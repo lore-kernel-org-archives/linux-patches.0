@@ -1,50 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D20B41428F0;
-	Thu, 13 Jun 2024 12:36:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAFAE1EEF8;
+	Thu, 13 Jun 2024 12:37:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282217; cv=none; b=PxlDKOhKkALMhJFvGCiVdVb68klKX/X0dzkntm1EFsznjRRkJ161sXXRmRTan4w5P8O2BCov9gCAh8BXGagY9MAKcDVsxw5+H9R8InQE2cL5DeJQewnQXz3c7I3u16X60W2Xs4U4X/K4aPcCz8AdVHQUkWJLa8tWyU0SLOtff0U=
+	t=1718282221; cv=none; b=XKQPaUkV7WRewJmsiW1BtCf4WMOK9htjzWqhYN1GVWoW/JT2E+V/wx0hVa1D5+Yi1c+EXTEmQFgiXFGuN+nZfweZAgsgHUqDfrVe8dI3x8VfuLoD7Pipyn3pVvKLTwHZ6DMypbpSjJH9s4OkBpLsZTeOTpYrlRlYyYvuvIrqdUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282217; c=relaxed/simple;
-	bh=F8z4WwK9iP1Z6ZG48/U/iI7OAZN5O6Zynvd7OVFjSOE=;
+	s=arc-20240116; t=1718282221; c=relaxed/simple;
+	bh=4aDKwESArYrT+rzHDXYtRCWjfwdKNl7re+KuaVxHu9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UzTAz08Uz9luc25epky5hRzXUDm+bp0FFJQuhoC1i/dgpZHJHe1/zsvSNDWi1JvAiDC39ABKvy1I+00mxOMC1aujHPKb0pOIzy9g5a1TvfI1xnoz8+caOa0FutQl0VxSbcbaq41bbNlbUQpeM7VSrIvPzF4P3fP5WJkNjIWkQK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PhiI3qxG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TjKMHuXO1UdxllhhrtsaANMPVgGyyYSxtg2mR5EzSPrTQK9RGQm+bFzJFyIZ4HtRLpsi0VWbY+PeD5Acf2VdHU34LQKuwVkJkYGthg4O3hsn5B3Ty9KCttmKaeQdoSZM+29VK6TDY2CJge1kXKTnQBAZ8IPiOcWBySdXpsMPU00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T+arEH4L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PhiI3qxG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC693C2BBFC;
-	Thu, 13 Jun 2024 12:36:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T+arEH4L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3D7C2BBFC;
+	Thu, 13 Jun 2024 12:36:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282217;
-	bh=F8z4WwK9iP1Z6ZG48/U/iI7OAZN5O6Zynvd7OVFjSOE=;
+	s=korg; t=1718282220;
+	bh=4aDKwESArYrT+rzHDXYtRCWjfwdKNl7re+KuaVxHu9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PhiI3qxGVjT1xPc+2boqL2fa5zuWAjnn00RMeAiRUXTsWbKmLQioF1GhYmv7KmWLv
-	 niJbIrRz+pF8TC98+nIMT3giDmrKy9LgtpWtiO+glaIhHo5JT/ecbO+6F3EKnEsXEi
-	 OZ/tAfARk4u5ATjo3dxIUfNkMNPSaiweDQ/axvpI=
+	b=T+arEH4L+uxA1C/qNnAly0yqvV4e3ac0O+awKZvWFZk8Bj/lJZqlhfQMP26D+ZPKp
+	 c9CoeFGXiql3UBUHl3KRrbw44cN/X6WZ+0RxLlCZzUqrtbUrpuNJ896w+fLEpgpQbB
+	 2LAZ+ZyfwZiEZoSFWTeyQeqJEBKEW/AOY9cGfIlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Song Liu <song@kernel.org>,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Thomas Haemmerle <thomas.haemmerle@leica-geosystems.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 202/402] perf docs: Document bpf event modifier
-Date: Thu, 13 Jun 2024 13:32:39 +0200
-Message-ID: <20240613113310.022900431@linuxfoundation.org>
+Subject: [PATCH 5.15 203/402] iio: pressure: dps310: support negative temperature values
+Date: Thu, 13 Jun 2024 13:32:40 +0200
+Message-ID: <20240613113310.066606754@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -63,46 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Thomas Haemmerle <thomas.haemmerle@leica-geosystems.com>
 
-[ Upstream commit eb4d27cf9aef3e6c9bcaf8fa1a1cadc2433d847b ]
+[ Upstream commit 9dd6b32e76ff714308964cd9ec91466a343dcb8b ]
 
-Document that 'b' is used as a modifier to make an event use a BPF
-counter.
+The current implementation interprets negative values returned from
+`dps310_calculate_temp` as error codes.
+This has a side effect that when negative temperature values are
+calculated, they are interpreted as error.
 
-Fixes: 01bd8efcec444468 ("perf stat: Introduce ':b' modifier")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Cc: Song Liu <song@kernel.org>
-Cc: Thomas Richter <tmricht@linux.ibm.com>
-Link: https://lore.kernel.org/r/20240416170014.985191-1-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fix this by using the return value only for error handling and passing a
+pointer for the value.
+
+Fixes: ba6ec48e76bc ("iio: Add driver for Infineon DPS310")
+Signed-off-by: Thomas Haemmerle <thomas.haemmerle@leica-geosystems.com>
+Link: https://lore.kernel.org/r/20240415105030.1161770-2-thomas.haemmerle@leica-geosystems.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/Documentation/perf-list.txt | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/pressure/dps310.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/tools/perf/Documentation/perf-list.txt b/tools/perf/Documentation/perf-list.txt
-index 4c7db1da8fccc..a4881d32b318a 100644
---- a/tools/perf/Documentation/perf-list.txt
-+++ b/tools/perf/Documentation/perf-list.txt
-@@ -59,6 +59,7 @@ counted. The following modifiers exist:
-  D - pin the event to the PMU
-  W - group is weak and will fallback to non-group if not schedulable,
-  e - group or event are exclusive and do not share the PMU
-+ b - use BPF aggregration (see perf stat --bpf-counters)
+diff --git a/drivers/iio/pressure/dps310.c b/drivers/iio/pressure/dps310.c
+index 1b6b9530f1662..7fdc7a0147f0e 100644
+--- a/drivers/iio/pressure/dps310.c
++++ b/drivers/iio/pressure/dps310.c
+@@ -730,7 +730,7 @@ static int dps310_read_pressure(struct dps310_data *data, int *val, int *val2,
+ 	}
+ }
  
- The 'p' modifier can be used for specifying how precise the instruction
- address should be. The 'p' modifier can be specified multiple times:
+-static int dps310_calculate_temp(struct dps310_data *data)
++static int dps310_calculate_temp(struct dps310_data *data, int *val)
+ {
+ 	s64 c0;
+ 	s64 t;
+@@ -746,7 +746,9 @@ static int dps310_calculate_temp(struct dps310_data *data)
+ 	t = c0 + ((s64)data->temp_raw * (s64)data->c1);
+ 
+ 	/* Convert to milliCelsius and scale the temperature */
+-	return (int)div_s64(t * 1000LL, kt);
++	*val = (int)div_s64(t * 1000LL, kt);
++
++	return 0;
+ }
+ 
+ static int dps310_read_temp(struct dps310_data *data, int *val, int *val2,
+@@ -768,11 +770,10 @@ static int dps310_read_temp(struct dps310_data *data, int *val, int *val2,
+ 		if (rc)
+ 			return rc;
+ 
+-		rc = dps310_calculate_temp(data);
+-		if (rc < 0)
++		rc = dps310_calculate_temp(data, val);
++		if (rc)
+ 			return rc;
+ 
+-		*val = rc;
+ 		return IIO_VAL_INT;
+ 
+ 	case IIO_CHAN_INFO_OVERSAMPLING_RATIO:
 -- 
 2.43.0
 
