@@ -1,72 +1,179 @@
-Received: from mail.ispras.ru (mail.ispras.ru [83.149.199.84])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EBCC193086
-	for <patches@lists.linux.dev>; Fri, 14 Jun 2024 10:19:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.149.199.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D385A149C4A
+	for <patches@lists.linux.dev>; Fri, 14 Jun 2024 11:06:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718360362; cv=none; b=mOeu6WEssMNXxftIEgSqwF9vnW7JEx5ODUTX3NVf6JtcoFKNVQ+SnB+m/b6q8Ma7K+kcY/GLGHIl+uJhUCJnsO+b+il5qrQaq1Yj40Ng8zvgaQrVmMvt6bT3EbQvs/aPPFUSVF82Fqd0GEWKfwyXmtySBZgJfkjYYjbY8qMPG50=
+	t=1718363216; cv=none; b=u7n4vOE61uO6T/6YP/lgwH3Dwvb5D4Py3i5WKN2VdlkU7rkEp7pdfbvpXaKN1Rnse1PPAyofctVs0bxFUPJW+sYAVcsJGEg8DdM2XsmPKr+LfW+jsvk7YMRfhA/MQ/TkurUP0FZkk9bOahpwFlWBiVFP8BNxVinW/G9OW4Podio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718360362; c=relaxed/simple;
-	bh=vPui0HMuypqfFk1YqQTMYprp1+TouQfcH0F3cHLqzyQ=;
-	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=cjQ+fLZf0aKdmN6WA43aSjumG2yBIn/T6ftTZQlY8I1XBWg5Hmf1RFm/9HyLFqVxSAe9n6dIkwJR+FroiSf8XvJk8+opfkxPFSX9cQWt5XkGSOeircU1weglDWWXjwlLpuwsqJSGhoBxCiOA/4oenftWOpTuCPxki96/JlSKsYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru; spf=pass smtp.mailfrom=ispras.ru; dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b=sfSeSs4k; arc=none smtp.client-ip=83.149.199.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ispras.ru
+	s=arc-20240116; t=1718363216; c=relaxed/simple;
+	bh=K39z/7LGE/Fu+27l1PLvtZ8nbzeX+T5A+Oi7ylaDw7E=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Hc3Hs8kl2GBa53i+yfNQPzhBOEUxcclopMf5x6kGW+p+dJq45egfcNGxURqBYix4bMFfzVU0vd5v8rvcVp7NMsnCsmFXo/jqN0vhmAUlP8X7HkPgLFw+dceS3yPzB4pbIZlwZWD2dXeU4didZUdsSN2vzZniTJcPMWUwVWA3xbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iJkAw816; arc=none smtp.client-ip=209.85.208.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b="sfSeSs4k"
-Received: from [10.10.2.52] (unknown [10.10.2.52])
-	by mail.ispras.ru (Postfix) with ESMTPSA id 88E654076739;
-	Fri, 14 Jun 2024 10:19:18 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru 88E654076739
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
-	s=default; t=1718360358;
-	bh=2JKLFIjl8ixArdgVrJ5DBpdunmYy3E2bCd6ZiZ1wUbI=;
-	h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-	b=sfSeSs4knkQcnJ6PItgIlxeugi9O0iu4i+i+3GUs59wqUQAfcBj3tMtCduhc2hoYG
-	 wZ30sgkyW9HdviNVa9VH9f1nw8B4X6o2uNouPGnrIUybYY9cP0tDLCa3Csd1akNZZx
-	 /NiWL9pn0gZ9e5Ndj4Laytj310iIrUFk76Eldluc=
-Subject: Re: [PATCH 6.6 267/301] Revert "drm/nouveau/firmware: Fix SG_DEBUG
- error with nvkm_firmware_ctor()"
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- Dan Moulding <dan@danm.net>, Dave Airlie <airlied@redhat.com>,
- "lvc-project@linuxtesting.org" <lvc-project@linuxtesting.org>
-References: <20240514101032.219857983@linuxfoundation.org>
- <20240514101042.344516025@linuxfoundation.org>
- <1fc2fb82-aad2-8587-cc5a-2076d1f63862@ispras.ru>
- <2024061447-clamp-pretender-bac9@gregkh>
-From: Alexey Khoroshilov <khoroshilov@ispras.ru>
-Message-ID: <3bb5ed3c-8797-2cf8-c684-0b1553080c94@ispras.ru>
-Date: Fri, 14 Jun 2024 13:19:18 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iJkAw816"
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2eabd22d3f4so22005411fa.1
+        for <patches@lists.linux.dev>; Fri, 14 Jun 2024 04:06:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1718363213; x=1718968013; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=HtDpJcdpavz6cBylx2JMFPBLe/yTCka1erD+aP6W33s=;
+        b=iJkAw816owZoRoUqe0eIZnr5ofl97IEYSQ9k6rgaeQWNECOljSnpCB2X+dK/a0TK1E
+         YQybSkd/NLr1K5heljD3DS6nP8XwIJ5AHDWyGJqupsBnZlOl7hEvPoFeNiRg2ADrTQpF
+         JQsTUNeAKJ9W+nSXk3CpitVCrzO8rHagJFZx5fwfoeHrYfupBQ9X7NFaccGxWbX5o06Q
+         rP3YgPMdHGtwQc2AWDGhRKTn6S3Irv2YD6sT8BJCJZMuaqR0bij5mg1kI3WTOTxC8JsM
+         JpzJKppynf2yPFECwkbF0v9PpoJrEcSfArej1f45nB2HZNNbJkf//rNTLeD1PYJn9qAT
+         8DbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718363213; x=1718968013;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HtDpJcdpavz6cBylx2JMFPBLe/yTCka1erD+aP6W33s=;
+        b=mqbvCOQOgCSIBxGmkwPU24Q7Nv55Tc833hZtlKJoDebknqpM5URicrgQhLzcxB/RHf
+         I3ifgtiQEbddZYtrKfXMwDD1x8Sh3AiqdC+3i03qMd0MLH3cgz7OIhonHjMN4T2fWvdC
+         M752cF6/q5gF2B/JEbMJk8d0Y4dxaUAhkVT0ncCS6x+ouEc0yz6KO+mbH0TSgnBJNqFi
+         52Yf2IKpEyM7xz1Or5cKfilp2KC/6DeanY9rhwdvZLPdXnkA6o+BnIXg/9Bnasro+0SY
+         5k+tiAH/QNK+t6mJxswO1FWgHx8F7Dbo/vPHShtOLmLJjThQzw3gVv8sFay13vaK/zD+
+         610g==
+X-Gm-Message-State: AOJu0YzK7vnM3Gp6P55pRH4Zx1mGjpI9LjqMwyQzriEO+TewPLpIzO7L
+	nJ6zjzjDO1FqNM/eZ1gU99L7t5JqjDxCLSPQVMXhnGyjCWX8CXAN
+X-Google-Smtp-Source: AGHT+IEIySahOq+eoCwln0+vI0Wmi80YGigUharhGehoW+hvSYQ+4A1gI84xogI+CDwmaTjW6EPPfA==
+X-Received: by 2002:a2e:b04a:0:b0:2eb:e505:ebea with SMTP id 38308e7fff4ca-2ec0e5d0b93mr15640041fa.25.1718363212785;
+        Fri, 14 Jun 2024 04:06:52 -0700 (PDT)
+Received: from [192.168.1.227] (132.28.45.217.dyn.plus.net. [217.45.28.132])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-422874e73e8sm94985885e9.43.2024.06.14.04.06.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 14 Jun 2024 04:06:52 -0700 (PDT)
+Message-ID: <a399b30f-fb9e-4d7c-8a3b-bce9898a7f19@gmail.com>
+Date: Fri, 14 Jun 2024 12:06:51 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <2024061447-clamp-pretender-bac9@gregkh>
-Content-Type: text/plain; charset=utf-8
-Content-Language: ru-RU
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.10 004/317] r8169: Fix possible ring buffer corruption
+ on fragmented Tx packets.
+From: Ken Milmore <ken.milmore@gmail.com>
+To: Alexey Khoroshilov <khoroshilov@ispras.ru>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Heiner Kallweit <hkallweit1@gmail.com>,
+ Paolo Abeni <pabeni@redhat.com>,
+ "lvc-project@linuxtesting.org" <lvc-project@linuxtesting.org>
+References: <20240613113247.525431100@linuxfoundation.org>
+ <20240613113247.702462647@linuxfoundation.org>
+ <9592add5-b9e3-d14d-dd1b-2ef3d1057dd1@ispras.ru>
+ <ae35864a-9a76-4e9e-8a33-2d141f475d4d@gmail.com>
+Content-Language: en-GB
+In-Reply-To: <ae35864a-9a76-4e9e-8a33-2d141f475d4d@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 14.06.2024 12:42, Greg Kroah-Hartman wrote:
-> On Fri, Jun 14, 2024 at 12:34:02PM +0300, Alexey Khoroshilov wrote:
->> On 14.05.2024 13:18, Greg Kroah-Hartman wrote:
->>> 6.6-stable review patch.  If anyone has any objections, please let me know.
+
+
+On 13/06/2024 21:27, Ken Milmore wrote:
+> On 13/06/2024 18:21, Alexey Khoroshilov wrote:
+>> On 13.06.2024 14:30, Greg Kroah-Hartman wrote:
+>>> 5.10-stable review patch.  If anyone has any objections, please let me know.
 >>
->> A little bit strange situation to add and revert commit in the same
->> stable release.
+>> The patch is cleanly applied to 5.10, but it leads to uninit value
+>> access in rtl_tx_slots_avail().
 >>
->> Is it intentional? Or some scripts should be updated to avoid that?
+>>
+>> 	unsigned int frags;
+>> 	u32 opts[2];
+>>
+>> 	txd_first = tp->TxDescArray + entry;
+>>
+>> 	if (unlikely(!rtl_tx_slots_avail(tp, frags))) {
+>>                                              ^^^^^ - USE OF UNINIT VALUE
+>> 		if (net_ratelimit())
+>> 			netdev_err(dev, "BUG! Tx Ring full when queue awake!\n");
+>> 		goto err_stop_0;
+>> 	}
+>>
+>> 	opts[1] = rtl8169_tx_vlan_tag(skb);
+>> 	opts[0] = 0;
+>>
+>> 	if (!rtl_chip_supports_csum_v2(tp))
+>> 		rtl8169_tso_csum_v1(skb, opts);
+>> 	else if (!rtl8169_tso_csum_v2(tp, skb, opts))
+>> 		goto err_dma_0;
+>>
+>> 	if (unlikely(rtl8169_tx_map(tp, opts, skb_headlen(skb), skb->data,
+>> 				    entry, false)))
+>> 		goto err_dma_0;
+>>
+>> 	txd_first = tp->TxDescArray + entry;
+>>
+>> 	frags = skb_shinfo(skb)->nr_frags;
+>>         ^^^^^^   - INITIALIZATION IS HERE AFTER THE PATCH
+>>
+>> There is no such problem in upstream because rtl_tx_slots_avail() has no
+>> nr_frags argument there.
+>>
+>>
+>> Found by Linux Verification Center (linuxtesting.org) with SVACE.
+>>
+>> --
+>> Alexey Khoroshilov
+>> Linux Verification Center, ISPRAS
 > 
-> Totally intentional, otherwise we would notice that the original commit
-> was not applied later on and try to apply it there again.
+> Looks like the frags argument was removed in commit 83c317d7b36bb (r8169: remove nr_frags argument from rtl_tx_slots_avail), which first appears in linux-5.11.
+> 
+> I dare say it would be safe to replace
+>  	if (unlikely(!rtl_tx_slots_avail(tp, frags))) {
+> with
+>  	if (unlikely(!rtl_tx_slots_avail(tp, MAX_SKB_FRAGS))) {
+> 
+> Best wait for Heiner to confirm though.
 
-Thank you for the clarification!
+Further to this, I have tested the following amended patch to 5.10 on the RTL8125b and it works without problems:
 
---
-Alexey
+
+diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
+index c29d43c5f450..8aa0097bf887 100644
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -4279,16 +4279,16 @@ static void rtl8169_doorbell(struct rtl8169_private *tp)
+ static netdev_tx_t rtl8169_start_xmit(struct sk_buff *skb,
+ 				      struct net_device *dev)
+ {
+-	unsigned int frags = skb_shinfo(skb)->nr_frags;
+ 	struct rtl8169_private *tp = netdev_priv(dev);
+ 	unsigned int entry = tp->cur_tx % NUM_TX_DESC;
+ 	struct TxDesc *txd_first, *txd_last;
+ 	bool stop_queue, door_bell;
++	unsigned int frags;
+ 	u32 opts[2];
+ 
+ 	txd_first = tp->TxDescArray + entry;
+ 
+-	if (unlikely(!rtl_tx_slots_avail(tp, frags))) {
++	if (unlikely(!rtl_tx_slots_avail(tp, MAX_SKB_FRAGS))) {
+ 		if (net_ratelimit())
+ 			netdev_err(dev, "BUG! Tx Ring full when queue awake!\n");
+ 		goto err_stop_0;
+@@ -4309,6 +4309,7 @@ static netdev_tx_t rtl8169_start_xmit(struct sk_buff *skb,
+ 				    entry, false)))
+ 		goto err_dma_0;
+ 
++	frags = skb_shinfo(skb)->nr_frags;
+ 	if (frags) {
+ 		if (rtl8169_xmit_frags(tp, skb, opts, entry))
+ 			goto err_dma_1;
+
+
+An alternative to this amendment would be to apply 83c317d7b36bb as a prerequisite, but that does not apply cleanly to 5.10 without some massaging.
+
+Because of these complications, I would suggest it may be safest to omit this patch from 5.10 for now.
+
+NAKed-by: Ken Milmore <ken.milmore@gmail.com>
