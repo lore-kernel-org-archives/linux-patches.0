@@ -1,64 +1,79 @@
-Received: from mail.ispras.ru (mail.ispras.ru [83.149.199.84])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AA15190071
-	for <patches@lists.linux.dev>; Fri, 14 Jun 2024 09:34:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.149.199.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF6E1922C2
+	for <patches@lists.linux.dev>; Fri, 14 Jun 2024 09:35:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718357649; cv=none; b=UPP474cszLjCm3MxTaQ3tu8sV1Ok7pb411fER+P7Awce8lqJLOemTliQJir/wOSETiu9rV+TfFlWs8r4mk980Zd7j5amLVdXafdy79X2/NpvJEu+2SB/Aeg0oyrrjjH4wARH1/6TQOa2o0a+cH4qfjkdjWYfIkD4kDwXaKoWnPg=
+	t=1718357718; cv=none; b=QdP4ZGxvyvNPguszgKxQz4jz/AwfBRT3EW3FRv/nOgl+fjRxyfRCp/Sc9biXHcl8GUqWOxtSw34L78GP9UWO3lRy370wknw3/Dv0/yAy3FZ9tHSOq12T+7Wk/3+vUZQGb/786XwsQyc0bawavLMltVndwqhfLAfydbnKz55910I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718357649; c=relaxed/simple;
-	bh=2EuV9lv3QZLgMS2+OeKIHzFtsXdoP8ptE/XMKM3QLU8=;
-	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=nTG/sBN33cs6mELi8Y5KRumg7oodIc8vsVTBNdCPhVXdQJsXTOvqnBH9tv/xqYSi1xOJz6QKAiTV5obpgi6MzqZdWNw66cfx4ExpegCFJ/vlJSrGtwRXyQk1Oeg4ZDNv6+ParNrVFux29hNVU5k2LUmjFxYvEPBoFqklxGDIXF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru; spf=pass smtp.mailfrom=ispras.ru; dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b=lkGFFcMA; arc=none smtp.client-ip=83.149.199.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ispras.ru
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b="lkGFFcMA"
-Received: from [10.10.2.52] (unknown [10.10.2.52])
-	by mail.ispras.ru (Postfix) with ESMTPSA id 2FEE54078524;
-	Fri, 14 Jun 2024 09:34:04 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru 2FEE54078524
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
-	s=default; t=1718357645;
-	bh=B6cLvZe1zxnCNFAeqntK3finkaqniYPq6CFKUMWgshg=;
-	h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-	b=lkGFFcMAWfkaTt+cCvZUCUQ5CkCwpHO28k80ni28lGRWGqbwCmUWdVUsDxFtPrjve
-	 VcnylkbT3002ObG3uZ2SHLIAo/RNc7qtDUqnomREVR0nIjyXq8DEf1FrdEpR+HOWMX
-	 rDDpgQ6HCbJAsdg56dbxColRUjFHHFx4lJ+dAAk4=
-Subject: Re: [PATCH 6.6 267/301] Revert "drm/nouveau/firmware: Fix SG_DEBUG
- error with nvkm_firmware_ctor()"
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Dan Moulding <dan@danm.net>,
- Dave Airlie <airlied@redhat.com>,
- "lvc-project@linuxtesting.org" <lvc-project@linuxtesting.org>
-References: <20240514101032.219857983@linuxfoundation.org>
- <20240514101042.344516025@linuxfoundation.org>
-From: Alexey Khoroshilov <khoroshilov@ispras.ru>
-Message-ID: <1fc2fb82-aad2-8587-cc5a-2076d1f63862@ispras.ru>
-Date: Fri, 14 Jun 2024 12:34:02 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+	s=arc-20240116; t=1718357718; c=relaxed/simple;
+	bh=+SRN0TRxmcBxaF6CyBtFMH7/VP/6CAVDDqHQgSCDdoc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TaA/f/fiCGVBpn+45uuAm9A+EizjbNGQYY4sG//AlFojjh2ghuYAaCSIHJQY+El5ZHpG9tpHIYIDfeuK4BcfXvm1sp9hUu95WyaCRuPUx8f9Vw9+sH/6cQoNfA0XKPl9ZX9k5/ZiNcOr5Iji+k7pW8NgwgW8uOscEhq8EGYBieQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 2CEEE1C0082; Fri, 14 Jun 2024 11:35:08 +0200 (CEST)
+Date: Fri, 14 Jun 2024 11:35:07 +0200
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+Subject: Re: [PATCH 6.1 00/85] 6.1.94-rc1 review
+Message-ID: <ZmwOy7M+WQQweaSD@duo.ucw.cz>
+References: <20240613113214.134806994@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20240514101042.344516025@linuxfoundation.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="+Bb+eb7BKPYLfG0z"
+Content-Disposition: inline
+In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 
-On 14.05.2024 13:18, Greg Kroah-Hartman wrote:
-> 6.6-stable review patch.  If anyone has any objections, please let me know.
 
-A little bit strange situation to add and revert commit in the same
-stable release.
+--+Bb+eb7BKPYLfG0z
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Is it intentional? Or some scripts should be updated to avoid that?
+Hi!
 
---
-Alexey Khoroshilov
-Linux Verification Center, ISPRAS
+> This is the start of the stable review cycle for the 6.1.94 release.
+> There are 85 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+
+CIP testing did not find any problems here:
+
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
+6.1.y
+
+Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+
+Best regards,
+                                                                Pavel
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--+Bb+eb7BKPYLfG0z
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZmwOywAKCRAw5/Bqldv6
+8p+8AKCMHRgKGCDAtTKWJK79aoTPmKVQ9ACfYdtDawBVEOzsLgCWqASbflOXtqI=
+=5RJg
+-----END PGP SIGNATURE-----
+
+--+Bb+eb7BKPYLfG0z--
