@@ -1,88 +1,62 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC85C1922D5
-	for <patches@lists.linux.dev>; Fri, 14 Jun 2024 09:38:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA241922FA;
+	Fri, 14 Jun 2024 09:42:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718357890; cv=none; b=MOiJq1Slk7AZHu7m6L87vxMbtisaPGVTkfjGBNcO1L1V37Pb9QKEPUiRvMEiQlL+PY2nU0ckj3q9RKi2Ta4PgwPveOuytVazK1E73f/m+/Fg9QT/HRm7LYEXG9M78LUjI+VH1/lqHpMezT4W8BYjhdg2wpLyYHkDRE/zvCcIlkQ=
+	t=1718358133; cv=none; b=c3cEEu+szBSMNZ8/ICt5/McDn/5vqBs1YWY9O8hTcWsaiZuT7W9z/vXvCqvTUvJJ6po7c2LLRpliY6KDMCW7CJlxKo5CN5GjVdhqVYnhSDsj9Yd15IxjxCdTeZwQeY/wRwm9uAr4Ac7snDJXnGcugMj6PF1rNXCOzS8eo/lV0Ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718357890; c=relaxed/simple;
-	bh=yk3xVCXhUi85+dtex8ea9Edp2bKOvgEo76IknOTQV6s=;
+	s=arc-20240116; t=1718358133; c=relaxed/simple;
+	bh=3ZCYct1jR4rbj5YFkVtgr3ow682HEO9o5cI6WRTIIvw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TyzkYW69Rtu9iyiA8/akKtlAGVz55ScwK4VHW4EUQBHMIP6pQD3RgwrTFQCLmf1923zfA0zUZsnvjBMPjPSZPJ80IdIkJH8Swcrvx/WYLCw488PlcVGsd6zkfcmE5ErIV120VCEaXk0QwKyZVAPBCvn3GrUWlb6PLtxSLq3LNNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 1F1C91C0082; Fri, 14 Jun 2024 11:38:07 +0200 (CEST)
-Date: Fri, 14 Jun 2024 11:38:06 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=cOeXhVwHmWIRXmQAsmOzhXr1KB4hjvYcD25MO+5k3awruA8TUd0KO6GyGTdzJwQh7x/NLMmj1+XOo18K/Gk/nvbH0c67AeFFuPDpeBcGV3NlaG7o3UMVJScwgY0S4ucZ6IBHh10a5iJD6U2YTHsK8VSRy38pz7mL2iR8kS3SaCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJvA09pm; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJvA09pm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 750E5C2BD10;
+	Fri, 14 Jun 2024 09:42:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1718358132;
+	bh=3ZCYct1jR4rbj5YFkVtgr3ow682HEO9o5cI6WRTIIvw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=EJvA09pmDh/gnovpyWBFX6R0guny535UTTvibzNCQzNAdb8NbCfBffYAieNBM7rLW
+	 0zDKLTVsnfgteER1G6sNXd+N2V3Nm7c8CrvKNK0LiNOrzNMXRIiCn1B8moyUg9POpF
+	 2i3XplKVSIRcXvY6682HctTGVCyB5CeVt5pwwgqo=
+Date: Fri, 14 Jun 2024 11:42:10 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Alexey Khoroshilov <khoroshilov@ispras.ru>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 6.9 000/157] 6.9.5-rc1 review
-Message-ID: <ZmwPfqvcarQQ/cLx@duo.ucw.cz>
-References: <20240613113227.389465891@linuxfoundation.org>
+	Dan Moulding <dan@danm.net>, Dave Airlie <airlied@redhat.com>,
+	"lvc-project@linuxtesting.org" <lvc-project@linuxtesting.org>
+Subject: Re: [PATCH 6.6 267/301] Revert "drm/nouveau/firmware: Fix SG_DEBUG
+ error with nvkm_firmware_ctor()"
+Message-ID: <2024061447-clamp-pretender-bac9@gregkh>
+References: <20240514101032.219857983@linuxfoundation.org>
+ <20240514101042.344516025@linuxfoundation.org>
+ <1fc2fb82-aad2-8587-cc5a-2076d1f63862@ispras.ru>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ln8mXAV6eA/q0+pD"
-Content-Disposition: inline
-In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
-
-
---ln8mXAV6eA/q0+pD
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1fc2fb82-aad2-8587-cc5a-2076d1f63862@ispras.ru>
 
-Hi!
+On Fri, Jun 14, 2024 at 12:34:02PM +0300, Alexey Khoroshilov wrote:
+> On 14.05.2024 13:18, Greg Kroah-Hartman wrote:
+> > 6.6-stable review patch.  If anyone has any objections, please let me know.
+> 
+> A little bit strange situation to add and revert commit in the same
+> stable release.
+> 
+> Is it intentional? Or some scripts should be updated to avoid that?
 
-> This is the start of the stable review cycle for the 6.9.5 release.
-> There are 157 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Totally intentional, otherwise we would notice that the original commit
+was not applied later on and try to apply it there again.
 
-CIP testing did not find any problems here:
+thanks,
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.9.y
-
-6.6, 5.15, 5.4 pass our testing, too:
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.6.y
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-5.15.y
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-5.4.y
-
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
-
-Best regards,
-                                                                Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---ln8mXAV6eA/q0+pD
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZmwPfgAKCRAw5/Bqldv6
-8gqSAJ4oRJOMNzHexwIwalZ8RDexZwxOswCcDNXeiKfRmeRIZA+U/2iP25TYza8=
-=nCwR
------END PGP SIGNATURE-----
-
---ln8mXAV6eA/q0+pD--
+greg k-h
