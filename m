@@ -1,88 +1,82 @@
-Received: from mail.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D807A148FE0
-	for <patches@lists.linux.dev>; Fri, 14 Jun 2024 07:27:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=150.107.74.76
+Received: from submarine.notk.org (62-210-214-84.rev.poneytelecom.eu [62.210.214.84])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DEBB19007E
+	for <patches@lists.linux.dev>; Fri, 14 Jun 2024 08:38:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.210.214.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718350034; cv=none; b=i3V2pcgaUfWOtfzESXInE1B/zvg+rQ3gbKY50GE/YZwv0IH2ul8/B8bNPrT0+VXsLjmcl3+aH5Dcc02f2wpil/xghjM1iK6EMCUMIVQ47FIpTMhmNQfK7Iw8cpJN0QZT255+YHIgTHEonhrJPrgrbI3brxwH2gz26+M3zYM8/8Q=
+	t=1718354290; cv=none; b=sqDRsT4TuIzQyK/zxTDfYGSIes/a37YWjpd1myHSmdG3xpV/tx8aQb13oarqApJx7Db3zof+/rbJh8iQbbN+QccyLxxVr9lM6cr7R4Gr6aY5OItlScY7B129fHq5fivxExzfRwWDjWBXAWiMZ4U5dzc9kRL66RftxMEED0Jxqes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718350034; c=relaxed/simple;
-	bh=/5hWId5YmtsyMOhRIhKRwGN1qpcOZRo4MAszCsksz/s=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rWtD7vNutMVRT4ChmL8sqkptTV+e1Us/mZLhrH8kQaDMu7Hw0mjyIoIc4Hb3AMkBIorZEMjlZyQ+sLbvB0EDHYzro+pn4/6x9QPwZgcOWEC7lhv+N88Pmx7lJTpvWAB//OFzZTG9R/OtKzb5jCgZwfyy5y3zcqHfo1WqLAVX8q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ellerman.id.au; spf=pass smtp.mailfrom=ellerman.id.au; dkim=pass (2048-bit key) header.d=ellerman.id.au header.i=@ellerman.id.au header.b=DzEZhFVG; arc=none smtp.client-ip=150.107.74.76
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ellerman.id.au
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ellerman.id.au
+	s=arc-20240116; t=1718354290; c=relaxed/simple;
+	bh=6QqwUINZwrYIdITWIBtpBk2qJO2319v2hxiHhZiXk5o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uP9G9eSGGb82IAOvIf0Q0ryeMXHMcFPP88N5RJwKiHwut91ZqY/yY1L4EpN0HLrwl1KHuDHo6VZ046hyRgZc31K0LMA3BIMLNzAHFZqcMeT7Lcs1ugmP4GkYs0k8xb5V3pkeFmU0mFfSSsC63ebGjThKrGesFNib9CK20Rg3zLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=wqmcqBgR; arc=none smtp.client-ip=62.210.214.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ellerman.id.au header.i=@ellerman.id.au header.b="DzEZhFVG"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ellerman.id.au;
-	s=201909; t=1718350023;
-	bh=sZZIq6nqaxk/VPxNvN8lNGGq2t4CThr2RloNNxr331s=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=DzEZhFVGlHjUE6j+6SpGlsV+1R3lE8qFN1VlnSaMC3D7hZS+iiCvRjyTGAFILOvDT
-	 gmditDZHUEiFPSIXSww4KqkY05alJcTlJ1FL6Y7wqZONXHKRu/ILvDw48Knim206YX
-	 NGM0vvLDRxgwakZWQgZqCGtVlNhCmWkYVK8sik6jDmS3hJuE+QXIClFjjE/R3G7niL
-	 rh7hUaxcWTkQUmh04K/sPcNKaj8WlGU1zyApRcPuf8399Uw4V/4i6tFC+GppMMgFz7
-	 494FkcmJICkViE58PxQdxjsCmmKrM8X6mo0nzrcN43WSwX7yn2pLv7KNDlbZDwhXkJ
-	 LuaSbOzKbxmxg==
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mail.ozlabs.org (Postfix) with ESMTPSA id 4W0rSk4BN8z4wcg;
-	Fri, 14 Jun 2024 17:27:02 +1000 (AEST)
-From: Michael Ellerman <mpe@ellerman.id.au>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- patches@lists.linux.dev, Christophe Leroy <christophe.leroy@csgroup.eu>,
- Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.10 260/317] powerpc/uaccess: Use asm goto for get_user
- when compiler supports it
-In-Reply-To: <20240613113257.605251513@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="wqmcqBgR"
+Received: from gaia.codewreck.org (localhost [127.0.0.1])
+	by submarine.notk.org (Postfix) with ESMTPS id 23DBC14C1E1;
+	Fri, 14 Jun 2024 10:37:54 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
+	s=2; t=1718354280;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=dzytT4OTAPYYW6m/eVOiV+9/isR+EfC8guGdMV3QHtQ=;
+	b=wqmcqBgRPTtVLHA9EsnvT3Dc+kYnUrS17ArNJuQh9LwEh7GaogVQlE5qChrkhKmgc0FGzi
+	Jy0vOuO5RCrQ+pZzm/G7ji9TYvKvQxylvKWjD5HZsKF5w1JD0oALKspX7Xvd/4kR3cjL4F
+	cXF8SpBXcrBCSGG1Lqyafu7TS82pskwlxJU9aJQ8mbIxOYInXutcNhfSVTG3fXU3ybY/nc
+	BwJNgWrxJukQ9x/ExTpYO7ZMnqDTEToClvCyi1YyPFo/wHgIwnxw1p/RdEAtuaQ+r8hE79
+	+/GpY56BJBhO28XBndA2QAsvNVWGMNaN0VdvEqWJFlj0HBB7fkj1mJRbU6++Vw==
+Received: from localhost (gaia.codewreck.org [local])
+	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id b9898663;
+	Fri, 14 Jun 2024 08:37:50 +0000 (UTC)
+Date: Fri, 14 Jun 2024 17:37:35 +0900
+From: Dominique Martinet <asmadeus@codewreck.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+Subject: Re: [PATCH 5.10 000/317] 5.10.219-rc1 review
+Message-ID: <ZmwBTwSgfoQSlOGG@codewreck.org>
 References: <20240613113247.525431100@linuxfoundation.org>
- <20240613113257.605251513@linuxfoundation.org>
-Date: Fri, 14 Jun 2024 17:27:00 +1000
-Message-ID: <87zfronfwb.fsf@mail.lhotse>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org> writes:
-> 5.10-stable review patch.  If anyone has any objections, please let me know.
->
-> ------------------
->
-> From: Christophe Leroy <christophe.leroy@csgroup.eu>
->
-> [ Upstream commit 5cd29b1fd3e8f2b45fe6d011588d832417defe31 ]
->
-> clang 11 and future GCC are supporting asm goto with outputs.
->
-> Use it to implement get_user in order to get better generated code.
->
-> Note that clang requires to set x in the default branch of
-> __get_user_size_goto() otherwise is compliant about x not being
-> initialised :puzzled:
->
-> Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-> Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-> Link: https://lore.kernel.org/r/403745b5aaa1b315bb4e8e46c1ba949e77eecec0.1615398265.git.christophe.leroy@csgroup.eu
-> Stable-dep-of: 50934945d542 ("powerpc/uaccess: Use YZ asm constraint for ld")
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  arch/powerpc/include/asm/uaccess.h | 55 ++++++++++++++++++++++++++++++
->  1 file changed, 55 insertions(+)
+Greg Kroah-Hartman wrote on Thu, Jun 13, 2024 at 01:30:18PM +0200:
+> This is the start of the stable review cycle for the 5.10.219 release.
+> There are 317 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sat, 15 Jun 2024 11:31:50 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.219-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
 
-This is causing a build break. Please drop it.
+(There will likely be a rc2 for riscv/ppc, but..)
 
-There have been a lot of changes to uaccess.h since v5.10. I think
-rather than trying to pull in enough of them to allow backporting the
-recent uaccess fixes it'd be better to do a custom backport. I'll send
-one once I've done some build tests.
+Tested 853b71b570fb ("Linux 5.10.219-rc1") on:
+- arm i.MX6ULL (Armadillo 640)
+- arm64 i.MX8MP (Armadillo G4)
 
-cheers
+No obvious regression in dmesg or basic tests:
+Tested-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+
+--
+Dominique Martinet | Asmadeus
