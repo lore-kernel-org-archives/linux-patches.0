@@ -1,133 +1,103 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB45B1361;
-	Sat, 15 Jun 2024 00:29:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32CE442C
+	for <patches@lists.linux.dev>; Sat, 15 Jun 2024 00:56:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718411382; cv=none; b=EYAX0yd0KfC94YdXyeJfaNhISXMbDXktWRCDBDSmeq/Hp0YCuHsgEfX8YEvNDiqIIuLNfRlUMQpK52SwZCbzeLXlN6TGM6+qLhiS8tXoikdKWfozFzqBBqySSHym7jPSotgSKwniCFspyeBENfxXuQ2As8C5mdkLFyy9RKb4FY4=
+	t=1718412976; cv=none; b=GHQxjXZyAYwC9+1Ok1AW//9arxZZBnfUT/2tvKGzzcOw/ln/Jsg+H/d7CDzGeawv9imcBTOyv3BYwsZnKjWZcqLIZj2QBAR1rPdKyhh8ZGDZv/6bG1qkd97IgYj9cXtfGPmqeyLbbPgzKxKZYwLu4OlOrQg+d5m4Wr9+Y5GR51k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718411382; c=relaxed/simple;
-	bh=vtz42luEAJn0VhLOUkv2/QP5NNZipfjnEVBsxy/fZy0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ueDgwav9MN9ObFoh28PiD097ywH7hFdfrrli9xfwdOEXsJ0mvNbAI3FmcslFeV+m3oQNY4K7lVvoVsmjsnT/3N37yeaScLAbw6MDPKVVC0zSRtDQsbLilfUIssmX3k95G4R4FkIPwRPgAr+vRuXnzCgSc1TXbKq1/ivUzzcePkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=bixN2wSh; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1718412976; c=relaxed/simple;
+	bh=xAOUve96nzRjMjGiUPA98atnzfn+8zSS2djXh7HQyQg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qxKns7NdGgL3AXYheD7BQaKvuBkSTrUSzFYP0TrGlI9KSfCSKx2a8NyqK4/9XVbZCIs/Fe+cLdeRP4eXxwaDnpeIyIWHY8EhaSpHRl1ttz8IL8kqmqUfFkLSPZQxqr0EWGFFKNuB5xjDK9U0UjeSpctXO9TDfr5t7IB0vKPiPWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=bzZljztY; arc=none smtp.client-ip=209.85.218.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="bixN2wSh"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:Message-ID:Date:Subject:Cc:To:From:Reply-To:Content-Type:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=KMlKjNaY/F8QL3qECnT8EKms3WZs5CznUIuEAKsL0wI=; b=bixN2wShYjRMBjSUYnaQovwNZk
-	EEqsZMmtJGDJBNqorl/0WokkuKb8uhDH+ctYRXT2Cxc2cx32L98paVDX2qpolK0cPMIPcz6Ilpymb
-	KD6FYBQFvNwNhpsl5fdtdvw1CKziq78+ykStUytje7gPA2Xqm5WQvPA8HfCTUt8tQ5bnrO1QpJ4TV
-	JHCU1kWSzBgrxKujcf2nydpnuTEy6geOcIr7UynmlkCtTQ4gfJ+zz6gI5vRvYpGsVSFY1wZCySEfr
-	GDb4cToeKC+23QpY9TGiqK85ZZNvJkLf7bxx6XIoelh7dIJvmEVtqbq/4uSF/zM/i2F4OJ3hFe81g
-	sluCwWBw==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.97.1 #2 (Red Hat Linux))
-	id 1sIHIV-00000004KkG-3N4C;
-	Sat, 15 Jun 2024 00:29:35 +0000
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: patches@lists.linux.dev,
-	fstests@vger.kernel.org
-Cc: linux-xfs@vger.kernel.org,
-	linux-mm@kvack.org,
-	linux-fsdevel@vger.kernel.org,
-	akpm@linux-foundation.org,
-	ziy@nvidia.com,
-	vbabka@suse.cz,
-	seanjc@google.com,
-	willy@infradead.org,
-	david@redhat.com,
-	hughd@google.com,
-	linmiaohe@huawei.com,
-	muchun.song@linux.dev,
-	osalvador@suse.de,
-	p.raghav@samsung.com,
-	da.gomez@samsung.com,
-	hare@suse.de,
-	john.g.garry@oracle.com,
-	mcgrof@kernel.org
-Subject: [PATCH v2 0/5] fstests: add some new LBS inspired tests
-Date: Fri, 14 Jun 2024 17:29:29 -0700
-Message-ID: <20240615002935.1033031-1-mcgrof@kernel.org>
-X-Mailer: git-send-email 2.44.0
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="bzZljztY"
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a6f177b78dcso367557266b.1
+        for <patches@lists.linux.dev>; Fri, 14 Jun 2024 17:56:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20230601; t=1718412973; x=1719017773; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=MhPhQCOOoQnlUOqGQeHnLIf9fsvszQNArbvyi0UDoYs=;
+        b=bzZljztY73Bry29FqT2f/LouPZGuB8/YZ/+71gwKNcLYLvb/10jjG6oyEKa1bPOg06
+         U/4XZChunYeFZ0j47rk/7uKFh1L9xGYzwLO3+5ZcLH1LsqfB/tuGbqgBXridTnCid4Ae
+         cltKaxOiJPW0NmwA2ZGG2JRxlIngEFPWQNzty6K7wj2rQEfT9MTQJcIHQRRzm1HEt0sg
+         8VPRVji6v1zyFDcPDDQnudopV6UJ9XK+KL8M54mU8681gIKW9IsjcRCttVqzp8QsB9fG
+         C1FIhEIX8ZQawqdckbA8skH69jzk2LLkQ5OCpGQl6R66LdWmzL421jh5jHiC39t+bIwW
+         qRiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718412973; x=1719017773;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MhPhQCOOoQnlUOqGQeHnLIf9fsvszQNArbvyi0UDoYs=;
+        b=S3XG+k8gtwiFUYTUNVhox5CwuT14bmnxJ//yvU1j/IU52jXmMky1oBuqnuSoha6Ahr
+         LU1Tqs3LFT/OeRvVCjAhZ1WoOCB8GLVzDIeSt/EQVpHHwGI5IFkNYOooWTnk6LoKnFiK
+         OGHp8JLF0o1ncLRn1g6lGoNkuEqT2dU85pEfyNZxaUmbPrO4KYP3VHwACYjQh8Ua6k3N
+         fX1A3pEU8ziUGX8UMDLo7hSjUn+oF37u0t1iuYb0CWKOovaCVD5ez6fPaodA+2+W6iB9
+         zqYQpTT/sVLcltZQkawrlVFT4YanygCx4wSrbz4dbZ6tKInO2i4xtwsPHp/FStFJMogr
+         7e5w==
+X-Gm-Message-State: AOJu0YwOCeNwvvSQoBD2CrAx1xam/+fN9KtNzJX7Ty0Uf4A5F3UH37OM
+	GCo6wLhxopdGVVf+8vzDzOFhuXjwn1Qx+h/6cNH/GOl5qgrM4b4=
+X-Google-Smtp-Source: AGHT+IG0B5lsBy9jnULieYgLvmnLrftGOgA3ohOsKOLCHMupilq6C/57dHPtGnk4QzxY1gtFlrfz/Q==
+X-Received: by 2002:a17:907:1c05:b0:a62:1347:ad40 with SMTP id a640c23a62f3a-a6f60ced4b8mr292509966b.16.1718412972742;
+        Fri, 14 Jun 2024 17:56:12 -0700 (PDT)
+Received: from [192.168.1.3] (p5b2b4225.dip0.t-ipconnect.de. [91.43.66.37])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6f56da40b7sm239580666b.22.2024.06.14.17.56.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 14 Jun 2024 17:56:12 -0700 (PDT)
+Message-ID: <3dec1820-42d8-4c76-9424-ff73fd7e5643@googlemail.com>
+Date: Sat, 15 Jun 2024 02:56:11 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.6 000/137] 6.6.34-rc1 review
+Content-Language: de-DE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240613113223.281378087@linuxfoundation.org>
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-While working on LBS we've come accross some existing issues, some of them deal
-existing kernels without LBS, while the only new corner case specific to LBS is
-the xarray bug Willy fixed to help with truncation to larger order folios and
-races with writeback.                                                                                                                                                                         
-                                                                                                                                                                                              
-This adds 3 new tests to help reproduce these issues right away. One test
-reproduces an otherwise extremely difficult to reproduce deadlock, we have one
-patch fix already merged to help with that deadlock, however the test also
-also gives us more homework todo, as more deadlocks are still possible with that
-test even on v6.10-rc2.
+Am 13.06.2024 um 13:33 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.6.34 release.
+> There are 137 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-The 3 tests are:
+Builds, boots and works w/o regressions on 2-socket Ivy Bridge Xeon E5-2697 v2. I'm 
+currently test-building 6.9.5-rc1 under it, also 2 idling VMs running at the same time and 
+I don't see any problems; everything running smoothly. Nothing unusual or suspicious in 
+the dmesg output.
 
-1) mmap():
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
-The mmap page boundary test let's us discover that a patch on the LBS series
-fixes the mmap page boundary restriction when huge pages are enabled on tmpfs
-with a 4k base page size system (x86). This is a corner case POSIX semantic
-issue, so likley not critical to most users.
 
-2) fsstress + compaction
-
-The fsstress + compaction test reproduces a really difficult to reproduce hang
-which is possible without some recent fixes. However the test reveals there is
-yet more work is left to do to fix all posssible deadlocks. To be clear these
-issues are reproducible without LBS, on a plain 4k block size XFS filesystem.
-
-3) stress truncation + writeback                                                                                                                                                                                              
-The stress truncation + writeback test is the only test in this series specific
-to LBS, but likely will be useful later for other future uses in the kernel.
-
-Changes on this v2:
-
-- Few cleanups suggested
-- Renamed routines as suggested
-- Used helpers for proc vmstat as suggested
-- Made the mmap() test continue so we can just count the number of failures
-  of the test
-- Made the fio test ignore out of space issues, we care to just blast
-  the page cache, and detect write errors or crashes. This test now goes also
-  tested with tmpfs.
-- Minor commit log enhancements
-
-Luis Chamberlain (5):
-  common: move mread() to generic helper _mread()
-  fstests: add mmap page boundary tests
-  fstests: add fsstress + compaction test
-  _require_debugfs(): simplify and fix for debian
-  fstests: add stress truncation + writeback test
-
- common/rc             |  54 ++++++++-
- tests/generic/574     |  36 +-----
- tests/generic/749     | 256 ++++++++++++++++++++++++++++++++++++++++++
- tests/generic/749.out |   2 +
- tests/generic/750     |  63 +++++++++++
- tests/generic/750.out |   2 +
- tests/generic/751     | 170 ++++++++++++++++++++++++++++
- tests/generic/751.out |   2 +
- 8 files changed, 552 insertions(+), 33 deletions(-)
- create mode 100755 tests/generic/749
- create mode 100644 tests/generic/749.out
- create mode 100755 tests/generic/750
- create mode 100644 tests/generic/750.out
- create mode 100755 tests/generic/751
- create mode 100644 tests/generic/751.out
+Beste Grüße,
+Peter Schneider
 
 -- 
-2.43.0
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
 
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
