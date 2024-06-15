@@ -1,196 +1,239 @@
-Received: from NAM04-DM6-obe.outbound.protection.outlook.com (mail-dm6nam04on2048.outbound.protection.outlook.com [40.107.102.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE3D6FD0
-	for <patches@lists.linux.dev>; Sat, 15 Jun 2024 02:12:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.102.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718417574; cv=fail; b=BGl3kpXs4fFWlChj+StXPqilDBjhz/DCi49rsqXB+nS9Kyk7MyGttm2JoCq+s+cLYuzUG40XZBoVzjwAW5GVdIWUOZBNyJrhXwvo7Q3eIjKuR1JfLESjnEoQ0QKHiEhAteEk5nGxw3U1r4zDugFJ5wX653otZyhzI7EH0LkNpjk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718417574; c=relaxed/simple;
-	bh=oXR7tGlYORA3ttVLQAjJZs8ODZYxwV6VqEnf+Gq+cgo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=leVTebQqjdMie1F6q6iVbCXhrVAy/4X42m1olatvr9rps325nZEM7NvnA5fevZbAh8T9/HA2LjM79tjSCdq8X//aa5NKwFeHrEjpUJGrLauTtqf/dxZhcYdkVPtcOrI/nPmqQ0GY3lLwATkssa8jxQzv66dAwdqiBTIZyxl1B84=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=cQXgayq4; arc=fail smtp.client-ip=40.107.102.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E509C8827
+	for <patches@lists.linux.dev>; Sat, 15 Jun 2024 06:47:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1718434033; cv=none; b=TEOpDkcFXNf7ke+dT5GAwKCETeluEPaVSwOsIeeJVccB3sgdclkSlc/grSk8HOQ7++geWGlQRpyD0xI/kEKOA19jmCmrB8fxbTi/ld0VqhwNnoRcp6dnicskQ13hFyRv3ESMu6OCxE5u+u9imixKWZQFxzUXm+99XrclGoehs3Y=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1718434033; c=relaxed/simple;
+	bh=znnbojbn7bV82M7iK5JAhEnZ3lVFFlNFEcHsHJkwCKY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZwbWqTc0q7uJONIsAXLukVxuvBliWdDg5Ejs5WLi/vG/djmcwq9573oX1Cdxw6CAE21SxL2NL869jJ25VoyPhPNXv1np4BvT9a3Ew/gHBPWjWPuGQPSNn8qt9BfcMsbLrLmQh5lq+ax2z4/F+ACYkx7wXXsjDcWFfQQCmK55OqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cnfIb0C7; arc=none smtp.client-ip=209.85.221.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="cQXgayq4"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=mECFMT31zhz90d3yN3pV91Wnm1e0vDByDEHrDIo85oiMxP6E54pwOn6Q7Xy0tUd5gtbuAyrllOWxO2zxjyaEMDMP65S0Vt1eNY402TVOBwYDmGtFasETnbelBz+qdgtu2zyeqXAW/CznVDNazS17JL/0STVuGLQ2e4vWKbs0r+lH+22Zbntd64KkSCHG/6zbneMSX8ThJ23fFdYmWzeU7qDrU+/bxkzGGLWUFTkemw4Me9vboSeNO6DAFTWDIJjgGryI3zGRLJy0QgSukArWyKKwGRuHFv/FyrDhBtID5RtPEu8/A4vjSxUWNgRREUc0gnaN9kWvYzTGKo9uQ0Ucgw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=mjJEAx9EO4Gt1Ifz/cONtMOWbp+QbNQ/gJbZyHqLAEE=;
- b=WzWJZYEfgc6G2m/s5cBDLmXycHsj0MnPx7KJX9c/kpw+W5XvWxkAjwFiTfAosMK24/iGm4ecuO4OuLke/fWQFxpONS4kOV195/JmsHwZmqMXYTv3GB7O2QYE0GB76rL9kHk66Zw6+CcpYZorCeNY7ak6KJl1+9pUj1jImagGl4Y4RNP9V+46E51QKdPpgZyPL1BXAhIhGrXapp/aJM4kc0XKXkhZeR4rybDTfE24qAganxv5VFe10mTeKT7ihhGCXFjYM7VjEPvynvA1xjNc5ZUbE08QPQjVq6h/nKyhCbcAIZKdrBbAEp8xmVbOMm14226aI7+B5k7hdKAsPZZpQQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=zx2c4.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=mjJEAx9EO4Gt1Ifz/cONtMOWbp+QbNQ/gJbZyHqLAEE=;
- b=cQXgayq40oIGNYOWG8Z7PACMY07GPz3tXOgnZG1aKsayV/xk2QJqzptkIJLZ3q/kSWwQjbi5pzgch7+fBZJSbIYDSq+H39aBpt8mEPPKBDOXQ30/ieDSVbTiOEfLqaS47hW37FD9sivX95nSweiZOIdXrD44fY4Qv0LoUrRzXL86P0hsOCA5LJarHz75nuujNPKLFPtTcHOyeE9xstgC6U0t5oKnGEf1droirDqK7OaNO9LR2qpW+h8vPOao9mOW4SnSMhPoIPhz+6cNX5587dD5Vir930jTdATbwPX4DJDrmBg3GMftYmlgmNZAygwWb0Ul9L4txDTlk/UupW1ZGQ==
-Received: from SA0PR11CA0171.namprd11.prod.outlook.com (2603:10b6:806:1bb::26)
- by SA1PR12MB7248.namprd12.prod.outlook.com (2603:10b6:806:2be::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.36; Sat, 15 Jun
- 2024 02:12:49 +0000
-Received: from SN1PEPF00036F41.namprd05.prod.outlook.com
- (2603:10b6:806:1bb:cafe::b5) by SA0PR11CA0171.outlook.office365.com
- (2603:10b6:806:1bb::26) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7677.26 via Frontend
- Transport; Sat, 15 Jun 2024 02:12:49 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- SN1PEPF00036F41.mail.protection.outlook.com (10.167.248.25) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7677.15 via Frontend Transport; Sat, 15 Jun 2024 02:12:49 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Fri, 14 Jun
- 2024 19:12:37 -0700
-Received: from [10.110.48.28] (10.126.231.35) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Fri, 14 Jun
- 2024 19:12:36 -0700
-Message-ID: <722af60d-efde-48f7-b521-657c25f68195@nvidia.com>
-Date: Fri, 14 Jun 2024 19:12:36 -0700
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cnfIb0C7"
+Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-4e1c721c040so997028e0c.3
+        for <patches@lists.linux.dev>; Fri, 14 Jun 2024 23:47:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1718434030; x=1719038830; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=y4RbldOmyuB3cQWDkIPG/+2f11O33ZLaDT0kxFu1pIc=;
+        b=cnfIb0C7od+MrSgRQ4+p+HuB5JKvuLdd5N4QLuFSQW3U7XqGoBJaFnXXbtCbN2nsTM
+         09YIGuoebnbNsBMOCwoY1u0iB3CfTmtJPuFccoocq+hVm+o1vFsmXaAaMZeu260nbGU6
+         1Je49T8FjfzBPADpQ4L9lBKFb64G65f5rCrC838jbodL3Qg0tLfN+vohjyeASqXgyrTK
+         0oQ80RUibBgdKTOfyyC/ss2lCMK1MYFmweabsiSVJ53Vxe2kCO1bS3aJD8Vpw9zPvc2m
+         qt2q5O/ZjjIms4q9X5ppWeMNeVyxWmaMOLB3a7iy1/tadmpl/OVZaYHM16hsAVS+Fg81
+         lR/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718434030; x=1719038830;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=y4RbldOmyuB3cQWDkIPG/+2f11O33ZLaDT0kxFu1pIc=;
+        b=lYNBfS9muKUW4pksxUODijJIF9Ym3p93QOuy2+rAG6CAK2QinjdwWzieLBHNmV09WJ
+         ShKazWOBGwzte8Gdi2D0PH7LS/n99r7Y1Q79B+1tArcxp5qjUAX/dM3jVgLzXwHfvwO+
+         HHQlsR3QN3prx4Cvu1i/L0joBvbMaLhNCW/NUQP5EWDn3rivYteB2noenXnhp1KnMzKr
+         ZpFWjJf9v5rjxUrN5bQOCFCaDsZ3sQbwOsao7Isv9OcOY6LWL8RBzzGQ3/GNl3g5atJj
+         jTPotnt0iKb7+hlOuxgJMFLMk4SNSjiNFehZOwEI/bjke7mgk6fX9w1IHsW9A64H7RMP
+         obKw==
+X-Forwarded-Encrypted: i=1; AJvYcCU+8iqlX6bAtbkn30LSKkpS5ljLd1i2ya29vnnduXZ83ZUGDKYTHWvYEE5RVmyl0oPJzMnN1EuIfvMLBe29XIYOGYi6wgoCKw==
+X-Gm-Message-State: AOJu0Yzb2hlljDEeUdD9CBflh4LzjKdU3Vg7kbFgB1LI0c/c/nYRlK7m
+	OiOE4ikAMHKa2QGJMgDfKHi3OJoG6FAE9QpojxOQskeE2TEyFvNS81KJZQOVrsS+hlOQ3LXBGS5
+	ud7Uztti3S9a7tEsux8XbOK/BeXUmzWK4BRo+9g==
+X-Google-Smtp-Source: AGHT+IG9UQzi+/x6u3a0CaY7fNyxTDm/VpR28UpB4I3qr8yCgEap85fJlxSVUf2uR9MBxivdeIvjkY1RaWQ/j/8Eb1c=
+X-Received: by 2002:a05:6122:2a0b:b0:4ec:f183:c9a8 with SMTP id
+ 71dfb90a1353d-4ee3f757840mr4716374e0c.9.1718434029824; Fri, 14 Jun 2024
+ 23:47:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v17 1/5] mm: add VM_DROPPABLE for designating always
- lazily freeable mappings
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, <linux-kernel@vger.kernel.org>,
-	<patches@lists.linux.dev>, <tglx@linutronix.de>
-CC: <linux-crypto@vger.kernel.org>, <linux-api@vger.kernel.org>,
-	<x86@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"Adhemerval Zanella Netto" <adhemerval.zanella@linaro.org>, Carlos O'Donell
-	<carlos@redhat.com>, Florian Weimer <fweimer@redhat.com>, Arnd Bergmann
-	<arnd@arndb.de>, Jann Horn <jannh@google.com>, Christian Brauner
-	<brauner@kernel.org>, David Hildenbrand <dhildenb@redhat.com>,
-	<linux-mm@kvack.org>
-References: <20240614190646.2081057-1-Jason@zx2c4.com>
- <20240614190646.2081057-2-Jason@zx2c4.com>
-Content-Language: en-US
-From: John Hubbard <jhubbard@nvidia.com>
-In-Reply-To: <20240614190646.2081057-2-Jason@zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: rnnvmail203.nvidia.com (10.129.68.9) To
- rnnvmail201.nvidia.com (10.129.68.8)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN1PEPF00036F41:EE_|SA1PR12MB7248:EE_
-X-MS-Office365-Filtering-Correlation-Id: ae0f2220-7528-4c6a-bfac-08dc8ce0a7a2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230037|36860700010|376011|7416011|1800799021|82310400023;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?Q1Y0cjZwclpTOVNSQjhlekREVUhtczZRTGxkaE9IdjROR3pIWnM1TFc3NFBm?=
- =?utf-8?B?MWc0d2h1aXFEWTlzYm85VS9YTWpEdHAvczZnVFBGY2l4c2FSM3NZdHQvU1pr?=
- =?utf-8?B?aDdaZ3FnS2ZCazdWT3ZwQkM2TytDZWd4SE5YSFhFd1pONitUQ2dWY05zNmYr?=
- =?utf-8?B?b1FsR01OZkJ3RkFWeW9kWHRNcEM1NERKQ1dGQmJXM1JvUzBqb2NseWJ4d0hP?=
- =?utf-8?B?SStiWmJJc3FvZkJvS1RSYmg3RmZVSmdoTWdGcU5NckNtTmE1T0pRZlp2aGx6?=
- =?utf-8?B?R25TcVB2bnRhbjYyTkF1T0JsOHJham9JWWZjOWttUWxzVzE5cDRKYjB0OURm?=
- =?utf-8?B?dHlDUTVjNlNwM1B5UU8zL0EwSFdRTHY3K2ZWOWM2eHF6azZjUDdIUDJ0UmFW?=
- =?utf-8?B?dEp5Vzc0UU1xdVhINkVZVHM2MWpPNm5jWEFHdHk4SDBCWDNGRWNYQk9oNW9D?=
- =?utf-8?B?cFAxaEJldDF4U0VNU3VLQUdubUdCYncvY1k4SjJxZnBsUXNRK3psbzZwRUdG?=
- =?utf-8?B?YjdYaEpJZjhGV3dCNnpla0xqVkczakpSdCtHZ1cvRXZqbGd2UFNjTWxiU0Zz?=
- =?utf-8?B?Q1JXeWt1Y2JvZm1UWm5GQ1E0dmxFVTFJVXdTekJJdHpSMHBHcEhtcWRnUzla?=
- =?utf-8?B?OVFZQk10Rlk1MWRkRE1Mc2x6TXVFYTdOSGNkMG1Lck01NmFpWEdyNVFOeDlO?=
- =?utf-8?B?ei9xVVgyYWloS2t1dGw3TXFGWmljRlU1czV4R0JiQkZIYzd3TE13TDd6WGcw?=
- =?utf-8?B?RmJjVVBBRmdmYUtjUkVwNU5lWDhISWdmOTd1dUY5MjNsejRKenBsRDc2aHpD?=
- =?utf-8?B?clU2MThPV0VZSjIvNTdab3JkcWdueXozbnZhYk54SEp0SWlla1MvK0xZTkJh?=
- =?utf-8?B?SmtNM3VicFJ1VTIzb2N1MzhpSDdwNWNZdDBDVTVFbG5MMHlPK3pCeXZjRm1z?=
- =?utf-8?B?V3pkYnlFVnlrVzlWS0E5ekIxaTNqWVV2QndVSUdrOW43dmdCbFJkSlpvRnB1?=
- =?utf-8?B?dDhVYnAreGFIa1B3WUoxaHo0eGFyazVmbEhpMjNLbkxhZ2NkaHBBcTJGNzk3?=
- =?utf-8?B?blh1MVBvU2l2dlFzRHFvNnFId3dsNEFHZjloY3FsZHUxYkw2cEZIM3J6a0l6?=
- =?utf-8?B?YnZ2bDd3eVhqYjlNQjhlTlpjeHBRYTI3eDRUdG5ZSnRSUDJhaHRlb1ZZRW80?=
- =?utf-8?B?WC9IR2d0Qkt5T3FWMGVtVXBmNER2TGpzSHNRL2J6ZEU1QmhnRGV6bVhNM1Zt?=
- =?utf-8?B?V0YvdE80dTZPOVA2NUFoQlREbncvWmFtVVp0bVNYOWVXLy8zT0xJN3lsc09t?=
- =?utf-8?B?U1NpdGFwZWY4aHZCb2dIczM5eE8yUHZNSEEzRU9XaW9ONW5YNjgwZXFCQUZR?=
- =?utf-8?B?c09lYWFRNGlMVHVWOTRBUDI2QWlrTDdBbjBtREE3eDJmSG03dlR2S3RlMFlD?=
- =?utf-8?B?U3FKS2tGNWMyaUUvVUF6b0tUMWJ3dE9IMkxFenhYZTE1SDl1NTVSaVdsR1BR?=
- =?utf-8?B?V2RYTmJaS2JZdEt4SWo3NWZ5NzVWaDZLVUg3QXlwUWpZcjNjdldpcHRZMFAz?=
- =?utf-8?B?M2RuZzlNeTJ5SFU4MzlweUlTbWllQUFlNzFpRnpOak1kbDMxZk1WV3dpdS8v?=
- =?utf-8?B?NjNPeXZVcUlZZVJIdzh2SXYvQlNDaUpGVzlzdWVocDI0ZHI5dzlKa0lHT0JZ?=
- =?utf-8?B?U0VMVy8zbENXQ09lMjM4WUx1dGJVaDRIVGhxS3hMSjAwOFFMb2o4cTZwb0VC?=
- =?utf-8?B?UkZodlVwbEhxLzlwUGkwQkxvMnUwMU1LYlczS2g1Rjh4M2JyZVJFTXdtKy9j?=
- =?utf-8?B?dnZtQm8wbWJQRXVLamlqR2pSUmpLaHZiREc1SThCVE5WUVo0VXF3QWtnUXlo?=
- =?utf-8?B?aDU3c25SRUJ3VEoyV0VvQWtoQjc5YnRmWFk3ckFUMEVOSUE9PQ==?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230037)(36860700010)(376011)(7416011)(1800799021)(82310400023);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Jun 2024 02:12:49.1229
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: ae0f2220-7528-4c6a-bfac-08dc8ce0a7a2
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SN1PEPF00036F41.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB7248
+References: <20240613113302.116811394@linuxfoundation.org>
+In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Sat, 15 Jun 2024 12:16:58 +0530
+Message-ID: <CA+G9fYvCQ1afo2s66UUDGMKGoTAe9BnONg8LqgzOnY_HC7FFHg@mail.gmail.com>
+Subject: Re: [PATCH 5.15 000/402] 5.15.161-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 6/14/24 12:06 PM, Jason A. Donenfeld wrote:
-...
-> diff --git a/mm/Kconfig b/mm/Kconfig
-> index b4cb45255a54..6cd65ea4b3ad 100644
-> --- a/mm/Kconfig
-> +++ b/mm/Kconfig
-> @@ -1056,6 +1056,9 @@ config ARCH_USES_HIGH_VMA_FLAGS
->   	bool
->   config ARCH_HAS_PKEYS
->   	bool
-> +config NEED_VM_DROPPABLE
-> +	select ARCH_USES_HIGH_VMA_FLAGS
+On Thu, 13 Jun 2024 at 17:58, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 5.15.161 release.
+> There are 402 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sat, 15 Jun 2024 11:31:50 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
+5.15.161-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-5.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Hi Jason!
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-The naming and use of NEED_VM_DROPPABLE are a little bit backwards. :)
-First of all, the name should probably be:
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-     HAVE_VM_DROPPABLE
+## Build
+* kernel: 5.15.161-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-5.15.y
+* git commit: 382eb0c7888246aec43f7bbb93ef43abf816ec32
+* git describe: v5.15.160-403-g382eb0c78882
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15=
+.160-403-g382eb0c78882
 
-...although that doesn't yet work here. And the reason it doesn't work
-yet is that the logic also needs to change: only the arch layers should
-be doing this:
+## Test Regressions (compared to v5.15.160)
 
-     select ARCH_USES_HIGH_VMA_FLAGS
+## Metric Regressions (compared to v5.15.160)
 
-If a feature does it, then the logic and dependency tree gets all weird
-and wrong.
+## Test Fixes (compared to v5.15.160)
 
-So:
+## Metric Fixes (compared to v5.15.160)
 
-a) 64-bit arches should do this part:
+## Test result summary
+total: 87886, pass: 70665, fail: 2514, skip: 14636, xfail: 71
 
-     select ARCH_USES_HIGH_VMA_FLAGS (already done, in most cases) select
-     HAVE_VM_DROPPABLE
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 104 total, 104 passed, 0 failed
+* arm64: 31 total, 31 passed, 0 failed
+* i386: 25 total, 25 passed, 0 failed
+* mips: 22 total, 22 passed, 0 failed
+* parisc: 3 total, 3 passed, 0 failed
+* powerpc: 24 total, 24 passed, 0 failed
+* riscv: 8 total, 8 passed, 0 failed
+* s390: 9 total, 9 passed, 0 failed
+* sh: 10 total, 10 passed, 0 failed
+* sparc: 6 total, 6 passed, 0 failed
+* x86_64: 27 total, 27 passed, 0 failed
 
-b) VDSO_GETRANDOM should depend on:
+## Test suites summary
+* boot
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-filesystems-epoll
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mm
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-watchdog
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libgpiod
+* log-parser-boot
+* log-parser-test
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-hugetlb
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-smoke
+* ltp-smoketest
+* ltp-syscalls
+* ltp-tracing
+* perf
+* rcutorture
 
-     HAVE_VM_DROPPABLE
-
-...and then you'll find that the uses of HAVE_VM_DROPPABLE read more
-like the pre-existing cases of other "HAVE_" items, too.
-
-
-
-thanks,
--- 
-John Hubbard
-NVIDIA
-
+--
+Linaro LKFT
+https://lkft.linaro.org
