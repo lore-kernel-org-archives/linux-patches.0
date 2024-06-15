@@ -1,42 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A0122097;
-	Sat, 15 Jun 2024 10:58:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC4974C89;
+	Sat, 15 Jun 2024 11:00:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718449091; cv=none; b=uenE51rbf33KJ0dbOm2CwVQj9WKKJqKshxUtk6xl8UibCVmuGdx6OVQL7Uj0FMfx9DOshVa/bLSYEmMOzkP2X4sfiqG3kisUEl02rJ0I17wyUIWsSSg4hFdPE8DMOp1YQegJJL17oK9t1TdgTOlE+k7+NKLrcU8nAvTSl0Ogklo=
+	t=1718449221; cv=none; b=dxS6BmccZqmxCwBXX5eHGD1q9y7XarTOn1aiPsBV+I0mRNQxXFOwwHhPtAUu1+caaAfT+8MDNGvgwDfqOLt9kH8YU8AkgFWOIerwRb8LyrVdn4LX0iD1i2aY7WFuOoMDHLoyRQHyuSu9WyKaVd1d2JBxstQwKdWeL2muCTBgxa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718449091; c=relaxed/simple;
-	bh=g7IPgHNS1h3LS5lVbaExUnTikfLbPytBrEMmU/FTdko=;
+	s=arc-20240116; t=1718449221; c=relaxed/simple;
+	bh=3HB0saeYYAYpcpbConAzAngu+NHabLUV8Vxt1hPYagw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lHQgKKupMW5ENP1vEHjCih21o66xFfdte2g8iTgZ2cccekFAMm5yOoKjGkQjY9YNjTcCDt1nZ/gqoM7Tm2dAfjj3lhEwsxKlVgyc0/sbOZhebLeTyFNpUKnY9ZXhcNObviN+h98VmE78J0GoNhJlo9wc2M62WQNDwtqoS+gWwBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G0T+MsEs; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=pgEa4rYqqwyiHALrw1xUZs/t4ISBExdVNGMBMlxfaiLpvUgZVtlwx5y2rdmlvVqtefIoCTzNzYMyc0f+ds4AAw8D5Lcu0rRcec9dch5Ufo1zsursz8CaqSOcYahrt5DuRhvxRqHuZ3CAM6vBw9oRfgaXcnj2TM6ArOYNZzvuGU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VP6NPZBN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G0T+MsEs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48DF7C116B1;
-	Sat, 15 Jun 2024 10:58:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VP6NPZBN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA912C116B1;
+	Sat, 15 Jun 2024 11:00:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718449090;
-	bh=g7IPgHNS1h3LS5lVbaExUnTikfLbPytBrEMmU/FTdko=;
+	s=korg; t=1718449221;
+	bh=3HB0saeYYAYpcpbConAzAngu+NHabLUV8Vxt1hPYagw=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=G0T+MsEsv5z0vFZmtWxcCOi3Qg5SytEtbNE0gjMEFHYU7tGne8hPP4/zo2PeVhSzD
-	 erZFg3oFWdGNvVbuquJ07YR5MPpbMuhA0bzKlRIiMFzX3wB+Ituw5Ok+5Jq9zVvGBV
-	 BebxSS+M1Jk0eBDO0TA8BrDC+jDshmQumpHJLgOI=
-Date: Sat, 15 Jun 2024 12:58:07 +0200
+	b=VP6NPZBNeZTg14E+XDA1TY7n6JlW6rjALKM3oAudvH3yUfwSvwaRFFG3ukjWK+Cf4
+	 ZnsxRDA8vSZsG3ginB55C9+4WYmIEyUlvoFLKNv8QcvkLnFF3BGW0TuqvRd280UWHB
+	 M5/7S/J88hexKmfBJ6jKCq4Mz7HI2f8ib7tYCqx8=
+Date: Sat, 15 Jun 2024 13:00:18 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Ken Milmore <ken.milmore@gmail.com>
-Cc: Alexey Khoroshilov <khoroshilov@ispras.ru>, stable@vger.kernel.org,
-	patches@lists.linux.dev, Heiner Kallweit <hkallweit1@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	"lvc-project@linuxtesting.org" <lvc-project@linuxtesting.org>
-Subject: Re: [PATCH 5.10 004/317] r8169: Fix possible ring buffer corruption
- on fragmented Tx packets.
-Message-ID: <2024061559-skirmish-cassette-fb84@gregkh>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com, broonie@kernel.org,
+	Anders Roxell <anders.roxell@linaro.org>,
+	Guo Ren <guoren@linux.alibaba.com>, Guo Ren <guoren@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	clang-built-linux <llvm@lists.linux.dev>
+Subject: Re: [PATCH 5.10 000/317] 5.10.219-rc1 review
+Message-ID: <2024061545-cold-fancied-1bd0@gregkh>
 References: <20240613113247.525431100@linuxfoundation.org>
- <20240613113247.702462647@linuxfoundation.org>
- <9592add5-b9e3-d14d-dd1b-2ef3d1057dd1@ispras.ru>
- <ae35864a-9a76-4e9e-8a33-2d141f475d4d@gmail.com>
+ <CA+G9fYvnVJi1RFhO5f6ZH2mpagZ6jcEdoQAxnSBxWPHsEVQwYg@mail.gmail.com>
+ <20240613223523.GB1849801@thelio-3990X>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -45,65 +51,95 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ae35864a-9a76-4e9e-8a33-2d141f475d4d@gmail.com>
+In-Reply-To: <20240613223523.GB1849801@thelio-3990X>
 
-On Thu, Jun 13, 2024 at 09:27:18PM +0100, Ken Milmore wrote:
-> On 13/06/2024 18:21, Alexey Khoroshilov wrote:
-> > On 13.06.2024 14:30, Greg Kroah-Hartman wrote:
-> >> 5.10-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > The patch is cleanly applied to 5.10, but it leads to uninit value
-> > access in rtl_tx_slots_avail().
-> > 
-> > 
-> > 	unsigned int frags;
-> > 	u32 opts[2];
-> > 
-> > 	txd_first = tp->TxDescArray + entry;
-> > 
-> > 	if (unlikely(!rtl_tx_slots_avail(tp, frags))) {
-> >                                              ^^^^^ - USE OF UNINIT VALUE
-> > 		if (net_ratelimit())
-> > 			netdev_err(dev, "BUG! Tx Ring full when queue awake!\n");
-> > 		goto err_stop_0;
-> > 	}
-> > 
-> > 	opts[1] = rtl8169_tx_vlan_tag(skb);
-> > 	opts[0] = 0;
-> > 
-> > 	if (!rtl_chip_supports_csum_v2(tp))
-> > 		rtl8169_tso_csum_v1(skb, opts);
-> > 	else if (!rtl8169_tso_csum_v2(tp, skb, opts))
-> > 		goto err_dma_0;
-> > 
-> > 	if (unlikely(rtl8169_tx_map(tp, opts, skb_headlen(skb), skb->data,
-> > 				    entry, false)))
-> > 		goto err_dma_0;
-> > 
-> > 	txd_first = tp->TxDescArray + entry;
-> > 
-> > 	frags = skb_shinfo(skb)->nr_frags;
-> >         ^^^^^^   - INITIALIZATION IS HERE AFTER THE PATCH
-> > 
-> > There is no such problem in upstream because rtl_tx_slots_avail() has no
-> > nr_frags argument there.
+On Thu, Jun 13, 2024 at 03:35:23PM -0700, Nathan Chancellor wrote:
+> On Thu, Jun 13, 2024 at 08:43:41PM +0530, Naresh Kamboju wrote:
+> > On Thu, 13 Jun 2024 at 17:43, Greg Kroah-Hartman
+> > <gregkh@linuxfoundation.org> wrote:
+> > >
+> > > This is the start of the stable review cycle for the 5.10.219 release.
+> > > There are 317 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, please
+> > > let me know.
+> > >
+> > > Responses should be made by Sat, 15 Jun 2024 11:31:50 +0000.
+> > > Anything received after that time might be too late.
+> > >
+> > > The whole patch series can be found in one patch at:
+> > >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.219-rc1.gz
+> > > or in the git tree and branch at:
+> > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> > > and the diffstat can be found below.
+> > >
+> > > thanks,
+> > >
+> > > greg k-h
 > > 
 > > 
-> > Found by Linux Verification Center (linuxtesting.org) with SVACE.
+> > The following build errors are noticed on riscv with clang-18 toolchain
+> > but gcc-12 builds pass.
 > > 
-> > --
-> > Alexey Khoroshilov
-> > Linux Verification Center, ISPRAS
+> > However, compared with older releases this is a build regression on
+> > stable-rc 5.10.
+> > 
+> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> > 
+> > riscv:
+> >  defconfig - gcc-12 - PASS
+> >  defconfig - clang-18 - FAILED
+> > 
+> > Build error:
+> > ------
+> > arch/riscv/kernel/stacktrace.c:75:52: error: incompatible pointer to
+> > integer conversion passing 'void *' to parameter of type 'unsigned
+> > long' [-Wint-conversion]
+> >    75 |                                 if
+> > (unlikely(!__kernel_text_address(pc) || !fn(arg, pc)))
+> >       |
+> >                 ^~~
+> > include/linux/compiler.h:78:42: note: expanded from macro 'unlikely'
+> >    78 | # define unlikely(x)    __builtin_expect(!!(x), 0)
+> >       |                                             ^
+> > arch/riscv/kernel/stacktrace.c:75:57: error: incompatible integer to
+> > pointer conversion passing 'unsigned long' to parameter of type 'void
+> > *' [-Wint-conversion]
+> >    75 |                                 if
+> > (unlikely(!__kernel_text_address(pc) || !fn(arg, pc)))
+> >       |
+> >                      ^~
+> > include/linux/compiler.h:78:42: note: expanded from macro 'unlikely'
+> >    78 | # define unlikely(x)    __builtin_expect(!!(x), 0)
+> >       |                                             ^
+> > 2 errors generated.
+> > make[3]: *** [scripts/Makefile.build:286:
+> > arch/riscv/kernel/stacktrace.o] Error 1
 > 
-> Looks like the frags argument was removed in commit 83c317d7b36bb (r8169: remove nr_frags argument from rtl_tx_slots_avail), which first appears in linux-5.11.
+> It looks like either commit 9dd97064e21f ("riscv: Make stack walk
+> callback consistent with generic code") should be applied with the
+> straight from upstream copy of commit 7ecdadf7f8c6 ("riscv: stacktrace:
+> Make walk_stackframe cross pt_regs frame") or the latter commit's 5.10
+> backport should be modified to match the linux-5.10.y order of the
+> arguments:
 > 
-> I dare say it would be safe to replace
->  	if (unlikely(!rtl_tx_slots_avail(tp, frags))) {
-> with
->  	if (unlikely(!rtl_tx_slots_avail(tp, MAX_SKB_FRAGS))) {
-> 
-> Best wait for Heiner to confirm though.
+> diff --git a/arch/riscv/kernel/stacktrace.c b/arch/riscv/kernel/stacktrace.c
+> index c38b20caad7c..010e4c881c8b 100644
+> --- a/arch/riscv/kernel/stacktrace.c
+> +++ b/arch/riscv/kernel/stacktrace.c
+> @@ -72,7 +72,7 @@ void notrace walk_stackframe(struct task_struct *task, struct pt_regs *regs,
+>  			pc = ftrace_graph_ret_addr(current, NULL, frame->ra,
+>  						   &frame->ra);
+>  			if (pc == (unsigned long)ret_from_exception) {
+> -				if (unlikely(!__kernel_text_address(pc) || !fn(arg, pc)))
+> +				if (unlikely(!__kernel_text_address(pc) || !fn(pc, arg)))
+>  					break;
+>  
+>  				pc = ((struct pt_regs *)sp)->epc;
 
-I'll just drop this commit for now, thanks.
+I'll just drop these riscv patches from 5.10.y, as odds are, no one is
+using that arch in that old tree anymore.  And if they are, they can
+send working patches :)
+
+thanks,
 
 greg k-h
