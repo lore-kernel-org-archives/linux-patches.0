@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E625D1AAE2F;
-	Tue, 18 Jun 2024 13:14:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78DD41AAE2E;
+	Tue, 18 Jun 2024 13:14:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716480; cv=none; b=AZmMSiFhydQn1w6iWD6eKYkT9iFTGR5JOvkpVq60+WOl3FALu1J5yHFrW3NahK70iIA4zLcknrMaLbY315kEThyLpWP0NoCMqy6rBWMBD2rt6eGtn3dXtomu/4WJ3VKMYd+Ox3oA0PeczPdJ0XUKynkagV9G9Jx5q+Eo7Z2lMhE=
+	t=1718716487; cv=none; b=MACOFWrXMcehKQgeb0nmNJn0mcDMONWDkLsHCU+cHp61ET+giX5jdmlvfMarIt+zE0sLlqPwSHJLVrv+kvdhSu8WNaDx3YwuHGpdKxAOjKKhKCCPikaIMmt02Dqd63WA0D/6MT+6qL1T4Sg+wUwUCK5EPZyUTitQWbbbtvROy+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716480; c=relaxed/simple;
-	bh=a1Vw4ErXoAJ1T/m+wHMyPjRkt4zgz68fH6pUPaYP5mY=;
+	s=arc-20240116; t=1718716487; c=relaxed/simple;
+	bh=l1DII5SD6zkSiedY327DL1+XBn5zpi60Iq3dbco6PKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eRwSbGlzficaTUsHA3ZEreZs9W+M1cCQSrkw52UD/TypI6uAAmBy/ooc1mwQO4svyuCehOD6UQgGwBRhNm21oxCyx4ny7aH905/YnCfVe3MaTXwJ533l7lfX9azbz2XDtcJOK6YohUvauST2sW8Xl4NeO/BHRwtNfTH9PUvG77w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ziKBFqXr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QHTBR+11+RqVxFZT+SaodAsDfKj05CNXUL29C2c978IN234FSa6b7rq4623YDcxwVc72PSnNOxuEvw9+cZK/MY2fm3UmEe9jSQhNyPhfQDF4WkTr34ouSrXUMLDA25OkkiQtZ9iUdBuTfbAniGEbbv7dVWShZCxnenCD1KMC0ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p5ZZUyZr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ziKBFqXr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3509C3277B;
-	Tue, 18 Jun 2024 13:14:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p5ZZUyZr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00E8AC3277B;
+	Tue, 18 Jun 2024 13:14:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716479;
-	bh=a1Vw4ErXoAJ1T/m+wHMyPjRkt4zgz68fH6pUPaYP5mY=;
+	s=korg; t=1718716487;
+	bh=l1DII5SD6zkSiedY327DL1+XBn5zpi60Iq3dbco6PKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ziKBFqXrAj1rtkziwms5tMEJsAS3VxCghiX00Ls9+ypxzOgAY7CVmGBQsp7e6KoWU
-	 vyoawksLHxmzyYxlO8m/igm43fjmNriw5Giu0axXn2rfKmp0vVv+rMI3gw/o1up13M
-	 /NeplTUHcLIA2q9SC5r177CWJjJ1UphXYmDmd0Fo=
+	b=p5ZZUyZrJxGh4liP8QQt7rs0qvWfq3D7/AAdnFr0aUhu1fCKlIKwX+tILZT5PvNtf
+	 akMnt+1ya4EmIK3xiiE7brsUA2YkPULT46IGgrZYW8MF93jLLNzxbe5R166hiRjgWh
+	 ApRPhUvTeqCy4v/xojVxNHOvrfKlorRTCk7qmuV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	ChenXiaoSong <chenxiaosong2@huawei.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 661/770] nfsd: use DEFINE_SHOW_ATTRIBUTE to define nfsd_reply_cache_stats_fops
-Date: Tue, 18 Jun 2024 14:38:34 +0200
-Message-ID: <20240618123432.800359337@linuxfoundation.org>
+Subject: [PATCH 5.10 662/770] nfsd: use DEFINE_SHOW_ATTRIBUTE to define nfsd_file_cache_stats_fops
+Date: Tue, 18 Jun 2024 14:38:35 +0200
+Message-ID: <20240618123432.839037349@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,92 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 From: ChenXiaoSong <chenxiaosong2@huawei.com>
 
-[ Upstream commit 64776611a06322b99386f8dfe3b3ba1aa0347a38 ]
+[ Upstream commit 1342f9dd3fc219089deeb2620f6790f19b4129b1 ]
 
 Use DEFINE_SHOW_ATTRIBUTE helper macro to simplify the code.
 
-nfsd_net is converted from seq_file->file instead of seq_file->private in
-nfsd_reply_cache_stats_show().
-
 Signed-off-by: ChenXiaoSong <chenxiaosong2@huawei.com>
-[ cel: reduce line length ]
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/cache.h    |  2 +-
- fs/nfsd/nfscache.c | 13 +++----------
- fs/nfsd/nfsctl.c   | 10 +++-------
- 3 files changed, 7 insertions(+), 18 deletions(-)
+ fs/nfsd/filecache.c | 7 +------
+ fs/nfsd/filecache.h | 2 +-
+ fs/nfsd/nfsctl.c    | 9 ++-------
+ 3 files changed, 4 insertions(+), 14 deletions(-)
 
-diff --git a/fs/nfsd/cache.h b/fs/nfsd/cache.h
-index 65c331f75e9c7..f21259ead64bb 100644
---- a/fs/nfsd/cache.h
-+++ b/fs/nfsd/cache.h
-@@ -84,6 +84,6 @@ int	nfsd_reply_cache_init(struct nfsd_net *);
- void	nfsd_reply_cache_shutdown(struct nfsd_net *);
- int	nfsd_cache_lookup(struct svc_rqst *);
- void	nfsd_cache_update(struct svc_rqst *, int, __be32 *);
--int	nfsd_reply_cache_stats_open(struct inode *, struct file *);
-+int	nfsd_reply_cache_stats_show(struct seq_file *m, void *v);
- 
- #endif /* NFSCACHE_H */
-diff --git a/fs/nfsd/nfscache.c b/fs/nfsd/nfscache.c
-index 7da88bdc0d6c3..2b5417e06d80d 100644
---- a/fs/nfsd/nfscache.c
-+++ b/fs/nfsd/nfscache.c
-@@ -603,9 +603,10 @@ nfsd_cache_append(struct svc_rqst *rqstp, struct kvec *data)
+diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
+index 55478d411e5a0..fa8e1546e0206 100644
+--- a/fs/nfsd/filecache.c
++++ b/fs/nfsd/filecache.c
+@@ -1211,7 +1211,7 @@ nfsd_file_create(struct svc_rqst *rqstp, struct svc_fh *fhp,
   * scraping this file for info should test the labels to ensure they're
   * getting the correct field.
   */
--static int nfsd_reply_cache_stats_show(struct seq_file *m, void *v)
-+int nfsd_reply_cache_stats_show(struct seq_file *m, void *v)
+-static int nfsd_file_cache_stats_show(struct seq_file *m, void *v)
++int nfsd_file_cache_stats_show(struct seq_file *m, void *v)
  {
--	struct nfsd_net *nn = m->private;
-+	struct nfsd_net *nn = net_generic(file_inode(m->file)->i_sb->s_fs_info,
-+					  nfsd_net_id);
- 
- 	seq_printf(m, "max entries:           %u\n", nn->max_drc_entries);
- 	seq_printf(m, "num entries:           %u\n",
-@@ -625,11 +626,3 @@ static int nfsd_reply_cache_stats_show(struct seq_file *m, void *v)
- 	seq_printf(m, "cachesize at longest:  %u\n", nn->longest_chain_cachesize);
+ 	unsigned long releases = 0, pages_flushed = 0, evictions = 0;
+ 	unsigned long hits = 0, acquisitions = 0;
+@@ -1258,8 +1258,3 @@ static int nfsd_file_cache_stats_show(struct seq_file *m, void *v)
+ 	seq_printf(m, "pages flushed: %lu\n", pages_flushed);
  	return 0;
  }
 -
--int nfsd_reply_cache_stats_open(struct inode *inode, struct file *file)
+-int nfsd_file_cache_stats_open(struct inode *inode, struct file *file)
 -{
--	struct nfsd_net *nn = net_generic(file_inode(file)->i_sb->s_fs_info,
--								nfsd_net_id);
--
--	return single_open(file, nfsd_reply_cache_stats_show, nn);
+-	return single_open(file, nfsd_file_cache_stats_show, NULL);
 -}
+diff --git a/fs/nfsd/filecache.h b/fs/nfsd/filecache.h
+index 8e8c0c47d67df..357832bac736b 100644
+--- a/fs/nfsd/filecache.h
++++ b/fs/nfsd/filecache.h
+@@ -60,5 +60,5 @@ __be32 nfsd_file_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 		  unsigned int may_flags, struct nfsd_file **nfp);
+ __be32 nfsd_file_create(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 		  unsigned int may_flags, struct nfsd_file **nfp);
+-int	nfsd_file_cache_stats_open(struct inode *, struct file *);
++int nfsd_file_cache_stats_show(struct seq_file *m, void *v);
+ #endif /* _FS_NFSD_FILECACHE_H */
 diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
-index 3ed0cfdb0c0b5..1983f4f2908d9 100644
+index 1983f4f2908d9..6a29bcfc93909 100644
 --- a/fs/nfsd/nfsctl.c
 +++ b/fs/nfsd/nfsctl.c
-@@ -204,12 +204,7 @@ static const struct file_operations pool_stats_operations = {
- 	.release	= nfsd_pool_stats_release,
- };
+@@ -206,12 +206,7 @@ static const struct file_operations pool_stats_operations = {
  
--static const struct file_operations reply_cache_stats_operations = {
--	.open		= nfsd_reply_cache_stats_open,
+ DEFINE_SHOW_ATTRIBUTE(nfsd_reply_cache_stats);
+ 
+-static const struct file_operations filecache_ops = {
+-	.open		= nfsd_file_cache_stats_open,
 -	.read		= seq_read,
 -	.llseek		= seq_lseek,
 -	.release	= single_release,
 -};
-+DEFINE_SHOW_ATTRIBUTE(nfsd_reply_cache_stats);
++DEFINE_SHOW_ATTRIBUTE(nfsd_file_cache_stats);
  
- static const struct file_operations filecache_ops = {
- 	.open		= nfsd_file_cache_stats_open,
-@@ -1354,7 +1349,8 @@ static int nfsd_fill_super(struct super_block *sb, struct fs_context *fc)
- 		[NFSD_Threads] = {"threads", &transaction_ops, S_IWUSR|S_IRUSR},
- 		[NFSD_Pool_Threads] = {"pool_threads", &transaction_ops, S_IWUSR|S_IRUSR},
- 		[NFSD_Pool_Stats] = {"pool_stats", &pool_stats_operations, S_IRUGO},
--		[NFSD_Reply_Cache_Stats] = {"reply_cache_stats", &reply_cache_stats_operations, S_IRUGO},
-+		[NFSD_Reply_Cache_Stats] = {"reply_cache_stats",
-+					&nfsd_reply_cache_stats_fops, S_IRUGO},
- 		[NFSD_Versions] = {"versions", &transaction_ops, S_IWUSR|S_IRUSR},
+ /*----------------------------------------------------------------------------*/
+ /*
+@@ -1355,7 +1350,7 @@ static int nfsd_fill_super(struct super_block *sb, struct fs_context *fc)
  		[NFSD_Ports] = {"portlist", &transaction_ops, S_IWUSR|S_IRUGO},
  		[NFSD_MaxBlkSize] = {"max_block_size", &transaction_ops, S_IWUSR|S_IRUGO},
+ 		[NFSD_MaxConnections] = {"max_connections", &transaction_ops, S_IWUSR|S_IRUGO},
+-		[NFSD_Filecache] = {"filecache", &filecache_ops, S_IRUGO},
++		[NFSD_Filecache] = {"filecache", &nfsd_file_cache_stats_fops, S_IRUGO},
+ #if defined(CONFIG_SUNRPC_GSS) || defined(CONFIG_SUNRPC_GSS_MODULE)
+ 		[NFSD_SupportedEnctypes] = {"supported_krb5_enctypes",
+ 					&supported_enctypes_fops, S_IRUGO},
 -- 
 2.43.0
 
