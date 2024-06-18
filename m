@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F735156C7C;
-	Tue, 18 Jun 2024 13:01:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B8913AA41;
+	Tue, 18 Jun 2024 13:01:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715689; cv=none; b=FHyb366B70BzEL2dyq35gpTRKv2NZupA7/YypcpgTw3yMx24iPKHEGUlzvhSx0EEU2r93TrT5Gsz/Sy6syPC5dNh0HSfNFiMXzVGIi+/Mr1XSycoXpZezcuB/lcRef0Yn6KXa5NjV6ssr3jKghBBisaTKXAPPrulHbxt8Pfu5QA=
+	t=1718715692; cv=none; b=QbTlITh+A8954lEBOR80L3yJinxoFqG2PSNt4MRbtnGVSIeozF5C2WeUsuTQXzRbFZGtMSul8fRXeyHWAyvfB4jLvljKJSyxZJNZKzs+qFnlMgqKvzzRELWBIbNDgsaDUpVBDHTk8WuhrmnJ/6K9Dw3OoUWTU09Kw27fwrpIpEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715689; c=relaxed/simple;
-	bh=1Y6KfMbGTgUwmHRs+QqTmX36JtuLI30tqx9xQk+bXXU=;
+	s=arc-20240116; t=1718715692; c=relaxed/simple;
+	bh=hpzwZi75OmDsxCgWynR54Yn1GEbXA8pSPYOLSdaZIxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HtYI2So04WwwYY2HELoe9npuo0J+Ys02ohfBmU0Lj1+5Oqaq8e7oUed6wkIOfw9vpCDp+mvomc1kWUxfDOni4pRrIfrnzwyTB8QXrgdUg+Qk1NllU0SYXBS24mbh3BB+ouOzKkp8xEfPO9aNA3Zj5tjmoWP+v37hnuXhCQ0rupo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nv9lz41r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sZghDGdImz+mNHgrIsWhFdeppG/kKcYG9hZZxNDGGSrVYljIhhRpnyv+Jfm+gNtua/9wfRR8L0Sd1Zx9mFUF1Ie8TXHBDPZMrSUyBYH5hCl+OOChXFnSGDNb3pMNe6Cc1ERy/pm1X0wml1NbXOxF+z7RUqhoQjPdFLserCY6NEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SFoFs+gc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nv9lz41r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B776C3277B;
-	Tue, 18 Jun 2024 13:01:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SFoFs+gc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A08EBC3277B;
+	Tue, 18 Jun 2024 13:01:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715689;
-	bh=1Y6KfMbGTgUwmHRs+QqTmX36JtuLI30tqx9xQk+bXXU=;
+	s=korg; t=1718715692;
+	bh=hpzwZi75OmDsxCgWynR54Yn1GEbXA8pSPYOLSdaZIxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nv9lz41rsRMUrNYcPpLwp+mgWZufmPLxStkNndf0/x15BH3PSKgHU+reQsZBhNE6X
-	 pU5Y23SfnmTEek5K9oL/fltG8Oj/cxN+mUn21B2K99n/akWxJ9r5P+oQtjh18d2rbU
-	 oKrnQSJI69kaQTHccV2hppzDpvLh1kXn2C4QC29s=
+	b=SFoFs+gcBHahIrRjb5o3n0thmgeo1+RHd7ZBtD6eX+TzpfQcLB8y8RLKnOEhoUtec
+	 A0wqp4nf5V3sSAI3B7OL8YJuICM4souqXPXAEqJXimJIw6DiL+jr67LO+815sbEeoH
+	 JPFBCsPRkXDlQkE83V2WH1NTV77lynZzx1ppBB04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	"J. Bruce Fields" <bfields@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 394/770] NFSD: Have legacy NFSD WRITE decoders use xdr_stream_subsegment()
-Date: Tue, 18 Jun 2024 14:34:07 +0200
-Message-ID: <20240618123422.486612759@linuxfoundation.org>
+Subject: [PATCH 5.10 395/770] SUNRPC: Replace the "__be32 *p" parameter to .pc_decode
+Date: Tue, 18 Jun 2024 14:34:08 +0200
+Message-ID: <20240618123422.525130541@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,210 +53,845 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit dae9a6cab8009e526570e7477ce858dcdfeb256e ]
+[ Upstream commit 16c663642c7ec03cd4cee5fec520bb69e97babe4 ]
 
-Refactor.
+The passed-in value of the "__be32 *p" parameter is now unused in
+every server-side XDR decoder, and can be removed.
 
-Now that the NFSv2 and NFSv3 XDR decoders have been converted to
-use xdr_streams, the WRITE decoder functions can use
-xdr_stream_subsegment() to extract the WRITE payload into its own
-xdr_buf, just as the NFSv4 WRITE XDR decoder currently does.
-
-That makes it possible to pass the first kvec, pages array + length,
-page_base, and total payload length via a single function parameter.
-
-The payload's page_base is not yet assigned or used, but will be in
-subsequent patches.
+Note also that there is a line in each decoder that sets up a local
+pointer to a struct xdr_stream. Passing that pointer from the
+dispatcher instead saves one line per decoder function.
 
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: J. Bruce Fields <bfields@redhat.com>
-[ cel: adjusted to apply to v5.10.y ]
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs3proc.c         |  3 +--
- fs/nfsd/nfs3xdr.c          | 12 ++----------
- fs/nfsd/nfs4proc.c         |  3 +--
- fs/nfsd/nfsproc.c          |  3 +--
- fs/nfsd/nfsxdr.c           |  9 +--------
- fs/nfsd/xdr.h              |  2 +-
- fs/nfsd/xdr3.h             |  2 +-
- include/linux/sunrpc/svc.h |  3 +--
- net/sunrpc/svc.c           | 11 ++++++-----
- 9 files changed, 15 insertions(+), 33 deletions(-)
+ fs/lockd/svc.c             |  3 +--
+ fs/lockd/xdr.c             | 27 +++++++++--------------
+ fs/lockd/xdr4.c            | 27 +++++++++--------------
+ fs/nfsd/nfs2acl.c          | 12 +++++-----
+ fs/nfsd/nfs3acl.c          |  8 +++----
+ fs/nfsd/nfs3xdr.c          | 45 +++++++++++++-------------------------
+ fs/nfsd/nfs4xdr.c          |  4 ++--
+ fs/nfsd/nfsd.h             |  3 ++-
+ fs/nfsd/nfssvc.c           |  7 +++---
+ fs/nfsd/nfsxdr.c           | 30 +++++++++----------------
+ fs/nfsd/xdr.h              | 21 +++++++++---------
+ fs/nfsd/xdr3.h             | 31 +++++++++++++-------------
+ fs/nfsd/xdr4.h             |  2 +-
+ include/linux/lockd/xdr.h  | 19 ++++++++--------
+ include/linux/lockd/xdr4.h | 19 ++++++++--------
+ include/linux/sunrpc/svc.h |  3 ++-
+ 16 files changed, 112 insertions(+), 149 deletions(-)
 
-diff --git a/fs/nfsd/nfs3proc.c b/fs/nfsd/nfs3proc.c
-index be1ed33e424e0..5abb5c8e2cd21 100644
---- a/fs/nfsd/nfs3proc.c
-+++ b/fs/nfsd/nfs3proc.c
-@@ -206,8 +206,7 @@ nfsd3_proc_write(struct svc_rqst *rqstp)
+diff --git a/fs/lockd/svc.c b/fs/lockd/svc.c
+index b632be3ad57b2..9a82471bda071 100644
+--- a/fs/lockd/svc.c
++++ b/fs/lockd/svc.c
+@@ -780,11 +780,10 @@ module_exit(exit_nlm);
+ static int nlmsvc_dispatch(struct svc_rqst *rqstp, __be32 *statp)
+ {
+ 	const struct svc_procedure *procp = rqstp->rq_procinfo;
+-	struct kvec *argv = rqstp->rq_arg.head;
+ 	struct kvec *resv = rqstp->rq_res.head;
  
- 	fh_copy(&resp->fh, &argp->fh);
- 	resp->committed = argp->stable;
--	nvecs = svc_fill_write_vector(rqstp, rqstp->rq_arg.pages,
--				      &argp->first, cnt);
-+	nvecs = svc_fill_write_vector(rqstp, &argp->payload);
- 	if (!nvecs) {
- 		resp->status = nfserr_io;
- 		goto out;
-diff --git a/fs/nfsd/nfs3xdr.c b/fs/nfsd/nfs3xdr.c
-index 3d37923afb06c..267e56f218af7 100644
---- a/fs/nfsd/nfs3xdr.c
-+++ b/fs/nfsd/nfs3xdr.c
-@@ -621,9 +621,6 @@ nfs3svc_decode_writeargs(struct svc_rqst *rqstp, __be32 *p)
- 	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
- 	struct nfsd3_writeargs *args = rqstp->rq_argp;
- 	u32 max_blocksize = svc_max_payload(rqstp);
--	struct kvec *head = rqstp->rq_arg.head;
--	struct kvec *tail = rqstp->rq_arg.tail;
--	size_t remaining;
+ 	svcxdr_init_decode(rqstp);
+-	if (!procp->pc_decode(rqstp, argv->iov_base))
++	if (!procp->pc_decode(rqstp, &rqstp->rq_arg_stream))
+ 		goto out_decode_err;
  
- 	if (!svcxdr_decode_nfs_fh3(xdr, &args->fh))
- 		return 0;
-@@ -641,17 +638,12 @@ nfs3svc_decode_writeargs(struct svc_rqst *rqstp, __be32 *p)
- 	/* request sanity */
- 	if (args->count != args->len)
- 		return 0;
--	remaining = head->iov_len + rqstp->rq_arg.page_len + tail->iov_len;
--	remaining -= xdr_stream_pos(xdr);
--	if (remaining < xdr_align_size(args->len))
--		return 0;
- 	if (args->count > max_blocksize) {
- 		args->count = max_blocksize;
- 		args->len = max_blocksize;
- 	}
--
--	args->first.iov_base = xdr->p;
--	args->first.iov_len = head->iov_len - xdr_stream_pos(xdr);
-+	if (!xdr_stream_subsegment(xdr, &args->payload, args->count))
-+		return 0;
+ 	*statp = procp->pc_func(rqstp);
+diff --git a/fs/lockd/xdr.c b/fs/lockd/xdr.c
+index 9235e60b17694..895f152221048 100644
+--- a/fs/lockd/xdr.c
++++ b/fs/lockd/xdr.c
+@@ -146,15 +146,14 @@ svcxdr_encode_testrply(struct xdr_stream *xdr, const struct nlm_res *resp)
+  */
  
+ int
+-nlmsvc_decode_void(struct svc_rqst *rqstp, __be32 *p)
++nlmsvc_decode_void(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
  	return 1;
  }
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index ebb6d8471e8d7..d2ee1ba7ddc65 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1034,8 +1034,7 @@ nfsd4_write(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
  
- 	write->wr_how_written = write->wr_stable_how;
- 
--	nvecs = svc_fill_write_vector(rqstp, write->wr_payload.pages,
--				      write->wr_payload.head, write->wr_buflen);
-+	nvecs = svc_fill_write_vector(rqstp, &write->wr_payload);
- 	WARN_ON_ONCE(nvecs > ARRAY_SIZE(rqstp->rq_vec));
- 
- 	status = nfsd_vfs_write(rqstp, &cstate->current_fh, nf,
-diff --git a/fs/nfsd/nfsproc.c b/fs/nfsd/nfsproc.c
-index 78bdfdc253fd3..5a84aed17e705 100644
---- a/fs/nfsd/nfsproc.c
-+++ b/fs/nfsd/nfsproc.c
-@@ -234,8 +234,7 @@ nfsd_proc_write(struct svc_rqst *rqstp)
- 		SVCFH_fmt(&argp->fh),
- 		argp->len, argp->offset);
- 
--	nvecs = svc_fill_write_vector(rqstp, rqstp->rq_arg.pages,
--				      &argp->first, cnt);
-+	nvecs = svc_fill_write_vector(rqstp, &argp->payload);
- 	if (!nvecs) {
- 		resp->status = nfserr_io;
- 		goto out;
-diff --git a/fs/nfsd/nfsxdr.c b/fs/nfsd/nfsxdr.c
-index 082449c7d0dbf..ddcc18adfeb1a 100644
---- a/fs/nfsd/nfsxdr.c
-+++ b/fs/nfsd/nfsxdr.c
-@@ -325,10 +325,7 @@ nfssvc_decode_writeargs(struct svc_rqst *rqstp, __be32 *p)
+ int
+-nlmsvc_decode_testargs(struct svc_rqst *rqstp, __be32 *p)
++nlmsvc_decode_testargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
  {
- 	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
- 	struct nfsd_writeargs *args = rqstp->rq_argp;
--	struct kvec *head = rqstp->rq_arg.head;
--	struct kvec *tail = rqstp->rq_arg.tail;
- 	u32 beginoffset, totalcount;
--	size_t remaining;
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nlm_args *argp = rqstp->rq_argp;
+ 	u32 exclusive;
+ 
+@@ -171,9 +170,8 @@ nlmsvc_decode_testargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nlmsvc_decode_lockargs(struct svc_rqst *rqstp, __be32 *p)
++nlmsvc_decode_lockargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nlm_args *argp = rqstp->rq_argp;
+ 	u32 exclusive;
+ 
+@@ -197,9 +195,8 @@ nlmsvc_decode_lockargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nlmsvc_decode_cancargs(struct svc_rqst *rqstp, __be32 *p)
++nlmsvc_decode_cancargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nlm_args *argp = rqstp->rq_argp;
+ 	u32 exclusive;
+ 
+@@ -218,9 +215,8 @@ nlmsvc_decode_cancargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nlmsvc_decode_unlockargs(struct svc_rqst *rqstp, __be32 *p)
++nlmsvc_decode_unlockargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nlm_args *argp = rqstp->rq_argp;
+ 
+ 	if (!svcxdr_decode_cookie(xdr, &argp->cookie))
+@@ -233,9 +229,8 @@ nlmsvc_decode_unlockargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nlmsvc_decode_res(struct svc_rqst *rqstp, __be32 *p)
++nlmsvc_decode_res(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nlm_res *resp = rqstp->rq_argp;
+ 
+ 	if (!svcxdr_decode_cookie(xdr, &resp->cookie))
+@@ -247,10 +242,10 @@ nlmsvc_decode_res(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nlmsvc_decode_reboot(struct svc_rqst *rqstp, __be32 *p)
++nlmsvc_decode_reboot(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nlm_reboot *argp = rqstp->rq_argp;
++	__be32 *p;
+ 	u32 len;
+ 
+ 	if (xdr_stream_decode_u32(xdr, &len) < 0)
+@@ -273,9 +268,8 @@ nlmsvc_decode_reboot(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nlmsvc_decode_shareargs(struct svc_rqst *rqstp, __be32 *p)
++nlmsvc_decode_shareargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nlm_args *argp = rqstp->rq_argp;
+ 	struct nlm_lock	*lock = &argp->lock;
+ 
+@@ -301,9 +295,8 @@ nlmsvc_decode_shareargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nlmsvc_decode_notify(struct svc_rqst *rqstp, __be32 *p)
++nlmsvc_decode_notify(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nlm_args *argp = rqstp->rq_argp;
+ 	struct nlm_lock	*lock = &argp->lock;
+ 
+diff --git a/fs/lockd/xdr4.c b/fs/lockd/xdr4.c
+index 98e957e4566c2..573c7d580a5e6 100644
+--- a/fs/lockd/xdr4.c
++++ b/fs/lockd/xdr4.c
+@@ -145,15 +145,14 @@ svcxdr_encode_testrply(struct xdr_stream *xdr, const struct nlm_res *resp)
+  */
+ 
+ int
+-nlm4svc_decode_void(struct svc_rqst *rqstp, __be32 *p)
++nlm4svc_decode_void(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+ 	return 1;
+ }
+ 
+ int
+-nlm4svc_decode_testargs(struct svc_rqst *rqstp, __be32 *p)
++nlm4svc_decode_testargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nlm_args *argp = rqstp->rq_argp;
+ 	u32 exclusive;
+ 
+@@ -170,9 +169,8 @@ nlm4svc_decode_testargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nlm4svc_decode_lockargs(struct svc_rqst *rqstp, __be32 *p)
++nlm4svc_decode_lockargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nlm_args *argp = rqstp->rq_argp;
+ 	u32 exclusive;
+ 
+@@ -196,9 +194,8 @@ nlm4svc_decode_lockargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nlm4svc_decode_cancargs(struct svc_rqst *rqstp, __be32 *p)
++nlm4svc_decode_cancargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nlm_args *argp = rqstp->rq_argp;
+ 	u32 exclusive;
+ 
+@@ -216,9 +213,8 @@ nlm4svc_decode_cancargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nlm4svc_decode_unlockargs(struct svc_rqst *rqstp, __be32 *p)
++nlm4svc_decode_unlockargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nlm_args *argp = rqstp->rq_argp;
+ 
+ 	if (!svcxdr_decode_cookie(xdr, &argp->cookie))
+@@ -231,9 +227,8 @@ nlm4svc_decode_unlockargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nlm4svc_decode_res(struct svc_rqst *rqstp, __be32 *p)
++nlm4svc_decode_res(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nlm_res *resp = rqstp->rq_argp;
+ 
+ 	if (!svcxdr_decode_cookie(xdr, &resp->cookie))
+@@ -245,10 +240,10 @@ nlm4svc_decode_res(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nlm4svc_decode_reboot(struct svc_rqst *rqstp, __be32 *p)
++nlm4svc_decode_reboot(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nlm_reboot *argp = rqstp->rq_argp;
++	__be32 *p;
+ 	u32 len;
+ 
+ 	if (xdr_stream_decode_u32(xdr, &len) < 0)
+@@ -271,9 +266,8 @@ nlm4svc_decode_reboot(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nlm4svc_decode_shareargs(struct svc_rqst *rqstp, __be32 *p)
++nlm4svc_decode_shareargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nlm_args *argp = rqstp->rq_argp;
+ 	struct nlm_lock	*lock = &argp->lock;
+ 
+@@ -299,9 +293,8 @@ nlm4svc_decode_shareargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nlm4svc_decode_notify(struct svc_rqst *rqstp, __be32 *p)
++nlm4svc_decode_notify(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nlm_args *argp = rqstp->rq_argp;
+ 	struct nlm_lock	*lock = &argp->lock;
+ 
+diff --git a/fs/nfsd/nfs2acl.c b/fs/nfsd/nfs2acl.c
+index 8703326fc1654..53f793c3606d6 100644
+--- a/fs/nfsd/nfs2acl.c
++++ b/fs/nfsd/nfs2acl.c
+@@ -186,9 +186,9 @@ static __be32 nfsacld_proc_access(struct svc_rqst *rqstp)
+  * XDR decode functions
+  */
+ 
+-static int nfsaclsvc_decode_getaclargs(struct svc_rqst *rqstp, __be32 *p)
++static int
++nfsaclsvc_decode_getaclargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd3_getaclargs *argp = rqstp->rq_argp;
+ 
+ 	if (!svcxdr_decode_fhandle(xdr, &argp->fh))
+@@ -199,9 +199,9 @@ static int nfsaclsvc_decode_getaclargs(struct svc_rqst *rqstp, __be32 *p)
+ 	return 1;
+ }
+ 
+-static int nfsaclsvc_decode_setaclargs(struct svc_rqst *rqstp, __be32 *p)
++static int
++nfsaclsvc_decode_setaclargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd3_setaclargs *argp = rqstp->rq_argp;
+ 
+ 	if (!svcxdr_decode_fhandle(xdr, &argp->fh))
+@@ -220,9 +220,9 @@ static int nfsaclsvc_decode_setaclargs(struct svc_rqst *rqstp, __be32 *p)
+ 	return 1;
+ }
+ 
+-static int nfsaclsvc_decode_accessargs(struct svc_rqst *rqstp, __be32 *p)
++static int
++nfsaclsvc_decode_accessargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd3_accessargs *args = rqstp->rq_argp;
  
  	if (!svcxdr_decode_fhandle(xdr, &args->fh))
- 		return 0;
-@@ -346,12 +343,8 @@ nfssvc_decode_writeargs(struct svc_rqst *rqstp, __be32 *p)
- 		return 0;
- 	if (args->len > NFSSVC_MAXBLKSIZE_V2)
- 		return 0;
--	remaining = head->iov_len + rqstp->rq_arg.page_len + tail->iov_len;
--	remaining -= xdr_stream_pos(xdr);
--	if (remaining < xdr_align_size(args->len))
-+	if (!xdr_stream_subsegment(xdr, &args->payload, args->len))
- 		return 0;
--	args->first.iov_base = xdr->p;
--	args->first.iov_len = head->iov_len - xdr_stream_pos(xdr);
+diff --git a/fs/nfsd/nfs3acl.c b/fs/nfsd/nfs3acl.c
+index 5e13e5f7f92b8..37c8fb184ca4d 100644
+--- a/fs/nfsd/nfs3acl.c
++++ b/fs/nfsd/nfs3acl.c
+@@ -125,9 +125,9 @@ static __be32 nfsd3_proc_setacl(struct svc_rqst *rqstp)
+  * XDR decode functions
+  */
  
+-static int nfs3svc_decode_getaclargs(struct svc_rqst *rqstp, __be32 *p)
++static int
++nfs3svc_decode_getaclargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd3_getaclargs *args = rqstp->rq_argp;
+ 
+ 	if (!svcxdr_decode_nfs_fh3(xdr, &args->fh))
+@@ -138,9 +138,9 @@ static int nfs3svc_decode_getaclargs(struct svc_rqst *rqstp, __be32 *p)
  	return 1;
  }
+ 
+-static int nfs3svc_decode_setaclargs(struct svc_rqst *rqstp, __be32 *p)
++static int
++nfs3svc_decode_setaclargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd3_setaclargs *argp = rqstp->rq_argp;
+ 
+ 	if (!svcxdr_decode_nfs_fh3(xdr, &argp->fh))
+diff --git a/fs/nfsd/nfs3xdr.c b/fs/nfsd/nfs3xdr.c
+index 267e56f218af7..5f744f03cda7c 100644
+--- a/fs/nfsd/nfs3xdr.c
++++ b/fs/nfsd/nfs3xdr.c
+@@ -557,18 +557,16 @@ void fill_post_wcc(struct svc_fh *fhp)
+  */
+ 
+ int
+-nfs3svc_decode_fhandleargs(struct svc_rqst *rqstp, __be32 *p)
++nfs3svc_decode_fhandleargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd_fhandle *args = rqstp->rq_argp;
+ 
+ 	return svcxdr_decode_nfs_fh3(xdr, &args->fh);
+ }
+ 
+ int
+-nfs3svc_decode_sattrargs(struct svc_rqst *rqstp, __be32 *p)
++nfs3svc_decode_sattrargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd3_sattrargs *args = rqstp->rq_argp;
+ 
+ 	return svcxdr_decode_nfs_fh3(xdr, &args->fh) &&
+@@ -577,18 +575,16 @@ nfs3svc_decode_sattrargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nfs3svc_decode_diropargs(struct svc_rqst *rqstp, __be32 *p)
++nfs3svc_decode_diropargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd3_diropargs *args = rqstp->rq_argp;
+ 
+ 	return svcxdr_decode_diropargs3(xdr, &args->fh, &args->name, &args->len);
+ }
+ 
+ int
+-nfs3svc_decode_accessargs(struct svc_rqst *rqstp, __be32 *p)
++nfs3svc_decode_accessargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd3_accessargs *args = rqstp->rq_argp;
+ 
+ 	if (!svcxdr_decode_nfs_fh3(xdr, &args->fh))
+@@ -600,9 +596,8 @@ nfs3svc_decode_accessargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nfs3svc_decode_readargs(struct svc_rqst *rqstp, __be32 *p)
++nfs3svc_decode_readargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd3_readargs *args = rqstp->rq_argp;
+ 
+ 	if (!svcxdr_decode_nfs_fh3(xdr, &args->fh))
+@@ -616,9 +611,8 @@ nfs3svc_decode_readargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nfs3svc_decode_writeargs(struct svc_rqst *rqstp, __be32 *p)
++nfs3svc_decode_writeargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd3_writeargs *args = rqstp->rq_argp;
+ 	u32 max_blocksize = svc_max_payload(rqstp);
+ 
+@@ -649,9 +643,8 @@ nfs3svc_decode_writeargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nfs3svc_decode_createargs(struct svc_rqst *rqstp, __be32 *p)
++nfs3svc_decode_createargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd3_createargs *args = rqstp->rq_argp;
+ 
+ 	if (!svcxdr_decode_diropargs3(xdr, &args->fh, &args->name, &args->len))
+@@ -674,9 +667,8 @@ nfs3svc_decode_createargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nfs3svc_decode_mkdirargs(struct svc_rqst *rqstp, __be32 *p)
++nfs3svc_decode_mkdirargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd3_createargs *args = rqstp->rq_argp;
+ 
+ 	return svcxdr_decode_diropargs3(xdr, &args->fh,
+@@ -685,9 +677,8 @@ nfs3svc_decode_mkdirargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nfs3svc_decode_symlinkargs(struct svc_rqst *rqstp, __be32 *p)
++nfs3svc_decode_symlinkargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd3_symlinkargs *args = rqstp->rq_argp;
+ 	struct kvec *head = rqstp->rq_arg.head;
+ 	struct kvec *tail = rqstp->rq_arg.tail;
+@@ -713,9 +704,8 @@ nfs3svc_decode_symlinkargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nfs3svc_decode_mknodargs(struct svc_rqst *rqstp, __be32 *p)
++nfs3svc_decode_mknodargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd3_mknodargs *args = rqstp->rq_argp;
+ 
+ 	if (!svcxdr_decode_diropargs3(xdr, &args->fh, &args->name, &args->len))
+@@ -742,9 +732,8 @@ nfs3svc_decode_mknodargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nfs3svc_decode_renameargs(struct svc_rqst *rqstp, __be32 *p)
++nfs3svc_decode_renameargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd3_renameargs *args = rqstp->rq_argp;
+ 
+ 	return svcxdr_decode_diropargs3(xdr, &args->ffh,
+@@ -754,9 +743,8 @@ nfs3svc_decode_renameargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nfs3svc_decode_linkargs(struct svc_rqst *rqstp, __be32 *p)
++nfs3svc_decode_linkargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd3_linkargs *args = rqstp->rq_argp;
+ 
+ 	return svcxdr_decode_nfs_fh3(xdr, &args->ffh) &&
+@@ -765,9 +753,8 @@ nfs3svc_decode_linkargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nfs3svc_decode_readdirargs(struct svc_rqst *rqstp, __be32 *p)
++nfs3svc_decode_readdirargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd3_readdirargs *args = rqstp->rq_argp;
+ 
+ 	if (!svcxdr_decode_nfs_fh3(xdr, &args->fh))
+@@ -784,9 +771,8 @@ nfs3svc_decode_readdirargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nfs3svc_decode_readdirplusargs(struct svc_rqst *rqstp, __be32 *p)
++nfs3svc_decode_readdirplusargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd3_readdirargs *args = rqstp->rq_argp;
+ 	u32 dircount;
+ 
+@@ -807,9 +793,8 @@ nfs3svc_decode_readdirplusargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nfs3svc_decode_commitargs(struct svc_rqst *rqstp, __be32 *p)
++nfs3svc_decode_commitargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd3_commitargs *args = rqstp->rq_argp;
+ 
+ 	if (!svcxdr_decode_nfs_fh3(xdr, &args->fh))
+diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
+index 899d961372c06..5ee5081c56637 100644
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -5423,14 +5423,14 @@ void nfsd4_release_compoundargs(struct svc_rqst *rqstp)
+ }
+ 
+ int
+-nfs4svc_decode_compoundargs(struct svc_rqst *rqstp, __be32 *p)
++nfs4svc_decode_compoundargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+ 	struct nfsd4_compoundargs *args = rqstp->rq_argp;
+ 
+ 	/* svcxdr_tmp_alloc */
+ 	args->to_free = NULL;
+ 
+-	args->xdr = &rqstp->rq_arg_stream;
++	args->xdr = xdr;
+ 	args->ops = args->iops;
+ 	args->rqstp = rqstp;
+ 
+diff --git a/fs/nfsd/nfsd.h b/fs/nfsd/nfsd.h
+index 9664303afdaf3..6e8ad5f9757c8 100644
+--- a/fs/nfsd/nfsd.h
++++ b/fs/nfsd/nfsd.h
+@@ -78,7 +78,8 @@ extern const struct seq_operations nfs_exports_op;
+  */
+ struct nfsd_voidargs { };
+ struct nfsd_voidres { };
+-int		nfssvc_decode_voidarg(struct svc_rqst *rqstp, __be32 *p);
++int		nfssvc_decode_voidarg(struct svc_rqst *rqstp,
++				      struct xdr_stream *xdr);
+ int		nfssvc_encode_voidres(struct svc_rqst *rqstp, __be32 *p);
+ 
+ /*
+diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
+index 373695cc62a7a..be1d656548cfe 100644
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -1004,7 +1004,6 @@ nfsd(void *vrqstp)
+ int nfsd_dispatch(struct svc_rqst *rqstp, __be32 *statp)
+ {
+ 	const struct svc_procedure *proc = rqstp->rq_procinfo;
+-	struct kvec *argv = &rqstp->rq_arg.head[0];
+ 	struct kvec *resv = &rqstp->rq_res.head[0];
+ 	__be32 *p;
+ 
+@@ -1015,7 +1014,7 @@ int nfsd_dispatch(struct svc_rqst *rqstp, __be32 *statp)
+ 	rqstp->rq_cachetype = proc->pc_cachetype;
+ 
+ 	svcxdr_init_decode(rqstp);
+-	if (!proc->pc_decode(rqstp, argv->iov_base))
++	if (!proc->pc_decode(rqstp, &rqstp->rq_arg_stream))
+ 		goto out_decode_err;
+ 
+ 	switch (nfsd_cache_lookup(rqstp)) {
+@@ -1065,13 +1064,13 @@ int nfsd_dispatch(struct svc_rqst *rqstp, __be32 *statp)
+ /**
+  * nfssvc_decode_voidarg - Decode void arguments
+  * @rqstp: Server RPC transaction context
+- * @p: buffer containing arguments to decode
++ * @xdr: XDR stream positioned at arguments to decode
+  *
+  * Return values:
+  *   %0: Arguments were not valid
+  *   %1: Decoding was successful
+  */
+-int nfssvc_decode_voidarg(struct svc_rqst *rqstp, __be32 *p)
++int nfssvc_decode_voidarg(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+ 	return 1;
+ }
+diff --git a/fs/nfsd/nfsxdr.c b/fs/nfsd/nfsxdr.c
+index ddcc18adfeb1a..08e899180ee43 100644
+--- a/fs/nfsd/nfsxdr.c
++++ b/fs/nfsd/nfsxdr.c
+@@ -273,18 +273,16 @@ svcxdr_encode_fattr(struct svc_rqst *rqstp, struct xdr_stream *xdr,
+  */
+ 
+ int
+-nfssvc_decode_fhandleargs(struct svc_rqst *rqstp, __be32 *p)
++nfssvc_decode_fhandleargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd_fhandle *args = rqstp->rq_argp;
+ 
+ 	return svcxdr_decode_fhandle(xdr, &args->fh);
+ }
+ 
+ int
+-nfssvc_decode_sattrargs(struct svc_rqst *rqstp, __be32 *p)
++nfssvc_decode_sattrargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd_sattrargs *args = rqstp->rq_argp;
+ 
+ 	return svcxdr_decode_fhandle(xdr, &args->fh) &&
+@@ -292,18 +290,16 @@ nfssvc_decode_sattrargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nfssvc_decode_diropargs(struct svc_rqst *rqstp, __be32 *p)
++nfssvc_decode_diropargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd_diropargs *args = rqstp->rq_argp;
+ 
+ 	return svcxdr_decode_diropargs(xdr, &args->fh, &args->name, &args->len);
+ }
+ 
+ int
+-nfssvc_decode_readargs(struct svc_rqst *rqstp, __be32 *p)
++nfssvc_decode_readargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd_readargs *args = rqstp->rq_argp;
+ 	u32 totalcount;
+ 
+@@ -321,9 +317,8 @@ nfssvc_decode_readargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nfssvc_decode_writeargs(struct svc_rqst *rqstp, __be32 *p)
++nfssvc_decode_writeargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd_writeargs *args = rqstp->rq_argp;
+ 	u32 beginoffset, totalcount;
+ 
+@@ -350,9 +345,8 @@ nfssvc_decode_writeargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nfssvc_decode_createargs(struct svc_rqst *rqstp, __be32 *p)
++nfssvc_decode_createargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd_createargs *args = rqstp->rq_argp;
+ 
+ 	return svcxdr_decode_diropargs(xdr, &args->fh,
+@@ -361,9 +355,8 @@ nfssvc_decode_createargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nfssvc_decode_renameargs(struct svc_rqst *rqstp, __be32 *p)
++nfssvc_decode_renameargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd_renameargs *args = rqstp->rq_argp;
+ 
+ 	return svcxdr_decode_diropargs(xdr, &args->ffh,
+@@ -373,9 +366,8 @@ nfssvc_decode_renameargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nfssvc_decode_linkargs(struct svc_rqst *rqstp, __be32 *p)
++nfssvc_decode_linkargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd_linkargs *args = rqstp->rq_argp;
+ 
+ 	return svcxdr_decode_fhandle(xdr, &args->ffh) &&
+@@ -384,9 +376,8 @@ nfssvc_decode_linkargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nfssvc_decode_symlinkargs(struct svc_rqst *rqstp, __be32 *p)
++nfssvc_decode_symlinkargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd_symlinkargs *args = rqstp->rq_argp;
+ 	struct kvec *head = rqstp->rq_arg.head;
+ 
+@@ -405,9 +396,8 @@ nfssvc_decode_symlinkargs(struct svc_rqst *rqstp, __be32 *p)
+ }
+ 
+ int
+-nfssvc_decode_readdirargs(struct svc_rqst *rqstp, __be32 *p)
++nfssvc_decode_readdirargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ {
+-	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd_readdirargs *args = rqstp->rq_argp;
+ 
+ 	if (!svcxdr_decode_fhandle(xdr, &args->fh))
 diff --git a/fs/nfsd/xdr.h b/fs/nfsd/xdr.h
-index c67ad02b9a028..863a35f24910a 100644
+index 863a35f24910a..19e281382bb98 100644
 --- a/fs/nfsd/xdr.h
 +++ b/fs/nfsd/xdr.h
-@@ -33,7 +33,7 @@ struct nfsd_writeargs {
- 	svc_fh			fh;
- 	__u32			offset;
- 	__u32			len;
--	struct kvec		first;
-+	struct xdr_buf		payload;
- };
+@@ -141,16 +141,17 @@ union nfsd_xdrstore {
+ #define NFS2_SVC_XDRSIZE	sizeof(union nfsd_xdrstore)
  
- struct nfsd_createargs {
+ 
+-int nfssvc_decode_fhandleargs(struct svc_rqst *, __be32 *);
+-int nfssvc_decode_sattrargs(struct svc_rqst *, __be32 *);
+-int nfssvc_decode_diropargs(struct svc_rqst *, __be32 *);
+-int nfssvc_decode_readargs(struct svc_rqst *, __be32 *);
+-int nfssvc_decode_writeargs(struct svc_rqst *, __be32 *);
+-int nfssvc_decode_createargs(struct svc_rqst *, __be32 *);
+-int nfssvc_decode_renameargs(struct svc_rqst *, __be32 *);
+-int nfssvc_decode_linkargs(struct svc_rqst *, __be32 *);
+-int nfssvc_decode_symlinkargs(struct svc_rqst *, __be32 *);
+-int nfssvc_decode_readdirargs(struct svc_rqst *, __be32 *);
++int nfssvc_decode_fhandleargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int nfssvc_decode_sattrargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int nfssvc_decode_diropargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int nfssvc_decode_readargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int nfssvc_decode_writeargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int nfssvc_decode_createargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int nfssvc_decode_renameargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int nfssvc_decode_linkargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int nfssvc_decode_symlinkargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int nfssvc_decode_readdirargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++
+ int nfssvc_encode_statres(struct svc_rqst *, __be32 *);
+ int nfssvc_encode_attrstatres(struct svc_rqst *, __be32 *);
+ int nfssvc_encode_diropres(struct svc_rqst *, __be32 *);
 diff --git a/fs/nfsd/xdr3.h b/fs/nfsd/xdr3.h
-index 933008382bbeb..712c117300cb7 100644
+index 712c117300cb7..60a8909205e5a 100644
 --- a/fs/nfsd/xdr3.h
 +++ b/fs/nfsd/xdr3.h
-@@ -40,7 +40,7 @@ struct nfsd3_writeargs {
- 	__u32			count;
- 	int			stable;
- 	__u32			len;
--	struct kvec		first;
-+	struct xdr_buf		payload;
- };
+@@ -265,21 +265,22 @@ union nfsd3_xdrstore {
  
- struct nfsd3_createargs {
+ #define NFS3_SVC_XDRSIZE		sizeof(union nfsd3_xdrstore)
+ 
+-int nfs3svc_decode_fhandleargs(struct svc_rqst *, __be32 *);
+-int nfs3svc_decode_sattrargs(struct svc_rqst *, __be32 *);
+-int nfs3svc_decode_diropargs(struct svc_rqst *, __be32 *);
+-int nfs3svc_decode_accessargs(struct svc_rqst *, __be32 *);
+-int nfs3svc_decode_readargs(struct svc_rqst *, __be32 *);
+-int nfs3svc_decode_writeargs(struct svc_rqst *, __be32 *);
+-int nfs3svc_decode_createargs(struct svc_rqst *, __be32 *);
+-int nfs3svc_decode_mkdirargs(struct svc_rqst *, __be32 *);
+-int nfs3svc_decode_mknodargs(struct svc_rqst *, __be32 *);
+-int nfs3svc_decode_renameargs(struct svc_rqst *, __be32 *);
+-int nfs3svc_decode_linkargs(struct svc_rqst *, __be32 *);
+-int nfs3svc_decode_symlinkargs(struct svc_rqst *, __be32 *);
+-int nfs3svc_decode_readdirargs(struct svc_rqst *, __be32 *);
+-int nfs3svc_decode_readdirplusargs(struct svc_rqst *, __be32 *);
+-int nfs3svc_decode_commitargs(struct svc_rqst *, __be32 *);
++int nfs3svc_decode_fhandleargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int nfs3svc_decode_sattrargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int nfs3svc_decode_diropargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int nfs3svc_decode_accessargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int nfs3svc_decode_readargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int nfs3svc_decode_writeargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int nfs3svc_decode_createargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int nfs3svc_decode_mkdirargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int nfs3svc_decode_mknodargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int nfs3svc_decode_renameargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int nfs3svc_decode_linkargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int nfs3svc_decode_symlinkargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int nfs3svc_decode_readdirargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int nfs3svc_decode_readdirplusargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int nfs3svc_decode_commitargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++
+ int nfs3svc_encode_getattrres(struct svc_rqst *, __be32 *);
+ int nfs3svc_encode_wccstat(struct svc_rqst *, __be32 *);
+ int nfs3svc_encode_lookupres(struct svc_rqst *, __be32 *);
+diff --git a/fs/nfsd/xdr4.h b/fs/nfsd/xdr4.h
+index 37af86e370cb3..c3e18efcd23b6 100644
+--- a/fs/nfsd/xdr4.h
++++ b/fs/nfsd/xdr4.h
+@@ -756,7 +756,7 @@ set_change_info(struct nfsd4_change_info *cinfo, struct svc_fh *fhp)
+ 
+ 
+ bool nfsd4_mach_creds_match(struct nfs4_client *cl, struct svc_rqst *rqstp);
+-int nfs4svc_decode_compoundargs(struct svc_rqst *, __be32 *);
++int nfs4svc_decode_compoundargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
+ int nfs4svc_encode_compoundres(struct svc_rqst *, __be32 *);
+ __be32 nfsd4_check_resp_size(struct nfsd4_compoundres *, u32);
+ void nfsd4_encode_operation(struct nfsd4_compoundres *, struct nfsd4_op *);
+diff --git a/include/linux/lockd/xdr.h b/include/linux/lockd/xdr.h
+index a98309c0121cb..170ad6f5596a0 100644
+--- a/include/linux/lockd/xdr.h
++++ b/include/linux/lockd/xdr.h
+@@ -96,18 +96,19 @@ struct nlm_reboot {
+  */
+ #define NLMSVC_XDRSIZE		sizeof(struct nlm_args)
+ 
+-int	nlmsvc_decode_testargs(struct svc_rqst *, __be32 *);
++int	nlmsvc_decode_void(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int	nlmsvc_decode_testargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int	nlmsvc_decode_lockargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int	nlmsvc_decode_cancargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int	nlmsvc_decode_unlockargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int	nlmsvc_decode_res(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int	nlmsvc_decode_reboot(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int	nlmsvc_decode_shareargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int	nlmsvc_decode_notify(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++
+ int	nlmsvc_encode_testres(struct svc_rqst *, __be32 *);
+-int	nlmsvc_decode_lockargs(struct svc_rqst *, __be32 *);
+-int	nlmsvc_decode_cancargs(struct svc_rqst *, __be32 *);
+-int	nlmsvc_decode_unlockargs(struct svc_rqst *, __be32 *);
+ int	nlmsvc_encode_res(struct svc_rqst *, __be32 *);
+-int	nlmsvc_decode_res(struct svc_rqst *, __be32 *);
+ int	nlmsvc_encode_void(struct svc_rqst *, __be32 *);
+-int	nlmsvc_decode_void(struct svc_rqst *, __be32 *);
+-int	nlmsvc_decode_shareargs(struct svc_rqst *, __be32 *);
+ int	nlmsvc_encode_shareres(struct svc_rqst *, __be32 *);
+-int	nlmsvc_decode_notify(struct svc_rqst *, __be32 *);
+-int	nlmsvc_decode_reboot(struct svc_rqst *, __be32 *);
+ 
+ #endif /* LOCKD_XDR_H */
+diff --git a/include/linux/lockd/xdr4.h b/include/linux/lockd/xdr4.h
+index 5ae766f26e04f..68e14e0f2b1fb 100644
+--- a/include/linux/lockd/xdr4.h
++++ b/include/linux/lockd/xdr4.h
+@@ -22,21 +22,20 @@
+ #define	nlm4_fbig		cpu_to_be32(NLM_FBIG)
+ #define	nlm4_failed		cpu_to_be32(NLM_FAILED)
+ 
++int	nlm4svc_decode_void(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int	nlm4svc_decode_testargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int	nlm4svc_decode_lockargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int	nlm4svc_decode_cancargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int	nlm4svc_decode_unlockargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int	nlm4svc_decode_res(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int	nlm4svc_decode_reboot(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int	nlm4svc_decode_shareargs(struct svc_rqst *rqstp, struct xdr_stream *xdr);
++int	nlm4svc_decode_notify(struct svc_rqst *rqstp, struct xdr_stream *xdr);
+ 
+-
+-int	nlm4svc_decode_testargs(struct svc_rqst *, __be32 *);
+ int	nlm4svc_encode_testres(struct svc_rqst *, __be32 *);
+-int	nlm4svc_decode_lockargs(struct svc_rqst *, __be32 *);
+-int	nlm4svc_decode_cancargs(struct svc_rqst *, __be32 *);
+-int	nlm4svc_decode_unlockargs(struct svc_rqst *, __be32 *);
+ int	nlm4svc_encode_res(struct svc_rqst *, __be32 *);
+-int	nlm4svc_decode_res(struct svc_rqst *, __be32 *);
+ int	nlm4svc_encode_void(struct svc_rqst *, __be32 *);
+-int	nlm4svc_decode_void(struct svc_rqst *, __be32 *);
+-int	nlm4svc_decode_shareargs(struct svc_rqst *, __be32 *);
+ int	nlm4svc_encode_shareres(struct svc_rqst *, __be32 *);
+-int	nlm4svc_decode_notify(struct svc_rqst *, __be32 *);
+-int	nlm4svc_decode_reboot(struct svc_rqst *, __be32 *);
+ 
+ extern const struct rpc_version nlm_version4;
+ 
 diff --git a/include/linux/sunrpc/svc.h b/include/linux/sunrpc/svc.h
-index dd3daadbc0e5c..b0986e969c2f4 100644
+index b0986e969c2f4..77e3a9b398275 100644
 --- a/include/linux/sunrpc/svc.h
 +++ b/include/linux/sunrpc/svc.h
-@@ -531,8 +531,7 @@ int		   svc_encode_result_payload(struct svc_rqst *rqstp,
- 					     unsigned int offset,
- 					     unsigned int length);
- unsigned int	   svc_fill_write_vector(struct svc_rqst *rqstp,
--					 struct page **pages,
--					 struct kvec *first, size_t total);
-+					 struct xdr_buf *payload);
- char		  *svc_fill_symlink_pathname(struct svc_rqst *rqstp,
- 					     struct kvec *first, void *p,
- 					     size_t total);
-diff --git a/net/sunrpc/svc.c b/net/sunrpc/svc.c
-index 0d3c3ca2830a8..54f66f66beb59 100644
---- a/net/sunrpc/svc.c
-+++ b/net/sunrpc/svc.c
-@@ -1654,16 +1654,17 @@ EXPORT_SYMBOL_GPL(svc_encode_result_payload);
- /**
-  * svc_fill_write_vector - Construct data argument for VFS write call
-  * @rqstp: svc_rqst to operate on
-- * @pages: list of pages containing data payload
-- * @first: buffer containing first section of write payload
-- * @total: total number of bytes of write payload
-+ * @payload: xdr_buf containing only the write data payload
-  *
-  * Fills in rqstp::rq_vec, and returns the number of elements.
-  */
--unsigned int svc_fill_write_vector(struct svc_rqst *rqstp, struct page **pages,
--				   struct kvec *first, size_t total)
-+unsigned int svc_fill_write_vector(struct svc_rqst *rqstp,
-+				   struct xdr_buf *payload)
- {
-+	struct page **pages = payload->pages;
-+	struct kvec *first = payload->head;
- 	struct kvec *vec = rqstp->rq_vec;
-+	size_t total = payload->len;
- 	unsigned int i;
- 
- 	/* Some types of transport can present the write payload
+@@ -457,7 +457,8 @@ struct svc_procedure {
+ 	/* process the request: */
+ 	__be32			(*pc_func)(struct svc_rqst *);
+ 	/* XDR decode args: */
+-	int			(*pc_decode)(struct svc_rqst *, __be32 *data);
++	int			(*pc_decode)(struct svc_rqst *rqstp,
++					     struct xdr_stream *xdr);
+ 	/* XDR encode result: */
+ 	int			(*pc_encode)(struct svc_rqst *, __be32 *data);
+ 	/* XDR free result: */
 -- 
 2.43.0
 
