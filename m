@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B41AB1741D0;
-	Tue, 18 Jun 2024 12:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97AA81741EA;
+	Tue, 18 Jun 2024 12:57:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715437; cv=none; b=KjX/EG7lLizJQYopS7tMf3HesKQofuuLS39lriGglR3pMsX0AX6Yv03bl7KncBwNT9/PLyWn9X6+mpmv2nUVn2G8jEyxCLImWxsafN4F0lsp59Gxf4iEewL3bTyAChPiMaOeGfX7BBvDzgJCJtsAYYZ4dIqGLY9O/x9WHXgxh9g=
+	t=1718715440; cv=none; b=MnNhOUTteWihOrDx1Q23G3X12YXTSFkh382Iqxq9cw+2OH55Xqw4CQ9whtzP6NdA3vpkfcd4yo+ZgpGLd7Cv30vZ9ClguMfRI0cLe4LuYB6xisCU0MWUCqGYqjuWTAqqXgjNSb5bsO7u5uOzrM96nXWF40+iuJrMsUZcGnXytig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715437; c=relaxed/simple;
-	bh=WJx39/98BDW+kLHIyx/jUG/Yw/Vp4vuIG7PY6eyZh/o=;
+	s=arc-20240116; t=1718715440; c=relaxed/simple;
+	bh=JN6CL/JdJWMr0gWirt+HcG+QlFZD6nJYHLegaWow9Z8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OvxXFvwXAAeedD2mYhU9ul0Er3f8fgMD3efyxr4/aN9cOw6y/C2V8HCjLp/RA6H34He/bNZOW67qsZLqGQWYcYt613VPR1zQrqm8zbIxv/j8ndalWBSyadbDZRyCIpBWsTDHkZbuB0CRfL44Bf79DpVYCyl+g+td76sxxe52smg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l6Y8ZvBL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qscDY8E5O0HsEn8jNL+1lgZ9/7D8cdXGrYnoUuk3dfuEzz9mEgGgQSrEH+JZBT5GCcdJAygxZEBTi5gCUsuR+eaq5lej+b2TuyFccyWz2AeKUjFtEK14BvnYaca45C5o0ve/JAna+ean9tbo0Qo72hhaia/FoCyl45h0Ruxm3RY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gD6kKjS4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l6Y8ZvBL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35CECC3277B;
-	Tue, 18 Jun 2024 12:57:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gD6kKjS4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C877C3277B;
+	Tue, 18 Jun 2024 12:57:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715437;
-	bh=WJx39/98BDW+kLHIyx/jUG/Yw/Vp4vuIG7PY6eyZh/o=;
+	s=korg; t=1718715440;
+	bh=JN6CL/JdJWMr0gWirt+HcG+QlFZD6nJYHLegaWow9Z8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l6Y8ZvBL8BXSaMJKNS3t3uG3qwktvzsZlpRwWnQnZUw3U5F5MSAwBsxcbYxEu1PLj
-	 omedGu+c6BdRm5uxrdLxBq851eEqSbnnTE0SQVoWSClIahAhtPJYF946wPJV0BlAbG
-	 pwIsr0K3BhzoIICBkA7XCeHmpYLImsTho3RUfEnE=
+	b=gD6kKjS4ycuYTURoPerNRp6/7yQBbkNlfGXf64kC1ilPIrnJJu8OfTnedOuWCAQcg
+	 TiNCjRuIdIy8aUUakrA+G6vESEIOSS49+oWzrokFu4L3yWTTpF05acG9HqsXuTinx0
+	 t56+uq/X3zLJ9eK/4c9IZ4s6Lw2gIi55hH7AjjP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	"J. Bruce Fields" <bfields@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 307/770] lockd: Update the NLMv1 nlm_res arguments decoder to use struct xdr_stream
-Date: Tue, 18 Jun 2024 14:32:40 +0200
-Message-ID: <20240618123419.111389075@linuxfoundation.org>
+Subject: [PATCH 5.10 278/770] NFSD: Constify @fh argument of knfsd_fh_hash()
+Date: Tue, 18 Jun 2024 14:32:11 +0200
+Message-ID: <20240618123417.997180968@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,59 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 16ddcabe6240c4fb01c97f6fce6c35ddf8626ad5 ]
+[ Upstream commit 1736aec82a15cb5d4b3bbe0b2fbae0ede66b1a1a ]
+
+Enable knfsd_fh_hash() to be invoked in functions where the
+filehandle pointer is a const.
 
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: J. Bruce Fields <bfields@redhat.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/lockd/xdr.c | 25 ++++++++++++++-----------
- 1 file changed, 14 insertions(+), 11 deletions(-)
+ fs/nfsd/nfsfh.h | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/fs/lockd/xdr.c b/fs/lockd/xdr.c
-index b59e02b4417c8..911b6377a6da4 100644
---- a/fs/lockd/xdr.c
-+++ b/fs/lockd/xdr.c
-@@ -299,6 +299,20 @@ nlmsvc_decode_unlockargs(struct svc_rqst *rqstp, __be32 *p)
- 	return 1;
- }
- 
-+int
-+nlmsvc_decode_res(struct svc_rqst *rqstp, __be32 *p)
-+{
-+	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
-+	struct nlm_res *resp = rqstp->rq_argp;
-+
-+	if (!svcxdr_decode_cookie(xdr, &resp->cookie))
-+		return 0;
-+	if (!svcxdr_decode_stats(xdr, &resp->status))
-+		return 0;
-+
-+	return 1;
-+}
-+
- int
- nlmsvc_encode_testres(struct svc_rqst *rqstp, __be32 *p)
- {
-@@ -379,17 +393,6 @@ nlmsvc_decode_reboot(struct svc_rqst *rqstp, __be32 *p)
- 	return xdr_argsize_check(rqstp, p);
- }
- 
--int
--nlmsvc_decode_res(struct svc_rqst *rqstp, __be32 *p)
--{
--	struct nlm_res *resp = rqstp->rq_argp;
+diff --git a/fs/nfsd/nfsfh.h b/fs/nfsd/nfsfh.h
+index aff2cda5c6c33..6106697adc04b 100644
+--- a/fs/nfsd/nfsfh.h
++++ b/fs/nfsd/nfsfh.h
+@@ -225,15 +225,12 @@ static inline bool fh_fsid_match(struct knfsd_fh *fh1, struct knfsd_fh *fh2)
+  * returns a crc32 hash for the filehandle that is compatible with
+  * the one displayed by "wireshark".
+  */
 -
--	if (!(p = nlm_decode_cookie(p, &resp->cookie)))
--		return 0;
--	resp->status = *p++;
--	return xdr_argsize_check(rqstp, p);
--}
--
- int
- nlmsvc_encode_void(struct svc_rqst *rqstp, __be32 *p)
+-static inline u32
+-knfsd_fh_hash(struct knfsd_fh *fh)
++static inline u32 knfsd_fh_hash(const struct knfsd_fh *fh)
  {
+ 	return ~crc32_le(0xFFFFFFFF, (unsigned char *)&fh->fh_base, fh->fh_size);
+ }
+ #else
+-static inline u32
+-knfsd_fh_hash(struct knfsd_fh *fh)
++static inline u32 knfsd_fh_hash(const struct knfsd_fh *fh)
+ {
+ 	return 0;
+ }
 -- 
 2.43.0
 
