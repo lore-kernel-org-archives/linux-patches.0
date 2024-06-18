@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3029E13D291;
-	Tue, 18 Jun 2024 13:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC8613D291;
+	Tue, 18 Jun 2024 13:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716529; cv=none; b=eekSjk5NxICpYiu6JTQjcac/F9gRGfHn+rO1cO8oZ7Ul0xRjF6GwnCOylKSNANi/OdPlAkawsPlh5abFTynrDJVhxzEXNJU2Zn0vHkkw9PXQzB2H2D9n1FcLwKCRl2BNW24HWMlhQERoH+/Uz3IAuWaizi5djC3FCilxZUnL/I0=
+	t=1718716532; cv=none; b=L1vPWpJCEKe03XLI0xNsk38b1np3QWcJW+giBM+djjM10SxrTuh3DHRjZ6eM6VgMglIdn9RRs7SmvO989wqq/McxOUD30dE9VBcMENH2esHshZu2ApJX+JWup+K0dTXr2gaEOB572YAqUqPMSAWKfrMPNxAG11nCu3hIAMMQj7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716529; c=relaxed/simple;
-	bh=I13VeKCTBVQefNStAuFI6P1663quTNRI+x1HdjdCUTk=;
+	s=arc-20240116; t=1718716532; c=relaxed/simple;
+	bh=rWVwxT2IECi4/6FBOVn+SDPfdWJc+p2PorMJXeA5xeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W8xnJrOL5zzIsF4hdVA68Yvt2Yu3ES5H0R7TvAWcW/08UJ8V+sdwIrAesZyyJ81O115yuwxf3M+OHxhgHD2UbBrKiCDG7IGwemcy76paPY4HiuYzj9qWuyBKl9yloPLMCTTTjnVnv51xR0VKujIDFuGACJ48w+dYezDIi7ku8eI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WOJczXFi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qp5OVsPuOQlMazlitODbOP2tdr01Hk25/HvR77kBwF8igbdr/8OGhGesF9wwuy74iKrxRnzDhh4y06+Bc7SEtNATFlKKURrqeqM8hZsvlNvcnGMjSbYVDmO810r8ZRqpgbG4oe3pVroKJZwSSTRFCXr2P0VssEBWukQqY7k97Rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2wg8RSW3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WOJczXFi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CF71C3277B;
-	Tue, 18 Jun 2024 13:15:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2wg8RSW3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26ACEC3277B;
+	Tue, 18 Jun 2024 13:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716528;
-	bh=I13VeKCTBVQefNStAuFI6P1663quTNRI+x1HdjdCUTk=;
+	s=korg; t=1718716531;
+	bh=rWVwxT2IECi4/6FBOVn+SDPfdWJc+p2PorMJXeA5xeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WOJczXFi4xyDnMcqMpAw6AUaVHBfwHViEyVUsdNkGeqNm4CttTGLsXbvPsRQwjln7
-	 VsmX6BHL7lExFWloIW/a8Gi7RpswUaItqPTDTwQ1qUb7eAZgCuCOlwJATl3RCXGiH6
-	 JaHQso7oblOTUTGps/mfoizjpuP5OMvbXtmME0hc=
+	b=2wg8RSW3kprOR7AoWrVGEDxiGhtGGNcNJT95E+pomQDb++hFLEMOV4Km2QltqDF+l
+	 Ed5bvdTLipKq5ckl1E9qA0vRVa4DtqNVsqM7GtcX0Q5CXSjRIBAuWroijSxjSD3Op0
+	 VmUtHh+zxM+64NXiryOHdpPxhQ48MdTxpKO3qp8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Vorel <pvorel@suse.cz>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 675/770] nfsd: fix net-namespace logic in __nfsd_file_cache_purge
-Date: Tue, 18 Jun 2024 14:38:48 +0200
-Message-ID: <20240618123433.334693415@linuxfoundation.org>
+Subject: [PATCH 5.10 676/770] nfsd: fix use-after-free in nfsd_file_do_acquire tracepoint
+Date: Tue, 18 Jun 2024 14:38:49 +0200
+Message-ID: <20240618123433.372856720@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -54,38 +55,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit d3aefd2b29ff5ffdeb5c06a7d3191a027a18cdb8 ]
+[ Upstream commit bdd6b5624c62d0acd350d07564f1c82fe649235f ]
 
-If the namespace doesn't match the one in "net", then we'll continue,
-but that doesn't cause another rhashtable_walk_next call, so it will
-loop infinitely.
+When we fail to insert into the hashtable with a non-retryable error,
+we'll free the object and then goto out_status. If the tracepoint is
+enabled, it'll end up accessing the freed object when it tries to
+grab the fields out of it.
 
-Fixes: ce502f81ba88 ("NFSD: Convert the filecache to use rhashtable")
-Reported-by: Petr Vorel <pvorel@suse.cz>
-Link: https://lore.kernel.org/ltp/Y1%2FP8gDAcWC%2F+VR3@pevik/
+Set nf to NULL after freeing it to avoid the issue.
+
+Fixes: 243a5263014a ("nfsd: rework hashtable handling in nfsd_do_file_acquire")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/filecache.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ fs/nfsd/filecache.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-index 0b19eb015c6c8..024adcbe67e95 100644
+index 024adcbe67e95..dceb522f5cee9 100644
 --- a/fs/nfsd/filecache.c
 +++ b/fs/nfsd/filecache.c
-@@ -892,9 +892,8 @@ __nfsd_file_cache_purge(struct net *net)
+@@ -1075,6 +1075,7 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 		goto open_file;
  
- 		nf = rhashtable_walk_next(&iter);
- 		while (!IS_ERR_OR_NULL(nf)) {
--			if (net && nf->nf_net != net)
--				continue;
--			nfsd_file_unhash_and_dispose(nf, &dispose);
-+			if (!net || nf->nf_net == net)
-+				nfsd_file_unhash_and_dispose(nf, &dispose);
- 			nf = rhashtable_walk_next(&iter);
- 		}
- 
+ 	nfsd_file_slab_free(&nf->nf_rcu);
++	nf = NULL;
+ 	if (ret == -EEXIST)
+ 		goto retry;
+ 	trace_nfsd_file_insert_err(rqstp, key.inode, may_flags, ret);
 -- 
 2.43.0
 
