@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5008B13C83B;
-	Tue, 18 Jun 2024 13:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3258013C83B;
+	Tue, 18 Jun 2024 13:12:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716323; cv=none; b=l65p4RhtQtFDWlfnROL+bAF494E1y4OrkW8UIpJ4e0BVtc9IcUsP7hZTjduWt+BTmdL/4AR+FFGD8+tVvLAAJQOUbg/3PWGv5LOCHHvwPlMJZctLeVK/436UzsoP81CoWj1ayh5CRqlijNIHdCkhugEWdp92Emb6EnOIE6JjQaM=
+	t=1718716326; cv=none; b=VcLuZoOFjUiU00S/b2kqJGaYrZcVfPdvaxOMdIELpHpnmbFRKIlNz3Nsjo+zmQvtvUaEOMUd5bqJNj9vBK9Gtrdtqd+5sDrsTx/DJD6g50vytnCX8/e0YklXkITQ2r8k+Pd+c/1nEiw67ZsnxheSI9j7Gpsufocl3bslLqkoJKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716323; c=relaxed/simple;
-	bh=P0AN3sI2EIFu4AJK570IPdmPpf1p/Pl9hxKiRp+6GiM=;
+	s=arc-20240116; t=1718716326; c=relaxed/simple;
+	bh=z7esFJ38Htqifbmtx0SaCAxeSvgMDz/xmzicl2SMclQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BR58vEpzcP+g1EXRlkWjg0eYwLClwOwPIbGojfJD1dmBBs5ERRS8d3WBVWvm9ww6vA4Rtbzwp3oZ1sVGbmzwywBoiA41lTr0PrGkwjcsElc50HkvV5UsCVPiBZ+6fb01SbFpHwYNJzUQD24/11gb9mvwdtsU51YDf5yof5JO4pI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cpMsCy/a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e3vrMdtB6xhVM4H1sDJS2VJspDmMbMkzXgH0lrz7PbQzs3Bs7mcPjAkHsc4yK/9OsTWj2IvecsQkBdrlrjpzkTEi6RVCp+i7iF2wldPZswWhwppH0popciPddMJIVHYo2tMYOgQkBujG5s9Pl1xNgVTBZ+mM5AUKliUzJPWyvM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NVnuClVx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cpMsCy/a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA6FCC3277B;
-	Tue, 18 Jun 2024 13:12:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NVnuClVx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B19F1C3277B;
+	Tue, 18 Jun 2024 13:12:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716323;
-	bh=P0AN3sI2EIFu4AJK570IPdmPpf1p/Pl9hxKiRp+6GiM=;
+	s=korg; t=1718716326;
+	bh=z7esFJ38Htqifbmtx0SaCAxeSvgMDz/xmzicl2SMclQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cpMsCy/a+0B7GCyKuHIQ4u8QBvN9OaN6pk1OWOwY2xYI4mRDDTo/Wc16+ZYzCqBUQ
-	 /jrNPcfh1gTXO6KswgnQKuo3kfEjpXzK9lDbjUWXTX5lBTR6GGZs4SgZBAvZ6jNxXy
-	 C+uW4W6vTDZLkWbrw9HqiTQZbvOux02OQ1ZwA/rs=
+	b=NVnuClVxEbD9aZRMQcc8GESiJR+vol5aWS9Iu53OMZJtdnT4AO6/k5aR/BhFgPKuN
+	 +gTK+Zv/8ejvCmFIL7KaLKF8g1hjhXGC3VXM4pVm9pXQGD9e56aHeU50/ZSkhe05nV
+	 1EGXzELmlt+LoaClT+lyI7xVDwVlWakvNjXnej24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 607/770] NFSD: Remove kmalloc from nfsd4_do_async_copy()
-Date: Tue, 18 Jun 2024 14:37:40 +0200
-Message-ID: <20240618123430.718474198@linuxfoundation.org>
+Subject: [PATCH 5.10 608/770] NFSD: Add nfsd4_send_cb_offload()
+Date: Tue, 18 Jun 2024 14:37:41 +0200
+Message-ID: <20240618123430.756765621@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,73 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit ad1e46c9b07b13659635ee5405f83ad0df143116 ]
+[ Upstream commit e72f9bc006c08841c46d27747a4debc747a8fe13 ]
 
-Instead of manufacturing a phony struct nfsd_file, pass the
-struct file returned by nfs42_ssc_open() directly to
-nfsd4_do_copy().
+Refactor for legibility.
 
-[ cel: adjusted to apply to v5.10.y ]
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4proc.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ fs/nfsd/nfs4proc.c | 37 ++++++++++++++++++++++---------------
+ 1 file changed, 22 insertions(+), 15 deletions(-)
 
 diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 16f968c165c98..dbc507c9aa11b 100644
+index dbc507c9aa11b..332fd1d0b188d 100644
 --- a/fs/nfsd/nfs4proc.c
 +++ b/fs/nfsd/nfs4proc.c
-@@ -1753,29 +1753,31 @@ static void cleanup_async_copy(struct nfsd4_copy *copy)
+@@ -1753,6 +1753,27 @@ static void cleanup_async_copy(struct nfsd4_copy *copy)
  	nfs4_put_copy(copy);
  }
  
-+/**
-+ * nfsd4_do_async_copy - kthread function for background server-side COPY
-+ * @data: arguments for COPY operation
-+ *
-+ * Return values:
-+ *   %0: Copy operation is done.
-+ */
++static void nfsd4_send_cb_offload(struct nfsd4_copy *copy)
++{
++	struct nfsd4_copy *cb_copy;
++
++	cb_copy = kzalloc(sizeof(struct nfsd4_copy), GFP_KERNEL);
++	if (!cb_copy)
++		return;
++
++	refcount_set(&cb_copy->refcount, 1);
++	memcpy(&cb_copy->cp_res, &copy->cp_res, sizeof(copy->cp_res));
++	cb_copy->cp_clp = copy->cp_clp;
++	cb_copy->nfserr = copy->nfserr;
++	memcpy(&cb_copy->fh, &copy->fh, sizeof(copy->fh));
++
++	nfsd4_init_cb(&cb_copy->cp_cb, cb_copy->cp_clp,
++			&nfsd4_cb_offload_ops, NFSPROC4_CLNT_CB_OFFLOAD);
++	trace_nfsd_cb_offload(copy->cp_clp, &copy->cp_res.cb_stateid,
++			      &copy->fh, copy->cp_count, copy->nfserr);
++	nfsd4_run_cb(&cb_copy->cp_cb);
++}
++
+ /**
+  * nfsd4_do_async_copy - kthread function for background server-side COPY
+  * @data: arguments for COPY operation
+@@ -1763,7 +1784,6 @@ static void cleanup_async_copy(struct nfsd4_copy *copy)
  static int nfsd4_do_async_copy(void *data)
  {
  	struct nfsd4_copy *copy = (struct nfsd4_copy *)data;
- 	struct nfsd4_copy *cb_copy;
+-	struct nfsd4_copy *cb_copy;
  
  	if (nfsd4_ssc_is_inter(copy)) {
--		copy->nf_src = kzalloc(sizeof(struct nfsd_file), GFP_KERNEL);
--		if (!copy->nf_src) {
--			copy->nfserr = nfserr_serverfault;
--			/* ss_mnt will be unmounted by the laundromat */
--			goto do_callback;
--		}
--		copy->nf_src->nf_file = nfs42_ssc_open(copy->ss_mnt, &copy->c_fh,
--					      &copy->stateid);
--		if (IS_ERR(copy->nf_src->nf_file)) {
-+		struct file *filp;
-+
-+		filp = nfs42_ssc_open(copy->ss_mnt, &copy->c_fh,
-+				      &copy->stateid);
-+		if (IS_ERR(filp)) {
- 			copy->nfserr = nfserr_offload_denied;
- 			/* ss_mnt will be unmounted by the laundromat */
- 			goto do_callback;
- 		}
--		copy->nfserr = nfsd4_do_copy(copy, copy->nf_src->nf_file,
-+		copy->nfserr = nfsd4_do_copy(copy, filp,
- 					     copy->nf_dst->nf_file, false);
--		nfsd4_cleanup_inter_ssc(copy->ss_mnt, copy->nf_src->nf_file,
--					copy->nf_dst);
-+		nfsd4_cleanup_inter_ssc(copy->ss_mnt, filp, copy->nf_dst);
- 	} else {
- 		copy->nfserr = nfsd4_do_copy(copy, copy->nf_src->nf_file,
- 					     copy->nf_dst->nf_file, false);
-@@ -1797,8 +1799,6 @@ static int nfsd4_do_async_copy(void *data)
- 			      &copy->fh, copy->cp_count, copy->nfserr);
- 	nfsd4_run_cb(&cb_copy->cp_cb);
- out:
--	if (nfsd4_ssc_is_inter(copy))
--		kfree(copy->nf_src);
+ 		struct file *filp;
+@@ -1785,20 +1805,7 @@ static int nfsd4_do_async_copy(void *data)
+ 	}
+ 
+ do_callback:
+-	cb_copy = kzalloc(sizeof(struct nfsd4_copy), GFP_KERNEL);
+-	if (!cb_copy)
+-		goto out;
+-	refcount_set(&cb_copy->refcount, 1);
+-	memcpy(&cb_copy->cp_res, &copy->cp_res, sizeof(copy->cp_res));
+-	cb_copy->cp_clp = copy->cp_clp;
+-	cb_copy->nfserr = copy->nfserr;
+-	memcpy(&cb_copy->fh, &copy->fh, sizeof(copy->fh));
+-	nfsd4_init_cb(&cb_copy->cp_cb, cb_copy->cp_clp,
+-			&nfsd4_cb_offload_ops, NFSPROC4_CLNT_CB_OFFLOAD);
+-	trace_nfsd_cb_offload(copy->cp_clp, &copy->cp_res.cb_stateid,
+-			      &copy->fh, copy->cp_count, copy->nfserr);
+-	nfsd4_run_cb(&cb_copy->cp_cb);
+-out:
++	nfsd4_send_cb_offload(copy);
  	cleanup_async_copy(copy);
  	return 0;
  }
