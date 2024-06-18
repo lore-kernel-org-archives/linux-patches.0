@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A86158853;
-	Tue, 18 Jun 2024 13:08:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1156C158A12;
+	Tue, 18 Jun 2024 13:08:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716112; cv=none; b=Yg5RWVMH4cE3IyMQlXHJifyLZJeKDxdOrxekJ8Sq89hjVJTyzM69tie6F4pAHyCm1J0pCFtpXfFNkPON4nm59g8g3TppJR1FMRPKtKQYtOsX17+N3f1i191tk9ehsa/cpQX5Mk4EM8NBmj1vRg15dtThRRwjd3bgiXcEpZBPAlE=
+	t=1718716115; cv=none; b=O/QYsl7hVwKewkedXP/Qy8yYP5AIi7ol8FpuZPOdv7hNMWhEEVXyfpJGagRdEojaxc7PS30J0189p+2V5uvbUBw7RE1Qqj4foiFLCN4EhsLG8/CinQR5yzmv406leIdGz+lMj+LSD5WABJYsr65TvfjSPtMhhl49Pi0jZVpE4z4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716112; c=relaxed/simple;
-	bh=r4FM46IiBlu5a4WzszKE4QgTU91hH53TNCZoA6eC71w=;
+	s=arc-20240116; t=1718716115; c=relaxed/simple;
+	bh=3KquAU/ogf0bqXPWf770P0r2ZbnyQnQqLFbQKyl+JxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fOK9JWeNdyOmKDuoO3gnWk/Zxe+bjiA5urrHbvDzCbFk18nbVmEYaiScROTos/geJR55LRKz0x/KwKRfkIKl1rDJjPIZMaQmsliQ0YgWlE47eFHjGbZ1Hy1WERGuMwCVeCPIHGTUlc99HgR2nICS9vkiAkKGpLl/tByHKzxuqhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wjXhtGWG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Phkp/OGSaA6tiWjUeYKDhuHzwCUXccaJ0nGgVpmnIufNK1zsjrGWj0g7RQNmx7xEqN056hmhV2vHiUhUSYA0wMLR+9kuuthntfcBcOMUDJbl9Y77E/Fog+BIppKZQkLX38a3+erEDey3Gp1WZ46Lnxft3R2D9rZYd0BbtnNQ5EQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BGsCZUxr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wjXhtGWG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B429C3277B;
-	Tue, 18 Jun 2024 13:08:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BGsCZUxr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85699C3277B;
+	Tue, 18 Jun 2024 13:08:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716112;
-	bh=r4FM46IiBlu5a4WzszKE4QgTU91hH53TNCZoA6eC71w=;
+	s=korg; t=1718716114;
+	bh=3KquAU/ogf0bqXPWf770P0r2ZbnyQnQqLFbQKyl+JxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wjXhtGWGMKrU26s/mL7DU1HIqKQpx/DqiAaFEHfZ4h/PWJS4gNA8WDlkKzWxBXoj5
-	 BTjCgVAPKBapm7t5HONJ6m9sWZBE09R9+QvKuenHgb4lcTXvBgrgFGrqFkAI2XUfxV
-	 YoIrYLFvJIERj0+sBWDMizOOvsH0Kt+PBmfjjFE8=
+	b=BGsCZUxroULuKDu7uul+j6LTMMdo06YTjAfHNpJTLexAacadqDQ1k4rm0mrD2tMKs
+	 +rO3hEbjOzgpMF8YE/+GMxt5IWgCfmZmLWAXhhFlPM21iUnxjGTHMYhPfRHDVWUP9v
+	 Fqyz5r7vafpst26SdRztFKOPTZWfwT9eFcbJW17w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Trond Myklebust <trondmy@hammerspace.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
-	Jeff Layton <jlayton@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 536/770] NFSD: nfsd_file_put() can sleep
-Date: Tue, 18 Jun 2024 14:36:29 +0200
-Message-ID: <20240618123427.999162961@linuxfoundation.org>
+Subject: [PATCH 5.10 537/770] NFSD: Fix potential use-after-free in nfsd_file_put()
+Date: Tue, 18 Jun 2024 14:36:30 +0200
+Message-ID: <20240618123428.037114947@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,35 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 08af54b3e5729bc1d56ad3190af811301bdc37a1 ]
+[ Upstream commit b6c71c66b0ad8f2b59d9bc08c7a5079b110bec01 ]
 
-Now that there are no more callers of nfsd_file_put() that might
-hold a spin lock, ensure the lockdep infrastructure can catch
-newly introduced calls to nfsd_file_put() made while a spinlock
-is held.
+nfsd_file_put_noref() can free @nf, so don't dereference @nf
+immediately upon return from nfsd_file_put_noref().
 
-Link: https://lore.kernel.org/linux-nfs/ece7fd1d-5fb3-5155-54ba-347cfc19bd9a@oracle.com/T/#mf1855552570cf9a9c80d1e49d91438cd9085aada
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Suggested-by: Trond Myklebust <trondmy@hammerspace.com>
+Fixes: 999397926ab3 ("nfsd: Clean up nfsd_file_put()")
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/filecache.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/nfsd/filecache.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-index bdb5de8c08036..11c096b447401 100644
+index 11c096b447401..fc0fcb3321537 100644
 --- a/fs/nfsd/filecache.c
 +++ b/fs/nfsd/filecache.c
-@@ -302,6 +302,8 @@ nfsd_file_put_noref(struct nfsd_file *nf)
- void
- nfsd_file_put(struct nfsd_file *nf)
- {
-+	might_sleep();
-+
- 	set_bit(NFSD_FILE_REFERENCED, &nf->nf_flags);
+@@ -308,11 +308,12 @@ nfsd_file_put(struct nfsd_file *nf)
  	if (test_bit(NFSD_FILE_HASHED, &nf->nf_flags) == 0) {
  		nfsd_file_flush(nf);
+ 		nfsd_file_put_noref(nf);
+-	} else {
++	} else if (nf->nf_file) {
+ 		nfsd_file_put_noref(nf);
+-		if (nf->nf_file)
+-			nfsd_file_schedule_laundrette();
+-	}
++		nfsd_file_schedule_laundrette();
++	} else
++		nfsd_file_put_noref(nf);
++
+ 	if (atomic_long_read(&nfsd_filecache_count) >= NFSD_FILE_LRU_LIMIT)
+ 		nfsd_file_gc();
+ }
 -- 
 2.43.0
 
