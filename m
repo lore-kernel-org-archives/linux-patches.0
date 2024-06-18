@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB90813C675;
-	Tue, 18 Jun 2024 12:44:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81C013C675;
+	Tue, 18 Jun 2024 12:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718714681; cv=none; b=Zq6IX6n5zFELqIJtr6TkjdOrPr1AyfFw+8zpSWQCf8kjQNoTkjoyPArzL5HN8t0ZBF94l9DNvHnKfF3/zDHDTmK5D0DCafT8+2XgfUog4aQki3L4RhyK2VcT22ozddlDTMRLrPrKL6WVWxPRlUkYZBZ/XGYhozVXQAFfeNPmhmM=
+	t=1718714684; cv=none; b=Lj/q5lidEk0AHtaG7zuwnCBe2WVsXv6T5WcT6qG7KUorF3t6obwJOrv3HkRrCq0xOomMPUHjtOhIDnlYwoq55M4APtiKOIE2hQlzH8l9mc0RVADM1ckTfK2YzMgRv4QhnTx3Bldl6SapodiPodEADw+PhoD7n5JctbT80rVtD9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718714681; c=relaxed/simple;
-	bh=UrfhxXNDKMtmFloOJXlKvHteei8YT5PqMkGo+dBm8I4=;
+	s=arc-20240116; t=1718714684; c=relaxed/simple;
+	bh=+qWRx6P87GtLjt+IlBNOxz9wwPxQlE2FWzDZl+M0OaM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g3OOShmNTQkYkZoy5ekZAPvY9Ln0Z4URc/oN8+7nWqq8hRNcfb+hwo9FUwPcG5wNkp661//t5RX7Z7UWstJBQNe4H80h3WshXkZL9je+hSLxolvSqrTLqSKkTHwNaFDOVvnQLmgfHtTV1zMqe94Y/81MmPXa3dvOZRTUrGjKn5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MalRobmd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hri8eatNvWuu2e3YhC6gZOogCywT4Yjujz+OGltGSAHFKz7zhuqZ1TVpb3gLjsnTUheZ4GAEN7uDTJHdRfAOPa6/4W62dWfuSVQPxZipyxJA6kv0t6ulXsbN3cJ49kES5AYCmYApimGbTxOuw/1Jr120+nCAFMUd5u7I+ZSvJ0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UA39wsFx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MalRobmd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3139AC3277B;
-	Tue, 18 Jun 2024 12:44:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UA39wsFx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2746CC4AF1D;
+	Tue, 18 Jun 2024 12:44:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718714681;
-	bh=UrfhxXNDKMtmFloOJXlKvHteei8YT5PqMkGo+dBm8I4=;
+	s=korg; t=1718714684;
+	bh=+qWRx6P87GtLjt+IlBNOxz9wwPxQlE2FWzDZl+M0OaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MalRobmd+qZ8BiknCjMK4xWJXVE/IoD9+/yoit+BH1ZgC2F8hCmKDtDdsAkNWiYkt
-	 cblJCEi7Br9/gsjO9HL+WZsuMLiRQF24wI4SYAlW50QOEv4P9h5g02GUnsm17xppw3
-	 8SdubAAA4l6UV2CZzSJTxkV4uvCXxZ9j6ZDuF6N8=
+	b=UA39wsFxzvYsaJn4EyXijG7Wvl7/LaCr3lcckO5skk5dLcGxMNH1/OUnySGXhkWkA
+	 +W4CrVeCfMovJy/BVsuyBCN5LFXjg1a1YruYuKbBYL++0C3LuK/iSqrxiWaOczP98V
+	 he5TXFArFWRNqt0Yb5bS3jYqrUi8mj4gAgpuiJts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 053/770] NFSD: Replace READ* macros in nfsd4_decode_renew()
-Date: Tue, 18 Jun 2024 14:28:26 +0200
-Message-ID: <20240618123409.336827563@linuxfoundation.org>
+Subject: [PATCH 5.10 036/770] NFSD: Replace READ* macros in nfsd4_decode_lockt()
+Date: Tue, 18 Jun 2024 14:28:09 +0200
+Message-ID: <20240618123408.687470579@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,32 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit d12f90458dc8c11734ba44ec88f109bf8de86ff0 ]
+[ Upstream commit 0a146f04aa0fa7a57aaed3913d1c2732b3853f31 ]
 
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4xdr.c | 10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
+ fs/nfsd/nfs4xdr.c | 24 ++++++++++--------------
+ 1 file changed, 10 insertions(+), 14 deletions(-)
 
 diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
-index adf4a6fb94d4c..51b59b369d726 100644
+index b50d2987bb6e8..4f2680650a567 100644
 --- a/fs/nfsd/nfs4xdr.c
 +++ b/fs/nfsd/nfs4xdr.c
-@@ -1272,15 +1272,7 @@ nfsd4_decode_rename(struct nfsd4_compoundargs *argp, struct nfsd4_rename *rename
+@@ -894,20 +894,16 @@ nfsd4_decode_lock(struct nfsd4_compoundargs *argp, struct nfsd4_lock *lock)
  static __be32
- nfsd4_decode_renew(struct nfsd4_compoundargs *argp, clientid_t *clientid)
+ nfsd4_decode_lockt(struct nfsd4_compoundargs *argp, struct nfsd4_lockt *lockt)
  {
 -	DECODE_HEAD;
--
--	if (argp->minorversion >= 1)
--		return nfserr_notsupp;
--
--	READ_BUF(sizeof(clientid_t));
--	COPYMEM(clientid, sizeof(clientid_t));
+-		        
+-	READ_BUF(32);
+-	lockt->lt_type = be32_to_cpup(p++);
+-	if((lockt->lt_type < NFS4_READ_LT) || (lockt->lt_type > NFS4_WRITEW_LT))
+-		goto xdr_error;
+-	p = xdr_decode_hyper(p, &lockt->lt_offset);
+-	p = xdr_decode_hyper(p, &lockt->lt_length);
+-	COPYMEM(&lockt->lt_clientid, 8);
+-	lockt->lt_owner.len = be32_to_cpup(p++);
+-	READ_BUF(lockt->lt_owner.len);
+-	READMEM(lockt->lt_owner.data, lockt->lt_owner.len);
 -
 -	DECODE_TAIL;
-+	return nfsd4_decode_clientid4(argp, clientid);
++	if (xdr_stream_decode_u32(argp->xdr, &lockt->lt_type) < 0)
++		return nfserr_bad_xdr;
++	if ((lockt->lt_type < NFS4_READ_LT) || (lockt->lt_type > NFS4_WRITEW_LT))
++		return nfserr_bad_xdr;
++	if (xdr_stream_decode_u64(argp->xdr, &lockt->lt_offset) < 0)
++		return nfserr_bad_xdr;
++	if (xdr_stream_decode_u64(argp->xdr, &lockt->lt_length) < 0)
++		return nfserr_bad_xdr;
++	return nfsd4_decode_state_owner4(argp, &lockt->lt_clientid,
++					 &lockt->lt_owner);
  }
  
  static __be32
