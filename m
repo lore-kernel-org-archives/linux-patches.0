@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7C61591E3;
-	Tue, 18 Jun 2024 13:16:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C15F1591E3;
+	Tue, 18 Jun 2024 13:16:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716567; cv=none; b=eJxAMpaQufMH2/kINoPCVnFmJ2n5EL1DT8AG7NqQCzhgaSCe3BMDj6stpQ19+OcjHu36HD2U5tYzOK0TvhcqKuVIj96oTF0/cA0olGzhZeP2UtF/E29IACoLLzZTRgzZRVeZSSR4ee4oV/Slqtl42NX/U3mDkJWr5EP6j8dygyA=
+	t=1718716570; cv=none; b=qpYhP+bShFtxRhP+cZs3aVeuDaBdz5jLOAZZoooKjab7lqSjSkmvvJAPiRP3CvmokUe9lV1Kp1mB7CSsgHgd+wATg4yyk3X4dGYSaNjY/mi1xDDby8x1ZYAxgRWcolll77g93pTIEWXuFE1uMMAum8AhEyAO5iZ4UR/8L14JFSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716567; c=relaxed/simple;
-	bh=DnPcxZrpOc390m7Wc2hgoV2xrx2XOC+k/6Aq82ShH7Q=;
+	s=arc-20240116; t=1718716570; c=relaxed/simple;
+	bh=oPtwlcYmmIeK1rxJvspAZpbGpy1ThnNV4Anh04qG1t0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bgG9e6028/iZ+TmxIpmVTe91q6utoHfgLkdUDx3TfuXXN06XarNgGni5WQwx6VLs31P3V7KLOuMl3QWeEAiM3+pQ4Se6W4MCj5/ZSEGhxKNvcLtjbFKEfnlY/hhD2DkmAyTPuT/JugnW7WL8gdENWPPdJHM35nIBHbedA8+GhBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pejK7s5y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dbib/QATtkgS6TacpWXa6ulkxZ3NssXlTTY78qHKtlIa/xs0LkXQtrIBdP8ZVMbqfJvEQwTkJNYJLH7QDCi/35ihldAF+iYN0yTlNhpPOykeDEVQsEFcSyopmjt9jaUe1b+Kp5EXgg21nBm4dOL3b45qGwHJox+/L/qCuuuVEUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qiGufWhM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pejK7s5y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69788C4AF1D;
-	Tue, 18 Jun 2024 13:16:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qiGufWhM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5CFC4AF1D;
+	Tue, 18 Jun 2024 13:16:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716566;
-	bh=DnPcxZrpOc390m7Wc2hgoV2xrx2XOC+k/6Aq82ShH7Q=;
+	s=korg; t=1718716569;
+	bh=oPtwlcYmmIeK1rxJvspAZpbGpy1ThnNV4Anh04qG1t0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pejK7s5y1zSwEvTvBCZqkVlrka29Dqy4YlgauhcNkrk/NHkZJdrfGH2I+lZt5PX/V
-	 OUZtjQHVsRObTssmMbAFbbIR+0WXGzLohM8z7yHd/nMQacve1zvFHonT3txd7Dh79m
-	 5sAxZcqHzWTPjMFOEsh+8uC461qiXKrK85iSYUCk=
+	b=qiGufWhMDm0BLYBuZXPvy2N+1d3cFKZC4deWr8aw8cFYkSROfVFt5dBLDX+oSLJMo
+	 JhlMVTMyT2uci5SSXfb9IFsaZ3qPMDZ7wBiwjk9mIn3l3nQyEwxldtGYiHFQ7SaK8C
+	 wnvTphmcvjOtFVWfVKZARdMoAO88M50MgJiVQG5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 656/770] NFSD: Remove unused nfsd4_compoundargs::cachetype field
-Date: Tue, 18 Jun 2024 14:38:29 +0200
-Message-ID: <20240618123432.609659312@linuxfoundation.org>
+Subject: [PATCH 5.10 657/770] NFSD: Pack struct nfsd4_compoundres
+Date: Tue, 18 Jun 2024 14:38:30 +0200
+Message-ID: <20240618123432.647455360@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,29 +52,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 77e378cf2a595d8e39cddf28a31efe6afd9394a0 ]
+[ Upstream commit 9f553e61bd36c1048543ac2f6945103dd2f742be ]
 
-This field was added by commit 1091006c5eb1 ("nfsd: turn on reply
-cache for NFSv4") but was never put to use.
+Remove a couple of 4-byte holes on platforms with 64-bit pointers.
 
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/xdr4.h | 1 -
- 1 file changed, 1 deletion(-)
+ fs/nfsd/xdr4.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/nfsd/xdr4.h b/fs/nfsd/xdr4.h
-index 1e83fda7601ab..624a19ec3ad11 100644
+index 624a19ec3ad11..8f323d9071f06 100644
 --- a/fs/nfsd/xdr4.h
 +++ b/fs/nfsd/xdr4.h
-@@ -724,7 +724,6 @@ struct nfsd4_compoundargs {
- 	u32				opcnt;
- 	struct nfsd4_op			*ops;
- 	struct nfsd4_op			iops[8];
--	int				cachetype;
- };
+@@ -732,8 +732,8 @@ struct nfsd4_compoundres {
+ 	struct svc_rqst *		rqstp;
  
- struct nfsd4_compoundres {
+ 	__be32				*statusp;
+-	u32				taglen;
+ 	char *				tag;
++	u32				taglen;
+ 	u32				opcnt;
+ 
+ 	struct nfsd4_compound_state	cstate;
 -- 
 2.43.0
 
