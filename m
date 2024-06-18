@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334AA1428EC;
-	Tue, 18 Jun 2024 13:16:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D843813CF82;
+	Tue, 18 Jun 2024 13:16:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716577; cv=none; b=NsWro4xnHekS3VkngXDXE5CBPQNpjRWF5G9KUUBZx98uxsrJ1Vz5sU6Ji5N9+SiphI7tXcQZpvyxYmux5dNzzHRwMMz8q/0WK2qLe0jltPQ4CvayIrVw6UlXFgXjvgSx5Xof7kF18Iww8dz1SnAeUptirJMU0YVev/xY1w5Fqrw=
+	t=1718716578; cv=none; b=Ifh9wAG3O8IhYRCJs0lROy8ic6De/peaowelIvpiUgCD8OdR2VN2ToMZOGjJQa5grtBn41/lNt+dP8gMQEYcuri7j2ro3epMOqq0UmbkynJW6+JUtX0IvyFEmYCBjhTYlHulMvNf+wKFO5f8amf8w9j4JUO+baruHSVvQjC4mcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716577; c=relaxed/simple;
-	bh=gIpQKtMuZ6AFFVqvxafl71ZQPkcjWXoYeXR90xXw/u4=;
+	s=arc-20240116; t=1718716578; c=relaxed/simple;
+	bh=M1omBZ9nh0IJoreDG8+13g4hDH+wlSdiXrjwAYV0xsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s/DiHp00DTg3VQdfvdStK+HoWXK4mA0R1sI6zv+s9hVcQuaQcDOyTL/pDXxswpfHcM5YP0XIMlEGO+j3fSBBM/hsmsscO1C7BW8GYW+QdzgIC98bvlHCigosj7emEu2sJOUaHbGcjvboYTBjiW5fW/Z2WYz5EF/7bFDWYb4bA0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vphCb83t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uvMD52ByXmvvUFpRb6eXvjbcs4qSgfvoh6I/7bDaAJN10ig4iryPrC5BXu0IvZtZG/dZKQYMO0CmM1qcJ70ZuPUyOd4TbC53wZ07E5vmWZSbSm8yV58ND2NnTVSyqC+AbseRH2v6Ob+l7nByzNgKeIMPnkd3zmL0Vik9ctHLHtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RWU9RPX3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vphCb83t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C650C3277B;
-	Tue, 18 Jun 2024 13:16:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RWU9RPX3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F8DAC4AF51;
+	Tue, 18 Jun 2024 13:16:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716575;
-	bh=gIpQKtMuZ6AFFVqvxafl71ZQPkcjWXoYeXR90xXw/u4=;
+	s=korg; t=1718716578;
+	bh=M1omBZ9nh0IJoreDG8+13g4hDH+wlSdiXrjwAYV0xsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vphCb83tU2zcRRux4Gjj31qyk1VnS4HDmDo0BZOmrIEHBOCBCy/71jMyGnIhaVdvG
-	 DMLOB2R+iLgPEwsfMsZakrZaUHaAMqMVjUlffY103qapNZ48XrFkBLc5xHOUoFTZ5V
-	 aWW9AXW9IIEfshP8Ua7zOIxMfOaAC670ircPM6JE=
+	b=RWU9RPX3nj9RdIoHTXnDJNFBXvv5dHgyKuKvN+E0EQXie6GCtGMC1HxJ+2ulbiKM1
+	 9T8Bn940Y7kvlwSmUfeZ1oMxSGNrMeJTEmyYGR4YBiR//J6Lsycpj4J8bp74ZHzkp+
+	 /VwB2b6FMjV/KZKjzZr9Q9xeFyKpNdZVH0E/uRL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
+	Jeff Layton <jlayton@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 684/770] NFSD: Finish converting the NFSv2 GETACL result encoder
-Date: Tue, 18 Jun 2024 14:38:57 +0200
-Message-ID: <20240618123433.681764915@linuxfoundation.org>
+Subject: [PATCH 5.10 693/770] NFSD: Flesh out a documenting comment for filecache.c
+Date: Tue, 18 Jun 2024 14:39:06 +0200
+Message-ID: <20240618123434.026672549@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,52 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit ea5021e911d3479346a75ac9b7d9dcd751b0fb99 ]
+[ Upstream commit b3276c1f5b268ff56622e9e125b792b4c3dc03ac ]
 
-The xdr_stream conversion inadvertently left some code that set the
-page_len of the send buffer. The XDR stream encoders should handle
-this automatically now.
+Record what we've learned recently about the NFSD filecache in a
+documenting comment so our future selves don't forget what all this
+is for.
 
-This oversight adds garbage past the end of the Reply message.
-Clients typically ignore the garbage, but NFSD does not need to send
-it, as it leaks stale memory contents onto the wire.
-
-Fixes: f8cba47344f7 ("NFSD: Update the NFSv2 GETACL result encoder to use struct xdr_stream")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs2acl.c | 10 ----------
- 1 file changed, 10 deletions(-)
+ fs/nfsd/filecache.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/fs/nfsd/nfs2acl.c b/fs/nfsd/nfs2acl.c
-index f8179fc8c9bdf..9adf672dedbdd 100644
---- a/fs/nfsd/nfs2acl.c
-+++ b/fs/nfsd/nfs2acl.c
-@@ -244,7 +244,6 @@ nfsaclsvc_encode_getaclres(struct svc_rqst *rqstp, struct xdr_stream *xdr)
- 	struct nfsd3_getaclres *resp = rqstp->rq_resp;
- 	struct dentry *dentry = resp->fh.fh_dentry;
- 	struct inode *inode;
--	int w;
+diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
+index 13a25503b80e1..d681faf48cf85 100644
+--- a/fs/nfsd/filecache.c
++++ b/fs/nfsd/filecache.c
+@@ -2,6 +2,30 @@
+  * Open file cache.
+  *
+  * (c) 2015 - Jeff Layton <jeff.layton@primarydata.com>
++ *
++ * An nfsd_file object is a per-file collection of open state that binds
++ * together:
++ *   - a struct file *
++ *   - a user credential
++ *   - a network namespace
++ *   - a read-ahead context
++ *   - monitoring for writeback errors
++ *
++ * nfsd_file objects are reference-counted. Consumers acquire a new
++ * object via the nfsd_file_acquire API. They manage their interest in
++ * the acquired object, and hence the object's reference count, via
++ * nfsd_file_get and nfsd_file_put. There are two varieties of nfsd_file
++ * object:
++ *
++ *  * non-garbage-collected: When a consumer wants to precisely control
++ *    the lifetime of a file's open state, it acquires a non-garbage-
++ *    collected nfsd_file. The final nfsd_file_put releases the open
++ *    state immediately.
++ *
++ *  * garbage-collected: When a consumer does not control the lifetime
++ *    of open state, it acquires a garbage-collected nfsd_file. The
++ *    final nfsd_file_put allows the open state to linger for a period
++ *    during which it may be re-used.
+  */
  
- 	if (!svcxdr_encode_stat(xdr, resp->status))
- 		return false;
-@@ -258,15 +257,6 @@ nfsaclsvc_encode_getaclres(struct svc_rqst *rqstp, struct xdr_stream *xdr)
- 	if (xdr_stream_encode_u32(xdr, resp->mask) < 0)
- 		return false;
- 
--	rqstp->rq_res.page_len = w = nfsacl_size(
--		(resp->mask & NFS_ACL)   ? resp->acl_access  : NULL,
--		(resp->mask & NFS_DFACL) ? resp->acl_default : NULL);
--	while (w > 0) {
--		if (!*(rqstp->rq_next_page++))
--			return true;
--		w -= PAGE_SIZE;
--	}
--
- 	if (!nfs_stream_encode_acl(xdr, inode, resp->acl_access,
- 				   resp->mask & NFS_ACL, 0))
- 		return false;
+ #include <linux/hash.h>
 -- 
 2.43.0
 
