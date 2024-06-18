@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B2B15FCF5;
-	Tue, 18 Jun 2024 12:51:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 769B115FCF5;
+	Tue, 18 Jun 2024 12:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715076; cv=none; b=qgqbTs7zo+Kk2+pf1f9k4kiaIJU825VmMC9X6sDqj0o/6na3GJn26ivbs+veeWIPzLT1TgUUlPtkzS6VVSldyTozUYQm+YbNN5J6UyinIIG2R4y5ZrXP8bKzIwmc8ceJelJzfUwXvOkGUKJ0eIb6CIBpm9K4UjjkdV7na3oPNo0=
+	t=1718715079; cv=none; b=mUNLkh+7YlCBS90+VQM7uKgMh4FfCANpvAZASWnvxVfo5jykYkbCs+J3Mho0oTg8K0f2HZYB3Dx/nFQnR/tKQkEh7XjZ8ugn/njlL243jHt+i+QefPYCtRNZB6dAIgzVMLOr9bpe2almd4728k7KzocmT3LHUEP069W6Csw4q7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715076; c=relaxed/simple;
-	bh=cGzKphcW0C3OiXe67w2dmlPYIXMHjKJpgPUq8EJ76gE=;
+	s=arc-20240116; t=1718715079; c=relaxed/simple;
+	bh=t+jW8+P0OaYU0RwAKbFMBNbKQH00V4iJtbgiPrSy9HQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KErR/Q1l9jIr8S0BRepg7m5OCLRt8yWWqCv5+O9OxGA93fbdvw6FQBV3ed+AOACTRaXTo8W379JeHNoeLh6qTQa5Xbm1dK/gkQQL1c6PaBKAW0yNpoFJQLmbz7iwk4OSZVKCerpCY/7pKqh/BaBgSvAxEgOMyXObuPI9wqTz/nU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h//LoU2T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HQglLn2Ci/HSPUJKuAsTqO0qJ5exmpNvYyfxa+XbpI0ZSpEZWRJhokgci68HqbFaW9COUhHv3xeXnU23PD0kDH+0+7qPHLakegy0rIMO6QKnE2LNsWL7E90TaLEmv2gmzRBQLYd2uA3d4fCkcK4G95IF2uP5RRmWgtla15PAOIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXxOl/7f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h//LoU2T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15DE6C3277B;
-	Tue, 18 Jun 2024 12:51:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXxOl/7f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1ED7C3277B;
+	Tue, 18 Jun 2024 12:51:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715076;
-	bh=cGzKphcW0C3OiXe67w2dmlPYIXMHjKJpgPUq8EJ76gE=;
+	s=korg; t=1718715079;
+	bh=t+jW8+P0OaYU0RwAKbFMBNbKQH00V4iJtbgiPrSy9HQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h//LoU2TuN5ZbJKvCKhACsGdkwxf5EcBemUEe9Lbr3gj3db9e2q6qCGCA5vRO67PD
-	 JeBM4Tv2ebJjCC4Zs4T+VFeZ5GFFwz3IsaeJEhTTJekfLmTfWtk04pjhv4ILTvFMET
-	 q7TJCal41KR9VDU1/bwZd9eECAk8pYhTQwbB2Xe8=
+	b=RXxOl/7fp5ZS29pRywlHLPVQSPmHMFJgAKc3E+VfXUAnuCGPv0ym3h/S4rUuRNRpd
+	 m4S9ScG1S8FCTm/0TV6lQl7yg/+gu31CMBd3I+3Y8hin8TUDe26DL8nCGjkZG7QRmz
+	 NxXhpekIHXchosXD1cjNKWt/JFkyT928f1kIW3Uo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dai Ngo <dai.ngo@oracle.com>,
+	"J. Bruce Fields" <bfields@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 187/770] NFSv4_2: SSC helper should use its own config.
-Date: Tue, 18 Jun 2024 14:30:40 +0200
-Message-ID: <20240618123414.491666121@linuxfoundation.org>
+Subject: [PATCH 5.10 188/770] nfs: use change attribute for NFS re-exports
+Date: Tue, 18 Jun 2024 14:30:41 +0200
+Message-ID: <20240618123414.529964054@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -51,158 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dai Ngo <dai.ngo@oracle.com>
+From: J. Bruce Fields <bfields@redhat.com>
 
-[ Upstream commit 02591f9febd5f69bb4c266a4abf899c4cf21964f ]
+[ Upstream commit 3cc55f4434b421d37300aa9a167ace7d60b45ccf ]
 
-Currently NFSv4_2 SSC helper, nfs_ssc, incorrectly uses GRACE_PERIOD
-as its config. Fix by adding new config NFS_V4_2_SSC_HELPER which
-depends on NFS_V4_2 and is automatically selected when NFSD_V4 is
-enabled. Also removed the file name from a comment in nfs_ssc.c.
+When exporting NFS, we may as well use the real change attribute
+returned by the original server instead of faking up a change attribute
+from the ctime.
 
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Note we can't do that by setting I_VERSION--that would also turn on the
+logic in iversion.h which treats the lower bit specially, and that
+doesn't make sense for NFS.
+
+So instead we define a new export operation for filesystems like NFS
+that want to manage the change attribute themselves.
+
+Signed-off-by: J. Bruce Fields <bfields@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/Kconfig              |  4 ++++
- fs/nfs/nfs4file.c       |  4 ++++
- fs/nfs/super.c          | 12 ++++++++++++
- fs/nfs_common/Makefile  |  2 +-
- fs/nfs_common/nfs_ssc.c |  2 --
- fs/nfsd/Kconfig         |  1 +
- 6 files changed, 22 insertions(+), 3 deletions(-)
+ fs/nfs/export.c          | 18 ++++++++++++++++++
+ fs/nfsd/nfsfh.h          |  5 ++++-
+ include/linux/exportfs.h |  1 +
+ 3 files changed, 23 insertions(+), 1 deletion(-)
 
-diff --git a/fs/Kconfig b/fs/Kconfig
-index da524c4d7b7e0..462253ae483a3 100644
---- a/fs/Kconfig
-+++ b/fs/Kconfig
-@@ -333,6 +333,10 @@ config NFS_COMMON
- 	depends on NFSD || NFS_FS || LOCKD
- 	default y
+diff --git a/fs/nfs/export.c b/fs/nfs/export.c
+index 7412bb164fa77..f2b34cfe286c2 100644
+--- a/fs/nfs/export.c
++++ b/fs/nfs/export.c
+@@ -167,10 +167,28 @@ nfs_get_parent(struct dentry *dentry)
+ 	return parent;
+ }
  
-+config NFS_V4_2_SSC_HELPER
-+	tristate
-+	default y if NFS_V4=y || NFS_FS=y
++static u64 nfs_fetch_iversion(struct inode *inode)
++{
++	struct nfs_server *server = NFS_SERVER(inode);
 +
- source "net/sunrpc/Kconfig"
- source "fs/ceph/Kconfig"
- source "fs/cifs/Kconfig"
-diff --git a/fs/nfs/nfs4file.c b/fs/nfs/nfs4file.c
-index 70cd0d764c447..5ad57ad89fb1e 100644
---- a/fs/nfs/nfs4file.c
-+++ b/fs/nfs/nfs4file.c
-@@ -430,7 +430,9 @@ static const struct nfs4_ssc_client_ops nfs4_ssc_clnt_ops_tbl = {
-  */
- void nfs42_ssc_register_ops(void)
++	/* Is this the right call?: */
++	nfs_revalidate_inode(server, inode);
++	/*
++	 * Also, note we're ignoring any returned error.  That seems to be
++	 * the practice for cache consistency information elsewhere in
++	 * the server, but I'm not sure why.
++	 */
++	if (server->nfs_client->rpc_ops->version >= 4)
++		return inode_peek_iversion_raw(inode);
++	else
++		return time_to_chattr(&inode->i_ctime);
++}
++
+ const struct export_operations nfs_export_ops = {
+ 	.encode_fh = nfs_encode_fh,
+ 	.fh_to_dentry = nfs_fh_to_dentry,
+ 	.get_parent = nfs_get_parent,
++	.fetch_iversion = nfs_fetch_iversion,
+ 	.flags = EXPORT_OP_NOWCC|EXPORT_OP_NOSUBTREECHK|
+ 		EXPORT_OP_CLOSE_BEFORE_UNLINK|EXPORT_OP_REMOTE_FS|
+ 		EXPORT_OP_NOATOMIC_ATTR,
+diff --git a/fs/nfsd/nfsfh.h b/fs/nfsd/nfsfh.h
+index cb20c2cd34695..f58933519f380 100644
+--- a/fs/nfsd/nfsfh.h
++++ b/fs/nfsd/nfsfh.h
+@@ -12,6 +12,7 @@
+ #include <linux/sunrpc/svc.h>
+ #include <uapi/linux/nfsd/nfsfh.h>
+ #include <linux/iversion.h>
++#include <linux/exportfs.h>
+ 
+ static inline __u32 ino_t_to_u32(ino_t ino)
  {
-+#ifdef CONFIG_NFSD_V4
- 	nfs42_ssc_register(&nfs4_ssc_clnt_ops_tbl);
-+#endif
- }
- 
- /**
-@@ -441,7 +443,9 @@ void nfs42_ssc_register_ops(void)
-  */
- void nfs42_ssc_unregister_ops(void)
+@@ -264,7 +265,9 @@ fh_clear_wcc(struct svc_fh *fhp)
+ static inline u64 nfsd4_change_attribute(struct kstat *stat,
+ 					 struct inode *inode)
  {
-+#ifdef CONFIG_NFSD_V4
- 	nfs42_ssc_unregister(&nfs4_ssc_clnt_ops_tbl);
-+#endif
- }
- #endif /* CONFIG_NFS_V4_2 */
+-	if (IS_I_VERSION(inode)) {
++	if (inode->i_sb->s_export_op->fetch_iversion)
++		return inode->i_sb->s_export_op->fetch_iversion(inode);
++	else if (IS_I_VERSION(inode)) {
+ 		u64 chattr;
  
-diff --git a/fs/nfs/super.c b/fs/nfs/super.c
-index b3fcc27b95648..7179d59d73ca4 100644
---- a/fs/nfs/super.c
-+++ b/fs/nfs/super.c
-@@ -86,9 +86,11 @@ const struct super_operations nfs_sops = {
- };
- EXPORT_SYMBOL_GPL(nfs_sops);
- 
-+#ifdef CONFIG_NFS_V4_2
- static const struct nfs_ssc_client_ops nfs_ssc_clnt_ops_tbl = {
- 	.sco_sb_deactive = nfs_sb_deactive,
- };
-+#endif
- 
- #if IS_ENABLED(CONFIG_NFS_V4)
- static int __init register_nfs4_fs(void)
-@@ -111,15 +113,21 @@ static void unregister_nfs4_fs(void)
- }
- #endif
- 
-+#ifdef CONFIG_NFS_V4_2
- static void nfs_ssc_register_ops(void)
- {
-+#ifdef CONFIG_NFSD_V4
- 	nfs_ssc_register(&nfs_ssc_clnt_ops_tbl);
-+#endif
- }
- 
- static void nfs_ssc_unregister_ops(void)
- {
-+#ifdef CONFIG_NFSD_V4
- 	nfs_ssc_unregister(&nfs_ssc_clnt_ops_tbl);
-+#endif
- }
-+#endif /* CONFIG_NFS_V4_2 */
- 
- static struct shrinker acl_shrinker = {
- 	.count_objects	= nfs_access_cache_count,
-@@ -148,7 +156,9 @@ int __init register_nfs_fs(void)
- 	ret = register_shrinker(&acl_shrinker);
- 	if (ret < 0)
- 		goto error_3;
-+#ifdef CONFIG_NFS_V4_2
- 	nfs_ssc_register_ops();
-+#endif
- 	return 0;
- error_3:
- 	nfs_unregister_sysctl();
-@@ -168,7 +178,9 @@ void __exit unregister_nfs_fs(void)
- 	unregister_shrinker(&acl_shrinker);
- 	nfs_unregister_sysctl();
- 	unregister_nfs4_fs();
-+#ifdef CONFIG_NFS_V4_2
- 	nfs_ssc_unregister_ops();
-+#endif
- 	unregister_filesystem(&nfs_fs_type);
- }
- 
-diff --git a/fs/nfs_common/Makefile b/fs/nfs_common/Makefile
-index fa82f5aaa6d95..119c75ab9fd08 100644
---- a/fs/nfs_common/Makefile
-+++ b/fs/nfs_common/Makefile
-@@ -7,4 +7,4 @@ obj-$(CONFIG_NFS_ACL_SUPPORT) += nfs_acl.o
- nfs_acl-objs := nfsacl.o
- 
- obj-$(CONFIG_GRACE_PERIOD) += grace.o
--obj-$(CONFIG_GRACE_PERIOD) += nfs_ssc.o
-+obj-$(CONFIG_NFS_V4_2_SSC_HELPER) += nfs_ssc.o
-diff --git a/fs/nfs_common/nfs_ssc.c b/fs/nfs_common/nfs_ssc.c
-index f43bbb3739134..7c1509e968c81 100644
---- a/fs/nfs_common/nfs_ssc.c
-+++ b/fs/nfs_common/nfs_ssc.c
-@@ -1,7 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /*
-- * fs/nfs_common/nfs_ssc_comm.c
-- *
-  * Helper for knfsd's SSC to access ops in NFS client modules
-  *
-  * Author: Dai Ngo <dai.ngo@oracle.com>
-diff --git a/fs/nfsd/Kconfig b/fs/nfsd/Kconfig
-index 248f1459c0399..d6cff5fbe705b 100644
---- a/fs/nfsd/Kconfig
-+++ b/fs/nfsd/Kconfig
-@@ -77,6 +77,7 @@ config NFSD_V4
- 	select CRYPTO_MD5
- 	select CRYPTO_SHA256
- 	select GRACE_PERIOD
-+	select NFS_V4_2_SSC_HELPER if NFS_V4_2
- 	help
- 	  This option enables support in your system's NFS server for
- 	  version 4 of the NFS protocol (RFC 3530).
+ 		chattr =  stat->ctime.tv_sec;
+diff --git a/include/linux/exportfs.h b/include/linux/exportfs.h
+index 9f4d4bcbf251d..fe848901fcc3a 100644
+--- a/include/linux/exportfs.h
++++ b/include/linux/exportfs.h
+@@ -213,6 +213,7 @@ struct export_operations {
+ 			  bool write, u32 *device_generation);
+ 	int (*commit_blocks)(struct inode *inode, struct iomap *iomaps,
+ 			     int nr_iomaps, struct iattr *iattr);
++	u64 (*fetch_iversion)(struct inode *);
+ #define	EXPORT_OP_NOWCC			(0x1) /* don't collect v3 wcc data */
+ #define	EXPORT_OP_NOSUBTREECHK		(0x2) /* no subtree checking */
+ #define	EXPORT_OP_CLOSE_BEFORE_UNLINK	(0x4) /* close files before unlink */
 -- 
 2.43.0
 
