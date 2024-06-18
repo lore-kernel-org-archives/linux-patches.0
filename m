@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C6618EFE7;
-	Tue, 18 Jun 2024 13:04:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C924615747D;
+	Tue, 18 Jun 2024 13:04:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715846; cv=none; b=LUPNEoGcXD3kUfc2JAP/vGvAna69wSSl/IZezloLbDTZyjbysoVx8easxJAdu32wbUbilaUa0DAVTOpbg9tuB1bBLdb1M1IGjXkx2Bd+mJ8b9kY6qYHYeaObsXM6hUtqQISh8DJsw2fAftAG6T80/uC/rv7HWBiofCQ7Oeb7zSU=
+	t=1718715849; cv=none; b=IdaZkDYD/+/3yUG16gdFrditiJgXAPiLt/xZaxCjgxU7qKclmCf7uTcyX/Z1RgpKxijMsxd6J1Jj6Lpp5NL6fbFafkdrkMJPqPxhXD8XQcshgxgKfbilD0A87H4Cuw3cLfvckbnZnjTsd4f+ivN+3Q/N21b5hV0FUdWdq+dILGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715846; c=relaxed/simple;
-	bh=ukWaCu/eef1RvA+VglO61R7RJI0O3J0gzNE4ockmCGw=;
+	s=arc-20240116; t=1718715849; c=relaxed/simple;
+	bh=hP1qZ4VaHGcYWn6a48luB4Ib0dmkE+S9Uz4d3b7hv2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mjuP51xgbO0lJv96WPPiyTTAIyscqRJe+45Ix3oNgc4Hv75tKmTum5MIIK2c5US9/cSo2WcRNscaXb3XqtL/kLwxUVpzs7/38CiqZKRjeNoxHNxDgbdMnOkxNB26tzaY827M++dRVtfzQUoOHIME7Fb01WEepR1rblJFsGO3P74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=utdi7rSn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QOlBBLrVjTqqVQNi2ka+ejQ6Reeu5qTaUpgxu2SGdLAwrp/xpJR8nckd1HJwrTmL/N6yJ8VmJwOKB6yjuAYtAN88dVedn7CtWkqIZZkx2R7yfOIZG4K2603yHX2fE9WJ7Bv11tCspWZOzqjAZyoKj4NfsGRDfLrmZdLWqQI+MnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QGkGyiv6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="utdi7rSn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6129EC3277B;
-	Tue, 18 Jun 2024 13:04:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QGkGyiv6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F21EC3277B;
+	Tue, 18 Jun 2024 13:04:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715846;
-	bh=ukWaCu/eef1RvA+VglO61R7RJI0O3J0gzNE4ockmCGw=;
+	s=korg; t=1718715849;
+	bh=hP1qZ4VaHGcYWn6a48luB4Ib0dmkE+S9Uz4d3b7hv2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=utdi7rSn3lUJ7i9TYCZp7JLa7TRz2YpjaC2+JAsi7Dz66Q7Q62jxbFOR9miBLjADY
-	 VRjb1MeP+HUHnCTTFOWqqujU9hfuceYV1NJXldXpmFM7pkoqw4fOU++5GhYO1Hz0zb
-	 z5+7XP1GXEyrVgmSUtG234ZpPHlImD/blwSfMOS8=
+	b=QGkGyiv6v48It8akJYXbnhpH1yxXJGUp5TbgGRvhzpaSK/LKO7ejYvzGus9DV8Yud
+	 XXx9wOb6vzPOWvsmMpR1scky3Re021p9LzmYcqOVuDcH1CL29gsLdBAAM0t9ldDfUM
+	 eTIp6ZarCAnUCPejOTkzYyx2u2QkOmWIxJ+oZVdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 415/770] fanotify: wire up FAN_RENAME event
-Date: Tue, 18 Jun 2024 14:34:28 +0200
-Message-ID: <20240618123423.304364099@linuxfoundation.org>
+Subject: [PATCH 5.10 416/770] exit: Implement kthread_exit
+Date: Tue, 18 Jun 2024 14:34:29 +0200
+Message-ID: <20240618123423.343619986@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,80 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Eric W. Biederman <ebiederm@xmission.com>
 
-[ Upstream commit 8cc3b1ccd930fe6971e1527f0c4f1bdc8cb56026 ]
+[ Upstream commit bbda86e988d4c124e4cfa816291cbd583ae8bfb1 ]
 
-FAN_RENAME is the successor of FAN_MOVED_FROM and FAN_MOVED_TO
-and can be used to get the old and new parent+name information in
-a single event.
+The way the per task_struct exit_code is used by kernel threads is not
+quite compatible how it is used by userspace applications.  The low
+byte of the userspace exit_code value encodes the exit signal.  While
+kthreads just use the value as an int holding ordinary kernel function
+exit status like -EPERM.
 
-FAN_MOVED_FROM and FAN_MOVED_TO are still supported for backward
-compatibility, but it makes little sense to use them together with
-FAN_RENAME in the same group.
+Add kthread_exit to clearly separate the two kinds of uses.
 
-FAN_RENAME uses special info type records to report the old and
-new parent+name, so reporting only old and new parent id is less
-useful and was not implemented.
-Therefore, FAN_REANAME requires a group with flag FAN_REPORT_NAME.
-
-Link: https://lore.kernel.org/r/20211129201537.1932819-12-amir73il@gmail.com
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
+Stable-dep-of: ca3574bd653a ("exit: Rename module_put_and_exit to module_put_and_kthread_exit")
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/fanotify/fanotify.c      | 2 +-
- fs/notify/fanotify/fanotify_user.c | 8 ++++++++
- include/linux/fanotify.h           | 3 ++-
- 3 files changed, 11 insertions(+), 2 deletions(-)
+ include/linux/kthread.h |  1 +
+ kernel/kthread.c        | 23 +++++++++++++++++++----
+ tools/objtool/check.c   |  1 +
+ 3 files changed, 21 insertions(+), 4 deletions(-)
 
-diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
-index 0da305b6f3e2f..985e995d2a398 100644
---- a/fs/notify/fanotify/fanotify.c
-+++ b/fs/notify/fanotify/fanotify.c
-@@ -930,7 +930,7 @@ static int fanotify_handle_event(struct fsnotify_group *group, u32 mask,
- 	BUILD_BUG_ON(FAN_FS_ERROR != FS_ERROR);
- 	BUILD_BUG_ON(FAN_RENAME != FS_RENAME);
+diff --git a/include/linux/kthread.h b/include/linux/kthread.h
+index 2484ed97e72f5..9dae77a97a033 100644
+--- a/include/linux/kthread.h
++++ b/include/linux/kthread.h
+@@ -68,6 +68,7 @@ void *kthread_probe_data(struct task_struct *k);
+ int kthread_park(struct task_struct *k);
+ void kthread_unpark(struct task_struct *k);
+ void kthread_parkme(void);
++void kthread_exit(long result) __noreturn;
  
--	BUILD_BUG_ON(HWEIGHT32(ALL_FANOTIFY_EVENT_BITS) != 20);
-+	BUILD_BUG_ON(HWEIGHT32(ALL_FANOTIFY_EVENT_BITS) != 21);
+ int kthreadd(void *unused);
+ extern struct task_struct *kthreadd_task;
+diff --git a/kernel/kthread.c b/kernel/kthread.c
+index 508fe52782857..9d6cc9c15a55e 100644
+--- a/kernel/kthread.c
++++ b/kernel/kthread.c
+@@ -262,6 +262,21 @@ void kthread_parkme(void)
+ }
+ EXPORT_SYMBOL_GPL(kthread_parkme);
  
- 	mask = fanotify_group_event_mask(group, iter_info, &match_mask,
- 					 mask, data, data_type, dir);
-diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
-index e16b18fdf1a65..3bac2329dc35f 100644
---- a/fs/notify/fanotify/fanotify_user.c
-+++ b/fs/notify/fanotify/fanotify_user.c
-@@ -1599,6 +1599,14 @@ static int do_fanotify_mark(int fanotify_fd, unsigned int flags, __u64 mask,
- 	    (!fid_mode || mark_type == FAN_MARK_MOUNT))
- 		goto fput_and_out;
- 
-+	/*
-+	 * FAN_RENAME uses special info type records to report the old and
-+	 * new parent+name.  Reporting only old and new parent id is less
-+	 * useful and was not implemented.
-+	 */
-+	if (mask & FAN_RENAME && !(fid_mode & FAN_REPORT_NAME))
-+		goto fput_and_out;
++/**
++ * kthread_exit - Cause the current kthread return @result to kthread_stop().
++ * @result: The integer value to return to kthread_stop().
++ *
++ * While kthread_exit can be called directly, it exists so that
++ * functions which do some additional work in non-modular code such as
++ * module_put_and_kthread_exit can be implemented.
++ *
++ * Does not return.
++ */
++void __noreturn kthread_exit(long result)
++{
++	do_exit(result);
++}
 +
- 	if (flags & FAN_MARK_FLUSH) {
- 		ret = 0;
- 		if (mark_type == FAN_MARK_MOUNT)
-diff --git a/include/linux/fanotify.h b/include/linux/fanotify.h
-index 376e050e6f384..3afdf339d53c9 100644
---- a/include/linux/fanotify.h
-+++ b/include/linux/fanotify.h
-@@ -82,7 +82,8 @@ extern struct ctl_table fanotify_table[]; /* for sysctl */
-  * Directory entry modification events - reported only to directory
-  * where entry is modified and not to a watching parent.
-  */
--#define FANOTIFY_DIRENT_EVENTS	(FAN_MOVE | FAN_CREATE | FAN_DELETE)
-+#define FANOTIFY_DIRENT_EVENTS	(FAN_MOVE | FAN_CREATE | FAN_DELETE | \
-+				 FAN_RENAME)
+ static int kthread(void *_create)
+ {
+ 	/* Copy data: it's on kthread's stack */
+@@ -279,13 +294,13 @@ static int kthread(void *_create)
+ 	done = xchg(&create->done, NULL);
+ 	if (!done) {
+ 		kfree(create);
+-		do_exit(-EINTR);
++		kthread_exit(-EINTR);
+ 	}
  
- /* Events that can be reported with event->fd */
- #define FANOTIFY_FD_EVENTS (FANOTIFY_PATH_EVENTS | FANOTIFY_PERM_EVENTS)
+ 	if (!self) {
+ 		create->result = ERR_PTR(-ENOMEM);
+ 		complete(done);
+-		do_exit(-ENOMEM);
++		kthread_exit(-ENOMEM);
+ 	}
+ 
+ 	self->threadfn = threadfn;
+@@ -312,7 +327,7 @@ static int kthread(void *_create)
+ 		__kthread_parkme(self);
+ 		ret = threadfn(data);
+ 	}
+-	do_exit(ret);
++	kthread_exit(ret);
+ }
+ 
+ /* called from do_fork() to get node information for about to be created task */
+@@ -621,7 +636,7 @@ EXPORT_SYMBOL_GPL(kthread_park);
+  * instead of calling wake_up_process(): the thread will exit without
+  * calling threadfn().
+  *
+- * If threadfn() may call do_exit() itself, the caller must ensure
++ * If threadfn() may call kthread_exit() itself, the caller must ensure
+  * task_struct can't go away.
+  *
+  * Returns the result of threadfn(), or %-EINTR if wake_up_process()
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index 059b78d08f7af..6afa1f8ca1614 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -168,6 +168,7 @@ static bool __dead_end_function(struct objtool_file *file, struct symbol *func,
+ 		"panic",
+ 		"do_exit",
+ 		"do_task_dead",
++		"kthread_exit",
+ 		"make_task_dead",
+ 		"__module_put_and_exit",
+ 		"complete_and_exit",
 -- 
 2.43.0
 
