@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9477F185E4B;
-	Tue, 18 Jun 2024 13:11:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80DF0158D72;
+	Tue, 18 Jun 2024 13:11:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716302; cv=none; b=APJelYmcZVpC7aLUeZ1GWiLiIdbYrFIRq4AUrMRg3YSqpCtzxn2u/aYZeKH095qHUc/nyseTeFZ0pZHBIohFmxsfYqaYWFAH1Nu/LYvunhuPl7W2/UXmUXSTFiKi12n8tEnvtbtHmU2XxCK+mY2unXrio3+EsafFfgGKEMFulPg=
+	t=1718716305; cv=none; b=Vuy69bTQGSsNALOIBUq9kKfCiFtczZJYACLRnB2lgZPHrDC7eYq+9mUiEfpTq15mKvE+4ZgS1g8AykjZllhOyEsNKHoigRvWdzJCbP8fyJp+QxIfwF7A88nG8FIGHh9HsTzuGbhwvrAsWOLnwzaKs1TTYE02tHRoY5Ew+CBVSLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716302; c=relaxed/simple;
-	bh=gkpLuG1LryVEKysYhnxs3Z2r93/W7HwsXiJrwk8qMqI=;
+	s=arc-20240116; t=1718716305; c=relaxed/simple;
+	bh=u+jaebYJBKjnL1SMdz6orvT42AqbfIz0b0BGG2nVeso=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PWB0apr1U6fp8pDFRoSvAfEWDinvDKKJ1WsiLGwFxNndR4XjxEn9WImu3QxaDhxZC0xYDquW388zhPRzPs2CeVzCtLsRUiovGx5mqbmSW/skS8HFX86QO7lQ87g0KB7H73bTqbP3jJ2GaoNKNDDnAS7tgqIeZTSKibHCRwL506w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rWrCL65p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OpaAzGFwG32a2RzK/ojTbd3/Vrjw2sPTJ6ksJgpa0jA8j1aJ9xhJsU43GX7PGbBHLYbL5mFNbyQ+8FBjUbJKj9sZ4cc/fQaN1/q8vf5srLjYNDj6MLDN/IDnq6uNPTFpFbcx6AKxL2McUuWYiMyCgB2Ud3c2QQ6GctBbkE/ftsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MhnLxxtz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rWrCL65p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1301AC3277B;
-	Tue, 18 Jun 2024 13:11:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MhnLxxtz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 069E8C3277B;
+	Tue, 18 Jun 2024 13:11:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716302;
-	bh=gkpLuG1LryVEKysYhnxs3Z2r93/W7HwsXiJrwk8qMqI=;
+	s=korg; t=1718716305;
+	bh=u+jaebYJBKjnL1SMdz6orvT42AqbfIz0b0BGG2nVeso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rWrCL65pO60i1jQukKvh2OyiGzvIZZ/Ruwkqu+jagsXlaYwDR4yCd0X7r1lYK2PT9
-	 DXX+1rIWERdFZ00fijMXTbkROAhyRA5t2JIQKomFcjMRrwRO5czjdC4e5kaE7WXRWj
-	 aFvFrFWl7lU9AmTJ/9wcTb2qdITmwpFQk+hdq5Zw=
+	b=MhnLxxtzC9Vvukjh2/3yFBAU80a4OtB0g//TQrEvLhbN8KH+BU4sdf3PkN9nnI/gi
+	 nXnrFFCEyTEjYVxqsoTXkEtnJub7szpmlXj8KmXcWbFSmGX1VxqridUteQOThE/hvR
+	 +aTfjo8nJeRKrNWuffEky6CujxqCss3W4BUQfyRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 600/770] NFSD: Shrink size of struct nfsd4_copy
-Date: Tue, 18 Jun 2024 14:37:33 +0200
-Message-ID: <20240618123430.451307295@linuxfoundation.org>
+Subject: [PATCH 5.10 601/770] NFSD: Reorder the fields in struct nfsd4_op
+Date: Tue, 18 Jun 2024 14:37:34 +0200
+Message-ID: <20240618123430.489468989@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,99 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 87689df694916c40e8e6c179ab1c8710f65cb6c6 ]
+[ Upstream commit d314309425ad5dc1b6facdb2d456580fb5fa5e3a ]
 
-struct nfsd4_copy is part of struct nfsd4_op, which resides in an
-8-element array.
+Pack the fields to reduce the size of struct nfsd4_op, which is used
+an array in struct nfsd4_compoundargs.
 
 sizeof(struct nfsd4_op):
-Before: /* size: 1696, cachelines: 27, members: 5 */
-After:  /* size: 672, cachelines: 11, members: 5 */
+Before: /* size: 672, cachelines: 11, members: 5 */
+After:  /* size: 640, cachelines: 10, members: 5 */
 
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4proc.c | 8 ++++++--
- fs/nfsd/nfs4xdr.c  | 5 ++++-
- fs/nfsd/xdr4.h     | 2 +-
- 3 files changed, 11 insertions(+), 4 deletions(-)
+ fs/nfsd/xdr4.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 3ed9c36bc4078..7fb1ef7c4383e 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1291,6 +1291,7 @@ void nfs4_put_copy(struct nfsd4_copy *copy)
- {
- 	if (!refcount_dec_and_test(&copy->refcount))
- 		return;
-+	kfree(copy->cp_src);
- 	kfree(copy);
- }
- 
-@@ -1544,7 +1545,7 @@ nfsd4_setup_inter_ssc(struct svc_rqst *rqstp,
- 	if (status)
- 		goto out;
- 
--	status = nfsd4_interssc_connect(&copy->cp_src, rqstp, mount);
-+	status = nfsd4_interssc_connect(copy->cp_src, rqstp, mount);
- 	if (status)
- 		goto out;
- 
-@@ -1751,7 +1752,7 @@ static void dup_copy_fields(struct nfsd4_copy *src, struct nfsd4_copy *dst)
- 		dst->nf_src = nfsd_file_get(src->nf_src);
- 
- 	memcpy(&dst->cp_stateid, &src->cp_stateid, sizeof(src->cp_stateid));
--	memcpy(&dst->cp_src, &src->cp_src, sizeof(struct nl4_server));
-+	memcpy(dst->cp_src, src->cp_src, sizeof(struct nl4_server));
- 	memcpy(&dst->stateid, &src->stateid, sizeof(src->stateid));
- 	memcpy(&dst->c_fh, &src->c_fh, sizeof(src->c_fh));
- 	dst->ss_mnt = src->ss_mnt;
-@@ -1845,6 +1846,9 @@ nfsd4_copy(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 		async_copy = kzalloc(sizeof(struct nfsd4_copy), GFP_KERNEL);
- 		if (!async_copy)
- 			goto out_err;
-+		async_copy->cp_src = kmalloc(sizeof(*async_copy->cp_src), GFP_KERNEL);
-+		if (!async_copy->cp_src)
-+			goto out_err;
- 		if (!nfs4_init_copy_state(nn, copy))
- 			goto out_err;
- 		refcount_set(&async_copy->refcount, 1);
-diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
-index 537c358fec98c..890f1009bd4ca 100644
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -1920,6 +1920,9 @@ nfsd4_decode_copy(struct nfsd4_compoundargs *argp, struct nfsd4_copy *copy)
- 
- 	if (xdr_stream_decode_u32(argp->xdr, &count) < 0)
- 		return nfserr_bad_xdr;
-+	copy->cp_src = svcxdr_tmpalloc(argp, sizeof(*copy->cp_src));
-+	if (copy->cp_src == NULL)
-+		return nfserr_jukebox;
- 	copy->cp_intra = false;
- 	if (count == 0) { /* intra-server copy */
- 		copy->cp_intra = true;
-@@ -1927,7 +1930,7 @@ nfsd4_decode_copy(struct nfsd4_compoundargs *argp, struct nfsd4_copy *copy)
- 	}
- 
- 	/* decode all the supplied server addresses but use only the first */
--	status = nfsd4_decode_nl4_server(argp, &copy->cp_src);
-+	status = nfsd4_decode_nl4_server(argp, copy->cp_src);
- 	if (status)
- 		return status;
- 
 diff --git a/fs/nfsd/xdr4.h b/fs/nfsd/xdr4.h
-index 27f9300fadbe0..c44c76cef40cd 100644
+index c44c76cef40cd..621937fae9acb 100644
 --- a/fs/nfsd/xdr4.h
 +++ b/fs/nfsd/xdr4.h
-@@ -540,7 +540,7 @@ struct nfsd4_copy {
- 	u64			cp_src_pos;
- 	u64			cp_dst_pos;
- 	u64			cp_count;
--	struct nl4_server	cp_src;
-+	struct nl4_server	*cp_src;
- 	bool			cp_intra;
+@@ -606,8 +606,9 @@ struct nfsd4_copy_notify {
  
- 	/* both */
+ struct nfsd4_op {
+ 	u32					opnum;
+-	const struct nfsd4_operation *		opdesc;
+ 	__be32					status;
++	const struct nfsd4_operation		*opdesc;
++	struct nfs4_replay			*replay;
+ 	union nfsd4_op_u {
+ 		struct nfsd4_access		access;
+ 		struct nfsd4_close		close;
+@@ -671,7 +672,6 @@ struct nfsd4_op {
+ 		struct nfsd4_listxattrs		listxattrs;
+ 		struct nfsd4_removexattr	removexattr;
+ 	} u;
+-	struct nfs4_replay *			replay;
+ };
+ 
+ bool nfsd4_cache_this_op(struct nfsd4_op *);
 -- 
 2.43.0
 
