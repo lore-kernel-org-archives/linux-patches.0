@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8E515A857;
-	Tue, 18 Jun 2024 13:20:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A0F15A857;
+	Tue, 18 Jun 2024 13:20:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716822; cv=none; b=nApivXcdht2PERopKIi3jNLTZ73czG4v7VkYpK0AFrdj5X5GPQxs6y1m0ES6osWo8to8IstRS9o0KqRQ9iDMfp1bdInTPjx0wydQmslZUsYXi7mNn32PXmcJHV326YJ2Wc5jcz+BZaoAP9pQYavYTHrnDm0ztmATOI9mJuVuLGo=
+	t=1718716825; cv=none; b=NGsIges1afDLpKIe4LzyycGO6wmVkdJ9ooghZSTogjL2Mcmt04CxvF66ze1LUqqtoJdx/cZPJZzhw41m/+gGDj5uH1KvaA6lNVg9Zt9PGmkXqaCF4sY9BvOKdebWGeFDJn9UNgvTvNNdVGVFH7iqi36gS7LdNDGkJnkQ+z0wb6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716822; c=relaxed/simple;
-	bh=IT3/P5sE3tdjqOn/82ts5WZd7jH7cku38AQiyyhIUa4=;
+	s=arc-20240116; t=1718716825; c=relaxed/simple;
+	bh=ZSv4ddwQKUCMSKQL98iP/hGYzk29HspwX2m/dLSjJ1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cIZTGuIFDzgzSDH5LcUwOSmoxaklmilLL+ai7Hn/FbHAS0TkWB8vrjb9QMl9tHhzMayf3YiDKhGPVMKHh1SqEnPgxsDNsIyA/9OF9AOyC7YKCiwQvKLir8jTTF1skoIuYFFeQOYzxnyFUzYk+fgEfZKj2Shbx+Bari3JM/mjWg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JF2eUssZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mi7di/+THZZYfmtofwWvIljTptX7TUenCOKL+sfUUN5ngsUpWQoHQBfe3TNGdZnO/x0MZXYwYd5YcSoefq9thzUWwazBFNvUkWQVUps9c/fw9g1v97gV4xqMmEBGtYkOrE8pPCETyvUUBI9+WAWrMBnGS59PVzts7vH2ISgk61A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fAcdodbP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JF2eUssZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C6E7C3277B;
-	Tue, 18 Jun 2024 13:20:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fAcdodbP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E600C3277B;
+	Tue, 18 Jun 2024 13:20:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716822;
-	bh=IT3/P5sE3tdjqOn/82ts5WZd7jH7cku38AQiyyhIUa4=;
+	s=korg; t=1718716825;
+	bh=ZSv4ddwQKUCMSKQL98iP/hGYzk29HspwX2m/dLSjJ1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JF2eUssZzR2LuuceyqdcdDwq1TwwzqGLXdhS+W3TBG7eUjGQiFZphOxIvxjiu4DtG
-	 PCIdn493I/IcFJbVsZqS7ZMjyg01xLxU7dnFeKd6kTSo7czwWHS9ofvnU/avhASrUj
-	 hSwoFoukDFIwAiPvZJbQKijrFRL/J9V2jskoC9Ec=
+	b=fAcdodbPqlqaqbmB34sfCbBIw1vahNM572Drd3YEqocdRMq23Ov/A3B+uzqoXXG/a
+	 lz4IR2PW1wypCRn51R09Qmcpm6H2RucaDbf56zjjBf5P+Cmo+VTQAhmIAHFNuDRAn/
+	 xK/UA+1FcTMS2dXVWtR9phEeoiFclO20goyRRiFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@idosch.org>,
-	NeilBrown <neilb@suse.de>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Tom Talpey <tom@talpey.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 757/770] lockd: drop inappropriate svc_get() from locked_get()
-Date: Tue, 18 Jun 2024 14:40:10 +0200
-Message-ID: <20240618123436.487195259@linuxfoundation.org>
+Subject: [PATCH 5.10 758/770] NFSD: Add an nfsd4_encode_nfstime4() helper
+Date: Tue, 18 Jun 2024 14:40:11 +0200
+Message-ID: <20240618123436.527723149@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,55 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 665e89ab7c5af1f2d260834c861a74b01a30f95f ]
+[ Upstream commit 262176798b18b12fd8ab84c94cfece0a6a652476 ]
 
-The below-mentioned patch was intended to simplify refcounting on the
-svc_serv used by locked.  The goal was to only ever have a single
-reference from the single thread.  To that end we dropped a call to
-lockd_start_svc() (except when creating thread) which would take a
-reference, and dropped the svc_put(serv) that would drop that reference.
+Clean up: de-duplicate some common code.
 
-Unfortunately we didn't also remove the svc_get() from
-lockd_create_svc() in the case where the svc_serv already existed.
-So after the patch:
- - on the first call the svc_serv was allocated and the one reference
-   was given to the thread, so there are no extra references
- - on subsequent calls svc_get() was called so there is now an extra
-   reference.
-This is clearly not consistent.
-
-The inconsistency is also clear in the current code in lockd_get()
-takes *two* references, one on nlmsvc_serv and one by incrementing
-nlmsvc_users.   This clearly does not match lockd_put().
-
-So: drop that svc_get() from lockd_get() (which used to be in
-lockd_create_svc().
-
-Reported-by: Ido Schimmel <idosch@idosch.org>
-Closes: https://lore.kernel.org/linux-nfs/ZHsI%2FH16VX9kJQX1@shredder/T/#u
-Fixes: b73a2972041b ("lockd: move lockd_start_svc() call into lockd_create_svc()")
-Signed-off-by: NeilBrown <neilb@suse.de>
-Tested-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Acked-by: Tom Talpey <tom@talpey.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/lockd/svc.c | 1 -
- 1 file changed, 1 deletion(-)
+ fs/nfsd/nfs4xdr.c | 46 ++++++++++++++++++++++++++--------------------
+ 1 file changed, 26 insertions(+), 20 deletions(-)
 
-diff --git a/fs/lockd/svc.c b/fs/lockd/svc.c
-index 59ef8a1f843f3..5579e67da17db 100644
---- a/fs/lockd/svc.c
-+++ b/fs/lockd/svc.c
-@@ -355,7 +355,6 @@ static int lockd_get(void)
- 	int error;
+diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
+index d62382dfc135e..a81938c1e3efb 100644
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -2541,6 +2541,20 @@ static __be32 *encode_change(__be32 *p, struct kstat *stat, struct inode *inode,
+ 	return p;
+ }
  
- 	if (nlmsvc_serv) {
--		svc_get(nlmsvc_serv);
- 		nlmsvc_users++;
- 		return 0;
++static __be32 nfsd4_encode_nfstime4(struct xdr_stream *xdr,
++				    struct timespec64 *tv)
++{
++	__be32 *p;
++
++	p = xdr_reserve_space(xdr, XDR_UNIT * 3);
++	if (!p)
++		return nfserr_resource;
++
++	p = xdr_encode_hyper(p, (s64)tv->tv_sec);
++	*p = cpu_to_be32(tv->tv_nsec);
++	return nfs_ok;
++}
++
+ /*
+  * ctime (in NFSv4, time_metadata) is not writeable, and the client
+  * doesn't really care what resolution could theoretically be stored by
+@@ -3346,11 +3360,9 @@ nfsd4_encode_fattr(struct xdr_stream *xdr, struct svc_fh *fhp,
+ 		p = xdr_encode_hyper(p, dummy64);
  	}
+ 	if (bmval1 & FATTR4_WORD1_TIME_ACCESS) {
+-		p = xdr_reserve_space(xdr, 12);
+-		if (!p)
+-			goto out_resource;
+-		p = xdr_encode_hyper(p, (s64)stat.atime.tv_sec);
+-		*p++ = cpu_to_be32(stat.atime.tv_nsec);
++		status = nfsd4_encode_nfstime4(xdr, &stat.atime);
++		if (status)
++			goto out;
+ 	}
+ 	if (bmval1 & FATTR4_WORD1_TIME_DELTA) {
+ 		p = xdr_reserve_space(xdr, 12);
+@@ -3359,25 +3371,19 @@ nfsd4_encode_fattr(struct xdr_stream *xdr, struct svc_fh *fhp,
+ 		p = encode_time_delta(p, d_inode(dentry));
+ 	}
+ 	if (bmval1 & FATTR4_WORD1_TIME_METADATA) {
+-		p = xdr_reserve_space(xdr, 12);
+-		if (!p)
+-			goto out_resource;
+-		p = xdr_encode_hyper(p, (s64)stat.ctime.tv_sec);
+-		*p++ = cpu_to_be32(stat.ctime.tv_nsec);
++		status = nfsd4_encode_nfstime4(xdr, &stat.ctime);
++		if (status)
++			goto out;
+ 	}
+ 	if (bmval1 & FATTR4_WORD1_TIME_MODIFY) {
+-		p = xdr_reserve_space(xdr, 12);
+-		if (!p)
+-			goto out_resource;
+-		p = xdr_encode_hyper(p, (s64)stat.mtime.tv_sec);
+-		*p++ = cpu_to_be32(stat.mtime.tv_nsec);
++		status = nfsd4_encode_nfstime4(xdr, &stat.mtime);
++		if (status)
++			goto out;
+ 	}
+ 	if (bmval1 & FATTR4_WORD1_TIME_CREATE) {
+-		p = xdr_reserve_space(xdr, 12);
+-		if (!p)
+-			goto out_resource;
+-		p = xdr_encode_hyper(p, (s64)stat.btime.tv_sec);
+-		*p++ = cpu_to_be32(stat.btime.tv_nsec);
++		status = nfsd4_encode_nfstime4(xdr, &stat.btime);
++		if (status)
++			goto out;
+ 	}
+ 	if (bmval1 & FATTR4_WORD1_MOUNTED_ON_FILEID) {
+ 		u64 ino = stat.ino;
 -- 
 2.43.0
 
