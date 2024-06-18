@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A4E153810;
-	Tue, 18 Jun 2024 12:55:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2156013B79B;
+	Tue, 18 Jun 2024 12:55:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715328; cv=none; b=Djv5y7DbncjWw6ucDcgvrLwb5nLeU2lLptC4ztz9/UstqlKSop3Q+GOAGGJfqxCgh/krjLHXhCHg+4iszMH0j/8US26CakX0PGhUYp+D/A/+i9A8ggrYtntHnrL8uBYDs62QfOhTg4+OmYvX4Pjf3N8FxXXWVEWIIq4EfBNKT04=
+	t=1718715331; cv=none; b=sYDggnmHfdLnn4KJ5ODNRDfjAogm2KlBgpA8cFUh6kmrYpadQw6VikySH2fKD/mF72sTFv6yVgTdk7ehFXD4uzkJX5j3Idm1MQ+1nOOubrSIdC3UOf93h2767w6RwJsi9h9clq4mXtWrWkxFZ9owXN1qmraMZTVeo8L2KoA7yow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715328; c=relaxed/simple;
-	bh=9yLYTuHIdtZcBsPv2tTsS0id8bKXyKY2RlewUiDA7iI=;
+	s=arc-20240116; t=1718715331; c=relaxed/simple;
+	bh=RKA6k++QZpXbaW8ma+2M8uvP29/ugWwdaqp1qrF7i38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q+gmuIwE2UNQ5nP1UPfXdJXL9fcRYN9I2er9T7vKD+P4ZBM2f2XsizNbcOdg7r9yoAyUVAJJ+BxeywWfTeFF6/ZDqHrP1AXvSwwDjnRWCwynhNVCPm4Y+p+YIjtRgRt9tY0HcPmSEgzrlA6qgsVm7v2gn56wn1yxAVgExt3aG8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Px14B9I/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZNJ8nyFwbm3VBy/Wc45QEs1j4pJPT2M3BNeII6ypjobBZu1DlQ6ltGo+tGGougLho0NhYf4Ciw4OjxVs9QJOSPK1IS735pLWt/JF53+mfkUR621N8/gz3gxKVAcw7yoEjsffcnwS7EeOPKBJQiYvd3Dh4EV6uoO6D6gHFPpOILc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xHAZWwWN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Px14B9I/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE634C32786;
-	Tue, 18 Jun 2024 12:55:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xHAZWwWN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C3F6C32786;
+	Tue, 18 Jun 2024 12:55:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715328;
-	bh=9yLYTuHIdtZcBsPv2tTsS0id8bKXyKY2RlewUiDA7iI=;
+	s=korg; t=1718715331;
+	bh=RKA6k++QZpXbaW8ma+2M8uvP29/ugWwdaqp1qrF7i38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Px14B9I/iYELIR6tU/LYZHtY6UXRvx2BawXQRkmdcuB1ONLl8vXFrWTtOKhaftEmQ
-	 QGE5cAT8gM7IhxDgEKm1mQjp764vB29/X1ZdLwl9J7cy7kKfjGQvgfCD6flXuD05Y5
-	 Gs/TiDw8sShjGS1ZZYBX+ey5dRVMry0p7e5GrWqw=
+	b=xHAZWwWNKoiwmkH1Xmsm40nSbaal+FxKtOf8lUPBbHiFt2JASRJi6gb6cMy6TztjM
+	 wDWSY7+3xhnFmlWD5ZWBiJIUR6ViUjGOAo21V6Y7BfQ7EWFvYsSUTSv0740In26OKr
+	 FCZxUv4LoPdAfQY1pWeouuNlZu2ECiPBKTz7itd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	"J. Bruce Fields" <bfields@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 270/770] NFSD: Add nfsd_clid_verf_mismatch tracepoint
-Date: Tue, 18 Jun 2024 14:32:03 +0200
-Message-ID: <20240618123417.693889207@linuxfoundation.org>
+Subject: [PATCH 5.10 271/770] NFSD: Remove trace_nfsd_clid_inuse_err
+Date: Tue, 18 Jun 2024 14:32:04 +0200
+Message-ID: <20240618123417.731823063@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,94 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 744ea54c869cebe41fbad5f53f8a8ca5d93a5c97 ]
+[ Upstream commit 0bfaacac57e64aa342f865b8ddcab06ca59a6f83 ]
 
-Record when a client presents a different boot verifier than the
-one we know about. Typically this is a sign the client has
-rebooted, but sometimes it signals a conflicting client ID, which
-the client's administrator will need to address.
+This tracepoint has been replaced by nfsd_clid_cred_mismatch and
+nfsd_clid_verf_mismatch, and can simply be removed.
 
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: J. Bruce Fields <bfields@redhat.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 11 ++++++++---
- fs/nfsd/trace.h     | 32 ++++++++++++++++++++++++++++++++
- 2 files changed, 40 insertions(+), 3 deletions(-)
+ fs/nfsd/trace.h | 24 ------------------------
+ 1 file changed, 24 deletions(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 2e18b1ad889d7..8169625fdd233 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -3213,6 +3213,7 @@ nfsd4_exchange_id(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 			goto out_copy;
- 		}
- 		/* case 5, client reboot */
-+		trace_nfsd_clid_verf_mismatch(conf, rqstp, &verf);
- 		conf = NULL;
- 		goto out_new;
- 	}
-@@ -4018,9 +4019,13 @@ nfsd4_setclientid(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 	if (unconf)
- 		unhash_client_locked(unconf);
- 	/* We need to handle only case 1: probable callback update */
--	if (conf && same_verf(&conf->cl_verifier, &clverifier)) {
--		copy_clid(new, conf);
--		gen_confirm(new, nn);
-+	if (conf) {
-+		if (same_verf(&conf->cl_verifier, &clverifier)) {
-+			copy_clid(new, conf);
-+			gen_confirm(new, nn);
-+		} else
-+			trace_nfsd_clid_verf_mismatch(conf, rqstp,
-+						      &clverifier);
- 	}
- 	new->cl_minorversion = 0;
- 	gen_callback(new, setclid, rqstp);
 diff --git a/fs/nfsd/trace.h b/fs/nfsd/trace.h
-index bec85fc8be01a..0ab46a0c911d2 100644
+index 0ab46a0c911d2..2fac89e29f515 100644
 --- a/fs/nfsd/trace.h
 +++ b/fs/nfsd/trace.h
-@@ -564,6 +564,38 @@ TRACE_EVENT(nfsd_clid_cred_mismatch,
+@@ -596,30 +596,6 @@ TRACE_EVENT(nfsd_clid_verf_mismatch,
  	)
- )
+ );
  
-+TRACE_EVENT(nfsd_clid_verf_mismatch,
-+	TP_PROTO(
-+		const struct nfs4_client *clp,
-+		const struct svc_rqst *rqstp,
-+		const nfs4_verifier *verf
-+	),
-+	TP_ARGS(clp, rqstp, verf),
-+	TP_STRUCT__entry(
-+		__field(u32, cl_boot)
-+		__field(u32, cl_id)
-+		__array(unsigned char, cl_verifier, NFS4_VERIFIER_SIZE)
-+		__array(unsigned char, new_verifier, NFS4_VERIFIER_SIZE)
-+		__array(unsigned char, addr, sizeof(struct sockaddr_in6))
-+	),
-+	TP_fast_assign(
-+		__entry->cl_boot = clp->cl_clientid.cl_boot;
-+		__entry->cl_id = clp->cl_clientid.cl_id;
-+		memcpy(__entry->cl_verifier, (void *)&clp->cl_verifier,
-+		       NFS4_VERIFIER_SIZE);
-+		memcpy(__entry->new_verifier, (void *)verf,
-+		       NFS4_VERIFIER_SIZE);
-+		memcpy(__entry->addr, &rqstp->rq_xprt->xpt_remote,
-+			sizeof(struct sockaddr_in6));
-+	),
-+	TP_printk("client %08x:%08x verf=0x%s, updated=0x%s from addr=%pISpc",
-+		__entry->cl_boot, __entry->cl_id,
-+		__print_hex_str(__entry->cl_verifier, NFS4_VERIFIER_SIZE),
-+		__print_hex_str(__entry->new_verifier, NFS4_VERIFIER_SIZE),
-+		__entry->addr
-+	)
-+);
-+
- TRACE_EVENT(nfsd_clid_inuse_err,
- 	TP_PROTO(const struct nfs4_client *clp),
- 	TP_ARGS(clp),
+-TRACE_EVENT(nfsd_clid_inuse_err,
+-	TP_PROTO(const struct nfs4_client *clp),
+-	TP_ARGS(clp),
+-	TP_STRUCT__entry(
+-		__field(u32, cl_boot)
+-		__field(u32, cl_id)
+-		__array(unsigned char, addr, sizeof(struct sockaddr_in6))
+-		__field(unsigned int, namelen)
+-		__dynamic_array(unsigned char, name, clp->cl_name.len)
+-	),
+-	TP_fast_assign(
+-		__entry->cl_boot = clp->cl_clientid.cl_boot;
+-		__entry->cl_id = clp->cl_clientid.cl_id;
+-		memcpy(__entry->addr, &clp->cl_addr,
+-			sizeof(struct sockaddr_in6));
+-		__entry->namelen = clp->cl_name.len;
+-		memcpy(__get_dynamic_array(name), clp->cl_name.data,
+-			clp->cl_name.len);
+-	),
+-	TP_printk("nfs4_clientid %.*s already in use by %pISpc, client %08x:%08x",
+-		__entry->namelen, __get_str(name), __entry->addr,
+-		__entry->cl_boot, __entry->cl_id)
+-)
+-
+ /*
+  * from fs/nfsd/filecache.h
+  */
 -- 
 2.43.0
 
