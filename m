@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B3F19D087;
-	Tue, 18 Jun 2024 13:05:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8177D157E88;
+	Tue, 18 Jun 2024 13:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715929; cv=none; b=EeexK45BTo2tNFGo+PwhgM0hFZdZ4GdoDHSIQX8jKaWj9unjsz6tVD5GrUG/aQ4unM5LqzoRobXsM7bXM1lQJcJRhM164eakKyxdPEznLwESL2PNvmeqR6z+cNCc2wJuuQgKrt8kzoB+c2Y3P3dPNcH5AyaavE8ZGm1EElKljq0=
+	t=1718715932; cv=none; b=KVP8UsyEDpQn26o9EprHx+EoKr5T7r21CrpscwMmi4gl/jX5j3sSUZdvYBdcv1We0btQbkHZ9RxspJvNZG8vpuH1N8cg3WUyHswzb3rvasXH0/fLBSDyXyXzqJOtRzpWNjmkVDnNYUQRKuwr2IyrefbURiahO9POv8fwAygp2Ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715929; c=relaxed/simple;
-	bh=KgpU5j+8vIgFbMi9+77IT35qea8gnlk3zSqr3K+lfYg=;
+	s=arc-20240116; t=1718715932; c=relaxed/simple;
+	bh=Fr8ayGs8zwdvEZJ+Q8Lv1AAtdlIuE0oElLT8rPPWMrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dwNQyY5hvLjOApeZhzzbjWUR9qXxN9KjE5+DKCTmCaYdEZGVTbO/GWMtzmp1SPofZdTFgCHfmBh1OKOTqyux46GJ0oPS+pcfcJDtcqhbrawVNxyYvzPQxJSgi9ZB6K6kwi8Q9X7ij+aNIeHeMByVqWFuT3EheMrWEYWPiBtTT5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oEaFsjNq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qa2uDX/8dRPoQqjpiLTgDU64Qwstiy6nsm11SHQhjKM4laQQ7v1/I47lCnMG9biUdiNDL0HjmcCIPD+vI08hlEeIrwBDChaf8+RBRVZRuxXXiVO2Qsi2W3/WD7qPAunOODUamOXl8yFGkxL/HKSjGcVvnL8fBhtoWaQdsegsXWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EgLBZ+s5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oEaFsjNq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D306C3277B;
-	Tue, 18 Jun 2024 13:05:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EgLBZ+s5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06074C3277B;
+	Tue, 18 Jun 2024 13:05:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715929;
-	bh=KgpU5j+8vIgFbMi9+77IT35qea8gnlk3zSqr3K+lfYg=;
+	s=korg; t=1718715932;
+	bh=Fr8ayGs8zwdvEZJ+Q8Lv1AAtdlIuE0oElLT8rPPWMrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oEaFsjNqBB9K3BDTWp6CHO/Fgppxn8yrlPYcdRc0iRWs1cNxMwTM++7/50/om6Pdt
-	 paTTyOuZ67Kvx1Q3CVHMfpp2inta9vCbr/+/c/A3hT5YN+m9keSE5wqEz1NCgktiZZ
-	 tFfYccIQp4C7POBW8gZnSWmr/84pdmfIX9zFoUB8=
+	b=EgLBZ+s5rGLGyWeZ+d3o5VAXXciO4ZUuO6BkvBegL/cr67MSOnqyavt8oAuC45dau
+	 UYG/GO2jjv3oeJc7EyBBj3HmlZ4+/ndxLjbv0xG5P2IC8nyywMf+rNJp0X6nQqb89u
+	 qfYm5D79WBi7rmLjwjwsZqmq2xSN/Wa77/tjDR1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 447/770] NFSD: Fix zero-length NFSv3 WRITEs
-Date: Tue, 18 Jun 2024 14:35:00 +0200
-Message-ID: <20240618123424.547216607@linuxfoundation.org>
+Subject: [PATCH 5.10 474/770] SUNRPC: Remove the .svo_enqueue_xprt method
+Date: Tue, 18 Jun 2024 14:35:27 +0200
+Message-ID: <20240618123425.610036608@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,87 +52,152 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 6a2f774424bfdcc2df3e17de0cefe74a4269cad5 ]
+[ Upstream commit a9ff2e99e9fa501ec965da03c18a5422b37a2f44 ]
 
-The Linux NFS server currently responds to a zero-length NFSv3 WRITE
-request with NFS3ERR_IO. It responds to a zero-length NFSv4 WRITE
-with NFS4_OK and count of zero.
+We have never been able to track down and address the underlying
+cause of the performance issues with workqueue-based service
+support. svo_enqueue_xprt is called multiple times per RPC, so
+it adds instruction path length, but always ends up at the same
+function: svc_xprt_do_enqueue(). We do not anticipate needing
+this flexibility for dynamic nfsd thread management support.
 
-RFC 1813 says of the WRITE procedure's @count argument:
+As a micro-optimization, remove .svo_enqueue_xprt because
+Spectre/Meltdown makes virtual function calls more costly.
 
-count
-         The number of bytes of data to be written. If count is
-         0, the WRITE will succeed and return a count of 0,
-         barring errors due to permissions checking.
+This change essentially reverts commit b9e13cdfac70 ("nfsd/sunrpc:
+turn enqueueing a svc_xprt into a svc_serv operation").
 
-RFC 8881 has similar language for NFSv4, though NFSv4 removed the
-explicit @count argument because that value is already contained in
-the opaque payload array.
-
-The synthetic client pynfs's WRT4 and WRT15 tests do emit zero-
-length WRITEs to exercise this spec requirement. Commit fdec6114ee1f
-("nfsd4: zero-length WRITE should succeed") addressed the same
-problem there with the same fix.
-
-But interestingly the Linux NFS client does not appear to emit zero-
-length WRITEs, instead squelching them. I'm not aware of a test that
-can generate such WRITEs for NFSv3, so I wrote a naive C program to
-generate a zero-length WRITE and test this fix.
-
-Fixes: 8154ef2776aa ("NFSD: Clean up legacy NFS WRITE argument XDR decoders")
-Reported-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Cc: stable@vger.kernel.org
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs3proc.c | 6 +-----
- fs/nfsd/nfsproc.c  | 5 -----
- 2 files changed, 1 insertion(+), 10 deletions(-)
+ fs/lockd/svc.c                  |  1 -
+ fs/nfs/callback.c               |  2 --
+ fs/nfsd/nfssvc.c                |  1 -
+ include/linux/sunrpc/svc.h      |  3 ---
+ include/linux/sunrpc/svc_xprt.h |  1 -
+ net/sunrpc/svc_xprt.c           | 10 +++++-----
+ 6 files changed, 5 insertions(+), 13 deletions(-)
 
-diff --git a/fs/nfsd/nfs3proc.c b/fs/nfsd/nfs3proc.c
-index d26271c60ab44..1515c32e08db2 100644
---- a/fs/nfsd/nfs3proc.c
-+++ b/fs/nfsd/nfs3proc.c
-@@ -207,15 +207,11 @@ nfsd3_proc_write(struct svc_rqst *rqstp)
- 	fh_copy(&resp->fh, &argp->fh);
- 	resp->committed = argp->stable;
- 	nvecs = svc_fill_write_vector(rqstp, &argp->payload);
--	if (!nvecs) {
--		resp->status = nfserr_io;
--		goto out;
--	}
-+
- 	resp->status = nfsd_write(rqstp, &resp->fh, argp->offset,
- 				  rqstp->rq_vec, nvecs, &cnt,
- 				  resp->committed, resp->verf);
- 	resp->count = cnt;
--out:
- 	return rpc_success;
+diff --git a/fs/lockd/svc.c b/fs/lockd/svc.c
+index 0475c5a5d061e..3a05af8736259 100644
+--- a/fs/lockd/svc.c
++++ b/fs/lockd/svc.c
+@@ -353,7 +353,6 @@ static struct notifier_block lockd_inet6addr_notifier = {
+ static const struct svc_serv_ops lockd_sv_ops = {
+ 	.svo_shutdown		= svc_rpcb_cleanup,
+ 	.svo_function		= lockd,
+-	.svo_enqueue_xprt	= svc_xprt_do_enqueue,
+ 	.svo_module		= THIS_MODULE,
+ };
+ 
+diff --git a/fs/nfs/callback.c b/fs/nfs/callback.c
+index 054cc1255fac6..7a810f8850632 100644
+--- a/fs/nfs/callback.c
++++ b/fs/nfs/callback.c
+@@ -234,13 +234,11 @@ static int nfs_callback_up_net(int minorversion, struct svc_serv *serv,
+ 
+ static const struct svc_serv_ops nfs40_cb_sv_ops = {
+ 	.svo_function		= nfs4_callback_svc,
+-	.svo_enqueue_xprt	= svc_xprt_do_enqueue,
+ 	.svo_module		= THIS_MODULE,
+ };
+ #if defined(CONFIG_NFS_V4_1)
+ static const struct svc_serv_ops nfs41_cb_sv_ops = {
+ 	.svo_function		= nfs41_callback_svc,
+-	.svo_enqueue_xprt	= svc_xprt_do_enqueue,
+ 	.svo_module		= THIS_MODULE,
+ };
+ 
+diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
+index 2efe9d33a2827..3b79b97f2715d 100644
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -615,7 +615,6 @@ static int nfsd_get_default_max_blksize(void)
+ static const struct svc_serv_ops nfsd_thread_sv_ops = {
+ 	.svo_shutdown		= nfsd_last_thread,
+ 	.svo_function		= nfsd,
+-	.svo_enqueue_xprt	= svc_xprt_do_enqueue,
+ 	.svo_module		= THIS_MODULE,
+ };
+ 
+diff --git a/include/linux/sunrpc/svc.h b/include/linux/sunrpc/svc.h
+index f116141ea64d0..3c8ed018c6868 100644
+--- a/include/linux/sunrpc/svc.h
++++ b/include/linux/sunrpc/svc.h
+@@ -61,9 +61,6 @@ struct svc_serv_ops {
+ 	/* function for service threads to run */
+ 	int		(*svo_function)(void *);
+ 
+-	/* queue up a transport for servicing */
+-	void		(*svo_enqueue_xprt)(struct svc_xprt *);
+-
+ 	/* optional module to count when adding threads.
+ 	 * Thread function must call module_put_and_kthread_exit() to exit.
+ 	 */
+diff --git a/include/linux/sunrpc/svc_xprt.h b/include/linux/sunrpc/svc_xprt.h
+index c5278871f9e40..1311425ddab7f 100644
+--- a/include/linux/sunrpc/svc_xprt.h
++++ b/include/linux/sunrpc/svc_xprt.h
+@@ -131,7 +131,6 @@ int	svc_create_xprt(struct svc_serv *, const char *, struct net *,
+ 			const int, const unsigned short, int,
+ 			const struct cred *);
+ void	svc_xprt_received(struct svc_xprt *xprt);
+-void	svc_xprt_do_enqueue(struct svc_xprt *xprt);
+ void	svc_xprt_enqueue(struct svc_xprt *xprt);
+ void	svc_xprt_put(struct svc_xprt *xprt);
+ void	svc_xprt_copy_addrs(struct svc_rqst *rqstp, struct svc_xprt *xprt);
+diff --git a/net/sunrpc/svc_xprt.c b/net/sunrpc/svc_xprt.c
+index 570b092165d73..833952db23192 100644
+--- a/net/sunrpc/svc_xprt.c
++++ b/net/sunrpc/svc_xprt.c
+@@ -31,6 +31,7 @@ static int svc_deferred_recv(struct svc_rqst *rqstp);
+ static struct cache_deferred_req *svc_defer(struct cache_req *req);
+ static void svc_age_temp_xprts(struct timer_list *t);
+ static void svc_delete_xprt(struct svc_xprt *xprt);
++static void svc_xprt_do_enqueue(struct svc_xprt *xprt);
+ 
+ /* apparently the "standard" is that clients close
+  * idle connections after 5 minutes, servers after
+@@ -253,12 +254,12 @@ void svc_xprt_received(struct svc_xprt *xprt)
+ 	trace_svc_xprt_received(xprt);
+ 
+ 	/* As soon as we clear busy, the xprt could be closed and
+-	 * 'put', so we need a reference to call svc_enqueue_xprt with:
++	 * 'put', so we need a reference to call svc_xprt_do_enqueue with:
+ 	 */
+ 	svc_xprt_get(xprt);
+ 	smp_mb__before_atomic();
+ 	clear_bit(XPT_BUSY, &xprt->xpt_flags);
+-	xprt->xpt_server->sv_ops->svo_enqueue_xprt(xprt);
++	svc_xprt_do_enqueue(xprt);
+ 	svc_xprt_put(xprt);
+ }
+ EXPORT_SYMBOL_GPL(svc_xprt_received);
+@@ -410,7 +411,7 @@ static bool svc_xprt_ready(struct svc_xprt *xprt)
+ 	return false;
  }
  
-diff --git a/fs/nfsd/nfsproc.c b/fs/nfsd/nfsproc.c
-index 8ee329bc3815d..0a2bab7ef33c9 100644
---- a/fs/nfsd/nfsproc.c
-+++ b/fs/nfsd/nfsproc.c
-@@ -235,10 +235,6 @@ nfsd_proc_write(struct svc_rqst *rqstp)
- 		argp->len, argp->offset);
- 
- 	nvecs = svc_fill_write_vector(rqstp, &argp->payload);
--	if (!nvecs) {
--		resp->status = nfserr_io;
--		goto out;
--	}
- 
- 	resp->status = nfsd_write(rqstp, fh_copy(&resp->fh, &argp->fh),
- 				  argp->offset, rqstp->rq_vec, nvecs,
-@@ -247,7 +243,6 @@ nfsd_proc_write(struct svc_rqst *rqstp)
- 		resp->status = fh_getattr(&resp->fh, &resp->stat);
- 	else if (resp->status == nfserr_jukebox)
- 		return rpc_drop_reply;
--out:
- 	return rpc_success;
+-void svc_xprt_do_enqueue(struct svc_xprt *xprt)
++static void svc_xprt_do_enqueue(struct svc_xprt *xprt)
+ {
+ 	struct svc_pool *pool;
+ 	struct svc_rqst	*rqstp = NULL;
+@@ -454,7 +455,6 @@ void svc_xprt_do_enqueue(struct svc_xprt *xprt)
+ 	put_cpu();
+ 	trace_svc_xprt_do_enqueue(xprt, rqstp);
  }
+-EXPORT_SYMBOL_GPL(svc_xprt_do_enqueue);
+ 
+ /*
+  * Queue up a transport with data pending. If there are idle nfsd
+@@ -465,7 +465,7 @@ void svc_xprt_enqueue(struct svc_xprt *xprt)
+ {
+ 	if (test_bit(XPT_BUSY, &xprt->xpt_flags))
+ 		return;
+-	xprt->xpt_server->sv_ops->svo_enqueue_xprt(xprt);
++	svc_xprt_do_enqueue(xprt);
+ }
+ EXPORT_SYMBOL_GPL(svc_xprt_enqueue);
  
 -- 
 2.43.0
