@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2761581E9;
-	Tue, 18 Jun 2024 13:06:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080E51581EF;
+	Tue, 18 Jun 2024 13:06:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715968; cv=none; b=VLSBWyPUp9rV6SPjjy+bqSn+w6TebrbDyS1xAMAzevYZlvZ9Zj6R6HHfRrfVmR7RuNicDPZfmwbiIxPx5rBUWtJaSm80vx1dLYZthlo0v77hBZleXnaFNCyDEg/ActcEg9DfZ9+Io80vSuQ62/ZsX/ktKvxY+P2ky5M+VZdOxN0=
+	t=1718715971; cv=none; b=QSXZFqOpgjkSQB3AIzD/JXTwqwMPaNOgOYhjTU69yyILvLOExF0gFpRHLuqDYVKV3+o5T5hY5DunGaaglQecRET/LsnvuW0bo80K2aUC6n6FdGlm6TcmBhiBMokscGE14hUSp7tcgCNtjgcOaYFMzE0oh2NML5zs6c0Iw2jsFt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715968; c=relaxed/simple;
-	bh=Cna+XtontIopK0HERRUwCKHIJdixjAQNaDIq0mANfpk=;
+	s=arc-20240116; t=1718715971; c=relaxed/simple;
+	bh=VGmQLwjOf6rzLQfYoNE1X9ozPkd3xl/s52MzvneK20E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gOIpA6kqn7I6ZCcxKDbAwXTjUYzd9b1ap1jfGXjyFmIQFVF3+VYepCFI04LIXjUorVVI2qpcTS/OW/KE9Ca6adK7QhQiPVGIG0/6tACHdFdIh3NPDxgGBrwbdhZBdbF+YH1ZZo7OQClqHJUvrWjy67k0VsGzpzwLC1hCOjC5JuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lR63nOhL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fJg+H1GdyG545lRnEqwmlEneCubtqyqLIljr15cUX1yPEfmiEKx/ebp1WwEUZLNiZlV5bUrKzaLlvpCp1MVhIFAgYnWGbZX35gvz0rNrlHYp4K987eq6MGcvsGANvPR+yeR3L8giJsLBHtNyx56oNf9kl4Lth3iJ4vRuxT4p/wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BrlOSI9Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lR63nOhL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90182C3277B;
-	Tue, 18 Jun 2024 13:06:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BrlOSI9Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8035FC32786;
+	Tue, 18 Jun 2024 13:06:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715968;
-	bh=Cna+XtontIopK0HERRUwCKHIJdixjAQNaDIq0mANfpk=;
+	s=korg; t=1718715970;
+	bh=VGmQLwjOf6rzLQfYoNE1X9ozPkd3xl/s52MzvneK20E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lR63nOhLvEw7ghGeZCvLYjr/Dd6u7jNomvk+KbxTXpeBQ4UKKomMpXI8jJjB9uiAw
-	 WDQkQ4xLkOC8p69LNo56x202ELrnWrWgMdLVg3ad1xQOXRWMp0eTK01kCsh8ga6dkw
-	 A01c0ygpsSwHnKzStq09LbD9pkJ/oOxfVVFhC9yI=
+	b=BrlOSI9QiNlSRfQ6SDtiTNIdS8wnWPe8I7XUzCs6dHj/tp0qIAC+SHMthqJ1lsCtp
+	 t+lZ1YE8igdZC9MD5Jib0jBlZ4Wn4Jqx1jkEhkOti08xLAo0cr406ZRWW4WAOM6KUw
+	 aQoNkgnjkFTOU9cP+TeFirdv2zbdJSMpQa6Jew/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haowen Bai <baihaowen@meizu.com>,
+	Jan Kara <jack@suse.cz>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 488/770] SUNRPC: Return true/false (not 1/0) from bool functions
-Date: Tue, 18 Jun 2024 14:35:41 +0200
-Message-ID: <20240618123426.153668743@linuxfoundation.org>
+Subject: [PATCH 5.10 489/770] nfsd: Fix a write performance regression
+Date: Tue, 18 Jun 2024 14:35:42 +0200
+Message-ID: <20240618123426.191370250@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -51,94 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haowen Bai <baihaowen@meizu.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 5f7b839d47dbc74cf4a07beeab5191f93678673e ]
+[ Upstream commit 6b8a94332ee4f7d9a8ae0cbac7609f79c212f06c ]
 
-Return boolean values ("true" or "false") instead of 1 or 0 from bool
-functions.  This fixes the following warnings from coccicheck:
+The call to filemap_flush() in nfsd_file_put() is there to ensure that
+we clear out any writes belonging to a NFSv3 client relatively quickly
+and avoid situations where the file can't be evicted by the garbage
+collector. It also ensures that we detect write errors quickly.
 
-./fs/nfsd/nfs2acl.c:289:9-10: WARNING: return of 0/1 in function
-'nfsaclsvc_encode_accessres' with return type bool
-./fs/nfsd/nfs2acl.c:252:9-10: WARNING: return of 0/1 in function
-'nfsaclsvc_encode_getaclres' with return type bool
+The problem is this causes a regression in performance for some
+workloads.
 
-Signed-off-by: Haowen Bai <baihaowen@meizu.com>
+So try to improve matters by deferring writeback until we're ready to
+close the file, and need to detect errors so that we can force the
+client to resend.
+
+Tested-by: Jan Kara <jack@suse.cz>
+Fixes: b6669305d35a ("nfsd: Reduce the number of calls to nfsd_file_gc()")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Link: https://lore.kernel.org/all/20220330103457.r4xrhy2d6nhtouzk@quack3.lan
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs2acl.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ fs/nfsd/filecache.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nfsd/nfs2acl.c b/fs/nfsd/nfs2acl.c
-index 96733dff354d3..03703b22c81ef 100644
---- a/fs/nfsd/nfs2acl.c
-+++ b/fs/nfsd/nfs2acl.c
-@@ -247,34 +247,34 @@ nfsaclsvc_encode_getaclres(struct svc_rqst *rqstp, struct xdr_stream *xdr)
- 	int w;
- 
- 	if (!svcxdr_encode_stat(xdr, resp->status))
--		return 0;
-+		return false;
- 
- 	if (dentry == NULL || d_really_is_negative(dentry))
--		return 1;
-+		return true;
- 	inode = d_inode(dentry);
- 
- 	if (!svcxdr_encode_fattr(rqstp, xdr, &resp->fh, &resp->stat))
--		return 0;
-+		return false;
- 	if (xdr_stream_encode_u32(xdr, resp->mask) < 0)
--		return 0;
-+		return false;
- 
- 	rqstp->rq_res.page_len = w = nfsacl_size(
- 		(resp->mask & NFS_ACL)   ? resp->acl_access  : NULL,
- 		(resp->mask & NFS_DFACL) ? resp->acl_default : NULL);
- 	while (w > 0) {
- 		if (!*(rqstp->rq_next_page++))
--			return 1;
-+			return true;
- 		w -= PAGE_SIZE;
- 	}
- 
- 	if (!nfs_stream_encode_acl(xdr, inode, resp->acl_access,
- 				   resp->mask & NFS_ACL, 0))
--		return 0;
-+		return false;
- 	if (!nfs_stream_encode_acl(xdr, inode, resp->acl_default,
- 				   resp->mask & NFS_DFACL, NFS_ACL_DEFAULT))
--		return 0;
-+		return false;
- 
--	return 1;
-+	return true;
+diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
+index cc2831cec6695..496f7b3f75237 100644
+--- a/fs/nfsd/filecache.c
++++ b/fs/nfsd/filecache.c
+@@ -235,6 +235,13 @@ nfsd_file_check_write_error(struct nfsd_file *nf)
+ 	return filemap_check_wb_err(file->f_mapping, READ_ONCE(file->f_wb_err));
  }
  
- /* ACCESS */
-@@ -284,17 +284,17 @@ nfsaclsvc_encode_accessres(struct svc_rqst *rqstp, struct xdr_stream *xdr)
- 	struct nfsd3_accessres *resp = rqstp->rq_resp;
- 
- 	if (!svcxdr_encode_stat(xdr, resp->status))
--		return 0;
-+		return false;
- 	switch (resp->status) {
- 	case nfs_ok:
- 		if (!svcxdr_encode_fattr(rqstp, xdr, &resp->fh, &resp->stat))
--			return 0;
-+			return false;
- 		if (xdr_stream_encode_u32(xdr, resp->access) < 0)
--			return 0;
-+			return false;
- 		break;
++static void
++nfsd_file_flush(struct nfsd_file *nf)
++{
++	if (nf->nf_file && vfs_fsync(nf->nf_file, 1) != 0)
++		nfsd_reset_write_verifier(net_generic(nf->nf_net, nfsd_net_id));
++}
++
+ static void
+ nfsd_file_do_unhash(struct nfsd_file *nf)
+ {
+@@ -302,11 +309,14 @@ nfsd_file_put(struct nfsd_file *nf)
+ 		return;
  	}
  
--	return 1;
-+	return true;
+-	filemap_flush(nf->nf_file->f_mapping);
+ 	is_hashed = test_bit(NFSD_FILE_HASHED, &nf->nf_flags) != 0;
+-	nfsd_file_put_noref(nf);
+-	if (is_hashed)
++	if (!is_hashed) {
++		nfsd_file_flush(nf);
++		nfsd_file_put_noref(nf);
++	} else {
++		nfsd_file_put_noref(nf);
+ 		nfsd_file_schedule_laundrette();
++	}
+ 	if (atomic_long_read(&nfsd_filecache_count) >= NFSD_FILE_LRU_LIMIT)
+ 		nfsd_file_gc();
  }
- 
- /*
+@@ -327,6 +337,7 @@ nfsd_file_dispose_list(struct list_head *dispose)
+ 	while(!list_empty(dispose)) {
+ 		nf = list_first_entry(dispose, struct nfsd_file, nf_lru);
+ 		list_del(&nf->nf_lru);
++		nfsd_file_flush(nf);
+ 		nfsd_file_put_noref(nf);
+ 	}
+ }
+@@ -340,6 +351,7 @@ nfsd_file_dispose_list_sync(struct list_head *dispose)
+ 	while(!list_empty(dispose)) {
+ 		nf = list_first_entry(dispose, struct nfsd_file, nf_lru);
+ 		list_del(&nf->nf_lru);
++		nfsd_file_flush(nf);
+ 		if (!refcount_dec_and_test(&nf->nf_ref))
+ 			continue;
+ 		if (nfsd_file_free(nf))
 -- 
 2.43.0
 
