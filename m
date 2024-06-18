@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372761891C9;
-	Tue, 18 Jun 2024 13:01:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF2016CD3C;
+	Tue, 18 Jun 2024 13:01:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715668; cv=none; b=t8vjsCFKdpF7qIgk1QELquIWPFOM1JIAU2rsJ5rwEi3XNRS4AP4R+OSUzqhF0YxCVNEvRHwyX9uBip0FnukecpfOgUtnkoqKZNZ4YRrtd6C/8uuXIIIn33cNZC1gOfTBidNW75JazB6ErKiCkyCrBY6TDc8Ely2L8xday7nxd+g=
+	t=1718715671; cv=none; b=oSqc+GS4xwqT2ZqXbxqQJN9CP2BgAG+snFmrPWH3+eGGV+lh4Cs0XFf7lUG5+FDpsDcIjlWEDTWcKAdl1H8ve9OYgUU2/jajp/W7JyPNyF20YltUr7ADQmhp5Mi6FfYN+3RfGHRwL1wWGJ1n1WB7VPOGOHg82HkjGKqdYg6nvNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715668; c=relaxed/simple;
-	bh=l7y0hQOEX178f9LDSIW2dAbi4nN2Gy63fYI/3V6XMf8=;
+	s=arc-20240116; t=1718715671; c=relaxed/simple;
+	bh=6F1ZCo2rYcdJRyPwE3J0VRWk8vJTcgeTMJNXcCEb7xg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=atFqTv5pUiOo9OxEc4p3/P4eqmcmtPlPcEZREJhG70ikSTqSHAuXYKI335+5eoU//PbNYMEqWflfdTkcw1Lrill+orvdog+HNd9amK7NcadUAU2lBTo1Lp1Uuwv6Oct6nVgsfVtFTbWP7RnpLSsPTLph93kOkYh3QTMTSHBP32o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bVlhmRyN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uml38XcE5WHfncEj4E+rsKz3zrum073GsRgkwTUM7eriBTGlXx+cckHrW7kBRfZ2c8rtmAbXM1knu22cGy9kXOh1HFI+IfYQl85GSau7HimdhoHyaVdyYQPDnGjYQmD1fRUg/hdqktbeZlZkpHlm2ZYvhOcN4pCzf/f9NVoOsPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XqM7bX6O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bVlhmRyN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4CCEC3277B;
-	Tue, 18 Jun 2024 13:01:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqM7bX6O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A61C6C3277B;
+	Tue, 18 Jun 2024 13:01:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715668;
-	bh=l7y0hQOEX178f9LDSIW2dAbi4nN2Gy63fYI/3V6XMf8=;
+	s=korg; t=1718715671;
+	bh=6F1ZCo2rYcdJRyPwE3J0VRWk8vJTcgeTMJNXcCEb7xg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bVlhmRyNvqrXPVON5XOSl33RKaZTvaIqGfrID2/aFjQ+yBVREXAXZWWOjyq/ggmQ8
-	 52Meh0xPoT5Tr+WPZvdtfsgYhhnEV19fWLL859eNh0ZAPZbGZEd+qAEnKpiNQdZNrs
-	 A49dzhyCEiHkdegZA1DtrgAtJWQginuC0Njyw+UM=
+	b=XqM7bX6O8jM+a4E7VODAWKkXXwZF9p//5/96xxfhjt3EeWqcm6kqO4qtAegWf1Dd0
+	 rVWDPP/qJwM1AV5T/bfCHy9tl1L1RL/K3rAVxSm9iU7dBhzOMmQYsxs50Vrt/Zk7Rk
+	 mjM93xN7NvJf+TvYrSVP0a9arYKrLVlL7e775L8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Gabriel Krisman Bertazi <krisman@collabora.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 387/770] fanotify: Allow users to request FAN_FS_ERROR events
-Date: Tue, 18 Jun 2024 14:34:00 +0200
-Message-ID: <20240618123422.213844892@linuxfoundation.org>
+Subject: [PATCH 5.10 388/770] SUNRPC: Trace calls to .rpc_call_done
+Date: Tue, 18 Jun 2024 14:34:01 +0200
+Message-ID: <20240618123422.253999885@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,76 +51,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriel Krisman Bertazi <krisman@collabora.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 9709bd548f11a092d124698118013f66e1740f9b ]
+[ Upstream commit b40887e10dcacc5e8ae3c1a99dcba20877c4831b ]
 
-Wire up the FAN_FS_ERROR event in the fanotify_mark syscall, allowing
-user space to request the monitoring of FAN_FS_ERROR events.
+Introduce a single tracepoint that can replace simple dprintk call
+sites in upper layer "rpc_call_done" callbacks. Example:
 
-These events are limited to filesystem marks, so check it is the
-case in the syscall handler.
+   kworker/u24:2-1254  [001]   771.026677: rpc_stats_latency:    task:00000001@00000002 xid=0x16a6f3c0 rpcbindv2 GETPORT backlog=446 rtt=101 execute=555
+   kworker/u24:2-1254  [001]   771.026677: rpc_task_call_done:   task:00000001@00000002 flags=ASYNC|DYNAMIC|SOFT|SOFTCONN|SENT runstate=RUNNING|ACTIVE status=0 action=rpcb_getport_done
+   kworker/u24:2-1254  [001]   771.026678: rpcb_setport:         task:00000001@00000002 status=0 port=20048
 
-Link: https://lore.kernel.org/r/20211025192746.66445-29-krisman@collabora.com
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Gabriel Krisman Bertazi <krisman@collabora.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/fanotify/fanotify.c      | 2 +-
- fs/notify/fanotify/fanotify_user.c | 4 ++++
- include/linux/fanotify.h           | 6 +++++-
- 3 files changed, 10 insertions(+), 2 deletions(-)
+ fs/lockd/clntproc.c                    | 3 ---
+ fs/lockd/svc4proc.c                    | 2 --
+ fs/lockd/svcproc.c                     | 2 --
+ fs/nfs/filelayout/filelayout.c         | 2 --
+ fs/nfs/flexfilelayout/flexfilelayout.c | 2 --
+ fs/nfs/pagelist.c                      | 3 ---
+ fs/nfs/write.c                         | 3 ---
+ include/trace/events/sunrpc.h          | 1 +
+ net/sunrpc/sched.c                     | 1 +
+ 9 files changed, 2 insertions(+), 17 deletions(-)
 
-diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
-index af61425e6e3bf..b6091775aa6ef 100644
---- a/fs/notify/fanotify/fanotify.c
-+++ b/fs/notify/fanotify/fanotify.c
-@@ -822,7 +822,7 @@ static int fanotify_handle_event(struct fsnotify_group *group, u32 mask,
- 	BUILD_BUG_ON(FAN_OPEN_EXEC_PERM != FS_OPEN_EXEC_PERM);
- 	BUILD_BUG_ON(FAN_FS_ERROR != FS_ERROR);
+diff --git a/fs/lockd/clntproc.c b/fs/lockd/clntproc.c
+index b11f2afa84f1f..99fffc9cb9585 100644
+--- a/fs/lockd/clntproc.c
++++ b/fs/lockd/clntproc.c
+@@ -794,9 +794,6 @@ static void nlmclnt_cancel_callback(struct rpc_task *task, void *data)
+ 		goto retry_cancel;
+ 	}
  
--	BUILD_BUG_ON(HWEIGHT32(ALL_FANOTIFY_EVENT_BITS) != 19);
-+	BUILD_BUG_ON(HWEIGHT32(ALL_FANOTIFY_EVENT_BITS) != 20);
+-	dprintk("lockd: cancel status %u (task %u)\n",
+-			status, task->tk_pid);
+-
+ 	switch (status) {
+ 	case NLM_LCK_GRANTED:
+ 	case NLM_LCK_DENIED_GRACE_PERIOD:
+diff --git a/fs/lockd/svc4proc.c b/fs/lockd/svc4proc.c
+index e10ae2c41279e..176b468a61c75 100644
+--- a/fs/lockd/svc4proc.c
++++ b/fs/lockd/svc4proc.c
+@@ -269,8 +269,6 @@ nlm4svc_proc_granted(struct svc_rqst *rqstp)
+  */
+ static void nlm4svc_callback_exit(struct rpc_task *task, void *data)
+ {
+-	dprintk("lockd: %5u callback returned %d\n", task->tk_pid,
+-			-task->tk_status);
+ }
  
- 	mask = fanotify_group_event_mask(group, iter_info, mask, data,
- 					 data_type, dir);
-diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
-index 3040c8669dfd1..e6860c55b3dcb 100644
---- a/fs/notify/fanotify/fanotify_user.c
-+++ b/fs/notify/fanotify/fanotify_user.c
-@@ -1533,6 +1533,10 @@ static int do_fanotify_mark(int fanotify_fd, unsigned int flags, __u64 mask,
- 	    group->priority == FS_PRIO_0)
- 		goto fput_and_out;
+ static void nlm4svc_callback_release(void *data)
+diff --git a/fs/lockd/svcproc.c b/fs/lockd/svcproc.c
+index 99696d3f6dd66..4dc1b40a489a2 100644
+--- a/fs/lockd/svcproc.c
++++ b/fs/lockd/svcproc.c
+@@ -301,8 +301,6 @@ nlmsvc_proc_granted(struct svc_rqst *rqstp)
+  */
+ static void nlmsvc_callback_exit(struct rpc_task *task, void *data)
+ {
+-	dprintk("lockd: %5u callback returned %d\n", task->tk_pid,
+-			-task->tk_status);
+ }
  
-+	if (mask & FAN_FS_ERROR &&
-+	    mark_type != FAN_MARK_FILESYSTEM)
-+		goto fput_and_out;
-+
- 	/*
- 	 * Events that do not carry enough information to report
- 	 * event->fd require a group that supports reporting fid.  Those
-diff --git a/include/linux/fanotify.h b/include/linux/fanotify.h
-index 52d464802d99f..616af2ea20f30 100644
---- a/include/linux/fanotify.h
-+++ b/include/linux/fanotify.h
-@@ -91,9 +91,13 @@ extern struct ctl_table fanotify_table[]; /* for sysctl */
- #define FANOTIFY_INODE_EVENTS	(FANOTIFY_DIRENT_EVENTS | \
- 				 FAN_ATTRIB | FAN_MOVE_SELF | FAN_DELETE_SELF)
+ void nlmsvc_release_call(struct nlm_rqst *call)
+diff --git a/fs/nfs/filelayout/filelayout.c b/fs/nfs/filelayout/filelayout.c
+index 45eec08ec904f..2ed8b6885b091 100644
+--- a/fs/nfs/filelayout/filelayout.c
++++ b/fs/nfs/filelayout/filelayout.c
+@@ -293,8 +293,6 @@ static void filelayout_read_call_done(struct rpc_task *task, void *data)
+ {
+ 	struct nfs_pgio_header *hdr = data;
  
-+/* Events that can only be reported with data type FSNOTIFY_EVENT_ERROR */
-+#define FANOTIFY_ERROR_EVENTS	(FAN_FS_ERROR)
-+
- /* Events that user can request to be notified on */
- #define FANOTIFY_EVENTS		(FANOTIFY_PATH_EVENTS | \
--				 FANOTIFY_INODE_EVENTS)
-+				 FANOTIFY_INODE_EVENTS | \
-+				 FANOTIFY_ERROR_EVENTS)
+-	dprintk("--> %s task->tk_status %d\n", __func__, task->tk_status);
+-
+ 	if (test_bit(NFS_IOHDR_REDO, &hdr->flags) &&
+ 	    task->tk_status == 0) {
+ 		nfs41_sequence_done(task, &hdr->res.seq_res);
+diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
+index f2ae271fe7ec7..a263bfec4244d 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayout.c
++++ b/fs/nfs/flexfilelayout/flexfilelayout.c
+@@ -1419,8 +1419,6 @@ static void ff_layout_read_call_done(struct rpc_task *task, void *data)
+ {
+ 	struct nfs_pgio_header *hdr = data;
  
- /* Events that require a permission response from user */
- #define FANOTIFY_PERM_EVENTS	(FAN_OPEN_PERM | FAN_ACCESS_PERM | \
+-	dprintk("--> %s task->tk_status %d\n", __func__, task->tk_status);
+-
+ 	if (test_bit(NFS_IOHDR_REDO, &hdr->flags) &&
+ 	    task->tk_status == 0) {
+ 		nfs4_sequence_done(task, &hdr->res.seq_res);
+diff --git a/fs/nfs/pagelist.c b/fs/nfs/pagelist.c
+index 17fef6eb490c5..d79a3b6cb0701 100644
+--- a/fs/nfs/pagelist.c
++++ b/fs/nfs/pagelist.c
+@@ -870,9 +870,6 @@ static void nfs_pgio_result(struct rpc_task *task, void *calldata)
+ 	struct nfs_pgio_header *hdr = calldata;
+ 	struct inode *inode = hdr->inode;
+ 
+-	dprintk("NFS: %s: %5u, (status %d)\n", __func__,
+-		task->tk_pid, task->tk_status);
+-
+ 	if (hdr->rw_ops->rw_done(task, hdr, inode) != 0)
+ 		return;
+ 	if (task->tk_status < 0)
+diff --git a/fs/nfs/write.c b/fs/nfs/write.c
+index 4cf0606919794..2bde35921f2b2 100644
+--- a/fs/nfs/write.c
++++ b/fs/nfs/write.c
+@@ -1809,9 +1809,6 @@ static void nfs_commit_done(struct rpc_task *task, void *calldata)
+ {
+ 	struct nfs_commit_data	*data = calldata;
+ 
+-        dprintk("NFS: %5u nfs_commit_done (status %d)\n",
+-                                task->tk_pid, task->tk_status);
+-
+ 	/* Call the NFS version-specific code */
+ 	NFS_PROTO(data->inode)->commit_done(task, data);
+ 	trace_nfs_commit_done(task, data);
+diff --git a/include/trace/events/sunrpc.h b/include/trace/events/sunrpc.h
+index fce071f39f51f..56e4a57d25382 100644
+--- a/include/trace/events/sunrpc.h
++++ b/include/trace/events/sunrpc.h
+@@ -394,6 +394,7 @@ DEFINE_RPC_RUNNING_EVENT(complete);
+ DEFINE_RPC_RUNNING_EVENT(timeout);
+ DEFINE_RPC_RUNNING_EVENT(signalled);
+ DEFINE_RPC_RUNNING_EVENT(end);
++DEFINE_RPC_RUNNING_EVENT(call_done);
+ 
+ DECLARE_EVENT_CLASS(rpc_task_queued,
+ 
+diff --git a/net/sunrpc/sched.c b/net/sunrpc/sched.c
+index a00890962e115..a4c9d410eb8d5 100644
+--- a/net/sunrpc/sched.c
++++ b/net/sunrpc/sched.c
+@@ -821,6 +821,7 @@ void rpc_exit_task(struct rpc_task *task)
+ 	else if (task->tk_client)
+ 		rpc_count_iostats(task, task->tk_client->cl_metrics);
+ 	if (task->tk_ops->rpc_call_done != NULL) {
++		trace_rpc_task_call_done(task, task->tk_ops->rpc_call_done);
+ 		task->tk_ops->rpc_call_done(task, task->tk_calldata);
+ 		if (task->tk_action != NULL) {
+ 			/* Always release the RPC slot and buffer memory */
 -- 
 2.43.0
 
