@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FDAA1A8C12;
-	Tue, 18 Jun 2024 13:14:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEC391A8C3A;
+	Tue, 18 Jun 2024 13:14:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716470; cv=none; b=qXVqURk4pZ9G1puzkiNnFOnUNcg4h0jrExDpMsm1BCbha1nfIJFXj6vXk1rWdkiMOja2SxxWkgYRd1XfENErZjMWKHkmqMrDZuohLFHLUZVxvM+ZjXItHO5eYVzc1Pa3pWaM+/QbCEas93BuLBlW4/4TtXJykKE+MLmAx1lY+GU=
+	t=1718716474; cv=none; b=HuKIf1wpg0nkW/VPwhlEbvBx+FFvKuGq+o2delTsKqE0/X1TGR6uBnDr89uE5G6topIDyZoo8GInBfu3sghWA1ED55jHp6oJxpkqMjTpq8BIaJ10nzcNwzbe5dFSZD53OTJZdOog/WJ63KIUUvzftOAKATfCQ0csaROeEyOFOI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716470; c=relaxed/simple;
-	bh=ODRhUsjpQ1+qGEVoBLqez4q1WDZ6kHyiyjvWOeHvSTc=;
+	s=arc-20240116; t=1718716474; c=relaxed/simple;
+	bh=24tTfgf8lDLLSD3OsN4nWXqGaNODO7AtrKSDOfyxMQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P+yKsTBjQK+dgNnWX/QItHO1/zKofOd842bTcYA20zEhNeS9b4mRRFCo3BmlgtSIYGgB7NPbELVWlmUp7ZKRVPDgUb5cwzaHYFDwDfFy+lfbVjmHYZmApA7WsMdKIVqr0j2anR9E11BEY0kQ3liXadbIJMJCVbE9Uz9S42T+p9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h3PQrlq+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K11AlizA8ekwiShijx/LjMP2o9wQUeQPpfz2yyxEhsNpiUU/fZ3swMjz3L4VyhrhIj6rS/l+dAxZu4xFovE9196vHhCNva/t2UsJlUO9be/djO25PMI8blBk0ZWby/8rMMX7oLKNLtGobyMxcGY5TYCv0xK3Ot4QfoU1ETPNcE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FALwAY/V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h3PQrlq+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBE97C4AF1D;
-	Tue, 18 Jun 2024 13:14:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FALwAY/V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5883C3277B;
+	Tue, 18 Jun 2024 13:14:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716470;
-	bh=ODRhUsjpQ1+qGEVoBLqez4q1WDZ6kHyiyjvWOeHvSTc=;
+	s=korg; t=1718716473;
+	bh=24tTfgf8lDLLSD3OsN4nWXqGaNODO7AtrKSDOfyxMQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h3PQrlq+p3fdeWU2XeVouvtUzic3P5MvgVKprA8UO6DVFTSFqWLmbEmETuUIR3Z1k
-	 eqi5YcbBGZ1euidF+WxbSsufvdq/W0jTHKkg2EbTmj3Rc1RH6qjVuN0Qb4G7No2zpj
-	 XAVKOafwqA56uJd9OEwJ4Q6x8V/JiC8CVDA9enyQ=
+	b=FALwAY/VmAUdhSk5414t3nvJrDsdmdeH+dOmCRSeb7m+Ai2ZHXhDGcydkky2pF0bv
+	 R/8RyjoPZH/S2Kke+NJr3He/dnfd5JiquCsl+E+LqEV9Y8nJ6NdKh8SxVVCgIEWSZA
+	 0JNoAxQQlku/jkPHAuUC8ctSBPDJrAoWOCGdWNq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	ChenXiaoSong <chenxiaosong2@huawei.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 658/770] nfsd: use DEFINE_PROC_SHOW_ATTRIBUTE to define nfsd_proc_ops
-Date: Tue, 18 Jun 2024 14:38:31 +0200
-Message-ID: <20240618123432.685852744@linuxfoundation.org>
+Subject: [PATCH 5.10 659/770] nfsd: use DEFINE_SHOW_ATTRIBUTE to define export_features_fops and supported_enctypes_fops
+Date: Tue, 18 Jun 2024 14:38:32 +0200
+Message-ID: <20240618123432.723506672@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,49 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 From: ChenXiaoSong <chenxiaosong2@huawei.com>
 
-[ Upstream commit 0cfb0c4228a5c8e2ed2b58f8309b660b187cef02 ]
+[ Upstream commit 9beeaab8e05d353d709103cafa1941714b4d5d94 ]
 
-Use DEFINE_PROC_SHOW_ATTRIBUTE helper macro to simplify the code.
+Use DEFINE_SHOW_ATTRIBUTE helper macro to simplify the code.
 
 Signed-off-by: ChenXiaoSong <chenxiaosong2@huawei.com>
+[ cel: reduce line length ]
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/stats.c | 14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ fs/nfsd/nfsctl.c | 29 +++++------------------------
+ 1 file changed, 5 insertions(+), 24 deletions(-)
 
-diff --git a/fs/nfsd/stats.c b/fs/nfsd/stats.c
-index a8c5a02a84f04..777e24e5da33b 100644
---- a/fs/nfsd/stats.c
-+++ b/fs/nfsd/stats.c
-@@ -32,7 +32,7 @@ struct svc_stat		nfsd_svcstats = {
- 	.program	= &nfsd_program,
- };
- 
--static int nfsd_proc_show(struct seq_file *seq, void *v)
-+static int nfsd_show(struct seq_file *seq, void *v)
- {
- 	int i;
- 
-@@ -72,17 +72,7 @@ static int nfsd_proc_show(struct seq_file *seq, void *v)
+diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
+index 597a26ad4183f..3ed0cfdb0c0b5 100644
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -185,17 +185,7 @@ static int export_features_show(struct seq_file *m, void *v)
  	return 0;
  }
  
--static int nfsd_proc_open(struct inode *inode, struct file *file)
+-static int export_features_open(struct inode *inode, struct file *file)
 -{
--	return single_open(file, nfsd_proc_show, NULL);
+-	return single_open(file, export_features_show, NULL);
 -}
 -
--static const struct proc_ops nfsd_proc_ops = {
--	.proc_open	= nfsd_proc_open,
--	.proc_read	= seq_read,
--	.proc_lseek	= seq_lseek,
--	.proc_release	= single_release,
+-static const struct file_operations export_features_operations = {
+-	.open		= export_features_open,
+-	.read		= seq_read,
+-	.llseek		= seq_lseek,
+-	.release	= single_release,
 -};
-+DEFINE_PROC_SHOW_ATTRIBUTE(nfsd);
++DEFINE_SHOW_ATTRIBUTE(export_features);
  
- int nfsd_percpu_counters_init(struct percpu_counter counters[], int num)
- {
+ #if defined(CONFIG_SUNRPC_GSS) || defined(CONFIG_SUNRPC_GSS_MODULE)
+ static int supported_enctypes_show(struct seq_file *m, void *v)
+@@ -204,17 +194,7 @@ static int supported_enctypes_show(struct seq_file *m, void *v)
+ 	return 0;
+ }
+ 
+-static int supported_enctypes_open(struct inode *inode, struct file *file)
+-{
+-	return single_open(file, supported_enctypes_show, NULL);
+-}
+-
+-static const struct file_operations supported_enctypes_ops = {
+-	.open		= supported_enctypes_open,
+-	.read		= seq_read,
+-	.llseek		= seq_lseek,
+-	.release	= single_release,
+-};
++DEFINE_SHOW_ATTRIBUTE(supported_enctypes);
+ #endif /* CONFIG_SUNRPC_GSS or CONFIG_SUNRPC_GSS_MODULE */
+ 
+ static const struct file_operations pool_stats_operations = {
+@@ -1365,7 +1345,7 @@ static int nfsd_fill_super(struct super_block *sb, struct fs_context *fc)
+ 		/* Per-export io stats use same ops as exports file */
+ 		[NFSD_Export_Stats] = {"export_stats", &exports_nfsd_operations, S_IRUGO},
+ 		[NFSD_Export_features] = {"export_features",
+-					&export_features_operations, S_IRUGO},
++					&export_features_fops, S_IRUGO},
+ 		[NFSD_FO_UnlockIP] = {"unlock_ip",
+ 					&transaction_ops, S_IWUSR|S_IRUSR},
+ 		[NFSD_FO_UnlockFS] = {"unlock_filesystem",
+@@ -1381,7 +1361,8 @@ static int nfsd_fill_super(struct super_block *sb, struct fs_context *fc)
+ 		[NFSD_MaxConnections] = {"max_connections", &transaction_ops, S_IWUSR|S_IRUGO},
+ 		[NFSD_Filecache] = {"filecache", &filecache_ops, S_IRUGO},
+ #if defined(CONFIG_SUNRPC_GSS) || defined(CONFIG_SUNRPC_GSS_MODULE)
+-		[NFSD_SupportedEnctypes] = {"supported_krb5_enctypes", &supported_enctypes_ops, S_IRUGO},
++		[NFSD_SupportedEnctypes] = {"supported_krb5_enctypes",
++					&supported_enctypes_fops, S_IRUGO},
+ #endif /* CONFIG_SUNRPC_GSS or CONFIG_SUNRPC_GSS_MODULE */
+ #ifdef CONFIG_NFSD_V4
+ 		[NFSD_Leasetime] = {"nfsv4leasetime", &transaction_ops, S_IWUSR|S_IRUSR},
 -- 
 2.43.0
 
