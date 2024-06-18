@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF5915746D;
-	Tue, 18 Jun 2024 13:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE0A81725;
+	Tue, 18 Jun 2024 13:03:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715823; cv=none; b=YR+r4jzeknacMhtmcyrAf2yBdPwIS/fXzi5yhUnQriOpeHqqt++U2rX4S+JpxqEkGNw+TfP+fj53wPp9Q59HlWZqxh9Jp5gp7Ry4GkuS6huZnSEoLmixBjv7mx7g4ImXar6FNacA1BCbtHpUxwvxLQ5LNfTAWRfGgXtluikim0c=
+	t=1718715826; cv=none; b=s4aH6yfwqA6VxVMS4Kfgec4x5y2wumtjaLD+hGOdcSMritFWFwl0xsygjJ79SFxgTUt1zI2TQ60GAF7Pf0O2IQHq0db2L0Wcfm3xB2gV37nCdOrAAhg/6Si/WwzxnqafKuwxTf2zjRyQXug2natBPk6LMpzIkvzA74r0UB9RPoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715823; c=relaxed/simple;
-	bh=2uPikhlCD1NorMlB5vUJX1AjdNmhcREDNkdNW+Q4520=;
+	s=arc-20240116; t=1718715826; c=relaxed/simple;
+	bh=CtvRZgk3s5tktDCh14YrCog8F0qtYEvGOQw6hcmO6bc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gtubnQTq3zMSKihTMe8qtneNcW21lCmyCBxprEu5c6WdOWTBJK/0BfIXCGhjfOPlPJ1TWB7scESCbYqiM1tBKkd6E4J/NHWGK31iK/yVJqMFagq/wEpswmmhmRP1NpO2dqK8Kx/KA5WXxcPALOepwz4aHL51NTFmKx0GCzWAbE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sHcg3gaX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i6fdMqCCTiuVcRdzUv0qo/+P4nrXFW7OOu1JYp2gqMelLk1MwQdsVpyHHvSY+OW5bOU5m2fUVIDYa4lmEkBNYLTHWN+o8ulbHxep5Ux1JGiAgKrnb1VErf3RyaPq1bYk23a/sgFDYjxT9eHjoXAshxLTc5wFJmN/iq+xMzBZTrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jykk+et5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sHcg3gaX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6185C3277B;
-	Tue, 18 Jun 2024 13:03:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jykk+et5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5289C3277B;
+	Tue, 18 Jun 2024 13:03:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715823;
-	bh=2uPikhlCD1NorMlB5vUJX1AjdNmhcREDNkdNW+Q4520=;
+	s=korg; t=1718715826;
+	bh=CtvRZgk3s5tktDCh14YrCog8F0qtYEvGOQw6hcmO6bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sHcg3gaXsE5LaNIinJDOEqboHOP1F3jLtDL8Z+5YRKIohilpmdxZSW+w7AnVXpB9g
-	 Gf8TIB7UlpOmr3HwWAtlFtLaLDQYN2SKetVN0HLUEjcxYZ/8HcDirIqlTyiItsd99r
-	 UGPcBGORjy0rw1wQBsGuxpZlaUk6CFgS+Dv0wOpQ=
+	b=jykk+et55vu8DTzJ2xAeIjxPfry0DJdHQphR8xQDRXCGV+YPaQRB/+A7AwEtwMNSk
+	 gqE21nv/D1ja/XipXqr5kq5+bwjdO99nH3JwMAzJQF3TN21SMrA5CYCqEc7KV8b1Ek
+	 3cKJfkrvBsUNppSErQeMoJU0nYi5Z02/Rudf+Rr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neilb@suse.de>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 438/770] NFS: switch the callback service back to non-pooled.
-Date: Tue, 18 Jun 2024 14:34:51 +0200
-Message-ID: <20240618123424.194723494@linuxfoundation.org>
+Subject: [PATCH 5.10 439/770] NFSD: Remove be32_to_cpu() from DRC hash function
+Date: Tue, 18 Jun 2024 14:34:52 +0200
+Message-ID: <20240618123424.233721223@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -51,38 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 23a1a573c61ccb5e7829c1f5472d3e025293a031 ]
+[ Upstream commit 7578b2f628db27281d3165af0aa862311883a858 ]
 
-Now that thread management is consistent there is no need for
-nfs-callback to use svc_create_pooled() as introduced in Commit
-df807fffaabd ("NFSv4.x/callback: Create the callback service through
-svc_create_pooled").  So switch back to svc_create().
+Commit 7142b98d9fd7 ("nfsd: Clean up drc cache in preparation for
+global spinlock elimination"), billed as a clean-up, added
+be32_to_cpu() to the DRC hash function without explanation. That
+commit removed two comments that state that byte-swapping in the
+hash function is unnecessary without explaining whether there was
+a need for that change.
 
-If service pools were configured, but the number of threads were left at
-'1', nfs callback may not work reliably when svc_create_pooled() is used.
+On some Intel CPUs, the swab32 instruction is known to cause a CPU
+pipeline stall. be32_to_cpu() does not add extra randomness, since
+the hash multiplication is done /before/ shifting to the high-order
+bits of the result.
 
-Signed-off-by: NeilBrown <neilb@suse.de>
+As a micro-optimization, remove the unnecessary transform from the
+DRC hash function.
+
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/callback.c | 2 +-
+ fs/nfsd/nfscache.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfs/callback.c b/fs/nfs/callback.c
-index 422055a1092f0..054cc1255fac6 100644
---- a/fs/nfs/callback.c
-+++ b/fs/nfs/callback.c
-@@ -286,7 +286,7 @@ static struct svc_serv *nfs_callback_create_svc(int minorversion)
- 		printk(KERN_WARNING "nfs_callback_create_svc: no kthread, %d users??\n",
- 			cb_info->users);
+diff --git a/fs/nfsd/nfscache.c b/fs/nfsd/nfscache.c
+index 6e0b6f3148dca..a4a69ab6ab280 100644
+--- a/fs/nfsd/nfscache.c
++++ b/fs/nfsd/nfscache.c
+@@ -87,7 +87,7 @@ nfsd_hashsize(unsigned int limit)
+ static u32
+ nfsd_cache_hash(__be32 xid, struct nfsd_net *nn)
+ {
+-	return hash_32(be32_to_cpu(xid), nn->maskbits);
++	return hash_32((__force u32)xid, nn->maskbits);
+ }
  
--	serv = svc_create_pooled(&nfs4_callback_program, NFS4_CALLBACK_BUFSIZE, sv_ops);
-+	serv = svc_create(&nfs4_callback_program, NFS4_CALLBACK_BUFSIZE, sv_ops);
- 	if (!serv) {
- 		printk(KERN_ERR "nfs_callback_create_svc: create service failed\n");
- 		return ERR_PTR(-ENOMEM);
+ static struct svc_cacherep *
 -- 
 2.43.0
 
