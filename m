@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF019145B37;
-	Tue, 18 Jun 2024 12:47:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2E4146582;
+	Tue, 18 Jun 2024 12:47:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718714872; cv=none; b=HDObzAE5tN0sVGS4x6znxiQtvw+kZrsWpsV3Bh/Mtc2y3J+EgEf/SluM7bzIsCzh/5pPQ7ozuVPA5MucNqjiWz/9Z2Nf6tpLO1secQsrK6SxIqZKmtin3jmy9B5B9HzfTaw6BugkkHOv8kpd4jJggy8pzpOrQGDXh+jFOcIKilk=
+	t=1718714875; cv=none; b=bqz2P/Z8tr4VCnCDOjS+aIXoNgfDF9EjWypUDeteq2is6suGX7u0n+X9z18hoOKdd1oVgQX5PO5O2OQdIUhq6pQLIq7SV1G7XJ3FqAqv5RAx263pOF1N6jonToJ4SLme517v/OPVwaOMi9o7CMmhVj9Y/yzag6Dm5OeXWqhL4XQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718714872; c=relaxed/simple;
-	bh=dhrNyziVaX7OT6TffuGG3Wk06A+Cua8oEZWWisqsHNQ=;
+	s=arc-20240116; t=1718714875; c=relaxed/simple;
+	bh=8rec3HIS7ZCyFfexhZGfmy7oIz9vTEp1J3TF62ra6Lw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eXj++DWouzOy5IScKME/g6QofOSoqxmC0ZbAwyQwXkE5QEIDw7kB9ShKlMjfwUnyKYJPYui2uhH5tMUIsx7yDCRAyog7RnR46iqzplOJjrM40z1nXUJv5fBjrGX4pjIyQ3exFuv6A4vLkDwREEk3ipJ9RzD+J2Eqliy6IYVw9uA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Do69nqI2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QlWndI/ItyvjnvgtEQLxI8uLYnU/bt40KkVn8v/evytjO9ZudT4aLqX5nVS4oMzum5bm2w33w66UndU+aNMJ1p1civG1VblVW0UwSG1uvemKGCmUfEn2O8ahtdhEhS36we7z7weNrbR2XhVQloU/c7chxUvqX9hleavNmODeArs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QrlI1R76; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Do69nqI2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53EAFC3277B;
-	Tue, 18 Jun 2024 12:47:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QrlI1R76"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41C56C3277B;
+	Tue, 18 Jun 2024 12:47:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718714872;
-	bh=dhrNyziVaX7OT6TffuGG3Wk06A+Cua8oEZWWisqsHNQ=;
+	s=korg; t=1718714875;
+	bh=8rec3HIS7ZCyFfexhZGfmy7oIz9vTEp1J3TF62ra6Lw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Do69nqI21P0dYhtpgoMnb0Db7VYWKMU0Jo7OTVqJ9E2jypuolm/xBsbsM7ClxnGZv
-	 /VqbaTA9hKSGvf9Ohh9L+n79h7mcmjEhQhPJ2voug+IARKjy8xR2yBifEWUxjLKsNl
-	 mmvFEEgv28zEU14FjtzCghTUW2QnUTnfbeiQC3VQ=
+	b=QrlI1R7681OLd9ipq1V+3kWv+nBH0c5MmcLzomoYpbdWz2z9k+jC71PCwLj7MRPkT
+	 kH+9LBDwsP0hVr03G8ymSXwMhu6MgrZ2ZD2JQkdrz2ueY6htpACo5gpb7NGbxbpHE3
+	 JCIq4fEbzs8zFty6K9lICpL6AGkMgjh3yQqNStek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Oleg Nesterov <oleg@redhat.com>,
 	Christian Brauner <christian.brauner@ubuntu.com>,
 	"Eric W. Biederman" <ebiederm@xmission.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 118/770] file: Implement task_lookup_fd_rcu
-Date: Tue, 18 Jun 2024 14:29:31 +0200
-Message-ID: <20240618123411.824808054@linuxfoundation.org>
+Subject: [PATCH 5.10 119/770] proc/fd: In tid_fd_mode use task_lookup_fd_rcu
+Date: Tue, 18 Jun 2024 14:29:32 +0200
+Message-ID: <20240618123411.862793619@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -54,61 +55,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric W. Biederman <ebiederm@xmission.com>
 
-[ Upstream commit 3a879fb38082125cc0d8aa89b70c7f3a7cdf584b ]
+[ Upstream commit 64eb661fda0269276b4c46965832938e3f268268 ]
 
-As a companion to lookup_fd_rcu implement task_lookup_fd_rcu for
-querying an arbitrary process about a specific file.
+When discussing[1] exec and posix file locks it was realized that none
+of the callers of get_files_struct fundamentally needed to call
+get_files_struct, and that by switching them to helper functions
+instead it will both simplify their code and remove unnecessary
+increments of files_struct.count.  Those unnecessary increments can
+result in exec unnecessarily unsharing files_struct which breaking
+posix locks, and it can result in fget_light having to fallback to
+fget reducing system performance.
 
+Instead of manually coding finding the files struct for a task and
+then calling files_lookup_fd_rcu, use the helper task_lookup_fd_rcu
+that combines those to steps.   Making the code simpler and removing
+the need to get a reference on a files_struct.
+
+[1] https://lkml.kernel.org/r/20180915160423.GA31461@redhat.com
+Suggested-by: Oleg Nesterov <oleg@redhat.com>
 Acked-by: Christian Brauner <christian.brauner@ubuntu.com>
-v1: https://lkml.kernel.org/r/20200818103713.aw46m7vprsy4vlve@wittgenstein
-Link: https://lkml.kernel.org/r/20201120231441.29911-11-ebiederm@xmission.com
+v1: https://lkml.kernel.org/r/20200817220425.9389-7-ebiederm@xmission.com
+Link: https://lkml.kernel.org/r/20201120231441.29911-12-ebiederm@xmission.com
 Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/file.c               | 15 +++++++++++++++
- include/linux/fdtable.h |  2 ++
- 2 files changed, 17 insertions(+)
+ fs/proc/fd.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/fs/file.c b/fs/file.c
-index 6149f75a18a66..60a3ccba728cd 100644
---- a/fs/file.c
-+++ b/fs/file.c
-@@ -911,6 +911,21 @@ struct file *fget_task(struct task_struct *task, unsigned int fd)
- 	return file;
+diff --git a/fs/proc/fd.c b/fs/proc/fd.c
+index 3dec44d7c5c5c..c1a984f3c4df7 100644
+--- a/fs/proc/fd.c
++++ b/fs/proc/fd.c
+@@ -83,18 +83,13 @@ static const struct file_operations proc_fdinfo_file_operations = {
+ 
+ static bool tid_fd_mode(struct task_struct *task, unsigned fd, fmode_t *mode)
+ {
+-	struct files_struct *files = get_files_struct(task);
+ 	struct file *file;
+ 
+-	if (!files)
+-		return false;
+-
+ 	rcu_read_lock();
+-	file = files_lookup_fd_rcu(files, fd);
++	file = task_lookup_fd_rcu(task, fd);
+ 	if (file)
+ 		*mode = file->f_mode;
+ 	rcu_read_unlock();
+-	put_files_struct(files);
+ 	return !!file;
  }
  
-+struct file *task_lookup_fd_rcu(struct task_struct *task, unsigned int fd)
-+{
-+	/* Must be called with rcu_read_lock held */
-+	struct files_struct *files;
-+	struct file *file = NULL;
-+
-+	task_lock(task);
-+	files = task->files;
-+	if (files)
-+		file = files_lookup_fd_rcu(files, fd);
-+	task_unlock(task);
-+
-+	return file;
-+}
-+
- /*
-  * Lightweight file lookup - no refcnt increment if fd table isn't shared.
-  *
-diff --git a/include/linux/fdtable.h b/include/linux/fdtable.h
-index 695306cc5337a..a88f68f740677 100644
---- a/include/linux/fdtable.h
-+++ b/include/linux/fdtable.h
-@@ -110,6 +110,8 @@ static inline struct file *lookup_fd_rcu(unsigned int fd)
- 	return files_lookup_fd_rcu(current->files, fd);
- }
- 
-+struct file *task_lookup_fd_rcu(struct task_struct *task, unsigned int fd);
-+
- struct task_struct;
- 
- struct files_struct *get_files_struct(struct task_struct *);
 -- 
 2.43.0
 
