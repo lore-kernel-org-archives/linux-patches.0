@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55338158D6C;
-	Tue, 18 Jun 2024 13:12:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6E513C83D;
+	Tue, 18 Jun 2024 13:12:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716373; cv=none; b=E7kcKCleZ0Oi9AOC9gZ2dLHIEzDVaWbt33ZYJ/i0Bgg7SPExh8bchgaLWN7VDWl3somjdKOjK2yLVzo7C1+cOixy6rlkHRFEWsgdQ9RIiRVhB1N793qa+Kink2UDKlTqFDYnxB92kzXTy2CJDkPebBzBzn+Nt9iRknGnJ2CCziE=
+	t=1718716376; cv=none; b=hokAahUqt6GxgxGz60HDB/01LTTcRWV/PM2WdrtRZNifvWVYXzg4WHADS4WwfAkkG5eJMgpezgcumyXPOXUPsWbKL8BjHpYOtpvH+AI+8DMg3EXAONH66uAqUZ1qC9jw2iAxxuPmwLO2nH0/iNfQmzUJgCTY1Qy+ijt5D60/pIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716373; c=relaxed/simple;
-	bh=ucnBeqWUntvP/oJN4reLYDlJD4xl95F5txTW7EDJVZU=;
+	s=arc-20240116; t=1718716376; c=relaxed/simple;
+	bh=pbQLRz5KhtszL4YNEs4tR+kxjMNnHLI8VFeJyzOqiAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PwmFrEBnqARXKwXPPPH34GeY+3Fk5+n5B7TgOQWbtUvxVhxgbt+M7wSt3YcQxjtE5OgQKEjaOf6s+TVszL8k1e0h30fXhNpU93OQpo0lG4adGUpp7YZfdJUf25wfuSBM7nZ0+zYBUo2L3hRUiyutQzge9tenbBnVDBcjUhWD3uY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KZGIN4xc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q+LN8LEH/Luw5xHT2BEI4uq/M8uwNB02VOyeQeeWDCssblU5K5reGEM64P0yd1GayXOb4jMMenB/3tn2JAVo7cjIYXftEASTxhCKjqJQ+5f72b/YBcUfjdGvQfMVR7fGgsooZAaund1MKfnNofwm+cVsFu8wefOhyuVGA8URkM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jgoM1M/1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KZGIN4xc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D09E0C3277B;
-	Tue, 18 Jun 2024 13:12:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jgoM1M/1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A14C3277B;
+	Tue, 18 Jun 2024 13:12:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716373;
-	bh=ucnBeqWUntvP/oJN4reLYDlJD4xl95F5txTW7EDJVZU=;
+	s=korg; t=1718716376;
+	bh=pbQLRz5KhtszL4YNEs4tR+kxjMNnHLI8VFeJyzOqiAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KZGIN4xcOr0CYlRdy45kukRNoZ95CvuCYX7jwkTdBXtALStiIV1uHXx/FsiZesz75
-	 QV5HdmoVJSl/wvNwa0UqA4U/DAMcVW8/oj2OkxHxRg+obrMhKrxEjNKHJteRG6WoHD
-	 g54SGpHmKYvRPieiu9ZWl06Kd25fpxVIRERPtPeA=
+	b=jgoM1M/1a9cfHWrTQonmMORpa37Abl6DnsdvJknvTlsusPd3FGZkgAUZ+70PiZWZ4
+	 H0bXAUI03Ms4dfrOujZZqloAEKs70zR52yGz+CL0up/qaaX81q0rJfBO+Skh1wPfXT
+	 8qVWXGSo2wtTtPgTEey5gZRblNzTkoX5je/hpP+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 625/770] nfsd_splice_actor(): handle compound pages
-Date: Tue, 18 Jun 2024 14:37:58 +0200
-Message-ID: <20240618123431.411321945@linuxfoundation.org>
+Subject: [PATCH 5.10 626/770] NFSD: move from strlcpy with unused retval to strscpy
+Date: Tue, 18 Jun 2024 14:37:59 +0200
+Message-ID: <20240618123431.449372670@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -46,59 +45,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit bfbfb6182ad1d7d184b16f25165faad879147f79 ]
+[ Upstream commit 72f78ae00a8e5d7abe13abac8305a300f6afd74b ]
 
-pipe_buffer might refer to a compound page (and contain more than a PAGE_SIZE
-worth of data).  Theoretically it had been possible since way back, but
-nfsd_splice_actor() hadn't run into that until copy_page_to_iter() change.
-Fortunately, the only thing that changes for compound pages is that we
-need to stuff each relevant subpage in and convert the offset into offset
-in the first subpage.
+Follow the advice of the below link and prefer 'strscpy' in this
+subsystem. Conversion is 1:1 because the return value is not used.
+Generated by a coccinelle script.
 
-Acked-by: Chuck Lever <chuck.lever@oracle.com>
-Tested-by: Benjamin Coddington <bcodding@redhat.com>
-Fixes: f0f6b614f83d "copy_page_to_iter(): don't split high-order page in case of ITER_PIPE"
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-[ cel: "‘for’ loop initial declarations are only allowed in C99 or C11 mode" ]
+Link: https://lore.kernel.org/r/CAHk-=wgfRnXz0W3D37d01q3JFkr_i_uTL=V6A6G1oUZcprmknw@mail.gmail.com/
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/vfs.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ fs/nfsd/nfs4idmap.c | 8 ++++----
+ fs/nfsd/nfs4proc.c  | 2 +-
+ fs/nfsd/nfssvc.c    | 2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
-index 95f2e4549c034..bc377ee177171 100644
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -862,10 +862,15 @@ nfsd_splice_actor(struct pipe_inode_info *pipe, struct pipe_buffer *buf,
- 		  struct splice_desc *sd)
- {
- 	struct svc_rqst *rqstp = sd->u.data;
--
--	svc_rqst_replace_page(rqstp, buf->page);
--	if (rqstp->rq_res.page_len == 0)
--		rqstp->rq_res.page_base = buf->offset;
-+	struct page *page = buf->page;	// may be a compound one
-+	unsigned offset = buf->offset;
-+	int i;
-+
-+	page += offset / PAGE_SIZE;
-+	for (i = sd->len; i > 0; i -= PAGE_SIZE)
-+		svc_rqst_replace_page(rqstp, page++);
-+	if (rqstp->rq_res.page_len == 0)	// first call
-+		rqstp->rq_res.page_base = offset % PAGE_SIZE;
- 	rqstp->rq_res.page_len += sd->len;
- 	return sd->len;
+diff --git a/fs/nfsd/nfs4idmap.c b/fs/nfsd/nfs4idmap.c
+index f92161ce1f97d..e70a1a2999b7b 100644
+--- a/fs/nfsd/nfs4idmap.c
++++ b/fs/nfsd/nfs4idmap.c
+@@ -82,8 +82,8 @@ ent_init(struct cache_head *cnew, struct cache_head *citm)
+ 	new->id = itm->id;
+ 	new->type = itm->type;
+ 
+-	strlcpy(new->name, itm->name, sizeof(new->name));
+-	strlcpy(new->authname, itm->authname, sizeof(new->authname));
++	strscpy(new->name, itm->name, sizeof(new->name));
++	strscpy(new->authname, itm->authname, sizeof(new->authname));
  }
+ 
+ static void
+@@ -548,7 +548,7 @@ idmap_name_to_id(struct svc_rqst *rqstp, int type, const char *name, u32 namelen
+ 		return nfserr_badowner;
+ 	memcpy(key.name, name, namelen);
+ 	key.name[namelen] = '\0';
+-	strlcpy(key.authname, rqst_authname(rqstp), sizeof(key.authname));
++	strscpy(key.authname, rqst_authname(rqstp), sizeof(key.authname));
+ 	ret = idmap_lookup(rqstp, nametoid_lookup, &key, nn->nametoid_cache, &item);
+ 	if (ret == -ENOENT)
+ 		return nfserr_badowner;
+@@ -584,7 +584,7 @@ static __be32 idmap_id_to_name(struct xdr_stream *xdr,
+ 	int ret;
+ 	struct nfsd_net *nn = net_generic(SVC_NET(rqstp), nfsd_net_id);
+ 
+-	strlcpy(key.authname, rqst_authname(rqstp), sizeof(key.authname));
++	strscpy(key.authname, rqst_authname(rqstp), sizeof(key.authname));
+ 	ret = idmap_lookup(rqstp, idtoname_lookup, &key, nn->idtoname_cache, &item);
+ 	if (ret == -ENOENT)
+ 		return encode_ascii_id(xdr, id);
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index 193b84a0f3a59..0431b979748b8 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -1345,7 +1345,7 @@ static __be32 nfsd4_ssc_setup_dul(struct nfsd_net *nn, char *ipaddr,
+ 		return 0;
+ 	}
+ 	if (work) {
+-		strlcpy(work->nsui_ipaddr, ipaddr, sizeof(work->nsui_ipaddr) - 1);
++		strscpy(work->nsui_ipaddr, ipaddr, sizeof(work->nsui_ipaddr) - 1);
+ 		refcount_set(&work->nsui_refcnt, 2);
+ 		work->nsui_busy = true;
+ 		list_add_tail(&work->nsui_list, &nn->nfsd_ssc_mount_list);
+diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
+index 011c556caa1e7..8b1afde192118 100644
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -799,7 +799,7 @@ nfsd_svc(int nrservs, struct net *net, const struct cred *cred)
+ 	if (nrservs == 0 && nn->nfsd_serv == NULL)
+ 		goto out;
+ 
+-	strlcpy(nn->nfsd_name, utsname()->nodename,
++	strscpy(nn->nfsd_name, utsname()->nodename,
+ 		sizeof(nn->nfsd_name));
+ 
+ 	error = nfsd_create_serv(net);
 -- 
 2.43.0
 
