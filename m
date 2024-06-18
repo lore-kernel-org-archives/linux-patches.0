@@ -1,81 +1,100 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1369E1AD9FF;
-	Tue, 18 Jun 2024 13:20:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08B2B154C02;
+	Tue, 18 Jun 2024 13:32:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716849; cv=none; b=f/ukV2sEcWQ2ngABzJlC9OFQT9UBySPub4Gu9VHAYx4kx0x/bU173+un/TCXVp7yXoAMGgwYt9HyQNEua+B/vlZp0n/R36Qtb8+QS5UG3EkmFddxjHS0IsrQUsymY9ieBoTdCN+vAxR7Bx0+sx8MH+RvwTfLTUjojv/CMc6zuCU=
+	t=1718717529; cv=none; b=L7sp+3bUIzdk+fHyJJs+anxVwLdHl04u/pCbUsARJQsz4Kc1hhKCFz/cOnvG+yzmGAr7dq6YBD5T6bAteMS1sEjnhB457HiAqkETtqFsQySj7DhxWhVOYs7ngWKzCdqPZADozg2stbWgUKWRZWsbMXUowUzxnNjDSbDu66tF6k0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716849; c=relaxed/simple;
-	bh=eiEYRg7tb9Zm5L5qiyKdmcxA6sLOHm162FbH/EnNafk=;
+	s=arc-20240116; t=1718717529; c=relaxed/simple;
+	bh=qEkj4//U6KG8xRAeMon7L+0J8zZLN/mZEyxTlEPRTbg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ki6vZfrewwehav7HjAPGAgDVSepQ9Vrf0tiDbSjajyGB91RUFmZ2mKr7x3WLqknLheDGvXaSKn5n84dAmOOgxLM3rvRfsz3iETtz9lqky1WL1RJBhj8xd+CFOHjdxd7x+RjNRFLqzTZmKxZi3VgkpaWFg9pB4+EDMHv7cbDQWb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2SMaN9t+; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=LF+4HMrwpLhnONS50GjP4nzimr/zK4Pqo0QXBn7eFJ4gCzKjMzaL3Qf2DB68U4dKGbgCAjS8FydVePseNCTrRd+l8dWMc614nUtRcgNciqMiCeR0MImb/k0k0SDeTybukCFBq+AQC96wa9pXz+RrOiU129Ee1qWwxp4EmHOCMr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b=YOnvFoSI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2SMaN9t+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6069CC3277B;
-	Tue, 18 Jun 2024 13:20:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716848;
-	bh=eiEYRg7tb9Zm5L5qiyKdmcxA6sLOHm162FbH/EnNafk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=2SMaN9t+BDTOmgY5LngowGE8aP5d6hfv3J72xiUTJu17ASoBewEydNivyJFfkCEem
-	 TT17iISo/QJVq6N7Cd/FW1yNTUuuvPIKBNkHG1O2oKoipHvgbhMtwPpl5mDBBbaefq
-	 btR6MADVjHWoVYhasE9OLDXiJr6nn7k6hnSgIzE4=
-Date: Tue, 18 Jun 2024 15:18:07 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 6.6 000/741] 6.6.33-rc2 review
-Message-ID: <2024061855-rural-stoplight-1283@gregkh>
-References: <20240609113903.732882729@linuxfoundation.org>
- <55b8c260-d8f0-4c05-bdf1-c20865fb13f7@roeck-us.net>
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="YOnvFoSI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31C43C3277B;
+	Tue, 18 Jun 2024 13:32:07 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="YOnvFoSI"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1718717524;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=dXgTJ+f0QK4xyk6S0WAzQZ56fTF02lsoZfvyGwGUpGA=;
+	b=YOnvFoSIHAUfloRtGqwbXjuzFNL49AdMN7f7g+JamurOUujx5DTbMwqEd2kCTOHFNgw8gS
+	C3qtfplIVATyyxO2mxH9UT7I/5iPeVarelvrWYxONiGjErUIoXwZ7Wqtgt0hfIdSy+/g/M
+	2vwm/uY3OfvrQrq4qeYpmRW1lugCyws=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 53381528 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 18 Jun 2024 13:32:03 +0000 (UTC)
+Date: Tue, 18 Jun 2024 15:32:00 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Peter Zijlstra <peterz@infradead.org>
+Cc: Andy Lutomirski <luto@amacapital.net>, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, tglx@linutronix.de,
+	linux-crypto@vger.kernel.org, linux-api@vger.kernel.org,
+	x86@kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+	Carlos O'Donell <carlos@redhat.com>,
+	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
+	Jann Horn <jannh@google.com>,
+	Christian Brauner <brauner@kernel.org>,
+	David Hildenbrand <dhildenb@redhat.com>
+Subject: Re: [PATCH v17 4/5] random: introduce generic vDSO getrandom()
+ implementation
+Message-ID: <ZnGMUMf73dMdaZWv@zx2c4.com>
+References: <20240614190646.2081057-1-Jason@zx2c4.com>
+ <20240614190646.2081057-5-Jason@zx2c4.com>
+ <CALCETrVQtQO87U3SEgQyHfkNKsrcS8PjeZrsy2MPAU7gQY70XA@mail.gmail.com>
+ <ZnDQ-HQH8NlmCcIr@zx2c4.com>
+ <20240618084548.GE31592@noisy.programming.kicks-ass.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <55b8c260-d8f0-4c05-bdf1-c20865fb13f7@roeck-us.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240618084548.GE31592@noisy.programming.kicks-ass.net>
 
-On Mon, Jun 17, 2024 at 10:38:29AM -0700, Guenter Roeck wrote:
-> Hi,
-> 
-> On 6/9/24 04:41, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 6.6.33 release.
-> > There are 741 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
+On Tue, Jun 18, 2024 at 10:45:48AM +0200, Peter Zijlstra wrote:
+> On Tue, Jun 18, 2024 at 02:12:40AM +0200, Jason A. Donenfeld wrote:
+> > Hi Andy,
 > > 
-> > Responses should be made by Tue, 11 Jun 2024 11:36:08 +0000.
-> > Anything received after that time might be too late.
+> > On Mon, Jun 17, 2024 at 05:06:22PM -0700, Andy Lutomirski wrote:
+> > > On Fri, Jun 14, 2024 at 12:08 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+> > > >
+> > > > Provide a generic C vDSO getrandom() implementation, which operates on
+> > > > an opaque state returned by vgetrandom_alloc() and produces random bytes
+> > > > the same way as getrandom(). This has a the API signature:
+> > > >
+> > > >   ssize_t vgetrandom(void *buffer, size_t len, unsigned int flags, void *opaque_state);
+> > > 
+> > > Last time around, I mentioned some potential issues with this function
+> > > signature, and I didn't see any answer.  My specific objection was to
+> > > the fact that the caller passes in a pointer but not a length, and
+> > > this potentially makes reasoning about memory safety awkward,
+> > > especially if anything like CRIU is involved.
 > > 
-> [ ... ]
+> > Oh, I understood this backwards last time - I thought you were
+> > criticizing the size_t len argument, which didn't make any sense.
 > > 
-> > Duanqiang Wen <duanqiangwen@net-swift.com>
-> >      Revert "net: txgbe: fix clk_name exceed MAX_DEV_ID limits"
-> > 
+> > Re-reading now, what you're suggesting is that I add an additional
+> > argument called `size_t opaque_len`, and then the implementation does
+> > something like:
 > 
-> This patch, in its commit message, explicitly states:
+> Exactly, that's how I read amluto's suggestion as well. Also, I recently
+> ran into this clang rfc:
 > 
->   This reverts commit e30cef001da259e8df354b813015d0e5acc08740.
->   commit 99f4570cfba1 ("clkdev: Update clkdev id usage to allow
->   for longer names") can fix clk_name exceed MAX_DEV_ID limits,
->   so this commit is meaningless.
-> 
-> However, commit 99f4570cfba1 has not been applied to v6.6.y,
-> meaning the revert may impact the affected driver under some
-> circumstances.
+>   https://discourse.llvm.org/t/rfc-enforcing-bounds-safety-in-c-fbounds-safety/70854
 
-Ah, that was tricky, thanks, I've queued up 99f4570cfba1 now.
+Alright, I'll have this for v+1. Patches already written now, for both
+kernel and libc, and I'm dogfooding it.
 
-greg k-h
+Jason
