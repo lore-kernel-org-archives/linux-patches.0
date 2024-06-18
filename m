@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B350C16B3B7;
-	Tue, 18 Jun 2024 12:55:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B4915443A;
+	Tue, 18 Jun 2024 12:55:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715307; cv=none; b=N/NHldUqJH11Fowm+n1OnzooZwe1rRAWhGfqdw7yfBD6KELWGwtV/GYDLgdVgLYy9uoahbcSYpXmbK1ATdVYwYpB+F9THEFolNYQYCtjXgxsCS1rOLDCDkwXX0Nj26Wm34rLrdIBgIt58ZxDexZ/ayeTqDsky2PBZwCcKecxfl0=
+	t=1718715310; cv=none; b=X2YEuvmzA8okt5kwqlN9pX8KuKP3MfcnpclhwiRybs7UWTluuSJRylfCF4ghJ7lp89I97xN8WJXWkYHZR0ggvNjRHvUUEKaCajyX04GyG87qQA6ANbNAd81zsBmNPhnWb6+L8vIjdYxpduW82QjGvOD+GY7Eb+oUSnZiiMjQNR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715307; c=relaxed/simple;
-	bh=AwKf2XxGZKEIgQpYH/UjSTLFFCPJhf+0+cn5VS2g9Ek=;
+	s=arc-20240116; t=1718715310; c=relaxed/simple;
+	bh=aCtPCCuYvUwYVUVXwsciQ/2f4abGN9PzS7/m0q8rYxs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tICmpP5a9HXw0dVG4+7v+yVQ649+9hiotCAn/sOjl8HDVtz7RkEW8gl379Q2axL7lTiG/XwOBC0+osF4TwBZ9AVjT1Hexc7086R7lv3dAI0xtE04keQrFI7IDD2HzjbguasG3puTjKXd87NEP7bMAvtku3wFTbuJK/orFvWTIYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K1jR014H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XaB9XIIGozjqebQ8frfx8mJpnfn949Pbtz57FxVuXMMwMIFG2RQFVhGRddddKjFR9ogZPe69xCHPPCSz89MRT3t9Y5JyDzY11SMbyJydMzbE1cmrTPyQOcZeyDzWSjsB8x/zPBcsio9OS9rrsFt3bfOy/cR1nBExZV70zlfKM3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lzxjUR44; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K1jR014H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32887C3277B;
-	Tue, 18 Jun 2024 12:55:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lzxjUR44"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DC09C3277B;
+	Tue, 18 Jun 2024 12:55:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715307;
-	bh=AwKf2XxGZKEIgQpYH/UjSTLFFCPJhf+0+cn5VS2g9Ek=;
+	s=korg; t=1718715310;
+	bh=aCtPCCuYvUwYVUVXwsciQ/2f4abGN9PzS7/m0q8rYxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K1jR014HhMLIkQ4/A85yaUtqrDUNR6pSY+Pqg8F6fvakJwOigrO/IU6CkOVLkoWUg
-	 AYBAcNmEHV5eOJCi6LxDWlXTKkCDF/lyNfT5yfQ2QW2V507rLmeIJ59it0oSXS7eWP
-	 cS0iOdsBM4kb7DfVrPyxAyAMGi+riIVk49DzKrDc=
+	b=lzxjUR44Ji8tNofleb533M0obQcwutigg8D88SLBNSFu9bJo86537dW8tbXlqk+Zt
+	 i7SYaw4726oIYIQgy+e0M41YrkT1y47A2PIUuMmdWfwBo3M0rXwKnkiPUfnSutxeLG
+	 42o2Af1OAnz3dIMc0jhxEofVaeIvyjhji0eTuuew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Dai Ngo <dai.ngo@oracle.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 264/770] nfsd: Fix fall-through warnings for Clang
-Date: Tue, 18 Jun 2024 14:31:57 +0200
-Message-ID: <20240618123417.463372150@linuxfoundation.org>
+Subject: [PATCH 5.10 265/770] NFSv4.2: Remove ifdef CONFIG_NFSD from NFSv4.2 client SSC code.
+Date: Tue, 18 Jun 2024 14:31:58 +0200
+Message-ID: <20240618123417.501990621@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -51,47 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-[ Upstream commit 76c50eb70d8e1133eaada0013845619c36345fbc ]
+[ Upstream commit d9092b4bb2109502eb8972021a3f74febc931a63 ]
 
-In preparation to enable -Wimplicit-fallthrough for Clang, fix multiple
-warnings by explicitly adding a couple of break statements instead of
-just letting the code fall through to the next case.
+The client SSC code should not depend on any of the CONFIG_NFSD config.
+This patch removes all CONFIG_NFSD from NFSv4.2 client SSC code and
+simplifies the config of CONFIG_NFS_V4_2_SSC_HELPER, NFSD_V4_2_INTER_SSC.
 
-Link: https://github.com/KSPP/linux/issues/115
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 1 +
- fs/nfsd/nfsctl.c    | 1 +
- 2 files changed, 2 insertions(+)
+ fs/Kconfig        | 4 ++--
+ fs/nfs/nfs4file.c | 4 ----
+ fs/nfs/super.c    | 4 ----
+ fs/nfsd/Kconfig   | 2 +-
+ 4 files changed, 3 insertions(+), 11 deletions(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index fd0d6e81a2272..ea68dc157ada1 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -3161,6 +3161,7 @@ nfsd4_exchange_id(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 			goto out_nolock;
- 		}
- 		new->cl_mach_cred = true;
-+		break;
- 	case SP4_NONE:
- 		break;
- 	default:				/* checked by xdr code */
-diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
-index 147ed8995a79f..cb73c12925629 100644
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -1169,6 +1169,7 @@ static struct inode *nfsd_get_inode(struct super_block *sb, umode_t mode)
- 		inode->i_fop = &simple_dir_operations;
- 		inode->i_op = &simple_dir_inode_operations;
- 		inc_nlink(inode);
-+		break;
- 	default:
- 		break;
- 	}
+diff --git a/fs/Kconfig b/fs/Kconfig
+index 462253ae483a3..eaff422877c39 100644
+--- a/fs/Kconfig
++++ b/fs/Kconfig
+@@ -334,8 +334,8 @@ config NFS_COMMON
+ 	default y
+ 
+ config NFS_V4_2_SSC_HELPER
+-	tristate
+-	default y if NFS_V4=y || NFS_FS=y
++	bool
++	default y if NFS_V4_2
+ 
+ source "net/sunrpc/Kconfig"
+ source "fs/ceph/Kconfig"
+diff --git a/fs/nfs/nfs4file.c b/fs/nfs/nfs4file.c
+index 5ad57ad89fb1e..70cd0d764c447 100644
+--- a/fs/nfs/nfs4file.c
++++ b/fs/nfs/nfs4file.c
+@@ -430,9 +430,7 @@ static const struct nfs4_ssc_client_ops nfs4_ssc_clnt_ops_tbl = {
+  */
+ void nfs42_ssc_register_ops(void)
+ {
+-#ifdef CONFIG_NFSD_V4
+ 	nfs42_ssc_register(&nfs4_ssc_clnt_ops_tbl);
+-#endif
+ }
+ 
+ /**
+@@ -443,9 +441,7 @@ void nfs42_ssc_register_ops(void)
+  */
+ void nfs42_ssc_unregister_ops(void)
+ {
+-#ifdef CONFIG_NFSD_V4
+ 	nfs42_ssc_unregister(&nfs4_ssc_clnt_ops_tbl);
+-#endif
+ }
+ #endif /* CONFIG_NFS_V4_2 */
+ 
+diff --git a/fs/nfs/super.c b/fs/nfs/super.c
+index 7179d59d73ca4..1ffce90760606 100644
+--- a/fs/nfs/super.c
++++ b/fs/nfs/super.c
+@@ -116,16 +116,12 @@ static void unregister_nfs4_fs(void)
+ #ifdef CONFIG_NFS_V4_2
+ static void nfs_ssc_register_ops(void)
+ {
+-#ifdef CONFIG_NFSD_V4
+ 	nfs_ssc_register(&nfs_ssc_clnt_ops_tbl);
+-#endif
+ }
+ 
+ static void nfs_ssc_unregister_ops(void)
+ {
+-#ifdef CONFIG_NFSD_V4
+ 	nfs_ssc_unregister(&nfs_ssc_clnt_ops_tbl);
+-#endif
+ }
+ #endif /* CONFIG_NFS_V4_2 */
+ 
+diff --git a/fs/nfsd/Kconfig b/fs/nfsd/Kconfig
+index 5fa38ad9e7e3f..f229172652be0 100644
+--- a/fs/nfsd/Kconfig
++++ b/fs/nfsd/Kconfig
+@@ -138,7 +138,7 @@ config NFSD_FLEXFILELAYOUT
+ 
+ config NFSD_V4_2_INTER_SSC
+ 	bool "NFSv4.2 inter server to server COPY"
+-	depends on NFSD_V4 && NFS_V4_1 && NFS_V4_2
++	depends on NFSD_V4 && NFS_V4_2
+ 	help
+ 	  This option enables support for NFSv4.2 inter server to
+ 	  server copy where the destination server calls the NFSv4.2
 -- 
 2.43.0
 
