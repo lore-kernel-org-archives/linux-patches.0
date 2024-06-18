@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71361A00E0;
-	Tue, 18 Jun 2024 13:08:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36B91A00DF;
+	Tue, 18 Jun 2024 13:08:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716124; cv=none; b=Bwma3XKXBWV1siVfWkNBlQX9MWZIQyM8vQBCwL/c4fg9SgmUYjQnMavGQdR/EBkKJswg0UZKYWEihkNWeOMXr5wTxNkqpsNUEKxAQQkG+hkPVzhqEhEfv20XcE3/EcGafSkVTTyjagG4XP0i2E3mucCmFqm70E5Y4NOVv27UNmw=
+	t=1718716126; cv=none; b=RY4CxvBZYw+G9al5uO0A0GsIhyPHgVY3V2FUx9v2uZFsmu1gCBddCnPU2hWSds/IgvNBSGIJ3RO38LqXwpRrXdhY72omboL6/Dzd3xuTXmB2m72Y2Tqcqr3XhVbUPNeWLyprc4zIaxIvv552ABllegiGy48eh8V3AksqY8WNvs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716124; c=relaxed/simple;
-	bh=0cWuDeVRf7YufkctSMJ9+DwT/0pDKzUuMgACWYt5BlY=;
+	s=arc-20240116; t=1718716126; c=relaxed/simple;
+	bh=1ec8Sq7MhS43LhPOmRNK/EeRjaKKycrDG2+Pt+CJrgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mJ9h+Jl13tf6OWfTxFBKJbqVdSzNxT/FIq54yvLqNJZ6GZPxFg+a6gbPdI+UHROnUOC0UMlBqsEiueWxDMpdbtU3NdlFnM/q3gOBym5sRRmDpQyfSv5vfdRh4Sp2kcJFvrzfG8sSgA7Mids2Ktafvq+jIo/f1DxMA7vS908sNsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DFAXKSlo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WxLQ0GhnAyRwA5yUOyRpn5nBHf4xwbwv04Lt+SLgzxj2pxRrRzMABB2lxWvTkFlUmUSKrQottUY0iZw9/GxQkzKl7TYp301Pxc6QCI1myUPm0qA8UMzuRgPn0iHhN/cYAvqPFm2H/KcnFHsK80OdJrojcw+4rkvVz19WXgcB+6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0J92dj1u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DFAXKSlo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A1A9C3277B;
-	Tue, 18 Jun 2024 13:08:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0J92dj1u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CDE2C32786;
+	Tue, 18 Jun 2024 13:08:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716123;
-	bh=0cWuDeVRf7YufkctSMJ9+DwT/0pDKzUuMgACWYt5BlY=;
+	s=korg; t=1718716126;
+	bh=1ec8Sq7MhS43LhPOmRNK/EeRjaKKycrDG2+Pt+CJrgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DFAXKSloQ92WjG8jUbJT/GZGCoe+d7f8H1M0NvW3Kft+lE+H6dZTOY5PYYFgHEqaH
-	 EP9XieiuIX53trfP7ve7TG5DirD9pRLZDL4CBTGfjmROfMwBJlwe2rPP1tmWoZKbEA
-	 YkMY7yP2w5riwjBqeda+O3R7J45/XhD1KAcI4YFc=
+	b=0J92dj1uo2rL+Y1omj5vw2m5crHImZ5r8RE4wzTh5xblHT4q3Kk7vZiKYMm5RGfEG
+	 wOcdA2ziaRvMoeu+KnV1vcVrzHz7UW42T9qzQSWeR0u0BHTGr6XRteM9qduEmJwohD
+	 WusQ/7r43h7ZMsGOGmRMhB4d2P85mA8/7StpwkHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neilb@suse.de>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Igor Mammedov <imammedo@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 540/770] NFS: restore module put when manager exits.
-Date: Tue, 18 Jun 2024 14:36:33 +0200
-Message-ID: <20240618123428.154251084@linuxfoundation.org>
+Subject: [PATCH 5.10 541/770] NFSD: Decode NFSv4 birth time attribute
+Date: Tue, 18 Jun 2024 14:36:34 +0200
+Message-ID: <20240618123428.192496268@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,44 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 080abad71e99d2becf38c978572982130b927a28 ]
+[ Upstream commit 5b2f3e0777da2a5dd62824bbe2fdab1d12caaf8f ]
 
-Commit f49169c97fce ("NFSD: Remove svc_serv_ops::svo_module") removed
-calls to module_put_and_kthread_exit() from threads that acted as SUNRPC
-servers and had a related svc_serv_ops structure.  This was correct.
+NFSD has advertised support for the NFSv4 time_create attribute
+since commit e377a3e698fb ("nfsd: Add support for the birth time
+attribute").
 
-It ALSO removed the module_put_and_kthread_exit() call from
-nfs4_run_state_manager() which is NOT a SUNRPC service.
+Igor Mammedov reports that Mac OS clients attempt to set the NFSv4
+birth time attribute via OPEN(CREATE) and SETATTR if the server
+indicates that it supports it, but since the above commit was
+merged, those attempts now fail.
 
-Consequently every time the NFSv4 state manager runs the module count
-increments and won't be decremented.  So the nfsv4 module cannot be
-unloaded.
+Table 5 in RFC 8881 lists the time_create attribute as one that can
+be both set and retrieved, but the above commit did not add server
+support for clients to provide a time_create attribute. IMO that's
+a bug in our implementation of the NFSv4 protocol, which this commit
+addresses.
 
-So restore the module_put_and_kthread_exit() call.
+Whether NFSD silently ignores the new birth time or actually sets it
+is another matter. I haven't found another filesystem service in the
+Linux kernel that enables users or clients to modify a file's birth
+time attribute.
 
-Fixes: f49169c97fce ("NFSD: Remove svc_serv_ops::svo_module")
-Signed-off-by: NeilBrown <neilb@suse.de>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+This commit reflects my (perhaps incorrect) understanding of whether
+Linux users can set a file's birth time. NFSD will now recognize a
+time_create attribute but it ignores its value. It clears the
+time_create bit in the returned attribute bitmask to indicate that
+the value was not used.
+
+Reported-by: Igor Mammedov <imammedo@redhat.com>
+Fixes: e377a3e698fb ("nfsd: Add support for the birth time attribute")
+Tested-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4state.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/nfsd/nfs4xdr.c | 9 +++++++++
+ fs/nfsd/nfsd.h    | 3 ++-
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
-index ae2da65ffbafb..d8fc5d72a161c 100644
---- a/fs/nfs/nfs4state.c
-+++ b/fs/nfs/nfs4state.c
-@@ -2757,6 +2757,7 @@ static int nfs4_run_state_manager(void *ptr)
- 		goto again;
+diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
+index 804c137fabec5..b98a24c2a753c 100644
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -470,6 +470,15 @@ nfsd4_decode_fattr4(struct nfsd4_compoundargs *argp, u32 *bmval, u32 bmlen,
+ 			return nfserr_bad_xdr;
+ 		}
+ 	}
++	if (bmval[1] & FATTR4_WORD1_TIME_CREATE) {
++		struct timespec64 ts;
++
++		/* No Linux filesystem supports setting this attribute. */
++		bmval[1] &= ~FATTR4_WORD1_TIME_CREATE;
++		status = nfsd4_decode_nfstime4(argp, &ts);
++		if (status)
++			return status;
++	}
+ 	if (bmval[1] & FATTR4_WORD1_TIME_MODIFY_SET) {
+ 		u32 set_it;
  
- 	nfs_put_client(clp);
-+	module_put_and_kthread_exit(0);
- 	return 0;
- }
- 
+diff --git a/fs/nfsd/nfsd.h b/fs/nfsd/nfsd.h
+index 847b482155ae9..9a8b09afc1733 100644
+--- a/fs/nfsd/nfsd.h
++++ b/fs/nfsd/nfsd.h
+@@ -465,7 +465,8 @@ static inline bool nfsd_attrs_supported(u32 minorversion, const u32 *bmval)
+ 	(FATTR4_WORD0_SIZE | FATTR4_WORD0_ACL)
+ #define NFSD_WRITEABLE_ATTRS_WORD1 \
+ 	(FATTR4_WORD1_MODE | FATTR4_WORD1_OWNER | FATTR4_WORD1_OWNER_GROUP \
+-	| FATTR4_WORD1_TIME_ACCESS_SET | FATTR4_WORD1_TIME_MODIFY_SET)
++	| FATTR4_WORD1_TIME_ACCESS_SET | FATTR4_WORD1_TIME_CREATE \
++	| FATTR4_WORD1_TIME_MODIFY_SET)
+ #ifdef CONFIG_NFSD_V4_SECURITY_LABEL
+ #define MAYBE_FATTR4_WORD2_SECURITY_LABEL \
+ 	FATTR4_WORD2_SECURITY_LABEL
 -- 
 2.43.0
 
