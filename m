@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB01516B3AF;
-	Tue, 18 Jun 2024 12:54:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B864116B3AE;
+	Tue, 18 Jun 2024 12:55:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715298; cv=none; b=WZc4qvxQf+l4bNY6YgLSkYcT+2EcjV38C/dHAHSE50lUXydcZorxTfJrBUDYlYU/30q1DWFE8Ja4xyMEYX+ELrHd3lg/2vOMClZ1n2VNiZLsPjs8Slpw6NE7BEE+D7RkRX8QOm64PrLvfOkHx5pukz/Hu3rfv5wF8burKhaNbKo=
+	t=1718715301; cv=none; b=mJAdZvj+UNlGZmAbU6D34d08PKkZoxmKyuusja7tRTGaMm4l/+v1YYfzRqrQKVA91q8znri5qHT3IpW3ne0qoTO+KnPYCBZv7tuU95kMJ3Akd9UwDHgoyX4htxeQCamI9UqUl1JLR+IRWa5QShN7LxZZmUtYQaKbK7bLVavgOE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715298; c=relaxed/simple;
-	bh=Mc8FN2wNnnKNHzzboTG/RVLz+aSeTFRbZUY90scT/JU=;
+	s=arc-20240116; t=1718715301; c=relaxed/simple;
+	bh=9oxyokKiEgiJ2AU5X2wfhccOkpvOoKtp/Pq0eudubdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=srnXrVPyifCG/PCzvr2nhJ0irO2cUBXRYM7a0mNJgCtw9DVka0F4mixNZWTgaWHZMrlq+/uOr6Wh6g7p1gjG7uK/KHC9XyVi5bZ54AaFIVH8DJ9EXlx0MwPSOVeTZk9z7OjaCVpAJBR6tjtE8na2OpE1Hwb+tCG5O3I+CP29XrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qHJUv4/w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ggRifZcl5VIhiclS9yggD+uT5El93XY0fmayWq79tb8UXXEagPQhvsHq8FtjpdPupWcL9eh9sr9Gwys54rCD4+SZkpbz9BtrjEjO7YPHLWA3jUcphxmPqvbzzPcRsTRbhHArPfXpcMl5Rt/0FkV2loz8bbTLW1Bfgm+9BcbrkgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YEdWmpP+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qHJUv4/w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EBBCC3277B;
-	Tue, 18 Jun 2024 12:54:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YEdWmpP+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40C3EC3277B;
+	Tue, 18 Jun 2024 12:55:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715298;
-	bh=Mc8FN2wNnnKNHzzboTG/RVLz+aSeTFRbZUY90scT/JU=;
+	s=korg; t=1718715301;
+	bh=9oxyokKiEgiJ2AU5X2wfhccOkpvOoKtp/Pq0eudubdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qHJUv4/wyv/F8sfEYPXRKHOeRDYyc5pJUSeH4Q0AX0Aoc8bMcXpJiKyZGF/ecYcl1
-	 b0JsN0o7vOm33agzT7xJCRAb2VlC8u//hR7ECvvFtRWqDg8CSs+d2LkzGyzz6dasIA
-	 RBGgSh/Ocb47ujw9WCuYEbxoOE3R5rxKsxnLnomc=
+	b=YEdWmpP+30rLJWq4Y1laiIOjGW4Klud+5umfm7gqHkXi3k8/3wJPjXywd3+tfP9ms
+	 0/+Zm+PjPpgQD0rsjuKXeormyILQCp45zB7lH6Z5mhoBLSlNxz5voIV0QKmK/gWVu3
+	 UonEH9U00XFBB5s7//xoNjnW1WU3ocVjf3T4SmjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"J. Bruce Fields" <bfields@redhat.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 261/770] nfsd: track filehandle aliasing in nfs4_files
-Date: Tue, 18 Jun 2024 14:31:54 +0200
-Message-ID: <20240618123417.347952381@linuxfoundation.org>
+Subject: [PATCH 5.10 262/770] nfsd: reshuffle some code
+Date: Tue, 18 Jun 2024 14:31:55 +0200
+Message-ID: <20240618123417.386922420@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,98 +53,281 @@ Content-Transfer-Encoding: 8bit
 
 From: J. Bruce Fields <bfields@redhat.com>
 
-[ Upstream commit a0ce48375a367222989c2618fe68bf34db8c7bb7 ]
+[ Upstream commit ebd9d2c2f5a7ebaaed2d7bb4dee148755f46033d ]
 
-It's unusual but possible for multiple filehandles to point to the same
-file.  In that case, we may end up with multiple nfs4_files referencing
-the same inode.
+No change in behavior, I'm just moving some code around to avoid forward
+references in a following patch.
 
-For delegation purposes it will turn out to be useful to flag those
-cases.
+(To do someday: figure out how to split up nfs4state.c.  It's big and
+disorganized.)
 
 Signed-off-by: J. Bruce Fields <bfields@redhat.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 37 ++++++++++++++++++++++++++++---------
- fs/nfsd/state.h     |  2 ++
- 2 files changed, 30 insertions(+), 9 deletions(-)
+ fs/nfsd/nfs4state.c | 235 ++++++++++++++++++++++----------------------
+ 1 file changed, 118 insertions(+), 117 deletions(-)
 
 diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 8d2d6e90bfc5e..89d5669ce1463 100644
+index 89d5669ce1463..9c8dacf0f2b86 100644
 --- a/fs/nfsd/nfs4state.c
 +++ b/fs/nfsd/nfs4state.c
-@@ -4120,6 +4120,8 @@ static void nfsd4_init_file(struct svc_fh *fh, unsigned int hashval,
- 	fp->fi_share_deny = 0;
- 	memset(fp->fi_fds, 0, sizeof(fp->fi_fds));
- 	memset(fp->fi_access, 0, sizeof(fp->fi_access));
-+	fp->fi_aliased = false;
-+	fp->fi_inode = d_inode(fh->fh_dentry);
- #ifdef CONFIG_NFSD_PNFS
- 	INIT_LIST_HEAD(&fp->fi_lo_states);
- 	atomic_set(&fp->fi_lo_recalls, 0);
-@@ -4472,6 +4474,31 @@ find_file_locked(struct svc_fh *fh, unsigned int hashval)
- 	return NULL;
- }
+@@ -354,6 +354,124 @@ static const struct nfsd4_callback_ops nfsd4_cb_notify_lock_ops = {
+ 	.release	= nfsd4_cb_notify_lock_release,
+ };
  
-+static struct nfs4_file *insert_file(struct nfs4_file *new, struct svc_fh *fh,
-+				     unsigned int hashval)
++/*
++ * We store the NONE, READ, WRITE, and BOTH bits separately in the
++ * st_{access,deny}_bmap field of the stateid, in order to track not
++ * only what share bits are currently in force, but also what
++ * combinations of share bits previous opens have used.  This allows us
++ * to enforce the recommendation of rfc 3530 14.2.19 that the server
++ * return an error if the client attempt to downgrade to a combination
++ * of share bits not explicable by closing some of its previous opens.
++ *
++ * XXX: This enforcement is actually incomplete, since we don't keep
++ * track of access/deny bit combinations; so, e.g., we allow:
++ *
++ *	OPEN allow read, deny write
++ *	OPEN allow both, deny none
++ *	DOWNGRADE allow read, deny none
++ *
++ * which we should reject.
++ */
++static unsigned int
++bmap_to_share_mode(unsigned long bmap)
 +{
-+	struct nfs4_file *fp;
-+	struct nfs4_file *ret = NULL;
-+	bool alias_found = false;
++	int i;
++	unsigned int access = 0;
 +
-+	spin_lock(&state_lock);
-+	hlist_for_each_entry_rcu(fp, &file_hashtbl[hashval], fi_hash,
-+				 lockdep_is_held(&state_lock)) {
-+		if (fh_match(&fp->fi_fhandle, &fh->fh_handle)) {
-+			if (refcount_inc_not_zero(&fp->fi_ref))
-+				ret = fp;
-+		} else if (d_inode(fh->fh_dentry) == fp->fi_inode)
-+			fp->fi_aliased = alias_found = true;
++	for (i = 1; i < 4; i++) {
++		if (test_bit(i, &bmap))
++			access |= i;
 +	}
-+	if (likely(ret == NULL)) {
-+		nfsd4_init_file(fh, hashval, new);
-+		new->fi_aliased = alias_found;
-+		ret = new;
-+	}
-+	spin_unlock(&state_lock);
-+	return ret;
++	return access;
 +}
 +
- static struct nfs4_file * find_file(struct svc_fh *fh)
++/* set share access for a given stateid */
++static inline void
++set_access(u32 access, struct nfs4_ol_stateid *stp)
++{
++	unsigned char mask = 1 << access;
++
++	WARN_ON_ONCE(access > NFS4_SHARE_ACCESS_BOTH);
++	stp->st_access_bmap |= mask;
++}
++
++/* clear share access for a given stateid */
++static inline void
++clear_access(u32 access, struct nfs4_ol_stateid *stp)
++{
++	unsigned char mask = 1 << access;
++
++	WARN_ON_ONCE(access > NFS4_SHARE_ACCESS_BOTH);
++	stp->st_access_bmap &= ~mask;
++}
++
++/* test whether a given stateid has access */
++static inline bool
++test_access(u32 access, struct nfs4_ol_stateid *stp)
++{
++	unsigned char mask = 1 << access;
++
++	return (bool)(stp->st_access_bmap & mask);
++}
++
++/* set share deny for a given stateid */
++static inline void
++set_deny(u32 deny, struct nfs4_ol_stateid *stp)
++{
++	unsigned char mask = 1 << deny;
++
++	WARN_ON_ONCE(deny > NFS4_SHARE_DENY_BOTH);
++	stp->st_deny_bmap |= mask;
++}
++
++/* clear share deny for a given stateid */
++static inline void
++clear_deny(u32 deny, struct nfs4_ol_stateid *stp)
++{
++	unsigned char mask = 1 << deny;
++
++	WARN_ON_ONCE(deny > NFS4_SHARE_DENY_BOTH);
++	stp->st_deny_bmap &= ~mask;
++}
++
++/* test whether a given stateid is denying specific access */
++static inline bool
++test_deny(u32 deny, struct nfs4_ol_stateid *stp)
++{
++	unsigned char mask = 1 << deny;
++
++	return (bool)(stp->st_deny_bmap & mask);
++}
++
++static int nfs4_access_to_omode(u32 access)
++{
++	switch (access & NFS4_SHARE_ACCESS_BOTH) {
++	case NFS4_SHARE_ACCESS_READ:
++		return O_RDONLY;
++	case NFS4_SHARE_ACCESS_WRITE:
++		return O_WRONLY;
++	case NFS4_SHARE_ACCESS_BOTH:
++		return O_RDWR;
++	}
++	WARN_ON_ONCE(1);
++	return O_RDONLY;
++}
++
++static inline int
++access_permit_read(struct nfs4_ol_stateid *stp)
++{
++	return test_access(NFS4_SHARE_ACCESS_READ, stp) ||
++		test_access(NFS4_SHARE_ACCESS_BOTH, stp) ||
++		test_access(NFS4_SHARE_ACCESS_WRITE, stp);
++}
++
++static inline int
++access_permit_write(struct nfs4_ol_stateid *stp)
++{
++	return test_access(NFS4_SHARE_ACCESS_WRITE, stp) ||
++		test_access(NFS4_SHARE_ACCESS_BOTH, stp);
++}
++
+ static inline struct nfs4_stateowner *
+ nfs4_get_stateowner(struct nfs4_stateowner *sop)
  {
- 	struct nfs4_file *fp;
-@@ -4495,15 +4522,7 @@ find_or_add_file(struct nfs4_file *new, struct svc_fh *fh)
- 	if (fp)
- 		return fp;
- 
--	spin_lock(&state_lock);
--	fp = find_file_locked(fh, hashval);
--	if (likely(fp == NULL)) {
--		nfsd4_init_file(fh, hashval, new);
--		fp = new;
--	}
--	spin_unlock(&state_lock);
--
--	return fp;
-+	return insert_file(new, fh, hashval);
+@@ -1167,108 +1285,6 @@ static unsigned int clientstr_hashval(struct xdr_netobj name)
+ 	return opaque_hashval(name.data, 8) & CLIENT_HASH_MASK;
  }
  
+-/*
+- * We store the NONE, READ, WRITE, and BOTH bits separately in the
+- * st_{access,deny}_bmap field of the stateid, in order to track not
+- * only what share bits are currently in force, but also what
+- * combinations of share bits previous opens have used.  This allows us
+- * to enforce the recommendation of rfc 3530 14.2.19 that the server
+- * return an error if the client attempt to downgrade to a combination
+- * of share bits not explicable by closing some of its previous opens.
+- *
+- * XXX: This enforcement is actually incomplete, since we don't keep
+- * track of access/deny bit combinations; so, e.g., we allow:
+- *
+- *	OPEN allow read, deny write
+- *	OPEN allow both, deny none
+- *	DOWNGRADE allow read, deny none
+- *
+- * which we should reject.
+- */
+-static unsigned int
+-bmap_to_share_mode(unsigned long bmap) {
+-	int i;
+-	unsigned int access = 0;
+-
+-	for (i = 1; i < 4; i++) {
+-		if (test_bit(i, &bmap))
+-			access |= i;
+-	}
+-	return access;
+-}
+-
+-/* set share access for a given stateid */
+-static inline void
+-set_access(u32 access, struct nfs4_ol_stateid *stp)
+-{
+-	unsigned char mask = 1 << access;
+-
+-	WARN_ON_ONCE(access > NFS4_SHARE_ACCESS_BOTH);
+-	stp->st_access_bmap |= mask;
+-}
+-
+-/* clear share access for a given stateid */
+-static inline void
+-clear_access(u32 access, struct nfs4_ol_stateid *stp)
+-{
+-	unsigned char mask = 1 << access;
+-
+-	WARN_ON_ONCE(access > NFS4_SHARE_ACCESS_BOTH);
+-	stp->st_access_bmap &= ~mask;
+-}
+-
+-/* test whether a given stateid has access */
+-static inline bool
+-test_access(u32 access, struct nfs4_ol_stateid *stp)
+-{
+-	unsigned char mask = 1 << access;
+-
+-	return (bool)(stp->st_access_bmap & mask);
+-}
+-
+-/* set share deny for a given stateid */
+-static inline void
+-set_deny(u32 deny, struct nfs4_ol_stateid *stp)
+-{
+-	unsigned char mask = 1 << deny;
+-
+-	WARN_ON_ONCE(deny > NFS4_SHARE_DENY_BOTH);
+-	stp->st_deny_bmap |= mask;
+-}
+-
+-/* clear share deny for a given stateid */
+-static inline void
+-clear_deny(u32 deny, struct nfs4_ol_stateid *stp)
+-{
+-	unsigned char mask = 1 << deny;
+-
+-	WARN_ON_ONCE(deny > NFS4_SHARE_DENY_BOTH);
+-	stp->st_deny_bmap &= ~mask;
+-}
+-
+-/* test whether a given stateid is denying specific access */
+-static inline bool
+-test_deny(u32 deny, struct nfs4_ol_stateid *stp)
+-{
+-	unsigned char mask = 1 << deny;
+-
+-	return (bool)(stp->st_deny_bmap & mask);
+-}
+-
+-static int nfs4_access_to_omode(u32 access)
+-{
+-	switch (access & NFS4_SHARE_ACCESS_BOTH) {
+-	case NFS4_SHARE_ACCESS_READ:
+-		return O_RDONLY;
+-	case NFS4_SHARE_ACCESS_WRITE:
+-		return O_WRONLY;
+-	case NFS4_SHARE_ACCESS_BOTH:
+-		return O_RDWR;
+-	}
+-	WARN_ON_ONCE(1);
+-	return O_RDONLY;
+-}
+-
  /*
-diff --git a/fs/nfsd/state.h b/fs/nfsd/state.h
-index 61a2d95d79233..e73bdbb1634ab 100644
---- a/fs/nfsd/state.h
-+++ b/fs/nfsd/state.h
-@@ -516,6 +516,8 @@ struct nfs4_clnt_odstate {
-  */
- struct nfs4_file {
- 	refcount_t		fi_ref;
-+	struct inode *		fi_inode;
-+	bool			fi_aliased;
- 	spinlock_t		fi_lock;
- 	struct hlist_node       fi_hash;	/* hash on fi_fhandle */
- 	struct list_head        fi_stateids;
+  * A stateid that had a deny mode associated with it is being released
+  * or downgraded. Recalculate the deny mode on the file.
+@@ -5565,21 +5581,6 @@ static inline __be32 nfs4_check_fh(struct svc_fh *fhp, struct nfs4_stid *stp)
+ 	return nfs_ok;
+ }
+ 
+-static inline int
+-access_permit_read(struct nfs4_ol_stateid *stp)
+-{
+-	return test_access(NFS4_SHARE_ACCESS_READ, stp) ||
+-		test_access(NFS4_SHARE_ACCESS_BOTH, stp) ||
+-		test_access(NFS4_SHARE_ACCESS_WRITE, stp);
+-}
+-
+-static inline int
+-access_permit_write(struct nfs4_ol_stateid *stp)
+-{
+-	return test_access(NFS4_SHARE_ACCESS_WRITE, stp) ||
+-		test_access(NFS4_SHARE_ACCESS_BOTH, stp);
+-}
+-
+ static
+ __be32 nfs4_check_openmode(struct nfs4_ol_stateid *stp, int flags)
+ {
 -- 
 2.43.0
 
