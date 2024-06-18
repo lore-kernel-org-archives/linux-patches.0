@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6820150297;
-	Tue, 18 Jun 2024 12:45:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C67140E37;
+	Tue, 18 Jun 2024 12:45:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718714755; cv=none; b=Hn3BQM6o0ZiEqd3QiC3ewfzSTQjYaEZotQiE2jpV437nBDMNoR+IB92ihCFxfNUJyD9oWU738eyyzaE2J6DXv6j9qRlO8mvyZVI69umWTv8u9uV8pwwtiszfrMH7Y15R46ym8pvZC/S5IhIOUhqA51/BWKqp7Nh8ukCUkab9tm8=
+	t=1718714758; cv=none; b=AYRILiK+BPIOhi+l4fl7UtrveuRBUTSwDqs7P3KMdAgq+J4OuJvcnWQjUTEaQcwThNvVLl6mm7SINCtdeqX5TQLWY/CXbFXkJheyychDi5z81Wn27idZnKjLB2XtXfN9pvfYy0qB8JG2PfMUzAZLYqb/1MkSrhmqDlCJcsTvo0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718714755; c=relaxed/simple;
-	bh=CwPeKAGLJzApY9CHW+DnTQrI+Jr2tslk3boXxEDUnSI=;
+	s=arc-20240116; t=1718714758; c=relaxed/simple;
+	bh=c5umScpVJQB+hY/LkCdYipDDwAvYMbUaje1rz7utp6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bQriMCmUENdlFP2m9ZGnorVu0JofGJxj9tKDrAYsHF/SopH2lCHrjQ3Byx9AnYsy7kShkc5x3QL0Flo18X3ige0l1vxj2wg2hbYOl+7rR0hr+d+6qClemrLgFcYN/zYWWqDaSPO4NBYws+PnhPI2LaKG4IgrzUD2l2IN3c0dJ/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zbPzygUx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gNqnRK8pe9Ni4IGswJKjAH5tDLLVrGsV1HVDyt7Qhx4g0GohG3FUzWjLBY+FvEmE3ci4tC8zaSJ7/czqfNEhArO+asLkc+piMLugqB4aahT1yLQ3KDk+Qu4uT2zyG487vDECTS8voN7qNy9LFFeyN0sLYd6BnB8E7sz5pnnlKjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pE/WNNjk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zbPzygUx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6CD5C3277B;
-	Tue, 18 Jun 2024 12:45:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pE/WNNjk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2D81C3277B;
+	Tue, 18 Jun 2024 12:45:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718714755;
-	bh=CwPeKAGLJzApY9CHW+DnTQrI+Jr2tslk3boXxEDUnSI=;
+	s=korg; t=1718714758;
+	bh=c5umScpVJQB+hY/LkCdYipDDwAvYMbUaje1rz7utp6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zbPzygUx6+sO5dhSQ9rYcG9XKg2NkmqYRhIg89l19HTOFxtRxTIW6lYQeBgWj3i7l
-	 I+JIJpNZzhXrClkqorpdko/qdUv8HXd9KK/m/hkEFxCfOeSNjaQSXxvY/OLwzkRXhI
-	 f+QoSJClW2kWcCL33lR7qiHnIvl+xrbhhxhYXEGY=
+	b=pE/WNNjkZWXHS6odNlQmz5PXjI9fhhV8GO7zFnVyoOU3bv9MKPFeDFYT5Q2jXGynv
+	 6TYDcyG+hFY2lIXgUDtkf4uqFW0t1ku8ZN5LI8oLkL/DhN0PtXOFRE+30XUE7i7wFl
+	 4CL9dNtJoqliwDBpatmeVIMW0lmV66SvkM6sFC1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 078/770] NFSD: Replace READ* macros in nfsd4_decode_test_stateid()
-Date: Tue, 18 Jun 2024 14:28:51 +0200
-Message-ID: <20240618123410.293785048@linuxfoundation.org>
+Subject: [PATCH 5.10 079/770] NFSD: Replace READ* macros in nfsd4_decode_destroy_clientid()
+Date: Tue, 18 Jun 2024 14:28:52 +0200
+Message-ID: <20240618123410.331798724@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,88 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit b7a0c8f6e741bf9dee0d24e69d3ce51fa4ccce78 ]
+[ Upstream commit c95f2ec3490586cbb33badc8f4c82d6aa4955078 ]
 
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4xdr.c | 61 +++++++++++++++++++----------------------------
- 1 file changed, 25 insertions(+), 36 deletions(-)
+ fs/nfsd/nfs4xdr.c | 16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
 diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
-index 3fe0d0228c4ac..9642de1550431 100644
+index 9642de1550431..d0f0b7cd4e74e 100644
 --- a/fs/nfsd/nfs4xdr.c
 +++ b/fs/nfsd/nfs4xdr.c
-@@ -1738,42 +1738,6 @@ nfsd4_decode_free_stateid(struct nfsd4_compoundargs *argp,
+@@ -1738,16 +1738,6 @@ nfsd4_decode_free_stateid(struct nfsd4_compoundargs *argp,
  	return nfsd4_decode_stateid4(argp, &free_stateid->fr_stateid);
  }
  
--static __be32
--nfsd4_decode_test_stateid(struct nfsd4_compoundargs *argp, struct nfsd4_test_stateid *test_stateid)
+-static __be32 nfsd4_decode_destroy_clientid(struct nfsd4_compoundargs *argp, struct nfsd4_destroy_clientid *dc)
 -{
--	int i;
--	__be32 *p, status;
--	struct nfsd4_test_stateid_id *stateid;
+-	DECODE_HEAD;
 -
--	READ_BUF(4);
--	test_stateid->ts_num_ids = ntohl(*p++);
+-	READ_BUF(8);
+-	COPYMEM(&dc->clientid, 8);
 -
--	INIT_LIST_HEAD(&test_stateid->ts_stateid_list);
--
--	for (i = 0; i < test_stateid->ts_num_ids; i++) {
--		stateid = svcxdr_tmpalloc(argp, sizeof(*stateid));
--		if (!stateid) {
--			status = nfserrno(-ENOMEM);
--			goto out;
--		}
--
--		INIT_LIST_HEAD(&stateid->ts_id_list);
--		list_add_tail(&stateid->ts_id_list, &test_stateid->ts_stateid_list);
--
--		status = nfsd4_decode_stateid(argp, &stateid->ts_id_stateid);
--		if (status)
--			goto out;
--	}
--
--	status = 0;
--out:
--	return status;
--xdr_error:
--	dprintk("NFSD: xdr error (%s:%d)\n", __FILE__, __LINE__);
--	status = nfserr_bad_xdr;
--	goto out;
+-	DECODE_TAIL;
 -}
 -
- static __be32 nfsd4_decode_destroy_clientid(struct nfsd4_compoundargs *argp, struct nfsd4_destroy_clientid *dc)
+ static __be32 nfsd4_decode_reclaim_complete(struct nfsd4_compoundargs *argp, struct nfsd4_reclaim_complete *rc)
  {
  	DECODE_HEAD;
-@@ -1919,6 +1883,31 @@ nfsd4_decode_sequence(struct nfsd4_compoundargs *argp,
+@@ -1908,6 +1898,12 @@ nfsd4_decode_test_stateid(struct nfsd4_compoundargs *argp, struct nfsd4_test_sta
  	return nfs_ok;
  }
  
-+static __be32
-+nfsd4_decode_test_stateid(struct nfsd4_compoundargs *argp, struct nfsd4_test_stateid *test_stateid)
++static __be32 nfsd4_decode_destroy_clientid(struct nfsd4_compoundargs *argp,
++					    struct nfsd4_destroy_clientid *dc)
 +{
-+	struct nfsd4_test_stateid_id *stateid;
-+	__be32 status;
-+	u32 i;
-+
-+	if (xdr_stream_decode_u32(argp->xdr, &test_stateid->ts_num_ids) < 0)
-+		return nfserr_bad_xdr;
-+
-+	INIT_LIST_HEAD(&test_stateid->ts_stateid_list);
-+	for (i = 0; i < test_stateid->ts_num_ids; i++) {
-+		stateid = svcxdr_tmpalloc(argp, sizeof(*stateid));
-+		if (!stateid)
-+			return nfserrno(-ENOMEM);	/* XXX: not jukebox? */
-+		INIT_LIST_HEAD(&stateid->ts_id_list);
-+		list_add_tail(&stateid->ts_id_list, &test_stateid->ts_stateid_list);
-+		status = nfsd4_decode_stateid4(argp, &stateid->ts_id_stateid);
-+		if (status)
-+			return status;
-+	}
-+
-+	return nfs_ok;
++	return nfsd4_decode_clientid4(argp, &dc->clientid);
 +}
 +
  static __be32
