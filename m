@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D843813CF82;
-	Tue, 18 Jun 2024 13:16:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8AD313AA46;
+	Tue, 18 Jun 2024 13:16:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716578; cv=none; b=Ifh9wAG3O8IhYRCJs0lROy8ic6De/peaowelIvpiUgCD8OdR2VN2ToMZOGjJQa5grtBn41/lNt+dP8gMQEYcuri7j2ro3epMOqq0UmbkynJW6+JUtX0IvyFEmYCBjhTYlHulMvNf+wKFO5f8amf8w9j4JUO+baruHSVvQjC4mcM=
+	t=1718716581; cv=none; b=n91Cl2EHM8HypV0UflL57sA0xQZzLHlKH3AVnO1NMe1sfGXw64rWp+E9Q0DTAIAJN62WgxQolNC48OqjvCzHrj7g9gRaQLXPss/UuGwB4PFjXPfmI+tBxRm18lHbZ94a0nQVVvcz9/4j4VZ23iAIdNZWJzwfrUE7ygnV9EePXOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716578; c=relaxed/simple;
-	bh=M1omBZ9nh0IJoreDG8+13g4hDH+wlSdiXrjwAYV0xsA=;
+	s=arc-20240116; t=1718716581; c=relaxed/simple;
+	bh=ZDdaNJr5LZj810GTvBMyNnLgts8E0VLlDK199WLYzZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uvMD52ByXmvvUFpRb6eXvjbcs4qSgfvoh6I/7bDaAJN10ig4iryPrC5BXu0IvZtZG/dZKQYMO0CmM1qcJ70ZuPUyOd4TbC53wZ07E5vmWZSbSm8yV58ND2NnTVSyqC+AbseRH2v6Ob+l7nByzNgKeIMPnkd3zmL0Vik9ctHLHtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RWU9RPX3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dQYSwodgqwTe0lkZiJ0dNNLVbI7J0iJZDoIRsu/vZVJNu5Ufoh6ga4rX+NfNliQe/hYhtEggMIiuFLt0uOtrCdvqOScjCREEaEjypRJLuSJy5rQN9bHHlJSw65fUMGiiFHYU1BCZdYSYw51Wi3Y/qWXMqLNc/83G+J2CGGxRrQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dOw76+NB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RWU9RPX3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F8DAC4AF51;
-	Tue, 18 Jun 2024 13:16:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dOw76+NB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48E90C3277B;
+	Tue, 18 Jun 2024 13:16:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716578;
-	bh=M1omBZ9nh0IJoreDG8+13g4hDH+wlSdiXrjwAYV0xsA=;
+	s=korg; t=1718716581;
+	bh=ZDdaNJr5LZj810GTvBMyNnLgts8E0VLlDK199WLYzZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RWU9RPX3nj9RdIoHTXnDJNFBXvv5dHgyKuKvN+E0EQXie6GCtGMC1HxJ+2ulbiKM1
-	 9T8Bn940Y7kvlwSmUfeZ1oMxSGNrMeJTEmyYGR4YBiR//J6Lsycpj4J8bp74ZHzkp+
-	 /VwB2b6FMjV/KZKjzZr9Q9xeFyKpNdZVH0E/uRL8=
+	b=dOw76+NBQNvHKegU6xsOJXtolL2+2zS1g3oXhhjBGq09CYGeObGb67X+a8F/aZV6Q
+	 Fl1ibdYeDvJY5a9SM4CZx+VioxIxxsjroepvI9Q/DN+uQVb32BSQ2DbnWtgbt9vxc8
+	 SC1eQ4TWugh/8iUt5YZv155jvtHS1G4oLfig7AL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Jeff Layton <jlayton@kernel.org>,
+	NeilBrown <neilb@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 693/770] NFSD: Flesh out a documenting comment for filecache.c
-Date: Tue, 18 Jun 2024 14:39:06 +0200
-Message-ID: <20240618123434.026672549@linuxfoundation.org>
+Subject: [PATCH 5.10 694/770] NFSD: Clean up nfs4_preprocess_stateid_op() call sites
+Date: Tue, 18 Jun 2024 14:39:07 +0200
+Message-ID: <20240618123434.064798104@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,55 +54,107 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit b3276c1f5b268ff56622e9e125b792b4c3dc03ac ]
+[ Upstream commit eeff73f7c1c583f79a401284f46c619294859310 ]
 
-Record what we've learned recently about the NFSD filecache in a
-documenting comment so our future selves don't forget what all this
-is for.
+Remove the lame-duck dprintk()s around nfs4_preprocess_stateid_op()
+call sites.
 
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Tested-by: Jeff Layton <jlayton@kernel.org>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: NeilBrown <neilb@suse.de>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/filecache.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ fs/nfsd/nfs4proc.c | 31 +++++++------------------------
+ 1 file changed, 7 insertions(+), 24 deletions(-)
 
-diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-index 13a25503b80e1..d681faf48cf85 100644
---- a/fs/nfsd/filecache.c
-+++ b/fs/nfsd/filecache.c
-@@ -2,6 +2,30 @@
-  * Open file cache.
-  *
-  * (c) 2015 - Jeff Layton <jeff.layton@primarydata.com>
-+ *
-+ * An nfsd_file object is a per-file collection of open state that binds
-+ * together:
-+ *   - a struct file *
-+ *   - a user credential
-+ *   - a network namespace
-+ *   - a read-ahead context
-+ *   - monitoring for writeback errors
-+ *
-+ * nfsd_file objects are reference-counted. Consumers acquire a new
-+ * object via the nfsd_file_acquire API. They manage their interest in
-+ * the acquired object, and hence the object's reference count, via
-+ * nfsd_file_get and nfsd_file_put. There are two varieties of nfsd_file
-+ * object:
-+ *
-+ *  * non-garbage-collected: When a consumer wants to precisely control
-+ *    the lifetime of a file's open state, it acquires a non-garbage-
-+ *    collected nfsd_file. The final nfsd_file_put releases the open
-+ *    state immediately.
-+ *
-+ *  * garbage-collected: When a consumer does not control the lifetime
-+ *    of open state, it acquires a garbage-collected nfsd_file. The
-+ *    final nfsd_file_put allows the open state to linger for a period
-+ *    during which it may be re-used.
-  */
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index 3fe1966ed7358..32fccca7de185 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -943,12 +943,7 @@ nfsd4_read(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 	status = nfs4_preprocess_stateid_op(rqstp, cstate, &cstate->current_fh,
+ 					&read->rd_stateid, RD_STATE,
+ 					&read->rd_nf, NULL);
+-	if (status) {
+-		dprintk("NFSD: nfsd4_read: couldn't process stateid!\n");
+-		goto out;
+-	}
+-	status = nfs_ok;
+-out:
++
+ 	read->rd_rqstp = rqstp;
+ 	read->rd_fhp = &cstate->current_fh;
+ 	return status;
+@@ -1117,10 +1112,8 @@ nfsd4_setattr(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 		status = nfs4_preprocess_stateid_op(rqstp, cstate,
+ 				&cstate->current_fh, &setattr->sa_stateid,
+ 				WR_STATE, NULL, NULL);
+-		if (status) {
+-			dprintk("NFSD: nfsd4_setattr: couldn't process stateid!\n");
++		if (status)
+ 			return status;
+-		}
+ 	}
+ 	err = fh_want_write(&cstate->current_fh);
+ 	if (err)
+@@ -1168,10 +1161,8 @@ nfsd4_write(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 			       write->wr_offset, cnt);
+ 	status = nfs4_preprocess_stateid_op(rqstp, cstate, &cstate->current_fh,
+ 						stateid, WR_STATE, &nf, NULL);
+-	if (status) {
+-		dprintk("NFSD: nfsd4_write: couldn't process stateid!\n");
++	if (status)
+ 		return status;
+-	}
  
- #include <linux/hash.h>
+ 	write->wr_how_written = write->wr_stable_how;
+ 
+@@ -1202,17 +1193,13 @@ nfsd4_verify_copy(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 
+ 	status = nfs4_preprocess_stateid_op(rqstp, cstate, &cstate->save_fh,
+ 					    src_stateid, RD_STATE, src, NULL);
+-	if (status) {
+-		dprintk("NFSD: %s: couldn't process src stateid!\n", __func__);
++	if (status)
+ 		goto out;
+-	}
+ 
+ 	status = nfs4_preprocess_stateid_op(rqstp, cstate, &cstate->current_fh,
+ 					    dst_stateid, WR_STATE, dst, NULL);
+-	if (status) {
+-		dprintk("NFSD: %s: couldn't process dst stateid!\n", __func__);
++	if (status)
+ 		goto out_put_src;
+-	}
+ 
+ 	/* fix up for NFS-specific error code */
+ 	if (!S_ISREG(file_inode((*src)->nf_file)->i_mode) ||
+@@ -1949,10 +1936,8 @@ nfsd4_fallocate(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 	status = nfs4_preprocess_stateid_op(rqstp, cstate, &cstate->current_fh,
+ 					    &fallocate->falloc_stateid,
+ 					    WR_STATE, &nf, NULL);
+-	if (status != nfs_ok) {
+-		dprintk("NFSD: nfsd4_fallocate: couldn't process stateid!\n");
++	if (status != nfs_ok)
+ 		return status;
+-	}
+ 
+ 	status = nfsd4_vfs_fallocate(rqstp, &cstate->current_fh, nf->nf_file,
+ 				     fallocate->falloc_offset,
+@@ -2008,10 +1993,8 @@ nfsd4_seek(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 	status = nfs4_preprocess_stateid_op(rqstp, cstate, &cstate->current_fh,
+ 					    &seek->seek_stateid,
+ 					    RD_STATE, &nf, NULL);
+-	if (status) {
+-		dprintk("NFSD: nfsd4_seek: couldn't process stateid!\n");
++	if (status)
+ 		return status;
+-	}
+ 
+ 	switch (seek->seek_whence) {
+ 	case NFS4_CONTENT_DATA:
 -- 
 2.43.0
 
