@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C2313DDDF;
-	Tue, 18 Jun 2024 12:46:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8780513DDDF;
+	Tue, 18 Jun 2024 12:46:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718714802; cv=none; b=QLnxnqf2j4aaJizcIA8ko5t8uzvXTVOYA4mt6uylvEdR8dcVKwWUzzLMYYIX0J8ChenQwRSl3Zkbnr2MycTH42HsPkoy3ptthRbQaJaIn9NMshJzTiMcbSwgIvW84vHedhLJZW7wtKy3O3G7/HRi1JTgg7QzXWBquvZEocPZ4vM=
+	t=1718714805; cv=none; b=FgxBwfBJdD+zKor2eY8blXv6hH1PToBSa8WKoBApXBwZto9xMsX1ETcQDUBhR3zEJiVEuTgxJIccoXhmYS3qi4+mBLiPr94o2voVF9zup7XlTS6XsDxQLgguSdSYzAvNKxHTY9QmrgYZnwFzTNwmAqvA3UkieXVcdAhxg7OW0SA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718714802; c=relaxed/simple;
-	bh=rnUh1XV/m0ot6qkS3F5HFmGM+vTkVre8qp8kmvrCCCE=;
+	s=arc-20240116; t=1718714805; c=relaxed/simple;
+	bh=EznVb2W/h9NrY9y8qgdHHZjb6sYwNREYOQx41OZCfBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ym/ERcw2NOqDhQFFStO3+GLlvu/SuHrup4Lw1Pc5BcbJ6mPy7rsr93bkkyh63kM4K9pxsqh7/w2YQqOZYHz7+78+xqAyckVpEB0CvbPWui6hR9vvaZ3C+FWXpeA0rU5YBpT4cedahWCq+gnlhw5FwI7Bih/vMTDrDUgSBXnoA4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xZKVvTJw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dZOV9HJJfjuIt8VY78qYN/k+Ez8K7PxmofTpNEar2W7sF2ZcYvWvfW686k2Sl9Gw1SWBs0DBPJB0k3DqLECtmDU21JGg/wqsCUSTptRQgQgpFX0DbsFOlprLt92S4LqeCv/VvqrYzPx71mAcUf0dqm0dnBzSJVPZsK7k0kCTP0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mxp5QDXa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xZKVvTJw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A9C3C3277B;
-	Tue, 18 Jun 2024 12:46:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mxp5QDXa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B344C3277B;
+	Tue, 18 Jun 2024 12:46:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718714802;
-	bh=rnUh1XV/m0ot6qkS3F5HFmGM+vTkVre8qp8kmvrCCCE=;
+	s=korg; t=1718714805;
+	bh=EznVb2W/h9NrY9y8qgdHHZjb6sYwNREYOQx41OZCfBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xZKVvTJwbvOb4/sC59tO9O4/AmUcEgt+If6Z630GPyMtcCG06vmKwRcgKLYhBR5RA
-	 q9ouOqVtxze+lg/rzjHs5guOhOwm8YEyckCUItSnjki0bSSCPVnTHJ6dDmkSvLJpTj
-	 hsX+pqOSvjsbSeAQH3VvX+2qQ759SldTOMKGQX+Y=
+	b=Mxp5QDXaFMDg68Y7LSRDVYGvhMWjsAPQAXAevSkzEUEE+j2UYUjyiMtfFwG19E6U+
+	 HqiFRWrsoBoVBhXe/rQHQKFKiHPK9VimmdqZDeniEoOhpMmOfAW+9NDLxcajdNienT
+	 yMsziLOqB6UcnNyvsO/W7pbKNV4dbfh7ViCSWrlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Daire Byrne <daire@dneg.com>,
+	"J. Bruce Fields" <bfields@redhat.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 093/770] NFSD: Remove macros that are no longer used
-Date: Tue, 18 Jun 2024 14:29:06 +0200
-Message-ID: <20240618123410.863793924@linuxfoundation.org>
+Subject: [PATCH 5.10 094/770] nfsd: only call inode_query_iversion in the I_VERSION case
+Date: Tue, 18 Jun 2024 14:29:07 +0200
+Message-ID: <20240618123410.901675181@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -50,105 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: J. Bruce Fields <bfields@redhat.com>
 
-[ Upstream commit 5cfc822f3e77b0477e6602d399116130317f537a ]
+[ Upstream commit 70b87f77294d16d3e567056ba4c9ee2b091a5b50 ]
 
-Now that all the NFSv4 decoder functions have been converted to
-make direct calls to the xdr helpers, remove the unused C macros.
+inode_query_iversion() can modify i_version.  Depending on the exported
+filesystem, that may not be safe.  For example, if you're re-exporting
+NFS, NFS stores the server's change attribute in i_version and does not
+expect it to be modified locally.  This has been observed causing
+unnecessary cache invalidations.
 
+The way a filesystem indicates that it's OK to call
+inode_query_iverson() is by setting SB_I_VERSION.
+
+So, move the I_VERSION check out of encode_change(), where it's used
+only in GETATTR responses, to nfsd4_change_attribute(), which is
+also called for pre- and post- operation attributes.
+
+(Note we could also pull the NFSEXP_V4ROOT case into
+nfsd4_change_attribute() as well.  That would actually be a no-op,
+since pre/post attrs are only used for metadata-modifying operations,
+and V4ROOT exports are read-only.  But we might make the change in
+the future just for simplicity.)
+
+Reported-by: Daire Byrne <daire@dneg.com>
+Signed-off-by: J. Bruce Fields <bfields@redhat.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4xdr.c | 40 ----------------------------------------
- fs/nfsd/xdr4.h    |  9 ---------
- 2 files changed, 49 deletions(-)
+ fs/nfsd/nfs3xdr.c |  5 ++---
+ fs/nfsd/nfs4xdr.c |  6 +-----
+ fs/nfsd/nfsfh.h   | 14 ++++++++++----
+ 3 files changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
-index 30604a3e70c0f..315be1c1ab85c 100644
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -102,45 +102,6 @@ check_filename(char *str, int len)
- 	return 0;
+diff --git a/fs/nfsd/nfs3xdr.c b/fs/nfsd/nfs3xdr.c
+index 0d75d201db1b3..5956b0317c55e 100644
+--- a/fs/nfsd/nfs3xdr.c
++++ b/fs/nfsd/nfs3xdr.c
+@@ -291,14 +291,13 @@ void fill_post_wcc(struct svc_fh *fhp)
+ 		printk("nfsd: inode locked twice during operation.\n");
+ 
+ 	err = fh_getattr(fhp, &fhp->fh_post_attr);
+-	fhp->fh_post_change = nfsd4_change_attribute(&fhp->fh_post_attr,
+-						     d_inode(fhp->fh_dentry));
+ 	if (err) {
+ 		fhp->fh_post_saved = false;
+-		/* Grab the ctime anyway - set_change_info might use it */
+ 		fhp->fh_post_attr.ctime = d_inode(fhp->fh_dentry)->i_ctime;
+ 	} else
+ 		fhp->fh_post_saved = true;
++	fhp->fh_post_change = nfsd4_change_attribute(&fhp->fh_post_attr,
++						     d_inode(fhp->fh_dentry));
  }
  
--#define DECODE_HEAD				\
--	__be32 *p;				\
--	__be32 status
--#define DECODE_TAIL				\
--	status = 0;				\
--out:						\
--	return status;				\
--xdr_error:					\
--	dprintk("NFSD: xdr error (%s:%d)\n",	\
--			__FILE__, __LINE__);	\
--	status = nfserr_bad_xdr;		\
--	goto out
--
--#define READMEM(x,nbytes) do {			\
--	x = (char *)p;				\
--	p += XDR_QUADLEN(nbytes);		\
--} while (0)
--#define SAVEMEM(x,nbytes) do {			\
--	if (!(x = (p==argp->tmp || p == argp->tmpp) ? \
-- 		savemem(argp, p, nbytes) :	\
-- 		(char *)p)) {			\
--		dprintk("NFSD: xdr error (%s:%d)\n", \
--				__FILE__, __LINE__); \
--		goto xdr_error;			\
--		}				\
--	p += XDR_QUADLEN(nbytes);		\
--} while (0)
--#define COPYMEM(x,nbytes) do {			\
--	memcpy((x), p, nbytes);			\
--	p += XDR_QUADLEN(nbytes);		\
--} while (0)
--#define READ_BUF(nbytes)			\
--	do {					\
--		p = xdr_inline_decode(argp->xdr,\
--				      nbytes);	\
--		if (!p)				\
--			goto xdr_error;		\
--	} while (0)
--
- static int zero_clientid(clientid_t *clid)
+ /*
+diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
+index 315be1c1ab85c..bdcfb5f7021da 100644
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -2426,12 +2426,8 @@ static __be32 *encode_change(__be32 *p, struct kstat *stat, struct inode *inode,
+ 	if (exp->ex_flags & NFSEXP_V4ROOT) {
+ 		*p++ = cpu_to_be32(convert_to_wallclock(exp->cd->flush_time));
+ 		*p++ = 0;
+-	} else if (IS_I_VERSION(inode)) {
++	} else
+ 		p = xdr_encode_hyper(p, nfsd4_change_attribute(stat, inode));
+-	} else {
+-		*p++ = cpu_to_be32(stat->ctime.tv_sec);
+-		*p++ = cpu_to_be32(stat->ctime.tv_nsec);
+-	}
+ 	return p;
+ }
+ 
+diff --git a/fs/nfsd/nfsfh.h b/fs/nfsd/nfsfh.h
+index 56cfbc3615618..39d764b129fa3 100644
+--- a/fs/nfsd/nfsfh.h
++++ b/fs/nfsd/nfsfh.h
+@@ -261,10 +261,16 @@ static inline u64 nfsd4_change_attribute(struct kstat *stat,
  {
- 	return (clid->cl_boot == 0) && (clid->cl_id == 0);
-@@ -5478,7 +5439,6 @@ nfs4svc_decode_compoundargs(struct svc_rqst *rqstp, __be32 *p)
- 	struct nfsd4_compoundargs *args = rqstp->rq_argp;
+ 	u64 chattr;
  
- 	/* svcxdr_tmp_alloc */
--	args->tmpp = NULL;
- 	args->to_free = NULL;
+-	chattr =  stat->ctime.tv_sec;
+-	chattr <<= 30;
+-	chattr += stat->ctime.tv_nsec;
+-	chattr += inode_query_iversion(inode);
++	if (IS_I_VERSION(inode)) {
++		chattr =  stat->ctime.tv_sec;
++		chattr <<= 30;
++		chattr += stat->ctime.tv_nsec;
++		chattr += inode_query_iversion(inode);
++	} else {
++		chattr = stat->ctime.tv_sec;
++		chattr <<= 32;
++		chattr += stat->ctime.tv_nsec;
++	}
+ 	return chattr;
+ }
  
- 	args->xdr = &rqstp->rq_arg_stream;
-diff --git a/fs/nfsd/xdr4.h b/fs/nfsd/xdr4.h
-index 2c31f3a7d7c74..e12fbe382e3f3 100644
---- a/fs/nfsd/xdr4.h
-+++ b/fs/nfsd/xdr4.h
-@@ -386,13 +386,6 @@ struct nfsd4_setclientid_confirm {
- 	nfs4_verifier	sc_confirm;
- };
- 
--struct nfsd4_saved_compoundargs {
--	__be32 *p;
--	__be32 *end;
--	int pagelen;
--	struct page **pagelist;
--};
--
- struct nfsd4_test_stateid_id {
- 	__be32			ts_id_status;
- 	stateid_t		ts_id_stateid;
-@@ -696,8 +689,6 @@ struct svcxdr_tmpbuf {
- 
- struct nfsd4_compoundargs {
- 	/* scratch variables for XDR decode */
--	__be32				tmp[8];
--	__be32 *			tmpp;
- 	struct xdr_stream		*xdr;
- 	struct svcxdr_tmpbuf		*to_free;
- 	struct svc_rqst			*rqstp;
 -- 
 2.43.0
 
