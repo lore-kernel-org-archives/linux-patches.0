@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331C813E8B9;
-	Tue, 18 Jun 2024 12:51:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27DDC13E8B9;
+	Tue, 18 Jun 2024 12:51:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715094; cv=none; b=cudupXppXq5k/mEWudDHJ9vjHf7I2TDrr0jRI5zCtLcF2+dSDkKFy6GulgH4k8qtjQWugC8rKTu4Z3iaYaIsT0MYLrhW2geEA3oN7+rvOQJHg7cG9knCXFK6sHZmsOj7m7FT0qFEiSRMediARydtpD87s7YxJaPF43Iexbmqmj4=
+	t=1718715097; cv=none; b=eW/V2YDwLCsRhfakQqkbbciA27kYmE5vfhUKFk+ysINWvxkprifeTGJqxZ1mz12/YR574mqH/NarR8cvPNvq55iSAJgTxXQnZxpBov5nDqaYOmfqhIfIfn+fEfTFVmYG0y6bQnT5BFPz61C40/jm/lJhdSX1iba+IaR3BqGqUsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715094; c=relaxed/simple;
-	bh=2IlLG1UApOj4QKc44+LSSAqes/h/kfdJIqFZ+slRV0M=;
+	s=arc-20240116; t=1718715097; c=relaxed/simple;
+	bh=H4yxPYhlhE6970ACa2BTc7/DO5FL9QZ7p35HSnJ+qlA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DSV7Kya9nMFBn++enFJIXKHtl9EYrE1AAqyiC7mAt9rs4I0oYuWW/xwFri/s/qmv7ah4RJzKlwa5O9U/Ex9FsGNr28lDynycpfJuVObt1hEnGni3CmeJG6xf+0OG/Lx6zFaC0KGyTAsUEyV+bpKstgfk48dds7+UtdtclTT1IxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NMcR6PXd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pk1AlF1wnuvrqaE0vYB5HjngSLOKoPouqZSxj1vhBOSlPA9UYuPQNZ9ntVTuvKnC1ypjAFTGf1N0tkuJxAbnLBiRLI+9cQ8zbvZUNbRYDM3B7Q+qgJ38v7TzZS/8MHDPISbrNlOR2Uhm4zqARgYiX+W7KZtjZ5jFWnyX2gkp4Hc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FvzAp1fB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NMcR6PXd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA71BC3277B;
-	Tue, 18 Jun 2024 12:51:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FvzAp1fB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CE2DC3277B;
+	Tue, 18 Jun 2024 12:51:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715094;
-	bh=2IlLG1UApOj4QKc44+LSSAqes/h/kfdJIqFZ+slRV0M=;
+	s=korg; t=1718715097;
+	bh=H4yxPYhlhE6970ACa2BTc7/DO5FL9QZ7p35HSnJ+qlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NMcR6PXdY//vK+jDFrlyNTXWzDRXkRgBpn3ruPQvUNCwtAEijD4wdhvpDOsFXxzwE
-	 a9sEr9CEFn6uSBY97oB6GuWCdQVxwOvPF+c7WMPNr5/0jYXZYfnwL5mj+7tKRigfG7
-	 Vy7LWV3wyEJqCJNLXDO7KWn7mksFoLvryw7xkKsI=
+	b=FvzAp1fBTSjP2FeBC4Z0bLhTAWCNaAOeKW6i3vlH46+p2R9QzzwIFEM6H0TmRtXqc
+	 a6XQlcK70nf4zPpI3Phh7GsowSqKqEx14f7vGGwXkl80NI64fjC4JMXEZzBBeOKixD
+	 R3AZLUvm1C4SFjJ5logVQGfSo2S5VbyfHCYiy0Fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jessica Yu <jeyu@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 192/770] module: use RCU to synchronize find_module
-Date: Tue, 18 Jun 2024 14:30:45 +0200
-Message-ID: <20240618123414.687801959@linuxfoundation.org>
+Subject: [PATCH 5.10 193/770] kallsyms: refactor {,module_}kallsyms_on_each_symbol
+Date: Tue, 18 Jun 2024 14:30:46 +0200
+Message-ID: <20240618123414.726153762@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -56,12 +56,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit a006050575745ca2be25118b90f1c37f454ac542 ]
+[ Upstream commit 013c1667cf78c1d847152f7116436d82dcab3db4 ]
 
-Allow for a RCU-sched critical section around find_module, following
-the lower level find_module_all helper, and switch the two callers
-outside of module.c to use such a RCU-sched critical section instead
-of module_mutex.
+Require an explicit call to module_kallsyms_on_each_symbol to look
+for symbols in modules instead of the call from kallsyms_on_each_symbol,
+and acquire module_mutex inside of module_kallsyms_on_each_symbol instead
+of leaving that up to the caller.  Note that this slightly changes the
+behavior for the livepatch code in that the symbols from vmlinux are not
+iterated anymore if objname is set, but that actually is the desired
+behavior in this case.
 
 Reviewed-by: Petr Mladek <pmladek@suse.com>
 Acked-by: Miroslav Benes <mbenes@suse.cz>
@@ -70,83 +73,92 @@ Signed-off-by: Jessica Yu <jeyu@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/module.h      | 2 +-
- kernel/livepatch/core.c     | 5 +++--
- kernel/module.c             | 1 -
- kernel/trace/trace_kprobe.c | 4 ++--
- 4 files changed, 6 insertions(+), 6 deletions(-)
+ kernel/kallsyms.c       |  6 +++++-
+ kernel/livepatch/core.c |  2 --
+ kernel/module.c         | 13 ++++---------
+ 3 files changed, 9 insertions(+), 12 deletions(-)
 
-diff --git a/include/linux/module.h b/include/linux/module.h
-index 6264617bab4d4..86fae5d1c0e39 100644
---- a/include/linux/module.h
-+++ b/include/linux/module.h
-@@ -582,7 +582,7 @@ static inline bool within_module(unsigned long addr, const struct module *mod)
- 	return within_module_init(addr, mod) || within_module_core(addr, mod);
+diff --git a/kernel/kallsyms.c b/kernel/kallsyms.c
+index fe9de067771c3..a0d3f0865916f 100644
+--- a/kernel/kallsyms.c
++++ b/kernel/kallsyms.c
+@@ -177,6 +177,10 @@ unsigned long kallsyms_lookup_name(const char *name)
+ 	return module_kallsyms_lookup_name(name);
  }
  
--/* Search for module by name: must hold module_mutex. */
-+/* Search for module by name: must be in a RCU-sched critical section. */
- struct module *find_module(const char *name);
++/*
++ * Iterate over all symbols in vmlinux.  For symbols from modules use
++ * module_kallsyms_on_each_symbol instead.
++ */
+ int kallsyms_on_each_symbol(int (*fn)(void *, const char *, struct module *,
+ 				      unsigned long),
+ 			    void *data)
+@@ -192,7 +196,7 @@ int kallsyms_on_each_symbol(int (*fn)(void *, const char *, struct module *,
+ 		if (ret != 0)
+ 			return ret;
+ 	}
+-	return module_kallsyms_on_each_symbol(fn, data);
++	return 0;
+ }
  
- struct symsearch {
+ static unsigned long get_symbol_pos(unsigned long addr,
 diff --git a/kernel/livepatch/core.c b/kernel/livepatch/core.c
-index f5faf935c2d8f..e660ea4f90a28 100644
+index e660ea4f90a28..147ed154ebc77 100644
 --- a/kernel/livepatch/core.c
 +++ b/kernel/livepatch/core.c
-@@ -19,6 +19,7 @@
- #include <linux/moduleloader.h>
- #include <linux/completion.h>
- #include <linux/memory.h>
-+#include <linux/rcupdate.h>
- #include <asm/cacheflush.h>
- #include "core.h"
- #include "patch.h"
-@@ -57,7 +58,7 @@ static void klp_find_object_module(struct klp_object *obj)
- 	if (!klp_is_module(obj))
- 		return;
+@@ -164,12 +164,10 @@ static int klp_find_object_symbol(const char *objname, const char *name,
+ 		.pos = sympos,
+ 	};
  
 -	mutex_lock(&module_mutex);
-+	rcu_read_lock_sched();
- 	/*
- 	 * We do not want to block removal of patched modules and therefore
- 	 * we do not take a reference here. The patches are removed by
-@@ -74,7 +75,7 @@ static void klp_find_object_module(struct klp_object *obj)
- 	if (mod && mod->klp_alive)
- 		obj->mod = mod;
- 
+ 	if (objname)
+ 		module_kallsyms_on_each_symbol(klp_find_callback, &args);
+ 	else
+ 		kallsyms_on_each_symbol(klp_find_callback, &args);
 -	mutex_unlock(&module_mutex);
-+	rcu_read_unlock_sched();
- }
  
- static bool klp_initialized(void)
+ 	/*
+ 	 * Ensure an address was found. If sympos is 0, ensure symbol is unique;
 diff --git a/kernel/module.c b/kernel/module.c
-index c0e51ffe26f0a..1f9f6133c30ef 100644
+index 1f9f6133c30ef..330387d63c633 100644
 --- a/kernel/module.c
 +++ b/kernel/module.c
-@@ -641,7 +641,6 @@ static struct module *find_module_all(const char *name, size_t len,
+@@ -255,11 +255,6 @@ static void mod_update_bounds(struct module *mod)
+ struct list_head *kdb_modules = &modules; /* kdb needs the list of modules */
+ #endif /* CONFIG_KGDB_KDB */
  
- struct module *find_module(const char *name)
+-static void module_assert_mutex(void)
+-{
+-	lockdep_assert_held(&module_mutex);
+-}
+-
+ static void module_assert_mutex_or_preempt(void)
  {
+ #ifdef CONFIG_LOCKDEP
+@@ -4457,8 +4452,7 @@ int module_kallsyms_on_each_symbol(int (*fn)(void *, const char *,
+ 	unsigned int i;
+ 	int ret;
+ 
 -	module_assert_mutex();
- 	return find_module_all(name, strlen(name), false);
+-
++	mutex_lock(&module_mutex);
+ 	list_for_each_entry(mod, &modules, list) {
+ 		/* We hold module_mutex: no need for rcu_dereference_sched */
+ 		struct mod_kallsyms *kallsyms = mod->kallsyms;
+@@ -4474,10 +4468,11 @@ int module_kallsyms_on_each_symbol(int (*fn)(void *, const char *,
+ 			ret = fn(data, kallsyms_symbol_name(kallsyms, i),
+ 				 mod, kallsyms_symbol_value(sym));
+ 			if (ret != 0)
+-				return ret;
++				break;
+ 		}
+ 	}
+-	return 0;
++	mutex_unlock(&module_mutex);
++	return ret;
  }
+ #endif /* CONFIG_KALLSYMS */
  
-diff --git a/kernel/trace/trace_kprobe.c b/kernel/trace/trace_kprobe.c
-index 7183572898998..5453af26ff764 100644
---- a/kernel/trace/trace_kprobe.c
-+++ b/kernel/trace/trace_kprobe.c
-@@ -124,9 +124,9 @@ static nokprobe_inline bool trace_kprobe_module_exist(struct trace_kprobe *tk)
- 	if (!p)
- 		return true;
- 	*p = '\0';
--	mutex_lock(&module_mutex);
-+	rcu_read_lock_sched();
- 	ret = !!find_module(tk->symbol);
--	mutex_unlock(&module_mutex);
-+	rcu_read_unlock_sched();
- 	*p = ':';
- 
- 	return ret;
 -- 
 2.43.0
 
