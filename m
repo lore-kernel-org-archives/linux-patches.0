@@ -1,181 +1,170 @@
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2070.outbound.protection.outlook.com [40.107.94.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7EB314D446
-	for <patches@lists.linux.dev>; Tue, 18 Jun 2024 21:01:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.70
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718744512; cv=fail; b=ElVK8fqpX/4LI8BsKaB1YFR0OO4b1o2NumzNOHwz+Zn4bg8QJCuHqTzuAmwzUrT3x8QGCVSyT1RpCfLxSa1MxFVt8p+MOCGfOdLZ59yz14pxP65KNAt85MYnmr68/6YAeOiD6UAyif0JPDv49n8RLAoBzJqRmlE9LRtLO+85GG8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718744512; c=relaxed/simple;
-	bh=stFDNBtFAFQAf2plAmILi2B0vcOj/ahvJoh6qeCMXZg=;
-	h=From:To:CC:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID:Date; b=b/SWS/tCNxiSjWzwpV8JgKdWKYIm7MJy9B08npvLvjcqmGDlaSfwy/grzcc3t978AYrSoUf+/McsvON8jQbViJqJIyqNGvBINDgwRx45lxBji6wqdi3OspbPgsJI57hPHJpDPbhUZMNEqyZo6hhgkNqBxlfDvlYRuHt8adVJgzs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=oV5gLgHv; arc=fail smtp.client-ip=40.107.94.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163D11662EA;
+	Tue, 18 Jun 2024 21:32:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1718746358; cv=none; b=m5QT5ZbLsIKaCY2NpfHxwXtD8/Ja3dj6pC7iNy9wVGxYJ2ZdlSAzWBQf9AjQEEi33mc5UoUuVEK5rGZciZQdHcHNCQIs6kAJJPwsLKAbiY1ILA02ncK9f/uPlt6CC+FR203ZgOY4kJkKN1abpgR+bpwporVpKJy0wE1LjdYoKCw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1718746358; c=relaxed/simple;
+	bh=VVcf37s2EfA8gVOeqHWCxz/aViKmRNUtMDu5rG1+UfU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=L8s2YhBrV5WzA6li7yeX3bBm5RijIUWhe0traLNagMn4x8rUAFqG9GjIqApqfkLt6qw7RMOaPIKvdzUPiTSW1Ip4+3cxSEJGnFEEqLDzIcy2OE/vqvNVaPWnweRcDiqi1Th8KFElLFvFK50XiPDcBcJF7V0AL8MgA82uCnpptPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H6p5vdJj; arc=none smtp.client-ip=209.85.210.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="oV5gLgHv"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=OUPxTBwg5A4rz7FunT1VbvXokt/Psy7FxqHXH39yenTKKrpsm+M1ZJcMFypjcBK180MrlTarwoZdoE6wzF7X6dgEBV3+5QeN8n24bG6lMsHEcQul1zIbAicOAil+uk7+eJ4YncBTfnU8rfui3EdeGjnAfh5QBLWeQ9L6X7Ygo1AmYUPwdg4+st7R9kgBlZc9S9s+P26v7aaiO/yJ4QNushvpgt5e15g6jxDx9BNqfnX5D6hJAA8M1r7XEqo2XnQySfS0QwV7uxpNt2ohnt0AfJEQJnS1XmDSJ7hv8lU2IiI6hSiThxm526b8vRlW9H6X2ImOMcxeZIV96gN1zORD2Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0ZPGy7nDEp8typY7dDi6nXbzxj7BeZLEF0piFhnbLxI=;
- b=DpMq5Bdi8xkxkRdaCMdUUvrxYepSwnSoVxcZrEqQuC0GvfEpkGKKghips575al4hVOLUPKNGSsn6d9G2YuCFXVwJWoZjc0tto6eDupn9By54W2UlhLrnLQRg8AXZj46m+YFAuHk0Tap3wVZhZ5cP2BAnSkNR/sFqdIcltMr+Rl8G0TZh/OGRo8nFeEwYYrQM8be0FA0HdL4rD4xPPvYf5GwVKy3Rm4GP2W1ht4ddybddqc36NSylUW6v2xVjTzrCDaL/eBIRDw6gFPTvNnD9Btf02VSf5l5IJfAokBTKJeBjiAkurJSKALA/2zON5ayGqqdtBrVYKLudhOHv+RoFxA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=linuxfoundation.org
- smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=nvidia.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0ZPGy7nDEp8typY7dDi6nXbzxj7BeZLEF0piFhnbLxI=;
- b=oV5gLgHvHd/CO/EskfhdmQ/SYlm0O6/fHNOs9I2lOuVIOB6gkdBpnl/6xN7H67/YpgXfuiwRn3rQF4gHtQFocT2f23fCrANKakMB6Z5S5jAaQh9k49jVugtxUVRkkVMBFvt/VlWc5scjhh56i0CcqpEtdTCOIxZXs8eGOboUPPLXkmbWi5umDqDD4G7gkt8rZN3Alx3nr+ZoldtH9oryzZJDwWU9ApnScBWwjshN4bykqHgWQt211Ilgyh9BLzOU4hGB3JKEpkv7eycBA/ayDFs4oTkMXoPyZ2uQCb1lTp4J7+GPUm0Q71BY3qTPs5HMPj5FGSgsCddq3wMCxNqMsQ==
-Received: from BY3PR10CA0025.namprd10.prod.outlook.com (2603:10b6:a03:255::30)
- by MW5PR12MB5621.namprd12.prod.outlook.com (2603:10b6:303:193::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7677.30; Tue, 18 Jun
- 2024 21:01:47 +0000
-Received: from SJ5PEPF000001F3.namprd05.prod.outlook.com
- (2603:10b6:a03:255:cafe::20) by BY3PR10CA0025.outlook.office365.com
- (2603:10b6:a03:255::30) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7677.31 via Frontend
- Transport; Tue, 18 Jun 2024 21:01:47 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- SJ5PEPF000001F3.mail.protection.outlook.com (10.167.242.71) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7677.15 via Frontend Transport; Tue, 18 Jun 2024 21:01:47 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 18 Jun
- 2024 14:01:27 -0700
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 18 Jun
- 2024 14:01:26 -0700
-Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
- (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
- Transport; Tue, 18 Jun 2024 14:01:26 -0700
-From: Jon Hunter <jonathanh@nvidia.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
-	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
-	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
-	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
-	<rwarsow@gmx.de>, <conor@kernel.org>, <allen.lkml@gmail.com>,
-	<broonie@kernel.org>, <linux-tegra@vger.kernel.org>, <stable@vger.kernel.org>
-Subject: Re: [PATCH 5.10 000/770] 5.10.220-rc1 review
-In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
-References: <20240618123407.280171066@linuxfoundation.org>
-X-NVConfidentiality: public
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H6p5vdJj"
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-7062bf6d9a1so190514b3a.1;
+        Tue, 18 Jun 2024 14:32:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1718746356; x=1719351156; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0F2GFRylmsUf8qCCMvo7ZfErHvVg5KnaNyTwWf+ackU=;
+        b=H6p5vdJjP+uBXIT3s0dHu6th9+rSlt1tQPJVA87JUpwMDfPnk32WFBjrC8LnD0zqKX
+         H+4DjcFOu8WYV1SBwhFXdZh+D7rwXgYenhul4IW++eDUakMLKKmj9qtq+36Ei4xIg1lG
+         XdbOW/RxKMdvkjjvvqnnqEUCv/LYfP7wEYZRAUfrhke+StF0A3G6nGfB2jJfY0pavz6M
+         yG2pgFsI5vhCJEnylCOJ3UkecMSJxP4rfKCQCw/GcOZTFt7yBwqIavPY0GiWheibw64w
+         KQU4sshG6rbwFfx+lqJAsTjk6ZIEJzruS3cOzTprkjpzyoEZ9+m2R443dXxQORwsrl45
+         5XYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718746356; x=1719351156;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0F2GFRylmsUf8qCCMvo7ZfErHvVg5KnaNyTwWf+ackU=;
+        b=GWdmFgv3ClSSIeN0yAK+1Utdwc5WbTBhImz3+CAXNrrLeoVk8zJ/umZfRqXSwg3Du5
+         cNux+UG2zJ6e/2cyW8lJ3riQzWIEhUXbedczqzyc8K8zjvKl+S4r8psGRAO4xI3Lm8wO
+         JW1wGXDJSmo/gxs9L4nEQ+j7cQT655hVQ4gX0ETOzfQNzv9hMQAAswX9CiyULbPdSJmg
+         n4L+HH94TbNrHKksUuGVu2tcd7Fth1xYI60uMDd200F8hSbZj3I1orndcuwe5/9ea3Yi
+         BkeCketiPiyLucYCZBfZgEFukhO59pm1doJNawrVL0YIzfx5XQxwchBBitUxX767DnlR
+         mEIg==
+X-Forwarded-Encrypted: i=1; AJvYcCWP6tPnQiCznb7B7UV1Qf2h50mY9JOPjjHISFMIZSaMwGB85PfeXRT/f8YHB+SExcARHEH+L5BvF84aVLYt9Do9W3ogOi9/gCILiiqqTH639HM+cnAp7yL+PVHiAho=
+X-Gm-Message-State: AOJu0YyOAb+oYQOH9c2SoVZt7EPwwt9Eo9t9GbkOnzQ+NuQeN4tW9OKh
+	0YUtirKLomFz8Z1T4GRL6sOPxzql0yVy8HGVwb50w5orKql59CaqanZxHIdoON4O4Veee/uIdqG
+	C/7FrZNs2XeoirtLPJMvuQrPGRRQ=
+X-Google-Smtp-Source: AGHT+IFIYnRfv9OexIBisPO8GJODl0YW0GErnOlBNhmoJ+53el0v0LQ+XytbXr/0FiI9zYwRjX6PFplolAaJccvUk80=
+X-Received: by 2002:a17:90b:344f:b0:2c2:faf7:67a0 with SMTP id
+ 98e67ed59e1d1-2c7b5c725a6mr924947a91.16.1718746356201; Tue, 18 Jun 2024
+ 14:32:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <40613d8f-b325-4a5c-b954-e03a7fc26af4@rnnvmail204.nvidia.com>
-Date: Tue, 18 Jun 2024 14:01:26 -0700
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF000001F3:EE_|MW5PR12MB5621:EE_
-X-MS-Office365-Filtering-Correlation-Id: baddc833-1afb-41e0-0d84-08dc8fd9ddb9
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230037|36860700010|376011|7416011|82310400023|1800799021;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?WG0xckVEVjZHL29RdEI1eTJ0ZlVZU2txRXo0clVPQUFEV2lxVXJpNDRGVDla?=
- =?utf-8?B?VGxyaGU3VXhnMklkOTIyQUlyNUNhWDVHY3FuU0dMd2lUUDZhYUZwZ0cxeHFN?=
- =?utf-8?B?ZG9YTGg1Z2JZYmsrZE1qZHVOMUJWc2NPNXRQS25zcDVYV2UzZFR0Q3N2TG9v?=
- =?utf-8?B?RlJPVVdiYW9veldsY1VCeFZCSEdwWDg0cHEyVzMwelF3dEtua3BRV2Y5M2hW?=
- =?utf-8?B?TDFzUDk1VnBtR3ZDQzErRGltSGIrTVFKcU95QmJ5OUN0ZzIzb0NCOWs5d2xK?=
- =?utf-8?B?b25FcDhaZUdQbTlkNVAvblFYTVFCb0dqcmhZZ1BkbFB1aXNldDVlZkJrdy9a?=
- =?utf-8?B?TzhjOEFMWVV6S01saEY4b25RekNSZnA1NHFmSDg3TFp4OXRGZkduV1M0N1Vt?=
- =?utf-8?B?c0ZyTEJzb2VTdk1TcnlUOE5CRmlmbHd6M1U1Y3JOVFVVNmZVcUx5RTN4MVU4?=
- =?utf-8?B?aWVXMkthcjBZR0txMlFFd2RGZ0U2THFISXpkcEpQMmVueGg4U3BqdzBqcUhH?=
- =?utf-8?B?MU4wZVErOU5oZzlDYzQyWG14Qkd3a0J0TWJlUU81Nm54RnRLZ3lPS1NtWXBq?=
- =?utf-8?B?VHVDMmxFTGRrQm1XNnlic2RvWlQ3UlBzZC9QcGFIUzdHOGJkTkFTVktNR1VK?=
- =?utf-8?B?bGh0djltQkM1c2ZrVTQvclZtNXJZem1sRkxodVZDT3JzMHpteWNJUTBPM21y?=
- =?utf-8?B?R2JicVhoa1B2bS9DZEk5WUJYOVRJUEI4djJTTndiaXU0RGJxVlhUT0FHM0RD?=
- =?utf-8?B?bWpWMWovSjBCMWMyaFhhcTJibHIxVzJRak03OGg5QW0rUDI2Vmd1RXRHaHhT?=
- =?utf-8?B?T3BCUVhMVGZ2YUtiSTFPTVAzVnJPN05MRkdIelM0SWFpWWNEY1o3NDM4Y3VH?=
- =?utf-8?B?SzhzSzNJYVRneTVWVDcydUZoSzNKSitySS9PR3N1UnVoYk1TSERLcE4wSnhy?=
- =?utf-8?B?M3NOTitvMHhPYlpnNm9EYXRGcEZONWVyVG16TXpYT1hrcW9aOWRUa2VHcWxw?=
- =?utf-8?B?NGpkai9tS1JrY0wrL05ZNlBjMnFyL2JNNmVqbWd3bEtOV0E5ekxQbUxPdW5o?=
- =?utf-8?B?Tk84N2VVSWFvclUvdDBvNyt6VkNTK0pURVlSN3g3bCtISE11L1ltLzdSSXVi?=
- =?utf-8?B?UmxYNDRKYUVNb2g4SzJMa2NCVkFIMisrdFM0Y3VoR3BpSzR4TU90WEZzWnNl?=
- =?utf-8?B?SWtUSkpzLzFmSjVMcWZZcU1NM2tjZ0tGQ1ZhZ3gwWXU4VTVGQW1Lak5Ybytx?=
- =?utf-8?B?SmtTbUtGNHRFVlRmcTVnMjJycmlKR2RKMTkwR2JXSmxId2FKZktJVnc4bi9v?=
- =?utf-8?B?VE13VGloeHN6bVhwYit1UittaHFPYkUxNk5HemlrclBobCtIVi9iUDQxU1dy?=
- =?utf-8?B?R1VEeE9YdUtnL0hDL0FYOGU0RWFUYW1Sa1FEVmFtRW5CcEpLM3F1N1lhOGNm?=
- =?utf-8?B?RE9GM1pwY3pERDVST0YycjR6bVdWeUlFRmRHY3gzSzUyZFBETzNrYWZ4WXB5?=
- =?utf-8?B?ZGN5NDh0SlFWNXFYeDZ5aG04dmx0a0JtMFNFdmttYjdoSWh2eGtQOEd3MEhG?=
- =?utf-8?B?NjFEbmFiQU5vcTBub2h0bjlERnFOdFJMdDJXakdVVCs1VFUvVVR0UjR4WHdC?=
- =?utf-8?B?TWN3dStqd3hJM3hIVk16bDlhelFOa2NEbHpKa1hVb24weE5SRW8wc3pGN01t?=
- =?utf-8?B?dnRRS3ZqWnZuZHd5M3UreUluN2lTU0l3S01hZVFDQ3QxbU5sOUw3U21xU3BB?=
- =?utf-8?B?R3BIdWhKV203ZG0xSDR4c0krUWF1R3ppRzhBMTViczlTa2E2TDhzNVVvK2R2?=
- =?utf-8?B?UXhVQUp3TEJpZmp1YWsyUWZkeE85OFdNeENZSllLNkZndlY1WWRuOEt1NlNV?=
- =?utf-8?B?V05hOVFJWS9zeUp0MFUrd1NNR0hBQUtPV2h4TnBTWEs0SHc9PQ==?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230037)(36860700010)(376011)(7416011)(82310400023)(1800799021);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Jun 2024 21:01:47.0179
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: baddc833-1afb-41e0-0d84-08dc8fd9ddb9
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SJ5PEPF000001F3.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW5PR12MB5621
+References: <20240614-amdgpu-disable-drm-amd-dc-fp-riscv-clang-v1-1-a6d40617dc9b@kernel.org>
+ <58253c2e-25a2-48c6-bcd4-5bc3bbe03296@amd.com>
+In-Reply-To: <58253c2e-25a2-48c6-bcd4-5bc3bbe03296@amd.com>
+From: Alex Deucher <alexdeucher@gmail.com>
+Date: Tue, 18 Jun 2024 17:32:24 -0400
+Message-ID: <CADnq5_Ox_Ak9XedYNPchxMh-AKuLRG1_V8YqpiEB=ke8130B5A@mail.gmail.com>
+Subject: Re: [PATCH] drm/amd/display: Disable CONFIG_DRM_AMD_DC_FP for RISC-V
+ with clang
+To: Harry Wentland <harry.wentland@amd.com>
+Cc: Nathan Chancellor <nathan@kernel.org>, Leo Li <sunpeng.li@amd.com>, 
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>, Alex Deucher <alexander.deucher@amd.com>, 
+	=?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
+	Xinhui Pan <Xinhui.Pan@amd.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
+	Samuel Holland <samuel.holland@sifive.com>, Nick Desaulniers <ndesaulniers@google.com>, 
+	Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, amd-gfx@lists.freedesktop.org, 
+	dri-devel@lists.freedesktop.org, linux-riscv@lists.infradead.org, 
+	llvm@lists.linux.dev, patches@lists.linux.dev, 
+	Palmer Dabbelt <palmer@rivosinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 18 Jun 2024 14:27:33 +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.220 release.
-> There are 770 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 20 Jun 2024 12:32:00 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.220-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Applied.  Thanks!
 
-All tests passing for Tegra ...
+Alex
 
-Test results for stable-v5.10:
-    10 builds:	10 pass, 0 fail
-    26 boots:	26 pass, 0 fail
-    68 tests:	68 pass, 0 fail
-
-Linux version:	5.10.220-rc1-g7927147b02fc
-Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
-                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
-                tegra20-ventana, tegra210-p2371-2180,
-                tegra210-p3450-0000, tegra30-cardhu-a04
-
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-
-Jon
+On Tue, Jun 18, 2024 at 10:17=E2=80=AFAM Harry Wentland <harry.wentland@amd=
+.com> wrote:
+>
+>
+>
+> On 2024-06-14 15:54, Nathan Chancellor wrote:
+> > Commit 77acc6b55ae4 ("riscv: add support for kernel-mode FPU") and
+> > commit a28e4b672f04 ("drm/amd/display: use ARCH_HAS_KERNEL_FPU_SUPPORT"=
+)
+> > enabled support for CONFIG_DRM_AMD_DC_FP with RISC-V. Unfortunately,
+> > this exposed -Wframe-larger-than warnings (which become fatal with
+> > CONFIG_WERROR=3Dy) when building ARCH=3Driscv allmodconfig with clang:
+> >
+> >   drivers/gpu/drm/amd/amdgpu/../display/dc/dml/dcn32/display_mode_vba_3=
+2.c:58:13: error: stack frame size (2448) exceeds limit (2048) in 'DISPCLKD=
+PPCLKDCFCLKDeepSleepPrefetchParametersWatermarksAndPerformanceCalculation' =
+[-Werror,-Wframe-larger-than]
+> >      58 | static void DISPCLKDPPCLKDCFCLKDeepSleepPrefetchParametersWat=
+ermarksAndPerformanceCalculation(
+> >         |             ^
+> >   1 error generated.
+> >
+> > Many functions in this file use a large number of parameters, which mus=
+t
+> > be passed on the stack at a certain pointer due to register exhaustion,
+> > which can cause high stack usage when inlining and issues with stack
+> > slot analysis get involved. While the compiler can and should do better
+> > (as GCC uses less than half the amount of stack space for the same
+> > function), it is not as simple as a fix as adjusting the functions not
+> > to take a large number of parameters.
+> >
+> > Unfortunately, modifying these files to avoid the problem is a difficul=
+t
+> > to justify approach because any revisions to the files in the kernel
+> > tree never make it back to the original source (so copies of the code
+> > for newer hardware revisions just reintroduce the issue) and the files
+> > are hard to read/modify due to being "gcc-parsable HW gospel, coming
+> > straight from HW engineers".
+> >
+> > Avoid building the problematic code for RISC-V by modifying the existin=
+g
+> > condition for arm64 that exists for the same reason. Factor out the
+> > logical not to make the condition a little more readable naturally.
+> >
+> > Fixes: a28e4b672f04 ("drm/amd/display: use ARCH_HAS_KERNEL_FPU_SUPPORT"=
+)
+> > Reported-by: Palmer Dabbelt <palmer@rivosinc.com>
+> > Closes: https://lore.kernel.org/20240530145741.7506-2-palmer@rivosinc.c=
+om/
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> > ---
+> >  drivers/gpu/drm/amd/display/Kconfig | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/gpu/drm/amd/display/Kconfig b/drivers/gpu/drm/amd/=
+display/Kconfig
+> > index 5fcd4f778dc3..47b8b49da8a7 100644
+> > --- a/drivers/gpu/drm/amd/display/Kconfig
+> > +++ b/drivers/gpu/drm/amd/display/Kconfig
+> > @@ -8,7 +8,7 @@ config DRM_AMD_DC
+> >       depends on BROKEN || !CC_IS_CLANG || ARM64 || RISCV || SPARC64 ||=
+ X86_64
+> >       select SND_HDA_COMPONENT if SND_HDA_CORE
+> >       # !CC_IS_CLANG: https://github.com/ClangBuiltLinux/linux/issues/1=
+752
+> > -     select DRM_AMD_DC_FP if ARCH_HAS_KERNEL_FPU_SUPPORT && (!ARM64 ||=
+ !CC_IS_CLANG)
+> > +     select DRM_AMD_DC_FP if ARCH_HAS_KERNEL_FPU_SUPPORT && !(CC_IS_CL=
+ANG && (ARM64 || RISCV))
+>
+> Thanks for also making the logic easier to parse.
+>
+> Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+>
+> Harry
+>
+> >       help
+> >         Choose this option if you want to use the new display engine
+> >         support for AMDGPU. This adds required support for Vega and
+> >
+> > ---
+> > base-commit: c6c4dd54012551cce5cde408b35468f2c62b0cce
+> > change-id: 20240614-amdgpu-disable-drm-amd-dc-fp-riscv-clang-31c84f6b99=
+0d
+> >
+> > Best regards,
+>
