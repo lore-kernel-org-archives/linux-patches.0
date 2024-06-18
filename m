@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFAB813A877;
-	Tue, 18 Jun 2024 12:49:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FCA414C5A7;
+	Tue, 18 Jun 2024 12:49:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718714947; cv=none; b=oblqQuxTpKtu/3a5U4saXK1Gu4gEYRwm1Of5JVLUxgaEoeCK2VCVSwWr3rJ1TCR1OwJa38OKXJNzWQFSfhV3N/HBJzR1crsszKIXUl1t97hYtbKk+SIa3Y2UgsKKz+BAbmvd5hYZJtye2Byet4UzwyyQ0WgM1tFOwKaih+Ex1kY=
+	t=1718714950; cv=none; b=lSmFMQgBacqN+oAJTlp9B4D5x7/HrtDikH/5fI1+oT65iF3BIA1CW/orfaMUBGeQ9eNUwXcwIT39EvULed9mEasR2o23e56zfe1/a7gtH3V8UFVyfAFdMnH9zITLk0b41qH9iIHnkoS2RgBbJUfLDXfTNYUOOo51Yg3Jd4SAJhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718714947; c=relaxed/simple;
-	bh=9/W6aD2HsAMG4hbyPhjZiuK0wMsJhkjUHlT+3C0Vrzc=;
+	s=arc-20240116; t=1718714950; c=relaxed/simple;
+	bh=Mevzi+b9gGg+lBcPu32VExafc1MIi+qjaJ1v9MND8A4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p5Pv7X5Vv5t0i/KgpwLEG07LJy4mM7+0eP/Cxj8/n23GMCKCL6jC7pYle9qiJOA+ReQptHHIG6hgg2LBwp6uxu1U3Lat11hno2rrkv01/KxhrIheKtVN1IS/M8N+XmmH17QHBCLWV5J1yQ9EIR43ktrsKogsMqLQcMDJsWRXBm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VJ9WvdIF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ejp72nQ9ura9HVmBuf7JZcBgGjzWvLH+zpT/WgbH/aVyMB4DjtDn2UAjpjIiiFxKJMyDyeFK8Htl661NxT+ZbQBzELc6UUknzDmSaw2UJtXwNMOTecl2hOgkzpELThiG67WfzfMSwpPz/aFDBuU7uu8opH6YilU/rNlqMf2Avqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hz+b6BE0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VJ9WvdIF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 679FEC3277B;
-	Tue, 18 Jun 2024 12:49:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hz+b6BE0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54418C3277B;
+	Tue, 18 Jun 2024 12:49:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718714946;
-	bh=9/W6aD2HsAMG4hbyPhjZiuK0wMsJhkjUHlT+3C0Vrzc=;
+	s=korg; t=1718714949;
+	bh=Mevzi+b9gGg+lBcPu32VExafc1MIi+qjaJ1v9MND8A4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VJ9WvdIFu//sweaOFBgcUBD3nULOWTNaKCOEqkdRFEtb1vn9R6dCnxS9xt46sIpI3
-	 CTOJsi5Rd4NgZxY2Kfki1JBOzdMByGx/1feo5sW5xfRUNn/e7Szokeeo8ZG8oPoVQS
-	 h7OoMcVTopQXx7Ed728uxAzUX94fFfGotsMlsnqc=
+	b=Hz+b6BE0VC1bkELSENXXDD/+2Tia+Anjh0dGFAZ8DYzLa74A+G9iCFZmjGNFEi1b7
+	 He/L7T/PL5Wx4tpg2DOFWHj4bKgixxIOwtQxSopLwtaxTIc+D0HFB6zbENvMbx9xr8
+	 Z68aY0hLNibgeuxQF29rbMGtmZCi+ZHo6acDiT80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Eric W. Biederman" <ebiederm@xmission.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 111/770] bpf: In bpf_task_fd_query use fget_task
-Date: Tue, 18 Jun 2024 14:29:24 +0200
-Message-ID: <20240618123411.557297534@linuxfoundation.org>
+Subject: [PATCH 5.10 112/770] proc/fd: In proc_fd_link use fget_task
+Date: Tue, 18 Jun 2024 14:29:25 +0200
+Message-ID: <20240618123411.595179751@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -54,78 +54,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric W. Biederman <ebiederm@xmission.com>
 
-[ Upstream commit b48845af0152d790a54b8ab78cc2b7c07485fc98 ]
+[ Upstream commit 439be32656035d3239fd56f9b83353ec06cb3b45 ]
 
-Use the helper fget_task to simplify bpf_task_fd_query.
+When discussing[1] exec and posix file locks it was realized that none
+of the callers of get_files_struct fundamentally needed to call
+get_files_struct, and that by switching them to helper functions
+instead it will both simplify their code and remove unnecessary
+increments of files_struct.count.  Those unnecessary increments can
+result in exec unnecessarily unsharing files_struct which breaking
+posix locks, and it can result in fget_light having to fallback to
+fget reducing system performance.
 
-As well as simplifying the code this removes one unnecessary increment of
-struct files_struct.  This unnecessary increment of files_struct.count can
-result in exec unnecessarily unsharing files_struct and breaking posix
-locks, and it can result in fget_light having to fallback to fget reducing
-performance.
+Simplifying proc_fd_link is a little bit tricky.  It is necessary to
+know that there is a reference to fd_f	 ile while path_get is running.
+This reference can either be guaranteed to exist either by locking the
+fdtable as the code currently does or by taking a reference on the
+file in question.
 
-This simplification comes from the observation that none of the
-callers of get_files_struct actually need to call get_files_struct
-that was made when discussing[1] exec and posix file locks.
+Use fget_task to remove the need for get_files_struct and
+to take a reference to file in question.
 
 [1] https://lkml.kernel.org/r/20180915160423.GA31461@redhat.com
 Suggested-by: Oleg Nesterov <oleg@redhat.com>
-v1: https://lkml.kernel.org/r/20200817220425.9389-5-ebiederm@xmission.com
-Link: https://lkml.kernel.org/r/20201120231441.29911-5-ebiederm@xmission.com
+v1: https://lkml.kernel.org/r/20200817220425.9389-8-ebiederm@xmission.com
+Link: https://lkml.kernel.org/r/20201120231441.29911-6-ebiederm@xmission.com
 Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c | 20 +++-----------------
- 1 file changed, 3 insertions(+), 17 deletions(-)
+ fs/proc/fd.c | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index e1bee8cd34044..fbe7f8e2b022c 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -3929,7 +3929,6 @@ static int bpf_task_fd_query(const union bpf_attr *attr,
- 	pid_t pid = attr->task_fd_query.pid;
- 	u32 fd = attr->task_fd_query.fd;
- 	const struct perf_event *event;
--	struct files_struct *files;
+diff --git a/fs/proc/fd.c b/fs/proc/fd.c
+index 81882a13212d3..d58960f6ee524 100644
+--- a/fs/proc/fd.c
++++ b/fs/proc/fd.c
+@@ -146,29 +146,22 @@ static const struct dentry_operations tid_fd_dentry_operations = {
+ 
+ static int proc_fd_link(struct dentry *dentry, struct path *path)
+ {
+-	struct files_struct *files = NULL;
  	struct task_struct *task;
- 	struct file *file;
- 	int err;
-@@ -3949,23 +3948,11 @@ static int bpf_task_fd_query(const union bpf_attr *attr,
- 	if (!task)
- 		return -ENOENT;
+ 	int ret = -ENOENT;
  
--	files = get_files_struct(task);
--	put_task_struct(task);
--	if (!files)
--		return -ENOENT;
+ 	task = get_proc_task(d_inode(dentry));
+ 	if (task) {
+-		files = get_files_struct(task);
+-		put_task_struct(task);
+-	}
 -
- 	err = 0;
--	spin_lock(&files->file_lock);
--	file = fcheck_files(files, fd);
-+	file = fget_task(task, fd);
-+	put_task_struct(task);
- 	if (!file)
--		err = -EBADF;
--	else
--		get_file(file);
--	spin_unlock(&files->file_lock);
--	put_files_struct(files);
--
--	if (err)
--		goto out;
-+		return -EBADF;
+-	if (files) {
+ 		unsigned int fd = proc_fd(d_inode(dentry));
+ 		struct file *fd_file;
  
- 	if (file->f_op == &bpf_link_fops) {
- 		struct bpf_link *link = file->private_data;
-@@ -4005,7 +3992,6 @@ static int bpf_task_fd_query(const union bpf_attr *attr,
- 	err = -ENOTSUPP;
- put_file:
- 	fput(file);
--out:
- 	return err;
- }
+-		spin_lock(&files->file_lock);
+-		fd_file = fcheck_files(files, fd);
++		fd_file = fget_task(task, fd);
+ 		if (fd_file) {
+ 			*path = fd_file->f_path;
+ 			path_get(&fd_file->f_path);
+ 			ret = 0;
++			fput(fd_file);
+ 		}
+-		spin_unlock(&files->file_lock);
+-		put_files_struct(files);
++		put_task_struct(task);
+ 	}
  
+ 	return ret;
 -- 
 2.43.0
 
