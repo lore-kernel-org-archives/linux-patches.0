@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A3118E757;
-	Tue, 18 Jun 2024 13:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3CC18E759;
+	Tue, 18 Jun 2024 13:02:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715758; cv=none; b=BLP8I5pZ6NDMTWTrHeCTWD8taC8mHBHqBfgyYe+CoZRoLEfoScN4NtN1JX53znpdvWYlRTOLDAh8mwLlm2XI6ccFXcJ8LjABp1lHXMmxqGLZp4mnYWP0VuRuzHYiwCOXcFtWwPzFOQmsMETJbRLQ2/w9NKJkR8D5kpTJ/id9Kno=
+	t=1718715761; cv=none; b=mQM1xWmx4gvcbsVYNGR+BKo2s1lBvfBWOPhwkPSSWnT4vug8ksEzs1fAZOV578sQOl19iqAmAJU7JDvmuPDmxuul49x6m/GxHnqJbHddk9ym9CSG59Sp8Ybl7hX7qY6TCQbObcFwdNYCvYMXNu1zCVU6aaZUKrV3Ld3sfxi2jHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715758; c=relaxed/simple;
-	bh=DnVFFX1flWmqiaGtuGc950dDbpfi6JB8U6UGVOmnbWg=;
+	s=arc-20240116; t=1718715761; c=relaxed/simple;
+	bh=mpHmjAjuD8pH0O8l7iWkiFPBhFA3aYay1BFAv7RBV3k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gDXw4LxXW0RdMlyY6ucxv76I5cksaeIxDc2YxEW4f1Y1bDPcxIQFKhwgcFCj891euDl19ujclzz+wbZlQEPuB1tgrE+/OGTPid9yoz2Y3iCXWLeFH7crltby9BKkCEniH8PwWaFpj6X6p+CDAt9G75Q7pWybpT9Na+z+XC9JLeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UgtnMkts; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hLN7OA3L5zxbJFV5moUZWzoWfaZ5eTs8PXgbkvpFMSJGwQqURjejY/ZZ8FVRkMfs1KEhTxulZJF36aXpx+Sv5DnM+fOndXwcIWNVjFHhoF0P7Z3HSCn/nL2Q4jlSFV2S7mbB4i5G9O0/t+TEWOzoz0xJ5HYJhTfG66saCIDTd98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PcqfFJyK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UgtnMkts"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F14DC3277B;
-	Tue, 18 Jun 2024 13:02:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PcqfFJyK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FFC5C3277B;
+	Tue, 18 Jun 2024 13:02:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715758;
-	bh=DnVFFX1flWmqiaGtuGc950dDbpfi6JB8U6UGVOmnbWg=;
+	s=korg; t=1718715760;
+	bh=mpHmjAjuD8pH0O8l7iWkiFPBhFA3aYay1BFAv7RBV3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UgtnMktsMaQZBFf+t9CE2vkDtMdK2Tidi1AiKc7XCee1wtljb46EMo2aCY8e+v8Dv
-	 CgL4n13sNKaktxqpVMl4kHUHA6K17RzD6cvwcEVqXP++RHIf6WwrYh4/FYNJXZF3qo
-	 aYdrt8x8AfAtfVvqV1fyqiTgQxmNIh2FIbsPsb/k=
+	b=PcqfFJyKXYew8njV1V5nkBnNtsKp6qmmDtcd/gUaKNNws6SenPLUhPcUXeCo51eX5
+	 ICc8DByxXaoa3MqKh8sllKvggPZMkDKZiSGL5ZbxL+KBonU/tDJVEsnRNIt9gZxYnl
+	 Isy4XULDPUATOd3hNr8ckyc6LwICirQ17a1Fvv7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Krisman Bertazi <krisman@collabora.com>,
 	Amir Goldstein <amir73il@gmail.com>,
 	Jan Kara <jack@suse.cz>,
+	Gabriel Krisman Bertazi <krisman@collabora.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 385/770] fanotify: Report fid info for file related file system errors
-Date: Tue, 18 Jun 2024 14:33:58 +0200
-Message-ID: <20240618123422.137254665@linuxfoundation.org>
+Subject: [PATCH 5.10 376/770] fanotify: Require fid_mode for any non-fd event
+Date: Tue, 18 Jun 2024 14:33:49 +0200
+Message-ID: <20240618123421.783225553@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -55,130 +55,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Gabriel Krisman Bertazi <krisman@collabora.com>
 
-[ Upstream commit 936d6a38be39177495af38497bf8da1c6128fa1b ]
+[ Upstream commit 4fe595cf1c80e7a5af4d00c4da29def64aff57a2 ]
 
-Plumb the pieces to add a FID report to error records.  Since all error
-event memory must be pre-allocated, we pre-allocate the maximum file
-handle size possible, such that it should always fit.
+Like inode events, FAN_FS_ERROR will require fid mode.  Therefore,
+convert the verification during fanotify_mark(2) to require fid for any
+non-fd event.  This means fid_mode will not only be required for inode
+events, but for any event that doesn't provide a descriptor.
 
-For errors that don't expose a file handle, report it with an invalid
-FID. Internally we use zero-length FILEID_ROOT file handle for passing
-the information (which we report as zero-length FILEID_INVALID file
-handle to userspace) so we update the handle reporting code to deal with
-this case correctly.
-
-Link: https://lore.kernel.org/r/20211025192746.66445-27-krisman@collabora.com
-Link: https://lore.kernel.org/r/20211025192746.66445-25-krisman@collabora.com
-Signed-off-by: Gabriel Krisman Bertazi <krisman@collabora.com>
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Link: https://lore.kernel.org/r/20211025192746.66445-17-krisman@collabora.com
+Suggested-by: Amir Goldstein <amir73il@gmail.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-[Folded two patches into 2 to make series bisectable]
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Gabriel Krisman Bertazi <krisman@collabora.com>
 Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/fanotify/fanotify.c      | 11 +++++++++++
- fs/notify/fanotify/fanotify.h      |  9 +++++++++
- fs/notify/fanotify/fanotify_user.c |  8 +++++---
- 3 files changed, 25 insertions(+), 3 deletions(-)
+ fs/notify/fanotify/fanotify_user.c | 12 ++++++------
+ include/linux/fanotify.h           |  3 +++
+ 2 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
-index 45df610debbe4..465f07e70e6dc 100644
---- a/fs/notify/fanotify/fanotify.c
-+++ b/fs/notify/fanotify/fanotify.c
-@@ -609,7 +609,9 @@ static struct fanotify_event *fanotify_alloc_error_event(
- {
- 	struct fs_error_report *report =
- 			fsnotify_data_error_report(data, data_type);
-+	struct inode *inode;
- 	struct fanotify_error_event *fee;
-+	int fh_len;
- 
- 	if (WARN_ON_ONCE(!report))
- 		return NULL;
-@@ -622,6 +624,15 @@ static struct fanotify_event *fanotify_alloc_error_event(
- 	fee->err_count = 1;
- 	fee->fsid = *fsid;
- 
-+	inode = report->inode;
-+	fh_len = fanotify_encode_fh_len(inode);
-+
-+	/* Bad fh_len. Fallback to using an invalid fh. Should never happen. */
-+	if (!fh_len && inode)
-+		inode = NULL;
-+
-+	fanotify_encode_fh(&fee->object_fh, inode, fh_len, NULL, 0);
-+
- 	*hash ^= fanotify_hash_fsid(fsid);
- 
- 	return &fee->fae;
-diff --git a/fs/notify/fanotify/fanotify.h b/fs/notify/fanotify/fanotify.h
-index 80af269eebb89..edd7587adcc59 100644
---- a/fs/notify/fanotify/fanotify.h
-+++ b/fs/notify/fanotify/fanotify.h
-@@ -208,6 +208,8 @@ struct fanotify_error_event {
- 	u32 err_count; /* Suppressed errors count */
- 
- 	__kernel_fsid_t fsid; /* FSID this error refers to. */
-+
-+	FANOTIFY_INLINE_FH(object_fh, MAX_HANDLE_SZ);
- };
- 
- static inline struct fanotify_error_event *
-@@ -222,6 +224,8 @@ static inline __kernel_fsid_t *fanotify_event_fsid(struct fanotify_event *event)
- 		return &FANOTIFY_FE(event)->fsid;
- 	else if (event->type == FANOTIFY_EVENT_TYPE_FID_NAME)
- 		return &FANOTIFY_NE(event)->fsid;
-+	else if (event->type == FANOTIFY_EVENT_TYPE_FS_ERROR)
-+		return &FANOTIFY_EE(event)->fsid;
- 	else
- 		return NULL;
- }
-@@ -233,6 +237,8 @@ static inline struct fanotify_fh *fanotify_event_object_fh(
- 		return &FANOTIFY_FE(event)->object_fh;
- 	else if (event->type == FANOTIFY_EVENT_TYPE_FID_NAME)
- 		return fanotify_info_file_fh(&FANOTIFY_NE(event)->info);
-+	else if (event->type == FANOTIFY_EVENT_TYPE_FS_ERROR)
-+		return &FANOTIFY_EE(event)->object_fh;
- 	else
- 		return NULL;
- }
-@@ -266,6 +272,9 @@ static inline int fanotify_event_dir_fh_len(struct fanotify_event *event)
- 
- static inline bool fanotify_event_has_object_fh(struct fanotify_event *event)
- {
-+	/* For error events, even zeroed fh are reported. */
-+	if (event->type == FANOTIFY_EVENT_TYPE_FS_ERROR)
-+		return true;
- 	return fanotify_event_object_fh_len(event) > 0;
- }
- 
 diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
-index 34ed30be0e4d4..0d36ac3ed7e99 100644
+index 6dd6a2e05f55d..34bf71108f7a3 100644
 --- a/fs/notify/fanotify/fanotify_user.c
 +++ b/fs/notify/fanotify/fanotify_user.c
-@@ -334,9 +334,6 @@ static int copy_fid_info_to_user(__kernel_fsid_t *fsid, struct fanotify_fh *fh,
- 	pr_debug("%s: fh_len=%zu name_len=%zu, info_len=%zu, count=%zu\n",
- 		 __func__, fh_len, name_len, info_len, count);
+@@ -1471,14 +1471,14 @@ static int do_fanotify_mark(int fanotify_fd, unsigned int flags, __u64 mask,
+ 		goto fput_and_out;
  
--	if (!fh_len)
--		return 0;
--
- 	if (WARN_ON_ONCE(len < sizeof(info) || len > count))
- 		return -EFAULT;
+ 	/*
+-	 * Events with data type inode do not carry enough information to report
+-	 * event->fd, so we do not allow setting a mask for inode events unless
+-	 * group supports reporting fid.
+-	 * inode events are not supported on a mount mark, because they do not
+-	 * carry enough information (i.e. path) to be filtered by mount point.
++	 * Events that do not carry enough information to report
++	 * event->fd require a group that supports reporting fid.  Those
++	 * events are not supported on a mount mark, because they do not
++	 * carry enough information (i.e. path) to be filtered by mount
++	 * point.
+ 	 */
+ 	fid_mode = FAN_GROUP_FLAG(group, FANOTIFY_FID_BITS);
+-	if (mask & FANOTIFY_INODE_EVENTS &&
++	if (mask & ~(FANOTIFY_FD_EVENTS|FANOTIFY_EVENT_FLAGS) &&
+ 	    (!fid_mode || mark_type == FAN_MARK_MOUNT))
+ 		goto fput_and_out;
  
-@@ -371,6 +368,11 @@ static int copy_fid_info_to_user(__kernel_fsid_t *fsid, struct fanotify_fh *fh,
+diff --git a/include/linux/fanotify.h b/include/linux/fanotify.h
+index eec3b7c408115..52d464802d99f 100644
+--- a/include/linux/fanotify.h
++++ b/include/linux/fanotify.h
+@@ -84,6 +84,9 @@ extern struct ctl_table fanotify_table[]; /* for sysctl */
+  */
+ #define FANOTIFY_DIRENT_EVENTS	(FAN_MOVE | FAN_CREATE | FAN_DELETE)
  
- 	handle.handle_type = fh->type;
- 	handle.handle_bytes = fh_len;
++/* Events that can be reported with event->fd */
++#define FANOTIFY_FD_EVENTS (FANOTIFY_PATH_EVENTS | FANOTIFY_PERM_EVENTS)
 +
-+	/* Mangle handle_type for bad file_handle */
-+	if (!fh_len)
-+		handle.handle_type = FILEID_INVALID;
-+
- 	if (copy_to_user(buf, &handle, sizeof(handle)))
- 		return -EFAULT;
- 
+ /* Events that can only be reported with data type FSNOTIFY_EVENT_INODE */
+ #define FANOTIFY_INODE_EVENTS	(FANOTIFY_DIRENT_EVENTS | \
+ 				 FAN_ATTRIB | FAN_MOVE_SELF | FAN_DELETE_SELF)
 -- 
 2.43.0
 
