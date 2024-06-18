@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5AA31891BB;
-	Tue, 18 Jun 2024 13:00:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70DDD1891D3;
+	Tue, 18 Jun 2024 13:00:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715653; cv=none; b=LW9ouxYnsxBlPkBLtfOopXnxsk9wmSt56slxmf7mFKZCTd9H/hdqDB7uy5mGBDzQUsVpCFQWWfkXt1xffOC3AXubjeBkI3hhsbjx5m1WEiPsqBx2BgVpJWJf2/f8oeFKvuCDyNIc/SvIEYg3mPYkfwR/82aNyOEHusL7R1qukIE=
+	t=1718715656; cv=none; b=BsyxWLZ9kTufOHhX0K9GU38tSrsSMYxWe4rTpuXd2JFdYrL5qo2wsthrW1gDqD/aqGOH0uz7HjuSPk+d1J3+CxTm9UHHQaAY6hLG6mnrTn+vWkTDYzDHH0nrS3ZSJIoZupUAcL1FloelPQWddNoa4MNVXjUED82VTQjTar8deUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715653; c=relaxed/simple;
-	bh=uLe9DAZu53Gkw7kT5VmVGM011nLZIhtyJ9VtqdVzQJI=;
+	s=arc-20240116; t=1718715656; c=relaxed/simple;
+	bh=i46mA2bv5UOey4HwLi/q6/ZTyu9m8u4k6grLVkZlvcQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WIfiHkFL29Kb3d+mfEbrrCxg8o85/ecZrbcNg8A9K5n1cJc4O4v6/1u79oN6T2RB5XhxXZelbY4h04mxXfmcbCpa2/GUzXFmiJtngCkuqak5Xt48dk1hU2ymUFb+SDkR9PQ1REfS7CSY0lPiTCm6s04KAd4hclFza80qwFicTAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gC7FWxVP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FvuAqBE78Y3krEs8sKj58ie5kD9FCmBfspyRyrmRITUrVZd6AuN98l5/OwGEeFzZTipLR4RIiQ8VC7GG6OIXViciSm0SlJo73VqvwodpqVlAlZcg5x31BUbhj6K9aD7mGJnO2JLZ158fnxNgV1pYGriOFfDYhQOLHb1aD5PgFo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FZovTtvP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gC7FWxVP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0212C3277B;
-	Tue, 18 Jun 2024 13:00:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FZovTtvP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBB47C3277B;
+	Tue, 18 Jun 2024 13:00:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715653;
-	bh=uLe9DAZu53Gkw7kT5VmVGM011nLZIhtyJ9VtqdVzQJI=;
+	s=korg; t=1718715656;
+	bh=i46mA2bv5UOey4HwLi/q6/ZTyu9m8u4k6grLVkZlvcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gC7FWxVPgco+63z38lKn12ZsFSBr7LBjT+MoHEanzf0vX2G0EnNRebkjP7xj0ffPe
-	 9UhdapP0WA9p8YoJmyw1gSGG5kUWqOHSVL3H+vx8h6YE3QPBhEfQq3wZKKVy/TE8K6
-	 dX2x4LnszSEPliN77eRQVR55Zblu+Ftib8M72aqo=
+	b=FZovTtvPNq7Tu4Yu8K7e8qgnsetFBXsJT5jenGbIdaUJurJpUNqJKqvZWI0/i4DWg
+	 W64dwWtqEhegJJqfXovnXweZJIoVkCbLQP57SgNHuChfhVzG1cZoCYj8q2An7gwt+s
+	 lrMtseD9gQf0BxSp5S37+iByDBlKfjXE59U054a4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 350/770] nfs: dont atempt blocking locks on nfs reexports
-Date: Tue, 18 Jun 2024 14:33:23 +0200
-Message-ID: <20240618123420.770084959@linuxfoundation.org>
+Subject: [PATCH 5.10 351/770] lockd: dont attempt blocking locks on nfs reexports
+Date: Tue, 18 Jun 2024 14:33:24 +0200
+Message-ID: <20240618123420.815279637@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -54,94 +54,72 @@ Content-Transfer-Encoding: 8bit
 
 From: J. Bruce Fields <bfields@redhat.com>
 
-[ Upstream commit f657f8eef3ff870552c9fd2839e0061046f44618 ]
+[ Upstream commit b840be2f00c0bc00d993f8f76e251052b83e4382 ]
 
-NFS implements blocking locks by blocking inside its lock method.  In
-the reexport case, this blocks the nfs server thread, which could lead
-to deadlocks since an nfs server thread might be required to unlock the
-conflicting lock.  It also causes a crash, since the nfs server thread
-assumes it can free the lock when its lm_notify lock callback is called.
+As in the v4 case, it doesn't work well to block waiting for a lock on
+an nfs filesystem.
 
-Ideal would be to make the nfs lock method return without blocking in
-this case, but for now it works just not to attempt blocking locks.  The
-difference is just that the original client will have to poll (as it
-does in the v4.0 case) instead of getting a callback when the lock's
-available.
+As in the v4 case, that means we're depending on the client to poll.
+It's probably incorrect to depend on that, but I *think* clients do poll
+in practice.  In any case, it's an improvement over hanging the lockd
+thread indefinitely as we currently are.
 
 Signed-off-by: J. Bruce Fields <bfields@redhat.com>
 Acked-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/export.c          | 2 +-
- fs/nfsd/nfs4state.c      | 8 ++++++--
- include/linux/exportfs.h | 2 ++
- 3 files changed, 9 insertions(+), 3 deletions(-)
+ fs/lockd/svclock.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nfs/export.c b/fs/nfs/export.c
-index b347e3ce0cc8e..40beac65d1355 100644
---- a/fs/nfs/export.c
-+++ b/fs/nfs/export.c
-@@ -184,5 +184,5 @@ const struct export_operations nfs_export_ops = {
- 	.fetch_iversion = nfs_fetch_iversion,
- 	.flags = EXPORT_OP_NOWCC|EXPORT_OP_NOSUBTREECHK|
- 		EXPORT_OP_CLOSE_BEFORE_UNLINK|EXPORT_OP_REMOTE_FS|
--		EXPORT_OP_NOATOMIC_ATTR,
-+		EXPORT_OP_NOATOMIC_ATTR|EXPORT_OP_SYNC_LOCKS,
- };
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 401f0f2743717..fd3bdf0bf0052 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -6878,6 +6878,7 @@ nfsd4_lock(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 	struct nfsd4_blocked_lock *nbl = NULL;
- 	struct file_lock *file_lock = NULL;
- 	struct file_lock *conflock = NULL;
-+	struct super_block *sb;
- 	__be32 status = 0;
- 	int lkflg;
- 	int err;
-@@ -6899,6 +6900,7 @@ nfsd4_lock(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 		dprintk("NFSD: nfsd4_lock: permission denied!\n");
- 		return status;
- 	}
-+	sb = cstate->current_fh.fh_dentry->d_sb;
+diff --git a/fs/lockd/svclock.c b/fs/lockd/svclock.c
+index a7b4c51667ada..e9b85d8fd5fe7 100644
+--- a/fs/lockd/svclock.c
++++ b/fs/lockd/svclock.c
+@@ -31,6 +31,7 @@
+ #include <linux/lockd/nlm.h>
+ #include <linux/lockd/lockd.h>
+ #include <linux/kthread.h>
++#include <linux/exportfs.h>
  
- 	if (lock->lk_is_new) {
- 		if (nfsd4_has_session(cstate))
-@@ -6947,7 +6949,8 @@ nfsd4_lock(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 	fp = lock_stp->st_stid.sc_file;
- 	switch (lock->lk_type) {
- 		case NFS4_READW_LT:
--			if (nfsd4_has_session(cstate))
-+			if (nfsd4_has_session(cstate) &&
-+			    !(sb->s_export_op->flags & EXPORT_OP_SYNC_LOCKS))
- 				fl_flags |= FL_SLEEP;
- 			fallthrough;
- 		case NFS4_READ_LT:
-@@ -6959,7 +6962,8 @@ nfsd4_lock(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 			fl_type = F_RDLCK;
- 			break;
- 		case NFS4_WRITEW_LT:
--			if (nfsd4_has_session(cstate))
-+			if (nfsd4_has_session(cstate) &&
-+			    !(sb->s_export_op->flags & EXPORT_OP_SYNC_LOCKS))
- 				fl_flags |= FL_SLEEP;
- 			fallthrough;
- 		case NFS4_WRITE_LT:
-diff --git a/include/linux/exportfs.h b/include/linux/exportfs.h
-index fe848901fcc3a..3260fe7148462 100644
---- a/include/linux/exportfs.h
-+++ b/include/linux/exportfs.h
-@@ -221,6 +221,8 @@ struct export_operations {
- #define EXPORT_OP_NOATOMIC_ATTR		(0x10) /* Filesystem cannot supply
- 						  atomic attribute updates
- 						*/
-+#define EXPORT_OP_SYNC_LOCKS		(0x20) /* Filesystem can't do
-+						  asychronous blocking locks */
- 	unsigned long	flags;
- };
+ #define NLMDBG_FACILITY		NLMDBG_SVCLOCK
  
+@@ -470,18 +471,24 @@ nlmsvc_lock(struct svc_rqst *rqstp, struct nlm_file *file,
+ 	    struct nlm_cookie *cookie, int reclaim)
+ {
+ 	struct nlm_block	*block = NULL;
++	struct inode		*inode = nlmsvc_file_inode(file);
+ 	int			error;
+ 	int			mode;
++	int			async_block = 0;
+ 	__be32			ret;
+ 
+ 	dprintk("lockd: nlmsvc_lock(%s/%ld, ty=%d, pi=%d, %Ld-%Ld, bl=%d)\n",
+-				nlmsvc_file_inode(file)->i_sb->s_id,
+-				nlmsvc_file_inode(file)->i_ino,
++				inode->i_sb->s_id, inode->i_ino,
+ 				lock->fl.fl_type, lock->fl.fl_pid,
+ 				(long long)lock->fl.fl_start,
+ 				(long long)lock->fl.fl_end,
+ 				wait);
+ 
++	if (inode->i_sb->s_export_op->flags & EXPORT_OP_SYNC_LOCKS) {
++		async_block = wait;
++		wait = 0;
++	}
++
+ 	/* Lock file against concurrent access */
+ 	mutex_lock(&file->f_mutex);
+ 	/* Get existing block (in case client is busy-waiting)
+@@ -542,7 +549,7 @@ nlmsvc_lock(struct svc_rqst *rqstp, struct nlm_file *file,
+ 			 */
+ 			if (wait)
+ 				break;
+-			ret = nlm_lck_denied;
++			ret = async_block ? nlm_lck_blocked : nlm_lck_denied;
+ 			goto out;
+ 		case FILE_LOCK_DEFERRED:
+ 			if (wait)
 -- 
 2.43.0
 
