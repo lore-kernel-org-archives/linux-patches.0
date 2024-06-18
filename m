@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97241146A88;
-	Tue, 18 Jun 2024 12:48:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87F4913A868;
+	Tue, 18 Jun 2024 12:48:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718714887; cv=none; b=SJJI+UDqrNAJ4oT/Y/5rrlUTEETOw+84GMXkozclsy+Z5GKgy26/HXzqHuLG8OnjfKxsQKCAee22D/XB0cTDq3lxIX4P3i+6/M3t1ZPT0ble+ytLMQDyNTwhTdrjevspFv4svfZQwixaSC8Zcp7poaszU6IS9T/70BviUY+wZ6k=
+	t=1718714890; cv=none; b=Lfr8DXrIvbazlhaWep8CChcWBDTx2mvaZRFPqCr5J8CR6O6GIzs4vKXcE5xddB1SptU5buczmLZIBcq/LdRYu8oxZ3wZoJosBf5vgfhBcMd1c7ApqIbyP36ZBYquRze4LDSWppf6WrRs+l49ffS5XvyehSzwDUB6DVAsYBAuPEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718714887; c=relaxed/simple;
-	bh=As039JXgekAkYJSVeTCt2U5yYOGRhLsX6uDQ9BRL1IU=;
+	s=arc-20240116; t=1718714890; c=relaxed/simple;
+	bh=+wDltEpUrdvGQ4hP4CSu68HIeIrII1p3ONJUe6aSHN0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V41FdaWSd1FKJlf8pwjEuwZGFrs3UiFWBiEWkhDpNka4UA+i0+aGwR/pPdi6Q2P63kAbrdbb313frzPZ+FMVvx6+MXTVR9lWTJnw8sTRGEWinlf4AYRhqWwSZtVQW9bsVJBpNClrvAMsFqOvaT7JalYB7mn2Qd7IjZABnCF36/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1hFJKi63; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YcBz3+mPgkKxo91owetFbFohE6Udxcj0Aee3sgIJSTxU2tUQFZM3pIRWEfINC/AneFJdASb3MPbfEdkUUkguK6bibUHB+Raq7vO5uFodQhxiEU+OYEOo6ozypLL4MoMDYjy3Z5BH3/PAiLvSc/KQXgPqzVYsUSGHSoJWWZ9mq84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TMbYcdvF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1hFJKi63"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D574C3277B;
-	Tue, 18 Jun 2024 12:48:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TMbYcdvF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C934C3277B;
+	Tue, 18 Jun 2024 12:48:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718714887;
-	bh=As039JXgekAkYJSVeTCt2U5yYOGRhLsX6uDQ9BRL1IU=;
+	s=korg; t=1718714890;
+	bh=+wDltEpUrdvGQ4hP4CSu68HIeIrII1p3ONJUe6aSHN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1hFJKi63xn5k0HI0zIY/k0+aCdwRtWeChCYq5fXGi95TllkoU4B6opUkI+zpUIWHk
-	 +lnfZ5E2Fl0WFhx7fD7DgH2dGy4YAzjdNeqWuk/xZ6c1ELmhRMMV6IPgC+PT2M7p2N
-	 2g4bpJQ3LcM8rqkfpX9C8bgCqKY/QxGbcM7w7arA=
+	b=TMbYcdvFynZPxRa9+hj1EbLp4u3SlW4YPj8BO2yiNlzGTNUijwDm6DPafjKTbpL6d
+	 myrHfYZ/ftCqocVjX/Dj+vm95eXrnbTF6lftxtqRJPPYMi/DqjpBfuQg6ouZTCSttg
+	 urpgIDEE29X/x1M7qJ/ICWx/qtWJIclVCekgh8XA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Christian Brauner <christian.brauner@ubuntu.com>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 105/770] nfsd: Record NFSv4 pre/post-op attributes as non-atomic
-Date: Tue, 18 Jun 2024 14:29:18 +0200
-Message-ID: <20240618123411.328146767@linuxfoundation.org>
+Subject: [PATCH 5.10 123/770] proc/fd: In fdinfo seq_show dont use get_files_struct
+Date: Tue, 18 Jun 2024 14:29:36 +0200
+Message-ID: <20240618123412.019175804@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -51,94 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Eric W. Biederman <ebiederm@xmission.com>
 
-[ Upstream commit 716a8bc7f706eeef80ab42c99d9f210eda845c81 ]
+[ Upstream commit 775e0656b27210ae668e33af00bece858f44576f ]
 
-For the case of NFSv4, specify to the client that the pre/post-op
-attributes were not recorded atomically with the main operation.
+When discussing[1] exec and posix file locks it was realized that none
+of the callers of get_files_struct fundamentally needed to call
+get_files_struct, and that by switching them to helper functions
+instead it will both simplify their code and remove unnecessary
+increments of files_struct.count.  Those unnecessary increments can
+result in exec unnecessarily unsharing files_struct which breaking
+posix locks, and it can result in fget_light having to fallback to
+fget reducing system performance.
 
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Instead hold task_lock for the duration that task->files needs to be
+stable in seq_show.  The task_lock was already taken in
+get_files_struct, and so skipping get_files_struct performs less work
+overall, and avoids the problems with the files_struct reference
+count.
+
+[1] https://lkml.kernel.org/r/20180915160423.GA31461@redhat.com
+Suggested-by: Oleg Nesterov <oleg@redhat.com>
+Acked-by: Christian Brauner <christian.brauner@ubuntu.com>
+v1: https://lkml.kernel.org/r/20200817220425.9389-12-ebiederm@xmission.com
+Link: https://lkml.kernel.org/r/20201120231441.29911-17-ebiederm@xmission.com
+Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/export.c          | 3 ++-
- fs/nfsd/nfsfh.c          | 4 ++++
- fs/nfsd/nfsfh.h          | 5 +++++
- fs/nfsd/xdr4.h           | 2 +-
- include/linux/exportfs.h | 3 +++
- 5 files changed, 15 insertions(+), 2 deletions(-)
+ fs/proc/fd.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/fs/nfs/export.c b/fs/nfs/export.c
-index 48b879cfe6e3b..7412bb164fa77 100644
---- a/fs/nfs/export.c
-+++ b/fs/nfs/export.c
-@@ -172,5 +172,6 @@ const struct export_operations nfs_export_ops = {
- 	.fh_to_dentry = nfs_fh_to_dentry,
- 	.get_parent = nfs_get_parent,
- 	.flags = EXPORT_OP_NOWCC|EXPORT_OP_NOSUBTREECHK|
--		EXPORT_OP_CLOSE_BEFORE_UNLINK|EXPORT_OP_REMOTE_FS,
-+		EXPORT_OP_CLOSE_BEFORE_UNLINK|EXPORT_OP_REMOTE_FS|
-+		EXPORT_OP_NOATOMIC_ATTR,
- };
-diff --git a/fs/nfsd/nfsfh.c b/fs/nfsd/nfsfh.c
-index e80a7525561d0..66f2ef67792a7 100644
---- a/fs/nfsd/nfsfh.c
-+++ b/fs/nfsd/nfsfh.c
-@@ -301,6 +301,10 @@ static __be32 nfsd_set_fh_dentry(struct svc_rqst *rqstp, struct svc_fh *fhp)
- 	fhp->fh_export = exp;
+diff --git a/fs/proc/fd.c b/fs/proc/fd.c
+index 72c1525b4b3eb..cb51763ed554b 100644
+--- a/fs/proc/fd.c
++++ b/fs/proc/fd.c
+@@ -28,9 +28,8 @@ static int seq_show(struct seq_file *m, void *v)
+ 	if (!task)
+ 		return -ENOENT;
  
- 	switch (rqstp->rq_vers) {
-+	case 4:
-+		if (dentry->d_sb->s_export_op->flags & EXPORT_OP_NOATOMIC_ATTR)
-+			fhp->fh_no_atomic_attr = true;
-+		break;
- 	case 3:
- 		if (dentry->d_sb->s_export_op->flags & EXPORT_OP_NOWCC)
- 			fhp->fh_no_wcc = true;
-diff --git a/fs/nfsd/nfsfh.h b/fs/nfsd/nfsfh.h
-index 347d10aa62655..cb20c2cd34695 100644
---- a/fs/nfsd/nfsfh.h
-+++ b/fs/nfsd/nfsfh.h
-@@ -36,6 +36,11 @@ typedef struct svc_fh {
- 	bool			fh_locked;	/* inode locked by us */
- 	bool			fh_want_write;	/* remount protection taken */
- 	bool			fh_no_wcc;	/* no wcc data needed */
-+	bool			fh_no_atomic_attr;
-+						/*
-+						 * wcc data is not atomic with
-+						 * operation
-+						 */
- 	int			fh_flags;	/* FH flags */
- #ifdef CONFIG_NFSD_V3
- 	bool			fh_post_saved;	/* post-op attrs saved */
-diff --git a/fs/nfsd/xdr4.h b/fs/nfsd/xdr4.h
-index b4556e86e97c3..a60ff5ce1a375 100644
---- a/fs/nfsd/xdr4.h
-+++ b/fs/nfsd/xdr4.h
-@@ -748,7 +748,7 @@ static inline void
- set_change_info(struct nfsd4_change_info *cinfo, struct svc_fh *fhp)
- {
- 	BUG_ON(!fhp->fh_pre_saved);
--	cinfo->atomic = (u32)fhp->fh_post_saved;
-+	cinfo->atomic = (u32)(fhp->fh_post_saved && !fhp->fh_no_atomic_attr);
+-	files = get_files_struct(task);
+-	put_task_struct(task);
+-
++	task_lock(task);
++	files = task->files;
+ 	if (files) {
+ 		unsigned int fd = proc_fd(m->private);
  
- 	cinfo->before_change = fhp->fh_pre_change;
- 	cinfo->after_change = fhp->fh_post_change;
-diff --git a/include/linux/exportfs.h b/include/linux/exportfs.h
-index d93e8a6737bb0..9f4d4bcbf251d 100644
---- a/include/linux/exportfs.h
-+++ b/include/linux/exportfs.h
-@@ -217,6 +217,9 @@ struct export_operations {
- #define	EXPORT_OP_NOSUBTREECHK		(0x2) /* no subtree checking */
- #define	EXPORT_OP_CLOSE_BEFORE_UNLINK	(0x4) /* close files before unlink */
- #define EXPORT_OP_REMOTE_FS		(0x8) /* Filesystem is remote */
-+#define EXPORT_OP_NOATOMIC_ATTR		(0x10) /* Filesystem cannot supply
-+						  atomic attribute updates
-+						*/
- 	unsigned long	flags;
- };
+@@ -47,8 +46,9 @@ static int seq_show(struct seq_file *m, void *v)
+ 			ret = 0;
+ 		}
+ 		spin_unlock(&files->file_lock);
+-		put_files_struct(files);
+ 	}
++	task_unlock(task);
++	put_task_struct(task);
  
+ 	if (ret)
+ 		return ret;
+@@ -57,6 +57,7 @@ static int seq_show(struct seq_file *m, void *v)
+ 		   (long long)file->f_pos, f_flags,
+ 		   real_mount(file->f_path.mnt)->mnt_id);
+ 
++	/* show_fd_locks() never deferences files so a stale value is safe */
+ 	show_fd_locks(m, file, files);
+ 	if (seq_has_overflowed(m))
+ 		goto out;
 -- 
 2.43.0
 
