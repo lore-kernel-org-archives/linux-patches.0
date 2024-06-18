@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A9E13D8BC;
-	Tue, 18 Jun 2024 12:53:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29DDF13D8BC;
+	Tue, 18 Jun 2024 12:53:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715183; cv=none; b=KhpYtGVeqEma7qphNXvPUDv4lKAgHxb0jQVmv4bj2h3wJ6/wrk3vXotMBCqiI3Gkdg8njYczR4nocZzbpTi7cWLqkBHGtaZqRihGr4CcxptLVJGm5gOKSf/VjRi7Nu2K6+KSoixKtgmqfBn+N2ndtjQ942H3TLbN3hWOJaTad1o=
+	t=1718715186; cv=none; b=N0DICMzemiviPf32B/oforHvQVBwSHBZzSZ73ZRuRFZJ2eBC4H5qyzK8AMdDwo7ODUvoEieQJydW5UFd6AsnAiE084UckxyP9pRwy2ZCz/H7/i1wHUPdMgxj82YeRwQUK0YzEo4VGgU/vEJzH2vpwhCk91AbY66SfYxBRvpL+g8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715183; c=relaxed/simple;
-	bh=6NpiRStYMt21FVMdQ2prTCQG6oZzslHCJE2mOvFP4Us=;
+	s=arc-20240116; t=1718715186; c=relaxed/simple;
+	bh=pJ5buSq0179c0YB9Wu+CS6M9kbcyyF0oQ3AiNg40M5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u/R6SuxUse22+o9nw0cr5yPZjSn+1NLmLNIIr8TwcjpH2tqHOlA1agiaKubOPhYsrn2H92PT6SHSl6myX4ZvH9jxHi9b7nlI9dxZUP+y6lijlhwmB6CVvWuiKJkv1kTHgqCnj+N7pm2EYs1gRMLhjPnJmVc/1hdEfVY0m+/IzFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l9f6UKgE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NE+EezA+akPGN0Gq9rgrYjeoVs0IURsVHp7sE1PalWgF6xK0egvIrqhuykqWaCQq8l9mJGqfsbabzG3hETls+NHQn8qFK2UyLD31F6h5XKHomRjolDg9WsF+2UtkIlsZlfGTo98/69Ci5/YlMgmXSwQ7N1fHYAdCqCXidsd9CeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zC4xK1UY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l9f6UKgE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D4FFC3277B;
-	Tue, 18 Jun 2024 12:53:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zC4xK1UY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 659A8C3277B;
+	Tue, 18 Jun 2024 12:53:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715182;
-	bh=6NpiRStYMt21FVMdQ2prTCQG6oZzslHCJE2mOvFP4Us=;
+	s=korg; t=1718715185;
+	bh=pJ5buSq0179c0YB9Wu+CS6M9kbcyyF0oQ3AiNg40M5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l9f6UKgERZNORqqKyh2FXfumu9BGz8gP2mEZAiO4YT+X/5QKSAUx5HNQlUdJWqzca
-	 3LwTUWi3gcxmKrVoCXQFR14tfiKuSA4/LpV57/CvnIPXK3uT4jzHWxu4RXxN08UhAD
-	 +sFnMxJu/5cIyJMM9TAh1vWtcuF10cYyyQna/K/w=
+	b=zC4xK1UY0zabTJV1okAo7ZVKlYLaV+SGVYccwLy8pgzMh7G7L5ceAZGu09kOtR3ww
+	 GuJWtZrS9J6G36IHvqX5DKbIG3uWpdz43oCfrZJ23Z6+OoQHrNm3VaL1L14P/rdgtK
+	 CVwJBHPxwqnjVv/gVK+S7qCpDb3rdYaS1xyFa0Gc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 223/770] NFSD: Update the NFSv2 STATFS result encoder to use struct xdr_stream
-Date: Tue, 18 Jun 2024 14:31:16 +0200
-Message-ID: <20240618123415.889851747@linuxfoundation.org>
+Subject: [PATCH 5.10 224/770] NFSD: Add a helper that encodes NFSv3 directory offset cookies, again
+Date: Tue, 18 Jun 2024 14:31:17 +0200
+Message-ID: <20240618123415.930199526@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,54 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit bf15229f2ced4f14946eef958336f764e30f8efb ]
+[ Upstream commit d52532002ffa217ad3fa4c3ba86c95203d21dd21 ]
+
+Refactor: Add helper function similar to nfs3svc_encode_cookie3().
 
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfsxdr.c | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ fs/nfsd/nfsproc.c |  3 +--
+ fs/nfsd/nfsxdr.c  | 18 ++++++++++++++++--
+ fs/nfsd/xdr.h     |  1 +
+ 3 files changed, 18 insertions(+), 4 deletions(-)
 
+diff --git a/fs/nfsd/nfsproc.c b/fs/nfsd/nfsproc.c
+index 1fd91e00b97ba..2d3d7cdffd52f 100644
+--- a/fs/nfsd/nfsproc.c
++++ b/fs/nfsd/nfsproc.c
+@@ -595,8 +595,7 @@ nfsd_proc_readdir(struct svc_rqst *rqstp)
+ 				    &resp->common, nfssvc_encode_entry);
+ 
+ 	resp->count = resp->buffer - buffer;
+-	if (resp->offset)
+-		*resp->offset = htonl(offset);
++	nfssvc_encode_nfscookie(resp, offset);
+ 
+ 	fh_put(&argp->fh);
+ 	return rpc_success;
 diff --git a/fs/nfsd/nfsxdr.c b/fs/nfsd/nfsxdr.c
-index d6d7d07dbb1b2..39d296aecd3e7 100644
+index 39d296aecd3e7..a87b21cfe0d03 100644
 --- a/fs/nfsd/nfsxdr.c
 +++ b/fs/nfsd/nfsxdr.c
-@@ -592,19 +592,26 @@ nfssvc_encode_readdirres(struct svc_rqst *rqstp, __be32 *p)
- int
- nfssvc_encode_statfsres(struct svc_rqst *rqstp, __be32 *p)
- {
-+	struct xdr_stream *xdr = &rqstp->rq_res_stream;
- 	struct nfsd_statfsres *resp = rqstp->rq_resp;
- 	struct kstatfs	*stat = &resp->stats;
- 
--	*p++ = resp->status;
--	if (resp->status != nfs_ok)
--		return xdr_ressize_check(rqstp, p);
-+	if (!svcxdr_encode_stat(xdr, resp->status))
-+		return 0;
-+	switch (resp->status) {
-+	case nfs_ok:
-+		p = xdr_reserve_space(xdr, XDR_UNIT * 5);
-+		if (!p)
-+			return 0;
-+		*p++ = cpu_to_be32(NFSSVC_MAXBLKSIZE_V2);
-+		*p++ = cpu_to_be32(stat->f_bsize);
-+		*p++ = cpu_to_be32(stat->f_blocks);
-+		*p++ = cpu_to_be32(stat->f_bfree);
-+		*p = cpu_to_be32(stat->f_bavail);
-+		break;
-+	}
- 
--	*p++ = htonl(NFSSVC_MAXBLKSIZE_V2);	/* max transfer size */
--	*p++ = htonl(stat->f_bsize);
--	*p++ = htonl(stat->f_blocks);
--	*p++ = htonl(stat->f_bfree);
--	*p++ = htonl(stat->f_bavail);
--	return xdr_ressize_check(rqstp, p);
-+	return 1;
+@@ -614,6 +614,21 @@ nfssvc_encode_statfsres(struct svc_rqst *rqstp, __be32 *p)
+ 	return 1;
  }
  
++/**
++ * nfssvc_encode_nfscookie - Encode a directory offset cookie
++ * @resp: readdir result context
++ * @offset: offset cookie to encode
++ *
++ */
++void nfssvc_encode_nfscookie(struct nfsd_readdirres *resp, u32 offset)
++{
++	if (!resp->offset)
++		return;
++
++	*resp->offset = cpu_to_be32(offset);
++	resp->offset = NULL;
++}
++
  int
+ nfssvc_encode_entry(void *ccdv, const char *name,
+ 		    int namlen, loff_t offset, u64 ino, unsigned int d_type)
+@@ -632,8 +647,7 @@ nfssvc_encode_entry(void *ccdv, const char *name,
+ 		cd->common.err = nfserr_fbig;
+ 		return -EINVAL;
+ 	}
+-	if (cd->offset)
+-		*cd->offset = htonl(offset);
++	nfssvc_encode_nfscookie(cd, offset);
+ 
+ 	/* truncate filename */
+ 	namlen = min(namlen, NFS2_MAXNAMLEN);
+diff --git a/fs/nfsd/xdr.h b/fs/nfsd/xdr.h
+index 337c581e15b4c..75b3b31445340 100644
+--- a/fs/nfsd/xdr.h
++++ b/fs/nfsd/xdr.h
+@@ -157,6 +157,7 @@ int nfssvc_encode_readres(struct svc_rqst *, __be32 *);
+ int nfssvc_encode_statfsres(struct svc_rqst *, __be32 *);
+ int nfssvc_encode_readdirres(struct svc_rqst *, __be32 *);
+ 
++void nfssvc_encode_nfscookie(struct nfsd_readdirres *resp, u32 offset);
+ int nfssvc_encode_entry(void *, const char *name,
+ 			int namlen, loff_t offset, u64 ino, unsigned int);
+ 
 -- 
 2.43.0
 
