@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A2F14F13D;
-	Tue, 18 Jun 2024 12:50:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96AD914F13D;
+	Tue, 18 Jun 2024 12:50:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715047; cv=none; b=hIpraIOVn0lCtTuHIWufWN8lB31EKz4LqL+odGS4OfCPCiYOhtEeZk1VG2BpDIH84f4i5SBNiVQIZmgExig0mLucf8ZSU2NgcmwHEh5zBWS4Z4v/mdXOcBB0I988+lPLeeVtlD3JqCtjdOrm+YH4FWAyhTB3XX4mXqVp/VuCQKI=
+	t=1718715050; cv=none; b=JtJasEYDYwlxBmf3drqGrbvWFA8LOOFUSrY8Ma/UcBNRK2NU1B6KAZSADXGoFcywR8pnXnrgON39Ed99LA0QojKJbJ2nnF8Mm5egcrLE9NRM7dtwqq8dc0Hh+s8pbWQuIwjzGjcSK13tCZukmdCjpzoI7OwRzcwDV7TXQTn5uL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715047; c=relaxed/simple;
-	bh=F61ccwz6BaCJw2kd7bff6kPQLSc0F62gyDVmcFb8l6c=;
+	s=arc-20240116; t=1718715050; c=relaxed/simple;
+	bh=ZcqHbl1kQHN/4tOxIpGp2tNPPsw7da2x9s6HcUw0ATs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vGZtdVVTplp29qI1zKgSBMHLHdQDlT59VP9pYMMPEqhKV6jVijYkYXZsZJWCNX04BJr/Li3v2zO9F2WQJ1aadeIXDzY+w9IyWgjpmSmKxn41s68g2Jr39goYgFuJPsdQFVXEuVRzoSff+C7xWVReT/zUAaXD/PMQor5r80az2oE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qFN058pu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tmKM9p8vzJ/LRnSW6usFR44RNNACPtjMNCJNQiXC5dIjT1fxzt6xfYZRegG9z8MurmhfvWE0bpiJKdQCebAj/Xvyt6EzEOqDxJChbG/7dIadrFFp1EZVtFJ494A2FGb+Z7L6QnGURqXlzrZGsmCEoYplurHJ2jJfSSGRxJTT2I8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WaCjaPUr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qFN058pu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A44F9C3277B;
-	Tue, 18 Jun 2024 12:50:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WaCjaPUr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99A32C32786;
+	Tue, 18 Jun 2024 12:50:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715047;
-	bh=F61ccwz6BaCJw2kd7bff6kPQLSc0F62gyDVmcFb8l6c=;
+	s=korg; t=1718715050;
+	bh=ZcqHbl1kQHN/4tOxIpGp2tNPPsw7da2x9s6HcUw0ATs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qFN058puAeHSg2jsiMjBS07GAtTLckL4+j7hpAnsNbUl/4MmkDWSyNBT8lv+26FKO
-	 1C0l9bfBqJBLA0xpBLI6MSFBOAZmi8DS4ou3cStEpZ1xlEeMxyKZiziJ2+5CPZ+uCl
-	 qpv0U15LmdV4XK3oGSA1zQOMAtPOzvOCSf0n/oWA=
+	b=WaCjaPUrDnoVMWPfD5D04SFqb2Q2Y46XCq35G6qBxuF1SVLrKrAtH8tC91Cse9msM
+	 nErdpbNAqeS5UYTGb6F2gUYnRGZbr+Ln0ouOGza1mWuy6JGQiLaZ/oNZHMr33VtXB2
+	 uZhbrhEUS9Cr01jc5WoBprwcFMrKrJ4HZ09mN19c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 144/770] NFSD: Update COMMIT3arg decoder to use struct xdr_stream
-Date: Tue, 18 Jun 2024 14:29:57 +0200
-Message-ID: <20240618123412.835485351@linuxfoundation.org>
+Subject: [PATCH 5.10 145/770] NFSD: Update the NFSv3 DIROPargs decoder to use struct xdr_stream
+Date: Tue, 18 Jun 2024 14:29:58 +0200
+Message-ID: <20240618123412.873111329@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,41 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit c8d26a0acfe77f0880e0acfe77e4209cf8f3a38b ]
+[ Upstream commit 54d1d43dc709f58be38d278bfc38e9bfb38d35fc ]
 
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs3xdr.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ fs/nfsd/nfs3xdr.c | 40 +++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 35 insertions(+), 5 deletions(-)
 
 diff --git a/fs/nfsd/nfs3xdr.c b/fs/nfsd/nfs3xdr.c
-index eb55be106a04e..bafb84c978616 100644
+index bafb84c978616..299ea8bbd685f 100644
 --- a/fs/nfsd/nfs3xdr.c
 +++ b/fs/nfsd/nfs3xdr.c
-@@ -601,14 +601,17 @@ nfs3svc_decode_readdirplusargs(struct svc_rqst *rqstp, __be32 *p)
- int
- nfs3svc_decode_commitargs(struct svc_rqst *rqstp, __be32 *p)
- {
-+	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
- 	struct nfsd3_commitargs *args = rqstp->rq_argp;
--	p = decode_fh(p, &args->fh);
--	if (!p)
-+
-+	if (!svcxdr_decode_nfs_fh3(xdr, &args->fh))
-+		return 0;
-+	if (xdr_stream_decode_u64(xdr, &args->offset) < 0)
-+		return 0;
-+	if (xdr_stream_decode_u32(xdr, &args->count) < 0)
- 		return 0;
--	p = xdr_decode_hyper(p, &args->offset);
--	args->count = ntohl(*p++);
- 
--	return xdr_argsize_check(rqstp, p);
-+	return 1;
+@@ -117,6 +117,39 @@ decode_filename(__be32 *p, char **namp, unsigned int *lenp)
+ 	return p;
  }
  
- /*
++static bool
++svcxdr_decode_filename3(struct xdr_stream *xdr, char **name, unsigned int *len)
++{
++	u32 size, i;
++	__be32 *p;
++	char *c;
++
++	if (xdr_stream_decode_u32(xdr, &size) < 0)
++		return false;
++	if (size == 0 || size > NFS3_MAXNAMLEN)
++		return false;
++	p = xdr_inline_decode(xdr, size);
++	if (!p)
++		return false;
++
++	*len = size;
++	*name = (char *)p;
++	for (i = 0, c = *name; i < size; i++, c++) {
++		if (*c == '\0' || *c == '/')
++			return false;
++	}
++
++	return true;
++}
++
++static bool
++svcxdr_decode_diropargs3(struct xdr_stream *xdr, struct svc_fh *fhp,
++			 char **name, unsigned int *len)
++{
++	return svcxdr_decode_nfs_fh3(xdr, fhp) &&
++		svcxdr_decode_filename3(xdr, name, len);
++}
++
+ static __be32 *
+ decode_sattr3(__be32 *p, struct iattr *iap, struct user_namespace *userns)
+ {
+@@ -363,13 +396,10 @@ nfs3svc_decode_sattrargs(struct svc_rqst *rqstp, __be32 *p)
+ int
+ nfs3svc_decode_diropargs(struct svc_rqst *rqstp, __be32 *p)
+ {
++	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd3_diropargs *args = rqstp->rq_argp;
+ 
+-	if (!(p = decode_fh(p, &args->fh))
+-	 || !(p = decode_filename(p, &args->name, &args->len)))
+-		return 0;
+-
+-	return xdr_argsize_check(rqstp, p);
++	return svcxdr_decode_diropargs3(xdr, &args->fh, &args->name, &args->len);
+ }
+ 
+ int
 -- 
 2.43.0
 
