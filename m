@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FF7F139D0C;
-	Tue, 18 Jun 2024 13:00:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8617139D0C;
+	Tue, 18 Jun 2024 13:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715627; cv=none; b=NUBMbTilMN+EfpDFMZWae5GTnozd0jYwCZWpRx/sr7YIrQbvIV5zKZLcUPGri5q4BXzAJ44LqrwsqfimZcK5ggG6l8PiAyUjUKW/aQlTn+Q0ReDPKinllO9msgkjCdWBxK15/ZYs4B1UNKbmAMkKilKVdCA1hb2DPN0QyXRwE10=
+	t=1718715629; cv=none; b=HnnPVulhzLy285RHMvoOcxvTb/AH+NlPaThN4ahiTfeWfrAF8sIXzaSBLsWxm0N5qZy+le6qSui2/WqLhMiIBH+bcL8WCDos0YqY1wHTYZJ+qyXsgUVj08e8gLD+5tp9BjIIWfAd6wx7uZH5X8E9Wv3AnTz3Er5By/yJB4dT+pA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715627; c=relaxed/simple;
-	bh=mtc7Tjok/QHRhinEtQ4LjxTaB+jzsRn+tIggPPX4TcE=;
+	s=arc-20240116; t=1718715629; c=relaxed/simple;
+	bh=Dq10ZN2xVFt9d5ywxpytc0ze7CEN3COzIn2TnIfq2xo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ueCvcDfcUbNbtRz9LgEm8WFdcWNvEGy7YB7m2WYIyYyVxlXOAHipAiAH4lAZERhiR4Ukge/cNPZr1f8zXjcGNzUBGDmdg6EN43jw+5htP6RtlS42SzmlyBqU+5b4JSXk6Qv2nuv9swU7iGHhR4V0olfjk2YdWdhuba+xHeCDPA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3+rr8hA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WCtYThdR2tz+5j4JT/PSGgqsS/krtkxwOX4o6KUP+NABey3dnOp3PMs5Q8EMdjTIxd2SQ2U1NaAjhK6Ocsfhe764bGhpSyZ0xX2JKRFP+bp/h60AlTjtL6Hrf2acfxf18CQ3CMWdiiWHO6CjPLFTFyMQ6Epn4YkYe9uPfqMza4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vsLDhQHH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3+rr8hA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B81C3277B;
-	Tue, 18 Jun 2024 13:00:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vsLDhQHH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 632BDC3277B;
+	Tue, 18 Jun 2024 13:00:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715626;
-	bh=mtc7Tjok/QHRhinEtQ4LjxTaB+jzsRn+tIggPPX4TcE=;
+	s=korg; t=1718715629;
+	bh=Dq10ZN2xVFt9d5ywxpytc0ze7CEN3COzIn2TnIfq2xo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a3+rr8hAsb1uC4gSxxmcXMcyMbu1yBygeuQWZS40uPv5Gb8o9oshi+fLn1NKBF3tg
-	 ytMx686HW7b4EsnXbXSvA1R4rPDgiJO52PGACe59Cwr3fkhx0/AEZ5V4srUabBlrYd
-	 1OsyaIAbIjkpgEAwhhBy9RX9trHEJIlIuLoa9QhE=
+	b=vsLDhQHHq797Nkckc+Z/JoCN1+3WeV35X4AgEaHEOdiaNqs2bECLjDKUiJsTawBmB
+	 +SBGDPWYBJcrstMq76zd1kJDofP1e5uYnF4e2BlTPyD3btb2SGKtEPkuJWeRK1u2CP
+	 o6R9RvF4SQkCeE6g+oAyrVYu89WRViTdj+d8FCeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia He <hejianet@gmail.com>,
-	Pan Xinhui <xinhui.pan@linux.vnet.ibm.com>,
-	Thomas Huth <thuth@redhat.com>,
+	Jan Kara <jack@suse.cz>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Gabriel Krisman Bertazi <krisman@collabora.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 345/770] lockd: change the proc_handler for nsm_use_hostnames
-Date: Tue, 18 Jun 2024 14:33:18 +0200
-Message-ID: <20240618123420.580418378@linuxfoundation.org>
+Subject: [PATCH 5.10 372/770] fsnotify: Pass group argument to free_event
+Date: Tue, 18 Jun 2024 14:33:45 +0200
+Message-ID: <20240618123421.629618350@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,41 +53,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia He <hejianet@gmail.com>
+From: Gabriel Krisman Bertazi <krisman@collabora.com>
 
-[ Upstream commit d02a3a2cb25d384005a6e3446a445013342024b7 ]
+[ Upstream commit 330ae77d2a5b0af32c0f29e139bf28ec8591de59 ]
 
-nsm_use_hostnames is a module parameter and it will be exported to sysctl
-procfs. This is to let user sometimes change it from userspace. But the
-minimal unit for sysctl procfs read/write it sizeof(int).
-In big endian system, the converting from/to  bool to/from int will cause
-error for proc items.
+For group-wide mempool backed events, like FS_ERROR, the free_event
+callback will need to reference the group's mempool to free the memory.
+Wire that argument into the current callers.
 
-This patch use a new proc_handler proc_dobool to fix it.
-
-Signed-off-by: Jia He <hejianet@gmail.com>
-Reviewed-by: Pan Xinhui <xinhui.pan@linux.vnet.ibm.com>
-[thuth: Fix typo in commit message]
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+Link: https://lore.kernel.org/r/20211025192746.66445-13-krisman@collabora.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Gabriel Krisman Bertazi <krisman@collabora.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/lockd/svc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/notify/fanotify/fanotify.c        | 3 ++-
+ fs/notify/group.c                    | 2 +-
+ fs/notify/inotify/inotify_fsnotify.c | 3 ++-
+ fs/notify/notification.c             | 2 +-
+ include/linux/fsnotify_backend.h     | 2 +-
+ 5 files changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/fs/lockd/svc.c b/fs/lockd/svc.c
-index 2de048f80eb8c..0ab9756ed2359 100644
---- a/fs/lockd/svc.c
-+++ b/fs/lockd/svc.c
-@@ -584,7 +584,7 @@ static struct ctl_table nlm_sysctls[] = {
- 		.data		= &nsm_use_hostnames,
- 		.maxlen		= sizeof(int),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec,
-+		.proc_handler	= proc_dobool,
- 	},
- 	{
- 		.procname	= "nsm_local_state",
+diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
+index f82e20228999c..c620b4f6fe123 100644
+--- a/fs/notify/fanotify/fanotify.c
++++ b/fs/notify/fanotify/fanotify.c
+@@ -835,7 +835,8 @@ static void fanotify_free_name_event(struct fanotify_event *event)
+ 	kfree(FANOTIFY_NE(event));
+ }
+ 
+-static void fanotify_free_event(struct fsnotify_event *fsn_event)
++static void fanotify_free_event(struct fsnotify_group *group,
++				struct fsnotify_event *fsn_event)
+ {
+ 	struct fanotify_event *event;
+ 
+diff --git a/fs/notify/group.c b/fs/notify/group.c
+index fb89c351295d6..6a297efc47887 100644
+--- a/fs/notify/group.c
++++ b/fs/notify/group.c
+@@ -88,7 +88,7 @@ void fsnotify_destroy_group(struct fsnotify_group *group)
+ 	 * that deliberately ignores overflow events.
+ 	 */
+ 	if (group->overflow_event)
+-		group->ops->free_event(group->overflow_event);
++		group->ops->free_event(group, group->overflow_event);
+ 
+ 	fsnotify_put_group(group);
+ }
+diff --git a/fs/notify/inotify/inotify_fsnotify.c b/fs/notify/inotify/inotify_fsnotify.c
+index be3eb1cebdcce..8279827836399 100644
+--- a/fs/notify/inotify/inotify_fsnotify.c
++++ b/fs/notify/inotify/inotify_fsnotify.c
+@@ -184,7 +184,8 @@ static void inotify_free_group_priv(struct fsnotify_group *group)
+ 		dec_inotify_instances(group->inotify_data.ucounts);
+ }
+ 
+-static void inotify_free_event(struct fsnotify_event *fsn_event)
++static void inotify_free_event(struct fsnotify_group *group,
++			       struct fsnotify_event *fsn_event)
+ {
+ 	kfree(INOTIFY_E(fsn_event));
+ }
+diff --git a/fs/notify/notification.c b/fs/notify/notification.c
+index 44bb10f507153..9022ae650cf86 100644
+--- a/fs/notify/notification.c
++++ b/fs/notify/notification.c
+@@ -64,7 +64,7 @@ void fsnotify_destroy_event(struct fsnotify_group *group,
+ 		WARN_ON(!list_empty(&event->list));
+ 		spin_unlock(&group->notification_lock);
+ 	}
+-	group->ops->free_event(event);
++	group->ops->free_event(group, event);
+ }
+ 
+ /*
+diff --git a/include/linux/fsnotify_backend.h b/include/linux/fsnotify_backend.h
+index b71dc788018e4..3a7c314361824 100644
+--- a/include/linux/fsnotify_backend.h
++++ b/include/linux/fsnotify_backend.h
+@@ -156,7 +156,7 @@ struct fsnotify_ops {
+ 			    const struct qstr *file_name, u32 cookie);
+ 	void (*free_group_priv)(struct fsnotify_group *group);
+ 	void (*freeing_mark)(struct fsnotify_mark *mark, struct fsnotify_group *group);
+-	void (*free_event)(struct fsnotify_event *event);
++	void (*free_event)(struct fsnotify_group *group, struct fsnotify_event *event);
+ 	/* called on final put+free to free memory */
+ 	void (*free_mark)(struct fsnotify_mark *mark);
+ };
 -- 
 2.43.0
 
