@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 479E01891C9;
-	Tue, 18 Jun 2024 13:01:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372761891C9;
+	Tue, 18 Jun 2024 13:01:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715665; cv=none; b=dvgEtjCI3/UkukH/2zKIA0YhZikJE3d6EhoMUCWARURcz+b8JgS7sywhWDntFCjOdY+oyRwenZfKp4TIucDD177iNSk/Z4y+OO/iBLjorK7AvDGVRJApfbpsPO/VNGmTZKu87hy0H+4vplz6f809qHT2NoXxbgT/tzL1CIIIKhc=
+	t=1718715668; cv=none; b=t8vjsCFKdpF7qIgk1QELquIWPFOM1JIAU2rsJ5rwEi3XNRS4AP4R+OSUzqhF0YxCVNEvRHwyX9uBip0FnukecpfOgUtnkoqKZNZ4YRrtd6C/8uuXIIIn33cNZC1gOfTBidNW75JazB6ErKiCkyCrBY6TDc8Ely2L8xday7nxd+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715665; c=relaxed/simple;
-	bh=d+kVvU2GxRTJaBu/zQOa+PVaLmu9dkJuuo91097rTAI=;
+	s=arc-20240116; t=1718715668; c=relaxed/simple;
+	bh=l7y0hQOEX178f9LDSIW2dAbi4nN2Gy63fYI/3V6XMf8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N3u7T0RP3nCf05KmW5ZFEmXfX7RKHajGCFruBV3VMqCtlVMvmoKqgBgvGyrijyWv8h4lvEi4N+LwCoNt0Bd2F6JlshaYcNK7JjsGxhIRsVWPt2sOZSonVYCxE5uaS3kHPQ/p2DyUYZDmALgCaqU4b4Rq6ejZToUThFDsG7Fsf8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FRQaAm0j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=atFqTv5pUiOo9OxEc4p3/P4eqmcmtPlPcEZREJhG70ikSTqSHAuXYKI335+5eoU//PbNYMEqWflfdTkcw1Lrill+orvdog+HNd9amK7NcadUAU2lBTo1Lp1Uuwv6Oct6nVgsfVtFTbWP7RnpLSsPTLph93kOkYh3QTMTSHBP32o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bVlhmRyN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FRQaAm0j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C61DEC3277B;
-	Tue, 18 Jun 2024 13:01:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bVlhmRyN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4CCEC3277B;
+	Tue, 18 Jun 2024 13:01:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715665;
-	bh=d+kVvU2GxRTJaBu/zQOa+PVaLmu9dkJuuo91097rTAI=;
+	s=korg; t=1718715668;
+	bh=l7y0hQOEX178f9LDSIW2dAbi4nN2Gy63fYI/3V6XMf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FRQaAm0jC6xTIL5RDEa+CZGIj5XQ7jhwxqu2DBy/KXPYYBdKt9cGRlU58JrF4cdHZ
-	 avmfNJUYaXjdoeJ2RW0wMDXp+t/huYh9TwLQnTk5cCi6+FgHxDYIflt9dejnknRuUi
-	 d15gh5xyI07c+/etNIr1XVLLk5jDo7OrDknlQKUg=
+	b=bVlhmRyNvqrXPVON5XOSl33RKaZTvaIqGfrID2/aFjQ+yBVREXAXZWWOjyq/ggmQ8
+	 52Meh0xPoT5Tr+WPZvdtfsgYhhnEV19fWLL859eNh0ZAPZbGZEd+qAEnKpiNQdZNrs
+	 A49dzhyCEiHkdegZA1DtrgAtJWQginuC0Njyw+UM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Gabriel Krisman Bertazi <krisman@collabora.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 386/770] fanotify: Emit generic error info for error event
-Date: Tue, 18 Jun 2024 14:33:59 +0200
-Message-ID: <20240618123422.175483979@linuxfoundation.org>
+Subject: [PATCH 5.10 387/770] fanotify: Allow users to request FAN_FS_ERROR events
+Date: Tue, 18 Jun 2024 14:34:00 +0200
+Message-ID: <20240618123422.213844892@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -55,13 +55,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Gabriel Krisman Bertazi <krisman@collabora.com>
 
-[ Upstream commit 130a3c742107acff985541c28360c8b40203559c ]
+[ Upstream commit 9709bd548f11a092d124698118013f66e1740f9b ]
 
-The error info is a record sent to users on FAN_FS_ERROR events
-documenting the type of error.  It also carries an error count,
-documenting how many errors were observed since the last reporting.
+Wire up the FAN_FS_ERROR event in the fanotify_mark syscall, allowing
+user space to request the monitoring of FAN_FS_ERROR events.
 
-Link: https://lore.kernel.org/r/20211025192746.66445-28-krisman@collabora.com
+These events are limited to filesystem marks, so check it is the
+case in the syscall handler.
+
+Link: https://lore.kernel.org/r/20211025192746.66445-29-krisman@collabora.com
 Reviewed-by: Amir Goldstein <amir73il@gmail.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Gabriel Krisman Bertazi <krisman@collabora.com>
@@ -69,129 +71,58 @@ Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/fanotify/fanotify.c      |  1 +
- fs/notify/fanotify/fanotify.h      |  1 +
- fs/notify/fanotify/fanotify_user.c | 36 ++++++++++++++++++++++++++++++
- include/uapi/linux/fanotify.h      |  7 ++++++
- 4 files changed, 45 insertions(+)
+ fs/notify/fanotify/fanotify.c      | 2 +-
+ fs/notify/fanotify/fanotify_user.c | 4 ++++
+ include/linux/fanotify.h           | 6 +++++-
+ 3 files changed, 10 insertions(+), 2 deletions(-)
 
 diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
-index 465f07e70e6dc..af61425e6e3bf 100644
+index af61425e6e3bf..b6091775aa6ef 100644
 --- a/fs/notify/fanotify/fanotify.c
 +++ b/fs/notify/fanotify/fanotify.c
-@@ -621,6 +621,7 @@ static struct fanotify_event *fanotify_alloc_error_event(
- 		return NULL;
+@@ -822,7 +822,7 @@ static int fanotify_handle_event(struct fsnotify_group *group, u32 mask,
+ 	BUILD_BUG_ON(FAN_OPEN_EXEC_PERM != FS_OPEN_EXEC_PERM);
+ 	BUILD_BUG_ON(FAN_FS_ERROR != FS_ERROR);
  
- 	fee->fae.type = FANOTIFY_EVENT_TYPE_FS_ERROR;
-+	fee->error = report->error;
- 	fee->err_count = 1;
- 	fee->fsid = *fsid;
+-	BUILD_BUG_ON(HWEIGHT32(ALL_FANOTIFY_EVENT_BITS) != 19);
++	BUILD_BUG_ON(HWEIGHT32(ALL_FANOTIFY_EVENT_BITS) != 20);
  
-diff --git a/fs/notify/fanotify/fanotify.h b/fs/notify/fanotify/fanotify.h
-index edd7587adcc59..d25f500bf7e79 100644
---- a/fs/notify/fanotify/fanotify.h
-+++ b/fs/notify/fanotify/fanotify.h
-@@ -205,6 +205,7 @@ FANOTIFY_NE(struct fanotify_event *event)
- 
- struct fanotify_error_event {
- 	struct fanotify_event fae;
-+	s32 error; /* Error reported by the Filesystem. */
- 	u32 err_count; /* Suppressed errors count */
- 
- 	__kernel_fsid_t fsid; /* FSID this error refers to. */
+ 	mask = fanotify_group_event_mask(group, iter_info, mask, data,
+ 					 data_type, dir);
 diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
-index 0d36ac3ed7e99..3040c8669dfd1 100644
+index 3040c8669dfd1..e6860c55b3dcb 100644
 --- a/fs/notify/fanotify/fanotify_user.c
 +++ b/fs/notify/fanotify/fanotify_user.c
-@@ -110,6 +110,8 @@ struct kmem_cache *fanotify_perm_event_cachep __read_mostly;
- 	(sizeof(struct fanotify_event_info_fid) + sizeof(struct file_handle))
- #define FANOTIFY_PIDFD_INFO_HDR_LEN \
- 	sizeof(struct fanotify_event_info_pidfd)
-+#define FANOTIFY_ERROR_INFO_LEN \
-+	(sizeof(struct fanotify_event_info_error))
+@@ -1533,6 +1533,10 @@ static int do_fanotify_mark(int fanotify_fd, unsigned int flags, __u64 mask,
+ 	    group->priority == FS_PRIO_0)
+ 		goto fput_and_out;
  
- static int fanotify_fid_info_len(int fh_len, int name_len)
- {
-@@ -134,6 +136,9 @@ static size_t fanotify_event_len(unsigned int info_mode,
- 	if (!info_mode)
- 		return event_len;
++	if (mask & FAN_FS_ERROR &&
++	    mark_type != FAN_MARK_FILESYSTEM)
++		goto fput_and_out;
++
+ 	/*
+ 	 * Events that do not carry enough information to report
+ 	 * event->fd require a group that supports reporting fid.  Those
+diff --git a/include/linux/fanotify.h b/include/linux/fanotify.h
+index 52d464802d99f..616af2ea20f30 100644
+--- a/include/linux/fanotify.h
++++ b/include/linux/fanotify.h
+@@ -91,9 +91,13 @@ extern struct ctl_table fanotify_table[]; /* for sysctl */
+ #define FANOTIFY_INODE_EVENTS	(FANOTIFY_DIRENT_EVENTS | \
+ 				 FAN_ATTRIB | FAN_MOVE_SELF | FAN_DELETE_SELF)
  
-+	if (fanotify_is_error_event(event->mask))
-+		event_len += FANOTIFY_ERROR_INFO_LEN;
++/* Events that can only be reported with data type FSNOTIFY_EVENT_ERROR */
++#define FANOTIFY_ERROR_EVENTS	(FAN_FS_ERROR)
 +
- 	info = fanotify_event_info(event);
+ /* Events that user can request to be notified on */
+ #define FANOTIFY_EVENTS		(FANOTIFY_PATH_EVENTS | \
+-				 FANOTIFY_INODE_EVENTS)
++				 FANOTIFY_INODE_EVENTS | \
++				 FANOTIFY_ERROR_EVENTS)
  
- 	if (fanotify_event_has_dir_fh(event)) {
-@@ -319,6 +324,28 @@ static int process_access_response(struct fsnotify_group *group,
- 	return -ENOENT;
- }
- 
-+static size_t copy_error_info_to_user(struct fanotify_event *event,
-+				      char __user *buf, int count)
-+{
-+	struct fanotify_event_info_error info;
-+	struct fanotify_error_event *fee = FANOTIFY_EE(event);
-+
-+	info.hdr.info_type = FAN_EVENT_INFO_TYPE_ERROR;
-+	info.hdr.pad = 0;
-+	info.hdr.len = FANOTIFY_ERROR_INFO_LEN;
-+
-+	if (WARN_ON(count < info.hdr.len))
-+		return -EFAULT;
-+
-+	info.error = fee->error;
-+	info.error_count = fee->err_count;
-+
-+	if (copy_to_user(buf, &info, sizeof(info)))
-+		return -EFAULT;
-+
-+	return info.hdr.len;
-+}
-+
- static int copy_fid_info_to_user(__kernel_fsid_t *fsid, struct fanotify_fh *fh,
- 				 int info_type, const char *name,
- 				 size_t name_len,
-@@ -525,6 +552,15 @@ static int copy_info_records_to_user(struct fanotify_event *event,
- 		total_bytes += ret;
- 	}
- 
-+	if (fanotify_is_error_event(event->mask)) {
-+		ret = copy_error_info_to_user(event, buf, count);
-+		if (ret < 0)
-+			return ret;
-+		buf += ret;
-+		count -= ret;
-+		total_bytes += ret;
-+	}
-+
- 	return total_bytes;
- }
- 
-diff --git a/include/uapi/linux/fanotify.h b/include/uapi/linux/fanotify.h
-index 2990731ddc8bc..bd1932c2074d5 100644
---- a/include/uapi/linux/fanotify.h
-+++ b/include/uapi/linux/fanotify.h
-@@ -126,6 +126,7 @@ struct fanotify_event_metadata {
- #define FAN_EVENT_INFO_TYPE_DFID_NAME	2
- #define FAN_EVENT_INFO_TYPE_DFID	3
- #define FAN_EVENT_INFO_TYPE_PIDFD	4
-+#define FAN_EVENT_INFO_TYPE_ERROR	5
- 
- /* Variable length info record following event metadata */
- struct fanotify_event_info_header {
-@@ -160,6 +161,12 @@ struct fanotify_event_info_pidfd {
- 	__s32 pidfd;
- };
- 
-+struct fanotify_event_info_error {
-+	struct fanotify_event_info_header hdr;
-+	__s32 error;
-+	__u32 error_count;
-+};
-+
- struct fanotify_response {
- 	__s32 fd;
- 	__u32 response;
+ /* Events that require a permission response from user */
+ #define FANOTIFY_PERM_EVENTS	(FAN_OPEN_PERM | FAN_ACCESS_PERM | \
 -- 
 2.43.0
 
