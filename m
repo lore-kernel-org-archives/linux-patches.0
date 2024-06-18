@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78DD41AAE2E;
-	Tue, 18 Jun 2024 13:14:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930A51AAE23;
+	Tue, 18 Jun 2024 13:14:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716487; cv=none; b=MACOFWrXMcehKQgeb0nmNJn0mcDMONWDkLsHCU+cHp61ET+giX5jdmlvfMarIt+zE0sLlqPwSHJLVrv+kvdhSu8WNaDx3YwuHGpdKxAOjKKhKCCPikaIMmt02Dqd63WA0D/6MT+6qL1T4Sg+wUwUCK5EPZyUTitQWbbbtvROy+k=
+	t=1718716490; cv=none; b=K60KwJsbIPsh3e8/MjXm1PWXDQyec4+S8lFKlnnZcxGS+Nb30j2QLnbd6r/JjVl3NYgGfLj+pVQcRJavYoWMhCjUCbfN+Mr1eGD10pkYVJ7qnbLnfKghyxRivek9HmalfCj0Lmow83X2BVOV8bvJF5XfRghQjKyGayddzlY7B5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716487; c=relaxed/simple;
-	bh=l1DII5SD6zkSiedY327DL1+XBn5zpi60Iq3dbco6PKA=;
+	s=arc-20240116; t=1718716490; c=relaxed/simple;
+	bh=Hy4NWByc1oWmLhuJau0I3OFUppgALIPh9p0KNqAWeFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QHTBR+11+RqVxFZT+SaodAsDfKj05CNXUL29C2c978IN234FSa6b7rq4623YDcxwVc72PSnNOxuEvw9+cZK/MY2fm3UmEe9jSQhNyPhfQDF4WkTr34ouSrXUMLDA25OkkiQtZ9iUdBuTfbAniGEbbv7dVWShZCxnenCD1KMC0ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p5ZZUyZr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZSbTPY7OAHI+kLRGLSetnDt1J2b4W7VuTsCjEw0d+b//dze4l5iM07YGL6RzqOGwoa618RZePJ1sj5Lj0zJHa6qmPJHHC3rMGtgJnyZfejchWijRtKThB/l1fH33bXS2IDNOVXf85muOUYyOEiJI4ZH/5ldMF1Mb1FCYoFHu63M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OdK2swjL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p5ZZUyZr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00E8AC3277B;
-	Tue, 18 Jun 2024 13:14:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OdK2swjL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34DDC3277B;
+	Tue, 18 Jun 2024 13:14:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716487;
-	bh=l1DII5SD6zkSiedY327DL1+XBn5zpi60Iq3dbco6PKA=;
+	s=korg; t=1718716490;
+	bh=Hy4NWByc1oWmLhuJau0I3OFUppgALIPh9p0KNqAWeFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p5ZZUyZrJxGh4liP8QQt7rs0qvWfq3D7/AAdnFr0aUhu1fCKlIKwX+tILZT5PvNtf
-	 akMnt+1ya4EmIK3xiiE7brsUA2YkPULT46IGgrZYW8MF93jLLNzxbe5R166hiRjgWh
-	 ApRPhUvTeqCy4v/xojVxNHOvrfKlorRTCk7qmuV8=
+	b=OdK2swjLhDm22lcGVl4OEp3YFL9f6IQ4Q0dLeO5QJYNEOhtwDrTR4u45JRqwTuWLj
+	 dLEyX9FCDEDZQC4oT3nY4q9WnlCRN7cC3eysUXTfrTXmgDjd1YSLVzjZmnIXuaRQcv
+	 FeNfWW8qoWiUOdWGy+K4sgvbD8U3Ojy/6RmRueVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ChenXiaoSong <chenxiaosong2@huawei.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 662/770] nfsd: use DEFINE_SHOW_ATTRIBUTE to define nfsd_file_cache_stats_fops
-Date: Tue, 18 Jun 2024 14:38:35 +0200
-Message-ID: <20240618123432.839037349@linuxfoundation.org>
+Subject: [PATCH 5.10 663/770] NFSD: Rename the fields in copy_stateid_t
+Date: Tue, 18 Jun 2024 14:38:36 +0200
+Message-ID: <20240618123432.877399133@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -51,81 +50,168 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ChenXiaoSong <chenxiaosong2@huawei.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 1342f9dd3fc219089deeb2620f6790f19b4129b1 ]
+[ Upstream commit 781fde1a2ba2391f31142f46f964cf1148ca1791 ]
 
-Use DEFINE_SHOW_ATTRIBUTE helper macro to simplify the code.
+Code maintenance: The name of the copy_stateid_t::sc_count field
+collides with the sc_count field in struct nfs4_stid, making the
+latter difficult to grep for when auditing stateid reference
+counting.
 
-Signed-off-by: ChenXiaoSong <chenxiaosong2@huawei.com>
+No behavior change expected.
+
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/filecache.c | 7 +------
- fs/nfsd/filecache.h | 2 +-
- fs/nfsd/nfsctl.c    | 9 ++-------
- 3 files changed, 4 insertions(+), 14 deletions(-)
+ fs/nfsd/nfs4proc.c  |  6 +++---
+ fs/nfsd/nfs4state.c | 30 +++++++++++++++---------------
+ fs/nfsd/state.h     |  6 +++---
+ 3 files changed, 21 insertions(+), 21 deletions(-)
 
-diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-index 55478d411e5a0..fa8e1546e0206 100644
---- a/fs/nfsd/filecache.c
-+++ b/fs/nfsd/filecache.c
-@@ -1211,7 +1211,7 @@ nfsd_file_create(struct svc_rqst *rqstp, struct svc_fh *fhp,
-  * scraping this file for info should test the labels to ensure they're
-  * getting the correct field.
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index 1bb0fb917cf0d..e1aa48d496b98 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -1818,7 +1818,7 @@ nfsd4_copy(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 		if (!nfs4_init_copy_state(nn, copy))
+ 			goto out_err;
+ 		refcount_set(&async_copy->refcount, 1);
+-		memcpy(&copy->cp_res.cb_stateid, &copy->cp_stateid.stid,
++		memcpy(&copy->cp_res.cb_stateid, &copy->cp_stateid.cs_stid,
+ 			sizeof(copy->cp_res.cb_stateid));
+ 		dup_copy_fields(copy, async_copy);
+ 		async_copy->copy_task = kthread_create(nfsd4_do_async_copy,
+@@ -1856,7 +1856,7 @@ find_async_copy(struct nfs4_client *clp, stateid_t *stateid)
+ 
+ 	spin_lock(&clp->async_lock);
+ 	list_for_each_entry(copy, &clp->async_copies, copies) {
+-		if (memcmp(&copy->cp_stateid.stid, stateid, NFS4_STATEID_SIZE))
++		if (memcmp(&copy->cp_stateid.cs_stid, stateid, NFS4_STATEID_SIZE))
+ 			continue;
+ 		refcount_inc(&copy->refcount);
+ 		spin_unlock(&clp->async_lock);
+@@ -1910,7 +1910,7 @@ nfsd4_copy_notify(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 	cps = nfs4_alloc_init_cpntf_state(nn, stid);
+ 	if (!cps)
+ 		goto out;
+-	memcpy(&cn->cpn_cnr_stateid, &cps->cp_stateid.stid, sizeof(stateid_t));
++	memcpy(&cn->cpn_cnr_stateid, &cps->cp_stateid.cs_stid, sizeof(stateid_t));
+ 	memcpy(&cps->cp_p_stateid, &stid->sc_stateid, sizeof(stateid_t));
+ 	memcpy(&cps->cp_p_clid, &clp->cl_clientid, sizeof(clientid_t));
+ 
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index fce62a4388a26..f207c73ae1b58 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -985,19 +985,19 @@ struct nfs4_stid *nfs4_alloc_stid(struct nfs4_client *cl, struct kmem_cache *sla
+  * Create a unique stateid_t to represent each COPY.
   */
--static int nfsd_file_cache_stats_show(struct seq_file *m, void *v)
-+int nfsd_file_cache_stats_show(struct seq_file *m, void *v)
+ static int nfs4_init_cp_state(struct nfsd_net *nn, copy_stateid_t *stid,
+-			      unsigned char sc_type)
++			      unsigned char cs_type)
  {
- 	unsigned long releases = 0, pages_flushed = 0, evictions = 0;
- 	unsigned long hits = 0, acquisitions = 0;
-@@ -1258,8 +1258,3 @@ static int nfsd_file_cache_stats_show(struct seq_file *m, void *v)
- 	seq_printf(m, "pages flushed: %lu\n", pages_flushed);
- 	return 0;
+ 	int new_id;
+ 
+-	stid->stid.si_opaque.so_clid.cl_boot = (u32)nn->boot_time;
+-	stid->stid.si_opaque.so_clid.cl_id = nn->s2s_cp_cl_id;
+-	stid->sc_type = sc_type;
++	stid->cs_stid.si_opaque.so_clid.cl_boot = (u32)nn->boot_time;
++	stid->cs_stid.si_opaque.so_clid.cl_id = nn->s2s_cp_cl_id;
++	stid->cs_type = cs_type;
+ 
+ 	idr_preload(GFP_KERNEL);
+ 	spin_lock(&nn->s2s_cp_lock);
+ 	new_id = idr_alloc_cyclic(&nn->s2s_cp_stateids, stid, 0, 0, GFP_NOWAIT);
+-	stid->stid.si_opaque.so_id = new_id;
+-	stid->stid.si_generation = 1;
++	stid->cs_stid.si_opaque.so_id = new_id;
++	stid->cs_stid.si_generation = 1;
+ 	spin_unlock(&nn->s2s_cp_lock);
+ 	idr_preload_end();
+ 	if (new_id < 0)
+@@ -1019,7 +1019,7 @@ struct nfs4_cpntf_state *nfs4_alloc_init_cpntf_state(struct nfsd_net *nn,
+ 	if (!cps)
+ 		return NULL;
+ 	cps->cpntf_time = ktime_get_boottime_seconds();
+-	refcount_set(&cps->cp_stateid.sc_count, 1);
++	refcount_set(&cps->cp_stateid.cs_count, 1);
+ 	if (!nfs4_init_cp_state(nn, &cps->cp_stateid, NFS4_COPYNOTIFY_STID))
+ 		goto out_free;
+ 	spin_lock(&nn->s2s_cp_lock);
+@@ -1035,11 +1035,11 @@ void nfs4_free_copy_state(struct nfsd4_copy *copy)
+ {
+ 	struct nfsd_net *nn;
+ 
+-	WARN_ON_ONCE(copy->cp_stateid.sc_type != NFS4_COPY_STID);
++	WARN_ON_ONCE(copy->cp_stateid.cs_type != NFS4_COPY_STID);
+ 	nn = net_generic(copy->cp_clp->net, nfsd_net_id);
+ 	spin_lock(&nn->s2s_cp_lock);
+ 	idr_remove(&nn->s2s_cp_stateids,
+-		   copy->cp_stateid.stid.si_opaque.so_id);
++		   copy->cp_stateid.cs_stid.si_opaque.so_id);
+ 	spin_unlock(&nn->s2s_cp_lock);
  }
--
--int nfsd_file_cache_stats_open(struct inode *inode, struct file *file)
--{
--	return single_open(file, nfsd_file_cache_stats_show, NULL);
--}
-diff --git a/fs/nfsd/filecache.h b/fs/nfsd/filecache.h
-index 8e8c0c47d67df..357832bac736b 100644
---- a/fs/nfsd/filecache.h
-+++ b/fs/nfsd/filecache.h
-@@ -60,5 +60,5 @@ __be32 nfsd_file_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 		  unsigned int may_flags, struct nfsd_file **nfp);
- __be32 nfsd_file_create(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 		  unsigned int may_flags, struct nfsd_file **nfp);
--int	nfsd_file_cache_stats_open(struct inode *, struct file *);
-+int nfsd_file_cache_stats_show(struct seq_file *m, void *v);
- #endif /* _FS_NFSD_FILECACHE_H */
-diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
-index 1983f4f2908d9..6a29bcfc93909 100644
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -206,12 +206,7 @@ static const struct file_operations pool_stats_operations = {
  
- DEFINE_SHOW_ATTRIBUTE(nfsd_reply_cache_stats);
- 
--static const struct file_operations filecache_ops = {
--	.open		= nfsd_file_cache_stats_open,
--	.read		= seq_read,
--	.llseek		= seq_lseek,
--	.release	= single_release,
--};
-+DEFINE_SHOW_ATTRIBUTE(nfsd_file_cache_stats);
- 
- /*----------------------------------------------------------------------------*/
+@@ -6044,7 +6044,7 @@ nfs4_laundromat(struct nfsd_net *nn)
+ 	spin_lock(&nn->s2s_cp_lock);
+ 	idr_for_each_entry(&nn->s2s_cp_stateids, cps_t, i) {
+ 		cps = container_of(cps_t, struct nfs4_cpntf_state, cp_stateid);
+-		if (cps->cp_stateid.sc_type == NFS4_COPYNOTIFY_STID &&
++		if (cps->cp_stateid.cs_type == NFS4_COPYNOTIFY_STID &&
+ 				state_expired(&lt, cps->cpntf_time))
+ 			_free_cpntf_state_locked(nn, cps);
+ 	}
+@@ -6384,12 +6384,12 @@ nfs4_check_file(struct svc_rqst *rqstp, struct svc_fh *fhp, struct nfs4_stid *s,
+ static void
+ _free_cpntf_state_locked(struct nfsd_net *nn, struct nfs4_cpntf_state *cps)
+ {
+-	WARN_ON_ONCE(cps->cp_stateid.sc_type != NFS4_COPYNOTIFY_STID);
+-	if (!refcount_dec_and_test(&cps->cp_stateid.sc_count))
++	WARN_ON_ONCE(cps->cp_stateid.cs_type != NFS4_COPYNOTIFY_STID);
++	if (!refcount_dec_and_test(&cps->cp_stateid.cs_count))
+ 		return;
+ 	list_del(&cps->cp_list);
+ 	idr_remove(&nn->s2s_cp_stateids,
+-		   cps->cp_stateid.stid.si_opaque.so_id);
++		   cps->cp_stateid.cs_stid.si_opaque.so_id);
+ 	kfree(cps);
+ }
  /*
-@@ -1355,7 +1350,7 @@ static int nfsd_fill_super(struct super_block *sb, struct fs_context *fc)
- 		[NFSD_Ports] = {"portlist", &transaction_ops, S_IWUSR|S_IRUGO},
- 		[NFSD_MaxBlkSize] = {"max_block_size", &transaction_ops, S_IWUSR|S_IRUGO},
- 		[NFSD_MaxConnections] = {"max_connections", &transaction_ops, S_IWUSR|S_IRUGO},
--		[NFSD_Filecache] = {"filecache", &filecache_ops, S_IRUGO},
-+		[NFSD_Filecache] = {"filecache", &nfsd_file_cache_stats_fops, S_IRUGO},
- #if defined(CONFIG_SUNRPC_GSS) || defined(CONFIG_SUNRPC_GSS_MODULE)
- 		[NFSD_SupportedEnctypes] = {"supported_krb5_enctypes",
- 					&supported_enctypes_fops, S_IRUGO},
+@@ -6411,12 +6411,12 @@ __be32 manage_cpntf_state(struct nfsd_net *nn, stateid_t *st,
+ 	if (cps_t) {
+ 		state = container_of(cps_t, struct nfs4_cpntf_state,
+ 				     cp_stateid);
+-		if (state->cp_stateid.sc_type != NFS4_COPYNOTIFY_STID) {
++		if (state->cp_stateid.cs_type != NFS4_COPYNOTIFY_STID) {
+ 			state = NULL;
+ 			goto unlock;
+ 		}
+ 		if (!clp)
+-			refcount_inc(&state->cp_stateid.sc_count);
++			refcount_inc(&state->cp_stateid.cs_count);
+ 		else
+ 			_free_cpntf_state_locked(nn, state);
+ 	}
+diff --git a/fs/nfsd/state.h b/fs/nfsd/state.h
+index 4155be65d8069..b3477087a9fc3 100644
+--- a/fs/nfsd/state.h
++++ b/fs/nfsd/state.h
+@@ -57,11 +57,11 @@ typedef struct {
+ } stateid_t;
+ 
+ typedef struct {
+-	stateid_t		stid;
++	stateid_t		cs_stid;
+ #define NFS4_COPY_STID 1
+ #define NFS4_COPYNOTIFY_STID 2
+-	unsigned char		sc_type;
+-	refcount_t		sc_count;
++	unsigned char		cs_type;
++	refcount_t		cs_count;
+ } copy_stateid_t;
+ 
+ struct nfsd4_callback {
 -- 
 2.43.0
 
