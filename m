@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8258B1581F6;
-	Tue, 18 Jun 2024 13:07:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7079013C667;
+	Tue, 18 Jun 2024 13:07:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716032; cv=none; b=uQdbbxTdylBjf5CSmpc61PLSA6PlrSTq2VrMmsQ8XCEyVHcU1V0S8LB381PY9pclcT/QDtIOkOFjKaeQ1KB/IcJAJTc2MpINce7U15/6JcbYEyxSuu6oKWTk20hfY1PPAnVFaqxFthkZQmVrhdvRKGNRV/5bd9EbhmPVEK4phRs=
+	t=1718716035; cv=none; b=tcMAdh6aBNN8J0UUO5AHQZPYBuzr1zKw6D5fP8VhXKJiyP7glUOqp086dAGrNDfGiSvy4qZCFhvx1ydWRt/+KzxWY68oeErVBw0U1SM+kM7fmAZZ/dcP83LLcBKKg55vSkDgrISJHhuhCGICs3bXT4nGBxqr3oYoYfEYj6+tpR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716032; c=relaxed/simple;
-	bh=LURaLRecJvAknXdCMY0sPWHeLYCF3coFm+oJg4aIfOw=;
+	s=arc-20240116; t=1718716035; c=relaxed/simple;
+	bh=L2VtXvFLEg4GpV0gmhZq2RSVaA9LgyA1rjJrOwHq9w8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tm//jxqmeg2iK+7mZz7tQNSCuMI41pL8VKP0uFnwM4ax4r5I7wBgahj/FXUGja4vU5duWNS5oD2VZWl2fJzMOFpZb1r4tIuVbGxuK+sJow3ldpLCa/BsY7PE9cgr5cEpHRL9oACcN1/CfYRgshpaP64bj2E9qlv8FbHOcw0Pe2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBW2Vhns; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TQHJ0xWgHDppv5rD/hlJmeecsmuaFPeOYKYUlwtGQB7eaMMqacoz5JkOV9AUwTtnUfCBNRqNDvodoyclYaG+ZsG4XNRVLxqajatyX6V2EATW2ceZRDOfOAH1vm2mKC4ypAR2FjgNuUn0Nhcd7Xt60Oh1qDTkOP1BFHY+g7KYieQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wvly/Js5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBW2Vhns"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07D40C3277B;
-	Tue, 18 Jun 2024 13:07:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wvly/Js5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB973C3277B;
+	Tue, 18 Jun 2024 13:07:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716032;
-	bh=LURaLRecJvAknXdCMY0sPWHeLYCF3coFm+oJg4aIfOw=;
+	s=korg; t=1718716035;
+	bh=L2VtXvFLEg4GpV0gmhZq2RSVaA9LgyA1rjJrOwHq9w8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NBW2Vhns21+/7ZwuaBTDvUJBL/rtDDzi7E773Tf1sYiBa93cvyLNrTw5nqDMHJgiO
-	 BJsMFfUSiVtlD1bVFQlYldOMu7Q76s+s6SWltBT+PAdZSP/V7a58onnnIeGaxWSxZo
-	 hzYMgdzCkoIbSAHcBUwXyOqOqx1GBqJmkj62fIDU=
+	b=Wvly/Js57pVBF5QxB8572WMeJ9azv7cXl9Qtz+58GwiG01NbnaT223S3hcdQYng9+
+	 wiMs9JRp8dWfHbJM9c+DdVsgYykEyU5GuQvkDRy/F9CEYT2rlx68BPNHaqSQY8JeZ7
+	 IqD9SdlYtREIQuN7bbszZUaOq3XtsM55l2kJe5qE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasily Averin <vvs@openvz.org>,
-	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Jan Kara <jack@suse.cz>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 508/770] fanotify: fix incorrect fmode_t casts
-Date: Tue, 18 Jun 2024 14:36:01 +0200
-Message-ID: <20240618123426.921495908@linuxfoundation.org>
+Subject: [PATCH 5.10 509/770] NFSD: Clean up nfsd_splice_actor()
+Date: Tue, 18 Jun 2024 14:36:02 +0200
+Message-ID: <20240618123426.959604213@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -54,52 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasily Averin <vvs@openvz.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit dccd855771b37820b6d976a99729c88259549f85 ]
+[ Upstream commit 91e23b1c39820bfed642119ff6b6ef9f43cf09ce ]
 
-Fixes sparce warnings:
-fs/notify/fanotify/fanotify_user.c:267:63: sparse:
- warning: restricted fmode_t degrades to integer
-fs/notify/fanotify/fanotify_user.c:1351:28: sparse:
- warning: restricted fmode_t degrades to integer
+nfsd_splice_actor() checks that the page being spliced does not
+match the previous element in the svc_rqst::rq_pages array. We
+believe this is to prevent a double put_page() in cases where the
+READ payload is partially contained in the xdr_buf's head buffer.
 
-FMODE_NONTIFY have bitwise fmode_t type and requires __force attribute
-for any casts.
+However, the NFSD READ proc functions no longer place any part of
+the READ payload in the head buffer, in order to properly support
+NFS/RDMA READ with Write chunks. Therefore, simplify the logic in
+nfsd_splice_actor() to remove this unnecessary check.
 
-Signed-off-by: Vasily Averin <vvs@openvz.org>
-Reviewed-by: Christian Brauner (Microsoft) <brauner@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/9adfd6ac-1b89-791e-796b-49ada3293985@openvz.org
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/fanotify/fanotify_user.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nfsd/vfs.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
-index 3a1325c90ff86..f4a5e9074dd42 100644
---- a/fs/notify/fanotify/fanotify_user.c
-+++ b/fs/notify/fanotify/fanotify_user.c
-@@ -252,7 +252,7 @@ static int create_fd(struct fsnotify_group *group, struct path *path,
- 	 * originally opened O_WRONLY.
- 	 */
- 	new_file = dentry_open(path,
--			       group->fanotify_data.f_flags | FMODE_NONOTIFY,
-+			       group->fanotify_data.f_flags | __FMODE_NONOTIFY,
- 			       current_cred());
- 	if (IS_ERR(new_file)) {
- 		/*
-@@ -1365,7 +1365,7 @@ SYSCALL_DEFINE2(fanotify_init, unsigned int, flags, unsigned int, event_f_flags)
- 	    (!(fid_mode & FAN_REPORT_NAME) || !(fid_mode & FAN_REPORT_FID)))
- 		return -EINVAL;
+diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
+index 86584e727ce09..0968eaf735c85 100644
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -874,17 +874,11 @@ nfsd_splice_actor(struct pipe_inode_info *pipe, struct pipe_buffer *buf,
+ 		  struct splice_desc *sd)
+ {
+ 	struct svc_rqst *rqstp = sd->u.data;
+-	struct page **pp = rqstp->rq_next_page;
+-	struct page *page = buf->page;
  
--	f_flags = O_RDWR | FMODE_NONOTIFY;
-+	f_flags = O_RDWR | __FMODE_NONOTIFY;
- 	if (flags & FAN_CLOEXEC)
- 		f_flags |= O_CLOEXEC;
- 	if (flags & FAN_NONBLOCK)
+-	if (rqstp->rq_res.page_len == 0) {
+-		svc_rqst_replace_page(rqstp, page);
++	svc_rqst_replace_page(rqstp, buf->page);
++	if (rqstp->rq_res.page_len == 0)
+ 		rqstp->rq_res.page_base = buf->offset;
+-	} else if (page != pp[-1]) {
+-		svc_rqst_replace_page(rqstp, page);
+-	}
+ 	rqstp->rq_res.page_len += sd->len;
+-
+ 	return sd->len;
+ }
+ 
 -- 
 2.43.0
 
