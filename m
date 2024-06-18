@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41641BF38;
-	Tue, 18 Jun 2024 13:00:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A81188CBE;
+	Tue, 18 Jun 2024 13:00:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715636; cv=none; b=rJ/lvr0VlrzlTeEi5o3vVoSKd2W/ZXupwgKPSCFD3MU1JaQv1Hs4VIH8C4A43c7CIB3yh7w5qgu7k1TmB4GtZeiIeE83KQC8LBiMNs9ufdeD1dvLTkO6sAokWzjJTsbjxmuaCkGSGHngCVFRe8z80HvR7z3Hm2QF0UXQ+qa4yD8=
+	t=1718715638; cv=none; b=GrvkmEKoJtu6JvzioKqbn4n8TTGjjE/UXWQ+t1EjYP0kzfGGk2JMSg7XRd2O45KVfESREdGSmIsWuF158Y5qL13kGSKq2WBRBXR6h6sKwQD+WVcB6a8koZO7GlomAYSv4SSROjpy+ORV0Z2aQWNNd1ZEMrBt+pocrFCPBqaL7vk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715636; c=relaxed/simple;
-	bh=PRyeniklE+WoArplro8nlaCjQMoV4p5eodQu9q5A4Q8=;
+	s=arc-20240116; t=1718715638; c=relaxed/simple;
+	bh=baJy0tiposHfDK0FmN2jEQ6yd0si21saTfZI6qzsv8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a7qrxpqEG8p+jIjp2rTOBgfnqObezE7ZSsNsVnrmMC/meNmstWG8bAOWu/WjmQjENZAZWPchhplIHFQjtgcTabbpNyCELSqHmKtyX9baIEhCvACS7Ucs/4Zyc63fr4Rl5IyLTTRHWAfNBfnZ9Jkwc1QsCLSzo/xq5Q32SxQDF08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dcxtBhoe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IrymmuAS6y4iDpaWxN3m7jSAHAWuM4ermjQebjDXyfhcCXSjXGaXvJrTyMGm9hVXidB21XE185AIhv5B8ooQriTRpbbOyXmYTKXDjJKbSJBUwPgsMKymeSaPVF/xxvtwYPsyGjB5YPr1+zBj+B+xg7T8yMX5r/Tm7esE9wCiSeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mt2uA4kg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dcxtBhoe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36AD1C32786;
-	Tue, 18 Jun 2024 13:00:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mt2uA4kg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2864AC3277B;
+	Tue, 18 Jun 2024 13:00:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715635;
-	bh=PRyeniklE+WoArplro8nlaCjQMoV4p5eodQu9q5A4Q8=;
+	s=korg; t=1718715638;
+	bh=baJy0tiposHfDK0FmN2jEQ6yd0si21saTfZI6qzsv8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dcxtBhoe6scI/nKbC7Kxi3HGETCwYhqQhjDY0PFFalyQlpfFHe0FpFRQLdo/2glNy
-	 r83bY+sYkzxyhjl/TupK01KRcUiLGXAUrCjxwvv7/CpCe5tFkSrUOr2gUNd/jtJyws
-	 n02KR0NtX6c2dTFzAZtlP2LpsGxNKh1YhcnV5aVE=
+	b=Mt2uA4kgbTp57XFJtWPjlxbKTejjVzIZr7Y70sS2yuAf9IvOioy4iaJkAteXh9asJ
+	 VDha9uL+eZlmygP+75ysfZPrjKNfa/SkT8BrbnAI3rkgW2dz5bvQ3dvD6r8ElYH3JU
+	 TW34sS0ca/2GtRDf9PH1VEyFvuVnZTXkkvd/SNm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
 	Amir Goldstein <amir73il@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Gabriel Krisman Bertazi <krisman@collabora.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 374/770] fanotify: Allow file handle encoding for unhashed events
-Date: Tue, 18 Jun 2024 14:33:47 +0200
-Message-ID: <20240618123421.705827441@linuxfoundation.org>
+Subject: [PATCH 5.10 375/770] fanotify: Encode empty file handle when no inode is provided
+Date: Tue, 18 Jun 2024 14:33:48 +0200
+Message-ID: <20240618123421.743830546@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -55,41 +55,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Gabriel Krisman Bertazi <krisman@collabora.com>
 
-[ Upstream commit 74fe4734897a2da2ae2a665a5e622cd490d36eaf ]
+[ Upstream commit 272531ac619b374ab474e989eb387162fded553f ]
 
-Allow passing a NULL hash to fanotify_encode_fh and avoid calculating
-the hash if not needed.
+Instead of failing, encode an invalid file handle in fanotify_encode_fh
+if no inode is provided.  This bogus file handle will be reported by
+FAN_FS_ERROR for non-inode errors.
 
-Link: https://lore.kernel.org/r/20211025192746.66445-15-krisman@collabora.com
-Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20211025192746.66445-16-krisman@collabora.com
 Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Gabriel Krisman Bertazi <krisman@collabora.com>
 Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/fanotify/fanotify.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/notify/fanotify/fanotify.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
-index 397ee623ff1e8..ec84fee7ad01c 100644
+index ec84fee7ad01c..c64d61b673caf 100644
 --- a/fs/notify/fanotify/fanotify.c
 +++ b/fs/notify/fanotify/fanotify.c
-@@ -403,8 +403,12 @@ static int fanotify_encode_fh(struct fanotify_fh *fh, struct inode *inode,
+@@ -370,8 +370,14 @@ static int fanotify_encode_fh(struct fanotify_fh *fh, struct inode *inode,
+ 	fh->type = FILEID_ROOT;
+ 	fh->len = 0;
+ 	fh->flags = 0;
++
++	/*
++	 * Invalid FHs are used by FAN_FS_ERROR for errors not
++	 * linked to any inode. The f_handle won't be reported
++	 * back to userspace.
++	 */
+ 	if (!inode)
+-		return 0;
++		goto out;
+ 
+ 	/*
+ 	 * !gpf means preallocated variable size fh, but fh_len could
+@@ -403,6 +409,7 @@ static int fanotify_encode_fh(struct fanotify_fh *fh, struct inode *inode,
  	fh->type = type;
  	fh->len = fh_len;
  
--	/* Mix fh into event merge key */
--	*hash ^= fanotify_hash_fh(fh);
-+	/*
-+	 * Mix fh into event merge key.  Hash might be NULL in case of
-+	 * unhashed FID events (i.e. FAN_FS_ERROR).
-+	 */
-+	if (hash)
-+		*hash ^= fanotify_hash_fh(fh);
- 
- 	return FANOTIFY_FH_HDR_LEN + fh_len;
- 
++out:
+ 	/*
+ 	 * Mix fh into event merge key.  Hash might be NULL in case of
+ 	 * unhashed FID events (i.e. FAN_FS_ERROR).
 -- 
 2.43.0
 
