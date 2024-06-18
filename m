@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C985573461;
-	Tue, 18 Jun 2024 13:11:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFAA513D8BC;
+	Tue, 18 Jun 2024 13:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716290; cv=none; b=haGJ1GMUbnxFyhzhA9EVqtUj2D8AzEpqQAky414NHCk5sBrPeTN/cG9+RAeIAnKDNNl4sUkznFNe9O5RkqJhy5iNzWBYs3a2Fjuun8YENkKbKYYtBNiGKsU//wGV3mng0zrBWS7vK5wJJhhdkPcnMdYPF0Cg3UKOt4IKUEzfElk=
+	t=1718716293; cv=none; b=DH13JH0ALgq4WmOMvl9TJ4Cd78NIN2rGAp0ZCouOmO4LNWb+DUM5o9ltBWXzXj52J4QvWTblNRIi9GTxhDgUGr6/ai379bItHjivl4bDNLdV4CvwUjyICEKOfNQIpQRv01r1RXousYWvAGvWO2YtoswE6YvMxYWtiLmBAue/Ydw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716290; c=relaxed/simple;
-	bh=ETfhoq+tnffcWeNf2B5CUHe3ifQXPdd8qqyyCEJGO38=;
+	s=arc-20240116; t=1718716293; c=relaxed/simple;
+	bh=8ZW4D7lBZHB9yXW96+RThFW0zTSVEU9wai/rBK8uQmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Zqw9SGithTpDtGVlPtqQUJ4gVIPQYIJmslcHw0ypbvjK4vp7eVVDkZLxE+ZlfQJgUSovcuYffCagU63bDM1bZmHQavrfu4uJ+pwHDrv2szdjGXOz5HmG5Bd9vqz1QKKEP5h6o8j+gQqv1Xj49hrstb62AJ0bUwfflh+TNHZAa/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aRZqUXuU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dhPJ97cS+eoHu8sEcoAiLNFE9aAtB18NjQNZ41sHrvoszpUwQGgxuemdHfbhK7iW5YHv+iQDjAn6cVe0EQi3dmOc0168hEvgk9IZjHPp7f+y0V4jiKtmWvbh/AV4F4Xf2Z3a1NvPyjDkuLBDt0QGgVIrkrWGmmbeAKrH5KAIne8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VvdlODcv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aRZqUXuU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52596C3277B;
-	Tue, 18 Jun 2024 13:11:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VvdlODcv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41BD0C3277B;
+	Tue, 18 Jun 2024 13:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716290;
-	bh=ETfhoq+tnffcWeNf2B5CUHe3ifQXPdd8qqyyCEJGO38=;
+	s=korg; t=1718716293;
+	bh=8ZW4D7lBZHB9yXW96+RThFW0zTSVEU9wai/rBK8uQmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aRZqUXuUdyyCnsMl72qkkiog5r1FFepOaYcUZnnuOmx0ZR5BnI/XRVCHeDrWpV0MG
-	 U/oSkqO117wqxniFnu4YBZU2PlmOh2wy5ZyIV8DYVAI9xyjmlDkZcsrRGcHucj2u3I
-	 yV7J5ap8tzdFKaanCQrFsQUXxawaAV824B9wkt+k=
+	b=VvdlODcvBt0Dt1O4QIv0ufQiETLPigb2D8NIpBs40d3V53ZXF+n3B6Fi45tj+jBet
+	 CcvcHqaU6ZIpdDrNL2vZ9FNjgM4xO9McIKtxKTBNlxGlJj13eRV5sHpx0cI6gvqp0s
+	 yAqpePAd1RMhVP+WUIXv9jZLNbMOIPLHzZaStqks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Dai Ngo <dai.ngo@oracle.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 597/770] NFSD: Fix strncpy() fortify warning
-Date: Tue, 18 Jun 2024 14:37:30 +0200
-Message-ID: <20240618123430.337676114@linuxfoundation.org>
+Subject: [PATCH 5.10 598/770] NFSD: nfserrno(-ENOMEM) is nfserr_jukebox
+Date: Tue, 18 Jun 2024 14:37:31 +0200
+Message-ID: <20240618123430.375481841@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -44,7 +45,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
@@ -53,51 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 5304877936c0a67e1a01464d113bae4c81eacdb6 ]
+[ Upstream commit bb4d842722b84a2731257054b6405f2d866fc5f3 ]
 
-In function ‘strncpy’,
-    inlined from ‘nfsd4_ssc_setup_dul’ at /home/cel/src/linux/manet/fs/nfsd/nfs4proc.c:1392:3,
-    inlined from ‘nfsd4_interssc_connect’ at /home/cel/src/linux/manet/fs/nfsd/nfs4proc.c:1489:11:
-/home/cel/src/linux/manet/include/linux/fortify-string.h:52:33: warning: ‘__builtin_strncpy’ specified bound 63 equals destination size [-Wstringop-truncation]
-   52 | #define __underlying_strncpy    __builtin_strncpy
-      |                                 ^
-/home/cel/src/linux/manet/include/linux/fortify-string.h:89:16: note: in expansion of macro ‘__underlying_strncpy’
-   89 |         return __underlying_strncpy(p, q, size);
-      |                ^~~~~~~~~~~~~~~~~~~~
-
+Suggested-by: Dai Ngo <dai.ngo@oracle.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4proc.c      | 2 +-
- include/linux/nfs_ssc.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs4xdr.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 08c2eaca4f24e..1b49b4e2803c7 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1391,7 +1391,7 @@ static __be32 nfsd4_ssc_setup_dul(struct nfsd_net *nn, char *ipaddr,
- 		return 0;
- 	}
- 	if (work) {
--		strncpy(work->nsui_ipaddr, ipaddr, sizeof(work->nsui_ipaddr));
-+		strlcpy(work->nsui_ipaddr, ipaddr, sizeof(work->nsui_ipaddr) - 1);
- 		refcount_set(&work->nsui_refcnt, 2);
- 		work->nsui_busy = true;
- 		list_add_tail(&work->nsui_list, &nn->nfsd_ssc_mount_list);
-diff --git a/include/linux/nfs_ssc.h b/include/linux/nfs_ssc.h
-index 222ae8883e854..75843c00f326a 100644
---- a/include/linux/nfs_ssc.h
-+++ b/include/linux/nfs_ssc.h
-@@ -64,7 +64,7 @@ struct nfsd4_ssc_umount_item {
- 	refcount_t nsui_refcnt;
- 	unsigned long nsui_expire;
- 	struct vfsmount *nsui_vfsmount;
--	char nsui_ipaddr[RPC_MAX_ADDRBUFLEN];
-+	char nsui_ipaddr[RPC_MAX_ADDRBUFLEN + 1];
- };
- #endif
+diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
+index a98513cb35b10..fcf56e396e66b 100644
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -1810,7 +1810,7 @@ nfsd4_decode_test_stateid(struct nfsd4_compoundargs *argp, struct nfsd4_test_sta
+ 	for (i = 0; i < test_stateid->ts_num_ids; i++) {
+ 		stateid = svcxdr_tmpalloc(argp, sizeof(*stateid));
+ 		if (!stateid)
+-			return nfserrno(-ENOMEM);	/* XXX: not jukebox? */
++			return nfserr_jukebox;
+ 		INIT_LIST_HEAD(&stateid->ts_id_list);
+ 		list_add_tail(&stateid->ts_id_list, &test_stateid->ts_stateid_list);
+ 		status = nfsd4_decode_stateid4(argp, &stateid->ts_id_stateid);
+@@ -1933,7 +1933,7 @@ nfsd4_decode_copy(struct nfsd4_compoundargs *argp, struct nfsd4_copy *copy)
  
+ 	ns_dummy = kmalloc(sizeof(struct nl4_server), GFP_KERNEL);
+ 	if (ns_dummy == NULL)
+-		return nfserrno(-ENOMEM);	/* XXX: jukebox? */
++		return nfserr_jukebox;
+ 	for (i = 0; i < count - 1; i++) {
+ 		status = nfsd4_decode_nl4_server(argp, ns_dummy);
+ 		if (status) {
 -- 
 2.43.0
 
