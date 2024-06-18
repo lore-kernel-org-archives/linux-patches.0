@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 059031586DB;
-	Tue, 18 Jun 2024 13:11:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C8D1586DB;
+	Tue, 18 Jun 2024 13:11:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716273; cv=none; b=e1eDURJv6KIKUtq6hljxMoUn4P/Py+VIsKdnjQf6uUutSeJjCLLb49ooHMDhtazfzdZebsw3O7cUwXIZomtrhe4hl7TgSD1aRpgWeiJ554XqQL6iwaz9Z9V2Y9hNz/Q4bqaDKSnT199rDS5rEJvVIkneOItPXm58h735Aschs8E=
+	t=1718716276; cv=none; b=QPgTRVyBUfXHy+05d87fGg1zNoCF14yYGkOarGYL3iMWgBEmDA6TZ8FFmWG9MzU5Owv4Dy2W+M8QLM+3yCftMKwk6Iq8B2Z2CBQXoWwpPF7tsNurynmzF6yAr0gw5c2Iokct0mqNp6J/3ZO3gtLruH4NlViWCYm9HCEm7wCUeVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716273; c=relaxed/simple;
-	bh=bMAmT75CtsIPfLxUo8aOR4aEptodVwblRL6zitSfk7Q=;
+	s=arc-20240116; t=1718716276; c=relaxed/simple;
+	bh=Ffc6ik9MsGL1FSQlw/W/IaSnLPiYkwYxlEb7if+1zx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iWNn7DXlbWK7jYRkF7ZfarGMtJmuYhlvVSfmX/eUn15qTw0KdwPLq+iPVuZQiB1TPCJJ9yMIHROTnBfTb+JdK+eBlnHtXpRQLG9i4WRjME6ugeoeNqJ1R39xp9s6nWzU7HgUA17AdwBlOGs6rnd5XToS3F/jc3Bf5YNY6GF47nc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=trcOC/dU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kfQqb1pfpXRfrsxsaPeukH5PGse8DWbZJvTU+aQMu3BWZyORQ9tsUuhMn/fAcyTdGireqJrQK9pa5UG+V/cfwZ7ZCWx6GoOyi0+ruZYJCunsXyeOz0T9pjxxnQuH5BT1ha/A7a/wQ9JulhhnOoUjdzQDiTA4SPyVQwDhXoS83eA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GnykakAh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="trcOC/dU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76BE3C3277B;
-	Tue, 18 Jun 2024 13:11:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GnykakAh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69967C3277B;
+	Tue, 18 Jun 2024 13:11:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716272;
-	bh=bMAmT75CtsIPfLxUo8aOR4aEptodVwblRL6zitSfk7Q=;
+	s=korg; t=1718716275;
+	bh=Ffc6ik9MsGL1FSQlw/W/IaSnLPiYkwYxlEb7if+1zx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=trcOC/dU8Z6qiGevFdoPb8qbohhSC68hTeiMrRgBugXzTgITU5/O3ThrnX3tykDzA
-	 QRgWK+5Kh+CUB6fXoGzXY/kIB43T5cD4oiDaZaSwNZcHQsxnIA+RwLv4R960bZT7OC
-	 ELWQM5IXTmWfd4vY7tEuBEDRXsFjhS242cqxQpRI=
+	b=GnykakAhgel9SF205kVNcl/CrbX2Ip0Jd2DHGmbw7Dw/gu7TdEcwQIro7ARoLwNgk
+	 OWU/kr5Gu39DofiMDaNxtgGWy4cneyyv4Ste5OSGe/DZlqSP8AccpM56bv4PLodkRY
+	 XduKlNNDoC7EHmBLU/Qy5s4JovE8VJRD7eKq1+pU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 591/770] NFSD: Clean up SPLICE_OK in nfsd4_encode_read()
-Date: Tue, 18 Jun 2024 14:37:24 +0200
-Message-ID: <20240618123430.107561743@linuxfoundation.org>
+Subject: [PATCH 5.10 592/770] NFSD: Add an nfsd4_read::rd_eof field
+Date: Tue, 18 Jun 2024 14:37:25 +0200
+Message-ID: <20240618123430.144966682@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,54 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit c738b218a2e5a753a336b4b7fee6720b902c7ace ]
+[ Upstream commit 24c7fb85498eda1d4c6b42cc4886328429814990 ]
 
-Do the test_bit() once -- this reduces the number of locked-bus
-operations and makes the function a little easier to read.
+Refactor: Make the EOF result available in the entire NFSv4 READ
+path.
 
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4xdr.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ fs/nfsd/nfs4xdr.c | 11 +++++------
+ fs/nfsd/xdr4.h    |  5 +++--
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
-index 1e388cdf9b005..059e920c21919 100644
+index 059e920c21919..8437a390480df 100644
 --- a/fs/nfsd/nfs4xdr.c
 +++ b/fs/nfsd/nfs4xdr.c
-@@ -3991,6 +3991,7 @@ static __be32
- nfsd4_encode_read(struct nfsd4_compoundres *resp, __be32 nfserr,
- 		  struct nfsd4_read *read)
- {
-+	bool splice_ok = test_bit(RQ_SPLICE_OK, &resp->rqstp->rq_flags);
- 	unsigned long maxcount;
+@@ -3890,7 +3890,6 @@ static __be32 nfsd4_encode_splice_read(
  	struct xdr_stream *xdr = resp->xdr;
- 	struct file *file;
-@@ -4003,11 +4004,10 @@ nfsd4_encode_read(struct nfsd4_compoundres *resp, __be32 nfserr,
+ 	struct xdr_buf *buf = xdr->buf;
+ 	int status, space_left;
+-	u32 eof;
+ 	__be32 nfserr;
+ 	__be32 *p = xdr->p - 2;
  
- 	p = xdr_reserve_space(xdr, 8); /* eof flag and byte count */
- 	if (!p) {
--		WARN_ON_ONCE(test_bit(RQ_SPLICE_OK, &resp->rqstp->rq_flags));
-+		WARN_ON_ONCE(splice_ok);
+@@ -3899,7 +3898,8 @@ static __be32 nfsd4_encode_splice_read(
  		return nfserr_resource;
- 	}
--	if (resp->xdr->buf->page_len &&
--	    test_bit(RQ_SPLICE_OK, &resp->rqstp->rq_flags)) {
-+	if (resp->xdr->buf->page_len && splice_ok) {
- 		WARN_ON_ONCE(1);
- 		return nfserr_serverfault;
- 	}
-@@ -4016,8 +4016,7 @@ nfsd4_encode_read(struct nfsd4_compoundres *resp, __be32 nfserr,
- 	maxcount = min_t(unsigned long, read->rd_length,
- 			 (xdr->buf->buflen - xdr->buf->len));
  
--	if (file->f_op->splice_read &&
--	    test_bit(RQ_SPLICE_OK, &resp->rqstp->rq_flags))
-+	if (file->f_op->splice_read && splice_ok)
- 		nfserr = nfsd4_encode_splice_read(resp, read, file, maxcount);
- 	else
- 		nfserr = nfsd4_encode_readv(resp, read, file, maxcount);
+ 	nfserr = nfsd_splice_read(read->rd_rqstp, read->rd_fhp,
+-				  file, read->rd_offset, &maxcount, &eof);
++				  file, read->rd_offset, &maxcount,
++				  &read->rd_eof);
+ 	read->rd_length = maxcount;
+ 	if (nfserr)
+ 		goto out_err;
+@@ -3910,7 +3910,7 @@ static __be32 nfsd4_encode_splice_read(
+ 		goto out_err;
+ 	}
+ 
+-	*(p++) = htonl(eof);
++	*(p++) = htonl(read->rd_eof);
+ 	*(p++) = htonl(maxcount);
+ 
+ 	buf->page_len = maxcount;
+@@ -3954,7 +3954,6 @@ static __be32 nfsd4_encode_readv(struct nfsd4_compoundres *resp,
+ 				 struct file *file, unsigned long maxcount)
+ {
+ 	struct xdr_stream *xdr = resp->xdr;
+-	u32 eof;
+ 	int starting_len = xdr->buf->len - 8;
+ 	__be32 nfserr;
+ 	__be32 tmp;
+@@ -3966,7 +3965,7 @@ static __be32 nfsd4_encode_readv(struct nfsd4_compoundres *resp,
+ 
+ 	nfserr = nfsd_readv(resp->rqstp, read->rd_fhp, file, read->rd_offset,
+ 			    resp->rqstp->rq_vec, read->rd_vlen, &maxcount,
+-			    &eof);
++			    &read->rd_eof);
+ 	read->rd_length = maxcount;
+ 	if (nfserr)
+ 		return nfserr;
+@@ -3974,7 +3973,7 @@ static __be32 nfsd4_encode_readv(struct nfsd4_compoundres *resp,
+ 		return nfserr_io;
+ 	xdr_truncate_encode(xdr, starting_len + 8 + xdr_align_size(maxcount));
+ 
+-	tmp = htonl(eof);
++	tmp = htonl(read->rd_eof);
+ 	write_bytes_to_xdr_buf(xdr->buf, starting_len    , &tmp, 4);
+ 	tmp = htonl(maxcount);
+ 	write_bytes_to_xdr_buf(xdr->buf, starting_len + 4, &tmp, 4);
+diff --git a/fs/nfsd/xdr4.h b/fs/nfsd/xdr4.h
+index 448b687943cd3..32617639a3ece 100644
+--- a/fs/nfsd/xdr4.h
++++ b/fs/nfsd/xdr4.h
+@@ -302,9 +302,10 @@ struct nfsd4_read {
+ 	u32			rd_length;          /* request */
+ 	int			rd_vlen;
+ 	struct nfsd_file	*rd_nf;
+-	
++
+ 	struct svc_rqst		*rd_rqstp;          /* response */
+-	struct svc_fh		*rd_fhp;             /* response */
++	struct svc_fh		*rd_fhp;            /* response */
++	u32			rd_eof;             /* response */
+ };
+ 
+ struct nfsd4_readdir {
 -- 
 2.43.0
 
