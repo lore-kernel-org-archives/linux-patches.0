@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009F4158A12;
-	Tue, 18 Jun 2024 13:08:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECD91158A12;
+	Tue, 18 Jun 2024 13:08:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716118; cv=none; b=Bn3rewWx6T4gUmLhMEDQrKc6Mu5s8oTsG5p+v7nWoM1Mbv01tl0b6LSC+OBMzTnEAcPGGzwmfvn3QMwAQ1dggWbps46POUrnPUlPZGkXdYUXKWtIZ5ULS+72+bv0WVVuENkf37V3dGyKKxQz4fY0QMjnC0DZ4PI9pe3/LRkodqY=
+	t=1718716121; cv=none; b=QiYX3thQjC+wNGcNhw6ej+KGFxIALnbCEUatQNC6GUlVhcC5+5LNCXEr/7mdWoruc+n3+jg7RCCmE27A9HMSsIMjODSztqGYLQnV8lBHXR4wnobc06np5HL5s/QQhvEKLKPILrnAzsc2We8Rp/gM/2KCVlnwPYmeJqkfYvaiyHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716118; c=relaxed/simple;
-	bh=y1fEfVxu2tiMSLESZUIqMYSuGSZUeQ04616+i0NTJ2Y=;
+	s=arc-20240116; t=1718716121; c=relaxed/simple;
+	bh=eC4/4R3g9oUalFkICgubXedadzlCXNmhNEdBTty2s4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jPbW7CReAYF2uBTNLo/Wr/L+0UfAvisa//SrSk9pLpm4Knaweda20qch3X4wq/+28SPEOOwLLvbr6H31C9sAE7Y2NhFjMWKJQAgT+0Tmfh/Q0bXV4N+WJPqYrlcuJv1BsKFun4hAGJT059S4bTmxeq8idssxcgYgPkibYM9ZxsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0Ny8k8l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OEpqGiOqpUdIgWLDMv0jtG1NefvRkLElBC8/AHMifVyr3g6QFi0QT9Oa9EROU5Qrjg7acBfRFymOYYohVQzQgCxDIwJT3Jcc0DSxUbYU8D37e/RW8f4UOzkWfXBWPZd5BFcYcH5ApK0LHBnqFY8HCwsrFiCjKFdV+K2VEOaGy1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c3RQMWba; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0Ny8k8l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73CE2C3277B;
-	Tue, 18 Jun 2024 13:08:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c3RQMWba"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70750C3277B;
+	Tue, 18 Jun 2024 13:08:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716117;
-	bh=y1fEfVxu2tiMSLESZUIqMYSuGSZUeQ04616+i0NTJ2Y=;
+	s=korg; t=1718716120;
+	bh=eC4/4R3g9oUalFkICgubXedadzlCXNmhNEdBTty2s4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z0Ny8k8lnlx72+S52D52DhUV00IpMdBrbYmVri/xPYF2ZgRn8fC9qruV2ywUgb+Bc
-	 0q0seHdpP/vACk7Fnmt2+ZWVwQ8XHZ/pFWpLUEihj79yJtBgDOZjlJYqdcLwZIPIY/
-	 UtR+ctKHWfr43R4Vhtg8Po8BMmXFa2lcUa7lt0Cg=
+	b=c3RQMWbay2IuCjqSMj3xF7A4qkZfvzOXGP2IHCzqfCRTesI7vihtUeykNrb/3WD3M
+	 ueLyUqcg2PaDJ5DDrZz9OdCiDhdKU/4xiVUFxJe2DTBsiATG+FmeT3WEggw3s2XZKZ
+	 DVSCV4CtQ5veVLCoMyImTFWUfCfFwqRcZQvweuIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Amir Goldstein <amir73il@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Chuck Lever <chuck.lever@oracle.com>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 538/770] SUNRPC: Optimize xdr_reserve_space()
-Date: Tue, 18 Jun 2024 14:36:31 +0200
-Message-ID: <20240618123428.074891625@linuxfoundation.org>
+Subject: [PATCH 5.10 539/770] fanotify: refine the validation checks on non-dir inode mask
+Date: Tue, 18 Jun 2024 14:36:32 +0200
+Message-ID: <20240618123428.116065280@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -51,107 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit 62ed448cc53b654036f7d7f3c99f299d79ad14c3 ]
+[ Upstream commit 8698e3bab4dd7968666e84e111d0bfd17c040e77 ]
 
-Transitioning between encode buffers is quite infrequent. It happens
-about 1 time in 400 calls to xdr_reserve_space(), measured on NFSD
-with a typical build/test workload.
+Commit ceaf69f8eadc ("fanotify: do not allow setting dirent events in
+mask of non-dir") added restrictions about setting dirent events in the
+mask of a non-dir inode mark, which does not make any sense.
 
-Force the compiler to remove that code from xdr_reserve_space(),
-which is a hot path on both the server and the client. This change
-reduces the size of xdr_reserve_space() from 10 cache lines to 2
-when compiled with -Os.
+For backward compatibility, these restictions were added only to new
+(v5.17+) APIs.
 
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Reviewed-by: J. Bruce Fields <bfields@fieldses.org>
+It also does not make any sense to set the flags FAN_EVENT_ON_CHILD or
+FAN_ONDIR in the mask of a non-dir inode.  Add these flags to the
+dir-only restriction of the new APIs as well.
+
+Move the check of the dir-only flags for new APIs into the helper
+fanotify_events_supported(), which is only called for FAN_MARK_ADD,
+because there is no need to error on an attempt to remove the dir-only
+flags from non-dir inode.
+
+Fixes: ceaf69f8eadc ("fanotify: do not allow setting dirent events in mask of non-dir")
+Link: https://lore.kernel.org/linux-fsdevel/20220627113224.kr2725conevh53u4@quack3.lan/
+Link: https://lore.kernel.org/r/20220627174719.2838175-1-amir73il@gmail.com
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+[ cel: adjusted to apply to v5.10.y ]
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sunrpc/xdr.h | 16 +++++++++++++++-
- net/sunrpc/xdr.c           | 17 ++++++++++-------
- 2 files changed, 25 insertions(+), 8 deletions(-)
+ fs/notify/fanotify/fanotify_user.c | 30 +++++++++++++++---------------
+ include/linux/fanotify.h           |  4 ++++
+ 2 files changed, 19 insertions(+), 15 deletions(-)
 
-diff --git a/include/linux/sunrpc/xdr.h b/include/linux/sunrpc/xdr.h
-index 927f1458bcab9..b8fb866e1fd32 100644
---- a/include/linux/sunrpc/xdr.h
-+++ b/include/linux/sunrpc/xdr.h
-@@ -242,7 +242,7 @@ extern void xdr_init_encode(struct xdr_stream *xdr, struct xdr_buf *buf,
- extern __be32 *xdr_reserve_space(struct xdr_stream *xdr, size_t nbytes);
- extern int xdr_reserve_space_vec(struct xdr_stream *xdr, struct kvec *vec,
- 		size_t nbytes);
--extern void xdr_commit_encode(struct xdr_stream *xdr);
-+extern void __xdr_commit_encode(struct xdr_stream *xdr);
- extern void xdr_truncate_encode(struct xdr_stream *xdr, size_t len);
- extern int xdr_restrict_buflen(struct xdr_stream *xdr, int newbuflen);
- extern void xdr_write_pages(struct xdr_stream *xdr, struct page **pages,
-@@ -305,6 +305,20 @@ xdr_reset_scratch_buffer(struct xdr_stream *xdr)
- 	xdr_set_scratch_buffer(xdr, NULL, 0);
+diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
+index f4a5e9074dd42..990464e00aec7 100644
+--- a/fs/notify/fanotify/fanotify_user.c
++++ b/fs/notify/fanotify/fanotify_user.c
+@@ -1501,10 +1501,14 @@ static int fanotify_test_fid(struct dentry *dentry)
+ 	return 0;
  }
  
-+/**
-+ * xdr_commit_encode - Ensure all data is written to xdr->buf
-+ * @xdr: pointer to xdr_stream
-+ *
-+ * Handle encoding across page boundaries by giving the caller a
-+ * temporary location to write to, then later copying the data into
-+ * place. __xdr_commit_encode() does that copying.
-+ */
-+static inline void xdr_commit_encode(struct xdr_stream *xdr)
-+{
-+	if (unlikely(xdr->scratch.iov_len))
-+		__xdr_commit_encode(xdr);
-+}
+-static int fanotify_events_supported(struct path *path, __u64 mask,
++static int fanotify_events_supported(struct fsnotify_group *group,
++				     struct path *path, __u64 mask,
+ 				     unsigned int flags)
+ {
+ 	unsigned int mark_type = flags & FANOTIFY_MARK_TYPE_BITS;
++	/* Strict validation of events in non-dir inode mask with v5.17+ APIs */
++	bool strict_dir_events = FAN_GROUP_FLAG(group, FAN_REPORT_TARGET_FID) ||
++				 (mask & FAN_RENAME);
+ 
+ 	/*
+ 	 * Some filesystems such as 'proc' acquire unusual locks when opening
+@@ -1532,6 +1536,15 @@ static int fanotify_events_supported(struct path *path, __u64 mask,
+ 	    path->mnt->mnt_sb->s_flags & SB_NOUSER)
+ 		return -EINVAL;
+ 
++	/*
++	 * We shouldn't have allowed setting dirent events and the directory
++	 * flags FAN_ONDIR and FAN_EVENT_ON_CHILD in mask of non-dir inode,
++	 * but because we always allowed it, error only when using new APIs.
++	 */
++	if (strict_dir_events && mark_type == FAN_MARK_INODE &&
++	    !d_is_dir(path->dentry) && (mask & FANOTIFY_DIRONLY_EVENT_BITS))
++		return -ENOTDIR;
 +
- /**
-  * xdr_stream_remaining - Return the number of bytes remaining in the stream
-  * @xdr: pointer to struct xdr_stream
-diff --git a/net/sunrpc/xdr.c b/net/sunrpc/xdr.c
-index 722586696fade..f66e2de7cd279 100644
---- a/net/sunrpc/xdr.c
-+++ b/net/sunrpc/xdr.c
-@@ -691,7 +691,7 @@ void xdr_init_encode(struct xdr_stream *xdr, struct xdr_buf *buf, __be32 *p,
- EXPORT_SYMBOL_GPL(xdr_init_encode);
- 
- /**
-- * xdr_commit_encode - Ensure all data is written to buffer
-+ * __xdr_commit_encode - Ensure all data is written to buffer
-  * @xdr: pointer to xdr_stream
-  *
-  * We handle encoding across page boundaries by giving the caller a
-@@ -703,22 +703,25 @@ EXPORT_SYMBOL_GPL(xdr_init_encode);
-  * required at the end of encoding, or any other time when the xdr_buf
-  * data might be read.
-  */
--inline void xdr_commit_encode(struct xdr_stream *xdr)
-+void __xdr_commit_encode(struct xdr_stream *xdr)
- {
- 	int shift = xdr->scratch.iov_len;
- 	void *page;
- 
--	if (shift == 0)
--		return;
- 	page = page_address(*xdr->page_ptr);
- 	memcpy(xdr->scratch.iov_base, page, shift);
- 	memmove(page, page + shift, (void *)xdr->p - page);
- 	xdr_reset_scratch_buffer(xdr);
+ 	return 0;
  }
--EXPORT_SYMBOL_GPL(xdr_commit_encode);
-+EXPORT_SYMBOL_GPL(__xdr_commit_encode);
  
--static __be32 *xdr_get_next_encode_buffer(struct xdr_stream *xdr,
--		size_t nbytes)
-+/*
-+ * The buffer space to be reserved crosses the boundary between
-+ * xdr->buf->head and xdr->buf->pages, or between two pages
-+ * in xdr->buf->pages.
-+ */
-+static noinline __be32 *xdr_get_next_encode_buffer(struct xdr_stream *xdr,
-+						   size_t nbytes)
- {
- 	__be32 *p;
- 	int space_left;
+@@ -1678,7 +1691,7 @@ static int do_fanotify_mark(int fanotify_fd, unsigned int flags, __u64 mask,
+ 		goto fput_and_out;
+ 
+ 	if (flags & FAN_MARK_ADD) {
+-		ret = fanotify_events_supported(&path, mask, flags);
++		ret = fanotify_events_supported(group, &path, mask, flags);
+ 		if (ret)
+ 			goto path_put_and_out;
+ 	}
+@@ -1701,19 +1714,6 @@ static int do_fanotify_mark(int fanotify_fd, unsigned int flags, __u64 mask,
+ 	else
+ 		mnt = path.mnt;
+ 
+-	/*
+-	 * FAN_RENAME is not allowed on non-dir (for now).
+-	 * We shouldn't have allowed setting any dirent events in mask of
+-	 * non-dir, but because we always allowed it, error only if group
+-	 * was initialized with the new flag FAN_REPORT_TARGET_FID.
+-	 */
+-	ret = -ENOTDIR;
+-	if (inode && !S_ISDIR(inode->i_mode) &&
+-	    ((mask & FAN_RENAME) ||
+-	     ((mask & FANOTIFY_DIRENT_EVENTS) &&
+-	      FAN_GROUP_FLAG(group, FAN_REPORT_TARGET_FID))))
+-		goto path_put_and_out;
+-
+ 	/* Mask out FAN_EVENT_ON_CHILD flag for sb/mount/non-dir marks */
+ 	if (mnt || !S_ISDIR(inode->i_mode)) {
+ 		mask &= ~FAN_EVENT_ON_CHILD;
+diff --git a/include/linux/fanotify.h b/include/linux/fanotify.h
+index 81f45061c1b18..4f6cbe6c6e235 100644
+--- a/include/linux/fanotify.h
++++ b/include/linux/fanotify.h
+@@ -113,6 +113,10 @@ extern struct ctl_table fanotify_table[]; /* for sysctl */
+ 					 FANOTIFY_PERM_EVENTS | \
+ 					 FAN_Q_OVERFLOW | FAN_ONDIR)
+ 
++/* Events and flags relevant only for directories */
++#define FANOTIFY_DIRONLY_EVENT_BITS	(FANOTIFY_DIRENT_EVENTS | \
++					 FAN_EVENT_ON_CHILD | FAN_ONDIR)
++
+ #define ALL_FANOTIFY_EVENT_BITS		(FANOTIFY_OUTGOING_EVENTS | \
+ 					 FANOTIFY_EVENT_FLAGS)
+ 
 -- 
 2.43.0
 
