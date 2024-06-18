@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA8C13D8BC;
-	Tue, 18 Jun 2024 12:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D7913AD2F;
+	Tue, 18 Jun 2024 12:53:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715177; cv=none; b=LnQPCC/ryqosiM4usomlSRINEJe5x7jAP2HVcqHMOXtTk4+3mH9QWMgs0J/VWRVYn9Gomoewedg9UlJZOgS94GQhfk49NCikrY4GnOXyoJ7QuZR3+IyjfnYpxdt7bfJJoI1Jp79jTHNX9tBeLlf0vW0vgTI3H68xe9TAo8VKsSQ=
+	t=1718715180; cv=none; b=ISSLLYfVeZ0Uh/fOq4NQjxPaGuVXnGIsWhvp4FXL8Cqmeb+nA5r/GgH7VK5Op7cqXilASOgCFZqy+vI9L/5je1Twd+v4Byqclm/do+AvQmMrLo4GhUjYlnl098C+AoL0dt0EhqqNtRYOcVwrLTt0oN2+fTtLFsgbWhBJtOKEyjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715177; c=relaxed/simple;
-	bh=FV2C54oqnEyMg/e8wzsqQKB/zA2pGzfOke15jprO6d0=;
+	s=arc-20240116; t=1718715180; c=relaxed/simple;
+	bh=lj698T7AvwXRrAh5p54o0vOisW5UN97hqBAlAVMUpAw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UGzYKwkKaLwO1aQYenmFie8mcZ244Yuz2kfUZBlkcATLNkwdsWPfNuOJuiFFUyM2yfQ7lpe/yHrubbu0pImHxjx1R0TUAjwlkRQdL1r+VVTUuM0QxXO1i8GjESiP6fXP/6FW8tvxO+VTg08qk3QUtfd693CFCHWHWfrpPB/xb4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SgTxwE99; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oSanziAVj77gOdZa9/hcXXRyqDCRd6TqH3d0yjzUy/XjbDubN9EGh/WlaAH6kz6XUxZXv1GDyhp5MENQrTt/PyAXTrNsgwg1+gEWjYTEBaAU0JcrRk7W/+ChqoWrBaXd1NO/BH39tNO5gKXOhjhFLUFG8xVuV4f9WXlXiUklk5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ITmaLvXH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SgTxwE99"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A747C3277B;
-	Tue, 18 Jun 2024 12:52:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ITmaLvXH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81060C3277B;
+	Tue, 18 Jun 2024 12:52:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715177;
-	bh=FV2C54oqnEyMg/e8wzsqQKB/zA2pGzfOke15jprO6d0=;
+	s=korg; t=1718715179;
+	bh=lj698T7AvwXRrAh5p54o0vOisW5UN97hqBAlAVMUpAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SgTxwE99wta9nSwclXJOsaV7+jIu7rEtXYcTJZ16MR9M8Rlm3gL0WPev7AGluvffI
-	 CDgPctQ7nLsaNmaCH1MsBddVYId+CmHYYSa+y8ayjZ8WiORNk5lil1GNFlnsDiZZCw
-	 l1oYJzGedKn1tYWqi3sv6kP55ySRgBhTM+kuKkOc=
+	b=ITmaLvXHFVd3ZU4arTw13d1b1TnimdBZJ/WyURXSH5iSrLtfrai3HgcnAiPd3YUUT
+	 BLifk86aIYxDk/fGnbQXs4yuuUJNooXKyq0cLVgI8x1M9wOq65lXK6lsHIkGoSL0+Q
+	 v442iMx58hAU3SVUVtQzVTsmsE77/BCzyzMBFkqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 221/770] NFSD: Update the NFSv2 READLINK result encoder to use struct xdr_stream
-Date: Tue, 18 Jun 2024 14:31:14 +0200
-Message-ID: <20240618123415.812594803@linuxfoundation.org>
+Subject: [PATCH 5.10 222/770] NFSD: Update the NFSv2 READ result encoder to use struct xdr_stream
+Date: Tue, 18 Jun 2024 14:31:15 +0200
+Message-ID: <20240618123415.851391684@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,71 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit d9014b0f8fae11f22a3d356553844e06ddcdce4a ]
+[ Upstream commit a6f8d9dc9e44b51303d9abde4643460137d19b28 ]
 
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfsproc.c |  5 +++--
- fs/nfsd/nfsxdr.c  | 26 ++++++++++++--------------
+ fs/nfsd/nfsproc.c |  1 +
+ fs/nfsd/nfsxdr.c  | 32 +++++++++++++++-----------------
  fs/nfsd/xdr.h     |  1 +
- 3 files changed, 16 insertions(+), 16 deletions(-)
+ 3 files changed, 17 insertions(+), 17 deletions(-)
 
 diff --git a/fs/nfsd/nfsproc.c b/fs/nfsd/nfsproc.c
-index 2a30b27c9d9be..fa9a18897bc29 100644
+index fa9a18897bc29..1fd91e00b97ba 100644
 --- a/fs/nfsd/nfsproc.c
 +++ b/fs/nfsd/nfsproc.c
-@@ -151,13 +151,14 @@ nfsd_proc_readlink(struct svc_rqst *rqstp)
- {
- 	struct nfsd_fhandle *argp = rqstp->rq_argp;
- 	struct nfsd_readlinkres *resp = rqstp->rq_resp;
--	char *buffer = page_address(*(rqstp->rq_next_page++));
+@@ -185,6 +185,7 @@ nfsd_proc_read(struct svc_rqst *rqstp)
  
- 	dprintk("nfsd: READLINK %s\n", SVCFH_fmt(&argp->fh));
+ 	v = 0;
+ 	len = argp->count;
++	resp->pages = rqstp->rq_next_page;
+ 	while (len > 0) {
+ 		struct page *page = *(rqstp->rq_next_page++);
  
- 	/* Read the symlink. */
- 	resp->len = NFS_MAXPATHLEN;
--	resp->status = nfsd_readlink(rqstp, &argp->fh, buffer, &resp->len);
-+	resp->page = *(rqstp->rq_next_page++);
-+	resp->status = nfsd_readlink(rqstp, &argp->fh,
-+				     page_address(resp->page), &resp->len);
- 
- 	fh_put(&argp->fh);
- 	return rpc_success;
 diff --git a/fs/nfsd/nfsxdr.c b/fs/nfsd/nfsxdr.c
-index 989144b0d5be2..74d9d11949c6c 100644
+index 74d9d11949c6c..d6d7d07dbb1b2 100644
 --- a/fs/nfsd/nfsxdr.c
 +++ b/fs/nfsd/nfsxdr.c
-@@ -527,24 +527,22 @@ nfssvc_encode_diropres(struct svc_rqst *rqstp, __be32 *p)
+@@ -549,27 +549,25 @@ nfssvc_encode_readlinkres(struct svc_rqst *rqstp, __be32 *p)
  int
- nfssvc_encode_readlinkres(struct svc_rqst *rqstp, __be32 *p)
+ nfssvc_encode_readres(struct svc_rqst *rqstp, __be32 *p)
  {
 +	struct xdr_stream *xdr = &rqstp->rq_res_stream;
- 	struct nfsd_readlinkres *resp = rqstp->rq_resp;
+ 	struct nfsd_readres *resp = rqstp->rq_resp;
  	struct kvec *head = rqstp->rq_res.head;
  
 -	*p++ = resp->status;
 -	if (resp->status != nfs_ok)
 -		return xdr_ressize_check(rqstp, p);
 -
--	*p++ = htonl(resp->len);
+-	p = encode_fattr(rqstp, p, &resp->fh, &resp->stat);
+-	*p++ = htonl(resp->count);
 -	xdr_ressize_check(rqstp, p);
--	rqstp->rq_res.page_len = resp->len;
--	if (resp->len & 3) {
+-
+-	/* now update rqstp->rq_res to reflect data as well */
+-	rqstp->rq_res.page_len = resp->count;
+-	if (resp->count & 3) {
 -		/* need to pad the tail */
 -		rqstp->rq_res.tail[0].iov_base = p;
 -		*p = 0;
--		rqstp->rq_res.tail[0].iov_len = 4 - (resp->len&3);
+-		rqstp->rq_res.tail[0].iov_len = 4 - (resp->count&3);
 -	}
--	if (svc_encode_result_payload(rqstp, head->iov_len, resp->len))
+-	if (svc_encode_result_payload(rqstp, head->iov_len, resp->count))
 +	if (!svcxdr_encode_stat(xdr, resp->status))
  		return 0;
 +	switch (resp->status) {
 +	case nfs_ok:
-+		if (xdr_stream_encode_u32(xdr, resp->len) < 0)
++		if (!svcxdr_encode_fattr(rqstp, xdr, &resp->fh, &resp->stat))
 +			return 0;
-+		xdr_write_pages(xdr, &resp->page, 0, resp->len);
-+		if (svc_encode_result_payload(rqstp, head->iov_len, resp->len) < 0)
++		if (xdr_stream_encode_u32(xdr, resp->count) < 0)
++			return 0;
++		xdr_write_pages(xdr, resp->pages, rqstp->rq_res.page_base,
++				resp->count);
++		if (svc_encode_result_payload(rqstp, head->iov_len, resp->count) < 0)
 +			return 0;
 +		break;
 +	}
@@ -125,17 +122,17 @@ index 989144b0d5be2..74d9d11949c6c 100644
  }
  
 diff --git a/fs/nfsd/xdr.h b/fs/nfsd/xdr.h
-index 45aa6b75a5f87..b17fd72c69a6a 100644
+index b17fd72c69a6a..337c581e15b4c 100644
 --- a/fs/nfsd/xdr.h
 +++ b/fs/nfsd/xdr.h
-@@ -94,6 +94,7 @@ struct nfsd_diropres  {
- struct nfsd_readlinkres {
- 	__be32			status;
- 	int			len;
-+	struct page		*page;
+@@ -102,6 +102,7 @@ struct nfsd_readres {
+ 	struct svc_fh		fh;
+ 	unsigned long		count;
+ 	struct kstat		stat;
++	struct page		**pages;
  };
  
- struct nfsd_readres {
+ struct nfsd_readdirres {
 -- 
 2.43.0
 
