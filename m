@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FFCE15747D;
-	Tue, 18 Jun 2024 13:04:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77443155736;
+	Tue, 18 Jun 2024 13:04:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715865; cv=none; b=cRl5Yyc9sMe1jce83QLhwuWH9aC7Qb4+P/ESnk/a0PWJ67hzE8kBRuwQ21GomHwRXWZtBP+UpaK2T0UWE5EdYB18PVgEbz9DUm+ajtybNnw+zWX7a3p/KeIlS3iCOu4XLnC6evhJUBtsvCcKUcMmkPu/4srt26Gm22SsOc8rnPk=
+	t=1718715867; cv=none; b=sYQr/rhCDBfrCirzTHt9uT3KNVOeLAKRu3nem4RmAQPQU+LvDe463NFMkD2yk+H1a/2oWH/mmab3VdLHKvbu6QXlIzeGVB96o7h/HV19Lj9VDuzeTw9gnIKqyd/d8qi7piKLuiKrBduELvWcrYhgD+hLCjnbSxfBTFxYgGK51bY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715865; c=relaxed/simple;
-	bh=zi7w7ZVu5zlYmZHSaEDjsUIXXdLvdZXKWkoezBYB4EY=;
+	s=arc-20240116; t=1718715867; c=relaxed/simple;
+	bh=6ox0ZHlD37YrvmwgcuwxdJ2o08vBnsKBie8Y80UDp68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cTCRsyZIGKw8VhDUq4EpvZpE+qmRYxJ4Kzbw5hQngeK7LTsXgaqlbsJ3hjRBb0y+31G6aZZOyoxEfy0Bsvm6b4FwxTeDF/EGvGDyatJE2DrF5dWSVqv4C4Jm/eGB+riETqt8hWlkK8DoHKa31MDX6sso5xpmXs05VByu1J6wrC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WEeMI79I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rK9lrZxLCwlCe0Tg5WW1uudpXkFcLZtYeI3paOGyRAb+DxCWZH22kS7wIqta/hiNvP+pJyrGFxOSMD0RfdVBTn0X354FCCr4YhstCKCRkGoMtrsNRqbfj/CQ0E44AgOMEx9c9DCQvcj5lEYJczKZuIjfKUsUXS/CybEdKv7MxGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RWxW6V34; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WEeMI79I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0D0AC3277B;
-	Tue, 18 Jun 2024 13:04:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RWxW6V34"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8EBBC32786;
+	Tue, 18 Jun 2024 13:04:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715864;
-	bh=zi7w7ZVu5zlYmZHSaEDjsUIXXdLvdZXKWkoezBYB4EY=;
+	s=korg; t=1718715867;
+	bh=6ox0ZHlD37YrvmwgcuwxdJ2o08vBnsKBie8Y80UDp68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WEeMI79I9CGaRq/S4b27ByvVEr/tTL6PbEnv+4jt8q7UK9OKAO3Aov1ENxdL7QpJw
-	 TFiEoD5ll9FYpPQFX7phlGdDvi0/gcT9ukOrq93o3q6RFqg/oOO8EPY70O+THVtexG
-	 iJF1RXtvWpeFu8DNMNlR1XJiT3TADiZlv/kn2hyU=
+	b=RWxW6V34Rx66Ckik6TUhDVm19BadjOQ1Ce2XYUypVlVqxHx4iS1lEn6Q710rCwJ6O
+	 PAJjsHT4nRge7Kp8/BedI+F2QoscYEF73dNq09hRCpwabSdhQgBQWvWmzN/Ki3Pgy9
+	 L3MHT8T+YU4icNjf/x8wa/SWJRq9HpUE/+XkMS1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasily Averin <vvs@virtuozzo.com>,
-	"J. Bruce Fields" <bfields@redhat.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 445/770] nfs: block notification on fs with its own ->lock
-Date: Tue, 18 Jun 2024 14:34:58 +0200
-Message-ID: <20240618123424.467052942@linuxfoundation.org>
+Subject: [PATCH 5.10 454/770] nfsd: Add a tracepoint for errors in nfsd4_clone_file_range()
+Date: Tue, 18 Jun 2024 14:35:07 +0200
+Message-ID: <20240618123424.822933933@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,182 +51,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: J. Bruce Fields <bfields@redhat.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 40595cdc93edf4110c0f0c0b06f8d82008f23929 ]
+[ Upstream commit a2f4c3fa4db94ba44d32a72201927cfd132a8e82 ]
 
-NFSv4.1 supports an optional lock notification feature which notifies
-the client when a lock comes available.  (Normally NFSv4 clients just
-poll for locks if necessary.)  To make that work, we need to request a
-blocking lock from the filesystem.
+Since a clone error commit can cause the boot verifier to change,
+we should trace those errors.
 
-We turned that off for NFS in commit f657f8eef3ff ("nfs: don't atempt
-blocking locks on nfs reexports") [sic] because it actually blocks the
-nfsd thread while waiting for the lock.
-
-Thanks to Vasily Averin for pointing out that NFS isn't the only
-filesystem with that problem.
-
-Any filesystem that leaves ->lock NULL will use posix_lock_file(), which
-does the right thing.  Simplest is just to assume that any filesystem
-that defines its own ->lock is not safe to request a blocking lock from.
-
-So, this patch mostly reverts commit f657f8eef3ff ("nfs: don't atempt
-blocking locks on nfs reexports") [sic] and commit b840be2f00c0 ("lockd:
-don't attempt blocking locks on nfs reexports"), and instead uses a
-check of ->lock (Vasily's suggestion) to decide whether to support
-blocking lock notifications on a given filesystem.  Also add a little
-documentation.
-
-Perhaps someday we could add back an export flag later to allow
-filesystems with "good" ->lock methods to support blocking lock
-notifications.
-
-Reported-by: Vasily Averin <vvs@virtuozzo.com>
-Signed-off-by: J. Bruce Fields <bfields@redhat.com>
-[ cel: Description rewritten to address checkpatch nits ]
-[ cel: Fixed warning when SUNRPC debugging is disabled ]
-[ cel: Fixed NULL check ]
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Reviewed-by: Vasily Averin <vvs@virtuozzo.com>
+[ cel: Addressed a checkpatch.pl splat in fs/nfsd/vfs.h ]
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/lockd/svclock.c          |  6 ++++--
- fs/nfs/export.c             |  2 +-
- fs/nfsd/nfs4state.c         | 18 ++++++++++++------
- include/linux/exportfs.h    |  2 --
- include/linux/lockd/lockd.h |  9 +++++++--
- 5 files changed, 24 insertions(+), 13 deletions(-)
+ fs/nfsd/nfs4proc.c |  2 +-
+ fs/nfsd/trace.h    | 50 ++++++++++++++++++++++++++++++++++++++++++++++
+ fs/nfsd/vfs.c      | 18 +++++++++++++++--
+ fs/nfsd/vfs.h      |  3 ++-
+ 4 files changed, 69 insertions(+), 4 deletions(-)
 
-diff --git a/fs/lockd/svclock.c b/fs/lockd/svclock.c
-index e9b85d8fd5fe7..cb3658ab9b7ae 100644
---- a/fs/lockd/svclock.c
-+++ b/fs/lockd/svclock.c
-@@ -470,8 +470,10 @@ nlmsvc_lock(struct svc_rqst *rqstp, struct nlm_file *file,
- 	    struct nlm_host *host, struct nlm_lock *lock, int wait,
- 	    struct nlm_cookie *cookie, int reclaim)
- {
--	struct nlm_block	*block = NULL;
-+#if IS_ENABLED(CONFIG_SUNRPC_DEBUG)
- 	struct inode		*inode = nlmsvc_file_inode(file);
-+#endif
-+	struct nlm_block	*block = NULL;
- 	int			error;
- 	int			mode;
- 	int			async_block = 0;
-@@ -484,7 +486,7 @@ nlmsvc_lock(struct svc_rqst *rqstp, struct nlm_file *file,
- 				(long long)lock->fl.fl_end,
- 				wait);
- 
--	if (inode->i_sb->s_export_op->flags & EXPORT_OP_SYNC_LOCKS) {
-+	if (nlmsvc_file_file(file)->f_op->lock) {
- 		async_block = wait;
- 		wait = 0;
- 	}
-diff --git a/fs/nfs/export.c b/fs/nfs/export.c
-index 40beac65d1355..b347e3ce0cc8e 100644
---- a/fs/nfs/export.c
-+++ b/fs/nfs/export.c
-@@ -184,5 +184,5 @@ const struct export_operations nfs_export_ops = {
- 	.fetch_iversion = nfs_fetch_iversion,
- 	.flags = EXPORT_OP_NOWCC|EXPORT_OP_NOSUBTREECHK|
- 		EXPORT_OP_CLOSE_BEFORE_UNLINK|EXPORT_OP_REMOTE_FS|
--		EXPORT_OP_NOATOMIC_ATTR|EXPORT_OP_SYNC_LOCKS,
-+		EXPORT_OP_NOATOMIC_ATTR,
- };
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 3b8c5f2283975..36ae55fbfbc67 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -6884,7 +6884,6 @@ nfsd4_lock(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 	struct nfsd4_blocked_lock *nbl = NULL;
- 	struct file_lock *file_lock = NULL;
- 	struct file_lock *conflock = NULL;
--	struct super_block *sb;
- 	__be32 status = 0;
- 	int lkflg;
- 	int err;
-@@ -6906,7 +6905,6 @@ nfsd4_lock(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 		dprintk("NFSD: nfsd4_lock: permission denied!\n");
- 		return status;
- 	}
--	sb = cstate->current_fh.fh_dentry->d_sb;
- 
- 	if (lock->lk_is_new) {
- 		if (nfsd4_has_session(cstate))
-@@ -6958,8 +6956,7 @@ nfsd4_lock(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 	fp = lock_stp->st_stid.sc_file;
- 	switch (lock->lk_type) {
- 		case NFS4_READW_LT:
--			if (nfsd4_has_session(cstate) &&
--			    !(sb->s_export_op->flags & EXPORT_OP_SYNC_LOCKS))
-+			if (nfsd4_has_session(cstate))
- 				fl_flags |= FL_SLEEP;
- 			fallthrough;
- 		case NFS4_READ_LT:
-@@ -6971,8 +6968,7 @@ nfsd4_lock(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 			fl_type = F_RDLCK;
- 			break;
- 		case NFS4_WRITEW_LT:
--			if (nfsd4_has_session(cstate) &&
--			    !(sb->s_export_op->flags & EXPORT_OP_SYNC_LOCKS))
-+			if (nfsd4_has_session(cstate))
- 				fl_flags |= FL_SLEEP;
- 			fallthrough;
- 		case NFS4_WRITE_LT:
-@@ -6993,6 +6989,16 @@ nfsd4_lock(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index eaf2f95d059ca..0f2025b7a6415 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -1104,7 +1104,7 @@ nfsd4_clone(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 	if (status)
  		goto out;
- 	}
  
-+	/*
-+	 * Most filesystems with their own ->lock operations will block
-+	 * the nfsd thread waiting to acquire the lock.  That leads to
-+	 * deadlocks (we don't want every nfsd thread tied up waiting
-+	 * for file locks), so don't attempt blocking lock notifications
-+	 * on those filesystems:
-+	 */
-+	if (nf->nf_file->f_op->lock)
-+		fl_flags &= ~FL_SLEEP;
+-	status = nfsd4_clone_file_range(src, clone->cl_src_pos,
++	status = nfsd4_clone_file_range(rqstp, src, clone->cl_src_pos,
+ 			dst, clone->cl_dst_pos, clone->cl_count,
+ 			EX_ISSYNC(cstate->current_fh.fh_export));
+ 
+diff --git a/fs/nfsd/trace.h b/fs/nfsd/trace.h
+index cba38e0b204b9..199b485c77179 100644
+--- a/fs/nfsd/trace.h
++++ b/fs/nfsd/trace.h
+@@ -400,6 +400,56 @@ TRACE_EVENT(nfsd_dirent,
+ 		__entry->len, __get_str(name))
+ )
+ 
++DECLARE_EVENT_CLASS(nfsd_copy_err_class,
++	TP_PROTO(struct svc_rqst *rqstp,
++		 struct svc_fh	*src_fhp,
++		 loff_t		src_offset,
++		 struct svc_fh	*dst_fhp,
++		 loff_t		dst_offset,
++		 u64		count,
++		 int		status),
++	TP_ARGS(rqstp, src_fhp, src_offset, dst_fhp, dst_offset, count, status),
++	TP_STRUCT__entry(
++		__field(u32, xid)
++		__field(u32, src_fh_hash)
++		__field(loff_t, src_offset)
++		__field(u32, dst_fh_hash)
++		__field(loff_t, dst_offset)
++		__field(u64, count)
++		__field(int, status)
++	),
++	TP_fast_assign(
++		__entry->xid = be32_to_cpu(rqstp->rq_xid);
++		__entry->src_fh_hash = knfsd_fh_hash(&src_fhp->fh_handle);
++		__entry->src_offset = src_offset;
++		__entry->dst_fh_hash = knfsd_fh_hash(&dst_fhp->fh_handle);
++		__entry->dst_offset = dst_offset;
++		__entry->count = count;
++		__entry->status = status;
++	),
++	TP_printk("xid=0x%08x src_fh_hash=0x%08x src_offset=%lld "
++			"dst_fh_hash=0x%08x dst_offset=%lld "
++			"count=%llu status=%d",
++		  __entry->xid, __entry->src_fh_hash, __entry->src_offset,
++		  __entry->dst_fh_hash, __entry->dst_offset,
++		  (unsigned long long)__entry->count,
++		  __entry->status)
++)
 +
- 	nbl = find_or_allocate_block(lock_sop, &fp->fi_fhandle, nn);
- 	if (!nbl) {
- 		dprintk("NFSD: %s: unable to allocate block!\n", __func__);
-diff --git a/include/linux/exportfs.h b/include/linux/exportfs.h
-index 3260fe7148462..fe848901fcc3a 100644
---- a/include/linux/exportfs.h
-+++ b/include/linux/exportfs.h
-@@ -221,8 +221,6 @@ struct export_operations {
- #define EXPORT_OP_NOATOMIC_ATTR		(0x10) /* Filesystem cannot supply
- 						  atomic attribute updates
- 						*/
--#define EXPORT_OP_SYNC_LOCKS		(0x20) /* Filesystem can't do
--						  asychronous blocking locks */
- 	unsigned long	flags;
- };
++#define DEFINE_NFSD_COPY_ERR_EVENT(name)		\
++DEFINE_EVENT(nfsd_copy_err_class, nfsd_##name,		\
++	TP_PROTO(struct svc_rqst	*rqstp,		\
++		 struct svc_fh		*src_fhp,	\
++		 loff_t			src_offset,	\
++		 struct svc_fh		*dst_fhp,	\
++		 loff_t			dst_offset,	\
++		 u64			count,		\
++		 int			status),	\
++	TP_ARGS(rqstp, src_fhp, src_offset, dst_fhp, dst_offset, \
++		count, status))
++
++DEFINE_NFSD_COPY_ERR_EVENT(clone_file_range_err);
++
+ #include "state.h"
+ #include "filecache.h"
+ #include "vfs.h"
+diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
+index 2e3b0bd560fcc..b1ce38c642cde 100644
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -40,6 +40,7 @@
+ #include "../internal.h"
+ #include "acl.h"
+ #include "idmap.h"
++#include "xdr4.h"
+ #endif /* CONFIG_NFSD_V4 */
  
-diff --git a/include/linux/lockd/lockd.h b/include/linux/lockd/lockd.h
-index c4ae6506b8b36..fcef192e5e45e 100644
---- a/include/linux/lockd/lockd.h
-+++ b/include/linux/lockd/lockd.h
-@@ -303,10 +303,15 @@ void		  nlmsvc_invalidate_all(void);
- int           nlmsvc_unlock_all_by_sb(struct super_block *sb);
- int           nlmsvc_unlock_all_by_ip(struct sockaddr *server_addr);
+ #include "nfsd.h"
+@@ -530,8 +531,15 @@ __be32 nfsd4_set_nfs4_label(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ }
+ #endif
  
-+static inline struct file *nlmsvc_file_file(struct nlm_file *file)
+-__be32 nfsd4_clone_file_range(struct nfsd_file *nf_src, u64 src_pos,
+-		struct nfsd_file *nf_dst, u64 dst_pos, u64 count, bool sync)
++static struct nfsd4_compound_state *nfsd4_get_cstate(struct svc_rqst *rqstp)
 +{
-+	return file->f_file[O_RDONLY] ?
-+	       file->f_file[O_RDONLY] : file->f_file[O_WRONLY];
++	return &((struct nfsd4_compoundres *)rqstp->rq_resp)->cstate;
 +}
 +
- static inline struct inode *nlmsvc_file_inode(struct nlm_file *file)
++__be32 nfsd4_clone_file_range(struct svc_rqst *rqstp,
++		struct nfsd_file *nf_src, u64 src_pos,
++		struct nfsd_file *nf_dst, u64 dst_pos,
++		u64 count, bool sync)
  {
--	return locks_inode(file->f_file[O_RDONLY] ?
--			   file->f_file[O_RDONLY] : file->f_file[O_WRONLY]);
-+	return locks_inode(nlmsvc_file_file(file));
- }
- 
- static inline int __nlm_privileged_request4(const struct sockaddr *sap)
+ 	struct file *src = nf_src->nf_file;
+ 	struct file *dst = nf_dst->nf_file;
+@@ -558,6 +566,12 @@ __be32 nfsd4_clone_file_range(struct nfsd_file *nf_src, u64 src_pos,
+ 		if (!status)
+ 			status = commit_inode_metadata(file_inode(src));
+ 		if (status < 0) {
++			trace_nfsd_clone_file_range_err(rqstp,
++					&nfsd4_get_cstate(rqstp)->save_fh,
++					src_pos,
++					&nfsd4_get_cstate(rqstp)->current_fh,
++					dst_pos,
++					count, status);
+ 			nfsd_reset_boot_verifier(net_generic(nf_dst->nf_net,
+ 						 nfsd_net_id));
+ 			ret = nfserrno(status);
+diff --git a/fs/nfsd/vfs.h b/fs/nfsd/vfs.h
+index b21b76e6b9a87..9f56dcb22ff72 100644
+--- a/fs/nfsd/vfs.h
++++ b/fs/nfsd/vfs.h
+@@ -57,7 +57,8 @@ __be32          nfsd4_set_nfs4_label(struct svc_rqst *, struct svc_fh *,
+ 		    struct xdr_netobj *);
+ __be32		nfsd4_vfs_fallocate(struct svc_rqst *, struct svc_fh *,
+ 				    struct file *, loff_t, loff_t, int);
+-__be32		nfsd4_clone_file_range(struct nfsd_file *nf_src, u64 src_pos,
++__be32		nfsd4_clone_file_range(struct svc_rqst *rqstp,
++				       struct nfsd_file *nf_src, u64 src_pos,
+ 				       struct nfsd_file *nf_dst, u64 dst_pos,
+ 				       u64 count, bool sync);
+ #endif /* CONFIG_NFSD_V4 */
 -- 
 2.43.0
 
