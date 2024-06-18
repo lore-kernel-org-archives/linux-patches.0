@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55F219E81E;
-	Tue, 18 Jun 2024 13:07:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9357B1581F6;
+	Tue, 18 Jun 2024 13:07:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716027; cv=none; b=bAV5tlQ56Vk0TQvjP0ss5u4c46O5GLQDrcKzSNjt3s/1/ydGmmtF1XNNkY58xNACD4KRAogKr+H2IJ9F9a0SERHF1yedLNQFj565QaxijN/EcZ6oO4374ZZaQk+n7JuGvo4Pj3eWFhNYuqHD9jMmhIVPvNseYgjsGi/dO8aYhGE=
+	t=1718716029; cv=none; b=noB3yZ8ti5TzznU+SulIEgGiCFSgkc9TTJoPulAF+aHwPNpwCvlfESKl9MVh9ZvY8Khl/USeg5RgQ2IcjqcdohgN2CL7UguHIWAJ3USwkAO1Q6kV7+a0kDJ+TH2unoBqH+sYG/WGOOKjDu5mrSrhhjvhOst7/xqkC/9SzovMJjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716027; c=relaxed/simple;
-	bh=Tcm4YDUqJvEC5KXdwSjsRpluQt9vMI+CSbkPuMyyuCk=;
+	s=arc-20240116; t=1718716029; c=relaxed/simple;
+	bh=avNCoer7fGX4UQrnP69luDYTW03KovxVa++LVeR4Z+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nC3d0JpU1DY3OsGxIw9hUD2/Z3r5aZogVIzDscT0ahdVI5hDIWL87tyCJBjaEMj/HDqUy0WzIDoRZ9KLRZ0NbwAqpcHhJGiLtqlnRyQhqBV3vPND+haj4T6jk/73LkHz3ufwWRZAc1dbwnJjBq/Yh2ypbMrzerjHNigUu8glhWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zz+vSYlg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UQ0QTy5zAKAhoVHLBta/mmKx3LgX7ZNZUnK73ayPgW6miq4xMOmCdcr8pf5sW6/oxWT8ak1s9BREUoFvHYgtaIyN+pHmB+EEv1u6G+nBSNNXHroi+iBLGkt2b12jQgQ41xUOhD9hYBLYCFL9N5KK4nV9cEFx9PD2qRyr/DEKTJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fE0dnNTF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zz+vSYlg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23004C3277B;
-	Tue, 18 Jun 2024 13:07:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fE0dnNTF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 171C9C3277B;
+	Tue, 18 Jun 2024 13:07:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716026;
-	bh=Tcm4YDUqJvEC5KXdwSjsRpluQt9vMI+CSbkPuMyyuCk=;
+	s=korg; t=1718716029;
+	bh=avNCoer7fGX4UQrnP69luDYTW03KovxVa++LVeR4Z+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zz+vSYlgE3ivMhRrfwmhm3CCosHLmkayKRz+FAf9hEpisALeygxZkDZlKvJI2YPLk
-	 0aP/Uk7r/MCZ1m9uq27J+fC5Y0PPZKsJX+4/uXgspztNWcgd1Ukbv7LEjFYEwNf10H
-	 M8cAq3NvcT+aYhO0QjmKomtWIdsk6eXpAcwK5wzs=
+	b=fE0dnNTFvwdAmqd0KCUQ78g73HRZv6gnFmvHE3YV3aHtuZkHJCTS7qmZPVI/1pRUF
+	 neLVY1jFJrZb8JuQvqMPUrFqzfyofoQX1VaMGWs14rAcG32cW8r+PPPiTi+uCXdmyJ
+	 CSiIMEAmAGria/dggrqUkfPv8e86YrUbN3RRu6Rk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.com>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 507/770] fsnotify: consistent behavior for parent not watching children
-Date: Tue, 18 Jun 2024 14:36:00 +0200
-Message-ID: <20240618123426.882968866@linuxfoundation.org>
+Subject: [PATCH 5.10 481/770] NFSD: Move svc_serv_ops::svo_function into struct svc_serv
+Date: Tue, 18 Jun 2024 14:35:34 +0200
+Message-ID: <20240618123425.882594606@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,129 +50,266 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit e730558adffb88a52e562db089e969ee9510184a ]
+[ Upstream commit 37902c6313090235c847af89c5515591261ee338 ]
 
-The logic for handling events on child in groups that have a mark on
-the parent inode, but without FS_EVENT_ON_CHILD flag in the mask is
-duplicated in several places and inconsistent.
+Hoist svo_function back into svc_serv and remove struct
+svc_serv_ops, since the struct is now devoid of fields.
 
-Move the logic into the preparation of mark type iterator, so that the
-parent mark type will be excluded from all mark type iterations in that
-case.
-
-This results in several subtle changes of behavior, hopefully all
-desired changes of behavior, for example:
-
-- Group A has a mount mark with FS_MODIFY in mask
-- Group A has a mark with ignore mask that does not survive FS_MODIFY
-  and does not watch children on directory D.
-- Group B has a mark with FS_MODIFY in mask that does watch children
-  on directory D.
-- FS_MODIFY event on file D/foo should not clear the ignore mask of
-  group A, but before this change it does
-
-And if group A ignore mask was set to survive FS_MODIFY:
-- FS_MODIFY event on file D/foo should be reported to group A on account
-  of the mount mark, but before this change it is wrongly ignored
-
-Fixes: 2f02fd3fa13e ("fanotify: fix ignore mask logic for events on child and on dir")
-Reported-by: Jan Kara <jack@suse.com>
-Link: https://lore.kernel.org/linux-fsdevel/20220314113337.j7slrb5srxukztje@quack3.lan/
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20220511190213.831646-3-amir73il@gmail.com
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/fanotify/fanotify.c | 10 +---------
- fs/notify/fsnotify.c          | 34 +++++++++++++++++++---------------
- 2 files changed, 20 insertions(+), 24 deletions(-)
+ fs/lockd/svc.c             |  6 +-----
+ fs/nfs/callback.c          | 43 ++++++++++----------------------------
+ fs/nfsd/nfssvc.c           |  7 +------
+ include/linux/sunrpc/svc.h | 14 ++++---------
+ net/sunrpc/svc.c           | 37 ++++++++++++++++++++++----------
+ 5 files changed, 43 insertions(+), 64 deletions(-)
 
-diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
-index 263d303d8f8f1..4f897e1095470 100644
---- a/fs/notify/fanotify/fanotify.c
-+++ b/fs/notify/fanotify/fanotify.c
-@@ -320,7 +320,7 @@ static u32 fanotify_group_event_mask(struct fsnotify_group *group,
- 	}
+diff --git a/fs/lockd/svc.c b/fs/lockd/svc.c
+index bfde31124f3af..59ef8a1f843f3 100644
+--- a/fs/lockd/svc.c
++++ b/fs/lockd/svc.c
+@@ -349,10 +349,6 @@ static struct notifier_block lockd_inet6addr_notifier = {
+ };
+ #endif
  
- 	fsnotify_foreach_iter_mark_type(iter_info, mark, type) {
--		/* Apply ignore mask regardless of ISDIR and ON_CHILD flags */
-+		/* Apply ignore mask regardless of mark's ISDIR flag */
- 		marks_ignored_mask |= mark->ignored_mask;
- 
- 		/*
-@@ -330,14 +330,6 @@ static u32 fanotify_group_event_mask(struct fsnotify_group *group,
- 		if (event_mask & FS_ISDIR && !(mark->mask & FS_ISDIR))
- 			continue;
- 
--		/*
--		 * If the event is on a child and this mark is on a parent not
--		 * watching children, don't send it!
--		 */
--		if (type == FSNOTIFY_ITER_TYPE_PARENT &&
--		    !(mark->mask & FS_EVENT_ON_CHILD))
--			continue;
+-static const struct svc_serv_ops lockd_sv_ops = {
+-	.svo_function		= lockd,
+-};
 -
- 		marks_mask |= mark->mask;
+ static int lockd_get(void)
+ {
+ 	struct svc_serv *serv;
+@@ -376,7 +372,7 @@ static int lockd_get(void)
+ 		nlm_timeout = LOCKD_DFLT_TIMEO;
+ 	nlmsvc_timeout = nlm_timeout * HZ;
  
- 		/* Record the mark types of this group that matched the event */
-diff --git a/fs/notify/fsnotify.c b/fs/notify/fsnotify.c
-index 35740a64ee453..0b3e74935cb4f 100644
---- a/fs/notify/fsnotify.c
-+++ b/fs/notify/fsnotify.c
-@@ -290,22 +290,15 @@ static int fsnotify_handle_event(struct fsnotify_group *group, __u32 mask,
- 	}
+-	serv = svc_create(&nlmsvc_program, LOCKD_BUFSIZE, &lockd_sv_ops);
++	serv = svc_create(&nlmsvc_program, LOCKD_BUFSIZE, lockd);
+ 	if (!serv) {
+ 		printk(KERN_WARNING "lockd_up: create service failed\n");
+ 		return -ENOMEM;
+diff --git a/fs/nfs/callback.c b/fs/nfs/callback.c
+index a494f9e7bd0a0..456af7d230cf1 100644
+--- a/fs/nfs/callback.c
++++ b/fs/nfs/callback.c
+@@ -231,29 +231,10 @@ static int nfs_callback_up_net(int minorversion, struct svc_serv *serv,
+ 	return ret;
+ }
  
- 	if (parent_mark) {
--		/*
--		 * parent_mark indicates that the parent inode is watching
--		 * children and interested in this event, which is an event
--		 * possible on child. But is *this mark* watching children and
--		 * interested in this event?
--		 */
--		if (parent_mark->mask & FS_EVENT_ON_CHILD) {
--			ret = fsnotify_handle_inode_event(group, parent_mark, mask,
--							  data, data_type, dir, name, 0);
--			if (ret)
--				return ret;
--		}
--		if (!inode_mark)
--			return 0;
-+		ret = fsnotify_handle_inode_event(group, parent_mark, mask,
-+						  data, data_type, dir, name, 0);
-+		if (ret)
-+			return ret;
- 	}
+-static const struct svc_serv_ops nfs40_cb_sv_ops = {
+-	.svo_function		= nfs4_callback_svc,
+-};
+-#if defined(CONFIG_NFS_V4_1)
+-static const struct svc_serv_ops nfs41_cb_sv_ops = {
+-	.svo_function		= nfs41_callback_svc,
+-};
+-
+-static const struct svc_serv_ops *nfs4_cb_sv_ops[] = {
+-	[0] = &nfs40_cb_sv_ops,
+-	[1] = &nfs41_cb_sv_ops,
+-};
+-#else
+-static const struct svc_serv_ops *nfs4_cb_sv_ops[] = {
+-	[0] = &nfs40_cb_sv_ops,
+-	[1] = NULL,
+-};
+-#endif
+-
+ static struct svc_serv *nfs_callback_create_svc(int minorversion)
+ {
+ 	struct nfs_callback_data *cb_info = &nfs_callback_info[minorversion];
+-	const struct svc_serv_ops *sv_ops;
++	int (*threadfn)(void *data);
+ 	struct svc_serv *serv;
  
-+	if (!inode_mark)
-+		return 0;
+ 	/*
+@@ -262,17 +243,6 @@ static struct svc_serv *nfs_callback_create_svc(int minorversion)
+ 	if (cb_info->serv)
+ 		return svc_get(cb_info->serv);
+ 
+-	switch (minorversion) {
+-	case 0:
+-		sv_ops = nfs4_cb_sv_ops[0];
+-		break;
+-	default:
+-		sv_ops = nfs4_cb_sv_ops[1];
+-	}
+-
+-	if (sv_ops == NULL)
+-		return ERR_PTR(-ENOTSUPP);
+-
+ 	/*
+ 	 * Sanity check: if there's no task,
+ 	 * we should be the first user ...
+@@ -281,7 +251,16 @@ static struct svc_serv *nfs_callback_create_svc(int minorversion)
+ 		printk(KERN_WARNING "nfs_callback_create_svc: no kthread, %d users??\n",
+ 			cb_info->users);
+ 
+-	serv = svc_create(&nfs4_callback_program, NFS4_CALLBACK_BUFSIZE, sv_ops);
++	threadfn = nfs4_callback_svc;
++#if defined(CONFIG_NFS_V4_1)
++	if (minorversion)
++		threadfn = nfs41_callback_svc;
++#else
++	if (minorversion)
++		return ERR_PTR(-ENOTSUPP);
++#endif
++	serv = svc_create(&nfs4_callback_program, NFS4_CALLBACK_BUFSIZE,
++			  threadfn);
+ 	if (!serv) {
+ 		printk(KERN_ERR "nfs_callback_create_svc: create service failed\n");
+ 		return ERR_PTR(-ENOMEM);
+diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
+index d25d4c12a499a..2f74be98ff2d9 100644
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -612,10 +612,6 @@ static int nfsd_get_default_max_blksize(void)
+ 	return ret;
+ }
+ 
+-static const struct svc_serv_ops nfsd_thread_sv_ops = {
+-	.svo_function		= nfsd,
+-};
+-
+ void nfsd_shutdown_threads(struct net *net)
+ {
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+@@ -654,8 +650,7 @@ int nfsd_create_serv(struct net *net)
+ 	if (nfsd_max_blksize == 0)
+ 		nfsd_max_blksize = nfsd_get_default_max_blksize();
+ 	nfsd_reset_versions(nn);
+-	serv = svc_create_pooled(&nfsd_program, nfsd_max_blksize,
+-				 &nfsd_thread_sv_ops);
++	serv = svc_create_pooled(&nfsd_program, nfsd_max_blksize, nfsd);
+ 	if (serv == NULL)
+ 		return -ENOMEM;
+ 
+diff --git a/include/linux/sunrpc/svc.h b/include/linux/sunrpc/svc.h
+index c64db9b14a643..3c908ffbbf45f 100644
+--- a/include/linux/sunrpc/svc.h
++++ b/include/linux/sunrpc/svc.h
+@@ -52,13 +52,6 @@ struct svc_pool {
+ 	unsigned long		sp_flags;
+ } ____cacheline_aligned_in_smp;
+ 
+-struct svc_serv;
+-
+-struct svc_serv_ops {
+-	/* function for service threads to run */
+-	int		(*svo_function)(void *);
+-};
+-
+ /*
+  * RPC service.
+  *
+@@ -91,7 +84,8 @@ struct svc_serv {
+ 
+ 	unsigned int		sv_nrpools;	/* number of thread pools */
+ 	struct svc_pool *	sv_pools;	/* array of thread pools */
+-	const struct svc_serv_ops *sv_ops;	/* server operations */
++	int			(*sv_threadfn)(void *data);
 +
- 	if (mask & FS_EVENT_ON_CHILD) {
- 		/*
- 		 * Some events can be sent on both parent dir and child marks
-@@ -422,8 +415,19 @@ static bool fsnotify_iter_select_report_types(
- 	iter_info->report_mask = 0;
- 	fsnotify_foreach_iter_type(type) {
- 		mark = iter_info->marks[type];
--		if (mark && mark->group == iter_info->current_group)
-+		if (mark && mark->group == iter_info->current_group) {
-+			/*
-+			 * FSNOTIFY_ITER_TYPE_PARENT indicates that this inode
-+			 * is watching children and interested in this event,
-+			 * which is an event possible on child.
-+			 * But is *this mark* watching children?
-+			 */
-+			if (type == FSNOTIFY_ITER_TYPE_PARENT &&
-+			    !(mark->mask & FS_EVENT_ON_CHILD))
-+				continue;
-+
- 			fsnotify_iter_set_report_type(iter_info, type);
-+		}
- 	}
+ #if defined(CONFIG_SUNRPC_BACKCHANNEL)
+ 	struct list_head	sv_cb_list;	/* queue for callback requests
+ 						 * that arrive over the same
+@@ -495,7 +489,7 @@ int svc_rpcb_setup(struct svc_serv *serv, struct net *net);
+ void svc_rpcb_cleanup(struct svc_serv *serv, struct net *net);
+ int svc_bind(struct svc_serv *serv, struct net *net);
+ struct svc_serv *svc_create(struct svc_program *, unsigned int,
+-			    const struct svc_serv_ops *);
++			    int (*threadfn)(void *data));
+ struct svc_rqst *svc_rqst_alloc(struct svc_serv *serv,
+ 					struct svc_pool *pool, int node);
+ void		   svc_rqst_replace_page(struct svc_rqst *rqstp,
+@@ -503,7 +497,7 @@ void		   svc_rqst_replace_page(struct svc_rqst *rqstp,
+ void		   svc_rqst_free(struct svc_rqst *);
+ void		   svc_exit_thread(struct svc_rqst *);
+ struct svc_serv *  svc_create_pooled(struct svc_program *, unsigned int,
+-			const struct svc_serv_ops *);
++				     int (*threadfn)(void *data));
+ int		   svc_set_num_threads(struct svc_serv *, struct svc_pool *, int);
+ int		   svc_pool_stats_open(struct svc_serv *serv, struct file *file);
+ int		   svc_process(struct svc_rqst *);
+diff --git a/net/sunrpc/svc.c b/net/sunrpc/svc.c
+index bdecc902cf998..7f231947347ea 100644
+--- a/net/sunrpc/svc.c
++++ b/net/sunrpc/svc.c
+@@ -446,7 +446,7 @@ __svc_init_bc(struct svc_serv *serv)
+  */
+ static struct svc_serv *
+ __svc_create(struct svc_program *prog, unsigned int bufsize, int npools,
+-	     const struct svc_serv_ops *ops)
++	     int (*threadfn)(void *data))
+ {
+ 	struct svc_serv	*serv;
+ 	unsigned int vers;
+@@ -463,7 +463,7 @@ __svc_create(struct svc_program *prog, unsigned int bufsize, int npools,
+ 		bufsize = RPCSVC_MAXPAYLOAD;
+ 	serv->sv_max_payload = bufsize? bufsize : 4096;
+ 	serv->sv_max_mesg  = roundup(serv->sv_max_payload + PAGE_SIZE, PAGE_SIZE);
+-	serv->sv_ops = ops;
++	serv->sv_threadfn = threadfn;
+ 	xdrsize = 0;
+ 	while (prog) {
+ 		prog->pg_lovers = prog->pg_nvers-1;
+@@ -509,22 +509,37 @@ __svc_create(struct svc_program *prog, unsigned int bufsize, int npools,
+ 	return serv;
+ }
  
- 	return true;
+-struct svc_serv *
+-svc_create(struct svc_program *prog, unsigned int bufsize,
+-	   const struct svc_serv_ops *ops)
++/**
++ * svc_create - Create an RPC service
++ * @prog: the RPC program the new service will handle
++ * @bufsize: maximum message size for @prog
++ * @threadfn: a function to service RPC requests for @prog
++ *
++ * Returns an instantiated struct svc_serv object or NULL.
++ */
++struct svc_serv *svc_create(struct svc_program *prog, unsigned int bufsize,
++			    int (*threadfn)(void *data))
+ {
+-	return __svc_create(prog, bufsize, /*npools*/1, ops);
++	return __svc_create(prog, bufsize, 1, threadfn);
+ }
+ EXPORT_SYMBOL_GPL(svc_create);
+ 
+-struct svc_serv *
+-svc_create_pooled(struct svc_program *prog, unsigned int bufsize,
+-		  const struct svc_serv_ops *ops)
++/**
++ * svc_create_pooled - Create an RPC service with pooled threads
++ * @prog: the RPC program the new service will handle
++ * @bufsize: maximum message size for @prog
++ * @threadfn: a function to service RPC requests for @prog
++ *
++ * Returns an instantiated struct svc_serv object or NULL.
++ */
++struct svc_serv *svc_create_pooled(struct svc_program *prog,
++				   unsigned int bufsize,
++				   int (*threadfn)(void *data))
+ {
+ 	struct svc_serv *serv;
+ 	unsigned int npools = svc_pool_map_get();
+ 
+-	serv = __svc_create(prog, bufsize, npools, ops);
++	serv = __svc_create(prog, bufsize, npools, threadfn);
+ 	if (!serv)
+ 		goto out_err;
+ 	return serv;
+@@ -734,7 +749,7 @@ svc_start_kthreads(struct svc_serv *serv, struct svc_pool *pool, int nrservs)
+ 		if (IS_ERR(rqstp))
+ 			return PTR_ERR(rqstp);
+ 
+-		task = kthread_create_on_node(serv->sv_ops->svo_function, rqstp,
++		task = kthread_create_on_node(serv->sv_threadfn, rqstp,
+ 					      node, "%s", serv->sv_name);
+ 		if (IS_ERR(task)) {
+ 			svc_exit_thread(rqstp);
 -- 
 2.43.0
 
