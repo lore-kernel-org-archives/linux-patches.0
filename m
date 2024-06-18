@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC00156972;
-	Tue, 18 Jun 2024 12:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766AB1849CB;
+	Tue, 18 Jun 2024 12:59:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715583; cv=none; b=Ea/m5g+sv+Lj+gRAF20kKyv3hj7mTJ8YOuLAM9cVfnG6SflKzlEloRI/0+ovclRsKKbIiRNfmtYqUwr437WQDt0Sskn9hdy2sLqqT429yUmC9K6Xuv+YhPgWvngLjvlMeo6APqvstIrbpi9Ke8B3tuZJSrlH6mysK67L7x5Sxmc=
+	t=1718715586; cv=none; b=mE+xPYkGkgYqL4b2trVaQGyHVyo917eoNrcQir2UxCY6CCOev6zePgKpT8OoxT+cvyKQFM9X0FodYtzsH99MftAmX/ZmEMX8Qd3Oc3w+zxPpi1VDF3vFTFxi84gGz7j+T+KxPrwFbYVk66TkfcufD20CzjRKaTYf1zn1evI3wK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715583; c=relaxed/simple;
-	bh=/KgpvdMINzSvbfrfLroIxag+pf+I+/DwP50m0Vmy0vA=;
+	s=arc-20240116; t=1718715586; c=relaxed/simple;
+	bh=q4qPxQuzRtn/xti0gn0h8njn3zOAYufcwKkC7CcnIHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pfSVihjzDVlD+rgsTWTVELKZxX4mNaAFuYe5/+NBq7yq/iEGE3aR0QY+mgz/2+YZ6piDpJAFAnnXRQJV7Iwd5sr+oAj2tt8KqajRSu5ejs6ZOOnfd8TaikpBCrtX2HgXa2AzOzOJeydW0XJnF6a07F8aphM+PCgtpTqGQ9zO67k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sez9McXx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DVbJoST+iKRcCV0lQU29qjNAxSqZXokrytjYl1LMR95qq3Oq0FEilQKeSRXAaWshycPe+2Tv8Q+ZJisQsXtXU6RuUvVf+pjqhPbMgfJoAwpO6PyaaCyBttAsP2b910M4gZ0ELzjZBc6TPONysP4PVSUiugkIB6zVIKh2mmQlWQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mv/yWyNg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sez9McXx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA02AC3277B;
-	Tue, 18 Jun 2024 12:59:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mv/yWyNg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BFE3C3277B;
+	Tue, 18 Jun 2024 12:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715583;
-	bh=/KgpvdMINzSvbfrfLroIxag+pf+I+/DwP50m0Vmy0vA=;
+	s=korg; t=1718715586;
+	bh=q4qPxQuzRtn/xti0gn0h8njn3zOAYufcwKkC7CcnIHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sez9McXxInl39ejF2F7KxyA6aNwKu/57gVE0Hb+ETJM1Dh9ywm9me7QT3IDkCLisB
-	 H0CX+RItu0oLdY2rMXRHo+bm7eqOW7UQXioyDDN1+N7wX4cp4o5QyKm9WKR9km1PFM
-	 oXus9rXI3IfMMJa+g6nX8IXJYjafU+ulcb5Pxgf0=
+	b=Mv/yWyNgmSu9zNqFtaLAwKbYFNZRXIdi9wxY/PBgUv3ktKOLTj6jhx/oJ8lz+N+dP
+	 mG9QsvimvwgGWNQiPg4PZ02A/4zCFtvYCCw7E3lXvXfkayRTtI44V7mggJhztn2zo8
+	 f9hiMnT7tPP+hwE53vd6SdRs9N6F/Qw0/WGMEPkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Murphy Zhou <jencce.kernel@gmail.com>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Dai Ngo <Dai.Ngo@oracle.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 358/770] fsnotify: fix sb_connectors leak
-Date: Tue, 18 Jun 2024 14:33:31 +0200
-Message-ID: <20240618123421.085388950@linuxfoundation.org>
+Subject: [PATCH 5.10 359/770] NLM: Fix svcxdr_encode_owner()
+Date: Tue, 18 Jun 2024 14:33:32 +0200
+Message-ID: <20240618123421.125646041@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,42 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 4396a73115fc8739083536162e2228c0c0c3ed1a ]
+[ Upstream commit 89c485c7a3ecbc2ebd568f9c9c2edf3a8cf7485b ]
 
-Fix a leak in s_fsnotify_connectors counter in case of a race between
-concurrent add of new fsnotify mark to an object.
+Dai Ngo reports that, since the XDR overhaul, the NLM server crashes
+when the TEST procedure wants to return NLM_DENIED. There is a bug
+in svcxdr_encode_owner() that none of our standard test cases found.
 
-The task that lost the race fails to drop the counter before freeing
-the unused connector.
+Replace the open-coded function with a call to an appropriate
+pre-fabricated XDR helper.
 
-Following umount() hangs in fsnotify_sb_delete()/wait_var_event(),
-because s_fsnotify_connectors never drops to zero.
-
-Fixes: ec44610fe2b8 ("fsnotify: count all objects with attached connectors")
-Reported-by: Murphy Zhou <jencce.kernel@gmail.com>
-Link: https://lore.kernel.org/linux-fsdevel/20210907063338.ycaw6wvhzrfsfdlp@xzhoux.usersys.redhat.com/
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Reported-by: Dai Ngo <Dai.Ngo@oracle.com>
+Fixes: a6a63ca5652e ("lockd: Common NLM XDR helpers")
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/mark.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/lockd/svcxdr.h | 13 ++-----------
+ 1 file changed, 2 insertions(+), 11 deletions(-)
 
-diff --git a/fs/notify/mark.c b/fs/notify/mark.c
-index 796946eb0c2e2..bea106fac0901 100644
---- a/fs/notify/mark.c
-+++ b/fs/notify/mark.c
-@@ -531,6 +531,7 @@ static int fsnotify_attach_connector_to_object(fsnotify_connp_t *connp,
- 		/* Someone else created list structure for us */
- 		if (inode)
- 			fsnotify_put_inode_ref(inode);
-+		fsnotify_put_sb_connectors(conn);
- 		kmem_cache_free(fsnotify_mark_connector_cachep, conn);
- 	}
+diff --git a/fs/lockd/svcxdr.h b/fs/lockd/svcxdr.h
+index c69a0bb76c940..4f1a451da5ba2 100644
+--- a/fs/lockd/svcxdr.h
++++ b/fs/lockd/svcxdr.h
+@@ -134,18 +134,9 @@ svcxdr_decode_owner(struct xdr_stream *xdr, struct xdr_netobj *obj)
+ static inline bool
+ svcxdr_encode_owner(struct xdr_stream *xdr, const struct xdr_netobj *obj)
+ {
+-	unsigned int quadlen = XDR_QUADLEN(obj->len);
+-	__be32 *p;
+-
+-	if (xdr_stream_encode_u32(xdr, obj->len) < 0)
+-		return false;
+-	p = xdr_reserve_space(xdr, obj->len);
+-	if (!p)
++	if (obj->len > XDR_MAX_NETOBJ)
+ 		return false;
+-	p[quadlen - 1] = 0;	/* XDR pad */
+-	memcpy(p, obj->data, obj->len);
+-
+-	return true;
++	return xdr_stream_encode_opaque(xdr, obj->data, obj->len) > 0;
+ }
  
+ #endif /* _LOCKD_SVCXDR_H_ */
 -- 
 2.43.0
 
