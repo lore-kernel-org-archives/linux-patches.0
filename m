@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D6213BAFB;
-	Tue, 18 Jun 2024 13:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6C513BAFB;
+	Tue, 18 Jun 2024 13:03:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715814; cv=none; b=NjvStj7V2qFhv5WQ3D6PcsBn6mSKXJoSSg8RtdFkBjZjukMmPvYAvA26thUxObJi3ApOxTY9L9TqhQG7N8jOPNl7fmBYAhkYQ6GVIWV3tu69DBqUS0q/BRSVXtqZd1j+O46xL8yPDKW9IosfavKADaga718rq+y7UWTnaBGGoRA=
+	t=1718715817; cv=none; b=oOejSus0DolFFqMWM2mAAr6UGJN8XP+8Yqps8QdptgNkM5cPV5VYBAAb9Dfr27lFWOBHEyuQpSU+UHORIwbdcahObQzhudSVetQ8o39jiqDScsBZxtElfzUpxtm0QxyrnkpRDH/Sc56eXeYJ5ePE8rVb67JqSG8Xfpqq+BPJfRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715814; c=relaxed/simple;
-	bh=ugfnh8Rib7i0xR3pJj9S9MB5rmOdjVqY7V4sYV8Vut8=;
+	s=arc-20240116; t=1718715817; c=relaxed/simple;
+	bh=NJ3AVsS1GBrlcVr3rpf8PLfQ81hvP/viJBaMThqfYz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gKgno23CgO8bhxlQUL8WCuf9Z6rlEPJVlGYJFewgLTwJI3hmXKpYCzDojzc0o4/tjPOqgex27GyhRLvFh0AqtNvGckeSUG7cWkPPIib52RifDP46+FeqRTu3aTLn0xdMTMrWCmwwBqwRKTRGDDwrLy6kY96G9qXlqb7J8Wf+/L0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xRq86dS2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ox5AwlwNIZ8WX2nSbIOYa4byT00KCZygLo3NxseNw0xwUIr+Nc/QghmXL2fm/DdvJBVSgBF4bR9POxkvzGYc9o3gekCyfTRmLnl485gVdQyPL+M5DOWtrfVAq89IUy6LT5KhVSeIg4zi0LKxgM41nYbcPrDOVc/wn+tRygaVmbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n5MutsrJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xRq86dS2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C48C3277B;
-	Tue, 18 Jun 2024 13:03:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n5MutsrJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6CD1C3277B;
+	Tue, 18 Jun 2024 13:03:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715814;
-	bh=ugfnh8Rib7i0xR3pJj9S9MB5rmOdjVqY7V4sYV8Vut8=;
+	s=korg; t=1718715817;
+	bh=NJ3AVsS1GBrlcVr3rpf8PLfQ81hvP/viJBaMThqfYz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xRq86dS26n34WICi8ycB2c2y5UaMm35obp3FiWF7i8Y4SawJdowcifjpS1nogYbo7
-	 vkZxf0vD3bNv7Nt8PRZn1mbOlLrjgCVyT0GypHsFiivVoHJXmJSjT2ctIaVVV9uJYt
-	 uZP2PF1/a+QYIsyr1W+DiQaPkC5A8+wRSC02amgc=
+	b=n5MutsrJHkIyTmwWjT72HAR28Cil8Tl1W5F//euaajckaytNq64LgDms01mpEzGUz
+	 3/EQaUiLJetev/gO6vD9pme6geLNRLD/CRrzwoum90snLW+OZ3VzZM6TYKMXuQaVaB
+	 /LVlox9VMs9+/uxaKW4yFj7AV1Ybqy1PrEPDkAXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	NeilBrown <neilb@suse.de>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 435/770] SUNRPC: move the pool_map definitions (back) into svc.c
-Date: Tue, 18 Jun 2024 14:34:48 +0200
-Message-ID: <20240618123424.077927094@linuxfoundation.org>
+Subject: [PATCH 5.10 436/770] SUNRPC: always treat sv_nrpools==1 as "not pooled"
+Date: Tue, 18 Jun 2024 14:34:49 +0200
+Message-ID: <20240618123424.115634003@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,139 +53,160 @@ Content-Transfer-Encoding: 8bit
 
 From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit cf0e124e0a489944d08fcc3c694d2b234d2cc658 ]
+[ Upstream commit 93aa619eb0b42eec2f3a9b4d9db41f5095390aec ]
 
-These definitions are not used outside of svc.c, and there is no
-evidence that they ever have been.  So move them into svc.c
-and make the declarations 'static'.
+Currently 'pooled' services hold a reference on the pool_map, and
+'unpooled' services do not.
+svc_destroy() uses the presence of ->svo_function (via
+svc_serv_is_pooled()) to determine if the reference should be dropped.
+There is no direct correlation between being pooled and the use of
+svo_function, though in practice, lockd is the only non-pooled service,
+and the only one not to use svo_function.
+
+This is untidy and would cause problems if we changed lockd to use
+svc_set_num_threads(), which requires the use of ->svo_function.
+
+So change the test for "is the service pooled" to "is sv_nrpools > 1".
+
+This means that when svc_pool_map_get() returns 1, it must NOT take a
+reference to the pool.
+
+We discard svc_serv_is_pooled(), and test sv_nrpools directly.
 
 Signed-off-by: NeilBrown <neilb@suse.de>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sunrpc/svc.h | 25 -------------------------
- net/sunrpc/svc.c           | 31 +++++++++++++++++++++++++------
- 2 files changed, 25 insertions(+), 31 deletions(-)
+ net/sunrpc/svc.c | 54 ++++++++++++++++++++++++++----------------------
+ 1 file changed, 29 insertions(+), 25 deletions(-)
 
-diff --git a/include/linux/sunrpc/svc.h b/include/linux/sunrpc/svc.h
-index 165719a6229ab..89e9d00af601b 100644
---- a/include/linux/sunrpc/svc.h
-+++ b/include/linux/sunrpc/svc.h
-@@ -497,29 +497,6 @@ struct svc_procedure {
- 	const char *		pc_name;	/* for display */
- };
- 
--/*
-- * Mode for mapping cpus to pools.
-- */
--enum {
--	SVC_POOL_AUTO = -1,	/* choose one of the others */
--	SVC_POOL_GLOBAL,	/* no mapping, just a single global pool
--				 * (legacy & UP mode) */
--	SVC_POOL_PERCPU,	/* one pool per cpu */
--	SVC_POOL_PERNODE	/* one pool per numa node */
--};
--
--struct svc_pool_map {
--	int count;			/* How many svc_servs use us */
--	int mode;			/* Note: int not enum to avoid
--					 * warnings about "enumeration value
--					 * not handled in switch" */
--	unsigned int npools;
--	unsigned int *pool_to;		/* maps pool id to cpu or node */
--	unsigned int *to_pool;		/* maps cpu or node to pool id */
--};
--
--extern struct svc_pool_map svc_pool_map;
--
- /*
-  * Function prototypes.
-  */
-@@ -536,8 +513,6 @@ void		   svc_rqst_replace_page(struct svc_rqst *rqstp,
- 					 struct page *page);
- void		   svc_rqst_free(struct svc_rqst *);
- void		   svc_exit_thread(struct svc_rqst *);
--unsigned int	   svc_pool_map_get(void);
--void		   svc_pool_map_put(void);
- struct svc_serv *  svc_create_pooled(struct svc_program *, unsigned int,
- 			const struct svc_serv_ops *);
- int		   svc_set_num_threads(struct svc_serv *, struct svc_pool *, int);
 diff --git a/net/sunrpc/svc.c b/net/sunrpc/svc.c
-index da5f008b8d27c..c681ac1c9d569 100644
+index c681ac1c9d569..ceccd4ae5f797 100644
 --- a/net/sunrpc/svc.c
 +++ b/net/sunrpc/svc.c
-@@ -39,14 +39,35 @@ static void svc_unregister(const struct svc_serv *serv, struct net *net);
+@@ -35,8 +35,6 @@
  
+ static void svc_unregister(const struct svc_serv *serv, struct net *net);
+ 
+-#define svc_serv_is_pooled(serv)    ((serv)->sv_ops->svo_function)
+-
  #define SVC_POOL_DEFAULT	SVC_POOL_GLOBAL
  
-+/*
-+ * Mode for mapping cpus to pools.
-+ */
-+enum {
-+	SVC_POOL_AUTO = -1,	/* choose one of the others */
-+	SVC_POOL_GLOBAL,	/* no mapping, just a single global pool
-+				 * (legacy & UP mode) */
-+	SVC_POOL_PERCPU,	/* one pool per cpu */
-+	SVC_POOL_PERNODE	/* one pool per numa node */
-+};
-+
  /*
-  * Structure for mapping cpus to pools and vice versa.
-  * Setup once during sunrpc initialisation.
-  */
--struct svc_pool_map svc_pool_map = {
-+
-+struct svc_pool_map {
-+	int count;			/* How many svc_servs use us */
-+	int mode;			/* Note: int not enum to avoid
-+					 * warnings about "enumeration value
-+					 * not handled in switch" */
-+	unsigned int npools;
-+	unsigned int *pool_to;		/* maps pool id to cpu or node */
-+	unsigned int *to_pool;		/* maps cpu or node to pool id */
-+};
-+
-+static struct svc_pool_map svc_pool_map = {
- 	.mode = SVC_POOL_DEFAULT
- };
--EXPORT_SYMBOL_GPL(svc_pool_map);
+@@ -238,8 +236,10 @@ svc_pool_map_init_pernode(struct svc_pool_map *m)
  
- static DEFINE_MUTEX(svc_pool_map_mutex);/* protects svc_pool_map.count only */
- 
-@@ -220,7 +241,7 @@ svc_pool_map_init_pernode(struct svc_pool_map *m)
-  * vice versa).  Initialise the map if we're the first user.
-  * Returns the number of pools.
+ /*
+  * Add a reference to the global map of cpus to pools (and
+- * vice versa).  Initialise the map if we're the first user.
+- * Returns the number of pools.
++ * vice versa) if pools are in use.
++ * Initialise the map if we're the first user.
++ * Returns the number of pools. If this is '1', no reference
++ * was taken.
   */
--unsigned int
-+static unsigned int
+ static unsigned int
  svc_pool_map_get(void)
- {
- 	struct svc_pool_map *m = &svc_pool_map;
-@@ -255,7 +276,6 @@ svc_pool_map_get(void)
+@@ -251,6 +251,7 @@ svc_pool_map_get(void)
+ 
+ 	if (m->count++) {
+ 		mutex_unlock(&svc_pool_map_mutex);
++		WARN_ON_ONCE(m->npools <= 1);
+ 		return m->npools;
+ 	}
+ 
+@@ -266,29 +267,36 @@ svc_pool_map_get(void)
+ 		break;
+ 	}
+ 
+-	if (npools < 0) {
++	if (npools <= 0) {
+ 		/* default, or memory allocation failure */
+ 		npools = 1;
+ 		m->mode = SVC_POOL_GLOBAL;
+ 	}
+ 	m->npools = npools;
+ 
++	if (npools == 1)
++		/* service is unpooled, so doesn't hold a reference */
++		m->count--;
++
  	mutex_unlock(&svc_pool_map_mutex);
- 	return m->npools;
+-	return m->npools;
++	return npools;
  }
--EXPORT_SYMBOL_GPL(svc_pool_map_get);
  
  /*
-  * Drop a reference to the global map of cpus to pools.
-@@ -264,7 +284,7 @@ EXPORT_SYMBOL_GPL(svc_pool_map_get);
+- * Drop a reference to the global map of cpus to pools.
++ * Drop a reference to the global map of cpus to pools, if
++ * pools were in use, i.e. if npools > 1.
+  * When the last reference is dropped, the map data is
+  * freed; this allows the sysadmin to change the pool
   * mode using the pool_mode module option without
   * rebooting or re-loading sunrpc.ko.
   */
--void
-+static void
- svc_pool_map_put(void)
+ static void
+-svc_pool_map_put(void)
++svc_pool_map_put(int npools)
  {
  	struct svc_pool_map *m = &svc_pool_map;
-@@ -281,7 +301,6 @@ svc_pool_map_put(void)
  
- 	mutex_unlock(&svc_pool_map_mutex);
++	if (npools <= 1)
++		return;
+ 	mutex_lock(&svc_pool_map_mutex);
+ 
+ 	if (!--m->count) {
+@@ -357,21 +365,18 @@ svc_pool_for_cpu(struct svc_serv *serv, int cpu)
+ 	struct svc_pool_map *m = &svc_pool_map;
+ 	unsigned int pidx = 0;
+ 
+-	/*
+-	 * An uninitialised map happens in a pure client when
+-	 * lockd is brought up, so silently treat it the
+-	 * same as SVC_POOL_GLOBAL.
+-	 */
+-	if (svc_serv_is_pooled(serv)) {
+-		switch (m->mode) {
+-		case SVC_POOL_PERCPU:
+-			pidx = m->to_pool[cpu];
+-			break;
+-		case SVC_POOL_PERNODE:
+-			pidx = m->to_pool[cpu_to_node(cpu)];
+-			break;
+-		}
++	if (serv->sv_nrpools <= 1)
++		return serv->sv_pools;
++
++	switch (m->mode) {
++	case SVC_POOL_PERCPU:
++		pidx = m->to_pool[cpu];
++		break;
++	case SVC_POOL_PERNODE:
++		pidx = m->to_pool[cpu_to_node(cpu)];
++		break;
+ 	}
++
+ 	return &serv->sv_pools[pidx % serv->sv_nrpools];
  }
--EXPORT_SYMBOL_GPL(svc_pool_map_put);
  
- static int svc_pool_map_get_node(unsigned int pidx)
- {
+@@ -524,7 +529,7 @@ svc_create_pooled(struct svc_program *prog, unsigned int bufsize,
+ 		goto out_err;
+ 	return serv;
+ out_err:
+-	svc_pool_map_put();
++	svc_pool_map_put(npools);
+ 	return NULL;
+ }
+ EXPORT_SYMBOL_GPL(svc_create_pooled);
+@@ -559,8 +564,7 @@ svc_destroy(struct kref *ref)
+ 
+ 	cache_clean_deferred(serv);
+ 
+-	if (svc_serv_is_pooled(serv))
+-		svc_pool_map_put();
++	svc_pool_map_put(serv->sv_nrpools);
+ 
+ 	kfree(serv->sv_pools);
+ 	kfree(serv);
 -- 
 2.43.0
 
