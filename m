@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8528115A853;
-	Tue, 18 Jun 2024 13:19:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C9C41AD406;
+	Tue, 18 Jun 2024 13:19:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716786; cv=none; b=Wl2+Lha7KBRZXwwyn97qhCyikD/m37rMuzwxCD+X8a5kBeWzzdBcfLdjvd7VNXLDfYfCsKqK3dtz+ycsxlCMbHWfLZe1I55S/slcXkg2XuPmKpjPhO3s6tcTsZucj5cG2pdRGdfTr6leIdqIibWZgHp0iy7SmwGTKjoGQyT8Tv0=
+	t=1718716789; cv=none; b=I7w7omI0IHeNcjj9DwXBcVWGIz9oPTzPk82OvdaaAlSONNqQjQf2VU+Io5NLQcKL7P0qkfvqOcUtqBIO8hz3EelXVj2yrzF6RTvgl1cauLfq0B1qKrivAq6RpvwjCdJApzqVua4e8nALyJoG5Qjg+wTa4gYue14pLCFOkVKoiGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716786; c=relaxed/simple;
-	bh=vCFaTFG/nS9LI/28mCn8lY7R7cjCUzFCr4/wpxpQ5G8=;
+	s=arc-20240116; t=1718716789; c=relaxed/simple;
+	bh=6hbYH/LfxV8YLvlFYPbdq4YGgJMX7CLKh9wpjGp3juQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k2qbBIKK+kDpGM6z6UOSFpmh1SHY29SWddiAwb9SkFCAbhkb3PspIaGF/9nWq1R3Xzaqc5/6ALnoBDtCXo0MbmURiprKzm7ir4+Rd6rR736C42HBeWVsUvLKeDg1Xx8HaNDJg8KZO1SmyNvj6H1ZGiEKyI6IJFC8Dpnmnjc5jFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YUItDRX4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J5gQFbo0eNenaX58uwCtylf2QSmZHQ5GyJlyz18axLgFIuMjNl83yZz2O9DlbtW72xiGKJq256v4339V59LXSiaob7OVL1QvliEffBrM40LKCy0o6RIxDwpSAmFdheUpTJ0p5uOa2gMsJTZcWTlj/uO/+t5hweEOq20Aqu5XPOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zz997Vcp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YUItDRX4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F5E0C3277B;
-	Tue, 18 Jun 2024 13:19:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zz997Vcp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9FE4C3277B;
+	Tue, 18 Jun 2024 13:19:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716786;
-	bh=vCFaTFG/nS9LI/28mCn8lY7R7cjCUzFCr4/wpxpQ5G8=;
+	s=korg; t=1718716789;
+	bh=6hbYH/LfxV8YLvlFYPbdq4YGgJMX7CLKh9wpjGp3juQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YUItDRX48CiSBgKNXtyRRkkG2DOXNRjhHcbqo8nJfh2ee/BN6dbYeINhJSSf6HXjW
-	 6polVf6nhNjwpSbXWevRoBc5RrWcnaNKKDl6XGqM4YiQoX+0AoT7LuVRzfHEb75XED
-	 A17LnsBq42cmr0+ZYew/ksr4a3ApLmTz4JTAzIjE=
+	b=Zz997VcpKIB5rkvdLFbVz9FO+EWYWJukaeQ2fLwC+0trZBVfGg6L5ZqGsXR7SW1n6
+	 HBGSJ7/cZu6LVrTGJL6lj9jCxBJZwSU1eyiJQOV/CaJPAf5rjM4qQU1RpVlM1h5z5W
+	 YZx4hRsWPOXdtUPZlyMYcBjojw//dEdww6MbcoBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	NeilBrown <neilb@suse.de>,
+	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 763/770] Documentation: Add missing documentation for EXPORT_OP flags
-Date: Tue, 18 Jun 2024 14:40:16 +0200
-Message-ID: <20240618123436.724325994@linuxfoundation.org>
+Subject: [PATCH 5.10 764/770] NFSD: fix possible oops when nfsd/pool_stats is closed.
+Date: Tue, 18 Jun 2024 14:40:17 +0200
+Message-ID: <20240618123436.761927123@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -50,53 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit b38a6023da6a12b561f0421c6a5a1f7624a1529c ]
+[ Upstream commit 88956eabfdea7d01d550535af120d4ef265b1d02 ]
 
-The commits that introduced these flags neglected to update the
-Documentation/filesystems/nfs/exporting.rst file.
+If /proc/fs/nfsd/pool_stats is open when the last nfsd thread exits, then
+when the file is closed a NULL pointer is dereferenced.
+This is because nfsd_pool_stats_release() assumes that the
+pointer to the svc_serv cannot become NULL while a reference is held.
 
+This used to be the case but a recent patch split nfsd_last_thread() out
+from nfsd_put(), and clearing the pointer is done in nfsd_last_thread().
+
+This is easily reproduced by running
+   rpc.nfsd 8 ; ( rpc.nfsd 0;true) < /proc/fs/nfsd/pool_stats
+
+Fortunately nfsd_pool_stats_release() has easy access to the svc_serv
+pointer, and so can call svc_put() on it directly.
+
+Fixes: 9f28a971ee9f ("nfsd: separate nfsd_last_thread() from nfsd_put()")
+Signed-off-by: NeilBrown <neilb@suse.de>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/filesystems/nfs/exporting.rst | 26 +++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ fs/nfsd/nfssvc.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/filesystems/nfs/exporting.rst b/Documentation/filesystems/nfs/exporting.rst
-index 0e98edd353b5f..6f59a364f84cd 100644
---- a/Documentation/filesystems/nfs/exporting.rst
-+++ b/Documentation/filesystems/nfs/exporting.rst
-@@ -215,3 +215,29 @@ following flags are defined:
-     This flag causes nfsd to close any open files for this inode _before_
-     calling into the vfs to do an unlink or a rename that would replace
-     an existing file.
-+
-+  EXPORT_OP_REMOTE_FS - Backing storage for this filesystem is remote
-+    PF_LOCAL_THROTTLE exists for loopback NFSD, where a thread needs to
-+    write to one bdi (the final bdi) in order to free up writes queued
-+    to another bdi (the client bdi). Such threads get a private balance
-+    of dirty pages so that dirty pages for the client bdi do not imact
-+    the daemon writing to the final bdi. For filesystems whose durable
-+    storage is not local (such as exported NFS filesystems), this
-+    constraint has negative consequences. EXPORT_OP_REMOTE_FS enables
-+    an export to disable writeback throttling.
-+
-+  EXPORT_OP_NOATOMIC_ATTR - Filesystem does not update attributes atomically
-+    EXPORT_OP_NOATOMIC_ATTR indicates that the exported filesystem
-+    cannot provide the semantics required by the "atomic" boolean in
-+    NFSv4's change_info4. This boolean indicates to a client whether the
-+    returned before and after change attributes were obtained atomically
-+    with the respect to the requested metadata operation (UNLINK,
-+    OPEN/CREATE, MKDIR, etc).
-+
-+  EXPORT_OP_FLUSH_ON_CLOSE - Filesystem flushes file data on close(2)
-+    On most filesystems, inodes can remain under writeback after the
-+    file is closed. NFSD relies on client activity or local flusher
-+    threads to handle writeback. Certain filesystems, such as NFS, flush
-+    all of an inode's dirty data on last close. Exports that behave this
-+    way should set EXPORT_OP_FLUSH_ON_CLOSE so that NFSD knows to skip
-+    waiting for writeback when closing such files.
+diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
+index ee5713fca1870..2a1dd580dfb94 100644
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -1084,11 +1084,12 @@ int nfsd_pool_stats_open(struct inode *inode, struct file *file)
+ 
+ int nfsd_pool_stats_release(struct inode *inode, struct file *file)
+ {
++	struct seq_file *seq = file->private_data;
++	struct svc_serv *serv = seq->private;
+ 	int ret = seq_release(inode, file);
+-	struct net *net = inode->i_sb->s_fs_info;
+ 
+ 	mutex_lock(&nfsd_mutex);
+-	nfsd_put(net);
++	svc_put(serv);
+ 	mutex_unlock(&nfsd_mutex);
+ 	return ret;
+ }
 -- 
 2.43.0
 
