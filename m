@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2658156F39;
-	Tue, 18 Jun 2024 13:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE44C156F3F;
+	Tue, 18 Jun 2024 13:03:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715796; cv=none; b=C+8TWWN7Lxw4llSAAI8TP68jiaz85ONoa/+hWz2yKqeGU2qaa9K4n3aveKeNTFVBeeVtXC7SVif31D8rx4L8VcuMTXeWp4IFsuRdUPh8AKWnJQnyiL0xYPyzyH7eGSyW0TPSrLgEs1zTOJt6ysi39XEeT2qDI/EdlDZ9zVzt0G0=
+	t=1718715799; cv=none; b=W7RfOB5zVYYrXWK9n45psYwKlGQNsteAU7T6Tp7EpDogEgP2zu3Kl/4YG3FIojZeY9TTGE4BLndjz/O4OQhppjMRec65gLp/sbfRWFYziQyG/T+LsEr5q86aQkDpJ3laAAAQV6DTJggWsdjpKfkeoCeRIBYfjVSmeqwx0mRplQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715796; c=relaxed/simple;
-	bh=8P65SD5xEbefaxqwbKzgh6ezde6AmI+P0uHvbzBTKNw=;
+	s=arc-20240116; t=1718715799; c=relaxed/simple;
+	bh=R2PptO4ZPkb+30pMwtQZ0oxQLuMaKSLjIzX/GTHLhVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hxCuw/eopj3ojpZjVm08r0Kljs5Hv6UWvlkkfZjbPuT8Qs+WXFVxPPjvNGgKl6JLKeR6lVrnMmAJLr3vMqp4e/p195CeJh7s5rWF7tCcBZCG/7a4UsXXEAVmR1iuVXF+uFgTsnP7pvIP1sELCUy12f1nKhNEZQgc5jPHrj0JlJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GUDGwzrO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fJXb4cddyYK/Vb/bwb+7+x5MeMIekRLozBpxHuEXSwj5381vs826kPxmXfBIITkFNZogurLZBMryU1Y3GVFaKuy36WWZQyW5ZzpS9wW2H4/dl6Q/OM1OD3QBhbr6IEGB5jLV2wNwM3nFzj+ZPdcYGD5aR5vpRMJUjcR5fJteJlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zcw5mzDK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GUDGwzrO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45619C3277B;
-	Tue, 18 Jun 2024 13:03:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zcw5mzDK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46134C3277B;
+	Tue, 18 Jun 2024 13:03:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715796;
-	bh=8P65SD5xEbefaxqwbKzgh6ezde6AmI+P0uHvbzBTKNw=;
+	s=korg; t=1718715799;
+	bh=R2PptO4ZPkb+30pMwtQZ0oxQLuMaKSLjIzX/GTHLhVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GUDGwzrO2PasAXF6IF2bTXIvnt4hzT7Dodae78vIlwq6oFTdk60CozLfDrJi6q/Fn
-	 sM4/c0S+MgeeSsDkQ3yI1Xayo0t4TcRm+gzVUsEq/tlbctH5G/U4a8v8qoFC9MKOpy
-	 KMdA+8J7ifccqEppV8gfJAuRn3TbZQwtf3QVuBDQ=
+	b=Zcw5mzDKkDt6aWBC+nxWyeTAc2voJwdgJEaUdFz8AMfK0wZitiIWePYVMcTotoQc9
+	 W6e2wrYQpI2qZpP9wQMo+GYk1Y62pK6GOsQknqtQkXfcNRfOWflofEBl8BUx7uA/7t
+	 1Za72wj6JGcxe6K7xZWkS/Zw1SW95o2+/6B+2/Po=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	NeilBrown <neilb@suse.de>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 412/770] fanotify: record old and new parent and name in FAN_RENAME event
-Date: Tue, 18 Jun 2024 14:34:25 +0200
-Message-ID: <20240618123423.187774488@linuxfoundation.org>
+Subject: [PATCH 5.10 430/770] lockd: simplify management of network status notifiers
+Date: Tue, 18 Jun 2024 14:34:43 +0200
+Message-ID: <20240618123423.883168627@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,150 +51,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 3982534ba5ce45e890b2f5ef5e7372c1accd14c7 ]
+[ Upstream commit 5a8a7ff57421b7de3ae72019938ffb5daaee36e7 ]
 
-In the special case of FAN_RENAME event, we record both the old
-and new parent and name.
+Now that the network status notifiers use nlmsvc_serv rather then
+nlmsvc_rqst the management can be simplified.
 
-Link: https://lore.kernel.org/r/20211129201537.1932819-9-amir73il@gmail.com
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
+Notifier unregistration synchronises with any pending notifications so
+providing we unregister before nlm_serv is freed no further interlock
+is required.
+
+So we move the unregister call to just before the thread is killed
+(which destroys the service) and just before the service is destroyed in
+the failure-path of lockd_up().
+
+Then nlm_ntf_refcnt and nlm_ntf_wq can be removed.
+
+Signed-off-by: NeilBrown <neilb@suse.de>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/fanotify/fanotify.c | 42 +++++++++++++++++++++++++++++++----
- include/uapi/linux/fanotify.h |  2 ++
- 2 files changed, 40 insertions(+), 4 deletions(-)
+ fs/lockd/svc.c | 35 +++++++++--------------------------
+ 1 file changed, 9 insertions(+), 26 deletions(-)
 
-diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
-index 5f184b2d6ea7c..db81eab905442 100644
---- a/fs/notify/fanotify/fanotify.c
-+++ b/fs/notify/fanotify/fanotify.c
-@@ -592,21 +592,28 @@ static struct fanotify_event *fanotify_alloc_name_event(struct inode *dir,
- 							__kernel_fsid_t *fsid,
- 							const struct qstr *name,
- 							struct inode *child,
-+							struct dentry *moved,
- 							unsigned int *hash,
- 							gfp_t gfp)
- {
- 	struct fanotify_name_event *fne;
- 	struct fanotify_info *info;
- 	struct fanotify_fh *dfh, *ffh;
-+	struct inode *dir2 = moved ? d_inode(moved->d_parent) : NULL;
-+	const struct qstr *name2 = moved ? &moved->d_name : NULL;
- 	unsigned int dir_fh_len = fanotify_encode_fh_len(dir);
-+	unsigned int dir2_fh_len = fanotify_encode_fh_len(dir2);
- 	unsigned int child_fh_len = fanotify_encode_fh_len(child);
- 	unsigned long name_len = name ? name->len : 0;
-+	unsigned long name2_len = name2 ? name2->len : 0;
- 	unsigned int len, size;
+diff --git a/fs/lockd/svc.c b/fs/lockd/svc.c
+index 83874878f41d8..20cebb191350f 100644
+--- a/fs/lockd/svc.c
++++ b/fs/lockd/svc.c
+@@ -59,9 +59,6 @@ static struct task_struct	*nlmsvc_task;
+ static struct svc_rqst		*nlmsvc_rqst;
+ unsigned long			nlmsvc_timeout;
  
- 	/* Reserve terminating null byte even for empty name */
--	size = sizeof(*fne) + name_len + 1;
-+	size = sizeof(*fne) + name_len + name2_len + 2;
- 	if (dir_fh_len)
- 		size += FANOTIFY_FH_HDR_LEN + dir_fh_len;
-+	if (dir2_fh_len)
-+		size += FANOTIFY_FH_HDR_LEN + dir2_fh_len;
- 	if (child_fh_len)
- 		size += FANOTIFY_FH_HDR_LEN + child_fh_len;
- 	fne = kmalloc(size, gfp);
-@@ -623,6 +630,11 @@ static struct fanotify_event *fanotify_alloc_name_event(struct inode *dir,
- 		len = fanotify_encode_fh(dfh, dir, dir_fh_len, hash, 0);
- 		fanotify_info_set_dir_fh(info, len);
+-static atomic_t nlm_ntf_refcnt = ATOMIC_INIT(0);
+-static DECLARE_WAIT_QUEUE_HEAD(nlm_ntf_wq);
+-
+ unsigned int lockd_net_id;
+ 
+ /*
+@@ -303,8 +300,7 @@ static int lockd_inetaddr_event(struct notifier_block *this,
+ 	struct in_ifaddr *ifa = (struct in_ifaddr *)ptr;
+ 	struct sockaddr_in sin;
+ 
+-	if ((event != NETDEV_DOWN) ||
+-	    !atomic_inc_not_zero(&nlm_ntf_refcnt))
++	if (event != NETDEV_DOWN)
+ 		goto out;
+ 
+ 	if (nlmsvc_serv) {
+@@ -314,8 +310,6 @@ static int lockd_inetaddr_event(struct notifier_block *this,
+ 		sin.sin_addr.s_addr = ifa->ifa_local;
+ 		svc_age_temp_xprts_now(nlmsvc_serv, (struct sockaddr *)&sin);
  	}
-+	if (dir2_fh_len) {
-+		dfh = fanotify_info_dir2_fh(info);
-+		len = fanotify_encode_fh(dfh, dir2, dir2_fh_len, hash, 0);
-+		fanotify_info_set_dir2_fh(info, len);
-+	}
- 	if (child_fh_len) {
- 		ffh = fanotify_info_file_fh(info);
- 		len = fanotify_encode_fh(ffh, child, child_fh_len, hash, 0);
-@@ -632,11 +644,22 @@ static struct fanotify_event *fanotify_alloc_name_event(struct inode *dir,
- 		fanotify_info_copy_name(info, name);
- 		*hash ^= full_name_hash((void *)name_len, name->name, name_len);
+-	atomic_dec(&nlm_ntf_refcnt);
+-	wake_up(&nlm_ntf_wq);
+ 
+ out:
+ 	return NOTIFY_DONE;
+@@ -332,8 +326,7 @@ static int lockd_inet6addr_event(struct notifier_block *this,
+ 	struct inet6_ifaddr *ifa = (struct inet6_ifaddr *)ptr;
+ 	struct sockaddr_in6 sin6;
+ 
+-	if ((event != NETDEV_DOWN) ||
+-	    !atomic_inc_not_zero(&nlm_ntf_refcnt))
++	if (event != NETDEV_DOWN)
+ 		goto out;
+ 
+ 	if (nlmsvc_serv) {
+@@ -344,8 +337,6 @@ static int lockd_inet6addr_event(struct notifier_block *this,
+ 			sin6.sin6_scope_id = ifa->idev->dev->ifindex;
+ 		svc_age_temp_xprts_now(nlmsvc_serv, (struct sockaddr *)&sin6);
  	}
-+	if (name2_len) {
-+		fanotify_info_copy_name2(info, name2);
-+		*hash ^= full_name_hash((void *)name2_len, name2->name,
-+					name2_len);
-+	}
+-	atomic_dec(&nlm_ntf_refcnt);
+-	wake_up(&nlm_ntf_wq);
  
- 	pr_debug("%s: size=%u dir_fh_len=%u child_fh_len=%u name_len=%u name='%.*s'\n",
- 		 __func__, size, dir_fh_len, child_fh_len,
- 		 info->name_len, info->name_len, fanotify_info_name(info));
- 
-+	if (dir2_fh_len) {
-+		pr_debug("%s: dir2_fh_len=%u name2_len=%u name2='%.*s'\n",
-+			 __func__, dir2_fh_len, info->name2_len,
-+			 info->name2_len, fanotify_info_name2(info));
-+	}
-+
- 	return &fne->fae;
+ out:
+ 	return NOTIFY_DONE;
+@@ -362,14 +353,6 @@ static void lockd_unregister_notifiers(void)
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	unregister_inet6addr_notifier(&lockd_inet6addr_notifier);
+ #endif
+-	wait_event(nlm_ntf_wq, atomic_read(&nlm_ntf_refcnt) == 0);
+-}
+-
+-static void lockd_svc_exit_thread(void)
+-{
+-	atomic_dec(&nlm_ntf_refcnt);
+-	lockd_unregister_notifiers();
+-	svc_exit_thread(nlmsvc_rqst);
  }
  
-@@ -692,6 +715,7 @@ static struct fanotify_event *fanotify_alloc_event(struct fsnotify_group *group,
- 	struct inode *dirid = fanotify_dfid_inode(mask, data, data_type, dir);
- 	const struct path *path = fsnotify_data_path(data, data_type);
- 	struct mem_cgroup *old_memcg;
-+	struct dentry *moved = NULL;
- 	struct inode *child = NULL;
- 	bool name_event = false;
- 	unsigned int hash = 0;
-@@ -727,6 +751,15 @@ static struct fanotify_event *fanotify_alloc_event(struct fsnotify_group *group,
- 		} else if ((mask & ALL_FSNOTIFY_DIRENT_EVENTS) || !ondir) {
- 			name_event = true;
- 		}
-+
-+		/*
-+		 * In the special case of FAN_RENAME event, we record both
-+		 * old and new parent+name.
-+		 * 'dirid' and 'file_name' are the old parent+name and
-+		 * 'moved' has the new parent+name.
-+		 */
-+		if (mask & FAN_RENAME)
-+			moved = fsnotify_data_dentry(data, data_type);
+ static int lockd_start_svc(struct svc_serv *serv)
+@@ -388,11 +371,9 @@ static int lockd_start_svc(struct svc_serv *serv)
+ 		printk(KERN_WARNING
+ 			"lockd_up: svc_rqst allocation failed, error=%d\n",
+ 			error);
+-		lockd_unregister_notifiers();
+ 		goto out_rqst;
  	}
  
- 	/*
-@@ -748,9 +781,9 @@ static struct fanotify_event *fanotify_alloc_event(struct fsnotify_group *group,
- 	} else if (fanotify_is_error_event(mask)) {
- 		event = fanotify_alloc_error_event(group, fsid, data,
- 						   data_type, &hash);
--	} else if (name_event && (file_name || child)) {
--		event = fanotify_alloc_name_event(id, fsid, file_name, child,
--						  &hash, gfp);
-+	} else if (name_event && (file_name || moved || child)) {
-+		event = fanotify_alloc_name_event(dirid, fsid, file_name, child,
-+						  moved, &hash, gfp);
- 	} else if (fid_mode) {
- 		event = fanotify_alloc_fid_event(id, fsid, &hash, gfp);
- 	} else {
-@@ -860,6 +893,7 @@ static int fanotify_handle_event(struct fsnotify_group *group, u32 mask,
- 	BUILD_BUG_ON(FAN_OPEN_EXEC != FS_OPEN_EXEC);
- 	BUILD_BUG_ON(FAN_OPEN_EXEC_PERM != FS_OPEN_EXEC_PERM);
- 	BUILD_BUG_ON(FAN_FS_ERROR != FS_ERROR);
-+	BUILD_BUG_ON(FAN_RENAME != FS_RENAME);
+-	atomic_inc(&nlm_ntf_refcnt);
+ 	svc_sock_update_bufs(serv);
+ 	serv->sv_maxconn = nlm_max_connections;
  
- 	BUILD_BUG_ON(HWEIGHT32(ALL_FANOTIFY_EVENT_BITS) != 20);
+@@ -410,7 +391,7 @@ static int lockd_start_svc(struct svc_serv *serv)
+ 	return 0;
  
-diff --git a/include/uapi/linux/fanotify.h b/include/uapi/linux/fanotify.h
-index 60f73639a896a..9d0e2dc5767b5 100644
---- a/include/uapi/linux/fanotify.h
-+++ b/include/uapi/linux/fanotify.h
-@@ -28,6 +28,8 @@
+ out_task:
+-	lockd_svc_exit_thread();
++	svc_exit_thread(nlmsvc_rqst);
+ 	nlmsvc_task = NULL;
+ out_rqst:
+ 	nlmsvc_rqst = NULL;
+@@ -477,7 +458,6 @@ int lockd_up(struct net *net, const struct cred *cred)
  
- #define FAN_EVENT_ON_CHILD	0x08000000	/* Interested in child events */
+ 	error = lockd_up_net(serv, net, cred);
+ 	if (error < 0) {
+-		lockd_unregister_notifiers();
+ 		goto err_put;
+ 	}
  
-+#define FAN_RENAME		0x10000000	/* File was renamed */
-+
- #define FAN_ONDIR		0x40000000	/* Event occurred against dir */
- 
- /* helper events */
+@@ -488,8 +468,10 @@ int lockd_up(struct net *net, const struct cred *cred)
+ 	}
+ 	nlmsvc_users++;
+ err_put:
+-	if (nlmsvc_users == 0)
++	if (nlmsvc_users == 0) {
++		lockd_unregister_notifiers();
+ 		nlmsvc_serv = NULL;
++	}
+ 	svc_put(serv);
+ err_create:
+ 	mutex_unlock(&nlmsvc_mutex);
+@@ -518,13 +500,14 @@ lockd_down(struct net *net)
+ 		printk(KERN_ERR "lockd_down: no lockd running.\n");
+ 		BUG();
+ 	}
++	lockd_unregister_notifiers();
+ 	kthread_stop(nlmsvc_task);
+ 	dprintk("lockd_down: service stopped\n");
+-	lockd_svc_exit_thread();
++	svc_exit_thread(nlmsvc_rqst);
++	nlmsvc_rqst = NULL;
+ 	dprintk("lockd_down: service destroyed\n");
+ 	nlmsvc_serv = NULL;
+ 	nlmsvc_task = NULL;
+-	nlmsvc_rqst = NULL;
+ out:
+ 	mutex_unlock(&nlmsvc_mutex);
+ }
 -- 
 2.43.0
 
