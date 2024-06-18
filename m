@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B432142E9E;
-	Tue, 18 Jun 2024 12:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3626213AD07;
+	Tue, 18 Jun 2024 12:48:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718714911; cv=none; b=AQ1FQGLaQgcW/tGBYcv7LfQUdxIi7iuC7n0Z3l+6r627U36FjlIil6Lm367k4C4EGsDedXIpWGItESaATu21Mi4aiV5n9eUNidh6vA55SmVRBdhpzd+LfBXR6fabVKbGPpJE6pJ6udieqkuZn9Kv4BFd168cT7jjHG8HII/2Y64=
+	t=1718714914; cv=none; b=jk6xf0a3RR7S7ZcEe12wervI7PbKTlvBJHMuA7uWfDDvVPv3Ws85bPzlwi09DGaebOnP33CMy5ExxSQuqMxmmIsoeqnmgzCgHgQgSlAPpIL5CAXcZcmu3P+LaKrPyuovTb/APfl3WXvo0OeqyioqA9cIxYPR4cHeyhKuNQguAzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718714911; c=relaxed/simple;
-	bh=25hCf61fvf0NvYUQOVxlh0k2Mo+DggVDUqXJFb3m8Mc=;
+	s=arc-20240116; t=1718714914; c=relaxed/simple;
+	bh=vUcJZEqaksnwKjpAcldgAaF80sf2htI1AVni4nOrYrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J7lYtDGBd2vctg11el+UROM5wnQ/j9YyPKsufTh2GMt6XjT93eFnJKlo5+snqwLpus8SP+V5gGFFnT09OXlERcYQZLurQk3ZDFoypcPA2msfJi76z1Yobo92lw+8AlTzkn2LK9gBE9LWSLrpWZbI813XLfXGoQElRXbicaShT0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1cA+Lge/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q8qwMSqJs1hSXDnRjnRXTMz/IqBN1qNpz2B4IHe1tf0ShpnxlrdqyBOodaEbGHPM5RCQkUhHhQjAPA+STwYq/Zpf91BU3jC85/7eXD0P7P9RE+OxtJuheRa/DlBu+m3gAbKeZGYKaK4AejThALG82HfK8DhhQmCplPvYahpsHRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WqkzkXoz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1cA+Lge/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B42DCC32786;
-	Tue, 18 Jun 2024 12:48:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WqkzkXoz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABE9DC3277B;
+	Tue, 18 Jun 2024 12:48:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718714911;
-	bh=25hCf61fvf0NvYUQOVxlh0k2Mo+DggVDUqXJFb3m8Mc=;
+	s=korg; t=1718714914;
+	bh=vUcJZEqaksnwKjpAcldgAaF80sf2htI1AVni4nOrYrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1cA+Lge/x63TZkbNzcehQuhEHYjHD7reVg9JzYipDhZZAzg5sJB2e2bqISzQ4UQvZ
-	 7FW9O1Lj+NCBTO6/B/D5uJHOeUW/riCe5oPlmVi/CJrZYBRMRgBv3Xrw4JhvDm3pjM
-	 FSpaG3Kuh+rlLju0sl8SXJZqP24imxYEHRsn+K1o=
+	b=WqkzkXozlmkuY3WFOTlifp8CKYggYUrFPlkgqh3WTmk2ZPKAQdt49t5xFXaD7OWAA
+	 +cNxVV6hqPXb9tuwPSPX6Yid5wjROJvLyMM1SVteL1txnyciMNMPapPQPYM66Uu+vp
+	 AIA1HrkIgeh2bsyqo+poswLw7HfUb5P/qTStZsNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yongjun <zhengyongjun3@huawei.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 130/770] fs/lockd: convert comma to semicolon
-Date: Tue, 18 Jun 2024 14:29:43 +0200
-Message-ID: <20240618123412.295458965@linuxfoundation.org>
+Subject: [PATCH 5.10 131/770] NFSD: Fix sparse warning in nfssvc.c
+Date: Tue, 18 Jun 2024 14:29:44 +0200
+Message-ID: <20240618123412.333836188@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,33 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Yongjun <zhengyongjun3@huawei.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 3316fb80a0b4c1fef03a3eb1a7f0651e2133c429 ]
+[ Upstream commit d6c9e4368cc6a61bf25c9c72437ced509c854563 ]
 
-Replace a comma between expression statements by a semicolon.
+fs/nfsd/nfssvc.c:36:6: warning: symbol 'inter_copy_offload_enable' was not declared. Should it be static?
 
-Signed-off-by: Zheng Yongjun <zhengyongjun3@huawei.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+The parameter was added by commit ce0887ac96d3 ("NFSD add nfs4 inter
+ssc to nfsd4_copy"). Relocate it into the source file that uses it,
+and make it static. This approach is similar to the
+nfs4_disable_idmapping, cltrack_prog, and cltrack_legacy_disable
+module parameters.
+
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/lockd/host.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfs4proc.c | 5 +++++
+ fs/nfsd/nfssvc.c   | 6 ------
+ fs/nfsd/xdr4.h     | 1 -
+ 3 files changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/fs/lockd/host.c b/fs/lockd/host.c
-index 771c289f6df7f..f802223e71abe 100644
---- a/fs/lockd/host.c
-+++ b/fs/lockd/host.c
-@@ -163,7 +163,7 @@ static struct nlm_host *nlm_alloc_host(struct nlm_lookup_host_info *ni,
- 	host->h_nsmhandle  = nsm;
- 	host->h_addrbuf    = nsm->sm_addrbuf;
- 	host->net	   = ni->net;
--	host->h_cred	   = get_cred(ni->cred),
-+	host->h_cred	   = get_cred(ni->cred);
- 	strlcpy(host->nodename, utsname()->nodename, sizeof(host->nodename));
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index 6b06f0ad05615..1ef98398362a5 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -50,6 +50,11 @@
+ #include "pnfs.h"
+ #include "trace.h"
  
- out:
++static bool inter_copy_offload_enable;
++module_param(inter_copy_offload_enable, bool, 0644);
++MODULE_PARM_DESC(inter_copy_offload_enable,
++		 "Enable inter server to server copy offload. Default: false");
++
+ #ifdef CONFIG_NFSD_V4_SECURITY_LABEL
+ #include <linux/security.h>
+ 
+diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
+index 3fb9607d67a37..423410cc02145 100644
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -33,12 +33,6 @@
+ 
+ #define NFSDDBG_FACILITY	NFSDDBG_SVC
+ 
+-bool inter_copy_offload_enable;
+-EXPORT_SYMBOL_GPL(inter_copy_offload_enable);
+-module_param(inter_copy_offload_enable, bool, 0644);
+-MODULE_PARM_DESC(inter_copy_offload_enable,
+-		 "Enable inter server to server copy offload. Default: false");
+-
+ extern struct svc_program	nfsd_program;
+ static int			nfsd(void *vrqstp);
+ #if defined(CONFIG_NFSD_V2_ACL) || defined(CONFIG_NFSD_V3_ACL)
+diff --git a/fs/nfsd/xdr4.h b/fs/nfsd/xdr4.h
+index a60ff5ce1a375..c300885ae75dd 100644
+--- a/fs/nfsd/xdr4.h
++++ b/fs/nfsd/xdr4.h
+@@ -568,7 +568,6 @@ struct nfsd4_copy {
+ 	struct nfs_fh		c_fh;
+ 	nfs4_stateid		stateid;
+ };
+-extern bool inter_copy_offload_enable;
+ 
+ struct nfsd4_seek {
+ 	/* request */
 -- 
 2.43.0
 
