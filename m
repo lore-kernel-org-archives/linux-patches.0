@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE2813C660;
-	Tue, 18 Jun 2024 13:06:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B7319E7D7;
+	Tue, 18 Jun 2024 13:06:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715985; cv=none; b=LkvuFxuVePs0oWGz59CQ8zOUQMMsgPnvhT4v+kXltiEMVG9q8dEawnrt/0dVm7dKep30RWaudnnVTvJ3mhOg2WArAVCQ6IJwX37EJA3n9/s+at7Od73y8HmUuEgBCvUnTHaFTf34OV3OYub1h8AFfSfEO76wE3Ab7z9ut6ycnQM=
+	t=1718715988; cv=none; b=Y/jkGPz9Tiq3wb5GlbyGauQRrmglSfmHLa8CZcz33SN5gyZNrmlUxCe+xHODYDjfIWPMM76omINf3XWbCEqXrXEVN6G3TElvEHEMayk4BWiHStm21KudgtvFaV1z/Mb7F9mP+f7CLpw6rcKSMRkGYL1n64R4O7kivszG+kPLAMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715985; c=relaxed/simple;
-	bh=0PjwwsyItYC6i9fznwK8YV7T+dFgjTrUYv0vNrfQym4=;
+	s=arc-20240116; t=1718715988; c=relaxed/simple;
+	bh=jobrDX/kdlGlh/y8np5cy+cxjmqFbXmzElmTjjjeP/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MTiTv8Vx4zu07QHCaiopa+nZGfYE15exr6xryCnLg8eb3s8XlfAUgEGQBWOUkiNbJGhxjC9S/TpzDFfOfrAJHBXSLcR/ERm5BU5nEMZl0DI6YLv+rZhB/tlwzsbTj4dY6QiS8hgsG9Q7noaQpZ+84vN4iVJxKzkbzqt2kZpFkcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gVUF46Dn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mlo5jz9Hrb1rOkiWUK/Wk0ZdQ/p7sawNSUVr0UqImimNBCajHXZ9SCAnUo+9vPqdKiCi64HstDF5GVOMiWBtp1UgjwD62nt85F+VvufLRQ3aRd3e/5vrztTNrqORa/bI5cskJhOWPbYvhiombhk/mgBHm6p5fWR9ElsqMgntKvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wpElRs41; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gVUF46Dn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 414DDC3277B;
-	Tue, 18 Jun 2024 13:06:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wpElRs41"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C096C4AF49;
+	Tue, 18 Jun 2024 13:06:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715985;
-	bh=0PjwwsyItYC6i9fznwK8YV7T+dFgjTrUYv0vNrfQym4=;
+	s=korg; t=1718715988;
+	bh=jobrDX/kdlGlh/y8np5cy+cxjmqFbXmzElmTjjjeP/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gVUF46DnF3QhcDvemxFyxi5wmnq9Uh8FpdWGbG91BFxXSJ6tmL+X5XTyeJFklvXhY
-	 ZHegfvp9h6qZJd8fmh+ZW/HV6DY6nfNrmPnB1JDRW3flKKM70P1fhJ0waa0UL6kq6x
-	 imly+kzyu/kUxZebwqZiKZE7TmZ9YctIn8gibkcg=
+	b=wpElRs41u9KmrFNJvy0vhRqnah7IkNTYyyhR8LbOaX09CGzjDUbgRMK0QM+2+SWSq
+	 6j9UJhhFax/ENpDM66h3D3yR/0bnIsIG3DrS1O8/fSGMizzx4NP5JcwVfoyyDDi6ii
+	 2Hy0C7vqscOeMRHoBdmXNmWnFk7XpfaobvW7TKMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
 	Jan Kara <jack@suse.cz>,
+	Amir Goldstein <amir73il@gmail.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 494/770] fsnotify: pass flags argument to fsnotify_alloc_group()
-Date: Tue, 18 Jun 2024 14:35:47 +0200
-Message-ID: <20240618123426.384316840@linuxfoundation.org>
+Subject: [PATCH 5.10 495/770] fsnotify: make allow_dups a property of the group
+Date: Tue, 18 Jun 2024 14:35:48 +0200
+Message-ID: <20240618123426.422481505@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -54,202 +54,151 @@ Content-Transfer-Encoding: 8bit
 
 From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit 867a448d587e7fa845bceaf4ee1c632448f2a9fa ]
+[ Upstream commit f3010343d9e119da35ee864b3a28993bb5c78ed7 ]
 
-Add flags argument to fsnotify_alloc_group(), define and use the flag
-FSNOTIFY_GROUP_USER in inotify and fanotify instead of the helper
-fsnotify_alloc_user_group() to indicate user allocation.
+Instead of passing the allow_dups argument to fsnotify_add_mark()
+as an argument, define the group flag FSNOTIFY_GROUP_DUPS to express
+the allow_dups behavior and set this behavior at group creation time
+for all calls of fsnotify_add_mark().
 
-Although the flag FSNOTIFY_GROUP_USER is currently not used after group
-allocation, we store the flags argument in the group struct for future
-use of other group flags.
+Rename the allow_dups argument to generic add_flags argument for future
+use.
 
-Link: https://lore.kernel.org/r/20220422120327.3459282-5-amir73il@gmail.com
+Link: https://lore.kernel.org/r/20220422120327.3459282-6-amir73il@gmail.com
+Suggested-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/filecache.c                |  3 ++-
- fs/notify/dnotify/dnotify.c        |  2 +-
- fs/notify/fanotify/fanotify_user.c |  3 ++-
- fs/notify/group.c                  | 21 +++++++++------------
- fs/notify/inotify/inotify_user.c   |  3 ++-
- include/linux/fsnotify_backend.h   |  8 ++++++--
- kernel/audit_fsnotify.c            |  3 ++-
- kernel/audit_tree.c                |  2 +-
- kernel/audit_watch.c               |  2 +-
- 9 files changed, 26 insertions(+), 21 deletions(-)
+ fs/notify/mark.c                 | 12 ++++++------
+ include/linux/fsnotify_backend.h | 13 +++++++------
+ kernel/audit_fsnotify.c          |  4 ++--
+ 3 files changed, 15 insertions(+), 14 deletions(-)
 
-diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-index 8f7ed5dbb0031..7ae2b6611fb29 100644
---- a/fs/nfsd/filecache.c
-+++ b/fs/nfsd/filecache.c
-@@ -677,7 +677,8 @@ nfsd_file_cache_init(void)
- 		goto out_shrinker;
- 	}
- 
--	nfsd_file_fsnotify_group = fsnotify_alloc_group(&nfsd_file_fsnotify_ops);
-+	nfsd_file_fsnotify_group = fsnotify_alloc_group(&nfsd_file_fsnotify_ops,
-+							0);
- 	if (IS_ERR(nfsd_file_fsnotify_group)) {
- 		pr_err("nfsd: unable to create fsnotify group: %ld\n",
- 			PTR_ERR(nfsd_file_fsnotify_group));
-diff --git a/fs/notify/dnotify/dnotify.c b/fs/notify/dnotify/dnotify.c
-index d5ebebb034ffe..6c586802c50e6 100644
---- a/fs/notify/dnotify/dnotify.c
-+++ b/fs/notify/dnotify/dnotify.c
-@@ -383,7 +383,7 @@ static int __init dnotify_init(void)
- 					  SLAB_PANIC|SLAB_ACCOUNT);
- 	dnotify_mark_cache = KMEM_CACHE(dnotify_mark, SLAB_PANIC|SLAB_ACCOUNT);
- 
--	dnotify_group = fsnotify_alloc_group(&dnotify_fsnotify_ops);
-+	dnotify_group = fsnotify_alloc_group(&dnotify_fsnotify_ops, 0);
- 	if (IS_ERR(dnotify_group))
- 		panic("unable to allocate fsnotify group for dnotify\n");
- 	return 0;
-diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
-index 921ee7b08580d..731bd7f64e018 100644
---- a/fs/notify/fanotify/fanotify_user.c
-+++ b/fs/notify/fanotify/fanotify_user.c
-@@ -1343,7 +1343,8 @@ SYSCALL_DEFINE2(fanotify_init, unsigned int, flags, unsigned int, event_f_flags)
- 		f_flags |= O_NONBLOCK;
- 
- 	/* fsnotify_alloc_group takes a ref.  Dropped in fanotify_release */
--	group = fsnotify_alloc_user_group(&fanotify_fsnotify_ops);
-+	group = fsnotify_alloc_group(&fanotify_fsnotify_ops,
-+				     FSNOTIFY_GROUP_USER);
- 	if (IS_ERR(group)) {
- 		return PTR_ERR(group);
- 	}
-diff --git a/fs/notify/group.c b/fs/notify/group.c
-index b7d4d64f87c29..18446b7b0d495 100644
---- a/fs/notify/group.c
-+++ b/fs/notify/group.c
-@@ -112,7 +112,8 @@ void fsnotify_put_group(struct fsnotify_group *group)
- EXPORT_SYMBOL_GPL(fsnotify_put_group);
- 
- static struct fsnotify_group *__fsnotify_alloc_group(
--				const struct fsnotify_ops *ops, gfp_t gfp)
-+				const struct fsnotify_ops *ops,
-+				int flags, gfp_t gfp)
+diff --git a/fs/notify/mark.c b/fs/notify/mark.c
+index c86982be2d505..1fb246ea61752 100644
+--- a/fs/notify/mark.c
++++ b/fs/notify/mark.c
+@@ -574,7 +574,7 @@ static struct fsnotify_mark_connector *fsnotify_grab_connector(
+ static int fsnotify_add_mark_list(struct fsnotify_mark *mark,
+ 				  fsnotify_connp_t *connp,
+ 				  unsigned int obj_type,
+-				  int allow_dups, __kernel_fsid_t *fsid)
++				  int add_flags, __kernel_fsid_t *fsid)
  {
- 	struct fsnotify_group *group;
+ 	struct fsnotify_mark *lmark, *last = NULL;
+ 	struct fsnotify_mark_connector *conn;
+@@ -633,7 +633,7 @@ static int fsnotify_add_mark_list(struct fsnotify_mark *mark,
  
-@@ -133,6 +134,7 @@ static struct fsnotify_group *__fsnotify_alloc_group(
- 	INIT_LIST_HEAD(&group->marks_list);
- 
- 	group->ops = ops;
-+	group->flags = flags;
- 
- 	return group;
- }
-@@ -140,20 +142,15 @@ static struct fsnotify_group *__fsnotify_alloc_group(
- /*
-  * Create a new fsnotify_group and hold a reference for the group returned.
+ 		if ((lmark->group == mark->group) &&
+ 		    (lmark->flags & FSNOTIFY_MARK_FLAG_ATTACHED) &&
+-		    !allow_dups) {
++		    !(mark->group->flags & FSNOTIFY_GROUP_DUPS)) {
+ 			err = -EEXIST;
+ 			goto out_err;
+ 		}
+@@ -668,7 +668,7 @@ static int fsnotify_add_mark_list(struct fsnotify_mark *mark,
   */
--struct fsnotify_group *fsnotify_alloc_group(const struct fsnotify_ops *ops)
-+struct fsnotify_group *fsnotify_alloc_group(const struct fsnotify_ops *ops,
-+					    int flags)
+ int fsnotify_add_mark_locked(struct fsnotify_mark *mark,
+ 			     fsnotify_connp_t *connp, unsigned int obj_type,
+-			     int allow_dups, __kernel_fsid_t *fsid)
++			     int add_flags, __kernel_fsid_t *fsid)
  {
--	return __fsnotify_alloc_group(ops, GFP_KERNEL);
--}
--EXPORT_SYMBOL_GPL(fsnotify_alloc_group);
-+	gfp_t gfp = (flags & FSNOTIFY_GROUP_USER) ? GFP_KERNEL_ACCOUNT :
-+						    GFP_KERNEL;
+ 	struct fsnotify_group *group = mark->group;
+ 	int ret = 0;
+@@ -688,7 +688,7 @@ int fsnotify_add_mark_locked(struct fsnotify_mark *mark,
+ 	fsnotify_get_mark(mark); /* for g_list */
+ 	spin_unlock(&mark->lock);
  
--/*
-- * Create a new fsnotify_group and hold a reference for the group returned.
-- */
--struct fsnotify_group *fsnotify_alloc_user_group(const struct fsnotify_ops *ops)
--{
--	return __fsnotify_alloc_group(ops, GFP_KERNEL_ACCOUNT);
-+	return __fsnotify_alloc_group(ops, flags, gfp);
+-	ret = fsnotify_add_mark_list(mark, connp, obj_type, allow_dups, fsid);
++	ret = fsnotify_add_mark_list(mark, connp, obj_type, add_flags, fsid);
+ 	if (ret)
+ 		goto err;
+ 
+@@ -708,14 +708,14 @@ int fsnotify_add_mark_locked(struct fsnotify_mark *mark,
  }
--EXPORT_SYMBOL_GPL(fsnotify_alloc_user_group);
-+EXPORT_SYMBOL_GPL(fsnotify_alloc_group);
  
- int fsnotify_fasync(int fd, struct file *file, int on)
+ int fsnotify_add_mark(struct fsnotify_mark *mark, fsnotify_connp_t *connp,
+-		      unsigned int obj_type, int allow_dups,
++		      unsigned int obj_type, int add_flags,
+ 		      __kernel_fsid_t *fsid)
  {
-diff --git a/fs/notify/inotify/inotify_user.c b/fs/notify/inotify/inotify_user.c
-index 861147e574581..9e1cf8392385a 100644
---- a/fs/notify/inotify/inotify_user.c
-+++ b/fs/notify/inotify/inotify_user.c
-@@ -643,7 +643,8 @@ static struct fsnotify_group *inotify_new_group(unsigned int max_events)
- 	struct fsnotify_group *group;
- 	struct inotify_event_info *oevent;
+ 	int ret;
+ 	struct fsnotify_group *group = mark->group;
  
--	group = fsnotify_alloc_user_group(&inotify_fsnotify_ops);
-+	group = fsnotify_alloc_group(&inotify_fsnotify_ops,
-+				     FSNOTIFY_GROUP_USER);
- 	if (IS_ERR(group))
- 		return group;
- 
+ 	mutex_lock(&group->mark_mutex);
+-	ret = fsnotify_add_mark_locked(mark, connp, obj_type, allow_dups, fsid);
++	ret = fsnotify_add_mark_locked(mark, connp, obj_type, add_flags, fsid);
+ 	mutex_unlock(&group->mark_mutex);
+ 	return ret;
+ }
 diff --git a/include/linux/fsnotify_backend.h b/include/linux/fsnotify_backend.h
-index b1c72edd97845..f0bf557af0091 100644
+index f0bf557af0091..dd440e6ff5285 100644
 --- a/include/linux/fsnotify_backend.h
 +++ b/include/linux/fsnotify_backend.h
-@@ -210,6 +210,9 @@ struct fsnotify_group {
- 	unsigned int priority;
+@@ -211,6 +211,7 @@ struct fsnotify_group {
  	bool shutdown;		/* group is being shut down, don't queue more events */
  
-+#define FSNOTIFY_GROUP_USER	0x01 /* user allocated group */
-+	int flags;
-+
- 	/* stores all fastpath marks assoc with this group so they can be cleaned on unregister */
- 	struct mutex mark_mutex;	/* protect marks_list */
- 	atomic_t user_waits;		/* Number of tasks waiting for user
-@@ -543,8 +546,9 @@ static inline void fsnotify_update_flags(struct dentry *dentry)
- /* called from fsnotify listeners, such as fanotify or dnotify */
+ #define FSNOTIFY_GROUP_USER	0x01 /* user allocated group */
++#define FSNOTIFY_GROUP_DUPS	0x02 /* allow multiple marks per object */
+ 	int flags;
  
- /* create a new group */
--extern struct fsnotify_group *fsnotify_alloc_group(const struct fsnotify_ops *ops);
--extern struct fsnotify_group *fsnotify_alloc_user_group(const struct fsnotify_ops *ops);
-+extern struct fsnotify_group *fsnotify_alloc_group(
-+				const struct fsnotify_ops *ops,
-+				int flags);
- /* get reference to a group */
- extern void fsnotify_get_group(struct fsnotify_group *group);
- /* drop reference on a group from fsnotify_alloc_group */
+ 	/* stores all fastpath marks assoc with this group so they can be cleaned on unregister */
+@@ -641,26 +642,26 @@ extern int fsnotify_get_conn_fsid(const struct fsnotify_mark_connector *conn,
+ /* attach the mark to the object */
+ extern int fsnotify_add_mark(struct fsnotify_mark *mark,
+ 			     fsnotify_connp_t *connp, unsigned int obj_type,
+-			     int allow_dups, __kernel_fsid_t *fsid);
++			     int add_flags, __kernel_fsid_t *fsid);
+ extern int fsnotify_add_mark_locked(struct fsnotify_mark *mark,
+ 				    fsnotify_connp_t *connp,
+-				    unsigned int obj_type, int allow_dups,
++				    unsigned int obj_type, int add_flags,
+ 				    __kernel_fsid_t *fsid);
+ 
+ /* attach the mark to the inode */
+ static inline int fsnotify_add_inode_mark(struct fsnotify_mark *mark,
+ 					  struct inode *inode,
+-					  int allow_dups)
++					  int add_flags)
+ {
+ 	return fsnotify_add_mark(mark, &inode->i_fsnotify_marks,
+-				 FSNOTIFY_OBJ_TYPE_INODE, allow_dups, NULL);
++				 FSNOTIFY_OBJ_TYPE_INODE, add_flags, NULL);
+ }
+ static inline int fsnotify_add_inode_mark_locked(struct fsnotify_mark *mark,
+ 						 struct inode *inode,
+-						 int allow_dups)
++						 int add_flags)
+ {
+ 	return fsnotify_add_mark_locked(mark, &inode->i_fsnotify_marks,
+-					FSNOTIFY_OBJ_TYPE_INODE, allow_dups,
++					FSNOTIFY_OBJ_TYPE_INODE, add_flags,
+ 					NULL);
+ }
+ 
 diff --git a/kernel/audit_fsnotify.c b/kernel/audit_fsnotify.c
-index 76a5925b4e18d..31f43b1475404 100644
+index 31f43b1475404..691f90dd09d25 100644
 --- a/kernel/audit_fsnotify.c
 +++ b/kernel/audit_fsnotify.c
-@@ -182,7 +182,8 @@ static const struct fsnotify_ops audit_mark_fsnotify_ops = {
+@@ -100,7 +100,7 @@ struct audit_fsnotify_mark *audit_alloc_mark(struct audit_krule *krule, char *pa
+ 	audit_update_mark(audit_mark, dentry->d_inode);
+ 	audit_mark->rule = krule;
  
+-	ret = fsnotify_add_inode_mark(&audit_mark->mark, inode, true);
++	ret = fsnotify_add_inode_mark(&audit_mark->mark, inode, 0);
+ 	if (ret < 0) {
+ 		audit_mark->path = NULL;
+ 		fsnotify_put_mark(&audit_mark->mark);
+@@ -183,7 +183,7 @@ static const struct fsnotify_ops audit_mark_fsnotify_ops = {
  static int __init audit_fsnotify_init(void)
  {
--	audit_fsnotify_group = fsnotify_alloc_group(&audit_mark_fsnotify_ops);
-+	audit_fsnotify_group = fsnotify_alloc_group(&audit_mark_fsnotify_ops,
-+						    0);
+ 	audit_fsnotify_group = fsnotify_alloc_group(&audit_mark_fsnotify_ops,
+-						    0);
++						    FSNOTIFY_GROUP_DUPS);
  	if (IS_ERR(audit_fsnotify_group)) {
  		audit_fsnotify_group = NULL;
- 		audit_panic("cannot create audit fsnotify group");
-diff --git a/kernel/audit_tree.c b/kernel/audit_tree.c
-index 39241207ec044..0c35879bbf7c3 100644
---- a/kernel/audit_tree.c
-+++ b/kernel/audit_tree.c
-@@ -1077,7 +1077,7 @@ static int __init audit_tree_init(void)
- 
- 	audit_tree_mark_cachep = KMEM_CACHE(audit_tree_mark, SLAB_PANIC);
- 
--	audit_tree_group = fsnotify_alloc_group(&audit_tree_ops);
-+	audit_tree_group = fsnotify_alloc_group(&audit_tree_ops, 0);
- 	if (IS_ERR(audit_tree_group))
- 		audit_panic("cannot initialize fsnotify group for rectree watches");
- 
-diff --git a/kernel/audit_watch.c b/kernel/audit_watch.c
-index fd7b30a2d9a4b..5cf22fe301493 100644
---- a/kernel/audit_watch.c
-+++ b/kernel/audit_watch.c
-@@ -492,7 +492,7 @@ static const struct fsnotify_ops audit_watch_fsnotify_ops = {
- 
- static int __init audit_watch_init(void)
- {
--	audit_watch_group = fsnotify_alloc_group(&audit_watch_fsnotify_ops);
-+	audit_watch_group = fsnotify_alloc_group(&audit_watch_fsnotify_ops, 0);
- 	if (IS_ERR(audit_watch_group)) {
- 		audit_watch_group = NULL;
  		audit_panic("cannot create audit fsnotify group");
 -- 
 2.43.0
