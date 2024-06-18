@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D661AB8F6;
-	Tue, 18 Jun 2024 13:16:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63CB11AB917;
+	Tue, 18 Jun 2024 13:16:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716605; cv=none; b=ulCwfLx4UlHiYHduxBdmVKpoEqYEf1ImEDmpzYnV9MH7t+0eNsHH56rWqW/MzgvYYFC72pkLS4jqJTtFXCENc90CMxfjBvEbce7ULb9aQdGcnm8ORe2UYkgyHnFuzoltBjRSNxRjHnUPrP7/8jlst371ARjhYU7hQQdBR1YIvW4=
+	t=1718716608; cv=none; b=CAp6RQRMEtolgAYvxlan0eD1cBC0K1eMxZQOrMKlSuWYy+cfb95cVlw9gUIbaBj7VluE9uZe2pNxLn+ZNDmcYy1YwhB+uoWqfMAUN5k6Gx50QV0wChtQ3vD4zR9ZgFiMyKOMsO/lADnlhigaVEpEuZsOtz6ioWoCbymm0/lSBA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716605; c=relaxed/simple;
-	bh=qlORsvdpq7CXdfzXL8tcdeBv0zvTkZfJv+ZmHoyNVoA=;
+	s=arc-20240116; t=1718716608; c=relaxed/simple;
+	bh=xrErU2XmYxjJaLQu1qoXiPbXvQXzaHkxmQXElIVU4kk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DmahhSCGaV7dZ9vJ2CI4M11YFr37bIaDM5gAIomF4pYh64ZhYVD69RlBAapyRn/vbE/gWhbbKds46ClVj/Kn78BvJfYWtdWRuN0hSrkwxAymD5p+0EhBFo0peaarrpsc4y1cn2LgEo5+BZiHXLpUTd/6J4yczT1VM6BGnIOxWgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oRFBXA5F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YEisVbJRrnmhtlYi/rc4k2wZ36cCV8smzpU3ugAjbRdKga0yvkR1qaXEMwq8dE4oAvXfQIWxl7gqZYEU5JE3pV+8ZucTOIe3qHvbx3tXB1XWfqQAOqXhIyngQsRVcOQebRez3O+/hHaB+6350l8zejX/IzVx6653pFTWiKnCCF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qcU2+2y+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oRFBXA5F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A07AAC3277B;
-	Tue, 18 Jun 2024 13:16:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qcU2+2y+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 888D3C32786;
+	Tue, 18 Jun 2024 13:16:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716605;
-	bh=qlORsvdpq7CXdfzXL8tcdeBv0zvTkZfJv+ZmHoyNVoA=;
+	s=korg; t=1718716607;
+	bh=xrErU2XmYxjJaLQu1qoXiPbXvQXzaHkxmQXElIVU4kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oRFBXA5FPsc35a54H8Sa5YpTnPYF+pDYnETeG6cUN8TXYu+8hYUW3LOopGDuUYuzd
-	 BjzDSbOoKF64P8tdm/MrNp7zSR9gzTor55JI+NWUhdcyHbKAbtiAJ5J3S9xbKzPPjQ
-	 NSOV5O3wSe5fHZzpWKVzIu70iNVr3t0YjfiFGVrk=
+	b=qcU2+2y+5/fp4ToSMLIiXW/qPELPOWNeLCQnee6UUgYbmJGU7VCopNWzZ7UIGghxn
+	 USRrBbx2ezWgCG51QrvefkrBHf1Jt6A1TglYhRoMSp61s2fDa3Qvl4DCtf8WFh9FSi
+	 gAR9KkIhg3VwAJXp2kiKanhaAP+7Wy8TcDIe6//w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	NeilBrown <neilb@suse.de>,
 	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 702/770] NFSD: Refactor find_file()
-Date: Tue, 18 Jun 2024 14:39:15 +0200
-Message-ID: <20240618123434.372054850@linuxfoundation.org>
+Subject: [PATCH 5.10 685/770] NFSD: Finish converting the NFSv3 GETACL result encoder
+Date: Tue, 18 Jun 2024 14:38:58 +0200
+Message-ID: <20240618123433.720686645@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -54,81 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 15424748001a9b5ea62b3e6ad45f0a8b27f01df9 ]
+[ Upstream commit 841fd0a3cb490eae5dfd262eccb8c8b11d57f8b8 ]
 
-find_file() is now the only caller of find_file_locked(), so just
-fold these two together.
+For some reason, the NFSv2 GETACL result encoder was fully converted
+to use the new nfs_stream_encode_acl(), but the NFSv3 equivalent was
+not similarly converted.
 
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Reviewed-by: NeilBrown <neilb@suse.de>
+Fixes: 20798dfe249a ("NFSD: Update the NFSv3 GETACL result encoder to use struct xdr_stream")
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 36 +++++++++++++++---------------------
- 1 file changed, 15 insertions(+), 21 deletions(-)
+ fs/nfsd/nfs3acl.c | 30 ++++++------------------------
+ 1 file changed, 6 insertions(+), 24 deletions(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index d2664aa4bde0d..69329dc159f64 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -4682,31 +4682,24 @@ move_to_close_lru(struct nfs4_ol_stateid *s, struct net *net)
- 		nfs4_put_stid(&last->st_stid);
- }
- 
--/* search file_hashtbl[] for file */
--static struct nfs4_file *
--find_file_locked(const struct svc_fh *fh, unsigned int hashval)
-+static noinline_for_stack struct nfs4_file *
-+nfsd4_file_hash_lookup(const struct svc_fh *fhp)
+diff --git a/fs/nfsd/nfs3acl.c b/fs/nfsd/nfs3acl.c
+index 2c451fcd5a3cc..161f831b3a1b7 100644
+--- a/fs/nfsd/nfs3acl.c
++++ b/fs/nfsd/nfs3acl.c
+@@ -169,11 +169,7 @@ nfs3svc_encode_getaclres(struct svc_rqst *rqstp, struct xdr_stream *xdr)
  {
--	struct nfs4_file *fp;
-+	unsigned int hashval = file_hashval(fhp);
-+	struct nfs4_file *fi;
+ 	struct nfsd3_getaclres *resp = rqstp->rq_resp;
+ 	struct dentry *dentry = resp->fh.fh_dentry;
+-	struct kvec *head = rqstp->rq_res.head;
+ 	struct inode *inode;
+-	unsigned int base;
+-	int n;
+-	int w;
  
--	hlist_for_each_entry_rcu(fp, &file_hashtbl[hashval], fi_hash,
--				lockdep_is_held(&state_lock)) {
--		if (fh_match(&fp->fi_fhandle, &fh->fh_handle)) {
--			if (refcount_inc_not_zero(&fp->fi_ref))
--				return fp;
-+	rcu_read_lock();
-+	hlist_for_each_entry_rcu(fi, &file_hashtbl[hashval], fi_hash,
-+				 lockdep_is_held(&state_lock)) {
-+		if (fh_match(&fi->fi_fhandle, &fhp->fh_handle)) {
-+			if (refcount_inc_not_zero(&fi->fi_ref)) {
-+				rcu_read_unlock();
-+				return fi;
-+			}
- 		}
- 	}
--	return NULL;
--}
+ 	if (!svcxdr_encode_nfsstat3(xdr, resp->status))
+ 		return false;
+@@ -185,26 +181,12 @@ nfs3svc_encode_getaclres(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ 		if (xdr_stream_encode_u32(xdr, resp->mask) < 0)
+ 			return false;
+ 
+-		base = (char *)xdr->p - (char *)head->iov_base;
 -
--static struct nfs4_file * find_file(struct svc_fh *fh)
--{
--	struct nfs4_file *fp;
--	unsigned int hashval = file_hashval(fh);
+-		rqstp->rq_res.page_len = w = nfsacl_size(
+-			(resp->mask & NFS_ACL)   ? resp->acl_access  : NULL,
+-			(resp->mask & NFS_DFACL) ? resp->acl_default : NULL);
+-		while (w > 0) {
+-			if (!*(rqstp->rq_next_page++))
+-				return false;
+-			w -= PAGE_SIZE;
+-		}
 -
--	rcu_read_lock();
--	fp = find_file_locked(fh, hashval);
- 	rcu_read_unlock();
--	return fp;
-+	return NULL;
- }
- 
- /*
-@@ -4757,9 +4750,10 @@ nfs4_share_conflict(struct svc_fh *current_fh, unsigned int deny_type)
- 	struct nfs4_file *fp;
- 	__be32 ret = nfs_ok;
- 
--	fp = find_file(current_fh);
-+	fp = nfsd4_file_hash_lookup(current_fh);
- 	if (!fp)
- 		return ret;
-+
- 	/* Check for conflicting share reservations */
- 	spin_lock(&fp->fi_lock);
- 	if (fp->fi_share_deny & deny_type)
+-		n = nfsacl_encode(&rqstp->rq_res, base, inode,
+-				  resp->acl_access,
+-				  resp->mask & NFS_ACL, 0);
+-		if (n > 0)
+-			n = nfsacl_encode(&rqstp->rq_res, base + n, inode,
+-					  resp->acl_default,
+-					  resp->mask & NFS_DFACL,
+-					  NFS_ACL_DEFAULT);
+-		if (n <= 0)
++		if (!nfs_stream_encode_acl(xdr, inode, resp->acl_access,
++					   resp->mask & NFS_ACL, 0))
++			return false;
++		if (!nfs_stream_encode_acl(xdr, inode, resp->acl_default,
++					   resp->mask & NFS_DFACL,
++					   NFS_ACL_DEFAULT))
+ 			return false;
+ 		break;
+ 	default:
 -- 
 2.43.0
 
