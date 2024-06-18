@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 369BE13F431;
-	Tue, 18 Jun 2024 12:50:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3E813F431;
+	Tue, 18 Jun 2024 12:51:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715059; cv=none; b=MIsqmeK5T2vXh71euLe4IabpFA9fn0dasZdZzg7X8j37nHTSES5Ewud2WXS06TSbXNll79eZN+7v88n5iRxvE+DSBbefIcUX/HhX/G1G147nyHwjd2cgHccyGnV/7ZspELzetaKl4IPSmmA71i2elaa8YH6hzYyVIVxHpcs3jxQ=
+	t=1718715062; cv=none; b=icraysR+C2Y21GeCnqQj3ubKqJfCa3AAtP5U79LAyXxSC3hSZuijXje6fjnYE/He+lvUMPGe0O8bfG6NowCcsBwkjLpMBETH2Ww2wAHHoAz61NMgHOYbmMRtuVfUfeP8DULGmgSo62B0Q5NnhSkVGk0xtg1NzunLVed7MdsLick=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715059; c=relaxed/simple;
-	bh=4V8EYxYktO+usQgplM/SDmsYAJcA+pVwQj4yOhm2afE=;
+	s=arc-20240116; t=1718715062; c=relaxed/simple;
+	bh=9xvYc/cr16Nem3+owfNUzut/+2KI2qa0J0kXJ3CIpsI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jfgQC3r8DIsLBn1e+O3YabwF0cmWFBqrV6WiDKZLkuyiGwAgyqFcvxA33cVgjEnOhVIm5PTuhJllX+lhNtUEsASi7QrouuB77kCVlzZizIC34QetENCH1Js5FhNb4i2IjwokGlxJo1Ejih/XZc2ulNskHOrjuFXef8doIFHY/XY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=psX/hYXx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rjuY7YK7RY0yXip3Qulvjl4LfAZNtTLtV9t3Uuo1z62b+WkglpOMEykZ5yfME/gwl8Y/z5WXPwpSTM/Nq1dW7fR7emgjInFAC83eUjURdI4GvsqMUFo776oKUGrMUvn9kZkfG2GnBWazniXJhFjU3UeEjTVawW448tGdUe33vZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gc3sVVAL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="psX/hYXx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF31C3277B;
-	Tue, 18 Jun 2024 12:50:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gc3sVVAL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E058C3277B;
+	Tue, 18 Jun 2024 12:51:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715058;
-	bh=4V8EYxYktO+usQgplM/SDmsYAJcA+pVwQj4yOhm2afE=;
+	s=korg; t=1718715061;
+	bh=9xvYc/cr16Nem3+owfNUzut/+2KI2qa0J0kXJ3CIpsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=psX/hYXxesn1AgRSrUqikgRUrGK1ChiEkua8wtfep/aCpfO54d38h3gaMVSwIb7n2
-	 8Lmuv6LLbLoetbkwyryMvYP2MS45eNxrZ1Fb8X91s0hojxsKC1TI+Mtul6xo18fIUL
-	 0wLJmu2xVyK/Ir5546zQ5ZFmcN/CQi3/TzHcxEJU=
+	b=Gc3sVVALyVf4JB9z6On5JfGyCmThGM5L9cpM4q5xCpkL20BIqKzISEWUUEJLkDxz7
+	 JLxvh3iGVOX0iccqKNe5ZxGtKpaz8mHRWURAKFFKz8Vo6i162s1UXMnpSZPjV+IjqD
+	 v8ZnEvw0H+F/gsCYek7hBZqzAiWK41hxH2sTC4PU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"J. Bruce Fields" <bfields@redhat.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 173/770] NFSD: Update the NFSv2 SETACL argument decoder to use struct xdr_stream, again
-Date: Tue, 18 Jun 2024 14:30:26 +0200
-Message-ID: <20240618123413.948542434@linuxfoundation.org>
+Subject: [PATCH 5.10 182/770] nfsd: refactor set_client
+Date: Tue, 18 Jun 2024 14:30:35 +0200
+Message-ID: <20240618123414.300635238@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -50,62 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: J. Bruce Fields <bfields@redhat.com>
 
-[ Upstream commit 68519ff2a1c72c67fcdc4b81671acda59f420af9 ]
+[ Upstream commit 7950b5316e40d99dcb85ab81a2d1dbb913d7c1c8 ]
 
+This'll be useful elsewhere.
+
+Signed-off-by: J. Bruce Fields <bfields@redhat.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs3acl.c | 31 +++++++++++++------------------
- 1 file changed, 13 insertions(+), 18 deletions(-)
+ fs/nfsd/nfs4state.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/fs/nfsd/nfs3acl.c b/fs/nfsd/nfs3acl.c
-index addb0d7d5500f..a568b842e9ebe 100644
---- a/fs/nfsd/nfs3acl.c
-+++ b/fs/nfsd/nfs3acl.c
-@@ -140,28 +140,23 @@ static int nfs3svc_decode_getaclargs(struct svc_rqst *rqstp, __be32 *p)
- 
- static int nfs3svc_decode_setaclargs(struct svc_rqst *rqstp, __be32 *p)
- {
--	struct nfsd3_setaclargs *args = rqstp->rq_argp;
--	struct kvec *head = rqstp->rq_arg.head;
--	unsigned int base;
--	int n;
-+	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
-+	struct nfsd3_setaclargs *argp = rqstp->rq_argp;
- 
--	p = nfs3svc_decode_fh(p, &args->fh);
--	if (!p)
-+	if (!svcxdr_decode_nfs_fh3(xdr, &argp->fh))
-+		return 0;
-+	if (xdr_stream_decode_u32(xdr, &argp->mask) < 0)
- 		return 0;
--	args->mask = ntohl(*p++);
--	if (args->mask & ~NFS_ACL_MASK ||
--	    !xdr_argsize_check(rqstp, p))
-+	if (argp->mask & ~NFS_ACL_MASK)
-+		return 0;
-+	if (!nfs_stream_decode_acl(xdr, NULL, (argp->mask & NFS_ACL) ?
-+				   &argp->acl_access : NULL))
-+		return 0;
-+	if (!nfs_stream_decode_acl(xdr, NULL, (argp->mask & NFS_DFACL) ?
-+				   &argp->acl_default : NULL))
- 		return 0;
- 
--	base = (char *)p - (char *)head->iov_base;
--	n = nfsacl_decode(&rqstp->rq_arg, base, NULL,
--			  (args->mask & NFS_ACL) ?
--			  &args->acl_access : NULL);
--	if (n > 0)
--		n = nfsacl_decode(&rqstp->rq_arg, base + n, NULL,
--				  (args->mask & NFS_DFACL) ?
--				  &args->acl_default : NULL);
--	return (n > 0);
-+	return 1;
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index 60c66becbc876..c4e9f807b4a1b 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -4675,40 +4675,40 @@ static __be32 nfsd4_check_seqid(struct nfsd4_compound_state *cstate, struct nfs4
+ 	return nfserr_bad_seqid;
  }
  
- /*
++static struct nfs4_client *lookup_clientid(clientid_t *clid, bool sessions,
++						struct nfsd_net *nn)
++{
++	struct nfs4_client *found;
++
++	spin_lock(&nn->client_lock);
++	found = find_confirmed_client(clid, sessions, nn);
++	if (found)
++		atomic_inc(&found->cl_rpc_users);
++	spin_unlock(&nn->client_lock);
++	return found;
++}
++
+ static __be32 set_client(clientid_t *clid,
+ 		struct nfsd4_compound_state *cstate,
+ 		struct nfsd_net *nn,
+ 		bool sessions)
+ {
+-	struct nfs4_client *found;
+-
+ 	if (cstate->clp) {
+-		found = cstate->clp;
+-		if (!same_clid(&found->cl_clientid, clid))
++		if (!same_clid(&cstate->clp->cl_clientid, clid))
+ 			return nfserr_stale_clientid;
+ 		return nfs_ok;
+ 	}
+-
+ 	if (STALE_CLIENTID(clid, nn))
+ 		return nfserr_stale_clientid;
+-
+ 	/*
+ 	 * For v4.1+ we get the client in the SEQUENCE op. If we don't have one
+ 	 * cached already then we know this is for is for v4.0 and "sessions"
+ 	 * will be false.
+ 	 */
+ 	WARN_ON_ONCE(cstate->session);
+-	spin_lock(&nn->client_lock);
+-	found = find_confirmed_client(clid, sessions, nn);
+-	if (!found) {
+-		spin_unlock(&nn->client_lock);
++	cstate->clp = lookup_clientid(clid, sessions, nn);
++	if (!cstate->clp)
+ 		return nfserr_expired;
+-	}
+-	atomic_inc(&found->cl_rpc_users);
+-	spin_unlock(&nn->client_lock);
+-
+-	/* Cache the nfs4_client in cstate! */
+-	cstate->clp = found;
+ 	return nfs_ok;
+ }
+ 
 -- 
 2.43.0
 
