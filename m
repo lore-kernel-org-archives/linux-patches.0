@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9CED153BD7;
-	Tue, 18 Jun 2024 12:54:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D060A15383C;
+	Tue, 18 Jun 2024 12:54:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715281; cv=none; b=By8FEZsJvf1latVgIneVHyr2tQUArVEw0oygMIoqcyhUh1qNLm8yDWOeMgG1NyG2vIKIP9+Y2DTV35n0ucQYgmKSsl7W6h9NryF+NUkMBI0m2+N9103jXz1QbfQlGkYRvzuhzaz8envmLNbsikkZBX2DwkGbtflhTy9hwC89WnE=
+	t=1718715283; cv=none; b=jaGY/1UmWPPemVGwuVLqFKdtNw8TlKyA6ra9XmKYjeR6EOv+l8hOPz12hDF/1nzo8C0YTOZA5VIkV9WYsEeY3P4bBRxHZWdB6Z4PYnufKf3Wyhvp6JVD+5wjGXIh6nau0U488LUjh6CKblunqVLZMMlWkoz+h7xTW7BEwR605a4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715281; c=relaxed/simple;
-	bh=OLVy5qado8jLOvYdavBwF41rZgJrJJzKtcAf7lZExmg=;
+	s=arc-20240116; t=1718715283; c=relaxed/simple;
+	bh=DBsvYbwxLfmWCKsiVNmGR6LqH87LRk5FbC+sg6JOwW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X1u6YqoRhc/YL2Drt42X8NK1l2p9BhCW6IbhVyHbTittF7AL+81ELTq2B8k1GkaQTQJ1if3eTHfjrhW7Cp32t1b9pyluE/uOhpDwx3TPWR+GcH9OH0p44Dm/7MJZOg3cC5wxzKct+7dyqjmP8jAbwVJaiCTcyffaxC+oGeZUXH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PSqC5ycS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ae0NKdgBPCfb1VF8Ap7z3X3Nh94P5ytP1sOKaGIoz0BEHuebQpM7oKh/dkWPzg1qfGOK2Rnz0Rb6AUSmGxCnLx5zS7Qq5+H8nK2Tv5F4wwkUfetpHw6/s2nwUA7ZiQYn53CyWgY3frcBZvkAuU4DGWT5Eyu8VbIXpmnlH9LchYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fmr9LJZx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PSqC5ycS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71EFAC3277B;
-	Tue, 18 Jun 2024 12:54:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fmr9LJZx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58F36C3277B;
+	Tue, 18 Jun 2024 12:54:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715280;
-	bh=OLVy5qado8jLOvYdavBwF41rZgJrJJzKtcAf7lZExmg=;
+	s=korg; t=1718715283;
+	bh=DBsvYbwxLfmWCKsiVNmGR6LqH87LRk5FbC+sg6JOwW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PSqC5ycSHvLCmdC8jCAy+hSZgpRtCD+xtIrPHf2oHriwO9HT9Jl2wLuUReb66WenW
-	 +5zsYwMWdeW9ZhTEWKPofM0TdyOvD8Tec1WVHr6X0KktcEGlazQ56SKGXuUxMNxlDn
-	 J+EVL+COKmq1U6Ljl5bYWLe2yujgK/sEeGYyLPr4=
+	b=Fmr9LJZxdxizf61ntkQ1XYJQJ7XCLF8KfUk5dPtiKW/a6s+U+1yj9u/x5A9lC0Z1g
+	 DxXoetalL+9EKgEnRLbfFDWugJtJ2pN4tV+VshU1fVRhBKYlLZZ4t8PW+0/HuddMx3
+	 IYeAPlZtRaFkxusUZ4dtdv4YVndTJKXo9QfOH+sw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Amir Goldstein <amir73il@gmail.com>,
 	Jan Kara <jack@suse.cz>,
+	Christian Brauner <christian.brauner@ubuntu.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 256/770] fanotify: support limited functionality for unprivileged users
-Date: Tue, 18 Jun 2024 14:31:49 +0200
-Message-ID: <20240618123417.157249008@linuxfoundation.org>
+Subject: [PATCH 5.10 257/770] fanotify_user: use upper_32_bits() to verify mask
+Date: Tue, 18 Jun 2024 14:31:50 +0200
+Message-ID: <20240618123417.195223834@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,159 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Christian Brauner <christian.brauner@ubuntu.com>
 
-[ Upstream commit 7cea2a3c505e87a9d6afc78be4a7f7be636a73a7 ]
+[ Upstream commit 22d483b99863202e3631ff66fa0f3c2302c0f96f ]
 
-Add limited support for unprivileged fanotify groups.
-An unprivileged users is not allowed to get an open file descriptor in
-the event nor the process pid of another process.  An unprivileged user
-cannot request permission events, cannot set mount/filesystem marks and
-cannot request unlimited queue/marks.
+I don't see an obvious reason why the upper 32 bit check needs to be
+open-coded this way. Switch to upper_32_bits() which is more idiomatic and
+should conceptually be the same check.
 
-This enables the limited functionality similar to inotify when watching a
-set of files and directories for OPEN/ACCESS/MODIFY/CLOSE events, without
-requiring SYS_CAP_ADMIN privileges.
-
-The FAN_REPORT_DFID_NAME init flag, provide a method for an unprivileged
-listener watching a set of directories (with FAN_EVENT_ON_CHILD) to monitor
-all changes inside those directories.
-
-This typically requires that the listener keeps a map of watched directory
-fid to dirfd (O_PATH), where fid is obtained with name_to_handle_at()
-before starting to watch for changes.
-
-When getting an event, the reported fid of the parent should be resolved
-to dirfd and fstatsat(2) with dirfd and name should be used to query the
-state of the filesystem entry.
-
-Link: https://lore.kernel.org/r/20210304112921.3996419-3-amir73il@gmail.com
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Cc: Amir Goldstein <amir73il@gmail.com>
+Cc: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20210325083742.2334933-1-brauner@kernel.org
+Signed-off-by: Christian Brauner <christian.brauner@ubuntu.com>
 Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/fanotify/fanotify_user.c | 29 ++++++++++++++++++++++++--
- fs/notify/fdinfo.c                 |  3 ++-
- include/linux/fanotify.h           | 33 +++++++++++++++++++++++++-----
- 3 files changed, 57 insertions(+), 8 deletions(-)
+ fs/notify/fanotify/fanotify_user.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
-index 74b4da6354e1c..842cccb4f7499 100644
+index 842cccb4f7499..98289ace66fac 100644
 --- a/fs/notify/fanotify/fanotify_user.c
 +++ b/fs/notify/fanotify/fanotify_user.c
-@@ -419,6 +419,14 @@ static ssize_t copy_event_to_user(struct fsnotify_group *group,
- 	metadata.reserved = 0;
- 	metadata.mask = event->mask & FANOTIFY_OUTGOING_EVENTS;
- 	metadata.pid = pid_vnr(event->pid);
-+	/*
-+	 * For an unprivileged listener, event->pid can be used to identify the
-+	 * events generated by the listener process itself, without disclosing
-+	 * the pids of other processes.
-+	 */
-+	if (!capable(CAP_SYS_ADMIN) &&
-+	    task_tgid(current) != event->pid)
-+		metadata.pid = 0;
+@@ -1268,7 +1268,7 @@ static int do_fanotify_mark(int fanotify_fd, unsigned int flags, __u64 mask,
+ 		 __func__, fanotify_fd, flags, dfd, pathname, mask);
  
- 	if (path && path->mnt && path->dentry) {
- 		fd = create_fd(group, path, &f);
-@@ -1036,8 +1044,16 @@ SYSCALL_DEFINE2(fanotify_init, unsigned int, flags, unsigned int, event_f_flags)
- 	pr_debug("%s: flags=%x event_f_flags=%x\n",
- 		 __func__, flags, event_f_flags);
+ 	/* we only use the lower 32 bits as of right now. */
+-	if (mask & ((__u64)0xffffffff << 32))
++	if (upper_32_bits(mask))
+ 		return -EINVAL;
  
--	if (!capable(CAP_SYS_ADMIN))
--		return -EPERM;
-+	if (!capable(CAP_SYS_ADMIN)) {
-+		/*
-+		 * An unprivileged user can setup an fanotify group with
-+		 * limited functionality - an unprivileged group is limited to
-+		 * notification events with file handles and it cannot use
-+		 * unlimited queue/marks.
-+		 */
-+		if ((flags & FANOTIFY_ADMIN_INIT_FLAGS) || !fid_mode)
-+			return -EPERM;
-+	}
- 
- #ifdef CONFIG_AUDITSYSCALL
- 	if (flags & ~(FANOTIFY_INIT_FLAGS | FAN_ENABLE_AUDIT))
-@@ -1306,6 +1322,15 @@ static int do_fanotify_mark(int fanotify_fd, unsigned int flags, __u64 mask,
- 		goto fput_and_out;
- 	group = f.file->private_data;
- 
-+	/*
-+	 * An unprivileged user is not allowed to watch a mount point nor
-+	 * a filesystem.
-+	 */
-+	ret = -EPERM;
-+	if (!capable(CAP_SYS_ADMIN) &&
-+	    mark_type != FAN_MARK_INODE)
-+		goto fput_and_out;
-+
- 	/*
- 	 * group->priority == FS_PRIO_0 == FAN_CLASS_NOTIF.  These are not
- 	 * allowed to set permissions events.
-diff --git a/fs/notify/fdinfo.c b/fs/notify/fdinfo.c
-index 765b50aeadd28..85b112bd88511 100644
---- a/fs/notify/fdinfo.c
-+++ b/fs/notify/fdinfo.c
-@@ -137,7 +137,8 @@ void fanotify_show_fdinfo(struct seq_file *m, struct file *f)
- 	struct fsnotify_group *group = f->private_data;
- 
- 	seq_printf(m, "fanotify flags:%x event-flags:%x\n",
--		   group->fanotify_data.flags, group->fanotify_data.f_flags);
-+		   group->fanotify_data.flags,
-+		   group->fanotify_data.f_flags);
- 
- 	show_fdinfo(m, f, fanotify_fdinfo);
- }
-diff --git a/include/linux/fanotify.h b/include/linux/fanotify.h
-index 031a97d8369ae..bad41bcb25dfb 100644
---- a/include/linux/fanotify.h
-+++ b/include/linux/fanotify.h
-@@ -18,15 +18,38 @@ extern struct ctl_table fanotify_table[]; /* for sysctl */
-  * these constant, the programs may break if re-compiled with new uapi headers
-  * and then run on an old kernel.
-  */
--#define FANOTIFY_CLASS_BITS	(FAN_CLASS_NOTIF | FAN_CLASS_CONTENT | \
-+
-+/* Group classes where permission events are allowed */
-+#define FANOTIFY_PERM_CLASSES	(FAN_CLASS_CONTENT | \
- 				 FAN_CLASS_PRE_CONTENT)
- 
-+#define FANOTIFY_CLASS_BITS	(FAN_CLASS_NOTIF | FANOTIFY_PERM_CLASSES)
-+
- #define FANOTIFY_FID_BITS	(FAN_REPORT_FID | FAN_REPORT_DFID_NAME)
- 
--#define FANOTIFY_INIT_FLAGS	(FANOTIFY_CLASS_BITS | FANOTIFY_FID_BITS | \
--				 FAN_REPORT_TID | \
--				 FAN_CLOEXEC | FAN_NONBLOCK | \
--				 FAN_UNLIMITED_QUEUE | FAN_UNLIMITED_MARKS)
-+/*
-+ * fanotify_init() flags that require CAP_SYS_ADMIN.
-+ * We do not allow unprivileged groups to request permission events.
-+ * We do not allow unprivileged groups to get other process pid in events.
-+ * We do not allow unprivileged groups to use unlimited resources.
-+ */
-+#define FANOTIFY_ADMIN_INIT_FLAGS	(FANOTIFY_PERM_CLASSES | \
-+					 FAN_REPORT_TID | \
-+					 FAN_UNLIMITED_QUEUE | \
-+					 FAN_UNLIMITED_MARKS)
-+
-+/*
-+ * fanotify_init() flags that are allowed for user without CAP_SYS_ADMIN.
-+ * FAN_CLASS_NOTIF is the only class we allow for unprivileged group.
-+ * We do not allow unprivileged groups to get file descriptors in events,
-+ * so one of the flags for reporting file handles is required.
-+ */
-+#define FANOTIFY_USER_INIT_FLAGS	(FAN_CLASS_NOTIF | \
-+					 FANOTIFY_FID_BITS | \
-+					 FAN_CLOEXEC | FAN_NONBLOCK)
-+
-+#define FANOTIFY_INIT_FLAGS	(FANOTIFY_ADMIN_INIT_FLAGS | \
-+				 FANOTIFY_USER_INIT_FLAGS)
- 
- #define FANOTIFY_MARK_TYPE_BITS	(FAN_MARK_INODE | FAN_MARK_MOUNT | \
- 				 FAN_MARK_FILESYSTEM)
+ 	if (flags & ~FANOTIFY_MARK_FLAGS)
 -- 
 2.43.0
 
