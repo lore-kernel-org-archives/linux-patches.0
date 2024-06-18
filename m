@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B23E13C695;
-	Tue, 18 Jun 2024 13:10:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD2D1A08B5;
+	Tue, 18 Jun 2024 13:10:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716219; cv=none; b=Yp1soaSZ/UDQ0VS8y5gvhw77BwnS4Gv7RW3WNXflOQ6j96YyZrmegb1k3hvQxfHyaFRp9ScrOmKqtlvPBrydRw5YuFlvBilSO2A/L8dmwEuucqTcJKHn1RADgx1QtTz6MK+5jdCVzMrUCIF9I/DLXcbSGZ+XbZHX6qoHvyzEg3s=
+	t=1718716222; cv=none; b=qJsM8rzOtaxlxBN4i9egEk4ohQhk2UDx/U4rRKOe3aP8aqukxXWhNifDKItagBq7y8dFjEva7l9uTW+PJkdBlfJHCDd57rKuHRd9DGLPmAg+Y3o4UF5SUbkXI2RvKCT96JilxVWOpMxOyRJzPGPOJXD7e2NE7jf5WoD5VMIwMr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716219; c=relaxed/simple;
-	bh=XPqQ/EwyklC+Qxzp69a6vqLg5ZW7rlxEL0pfQgqpvMU=;
+	s=arc-20240116; t=1718716222; c=relaxed/simple;
+	bh=5zJ9fNDBzopFuHZdLnO4NfJVumnjkasSLICrCtMbACk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g4oe6w5AXYOp3XsEJ52twTGwoNou8qt/CI3pDtwmiM620hwByhiCEN4QbfE5IGi67+HtcS/diuTmbZx9cPoPzfht3oDImcUmTsXhSUKWT9lOPsjLAnZ1SSc2tVtpxLjPrW9X0mY+BNP/ZTATeetan1PbvJReP36t+d/vVhklSzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0BZp/dzx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BegRUYZl1qlSpW8BXbJjvol6IrgADvyf3e62dgOXGPnq3yBcIUZk+iUrUUi3DyQ7PuQxiZNrOxi8xOIgGgO1cXWTgNgN0++wKng/o/q9iNr65idZmrP8r7GyhKZqMKG5gKXUmjKuHq65YjV+V8btMx1uG7koA5G6Xtj26tifj+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WYemKENh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0BZp/dzx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8440DC3277B;
-	Tue, 18 Jun 2024 13:10:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WYemKENh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71092C3277B;
+	Tue, 18 Jun 2024 13:10:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716218;
-	bh=XPqQ/EwyklC+Qxzp69a6vqLg5ZW7rlxEL0pfQgqpvMU=;
+	s=korg; t=1718716222;
+	bh=5zJ9fNDBzopFuHZdLnO4NfJVumnjkasSLICrCtMbACk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0BZp/dzxYM/YSqHb9x0nx57+EjIZJ40b7u7u/unmMgKOa5Fk7WLsLYEsQKu+Yv8ZT
-	 1VxiQ9Ub/NrRTcLGP2Ev/RRUIF8AvLdXeFvFQKaYEClpUS7TW5ybLUFCMjgo9aGeuC
-	 hDNOMRK43ASG9PEElAdJVAkbhbtaW3Yqid1MvtB0=
+	b=WYemKENhbumolQYDyv6LEMDxEENwZV+vkYTBGJT14my9ihXhR6oJhTAVd9O5G6QgC
+	 y9H2jovNQTMdBS7FOK+IlHDKoehLjEmUJxEq9C1irC7c30MxNP+EfezVIZcgT/lx+g
+	 9J81bOsFeaqmJuCQ+3lBeUWI2XuS7FSUAc879maQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 572/770] NFSD: Remove lockdep assertion from unhash_and_release_locked()
-Date: Tue, 18 Jun 2024 14:37:05 +0200
-Message-ID: <20240618123429.375283059@linuxfoundation.org>
+Subject: [PATCH 5.10 573/770] NFSD: nfsd_file_unhash can compute hashval from nf->nf_inode
+Date: Tue, 18 Jun 2024 14:37:06 +0200
+Message-ID: <20240618123429.413302255@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,31 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit f53cef15dddec7203df702cdc62e554190385450 ]
+[ Upstream commit 8755326399f471ec3b31e2ab8c5074c0d28a0fb5 ]
 
-IIUC, holding the hash bucket lock is needed only in
-nfsd_file_unhash, and there is already a lockdep assertion there.
+Remove an unnecessary usage of nf_hashval.
 
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/filecache.c | 2 --
- 1 file changed, 2 deletions(-)
+ fs/nfsd/filecache.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-index 2d013a88e3565..6a01de8677959 100644
+index 6a01de8677959..d7c74b51eabf3 100644
 --- a/fs/nfsd/filecache.c
 +++ b/fs/nfsd/filecache.c
-@@ -299,8 +299,6 @@ nfsd_file_unhash(struct nfsd_file *nf)
- static bool
- nfsd_file_unhash_and_release_locked(struct nfsd_file *nf, struct list_head *dispose)
+@@ -272,13 +272,17 @@ static void nfsd_file_lru_remove(struct nfsd_file *nf)
+ static void
+ nfsd_file_do_unhash(struct nfsd_file *nf)
  {
 -	lockdep_assert_held(&nfsd_file_hashtbl[nf->nf_hashval].nfb_lock);
--
- 	trace_nfsd_file_unhash_and_release_locked(nf);
- 	if (!nfsd_file_unhash(nf))
- 		return false;
++	struct inode *inode = nf->nf_inode;
++	unsigned int hashval = (unsigned int)hash_long(inode->i_ino,
++				NFSD_FILE_HASH_BITS);
++
++	lockdep_assert_held(&nfsd_file_hashtbl[hashval].nfb_lock);
+ 
+ 	trace_nfsd_file_unhash(nf);
+ 
+ 	if (nfsd_file_check_write_error(nf))
+ 		nfsd_reset_write_verifier(net_generic(nf->nf_net, nfsd_net_id));
+-	--nfsd_file_hashtbl[nf->nf_hashval].nfb_count;
++	--nfsd_file_hashtbl[hashval].nfb_count;
+ 	hlist_del_rcu(&nf->nf_node);
+ 	atomic_long_dec(&nfsd_filecache_count);
+ }
 -- 
 2.43.0
 
