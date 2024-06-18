@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54819158DB3;
-	Tue, 18 Jun 2024 13:13:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF06C158DB8;
+	Tue, 18 Jun 2024 13:13:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716414; cv=none; b=Ttb8uBZzCsiILuEJYwQzi5vmlgwhbmYd9VC6FvnkpSQ6t2WfjRGEs7hpL0P+pAVjGZHI4hi4hca6SbSebtJqaGnay7bViOOMM4Z52x9Deu+CgmyPbHqSE6DhbEDwUn6/8NTpzdh7/IEphaLsEZU2j0/+kElZkf4ceDzNdpGBBGo=
+	t=1718716417; cv=none; b=hVkHezC7DuyG6GAYocB1o1XVNKVeqWuUosCCxs2WUnHfdrfACGqA3PxEZ+WXOk6oKrrHgbQRXkLxDsYLj9bO2K2o5KRkDQgg5IxVf0XOle0mF0AvjCdQDFTvx6remzKxuSRaiKLk1EgslcAlbKk0hSwC0X4uRJoIRdYX+WPmW+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716414; c=relaxed/simple;
-	bh=P8jcieAuHtub7m7OXhXeNdyjR8RtupS7kR1f0kgGVBA=;
+	s=arc-20240116; t=1718716417; c=relaxed/simple;
+	bh=tkZ939r76b69imn3SE2W6W0VdEkdF67vM3M38pRdTZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dIyb/CGCBg9tmWKD85T8Cr9/wLKXusyALuWBFpRQYr/5qdySu7aVzAFJ8xNRGwS+cR2pZF/Ruitq8uCgz5FwFqiimJsqyL9g3uOo/VDnfDvgGZvOLqa5pt91/n9YACpkh6waiW2VEtNizhVLOfUjUaSSftLdvhHdAC/X2MX1sp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v3CeljUn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e4+CF3QHbsDS2HOBN4dyaAvJhPY/bS6i8VbIl0/4llU8QUIPryHmvFFkl1fqliMu5+ameb+3tRNy9TiEYo1yCx8TLQg+Qoz9jazm1d94kEnY7lKLcLhiN9NLPmPFv3pQBj29jHb3dzr2Zkyk5cNXXKZOo6L02bPldLLDHYXFMLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=exz5OpJ4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v3CeljUn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF27FC3277B;
-	Tue, 18 Jun 2024 13:13:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="exz5OpJ4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E56C3277B;
+	Tue, 18 Jun 2024 13:13:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716414;
-	bh=P8jcieAuHtub7m7OXhXeNdyjR8RtupS7kR1f0kgGVBA=;
+	s=korg; t=1718716417;
+	bh=tkZ939r76b69imn3SE2W6W0VdEkdF67vM3M38pRdTZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v3CeljUnpml9wiVz0hzWMT7gHo+p1eZxVdeLIPt29Mzhk4pIHdqToZO/fO4VF2BnU
-	 m297PG9AgT8ip78bPJVhNN2SJ6HCdkJ9AO3HZDFUWkbZ3JZ/q8fJcj4MiwdGHOBNAa
-	 EJvYy9bvu6RO6zVpWKyzB/6r9UMJ+hN3+cNxDWIk=
+	b=exz5OpJ4ifku38rf5E3LNKIhJyJh5R+CbWmi31wZgEhnjAISgevMh5VFblUPu0p/A
+	 pr0mlRTdw+VFZENF/OAdxDszthKwrGPSfzzP7+fEJNHiqrrdAn5ywuApOch6uHVa5g
+	 6xLJm53a/E1EGhGN94ZQd0ri1vyUyaepskBUP9BA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bruce Fields <bfields@fieldses.org>,
+	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 638/770] NFSD: Fix handling of oversized NFSv4 COMPOUND requests
-Date: Tue, 18 Jun 2024 14:38:11 +0200
-Message-ID: <20240618123431.916267209@linuxfoundation.org>
+Subject: [PATCH 5.10 639/770] nfsd: clean up mounted_on_fileid handling
+Date: Tue, 18 Jun 2024 14:38:12 +0200
+Message-ID: <20240618123431.954495033@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -51,123 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 7518a3dc5ea249d4112156ce71b8b184eb786151 ]
+[ Upstream commit 6106d9119b6599fa23dc556b429d887b4c2d9f62 ]
 
-If an NFS server returns NFS4ERR_RESOURCE on the first operation in
-an NFSv4 COMPOUND, there's no way for a client to know where the
-problem is and then simplify the compound to make forward progress.
+We only need the inode number for this, not a full rack of attributes.
+Rename this function make it take a pointer to a u64 instead of
+struct kstat, and change it to just request STATX_INO.
 
-So instead, make NFSD process as many operations in an oversized
-COMPOUND as it can and then return NFS4ERR_RESOURCE on the first
-operation it did not process.
-
-pynfs NFSv4.0 COMP6 exercises this case, but checks only for the
-COMPOUND status code, not whether the server has processed any
-of the operations.
-
-pynfs NFSv4.1 SEQ6 and SEQ7 exercise the NFSv4.1 case, which detects
-too many operations per COMPOUND by checking against the limits
-negotiated when the session was created.
-
-Suggested-by: Bruce Fields <bfields@fieldses.org>
-Fixes: 0078117c6d91 ("nfsd: return RESOURCE not GARBAGE_ARGS on too many ops")
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+[ cel: renamed get_mounted_on_ino() ]
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4proc.c | 19 +++++++++++++------
- fs/nfsd/nfs4xdr.c  | 12 +++---------
- fs/nfsd/xdr4.h     |  3 ++-
- 3 files changed, 18 insertions(+), 16 deletions(-)
+ fs/nfsd/nfs4xdr.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 62ffcecf78f7e..c40795d1d98df 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -2623,9 +2623,6 @@ nfsd4_proc_compound(struct svc_rqst *rqstp)
- 	status = nfserr_minor_vers_mismatch;
- 	if (nfsd_minorversion(nn, args->minorversion, NFSD_TEST) <= 0)
- 		goto out;
--	status = nfserr_resource;
--	if (args->opcnt > NFSD_MAX_OPS_PER_COMPOUND)
--		goto out;
- 
- 	status = nfs41_check_op_ordering(args);
- 	if (status) {
-@@ -2638,10 +2635,20 @@ nfsd4_proc_compound(struct svc_rqst *rqstp)
- 
- 	rqstp->rq_lease_breaker = (void **)&cstate->clp;
- 
--	trace_nfsd_compound(rqstp, args->opcnt);
-+	trace_nfsd_compound(rqstp, args->client_opcnt);
- 	while (!status && resp->opcnt < args->opcnt) {
- 		op = &args->ops[resp->opcnt++];
- 
-+		if (unlikely(resp->opcnt == NFSD_MAX_OPS_PER_COMPOUND)) {
-+			/* If there are still more operations to process,
-+			 * stop here and report NFS4ERR_RESOURCE. */
-+			if (cstate->minorversion == 0 &&
-+			    args->client_opcnt > resp->opcnt) {
-+				op->status = nfserr_resource;
-+				goto encode_op;
-+			}
-+		}
-+
- 		/*
- 		 * The XDR decode routines may have pre-set op->status;
- 		 * for example, if there is a miscellaneous XDR error
-@@ -2717,8 +2724,8 @@ nfsd4_proc_compound(struct svc_rqst *rqstp)
- 			status = op->status;
- 		}
- 
--		trace_nfsd_compound_status(args->opcnt, resp->opcnt, status,
--					   nfsd4_op_name(op->opnum));
-+		trace_nfsd_compound_status(args->client_opcnt, resp->opcnt,
-+					   status, nfsd4_op_name(op->opnum));
- 
- 		nfsd4_cstate_clear_replay(cstate);
- 		nfsd4_increment_op_stats(op->opnum);
 diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
-index 92e0535ddb922..b9398b7b3539a 100644
+index b9398b7b3539a..b5ca83045d6e9 100644
 --- a/fs/nfsd/nfs4xdr.c
 +++ b/fs/nfsd/nfs4xdr.c
-@@ -2359,16 +2359,10 @@ nfsd4_decode_compound(struct nfsd4_compoundargs *argp)
+@@ -2769,9 +2769,10 @@ static __be32 fattr_handle_absent_fs(u32 *bmval0, u32 *bmval1, u32 *bmval2, u32
+ }
  
- 	if (xdr_stream_decode_u32(argp->xdr, &argp->minorversion) < 0)
- 		return false;
--	if (xdr_stream_decode_u32(argp->xdr, &argp->opcnt) < 0)
-+	if (xdr_stream_decode_u32(argp->xdr, &argp->client_opcnt) < 0)
- 		return false;
--
--	/*
--	 * NFS4ERR_RESOURCE is a more helpful error than GARBAGE_ARGS
--	 * here, so we return success at the xdr level so that
--	 * nfsd4_proc can handle this is an NFS-level error.
--	 */
--	if (argp->opcnt > NFSD_MAX_OPS_PER_COMPOUND)
--		return true;
-+	argp->opcnt = min_t(u32, argp->client_opcnt,
-+			    NFSD_MAX_OPS_PER_COMPOUND);
  
- 	if (argp->opcnt > ARRAY_SIZE(argp->iops)) {
- 		argp->ops = vcalloc(argp->opcnt, sizeof(*argp->ops));
-diff --git a/fs/nfsd/xdr4.h b/fs/nfsd/xdr4.h
-index 14b87141de343..2a699e8ca1baf 100644
---- a/fs/nfsd/xdr4.h
-+++ b/fs/nfsd/xdr4.h
-@@ -717,9 +717,10 @@ struct nfsd4_compoundargs {
- 	struct svcxdr_tmpbuf		*to_free;
- 	struct svc_rqst			*rqstp;
+-static int get_parent_attributes(struct svc_export *exp, struct kstat *stat)
++static int nfsd4_get_mounted_on_ino(struct svc_export *exp, u64 *pino)
+ {
+ 	struct path path = exp->ex_path;
++	struct kstat stat;
+ 	int err;
  
--	u32				taglen;
- 	char *				tag;
-+	u32				taglen;
- 	u32				minorversion;
-+	u32				client_opcnt;
- 	u32				opcnt;
- 	struct nfsd4_op			*ops;
- 	struct nfsd4_op			iops[8];
+ 	path_get(&path);
+@@ -2779,8 +2780,10 @@ static int get_parent_attributes(struct svc_export *exp, struct kstat *stat)
+ 		if (path.dentry != path.mnt->mnt_root)
+ 			break;
+ 	}
+-	err = vfs_getattr(&path, stat, STATX_BASIC_STATS, AT_STATX_SYNC_AS_STAT);
++	err = vfs_getattr(&path, &stat, STATX_INO, AT_STATX_SYNC_AS_STAT);
+ 	path_put(&path);
++	if (!err)
++		*pino = stat.ino;
+ 	return err;
+ }
+ 
+@@ -3277,22 +3280,21 @@ nfsd4_encode_fattr(struct xdr_stream *xdr, struct svc_fh *fhp,
+ 		*p++ = cpu_to_be32(stat.btime.tv_nsec);
+ 	}
+ 	if (bmval1 & FATTR4_WORD1_MOUNTED_ON_FILEID) {
+-		struct kstat parent_stat;
+ 		u64 ino = stat.ino;
+ 
+ 		p = xdr_reserve_space(xdr, 8);
+ 		if (!p)
+                 	goto out_resource;
+ 		/*
+-		 * Get parent's attributes if not ignoring crossmount
+-		 * and this is the root of a cross-mounted filesystem.
++		 * Get ino of mountpoint in parent filesystem, if not ignoring
++		 * crossmount and this is the root of a cross-mounted
++		 * filesystem.
+ 		 */
+ 		if (ignore_crossmnt == 0 &&
+ 		    dentry == exp->ex_path.mnt->mnt_root) {
+-			err = get_parent_attributes(exp, &parent_stat);
++			err = nfsd4_get_mounted_on_ino(exp, &ino);
+ 			if (err)
+ 				goto out_nfserr;
+-			ino = parent_stat.ino;
+ 		}
+ 		p = xdr_encode_hyper(p, ino);
+ 	}
 -- 
 2.43.0
 
