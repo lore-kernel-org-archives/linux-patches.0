@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FCA414C5A7;
-	Tue, 18 Jun 2024 12:49:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA46514D435;
+	Tue, 18 Jun 2024 12:49:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718714950; cv=none; b=lSmFMQgBacqN+oAJTlp9B4D5x7/HrtDikH/5fI1+oT65iF3BIA1CW/orfaMUBGeQ9eNUwXcwIT39EvULed9mEasR2o23e56zfe1/a7gtH3V8UFVyfAFdMnH9zITLk0b41qH9iIHnkoS2RgBbJUfLDXfTNYUOOo51Yg3Jd4SAJhU=
+	t=1718714952; cv=none; b=Ty0IiiEIV+vUdvGUOWYqOjh65gaTWaLuixkxkAYaqg7/GuKtas2Li33Fi0rodJyxD2tNshAigvtZ8Hg6PHo7dWJ4R8rk04N8A5xmXO60Uy+QqRfm3YR9t6ObuvFnVqDzQo4yrMRK/kmpXsjDla0p6sXsu/Aj8EhqLclL45pDAKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718714950; c=relaxed/simple;
-	bh=Mevzi+b9gGg+lBcPu32VExafc1MIi+qjaJ1v9MND8A4=;
+	s=arc-20240116; t=1718714952; c=relaxed/simple;
+	bh=KKVMFeEDyTBoP6JzYjsCJV+EQKGLuz+xU7SFSZwfyH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ejp72nQ9ura9HVmBuf7JZcBgGjzWvLH+zpT/WgbH/aVyMB4DjtDn2UAjpjIiiFxKJMyDyeFK8Htl661NxT+ZbQBzELc6UUknzDmSaw2UJtXwNMOTecl2hOgkzpELThiG67WfzfMSwpPz/aFDBuU7uu8opH6YilU/rNlqMf2Avqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hz+b6BE0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dcZwsOMmywzoYOWPYSaO4Ys3QFjhZT3QcLZuok0J0K56poFCkUoMOnpDpJfsC1lsTw+4rgIZqMJ8enahlf6fTOkk9oRnmjsulYcd4l/6+5MBiRGQOah00iHbfuqUqSqaNbJUGurIVQT04A5y+VKL12SnLDnggrIqGGpHdfv5dEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rWbziI9Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hz+b6BE0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54418C3277B;
-	Tue, 18 Jun 2024 12:49:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rWbziI9Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52351C3277B;
+	Tue, 18 Jun 2024 12:49:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718714949;
-	bh=Mevzi+b9gGg+lBcPu32VExafc1MIi+qjaJ1v9MND8A4=;
+	s=korg; t=1718714952;
+	bh=KKVMFeEDyTBoP6JzYjsCJV+EQKGLuz+xU7SFSZwfyH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hz+b6BE0VC1bkELSENXXDD/+2Tia+Anjh0dGFAZ8DYzLa74A+G9iCFZmjGNFEi1b7
-	 He/L7T/PL5Wx4tpg2DOFWHj4bKgixxIOwtQxSopLwtaxTIc+D0HFB6zbENvMbx9xr8
-	 Z68aY0hLNibgeuxQF29rbMGtmZCi+ZHo6acDiT80=
+	b=rWbziI9Yn88sryqjj3vYVT8aI5uVUxHi1Gfrv26b6y2pOW+HsFx7pRT9kf0WS/IYQ
+	 abUngmPUp2C0TmFLZyWSxZm9dxSFkQ3GUQIwR6mC0w7ONxX4dvmcUZ6HKDIPpCdYFW
+	 AZjEsej+tSK/d6S7Y6eHc+OxVv9yZmB+04P5X7JE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 112/770] proc/fd: In proc_fd_link use fget_task
-Date: Tue, 18 Jun 2024 14:29:25 +0200
-Message-ID: <20240618123411.595179751@linuxfoundation.org>
+Subject: [PATCH 5.10 103/770] nfsd: Fix up nfsd to ensure that timeout errors dont result in ESTALE
+Date: Tue, 18 Jun 2024 14:29:16 +0200
+Message-ID: <20240618123411.251029073@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,76 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric W. Biederman <ebiederm@xmission.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 439be32656035d3239fd56f9b83353ec06cb3b45 ]
+[ Upstream commit 2e19d10c1438241de32467637a2a411971547991 ]
 
-When discussing[1] exec and posix file locks it was realized that none
-of the callers of get_files_struct fundamentally needed to call
-get_files_struct, and that by switching them to helper functions
-instead it will both simplify their code and remove unnecessary
-increments of files_struct.count.  Those unnecessary increments can
-result in exec unnecessarily unsharing files_struct which breaking
-posix locks, and it can result in fget_light having to fallback to
-fget reducing system performance.
+If the underlying filesystem times out, then we want knfsd to return
+NFSERR_JUKEBOX/DELAY rather than NFSERR_STALE.
 
-Simplifying proc_fd_link is a little bit tricky.  It is necessary to
-know that there is a reference to fd_f	 ile while path_get is running.
-This reference can either be guaranteed to exist either by locking the
-fdtable as the code currently does or by taking a reference on the
-file in question.
-
-Use fget_task to remove the need for get_files_struct and
-to take a reference to file in question.
-
-[1] https://lkml.kernel.org/r/20180915160423.GA31461@redhat.com
-Suggested-by: Oleg Nesterov <oleg@redhat.com>
-v1: https://lkml.kernel.org/r/20200817220425.9389-8-ebiederm@xmission.com
-Link: https://lkml.kernel.org/r/20201120231441.29911-6-ebiederm@xmission.com
-Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/fd.c | 13 +++----------
- 1 file changed, 3 insertions(+), 10 deletions(-)
+ fs/nfsd/nfsfh.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/fs/proc/fd.c b/fs/proc/fd.c
-index 81882a13212d3..d58960f6ee524 100644
---- a/fs/proc/fd.c
-+++ b/fs/proc/fd.c
-@@ -146,29 +146,22 @@ static const struct dentry_operations tid_fd_dentry_operations = {
- 
- static int proc_fd_link(struct dentry *dentry, struct path *path)
- {
--	struct files_struct *files = NULL;
- 	struct task_struct *task;
- 	int ret = -ENOENT;
- 
- 	task = get_proc_task(d_inode(dentry));
- 	if (task) {
--		files = get_files_struct(task);
--		put_task_struct(task);
--	}
--
--	if (files) {
- 		unsigned int fd = proc_fd(d_inode(dentry));
- 		struct file *fd_file;
- 
--		spin_lock(&files->file_lock);
--		fd_file = fcheck_files(files, fd);
-+		fd_file = fget_task(task, fd);
- 		if (fd_file) {
- 			*path = fd_file->f_path;
- 			path_get(&fd_file->f_path);
- 			ret = 0;
-+			fput(fd_file);
- 		}
--		spin_unlock(&files->file_lock);
--		put_files_struct(files);
-+		put_task_struct(task);
+diff --git a/fs/nfsd/nfsfh.c b/fs/nfsd/nfsfh.c
+index 9c29a523f4848..e80a7525561d0 100644
+--- a/fs/nfsd/nfsfh.c
++++ b/fs/nfsd/nfsfh.c
+@@ -268,12 +268,20 @@ static __be32 nfsd_set_fh_dentry(struct svc_rqst *rqstp, struct svc_fh *fhp)
+ 	if (fileid_type == FILEID_ROOT)
+ 		dentry = dget(exp->ex_path.dentry);
+ 	else {
+-		dentry = exportfs_decode_fh(exp->ex_path.mnt, fid,
+-				data_left, fileid_type,
+-				nfsd_acceptable, exp);
+-		if (IS_ERR_OR_NULL(dentry))
++		dentry = exportfs_decode_fh_raw(exp->ex_path.mnt, fid,
++						data_left, fileid_type,
++						nfsd_acceptable, exp);
++		if (IS_ERR_OR_NULL(dentry)) {
+ 			trace_nfsd_set_fh_dentry_badhandle(rqstp, fhp,
+ 					dentry ?  PTR_ERR(dentry) : -ESTALE);
++			switch (PTR_ERR(dentry)) {
++			case -ENOMEM:
++			case -ETIMEDOUT:
++				break;
++			default:
++				dentry = ERR_PTR(-ESTALE);
++			}
++		}
  	}
- 
- 	return ret;
+ 	if (dentry == NULL)
+ 		goto out;
 -- 
 2.43.0
 
