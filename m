@@ -1,410 +1,231 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2060.outbound.protection.outlook.com [40.107.94.60])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D894313AA46
-	for <patches@lists.linux.dev>; Tue, 18 Jun 2024 14:07:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718719657; cv=none; b=eEO/emUYqN2Y89Db0uTYsHiTja4OMu1NnZ7s+p0EDHjbmFCSbYK0Ip2LxpTgkFyHOKMBPni+NrSyesuEawZMp4SsfPvKoBafCXZWWK5u6fwyKfEyNykQ5Mq3IDIsjJOxfG5/iHHZQfUdTY1BBTU4za8+ds54p3WkekReWbK2vRs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718719657; c=relaxed/simple;
-	bh=o6oOS9AoziaCRsYt1FDiUVPorMdX4OHyekN8d7TdfEg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 In-Reply-To:Content-Type:Content-Disposition; b=JjFxArc+uUcOMSiUN8gJEbM/V0neSI3+N6D+gvcKYKLyXhVmTOePGNIYf4N9EkV+dMYBgPB6EGT1L0WbSLpC4YFaOOoUOT4cXHyDOHorWY9tibTPcVqA6PgmCuckq8U/v9gmgi17GtDoWzfQ2EIujSoKpxVzx5Zhvq/nHTwYpTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Qipe4oRu; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB0A213D50B;
+	Tue, 18 Jun 2024 14:08:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.60
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1718719711; cv=fail; b=tyOVIkRZ+/4gkcPBHwIHnZ9CF8w4BlFNeT/zRFPF8F7FY2Ip7VtYzTkbD31GVbf+qq8jRylFc9XURlKvoWpOs6ge6Gsi9RYgF4TA4Vx5CZzhXZxQ1DM7fSUQzV9ZV7Ba3VutpumuDEJcjqScEHVRPfFsiS24lBCtZllSgQDCFFs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1718719711; c=relaxed/simple;
+	bh=RQtB7WMxNdeHX8vQVSEKvRDhMx1Y+JAPXTRgY+hdkgs=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=ie3tnOLM5BSgBM/l61HoeRLgPOU/9hIxmVrbSBgfqxAg3URBe+Q7boiVtL5KRdoTLlCeJ/ZybadPi1dmbM9hrjqq/GzaS0rdPp8HszH5XHEDt8euJxqsEDc2C58yXKs9dzYI3lkJW39dZ68LlwbEAh2nci5ebsjnxeknhkvLke8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=yg/D+mfv; arc=fail smtp.client-ip=40.107.94.60
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Qipe4oRu"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1718719654;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=YDk9d1DZJVHFFhAA1PLcQoEXVG1f199ilHyv9gpJapw=;
-	b=Qipe4oRu8tmh8pfxTmSrMyBBw6teIp6dTsrBTHzmnR5wktftcsZYv+qNFipEAd41rmezXZ
-	lOsTzGw4eBc0ZVIKTcjNGSLNWtk82iSTY7ZKixw6McbL5q8hCNxk714KkbYRSPbaNvsjMb
-	laf3iB6QZjvBvNDR6QY2wePwB8OudN0=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-600-6gdkg0A5NRK-RBjmIxdopw-1; Tue, 18 Jun 2024 10:07:33 -0400
-X-MC-Unique: 6gdkg0A5NRK-RBjmIxdopw-1
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-1f84619fce8so58504075ad.3
-        for <patches@lists.linux.dev>; Tue, 18 Jun 2024 07:07:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718719652; x=1719324452;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YDk9d1DZJVHFFhAA1PLcQoEXVG1f199ilHyv9gpJapw=;
-        b=ikHJryxrEEV1sJ99jtneaeHCjaYb4HiTw4VC1yBPvL9e02fe/1dghOYEj/S3+eU3Vv
-         JCybD5FDC/EkN4xtjUBYJVn0pdLezKLoovRLWgNmIQ7s4b+7DjlTRhxSd8me70cq8SC0
-         9ypSxSEIkLoL6VNtcSnNHfW8E6R3x4NAekNzFJVCaBU1kxqvrVuE8xTMWRDNNyLDVx3c
-         btbDm8yEdNIXQ6gB47l/Hs0PlptsdAUdJuM583ruvxdzesVFZvXL3zTYAOLTkLwUv7Ej
-         JRdVZGgNIcN8ih/sjiz3QpMAeY4SrN6L5Ha0CdA0ikSnhVtZjlkLKY7yfPwyqNxBLUSu
-         mY2g==
-X-Gm-Message-State: AOJu0YxB7J1D4c1mK9IEyDrMZHIX8AC8/XoqDdYhC+lfsg5KccCbjweH
-	qenbVHmqmnatZP1CbsSOSMt/N354vpVJbx4gexGbwJBDoOwqMjVY6AAXdyfBgCH8Ri4XB42EO6p
-	WjYBND/WzqBDAg6m5jjsYvw0p9t01DUUwQ3UkTzWf//Pgx3eNJ7xpNNs=
-X-Received: by 2002:a17:902:d4c5:b0:1f8:3b20:3813 with SMTP id d9443c01a7336-1f8625c1762mr151927255ad.12.1718719651676;
-        Tue, 18 Jun 2024 07:07:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFc+ZgPAUrHnzwloSnonOmgLjLc4twZCmIxdgyHOk4Kjx8I09Imk6T3PfAjRYw2n/4WCiPIOg==
-X-Received: by 2002:a17:902:d4c5:b0:1f8:3b20:3813 with SMTP id d9443c01a7336-1f8625c1762mr151926555ad.12.1718719650994;
-        Tue, 18 Jun 2024 07:07:30 -0700 (PDT)
-Received: from dell-per750-06-vm-08.rhts.eng.pek2.redhat.com ([43.228.180.230])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f99b5740dbsm11773375ad.299.2024.06.18.07.07.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Jun 2024 07:07:30 -0700 (PDT)
-Date: Tue, 18 Jun 2024 22:07:23 +0800
-From: Zorro Lang <zlang@redhat.com>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: patches@lists.linux.dev, fstests@vger.kernel.org,
-	linux-xfs@vger.kernel.org, linux-mm@kvack.org,
-	linux-fsdevel@vger.kernel.org, akpm@linux-foundation.org,
-	ziy@nvidia.com, vbabka@suse.cz, seanjc@google.com,
-	willy@infradead.org, david@redhat.com, hughd@google.com,
-	linmiaohe@huawei.com, muchun.song@linux.dev, osalvador@suse.de,
-	p.raghav@samsung.com, da.gomez@samsung.com, hare@suse.de,
-	john.g.garry@oracle.com
-Subject: Re: [PATCH v2 2/5] fstests: add mmap page boundary tests
-Message-ID: <20240618140723.r2g3vbsevjl67753@dell-per750-06-vm-08.rhts.eng.pek2.redhat.com>
-References: <20240615002935.1033031-1-mcgrof@kernel.org>
- <20240615002935.1033031-3-mcgrof@kernel.org>
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="yg/D+mfv"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ez3t3Lp4a699lwZBnaRUzCnauhbvRAsn4M0j0Bzq3X056CkVJZo9Wgs5R+r6jHnk15mT3MiyEOyB4wAcFbZKQi7P2NX938qZNuKo0QUZB0W7ly3GwaIRmKO03qFa2zIQX/Q+JqVcmgE+yZ5P5HvWEbrbOMeRht7+EY8WxrsBdi5K+8mOeyKia5b8DqZXgTLG/o/sifc+XPCXt+7T5mLeJwayKZ8mdf9Kp0K4GUcALv1q7p8xm+NhiINSFuLbOICwO0JbUUaM6Zx38aO8AY19sujQQf5CbXQxldDvfl83PdDSg6UIPYNHaKtnJals8ksnDrQGcV7hFNGTGkhv/ewB/g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=O24RGwbG2nA8T3APyP2V8XPYCrVLrczVJWyV+N4qRLg=;
+ b=n1Ze7DrTuvFvBQ+u2QNawNzeQmMeDX6mXgncbO20dt20gPV12qDhwXplgZoDFqrSMO3ceES/6g1vKXOBB1DkfbZIlFM+73hiQpTVn+Q4bmB+W6xoyVAHJ56+r/INE41AjMnTRnD0TytgqyvhgNdTAZykNMCMoOqd384K+gcA47OOpxFzLpzHu7ledbrLc5ATzf7q7DEkDN8zYfw/I6Cr93ZISHuGEqkDPyXdXHZw1jbAnFXVJZYtOx5ctJOjpRMC28lkBi9k8j2imiIH/wtngpZ0ZFHUd2xMCWne/owV2cIlxuRdfmkaXLj7iBG8ICHj/TOJIUG7mwNIere3/2Vp0Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=O24RGwbG2nA8T3APyP2V8XPYCrVLrczVJWyV+N4qRLg=;
+ b=yg/D+mfvtcM4tOW0SZe2Xp1RamtqB+u0xWlInm+BtyJo4LTjX2j/HuVOg6LKEo2VUWn9RHYs6k11APn+mm0Iuhw3v4i1unaUChf9Iw17Sn+00o4rq5oWuNgpnuPoSmfk2kKx/S1lch98TYp0ly//lGze8PLmEVd6qD7XN2DUGRw=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from CO6PR12MB5427.namprd12.prod.outlook.com (2603:10b6:5:358::13)
+ by MN2PR12MB4303.namprd12.prod.outlook.com (2603:10b6:208:198::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7677.31; Tue, 18 Jun
+ 2024 14:08:26 +0000
+Received: from CO6PR12MB5427.namprd12.prod.outlook.com
+ ([fe80::1c2f:5c82:2d9c:6062]) by CO6PR12MB5427.namprd12.prod.outlook.com
+ ([fe80::1c2f:5c82:2d9c:6062%7]) with mapi id 15.20.7677.030; Tue, 18 Jun 2024
+ 14:08:26 +0000
+Message-ID: <58253c2e-25a2-48c6-bcd4-5bc3bbe03296@amd.com>
+Date: Tue, 18 Jun 2024 10:08:19 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/amd/display: Disable CONFIG_DRM_AMD_DC_FP for RISC-V
+ with clang
+To: Nathan Chancellor <nathan@kernel.org>, Leo Li <sunpeng.li@amd.com>,
+ Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xinhui Pan <Xinhui.Pan@amd.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Samuel Holland <samuel.holland@sifive.com>,
+ Nick Desaulniers <ndesaulniers@google.com>, Bill Wendling
+ <morbo@google.com>, Justin Stitt <justinstitt@google.com>,
+ amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+ linux-riscv@lists.infradead.org, llvm@lists.linux.dev,
+ patches@lists.linux.dev, Palmer Dabbelt <palmer@rivosinc.com>
+References: <20240614-amdgpu-disable-drm-amd-dc-fp-riscv-clang-v1-1-a6d40617dc9b@kernel.org>
+Content-Language: en-US
+From: Harry Wentland <harry.wentland@amd.com>
+In-Reply-To: <20240614-amdgpu-disable-drm-amd-dc-fp-riscv-clang-v1-1-a6d40617dc9b@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: YT3PR01CA0117.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:85::35) To CO6PR12MB5427.namprd12.prod.outlook.com
+ (2603:10b6:5:358::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20240615002935.1033031-3-mcgrof@kernel.org>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO6PR12MB5427:EE_|MN2PR12MB4303:EE_
+X-MS-Office365-Filtering-Correlation-Id: ef973d11-36c0-4ac6-609b-08dc8fa01eec
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230037|376011|7416011|1800799021|366013;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?NFNsdDRsY2kybEFrSEFoM2RtZ0F3K1pDYzlHaDRiL3A4N2UzdXdnNlJ5YXBj?=
+ =?utf-8?B?UzQrOXVzTzNES3FWUWRGQmJYNWdIZ1d5Si9VbmpobGp4ZkYwZzltVzE3dS9V?=
+ =?utf-8?B?QzNqMlFBVit0VUJBVnJVdUZuZ2VvbTgvNzVIL3NEazhwRkpDcElvbjFRYjdG?=
+ =?utf-8?B?SURhYTFqTkJNTmVnektTbHBnUHpEcjBRTFd1L2ZpRXFzTHVqYnpoZHFIbXpv?=
+ =?utf-8?B?ZDF0NG9acmlBVi9qdmhFZGJOSnlPYU41eElBakU2d015MHNoTVJsbEVhNkVx?=
+ =?utf-8?B?eWpJcUE5a1Ivd3ExZWswaEFEeXpublJzQ282WXRFQ0Q0UDgzMkZmWWFScHpM?=
+ =?utf-8?B?MmpBV0FsUkZNYTVkWkQ1TUpBSTZaekNYR3FNQWNXTmpJNXk3b2lHNUVCNzla?=
+ =?utf-8?B?eTJPNkNoaHh5UE9lTUl3ZHdWcGRPdEk4elRycnV4VElZWE1hQmgrWmRoOVR5?=
+ =?utf-8?B?WFo2a2EwZ21WSHVrNE9ESk9RazFHc2tkaGpWU0lUZ3B3ZEV2NnBvNXFjdVM5?=
+ =?utf-8?B?YjNweEduTU83TTJRYXpsVDhsbjJPTHRqK0tObk9VcERuaDNGOG9vQklibU5m?=
+ =?utf-8?B?dHRBcS84RStyTHVrcVhkZmhnYTZMa2R6UlhLR3dxaDhHK3dxekFFUldiNTZz?=
+ =?utf-8?B?aUNQQlVrOUNERzNKWE9NQXFtR0dCdkdYMFRQSTRoZURRQjgzVllSTlBJVE55?=
+ =?utf-8?B?RlFBK2pWSlk3cVU4QlhGR0NyQjJXMnR4dUtkOVVUTkpJUlJ2WUk0Wm9VTkpI?=
+ =?utf-8?B?MStEYUZOVXRrZnM3VW1GcVJxRGw3V0hpT3ZidU5zSnJXUjZHalpsV2Y2TnVC?=
+ =?utf-8?B?dW5zNUFDQ1B5ekEzR0s1dnVXK1k4THlyUCtsS1p5WWZnMy9Wa0lXdFRSQXFS?=
+ =?utf-8?B?dEVQTy9uN1g5R0hwV3ViNU9UOWNMdDl0Nng1ZFRLQWpFTW9GZ2xzdncyRnZM?=
+ =?utf-8?B?NFRwaGFrMHhKMGc5dU4yTlRvNmYrZmlTTDdhbHhWZUErVHpoSDVOeXJNRjdJ?=
+ =?utf-8?B?ZEV3RmpYREFNdGNXdFJwTkFZUWlrZ1VjdERTRnU3SDdpZlFxQTRETWtJcG44?=
+ =?utf-8?B?VHN5QXZRKzh2RzA3OVN5TEQ5bklHYmtJL05ocDNydjdSRjJyWGM3ZEFMRHlF?=
+ =?utf-8?B?WUhJR25BS0dmeHF4K0lCYkdDdm9sRTZoVkNJKzJmOTVaZVF3YlhlTFZpNkMv?=
+ =?utf-8?B?ekVvNWZRSzAyR2s1TDF0R0dydDV2eTZLMXF2M29HY0l3K0x0cE1yc01XQlRL?=
+ =?utf-8?B?dXJIakp3YmFGOUFRZ0Y1azlFVTF1by9GMElRVys2SlhGR2I3VTBUN2pUNGJk?=
+ =?utf-8?B?azlGWWNTR2FiOTVnT3FRaGdXak9EZ3Z1NFdSSkl4WHVacytoRGxXY1orV0Fk?=
+ =?utf-8?B?cm1zMWMxMWt6Zkpqb08wOFZZaGliTXN4TFpBMUhEcHB3c2U1Yk16SnY0TUk1?=
+ =?utf-8?B?aWpOSTFzL05zbjNpT01DUzJIVU9XNDJGRnUxWXFZd3ZrSUJla2VFcjRiOTlD?=
+ =?utf-8?B?eklLd241MTM1Z3RlejdlQmp4K0cyOVJoS0pzTEJrMFI4aGsrelpRSzVhQjFz?=
+ =?utf-8?B?aGQvUU1qdmtkSlMxK3lVNkp5Y1FJZExJZTY1Y2U2V3F6RlZyZ0ZzdnphSzV4?=
+ =?utf-8?B?bGlLU3M1ZEdFeWRtL3ovay84dElHYUhlb3RYLy9EMEF6d1lodDFEVzJ0M1VQ?=
+ =?utf-8?B?OGxQVlpKVVdHUjhra05XUTlUa0FWckVXUTczQmdlVWNQYjRBZUNNc2d3PT0=?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO6PR12MB5427.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230037)(376011)(7416011)(1800799021)(366013);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?ajBZYmpBYUxPRWJJVXFxWlFaTnBPR0RKeWRLTDF6Skh6clFzTkJmd2lrMC9y?=
+ =?utf-8?B?M2RDMm9SK0pVTlh1T0dDK2xTV0t6YTdYTTl5SzRjNUdRaEJsTWEzd0tPUVNw?=
+ =?utf-8?B?MVAxVmVWVkdCaHRjWnc0OXp5SUxwemxPYXhvNlp5TFJpRnhudEFnVEdMbXd6?=
+ =?utf-8?B?V0QrclQybzRRN2ltUnFnVFZSNGQxaVVUZTNZTlgzVnlocHo5Qnk4NjBUL1JT?=
+ =?utf-8?B?MGxDRk9Md3E1VkZaV0tGOFJoZnU4SkU1M3Q4ZzlPNXdGSjNRTmdyOEpTUm9Y?=
+ =?utf-8?B?VDYxV3ZOa1RPQVphWlZrMjVQWmFlODhGZG9XTzgvWEo3UU5kaGo3TUxNSVMy?=
+ =?utf-8?B?ODJyTkRPNlZBTzRqaXg2dFJiSm41aTFSeVV0QWlBYktEOEpCdm5Ga2lrODVJ?=
+ =?utf-8?B?Rk00SWYxM2FzWWFFbHdNMmtiN2FDQzlDZ3hvR0lCRkFXdnN1NXRWMlF2aHU4?=
+ =?utf-8?B?MkFlWmRNNDYxNEdJMThxS2xIU0daWUZ2ekN6d2tJVzYyNURyOW1IWURXSW9K?=
+ =?utf-8?B?UzZTU1BtYUY5S2hjc1BYZndaR0g5NDI1YXA4WjVZcGduN1ZQek03QWJWTjBZ?=
+ =?utf-8?B?aE5BNm85U2hzUlh4a0lCYkNjM1N6RnI1bW9NNEY1WkhZTTIyWTdPTHhnMTVV?=
+ =?utf-8?B?ZENxY0haL21QUC9qY1RiMHNMaHJrYjkrL0VFdDVjUFlmK3RSZkh5WWgvb25F?=
+ =?utf-8?B?RXovalV1cWtsdWp6eWNWbWR1OGFrNEszRmtSWXZXRXlCa09qdUErK2pNV1FB?=
+ =?utf-8?B?cytRSEZ4NCtteVBVdXFaRU16a2I2MDJ0RUNWa0lTQzE3N1JUNzZWVFpDVWhD?=
+ =?utf-8?B?T1NXcDhQbWxTeUNQajY2WEx6d0ZSQy9DRXRzMTJiT3BrKzl3YmRvMFg1TW13?=
+ =?utf-8?B?cXJyTm1jN1NRbnRlc2dtVU1wcWdTODhMSFdSSFgwRGRsRHpHMFRPV1BmS0R5?=
+ =?utf-8?B?ZXIzVnVVWHptSlllUnVOdFFWODRjYXArWkhUUXM3TFdxNWJmM3hCbU9aR3dN?=
+ =?utf-8?B?emZQMWp1ZzNEbGc1K1E3SUdzRUU4WGNoYStJVUhvQjdIblhhbHZOQzBrb2FG?=
+ =?utf-8?B?UDVXVEVYQTA2YjNjTktjL0VMbzl2eTRqcEM2cTk3bk1reHFQTWNrQ20vaitv?=
+ =?utf-8?B?UHNjd2dxWGFzaG9ENElBNndNeE1Gd3ZMOHkxMXVsT0xJdy9ibVU1eGxta1ph?=
+ =?utf-8?B?V1h5aVBxVVNTWW1sQlF6WER6R2VVNEpZd0d2bXQwR1JtM01oV0tMV0MxRytq?=
+ =?utf-8?B?d0xSZ2c1RS9SNjVBblZLalJLZmQ2Nkt0T1ZmRjg0QVpESGQ0SHlxa25Fa2ZD?=
+ =?utf-8?B?N2xUWVIreGNWckFyVzhYQnZzdEJYelhFUUJsRytwSSthditCQ0dsVGVzSEpD?=
+ =?utf-8?B?ekxuczVnTTRNU2p0cFFObVJPRGVzSUNGQ0Z0elQzMlAxTkVRZUFhZHBKb3JO?=
+ =?utf-8?B?TEZhNDVSRFBtdnRDN3hjdzhNa2FuWnNoMnplN2JGWnc2N0lWV3JxMUtzdjdi?=
+ =?utf-8?B?ejIvSUxEbGpYcHZvaUxEN25mU0RBQ0U0cllpaTVTNkRJZ0FYTGpsVDZKWUFN?=
+ =?utf-8?B?c3VJRTVmSWJOZCtLbitnWEROdWM3RUQ3c2dEWTl5Q1UxQ21JRmlJd1V4SGlP?=
+ =?utf-8?B?bTVKRkZqZlQxNWFueXdWcklGanRaM3dtbW1DMXg1SjlYTFlyT1FLSGJGbFov?=
+ =?utf-8?B?bGJUeFdDdkVVSnRsSXZqcHVrdjA0ZTZlanpJcEFoMk0vYjg2b09tQnFxenA4?=
+ =?utf-8?B?Q0NZL3Z2QlVrSElsWWNYcWRTOHZGYitEYzhKY0h2SlJlazhCQWt1bVFVNTZi?=
+ =?utf-8?B?elZMazY5ZFVzTnBlaDNSWEFvVEl3OXRwTjZsU1BtQjJuVjB1MVBUeXVwTnBN?=
+ =?utf-8?B?V096c2FXZFBBN3phb2RoellCcXZlZWx5WWJCUUxubEJwOHdtQklwb1Bxbk91?=
+ =?utf-8?B?STZUMk92U3NjMFo4OGw3ZzZNVjlST3NySzBRSktZUzJ4UjUzdS9Lb2lsQUZ2?=
+ =?utf-8?B?MXVyWDN1RGFXMEh3QWVEU1ZnMGVSVm4zZE5EOWNUM1dPSnZBbTdpNTY4SWNG?=
+ =?utf-8?B?RDA1UXpmKzlrd0xjWVZjc1JrbFgyL0JWSGQ1b243emlDalFMeGdYeFhJWEcr?=
+ =?utf-8?Q?21wlaZFmGCd1hQ8cainj9Whp6?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ef973d11-36c0-4ac6-609b-08dc8fa01eec
+X-MS-Exchange-CrossTenant-AuthSource: CO6PR12MB5427.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Jun 2024 14:08:25.9675
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: UfMyWaFDJYmPKDOEE906ixE2MFQWHunaM8k8PSB7IVsdMh17p7umOY7A2tBRf1dJ45Xr0eH7J1bs7DXnwSW0sA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4303
 
-On Fri, Jun 14, 2024 at 05:29:31PM -0700, Luis Chamberlain wrote:
-> mmap() POSIX compliance says we should zero fill data beyond a file
-> size up to page boundary, and issue a SIGBUS if we go beyond. While fsx
-> helps us test zero-fill sometimes, fsstress also let's us sometimes test
-> for SIGBUS however that is based on a random value and its not likely we
-> always test it. Dedicate a specic test for this to make testing for
-> this specific situation and to easily expand on other corner cases.
+
+
+On 2024-06-14 15:54, Nathan Chancellor wrote:
+> Commit 77acc6b55ae4 ("riscv: add support for kernel-mode FPU") and
+> commit a28e4b672f04 ("drm/amd/display: use ARCH_HAS_KERNEL_FPU_SUPPORT")
+> enabled support for CONFIG_DRM_AMD_DC_FP with RISC-V. Unfortunately,
+> this exposed -Wframe-larger-than warnings (which become fatal with
+> CONFIG_WERROR=y) when building ARCH=riscv allmodconfig with clang:
 > 
-> The only filesystem currently known to fail is tmpfs with huge pages on
-> a 4k base page size system, on 64k base page size it does not fail.
-> The pending upstream patch "filemap: cap PTE range to be created to
-> allowed zero fill in folio_map_range()" fixes this issue for tmpfs on
-> 4k base page size with huge pages and it also fixes it for LBS support.
+>   drivers/gpu/drm/amd/amdgpu/../display/dc/dml/dcn32/display_mode_vba_32.c:58:13: error: stack frame size (2448) exceeds limit (2048) in 'DISPCLKDPPCLKDCFCLKDeepSleepPrefetchParametersWatermarksAndPerformanceCalculation' [-Werror,-Wframe-larger-than]
+>      58 | static void DISPCLKDPPCLKDCFCLKDeepSleepPrefetchParametersWatermarksAndPerformanceCalculation(
+>         |             ^
+>   1 error generated.
 > 
-> Suggested-by: Matthew Wilcox <willy@infradead.org>
-> Signed-off-by: Pankaj Raghav <p.raghav@samsung.com>
-> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+> Many functions in this file use a large number of parameters, which must
+> be passed on the stack at a certain pointer due to register exhaustion,
+> which can cause high stack usage when inlining and issues with stack
+> slot analysis get involved. While the compiler can and should do better
+> (as GCC uses less than half the amount of stack space for the same
+> function), it is not as simple as a fix as adjusting the functions not
+> to take a large number of parameters.
+> 
+> Unfortunately, modifying these files to avoid the problem is a difficult
+> to justify approach because any revisions to the files in the kernel
+> tree never make it back to the original source (so copies of the code
+> for newer hardware revisions just reintroduce the issue) and the files
+> are hard to read/modify due to being "gcc-parsable HW gospel, coming
+> straight from HW engineers".
+> 
+> Avoid building the problematic code for RISC-V by modifying the existing
+> condition for arm64 that exists for the same reason. Factor out the
+> logical not to make the condition a little more readable naturally.
+> 
+> Fixes: a28e4b672f04 ("drm/amd/display: use ARCH_HAS_KERNEL_FPU_SUPPORT")
+> Reported-by: Palmer Dabbelt <palmer@rivosinc.com>
+> Closes: https://lore.kernel.org/20240530145741.7506-2-palmer@rivosinc.com/
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 > ---
+>  drivers/gpu/drm/amd/display/Kconfig | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/amd/display/Kconfig b/drivers/gpu/drm/amd/display/Kconfig
+> index 5fcd4f778dc3..47b8b49da8a7 100644
+> --- a/drivers/gpu/drm/amd/display/Kconfig
+> +++ b/drivers/gpu/drm/amd/display/Kconfig
+> @@ -8,7 +8,7 @@ config DRM_AMD_DC
+>  	depends on BROKEN || !CC_IS_CLANG || ARM64 || RISCV || SPARC64 || X86_64
+>  	select SND_HDA_COMPONENT if SND_HDA_CORE
+>  	# !CC_IS_CLANG: https://github.com/ClangBuiltLinux/linux/issues/1752
+> -	select DRM_AMD_DC_FP if ARCH_HAS_KERNEL_FPU_SUPPORT && (!ARM64 || !CC_IS_CLANG)
+> +	select DRM_AMD_DC_FP if ARCH_HAS_KERNEL_FPU_SUPPORT && !(CC_IS_CLANG && (ARM64 || RISCV))
 
-Good to me,
-Reviewed-by: Zorro Lang <zlang@redhat.com>
+Thanks for also making the logic easier to parse.
 
->  common/rc             |   5 +-
->  tests/generic/749     | 256 ++++++++++++++++++++++++++++++++++++++++++
->  tests/generic/749.out |   2 +
->  3 files changed, 262 insertions(+), 1 deletion(-)
->  create mode 100755 tests/generic/749
->  create mode 100644 tests/generic/749.out
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+
+Harry
+
+>  	help
+>  	  Choose this option if you want to use the new display engine
+>  	  support for AMDGPU. This adds required support for Vega and
 > 
-> diff --git a/common/rc b/common/rc
-> index fa7942809d6c..e812a2f7cc67 100644
-> --- a/common/rc
-> +++ b/common/rc
-> @@ -60,12 +60,15 @@ _round_up_to_page_boundary()
->  	echo $(( (n + page_size - 1) & ~(page_size - 1) ))
->  }
->  
-> +# You can override the $map_len but its optional, by default we use the
-> +# max allowed size. If you use a length greater than the default you can
-> +# expect a SIBGUS and test for it.
->  _mread()
->  {
->  	local file=$1
->  	local offset=$2
->  	local length=$3
-> -	local map_len=$(_round_up_to_page_boundary $(_get_filesize $file))
-> +	local map_len=${4:-$(_round_up_to_page_boundary $(_get_filesize $file)) }
->  
->  	# Some callers expect xfs_io to crash with SIGBUS due to the mread,
->  	# causing the shell to print "Bus error" to stderr.  To allow this
-> diff --git a/tests/generic/749 b/tests/generic/749
-> new file mode 100755
-> index 000000000000..2dcced4e3c13
-> --- /dev/null
-> +++ b/tests/generic/749
-> @@ -0,0 +1,256 @@
-> +#! /bin/bash
-> +# SPDX-License-Identifier: GPL-2.0
-> +# Copyright (c) Luis Chamberlain. All Rights Reserved.
-> +#
-> +# FS QA Test 749
-> +#
-> +# As per POSIX NOTES mmap(2) maps multiples of the system page size, but if the
-> +# data mapped is not multiples of the page size the remaining bytes are zeroed
-> +# out when mapped and modifications to that region are not written to the file.
-> +# On Linux when you write data to such partial page after the end of the
-> +# object, the data stays in the page cache even after the file is closed and
-> +# unmapped and  even  though  the data  is never written to the file itself,
-> +# subsequent mappings may see the modified content. If you go *beyond* this
-> +# page, you should get a SIGBUS. This test verifies we zero-fill to page
-> +# boundary and ensures we get a SIGBUS if we write to data beyond the system
-> +# page size even if the block size is greater than the system page size.
-> +. ./common/preamble
-> +. ./common/rc
-> +_begin_fstest auto quick prealloc
-> +
-> +# Import common functions.
-> +. ./common/filter
-> +
-> +# real QA test starts here
-> +_supported_fs generic
-> +_require_scratch_nocheck
-> +_require_test
-> +_require_xfs_io_command "truncate"
-> +_require_xfs_io_command "falloc"
-> +
-> +# _fixed_by_git_commit kernel <pending-upstream> \
-> +#        "filemap: cap PTE range to be created to allowed zero fill in folio_map_range()"
-> +
-> +filter_xfs_io_data_unique()
-> +{
-> +    _filter_xfs_io_offset | sed -e 's| |\n|g' | grep -E -v "\.|XX|\*" | \
-> +	sort -u | tr -d '\n'
-> +}
-> +
-> +
-> +setup_zeroed_file()
-> +{
-> +	local file_len=$1
-> +	local sparse=$2
-> +
-> +	if $sparse; then
-> +		$XFS_IO_PROG -f -c "truncate $file_len" $test_file
-> +	else
-> +		$XFS_IO_PROG -f -c "falloc 0 $file_len" $test_file
-> +	fi
-> +}
-> +
-> +mwrite()
-> +{
-> +       local file=$1
-> +       local offset=$2
-> +       local length=$3
-> +       local map_len=${4:-$(_round_up_to_page_boundary $(_get_filesize $file)) }
-> +
-> +       # Some callers expect xfs_io to crash with SIGBUS due to the mread,
-> +       # causing the shell to print "Bus error" to stderr.  To allow this
-> +       # message to be redirected, execute xfs_io in a new shell instance.
-> +       # However, for this to work reliably, we also need to prevent the new
-> +       # shell instance from optimizing out the fork and directly exec'ing
-> +       # xfs_io.  The easiest way to do that is to append 'true' to the
-> +       # commands, so that xfs_io is no longer the last command the shell sees.
-> +       bash -c "trap '' SIGBUS; ulimit -c 0; \
-> +		$XFS_IO_PROG $file \
-> +               -c 'mmap -w 0 $map_len' \
-> +               -c 'mwrite $offset $length'; \
-> +	       true"
-> +}
-> +
-> +do_mmap_tests()
-> +{
-> +	local block_size=$1
-> +	local file_len=$2
-> +	local offset=$3
-> +	local len=$4
-> +	local use_sparse_file=${5:-false}
-> +	local new_filelen=0
-> +	local map_len=0
-> +	local csum=0
-> +	local fs_block_size=$(_get_file_block_size $SCRATCH_MNT)
-> +	local failed=0
-> +
-> +	echo -en "\n\n==> Testing blocksize $block_size " >> $seqres.full
-> +	echo -en "file_len: $file_len offset: $offset " >> $seqres.full
-> +	echo -e "len: $len sparse: $use_sparse_file" >> $seqres.full
-> +
-> +	if ((fs_block_size != block_size)); then
-> +		_fail "Block size created ($block_size) doesn't match _get_file_block_size on mount ($fs_block_size)"
-> +	fi
-> +
-> +	rm -f $SCRATCH_MNT/file
-> +
-> +	# This let's us also test against sparse files
-> +	setup_zeroed_file $file_len $use_sparse_file
-> +
-> +	# This will overwrite the old data, the file size is the
-> +	# delta between offset and len now.
-> +	$XFS_IO_PROG -f -c "pwrite -S 0xaa -b 512 $offset $len" \
-> +		$test_file >> $seqres.full
-> +
-> +	sync
-> +	new_filelen=$(_get_filesize $test_file)
-> +	map_len=$(_round_up_to_page_boundary $new_filelen)
-> +	csum_orig="$(_md5_checksum $test_file)"
-> +
-> +	# A couple of mmap() tests:
-> +	#
-> +	# We are allowed to mmap() up to the boundary of the page size of a
-> +	# data object, but there a few rules to follow we must check for:
-> +	#
-> +	# a) zero-fill test for the data: POSIX says we should zero fill any
-> +	#    partial page after the end of the object. Verify zero-fill.
-> +	# b) do not write this bogus data to disk: on Linux, if we write data
-> +	#    to a partially filled page, it will stay in the page cache even
-> +	#    after the file is closed and unmapped even if it never reaches the
-> +	#    file. As per mmap(2) subsequent mappings *may* see the modified
-> +	#    content. This means that it also can get other data and we have
-> +	#    no rules about what this data should be. Since the data read after
-> +	#    the actual object data can vary this test just verifies that the
-> +	#    filesize does not change.
-> +	if [[ $map_len -gt $new_filelen ]]; then
-> +		zero_filled_data_len=$((map_len - new_filelen))
-> +		_scratch_cycle_mount
-> +		expected_zero_data="00"
-> +		zero_filled_data=$($XFS_IO_PROG -r $test_file \
-> +			-c "mmap -r 0 $map_len" \
-> +			-c "mread -v $new_filelen $zero_filled_data_len" \
-> +			-c "munmap" | \
-> +			filter_xfs_io_data_unique)
-> +		if [[ "$zero_filled_data" != "$expected_zero_data" ]]; then
-> +			let failed=$failed+1
-> +			echo "Expected data: $expected_zero_data"
-> +			echo "  Actual data: $zero_filled_data"
-> +			echo "Zero-fill expectations with mmap() not respected"
-> +		fi
-> +
-> +		_scratch_cycle_mount
-> +		$XFS_IO_PROG $test_file \
-> +			-c "mmap -w 0 $map_len" \
-> +			-c "mwrite $new_filelen $zero_filled_data_len" \
-> +			-c "munmap"
-> +		sync
-> +		csum_post="$(_md5_checksum $test_file)"
-> +		if [[ "$csum_orig" != "$csum_post" ]]; then
-> +			let failed=$failed+1
-> +			echo "Expected csum: $csum_orig"
-> +			echo " Actual  csum: $csum_post"
-> +			echo "mmap() write up to page boundary should not change actual file contents"
-> +		fi
-> +
-> +		local filelen_test=$(_get_filesize $test_file)
-> +		if [[ "$filelen_test" != "$new_filelen" ]]; then
-> +			let failed=$failed+1
-> +			echo "Expected file length: $new_filelen"
-> +			echo " Actual  file length: $filelen_test"
-> +			echo "mmap() write up to page boundary should not change actual file size"
-> +		fi
-> +	fi
-> +
-> +	# Now lets ensure we get SIGBUS when we go beyond the page boundary
-> +	_scratch_cycle_mount
-> +	new_filelen=$(_get_filesize $test_file)
-> +	map_len=$(_round_up_to_page_boundary $new_filelen)
-> +	csum_orig="$(_md5_checksum $test_file)"
-> +	_mread $test_file 0 $map_len >> $seqres.full  2>$tmp.err
-> +	if grep -q 'Bus error' $tmp.err; then
-> +		failed=1
-> +		cat $tmp.err
-> +		echo "Not expecting SIGBUS when reading up to page boundary"
-> +	fi
-> +
-> +	# This should just work
-> +	_mread $test_file 0 $map_len >> $seqres.full  2>$tmp.err
-> +	if [[ $? -ne 0 ]]; then
-> +		let failed=$failed+1
-> +		echo "mmap() read up to page boundary should work"
-> +	fi
-> +
-> +	# This should just work
-> +	mwrite $map_len 0 $map_len >> $seqres.full  2>$tmp.err
-> +	if [[ $? -ne 0 ]]; then
-> +		let failed=$failed+1
-> +		echo "mmap() write up to page boundary should work"
-> +	fi
-> +
-> +	# If we mmap() on the boundary but try to read beyond it just
-> +	# fails, we don't get a SIGBUS
-> +	$XFS_IO_PROG -r $test_file \
-> +		-c "mmap -r 0 $map_len" \
-> +		-c "mread 0 $((map_len + 10))" >> $seqres.full  2>$tmp.err
-> +	local mread_err=$?
-> +	if [[ $mread_err -eq 0 ]]; then
-> +		let failed=$failed+1
-> +		echo "mmap() to page boundary works as expected but reading beyond should fail: $mread_err"
-> +	fi
-> +
-> +	$XFS_IO_PROG -w $test_file \
-> +		-c "mmap -w 0 $map_len" \
-> +		-c "mwrite 0 $((map_len + 10))" >> $seqres.full  2>$tmp.err
-> +	local mwrite_err=$?
-> +	if [[ $mwrite_err -eq 0 ]]; then
-> +		let failed=$failed+1
-> +		echo "mmap() to page boundary works as expected but writing beyond should fail: $mwrite_err"
-> +	fi
-> +
-> +	# Now let's go beyond the allowed mmap() page boundary
-> +	_mread $test_file 0 $((map_len + 10)) $((map_len + 10)) >> $seqres.full  2>$tmp.err
-> +	if ! grep -q 'Bus error' $tmp.err; then
-> +		let failed=$failed+1
-> +		echo "Expected SIGBUS when mmap() reading beyond page boundary"
-> +	fi
-> +
-> +	mwrite $test_file 0 $((map_len + 10)) $((map_len + 10))  >> $seqres.full  2>$tmp.err
-> +	if ! grep -q 'Bus error' $tmp.err; then
-> +		let failed=$failed+1
-> +		echo "Expected SIGBUS when mmap() writing beyond page boundary"
-> +	fi
-> +
-> +	local filelen_test=$(_get_filesize $test_file)
-> +	if [[ "$filelen_test" != "$new_filelen" ]]; then
-> +		let failed=$failed+1
-> +		echo "Expected file length: $new_filelen"
-> +		echo " Actual  file length: $filelen_test"
-> +		echo "reading or writing beyond file size up to mmap() page boundary should not change file size"
-> +	fi
-> +
-> +	if [[ $failed -eq 1 ]]; then
-> +		_fail "Test had $failed failures..."
-> +	fi
-> +}
-> +
-> +test_block_size()
-> +{
-> +	local block_size=$1
-> +
-> +	do_mmap_tests $block_size 512 3 5
-> +	do_mmap_tests $block_size 11k 0 $((4096 * 3 + 3))
-> +	do_mmap_tests $block_size 16k 0 $((16384+3))
-> +	do_mmap_tests $block_size 16k $((16384-10)) $((16384+20))
-> +	do_mmap_tests $block_size 64k 0 $((65536+3))
-> +	do_mmap_tests $block_size 4k 4090 30 true
-> +}
-> +
-> +_scratch_mkfs >> $seqres.full 2>&1 || _fail "mkfs failed"
-> +_scratch_mount
-> +test_file=$SCRATCH_MNT/file
-> +block_size=$(_get_file_block_size "$SCRATCH_MNT")
-> +test_block_size $block_size
-> +
-> +echo "Silence is golden"
-> +status=0
-> +exit
-> diff --git a/tests/generic/749.out b/tests/generic/749.out
-> new file mode 100644
-> index 000000000000..24658deddb99
-> --- /dev/null
-> +++ b/tests/generic/749.out
-> @@ -0,0 +1,2 @@
-> +QA output created by 749
-> +Silence is golden
-> -- 
-> 2.43.0
+> ---
+> base-commit: c6c4dd54012551cce5cde408b35468f2c62b0cce
+> change-id: 20240614-amdgpu-disable-drm-amd-dc-fp-riscv-clang-31c84f6b990d
 > 
-> 
+> Best regards,
 
