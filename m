@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58ED71741F9;
-	Tue, 18 Jun 2024 12:57:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44015176AB0;
+	Tue, 18 Jun 2024 12:57:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715455; cv=none; b=RAzblrxba4Gse9xFKCMmRHSfChVP7fzsik80/lfuqD7lcGhpbQjUitKsVBPcRM49YVvbmbdzF7f4ce4STPQzcyJ/qZgJKtso3WmSzmPC60IiBQdy+FZFUCmZlINiNB7wJpv3Ev0YuHJfsO/9fp69rpBI8NAID8gKDKesf38QcNg=
+	t=1718715458; cv=none; b=Dby2rXMONNU2ezmhutZHGaSggVp7EIjjHXUMxetIV1t63oL5fRM2U2A5oRWueLuKo1lra04kyjEIRLPrdt1x3Y6q4ocfu0pTVf/dlub0JhsFNXwLQcuG2VQTuFOWQpYUpFSjrptKGczkZ2xATcMBjW8BBjvQPlnu3kwcJ/YrJB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715455; c=relaxed/simple;
-	bh=vheLCoPg9PXPFNedS7izl9JVcO8eypVYRP++wdKMaAQ=;
+	s=arc-20240116; t=1718715458; c=relaxed/simple;
+	bh=gNcYsq5gDEhIIbCWxgY//g7pC+FKSaZzYAdrk8wj0BE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NRl5i/8trt7A2I2nn6zJJNlOVmKUcKfESvQ4TQx+db8YHsCf0+ojoSRynn1yAUzc6zOBu5+acD3iqEkbIS651hFyJgUefrPhtkDOPGhnPwK8+9KLf+cxBwmL5ii5yEqwt934m9BWOMMTGuLUvdUXY0yto3O2IFlkucfTOexnQzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i04pZg02; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kuf8ArzY8CrC1rqPFC1JVmvhhpsXjj/FEahGlRxiZmOPp+1IOtNnlkXsF+/g+ZY559tMR6TZrxLymlPrjT8S7PN70o+a3YAmF5CHR/j1iTpqg7wd2wntisGhQ+H61qP+IqaB62Q6MXP4J4J5HSqzmpiZAM5kEawsFHLg5ez5YDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=auaiI3sn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i04pZg02"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D430FC3277B;
-	Tue, 18 Jun 2024 12:57:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="auaiI3sn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0468C3277B;
+	Tue, 18 Jun 2024 12:57:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715455;
-	bh=vheLCoPg9PXPFNedS7izl9JVcO8eypVYRP++wdKMaAQ=;
+	s=korg; t=1718715458;
+	bh=gNcYsq5gDEhIIbCWxgY//g7pC+FKSaZzYAdrk8wj0BE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i04pZg02TGhSluQLYu6D67mBEucD/kcOaDyFj0pG4RS72IaF/+L6Ger1QZLdBKobU
-	 bCcEulwd+nYnDJZ/rhAL5D8Ip8i4zvUuoc36zdQXY8ChuEVQ7CkXWzDaEhZxAFclEL
-	 rHz7cX7fb0Xdg1h4Q+PniCYjThke+pBarSy1BfZQ=
+	b=auaiI3snsyUubtQ6qRME5KkyzGU8KOaFuBqMFrn1YTIxdw7bgbpJ0jYItguaPNcTO
+	 a21Z7TZt+rTohxt7trg6BrgZ8tOnKjg5GswxasGrhx1MmvLkZhaYbo8vUkEN2KRaeP
+	 L5y5v3/yBjmf9zGvW2iV7UTRSbNnvhbby2O6tQoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	"J. Bruce Fields" <bfields@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 283/770] NFSD: Enhance the nfsd_cb_setup tracepoint
-Date: Tue, 18 Jun 2024 14:32:16 +0200
-Message-ID: <20240618123418.189943039@linuxfoundation.org>
+Subject: [PATCH 5.10 274/770] NFSD: Add nfsd_clid_destroyed tracepoint
+Date: Tue, 18 Jun 2024 14:32:07 +0200
+Message-ID: <20240618123417.845015887@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,79 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 9f57c6062bf3ce2c6ab9ba60040b34e8134ef259 ]
+[ Upstream commit c41a9b7a906fb872f8b2b1a34d2a1d5ef7f94adb ]
 
-Display the transport protocol and authentication flavor so admins
-can see what they might be getting wrong.
+Record client-requested termination of client IDs.
 
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: J. Bruce Fields <bfields@redhat.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4callback.c |  3 ++-
- fs/nfsd/trace.h        | 27 ++++++++++++++++++++++++++-
- 2 files changed, 28 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs4state.c | 1 +
+ fs/nfsd/trace.h     | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/fs/nfsd/nfs4callback.c b/fs/nfsd/nfs4callback.c
-index 2a2eb6184bdae..fe1f36b70fa03 100644
---- a/fs/nfsd/nfs4callback.c
-+++ b/fs/nfsd/nfs4callback.c
-@@ -941,7 +941,8 @@ static int setup_callback_client(struct nfs4_client *clp, struct nfs4_cb_conn *c
- 		clp->cl_cb_conn.cb_xprt = conn->cb_xprt;
- 	clp->cl_cb_client = client;
- 	clp->cl_cb_cred = cred;
--	trace_nfsd_cb_setup(clp);
-+	trace_nfsd_cb_setup(clp, rpc_peeraddr2str(client, RPC_DISPLAY_NETID),
-+			    args.authflavor);
- 	return 0;
- }
- 
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index da5b9b88b0cd4..6f04a84f76c0e 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -3939,6 +3939,7 @@ nfsd4_destroy_clientid(struct svc_rqst *rqstp,
+ 		status = nfserr_wrong_cred;
+ 		goto out;
+ 	}
++	trace_nfsd_clid_destroyed(&clp->cl_clientid);
+ 	unhash_client_locked(clp);
+ out:
+ 	spin_unlock(&nn->client_lock);
 diff --git a/fs/nfsd/trace.h b/fs/nfsd/trace.h
-index afffb4912acbc..86e0656bdb779 100644
+index 6c787f4ef5633..3aca6dcba90a5 100644
 --- a/fs/nfsd/trace.h
 +++ b/fs/nfsd/trace.h
-@@ -910,7 +910,6 @@ DEFINE_EVENT(nfsd_cb_class, nfsd_cb_##name,		\
- 	TP_PROTO(const struct nfs4_client *clp),	\
- 	TP_ARGS(clp))
+@@ -513,6 +513,7 @@ DEFINE_EVENT(nfsd_clientid_class, nfsd_clid_##name, \
  
--DEFINE_NFSD_CB_EVENT(setup);
- DEFINE_NFSD_CB_EVENT(state);
- DEFINE_NFSD_CB_EVENT(lost);
- DEFINE_NFSD_CB_EVENT(shutdown);
-@@ -931,6 +930,32 @@ TRACE_DEFINE_ENUM(RPC_AUTH_GSS_KRB5P);
- 		{ RPC_AUTH_GSS_KRB5I,		"krb5i" },		\
- 		{ RPC_AUTH_GSS_KRB5P,		"krb5p" })
- 
-+TRACE_EVENT(nfsd_cb_setup,
-+	TP_PROTO(const struct nfs4_client *clp,
-+		 const char *netid,
-+		 rpc_authflavor_t authflavor
-+	),
-+	TP_ARGS(clp, netid, authflavor),
-+	TP_STRUCT__entry(
-+		__field(u32, cl_boot)
-+		__field(u32, cl_id)
-+		__field(unsigned long, authflavor)
-+		__array(unsigned char, addr, sizeof(struct sockaddr_in6))
-+		__array(unsigned char, netid, 8)
-+	),
-+	TP_fast_assign(
-+		__entry->cl_boot = clp->cl_clientid.cl_boot;
-+		__entry->cl_id = clp->cl_clientid.cl_id;
-+		strlcpy(__entry->netid, netid, sizeof(__entry->netid));
-+		__entry->authflavor = authflavor;
-+		memcpy(__entry->addr, &clp->cl_cb_conn.cb_addr,
-+			sizeof(struct sockaddr_in6));
-+	),
-+	TP_printk("addr=%pISpc client %08x:%08x proto=%s flavor=%s",
-+		__entry->addr, __entry->cl_boot, __entry->cl_id,
-+		__entry->netid, show_nfsd_authflavor(__entry->authflavor))
-+);
-+
- TRACE_EVENT(nfsd_cb_setup_err,
- 	TP_PROTO(
- 		const struct nfs4_client *clp,
+ DEFINE_CLIENTID_EVENT(reclaim_complete);
+ DEFINE_CLIENTID_EVENT(confirmed);
++DEFINE_CLIENTID_EVENT(destroyed);
+ DEFINE_CLIENTID_EVENT(expired);
+ DEFINE_CLIENTID_EVENT(purged);
+ DEFINE_CLIENTID_EVENT(renew);
 -- 
 2.43.0
 
