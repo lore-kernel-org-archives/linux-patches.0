@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A81188CBE;
-	Tue, 18 Jun 2024 13:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CABA5185E77;
+	Tue, 18 Jun 2024 13:00:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715638; cv=none; b=GrvkmEKoJtu6JvzioKqbn4n8TTGjjE/UXWQ+t1EjYP0kzfGGk2JMSg7XRd2O45KVfESREdGSmIsWuF158Y5qL13kGSKq2WBRBXR6h6sKwQD+WVcB6a8koZO7GlomAYSv4SSROjpy+ORV0Z2aQWNNd1ZEMrBt+pocrFCPBqaL7vk=
+	t=1718715641; cv=none; b=LqgSbi83VVIPvttSphjiVX+5qjt26ije/Wiblm0sTf3lXNA4wPdS9DC0eErecfQxojWzFzwcJqr+YUXOfHW0nMnvuidk0kCjSTJZexTjH8K/JHIiUQQ9SRab0ZDC0rHvaq8eVBr/5iCr8y67272YTBSnX/yYwCdxAzy0kLNFiHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715638; c=relaxed/simple;
-	bh=baJy0tiposHfDK0FmN2jEQ6yd0si21saTfZI6qzsv8c=;
+	s=arc-20240116; t=1718715641; c=relaxed/simple;
+	bh=SEtoKu2je/UEc9ZdqojzwQySMZ24g7ezlM7nMDBc4UM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IrymmuAS6y4iDpaWxN3m7jSAHAWuM4ermjQebjDXyfhcCXSjXGaXvJrTyMGm9hVXidB21XE185AIhv5B8ooQriTRpbbOyXmYTKXDjJKbSJBUwPgsMKymeSaPVF/xxvtwYPsyGjB5YPr1+zBj+B+xg7T8yMX5r/Tm7esE9wCiSeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mt2uA4kg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n7RtBw3r0daYLwN2x0Ba270pD2C0XL/pqVyPsy7ijQc95gVqxpyG8TumuWJqQPDxPcUSiMm8aApYI3V6nzaFSJcOvtfLMChizL0e/HQLcek+fRjJTzN2W6yvRMDfyrIYW9bYRC3QVq/5Ryo7GFIECe6ir5uAhTOnHaqhpH9NGj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0agrwFDb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mt2uA4kg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2864AC3277B;
-	Tue, 18 Jun 2024 13:00:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0agrwFDb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18E79C3277B;
+	Tue, 18 Jun 2024 13:00:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715638;
-	bh=baJy0tiposHfDK0FmN2jEQ6yd0si21saTfZI6qzsv8c=;
+	s=korg; t=1718715641;
+	bh=SEtoKu2je/UEc9ZdqojzwQySMZ24g7ezlM7nMDBc4UM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mt2uA4kgbTp57XFJtWPjlxbKTejjVzIZr7Y70sS2yuAf9IvOioy4iaJkAteXh9asJ
-	 VDha9uL+eZlmygP+75ysfZPrjKNfa/SkT8BrbnAI3rkgW2dz5bvQ3dvD6r8ElYH3JU
-	 TW34sS0ca/2GtRDf9PH1VEyFvuVnZTXkkvd/SNm4=
+	b=0agrwFDbGXD+gv/Itu/mlb8JDb7UgC7RCMuSF6WdeKGSGBcma9x3jbwdiwI4U3SOh
+	 96t54bmtRwfFMvKaJqfHsgSiLRuqzMZhI/p/B1h8YAHmi4YG5zDEVVt4HWVQ95GxG9
+	 kiKTjUogB87OA0Okb5LmSmF5z0nLkx6iBkkFUsok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Gabriel Krisman Bertazi <krisman@collabora.com>,
+	"J. Bruce Fields" <bfields@redhat.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 375/770] fanotify: Encode empty file handle when no inode is provided
-Date: Tue, 18 Jun 2024 14:33:48 +0200
-Message-ID: <20240618123421.743830546@linuxfoundation.org>
+Subject: [PATCH 5.10 346/770] nlm: minor nlm_lookup_file argument change
+Date: Tue, 18 Jun 2024 14:33:19 +0200
+Message-ID: <20240618123420.619434297@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,53 +51,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriel Krisman Bertazi <krisman@collabora.com>
+From: J. Bruce Fields <bfields@redhat.com>
 
-[ Upstream commit 272531ac619b374ab474e989eb387162fded553f ]
+[ Upstream commit 2dc6f19e4f438d4c14987cb17aee38aaf7304e7f ]
 
-Instead of failing, encode an invalid file handle in fanotify_encode_fh
-if no inode is provided.  This bogus file handle will be reported by
-FAN_FS_ERROR for non-inode errors.
+It'll come in handy to get the whole nlm_lock.
 
-Link: https://lore.kernel.org/r/20211025192746.66445-16-krisman@collabora.com
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Gabriel Krisman Bertazi <krisman@collabora.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: J. Bruce Fields <bfields@redhat.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/fanotify/fanotify.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/lockd/svc4proc.c         |  3 ++-
+ fs/lockd/svcproc.c          |  2 +-
+ fs/lockd/svcsubs.c          | 15 ++++++++-------
+ include/linux/lockd/lockd.h |  2 +-
+ 4 files changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
-index ec84fee7ad01c..c64d61b673caf 100644
---- a/fs/notify/fanotify/fanotify.c
-+++ b/fs/notify/fanotify/fanotify.c
-@@ -370,8 +370,14 @@ static int fanotify_encode_fh(struct fanotify_fh *fh, struct inode *inode,
- 	fh->type = FILEID_ROOT;
- 	fh->len = 0;
- 	fh->flags = 0;
-+
-+	/*
-+	 * Invalid FHs are used by FAN_FS_ERROR for errors not
-+	 * linked to any inode. The f_handle won't be reported
-+	 * back to userspace.
-+	 */
- 	if (!inode)
--		return 0;
-+		goto out;
+diff --git a/fs/lockd/svc4proc.c b/fs/lockd/svc4proc.c
+index 4c10fb5138f10..bc496bbd696b8 100644
+--- a/fs/lockd/svc4proc.c
++++ b/fs/lockd/svc4proc.c
+@@ -40,7 +40,8 @@ nlm4svc_retrieve_args(struct svc_rqst *rqstp, struct nlm_args *argp,
  
- 	/*
- 	 * !gpf means preallocated variable size fh, but fh_len could
-@@ -403,6 +409,7 @@ static int fanotify_encode_fh(struct fanotify_fh *fh, struct inode *inode,
- 	fh->type = type;
- 	fh->len = fh_len;
+ 	/* Obtain file pointer. Not used by FREE_ALL call. */
+ 	if (filp != NULL) {
+-		if ((error = nlm_lookup_file(rqstp, &file, &lock->fh)) != 0)
++		error = nlm_lookup_file(rqstp, &file, lock);
++		if (error)
+ 			goto no_locks;
+ 		*filp = file;
  
-+out:
- 	/*
- 	 * Mix fh into event merge key.  Hash might be NULL in case of
- 	 * unhashed FID events (i.e. FAN_FS_ERROR).
+diff --git a/fs/lockd/svcproc.c b/fs/lockd/svcproc.c
+index 4ae4b63b53925..f4e5e0eb30fd1 100644
+--- a/fs/lockd/svcproc.c
++++ b/fs/lockd/svcproc.c
+@@ -69,7 +69,7 @@ nlmsvc_retrieve_args(struct svc_rqst *rqstp, struct nlm_args *argp,
+ 
+ 	/* Obtain file pointer. Not used by FREE_ALL call. */
+ 	if (filp != NULL) {
+-		error = cast_status(nlm_lookup_file(rqstp, &file, &lock->fh));
++		error = cast_status(nlm_lookup_file(rqstp, &file, lock));
+ 		if (error != 0)
+ 			goto no_locks;
+ 		*filp = file;
+diff --git a/fs/lockd/svcsubs.c b/fs/lockd/svcsubs.c
+index 028fc152da22f..2d62633b39e51 100644
+--- a/fs/lockd/svcsubs.c
++++ b/fs/lockd/svcsubs.c
+@@ -82,31 +82,31 @@ static inline unsigned int file_hash(struct nfs_fh *f)
+  */
+ __be32
+ nlm_lookup_file(struct svc_rqst *rqstp, struct nlm_file **result,
+-					struct nfs_fh *f)
++					struct nlm_lock *lock)
+ {
+ 	struct nlm_file	*file;
+ 	unsigned int	hash;
+ 	__be32		nfserr;
+ 
+-	nlm_debug_print_fh("nlm_lookup_file", f);
++	nlm_debug_print_fh("nlm_lookup_file", &lock->fh);
+ 
+-	hash = file_hash(f);
++	hash = file_hash(&lock->fh);
+ 
+ 	/* Lock file table */
+ 	mutex_lock(&nlm_file_mutex);
+ 
+ 	hlist_for_each_entry(file, &nlm_files[hash], f_list)
+-		if (!nfs_compare_fh(&file->f_handle, f))
++		if (!nfs_compare_fh(&file->f_handle, &lock->fh))
+ 			goto found;
+ 
+-	nlm_debug_print_fh("creating file for", f);
++	nlm_debug_print_fh("creating file for", &lock->fh);
+ 
+ 	nfserr = nlm_lck_denied_nolocks;
+ 	file = kzalloc(sizeof(*file), GFP_KERNEL);
+ 	if (!file)
+ 		goto out_unlock;
+ 
+-	memcpy(&file->f_handle, f, sizeof(struct nfs_fh));
++	memcpy(&file->f_handle, &lock->fh, sizeof(struct nfs_fh));
+ 	mutex_init(&file->f_mutex);
+ 	INIT_HLIST_NODE(&file->f_list);
+ 	INIT_LIST_HEAD(&file->f_blocks);
+@@ -117,7 +117,8 @@ nlm_lookup_file(struct svc_rqst *rqstp, struct nlm_file **result,
+ 	 * We have to make sure we have the right credential to open
+ 	 * the file.
+ 	 */
+-	if ((nfserr = nlmsvc_ops->fopen(rqstp, f, &file->f_file)) != 0) {
++	nfserr = nlmsvc_ops->fopen(rqstp, &lock->fh, &file->f_file);
++	if (nfserr) {
+ 		dprintk("lockd: open failed (error %d)\n", nfserr);
+ 		goto out_free;
+ 	}
+diff --git a/include/linux/lockd/lockd.h b/include/linux/lockd/lockd.h
+index 666f5f310a041..81b71ad2040ac 100644
+--- a/include/linux/lockd/lockd.h
++++ b/include/linux/lockd/lockd.h
+@@ -286,7 +286,7 @@ void		  nlmsvc_locks_init_private(struct file_lock *, struct nlm_host *, pid_t);
+  * File handling for the server personality
+  */
+ __be32		  nlm_lookup_file(struct svc_rqst *, struct nlm_file **,
+-					struct nfs_fh *);
++					struct nlm_lock *);
+ void		  nlm_release_file(struct nlm_file *);
+ void		  nlmsvc_release_lockowner(struct nlm_lock *);
+ void		  nlmsvc_mark_resources(struct net *);
 -- 
 2.43.0
 
