@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6A219CD1E;
-	Tue, 18 Jun 2024 13:05:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17DE819CD1B;
+	Tue, 18 Jun 2024 13:05:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715906; cv=none; b=fY0Tz0m0UwPxYQPcd3L4mifsY4PhIEyGGy5Cy2sMUHcyZzx07gU/s9XVEPu7WGPutiy/iNwLiICoAG6wYR/Urzxl4hYB+0zAwc+1EINYlYqvr1J9fQXvKSmBaPdaOivZiy4Q2ZcRF74a7GfXcXx4Tg75Xb68PSiQA1CNgT6UjOI=
+	t=1718715909; cv=none; b=INAcRi4gEMPqpMBBtbvAI/+k4vkrq/NJ3f0UOySkF1fyQm/aKUn7mZew3uBfhzWnyObNNKXzV6aoZxSxe+JQuZves5JoLYm81jP7NQwheQqX+sVM9D21Gxg32TTwdOYc8QeRnalISP/rAIA4CTsM40suEWq0Xg9kMqo280UKy94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715906; c=relaxed/simple;
-	bh=ZkUwAWmOESjeKESDZmgCYWYwcz3g0ExPQdOsQZtYYLI=;
+	s=arc-20240116; t=1718715909; c=relaxed/simple;
+	bh=ws7R/eY0i79lNm8UTQKkJqe5z/+OrDoj85ZPq+GWVME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MyUGqbf3rVDZAIundrLVinBFWTAH8VlUwyz6yZU3BS0YMr9HPqwABZPjrX7bHv0wphCc7dCAbIM9nrtjnZ+2uYPKFPUodC1r0vZrzM7J1g3NvSf65YBR6pfoBNe2lSKuaH1TqAposkJggKBRlHLlvDZ2FzhcVmRPXpCq1YMiBYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UejreQwf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Scwona0Tt0JhFF3END/7OUFu2iS19VOMUL5QoeoJKMTgHT7ojWwnO1cnU/U8dkAb0Qgo1skD0O+Tv3kzVdNjkNp62GA2iBCWC8jooLzDQ99xTBoFNDmh7Gm5I32NI2bCuLcdjYYFuR+D05sp+NEwEyodAulrHss9Zs9kTYV2S2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Odf7FuHn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UejreQwf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EA90C3277B;
-	Tue, 18 Jun 2024 13:05:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Odf7FuHn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 916E1C3277B;
+	Tue, 18 Jun 2024 13:05:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715906;
-	bh=ZkUwAWmOESjeKESDZmgCYWYwcz3g0ExPQdOsQZtYYLI=;
+	s=korg; t=1718715909;
+	bh=ws7R/eY0i79lNm8UTQKkJqe5z/+OrDoj85ZPq+GWVME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UejreQwfButM5OIRwTQoXLvFWIAPfkjoAQ1Z7Tw3oP1wLhbmi0+V3k70vwau6qE+3
-	 8pWhDFtG4R0iSgMCFjoXwd9Uzz6xNrLkZt1SB+H0bLjcU2si4hOdUvUHlMmyIZxo3k
-	 3EYuZh7W+7azPzkDZQMHy6nwfkVbLS8Xh6D4nenU=
+	b=Odf7FuHnodCFg57wEp+igocE5awib23ZrcNv4qf6WyPqBaM8ygf61dxmJoq52f2/m
+	 /y8wTZ3yitrEQrcg0P9pufBr6ReZjmEMi8fqb0Z1GD/lqhuRgboQQTREr0OEv9ki0q
+	 V1w4UjN7aoUc3k8iPGVf+o8VunCIQtfpCyv5pjjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 466/770] NFSD: Fix ia_size underflow
-Date: Tue, 18 Jun 2024 14:35:19 +0200
-Message-ID: <20240618123425.301213684@linuxfoundation.org>
+Subject: [PATCH 5.10 467/770] NFSD: Fix NFSv3 SETATTR/CREATEs handling of large file sizes
+Date: Tue, 18 Jun 2024 14:35:20 +0200
+Message-ID: <20240618123425.341437065@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,41 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit e6faac3f58c7c4176b66f63def17a34232a17b0e ]
+[ Upstream commit a648fdeb7c0e17177a2280344d015dba3fbe3314 ]
 
-iattr::ia_size is a loff_t, which is a signed 64-bit type. NFSv3 and
-NFSv4 both define file size as an unsigned 64-bit type. Thus there
-is a range of valid file size values an NFS client can send that is
-already larger than Linux can handle.
+iattr::ia_size is a loff_t, so these NFSv3 procedures must be
+careful to deal with incoming client size values that are larger
+than s64_max without corrupting the value.
 
-Currently decode_fattr4() dumps a full u64 value into ia_size. If
-that value happens to be larger than S64_MAX, then ia_size
-underflows. I'm about to fix up the NFSv3 behavior as well, so let's
-catch the underflow in the common code path: nfsd_setattr().
+Silently capping the value results in storing a different value
+than the client passed in which is unexpected behavior, so remove
+the min_t() check in decode_sattr3().
+
+Note that RFC 1813 permits only the WRITE procedure to return
+NFS3ERR_FBIG. We believe that NFSv3 reference implementations
+also return NFS3ERR_FBIG when ia_size is too large.
 
 Cc: stable@vger.kernel.org
-[ cel: context adjusted, 2f221d6f7b88 has not been applied ]
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/vfs.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/nfsd/nfs3xdr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
-index d4b6bc3b4d735..09e4a0af6fb43 100644
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -449,6 +449,10 @@ nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp, struct iattr *iap,
- 			.ia_size	= iap->ia_size,
- 		};
- 
-+		host_err = -EFBIG;
-+		if (iap->ia_size < 0)
-+			goto out_unlock;
-+
- 		host_err = notify_change(dentry, &size_attr, NULL);
- 		if (host_err)
- 			goto out_unlock;
+diff --git a/fs/nfsd/nfs3xdr.c b/fs/nfsd/nfs3xdr.c
+index 7c45ba4db61be..2e47a07029f1d 100644
+--- a/fs/nfsd/nfs3xdr.c
++++ b/fs/nfsd/nfs3xdr.c
+@@ -254,7 +254,7 @@ svcxdr_decode_sattr3(struct svc_rqst *rqstp, struct xdr_stream *xdr,
+ 		if (xdr_stream_decode_u64(xdr, &newsize) < 0)
+ 			return false;
+ 		iap->ia_valid |= ATTR_SIZE;
+-		iap->ia_size = min_t(u64, newsize, NFS_OFFSET_MAX);
++		iap->ia_size = newsize;
+ 	}
+ 	if (xdr_stream_decode_u32(xdr, &set_it) < 0)
+ 		return false;
 -- 
 2.43.0
 
