@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10BE515FD0B;
-	Tue, 18 Jun 2024 12:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FEEB160790;
+	Tue, 18 Jun 2024 12:51:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715071; cv=none; b=cFSc5IY/TNU+O7NOtKvPvIHOjNh7mTzSxC2WdmztkEUBS3iwlESKEl0AceIK/7x77oVeLH1yvnz1PyYzIX0b38MDFlY3yx+AsSRnoQ190MjUySGoYTialbXS9X2lcDeCT0RS+ZahzMpvnrh586qacivU0+jl3ktRrnCWlXHASGM=
+	t=1718715073; cv=none; b=CaWXaLfDlLzRIW7Rlsv0hu9aqKSNdOYQMVTJXFG6+EdVsIPinHYS466x+/d/6LZHRYpgqHwVpnEILZ9bzsqjREe75nRRMjgG6jV9qPDR0uGrKAkBkcgHMlo0bjdWTh/Oa1+oC5g3qVty4vZgWhM2Gu2ClC1QjQ3r2HCjb6JHFS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715071; c=relaxed/simple;
-	bh=lPwB8TcEeIuvqCHUmrUNCPm1izIov4Vtk7EjsDXVKS0=;
+	s=arc-20240116; t=1718715073; c=relaxed/simple;
+	bh=rMWiJkn1a0dU+PSlnInNZtPuAQP4+/QDKnnuVJzDoEc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cizx+q+gcc5d0B22JzrwL38GkXQkeAtfEjefmPF5Jsn5NanPU1gOLSSiglzQZFDWCH6/M87TszlZky8giEIKob/7Fx4csT0m1QLdVej6Z91tXBUlmnI07m+oxqbQjG0OHbBmnpmBk6n04hZ+l9f0ORVznCLBJUrsOt5fu/mKu5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xd860zf1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZjnUk2Aull3QpOu+o+LUfXPnOisD2MhLET+LHpQIa/2AK/QOARdHVDIZOc+2FUK2Jbnf1C2XEzk8ZpKZebLHqoBselvYIFsGnwND1yaanfB2a3YHLVTe7JbpnzJNggPKYi8aktwEVdaXkH2ddCgd8m/d3OE2z1CdmFq0d7fU4pA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qO9y+eTm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xd860zf1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32699C3277B;
-	Tue, 18 Jun 2024 12:51:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qO9y+eTm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F98C3277B;
+	Tue, 18 Jun 2024 12:51:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715070;
-	bh=lPwB8TcEeIuvqCHUmrUNCPm1izIov4Vtk7EjsDXVKS0=;
+	s=korg; t=1718715073;
+	bh=rMWiJkn1a0dU+PSlnInNZtPuAQP4+/QDKnnuVJzDoEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xd860zf1xHNLkb7OMJMjtaWmB+d/8HPriU6KutWKqpJ1Tn7NgP1VMmhfRUAHJr3X+
-	 gVbfHs+6pih5IyoC+ow+RV+rsmAbIsvNBAmV9HpClsK59b59zbOsJp5CBgX7ldAoxv
-	 ziPjr+SuKSpKEbP4uKVxbNR9HOtTI4w9m7mcL+Z8=
+	b=qO9y+eTmEXQz6tIepMGMZFQLt5M1YX/8u5sIIKPSdOrAXeE7PG6YeWtrkaHPhtTQf
+	 J/E4IICGtD6juSY4NuUu9SD5pMb3EQSgOp3jI9MR1uIMRoNJCcpRJu46oymjJIlL+3
+	 qVBBzwvx/Uo7oSgL4pT35NoLvc8FhRgOf0sjIboE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"J. Bruce Fields" <bfields@redhat.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 185/770] nfsd: simplify nfsd4_check_open_reclaim
-Date: Tue, 18 Jun 2024 14:30:38 +0200
-Message-ID: <20240618123414.415967747@linuxfoundation.org>
+Subject: [PATCH 5.10 186/770] nfsd: cstate->session->se_client -> cstate->clp
+Date: Tue, 18 Jun 2024 14:30:39 +0200
+Message-ID: <20240618123414.454515389@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,82 +53,106 @@ Content-Transfer-Encoding: 8bit
 
 From: J. Bruce Fields <bfields@redhat.com>
 
-[ Upstream commit 1722b04624806ced51693f546edb83e8b2297a77 ]
+[ Upstream commit ec59659b4972ec25851aa03b4b5baba6764a62e4 ]
 
-The set_client() was already taken care of by process_open1().
-
-The comments here are mostly redundant with the code.
+I'm not sure why we're writing this out the hard way in so many places.
 
 Signed-off-by: J. Bruce Fields <bfields@redhat.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4proc.c  |  3 +--
- fs/nfsd/nfs4state.c | 18 +++---------------
- fs/nfsd/state.h     |  3 +--
- 3 files changed, 5 insertions(+), 19 deletions(-)
+ fs/nfsd/nfs4proc.c  |  5 ++---
+ fs/nfsd/nfs4state.c | 16 ++++++++--------
+ 2 files changed, 10 insertions(+), 11 deletions(-)
 
 diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 4f64d94909ec1..5d304b51914a2 100644
+index 5d304b51914a2..0acf7af9aab8f 100644
 --- a/fs/nfsd/nfs4proc.c
 +++ b/fs/nfsd/nfs4proc.c
-@@ -428,8 +428,7 @@ nfsd4_open(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 				goto out;
- 			break;
- 		case NFS4_OPEN_CLAIM_PREVIOUS:
--			status = nfs4_check_open_reclaim(&open->op_clientid,
--							 cstate, nn);
-+			status = nfs4_check_open_reclaim(cstate->clp);
- 			if (status)
- 				goto out;
- 			open->op_openowner->oo_flags |= NFS4_OO_CONFIRMED;
+@@ -378,8 +378,7 @@ nfsd4_open(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 	 * Before RECLAIM_COMPLETE done, server should deny new lock
+ 	 */
+ 	if (nfsd4_has_session(cstate) &&
+-	    !test_bit(NFSD4_CLIENT_RECLAIM_COMPLETE,
+-		      &cstate->session->se_client->cl_flags) &&
++	    !test_bit(NFSD4_CLIENT_RECLAIM_COMPLETE, &cstate->clp->cl_flags) &&
+ 	    open->op_claim_type != NFS4_OPEN_CLAIM_PREVIOUS)
+ 		return nfserr_grace;
+ 
+@@ -1881,7 +1880,7 @@ nfsd4_getdeviceinfo(struct svc_rqst *rqstp,
+ 	nfserr = nfs_ok;
+ 	if (gdp->gd_maxcount != 0) {
+ 		nfserr = ops->proc_getdeviceinfo(exp->ex_path.mnt->mnt_sb,
+-				rqstp, cstate->session->se_client, gdp);
++				rqstp, cstate->clp, gdp);
+ 	}
+ 
+ 	gdp->gd_notify_types &= ops->notify_types;
 diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index cbec87ee6bc0e..4da8467a3570d 100644
+index 4da8467a3570d..c2eba93ab5138 100644
 --- a/fs/nfsd/nfs4state.c
 +++ b/fs/nfsd/nfs4state.c
-@@ -7248,25 +7248,13 @@ nfsd4_find_reclaim_client(struct xdr_netobj name, struct nfsd_net *nn)
- 	return NULL;
- }
- 
--/*
--* Called from OPEN. Look for clientid in reclaim list.
--*/
- __be32
--nfs4_check_open_reclaim(clientid_t *clid,
--		struct nfsd4_compound_state *cstate,
--		struct nfsd_net *nn)
-+nfs4_check_open_reclaim(struct nfs4_client *clp)
+@@ -3923,6 +3923,7 @@ nfsd4_reclaim_complete(struct svc_rqst *rqstp,
+ 		struct nfsd4_compound_state *cstate, union nfsd4_op_u *u)
  {
--	__be32 status;
--
--	/* find clientid in conf_id_hashtbl */
--	status = set_client(clid, cstate, nn);
--	if (status)
--		return nfserr_reclaim_bad;
--
--	if (test_bit(NFSD4_CLIENT_RECLAIM_COMPLETE, &cstate->clp->cl_flags))
-+	if (test_bit(NFSD4_CLIENT_RECLAIM_COMPLETE, &clp->cl_flags))
- 		return nfserr_no_grace;
+ 	struct nfsd4_reclaim_complete *rc = &u->reclaim_complete;
++	struct nfs4_client *clp = cstate->clp;
+ 	__be32 status = 0;
  
--	if (nfsd4_client_record_check(cstate->clp))
-+	if (nfsd4_client_record_check(clp))
- 		return nfserr_reclaim_bad;
+ 	if (rc->rca_one_fs) {
+@@ -3936,12 +3937,11 @@ nfsd4_reclaim_complete(struct svc_rqst *rqstp,
+ 	}
  
- 	return nfs_ok;
-diff --git a/fs/nfsd/state.h b/fs/nfsd/state.h
-index 9eae11a9d21ca..73deea3531699 100644
---- a/fs/nfsd/state.h
-+++ b/fs/nfsd/state.h
-@@ -649,8 +649,7 @@ void nfs4_remove_reclaim_record(struct nfs4_client_reclaim *, struct nfsd_net *)
- extern void nfs4_release_reclaim(struct nfsd_net *);
- extern struct nfs4_client_reclaim *nfsd4_find_reclaim_client(struct xdr_netobj name,
- 							struct nfsd_net *nn);
--extern __be32 nfs4_check_open_reclaim(clientid_t *clid,
--		struct nfsd4_compound_state *cstate, struct nfsd_net *nn);
-+extern __be32 nfs4_check_open_reclaim(struct nfs4_client *);
- extern void nfsd4_probe_callback(struct nfs4_client *clp);
- extern void nfsd4_probe_callback_sync(struct nfs4_client *clp);
- extern void nfsd4_change_callback(struct nfs4_client *clp, struct nfs4_cb_conn *);
+ 	status = nfserr_complete_already;
+-	if (test_and_set_bit(NFSD4_CLIENT_RECLAIM_COMPLETE,
+-			     &cstate->session->se_client->cl_flags))
++	if (test_and_set_bit(NFSD4_CLIENT_RECLAIM_COMPLETE, &clp->cl_flags))
+ 		goto out;
+ 
+ 	status = nfserr_stale_clientid;
+-	if (is_client_expired(cstate->session->se_client))
++	if (is_client_expired(clp))
+ 		/*
+ 		 * The following error isn't really legal.
+ 		 * But we only get here if the client just explicitly
+@@ -3952,8 +3952,8 @@ nfsd4_reclaim_complete(struct svc_rqst *rqstp,
+ 		goto out;
+ 
+ 	status = nfs_ok;
+-	nfsd4_client_record_create(cstate->session->se_client);
+-	inc_reclaim_complete(cstate->session->se_client);
++	nfsd4_client_record_create(clp);
++	inc_reclaim_complete(clp);
+ out:
+ 	return status;
+ }
+@@ -5938,7 +5938,7 @@ nfsd4_test_stateid(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ {
+ 	struct nfsd4_test_stateid *test_stateid = &u->test_stateid;
+ 	struct nfsd4_test_stateid_id *stateid;
+-	struct nfs4_client *cl = cstate->session->se_client;
++	struct nfs4_client *cl = cstate->clp;
+ 
+ 	list_for_each_entry(stateid, &test_stateid->ts_stateid_list, ts_id_list)
+ 		stateid->ts_id_status =
+@@ -5984,7 +5984,7 @@ nfsd4_free_stateid(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 	stateid_t *stateid = &free_stateid->fr_stateid;
+ 	struct nfs4_stid *s;
+ 	struct nfs4_delegation *dp;
+-	struct nfs4_client *cl = cstate->session->se_client;
++	struct nfs4_client *cl = cstate->clp;
+ 	__be32 ret = nfserr_bad_stateid;
+ 
+ 	spin_lock(&cl->cl_lock);
+@@ -6716,7 +6716,7 @@ nfsd4_lock(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 		if (nfsd4_has_session(cstate))
+ 			/* See rfc 5661 18.10.3: given clientid is ignored: */
+ 			memcpy(&lock->lk_new_clientid,
+-				&cstate->session->se_client->cl_clientid,
++				&cstate->clp->cl_clientid,
+ 				sizeof(clientid_t));
+ 
+ 		/* validate and update open stateid and open seqid */
 -- 
 2.43.0
 
