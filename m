@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF211A00F5;
-	Tue, 18 Jun 2024 13:09:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DDD01A00F5;
+	Tue, 18 Jun 2024 13:09:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716144; cv=none; b=gXECI3uAF0+IPOEZ3GTwZapTRkNoXUFXSuBVMIm2DXzt4u/3b2xRtEZ30XwDFcSj6nLHMD5VHYlzQP4QYjhiIO82O1crpBQ+frsDVtfgO62qfpU3XKKFIggnphEQYZ1bCyyIKOJaIHEqptAHV/GvHq4LkwzbYq1a+eOBx2YhrzA=
+	t=1718716147; cv=none; b=s1pIE1prx2IYwe+R0rzIRDabF2PzPc173N9qvv6hq9q6pHjUDMvweOUc0KnfQNKmLBxunqd07mCRr+s/6SvR0jdnMMUifcJIskEh9oPEoebwMXRRI2O7nHGwD8vOicVskBdV80l+SR7qu6imdw9ooJu/TNZoKA/AuagKjmpfJbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716144; c=relaxed/simple;
-	bh=GVT6TofnXvYbb7uMw+39U7OIhmNpg0hyIemw8bYqlow=;
+	s=arc-20240116; t=1718716147; c=relaxed/simple;
+	bh=xWSLPyi7uL695Xl9I5vi/+Z59XjrsLS4D0tzYbvjzjc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qgp01wjPcduCSAnZeq69064GrMwFCI9mAD3vyNzHFOf5CAMoPnNx9si+7/4bGmUW8wSNrVVvJObYyVS9nCPoMUa3jEPVXVRaFk0AtW8nMej0FbZw18eaWIOYUQD8S8owrQYx0mLi7g46dY9tfZO/FmrhNgGpGO2NyrfatNI6e3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OT6bn0uy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jCwdxDdJjf2HGywEnuc9j6bdsGF4E6Kt/i+9zRmutn2ngLHO9mtOdA5jfimoxYuHjDtn4k75uqr21/GK0YYIrITKkLAzmZwANCrpweBZFdYW3B5bkKmFrwMiA0knLdMGfCQ/uF5u6mFLCrmjiNEKlCt6fL2cTG6BDcbiXHYcYlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V4zY9bqf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OT6bn0uy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E938C3277B;
-	Tue, 18 Jun 2024 13:09:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V4zY9bqf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED187C3277B;
+	Tue, 18 Jun 2024 13:09:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716144;
-	bh=GVT6TofnXvYbb7uMw+39U7OIhmNpg0hyIemw8bYqlow=;
+	s=korg; t=1718716147;
+	bh=xWSLPyi7uL695Xl9I5vi/+Z59XjrsLS4D0tzYbvjzjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OT6bn0uyDjIVrkMtggXwx4M3uZUudb6SiDj2gGdVkDq+Fpgt4zUyYaDAKE/WW3o87
-	 AoA3mJRXvSWTgvQghJB+Y1QZrbTdFH+BlMn7DU1sFTRQpp4bZ7DZjuImUY+bXDxlQW
-	 wm26sLPyNwRiA4qCagGDNapIy3EqXaZV141xACqU=
+	b=V4zY9bqfPSGmYUaaNTLUlH3DFJ+U2lisx+wlHOpRFt3Oi/HRiXvC1Aftwkyh/gFE6
+	 X3a+eIKMwpH0+4nx1K5v95VFuM8SMEJnkbgWsfj6ySPlEoVhxwQPKpyHTlfmb0slhn
+	 a4y6zG566BsZADGCTWzXXStQ4NaEexksA3gCXsDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Dai Ngo <dai.ngo@oracle.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 516/770] NFSD: Show state of courtesy client in client info
-Date: Tue, 18 Jun 2024 14:36:09 +0200
-Message-ID: <20240618123427.232297539@linuxfoundation.org>
+Subject: [PATCH 5.10 517/770] NFSD: Clean up nfsd3_proc_create()
+Date: Tue, 18 Jun 2024 14:36:10 +0200
+Message-ID: <20240618123427.270768783@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,44 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dai Ngo <dai.ngo@oracle.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit e9488d5ae13c0a72223c507e2508dc2ac66cad4f ]
+[ Upstream commit e61568599c9ad638fdaba150fee07d7065e31851 ]
 
-Update client_info_show to show state of courtesy client
-and seconds since last renew.
+As near as I can tell, mode bit masking and setting S_IFREG is
+already done by do_nfsd_create() and vfs_create(). The NFSv4 path
+(do_open_lookup), for example, does not bother with this special
+processing.
 
-Reviewed-by: J. Bruce Fields <bfields@fieldses.org>
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/nfsd/nfs3proc.c | 16 ++--------------
+ 1 file changed, 2 insertions(+), 14 deletions(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 6851fece3a760..9116496b476aa 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -2494,10 +2494,17 @@ static int client_info_show(struct seq_file *m, void *v)
- 	memcpy(&clid, &clp->cl_clientid, sizeof(clid));
- 	seq_printf(m, "clientid: 0x%llx\n", clid);
- 	seq_printf(m, "address: \"%pISpc\"\n", (struct sockaddr *)&clp->cl_addr);
--	if (test_bit(NFSD4_CLIENT_CONFIRMED, &clp->cl_flags))
-+
-+	if (clp->cl_state == NFSD4_COURTESY)
-+		seq_puts(m, "status: courtesy\n");
-+	else if (clp->cl_state == NFSD4_EXPIRABLE)
-+		seq_puts(m, "status: expirable\n");
-+	else if (test_bit(NFSD4_CLIENT_CONFIRMED, &clp->cl_flags))
- 		seq_puts(m, "status: confirmed\n");
- 	else
- 		seq_puts(m, "status: unconfirmed\n");
-+	seq_printf(m, "seconds from last renew: %lld\n",
-+		ktime_get_boottime_seconds() - clp->cl_time);
- 	seq_printf(m, "name: ");
- 	seq_quote_mem(m, clp->cl_name.data, clp->cl_name.len);
- 	seq_printf(m, "\nminor version: %d\n", clp->cl_minorversion);
+diff --git a/fs/nfsd/nfs3proc.c b/fs/nfsd/nfs3proc.c
+index 936eebd4c56dc..981a2a71c5af7 100644
+--- a/fs/nfsd/nfs3proc.c
++++ b/fs/nfsd/nfs3proc.c
+@@ -229,8 +229,7 @@ nfsd3_proc_create(struct svc_rqst *rqstp)
+ {
+ 	struct nfsd3_createargs *argp = rqstp->rq_argp;
+ 	struct nfsd3_diropres *resp = rqstp->rq_resp;
+-	svc_fh		*dirfhp, *newfhp = NULL;
+-	struct iattr	*attr;
++	svc_fh *dirfhp, *newfhp;
+ 
+ 	dprintk("nfsd: CREATE(3)   %s %.*s\n",
+ 				SVCFH_fmt(&argp->fh),
+@@ -239,20 +238,9 @@ nfsd3_proc_create(struct svc_rqst *rqstp)
+ 
+ 	dirfhp = fh_copy(&resp->dirfh, &argp->fh);
+ 	newfhp = fh_init(&resp->fh, NFS3_FHSIZE);
+-	attr   = &argp->attrs;
+-
+-	/* Unfudge the mode bits */
+-	attr->ia_mode &= ~S_IFMT;
+-	if (!(attr->ia_valid & ATTR_MODE)) { 
+-		attr->ia_valid |= ATTR_MODE;
+-		attr->ia_mode = S_IFREG;
+-	} else {
+-		attr->ia_mode = (attr->ia_mode & ~S_IFMT) | S_IFREG;
+-	}
+ 
+-	/* Now create the file and set attributes */
+ 	resp->status = do_nfsd_create(rqstp, dirfhp, argp->name, argp->len,
+-				      attr, newfhp, argp->createmode,
++				      &argp->attrs, newfhp, argp->createmode,
+ 				      (u32 *)argp->verf, NULL, NULL);
+ 	return rpc_success;
+ }
 -- 
 2.43.0
 
