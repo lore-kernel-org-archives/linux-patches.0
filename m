@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEDD913A877;
-	Tue, 18 Jun 2024 12:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBCF13A877;
+	Tue, 18 Jun 2024 12:49:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718714941; cv=none; b=qx+MjKRGzXpIhp6JBysZPJov+PxEqNzmbNbtlgdGqwlywiOHIu66OZVA+L9A1QT4fu+ro/aeU4TYev5zReiBsutMgoSpKsdPw98TqII/fkbp1G6mBSMLv/9CW/ug9C1gPFb/SsCzk2IYlmcxiAiZuMfP2LYVCnCYlK8WNHL2GnY=
+	t=1718714944; cv=none; b=NuxcfPupMeeW3kaMzw4oqrZOEj/Eddp7zD8z+oxa29N/AZzqP7H2VDSnMLE8AS4fZDMfpAXMPAn31d2InVC8jmXeaNiYuJ5GSwqC9421sDlLdXylnxTGrYXA4DQw4IL2Fau0rCWCd/jK+2p8eRpDb8e5YkVu35ooujtfKJ0Af6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718714941; c=relaxed/simple;
-	bh=GqRQ7G+3OY1F/s28gjKsbshzPehBzbukfxkaTpd+JsM=;
+	s=arc-20240116; t=1718714944; c=relaxed/simple;
+	bh=JtR56w20488SmXbiDi9/2z/1hgEAIq9Zfop4270heHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pa3sMc9iL+EC6M8MtH4FLUy3+NxHI6bIFGmEKaot3VBL2h6E7dY7EziLqrK0V3/LFyQyzIhhWDIuCajwAh29uATJPs+D6nYCJRc2SJcqsmBj9e7nMORBEZyfzk1XvRtsZXXA1TdMJizW3RpiX4GzGdO2UmE5I4kJSpY9j7WjA/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pDvGbVPB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sDwZwxBi4J7tV/D7Ysl7IToChSHTwaa+yyLHt9/m6U+kqbmvVpd/E06KeYsNpmJcwyHZs/01xA4tgjTwkCoS15C2NKbI8OH4gjtGpi3sU1aAtDBhA3GYxTtWgHPIoxilidxZ1lJmsGi0p9YRE5OgT8gGfXsgZPiGOZm3xXXP53U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x4bfXKsD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pDvGbVPB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75B14C3277B;
-	Tue, 18 Jun 2024 12:49:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x4bfXKsD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73DEAC3277B;
+	Tue, 18 Jun 2024 12:49:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718714940;
-	bh=GqRQ7G+3OY1F/s28gjKsbshzPehBzbukfxkaTpd+JsM=;
+	s=korg; t=1718714943;
+	bh=JtR56w20488SmXbiDi9/2z/1hgEAIq9Zfop4270heHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pDvGbVPBJzxoy70VJ2aqn8gMZucxz2hHEZ/blzUSzccB7fz1zaSd6PWozUzS7hbUV
-	 RbOE0fhwYZ2oovizqhWC4j+BXCHJrw0O9A5OtbjLcY8Q3+Il+EGKnlkimGOT3nXUSr
-	 XTigpOhyDCVKiYCW/z/1p1Ovg+ONWoBaUOX1E/V4=
+	b=x4bfXKsDyZityJN/1dMnYo0NWALjOUHKLFVWTYMnqi9GQCrrraYzUnPjnZTZ3jwwq
+	 e6+/qyBi9xTZ2pDQnc+wGr3jeqrnn6MlG3F4dgBypQeStgTWsUGoAW3cBlWPKkHD2u
+	 RRdqxehAzvala4DuWPzdeIopp0hFn0dvuK6LPOjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <christian.brauner@ubuntu.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Cyrill Gorcunov <gorcunov@gmail.com>,
 	"Eric W. Biederman" <ebiederm@xmission.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 109/770] exec: Remove reset_files_struct
-Date: Tue, 18 Jun 2024 14:29:22 +0200
-Message-ID: <20240618123411.480913996@linuxfoundation.org>
+Subject: [PATCH 5.10 110/770] kcmp: In kcmp_epoll_target use fget_task
+Date: Tue, 18 Jun 2024 14:29:23 +0200
+Message-ID: <20240618123411.518219866@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -54,57 +55,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric W. Biederman <ebiederm@xmission.com>
 
-[ Upstream commit 950db38ff2c01b7aabbd7ab4a50b7992750fa63d ]
+[ Upstream commit f43c283a89a7dc531a47d4b1e001503cf3dc3234 ]
 
-Now that exec no longer needs to restore the previous value of current->files
-on error there are no more callers of reset_files_struct so remove it.
+Use the helper fget_task and simplify the code.
 
-Acked-by: Christian Brauner <christian.brauner@ubuntu.com>
-v1: https://lkml.kernel.org/r/20200817220425.9389-3-ebiederm@xmission.com
-Link: https://lkml.kernel.org/r/20201120231441.29911-3-ebiederm@xmission.com
+As well as simplifying the code this removes one unnecessary increment of
+struct files_struct.  This unnecessary increment of files_struct.count can
+result in exec unnecessarily unsharing files_struct and breaking posix
+locks, and it can result in fget_light having to fallback to fget reducing
+performance.
+
+Suggested-by: Oleg Nesterov <oleg@redhat.com>
+Reviewed-by: Cyrill Gorcunov <gorcunov@gmail.com>
+v1: https://lkml.kernel.org/r/20200817220425.9389-4-ebiederm@xmission.com
+Link: https://lkml.kernel.org/r/20201120231441.29911-4-ebiederm@xmission.com
 Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/file.c               | 12 ------------
- include/linux/fdtable.h |  1 -
- 2 files changed, 13 deletions(-)
+ kernel/kcmp.c | 20 ++++----------------
+ 1 file changed, 4 insertions(+), 16 deletions(-)
 
-diff --git a/fs/file.c b/fs/file.c
-index d6bc73960e4ac..5065252bb474e 100644
---- a/fs/file.c
-+++ b/fs/file.c
-@@ -466,18 +466,6 @@ void put_files_struct(struct files_struct *files)
- 	}
- }
- 
--void reset_files_struct(struct files_struct *files)
--{
--	struct task_struct *tsk = current;
--	struct files_struct *old;
--
--	old = tsk->files;
--	task_lock(tsk);
--	tsk->files = files;
--	task_unlock(tsk);
--	put_files_struct(old);
--}
--
- void exit_files(struct task_struct *tsk)
+diff --git a/kernel/kcmp.c b/kernel/kcmp.c
+index c0d2ad9b4705d..bd6f9edf98fd3 100644
+--- a/kernel/kcmp.c
++++ b/kernel/kcmp.c
+@@ -107,7 +107,6 @@ static int kcmp_epoll_target(struct task_struct *task1,
  {
- 	struct files_struct * files = tsk->files;
-diff --git a/include/linux/fdtable.h b/include/linux/fdtable.h
-index b32ab2163dc2d..c0ca6fb3f0f95 100644
---- a/include/linux/fdtable.h
-+++ b/include/linux/fdtable.h
-@@ -108,7 +108,6 @@ struct task_struct;
+ 	struct file *filp, *filp_epoll, *filp_tgt;
+ 	struct kcmp_epoll_slot slot;
+-	struct files_struct *files;
  
- struct files_struct *get_files_struct(struct task_struct *);
- void put_files_struct(struct files_struct *fs);
--void reset_files_struct(struct files_struct *);
- int unshare_files(void);
- struct files_struct *dup_fd(struct files_struct *, unsigned, int *) __latent_entropy;
- void do_close_on_exec(struct files_struct *);
+ 	if (copy_from_user(&slot, uslot, sizeof(slot)))
+ 		return -EFAULT;
+@@ -116,23 +115,12 @@ static int kcmp_epoll_target(struct task_struct *task1,
+ 	if (!filp)
+ 		return -EBADF;
+ 
+-	files = get_files_struct(task2);
+-	if (!files)
++	filp_epoll = fget_task(task2, slot.efd);
++	if (!filp_epoll)
+ 		return -EBADF;
+ 
+-	spin_lock(&files->file_lock);
+-	filp_epoll = fcheck_files(files, slot.efd);
+-	if (filp_epoll)
+-		get_file(filp_epoll);
+-	else
+-		filp_tgt = ERR_PTR(-EBADF);
+-	spin_unlock(&files->file_lock);
+-	put_files_struct(files);
+-
+-	if (filp_epoll) {
+-		filp_tgt = get_epoll_tfile_raw_ptr(filp_epoll, slot.tfd, slot.toff);
+-		fput(filp_epoll);
+-	}
++	filp_tgt = get_epoll_tfile_raw_ptr(filp_epoll, slot.tfd, slot.toff);
++	fput(filp_epoll);
+ 
+ 	if (IS_ERR(filp_tgt))
+ 		return PTR_ERR(filp_tgt);
 -- 
 2.43.0
 
