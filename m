@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BEF1A256C;
-	Tue, 18 Jun 2024 13:12:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CFB51A2C04;
+	Tue, 18 Jun 2024 13:12:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716349; cv=none; b=RmJe4gsvXX8KlvtXP/XqbSc9sSTWWrRMDpCvMi281SZKGHUdBajAhgeEXnoymsShYA42tdyKT38voG4aXTIec7MP96/3ROtaXEIX+meybnKhPLxAdT22NDqQH+NirI4UVDfokRUxFEiFl7nx63z54STiLeOFZ2Rvtho8vBmxTx4=
+	t=1718716352; cv=none; b=gQP7euxuejhsPYGoaXg7/9Ih8t44hFyhCcLZdYDfujqcLSE0RI3+Hx3dfwLRZ5gihbWTCn9qPg747N6m9yiqWhluUeoCvl+ayFUx9UWtYboZdLSxEzB2/9r5sCCRZPyQUL3Dy3i/gZucW7Fj3Tu9tv+lDBL/wET7soLRNmBgLdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716349; c=relaxed/simple;
-	bh=5ujYsQTHVDYOihAiyEmTDZpl+j04hPKiGuhtuDrjYtw=;
+	s=arc-20240116; t=1718716352; c=relaxed/simple;
+	bh=gkqS3+OUGJUYFFazj1TQA9LXDfh+Ka4D1vhQUVgLmVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=buuVY9jWENuTkv9/4T6QNeEwU3tJlORK6nP1zLv64NxIoQRztJCbWgXoJs5WCG5k50Sd5AOamsIx57GsQb0QsPJ1+vU0tmtfoRPLOdLDOVn5Skd9pP4X2i29MOhnVlycOXgTkI6pysAZMykb7ai97mRABKXmxC+GMYUcVpqSlB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nW4PnU//; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Il/6Qn/KGnA5BBCuyW1qvPTMSSYkUf7RGREiqLw3FqQhFRcQIcpsmpnz07IzrDkrXasNSvkKu9LJbHQy7H9JNG1CAVC0yf+8uUhZOAjfwvBsTpC7+keWPudydbZvfknBt0ZqshcuQlOlGMfyhXknr7ZfrqnfjqewbsKh6gzmmdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hC/enqn1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nW4PnU//"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 367EDC3277B;
-	Tue, 18 Jun 2024 13:12:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hC/enqn1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2288FC3277B;
+	Tue, 18 Jun 2024 13:12:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716349;
-	bh=5ujYsQTHVDYOihAiyEmTDZpl+j04hPKiGuhtuDrjYtw=;
+	s=korg; t=1718716352;
+	bh=gkqS3+OUGJUYFFazj1TQA9LXDfh+Ka4D1vhQUVgLmVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nW4PnU//fFEWLx6kTlM6KAtI4Bzp/IBEIXD0szazfd4pKrPeXvpKq9QwVs4oCEUJX
-	 RGJ6C7cS5pHW9BjpIRgP8qISfGUo+IwwylszYJzuAy9zJ/ELbLTJDGtGFRLhDy2+sq
-	 SHSx6K6866TKroRH4LxelteG2nQeWau5ow4fD678=
+	b=hC/enqn1VLz6WVFskIELEkj3Nvng6zx+rXRVqSKO37TQ7qp0ndLFGPUj2Tvnb85jP
+	 m9wcWxOKXa+WJNWNidOPqlehzaiNkA6XbFTh+POtgfRK1DmIYrerwRgQvSmNDDRxKQ
+	 FYRLE7D71uole9BLMMZeQQAcYVNQQVBzkNHv3MDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dai Ngo <dai.ngo@oracle.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 585/770] NFSD: refactoring v4 specific code to a helper in nfs4state.c
-Date: Tue, 18 Jun 2024 14:37:18 +0200
-Message-ID: <20240618123429.875720333@linuxfoundation.org>
+Subject: [PATCH 5.10 586/770] NFSD: keep track of the number of v4 clients in the system
+Date: Tue, 18 Jun 2024 14:37:19 +0200
+Message-ID: <20240618123429.914106007@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,84 +53,88 @@ Content-Transfer-Encoding: 8bit
 
 From: Dai Ngo <dai.ngo@oracle.com>
 
-[ Upstream commit 6867137ebcf4155fe25f2ecf7c29b9fb90a76d1d ]
+[ Upstream commit 0926c39515aa065a296e97dfc8790026f1e53f86 ]
 
-This patch moves the v4 specific code from nfsd_init_net() to
-nfsd4_init_leases_net() helper in nfs4state.c
+Add counter nfs4_client_count to keep track of the total number
+of v4 clients, including courtesy clients, in the system.
 
 Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 12 ++++++++++++
- fs/nfsd/nfsctl.c    |  9 +--------
- fs/nfsd/nfsd.h      |  4 ++++
- 3 files changed, 17 insertions(+), 8 deletions(-)
+ fs/nfsd/netns.h     |  2 ++
+ fs/nfsd/nfs4state.c | 10 ++++++++--
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
+diff --git a/fs/nfsd/netns.h b/fs/nfsd/netns.h
+index 1b1a962a18041..ce864f001a3ee 100644
+--- a/fs/nfsd/netns.h
++++ b/fs/nfsd/netns.h
+@@ -189,6 +189,8 @@ struct nfsd_net {
+ 	struct nfsd_fcache_disposal *fcache_disposal;
+ 
+ 	siphash_key_t		siphash_key;
++
++	atomic_t		nfs4_client_count;
+ };
+ 
+ /* Simple check to find out if a given net was properly initialized */
 diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 16e5bd54d92c2..76a77329cf368 100644
+index 76a77329cf368..5003d73fa9287 100644
 --- a/fs/nfsd/nfs4state.c
 +++ b/fs/nfsd/nfs4state.c
-@@ -4347,6 +4347,18 @@ nfsd4_init_slabs(void)
- 	return -ENOMEM;
+@@ -2066,7 +2066,8 @@ STALE_CLIENTID(clientid_t *clid, struct nfsd_net *nn)
+  * This type of memory management is somewhat inefficient, but we use it
+  * anyway since SETCLIENTID is not a common operation.
+  */
+-static struct nfs4_client *alloc_client(struct xdr_netobj name)
++static struct nfs4_client *alloc_client(struct xdr_netobj name,
++				struct nfsd_net *nn)
+ {
+ 	struct nfs4_client *clp;
+ 	int i;
+@@ -2089,6 +2090,7 @@ static struct nfs4_client *alloc_client(struct xdr_netobj name)
+ 	atomic_set(&clp->cl_rpc_users, 0);
+ 	clp->cl_cb_state = NFSD4_CB_UNKNOWN;
+ 	clp->cl_state = NFSD4_ACTIVE;
++	atomic_inc(&nn->nfs4_client_count);
+ 	atomic_set(&clp->cl_delegs_in_recall, 0);
+ 	INIT_LIST_HEAD(&clp->cl_idhash);
+ 	INIT_LIST_HEAD(&clp->cl_openowners);
+@@ -2196,6 +2198,7 @@ static __be32 mark_client_expired_locked(struct nfs4_client *clp)
+ static void
+ __destroy_client(struct nfs4_client *clp)
+ {
++	struct nfsd_net *nn = net_generic(clp->net, nfsd_net_id);
+ 	int i;
+ 	struct nfs4_openowner *oo;
+ 	struct nfs4_delegation *dp;
+@@ -2239,6 +2242,7 @@ __destroy_client(struct nfs4_client *clp)
+ 	nfsd4_shutdown_callback(clp);
+ 	if (clp->cl_cb_conn.cb_xprt)
+ 		svc_xprt_put(clp->cl_cb_conn.cb_xprt);
++	atomic_add_unless(&nn->nfs4_client_count, -1, 0);
+ 	free_client(clp);
+ 	wake_up_all(&expiry_wq);
+ }
+@@ -2865,7 +2869,7 @@ static struct nfs4_client *create_client(struct xdr_netobj name,
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+ 	struct dentry *dentries[ARRAY_SIZE(client_files)];
+ 
+-	clp = alloc_client(name);
++	clp = alloc_client(name, nn);
+ 	if (clp == NULL)
+ 		return NULL;
+ 
+@@ -4357,6 +4361,8 @@ void nfsd4_init_leases_net(struct nfsd_net *nn)
+ 	nn->clientid_base = prandom_u32();
+ 	nn->clientid_counter = nn->clientid_base + 1;
+ 	nn->s2s_cp_cl_id = nn->clientid_counter++;
++
++	atomic_set(&nn->nfs4_client_count, 0);
  }
  
-+void nfsd4_init_leases_net(struct nfsd_net *nn)
-+{
-+	nn->nfsd4_lease = 90;	/* default lease time */
-+	nn->nfsd4_grace = 90;
-+	nn->somebody_reclaimed = false;
-+	nn->track_reclaim_completes = false;
-+	nn->clverifier_counter = prandom_u32();
-+	nn->clientid_base = prandom_u32();
-+	nn->clientid_counter = nn->clientid_base + 1;
-+	nn->s2s_cp_cl_id = nn->clientid_counter++;
-+}
-+
  static void init_nfs4_replay(struct nfs4_replay *rp)
- {
- 	rp->rp_status = nfserr_serverfault;
-diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
-index 7002edbf26870..164c822ae3ae9 100644
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -1484,14 +1484,7 @@ static __net_init int nfsd_init_net(struct net *net)
- 	retval = nfsd_reply_cache_init(nn);
- 	if (retval)
- 		goto out_drc_error;
--	nn->nfsd4_lease = 90;	/* default lease time */
--	nn->nfsd4_grace = 90;
--	nn->somebody_reclaimed = false;
--	nn->track_reclaim_completes = false;
--	nn->clverifier_counter = prandom_u32();
--	nn->clientid_base = prandom_u32();
--	nn->clientid_counter = nn->clientid_base + 1;
--	nn->s2s_cp_cl_id = nn->clientid_counter++;
-+	nfsd4_init_leases_net(nn);
- 
- 	get_random_bytes(&nn->siphash_key, sizeof(nn->siphash_key));
- 	seqlock_init(&nn->writeverf_lock);
-diff --git a/fs/nfsd/nfsd.h b/fs/nfsd/nfsd.h
-index 9a8b09afc1733..ef8087691138a 100644
---- a/fs/nfsd/nfsd.h
-+++ b/fs/nfsd/nfsd.h
-@@ -496,12 +496,16 @@ extern void unregister_cld_notifier(void);
- extern void nfsd4_ssc_init_umount_work(struct nfsd_net *nn);
- #endif
- 
-+extern void nfsd4_init_leases_net(struct nfsd_net *nn);
-+
- #else /* CONFIG_NFSD_V4 */
- static inline int nfsd4_is_junction(struct dentry *dentry)
- {
- 	return 0;
- }
- 
-+static inline void nfsd4_init_leases_net(struct nfsd_net *nn) {};
-+
- #define register_cld_notifier() 0
- #define unregister_cld_notifier() do { } while(0)
- 
 -- 
 2.43.0
 
