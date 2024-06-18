@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0F416CD3C;
-	Tue, 18 Jun 2024 13:01:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2DD156C7C;
+	Tue, 18 Jun 2024 13:01:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715683; cv=none; b=PUsUHZ74Yu2hn81P0UEIwvsY4IS6Ymq6ZwbnfVGRUMQm+4WIa6F5hh0HKXM69CMawW9TvP09vCQKrCFNe7/GF5Y+eKnWg99SyDGwKwgn+yT/oWnutq/RIsbUf0wu0Jf4ht7KPF7pHXYnc6vvxbm0vkIa+QW8dEXheS4XPNBuwpo=
+	t=1718715686; cv=none; b=LCljfCR35WsXlefKXBQ86xMRJ2tXSxYmFsfXzmjfCw0SRNhQA38oHy0iCYVzBX45tJ7kcOBFg5H/jTTYu2J3HRRd1b/61/fsg8e9JJvB1R2aVID6+KS3COH5c7ceImXM6jz29uUWedORLtuwwLxRltEumFzEDua35jrKzGTUs9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715683; c=relaxed/simple;
-	bh=51+CAzoGhLNN/UsPZ/m2sXF+iTz/t9xZ4UXrvnzSvcQ=;
+	s=arc-20240116; t=1718715686; c=relaxed/simple;
+	bh=QTPpjrFV5Q4ySfhFO5TW6rKfUakZdt1YLzOwVPVdgJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JmAJ+pdk7yeTif40pA2n7EPA6LeQcMKA3zDrF4aX+Hyw9USU4QVMdWwM7P63/9OgzXUB87LRwPez1+XFsbbbLGIjXqij+K0zQoFewSnW4OpDMf0RKahLTKbn6yOqitFEWXwPl+e3wIJlKLiheBfLy88cTCR8FlJz96jorzQyH8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ndbfnaVT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iN6/YBvbfH5QaXChxmBBTl5MxR3iMWRg9sUItBzXX6jYeohWjzdwYzlYEZrUaOkTvhx6NYe3WQ9iu1icC1x5xluGpUMPjcP/ecRNb9Ss5EE1ERwpuP8G7fZvsHy/JyaHCs7410Dxv+P7vujmETiV5z6C9LGL7TTNvsWz2M6834E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YEiBv2+M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ndbfnaVT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9273FC32786;
-	Tue, 18 Jun 2024 13:01:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YEiBv2+M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86097C3277B;
+	Tue, 18 Jun 2024 13:01:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715683;
-	bh=51+CAzoGhLNN/UsPZ/m2sXF+iTz/t9xZ4UXrvnzSvcQ=;
+	s=korg; t=1718715685;
+	bh=QTPpjrFV5Q4ySfhFO5TW6rKfUakZdt1YLzOwVPVdgJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ndbfnaVTpOSi0mIR8nkiD5pE4zHsTE20rvbjVovXUUq4Cv9fUwCPCxAmRFSgpdu1r
-	 x5DZnJKeeXMYkrQctUY/NUDlH4JZHjNLNiZeMAuc3ZdHsmTUsQM3ecp9HDpxJ8rFNh
-	 7jTHsxgL2fVLsY6M6yFhinR9MAPVq8u4sk6zfG6A=
+	b=YEiBv2+MXBRr7AqxcWZEpcLMaIYrJtnOivSQh1wlG9AznI6MshG9mJ9GvbQwQDM6i
+	 /qddMB6tsTl1r/Hp1WEmLQ6pU8ZorzuF2PQ7Emg+Czgo0qWhVNEd399G8YuONeRkbs
+	 vVqNjwWsYvpheEJ05SIVoN8b6/3mQa/+uhlE8xgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	NeilBrown <neilb@suse.de>,
+	Colin Ian King <colin.king@canonical.com>,
 	"J. Bruce Fields" <bfields@redhat.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 392/770] NFSD: simplify struct nfsfh
-Date: Tue, 18 Jun 2024 14:34:05 +0200
-Message-ID: <20240618123422.410339668@linuxfoundation.org>
+Subject: [PATCH 5.10 393/770] NFSD: Initialize pointer ni with NULL and not plain integer 0
+Date: Tue, 18 Jun 2024 14:34:06 +0200
+Message-ID: <20240618123422.448253674@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,332 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Colin Ian King <colin.king@canonical.com>
 
-[ Upstream commit d8b26071e65e80a348602b939e333242f989221b ]
+[ Upstream commit 8e70bf27fd20cc17e87150327a640e546bfbee64 ]
 
-Most of the fields in 'struct knfsd_fh' are 2 levels deep (a union and a
-struct) and are accessed using macros like:
+Pointer ni is being initialized with plain integer zero. Fix
+this by initializing with NULL.
 
- #define fh_FOO fh_base.fh_new.fb_FOO
-
-This patch makes the union and struct anonymous, so that "fh_FOO" can be
-a name directly within 'struct knfsd_fh' and the #defines aren't needed.
-
-The file handle as a whole is sometimes accessed as "fh_base" or
-"fh_base.fh_pad", neither of which are particularly helpful names.
-As the struct holding the filehandle is now anonymous, we
-cannot use the name of that, so we union it with 'fh_raw' and use that
-where the raw filehandle is needed.  fh_raw also ensure the structure is
-large enough for the largest possible filehandle.
-
-fh_raw is a 'char' array, removing any need to cast it for memcpy etc.
-
-SVCFH_fmt() is simplified using the "%ph" printk format.  This
-changes the appearance of filehandles in dprintk() debugging, making
-them a little more precise.
-
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: NeilBrown <neilb@suse.de>
+Signed-off-by: Colin Ian King <colin.king@canonical.com>
 Signed-off-by: J. Bruce Fields <bfields@redhat.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/flexfilelayout.c |  2 +-
- fs/nfsd/lockd.c          |  2 +-
- fs/nfsd/nfs3xdr.c        |  4 ++--
- fs/nfsd/nfs4callback.c   |  2 +-
- fs/nfsd/nfs4proc.c       |  4 ++--
- fs/nfsd/nfs4state.c      |  4 ++--
- fs/nfsd/nfs4xdr.c        |  4 ++--
- fs/nfsd/nfsctl.c         |  6 ++---
- fs/nfsd/nfsfh.c          | 13 ++++-------
- fs/nfsd/nfsfh.h          | 50 ++++++++++++----------------------------
- fs/nfsd/nfsxdr.c         |  4 ++--
- 11 files changed, 35 insertions(+), 60 deletions(-)
+ fs/nfsd/nfs4proc.c  | 2 +-
+ fs/nfsd/nfs4state.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfsd/flexfilelayout.c b/fs/nfsd/flexfilelayout.c
-index db7ef07ae50c9..2e2f1d5e9f623 100644
---- a/fs/nfsd/flexfilelayout.c
-+++ b/fs/nfsd/flexfilelayout.c
-@@ -61,7 +61,7 @@ nfsd4_ff_proc_layoutget(struct inode *inode, const struct svc_fh *fhp,
- 		goto out_error;
- 
- 	fl->fh.size = fhp->fh_handle.fh_size;
--	memcpy(fl->fh.data, &fhp->fh_handle.fh_base, fl->fh.size);
-+	memcpy(fl->fh.data, &fhp->fh_handle.fh_raw, fl->fh.size);
- 
- 	/* Give whole file layout segments */
- 	seg->offset = 0;
-diff --git a/fs/nfsd/lockd.c b/fs/nfsd/lockd.c
-index 606fa155c28ad..46a7f9b813e52 100644
---- a/fs/nfsd/lockd.c
-+++ b/fs/nfsd/lockd.c
-@@ -35,7 +35,7 @@ nlm_fopen(struct svc_rqst *rqstp, struct nfs_fh *f, struct file **filp,
- 	/* must initialize before using! but maxsize doesn't matter */
- 	fh_init(&fh,0);
- 	fh.fh_handle.fh_size = f->size;
--	memcpy((char*)&fh.fh_handle.fh_base, f->data, f->size);
-+	memcpy(&fh.fh_handle.fh_raw, f->data, f->size);
- 	fh.fh_export = NULL;
- 
- 	access = (mode == O_WRONLY) ? NFSD_MAY_WRITE : NFSD_MAY_READ;
-diff --git a/fs/nfsd/nfs3xdr.c b/fs/nfsd/nfs3xdr.c
-index 0a5ebc52e6a9c..3d37923afb06c 100644
---- a/fs/nfsd/nfs3xdr.c
-+++ b/fs/nfsd/nfs3xdr.c
-@@ -92,7 +92,7 @@ svcxdr_decode_nfs_fh3(struct xdr_stream *xdr, struct svc_fh *fhp)
- 		return false;
- 	fh_init(fhp, NFS3_FHSIZE);
- 	fhp->fh_handle.fh_size = size;
--	memcpy(&fhp->fh_handle.fh_base, p, size);
-+	memcpy(&fhp->fh_handle.fh_raw, p, size);
- 
- 	return true;
- }
-@@ -131,7 +131,7 @@ svcxdr_encode_nfs_fh3(struct xdr_stream *xdr, const struct svc_fh *fhp)
- 	*p++ = cpu_to_be32(size);
- 	if (size)
- 		p[XDR_QUADLEN(size) - 1] = 0;
--	memcpy(p, &fhp->fh_handle.fh_base, size);
-+	memcpy(p, &fhp->fh_handle.fh_raw, size);
- 
- 	return true;
- }
-diff --git a/fs/nfsd/nfs4callback.c b/fs/nfsd/nfs4callback.c
-index 97f517e9b4189..e1272a7f45220 100644
---- a/fs/nfsd/nfs4callback.c
-+++ b/fs/nfsd/nfs4callback.c
-@@ -121,7 +121,7 @@ static void encode_nfs_fh4(struct xdr_stream *xdr, const struct knfsd_fh *fh)
- 
- 	BUG_ON(length > NFS4_FHSIZE);
- 	p = xdr_reserve_space(xdr, 4 + length);
--	xdr_encode_opaque(p, &fh->fh_base, length);
-+	xdr_encode_opaque(p, &fh->fh_raw, length);
- }
- 
- /*
 diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 1f840c72e9780..d55d9b9dbafb1 100644
+index d55d9b9dbafb1..ebb6d8471e8d7 100644
 --- a/fs/nfsd/nfs4proc.c
 +++ b/fs/nfsd/nfs4proc.c
-@@ -519,7 +519,7 @@ nfsd4_putfh(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 
- 	fh_put(&cstate->current_fh);
- 	cstate->current_fh.fh_handle.fh_size = putfh->pf_fhlen;
--	memcpy(&cstate->current_fh.fh_handle.fh_base, putfh->pf_fhval,
-+	memcpy(&cstate->current_fh.fh_handle.fh_raw, putfh->pf_fhval,
- 	       putfh->pf_fhlen);
- 	ret = fh_verify(rqstp, &cstate->current_fh, 0, NFSD_MAY_BYPASS_GSS);
- #ifdef CONFIG_NFSD_V4_2_INTER_SSC
-@@ -1379,7 +1379,7 @@ nfsd4_setup_inter_ssc(struct svc_rqst *rqstp,
- 	s_fh = &cstate->save_fh;
- 
- 	copy->c_fh.size = s_fh->fh_handle.fh_size;
--	memcpy(copy->c_fh.data, &s_fh->fh_handle.fh_base, copy->c_fh.size);
-+	memcpy(copy->c_fh.data, &s_fh->fh_handle.fh_raw, copy->c_fh.size);
- 	copy->stateid.seqid = cpu_to_be32(s_stid->si_generation);
- 	memcpy(copy->stateid.other, (void *)&s_stid->si_opaque,
- 	       sizeof(stateid_opaque_t));
+@@ -1181,7 +1181,7 @@ extern void nfs_sb_deactive(struct super_block *sb);
+ static __be32 nfsd4_ssc_setup_dul(struct nfsd_net *nn, char *ipaddr,
+ 		struct nfsd4_ssc_umount_item **retwork, struct vfsmount **ss_mnt)
+ {
+-	struct nfsd4_ssc_umount_item *ni = 0;
++	struct nfsd4_ssc_umount_item *ni = NULL;
+ 	struct nfsd4_ssc_umount_item *work = NULL;
+ 	struct nfsd4_ssc_umount_item *tmp;
+ 	DEFINE_WAIT(wait);
 diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index e9ac77c28741e..68562564be6b2 100644
+index 68562564be6b2..0b39ed1568d40 100644
 --- a/fs/nfsd/nfs4state.c
 +++ b/fs/nfsd/nfs4state.c
-@@ -1022,7 +1022,7 @@ static int delegation_blocked(struct knfsd_fh *fh)
- 		}
- 		spin_unlock(&blocked_delegations_lock);
- 	}
--	hash = jhash(&fh->fh_base, fh->fh_size, 0);
-+	hash = jhash(&fh->fh_raw, fh->fh_size, 0);
- 	if (test_bit(hash&255, bd->set[0]) &&
- 	    test_bit((hash>>8)&255, bd->set[0]) &&
- 	    test_bit((hash>>16)&255, bd->set[0]))
-@@ -1041,7 +1041,7 @@ static void block_delegations(struct knfsd_fh *fh)
- 	u32 hash;
- 	struct bloom_pair *bd = &blocked_delegations;
- 
--	hash = jhash(&fh->fh_base, fh->fh_size, 0);
-+	hash = jhash(&fh->fh_raw, fh->fh_size, 0);
- 
- 	spin_lock(&blocked_delegations_lock);
- 	__set_bit(hash&255, bd->set[bd->new]);
-diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
-index 262c6fec56aa6..899d961372c06 100644
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -3110,7 +3110,7 @@ nfsd4_encode_fattr(struct xdr_stream *xdr, struct svc_fh *fhp,
- 		p = xdr_reserve_space(xdr, fhp->fh_handle.fh_size + 4);
- 		if (!p)
- 			goto out_resource;
--		p = xdr_encode_opaque(p, &fhp->fh_handle.fh_base,
-+		p = xdr_encode_opaque(p, &fhp->fh_handle.fh_raw,
- 					fhp->fh_handle.fh_size);
- 	}
- 	if (bmval0 & FATTR4_WORD0_FILEID) {
-@@ -3681,7 +3681,7 @@ nfsd4_encode_getfh(struct nfsd4_compoundres *resp, __be32 nfserr, struct svc_fh
- 	p = xdr_reserve_space(xdr, len + 4);
- 	if (!p)
- 		return nfserr_resource;
--	p = xdr_encode_opaque(p, &fhp->fh_handle.fh_base, len);
-+	p = xdr_encode_opaque(p, &fhp->fh_handle.fh_raw, len);
- 	return 0;
- }
- 
-diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
-index cb73c12925629..d0761ca8cb542 100644
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -395,12 +395,12 @@ static ssize_t write_filehandle(struct file *file, char *buf, size_t size)
- 	auth_domain_put(dom);
- 	if (len)
- 		return len;
--	
-+
- 	mesg = buf;
- 	len = SIMPLE_TRANSACTION_LIMIT;
--	qword_addhex(&mesg, &len, (char*)&fh.fh_base, fh.fh_size);
-+	qword_addhex(&mesg, &len, fh.fh_raw, fh.fh_size);
- 	mesg[-1] = '\n';
--	return mesg - buf;	
-+	return mesg - buf;
- }
- 
- /*
-diff --git a/fs/nfsd/nfsfh.c b/fs/nfsd/nfsfh.c
-index 7e5a508173a04..34e201b6eb623 100644
---- a/fs/nfsd/nfsfh.c
-+++ b/fs/nfsd/nfsfh.c
-@@ -639,16 +639,11 @@ fh_put(struct svc_fh *fhp)
- char * SVCFH_fmt(struct svc_fh *fhp)
+@@ -5573,7 +5573,7 @@ static void nfsd4_ssc_shutdown_umount(struct nfsd_net *nn)
+ static void nfsd4_ssc_expire_umount(struct nfsd_net *nn)
  {
- 	struct knfsd_fh *fh = &fhp->fh_handle;
-+	static char buf[2+1+1+64*3+1];
+ 	bool do_wakeup = false;
+-	struct nfsd4_ssc_umount_item *ni = 0;
++	struct nfsd4_ssc_umount_item *ni = NULL;
+ 	struct nfsd4_ssc_umount_item *tmp;
  
--	static char buf[80];
--	sprintf(buf, "%d: %08x %08x %08x %08x %08x %08x",
--		fh->fh_size,
--		fh->fh_base.fh_pad[0],
--		fh->fh_base.fh_pad[1],
--		fh->fh_base.fh_pad[2],
--		fh->fh_base.fh_pad[3],
--		fh->fh_base.fh_pad[4],
--		fh->fh_base.fh_pad[5]);
-+	if (fh->fh_size < 0 || fh->fh_size> 64)
-+		return "bad-fh";
-+	sprintf(buf, "%d: %*ph", fh->fh_size, fh->fh_size, fh->fh_raw);
- 	return buf;
- }
- 
-diff --git a/fs/nfsd/nfsfh.h b/fs/nfsd/nfsfh.h
-index 8b5587f274a7d..d11e4b6870d68 100644
---- a/fs/nfsd/nfsfh.h
-+++ b/fs/nfsd/nfsfh.h
-@@ -43,44 +43,24 @@
-  *   filesystems must not use the values '0' or '0xff'. 'See enum fid_type'
-  *   in include/linux/exportfs.h for currently registered values.
-  */
--struct nfs_fhbase_new {
--	union {
--		struct {
--			u8		fb_version_aux;	/* == 1 */
--			u8		fb_auth_type_aux;
--			u8		fb_fsid_type_aux;
--			u8		fb_fileid_type_aux;
--			u32		fb_auth[1];
--		/*	u32		fb_fsid[0]; floating */
--		/*	u32		fb_fileid[0]; floating */
--		};
--		struct {
--			u8		fb_version;	/* == 1 */
--			u8		fb_auth_type;
--			u8		fb_fsid_type;
--			u8		fb_fileid_type;
--			u32		fb_auth_flex[]; /* flexible-array member */
--		};
--	};
--};
- 
- struct knfsd_fh {
--	unsigned int	fh_size;	/* significant for NFSv3.
--					 * Points to the current size while building
--					 * a new file handle
-+	unsigned int	fh_size;	/*
-+					 * Points to the current size while
-+					 * building a new file handle.
- 					 */
- 	union {
--		u32			fh_pad[NFS4_FHSIZE/4];
--		struct nfs_fhbase_new	fh_new;
--	} fh_base;
-+		char			fh_raw[NFS4_FHSIZE];
-+		struct {
-+			u8		fh_version;	/* == 1 */
-+			u8		fh_auth_type;	/* deprecated */
-+			u8		fh_fsid_type;
-+			u8		fh_fileid_type;
-+			u32		fh_fsid[]; /* flexible-array member */
-+		};
-+	};
- };
- 
--#define	fh_version		fh_base.fh_new.fb_version
--#define	fh_fsid_type		fh_base.fh_new.fb_fsid_type
--#define	fh_auth_type		fh_base.fh_new.fb_auth_type
--#define	fh_fileid_type		fh_base.fh_new.fb_fileid_type
--#define	fh_fsid			fh_base.fh_new.fb_auth_flex
--
- static inline __u32 ino_t_to_u32(ino_t ino)
- {
- 	return (__u32) ino;
-@@ -255,7 +235,7 @@ static inline void
- fh_copy_shallow(struct knfsd_fh *dst, struct knfsd_fh *src)
- {
- 	dst->fh_size = src->fh_size;
--	memcpy(&dst->fh_base, &src->fh_base, src->fh_size);
-+	memcpy(&dst->fh_raw, &src->fh_raw, src->fh_size);
- }
- 
- static __inline__ struct svc_fh *
-@@ -270,7 +250,7 @@ static inline bool fh_match(struct knfsd_fh *fh1, struct knfsd_fh *fh2)
- {
- 	if (fh1->fh_size != fh2->fh_size)
- 		return false;
--	if (memcmp(fh1->fh_base.fh_pad, fh2->fh_base.fh_pad, fh1->fh_size) != 0)
-+	if (memcmp(fh1->fh_raw, fh2->fh_raw, fh1->fh_size) != 0)
- 		return false;
- 	return true;
- }
-@@ -294,7 +274,7 @@ static inline bool fh_fsid_match(struct knfsd_fh *fh1, struct knfsd_fh *fh2)
-  */
- static inline u32 knfsd_fh_hash(const struct knfsd_fh *fh)
- {
--	return ~crc32_le(0xFFFFFFFF, (unsigned char *)&fh->fh_base, fh->fh_size);
-+	return ~crc32_le(0xFFFFFFFF, fh->fh_raw, fh->fh_size);
- }
- #else
- static inline u32 knfsd_fh_hash(const struct knfsd_fh *fh)
-diff --git a/fs/nfsd/nfsxdr.c b/fs/nfsd/nfsxdr.c
-index a06c05fe3b421..082449c7d0dbf 100644
---- a/fs/nfsd/nfsxdr.c
-+++ b/fs/nfsd/nfsxdr.c
-@@ -64,7 +64,7 @@ svcxdr_decode_fhandle(struct xdr_stream *xdr, struct svc_fh *fhp)
- 	if (!p)
- 		return false;
- 	fh_init(fhp, NFS_FHSIZE);
--	memcpy(&fhp->fh_handle.fh_base, p, NFS_FHSIZE);
-+	memcpy(&fhp->fh_handle.fh_raw, p, NFS_FHSIZE);
- 	fhp->fh_handle.fh_size = NFS_FHSIZE;
- 
- 	return true;
-@@ -78,7 +78,7 @@ svcxdr_encode_fhandle(struct xdr_stream *xdr, const struct svc_fh *fhp)
- 	p = xdr_reserve_space(xdr, NFS_FHSIZE);
- 	if (!p)
- 		return false;
--	memcpy(p, &fhp->fh_handle.fh_base, NFS_FHSIZE);
-+	memcpy(p, &fhp->fh_handle.fh_raw, NFS_FHSIZE);
- 
- 	return true;
- }
+ 	spin_lock(&nn->nfsd_ssc_lock);
 -- 
 2.43.0
 
