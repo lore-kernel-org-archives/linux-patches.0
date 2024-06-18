@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557D82139DB;
-	Tue, 18 Jun 2024 13:15:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1AF1158D95;
+	Tue, 18 Jun 2024 13:15:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716521; cv=none; b=Ltuqf+4HnHPMXDJ5DJY4MAnJWrCFehehyhFxMVY/qTHxd1GkN3HeQ8GpXCDt/4wYwnNh/9S9w0wTGMd7J/eKuf4II1tPePtrcic6GODIVg7pC/15GHFTy4SGB+is5WJyhRfjQAfYAQPdZMVqTYvBK6LxV0P47LcZg+fF1xOmNNY=
+	t=1718716523; cv=none; b=P7cpL4zV9VrP4MRXf+qc3u6yZQvToRsyFSQd3W78bXKoAORfcZ8cnMxE894WoerxlScF/9C7Xt6QZ6EGlQ/NEXR1tC71LMhZ8UutRbsjb7itbeBYWpXeNtp3g1xxgCjI++xAM/x7IVlRETmZwEKujI12MkX/EkJCCIs8NSdU04k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716521; c=relaxed/simple;
-	bh=hoPsNRNU82pCYh3o+y40FERs3/8J1beE50uWzXLMpJA=;
+	s=arc-20240116; t=1718716523; c=relaxed/simple;
+	bh=e19bktzmpJImcYSPeWK1U0h1g78knWIXG6vhDOhcPfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pm+tbThGmDSZQKc9tkBI8rAi3G9Cx3pWMp+yVES4sSbDfoVrhuJP81o09kMrMjtj1QCv18ZvGeHCbiwp6GOvuSa+adTI2hkLiFyPHKwf0Ef8GgRTkEQmTW1aOZf1cTB7XlSYI/x1cnITHh38veprqh/GpRypLdT5Th9b06ewC6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AGE5h+0y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aCwJnDlseXlUAnmch74uZqlZPS8pr8ivU9qbVNweD6v4lr+QjQzBVzMpnCZRrkKm9lhjLYT7P2KNmHBLlUHm9MtnZ6636pcXnL4w4xnve1+7xTLuaK3WwPj/9tjyscLmb16E534LcC0gW2AX8xse75JqHPORvg4FOxNCFx3n81o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CE2GjEbD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AGE5h+0y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7683DC3277B;
-	Tue, 18 Jun 2024 13:15:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CE2GjEbD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F7DC3277B;
+	Tue, 18 Jun 2024 13:15:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716519;
-	bh=hoPsNRNU82pCYh3o+y40FERs3/8J1beE50uWzXLMpJA=;
+	s=korg; t=1718716522;
+	bh=e19bktzmpJImcYSPeWK1U0h1g78knWIXG6vhDOhcPfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AGE5h+0ysMRHkOwSWG9HtqduQngzUQPxyMrrlcu2tEbVE5eWeicHWMXxwKsa8r0VD
-	 aAYALi30+21msWFASl9J2zyPS9BHbvjaUtF11pF5nFv7Hqisp9Auw7qKKVRqHDMpql
-	 Hyyqyr2L33qPgNXG9D4QsgkkGIOhxFx2wTD/VoQ8=
+	b=CE2GjEbDiAPzQ31dKvNn/yFzaG56/SClGMjsQ9uORw7zZSVbn/e5cLi7ag9RWXShd
+	 PF+xucUMZWcyb7Y3AP8u4I+1e0LRHIyJKjaBNI5OHRepNqKhnoUb3Lp039DWKAKeMZ
+	 jR5jaeDnoX/lNvyoXmgRVnyKGXHIm2i6yeKTSb1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 672/770] nfsd: fix nfsd_file_unhash_and_dispose
-Date: Tue, 18 Jun 2024 14:38:45 +0200
-Message-ID: <20240618123433.220484449@linuxfoundation.org>
+Subject: [PATCH 5.10 673/770] nfsd: rework hashtable handling in nfsd_do_file_acquire
+Date: Tue, 18 Jun 2024 14:38:46 +0200
+Message-ID: <20240618123433.259051141@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,121 +53,121 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 8d0d254b15cc5b7d46d85fb7ab8ecede9575e672 ]
+[ Upstream commit 243a5263014a30436c93ed3f1f864c1da845455e ]
 
-nfsd_file_unhash_and_dispose() is called for two reasons:
+nfsd_file is RCU-freed, so we need to hold the rcu_read_lock long enough
+to get a reference after finding it in the hash. Take the
+rcu_read_lock() and call rhashtable_lookup directly.
 
-We're either shutting down and purging the filecache, or we've gotten a
-notification about a file delete, so we want to go ahead and unhash it
-so that it'll get cleaned up when we close.
-
-We're either walking the hashtable or doing a lookup in it and we
-don't take a reference in either case. What we want to do in both cases
-is to try and unhash the object and put it on the dispose list if that
-was successful. If it's no longer hashed, then we don't want to touch
-it, with the assumption being that something else is already cleaning
-up the sentinel reference.
-
-Instead of trying to selectively decrement the refcount in this
-function, just unhash it, and if that was successful, move it to the
-dispose list. Then, the disposal routine will just clean that up as
-usual.
-
-Also, just make this a void function, drop the WARN_ON_ONCE, and the
-comments about deadlocking since the nature of the purported deadlock
-is no longer clear.
+Switch to using rhashtable_lookup_insert_key as well, and use the usual
+retry mechanism if we hit an -EEXIST. Rename the "retry" bool to
+open_retry, and eliminiate the insert_err goto target.
 
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/filecache.c | 36 +++++++-----------------------------
- 1 file changed, 7 insertions(+), 29 deletions(-)
+ fs/nfsd/filecache.c | 52 +++++++++++++++++++--------------------------
+ 1 file changed, 22 insertions(+), 30 deletions(-)
 
 diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-index fa8e1546e0206..a0d93e797cdce 100644
+index a0d93e797cdce..0b19eb015c6c8 100644
 --- a/fs/nfsd/filecache.c
 +++ b/fs/nfsd/filecache.c
-@@ -404,22 +404,15 @@ nfsd_file_unhash(struct nfsd_file *nf)
- 	return false;
- }
+@@ -1041,9 +1041,10 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 		.need	= may_flags & NFSD_FILE_MAY_MASK,
+ 		.net	= SVC_NET(rqstp),
+ 	};
+-	struct nfsd_file *nf, *new;
+-	bool retry = true;
++	bool open_retry = true;
++	struct nfsd_file *nf;
+ 	__be32 status;
++	int ret;
  
--/*
-- * Return true if the file was unhashed.
-- */
--static bool
-+static void
- nfsd_file_unhash_and_dispose(struct nfsd_file *nf, struct list_head *dispose)
- {
- 	trace_nfsd_file_unhash_and_dispose(nf);
--	if (!nfsd_file_unhash(nf))
--		return false;
--	/* keep final reference for nfsd_file_lru_dispose */
--	if (refcount_dec_not_one(&nf->nf_ref))
--		return true;
--
--	nfsd_file_lru_remove(nf);
--	list_add(&nf->nf_lru, dispose);
--	return true;
-+	if (nfsd_file_unhash(nf)) {
-+		/* caller must call nfsd_file_dispose_list() later */
-+		nfsd_file_lru_remove(nf);
-+		list_add(&nf->nf_lru, dispose);
-+	}
- }
+ 	status = fh_verify(rqstp, fhp, S_IFREG,
+ 				may_flags|NFSD_MAY_OWNER_OVERRIDE);
+@@ -1053,35 +1054,33 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 	key.cred = get_current_cred();
  
- static void
-@@ -561,8 +554,6 @@ nfsd_file_dispose_list_delayed(struct list_head *dispose)
-  * @lock: LRU list lock (unused)
-  * @arg: dispose list
-  *
-- * Note this can deadlock with nfsd_file_cache_purge.
-- *
-  * Return values:
-  *   %LRU_REMOVED: @item was removed from the LRU
-  *   %LRU_ROTATE: @item is to be moved to the LRU tail
-@@ -747,8 +738,6 @@ nfsd_file_close_inode(struct inode *inode)
-  *
-  * Walk the LRU list and close any entries that have not been used since
-  * the last scan.
-- *
-- * Note this can deadlock with nfsd_file_cache_purge.
-  */
- static void
- nfsd_file_delayed_close(struct work_struct *work)
-@@ -890,16 +879,12 @@ nfsd_file_cache_init(void)
- 	goto out;
- }
+ retry:
+-	/* Avoid allocation if the item is already in cache */
+-	nf = rhashtable_lookup_fast(&nfsd_file_rhash_tbl, &key,
+-				    nfsd_file_rhash_params);
++	rcu_read_lock();
++	nf = rhashtable_lookup(&nfsd_file_rhash_tbl, &key,
++			       nfsd_file_rhash_params);
+ 	if (nf)
+ 		nf = nfsd_file_get(nf);
++	rcu_read_unlock();
+ 	if (nf)
+ 		goto wait_for_construction;
  
--/*
-- * Note this can deadlock with nfsd_file_lru_cb.
-- */
- static void
- __nfsd_file_cache_purge(struct net *net)
- {
- 	struct rhashtable_iter iter;
- 	struct nfsd_file *nf;
- 	LIST_HEAD(dispose);
--	bool del;
+-	new = nfsd_file_alloc(&key, may_flags);
+-	if (!new) {
++	nf = nfsd_file_alloc(&key, may_flags);
++	if (!nf) {
+ 		status = nfserr_jukebox;
+ 		goto out_status;
+ 	}
  
- 	rhashtable_walk_enter(&nfsd_file_rhash_tbl, &iter);
- 	do {
-@@ -909,14 +894,7 @@ __nfsd_file_cache_purge(struct net *net)
- 		while (!IS_ERR_OR_NULL(nf)) {
- 			if (net && nf->nf_net != net)
- 				continue;
--			del = nfsd_file_unhash_and_dispose(nf, &dispose);
--
--			/*
--			 * Deadlock detected! Something marked this entry as
--			 * unhased, but hasn't removed it from the hash list.
--			 */
--			WARN_ON_ONCE(!del);
--
-+			nfsd_file_unhash_and_dispose(nf, &dispose);
- 			nf = rhashtable_walk_next(&iter);
+-	nf = rhashtable_lookup_get_insert_key(&nfsd_file_rhash_tbl,
+-					      &key, &new->nf_rhash,
+-					      nfsd_file_rhash_params);
+-	if (!nf) {
+-		nf = new;
+-		goto open_file;
+-	}
+-	if (IS_ERR(nf))
+-		goto insert_err;
+-	nf = nfsd_file_get(nf);
+-	if (nf == NULL) {
+-		nf = new;
++	ret = rhashtable_lookup_insert_key(&nfsd_file_rhash_tbl,
++					   &key, &nf->nf_rhash,
++					   nfsd_file_rhash_params);
++	if (likely(ret == 0))
+ 		goto open_file;
+-	}
+-	nfsd_file_slab_free(&new->nf_rcu);
++
++	nfsd_file_slab_free(&nf->nf_rcu);
++	if (ret == -EEXIST)
++		goto retry;
++	trace_nfsd_file_insert_err(rqstp, key.inode, may_flags, ret);
++	status = nfserr_jukebox;
++	goto out_status;
+ 
+ wait_for_construction:
+ 	wait_on_bit(&nf->nf_flags, NFSD_FILE_PENDING, TASK_UNINTERRUPTIBLE);
+@@ -1089,11 +1088,11 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 	/* Did construction of this file fail? */
+ 	if (!test_bit(NFSD_FILE_HASHED, &nf->nf_flags)) {
+ 		trace_nfsd_file_cons_err(rqstp, key.inode, may_flags, nf);
+-		if (!retry) {
++		if (!open_retry) {
+ 			status = nfserr_jukebox;
+ 			goto out;
  		}
+-		retry = false;
++		open_retry = false;
+ 		nfsd_file_put_noref(nf);
+ 		goto retry;
+ 	}
+@@ -1141,13 +1140,6 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 	smp_mb__after_atomic();
+ 	wake_up_bit(&nf->nf_flags, NFSD_FILE_PENDING);
+ 	goto out;
+-
+-insert_err:
+-	nfsd_file_slab_free(&new->nf_rcu);
+-	trace_nfsd_file_insert_err(rqstp, key.inode, may_flags, PTR_ERR(nf));
+-	nf = NULL;
+-	status = nfserr_jukebox;
+-	goto out_status;
+ }
  
+ /**
 -- 
 2.43.0
 
