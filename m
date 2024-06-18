@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6E513C83D;
-	Tue, 18 Jun 2024 13:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17E461A2C00;
+	Tue, 18 Jun 2024 13:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716376; cv=none; b=hokAahUqt6GxgxGz60HDB/01LTTcRWV/PM2WdrtRZNifvWVYXzg4WHADS4WwfAkkG5eJMgpezgcumyXPOXUPsWbKL8BjHpYOtpvH+AI+8DMg3EXAONH66uAqUZ1qC9jw2iAxxuPmwLO2nH0/iNfQmzUJgCTY1Qy+ijt5D60/pIg=
+	t=1718716379; cv=none; b=YEEw9TzMM6urddCFDUuNUZ4TUWPJcgm5dS2rdtUnPitfVHniOmJ14WItRCmZTmgO+D57EprXz2kOX4GwZJOScSFr3UWUujx5z2N/we8yF6vRgNKg5fDzBxLbqWfaSfhObgA+s8/iNfZtgA4uaXvkGZz2l3WuFOCTOXhjf3g+EMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716376; c=relaxed/simple;
-	bh=pbQLRz5KhtszL4YNEs4tR+kxjMNnHLI8VFeJyzOqiAs=;
+	s=arc-20240116; t=1718716379; c=relaxed/simple;
+	bh=pj1E2M9TjX3YPR3i98oVOugs4lwT8iP1di/ZD8AnlSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q+LN8LEH/Luw5xHT2BEI4uq/M8uwNB02VOyeQeeWDCssblU5K5reGEM64P0yd1GayXOb4jMMenB/3tn2JAVo7cjIYXftEASTxhCKjqJQ+5f72b/YBcUfjdGvQfMVR7fGgsooZAaund1MKfnNofwm+cVsFu8wefOhyuVGA8URkM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jgoM1M/1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mI3nMMkvLJxwDI2FxHaPHt3LO82U1O3viraPL2X7dV4PDoS/jA80QobJMw2V4FSsny4sDnIusvPVdeWRyOigc7aZpMoWFTczxgt83a2NUZjCdbguPr/eIdbMRIHPdKW3i6SDjZlh1MQCeXaIOc/5z/fGxqI7ywhNtTAde1XO96A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iTL9z3NX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jgoM1M/1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A14C3277B;
-	Tue, 18 Jun 2024 13:12:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iTL9z3NX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94FD2C3277B;
+	Tue, 18 Jun 2024 13:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716376;
-	bh=pbQLRz5KhtszL4YNEs4tR+kxjMNnHLI8VFeJyzOqiAs=;
+	s=korg; t=1718716379;
+	bh=pj1E2M9TjX3YPR3i98oVOugs4lwT8iP1di/ZD8AnlSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jgoM1M/1a9cfHWrTQonmMORpa37Abl6DnsdvJknvTlsusPd3FGZkgAUZ+70PiZWZ4
-	 H0bXAUI03Ms4dfrOujZZqloAEKs70zR52yGz+CL0up/qaaX81q0rJfBO+Skh1wPfXT
-	 8qVWXGSo2wtTtPgTEey5gZRblNzTkoX5je/hpP+c=
+	b=iTL9z3NXhBoLrmqnR2G2aqlFZT1zzL4m3cSZvTQJkRkvQJronHhJwGh9nE+M+YxbG
+	 u6AqxLmlITEUiicNEx7ME7QWuFl/4ir3JTl9oA3lEtYSSOFnz1RBODwU0yrl3LhsNg
+	 pDKsmP3BXOCyf2Vbj5X4I76FMm7FLWV1rqEUJD5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 626/770] NFSD: move from strlcpy with unused retval to strscpy
-Date: Tue, 18 Jun 2024 14:37:59 +0200
-Message-ID: <20240618123431.449372670@linuxfoundation.org>
+Subject: [PATCH 5.10 627/770] lockd: move from strlcpy with unused retval to strscpy
+Date: Tue, 18 Jun 2024 14:38:00 +0200
+Message-ID: <20240618123431.488465789@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,7 +53,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 72f78ae00a8e5d7abe13abac8305a300f6afd74b ]
+[ Upstream commit 97f8e62572555f8ad578d7b1739ba64d5d2cac0f ]
 
 Follow the advice of the below link and prefer 'strscpy' in this
 subsystem. Conversion is 1:1 because the return value is not used.
@@ -64,70 +64,22 @@ Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4idmap.c | 8 ++++----
- fs/nfsd/nfs4proc.c  | 2 +-
- fs/nfsd/nfssvc.c    | 2 +-
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ fs/lockd/host.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfs4idmap.c b/fs/nfsd/nfs4idmap.c
-index f92161ce1f97d..e70a1a2999b7b 100644
---- a/fs/nfsd/nfs4idmap.c
-+++ b/fs/nfsd/nfs4idmap.c
-@@ -82,8 +82,8 @@ ent_init(struct cache_head *cnew, struct cache_head *citm)
- 	new->id = itm->id;
- 	new->type = itm->type;
+diff --git a/fs/lockd/host.c b/fs/lockd/host.c
+index f802223e71abe..cdc8e12cdac44 100644
+--- a/fs/lockd/host.c
++++ b/fs/lockd/host.c
+@@ -164,7 +164,7 @@ static struct nlm_host *nlm_alloc_host(struct nlm_lookup_host_info *ni,
+ 	host->h_addrbuf    = nsm->sm_addrbuf;
+ 	host->net	   = ni->net;
+ 	host->h_cred	   = get_cred(ni->cred);
+-	strlcpy(host->nodename, utsname()->nodename, sizeof(host->nodename));
++	strscpy(host->nodename, utsname()->nodename, sizeof(host->nodename));
  
--	strlcpy(new->name, itm->name, sizeof(new->name));
--	strlcpy(new->authname, itm->authname, sizeof(new->authname));
-+	strscpy(new->name, itm->name, sizeof(new->name));
-+	strscpy(new->authname, itm->authname, sizeof(new->authname));
- }
- 
- static void
-@@ -548,7 +548,7 @@ idmap_name_to_id(struct svc_rqst *rqstp, int type, const char *name, u32 namelen
- 		return nfserr_badowner;
- 	memcpy(key.name, name, namelen);
- 	key.name[namelen] = '\0';
--	strlcpy(key.authname, rqst_authname(rqstp), sizeof(key.authname));
-+	strscpy(key.authname, rqst_authname(rqstp), sizeof(key.authname));
- 	ret = idmap_lookup(rqstp, nametoid_lookup, &key, nn->nametoid_cache, &item);
- 	if (ret == -ENOENT)
- 		return nfserr_badowner;
-@@ -584,7 +584,7 @@ static __be32 idmap_id_to_name(struct xdr_stream *xdr,
- 	int ret;
- 	struct nfsd_net *nn = net_generic(SVC_NET(rqstp), nfsd_net_id);
- 
--	strlcpy(key.authname, rqst_authname(rqstp), sizeof(key.authname));
-+	strscpy(key.authname, rqst_authname(rqstp), sizeof(key.authname));
- 	ret = idmap_lookup(rqstp, idtoname_lookup, &key, nn->idtoname_cache, &item);
- 	if (ret == -ENOENT)
- 		return encode_ascii_id(xdr, id);
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 193b84a0f3a59..0431b979748b8 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1345,7 +1345,7 @@ static __be32 nfsd4_ssc_setup_dul(struct nfsd_net *nn, char *ipaddr,
- 		return 0;
- 	}
- 	if (work) {
--		strlcpy(work->nsui_ipaddr, ipaddr, sizeof(work->nsui_ipaddr) - 1);
-+		strscpy(work->nsui_ipaddr, ipaddr, sizeof(work->nsui_ipaddr) - 1);
- 		refcount_set(&work->nsui_refcnt, 2);
- 		work->nsui_busy = true;
- 		list_add_tail(&work->nsui_list, &nn->nfsd_ssc_mount_list);
-diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
-index 011c556caa1e7..8b1afde192118 100644
---- a/fs/nfsd/nfssvc.c
-+++ b/fs/nfsd/nfssvc.c
-@@ -799,7 +799,7 @@ nfsd_svc(int nrservs, struct net *net, const struct cred *cred)
- 	if (nrservs == 0 && nn->nfsd_serv == NULL)
- 		goto out;
- 
--	strlcpy(nn->nfsd_name, utsname()->nodename,
-+	strscpy(nn->nfsd_name, utsname()->nodename,
- 		sizeof(nn->nfsd_name));
- 
- 	error = nfsd_create_serv(net);
+ out:
+ 	return host;
 -- 
 2.43.0
 
