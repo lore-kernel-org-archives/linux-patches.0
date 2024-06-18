@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D994198856;
-	Tue, 18 Jun 2024 13:04:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73C7D19CCF9;
+	Tue, 18 Jun 2024 13:04:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715891; cv=none; b=m6nURa6GyV5QXEERzTUa+dh6kTywrl0bMw4GmV+K3VbdiLyJz+x5fZPGI8l0lTCWOUcr9smzhNgbBy/VpbzWTAfAurgfW4s5BsqzvATo0/010LtsTRsjDbQ7AAlrEsFGkcFQwC2jmPVaZEGqo25X4+9L8gOUj9TtPXuIDqqAaxo=
+	t=1718715894; cv=none; b=VqteX/BHVzAM3fcB/Wp6z03mvFmkkcUM334YfLZEQD3WbSn9uFpaAIFvAafK8eWhiolHAfgeVL6K9dnV8jnv02dBQgt9rsf9lOiTQAYfOHLRCak2X1Dk6vT0V8tk99QdLiea6W7+Q3enUXsPMXK+6lWWPgUpIEOXr94Tdz6U/Go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715891; c=relaxed/simple;
-	bh=upNMw2ZykPSyJrcukkwGuV1Y2btGSUT2/7pqzvNml30=;
+	s=arc-20240116; t=1718715894; c=relaxed/simple;
+	bh=zLP1abi6NRaFc8xO33ptE7XzfmijTDXM3Ubl+m88pCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kCxHF70uuvGpIcH0/SIlf5/GPhymxdDJv0CtUG9gBHVfwZfPR4NneQZkx+AjneVt4R7PRqOrBKoW1vRyUZa2lf452aKChP+XAe8b8jfEaHw+Zr5jq5/PitTuhInvAMVadKGp1OgNmdMQV3TOgZ41BM/EAAKHFcL84AWOuOr0pe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0TAJBewv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iv7xphamq3SlsAe0ouFJsJ+hdpY5l4EZpG1XpxfSsk+vt0Z6vOT8/F4K+ypVkqBF0+4qx7LIGiM/ugeDrvaq2AZ//VPCc/G6KXJLPgqlhL75jqHORgznkcHlRRngVtSgMSQZSsTSlUaG62ivs3xV8JXPXarrib74O21s7ChmNxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n/Mqqqvq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0TAJBewv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0583CC3277B;
-	Tue, 18 Jun 2024 13:04:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n/Mqqqvq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA27C3277B;
+	Tue, 18 Jun 2024 13:04:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715891;
-	bh=upNMw2ZykPSyJrcukkwGuV1Y2btGSUT2/7pqzvNml30=;
+	s=korg; t=1718715894;
+	bh=zLP1abi6NRaFc8xO33ptE7XzfmijTDXM3Ubl+m88pCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0TAJBewvvXv6GfLhednpQmCmTlIFhyDgNa699r2C1uc0adWhUJXGG1a6FdIvqh8Cr
-	 wpDUcu6G8bDo6BrWgPiq2TIMtPU4YD6djo7Q9gHmH4VvBaFlE5+p3i6MEe8bzU/Gbg
-	 504DDOpwjhb/hL9kbl1ffkD3R9LdMjPSbAAC9/Ns=
+	b=n/MqqqvqTxpqi8hYCnxoGVnWak6SztrDPOpg6intM876X3prM5WPOnnU1tLfYQk8v
+	 zoDpPl/AntgcIuvsP/AG3YqD3SrP70VgUtwDoCESir+BgYzwP6/R+/pl/1DVJL545+
+	 NBKgllLUrr3fOnm2P7aRZRTPkSlkLKVJODy24Tio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abaci Robot <abaci@linux.alibaba.com>,
-	Yang Li <yang.lee@linux.alibaba.com>,
-	Jan Kara <jack@suse.cz>,
+	Jonathan Woithe <jwoithe@just42.net>,
+	"J. Bruce Fields" <bfields@redhat.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 462/770] fanotify: remove variable set but not used
-Date: Tue, 18 Jun 2024 14:35:15 +0200
-Message-ID: <20240618123425.145924253@linuxfoundation.org>
+Subject: [PATCH 5.10 463/770] lockd: fix server crash on reboot of client holding lock
+Date: Tue, 18 Jun 2024 14:35:16 +0200
+Message-ID: <20240618123425.186258532@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -47,56 +46,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yang Li <yang.lee@linux.alibaba.com>
+From: J. Bruce Fields <bfields@redhat.com>
 
-[ Upstream commit 217663f101a56ef77f82273818253fff082bf503 ]
+[ Upstream commit 6e7f90d163afa8fc2efd6ae318e7c20156a5621f ]
 
-The code that uses the pointer info has been removed in 7326e382c21e
-("fanotify: report old and/or new parent+name in FAN_RENAME event").
-and fanotify_event_info() doesn't change 'event', so the declaration and
-assignment of info can be removed.
+I thought I was iterating over the array when actually the iteration is
+over the values contained in the array?
 
-Eliminate the following clang warning:
-fs/notify/fanotify/fanotify_user.c:161:24: warning: variable ‘info’ set
-but not used
+Ugh, keep it simple.
 
-Reported-by: Abaci Robot <abaci@linux.alibaba.com>
-Signed-off-by: Yang Li <yang.lee@linux.alibaba.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
+Symptoms were a null deference in vfs_lock_file() when an NFSv3 client
+that previously held a lock came back up and sent a notify.
+
+Reported-by: Jonathan Woithe <jwoithe@just42.net>
+Fixes: 7f024fcd5c97 ("Keep read and write fds with each nlm_file")
+Signed-off-by: J. Bruce Fields <bfields@redhat.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/fanotify/fanotify_user.c | 3 ---
- 1 file changed, 3 deletions(-)
+ fs/lockd/svcsubs.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
-index 3bac2329dc35f..6679700574113 100644
---- a/fs/notify/fanotify/fanotify_user.c
-+++ b/fs/notify/fanotify/fanotify_user.c
-@@ -146,7 +146,6 @@ static size_t fanotify_event_len(unsigned int info_mode,
- 				 struct fanotify_event *event)
+diff --git a/fs/lockd/svcsubs.c b/fs/lockd/svcsubs.c
+index cb3a7512c33ec..54c2e42130ca2 100644
+--- a/fs/lockd/svcsubs.c
++++ b/fs/lockd/svcsubs.c
+@@ -179,19 +179,20 @@ nlm_delete_file(struct nlm_file *file)
+ static int nlm_unlock_files(struct nlm_file *file)
  {
- 	size_t event_len = FAN_EVENT_METADATA_LEN;
--	struct fanotify_info *info;
- 	int fh_len;
- 	int dot_len = 0;
+ 	struct file_lock lock;
+-	struct file *f;
  
-@@ -156,8 +155,6 @@ static size_t fanotify_event_len(unsigned int info_mode,
- 	if (fanotify_is_error_event(event->mask))
- 		event_len += FANOTIFY_ERROR_INFO_LEN;
+ 	lock.fl_type  = F_UNLCK;
+ 	lock.fl_start = 0;
+ 	lock.fl_end   = OFFSET_MAX;
+-	for (f = file->f_file[0]; f <= file->f_file[1]; f++) {
+-		if (f && vfs_lock_file(f, F_SETLK, &lock, NULL) < 0) {
+-			pr_warn("lockd: unlock failure in %s:%d\n",
+-				__FILE__, __LINE__);
+-			return 1;
+-		}
+-	}
++	if (file->f_file[O_RDONLY] &&
++	    vfs_lock_file(file->f_file[O_RDONLY], F_SETLK, &lock, NULL))
++		goto out_err;
++	if (file->f_file[O_WRONLY] &&
++	    vfs_lock_file(file->f_file[O_WRONLY], F_SETLK, &lock, NULL))
++		goto out_err;
+ 	return 0;
++out_err:
++	pr_warn("lockd: unlock failure in %s:%d\n", __FILE__, __LINE__);
++	return 1;
+ }
  
--	info = fanotify_event_info(event);
--
- 	if (fanotify_event_has_any_dir_fh(event)) {
- 		event_len += fanotify_dir_name_info_len(event);
- 	} else if ((info_mode & FAN_REPORT_NAME) &&
+ /*
 -- 
 2.43.0
 
