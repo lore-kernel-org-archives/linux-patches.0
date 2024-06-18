@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB3C156972;
-	Tue, 18 Jun 2024 12:59:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC00156972;
+	Tue, 18 Jun 2024 12:59:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715580; cv=none; b=RuO6cSaDTQVeAcyFRk2NP+E/3LCxYY3iB+m2p+eA9b+mlq/Slf9r+TP2tk7fq1LwXI8CBG/Nl+d2vO/8U1yKzkPI2yhHghSORPws+O3cMNcY5+y4shElbJb0YhrTj+JHnWSBcRkY7+gF1jjk8mqyze0FpCSXP/BCFCTWoDNUc2A=
+	t=1718715583; cv=none; b=Ea/m5g+sv+Lj+gRAF20kKyv3hj7mTJ8YOuLAM9cVfnG6SflKzlEloRI/0+ovclRsKKbIiRNfmtYqUwr437WQDt0Sskn9hdy2sLqqT429yUmC9K6Xuv+YhPgWvngLjvlMeo6APqvstIrbpi9Ke8B3tuZJSrlH6mysK67L7x5Sxmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715580; c=relaxed/simple;
-	bh=EUOTRrkXRFtGWRiWSiGX2Rkl8q44Y9IceUO0QUOn52c=;
+	s=arc-20240116; t=1718715583; c=relaxed/simple;
+	bh=/KgpvdMINzSvbfrfLroIxag+pf+I+/DwP50m0Vmy0vA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q0T9wQOTdJKdOku9F3DUPAr30gReKNsMANbMhGB3w5Ze/OKxpthLlsrv9M9OhqZL69u8Z9mn9hemnqe3UWC74qAZcV1o8BMWW4/rIktVxckYhFnHLVR+0D9lGxTnmUUVTk/xtqjxXyodLadAgS2zxpUzLXZybWidxY6ffT4L9Nk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxDoG2dZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pfSVihjzDVlD+rgsTWTVELKZxX4mNaAFuYe5/+NBq7yq/iEGE3aR0QY+mgz/2+YZ6piDpJAFAnnXRQJV7Iwd5sr+oAj2tt8KqajRSu5ejs6ZOOnfd8TaikpBCrtX2HgXa2AzOzOJeydW0XJnF6a07F8aphM+PCgtpTqGQ9zO67k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sez9McXx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxDoG2dZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA47EC3277B;
-	Tue, 18 Jun 2024 12:59:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sez9McXx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA02AC3277B;
+	Tue, 18 Jun 2024 12:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715580;
-	bh=EUOTRrkXRFtGWRiWSiGX2Rkl8q44Y9IceUO0QUOn52c=;
+	s=korg; t=1718715583;
+	bh=/KgpvdMINzSvbfrfLroIxag+pf+I+/DwP50m0Vmy0vA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dxDoG2dZJz6EahhLq6LnQvcXI+PT2L7c9VfVuro+fyxJo0sLOPzIJctUObk2cpAAs
-	 tzKPJwChwkinrs6jfWXSRZV8pCy3xGtrnaaxi57GXf4CBlXib+18M+/kMhqJwblgYb
-	 LNg8tzvFwqSgJKPZVB5+SPpKwqO/REAyKUa2b7YY=
+	b=Sez9McXxInl39ejF2F7KxyA6aNwKu/57gVE0Hb+ETJM1Dh9ywm9me7QT3IDkCLisB
+	 H0CX+RItu0oLdY2rMXRHo+bm7eqOW7UQXioyDDN1+N7wX4cp4o5QyKm9WKR9km1PFM
+	 oXus9rXI3IfMMJa+g6nX8IXJYjafU+ulcb5Pxgf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Murphy Zhou <jencce.kernel@gmail.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 357/770] NFS: Remove unused callback void decoder
-Date: Tue, 18 Jun 2024 14:33:30 +0200
-Message-ID: <20240618123421.047356665@linuxfoundation.org>
+Subject: [PATCH 5.10 358/770] fsnotify: fix sb_connectors leak
+Date: Tue, 18 Jun 2024 14:33:31 +0200
+Message-ID: <20240618123421.085388950@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -51,50 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit c35a810ce59524971c4a3b45faed4d0121e5a305 ]
+[ Upstream commit 4396a73115fc8739083536162e2228c0c0c3ed1a ]
 
-Clean up: The callback RPC dispatcher no longer invokes these call
-outs, although svc_process_common() relies on seeing a .pc_encode
-function.
+Fix a leak in s_fsnotify_connectors counter in case of a race between
+concurrent add of new fsnotify mark to an object.
 
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+The task that lost the race fails to drop the counter before freeing
+the unused connector.
+
+Following umount() hangs in fsnotify_sb_delete()/wait_var_event(),
+because s_fsnotify_connectors never drops to zero.
+
+Fixes: ec44610fe2b8 ("fsnotify: count all objects with attached connectors")
+Reported-by: Murphy Zhou <jencce.kernel@gmail.com>
+Link: https://lore.kernel.org/linux-fsdevel/20210907063338.ycaw6wvhzrfsfdlp@xzhoux.usersys.redhat.com/
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/callback_xdr.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ fs/notify/mark.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/nfs/callback_xdr.c b/fs/nfs/callback_xdr.c
-index e7d1efd45fa46..600e640682401 100644
---- a/fs/nfs/callback_xdr.c
-+++ b/fs/nfs/callback_xdr.c
-@@ -63,11 +63,10 @@ static __be32 nfs4_callback_null(struct svc_rqst *rqstp)
- 	return htonl(NFS4_OK);
- }
+diff --git a/fs/notify/mark.c b/fs/notify/mark.c
+index 796946eb0c2e2..bea106fac0901 100644
+--- a/fs/notify/mark.c
++++ b/fs/notify/mark.c
+@@ -531,6 +531,7 @@ static int fsnotify_attach_connector_to_object(fsnotify_connp_t *connp,
+ 		/* Someone else created list structure for us */
+ 		if (inode)
+ 			fsnotify_put_inode_ref(inode);
++		fsnotify_put_sb_connectors(conn);
+ 		kmem_cache_free(fsnotify_mark_connector_cachep, conn);
+ 	}
  
--static int nfs4_decode_void(struct svc_rqst *rqstp, __be32 *p)
--{
--	return xdr_argsize_check(rqstp, p);
--}
--
-+/*
-+ * svc_process_common() looks for an XDR encoder to know when
-+ * not to drop a Reply.
-+ */
- static int nfs4_encode_void(struct svc_rqst *rqstp, __be32 *p)
- {
- 	return xdr_ressize_check(rqstp, p);
-@@ -1063,7 +1062,6 @@ static struct callback_op callback_ops[] = {
- static const struct svc_procedure nfs4_callback_procedures1[] = {
- 	[CB_NULL] = {
- 		.pc_func = nfs4_callback_null,
--		.pc_decode = nfs4_decode_void,
- 		.pc_encode = nfs4_encode_void,
- 		.pc_xdrressize = 1,
- 		.pc_name = "NULL",
 -- 
 2.43.0
 
