@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F9A1A256C;
-	Tue, 18 Jun 2024 13:12:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BEF1A256C;
+	Tue, 18 Jun 2024 13:12:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716346; cv=none; b=br6JGzn0CboPM7rcbqx66FSaXxmJWtP1rMnJ16WtC6oGSYWXnTrVQfj165xEDf9bVvsP92HQ2PHhUNg4Im0/reNVK4wAknFO2McnF17grPsTASqo5UlsrSsw79/frog0e40fLeCkwSUq/cSDp2LWT03HBDq4hLcmMGTefTxMJvc=
+	t=1718716349; cv=none; b=RmJe4gsvXX8KlvtXP/XqbSc9sSTWWrRMDpCvMi281SZKGHUdBajAhgeEXnoymsShYA42tdyKT38voG4aXTIec7MP96/3ROtaXEIX+meybnKhPLxAdT22NDqQH+NirI4UVDfokRUxFEiFl7nx63z54STiLeOFZ2Rvtho8vBmxTx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716346; c=relaxed/simple;
-	bh=ogUFldZs8Cyw8KuI6fRe/f8B7XZsGjaaETWcHNQs5pc=;
+	s=arc-20240116; t=1718716349; c=relaxed/simple;
+	bh=5ujYsQTHVDYOihAiyEmTDZpl+j04hPKiGuhtuDrjYtw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QHKZVrHFd7T7ENfuyHe5z1Ptt3wYcIk2QwI5vXWW6n91TwHyede9hJ1czSRWuMaz+3+Q5l0OsYWKhwuCBoVtSMwAp5dtdmiOUPAIgerqLNEjmeVISj1slEdQcFSQkK6GYvG2K+YBqY502Ieyxxxe//TLGlzibNS0W+FSxcWov+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r5xcwox9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=buuVY9jWENuTkv9/4T6QNeEwU3tJlORK6nP1zLv64NxIoQRztJCbWgXoJs5WCG5k50Sd5AOamsIx57GsQb0QsPJ1+vU0tmtfoRPLOdLDOVn5Skd9pP4X2i29MOhnVlycOXgTkI6pysAZMykb7ai97mRABKXmxC+GMYUcVpqSlB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nW4PnU//; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r5xcwox9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A735C3277B;
-	Tue, 18 Jun 2024 13:12:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nW4PnU//"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 367EDC3277B;
+	Tue, 18 Jun 2024 13:12:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716346;
-	bh=ogUFldZs8Cyw8KuI6fRe/f8B7XZsGjaaETWcHNQs5pc=;
+	s=korg; t=1718716349;
+	bh=5ujYsQTHVDYOihAiyEmTDZpl+j04hPKiGuhtuDrjYtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r5xcwox9Wb5CGvXkE6HIb5h8YRsOCBLX0bfW2pHmCz+x+bYzUr/C4iWKJhM7Un6aB
-	 yQTk/ay5PglNatfK+9c+9EHySgpJdKqYu0SXFk7RN+wAzv4CpT9VkSNL4SQunkLH/U
-	 4AOiur3uvPegnA+5fQ5YArDOITl7BRGNq71COfJE=
+	b=nW4PnU//fFEWLx6kTlM6KAtI4Bzp/IBEIXD0szazfd4pKrPeXvpKq9QwVs4oCEUJX
+	 RGJ6C7cS5pHW9BjpIRgP8qISfGUo+IwwylszYJzuAy9zJ/ELbLTJDGtGFRLhDy2+sq
+	 SHSx6K6866TKroRH4LxelteG2nQeWau5ow4fD678=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
+	Dai Ngo <dai.ngo@oracle.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 584/770] NFSD: Ensure nf_inode is never dereferenced
-Date: Tue, 18 Jun 2024 14:37:17 +0200
-Message-ID: <20240618123429.836169597@linuxfoundation.org>
+Subject: [PATCH 5.10 585/770] NFSD: refactoring v4 specific code to a helper in nfs4state.c
+Date: Tue, 18 Jun 2024 14:37:18 +0200
+Message-ID: <20240618123429.875720333@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -51,84 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-[ Upstream commit 427f5f83a3191cbf024c5aea6e5b601cdf88d895 ]
+[ Upstream commit 6867137ebcf4155fe25f2ecf7c29b9fb90a76d1d ]
 
-The documenting comment for struct nf_file states:
+This patch moves the v4 specific code from nfsd_init_net() to
+nfsd4_init_leases_net() helper in nfs4state.c
 
-/*
- * A representation of a file that has been opened by knfsd. These are hashed
- * in the hashtable by inode pointer value. Note that this object doesn't
- * hold a reference to the inode by itself, so the nf_inode pointer should
- * never be dereferenced, only used for comparison.
- */
-
-Replace the two existing dereferences to make the comment always
-true.
-
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/filecache.c | 5 ++---
- fs/nfsd/filecache.h | 2 +-
- fs/nfsd/nfs4state.c | 2 +-
- 3 files changed, 4 insertions(+), 5 deletions(-)
+ fs/nfsd/nfs4state.c | 12 ++++++++++++
+ fs/nfsd/nfsctl.c    |  9 +--------
+ fs/nfsd/nfsd.h      |  4 ++++
+ 3 files changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-index 7ad27655db699..55478d411e5a0 100644
---- a/fs/nfsd/filecache.c
-+++ b/fs/nfsd/filecache.c
-@@ -227,12 +227,11 @@ nfsd_file_mark_put(struct nfsd_file_mark *nfm)
- }
- 
- static struct nfsd_file_mark *
--nfsd_file_mark_find_or_create(struct nfsd_file *nf)
-+nfsd_file_mark_find_or_create(struct nfsd_file *nf, struct inode *inode)
- {
- 	int			err;
- 	struct fsnotify_mark	*mark;
- 	struct nfsd_file_mark	*nfm = NULL, *new;
--	struct inode *inode = nf->nf_inode;
- 
- 	do {
- 		fsnotify_group_lock(nfsd_file_fsnotify_group);
-@@ -1143,7 +1142,7 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 
- open_file:
- 	trace_nfsd_file_alloc(nf);
--	nf->nf_mark = nfsd_file_mark_find_or_create(nf);
-+	nf->nf_mark = nfsd_file_mark_find_or_create(nf, key.inode);
- 	if (nf->nf_mark) {
- 		if (open) {
- 			status = nfsd_open_verified(rqstp, fhp, may_flags,
-diff --git a/fs/nfsd/filecache.h b/fs/nfsd/filecache.h
-index 28145f1628923..8e8c0c47d67df 100644
---- a/fs/nfsd/filecache.h
-+++ b/fs/nfsd/filecache.h
-@@ -39,7 +39,7 @@ struct nfsd_file {
- #define NFSD_FILE_PENDING	(1)
- #define NFSD_FILE_REFERENCED	(2)
- 	unsigned long		nf_flags;
--	struct inode		*nf_inode;
-+	struct inode		*nf_inode;	/* don't deref */
- 	refcount_t		nf_ref;
- 	unsigned char		nf_may;
- 	struct nfsd_file_mark	*nf_mark;
 diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index c4c1e35d3eb7a..16e5bd54d92c2 100644
+index 16e5bd54d92c2..76a77329cf368 100644
 --- a/fs/nfsd/nfs4state.c
 +++ b/fs/nfsd/nfs4state.c
-@@ -2577,7 +2577,7 @@ static void nfs4_show_fname(struct seq_file *s, struct nfsd_file *f)
+@@ -4347,6 +4347,18 @@ nfsd4_init_slabs(void)
+ 	return -ENOMEM;
+ }
  
- static void nfs4_show_superblock(struct seq_file *s, struct nfsd_file *f)
++void nfsd4_init_leases_net(struct nfsd_net *nn)
++{
++	nn->nfsd4_lease = 90;	/* default lease time */
++	nn->nfsd4_grace = 90;
++	nn->somebody_reclaimed = false;
++	nn->track_reclaim_completes = false;
++	nn->clverifier_counter = prandom_u32();
++	nn->clientid_base = prandom_u32();
++	nn->clientid_counter = nn->clientid_base + 1;
++	nn->s2s_cp_cl_id = nn->clientid_counter++;
++}
++
+ static void init_nfs4_replay(struct nfs4_replay *rp)
  {
--	struct inode *inode = f->nf_inode;
-+	struct inode *inode = file_inode(f->nf_file);
+ 	rp->rp_status = nfserr_serverfault;
+diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
+index 7002edbf26870..164c822ae3ae9 100644
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -1484,14 +1484,7 @@ static __net_init int nfsd_init_net(struct net *net)
+ 	retval = nfsd_reply_cache_init(nn);
+ 	if (retval)
+ 		goto out_drc_error;
+-	nn->nfsd4_lease = 90;	/* default lease time */
+-	nn->nfsd4_grace = 90;
+-	nn->somebody_reclaimed = false;
+-	nn->track_reclaim_completes = false;
+-	nn->clverifier_counter = prandom_u32();
+-	nn->clientid_base = prandom_u32();
+-	nn->clientid_counter = nn->clientid_base + 1;
+-	nn->s2s_cp_cl_id = nn->clientid_counter++;
++	nfsd4_init_leases_net(nn);
  
- 	seq_printf(s, "superblock: \"%02x:%02x:%ld\"",
- 					MAJOR(inode->i_sb->s_dev),
+ 	get_random_bytes(&nn->siphash_key, sizeof(nn->siphash_key));
+ 	seqlock_init(&nn->writeverf_lock);
+diff --git a/fs/nfsd/nfsd.h b/fs/nfsd/nfsd.h
+index 9a8b09afc1733..ef8087691138a 100644
+--- a/fs/nfsd/nfsd.h
++++ b/fs/nfsd/nfsd.h
+@@ -496,12 +496,16 @@ extern void unregister_cld_notifier(void);
+ extern void nfsd4_ssc_init_umount_work(struct nfsd_net *nn);
+ #endif
+ 
++extern void nfsd4_init_leases_net(struct nfsd_net *nn);
++
+ #else /* CONFIG_NFSD_V4 */
+ static inline int nfsd4_is_junction(struct dentry *dentry)
+ {
+ 	return 0;
+ }
+ 
++static inline void nfsd4_init_leases_net(struct nfsd_net *nn) {};
++
+ #define register_cld_notifier() 0
+ #define unregister_cld_notifier() do { } while(0)
+ 
 -- 
 2.43.0
 
