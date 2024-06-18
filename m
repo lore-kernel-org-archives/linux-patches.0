@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44DEC18A934;
-	Tue, 18 Jun 2024 13:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 219E816CD3C;
+	Tue, 18 Jun 2024 13:01:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715674; cv=none; b=sgfxui1/bRHSFaQkHTHztrdpTxAvXmfYMLhgIj4SnFOcyP5whjxLTr29y9h3+Yf4mVAeochld0CxAcD2Xt4V+JY2lzBxFr6+e9XZnpivkVoMOs+Qq8jeqK5d4If8Jb70Fe2oVfVR3SqI8JIxzAXFuPqM+JaYCrkVe7VQ+RlAVxY=
+	t=1718715677; cv=none; b=BEVLs1g+T7MY75HP7pXhoMMMUEXPqoIiR1AlbUiVEt3j/FeyoWZPso+LbL2Sv53QfLeY6rMV4gOe5ukkT3QguZYMivvu7vdrwoJ11+1qViz8ELhwsnJrp/EVxHkiYqLsar/YEKdapDNssFrFHSDWcc1ykaj3PkqvVmXbCua2UcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715674; c=relaxed/simple;
-	bh=OdU5SlHTmthLG9UL/kjhMddVjlQhkSKzpfCs2CftK8k=;
+	s=arc-20240116; t=1718715677; c=relaxed/simple;
+	bh=5spOvKZWiLBbjv066k5XDC7oUFvYECm+q+GHsJXeO0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V8FxUE5ptfld6DfGAz5gKSS7+CJXml+1HLY6RoEi4Gg42JVPt2vVJapOvJcXEkuch3nTVGoiqn45IzBPGfkAzfXLGTO7qbLG7gQvkVprzDQlGAmN0OVz7TuX1RAeRq5O7a2fDCQofVWmEhCPp4xU8+JdkjyGkSfKjqba5u2GTwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1/FvTON/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wi1gQ+Wnvrxbs80hC/eggImYDOJ/XQF3B0P10uVX7CS2xyLmLD7pIkZ4Xslje4AaavpchVoFQ4x1Uys90sF2p2T2iFoYrzUfA6UUTDZHDV/6rRRIsaoIktoM+XQTytnhXke8/EmeM6w5hJ6DyduhNv6T1lWPhRA0cflO/j+vbc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JKSZMBCV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1/FvTON/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9681EC3277B;
-	Tue, 18 Jun 2024 13:01:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JKSZMBCV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF6CC32786;
+	Tue, 18 Jun 2024 13:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715674;
-	bh=OdU5SlHTmthLG9UL/kjhMddVjlQhkSKzpfCs2CftK8k=;
+	s=korg; t=1718715677;
+	bh=5spOvKZWiLBbjv066k5XDC7oUFvYECm+q+GHsJXeO0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1/FvTON/I+9ToBKums6JTW4kAdOBhnRc65LsQUwGgyEtySHxG5DuFhiFkoNN3sq7k
-	 fcG+8rHdK7q8LpXsgn3imskDf8UgyKBy+aBtJOu7XOIsSiGCSUbSneOXSHQuxuI28W
-	 ZFuF+z2JLQeXsCtDkhSnWCbpU8lEI1Z92NpsKGUI=
+	b=JKSZMBCV6hxUj0u7jNvu8tV2wbCUD4ZehdzysEiPsbMxaxvMps7zrW2EWz1deAHvX
+	 eEC7qR3K5D9UERTJ4sExZKEr9WOg1io+tMGYBxu9mGVFvLiw0691d+ovr8DyYQimk/
+	 o7V2yC9V8+xft8mKnJn1dj78b7tI1wbyotDI/q38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
+	NeilBrown <neilb@suse.de>,
 	"J. Bruce Fields" <bfields@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 389/770] NFSD: Optimize DRC bucket pruning
-Date: Tue, 18 Jun 2024 14:34:02 +0200
-Message-ID: <20240618123422.293431670@linuxfoundation.org>
+Subject: [PATCH 5.10 390/770] NFSD: move filehandle format declarations out of "uapi".
+Date: Tue, 18 Jun 2024 14:34:03 +0200
+Message-ID: <20240618123422.332951546@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -51,114 +52,290 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 8847ecc9274a14114385d1cb4030326baa0766eb ]
+[ Upstream commit ef5825e3cf0d0af657f5fb4dd86d750ed42fee0a ]
 
-DRC bucket pruning is done by nfsd_cache_lookup(), which is part of
-every NFSv2 and NFSv3 dispatch (ie, it's done while the client is
-waiting).
+A small part of the declaration concerning filehandle format are
+currently in the "uapi" include directory:
+   include/uapi/linux/nfsd/nfsfh.h
 
-I added a trace_printk() in prune_bucket() to see just how long
-it takes to prune. Here are two ends of the spectrum:
+There is a lot more to the filehandle format, including "enum fid_type"
+and "enum nfsd_fsid" which are not exported via "uapi".
 
- prune_bucket: Scanned 1 and freed 0 in 90 ns, 62 entries remaining
- prune_bucket: Scanned 2 and freed 1 in 716 ns, 63 entries remaining
-...
- prune_bucket: Scanned 75 and freed 74 in 34149 ns, 1 entries remaining
+This small part of the filehandle definition is of minimal use outside
+of the kernel, and I can find no evidence that an other code is using
+it. Certainly nfs-utils and wireshark (The most likely candidates) do not
+use these declarations.
 
-Pruning latency is noticeable on fast transports with fast storage.
-By noticeable, I mean that the latency measured here in the worst
-case is the same order of magnitude as the round trip time for
-cached server operations.
+So move it out of "uapi" by copying the content from
+  include/uapi/linux/nfsd/nfsfh.h
+into
+  fs/nfsd/nfsfh.h
 
-We could do something like moving expired entries to an expired list
-and then free them later instead of freeing them right in
-prune_bucket(). But simply limiting the number of entries that can
-be pruned by a lookup is simple and retains more entries in the
-cache, making the DRC somewhat more effective.
+A few unnecessary "#include" directives are not copied, and neither is
+the #define of fh_auth, which is annotated as being for userspace only.
 
-Comparison with a 70/30 fio 8KB 12 thread direct I/O test:
+The copyright claims in the uapi file are identical to those in the nfsd
+file, so there is no need to copy those.
 
-Before:
+The "__u32" style integer types are only needed in "uapi".  In
+kernel-only code we can use the more familiar "u32" style.
 
-  write: IOPS=61.6k, BW=481MiB/s (505MB/s)(14.1GiB/30001msec); 0 zone resets
-
-WRITE:
-	1848726 ops (30%)
-	avg bytes sent per op: 8340 avg bytes received per op: 136
-	backlog wait: 0.635158 	RTT: 0.128525 	total execute time: 0.827242 (milliseconds)
-
-After:
-
-  write: IOPS=63.0k, BW=492MiB/s (516MB/s)(14.4GiB/30001msec); 0 zone resets
-
-WRITE:
-	1891144 ops (30%)
-	avg bytes sent per op: 8340 avg bytes received per op: 136
-	backlog wait: 0.616114 	RTT: 0.126842 	total execute time: 0.805348 (milliseconds)
-
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: NeilBrown <neilb@suse.de>
 Signed-off-by: J. Bruce Fields <bfields@redhat.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfscache.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ fs/nfsd/nfsfh.h                 |  97 ++++++++++++++++++++++++++-
+ fs/nfsd/vfs.c                   |   1 +
+ include/uapi/linux/nfsd/nfsfh.h | 115 --------------------------------
+ 3 files changed, 97 insertions(+), 116 deletions(-)
+ delete mode 100644 include/uapi/linux/nfsd/nfsfh.h
 
-diff --git a/fs/nfsd/nfscache.c b/fs/nfsd/nfscache.c
-index 96cdf77925f33..6e0b6f3148dca 100644
---- a/fs/nfsd/nfscache.c
-+++ b/fs/nfsd/nfscache.c
-@@ -241,8 +241,8 @@ lru_put_end(struct nfsd_drc_bucket *b, struct svc_cacherep *rp)
- 	list_move_tail(&rp->c_lru, &b->lru_head);
- }
+diff --git a/fs/nfsd/nfsfh.h b/fs/nfsd/nfsfh.h
+index 6106697adc04b..ad47f16676a8c 100644
+--- a/fs/nfsd/nfsfh.h
++++ b/fs/nfsd/nfsfh.h
+@@ -10,9 +10,104 @@
  
--static long
--prune_bucket(struct nfsd_drc_bucket *b, struct nfsd_net *nn)
-+static long prune_bucket(struct nfsd_drc_bucket *b, struct nfsd_net *nn,
-+			 unsigned int max)
- {
- 	struct svc_cacherep *rp, *tmp;
- 	long freed = 0;
-@@ -258,11 +258,17 @@ prune_bucket(struct nfsd_drc_bucket *b, struct nfsd_net *nn)
- 		    time_before(jiffies, rp->c_timestamp + RC_EXPIRE))
- 			break;
- 		nfsd_reply_cache_free_locked(b, rp, nn);
--		freed++;
-+		if (max && freed++ > max)
-+			break;
- 	}
- 	return freed;
- }
- 
-+static long nfsd_prune_bucket(struct nfsd_drc_bucket *b, struct nfsd_net *nn)
-+{
-+	return prune_bucket(b, nn, 3);
-+}
+ #include <linux/crc32.h>
+ #include <linux/sunrpc/svc.h>
+-#include <uapi/linux/nfsd/nfsfh.h>
+ #include <linux/iversion.h>
+ #include <linux/exportfs.h>
++#include <linux/nfs4.h>
 +
- /*
-  * Walk the LRU list and prune off entries that are older than RC_EXPIRE.
-  * Also prune the oldest ones when the total exceeds the max number of entries.
-@@ -279,7 +285,7 @@ prune_cache_entries(struct nfsd_net *nn)
- 		if (list_empty(&b->lru_head))
- 			continue;
- 		spin_lock(&b->cache_lock);
--		freed += prune_bucket(b, nn);
-+		freed += prune_bucket(b, nn, 0);
- 		spin_unlock(&b->cache_lock);
- 	}
- 	return freed;
-@@ -453,8 +459,7 @@ int nfsd_cache_lookup(struct svc_rqst *rqstp)
- 	atomic_inc(&nn->num_drc_entries);
- 	nfsd_stats_drc_mem_usage_add(nn, sizeof(*rp));
++
++/*
++ * This is the old "dentry style" Linux NFSv2 file handle.
++ *
++ * The xino and xdev fields are currently used to transport the
++ * ino/dev of the exported inode.
++ */
++struct nfs_fhbase_old {
++	u32		fb_dcookie;	/* dentry cookie - always 0xfeebbaca */
++	u32		fb_ino;		/* our inode number */
++	u32		fb_dirino;	/* dir inode number, 0 for directories */
++	u32		fb_dev;		/* our device */
++	u32		fb_xdev;
++	u32		fb_xino;
++	u32		fb_generation;
++};
++
++/*
++ * This is the new flexible, extensible style NFSv2/v3/v4 file handle.
++ *
++ * The file handle starts with a sequence of four-byte words.
++ * The first word contains a version number (1) and three descriptor bytes
++ * that tell how the remaining 3 variable length fields should be handled.
++ * These three bytes are auth_type, fsid_type and fileid_type.
++ *
++ * All four-byte values are in host-byte-order.
++ *
++ * The auth_type field is deprecated and must be set to 0.
++ *
++ * The fsid_type identifies how the filesystem (or export point) is
++ *    encoded.
++ *  Current values:
++ *     0  - 4 byte device id (ms-2-bytes major, ls-2-bytes minor), 4byte inode number
++ *        NOTE: we cannot use the kdev_t device id value, because kdev_t.h
++ *              says we mustn't.  We must break it up and reassemble.
++ *     1  - 4 byte user specified identifier
++ *     2  - 4 byte major, 4 byte minor, 4 byte inode number - DEPRECATED
++ *     3  - 4 byte device id, encoded for user-space, 4 byte inode number
++ *     4  - 4 byte inode number and 4 byte uuid
++ *     5  - 8 byte uuid
++ *     6  - 16 byte uuid
++ *     7  - 8 byte inode number and 16 byte uuid
++ *
++ * The fileid_type identified how the file within the filesystem is encoded.
++ *   The values for this field are filesystem specific, exccept that
++ *   filesystems must not use the values '0' or '0xff'. 'See enum fid_type'
++ *   in include/linux/exportfs.h for currently registered values.
++ */
++struct nfs_fhbase_new {
++	union {
++		struct {
++			u8		fb_version_aux;	/* == 1, even => nfs_fhbase_old */
++			u8		fb_auth_type_aux;
++			u8		fb_fsid_type_aux;
++			u8		fb_fileid_type_aux;
++			u32		fb_auth[1];
++		/*	u32		fb_fsid[0]; floating */
++		/*	u32		fb_fileid[0]; floating */
++		};
++		struct {
++			u8		fb_version;	/* == 1, even => nfs_fhbase_old */
++			u8		fb_auth_type;
++			u8		fb_fsid_type;
++			u8		fb_fileid_type;
++			u32		fb_auth_flex[]; /* flexible-array member */
++		};
++	};
++};
++
++struct knfsd_fh {
++	unsigned int	fh_size;	/* significant for NFSv3.
++					 * Points to the current size while building
++					 * a new file handle
++					 */
++	union {
++		struct nfs_fhbase_old	fh_old;
++		u32			fh_pad[NFS4_FHSIZE/4];
++		struct nfs_fhbase_new	fh_new;
++	} fh_base;
++};
++
++#define ofh_dcookie		fh_base.fh_old.fb_dcookie
++#define ofh_ino			fh_base.fh_old.fb_ino
++#define ofh_dirino		fh_base.fh_old.fb_dirino
++#define ofh_dev			fh_base.fh_old.fb_dev
++#define ofh_xdev		fh_base.fh_old.fb_xdev
++#define ofh_xino		fh_base.fh_old.fb_xino
++#define ofh_generation		fh_base.fh_old.fb_generation
++
++#define	fh_version		fh_base.fh_new.fb_version
++#define	fh_fsid_type		fh_base.fh_new.fb_fsid_type
++#define	fh_auth_type		fh_base.fh_new.fb_auth_type
++#define	fh_fileid_type		fh_base.fh_new.fb_fileid_type
++#define	fh_fsid			fh_base.fh_new.fb_auth_flex
  
--	/* go ahead and prune the cache */
--	prune_bucket(b, nn);
-+	nfsd_prune_bucket(b, nn);
- 
- out_unlock:
- 	spin_unlock(&b->cache_lock);
+ static inline __u32 ino_t_to_u32(ino_t ino)
+ {
+diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
+index 2c493937dd5ec..05b5f7e241e70 100644
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -244,6 +244,7 @@ nfsd_lookup_dentry(struct svc_rqst *rqstp, struct svc_fh *fhp,
+  * returned. Otherwise the covered directory is returned.
+  * NOTE: this mountpoint crossing is not supported properly by all
+  *   clients and is explicitly disallowed for NFSv3
++ *      NeilBrown <neilb@cse.unsw.edu.au>
+  */
+ __be32
+ nfsd_lookup(struct svc_rqst *rqstp, struct svc_fh *fhp, const char *name,
+diff --git a/include/uapi/linux/nfsd/nfsfh.h b/include/uapi/linux/nfsd/nfsfh.h
+deleted file mode 100644
+index e29e8accc4f4d..0000000000000
+--- a/include/uapi/linux/nfsd/nfsfh.h
++++ /dev/null
+@@ -1,115 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
+-/*
+- * This file describes the layout of the file handles as passed
+- * over the wire.
+- *
+- * Copyright (C) 1995, 1996, 1997 Olaf Kirch <okir@monad.swb.de>
+- */
+-
+-#ifndef _UAPI_LINUX_NFSD_FH_H
+-#define _UAPI_LINUX_NFSD_FH_H
+-
+-#include <linux/types.h>
+-#include <linux/nfs.h>
+-#include <linux/nfs2.h>
+-#include <linux/nfs3.h>
+-#include <linux/nfs4.h>
+-
+-/*
+- * This is the old "dentry style" Linux NFSv2 file handle.
+- *
+- * The xino and xdev fields are currently used to transport the
+- * ino/dev of the exported inode.
+- */
+-struct nfs_fhbase_old {
+-	__u32		fb_dcookie;	/* dentry cookie - always 0xfeebbaca */
+-	__u32		fb_ino;		/* our inode number */
+-	__u32		fb_dirino;	/* dir inode number, 0 for directories */
+-	__u32		fb_dev;		/* our device */
+-	__u32		fb_xdev;
+-	__u32		fb_xino;
+-	__u32		fb_generation;
+-};
+-
+-/*
+- * This is the new flexible, extensible style NFSv2/v3/v4 file handle.
+- *
+- * The file handle starts with a sequence of four-byte words.
+- * The first word contains a version number (1) and three descriptor bytes
+- * that tell how the remaining 3 variable length fields should be handled.
+- * These three bytes are auth_type, fsid_type and fileid_type.
+- *
+- * All four-byte values are in host-byte-order.
+- *
+- * The auth_type field is deprecated and must be set to 0.
+- *
+- * The fsid_type identifies how the filesystem (or export point) is
+- *    encoded.
+- *  Current values:
+- *     0  - 4 byte device id (ms-2-bytes major, ls-2-bytes minor), 4byte inode number
+- *        NOTE: we cannot use the kdev_t device id value, because kdev_t.h
+- *              says we mustn't.  We must break it up and reassemble.
+- *     1  - 4 byte user specified identifier
+- *     2  - 4 byte major, 4 byte minor, 4 byte inode number - DEPRECATED
+- *     3  - 4 byte device id, encoded for user-space, 4 byte inode number
+- *     4  - 4 byte inode number and 4 byte uuid
+- *     5  - 8 byte uuid
+- *     6  - 16 byte uuid
+- *     7  - 8 byte inode number and 16 byte uuid
+- *
+- * The fileid_type identified how the file within the filesystem is encoded.
+- *   The values for this field are filesystem specific, exccept that
+- *   filesystems must not use the values '0' or '0xff'. 'See enum fid_type'
+- *   in include/linux/exportfs.h for currently registered values.
+- */
+-struct nfs_fhbase_new {
+-	union {
+-		struct {
+-			__u8		fb_version_aux;	/* == 1, even => nfs_fhbase_old */
+-			__u8		fb_auth_type_aux;
+-			__u8		fb_fsid_type_aux;
+-			__u8		fb_fileid_type_aux;
+-			__u32		fb_auth[1];
+-			/*	__u32		fb_fsid[0]; floating */
+-			/*	__u32		fb_fileid[0]; floating */
+-		};
+-		struct {
+-			__u8		fb_version;	/* == 1, even => nfs_fhbase_old */
+-			__u8		fb_auth_type;
+-			__u8		fb_fsid_type;
+-			__u8		fb_fileid_type;
+-			__u32		fb_auth_flex[]; /* flexible-array member */
+-		};
+-	};
+-};
+-
+-struct knfsd_fh {
+-	unsigned int	fh_size;	/* significant for NFSv3.
+-					 * Points to the current size while building
+-					 * a new file handle
+-					 */
+-	union {
+-		struct nfs_fhbase_old	fh_old;
+-		__u32			fh_pad[NFS4_FHSIZE/4];
+-		struct nfs_fhbase_new	fh_new;
+-	} fh_base;
+-};
+-
+-#define ofh_dcookie		fh_base.fh_old.fb_dcookie
+-#define ofh_ino			fh_base.fh_old.fb_ino
+-#define ofh_dirino		fh_base.fh_old.fb_dirino
+-#define ofh_dev			fh_base.fh_old.fb_dev
+-#define ofh_xdev		fh_base.fh_old.fb_xdev
+-#define ofh_xino		fh_base.fh_old.fb_xino
+-#define ofh_generation		fh_base.fh_old.fb_generation
+-
+-#define	fh_version		fh_base.fh_new.fb_version
+-#define	fh_fsid_type		fh_base.fh_new.fb_fsid_type
+-#define	fh_auth_type		fh_base.fh_new.fb_auth_type
+-#define	fh_fileid_type		fh_base.fh_new.fb_fileid_type
+-#define	fh_fsid			fh_base.fh_new.fb_auth_flex
+-
+-/* Do not use, provided for userspace compatiblity. */
+-#define	fh_auth			fh_base.fh_new.fb_auth
+-
+-#endif /* _UAPI_LINUX_NFSD_FH_H */
 -- 
 2.43.0
 
