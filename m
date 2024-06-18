@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81A11A38E4;
-	Tue, 18 Jun 2024 13:14:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E621A2FCF;
+	Tue, 18 Jun 2024 13:14:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716443; cv=none; b=VETCpiXOj063whm6g7I9KzGSrng7JgEr3G52tpyb5RbbXIG31/utEPWBrK2XSrcW1zNOnRh+8H+oYX4dX2CKM8XoIfFrvyrssDsYKEYqut1L4fNkq4qga1q86jXXJMRxYt27bKCWjxqd9HBUfFoM3bVMc3SXzaEo3mioCOU1hnA=
+	t=1718716446; cv=none; b=fG5pDHSl2UKaw+WTwFQ5B640/U0iHxFdsKXydtT+qKlwfjISPVyDkhHU6Clf6fbhN6dW/3e8syVkLMwVCN1shZXdzkoGbtxWZUZhRT6VfH8Nwaiy+cRQUdp2LhBhDK5VhyCPQMmwezvracPq98KN45+ivi7nhaOhy3XGVkvuvhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716443; c=relaxed/simple;
-	bh=el9+lZBSZn4etfJx8wTMbz90q97gj5adf4CbHp8bMDw=;
+	s=arc-20240116; t=1718716446; c=relaxed/simple;
+	bh=3jMo+n5Q8kBwpMr1BERr5n7ovKW3bWcre3EV2LPJ/10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h6OXkeBEDkAx6HJA9lPA08gfC41XZtvjv7++xFXcRuVwOxQquGZ8Bk4cvHVheESQ9JIxECNJ5vkYONdSREBM8TYwKgRDISPtzCY1ZdB1xZnVgDQKJH4GoKYZj9CQmTqdRF2xmzBXWmSu4FjXjCTNjFSFfHugMkzPnKwD+vA44OU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YqniKobi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ajDgy3GybfT/1sVLphb6cyj70n410XivIQTkZqFHNgRdzOfh2jo2xl7sDcXE9zn0pX/4lTZ2sFpLuYl+qVkVMjsP1G2HoKwvgkF1A0UPsIT33xG+pUHu1KFRx1kBT/VPViO8/vm9dXuFeUIw+IcMPVKcQMa8IiU+33n5AH7g/M8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RrY7WiaZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YqniKobi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A5EC3277B;
-	Tue, 18 Jun 2024 13:14:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RrY7WiaZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 501B3C4AF1D;
+	Tue, 18 Jun 2024 13:14:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716443;
-	bh=el9+lZBSZn4etfJx8wTMbz90q97gj5adf4CbHp8bMDw=;
+	s=korg; t=1718716446;
+	bh=3jMo+n5Q8kBwpMr1BERr5n7ovKW3bWcre3EV2LPJ/10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YqniKobin7qeCMg0GVghHROqFLyNiJFL6C9pw/iqOJqHGH6U3LqiOxjXC1iM/B/mt
-	 TKvoKTXGtQC8q6nd4rwnYdl/En34+0WcOQVZW43m7dZLTNlXd6/mSoVoxCogXkHK4h
-	 zL0RW6AXJ0gQOJUaravufdP4lRfOHgQMf4MSz/UA=
+	b=RrY7WiaZsVWJCdatj5W3PLjjyjwtb1EXe683sw6MHBN1CA9RLUEoqDWdtPS8X+62t
+	 7E2dw1wwtreQGT3uiN/AXBS4rFnkG0JXUkyMFWFrPAZhR82gqjyOiGAgBphvgIVwmU
+	 i4HTdP84Zj7zLnnqqZhoWHjmUg/e1PNyc/irOzdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dai Ngo <dai.ngo@oracle.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	NeilBrown <neilb@suse.de>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 647/770] NFSD: keep track of the number of courtesy clients in the system
-Date: Tue, 18 Jun 2024 14:38:20 +0200
-Message-ID: <20240618123432.263622876@linuxfoundation.org>
+Subject: [PATCH 5.10 618/770] NFSD: only call fh_unlock() once in nfsd_link()
+Date: Tue, 18 Jun 2024 14:37:51 +0200
+Message-ID: <20240618123431.142108415@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -51,98 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dai Ngo <dai.ngo@oracle.com>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 3a4ea23d86a317c4b68b9a69d51f7e84e1e04357 ]
+[ Upstream commit e18bcb33bc5b69bccc2b532075aa00bb49cc01c5 ]
 
-Add counter nfs4_courtesy_client_count to nfsd_net to keep track
-of the number of courtesy clients in the system.
+On non-error paths, nfsd_link() calls fh_unlock() twice.  This is safe
+because fh_unlock() records that the unlock has been done and doesn't
+repeat it.
+However it makes the code a little confusing and interferes with changes
+that are planned for directory locking.
 
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+So rearrange the code to ensure fh_unlock() is called exactly once if
+fh_lock() was called.
+
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: NeilBrown <neilb@suse.de>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/netns.h     |  2 ++
- fs/nfsd/nfs4state.c | 17 ++++++++++++++++-
- 2 files changed, 18 insertions(+), 1 deletion(-)
+ fs/nfsd/vfs.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/fs/nfsd/netns.h b/fs/nfsd/netns.h
-index ffe17743cc74b..55c7006d6109a 100644
---- a/fs/nfsd/netns.h
-+++ b/fs/nfsd/netns.h
-@@ -192,6 +192,8 @@ struct nfsd_net {
+diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
+index 6b8e1826956bf..dd945099ae6b5 100644
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -1557,9 +1557,10 @@ nfsd_link(struct svc_rqst *rqstp, struct svc_fh *ffhp,
+ 	dirp = d_inode(ddir);
  
- 	atomic_t		nfs4_client_count;
- 	int			nfs4_max_clients;
-+
-+	atomic_t		nfsd_courtesy_clients;
- };
+ 	dnew = lookup_one_len(name, ddir, len);
+-	host_err = PTR_ERR(dnew);
+-	if (IS_ERR(dnew))
+-		goto out_nfserr;
++	if (IS_ERR(dnew)) {
++		err = nfserrno(PTR_ERR(dnew));
++		goto out_unlock;
++	}
  
- /* Simple check to find out if a given net was properly initialized */
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 2bb78ab4f6c31..9930c5f9440c7 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -160,6 +160,13 @@ static bool is_client_expired(struct nfs4_client *clp)
- 	return clp->cl_time == 0;
+ 	dold = tfhp->fh_dentry;
+ 
+@@ -1578,17 +1579,17 @@ nfsd_link(struct svc_rqst *rqstp, struct svc_fh *ffhp,
+ 		else
+ 			err = nfserrno(host_err);
+ 	}
+-out_dput:
+ 	dput(dnew);
+-out_unlock:
+-	fh_unlock(ffhp);
++out_drop_write:
+ 	fh_drop_write(tfhp);
+ out:
+ 	return err;
+ 
+-out_nfserr:
+-	err = nfserrno(host_err);
+-	goto out_unlock;
++out_dput:
++	dput(dnew);
++out_unlock:
++	fh_unlock(ffhp);
++	goto out_drop_write;
  }
  
-+static void nfsd4_dec_courtesy_client_count(struct nfsd_net *nn,
-+					struct nfs4_client *clp)
-+{
-+	if (clp->cl_state != NFSD4_ACTIVE)
-+		atomic_add_unless(&nn->nfsd_courtesy_clients, -1, 0);
-+}
-+
- static __be32 get_client_locked(struct nfs4_client *clp)
- {
- 	struct nfsd_net *nn = net_generic(clp->net, nfsd_net_id);
-@@ -169,6 +176,7 @@ static __be32 get_client_locked(struct nfs4_client *clp)
- 	if (is_client_expired(clp))
- 		return nfserr_expired;
- 	atomic_inc(&clp->cl_rpc_users);
-+	nfsd4_dec_courtesy_client_count(nn, clp);
- 	clp->cl_state = NFSD4_ACTIVE;
- 	return nfs_ok;
- }
-@@ -190,6 +198,7 @@ renew_client_locked(struct nfs4_client *clp)
- 
- 	list_move_tail(&clp->cl_lru, &nn->client_lru);
- 	clp->cl_time = ktime_get_boottime_seconds();
-+	nfsd4_dec_courtesy_client_count(nn, clp);
- 	clp->cl_state = NFSD4_ACTIVE;
- }
- 
-@@ -2248,6 +2257,7 @@ __destroy_client(struct nfs4_client *clp)
- 	if (clp->cl_cb_conn.cb_xprt)
- 		svc_xprt_put(clp->cl_cb_conn.cb_xprt);
- 	atomic_add_unless(&nn->nfs4_client_count, -1, 0);
-+	nfsd4_dec_courtesy_client_count(nn, clp);
- 	free_client(clp);
- 	wake_up_all(&expiry_wq);
- }
-@@ -4375,6 +4385,8 @@ void nfsd4_init_leases_net(struct nfsd_net *nn)
- 	max_clients = (u64)si.totalram * si.mem_unit / (1024 * 1024 * 1024);
- 	max_clients *= NFS4_CLIENTS_PER_GB;
- 	nn->nfs4_max_clients = max_t(int, max_clients, NFS4_CLIENTS_PER_GB);
-+
-+	atomic_set(&nn->nfsd_courtesy_clients, 0);
- }
- 
- static void init_nfs4_replay(struct nfs4_replay *rp)
-@@ -5928,8 +5940,11 @@ nfs4_get_client_reaplist(struct nfsd_net *nn, struct list_head *reaplist,
- 			goto exp_client;
- 		if (!state_expired(lt, clp->cl_time))
- 			break;
--		if (!atomic_read(&clp->cl_rpc_users))
-+		if (!atomic_read(&clp->cl_rpc_users)) {
-+			if (clp->cl_state == NFSD4_ACTIVE)
-+				atomic_inc(&nn->nfsd_courtesy_clients);
- 			clp->cl_state = NFSD4_COURTESY;
-+		}
- 		if (!client_has_state(clp))
- 			goto exp_client;
- 		if (!nfs4_anylock_blockers(clp))
+ static void
 -- 
 2.43.0
 
