@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8828B13A245;
-	Tue, 18 Jun 2024 12:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD44B15DBA7;
+	Tue, 18 Jun 2024 12:56:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715390; cv=none; b=fgaeBxwm5UuKzdPHdpnKWlonykj1VJSGv6Yu0BBUQ+5uG0E7xkyMqhBXJPwvu5xfH/VJVp/tDLI31bRODRj5qlCJIrREmw1yIHxttRpC4w48pQkm8Jh8O3StgychscZ/00HXcXn9LGW7PuPTGOoXCJaLHh6GkoPPaNdfNmnOrVE=
+	t=1718715393; cv=none; b=NL2QdcsSz/UA2f572sAM5lNz1D+Ec5AfOBA/lLNVDg7d6N0nqK/91K/I5r+Sjg1sy+RM8f4EzI5bcj64vCJ0U19njKmQ+u502+ODOTqAHqI2v4ObbDg+vuGKO9ooRupQ6lvfZLWd67TZdtFZGInY6cVp/iKfuMiYmg31k2sdcOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715390; c=relaxed/simple;
-	bh=+iM6Ec5IpuJhUBDmpXuaEKLLn6SHqWKXDrK/G8qVUnU=;
+	s=arc-20240116; t=1718715393; c=relaxed/simple;
+	bh=OOyPkfnOpxdFSf4N+3iJrFy6+CN3REG3KjZCt4wXZL8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sqz8PULp9lQOgEk+lB4yAOLWyAFGDDToYp1EhNxuSxnhir18yykfFK8djKkJkx4WhUCSBNEZHrIu9wyyxlNwhCWE06yMDEdDBFVjjjjZOjUKKNDtQ8cLX5r7W+i5BiBtDgfIoL1p9kXzJFAOjQLONJ9zawvhFClcyCXQsSrsqbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bk4tKO1I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lHyzTDZiaZB3I3jX21I0U7zAZQe0F/Ol65SrkPKUvHXejLb38jsc8ZGpXmx/om28tJ8nhOKdNKbNMMJjvQ4Ti//F1QRKa3gqtGyEe9LmNYPDiXiAfHa7GObWy3UGZSkAPaNUZE9W0SLg37uOMi4v9OLWFYLZF3pLmAwZpRt+SvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vf9eAyOf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bk4tKO1I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D28BBC32786;
-	Tue, 18 Jun 2024 12:56:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vf9eAyOf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C17C4AF48;
+	Tue, 18 Jun 2024 12:56:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715390;
-	bh=+iM6Ec5IpuJhUBDmpXuaEKLLn6SHqWKXDrK/G8qVUnU=;
+	s=korg; t=1718715393;
+	bh=OOyPkfnOpxdFSf4N+3iJrFy6+CN3REG3KjZCt4wXZL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bk4tKO1IksdIL/xzP1lyDrijSvtteuXa28Y4Y9TPXq64uo+0e41Njq+KPn5d1aleD
-	 +yi8LksAumsREfeR4pWdL5iQEKytWioq7GNtvmcVvd+jwo/UL7EmXQ5cK1Z4NeI36x
-	 TXE6x2IVel7E8hGvxyvq0hxzLwD/5u0XLEvyxyqI=
+	b=vf9eAyOf0ZqfY3SStLah2oCOyW/p9RhD+6LZSP8CLyNVMApl0xEB2Pk/aGUcSThL6
+	 wL5IG74o+Q+liQYAYG0R8Ynj0pWuyA55Q3Bs/yq+dt/RKy/Nr0gVRu3vFy7U9/Xr4U
+	 zSY/BRAYWXGduymGAeJHqhVMrlCB2OABXU6R0A6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dai Ngo <dai.ngo@oracle.com>,
-	"J. Bruce Fields" <bfields@redhat.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
+	"J. Bruce Fields" <bfields@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 293/770] NFSD: delay unmount sources export after inter-server copy completed.
-Date: Tue, 18 Jun 2024 14:32:26 +0200
-Message-ID: <20240618123418.572699468@linuxfoundation.org>
+Subject: [PATCH 5.10 276/770] NFSD: Add tracepoints for SETCLIENTID edge cases
+Date: Tue, 18 Jun 2024 14:32:09 +0200
+Message-ID: <20240618123417.920905389@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,399 +51,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dai Ngo <dai.ngo@oracle.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit f4e44b393389c77958f7c58bf4415032b4cda15b ]
+[ Upstream commit 237f91c85acef206a33bc02f3c4e856128fd7994 ]
 
-Currently the source's export is mounted and unmounted on every
-inter-server copy operation. This patch is an enhancement to delay
-the unmount of the source export for a certain period of time to
-eliminate the mount and unmount overhead on subsequent copy operations.
-
-After a copy operation completes, a work entry is added to the
-delayed unmount list with an expiration time. This list is serviced
-by the laundromat thread to unmount the export of the expired entries.
-Each time the export is being used again, its expiration time is
-extended and the entry is re-inserted to the tail of the list.
-
-The unmount task and the mount operation of the copy request are
-synced to make sure the export is not unmounted while it's being
-used.
-
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: J. Bruce Fields <bfields@redhat.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/netns.h         |   6 ++
- fs/nfsd/nfs4proc.c      | 135 ++++++++++++++++++++++++++++++++++++++--
- fs/nfsd/nfs4state.c     |  71 +++++++++++++++++++++
- fs/nfsd/nfsd.h          |   4 ++
- fs/nfsd/nfssvc.c        |   3 +
- include/linux/nfs_ssc.h |  14 +++++
- 6 files changed, 229 insertions(+), 4 deletions(-)
+ fs/nfsd/nfs4state.c | 19 ++++++++-----------
+ fs/nfsd/trace.h     | 37 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 45 insertions(+), 11 deletions(-)
 
-diff --git a/fs/nfsd/netns.h b/fs/nfsd/netns.h
-index a75abeb1e6988..935c1028c2175 100644
---- a/fs/nfsd/netns.h
-+++ b/fs/nfsd/netns.h
-@@ -176,6 +176,12 @@ struct nfsd_net {
- 	unsigned int             longest_chain_cachesize;
- 
- 	struct shrinker		nfsd_reply_cache_shrinker;
-+
-+	/* tracking server-to-server copy mounts */
-+	spinlock_t              nfsd_ssc_lock;
-+	struct list_head        nfsd_ssc_mount_list;
-+	wait_queue_head_t       nfsd_ssc_waitq;
-+
- 	/* utsname taken from the process that starts the server */
- 	char			nfsd_name[UNX_MAXNODENAME+1];
- };
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index aa0da0737a3ff..573c550e7aceb 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -55,6 +55,13 @@ module_param(inter_copy_offload_enable, bool, 0644);
- MODULE_PARM_DESC(inter_copy_offload_enable,
- 		 "Enable inter server to server copy offload. Default: false");
- 
-+#ifdef CONFIG_NFSD_V4_2_INTER_SSC
-+static int nfsd4_ssc_umount_timeout = 900000;		/* default to 15 mins */
-+module_param(nfsd4_ssc_umount_timeout, int, 0644);
-+MODULE_PARM_DESC(nfsd4_ssc_umount_timeout,
-+		"idle msecs before unmount export from source server");
-+#endif
-+
- #ifdef CONFIG_NFSD_V4_SECURITY_LABEL
- #include <linux/security.h>
- 
-@@ -1168,6 +1175,81 @@ extern void nfs_sb_deactive(struct super_block *sb);
- 
- #define NFSD42_INTERSSC_MOUNTOPS "vers=4.2,addr=%s,sec=sys"
- 
-+/*
-+ * setup a work entry in the ssc delayed unmount list.
-+ */
-+static int nfsd4_ssc_setup_dul(struct nfsd_net *nn, char *ipaddr,
-+		struct nfsd4_ssc_umount_item **retwork, struct vfsmount **ss_mnt)
-+{
-+	struct nfsd4_ssc_umount_item *ni = 0;
-+	struct nfsd4_ssc_umount_item *work = NULL;
-+	struct nfsd4_ssc_umount_item *tmp;
-+	DEFINE_WAIT(wait);
-+
-+	*ss_mnt = NULL;
-+	*retwork = NULL;
-+	work = kzalloc(sizeof(*work), GFP_KERNEL);
-+try_again:
-+	spin_lock(&nn->nfsd_ssc_lock);
-+	list_for_each_entry_safe(ni, tmp, &nn->nfsd_ssc_mount_list, nsui_list) {
-+		if (strncmp(ni->nsui_ipaddr, ipaddr, sizeof(ni->nsui_ipaddr)))
-+			continue;
-+		/* found a match */
-+		if (ni->nsui_busy) {
-+			/*  wait - and try again */
-+			prepare_to_wait(&nn->nfsd_ssc_waitq, &wait,
-+				TASK_INTERRUPTIBLE);
-+			spin_unlock(&nn->nfsd_ssc_lock);
-+
-+			/* allow 20secs for mount/unmount for now - revisit */
-+			if (signal_pending(current) ||
-+					(schedule_timeout(20*HZ) == 0)) {
-+				kfree(work);
-+				return nfserr_eagain;
-+			}
-+			finish_wait(&nn->nfsd_ssc_waitq, &wait);
-+			goto try_again;
-+		}
-+		*ss_mnt = ni->nsui_vfsmount;
-+		refcount_inc(&ni->nsui_refcnt);
-+		spin_unlock(&nn->nfsd_ssc_lock);
-+		kfree(work);
-+
-+		/* return vfsmount in ss_mnt */
-+		return 0;
-+	}
-+	if (work) {
-+		strncpy(work->nsui_ipaddr, ipaddr, sizeof(work->nsui_ipaddr));
-+		refcount_set(&work->nsui_refcnt, 2);
-+		work->nsui_busy = true;
-+		list_add_tail(&work->nsui_list, &nn->nfsd_ssc_mount_list);
-+		*retwork = work;
-+	}
-+	spin_unlock(&nn->nfsd_ssc_lock);
-+	return 0;
-+}
-+
-+static void nfsd4_ssc_update_dul_work(struct nfsd_net *nn,
-+		struct nfsd4_ssc_umount_item *work, struct vfsmount *ss_mnt)
-+{
-+	/* set nsui_vfsmount, clear busy flag and wakeup waiters */
-+	spin_lock(&nn->nfsd_ssc_lock);
-+	work->nsui_vfsmount = ss_mnt;
-+	work->nsui_busy = false;
-+	wake_up_all(&nn->nfsd_ssc_waitq);
-+	spin_unlock(&nn->nfsd_ssc_lock);
-+}
-+
-+static void nfsd4_ssc_cancel_dul_work(struct nfsd_net *nn,
-+		struct nfsd4_ssc_umount_item *work)
-+{
-+	spin_lock(&nn->nfsd_ssc_lock);
-+	list_del(&work->nsui_list);
-+	wake_up_all(&nn->nfsd_ssc_waitq);
-+	spin_unlock(&nn->nfsd_ssc_lock);
-+	kfree(work);
-+}
-+
- /*
-  * Support one copy source server for now.
-  */
-@@ -1184,6 +1266,8 @@ nfsd4_interssc_connect(struct nl4_server *nss, struct svc_rqst *rqstp,
- 	char *ipaddr, *dev_name, *raw_data;
- 	int len, raw_len;
- 	__be32 status = nfserr_inval;
-+	struct nfsd4_ssc_umount_item *work = NULL;
-+	struct nfsd_net *nn = net_generic(SVC_NET(rqstp), nfsd_net_id);
- 
- 	naddr = &nss->u.nl4_addr;
- 	tmp_addrlen = rpc_uaddr2sockaddr(SVC_NET(rqstp), naddr->addr,
-@@ -1232,12 +1316,23 @@ nfsd4_interssc_connect(struct nl4_server *nss, struct svc_rqst *rqstp,
- 		goto out_free_rawdata;
- 	snprintf(dev_name, len + 5, "%s%s%s:/", startsep, ipaddr, endsep);
- 
-+	status = nfsd4_ssc_setup_dul(nn, ipaddr, &work, &ss_mnt);
-+	if (status)
-+		goto out_free_devname;
-+	if (ss_mnt)
-+		goto out_done;
-+
- 	/* Use an 'internal' mount: SB_KERNMOUNT -> MNT_INTERNAL */
- 	ss_mnt = vfs_kern_mount(type, SB_KERNMOUNT, dev_name, raw_data);
- 	module_put(type->owner);
--	if (IS_ERR(ss_mnt))
-+	if (IS_ERR(ss_mnt)) {
-+		if (work)
-+			nfsd4_ssc_cancel_dul_work(nn, work);
- 		goto out_free_devname;
--
-+	}
-+	if (work)
-+		nfsd4_ssc_update_dul_work(nn, work, ss_mnt);
-+out_done:
- 	status = 0;
- 	*mount = ss_mnt;
- 
-@@ -1297,10 +1392,42 @@ static void
- nfsd4_cleanup_inter_ssc(struct vfsmount *ss_mnt, struct nfsd_file *src,
- 			struct nfsd_file *dst)
- {
-+	bool found = false;
-+	long timeout;
-+	struct nfsd4_ssc_umount_item *tmp;
-+	struct nfsd4_ssc_umount_item *ni = 0;
-+	struct nfsd_net *nn = net_generic(dst->nf_net, nfsd_net_id);
-+
- 	nfs42_ssc_close(src->nf_file);
--	fput(src->nf_file);
- 	nfsd_file_put(dst);
--	mntput(ss_mnt);
-+	fput(src->nf_file);
-+
-+	if (!nn) {
-+		mntput(ss_mnt);
-+		return;
-+	}
-+	spin_lock(&nn->nfsd_ssc_lock);
-+	timeout = msecs_to_jiffies(nfsd4_ssc_umount_timeout);
-+	list_for_each_entry_safe(ni, tmp, &nn->nfsd_ssc_mount_list, nsui_list) {
-+		if (ni->nsui_vfsmount->mnt_sb == ss_mnt->mnt_sb) {
-+			list_del(&ni->nsui_list);
-+			/*
-+			 * vfsmount can be shared by multiple exports,
-+			 * decrement refcnt. If the count drops to 1 it
-+			 * will be unmounted when nsui_expire expires.
-+			 */
-+			refcount_dec(&ni->nsui_refcnt);
-+			ni->nsui_expire = jiffies + timeout;
-+			list_add_tail(&ni->nsui_list, &nn->nfsd_ssc_mount_list);
-+			found = true;
-+			break;
-+		}
-+	}
-+	spin_unlock(&nn->nfsd_ssc_lock);
-+	if (!found) {
-+		mntput(ss_mnt);
-+		return;
-+	}
- }
- 
- #else /* CONFIG_NFSD_V4_2_INTER_SSC */
 diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 09967037eb1a3..3dd6e25d5d90f 100644
+index 7e8752f4affda..31310dbe9c1e2 100644
 --- a/fs/nfsd/nfs4state.c
 +++ b/fs/nfsd/nfs4state.c
-@@ -44,6 +44,7 @@
- #include <linux/jhash.h>
- #include <linux/string_helpers.h>
- #include <linux/fsnotify.h>
-+#include <linux/nfs_ssc.h>
- #include "xdr4.h"
- #include "xdr4cb.h"
- #include "vfs.h"
-@@ -5522,6 +5523,69 @@ static bool state_expired(struct laundry_time *lt, time64_t last_refresh)
- 	return false;
+@@ -4008,11 +4008,9 @@ nfsd4_setclientid(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 	new = create_client(clname, rqstp, &clverifier);
+ 	if (new == NULL)
+ 		return nfserr_jukebox;
+-	/* Cases below refer to rfc 3530 section 14.2.33: */
+ 	spin_lock(&nn->client_lock);
+ 	conf = find_confirmed_client_by_name(&clname, nn);
+ 	if (conf && client_has_state(conf)) {
+-		/* case 0: */
+ 		status = nfserr_clid_inuse;
+ 		if (clp_used_exchangeid(conf))
+ 			goto out;
+@@ -4024,7 +4022,6 @@ nfsd4_setclientid(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 	unconf = find_unconfirmed_client_by_name(&clname, nn);
+ 	if (unconf)
+ 		unhash_client_locked(unconf);
+-	/* We need to handle only case 1: probable callback update */
+ 	if (conf) {
+ 		if (same_verf(&conf->cl_verifier, &clverifier)) {
+ 			copy_clid(new, conf);
+@@ -4032,7 +4029,8 @@ nfsd4_setclientid(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 		} else
+ 			trace_nfsd_clid_verf_mismatch(conf, rqstp,
+ 						      &clverifier);
+-	}
++	} else
++		trace_nfsd_clid_fresh(new);
+ 	new->cl_minorversion = 0;
+ 	gen_callback(new, setclid, rqstp);
+ 	add_to_unconfirmed(new);
+@@ -4045,12 +4043,13 @@ nfsd4_setclientid(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 	spin_unlock(&nn->client_lock);
+ 	if (new)
+ 		free_client(new);
+-	if (unconf)
++	if (unconf) {
++		trace_nfsd_clid_expire_unconf(&unconf->cl_clientid);
+ 		expire_client(unconf);
++	}
+ 	return status;
  }
  
-+#ifdef CONFIG_NFSD_V4_2_INTER_SSC
-+void nfsd4_ssc_init_umount_work(struct nfsd_net *nn)
-+{
-+	spin_lock_init(&nn->nfsd_ssc_lock);
-+	INIT_LIST_HEAD(&nn->nfsd_ssc_mount_list);
-+	init_waitqueue_head(&nn->nfsd_ssc_waitq);
-+}
-+EXPORT_SYMBOL_GPL(nfsd4_ssc_init_umount_work);
-+
-+/*
-+ * This is called when nfsd is being shutdown, after all inter_ssc
-+ * cleanup were done, to destroy the ssc delayed unmount list.
-+ */
-+static void nfsd4_ssc_shutdown_umount(struct nfsd_net *nn)
-+{
-+	struct nfsd4_ssc_umount_item *ni = 0;
-+	struct nfsd4_ssc_umount_item *tmp;
-+
-+	spin_lock(&nn->nfsd_ssc_lock);
-+	list_for_each_entry_safe(ni, tmp, &nn->nfsd_ssc_mount_list, nsui_list) {
-+		list_del(&ni->nsui_list);
-+		spin_unlock(&nn->nfsd_ssc_lock);
-+		mntput(ni->nsui_vfsmount);
-+		kfree(ni);
-+		spin_lock(&nn->nfsd_ssc_lock);
-+	}
-+	spin_unlock(&nn->nfsd_ssc_lock);
-+}
-+
-+static void nfsd4_ssc_expire_umount(struct nfsd_net *nn)
-+{
-+	bool do_wakeup = false;
-+	struct nfsd4_ssc_umount_item *ni = 0;
-+	struct nfsd4_ssc_umount_item *tmp;
-+
-+	spin_lock(&nn->nfsd_ssc_lock);
-+	list_for_each_entry_safe(ni, tmp, &nn->nfsd_ssc_mount_list, nsui_list) {
-+		if (time_after(jiffies, ni->nsui_expire)) {
-+			if (refcount_read(&ni->nsui_refcnt) > 1)
-+				continue;
-+
-+			/* mark being unmount */
-+			ni->nsui_busy = true;
-+			spin_unlock(&nn->nfsd_ssc_lock);
-+			mntput(ni->nsui_vfsmount);
-+			spin_lock(&nn->nfsd_ssc_lock);
-+
-+			/* waiters need to start from begin of list */
-+			list_del(&ni->nsui_list);
-+			kfree(ni);
-+
-+			/* wakeup ssc_connect waiters */
-+			do_wakeup = true;
-+			continue;
-+		}
-+		break;
-+	}
-+	if (do_wakeup)
-+		wake_up_all(&nn->nfsd_ssc_waitq);
-+	spin_unlock(&nn->nfsd_ssc_lock);
-+}
-+#endif
-+
- static time64_t
- nfs4_laundromat(struct nfsd_net *nn)
- {
-@@ -5631,6 +5695,10 @@ nfs4_laundromat(struct nfsd_net *nn)
- 		list_del_init(&nbl->nbl_lru);
- 		free_blocked_lock(nbl);
+-
+ __be32
+ nfsd4_setclientid_confirm(struct svc_rqst *rqstp,
+ 			struct nfsd4_compound_state *cstate,
+@@ -4087,21 +4086,19 @@ nfsd4_setclientid_confirm(struct svc_rqst *rqstp,
+ 		trace_nfsd_clid_cred_mismatch(conf, rqstp);
+ 		goto out;
  	}
-+#ifdef CONFIG_NFSD_V4_2_INTER_SSC
-+	/* service the server-to-server copy delayed unmount list */
-+	nfsd4_ssc_expire_umount(nn);
-+#endif
- out:
- 	return max_t(time64_t, lt.new_timeo, NFSD_LAUNDROMAT_MINTIMEOUT);
- }
-@@ -7546,6 +7614,9 @@ nfs4_state_shutdown_net(struct net *net)
+-	/* cases below refer to rfc 3530 section 14.2.34: */
+ 	if (!unconf || !same_verf(&confirm, &unconf->cl_confirm)) {
+ 		if (conf && same_verf(&confirm, &conf->cl_confirm)) {
+-			/* case 2: probable retransmit */
+ 			status = nfs_ok;
+-		} else /* case 4: client hasn't noticed we rebooted yet? */
++		} else
+ 			status = nfserr_stale_clientid;
+ 		goto out;
+ 	}
+ 	status = nfs_ok;
+-	if (conf) { /* case 1: callback update */
++	if (conf) {
+ 		old = unconf;
+ 		unhash_client_locked(old);
+ 		nfsd4_change_callback(conf, &unconf->cl_cb_conn);
+-	} else { /* case 3: normal case; new or rebooted client */
++	} else {
+ 		old = find_confirmed_client_by_name(&unconf->cl_name, nn);
+ 		if (old) {
+ 			status = nfserr_clid_inuse;
+diff --git a/fs/nfsd/trace.h b/fs/nfsd/trace.h
+index 3271d925abf2e..aa42d31cdfac1 100644
+--- a/fs/nfsd/trace.h
++++ b/fs/nfsd/trace.h
+@@ -511,6 +511,7 @@ DEFINE_EVENT(nfsd_clientid_class, nfsd_clid_##name, \
+ 	TP_PROTO(const clientid_t *clid), \
+ 	TP_ARGS(clid))
  
- 	nfsd4_client_tracking_exit(net);
- 	nfs4_state_destroy_net(net);
-+#ifdef CONFIG_NFSD_V4_2_INTER_SSC
-+	nfsd4_ssc_shutdown_umount(nn);
-+#endif
- }
++DEFINE_CLIENTID_EVENT(expire_unconf);
+ DEFINE_CLIENTID_EVENT(reclaim_complete);
+ DEFINE_CLIENTID_EVENT(confirmed);
+ DEFINE_CLIENTID_EVENT(destroyed);
+@@ -600,6 +601,42 @@ TRACE_EVENT(nfsd_clid_verf_mismatch,
+ 	)
+ );
  
- void
-diff --git a/fs/nfsd/nfsd.h b/fs/nfsd/nfsd.h
-index 14dbfa75059d5..9664303afdaf3 100644
---- a/fs/nfsd/nfsd.h
-+++ b/fs/nfsd/nfsd.h
-@@ -484,6 +484,10 @@ static inline bool nfsd_attrs_supported(u32 minorversion, const u32 *bmval)
- extern int nfsd4_is_junction(struct dentry *dentry);
- extern int register_cld_notifier(void);
- extern void unregister_cld_notifier(void);
-+#ifdef CONFIG_NFSD_V4_2_INTER_SSC
-+extern void nfsd4_ssc_init_umount_work(struct nfsd_net *nn);
-+#endif
++DECLARE_EVENT_CLASS(nfsd_clid_class,
++	TP_PROTO(const struct nfs4_client *clp),
++	TP_ARGS(clp),
++	TP_STRUCT__entry(
++		__field(u32, cl_boot)
++		__field(u32, cl_id)
++		__array(unsigned char, addr, sizeof(struct sockaddr_in6))
++		__field(unsigned long, flavor)
++		__array(unsigned char, verifier, NFS4_VERIFIER_SIZE)
++		__dynamic_array(char, name, clp->cl_name.len + 1)
++	),
++	TP_fast_assign(
++		__entry->cl_boot = clp->cl_clientid.cl_boot;
++		__entry->cl_id = clp->cl_clientid.cl_id;
++		memcpy(__entry->addr, &clp->cl_addr,
++			sizeof(struct sockaddr_in6));
++		__entry->flavor = clp->cl_cred.cr_flavor;
++		memcpy(__entry->verifier, (void *)&clp->cl_verifier,
++		       NFS4_VERIFIER_SIZE);
++		memcpy(__get_str(name), clp->cl_name.data, clp->cl_name.len);
++		__get_str(name)[clp->cl_name.len] = '\0';
++	),
++	TP_printk("addr=%pISpc name='%s' verifier=0x%s flavor=%s client=%08x:%08x",
++		__entry->addr, __get_str(name),
++		__print_hex_str(__entry->verifier, NFS4_VERIFIER_SIZE),
++		show_nfsd_authflavor(__entry->flavor),
++		__entry->cl_boot, __entry->cl_id)
++);
 +
- #else /* CONFIG_NFSD_V4 */
- static inline int nfsd4_is_junction(struct dentry *dentry)
- {
-diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
-index 731d89898903a..373695cc62a7a 100644
---- a/fs/nfsd/nfssvc.c
-+++ b/fs/nfsd/nfssvc.c
-@@ -403,6 +403,9 @@ static int nfsd_startup_net(struct net *net, const struct cred *cred)
- 	if (ret)
- 		goto out_filecache;
- 
-+#ifdef CONFIG_NFSD_V4_2_INTER_SSC
-+	nfsd4_ssc_init_umount_work(nn);
-+#endif
- 	nn->nfsd_net_up = true;
- 	return 0;
- 
-diff --git a/include/linux/nfs_ssc.h b/include/linux/nfs_ssc.h
-index f5ba0fbff72fe..222ae8883e854 100644
---- a/include/linux/nfs_ssc.h
-+++ b/include/linux/nfs_ssc.h
-@@ -8,6 +8,7 @@
-  */
- 
- #include <linux/nfs_fs.h>
-+#include <linux/sunrpc/svc.h>
- 
- extern struct nfs_ssc_client_ops_tbl nfs_ssc_client_tbl;
- 
-@@ -52,6 +53,19 @@ static inline void nfs42_ssc_close(struct file *filep)
- 	if (nfs_ssc_client_tbl.ssc_nfs4_ops)
- 		(*nfs_ssc_client_tbl.ssc_nfs4_ops->sco_close)(filep);
- }
++#define DEFINE_CLID_EVENT(name) \
++DEFINE_EVENT(nfsd_clid_class, nfsd_clid_##name, \
++	TP_PROTO(const struct nfs4_client *clp), \
++	TP_ARGS(clp))
 +
-+struct nfsd4_ssc_umount_item {
-+	struct list_head nsui_list;
-+	bool nsui_busy;
-+	/*
-+	 * nsui_refcnt inited to 2, 1 on list and 1 for consumer. Entry
-+	 * is removed when refcnt drops to 1 and nsui_expire expires.
-+	 */
-+	refcount_t nsui_refcnt;
-+	unsigned long nsui_expire;
-+	struct vfsmount *nsui_vfsmount;
-+	char nsui_ipaddr[RPC_MAX_ADDRBUFLEN];
-+};
- #endif
- 
++DEFINE_CLID_EVENT(fresh);
++
  /*
+  * from fs/nfsd/filecache.h
+  */
 -- 
 2.43.0
 
