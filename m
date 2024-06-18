@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0181A38E7;
-	Tue, 18 Jun 2024 13:14:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB0AD158DC4;
+	Tue, 18 Jun 2024 13:14:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716449; cv=none; b=fqQBX2Q8cCNRBwMFwnrg5FFgqs7rklk7xVSf1QjPmdJuo2fpH4scQIkRXx1dpcX0IZaYlsEU6VZPFQZS+VrOSx/GXWW+A78M0KjVgGVMAbcTmOpltVh0o5qgyVmUjLLptKdOR56mHuu2Uqlmnm959LskWumTMPS2nN1zjJ9IErs=
+	t=1718716452; cv=none; b=TBG/XkepPzMNSJ8qCPzZjyu55CV0ccdb/KnCaxNOKdhEnjJyk/JaDiu2/1fYuMe1eDyvxstaN+HHb0UZMyabXsW/4dn4IFX4Sxv+JcnmaMpMM1Iq9ul9HHd/hWpPT0xzzIqarILiW/c12a6fEtNKzrbCLimJIYzZQme1To9Mi5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716449; c=relaxed/simple;
-	bh=cexiw87bpeg8HDJcxVJ62iUSO0LiXHefaZuyeXUHy/Q=;
+	s=arc-20240116; t=1718716452; c=relaxed/simple;
+	bh=D0lzhbmD3kAdlO1BunfvuTaft4yuZd0wNF3VUf5CNhI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RKtFwiqnBMU6+OT9ZpBOlPm/ms6ogHIJBJ0K6rSXPmoHxpHjPs+PPOMR3gZ2Uyl2ntbq8ET1Jf6Qs8q34vxaJ0PIM3EjaD6Sir1Xn9ti0Xg1Glqvdeb25hzAoF4XJ0nqHE6RztsVjdccfmBqHBb0/xc8/tQ2s74XooWadSsQmkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IpG8RKLJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HU97eZZwZziX8w8G2ajL8DqYSS8ow+4G6izie0CYnsqI8woEqcP5iTfjJ6+LhxXpG1OM3wkdgzOY0sgWO0R/R1LsUQfhGSmM809ERNVeHZNxYHwBg3/humtRR55vrBWmCKyEsEXodRZKxizDg+SuywTu27reYQ+C+ki2J1OXTHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rBbAoABp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IpG8RKLJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E06AC3277B;
-	Tue, 18 Jun 2024 13:14:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rBbAoABp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31B73C4AF4D;
+	Tue, 18 Jun 2024 13:14:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716449;
-	bh=cexiw87bpeg8HDJcxVJ62iUSO0LiXHefaZuyeXUHy/Q=;
+	s=korg; t=1718716452;
+	bh=D0lzhbmD3kAdlO1BunfvuTaft4yuZd0wNF3VUf5CNhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IpG8RKLJU5HOD0jC5HncLVjNqOZfOddCmHnKKZJtBgCj2HsCphthAV4XJ+1ziAHtu
-	 TzL85DbyCVhdBdeovf1fXg+bPh1ulU+xBvBpBke462vzuG/ZaDWTrUGwF83gf1TsG6
-	 Z09urIRnUlUyuWuziFCMRy9n2nksxYkI+92K8pIY=
+	b=rBbAoABpuaazW8B93LmTW1vuBqHL8neSO077iVOst2JwEKoY4kC89TCQtJdn/CnrJ
+	 MAk8LRj03BRevHHTSYF/qOtxsCXa4BNHyB2DxRec9oDaV6G1z39X2mmybZuBe77Izs
+	 WbCTVYf7ixuX/oAETwZtMXkmLIwdWATx3DfCQzrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jeff Layton <jlayton@kernel.org>,
 	NeilBrown <neilb@suse.de>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 619/770] NFSD: reduce locking in nfsd_lookup()
-Date: Tue, 18 Jun 2024 14:37:52 +0200
-Message-ID: <20240618123431.181441743@linuxfoundation.org>
+Subject: [PATCH 5.10 620/770] NFSD: use explicit lock/unlock for directory ops
+Date: Tue, 18 Jun 2024 14:37:53 +0200
+Message-ID: <20240618123431.219690616@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,206 +54,261 @@ Content-Transfer-Encoding: 8bit
 
 From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 19d008b46941b8c668402170522e0f7a9258409c ]
+[ Upstream commit debf16f0c671cb8db154a9ebcd6014cfff683b80 ]
 
-nfsd_lookup() takes an exclusive lock on the parent inode, but no
-callers want the lock and it may not be needed at all if the
-result is in the dcache.
+When creating or unlinking a name in a directory use explicit
+inode_lock_nested() instead of fh_lock(), and explicit calls to
+fh_fill_pre_attrs() and fh_fill_post_attrs().  This is already done
+for renames, with lock_rename() as the explicit locking.
 
-Change nfsd_lookup_dentry() to not take the lock, and call
-lookup_one_len_locked() which takes lock only if needed.
+Also move the 'fill' calls closer to the operation that might change the
+attributes.  This way they are avoided on some error paths.
 
-nfsd4_open() currently expects the lock to still be held, but that isn't
-necessary as nfsd_validate_delegated_dentry() provides required
-guarantees without the lock.
+For the v2-only code in nfsproc.c, the fill calls are not replaced as
+they aren't needed.
 
-NOTE: NFSv4 requires directory changeinfo for OPEN even when a create
-  wasn't requested and no change happened.  Now that nfsd_lookup()
-  doesn't use fh_lock(), we need to explicitly fill the attributes
-  when no create happens.  A new fh_fill_both_attrs() is provided
-  for that task.
+Making the locking explicit will simplify proposed future changes to
+locking for directories.  It also makes it easily visible exactly where
+pre/post attributes are used - not all callers of fh_lock() actually
+need the pre/post attributes.
 
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: NeilBrown <neilb@suse.de>
+[ cel: backported to 5.10.y, prior to idmapped mounts ]
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4proc.c  | 20 ++++++++++++--------
- fs/nfsd/nfs4state.c |  3 ---
- fs/nfsd/nfsfh.c     | 19 +++++++++++++++++++
- fs/nfsd/nfsfh.h     |  2 +-
- fs/nfsd/vfs.c       | 34 ++++++++++++++--------------------
- 5 files changed, 46 insertions(+), 32 deletions(-)
+ fs/nfsd/nfs3proc.c |  6 ++++--
+ fs/nfsd/nfs4proc.c |  6 ++++--
+ fs/nfsd/nfsproc.c  |  5 ++---
+ fs/nfsd/vfs.c      | 36 ++++++++++++++++++++++++++----------
+ 4 files changed, 36 insertions(+), 17 deletions(-)
 
+diff --git a/fs/nfsd/nfs3proc.c b/fs/nfsd/nfs3proc.c
+index d78dbb214c5c3..1a52f0b06ec32 100644
+--- a/fs/nfsd/nfs3proc.c
++++ b/fs/nfsd/nfs3proc.c
+@@ -260,7 +260,7 @@ nfsd3_create_file(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 	if (host_err)
+ 		return nfserrno(host_err);
+ 
+-	fh_lock_nested(fhp, I_MUTEX_PARENT);
++	inode_lock_nested(inode, I_MUTEX_PARENT);
+ 
+ 	child = lookup_one_len(argp->name, parent, argp->len);
+ 	if (IS_ERR(child)) {
+@@ -318,11 +318,13 @@ nfsd3_create_file(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 	if (!IS_POSIXACL(inode))
+ 		iap->ia_mode &= ~current_umask();
+ 
++	fh_fill_pre_attrs(fhp);
+ 	host_err = vfs_create(inode, child, iap->ia_mode, true);
+ 	if (host_err < 0) {
+ 		status = nfserrno(host_err);
+ 		goto out;
+ 	}
++	fh_fill_post_attrs(fhp);
+ 
+ 	/* A newly created file already has a file size of zero. */
+ 	if ((iap->ia_valid & ATTR_SIZE) && (iap->ia_size == 0))
+@@ -340,7 +342,7 @@ nfsd3_create_file(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 	status = nfsd_create_setattr(rqstp, fhp, resfhp, &attrs);
+ 
+ out:
+-	fh_unlock(fhp);
++	inode_unlock(inode);
+ 	if (child && !IS_ERR(child))
+ 		dput(child);
+ 	fh_drop_write(fhp);
 diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index f588e592a0703..9cf4298817c4b 100644
+index 9cf4298817c4b..193b84a0f3a59 100644
 --- a/fs/nfsd/nfs4proc.c
 +++ b/fs/nfsd/nfs4proc.c
-@@ -302,6 +302,11 @@ nfsd4_create_file(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	if (d_really_is_positive(child)) {
- 		status = nfs_ok;
+@@ -264,7 +264,7 @@ nfsd4_create_file(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 	if (is_create_with_attrs(open))
+ 		nfsd4_acl_to_attr(NF4REG, open->op_acl, &attrs);
  
-+		/* NFSv4 protocol requires change attributes even though
-+		 * no change happened.
-+		 */
-+		fh_fill_both_attrs(fhp);
-+
- 		switch (open->op_createmode) {
- 		case NFS4_CREATE_UNCHECKED:
- 			if (!d_is_reg(child))
-@@ -417,15 +422,15 @@ do_open_lookup(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate, stru
- 		if (nfsd4_create_is_exclusive(open->op_createmode) && status == 0)
- 			open->op_bmval[1] |= (FATTR4_WORD1_TIME_ACCESS |
- 						FATTR4_WORD1_TIME_MODIFY);
--	} else
--		/*
--		 * Note this may exit with the parent still locked.
--		 * We will hold the lock until nfsd4_open's final
--		 * lookup, to prevent renames or unlinks until we've had
--		 * a chance to an acquire a delegation if appropriate.
--		 */
-+	} else {
- 		status = nfsd_lookup(rqstp, current_fh,
- 				     open->op_fname, open->op_fnamelen, *resfh);
-+		if (!status)
-+			/* NFSv4 protocol requires change attributes even though
-+			 * no change happened.
-+			 */
-+			fh_fill_both_attrs(current_fh);
-+	}
- 	if (status)
+-	fh_lock_nested(fhp, I_MUTEX_PARENT);
++	inode_lock_nested(inode, I_MUTEX_PARENT);
+ 
+ 	child = lookup_one_len(open->op_fname, parent, open->op_fnamelen);
+ 	if (IS_ERR(child)) {
+@@ -348,10 +348,12 @@ nfsd4_create_file(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 	if (!IS_POSIXACL(inode))
+ 		iap->ia_mode &= ~current_umask();
+ 
++	fh_fill_pre_attrs(fhp);
+ 	status = nfsd4_vfs_create(fhp, child, open);
+ 	if (status != nfs_ok)
  		goto out;
- 	status = nfsd_check_obj_isreg(*resfh);
-@@ -1043,7 +1048,6 @@ nfsd4_secinfo(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 				    &exp, &dentry);
- 	if (err)
- 		return err;
--	fh_unlock(&cstate->current_fh);
- 	if (d_really_is_negative(dentry)) {
- 		exp_put(exp);
- 		err = nfserr_noent;
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 2b6c9f1b9de88..e44d9c8d5065a 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -5321,9 +5321,6 @@ nfsd4_verify_deleg_dentry(struct nfsd4_open *open, struct nfs4_file *fp,
- 	struct dentry *child;
- 	__be32 err;
- 
--	/* parent may already be locked, and it may get unlocked by
--	 * this call, but that is safe.
--	 */
- 	err = nfsd_lookup_dentry(open->op_rqstp, parent,
- 				 open->op_fname, open->op_fnamelen,
- 				 &exp, &child);
-diff --git a/fs/nfsd/nfsfh.c b/fs/nfsd/nfsfh.c
-index d4ae838948ba5..cc680deecafa7 100644
---- a/fs/nfsd/nfsfh.c
-+++ b/fs/nfsd/nfsfh.c
-@@ -670,6 +670,25 @@ void fh_fill_post_attrs(struct svc_fh *fhp)
- 			nfsd4_change_attribute(&fhp->fh_post_attr, inode);
- }
- 
-+/**
-+ * fh_fill_both_attrs - Fill pre-op and post-op attributes
-+ * @fhp: file handle to be updated
-+ *
-+ * This is used when the directory wasn't changed, but wcc attributes
-+ * are needed anyway.
-+ */
-+void fh_fill_both_attrs(struct svc_fh *fhp)
-+{
+ 	open->op_created = true;
 +	fh_fill_post_attrs(fhp);
-+	if (!fhp->fh_post_saved)
-+		return;
-+	fhp->fh_pre_change = fhp->fh_post_change;
-+	fhp->fh_pre_mtime = fhp->fh_post_attr.mtime;
-+	fhp->fh_pre_ctime = fhp->fh_post_attr.ctime;
-+	fhp->fh_pre_size = fhp->fh_post_attr.size;
-+	fhp->fh_pre_saved = true;
-+}
-+
- /*
-  * Release a file handle.
-  */
-diff --git a/fs/nfsd/nfsfh.h b/fs/nfsd/nfsfh.h
-index fb9d358a267e5..28a4f9a94e2c8 100644
---- a/fs/nfsd/nfsfh.h
-+++ b/fs/nfsd/nfsfh.h
-@@ -322,7 +322,7 @@ static inline u64 nfsd4_change_attribute(struct kstat *stat,
  
- extern void fh_fill_pre_attrs(struct svc_fh *fhp);
- extern void fh_fill_post_attrs(struct svc_fh *fhp);
--
-+extern void fh_fill_both_attrs(struct svc_fh *fhp);
+ 	/* A newly created file already has a file size of zero. */
+ 	if ((iap->ia_valid & ATTR_SIZE) && (iap->ia_size == 0))
+@@ -373,7 +375,7 @@ nfsd4_create_file(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 	if (attrs.na_aclerr)
+ 		open->op_bmval[0] &= ~FATTR4_WORD0_ACL;
+ out:
+-	fh_unlock(fhp);
++	inode_unlock(inode);
+ 	nfsd_attrs_free(&attrs);
+ 	if (child && !IS_ERR(child))
+ 		dput(child);
+diff --git a/fs/nfsd/nfsproc.c b/fs/nfsd/nfsproc.c
+index 180b84b6597b0..e533550a26db5 100644
+--- a/fs/nfsd/nfsproc.c
++++ b/fs/nfsd/nfsproc.c
+@@ -291,7 +291,7 @@ nfsd_proc_create(struct svc_rqst *rqstp)
+ 		goto done;
+ 	}
  
- /*
-  * Lock a file handle/inode
+-	fh_lock_nested(dirfhp, I_MUTEX_PARENT);
++	inode_lock_nested(dirfhp->fh_dentry->d_inode, I_MUTEX_PARENT);
+ 	dchild = lookup_one_len(argp->name, dirfhp->fh_dentry, argp->len);
+ 	if (IS_ERR(dchild)) {
+ 		resp->status = nfserrno(PTR_ERR(dchild));
+@@ -407,8 +407,7 @@ nfsd_proc_create(struct svc_rqst *rqstp)
+ 	}
+ 
+ out_unlock:
+-	/* We don't really need to unlock, as fh_put does it. */
+-	fh_unlock(dirfhp);
++	inode_unlock(dirfhp->fh_dentry->d_inode);
+ 	fh_drop_write(dirfhp);
+ done:
+ 	fh_put(dirfhp);
 diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
-index dd945099ae6b5..03f6dd2ec653b 100644
+index 03f6dd2ec653b..3364e562b00e5 100644
 --- a/fs/nfsd/vfs.c
 +++ b/fs/nfsd/vfs.c
-@@ -198,27 +198,13 @@ nfsd_lookup_dentry(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 				goto out_nfserr;
- 		}
- 	} else {
--		/*
--		 * In the nfsd4_open() case, this may be held across
--		 * subsequent open and delegation acquisition which may
--		 * need to take the child's i_mutex:
--		 */
--		fh_lock_nested(fhp, I_MUTEX_PARENT);
--		dentry = lookup_one_len(name, dparent, len);
-+		dentry = lookup_one_len_unlocked(name, dparent, len);
- 		host_err = PTR_ERR(dentry);
- 		if (IS_ERR(dentry))
- 			goto out_nfserr;
- 		if (nfsd_mountpoint(dentry, exp)) {
--			/*
--			 * We don't need the i_mutex after all.  It's
--			 * still possible we could open this (regular
--			 * files can be mountpoints too), but the
--			 * i_mutex is just there to prevent renames of
--			 * something that we might be about to delegate,
--			 * and a mountpoint won't be renamed:
--			 */
--			fh_unlock(fhp);
--			if ((host_err = nfsd_cross_mnt(rqstp, &dentry, &exp))) {
-+			host_err = nfsd_cross_mnt(rqstp, &dentry, &exp);
-+			if (host_err) {
- 				dput(dentry);
- 				goto out_nfserr;
- 			}
-@@ -233,7 +219,15 @@ nfsd_lookup_dentry(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	return nfserrno(host_err);
+@@ -1386,7 +1386,7 @@ nfsd_create(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 	if (host_err)
+ 		return nfserrno(host_err);
+ 
+-	fh_lock_nested(fhp, I_MUTEX_PARENT);
++	inode_lock_nested(dentry->d_inode, I_MUTEX_PARENT);
+ 	dchild = lookup_one_len(fname, dentry, flen);
+ 	host_err = PTR_ERR(dchild);
+ 	if (IS_ERR(dchild)) {
+@@ -1401,10 +1401,12 @@ nfsd_create(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 	dput(dchild);
+ 	if (err)
+ 		goto out_unlock;
++	fh_fill_pre_attrs(fhp);
+ 	err = nfsd_create_locked(rqstp, fhp, fname, flen, attrs, type,
+ 				 rdev, resfhp);
++	fh_fill_post_attrs(fhp);
+ out_unlock:
+-	fh_unlock(fhp);
++	inode_unlock(dentry->d_inode);
+ 	return err;
  }
  
--/*
-+/**
-+ * nfsd_lookup - look up a single path component for nfsd
-+ *
-+ * @rqstp:   the request context
-+ * @fhp:     the file handle of the directory
-+ * @name:    the component name, or %NULL to look up parent
-+ * @len:     length of name to examine
-+ * @resfh:   pointer to pre-initialised filehandle to hold result.
-+ *
-  * Look up one component of a pathname.
-  * N.B. After this call _both_ fhp and resfh need an fh_put
-  *
-@@ -243,11 +237,11 @@ nfsd_lookup_dentry(struct svc_rqst *rqstp, struct svc_fh *fhp,
-  * returned. Otherwise the covered directory is returned.
-  * NOTE: this mountpoint crossing is not supported properly by all
-  *   clients and is explicitly disallowed for NFSv3
-- *      NeilBrown <neilb@cse.unsw.edu.au>
-+ *
-  */
- __be32
- nfsd_lookup(struct svc_rqst *rqstp, struct svc_fh *fhp, const char *name,
--				unsigned int len, struct svc_fh *resfh)
-+	    unsigned int len, struct svc_fh *resfh)
- {
- 	struct svc_export	*exp;
- 	struct dentry		*dentry;
+@@ -1487,20 +1489,22 @@ nfsd_symlink(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 		goto out;
+ 	}
+ 
+-	fh_lock(fhp);
+ 	dentry = fhp->fh_dentry;
++	inode_lock_nested(dentry->d_inode, I_MUTEX_PARENT);
+ 	dnew = lookup_one_len(fname, dentry, flen);
+ 	if (IS_ERR(dnew)) {
+ 		err = nfserrno(PTR_ERR(dnew));
+-		fh_unlock(fhp);
++		inode_unlock(dentry->d_inode);
+ 		goto out_drop_write;
+ 	}
++	fh_fill_pre_attrs(fhp);
+ 	host_err = vfs_symlink(d_inode(dentry), dnew, path);
+ 	err = nfserrno(host_err);
+ 	cerr = fh_compose(resfhp, fhp->fh_export, dnew, fhp);
+ 	if (!err)
+ 		nfsd_create_setattr(rqstp, fhp, resfhp, attrs);
+-	fh_unlock(fhp);
++	fh_fill_post_attrs(fhp);
++	inode_unlock(dentry->d_inode);
+ 	if (!err)
+ 		err = nfserrno(commit_metadata(fhp));
+ 	dput(dnew);
+@@ -1546,9 +1550,9 @@ nfsd_link(struct svc_rqst *rqstp, struct svc_fh *ffhp,
+ 		goto out;
+ 	}
+ 
+-	fh_lock_nested(ffhp, I_MUTEX_PARENT);
+ 	ddir = ffhp->fh_dentry;
+ 	dirp = d_inode(ddir);
++	inode_lock_nested(dirp, I_MUTEX_PARENT);
+ 
+ 	dnew = lookup_one_len(name, ddir, len);
+ 	if (IS_ERR(dnew)) {
+@@ -1561,8 +1565,18 @@ nfsd_link(struct svc_rqst *rqstp, struct svc_fh *ffhp,
+ 	err = nfserr_noent;
+ 	if (d_really_is_negative(dold))
+ 		goto out_dput;
++<<<<<<< current
+ 	host_err = vfs_link(dold, dirp, dnew, NULL);
+ 	fh_unlock(ffhp);
++||||||| constructed merge base
++	host_err = vfs_link(dold, &init_user_ns, dirp, dnew, NULL);
++	fh_unlock(ffhp);
++=======
++	fh_fill_pre_attrs(ffhp);
++	host_err = vfs_link(dold, &init_user_ns, dirp, dnew, NULL);
++	fh_fill_post_attrs(ffhp);
++	inode_unlock(dirp);
++>>>>>>> patched
+ 	if (!host_err) {
+ 		err = nfserrno(commit_metadata(ffhp));
+ 		if (!err)
+@@ -1582,7 +1596,7 @@ nfsd_link(struct svc_rqst *rqstp, struct svc_fh *ffhp,
+ out_dput:
+ 	dput(dnew);
+ out_unlock:
+-	fh_unlock(ffhp);
++	inode_unlock(dirp);
+ 	goto out_drop_write;
+ }
+ 
+@@ -1755,9 +1769,9 @@ nfsd_unlink(struct svc_rqst *rqstp, struct svc_fh *fhp, int type,
+ 	if (host_err)
+ 		goto out_nfserr;
+ 
+-	fh_lock_nested(fhp, I_MUTEX_PARENT);
+ 	dentry = fhp->fh_dentry;
+ 	dirp = d_inode(dentry);
++	inode_lock_nested(dirp, I_MUTEX_PARENT);
+ 
+ 	rdentry = lookup_one_len(fname, dentry, flen);
+ 	host_err = PTR_ERR(rdentry);
+@@ -1775,6 +1789,7 @@ nfsd_unlink(struct svc_rqst *rqstp, struct svc_fh *fhp, int type,
+ 	if (!type)
+ 		type = d_inode(rdentry)->i_mode & S_IFMT;
+ 
++	fh_fill_pre_attrs(fhp);
+ 	if (type != S_IFDIR) {
+ 		if (rdentry->d_sb->s_export_op->flags & EXPORT_OP_CLOSE_BEFORE_UNLINK)
+ 			nfsd_close_cached_files(rdentry);
+@@ -1782,8 +1797,9 @@ nfsd_unlink(struct svc_rqst *rqstp, struct svc_fh *fhp, int type,
+ 	} else {
+ 		host_err = vfs_rmdir(dirp, rdentry);
+ 	}
++	fh_fill_post_attrs(fhp);
+ 
+-	fh_unlock(fhp);
++	inode_unlock(dirp);
+ 	if (!host_err)
+ 		host_err = commit_metadata(fhp);
+ 	dput(rdentry);
+@@ -1806,7 +1822,7 @@ nfsd_unlink(struct svc_rqst *rqstp, struct svc_fh *fhp, int type,
+ out:
+ 	return err;
+ out_unlock:
+-	fh_unlock(fhp);
++	inode_unlock(dirp);
+ 	goto out_drop_write;
+ }
+ 
 -- 
 2.43.0
 
