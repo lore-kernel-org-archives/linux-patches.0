@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EECC914F130;
-	Tue, 18 Jun 2024 12:54:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5DB514F130;
+	Tue, 18 Jun 2024 12:54:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715242; cv=none; b=DP1zabY54GoNwvWMkJbr5w8XAfPg70wq/Z68Rwqd8St02fNiQwj0d8b8nOrY8t+QYlon6A+fPpQG+cwmgsoifdW1KuUgakkN73OWmsV++FqVoPVxrSlYZkykAg+d+68EARZLCa/Y3PTIINBIic4p12hLY5jw+Skc8FgzXDczUBU=
+	t=1718715245; cv=none; b=h9YC288uZWhleQoaZpGI85tyNs2FxcufLuX8G2L++I61K2F6iOuycBCeFhiN3L9xyIIxzvNLi4B9eJl5SELNYIzK0jVaG8qcU9KFExM5BulXorhYKYdnZoRsTK6xq4ax7P+2OIvzyu1b5PcTTDPVMA6OlzMWTIQixjkaf9f4oEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715242; c=relaxed/simple;
-	bh=KTaBXpfa6VDnRgp5chh98Yq9A6AxDntSkFwSDGQrAjI=;
+	s=arc-20240116; t=1718715245; c=relaxed/simple;
+	bh=lER9RqQpDr5ECIXLiCuBJvgJDzlZSYHy5vAhySegagA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EqvXwxcgubRQ6hbDWYVmmueDh/NsB5s4s1vTAst9Sq4kpnaHXVuyP8rQzUJ8MfgMpK0GgrBfc0k/zErwM5K1WZ8Js/7QEWAY8wAMnGhnIHB4DIBk+MCrNtXu6h/I0IoT+ijrh5Sor4cNwqSy2sbABlbnrDAx00e50kSlt2KTuXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jMwBQkEv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BQ/i+pYoYMKWa/Gtm0+mfVIh+KJfkzyeH/OhlfNtAv3lM2P5T8WYYpgwMx+BizcDB/sT0PMN7+kWkpnKcTFYrh536RnB8Lhyqg9a1PJoqruoBX/XBCdvCv9WsRtIn3vVoFPwJyGjtBtbhamBPbUlx6USVng0hUXcMwpK/STDbw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ns0SuKgK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jMwBQkEv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7208BC3277B;
-	Tue, 18 Jun 2024 12:54:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ns0SuKgK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AFF8C3277B;
+	Tue, 18 Jun 2024 12:54:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715241;
-	bh=KTaBXpfa6VDnRgp5chh98Yq9A6AxDntSkFwSDGQrAjI=;
+	s=korg; t=1718715244;
+	bh=lER9RqQpDr5ECIXLiCuBJvgJDzlZSYHy5vAhySegagA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jMwBQkEvKAC6HrChF1OIoNNhMyARWEf26Qp5VDRQfKbIFormFhpkYkFO5z1To3/6v
-	 goPjvx8/pD0W4iJAGEMM6iVuiBBiPJEJtnq5XdIt8k6SrBpEbL10pyFqoO8pk4UkvZ
-	 KK2KNgy3SbEx4dy7Q+Vly26KkjITfN6gIfpF7NIk=
+	b=Ns0SuKgKgqp/qCqg9HwcVgJf3ylqWw/dhClJgYOanB7WlbMaD631Xw55ZGesVd64g
+	 jnHBPRD12RyGIdwvi2d6LP+0dfM8RdqFXuTpcEIzCHxj/8RUi8hQJ+aHRQ13C2Uyjl
+	 mCLt62ltL+zWpAGmZoTlkI79Sy118u6G6DIECnz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 211/770] NFSD: Update the NFSv3 COMMIT3res encoder to use struct xdr_stream
-Date: Tue, 18 Jun 2024 14:31:04 +0200
-Message-ID: <20240618123415.419764681@linuxfoundation.org>
+Subject: [PATCH 5.10 212/770] NFSD: Add a helper that encodes NFSv3 directory offset cookies
+Date: Tue, 18 Jun 2024 14:31:05 +0200
+Message-ID: <20240618123415.457478779@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,99 +52,128 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 5ef2826c761079e27904c85034df34e601b82d94 ]
+[ Upstream commit a161e6c76aeba835e475a2f27dbbe5c37e565e94 ]
 
-As an additional clean up, encode_wcc_data() is removed because it
-is now no longer used.
+Refactor: De-duplicate identical code that handles encoding of
+directory offset cookies across page boundaries.
 
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs3xdr.c | 54 +++++++++++++----------------------------------
- 1 file changed, 15 insertions(+), 39 deletions(-)
+ fs/nfsd/nfs3proc.c | 24 ++----------------------
+ fs/nfsd/nfs3xdr.c  | 36 +++++++++++++++++++++++-------------
+ fs/nfsd/xdr3.h     |  2 ++
+ 3 files changed, 27 insertions(+), 35 deletions(-)
 
+diff --git a/fs/nfsd/nfs3proc.c b/fs/nfsd/nfs3proc.c
+index 201f2009b540b..acb0a2d37dcbb 100644
+--- a/fs/nfsd/nfs3proc.c
++++ b/fs/nfsd/nfs3proc.c
+@@ -500,17 +500,7 @@ nfsd3_proc_readdir(struct svc_rqst *rqstp)
+ 		count += PAGE_SIZE;
+ 	}
+ 	resp->count = count >> 2;
+-	if (resp->offset) {
+-		if (unlikely(resp->offset1)) {
+-			/* we ended up with offset on a page boundary */
+-			*resp->offset = htonl(offset >> 32);
+-			*resp->offset1 = htonl(offset & 0xffffffff);
+-			resp->offset1 = NULL;
+-		} else {
+-			xdr_encode_hyper(resp->offset, offset);
+-		}
+-		resp->offset = NULL;
+-	}
++	nfs3svc_encode_cookie3(resp, offset);
+ 
+ 	return rpc_success;
+ }
+@@ -565,17 +555,7 @@ nfsd3_proc_readdirplus(struct svc_rqst *rqstp)
+ 		count += PAGE_SIZE;
+ 	}
+ 	resp->count = count >> 2;
+-	if (resp->offset) {
+-		if (unlikely(resp->offset1)) {
+-			/* we ended up with offset on a page boundary */
+-			*resp->offset = htonl(offset >> 32);
+-			*resp->offset1 = htonl(offset & 0xffffffff);
+-			resp->offset1 = NULL;
+-		} else {
+-			xdr_encode_hyper(resp->offset, offset);
+-		}
+-		resp->offset = NULL;
+-	}
++	nfs3svc_encode_cookie3(resp, offset);
+ 
+ out:
+ 	return rpc_success;
 diff --git a/fs/nfsd/nfs3xdr.c b/fs/nfsd/nfs3xdr.c
-index 1467bba02e180..eab14b52db202 100644
+index eab14b52db202..e334a1454edbb 100644
 --- a/fs/nfsd/nfs3xdr.c
 +++ b/fs/nfsd/nfs3xdr.c
-@@ -432,14 +432,6 @@ encode_fattr3(struct svc_rqst *rqstp, __be32 *p, struct svc_fh *fhp,
+@@ -1219,6 +1219,28 @@ static __be32 *encode_entryplus_baggage(struct nfsd3_readdirres *cd, __be32 *p,
  	return p;
  }
  
--static __be32 *
--encode_saved_post_attr(struct svc_rqst *rqstp, __be32 *p, struct svc_fh *fhp)
--{
--	/* Attributes to follow */
--	*p++ = xdr_one;
--	return encode_fattr3(rqstp, p, fhp, &fhp->fh_post_attr);
--}
--
- static bool
- svcxdr_encode_wcc_attr(struct xdr_stream *xdr, const struct svc_fh *fhp)
- {
-@@ -562,30 +554,6 @@ svcxdr_encode_wcc_data(struct svc_rqst *rqstp, struct xdr_stream *xdr,
- 	return true;
- }
- 
--/*
-- * Enocde weak cache consistency data
-- */
--static __be32 *
--encode_wcc_data(struct svc_rqst *rqstp, __be32 *p, struct svc_fh *fhp)
--{
--	struct dentry	*dentry = fhp->fh_dentry;
--
--	if (dentry && d_really_is_positive(dentry) && fhp->fh_post_saved) {
--		if (fhp->fh_pre_saved) {
--			*p++ = xdr_one;
--			p = xdr_encode_hyper(p, (u64) fhp->fh_pre_size);
--			p = encode_time3(p, &fhp->fh_pre_mtime);
--			p = encode_time3(p, &fhp->fh_pre_ctime);
--		} else {
--			*p++ = xdr_zero;
--		}
--		return encode_saved_post_attr(rqstp, p, fhp);
--	}
--	/* no pre- or post-attrs */
--	*p++ = xdr_zero;
--	return encode_post_op_attr(rqstp, p, fhp);
--}
--
- static bool fs_supports_change_attribute(struct super_block *sb)
- {
- 	return sb->s_flags & SB_I_VERSION || sb->s_export_op->fetch_iversion;
-@@ -1548,16 +1516,24 @@ nfs3svc_encode_pathconfres(struct svc_rqst *rqstp, __be32 *p)
- int
- nfs3svc_encode_commitres(struct svc_rqst *rqstp, __be32 *p)
- {
-+	struct xdr_stream *xdr = &rqstp->rq_res_stream;
- 	struct nfsd3_commitres *resp = rqstp->rq_resp;
- 
--	*p++ = resp->status;
--	p = encode_wcc_data(rqstp, p, &resp->fh);
--	/* Write verifier */
--	if (resp->status == 0) {
--		*p++ = resp->verf[0];
--		*p++ = resp->verf[1];
-+	if (!svcxdr_encode_nfsstat3(xdr, resp->status))
-+		return 0;
-+	switch (resp->status) {
-+	case nfs_ok:
-+		if (!svcxdr_encode_wcc_data(rqstp, xdr, &resp->fh))
-+			return 0;
-+		if (!svcxdr_encode_writeverf3(xdr, resp->verf))
-+			return 0;
-+		break;
-+	default:
-+		if (!svcxdr_encode_wcc_data(rqstp, xdr, &resp->fh))
-+			return 0;
- 	}
--	return xdr_ressize_check(rqstp, p);
++/**
++ * nfs3svc_encode_cookie3 - Encode a directory offset cookie
++ * @resp: readdir result context
++ * @offset: offset cookie to encode
++ *
++ */
++void nfs3svc_encode_cookie3(struct nfsd3_readdirres *resp, u64 offset)
++{
++	if (!resp->offset)
++		return;
 +
-+	return 1;
- }
- 
++	if (resp->offset1) {
++		/* we ended up with offset on a page boundary */
++		*resp->offset = cpu_to_be32(offset >> 32);
++		*resp->offset1 = cpu_to_be32(offset & 0xffffffff);
++		resp->offset1 = NULL;
++	} else {
++		xdr_encode_hyper(resp->offset, offset);
++	}
++	resp->offset = NULL;
++}
++
  /*
+  * Encode a directory entry. This one works for both normal readdir
+  * and readdirplus.
+@@ -1244,19 +1266,7 @@ encode_entry(struct readdir_cd *ccd, const char *name, int namlen,
+ 	int		elen;		/* estimated entry length in words */
+ 	int		num_entry_words = 0;	/* actual number of words */
+ 
+-	if (cd->offset) {
+-		u64 offset64 = offset;
+-
+-		if (unlikely(cd->offset1)) {
+-			/* we ended up with offset on a page boundary */
+-			*cd->offset = htonl(offset64 >> 32);
+-			*cd->offset1 = htonl(offset64 & 0xffffffff);
+-			cd->offset1 = NULL;
+-		} else {
+-			xdr_encode_hyper(cd->offset, offset64);
+-		}
+-		cd->offset = NULL;
+-	}
++	nfs3svc_encode_cookie3(cd, offset);
+ 
+ 	/*
+ 	dprintk("encode_entry(%.*s @%ld%s)\n",
+diff --git a/fs/nfsd/xdr3.h b/fs/nfsd/xdr3.h
+index 8073350418ae0..e76e9230827e4 100644
+--- a/fs/nfsd/xdr3.h
++++ b/fs/nfsd/xdr3.h
+@@ -300,6 +300,8 @@ int nfs3svc_encode_commitres(struct svc_rqst *, __be32 *);
+ 
+ void nfs3svc_release_fhandle(struct svc_rqst *);
+ void nfs3svc_release_fhandle2(struct svc_rqst *);
++
++void nfs3svc_encode_cookie3(struct nfsd3_readdirres *resp, u64 offset);
+ int nfs3svc_encode_entry(void *, const char *name,
+ 				int namlen, loff_t offset, u64 ino,
+ 				unsigned int);
 -- 
 2.43.0
 
