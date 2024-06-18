@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A80D13A868;
-	Tue, 18 Jun 2024 12:48:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58374149001;
+	Tue, 18 Jun 2024 12:48:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718714902; cv=none; b=BkTvtZLY3bzXmDS4Ou//aV4ZscdWmY8azBzmtXwjFnp1JW5GYp1VbrEhHMxIebfOpwtyCnZLvlTUrZbsqVSE/dMs3H+axyTxjbcJYIV4n/OfgrnwD549HcPqsfOCVJ5NF6WK9JsiJymJNkDUc+NW2j1fCjPpp2Ulpbe83ox2Bh0=
+	t=1718714905; cv=none; b=QJ+qFEPY1J1NkmbR3DGvTuMK7ZSyJC6Wfow3EMdeKdxr1hNoOt18zNqZaTd8Z4XgYR8EY0ceebyAmDBDAxf5uEq1Kzo2vomsxoBRg9GcvEwY4e1sYFCIijHyaoax1xLXAWTHtFWZAhntpI6+uMTetRtVsRuYxRrtbo469TrnPbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718714902; c=relaxed/simple;
-	bh=1fulfRyFIPjZybPQdiKhZIB28bcFqe9lw78hCEaJKkQ=;
+	s=arc-20240116; t=1718714905; c=relaxed/simple;
+	bh=J/8hIFClL2sV0Hv6avqbZXZs9ugO+I7YdAsDA5Iths4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z19+XgmFO7G3TIeGLF4MCIgjPa3TS5+EktaX7NtxlL9buVFTGZZpZVuRQvzQlCR6ecYHK31sKoXjq4tRvNgCj1ldIBamtsBkvwNy+ybgBgm4xbl8JvBodhp/L2fsoZ+avTtejJ6akKJtFdpEqNoJ/Uhgup3+QcAfnDH/8dTrrVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zhnSNoOi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nQUY5BBiA/0LdUmq7p+1rJf0A9ZTqi+CpNawtfSITXzYBZhnnrpwwK80fsdmKdDR7Ro3rwqetCnsE5+7O22mKCYkz8y4lvUwDL/zkuBvRuyuXFi95yTf/7PKSaOhX+pe7SnKL/BZcWRyk/e0wKMP2Stw6yPa880pLTyXs6R7l6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pptzAyvh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zhnSNoOi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1039C3277B;
-	Tue, 18 Jun 2024 12:48:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pptzAyvh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D20B1C3277B;
+	Tue, 18 Jun 2024 12:48:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718714902;
-	bh=1fulfRyFIPjZybPQdiKhZIB28bcFqe9lw78hCEaJKkQ=;
+	s=korg; t=1718714905;
+	bh=J/8hIFClL2sV0Hv6avqbZXZs9ugO+I7YdAsDA5Iths4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zhnSNoOiF1Aew1bpLkhUYKiD+5hrXVll4idXS9mj7pCc3m+bntqifO2S98ZTsy4Vk
-	 ETpSekdZd5XBbrmWbntsbpcifQLGWeduNFHTjk/a+G78PAYphHKlwCamgnSS2f4zbh
-	 e1LBuuDxUaoMBp84OrEbSrFvP156acRA44VfQtxQ=
+	b=pptzAyvh2jMG11BJSk7PaJSQkaEEVFxBhnNyotscUwk8nMiNuQLEOWZwyIx1GzbDc
+	 EMsdDRpvfTPH1no31eZv2KiDFTrtzJcQAwRWqfxCAYlnQmOpeJGw1ZsbPrrCkE58gP
+	 6L3N3jQLHcGL817CHSeSey6Y6CHoEDEr3SWrlEz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <christian.brauner@ubuntu.com>,
+	Christoph Hellwig <hch@infradead.org>,
 	"Eric W. Biederman" <ebiederm@xmission.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 127/770] file: Rename __close_fd to close_fd and remove the files parameter
-Date: Tue, 18 Jun 2024 14:29:40 +0200
-Message-ID: <20240618123412.177984482@linuxfoundation.org>
+Subject: [PATCH 5.10 128/770] file: Replace ksys_close with close_fd
+Date: Tue, 18 Jun 2024 14:29:41 +0200
+Message-ID: <20240618123412.217010450@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -54,123 +54,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric W. Biederman <ebiederm@xmission.com>
 
-[ Upstream commit 8760c909f54a82aaa6e76da19afe798a0c77c3c3 ]
+[ Upstream commit 1572bfdf21d4d50e51941498ffe0b56c2289f783 ]
 
-The function __close_fd was added to support binder[1].  Now that
-binder has been fixed to no longer need __close_fd[2] all calls
-to __close_fd pass current->files.
+Now that ksys_close is exactly identical to close_fd replace
+the one caller of ksys_close with close_fd.
 
-Therefore transform the files parameter into a local variable
-initialized to current->files, and rename __close_fd to close_fd to
-reflect this change, and keep it in sync with the similar changes to
-__alloc_fd, and __fd_install.
-
-This removes the need for callers to care about the extra care that
-needs to be take if anything except current->files is passed, by
-limiting the callers to only operation on current->files.
-
-[1] 483ce1d4b8c3 ("take descriptor-related part of close() to file.c")
-[2] 44d8047f1d87 ("binder: use standard functions to allocate fds")
-Acked-by: Christian Brauner <christian.brauner@ubuntu.com>
-v1: https://lkml.kernel.org/r/20200817220425.9389-17-ebiederm@xmission.com
-Link: https://lkml.kernel.org/r/20201120231441.29911-21-ebiederm@xmission.com
+[1] https://lkml.kernel.org/r/20200818112020.GA17080@infradead.org
+Suggested-by: Christoph Hellwig <hch@infradead.org>
+Link: https://lkml.kernel.org/r/20201120231441.29911-22-ebiederm@xmission.com
 Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/file.c                | 10 ++++------
- fs/open.c                |  2 +-
- include/linux/fdtable.h  |  3 +--
- include/linux/syscalls.h |  6 +++---
- 4 files changed, 9 insertions(+), 12 deletions(-)
+ fs/autofs/dev-ioctl.c    |  5 +++--
+ include/linux/syscalls.h | 12 ------------
+ 2 files changed, 3 insertions(+), 14 deletions(-)
 
-diff --git a/fs/file.c b/fs/file.c
-index 48d0306e42ccc..fdb84a64724b7 100644
---- a/fs/file.c
-+++ b/fs/file.c
-@@ -659,11 +659,9 @@ static struct file *pick_file(struct files_struct *files, unsigned fd)
- 	return file;
- }
- 
--/*
-- * The same warnings as for __alloc_fd()/__fd_install() apply here...
-- */
--int __close_fd(struct files_struct *files, unsigned fd)
-+int close_fd(unsigned fd)
- {
-+	struct files_struct *files = current->files;
- 	struct file *file;
- 
- 	file = pick_file(files, fd);
-@@ -672,7 +670,7 @@ int __close_fd(struct files_struct *files, unsigned fd)
- 
- 	return filp_close(file, files);
- }
--EXPORT_SYMBOL(__close_fd); /* for ksys_close() */
-+EXPORT_SYMBOL(close_fd); /* for ksys_close() */
- 
- /**
-  * __close_range() - Close all file descriptors in a given range.
-@@ -1087,7 +1085,7 @@ int replace_fd(unsigned fd, struct file *file, unsigned flags)
- 	struct files_struct *files = current->files;
- 
- 	if (!file)
--		return __close_fd(files, fd);
-+		return close_fd(fd);
- 
- 	if (fd >= rlimit(RLIMIT_NOFILE))
- 		return -EBADF;
-diff --git a/fs/open.c b/fs/open.c
-index 83f62cf1432c8..48933cbb75391 100644
---- a/fs/open.c
-+++ b/fs/open.c
-@@ -1310,7 +1310,7 @@ EXPORT_SYMBOL(filp_close);
+diff --git a/fs/autofs/dev-ioctl.c b/fs/autofs/dev-ioctl.c
+index 322b7dfb4ea01..5bf781ea6d676 100644
+--- a/fs/autofs/dev-ioctl.c
++++ b/fs/autofs/dev-ioctl.c
+@@ -4,9 +4,10 @@
+  * Copyright 2008 Ian Kent <raven@themaw.net>
   */
- SYSCALL_DEFINE1(close, unsigned int, fd)
+ 
++#include <linux/module.h>
+ #include <linux/miscdevice.h>
+ #include <linux/compat.h>
+-#include <linux/syscalls.h>
++#include <linux/fdtable.h>
+ #include <linux/magic.h>
+ #include <linux/nospec.h>
+ 
+@@ -289,7 +290,7 @@ static int autofs_dev_ioctl_closemount(struct file *fp,
+ 				       struct autofs_sb_info *sbi,
+ 				       struct autofs_dev_ioctl *param)
  {
--	int retval = __close_fd(current->files, fd);
-+	int retval = close_fd(fd);
+-	return ksys_close(param->ioctlfd);
++	return close_fd(param->ioctlfd);
+ }
  
- 	/* can't restart close syscall because file table entry was cleared */
- 	if (unlikely(retval == -ERESTARTSYS ||
-diff --git a/include/linux/fdtable.h b/include/linux/fdtable.h
-index d26b884fcc5cc..4ed3589f9294e 100644
---- a/include/linux/fdtable.h
-+++ b/include/linux/fdtable.h
-@@ -124,8 +124,7 @@ int iterate_fd(struct files_struct *, unsigned,
- 		int (*)(const void *, struct file *, unsigned),
- 		const void *);
- 
--extern int __close_fd(struct files_struct *files,
--		      unsigned int fd);
-+extern int close_fd(unsigned int fd);
- extern int __close_range(unsigned int fd, unsigned int max_fd, unsigned int flags);
- extern int close_fd_get_file(unsigned int fd, struct file **res);
- extern int unshare_fd(unsigned long unshare_flags, unsigned int max_fds,
+ /*
 diff --git a/include/linux/syscalls.h b/include/linux/syscalls.h
-index 17a24e1180dad..0bc3dd86f9e50 100644
+index 0bc3dd86f9e50..1ea422b1a9f1c 100644
 --- a/include/linux/syscalls.h
 +++ b/include/linux/syscalls.h
-@@ -1320,16 +1320,16 @@ static inline long ksys_ftruncate(unsigned int fd, loff_t length)
+@@ -1320,18 +1320,6 @@ static inline long ksys_ftruncate(unsigned int fd, loff_t length)
  	return do_sys_ftruncate(fd, length, 1);
  }
  
--extern int __close_fd(struct files_struct *files, unsigned int fd);
-+extern int close_fd(unsigned int fd);
- 
- /*
-  * In contrast to sys_close(), this stub does not check whether the syscall
-  * should or should not be restarted, but returns the raw error codes from
-- * __close_fd().
-+ * close_fd().
-  */
- static inline int ksys_close(unsigned int fd)
- {
--	return __close_fd(current->files, fd);
-+	return close_fd(fd);
- }
- 
+-extern int close_fd(unsigned int fd);
+-
+-/*
+- * In contrast to sys_close(), this stub does not check whether the syscall
+- * should or should not be restarted, but returns the raw error codes from
+- * close_fd().
+- */
+-static inline int ksys_close(unsigned int fd)
+-{
+-	return close_fd(fd);
+-}
+-
  extern long do_sys_truncate(const char __user *pathname, loff_t length);
+ 
+ static inline long ksys_truncate(const char __user *pathname, loff_t length)
 -- 
 2.43.0
 
