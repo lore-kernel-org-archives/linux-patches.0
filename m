@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D31815A848;
-	Tue, 18 Jun 2024 13:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335B71ACE60;
+	Tue, 18 Jun 2024 13:18:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716707; cv=none; b=FKMSlpDWhxKMH1p7ped8vG+CC+8taRUasVG4KaXMkXEIzgW05uEFzm67m7Lov1fALB4bptjY7g0e3fO6V+4j5vXzIc0SVI5cDqpvCbjviHCMK71eknooqtRF8Gi46P/81XGsbIoM6+F4379PtX8sJFwRVVED5V1H01+5xOjWL0E=
+	t=1718716709; cv=none; b=neNkG/JniqiNZ4+DeXVfVyFqT7CS0wsrTQAjcNcgCqcGpJ4dnsgPigPxZvIr5765a+hsDhxdcMvzAm0bogORYiMJ8idMXy8n5ZIbJ8b0wFPyNV+yccGEjQteozeQXQCrgCGWOv6sYbF6sPNkjTGD0epfFHdxbRFAeEZ6iDCKCF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716707; c=relaxed/simple;
-	bh=5m0bk1TsbE6lTgFu5h1gynX2v2AleSoBiKAvHARy8VE=;
+	s=arc-20240116; t=1718716709; c=relaxed/simple;
+	bh=Q5+aI9x5BbSDqOGV/y4A1bDbfknabmRZ+UZtsmxzPsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ruCn3nRWCyaiQuoe+fFtniOXxU88f/xSA5U/7MVR8OEDyTZs94IT5WHLxQKZSCDLh/seH9zdCa07j0I+7TR71f9+6WV3I2ynNMLPfq+VYoVC9sS45PFVCZwiScucxWPhx5hGcbfx1wmYc3FJj5+gDggqwHrsVvRU+lvBeLu7pxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1qSjvTj7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IzcZieZUOnan7/F75Ye2MUjGhfKph7xB3eIl6soG++blXBfG1CSxyXxaKUjGa3YeHF+JrCDax+/f0hSWdY+7n6ja6j9QzerTQTSZMVr/ZiWNpJuFV3+fttb50ey4kfzWXKNtF71T5CGEBGATsIFt+TiYfn0TRwwImF8U7c26100=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bne+EG0r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1qSjvTj7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6480C3277B;
-	Tue, 18 Jun 2024 13:18:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bne+EG0r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5CDFC3277B;
+	Tue, 18 Jun 2024 13:18:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716706;
-	bh=5m0bk1TsbE6lTgFu5h1gynX2v2AleSoBiKAvHARy8VE=;
+	s=korg; t=1718716709;
+	bh=Q5+aI9x5BbSDqOGV/y4A1bDbfknabmRZ+UZtsmxzPsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1qSjvTj7J1bVynCxGYqZDUEOk+6AvBjkEG/6MFW3OJRGKaEYzRkw0zUpDNgjc0Skx
-	 44CMpNYJLcDcsIdY7uJJV7a2x6X9INzE14YpC3UwOQQIaYB1xjPNCrWKWhO0C5Ht/g
-	 ZmKNq+cQ5kIGDvIQpeLnSXL1VTlKJ/x3Z993W5Bs=
+	b=bne+EG0rLyDkcK2hNz8tmh1Y0i4L2QaCW/TwXmqguZG7MJ9A/E6nXJvV8RakoDpIB
+	 B+XMJzqrm/Z5pj0U2/oTRpdm8QW9qZsys3Mneopb0IlrphCgmeMpeCrha6WPRWZrRy
+	 DZ80FXAvP0ntCsazS3SmvvVdQljHoHKqrOtkkWGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=E5=BC=B5=E6=99=BA=E8=AB=BA?= <cc85nod@gmail.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Dai Ngo <dai.ngo@oracle.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
+	Jeff Layton <jlayton@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 736/770] nfsd: fix courtesy client with deny mode handling in nfs4_upgrade_open
-Date: Tue, 18 Jun 2024 14:39:49 +0200
-Message-ID: <20240618123435.676731398@linuxfoundation.org>
+Subject: [PATCH 5.10 719/770] NFSD: Use only RQ_DROPME to signal the need to drop a reply
+Date: Tue, 18 Jun 2024 14:39:32 +0200
+Message-ID: <20240618123435.023005908@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -47,63 +45,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit dcd779dc46540e174a6ac8d52fbed23593407317 ]
+[ Upstream commit 9315564747cb6a570e99196b3a4880fb817635fd ]
 
-The nested if statements here make no sense, as you can never reach
-"else" branch in the nested statement. Fix the error handling for
-when there is a courtesy client that holds a conflicting deny mode.
+Clean up: NFSv2 has the only two usages of rpc_drop_reply in the
+NFSD code base. Since NFSv2 is going away at some point, replace
+these in order to simplify the "drop this reply?" check in
+nfsd_dispatch().
 
-Fixes: 3d6942715180 ("NFSD: add support for share reservation conflict to courteous server")
-Reported-by: 張智諺 <cc85nod@gmail.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Dai Ngo <dai.ngo@oracle.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ fs/nfsd/nfsproc.c | 4 ++--
+ fs/nfsd/nfssvc.c  | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 507dd2b11856b..e8e642e5ec8f1 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -5296,16 +5296,17 @@ nfs4_upgrade_open(struct svc_rqst *rqstp, struct nfs4_file *fp,
- 	/* test and set deny mode */
- 	spin_lock(&fp->fi_lock);
- 	status = nfs4_file_check_deny(fp, open->op_share_deny);
--	if (status == nfs_ok) {
--		if (status != nfserr_share_denied) {
--			set_deny(open->op_share_deny, stp);
--			fp->fi_share_deny |=
--				(open->op_share_deny & NFS4_SHARE_DENY_BOTH);
--		} else {
--			if (nfs4_resolve_deny_conflicts_locked(fp, false,
--					stp, open->op_share_deny, false))
--				status = nfserr_jukebox;
--		}
-+	switch (status) {
-+	case nfs_ok:
-+		set_deny(open->op_share_deny, stp);
-+		fp->fi_share_deny |=
-+			(open->op_share_deny & NFS4_SHARE_DENY_BOTH);
-+		break;
-+	case nfserr_share_denied:
-+		if (nfs4_resolve_deny_conflicts_locked(fp, false,
-+				stp, open->op_share_deny, false))
-+			status = nfserr_jukebox;
-+		break;
- 	}
- 	spin_unlock(&fp->fi_lock);
+diff --git a/fs/nfsd/nfsproc.c b/fs/nfsd/nfsproc.c
+index 3777b5be4253a..c32a871f0e275 100644
+--- a/fs/nfsd/nfsproc.c
++++ b/fs/nfsd/nfsproc.c
+@@ -211,7 +211,7 @@ nfsd_proc_read(struct svc_rqst *rqstp)
+ 	if (resp->status == nfs_ok)
+ 		resp->status = fh_getattr(&resp->fh, &resp->stat);
+ 	else if (resp->status == nfserr_jukebox)
+-		return rpc_drop_reply;
++		__set_bit(RQ_DROPME, &rqstp->rq_flags);
+ 	return rpc_success;
+ }
  
+@@ -246,7 +246,7 @@ nfsd_proc_write(struct svc_rqst *rqstp)
+ 	if (resp->status == nfs_ok)
+ 		resp->status = fh_getattr(&resp->fh, &resp->stat);
+ 	else if (resp->status == nfserr_jukebox)
+-		return rpc_drop_reply;
++		__set_bit(RQ_DROPME, &rqstp->rq_flags);
+ 	return rpc_success;
+ }
+ 
+diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
+index 429f38c986280..325d3d3f12110 100644
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -1060,7 +1060,7 @@ int nfsd_dispatch(struct svc_rqst *rqstp, __be32 *statp)
+ 	svcxdr_init_encode(rqstp);
+ 
+ 	*statp = proc->pc_func(rqstp);
+-	if (*statp == rpc_drop_reply || test_bit(RQ_DROPME, &rqstp->rq_flags))
++	if (test_bit(RQ_DROPME, &rqstp->rq_flags))
+ 		goto out_update_drop;
+ 
+ 	if (!proc->pc_encode(rqstp, &rqstp->rq_res_stream))
 -- 
 2.43.0
 
