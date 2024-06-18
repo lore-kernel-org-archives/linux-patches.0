@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 191AD1AD488;
-	Tue, 18 Jun 2024 13:20:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0349A12D74D;
+	Tue, 18 Jun 2024 13:20:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716801; cv=none; b=vFgFpJk8fyQuJT06HUTSrdEUeN61T3raPzmUq+7K6ROFLn8++IySbiYxdW9eE4r/uiYIiiq+3y6473LGuGf5AfD9IKp8GO+u1I1GMKOARkv132rOOMo6vxdOf80yrRjH0GnKUXSwUTQXO/zC+zMQLROkqDCcMT8qB9e0JvrdcFI=
+	t=1718716804; cv=none; b=qDV1KJCoJN86Oxb7oJ3EE3TDfeRG0hrm0xKiAJP3Nt4i75rEsJ6F+dG23FtRVTmdZTb2qFERgnBhdhrMsaqBoSliXnNxg43EIACXamkVjiZUnJ1UK5+0m9KlLxJjYfTukqHQsrijkYVKJDM5VuQb8Pjy5cuUfoisKvC3ew/qKOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716801; c=relaxed/simple;
-	bh=bNbGtwIw9OVvBy2U+czZ6sfqIj7tGpZDKASwEeVPTrY=;
+	s=arc-20240116; t=1718716804; c=relaxed/simple;
+	bh=+bSJAwebK9FVFUMhy22+YIxOnqe1XtchqYb+QsCw3Ps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O7PVnX5v6qvPlCmC1sn8KGJRdWgKwq8TS7rzdfQf35mw7CvckCekjGDLLfL4sdtNxLd9IkpCMkaes7Y+boJQhWEg5C6xgrKPocgqVcG1cc525rluVaO4OVa0zi+/Op8vTULEpoXhKpVjyV9dw0VPAKX1BcqUizzx0OrYnzq8U90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zOdXLrrx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eabBox/a0CbrnlVEQTVApBvefM+qUZV4o9xQXgKwNqiPoifCW0wATdpe4blFLRn+oJRqkEpwd8hlBMXCrN1e/JpiYLclSIt/WX9PNyDQjSsOQSBckS+jES0UKaNr1NaQ506+tHDafswOYrMOoA040POE85DER0cHdCzky51XS5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IHmnUEdE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zOdXLrrx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92122C3277B;
-	Tue, 18 Jun 2024 13:20:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IHmnUEdE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CE4EC3277B;
+	Tue, 18 Jun 2024 13:20:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716801;
-	bh=bNbGtwIw9OVvBy2U+czZ6sfqIj7tGpZDKASwEeVPTrY=;
+	s=korg; t=1718716803;
+	bh=+bSJAwebK9FVFUMhy22+YIxOnqe1XtchqYb+QsCw3Ps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zOdXLrrxdJoasEJsayeN7k01IO792hHPpG3YCj5mA8BNEj30AJHrKg5Eg9t7GQIzU
-	 53sle5VUxPaZ2a7Em+dFJRAeos4Fnay8MMQUoQIB67uiY/GhLhsvYNVm4hFUR+feEC
-	 KE33PKa+FDC1maOYByJpgJKZXeMSwE378Wc/Xrds=
+	b=IHmnUEdEhMpkf5/xS0b2mYke30MV1eTduP0zAhAaZUVSLGXguzZapkTNPK4zdupg/
+	 m+PVyjsGmLelesfFIAgPtgUuqDyrbr5dv48DKMhrStuPEZ3VVXlgOEhweGIGdFyNNA
+	 8V1/O/ZEcceU18BDVhoUBMg79cgs0VjCzH5NhKz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	NeilBrown <neilb@suse.de>,
-	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 768/770] nfsd: dont take fi_lock in nfsd_break_deleg_cb()
-Date: Tue, 18 Jun 2024 14:40:21 +0200
-Message-ID: <20240618123436.918569196@linuxfoundation.org>
+Subject: [PATCH 5.10 769/770] nfsd: dont call locks_release_private() twice concurrently
+Date: Tue, 18 Jun 2024 14:40:22 +0200
+Message-ID: <20240618123436.956887110@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -54,92 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 5ea9a7c5fe4149f165f0e3b624fe08df02b6c301 ]
+[ Upstream commit 05eda6e75773592760285e10ac86c56d683be17f ]
 
-A recent change to check_for_locks() changed it to take ->flc_lock while
-holding ->fi_lock.  This creates a lock inversion (reported by lockdep)
-because there is a case where ->fi_lock is taken while holding
-->flc_lock.
+It is possible for free_blocked_lock() to be called twice concurrently,
+once from nfsd4_lock() and once from nfsd4_release_lockowner() calling
+remove_blocked_locks().  This is why a kref was added.
 
-->flc_lock is held across ->fl_lmops callbacks, and
-nfsd_break_deleg_cb() is one of those and does take ->fi_lock.  However
-it doesn't need to.
+It is perfectly safe for locks_delete_block() and kref_put() to be
+called in parallel as they use locking or atomicity respectively as
+protection.  However locks_release_private() has no locking.  It is
+safe for it to be called twice sequentially, but not concurrently.
 
-Prior to v4.17-rc1~110^2~22 ("nfsd: create a separate lease for each
-delegation") nfsd_break_deleg_cb() would walk the ->fi_delegations list
-and so needed the lock.  Since then it doesn't walk the list and doesn't
-need the lock.
+This patch moves that call from free_blocked_lock() where it could race
+with itself, to free_nbl() where it cannot.  This will slightly delay
+the freeing of private info or release of the owner - but not by much.
+It is arguably more natural for this freeing to happen in free_nbl()
+where the structure itself is freed.
 
-Two actions are performed under the lock.  One is to call
-nfsd_break_one_deleg which calls nfsd4_run_cb().  These doesn't act on
-the nfs4_file at all, so don't need the lock.
+This bug was found by code inspection - it has not been seen in practice.
 
-The other is to set ->fi_had_conflict which is in the nfs4_file.
-This field is only ever set here (except when initialised to false)
-so there is no possible problem will multiple threads racing when
-setting it.
-
-The field is tested twice in nfs4_set_delegation().  The first test does
-not hold a lock and is documented as an opportunistic optimisation, so
-it doesn't impose any need to hold ->fi_lock while setting
-->fi_had_conflict.
-
-The second test in nfs4_set_delegation() *is* make under ->fi_lock, so
-removing the locking when ->fi_had_conflict is set could make a change.
-The change could only be interesting if ->fi_had_conflict tested as
-false even though nfsd_break_one_deleg() ran before ->fi_lock was
-unlocked.  i.e. while hash_delegation_locked() was running.
-As hash_delegation_lock() doesn't interact in any way with nfs4_run_cb()
-there can be no importance to this interaction.
-
-So this patch removes the locking from nfsd_break_one_deleg() and moves
-the final test on ->fi_had_conflict out of the locked region to make it
-clear that locking isn't important to the test.  It is still tested
-*after* vfs_setlease() has succeeded.  This might be significant and as
-vfs_setlease() takes ->flc_lock, and nfsd_break_one_deleg() is called
-under ->flc_lock this "after" is a true ordering provided by a spinlock.
-
-Fixes: edcf9725150e ("nfsd: fix RELEASE_LOCKOWNER")
+Fixes: 47446d74f170 ("nfsd4: add refcount for nfsd4_blocked_lock")
 Signed-off-by: NeilBrown <neilb@suse.de>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ fs/nfsd/nfs4state.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index c073cc23c5285..165acd8138abe 100644
+index 165acd8138abe..228560f3fd0e0 100644
 --- a/fs/nfsd/nfs4state.c
 +++ b/fs/nfsd/nfs4state.c
-@@ -4946,10 +4946,8 @@ nfsd_break_deleg_cb(struct file_lock *fl)
- 	 */
- 	fl->fl_break_time = 0;
+@@ -318,6 +318,7 @@ free_nbl(struct kref *kref)
+ 	struct nfsd4_blocked_lock *nbl;
  
--	spin_lock(&fp->fi_lock);
- 	fp->fi_had_conflict = true;
- 	nfsd_break_one_deleg(dp);
--	spin_unlock(&fp->fi_lock);
- 	return false;
+ 	nbl = container_of(kref, struct nfsd4_blocked_lock, nbl_kref);
++	locks_release_private(&nbl->nbl_lock);
+ 	kfree(nbl);
  }
  
-@@ -5537,12 +5535,13 @@ nfs4_set_delegation(struct nfsd4_open *open, struct nfs4_ol_stateid *stp,
- 	if (status)
- 		goto out_unlock;
- 
-+	status = -EAGAIN;
-+	if (fp->fi_had_conflict)
-+		goto out_unlock;
-+
- 	spin_lock(&state_lock);
- 	spin_lock(&fp->fi_lock);
--	if (fp->fi_had_conflict)
--		status = -EAGAIN;
--	else
--		status = hash_delegation_locked(dp, fp);
-+	status = hash_delegation_locked(dp, fp);
- 	spin_unlock(&fp->fi_lock);
- 	spin_unlock(&state_lock);
+@@ -325,7 +326,6 @@ static void
+ free_blocked_lock(struct nfsd4_blocked_lock *nbl)
+ {
+ 	locks_delete_block(&nbl->nbl_lock);
+-	locks_release_private(&nbl->nbl_lock);
+ 	kref_put(&nbl->nbl_kref, free_nbl);
+ }
  
 -- 
 2.43.0
