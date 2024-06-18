@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54DD713B7A3;
-	Tue, 18 Jun 2024 12:56:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C0815532B;
+	Tue, 18 Jun 2024 12:56:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715402; cv=none; b=J+AxdFXx9VweuY/O5ECxUFtuEckhFgYY4do54/xbeG1qx4JIAVzp8Ge/P7lVrlJWiuLl+oZ1qPCwjna8IV5q8mjTgrbBRRSrFKHTgYpc5rdOP55rsGHCWXKqHUXVnXAcVMqijlzbmCfDMqPw82HIgLJwqV9p5st5B3m41fD0+zg=
+	t=1718715405; cv=none; b=fGa012c53chxaTDP8D9//mvUbiPl3p9jv0lLf9BjN7X93cPT4tkPp9ee0z/4+259omr01eXAcY5zkT+QmIVwyTghs4HYoY9j8kEB5m2RiSBBSvi9Ytbkx4gyCz8j+IoU4KhLGpRJGznQguaar8k+JLc7j0spbdl06gmBkBYv2Js=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715402; c=relaxed/simple;
-	bh=y9l9D0FhyTN9f/4c///T/wrxTcoPKsP/x6ojfNyG7pU=;
+	s=arc-20240116; t=1718715405; c=relaxed/simple;
+	bh=6OzN3OB+xrJU4UvKn3xldjxVFlm+rnf33T7EnM5GX3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=INQ182YfHFUAcncdtg7K+sVle58kM6ag3u4HLuEHmBxzWmOaNGN7hkMbaDf5LMMRSBVKiZOMPIV1cgarjvRwHELYtVA8rTDcoVD7K29/TKNjjmgba48XppsOM4IEhvifAKPrUoHEVtcIAdp98F/t9zfwhAmfIqpkEbxEgvYVUQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTxSjglc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bw9r+PR2VTZAukpTua2yLlWn4dwyJv38cWMz7elWOtHdyAT1bHOr+1u//31KBLCe9XWdbDdZOYF89oIYGn9O4RBW1lp0aoRm7GUUNkmUZuxM4WpqiZ+D44zR52FT2lx2BlnpRwQBXQsT/B3rbp7FSELEf+MfNbeUaR82R/178do=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EyF5KCEv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTxSjglc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB72DC3277B;
-	Tue, 18 Jun 2024 12:56:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EyF5KCEv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9203C32786;
+	Tue, 18 Jun 2024 12:56:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715402;
-	bh=y9l9D0FhyTN9f/4c///T/wrxTcoPKsP/x6ojfNyG7pU=;
+	s=korg; t=1718715405;
+	bh=6OzN3OB+xrJU4UvKn3xldjxVFlm+rnf33T7EnM5GX3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mTxSjglcxvxb5yn9X/50kJgZp7aaraom5+c/6K/+hU2GZOHN+oZghz+e6JNPKkw/u
-	 XIgZiXsuNsHgNrmGImBxD120hrg6Z7IYpiiFvSf+ls9Ftdn7UfL5pnrylgRMadaeCo
-	 mwruDg4BNDl8hWQyIMJ3Ug1AGT8lrklgE+UiffUk=
+	b=EyF5KCEvQyvtAKEe1OAr5UQCjFiGIlqCU+vdjd7reJi80uQI5iYGcbkOzg7BTBTKb
+	 uh44PPJKQ2ZiDeY7dNbC8bBvy1SxL4eRMwXWvvperjqPl32zq/wwOSBCRGMVxaxDGX
+	 ztrdStxp0nYmJ1iNkp5+jU5Uo9YO1EMOSYRQDaeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dai Ngo <dai.ngo@oracle.com>,
+	Hulk Robot <hulkci@huawei.com>,
+	Wei Yongjun <weiyongjun1@huawei.com>,
 	"J. Bruce Fields" <bfields@redhat.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 296/770] nfsd: fix kernel test robot warning in SSC code
-Date: Tue, 18 Jun 2024 14:32:29 +0200
-Message-ID: <20240618123418.688784812@linuxfoundation.org>
+Subject: [PATCH 5.10 297/770] NFSD: Fix error return code in nfsd4_interssc_connect()
+Date: Tue, 18 Jun 2024 14:32:30 +0200
+Message-ID: <20240618123418.727231555@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,58 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dai Ngo <dai.ngo@oracle.com>
+From: Wei Yongjun <weiyongjun1@huawei.com>
 
-[ Upstream commit f47dc2d3013c65631bf8903becc7d88dc9d9966e ]
+[ Upstream commit 54185267e1fe476875e649bb18e1c4254c123305 ]
 
-Fix by initializing pointer nfsd4_ssc_umount_item with NULL instead of 0.
-Replace return value of nfsd4_ssc_setup_dul with __be32 instead of int.
+'status' has been overwritten to 0 after nfsd4_ssc_setup_dul(), this
+cause 0 will be return in vfs_kern_mount() error case. Fix to return
+nfserr_nodev in this error.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Fixes: f4e44b393389 ("NFSD: delay unmount source's export after inter-server copy completed.")
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
 Signed-off-by: J. Bruce Fields <bfields@redhat.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4proc.c  | 4 ++--
- fs/nfsd/nfs4state.c | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ fs/nfsd/nfs4proc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 573c550e7aceb..598b54893f837 100644
+index 598b54893f837..f7ddfa204abc4 100644
 --- a/fs/nfsd/nfs4proc.c
 +++ b/fs/nfsd/nfs4proc.c
-@@ -1178,7 +1178,7 @@ extern void nfs_sb_deactive(struct super_block *sb);
- /*
-  * setup a work entry in the ssc delayed unmount list.
-  */
--static int nfsd4_ssc_setup_dul(struct nfsd_net *nn, char *ipaddr,
-+static __be32 nfsd4_ssc_setup_dul(struct nfsd_net *nn, char *ipaddr,
- 		struct nfsd4_ssc_umount_item **retwork, struct vfsmount **ss_mnt)
- {
- 	struct nfsd4_ssc_umount_item *ni = 0;
-@@ -1395,7 +1395,7 @@ nfsd4_cleanup_inter_ssc(struct vfsmount *ss_mnt, struct nfsd_file *src,
- 	bool found = false;
- 	long timeout;
- 	struct nfsd4_ssc_umount_item *tmp;
--	struct nfsd4_ssc_umount_item *ni = 0;
-+	struct nfsd4_ssc_umount_item *ni = NULL;
- 	struct nfsd_net *nn = net_generic(dst->nf_net, nfsd_net_id);
- 
- 	nfs42_ssc_close(src->nf_file);
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index a20cdb1910048..401f0f2743717 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -5556,7 +5556,7 @@ EXPORT_SYMBOL_GPL(nfsd4_ssc_init_umount_work);
-  */
- static void nfsd4_ssc_shutdown_umount(struct nfsd_net *nn)
- {
--	struct nfsd4_ssc_umount_item *ni = 0;
-+	struct nfsd4_ssc_umount_item *ni = NULL;
- 	struct nfsd4_ssc_umount_item *tmp;
- 
- 	spin_lock(&nn->nfsd_ssc_lock);
+@@ -1326,6 +1326,7 @@ nfsd4_interssc_connect(struct nl4_server *nss, struct svc_rqst *rqstp,
+ 	ss_mnt = vfs_kern_mount(type, SB_KERNMOUNT, dev_name, raw_data);
+ 	module_put(type->owner);
+ 	if (IS_ERR(ss_mnt)) {
++		status = nfserr_nodev;
+ 		if (work)
+ 			nfsd4_ssc_cancel_dul_work(nn, work);
+ 		goto out_free_devname;
 -- 
 2.43.0
 
