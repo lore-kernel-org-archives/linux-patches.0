@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EF9915689A;
-	Tue, 18 Jun 2024 12:59:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C22C181CE9;
+	Tue, 18 Jun 2024 12:59:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715571; cv=none; b=SdNAGuK2bMHTlvDtJuycqy3otrwuiOYZ+7z8e02J+y4pLl+0fU/VxywUtSsJSH87PU8JkVf7zRvBLl9t+jIVuGu2ZSY95JIgGru5cI47f4pVl1YcmPEePPGvpnazcY1Ev+JO2SfDIhLfr8qVHgJRxjKU2rdhmRBt2N4JoGSKQmA=
+	t=1718715574; cv=none; b=R/ALcv7ACgaFjd6PKndVxJVk5QJhqe5lWhEAEl5wUWCFFkdRtI0TdcGE7pMXrFtJTcibWpcK2dyJqQB6UCYzdhcVo5EnF2tQRHhWTY+SYQRKtij7rsStV+CEXp3X1AqClrWJlWVCw4/QyTLQaJV/eXmfpPxvkqNBpR3lh6VMQTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715571; c=relaxed/simple;
-	bh=ZIqiWbzoWViWilrGVYk9bi601Lz/PO+G8btS35aHpfY=;
+	s=arc-20240116; t=1718715574; c=relaxed/simple;
+	bh=HH0xMVj3EJsKqjsPm3HMfe/CViLX7BNnbAp/ApmJEPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zs5rjMW+Grn8OcNlZFyu0zoHnBh7XKYOftaHOntE2bUrsBLSPMAo9rjt07z1lC+MPr55l4seUyihgK7rTC3PKZNoKkJZMMi02PKvce4e8dgR3gQQUmLxXsgxZnRl/vOVOjWki4y8uMtEneROEOdyWdmTpDtiILQ9Um9U8aN6F1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kM4xgdd3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lwDFU2ty21pkBb+1ii0sTNL9EnkQ8cJh+tcBpAtRueo2l5v6N3lDjzVW/bndMqR3d4uPKE8hPPGDrCk/0G17M3t1P6mm931R0KxG6AFAMmvL1HbKJenT5aPzKQGliUJyc3f9XDEjanfYpfgV+wOxHHD1dnya5VybZqp4UtQNDNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dmrC5V+o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kM4xgdd3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCDEFC3277B;
-	Tue, 18 Jun 2024 12:59:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dmrC5V+o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C17ACC3277B;
+	Tue, 18 Jun 2024 12:59:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715571;
-	bh=ZIqiWbzoWViWilrGVYk9bi601Lz/PO+G8btS35aHpfY=;
+	s=korg; t=1718715574;
+	bh=HH0xMVj3EJsKqjsPm3HMfe/CViLX7BNnbAp/ApmJEPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kM4xgdd37CZz6Z9J7f+MpuA7hdaeZs2kInYSGpA/OwKCiCo117AEEarpbVULM+LCv
-	 vD8mg/pF0WIvYttCQD5JNo5QDJsrbyK5o3m8u4yBbt+54jKIO5LN1ox+x6G21hj845
-	 AeTbQZJXwgezetgQz63nE3liS/+b3y3PDXsVdpYA=
+	b=dmrC5V+oFjK0YdCPlmBrOHzqeji1P0jxA+O18MAvrIXtH557bUN6xnX5vfKipgmL9
+	 K9PAk0RBV2hp9NCpFSlsptesa905jAGlNvx0YZXD2KSQ/FJR2atRyy181lEOxWdk58
+	 8shBg4D+wcMan3zefX6Ibc4YL74W/k3OONfNu074=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 354/770] SUNRPC: Set rq_auth_stat in the pg_authenticate() callout
-Date: Tue, 18 Jun 2024 14:33:27 +0200
-Message-ID: <20240618123420.933683356@linuxfoundation.org>
+Subject: [PATCH 5.10 355/770] SUNRPC: Eliminate the RQ_AUTHERR flag
+Date: Tue, 18 Jun 2024 14:33:28 +0200
+Message-ID: <20240618123420.972042439@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,133 +53,125 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 5c2465dfd457f3015eebcc3ace50570e1d896aeb ]
+[ Upstream commit 9082e1d914f8b27114352b1940bbcc7522f682e7 ]
 
-In a few moments, rq_auth_stat will need to be explicitly set to
-rpc_auth_ok before execution gets to the dispatcher.
-
-svc_authenticate() already sets it, but it often gets reset to
-rpc_autherr_badcred right after that call, even when authentication
-is successful. Let's ensure that the pg_authenticate callout and
-svc_set_client() set it properly in every case.
+Now that there is an alternate method for returning an auth_stat
+value, replace the RQ_AUTHERR flag with use of that new method.
 
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/lockd/svc.c                    | 2 ++
- fs/nfs/callback.c                 | 4 ++++
- net/sunrpc/auth_gss/svcauth_gss.c | 4 ++++
- net/sunrpc/svc.c                  | 4 +---
- net/sunrpc/svcauth_unix.c         | 6 +++++-
- 5 files changed, 16 insertions(+), 4 deletions(-)
+ fs/nfs/callback_xdr.c         |  3 ++-
+ include/linux/sunrpc/svc.h    |  2 --
+ include/trace/events/sunrpc.h |  3 +--
+ net/sunrpc/svc.c              | 24 ++++--------------------
+ 4 files changed, 7 insertions(+), 25 deletions(-)
 
-diff --git a/fs/lockd/svc.c b/fs/lockd/svc.c
-index 0ab9756ed2359..b632be3ad57b2 100644
---- a/fs/lockd/svc.c
-+++ b/fs/lockd/svc.c
-@@ -649,6 +649,7 @@ static int lockd_authenticate(struct svc_rqst *rqstp)
- 	switch (rqstp->rq_authop->flavour) {
- 		case RPC_AUTH_NULL:
- 		case RPC_AUTH_UNIX:
-+			rqstp->rq_auth_stat = rpc_auth_ok;
- 			if (rqstp->rq_proc == 0)
- 				return SVC_OK;
- 			if (is_callback(rqstp->rq_proc)) {
-@@ -659,6 +660,7 @@ static int lockd_authenticate(struct svc_rqst *rqstp)
- 			}
- 			return svc_set_client(rqstp);
- 	}
+diff --git a/fs/nfs/callback_xdr.c b/fs/nfs/callback_xdr.c
+index f9dfd4e712a30..0559e8b6a8ec4 100644
+--- a/fs/nfs/callback_xdr.c
++++ b/fs/nfs/callback_xdr.c
+@@ -984,7 +984,8 @@ static __be32 nfs4_callback_compound(struct svc_rqst *rqstp)
+ 
+ out_invalidcred:
+ 	pr_warn_ratelimited("NFS: NFSv4 callback contains invalid cred\n");
+-	return svc_return_autherr(rqstp, rpc_autherr_badcred);
 +	rqstp->rq_auth_stat = rpc_autherr_badcred;
- 	return SVC_DENIED;
++	return rpc_success;
  }
  
-diff --git a/fs/nfs/callback.c b/fs/nfs/callback.c
-index 7817ad94a6bae..86d856de1389b 100644
---- a/fs/nfs/callback.c
-+++ b/fs/nfs/callback.c
-@@ -429,6 +429,8 @@ check_gss_callback_principal(struct nfs_client *clp, struct svc_rqst *rqstp)
-  */
- static int nfs_callback_authenticate(struct svc_rqst *rqstp)
- {
-+	rqstp->rq_auth_stat = rpc_autherr_badcred;
-+
- 	switch (rqstp->rq_authop->flavour) {
- 	case RPC_AUTH_NULL:
- 		if (rqstp->rq_proc != CB_NULL)
-@@ -439,6 +441,8 @@ static int nfs_callback_authenticate(struct svc_rqst *rqstp)
- 		 if (svc_is_backchannel(rqstp))
- 			return SVC_DENIED;
- 	}
-+
-+	rqstp->rq_auth_stat = rpc_auth_ok;
- 	return SVC_OK;
- }
+ /*
+diff --git a/include/linux/sunrpc/svc.h b/include/linux/sunrpc/svc.h
+index 7b7bd8a0a6fbd..dd3daadbc0e5c 100644
+--- a/include/linux/sunrpc/svc.h
++++ b/include/linux/sunrpc/svc.h
+@@ -277,7 +277,6 @@ struct svc_rqst {
+ #define	RQ_VICTIM	(5)			/* about to be shut down */
+ #define	RQ_BUSY		(6)			/* request is busy */
+ #define	RQ_DATA		(7)			/* request has data */
+-#define RQ_AUTHERR	(8)			/* Request status is auth error */
+ 	unsigned long		rq_flags;	/* flags field */
+ 	ktime_t			rq_qtime;	/* enqueue time */
  
-diff --git a/net/sunrpc/auth_gss/svcauth_gss.c b/net/sunrpc/auth_gss/svcauth_gss.c
-index 54303b7efde76..329eac782cc5e 100644
---- a/net/sunrpc/auth_gss/svcauth_gss.c
-+++ b/net/sunrpc/auth_gss/svcauth_gss.c
-@@ -1038,6 +1038,8 @@ svcauth_gss_set_client(struct svc_rqst *rqstp)
- 	struct rpc_gss_wire_cred *gc = &svcdata->clcred;
- 	int stat;
+@@ -537,7 +536,6 @@ unsigned int	   svc_fill_write_vector(struct svc_rqst *rqstp,
+ char		  *svc_fill_symlink_pathname(struct svc_rqst *rqstp,
+ 					     struct kvec *first, void *p,
+ 					     size_t total);
+-__be32		   svc_return_autherr(struct svc_rqst *rqstp, __be32 auth_err);
+ __be32		   svc_generic_init_request(struct svc_rqst *rqstp,
+ 					    const struct svc_program *progp,
+ 					    struct svc_process_info *procinfo);
+diff --git a/include/trace/events/sunrpc.h b/include/trace/events/sunrpc.h
+index 0cb9e182a1b1e..fce071f39f51f 100644
+--- a/include/trace/events/sunrpc.h
++++ b/include/trace/events/sunrpc.h
+@@ -1480,8 +1480,7 @@ DEFINE_SVCXDRBUF_EVENT(sendto);
+ 	svc_rqst_flag(SPLICE_OK)					\
+ 	svc_rqst_flag(VICTIM)						\
+ 	svc_rqst_flag(BUSY)						\
+-	svc_rqst_flag(DATA)						\
+-	svc_rqst_flag_end(AUTHERR)
++	svc_rqst_flag_end(DATA)
  
-+	rqstp->rq_auth_stat = rpc_autherr_badcred;
-+
- 	/*
- 	 * A gss export can be specified either by:
- 	 * 	export	*(sec=krb5,rw)
-@@ -1053,6 +1055,8 @@ svcauth_gss_set_client(struct svc_rqst *rqstp)
- 	stat = svcauth_unix_set_client(rqstp);
- 	if (stat == SVC_DROP || stat == SVC_CLOSE)
- 		return stat;
-+
-+	rqstp->rq_auth_stat = rpc_auth_ok;
- 	return SVC_OK;
- }
- 
+ #undef svc_rqst_flag
+ #undef svc_rqst_flag_end
 diff --git a/net/sunrpc/svc.c b/net/sunrpc/svc.c
-index cbcc951639ad5..f036507275338 100644
+index f036507275338..0d3c3ca2830a8 100644
 --- a/net/sunrpc/svc.c
 +++ b/net/sunrpc/svc.c
-@@ -1350,10 +1350,8 @@ svc_process_common(struct svc_rqst *rqstp, struct kvec *argv, struct kvec *resv)
- 	 */
- 	auth_res = svc_authenticate(rqstp);
- 	/* Also give the program a chance to reject this call: */
--	if (auth_res == SVC_OK && progp) {
--		rqstp->rq_auth_stat = rpc_autherr_badcred;
-+	if (auth_res == SVC_OK && progp)
- 		auth_res = progp->pg_authenticate(rqstp);
--	}
- 	if (auth_res != SVC_OK)
- 		trace_svc_authenticate(rqstp, auth_res);
- 	switch (auth_res) {
-diff --git a/net/sunrpc/svcauth_unix.c b/net/sunrpc/svcauth_unix.c
-index c20c63d651a9c..1868596259af5 100644
---- a/net/sunrpc/svcauth_unix.c
-+++ b/net/sunrpc/svcauth_unix.c
-@@ -699,8 +699,9 @@ svcauth_unix_set_client(struct svc_rqst *rqstp)
+@@ -1187,22 +1187,6 @@ void svc_printk(struct svc_rqst *rqstp, const char *fmt, ...)
+ static __printf(2,3) void svc_printk(struct svc_rqst *rqstp, const char *fmt, ...) {}
+ #endif
  
- 	rqstp->rq_client = NULL;
- 	if (rqstp->rq_proc == 0)
--		return SVC_OK;
-+		goto out;
+-__be32
+-svc_return_autherr(struct svc_rqst *rqstp, __be32 auth_err)
+-{
+-	set_bit(RQ_AUTHERR, &rqstp->rq_flags);
+-	return auth_err;
+-}
+-EXPORT_SYMBOL_GPL(svc_return_autherr);
+-
+-static __be32
+-svc_get_autherr(struct svc_rqst *rqstp, __be32 *statp)
+-{
+-	if (test_and_clear_bit(RQ_AUTHERR, &rqstp->rq_flags))
+-		return *statp;
+-	return rpc_auth_ok;
+-}
+-
+ static int
+ svc_generic_dispatch(struct svc_rqst *rqstp, __be32 *statp)
+ {
+@@ -1226,7 +1210,7 @@ svc_generic_dispatch(struct svc_rqst *rqstp, __be32 *statp)
+ 	    test_bit(RQ_DROPME, &rqstp->rq_flags))
+ 		return 0;
  
-+	rqstp->rq_auth_stat = rpc_autherr_badcred;
- 	ipm = ip_map_cached_get(xprt);
- 	if (ipm == NULL)
- 		ipm = __ip_map_lookup(sn->ip_map_cache, rqstp->rq_server->sv_program->pg_class,
-@@ -737,6 +738,9 @@ svcauth_unix_set_client(struct svc_rqst *rqstp)
- 		put_group_info(cred->cr_group_info);
- 		cred->cr_group_info = gi;
+-	if (test_bit(RQ_AUTHERR, &rqstp->rq_flags))
++	if (rqstp->rq_auth_stat != rpc_auth_ok)
+ 		return 1;
+ 
+ 	if (*statp != rpc_success)
+@@ -1412,15 +1396,15 @@ svc_process_common(struct svc_rqst *rqstp, struct kvec *argv, struct kvec *resv)
+ 			goto release_dropit;
+ 		if (*statp == rpc_garbage_args)
+ 			goto err_garbage;
+-		rqstp->rq_auth_stat = svc_get_autherr(rqstp, statp);
+-		if (rqstp->rq_auth_stat != rpc_auth_ok)
+-			goto err_release_bad_auth;
+ 	} else {
+ 		dprintk("svc: calling dispatcher\n");
+ 		if (!process.dispatch(rqstp, statp))
+ 			goto release_dropit; /* Release reply info */
  	}
-+
-+out:
-+	rqstp->rq_auth_stat = rpc_auth_ok;
- 	return SVC_OK;
- }
  
++	if (rqstp->rq_auth_stat != rpc_auth_ok)
++		goto err_release_bad_auth;
++
+ 	/* Check RPC status result */
+ 	if (*statp != rpc_success)
+ 		resv->iov_len = ((void*)statp)  - resv->iov_base + 4;
 -- 
 2.43.0
 
