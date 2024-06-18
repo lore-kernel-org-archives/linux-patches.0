@@ -1,231 +1,332 @@
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2060.outbound.protection.outlook.com [40.107.94.60])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB0A213D50B;
-	Tue, 18 Jun 2024 14:08:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.60
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718719711; cv=fail; b=tyOVIkRZ+/4gkcPBHwIHnZ9CF8w4BlFNeT/zRFPF8F7FY2Ip7VtYzTkbD31GVbf+qq8jRylFc9XURlKvoWpOs6ge6Gsi9RYgF4TA4Vx5CZzhXZxQ1DM7fSUQzV9ZV7Ba3VutpumuDEJcjqScEHVRPfFsiS24lBCtZllSgQDCFFs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718719711; c=relaxed/simple;
-	bh=RQtB7WMxNdeHX8vQVSEKvRDhMx1Y+JAPXTRgY+hdkgs=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=ie3tnOLM5BSgBM/l61HoeRLgPOU/9hIxmVrbSBgfqxAg3URBe+Q7boiVtL5KRdoTLlCeJ/ZybadPi1dmbM9hrjqq/GzaS0rdPp8HszH5XHEDt8euJxqsEDc2C58yXKs9dzYI3lkJW39dZ68LlwbEAh2nci5ebsjnxeknhkvLke8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=yg/D+mfv; arc=fail smtp.client-ip=40.107.94.60
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 580871DA24
+	for <patches@lists.linux.dev>; Tue, 18 Jun 2024 14:10:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1718719830; cv=none; b=PLlGWcW1uRa6tiVLzHB4DYhfzFq9zvjhIDYV2FVKKyli96ebWvDpdWy01FvMA5P79KOZVCDchEjCcZSENQPB/s/fzLOKmpiYBZbVxBqfe01jpEHWyN9hEcWWFb59qgoiCOu8QeM655eS1eAUdH/k2uNJJu+xZMPcnI9EmDtjh2s=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1718719830; c=relaxed/simple;
+	bh=tGl1yxfkuDeMIQeSADjyhPZolC20UrVrh9Ke7p4VEgk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 In-Reply-To:Content-Type:Content-Disposition; b=sH/V4Z0oGylj0hrf+mUsn4QLnjZYHiHfdLY71OZs2yt39TiuA4P7Tq9ELyBmEWFPgpUfnotj6yUCg6UE8woRq7DJlaWoghAA7EMv3IeY9lnLmEziAPD+Dh9+jbpWJQgXv8JEvt6FfndlkoiMNn1wDBX7QOEuec41Exn5HX2gAD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=iLPSFq0b; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="yg/D+mfv"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ez3t3Lp4a699lwZBnaRUzCnauhbvRAsn4M0j0Bzq3X056CkVJZo9Wgs5R+r6jHnk15mT3MiyEOyB4wAcFbZKQi7P2NX938qZNuKo0QUZB0W7ly3GwaIRmKO03qFa2zIQX/Q+JqVcmgE+yZ5P5HvWEbrbOMeRht7+EY8WxrsBdi5K+8mOeyKia5b8DqZXgTLG/o/sifc+XPCXt+7T5mLeJwayKZ8mdf9Kp0K4GUcALv1q7p8xm+NhiINSFuLbOICwO0JbUUaM6Zx38aO8AY19sujQQf5CbXQxldDvfl83PdDSg6UIPYNHaKtnJals8ksnDrQGcV7hFNGTGkhv/ewB/g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=O24RGwbG2nA8T3APyP2V8XPYCrVLrczVJWyV+N4qRLg=;
- b=n1Ze7DrTuvFvBQ+u2QNawNzeQmMeDX6mXgncbO20dt20gPV12qDhwXplgZoDFqrSMO3ceES/6g1vKXOBB1DkfbZIlFM+73hiQpTVn+Q4bmB+W6xoyVAHJ56+r/INE41AjMnTRnD0TytgqyvhgNdTAZykNMCMoOqd384K+gcA47OOpxFzLpzHu7ledbrLc5ATzf7q7DEkDN8zYfw/I6Cr93ZISHuGEqkDPyXdXHZw1jbAnFXVJZYtOx5ctJOjpRMC28lkBi9k8j2imiIH/wtngpZ0ZFHUd2xMCWne/owV2cIlxuRdfmkaXLj7iBG8ICHj/TOJIUG7mwNIere3/2Vp0Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=O24RGwbG2nA8T3APyP2V8XPYCrVLrczVJWyV+N4qRLg=;
- b=yg/D+mfvtcM4tOW0SZe2Xp1RamtqB+u0xWlInm+BtyJo4LTjX2j/HuVOg6LKEo2VUWn9RHYs6k11APn+mm0Iuhw3v4i1unaUChf9Iw17Sn+00o4rq5oWuNgpnuPoSmfk2kKx/S1lch98TYp0ly//lGze8PLmEVd6qD7XN2DUGRw=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from CO6PR12MB5427.namprd12.prod.outlook.com (2603:10b6:5:358::13)
- by MN2PR12MB4303.namprd12.prod.outlook.com (2603:10b6:208:198::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7677.31; Tue, 18 Jun
- 2024 14:08:26 +0000
-Received: from CO6PR12MB5427.namprd12.prod.outlook.com
- ([fe80::1c2f:5c82:2d9c:6062]) by CO6PR12MB5427.namprd12.prod.outlook.com
- ([fe80::1c2f:5c82:2d9c:6062%7]) with mapi id 15.20.7677.030; Tue, 18 Jun 2024
- 14:08:26 +0000
-Message-ID: <58253c2e-25a2-48c6-bcd4-5bc3bbe03296@amd.com>
-Date: Tue, 18 Jun 2024 10:08:19 -0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/amd/display: Disable CONFIG_DRM_AMD_DC_FP for RISC-V
- with clang
-To: Nathan Chancellor <nathan@kernel.org>, Leo Li <sunpeng.li@amd.com>,
- Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xinhui Pan <Xinhui.Pan@amd.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Samuel Holland <samuel.holland@sifive.com>,
- Nick Desaulniers <ndesaulniers@google.com>, Bill Wendling
- <morbo@google.com>, Justin Stitt <justinstitt@google.com>,
- amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
- linux-riscv@lists.infradead.org, llvm@lists.linux.dev,
- patches@lists.linux.dev, Palmer Dabbelt <palmer@rivosinc.com>
-References: <20240614-amdgpu-disable-drm-amd-dc-fp-riscv-clang-v1-1-a6d40617dc9b@kernel.org>
-Content-Language: en-US
-From: Harry Wentland <harry.wentland@amd.com>
-In-Reply-To: <20240614-amdgpu-disable-drm-amd-dc-fp-riscv-clang-v1-1-a6d40617dc9b@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: YT3PR01CA0117.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:85::35) To CO6PR12MB5427.namprd12.prod.outlook.com
- (2603:10b6:5:358::13)
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="iLPSFq0b"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1718719827;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=I4kwzn7nwp0hrFl15C/WJa7gZ49NVjVQcqnka+zFjp8=;
+	b=iLPSFq0bXbHdf6gxBJkPdgQXccPeOLVNiiqpVP+/j2NbsFmYSvKMUftOKaaN44ZyNQepU0
+	B3Limzx4SU8rhwPQEtJt7uTBLP9tx8kNNvCdp7G1huByA1FSp9V1CXzGGOoeR0fY18mKpy
+	uOJlrAkoMQhFBJIeBQaps83tsUPLRUY=
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-583-tShpJgwSOwWsSO_QYTW7ag-1; Tue, 18 Jun 2024 10:10:22 -0400
+X-MC-Unique: tShpJgwSOwWsSO_QYTW7ag-1
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-1f71d5a85f9so61558925ad.0
+        for <patches@lists.linux.dev>; Tue, 18 Jun 2024 07:10:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718719822; x=1719324622;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=I4kwzn7nwp0hrFl15C/WJa7gZ49NVjVQcqnka+zFjp8=;
+        b=qw6UKw0GsO82vWuXpHCRNu+qRRu5ntMgd6JVrBAVBQfGlHcPboC7TZxaw2rmoBModd
+         KHoSEVv4bYHTvWrrLyKojFr2dmk9ivn+inEsXqcKFdJUvfLRq9SeX6iAfibjHYCkRRsv
+         j7KfzNnLAcdnHXedYNUtqeZP2J44YIzRDeLhOPaD0s8fqyKVDdPG/uCoNunZNozPWNil
+         PFSd06RrSgEVxUE1Fp48BSMJUISCg4YtuWSDqS5momttb4Em7cgEICLHQqPiNOofpS/c
+         +BBdpbGAe1UlBeYRGGitObPaSeabmO45aoZ0P9K9WkCCC1QVe8RsmIp8USiaPp2zMORf
+         uq/g==
+X-Gm-Message-State: AOJu0YzixXSvzblB9R9ZmQuje74HOwB0e8hUrXfVtSTZOKTC2kXDwVtK
+	9TuR9f43dRg1M11od9XjDLHhKy53I8lGkjDyA752ui17smeWoAlwbvk1TFhdGqONQt5h8Cgm/LU
+	E0/ZItXNR51k7+GlaxgJgBYbPpyg/0LQpwO8GuFQ+fIk3VA25Qj83W6s=
+X-Received: by 2002:a17:902:e747:b0:1f7:317f:5434 with SMTP id d9443c01a7336-1f8627e3299mr156584925ad.40.1718719821567;
+        Tue, 18 Jun 2024 07:10:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFv9qqMlG7VblsZwC7P+NfT7DBt1DHXNsixB82zrwIP85DFtLiWNRSo0cCXjVC8NYr5EAxLTQ==
+X-Received: by 2002:a17:902:e747:b0:1f7:317f:5434 with SMTP id d9443c01a7336-1f8627e3299mr156584335ad.40.1718719821007;
+        Tue, 18 Jun 2024 07:10:21 -0700 (PDT)
+Received: from dell-per750-06-vm-08.rhts.eng.pek2.redhat.com ([43.228.180.230])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f855e55c3bsm97927985ad.57.2024.06.18.07.10.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Jun 2024 07:10:20 -0700 (PDT)
+Date: Tue, 18 Jun 2024 22:10:13 +0800
+From: Zorro Lang <zlang@redhat.com>
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: patches@lists.linux.dev, fstests@vger.kernel.org,
+	linux-xfs@vger.kernel.org, linux-mm@kvack.org,
+	linux-fsdevel@vger.kernel.org, akpm@linux-foundation.org,
+	ziy@nvidia.com, vbabka@suse.cz, seanjc@google.com,
+	willy@infradead.org, david@redhat.com, hughd@google.com,
+	linmiaohe@huawei.com, muchun.song@linux.dev, osalvador@suse.de,
+	p.raghav@samsung.com, da.gomez@samsung.com, hare@suse.de,
+	john.g.garry@oracle.com
+Subject: Re: [PATCH v2 5/5] fstests: add stress truncation + writeback test
+Message-ID: <20240618141013.pue6syikkp5dwj5q@dell-per750-06-vm-08.rhts.eng.pek2.redhat.com>
+References: <20240615002935.1033031-1-mcgrof@kernel.org>
+ <20240615002935.1033031-6-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO6PR12MB5427:EE_|MN2PR12MB4303:EE_
-X-MS-Office365-Filtering-Correlation-Id: ef973d11-36c0-4ac6-609b-08dc8fa01eec
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230037|376011|7416011|1800799021|366013;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?NFNsdDRsY2kybEFrSEFoM2RtZ0F3K1pDYzlHaDRiL3A4N2UzdXdnNlJ5YXBj?=
- =?utf-8?B?UzQrOXVzTzNES3FWUWRGQmJYNWdIZ1d5Si9VbmpobGp4ZkYwZzltVzE3dS9V?=
- =?utf-8?B?QzNqMlFBVit0VUJBVnJVdUZuZ2VvbTgvNzVIL3NEazhwRkpDcElvbjFRYjdG?=
- =?utf-8?B?SURhYTFqTkJNTmVnektTbHBnUHpEcjBRTFd1L2ZpRXFzTHVqYnpoZHFIbXpv?=
- =?utf-8?B?ZDF0NG9acmlBVi9qdmhFZGJOSnlPYU41eElBakU2d015MHNoTVJsbEVhNkVx?=
- =?utf-8?B?eWpJcUE5a1Ivd3ExZWswaEFEeXpublJzQ282WXRFQ0Q0UDgzMkZmWWFScHpM?=
- =?utf-8?B?MmpBV0FsUkZNYTVkWkQ1TUpBSTZaekNYR3FNQWNXTmpJNXk3b2lHNUVCNzla?=
- =?utf-8?B?eTJPNkNoaHh5UE9lTUl3ZHdWcGRPdEk4elRycnV4VElZWE1hQmgrWmRoOVR5?=
- =?utf-8?B?WFo2a2EwZ21WSHVrNE9ESk9RazFHc2tkaGpWU0lUZ3B3ZEV2NnBvNXFjdVM5?=
- =?utf-8?B?YjNweEduTU83TTJRYXpsVDhsbjJPTHRqK0tObk9VcERuaDNGOG9vQklibU5m?=
- =?utf-8?B?dHRBcS84RStyTHVrcVhkZmhnYTZMa2R6UlhLR3dxaDhHK3dxekFFUldiNTZz?=
- =?utf-8?B?aUNQQlVrOUNERzNKWE9NQXFtR0dCdkdYMFRQSTRoZURRQjgzVllSTlBJVE55?=
- =?utf-8?B?RlFBK2pWSlk3cVU4QlhGR0NyQjJXMnR4dUtkOVVUTkpJUlJ2WUk0Wm9VTkpI?=
- =?utf-8?B?MStEYUZOVXRrZnM3VW1GcVJxRGw3V0hpT3ZidU5zSnJXUjZHalpsV2Y2TnVC?=
- =?utf-8?B?dW5zNUFDQ1B5ekEzR0s1dnVXK1k4THlyUCtsS1p5WWZnMy9Wa0lXdFRSQXFS?=
- =?utf-8?B?dEVQTy9uN1g5R0hwV3ViNU9UOWNMdDl0Nng1ZFRLQWpFTW9GZ2xzdncyRnZM?=
- =?utf-8?B?NFRwaGFrMHhKMGc5dU4yTlRvNmYrZmlTTDdhbHhWZUErVHpoSDVOeXJNRjdJ?=
- =?utf-8?B?ZEV3RmpYREFNdGNXdFJwTkFZUWlrZ1VjdERTRnU3SDdpZlFxQTRETWtJcG44?=
- =?utf-8?B?VHN5QXZRKzh2RzA3OVN5TEQ5bklHYmtJL05ocDNydjdSRjJyWGM3ZEFMRHlF?=
- =?utf-8?B?WUhJR25BS0dmeHF4K0lCYkdDdm9sRTZoVkNJKzJmOTVaZVF3YlhlTFZpNkMv?=
- =?utf-8?B?ekVvNWZRSzAyR2s1TDF0R0dydDV2eTZLMXF2M29HY0l3K0x0cE1yc01XQlRL?=
- =?utf-8?B?dXJIakp3YmFGOUFRZ0Y1azlFVTF1by9GMElRVys2SlhGR2I3VTBUN2pUNGJk?=
- =?utf-8?B?azlGWWNTR2FiOTVnT3FRaGdXak9EZ3Z1NFdSSkl4WHVacytoRGxXY1orV0Fk?=
- =?utf-8?B?cm1zMWMxMWt6Zkpqb08wOFZZaGliTXN4TFpBMUhEcHB3c2U1Yk16SnY0TUk1?=
- =?utf-8?B?aWpOSTFzL05zbjNpT01DUzJIVU9XNDJGRnUxWXFZd3ZrSUJla2VFcjRiOTlD?=
- =?utf-8?B?eklLd241MTM1Z3RlejdlQmp4K0cyOVJoS0pzTEJrMFI4aGsrelpRSzVhQjFz?=
- =?utf-8?B?aGQvUU1qdmtkSlMxK3lVNkp5Y1FJZExJZTY1Y2U2V3F6RlZyZ0ZzdnphSzV4?=
- =?utf-8?B?bGlLU3M1ZEdFeWRtL3ovay84dElHYUhlb3RYLy9EMEF6d1lodDFEVzJ0M1VQ?=
- =?utf-8?B?OGxQVlpKVVdHUjhra05XUTlUa0FWckVXUTczQmdlVWNQYjRBZUNNc2d3PT0=?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO6PR12MB5427.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230037)(376011)(7416011)(1800799021)(366013);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?ajBZYmpBYUxPRWJJVXFxWlFaTnBPR0RKeWRLTDF6Skh6clFzTkJmd2lrMC9y?=
- =?utf-8?B?M2RDMm9SK0pVTlh1T0dDK2xTV0t6YTdYTTl5SzRjNUdRaEJsTWEzd0tPUVNw?=
- =?utf-8?B?MVAxVmVWVkdCaHRjWnc0OXp5SUxwemxPYXhvNlp5TFJpRnhudEFnVEdMbXd6?=
- =?utf-8?B?V0QrclQybzRRN2ltUnFnVFZSNGQxaVVUZTNZTlgzVnlocHo5Qnk4NjBUL1JT?=
- =?utf-8?B?MGxDRk9Md3E1VkZaV0tGOFJoZnU4SkU1M3Q4ZzlPNXdGSjNRTmdyOEpTUm9Y?=
- =?utf-8?B?VDYxV3ZOa1RPQVphWlZrMjVQWmFlODhGZG9XTzgvWEo3UU5kaGo3TUxNSVMy?=
- =?utf-8?B?ODJyTkRPNlZBTzRqaXg2dFJiSm41aTFSeVV0QWlBYktEOEpCdm5Ga2lrODVJ?=
- =?utf-8?B?Rk00SWYxM2FzWWFFbHdNMmtiN2FDQzlDZ3hvR0lCRkFXdnN1NXRWMlF2aHU4?=
- =?utf-8?B?MkFlWmRNNDYxNEdJMThxS2xIU0daWUZ2ekN6d2tJVzYyNURyOW1IWURXSW9K?=
- =?utf-8?B?UzZTU1BtYUY5S2hjc1BYZndaR0g5NDI1YXA4WjVZcGduN1ZQek03QWJWTjBZ?=
- =?utf-8?B?aE5BNm85U2hzUlh4a0lCYkNjM1N6RnI1bW9NNEY1WkhZTTIyWTdPTHhnMTVV?=
- =?utf-8?B?ZENxY0haL21QUC9qY1RiMHNMaHJrYjkrL0VFdDVjUFlmK3RSZkh5WWgvb25F?=
- =?utf-8?B?RXovalV1cWtsdWp6eWNWbWR1OGFrNEszRmtSWXZXRXlCa09qdUErK2pNV1FB?=
- =?utf-8?B?cytRSEZ4NCtteVBVdXFaRU16a2I2MDJ0RUNWa0lTQzE3N1JUNzZWVFpDVWhD?=
- =?utf-8?B?T1NXcDhQbWxTeUNQajY2WEx6d0ZSQy9DRXRzMTJiT3BrKzl3YmRvMFg1TW13?=
- =?utf-8?B?cXJyTm1jN1NRbnRlc2dtVU1wcWdTODhMSFdSSFgwRGRsRHpHMFRPV1BmS0R5?=
- =?utf-8?B?ZXIzVnVVWHptSlllUnVOdFFWODRjYXArWkhUUXM3TFdxNWJmM3hCbU9aR3dN?=
- =?utf-8?B?emZQMWp1ZzNEbGc1K1E3SUdzRUU4WGNoYStJVUhvQjdIblhhbHZOQzBrb2FG?=
- =?utf-8?B?UDVXVEVYQTA2YjNjTktjL0VMbzl2eTRqcEM2cTk3bk1reHFQTWNrQ20vaitv?=
- =?utf-8?B?UHNjd2dxWGFzaG9ENElBNndNeE1Gd3ZMOHkxMXVsT0xJdy9ibVU1eGxta1ph?=
- =?utf-8?B?V1h5aVBxVVNTWW1sQlF6WER6R2VVNEpZd0d2bXQwR1JtM01oV0tMV0MxRytq?=
- =?utf-8?B?d0xSZ2c1RS9SNjVBblZLalJLZmQ2Nkt0T1ZmRjg0QVpESGQ0SHlxa25Fa2ZD?=
- =?utf-8?B?N2xUWVIreGNWckFyVzhYQnZzdEJYelhFUUJsRytwSSthditCQ0dsVGVzSEpD?=
- =?utf-8?B?ekxuczVnTTRNU2p0cFFObVJPRGVzSUNGQ0Z0elQzMlAxTkVRZUFhZHBKb3JO?=
- =?utf-8?B?TEZhNDVSRFBtdnRDN3hjdzhNa2FuWnNoMnplN2JGWnc2N0lWV3JxMUtzdjdi?=
- =?utf-8?B?ejIvSUxEbGpYcHZvaUxEN25mU0RBQ0U0cllpaTVTNkRJZ0FYTGpsVDZKWUFN?=
- =?utf-8?B?c3VJRTVmSWJOZCtLbitnWEROdWM3RUQ3c2dEWTl5Q1UxQ21JRmlJd1V4SGlP?=
- =?utf-8?B?bTVKRkZqZlQxNWFueXdWcklGanRaM3dtbW1DMXg1SjlYTFlyT1FLSGJGbFov?=
- =?utf-8?B?bGJUeFdDdkVVSnRsSXZqcHVrdjA0ZTZlanpJcEFoMk0vYjg2b09tQnFxenA4?=
- =?utf-8?B?Q0NZL3Z2QlVrSElsWWNYcWRTOHZGYitEYzhKY0h2SlJlazhCQWt1bVFVNTZi?=
- =?utf-8?B?elZMazY5ZFVzTnBlaDNSWEFvVEl3OXRwTjZsU1BtQjJuVjB1MVBUeXVwTnBN?=
- =?utf-8?B?V096c2FXZFBBN3phb2RoellCcXZlZWx5WWJCUUxubEJwOHdtQklwb1Bxbk91?=
- =?utf-8?B?STZUMk92U3NjMFo4OGw3ZzZNVjlST3NySzBRSktZUzJ4UjUzdS9Lb2lsQUZ2?=
- =?utf-8?B?MXVyWDN1RGFXMEh3QWVEU1ZnMGVSVm4zZE5EOWNUM1dPSnZBbTdpNTY4SWNG?=
- =?utf-8?B?RDA1UXpmKzlrd0xjWVZjc1JrbFgyL0JWSGQ1b243emlDalFMeGdYeFhJWEcr?=
- =?utf-8?Q?21wlaZFmGCd1hQ8cainj9Whp6?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ef973d11-36c0-4ac6-609b-08dc8fa01eec
-X-MS-Exchange-CrossTenant-AuthSource: CO6PR12MB5427.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Jun 2024 14:08:25.9675
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: UfMyWaFDJYmPKDOEE906ixE2MFQWHunaM8k8PSB7IVsdMh17p7umOY7A2tBRf1dJ45Xr0eH7J1bs7DXnwSW0sA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4303
+In-Reply-To: <20240615002935.1033031-6-mcgrof@kernel.org>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-
-
-On 2024-06-14 15:54, Nathan Chancellor wrote:
-> Commit 77acc6b55ae4 ("riscv: add support for kernel-mode FPU") and
-> commit a28e4b672f04 ("drm/amd/display: use ARCH_HAS_KERNEL_FPU_SUPPORT")
-> enabled support for CONFIG_DRM_AMD_DC_FP with RISC-V. Unfortunately,
-> this exposed -Wframe-larger-than warnings (which become fatal with
-> CONFIG_WERROR=y) when building ARCH=riscv allmodconfig with clang:
+On Fri, Jun 14, 2024 at 05:29:34PM -0700, Luis Chamberlain wrote:
+> Stress test folio splits by using the new debugfs interface to a target
+> a new smaller folio order while triggering writeback at the same time.
 > 
->   drivers/gpu/drm/amd/amdgpu/../display/dc/dml/dcn32/display_mode_vba_32.c:58:13: error: stack frame size (2448) exceeds limit (2048) in 'DISPCLKDPPCLKDCFCLKDeepSleepPrefetchParametersWatermarksAndPerformanceCalculation' [-Werror,-Wframe-larger-than]
->      58 | static void DISPCLKDPPCLKDCFCLKDeepSleepPrefetchParametersWatermarksAndPerformanceCalculation(
->         |             ^
->   1 error generated.
+> This is known to only creates a crash with min order enabled, so for example
+> with a 16k block sized XFS test profile, an xarray fix for that is merged
+> already. This issue is fixed by kernel commit 2a0774c2886d ("XArray: set the
+> marks correctly when splitting an entry").
 > 
-> Many functions in this file use a large number of parameters, which must
-> be passed on the stack at a certain pointer due to register exhaustion,
-> which can cause high stack usage when inlining and issues with stack
-> slot analysis get involved. While the compiler can and should do better
-> (as GCC uses less than half the amount of stack space for the same
-> function), it is not as simple as a fix as adjusting the functions not
-> to take a large number of parameters.
+> If inspecting more closely, you'll want to enable on your kernel boot:
 > 
-> Unfortunately, modifying these files to avoid the problem is a difficult
-> to justify approach because any revisions to the files in the kernel
-> tree never make it back to the original source (so copies of the code
-> for newer hardware revisions just reintroduce the issue) and the files
-> are hard to read/modify due to being "gcc-parsable HW gospel, coming
-> straight from HW engineers".
+> 	dyndbg='file mm/huge_memory.c +p'
 > 
-> Avoid building the problematic code for RISC-V by modifying the existing
-> condition for arm64 that exists for the same reason. Factor out the
-> logical not to make the condition a little more readable naturally.
+> Since we want to race large folio splits we also augment the full test
+> output log $seqres.full with the test specific number of successful
+> splits from vmstat thp_split_page and thp_split_page_failed. The larger
+> the vmstat thp_split_page the more we stress test this path.
 > 
-> Fixes: a28e4b672f04 ("drm/amd/display: use ARCH_HAS_KERNEL_FPU_SUPPORT")
-> Reported-by: Palmer Dabbelt <palmer@rivosinc.com>
-> Closes: https://lore.kernel.org/20240530145741.7506-2-palmer@rivosinc.com/
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> This test reproduces a really hard to reproduce crash immediately.
+> 
+> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 > ---
->  drivers/gpu/drm/amd/display/Kconfig | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+
+Good to me,
+Reviewed-by: Zorro Lang <zlang@redhat.com>
+
+>  common/rc             |  14 ++++
+>  tests/generic/751     | 170 ++++++++++++++++++++++++++++++++++++++++++
+>  tests/generic/751.out |   2 +
+>  3 files changed, 186 insertions(+)
+>  create mode 100755 tests/generic/751
+>  create mode 100644 tests/generic/751.out
 > 
-> diff --git a/drivers/gpu/drm/amd/display/Kconfig b/drivers/gpu/drm/amd/display/Kconfig
-> index 5fcd4f778dc3..47b8b49da8a7 100644
-> --- a/drivers/gpu/drm/amd/display/Kconfig
-> +++ b/drivers/gpu/drm/amd/display/Kconfig
-> @@ -8,7 +8,7 @@ config DRM_AMD_DC
->  	depends on BROKEN || !CC_IS_CLANG || ARM64 || RISCV || SPARC64 || X86_64
->  	select SND_HDA_COMPONENT if SND_HDA_CORE
->  	# !CC_IS_CLANG: https://github.com/ClangBuiltLinux/linux/issues/1752
-> -	select DRM_AMD_DC_FP if ARCH_HAS_KERNEL_FPU_SUPPORT && (!ARM64 || !CC_IS_CLANG)
-> +	select DRM_AMD_DC_FP if ARCH_HAS_KERNEL_FPU_SUPPORT && !(CC_IS_CLANG && (ARM64 || RISCV))
-
-Thanks for also making the logic easier to parse.
-
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-
-Harry
-
->  	help
->  	  Choose this option if you want to use the new display engine
->  	  support for AMDGPU. This adds required support for Vega and
+> diff --git a/common/rc b/common/rc
+> index 30beef4e5c02..31ad30276ca6 100644
+> --- a/common/rc
+> +++ b/common/rc
+> @@ -158,6 +158,20 @@ _require_vm_compaction()
+>  	    _notrun "Need compaction enabled CONFIG_COMPACTION=y"
+>  	fi
+>  }
+> +
+> +# Requires CONFIG_DEBUGFS and truncation knobs
+> +_require_split_huge_pages_knob()
+> +{
+> +       if [ ! -f $DEBUGFS_MNT/split_huge_pages ]; then
+> +           _notrun "Needs CONFIG_DEBUGFS and split_huge_pages"
+> +       fi
+> +}
+> +
+> +_split_huge_pages_all()
+> +{
+> +	echo 1 > $DEBUGFS_MNT/split_huge_pages
+> +}
+> +
+>  # Get hugepagesize in bytes
+>  _get_hugepagesize()
+>  {
+> diff --git a/tests/generic/751 b/tests/generic/751
+> new file mode 100755
+> index 000000000000..ac0ca2f07443
+> --- /dev/null
+> +++ b/tests/generic/751
+> @@ -0,0 +1,170 @@
+> +#! /bin/bash
+> +# SPDX-License-Identifier: GPL-2.0
+> +# Copyright (C) 2024 Luis Chamberlain. All Rights Reserved.
+> +#
+> +# FS QA Test No. 751
+> +#
+> +# stress page cache truncation + writeback
+> +#
+> +# This aims at trying to reproduce a difficult to reproduce bug found with
+> +# min order. The issue was root caused to an xarray bug when we split folios
+> +# to another order other than 0. This functionality is used to support min
+> +# order. The crash:
+> +#
+> +# https://gist.github.com/mcgrof/d12f586ec6ebe32b2472b5d634c397df
+> +# Crash excerpt is as follows:
+> +#
+> +# BUG: kernel NULL pointer dereference, address: 0000000000000036
+> +# #PF: supervisor read access in kernel mode
+> +# #PF: error_code(0x0000) - not-present page
+> +# PGD 0 P4D 0
+> +# Oops: 0000 [#1] PREEMPT SMP NOPTI
+> +# CPU: 7 PID: 2190 Comm: kworker/u38:5 Not tainted 6.9.0-rc5+ #14
+> +# Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+> +# Workqueue: writeback wb_workfn (flush-7:5)
+> +# RIP: 0010:filemap_get_folios_tag+0xa9/0x200
+> +# Call Trace:
+> +#  <TASK>
+> +#   writeback_iter+0x17d/0x310
+> +#  write_cache_pages+0x42/0xa0
+> +#  iomap_writepages+0x33/0x50
+> +#  xfs_vm_writepages+0x63/0x90 [xfs]
+> +#  do_writepages+0xcc/0x260
+> +#  __writeback_single_inode+0x3d/0x340
+> +#  writeback_sb_inodes+0x1ed/0x4b0
+> +#  __writeback_inodes_wb+0x4c/0xe0
+> +#  wb_writeback+0x267/0x2d0
+> +#  wb_workfn+0x2a4/0x440
+> +#  process_one_work+0x189/0x3b0
+> +#  worker_thread+0x273/0x390
+> +#  kthread+0xda/0x110
+> +#  ret_from_fork+0x2d/0x50
+> +#  ret_from_fork_asm+0x1a/0x30
+> +#  </TASK>
+> +#
+> +# This may also find future truncation bugs in the future, as truncating any
+> +# mapped file through the collateral of using echo 1 > split_huge_pages will
+> +# always respect the min order. Truncating to a larger order then is excercised
+> +# when this test is run against any filesystem LBS profile or an LBS device.
+> +#
+> +# If you're enabling this and want to check underneath the hood you may want to
+> +# enable:
+> +#
+> +# dyndbg='file mm/huge_memory.c +p'
+> +#
+> +# This tests aims at increasing the rate of successful truncations so we want
+> +# to increase the value of thp_split_page in $seqres.full. Using echo 1 >
+> +# split_huge_pages is extremely aggressive, and even accounts for anonymous
+> +# memory on a system, however we accept that tradeoff for the efficiency of
+> +# doing the work in-kernel for any mapped file too. Our general goal here is to
+> +# race with folio truncation + writeback.
+> +
+> +. ./common/preamble
+> +
+> +_begin_fstest auto long_rw stress soak smoketest
+> +
+> +# Override the default cleanup function.
+> +_cleanup()
+> +{
+> +	cd /
+> +	rm -f $tmp.*
+> +	rm -f $runfile
+> +	kill -9 $split_huge_pages_files_pid > /dev/null 2>&1
+> +}
+> +
+> +fio_config=$tmp.fio
+> +fio_out=$tmp.fio.out
+> +fio_err=$tmp.fio.err
+> +
+> +# real QA test starts here
+> +_supported_fs generic
+> +_require_test
+> +_require_scratch
+> +_require_debugfs
+> +_require_split_huge_pages_knob
+> +_require_command "$KILLALL_PROG" "killall"
+> +_fixed_by_git_commit kernel 2a0774c2886d \
+> +	"XArray: set the marks correctly when splitting an entry"
+> +
+> +proc_vmstat()
+> +{
+> +	awk -v name="$1" '{if ($1 ~ name) {print($2)}}' /proc/vmstat | head -1
+> +}
+> +
+> +# we need buffered IO to force truncation races with writeback in the
+> +# page cache
+> +cat >$fio_config <<EOF
+> +[force_large_large_folio_parallel_writes]
+> +ignore_error=ENOSPC
+> +nrfiles=10
+> +direct=0
+> +bs=4M
+> +group_reporting=1
+> +filesize=1GiB
+> +readwrite=write
+> +fallocate=none
+> +numjobs=$(nproc)
+> +directory=$SCRATCH_MNT
+> +runtime=100*${TIME_FACTOR}
+> +time_based
+> +EOF
+> +
+> +_require_fio $fio_config
+> +
+> +echo "Silence is golden"
+> +
+> +_scratch_mkfs >>$seqres.full 2>&1
+> +_scratch_mount >> $seqres.full 2>&1
+> +
+> +# used to let our loops know when to stop
+> +runfile="$tmp.keep.running.loop"
+> +touch $runfile
+> +
+> +# The background ops are out of bounds, the goal is to race with fsstress.
+> +
+> +# Force folio split if possible, this seems to be screaming for MADV_NOHUGEPAGE
+> +# for large folios.
+> +while [ -e $runfile ]; do
+> +	_split_huge_pages_all >/dev/null 2>&1
+> +done &
+> +split_huge_pages_files_pid=$!
+> +
+> +split_count_before=0
+> +split_count_failed_before=0
+> +
+> +if grep -q thp_split_page /proc/vmstat; then
+> +	split_count_before=$(proc_vmstat thp_split_page)
+> +	split_count_failed_before=$(proc_vmstat thp_split_page_failed)
+> +else
+> +	echo "no thp_split_page in /proc/vmstat" >> $seqres.full
+> +fi
+> +
+> +# we blast away with large writes to force large folio writes when
+> +# possible.
+> +echo -e "Running fio with config:\n" >> $seqres.full
+> +cat $fio_config >> $seqres.full
+> +$FIO_PROG $fio_config --alloc-size=$(( $(nproc) * 8192 )) \
+> +	--output=$fio_out 2> $fio_err
+> +FIO_ERR=$?
+> +
+> +rm -f $runfile
+> +
+> +wait > /dev/null 2>&1
+> +
+> +if grep -q thp_split_page /proc/vmstat; then
+> +	split_count_after=$(proc_vmstat thp_split_page)
+> +	split_count_failed_after=$(proc_vmstat thp_split_page_failed)
+> +	thp_split_page=$((split_count_after - split_count_before))
+> +	thp_split_page_failed=$((split_count_failed_after - split_count_failed_before))
+> +
+> +	echo "vmstat thp_split_page: $thp_split_page" >> $seqres.full
+> +	echo "vmstat thp_split_page_failed: $thp_split_page_failed" >> $seqres.full
+> +fi
+> +
+> +# exitall_on_error=ENOSPC does not work as it should, so we need this eyesore
+> +if [[ $FIO_ERR -ne 0 ]] && ! grep -q "No space left on device" $fio_err; then
+> +	_fail "fio failed with err: $FIO_ERR"
+> +fi
+> +
+> +status=0
+> +exit
+> diff --git a/tests/generic/751.out b/tests/generic/751.out
+> new file mode 100644
+> index 000000000000..6479fa6f1404
+> --- /dev/null
+> +++ b/tests/generic/751.out
+> @@ -0,0 +1,2 @@
+> +QA output created by 751
+> +Silence is golden
+> -- 
+> 2.43.0
 > 
-> ---
-> base-commit: c6c4dd54012551cce5cde408b35468f2c62b0cce
-> change-id: 20240614-amdgpu-disable-drm-amd-dc-fp-riscv-clang-31c84f6b990d
 > 
-> Best regards,
 
