@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2207615A85E;
-	Tue, 18 Jun 2024 13:20:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0623B12D74D;
+	Tue, 18 Jun 2024 13:20:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716807; cv=none; b=gC8aRlR/qzyRxsNw8Y2Y/Z/aD7I4bprB5yKiQTmuv+yWJo8BkB86EFwrRcSKhEMIx8P/sfUHHxjQa9ZZaB+y86Xeg0H2DFrejESM1J06IEgWwEINka1NJvrFiY6WYgfsJMmsrb+tr7PgwXXd5eWX0PTY3Kgs0yQ7QadIeCB1Dss=
+	t=1718716810; cv=none; b=XVqk4pynYAv2RIuXcTCyl03AJywL3/pf8NyOIyimx90w7u7TyVnKWmQSk3iKDJLT7j7EdavzKb8NyBQZoTU8OqJ2Qwk1vgSvr5BxldI1p6Hu76xbevx/9Qy77KGhIieQn2MsIJyjA/4IQbdJFckfDOksrhzjOhEkRbzqwAG8ZU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716807; c=relaxed/simple;
-	bh=LRzSvrott0NObsJrfxZwPvE2uxtrpaVxWosO5q+lysU=;
+	s=arc-20240116; t=1718716810; c=relaxed/simple;
+	bh=UujEcCb2SvPH+hOOdBmQ7wmc59Q6TWC5t2B23+khsN8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aBrPfTg3aTf3NTqvikqf0I/eZcHiBc2W99lKqsDtCnR/3z5n1EqZ2X43UFnkVH2xKuuCq6NJHEr8hdJUx+/32jUy8kae/LWCPto3AGH/OvhqwrPdz5AA6NznEgV4ojfXzKp5ietG4IMRcf6J3Z7XZn1vx4Oe3oQiLJN/cvERcdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uf8Veuv2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DVc734wzAG/D5JOn6XwRIVc65YrwSJ2KuMGe7FuCG6mVuPx06oudSBCFd9vhbpInhDJQGm4LeebBpsZAvlvzakYqwMjFti7MNqg51EM0MCYb73j21KQA8BHo1biF6XPu7aifgM6tXOIaujK3tlTMbFuHfASfpQCkmvn1V0fS+Tc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cZdqSsby; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uf8Veuv2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72A5CC32786;
-	Tue, 18 Jun 2024 13:20:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZdqSsby"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F20C32786;
+	Tue, 18 Jun 2024 13:20:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716807;
-	bh=LRzSvrott0NObsJrfxZwPvE2uxtrpaVxWosO5q+lysU=;
+	s=korg; t=1718716809;
+	bh=UujEcCb2SvPH+hOOdBmQ7wmc59Q6TWC5t2B23+khsN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uf8Veuv2A9RsusTUQA/aQ0bUWMCc4NoB6hMYuzLhW6HBa4RGWZyvrNC2dvZPqmA7s
-	 A9Hw74bp94KjpbI5eO06UwQ9ao/p8K+UGvSo50/eLRp4tTAzGmlmy9iusY56H2egxV
-	 0NWmPHJfRuZU4cqaNkA09oGUJJpAelhqnOhBIaeI=
+	b=cZdqSsbyjygmhhPWieNyvldc5Z/Koldm3E/f8pJOdnm8cN8VTUZ/pZaP4aa+ZxIp+
+	 /arHkv/7g8qE8c1UAxBx1XyRWYTHMQWh9jmX/axciUesr+/nZ9zN/A63QNC+TqJHz4
+	 wKuRIFpCIBtUSi1E/G5Ca+yJ8VN0RulPoXkSBtPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Jeff Layton <jlayton@kernel.org>,
-	NeilBrown <neilb@suse.de>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 770/770] nfsd: Fix a regression in nfsd_setattr()
-Date: Tue, 18 Jun 2024 14:40:23 +0200
-Message-ID: <20240618123436.995540911@linuxfoundation.org>
+Subject: [PATCH 5.10 753/770] nfsd: simplify the delayed disposal list code
+Date: Tue, 18 Jun 2024 14:40:06 +0200
+Message-ID: <20240618123436.335955080@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,89 +51,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 6412e44c40aaf8f1d7320b2099c5bdd6cb9126ac ]
+[ Upstream commit 92e4a6733f922f0fef1d0995f7b2d0eaff86c7ea ]
 
-Commit bb4d53d66e4b ("NFSD: use (un)lock_inode instead of
-fh_(un)lock for file operations") broke the NFSv3 pre/post op
-attributes behaviour when doing a SETATTR rpc call by stripping out
-the calls to fh_fill_pre_attrs() and fh_fill_post_attrs().
+When queueing a dispose list to the appropriate "freeme" lists, it
+pointlessly queues the objects one at a time to an intermediate list.
 
-Fixes: bb4d53d66e4b ("NFSD: use (un)lock_inode instead of fh_(un)lock for file operations")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: NeilBrown <neilb@suse.de>
-Message-ID: <20240216012451.22725-1-trondmy@kernel.org>
-[ cel: adjusted to apply to v5.10.y ]
+Remove a few helpers and just open code a list_move to make it more
+clear and efficient. Better document the resulting functions with
+kerneldoc comments.
+
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4proc.c | 4 ++++
- fs/nfsd/vfs.c      | 6 ++++--
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ fs/nfsd/filecache.c | 64 ++++++++++++++++-----------------------------
+ 1 file changed, 22 insertions(+), 42 deletions(-)
 
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 8560a11daa47d..2c0de247083a9 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1107,6 +1107,7 @@ nfsd4_setattr(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 	};
- 	struct inode *inode;
- 	__be32 status = nfs_ok;
-+	bool save_no_wcc;
- 	int err;
- 
- 	if (setattr->sa_iattr.ia_valid & ATTR_SIZE) {
-@@ -1132,8 +1133,11 @@ nfsd4_setattr(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 
- 	if (status)
- 		goto out;
-+	save_no_wcc = cstate->current_fh.fh_no_wcc;
-+	cstate->current_fh.fh_no_wcc = true;
- 	status = nfsd_setattr(rqstp, &cstate->current_fh, &attrs,
- 				0, (time64_t)0);
-+	cstate->current_fh.fh_no_wcc = save_no_wcc;
- 	if (!status)
- 		status = nfserrno(attrs.na_labelerr);
- 	if (!status)
-diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
-index 542a1adbbf2a1..0ea05ddff0d08 100644
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -486,7 +486,7 @@ nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	int		accmode = NFSD_MAY_SATTR;
- 	umode_t		ftype = 0;
- 	__be32		err;
--	int		host_err;
-+	int		host_err = 0;
- 	bool		get_write_count;
- 	bool		size_change = (iap->ia_valid & ATTR_SIZE);
- 	int		retries;
-@@ -544,6 +544,7 @@ nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp,
+diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
+index 52e67ec267965..6b8706f23eaf0 100644
+--- a/fs/nfsd/filecache.c
++++ b/fs/nfsd/filecache.c
+@@ -401,49 +401,26 @@ nfsd_file_dispose_list(struct list_head *dispose)
  	}
- 
- 	inode_lock(inode);
-+	fh_fill_pre_attrs(fhp);
- 	for (retries = 1;;) {
- 		struct iattr attrs;
- 
-@@ -569,13 +570,14 @@ nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	    !attr->na_aclerr && attr->na_dpacl && S_ISDIR(inode->i_mode))
- 		attr->na_aclerr = set_posix_acl(inode, ACL_TYPE_DEFAULT,
- 						attr->na_dpacl);
-+	fh_fill_post_attrs(fhp);
- 	inode_unlock(inode);
- 	if (size_change)
- 		put_write_access(inode);
- out:
- 	if (!host_err)
- 		host_err = commit_metadata(fhp);
--	return nfserrno(host_err);
-+	return err != 0 ? err : nfserrno(host_err);
  }
  
- #if defined(CONFIG_NFSD_V4)
+-static void
+-nfsd_file_list_remove_disposal(struct list_head *dst,
+-		struct nfsd_fcache_disposal *l)
+-{
+-	spin_lock(&l->lock);
+-	list_splice_init(&l->freeme, dst);
+-	spin_unlock(&l->lock);
+-}
+-
+-static void
+-nfsd_file_list_add_disposal(struct list_head *files, struct net *net)
+-{
+-	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+-	struct nfsd_fcache_disposal *l = nn->fcache_disposal;
+-
+-	spin_lock(&l->lock);
+-	list_splice_tail_init(files, &l->freeme);
+-	spin_unlock(&l->lock);
+-	queue_work(nfsd_filecache_wq, &l->work);
+-}
+-
+-static void
+-nfsd_file_list_add_pernet(struct list_head *dst, struct list_head *src,
+-		struct net *net)
+-{
+-	struct nfsd_file *nf, *tmp;
+-
+-	list_for_each_entry_safe(nf, tmp, src, nf_lru) {
+-		if (nf->nf_net == net)
+-			list_move_tail(&nf->nf_lru, dst);
+-	}
+-}
+-
++/**
++ * nfsd_file_dispose_list_delayed - move list of dead files to net's freeme list
++ * @dispose: list of nfsd_files to be disposed
++ *
++ * Transfers each file to the "freeme" list for its nfsd_net, to eventually
++ * be disposed of by the per-net garbage collector.
++ */
+ static void
+ nfsd_file_dispose_list_delayed(struct list_head *dispose)
+ {
+-	LIST_HEAD(list);
+-	struct nfsd_file *nf;
+-
+ 	while(!list_empty(dispose)) {
+-		nf = list_first_entry(dispose, struct nfsd_file, nf_lru);
+-		nfsd_file_list_add_pernet(&list, dispose, nf->nf_net);
+-		nfsd_file_list_add_disposal(&list, nf->nf_net);
++		struct nfsd_file *nf = list_first_entry(dispose,
++						struct nfsd_file, nf_lru);
++		struct nfsd_net *nn = net_generic(nf->nf_net, nfsd_net_id);
++		struct nfsd_fcache_disposal *l = nn->fcache_disposal;
++
++		spin_lock(&l->lock);
++		list_move_tail(&nf->nf_lru, &l->freeme);
++		spin_unlock(&l->lock);
++		queue_work(nfsd_filecache_wq, &l->work);
+ 	}
+ }
+ 
+@@ -664,8 +641,8 @@ nfsd_file_close_inode_sync(struct inode *inode)
+  * nfsd_file_delayed_close - close unused nfsd_files
+  * @work: dummy
+  *
+- * Walk the LRU list and destroy any entries that have not been used since
+- * the last scan.
++ * Scrape the freeme list for this nfsd_net, and then dispose of them
++ * all.
+  */
+ static void
+ nfsd_file_delayed_close(struct work_struct *work)
+@@ -674,7 +651,10 @@ nfsd_file_delayed_close(struct work_struct *work)
+ 	struct nfsd_fcache_disposal *l = container_of(work,
+ 			struct nfsd_fcache_disposal, work);
+ 
+-	nfsd_file_list_remove_disposal(&head, l);
++	spin_lock(&l->lock);
++	list_splice_init(&l->freeme, &head);
++	spin_unlock(&l->lock);
++
+ 	nfsd_file_dispose_list(&head);
+ }
+ 
 -- 
 2.43.0
 
