@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1CCA15D5A9;
-	Tue, 18 Jun 2024 12:46:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B350C143722;
+	Tue, 18 Jun 2024 12:46:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718714793; cv=none; b=Vx2VyVs6KJAIIuKx1pKk8JOTPh9d88lZhYyEMAcAC9nM3LlD0rgp4fcYhP3n846MiyzVjPpk9dZM5UxN061lplbk6tcjM0mF1QegUQW1WRVal7sS6egSxPpS96gZBYdxd0Jze6NWgk0ce3UALaHeM97npuMLLhwr9mmQqF8FjD8=
+	t=1718714796; cv=none; b=dxFJnUUqTthnXPmTzVjJQjpbY0maZdtW5Vej7FNGtDCJQWQ2955SEebO5zR3XqIev4pwBReNJNUAtbwKvqF2viNPY9YJ+MQtn8MzQnGtxHEG2KXFl4mW6zFpcEOW+56TuI8zvqa2N/opCtY91MoclugUnwE+SqToas2hUgnnAvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718714793; c=relaxed/simple;
-	bh=+2z0fOFMHWqIevcP5ubvKjBVHx9nH2tP5owpEFRpST4=;
+	s=arc-20240116; t=1718714796; c=relaxed/simple;
+	bh=+1VVj7BOzVlF40rSzHlJ+lwxnhsQ+wAnWg0SfmEp9XA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=icD4429A/EUjbidS0YmdoO5LZq8qcBsakowLv8cOs8uWUleryZzp/iSxTAUkUa3Y1ZgzTRb42KJo6tkhY0n0J7NP+AVaBXLonL8SScFfEbCiZw46S2A2HvJcO+UbaRACB8EbkhBa9AcNmZjeimnKTFq/8/tEAiz+huJayUdKAPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W9le38IK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ex7Gh+jyDQI+kVhU5Iv2piD6xCSaFL3q+LKqTykelkgZtk3b9oRR+Ei4Ulwcp96tJHI8arKXAPpyULR4YiGHgVW+F31OVgPz266Jca/ntuhziu+Jww/8UN8nB/WzN0L3X5RMC6KcX1pyCTyH04SVYUkVExfRqsW+pVhqWiaZiAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G35VPXBt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W9le38IK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45DA7C3277B;
-	Tue, 18 Jun 2024 12:46:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G35VPXBt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8C9C3277B;
+	Tue, 18 Jun 2024 12:46:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718714793;
-	bh=+2z0fOFMHWqIevcP5ubvKjBVHx9nH2tP5owpEFRpST4=;
+	s=korg; t=1718714796;
+	bh=+1VVj7BOzVlF40rSzHlJ+lwxnhsQ+wAnWg0SfmEp9XA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W9le38IK5RXybi2x+z41XhCWQDm8E6gxBfqCnUpC4Sntw29vZk6vibSLey+vChRYc
-	 67aaxMVZgRh4Mroek1YWD2Hx5cnivNgfKfB9tQhY15QxCsNr/CpE6lLxoOjLhvWUsg
-	 aMUPIktSgyhqsjPUcZF+ngvMAE9NfJxstSQB8VgM=
+	b=G35VPXBt2fpnHo33PCC+35roR5DEJ+B5+aJtbv4GtpYHLyo8HN5iPP+712HU7O50e
+	 mNbwgUYQ6FOpzH7BmR5hdTeIP29iwku/YOjC/mqHSYhJbsyHmH1EvqPrLk1uShD5dz
+	 71kLWfN8YF5MT3VlD9K30u396asxGNRSwsZ2sbEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 090/770] NFSD: Replace READ* macros in nfsd4_decode_listxattrs()
-Date: Tue, 18 Jun 2024 14:29:03 +0200
-Message-ID: <20240618123410.748936793@linuxfoundation.org>
+Subject: [PATCH 5.10 091/770] NFSD: Make nfsd4_ops::opnum a u32
+Date: Tue, 18 Jun 2024 14:29:04 +0200
+Message-ID: <20240618123410.786728370@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,51 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 2212036cadf4da3c4b0e4bd2a9a8c3d78617ab4f ]
+[ Upstream commit 3a237b4af5b7b0e77588e120554077cab3341943 ]
+
+Avoid passing a "pointer to int" argument to xdr_stream_decode_u32.
 
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4xdr.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/nfsd/nfs4proc.c | 2 +-
+ fs/nfsd/nfs4xdr.c  | 7 +++----
+ fs/nfsd/xdr4.h     | 2 +-
+ 3 files changed, 5 insertions(+), 6 deletions(-)
 
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index a038d1e182ff3..6b06f0ad05615 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -3272,7 +3272,7 @@ int nfsd4_max_reply(struct svc_rqst *rqstp, struct nfsd4_op *op)
+ void warn_on_nonidempotent_op(struct nfsd4_op *op)
+ {
+ 	if (OPDESC(op)->op_flags & OP_MODIFIES_SOMETHING) {
+-		pr_err("unable to encode reply to nonidempotent op %d (%s)\n",
++		pr_err("unable to encode reply to nonidempotent op %u (%s)\n",
+ 			op->opnum, nfsd4_op_name(op->opnum));
+ 		WARN_ON_ONCE(1);
+ 	}
 diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
-index 38610764d7161..bf8eacab64952 100644
+index bf8eacab64952..085191b4b3aa5 100644
 --- a/fs/nfsd/nfs4xdr.c
 +++ b/fs/nfsd/nfs4xdr.c
-@@ -2223,11 +2223,10 @@ static __be32
- nfsd4_decode_listxattrs(struct nfsd4_compoundargs *argp,
- 			struct nfsd4_listxattrs *listxattrs)
- {
--	DECODE_HEAD;
- 	u32 maxcount;
+@@ -2419,9 +2419,8 @@ nfsd4_decode_compound(struct nfsd4_compoundargs *argp)
+ 		op = &argp->ops[i];
+ 		op->replay = NULL;
  
--	READ_BUF(12);
--	p = xdr_decode_hyper(p, &listxattrs->lsxa_cookie);
-+	if (xdr_stream_decode_u64(argp->xdr, &listxattrs->lsxa_cookie) < 0)
-+		return nfserr_bad_xdr;
+-		READ_BUF(4);
+-		op->opnum = be32_to_cpup(p++);
+-
++		if (xdr_stream_decode_u32(argp->xdr, &op->opnum) < 0)
++			return nfserr_bad_xdr;
+ 		if (nfsd4_opnum_in_range(argp, op)) {
+ 			op->status = nfsd4_dec_ops[op->opnum](argp, &op->u);
+ 			if (op->status != nfs_ok)
+@@ -5395,7 +5394,7 @@ nfsd4_encode_operation(struct nfsd4_compoundres *resp, struct nfsd4_op *op)
+ 	if (op->status && opdesc &&
+ 			!(opdesc->op_flags & OP_NONTRIVIAL_ERROR_ENCODE))
+ 		goto status;
+-	BUG_ON(op->opnum < 0 || op->opnum >= ARRAY_SIZE(nfsd4_enc_ops) ||
++	BUG_ON(op->opnum >= ARRAY_SIZE(nfsd4_enc_ops) ||
+ 	       !nfsd4_enc_ops[op->opnum]);
+ 	encoder = nfsd4_enc_ops[op->opnum];
+ 	op->status = encoder(resp, op->status, &op->u);
+diff --git a/fs/nfsd/xdr4.h b/fs/nfsd/xdr4.h
+index facc5762bf831..2c31f3a7d7c74 100644
+--- a/fs/nfsd/xdr4.h
++++ b/fs/nfsd/xdr4.h
+@@ -615,7 +615,7 @@ struct nfsd4_copy_notify {
+ };
  
- 	/*
- 	 * If the cookie  is too large to have even one user.x attribute
-@@ -2237,7 +2236,8 @@ nfsd4_decode_listxattrs(struct nfsd4_compoundargs *argp,
- 	    (XATTR_LIST_MAX / (XATTR_USER_PREFIX_LEN + 2)))
- 		return nfserr_badcookie;
- 
--	maxcount = be32_to_cpup(p++);
-+	if (xdr_stream_decode_u32(argp->xdr, &maxcount) < 0)
-+		return nfserr_bad_xdr;
- 	if (maxcount < 8)
- 		/* Always need at least 2 words (length and one character) */
- 		return nfserr_inval;
-@@ -2245,7 +2245,7 @@ nfsd4_decode_listxattrs(struct nfsd4_compoundargs *argp,
- 	maxcount = min(maxcount, svc_max_payload(argp->rqstp));
- 	listxattrs->lsxa_maxcount = maxcount;
- 
--	DECODE_TAIL;
-+	return nfs_ok;
- }
- 
- static __be32
+ struct nfsd4_op {
+-	int					opnum;
++	u32					opnum;
+ 	const struct nfsd4_operation *		opdesc;
+ 	__be32					status;
+ 	union nfsd4_op_u {
 -- 
 2.43.0
 
