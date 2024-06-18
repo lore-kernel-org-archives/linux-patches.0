@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC70D13D528;
-	Tue, 18 Jun 2024 13:16:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93B415957D;
+	Tue, 18 Jun 2024 13:17:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716619; cv=none; b=N+GmfkXVyR7dxajrDF2ELMNiAS5Ft6jY1y8pFqcezNohn+jAgo34qo0qPtOEgUy6864kTqFn0XU3XsLoapTCfxE04P9gYx5nyzflUglaWTzQ8hMWmw0zHbgBq3qNB1LPZXs6vz+R6e8dDDxi5QfgjbZtLC14NUXAf7FmPoRX1Vw=
+	t=1718716622; cv=none; b=Mwj0Vlkq1xjOp1lMUBVs157bO41Emu7gfYBy8gkRV39fURzBfXw2r6rg2bjFjdfG67XsUrHeMLoDi+t/X8BdzpPFF2ETjtIHUSRvx7B+OIeRrtQnOdquviHQmGLb90MP4yUMKTRXohk9KNXJcAtOd8iskEV+qvDMSfWR+xLN+go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716619; c=relaxed/simple;
-	bh=gH1I4qyXBppcyueRwo4cQJI/nL1V/kTJcHZRHDsb6bQ=;
+	s=arc-20240116; t=1718716622; c=relaxed/simple;
+	bh=IVXUvbVR+MqQcqqTZZZbuomsNUiF8a8+l3yS7KguHo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FcgMtnozBnODYnJHVNsM+MUi4mOXPaiiW791UWC5bMRDUQcYi//CUIZpDkNYd7sfv/z43Bqvy7n4h4CYirOOuJ8/rwiPVeQ5OkbOgpqL2etY7b0jSHndLqO/0JCt3yXX5JHu22qJM+V8fSzAPpdkyiCbjgOziUh0xt8tFU4rp3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MhbqCzYx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sMXdEhzYDSOIo1LorYRv58CrSMspXH8xggW5dIuk6ugPaKal5ND6Jr1oH5DKAG02Nxa5dWuwrmf3xWVLU5WjfwcuHJ2ZNSQBUqFx3Inj2+fIcgCUtOcLcN4QqCqmtVpGFqXibUNCrkwn2fL4hBF88M+gaoZOwkn3v/ihM59Iy+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AA8qoJq/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MhbqCzYx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33E22C3277B;
-	Tue, 18 Jun 2024 13:16:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AA8qoJq/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C747C4AF54;
+	Tue, 18 Jun 2024 13:17:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716619;
-	bh=gH1I4qyXBppcyueRwo4cQJI/nL1V/kTJcHZRHDsb6bQ=;
+	s=korg; t=1718716622;
+	bh=IVXUvbVR+MqQcqqTZZZbuomsNUiF8a8+l3yS7KguHo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MhbqCzYxHMWVqaFTFNHCjQ1zPZJzEmNZ5Cv8wgsm0eUWZBh5oFJv+MS5qTCJOiLOF
-	 LXDF6eLsw44UTokIb4TCcfeMTYoSeszv7bs8zZBZKK8e4kDSrtAPrHQX84xMaZx4E7
-	 tBTFpzQyGXnAWdqPJm8V1biXRnkCP+5QPLQyVuzk=
+	b=AA8qoJq/p07lHJhCV7T7UNHFGtgbaanBODU43HpJ9RJtrSjNdPVEq0L+b53MYZ9fh
+	 ulrOj3YfkX7okEToFQNc6OWOc8SQigHv6Ezoa+9qovCKC9q4Fi29Cnhs3glfImA1j6
+	 O0tsNFDYULJL97vr5ytrHy66sfoudw18VyqVszuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
-	NeilBrown <neilb@suse.de>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 706/770] nfsd: reorganize filecache.c
-Date: Tue, 18 Jun 2024 14:39:19 +0200
-Message-ID: <20240618123434.523331609@linuxfoundation.org>
+Subject: [PATCH 5.10 707/770] nfsd: fix up the filecache laundrette scheduling
+Date: Tue, 18 Jun 2024 14:39:20 +0200
+Message-ID: <20240618123434.560933888@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -54,235 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 8214118589881b2d390284410c5ff275e7a5e03c ]
+[ Upstream commit 22ae4c114f77b55a4c5036e8f70409a0799a08f8 ]
 
-In a coming patch, we're going to rework how the filecache refcounting
-works. Move some code around in the function to reduce the churn in the
-later patches, and rename some of the functions with (hopefully) clearer
-names: nfsd_file_flush becomes nfsd_file_fsync, and
-nfsd_file_unhash_and_dispose is renamed to nfsd_file_unhash_and_queue.
+We don't really care whether there are hashed entries when it comes to
+scheduling the laundrette. They might all be non-gc entries, after all.
+We only want to schedule it if there are entries on the LRU.
 
-Also, the nfsd_file_put_final tracepoint is renamed to nfsd_file_free,
-to better match the name of the function from which it's called.
+Switch to using list_lru_count, and move the check into
+nfsd_file_gc_worker. The other callsite in nfsd_file_put doesn't need to
+count entries, since it only schedules the laundrette after adding an
+entry to the LRU.
 
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: NeilBrown <neilb@suse.de>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/filecache.c | 111 ++++++++++++++++++++++----------------------
- fs/nfsd/trace.h     |   4 +-
- 2 files changed, 58 insertions(+), 57 deletions(-)
+ fs/nfsd/filecache.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
 diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-index b95b1be5b2e43..fb7ada3f7410e 100644
+index fb7ada3f7410e..522e900a88605 100644
 --- a/fs/nfsd/filecache.c
 +++ b/fs/nfsd/filecache.c
-@@ -334,16 +334,59 @@ nfsd_file_alloc(struct nfsd_file_lookup_key *key, unsigned int may)
- 	return nf;
- }
- 
-+static void
-+nfsd_file_fsync(struct nfsd_file *nf)
-+{
-+	struct file *file = nf->nf_file;
-+
-+	if (!file || !(file->f_mode & FMODE_WRITE))
-+		return;
-+	if (vfs_fsync(file, 1) != 0)
-+		nfsd_reset_write_verifier(net_generic(nf->nf_net, nfsd_net_id));
-+}
-+
-+static int
-+nfsd_file_check_write_error(struct nfsd_file *nf)
-+{
-+	struct file *file = nf->nf_file;
-+
-+	if (!file || !(file->f_mode & FMODE_WRITE))
-+		return 0;
-+	return filemap_check_wb_err(file->f_mapping, READ_ONCE(file->f_wb_err));
-+}
-+
-+static void
-+nfsd_file_hash_remove(struct nfsd_file *nf)
-+{
-+	trace_nfsd_file_unhash(nf);
-+
-+	if (nfsd_file_check_write_error(nf))
-+		nfsd_reset_write_verifier(net_generic(nf->nf_net, nfsd_net_id));
-+	rhashtable_remove_fast(&nfsd_file_rhash_tbl, &nf->nf_rhash,
-+			       nfsd_file_rhash_params);
-+}
-+
-+static bool
-+nfsd_file_unhash(struct nfsd_file *nf)
-+{
-+	if (test_and_clear_bit(NFSD_FILE_HASHED, &nf->nf_flags)) {
-+		nfsd_file_hash_remove(nf);
-+		return true;
-+	}
-+	return false;
-+}
-+
- static bool
- nfsd_file_free(struct nfsd_file *nf)
+@@ -210,12 +210,9 @@ static const struct rhashtable_params nfsd_file_rhash_params = {
+ static void
+ nfsd_file_schedule_laundrette(void)
  {
- 	s64 age = ktime_to_ms(ktime_sub(ktime_get(), nf->nf_birthtime));
- 	bool flush = false;
- 
-+	trace_nfsd_file_free(nf);
-+
- 	this_cpu_inc(nfsd_file_releases);
- 	this_cpu_add(nfsd_file_total_age, age);
- 
--	trace_nfsd_file_put_final(nf);
- 	if (nf->nf_mark)
- 		nfsd_file_mark_put(nf->nf_mark);
- 	if (nf->nf_file) {
-@@ -377,27 +420,6 @@ nfsd_file_check_writeback(struct nfsd_file *nf)
- 		mapping_tagged(mapping, PAGECACHE_TAG_WRITEBACK);
- }
- 
--static int
--nfsd_file_check_write_error(struct nfsd_file *nf)
--{
--	struct file *file = nf->nf_file;
--
--	if (!file || !(file->f_mode & FMODE_WRITE))
--		return 0;
--	return filemap_check_wb_err(file->f_mapping, READ_ONCE(file->f_wb_err));
--}
--
--static void
--nfsd_file_flush(struct nfsd_file *nf)
--{
--	struct file *file = nf->nf_file;
--
--	if (!file || !(file->f_mode & FMODE_WRITE))
+-	if ((atomic_read(&nfsd_file_rhash_tbl.nelems) == 0) ||
+-	    test_bit(NFSD_FILE_CACHE_UP, &nfsd_file_flags) == 0)
 -		return;
--	if (vfs_fsync(file, 1) != 0)
--		nfsd_reset_write_verifier(net_generic(nf->nf_net, nfsd_net_id));
--}
 -
- static void nfsd_file_lru_add(struct nfsd_file *nf)
- {
- 	set_bit(NFSD_FILE_REFERENCED, &nf->nf_flags);
-@@ -411,31 +433,18 @@ static void nfsd_file_lru_remove(struct nfsd_file *nf)
- 		trace_nfsd_file_lru_del(nf);
- }
- 
--static void
--nfsd_file_hash_remove(struct nfsd_file *nf)
--{
--	trace_nfsd_file_unhash(nf);
--
--	if (nfsd_file_check_write_error(nf))
--		nfsd_reset_write_verifier(net_generic(nf->nf_net, nfsd_net_id));
--	rhashtable_remove_fast(&nfsd_file_rhash_tbl, &nf->nf_rhash,
--			       nfsd_file_rhash_params);
--}
--
--static bool
--nfsd_file_unhash(struct nfsd_file *nf)
-+struct nfsd_file *
-+nfsd_file_get(struct nfsd_file *nf)
- {
--	if (test_and_clear_bit(NFSD_FILE_HASHED, &nf->nf_flags)) {
--		nfsd_file_hash_remove(nf);
--		return true;
--	}
--	return false;
-+	if (likely(refcount_inc_not_zero(&nf->nf_ref)))
-+		return nf;
-+	return NULL;
+-	queue_delayed_work(system_wq, &nfsd_filecache_laundrette,
+-			NFSD_LAUNDRETTE_DELAY);
++	if (test_bit(NFSD_FILE_CACHE_UP, &nfsd_file_flags))
++		queue_delayed_work(system_wq, &nfsd_filecache_laundrette,
++				   NFSD_LAUNDRETTE_DELAY);
  }
  
  static void
--nfsd_file_unhash_and_dispose(struct nfsd_file *nf, struct list_head *dispose)
-+nfsd_file_unhash_and_queue(struct nfsd_file *nf, struct list_head *dispose)
+@@ -665,7 +662,8 @@ static void
+ nfsd_file_gc_worker(struct work_struct *work)
  {
--	trace_nfsd_file_unhash_and_dispose(nf);
-+	trace_nfsd_file_unhash_and_queue(nf);
- 	if (nfsd_file_unhash(nf)) {
- 		/* caller must call nfsd_file_dispose_list() later */
- 		nfsd_file_lru_remove(nf);
-@@ -473,7 +482,7 @@ nfsd_file_put(struct nfsd_file *nf)
- 		nfsd_file_unhash_and_put(nf);
- 
- 	if (!test_bit(NFSD_FILE_HASHED, &nf->nf_flags)) {
--		nfsd_file_flush(nf);
-+		nfsd_file_fsync(nf);
- 		nfsd_file_put_noref(nf);
- 	} else if (nf->nf_file && test_bit(NFSD_FILE_GC, &nf->nf_flags)) {
- 		nfsd_file_put_noref(nf);
-@@ -482,14 +491,6 @@ nfsd_file_put(struct nfsd_file *nf)
- 		nfsd_file_put_noref(nf);
+ 	nfsd_file_gc();
+-	nfsd_file_schedule_laundrette();
++	if (list_lru_count(&nfsd_file_lru))
++		nfsd_file_schedule_laundrette();
  }
  
--struct nfsd_file *
--nfsd_file_get(struct nfsd_file *nf)
--{
--	if (likely(refcount_inc_not_zero(&nf->nf_ref)))
--		return nf;
--	return NULL;
--}
--
- static void
- nfsd_file_dispose_list(struct list_head *dispose)
- {
-@@ -498,7 +499,7 @@ nfsd_file_dispose_list(struct list_head *dispose)
- 	while(!list_empty(dispose)) {
- 		nf = list_first_entry(dispose, struct nfsd_file, nf_lru);
- 		list_del_init(&nf->nf_lru);
--		nfsd_file_flush(nf);
-+		nfsd_file_fsync(nf);
- 		nfsd_file_put_noref(nf);
- 	}
- }
-@@ -512,7 +513,7 @@ nfsd_file_dispose_list_sync(struct list_head *dispose)
- 	while(!list_empty(dispose)) {
- 		nf = list_first_entry(dispose, struct nfsd_file, nf_lru);
- 		list_del_init(&nf->nf_lru);
--		nfsd_file_flush(nf);
-+		nfsd_file_fsync(nf);
- 		if (!refcount_dec_and_test(&nf->nf_ref))
- 			continue;
- 		if (nfsd_file_free(nf))
-@@ -712,7 +713,7 @@ __nfsd_file_close_inode(struct inode *inode, struct list_head *dispose)
- 				       nfsd_file_rhash_params);
- 		if (!nf)
- 			break;
--		nfsd_file_unhash_and_dispose(nf, dispose);
-+		nfsd_file_unhash_and_queue(nf, dispose);
- 		count++;
- 	} while (1);
- 	rcu_read_unlock();
-@@ -914,7 +915,7 @@ __nfsd_file_cache_purge(struct net *net)
- 		nf = rhashtable_walk_next(&iter);
- 		while (!IS_ERR_OR_NULL(nf)) {
- 			if (!net || nf->nf_net == net)
--				nfsd_file_unhash_and_dispose(nf, &dispose);
-+				nfsd_file_unhash_and_queue(nf, &dispose);
- 			nf = rhashtable_walk_next(&iter);
- 		}
- 
-diff --git a/fs/nfsd/trace.h b/fs/nfsd/trace.h
-index 191b206379b76..5faec08ac7cf7 100644
---- a/fs/nfsd/trace.h
-+++ b/fs/nfsd/trace.h
-@@ -819,10 +819,10 @@ DEFINE_EVENT(nfsd_file_class, name, \
- 	TP_PROTO(struct nfsd_file *nf), \
- 	TP_ARGS(nf))
- 
--DEFINE_NFSD_FILE_EVENT(nfsd_file_put_final);
-+DEFINE_NFSD_FILE_EVENT(nfsd_file_free);
- DEFINE_NFSD_FILE_EVENT(nfsd_file_unhash);
- DEFINE_NFSD_FILE_EVENT(nfsd_file_put);
--DEFINE_NFSD_FILE_EVENT(nfsd_file_unhash_and_dispose);
-+DEFINE_NFSD_FILE_EVENT(nfsd_file_unhash_and_queue);
- 
- TRACE_EVENT(nfsd_file_alloc,
- 	TP_PROTO(
+ static unsigned long
 -- 
 2.43.0
 
