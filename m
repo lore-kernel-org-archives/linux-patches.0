@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B031B4C29;
-	Tue, 18 Jun 2024 12:42:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1BFD15A843;
+	Tue, 18 Jun 2024 12:42:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718714574; cv=none; b=k2aeomYvEHoAnl23epicujMs+c/hak8sYUjKKKf4xHhVv+9iC/TWoJPYU+iRH9k48WFZG97ofL2NSD0APwLkm7sCS8j0hEmMlboH7ppCvtx9RqZJLH2OkTiAwVWZfcSfvKmKBCuF5del8N7+G7JInAOT5aCdZVoH9ziLt5nDXpk=
+	t=1718714578; cv=none; b=JR3k2UGOZ+b0u2x4B1vMosqLysjEvYotfDJzKgxvnE5uRM6hq8rK0UtV4jemC1TnpGdDMLJnIZevbJ5039PjNTXMr4gxS90DcRTWkIl9REUpOo9293MGA7hpsdlNs7D+vSKI0J1av3TB+gEwDLAq/3PKeOYpKKt2EdbGUKbz3ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718714574; c=relaxed/simple;
-	bh=HZwDUV8tbLtBso336iQsMHIMFlZNXOhS6Uior9vXjtI=;
+	s=arc-20240116; t=1718714578; c=relaxed/simple;
+	bh=tn0LLPzBTQGrLCXJWkB/PlaECpiCgJ5BLriBla0OECU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=droiHVr9pdUIMDt0R3GWN+1CI8ZbYxYiDxQ0m80Olco96oRKCHexuP087+xMfY5VsjYmJqAf9JdTtAokw2wmtBTblo7BZhfEB0PU3N5fbC+2WXmmQrnYE3tQmGsJ8x41yLvcLF3jfX8L302zbFFmBThmhD4H3TT7uvjyVYSzSA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HHZ84bFN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oy2P0NMDUPDXCacxao9VZpl0Zt7ZrF6BoIynuxCerU7LmXtKlicc3nFJuW6+w8O1skSlChHgOS3zuQ7euc8cGURYcxPReaQDPlIWHiUjYXLZvIKWtiuDq7nYvl+BaOSqKwJcQJGm507mZHRy3107tYx6ac30eENAmmNoYDFnkeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ygNqz9fg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HHZ84bFN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E1F1C4AF49;
-	Tue, 18 Jun 2024 12:42:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ygNqz9fg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CFC4C3277B;
+	Tue, 18 Jun 2024 12:42:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718714574;
-	bh=HZwDUV8tbLtBso336iQsMHIMFlZNXOhS6Uior9vXjtI=;
+	s=korg; t=1718714577;
+	bh=tn0LLPzBTQGrLCXJWkB/PlaECpiCgJ5BLriBla0OECU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HHZ84bFN+YLP0dAgIzUsUgoSYkaWbmutqqby88w84yB/COH4LSxufL048iqtJ5XtG
-	 u/5Ci0yf898e00at+RBp1GwBqqBk46WgRA28LXGzSGabydUXhkc1eqrB0j6GEYd5IK
-	 blh/VmaPulNONClPl4vcG52MJsULZ/qKCLe+JSpM=
+	b=ygNqz9fgM8kGHidS4Vfb9BetspWXPlDkNQM9fzaBeR+xxjYkm/ous7y8ssj3t+ZAO
+	 6WCpkFk1eTCiPI9tM+CbIr2AsHd0N8+Fk9jBErpcbqqF0WP6fBMNLr3nKP2vgFlamO
+	 eFKYQ9JM5Y5Kw1nuV9fpAZxaATpaJXFLeBnAgWys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 017/770] NFSD: Replace READ* macros in nfsd4_decode_commit()
-Date: Tue, 18 Jun 2024 14:27:50 +0200
-Message-ID: <20240618123407.962825778@linuxfoundation.org>
+Subject: [PATCH 5.10 018/770] NFSD: Change the way the expected length of a fattr4 is checked
+Date: Tue, 18 Jun 2024 14:27:51 +0200
+Message-ID: <20240618123408.001563918@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,70 +52,168 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit cbd9abb3706e96563b36af67595707a7054ab693 ]
+[ Upstream commit 081d53fe0b43c47c36d1832b759bf14edde9cdbb ]
+
+Because the fattr4 is now managed in an xdr_stream, all that is
+needed is to store the initial position of the stream before
+decoding the attribute list. Then the actual length of the list
+is computed using the final stream position, after decoding is
+complete.
+
+No behavior change is expected.
 
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4xdr.c          | 12 +++++-------
- include/linux/sunrpc/xdr.h | 21 +++++++++++++++++++++
- 2 files changed, 26 insertions(+), 7 deletions(-)
+ fs/nfsd/nfs4xdr.c | 34 +++++++++++-----------------------
+ 1 file changed, 11 insertions(+), 23 deletions(-)
 
 diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
-index ca02478534931..8251b905d5479 100644
+index 8251b905d5479..de5ac334cb8ab 100644
 --- a/fs/nfsd/nfs4xdr.c
 +++ b/fs/nfsd/nfs4xdr.c
-@@ -581,13 +581,11 @@ nfsd4_decode_close(struct nfsd4_compoundargs *argp, struct nfsd4_close *close)
- static __be32
- nfsd4_decode_commit(struct nfsd4_compoundargs *argp, struct nfsd4_commit *commit)
+@@ -250,7 +250,8 @@ nfsd4_decode_fattr(struct nfsd4_compoundargs *argp, u32 *bmval,
+ 		   struct iattr *iattr, struct nfs4_acl **acl,
+ 		   struct xdr_netobj *label, int *umask)
  {
--	DECODE_HEAD;
--
--	READ_BUF(12);
--	p = xdr_decode_hyper(p, &commit->co_offset);
--	commit->co_count = be32_to_cpup(p++);
--
--	DECODE_TAIL;
-+	if (xdr_stream_decode_u64(argp->xdr, &commit->co_offset) < 0)
-+		return nfserr_bad_xdr;
-+	if (xdr_stream_decode_u32(argp->xdr, &commit->co_count) < 0)
-+		return nfserr_bad_xdr;
-+	return nfs_ok;
- }
+-	int expected_len, len = 0;
++	unsigned int starting_pos;
++	u32 attrlist4_count;
+ 	u32 dummy32;
+ 	char *buf;
  
- static __be32
-diff --git a/include/linux/sunrpc/xdr.h b/include/linux/sunrpc/xdr.h
-index c03f7bf585c96..6b17575437474 100644
---- a/include/linux/sunrpc/xdr.h
-+++ b/include/linux/sunrpc/xdr.h
-@@ -569,6 +569,27 @@ xdr_stream_decode_u32(struct xdr_stream *xdr, __u32 *ptr)
- 	return 0;
- }
+@@ -267,12 +268,12 @@ nfsd4_decode_fattr(struct nfsd4_compoundargs *argp, u32 *bmval,
+ 		return nfserr_attrnotsupp;
+ 	}
  
-+/**
-+ * xdr_stream_decode_u64 - Decode a 64-bit integer
-+ * @xdr: pointer to xdr_stream
-+ * @ptr: location to store 64-bit integer
-+ *
-+ * Return values:
-+ *   %0 on success
-+ *   %-EBADMSG on XDR buffer overflow
-+ */
-+static inline ssize_t
-+xdr_stream_decode_u64(struct xdr_stream *xdr, __u64 *ptr)
-+{
-+	const size_t count = sizeof(*ptr);
-+	__be32 *p = xdr_inline_decode(xdr, count);
+-	READ_BUF(4);
+-	expected_len = be32_to_cpup(p++);
++	if (xdr_stream_decode_u32(argp->xdr, &attrlist4_count) < 0)
++		return nfserr_bad_xdr;
++	starting_pos = xdr_stream_pos(argp->xdr);
+ 
+ 	if (bmval[0] & FATTR4_WORD0_SIZE) {
+ 		READ_BUF(8);
+-		len += 8;
+ 		p = xdr_decode_hyper(p, &iattr->ia_size);
+ 		iattr->ia_valid |= ATTR_SIZE;
+ 	}
+@@ -280,7 +281,7 @@ nfsd4_decode_fattr(struct nfsd4_compoundargs *argp, u32 *bmval,
+ 		u32 nace;
+ 		struct nfs4_ace *ace;
+ 
+-		READ_BUF(4); len += 4;
++		READ_BUF(4);
+ 		nace = be32_to_cpup(p++);
+ 
+ 		if (nace > xdr_stream_remaining(argp->xdr) / sizeof(struct nfs4_ace))
+@@ -297,13 +298,12 @@ nfsd4_decode_fattr(struct nfsd4_compoundargs *argp, u32 *bmval,
+ 
+ 		(*acl)->naces = nace;
+ 		for (ace = (*acl)->aces; ace < (*acl)->aces + nace; ace++) {
+-			READ_BUF(16); len += 16;
++			READ_BUF(16);
+ 			ace->type = be32_to_cpup(p++);
+ 			ace->flag = be32_to_cpup(p++);
+ 			ace->access_mask = be32_to_cpup(p++);
+ 			dummy32 = be32_to_cpup(p++);
+ 			READ_BUF(dummy32);
+-			len += XDR_QUADLEN(dummy32) << 2;
+ 			READMEM(buf, dummy32);
+ 			ace->whotype = nfs4_acl_get_whotype(buf, dummy32);
+ 			status = nfs_ok;
+@@ -322,17 +322,14 @@ nfsd4_decode_fattr(struct nfsd4_compoundargs *argp, u32 *bmval,
+ 		*acl = NULL;
+ 	if (bmval[1] & FATTR4_WORD1_MODE) {
+ 		READ_BUF(4);
+-		len += 4;
+ 		iattr->ia_mode = be32_to_cpup(p++);
+ 		iattr->ia_mode &= (S_IFMT | S_IALLUGO);
+ 		iattr->ia_valid |= ATTR_MODE;
+ 	}
+ 	if (bmval[1] & FATTR4_WORD1_OWNER) {
+ 		READ_BUF(4);
+-		len += 4;
+ 		dummy32 = be32_to_cpup(p++);
+ 		READ_BUF(dummy32);
+-		len += (XDR_QUADLEN(dummy32) << 2);
+ 		READMEM(buf, dummy32);
+ 		if ((status = nfsd_map_name_to_uid(argp->rqstp, buf, dummy32, &iattr->ia_uid)))
+ 			return status;
+@@ -340,10 +337,8 @@ nfsd4_decode_fattr(struct nfsd4_compoundargs *argp, u32 *bmval,
+ 	}
+ 	if (bmval[1] & FATTR4_WORD1_OWNER_GROUP) {
+ 		READ_BUF(4);
+-		len += 4;
+ 		dummy32 = be32_to_cpup(p++);
+ 		READ_BUF(dummy32);
+-		len += (XDR_QUADLEN(dummy32) << 2);
+ 		READMEM(buf, dummy32);
+ 		if ((status = nfsd_map_name_to_gid(argp->rqstp, buf, dummy32, &iattr->ia_gid)))
+ 			return status;
+@@ -351,11 +346,9 @@ nfsd4_decode_fattr(struct nfsd4_compoundargs *argp, u32 *bmval,
+ 	}
+ 	if (bmval[1] & FATTR4_WORD1_TIME_ACCESS_SET) {
+ 		READ_BUF(4);
+-		len += 4;
+ 		dummy32 = be32_to_cpup(p++);
+ 		switch (dummy32) {
+ 		case NFS4_SET_TO_CLIENT_TIME:
+-			len += 12;
+ 			status = nfsd4_decode_time(argp, &iattr->ia_atime);
+ 			if (status)
+ 				return status;
+@@ -370,11 +363,9 @@ nfsd4_decode_fattr(struct nfsd4_compoundargs *argp, u32 *bmval,
+ 	}
+ 	if (bmval[1] & FATTR4_WORD1_TIME_MODIFY_SET) {
+ 		READ_BUF(4);
+-		len += 4;
+ 		dummy32 = be32_to_cpup(p++);
+ 		switch (dummy32) {
+ 		case NFS4_SET_TO_CLIENT_TIME:
+-			len += 12;
+ 			status = nfsd4_decode_time(argp, &iattr->ia_mtime);
+ 			if (status)
+ 				return status;
+@@ -392,18 +383,14 @@ nfsd4_decode_fattr(struct nfsd4_compoundargs *argp, u32 *bmval,
+ 	if (IS_ENABLED(CONFIG_NFSD_V4_SECURITY_LABEL) &&
+ 	    bmval[2] & FATTR4_WORD2_SECURITY_LABEL) {
+ 		READ_BUF(4);
+-		len += 4;
+ 		dummy32 = be32_to_cpup(p++); /* lfs: we don't use it */
+ 		READ_BUF(4);
+-		len += 4;
+ 		dummy32 = be32_to_cpup(p++); /* pi: we don't use it either */
+ 		READ_BUF(4);
+-		len += 4;
+ 		dummy32 = be32_to_cpup(p++);
+ 		READ_BUF(dummy32);
+ 		if (dummy32 > NFS4_MAXLABELLEN)
+ 			return nfserr_badlabel;
+-		len += (XDR_QUADLEN(dummy32) << 2);
+ 		READMEM(buf, dummy32);
+ 		label->len = dummy32;
+ 		label->data = svcxdr_dupstr(argp, buf, dummy32);
+@@ -414,15 +401,16 @@ nfsd4_decode_fattr(struct nfsd4_compoundargs *argp, u32 *bmval,
+ 		if (!umask)
+ 			goto xdr_error;
+ 		READ_BUF(8);
+-		len += 8;
+ 		dummy32 = be32_to_cpup(p++);
+ 		iattr->ia_mode = dummy32 & (S_IFMT | S_IALLUGO);
+ 		dummy32 = be32_to_cpup(p++);
+ 		*umask = dummy32 & S_IRWXUGO;
+ 		iattr->ia_valid |= ATTR_MODE;
+ 	}
+-	if (len != expected_len)
+-		goto xdr_error;
 +
-+	if (unlikely(!p))
-+		return -EBADMSG;
-+	xdr_decode_hyper(p, ptr);
-+	return 0;
-+}
-+
- /**
-  * xdr_stream_decode_opaque_fixed - Decode fixed length opaque xdr data
-  * @xdr: pointer to xdr_stream
++	/* request sanity: did attrlist4 contain the expected number of words? */
++	if (attrlist4_count != xdr_stream_pos(argp->xdr) - starting_pos)
++		return nfserr_bad_xdr;
+ 
+ 	DECODE_TAIL;
+ }
 -- 
 2.43.0
 
