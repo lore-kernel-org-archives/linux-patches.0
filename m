@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7817F157E88;
-	Tue, 18 Jun 2024 13:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E09157E88;
+	Tue, 18 Jun 2024 13:05:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715935; cv=none; b=l4R+PkYbkVF1FlSIh3omthNPFPcZYeS7BRVjjCV3TueCjzWWAlsZWBDDITAVMb6Z/VXae8/HTnkP6KrXNGwGKYeeVTJ8GDXnuZpNQfUvk4wSk4ZYYnIKue1MEXPz2d3ISJT87WxsNfrUKuktWORHPZOTVTO2Sef9NkJWAHjVhzc=
+	t=1718715939; cv=none; b=sNGBrKiCkNKtK+/pRjdTkD/iwv5KPDU0fzVL5hz8wP7HjS2reylxnyOA/8E8zxNZ2F4CwORjJdn+8aSC+TLKOLrYgUVrSVoBp65SVKfc7CqIAqfVgH+O+PpVK8snxi4zQdKEj254eGIYPvSH1SMndW1rQlcZmwhimS0mVVENmcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715935; c=relaxed/simple;
-	bh=M+eTlBbGSeX1WQyBGsLg9ei6ymE/VcHaF/m2l2TodKY=;
+	s=arc-20240116; t=1718715939; c=relaxed/simple;
+	bh=HFzf9tK4HzESyTzU8kUT1Rn2anjdAOkIC6I2sk7J2i8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nsiq1J2xuAL2S9g3EkohAoncPiuqZBMlOHeNTiGJerM3meHjwwND3ATJQPYEI2B2uNZgoVZgxbTDME734Nn7FdtxO4FjsnAfijubRliKr0ko4hLE1mlXWN/f8wLU5wmgRKh/VKGGW60G1shpBJ1WSRA/Jc5nSqE5J6zD0sKyaSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hOjVxwSy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XEBQ6Djyqu2xwddHufDVJNU4BUH4cUN6Oq83Wqf7X4KX8Xyrnhjj5l3UdeJbOQ0tom2IOdFM/tkxVf+vislSwC/jJ/NcPg4McPfAMC25VlQscGK5v8syKBZ9OVYIbPODoo+rLXygG/XLSMj7dijeTqMYZihTKQkgk1xfOadh7QM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HAPttXLE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hOjVxwSy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40D7C3277B;
-	Tue, 18 Jun 2024 13:05:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HAPttXLE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8782C3277B;
+	Tue, 18 Jun 2024 13:05:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715935;
-	bh=M+eTlBbGSeX1WQyBGsLg9ei6ymE/VcHaF/m2l2TodKY=;
+	s=korg; t=1718715938;
+	bh=HFzf9tK4HzESyTzU8kUT1Rn2anjdAOkIC6I2sk7J2i8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hOjVxwSyBrMhr91PB/TbxA2iRYFNnLtAFgG5xU/E+GkH4na0zxnb6FhncbUNaI3wn
-	 WreNspRpw7SSqnpZVlz6r9+9dt2Yi8qlIMFZ5DucrtFRTpMaIG1o/J9QWufBL5pj3X
-	 xa8KBq71Jbs5sFFfDwFYRXUvHdmnx5DJXHdgRWi8=
+	b=HAPttXLEaTaJ27dJk1bJl2GmY8mfQ15Pca4TQpcPk/+yUy5rbQbJzSfSPNEjUMhQn
+	 747aNEIaK/jQfjkUygjqKuFXrkiu+VvjepLrxD8pOkA4TN1HVAnBnIXORm7Twt8Sm8
+	 1pBskG0abia5clAj/sY6j9BJP9OPTnrrsmaOnpYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Brown <neilb@suse.de>,
 	Chuck Lever <chuck.lever@oracle.com>,
+	NeilBrown <neilb@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 475/770] SUNRPC: Merge svc_do_enqueue_xprt() into svc_enqueue_xprt()
-Date: Tue, 18 Jun 2024 14:35:28 +0200
-Message-ID: <20240618123425.650478907@linuxfoundation.org>
+Subject: [PATCH 5.10 476/770] SUNRPC: Remove svo_shutdown method
+Date: Tue, 18 Jun 2024 14:35:29 +0200
+Message-ID: <20240618123425.689668826@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,95 +53,101 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit c0219c499799c1e92bd570c15a47e6257a27bb15 ]
+[ Upstream commit 87cdd8641c8a1ec6afd2468265e20840a57fd888 ]
 
-Neil says:
-"These functions were separated in commit 0971374e2818 ("SUNRPC:
-Reduce contention in svc_xprt_enqueue()") so that the XPT_BUSY check
-happened before taking any spinlocks.
+Clean up. Neil observed that "any code that calls svc_shutdown_net()
+knows what the shutdown function should be, and so can call it
+directly."
 
-We have since moved or removed the spinlocks so the extra test is
-fairly pointless."
-
-I've made this a separate patch in case the XPT_BUSY change has
-unexpected consequences and needs to be reverted.
-
-Suggested-by: Neil Brown <neilb@suse.de>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: NeilBrown <neilb@suse.de>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/svc_xprt.c | 26 ++++++++++----------------
- 1 file changed, 10 insertions(+), 16 deletions(-)
+ fs/lockd/svc.c             | 5 ++---
+ fs/nfsd/nfssvc.c           | 2 +-
+ include/linux/sunrpc/svc.h | 3 ---
+ net/sunrpc/svc.c           | 3 ---
+ 4 files changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/net/sunrpc/svc_xprt.c b/net/sunrpc/svc_xprt.c
-index 833952db23192..b5e80817b02f5 100644
---- a/net/sunrpc/svc_xprt.c
-+++ b/net/sunrpc/svc_xprt.c
-@@ -31,7 +31,6 @@ static int svc_deferred_recv(struct svc_rqst *rqstp);
- static struct cache_deferred_req *svc_defer(struct cache_req *req);
- static void svc_age_temp_xprts(struct timer_list *t);
- static void svc_delete_xprt(struct svc_xprt *xprt);
--static void svc_xprt_do_enqueue(struct svc_xprt *xprt);
- 
- /* apparently the "standard" is that clients close
-  * idle connections after 5 minutes, servers after
-@@ -254,12 +253,12 @@ void svc_xprt_received(struct svc_xprt *xprt)
- 	trace_svc_xprt_received(xprt);
- 
- 	/* As soon as we clear busy, the xprt could be closed and
--	 * 'put', so we need a reference to call svc_xprt_do_enqueue with:
-+	 * 'put', so we need a reference to call svc_xprt_enqueue with:
- 	 */
- 	svc_xprt_get(xprt);
- 	smp_mb__before_atomic();
- 	clear_bit(XPT_BUSY, &xprt->xpt_flags);
--	svc_xprt_do_enqueue(xprt);
-+	svc_xprt_enqueue(xprt);
- 	svc_xprt_put(xprt);
- }
- EXPORT_SYMBOL_GPL(svc_xprt_received);
-@@ -399,6 +398,8 @@ static bool svc_xprt_ready(struct svc_xprt *xprt)
- 	smp_rmb();
- 	xpt_flags = READ_ONCE(xprt->xpt_flags);
- 
-+	if (xpt_flags & BIT(XPT_BUSY))
-+		return false;
- 	if (xpt_flags & (BIT(XPT_CONN) | BIT(XPT_CLOSE)))
- 		return true;
- 	if (xpt_flags & (BIT(XPT_DATA) | BIT(XPT_DEFERRED))) {
-@@ -411,7 +412,12 @@ static bool svc_xprt_ready(struct svc_xprt *xprt)
- 	return false;
+diff --git a/fs/lockd/svc.c b/fs/lockd/svc.c
+index 3a05af8736259..f5b688a844aa5 100644
+--- a/fs/lockd/svc.c
++++ b/fs/lockd/svc.c
+@@ -249,6 +249,7 @@ static int make_socks(struct svc_serv *serv, struct net *net,
+ 		printk(KERN_WARNING
+ 			"lockd_up: makesock failed, error=%d\n", err);
+ 	svc_shutdown_net(serv, net);
++	svc_rpcb_cleanup(serv, net);
+ 	return err;
  }
  
--static void svc_xprt_do_enqueue(struct svc_xprt *xprt)
-+/**
-+ * svc_xprt_enqueue - Queue a transport on an idle nfsd thread
-+ * @xprt: transport with data pending
-+ *
-+ */
-+void svc_xprt_enqueue(struct svc_xprt *xprt)
- {
- 	struct svc_pool *pool;
- 	struct svc_rqst	*rqstp = NULL;
-@@ -455,18 +461,6 @@ static void svc_xprt_do_enqueue(struct svc_xprt *xprt)
- 	put_cpu();
- 	trace_svc_xprt_do_enqueue(xprt, rqstp);
+@@ -287,8 +288,7 @@ static void lockd_down_net(struct svc_serv *serv, struct net *net)
+ 			cancel_delayed_work_sync(&ln->grace_period_end);
+ 			locks_end_grace(&ln->lockd_manager);
+ 			svc_shutdown_net(serv, net);
+-			dprintk("%s: per-net data destroyed; net=%x\n",
+-				__func__, net->ns.inum);
++			svc_rpcb_cleanup(serv, net);
+ 		}
+ 	} else {
+ 		pr_err("%s: no users! net=%x\n",
+@@ -351,7 +351,6 @@ static struct notifier_block lockd_inet6addr_notifier = {
+ #endif
+ 
+ static const struct svc_serv_ops lockd_sv_ops = {
+-	.svo_shutdown		= svc_rpcb_cleanup,
+ 	.svo_function		= lockd,
+ 	.svo_module		= THIS_MODULE,
+ };
+diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
+index 3b79b97f2715d..a1765e751b739 100644
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -613,7 +613,6 @@ static int nfsd_get_default_max_blksize(void)
  }
+ 
+ static const struct svc_serv_ops nfsd_thread_sv_ops = {
+-	.svo_shutdown		= nfsd_last_thread,
+ 	.svo_function		= nfsd,
+ 	.svo_module		= THIS_MODULE,
+ };
+@@ -724,6 +723,7 @@ void nfsd_put(struct net *net)
+ 
+ 	if (kref_put(&nn->nfsd_serv->sv_refcnt, nfsd_noop)) {
+ 		svc_shutdown_net(nn->nfsd_serv, net);
++		nfsd_last_thread(nn->nfsd_serv, net);
+ 		svc_destroy(&nn->nfsd_serv->sv_refcnt);
+ 		spin_lock(&nfsd_notifier_lock);
+ 		nn->nfsd_serv = NULL;
+diff --git a/include/linux/sunrpc/svc.h b/include/linux/sunrpc/svc.h
+index 3c8ed018c6868..6f3ba5c514643 100644
+--- a/include/linux/sunrpc/svc.h
++++ b/include/linux/sunrpc/svc.h
+@@ -55,9 +55,6 @@ struct svc_pool {
+ struct svc_serv;
+ 
+ struct svc_serv_ops {
+-	/* Callback to use when last thread exits. */
+-	void		(*svo_shutdown)(struct svc_serv *, struct net *);
 -
--/*
-- * Queue up a transport with data pending. If there are idle nfsd
-- * processes, wake 'em up.
-- *
-- */
--void svc_xprt_enqueue(struct svc_xprt *xprt)
--{
--	if (test_bit(XPT_BUSY, &xprt->xpt_flags))
--		return;
--	svc_xprt_do_enqueue(xprt);
--}
- EXPORT_SYMBOL_GPL(svc_xprt_enqueue);
+ 	/* function for service threads to run */
+ 	int		(*svo_function)(void *);
  
- /*
+diff --git a/net/sunrpc/svc.c b/net/sunrpc/svc.c
+index d34d03b0bf76b..709118bac4c32 100644
+--- a/net/sunrpc/svc.c
++++ b/net/sunrpc/svc.c
+@@ -537,9 +537,6 @@ EXPORT_SYMBOL_GPL(svc_create_pooled);
+ void svc_shutdown_net(struct svc_serv *serv, struct net *net)
+ {
+ 	svc_close_net(serv, net);
+-
+-	if (serv->sv_ops->svo_shutdown)
+-		serv->sv_ops->svo_shutdown(serv, net);
+ }
+ EXPORT_SYMBOL_GPL(svc_shutdown_net);
+ 
 -- 
 2.43.0
 
