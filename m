@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA84154C02;
-	Tue, 18 Jun 2024 12:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA7F14A08D;
+	Tue, 18 Jun 2024 12:55:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715337; cv=none; b=I7QBJXnn5itaBaaMX9XUPt2WVU2+Iyjh7tx2uA0w0mNey3ed2wVHNUUUqiwfq38la5rmyPbR2rH++Tqcpvbg7r+c4ntPbSVuylRu6eyqp0EQ5t2tQ/Zqrq9hZM7IPvJOKoz0Izoa4tC2V9Gn/eL774/PGZBCxLdm6TEvzTeF8pA=
+	t=1718715340; cv=none; b=Hb2kNK5vurY0eVBJSoyfm/VvcJWrdVATZWB7JpktgVcO01bkW9EDLfTFWke5s+w3XryIxBC6cTdfZrA9+D0t/i44gsm7FD8I3RBb4lfJi8ccKxbtljVlxVoJlfGhFz2jTw0uw1ZI6KtVS5cunLXCak1T16f4uYs8WXLoSf6IGA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715337; c=relaxed/simple;
-	bh=psZrKiboh4XGozPN58WUuDKUboAvr/4yfRRQzeZYICM=;
+	s=arc-20240116; t=1718715340; c=relaxed/simple;
+	bh=n5tOyVmF9MUvuou32dO0VVe+UQSZh8d+wri/Gmr1aBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UjYEk4snXTM1bQ7CaPEQO8LqxfTmlFBPuf+nyIxqKbqoSyiDs5Vqm5YT3rLEp1/l60A7b6rXXKiLu2nxxCoeHuT8utR8zcdO+8mVnAgXDLC83oI/45LmJIS/lgvt/h80tkjQXs0r4W4+fzaXnd3hmv8cH9BpIxeBB7KOZP53Sdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WAUo7Srf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R+9t6/Qzmf4SaUWaEf8THemp5IjvofjvwqG8aHUIzygqa9qT9YV/zisaq9G9VUIF0u1qYa0C6fJ27oaltiwWsScERdFCVkJAuOYiynZeXiySamHpd+KQiYBTRz6uhGGTDeOqFBo1L3/m/iXQ2Siy2VI2DaLlz4VcT6IVwNzqFeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QG0pwT1Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WAUo7Srf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 845F4C3277B;
-	Tue, 18 Jun 2024 12:55:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QG0pwT1Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FC2AC3277B;
+	Tue, 18 Jun 2024 12:55:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715336;
-	bh=psZrKiboh4XGozPN58WUuDKUboAvr/4yfRRQzeZYICM=;
+	s=korg; t=1718715339;
+	bh=n5tOyVmF9MUvuou32dO0VVe+UQSZh8d+wri/Gmr1aBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WAUo7SrfXpxLt+DhUpdVl96Q/v4oRFAk3M2nR3mII/kAqNTwKM6oYMPPNOK/uDhVU
-	 3XelBZn9Q/xwp9ZbtxBCWa9TPfoqLrYlpORTk7oCJ9ERwGJ6Jvpd29wBM+drtWU32i
-	 9+xGDAyZSFwG5j52f3dYrX6GTd81JH8i0kHt9iGQ=
+	b=QG0pwT1YOwqywq5/jVbyDUvxcYsXUO8Jsc0B/YpXXMgV4UFVj7jK4ZkTvCDnWzIuH
+	 bbPDyFQ+O7i+YUBe28J+oC31OJ706HUhOGI857xK6DR64F7Ahpn3B9bxnIDGZHoW74
+	 5iUgmBeMdZi3vP++BjKqyPIRCWjhSTPWl09zP/9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
+	radchenkoy@gmail.com,
 	"J. Bruce Fields" <bfields@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 273/770] NFSD: Add nfsd_clid_reclaim_complete tracepoint
-Date: Tue, 18 Jun 2024 14:32:06 +0200
-Message-ID: <20240618123417.807518768@linuxfoundation.org>
+Subject: [PATCH 5.10 244/770] nfsd: dont ignore high bits of copy count
+Date: Tue, 18 Jun 2024 14:31:37 +0200
+Message-ID: <20240618123416.696663188@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -51,43 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: J. Bruce Fields <bfields@redhat.com>
 
-[ Upstream commit cee8aa074281e5269d8404be2b6388bb29ea8efc ]
+[ Upstream commit e7a833e9cc6c3b58fe94f049d2b40943cba07086 ]
 
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Note size_t is 32-bit on a 32-bit architecture, but cp_count is defined
+by the protocol to be 64 bit, so we could be turning a large copy into a
+0-length copy here.
+
+Reported-by: <radchenkoy@gmail.com>
 Signed-off-by: J. Bruce Fields <bfields@redhat.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 1 +
- fs/nfsd/trace.h     | 1 +
- 2 files changed, 2 insertions(+)
+ fs/nfsd/nfs4proc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index b10593079e380..da5b9b88b0cd4 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -3981,6 +3981,7 @@ nfsd4_reclaim_complete(struct svc_rqst *rqstp,
- 		goto out;
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index 949d9cedef5d1..f85958f81a266 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -1376,7 +1376,7 @@ static ssize_t _nfsd_copy_file_range(struct nfsd4_copy *copy)
+ 	struct file *dst = copy->nf_dst->nf_file;
+ 	struct file *src = copy->nf_src->nf_file;
+ 	ssize_t bytes_copied = 0;
+-	size_t bytes_total = copy->cp_count;
++	u64 bytes_total = copy->cp_count;
+ 	u64 src_pos = copy->cp_src_pos;
+ 	u64 dst_pos = copy->cp_dst_pos;
  
- 	status = nfs_ok;
-+	trace_nfsd_clid_reclaim_complete(&clp->cl_clientid);
- 	nfsd4_client_record_create(clp);
- 	inc_reclaim_complete(clp);
- out:
-diff --git a/fs/nfsd/trace.h b/fs/nfsd/trace.h
-index 2c0f0057f60c9..6c787f4ef5633 100644
---- a/fs/nfsd/trace.h
-+++ b/fs/nfsd/trace.h
-@@ -511,6 +511,7 @@ DEFINE_EVENT(nfsd_clientid_class, nfsd_clid_##name, \
- 	TP_PROTO(const clientid_t *clid), \
- 	TP_ARGS(clid))
- 
-+DEFINE_CLIENTID_EVENT(reclaim_complete);
- DEFINE_CLIENTID_EVENT(confirmed);
- DEFINE_CLIENTID_EVENT(expired);
- DEFINE_CLIENTID_EVENT(purged);
 -- 
 2.43.0
 
