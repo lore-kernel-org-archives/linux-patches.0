@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F39715216F;
-	Tue, 18 Jun 2024 12:52:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DCF015217A;
+	Tue, 18 Jun 2024 12:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715147; cv=none; b=TenpSU0cYwgSf90BEAhGoIo7Mkn+1ht/J4LjXNOTLGSurfBkyqTebFVkkHFLjgvDqwIU4IYKfcoj98TY2ZH24xvdrUhDDEPtmzw7tFRZEBAIMMAP5GYxZtYKuX/6M1vHAgxbTyeMNjIihD3jxl0lTkY0yU0uyV+DA1GPf4ZvREc=
+	t=1718715150; cv=none; b=qEZnSQBjChqfPRU+hrmXLFmNbwtovrfb1wtpx1r4O6IksqzhQ0RJ2W8ePZV+msQ9RFlE+Wg9Jf3RBpxqPd2hl+DKDRyDO3V5FtqkaEKwiDnZqP92BkJd0Pt93uJXvSYpW2J6sihNfJ3mlVhqxkzPZN84W3IPtR7ecxue5A7Nnmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715147; c=relaxed/simple;
-	bh=P4igxkh4ojS9qC6RU4Xns2JpDkXOhJkuGWWpTAtqDk0=;
+	s=arc-20240116; t=1718715150; c=relaxed/simple;
+	bh=VYruwWNdI6Csi7khOTZKY1opN2cK+isPHbC2IRl+Gk8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aUmZa8Hzw8CRPDs1C1u+y9t1PxZx152RgCb7Qekgfv6d7eHPqf2UtmpL/no2YvRc6wunMa6lysssXt5AxC/ohpoG70rzCk+GKUdtox6mKyt9ZY0Hlo+R8uJUgCejByZ3IcMqTQd0scwL29P2fnz8e2UdatUHM/j3QrEnN5CjduQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QUoKI99v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AsAYq/xsbsI0YV2epLTU0JuxK4Z4lhsGBUC8qrRvr6ZdgCepo2FzB/n+RRZyKFWJL3VsQbbAM7fncGW3R3ga5D6bUbnaFOrxp26HKBFxnZt0BRuj+g5wwttsJrz0PcAo3ybUqwGAbzkGE3JpC/OHE0xAbsp6M3aA/51IPXeELLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dTI0ka3i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QUoKI99v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B98C3C3277B;
-	Tue, 18 Jun 2024 12:52:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dTI0ka3i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85BFC3277B;
+	Tue, 18 Jun 2024 12:52:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715147;
-	bh=P4igxkh4ojS9qC6RU4Xns2JpDkXOhJkuGWWpTAtqDk0=;
+	s=korg; t=1718715150;
+	bh=VYruwWNdI6Csi7khOTZKY1opN2cK+isPHbC2IRl+Gk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QUoKI99v9zKT3cXP9WWzPU2vX/muLo1Z1gMfuuLDADzVfOnFE+bVaztzS2/0irv0A
-	 1pd6FoeLlphzU0IgxIqx8ROpCF6T1hw4Kc2t7GBiZIRyZZZ0RM+Y1lLfWOMCN6kfnd
-	 ZPMgut1oxbzcE3r/x0tblkLds8YuzQVFFGDkaH6w=
+	b=dTI0ka3igS2jaApe9WWNy6q6dRcg9czqOmPFYxkAcajz3K1zx2r+dwf62ZEpYiJwu
+	 S63x9KMMi+14BLXtpdctRg/JDndQGubXzKVFKysgvb8iLF0PifoIc/n3Qz8eXPo8FE
+	 jSF6gxGb4dY361QIiYpe94gzpFNAMjpSeICdvDgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"J. Bruce Fields" <bfields@redhat.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 179/770] nfsd: simplify process_lock
-Date: Tue, 18 Jun 2024 14:30:32 +0200
-Message-ID: <20240618123414.178655535@linuxfoundation.org>
+Subject: [PATCH 5.10 180/770] nfsd: simplify nfsd_renew
+Date: Tue, 18 Jun 2024 14:30:33 +0200
+Message-ID: <20240618123414.221821126@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,43 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: J. Bruce Fields <bfields@redhat.com>
 
-[ Upstream commit a9d53a75cf574d6aa41f3cb4968fffe4f64e0fad ]
+[ Upstream commit b4587eb2cf4b6271f67fb93b75f7de2a2026e853 ]
 
-Similarly, this STALE_CLIENTID check is already handled by:
-
-nfs4_preprocess_confirmed_seqid_op()->
-        nfs4_preprocess_seqid_op()->
-                nfsd4_lookup_stateid()->
-                        set_client()->
-                                STALE_CLIENTID()
-
-(This may cause it to return a different error in some cases where
-there are multiple things wrong; pynfs test SEQ10 regressed on this
-commit because of that, but I think that's the test's fault, and I've
-fixed it separately.)
+You can take the single-exit thing too far, I think.
 
 Signed-off-by: J. Bruce Fields <bfields@redhat.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 4 ----
- 1 file changed, 4 deletions(-)
+ fs/nfsd/nfs4state.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
 diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 3f26047376368..15ed72b0ef55b 100644
+index 15ed72b0ef55b..574c88a9da268 100644
 --- a/fs/nfsd/nfs4state.c
 +++ b/fs/nfsd/nfs4state.c
-@@ -6720,10 +6720,6 @@ nfsd4_lock(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 				&cstate->session->se_client->cl_clientid,
- 				sizeof(clientid_t));
+@@ -5322,15 +5322,12 @@ nfsd4_renew(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 	trace_nfsd_clid_renew(clid);
+ 	status = lookup_clientid(clid, cstate, nn, false);
+ 	if (status)
+-		goto out;
++		return status;
+ 	clp = cstate->clp;
+-	status = nfserr_cb_path_down;
+ 	if (!list_empty(&clp->cl_delegations)
+ 			&& clp->cl_cb_state != NFSD4_CB_UP)
+-		goto out;
+-	status = nfs_ok;
+-out:
+-	return status;
++		return nfserr_cb_path_down;
++	return nfs_ok;
+ }
  
--		status = nfserr_stale_clientid;
--		if (STALE_CLIENTID(&lock->lk_new_clientid, nn))
--			goto out;
--
- 		/* validate and update open stateid and open seqid */
- 		status = nfs4_preprocess_confirmed_seqid_op(cstate,
- 				        lock->lk_new_open_seqid,
+ void
 -- 
 2.43.0
 
