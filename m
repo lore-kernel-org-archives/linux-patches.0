@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2D8158D9A;
-	Tue, 18 Jun 2024 13:13:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31C81A2C38;
+	Tue, 18 Jun 2024 13:13:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716382; cv=none; b=G84RMZX7csleNlE8ChrdFJkW297QGxOC8+vsEzCiQSigPhIgokAeHIL8t/Zbg/rLu2N41+XLxesIxOhaVDEBI7t1YbH5qSjqfVmKjaZ+Ijy6bp09bBylKYldNxJ8zHyUNhDqs9lPdHnRRBJEwHBPyiy5QRHHkt6vz4nlcp83je8=
+	t=1718716385; cv=none; b=ZQgdW8svi5GXv4UNjevra2FKk6fdPVNxXmj2K92ULRtniMexmq3Zn0y+oZaOVun/llXyjIuonFLZ6JNUSY4CZxjGhHuiXWyTZl/5rjmBgxA/5fQcUQneCyX1FbwUOJOK5NNru3BNxE0iqyP0VsoWVvB0I9XtQSyfCuPa1PtpjyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716382; c=relaxed/simple;
-	bh=glc/fn9KP5H6FPfFjhfkpJCc0r5RbJNoV91viO15BVE=;
+	s=arc-20240116; t=1718716385; c=relaxed/simple;
+	bh=tq/GZURe61UzM2l92gXDN4M73GR5ecHwX/4YQ9yRzOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W7Tmze/eYQeszN48bzw2vRqkpZSa1ujfrUy+xte9+mYeFJRD59BMZzOK+fhK2u46skoNkaesxuXO0XFOQhMBmtS7Mp5+imNtQoH82CbraaoO1eoMQu3/LoiDzHWQ0KVU4dkr6bP9wiCWyaeevTESnswhTHtajSRXiX5di5M3gDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0wVbgX4A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uUNSsQ8st4djUocR6ZeOuIsXF84Qdqr6MWEq5g57XJB38gj923rvjfr1fgXHj9Ucd6Unxq4kJzjJFjhJSoTTs+h3M0OmHdjyQedSu5fusRzPhnjjOAGMADUzJjCxLv5iaD2pTa2EvQCM0tX9Hlru2qeoqi6gavoHNCFCH3TLKN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IqoaCWBo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0wVbgX4A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85610C3277B;
-	Tue, 18 Jun 2024 13:13:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IqoaCWBo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A52AC3277B;
+	Tue, 18 Jun 2024 13:13:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716381;
-	bh=glc/fn9KP5H6FPfFjhfkpJCc0r5RbJNoV91viO15BVE=;
+	s=korg; t=1718716384;
+	bh=tq/GZURe61UzM2l92gXDN4M73GR5ecHwX/4YQ9yRzOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0wVbgX4A1X8ZMg3T2g0kbu+IAtsqWwNyPZFT0EFz1LifbIrry8SzuJyjLGElYcL3L
-	 kLE9pcFGeQ/+CRfEw3Pv91h5klMdOoFE2Wdv5PkYN0JxMl+7hdTEcb/Mu9P2EpeWCM
-	 iPH3vH2HkVSy/ySuUpx4wGlOiRdRmcfQVdidkRHs=
+	b=IqoaCWBonDKumQqxqd6XiNC8j3EdQAOAjgDNSayFKTIsuNBacYmzUMyaKsZxuIHCb
+	 gakkUFsakLxTu+rXoy/NXit6VLNLFstr5/zp/yZ5esLM6d5A1Cd9BXA7ptlu6rEMyr
+	 QbocSE1tiNa/7R+DwRORelgwoJzF488vAREagm5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <kolga@netapp.com>,
-	Jeff Layton <jlayton@kernel.org>,
+	Zeal Robot <zealci@zte.com.cn>,
+	Jinpeng Cui <cui.jinpeng2@zte.com.cn>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 628/770] NFSD enforce filehandle check for source file in COPY
-Date: Tue, 18 Jun 2024 14:38:01 +0200
-Message-ID: <20240618123431.526777063@linuxfoundation.org>
+Subject: [PATCH 5.10 629/770] NFSD: remove redundant variable status
+Date: Tue, 18 Jun 2024 14:38:02 +0200
+Message-ID: <20240618123431.564851179@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,41 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Kornievskaia <kolga@netapp.com>
+From: Jinpeng Cui <cui.jinpeng2@zte.com.cn>
 
-[ Upstream commit 754035ff79a14886e68c0c9f6fa80adb21f12b53 ]
+[ Upstream commit 4ab3442ca384a02abf8b1f2b3449a6c547851873 ]
 
-If the passed in filehandle for the source file in the COPY operation
-is not a regular file, the server MUST return NFS4ERR_WRONG_TYPE.
+Return value directly from fh_verify() do_open_permission()
+exp_pseudoroot() instead of getting value from
+redundant variable status.
 
-Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-[ cel: adjusted to apply to v5.10.y ]
+Reported-by: Zeal Robot <zealci@zte.com.cn>
+Signed-off-by: Jinpeng Cui <cui.jinpeng2@zte.com.cn>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4proc.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/nfsd/nfs4proc.c | 16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
 
 diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 0431b979748b8..ebfe39d313119 100644
+index ebfe39d313119..62ffcecf78f7e 100644
 --- a/fs/nfsd/nfs4proc.c
 +++ b/fs/nfsd/nfs4proc.c
-@@ -1758,7 +1758,13 @@ static int nfsd4_do_async_copy(void *data)
- 		filp = nfs42_ssc_open(copy->ss_mnt, &copy->c_fh,
- 				      &copy->stateid);
- 		if (IS_ERR(filp)) {
--			nfserr = nfserr_offload_denied;
-+			switch (PTR_ERR(filp)) {
-+			case -EBADF:
-+				nfserr = nfserr_wrong_type;
-+				break;
-+			default:
-+				nfserr = nfserr_offload_denied;
-+			}
- 			/* ss_mnt will be unmounted by the laundromat */
- 			goto do_callback;
- 		}
+@@ -141,7 +141,6 @@ fh_dup2(struct svc_fh *dst, struct svc_fh *src)
+ static __be32
+ do_open_permission(struct svc_rqst *rqstp, struct svc_fh *current_fh, struct nfsd4_open *open, int accmode)
+ {
+-	__be32 status;
+ 
+ 	if (open->op_truncate &&
+ 		!(open->op_share_access & NFS4_SHARE_ACCESS_WRITE))
+@@ -156,9 +155,7 @@ do_open_permission(struct svc_rqst *rqstp, struct svc_fh *current_fh, struct nfs
+ 	if (open->op_share_deny & NFS4_SHARE_DENY_READ)
+ 		accmode |= NFSD_MAY_WRITE;
+ 
+-	status = fh_verify(rqstp, current_fh, S_IFREG, accmode);
+-
+-	return status;
++	return fh_verify(rqstp, current_fh, S_IFREG, accmode);
+ }
+ 
+ static __be32 nfsd_check_obj_isreg(struct svc_fh *fh)
+@@ -454,7 +451,6 @@ static __be32
+ do_open_fhandle(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate, struct nfsd4_open *open)
+ {
+ 	struct svc_fh *current_fh = &cstate->current_fh;
+-	__be32 status;
+ 	int accmode = 0;
+ 
+ 	/* We don't know the target directory, and therefore can not
+@@ -479,9 +475,7 @@ do_open_fhandle(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate, str
+ 	if (open->op_claim_type == NFS4_OPEN_CLAIM_DELEG_CUR_FH)
+ 		accmode = NFSD_MAY_OWNER_OVERRIDE;
+ 
+-	status = do_open_permission(rqstp, current_fh, open, accmode);
+-
+-	return status;
++	return do_open_permission(rqstp, current_fh, open, accmode);
+ }
+ 
+ static void
+@@ -668,11 +662,9 @@ static __be32
+ nfsd4_putrootfh(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 		union nfsd4_op_u *u)
+ {
+-	__be32 status;
+-
+ 	fh_put(&cstate->current_fh);
+-	status = exp_pseudoroot(rqstp, &cstate->current_fh);
+-	return status;
++
++	return exp_pseudoroot(rqstp, &cstate->current_fh);
+ }
+ 
+ static __be32
 -- 
 2.43.0
 
