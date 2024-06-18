@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C11514F10F;
-	Tue, 18 Jun 2024 12:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5525115F300;
+	Tue, 18 Jun 2024 12:49:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718714985; cv=none; b=KUx1oS+ZgExDodV+onux0XIUvyRRvhykjnofjV16cFUh0ErSm1suIhqmPW4Vgim2clpPggU0skVv1M6o3MyFl6/2B3SUWQ/mD58jouzMHSEpnz/Iiuju+axGtnV7MCAxTKDM6UV0xWWslK5FV9OkvFkM3HJKIEqAetDjhsIW7XQ=
+	t=1718714988; cv=none; b=otpGubcmjPKFxgu8wjnQ2zCd6mZVqLbLGGpFZf/1hUxEKrvny9Ic/QVSuQ/v8GT/1sThrmAVrAqrWA/zi177GRwC9lNQzvbd5x9tHpR6qG8CaLjQT8olN8ft+r/qCxF4Qx5Y2nKIi7CEaiGXbt2u11LOMGFLs5MV8UIK1+5i9eo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718714985; c=relaxed/simple;
-	bh=uT3X53UaTd3DgsuF4Gmp0Ea6AhTXLHw8jZAeFUzLDMM=;
+	s=arc-20240116; t=1718714988; c=relaxed/simple;
+	bh=tWd+YromDa4dP+j24D4vLLSVvJCAy9PqPLh+KRln8/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xiwdztt8NggayUjbMhprldeVO7JfcIkvdqnBCDKSIXt/WYEkVkOrTMaSoLbxG/g19CMye5SgEjD99y8vrQJL6P1Y7NoM9y3P2CVTA07JLYT2qapJfEzfQSr2HadvptCpf19jihdM7rt0PpzBCZAejzKJO8pdilalwOPnZsc4ckI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HhzvHSFg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z16q0JP50zjaemxnIRW339cFwflEWdNXaBNbuLWo8v0qhIBzmUAouYWJnLqomh3Sj7yz11OsCBcFW48zB6FPxikNU+3m4lOsihDmZzYkgaf0xDvIrY5nydBhTfCUl4nb87nqplco0sHeNN6Dy18Hdjkudolg8khIQQNysTsGkE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wqtdUgxV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HhzvHSFg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5E27C3277B;
-	Tue, 18 Jun 2024 12:49:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wqtdUgxV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE507C3277B;
+	Tue, 18 Jun 2024 12:49:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718714985;
-	bh=uT3X53UaTd3DgsuF4Gmp0Ea6AhTXLHw8jZAeFUzLDMM=;
+	s=korg; t=1718714988;
+	bh=tWd+YromDa4dP+j24D4vLLSVvJCAy9PqPLh+KRln8/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HhzvHSFgwh1CWbMOSJbAMLWd3Qa45ha3XFroo3Hkrc3usdOPVSdYqxDoX0JL3GTHS
-	 dXyeFIQJuNo4U+bDxhF703UgHROQ3i13JDXsdEbsD7uYWwROZ06Urj9EyADkgt89uO
-	 4zomZvs1/rXJpBebxW1aLh9A/7JTrajSQKxuzEq0=
+	b=wqtdUgxVJwX2r+jDpvYWV1j2IZBbfgFD3OhUez7RJknaSG+BLJa8KE0O3op4fUMvi
+	 pT2S04iCBbd243Ds2lWWPO21GYMkoEWi/NVFhvFlECW7F+jEhFEiwldvZdXmZp2OOc
+	 VFAeyrSGCBldMfUI1ua0LIrrlSZdnzCuaCDEwHf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 156/770] NFSD: Update the NFSv2 READLINK argument decoder to use struct xdr_stream
-Date: Tue, 18 Jun 2024 14:30:09 +0200
-Message-ID: <20240618123413.298030227@linuxfoundation.org>
+Subject: [PATCH 5.10 139/770] NFSD: Update WRITE3arg decoder to use struct xdr_stream
+Date: Tue, 18 Jun 2024 14:29:52 +0200
+Message-ID: <20240618123412.641727248@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,103 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 1fcbd1c9456ba129d38420e345e91c4b6363db47 ]
+[ Upstream commit c43b2f229a01969a7ccf94b033c5085e0ec2040c ]
 
-If the code that sets up the sink buffer for nfsd_readlink() is
-moved adjacent to the nfsd_readlink() call site that uses it, then
-the only argument is a file handle, and the fhandle decoder can be
-used instead.
+As part of the update, open code that sanity-checks the size of the
+data payload against the length of the RPC Call message has to be
+re-implemented to use xdr_stream infrastructure.
 
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfsproc.c |  9 +++++----
- fs/nfsd/nfsxdr.c  | 13 -------------
- fs/nfsd/xdr.h     |  6 ------
- 3 files changed, 5 insertions(+), 23 deletions(-)
+ fs/nfsd/nfs3xdr.c | 51 +++++++++++++++++++----------------------------
+ 1 file changed, 20 insertions(+), 31 deletions(-)
 
-diff --git a/fs/nfsd/nfsproc.c b/fs/nfsd/nfsproc.c
-index c70ae20e54c49..6352da0168e04 100644
---- a/fs/nfsd/nfsproc.c
-+++ b/fs/nfsd/nfsproc.c
-@@ -149,14 +149,15 @@ nfsd_proc_lookup(struct svc_rqst *rqstp)
- static __be32
- nfsd_proc_readlink(struct svc_rqst *rqstp)
+diff --git a/fs/nfsd/nfs3xdr.c b/fs/nfsd/nfs3xdr.c
+index 2f32df15a7e87..c06467e8ac829 100644
+--- a/fs/nfsd/nfs3xdr.c
++++ b/fs/nfsd/nfs3xdr.c
+@@ -405,52 +405,41 @@ nfs3svc_decode_readargs(struct svc_rqst *rqstp, __be32 *p)
+ int
+ nfs3svc_decode_writeargs(struct svc_rqst *rqstp, __be32 *p)
  {
--	struct nfsd_readlinkargs *argp = rqstp->rq_argp;
-+	struct nfsd_fhandle *argp = rqstp->rq_argp;
- 	struct nfsd_readlinkres *resp = rqstp->rq_resp;
-+	char *buffer = page_address(*(rqstp->rq_next_page++));
++	struct xdr_stream *xdr = &rqstp->rq_arg_stream;
+ 	struct nfsd3_writeargs *args = rqstp->rq_argp;
+-	unsigned int len, hdr, dlen;
+ 	u32 max_blocksize = svc_max_payload(rqstp);
+ 	struct kvec *head = rqstp->rq_arg.head;
+ 	struct kvec *tail = rqstp->rq_arg.tail;
++	size_t remaining;
  
- 	dprintk("nfsd: READLINK %s\n", SVCFH_fmt(&argp->fh));
- 
- 	/* Read the symlink. */
- 	resp->len = NFS_MAXPATHLEN;
--	resp->status = nfsd_readlink(rqstp, &argp->fh, argp->buffer, &resp->len);
-+	resp->status = nfsd_readlink(rqstp, &argp->fh, buffer, &resp->len);
- 
- 	fh_put(&argp->fh);
- 	return rpc_success;
-@@ -674,9 +675,9 @@ static const struct svc_procedure nfsd_procedures2[18] = {
- 	},
- 	[NFSPROC_READLINK] = {
- 		.pc_func = nfsd_proc_readlink,
--		.pc_decode = nfssvc_decode_readlinkargs,
-+		.pc_decode = nfssvc_decode_fhandleargs,
- 		.pc_encode = nfssvc_encode_readlinkres,
--		.pc_argsize = sizeof(struct nfsd_readlinkargs),
-+		.pc_argsize = sizeof(struct nfsd_fhandle),
- 		.pc_ressize = sizeof(struct nfsd_readlinkres),
- 		.pc_cachetype = RC_NOCACHE,
- 		.pc_xdrressize = ST+1+NFS_MAXPATHLEN/4,
-diff --git a/fs/nfsd/nfsxdr.c b/fs/nfsd/nfsxdr.c
-index 11d27b219cff2..02dd9888d93b2 100644
---- a/fs/nfsd/nfsxdr.c
-+++ b/fs/nfsd/nfsxdr.c
-@@ -326,19 +326,6 @@ nfssvc_decode_renameargs(struct svc_rqst *rqstp, __be32 *p)
- 	return xdr_argsize_check(rqstp, p);
- }
- 
--int
--nfssvc_decode_readlinkargs(struct svc_rqst *rqstp, __be32 *p)
--{
--	struct nfsd_readlinkargs *args = rqstp->rq_argp;
--
 -	p = decode_fh(p, &args->fh);
 -	if (!p)
--		return 0;
--	args->buffer = page_address(*(rqstp->rq_next_page++));
++	if (!svcxdr_decode_nfs_fh3(xdr, &args->fh))
+ 		return 0;
+-	p = xdr_decode_hyper(p, &args->offset);
 -
--	return xdr_argsize_check(rqstp, p);
--}
--
- int
- nfssvc_decode_linkargs(struct svc_rqst *rqstp, __be32 *p)
- {
-diff --git a/fs/nfsd/xdr.h b/fs/nfsd/xdr.h
-index 7c704fa3215eb..1338551de828e 100644
---- a/fs/nfsd/xdr.h
-+++ b/fs/nfsd/xdr.h
-@@ -52,11 +52,6 @@ struct nfsd_renameargs {
- 	unsigned int		tlen;
- };
+-	args->count = ntohl(*p++);
+-	args->stable = ntohl(*p++);
+-	len = args->len = ntohl(*p++);
+-	if ((void *)p > head->iov_base + head->iov_len)
++	if (xdr_stream_decode_u64(xdr, &args->offset) < 0)
+ 		return 0;
+-	/*
+-	 * The count must equal the amount of data passed.
+-	 */
+-	if (args->count != args->len)
++	if (xdr_stream_decode_u32(xdr, &args->count) < 0)
++		return 0;
++	if (xdr_stream_decode_u32(xdr, &args->stable) < 0)
+ 		return 0;
  
--struct nfsd_readlinkargs {
--	struct svc_fh		fh;
--	char *			buffer;
--};
--	
- struct nfsd_linkargs {
- 	struct svc_fh		ffh;
- 	struct svc_fh		tfh;
-@@ -150,7 +145,6 @@ int nfssvc_decode_readargs(struct svc_rqst *, __be32 *);
- int nfssvc_decode_writeargs(struct svc_rqst *, __be32 *);
- int nfssvc_decode_createargs(struct svc_rqst *, __be32 *);
- int nfssvc_decode_renameargs(struct svc_rqst *, __be32 *);
--int nfssvc_decode_readlinkargs(struct svc_rqst *, __be32 *);
- int nfssvc_decode_linkargs(struct svc_rqst *, __be32 *);
- int nfssvc_decode_symlinkargs(struct svc_rqst *, __be32 *);
- int nfssvc_decode_readdirargs(struct svc_rqst *, __be32 *);
+-	/*
+-	 * Check to make sure that we got the right number of
+-	 * bytes.
+-	 */
+-	hdr = (void*)p - head->iov_base;
+-	dlen = head->iov_len + rqstp->rq_arg.page_len + tail->iov_len - hdr;
+-	/*
+-	 * Round the length of the data which was specified up to
+-	 * the next multiple of XDR units and then compare that
+-	 * against the length which was actually received.
+-	 * Note that when RPCSEC/GSS (for example) is used, the
+-	 * data buffer can be padded so dlen might be larger
+-	 * than required.  It must never be smaller.
+-	 */
+-	if (dlen < XDR_QUADLEN(len)*4)
++	/* opaque data */
++	if (xdr_stream_decode_u32(xdr, &args->len) < 0)
+ 		return 0;
+ 
++	/* request sanity */
++	if (args->count != args->len)
++		return 0;
++	remaining = head->iov_len + rqstp->rq_arg.page_len + tail->iov_len;
++	remaining -= xdr_stream_pos(xdr);
++	if (remaining < xdr_align_size(args->len))
++		return 0;
+ 	if (args->count > max_blocksize) {
+ 		args->count = max_blocksize;
+-		len = args->len = max_blocksize;
++		args->len = max_blocksize;
+ 	}
+ 
+-	args->first.iov_base = (void *)p;
+-	args->first.iov_len = head->iov_len - hdr;
++	args->first.iov_base = xdr->p;
++	args->first.iov_len = head->iov_len - xdr_stream_pos(xdr);
++
+ 	return 1;
+ }
+ 
 -- 
 2.43.0
 
