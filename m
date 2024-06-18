@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083D014A0A7;
-	Tue, 18 Jun 2024 13:02:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C4913A877;
+	Tue, 18 Jun 2024 13:02:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715731; cv=none; b=KRRfG5n/WSz0TXcfTDgSkupWFCQqDVc/BUCrX9GAVwKdys3LAFSXSSDU3GQCzL1hZQPtKMp8J7Tiibg9lsFk4GZu00qjExpdRNIVWTrZcQ0E07pnY8+LXVm/QeZm/DJ1zkFZ3YhOlu2d2WJWEo/+hLYb3wR8fFYANT8mUDsPilc=
+	t=1718715734; cv=none; b=hhQoXVHSrNvymxJCbk2ZQorpElAqXHTWLdJZRxBMUmSXvCU5jCgTpWC7QO/Sorajpj8FH2wDSn74ioKyqdbhhF8EikS49hoO84m+4AmGaiMVk3VUFTnxMqdiENmPH9pIBs/rp4M1h2GFCGh2xapmSq77eQ2m4kAGrtjcGkC0jh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715731; c=relaxed/simple;
-	bh=mtVPsL6OH1d6jburqQJytuMfGQTPNHoxilwvqYOLDks=;
+	s=arc-20240116; t=1718715734; c=relaxed/simple;
+	bh=YSNs8DAUF2D+MecwZw5HKcKG4OSi5M0EZH5tVgX82rA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S0KioZF46q/MVRBCNjQa1ntOGwDUxSlRBFra9KaBkbousZBiGQ+3ApNMXEIeiXHqlBJbSROCUHzyb1iKWjS9KDR0T4pPUaj2YSiWIf3YkCsMs7HB3v6RBN6RIkIWuo8HFaydAa34jjTPiv6owGKYfdCi1iBZBxawVKvc06oHMVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UFmrse+0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WwnQe0Z3RftfZD9N48gvIiCDGwxR60YAL7c57IrTCjDyWFbw4H0IpBBshISYFTPEb3YVtcEuP/ls43bW3mMnZcXZf9XEP0JjMD0lapRKSYaqdSuE14w4ZsHBTgMqJk71TVsovXN4qTMvCgnf1A1XMwrD8vd3XEu73p+Aj16vbCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mFHjxCAh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UFmrse+0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 843FCC3277B;
-	Tue, 18 Jun 2024 13:02:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mFHjxCAh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77013C3277B;
+	Tue, 18 Jun 2024 13:02:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715730;
-	bh=mtVPsL6OH1d6jburqQJytuMfGQTPNHoxilwvqYOLDks=;
+	s=korg; t=1718715733;
+	bh=YSNs8DAUF2D+MecwZw5HKcKG4OSi5M0EZH5tVgX82rA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UFmrse+0JIs7VhSvCITz/8rUZFjQmxvwtwfpjo207P2H35S+VRB6eyTdNOD/ySPak
-	 S0wB/438u2lnvD7Ci1IvQiIQxuCigE5OM/UIXKRF/EEUYNxVzxVdTzL3se7W7oAFBJ
-	 Dnln37iko1UUA1DZ7TithptazzdPRgjA3Ji01EDA=
+	b=mFHjxCAhrsBoxmo/AZ9jdjBhSWV5+t0p4k2OVYGGuftxVwZlmbopaAluF2HStf523
+	 u3GGGL2+/ohDtEe1CX3fIgCFV+jnTVm6L94ItlfOvn2n9HY04EMCuhoytGKNPCSTxZ
+	 qTw++uBHLw6cdRz8QZXGK1N8eTg+to/DWX4Sx4Dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jan Kara <jack@suse.cz>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 406/770] fsnotify: separate mark iterator type from object type enum
-Date: Tue, 18 Jun 2024 14:34:19 +0200
-Message-ID: <20240618123422.957180651@linuxfoundation.org>
+Subject: [PATCH 5.10 407/770] fanotify: introduce group flag FAN_REPORT_TARGET_FID
+Date: Tue, 18 Jun 2024 14:34:20 +0200
+Message-ID: <20240618123422.997660970@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -54,243 +54,174 @@ Content-Transfer-Encoding: 8bit
 
 From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit 1c9007d62bea6fd164285314f7553f73e5308863 ]
+[ Upstream commit d61fd650e9d206a71fda789f02a1ced4b19944c4 ]
 
-They are two different types that use the same enum, so this confusing.
+FAN_REPORT_FID is ambiguous in that it reports the fid of the child for
+some events and the fid of the parent for create/delete/move events.
 
-Use the object type to indicate the type of object mark is attached to
-and the iter type to indicate the type of watch.
+The new FAN_REPORT_TARGET_FID flag is an implicit request to report
+the fid of the target object of the operation (a.k.a the child inode)
+also in create/delete/move events in addition to the fid of the parent
+and the name of the child.
 
-A group can have two different watches of the same object type (parent
-and child watches) that match the same event.
+To reduce the test matrix for uninteresting use cases, the new
+FAN_REPORT_TARGET_FID flag requires both FAN_REPORT_NAME and
+FAN_REPORT_FID.  The convenience macro FAN_REPORT_DFID_NAME_TARGET
+combines FAN_REPORT_TARGET_FID with all the required flags.
 
-Link: https://lore.kernel.org/r/20211129201537.1932819-3-amir73il@gmail.com
+Link: https://lore.kernel.org/r/20211129201537.1932819-4-amir73il@gmail.com
 Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/fanotify/fanotify.c    |  6 ++---
- fs/notify/fsnotify.c             | 18 +++++++-------
- fs/notify/mark.c                 |  4 ++--
- include/linux/fsnotify_backend.h | 41 ++++++++++++++++++++++----------
- 4 files changed, 42 insertions(+), 27 deletions(-)
+ fs/notify/fanotify/fanotify.c      | 48 ++++++++++++++++++++++--------
+ fs/notify/fanotify/fanotify_user.c | 11 ++++++-
+ include/linux/fanotify.h           |  2 +-
+ include/uapi/linux/fanotify.h      |  4 +++
+ 4 files changed, 51 insertions(+), 14 deletions(-)
 
 diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
-index b6091775aa6ef..652fe84cb8acd 100644
+index 652fe84cb8acd..85e542b164c8c 100644
 --- a/fs/notify/fanotify/fanotify.c
 +++ b/fs/notify/fanotify/fanotify.c
-@@ -299,7 +299,7 @@ static u32 fanotify_group_event_mask(struct fsnotify_group *group,
- 			return 0;
- 	}
- 
--	fsnotify_foreach_obj_type(type) {
-+	fsnotify_foreach_iter_type(type) {
- 		if (!fsnotify_iter_should_report_type(iter_info, type))
- 			continue;
- 		mark = iter_info->marks[type];
-@@ -318,7 +318,7 @@ static u32 fanotify_group_event_mask(struct fsnotify_group *group,
- 		 * If the event is on a child and this mark is on a parent not
- 		 * watching children, don't send it!
- 		 */
--		if (type == FSNOTIFY_OBJ_TYPE_PARENT &&
-+		if (type == FSNOTIFY_ITER_TYPE_PARENT &&
- 		    !(mark->mask & FS_EVENT_ON_CHILD))
- 			continue;
- 
-@@ -746,7 +746,7 @@ static __kernel_fsid_t fanotify_get_fsid(struct fsnotify_iter_info *iter_info)
- 	int type;
- 	__kernel_fsid_t fsid = {};
- 
--	fsnotify_foreach_obj_type(type) {
-+	fsnotify_foreach_iter_type(type) {
- 		struct fsnotify_mark_connector *conn;
- 
- 		if (!fsnotify_iter_should_report_type(iter_info, type))
-diff --git a/fs/notify/fsnotify.c b/fs/notify/fsnotify.c
-index 4034ca566f95c..0c94457c625e2 100644
---- a/fs/notify/fsnotify.c
-+++ b/fs/notify/fsnotify.c
-@@ -330,7 +330,7 @@ static int send_to_group(__u32 mask, const void *data, int data_type,
- 
- 	/* clear ignored on inode modification */
- 	if (mask & FS_MODIFY) {
--		fsnotify_foreach_obj_type(type) {
-+		fsnotify_foreach_iter_type(type) {
- 			if (!fsnotify_iter_should_report_type(iter_info, type))
- 				continue;
- 			mark = iter_info->marks[type];
-@@ -340,7 +340,7 @@ static int send_to_group(__u32 mask, const void *data, int data_type,
- 		}
- 	}
- 
--	fsnotify_foreach_obj_type(type) {
-+	fsnotify_foreach_iter_type(type) {
- 		if (!fsnotify_iter_should_report_type(iter_info, type))
- 			continue;
- 		mark = iter_info->marks[type];
-@@ -405,7 +405,7 @@ static unsigned int fsnotify_iter_select_report_types(
- 	int type;
- 
- 	/* Choose max prio group among groups of all queue heads */
--	fsnotify_foreach_obj_type(type) {
-+	fsnotify_foreach_iter_type(type) {
- 		mark = iter_info->marks[type];
- 		if (mark &&
- 		    fsnotify_compare_groups(max_prio_group, mark->group) > 0)
-@@ -417,7 +417,7 @@ static unsigned int fsnotify_iter_select_report_types(
- 
- 	/* Set the report mask for marks from same group as max prio group */
- 	iter_info->report_mask = 0;
--	fsnotify_foreach_obj_type(type) {
-+	fsnotify_foreach_iter_type(type) {
- 		mark = iter_info->marks[type];
- 		if (mark &&
- 		    fsnotify_compare_groups(max_prio_group, mark->group) == 0)
-@@ -435,7 +435,7 @@ static void fsnotify_iter_next(struct fsnotify_iter_info *iter_info)
- {
- 	int type;
- 
--	fsnotify_foreach_obj_type(type) {
-+	fsnotify_foreach_iter_type(type) {
- 		if (fsnotify_iter_should_report_type(iter_info, type))
- 			iter_info->marks[type] =
- 				fsnotify_next_mark(iter_info->marks[type]);
-@@ -519,18 +519,18 @@ int fsnotify(__u32 mask, const void *data, int data_type, struct inode *dir,
- 
- 	iter_info.srcu_idx = srcu_read_lock(&fsnotify_mark_srcu);
- 
--	iter_info.marks[FSNOTIFY_OBJ_TYPE_SB] =
-+	iter_info.marks[FSNOTIFY_ITER_TYPE_SB] =
- 		fsnotify_first_mark(&sb->s_fsnotify_marks);
- 	if (mnt) {
--		iter_info.marks[FSNOTIFY_OBJ_TYPE_VFSMOUNT] =
-+		iter_info.marks[FSNOTIFY_ITER_TYPE_VFSMOUNT] =
- 			fsnotify_first_mark(&mnt->mnt_fsnotify_marks);
- 	}
- 	if (inode) {
--		iter_info.marks[FSNOTIFY_OBJ_TYPE_INODE] =
-+		iter_info.marks[FSNOTIFY_ITER_TYPE_INODE] =
- 			fsnotify_first_mark(&inode->i_fsnotify_marks);
- 	}
- 	if (parent) {
--		iter_info.marks[FSNOTIFY_OBJ_TYPE_PARENT] =
-+		iter_info.marks[FSNOTIFY_ITER_TYPE_PARENT] =
- 			fsnotify_first_mark(&parent->i_fsnotify_marks);
- 	}
- 
-diff --git a/fs/notify/mark.c b/fs/notify/mark.c
-index 7c0946e16918a..b42629d2fc1c6 100644
---- a/fs/notify/mark.c
-+++ b/fs/notify/mark.c
-@@ -353,7 +353,7 @@ bool fsnotify_prepare_user_wait(struct fsnotify_iter_info *iter_info)
- {
- 	int type;
- 
--	fsnotify_foreach_obj_type(type) {
-+	fsnotify_foreach_iter_type(type) {
- 		/* This can fail if mark is being removed */
- 		if (!fsnotify_get_mark_safe(iter_info->marks[type])) {
- 			__release(&fsnotify_mark_srcu);
-@@ -382,7 +382,7 @@ void fsnotify_finish_user_wait(struct fsnotify_iter_info *iter_info)
- 	int type;
- 
- 	iter_info->srcu_idx = srcu_read_lock(&fsnotify_mark_srcu);
--	fsnotify_foreach_obj_type(type)
-+	fsnotify_foreach_iter_type(type)
- 		fsnotify_put_mark_wake(iter_info->marks[type]);
+@@ -458,17 +458,41 @@ static int fanotify_encode_fh(struct fanotify_fh *fh, struct inode *inode,
  }
- 
-diff --git a/include/linux/fsnotify_backend.h b/include/linux/fsnotify_backend.h
-index b9c84b1dbcc8f..73739fee1710f 100644
---- a/include/linux/fsnotify_backend.h
-+++ b/include/linux/fsnotify_backend.h
-@@ -337,10 +337,25 @@ static inline struct fs_error_report *fsnotify_data_error_report(
- 	}
- }
- 
-+/*
-+ * Index to merged marks iterator array that correlates to a type of watch.
-+ * The type of watched object can be deduced from the iterator type, but not
-+ * the other way around, because an event can match different watched objects
-+ * of the same object type.
-+ * For example, both parent and child are watching an object of type inode.
-+ */
-+enum fsnotify_iter_type {
-+	FSNOTIFY_ITER_TYPE_INODE,
-+	FSNOTIFY_ITER_TYPE_VFSMOUNT,
-+	FSNOTIFY_ITER_TYPE_SB,
-+	FSNOTIFY_ITER_TYPE_PARENT,
-+	FSNOTIFY_ITER_TYPE_COUNT
-+};
-+
-+/* The type of object that a mark is attached to */
- enum fsnotify_obj_type {
- 	FSNOTIFY_OBJ_TYPE_ANY = -1,
- 	FSNOTIFY_OBJ_TYPE_INODE,
--	FSNOTIFY_OBJ_TYPE_PARENT,
- 	FSNOTIFY_OBJ_TYPE_VFSMOUNT,
- 	FSNOTIFY_OBJ_TYPE_SB,
- 	FSNOTIFY_OBJ_TYPE_COUNT,
-@@ -353,37 +368,37 @@ static inline bool fsnotify_valid_obj_type(unsigned int obj_type)
- }
- 
- struct fsnotify_iter_info {
--	struct fsnotify_mark *marks[FSNOTIFY_OBJ_TYPE_COUNT];
-+	struct fsnotify_mark *marks[FSNOTIFY_ITER_TYPE_COUNT];
- 	unsigned int report_mask;
- 	int srcu_idx;
- };
- 
- static inline bool fsnotify_iter_should_report_type(
--		struct fsnotify_iter_info *iter_info, int type)
-+		struct fsnotify_iter_info *iter_info, int iter_type)
- {
--	return (iter_info->report_mask & (1U << type));
-+	return (iter_info->report_mask & (1U << iter_type));
- }
- 
- static inline void fsnotify_iter_set_report_type(
--		struct fsnotify_iter_info *iter_info, int type)
-+		struct fsnotify_iter_info *iter_info, int iter_type)
- {
--	iter_info->report_mask |= (1U << type);
-+	iter_info->report_mask |= (1U << iter_type);
- }
- 
- static inline void fsnotify_iter_set_report_type_mark(
--		struct fsnotify_iter_info *iter_info, int type,
-+		struct fsnotify_iter_info *iter_info, int iter_type,
- 		struct fsnotify_mark *mark)
- {
--	iter_info->marks[type] = mark;
--	iter_info->report_mask |= (1U << type);
-+	iter_info->marks[iter_type] = mark;
-+	iter_info->report_mask |= (1U << iter_type);
- }
- 
- #define FSNOTIFY_ITER_FUNCS(name, NAME) \
- static inline struct fsnotify_mark *fsnotify_iter_##name##_mark( \
- 		struct fsnotify_iter_info *iter_info) \
- { \
--	return (iter_info->report_mask & (1U << FSNOTIFY_OBJ_TYPE_##NAME)) ? \
--		iter_info->marks[FSNOTIFY_OBJ_TYPE_##NAME] : NULL; \
-+	return (iter_info->report_mask & (1U << FSNOTIFY_ITER_TYPE_##NAME)) ? \
-+		iter_info->marks[FSNOTIFY_ITER_TYPE_##NAME] : NULL; \
- }
- 
- FSNOTIFY_ITER_FUNCS(inode, INODE)
-@@ -391,8 +406,8 @@ FSNOTIFY_ITER_FUNCS(parent, PARENT)
- FSNOTIFY_ITER_FUNCS(vfsmount, VFSMOUNT)
- FSNOTIFY_ITER_FUNCS(sb, SB)
- 
--#define fsnotify_foreach_obj_type(type) \
--	for (type = 0; type < FSNOTIFY_OBJ_TYPE_COUNT; type++)
-+#define fsnotify_foreach_iter_type(type) \
-+	for (type = 0; type < FSNOTIFY_ITER_TYPE_COUNT; type++)
  
  /*
-  * fsnotify_connp_t is what we embed in objects which connector can be attached
+- * The inode to use as identifier when reporting fid depends on the event.
+- * Report the modified directory inode on dirent modification events.
+- * Report the "victim" inode otherwise.
++ * FAN_REPORT_FID is ambiguous in that it reports the fid of the child for
++ * some events and the fid of the parent for create/delete/move events.
++ *
++ * With the FAN_REPORT_TARGET_FID flag, the fid of the child is reported
++ * also in create/delete/move events in addition to the fid of the parent
++ * and the name of the child.
++ */
++static inline bool fanotify_report_child_fid(unsigned int fid_mode, u32 mask)
++{
++	if (mask & ALL_FSNOTIFY_DIRENT_EVENTS)
++		return (fid_mode & FAN_REPORT_TARGET_FID);
++
++	return (fid_mode & FAN_REPORT_FID) && !(mask & FAN_ONDIR);
++}
++
++/*
++ * The inode to use as identifier when reporting fid depends on the event
++ * and the group flags.
++ *
++ * With the group flag FAN_REPORT_TARGET_FID, always report the child fid.
++ *
++ * Without the group flag FAN_REPORT_TARGET_FID, report the modified directory
++ * fid on dirent events and the child fid otherwise.
++ *
+  * For example:
+- * FS_ATTRIB reports the child inode even if reported on a watched parent.
+- * FS_CREATE reports the modified dir inode and not the created inode.
++ * FS_ATTRIB reports the child fid even if reported on a watched parent.
++ * FS_CREATE reports the modified dir fid without FAN_REPORT_TARGET_FID.
++ *       and reports the created child fid with FAN_REPORT_TARGET_FID.
+  */
+ static struct inode *fanotify_fid_inode(u32 event_mask, const void *data,
+-					int data_type, struct inode *dir)
++					int data_type, struct inode *dir,
++					unsigned int fid_mode)
+ {
+-	if (event_mask & ALL_FSNOTIFY_DIRENT_EVENTS)
++	if ((event_mask & ALL_FSNOTIFY_DIRENT_EVENTS) &&
++	    !(fid_mode & FAN_REPORT_TARGET_FID))
+ 		return dir;
+ 
+ 	return fsnotify_data_inode(data, data_type);
+@@ -647,10 +671,11 @@ static struct fanotify_event *fanotify_alloc_event(struct fsnotify_group *group,
+ {
+ 	struct fanotify_event *event = NULL;
+ 	gfp_t gfp = GFP_KERNEL_ACCOUNT;
+-	struct inode *id = fanotify_fid_inode(mask, data, data_type, dir);
++	unsigned int fid_mode = FAN_GROUP_FLAG(group, FANOTIFY_FID_BITS);
++	struct inode *id = fanotify_fid_inode(mask, data, data_type, dir,
++					      fid_mode);
+ 	struct inode *dirid = fanotify_dfid_inode(mask, data, data_type, dir);
+ 	const struct path *path = fsnotify_data_path(data, data_type);
+-	unsigned int fid_mode = FAN_GROUP_FLAG(group, FANOTIFY_FID_BITS);
+ 	struct mem_cgroup *old_memcg;
+ 	struct inode *child = NULL;
+ 	bool name_event = false;
+@@ -660,11 +685,10 @@ static struct fanotify_event *fanotify_alloc_event(struct fsnotify_group *group,
+ 
+ 	if ((fid_mode & FAN_REPORT_DIR_FID) && dirid) {
+ 		/*
+-		 * With both flags FAN_REPORT_DIR_FID and FAN_REPORT_FID, we
+-		 * report the child fid for events reported on a non-dir child
++		 * For certain events and group flags, report the child fid
+ 		 * in addition to reporting the parent fid and maybe child name.
+ 		 */
+-		if ((fid_mode & FAN_REPORT_FID) && id != dirid && !ondir)
++		if (fanotify_report_child_fid(fid_mode, mask) && id != dirid)
+ 			child = id;
+ 
+ 		id = dirid;
+diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
+index 2f78999a7aa3d..6b058d652f47b 100644
+--- a/fs/notify/fanotify/fanotify_user.c
++++ b/fs/notify/fanotify/fanotify_user.c
+@@ -1270,6 +1270,15 @@ SYSCALL_DEFINE2(fanotify_init, unsigned int, flags, unsigned int, event_f_flags)
+ 	if ((fid_mode & FAN_REPORT_NAME) && !(fid_mode & FAN_REPORT_DIR_FID))
+ 		return -EINVAL;
+ 
++	/*
++	 * FAN_REPORT_TARGET_FID requires FAN_REPORT_NAME and FAN_REPORT_FID
++	 * and is used as an indication to report both dir and child fid on all
++	 * dirent events.
++	 */
++	if ((fid_mode & FAN_REPORT_TARGET_FID) &&
++	    (!(fid_mode & FAN_REPORT_NAME) || !(fid_mode & FAN_REPORT_FID)))
++		return -EINVAL;
++
+ 	f_flags = O_RDWR | FMODE_NONOTIFY;
+ 	if (flags & FAN_CLOEXEC)
+ 		f_flags |= O_CLOEXEC;
+@@ -1680,7 +1689,7 @@ static int __init fanotify_user_setup(void)
+ 				     FANOTIFY_DEFAULT_MAX_USER_MARKS);
+ 
+ 	BUILD_BUG_ON(FANOTIFY_INIT_FLAGS & FANOTIFY_INTERNAL_GROUP_FLAGS);
+-	BUILD_BUG_ON(HWEIGHT32(FANOTIFY_INIT_FLAGS) != 11);
++	BUILD_BUG_ON(HWEIGHT32(FANOTIFY_INIT_FLAGS) != 12);
+ 	BUILD_BUG_ON(HWEIGHT32(FANOTIFY_MARK_FLAGS) != 9);
+ 
+ 	fanotify_mark_cache = KMEM_CACHE(fsnotify_mark,
+diff --git a/include/linux/fanotify.h b/include/linux/fanotify.h
+index 616af2ea20f30..376e050e6f384 100644
+--- a/include/linux/fanotify.h
++++ b/include/linux/fanotify.h
+@@ -25,7 +25,7 @@ extern struct ctl_table fanotify_table[]; /* for sysctl */
+ 
+ #define FANOTIFY_CLASS_BITS	(FAN_CLASS_NOTIF | FANOTIFY_PERM_CLASSES)
+ 
+-#define FANOTIFY_FID_BITS	(FAN_REPORT_FID | FAN_REPORT_DFID_NAME)
++#define FANOTIFY_FID_BITS	(FAN_REPORT_DFID_NAME_TARGET)
+ 
+ #define FANOTIFY_INFO_MODES	(FANOTIFY_FID_BITS | FAN_REPORT_PIDFD)
+ 
+diff --git a/include/uapi/linux/fanotify.h b/include/uapi/linux/fanotify.h
+index bd1932c2074d5..60f73639a896a 100644
+--- a/include/uapi/linux/fanotify.h
++++ b/include/uapi/linux/fanotify.h
+@@ -57,9 +57,13 @@
+ #define FAN_REPORT_FID		0x00000200	/* Report unique file id */
+ #define FAN_REPORT_DIR_FID	0x00000400	/* Report unique directory id */
+ #define FAN_REPORT_NAME		0x00000800	/* Report events with name */
++#define FAN_REPORT_TARGET_FID	0x00001000	/* Report dirent target id  */
+ 
+ /* Convenience macro - FAN_REPORT_NAME requires FAN_REPORT_DIR_FID */
+ #define FAN_REPORT_DFID_NAME	(FAN_REPORT_DIR_FID | FAN_REPORT_NAME)
++/* Convenience macro - FAN_REPORT_TARGET_FID requires all other FID flags */
++#define FAN_REPORT_DFID_NAME_TARGET (FAN_REPORT_DFID_NAME | \
++				     FAN_REPORT_FID | FAN_REPORT_TARGET_FID)
+ 
+ /* Deprecated - do not use this in programs and do not add new flags here! */
+ #define FAN_ALL_INIT_FLAGS	(FAN_CLOEXEC | FAN_NONBLOCK | \
 -- 
 2.43.0
 
