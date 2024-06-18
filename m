@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F97013AA47;
-	Tue, 18 Jun 2024 12:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1904713AA47;
+	Tue, 18 Jun 2024 12:48:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718714926; cv=none; b=Kjq6VXmvrYF9ybe1O8L3nCFJvI95estvfkbh4N82xYs6g4HeCJeox4Dv5/VEaCyJLxMJjuLgXdMUy0JZNikSk9H+N/E93X/e/Y0CUr7j1toifzj6TS6Sbx0ezUxrtDCuDKM469XWKeE9tLK/Z7Dwy13t78fisjOGGIteEr4qHg0=
+	t=1718714929; cv=none; b=Mn+DGNXhD8yBzys5xwQTykVYDtjsN2wcp+1XosXI9osVDA/HjrT0XqTxl6GvSw5Y7zz4EaX7x33IbtsVCIpNVr4el4Z/MnH9sIAPAEHpUqnmGOcaRV9nxgFMx9P5OyeUQDIGJbbkkyxP39lttoKP0PQYE7vU/WZa6+eOsWHkh2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718714926; c=relaxed/simple;
-	bh=4MEC/viT+axgbkHAI9CRd+CaKuRBKec7QyrWqKOwJng=;
+	s=arc-20240116; t=1718714929; c=relaxed/simple;
+	bh=gvictd9rqWzCkt8pFPzfJH6GGG5byNsIJsx6/vwZPto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GOiCQJ82WMnZ65iVqxHhl+FWReZZN4Rqeo2pvNGkScuLH8qksAJFIZK/qmFbzZL9apuDPG2rj+Thx4lV6cMzXidREPFUXKaLdh+TfQBosFcRsmwC8zIzh3lEriotNvmi8+BjB4+ob6oHGxrLEDe6bPMZ0HTp88wNU7VgpicidOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WfCYN+NY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uasTA6YZb/8NZYGA8qje4k5zi0+ngtSHg7OVUk07EAeD8855l/mUlnuBJxYRctedWrUv3u0phzD3GhehnDDExqdf9ftmpRPW4qCXtAA7HbBGskIr171GCKmnpG7G/A5rczOte9ky/XsgHzCNPx4xkuzwqbmCNnRfCfgf9hY0ge0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KVYOIJ9U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WfCYN+NY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3FB1C3277B;
-	Tue, 18 Jun 2024 12:48:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KVYOIJ9U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95361C3277B;
+	Tue, 18 Jun 2024 12:48:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718714926;
-	bh=4MEC/viT+axgbkHAI9CRd+CaKuRBKec7QyrWqKOwJng=;
+	s=korg; t=1718714929;
+	bh=gvictd9rqWzCkt8pFPzfJH6GGG5byNsIJsx6/vwZPto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WfCYN+NYPX9YcBpwpT4qShoc4VPvTNg7HXlnhZIJBJSjtKyoTsUjLrI8fWDtjwO83
-	 rPek+MGb3KfYzm+7Nv5KouDzfZ3tZDlYl0IpUNqtOiYeW1Kgx9n+ilNTjmTfQ8gpCZ
-	 XU3Y2sporkjWnw+pHTXhdrFSjwnOQsF810wgMHgk=
+	b=KVYOIJ9UX1YXwPo3NRRJ+IXqbt0TAz/dxrTfcEfMRO6w3W85KW43THEyYLnmbUWUL
+	 A04rTB4o+2cqBZY+io3amIFBu2mtWB9L9K9oZKTBRl23B5Mlhws8Y4fWBcfHx6dlLJ
+	 hR92Lh18qJTw3DMwKQl1W+L842S/7+Zad43Gy5dQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 134/770] SUNRPC: Display RPC procedure names instead of proc numbers
-Date: Tue, 18 Jun 2024 14:29:47 +0200
-Message-ID: <20240618123412.448677989@linuxfoundation.org>
+Subject: [PATCH 5.10 135/770] SUNRPC: Move definition of XDR_UNIT
+Date: Tue, 18 Jun 2024 14:29:48 +0200
+Message-ID: <20240618123412.488556203@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,71 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 89ff87494c6e4b32ea7960d0c644efdbb2fe6ef5 ]
+[ Upstream commit 81d217474326b25d7f14274b02fe3da1e85ad934 ]
 
-Make the sunrpc trace subsystem trace events easier to use.
+Clean up: The unit of XDR alignment is defined by RFC 4506,
+not as part of the RPC message header. Thus it belongs in
+include/linux/sunrpc/xdr.h.
 
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/sunrpc.h | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ include/linux/sunrpc/msg_prot.h |  3 ---
+ include/linux/sunrpc/xdr.h      | 13 ++++++++++---
+ 2 files changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/include/trace/events/sunrpc.h b/include/trace/events/sunrpc.h
-index 8220369ee6105..200978b94a0b9 100644
---- a/include/trace/events/sunrpc.h
-+++ b/include/trace/events/sunrpc.h
-@@ -1578,6 +1578,7 @@ TRACE_EVENT(svc_process,
- 		__field(u32, vers)
- 		__field(u32, proc)
- 		__string(service, name)
-+		__string(procedure, rqst->rq_procinfo->pc_name)
- 		__string(addr, rqst->rq_xprt ?
- 			 rqst->rq_xprt->xpt_remotebuf : "(null)")
- 	),
-@@ -1587,13 +1588,16 @@ TRACE_EVENT(svc_process,
- 		__entry->vers = rqst->rq_vers;
- 		__entry->proc = rqst->rq_proc;
- 		__assign_str(service, name);
-+		__assign_str(procedure, rqst->rq_procinfo->pc_name);
- 		__assign_str(addr, rqst->rq_xprt ?
- 			     rqst->rq_xprt->xpt_remotebuf : "(null)");
- 	),
+diff --git a/include/linux/sunrpc/msg_prot.h b/include/linux/sunrpc/msg_prot.h
+index 43f854487539b..938c2bf29db88 100644
+--- a/include/linux/sunrpc/msg_prot.h
++++ b/include/linux/sunrpc/msg_prot.h
+@@ -10,9 +10,6 @@
  
--	TP_printk("addr=%s xid=0x%08x service=%s vers=%u proc=%u",
-+	TP_printk("addr=%s xid=0x%08x service=%s vers=%u proc=%s",
- 			__get_str(addr), __entry->xid,
--			__get_str(service), __entry->vers, __entry->proc)
-+			__get_str(service), __entry->vers,
-+			__get_str(procedure)
-+	)
- );
+ #define RPC_VERSION 2
  
- DECLARE_EVENT_CLASS(svc_rqst_event,
-@@ -1849,6 +1853,7 @@ TRACE_EVENT(svc_stats_latency,
- 	TP_STRUCT__entry(
- 		__field(u32, xid)
- 		__field(unsigned long, execute)
-+		__string(procedure, rqst->rq_procinfo->pc_name)
- 		__string(addr, rqst->rq_xprt->xpt_remotebuf)
- 	),
+-/* size of an XDR encoding unit in bytes, i.e. 32bit */
+-#define XDR_UNIT	(4)
+-
+ /* spec defines authentication flavor as an unsigned 32 bit integer */
+ typedef u32	rpc_authflavor_t;
  
-@@ -1856,11 +1861,13 @@ TRACE_EVENT(svc_stats_latency,
- 		__entry->xid = be32_to_cpu(rqst->rq_xid);
- 		__entry->execute = ktime_to_us(ktime_sub(ktime_get(),
- 							 rqst->rq_stime));
-+		__assign_str(procedure, rqst->rq_procinfo->pc_name);
- 		__assign_str(addr, rqst->rq_xprt->xpt_remotebuf);
- 	),
+diff --git a/include/linux/sunrpc/xdr.h b/include/linux/sunrpc/xdr.h
+index f6569b620beab..eba6204330b3c 100644
+--- a/include/linux/sunrpc/xdr.h
++++ b/include/linux/sunrpc/xdr.h
+@@ -19,6 +19,13 @@
+ struct bio_vec;
+ struct rpc_rqst;
  
--	TP_printk("addr=%s xid=0x%08x execute-us=%lu",
--		__get_str(addr), __entry->xid, __entry->execute)
-+	TP_printk("addr=%s xid=0x%08x proc=%s execute-us=%lu",
-+		__get_str(addr), __entry->xid, __get_str(procedure),
-+		__entry->execute)
- );
++/*
++ * Size of an XDR encoding unit in bytes, i.e. 32 bits,
++ * as defined in Section 3 of RFC 4506. All encoded
++ * XDR data items are aligned on a boundary of 32 bits.
++ */
++#define XDR_UNIT		sizeof(__be32)
++
+ /*
+  * Buffer adjustment
+  */
+@@ -329,7 +336,7 @@ ssize_t xdr_stream_decode_string_dup(struct xdr_stream *xdr, char **str,
+ static inline size_t
+ xdr_align_size(size_t n)
+ {
+-	const size_t mask = sizeof(__u32) - 1;
++	const size_t mask = XDR_UNIT - 1;
  
- DECLARE_EVENT_CLASS(svc_deferred_event,
+ 	return (n + mask) & ~mask;
+ }
+@@ -359,7 +366,7 @@ static inline size_t xdr_pad_size(size_t n)
+  */
+ static inline ssize_t xdr_stream_encode_item_present(struct xdr_stream *xdr)
+ {
+-	const size_t len = sizeof(__be32);
++	const size_t len = XDR_UNIT;
+ 	__be32 *p = xdr_reserve_space(xdr, len);
+ 
+ 	if (unlikely(!p))
+@@ -378,7 +385,7 @@ static inline ssize_t xdr_stream_encode_item_present(struct xdr_stream *xdr)
+  */
+ static inline int xdr_stream_encode_item_absent(struct xdr_stream *xdr)
+ {
+-	const size_t len = sizeof(__be32);
++	const size_t len = XDR_UNIT;
+ 	__be32 *p = xdr_reserve_space(xdr, len);
+ 
+ 	if (unlikely(!p))
 -- 
 2.43.0
 
