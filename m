@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B4931581F6;
-	Tue, 18 Jun 2024 13:07:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AAFE15820C;
+	Tue, 18 Jun 2024 13:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716047; cv=none; b=HBpUNk38FBRHSU3Hx6QP/mwJTdW6ZSDln4WfKhaDjKQygUn4AeeXGqEgsC2zJdVxmuCEbIMCenFHBRwMTZn0WnVZGYk4n4QQfwGqA5n5eherfTd82OdZ0mSdrRos+w+l7tZsYaD/PYWGie/U5GN/QSrS54kGjV10Hwmx5TENlL0=
+	t=1718716050; cv=none; b=TnanlTs6p9sgNszZnwN8hv1938xkshLm37gDfwA3MkGcBjhxYA4ihOqun0HiKIQ8SRLtjiKxySMxClyrCPu4HspBORiTIY98yhMpBuu6Kh2B/nQro9/ADcIm+gPpCnz0FJJ1zbZcmC4d8yGPnyBbFc9NdotY705Tn7pGm7LXhJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716047; c=relaxed/simple;
-	bh=q1Cmz+PY3R3mpqK1BZOFQWJtRboS7LEp+oB3HxD3jA4=;
+	s=arc-20240116; t=1718716050; c=relaxed/simple;
+	bh=Y6/M5a6bixl3zdJRRm9FfLEAgOCHUJGBYkQW9EWO/io=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G7BCL13ANKgcsOxBN+DalGKtj2BDfJJVkpwySCrioEw1eIT1dsYU3uEJIf4zKKp8IQ2uU8GbxP5OXNg5sU4rvPApODO+UmNwHhxmcz7zQElaxNjSVNj8eh7UB/RQerQq90ABBr/8H5ZgrxnP7WStfTG5tBzPc8oV9wcvjt0HinU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MTwGUE0K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JbJda4/Do1HtDlA2VM3YOQtmGegomYCiILnG2DXtd76cxMnf13ZGwDojvgA+14A3mC3TIodr+jWbjqXWu0+DbkvXLiqUrbCeq2Y7cRANarpfzf5BUMuMFBZqBGHOXRO4j5BRaTnNxkKKR4RNsOiKH7zVuOTBn/r0DPf1OBLFosA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y4Fmt6T3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MTwGUE0K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7B6CC3277B;
-	Tue, 18 Jun 2024 13:07:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y4Fmt6T3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFDA6C3277B;
+	Tue, 18 Jun 2024 13:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716047;
-	bh=q1Cmz+PY3R3mpqK1BZOFQWJtRboS7LEp+oB3HxD3jA4=;
+	s=korg; t=1718716050;
+	bh=Y6/M5a6bixl3zdJRRm9FfLEAgOCHUJGBYkQW9EWO/io=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MTwGUE0KwEFdf/2XG11SP0Z+L2Xqnh+dXqwmrxqs5KLbnoLNDSKT89ogXAKO4Uya1
-	 SW2qjOcBFHKFLvS6RmTs2jPNwnvQ76hO1N/MP7wxXHevBcXtZUi7u8prp3BmHNCQvy
-	 Rn/jRWK5FZkik3JSapWmpDN5fvcs3rDvPPAb8Xac=
+	b=y4Fmt6T3vxi/+X+9Nc8mqbjSK/2VVWREvwjfOijcSu8IEnKKA30XbtSssgE+7Ce3v
+	 SnGYN7babfkiOQuJVHbyRjp9fJ/L61wxWr0yEp4MkPZfEO/ghcO9Qf7Kd+I1dmlQJS
+	 EP1OWi81dNRFWBVrvJ6FqNUnYR4rwySiYwBBJhCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jakob Koschel <jakobkoschel@gmail.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 483/770] NFSD: Clean up _lm_ operation names
-Date: Tue, 18 Jun 2024 14:35:36 +0200
-Message-ID: <20240618123425.960876052@linuxfoundation.org>
+Subject: [PATCH 5.10 484/770] nfsd: fix using the correct variable for sizeof()
+Date: Tue, 18 Jun 2024 14:35:37 +0200
+Message-ID: <20240618123426.000070600@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -50,58 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Jakob Koschel <jakobkoschel@gmail.com>
 
-[ Upstream commit 35aff0678f99b0623bb72d50112de9e163a19559 ]
+[ Upstream commit 4fc5f5346592cdc91689455d83885b0af65d71b8 ]
 
-The common practice is to name function instances the same as the
-method names, but with a uniquifying prefix. Commit aef9583b234a
-("NFSD: Get reference of lockowner when coping file_lock") missed
-this -- the new function names should both have been of the form
-"nfsd4_lm_*".
+While the original code is valid, it is not the obvious choice for the
+sizeof() call and in preparation to limit the scope of the list iterator
+variable the sizeof should be changed to the size of the destination.
 
-Before more lock manager operations are added in NFSD, rename these
-two functions for consistency.
-
+Signed-off-by: Jakob Koschel <jakobkoschel@gmail.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/nfsd/nfs4layouts.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 60d5d1cb2cc65..0170aaf318ea2 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -6566,7 +6566,7 @@ nfs4_transform_lock_offset(struct file_lock *lock)
- }
+diff --git a/fs/nfsd/nfs4layouts.c b/fs/nfsd/nfs4layouts.c
+index 2673019d30ecd..7018d209b784a 100644
+--- a/fs/nfsd/nfs4layouts.c
++++ b/fs/nfsd/nfs4layouts.c
+@@ -421,7 +421,7 @@ nfsd4_insert_layout(struct nfsd4_layoutget *lgp, struct nfs4_layout_stateid *ls)
+ 	new = kmem_cache_alloc(nfs4_layout_cache, GFP_KERNEL);
+ 	if (!new)
+ 		return nfserr_jukebox;
+-	memcpy(&new->lo_seg, seg, sizeof(lp->lo_seg));
++	memcpy(&new->lo_seg, seg, sizeof(new->lo_seg));
+ 	new->lo_state = ls;
  
- static fl_owner_t
--nfsd4_fl_get_owner(fl_owner_t owner)
-+nfsd4_lm_get_owner(fl_owner_t owner)
- {
- 	struct nfs4_lockowner *lo = (struct nfs4_lockowner *)owner;
- 
-@@ -6575,7 +6575,7 @@ nfsd4_fl_get_owner(fl_owner_t owner)
- }
- 
- static void
--nfsd4_fl_put_owner(fl_owner_t owner)
-+nfsd4_lm_put_owner(fl_owner_t owner)
- {
- 	struct nfs4_lockowner *lo = (struct nfs4_lockowner *)owner;
- 
-@@ -6610,8 +6610,8 @@ nfsd4_lm_notify(struct file_lock *fl)
- 
- static const struct lock_manager_operations nfsd_posix_mng_ops  = {
- 	.lm_notify = nfsd4_lm_notify,
--	.lm_get_owner = nfsd4_fl_get_owner,
--	.lm_put_owner = nfsd4_fl_put_owner,
-+	.lm_get_owner = nfsd4_lm_get_owner,
-+	.lm_put_owner = nfsd4_lm_put_owner,
- };
- 
- static inline void
+ 	spin_lock(&fp->fi_lock);
 -- 
 2.43.0
 
