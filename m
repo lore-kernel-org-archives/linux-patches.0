@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C5AB13C807;
-	Tue, 18 Jun 2024 13:10:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6697913C807;
+	Tue, 18 Jun 2024 13:10:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716225; cv=none; b=EHvunC63yEU0fJMPfnqeryxuUVbMyYjUmJhB9KYBs/YbzscFdVVSWpCoTd38IyTAtQPa1Vqk71rOiygCos6e4NlcNsxpYqt16PatTVBIgF9K9GIzp3Hdkfo3bnrc0Qg6VE5ajB1c2iVtmgzrEpV6KZ4Txq+NyeB2kIJ3lMRwj7k=
+	t=1718716228; cv=none; b=YY2geQtLlnDfa0bG3tAsaGO5WAsC8mx0M5TT+/7f2552WRksj9i34HwPPeODdvk9hgZRECT8quCfrGfBZocMQWtqN+1f87kTKuqzm5NxWTBq4kAfsjo47bskklj/bqbhJ+okCusV4y7J17z6wPz16Dc8+jonjCUmL+bKlLbj0QA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716225; c=relaxed/simple;
-	bh=SfyelsivfP9vSscDAM6GSk6uui8qYfMm4AsW5MwJkP4=;
+	s=arc-20240116; t=1718716228; c=relaxed/simple;
+	bh=7QqFkBA1Sw2Usl54IHW6p3mUTudhvENHN4JY+kc55J0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EKEnoO2mE9Dkmb0utoQDipKeZ82PRK45P2Qpa9CyzoVX1RuKB1M5XZLWQoxq6XbWn+3oLt36PWRXa/8M861lkNfyimVbmu6J1VMxfeL05vWTeoGQI10cJEYJ3g+SCzdPQMijUi3hwYdfHgA+UAq+GiUsdyHLtg/g8dOqWcNrFbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HoXPZhDA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RfDpj9BTHTnnAGYOiujovGQhr7XeXubk4+E1JqsI1qdLirQTMRe2SjVZcqjlp3/0TzsDxh9WPB6JqiVYGSPuUXIixxbsYFSJTfpqrqtAf5mHRlZxJ5Gq8/PmvmRzvWpk0pnKZta/KfWkvPlmvhVo4fbMqmuhEkFQsz/+CSdUR0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h2UikVGh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HoXPZhDA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85855C3277B;
-	Tue, 18 Jun 2024 13:10:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h2UikVGh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A8DFC3277B;
+	Tue, 18 Jun 2024 13:10:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716224;
-	bh=SfyelsivfP9vSscDAM6GSk6uui8qYfMm4AsW5MwJkP4=;
+	s=korg; t=1718716227;
+	bh=7QqFkBA1Sw2Usl54IHW6p3mUTudhvENHN4JY+kc55J0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HoXPZhDAZvqghs97PcTdutmhiDRyQ7z1q90kLMy26+tfwUoeTe8JY2fX2X9VZOXfG
-	 w09yewp/Xq666lGxWzQbbB+fPloJGWV2n/vYLtbOLoceIYPYMlORW1VhJ1dYGIhaXY
-	 7dMsFNCe521gNhv9324gjCKUP8DT89sylm3LeCLs=
+	b=h2UikVGh0hoy3CjI1FxXNLEafTNnr3kJIY5SWkxfZ8aSo+pxuuOgwuVB+EG9tK7yM
+	 RB+yHu3zf1w+o2I8vRQq6EoLZeFSpWcyOE8hP1lccAlsmFUqP9PbN8hKxoTj9wEEF6
+	 1+3C1UlXl2+lk9p52KjNs1Y59n1ZQpNGKsNFfJfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 574/770] NFSD: Refactor __nfsd_file_close_inode()
-Date: Tue, 18 Jun 2024 14:37:07 +0200
-Message-ID: <20240618123429.452380653@linuxfoundation.org>
+Subject: [PATCH 5.10 575/770] NFSD: nfsd_file_hash_remove can compute hashval
+Date: Tue, 18 Jun 2024 14:37:08 +0200
+Message-ID: <20240618123429.490089142@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,175 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit a845511007a63467fee575353c706806c21218b1 ]
+[ Upstream commit cb7ec76e73ff6640241c8f1f2f35c81d4005a2d6 ]
 
-The code that computes the hashval is the same in both callers.
-
-To prevent them from going stale, reframe the documenting comments
-to remove descriptions of the underlying hash table structure, which
-is about to be replaced.
+Remove an unnecessary use of nf_hashval.
 
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/filecache.c | 40 +++++++++++++++++++++-------------------
- fs/nfsd/trace.h     | 44 +++++++++++++++++++++++++++++++++-----------
- 2 files changed, 54 insertions(+), 30 deletions(-)
+ fs/nfsd/filecache.c | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
 diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-index d7c74b51eabf3..3925df9124c39 100644
+index 3925df9124c39..dd59deec8b011 100644
 --- a/fs/nfsd/filecache.c
 +++ b/fs/nfsd/filecache.c
-@@ -558,39 +558,44 @@ static struct shrinker	nfsd_file_shrinker = {
- 	.seeks = 1,
- };
- 
--static void
--__nfsd_file_close_inode(struct inode *inode, unsigned int hashval,
--			struct list_head *dispose)
-+/*
-+ * Find all cache items across all net namespaces that match @inode and
-+ * move them to @dispose. The lookup is atomic wrt nfsd_file_acquire().
-+ */
-+static unsigned int
-+__nfsd_file_close_inode(struct inode *inode, struct list_head *dispose)
- {
-+	unsigned int		hashval = (unsigned int)hash_long(inode->i_ino,
-+						NFSD_FILE_HASH_BITS);
-+	unsigned int		count = 0;
- 	struct nfsd_file	*nf;
- 	struct hlist_node	*tmp;
- 
- 	spin_lock(&nfsd_file_hashtbl[hashval].nfb_lock);
- 	hlist_for_each_entry_safe(nf, tmp, &nfsd_file_hashtbl[hashval].nfb_head, nf_node) {
--		if (inode == nf->nf_inode)
-+		if (inode == nf->nf_inode) {
- 			nfsd_file_unhash_and_release_locked(nf, dispose);
-+			count++;
-+		}
- 	}
- 	spin_unlock(&nfsd_file_hashtbl[hashval].nfb_lock);
-+	return count;
+@@ -287,6 +287,18 @@ nfsd_file_do_unhash(struct nfsd_file *nf)
+ 	atomic_long_dec(&nfsd_filecache_count);
  }
  
- /**
-  * nfsd_file_close_inode_sync - attempt to forcibly close a nfsd_file
-  * @inode: inode of the file to attempt to remove
-  *
-- * Walk the whole hash bucket, looking for any files that correspond to "inode".
-- * If any do, then unhash them and put the hashtable reference to them and
-- * destroy any that had their last reference put. Also ensure that any of the
-- * fputs also have their final __fput done as well.
-+ * Unhash and put, then flush and fput all cache items associated with @inode.
-  */
- void
- nfsd_file_close_inode_sync(struct inode *inode)
- {
--	unsigned int		hashval = (unsigned int)hash_long(inode->i_ino,
--						NFSD_FILE_HASH_BITS);
- 	LIST_HEAD(dispose);
-+	unsigned int count;
- 
--	__nfsd_file_close_inode(inode, hashval, &dispose);
--	trace_nfsd_file_close_inode_sync(inode, !list_empty(&dispose));
-+	count = __nfsd_file_close_inode(inode, &dispose);
-+	trace_nfsd_file_close_inode_sync(inode, count);
- 	nfsd_file_dispose_list_sync(&dispose);
- }
- 
-@@ -598,19 +603,16 @@ nfsd_file_close_inode_sync(struct inode *inode)
-  * nfsd_file_close_inode - attempt a delayed close of a nfsd_file
-  * @inode: inode of the file to attempt to remove
-  *
-- * Walk the whole hash bucket, looking for any files that correspond to "inode".
-- * If any do, then unhash them and put the hashtable reference to them and
-- * destroy any that had their last reference put.
-+ * Unhash and put all cache item associated with @inode.
-  */
- static void
- nfsd_file_close_inode(struct inode *inode)
- {
--	unsigned int		hashval = (unsigned int)hash_long(inode->i_ino,
--						NFSD_FILE_HASH_BITS);
- 	LIST_HEAD(dispose);
-+	unsigned int count;
- 
--	__nfsd_file_close_inode(inode, hashval, &dispose);
--	trace_nfsd_file_close_inode(inode, !list_empty(&dispose));
-+	count = __nfsd_file_close_inode(inode, &dispose);
-+	trace_nfsd_file_close_inode(inode, count);
- 	nfsd_file_dispose_list_delayed(&dispose);
- }
- 
-diff --git a/fs/nfsd/trace.h b/fs/nfsd/trace.h
-index 8b34f2a5ad296..f170f07ec0fd2 100644
---- a/fs/nfsd/trace.h
-+++ b/fs/nfsd/trace.h
-@@ -813,30 +813,52 @@ TRACE_EVENT(nfsd_file_open,
- 
- DECLARE_EVENT_CLASS(nfsd_file_search_class,
- 	TP_PROTO(
--		struct inode *inode,
--		int found
-+		const struct inode *inode,
-+		unsigned int count
- 	),
--	TP_ARGS(inode, found),
-+	TP_ARGS(inode, count),
- 	TP_STRUCT__entry(
--		__field(struct inode *, inode)
--		__field(int, found)
-+		__field(const struct inode *, inode)
-+		__field(unsigned int, count)
- 	),
- 	TP_fast_assign(
- 		__entry->inode = inode;
--		__entry->found = found;
-+		__entry->count = count;
- 	),
--	TP_printk("inode=%p found=%d",
--		__entry->inode, __entry->found)
-+	TP_printk("inode=%p count=%u",
-+		__entry->inode, __entry->count)
- );
- 
- #define DEFINE_NFSD_FILE_SEARCH_EVENT(name)				\
- DEFINE_EVENT(nfsd_file_search_class, name,				\
--	TP_PROTO(struct inode *inode, int found),			\
--	TP_ARGS(inode, found))
-+	TP_PROTO(							\
-+		const struct inode *inode,				\
-+		unsigned int count					\
-+	),								\
-+	TP_ARGS(inode, count))
- 
- DEFINE_NFSD_FILE_SEARCH_EVENT(nfsd_file_close_inode_sync);
- DEFINE_NFSD_FILE_SEARCH_EVENT(nfsd_file_close_inode);
--DEFINE_NFSD_FILE_SEARCH_EVENT(nfsd_file_is_cached);
++static void
++nfsd_file_hash_remove(struct nfsd_file *nf)
++{
++	struct inode *inode = nf->nf_inode;
++	unsigned int hashval = (unsigned int)hash_long(inode->i_ino,
++				NFSD_FILE_HASH_BITS);
 +
-+TRACE_EVENT(nfsd_file_is_cached,
-+	TP_PROTO(
-+		const struct inode *inode,
-+		int found
-+	),
-+	TP_ARGS(inode, found),
-+	TP_STRUCT__entry(
-+		__field(const struct inode *, inode)
-+		__field(int, found)
-+	),
-+	TP_fast_assign(
-+		__entry->inode = inode;
-+		__entry->found = found;
-+	),
-+	TP_printk("inode=%p is %scached",
-+		__entry->inode,
-+		__entry->found ? "" : "not "
-+	)
-+);
++	spin_lock(&nfsd_file_hashtbl[hashval].nfb_lock);
++	nfsd_file_do_unhash(nf);
++	spin_unlock(&nfsd_file_hashtbl[hashval].nfb_lock);
++}
++
+ static bool
+ nfsd_file_unhash(struct nfsd_file *nf)
+ {
+@@ -506,11 +518,8 @@ static void nfsd_file_gc_dispose_list(struct list_head *dispose)
+ {
+ 	struct nfsd_file *nf;
  
- TRACE_EVENT(nfsd_file_fsnotify_handle_event,
- 	TP_PROTO(struct inode *inode, u32 mask),
+-	list_for_each_entry(nf, dispose, nf_lru) {
+-		spin_lock(&nfsd_file_hashtbl[nf->nf_hashval].nfb_lock);
+-		nfsd_file_do_unhash(nf);
+-		spin_unlock(&nfsd_file_hashtbl[nf->nf_hashval].nfb_lock);
+-	}
++	list_for_each_entry(nf, dispose, nf_lru)
++		nfsd_file_hash_remove(nf);
+ 	nfsd_file_dispose_list_delayed(dispose);
+ }
+ 
 -- 
 2.43.0
 
