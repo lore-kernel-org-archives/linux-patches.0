@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713FF15957E;
-	Tue, 18 Jun 2024 13:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3F715958A;
+	Tue, 18 Jun 2024 13:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716634; cv=none; b=UVXQD4ynwCwIRZIB3t8RLdRaP4ma/irtojucLElkm4Du8XCPYD84dJxBv/hUOVrWkOXhqo5iQXOFzWZartFkEPyMZnX+HYHbWbf03OqYgzcg/u2GLshEA2Qk/sdy+JGZTtbr5pi7Aj7Q+xD35+uqOeISq8e5bVqSScwlofvKCK4=
+	t=1718716637; cv=none; b=LeGKzCi1pdVqyYtg95++UljNarejIezIs9c00dwqRE7y+gNSLON8X8wGASyPA1HrusG2fUXp9JW3GZzrUy5zcszhTb5CWLyxz3WfzPn5qT1sWcWDKBTp+HCHliOHoW6Wn48YVNNIiGvBmozDz+oYSgUBRrOs2T51c7/BALg2jxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716634; c=relaxed/simple;
-	bh=iDLinDzcwHjTCVUuGp0qJeF8wbySA6P8IXQdmkyRnLs=;
+	s=arc-20240116; t=1718716637; c=relaxed/simple;
+	bh=kFjF1QFkC/3DhlFJPAkmBJp8pzJ+Gn2JwVeJzFn5uxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aI/pr6prL2r++5v65Iivt5qokzglLcgHbMsCy2S24KnQRdfs9LnfZhseS0xJYtcH4f1OOXoFCLiFkSmkAYy26HxXaEBL0VKWxGU8wWU/e5rkID6L5FeFrGdZQBE7SAu9K1P8roG/VJCbu/kkN9Iju6FblLCSWb5K7smD8b+/1Sk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rn8Hvz4K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YMD1v/CsatQ9VFU9QSW0eitmLeDrNxHCX3hIfoK5bchGRqJiUqW4Nzim+tHy4dss1M2JHUMgm3owdPgPU+BRrLKeAWl2Q0XZK1yWFafvcsisRK7kwCftgu/XCztnMUQryvaZ436UCym1lv4NBanNwMK3h+S+UyAPRmi5lJhFg/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wv6m6iSA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rn8Hvz4K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBE4DC3277B;
-	Tue, 18 Jun 2024 13:17:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wv6m6iSA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B9BC3277B;
+	Tue, 18 Jun 2024 13:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716634;
-	bh=iDLinDzcwHjTCVUuGp0qJeF8wbySA6P8IXQdmkyRnLs=;
+	s=korg; t=1718716637;
+	bh=kFjF1QFkC/3DhlFJPAkmBJp8pzJ+Gn2JwVeJzFn5uxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rn8Hvz4Kr3vxk28bwxd+dXp3R43j0ElVKVSBIO1nxEVDQo0URz+ho/cdvAbjUNpxU
-	 fKcdGoSI67qOOdQlUC4TeQaieyGWljH37iyhiyYQlqrsEEPc5nAcpB60vI8mAePV8G
-	 bq6a8kav7A5+dXSn9OH2/nvhmaVedjPSQ+Gw5wBI=
+	b=wv6m6iSAC90LP6dmHbtWYEq9vbTOuj0I6+OFgL5r4mPJy3GNIlgbZ4d+RE8PCyPz6
+	 y1KIJefDeXM+q0WFOvcNOIcWqZqo9gor/5gIBqNgsI6/Apy4TdM+Ar68eJrEx3U923
+	 vIqjcdGvQNSkn9GrNEEuKNgHYqA7AuxMDnxb0cFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 711/770] NFSD: Use struct_size() helper in alloc_session()
-Date: Tue, 18 Jun 2024 14:39:24 +0200
-Message-ID: <20240618123434.716344789@linuxfoundation.org>
+Subject: [PATCH 5.10 712/770] lockd: set missing fl_flags field when retrieving args
+Date: Tue, 18 Jun 2024 14:39:25 +0200
+Message-ID: <20240618123434.754169365@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,42 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 85a0d0c9a58002ef7d1bf5e3ea630f4fbd42a4f0 ]
+[ Upstream commit 75c7940d2a86d3f1b60a0a265478cb8fc887b970 ]
 
-Use struct_size() helper to simplify the code, no functional changes.
-
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ fs/lockd/svc4proc.c | 1 +
+ fs/lockd/svcproc.c  | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index d490b19d95ddf..9a8038bfaa0d5 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -1833,13 +1833,12 @@ static struct nfsd4_session *alloc_session(struct nfsd4_channel_attrs *fattrs,
- 	int numslots = fattrs->maxreqs;
- 	int slotsize = slot_bytes(fattrs);
- 	struct nfsd4_session *new;
--	int mem, i;
-+	int i;
+diff --git a/fs/lockd/svc4proc.c b/fs/lockd/svc4proc.c
+index 284b019cb6529..b72023a6b4c16 100644
+--- a/fs/lockd/svc4proc.c
++++ b/fs/lockd/svc4proc.c
+@@ -52,6 +52,7 @@ nlm4svc_retrieve_args(struct svc_rqst *rqstp, struct nlm_args *argp,
+ 		*filp = file;
  
--	BUILD_BUG_ON(NFSD_MAX_SLOTS_PER_SESSION * sizeof(struct nfsd4_slot *)
--			+ sizeof(struct nfsd4_session) > PAGE_SIZE);
--	mem = numslots * sizeof(struct nfsd4_slot *);
-+	BUILD_BUG_ON(struct_size(new, se_slots, NFSD_MAX_SLOTS_PER_SESSION)
-+		     > PAGE_SIZE);
+ 		/* Set up the missing parts of the file_lock structure */
++		lock->fl.fl_flags = FL_POSIX;
+ 		lock->fl.fl_file  = file->f_file[mode];
+ 		lock->fl.fl_pid = current->tgid;
+ 		lock->fl.fl_start = (loff_t)lock->lock_start;
+diff --git a/fs/lockd/svcproc.c b/fs/lockd/svcproc.c
+index e35c05e278061..32784f508c810 100644
+--- a/fs/lockd/svcproc.c
++++ b/fs/lockd/svcproc.c
+@@ -77,6 +77,7 @@ nlmsvc_retrieve_args(struct svc_rqst *rqstp, struct nlm_args *argp,
  
--	new = kzalloc(sizeof(*new) + mem, GFP_KERNEL);
-+	new = kzalloc(struct_size(new, se_slots, numslots), GFP_KERNEL);
- 	if (!new)
- 		return NULL;
- 	/* allocate each struct nfsd4_slot and data cache in one piece */
+ 		/* Set up the missing parts of the file_lock structure */
+ 		mode = lock_to_openmode(&lock->fl);
++		lock->fl.fl_flags = FL_POSIX;
+ 		lock->fl.fl_file  = file->f_file[mode];
+ 		lock->fl.fl_pid = current->tgid;
+ 		lock->fl.fl_lmops = &nlmsvc_lock_operations;
 -- 
 2.43.0
 
