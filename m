@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D032513FD8C;
-	Tue, 18 Jun 2024 12:45:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E85713FD8C;
+	Tue, 18 Jun 2024 12:45:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718714749; cv=none; b=EXv5Jsx9fV3B7x5JR41JKcQhj4LBBvpJaOWmUykk4f7zK3pxUo9pJPHnXlGz6MqdFHOHvKBUnvCv2oF9xwJStfH1JoKdXUAsAGylU+c5eXSt8N3KqfsjVqSKnHJGx8FYkASe1Awqo7gxaJ8J5nXsx4IB7ajJYwvFO2lenh6GaJo=
+	t=1718714752; cv=none; b=AE/eIlbXd9Z9GxVeUhidjIwBPFPNB8+paxz5d0fDzoki6xzsDo2emr01OKvLhpIUZArNl8F9HqgIXZkOzlJ3hWjlzOGSh4vaBN6IQaTVgp50cIhdTU430GzwIkITb1r+/raGvhYmyEiH/iiUL1e1cYYhN9dM8ywYD3RxQ83/kK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718714749; c=relaxed/simple;
-	bh=ybOL7qQWcPGjwqjznbEemUzoTpruuNNV4XMD1xF22mk=;
+	s=arc-20240116; t=1718714752; c=relaxed/simple;
+	bh=nmDvIA7Uh/VP5Ib8PwyC5y4TzdyxyQdBnpzh07RDf/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Otpjd2xJyCnt6u+3cHZWFn75thbclED1koJ26cYhRvmT4H1/bPzeJVNOAXukicEWsSbDI0SpN0FDvsnobBQ1qLrpfNpq9tMVuKWexHCx7qbDaTJUE65c9VlFJZWZg1jS0xYIsJwd4E7He8cNhBjDKZBpGSksHqDkjL/BFQI1kiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Boj2GX+z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qmHKB0D0439rqCzRYm6U5G+s2iljqq8W8j8gQg/J6MQRoGk+y32hL9aFWm/2bhD8+4JRy8HWFuxaRSl9SyY4DSjeH8PmSUgsBK0EEnUVr7Bi0mJImRkuflwT5tpO0dVbS4VUBgNx6iYtR/Pr/VrF0e+CxF1exgkDgeAL1PiuOtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zQ3BFG4N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Boj2GX+z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1FB0C3277B;
-	Tue, 18 Jun 2024 12:45:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zQ3BFG4N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 008F3C3277B;
+	Tue, 18 Jun 2024 12:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718714749;
-	bh=ybOL7qQWcPGjwqjznbEemUzoTpruuNNV4XMD1xF22mk=;
+	s=korg; t=1718714752;
+	bh=nmDvIA7Uh/VP5Ib8PwyC5y4TzdyxyQdBnpzh07RDf/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Boj2GX+zFyhsEbbw+ibwUS+idwJveux+Q0yh0eUMtECnfr4py8yq0+lJ3Zuk370+d
-	 wtf9FMDyKLKDpWq66waffxm48DLiRPNM0nurdCHC12KRqIPBvj571KHPiPyd1nlQMZ
-	 dX/4OZdrmkZlreb7MR8+CU+Gqg/GaVkUtscfIZZk=
+	b=zQ3BFG4N2uApRsMs3rxYDSEosfb3+hKHZJRYdB+jDYaD0eL7KpyAIxK4zJTuVUsUL
+	 6kAHCTJqqgvVHErwfQjhLAtW8nn198ncOJNHf+p03KrdmPkgYWKqp+zSu0sx4d/sG9
+	 5C9g9VQdyp7HJriifm99cY+KYzlBiKmBZbMZTGy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 034/770] NFSD: Add helper for decoding locker4
-Date: Tue, 18 Jun 2024 14:28:07 +0200
-Message-ID: <20240618123408.612149453@linuxfoundation.org>
+Subject: [PATCH 5.10 069/770] NFSD: Replace READ* macros in nfsd4_decode_create_session()
+Date: Tue, 18 Jun 2024 14:28:42 +0200
+Message-ID: <20240618123409.947380137@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,131 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 8918cc0d2b72db9997390626010b182c4500d749 ]
-
-Refactor for clarity.
+[ Upstream commit 81243e3fe37ed547fc4ed8aab1cec2865540bb18 ]
 
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4xdr.c          | 64 +++++++++++++++++++++++++-------------
- include/linux/sunrpc/xdr.h | 21 +++++++++++++
- 2 files changed, 64 insertions(+), 21 deletions(-)
+ fs/nfsd/nfs4xdr.c | 24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
 diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
-index 63140cd4c50e4..15ed5249e2c74 100644
+index 716a16961ff48..3e2e0de00c3a7 100644
 --- a/fs/nfsd/nfs4xdr.c
 +++ b/fs/nfsd/nfs4xdr.c
-@@ -833,6 +833,48 @@ nfsd4_decode_link(struct nfsd4_compoundargs *argp, struct nfsd4_link *link)
- 	return nfsd4_decode_component4(argp, &link->li_name, &link->li_namelen);
- }
- 
-+static __be32
-+nfsd4_decode_open_to_lock_owner4(struct nfsd4_compoundargs *argp,
-+				 struct nfsd4_lock *lock)
-+{
-+	__be32 status;
-+
-+	if (xdr_stream_decode_u32(argp->xdr, &lock->lk_new_open_seqid) < 0)
-+		return nfserr_bad_xdr;
-+	status = nfsd4_decode_stateid4(argp, &lock->lk_new_open_stateid);
-+	if (status)
-+		return status;
-+	if (xdr_stream_decode_u32(argp->xdr, &lock->lk_new_lock_seqid) < 0)
-+		return nfserr_bad_xdr;
-+	return nfsd4_decode_state_owner4(argp, &lock->lk_new_clientid,
-+					 &lock->lk_new_owner);
-+}
-+
-+static __be32
-+nfsd4_decode_exist_lock_owner4(struct nfsd4_compoundargs *argp,
-+			       struct nfsd4_lock *lock)
-+{
-+	__be32 status;
-+
-+	status = nfsd4_decode_stateid4(argp, &lock->lk_old_lock_stateid);
-+	if (status)
-+		return status;
-+	if (xdr_stream_decode_u32(argp->xdr, &lock->lk_old_lock_seqid) < 0)
-+		return nfserr_bad_xdr;
-+
-+	return nfs_ok;
-+}
-+
-+static __be32
-+nfsd4_decode_locker4(struct nfsd4_compoundargs *argp, struct nfsd4_lock *lock)
-+{
-+	if (xdr_stream_decode_bool(argp->xdr, &lock->lk_is_new) < 0)
-+		return nfserr_bad_xdr;
-+	if (lock->lk_is_new)
-+		return nfsd4_decode_open_to_lock_owner4(argp, lock);
-+	return nfsd4_decode_exist_lock_owner4(argp, lock);
-+}
-+
- static __be32
- nfsd4_decode_lock(struct nfsd4_compoundargs *argp, struct nfsd4_lock *lock)
+@@ -1650,24 +1650,28 @@ static __be32
+ nfsd4_decode_create_session(struct nfsd4_compoundargs *argp,
+ 			    struct nfsd4_create_session *sess)
  {
-@@ -848,27 +890,7 @@ nfsd4_decode_lock(struct nfsd4_compoundargs *argp, struct nfsd4_lock *lock)
- 	lock->lk_reclaim = be32_to_cpup(p++);
- 	p = xdr_decode_hyper(p, &lock->lk_offset);
- 	p = xdr_decode_hyper(p, &lock->lk_length);
--	lock->lk_is_new = be32_to_cpup(p++);
+-	DECODE_HEAD;
 -
--	if (lock->lk_is_new) {
--		READ_BUF(4);
--		lock->lk_new_open_seqid = be32_to_cpup(p++);
--		status = nfsd4_decode_stateid(argp, &lock->lk_new_open_stateid);
--		if (status)
--			return status;
--		READ_BUF(4);
--		lock->lk_new_lock_seqid = be32_to_cpup(p++);
--		status = nfsd4_decode_state_owner4(argp, &lock->lk_new_clientid,
--						   &lock->lk_new_owner);
--		if (status)
--			return status;
--	} else {
--		status = nfsd4_decode_stateid(argp, &lock->lk_old_lock_stateid);
--		if (status)
--			return status;
--		READ_BUF(4);
--		lock->lk_old_lock_seqid = be32_to_cpup(p++);
--	}
-+	status = nfsd4_decode_locker4(argp, lock);
+-	READ_BUF(16);
+-	COPYMEM(&sess->clientid, 8);
+-	sess->seqid = be32_to_cpup(p++);
+-	sess->flags = be32_to_cpup(p++);
++	__be32 status;
  
- 	DECODE_TAIL;
- }
-diff --git a/include/linux/sunrpc/xdr.h b/include/linux/sunrpc/xdr.h
-index 6b17575437474..f6569b620beab 100644
---- a/include/linux/sunrpc/xdr.h
-+++ b/include/linux/sunrpc/xdr.h
-@@ -548,6 +548,27 @@ static inline bool xdr_item_is_present(const __be32 *p)
- 	return *p != xdr_zero;
++	status = nfsd4_decode_clientid4(argp, &sess->clientid);
++	if (status)
++		return status;
++	if (xdr_stream_decode_u32(argp->xdr, &sess->seqid) < 0)
++		return nfserr_bad_xdr;
++	if (xdr_stream_decode_u32(argp->xdr, &sess->flags) < 0)
++		return nfserr_bad_xdr;
+ 	status = nfsd4_decode_channel_attrs4(argp, &sess->fore_channel);
+ 	if (status)
+ 		return status;
+ 	status = nfsd4_decode_channel_attrs4(argp, &sess->back_channel);
++	if (status)
++		return status;
++	if (xdr_stream_decode_u32(argp->xdr, &sess->callback_prog) < 0)
++		return nfserr_bad_xdr;
++	status = nfsd4_decode_cb_sec(argp, &sess->cb_sec);
+ 	if (status)
+ 		return status;
+ 
+-	READ_BUF(4);
+-	sess->callback_prog = be32_to_cpup(p++);
+-	nfsd4_decode_cb_sec(argp, &sess->cb_sec);
+-	DECODE_TAIL;
++	return nfs_ok;
  }
  
-+/**
-+ * xdr_stream_decode_bool - Decode a boolean
-+ * @xdr: pointer to xdr_stream
-+ * @ptr: pointer to a u32 in which to store the result
-+ *
-+ * Return values:
-+ *   %0 on success
-+ *   %-EBADMSG on XDR buffer overflow
-+ */
-+static inline ssize_t
-+xdr_stream_decode_bool(struct xdr_stream *xdr, __u32 *ptr)
-+{
-+	const size_t count = sizeof(*ptr);
-+	__be32 *p = xdr_inline_decode(xdr, count);
-+
-+	if (unlikely(!p))
-+		return -EBADMSG;
-+	*ptr = (*p != xdr_zero);
-+	return 0;
-+}
-+
- /**
-  * xdr_stream_decode_u32 - Decode a 32-bit integer
-  * @xdr: pointer to xdr_stream
+ static __be32
 -- 
 2.43.0
 
