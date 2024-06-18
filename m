@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6710B12D74D;
-	Tue, 18 Jun 2024 13:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 191AD1AD488;
+	Tue, 18 Jun 2024 13:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716798; cv=none; b=jySO2eYW+G+N3X1eDwEuajwu5y3qJJUzqSe/9II4WQary77qKC6aq+N+uIzs6VgrN0ey/nnK5KeTOtPrITTRLCisWA+bFllmPN4pgt3IqY98mBbdz1r7otgrr/8pUml+aGaxA/hPQkdYf5dBNMVQEUDVVfFSW27dc6ZuQws9VsQ=
+	t=1718716801; cv=none; b=vFgFpJk8fyQuJT06HUTSrdEUeN61T3raPzmUq+7K6ROFLn8++IySbiYxdW9eE4r/uiYIiiq+3y6473LGuGf5AfD9IKp8GO+u1I1GMKOARkv132rOOMo6vxdOf80yrRjH0GnKUXSwUTQXO/zC+zMQLROkqDCcMT8qB9e0JvrdcFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716798; c=relaxed/simple;
-	bh=4r9qMpO3vC4sYbCzAua/bN3Lnk/YdEOrmhRevJUOvbk=;
+	s=arc-20240116; t=1718716801; c=relaxed/simple;
+	bh=bNbGtwIw9OVvBy2U+czZ6sfqIj7tGpZDKASwEeVPTrY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qTPfEaMWz+roDkVWI0YZo8hHkmJxX2K8QM761p0ZOqtn/30fJdwJv2W/3oGGht7OkejF+IuiW63zs/jx7d+/+tcs2p8J4/8Dp5mi4YDyks/USwe5aZDngKLx3R/V2NEBopiARLXnWrTGx6DIwSdDkfWyKjyG8Hk0lTulzlocmO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2HJeKDvO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O7PVnX5v6qvPlCmC1sn8KGJRdWgKwq8TS7rzdfQf35mw7CvckCekjGDLLfL4sdtNxLd9IkpCMkaes7Y+boJQhWEg5C6xgrKPocgqVcG1cc525rluVaO4OVa0zi+/Op8vTULEpoXhKpVjyV9dw0VPAKX1BcqUizzx0OrYnzq8U90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zOdXLrrx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2HJeKDvO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A96AFC3277B;
-	Tue, 18 Jun 2024 13:19:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zOdXLrrx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92122C3277B;
+	Tue, 18 Jun 2024 13:20:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716798;
-	bh=4r9qMpO3vC4sYbCzAua/bN3Lnk/YdEOrmhRevJUOvbk=;
+	s=korg; t=1718716801;
+	bh=bNbGtwIw9OVvBy2U+czZ6sfqIj7tGpZDKASwEeVPTrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2HJeKDvO7ndI2U+fmiQ7QTk1Y4wzyqCK94iBwYGheqAxL50/YLG5zVVBRycJVhrnW
-	 J/qG0y6y/6QKegOpAF+VkRcyICixvZPc/y+Dzjen4FPuQsNxtKH/2hcqo1h6SpExbV
-	 qh8ShdDd1GLzn7AsGOfAHOZ0J1vCzt9Qj226Q5ZU=
+	b=zOdXLrrxdJoasEJsayeN7k01IO792hHPpG3YCj5mA8BNEj30AJHrKg5Eg9t7GQIzU
+	 53sle5VUxPaZ2a7Em+dFJRAeos4Fnay8MMQUoQIB67uiY/GhLhsvYNVm4hFUR+feEC
+	 KE33PKa+FDC1maOYByJpgJKZXeMSwE378Wc/Xrds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 767/770] nfsd: fix RELEASE_LOCKOWNER
-Date: Tue, 18 Jun 2024 14:40:20 +0200
-Message-ID: <20240618123436.879101420@linuxfoundation.org>
+Subject: [PATCH 5.10 768/770] nfsd: dont take fi_lock in nfsd_break_deleg_cb()
+Date: Tue, 18 Jun 2024 14:40:21 +0200
+Message-ID: <20240618123436.918569196@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -54,145 +54,93 @@ Content-Transfer-Encoding: 8bit
 
 From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit edcf9725150e42beeca42d085149f4c88fa97afd ]
+[ Upstream commit 5ea9a7c5fe4149f165f0e3b624fe08df02b6c301 ]
 
-The test on so_count in nfsd4_release_lockowner() is nonsense and
-harmful.  Revert to using check_for_locks(), changing that to not sleep.
+A recent change to check_for_locks() changed it to take ->flc_lock while
+holding ->fi_lock.  This creates a lock inversion (reported by lockdep)
+because there is a case where ->fi_lock is taken while holding
+->flc_lock.
 
-First: harmful.
-As is documented in the kdoc comment for nfsd4_release_lockowner(), the
-test on so_count can transiently return a false positive resulting in a
-return of NFS4ERR_LOCKS_HELD when in fact no locks are held.  This is
-clearly a protocol violation and with the Linux NFS client it can cause
-incorrect behaviour.
+->flc_lock is held across ->fl_lmops callbacks, and
+nfsd_break_deleg_cb() is one of those and does take ->fi_lock.  However
+it doesn't need to.
 
-If RELEASE_LOCKOWNER is sent while some other thread is still
-processing a LOCK request which failed because, at the time that request
-was received, the given owner held a conflicting lock, then the nfsd
-thread processing that LOCK request can hold a reference (conflock) to
-the lock owner that causes nfsd4_release_lockowner() to return an
-incorrect error.
+Prior to v4.17-rc1~110^2~22 ("nfsd: create a separate lease for each
+delegation") nfsd_break_deleg_cb() would walk the ->fi_delegations list
+and so needed the lock.  Since then it doesn't walk the list and doesn't
+need the lock.
 
-The Linux NFS client ignores that NFS4ERR_LOCKS_HELD error because it
-never sends NFS4_RELEASE_LOCKOWNER without first releasing any locks, so
-it knows that the error is impossible.  It assumes the lock owner was in
-fact released so it feels free to use the same lock owner identifier in
-some later locking request.
+Two actions are performed under the lock.  One is to call
+nfsd_break_one_deleg which calls nfsd4_run_cb().  These doesn't act on
+the nfs4_file at all, so don't need the lock.
 
-When it does reuse a lock owner identifier for which a previous RELEASE
-failed, it will naturally use a lock_seqid of zero.  However the server,
-which didn't release the lock owner, will expect a larger lock_seqid and
-so will respond with NFS4ERR_BAD_SEQID.
+The other is to set ->fi_had_conflict which is in the nfs4_file.
+This field is only ever set here (except when initialised to false)
+so there is no possible problem will multiple threads racing when
+setting it.
 
-So clearly it is harmful to allow a false positive, which testing
-so_count allows.
+The field is tested twice in nfs4_set_delegation().  The first test does
+not hold a lock and is documented as an opportunistic optimisation, so
+it doesn't impose any need to hold ->fi_lock while setting
+->fi_had_conflict.
 
-The test is nonsense because ... well... it doesn't mean anything.
+The second test in nfs4_set_delegation() *is* make under ->fi_lock, so
+removing the locking when ->fi_had_conflict is set could make a change.
+The change could only be interesting if ->fi_had_conflict tested as
+false even though nfsd_break_one_deleg() ran before ->fi_lock was
+unlocked.  i.e. while hash_delegation_locked() was running.
+As hash_delegation_lock() doesn't interact in any way with nfs4_run_cb()
+there can be no importance to this interaction.
 
-so_count is the sum of three different counts.
-1/ the set of states listed on so_stateids
-2/ the set of active vfs locks owned by any of those states
-3/ various transient counts such as for conflicting locks.
+So this patch removes the locking from nfsd_break_one_deleg() and moves
+the final test on ->fi_had_conflict out of the locked region to make it
+clear that locking isn't important to the test.  It is still tested
+*after* vfs_setlease() has succeeded.  This might be significant and as
+vfs_setlease() takes ->flc_lock, and nfsd_break_one_deleg() is called
+under ->flc_lock this "after" is a true ordering provided by a spinlock.
 
-When it is tested against '2' it is clear that one of these is the
-transient reference obtained by find_lockowner_str_locked().  It is not
-clear what the other one is expected to be.
-
-In practice, the count is often 2 because there is precisely one state
-on so_stateids.  If there were more, this would fail.
-
-In my testing I see two circumstances when RELEASE_LOCKOWNER is called.
-In one case, CLOSE is called before RELEASE_LOCKOWNER.  That results in
-all the lock states being removed, and so the lockowner being discarded
-(it is removed when there are no more references which usually happens
-when the lock state is discarded).  When nfsd4_release_lockowner() finds
-that the lock owner doesn't exist, it returns success.
-
-The other case shows an so_count of '2' and precisely one state listed
-in so_stateid.  It appears that the Linux client uses a separate lock
-owner for each file resulting in one lock state per lock owner, so this
-test on '2' is safe.  For another client it might not be safe.
-
-So this patch changes check_for_locks() to use the (newish)
-find_any_file_locked() so that it doesn't take a reference on the
-nfs4_file and so never calls nfsd_file_put(), and so never sleeps.  With
-this check is it safe to restore the use of check_for_locks() rather
-than testing so_count against the mysterious '2'.
-
-Fixes: ce3c4ad7f4ce ("NFSD: Fix possible sleep during nfsd4_release_lockowner()")
+Fixes: edcf9725150e ("nfsd: fix RELEASE_LOCKOWNER")
 Signed-off-by: NeilBrown <neilb@suse.de>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Cc: stable@vger.kernel.org # v6.2+
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ fs/nfsd/nfs4state.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
 diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index e8e642e5ec8f1..c073cc23c5285 100644
+index c073cc23c5285..165acd8138abe 100644
 --- a/fs/nfsd/nfs4state.c
 +++ b/fs/nfsd/nfs4state.c
-@@ -7836,14 +7836,16 @@ check_for_locks(struct nfs4_file *fp, struct nfs4_lockowner *lowner)
- {
- 	struct file_lock *fl;
- 	int status = false;
--	struct nfsd_file *nf = find_any_file(fp);
-+	struct nfsd_file *nf;
- 	struct inode *inode;
- 	struct file_lock_context *flctx;
+@@ -4946,10 +4946,8 @@ nfsd_break_deleg_cb(struct file_lock *fl)
+ 	 */
+ 	fl->fl_break_time = 0;
  
-+	spin_lock(&fp->fi_lock);
-+	nf = find_any_file_locked(fp);
- 	if (!nf) {
- 		/* Any valid lock stateid should have some sort of access */
- 		WARN_ON_ONCE(1);
--		return status;
-+		goto out;
- 	}
- 
- 	inode = locks_inode(nf->nf_file);
-@@ -7859,7 +7861,8 @@ check_for_locks(struct nfs4_file *fp, struct nfs4_lockowner *lowner)
- 		}
- 		spin_unlock(&flctx->flc_lock);
- 	}
--	nfsd_file_put(nf);
-+out:
-+	spin_unlock(&fp->fi_lock);
- 	return status;
+-	spin_lock(&fp->fi_lock);
+ 	fp->fi_had_conflict = true;
+ 	nfsd_break_one_deleg(dp);
+-	spin_unlock(&fp->fi_lock);
+ 	return false;
  }
  
-@@ -7869,10 +7872,8 @@ check_for_locks(struct nfs4_file *fp, struct nfs4_lockowner *lowner)
-  * @cstate: NFSv4 COMPOUND state
-  * @u: RELEASE_LOCKOWNER arguments
-  *
-- * The lockowner's so_count is bumped when a lock record is added
-- * or when copying a conflicting lock. The latter case is brief,
-- * but can lead to fleeting false positives when looking for
-- * locks-in-use.
-+ * Check if theree are any locks still held and if not - free the lockowner
-+ * and any lock state that is owned.
-  *
-  * Return values:
-  *   %nfs_ok: lockowner released or not found
-@@ -7908,10 +7909,13 @@ nfsd4_release_lockowner(struct svc_rqst *rqstp,
- 		spin_unlock(&clp->cl_lock);
- 		return nfs_ok;
- 	}
--	if (atomic_read(&lo->lo_owner.so_count) != 2) {
--		spin_unlock(&clp->cl_lock);
--		nfs4_put_stateowner(&lo->lo_owner);
--		return nfserr_locks_held;
+@@ -5537,12 +5535,13 @@ nfs4_set_delegation(struct nfsd4_open *open, struct nfs4_ol_stateid *stp,
+ 	if (status)
+ 		goto out_unlock;
+ 
++	status = -EAGAIN;
++	if (fp->fi_had_conflict)
++		goto out_unlock;
 +
-+	list_for_each_entry(stp, &lo->lo_owner.so_stateids, st_perstateowner) {
-+		if (check_for_locks(stp->st_stid.sc_file, lo)) {
-+			spin_unlock(&clp->cl_lock);
-+			nfs4_put_stateowner(&lo->lo_owner);
-+			return nfserr_locks_held;
-+		}
- 	}
- 	unhash_lockowner_locked(lo);
- 	while (!list_empty(&lo->lo_owner.so_stateids)) {
+ 	spin_lock(&state_lock);
+ 	spin_lock(&fp->fi_lock);
+-	if (fp->fi_had_conflict)
+-		status = -EAGAIN;
+-	else
+-		status = hash_delegation_locked(dp, fp);
++	status = hash_delegation_locked(dp, fp);
+ 	spin_unlock(&fp->fi_lock);
+ 	spin_unlock(&state_lock);
+ 
 -- 
 2.43.0
 
