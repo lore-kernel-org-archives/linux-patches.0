@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C9C41AD406;
-	Tue, 18 Jun 2024 13:19:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657EF1AD419;
+	Tue, 18 Jun 2024 13:19:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716789; cv=none; b=I7w7omI0IHeNcjj9DwXBcVWGIz9oPTzPk82OvdaaAlSONNqQjQf2VU+Io5NLQcKL7P0qkfvqOcUtqBIO8hz3EelXVj2yrzF6RTvgl1cauLfq0B1qKrivAq6RpvwjCdJApzqVua4e8nALyJoG5Qjg+wTa4gYue14pLCFOkVKoiGw=
+	t=1718716792; cv=none; b=KHFmJ+eLWY72Cigytc7+JifTsOkawUrNraUmx2znfdBS7Na8l81N+xRbq9TCJVlUDngeCs2bieLfnVHMGcyl9gjUdrY6Uj+vprThYqqDq+35L3kA3a3/jMj3WTiTRkvtx11/GTL2Q/7uzIkS0P/nHIeQ2HJ2nm+vCS6iAJJccYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716789; c=relaxed/simple;
-	bh=6hbYH/LfxV8YLvlFYPbdq4YGgJMX7CLKh9wpjGp3juQ=;
+	s=arc-20240116; t=1718716792; c=relaxed/simple;
+	bh=vVbyEfpomoKwbxP2JaGldnXGIcbc36hFrU6trPQOTuw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J5gQFbo0eNenaX58uwCtylf2QSmZHQ5GyJlyz18axLgFIuMjNl83yZz2O9DlbtW72xiGKJq256v4339V59LXSiaob7OVL1QvliEffBrM40LKCy0o6RIxDwpSAmFdheUpTJ0p5uOa2gMsJTZcWTlj/uO/+t5hweEOq20Aqu5XPOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zz997Vcp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SvWbhV9GQOWC27K7igQlEFZBJEQb6HG5CyiGALpyRicPw2fGRZH2eMg+aFyQH9tlT1s5/G8NqP2dazO3SI6fm8C3jWuVJLqDwYJfwMsNVSJOBlxNkK2tc6iAKC4TS4gf7smo2nl08pMGc2CEhfD4CHcpZfbpYnlF/ZcT6RNLYA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M++xjlCA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zz997Vcp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9FE4C3277B;
-	Tue, 18 Jun 2024 13:19:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M++xjlCA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEEBDC3277B;
+	Tue, 18 Jun 2024 13:19:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716789;
-	bh=6hbYH/LfxV8YLvlFYPbdq4YGgJMX7CLKh9wpjGp3juQ=;
+	s=korg; t=1718716792;
+	bh=vVbyEfpomoKwbxP2JaGldnXGIcbc36hFrU6trPQOTuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zz997VcpKIB5rkvdLFbVz9FO+EWYWJukaeQ2fLwC+0trZBVfGg6L5ZqGsXR7SW1n6
-	 HBGSJ7/cZu6LVrTGJL6lj9jCxBJZwSU1eyiJQOV/CaJPAf5rjM4qQU1RpVlM1h5z5W
-	 YZx4hRsWPOXdtUPZlyMYcBjojw//dEdww6MbcoBU=
+	b=M++xjlCA1VfPTrMbA0IrtPWQqdT3spCag68H5Jw8salV9FdK/ETv05J0ovfP8OyqB
+	 KscwZ28T+QQtw8io7KJzKmkZRy21ZHMuwk5vIWEEsUCzG1JBgm2jWczr6l0B+rjAjm
+	 tpnP4RJtuSse0PcaQ7+i597oQgW7jr5bDhHlQS/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 764/770] NFSD: fix possible oops when nfsd/pool_stats is closed.
-Date: Tue, 18 Jun 2024 14:40:17 +0200
-Message-ID: <20240618123436.761927123@linuxfoundation.org>
+Subject: [PATCH 5.10 765/770] nfsd: call nfsd_last_thread() before final nfsd_put()
+Date: Tue, 18 Jun 2024 14:40:18 +0200
+Message-ID: <20240618123436.801515399@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -54,50 +54,79 @@ Content-Transfer-Encoding: 8bit
 
 From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 88956eabfdea7d01d550535af120d4ef265b1d02 ]
+[ Upstream commit 2a501f55cd641eb4d3c16a2eab0d678693fac663 ]
 
-If /proc/fs/nfsd/pool_stats is open when the last nfsd thread exits, then
-when the file is closed a NULL pointer is dereferenced.
-This is because nfsd_pool_stats_release() assumes that the
-pointer to the svc_serv cannot become NULL while a reference is held.
+If write_ports_addfd or write_ports_addxprt fail, they call nfsd_put()
+without calling nfsd_last_thread().  This leaves nn->nfsd_serv pointing
+to a structure that has been freed.
 
-This used to be the case but a recent patch split nfsd_last_thread() out
-from nfsd_put(), and clearing the pointer is done in nfsd_last_thread().
+So remove 'static' from nfsd_last_thread() and call it when the
+nfsd_serv is about to be destroyed.
 
-This is easily reproduced by running
-   rpc.nfsd 8 ; ( rpc.nfsd 0;true) < /proc/fs/nfsd/pool_stats
-
-Fortunately nfsd_pool_stats_release() has easy access to the svc_serv
-pointer, and so can call svc_put() on it directly.
-
-Fixes: 9f28a971ee9f ("nfsd: separate nfsd_last_thread() from nfsd_put()")
+Fixes: ec52361df99b ("SUNRPC: stop using ->sv_nrthreads as a refcount")
 Signed-off-by: NeilBrown <neilb@suse.de>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfssvc.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/nfsd/nfsctl.c | 9 +++++++--
+ fs/nfsd/nfsd.h   | 1 +
+ fs/nfsd/nfssvc.c | 2 +-
+ 3 files changed, 9 insertions(+), 3 deletions(-)
 
+diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
+index 76a60e7a75097..eec442edb6556 100644
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -720,8 +720,10 @@ static ssize_t __write_ports_addfd(char *buf, struct net *net, const struct cred
+ 
+ 	err = svc_addsock(nn->nfsd_serv, net, fd, buf, SIMPLE_TRANSACTION_LIMIT, cred);
+ 
+-	if (err >= 0 &&
+-	    !nn->nfsd_serv->sv_nrthreads && !xchg(&nn->keep_active, 1))
++	if (err < 0 && !nn->nfsd_serv->sv_nrthreads && !nn->keep_active)
++		nfsd_last_thread(net);
++	else if (err >= 0 &&
++		 !nn->nfsd_serv->sv_nrthreads && !xchg(&nn->keep_active, 1))
+ 		svc_get(nn->nfsd_serv);
+ 
+ 	nfsd_put(net);
+@@ -771,6 +773,9 @@ static ssize_t __write_ports_addxprt(char *buf, struct net *net, const struct cr
+ 		svc_xprt_put(xprt);
+ 	}
+ out_err:
++	if (!nn->nfsd_serv->sv_nrthreads && !nn->keep_active)
++		nfsd_last_thread(net);
++
+ 	nfsd_put(net);
+ 	return err;
+ }
+diff --git a/fs/nfsd/nfsd.h b/fs/nfsd/nfsd.h
+index 867dcfd64d426..3796015dc7656 100644
+--- a/fs/nfsd/nfsd.h
++++ b/fs/nfsd/nfsd.h
+@@ -138,6 +138,7 @@ int nfsd_vers(struct nfsd_net *nn, int vers, enum vers_op change);
+ int nfsd_minorversion(struct nfsd_net *nn, u32 minorversion, enum vers_op change);
+ void nfsd_reset_versions(struct nfsd_net *nn);
+ int nfsd_create_serv(struct net *net);
++void nfsd_last_thread(struct net *net);
+ 
+ extern int nfsd_max_blksize;
+ 
 diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
-index ee5713fca1870..2a1dd580dfb94 100644
+index 2a1dd580dfb94..3d4fd40c987bd 100644
 --- a/fs/nfsd/nfssvc.c
 +++ b/fs/nfsd/nfssvc.c
-@@ -1084,11 +1084,12 @@ int nfsd_pool_stats_open(struct inode *inode, struct file *file)
+@@ -529,7 +529,7 @@ static struct notifier_block nfsd_inet6addr_notifier = {
+ /* Only used under nfsd_mutex, so this atomic may be overkill: */
+ static atomic_t nfsd_notifier_refcount = ATOMIC_INIT(0);
  
- int nfsd_pool_stats_release(struct inode *inode, struct file *file)
+-static void nfsd_last_thread(struct net *net)
++void nfsd_last_thread(struct net *net)
  {
-+	struct seq_file *seq = file->private_data;
-+	struct svc_serv *serv = seq->private;
- 	int ret = seq_release(inode, file);
--	struct net *net = inode->i_sb->s_fs_info;
- 
- 	mutex_lock(&nfsd_mutex);
--	nfsd_put(net);
-+	svc_put(serv);
- 	mutex_unlock(&nfsd_mutex);
- 	return ret;
- }
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+ 	struct svc_serv *serv = nn->nfsd_serv;
 -- 
 2.43.0
 
