@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0623B12D74D;
-	Tue, 18 Jun 2024 13:20:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E834D1AD493;
+	Tue, 18 Jun 2024 13:20:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716810; cv=none; b=XVqk4pynYAv2RIuXcTCyl03AJywL3/pf8NyOIyimx90w7u7TyVnKWmQSk3iKDJLT7j7EdavzKb8NyBQZoTU8OqJ2Qwk1vgSvr5BxldI1p6Hu76xbevx/9Qy77KGhIieQn2MsIJyjA/4IQbdJFckfDOksrhzjOhEkRbzqwAG8ZU4=
+	t=1718716813; cv=none; b=UfBhtPJtQ1HJTq3yOb1XvAbLpGykxKPLsE5xMWoW6Ny4wurR4uxm8JhfcKDkQDv59sdK789vZ4cuUQdLKrm1k/gcZpucELyFdm0r5Mcsw50qHfBUhIRLxkYWd7CBL3MYkR2Y7DoUqXdKmReMW3ojFykt35aY/po5D+ekOMwibHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716810; c=relaxed/simple;
-	bh=UujEcCb2SvPH+hOOdBmQ7wmc59Q6TWC5t2B23+khsN8=;
+	s=arc-20240116; t=1718716813; c=relaxed/simple;
+	bh=fZtE8QgmZM6eArI7mjbaPkLUonmCkHjxDYMxSTw9XBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DVc734wzAG/D5JOn6XwRIVc65YrwSJ2KuMGe7FuCG6mVuPx06oudSBCFd9vhbpInhDJQGm4LeebBpsZAvlvzakYqwMjFti7MNqg51EM0MCYb73j21KQA8BHo1biF6XPu7aifgM6tXOIaujK3tlTMbFuHfASfpQCkmvn1V0fS+Tc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cZdqSsby; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RUaMzMgdgruiNSwx/DJOp2+57Hw/kIEI1FaiqZKaZUplBwTpcmPw1J2dJIniD5Hlp+n3Aw07BRQeU0frBrxgP2wrXzYkkKynhEpA5hpPTi15urfMcSXCJfPRB/2Mr0K/qUfDBPKVdDfrDWWqWFn3NRqc+A5X6Nj1Im/7O8sSWt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o5ioYC5z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZdqSsby"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F20C32786;
-	Tue, 18 Jun 2024 13:20:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o5ioYC5z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FA93C4AF1D;
+	Tue, 18 Jun 2024 13:20:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716809;
-	bh=UujEcCb2SvPH+hOOdBmQ7wmc59Q6TWC5t2B23+khsN8=;
+	s=korg; t=1718716812;
+	bh=fZtE8QgmZM6eArI7mjbaPkLUonmCkHjxDYMxSTw9XBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cZdqSsbyjygmhhPWieNyvldc5Z/Koldm3E/f8pJOdnm8cN8VTUZ/pZaP4aa+ZxIp+
-	 /arHkv/7g8qE8c1UAxBx1XyRWYTHMQWh9jmX/axciUesr+/nZ9zN/A63QNC+TqJHz4
-	 wKuRIFpCIBtUSi1E/G5Ca+yJ8VN0RulPoXkSBtPc=
+	b=o5ioYC5zeMdayW3wGnGh66LsZ24sVkxGsX2tK8VZeufV5qMWFDC/suzetAxxamVIb
+	 C4XBCTH1BVpIcs/f53x8Pr0gubNCC7OCBeTM2clOoJ8wbwlRS6Jikb2zqUYddF5Puj
+	 ptPwNBaK9ORp81rLm3JidowEoHa9c5a2+O+TS/nU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Dai Ngo <dai.ngo@oracle.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 753/770] nfsd: simplify the delayed disposal list code
-Date: Tue, 18 Jun 2024 14:40:06 +0200
-Message-ID: <20240618123436.335955080@linuxfoundation.org>
+Subject: [PATCH 5.10 754/770] NFSD: Fix problem of COMMIT and NFS4ERR_DELAY in infinite loop
+Date: Tue, 18 Jun 2024 14:40:07 +0200
+Message-ID: <20240618123436.373411101@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -51,117 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-[ Upstream commit 92e4a6733f922f0fef1d0995f7b2d0eaff86c7ea ]
+[ Upstream commit 147abcacee33781e75588869e944ddb07528a897 ]
 
-When queueing a dispose list to the appropriate "freeme" lists, it
-pointlessly queues the objects one at a time to an intermediate list.
+The following request sequence to the same file causes the NFS client and
+server getting into an infinite loop with COMMIT and NFS4ERR_DELAY:
 
-Remove a few helpers and just open code a list_move to make it more
-clear and efficient. Better document the resulting functions with
-kerneldoc comments.
+OPEN
+REMOVE
+WRITE
+COMMIT
 
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Problem reported by recall11, recall12, recall14, recall20, recall22,
+recall40, recall42, recall48, recall50 of nfstest suite.
+
+This patch restores the handling of race condition in nfsd_file_do_acquire
+with unlink to that prior of the regression.
+
+Fixes: ac3a2585f018 ("nfsd: rework refcounting in filecache")
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/filecache.c | 64 ++++++++++++++++-----------------------------
- 1 file changed, 22 insertions(+), 42 deletions(-)
+ fs/nfsd/filecache.c | 2 --
+ 1 file changed, 2 deletions(-)
 
 diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-index 52e67ec267965..6b8706f23eaf0 100644
+index 6b8706f23eaf0..615ea8324911e 100644
 --- a/fs/nfsd/filecache.c
 +++ b/fs/nfsd/filecache.c
-@@ -401,49 +401,26 @@ nfsd_file_dispose_list(struct list_head *dispose)
- 	}
- }
- 
--static void
--nfsd_file_list_remove_disposal(struct list_head *dst,
--		struct nfsd_fcache_disposal *l)
--{
--	spin_lock(&l->lock);
--	list_splice_init(&l->freeme, dst);
--	spin_unlock(&l->lock);
--}
--
--static void
--nfsd_file_list_add_disposal(struct list_head *files, struct net *net)
--{
--	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
--	struct nfsd_fcache_disposal *l = nn->fcache_disposal;
--
--	spin_lock(&l->lock);
--	list_splice_tail_init(files, &l->freeme);
--	spin_unlock(&l->lock);
--	queue_work(nfsd_filecache_wq, &l->work);
--}
--
--static void
--nfsd_file_list_add_pernet(struct list_head *dst, struct list_head *src,
--		struct net *net)
--{
--	struct nfsd_file *nf, *tmp;
--
--	list_for_each_entry_safe(nf, tmp, src, nf_lru) {
--		if (nf->nf_net == net)
--			list_move_tail(&nf->nf_lru, dst);
--	}
--}
--
-+/**
-+ * nfsd_file_dispose_list_delayed - move list of dead files to net's freeme list
-+ * @dispose: list of nfsd_files to be disposed
-+ *
-+ * Transfers each file to the "freeme" list for its nfsd_net, to eventually
-+ * be disposed of by the per-net garbage collector.
-+ */
- static void
- nfsd_file_dispose_list_delayed(struct list_head *dispose)
- {
--	LIST_HEAD(list);
--	struct nfsd_file *nf;
--
- 	while(!list_empty(dispose)) {
--		nf = list_first_entry(dispose, struct nfsd_file, nf_lru);
--		nfsd_file_list_add_pernet(&list, dispose, nf->nf_net);
--		nfsd_file_list_add_disposal(&list, nf->nf_net);
-+		struct nfsd_file *nf = list_first_entry(dispose,
-+						struct nfsd_file, nf_lru);
-+		struct nfsd_net *nn = net_generic(nf->nf_net, nfsd_net_id);
-+		struct nfsd_fcache_disposal *l = nn->fcache_disposal;
-+
-+		spin_lock(&l->lock);
-+		list_move_tail(&nf->nf_lru, &l->freeme);
-+		spin_unlock(&l->lock);
-+		queue_work(nfsd_filecache_wq, &l->work);
- 	}
- }
- 
-@@ -664,8 +641,8 @@ nfsd_file_close_inode_sync(struct inode *inode)
-  * nfsd_file_delayed_close - close unused nfsd_files
-  * @work: dummy
-  *
-- * Walk the LRU list and destroy any entries that have not been used since
-- * the last scan.
-+ * Scrape the freeme list for this nfsd_net, and then dispose of them
-+ * all.
-  */
- static void
- nfsd_file_delayed_close(struct work_struct *work)
-@@ -674,7 +651,10 @@ nfsd_file_delayed_close(struct work_struct *work)
- 	struct nfsd_fcache_disposal *l = container_of(work,
- 			struct nfsd_fcache_disposal, work);
- 
--	nfsd_file_list_remove_disposal(&head, l);
-+	spin_lock(&l->lock);
-+	list_splice_init(&l->freeme, &head);
-+	spin_unlock(&l->lock);
-+
- 	nfsd_file_dispose_list(&head);
- }
- 
+@@ -1098,8 +1098,6 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 	 * then unhash.
+ 	 */
+ 	if (status != nfs_ok || inode->i_nlink == 0)
+-		status = nfserr_jukebox;
+-	if (status != nfs_ok)
+ 		nfsd_file_unhash(nf);
+ 	clear_and_wake_up_bit(NFSD_FILE_PENDING, &nf->nf_flags);
+ 	if (status == nfs_ok)
 -- 
 2.43.0
 
