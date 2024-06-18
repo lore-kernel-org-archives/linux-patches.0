@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78EBD158871;
-	Tue, 18 Jun 2024 13:08:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F48158A01;
+	Tue, 18 Jun 2024 13:08:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716097; cv=none; b=FNWV6l/PJpSdfuYZIKlLzZVosf7hwXUr0szcyeoFgcyj2UAdoChcB6CxqSZDZqDqJ0kXSldfsVP9C5LvFZ0SA82Y4L2CWapYwmvqbaq2G5pmTY9MtIKM3n8e2ExQcEPq8W1vAmfS7kaEAN42sZRS8S3nU4mB4srXvJNEL1lJPMQ=
+	t=1718716100; cv=none; b=Gsugi8WxI5Y4vgrFcBvP/aw0zQkl13KNBXr0PX9E8jWTnfN13hO4wENHLRrpWnUFYayEzLZKE+quJ0bVE/zBD1DqwK91IiJ+ShTQh0AnmY1hyTbXqtcWxhvbAL/8F+AplNr1ELxqjWCoUExxfvhY4y9rayDOF/F1+N/fw4BY7pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716097; c=relaxed/simple;
-	bh=+/eZlcIhv08kBZlKaG+pniSKc+biQb4eabdES5fx0Tk=;
+	s=arc-20240116; t=1718716100; c=relaxed/simple;
+	bh=n19eTw5+FhONwKYABCd1XKxmtnTPLgkwI32rV5HzJSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZHEt3JBdjPCQCSFjiGMGlU5k67SMk2Z86Tl98qUSu++CToP4e86TRvseWzV1FK8FgkTGbAz527Iu5rePVmjQneZ7z2OUbXA2SXbv+0H5rlHXHQQxYX+qxAJEbdKbK4A4Fu7P17cRsSzTzfE5qkv9WlUcgoyxUHtIvloPY7NwWss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rLffbS/L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FCIjo2ZfevDpdS7W2AM7Hv2XyWrEDDZ7vQZzbv4rfDmnRkY4lcr/eBXnieNQdTphhNkEUY2/NTvwT6TO8+W33qNMLAXIDENKxeSRr8XgvVHHhf02kpxfZSVV5cToz7JkEmW7f7jIBBkXmEwt1J2UauCP9/ogwuei8AuGwli2kQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Stx+p01h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rLffbS/L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C680EC3277B;
-	Tue, 18 Jun 2024 13:08:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Stx+p01h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E256AC4AF4D;
+	Tue, 18 Jun 2024 13:08:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716097;
-	bh=+/eZlcIhv08kBZlKaG+pniSKc+biQb4eabdES5fx0Tk=;
+	s=korg; t=1718716100;
+	bh=n19eTw5+FhONwKYABCd1XKxmtnTPLgkwI32rV5HzJSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rLffbS/LFs6yw38aFaaHd1Uzzd0Ww1c8A5zHwvj+TsbYjqvJ6TXfmXxG22wI4apiD
-	 4D+nP6lYM9cuHuBuK7e+qj08tqhnEHxPntM5WsOkpWos1tzW0ugnWX6EnAQ3kbkCcX
-	 /uVZT6VWk70YlEcaHLjjQo5z/Q6B8oUKGyWR8hA8=
+	b=Stx+p01hOQ54tzQGSzToGOs+OC1XbdGLJhHqmM4wnbOz8Nup0XzXqqNy7FprOVfL+
+	 gtppu3vAJt7W5+b+Qaa8zGdfnfrcT7w246J4l0EQAPM2PXqsbYrIiln6ckgJByUedi
+	 6ut4YbWq0+jm2x8JhxWmAXT02urZmrXR6NiIXa3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Dai Ngo <dai.ngo@oracle.com>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
-	Jeff Layton <jlayton@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 514/770] fs/lock: add 2 callbacks to lock_manager_operations to resolve conflict
-Date: Tue, 18 Jun 2024 14:36:07 +0200
-Message-ID: <20240618123427.156393027@linuxfoundation.org>
+Subject: [PATCH 5.10 532/770] nfsd: Fix null-ptr-deref in nfsd_fill_super()
+Date: Tue, 18 Jun 2024 14:36:25 +0200
+Message-ID: <20240618123427.847491265@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,164 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dai Ngo <dai.ngo@oracle.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit 2443da2259e97688f93d64d17ab69b15f466078a ]
+[ Upstream commit 6f6f84aa215f7b6665ccbb937db50860f9ec2989 ]
 
-Add 2 new callbacks, lm_lock_expirable and lm_expire_lock, to
-lock_manager_operations to allow the lock manager to take appropriate
-action to resolve the lock conflict if possible.
+KASAN report null-ptr-deref as follows:
 
-A new field, lm_mod_owner, is also added to lock_manager_operations.
-The lm_mod_owner is used by the fs/lock code to make sure the lock
-manager module such as nfsd, is not freed while lock conflict is being
-resolved.
+  BUG: KASAN: null-ptr-deref in nfsd_fill_super+0xc6/0xe0 [nfsd]
+  Write of size 8 at addr 000000000000005d by task a.out/852
 
-lm_lock_expirable checks and returns true to indicate that the lock
-conflict can be resolved else return false. This callback must be
-called with the flc_lock held so it can not block.
+  CPU: 7 PID: 852 Comm: a.out Not tainted 5.18.0-rc7-dirty #66
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-1.fc33 04/01/2014
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x34/0x44
+   kasan_report+0xab/0x120
+   ? nfsd_mkdir+0x71/0x1c0 [nfsd]
+   ? nfsd_fill_super+0xc6/0xe0 [nfsd]
+   nfsd_fill_super+0xc6/0xe0 [nfsd]
+   ? nfsd_mkdir+0x1c0/0x1c0 [nfsd]
+   get_tree_keyed+0x8e/0x100
+   vfs_get_tree+0x41/0xf0
+   __do_sys_fsconfig+0x590/0x670
+   ? fscontext_read+0x180/0x180
+   ? anon_inode_getfd+0x4f/0x70
+   do_syscall_64+0x35/0x80
+   entry_SYSCALL_64_after_hwframe+0x44/0xae
 
-lm_expire_lock is called to resolve the lock conflict if the returned
-value from lm_lock_expirable is true. This callback is called without
-the flc_lock held since it's allowed to block. Upon returning from
-this callback, the lock conflict should be resolved and the caller is
-expected to restart the conflict check from the beginnning of the list.
+This can be reproduce by concurrent operations:
+	1. fsopen(nfsd)/fsconfig
+	2. insmod/rmmod nfsd
 
-Lock manager, such as NFSv4 courteous server, uses this callback to
-resolve conflict by destroying lock owner, or the NFSv4 courtesy client
-(client that has expired but allowed to maintains its states) that owns
-the lock.
+Since the nfsd file system is registered before than nfsd_net allocated,
+the caller may get the file_system_type and use the nfsd_net before it
+allocated, then null-ptr-deref occurred.
 
-Reviewed-by: J. Bruce Fields <bfields@fieldses.org>
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+So init_nfsd() should call register_filesystem() last.
+
+Fixes: bd5ae9288d64 ("nfsd: register pernet ops last, unregister first")
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/filesystems/locking.rst |  4 ++++
- fs/locks.c                            | 33 ++++++++++++++++++++++++---
- include/linux/fs.h                    |  3 +++
- 3 files changed, 37 insertions(+), 3 deletions(-)
+ fs/nfsd/nfsctl.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/filesystems/locking.rst b/Documentation/filesystems/locking.rst
-index 07e57f7629202..23a0d24168bc5 100644
---- a/Documentation/filesystems/locking.rst
-+++ b/Documentation/filesystems/locking.rst
-@@ -433,6 +433,8 @@ prototypes::
- 	void (*lm_break)(struct file_lock *); /* break_lease callback */
- 	int (*lm_change)(struct file_lock **, int);
- 	bool (*lm_breaker_owns_lease)(struct file_lock *);
-+        bool (*lm_lock_expirable)(struct file_lock *);
-+        void (*lm_expire_lock)(void);
+diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
+index 55949e60897d5..0621c2faf2424 100644
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -1535,25 +1535,25 @@ static int __init init_nfsd(void)
+ 	retval = create_proc_exports_entry();
+ 	if (retval)
+ 		goto out_free_lockd;
+-	retval = register_filesystem(&nfsd_fs_type);
+-	if (retval)
+-		goto out_free_exports;
+ 	retval = register_pernet_subsys(&nfsd_net_ops);
+ 	if (retval < 0)
+-		goto out_free_filesystem;
++		goto out_free_exports;
+ 	retval = register_cld_notifier();
+ 	if (retval)
+ 		goto out_free_subsys;
+ 	retval = nfsd4_create_laundry_wq();
++	if (retval)
++		goto out_free_cld;
++	retval = register_filesystem(&nfsd_fs_type);
+ 	if (retval)
+ 		goto out_free_all;
+ 	return 0;
+ out_free_all:
++	nfsd4_destroy_laundry_wq();
++out_free_cld:
+ 	unregister_cld_notifier();
+ out_free_subsys:
+ 	unregister_pernet_subsys(&nfsd_net_ops);
+-out_free_filesystem:
+-	unregister_filesystem(&nfsd_fs_type);
+ out_free_exports:
+ 	remove_proc_entry("fs/nfs/exports", NULL);
+ 	remove_proc_entry("fs/nfs", NULL);
+@@ -1571,6 +1571,7 @@ static int __init init_nfsd(void)
  
- locking rules:
+ static void __exit exit_nfsd(void)
+ {
++	unregister_filesystem(&nfsd_fs_type);
+ 	nfsd4_destroy_laundry_wq();
+ 	unregister_cld_notifier();
+ 	unregister_pernet_subsys(&nfsd_net_ops);
+@@ -1581,7 +1582,6 @@ static void __exit exit_nfsd(void)
+ 	nfsd_lockd_shutdown();
+ 	nfsd4_free_slabs();
+ 	nfsd4_exit_pnfs();
+-	unregister_filesystem(&nfsd_fs_type);
+ }
  
-@@ -444,6 +446,8 @@ lm_grant:		no		no			no
- lm_break:		yes		no			no
- lm_change		yes		no			no
- lm_breaker_owns_lease:	yes     	no			no
-+lm_lock_expirable	yes		no			no
-+lm_expire_lock		no		no			yes
- ======================	=============	=================	=========
- 
- buffer_head
-diff --git a/fs/locks.c b/fs/locks.c
-index 118df2812f8aa..13a3ba97b73d1 100644
---- a/fs/locks.c
-+++ b/fs/locks.c
-@@ -982,6 +982,8 @@ posix_test_lock(struct file *filp, struct file_lock *fl)
- 	struct file_lock *cfl;
- 	struct file_lock_context *ctx;
- 	struct inode *inode = locks_inode(filp);
-+	void *owner;
-+	void (*func)(void);
- 
- 	ctx = smp_load_acquire(&inode->i_flctx);
- 	if (!ctx || list_empty_careful(&ctx->flc_posix)) {
-@@ -989,12 +991,23 @@ posix_test_lock(struct file *filp, struct file_lock *fl)
- 		return;
- 	}
- 
-+retry:
- 	spin_lock(&ctx->flc_lock);
- 	list_for_each_entry(cfl, &ctx->flc_posix, fl_list) {
--		if (posix_locks_conflict(fl, cfl)) {
--			locks_copy_conflock(fl, cfl);
--			goto out;
-+		if (!posix_locks_conflict(fl, cfl))
-+			continue;
-+		if (cfl->fl_lmops && cfl->fl_lmops->lm_lock_expirable
-+			&& (*cfl->fl_lmops->lm_lock_expirable)(cfl)) {
-+			owner = cfl->fl_lmops->lm_mod_owner;
-+			func = cfl->fl_lmops->lm_expire_lock;
-+			__module_get(owner);
-+			spin_unlock(&ctx->flc_lock);
-+			(*func)();
-+			module_put(owner);
-+			goto retry;
- 		}
-+		locks_copy_conflock(fl, cfl);
-+		goto out;
- 	}
- 	fl->fl_type = F_UNLCK;
- out:
-@@ -1168,6 +1181,8 @@ static int posix_lock_inode(struct inode *inode, struct file_lock *request,
- 	int error;
- 	bool added = false;
- 	LIST_HEAD(dispose);
-+	void *owner;
-+	void (*func)(void);
- 
- 	ctx = locks_get_lock_context(inode, request->fl_type);
- 	if (!ctx)
-@@ -1186,6 +1201,7 @@ static int posix_lock_inode(struct inode *inode, struct file_lock *request,
- 		new_fl2 = locks_alloc_lock();
- 	}
- 
-+retry:
- 	percpu_down_read(&file_rwsem);
- 	spin_lock(&ctx->flc_lock);
- 	/*
-@@ -1197,6 +1213,17 @@ static int posix_lock_inode(struct inode *inode, struct file_lock *request,
- 		list_for_each_entry(fl, &ctx->flc_posix, fl_list) {
- 			if (!posix_locks_conflict(request, fl))
- 				continue;
-+			if (fl->fl_lmops && fl->fl_lmops->lm_lock_expirable
-+				&& (*fl->fl_lmops->lm_lock_expirable)(fl)) {
-+				owner = fl->fl_lmops->lm_mod_owner;
-+				func = fl->fl_lmops->lm_expire_lock;
-+				__module_get(owner);
-+				spin_unlock(&ctx->flc_lock);
-+				percpu_up_read(&file_rwsem);
-+				(*func)();
-+				module_put(owner);
-+				goto retry;
-+			}
- 			if (conflock)
- 				locks_copy_conflock(conflock, fl);
- 			error = -EAGAIN;
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 17dc1ee8c6cb2..3e9105b3cc767 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -1017,6 +1017,7 @@ struct file_lock_operations {
- };
- 
- struct lock_manager_operations {
-+	void *lm_mod_owner;
- 	fl_owner_t (*lm_get_owner)(fl_owner_t);
- 	void (*lm_put_owner)(fl_owner_t);
- 	void (*lm_notify)(struct file_lock *);	/* unblock callback */
-@@ -1025,6 +1026,8 @@ struct lock_manager_operations {
- 	int (*lm_change)(struct file_lock *, int, struct list_head *);
- 	void (*lm_setup)(struct file_lock *, void **);
- 	bool (*lm_breaker_owns_lease)(struct file_lock *);
-+	bool (*lm_lock_expirable)(struct file_lock *cfl);
-+	void (*lm_expire_lock)(void);
- };
- 
- struct lock_manager {
+ MODULE_AUTHOR("Olaf Kirch <okir@monad.swb.de>");
 -- 
 2.43.0
 
