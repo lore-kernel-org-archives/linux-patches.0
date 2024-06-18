@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36B91A00DF;
-	Tue, 18 Jun 2024 13:08:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4551A00E9;
+	Tue, 18 Jun 2024 13:08:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716126; cv=none; b=RY4CxvBZYw+G9al5uO0A0GsIhyPHgVY3V2FUx9v2uZFsmu1gCBddCnPU2hWSds/IgvNBSGIJ3RO38LqXwpRrXdhY72omboL6/Dzd3xuTXmB2m72Y2Tqcqr3XhVbUPNeWLyprc4zIaxIvv552ABllegiGy48eh8V3AksqY8WNvs4=
+	t=1718716129; cv=none; b=aXybaqK9NgCXDFU7mILwEcBuCZdjv39311Vk4hQk8NKXzxXtxOqNQO31THvT8V1senpvdI/xfFdCZFzvRQVuOsiQPgUnsUS/IhTP0Qo+OBfvr1+uXsEnYJQvZ5SEi++keHceL+KFrd2d+wD7v0yIxUwrLKsoRhj0W54kdYHSID0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716126; c=relaxed/simple;
-	bh=1ec8Sq7MhS43LhPOmRNK/EeRjaKKycrDG2+Pt+CJrgc=;
+	s=arc-20240116; t=1718716129; c=relaxed/simple;
+	bh=DY+btYOqxNG4/GXyW959hgzUWO/bV1M3Rr1FN1FuuzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WxLQ0GhnAyRwA5yUOyRpn5nBHf4xwbwv04Lt+SLgzxj2pxRrRzMABB2lxWvTkFlUmUSKrQottUY0iZw9/GxQkzKl7TYp301Pxc6QCI1myUPm0qA8UMzuRgPn0iHhN/cYAvqPFm2H/KcnFHsK80OdJrojcw+4rkvVz19WXgcB+6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0J92dj1u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uPdNtXo4Vsn1vze0j5VMJ8IsZrTBBnNtlMDhcKt333y/AHpFye9PLkzG18WMC7lcrUI/fTj91h6fxCLbRWVk3xMgnK62fpQAmUKfCtg/Ce9KscVW0W9p3eAxzWv9ghC+1wr4HjUU8XuLyiEx2FDHuh8F/7QHCQS5GsbVpyDbL5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pQv+qCYZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0J92dj1u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CDE2C32786;
-	Tue, 18 Jun 2024 13:08:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pQv+qCYZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AFFFC4AF1D;
+	Tue, 18 Jun 2024 13:08:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716126;
-	bh=1ec8Sq7MhS43LhPOmRNK/EeRjaKKycrDG2+Pt+CJrgc=;
+	s=korg; t=1718716129;
+	bh=DY+btYOqxNG4/GXyW959hgzUWO/bV1M3Rr1FN1FuuzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0J92dj1uo2rL+Y1omj5vw2m5crHImZ5r8RE4wzTh5xblHT4q3Kk7vZiKYMm5RGfEG
-	 wOcdA2ziaRvMoeu+KnV1vcVrzHz7UW42T9qzQSWeR0u0BHTGr6XRteM9qduEmJwohD
-	 WusQ/7r43h7ZMsGOGmRMhB4d2P85mA8/7StpwkHA=
+	b=pQv+qCYZdd8MtIYThc4eFul5dDCgr04hreQi9WaZ6aRVdh0TOgVEgvE2hMjyp6crG
+	 /GIyjtEhfdhw2n7qdcuKbjlkkV6/fEDS+cAfbY9GVxtr5XyaSEWdXjidOfI2TtOiu8
+	 lwLzGGxM9TbQOqcse7b+lnYZACl/hOrLcaR0KnW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Mammedov <imammedo@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
+	"J. Bruce Fields" <bfields@fieldses.org>,
+	Dai Ngo <dai.ngo@oracle.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 541/770] NFSD: Decode NFSv4 birth time attribute
-Date: Tue, 18 Jun 2024 14:36:34 +0200
-Message-ID: <20240618123428.192496268@linuxfoundation.org>
+Subject: [PATCH 5.10 515/770] NFSD: add support for lock conflict to courteous server
+Date: Tue, 18 Jun 2024 14:36:08 +0200
+Message-ID: <20240618123427.194135354@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -52,81 +52,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-[ Upstream commit 5b2f3e0777da2a5dd62824bbe2fdab1d12caaf8f ]
+[ Upstream commit 27431affb0dbc259ac6ffe6071243a576c8f38f1 ]
 
-NFSD has advertised support for the NFSv4 time_create attribute
-since commit e377a3e698fb ("nfsd: Add support for the birth time
-attribute").
+This patch allows expired client with lock state to be in COURTESY
+state. Lock conflict with COURTESY client is resolved by the fs/lock
+code using the lm_lock_expirable and lm_expire_lock callback in the
+struct lock_manager_operations.
 
-Igor Mammedov reports that Mac OS clients attempt to set the NFSv4
-birth time attribute via OPEN(CREATE) and SETATTR if the server
-indicates that it supports it, but since the above commit was
-merged, those attempts now fail.
+If conflict client is in COURTESY state, set it to EXPIRABLE and
+schedule the laundromat to run immediately to expire the client. The
+callback lm_expire_lock waits for the laundromat to flush its work
+queue before returning to caller.
 
-Table 5 in RFC 8881 lists the time_create attribute as one that can
-be both set and retrieved, but the above commit did not add server
-support for clients to provide a time_create attribute. IMO that's
-a bug in our implementation of the NFSv4 protocol, which this commit
-addresses.
-
-Whether NFSD silently ignores the new birth time or actually sets it
-is another matter. I haven't found another filesystem service in the
-Linux kernel that enables users or clients to modify a file's birth
-time attribute.
-
-This commit reflects my (perhaps incorrect) understanding of whether
-Linux users can set a file's birth time. NFSD will now recognize a
-time_create attribute but it ignores its value. It clears the
-time_create bit in the returned attribute bitmask to indicate that
-the value was not used.
-
-Reported-by: Igor Mammedov <imammedo@redhat.com>
-Fixes: e377a3e698fb ("nfsd: Add support for the birth time attribute")
-Tested-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: J. Bruce Fields <bfields@fieldses.org>
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4xdr.c | 9 +++++++++
- fs/nfsd/nfsd.h    | 3 ++-
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ fs/nfsd/nfs4state.c | 70 ++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 54 insertions(+), 16 deletions(-)
 
-diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
-index 804c137fabec5..b98a24c2a753c 100644
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -470,6 +470,15 @@ nfsd4_decode_fattr4(struct nfsd4_compoundargs *argp, u32 *bmval, u32 bmlen,
- 			return nfserr_bad_xdr;
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index 30ea1c7b6b9fd..6851fece3a760 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -5731,39 +5731,51 @@ static void nfsd4_ssc_expire_umount(struct nfsd_net *nn)
+ }
+ #endif
+ 
++/* Check if any lock belonging to this lockowner has any blockers */
+ static bool
+-nfs4_has_any_locks(struct nfs4_client *clp)
++nfs4_lockowner_has_blockers(struct nfs4_lockowner *lo)
++{
++	struct file_lock_context *ctx;
++	struct nfs4_ol_stateid *stp;
++	struct nfs4_file *nf;
++
++	list_for_each_entry(stp, &lo->lo_owner.so_stateids, st_perstateowner) {
++		nf = stp->st_stid.sc_file;
++		ctx = nf->fi_inode->i_flctx;
++		if (!ctx)
++			continue;
++		if (locks_owner_has_blockers(ctx, lo))
++			return true;
++	}
++	return false;
++}
++
++static bool
++nfs4_anylock_blockers(struct nfs4_client *clp)
+ {
+ 	int i;
+ 	struct nfs4_stateowner *so;
++	struct nfs4_lockowner *lo;
+ 
++	if (atomic_read(&clp->cl_delegs_in_recall))
++		return true;
+ 	spin_lock(&clp->cl_lock);
+ 	for (i = 0; i < OWNER_HASH_SIZE; i++) {
+ 		list_for_each_entry(so, &clp->cl_ownerstr_hashtbl[i],
+ 				so_strhash) {
+ 			if (so->so_is_open_owner)
+ 				continue;
+-			spin_unlock(&clp->cl_lock);
+-			return true;
++			lo = lockowner(so);
++			if (nfs4_lockowner_has_blockers(lo)) {
++				spin_unlock(&clp->cl_lock);
++				return true;
++			}
  		}
  	}
-+	if (bmval[1] & FATTR4_WORD1_TIME_CREATE) {
-+		struct timespec64 ts;
-+
-+		/* No Linux filesystem supports setting this attribute. */
-+		bmval[1] &= ~FATTR4_WORD1_TIME_CREATE;
-+		status = nfsd4_decode_nfstime4(argp, &ts);
-+		if (status)
-+			return status;
-+	}
- 	if (bmval[1] & FATTR4_WORD1_TIME_MODIFY_SET) {
- 		u32 set_it;
+ 	spin_unlock(&clp->cl_lock);
+ 	return false;
+ }
  
-diff --git a/fs/nfsd/nfsd.h b/fs/nfsd/nfsd.h
-index 847b482155ae9..9a8b09afc1733 100644
---- a/fs/nfsd/nfsd.h
-+++ b/fs/nfsd/nfsd.h
-@@ -465,7 +465,8 @@ static inline bool nfsd_attrs_supported(u32 minorversion, const u32 *bmval)
- 	(FATTR4_WORD0_SIZE | FATTR4_WORD0_ACL)
- #define NFSD_WRITEABLE_ATTRS_WORD1 \
- 	(FATTR4_WORD1_MODE | FATTR4_WORD1_OWNER | FATTR4_WORD1_OWNER_GROUP \
--	| FATTR4_WORD1_TIME_ACCESS_SET | FATTR4_WORD1_TIME_MODIFY_SET)
-+	| FATTR4_WORD1_TIME_ACCESS_SET | FATTR4_WORD1_TIME_CREATE \
-+	| FATTR4_WORD1_TIME_MODIFY_SET)
- #ifdef CONFIG_NFSD_V4_SECURITY_LABEL
- #define MAYBE_FATTR4_WORD2_SECURITY_LABEL \
- 	FATTR4_WORD2_SECURITY_LABEL
+-/*
+- * place holder for now, no check for lock blockers yet
+- */
+-static bool
+-nfs4_anylock_blockers(struct nfs4_client *clp)
+-{
+-	if (atomic_read(&clp->cl_delegs_in_recall) ||
+-			!list_empty(&clp->async_copies) ||
+-			nfs4_has_any_locks(clp))
+-		return true;
+-	return false;
+-}
+-
+ static void
+ nfs4_get_client_reaplist(struct nfsd_net *nn, struct list_head *reaplist,
+ 				struct laundry_time *lt)
+@@ -6743,6 +6755,29 @@ nfsd4_lm_put_owner(fl_owner_t owner)
+ 		nfs4_put_stateowner(&lo->lo_owner);
+ }
+ 
++/* return pointer to struct nfs4_client if client is expirable */
++static bool
++nfsd4_lm_lock_expirable(struct file_lock *cfl)
++{
++	struct nfs4_lockowner *lo = (struct nfs4_lockowner *)cfl->fl_owner;
++	struct nfs4_client *clp = lo->lo_owner.so_client;
++	struct nfsd_net *nn;
++
++	if (try_to_expire_client(clp)) {
++		nn = net_generic(clp->net, nfsd_net_id);
++		mod_delayed_work(laundry_wq, &nn->laundromat_work, 0);
++		return true;
++	}
++	return false;
++}
++
++/* schedule laundromat to run immediately and wait for it to complete */
++static void
++nfsd4_lm_expire_lock(void)
++{
++	flush_workqueue(laundry_wq);
++}
++
+ static void
+ nfsd4_lm_notify(struct file_lock *fl)
+ {
+@@ -6769,9 +6804,12 @@ nfsd4_lm_notify(struct file_lock *fl)
+ }
+ 
+ static const struct lock_manager_operations nfsd_posix_mng_ops  = {
++	.lm_mod_owner = THIS_MODULE,
+ 	.lm_notify = nfsd4_lm_notify,
+ 	.lm_get_owner = nfsd4_lm_get_owner,
+ 	.lm_put_owner = nfsd4_lm_put_owner,
++	.lm_lock_expirable = nfsd4_lm_lock_expirable,
++	.lm_expire_lock = nfsd4_lm_expire_lock,
+ };
+ 
+ static inline void
 -- 
 2.43.0
 
