@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C27815A853;
-	Tue, 18 Jun 2024 13:18:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC3E515A853;
+	Tue, 18 Jun 2024 13:18:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716736; cv=none; b=fmxEM35TFlKAmOhakOjKaSUKkzS7X58eSOIcJsgXf9x4qnXvN6Y1R0pDZLuygO3XCipaa484oDW9iZxVozcu33LzpBcctTOYqy6uJpAz9rTwC2ixr34tT+CBdY8SGBvCGjmjvzrIW1c5wrKatK1ArZD9NyhsUxcHk+KX2RvM9Yc=
+	t=1718716739; cv=none; b=iWk1Vp9QEWl0PY8B1ny9Fl4eaFX6Q5eLOp7991u6I6rkktnb6/I2Ut8KHWnAtlh2NV3SC5S5VggEeC3DY+9bPrtu4aEbt1RKo9XTIqHmoA8Fd5Zei4ONUxaIdN9WHbvPt+8ys43c7hla2qwNCbzLA9Iz4WyrbJFvKHdmOInzsUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716736; c=relaxed/simple;
-	bh=osE4KKMJHO0AVvdeBqDecK0Bh9mnTajtFtf4O6+2m/E=;
+	s=arc-20240116; t=1718716739; c=relaxed/simple;
+	bh=Az+rgOnDpBp0nt4pE5X8NIUwTvnLrSH2EaT6wx51Las=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dv2XcjqUz8yRh6kssqFs049eyYDXSnLMGp4dAYMC+jE6VpNEjHsMaIiK7wIbxZce8IyNRNzNOMfI3SZHpEi/X453dN1SSLeojBD0FCG4dv9iDTpjEM01kGVfyP+teQ5ckrG1YWDpUKL/87gdhwhInRpOFCCrA1204VYLle8XiJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h0/oZ0Nw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SEW9BZlT0PR00alg3YhnVI0ZIOcYHe0wEURh+HwnPlXCkZXi9kCOzZqdSaO8eTk1KaTBkXBtj7Z53ZxLDyIBblb1L7XgPNhd7ktyQslrLJp3/YWlW9Cu9+SsJOyhT/nrOnOPYfe+Y+tXTYQg2Ra6gzo3h4ktPiHMLOLonvIaD4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OQ9IxnHa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h0/oZ0Nw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81418C3277B;
-	Tue, 18 Jun 2024 13:18:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OQ9IxnHa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EA02C3277B;
+	Tue, 18 Jun 2024 13:18:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716735;
-	bh=osE4KKMJHO0AVvdeBqDecK0Bh9mnTajtFtf4O6+2m/E=;
+	s=korg; t=1718716738;
+	bh=Az+rgOnDpBp0nt4pE5X8NIUwTvnLrSH2EaT6wx51Las=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h0/oZ0NwZzwbejZPhqP7lfW9wPfakoIfeQTn+dxqdPxBsX4JqmviQ10Yk3kLowphz
-	 Y5uuTWeFoJsWKBBSQY9Xt0ZFV1dTL2ZETX8gT5JkQcPgLcgj7ZyLSuUujgbnTpQ7oF
-	 DmE+Y8+TNqxurMmW/0IHjYuq7XcmuS1YD2pdeKv4=
+	b=OQ9IxnHazAgF7etuk+NUYO0Cui+l3AYefsL4zdFyg7YACTNghiuyFZwZHgBT1Mj6n
+	 ByWTDJppduk/jFPK4sr8kW69jZkt6zBZzzzIE/umZF/gpPZq5iCPgO9Oo7pBFme0LD
+	 Rp5ekMRGM0AcLMJh38J5+H+4eOVJZZrCuYf1CDps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 745/770] nfsd: NFSD_FILE_KEY_INODE only needs to find GCed entries
-Date: Tue, 18 Jun 2024 14:39:58 +0200
-Message-ID: <20240618123436.025541996@linuxfoundation.org>
+Subject: [PATCH 5.10 746/770] nfsd: simplify test_bit return in NFSD_FILE_KEY_FULL comparator
+Date: Tue, 18 Jun 2024 14:39:59 +0200
+Message-ID: <20240618123436.064006118@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -53,51 +53,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 6c31e4c98853a4ba47355ea151b36a77c42b7734 ]
+[ Upstream commit d69b8dbfd0866abc5ec84652cc1c10fc3d4d91ef ]
 
-Since v4 files are expected to be long-lived, there's little value in
-closing them out of the cache when there is conflicting access.
-
-Change the comparator to also match the gc value in the key. Change both
-of the current users of that key to set the gc value in the key to
-"true".
+test_bit returns bool, so we can just compare the result of that to the
+key->gc value without the "!!".
 
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/filecache.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/nfsd/filecache.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-index 677a8d935ccc2..4ddc82b84f7c4 100644
+index 4ddc82b84f7c4..d61c8223082a4 100644
 --- a/fs/nfsd/filecache.c
 +++ b/fs/nfsd/filecache.c
-@@ -174,6 +174,8 @@ static int nfsd_file_obj_cmpfn(struct rhashtable_compare_arg *arg,
- 
- 	switch (key->type) {
- 	case NFSD_FILE_KEY_INODE:
-+		if (test_bit(NFSD_FILE_GC, &nf->nf_flags) != key->gc)
-+			return 1;
- 		if (nf->nf_inode != key->inode)
+@@ -188,7 +188,7 @@ static int nfsd_file_obj_cmpfn(struct rhashtable_compare_arg *arg,
  			return 1;
- 		break;
-@@ -694,6 +696,7 @@ nfsd_file_queue_for_close(struct inode *inode, struct list_head *dispose)
- 	struct nfsd_file_lookup_key key = {
- 		.type	= NFSD_FILE_KEY_INODE,
- 		.inode	= inode,
-+		.gc	= true,
- 	};
- 	struct nfsd_file *nf;
- 
-@@ -1048,6 +1051,7 @@ nfsd_file_is_cached(struct inode *inode)
- 	struct nfsd_file_lookup_key key = {
- 		.type	= NFSD_FILE_KEY_INODE,
- 		.inode	= inode,
-+		.gc	= true,
- 	};
- 	bool ret = false;
- 
+ 		if (!nfsd_match_cred(nf->nf_cred, key->cred))
+ 			return 1;
+-		if (!!test_bit(NFSD_FILE_GC, &nf->nf_flags) != key->gc)
++		if (test_bit(NFSD_FILE_GC, &nf->nf_flags) != key->gc)
+ 			return 1;
+ 		if (test_bit(NFSD_FILE_HASHED, &nf->nf_flags) == 0)
+ 			return 1;
 -- 
 2.43.0
 
