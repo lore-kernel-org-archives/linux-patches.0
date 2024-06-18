@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B51A13A259;
-	Tue, 18 Jun 2024 12:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D02C12B143;
+	Tue, 18 Jun 2024 12:46:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718714814; cv=none; b=o86YxakOl0WEWehW3ci3FZt2kfzmOfhJ4FMr2IBt8piH1UgPcBoT8IGBg3KVlKLrprtGq9geXPE9D4oBnK+CoV17GpHaparYOMvftZwwcgQRA8d5D7R/m7qMcOjyEXAOuMq1NSSJE4XYy9TR95GRv3oibXwPOZzG/qkdIBl943Q=
+	t=1718714817; cv=none; b=NHyBFsyJUXPgRAm6qCCXsAn+RcMk2fD7Jwb5cjNIAoToj26Ae79bqUj2Dpy1VXxJStCnm3salmDUXUA6YLgXKBLlDuZ45MNe3lQYlKqehRzEvjp1msHThCNEZ90xVItkGbJMmpO4unBIjUjpqoHebAtlKAC9NTrmsCxfw4/0KZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718714814; c=relaxed/simple;
-	bh=pRDbck6xG9bNI5TUCX0QnOBpDXxs/LNWUv9t2UNLPMk=;
+	s=arc-20240116; t=1718714817; c=relaxed/simple;
+	bh=8NL3HoHgjensC2fBi0q4NgIl9kCzk1pfReruhY36Xv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e//9LhLOukqDB544LsZ2Yq+xgaYWV7ggzOtSCIYqlF3m80FTVnxamhIaFfPT9h5WIn5NP/J1gT9k1YwJz3merWplgwGTBp9Wz/WtrsDNsQEDprYuCmj8gh7QsdRvjOtXZJe+yKaPOczRHMp6xrpGVn3XEHk2PhsoF4TPkWU/W10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ndhGhy7p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hkOoyriHGeXqSmpij81cw34eN5axCCh25eF/E+LFdUiY1feRDMc1eosSYVR2dcbwxIQM1uP4BgM61ydiwCdP5GAjvyV3Nacxrl9QVQzde+tlruOmhMg456TdKRx11Z/DJLAn6J+l2yBg0KqdLDya7eX7AYXugt+WCzVS0GgQBXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gEvXfAwc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ndhGhy7p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C659DC3277B;
-	Tue, 18 Jun 2024 12:46:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gEvXfAwc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60E3C3277B;
+	Tue, 18 Jun 2024 12:46:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718714814;
-	bh=pRDbck6xG9bNI5TUCX0QnOBpDXxs/LNWUv9t2UNLPMk=;
+	s=korg; t=1718714816;
+	bh=8NL3HoHgjensC2fBi0q4NgIl9kCzk1pfReruhY36Xv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ndhGhy7pmEP75eXuOGydf/vlXLt9YUpTL5Gr0eGKpnbrl+KgVjbkXojZPMognsJHd
-	 3Sko/NrtKGgKQeUhW0LUV0/pri6jyjlKRQb2Svt1ES2D25ORhXxgjQvByCSkcyB+OB
-	 T8tnJJjnvIxzqRSV6Swk+2yveayJv/dJCEzWSXrY=
+	b=gEvXfAwcWlz4y8QBrIa5bE6GVCtwsxrpshI0E2FVBuH/JXQ+/Xet8AJR2svebS4I4
+	 j+PAPlf6KOEsKMkyIqzEH+jcx28IP80fqUrzCMNrxxlNLihjE2rvDqLbm1F5mU0gfc
+	 vo6Bsj9y2WlTXAZkMPKu/qRSS8V80azOG+RZZx8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"J. Bruce Fields" <bfields@redhat.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 097/770] nfsd4: dont query change attribute in v2/v3 case
-Date: Tue, 18 Jun 2024 14:29:10 +0200
-Message-ID: <20240618123411.015543489@linuxfoundation.org>
+Subject: [PATCH 5.10 071/770] NFSD: Replace READ* macros in nfsd4_decode_free_stateid()
+Date: Tue, 18 Jun 2024 14:28:44 +0200
+Message-ID: <20240618123410.024076624@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -51,80 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: J. Bruce Fields <bfields@redhat.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 942b20dc245590327ee0187c15c78174cd96dd52 ]
+[ Upstream commit aec387d5909304810d899f7d90ae57df33f3a75c ]
 
-inode_query_iversion() has side effects, and there's no point calling it
-when we're not even going to use it.
-
-We check whether we're currently processing a v4 request by checking
-fh_maxsize, which is arguably a little hacky; we could add a flag to
-svc_fh instead.
-
-Signed-off-by: J. Bruce Fields <bfields@redhat.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs3xdr.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ fs/nfsd/nfs4xdr.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/fs/nfsd/nfs3xdr.c b/fs/nfsd/nfs3xdr.c
-index 5956b0317c55e..7d44e10a5f5dd 100644
---- a/fs/nfsd/nfs3xdr.c
-+++ b/fs/nfsd/nfs3xdr.c
-@@ -259,11 +259,11 @@ void fill_pre_wcc(struct svc_fh *fhp)
+diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
+index 7a0730688b2f0..92988926d9540 100644
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -1685,13 +1685,7 @@ static __be32
+ nfsd4_decode_free_stateid(struct nfsd4_compoundargs *argp,
+ 			  struct nfsd4_free_stateid *free_stateid)
  {
- 	struct inode    *inode;
- 	struct kstat	stat;
-+	bool v4 = (fhp->fh_maxsize == NFS4_FHSIZE);
- 	__be32 err;
- 
- 	if (fhp->fh_pre_saved)
- 		return;
+-	DECODE_HEAD;
 -
- 	inode = d_inode(fhp->fh_dentry);
- 	err = fh_getattr(fhp, &stat);
- 	if (err) {
-@@ -272,11 +272,12 @@ void fill_pre_wcc(struct svc_fh *fhp)
- 		stat.ctime = inode->i_ctime;
- 		stat.size  = inode->i_size;
- 	}
-+	if (v4)
-+		fhp->fh_pre_change = nfsd4_change_attribute(&stat, inode);
- 
- 	fhp->fh_pre_mtime = stat.mtime;
- 	fhp->fh_pre_ctime = stat.ctime;
- 	fhp->fh_pre_size  = stat.size;
--	fhp->fh_pre_change = nfsd4_change_attribute(&stat, inode);
- 	fhp->fh_pre_saved = true;
+-	READ_BUF(sizeof(stateid_t));
+-	free_stateid->fr_stateid.si_generation = be32_to_cpup(p++);
+-	COPYMEM(&free_stateid->fr_stateid.si_opaque, sizeof(stateid_opaque_t));
+-
+-	DECODE_TAIL;
++	return nfsd4_decode_stateid4(argp, &free_stateid->fr_stateid);
  }
  
-@@ -285,6 +286,8 @@ void fill_pre_wcc(struct svc_fh *fhp)
-  */
- void fill_post_wcc(struct svc_fh *fhp)
- {
-+	bool v4 = (fhp->fh_maxsize == NFS4_FHSIZE);
-+	struct inode *inode = d_inode(fhp->fh_dentry);
- 	__be32 err;
- 
- 	if (fhp->fh_post_saved)
-@@ -293,11 +296,12 @@ void fill_post_wcc(struct svc_fh *fhp)
- 	err = fh_getattr(fhp, &fhp->fh_post_attr);
- 	if (err) {
- 		fhp->fh_post_saved = false;
--		fhp->fh_post_attr.ctime = d_inode(fhp->fh_dentry)->i_ctime;
-+		fhp->fh_post_attr.ctime = inode->i_ctime;
- 	} else
- 		fhp->fh_post_saved = true;
--	fhp->fh_post_change = nfsd4_change_attribute(&fhp->fh_post_attr,
--						     d_inode(fhp->fh_dentry));
-+	if (v4)
-+		fhp->fh_post_change =
-+			nfsd4_change_attribute(&fhp->fh_post_attr, inode);
- }
- 
- /*
+ static __be32
 -- 
 2.43.0
 
