@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397B215A84B;
-	Tue, 18 Jun 2024 13:18:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 923E7158A16;
+	Tue, 18 Jun 2024 13:18:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718716727; cv=none; b=qN/tkTjhH3fIdLSgIf2gYxUzWWoNRGHPaJuBApTKMWkDFnXLN68tEhKdr+y+3j9jTSzHmpoCMKQ/U7zPREaPhIIWijjG36ihTRvza7/ZjSmbimphVOeJrt5P85zydy8hauV9qZ/jEXHheD2zIE1Cy7cmIM4WwuJrg2C/9Cxl2vA=
+	t=1718716730; cv=none; b=ZzdZpON/mYturr3Ti6jsAWhM5kb8sX722zIyOqNxqDs0Rofe+Rz6kYDP01+Jf5mU91SU9mXvMmcsTA05nbU3dmdPbsBIN7RMGhWr5A6VhwdcDmb7KlRr+05wCDqgLjt90DO5Z0Yo/0eV1IJGIsoXlKAa3F6mEiD60WNUlO+6BW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718716727; c=relaxed/simple;
-	bh=hiU710JXJBqvt4Ojqyw9HOj6DQ1T1fQIN+WgkyeoXgU=;
+	s=arc-20240116; t=1718716730; c=relaxed/simple;
+	bh=h65DK0Uc3eyLFixy/ONenMTG0+pyAnH+g6flTWsp9D0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EQkthM/3DjL4HuXwkm5sq8XTOaRAFVnUhRHci2Q3kXeRW/pr2SnbzSlI7xzlxrrOkUKnjEopDLNMfM1PAwXvURWxt5AQZ6+Kwqcw6h9Od++K8tcAEiiCOTE6u0Rz9Zxvvvix8C1Lk9A0fHb588sZedYvgkBfuAJdaG/4+VLPX6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xBEn6HDp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fo+RY4TEzNfyUIdzUaBnknVwYDxonIT1nYpm0ZedMqt6t61m/TiKFRuYR12aTWI22/P9Iq787kTdscjBugQWsiFploMfhQOHuWeR9xV6sNQzcU73/17keWmsWkuvvplFfFSW0SIA3e6CdU2PiIgRv90sQR5Akp+97gRfLPfwF8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sh6ia8pV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xBEn6HDp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F8EC3277B;
-	Tue, 18 Jun 2024 13:18:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sh6ia8pV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D36C3277B;
+	Tue, 18 Jun 2024 13:18:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718716727;
-	bh=hiU710JXJBqvt4Ojqyw9HOj6DQ1T1fQIN+WgkyeoXgU=;
+	s=korg; t=1718716730;
+	bh=h65DK0Uc3eyLFixy/ONenMTG0+pyAnH+g6flTWsp9D0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xBEn6HDpUT1YcXY8s9It2WiwvNlQixNMlx2yoVTusTYarYEkSsKowAdmyZH4Ald6m
-	 5SLvS6XcWdE/IxtqAx/0I0vjD1FQL2D/nEQWpbxvu2Dqi3pjX15N6IDYaG6xlSIsg7
-	 sTVjAOZfjDaSqSwq2lulU5fI4ErnmPVpo6VxI+HI=
+	b=sh6ia8pVnlq4LekjwN5Qh1j6rffw7FDK/FgTg16ZOyPpWl27AzTAErRX6XqISvfvB
+	 9P3PSdUcF6BpTyRpIVSaJyPXCKvRcFi9oNGDlYn4sK8cjZvTP9WzuYrT/oepL2G/Cs
+	 IEOcGgGEAsMP1x4eacz9Ot48fBJeDx//lh0jTRAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Zhi Li <yieli@redhat.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 742/770] NFSD: Avoid calling OPDESC() with ops->opnum == OP_ILLEGAL
-Date: Tue, 18 Jun 2024 14:39:55 +0200
-Message-ID: <20240618123435.909733649@linuxfoundation.org>
+Subject: [PATCH 5.10 743/770] nfsd: call op_release, even when op_func returns an error
+Date: Tue, 18 Jun 2024 14:39:56 +0200
+Message-ID: <20240618123435.948031915@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -51,52 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 804d8e0a6e54427268790472781e03bc243f4ee3 ]
+[ Upstream commit 15a8b55dbb1ba154d82627547c5761cac884d810 ]
 
-OPDESC() simply indexes into nfsd4_ops[] by the op's operation
-number, without range checking that value. It assumes callers are
-careful to avoid calling it with an out-of-bounds opnum value.
+For ops with "trivial" replies, nfsd4_encode_operation will shortcut
+most of the encoding work and skip to just marshalling up the status.
+One of the things it skips is calling op_release. This could cause a
+memory leak in the layoutget codepath if there is an error at an
+inopportune time.
 
-nfsd4_decode_compound() is not so careful, and can invoke OPDESC()
-with opnum set to OP_ILLEGAL, which is 10044 -- well beyond the end
-of nfsd4_ops[].
+Have the compound processing engine always call op_release, even when
+op_func sets an error in op->status. With this change, we also need
+nfsd4_block_get_device_info_scsi to set the gd_device pointer to NULL
+on error to avoid a double free.
 
-Reported-by: Jeff Layton <jlayton@kernel.org>
-Fixes: f4f9ef4a1b0a ("nfsd4: opdesc will be useful outside nfs4proc.c")
+Reported-by: Zhi Li <yieli@redhat.com>
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2181403
+Fixes: 34b1744c91cc ("nfsd4: define ->op_release for compound ops")
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4xdr.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/nfsd/nfs4xdr.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
 diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
-index d0b9fbf189ac6..e1f2f26ba93f2 100644
+index e1f2f26ba93f2..d62382dfc135e 100644
 --- a/fs/nfsd/nfs4xdr.c
 +++ b/fs/nfsd/nfs4xdr.c
-@@ -2476,10 +2476,12 @@ nfsd4_decode_compound(struct nfsd4_compoundargs *argp)
- 	for (i = 0; i < argp->opcnt; i++) {
- 		op = &argp->ops[i];
- 		op->replay = NULL;
-+		op->opdesc = NULL;
+@@ -5397,10 +5397,8 @@ nfsd4_encode_operation(struct nfsd4_compoundres *resp, struct nfsd4_op *op)
+ 	__be32 *p;
  
- 		if (xdr_stream_decode_u32(argp->xdr, &op->opnum) < 0)
- 			return false;
- 		if (nfsd4_opnum_in_range(argp, op)) {
-+			op->opdesc = OPDESC(op);
- 			op->status = nfsd4_dec_ops[op->opnum](argp, &op->u);
- 			if (op->status != nfs_ok)
- 				trace_nfsd_compound_decode_err(argp->rqstp,
-@@ -2490,7 +2492,7 @@ nfsd4_decode_compound(struct nfsd4_compoundargs *argp)
- 			op->opnum = OP_ILLEGAL;
- 			op->status = nfserr_op_illegal;
- 		}
--		op->opdesc = OPDESC(op);
-+
- 		/*
- 		 * We'll try to cache the result in the DRC if any one
- 		 * op in the compound wants to be cached:
+ 	p = xdr_reserve_space(xdr, 8);
+-	if (!p) {
+-		WARN_ON_ONCE(1);
+-		return;
+-	}
++	if (!p)
++		goto release;
+ 	*p++ = cpu_to_be32(op->opnum);
+ 	post_err_offset = xdr->buf->len;
+ 
+@@ -5415,8 +5413,6 @@ nfsd4_encode_operation(struct nfsd4_compoundres *resp, struct nfsd4_op *op)
+ 	op->status = encoder(resp, op->status, &op->u);
+ 	if (op->status)
+ 		trace_nfsd_compound_encode_err(rqstp, op->opnum, op->status);
+-	if (opdesc && opdesc->op_release)
+-		opdesc->op_release(&op->u);
+ 	xdr_commit_encode(xdr);
+ 
+ 	/* nfsd4_check_resp_size guarantees enough room for error status */
+@@ -5457,6 +5453,9 @@ nfsd4_encode_operation(struct nfsd4_compoundres *resp, struct nfsd4_op *op)
+ 	}
+ status:
+ 	*p = op->status;
++release:
++	if (opdesc && opdesc->op_release)
++		opdesc->op_release(&op->u);
+ }
+ 
+ /* 
 -- 
 2.43.0
 
