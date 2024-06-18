@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A7F1552E4;
-	Tue, 18 Jun 2024 12:55:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C761B16DC1D;
+	Tue, 18 Jun 2024 12:56:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718715357; cv=none; b=Nn5y6hV16NegveD0zPYUe3wZ6e+8AQDP9K5LO6qjDhlOup5qqjjo3OFmaxgAJwxx57IMIfKblJyDB+wlRy3wz6Ga2LPv4oJJFvXVGMI64fn/NiJke1pHa1G7WauxLqW73aaemJ6tq/C6nXctNibqvHJb57bSxrzRSRnzLZBbo9Y=
+	t=1718715360; cv=none; b=XZNXu2GAMxTYDXO5kqnfeArYb72QMxMi/Ooh0ZJiOIr7qRHGOcjTsIjVzIcdgkfFYB/IRJwW62+t+ddwnu95s0i553NSxacS7ftXzClRqpfRGF+Yg9Pp7AhqP8HrMuK5y+rrylI40cYT2jcJd0mmVJWYn6MirBYnCfFES4/MycM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718715357; c=relaxed/simple;
-	bh=pF54TLfCJ7q3RStfDf1fWL0mGpteNgxcKg7APvbE1HU=;
+	s=arc-20240116; t=1718715360; c=relaxed/simple;
+	bh=G/sxxMh386s0zVbIlm4dJ2pnHM0mXnVmLXxLQL0AQyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H1kvbI/3KmjyrzJas4HeQ/l7/tdQVIHk9wOjabKhtHm/uXtIDianeUbEvNVNpDP15ESkeEHZM3BYfRf4JwsK7c5L3qSOnj5pGg7GXTY/AFm1PbFiP3qvQvr8I0k1foUJj6OUloZ3pWH2RYBFtDX49Lsq9UlXXw2oOe2sdAwvPZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lWHHF78F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SE+WqxKPOppESU0N9DdMP/C84eXNMxTN+Uh1EzBmKkTurX5df7uTd8tu9WjaKQGlF6d8GGwTgv/eudz99L2TXVLB9CVDABfloaWs8R9ziz35JCeWayJp7tdSk9ZA+C2JnQQ70HeHcb5alI7pQQzS8Tm7Nhl8hq7H0n1lpV9REqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c6JGLzYx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lWHHF78F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C2FDC3277B;
-	Tue, 18 Jun 2024 12:55:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c6JGLzYx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20F36C3277B;
+	Tue, 18 Jun 2024 12:55:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718715357;
-	bh=pF54TLfCJ7q3RStfDf1fWL0mGpteNgxcKg7APvbE1HU=;
+	s=korg; t=1718715360;
+	bh=G/sxxMh386s0zVbIlm4dJ2pnHM0mXnVmLXxLQL0AQyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lWHHF78FSSFH0tf5Id6yk+h6LfATZPEAkaXCYDE1UESGFf0nml/+DmaPhoDk7ABHA
-	 r0KJCeJxxbqbEpNZ89BOPRKOLmDB8wd8hdMxd5nH65TC6OWkGArwrAPw2vOMphPJqS
-	 s0Bude9fMji6Tz1g/Y6Osuc5CfDezWakVcyPOT6I=
+	b=c6JGLzYxnCv3MxlkVhGGiAsaosvP/oTVt3yLSnL47BoOO0WX7Be3GzTQOq75fWN3k
+	 j2pphbYJUlFHIl1c1r9/rH2chSZm9uwU3DUgM3bCY9YOrJ2QFdwVFSpImD/2rhs0hy
+	 aP7SKJWAaX/55rMpeUMwKFNqZvo3HkH5HVDU0Ecg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"J. Bruce Fields" <bfields@redhat.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
+	"J. Bruce Fields" <bfields@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 240/770] nfsd: helper for laundromat expiry calculations
-Date: Tue, 18 Jun 2024 14:31:33 +0200
-Message-ID: <20240618123416.543387294@linuxfoundation.org>
+Subject: [PATCH 5.10 275/770] NFSD: Add a couple more nfsd_clid_expired call sites
+Date: Tue, 18 Jun 2024 14:32:08 +0200
+Message-ID: <20240618123417.883122812@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240618123407.280171066@linuxfoundation.org>
 References: <20240618123407.280171066@linuxfoundation.org>
@@ -51,138 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: J. Bruce Fields <bfields@redhat.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 7f7e7a4006f74b031718055a0751c70c2e3d5e7e ]
+[ Upstream commit 2958d2ee71021b6c44212ec6c2a39cc71d9cd4a9 ]
 
-We do this same logic repeatedly, and it's easy to get the sense of the
-comparison wrong.
+Improve observation of NFSv4 lease expiry.
 
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: J. Bruce Fields <bfields@redhat.com>
+[ cel: adjusted to apply to v5.10.y ]
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 49 +++++++++++++++++++++++++--------------------
- 1 file changed, 27 insertions(+), 22 deletions(-)
+ fs/nfsd/nfs4state.c | 9 ++++++---
+ fs/nfsd/trace.h     | 3 ++-
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
 diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 914f60cee3226..0afc14b3e4593 100644
+index 6f04a84f76c0e..7e8752f4affda 100644
 --- a/fs/nfsd/nfs4state.c
 +++ b/fs/nfsd/nfs4state.c
-@@ -5385,6 +5385,22 @@ static bool clients_still_reclaiming(struct nfsd_net *nn)
- 	return true;
- }
+@@ -2687,6 +2687,8 @@ static void force_expire_client(struct nfs4_client *clp)
+ 	struct nfsd_net *nn = net_generic(clp->net, nfsd_net_id);
+ 	bool already_expired;
  
-+struct laundry_time {
-+	time64_t cutoff;
-+	time64_t new_timeo;
-+};
++	trace_nfsd_clid_admin_expired(&clp->cl_clientid);
 +
-+static bool state_expired(struct laundry_time *lt, time64_t last_refresh)
-+{
-+	time64_t time_remaining;
-+
-+	if (last_refresh < lt->cutoff)
-+		return true;
-+	time_remaining = last_refresh - lt->cutoff;
-+	lt->new_timeo = min(lt->new_timeo, time_remaining);
-+	return false;
-+}
-+
- static time64_t
- nfs4_laundromat(struct nfsd_net *nn)
- {
-@@ -5394,14 +5410,16 @@ nfs4_laundromat(struct nfsd_net *nn)
- 	struct nfs4_ol_stateid *stp;
- 	struct nfsd4_blocked_lock *nbl;
- 	struct list_head *pos, *next, reaplist;
--	time64_t cutoff = ktime_get_boottime_seconds() - nn->nfsd4_lease;
--	time64_t t, new_timeo = nn->nfsd4_lease;
-+	struct laundry_time lt = {
-+		.cutoff = ktime_get_boottime_seconds() - nn->nfsd4_lease,
-+		.new_timeo = nn->nfsd4_lease
-+	};
- 	struct nfs4_cpntf_state *cps;
- 	copy_stateid_t *cps_t;
- 	int i;
- 
- 	if (clients_still_reclaiming(nn)) {
--		new_timeo = 0;
-+		lt.new_timeo = 0;
- 		goto out;
- 	}
- 	nfsd4_end_grace(nn);
-@@ -5411,7 +5429,7 @@ nfs4_laundromat(struct nfsd_net *nn)
- 	idr_for_each_entry(&nn->s2s_cp_stateids, cps_t, i) {
- 		cps = container_of(cps_t, struct nfs4_cpntf_state, cp_stateid);
- 		if (cps->cp_stateid.sc_type == NFS4_COPYNOTIFY_STID &&
--				cps->cpntf_time < cutoff)
-+				state_expired(&lt, cps->cpntf_time))
- 			_free_cpntf_state_locked(nn, cps);
- 	}
- 	spin_unlock(&nn->s2s_cp_lock);
-@@ -5419,11 +5437,8 @@ nfs4_laundromat(struct nfsd_net *nn)
  	spin_lock(&nn->client_lock);
- 	list_for_each_safe(pos, next, &nn->client_lru) {
+ 	clp->cl_time = 0;
+ 	spin_unlock(&nn->client_lock);
+@@ -3233,6 +3235,7 @@ nfsd4_exchange_id(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 		status = mark_client_expired_locked(conf);
+ 		if (status)
+ 			goto out;
++		trace_nfsd_clid_replaced(&conf->cl_clientid);
+ 	}
+ 	new->cl_minorversion = cstate->minorversion;
+ 	new->cl_spo_must_allow.u.words[0] = exid->spo_must_allow[0];
+@@ -3472,6 +3475,7 @@ nfsd4_create_session(struct svc_rqst *rqstp,
+ 				old = NULL;
+ 				goto out_free_conn;
+ 			}
++			trace_nfsd_clid_replaced(&old->cl_clientid);
+ 		}
+ 		move_to_confirmed(unconf);
+ 		conf = unconf;
+@@ -4112,6 +4116,7 @@ nfsd4_setclientid_confirm(struct svc_rqst *rqstp,
+ 				old = NULL;
+ 				goto out;
+ 			}
++			trace_nfsd_clid_replaced(&old->cl_clientid);
+ 		}
+ 		move_to_confirmed(unconf);
+ 		conf = unconf;
+@@ -5550,10 +5555,8 @@ nfs4_laundromat(struct nfsd_net *nn)
  		clp = list_entry(pos, struct nfs4_client, cl_lru);
--		if (clp->cl_time > cutoff) {
--			t = clp->cl_time - cutoff;
--			new_timeo = min(new_timeo, t);
-+		if (!state_expired(&lt, clp->cl_time))
+ 		if (!state_expired(&lt, clp->cl_time))
  			break;
--		}
- 		if (mark_client_expired_locked(clp)) {
- 			trace_nfsd_clid_expired(&clp->cl_clientid);
+-		if (mark_client_expired_locked(clp)) {
+-			trace_nfsd_clid_expired(&clp->cl_clientid);
++		if (mark_client_expired_locked(clp))
  			continue;
-@@ -5440,11 +5455,8 @@ nfs4_laundromat(struct nfsd_net *nn)
- 	spin_lock(&state_lock);
- 	list_for_each_safe(pos, next, &nn->del_recall_lru) {
- 		dp = list_entry (pos, struct nfs4_delegation, dl_recall_lru);
--		if (dp->dl_time > cutoff) {
--			t = dp->dl_time - cutoff;
--			new_timeo = min(new_timeo, t);
-+		if (!state_expired(&lt, dp->dl_time))
- 			break;
 -		}
- 		WARN_ON(!unhash_delegation_locked(dp));
- 		list_add(&dp->dl_recall_lru, &reaplist);
+ 		list_add(&clp->cl_lru, &reaplist);
  	}
-@@ -5460,11 +5472,8 @@ nfs4_laundromat(struct nfsd_net *nn)
- 	while (!list_empty(&nn->close_lru)) {
- 		oo = list_first_entry(&nn->close_lru, struct nfs4_openowner,
- 					oo_close_lru);
--		if (oo->oo_time > cutoff) {
--			t = oo->oo_time - cutoff;
--			new_timeo = min(new_timeo, t);
-+		if (!state_expired(&lt, oo->oo_time))
- 			break;
--		}
- 		list_del_init(&oo->oo_close_lru);
- 		stp = oo->oo_last_closed_stid;
- 		oo->oo_last_closed_stid = NULL;
-@@ -5490,11 +5499,8 @@ nfs4_laundromat(struct nfsd_net *nn)
- 	while (!list_empty(&nn->blocked_locks_lru)) {
- 		nbl = list_first_entry(&nn->blocked_locks_lru,
- 					struct nfsd4_blocked_lock, nbl_lru);
--		if (nbl->nbl_time > cutoff) {
--			t = nbl->nbl_time - cutoff;
--			new_timeo = min(new_timeo, t);
-+		if (!state_expired(&lt, nbl->nbl_time))
- 			break;
--		}
- 		list_move(&nbl->nbl_lru, &reaplist);
- 		list_del_init(&nbl->nbl_list);
- 	}
-@@ -5507,8 +5513,7 @@ nfs4_laundromat(struct nfsd_net *nn)
- 		free_blocked_lock(nbl);
- 	}
- out:
--	new_timeo = max_t(time64_t, new_timeo, NFSD_LAUNDROMAT_MINTIMEOUT);
--	return new_timeo;
-+	return max_t(time64_t, lt.new_timeo, NFSD_LAUNDROMAT_MINTIMEOUT);
- }
- 
- static struct workqueue_struct *laundry_wq;
+ 	spin_unlock(&nn->client_lock);
+diff --git a/fs/nfsd/trace.h b/fs/nfsd/trace.h
+index 3aca6dcba90a5..3271d925abf2e 100644
+--- a/fs/nfsd/trace.h
++++ b/fs/nfsd/trace.h
+@@ -514,7 +514,8 @@ DEFINE_EVENT(nfsd_clientid_class, nfsd_clid_##name, \
+ DEFINE_CLIENTID_EVENT(reclaim_complete);
+ DEFINE_CLIENTID_EVENT(confirmed);
+ DEFINE_CLIENTID_EVENT(destroyed);
+-DEFINE_CLIENTID_EVENT(expired);
++DEFINE_CLIENTID_EVENT(admin_expired);
++DEFINE_CLIENTID_EVENT(replaced);
+ DEFINE_CLIENTID_EVENT(purged);
+ DEFINE_CLIENTID_EVENT(renew);
+ DEFINE_CLIENTID_EVENT(stale);
 -- 
 2.43.0
 
