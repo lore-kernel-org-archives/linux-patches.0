@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E4E132129;
-	Wed, 19 Jun 2024 13:07:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5624D145334;
+	Wed, 19 Jun 2024 13:07:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802444; cv=none; b=LO8UuqwicCbIPsHzWbZkbM8h9YLI1GnSx/4ChqNukvSQP8S4WhDtaHNLi3SEfwTgm/S5e1+UcJDEUNfQv44Z1kCBjIRnKZZwJNz13smCh/hSMi0J0hGYbTqHEdXlWk0cWuzgbW5OSyWMXvv6bNbF61WFQmEEWDVn0CRyZbL4TLY=
+	t=1718802447; cv=none; b=Tt8DPjxskVPcF33cCsbKorOO3u9xweNNm3pW4yWuKGPXbv/Zumoaj1OXeuii9067CyMuV+L6kJMCR2h0FsM9Lcz3MT3MzxElOkmU1EyMCMeAwizBLtl8XzsjMeQgrUm97dLuWUuYQUPzZu0GGYG714Qnv1bm8DSS9Xf+UYqBg4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802444; c=relaxed/simple;
-	bh=YD4oFD3ayz8qfMKnX6GjCuAUWbnqIqMku8qsTiUkkOM=;
+	s=arc-20240116; t=1718802447; c=relaxed/simple;
+	bh=w68VTUIHUVUlIWgr/8O2CTFty8vrC0Zgg+1Sl06Hei0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JsBJCz5OJV745IvgRylqaGI2fmoHrndZSUIQKLBVTB2H3R/m0mpKlZL+nqd411mWF12T1W27u15IJiFI0ybG+2cXTKSbmI0Q8AfeKAncOqkR1HCa0kTCaaO6bRS3mKKw79zZYvdzJruu3ZdPw7e6Wj+RsRhiqeGvFCLPknQEAec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bfucVs3W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i47d8RdLV4VwkXjJ412ymqeP8nPsPF+mnWtQEx89Odj8zeAbNCk1eKChZBT7oBzcSqecpPjIbOTq2FlGfMkHyR+tedKXM8g5JVbloPfoy+dJCY92IN1uTC2AjCyjQN/iA+C66CIEj8AySOcQ2DdUWzbsltlgGCXL89Siiu0AI/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C4cyzr/p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bfucVs3W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF38FC2BBFC;
-	Wed, 19 Jun 2024 13:07:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C4cyzr/p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C846BC2BBFC;
+	Wed, 19 Jun 2024 13:07:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802444;
-	bh=YD4oFD3ayz8qfMKnX6GjCuAUWbnqIqMku8qsTiUkkOM=;
+	s=korg; t=1718802447;
+	bh=w68VTUIHUVUlIWgr/8O2CTFty8vrC0Zgg+1Sl06Hei0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bfucVs3Wn8ombCZK28pt7GEGdZvvh4NkdTeJwqz0dnchh86fra2HaLucRT5wAAM0Q
-	 EBkbR3UeS/yPsnEyHW6lLZF8nM35OA/ihsfeIIcnkeeWp4ZkYLJF1cv2Pk+YWekqrm
-	 Pggg/1IqlY0Upadn72dmd2OJQ1OHY9m8PDNQp2oI=
+	b=C4cyzr/pdol4b5YDxpeiRELqlAm1RIqcQcg2EV91OKw0mHJUR7xZVF/9pkvhVQ68f
+	 LX9LuW8WEQXv9rBipOKXyrH0qsGHl8CvQZBnpLcE+HBSHaiu/eUYXs5zQ2DdJSK/r4
+	 pEf8mLJjTwG7uIo5D7noM9XuWEXM5DGnDQ84/TwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	"T.J. Mercier" <tjmercier@google.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
-Subject: [PATCH 6.6 199/267] dma-buf: handle testing kthreads creation failure
-Date: Wed, 19 Jun 2024 14:55:50 +0200
-Message-ID: <20240619125613.971810185@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Hagar Gamal Halim Hemdan <hagarhem@amazon.com>
+Subject: [PATCH 6.6 200/267] vmci: prevent speculation leaks by sanitizing event in event_deliver()
+Date: Wed, 19 Jun 2024 14:55:51 +0200
+Message-ID: <20240619125614.009621506@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -45,48 +44,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Hagar Gamal Halim Hemdan <hagarhem@amazon.com>
 
-commit 6cb05d89fd62a76a9b74bd16211fb0930e89fea8 upstream.
+commit 8003f00d895310d409b2bf9ef907c56b42a4e0f4 upstream.
 
-kthread creation may possibly fail inside race_signal_callback(). In
-such a case stop the already started threads, put the already taken
-references to them and return with error code.
+Coverity spotted that event_msg is controlled by user-space,
+event_msg->event_data.event is passed to event_deliver() and used
+as an index without sanitization.
 
-Found by Linux Verification Center (linuxtesting.org).
+This change ensures that the event index is sanitized to mitigate any
+possibility of speculative information leaks.
 
-Fixes: 2989f6451084 ("dma-buf: Add selftests for dma-fence")
-Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: T.J. Mercier <tjmercier@google.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240522181308.841686-1-pchelkin@ispras.ru
-Signed-off-by: Christian König <christian.koenig@amd.com>
+This bug was discovered and resolved using Coverity Static Analysis
+Security Testing (SAST) by Synopsys, Inc.
+
+Only compile tested, no access to HW.
+
+Fixes: 1d990201f9bb ("VMCI: event handling implementation.")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Hagar Gamal Halim Hemdan <hagarhem@amazon.com>
+Link: https://lore.kernel.org/stable/20231127193533.46174-1-hagarhem%40amazon.com
+Link: https://lore.kernel.org/r/20240430085916.4753-1-hagarhem@amazon.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma-buf/st-dma-fence.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/misc/vmw_vmci/vmci_event.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/dma-buf/st-dma-fence.c
-+++ b/drivers/dma-buf/st-dma-fence.c
-@@ -540,6 +540,12 @@ static int race_signal_callback(void *ar
- 			t[i].before = pass;
- 			t[i].task = kthread_run(thread_signal_callback, &t[i],
- 						"dma-fence:%d", i);
-+			if (IS_ERR(t[i].task)) {
-+				ret = PTR_ERR(t[i].task);
-+				while (--i >= 0)
-+					kthread_stop_put(t[i].task);
-+				return ret;
-+			}
- 			get_task_struct(t[i].task);
- 		}
+--- a/drivers/misc/vmw_vmci/vmci_event.c
++++ b/drivers/misc/vmw_vmci/vmci_event.c
+@@ -9,6 +9,7 @@
+ #include <linux/vmw_vmci_api.h>
+ #include <linux/list.h>
+ #include <linux/module.h>
++#include <linux/nospec.h>
+ #include <linux/sched.h>
+ #include <linux/slab.h>
+ #include <linux/rculist.h>
+@@ -86,9 +87,12 @@ static void event_deliver(struct vmci_ev
+ {
+ 	struct vmci_subscription *cur;
+ 	struct list_head *subscriber_list;
++	u32 sanitized_event, max_vmci_event;
  
+ 	rcu_read_lock();
+-	subscriber_list = &subscriber_array[event_msg->event_data.event];
++	max_vmci_event = ARRAY_SIZE(subscriber_array);
++	sanitized_event = array_index_nospec(event_msg->event_data.event, max_vmci_event);
++	subscriber_list = &subscriber_array[sanitized_event];
+ 	list_for_each_entry_rcu(cur, subscriber_list, node) {
+ 		cur->callback(cur->id, &event_msg->event_data,
+ 			      cur->callback_data);
 
 
