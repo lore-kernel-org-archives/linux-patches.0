@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE721E492;
-	Wed, 19 Jun 2024 13:32:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6445F13F428;
+	Wed, 19 Jun 2024 13:32:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803953; cv=none; b=IOHKv26sWVEaAdft8MTY70WA1G0fEOBwOb4UlV/bs6yzK1m4Gcq1dKT8FjnzG5vMB7+dTMUybwK/edtUYWmwHPm+P/h9f+eJdQ2H/PM4ilYFfZ8ba5rujtu9HdN6OKxdsv0LBaIKFMoNVBFb39qgOcYCHtUo/jsxG+JeycEsW7Y=
+	t=1718803956; cv=none; b=gYtp/+gCbO4zsfCb1eXc8PfdQgBauEYyZLIynPwclRuKJVzlOSX6dhOJDY9sd8mE1KEj+v69az2cNrlpqCEwKy+/NUOm/rVQtRoD8YjloHdxi4HWkz+wjgRoPB4ATs5N07HnpZEvyHJK1dwFKZ6s0wqXmf9G31fMJfY3C9SRUAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803953; c=relaxed/simple;
-	bh=flea9uJd4k5yckdiigFWkkwbDjvZUMJ//0B5WcWmdbM=;
+	s=arc-20240116; t=1718803956; c=relaxed/simple;
+	bh=DzI7hmbX7Km9ZviNFRDmJsA3/bZrmb4miG2w0wzTBEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dMwX9zyvdc4MOv2y8q/dM/I2B4Ld/Gu31X/19gfjZK/wfFOrbaQwCIfTDqfn8tF6uG4DM5A95HA9x8roRAezivIjo+82WkjYXJssizIrbT+EuSofZzKtdPztC7MzZ7ued5Xx/3ooZoCFmh0TeKkow+E7pBOvK5zuV9GJ1miNUwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l+EX/90Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O+CAe2CM5De8ckhGJxv1pPlBhfs9Ztosph/g8+FCPEwbHL0bJgqgrnp3Qf080g1275nqS9IDdiKC14GA6DdnadzgdIj0wmMCqRfdGD4Lpr97d9+Mbt6Rkt9CaAW4g1IioNHOr9AUDDDSgnhs2hJ3C5hpwI7BDo5Q8JHNoqjrVUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iUrIfqki; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l+EX/90Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F5AC2BBFC;
-	Wed, 19 Jun 2024 13:32:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iUrIfqki"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DED3EC2BBFC;
+	Wed, 19 Jun 2024 13:32:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803953;
-	bh=flea9uJd4k5yckdiigFWkkwbDjvZUMJ//0B5WcWmdbM=;
+	s=korg; t=1718803956;
+	bh=DzI7hmbX7Km9ZviNFRDmJsA3/bZrmb4miG2w0wzTBEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l+EX/90QeQ/FfocVqLGtHlJ29e53ghlM33ouspqQwuLrvD+Mq2zWJIlz1lfNqOaPM
-	 kXXm9b8PSbPyRoNdufvTeO7ZmvBHvCAE05bpiKYK41gq++gvcg92y97tg5cvbZ4dHI
-	 xY7L1LulzI/ZVYucNgJq4MhAJp5qBOMpviRdoHhc=
+	b=iUrIfqki+04bA7IPwlV9YajJhlpHKoJxzMhuW0YL11iqJb7qJZvn0y4Uyls428K6+
+	 H8cVWg+YQxRQUeKUKjmIKhP9cq5i+bwp6QfOMKLyRkjlE9ougEE13ylWmVa4WFGTP4
+	 4aYUQWid9tg/UgLs9hzjgeAAxxcvzOc7MZUeGOu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongzhi Liu <hyperlyzcs@gmail.com>
-Subject: [PATCH 6.1 159/217] misc: microchip: pci1xxxx: fix double free in the error handling of gp_aux_bus_probe()
-Date: Wed, 19 Jun 2024 14:56:42 +0200
-Message-ID: <20240619125602.826887719@linuxfoundation.org>
+	Ben Segall <bsegall@google.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.1 160/217] x86/boot: Dont add the EFI stub to targets, again
+Date: Wed, 19 Jun 2024 14:56:43 +0200
+Message-ID: <20240619125602.864935006@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -49,51 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongzhi Liu <hyperlyzcs@gmail.com>
+From: Benjamin Segall <bsegall@google.com>
 
-commit 086c6cbcc563c81d55257f9b27e14faf1d0963d3 upstream.
+commit b2747f108b8034271fd5289bd8f3a7003e0775a3 upstream.
 
-When auxiliary_device_add() returns error and then calls
-auxiliary_device_uninit(), callback function
-gp_auxiliary_device_release() calls ida_free() and
-kfree(aux_device_wrapper) to free memory. We should't
-call them again in the error handling path.
+This is a re-commit of
 
-Fix this by skipping the redundant cleanup functions.
+  da05b143a308 ("x86/boot: Don't add the EFI stub to targets")
 
-Fixes: 393fc2f5948f ("misc: microchip: pci1xxxx: load auxiliary bus driver for the PIO function in the multi-function endpoint of pci1xxxx device.")
-Signed-off-by: Yongzhi Liu <hyperlyzcs@gmail.com>
-Link: https://lore.kernel.org/r/20240523121434.21855-3-hyperlyzcs@gmail.com
+after the tagged patch incorrectly reverted it.
+
+vmlinux-objs-y is added to targets, with an assumption that they are all
+relative to $(obj); adding a $(objtree)/drivers/...  path causes the
+build to incorrectly create a useless
+arch/x86/boot/compressed/drivers/...  directory tree.
+
+Fix this just by using a different make variable for the EFI stub.
+
+Fixes: cb8bda8ad443 ("x86/boot/compressed: Rename efi_thunk_64.S to efi-mixed.S")
+Signed-off-by: Ben Segall <bsegall@google.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Cc: stable@vger.kernel.org # v6.1+
+Link: https://lore.kernel.org/r/xm267ceukksz.fsf@bsegall.svl.corp.google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gp.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/boot/compressed/Makefile |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gp.c
-+++ b/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gp.c
-@@ -111,6 +111,7 @@ static int gp_aux_bus_probe(struct pci_d
+--- a/arch/x86/boot/compressed/Makefile
++++ b/arch/x86/boot/compressed/Makefile
+@@ -115,9 +115,9 @@ vmlinux-objs-$(CONFIG_INTEL_TDX_GUEST) +
  
- err_aux_dev_add_1:
- 	auxiliary_device_uninit(&aux_bus->aux_device_wrapper[1]->aux_dev);
-+	goto err_aux_dev_add_0;
+ vmlinux-objs-$(CONFIG_EFI) += $(obj)/efi.o
+ vmlinux-objs-$(CONFIG_EFI_MIXED) += $(obj)/efi_mixed.o
+-vmlinux-objs-$(CONFIG_EFI_STUB) += $(objtree)/drivers/firmware/efi/libstub/lib.a
++vmlinux-libs-$(CONFIG_EFI_STUB) += $(objtree)/drivers/firmware/efi/libstub/lib.a
  
- err_aux_dev_init_1:
- 	ida_free(&gp_client_ida, aux_bus->aux_device_wrapper[1]->aux_dev.id);
-@@ -120,6 +121,7 @@ err_ida_alloc_1:
+-$(obj)/vmlinux: $(vmlinux-objs-y) FORCE
++$(obj)/vmlinux: $(vmlinux-objs-y) $(vmlinux-libs-y) FORCE
+ 	$(call if_changed,ld)
  
- err_aux_dev_add_0:
- 	auxiliary_device_uninit(&aux_bus->aux_device_wrapper[0]->aux_dev);
-+	goto err_ret;
- 
- err_aux_dev_init_0:
- 	ida_free(&gp_client_ida, aux_bus->aux_device_wrapper[0]->aux_dev.id);
-@@ -127,6 +129,7 @@ err_aux_dev_init_0:
- err_ida_alloc_0:
- 	kfree(aux_bus->aux_device_wrapper[0]);
- 
-+err_ret:
- 	return retval;
- }
- 
+ OBJCOPYFLAGS_vmlinux.bin :=  -R .comment -S
 
 
