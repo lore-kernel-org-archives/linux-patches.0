@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F704D9EA;
-	Wed, 19 Jun 2024 13:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 891B84D9EA;
+	Wed, 19 Jun 2024 13:26:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803574; cv=none; b=J229PZucA4rTCMcoTh4ODHT68Vu+7QsHQPl1GcQe8qZMgoIng/FNgEm9QAxtWp1b3yOfl1GMxNqjsq/Dl2qC6tBNd3Z2wRmGuk43uqlP0pydie/ZwNKOgUgg5GaePx1/mFgpWGAOprXiJDZh2ccLULFWzbQ3HFoo1BF1p9UZax0=
+	t=1718803577; cv=none; b=Wljh4kZrejbEDB00lUi8PBVVH5pUkQ6iyVSgIgiiPu+qk+aWdxfXa+g8YGXKb6llxuFKzGh4vJhkfCtVyzO+wz44op+CM0UPOy4PygkC2UjTRioqfWsYOWBy3pfpvejETaq3awEcky1k93cXLtesvcGNyVK2IosASKoHvqbOCfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803574; c=relaxed/simple;
-	bh=HuOOjMBVNS2olCfAJy2xHI071pDhSD9W6/QQUowbjx8=;
+	s=arc-20240116; t=1718803577; c=relaxed/simple;
+	bh=p0h2VXxoKthXlXYlMCvPg5xrLQIs6X+CL47HdgZ66y4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Smwn0QVxDgePZLGCuvRaGNhkhA411Tkyyoda+Wws42HCXsBdH5bvzjPbDSJ3c1M+y8b+XL2ajCqthfgSw8+fkKOvZEDkBN9CcujGuHeqs1ncd7t+17Z1dL4SLgygPWGf/pvq1jdHdmAn+Y096tbYW79ol59shxEjKCx8UkW5Egk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=USyl1RRi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HKFD2cRtxoPUDdSauMjbYnx1yTZ94pNddRHfbeTLrslbnYK1ggOJmdAi3LWwXF+M5jaO0Q1X8s2Ei54p8LbLHfzUHZpqHN5GHfuqhyj7j07w2b7MzWi/6ozm+/YrmPFSKSFdEdiKbRABATVAM+JX/xFagMo9j7XXlc2jCeV5Dxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HxIRuLeX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="USyl1RRi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2206FC2BBFC;
-	Wed, 19 Jun 2024 13:26:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HxIRuLeX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1031FC2BBFC;
+	Wed, 19 Jun 2024 13:26:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803574;
-	bh=HuOOjMBVNS2olCfAJy2xHI071pDhSD9W6/QQUowbjx8=;
+	s=korg; t=1718803577;
+	bh=p0h2VXxoKthXlXYlMCvPg5xrLQIs6X+CL47HdgZ66y4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=USyl1RRidz4rJJL/rs2zY3W+epebZHtNp9mv63REVKd8JmhIjeIEmYc6DFK+GXkiC
-	 Ty+nDP5G3IFjIkUjO//d0mFxiyER42+DmZ6aSjji6mWDWFv7dKLYCPaLMJ0Bnz5z8m
-	 oUuRDvm8nPP1kXe8zUx3SAI1299Z2rQBLjExgs0s=
+	b=HxIRuLeXONb0JEJtsmpTtwGzrBx177q5ZAN2zl3yADW92XYJhmHuBOVYjFSMmImIH
+	 MJyHH4CSiPKxZoPbDflm0x3pjxDi6qW+P7uiKNwdS5gPYQmOyEBihoI9UPdSYVLVUR
+	 hhkWuHUQKvKhHZaA6J0npuGOgHsEtP63iBQmNDj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Greenwalt <paul.greenwalt@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Michal Wilczynski <michal.wilczynski@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 030/217] ice: fix iteration of TLVs in Preserved Fields Area
-Date: Wed, 19 Jun 2024 14:54:33 +0200
-Message-ID: <20240619125557.812491417@linuxfoundation.org>
+Subject: [PATCH 6.1 031/217] ice: Introduce new parameters in ice_sched_node
+Date: Wed, 19 Jun 2024 14:54:34 +0200
+Message-ID: <20240619125557.851642872@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -54,122 +51,287 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Keller <jacob.e.keller@intel.com>
+From: Michal Wilczynski <michal.wilczynski@intel.com>
 
-[ Upstream commit 03e4a092be8ce3de7c1baa7ae14e68b64e3ea644 ]
+[ Upstream commit 16dfa49406bc5e1f4cbb115027cbd719d7e6c930 ]
 
-The ice_get_pfa_module_tlv() function iterates over the Type-Length-Value
-structures in the Preserved Fields Area (PFA) of the NVM. This is used by
-the driver to access data such as the Part Board Assembly identifier.
+To support new devlink-rate API ice_sched_node struct needs to store
+a number of additional parameters. This includes tx_max, tx_share,
+tx_weight, and tx_priority.
 
-The function uses simple logic to iterate over the PFA. First, the pointer
-to the PFA in the NVM is read. Then the total length of the PFA is read
-from the first word.
+Add new fields to ice_sched_node struct. Add new functions to configure
+the hardware with new parameters. Introduce new xarray to identify
+nodes uniquely.
 
-A pointer to the first TLV is initialized, and a simple loop iterates over
-each TLV. The pointer is moved forward through the NVM until it exceeds the
-PFA area.
-
-The logic seems sound, but it is missing a key detail. The Preserved
-Fields Area length includes one additional final word. This is documented
-in the device data sheet as a dummy word which contains 0xFFFF. All NVMs
-have this extra word.
-
-If the driver tries to scan for a TLV that is not in the PFA, it will read
-past the size of the PFA. It reads and interprets the last dummy word of
-the PFA as a TLV with type 0xFFFF. It then reads the word following the PFA
-as a length.
-
-The PFA resides within the Shadow RAM portion of the NVM, which is
-relatively small. All of its offsets are within a 16-bit size. The PFA
-pointer and TLV pointer are stored by the driver as 16-bit values.
-
-In almost all cases, the word following the PFA will be such that
-interpreting it as a length will result in 16-bit arithmetic overflow. Once
-overflowed, the new next_tlv value is now below the maximum offset of the
-PFA. Thus, the driver will continue to iterate the data as TLVs. In the
-worst case, the driver hits on a sequence of reads which loop back to
-reading the same offsets in an endless loop.
-
-To fix this, we need to correct the loop iteration check to account for
-this extra word at the end of the PFA. This alone is sufficient to resolve
-the known cases of this issue in the field. However, it is plausible that
-an NVM could be misconfigured or have corrupt data which results in the
-same kind of overflow. Protect against this by using check_add_overflow
-when calculating both the maximum offset of the TLVs, and when calculating
-the next_tlv offset at the end of each loop iteration. This ensures that
-the driver will not get stuck in an infinite loop when scanning the PFA.
-
-Fixes: e961b679fb0b ("ice: add board identifier info to devlink .info_get")
-Co-developed-by: Paul Greenwalt <paul.greenwalt@intel.com>
-Signed-off-by: Paul Greenwalt <paul.greenwalt@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://lore.kernel.org/r/20240603-net-2024-05-30-intel-net-fixes-v2-1-e3563aa89b0c@intel.com
+Signed-off-by: Michal Wilczynski <michal.wilczynski@intel.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: adbf5a42341f ("ice: remove af_xdp_zc_qps bitmap")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_nvm.c | 28 ++++++++++++++++++------
- 1 file changed, 21 insertions(+), 7 deletions(-)
+ .../net/ethernet/intel/ice/ice_adminq_cmd.h   |  4 +-
+ drivers/net/ethernet/intel/ice/ice_common.c   |  3 +
+ drivers/net/ethernet/intel/ice/ice_sched.c    | 81 +++++++++++++++++--
+ drivers/net/ethernet/intel/ice/ice_sched.h    | 27 +++++++
+ drivers/net/ethernet/intel/ice/ice_type.h     |  8 ++
+ 5 files changed, 116 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_nvm.c b/drivers/net/ethernet/intel/ice/ice_nvm.c
-index c262dc886e6a6..07ef6b1f00884 100644
---- a/drivers/net/ethernet/intel/ice/ice_nvm.c
-+++ b/drivers/net/ethernet/intel/ice/ice_nvm.c
-@@ -441,8 +441,7 @@ int
- ice_get_pfa_module_tlv(struct ice_hw *hw, u16 *module_tlv, u16 *module_tlv_len,
- 		       u16 module_type)
- {
--	u16 pfa_len, pfa_ptr;
--	u16 next_tlv;
-+	u16 pfa_len, pfa_ptr, next_tlv, max_tlv;
- 	int status;
+diff --git a/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h b/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
+index fe48164dce1e1..4d53c40a9de27 100644
+--- a/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
++++ b/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
+@@ -848,9 +848,9 @@ struct ice_aqc_txsched_elem {
+ 	u8 generic;
+ #define ICE_AQC_ELEM_GENERIC_MODE_M		0x1
+ #define ICE_AQC_ELEM_GENERIC_PRIO_S		0x1
+-#define ICE_AQC_ELEM_GENERIC_PRIO_M	(0x7 << ICE_AQC_ELEM_GENERIC_PRIO_S)
++#define ICE_AQC_ELEM_GENERIC_PRIO_M	        GENMASK(3, 1)
+ #define ICE_AQC_ELEM_GENERIC_SP_S		0x4
+-#define ICE_AQC_ELEM_GENERIC_SP_M	(0x1 << ICE_AQC_ELEM_GENERIC_SP_S)
++#define ICE_AQC_ELEM_GENERIC_SP_M	        GENMASK(4, 4)
+ #define ICE_AQC_ELEM_GENERIC_ADJUST_VAL_S	0x5
+ #define ICE_AQC_ELEM_GENERIC_ADJUST_VAL_M	\
+ 	(0x3 << ICE_AQC_ELEM_GENERIC_ADJUST_VAL_S)
+diff --git a/drivers/net/ethernet/intel/ice/ice_common.c b/drivers/net/ethernet/intel/ice/ice_common.c
+index 039342a0ed15a..e2e661010176c 100644
+--- a/drivers/net/ethernet/intel/ice/ice_common.c
++++ b/drivers/net/ethernet/intel/ice/ice_common.c
+@@ -1105,6 +1105,9 @@ int ice_init_hw(struct ice_hw *hw)
  
- 	status = ice_read_sr_word(hw, ICE_SR_PFA_PTR, &pfa_ptr);
-@@ -455,11 +454,23 @@ ice_get_pfa_module_tlv(struct ice_hw *hw, u16 *module_tlv, u16 *module_tlv_len,
- 		ice_debug(hw, ICE_DBG_INIT, "Failed to read PFA length.\n");
- 		return status;
- 	}
-+
-+	/* The Preserved Fields Area contains a sequence of Type-Length-Value
-+	 * structures which define its contents. The PFA length includes all
-+	 * of the TLVs, plus the initial length word itself, *and* one final
-+	 * word at the end after all of the TLVs.
-+	 */
-+	if (check_add_overflow(pfa_ptr, pfa_len - 1, &max_tlv)) {
-+		dev_warn(ice_hw_to_dev(hw), "PFA starts at offset %u. PFA length of %u caused 16-bit arithmetic overflow.\n",
-+			 pfa_ptr, pfa_len);
-+		return -EINVAL;
-+	}
-+
- 	/* Starting with first TLV after PFA length, iterate through the list
- 	 * of TLVs to find the requested one.
- 	 */
- 	next_tlv = pfa_ptr + 1;
--	while (next_tlv < pfa_ptr + pfa_len) {
-+	while (next_tlv < max_tlv) {
- 		u16 tlv_sub_module_type;
- 		u16 tlv_len;
+ 	hw->evb_veb = true;
  
-@@ -483,10 +494,13 @@ ice_get_pfa_module_tlv(struct ice_hw *hw, u16 *module_tlv, u16 *module_tlv_len,
- 			}
- 			return -EINVAL;
- 		}
--		/* Check next TLV, i.e. current TLV pointer + length + 2 words
--		 * (for current TLV's type and length)
--		 */
--		next_tlv = next_tlv + tlv_len + 2;
++	/* init xarray for identifying scheduling nodes uniquely */
++	xa_init_flags(&hw->port_info->sched_node_ids, XA_FLAGS_ALLOC);
 +
-+		if (check_add_overflow(next_tlv, 2, &next_tlv) ||
-+		    check_add_overflow(next_tlv, tlv_len, &next_tlv)) {
-+			dev_warn(ice_hw_to_dev(hw), "TLV of type %u and length 0x%04x caused 16-bit arithmetic overflow. The PFA starts at 0x%04x and has length of 0x%04x\n",
-+				 tlv_sub_module_type, tlv_len, pfa_ptr, pfa_len);
-+			return -EINVAL;
+ 	/* Query the allocated resources for Tx scheduler */
+ 	status = ice_sched_query_res_alloc(hw);
+ 	if (status) {
+diff --git a/drivers/net/ethernet/intel/ice/ice_sched.c b/drivers/net/ethernet/intel/ice/ice_sched.c
+index 2c62c1763ee0d..88e74835d0274 100644
+--- a/drivers/net/ethernet/intel/ice/ice_sched.c
++++ b/drivers/net/ethernet/intel/ice/ice_sched.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0
+ /* Copyright (c) 2018, Intel Corporation. */
+ 
++#include <net/devlink.h>
+ #include "ice_sched.h"
+ 
+ /**
+@@ -355,6 +356,9 @@ void ice_free_sched_node(struct ice_port_info *pi, struct ice_sched_node *node)
+ 	/* leaf nodes have no children */
+ 	if (node->children)
+ 		devm_kfree(ice_hw_to_dev(hw), node->children);
++
++	kfree(node->name);
++	xa_erase(&pi->sched_node_ids, node->id);
+ 	devm_kfree(ice_hw_to_dev(hw), node);
+ }
+ 
+@@ -875,7 +879,7 @@ void ice_sched_cleanup_all(struct ice_hw *hw)
+  *
+  * This function add nodes to HW as well as to SW DB for a given layer
+  */
+-static int
++int
+ ice_sched_add_elems(struct ice_port_info *pi, struct ice_sched_node *tc_node,
+ 		    struct ice_sched_node *parent, u8 layer, u16 num_nodes,
+ 		    u16 *num_nodes_added, u32 *first_node_teid)
+@@ -940,6 +944,22 @@ ice_sched_add_elems(struct ice_port_info *pi, struct ice_sched_node *tc_node,
+ 
+ 		new_node->sibling = NULL;
+ 		new_node->tc_num = tc_node->tc_num;
++		new_node->tx_weight = ICE_SCHED_DFLT_BW_WT;
++		new_node->tx_share = ICE_SCHED_DFLT_BW;
++		new_node->tx_max = ICE_SCHED_DFLT_BW;
++		new_node->name = kzalloc(SCHED_NODE_NAME_MAX_LEN, GFP_KERNEL);
++		if (!new_node->name)
++			return -ENOMEM;
++
++		status = xa_alloc(&pi->sched_node_ids, &new_node->id, NULL, XA_LIMIT(0, UINT_MAX),
++				  GFP_KERNEL);
++		if (status) {
++			ice_debug(hw, ICE_DBG_SCHED, "xa_alloc failed for sched node status =%d\n",
++				  status);
++			break;
 +		}
- 	}
- 	/* Module does not exist */
- 	return -ENOENT;
++
++		snprintf(new_node->name, SCHED_NODE_NAME_MAX_LEN, "node_%u", new_node->id);
+ 
+ 		/* add it to previous node sibling pointer */
+ 		/* Note: siblings are not linked across branches */
+@@ -2154,7 +2174,7 @@ ice_sched_get_free_vsi_parent(struct ice_hw *hw, struct ice_sched_node *node,
+  * This function removes the child from the old parent and adds it to a new
+  * parent
+  */
+-static void
++void
+ ice_sched_update_parent(struct ice_sched_node *new_parent,
+ 			struct ice_sched_node *node)
+ {
+@@ -2188,7 +2208,7 @@ ice_sched_update_parent(struct ice_sched_node *new_parent,
+  *
+  * This function move the child nodes to a given parent.
+  */
+-static int
++int
+ ice_sched_move_nodes(struct ice_port_info *pi, struct ice_sched_node *parent,
+ 		     u16 num_items, u32 *list)
+ {
+@@ -3562,7 +3582,7 @@ ice_sched_set_eir_srl_excl(struct ice_port_info *pi,
+  * node's RL profile ID of type CIR, EIR, or SRL, and removes old profile
+  * ID from local database. The caller needs to hold scheduler lock.
+  */
+-static int
++int
+ ice_sched_set_node_bw(struct ice_port_info *pi, struct ice_sched_node *node,
+ 		      enum ice_rl_type rl_type, u32 bw, u8 layer_num)
+ {
+@@ -3598,6 +3618,57 @@ ice_sched_set_node_bw(struct ice_port_info *pi, struct ice_sched_node *node,
+ 				       ICE_AQC_RL_PROFILE_TYPE_M, old_id);
+ }
+ 
++/**
++ * ice_sched_set_node_priority - set node's priority
++ * @pi: port information structure
++ * @node: tree node
++ * @priority: number 0-7 representing priority among siblings
++ *
++ * This function sets priority of a node among it's siblings.
++ */
++int
++ice_sched_set_node_priority(struct ice_port_info *pi, struct ice_sched_node *node,
++			    u16 priority)
++{
++	struct ice_aqc_txsched_elem_data buf;
++	struct ice_aqc_txsched_elem *data;
++
++	buf = node->info;
++	data = &buf.data;
++
++	data->valid_sections |= ICE_AQC_ELEM_VALID_GENERIC;
++	data->generic |= FIELD_PREP(ICE_AQC_ELEM_GENERIC_PRIO_M, priority);
++
++	return ice_sched_update_elem(pi->hw, node, &buf);
++}
++
++/**
++ * ice_sched_set_node_weight - set node's weight
++ * @pi: port information structure
++ * @node: tree node
++ * @weight: number 1-200 representing weight for WFQ
++ *
++ * This function sets weight of the node for WFQ algorithm.
++ */
++int
++ice_sched_set_node_weight(struct ice_port_info *pi, struct ice_sched_node *node, u16 weight)
++{
++	struct ice_aqc_txsched_elem_data buf;
++	struct ice_aqc_txsched_elem *data;
++
++	buf = node->info;
++	data = &buf.data;
++
++	data->valid_sections = ICE_AQC_ELEM_VALID_CIR | ICE_AQC_ELEM_VALID_EIR |
++			       ICE_AQC_ELEM_VALID_GENERIC;
++	data->cir_bw.bw_alloc = cpu_to_le16(weight);
++	data->eir_bw.bw_alloc = cpu_to_le16(weight);
++
++	data->generic |= FIELD_PREP(ICE_AQC_ELEM_GENERIC_SP_M, 0x0);
++
++	return ice_sched_update_elem(pi->hw, node, &buf);
++}
++
+ /**
+  * ice_sched_set_node_bw_lmt - set node's BW limit
+  * @pi: port information structure
+@@ -3608,7 +3679,7 @@ ice_sched_set_node_bw(struct ice_port_info *pi, struct ice_sched_node *node,
+  * It updates node's BW limit parameters like BW RL profile ID of type CIR,
+  * EIR, or SRL. The caller needs to hold scheduler lock.
+  */
+-static int
++int
+ ice_sched_set_node_bw_lmt(struct ice_port_info *pi, struct ice_sched_node *node,
+ 			  enum ice_rl_type rl_type, u32 bw)
+ {
+diff --git a/drivers/net/ethernet/intel/ice/ice_sched.h b/drivers/net/ethernet/intel/ice/ice_sched.h
+index 4f91577fed56b..920db43ed4fa6 100644
+--- a/drivers/net/ethernet/intel/ice/ice_sched.h
++++ b/drivers/net/ethernet/intel/ice/ice_sched.h
+@@ -6,6 +6,8 @@
+ 
+ #include "ice_common.h"
+ 
++#define SCHED_NODE_NAME_MAX_LEN 32
++
+ #define ICE_QGRP_LAYER_OFFSET	2
+ #define ICE_VSI_LAYER_OFFSET	4
+ #define ICE_AGG_LAYER_OFFSET	6
+@@ -69,6 +71,28 @@ int
+ ice_aq_query_sched_elems(struct ice_hw *hw, u16 elems_req,
+ 			 struct ice_aqc_txsched_elem_data *buf, u16 buf_size,
+ 			 u16 *elems_ret, struct ice_sq_cd *cd);
++
++int
++ice_sched_set_node_bw_lmt(struct ice_port_info *pi, struct ice_sched_node *node,
++			  enum ice_rl_type rl_type, u32 bw);
++
++int
++ice_sched_set_node_bw(struct ice_port_info *pi, struct ice_sched_node *node,
++		      enum ice_rl_type rl_type, u32 bw, u8 layer_num);
++
++int
++ice_sched_add_elems(struct ice_port_info *pi, struct ice_sched_node *tc_node,
++		    struct ice_sched_node *parent, u8 layer, u16 num_nodes,
++		    u16 *num_nodes_added, u32 *first_node_teid);
++
++int
++ice_sched_move_nodes(struct ice_port_info *pi, struct ice_sched_node *parent,
++		     u16 num_items, u32 *list);
++
++int ice_sched_set_node_priority(struct ice_port_info *pi, struct ice_sched_node *node,
++				u16 priority);
++int ice_sched_set_node_weight(struct ice_port_info *pi, struct ice_sched_node *node, u16 weight);
++
+ int ice_sched_init_port(struct ice_port_info *pi);
+ int ice_sched_query_res_alloc(struct ice_hw *hw);
+ void ice_sched_get_psm_clk_freq(struct ice_hw *hw);
+@@ -82,6 +106,9 @@ ice_sched_find_node_by_teid(struct ice_sched_node *start_node, u32 teid);
+ int
+ ice_sched_add_node(struct ice_port_info *pi, u8 layer,
+ 		   struct ice_aqc_txsched_elem_data *info);
++void
++ice_sched_update_parent(struct ice_sched_node *new_parent,
++			struct ice_sched_node *node);
+ void ice_free_sched_node(struct ice_port_info *pi, struct ice_sched_node *node);
+ struct ice_sched_node *ice_sched_get_tc_node(struct ice_port_info *pi, u8 tc);
+ struct ice_sched_node *
+diff --git a/drivers/net/ethernet/intel/ice/ice_type.h b/drivers/net/ethernet/intel/ice/ice_type.h
+index e1abfcee96dcd..daf86cf561bc7 100644
+--- a/drivers/net/ethernet/intel/ice/ice_type.h
++++ b/drivers/net/ethernet/intel/ice/ice_type.h
+@@ -524,7 +524,14 @@ struct ice_sched_node {
+ 	struct ice_sched_node *sibling; /* next sibling in the same layer */
+ 	struct ice_sched_node **children;
+ 	struct ice_aqc_txsched_elem_data info;
++	char *name;
++	struct devlink_rate *rate_node;
++	u64 tx_max;
++	u64 tx_share;
+ 	u32 agg_id;			/* aggregator group ID */
++	u32 id;
++	u32 tx_priority;
++	u32 tx_weight;
+ 	u16 vsi_handle;
+ 	u8 in_use;			/* suspended or in use */
+ 	u8 tx_sched_layer;		/* Logical Layer (1-9) */
+@@ -706,6 +713,7 @@ struct ice_port_info {
+ 	/* List contain profile ID(s) and other params per layer */
+ 	struct list_head rl_prof_list[ICE_AQC_TOPO_MAX_LEVEL_NUM];
+ 	struct ice_qos_cfg qos_cfg;
++	struct xarray sched_node_ids;
+ 	u8 is_vf:1;
+ };
+ 
 -- 
 2.43.0
 
