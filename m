@@ -1,99 +1,94 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A703A82871;
-	Wed, 19 Jun 2024 13:05:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BC4682871;
+	Wed, 19 Jun 2024 13:05:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802313; cv=none; b=TNsxrnCxKFdZD97IKvRfHNAi+QQMnkZCZADqGiJb3WlyptUmSqjDXDMuFypOAT1utrNMAn7XqIfDybBnfT+3PgceE31n8+qoq2DrWCFz516G2MpE85FD4a3IGKzDHRr8NqhzBd36nbfkTvLqvPlE9SvIOAN6we8Ah+JocdGcQaI=
+	t=1718802314; cv=none; b=L/06NlXbbdSQ3loW7ojUecIN6PmGrWGeNPtBWiiVHErKPjVEWTaUnnLHyl9Frq+GyKlyYXbthf4Uzah6fBLd6TrrcjQt1OCQbZ6Q9G+B/0xtYEFN+cSaLIPUQLmaZ0emlt4DN4/BAXOZetVQS8nOaxxFB3EgIAOj4ClvqPeS8JM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802313; c=relaxed/simple;
-	bh=PTRu9LXtUGp3s0mBOOAQcnj4X6eQ12NeJbkhz+7wh7c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UViRkS7rq/1MR57pXX+qP9ZYe949yMXC9kQMuHXUau+nJTb7U3KnX4OsWZO2Bsx4DeIvSmfzOeCWHRKZ8MqJIP9CqyZFrnYjM0NgPg2S3aZrfgrXHGwDRRbJS+EEDX1Kx6qJby0dfJdMys8CO+3UfsOIOstwd1eh6VdxeLDj+Vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nhFD+ouJ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1718802314; c=relaxed/simple;
+	bh=Kcc2u825nY2vuDluT9UqFoN+CgEuL4/rv3eZbf+ZofI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=RRPac+4Pdj5/QtzMAIjTSzbM7abe9udsSBTm4rtg2ITrr4aeAVwcoqkNUtNSzDXmcuU5GF3UyGCBorzq60San4PXtFWk7KMFoVbSRkXfXB/ub+T7pn2vFnjtDzNILNl9Bf9a8DGnQ5G3v783TBCxHpeNHNoZ6cLByx61eq7mbAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HDI33j5B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nhFD+ouJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD62FC32786;
-	Wed, 19 Jun 2024 13:05:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718802313;
-	bh=PTRu9LXtUGp3s0mBOOAQcnj4X6eQ12NeJbkhz+7wh7c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nhFD+ouJLyF8aMkRyqhYXC5Q5DjPG8/UJR/GKCUPna5Dd+lnWwp6kMtpmrz1hlESk
-	 jjr444Xu0jDB0CGkuOJdyaXSr0/QuF6EhCg5Tgx2ZMoGLK9TsQlyyzY1Q/+Ef7uuVg
-	 ROsD/PlfKPdMwOql1Zu1zMScbrC1kMnNJXduO4JIE4xT2NAlcJp62c0tOxg3CL7FEq
-	 QfHS1y1aqAIcYjpSx6OD2iGBuhWLrwGBea9Qr3WYV9BVg2WsMD4cjM08BIEREugsN+
-	 IHZ+eZQfPJVaK3Zhh7wTWFytS+BaW5vLVQEnxZZAKfhkDgtGeVtENyFRYn2ceXNal7
-	 GqKkTBkFaqzrA==
-Date: Wed, 19 Jun 2024 14:05:08 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Ryan Roberts <ryan.roberts@arm.com>, Shuah Khan <shuah@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HDI33j5B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B26E0C4AF1A;
+	Wed, 19 Jun 2024 13:05:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1718802314;
+	bh=Kcc2u825nY2vuDluT9UqFoN+CgEuL4/rv3eZbf+ZofI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=HDI33j5Bm16BL+i0cymBA2HqLtXMddtl01ZpjlWJcOVymotIfmb3aoZZn9axepRTn
+	 o1cSSKlqNMGQM8/KsHxSSYpAoRDT327M5ibvhZjJVSzBflE3t0QWMClcyp+8Ho81dw
+	 WBS/EViNXjNDrhsa8/T1qMSZauSEb8YH4s54sek8=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Michael Riesch <michael.riesch@wolfvision.net>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.6 069/267] selftests/mm: log a consistent test name for
- check_compaction
-Message-ID: <72b9e2cd-be65-4fb7-82dc-04e870464b3f@sirena.org.uk>
+Subject: [PATCH 6.6 123/267] drm/panel: sitronix-st7789v: Add check for of_drm_get_panel_orientation
+Date: Wed, 19 Jun 2024 14:54:34 +0200
+Message-ID: <20240619125611.069694355@linuxfoundation.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
- <20240619125609.005611983@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="S1swdCi9UCbRMg3p"
-Content-Disposition: inline
-In-Reply-To: <20240619125609.005611983@linuxfoundation.org>
-X-Cookie: Don't I know you?
+Content-Transfer-Encoding: 8bit
+
+6.6-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Chen Ni <nichen@iscas.ac.cn>
+
+[ Upstream commit 629f2b4e05225e53125aaf7ff0b87d5d53897128 ]
+
+Add check for the return value of of_drm_get_panel_orientation() and
+return the error if it fails in order to catch the error.
+
+Fixes: b27c0f6d208d ("drm/panel: sitronix-st7789v: add panel orientation support")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Reviewed-by: Michael Riesch <michael.riesch@wolfvision.net>
+Acked-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Link: https://lore.kernel.org/r/20240528030832.2529471-1-nichen@iscas.ac.cn
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240528030832.2529471-1-nichen@iscas.ac.cn
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/gpu/drm/panel/panel-sitronix-st7789v.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/panel/panel-sitronix-st7789v.c b/drivers/gpu/drm/panel/panel-sitronix-st7789v.c
+index e8f385b9c6182..28bfc48a91272 100644
+--- a/drivers/gpu/drm/panel/panel-sitronix-st7789v.c
++++ b/drivers/gpu/drm/panel/panel-sitronix-st7789v.c
+@@ -643,7 +643,9 @@ static int st7789v_probe(struct spi_device *spi)
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "Failed to get backlight\n");
+ 
+-	of_drm_get_panel_orientation(spi->dev.of_node, &ctx->orientation);
++	ret = of_drm_get_panel_orientation(spi->dev.of_node, &ctx->orientation);
++	if (ret)
++		return dev_err_probe(&spi->dev, ret, "Failed to get orientation\n");
+ 
+ 	drm_panel_add(&ctx->panel);
+ 
+-- 
+2.43.0
 
 
---S1swdCi9UCbRMg3p
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jun 19, 2024 at 02:53:40PM +0200, Greg Kroah-Hartman wrote:
-> 6.6-stable review patch.  If anyone has any objections, please let me kno=
-w.
->=20
-> ------------------
->=20
-> From: Mark Brown <broonie@kernel.org>
->=20
-> [ Upstream commit f3b7568c49420d2dcd251032c9ca1e069ec8a6c9 ]
->=20
-> Every test result report in the compaction test prints a distinct log
-> messae, and some of the reports print a name that varies at runtime.  This
-> causes problems for automation since a lot of automation software uses the
-> printed string as the name of the test, if the name varies from run to run
-> and from pass to fail then the automation software can't identify that a
-> test changed result or that the same tests are being run.
->=20
-> Refactor the logging to use a consistent name when printing the result of
-> the test, printing the existing messages as diagnostic information instead
-> so they are still available for people trying to interpret the results.
-
-This will change the test names for these tests which might disrupt
-people's CI.
-
---S1swdCi9UCbRMg3p
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmZy14QACgkQJNaLcl1U
-h9Aiiwf8D+Yagu4pmsdH3sCcpTR853zF7/x6i3YJ69KW3zswvzDuSDGwfLtWeKBM
-JIy5LjkWnbMfFN+/Q/ujQrtH0DDAsqfhvdabvlC7qQeLmiPIGw69gszUj+SssDDx
-xWvzkmCQDbm0smJQrajSGAHROZiG0eWb4BBgSKm/F+hQjVlydu7nB0p2fa6g2UMU
-UGCkXCUQodIGrGkU/sOniwgcwIQ8I6LSDYM4GJldRgbM4d5LVHuglpsAciz3U9uv
-eF1auV2d6UEpCRjI5rg7SOPH3d2J4jcx61jcEgTE0gBck0onIRSK+G6IJH7FfxRQ
-haP+GefoxDWeE8uQcpbGsQ7U7bf7bw==
-=Htcm
------END PGP SIGNATURE-----
-
---S1swdCi9UCbRMg3p--
