@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D2CFC1F;
-	Wed, 19 Jun 2024 12:58:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F8E14388C;
+	Wed, 19 Jun 2024 12:58:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718801889; cv=none; b=lOHyblXvGz9z5QH4rI+x7JxCI+Y6z4kqZyvIWYL33X826lsFwgnORe2lInuNCzeQeF0k7nBzhYZsZfAxveLzSPXkadM+88uUclajQmyd8NkEPkla5GeqHcBqlEKfjt8fx1VcQAnMhLk1PKDLsniaNTJ/Qkiaylr+6A1m6Dv7XPo=
+	t=1718801892; cv=none; b=HnDR2gq6th7LM1L+/AFE8Fuw1JY3fqC2GKlnzLFbmFmyiPEcAxEiHahM0VXgCXJCf5nwQ+Btu5MRyY1k9ykVgLEqpoE3/2EaggKw1UEVaa54awWyE7kubN3IdBmT9ofOFcZS2cWYIVlt4SfZy2cHAex+YToChfAjqHZEk9mNdtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718801889; c=relaxed/simple;
-	bh=zJV4Kgs/DdST+k66n3CnyYjomGqwfq37wZ5laJOYB8I=;
+	s=arc-20240116; t=1718801892; c=relaxed/simple;
+	bh=HbrAcoWdbxH+LQicu9g3+uPND7ZHt5r9pUGYyFJWEJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f3o+AUa9QA+MgEvNb9kYAmjLJDMWhNdPBuG6BdTkUc8a/AIM/62jNvf82ZKFS94HdEr3RFQUu87PeZUeU4m1vxDHFXJxk6u2NX9dmCESvgFccRf+TvBHHSGtWttYjugVWMe0wg10BReGuQTCmwgXzlBlPNGR5axu6UkFvFSjIjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ikCCahNM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HtjOzYIC+/Pa81r6o+4FGVCgCnalWxaXqmb9fGvYwInl9rYaKvyWgrmdjzboeVAZFYgGjlkZ0MjOJARuK11MIRG81Y9ZsK078VjOe9nyST0z4H57NKggi47g4j4J/1bIpV58+bj5rzwVpxbNhOziQng8DSlhanM5xv/OEknmH1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2IfkvV1x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ikCCahNM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D86BDC2BBFC;
-	Wed, 19 Jun 2024 12:58:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2IfkvV1x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB660C2BBFC;
+	Wed, 19 Jun 2024 12:58:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718801889;
-	bh=zJV4Kgs/DdST+k66n3CnyYjomGqwfq37wZ5laJOYB8I=;
+	s=korg; t=1718801892;
+	bh=HbrAcoWdbxH+LQicu9g3+uPND7ZHt5r9pUGYyFJWEJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ikCCahNM446qckS8OHUhoBXPCJdyGWyJhMK3dZhvp7Kh62VURO8ik4/EXbrfHLWMC
-	 n9nj80Vpa6dCznT4/lQDeFmtB1b2+xO87ep/B0kKEVrB1kRbNUHtCRYIQ7A0Qui6ah
-	 er9bRunRFXGnaaB9TGJrsjgfJFh1btA2ahoxGwb4=
+	b=2IfkvV1xfLkFx620bsolJ2hwVd5cG6eVinlZyFDm3YGP2P7GSfPKylAOgdmCHdswW
+	 cN1fKcPlcvWcWhWzlo8xOumO9K0YgGwRhNpu4Eci4IkE9F1eVyFc9zOqO7VBIbsyYM
+	 e76QlMY9hVpHPaws0x+xp5wckP0YM6a/SKRt8YnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Lingbo Kong <quic_lingbok@quicinc.com>,
 	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 011/267] wifi: iwlwifi: mvm: dont read past the mfuart notifcation
-Date: Wed, 19 Jun 2024 14:52:42 +0200
-Message-ID: <20240619125606.787199502@linuxfoundation.org>
+Subject: [PATCH 6.6 012/267] wifi: mac80211: correctly parse Spatial Reuse Parameter Set element
+Date: Wed, 19 Jun 2024 14:52:43 +0200
+Message-ID: <20240619125606.825813654@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -52,53 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Lingbo Kong <quic_lingbok@quicinc.com>
 
-[ Upstream commit 4bb95f4535489ed830cf9b34b0a891e384d1aee4 ]
+[ Upstream commit a26d8dc5227f449a54518a8b40733a54c6600a8b ]
 
-In case the firmware sends a notification that claims it has more data
-than it has, we will read past that was allocated for the notification.
-Remove the print of the buffer, we won't see it by default. If needed,
-we can see the content with tracing.
+Currently, the way of parsing Spatial Reuse Parameter Set element is
+incorrect and some members of struct ieee80211_he_obss_pd are not assigned.
 
-This was reported by KFENCE.
+To address this issue, it must be parsed in the order of the elements of
+Spatial Reuse Parameter Set defined in the IEEE Std 802.11ax specification.
 
-Fixes: bdccdb854f2f ("iwlwifi: mvm: support MFUART dump in case of MFUART assert")
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240513132416.ba82a01a559e.Ia91dd20f5e1ca1ad380b95e68aebf2794f553d9b@changeid
+The diagram of the Spatial Reuse Parameter Set element (IEEE Std 802.11ax
+-2021-9.4.2.252).
+
+-------------------------------------------------------------------------
+|       |      |         |       |Non-SRG|  SRG  | SRG   | SRG  | SRG   |
+|Element|Length| Element |  SR   |OBSS PD|OBSS PD|OBSS PD| BSS  |Partial|
+|   ID  |      |   ID    |Control|  Max  |  Min  | Max   |Color | BSSID |
+|       |      |Extension|       | Offset| Offset|Offset |Bitmap|Bitmap |
+-------------------------------------------------------------------------
+
+Fixes: 1ced169cc1c2 ("mac80211: allow setting spatial reuse parameters from bss_conf")
+Signed-off-by: Lingbo Kong <quic_lingbok@quicinc.com>
+Link: https://msgid.link/20240516021854.5682-3-quic_lingbok@quicinc.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/fw.c | 10 ----------
- 1 file changed, 10 deletions(-)
+ net/mac80211/he.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
-index 1d5ee4330f29f..51f396287dc69 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
-@@ -92,20 +92,10 @@ void iwl_mvm_mfu_assert_dump_notif(struct iwl_mvm *mvm,
- {
- 	struct iwl_rx_packet *pkt = rxb_addr(rxb);
- 	struct iwl_mfu_assert_dump_notif *mfu_dump_notif = (void *)pkt->data;
--	__le32 *dump_data = mfu_dump_notif->data;
--	int n_words = le32_to_cpu(mfu_dump_notif->data_size) / sizeof(__le32);
--	int i;
+diff --git a/net/mac80211/he.c b/net/mac80211/he.c
+index 9f5ffdc9db284..ecbb042dd0433 100644
+--- a/net/mac80211/he.c
++++ b/net/mac80211/he.c
+@@ -230,15 +230,21 @@ ieee80211_he_spr_ie_to_bss_conf(struct ieee80211_vif *vif,
  
- 	if (mfu_dump_notif->index_num == 0)
- 		IWL_INFO(mvm, "MFUART assert id 0x%x occurred\n",
- 			 le32_to_cpu(mfu_dump_notif->assert_id));
--
--	for (i = 0; i < n_words; i++)
--		IWL_DEBUG_INFO(mvm,
--			       "MFUART assert dump, dword %u: 0x%08x\n",
--			       le16_to_cpu(mfu_dump_notif->index_num) *
--			       n_words + i,
--			       le32_to_cpu(dump_data[i]));
+ 	if (!he_spr_ie_elem)
+ 		return;
++
++	he_obss_pd->sr_ctrl = he_spr_ie_elem->he_sr_control;
+ 	data = he_spr_ie_elem->optional;
+ 
+ 	if (he_spr_ie_elem->he_sr_control &
+ 	    IEEE80211_HE_SPR_NON_SRG_OFFSET_PRESENT)
+-		data++;
++		he_obss_pd->non_srg_max_offset = *data++;
++
+ 	if (he_spr_ie_elem->he_sr_control &
+ 	    IEEE80211_HE_SPR_SRG_INFORMATION_PRESENT) {
+-		he_obss_pd->max_offset = *data++;
+ 		he_obss_pd->min_offset = *data++;
++		he_obss_pd->max_offset = *data++;
++		memcpy(he_obss_pd->bss_color_bitmap, data, 8);
++		data += 8;
++		memcpy(he_obss_pd->partial_bssid_bitmap, data, 8);
+ 		he_obss_pd->enable = true;
+ 	}
  }
- 
- static bool iwl_alive_fn(struct iwl_notif_wait_data *notif_wait,
 -- 
 2.43.0
 
