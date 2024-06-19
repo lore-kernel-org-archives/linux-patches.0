@@ -1,57 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8629312FB31;
-	Wed, 19 Jun 2024 13:10:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 789B312FB31;
+	Wed, 19 Jun 2024 13:10:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802644; cv=none; b=dpzKHylp14wCL79pYmYLJBvvD8ynddLH4/m41NvB1va47PGiJzMdmhghfUC62oD2Hsa6ZIh5nozZLaRZ9MjRG7rOIM511gwuezn2P/iJFeISJRJVQnmIKHXOCiuGiQ/6Ct5KDfrgrcA8LKjfZuNlefF78DERln6ybzKlc5fx9I0=
+	t=1718802647; cv=none; b=LIwyhJFCu+JbiiLEovT+ysPpMUNJW6NqUDjYwg1baukIpk2UxlW2VOZ41QIoYaKfBeb+ssFuAqUQegailRXl1DpjnnXA4UUTgAwUcxYm0QiWsDvV3fcsRVuBRE6SFhID77SIG5mUeSEAbH6RDNwy9T9fYRFjoBYwjWtxPMKA0bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802644; c=relaxed/simple;
-	bh=NnxyGiJfQz9YF739YggpTIOj2zty754q6gg3VEgnOEI=;
+	s=arc-20240116; t=1718802647; c=relaxed/simple;
+	bh=qlyZzCGD4vkj0rY4TB3tZIx9RoBKNBJ0G2cVGxlv144=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GuKXoOPTM2Urdryf6J9o56A4Thl4zbKhjmf+mu2aHe5fNu+z7FUXu2qIsNM+7BX7+wckEPmFOhULP44pgDJa4OJ7aYYW1/YQxId+1vPwQ+zJtYPCGm8OhV4bt3QIpv0huU5Su3TIRMS87Llb2w1/RnYHArek2tQKhslQ0o93Y8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dXOVp30x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=roXLfdLYHdOciXyAS3G/zDeAjlAQE6rynromtzTEv9C/TDuHEQFAWIEwj/vIyMT/kEUAaej1KrigzLXN/3mQkDWuGNyAbwVsFPifSSRC4bTa6iyNeGybw3XpnAdUZa6l8wWeqBtxZ34xfOFhDEkhFvW3ZtsK1JIJKvKciAqtkYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o2+9tiEM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dXOVp30x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8817C2BBFC;
-	Wed, 19 Jun 2024 13:10:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o2+9tiEM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F02D2C2BBFC;
+	Wed, 19 Jun 2024 13:10:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802644;
-	bh=NnxyGiJfQz9YF739YggpTIOj2zty754q6gg3VEgnOEI=;
+	s=korg; t=1718802647;
+	bh=qlyZzCGD4vkj0rY4TB3tZIx9RoBKNBJ0G2cVGxlv144=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dXOVp30xLQUTnoy6j3MNinZJ4elqX8zZ9nsKKY/2BV4e8O9pgEwlLX3V3+I+9DG7m
-	 ReLJGj1NAsx69qTg1YFNYGacoX654IqaLAyOji5TT7uhbq0uxGud+Dii4oGKuv5oFh
-	 oCiiBpjOWLfAfiDdGHXoGcVvpet73Zn4B00iiASw=
+	b=o2+9tiEMpY81Pquv0eGDfWQYmoKWZtq2bmTHoWcDwPXI5/lvZ/3feisO3r54G1INK
+	 m9piRpTl0FDaik3a9rxNCATtYGCSRWsIK7jK4kqHxzZ8ylu2OJq2PV5o85Pz4OSTOq
+	 viE3U44XfaQYwEQ70aoYdIdiC1kATYRRUPU3R/OU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	Rachel Menge <rachelmenge@linux.microsoft.com>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Wei Fu <fuweid89@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Allen Pais <apais@linux.microsoft.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
-	Joel Granados <j.granados@samsung.com>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Lai Jiangshan <jiangshanlai@gmail.com>,
-	Mateusz Guzik <mjguzik@gmail.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Zqiang <qiang.zhang1211@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 267/267] zap_pid_ns_processes: clear TIF_NOTIFY_SIGNAL along with TIF_SIGPENDING
-Date: Wed, 19 Jun 2024 14:56:58 +0200
-Message-ID: <20240619125616.568058309@linuxfoundation.org>
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 253/267] selftests: net: lib: support errexit with busywait
+Date: Wed, 19 Jun 2024 14:56:44 +0200
+Message-ID: <20240619125616.028227612@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -70,60 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit 7fea700e04bd3f424c2d836e98425782f97b494e ]
+commit 41b02ea4c0adfcc6761fbfed42c3ce6b6412d881 upstream.
 
-kernel_wait4() doesn't sleep and returns -EINTR if there is no
-eligible child and signal_pending() is true.
+If errexit is enabled ('set -e'), loopy_wait -- or busywait and others
+using it -- will stop after the first failure.
 
-That is why zap_pid_ns_processes() clears TIF_SIGPENDING but this is not
-enough, it should also clear TIF_NOTIFY_SIGNAL to make signal_pending()
-return false and avoid a busy-wait loop.
+Note that if the returned status of loopy_wait is checked, and even if
+errexit is enabled, Bash will not stop at the first error.
 
-Link: https://lkml.kernel.org/r/20240608120616.GB7947@redhat.com
-Fixes: 12db8b690010 ("entry: Add support for TIF_NOTIFY_SIGNAL")
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Reported-by: Rachel Menge <rachelmenge@linux.microsoft.com>
-Closes: https://lore.kernel.org/all/1386cd49-36d0-4a5c-85e9-bc42056a5a38@linux.microsoft.com/
-Reviewed-by: Boqun Feng <boqun.feng@gmail.com>
-Tested-by: Wei Fu <fuweid89@gmail.com>
-Reviewed-by: Jens Axboe <axboe@kernel.dk>
-Cc: Allen Pais <apais@linux.microsoft.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Frederic Weisbecker <frederic@kernel.org>
-Cc: Joel Fernandes (Google) <joel@joelfernandes.org>
-Cc: Joel Granados <j.granados@samsung.com>
-Cc: Josh Triplett <josh@joshtriplett.org>
-Cc: Lai Jiangshan <jiangshanlai@gmail.com>
-Cc: Mateusz Guzik <mjguzik@gmail.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Mike Christie <michael.christie@oracle.com>
-Cc: Neeraj Upadhyay <neeraj.upadhyay@kernel.org>
-Cc: Paul E. McKenney <paulmck@kernel.org>
-Cc: Steven Rostedt (Google) <rostedt@goodmis.org>
-Cc: Zqiang <qiang.zhang1211@gmail.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 25ae948b4478 ("selftests/net: add lib.sh")
+Cc: stable@vger.kernel.org
+Acked-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://lore.kernel.org/r/20240605-upstream-net-20240605-selftests-net-lib-fixes-v1-1-b3afadd368c9@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/pid_namespace.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/net/lib.sh |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/kernel/pid_namespace.c b/kernel/pid_namespace.c
-index 619972c78774f..e9b2bb260ee6c 100644
---- a/kernel/pid_namespace.c
-+++ b/kernel/pid_namespace.c
-@@ -217,6 +217,7 @@ void zap_pid_ns_processes(struct pid_namespace *pid_ns)
- 	 */
- 	do {
- 		clear_thread_flag(TIF_SIGPENDING);
-+		clear_thread_flag(TIF_NOTIFY_SIGNAL);
- 		rc = kernel_wait4(-1, NULL, __WALL, NULL);
- 	} while (rc != -ECHILD);
- 
--- 
-2.43.0
-
+--- a/tools/testing/selftests/net/lib.sh
++++ b/tools/testing/selftests/net/lib.sh
+@@ -22,9 +22,7 @@ busywait()
+ 	while true
+ 	do
+ 		local out
+-		out=$("$@")
+-		local ret=$?
+-		if ((!ret)); then
++		if out=$("$@"); then
+ 			echo -n "$out"
+ 			return 0
+ 		fi
 
 
