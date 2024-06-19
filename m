@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376091442F1;
-	Wed, 19 Jun 2024 12:58:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3A1F1442F1;
+	Wed, 19 Jun 2024 12:58:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718801913; cv=none; b=dgWCvFCNfY50J00l68eneRiXah4FJQvKQd2Vvj/DpBBEAT5r34P24GrxLhx8TLOj2Tyodl/8zZXJkMBhRdc7AywgQzvNu60nhf3BWFjR8iaH4Szl94UlJLZRWFVmxp4Jmna2EqHH8CWoQKQ7ev/lRYJUPa5Qk1UngtyQ4dRGGG8=
+	t=1718801916; cv=none; b=WdeSFvsMKBvHqHC89jCDMfG00KzIpQJTUwvZahFPehkdoJRoNkH5MF361pmJjoCD6ItE9PwbIdj0anN4KemXiM+8Tl3I3C0HkQ7pUucENRyn2FxFR3J6GhPVJapl2GXOeThp+kho+pT7BBDRfyxiy4qMXDisKZbQfWvXoo67tfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718801913; c=relaxed/simple;
-	bh=tMshOxDbmlQlJgjMOoEkgDyGsCJxmC2+yKONV0/w1Eo=;
+	s=arc-20240116; t=1718801916; c=relaxed/simple;
+	bh=q6O7uSU6obijfaLaGMrTP0hc5sXFcDgGAZ8Rec+wE6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ss5jUCHCVsqjNDhGc4jyT2XAvydjOYUi37Ceauos/FrDesASAcdfo3Xm6Ru0t+xrYeKPem1uHPbyMlHr6JtMvUqB6ka48NqwCII2YT05ug73Xpe7jsxfWuqs9xdRuyxbRv9UfEqWot5L21jz1PxPaqVSttnm8FLXH+cxsBlXIsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wiztK9MI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bHA362dGvEawRzv60mCfujnqmI0Tr3ywbYp0KO1LN19eI2miphmN7bMbt1uFfcl6I5oVWxCM4+Of9CFNhkZ7os+cN8op+L/hDUkdWFVNxmSuRnLVzCmPjkXXP058nh2vUmrX1Er2kBok6iuXLvLnUMJzc55gKMO5SMOYkU9viSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XHSrom74; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wiztK9MI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FA0DC2BBFC;
-	Wed, 19 Jun 2024 12:58:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XHSrom74"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56BB9C32786;
+	Wed, 19 Jun 2024 12:58:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718801912;
-	bh=tMshOxDbmlQlJgjMOoEkgDyGsCJxmC2+yKONV0/w1Eo=;
+	s=korg; t=1718801915;
+	bh=q6O7uSU6obijfaLaGMrTP0hc5sXFcDgGAZ8Rec+wE6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wiztK9MI7QEVSL5sePIp8N3CRMcVU/5hr0SBPMzvAMxnzGDDpKiOEkRmvqlGGbSyv
-	 u2oo9HNJB347GU8C/9BCnFKxThRrFi5NmlBMCBGvkpc6rfKKwdvG0pAV0ilH8myRFe
-	 gLfYg2OS8zQQF4b0zhRfcn29NsOHHnWjGNlfi5BI=
+	b=XHSrom74Xx4IifPm6E+mbWtHWXfHRT3qFyQ40taqxfsU631uDk+QPERFfxWELWPOI
+	 JqD6g0NGzKu7Wxrlc8EPPw/VRLFglK+Y6dL8DdgzjILHYv35Jz2WhchSFOJUUh7n3z
+	 UbxtXTPn7R2wa7FKJ3jjH5VjPIEyAVPArpXEPuWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Mordechay Goodstein <mordechay.goodstein@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
-	Liad Kaufman <liad.kaufman@intel.com>,
-	Luciano Coelho <luciano.coelho@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 007/267] wifi: iwlwifi: mvm: revert gen2 TX A-MPDU size to 64
-Date: Wed, 19 Jun 2024 14:52:38 +0200
-Message-ID: <20240619125606.634881314@linuxfoundation.org>
+Subject: [PATCH 6.6 008/267] wifi: iwlwifi: mvm: set properly mac header
+Date: Wed, 19 Jun 2024 14:52:39 +0200
+Message-ID: <20240619125606.672896842@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -53,47 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Mordechay Goodstein <mordechay.goodstein@intel.com>
 
-[ Upstream commit 4a7aace2899711592327463c1a29ffee44fcc66e ]
+[ Upstream commit 0f2e9f6f21d1ff292363cdfb5bc4d492eeaff76e ]
 
-We don't actually support >64 even for HE devices, so revert
-back to 64. This fixes an issue where the session is refused
-because the queue is configured differently from the actual
-session later.
+In the driver we only use skb_put* for adding data to the skb, hence data
+never moves and skb_reset_mac_haeder would set mac_header to the first
+time data was added and not to mac80211 header, fix this my using the
+actual len of bytes added for setting the mac header.
 
-Fixes: 514c30696fbc ("iwlwifi: add support for IEEE802.11ax")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Reviewed-by: Liad Kaufman <liad.kaufman@intel.com>
-Reviewed-by: Luciano Coelho <luciano.coelho@intel.com>
+Fixes: 3f7a9d577d47 ("wifi: iwlwifi: mvm: simplify by using SKB MAC header pointer")
+Signed-off-by: Mordechay Goodstein <mordechay.goodstein@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240510170500.52f7b4cf83aa.If47e43adddf7fe250ed7f5571fbb35d8221c7c47@changeid
+Link: https://msgid.link/20240510170500.12f2de2909c3.I72a819b96f2fe55bde192a8fd31a4b96c301aa73@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/rs.h | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rs.h b/drivers/net/wireless/intel/iwlwifi/mvm/rs.h
-index 1ca375a5cf6b5..639cecc7a6e60 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/rs.h
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/rs.h
-@@ -122,13 +122,8 @@ enum {
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c b/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
+index e9360b555ac93..8cff24d5f5f40 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
+@@ -2730,8 +2730,11 @@ void iwl_mvm_rx_monitor_no_data(struct iwl_mvm *mvm, struct napi_struct *napi,
+ 	 *
+ 	 * We mark it as mac header, for upper layers to know where
+ 	 * all radio tap header ends.
++	 *
++	 * Since data doesn't move data while putting data on skb and that is
++	 * the only way we use, data + len is the next place that hdr would be put
+ 	 */
+-	skb_reset_mac_header(skb);
++	skb_set_mac_header(skb, skb->len);
  
- #define LINK_QUAL_AGG_FRAME_LIMIT_DEF	(63)
- #define LINK_QUAL_AGG_FRAME_LIMIT_MAX	(63)
--/*
-- * FIXME - various places in firmware API still use u8,
-- * e.g. LQ command and SCD config command.
-- * This should be 256 instead.
-- */
--#define LINK_QUAL_AGG_FRAME_LIMIT_GEN2_DEF	(255)
--#define LINK_QUAL_AGG_FRAME_LIMIT_GEN2_MAX	(255)
-+#define LINK_QUAL_AGG_FRAME_LIMIT_GEN2_DEF	(64)
-+#define LINK_QUAL_AGG_FRAME_LIMIT_GEN2_MAX	(64)
- #define LINK_QUAL_AGG_FRAME_LIMIT_MIN	(0)
- 
- #define LQ_SIZE		2	/* 2 mode tables:  "Active" and "Search" */
+ 	/*
+ 	 * Override the nss from the rx_vec since the rate_n_flags has
 -- 
 2.43.0
 
