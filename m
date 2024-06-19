@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5C2143757;
-	Wed, 19 Jun 2024 13:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58328143757;
+	Wed, 19 Jun 2024 13:24:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803448; cv=none; b=TsOvk01rXhFNvfKzfyG2saNihnBaWB6xhRa36WAyDouI/XJ5rL8OIh2BXkhPgJaHj7nAjqjIMLzwXJzRxtYHyExfOYwMfUXMSAXylpOGMJxKDgv619hrN4RI1ODZvmyp01L0/XBYW75q96kSYAu5r1UX+9xGASmNp4Ny+zmv4bE=
+	t=1718803451; cv=none; b=HsYf+kAayDyRbx5ce7IrafnhRrzURx+2ssdMnrUhukgmMe7J9JmXP/9MZ353wN7P4RlK+GqiZ3bzeyB4vLs8HSaZiv96oNfs2GpdzkRNK1RRYAS/h6ZrWCnkvG8s0IOmMAILJ8K5SHfj4Buleooc/p3XYgOL069UVIWcc+MmD5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803448; c=relaxed/simple;
-	bh=LWeLbB6iwTlaw0u5ADgWgXOROnEQebARrqwOgoiTxko=;
+	s=arc-20240116; t=1718803451; c=relaxed/simple;
+	bh=/LN4wgnJVuW3lhuNILY+6i1rBMjtEo4iHWQOuDE6PDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aCPefRxCURlf2qUo4TKyYkC7VJyJtNEgwMz0OKOHn1EI8NN/XMSHZYdH5ImlU/AQcpaRwWJzHqBcZwr1uXHC52B0mSgLNkvoSfyZc8p9iVEWKmSrOux90bV4yk70tlsCh5Mz3AACRMpi6dL3LyK51CSA05TLxVOwLEdq005pKOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MyxT8W8L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z5I8y0f/y2EJ3jqbUFWG+g4lJpj54ogE3n5Wp39aTmT7/s6HQpO0jsksgwF7B18mrmDyZiNwAA2zjZSMc9an00K/oOJ7d+J5Z6f//PAEEgSK/85YGu+WuCIXW1sugHatHZKymJVBzYAGs2de+BKeHkx5yviSjjDepyBAoPqokyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cZUaxrKh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MyxT8W8L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2D99C2BBFC;
-	Wed, 19 Jun 2024 13:24:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZUaxrKh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C63C2BBFC;
+	Wed, 19 Jun 2024 13:24:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803448;
-	bh=LWeLbB6iwTlaw0u5ADgWgXOROnEQebARrqwOgoiTxko=;
+	s=korg; t=1718803451;
+	bh=/LN4wgnJVuW3lhuNILY+6i1rBMjtEo4iHWQOuDE6PDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MyxT8W8LSdJrx1L6l618284e8LKLjlpyOakVTxClE3DrYpM5nbmv0W83LWjqWM8OW
-	 6IHAIs/SoJ2DXwkaxwoGcaE9TB9tTWaK2h0aPDNbyWIoq9NrIIvfQXWtFwCc/wI30S
-	 DDXGEyabxoGw09VcBa6USI6qtOlqkHL/5OUbeyvY=
+	b=cZUaxrKhzm54NdOhiV0TyDyDf0uDUy4gmg9VxRMhZKIA/6XxjBXhUEUYC/pai+Sbe
+	 YiPfYqQf5b/c17uGJkzI7IcsdJBiIi3FjeDyCPKymlefimAXd53ROiSUvsNimPengh
+	 Ck3nNwiywb3SAageD0SdFPQHZgNyJnceK1RZgMMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	David Hildenbrand <david@redhat.com>,
-	Yang Shi <shy828301@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Xu Yu <xuyu@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.9 270/281] mm/huge_memory: dont unpoison huge_zero_folio
-Date: Wed, 19 Jun 2024 14:57:09 +0200
-Message-ID: <20240619125620.371139654@linuxfoundation.org>
+	Beleswar Padhi <b-padhi@ti.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 6.9 271/281] remoteproc: k3-r5: Jump to error handling labels in start/stop errors
+Date: Wed, 19 Jun 2024 14:57:10 +0200
+Message-ID: <20240619125620.410174303@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -56,90 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaohe Lin <linmiaohe@huawei.com>
+From: Beleswar Padhi <b-padhi@ti.com>
 
-commit fe6f86f4b40855a130a19aa589f9ba7f650423f4 upstream.
+commit 1dc7242f6ee0c99852cb90676d7fe201cf5de422 upstream.
 
-When I did memory failure tests recently, below panic occurs:
+In case of errors during core start operation from sysfs, the driver
+directly returns with the -EPERM error code. Fix this to ensure that
+mailbox channels are freed on error before returning by jumping to the
+'put_mbox' error handling label. Similarly, jump to the 'out' error
+handling label to return with required -EPERM error code during the
+core stop operation from sysfs.
 
- kernel BUG at include/linux/mm.h:1135!
- invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
- CPU: 9 PID: 137 Comm: kswapd1 Not tainted 6.9.0-rc4-00491-gd5ce28f156fe-dirty #14
- RIP: 0010:shrink_huge_zero_page_scan+0x168/0x1a0
- RSP: 0018:ffff9933c6c57bd0 EFLAGS: 00000246
- RAX: 000000000000003e RBX: 0000000000000000 RCX: ffff88f61fc5c9c8
- RDX: 0000000000000000 RSI: 0000000000000027 RDI: ffff88f61fc5c9c0
- RBP: ffffcd7c446b0000 R08: ffffffff9a9405f0 R09: 0000000000005492
- R10: 00000000000030ea R11: ffffffff9a9405f0 R12: 0000000000000000
- R13: 0000000000000000 R14: 0000000000000000 R15: ffff88e703c4ac00
- FS:  0000000000000000(0000) GS:ffff88f61fc40000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 000055f4da6e9878 CR3: 0000000c71048000 CR4: 00000000000006f0
- Call Trace:
-  <TASK>
-  do_shrink_slab+0x14f/0x6a0
-  shrink_slab+0xca/0x8c0
-  shrink_node+0x2d0/0x7d0
-  balance_pgdat+0x33a/0x720
-  kswapd+0x1f3/0x410
-  kthread+0xd5/0x100
-  ret_from_fork+0x2f/0x50
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
- Modules linked in: mce_inject hwpoison_inject
- ---[ end trace 0000000000000000 ]---
- RIP: 0010:shrink_huge_zero_page_scan+0x168/0x1a0
- RSP: 0018:ffff9933c6c57bd0 EFLAGS: 00000246
- RAX: 000000000000003e RBX: 0000000000000000 RCX: ffff88f61fc5c9c8
- RDX: 0000000000000000 RSI: 0000000000000027 RDI: ffff88f61fc5c9c0
- RBP: ffffcd7c446b0000 R08: ffffffff9a9405f0 R09: 0000000000005492
- R10: 00000000000030ea R11: ffffffff9a9405f0 R12: 0000000000000000
- R13: 0000000000000000 R14: 0000000000000000 R15: ffff88e703c4ac00
- FS:  0000000000000000(0000) GS:ffff88f61fc40000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 000055f4da6e9878 CR3: 0000000c71048000 CR4: 00000000000006f0
-
-The root cause is that HWPoison flag will be set for huge_zero_folio
-without increasing the folio refcnt.  But then unpoison_memory() will
-decrease the folio refcnt unexpectedly as it appears like a successfully
-hwpoisoned folio leading to VM_BUG_ON_PAGE(page_ref_count(page) == 0) when
-releasing huge_zero_folio.
-
-Skip unpoisoning huge_zero_folio in unpoison_memory() to fix this issue.
-We're not prepared to unpoison huge_zero_folio yet.
-
-Link: https://lkml.kernel.org/r/20240516122608.22610-1-linmiaohe@huawei.com
-Fixes: 478d134e9506 ("mm/huge_memory: do not overkill when splitting huge_zero_page")
-Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Yang Shi <shy828301@gmail.com>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Xu Yu <xuyu@linux.alibaba.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
+Fixes: 3c8a9066d584 ("remoteproc: k3-r5: Do not allow core1 to power up before core0 via sysfs")
+Signed-off-by: Beleswar Padhi <b-padhi@ti.com>
+Link: https://lore.kernel.org/r/20240506141849.1735679-1-b-padhi@ti.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory-failure.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/remoteproc/ti_k3_r5_remoteproc.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/mm/memory-failure.c
-+++ b/mm/memory-failure.c
-@@ -2550,6 +2550,13 @@ int unpoison_memory(unsigned long pfn)
- 		goto unlock_mutex;
- 	}
+--- a/drivers/remoteproc/ti_k3_r5_remoteproc.c
++++ b/drivers/remoteproc/ti_k3_r5_remoteproc.c
+@@ -580,7 +580,8 @@ static int k3_r5_rproc_start(struct rpro
+ 		if (core != core0 && core0->rproc->state == RPROC_OFFLINE) {
+ 			dev_err(dev, "%s: can not start core 1 before core 0\n",
+ 				__func__);
+-			return -EPERM;
++			ret = -EPERM;
++			goto put_mbox;
+ 		}
  
-+	if (is_huge_zero_page(&folio->page)) {
-+		unpoison_pr_info("Unpoison: huge zero page is not supported %#lx\n",
-+				 pfn, &unpoison_rs);
-+		ret = -EOPNOTSUPP;
-+		goto unlock_mutex;
-+	}
-+
- 	if (!PageHWPoison(p)) {
- 		unpoison_pr_info("Unpoison: Page was already unpoisoned %#lx\n",
- 				 pfn, &unpoison_rs);
+ 		ret = k3_r5_core_run(core);
+@@ -648,7 +649,8 @@ static int k3_r5_rproc_stop(struct rproc
+ 		if (core != core1 && core1->rproc->state != RPROC_OFFLINE) {
+ 			dev_err(dev, "%s: can not stop core 0 before core 1\n",
+ 				__func__);
+-			return -EPERM;
++			ret = -EPERM;
++			goto out;
+ 		}
+ 
+ 		ret = k3_r5_core_halt(core);
 
 
