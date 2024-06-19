@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4BC414389C;
-	Wed, 19 Jun 2024 13:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E000B1422B8;
+	Wed, 19 Jun 2024 13:12:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802763; cv=none; b=Y/9/xiAl18iyYMlXv4iYcZqn8M5qczCR6HI8bdgJJMzALen3FhXzgjh0yD92W92K2IQoDY/q2Cmbmuvn+AZX0mjoCe1hBz9mLusFL5MkMMd7p+LIUrjdExzcoLuBBvfzLJZhI+DvO1FEtL/Sg5a4XhsVrSVcQR+G5HlSm898tTY=
+	t=1718802766; cv=none; b=NnHs5rsFNcsTQkj6HrFRd/SZRRk+aVsNJB9vRRB/wuSqySKshzRE/hQ7og3aCWb6mzyWJJ0zsK9bu0W2ahC4PpxPaFYjrMhvqRR+4WfS7Idwkl+k8Fo82yr/JV925JbE5axg2kE8PoYQgUH/XzYNy2vhYmWLRua2k1Sb0hBY8Zc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802763; c=relaxed/simple;
-	bh=tMhptKip71JApJaakFOmpvKiITuVjbFdYpj2Ni+RjQQ=;
+	s=arc-20240116; t=1718802766; c=relaxed/simple;
+	bh=DCgwaCNAxfZmTfH6KZAIhYH02DbBUxleQPBWriXrHUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gfcm2vTqcHrHYZeDfhnL/RUNPBzHtFJlYf2TEZko+B9uBC8pMfLvFcb1y1hicyEmrYPxqT5mW8LM51RYqsunaszPZ14fWDbodWFRqv8YyiOGWEKPb8TfI+6sZ3VC/BmndBl5b3SSg3m2AbrzV5HE6h/ONUTc77NhilznadhLp0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IONRr+o2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vGKtUeZruAjbdhh6L8oYrcwznToktfbe7H9Z7tJjlWdC5jMnjOlx4vG5twr+iau1CduVH7KNTlBba/ta1q81qnNV49qsblk0kleNu1m955iHSpM/xTOtyxohF9wQOOqFoMW88i6UgI5WcSEaSYEOjNd1+w6rI6/RdLcO/8501gM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=giho6jdM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IONRr+o2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F61CC4AF1A;
-	Wed, 19 Jun 2024 13:12:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="giho6jdM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63E88C2BBFC;
+	Wed, 19 Jun 2024 13:12:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802762;
-	bh=tMhptKip71JApJaakFOmpvKiITuVjbFdYpj2Ni+RjQQ=;
+	s=korg; t=1718802765;
+	bh=DCgwaCNAxfZmTfH6KZAIhYH02DbBUxleQPBWriXrHUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IONRr+o2ivtCKBUC3Wvekr4vtgte9PPGDgRfaW8hhSU7xqdKOaMWFqIjHlvVXZo70
-	 n1MYsi3hpQY/OicNz/iP67wGgr6TQEIheFz1/Qj5KCF6W4QANywaj+A+88pJz/JT9E
-	 VLavqlCxC15Pt+jcB+KoUUeU+jWizlinAEOrWf84=
+	b=giho6jdMR7cFft1Vpuyqr1s/vS5W4ZET7eyS+mfOtOWt0GvcZZAH5NtYAPFM+soU5
+	 eYVrxPUFGTv6hnOZxHbwvbgOYz8mSbLMaJPLrVsPq3AnsJuqPw+nQd4A+AWL2Eaf/S
+	 xIaUD/nfCUIGp3JEa657uwAPzTiiH36qjQN0CIaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wen Gu <guwen@linux.alibaba.com>,
-	Wenjia Zhang <wenjia@linux.ibm.com>,
+	Tristram Ha <tristram.ha@microchip.com>,
 	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	Gerd Bayer <gbayer@linux.ibm.com>
-Subject: [PATCH 6.9 037/281] net/smc: avoid overwriting when adjusting sock bufsizes
-Date: Wed, 19 Jun 2024 14:53:16 +0200
-Message-ID: <20240619125611.277071273@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.9 038/281] net: phy: Micrel KSZ8061: fix errata solution not taking effect problem
+Date: Wed, 19 Jun 2024 14:53:17 +0200
+Message-ID: <20240619125611.315859433@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -53,66 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wen Gu <guwen@linux.alibaba.com>
+From: Tristram Ha <tristram.ha@microchip.com>
 
-[ Upstream commit fb0aa0781a5f457e3864da68af52c3b1f4f7fd8f ]
+[ Upstream commit 0a8d3f2e3e8d8aea8af017e14227b91d5989b696 ]
 
-When copying smc settings to clcsock, avoid setting clcsock's sk_sndbuf
-to sysctl_tcp_wmem[1], since this may overwrite the value set by
-tcp_sndbuf_expand() in TCP connection establishment.
+KSZ8061 needs to write to a MMD register at driver initialization to fix
+an errata.  This worked in 5.0 kernel but not in newer kernels.  The
+issue is the main phylib code no longer resets PHY at the very beginning.
+Calling phy resuming code later will reset the chip if it is already
+powered down at the beginning.  This wipes out the MMD register write.
+Solution is to implement a phy resume function for KSZ8061 to take care
+of this problem.
 
-And the other setting sk_{snd|rcv}buf to sysctl value in
-smc_adjust_sock_bufsizes() can also be omitted since the initialization
-of smc sock and clcsock has set sk_{snd|rcv}buf to smc.sysctl_{w|r}mem
-or ipv4_sysctl_tcp_{w|r}mem[1].
-
-Fixes: 30c3c4a4497c ("net/smc: Use correct buffer sizes when switching between TCP and SMC")
-Link: https://lore.kernel.org/r/5eaf3858-e7fd-4db8-83e8-3d7a3e0e9ae2@linux.alibaba.com
-Signed-off-by: Wen Gu <guwen@linux.alibaba.com>
-Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
-Reviewed-by: Gerd Bayer <gbayer@linux.ibm.com>, too.
+Fixes: 232ba3a51cc2 ("net: phy: Micrel KSZ8061: link failure after cable connect")
+Signed-off-by: Tristram Ha <tristram.ha@microchip.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c | 22 ++--------------------
- 1 file changed, 2 insertions(+), 20 deletions(-)
+ drivers/net/phy/micrel.c | 42 +++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 41 insertions(+), 1 deletion(-)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index 4b52b3b159c0e..5f9f3d4c1df5f 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -460,29 +460,11 @@ static int smc_bind(struct socket *sock, struct sockaddr *uaddr,
- static void smc_adjust_sock_bufsizes(struct sock *nsk, struct sock *osk,
- 				     unsigned long mask)
+diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
+index c2d99344ade41..4b22bb6393e26 100644
+--- a/drivers/net/phy/micrel.c
++++ b/drivers/net/phy/micrel.c
+@@ -785,6 +785,17 @@ static int ksz8061_config_init(struct phy_device *phydev)
  {
--	struct net *nnet = sock_net(nsk);
--
- 	nsk->sk_userlocks = osk->sk_userlocks;
--	if (osk->sk_userlocks & SOCK_SNDBUF_LOCK) {
-+	if (osk->sk_userlocks & SOCK_SNDBUF_LOCK)
- 		nsk->sk_sndbuf = osk->sk_sndbuf;
--	} else {
--		if (mask == SK_FLAGS_SMC_TO_CLC)
--			WRITE_ONCE(nsk->sk_sndbuf,
--				   READ_ONCE(nnet->ipv4.sysctl_tcp_wmem[1]));
--		else
--			WRITE_ONCE(nsk->sk_sndbuf,
--				   2 * READ_ONCE(nnet->smc.sysctl_wmem));
--	}
--	if (osk->sk_userlocks & SOCK_RCVBUF_LOCK) {
-+	if (osk->sk_userlocks & SOCK_RCVBUF_LOCK)
- 		nsk->sk_rcvbuf = osk->sk_rcvbuf;
--	} else {
--		if (mask == SK_FLAGS_SMC_TO_CLC)
--			WRITE_ONCE(nsk->sk_rcvbuf,
--				   READ_ONCE(nnet->ipv4.sysctl_tcp_rmem[1]));
--		else
--			WRITE_ONCE(nsk->sk_rcvbuf,
--				   2 * READ_ONCE(nnet->smc.sysctl_rmem));
--	}
+ 	int ret;
+ 
++	/* Chip can be powered down by the bootstrap code. */
++	ret = phy_read(phydev, MII_BMCR);
++	if (ret < 0)
++		return ret;
++	if (ret & BMCR_PDOWN) {
++		ret = phy_write(phydev, MII_BMCR, ret & ~BMCR_PDOWN);
++		if (ret < 0)
++			return ret;
++		usleep_range(1000, 2000);
++	}
++
+ 	ret = phy_write_mmd(phydev, MDIO_MMD_PMAPMD, MDIO_DEVID1, 0xB61A);
+ 	if (ret)
+ 		return ret;
+@@ -2054,6 +2065,35 @@ static int ksz9477_resume(struct phy_device *phydev)
+ 	return 0;
  }
  
- static void smc_copy_sock_settings(struct sock *nsk, struct sock *osk,
++static int ksz8061_resume(struct phy_device *phydev)
++{
++	int ret;
++
++	/* This function can be called twice when the Ethernet device is on. */
++	ret = phy_read(phydev, MII_BMCR);
++	if (ret < 0)
++		return ret;
++	if (!(ret & BMCR_PDOWN))
++		return 0;
++
++	genphy_resume(phydev);
++	usleep_range(1000, 2000);
++
++	/* Re-program the value after chip is reset. */
++	ret = phy_write_mmd(phydev, MDIO_MMD_PMAPMD, MDIO_DEVID1, 0xB61A);
++	if (ret)
++		return ret;
++
++	/* Enable PHY Interrupts */
++	if (phy_interrupt_is_valid(phydev)) {
++		phydev->interrupts = PHY_INTERRUPT_ENABLED;
++		if (phydev->drv->config_intr)
++			phydev->drv->config_intr(phydev);
++	}
++
++	return 0;
++}
++
+ static int kszphy_probe(struct phy_device *phydev)
+ {
+ 	const struct kszphy_type *type = phydev->drv->driver_data;
+@@ -4876,7 +4916,7 @@ static struct phy_driver ksphy_driver[] = {
+ 	.config_intr	= kszphy_config_intr,
+ 	.handle_interrupt = kszphy_handle_interrupt,
+ 	.suspend	= kszphy_suspend,
+-	.resume		= kszphy_resume,
++	.resume		= ksz8061_resume,
+ }, {
+ 	.phy_id		= PHY_ID_KSZ9021,
+ 	.phy_id_mask	= 0x000ffffe,
 -- 
 2.43.0
 
