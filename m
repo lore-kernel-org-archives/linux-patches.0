@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C3E1E492;
-	Wed, 19 Jun 2024 13:33:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C867E1E492;
+	Wed, 19 Jun 2024 13:33:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803989; cv=none; b=vFw8mEMGKvfsr6a5QYlDvHZ5wxir5bE0aVGU35bXdbZKIpXsDmzJr5xmxKLV3XNFnHaS4/5EBhUKNl3lcyvT3c7TaHW5eZ0aeNrlRryGf3umfrPfARVmTfW0x6BZXsJWNkvtP/7LEeua67uVIoj2SUICFkVFSHb9VjSgjAcycpI=
+	t=1718803991; cv=none; b=Yr1C3s/PGdXNTr/eTVOYZYwPf3Oa9V0mAJOvSZSFrKSpjpL8sIuf+xLo6QSbqv67kJXKvgR+jLoibB9T5hdJqj8wRaJuY+QStr4ICt5OjHfhzZV1yji8zzFpf5ztSyDg1HF0GMVQVMSVywujKOUKot7M0lfEc6lqiatpxy1eRU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803989; c=relaxed/simple;
-	bh=/rqKBATqmO+K5lFz5Yw0p3HvV8EC3epEMtAisgNteRE=;
+	s=arc-20240116; t=1718803991; c=relaxed/simple;
+	bh=mv9+WARAGVBdoYda71aUDJtop7jlMackufQngIaPEho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AHsKbi/8SPQeOuWaorcTDxeqC+IpZVy+pKY/xgglCOaPZ2/j9dIjxqQV4KTbJOxht51rIF62dvAmV7fhfiCB504vnuGqT85/w/0cjULA7992GrnesYuMQ2fbWhZD56oVcUBgIix5Aw8m0fdVZY/vpsbRAkljsMLUCsJAVht8amg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZVJQO32; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z1J/7v7BffrxX6i30GNoI+6ILSfDXaWncVE+gzzQshvRPjsZP14FHSqTmQ2Pb1VGxUZTfnKurSjnKjw9h/Y9yqTSRc26MMJA9U0fg366jf3LMoeHXvvVS0bsGJWASZfJlcFXFLD/vcqyMZYnLd50ap+6I3UeCHOQqRTWNXb/DaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uHGTF0/v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZVJQO32"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C23CC2BBFC;
-	Wed, 19 Jun 2024 13:33:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uHGTF0/v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C7C8C2BBFC;
+	Wed, 19 Jun 2024 13:33:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803988;
-	bh=/rqKBATqmO+K5lFz5Yw0p3HvV8EC3epEMtAisgNteRE=;
+	s=korg; t=1718803991;
+	bh=mv9+WARAGVBdoYda71aUDJtop7jlMackufQngIaPEho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MZVJQO32ibw5dBnRVOa46frswKIlnesbm+IFF4Jg2wu1O4Cla5+fqijzxcj5KKCyZ
-	 fz52nvN2TsT4lNzpQBBabffJ8H8WgVqXPLffxwAdyFzyvrIDDb4Wgvxw+NIeTKXW1p
-	 nEdJRbND09coDQrOInhyU1ZggmBFwIYZodlxAcWQ=
+	b=uHGTF0/vzXanC+XF6M1hAv0Ie/tn/TuCOQcLYrTT2NZOV/AC3zosfhrS+Fgt/aoBy
+	 NiE7r5gSLTWLz9m+erIw8xbGCroeenuBAgwS22chh1Z9J3y/784FfFMw8h6u5kpRm4
+	 8znm4N8zoldrMIxGWFda8AgZDHlS3az07KeWP9FY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Wang <wangjie125@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
 	Simon Horman <horms@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 140/217] net: hns3: add cond_resched() to hns3 ring buffer init process
-Date: Wed, 19 Jun 2024 14:56:23 +0200
-Message-ID: <20240619125602.093930143@linuxfoundation.org>
+Subject: [PATCH 6.1 141/217] liquidio: Adjust a NULL pointer handling path in lio_vf_rep_copy_packet
+Date: Wed, 19 Jun 2024 14:56:24 +0200
+Message-ID: <20240619125602.132415744@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -53,62 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jie Wang <wangjie125@huawei.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit 968fde83841a8c23558dfbd0a0c69d636db52b55 ]
+[ Upstream commit c44711b78608c98a3e6b49ce91678cd0917d5349 ]
 
-Currently hns3 ring buffer init process would hold cpu too long with big
-Tx/Rx ring depth. This could cause soft lockup.
+In lio_vf_rep_copy_packet() pg_info->page is compared to a NULL value,
+but then it is unconditionally passed to skb_add_rx_frag() which looks
+strange and could lead to null pointer dereference.
 
-So this patch adds cond_resched() to the process. Then cpu can break to
-run other tasks instead of busy looping.
+lio_vf_rep_copy_packet() call trace looks like:
+	octeon_droq_process_packets
+	 octeon_droq_fast_process_packets
+	  octeon_droq_dispatch_pkt
+	   octeon_create_recv_info
+	    ...search in the dispatch_list...
+	     ->disp_fn(rdisp->rinfo, ...)
+	      lio_vf_rep_pkt_recv(struct octeon_recv_info *recv_info, ...)
+In this path there is no code which sets pg_info->page to NULL.
+So this check looks unneeded and doesn't solve potential problem.
+But I guess the author had reason to add a check and I have no such card
+and can't do real test.
+In addition, the code in the function liquidio_push_packet() in
+liquidio/lio_core.c does exactly the same.
 
-Fixes: a723fb8efe29 ("net: hns3: refine for set ring parameters")
-Signed-off-by: Jie Wang <wangjie125@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Based on this, I consider the most acceptable compromise solution to
+adjust this issue by moving skb_add_rx_frag() into conditional scope.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 1f233f327913 ("liquidio: switchdev support for LiquidIO NIC")
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
 Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3_enet.c | 4 ++++
- drivers/net/ethernet/hisilicon/hns3/hns3_enet.h | 2 ++
- 2 files changed, 6 insertions(+)
+ drivers/net/ethernet/cavium/liquidio/lio_vf_rep.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-index 78d6752fe0519..4ce43c3a00a37 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-@@ -3538,6 +3538,9 @@ static int hns3_alloc_ring_buffers(struct hns3_enet_ring *ring)
- 		ret = hns3_alloc_and_attach_buffer(ring, i);
- 		if (ret)
- 			goto out_buffer_fail;
-+
-+		if (!(i % HNS3_RESCHED_BD_NUM))
-+			cond_resched();
- 	}
- 
- 	return 0;
-@@ -5111,6 +5114,7 @@ int hns3_init_all_ring(struct hns3_nic_priv *priv)
+diff --git a/drivers/net/ethernet/cavium/liquidio/lio_vf_rep.c b/drivers/net/ethernet/cavium/liquidio/lio_vf_rep.c
+index 600de587d7a98..e70b9ccca380e 100644
+--- a/drivers/net/ethernet/cavium/liquidio/lio_vf_rep.c
++++ b/drivers/net/ethernet/cavium/liquidio/lio_vf_rep.c
+@@ -272,13 +272,12 @@ lio_vf_rep_copy_packet(struct octeon_device *oct,
+ 				pg_info->page_offset;
+ 			memcpy(skb->data, va, MIN_SKB_SIZE);
+ 			skb_put(skb, MIN_SKB_SIZE);
++			skb_add_rx_frag(skb, skb_shinfo(skb)->nr_frags,
++					pg_info->page,
++					pg_info->page_offset + MIN_SKB_SIZE,
++					len - MIN_SKB_SIZE,
++					LIO_RXBUFFER_SZ);
  		}
- 
- 		u64_stats_init(&priv->ring[i].syncp);
-+		cond_resched();
- 	}
- 
- 	return 0;
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.h b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.h
-index 294a14b4fdefb..1aac93f9aaa15 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.h
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.h
-@@ -214,6 +214,8 @@ enum hns3_nic_state {
- #define HNS3_CQ_MODE_EQE			1U
- #define HNS3_CQ_MODE_CQE			0U
- 
-+#define HNS3_RESCHED_BD_NUM			1024
-+
- enum hns3_pkt_l2t_type {
- 	HNS3_L2_TYPE_UNICAST,
- 	HNS3_L2_TYPE_MULTICAST,
+-
+-		skb_add_rx_frag(skb, skb_shinfo(skb)->nr_frags,
+-				pg_info->page,
+-				pg_info->page_offset + MIN_SKB_SIZE,
+-				len - MIN_SKB_SIZE,
+-				LIO_RXBUFFER_SZ);
+ 	} else {
+ 		struct octeon_skb_page_info *pg_info =
+ 			((struct octeon_skb_page_info *)(skb->cb));
 -- 
 2.43.0
 
