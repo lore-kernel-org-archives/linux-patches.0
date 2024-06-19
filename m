@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FBF9143C58;
-	Wed, 19 Jun 2024 13:11:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3086D1494A6;
+	Wed, 19 Jun 2024 13:11:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802683; cv=none; b=BGgeYm+8I7zjUeHPSjD31GThOwDiKb9jgBuzqG/FP/dg7zpEvC1keEWdlbpY7uVeaKUfY5ZOPMMPXdHY5R50Ci6cVnFVbmmzxTeBWGMs6SbQ1RmqC6YKpOTITMiYbU9jG9YuK3VoyTsSmDDZIl7XDLJaOiy4UKzCLo/JDWZm44o=
+	t=1718802687; cv=none; b=rcVxhgbLI15BTd0VN+U808z8TAaDVAbLFY23AjA4Gm26M2Z19nvJgWkmjgw5nXSsCg5w+Dzb77c1vuZ5n5sfOtMLZauEvKkyB7owP5WjvbFASpsrQy6Mm1o3aqkjUWALwQ0DJxny6rNTgZzuhnM/UbQnsuilt6vN7tP3Tg1lhdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802683; c=relaxed/simple;
-	bh=VFJpsGYLnOFO/SuZpk0IQ491AbAo3nyWFoP/1kGO3/I=;
+	s=arc-20240116; t=1718802687; c=relaxed/simple;
+	bh=hY3ItH+G3kYiK0NZSjnutB2vbJynyptBAmp8yJaS33k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q3eHMNrmF4XvwKqKSiZC28ypPtTV7yBuFW7QqpQkhssgh4lt9nsCiRWMx8OSTp5aU4fUtoMNXc6VBCvd0+7N4eV6euOeQCcvdUH0NE+5AXh6heK/PRauKkO0m1uPMXvIUrydWVK4uvdafXfnCfhJsUbLNPrGMiTAZC/ROY2avkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aoxuWwaL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A2QZ+xeIG55mk+PzIa95CT5jEX85+qG2L/Cc2vMqWFNrRb/FnIyEo6maNtmqSQXaxduqk7RmlIYuBUon4nsqDQ/qEidL/qMM6PASsLaEZARO6gdV3s9VTatDWxAovZVw5NMWQS0fNroDexb75SETRhki/V7GUqZLU2DoFqtWaN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wan+kxrq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aoxuWwaL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DB51C4AF1A;
-	Wed, 19 Jun 2024 13:11:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wan+kxrq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48F46C32786;
+	Wed, 19 Jun 2024 13:11:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802682;
-	bh=VFJpsGYLnOFO/SuZpk0IQ491AbAo3nyWFoP/1kGO3/I=;
+	s=korg; t=1718802685;
+	bh=hY3ItH+G3kYiK0NZSjnutB2vbJynyptBAmp8yJaS33k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aoxuWwaLFGpkWo8HGHA/fMbdpTyEV+USP2GO/2q5ojV4qwI+8DsdkSnRueYCGlxOM
-	 fFY9MdO+62XjRk8lMi2hGqQfAoY7UTZtS9hL/2dmMLqEMShq/afZyleuTU2fKP09hd
-	 jgRul6dfgB4mJ1IVF1BzpjMAaCXBhMnkmsRHm970=
+	b=wan+kxrq6mWtkbMBq5M+LttJmux4fXSbuGUbwaATMlzcuW4IiCrgqRne1TvOnJro5
+	 Wt3EMRgwVJkJmXn38NVt55QaXkhgBct4MQV90R3emEU4Gwi4kpa1SwczL/U3e3vJK+
+	 p3gm4YMczdklJp/9kwl7XyH90FUi8q+DX+q3C9lY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huang Rui <ray.huang@amd.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Mario Limonciello <mario.limonciello@amd.com>,
-	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
-	Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>,
-	Perry Yuan <perry.yuan@amd.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 004/281] cpufreq: amd-pstate: Add quirk for the pstate CPPC capabilities missing
-Date: Wed, 19 Jun 2024 14:52:43 +0200
-Message-ID: <20240619125610.012090660@linuxfoundation.org>
+Subject: [PATCH 6.9 005/281] cpufreq: amd-pstate: remove global header file
+Date: Wed, 19 Jun 2024 14:52:44 +0200
+Message-ID: <20240619125610.049884759@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -55,138 +52,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Perry Yuan <perry.yuan@amd.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit eb8b6c36820214df96e7e86d8614d93f6b028f28 ]
+[ Upstream commit 779b8a14afde110dd3502566be907289eba72447 ]
 
-Add quirks table to get CPPC capabilities issue fixed by providing
-correct perf or frequency values while driver loading.
+When extra warnings are enabled, gcc points out a global variable
+definition in a header:
 
-If CPPC capabilities are not defined in the ACPI tables or wrongly
-defined by platform firmware, it needs to use quick to get those
-issues fixed with correct workaround values to make pstate driver
-can be loaded even though there are CPPC capabilities errors.
+In file included from drivers/cpufreq/amd-pstate-ut.c:29:
+include/linux/amd-pstate.h:123:27: error: 'amd_pstate_mode_string' defined but not used [-Werror=unused-const-variable=]
+  123 | static const char * const amd_pstate_mode_string[] = {
+      |                           ^~~~~~~~~~~~~~~~~~~~~~
 
-The workaround will match the broken BIOS which lack of CPPC capabilities
-nominal_freq and lowest_freq definition in the ACPI table.
+This header is only included from two files in the same directory,
+and one of them uses only a single definition from it, so clean it
+up by moving most of the contents into the driver that uses them,
+and making shared bits a local header file.
 
-$ cat /sys/devices/system/cpu/cpu0/acpi_cppc/lowest_freq
-0
-$ cat /sys/devices/system/cpu/cpu0/acpi_cppc/nominal_freq
-0
-
-Acked-by: Huang Rui <ray.huang@amd.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Tested-by: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
-Signed-off-by: Perry Yuan <perry.yuan@amd.com>
+Fixes: 36c5014e5460 ("cpufreq: amd-pstate: optimize driver working mode selection in amd_pstate_param()")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: 779b8a14afde ("cpufreq: amd-pstate: remove global header file")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c | 53 ++++++++++++++++++++++++++++++++++--
- include/linux/amd-pstate.h   |  6 ++++
- 2 files changed, 57 insertions(+), 2 deletions(-)
+ MAINTAINERS                                   |  1 -
+ drivers/cpufreq/amd-pstate-ut.c               |  3 +-
+ drivers/cpufreq/amd-pstate.c                  | 34 ++++++++++++++++++-
+ .../linux => drivers/cpufreq}/amd-pstate.h    | 33 ------------------
+ 4 files changed, 35 insertions(+), 36 deletions(-)
+ rename {include/linux => drivers/cpufreq}/amd-pstate.h (81%)
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 28e20975c26f5..3121709d99e3b 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1066,7 +1066,6 @@ L:	linux-pm@vger.kernel.org
+ S:	Supported
+ F:	Documentation/admin-guide/pm/amd-pstate.rst
+ F:	drivers/cpufreq/amd-pstate*
+-F:	include/linux/amd-pstate.h
+ F:	tools/power/x86/amd_pstate_tracer/amd_pstate_trace.py
+ 
+ AMD PTDMA DRIVER
+diff --git a/drivers/cpufreq/amd-pstate-ut.c b/drivers/cpufreq/amd-pstate-ut.c
+index f04ae67dda372..fc275d41d51e9 100644
+--- a/drivers/cpufreq/amd-pstate-ut.c
++++ b/drivers/cpufreq/amd-pstate-ut.c
+@@ -26,10 +26,11 @@
+ #include <linux/module.h>
+ #include <linux/moduleparam.h>
+ #include <linux/fs.h>
+-#include <linux/amd-pstate.h>
+ 
+ #include <acpi/cppc_acpi.h>
+ 
++#include "amd-pstate.h"
++
+ /*
+  * Abbreviations:
+  * amd_pstate_ut: used as a shortform for AMD P-State unit test.
 diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index e8385ca32f1fc..605b037913ff8 100644
+index 605b037913ff8..6c989d859b396 100644
 --- a/drivers/cpufreq/amd-pstate.c
 +++ b/drivers/cpufreq/amd-pstate.c
-@@ -68,6 +68,7 @@ static struct cpufreq_driver amd_pstate_epp_driver;
- static int cppc_state = AMD_PSTATE_UNDEFINED;
- static bool cppc_enabled;
- static bool amd_pstate_prefcore = true;
-+static struct quirk_entry *quirks;
+@@ -36,7 +36,6 @@
+ #include <linux/delay.h>
+ #include <linux/uaccess.h>
+ #include <linux/static_call.h>
+-#include <linux/amd-pstate.h>
+ #include <linux/topology.h>
  
- /*
-  * AMD Energy Preference Performance (EPP)
-@@ -112,6 +113,41 @@ static unsigned int epp_values[] = {
+ #include <acpi/processor.h>
+@@ -46,6 +45,8 @@
+ #include <asm/processor.h>
+ #include <asm/cpufeature.h>
+ #include <asm/cpu_device_id.h>
++
++#include "amd-pstate.h"
+ #include "amd-pstate-trace.h"
  
- typedef int (*cppc_mode_transition_fn)(int);
+ #define AMD_PSTATE_TRANSITION_LATENCY	20000
+@@ -53,6 +54,37 @@
+ #define CPPC_HIGHEST_PERF_PERFORMANCE	196
+ #define CPPC_HIGHEST_PERF_DEFAULT	166
  
-+static struct quirk_entry quirk_amd_7k62 = {
-+	.nominal_freq = 2600,
-+	.lowest_freq = 550,
++#define AMD_CPPC_EPP_PERFORMANCE		0x00
++#define AMD_CPPC_EPP_BALANCE_PERFORMANCE	0x80
++#define AMD_CPPC_EPP_BALANCE_POWERSAVE		0xBF
++#define AMD_CPPC_EPP_POWERSAVE			0xFF
++
++/*
++ * enum amd_pstate_mode - driver working mode of amd pstate
++ */
++enum amd_pstate_mode {
++	AMD_PSTATE_UNDEFINED = 0,
++	AMD_PSTATE_DISABLE,
++	AMD_PSTATE_PASSIVE,
++	AMD_PSTATE_ACTIVE,
++	AMD_PSTATE_GUIDED,
++	AMD_PSTATE_MAX,
 +};
 +
-+static int __init dmi_matched_7k62_bios_bug(const struct dmi_system_id *dmi)
-+{
-+	/**
-+	 * match the broken bios for family 17h processor support CPPC V2
-+	 * broken BIOS lack of nominal_freq and lowest_freq capabilities
-+	 * definition in ACPI tables
-+	 */
-+	if (boot_cpu_has(X86_FEATURE_ZEN2)) {
-+		quirks = dmi->driver_data;
-+		pr_info("Overriding nominal and lowest frequencies for %s\n", dmi->ident);
-+		return 1;
-+	}
-+
-+	return 0;
-+}
-+
-+static const struct dmi_system_id amd_pstate_quirks_table[] __initconst = {
-+	{
-+		.callback = dmi_matched_7k62_bios_bug,
-+		.ident = "AMD EPYC 7K62",
-+		.matches = {
-+			DMI_MATCH(DMI_BIOS_VERSION, "5.14"),
-+			DMI_MATCH(DMI_BIOS_RELEASE, "12/12/2019"),
-+		},
-+		.driver_data = &quirk_amd_7k62,
-+	},
-+	{}
++static const char * const amd_pstate_mode_string[] = {
++	[AMD_PSTATE_UNDEFINED]   = "undefined",
++	[AMD_PSTATE_DISABLE]     = "disable",
++	[AMD_PSTATE_PASSIVE]     = "passive",
++	[AMD_PSTATE_ACTIVE]      = "active",
++	[AMD_PSTATE_GUIDED]      = "guided",
++	NULL,
 +};
-+MODULE_DEVICE_TABLE(dmi, amd_pstate_quirks_table);
-+
- static inline int get_mode_idx_from_str(const char *str, size_t size)
- {
- 	int i;
-@@ -818,8 +854,16 @@ static int amd_pstate_init_freq(struct amd_cpudata *cpudata)
- 	if (ret)
- 		return ret;
- 
--	min_freq = cppc_perf.lowest_freq * 1000;
--	nominal_freq = cppc_perf.nominal_freq;
-+	if (quirks && quirks->lowest_freq)
-+		min_freq = quirks->lowest_freq * 1000;
-+	else
-+		min_freq = cppc_perf.lowest_freq * 1000;
-+
-+	if (quirks && quirks->nominal_freq)
-+		nominal_freq = quirks->nominal_freq ;
-+	else
-+		nominal_freq = cppc_perf.nominal_freq;
-+
- 	nominal_perf = READ_ONCE(cpudata->nominal_perf);
- 
- 	highest_perf = READ_ONCE(cpudata->highest_perf);
-@@ -1664,6 +1708,11 @@ static int __init amd_pstate_init(void)
- 	if (cpufreq_get_current_driver())
- 		return -EEXIST;
- 
-+	quirks = NULL;
-+
-+	/* check if this machine need CPPC quirks */
-+	dmi_check_system(amd_pstate_quirks_table);
-+
- 	switch (cppc_state) {
- 	case AMD_PSTATE_UNDEFINED:
- 		/* Disable on the following configs by default:
-diff --git a/include/linux/amd-pstate.h b/include/linux/amd-pstate.h
-index d21838835abda..7b2cbb892fd91 100644
---- a/include/linux/amd-pstate.h
-+++ b/include/linux/amd-pstate.h
-@@ -124,4 +124,10 @@ static const char * const amd_pstate_mode_string[] = {
- 	[AMD_PSTATE_GUIDED]      = "guided",
- 	NULL,
- };
 +
 +struct quirk_entry {
 +	u32 nominal_freq;
 +	u32 lowest_freq;
 +};
 +
+ /*
+  * TODO: We need more time to fine tune processors with shared memory solution
+  * with community together.
+diff --git a/include/linux/amd-pstate.h b/drivers/cpufreq/amd-pstate.h
+similarity index 81%
+rename from include/linux/amd-pstate.h
+rename to drivers/cpufreq/amd-pstate.h
+index 7b2cbb892fd91..bc341f35908d7 100644
+--- a/include/linux/amd-pstate.h
++++ b/drivers/cpufreq/amd-pstate.h
+@@ -1,7 +1,5 @@
+ /* SPDX-License-Identifier: GPL-2.0-only */
+ /*
+- * linux/include/linux/amd-pstate.h
+- *
+  * Copyright (C) 2022 Advanced Micro Devices, Inc.
+  *
+  * Author: Meng Li <li.meng@amd.com>
+@@ -12,11 +10,6 @@
+ 
+ #include <linux/pm_qos.h>
+ 
+-#define AMD_CPPC_EPP_PERFORMANCE		0x00
+-#define AMD_CPPC_EPP_BALANCE_PERFORMANCE	0x80
+-#define AMD_CPPC_EPP_BALANCE_POWERSAVE		0xBF
+-#define AMD_CPPC_EPP_POWERSAVE			0xFF
+-
+ /*********************************************************************
+  *                        AMD P-state INTERFACE                       *
+  *********************************************************************/
+@@ -104,30 +97,4 @@ struct amd_cpudata {
+ 	bool	suspended;
+ };
+ 
+-/*
+- * enum amd_pstate_mode - driver working mode of amd pstate
+- */
+-enum amd_pstate_mode {
+-	AMD_PSTATE_UNDEFINED = 0,
+-	AMD_PSTATE_DISABLE,
+-	AMD_PSTATE_PASSIVE,
+-	AMD_PSTATE_ACTIVE,
+-	AMD_PSTATE_GUIDED,
+-	AMD_PSTATE_MAX,
+-};
+-
+-static const char * const amd_pstate_mode_string[] = {
+-	[AMD_PSTATE_UNDEFINED]   = "undefined",
+-	[AMD_PSTATE_DISABLE]     = "disable",
+-	[AMD_PSTATE_PASSIVE]     = "passive",
+-	[AMD_PSTATE_ACTIVE]      = "active",
+-	[AMD_PSTATE_GUIDED]      = "guided",
+-	NULL,
+-};
+-
+-struct quirk_entry {
+-	u32 nominal_freq;
+-	u32 lowest_freq;
+-};
+-
  #endif /* _LINUX_AMD_PSTATE_H */
 -- 
 2.43.0
