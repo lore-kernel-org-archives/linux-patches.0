@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA9F13D525;
-	Wed, 19 Jun 2024 12:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EFC21459F2;
+	Wed, 19 Jun 2024 12:59:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718801983; cv=none; b=uAUYQ9gHOFplcgst/bYqURZcQ23YYmIvDGc5yQ0cQVvZLEHZn0xXvI441oJOusMx4hzt4SfvlZv7dxCtdFT3e5YqjZsIRJWHgIt4C7Fd5YwGcT2ENxkOzsmRoqK7hFKOUrcSg5C1/vsiJoxmWOSIDSHC1EuzqanuhQ9VutTvoP0=
+	t=1718801986; cv=none; b=SuDbHd8PKsjZ5j+iSy+hUxgKOGuzXcim2yA3ZLJVYIppIYxOL7s+LvAcVgsuXRNkS8yKg9GqNByWHjMAo+Q7yNqvQwU6LJAQAv+T+i8/lxkcuyAqinuFBO0ivRemrJD59tcVnlvZy9+K+Qt6nskPaO3msESqWOVP8KdM+ENstlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718801983; c=relaxed/simple;
-	bh=ZNh7mByHZ7LbLROBNezbZXroWbO5ZgalaNnGCGd6gL4=;
+	s=arc-20240116; t=1718801986; c=relaxed/simple;
+	bh=tN4Guvku0s8tlEAq3k9N2NrgluQK5CbSwo/bk6lr8Wg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NPC+F9a9O4mdkNu0ZgxlIt7XcQzUtxGEOjyQURmUGLgjf4TIayOWam4rs1NJITZinalZABelWs0e+onaobjd3vj0fu4GHcqpiyEtOqTJiSfuO42UN6VftUtLfcAVElFCqFQQixuXtn0H9rZKGUDOldyMxUzmM16knrBcDCOJK/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UA0DkhHM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LsB6bPI9dlLC7on+QluIopdPmK+LhJ4fk4LPkdA/jTdUp00GBj5GaIuambrdP4lYz70IUKNYry9OHkpP11kG3GZHUrl/RkwhOp+zqZEJAjzrG7SdHwa3HUgBhlIGSbXNERUqnEnySS5ZjnbWJthzAONzSihae1uz1p1FTsjvaXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mvg5IDh6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UA0DkhHM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EDEBC2BBFC;
-	Wed, 19 Jun 2024 12:59:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mvg5IDh6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26F45C2BBFC;
+	Wed, 19 Jun 2024 12:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718801983;
-	bh=ZNh7mByHZ7LbLROBNezbZXroWbO5ZgalaNnGCGd6gL4=;
+	s=korg; t=1718801986;
+	bh=tN4Guvku0s8tlEAq3k9N2NrgluQK5CbSwo/bk6lr8Wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UA0DkhHM/NCfsFnJY/7SvuhZ3pV9ikxYJLaqHDb7NcCISU9tkia6Hok+UO9zxO4Qa
-	 rT0sKzVwj91rquInxwBjAYF0Jz2Ex1HZqC1tcZhnortDUXEtTfFsQ9B0vq0OTSMa32
-	 5fqxL3LmX8/jz5M0oF2w70LGtj910l3uKt81C5tI=
+	b=Mvg5IDh6TO3jh9q6w3g04XqXrzgu3vhgStm658DwkR8cvM9P9lFuN1shBULo3ZDPx
+	 z24afXlbUX56QkLzJRSL6C+CoUcd/kv0/O530JwZQjN783FL+ORJDGS6mTyK/DlESE
+	 2k6ESBKmZO1IoGlhQtW17zYI0/Pf3XPyUDgevbkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Noam Rathaus <noamr@ssd-disclosure.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Karol Kolacinski <karol.kolacinski@intel.com>,
+	Richard Cochran <richardcochran@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 042/267] net/sched: taprio: always validate TCA_TAPRIO_ATTR_PRIOMAP
-Date: Wed, 19 Jun 2024 14:53:13 +0200
-Message-ID: <20240619125607.982373439@linuxfoundation.org>
+Subject: [PATCH 6.6 043/267] ptp: Fix error message on failed pin verification
+Date: Wed, 19 Jun 2024 14:53:14 +0200
+Message-ID: <20240619125608.021131980@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -54,61 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Karol Kolacinski <karol.kolacinski@intel.com>
 
-[ Upstream commit f921a58ae20852d188f70842431ce6519c4fdc36 ]
+[ Upstream commit 323a359f9b077f382f4483023d096a4d316fd135 ]
 
-If one TCA_TAPRIO_ATTR_PRIOMAP attribute has been provided,
-taprio_parse_mqprio_opt() must validate it, or userspace
-can inject arbitrary data to the kernel, the second time
-taprio_change() is called.
+On failed verification of PTP clock pin, error message prints channel
+number instead of pin index after "pin", which is incorrect.
 
-First call (with valid attributes) sets dev->num_tc
-to a non zero value.
+Fix error message by adding channel number to the message and printing
+pin number instead of channel number.
 
-Second call (with arbitrary mqprio attributes)
-returns early from taprio_parse_mqprio_opt()
-and bad things can happen.
-
-Fixes: a3d43c0d56f1 ("taprio: Add support adding an admin schedule")
-Reported-by: Noam Rathaus <noamr@ssd-disclosure.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://lore.kernel.org/r/20240604181511.769870-1-edumazet@google.com
+Fixes: 6092315dfdec ("ptp: introduce programmable pins.")
+Signed-off-by: Karol Kolacinski <karol.kolacinski@intel.com>
+Acked-by: Richard Cochran <richardcochran@gmail.com>
+Link: https://lore.kernel.org/r/20240604120555.16643-1-karol.kolacinski@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_taprio.c | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ drivers/ptp/ptp_chardev.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
-index a315748a5e531..418d4a846d04a 100644
---- a/net/sched/sch_taprio.c
-+++ b/net/sched/sch_taprio.c
-@@ -1186,16 +1186,13 @@ static int taprio_parse_mqprio_opt(struct net_device *dev,
- {
- 	bool allow_overlapping_txqs = TXTIME_ASSIST_IS_ENABLED(taprio_flags);
+diff --git a/drivers/ptp/ptp_chardev.c b/drivers/ptp/ptp_chardev.c
+index 5a3a4cc0bec82..91cc6ffa0095e 100644
+--- a/drivers/ptp/ptp_chardev.c
++++ b/drivers/ptp/ptp_chardev.c
+@@ -84,7 +84,8 @@ int ptp_set_pinfunc(struct ptp_clock *ptp, unsigned int pin,
+ 	}
  
--	if (!qopt && !dev->num_tc) {
--		NL_SET_ERR_MSG(extack, "'mqprio' configuration is necessary");
--		return -EINVAL;
--	}
--
--	/* If num_tc is already set, it means that the user already
--	 * configured the mqprio part
--	 */
--	if (dev->num_tc)
-+	if (!qopt) {
-+		if (!dev->num_tc) {
-+			NL_SET_ERR_MSG(extack, "'mqprio' configuration is necessary");
-+			return -EINVAL;
-+		}
- 		return 0;
-+	}
+ 	if (info->verify(info, pin, func, chan)) {
+-		pr_err("driver cannot use function %u on pin %u\n", func, chan);
++		pr_err("driver cannot use function %u and channel %u on pin %u\n",
++		       func, chan, pin);
+ 		return -EOPNOTSUPP;
+ 	}
  
- 	/* taprio imposes that traffic classes map 1:n to tx queues */
- 	if (qopt->num_tc > dev->num_tx_queues) {
 -- 
 2.43.0
 
