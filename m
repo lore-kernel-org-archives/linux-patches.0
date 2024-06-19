@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0193414375A;
-	Wed, 19 Jun 2024 13:14:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE3FA1494A9;
+	Wed, 19 Jun 2024 13:14:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802896; cv=none; b=GxAoAUZscskIxx/U3IprCAkLXyTlBFOoVBQxlexk7fNOxH2NCgsmX3T8Ns8uWeixYVhVsLqxKOqbTcYaSwFVdZztsqya599FzM1DOsijbZgdtc9DAvn9MhDK9WcNEAoF4uk2c+6N6SM886yWO9NnsuAgeWxI3l8qVYTOCBAKb8s=
+	t=1718802898; cv=none; b=Pe74wtqijzzZ3lkfnXW9DDNuwANWzfJ9ijm0vxD4kCEjgn30sKW7jTOZo52mtjeXQPufNflU4iYg4wG1/AalcQUDoahu4bSsPcoEw1LIv4nGuLaxBN+JW4UjJDI2KwVmKskrnAPAsPsx5RTZnX6EISRgqqvkA/azaZ/CDBm15dk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802896; c=relaxed/simple;
-	bh=7EBfyLt0lzdzqLeaTqtu6WcWcjZRi/pJCevNGtqAWmc=;
+	s=arc-20240116; t=1718802898; c=relaxed/simple;
+	bh=0uWX1OlRYIhFGWZY7tI56uZg0Uqe/BKYypzUZxOfWkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A9wPNpgK2YC4Ny5WvoVbuN0v7DLILq5VZcQ2NxVfw5DW29H/+iszYDMoUAUu8Gtel3LBhRxMEH0rR3DgmULJ04Wy/TiK18pm9/HzIedd14J7Xe45vJ4cuxso6mp4UFsriSs17mYUmug7gBgDaqJXYvwJJNJb5TXFVLeptvcbwVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DGHc4GMf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D2pFNkIHGrRpDHsYJ/lDh/rqO/4Ldqn92BhB8YlYlSGcDm6HDeCd01u0MQOzy1aSjYtl6rA2yR+YT8RKM0zeUCGRQqVK/BmZwBncHoA/rpJ4MX+TgNOVMY0qemYjWRuZGLz+4nfQ0wQMZAdpOH8/YeFhbn4/3ax34llhae3eU3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Othd4Ehd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DGHc4GMf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 114A5C2BBFC;
-	Wed, 19 Jun 2024 13:14:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Othd4Ehd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01A2EC2BBFC;
+	Wed, 19 Jun 2024 13:14:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802895;
-	bh=7EBfyLt0lzdzqLeaTqtu6WcWcjZRi/pJCevNGtqAWmc=;
+	s=korg; t=1718802898;
+	bh=0uWX1OlRYIhFGWZY7tI56uZg0Uqe/BKYypzUZxOfWkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DGHc4GMfUX1oTPg2+hzneD+Q9kmkgMIAbpoUVQc008Eeb85yS/QNXP4AKJ+wMrV6i
-	 gBacooRP+ET9GJWKrr3fhCmR8JFy8bd5ic89Pok83KbernwPVmYW8BmBIx9HTSMMUv
-	 DRN8FBIzOmIot0PTo0/rW/COTLd1i0LkuB+JU2Us=
+	b=Othd4EhdMRRr3fd/gSwsmXINHuT+efttXcLn1DJ9j6hEWo2RTlbwwbQxSXYpRCzVW
+	 i7/PQCunJixKjzSkV6nRJAFxZ6Ufn9iS/RhzpIF1/vTo8cdXpWaJidyfTmjRTR2u5j
+	 IRtAzOlGpj72IHpqkvthLwrlUAlZPqfKHeSsIhZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Ernberg <john.ernberg@actia.se>
-Subject: [PATCH 6.9 084/281] USB: xen-hcd: Traverse host/ when CONFIG_USB_XEN_HCD is selected
-Date: Wed, 19 Jun 2024 14:54:03 +0200
-Message-ID: <20240619125613.073858748@linuxfoundation.org>
+	Amit Sunil Dhamne <amitsd@google.com>,
+	Ondrej Jirman <megi@xff.cz>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH 6.9 085/281] usb: typec: tcpm: fix use-after-free case in tcpm_register_source_caps
+Date: Wed, 19 Jun 2024 14:54:04 +0200
+Message-ID: <20240619125613.115396003@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -49,33 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Ernberg <john.ernberg@actia.se>
+From: Amit Sunil Dhamne <amitsd@google.com>
 
-commit 8475ffcfb381a77075562207ce08552414a80326 upstream.
+commit e7e921918d905544500ca7a95889f898121ba886 upstream.
 
-If no other USB HCDs are selected when compiling a small pure virutal
-machine, the Xen HCD driver cannot be built.
+There could be a potential use-after-free case in
+tcpm_register_source_caps(). This could happen when:
+ * new (say invalid) source caps are advertised
+ * the existing source caps are unregistered
+ * tcpm_register_source_caps() returns with an error as
+   usb_power_delivery_register_capabilities() fails
 
-Fix it by traversing down host/ if CONFIG_USB_XEN_HCD is selected.
+This causes port->partner_source_caps to hold on to the now freed source
+caps.
 
-Fixes: 494ed3997d75 ("usb: Introduce Xen pvUSB frontend (xen hcd)")
-Cc: stable@vger.kernel.org # v5.17+
-Signed-off-by: John Ernberg <john.ernberg@actia.se>
-Link: https://lore.kernel.org/r/20240517114345.1190755-1-john.ernberg@actia.se
+Reset port->partner_source_caps value to NULL after unregistering
+existing source caps.
+
+Fixes: 230ecdf71a64 ("usb: typec: tcpm: unregister existing source caps before re-registration")
+Cc: stable@vger.kernel.org
+Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
+Reviewed-by: Ondrej Jirman <megi@xff.cz>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240514220134.2143181-1-amitsd@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/Makefile |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/typec/tcpm/tcpm.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/Makefile
-+++ b/drivers/usb/Makefile
-@@ -35,6 +35,7 @@ obj-$(CONFIG_USB_R8A66597_HCD)	+= host/
- obj-$(CONFIG_USB_FSL_USB2)	+= host/
- obj-$(CONFIG_USB_FOTG210_HCD)	+= host/
- obj-$(CONFIG_USB_MAX3421_HCD)	+= host/
-+obj-$(CONFIG_USB_XEN_HCD)	+= host/
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -3014,8 +3014,10 @@ static int tcpm_register_source_caps(str
+ 	memcpy(caps.pdo, port->source_caps, sizeof(u32) * port->nr_source_caps);
+ 	caps.role = TYPEC_SOURCE;
  
- obj-$(CONFIG_USB_C67X00_HCD)	+= c67x00/
+-	if (cap)
++	if (cap) {
+ 		usb_power_delivery_unregister_capabilities(cap);
++		port->partner_source_caps = NULL;
++	}
  
+ 	cap = usb_power_delivery_register_capabilities(port->partner_pd, &caps);
+ 	if (IS_ERR(cap))
 
 
