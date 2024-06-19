@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34F712FB31;
-	Wed, 19 Jun 2024 13:08:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0BDA12FB31;
+	Wed, 19 Jun 2024 13:08:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802512; cv=none; b=cVxmt7tsQUd+1S2T6pEvNldXdvxWiVQL1zcCNKLUXNDWHEx07MY26orWP5oUd1zA8TBsux/JjQz3/OMzjeLAXLEWnAK7L7+LN1xqzxQ8jAhXBpPV0k16B/K8gYKU3d7v9PPKHrtLOW7uKXZL8VId3yXunneUypS3k7U0p+B5l+0=
+	t=1718802515; cv=none; b=dHUE5hDBzru77N12t4wiEqoqsQ53Yc6dH/7RxI6exSAc6VWRzSIQKpcOfFHlxvTlD9v7/HurVBMdgovyx1tOaDDkK5H/TUog90CRY+mF+v0DbnrO5Xw6JeASgh9NNs/RofyHx23dcGbzA6KWJ7xRd1DUjlHHu5Cey9yObnnkKTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802512; c=relaxed/simple;
-	bh=vhexItMjPauN3p9UbqX2rCa6QjezmjMfs2DmXbZgGOA=;
+	s=arc-20240116; t=1718802515; c=relaxed/simple;
+	bh=bWUZfzpuljJu198XuADiyT7chP3k2eU611aPCsxaZzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sWfwDhp5Nrx7ys4XkmIBe20aep0bVI2C6sNNZH7x7XK2yLYf6NBBhJLdJVpspQY4WAgpbKMEBywgg86qMQyVYnlVEut0rk64Qslpy9RvI1a3rc/riBHaf6FRussVfXbqRW4W/4g0f17pEpHCpQ7QbG1mAAzu75QcK1fGipnGhSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CsTis+mV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cS+Dh3G9NyH1tjskMKDzsBZxkcNbLREGXNgRcJYBDkmMVPHuvBzgUt/EIOYKN0n+jOvzPUyJrmw8IC1GIY5O62SOQGdBp/NPNG39sZoUO3AiPYfPDV6Y+BleZPm+Uj8eXzteKbkem/w0BmSRXNJKpf4343wroCgTuABle3WzvI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sdDG/48B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CsTis+mV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CC6AC2BBFC;
-	Wed, 19 Jun 2024 13:08:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sdDG/48B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62D11C2BBFC;
+	Wed, 19 Jun 2024 13:08:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802511;
-	bh=vhexItMjPauN3p9UbqX2rCa6QjezmjMfs2DmXbZgGOA=;
+	s=korg; t=1718802514;
+	bh=bWUZfzpuljJu198XuADiyT7chP3k2eU611aPCsxaZzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CsTis+mVLcodL7fE8xUBKDCxBrfGWSu9Xv46NlLSCK7HowxL1+2FoSPdf8COF9Hur
-	 vRR2gjATf/2+RgRJwC/TS4W7RQXlNdRjum/SetToVivpiNqGw2mwXolHAmUSgASX4u
-	 JR3U3jH6u9L+0Wwi74MNKB2aaNMf9lYu0941wx8o=
+	b=sdDG/48BvHmVAZtT/TMYx2uLBZpcE7VvwAbwlbdJTrb3qG3UPzufZABdF+4s8AeFI
+	 tpkBjqZ5JTrzd8VKn2L5Uo0AUJiVFtqVE83+X1atAv6a+Q//XFmWI0mlCPKAQQ7N+g
+	 lhSdNvBXlYsvVIytbZIeZXWDZ9Pr9ubQXcZwEDLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Kaplan <david.kaplan@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	stable@kernel.org
-Subject: [PATCH 6.6 190/267] x86/kexec: Fix bug with call depth tracking
-Date: Wed, 19 Jun 2024 14:55:41 +0200
-Message-ID: <20240619125613.632274682@linuxfoundation.org>
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.6 191/267] x86/amd_nb: Check for invalid SMN reads
+Date: Wed, 19 Jun 2024 14:55:42 +0200
+Message-ID: <20240619125613.669801916@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -52,56 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Kaplan <david.kaplan@amd.com>
+From: Yazen Ghannam <yazen.ghannam@amd.com>
 
-commit 93c1800b3799f17375989b0daf76497dd3e80922 upstream.
+commit c625dabbf1c4a8e77e4734014f2fde7aa9071a1f upstream.
 
-The call to cc_platform_has() triggers a fault and system crash if call depth
-tracking is active because the GS segment has been reset by load_segments() and
-GS_BASE is now 0 but call depth tracking uses per-CPU variables to operate.
+AMD Zen-based systems use a System Management Network (SMN) that
+provides access to implementation-specific registers.
 
-Call cc_platform_has() earlier in the function when GS is still valid.
+SMN accesses are done indirectly through an index/data pair in PCI
+config space. The PCI config access may fail and return an error code.
+This would prevent the "read" value from being updated.
 
-  [ bp: Massage. ]
+However, the PCI config access may succeed, but the return value may be
+invalid. This is in similar fashion to PCI bad reads, i.e. return all
+bits set.
 
-Fixes: 5d8213864ade ("x86/retbleed: Add SKL return thunk")
-Signed-off-by: David Kaplan <david.kaplan@amd.com>
+Most systems will return 0 for SMN addresses that are not accessible.
+This is in line with AMD convention that unavailable registers are
+Read-as-Zero/Writes-Ignored.
+
+However, some systems will return a "PCI Error Response" instead. This
+value, along with an error code of 0 from the PCI config access, will
+confuse callers of the amd_smn_read() function.
+
+Check for this condition, clear the return value, and set a proper error
+code.
+
+Fixes: ddfe43cdc0da ("x86/amd_nb: Add SMN and Indirect Data Fabric access for AMD Fam17h")
+Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/20240603083036.637-1-bp@kernel.org
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230403164244.471141-1-yazen.ghannam@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/machine_kexec_64.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ arch/x86/kernel/amd_nb.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kernel/machine_kexec_64.c
-+++ b/arch/x86/kernel/machine_kexec_64.c
-@@ -298,8 +298,15 @@ void machine_kexec_cleanup(struct kimage
- void machine_kexec(struct kimage *image)
+--- a/arch/x86/kernel/amd_nb.c
++++ b/arch/x86/kernel/amd_nb.c
+@@ -209,7 +209,14 @@ out:
+ 
+ int amd_smn_read(u16 node, u32 address, u32 *value)
  {
- 	unsigned long page_list[PAGES_NR];
--	void *control_page;
-+	unsigned int host_mem_enc_active;
- 	int save_ftrace_enabled;
-+	void *control_page;
+-	return __amd_smn_rw(node, address, value, false);
++	int err = __amd_smn_rw(node, address, value, false);
 +
-+	/*
-+	 * This must be done before load_segments() since if call depth tracking
-+	 * is used then GS must be valid to make any function calls.
-+	 */
-+	host_mem_enc_active = cc_platform_has(CC_ATTR_HOST_MEM_ENCRYPT);
++	if (PCI_POSSIBLE_ERROR(*value)) {
++		err = -ENODEV;
++		*value = 0;
++	}
++
++	return err;
+ }
+ EXPORT_SYMBOL_GPL(amd_smn_read);
  
- #ifdef CONFIG_KEXEC_JUMP
- 	if (image->preserve_context)
-@@ -361,7 +368,7 @@ void machine_kexec(struct kimage *image)
- 				       (unsigned long)page_list,
- 				       image->start,
- 				       image->preserve_context,
--				       cc_platform_has(CC_ATTR_HOST_MEM_ENCRYPT));
-+				       host_mem_enc_active);
- 
- #ifdef CONFIG_KEXEC_JUMP
- 	if (image->preserve_context)
 
 
