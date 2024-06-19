@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5FBFAD58;
-	Wed, 19 Jun 2024 13:16:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE674AD58;
+	Wed, 19 Jun 2024 13:16:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802983; cv=none; b=E0WLuNlQR5YOS3pZPZ6SqNUVwcDRyUlv0C2uB5ocUWiOzU3WArBAcG4KFWiv5plDIGLdRUuNGUhh1WdqsnpON9CCHwiC6fWDdg4nOhl6sDIQM9yJgRoAF18IZXi3L59A3FEMZsfLEfIupF45JEpmW3TCABCL7/w6ZseKWiaUKJM=
+	t=1718802986; cv=none; b=scEL2vQ0Nnr9FEf4mx+NaQQyto54yGKvR7k8ZD0Yvd5jtrOqeHOOqhbaPC7TFNVzfJvXkcs+axRYiEsuMpw9/OcjwgrgTm9htYNQnRPTBy/8udQq2dja3jr3WyOgoEKNO6/WIZriMjFNi9mghEN0eHqqW/12/9vzn5TVjqxjTNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802983; c=relaxed/simple;
-	bh=7Pp63fJAiYENQYHKJ/NMWV0GGxfHe1G3AM2Fcy94iqE=;
+	s=arc-20240116; t=1718802986; c=relaxed/simple;
+	bh=j2PEMCtIsb1kLLwrQTT98eamhv/g9VLB/CiWMGO7aSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EyxZ/o45kMAvK7Yalcz3BPnSmQDRohDfLVPLiTNu/PUny11mKiouFAyBIBUN0rdZDb4seMoS3lKz/WVHdXvFu5As0rYv1CNNwdYrQ2dWe16CGmlU6XApZKXWGKhsRdMfLGYbdBV/3QAOyCyQlfcGzVQE5Rb6lfmv46u48voZ4IM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lhJr3uN/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iM+MpunaXxtcl0ggf/WqBx3qxh2JC+d99WdgWIoO7cSuzm700DeYwhpSBQkuzVyjVRUMzC5PxdIZpxoQutKhloQPXlE9pmyXcGh5b+3W9EKqFUz2t8txlKOe3/nF9EUWc5BfgOfoavz5SVmtcPj6X7v5VCZPtFv2ukZCpdgOBvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ROTq7yx3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lhJr3uN/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C190C2BBFC;
-	Wed, 19 Jun 2024 13:16:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ROTq7yx3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45243C2BBFC;
+	Wed, 19 Jun 2024 13:16:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802983;
-	bh=7Pp63fJAiYENQYHKJ/NMWV0GGxfHe1G3AM2Fcy94iqE=;
+	s=korg; t=1718802986;
+	bh=j2PEMCtIsb1kLLwrQTT98eamhv/g9VLB/CiWMGO7aSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lhJr3uN/OVDUk2AGJ/C1J7ipKiNvnkgJWwozVwOLTDVMT+OctX5AyK93RhmPZNtNZ
-	 8W44pHFzI1P7G2wXfw6VI98ssOF+GsgBbYFX0cjHBB4OqeO4adc57zh8phaYOyRfPj
-	 s1LuMIFqX1+B968CITvwrGjBg09hpIHWHVDSxDTs=
+	b=ROTq7yx3RF30RWgdU6Hs8pPkrSQPNpZzXbH/sbWb4kppsXPKLBCUYBRWcLY0jnwvB
+	 JUBHq656qgGqGXIOvDjfiU+KyCPEjV227ZPVlQk1tY/hjMOrJ3Rq50kwksGuws78g9
+	 bCwDyRHsO/QPmJyvl7XH6TBIHXCkesZq2PEouKTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>,
 	Alan Stern <stern@rowland.harvard.edu>,
-	syzbot+5f996b83575ef4058638@syzkaller.appspotmail.com,
-	syzbot+1b2abad17596ad03dcff@syzkaller.appspotmail.com
-Subject: [PATCH 6.9 082/281] USB: class: cdc-wdm: Fix CPU lockup caused by excessive log messages
-Date: Wed, 19 Jun 2024 14:54:01 +0200
-Message-ID: <20240619125612.996893809@linuxfoundation.org>
+	Dmitry Vyukov <dvyukov@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>
+Subject: [PATCH 6.9 083/281] kcov, usb: disable interrupts in kcov_remote_start_usb_softirq
+Date: Wed, 19 Jun 2024 14:54:02 +0200
+Message-ID: <20240619125613.035421293@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -51,78 +52,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Andrey Konovalov <andreyknvl@gmail.com>
 
-commit 22f00812862564b314784167a89f27b444f82a46 upstream.
+commit f85d39dd7ed89ffdd622bc1de247ffba8d961504 upstream.
 
-The syzbot fuzzer found that the interrupt-URB completion callback in
-the cdc-wdm driver was taking too long, and the driver's immediate
-resubmission of interrupt URBs with -EPROTO status combined with the
-dummy-hcd emulation to cause a CPU lockup:
+After commit 8fea0c8fda30 ("usb: core: hcd: Convert from tasklet to BH
+workqueue"), usb_giveback_urb_bh() runs in the BH workqueue with
+interrupts enabled.
 
-cdc_wdm 1-1:1.0: nonzero urb status received: -71
-cdc_wdm 1-1:1.0: wdm_int_callback - 0 bytes
-watchdog: BUG: soft lockup - CPU#0 stuck for 26s! [syz-executor782:6625]
-CPU#0 Utilization every 4s during lockup:
-	#1:  98% system,	  0% softirq,	  3% hardirq,	  0% idle
-	#2:  98% system,	  0% softirq,	  3% hardirq,	  0% idle
-	#3:  98% system,	  0% softirq,	  3% hardirq,	  0% idle
-	#4:  98% system,	  0% softirq,	  3% hardirq,	  0% idle
-	#5:  98% system,	  1% softirq,	  3% hardirq,	  0% idle
-Modules linked in:
-irq event stamp: 73096
-hardirqs last  enabled at (73095): [<ffff80008037bc00>] console_emit_next_record kernel/printk/printk.c:2935 [inline]
-hardirqs last  enabled at (73095): [<ffff80008037bc00>] console_flush_all+0x650/0xb74 kernel/printk/printk.c:2994
-hardirqs last disabled at (73096): [<ffff80008af10b00>] __el1_irq arch/arm64/kernel/entry-common.c:533 [inline]
-hardirqs last disabled at (73096): [<ffff80008af10b00>] el1_interrupt+0x24/0x68 arch/arm64/kernel/entry-common.c:551
-softirqs last  enabled at (73048): [<ffff8000801ea530>] softirq_handle_end kernel/softirq.c:400 [inline]
-softirqs last  enabled at (73048): [<ffff8000801ea530>] handle_softirqs+0xa60/0xc34 kernel/softirq.c:582
-softirqs last disabled at (73043): [<ffff800080020de8>] __do_softirq+0x14/0x20 kernel/softirq.c:588
-CPU: 0 PID: 6625 Comm: syz-executor782 Tainted: G        W          6.10.0-rc2-syzkaller-g8867bbd4a056 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/02/2024
+Thus, the remote coverage collection section in usb_giveback_urb_bh()->
+__usb_hcd_giveback_urb() might be interrupted, and the interrupt handler
+might invoke __usb_hcd_giveback_urb() again.
 
-Testing showed that the problem did not occur if the two error
-messages -- the first two lines above -- were removed; apparently adding
-material to the kernel log takes a surprisingly large amount of time.
+This breaks KCOV, as it does not support nested remote coverage collection
+sections within the same context (neither in task nor in softirq).
 
-In any case, the best approach for preventing these lockups and to
-avoid spamming the log with thousands of error messages per second is
-to ratelimit the two dev_err() calls.  Therefore we replace them with
-dev_err_ratelimited().
+Update kcov_remote_start/stop_usb_softirq() to disable interrupts for the
+duration of the coverage collection section to avoid nested sections in
+the softirq context (in addition to such in the task context, which are
+already handled).
 
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Suggested-by: Greg KH <gregkh@linuxfoundation.org>
-Reported-and-tested-by: syzbot+5f996b83575ef4058638@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-usb/00000000000073d54b061a6a1c65@google.com/
-Reported-and-tested-by: syzbot+1b2abad17596ad03dcff@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-usb/000000000000f45085061aa9b37e@google.com/
-Fixes: 9908a32e94de ("USB: remove err() macro from usb class drivers")
-Link: https://lore.kernel.org/linux-usb/40dfa45b-5f21-4eef-a8c1-51a2f320e267@rowland.harvard.edu/
+Reported-by: Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
+Closes: https://lore.kernel.org/linux-usb/0f4d1964-7397-485b-bc48-11c01e2fcbca@I-love.SAKURA.ne.jp/
+Closes: https://syzkaller.appspot.com/bug?extid=0438378d6f157baae1a2
+Suggested-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: 8fea0c8fda30 ("usb: core: hcd: Convert from tasklet to BH workqueue")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/29855215-52f5-4385-b058-91f42c2bee18@rowland.harvard.edu
+Acked-by: Dmitry Vyukov <dvyukov@google.com>
+Signed-off-by: Andrey Konovalov <andreyknvl@gmail.com>
+Link: https://lore.kernel.org/r/20240527173538.4989-1-andrey.konovalov@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/cdc-wdm.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/core/hcd.c |   12 +++++++-----
+ include/linux/kcov.h   |   47 ++++++++++++++++++++++++++++++++++++++---------
+ 2 files changed, 45 insertions(+), 14 deletions(-)
 
---- a/drivers/usb/class/cdc-wdm.c
-+++ b/drivers/usb/class/cdc-wdm.c
-@@ -266,14 +266,14 @@ static void wdm_int_callback(struct urb
- 			dev_err(&desc->intf->dev, "Stall on int endpoint\n");
- 			goto sw; /* halt is cleared in work */
- 		default:
--			dev_err(&desc->intf->dev,
-+			dev_err_ratelimited(&desc->intf->dev,
- 				"nonzero urb status received: %d\n", status);
- 			break;
- 		}
- 	}
+--- a/drivers/usb/core/hcd.c
++++ b/drivers/usb/core/hcd.c
+@@ -1623,6 +1623,7 @@ static void __usb_hcd_giveback_urb(struc
+ 	struct usb_hcd *hcd = bus_to_hcd(urb->dev->bus);
+ 	struct usb_anchor *anchor = urb->anchor;
+ 	int status = urb->unlinked;
++	unsigned long flags;
  
- 	if (urb->actual_length < sizeof(struct usb_cdc_notification)) {
--		dev_err(&desc->intf->dev, "wdm_int_callback - %d bytes\n",
-+		dev_err_ratelimited(&desc->intf->dev, "wdm_int_callback - %d bytes\n",
- 			urb->actual_length);
- 		goto exit;
- 	}
+ 	urb->hcpriv = NULL;
+ 	if (unlikely((urb->transfer_flags & URB_SHORT_NOT_OK) &&
+@@ -1640,13 +1641,14 @@ static void __usb_hcd_giveback_urb(struc
+ 	/* pass ownership to the completion handler */
+ 	urb->status = status;
+ 	/*
+-	 * This function can be called in task context inside another remote
+-	 * coverage collection section, but kcov doesn't support that kind of
+-	 * recursion yet. Only collect coverage in softirq context for now.
++	 * Only collect coverage in the softirq context and disable interrupts
++	 * to avoid scenarios with nested remote coverage collection sections
++	 * that KCOV does not support.
++	 * See the comment next to kcov_remote_start_usb_softirq() for details.
+ 	 */
+-	kcov_remote_start_usb_softirq((u64)urb->dev->bus->busnum);
++	flags = kcov_remote_start_usb_softirq((u64)urb->dev->bus->busnum);
+ 	urb->complete(urb);
+-	kcov_remote_stop_softirq();
++	kcov_remote_stop_softirq(flags);
+ 
+ 	usb_anchor_resume_wakeups(anchor);
+ 	atomic_dec(&urb->use_count);
+--- a/include/linux/kcov.h
++++ b/include/linux/kcov.h
+@@ -55,21 +55,47 @@ static inline void kcov_remote_start_usb
+ 
+ /*
+  * The softirq flavor of kcov_remote_*() functions is introduced as a temporary
+- * work around for kcov's lack of nested remote coverage sections support in
+- * task context. Adding support for nested sections is tracked in:
+- * https://bugzilla.kernel.org/show_bug.cgi?id=210337
++ * workaround for KCOV's lack of nested remote coverage sections support.
++ *
++ * Adding support is tracked in https://bugzilla.kernel.org/show_bug.cgi?id=210337.
++ *
++ * kcov_remote_start_usb_softirq():
++ *
++ * 1. Only collects coverage when called in the softirq context. This allows
++ *    avoiding nested remote coverage collection sections in the task context.
++ *    For example, USB/IP calls usb_hcd_giveback_urb() in the task context
++ *    within an existing remote coverage collection section. Thus, KCOV should
++ *    not attempt to start collecting coverage within the coverage collection
++ *    section in __usb_hcd_giveback_urb() in this case.
++ *
++ * 2. Disables interrupts for the duration of the coverage collection section.
++ *    This allows avoiding nested remote coverage collection sections in the
++ *    softirq context (a softirq might occur during the execution of a work in
++ *    the BH workqueue, which runs with in_serving_softirq() > 0).
++ *    For example, usb_giveback_urb_bh() runs in the BH workqueue with
++ *    interrupts enabled, so __usb_hcd_giveback_urb() might be interrupted in
++ *    the middle of its remote coverage collection section, and the interrupt
++ *    handler might invoke __usb_hcd_giveback_urb() again.
+  */
+ 
+-static inline void kcov_remote_start_usb_softirq(u64 id)
++static inline unsigned long kcov_remote_start_usb_softirq(u64 id)
+ {
+-	if (in_serving_softirq())
++	unsigned long flags = 0;
++
++	if (in_serving_softirq()) {
++		local_irq_save(flags);
+ 		kcov_remote_start_usb(id);
++	}
++
++	return flags;
+ }
+ 
+-static inline void kcov_remote_stop_softirq(void)
++static inline void kcov_remote_stop_softirq(unsigned long flags)
+ {
+-	if (in_serving_softirq())
++	if (in_serving_softirq()) {
+ 		kcov_remote_stop();
++		local_irq_restore(flags);
++	}
+ }
+ 
+ #ifdef CONFIG_64BIT
+@@ -103,8 +129,11 @@ static inline u64 kcov_common_handle(voi
+ }
+ static inline void kcov_remote_start_common(u64 id) {}
+ static inline void kcov_remote_start_usb(u64 id) {}
+-static inline void kcov_remote_start_usb_softirq(u64 id) {}
+-static inline void kcov_remote_stop_softirq(void) {}
++static inline unsigned long kcov_remote_start_usb_softirq(u64 id)
++{
++	return 0;
++}
++static inline void kcov_remote_stop_softirq(unsigned long flags) {}
+ 
+ #endif /* CONFIG_KCOV */
+ #endif /* _LINUX_KCOV_H */
 
 
