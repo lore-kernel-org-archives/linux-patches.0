@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 817C3143C45;
-	Wed, 19 Jun 2024 12:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C490143C4A;
+	Wed, 19 Jun 2024 12:58:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718801895; cv=none; b=L3UNGKktSB/wrIBviIPuByW3Cxk+rmOU2vtH2ETP6kKMnShxgOsu0oDF5hb39Lsu19rUKOh4Q5+V2tNa6LOlDbLk2T2UWNc9RbIZiLQU4uaE53csB1U2/kxJgJF6pcnFinICRIp/SjHKfqVwJiWy5jPqrsK42bCiEFrkGToqXo4=
+	t=1718801898; cv=none; b=h7RXVZ/bGp7OnCS0bmIDjKkM0Ael58FIbeQ1/fJSrtMLsMBL8/3SRxCq2fwKAeqdKaDcZO3NGVlPyndUtUXsmcMXeOggjLOmkrzCqQWZzvYvKrovkzArt8/FUbnXIZjcU09Rd4xQXcu4f4aZUej8nJ741ixtRG78SWO8jBqwWPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718801895; c=relaxed/simple;
-	bh=Lbh8t8szIfevDEda5lh7LfmS/PnBiP1+w3wGB7wXb7w=;
+	s=arc-20240116; t=1718801898; c=relaxed/simple;
+	bh=9RFGZXct+05wHewrZL3nHSnJs4hp43nTYqcCwHDsXM8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SNxjEpNV6EZXAxDn++IZSKI1w8l3/KhvjYD6BHOSxfJcCbwgWU3YWwFfBcoQ1nGPvbMsMFZSbjsa3oq7ujhDwtZe5WngbTzoETRY/XxRYVf/pITYTeUdFLTMXi1OJzQHbb8XZ5lDyMEure6iMYhAYotng46JqFzpn9gp/lxHc4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xq/IY9+Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XOk/Qco8TvVvg+KY5W38DnNDfPN5uirVBBhT3c61ysDXM2rjgPoKHFEm8GoZkf61l/Xkl5AxSxoeN9/jq7SBz3bdDWj3hQ4XvWifbo5R5DYw/kV1oouo+sr2QvzisscirvzwWGxZ8hP9lb4nzDvZ/iX68EUfJ769xz4l2gqXO5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VRDJxgz8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xq/IY9+Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31C2C2BBFC;
-	Wed, 19 Jun 2024 12:58:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VRDJxgz8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C97C4AF1A;
+	Wed, 19 Jun 2024 12:58:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718801895;
-	bh=Lbh8t8szIfevDEda5lh7LfmS/PnBiP1+w3wGB7wXb7w=;
+	s=korg; t=1718801898;
+	bh=9RFGZXct+05wHewrZL3nHSnJs4hp43nTYqcCwHDsXM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xq/IY9+Q2TwHePnmjjR8yCdtMGUJLAy0hCq9jqqgQfcFstUVe6BlqelsYzzHb4NJ8
-	 DVR5dhMJqH3gJ6fT/ot9BJkIavmRskdMA7ABjMlic2L7kUHLEIR3qBOYieqbr93WPb
-	 pf0Vbs6HtxFAEVT5QIFr1QiPx/KczWLW6J3n+aYc=
+	b=VRDJxgz8WPKTva/VKkgf1HKtZet2KX9DCShATb8aPeZAlYg9l7iWBSolj1zYoGG6l
+	 noJjL7Ph7j/CJhfXuMYYGKkzHWQ8qyXce3Tkus207ZuoKFzhGqLfLjFGgpy2i/BY6S
+	 Tw0abb4AZdMoqAZXZPHx2eXtfoJsKiNMJ+/mmOh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chanwoo Lee <cw9316.lee@samsung.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Remi Pommarel <repk@triplefau.lt>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 013/267] scsi: ufs: mcq: Fix error output and clean up ufshcd_mcq_abort()
-Date: Wed, 19 Jun 2024 14:52:44 +0200
-Message-ID: <20240619125606.863777081@linuxfoundation.org>
+Subject: [PATCH 6.6 002/267] wifi: mac80211: Fix deadlock in ieee80211_sta_ps_deliver_wakeup()
+Date: Wed, 19 Jun 2024 14:52:33 +0200
+Message-ID: <20240619125606.446417771@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -52,84 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chanwoo Lee <cw9316.lee@samsung.com>
+From: Remi Pommarel <repk@triplefau.lt>
 
-[ Upstream commit d53b681ce9ca7db5ef4ecb8d2cf465ae4a031264 ]
+[ Upstream commit 44c06bbde6443de206b30f513100b5670b23fc5e ]
 
-An error unrelated to ufshcd_try_to_abort_task is being logged and can
-cause confusion. Modify ufshcd_mcq_abort() to print the result of the abort
-failure. For readability, return immediately instead of 'goto'.
+The ieee80211_sta_ps_deliver_wakeup() function takes sta->ps_lock to
+synchronizes with ieee80211_tx_h_unicast_ps_buf() which is called from
+softirq context. However using only spin_lock() to get sta->ps_lock in
+ieee80211_sta_ps_deliver_wakeup() does not prevent softirq to execute
+on this same CPU, to run ieee80211_tx_h_unicast_ps_buf() and try to
+take this same lock ending in deadlock. Below is an example of rcu stall
+that arises in such situation.
 
-Fixes: f1304d442077 ("scsi: ufs: mcq: Added ufshcd_mcq_abort()")
-Signed-off-by: Chanwoo Lee <cw9316.lee@samsung.com>
-Link: https://lore.kernel.org/r/20240524015904.1116005-1-cw9316.lee@samsung.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+ rcu: INFO: rcu_sched self-detected stall on CPU
+ rcu:    2-....: (42413413 ticks this GP) idle=b154/1/0x4000000000000000 softirq=1763/1765 fqs=21206996
+ rcu:    (t=42586894 jiffies g=2057 q=362405 ncpus=4)
+ CPU: 2 PID: 719 Comm: wpa_supplicant Tainted: G        W          6.4.0-02158-g1b062f552873 #742
+ Hardware name: RPT (r1) (DT)
+ pstate: 00000005 (nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : queued_spin_lock_slowpath+0x58/0x2d0
+ lr : invoke_tx_handlers_early+0x5b4/0x5c0
+ sp : ffff00001ef64660
+ x29: ffff00001ef64660 x28: ffff000009bc1070 x27: ffff000009bc0ad8
+ x26: ffff000009bc0900 x25: ffff00001ef647a8 x24: 0000000000000000
+ x23: ffff000009bc0900 x22: ffff000009bc0900 x21: ffff00000ac0e000
+ x20: ffff00000a279e00 x19: ffff00001ef646e8 x18: 0000000000000000
+ x17: ffff800016468000 x16: ffff00001ef608c0 x15: 0010533c93f64f80
+ x14: 0010395c9faa3946 x13: 0000000000000000 x12: 00000000fa83b2da
+ x11: 000000012edeceea x10: ffff0000010fbe00 x9 : 0000000000895440
+ x8 : 000000000010533c x7 : ffff00000ad8b740 x6 : ffff00000c350880
+ x5 : 0000000000000007 x4 : 0000000000000001 x3 : 0000000000000000
+ x2 : 0000000000000000 x1 : 0000000000000001 x0 : ffff00000ac0e0e8
+ Call trace:
+  queued_spin_lock_slowpath+0x58/0x2d0
+  ieee80211_tx+0x80/0x12c
+  ieee80211_tx_pending+0x110/0x278
+  tasklet_action_common.constprop.0+0x10c/0x144
+  tasklet_action+0x20/0x28
+  _stext+0x11c/0x284
+  ____do_softirq+0xc/0x14
+  call_on_irq_stack+0x24/0x34
+  do_softirq_own_stack+0x18/0x20
+  do_softirq+0x74/0x7c
+  __local_bh_enable_ip+0xa0/0xa4
+  _ieee80211_wake_txqs+0x3b0/0x4b8
+  __ieee80211_wake_queue+0x12c/0x168
+  ieee80211_add_pending_skbs+0xec/0x138
+  ieee80211_sta_ps_deliver_wakeup+0x2a4/0x480
+  ieee80211_mps_sta_status_update.part.0+0xd8/0x11c
+  ieee80211_mps_sta_status_update+0x18/0x24
+  sta_apply_parameters+0x3bc/0x4c0
+  ieee80211_change_station+0x1b8/0x2dc
+  nl80211_set_station+0x444/0x49c
+  genl_family_rcv_msg_doit.isra.0+0xa4/0xfc
+  genl_rcv_msg+0x1b0/0x244
+  netlink_rcv_skb+0x38/0x10c
+  genl_rcv+0x34/0x48
+  netlink_unicast+0x254/0x2bc
+  netlink_sendmsg+0x190/0x3b4
+  ____sys_sendmsg+0x1e8/0x218
+  ___sys_sendmsg+0x68/0x8c
+  __sys_sendmsg+0x44/0x84
+  __arm64_sys_sendmsg+0x20/0x28
+  do_el0_svc+0x6c/0xe8
+  el0_svc+0x14/0x48
+  el0t_64_sync_handler+0xb0/0xb4
+  el0t_64_sync+0x14c/0x150
+
+Using spin_lock_bh()/spin_unlock_bh() instead prevents softirq to raise
+on the same CPU that is holding the lock.
+
+Fixes: 1d147bfa6429 ("mac80211: fix AP powersave TX vs. wakeup race")
+Signed-off-by: Remi Pommarel <repk@triplefau.lt>
+Link: https://msgid.link/8e36fe07d0fbc146f89196cd47a53c8a0afe84aa.1716910344.git.repk@triplefau.lt
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufs-mcq.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ net/mac80211/sta_info.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ufs/core/ufs-mcq.c b/drivers/ufs/core/ufs-mcq.c
-index 7ae3096814282..4e84ee6564d4b 100644
---- a/drivers/ufs/core/ufs-mcq.c
-+++ b/drivers/ufs/core/ufs-mcq.c
-@@ -630,20 +630,20 @@ int ufshcd_mcq_abort(struct scsi_cmnd *cmd)
- 	struct ufshcd_lrb *lrbp = &hba->lrb[tag];
- 	struct ufs_hw_queue *hwq;
- 	unsigned long flags;
--	int err = FAILED;
-+	int err;
+diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
+index c61eb867bb4a7..984f8f67492fd 100644
+--- a/net/mac80211/sta_info.c
++++ b/net/mac80211/sta_info.c
+@@ -1709,7 +1709,7 @@ void ieee80211_sta_ps_deliver_wakeup(struct sta_info *sta)
+ 	skb_queue_head_init(&pending);
  
- 	if (!ufshcd_cmd_inflight(lrbp->cmd)) {
- 		dev_err(hba->dev,
- 			"%s: skip abort. cmd at tag %d already completed.\n",
- 			__func__, tag);
--		goto out;
-+		return FAILED;
- 	}
- 
- 	/* Skip task abort in case previous aborts failed and report failure */
- 	if (lrbp->req_abort_skip) {
- 		dev_err(hba->dev, "%s: skip abort. tag %d failed earlier\n",
- 			__func__, tag);
--		goto out;
-+		return FAILED;
- 	}
- 
- 	hwq = ufshcd_mcq_req_to_hwq(hba, scsi_cmd_to_rq(cmd));
-@@ -655,7 +655,7 @@ int ufshcd_mcq_abort(struct scsi_cmnd *cmd)
- 		 */
- 		dev_err(hba->dev, "%s: cmd found in sq. hwq=%d, tag=%d\n",
- 			__func__, hwq->id, tag);
--		goto out;
-+		return FAILED;
- 	}
- 
- 	/*
-@@ -663,18 +663,17 @@ int ufshcd_mcq_abort(struct scsi_cmnd *cmd)
- 	 * in the completion queue either. Query the device to see if
- 	 * the command is being processed in the device.
+ 	/* sync with ieee80211_tx_h_unicast_ps_buf */
+-	spin_lock(&sta->ps_lock);
++	spin_lock_bh(&sta->ps_lock);
+ 	/* Send all buffered frames to the station */
+ 	for (ac = 0; ac < IEEE80211_NUM_ACS; ac++) {
+ 		int count = skb_queue_len(&pending), tmp;
+@@ -1738,7 +1738,7 @@ void ieee80211_sta_ps_deliver_wakeup(struct sta_info *sta)
  	 */
--	if (ufshcd_try_to_abort_task(hba, tag)) {
-+	err = ufshcd_try_to_abort_task(hba, tag);
-+	if (err) {
- 		dev_err(hba->dev, "%s: device abort failed %d\n", __func__, err);
- 		lrbp->req_abort_skip = true;
--		goto out;
-+		return FAILED;
- 	}
+ 	clear_sta_flag(sta, WLAN_STA_PSPOLL);
+ 	clear_sta_flag(sta, WLAN_STA_UAPSD);
+-	spin_unlock(&sta->ps_lock);
++	spin_unlock_bh(&sta->ps_lock);
  
--	err = SUCCESS;
- 	spin_lock_irqsave(&hwq->cq_lock, flags);
- 	if (ufshcd_cmd_inflight(lrbp->cmd))
- 		ufshcd_release_scsi_cmd(hba, lrbp);
- 	spin_unlock_irqrestore(&hwq->cq_lock, flags);
+ 	atomic_dec(&ps->num_sta_ps);
  
--out:
--	return err;
-+	return SUCCESS;
- }
 -- 
 2.43.0
 
