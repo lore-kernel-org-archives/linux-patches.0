@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6347D1474B9;
-	Wed, 19 Jun 2024 12:59:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B561474B9;
+	Wed, 19 Jun 2024 12:59:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718801954; cv=none; b=lcZck82tQ53N26hAaGR6LfadRGEx+EAW0YQ+zKiw164dozEBFUMBW8tPnA8mPNgXwSUW1IBMHEyRc45VqNHrhUgjlVRXKVwFfRKGgjYVidW6GlBx67z/Uv8J+Ikga3z9+w7MzsMHmXQoOc6lsrF09O+42ntMpJXxiCITNx9hft8=
+	t=1718801957; cv=none; b=qP1TO4el98OLbu4QI6cpG009d/+F63uNtKisMrDrY9/rcRVNmZi+dXXPNpsul8hIwJqIJkUq4Ulc5bIVm2IzmJH5wiat637V2c/jvSK05JNuFC1f0zxvmeFabaphUiMi16NnTMCEbdmuk4PvPFjFhZaYJyUaGNU21O8JdU5Xg58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718801954; c=relaxed/simple;
-	bh=ooR44VEeE2KHpNSwxMY/4HPCIqSgNN6+yselEGGkDKY=;
+	s=arc-20240116; t=1718801957; c=relaxed/simple;
+	bh=WR+/xU8LrIA5MW/r8RrnlG++gszXe3C3iLT0IiUm+zI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SOBeC+UNjANBqk04WczVP2EK6pSxwLMxLFKAaQFhoe3IGsboA3F5fFM3/C2KrFpIhHXfLXBYZYnlNDUXI/W1f4yehGBQ/be1jEjMJ3887f6TvFjc+ktVW2GEiwIFrc6g6p4s6esYeUatxH7iVsyq705C/BaWjwLoGon7MLR0/c0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uiD+hkUj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BYlijMya0CvNuCSiXdp2wH47FDidwcmAIK/g349SDC74P7jheIRsWe5bYjq06lLfnQ9xf+4wdLGbvNYjU2T2eoghG9QMcXkaOGkcd8BZUgiyOUtEyYh/mDH/sWI3j4qPqrWbacBLBspiwUQA/pHBoEhC2Zd54rQinCNEhKz6r6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bo7Qv6kA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uiD+hkUj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA425C2BBFC;
-	Wed, 19 Jun 2024 12:59:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bo7Qv6kA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF9C6C2BBFC;
+	Wed, 19 Jun 2024 12:59:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718801954;
-	bh=ooR44VEeE2KHpNSwxMY/4HPCIqSgNN6+yselEGGkDKY=;
+	s=korg; t=1718801957;
+	bh=WR+/xU8LrIA5MW/r8RrnlG++gszXe3C3iLT0IiUm+zI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uiD+hkUjCXEP0nTrqp1ozICNMuQYzHNYJzvvb7XlsZxIccv0/AkUn/3nRuMx95jxx
-	 x5k5DcJjUr8lRSPsmyvyjS9Qe5h7qyKHCyktME6U0sRPp+/UZqmXhVUWaQD1BGnL8t
-	 cBjqBNycnoWB725CuQa5mBrknP724cUTG2SOlc4k=
+	b=Bo7Qv6kAfuFGrNA8X/p+tCR+adS8e82kjY8LkcaQTnr9CA3ntKr6kBWZZc0vo/bhd
+	 VbyYdUEevRWnXeFNjxRcYoRMSX0Osg2Jl08z1NBCmLE4HOWSNcql82M7xOKGat9GZY
+	 pv8srG7NsFpsqwIzCDZSmDMMnVTGvGcMlrxhYl8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wen Gu <guwen@linux.alibaba.com>,
-	Wenjia Zhang <wenjia@linux.ibm.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	Gerd Bayer <gbayer@linux.ibm.com>
-Subject: [PATCH 6.6 033/267] net/smc: avoid overwriting when adjusting sock bufsizes
-Date: Wed, 19 Jun 2024 14:53:04 +0200
-Message-ID: <20240619125607.635490076@linuxfoundation.org>
+	Lars Kellogg-Stedman <lars@oddbit.com>,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Dan Cross <crossd@gmail.com>,
+	Chris Maness <christopher.maness@gmail.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 016/267] ax25: Fix refcount imbalance on inbound connections
+Date: Wed, 19 Jun 2024 14:52:47 +0200
+Message-ID: <20240619125606.979500617@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -53,66 +55,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wen Gu <guwen@linux.alibaba.com>
+From: Lars Kellogg-Stedman <lars@oddbit.com>
 
-[ Upstream commit fb0aa0781a5f457e3864da68af52c3b1f4f7fd8f ]
+[ Upstream commit 3c34fb0bd4a4237592c5ecb5b2e2531900c55774 ]
 
-When copying smc settings to clcsock, avoid setting clcsock's sk_sndbuf
-to sysctl_tcp_wmem[1], since this may overwrite the value set by
-tcp_sndbuf_expand() in TCP connection establishment.
+When releasing a socket in ax25_release(), we call netdev_put() to
+decrease the refcount on the associated ax.25 device. However, the
+execution path for accepting an incoming connection never calls
+netdev_hold(). This imbalance leads to refcount errors, and ultimately
+to kernel crashes.
 
-And the other setting sk_{snd|rcv}buf to sysctl value in
-smc_adjust_sock_bufsizes() can also be omitted since the initialization
-of smc sock and clcsock has set sk_{snd|rcv}buf to smc.sysctl_{w|r}mem
-or ipv4_sysctl_tcp_{w|r}mem[1].
+A typical call trace for the above situation will start with one of the
+following errors:
 
-Fixes: 30c3c4a4497c ("net/smc: Use correct buffer sizes when switching between TCP and SMC")
-Link: https://lore.kernel.org/r/5eaf3858-e7fd-4db8-83e8-3d7a3e0e9ae2@linux.alibaba.com
-Signed-off-by: Wen Gu <guwen@linux.alibaba.com>
-Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
-Reviewed-by: Gerd Bayer <gbayer@linux.ibm.com>, too.
-Signed-off-by: David S. Miller <davem@davemloft.net>
+    refcount_t: decrement hit 0; leaking memory.
+    refcount_t: underflow; use-after-free.
+
+And will then have a trace like:
+
+    Call Trace:
+    <TASK>
+    ? show_regs+0x64/0x70
+    ? __warn+0x83/0x120
+    ? refcount_warn_saturate+0xb2/0x100
+    ? report_bug+0x158/0x190
+    ? prb_read_valid+0x20/0x30
+    ? handle_bug+0x3e/0x70
+    ? exc_invalid_op+0x1c/0x70
+    ? asm_exc_invalid_op+0x1f/0x30
+    ? refcount_warn_saturate+0xb2/0x100
+    ? refcount_warn_saturate+0xb2/0x100
+    ax25_release+0x2ad/0x360
+    __sock_release+0x35/0xa0
+    sock_close+0x19/0x20
+    [...]
+
+On reboot (or any attempt to remove the interface), the kernel gets
+stuck in an infinite loop:
+
+    unregister_netdevice: waiting for ax0 to become free. Usage count = 0
+
+This patch corrects these issues by ensuring that we call netdev_hold()
+and ax25_dev_hold() for new connections in ax25_accept(). This makes the
+logic leading to ax25_accept() match the logic for ax25_bind(): in both
+cases we increment the refcount, which is ultimately decremented in
+ax25_release().
+
+Fixes: 9fd75b66b8f6 ("ax25: Fix refcount leaks caused by ax25_cb_del()")
+Signed-off-by: Lars Kellogg-Stedman <lars@oddbit.com>
+Tested-by: Duoming Zhou <duoming@zju.edu.cn>
+Tested-by: Dan Cross <crossd@gmail.com>
+Tested-by: Chris Maness <christopher.maness@gmail.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20240529210242.3346844-2-lars@oddbit.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c | 22 ++--------------------
- 1 file changed, 2 insertions(+), 20 deletions(-)
+ net/ax25/af_ax25.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index ef5b5d498ef3e..3158b94fd347a 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -460,29 +460,11 @@ static int smc_bind(struct socket *sock, struct sockaddr *uaddr,
- static void smc_adjust_sock_bufsizes(struct sock *nsk, struct sock *osk,
- 				     unsigned long mask)
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index 9d11d26e46c0e..26a3095bec462 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -1378,8 +1378,10 @@ static int ax25_accept(struct socket *sock, struct socket *newsock, int flags,
  {
--	struct net *nnet = sock_net(nsk);
--
- 	nsk->sk_userlocks = osk->sk_userlocks;
--	if (osk->sk_userlocks & SOCK_SNDBUF_LOCK) {
-+	if (osk->sk_userlocks & SOCK_SNDBUF_LOCK)
- 		nsk->sk_sndbuf = osk->sk_sndbuf;
--	} else {
--		if (mask == SK_FLAGS_SMC_TO_CLC)
--			WRITE_ONCE(nsk->sk_sndbuf,
--				   READ_ONCE(nnet->ipv4.sysctl_tcp_wmem[1]));
--		else
--			WRITE_ONCE(nsk->sk_sndbuf,
--				   2 * READ_ONCE(nnet->smc.sysctl_wmem));
--	}
--	if (osk->sk_userlocks & SOCK_RCVBUF_LOCK) {
-+	if (osk->sk_userlocks & SOCK_RCVBUF_LOCK)
- 		nsk->sk_rcvbuf = osk->sk_rcvbuf;
--	} else {
--		if (mask == SK_FLAGS_SMC_TO_CLC)
--			WRITE_ONCE(nsk->sk_rcvbuf,
--				   READ_ONCE(nnet->ipv4.sysctl_tcp_rmem[1]));
--		else
--			WRITE_ONCE(nsk->sk_rcvbuf,
--				   2 * READ_ONCE(nnet->smc.sysctl_rmem));
--	}
- }
+ 	struct sk_buff *skb;
+ 	struct sock *newsk;
++	ax25_dev *ax25_dev;
+ 	DEFINE_WAIT(wait);
+ 	struct sock *sk;
++	ax25_cb *ax25;
+ 	int err = 0;
  
- static void smc_copy_sock_settings(struct sock *nsk, struct sock *osk,
+ 	if (sock->state != SS_UNCONNECTED)
+@@ -1434,6 +1436,10 @@ static int ax25_accept(struct socket *sock, struct socket *newsock, int flags,
+ 	kfree_skb(skb);
+ 	sk_acceptq_removed(sk);
+ 	newsock->state = SS_CONNECTED;
++	ax25 = sk_to_ax25(newsk);
++	ax25_dev = ax25->ax25_dev;
++	netdev_hold(ax25_dev->dev, &ax25->dev_tracker, GFP_ATOMIC);
++	ax25_dev_hold(ax25_dev);
+ 
+ out:
+ 	release_sock(sk);
 -- 
 2.43.0
 
