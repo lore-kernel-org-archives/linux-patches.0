@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4DC082495;
-	Wed, 19 Jun 2024 13:22:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334DA82495;
+	Wed, 19 Jun 2024 13:22:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803347; cv=none; b=bocuoK8zQksaSIOKwUhm2uOp1JJAeIJX37NTZVvYCQGi3QqjZ7Bvs7srmGycCgSSO7EVayz/Y5pdgllW8QI9em1T8i9wl3PJORKhmIz3s3FjtyaciWcqplt+v59ZsasbzP4U60vZ/4kbb7ICpZzwkWEEfgCERDd64Ff1fQDACG0=
+	t=1718803350; cv=none; b=Y5505Ou64pMlqlcEka56WO+7z3skwsEz6Ng8YjVKbv0B4JMcRXZmyS7hmnZuNzPhc2GqSt55Y3/3bjAZSptP9DV+A9iZIVEj1NE6Izuekt27VqNtHR4McOsS+U4/qQWvnet4Hqx1QXSOGFCEDNe1D2x9FGt9tOqnK84nsBlbixI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803347; c=relaxed/simple;
-	bh=d1RCdVl4fHjSL7Kr1EQ/etkPeMB9nFplqtIDIVEMAM8=;
+	s=arc-20240116; t=1718803350; c=relaxed/simple;
+	bh=9bjE166TNJ0DKM8bnZA8kBM2F4HephbWK68fBzRnyIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SRVHz4QtFs+XN9Nu523mm9p437QQA6Qmq0mAZ+QyelucGQHZyxzAVXCWN/MD4YPpE2jl0rm4OjXbFr7+S2WiKRrtW756dtxsxe20UEE/fO2n4UKf6tWHf84akH/B1S6sgg4KAIB1Ulc5ICHGOW96hZ8c7lagR/hlTkOFWnoJx+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e+5Om0lk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HN7Hb7HVe72anepzgIxvZ1ofDfWVVPDy6m7yT3+jUuthp94u1BcXlf8qFjgMZAVaykzH5J7a4XYRp2Eodq/g3aFLK9qS6n03icmcXU3YiOYwokA1bQDpqjRpmKzcAOS8SX8jlPktENZTMTywi2r2NX8mPy9Wotsa5j68onYx/Fc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AyodwWXI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e+5Om0lk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C27D7C2BBFC;
-	Wed, 19 Jun 2024 13:22:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AyodwWXI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE56C2BBFC;
+	Wed, 19 Jun 2024 13:22:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803347;
-	bh=d1RCdVl4fHjSL7Kr1EQ/etkPeMB9nFplqtIDIVEMAM8=;
+	s=korg; t=1718803350;
+	bh=9bjE166TNJ0DKM8bnZA8kBM2F4HephbWK68fBzRnyIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e+5Om0lkE2I6jIat3MOUjNf3bpCdH8s7FHMp0z0bi2eEMqF6SYRs0nSGjEc8xj5EK
-	 7WFQJW2wMSHjTq9YRGk/bhzSBa5xpYem3tx/3/rwoHSvsdcfqeyf+9QYGl6n4KSUdg
-	 IBi++1gBazxlwhssO6CRvQyf2op+iyydwSuA0qJw=
+	b=AyodwWXIRNx9JTXSjNnl7rQmQ0XwtEu1i8fKWM/WzAyt9hfRj93dkEP/n1DKuWs2u
+	 q/i4pwbM1ez2RoccK9Om/SMk/3q0z8+7wdrICjxTB6RxSWjs9zJcO6Vd42+yCeOJK/
+	 HmgXhaBfEagrPYNkp8WdOgX7E6JxuSPXoJ8Jjpg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.9 236/281] knfsd: LOOKUP can return an illegal error value
-Date: Wed, 19 Jun 2024 14:56:35 +0200
-Message-ID: <20240619125619.041918774@linuxfoundation.org>
+	Rik van Riel <riel@surriel.com>,
+	Baoquan He <bhe@redhat.com>,
+	Dave Young <dyoung@redhat.com>,
+	Vivek Goyal <vgoyal@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.9 237/281] fs/proc: fix softlockup in __read_vmcore
+Date: Wed, 19 Jun 2024 14:56:36 +0200
+Message-ID: <20240619125619.081032433@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -50,47 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Rik van Riel <riel@surriel.com>
 
-commit e221c45da3770962418fb30c27d941bbc70d595a upstream.
+commit 5cbcb62dddf5346077feb82b7b0c9254222d3445 upstream.
 
-The 'NFS error' NFSERR_OPNOTSUPP is not described by any of the official
-NFS related RFCs, but appears to have snuck into some older .x files for
-NFSv2.
-Either way, it is not in RFC1094, RFC1813 or any of the NFSv4 RFCs, so
-should not be returned by the knfsd server, and particularly not by the
-"LOOKUP" operation.
+While taking a kernel core dump with makedumpfile on a larger system,
+softlockup messages often appear.
 
-Instead, let's return NFSERR_STALE, which is more appropriate if the
-filesystem encodes the filehandle as FILEID_INVALID.
+While softlockup warnings can be harmless, they can also interfere with
+things like RCU freeing memory, which can be problematic when the kdump
+kexec image is configured with as little memory as possible.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Avoid the softlockup, and give things like work items and RCU a chance to
+do their thing during __read_vmcore by adding a cond_resched.
+
+Link: https://lkml.kernel.org/r/20240507091858.36ff767f@imladris.surriel.com
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Acked-by: Baoquan He <bhe@redhat.com>
+Cc: Dave Young <dyoung@redhat.com>
+Cc: Vivek Goyal <vgoyal@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsfh.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/proc/vmcore.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/nfsd/nfsfh.c
-+++ b/fs/nfsd/nfsfh.c
-@@ -573,7 +573,7 @@ fh_compose(struct svc_fh *fhp, struct sv
- 		_fh_update(fhp, exp, dentry);
- 	if (fhp->fh_handle.fh_fileid_type == FILEID_INVALID) {
- 		fh_put(fhp);
--		return nfserr_opnotsupp;
-+		return nfserr_stale;
+--- a/fs/proc/vmcore.c
++++ b/fs/proc/vmcore.c
+@@ -383,6 +383,8 @@ static ssize_t __read_vmcore(struct iov_
+ 		/* leave now if filled buffer already */
+ 		if (!iov_iter_count(iter))
+ 			return acc;
++
++		cond_resched();
  	}
  
- 	return 0;
-@@ -599,7 +599,7 @@ fh_update(struct svc_fh *fhp)
- 
- 	_fh_update(fhp, fhp->fh_export, dentry);
- 	if (fhp->fh_handle.fh_fileid_type == FILEID_INVALID)
--		return nfserr_opnotsupp;
-+		return nfserr_stale;
- 	return 0;
- out_bad:
- 	printk(KERN_ERR "fh_update: fh not verified!\n");
+ 	list_for_each_entry(m, &vmcore_list, list) {
 
 
