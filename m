@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 891F612FB27;
-	Wed, 19 Jun 2024 13:20:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C56482495;
+	Wed, 19 Jun 2024 13:20:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803228; cv=none; b=BegT5sA3KijCRvPmWjdVuQu7WmgWT1iUQ/XPiPlziwjNDr/cf8jKXmBMe6s+99W8kRgcrAfKziq0YcL4aWp0bq68bD8pUjOwkIjd634hSobpjXgjNCJiwzOukBR7W18kZhxC+N2pdKX4+9Gnbdvvl+34TaEwndtaxRuZvV76o9k=
+	t=1718803232; cv=none; b=pLa/DFKGX3SlqiRdAJNN2FIWvCJYICoAy44fd95psOVtQYNT2D5GGDU3Y7g0rvLk6MO+o81iGRpDWd2egmDdA2pt92KGz9eRzs5hakPPqYfg6C6Upnb05VbDdkvYpU6zk5ant+4ENAaCy3Rmm3T5PLNubFlntguvkob7nYQFVr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803228; c=relaxed/simple;
-	bh=PHds+d02STHppvl8yuWFZuI1j3js0ZxseoZTC+CoknI=;
+	s=arc-20240116; t=1718803232; c=relaxed/simple;
+	bh=JVHJZ/wy55jIo6YcDxLdjAZOA/NSuWxGv5mwavhig4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ifoLcgJIk7EBTv2bYbOit12rsJqnN8xp0F0Nc4xSDnTJV6NS+gkxtOcpfhzSDXQhwzuw2qE6sUXXtrVqUoWxRU4sA1BKGiDpNoTZYa5KQwmTip4/LyXhDZakEOUScV0IW/44Cmc5b0R24El1rlumi/ajjGWM6NYsJt7rb7ZIQOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u0QbPITS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KYswz1n/+pUj/DclQq1NbvHDV9pschrlR+94GhQ2ix/52n+v1UMgfbUB9O+lV9mCZ1pfmo2dJbwPlQcZTqvZzMDPT8+1DqbDR+JI9vNHLdgbk/PV+KI4A4NQeTXEDleyAH4jfW4wC6sfAv7vV0cJAiBvuQiTg8ugAKp2izSO3NU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tR5ubczT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u0QbPITS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13B1AC4AF1A;
-	Wed, 19 Jun 2024 13:20:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tR5ubczT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1747C2BBFC;
+	Wed, 19 Jun 2024 13:20:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803228;
-	bh=PHds+d02STHppvl8yuWFZuI1j3js0ZxseoZTC+CoknI=;
+	s=korg; t=1718803231;
+	bh=JVHJZ/wy55jIo6YcDxLdjAZOA/NSuWxGv5mwavhig4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u0QbPITSkYJSsbABy8Hg/sH6cIlHXQ5Blb5ZsnlPy/aVtZALiZjdDLH4rjdsNgDNT
-	 94wmy6OVN4rZd16F1RAdH6UjIaJ1v1L0C/ldaZDUiKn6W+j4220Yw1953EYTlNnNZS
-	 ILBMdzEjGuTkhBcxe0P9y7D/i+e7dFj/RjnCOEBo=
+	b=tR5ubczT2rVS3/V+n3NNXteYFvyJERpNXh9XZ6Yre7KwnoD0rJsvaNEBl/Cp+3XEg
+	 8t1fQ2oGn8V8C7WFufVbdd91CrBT40VXC/JuNlVN64/666hUbaYlIQP+ymoG4+Qig+
+	 2BI2NJVucfROx1bHT/dX5hdlgnVhfeeruBAOwLLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
+	Adam Rizkalla <ajarizzo@gmail.com>,
+	Vasileios Amoiridis <vassilisamir@gmail.com>,
+	Angel Iglesias <ang.iglesiasg@gmail.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.9 196/281] iio: invensense: fix odr switching to same value
-Date: Wed, 19 Jun 2024 14:55:55 +0200
-Message-ID: <20240619125617.493103946@linuxfoundation.org>
+Subject: [PATCH 6.9 197/281] iio: pressure: bmp280: Fix BMP580 temperature reading
+Date: Wed, 19 Jun 2024 14:55:56 +0200
+Message-ID: <20240619125617.531797999@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -50,46 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+From: Adam Rizkalla <ajarizzo@gmail.com>
 
-commit 95444b9eeb8c5c0330563931d70c61ca3b101548 upstream.
+commit 0f0f6306617cb4b6231fc9d4ec68ab9a56dba7c0 upstream.
 
-ODR switching happens in 2 steps, update to store the new value and then
-apply when the ODR change flag is received in the data. When switching to
-the same ODR value, the ODR change flag is never happening, and frequency
-switching is blocked waiting for the never coming apply.
+Fix overflow issue when storing BMP580 temperature reading and
+properly preserve sign of 24-bit data.
 
-Fix the issue by preventing update to happen when switching to same ODR
-value.
-
-Fixes: 0ecc363ccea7 ("iio: make invensense timestamp module generic")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
-Link: https://lore.kernel.org/r/20240524124851.567485-1-inv.git-commit@tdk.com
+Signed-off-by: Adam Rizkalla <ajarizzo@gmail.com>
+Tested-By: Vasileios Amoiridis <vassilisamir@gmail.com>
+Acked-by: Angel Iglesias <ang.iglesiasg@gmail.com>
+Link: https://lore.kernel.org/r/Zin2udkXRD0+GrML@adam-asahi.lan
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/common/inv_sensors/inv_sensors_timestamp.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/iio/pressure/bmp280-core.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c
-+++ b/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c
-@@ -60,11 +60,15 @@ EXPORT_SYMBOL_NS_GPL(inv_sensors_timesta
- int inv_sensors_timestamp_update_odr(struct inv_sensors_timestamp *ts,
- 				     uint32_t period, bool fifo)
- {
-+	uint32_t mult;
-+
- 	/* when FIFO is on, prevent odr change if one is already pending */
- 	if (fifo && ts->new_mult != 0)
- 		return -EAGAIN;
+--- a/drivers/iio/pressure/bmp280-core.c
++++ b/drivers/iio/pressure/bmp280-core.c
+@@ -1394,12 +1394,12 @@ static int bmp580_read_temp(struct bmp28
  
--	ts->new_mult = period / ts->chip.clock_period;
-+	mult = period / ts->chip.clock_period;
-+	if (mult != ts->mult)
-+		ts->new_mult = mult;
- 
- 	return 0;
+ 	/*
+ 	 * Temperature is returned in Celsius degrees in fractional
+-	 * form down 2^16. We rescale by x1000 to return milli Celsius
+-	 * to respect IIO ABI.
++	 * form down 2^16. We rescale by x1000 to return millidegrees
++	 * Celsius to respect IIO ABI.
+ 	 */
+-	*val = raw_temp * 1000;
+-	*val2 = 16;
+-	return IIO_VAL_FRACTIONAL_LOG2;
++	raw_temp = sign_extend32(raw_temp, 23);
++	*val = ((s64)raw_temp * 1000) / (1 << 16);
++	return IIO_VAL_INT;
  }
+ 
+ static int bmp580_read_press(struct bmp280_data *data, int *val, int *val2)
 
 
