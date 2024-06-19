@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9CC150984;
-	Wed, 19 Jun 2024 13:01:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D5A145FEF;
+	Wed, 19 Jun 2024 13:01:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802078; cv=none; b=dKccbkry1g18kn8kWgiZf6f3BvtFBwzw/T/BYsKVhS6mK//FbBNmVINwTieroyAgcimsQfZPrrJ5yV+vkMD5GGpMK3rSJMpD4ne5BwvjUX2Ji5jWqpnWsHH9JyXuBhmfN4rLNU1uUncpRZnxDj+lhxRbsVUB3id1xO6KKCZqq7Q=
+	t=1718802081; cv=none; b=JW9D1mNNb4mwi3Fn1WIP5IH6x2HEThjhQS7UUfE3b2mWN6Zy/RBR+P3L12NfrKFKu8BGZxRJHloP3kMddTYtyz3lJuDWLL9gxcLWMm9JpO1Fy56fsYFZwDuC+odebgh8kJz6ATIEThEZwmbZe+1NnwtQlnKQqyTv1RtA15+R9vI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802078; c=relaxed/simple;
-	bh=yy/fN/SdemkzHsdQadSW1LyoqhQrvKlsXBB1GtKpkgw=;
+	s=arc-20240116; t=1718802081; c=relaxed/simple;
+	bh=+mm+su0uX/U5asRcsOrEmT3/4oNMk0Wz6ntPedczTaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t2YG8OcvFCBqHJxdvm7Hh3xHZKrJgoyH3esohidWVOa6KH5N48DoaqDi8CwtAsjcgEv+rw8h/kwviHVQByjqHilrGEhGfexAbdZLVIAHCF6PvFY9OX7ASmNoRfDU6ROPkfp6L47lwwvlhiveZjQ8/PWfQPOXWf8ySgnSN95dt5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lxbRyRHf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YKrpGJmmpdbMTZNgLNuzuq+hX+CfSbK2JoL0Kt4huCXl81Z10JlHzUJObqGAeyfjV1nPUeAQ74X1HAPcKky6fbwglllwo9DZOYWZDQRoFQ2zw0l5FEoAA9rtwoinkPnSNIwguRoL0XtHgTLK1My9stqQRQXhREwsyfr3rNH+ILE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IhVKX7Ml; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lxbRyRHf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99C61C4AF1A;
-	Wed, 19 Jun 2024 13:01:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IhVKX7Ml"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CEE8C2BBFC;
+	Wed, 19 Jun 2024 13:01:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802078;
-	bh=yy/fN/SdemkzHsdQadSW1LyoqhQrvKlsXBB1GtKpkgw=;
+	s=korg; t=1718802080;
+	bh=+mm+su0uX/U5asRcsOrEmT3/4oNMk0Wz6ntPedczTaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lxbRyRHfwUlaE4K8FJC5z30YQ/IoBqnq9EeqJV3WHav+MdFRjpSGfCMKMDHu8s1PH
-	 Y29eL4fQRiG5fbMbwzT178sYeY+tmPBDznFIjT0VkcLz3ULWjdYCByB1Okfaragxue
-	 P8YN6vibgGUjGyX3YfiiJRA5zaQXiEA7xVhL/Tf8=
+	b=IhVKX7MlgAKytk9WXQmsFiQA1tDnqpr9tPZHAKlCZMqbopkW0mBZZm79/LT9juN+0
+	 01DkVaK6j0b6DmVoCcot9jZKDkiFYM04QZF14nF46PO8MgmwErfpOX0uXDmU/ZNWB9
+	 4DHPim32qpRPD7YpiKajHkW+NK+eoP4wF4UuydmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 074/267] eventfs: Update all the eventfs_inodes from the events descriptor
-Date: Wed, 19 Jun 2024 14:53:45 +0200
-Message-ID: <20240619125609.196149538@linuxfoundation.org>
+Subject: [PATCH 6.6 075/267] bpf: fix multi-uprobe PID filtering logic
+Date: Wed, 19 Jun 2024 14:53:46 +0200
+Message-ID: <20240619125609.233910558@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -55,117 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 340f0c7067a95281ad13734f8225f49c6cf52067 ]
+[ Upstream commit 46ba0e49b64232adac35a2bc892f1710c5b0fb7f ]
 
-The change to update the permissions of the eventfs_inode had the
-misconception that using the tracefs_inode would find all the
-eventfs_inodes that have been updated and reset them on remount.
-The problem with this approach is that the eventfs_inodes are freed when
-they are no longer used (basically the reason the eventfs system exists).
-When they are freed, the updated eventfs_inodes are not reset on a remount
-because their tracefs_inodes have been freed.
+Current implementation of PID filtering logic for multi-uprobes in
+uprobe_prog_run() is filtering down to exact *thread*, while the intent
+for PID filtering it to filter by *process* instead. The check in
+uprobe_prog_run() also differs from the analogous one in
+uprobe_multi_link_filter() for some reason. The latter is correct,
+checking task->mm, not the task itself.
 
-Instead, since the events directory eventfs_inode always has a
-tracefs_inode pointing to it (it is not freed when finished), and the
-events directory has a link to all its children, have the
-eventfs_remount() function only operate on the events eventfs_inode and
-have it descend into its children updating their uid and gids.
+Fix the check in uprobe_prog_run() to perform the same task->mm check.
 
-Link: https://lore.kernel.org/all/CAK7LNARXgaWw3kH9JgrnH4vK6fr8LDkNKf3wq8NhMWJrVwJyVQ@mail.gmail.com/
-Link: https://lore.kernel.org/linux-trace-kernel/20240523051539.754424703@goodmis.org
+While doing this, we also update get_pid_task() use to use PIDTYPE_TGID
+type of lookup, given the intent is to get a representative task of an
+entire process. This doesn't change behavior, but seems more logical. It
+would hold task group leader task now, not any random thread task.
+
+Last but not least, given multi-uprobe support is half-broken due to
+this PID filtering logic (depending on whether PID filtering is
+important or not), we need to make it easy for user space consumers
+(including libbpf) to easily detect whether PID filtering logic was
+already fixed.
+
+We do it here by adding an early check on passed pid parameter. If it's
+negative (and so has no chance of being a valid PID), we return -EINVAL.
+Previous behavior would eventually return -ESRCH ("No process found"),
+given there can't be any process with negative PID. This subtle change
+won't make any practical change in behavior, but will allow applications
+to detect PID filtering fixes easily. Libbpf fixes take advantage of
+this in the next patch.
 
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Fixes: baa23a8d4360d ("tracefs: Reset permissions on remount if permissions are options")
-Reported-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Fixes: b733eeade420 ("bpf: Add pid filter support for uprobe_multi link")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20240521163401.3005045-2-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/tracefs/event_inode.c | 51 ++++++++++++++++++++++++++++++----------
- 1 file changed, 39 insertions(+), 12 deletions(-)
+ kernel/trace/bpf_trace.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/tracefs/event_inode.c b/fs/tracefs/event_inode.c
-index b521e904a7ce9..b406bb3430f3d 100644
---- a/fs/tracefs/event_inode.c
-+++ b/fs/tracefs/event_inode.c
-@@ -305,33 +305,60 @@ static const struct file_operations eventfs_file_operations = {
- 	.llseek		= generic_file_llseek,
- };
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index 8edbafe0d4cdf..cc29bf49f7159 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -3099,7 +3099,7 @@ static int uprobe_prog_run(struct bpf_uprobe *uprobe,
+ 	struct bpf_run_ctx *old_run_ctx;
+ 	int err = 0;
  
--/*
-- * On a remount of tracefs, if UID or GID options are set, then
-- * the mount point inode permissions should be used.
-- * Reset the saved permission flags appropriately.
-- */
--void eventfs_remount(struct tracefs_inode *ti, bool update_uid, bool update_gid)
-+static void eventfs_set_attrs(struct eventfs_inode *ei, bool update_uid, kuid_t uid,
-+			      bool update_gid, kgid_t gid, int level)
- {
--	struct eventfs_inode *ei = ti->private;
-+	struct eventfs_inode *ei_child;
+-	if (link->task && current != link->task)
++	if (link->task && current->mm != link->task->mm)
+ 		return 0;
  
--	if (!ei)
-+	/* Update events/<system>/<event> */
-+	if (WARN_ON_ONCE(level > 3))
- 		return;
+ 	if (sleepable)
+@@ -3200,8 +3200,9 @@ int bpf_uprobe_multi_link_attach(const union bpf_attr *attr, struct bpf_prog *pr
+ 	upath = u64_to_user_ptr(attr->link_create.uprobe_multi.path);
+ 	uoffsets = u64_to_user_ptr(attr->link_create.uprobe_multi.offsets);
+ 	cnt = attr->link_create.uprobe_multi.cnt;
++	pid = attr->link_create.uprobe_multi.pid;
  
--	if (update_uid)
-+	if (update_uid) {
- 		ei->attr.mode &= ~EVENTFS_SAVE_UID;
-+		ei->attr.uid = uid;
-+	}
- 
--	if (update_gid)
-+	if (update_gid) {
- 		ei->attr.mode &= ~EVENTFS_SAVE_GID;
-+		ei->attr.gid = gid;
-+	}
-+
-+	list_for_each_entry(ei_child, &ei->children, list) {
-+		eventfs_set_attrs(ei_child, update_uid, uid, update_gid, gid, level + 1);
-+	}
- 
- 	if (!ei->entry_attrs)
- 		return;
- 
- 	for (int i = 0; i < ei->nr_entries; i++) {
--		if (update_uid)
-+		if (update_uid) {
- 			ei->entry_attrs[i].mode &= ~EVENTFS_SAVE_UID;
--		if (update_gid)
-+			ei->entry_attrs[i].uid = uid;
-+		}
-+		if (update_gid) {
- 			ei->entry_attrs[i].mode &= ~EVENTFS_SAVE_GID;
-+			ei->entry_attrs[i].gid = gid;
-+		}
+-	if (!upath || !uoffsets || !cnt)
++	if (!upath || !uoffsets || !cnt || pid < 0)
+ 		return -EINVAL;
+ 	if (cnt > MAX_UPROBE_MULTI_CNT)
+ 		return -E2BIG;
+@@ -3225,10 +3226,9 @@ int bpf_uprobe_multi_link_attach(const union bpf_attr *attr, struct bpf_prog *pr
+ 		goto error_path_put;
  	}
-+
-+}
-+
-+/*
-+ * On a remount of tracefs, if UID or GID options are set, then
-+ * the mount point inode permissions should be used.
-+ * Reset the saved permission flags appropriately.
-+ */
-+void eventfs_remount(struct tracefs_inode *ti, bool update_uid, bool update_gid)
-+{
-+	struct eventfs_inode *ei = ti->private;
-+
-+	/* Only the events directory does the updates */
-+	if (!ei || !ei->is_events || ei->is_freed)
-+		return;
-+
-+	eventfs_set_attrs(ei, update_uid, ti->vfs_inode.i_uid,
-+			  update_gid, ti->vfs_inode.i_gid, 0);
- }
  
- /* Return the evenfs_inode of the "events" directory */
+-	pid = attr->link_create.uprobe_multi.pid;
+ 	if (pid) {
+ 		rcu_read_lock();
+-		task = get_pid_task(find_vpid(pid), PIDTYPE_PID);
++		task = get_pid_task(find_vpid(pid), PIDTYPE_TGID);
+ 		rcu_read_unlock();
+ 		if (!task) {
+ 			err = -ESRCH;
 -- 
 2.43.0
 
