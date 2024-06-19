@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77C71E492;
-	Wed, 19 Jun 2024 13:31:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95CEC1E492;
+	Wed, 19 Jun 2024 13:31:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803863; cv=none; b=YLpgNsIBo7WKSOeE1xUSNAMMjdyQoeBI5ur52pmYrB10yx7qmfgM2fukCM81CdQ7xp6hKHo6M6DjW9+8kIHvjf+6+SZ/6UA6rAo00BbflIA/euVtkps+/oNAe+mkGWK33fcPdyenYhZFZynj7Ovv11Nym0M9OI2ylXFaK2jZN48=
+	t=1718803866; cv=none; b=XiL4i940PU5VV4Sk1MCClFxVG0yy3heuTk5+dHIOFL4kq5RUaxWPUBw2N72CHA5fHX8XeOsBAUhhFRd6Jcj9nsshprXJ/It7Gz+fj+xXmMLe62XOmCP2IwbaYWQNCVVJqMK3SSWF+if7WHCpFa2DoXsO6HTtsMS4VDiSHj2uXoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803863; c=relaxed/simple;
-	bh=Yx3t+EIbEecQb8w7dRn5fAgZLHxkADkDI8zdeiBo+uU=;
+	s=arc-20240116; t=1718803866; c=relaxed/simple;
+	bh=2DPPLV1b3siWy27buoLCBws26S50paeG1t4jOFEno/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AT3e6q0YTIVd7SrFhk4hPxObVddolwRDYqn5Hho6akkuRT0MZSo50HaBrS5Ffg5bKGjtNS0yquvZ1Kr/HqrX44YMLccX3h1fee7ozc8SAqQxZ09utN5+IXADZvO/1mWqB7S+34JrSEKZUnjOrlLyuhROLBh3/oXc9WH05W2Cx6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iY5kxYk3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=henbi7RBp8mexq215BVrMxcGGsmyReYHvVrlP6t84rUAomfoNRE5+6oyD1smD/MG70zKJton0UQFvH8EEp/adhd27nSHTL4vhQQvp3QEqSu/morLjH7/lNyLzkfFPtASmaQz1HBRFVdZP+m6x7PmNadXwk8lb5//yoC37jG+Lik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y2cpYUMw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iY5kxYk3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B54EC2BBFC;
-	Wed, 19 Jun 2024 13:31:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y2cpYUMw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A303C2BBFC;
+	Wed, 19 Jun 2024 13:31:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803863;
-	bh=Yx3t+EIbEecQb8w7dRn5fAgZLHxkADkDI8zdeiBo+uU=;
+	s=korg; t=1718803866;
+	bh=2DPPLV1b3siWy27buoLCBws26S50paeG1t4jOFEno/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iY5kxYk36o2CEsuAlQCsXpU1UPVOgYIB1HcORBEvrXe4jhTqtLDvxTxMQCJzb8W1N
-	 axnUhDdy6gWGgiwNmfEASBwRmZGaX+nwMI1sowffAUduGjTtenSws4RajYLPlVj1DF
-	 UN28jF3TjS9DRDrbLYMMcmdrUXCbeBZBS71u+9DU=
+	b=y2cpYUMwazYQ9Csky2Vij2iAgkSdhjUQ6BmAL86iNeVx6YoWNY9+oapQYYc9GKiNU
+	 9EIA3NH1ZB8BoDxAfkXRN3zoH/HdVtBlWZKypBQt0UKpFDXGSE8VDs+n+XmHZRts45
+	 ETy4n0m7eEoQq7lnkkYjvIDbUrFT3xmb4kB8Qeds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kewen Lin <linkw@gcc.gnu.org>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.1 102/217] powerpc/uaccess: Fix build errors seen with GCC 13/14
-Date: Wed, 19 Jun 2024 14:55:45 +0200
-Message-ID: <20240619125600.626001537@linuxfoundation.org>
+	Gregor Herburger <gregor.herburger@tq-group.com>,
+	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 129/217] gpio: tqmx86: fix broken IRQ_TYPE_EDGE_BOTH interrupt type
+Date: Wed, 19 Jun 2024 14:56:12 +0200
+Message-ID: <20240619125601.666097512@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -50,86 +52,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
 
-commit 2d43cc701b96f910f50915ac4c2a0cae5deb734c upstream.
+[ Upstream commit 90dd7de4ef7ba584823dfbeba834c2919a4bb55b ]
 
-Building ppc64le_defconfig with GCC 14 fails with assembler errors:
+The TQMx86 GPIO controller only supports falling and rising edge
+triggers, but not both. Fix this by implementing a software both-edge
+mode that toggles the edge type after every interrupt.
 
-    CC      fs/readdir.o
-  /tmp/ccdQn0mD.s: Assembler messages:
-  /tmp/ccdQn0mD.s:212: Error: operand out of domain (18 is not a multiple of 4)
-  /tmp/ccdQn0mD.s:226: Error: operand out of domain (18 is not a multiple of 4)
-  ... [6 lines]
-  /tmp/ccdQn0mD.s:1699: Error: operand out of domain (18 is not a multiple of 4)
-
-A snippet of the asm shows:
-
-  # ../fs/readdir.c:210:         unsafe_copy_dirent_name(dirent->d_name, name, namlen, efault_end);
-         ld 9,0(29)       # MEM[(u64 *)name_38(D) + _88 * 1], MEM[(u64 *)name_38(D) + _88 * 1]
-  # 210 "../fs/readdir.c" 1
-         1:      std 9,18(8)     # put_user       # *__pus_addr_52, MEM[(u64 *)name_38(D) + _88 * 1]
-
-The 'std' instruction requires a 4-byte aligned displacement because
-it is a DS-form instruction, and as the assembler says, 18 is not a
-multiple of 4.
-
-A similar error is seen with GCC 13 and CONFIG_UBSAN_SIGNED_WRAP=y.
-
-The fix is to change the constraint on the memory operand to put_user(),
-from "m" which is a general memory reference to "YZ".
-
-The "Z" constraint is documented in the GCC manual PowerPC machine
-constraints, and specifies a "memory operand accessed with indexed or
-indirect addressing". "Y" is not documented in the manual but specifies
-a "memory operand for a DS-form instruction". Using both allows the
-compiler to generate a DS-form "std" or X-form "stdx" as appropriate.
-
-The change has to be conditional on CONFIG_PPC_KERNEL_PREFIXED because
-the "Y" constraint does not guarantee 4-byte alignment when prefixed
-instructions are enabled.
-
-Unfortunately clang doesn't support the "Y" constraint so that has to be
-behind an ifdef.
-
-Although the build error is only seen with GCC 13/14, that appears
-to just be luck. The constraint has been incorrect since it was first
-added.
-
-Fixes: c20beffeec3c ("powerpc/uaccess: Use flexible addressing with __put_user()/__get_user()")
-Cc: stable@vger.kernel.org # v5.10+
-Suggested-by: Kewen Lin <linkw@gcc.gnu.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240529123029.146953-1-mpe@ellerman.id.au
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b868db94a6a7 ("gpio: tqmx86: Add GPIO from for this IO controller")
+Co-developed-by: Gregor Herburger <gregor.herburger@tq-group.com>
+Signed-off-by: Gregor Herburger <gregor.herburger@tq-group.com>
+Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+Link: https://lore.kernel.org/r/515324f0491c4d44f4ef49f170354aca002d81ef.1717063994.git.matthias.schiffer@ew.tq-group.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/uaccess.h |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/gpio/gpio-tqmx86.c | 46 ++++++++++++++++++++++++++++++++++----
+ 1 file changed, 42 insertions(+), 4 deletions(-)
 
---- a/arch/powerpc/include/asm/uaccess.h
-+++ b/arch/powerpc/include/asm/uaccess.h
-@@ -80,9 +80,20 @@ __pu_failed:							\
- 		:						\
- 		: label)
+diff --git a/drivers/gpio/gpio-tqmx86.c b/drivers/gpio/gpio-tqmx86.c
+index 7e428c872a257..f2e7e8754d95d 100644
+--- a/drivers/gpio/gpio-tqmx86.c
++++ b/drivers/gpio/gpio-tqmx86.c
+@@ -32,6 +32,10 @@
+ #define TQMX86_GPII_NONE	0
+ #define TQMX86_GPII_FALLING	BIT(0)
+ #define TQMX86_GPII_RISING	BIT(1)
++/* Stored in irq_type as a trigger type, but not actually valid as a register
++ * value, so the name doesn't use "GPII"
++ */
++#define TQMX86_INT_BOTH		(BIT(0) | BIT(1))
+ #define TQMX86_GPII_MASK	(BIT(0) | BIT(1))
+ #define TQMX86_GPII_BITS	2
+ /* Stored in irq_type with GPII bits */
+@@ -113,9 +117,15 @@ static void tqmx86_gpio_irq_config(struct tqmx86_gpio_data *gpio, int offset)
+ {
+ 	u8 type = TQMX86_GPII_NONE, gpiic;
  
-+#ifdef CONFIG_CC_IS_CLANG
-+#define DS_FORM_CONSTRAINT "Z<>"
-+#else
-+#define DS_FORM_CONSTRAINT "YZ<>"
-+#endif
+-	if (gpio->irq_type[offset] & TQMX86_INT_UNMASKED)
++	if (gpio->irq_type[offset] & TQMX86_INT_UNMASKED) {
+ 		type = gpio->irq_type[offset] & TQMX86_GPII_MASK;
+ 
++		if (type == TQMX86_INT_BOTH)
++			type = tqmx86_gpio_get(&gpio->chip, offset + TQMX86_NGPO)
++				? TQMX86_GPII_FALLING
++				: TQMX86_GPII_RISING;
++	}
 +
- #ifdef __powerpc64__
--#define __put_user_asm2_goto(x, ptr, label)			\
--	__put_user_asm_goto(x, ptr, label, "std")
-+#define __put_user_asm2_goto(x, addr, label)			\
-+	asm goto ("1: std%U1%X1 %0,%1	# put_user\n"		\
-+		EX_TABLE(1b, %l2)				\
-+		:						\
-+		: "r" (x), DS_FORM_CONSTRAINT (*addr)		\
-+		:						\
-+		: label)
- #else /* __powerpc64__ */
- #define __put_user_asm2_goto(x, addr, label)			\
- 	asm goto(					\
+ 	gpiic = tqmx86_gpio_read(gpio, TQMX86_GPIIC);
+ 	gpiic &= ~(TQMX86_GPII_MASK << (offset * TQMX86_GPII_BITS));
+ 	gpiic |= type << (offset * TQMX86_GPII_BITS);
+@@ -169,7 +179,7 @@ static int tqmx86_gpio_irq_set_type(struct irq_data *data, unsigned int type)
+ 		new_type = TQMX86_GPII_FALLING;
+ 		break;
+ 	case IRQ_TYPE_EDGE_BOTH:
+-		new_type = TQMX86_GPII_FALLING | TQMX86_GPII_RISING;
++		new_type = TQMX86_INT_BOTH;
+ 		break;
+ 	default:
+ 		return -EINVAL; /* not supported */
+@@ -189,8 +199,8 @@ static void tqmx86_gpio_irq_handler(struct irq_desc *desc)
+ 	struct gpio_chip *chip = irq_desc_get_handler_data(desc);
+ 	struct tqmx86_gpio_data *gpio = gpiochip_get_data(chip);
+ 	struct irq_chip *irq_chip = irq_desc_get_chip(desc);
+-	unsigned long irq_bits;
+-	int i = 0;
++	unsigned long irq_bits, flags;
++	int i;
+ 	u8 irq_status;
+ 
+ 	chained_irq_enter(irq_chip, desc);
+@@ -199,6 +209,34 @@ static void tqmx86_gpio_irq_handler(struct irq_desc *desc)
+ 	tqmx86_gpio_write(gpio, irq_status, TQMX86_GPIIS);
+ 
+ 	irq_bits = irq_status;
++
++	raw_spin_lock_irqsave(&gpio->spinlock, flags);
++	for_each_set_bit(i, &irq_bits, TQMX86_NGPI) {
++		/*
++		 * Edge-both triggers are implemented by flipping the edge
++		 * trigger after each interrupt, as the controller only supports
++		 * either rising or falling edge triggers, but not both.
++		 *
++		 * Internally, the TQMx86 GPIO controller has separate status
++		 * registers for rising and falling edge interrupts. GPIIC
++		 * configures which bits from which register are visible in the
++		 * interrupt status register GPIIS and defines what triggers the
++		 * parent IRQ line. Writing to GPIIS always clears both rising
++		 * and falling interrupt flags internally, regardless of the
++		 * currently configured trigger.
++		 *
++		 * In consequence, we can cleanly implement the edge-both
++		 * trigger in software by first clearing the interrupt and then
++		 * setting the new trigger based on the current GPIO input in
++		 * tqmx86_gpio_irq_config() - even if an edge arrives between
++		 * reading the input and setting the trigger, we will have a new
++		 * interrupt pending.
++		 */
++		if ((gpio->irq_type[i] & TQMX86_GPII_MASK) == TQMX86_INT_BOTH)
++			tqmx86_gpio_irq_config(gpio, i);
++	}
++	raw_spin_unlock_irqrestore(&gpio->spinlock, flags);
++
+ 	for_each_set_bit(i, &irq_bits, TQMX86_NGPI)
+ 		generic_handle_domain_irq(gpio->chip.irq.domain,
+ 					  i + TQMX86_NGPO);
+-- 
+2.43.0
+
 
 
