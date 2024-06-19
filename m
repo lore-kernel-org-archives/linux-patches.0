@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C157214388C;
-	Wed, 19 Jun 2024 12:58:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75E014388C;
+	Wed, 19 Jun 2024 12:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718801939; cv=none; b=f8Zt7le2PmSzECSR2jXLChcNQ7K3wshB3yY3UsKHfvAljlwmqzaawiwnLljfpYmPdb9ONnKPBDHmSt9wUP25QaNAJN4tIyPD86w3YP8Sc+da2gSwjKtuzSWjKC6Z4IAxVx0ErYJIGzc6nr/STbTRWlM1q53LMkim9caO0x73cnw=
+	t=1718801942; cv=none; b=TcLctpv5W3e++7NuJnyjWBWzIIMLpRQ83Qn8sXjLk3Fyl5pKNaJFV6atsFhzi0k+UuxN2lOUbv/3XMrgG3y/76r5adtPVHCKGwhty1vE3CFXQsqrF8K1UhFI2e4WicrQ/T6BHCRPLUya4xkWjPCb/pQxYaiTEoPmtVoOKdYAQhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718801939; c=relaxed/simple;
-	bh=mRZ55QTw4vvJrYH/im8ItzVw11KEN26UwQlt4wUFsBw=;
+	s=arc-20240116; t=1718801942; c=relaxed/simple;
+	bh=GYYAmfIwdQ5TiglQsxUpqj5I8hWjgiRw/0jHeM7hp9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qmujKfXJmhk6ZDXtxFxq8KAiEfGTrfOnxxox6kB+mLg5TQ9QrZXBtgRVvRjkaGJVBAT14+3KVcT/L/tNMsHR8PlHxnwSZ2xduDnWLvby037C2o9XZAq4olITzzv80S5EHtHG7RsbVIlS3g7JEQnDhXTYyns5LcHsdjuq765xX44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uvtDRdEA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oOKkEq0NUFGvN8BWcTi/SA/iDEIisORIuTkE9XUjWH2abxz9baT193VU9y6nwQfwL8213a6ppXU/PRDoiJ/E+Gsel/SZZxhw+sBZBuQacPhn25+C06oaIIgot/xl1rBIYX7gE9xW4miJ5HE+ug7jZKHrHVwhCFx9k1e+qSicCmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=khSvqrlx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uvtDRdEA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FC3BC2BBFC;
-	Wed, 19 Jun 2024 12:58:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khSvqrlx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE07C2BBFC;
+	Wed, 19 Jun 2024 12:59:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718801939;
-	bh=mRZ55QTw4vvJrYH/im8ItzVw11KEN26UwQlt4wUFsBw=;
+	s=korg; t=1718801942;
+	bh=GYYAmfIwdQ5TiglQsxUpqj5I8hWjgiRw/0jHeM7hp9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uvtDRdEAMFsIlaYMdzcaZEqO4YNLIWwgpcg17Zel9xTt+3GGhJQV487ogGIYNGffl
-	 tNrB6Gum3vNmuf3UwvF4EYz6hTF4Ag7yiYILjm2b36ApPhEOdD1HhJTilhQ/PP5oWb
-	 6Lclpd6JjwFDSdHZOceZEw+9PXoarxG5SIJB3QxI=
+	b=khSvqrlx7Awe5d1nczauERSZE/jANqXNKbga+d+rpnJa0sZCNZnpDE9t/wri0PjWJ
+	 YdnpdaPC9Y4ahy/9UZuKphNs+k6f5JW+jb/FHNhS55znx0yFIbez85KrPOhd3Tag5y
+	 klhmTZEu5YJ7DrSW8z9K5I9xfb14kN7s8xqRpB8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
-	Justin Iurman <justin.iurman@uliege.be>,
+	David Lebrun <dlebrun@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 028/267] ipv6: ioam: block BH from ioam6_output()
-Date: Wed, 19 Jun 2024 14:52:59 +0200
-Message-ID: <20240619125607.445063970@linuxfoundation.org>
+Subject: [PATCH 6.6 029/267] ipv6: sr: block BH in seg6_output_core() and seg6_input_core()
+Date: Wed, 19 Jun 2024 14:53:00 +0200
+Message-ID: <20240619125607.483149848@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -55,61 +55,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 2fe40483ec257de2a0d819ef88e3e76c7e261319 ]
+[ Upstream commit c0b98ac1cc104f48763cdb27b1e9ac25fd81fc90 ]
 
 As explained in commit 1378817486d6 ("tipc: block BH
 before using dst_cache"), net/core/dst_cache.c
 helpers need to be called with BH disabled.
 
-Disabling preemption in ioam6_output() is not good enough,
-because ioam6_output() is called from process context,
+Disabling preemption in seg6_output_core() is not good enough,
+because seg6_output_core() is called from process context,
 lwtunnel_output() only uses rcu_read_lock().
 
-We might be interrupted by a softirq, re-enter ioam6_output()
+We might be interrupted by a softirq, re-enter seg6_output_core()
 and corrupt dst_cache data structures.
 
 Fix the race by using local_bh_disable() instead of
 preempt_disable().
 
-Fixes: 8cb3bf8bff3c ("ipv6: ioam: Add support for the ip6ip6 encapsulation")
+Apply a similar change in seg6_input_core().
+
+Fixes: fa79581ea66c ("ipv6: sr: fix several BUGs when preemption is enabled")
+Fixes: 6c8702c60b88 ("ipv6: sr: add support for SRH encapsulation and injection with lwtunnels")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Justin Iurman <justin.iurman@uliege.be>
+Cc: David Lebrun <dlebrun@google.com>
 Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/20240531132636.2637995-2-edumazet@google.com
+Link: https://lore.kernel.org/r/20240531132636.2637995-4-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ioam6_iptunnel.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/ipv6/seg6_iptunnel.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/net/ipv6/ioam6_iptunnel.c b/net/ipv6/ioam6_iptunnel.c
-index f6f5b83dd954d..a5cfc5b0b206b 100644
---- a/net/ipv6/ioam6_iptunnel.c
-+++ b/net/ipv6/ioam6_iptunnel.c
-@@ -351,9 +351,9 @@ static int ioam6_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- 		goto drop;
+diff --git a/net/ipv6/seg6_iptunnel.c b/net/ipv6/seg6_iptunnel.c
+index a75df2ec8db0d..098632adc9b5a 100644
+--- a/net/ipv6/seg6_iptunnel.c
++++ b/net/ipv6/seg6_iptunnel.c
+@@ -464,23 +464,21 @@ static int seg6_input_core(struct net *net, struct sock *sk,
  
- 	if (!ipv6_addr_equal(&orig_daddr, &ipv6_hdr(skb)->daddr)) {
--		preempt_disable();
-+		local_bh_disable();
- 		dst = dst_cache_get(&ilwt->cache);
--		preempt_enable();
-+		local_bh_enable();
+ 	slwt = seg6_lwt_lwtunnel(orig_dst->lwtstate);
  
- 		if (unlikely(!dst)) {
- 			struct ipv6hdr *hdr = ipv6_hdr(skb);
-@@ -373,9 +373,9 @@ static int ioam6_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- 				goto drop;
- 			}
+-	preempt_disable();
++	local_bh_disable();
+ 	dst = dst_cache_get(&slwt->cache);
+-	preempt_enable();
  
+ 	if (!dst) {
+ 		ip6_route_input(skb);
+ 		dst = skb_dst(skb);
+ 		if (!dst->error) {
 -			preempt_disable();
-+			local_bh_disable();
- 			dst_cache_set_ip6(&ilwt->cache, dst, &fl6.saddr);
+ 			dst_cache_set_ip6(&slwt->cache, dst,
+ 					  &ipv6_hdr(skb)->saddr);
 -			preempt_enable();
-+			local_bh_enable();
+ 		}
+ 	} else {
+ 		skb_dst_drop(skb);
+ 		skb_dst_set(skb, dst);
+ 	}
++	local_bh_enable();
+ 
+ 	err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
+ 	if (unlikely(err))
+@@ -536,9 +534,9 @@ static int seg6_output_core(struct net *net, struct sock *sk,
+ 
+ 	slwt = seg6_lwt_lwtunnel(orig_dst->lwtstate);
+ 
+-	preempt_disable();
++	local_bh_disable();
+ 	dst = dst_cache_get(&slwt->cache);
+-	preempt_enable();
++	local_bh_enable();
+ 
+ 	if (unlikely(!dst)) {
+ 		struct ipv6hdr *hdr = ipv6_hdr(skb);
+@@ -558,9 +556,9 @@ static int seg6_output_core(struct net *net, struct sock *sk,
+ 			goto drop;
  		}
  
- 		skb_dst_drop(skb);
+-		preempt_disable();
++		local_bh_disable();
+ 		dst_cache_set_ip6(&slwt->cache, dst, &fl6.saddr);
+-		preempt_enable();
++		local_bh_enable();
+ 	}
+ 
+ 	skb_dst_drop(skb);
 -- 
 2.43.0
 
