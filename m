@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 507CB4D9EA;
-	Wed, 19 Jun 2024 13:26:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E654D9EA;
+	Wed, 19 Jun 2024 13:26:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803589; cv=none; b=ubeCDQ9UW2nGtWI/Qcg+K1F1aj+VwTEQD1jRk1Z8JsMX2oX/q4wYMyfZUemU8VmmG0U6oCVc4Acw7UfObys9NXiHRFQPRGW9KSsqreLpat7hV5WTwTF5gvTs0B2oHN5K6+xNsgecTZ9Jl+WRBW/QXcTfVln9ZHP50V+Hl+4f8R8=
+	t=1718803592; cv=none; b=XQVomJdTmrnf1xul8GMeZ0Ekge1Xs0+De/iSke8eMkUF3Ua0crkyaVgIif1A6wDym0na0xA8u6Rbfzc1paCyBjdb31CkV6iN8x9cqKjwp6pRZQga+9jtXqMYgfCw2IjvXclMcrbvxQ9oGbXxR85hwWsjO+lbt389/Nn5la5oQ3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803589; c=relaxed/simple;
-	bh=kMhqCOABOcu35zxKJk0WXMP1bykZ0JnN3d506EeS9zA=;
+	s=arc-20240116; t=1718803592; c=relaxed/simple;
+	bh=/f6swVG0/fVGY1JfxjP8qfMLkUkyZeJaj7nfNbGT/tc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L7OEoEQjo5m6x0ZMW8GsLaz357DHQR9mN6cMQsjgxmz17el6wPah2n7Ka8zCsW+x7TlY8LtjmwosB27DSJDzVvA5ebImxZebF9a5s9opTYvzWFyueP4mlKG6NwNRkG60MkWu0nGKlwq4aiOQQyS+XQPyRBhRJOK15+fJPL2KDQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A8GgxRsk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qLXWLBDWXpHU0BP+b4NuzBfLV+6vPZ35wk/XUet+7jmsPsyQnbELYsyThREOiVAZDQHNfEJVsXo7uqXchsxMvFCXH9cJxJ7hJqgae39xkzMITIvlsJOoEQL5n4Etc/W3JjjLGWAVTrloJvHgVlOX3iesjI+kHwDERxSB7G4+1co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YHdlZvR3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A8GgxRsk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7048C2BBFC;
-	Wed, 19 Jun 2024 13:26:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YHdlZvR3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE2D7C2BBFC;
+	Wed, 19 Jun 2024 13:26:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803589;
-	bh=kMhqCOABOcu35zxKJk0WXMP1bykZ0JnN3d506EeS9zA=;
+	s=korg; t=1718803592;
+	bh=/f6swVG0/fVGY1JfxjP8qfMLkUkyZeJaj7nfNbGT/tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A8GgxRskwFzyDKTJHtYAjSTOSQ8GM3MUAR2Xh2h/hPsJ4znykWo0lzS64P6PVHg79
-	 O/yZd/YpSd1986BbhSlbUU5nkG1tmDAjtSW9oJexkjjVcqmpDD17PHdOjz8/J/GqEx
-	 1F84UJQ8emLZKKjk+fJq8FGXWNk8JxUdJA2y/rL8=
+	b=YHdlZvR3ZgkEu9GK0IcHI4yas9oOyPS/RdVX0XF67zN6V4N6x1Gz7+r2mCu26H1S4
+	 2qtBQgzjK0LJWv8Ytql3gKzNRmNYYdsIlpQjRA54D6/ptdwzCVFf9gTSElp1iBjCx7
+	 arNnWi0u1Wv3eU7y4V1wj6VHuLw1yKNcdFr9ced8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shahar S Matityahu <shahar.s.matityahu@intel.com>,
-	Luciano Coelho <luciano.coelho@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Ilan Peer <ilan.peer@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 007/217] wifi: iwlwifi: dbg_ini: move iwl_dbg_tlv_free outside of debugfs ifdef
-Date: Wed, 19 Jun 2024 14:54:10 +0200
-Message-ID: <20240619125556.787588886@linuxfoundation.org>
+Subject: [PATCH 6.1 008/217] wifi: iwlwifi: mvm: check n_ssids before accessing the ssids
+Date: Wed, 19 Jun 2024 14:54:11 +0200
+Message-ID: <20240619125556.825827510@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -53,38 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shahar S Matityahu <shahar.s.matityahu@intel.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit 87821b67dea87addbc4ab093ba752753b002176a ]
+[ Upstream commit 60d62757df30b74bf397a2847a6db7385c6ee281 ]
 
-The driver should call iwl_dbg_tlv_free even if debugfs is not defined
-since ini mode does not depend on debugfs ifdef.
+In some versions of cfg80211, the ssids poinet might be a valid one even
+though n_ssids is 0. Accessing the pointer in this case will cuase an
+out-of-bound access. Fix this by checking n_ssids first.
 
-Fixes: 68f6f492c4fa ("iwlwifi: trans: support loading ini TLVs from external file")
-Signed-off-by: Shahar S Matityahu <shahar.s.matityahu@intel.com>
-Reviewed-by: Luciano Coelho <luciano.coelho@intel.com>
+Fixes: c1a7515393e4 ("iwlwifi: mvm: add adaptive dwell support")
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240510170500.c8e3723f55b0.I5e805732b0be31ee6b83c642ec652a34e974ff10@changeid
+Reviewed-by: Ilan Peer <ilan.peer@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://msgid.link/20240513132416.6e4d1762bf0d.I5a0e6cc8f02050a766db704d15594c61fe583d45@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/iwl-drv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/scan.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-index 5eba1a355f043..024c37062a60b 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-@@ -1750,8 +1750,8 @@ struct iwl_drv *iwl_drv_start(struct iwl_trans *trans)
- err_fw:
- #ifdef CONFIG_IWLWIFI_DEBUGFS
- 	debugfs_remove_recursive(drv->dbgfs_drv);
--	iwl_dbg_tlv_free(drv->trans);
- #endif
-+	iwl_dbg_tlv_free(drv->trans);
- 	kfree(drv);
- err:
- 	return ERR_PTR(ret);
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
+index b20d64dbba1ad..a7a29f1659ea6 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
+@@ -1298,7 +1298,7 @@ static void iwl_mvm_scan_umac_dwell(struct iwl_mvm *mvm,
+ 		if (IWL_MVM_ADWELL_MAX_BUDGET)
+ 			cmd->v7.adwell_max_budget =
+ 				cpu_to_le16(IWL_MVM_ADWELL_MAX_BUDGET);
+-		else if (params->ssids && params->ssids[0].ssid_len)
++		else if (params->n_ssids && params->ssids[0].ssid_len)
+ 			cmd->v7.adwell_max_budget =
+ 				cpu_to_le16(IWL_SCAN_ADWELL_MAX_BUDGET_DIRECTED_SCAN);
+ 		else
+@@ -1400,7 +1400,7 @@ iwl_mvm_scan_umac_dwell_v11(struct iwl_mvm *mvm,
+ 	if (IWL_MVM_ADWELL_MAX_BUDGET)
+ 		general_params->adwell_max_budget =
+ 			cpu_to_le16(IWL_MVM_ADWELL_MAX_BUDGET);
+-	else if (params->ssids && params->ssids[0].ssid_len)
++	else if (params->n_ssids && params->ssids[0].ssid_len)
+ 		general_params->adwell_max_budget =
+ 			cpu_to_le16(IWL_SCAN_ADWELL_MAX_BUDGET_DIRECTED_SCAN);
+ 	else
 -- 
 2.43.0
 
