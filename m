@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CA382495;
-	Wed, 19 Jun 2024 13:20:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F04B82495;
+	Wed, 19 Jun 2024 13:20:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803222; cv=none; b=YHC+wBDeu8Z9kniQmWz1tUQqLxzACOi/PZa/DGsBs64jkxhMYeERsZnfwXjx+i3BMh2YjNTPzv1unxacNH6zMj2cHR2mPd5p87n3OZ+U0WqxdUQuTvS6o1aTP+viPU4Nihkqzzg/6XDDmbcWaxMk9KbVMzqtXpVRkfASjkr4enA=
+	t=1718803225; cv=none; b=A4xRj7vY5KH1+8Ei8hCVwY6EciDmU1i8SNVFT1wywp0PiXOcqzqbtUDa289TQcDZUy/94LJNiGy73uUDWh3la6PsELCo8EfoipSzQdupQuz3FkEEZvQz6N4sofpjW2fRJe2X0qYftCRx7Xv+XKOuKazqQy7hcF7RxVTePRIJja0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803222; c=relaxed/simple;
-	bh=cJSSOw+LORJ2Uay9AMdMft/nUb73sJjrfJAqeDEwxyg=;
+	s=arc-20240116; t=1718803225; c=relaxed/simple;
+	bh=bbNcgGhRhWqmC5DOxqEaloZJwSzNk0OTrFKkgkO3Z3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mOfYY8ytIFhMfubwSZfaOF3AD6D+j8t/8Fo0t/+l6PD64Q1A1hroBGR9jhPOXFRIR6tUGHW69KSqhUnoH9ASHVdNrtVLrb8s3PWH8a6Cs7lcqVdOwJEJLexLGPXGIJQQr1r34wNqP7OWySEHO7kVe33IIw5i8U8ax90DYZ5kt0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/QxQnkp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oIc8wLYMNR9ggdBj7oQYqLpNp7F6s3VyJoEJDvB6e2WU6JehX9AvFvFVwduqeIuY0vha0gTxIi3yrkb2pSS3yaMQkWb7vrCRwEMJZ83i98BEyuQajacZh+wnNkjqAFHvjcs4NOH+Sm2WFSwedlMpa96SiOzYmiq3LrlbMFT4+34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i0/G8NGf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/QxQnkp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C4EEC2BBFC;
-	Wed, 19 Jun 2024 13:20:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i0/G8NGf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20585C32786;
+	Wed, 19 Jun 2024 13:20:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803222;
-	bh=cJSSOw+LORJ2Uay9AMdMft/nUb73sJjrfJAqeDEwxyg=;
+	s=korg; t=1718803225;
+	bh=bbNcgGhRhWqmC5DOxqEaloZJwSzNk0OTrFKkgkO3Z3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S/QxQnkpaavBf4O0GC/Ewy5/cF0jnmXiYgk9bOZNqJWrPPNzF4eotNj17q2M0kJUb
-	 AgvcLt+XDeSvuRadk40QhyhdEb2iqBMcT9A8qu9VEhPpJPalc5f6WEsmMV4+jo3tyk
-	 Va5DJeqUTzxoD+zInS1tGiklkLxInLP0wuYiUtU0=
+	b=i0/G8NGfUvciq+fddsWdRwiX9f6/3OthdAQ6usZrCyw58oxW0Pm1tKNCs674SxKaZ
+	 Su0DdKDhj89qCbEh7UpkkRAyrtve18o4tSi4zy0cHlpaRtj+l03fx06gaa9l2aNcad
+	 ssJbpjYD9WTvfymDcHwcNgEBRt54fw7dHpnbPIzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9bbe2de1bc9d470eb5fe@syzkaller.appspotmail.com,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 177/281] net: bridge: mst: pass vlan group directly to br_mst_vlan_set_state
-Date: Wed, 19 Jun 2024 14:55:36 +0200
-Message-ID: <20240619125616.646637333@linuxfoundation.org>
+	Vasileios Amoiridis <vassilisamir@gmail.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.9 195/281] iio: imu: bmi323: Fix trigger notification in case of error
+Date: Wed, 19 Jun 2024 14:55:54 +0200
+Message-ID: <20240619125617.455356863@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -52,72 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Aleksandrov <razor@blackwall.org>
+From: Vasileios Amoiridis <vassilisamir@gmail.com>
 
-[ Upstream commit 36c92936e868601fa1f43da6758cf55805043509 ]
+commit bedb2ccb566de5ca0c336ca3fd3588cea6d50414 upstream.
 
-Pass the already obtained vlan group pointer to br_mst_vlan_set_state()
-instead of dereferencing it again. Each caller has already correctly
-dereferenced it for their context. This change is required for the
-following suspicious RCU dereference fix. No functional changes
-intended.
+In case of error in the bmi323_trigger_handler() function, the
+function exits without calling the iio_trigger_notify_done()
+which is responsible for informing the attached trigger that
+the process is done and in case there is a .reenable(), to
+call it.
 
-Fixes: 3a7c1661ae13 ("net: bridge: mst: fix vlan use-after-free")
-Reported-by: syzbot+9bbe2de1bc9d470eb5fe@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9bbe2de1bc9d470eb5fe
-Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://lore.kernel.org/r/20240609103654.914987-2-razor@blackwall.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 8a636db3aa57 ("iio: imu: Add driver for BMI323 IMU")
+Signed-off-by: Vasileios Amoiridis <vassilisamir@gmail.com>
+Link: https://lore.kernel.org/r/20240508155407.139805-1-vassilisamir@gmail.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_mst.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/iio/imu/bmi323/bmi323_core.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/bridge/br_mst.c b/net/bridge/br_mst.c
-index 3c66141d34d62..1de72816b0fb2 100644
---- a/net/bridge/br_mst.c
-+++ b/net/bridge/br_mst.c
-@@ -73,11 +73,10 @@ int br_mst_get_state(const struct net_device *dev, u16 msti, u8 *state)
- }
- EXPORT_SYMBOL_GPL(br_mst_get_state);
- 
--static void br_mst_vlan_set_state(struct net_bridge_port *p, struct net_bridge_vlan *v,
-+static void br_mst_vlan_set_state(struct net_bridge_vlan_group *vg,
-+				  struct net_bridge_vlan *v,
- 				  u8 state)
- {
--	struct net_bridge_vlan_group *vg = nbp_vlan_group(p);
--
- 	if (br_vlan_get_state(v) == state)
- 		return;
- 
-@@ -121,7 +120,7 @@ int br_mst_set_state(struct net_bridge_port *p, u16 msti, u8 state,
- 		if (v->brvlan->msti != msti)
- 			continue;
- 
--		br_mst_vlan_set_state(p, v, state);
-+		br_mst_vlan_set_state(vg, v, state);
- 	}
- 
- out:
-@@ -140,13 +139,13 @@ static void br_mst_vlan_sync_state(struct net_bridge_vlan *pv, u16 msti)
- 		 * it.
- 		 */
- 		if (v != pv && v->brvlan->msti == msti) {
--			br_mst_vlan_set_state(pv->port, pv, v->state);
-+			br_mst_vlan_set_state(vg, pv, v->state);
- 			return;
+--- a/drivers/iio/imu/bmi323/bmi323_core.c
++++ b/drivers/iio/imu/bmi323/bmi323_core.c
+@@ -1391,7 +1391,7 @@ static irqreturn_t bmi323_trigger_handle
+ 				       &data->buffer.channels,
+ 				       ARRAY_SIZE(data->buffer.channels));
+ 		if (ret)
+-			return IRQ_NONE;
++			goto out;
+ 	} else {
+ 		for_each_set_bit(bit, indio_dev->active_scan_mask,
+ 				 BMI323_CHAN_MAX) {
+@@ -1400,13 +1400,14 @@ static irqreturn_t bmi323_trigger_handle
+ 					      &data->buffer.channels[index++],
+ 					      BMI323_BYTES_PER_SAMPLE);
+ 			if (ret)
+-				return IRQ_NONE;
++				goto out;
  		}
  	}
  
- 	/* Otherwise, start out in a new MSTI with all ports disabled. */
--	return br_mst_vlan_set_state(pv->port, pv, BR_STATE_DISABLED);
-+	return br_mst_vlan_set_state(vg, pv, BR_STATE_DISABLED);
- }
+ 	iio_push_to_buffers_with_timestamp(indio_dev, &data->buffer,
+ 					   iio_get_time_ns(indio_dev));
  
- int br_mst_vlan_set_msti(struct net_bridge_vlan *mv, u16 msti)
--- 
-2.43.0
-
++out:
+ 	iio_trigger_notify_done(indio_dev->trig);
+ 
+ 	return IRQ_HANDLED;
 
 
