@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4BE71419B5;
-	Wed, 19 Jun 2024 13:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D34148308;
+	Wed, 19 Jun 2024 13:25:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803545; cv=none; b=D+nDOB+vpP0mt7RtkIV/fPXYz5ZwnCkPYDwJIi0j1bKn5xsG52vbj7VclVHv5I9qI16rRzqW4IXWdA7aTqZee2JM+Izo+x8TDDCbmZgTw6ab18pL1uQM+PW/BKW9InVR+r0sfAXqxouIFD7z2UFa3QDl71iSPqaL8SzPQkAHuNs=
+	t=1718803548; cv=none; b=jvmXSpaNNgFJXkKMpGjgLGFSnnyxB0w0sYQnGdHRlSdhsKk7gAY6gchVxvgzKF2WvNxt1/2C/Ptc052V9U30OiCk/78H7pGQSIhLL1/bZXQVyqwmfdly1UclxjzLtRpMHA5ktNTPvmjS/yBHdbyPn0wPaDSQs65Z5oukgNIKPr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803545; c=relaxed/simple;
-	bh=EJXPawyfOvp9J8H1ts7hFXD7FB9+G32rGVcBodRSOQ0=;
+	s=arc-20240116; t=1718803548; c=relaxed/simple;
+	bh=Lhx6TzdfzBA7lOxpcvAcDqPtghmB2OICavkRBz1vS44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qXtm4dQz27Nllo4dIS8+B1rBGg9MQkMaed/2i0P5gWQKiiuLhgb7QBDcxMrRAfECVXXYjbC7g7c5UCXTm9nbemc5GgIc09eU5zf0rle4bHduoBtPkTbFzH4OQXe8ABfC7yGstQhNLwPW+D9+XZOJsMzMjTwWuT2/LoIriSa1YzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pVKFSswK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aYAy+XutnxRYnlWZ55ytPMIS7BL0/bTjyIkDFP36uAuPfpUL1Kc5i/jmCeBYQtygiA138wrHASvQeEflfIPfb7ySNPZLxEARqQFRC51R1o7OcvdmZlkh9GG6yNPM57mqonN4btgXQU3vUzZmoZONGRXyEB1qmBWaEWz6hfUCfug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C5k5uxlL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pVKFSswK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA3E7C32786;
-	Wed, 19 Jun 2024 13:25:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C5k5uxlL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B911BC32786;
+	Wed, 19 Jun 2024 13:25:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803545;
-	bh=EJXPawyfOvp9J8H1ts7hFXD7FB9+G32rGVcBodRSOQ0=;
+	s=korg; t=1718803548;
+	bh=Lhx6TzdfzBA7lOxpcvAcDqPtghmB2OICavkRBz1vS44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pVKFSswKlfPhgUwlpJaaOD85VMYH5FZJwoBsp/Jfy9eLHylSHIgb1XUb4NataSN84
-	 IfVSb6SpmpTEsNA398WhjZoI/EQ7aDjI1jUCajL/JnEsb/adO+e8ql5N+3jJDjj3PQ
-	 MVyejA22QNiaOibNpcRTWfYLrA5anbWyIBP1X2JQ=
+	b=C5k5uxlLjCUAh0fodzRmguANyuUKwGgadP6ZUevW484mqoXg8qkKxr14m1umvd9tr
+	 l2rq7gPkdvGY+yrx0tezfPM2nbMg1M/Qy3z20luYpQ+35n1OYTqtExfAAOje3eoykT
+	 OUr2R9k2Yi9/vLxSm52ccBenePCknOcOdNlerex4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	David Bauer <mail@david-bauer.net>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jason Xing <kernelxing@tencent.com>,
+	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 021/217] vxlan: Fix regression when dropping packets due to invalid src addresses
-Date: Wed, 19 Jun 2024 14:54:24 +0200
-Message-ID: <20240619125557.463354682@linuxfoundation.org>
+Subject: [PATCH 6.1 022/217] tcp: count CLOSE-WAIT sockets for TCP_MIB_CURRESTAB
+Date: Wed, 19 Jun 2024 14:54:25 +0200
+Message-ID: <20240619125557.502869473@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -55,62 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Jason Xing <kernelxing@tencent.com>
 
-[ Upstream commit 1cd4bc987abb2823836cbb8f887026011ccddc8a ]
+[ Upstream commit a46d0ea5c94205f40ecf912d1bb7806a8a64704f ]
 
-Commit f58f45c1e5b9 ("vxlan: drop packets from invalid src-address")
-has recently been added to vxlan mainly in the context of source
-address snooping/learning so that when it is enabled, an entry in the
-FDB is not being created for an invalid address for the corresponding
-tunnel endpoint.
+According to RFC 1213, we should also take CLOSE-WAIT sockets into
+consideration:
 
-Before commit f58f45c1e5b9 vxlan was similarly behaving as geneve in
-that it passed through whichever macs were set in the L2 header. It
-turns out that this change in behavior breaks setups, for example,
-Cilium with netkit in L3 mode for Pods as well as tunnel mode has been
-passing before the change in f58f45c1e5b9 for both vxlan and geneve.
-After mentioned change it is only passing for geneve as in case of
-vxlan packets are dropped due to vxlan_set_mac() returning false as
-source and destination macs are zero which for E/W traffic via tunnel
-is totally fine.
+  "tcpCurrEstab OBJECT-TYPE
+   ...
+   The number of TCP connections for which the current state
+   is either ESTABLISHED or CLOSE- WAIT."
 
-Fix it by only opting into the is_valid_ether_addr() check in
-vxlan_set_mac() when in fact source address snooping/learning is
-actually enabled in vxlan. This is done by moving the check into
-vxlan_snoop(). With this change, the Cilium connectivity test suite
-passes again for both tunnel flavors.
+After this, CurrEstab counter will display the total number of
+ESTABLISHED and CLOSE-WAIT sockets.
 
-Fixes: f58f45c1e5b9 ("vxlan: drop packets from invalid src-address")
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Cc: David Bauer <mail@david-bauer.net>
-Cc: Ido Schimmel <idosch@nvidia.com>
-Cc: Nikolay Aleksandrov <razor@blackwall.org>
-Cc: Martin KaFai Lau <martin.lau@kernel.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: David Bauer <mail@david-bauer.net>
+The logic of counting
+When we increment the counter?
+a) if we change the state to ESTABLISHED.
+b) if we change the state from SYN-RECEIVED to CLOSE-WAIT.
+
+When we decrement the counter?
+a) if the socket leaves ESTABLISHED and will never go into CLOSE-WAIT,
+say, on the client side, changing from ESTABLISHED to FIN-WAIT-1.
+b) if the socket leaves CLOSE-WAIT, say, on the server side, changing
+from CLOSE-WAIT to LAST-ACK.
+
+Please note: there are two chances that old state of socket can be changed
+to CLOSE-WAIT in tcp_fin(). One is SYN-RECV, the other is ESTABLISHED.
+So we have to take care of the former case.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Jason Xing <kernelxing@tencent.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/ipv4/tcp.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index a7ae68f490c4c..61224a5a877cb 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -1493,6 +1493,10 @@ static bool vxlan_snoop(struct net_device *dev,
- 	struct vxlan_fdb *f;
- 	u32 ifindex = 0;
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 3447a09ee83a2..2d4f697d338f5 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -2758,6 +2758,10 @@ void tcp_set_state(struct sock *sk, int state)
+ 		if (oldstate != TCP_ESTABLISHED)
+ 			TCP_INC_STATS(sock_net(sk), TCP_MIB_CURRESTAB);
+ 		break;
++	case TCP_CLOSE_WAIT:
++		if (oldstate == TCP_SYN_RECV)
++			TCP_INC_STATS(sock_net(sk), TCP_MIB_CURRESTAB);
++		break;
  
-+	/* Ignore packets from invalid src-address */
-+	if (!is_valid_ether_addr(src_mac))
-+		return true;
-+
- #if IS_ENABLED(CONFIG_IPV6)
- 	if (src_ip->sa.sa_family == AF_INET6 &&
- 	    (ipv6_addr_type(&src_ip->sin6.sin6_addr) & IPV6_ADDR_LINKLOCAL))
+ 	case TCP_CLOSE:
+ 		if (oldstate == TCP_CLOSE_WAIT || oldstate == TCP_ESTABLISHED)
+@@ -2769,7 +2773,7 @@ void tcp_set_state(struct sock *sk, int state)
+ 			inet_put_port(sk);
+ 		fallthrough;
+ 	default:
+-		if (oldstate == TCP_ESTABLISHED)
++		if (oldstate == TCP_ESTABLISHED || oldstate == TCP_CLOSE_WAIT)
+ 			TCP_DEC_STATS(sock_net(sk), TCP_MIB_CURRESTAB);
+ 	}
+ 
 -- 
 2.43.0
 
