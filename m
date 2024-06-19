@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A4C14B95F;
-	Wed, 19 Jun 2024 13:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5CB5147C7B;
+	Wed, 19 Jun 2024 13:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802700; cv=none; b=jkGcLNaerEpCfijMw4ddzQbiVzuUsZnPSd6C381OynBIxUrQtQd/0GB7VVxgyfcr1Rctu3PVXpYvGeVJZLd4zn+sHZs2GCN/kk2ic3wNVkVUzzAppVCM63Eht551hwt89odYidB6lYVUvBhzfo7KVTNwPxq1kJZB5wkbBgoExFc=
+	t=1718802703; cv=none; b=iVNpesXE0GDo36xpbuRl5/NCjxv73W9kc1WEcd97r6NzGR8JIxkv9Sh6468flc2K18gheMGr3PAL9X0BI1IZK8UylqJWiZy17nLJ9qFVpfXgUWssMh6+ltmcVMJ0WBE62+64ARRzBQE6BSAPba0utrJHoG/ejqTJEpnJGhbinZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802700; c=relaxed/simple;
-	bh=gsGny+SVkNfhS1xYXprJpF1QJ7MnnBDnN81Hmuya28Q=;
+	s=arc-20240116; t=1718802703; c=relaxed/simple;
+	bh=D0sILxWCFRjBig6K6bKh5JXJqo37PtD2JYbrASP0rvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=D3BGqOe3UfpF1dZSaUWMVM6yXOW10+K3Pu/CenJiWxnffvNjd3myArPYDms+cmyW3yrxCS2MtcWzYOm3JE0j/zm8EncLPsWf8sLvdgvosdMokDGgptqToy+C8i03V9i/bn0WZhY77jizq5c2fABGSN7IM5XgNWa4v4830kaVQDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WYfip2d9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FCLrCU5Qb/ss4tJGPW97krq3iizzfgQJSqgChhCsyDZ136hiRYTjaWJOXPS4/ELsIcqU+TzpVNrFf9gadpZ77eToKUWooYO8LX1gkoUz9IMYbZAgFjBO3Q0sluDMRtTXwYK6QcRrkFdosg4IiRBttTETzsuUDF8Mfhv5du9Wu+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LmU7E/q/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WYfip2d9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36C95C4AF60;
-	Wed, 19 Jun 2024 13:11:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LmU7E/q/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C734C2BBFC;
+	Wed, 19 Jun 2024 13:11:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802700;
-	bh=gsGny+SVkNfhS1xYXprJpF1QJ7MnnBDnN81Hmuya28Q=;
+	s=korg; t=1718802703;
+	bh=D0sILxWCFRjBig6K6bKh5JXJqo37PtD2JYbrASP0rvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WYfip2d9IlWz6rtrUR+HyKuAm6WYNYIK8/uN91Nv883nqFGrKGQo6SujF4lkkGPd4
-	 EDkYzGTifN7lhy4c2dhcFw2KGtuO/GfGOk52B6CteH8/DngYGw3XH2wWtJYTaChY1h
-	 vn2eQOx/RA0n0WDWUrgv1vjWiqrfID3VPRBkOPMQ=
+	b=LmU7E/q/0LM22y8DDznSgKlMlV8kvx+1h6OADTeXtMG9rrY+6L+LjAxRT2xdi0Klr
+	 SCs9ocngG7WXsQt6XNk7FByrraK5cI4jBlNhR99hx1Rwv+7K1xi9c9StPgwLPeCzfR
+	 h5b1xBqbdKtwC9Vv66h4iaulIPOi6Mq+AtfH+I2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Lingbo Kong <quic_lingbok@quicinc.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 018/281] wifi: mac80211: fix Spatial Reuse element size check
-Date: Wed, 19 Jun 2024 14:52:57 +0200
-Message-ID: <20240619125610.550337557@linuxfoundation.org>
+Subject: [PATCH 6.9 019/281] wifi: mac80211: correctly parse Spatial Reuse Parameter Set element
+Date: Wed, 19 Jun 2024 14:52:58 +0200
+Message-ID: <20240619125610.588028218@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -45,7 +45,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
@@ -54,44 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Lingbo Kong <quic_lingbok@quicinc.com>
 
-[ Upstream commit 0c2fd18f7ec552796179c14f13a0e06942f09d16 ]
+[ Upstream commit a26d8dc5227f449a54518a8b40733a54c6600a8b ]
 
-Currently, the way to check the size of Spatial Reuse IE data in the
-ieee80211_parse_extension_element() is incorrect.
+Currently, the way of parsing Spatial Reuse Parameter Set element is
+incorrect and some members of struct ieee80211_he_obss_pd are not assigned.
 
-This is because the len variable in the ieee80211_parse_extension_element()
-function is equal to the size of Spatial Reuse IE data minus one and the
-value of returned by the ieee80211_he_spr_size() function is equal to
-the length of Spatial Reuse IE data. So the result of the
-len >= ieee80211_he_spr_size(data) statement always false.
+To address this issue, it must be parsed in the order of the elements of
+Spatial Reuse Parameter Set defined in the IEEE Std 802.11ax specification.
 
-To address this issue and make it consistent with the logic used elsewhere
-with ieee80211_he_oper_size(), change the
-"len >= ieee80211_he_spr_size(data)" to
-“len >= ieee80211_he_spr_size(data) - 1”.
+The diagram of the Spatial Reuse Parameter Set element (IEEE Std 802.11ax
+-2021-9.4.2.252).
 
-Fixes: 9d0480a7c05b ("wifi: mac80211: move element parsing to a new file")
+-------------------------------------------------------------------------
+|       |      |         |       |Non-SRG|  SRG  | SRG   | SRG  | SRG   |
+|Element|Length| Element |  SR   |OBSS PD|OBSS PD|OBSS PD| BSS  |Partial|
+|   ID  |      |   ID    |Control|  Max  |  Min  | Max   |Color | BSSID |
+|       |      |Extension|       | Offset| Offset|Offset |Bitmap|Bitmap |
+-------------------------------------------------------------------------
+
+Fixes: 1ced169cc1c2 ("mac80211: allow setting spatial reuse parameters from bss_conf")
 Signed-off-by: Lingbo Kong <quic_lingbok@quicinc.com>
-Link: https://msgid.link/20240516021854.5682-2-quic_lingbok@quicinc.com
+Link: https://msgid.link/20240516021854.5682-3-quic_lingbok@quicinc.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/parse.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/he.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/net/mac80211/parse.c b/net/mac80211/parse.c
-index 55e5497f89781..055a60e90979b 100644
---- a/net/mac80211/parse.c
-+++ b/net/mac80211/parse.c
-@@ -111,7 +111,7 @@ ieee80211_parse_extension_element(u32 *crc,
- 		if (params->mode < IEEE80211_CONN_MODE_HE)
- 			break;
- 		if (len >= sizeof(*elems->he_spr) &&
--		    len >= ieee80211_he_spr_size(data))
-+		    len >= ieee80211_he_spr_size(data) - 1)
- 			elems->he_spr = data;
- 		break;
- 	case WLAN_EID_EXT_HE_6GHZ_CAPA:
+diff --git a/net/mac80211/he.c b/net/mac80211/he.c
+index 9f5ffdc9db284..ecbb042dd0433 100644
+--- a/net/mac80211/he.c
++++ b/net/mac80211/he.c
+@@ -230,15 +230,21 @@ ieee80211_he_spr_ie_to_bss_conf(struct ieee80211_vif *vif,
+ 
+ 	if (!he_spr_ie_elem)
+ 		return;
++
++	he_obss_pd->sr_ctrl = he_spr_ie_elem->he_sr_control;
+ 	data = he_spr_ie_elem->optional;
+ 
+ 	if (he_spr_ie_elem->he_sr_control &
+ 	    IEEE80211_HE_SPR_NON_SRG_OFFSET_PRESENT)
+-		data++;
++		he_obss_pd->non_srg_max_offset = *data++;
++
+ 	if (he_spr_ie_elem->he_sr_control &
+ 	    IEEE80211_HE_SPR_SRG_INFORMATION_PRESENT) {
+-		he_obss_pd->max_offset = *data++;
+ 		he_obss_pd->min_offset = *data++;
++		he_obss_pd->max_offset = *data++;
++		memcpy(he_obss_pd->bss_color_bitmap, data, 8);
++		data += 8;
++		memcpy(he_obss_pd->partial_bssid_bitmap, data, 8);
+ 		he_obss_pd->enable = true;
+ 	}
+ }
 -- 
 2.43.0
 
