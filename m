@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7B51419BA;
-	Wed, 19 Jun 2024 13:29:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E745678C91;
+	Wed, 19 Jun 2024 13:29:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803796; cv=none; b=e/yyYzWI5iBqoPfJeKO8hfqI0GbdxocAa2GWpWMiJa8VdsMvJWBrbRbqeNJpXot0hH1/bLisNYo2lskXsGqxONcLfXuEvcD/Lslq9KGjdue2+YuqrHrRZm818sr1HqwpUVwXQfQ0R1p6dYiDY7rFTLydJrziN/cpSIjK3hqhglY=
+	t=1718803799; cv=none; b=incdZHAnvVIrES1mrBZCh/6T8aD21SdnrJAm+67fmAOxk+mLEblFkAe9z6Xo/jT+sDuAi0H7NVYwx04EJAvoDzRzpUdttGkpducRUBixQtRh+r4jYfIZ25gq91ecLwG+O7Xw5430epSVtTJSihcfnIE1H7vWWqgvopYPdPcxkmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803796; c=relaxed/simple;
-	bh=T9hRnQdr3kZ6ZdFW1TiWLQW/7wzOROkqmgZweF2CPS4=;
+	s=arc-20240116; t=1718803799; c=relaxed/simple;
+	bh=+j72SpN7qhvVgV2zQ946Us/fE+ardtOmNT2Xdlex2Mc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nHIrGUGGnOnNfprC5FzPJ3lQ9GCH0jwCwS/qDy0x+44M4RG11WF/XjdARXtw39gS8c9qpapkzUtlbhsHdF9jexI12Hotkb1Y3B5S5yL/SGyF4EAdebSUdLSeT9Eh20mHqaH4zdXCsXTPoIbM18GkDm9M8oriRdqmnknFG3I3+sA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TjZWqLUK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OaMqCgm/tmFrqral3GjUXez3aP8IsrA52K1b3A5w8S9zMcKBUWdoj98CiID1w0gLl9WA96p8AEMx5tJfwGIkwRaNvCAbsU6wcWJ/hrUQaq94vsIhKsSVjqqmnfj2F24WHHx82L9HQD86vXmw0FVGs6NhXzZGPENx5ItkXnuX+uM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=abQY0XVI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TjZWqLUK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 712ABC2BBFC;
-	Wed, 19 Jun 2024 13:29:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="abQY0XVI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E9E0C2BBFC;
+	Wed, 19 Jun 2024 13:29:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803795;
-	bh=T9hRnQdr3kZ6ZdFW1TiWLQW/7wzOROkqmgZweF2CPS4=;
+	s=korg; t=1718803798;
+	bh=+j72SpN7qhvVgV2zQ946Us/fE+ardtOmNT2Xdlex2Mc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TjZWqLUKYRnxqPlbXXsSvQgfWNfZU2vFzUGeMji55MQDKfqax7xqbj6UhFN9gbiox
-	 1xuxH/v38Pv8gcolKEJtPgSVFx4UPdqP5BOGQ+LfapBAQHJPvPpcPHDRrAJPJzKgls
-	 G6V51mpIZ/ivo9WHjMMlREmj7tiAmIl4hPnmXuGo=
+	b=abQY0XVIDtgMBEcl5aafdZo5S1MQR3ejGbhv54ajQJaZRHSysXS3SIefsNBZzPI7r
+	 MARYnbc9bUaSRKX8HXMpVyLzwFWKQRsua/FNiapTdVRMOpqAxR38C04bqxUCANSDih
+	 +HiXBBj5/Hd1fGOlP/Xaj1mlWYMoyPNyta8jrFwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 065/217] serial: sc16is7xx: fix bug in sc16is7xx_set_baud() when using prescaler
-Date: Wed, 19 Jun 2024 14:55:08 +0200
-Message-ID: <20240619125559.193706871@linuxfoundation.org>
+	Pierre Tomon <pierretom+12@ik.me>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 100/217] scsi: sd: Use READ(16) when reading block zero on large capacity disks
+Date: Wed, 19 Jun 2024 14:55:43 +0200
+Message-ID: <20240619125600.549019754@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -51,95 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Martin K. Petersen <martin.petersen@oracle.com>
 
-[ Upstream commit 8492bd91aa055907c67ef04f2b56f6dadd1f44bf ]
+commit 7926d51f73e0434a6250c2fd1a0555f98d9a62da upstream.
 
-When using a high speed clock with a low baud rate, the 4x prescaler is
-automatically selected if required. In that case, sc16is7xx_set_baud()
-properly configures the chip registers, but returns an incorrect baud
-rate by not taking into account the prescaler value. This incorrect baud
-rate is then fed to uart_update_timeout().
+Commit 321da3dc1f3c ("scsi: sd: usb_storage: uas: Access media prior
+to querying device properties") triggered a read to LBA 0 before
+attempting to inquire about device characteristics. This was done
+because some protocol bridge devices will return generic values until
+an attached storage device's media has been accessed.
 
-For example, with an input clock of 80MHz, and a selected baud rate of 50,
-sc16is7xx_set_baud() will return 200 instead of 50.
+Pierre Tomon reported that this change caused problems on a large
+capacity external drive connected via a bridge device. The bridge in
+question does not appear to implement the READ(10) command.
 
-Fix this by first changing the prescaler variable to hold the selected
-prescaler value instead of the MCR bitfield. Then properly take into
-account the selected prescaler value in the return value computation.
+Issue a READ(16) instead of READ(10) when a device has been identified
+as preferring 16-byte commands (use_16_for_rw heuristic).
 
-Also add better documentation about the divisor value computation.
-
-Fixes: dfeae619d781 ("serial: sc16is7xx")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=218890
+Link: https://lore.kernel.org/r/70dd7ae0-b6b1-48e1-bb59-53b7c7f18274@rowland.harvard.edu
+Link: https://lore.kernel.org/r/20240605022521.3960956-1-martin.petersen@oracle.com
+Fixes: 321da3dc1f3c ("scsi: sd: usb_storage: uas: Access media prior to querying device properties")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
-Link: https://lore.kernel.org/r/20240430200431.4102923-1-hugo@hugovil.com
+Reported-by: Pierre Tomon <pierretom+12@ik.me>
+Suggested-by: Alan Stern <stern@rowland.harvard.edu>
+Tested-by: Pierre Tomon <pierretom+12@ik.me>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sc16is7xx.c | 23 ++++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+ drivers/scsi/sd.c |   17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/tty/serial/sc16is7xx.c b/drivers/tty/serial/sc16is7xx.c
-index 08da7cc221d0e..a723df9b37dd9 100644
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -482,16 +482,28 @@ static bool sc16is7xx_regmap_noinc(struct device *dev, unsigned int reg)
- 	return reg == SC16IS7XX_RHR_REG;
- }
+--- a/drivers/scsi/sd.c
++++ b/drivers/scsi/sd.c
+@@ -3288,16 +3288,23 @@ static bool sd_validate_opt_xfer_size(st
  
-+/*
-+ * Configure programmable baud rate generator (divisor) according to the
-+ * desired baud rate.
-+ *
-+ * From the datasheet, the divisor is computed according to:
-+ *
-+ *              XTAL1 input frequency
-+ *             -----------------------
-+ *                    prescaler
-+ * divisor = ---------------------------
-+ *            baud-rate x sampling-rate
-+ */
- static int sc16is7xx_set_baud(struct uart_port *port, int baud)
+ static void sd_read_block_zero(struct scsi_disk *sdkp)
  {
- 	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
- 	u8 lcr;
--	u8 prescaler = 0;
-+	unsigned int prescaler = 1;
- 	unsigned long clk = port->uartclk, div = clk / 16 / baud;
+-	unsigned int buf_len = sdkp->device->sector_size;
+-	char *buffer, cmd[10] = { };
++	struct scsi_device *sdev = sdkp->device;
++	unsigned int buf_len = sdev->sector_size;
++	u8 *buffer, cmd[16] = { };
  
- 	if (div >= BIT(16)) {
--		prescaler = SC16IS7XX_MCR_CLKSEL_BIT;
--		div /= 4;
-+		prescaler = 4;
-+		div /= prescaler;
- 	}
+ 	buffer = kmalloc(buf_len, GFP_KERNEL);
+ 	if (!buffer)
+ 		return;
  
- 	/* In an amazing feat of design, the Enhanced Features Register shares
-@@ -528,9 +540,10 @@ static int sc16is7xx_set_baud(struct uart_port *port, int baud)
+-	cmd[0] = READ_10;
+-	put_unaligned_be32(0, &cmd[2]); /* Logical block address 0 */
+-	put_unaligned_be16(1, &cmd[7]);	/* Transfer 1 logical block */
++	if (sdev->use_16_for_rw) {
++		cmd[0] = READ_16;
++		put_unaligned_be64(0, &cmd[2]); /* Logical block address 0 */
++		put_unaligned_be32(1, &cmd[10]);/* Transfer 1 logical block */
++	} else {
++		cmd[0] = READ_10;
++		put_unaligned_be32(0, &cmd[2]); /* Logical block address 0 */
++		put_unaligned_be16(1, &cmd[7]);	/* Transfer 1 logical block */
++	}
  
- 	mutex_unlock(&one->efr_lock);
- 
-+	/* If bit MCR_CLKSEL is set, the divide by 4 prescaler is activated. */
- 	sc16is7xx_port_update(port, SC16IS7XX_MCR_REG,
- 			      SC16IS7XX_MCR_CLKSEL_BIT,
--			      prescaler);
-+			      prescaler == 1 ? 0 : SC16IS7XX_MCR_CLKSEL_BIT);
- 
- 	/* Open the LCR divisors for configuration */
- 	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG,
-@@ -545,7 +558,7 @@ static int sc16is7xx_set_baud(struct uart_port *port, int baud)
- 	/* Put LCR back to the normal mode */
- 	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG, lcr);
- 
--	return DIV_ROUND_CLOSEST(clk / 16, div);
-+	return DIV_ROUND_CLOSEST((clk / prescaler) / 16, div);
- }
- 
- static void sc16is7xx_handle_rx(struct uart_port *port, unsigned int rxlen,
--- 
-2.43.0
-
+ 	scsi_execute_req(sdkp->device, cmd, DMA_FROM_DEVICE, buffer, buf_len,
+ 			 NULL, SD_TIMEOUT, sdkp->max_retries, NULL);
 
 
