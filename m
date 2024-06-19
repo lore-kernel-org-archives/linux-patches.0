@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5621D14389C;
-	Wed, 19 Jun 2024 13:13:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F441422B8;
+	Wed, 19 Jun 2024 13:13:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802795; cv=none; b=p17BvoKR67nb2xnUU1R+xbBSksgMDoQvfOZkZspLZVAtH6stSKgGWQrg5PfdXjWY51Y8mkeMogcvkl3h6IZYayjZGGTXncYcElrMq2yJ2ixXJ0XYNXcdAl3HdeCZ26AU2ydefHTZy2QqIrmS3luPfxU/8O0xdQoBXp8QCId2o8g=
+	t=1718802798; cv=none; b=FCvmXVjhX0GRgp2rMRj+OdUp+Dqev0qliT+6udjQb0lB2DupFZh+sH063Dp3jZ1HqP9R5JhznOIdePTMU+RR8GLHZFLmA8OblEFXBKBVA0LyOkkrBqzJPJVaTS83JhnJ7fT25kgm51kT2AMf3QV3h4eAje7wW+9VzvJuH6IfENY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802795; c=relaxed/simple;
-	bh=Xqw4xIIkXbKBfNQCnBw0y115+xhsagbqu1sgXo60yL8=;
+	s=arc-20240116; t=1718802798; c=relaxed/simple;
+	bh=bsn9h5LjGXgmxnwtpjtGU8pdyvJq1yRIjZZ2YvsWhZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GBwpOpWDweGZtdgUWB5Ax2H/wjfyckvz0YP3OKNemDA2Ns7M2qKN0TJ8BGJimbIvoYbKJRt9xFfQ5wVJwiVMex6x6aiUYSRX9dJ8b5RznhPvodRnrYs1LyMpS/ZnXHA/A+zCtICRH0xBRLo2AYcDundnA6EBmLhE/d51opagjTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K6ES/HFm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gkn265GiWe0jeeIUEZT4Rcx4q/0freLdgFw8+GFfIbiuEuYcMD3CIKjznYO0fhjiXxsz5//+HEisCWVvMsEpPlf5FNHp+tlrBXWFg4nojS1e9b3G01qbkCAoGhDFfHLHQ1NVDCbM+MbY4Cv6OkzXuclFYXoN5PkamUeSp6Zx4T0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NKCUh3Cw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K6ES/HFm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF7F2C2BBFC;
-	Wed, 19 Jun 2024 13:13:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NKCUh3Cw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C177EC2BBFC;
+	Wed, 19 Jun 2024 13:13:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802795;
-	bh=Xqw4xIIkXbKBfNQCnBw0y115+xhsagbqu1sgXo60yL8=;
+	s=korg; t=1718802798;
+	bh=bsn9h5LjGXgmxnwtpjtGU8pdyvJq1yRIjZZ2YvsWhZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K6ES/HFmDkIeoB9U2UDu7J9srTZceqRvsf2Ni7tBa+Al/RxqioFIcaEViqgzNcum6
-	 iqPZ4tuIYnsmLqenZ3KstK0y6r/KDH56WDsZ/wChWm0vQt9tjDzCxG0GaGy4suI0/w
-	 4bSmjb4QM3u0jA0Hzo/oxn/WoqNGlYvCSbDJii3I=
+	b=NKCUh3Cw3stmhLfTRZFBXKXW47RncqKf9UyG1HnTkf1glDPOAqgetk9o4R7zfwsoJ
+	 6kvaw33ZneGMZMtkeRUAj31bR/knCrCRBZqgTypnau7Dan0xyxG+n6LrcFM0E/jiZl
+	 y2K4zGbfPJ+xUvp9XRRP+en7tRyVogZQFoZj3N1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 050/281] ice: fix iteration of TLVs in Preserved Fields Area
-Date: Wed, 19 Jun 2024 14:53:29 +0200
-Message-ID: <20240619125611.775790959@linuxfoundation.org>
+Subject: [PATCH 6.9 051/281] ice: fix reads from NVM Shadow RAM on E830 and E825-C devices
+Date: Wed, 19 Jun 2024 14:53:30 +0200
+Message-ID: <20240619125611.814158954@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -56,120 +56,207 @@ Content-Transfer-Encoding: 8bit
 
 From: Jacob Keller <jacob.e.keller@intel.com>
 
-[ Upstream commit 03e4a092be8ce3de7c1baa7ae14e68b64e3ea644 ]
+[ Upstream commit cfa747a66e5da34793ac08c26b814e7709613fab ]
 
-The ice_get_pfa_module_tlv() function iterates over the Type-Length-Value
-structures in the Preserved Fields Area (PFA) of the NVM. This is used by
-the driver to access data such as the Part Board Assembly identifier.
+The ice driver reads data from the Shadow RAM portion of the NVM during
+initialization, including data used to identify the NVM image and device,
+such as the ETRACK ID used to populate devlink dev info fw.bundle.
 
-The function uses simple logic to iterate over the PFA. First, the pointer
-to the PFA in the NVM is read. Then the total length of the PFA is read
-from the first word.
+Currently it is using a fixed offset defined by ICE_CSS_HEADER_LENGTH to
+compute the appropriate offset. This worked fine for E810 and E822 devices
+which both have CSS header length of 330 words.
 
-A pointer to the first TLV is initialized, and a simple loop iterates over
-each TLV. The pointer is moved forward through the NVM until it exceeds the
-PFA area.
+Other devices, including both E825-C and E830 devices have different sizes
+for their CSS header. The use of a hard coded value results in the driver
+reading from the wrong block in the NVM when attempting to access the
+Shadow RAM copy. This results in the driver reporting the fw.bundle as 0x0
+in both the devlink dev info and ethtool -i output.
 
-The logic seems sound, but it is missing a key detail. The Preserved
-Fields Area length includes one additional final word. This is documented
-in the device data sheet as a dummy word which contains 0xFFFF. All NVMs
-have this extra word.
+The first E830 support was introduced by commit ba20ecb1d1bb ("ice: Hook up
+4 E830 devices by adding their IDs") and the first E825-C support was
+introducted by commit f64e18944233 ("ice: introduce new E825C devices
+family")
 
-If the driver tries to scan for a TLV that is not in the PFA, it will read
-past the size of the PFA. It reads and interprets the last dummy word of
-the PFA as a TLV with type 0xFFFF. It then reads the word following the PFA
-as a length.
+The NVM actually contains the CSS header length embedded in it. Remove the
+hard coded value and replace it with logic to read the length from the NVM
+directly. This is more resilient against all existing and future hardware,
+vs looking up the expected values from a table. It ensures the driver will
+read from the appropriate place when determining the ETRACK ID value used
+for populating the fw.bundle_id and for reporting in ethtool -i.
 
-The PFA resides within the Shadow RAM portion of the NVM, which is
-relatively small. All of its offsets are within a 16-bit size. The PFA
-pointer and TLV pointer are stored by the driver as 16-bit values.
+The CSS header length for both the active and inactive flash bank is stored
+in the ice_bank_info structure to avoid unnecessary duplicate work when
+accessing multiple words of the Shadow RAM. Both banks are read in the
+unlikely event that the header length is different for the NVM in the
+inactive bank, rather than being different only by the overall device
+family.
 
-In almost all cases, the word following the PFA will be such that
-interpreting it as a length will result in 16-bit arithmetic overflow. Once
-overflowed, the new next_tlv value is now below the maximum offset of the
-PFA. Thus, the driver will continue to iterate the data as TLVs. In the
-worst case, the driver hits on a sequence of reads which loop back to
-reading the same offsets in an endless loop.
-
-To fix this, we need to correct the loop iteration check to account for
-this extra word at the end of the PFA. This alone is sufficient to resolve
-the known cases of this issue in the field. However, it is plausible that
-an NVM could be misconfigured or have corrupt data which results in the
-same kind of overflow. Protect against this by using check_add_overflow
-when calculating both the maximum offset of the TLVs, and when calculating
-the next_tlv offset at the end of each loop iteration. This ensures that
-the driver will not get stuck in an infinite loop when scanning the PFA.
-
-Fixes: e961b679fb0b ("ice: add board identifier info to devlink .info_get")
+Fixes: ba20ecb1d1bb ("ice: Hook up 4 E830 devices by adding their IDs")
 Co-developed-by: Paul Greenwalt <paul.greenwalt@intel.com>
 Signed-off-by: Paul Greenwalt <paul.greenwalt@intel.com>
 Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
 Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://lore.kernel.org/r/20240603-net-2024-05-30-intel-net-fixes-v2-1-e3563aa89b0c@intel.com
+Link: https://lore.kernel.org/r/20240603-net-2024-05-30-intel-net-fixes-v2-2-e3563aa89b0c@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_nvm.c | 28 ++++++++++++++++++------
- 1 file changed, 21 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_nvm.c  | 88 ++++++++++++++++++++++-
+ drivers/net/ethernet/intel/ice/ice_type.h | 14 ++--
+ 2 files changed, 93 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_nvm.c b/drivers/net/ethernet/intel/ice/ice_nvm.c
-index d4e05d2cb30c4..a0ad950cc76d9 100644
+index a0ad950cc76d9..8510a02afedcc 100644
 --- a/drivers/net/ethernet/intel/ice/ice_nvm.c
 +++ b/drivers/net/ethernet/intel/ice/ice_nvm.c
-@@ -441,8 +441,7 @@ int
- ice_get_pfa_module_tlv(struct ice_hw *hw, u16 *module_tlv, u16 *module_tlv_len,
- 		       u16 module_type)
+@@ -375,11 +375,25 @@ ice_read_nvm_module(struct ice_hw *hw, enum ice_bank_select bank, u32 offset, u1
+  *
+  * Read the specified word from the copy of the Shadow RAM found in the
+  * specified NVM module.
++ *
++ * Note that the Shadow RAM copy is always located after the CSS header, and
++ * is aligned to 64-byte (32-word) offsets.
+  */
+ static int
+ ice_read_nvm_sr_copy(struct ice_hw *hw, enum ice_bank_select bank, u32 offset, u16 *data)
  {
--	u16 pfa_len, pfa_ptr;
--	u16 next_tlv;
-+	u16 pfa_len, pfa_ptr, next_tlv, max_tlv;
- 	int status;
- 
- 	status = ice_read_sr_word(hw, ICE_SR_PFA_PTR, &pfa_ptr);
-@@ -455,11 +454,23 @@ ice_get_pfa_module_tlv(struct ice_hw *hw, u16 *module_tlv, u16 *module_tlv_len,
- 		ice_debug(hw, ICE_DBG_INIT, "Failed to read PFA length.\n");
- 		return status;
- 	}
+-	return ice_read_nvm_module(hw, bank, ICE_NVM_SR_COPY_WORD_OFFSET + offset, data);
++	u32 sr_copy;
 +
-+	/* The Preserved Fields Area contains a sequence of Type-Length-Value
-+	 * structures which define its contents. The PFA length includes all
-+	 * of the TLVs, plus the initial length word itself, *and* one final
-+	 * word at the end after all of the TLVs.
-+	 */
-+	if (check_add_overflow(pfa_ptr, pfa_len - 1, &max_tlv)) {
-+		dev_warn(ice_hw_to_dev(hw), "PFA starts at offset %u. PFA length of %u caused 16-bit arithmetic overflow.\n",
-+			 pfa_ptr, pfa_len);
-+		return -EINVAL;
++	switch (bank) {
++	case ICE_ACTIVE_FLASH_BANK:
++		sr_copy = roundup(hw->flash.banks.active_css_hdr_len, 32);
++		break;
++	case ICE_INACTIVE_FLASH_BANK:
++		sr_copy = roundup(hw->flash.banks.inactive_css_hdr_len, 32);
++		break;
 +	}
 +
- 	/* Starting with first TLV after PFA length, iterate through the list
- 	 * of TLVs to find the requested one.
- 	 */
- 	next_tlv = pfa_ptr + 1;
--	while (next_tlv < pfa_ptr + pfa_len) {
-+	while (next_tlv < max_tlv) {
- 		u16 tlv_sub_module_type;
- 		u16 tlv_len;
++	return ice_read_nvm_module(hw, bank, sr_copy + offset, data);
+ }
  
-@@ -483,10 +494,13 @@ ice_get_pfa_module_tlv(struct ice_hw *hw, u16 *module_tlv, u16 *module_tlv_len,
- 			}
- 			return -EINVAL;
- 		}
--		/* Check next TLV, i.e. current TLV pointer + length + 2 words
--		 * (for current TLV's type and length)
--		 */
--		next_tlv = next_tlv + tlv_len + 2;
+ /**
+@@ -1024,6 +1038,72 @@ static int ice_determine_active_flash_banks(struct ice_hw *hw)
+ 	return 0;
+ }
+ 
++/**
++ * ice_get_nvm_css_hdr_len - Read the CSS header length from the NVM CSS header
++ * @hw: pointer to the HW struct
++ * @bank: whether to read from the active or inactive flash bank
++ * @hdr_len: storage for header length in words
++ *
++ * Read the CSS header length from the NVM CSS header and add the Authentication
++ * header size, and then convert to words.
++ *
++ * Return: zero on success, or a negative error code on failure.
++ */
++static int
++ice_get_nvm_css_hdr_len(struct ice_hw *hw, enum ice_bank_select bank,
++			u32 *hdr_len)
++{
++	u16 hdr_len_l, hdr_len_h;
++	u32 hdr_len_dword;
++	int status;
 +
-+		if (check_add_overflow(next_tlv, 2, &next_tlv) ||
-+		    check_add_overflow(next_tlv, tlv_len, &next_tlv)) {
-+			dev_warn(ice_hw_to_dev(hw), "TLV of type %u and length 0x%04x caused 16-bit arithmetic overflow. The PFA starts at 0x%04x and has length of 0x%04x\n",
-+				 tlv_sub_module_type, tlv_len, pfa_ptr, pfa_len);
-+			return -EINVAL;
-+		}
++	status = ice_read_nvm_module(hw, bank, ICE_NVM_CSS_HDR_LEN_L,
++				     &hdr_len_l);
++	if (status)
++		return status;
++
++	status = ice_read_nvm_module(hw, bank, ICE_NVM_CSS_HDR_LEN_H,
++				     &hdr_len_h);
++	if (status)
++		return status;
++
++	/* CSS header length is in DWORD, so convert to words and add
++	 * authentication header size
++	 */
++	hdr_len_dword = hdr_len_h << 16 | hdr_len_l;
++	*hdr_len = (hdr_len_dword * 2) + ICE_NVM_AUTH_HEADER_LEN;
++
++	return 0;
++}
++
++/**
++ * ice_determine_css_hdr_len - Discover CSS header length for the device
++ * @hw: pointer to the HW struct
++ *
++ * Determine the size of the CSS header at the start of the NVM module. This
++ * is useful for locating the Shadow RAM copy in the NVM, as the Shadow RAM is
++ * always located just after the CSS header.
++ *
++ * Return: zero on success, or a negative error code on failure.
++ */
++static int ice_determine_css_hdr_len(struct ice_hw *hw)
++{
++	struct ice_bank_info *banks = &hw->flash.banks;
++	int status;
++
++	status = ice_get_nvm_css_hdr_len(hw, ICE_ACTIVE_FLASH_BANK,
++					 &banks->active_css_hdr_len);
++	if (status)
++		return status;
++
++	status = ice_get_nvm_css_hdr_len(hw, ICE_INACTIVE_FLASH_BANK,
++					 &banks->inactive_css_hdr_len);
++	if (status)
++		return status;
++
++	return 0;
++}
++
+ /**
+  * ice_init_nvm - initializes NVM setting
+  * @hw: pointer to the HW struct
+@@ -1070,6 +1150,12 @@ int ice_init_nvm(struct ice_hw *hw)
+ 		return status;
  	}
- 	/* Module does not exist */
- 	return -ENOENT;
+ 
++	status = ice_determine_css_hdr_len(hw);
++	if (status) {
++		ice_debug(hw, ICE_DBG_NVM, "Failed to determine Shadow RAM copy offsets.\n");
++		return status;
++	}
++
+ 	status = ice_get_nvm_ver_info(hw, ICE_ACTIVE_FLASH_BANK, &flash->nvm);
+ 	if (status) {
+ 		ice_debug(hw, ICE_DBG_INIT, "Failed to read NVM info.\n");
+diff --git a/drivers/net/ethernet/intel/ice/ice_type.h b/drivers/net/ethernet/intel/ice/ice_type.h
+index 9ff92dba58236..0aacd0d050b8e 100644
+--- a/drivers/net/ethernet/intel/ice/ice_type.h
++++ b/drivers/net/ethernet/intel/ice/ice_type.h
+@@ -481,6 +481,8 @@ struct ice_bank_info {
+ 	u32 orom_size;				/* Size of OROM bank */
+ 	u32 netlist_ptr;			/* Pointer to 1st Netlist bank */
+ 	u32 netlist_size;			/* Size of Netlist bank */
++	u32 active_css_hdr_len;			/* Active CSS header length */
++	u32 inactive_css_hdr_len;		/* Inactive CSS header length */
+ 	enum ice_flash_bank nvm_bank;		/* Active NVM bank */
+ 	enum ice_flash_bank orom_bank;		/* Active OROM bank */
+ 	enum ice_flash_bank netlist_bank;	/* Active Netlist bank */
+@@ -1084,17 +1086,13 @@ struct ice_aq_get_set_rss_lut_params {
+ #define ICE_SR_SECTOR_SIZE_IN_WORDS	0x800
+ 
+ /* CSS Header words */
++#define ICE_NVM_CSS_HDR_LEN_L			0x02
++#define ICE_NVM_CSS_HDR_LEN_H			0x03
+ #define ICE_NVM_CSS_SREV_L			0x14
+ #define ICE_NVM_CSS_SREV_H			0x15
+ 
+-/* Length of CSS header section in words */
+-#define ICE_CSS_HEADER_LENGTH			330
+-
+-/* Offset of Shadow RAM copy in the NVM bank area. */
+-#define ICE_NVM_SR_COPY_WORD_OFFSET		roundup(ICE_CSS_HEADER_LENGTH, 32)
+-
+-/* Size in bytes of Option ROM trailer */
+-#define ICE_NVM_OROM_TRAILER_LENGTH		(2 * ICE_CSS_HEADER_LENGTH)
++/* Length of Authentication header section in words */
++#define ICE_NVM_AUTH_HEADER_LEN			0x08
+ 
+ /* The Link Topology Netlist section is stored as a series of words. It is
+  * stored in the NVM as a TLV, with the first two words containing the type
 -- 
 2.43.0
 
