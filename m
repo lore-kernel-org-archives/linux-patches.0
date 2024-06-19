@@ -1,127 +1,150 @@
-Received: from eu-smtp-delivery-151.mimecast.com (eu-smtp-delivery-151.mimecast.com [185.58.85.151])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095101369AC
-	for <patches@lists.linux.dev>; Wed, 19 Jun 2024 11:37:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.58.85.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9371D146590;
+	Wed, 19 Jun 2024 12:58:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718797046; cv=none; b=VFypSh31LoMGpaAqwBooP7/6ByomvHRR9r9vgwFrx5xkSY+rbgwDrACUeXyz8LSpTDy6viJU2BC1n/nh2SpBKOIN60TaAKlna+bxzxigR564OeNH5ww8+aU6GpqwJR/hecbaETUI28IsUWRgLGoxOC7XmhWVnLOWdLIUBndmuEI=
+	t=1718801883; cv=none; b=oRZ9b0OS/Ge3+42Bbm6n1lLN+5YY2gkBRsolmEsGE3lmjXVdwo+LKXQ/rYBLWbDNdDAf2J+lH14ql9dKgOZxFs6XyIiRLDLdJ0AgEbYExrGps7vhr313+rRXZWAj9P6vZc/yh+yQ7f4g7Y7X5DitOHP2kNfDO3esKc9JkWd5W5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718797046; c=relaxed/simple;
-	bh=BSHkKLrECWLAlbeSl4v1U37C/da+oM2lEsa5kkc5HAU=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 MIME-Version:Content-Type; b=unRPwLeo7aW7P1fj2D30PiK99Akuco8KOg9as2mIOVHS1s/u5b6UHr7Zc0Bd+tVycxI7F1jCzaIKwcSO6NzfCLjBiTWbiFUVt8KMpSg1//AZY95qTZ/B4BNaksRBh7yH5BnCd5OO/IK4RLJn7O7LlltjV9Su9oNJBPhNubxweEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ACULAB.COM; spf=pass smtp.mailfrom=aculab.com; arc=none smtp.client-ip=185.58.85.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ACULAB.COM
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aculab.com
-Received: from AcuMS.aculab.com (156.67.243.121 [156.67.243.121]) by
- relay.mimecast.com with ESMTP with both STARTTLS and AUTH (version=TLSv1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- uk-mta-194-CS909xtoNvSfQqELdIGVDA-1; Wed, 19 Jun 2024 12:37:22 +0100
-X-MC-Unique: CS909xtoNvSfQqELdIGVDA-1
-Received: from AcuMS.Aculab.com (10.202.163.6) by AcuMS.aculab.com
- (10.202.163.6) with Microsoft SMTP Server (TLS) id 15.0.1497.48; Wed, 19 Jun
- 2024 12:36:46 +0100
-Received: from AcuMS.Aculab.com ([::1]) by AcuMS.aculab.com ([::1]) with mapi
- id 15.00.1497.048; Wed, 19 Jun 2024 12:36:46 +0100
-From: David Laight <David.Laight@ACULAB.COM>
-To: "'Jason A. Donenfeld'" <Jason@zx2c4.com>, Andy Lutomirski
-	<luto@amacapital.net>
-CC: "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>, "tglx@linutronix.de"
-	<tglx@linutronix.de>, "linux-crypto@vger.kernel.org"
-	<linux-crypto@vger.kernel.org>, "linux-api@vger.kernel.org"
-	<linux-api@vger.kernel.org>, "x86@kernel.org" <x86@kernel.org>, "Greg
- Kroah-Hartman" <gregkh@linuxfoundation.org>, Adhemerval Zanella Netto
-	<adhemerval.zanella@linaro.org>, Carlos O'Donell <carlos@redhat.com>,
-	"Florian Weimer" <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>, Jann
- Horn <jannh@google.com>, Christian Brauner <brauner@kernel.org>, David
- Hildenbrand <dhildenb@redhat.com>
-Subject: RE: [PATCH v17 4/5] random: introduce generic vDSO getrandom()
- implementation
-Thread-Topic: [PATCH v17 4/5] random: introduce generic vDSO getrandom()
- implementation
-Thread-Index: AQHawbWRB8EYMZoZREup+2i1zqOfJbHO9S3w
-Date: Wed, 19 Jun 2024 11:36:46 +0000
-Message-ID: <e860c5fdea5b4d26b1d95d32e2662a9d@AcuMS.aculab.com>
-References: <20240614190646.2081057-1-Jason@zx2c4.com>
- <20240614190646.2081057-5-Jason@zx2c4.com>
- <CALCETrVQtQO87U3SEgQyHfkNKsrcS8PjeZrsy2MPAU7gQY70XA@mail.gmail.com>
- <ZnDQ-HQH8NlmCcIr@zx2c4.com>
- <CALCETrWzXQMXjvL+nGq-+aLVUeiABJ46DACtLnrLXxmwh9s_dg@mail.gmail.com>
- <ZnHftrP3H410gScf@zx2c4.com>
-In-Reply-To: <ZnHftrP3H410gScf@zx2c4.com>
-Accept-Language: en-GB, en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
+	s=arc-20240116; t=1718801883; c=relaxed/simple;
+	bh=JoJ0NgwpJRLo/FSzTlyJtUHaSfN+qC4i0PiO9p4q5Ao=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=HtK6ggYTbRGGdMzgCu1S/zqAOSltqq60mzNWvERuqM8BAxrRo/DCyHEfEOfLDABP3JtS+rW56RvIA6gIqWkGkIiR31O4vAgc7Y3DyW64RbCRU3PL1YV9O3qfmtIAluGQMSTsvrw/40oW7JC5cbJzOXijiuTQ6k+tJrbYlB9CbMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EMnTyz/9; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EMnTyz/9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFFEAC32786;
+	Wed, 19 Jun 2024 12:58:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1718801883;
+	bh=JoJ0NgwpJRLo/FSzTlyJtUHaSfN+qC4i0PiO9p4q5Ao=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=EMnTyz/9iP0lIjVJ6QJwAbxqyMEYcEIxJ+vK819LXCtKy5APaxTFuP8fJZ5s5uEDi
+	 8fVCqMt9r0A4i98C3cvSRozmhSo0a1snvMlSJgbB73svdCemLk10tyfy7/zsIBvAIM
+	 5yiVc0b5LaGGhRM7stwOQasgU57NUqmNX1B+ccKE=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Nicolas Escande <nico.escande@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 001/267] wifi: mac80211: mesh: Fix leak of mesh_preq_queue objects
+Date: Wed, 19 Jun 2024 14:52:32 +0200
+Message-ID: <20240619125606.407125035@linuxfoundation.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
+References: <20240619125606.345939659@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: aculab.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: 8bit
 
-RnJvbTogSmFzb24gQS4gRG9uZW5mZWxkDQo+IFNlbnQ6IDE4IEp1bmUgMjAyNCAyMDoyOA0KPiBP
-biBUdWUsIEp1biAxOCwgMjAyNCBhdCAxMDo1NToxN0FNIC0wNzAwLCBBbmR5IEx1dG9taXJza2kg
-d3JvdGU6DQo+ID4gT24gTW9uLCBKdW4gMTcsIDIwMjQgYXQgNToxMuKAr1BNIEphc29uIEEuIERv
-bmVuZmVsZCA8SmFzb25AengyYzQuY29tPiB3cm90ZToNCj4gPiA+DQo+ID4gPiBIaSBBbmR5LA0K
-PiA+ID4NCj4gPiA+IE9uIE1vbiwgSnVuIDE3LCAyMDI0IGF0IDA1OjA2OjIyUE0gLTA3MDAsIEFu
-ZHkgTHV0b21pcnNraSB3cm90ZToNCj4gPiA+ID4gT24gRnJpLCBKdW4gMTQsIDIwMjQgYXQgMTI6
-MDjigK9QTSBKYXNvbiBBLiBEb25lbmZlbGQgPEphc29uQHp4MmM0LmNvbT4gd3JvdGU6DQo+ID4g
-PiA+ID4NCj4gPiA+ID4gPiBQcm92aWRlIGEgZ2VuZXJpYyBDIHZEU08gZ2V0cmFuZG9tKCkgaW1w
-bGVtZW50YXRpb24sIHdoaWNoIG9wZXJhdGVzIG9uDQo+ID4gPiA+ID4gYW4gb3BhcXVlIHN0YXRl
-IHJldHVybmVkIGJ5IHZnZXRyYW5kb21fYWxsb2MoKSBhbmQgcHJvZHVjZXMgcmFuZG9tIGJ5dGVz
-DQo+ID4gPiA+ID4gdGhlIHNhbWUgd2F5IGFzIGdldHJhbmRvbSgpLiBUaGlzIGhhcyBhIHRoZSBB
-UEkgc2lnbmF0dXJlOg0KPiA+ID4gPiA+DQo+ID4gPiA+ID4gICBzc2l6ZV90IHZnZXRyYW5kb20o
-dm9pZCAqYnVmZmVyLCBzaXplX3QgbGVuLCB1bnNpZ25lZCBpbnQgZmxhZ3MsIHZvaWQgKm9wYXF1
-ZV9zdGF0ZSk7DQo+ID4gPiA+DQo+ID4gPiA+IExhc3QgdGltZSBhcm91bmQsIEkgbWVudGlvbmVk
-IHNvbWUgcG90ZW50aWFsIGlzc3VlcyB3aXRoIHRoaXMgZnVuY3Rpb24NCj4gPiA+ID4gc2lnbmF0
-dXJlLCBhbmQgSSBkaWRuJ3Qgc2VlIGFueSBhbnN3ZXIuICBNeSBzcGVjaWZpYyBvYmplY3Rpb24g
-d2FzIHRvDQo+ID4gPiA+IHRoZSBmYWN0IHRoYXQgdGhlIGNhbGxlciBwYXNzZXMgaW4gYSBwb2lu
-dGVyIGJ1dCBub3QgYSBsZW5ndGgsIGFuZA0KPiA+ID4gPiB0aGlzIHBvdGVudGlhbGx5IG1ha2Vz
-IHJlYXNvbmluZyBhYm91dCBtZW1vcnkgc2FmZXR5IGF3a3dhcmQsDQo+ID4gPiA+IGVzcGVjaWFs
-bHkgaWYgYW55dGhpbmcgbGlrZSBDUklVIGlzIGludm9sdmVkLg0KPiA+ID4NCj4gPiA+IE9oLCBJ
-IHVuZGVyc3Rvb2QgdGhpcyBiYWNrd2FyZHMgbGFzdCB0aW1lIC0gSSB0aG91Z2h0IHlvdSB3ZXJl
-DQo+ID4gPiBjcml0aWNpemluZyB0aGUgc2l6ZV90IGxlbiBhcmd1bWVudCwgd2hpY2ggZGlkbid0
-IG1ha2UgYW55IHNlbnNlLg0KPiA+ID4NCj4gPiA+IFJlLXJlYWRpbmcgbm93LCB3aGF0IHlvdSdy
-ZSBzdWdnZXN0aW5nIGlzIHRoYXQgSSBhZGQgYW4gYWRkaXRpb25hbA0KPiA+ID4gYXJndW1lbnQg
-Y2FsbGVkIGBzaXplX3Qgb3BhcXVlX2xlbmAsIGFuZCB0aGVuIHRoZSBpbXBsZW1lbnRhdGlvbiBk
-b2VzDQo+ID4gPiBzb21ldGhpbmcgbGlrZToNCj4gPiA+DQo+ID4gPiAgICAgaWYgKG9wYXF1ZV9s
-ZW4gIT0gc2l6ZW9mKHN0cnVjdCB2Z2V0cmFuZG9tX3N0YXRlKSkNCj4gPiA+ICAgICAgICAgZ290
-byBmYWxsYmFja19zeXNjYWxsOw0KPiA+ID4NCj4gPiA+IFdpdGggdGhlIHJlYXNvbmluZyB0aGF0
-IGZhbGxpbmcgYmFjayB0byBzeXNjYWxsIGlzIGJldHRlciB0aGFuIHJldHVybmluZw0KPiA+ID4g
-LUVJTlZBTCwgYmVjYXVzZSB0aGF0IGNvdWxkIGhhcHBlbiBpbiBhIG5hdHVyYWwgd2F5IGR1ZSB0
-byBDUklVLiBJbg0KPiA+ID4gY29udHJhc3QsIHlvdXIgb2JqZWN0aW9uIHRvIG9wYXF1ZV9zdGF0
-ZSBub3QgYmVpbmcgYWxpZ25lZCBmYWxsaW5nIGJhY2sNCj4gPiA+IHRvIHRoZSBzeXNjYWxsIHdh
-cyB0aGF0IGl0IHNob3VsZCBuZXZlciBoYXBwZW4gZXZlciwgc28gLUVGQVVMVCBpcyBtb3JlDQo+
-ID4gPiBmaXR0aW5nLg0KPiA+ID4NCj4gPiA+IElzIHRoYXQgY29ycmVjdD8NCj4gPg0KPiA+IE15
-IGFsdGVybmF0aXZlIHN1Z2dlc3Rpb24sIHdoaWNoIGlzIGZhciBsZXNzIHdlbGwgZm9ybWVkLCB3
-b3VsZCBiZSB0bw0KPiA+IG1ha2UgdGhlIG9wYXF1ZSBhcmd1bWVudCBiZSBzb21laG93IG5vdCBw
-b2ludGVyLWxpa2UgYW5kIGJlIG1vcmUgb2YgYW4NCj4gPiBvcGFxdWUgaGFuZGxlLiAgU28gaXQg
-d291bGQgYmUgdWludHB0cl90IGluc3RlYWQgb2Ygdm9pZCAqLCBhbmQgdGhlDQo+ID4gdXNlciBB
-UEkgd291bGQgYmUgYnVpbHQgYXJvdW5kIHRoZSB1c2VyIGdldHRpbmcgYSBsaXN0IG9mIGhhbmRs
-ZXMNCj4gPiBpbnN0ZWFkIG9mIGEgYmxvY2sgb2YgbWVtb3J5Lg0KPiA+DQo+ID4gVGhlIGJlbmVm
-aXQgd291bGQgYmUgYSB0aW55IGJpdCBsZXNzIG92ZXJoZWFkIChwb3RlbnRpYWxseSksIGJ1dCB0
-aGUNCj4gPiBBUEkgd291bGQgbmVlZCBzdWJzdGFudGlhbGx5IG1vcmUgcmV3b3JrLiAgSSdtIG5v
-dCBjb252aW5jZWQgdGhhdCB0aGlzDQo+ID4gd291bGQgYmUgd29ydGh3aGlsZS4NCj4gDQo+IEkn
-ZCB0aG91Z2h0IGFib3V0IHRoaXMgdG9vIC0tIGEgV2luZG93cy1zdHlsZSBoYW5kbGUgc3lzdGVt
-IC0tIGJ1dA0KPiBpdCBzZWVtZWQgY29tcGxpY2F0ZWQgYW5kIGp1c3Qgbm90IHdvcnRoIGl0LCBz
-byB0aGUgc2ltcGxpY2l0eSBoZXJlDQo+IHNlZW1zIG1vcmUgYXBwZWFsaW5nLiBJJ20gaGFwcHkg
-dG8gdGFrZSB5b3VyIHN1Z2dlc3Rpb24gb2YgYW4gb3BhcXVlX2xlbg0KPiBhcmd1bWVudCAoYW5k
-IGl0J3MgYWxyZWFkeSBpbXBsZW1lbnRlZCBpbiBteSAidmRzbyIgYnJhbmNoKSwgYW5kDQo+IGxl
-YXZpbmcgaXQgYXQgdGhhdC4NCg0KVGhleSBkb24ndCB3b3JrIGVpdGhlci4uLg0KDQpQcm9iYWJs
-eSBiZXN0IGlzIHRvIG1ha2UgaXQgJ3N0cnVjdCB2Z2V0cmFuZG9tX3N0YXRlIConIGJ1dCBuZXZl
-cg0KYWN0dWFsbHkgZGVmaW5lIHRoYXQgc3RydWN0dXJlIGluIGFueSB1c2VyIGhlYWRlci4NClRo
-ZW4gYXQgbGVhc3QgdGhlIGFwcGxpY2F0aW9uIGdldHMgc29tZSB0eXBlIGNoZWNraW5nIGZyb20g
-dGhlIGNvbXBpbGVyDQp0aGF0IHRoZSBjb3JyZWN0IHBvaW50ZXIgaXMgYmVpbmcgcGFzc2VkLg0K
-DQpEZXBlbmRpbmcgb24gd2hlcmUvaG93IHRoZSBkYXRhIGlzIGFsbG9jYXRlZCB5b3UgbWF5IHRo
-ZW4gbm90IG5lZWQNCmEgbGVuZ3RoPyANCg0KCURhdmlkDQoNCi0NClJlZ2lzdGVyZWQgQWRkcmVz
-cyBMYWtlc2lkZSwgQnJhbWxleSBSb2FkLCBNb3VudCBGYXJtLCBNaWx0b24gS2V5bmVzLCBNSzEg
-MVBULCBVSw0KUmVnaXN0cmF0aW9uIE5vOiAxMzk3Mzg2IChXYWxlcykNCg==
+6.6-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Nicolas Escande <nico.escande@gmail.com>
+
+[ Upstream commit b7d7f11a291830fdf69d3301075dd0fb347ced84 ]
+
+The hwmp code use objects of type mesh_preq_queue, added to a list in
+ieee80211_if_mesh, to keep track of mpath we need to resolve. If the mpath
+gets deleted, ex mesh interface is removed, the entries in that list will
+never get cleaned. Fix this by flushing all corresponding items of the
+preq_queue in mesh_path_flush_pending().
+
+This should take care of KASAN reports like this:
+
+unreferenced object 0xffff00000668d800 (size 128):
+  comm "kworker/u8:4", pid 67, jiffies 4295419552 (age 1836.444s)
+  hex dump (first 32 bytes):
+    00 1f 05 09 00 00 ff ff 00 d5 68 06 00 00 ff ff  ..........h.....
+    8e 97 ea eb 3e b8 01 00 00 00 00 00 00 00 00 00  ....>...........
+  backtrace:
+    [<000000007302a0b6>] __kmem_cache_alloc_node+0x1e0/0x35c
+    [<00000000049bd418>] kmalloc_trace+0x34/0x80
+    [<0000000000d792bb>] mesh_queue_preq+0x44/0x2a8
+    [<00000000c99c3696>] mesh_nexthop_resolve+0x198/0x19c
+    [<00000000926bf598>] ieee80211_xmit+0x1d0/0x1f4
+    [<00000000fc8c2284>] __ieee80211_subif_start_xmit+0x30c/0x764
+    [<000000005926ee38>] ieee80211_subif_start_xmit+0x9c/0x7a4
+    [<000000004c86e916>] dev_hard_start_xmit+0x174/0x440
+    [<0000000023495647>] __dev_queue_xmit+0xe24/0x111c
+    [<00000000cfe9ca78>] batadv_send_skb_packet+0x180/0x1e4
+    [<000000007bacc5d5>] batadv_v_elp_periodic_work+0x2f4/0x508
+    [<00000000adc3cd94>] process_one_work+0x4b8/0xa1c
+    [<00000000b36425d1>] worker_thread+0x9c/0x634
+    [<0000000005852dd5>] kthread+0x1bc/0x1c4
+    [<000000005fccd770>] ret_from_fork+0x10/0x20
+unreferenced object 0xffff000009051f00 (size 128):
+  comm "kworker/u8:4", pid 67, jiffies 4295419553 (age 1836.440s)
+  hex dump (first 32 bytes):
+    90 d6 92 0d 00 00 ff ff 00 d8 68 06 00 00 ff ff  ..........h.....
+    36 27 92 e4 02 e0 01 00 00 58 79 06 00 00 ff ff  6'.......Xy.....
+  backtrace:
+    [<000000007302a0b6>] __kmem_cache_alloc_node+0x1e0/0x35c
+    [<00000000049bd418>] kmalloc_trace+0x34/0x80
+    [<0000000000d792bb>] mesh_queue_preq+0x44/0x2a8
+    [<00000000c99c3696>] mesh_nexthop_resolve+0x198/0x19c
+    [<00000000926bf598>] ieee80211_xmit+0x1d0/0x1f4
+    [<00000000fc8c2284>] __ieee80211_subif_start_xmit+0x30c/0x764
+    [<000000005926ee38>] ieee80211_subif_start_xmit+0x9c/0x7a4
+    [<000000004c86e916>] dev_hard_start_xmit+0x174/0x440
+    [<0000000023495647>] __dev_queue_xmit+0xe24/0x111c
+    [<00000000cfe9ca78>] batadv_send_skb_packet+0x180/0x1e4
+    [<000000007bacc5d5>] batadv_v_elp_periodic_work+0x2f4/0x508
+    [<00000000adc3cd94>] process_one_work+0x4b8/0xa1c
+    [<00000000b36425d1>] worker_thread+0x9c/0x634
+    [<0000000005852dd5>] kthread+0x1bc/0x1c4
+    [<000000005fccd770>] ret_from_fork+0x10/0x20
+
+Fixes: 050ac52cbe1f ("mac80211: code for on-demand Hybrid Wireless Mesh Protocol")
+Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
+Link: https://msgid.link/20240528142605.1060566-1-nico.escande@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ net/mac80211/mesh_pathtbl.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/net/mac80211/mesh_pathtbl.c b/net/mac80211/mesh_pathtbl.c
+index 59f7264194ce3..530581ba812b4 100644
+--- a/net/mac80211/mesh_pathtbl.c
++++ b/net/mac80211/mesh_pathtbl.c
+@@ -1011,10 +1011,23 @@ void mesh_path_discard_frame(struct ieee80211_sub_if_data *sdata,
+  */
+ void mesh_path_flush_pending(struct mesh_path *mpath)
+ {
++	struct ieee80211_sub_if_data *sdata = mpath->sdata;
++	struct ieee80211_if_mesh *ifmsh = &sdata->u.mesh;
++	struct mesh_preq_queue *preq, *tmp;
+ 	struct sk_buff *skb;
+ 
+ 	while ((skb = skb_dequeue(&mpath->frame_queue)) != NULL)
+ 		mesh_path_discard_frame(mpath->sdata, skb);
++
++	spin_lock_bh(&ifmsh->mesh_preq_queue_lock);
++	list_for_each_entry_safe(preq, tmp, &ifmsh->preq_queue.list, list) {
++		if (ether_addr_equal(mpath->dst, preq->dst)) {
++			list_del(&preq->list);
++			kfree(preq);
++			--ifmsh->preq_queue_len;
++		}
++	}
++	spin_unlock_bh(&ifmsh->mesh_preq_queue_lock);
+ }
+ 
+ /**
+-- 
+2.43.0
+
+
 
