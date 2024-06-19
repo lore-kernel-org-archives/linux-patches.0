@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0168114373E;
-	Wed, 19 Jun 2024 13:28:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E627914601E;
+	Wed, 19 Jun 2024 13:28:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803681; cv=none; b=MoSIG6Gce/oM4K78F0rn0jdEpkLWGR2YhpCgNOmCU05ZgTZVi1ZmvVWhX6ERhCPPeOnofTEQFsJA9sl6GMRH0EPdEgBgpmskmD+QWss6Ymgc+8wQ3e9ZMk04hU7WZXGL5WgjzTcUhrycWducDm0M27U4u6oKQjcnuvsRUa5j0rQ=
+	t=1718803684; cv=none; b=B77Nv4gRXFFKVzl0lYADEbKQ48mIG9Zm7q5ZBIfhsDbP8vauEGMG8lon22TvyrUuBd9KeLHj12RLer05FgiYUFdrvcdoqLYctvOS3S7x8EvT++KWJIlXfiUWyeaZ8pBoaAkrUyI0CfF6oBbXzWejf21D5yToqZt33P8Tcd7DCmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803681; c=relaxed/simple;
-	bh=WXtXFOcLARng3twWNeOVBHcerkDW+i32YCfwxGSzLD8=;
+	s=arc-20240116; t=1718803684; c=relaxed/simple;
+	bh=nNGtQYkSiDNBhmzrRDxfIOmhwiysDuLncl6xssSt6AA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZLf8FlulGsCxhBnX7qL0jn2KiuhBJ9sy1eGPGIFmzyWMFkuc0bFfOGjgy8PXDA2LR/0miqOc4TMXh0PtMkniKv2cQIZTeTGsp4QKSfYNXgdgkSa8NETGnqgWakaBpeLu9zRYxkS6WlwF1m8GtSobUVmOZmafL3bfVMcdM1P7Yno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=olnuwQhR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JfgQYWW3YRuRIpoUPDpy192++oAzmYHf0HgqZTVZRHu4j0V9AjOXjYxX+lKyTBg3kmjKxbJl3HN06u9LvGkV1rsl+tpEhIU3waKE/SxxOl+OKCfcExsoJbtQfKh2dYazIJQV3MjA+XBE6bcTjw9wRGRVeCsc2rFaiXfdoibOACM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U+Omz+6G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="olnuwQhR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79430C2BBFC;
-	Wed, 19 Jun 2024 13:28:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U+Omz+6G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D2AFC2BBFC;
+	Wed, 19 Jun 2024 13:28:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803680;
-	bh=WXtXFOcLARng3twWNeOVBHcerkDW+i32YCfwxGSzLD8=;
+	s=korg; t=1718803683;
+	bh=nNGtQYkSiDNBhmzrRDxfIOmhwiysDuLncl6xssSt6AA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=olnuwQhRWS7PA6m7e3OroD2qWPtWqwcQ/idLGzvyk06LUF/DN+Nkei47nny9jYKd5
-	 NrdjZ2OcTwQ4wOwBDQ+5LYMB/nf2Oxndxz6+rFcUTRqaT2fwtKqR6h7NC6cpLISljS
-	 rSWQGPcuy0OgQ033VYRV9sOgXYSx9weCk/rJZTEM=
+	b=U+Omz+6GJR+05pIcm989mWcd4LxHQPHa3iDEjrKA6XviJHe3pU1J/FdRdhK1+7ZA6
+	 L9I0sR7TwAOS544EUyP+Vm2YH+gDpv7kHpTLbpiP09B4bJySnlUzsV0v07uVtL90W7
+	 7ME2T3RvlPkJQQ67RR4TfcRCbB5lEF/qMQ8m5nEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 037/217] af_unix: Annotate data-race of sk->sk_state in unix_inq_len().
-Date: Wed, 19 Jun 2024 14:54:40 +0200
-Message-ID: <20240619125558.086970268@linuxfoundation.org>
+Subject: [PATCH 6.1 038/217] af_unix: Annotate data-races around sk->sk_state in unix_write_space() and poll().
+Date: Wed, 19 Jun 2024 14:54:41 +0200
+Message-ID: <20240619125558.125854665@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -53,46 +53,123 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 3a0f38eb285c8c2eead4b3230c7ac2983707599d ]
+[ Upstream commit eb0718fb3e97ad0d6f4529b810103451c90adf94 ]
 
-ioctl(SIOCINQ) calls unix_inq_len() that checks sk->sk_state first
-and returns -EINVAL if it's TCP_LISTEN.
+unix_poll() and unix_dgram_poll() read sk->sk_state locklessly and
+calls unix_writable() which also reads sk->sk_state without holding
+unix_state_lock().
 
-Then, for SOCK_STREAM sockets, unix_inq_len() returns the number of
-bytes in recvq.
+Let's use READ_ONCE() in unix_poll() and unix_dgram_poll() and pass
+it to unix_writable().
 
-However, unix_inq_len() does not hold unix_state_lock(), and the
-concurrent listen() might change the state after checking sk->sk_state.
+While at it, we remove TCP_SYN_SENT check in unix_dgram_poll() as
+that state does not exist for AF_UNIX socket since the code was added.
 
-If the race occurs, 0 is returned for the listener, instead of -EINVAL,
-because the length of skb with embryo is 0.
-
-We could hold unix_state_lock() in unix_inq_len(), but it's overkill
-given the result is true for pre-listen() TCP_CLOSE state.
-
-So, let's use READ_ONCE() for sk->sk_state in unix_inq_len().
-
+Fixes: 1586a5877db9 ("af_unix: do not report POLLOUT on listeners")
+Fixes: 3c73419c09a5 ("af_unix: fix 'poll for write'/ connected DGRAM sockets")
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/unix/af_unix.c | 25 ++++++++++++-------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
 
 diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 358e80956cb7b..6d7e1cd97c52e 100644
+index 6d7e1cd97c52e..67a2a0e842e4f 100644
 --- a/net/unix/af_unix.c
 +++ b/net/unix/af_unix.c
-@@ -3068,7 +3068,7 @@ long unix_inq_len(struct sock *sk)
- 	struct sk_buff *skb;
- 	long amount = 0;
+@@ -518,9 +518,9 @@ static int unix_dgram_peer_wake_me(struct sock *sk, struct sock *other)
+ 	return 0;
+ }
  
--	if (sk->sk_state == TCP_LISTEN)
-+	if (READ_ONCE(sk->sk_state) == TCP_LISTEN)
- 		return -EINVAL;
+-static int unix_writable(const struct sock *sk)
++static int unix_writable(const struct sock *sk, unsigned char state)
+ {
+-	return sk->sk_state != TCP_LISTEN &&
++	return state != TCP_LISTEN &&
+ 	       (refcount_read(&sk->sk_wmem_alloc) << 2) <= sk->sk_sndbuf;
+ }
  
- 	spin_lock(&sk->sk_receive_queue.lock);
+@@ -529,7 +529,7 @@ static void unix_write_space(struct sock *sk)
+ 	struct socket_wq *wq;
+ 
+ 	rcu_read_lock();
+-	if (unix_writable(sk)) {
++	if (unix_writable(sk, READ_ONCE(sk->sk_state))) {
+ 		wq = rcu_dereference(sk->sk_wq);
+ 		if (skwq_has_sleeper(wq))
+ 			wake_up_interruptible_sync_poll(&wq->wait,
+@@ -3180,12 +3180,14 @@ static int unix_compat_ioctl(struct socket *sock, unsigned int cmd, unsigned lon
+ static __poll_t unix_poll(struct file *file, struct socket *sock, poll_table *wait)
+ {
+ 	struct sock *sk = sock->sk;
++	unsigned char state;
+ 	__poll_t mask;
+ 	u8 shutdown;
+ 
+ 	sock_poll_wait(file, sock, wait);
+ 	mask = 0;
+ 	shutdown = READ_ONCE(sk->sk_shutdown);
++	state = READ_ONCE(sk->sk_state);
+ 
+ 	/* exceptional events? */
+ 	if (sk->sk_err)
+@@ -3207,14 +3209,14 @@ static __poll_t unix_poll(struct file *file, struct socket *sock, poll_table *wa
+ 
+ 	/* Connection-based need to check for termination and startup */
+ 	if ((sk->sk_type == SOCK_STREAM || sk->sk_type == SOCK_SEQPACKET) &&
+-	    sk->sk_state == TCP_CLOSE)
++	    state == TCP_CLOSE)
+ 		mask |= EPOLLHUP;
+ 
+ 	/*
+ 	 * we set writable also when the other side has shut down the
+ 	 * connection. This prevents stuck sockets.
+ 	 */
+-	if (unix_writable(sk))
++	if (unix_writable(sk, state))
+ 		mask |= EPOLLOUT | EPOLLWRNORM | EPOLLWRBAND;
+ 
+ 	return mask;
+@@ -3225,12 +3227,14 @@ static __poll_t unix_dgram_poll(struct file *file, struct socket *sock,
+ {
+ 	struct sock *sk = sock->sk, *other;
+ 	unsigned int writable;
++	unsigned char state;
+ 	__poll_t mask;
+ 	u8 shutdown;
+ 
+ 	sock_poll_wait(file, sock, wait);
+ 	mask = 0;
+ 	shutdown = READ_ONCE(sk->sk_shutdown);
++	state = READ_ONCE(sk->sk_state);
+ 
+ 	/* exceptional events? */
+ 	if (sk->sk_err || !skb_queue_empty_lockless(&sk->sk_error_queue))
+@@ -3249,19 +3253,14 @@ static __poll_t unix_dgram_poll(struct file *file, struct socket *sock,
+ 		mask |= EPOLLIN | EPOLLRDNORM;
+ 
+ 	/* Connection-based need to check for termination and startup */
+-	if (sk->sk_type == SOCK_SEQPACKET) {
+-		if (sk->sk_state == TCP_CLOSE)
+-			mask |= EPOLLHUP;
+-		/* connection hasn't started yet? */
+-		if (sk->sk_state == TCP_SYN_SENT)
+-			return mask;
+-	}
++	if (sk->sk_type == SOCK_SEQPACKET && state == TCP_CLOSE)
++		mask |= EPOLLHUP;
+ 
+ 	/* No write status requested, avoid expensive OUT tests. */
+ 	if (!(poll_requested_events(wait) & (EPOLLWRBAND|EPOLLWRNORM|EPOLLOUT)))
+ 		return mask;
+ 
+-	writable = unix_writable(sk);
++	writable = unix_writable(sk, state);
+ 	if (writable) {
+ 		unix_state_lock(sk);
+ 
 -- 
 2.43.0
 
