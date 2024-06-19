@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CDB812FB27;
-	Wed, 19 Jun 2024 13:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDF712FB27;
+	Wed, 19 Jun 2024 13:21:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803311; cv=none; b=ZO6aAKDUrucFAB5r4NsD17U4KTQx+FbT+KxJM2EV18sYwnyRU9PcJwieZ9q4Kk1c7njRWO2S4TZYj62WurT9zgvIjHh0RNnldRjN3eQUp7svv/nQGyYlzmp41C6UzpTn93kAUHajef2f1zOYU00+FAd0xEDHcP+yO5vFHtmP1wY=
+	t=1718803315; cv=none; b=hfy3zWRge97hPrj7VGI5PmBJzFiq+K1bgf4ZDTrcck8f8Z6aAB+SkEdQZos/R0HW10OcbXdH/JZbDfBsP0N0RLOmEDq4OGFHSMrvnckj75RwwGdLY3T0zkadA66IGNiHs5g6oObjzWlOneRJSgXTlX3HqoMXZP+F4fmDbhzQfjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803311; c=relaxed/simple;
-	bh=8wRyrSWNQOJMa4qnIjWs/5SB2kMLu5v+yAG3n3N5vSU=;
+	s=arc-20240116; t=1718803315; c=relaxed/simple;
+	bh=xjYV0BfTKlTt1QqXbPNwlpi021AO+Tim6NUY4D1uCus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TT9tmzkwz5ealt5ODYGi00OXs6YqjrjIm8J96oLcuh374C/6D5BZ0XTsZyADp+Iw0h+daW9pJUQiIS55f48oz45iZeOLX2ZbXnH4rrdZEqEXv60+Adf55rGPjohr6mzew2HJmZx5dHN76+WKnGciyWXWAjck2PomphbjxwAYqZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XNap1aY6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T2NwRrZ+OEvavVHpDNz4Hr92MSvbqzw4oF1qoOESXHgfq2naMVQiAPLMupEI3eyn8e8XKWzdcMYvLT4sdW9QvUf2zoo2MCZheZOSPgReNXFt40wSEXQSSwPs2XTBRongUgop3+PJwFDkuAqlR5A0P/Oq44fiPLVyB/XHva1dCM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oETiAV7I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XNap1aY6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F3DC2BBFC;
-	Wed, 19 Jun 2024 13:21:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oETiAV7I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BB22C2BBFC;
+	Wed, 19 Jun 2024 13:21:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803311;
-	bh=8wRyrSWNQOJMa4qnIjWs/5SB2kMLu5v+yAG3n3N5vSU=;
+	s=korg; t=1718803314;
+	bh=xjYV0BfTKlTt1QqXbPNwlpi021AO+Tim6NUY4D1uCus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XNap1aY6qI2CqpqF4IGIkm5nN3mVs6AXBYli6/jqveiz1WPbMxOpYd3QvO/kAxqxb
-	 /OqyZmviDkQC0hvzK5HSut3TotVR6NixnQ5hxGGe3KF6hpOAsYzhGKuQArY18uEaKA
-	 PQCUhG6pHH2f509KeEMG9dtK6VgCr4J9HQP+sQSE=
+	b=oETiAV7IZJ2fwDuGUtEG1k0Eu3niwuZCC/J06HJma/ErO2D10OSOsw+Ody1+xQ0iT
+	 wUSTiosQrfVEMCinTmVC+zNm5gnhMqBVb9D5mkTau1HW3jYvpNtAx8obqF6FxXGDiL
+	 JIw675dxMLkUHtLRMxBGyer3qHjhJ6KC9OC0l5VQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 6.9 225/281] tracing/selftests: Fix kprobe event name test for .isra. functions
-Date: Wed, 19 Jun 2024 14:56:24 +0200
-Message-ID: <20240619125618.616004600@linuxfoundation.org>
+	Matthias Maennich <maennich@google.com>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 6.9 226/281] kheaders: explicitly define file modes for archived headers
+Date: Wed, 19 Jun 2024 14:56:25 +0200
+Message-ID: <20240619125618.654672573@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -51,50 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Matthias Maennich <maennich@google.com>
 
-commit 23a4b108accc29a6125ed14de4a044689ffeda78 upstream.
+commit 3bd27a847a3a4827a948387cc8f0dbc9fa5931d5 upstream.
 
-The kprobe_eventname.tc test checks if a function with .isra. can have a
-kprobe attached to it. It loops through the kallsyms file for all the
-functions that have the .isra. name, and checks if it exists in the
-available_filter_functions file, and if it does, it uses it to attach a
-kprobe to it.
+Build environments might be running with different umask settings
+resulting in indeterministic file modes for the files contained in
+kheaders.tar.xz. The file itself is served with 444, i.e. world
+readable. Archive the files explicitly with 744,a+X to improve
+reproducibility across build environments.
 
-The issue is that kprobes can not attach to functions that are listed more
-than once in available_filter_functions. With the latest kernel, the
-function that is found is: rapl_event_update.isra.0
-
-  # grep rapl_event_update.isra.0 /sys/kernel/tracing/available_filter_functions
-  rapl_event_update.isra.0
-  rapl_event_update.isra.0
-
-It is listed twice. This causes the attached kprobe to it to fail which in
-turn fails the test. Instead of just picking the function function that is
-found in available_filter_functions, pick the first one that is listed
-only once in available_filter_functions.
+--mode=0444 is not suitable as directories need to be executable. Also,
+444 makes it hard to delete all the readonly files after extraction.
 
 Cc: stable@vger.kernel.org
-Fixes: 604e3548236d ("selftests/ftrace: Select an existing function in kprobe_eventname test")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Matthias Maennich <maennich@google.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/ftrace/test.d/kprobe/kprobe_eventname.tc |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/gen_kheaders.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_eventname.tc
-+++ b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_eventname.tc
-@@ -30,7 +30,8 @@ find_dot_func() {
- 	fi
+--- a/kernel/gen_kheaders.sh
++++ b/kernel/gen_kheaders.sh
+@@ -89,7 +89,7 @@ find $cpio_dir -type f -print0 |
  
- 	grep " [tT] .*\.isra\..*" /proc/kallsyms | cut -f 3 -d " " | while read f; do
--		if grep -s $f available_filter_functions; then
-+		cnt=`grep -s $f available_filter_functions | wc -l`;
-+		if [ $cnt -eq 1 ]; then
- 			echo $f
- 			break
- 		fi
+ # Create archive and try to normalize metadata for reproducibility.
+ tar "${KBUILD_BUILD_TIMESTAMP:+--mtime=$KBUILD_BUILD_TIMESTAMP}" \
+-    --owner=0 --group=0 --sort=name --numeric-owner \
++    --owner=0 --group=0 --sort=name --numeric-owner --mode=u=rw,go=r,a+X \
+     -I $XZ -cf $tarfile -C $cpio_dir/ . > /dev/null
+ 
+ echo $headers_md5 > kernel/kheaders.md5
 
 
