@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8CCB143873;
-	Wed, 19 Jun 2024 13:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1AD9143C4A;
+	Wed, 19 Jun 2024 13:02:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802142; cv=none; b=QETcf6HFLfpkE9xX/kJ9d+uoBikAydNGp9hc8dbGlV3IGVRpgF/jlViPYL7NcGEvzgvoTJYDCfJ2VzohGUqqTj7hVzDO2iCnOOvmfdRkr0vy9IDpy/Wt0PEEoPY1EAp/MVsqJDHOqSDEQWU+8xNc5HvwCTNpzLw85NJj2i9cZQQ=
+	t=1718802145; cv=none; b=aa0MNi3uByzVEwFuV3Dd5HS0tnLIZ+m5+mJRDbGLOi60uqYbisXaiSXky4xCtiGdNJd3x8v4bUGbnx9tMSnG9+YMKZfvGNI1y4tr1QixP23tTdfuaQFAjxCWEfHiUMwXfy5quNrzWd8V20pNT29SlXGxcsass/H0F2SUP7Y/sWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802142; c=relaxed/simple;
-	bh=A7PWdoKrpohA8cHq8USxfnGzF8GhEVWcB9hxEV+Y6ms=;
+	s=arc-20240116; t=1718802145; c=relaxed/simple;
+	bh=O+gUPzujCZZ8cj+E9fQuIDuV0I6okX+CG+N9NJcnZR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TonED2WXHEb1byN3q2NsirAUoSLtjTqHlqhYuErxf30i4/TQUUcA/PeiglIUiz38lm7am9WIVhvSH1VA7PVuMbWwxD/cIBXGsi/7XbMV/qrtc4Su2pFq0XpAKlMzrXdhP2n8aA8CtT22fZ9nAw4It0UqFfDedcOeVumfroytAj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sw39yyI/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=irj5VzU+xVQLcqLO0lI/DsUSF7jAIMf3D5YM6LDtID2GuCvFaV4Qy5/qt/GwFR14C03wUwCBahLImhDn6jWc5nY2gmrmf3xmxLlsUj5WuDI0VWnkiBrjZw5WIK1dg2+iaEnLnvj4e5JHXSIu9qirsK7EPWLqU3YqWKVlLa02Dqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gzvG5gR9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sw39yyI/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60627C32786;
-	Wed, 19 Jun 2024 13:02:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gzvG5gR9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54E0EC2BBFC;
+	Wed, 19 Jun 2024 13:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802142;
-	bh=A7PWdoKrpohA8cHq8USxfnGzF8GhEVWcB9hxEV+Y6ms=;
+	s=korg; t=1718802145;
+	bh=O+gUPzujCZZ8cj+E9fQuIDuV0I6okX+CG+N9NJcnZR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sw39yyI/E8LmAcHAOMLGJox4LT0IXoED37yyBtMC5Hk8GYQ6bg4lzCQ7Gd0rsmpY3
-	 He3WRK3Y/afACDjKPtGnqxu6wN2Yskgx81UPhAK4bFoEjBjpYPVbOFywdOl1bbmkAO
-	 BOQHGK8CkwB8Mif2nHe6w7frp4DwroSpfcl5B3M8=
+	b=gzvG5gR9UFvvXOkdgfl2mWZjbc8X7URCa4JoVp9lwBPvFc3mz9ZrX10fOLcQyfjKr
+	 OSxSM9HC+bPu5QwXKltfFR5mFXy8rCRecUR8zUNtfAYeoY3ydKOBtkJMTc+tM67OkU
+	 pngyYtx0leTrOyzGdagRiOe8yisq2zdTTE2Z8cNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre Tomon <pierretom+12@ik.me>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 097/267] scsi: sd: Use READ(16) when reading block zero on large capacity disks
-Date: Wed, 19 Jun 2024 14:54:08 +0200
-Message-ID: <20240619125610.074661013@linuxfoundation.org>
+	Shailend Chand <shailend@google.com>,
+	Ziwei Xiao <ziweixiao@google.com>,
+	Harshitha Ramamurthy <hramamurthy@google.com>,
+	Praveen Kaligineedi <pkaligineedi@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 098/267] gve: Clear napi->skb before dev_kfree_skb_any()
+Date: Wed, 19 Jun 2024 14:54:09 +0200
+Message-ID: <20240619125610.115079520@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -52,68 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin K. Petersen <martin.petersen@oracle.com>
+From: Ziwei Xiao <ziweixiao@google.com>
 
-commit 7926d51f73e0434a6250c2fd1a0555f98d9a62da upstream.
+commit 6f4d93b78ade0a4c2cafd587f7b429ce95abb02e upstream.
 
-Commit 321da3dc1f3c ("scsi: sd: usb_storage: uas: Access media prior
-to querying device properties") triggered a read to LBA 0 before
-attempting to inquire about device characteristics. This was done
-because some protocol bridge devices will return generic values until
-an attached storage device's media has been accessed.
+gve_rx_free_skb incorrectly leaves napi->skb referencing an skb after it
+is freed with dev_kfree_skb_any(). This can result in a subsequent call
+to napi_get_frags returning a dangling pointer.
 
-Pierre Tomon reported that this change caused problems on a large
-capacity external drive connected via a bridge device. The bridge in
-question does not appear to implement the READ(10) command.
+Fix this by clearing napi->skb before the skb is freed.
 
-Issue a READ(16) instead of READ(10) when a device has been identified
-as preferring 16-byte commands (use_16_for_rw heuristic).
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218890
-Link: https://lore.kernel.org/r/70dd7ae0-b6b1-48e1-bb59-53b7c7f18274@rowland.harvard.edu
-Link: https://lore.kernel.org/r/20240605022521.3960956-1-martin.petersen@oracle.com
-Fixes: 321da3dc1f3c ("scsi: sd: usb_storage: uas: Access media prior to querying device properties")
+Fixes: 9b8dd5e5ea48 ("gve: DQO: Add RX path")
 Cc: stable@vger.kernel.org
-Reported-by: Pierre Tomon <pierretom+12@ik.me>
-Suggested-by: Alan Stern <stern@rowland.harvard.edu>
-Tested-by: Pierre Tomon <pierretom+12@ik.me>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: Shailend Chand <shailend@google.com>
+Signed-off-by: Ziwei Xiao <ziweixiao@google.com>
+Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
+Reviewed-by: Shailend Chand <shailend@google.com>
+Reviewed-by: Praveen Kaligineedi <pkaligineedi@google.com>
+Link: https://lore.kernel.org/r/20240612001654.923887-1-ziweixiao@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/sd.c |   17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/google/gve/gve_rx_dqo.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -3406,16 +3406,23 @@ static bool sd_validate_opt_xfer_size(st
+--- a/drivers/net/ethernet/google/gve/gve_rx_dqo.c
++++ b/drivers/net/ethernet/google/gve/gve_rx_dqo.c
+@@ -506,11 +506,13 @@ static void gve_rx_skb_hash(struct sk_bu
+ 	skb_set_hash(skb, le32_to_cpu(compl_desc->hash), hash_type);
+ }
  
- static void sd_read_block_zero(struct scsi_disk *sdkp)
+-static void gve_rx_free_skb(struct gve_rx_ring *rx)
++static void gve_rx_free_skb(struct napi_struct *napi, struct gve_rx_ring *rx)
  {
--	unsigned int buf_len = sdkp->device->sector_size;
--	char *buffer, cmd[10] = { };
-+	struct scsi_device *sdev = sdkp->device;
-+	unsigned int buf_len = sdev->sector_size;
-+	u8 *buffer, cmd[16] = { };
- 
- 	buffer = kmalloc(buf_len, GFP_KERNEL);
- 	if (!buffer)
+ 	if (!rx->ctx.skb_head)
  		return;
  
--	cmd[0] = READ_10;
--	put_unaligned_be32(0, &cmd[2]); /* Logical block address 0 */
--	put_unaligned_be16(1, &cmd[7]);	/* Transfer 1 logical block */
-+	if (sdev->use_16_for_rw) {
-+		cmd[0] = READ_16;
-+		put_unaligned_be64(0, &cmd[2]); /* Logical block address 0 */
-+		put_unaligned_be32(1, &cmd[10]);/* Transfer 1 logical block */
-+	} else {
-+		cmd[0] = READ_10;
-+		put_unaligned_be32(0, &cmd[2]); /* Logical block address 0 */
-+		put_unaligned_be16(1, &cmd[7]);	/* Transfer 1 logical block */
-+	}
++	if (rx->ctx.skb_head == napi->skb)
++		napi->skb = NULL;
+ 	dev_kfree_skb_any(rx->ctx.skb_head);
+ 	rx->ctx.skb_head = NULL;
+ 	rx->ctx.skb_tail = NULL;
+@@ -783,7 +785,7 @@ int gve_rx_poll_dqo(struct gve_notify_bl
  
- 	scsi_execute_cmd(sdkp->device, cmd, REQ_OP_DRV_IN, buffer, buf_len,
- 			 SD_TIMEOUT, sdkp->max_retries, NULL);
+ 		err = gve_rx_dqo(napi, rx, compl_desc, rx->q_num);
+ 		if (err < 0) {
+-			gve_rx_free_skb(rx);
++			gve_rx_free_skb(napi, rx);
+ 			u64_stats_update_begin(&rx->statss);
+ 			if (err == -ENOMEM)
+ 				rx->rx_skb_alloc_fail++;
+@@ -826,7 +828,7 @@ int gve_rx_poll_dqo(struct gve_notify_bl
+ 
+ 		/* gve_rx_complete_skb() will consume skb if successful */
+ 		if (gve_rx_complete_skb(rx, napi, compl_desc, feat) != 0) {
+-			gve_rx_free_skb(rx);
++			gve_rx_free_skb(napi, rx);
+ 			u64_stats_update_begin(&rx->statss);
+ 			rx->rx_desc_err_dropped_pkt++;
+ 			u64_stats_update_end(&rx->statss);
 
 
