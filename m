@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C365713D8BF;
-	Wed, 19 Jun 2024 13:30:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B54BC13D52E;
+	Wed, 19 Jun 2024 13:30:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803854; cv=none; b=clTypieU6t3PKlKaJ+3J5I0xM6+iYStIqIKF3NNwl8Pm3cOFRvu89oYhPVeOrffalPX+BjrOzXZiFXZPL7j83cSFnCAKgTLS4+ECWlNAbtiGG/uEmyJv86kynLwp0xQP02dLpkm4BvgjlWGNIUZVkbgQm3dgyx8H7ArkWxU7flY=
+	t=1718803857; cv=none; b=pqRcKyxMB1my+qtMT3BwWg9Ged8dNi/pCO4lGGElLssSEdEr5eGUYvryDoY3ZVNUnDrsjxRwFVbd9wf1OzNIMyPCrUyVgyEVxVeumw376eJ2cqFkU/dk8bKcYMTXrnFJqWHPrQb3fHtm6C5289+auXiosfdgodxMIpcsySLODoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803854; c=relaxed/simple;
-	bh=PXpMJV1i65w/6WQaRwApB6LrLFYIYqs9nuPN9DMU03U=;
+	s=arc-20240116; t=1718803857; c=relaxed/simple;
+	bh=vRYtFysv4hKRjVQixh8A+7DXMl1Me+FFT3Wf6pYZ+uc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mR9UWjvbOBqEW+yWC4ljRtEk3H4exZ1FJFcFd+ZIasDczcJW+5x6rMbmxvDtJ4bFtK8mXQrHzINOlABvRa9T0grIoEAbeYgaunVAc0sCbVB8oRmxii8fBUjg/lr1Zm1MriWuf6usZDCnhErdjynazwrt0UjFPLVvrrE90IPkjME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nSSOjNGL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h+VTPu0LzOsX0YLkuoyB//1oe0SVTNQ1pdFDBxpIqvwE8LOr1FKR2PU2A3gDhhsycDhW3xS5MzL2r+LXHDhSxmUOh7eN+j6BkpQLVIJeqBuSRiDb3bbuQFQ52E2K+BOQxKCIJpVTWFIRe5X1pME2Nlt7nb93e43K1khGHiU11II=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qS+v1m6J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nSSOjNGL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44F88C2BBFC;
-	Wed, 19 Jun 2024 13:30:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qS+v1m6J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B1D1C2BBFC;
+	Wed, 19 Jun 2024 13:30:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803854;
-	bh=PXpMJV1i65w/6WQaRwApB6LrLFYIYqs9nuPN9DMU03U=;
+	s=korg; t=1718803857;
+	bh=vRYtFysv4hKRjVQixh8A+7DXMl1Me+FFT3Wf6pYZ+uc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nSSOjNGLWK51S65mHfZovNrRkITbV5KhjN4gvbehLGqAbIYHpfEPhWar5XeO5s9kh
-	 qcSiThmpf3v00v4n0raBqr0+NVRkmI2NR9lA9GJO25CrdjsxNlWskFFWWpVWlSRXeB
-	 ANn3Dsti1CkwYnh4Liz9JCyH6tBXhl+7XAsGP+OM=
+	b=qS+v1m6JhUds0XDZRUk/kzlZ10XasHmyC+tE777QRIWqV6o3oYkziBs+DYa21j8ze
+	 lw0/a1IyWLeADVcmciWn4J4atrGLCqJhRAtjvQ1eCmX+zgf5s+IOmqY7+Zkm29vyBZ
+	 AhEioSbgs3/XYsscj9xN50ZI7jr6Ph35IDOcwiDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Marc Zyngier <maz@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 126/217] gpio: tqmx86: introduce shadow register for GPIO output value
-Date: Wed, 19 Jun 2024 14:56:09 +0200
-Message-ID: <20240619125601.551177671@linuxfoundation.org>
+Subject: [PATCH 6.1 127/217] gpio: tqmx86: Convert to immutable irq_chip
+Date: Wed, 19 Jun 2024 14:56:10 +0200
+Message-ID: <20240619125601.589556934@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -52,87 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit 9d6a811b522ba558bcb4ec01d12e72a0af8e9f6e ]
+[ Upstream commit 8e43827b6ae727a745ce7a8cc19184b28905a965 ]
 
-The TQMx86 GPIO controller uses the same register address for input and
-output data. Reading the register will always return current inputs
-rather than the previously set outputs (regardless of the current
-direction setting). Therefore, using a RMW pattern does not make sense
-when setting output values. Instead, the previously set output register
-value needs to be stored as a shadow register.
+Convert the driver to immutable irq-chip with a bit of
+intuition.
 
-As there is no reliable way to get the current output values from the
-hardware, also initialize all channels to 0, to ensure that stored and
-actual output values match. This should usually not have any effect in
-practise, as the TQMx86 UEFI sets all outputs to 0 during boot.
-
-Also prepare for extension of the driver to more than 8 GPIOs by using
-DECLARE_BITMAP.
-
-Fixes: b868db94a6a7 ("gpio: tqmx86: Add GPIO from for this IO controller")
-Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/d0555933becd45fa92a85675d26e4d59343ddc01.1717063994.git.matthias.schiffer@ew.tq-group.com
+Cc: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Stable-dep-of: 08af509efdf8 ("gpio: tqmx86: store IRQ trigger type and unmask status separately")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-tqmx86.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/gpio/gpio-tqmx86.c | 28 ++++++++++++++++++++--------
+ 1 file changed, 20 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/gpio/gpio-tqmx86.c b/drivers/gpio/gpio-tqmx86.c
-index f0a2cf4b06796..da689b5b3fad2 100644
+index da689b5b3fad2..b7e2dbbdc4ebe 100644
 --- a/drivers/gpio/gpio-tqmx86.c
 +++ b/drivers/gpio/gpio-tqmx86.c
-@@ -6,6 +6,7 @@
-  *   Vadim V.Vlasov <vvlasov@dev.rtsoft.ru>
-  */
+@@ -16,6 +16,7 @@
+ #include <linux/module.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm_runtime.h>
++#include <linux/seq_file.h>
+ #include <linux/slab.h>
  
-+#include <linux/bitmap.h>
- #include <linux/bitops.h>
- #include <linux/errno.h>
- #include <linux/gpio/driver.h>
-@@ -38,6 +39,7 @@ struct tqmx86_gpio_data {
+ #define TQMX86_NGPIO	8
+@@ -35,7 +36,6 @@
+ 
+ struct tqmx86_gpio_data {
+ 	struct gpio_chip	chip;
+-	struct irq_chip		irq_chip;
  	void __iomem		*io_base;
  	int			irq;
  	raw_spinlock_t		spinlock;
-+	DECLARE_BITMAP(output, TQMX86_NGPIO);
- 	u8			irq_type[TQMX86_NGPI];
- };
- 
-@@ -64,15 +66,10 @@ static void tqmx86_gpio_set(struct gpio_chip *chip, unsigned int offset,
- {
- 	struct tqmx86_gpio_data *gpio = gpiochip_get_data(chip);
- 	unsigned long flags;
--	u8 val;
- 
- 	raw_spin_lock_irqsave(&gpio->spinlock, flags);
--	val = tqmx86_gpio_read(gpio, TQMX86_GPIOD);
--	if (value)
--		val |= BIT(offset);
--	else
--		val &= ~BIT(offset);
--	tqmx86_gpio_write(gpio, val, TQMX86_GPIOD);
-+	__assign_bit(offset, gpio->output, value);
-+	tqmx86_gpio_write(gpio, bitmap_get_value8(gpio->output, 0), TQMX86_GPIOD);
+@@ -119,6 +119,7 @@ static void tqmx86_gpio_irq_mask(struct irq_data *data)
+ 	gpiic &= ~mask;
+ 	tqmx86_gpio_write(gpio, gpiic, TQMX86_GPIIC);
  	raw_spin_unlock_irqrestore(&gpio->spinlock, flags);
++	gpiochip_disable_irq(&gpio->chip, irqd_to_hwirq(data));
  }
  
-@@ -259,6 +256,13 @@ static int tqmx86_gpio_probe(struct platform_device *pdev)
+ static void tqmx86_gpio_irq_unmask(struct irq_data *data)
+@@ -131,6 +132,7 @@ static void tqmx86_gpio_irq_unmask(struct irq_data *data)
  
- 	tqmx86_gpio_write(gpio, (u8)~TQMX86_DIR_INPUT_MASK, TQMX86_GPIODD);
+ 	mask = TQMX86_GPII_MASK << (offset * TQMX86_GPII_BITS);
  
-+	/*
-+	 * Reading the previous output state is not possible with TQMx86 hardware.
-+	 * Initialize all outputs to 0 to have a defined state that matches the
-+	 * shadow register.
-+	 */
-+	tqmx86_gpio_write(gpio, 0, TQMX86_GPIOD);
++	gpiochip_enable_irq(&gpio->chip, irqd_to_hwirq(data));
+ 	raw_spin_lock_irqsave(&gpio->spinlock, flags);
+ 	gpiic = tqmx86_gpio_read(gpio, TQMX86_GPIIC);
+ 	gpiic &= ~mask;
+@@ -223,6 +225,22 @@ static void tqmx86_init_irq_valid_mask(struct gpio_chip *chip,
+ 	clear_bit(3, valid_mask);
+ }
+ 
++static void tqmx86_gpio_irq_print_chip(struct irq_data *d, struct seq_file *p)
++{
++	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
 +
- 	chip = &gpio->chip;
- 	chip->label = "gpio-tqmx86";
- 	chip->owner = THIS_MODULE;
++	seq_printf(p, gc->label);
++}
++
++static const struct irq_chip tqmx86_gpio_irq_chip = {
++	.irq_mask = tqmx86_gpio_irq_mask,
++	.irq_unmask = tqmx86_gpio_irq_unmask,
++	.irq_set_type = tqmx86_gpio_irq_set_type,
++	.irq_print_chip = tqmx86_gpio_irq_print_chip,
++	.flags = IRQCHIP_IMMUTABLE,
++	GPIOCHIP_IRQ_RESOURCE_HELPERS,
++};
++
+ static int tqmx86_gpio_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+@@ -279,14 +297,8 @@ static int tqmx86_gpio_probe(struct platform_device *pdev)
+ 	pm_runtime_enable(&pdev->dev);
+ 
+ 	if (irq > 0) {
+-		struct irq_chip *irq_chip = &gpio->irq_chip;
+ 		u8 irq_status;
+ 
+-		irq_chip->name = chip->label;
+-		irq_chip->irq_mask = tqmx86_gpio_irq_mask;
+-		irq_chip->irq_unmask = tqmx86_gpio_irq_unmask;
+-		irq_chip->irq_set_type = tqmx86_gpio_irq_set_type;
+-
+ 		/* Mask all interrupts */
+ 		tqmx86_gpio_write(gpio, 0, TQMX86_GPIIC);
+ 
+@@ -295,7 +307,7 @@ static int tqmx86_gpio_probe(struct platform_device *pdev)
+ 		tqmx86_gpio_write(gpio, irq_status, TQMX86_GPIIS);
+ 
+ 		girq = &chip->irq;
+-		girq->chip = irq_chip;
++		gpio_irq_chip_set_chip(girq, &tqmx86_gpio_irq_chip);
+ 		girq->parent_handler = tqmx86_gpio_irq_handler;
+ 		girq->num_parents = 1;
+ 		girq->parents = devm_kcalloc(&pdev->dev, 1,
 -- 
 2.43.0
 
