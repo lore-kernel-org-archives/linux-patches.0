@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC3182495;
-	Wed, 19 Jun 2024 13:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 674E812FB27;
+	Wed, 19 Jun 2024 13:20:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803234; cv=none; b=JoUXr5Pb1B239nCavu8giViIK7BlN2ciKrqVODkWfBXY/LLJOtD01iOhZzrdFJDJ6ESLmeEgmTCeMBSCfExVMin024xWD8Aw3OINmqdOzDdG2Qi5gXn/WIQau3BDMB1rYzsiMJbDP5FxHbXVsDH+t50LATp3nIATpELm3bbYgwE=
+	t=1718803237; cv=none; b=nBPLNwIu9I94xnHT18wwHpw0DOwj/hs4hl4VNYClaMAVRqDziHdDthxqie54rDpYwajX5wbX9V/MZs47sMR1viXyuTdC46KwtdxX/8sWblP9rCeKYW6TlfdUe+xcLmqCFQx0+0YWLAUtBSnJi2mkyXvH2sfUSIH/7OB74N54W2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803234; c=relaxed/simple;
-	bh=H6mex0kS9qrn+3WVeI9/RLeTN1XoyIC/HQSbB9EPZnk=;
+	s=arc-20240116; t=1718803237; c=relaxed/simple;
+	bh=FucJRmndb13jAc5VUIBxXgXf/ezTmHqv5jhr7OrvTd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NW+woLp6TKPYvuEff06JW+R9wcnrqMtYMzv/2p9YS1JWQLl6Yi46qe3TXeEYIbVHX0GE6MTDEsTCkC9hRh8MAgm6by386Oj8YXgjL+CK1fDZvEirWPCIY9BGU/mdcv9PJvxID2QO0Ayicx6KvvE+bHahyALL1gRhTiYcSBlmSLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q75pSlf/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qck7MsgLFSpsN5qI69z/m873uSZ6Sns2dSw4RLMdZfKYT+7vLjLw44j36xrmVdpcbDM8VhSLg62jjUqvTOOotLJmnUnLQh6fPCSN7e1Jej7p3ZQRdVqJWA7LHA+rwFEd5qrtaTlQP1SYq7B4mJzg1lfA+2BENq6Fwvo7hv+Un90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ESgj1Qhf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q75pSlf/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC5CC4AF1A;
-	Wed, 19 Jun 2024 13:20:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ESgj1Qhf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7E2AC2BBFC;
+	Wed, 19 Jun 2024 13:20:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803234;
-	bh=H6mex0kS9qrn+3WVeI9/RLeTN1XoyIC/HQSbB9EPZnk=;
+	s=korg; t=1718803237;
+	bh=FucJRmndb13jAc5VUIBxXgXf/ezTmHqv5jhr7OrvTd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q75pSlf/tcmoXLH+IX/6ZSJ40zphuEQMI59shSiCh/8HaT9wIAE+5s4sM7MHabtqd
-	 S5OtiKuh3MSXQ+3SqXogRoeyogJPQkfu6Osmp1cKxCse6itjdQ8WpB4/SfhjcEFkXG
-	 EX0eYh0rg1zAfHOca5gjP5w1SB1sVqxyWAzQU2vA=
+	b=ESgj1Qhfz+xqdK96etQSt+uZCMpQJJGoywivmA0z5e9m55aRGPNq9WzJA+IR/Ri81
+	 3ZyB5cTj7F7PWhxALgZyi/l3uHIxlya/T/7oufDG9MpTocISB+TvQ9WyQ/saBqFBsO
+	 401dRoMdQVqtt+UAFZBI/imbO4aVJjStaetMPhdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Crt Mori <cmo@melexis.com>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Stable@vger.kernel.org,
+	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.9 198/281] iio: temperature: mlx90635: Fix ERR_PTR dereference in mlx90635_probe()
-Date: Wed, 19 Jun 2024 14:55:57 +0200
-Message-ID: <20240619125617.569716229@linuxfoundation.org>
+Subject: [PATCH 6.9 199/281] iio: imu: inv_icm42600: delete unneeded update watermark call
+Date: Wed, 19 Jun 2024 14:55:58 +0200
+Message-ID: <20240619125617.609733100@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -52,39 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 
-commit a23c14b062d8800a2192077d83273bbfe6c7552d upstream.
+commit 245f3b149e6cc3ac6ee612cdb7042263bfc9e73c upstream.
 
-When devm_regmap_init_i2c() fails, regmap_ee could be error pointer,
-instead of checking for IS_ERR(regmap_ee), regmap is checked which looks
-like a copy paste error.
+Update watermark will be done inside the hwfifo_set_watermark callback
+just after the update_scan_mode. It is useless to do it here.
 
-Fixes: a1d1ba5e1c28 ("iio: temperature: mlx90635 MLX90635 IR Temperature sensor")
-Reviewed-by: Crt Mori<cmo@melexis.com>
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Link: https://lore.kernel.org/r/20240513203427.3208696-1-harshit.m.mogalapalli@oracle.com
-Cc: <Stable@vger.kernel.org>
+Fixes: 7f85e42a6c54 ("iio: imu: inv_icm42600: add buffer support in iio devices")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Link: https://lore.kernel.org/r/20240527210008.612932-1-inv.git-commit@tdk.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/temperature/mlx90635.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c |    4 ----
+ drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c  |    4 ----
+ 2 files changed, 8 deletions(-)
 
---- a/drivers/iio/temperature/mlx90635.c
-+++ b/drivers/iio/temperature/mlx90635.c
-@@ -947,9 +947,9 @@ static int mlx90635_probe(struct i2c_cli
- 				     "failed to allocate regmap\n");
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
+@@ -129,10 +129,6 @@ static int inv_icm42600_accel_update_sca
+ 	/* update data FIFO write */
+ 	inv_sensors_timestamp_apply_odr(ts, 0, 0, 0);
+ 	ret = inv_icm42600_buffer_set_fifo_en(st, fifo_en | st->fifo.en);
+-	if (ret)
+-		goto out_unlock;
+-
+-	ret = inv_icm42600_buffer_update_watermark(st);
  
- 	regmap_ee = devm_regmap_init_i2c(client, &mlx90635_regmap_ee);
--	if (IS_ERR(regmap))
--		return dev_err_probe(&client->dev, PTR_ERR(regmap),
--				     "failed to allocate regmap\n");
-+	if (IS_ERR(regmap_ee))
-+		return dev_err_probe(&client->dev, PTR_ERR(regmap_ee),
-+				     "failed to allocate EEPROM regmap\n");
+ out_unlock:
+ 	mutex_unlock(&st->lock);
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
+@@ -129,10 +129,6 @@ static int inv_icm42600_gyro_update_scan
+ 	/* update data FIFO write */
+ 	inv_sensors_timestamp_apply_odr(ts, 0, 0, 0);
+ 	ret = inv_icm42600_buffer_set_fifo_en(st, fifo_en | st->fifo.en);
+-	if (ret)
+-		goto out_unlock;
+-
+-	ret = inv_icm42600_buffer_update_watermark(st);
  
- 	mlx90635 = iio_priv(indio_dev);
- 	i2c_set_clientdata(client, indio_dev);
+ out_unlock:
+ 	mutex_unlock(&st->lock);
 
 
