@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C55132129;
-	Wed, 19 Jun 2024 13:07:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E2AC12FB31;
+	Wed, 19 Jun 2024 13:07:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802462; cv=none; b=kwrB7nrbz7G0gMVTsFX00SdwFs2/7sogZvoV7ficWMCf19V5b04AeYhtQ6xdIwglcoZ0RNfQcrigt0GiYXe2NbNtwy+f58wghWpGozjDMNFZgoRv1IeLf/fEcKCMRA3KZwabXq3G2bnwxk7OeAy2bWF6gO2yPouloFC/ZlzAXV8=
+	t=1718802465; cv=none; b=WbRYb8dHiyYFOSYxRjCdal+OruSol0TQyqNvf0mAYBpzXZKd/rs+oEiH8sRphy95MLOV0Yqix85c0nx+b3Eh5xy5rjBZk1MmS/KvRJwQU9NJaZ8vlo6IwXdflLabu6wAUtKYZv5Z9YXqwapC9bD+KOXk8v/oQObanho2X7HEEas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802462; c=relaxed/simple;
-	bh=PXm8EP/poJkcMQFpxkDsJEQ25m9bMWKGHF9pRDX9o/M=;
+	s=arc-20240116; t=1718802465; c=relaxed/simple;
+	bh=PxSjTww99KIXfjLpS+jNPl8/5+GqctnCgQMPm2ITNiU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DlNNUid/CplE//0g0p0SvbBcPv3BcRhSP7RxmHfg30h0RLvWKzng2jewc6t+0pPRpIL5OLr7hIslKWqnFn9HgHhwsZ4pTvswNQIq4Dp55R5LorQ0aJ4/dSgCsqnrX+7yu1NSZi1oWFRaoxEUEsA4htqk7FKEB63uJjqzrdQm/bQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hv2S6Wmc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=apn8Dhk+PSz91SX0QhzxLYPOrnpFdpkEumg+N96ucKoDdTP3Qj/00EC8FJQ6JS7rGGNNEPbX2Xw3ExwheL0BSo96HNUHr8ydUfWSxkWF5Vcjy7K5h66qtNVtwyhaYofxuu0zCS5B7KbPCWvKEgqthDkur8s5evTIcF70RcwLRHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KCeqNM3e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hv2S6Wmc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE54DC2BBFC;
-	Wed, 19 Jun 2024 13:07:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KCeqNM3e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D20C2BBFC;
+	Wed, 19 Jun 2024 13:07:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802462;
-	bh=PXm8EP/poJkcMQFpxkDsJEQ25m9bMWKGHF9pRDX9o/M=;
+	s=korg; t=1718802465;
+	bh=PxSjTww99KIXfjLpS+jNPl8/5+GqctnCgQMPm2ITNiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hv2S6Wmcp6eW86ZnRwZxcZAwjpphSOl8++LVDanKh1+vYvCAiO02e5LyM4tga4OC0
-	 g6g9qDx1/7nA8jBxnpHg5Y4uTVzFyE5FAaampazxlvpsbqc6mXP4TXkuzIKvQQkkNu
-	 BHhq192QyNLuW9enVvkdCQu2d9jUa2oYEqUTm8Uc=
+	b=KCeqNM3eVWsWYR37tcxVD/mPVPHYtHqpKBUYzDt3LB3YdJRrC/pE5I0gJ3V2P5Sik
+	 MvvBGgTjMXO3Vx3IkzdfY6FoQYUw/AWkVd4GagRtpIL9aW22JqJuVZ/9GCHPiaZHKb
+	 eAeKV+bWz2XrGYiV1cnzCv5oaIrSklTmOH1EpM7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Su Yue <glass.su@suse.com>,
 	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
 	Changwei Ge <gechangwei@live.cn>,
 	Gang He <ghe@suse.com>,
+	Joel Becker <jlbec@evilplan.org>,
 	Jun Piao <piaojun@huawei.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Mark Fasheh <mark@fasheh.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 204/267] ocfs2: use coarse time for new created files
-Date: Wed, 19 Jun 2024 14:55:55 +0200
-Message-ID: <20240619125614.159743081@linuxfoundation.org>
+Subject: [PATCH 6.6 205/267] ocfs2: fix races between hole punching and AIO+DIO
+Date: Wed, 19 Jun 2024 14:55:56 +0200
+Message-ID: <20240619125614.197643351@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -59,85 +59,89 @@ Content-Transfer-Encoding: 8bit
 
 From: Su Yue <glass.su@suse.com>
 
-commit b8cb324277ee16f3eca3055b96fce4735a5a41c6 upstream.
+commit 952b023f06a24b2ad6ba67304c4c84d45bea2f18 upstream.
 
-The default atime related mount option is '-o realtime' which means file
-atime should be updated if atime <= ctime or atime <= mtime.  atime should
-be updated in the following scenario, but it is not:
-==========================================================
-$ rm /mnt/testfile;
-$ echo test > /mnt/testfile
-$ stat -c "%X %Y %Z" /mnt/testfile
-1711881646 1711881646 1711881646
-$ sleep 5
-$ cat /mnt/testfile > /dev/null
-$ stat -c "%X %Y %Z" /mnt/testfile
-1711881646 1711881646 1711881646
-==========================================================
+After commit "ocfs2: return real error code in ocfs2_dio_wr_get_block",
+fstests/generic/300 become from always failed to sometimes failed:
 
-And the reason the atime in the test is not updated is that ocfs2 calls
-ktime_get_real_ts64() in __ocfs2_mknod_locked during file creation.  Then
-inode_set_ctime_current() is called in inode_set_ctime_current() calls
-ktime_get_coarse_real_ts64() to get current time.
+========================================================================
+[  473.293420 ] run fstests generic/300
 
-ktime_get_real_ts64() is more accurate than ktime_get_coarse_real_ts64().
-In my test box, I saw ctime set by ktime_get_coarse_real_ts64() is less
-than ktime_get_real_ts64() even ctime is set later.  The ctime of the new
-inode is smaller than atime.
+[  475.296983 ] JBD2: Ignoring recovery information on journal
+[  475.302473 ] ocfs2: Mounting device (253,1) on (node local, slot 0) with ordered data mode.
+[  494.290998 ] OCFS2: ERROR (device dm-1): ocfs2_change_extent_flag: Owner 5668 has an extent at cpos 78723 which can no longer be found
+[  494.291609 ] On-disk corruption discovered. Please run fsck.ocfs2 once the filesystem is unmounted.
+[  494.292018 ] OCFS2: File system is now read-only.
+[  494.292224 ] (kworker/19:11,2628,19):ocfs2_mark_extent_written:5272 ERROR: status = -30
+[  494.292602 ] (kworker/19:11,2628,19):ocfs2_dio_end_io_write:2374 ERROR: status = -3
+fio: io_u error on file /mnt/scratch/racer: Read-only file system: write offset=460849152, buflen=131072
+=========================================================================
 
-The call trace is like:
+In __blockdev_direct_IO, ocfs2_dio_wr_get_block is called to add unwritten
+extents to a list.  extents are also inserted into extent tree in
+ocfs2_write_begin_nolock.  Then another thread call fallocate to puch a
+hole at one of the unwritten extent.  The extent at cpos was removed by
+ocfs2_remove_extent().  At end io worker thread, ocfs2_search_extent_list
+found there is no such extent at the cpos.
 
-ocfs2_create
-  ocfs2_mknod
-    __ocfs2_mknod_locked
-    ....
+    T1                        T2                T3
+                              inode lock
+                                ...
+                                insert extents
+                                ...
+                              inode unlock
+ocfs2_fallocate
+ __ocfs2_change_file_space
+  inode lock
+  lock ip_alloc_sem
+  ocfs2_remove_inode_range inode
+   ocfs2_remove_btree_range
+    ocfs2_remove_extent
+    ^---remove the extent at cpos 78723
+  ...
+  unlock ip_alloc_sem
+  inode unlock
+                                       ocfs2_dio_end_io
+                                        ocfs2_dio_end_io_write
+                                         lock ip_alloc_sem
+                                         ocfs2_mark_extent_written
+                                          ocfs2_change_extent_flag
+                                           ocfs2_search_extent_list
+                                           ^---failed to find extent
+                                          ...
+                                          unlock ip_alloc_sem
 
-      ktime_get_real_ts64 <------- set atime,ctime,mtime, more accurate
-      ocfs2_populate_inode
-    ...
-    ocfs2_init_acl
-      ocfs2_acl_set_mode
-        inode_set_ctime_current
-          current_time
-            ktime_get_coarse_real_ts64 <-------less accurate
+In most filesystems, fallocate is not compatible with racing with AIO+DIO,
+so fix it by adding to wait for all dio before fallocate/punch_hole like
+ext4.
 
-ocfs2_file_read_iter
-  ocfs2_inode_lock_atime
-    ocfs2_should_update_atime
-      atime <= ctime ? <-------- false, ctime < atime due to accuracy
-
-So here call ktime_get_coarse_real_ts64 to set inode time coarser while
-creating new files.  It may lower the accuracy of file times.  But it's
-not a big deal since we already use coarse time in other places like
-ocfs2_update_inode_atime and inode_set_ctime_current.
-
-Link: https://lkml.kernel.org/r/20240408082041.20925-5-glass.su@suse.com
-Fixes: c62c38f6b91b ("ocfs2: replace CURRENT_TIME macro")
+Link: https://lkml.kernel.org/r/20240408082041.20925-3-glass.su@suse.com
+Fixes: b25801038da5 ("ocfs2: Support xfs style space reservation ioctls")
 Signed-off-by: Su Yue <glass.su@suse.com>
 Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
 Cc: Changwei Ge <gechangwei@live.cn>
 Cc: Gang He <ghe@suse.com>
+Cc: Joel Becker <jlbec@evilplan.org>
 Cc: Jun Piao <piaojun@huawei.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Mark Fasheh <mark@fasheh.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/namei.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ocfs2/file.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/ocfs2/namei.c
-+++ b/fs/ocfs2/namei.c
-@@ -566,7 +566,7 @@ static int __ocfs2_mknod_locked(struct i
- 	fe->i_last_eb_blk = 0;
- 	strcpy(fe->i_signature, OCFS2_INODE_SIGNATURE);
- 	fe->i_flags |= cpu_to_le32(OCFS2_VALID_FL);
--	ktime_get_real_ts64(&ts);
-+	ktime_get_coarse_real_ts64(&ts);
- 	fe->i_atime = fe->i_ctime = fe->i_mtime =
- 		cpu_to_le64(ts.tv_sec);
- 	fe->i_mtime_nsec = fe->i_ctime_nsec = fe->i_atime_nsec =
+--- a/fs/ocfs2/file.c
++++ b/fs/ocfs2/file.c
+@@ -1934,6 +1934,8 @@ static int __ocfs2_change_file_space(str
+ 
+ 	inode_lock(inode);
+ 
++	/* Wait all existing dio workers, newcomers will block on i_rwsem */
++	inode_dio_wait(inode);
+ 	/*
+ 	 * This prevents concurrent writes on other nodes
+ 	 */
 
 
