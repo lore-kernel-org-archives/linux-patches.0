@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE2B414B07B;
-	Wed, 19 Jun 2024 13:12:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29A0146A85;
+	Wed, 19 Jun 2024 13:12:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802747; cv=none; b=sxrGhTedMntFRmGf12uDOlLcCfUcMSD6F3nMPfpd9X1KCWhJZTXQT0bwFb0Ie2dQxICUIPZXXCFJNYyu3hFo7C+Xs5m2w3eDI6MbnkR7dyPtSS3EnQb5wrQfHLz4D/Yupo8S+l8OZ4q7/xY6MXLWuDflwUoADqGSSna9oGeVpsU=
+	t=1718802750; cv=none; b=OinvwFLR3o5G+QcfWYIKwIDj5etv+7HNzf5aEkrjXLN+nuevfeYPWPrp/yNjiREaLolj1KNif2eMgyfZZQq6a0hdzl5/SlWMSLXmbWhfkI7pbYKxSyhwv3uk9nWfZTWdOhtD6KcU0vah8MsZODvIkYuJboYu0Jkl89nWL4WfNxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802747; c=relaxed/simple;
-	bh=mJUEcxYQY98cw+jUQ9kWXKuAbiIL2EEu4lBZB6E6fKk=;
+	s=arc-20240116; t=1718802750; c=relaxed/simple;
+	bh=84xj3XJacx1thjNIADIUyZqpgb7tPWLzd/VOd2cNHxY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eNx97W7it6Ev6l7tF6mv3xexqw6hose15v+zpbwjsBgEzkvvtTGO4ugiL3ZMncyFSo7w1HKUUPpSIw1bwX2j92JPbHCd3+0Acmvho5oH2eckybsU8hvwL47vJKLpXizW9scgHqlhfLj73lZ8dWE4psyR66JB1bnXEm9C9vL4ZXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L0u03CoF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uEN3OASK5wVHpl9Mbwz8D0MpByOuVmsc9cDAl11qhOB65/R6jE1VFaLNFcpA+JfuZDnD1Cq/UILiXiN5eJr7B1+c5ipjDoHjLajJEdw+omgekb6M7+Ahwy0QOcw1/dwIdOAz2hUb6s+ZYUV3t8ImPOxbwg/sdVzpClrLknJTvLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gm+CtSxW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L0u03CoF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EECBC2BBFC;
-	Wed, 19 Jun 2024 13:12:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gm+CtSxW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48E34C2BBFC;
+	Wed, 19 Jun 2024 13:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802747;
-	bh=mJUEcxYQY98cw+jUQ9kWXKuAbiIL2EEu4lBZB6E6fKk=;
+	s=korg; t=1718802750;
+	bh=84xj3XJacx1thjNIADIUyZqpgb7tPWLzd/VOd2cNHxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L0u03CoFMiZ+QKpC1aGlGSXyljx2KdTbx4iBjw08s60ZoMGBaRtNHVtgRPzsgQUc/
-	 zsycOw+jMn9InEZ5r4Z6nQb9iDLcD/IiFJ8mSSLG+QoQhT2b7tHIOyl2EZgLsCQ7vY
-	 0W0q+CHUpQbaX7eeUjHulxATCyyyx/jwv1lQ7CFo=
+	b=Gm+CtSxWYa55gEkT5a4z9H5E6bnL3eDqJtJLYWoxS5ldfG7i4a4zJ+m1g27wWR7kd
+	 O7dfE0e18LgaJNOhvFHigdW+mhEIh7EDLVao6WWLvP7CckzUa81rbob9WMP6j58x2q
+	 nmJhd9XVDlnrEcsz0ynY2kEehf5MUvF8YTcoBVY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Lebrun <dlebrun@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 033/281] ipv6: sr: block BH in seg6_output_core() and seg6_input_core()
-Date: Wed, 19 Jun 2024 14:53:12 +0200
-Message-ID: <20240619125611.124197926@linuxfoundation.org>
+Subject: [PATCH 6.9 034/281] net: tls: fix marking packets as decrypted
+Date: Wed, 19 Jun 2024 14:53:13 +0200
+Message-ID: <20240619125611.162651081@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -53,92 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit c0b98ac1cc104f48763cdb27b1e9ac25fd81fc90 ]
+[ Upstream commit a535d59432370343058755100ee75ab03c0e3f91 ]
 
-As explained in commit 1378817486d6 ("tipc: block BH
-before using dst_cache"), net/core/dst_cache.c
-helpers need to be called with BH disabled.
+For TLS offload we mark packets with skb->decrypted to make sure
+they don't escape the host without getting encrypted first.
+The crypto state lives in the socket, so it may get detached
+by a call to skb_orphan(). As a safety check - the egress path
+drops all packets with skb->decrypted and no "crypto-safe" socket.
 
-Disabling preemption in seg6_output_core() is not good enough,
-because seg6_output_core() is called from process context,
-lwtunnel_output() only uses rcu_read_lock().
+The skb marking was added to sendpage only (and not sendmsg),
+because tls_device injected data into the TCP stack using sendpage.
+This special case was missed when sendpage got folded into sendmsg.
 
-We might be interrupted by a softirq, re-enter seg6_output_core()
-and corrupt dst_cache data structures.
-
-Fix the race by using local_bh_disable() instead of
-preempt_disable().
-
-Apply a similar change in seg6_input_core().
-
-Fixes: fa79581ea66c ("ipv6: sr: fix several BUGs when preemption is enabled")
-Fixes: 6c8702c60b88 ("ipv6: sr: add support for SRH encapsulation and injection with lwtunnels")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: David Lebrun <dlebrun@google.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/20240531132636.2637995-4-edumazet@google.com
+Fixes: c5c37af6ecad ("tcp: Convert do_tcp_sendpages() to use MSG_SPLICE_PAGES")
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240530232607.82686-1-kuba@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/seg6_iptunnel.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ net/ipv4/tcp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/ipv6/seg6_iptunnel.c b/net/ipv6/seg6_iptunnel.c
-index a75df2ec8db0d..098632adc9b5a 100644
---- a/net/ipv6/seg6_iptunnel.c
-+++ b/net/ipv6/seg6_iptunnel.c
-@@ -464,23 +464,21 @@ static int seg6_input_core(struct net *net, struct sock *sk,
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 66d77faca64f6..5c79836e4c9e7 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -1159,6 +1159,9 @@ int tcp_sendmsg_locked(struct sock *sk, struct msghdr *msg, size_t size)
  
- 	slwt = seg6_lwt_lwtunnel(orig_dst->lwtstate);
+ 			process_backlog++;
  
--	preempt_disable();
-+	local_bh_disable();
- 	dst = dst_cache_get(&slwt->cache);
--	preempt_enable();
++#ifdef CONFIG_SKB_DECRYPTED
++			skb->decrypted = !!(flags & MSG_SENDPAGE_DECRYPTED);
++#endif
+ 			tcp_skb_entail(sk, skb);
+ 			copy = size_goal;
  
- 	if (!dst) {
- 		ip6_route_input(skb);
- 		dst = skb_dst(skb);
- 		if (!dst->error) {
--			preempt_disable();
- 			dst_cache_set_ip6(&slwt->cache, dst,
- 					  &ipv6_hdr(skb)->saddr);
--			preempt_enable();
- 		}
- 	} else {
- 		skb_dst_drop(skb);
- 		skb_dst_set(skb, dst);
- 	}
-+	local_bh_enable();
- 
- 	err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
- 	if (unlikely(err))
-@@ -536,9 +534,9 @@ static int seg6_output_core(struct net *net, struct sock *sk,
- 
- 	slwt = seg6_lwt_lwtunnel(orig_dst->lwtstate);
- 
--	preempt_disable();
-+	local_bh_disable();
- 	dst = dst_cache_get(&slwt->cache);
--	preempt_enable();
-+	local_bh_enable();
- 
- 	if (unlikely(!dst)) {
- 		struct ipv6hdr *hdr = ipv6_hdr(skb);
-@@ -558,9 +556,9 @@ static int seg6_output_core(struct net *net, struct sock *sk,
- 			goto drop;
- 		}
- 
--		preempt_disable();
-+		local_bh_disable();
- 		dst_cache_set_ip6(&slwt->cache, dst, &fl6.saddr);
--		preempt_enable();
-+		local_bh_enable();
- 	}
- 
- 	skb_dst_drop(skb);
 -- 
 2.43.0
 
