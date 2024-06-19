@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9371D146590;
-	Wed, 19 Jun 2024 12:58:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F9914A0A0;
+	Wed, 19 Jun 2024 12:58:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718801883; cv=none; b=oRZ9b0OS/Ge3+42Bbm6n1lLN+5YY2gkBRsolmEsGE3lmjXVdwo+LKXQ/rYBLWbDNdDAf2J+lH14ql9dKgOZxFs6XyIiRLDLdJ0AgEbYExrGps7vhr313+rRXZWAj9P6vZc/yh+yQ7f4g7Y7X5DitOHP2kNfDO3esKc9JkWd5W5Q=
+	t=1718801886; cv=none; b=oAr4WaUNR/iFpR7NWYqaN6Yzypeuj13BZR7HI7B70dLIpLYltXlFiKIqQU1cH+Qn15uQHn61M48rFDvJ4rJFdAQ9rxhXZ6gb22JFlDkV2S9VkHQo7URnqD64KqzCeYLTO+e4hqXHJOFNw+jLnfo1FnRfOglBNgtWeBD+HLlOu+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718801883; c=relaxed/simple;
-	bh=JoJ0NgwpJRLo/FSzTlyJtUHaSfN+qC4i0PiO9p4q5Ao=;
+	s=arc-20240116; t=1718801886; c=relaxed/simple;
+	bh=8G+X74WuWT7fGQuTj/14DyYr5yKJYh03hiP8MXKTl+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HtK6ggYTbRGGdMzgCu1S/zqAOSltqq60mzNWvERuqM8BAxrRo/DCyHEfEOfLDABP3JtS+rW56RvIA6gIqWkGkIiR31O4vAgc7Y3DyW64RbCRU3PL1YV9O3qfmtIAluGQMSTsvrw/40oW7JC5cbJzOXijiuTQ6k+tJrbYlB9CbMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EMnTyz/9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AHb+lK1LcU/LCQJZmmOMWstqkccrrW+9djg6+MttJzEu+j06VTqtUf5HtLE4qESeYzY3HePKtxElTj9yQpjNvbiWDx4fD+rdC161eVuDGtDmlLGWIcj06gALMhVawa0eE2hNUfvkcUqut2d1yny5BeFvEjWZLRVYULWFghJDLho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LJ3Gq0Ih; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EMnTyz/9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFFEAC32786;
-	Wed, 19 Jun 2024 12:58:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LJ3Gq0Ih"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB51FC2BBFC;
+	Wed, 19 Jun 2024 12:58:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718801883;
-	bh=JoJ0NgwpJRLo/FSzTlyJtUHaSfN+qC4i0PiO9p4q5Ao=;
+	s=korg; t=1718801886;
+	bh=8G+X74WuWT7fGQuTj/14DyYr5yKJYh03hiP8MXKTl+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EMnTyz/9iP0lIjVJ6QJwAbxqyMEYcEIxJ+vK819LXCtKy5APaxTFuP8fJZ5s5uEDi
-	 8fVCqMt9r0A4i98C3cvSRozmhSo0a1snvMlSJgbB73svdCemLk10tyfy7/zsIBvAIM
-	 5yiVc0b5LaGGhRM7stwOQasgU57NUqmNX1B+ccKE=
+	b=LJ3Gq0Ih1O5qfEloKkhc3f94WWuP0itriMCNFZTnT4j3mkQN/nfuG6lCO6ErH/eMB
+	 HX5et34VCT74v5LDLkcNdxTFkw6+WwyJzn2bM5jje4UeCQdVtmhHj8zN/+u4EntYa8
+	 zFnpNHUL6IRLTpQmJkF58d/ljTSBz+V7ds4r7dbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Escande <nico.escande@gmail.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Ilan Peer <ilan.peer@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 001/267] wifi: mac80211: mesh: Fix leak of mesh_preq_queue objects
-Date: Wed, 19 Jun 2024 14:52:32 +0200
-Message-ID: <20240619125606.407125035@linuxfoundation.org>
+Subject: [PATCH 6.6 010/267] wifi: iwlwifi: mvm: check n_ssids before accessing the ssids
+Date: Wed, 19 Jun 2024 14:52:41 +0200
+Message-ID: <20240619125606.749005246@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -51,98 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Escande <nico.escande@gmail.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit b7d7f11a291830fdf69d3301075dd0fb347ced84 ]
+[ Upstream commit 60d62757df30b74bf397a2847a6db7385c6ee281 ]
 
-The hwmp code use objects of type mesh_preq_queue, added to a list in
-ieee80211_if_mesh, to keep track of mpath we need to resolve. If the mpath
-gets deleted, ex mesh interface is removed, the entries in that list will
-never get cleaned. Fix this by flushing all corresponding items of the
-preq_queue in mesh_path_flush_pending().
+In some versions of cfg80211, the ssids poinet might be a valid one even
+though n_ssids is 0. Accessing the pointer in this case will cuase an
+out-of-bound access. Fix this by checking n_ssids first.
 
-This should take care of KASAN reports like this:
-
-unreferenced object 0xffff00000668d800 (size 128):
-  comm "kworker/u8:4", pid 67, jiffies 4295419552 (age 1836.444s)
-  hex dump (first 32 bytes):
-    00 1f 05 09 00 00 ff ff 00 d5 68 06 00 00 ff ff  ..........h.....
-    8e 97 ea eb 3e b8 01 00 00 00 00 00 00 00 00 00  ....>...........
-  backtrace:
-    [<000000007302a0b6>] __kmem_cache_alloc_node+0x1e0/0x35c
-    [<00000000049bd418>] kmalloc_trace+0x34/0x80
-    [<0000000000d792bb>] mesh_queue_preq+0x44/0x2a8
-    [<00000000c99c3696>] mesh_nexthop_resolve+0x198/0x19c
-    [<00000000926bf598>] ieee80211_xmit+0x1d0/0x1f4
-    [<00000000fc8c2284>] __ieee80211_subif_start_xmit+0x30c/0x764
-    [<000000005926ee38>] ieee80211_subif_start_xmit+0x9c/0x7a4
-    [<000000004c86e916>] dev_hard_start_xmit+0x174/0x440
-    [<0000000023495647>] __dev_queue_xmit+0xe24/0x111c
-    [<00000000cfe9ca78>] batadv_send_skb_packet+0x180/0x1e4
-    [<000000007bacc5d5>] batadv_v_elp_periodic_work+0x2f4/0x508
-    [<00000000adc3cd94>] process_one_work+0x4b8/0xa1c
-    [<00000000b36425d1>] worker_thread+0x9c/0x634
-    [<0000000005852dd5>] kthread+0x1bc/0x1c4
-    [<000000005fccd770>] ret_from_fork+0x10/0x20
-unreferenced object 0xffff000009051f00 (size 128):
-  comm "kworker/u8:4", pid 67, jiffies 4295419553 (age 1836.440s)
-  hex dump (first 32 bytes):
-    90 d6 92 0d 00 00 ff ff 00 d8 68 06 00 00 ff ff  ..........h.....
-    36 27 92 e4 02 e0 01 00 00 58 79 06 00 00 ff ff  6'.......Xy.....
-  backtrace:
-    [<000000007302a0b6>] __kmem_cache_alloc_node+0x1e0/0x35c
-    [<00000000049bd418>] kmalloc_trace+0x34/0x80
-    [<0000000000d792bb>] mesh_queue_preq+0x44/0x2a8
-    [<00000000c99c3696>] mesh_nexthop_resolve+0x198/0x19c
-    [<00000000926bf598>] ieee80211_xmit+0x1d0/0x1f4
-    [<00000000fc8c2284>] __ieee80211_subif_start_xmit+0x30c/0x764
-    [<000000005926ee38>] ieee80211_subif_start_xmit+0x9c/0x7a4
-    [<000000004c86e916>] dev_hard_start_xmit+0x174/0x440
-    [<0000000023495647>] __dev_queue_xmit+0xe24/0x111c
-    [<00000000cfe9ca78>] batadv_send_skb_packet+0x180/0x1e4
-    [<000000007bacc5d5>] batadv_v_elp_periodic_work+0x2f4/0x508
-    [<00000000adc3cd94>] process_one_work+0x4b8/0xa1c
-    [<00000000b36425d1>] worker_thread+0x9c/0x634
-    [<0000000005852dd5>] kthread+0x1bc/0x1c4
-    [<000000005fccd770>] ret_from_fork+0x10/0x20
-
-Fixes: 050ac52cbe1f ("mac80211: code for on-demand Hybrid Wireless Mesh Protocol")
-Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
-Link: https://msgid.link/20240528142605.1060566-1-nico.escande@gmail.com
+Fixes: c1a7515393e4 ("iwlwifi: mvm: add adaptive dwell support")
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Reviewed-by: Ilan Peer <ilan.peer@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://msgid.link/20240513132416.6e4d1762bf0d.I5a0e6cc8f02050a766db704d15594c61fe583d45@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mesh_pathtbl.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/mvm/scan.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/mac80211/mesh_pathtbl.c b/net/mac80211/mesh_pathtbl.c
-index 59f7264194ce3..530581ba812b4 100644
---- a/net/mac80211/mesh_pathtbl.c
-+++ b/net/mac80211/mesh_pathtbl.c
-@@ -1011,10 +1011,23 @@ void mesh_path_discard_frame(struct ieee80211_sub_if_data *sdata,
-  */
- void mesh_path_flush_pending(struct mesh_path *mpath)
- {
-+	struct ieee80211_sub_if_data *sdata = mpath->sdata;
-+	struct ieee80211_if_mesh *ifmsh = &sdata->u.mesh;
-+	struct mesh_preq_queue *preq, *tmp;
- 	struct sk_buff *skb;
- 
- 	while ((skb = skb_dequeue(&mpath->frame_queue)) != NULL)
- 		mesh_path_discard_frame(mpath->sdata, skb);
-+
-+	spin_lock_bh(&ifmsh->mesh_preq_queue_lock);
-+	list_for_each_entry_safe(preq, tmp, &ifmsh->preq_queue.list, list) {
-+		if (ether_addr_equal(mpath->dst, preq->dst)) {
-+			list_del(&preq->list);
-+			kfree(preq);
-+			--ifmsh->preq_queue_len;
-+		}
-+	}
-+	spin_unlock_bh(&ifmsh->mesh_preq_queue_lock);
- }
- 
- /**
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
+index 03ec900a33433..0841f1d6dc475 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
+@@ -1304,7 +1304,7 @@ static void iwl_mvm_scan_umac_dwell(struct iwl_mvm *mvm,
+ 		if (IWL_MVM_ADWELL_MAX_BUDGET)
+ 			cmd->v7.adwell_max_budget =
+ 				cpu_to_le16(IWL_MVM_ADWELL_MAX_BUDGET);
+-		else if (params->ssids && params->ssids[0].ssid_len)
++		else if (params->n_ssids && params->ssids[0].ssid_len)
+ 			cmd->v7.adwell_max_budget =
+ 				cpu_to_le16(IWL_SCAN_ADWELL_MAX_BUDGET_DIRECTED_SCAN);
+ 		else
+@@ -1406,7 +1406,7 @@ iwl_mvm_scan_umac_dwell_v11(struct iwl_mvm *mvm,
+ 	if (IWL_MVM_ADWELL_MAX_BUDGET)
+ 		general_params->adwell_max_budget =
+ 			cpu_to_le16(IWL_MVM_ADWELL_MAX_BUDGET);
+-	else if (params->ssids && params->ssids[0].ssid_len)
++	else if (params->n_ssids && params->ssids[0].ssid_len)
+ 		general_params->adwell_max_budget =
+ 			cpu_to_le16(IWL_SCAN_ADWELL_MAX_BUDGET_DIRECTED_SCAN);
+ 	else
 -- 
 2.43.0
 
