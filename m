@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464A6132129;
-	Wed, 19 Jun 2024 13:06:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4374D132129;
+	Wed, 19 Jun 2024 13:06:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802391; cv=none; b=Mcf12BMuoGE9QYGAxOlYpn8lYbSD7s96AVzFLw7KLBKRqZz2osVJCi15lhFusZz7Bx1QaktRvb2Q1L410FIvkgkcyOOT3Z/ROMrlM4VpGcJCypsZ6IcOsZ4mDH5qxhg65ATiwA38t4hePOnUik4R/tz+6mtmmwywGihr0iG0wuU=
+	t=1718802394; cv=none; b=bAi08pCIcivArguQNeCyHDaDRWneJn0l1p1m5J0hIiOTlHJd2YGGlTYoXk2qY8y/FgbgjFb3vmSnw93PXfeu2XoxmyZ8eCduZnxcqNKYE0XNbOjc/otBV8SUoXgRstFMImO21EFp2UYPP5n9vPpLWIeFmUW9yQU9db2WQdYGzA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802391; c=relaxed/simple;
-	bh=JmEo4Qs4L8sIOotB0vKCpKNFGExS/3l4zTWVZL8aBRA=;
+	s=arc-20240116; t=1718802394; c=relaxed/simple;
+	bh=ELC9EFfRrjRTGKLlZCTbd5uGzQxVqN3O7bJ1QFGFeCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tFF45BVSVlmKYsn0vhu5T7X6guXrgZYV9S2uut2vAVi+PcG8BbmN5yxZmsuAPBLy3ahi01m+uMgGm0dZSTX2GFj+9dD+ZTuTjomR04uv42qVvsXodneTPgxxNiNuJlgJD96FHgScQ+MnoqMCDQoX5I2j1MrrUizFTbyaK7eNMeY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yOqUsEpO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o5WU0Qh48g+NRYm+eYKFkg+5pCss87fEl2t4XvE0zGfI3BXXnIJm7+oygqvlpvElpWQxzDPHPDgw3k/T0Q4m5nv1XFEtIHBa2pGVIASOvgQ6BBp6Ciu+K3TmemVQvnzQ3pV+9FH7NKWNIBuvRevdSIzgNQD/7c8pINMWqPxR4iE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SWjzEjwS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yOqUsEpO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AEA8C2BBFC;
-	Wed, 19 Jun 2024 13:06:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SWjzEjwS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2834C2BBFC;
+	Wed, 19 Jun 2024 13:06:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802391;
-	bh=JmEo4Qs4L8sIOotB0vKCpKNFGExS/3l4zTWVZL8aBRA=;
+	s=korg; t=1718802394;
+	bh=ELC9EFfRrjRTGKLlZCTbd5uGzQxVqN3O7bJ1QFGFeCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yOqUsEpONC2WqeLoV/FJlPklzPWugJ73ZKu1sBktenr2u45hv4arwl+vjc3vxgRV9
-	 YaAROpVVQ9RTz5WleOw8e+3fwGelPU0zOmzsxORyaLkPFa+2KucypqkzRexy/6Vy+m
-	 nYd+s0NbxqwYyXua+jkFukDk+EKzBReT77AyIo3w=
+	b=SWjzEjwSFW6lNCfPH3KrLMeorh5LaCU3yO+HQljudToGh3/rZDd8AHdFVFlj4woG6
+	 32OyHehzWSELEJ8CAUMwu5b7DE7Otw7QV3q6tN34OkcjUD7FOKNw/5opYSvSt+rDpM
+	 BuTQbDYhH66nKFqqaAoDEuW4nVg7bENZHJfoc9aM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 153/267] Bluetooth: L2CAP: Fix rejecting L2CAP_CONN_PARAM_UPDATE_REQ
-Date: Wed, 19 Jun 2024 14:55:04 +0200
-Message-ID: <20240619125612.217481349@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	syzbot+ffa8143439596313a85a@syzkaller.appspotmail.com,
+	Ashish Sangwan <a.sangwan@samsung.com>,
+	Namjae Jeon <namjae.jeon@samsung.com>,
+	Dirk Behme <dirk.behme@de.bosch.com>
+Subject: [PATCH 6.6 180/267] drivers: core: synchronize really_probe() and dev_uevent()
+Date: Wed, 19 Jun 2024 14:55:31 +0200
+Message-ID: <20240619125613.251795688@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -50,108 +53,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Dirk Behme <dirk.behme@de.bosch.com>
 
-[ Upstream commit 806a5198c05987b748b50f3d0c0cfb3d417381a4 ]
+commit c0a40097f0bc81deafc15f9195d1fb54595cd6d0 upstream.
 
-This removes the bogus check for max > hcon->le_conn_max_interval since
-the later is just the initial maximum conn interval not the maximum the
-stack could support which is really 3200=4000ms.
+Synchronize the dev->driver usage in really_probe() and dev_uevent().
+These can run in different threads, what can result in the following
+race condition for dev->driver uninitialization:
 
-In order to pass GAP/CONN/CPUP/BV-05-C one shall probably enter values
-of the following fields in IXIT that would cause hci_check_conn_params
-to fail:
+Thread #1:
+==========
 
-TSPX_conn_update_int_min
-TSPX_conn_update_int_max
-TSPX_conn_update_peripheral_latency
-TSPX_conn_update_supervision_timeout
+really_probe() {
+...
+probe_failed:
+...
+device_unbind_cleanup(dev) {
+    ...
+    dev->driver = NULL;   // <= Failed probe sets dev->driver to NULL
+    ...
+    }
+...
+}
 
-Link: https://github.com/bluez/bluez/issues/847
-Fixes: e4b019515f95 ("Bluetooth: Enforce validation on max value of connection interval")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Thread #2:
+==========
+
+dev_uevent() {
+...
+if (dev->driver)
+      // If dev->driver is NULLed from really_probe() from here on,
+      // after above check, the system crashes
+      add_uevent_var(env, "DRIVER=%s", dev->driver->name);
+...
+}
+
+really_probe() holds the lock, already. So nothing needs to be done
+there. dev_uevent() is called with lock held, often, too. But not
+always. What implies that we can't add any locking in dev_uevent()
+itself. So fix this race by adding the lock to the non-protected
+path. This is the path where above race is observed:
+
+ dev_uevent+0x235/0x380
+ uevent_show+0x10c/0x1f0  <= Add lock here
+ dev_attr_show+0x3a/0xa0
+ sysfs_kf_seq_show+0x17c/0x250
+ kernfs_seq_show+0x7c/0x90
+ seq_read_iter+0x2d7/0x940
+ kernfs_fop_read_iter+0xc6/0x310
+ vfs_read+0x5bc/0x6b0
+ ksys_read+0xeb/0x1b0
+ __x64_sys_read+0x42/0x50
+ x64_sys_call+0x27ad/0x2d30
+ do_syscall_64+0xcd/0x1d0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Similar cases are reported by syzkaller in
+
+https://syzkaller.appspot.com/bug?extid=ffa8143439596313a85a
+
+But these are regarding the *initialization* of dev->driver
+
+dev->driver = drv;
+
+As this switches dev->driver to non-NULL these reports can be considered
+to be false-positives (which should be "fixed" by this commit, as well,
+though).
+
+The same issue was reported and tried to be fixed back in 2015 in
+
+https://lore.kernel.org/lkml/1421259054-2574-1-git-send-email-a.sangwan@samsung.com/
+
+already.
+
+Fixes: 239378f16aa1 ("Driver core: add uevent vars for devices of a class")
+Cc: stable <stable@kernel.org>
+Cc: syzbot+ffa8143439596313a85a@syzkaller.appspotmail.com
+Cc: Ashish Sangwan <a.sangwan@samsung.com>
+Cc: Namjae Jeon <namjae.jeon@samsung.com>
+Signed-off-by: Dirk Behme <dirk.behme@de.bosch.com>
+Link: https://lore.kernel.org/r/20240513050634.3964461-1-dirk.behme@de.bosch.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/hci_core.h | 36 ++++++++++++++++++++++++++++----
- net/bluetooth/l2cap_core.c       |  8 +------
- 2 files changed, 33 insertions(+), 11 deletions(-)
+ drivers/base/core.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index f786d2d62fa5e..f89d6d43ba8f1 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -2071,18 +2071,46 @@ static inline int hci_check_conn_params(u16 min, u16 max, u16 latency,
- {
- 	u16 max_latency;
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -2664,8 +2664,11 @@ static ssize_t uevent_show(struct device
+ 	if (!env)
+ 		return -ENOMEM;
  
--	if (min > max || min < 6 || max > 3200)
-+	if (min > max) {
-+		BT_WARN("min %d > max %d", min, max);
- 		return -EINVAL;
-+	}
-+
-+	if (min < 6) {
-+		BT_WARN("min %d < 6", min);
-+		return -EINVAL;
-+	}
-+
-+	if (max > 3200) {
-+		BT_WARN("max %d > 3200", max);
-+		return -EINVAL;
-+	}
-+
-+	if (to_multiplier < 10) {
-+		BT_WARN("to_multiplier %d < 10", to_multiplier);
-+		return -EINVAL;
-+	}
++	/* Synchronize with really_probe() */
++	device_lock(dev);
+ 	/* let the kset specific function add its keys */
+ 	retval = kset->uevent_ops->uevent(&dev->kobj, env);
++	device_unlock(dev);
+ 	if (retval)
+ 		goto out;
  
--	if (to_multiplier < 10 || to_multiplier > 3200)
-+	if (to_multiplier > 3200) {
-+		BT_WARN("to_multiplier %d > 3200", to_multiplier);
- 		return -EINVAL;
-+	}
- 
--	if (max >= to_multiplier * 8)
-+	if (max >= to_multiplier * 8) {
-+		BT_WARN("max %d >= to_multiplier %d * 8", max, to_multiplier);
- 		return -EINVAL;
-+	}
- 
- 	max_latency = (to_multiplier * 4 / max) - 1;
--	if (latency > 499 || latency > max_latency)
-+	if (latency > 499) {
-+		BT_WARN("latency %d > 499", latency);
- 		return -EINVAL;
-+	}
-+
-+	if (latency > max_latency) {
-+		BT_WARN("latency %d > max_latency %d", latency, max_latency);
-+		return -EINVAL;
-+	}
- 
- 	return 0;
- }
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 37210567fbfbe..d5fb78c604cf3 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -4645,13 +4645,7 @@ static inline int l2cap_conn_param_update_req(struct l2cap_conn *conn,
- 
- 	memset(&rsp, 0, sizeof(rsp));
- 
--	if (max > hcon->le_conn_max_interval) {
--		BT_DBG("requested connection interval exceeds current bounds.");
--		err = -EINVAL;
--	} else {
--		err = hci_check_conn_params(min, max, latency, to_multiplier);
--	}
--
-+	err = hci_check_conn_params(min, max, latency, to_multiplier);
- 	if (err)
- 		rsp.result = cpu_to_le16(L2CAP_CONN_PARAM_REJECTED);
- 	else
--- 
-2.43.0
-
 
 
