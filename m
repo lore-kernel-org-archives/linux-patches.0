@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDBE5143873;
-	Wed, 19 Jun 2024 13:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7142147C7B;
+	Wed, 19 Jun 2024 13:01:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802092; cv=none; b=PV6Uo2O1iEJnD5td8XrpI726J1J5kDCqqVhI8GEMNngcw7S+kndmHvYjUdhcJ1cZuInA9vwcE2SqLSSx8P3k8LwhBJVUL5JApRqN2XUIGrIL2XqVXARS6mMM2Db+/5yXLw1p5DfdUgm/lvYgZ1IX1GbJ3Ak+CDRX4ir35HJdjxY=
+	t=1718802095; cv=none; b=VR364RMT4WyBXSor6seqInncAPFlYRjS8oPkPR1TG6S19hDOfHKTj7/rQoeZqs8XIThWkBVKYzSx8ffZMmRLAcwLpsEu/+UmuGynCPW+XDtDbaDNPWMonQmSW3C0CcnPbKK5sdUSgDTkloEnQ9ertgJQBpXG+76KMiVjebir+PY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802092; c=relaxed/simple;
-	bh=VgKF/CDyADovlqggUJ0kkpjCmjGvwCDEWu0tVErvtQA=;
+	s=arc-20240116; t=1718802095; c=relaxed/simple;
+	bh=0dFkM1gMymSSIfDi3EKvnwupUvxq2V81LYKbRE2Yah0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=So9I22CHBP/LljayjL7kFT/3t4nyndw7sAj8Ux6yxONl5d93MG+ULHfsTCGED5d7YNLHeYIZWRJLfz4lqzjl0lSqlei8ELwu4/QO6/W2kLVCGBzZveroiRwo92HIBsNm5yLQSevn+PzNdjxa8LhVS0sbb07YOjMt2ahqvRTM+EE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vV/r5XjT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JNjVQ5Rekit+V2WsHSX1ZixUusB9EaA7+bDZDF69TopPL8BsCOcQAIe/8ILLgpIU6OrsE+PeZ6DCQwbMfpruDDZQsxgPTOClKyceaqzFpw3mu3Z4r4nZZvsvGHZyF8SlFpgCk6YbbmOa++EWgbHGQvrtyg9U55lJlliUx+/+ORY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iQhJidrm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vV/r5XjT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 556FCC2BBFC;
-	Wed, 19 Jun 2024 13:01:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iQhJidrm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BC9FC2BBFC;
+	Wed, 19 Jun 2024 13:01:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802092;
-	bh=VgKF/CDyADovlqggUJ0kkpjCmjGvwCDEWu0tVErvtQA=;
+	s=korg; t=1718802095;
+	bh=0dFkM1gMymSSIfDi3EKvnwupUvxq2V81LYKbRE2Yah0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vV/r5XjTLtaZ7k1yq9SnkrOm4xdwDnldHSle1WE8AoKp9KR9s+Q59Hs6+jbtlsYRm
-	 6Wmqh9OCiqcNh7ey/TmxKXjqUOjK1NkMsGPbPfqUBLujuRtR2PvBAy/16ype3ja8nD
-	 r2Qdk9ywg+e/Y+sRKNUGkScv3MoqoAED8gyNON8s=
+	b=iQhJidrmBZdwq8F2MNGaDNBW596OZmmWh/QzXOaeHxhSGExuZoSg4Eo8G0Uj+UxV4
+	 7cXJW4kWOyNFZk7J+pxiH5Y2mFB/33y7oqvNnYkIkbPxiVUtOtXXhaomr4MzaccwAq
+	 xmlMy6Q5bMdW85CVzKH7ZgbfPr9OevEdiqQ0dbnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Shi <sl1589472800@gmail.com>,
-	Pavel Begunkov <asml.silence@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 078/267] io_uring/rsrc: dont lock while !TASK_RUNNING
-Date: Wed, 19 Jun 2024 14:53:49 +0200
-Message-ID: <20240619125609.347930802@linuxfoundation.org>
+Subject: [PATCH 6.6 079/267] io_uring: check for non-NULL file pointer in io_file_can_poll()
+Date: Wed, 19 Jun 2024 14:53:50 +0200
+Message-ID: <20240619125609.385477186@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -51,52 +49,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 54559642b96116b45e4b5ca7fd9f7835b8561272 upstream.
+commit 5fc16fa5f13b3c06fdb959ef262050bd810416a2 upstream.
 
-There is a report of io_rsrc_ref_quiesce() locking a mutex while not
-TASK_RUNNING, which is due to forgetting restoring the state back after
-io_run_task_work_sig() and attempts to break out of the waiting loop.
+In earlier kernels, it was possible to trigger a NULL pointer
+dereference off the forced async preparation path, if no file had
+been assigned. The trace leading to that looks as follows:
 
-do not call blocking ops when !TASK_RUNNING; state=1 set at
-[<ffffffff815d2494>] prepare_to_wait+0xa4/0x380
-kernel/sched/wait.c:237
-WARNING: CPU: 2 PID: 397056 at kernel/sched/core.c:10099
-__might_sleep+0x114/0x160 kernel/sched/core.c:10099
-RIP: 0010:__might_sleep+0x114/0x160 kernel/sched/core.c:10099
+BUG: kernel NULL pointer dereference, address: 00000000000000b0
+PGD 0 P4D 0
+Oops: 0000 [#1] PREEMPT SMP
+CPU: 67 PID: 1633 Comm: buf-ring-invali Not tainted 6.8.0-rc3+ #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS unknown 2/2/2022
+RIP: 0010:io_buffer_select+0xc3/0x210
+Code: 00 00 48 39 d1 0f 82 ae 00 00 00 48 81 4b 48 00 00 01 00 48 89 73 70 0f b7 50 0c 66 89 53 42 85 ed 0f 85 d2 00 00 00 48 8b 13 <48> 8b 92 b0 00 00 00 48 83 7a 40 00 0f 84 21 01 00 00 4c 8b 20 5b
+RSP: 0018:ffffb7bec38c7d88 EFLAGS: 00010246
+RAX: ffff97af2be61000 RBX: ffff97af234f1700 RCX: 0000000000000040
+RDX: 0000000000000000 RSI: ffff97aecfb04820 RDI: ffff97af234f1700
+RBP: 0000000000000000 R08: 0000000000200030 R09: 0000000000000020
+R10: ffffb7bec38c7dc8 R11: 000000000000c000 R12: ffffb7bec38c7db8
+R13: ffff97aecfb05800 R14: ffff97aecfb05800 R15: ffff97af2be5e000
+FS:  00007f852f74b740(0000) GS:ffff97b1eeec0000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00000000000000b0 CR3: 000000016deab005 CR4: 0000000000370ef0
 Call Trace:
  <TASK>
- __mutex_lock_common kernel/locking/mutex.c:585 [inline]
- __mutex_lock+0xb4/0x940 kernel/locking/mutex.c:752
- io_rsrc_ref_quiesce+0x590/0x940 io_uring/rsrc.c:253
- io_sqe_buffers_unregister+0xa2/0x340 io_uring/rsrc.c:799
- __io_uring_register io_uring/register.c:424 [inline]
- __do_sys_io_uring_register+0x5b9/0x2400 io_uring/register.c:613
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xd8/0x270 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x6f/0x77
+ ? __die+0x1f/0x60
+ ? page_fault_oops+0x14d/0x420
+ ? do_user_addr_fault+0x61/0x6a0
+ ? exc_page_fault+0x6c/0x150
+ ? asm_exc_page_fault+0x22/0x30
+ ? io_buffer_select+0xc3/0x210
+ __io_import_iovec+0xb5/0x120
+ io_readv_prep_async+0x36/0x70
+ io_queue_sqe_fallback+0x20/0x260
+ io_submit_sqes+0x314/0x630
+ __do_sys_io_uring_enter+0x339/0xbc0
+ ? __do_sys_io_uring_register+0x11b/0xc50
+ ? vm_mmap_pgoff+0xce/0x160
+ do_syscall_64+0x5f/0x180
+ entry_SYSCALL_64_after_hwframe+0x46/0x4e
+RIP: 0033:0x55e0a110a67e
+Code: ba cc 00 00 00 45 31 c0 44 0f b6 92 d0 00 00 00 31 d2 41 b9 08 00 00 00 41 83 e2 01 41 c1 e2 04 41 09 c2 b8 aa 01 00 00 0f 05 <c3> 90 89 30 eb a9 0f 1f 40 00 48 8b 42 20 8b 00 a8 06 75 af 85 f6
 
-Reported-by: Li Shi <sl1589472800@gmail.com>
-Fixes: 4ea15b56f0810 ("io_uring/rsrc: use wq for quiescing")
+because the request is marked forced ASYNC and has a bad file fd, and
+hence takes the forced async prep path.
+
+Current kernels with the request async prep cleaned up can no longer hit
+this issue, but for ease of backporting, let's add this safety check in
+here too as it really doesn't hurt. For both cases, this will inevitably
+end with a CQE posted with -EBADF.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/77966bc104e25b0534995d5dbb152332bc8f31c0.1718196953.git.asml.silence@gmail.com
+Fixes: a76c0b31eef5 ("io_uring: commit non-pollable provided mapped buffers upfront")
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/rsrc.c |    1 +
- 1 file changed, 1 insertion(+)
+ io_uring/kbuf.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/io_uring/rsrc.c
-+++ b/io_uring/rsrc.c
-@@ -250,6 +250,7 @@ __cold static int io_rsrc_ref_quiesce(st
+--- a/io_uring/kbuf.c
++++ b/io_uring/kbuf.c
+@@ -168,7 +168,8 @@ static void __user *io_ring_buffer_selec
+ 	req->buf_list = bl;
+ 	req->buf_index = buf->bid;
  
- 		ret = io_run_task_work_sig(ctx);
- 		if (ret < 0) {
-+			__set_current_state(TASK_RUNNING);
- 			mutex_lock(&ctx->uring_lock);
- 			if (list_empty(&ctx->rsrc_ref_list))
- 				ret = 0;
+-	if (issue_flags & IO_URING_F_UNLOCKED || !file_can_poll(req->file)) {
++	if (issue_flags & IO_URING_F_UNLOCKED ||
++	    (req->file && !file_can_poll(req->file))) {
+ 		/*
+ 		 * If we came in unlocked, we have no choice but to consume the
+ 		 * buffer here, otherwise nothing ensures that the buffer won't
 
 
