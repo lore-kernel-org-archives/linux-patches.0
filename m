@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CCC614B95F;
-	Wed, 19 Jun 2024 13:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4991E14B95F;
+	Wed, 19 Jun 2024 13:21:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803290; cv=none; b=FE9qaHAMhfZ4VC95hntxAhsLTf4/9NpazkWJCX2ZGNnK7EAV4whsQQfS76mKsjPzaYjYEBOFkPtTN72XKLjyOiQmnD6TpptFB5XK4ITSE+L0SDxdABrTc7FgsgHdsgJQ0Uc1e5sBauilKOeKWwFEMAIHjpit2HyM123FvUPeDaM=
+	t=1718803293; cv=none; b=ktRUCjP4Jxu3Dn+Svhv3XK69mSUsyPH1ZPSiOHBm/U5ihBs2stx6u1SlgD1R8eZNO3bmetJooOOgPc5PmfzaS1YqxbVv0R7OLQHMENXOn/WuknG1gSjn+52shPni2lYwmqI7D/n4iwqGBew/rKe7LLD9wXge/ibZDjn2bdHr2oY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803290; c=relaxed/simple;
-	bh=bKkFbpnDkg+/q1y08CtDs0GNDmjWqmBaz4ybv6TKlU0=;
+	s=arc-20240116; t=1718803293; c=relaxed/simple;
+	bh=c/pLYxiI+4mo21F7cPkYMyhO4BWVNYO+crBNBsBKLCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XxPFeWlMLQoAYRX9K1CzJtSDL712veYL/iALctJR4YUED9zc6+rbhQStsFhvcwyETWU8CWK5FQkeu+SZiOxA2ah7l8FYr1UzGEmaVTmyBJLDdHdaLWPBOA5gl1QfyqembBj7J93lBGUbOA21d8iy3V8nTxn+08R/V+A0dqAXFEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dke46IyT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s8GpYQFeTplYU5TZKWm3ZeBuo6l7zJPWvdThOjTWcZkkZTaJcBPH8FHi9W00cjk1bnhw67CZtHjBXD0Jt1e8RVm3Z7kO71D+b6ZOQQWJm+Ol6512D9F/qgscRICxZ9ZYlB024Pn5ns10JYiGEN/f/+WL2zhHcI0zwsX4ji9CRd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZvKVwb9k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dke46IyT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1253C2BBFC;
-	Wed, 19 Jun 2024 13:21:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZvKVwb9k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C046EC2BBFC;
+	Wed, 19 Jun 2024 13:21:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803290;
-	bh=bKkFbpnDkg+/q1y08CtDs0GNDmjWqmBaz4ybv6TKlU0=;
+	s=korg; t=1718803293;
+	bh=c/pLYxiI+4mo21F7cPkYMyhO4BWVNYO+crBNBsBKLCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dke46IyTnqpKTqKOZdLihP8tDqYb3xmp+eOOXPhxYaWB3sLBXo2qyDt2s7gFbGxS1
-	 dv7ekUsplDwJZQ/O1lvJun+oAkookLlmUJ6VZ6VR6uFNE9MFbcvSwkRF6nl8+ZKosA
-	 BJPrPRB1QPP2Omux8of1Vkiq+qysMmvz4JmPnjm4=
+	b=ZvKVwb9k6aaBLgETVqpSk2bxjMNX5b10p5YzPlD6JeJk5Riz4QzDEihIX8nX8oHyL
+	 4e9bobgbKAymb+9qoYo7StPzEqqa4nwX2yTvU9ElldVXaQQgIS6UpMUfKX0MPKKrOc
+	 5XRZrjG1GXjE0a68IPvQnyFnoV9RulJ/+Qys0v1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	Christoph Paasch <cpaasch@apple.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.9 210/281] mptcp: ensure snd_una is properly initialized on connect
-Date: Wed, 19 Jun 2024 14:56:09 +0200
-Message-ID: <20240619125618.040628284@linuxfoundation.org>
+	Andi Kleen <ak@linux.intel.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>
+Subject: [PATCH 6.9 219/281] perf script: Show also errors for --insn-trace option
+Date: Wed, 19 Jun 2024 14:56:18 +0200
+Message-ID: <20240619125618.388332098@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -53,42 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit 8031b58c3a9b1db3ef68b3bd749fbee2e1e1aaa3 upstream.
+commit d4a98b45fbe6d06f4b79ed90d0bb05ced8674c23 upstream.
 
-This is strictly related to commit fb7a0d334894 ("mptcp: ensure snd_nxt
-is properly initialized on connect"). It turns out that syzkaller can
-trigger the retransmit after fallback and before processing any other
-incoming packet - so that snd_una is still left uninitialized.
+The trace could be misleading if trace errors are not taken into
+account, so display them also by adding the itrace "e" option.
 
-Address the issue explicitly initializing snd_una together with snd_nxt
-and write_seq.
+Note --call-trace and --call-ret-trace already add the itrace "e"
+option.
 
-Suggested-by: Mat Martineau <martineau@kernel.org>
-Fixes: 8fd738049ac3 ("mptcp: fallback in case of simultaneous connect")
+Fixes: b585ebdb5912cf14 ("perf script: Add --insn-trace for instruction decoding")
+Reviewed-by: Andi Kleen <ak@linux.intel.com>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
 Cc: stable@vger.kernel.org
-Reported-by: Christoph Paasch <cpaasch@apple.com>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/485
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://lore.kernel.org/r/20240607-upstream-net-20240607-misc-fixes-v1-1-1ab9ddfa3d00@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20240315071334.3478-1-adrian.hunter@intel.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    1 +
- 1 file changed, 1 insertion(+)
+ tools/perf/builtin-script.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -3731,6 +3731,7 @@ static int mptcp_connect(struct sock *sk
+--- a/tools/perf/builtin-script.c
++++ b/tools/perf/builtin-script.c
+@@ -3806,7 +3806,7 @@ static int parse_insn_trace(const struct
+ 	if (ret < 0)
+ 		return ret;
  
- 	WRITE_ONCE(msk->write_seq, subflow->idsn);
- 	WRITE_ONCE(msk->snd_nxt, subflow->idsn);
-+	WRITE_ONCE(msk->snd_una, subflow->idsn);
- 	if (likely(!__mptcp_check_fallback(msk)))
- 		MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_MPCAPABLEACTIVE);
- 
+-	itrace_parse_synth_opts(opt, "i0ns", 0);
++	itrace_parse_synth_opts(opt, "i0nse", 0);
+ 	symbol_conf.nanosecs = true;
+ 	return 0;
+ }
 
 
