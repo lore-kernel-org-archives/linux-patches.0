@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B24F14373E;
-	Wed, 19 Jun 2024 13:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2D8E14373E;
+	Wed, 19 Jun 2024 13:32:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803924; cv=none; b=KhkNi3wHlOPkuJirTpoWiQ4SbhGIskqj/uzWOBb2qGm3M3PeoQc3fiuWLC3Uh9/9wd+Vf6GP1cN5SZHabHyOpwL6pI7VX9gMd+hfiaGf8XXK0x4fL0ZPBBh6rhUtxGR2fS/WhQrRjc87o5UMGuzQjEoNJ0lygq/Kr2pnI2AtDIQ=
+	t=1718803927; cv=none; b=Ix5bfnmdKxD4X/20kf6sWF3lacyyCRz/Wh4f8hLf9j1/AXO05YYUqUDahmJvzcpj1iH8jTXV23IGNwoNo3H/+/xtaLu0EdW2Cf6tJOAd3o9XQMGTw7cSIiAC8W+T0850qpE9xzTyDhjP7pfpM2knnmlEDu6xWwbNHvtnwKam2+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803924; c=relaxed/simple;
-	bh=QGVTDG/b5yF2L+/HnUI0RqkOAiZqMucnK8vJM1DYDw4=;
+	s=arc-20240116; t=1718803927; c=relaxed/simple;
+	bh=2LQtkaxMrlW8BVSbkAL4HjOFl0+lTVQgRo+XQn/YSNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UkOzgCyCpAduvjQiEVpOyfiu1aAVhPGyMmlKALVjJv2AZr0h2V7IYjMIcVaGgN7SlY7LJlb1RVzlrDL6OO85OSfzbQu7taocmxuSOJoztsMwlInpd5+/JzRCIJ4FGOnXGW+No0pWaZq78VuuqUu69IRDBvQ/y5aX6b/Ipct4Bk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rd9OTCme; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kd0XBdW7BI6RnM3WrGFhwT5dkkYN3URN0LElMPGDX2wXxPHBRdHottHZaXdRtjqWHyxzicsSiKK3ekOZGdfraXz2rc48VWecK9jKMUBe8osx/+KBW8qGxGM60W/qttNahiZllmFOjShrEsTn/t7lGA2fpmql+cwgd1IzHzxsgrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQ8vJFJJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rd9OTCme"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF46C4AF1A;
-	Wed, 19 Jun 2024 13:32:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQ8vJFJJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746ACC2BBFC;
+	Wed, 19 Jun 2024 13:32:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803923;
-	bh=QGVTDG/b5yF2L+/HnUI0RqkOAiZqMucnK8vJM1DYDw4=;
+	s=korg; t=1718803926;
+	bh=2LQtkaxMrlW8BVSbkAL4HjOFl0+lTVQgRo+XQn/YSNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rd9OTCmePiczyoFv7JfNsBvntTK8ZzT9uge8wLS9QUTERPf9eG/qW7NaYHXn8mr/c
-	 JFTADfPoIZOoDa+GI92IlbX5LtXfUiTkrmseJTCwIg6n6go3H5YBscysmt+/lntHGv
-	 9RicfltTJJFN8xrbu354cyKM0Bx0E/RJ17JRzTfg=
+	b=fQ8vJFJJBiTztbUojeknOTc4fGYN2KHjc24igAgpZqCzIEy+v1VA8fo+HXUn4T9eH
+	 Mmz/NulvKei1NVOc+Qbj/KZxwHevSuQ1ZNxiGD7vXbk7vdsGlHOxdW8NZNHiReW3wS
+	 1gLtFS47s78BL+rztEGIAKMYbLrxB6huQkrhOxLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Washington <joshwash@google.com>,
-	Praveen Kaligineedi <pkaligineedi@google.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Andrei Vagin <avagin@gmail.com>,
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Vladimir Oltean <olteanv@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 150/217] gve: ignore nonrelevant GSO type bits when processing TSO headers
-Date: Wed, 19 Jun 2024 14:56:33 +0200
-Message-ID: <20240619125602.476854684@linuxfoundation.org>
+Subject: [PATCH 6.1 151/217] net: stmmac: replace priv->speed with the portTransmitRate from the tc-cbs parameters
+Date: Wed, 19 Jun 2024 14:56:34 +0200
+Message-ID: <20240619125602.515218826@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -56,84 +53,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Washington <joshwash@google.com>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-[ Upstream commit 1b9f756344416e02b41439bf2324b26aa25e141c ]
+[ Upstream commit be27b896529787e23a35ae4befb6337ce73fcca0 ]
 
-TSO currently fails when the skb's gso_type field has more than one bit
-set.
+The current cbs parameter depends on speed after uplinking,
+which is not needed and will report a configuration error
+if the port is not initially connected. The UAPI exposed by
+tc-cbs requires userspace to recalculate the send slope anyway,
+because the formula depends on port_transmit_rate (see man tc-cbs),
+which is not an invariant from tc's perspective. Therefore, we
+use offload->sendslope and offload->idleslope to derive the
+original port_transmit_rate from the CBS formula.
 
-TSO packets can be passed from userspace using PF_PACKET, TUNTAP and a
-few others, using virtio_net_hdr (e.g., PACKET_VNET_HDR). This includes
-virtualization, such as QEMU, a real use-case.
-
-The gso_type and gso_size fields as passed from userspace in
-virtio_net_hdr are not trusted blindly by the kernel. It adds gso_type
-|= SKB_GSO_DODGY to force the packet to enter the software GSO stack
-for verification.
-
-This issue might similarly come up when the CWR bit is set in the TCP
-header for congestion control, causing the SKB_GSO_TCP_ECN gso_type bit
-to be set.
-
-Fixes: a57e5de476be ("gve: DQO: Add TX path")
-Signed-off-by: Joshua Washington <joshwash@google.com>
-Reviewed-by: Praveen Kaligineedi <pkaligineedi@google.com>
-Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Andrei Vagin <avagin@gmail.com>
-
-v2 - Remove unnecessary comments, remove line break between fixes tag
-and signoffs.
-
-v3 - Add back unrelated empty line removal.
-
-Link: https://lore.kernel.org/r/20240610225729.2985343-1-joshwash@google.com
+Fixes: 1f705bc61aee ("net: stmmac: Add support for CBS QDISC")
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Link: https://lore.kernel.org/r/20240608143524.2065736-1-xiaolei.wang@windriver.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/google/gve/gve_tx_dqo.c | 20 +++++---------------
- 1 file changed, 5 insertions(+), 15 deletions(-)
+ .../net/ethernet/stmicro/stmmac/stmmac_tc.c   | 25 ++++++++-----------
+ 1 file changed, 11 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/google/gve/gve_tx_dqo.c b/drivers/net/ethernet/google/gve/gve_tx_dqo.c
-index e84e944d751d2..5147fb37929e0 100644
---- a/drivers/net/ethernet/google/gve/gve_tx_dqo.c
-+++ b/drivers/net/ethernet/google/gve/gve_tx_dqo.c
-@@ -370,28 +370,18 @@ static int gve_prep_tso(struct sk_buff *skb)
- 	if (unlikely(skb_shinfo(skb)->gso_size < GVE_TX_MIN_TSO_MSS_DQO))
- 		return -1;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+index 390c900832cd2..074ff289eaf25 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+@@ -343,10 +343,11 @@ static int tc_setup_cbs(struct stmmac_priv *priv,
+ 			struct tc_cbs_qopt_offload *qopt)
+ {
+ 	u32 tx_queues_count = priv->plat->tx_queues_to_use;
++	s64 port_transmit_rate_kbps;
+ 	u32 queue = qopt->queue;
+-	u32 ptr, speed_div;
+ 	u32 mode_to_use;
+ 	u64 value;
++	u32 ptr;
+ 	int ret;
  
-+	if (!(skb_shinfo(skb)->gso_type & (SKB_GSO_TCPV4 | SKB_GSO_TCPV6)))
-+		return -EINVAL;
+ 	/* Queue 0 is not AVB capable */
+@@ -355,30 +356,26 @@ static int tc_setup_cbs(struct stmmac_priv *priv,
+ 	if (!priv->dma_cap.av)
+ 		return -EOPNOTSUPP;
+ 
++	port_transmit_rate_kbps = qopt->idleslope - qopt->sendslope;
 +
- 	/* Needed because we will modify header. */
- 	err = skb_cow_head(skb, 0);
- 	if (err < 0)
- 		return err;
- 
- 	tcp = tcp_hdr(skb);
--
--	/* Remove payload length from checksum. */
- 	paylen = skb->len - skb_transport_offset(skb);
--
--	switch (skb_shinfo(skb)->gso_type) {
--	case SKB_GSO_TCPV4:
--	case SKB_GSO_TCPV6:
--		csum_replace_by_diff(&tcp->check,
--				     (__force __wsum)htonl(paylen));
--
--		/* Compute length of segmentation header. */
--		header_len = skb_tcp_all_headers(skb);
+ 	/* Port Transmit Rate and Speed Divider */
+-	switch (priv->speed) {
++	switch (div_s64(port_transmit_rate_kbps, 1000)) {
+ 	case SPEED_10000:
+-		ptr = 32;
+-		speed_div = 10000000;
 -		break;
--	default:
--		return -EINVAL;
--	}
-+	csum_replace_by_diff(&tcp->check, (__force __wsum)htonl(paylen));
-+	header_len = skb_tcp_all_headers(skb);
+ 	case SPEED_5000:
+ 		ptr = 32;
+-		speed_div = 5000000;
+ 		break;
+ 	case SPEED_2500:
+-		ptr = 8;
+-		speed_div = 2500000;
+-		break;
+ 	case SPEED_1000:
+ 		ptr = 8;
+-		speed_div = 1000000;
+ 		break;
+ 	case SPEED_100:
+ 		ptr = 4;
+-		speed_div = 100000;
+ 		break;
+ 	default:
+-		return -EOPNOTSUPP;
++		netdev_err(priv->dev,
++			   "Invalid portTransmitRate %lld (idleSlope - sendSlope)\n",
++			   port_transmit_rate_kbps);
++		return -EINVAL;
+ 	}
  
- 	if (unlikely(header_len > GVE_TX_MAX_HDR_SIZE_DQO))
- 		return -EINVAL;
+ 	mode_to_use = priv->plat->tx_queues_cfg[queue].mode_to_use;
+@@ -398,10 +395,10 @@ static int tc_setup_cbs(struct stmmac_priv *priv,
+ 	}
+ 
+ 	/* Final adjustments for HW */
+-	value = div_s64(qopt->idleslope * 1024ll * ptr, speed_div);
++	value = div_s64(qopt->idleslope * 1024ll * ptr, port_transmit_rate_kbps);
+ 	priv->plat->tx_queues_cfg[queue].idle_slope = value & GENMASK(31, 0);
+ 
+-	value = div_s64(-qopt->sendslope * 1024ll * ptr, speed_div);
++	value = div_s64(-qopt->sendslope * 1024ll * ptr, port_transmit_rate_kbps);
+ 	priv->plat->tx_queues_cfg[queue].send_slope = value & GENMASK(31, 0);
+ 
+ 	value = qopt->hicredit * 1024ll * 8;
 -- 
 2.43.0
 
