@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7662014B967;
-	Wed, 19 Jun 2024 13:29:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66ACD14B975;
+	Wed, 19 Jun 2024 13:29:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803763; cv=none; b=raWJxADV/dvgqT4c/kVGrSuTAPVGcjXzZQ3gIjt+5DrGAbZngZoKXvgm+RJbALrTZArtj0GQEk6W4olfAEiffU0+7eHOX/c9DtF9P9gw//XyjL4PpH8M6xHfD5fFTdokfBhMG+LLYNfP0SINRznLQDy0cOxMb69ifdeV4DU2XG8=
+	t=1718803766; cv=none; b=YTJeamanDGx0q4+5Z61mktNNZyeHzQReMUQhiX+AIAO06+rDaZLdI0dxbxqbK6WJJMNs6UxD3wkoMyRX07ndEa/HcwpZHvG8YaUd1x0P0wxvdz1Ad9uxYRCl4tfnJl8g/1b/zKUWcKQTgvTDTTlD0v8PfNoC0bo6c1nL/aNq1aI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803763; c=relaxed/simple;
-	bh=w/FwBrh5SY3GXQKfFRL3I27lVLECUBKYQ3aCCpgFhXs=;
+	s=arc-20240116; t=1718803766; c=relaxed/simple;
+	bh=8q3SEWAtj8Yy6ndnSt62qGTw1pGPChm498Yft4ZmQIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C2+HjrG2FPc4ErqmGz+Kf76opHm+40L7kyGRPzIip6fryzq4kbWdlNNAOmXzGWRHVDCITm5k2lKjb+gKjoEydZXiXYe14I2XlHQq8k6df1KFw2YgJHCZ+DqpEf1Wh9/AScoWjk8iNdxnzgIKyq3GMIBaKJPcQFZk48DEImLaR0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fjetkQek; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ci/BqpFEyduk/P9kdHpQHkzBWJ/oKHTEw1ITwMhypdrWs8cO49TCzc2jvcqyIQxF4w3OLVgKEevN3a5/RebpqDdtuA1ubVpOdvy4KiVQJPPou1ra8jdnP1etq3NkKAqlz0zLAm+XCELGTNbBD62qZscygAgTkcOaAfQ3B7qG/Eo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKEME2pB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fjetkQek"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED8A0C4AF49;
-	Wed, 19 Jun 2024 13:29:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKEME2pB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC697C2BBFC;
+	Wed, 19 Jun 2024 13:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803763;
-	bh=w/FwBrh5SY3GXQKfFRL3I27lVLECUBKYQ3aCCpgFhXs=;
+	s=korg; t=1718803766;
+	bh=8q3SEWAtj8Yy6ndnSt62qGTw1pGPChm498Yft4ZmQIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fjetkQekMyfYgK/7S16hfwG8kp/k2VnkaA7nRfp0KeC7546gUDYXPctxmSotNuNSs
-	 IbmB72aD8Lfo9EdMP5ypwNEu9VlGpq4RUM18c41buoFuGTz/cNqrojrSZhPfdbTAn8
-	 kAYyrrhFg6xy83tBaq/idXN7cJr7z9Jc9+sfQB0U=
+	b=jKEME2pBLbuGhjJDuIm5gARsbSG69rg7xq5p1ETUd7xE2IOgsoZ45hNnlnanOWg4b
+	 Vrw2DIENiu3kYYU8RDXofPWYbd8+W+Yr1gsSA54nPllW8G00bIIUhmlgzDRSPH45FT
+	 ogkqxaCBEzOwDEpEqTZHdzc9tgiB5eyQZ6i6d1W0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Cong Yang <yangcong5@huaqin.corp-partner.google.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 068/217] HID: i2c-hid: elan: Add ili9882t timing
-Date: Wed, 19 Jun 2024 14:55:11 +0200
-Message-ID: <20240619125559.307572092@linuxfoundation.org>
+	security@kernel.org,
+	Neal Gompa <neal@gompa.dev>,
+	Hector Martin <marcan@marcan.st>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.1 095/217] xhci: Handle TD clearing for multiple streams case
+Date: Wed, 19 Jun 2024 14:55:38 +0200
+Message-ID: <20240619125600.355831171@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -52,140 +52,205 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Yang <yangcong5@huaqin.corp-partner.google.com>
+From: Hector Martin <marcan@marcan.st>
 
-[ Upstream commit f2f43bf15d7aa3286eced18d5199ee579e2c2614 ]
+commit 5ceac4402f5d975e5a01c806438eb4e554771577 upstream.
 
-The ili9882t is a TDDI IC (Touch with Display Driver). The
-datasheet specifies there should be 60ms between touch SDA
-sleep and panel RESX. Doug's series[1] allows panels and
-touchscreens to power on/off together, so we can add the 65 ms
-delay in i2c_hid_core_suspend before panel_unprepare.
+When multiple streams are in use, multiple TDs might be in flight when
+an endpoint is stopped. We need to issue a Set TR Dequeue Pointer for
+each, to ensure everything is reset properly and the caches cleared.
+Change the logic so that any N>1 TDs found active for different streams
+are deferred until after the first one is processed, calling
+xhci_invalidate_cancelled_tds() again from xhci_handle_cmd_set_deq() to
+queue another command until we are done with all of them. Also change
+the error/"should never happen" paths to ensure we at least clear any
+affected TDs, even if we can't issue a command to clear the hardware
+cache, and complain loudly with an xhci_warn() if this ever happens.
 
-Because ili9882t touchscrgeen is a panel follower, and
-needs to use vccio-supply instead of vcc33-supply, so set
-it NULL to ili9882t_chip_data, then not use vcc33 regulator.
+This problem case dates back to commit e9df17eb1408 ("USB: xhci: Correct
+assumptions about number of rings per endpoint.") early on in the XHCI
+driver's life, when stream support was first added.
+It was then identified but not fixed nor made into a warning in commit
+674f8438c121 ("xhci: split handling halted endpoints into two steps"),
+which added a FIXME comment for the problem case (without materially
+changing the behavior as far as I can tell, though the new logic made
+the problem more obvious).
 
-[1]: https://lore.kernel.org/all/20230727171750.633410-1-dianders@chromium.org
+Then later, in commit 94f339147fc3 ("xhci: Fix failure to give back some
+cached cancelled URBs."), it was acknowledged again.
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Cong Yang <yangcong5@huaqin.corp-partner.google.com>
-Acked-by: Benjamin Tissoires <bentiss@kernel.org>
-Link: https://lore.kernel.org/r/20230802071947.1683318-3-yangcong5@huaqin.corp-partner.google.com
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
-Stable-dep-of: 0eafc58f2194 ("HID: i2c-hid: elan: fix reset suspend current leakage")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[Mathias: commit 94f339147fc3 ("xhci: Fix failure to give back some cached
+cancelled URBs.") was a targeted regression fix to the previously mentioned
+patch. Users reported issues with usb stuck after unmounting/disconnecting
+UAS devices. This rolled back the TD clearing of multiple streams to its
+original state.]
+
+Apparently the commit author was aware of the problem (yet still chose
+to submit it): It was still mentioned as a FIXME, an xhci_dbg() was
+added to log the problem condition, and the remaining issue was mentioned
+in the commit description. The choice of making the log type xhci_dbg()
+for what is, at this point, a completely unhandled and known broken
+condition is puzzling and unfortunate, as it guarantees that no actual
+users would see the log in production, thereby making it nigh
+undebuggable (indeed, even if you turn on DEBUG, the message doesn't
+really hint at there being a problem at all).
+
+It took me *months* of random xHC crashes to finally find a reliable
+repro and be able to do a deep dive debug session, which could all have
+been avoided had this unhandled, broken condition been actually reported
+with a warning, as it should have been as a bug intentionally left in
+unfixed (never mind that it shouldn't have been left in at all).
+
+> Another fix to solve clearing the caches of all stream rings with
+> cancelled TDs is needed, but not as urgent.
+
+3 years after that statement and 14 years after the original bug was
+introduced, I think it's finally time to fix it. And maybe next time
+let's not leave bugs unfixed (that are actually worse than the original
+bug), and let's actually get people to review kernel commits please.
+
+Fixes xHC crashes and IOMMU faults with UAS devices when handling
+errors/faults. Easiest repro is to use `hdparm` to mark an early sector
+(e.g. 1024) on a disk as bad, then `cat /dev/sdX > /dev/null` in a loop.
+At least in the case of JMicron controllers, the read errors end up
+having to cancel two TDs (for two queued requests to different streams)
+and the one that didn't get cleared properly ends up faulting the xHC
+entirely when it tries to access DMA pages that have since been unmapped,
+referred to by the stale TDs. This normally happens quickly (after two
+or three loops). After this fix, I left the `cat` in a loop running
+overnight and experienced no xHC failures, with all read errors
+recovered properly. Repro'd and tested on an Apple M1 Mac Mini
+(dwc3 host).
+
+On systems without an IOMMU, this bug would instead silently corrupt
+freed memory, making this a security bug (even on systems with IOMMUs
+this could silently corrupt memory belonging to other USB devices on the
+same controller, so it's still a security bug). Given that the kernel
+autoprobes partition tables, I'm pretty sure a malicious USB device
+pretending to be a UAS device and reporting an error with the right
+timing could deliberately trigger a UAF and write to freed memory, with
+no user action.
+
+[Mathias: Commit message and code comment edit, original at:]
+https://lore.kernel.org/linux-usb/20240524-xhci-streams-v1-1-6b1f13819bea@marcan.st/
+
+Fixes: e9df17eb1408 ("USB: xhci: Correct assumptions about number of rings per endpoint.")
+Fixes: 94f339147fc3 ("xhci: Fix failure to give back some cached cancelled URBs.")
+Fixes: 674f8438c121 ("xhci: split handling halted endpoints into two steps")
+Cc: stable@vger.kernel.org
+Cc: security@kernel.org
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Signed-off-by: Hector Martin <marcan@marcan.st>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20240611120610.3264502-5-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/i2c-hid/i2c-hid-of-elan.c | 50 ++++++++++++++++++++-------
- 1 file changed, 38 insertions(+), 12 deletions(-)
+ drivers/usb/host/xhci-ring.c |   54 ++++++++++++++++++++++++++++++++++---------
+ drivers/usb/host/xhci.h      |    1 
+ 2 files changed, 44 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/hid/i2c-hid/i2c-hid-of-elan.c b/drivers/hid/i2c-hid/i2c-hid-of-elan.c
-index 2d991325e734c..35986e8297095 100644
---- a/drivers/hid/i2c-hid/i2c-hid-of-elan.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-of-elan.c
-@@ -18,9 +18,11 @@
- #include "i2c-hid.h"
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -987,13 +987,27 @@ static int xhci_invalidate_cancelled_tds
+ 				break;
+ 			case TD_DIRTY: /* TD is cached, clear it */
+ 			case TD_HALTED:
++			case TD_CLEARING_CACHE_DEFERRED:
++				if (cached_td) {
++					if (cached_td->urb->stream_id != td->urb->stream_id) {
++						/* Multiple streams case, defer move dq */
++						xhci_dbg(xhci,
++							 "Move dq deferred: stream %u URB %p\n",
++							 td->urb->stream_id, td->urb);
++						td->cancel_status = TD_CLEARING_CACHE_DEFERRED;
++						break;
++					}
++
++					/* Should never happen, but clear the TD if it does */
++					xhci_warn(xhci,
++						  "Found multiple active URBs %p and %p in stream %u?\n",
++						  td->urb, cached_td->urb,
++						  td->urb->stream_id);
++					td_to_noop(xhci, ring, cached_td, false);
++					cached_td->cancel_status = TD_CLEARED;
++				}
++
+ 				td->cancel_status = TD_CLEARING_CACHE;
+-				if (cached_td)
+-					/* FIXME  stream case, several stopped rings */
+-					xhci_dbg(xhci,
+-						 "Move dq past stream %u URB %p instead of stream %u URB %p\n",
+-						 td->urb->stream_id, td->urb,
+-						 cached_td->urb->stream_id, cached_td->urb);
+ 				cached_td = td;
+ 				break;
+ 			}
+@@ -1013,10 +1027,16 @@ static int xhci_invalidate_cancelled_tds
+ 	if (err) {
+ 		/* Failed to move past cached td, just set cached TDs to no-op */
+ 		list_for_each_entry_safe(td, tmp_td, &ep->cancelled_td_list, cancelled_td_list) {
+-			if (td->cancel_status != TD_CLEARING_CACHE)
++			/*
++			 * Deferred TDs need to have the deq pointer set after the above command
++			 * completes, so if that failed we just give up on all of them (and
++			 * complain loudly since this could cause issues due to caching).
++			 */
++			if (td->cancel_status != TD_CLEARING_CACHE &&
++			    td->cancel_status != TD_CLEARING_CACHE_DEFERRED)
+ 				continue;
+-			xhci_dbg(xhci, "Failed to clear cancelled cached URB %p, mark clear anyway\n",
+-				 td->urb);
++			xhci_warn(xhci, "Failed to clear cancelled cached URB %p, mark clear anyway\n",
++				  td->urb);
+ 			td_to_noop(xhci, ring, td, false);
+ 			td->cancel_status = TD_CLEARED;
+ 		}
+@@ -1304,6 +1324,7 @@ static void xhci_handle_cmd_set_deq(stru
+ 	struct xhci_ep_ctx *ep_ctx;
+ 	struct xhci_slot_ctx *slot_ctx;
+ 	struct xhci_td *td, *tmp_td;
++	bool deferred = false;
  
- struct elan_i2c_hid_chip_data {
--	unsigned int post_gpio_reset_delay_ms;
-+	unsigned int post_gpio_reset_on_delay_ms;
-+	unsigned int post_gpio_reset_off_delay_ms;
- 	unsigned int post_power_delay_ms;
- 	u16 hid_descriptor_address;
-+	const char *main_supply_name;
- };
- 
- struct i2c_hid_of_elan {
-@@ -38,9 +40,11 @@ static int elan_i2c_hid_power_up(struct i2chid_ops *ops)
- 		container_of(ops, struct i2c_hid_of_elan, ops);
- 	int ret;
- 
--	ret = regulator_enable(ihid_elan->vcc33);
--	if (ret)
--		return ret;
-+	if (ihid_elan->vcc33) {
-+		ret = regulator_enable(ihid_elan->vcc33);
-+		if (ret)
-+			return ret;
+ 	ep_index = TRB_TO_EP_INDEX(le32_to_cpu(trb->generic.field[3]));
+ 	stream_id = TRB_TO_STREAM_ID(le32_to_cpu(trb->generic.field[2]));
+@@ -1390,6 +1411,8 @@ static void xhci_handle_cmd_set_deq(stru
+ 			xhci_dbg(ep->xhci, "%s: Giveback cancelled URB %p TD\n",
+ 				 __func__, td->urb);
+ 			xhci_td_cleanup(ep->xhci, td, ep_ring, td->status);
++		} else if (td->cancel_status == TD_CLEARING_CACHE_DEFERRED) {
++			deferred = true;
+ 		} else {
+ 			xhci_dbg(ep->xhci, "%s: Keep cancelled URB %p TD as cancel_status is %d\n",
+ 				 __func__, td->urb, td->cancel_status);
+@@ -1399,8 +1422,17 @@ cleanup:
+ 	ep->ep_state &= ~SET_DEQ_PENDING;
+ 	ep->queued_deq_seg = NULL;
+ 	ep->queued_deq_ptr = NULL;
+-	/* Restart any rings with pending URBs */
+-	ring_doorbell_for_active_rings(xhci, slot_id, ep_index);
++
++	if (deferred) {
++		/* We have more streams to clear */
++		xhci_dbg(ep->xhci, "%s: Pending TDs to clear, continuing with invalidation\n",
++			 __func__);
++		xhci_invalidate_cancelled_tds(ep);
++	} else {
++		/* Restart any rings with pending URBs */
++		xhci_dbg(ep->xhci, "%s: All TDs cleared, ring doorbell\n", __func__);
++		ring_doorbell_for_active_rings(xhci, slot_id, ep_index);
 +	}
- 
- 	ret = regulator_enable(ihid_elan->vccio);
- 	if (ret) {
-@@ -52,8 +56,8 @@ static int elan_i2c_hid_power_up(struct i2chid_ops *ops)
- 		msleep(ihid_elan->chip_data->post_power_delay_ms);
- 
- 	gpiod_set_value_cansleep(ihid_elan->reset_gpio, 0);
--	if (ihid_elan->chip_data->post_gpio_reset_delay_ms)
--		msleep(ihid_elan->chip_data->post_gpio_reset_delay_ms);
-+	if (ihid_elan->chip_data->post_gpio_reset_on_delay_ms)
-+		msleep(ihid_elan->chip_data->post_gpio_reset_on_delay_ms);
- 
- 	return 0;
- }
-@@ -64,8 +68,12 @@ static void elan_i2c_hid_power_down(struct i2chid_ops *ops)
- 		container_of(ops, struct i2c_hid_of_elan, ops);
- 
- 	gpiod_set_value_cansleep(ihid_elan->reset_gpio, 1);
-+	if (ihid_elan->chip_data->post_gpio_reset_off_delay_ms)
-+		msleep(ihid_elan->chip_data->post_gpio_reset_off_delay_ms);
-+
- 	regulator_disable(ihid_elan->vccio);
--	regulator_disable(ihid_elan->vcc33);
-+	if (ihid_elan->vcc33)
-+		regulator_disable(ihid_elan->vcc33);
  }
  
- static int i2c_hid_of_elan_probe(struct i2c_client *client,
-@@ -90,24 +98,42 @@ static int i2c_hid_of_elan_probe(struct i2c_client *client,
- 	if (IS_ERR(ihid_elan->vccio))
- 		return PTR_ERR(ihid_elan->vccio);
- 
--	ihid_elan->vcc33 = devm_regulator_get(&client->dev, "vcc33");
--	if (IS_ERR(ihid_elan->vcc33))
--		return PTR_ERR(ihid_elan->vcc33);
--
- 	ihid_elan->chip_data = device_get_match_data(&client->dev);
- 
-+	if (ihid_elan->chip_data->main_supply_name) {
-+		ihid_elan->vcc33 = devm_regulator_get(&client->dev,
-+						      ihid_elan->chip_data->main_supply_name);
-+		if (IS_ERR(ihid_elan->vcc33))
-+			return PTR_ERR(ihid_elan->vcc33);
-+	}
-+
- 	return i2c_hid_core_probe(client, &ihid_elan->ops,
- 				  ihid_elan->chip_data->hid_descriptor_address, 0);
- }
- 
- static const struct elan_i2c_hid_chip_data elan_ekth6915_chip_data = {
- 	.post_power_delay_ms = 1,
--	.post_gpio_reset_delay_ms = 300,
-+	.post_gpio_reset_on_delay_ms = 300,
-+	.hid_descriptor_address = 0x0001,
-+	.main_supply_name = "vcc33",
-+};
-+
-+static const struct elan_i2c_hid_chip_data ilitek_ili9882t_chip_data = {
-+	.post_power_delay_ms = 1,
-+	.post_gpio_reset_on_delay_ms = 200,
-+	.post_gpio_reset_off_delay_ms = 65,
- 	.hid_descriptor_address = 0x0001,
-+	/*
-+	 * this touchscreen is tightly integrated with the panel and assumes
-+	 * that the relevant power rails (other than the IO rail) have already
-+	 * been turned on by the panel driver because we're a panel follower.
-+	 */
-+	.main_supply_name = NULL,
+ static void xhci_handle_cmd_reset_ep(struct xhci_hcd *xhci, int slot_id,
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -1556,6 +1556,7 @@ enum xhci_cancelled_td_status {
+ 	TD_DIRTY = 0,
+ 	TD_HALTED,
+ 	TD_CLEARING_CACHE,
++	TD_CLEARING_CACHE_DEFERRED,
+ 	TD_CLEARED,
  };
  
- static const struct of_device_id elan_i2c_hid_of_match[] = {
- 	{ .compatible = "elan,ekth6915", .data = &elan_ekth6915_chip_data },
-+	{ .compatible = "ilitek,ili9882t", .data = &ilitek_ili9882t_chip_data },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, elan_i2c_hid_of_match);
--- 
-2.43.0
-
 
 
