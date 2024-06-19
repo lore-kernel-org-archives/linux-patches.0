@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A08213F428;
-	Wed, 19 Jun 2024 13:34:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3CAD13DDC0;
+	Wed, 19 Jun 2024 13:34:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718804087; cv=none; b=OX2o1dqlKQwNJANpRT1C/T/PDuVoNPg4fzKvHcsUThVQuLu88K1CQ03324wj2p+XyoD24hCuN7VXU5JR0iFH9C9rqUISWF3VP3WhSzg8v9qpe1BJrjZ5kMOeZeiAafrtJiY8AIbFfTdjdjLCJ0Q4ohQt1rHQKqNh58KqQI9eIzM=
+	t=1718804090; cv=none; b=KQFVT34S1VlGZRhFu3nDZgzZN+jo28ffaA0dzyjWEAkdW2RdiFywgi9+81H5r1P4f5EnN0uQ++DzYxDYfCpf0aYbaAjQITjrBmqNCqeVJgqT2yJUXNAyMKrCOSugSDj28qINBqhjMWsmweUFwQNQNWHZrCc56/ongX+TZbME+kQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718804087; c=relaxed/simple;
-	bh=9x357pJEwSCl+JijoohLxH93mMSeXgJCnkgmoqq1PFg=;
+	s=arc-20240116; t=1718804090; c=relaxed/simple;
+	bh=Rzu3FWW4nvlQIlFmUAe/2O6WHzn86SdoX9jWS9lueDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DP/YxifHheA4/kuu72lgE28XztBLMZJOrhR4F0cohoj/d46UDDOwszUxpE8e7pURBJM5qHvYs8O2CTC/23w3M5IO9q4OpX6Wp5tuqgiSwiGe2sn5MVvRD8A+wraXGUqgqgQr8YrJSCuYHClOhgI2sU6ytXd8Oofn9wk+CM39MzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2bdSzOBk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KL83HRYHnzoNmgI6TzgQvZQYArFO9+NIgikVNWW/qDcSbDr5vfkOE9prxjt2BaI1ztkoH+2lyBGSWaLQTJoispOEDKmY7iHl6fiFIV3UxM+aAmDy4cmstdwEZSHxmhJ3jRKBG5+u/jJng7r3lw1M3b3eKLVTTpuUUSUQ16BEm8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E7i/v3f6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2bdSzOBk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7806BC2BBFC;
-	Wed, 19 Jun 2024 13:34:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E7i/v3f6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA88C2BBFC;
+	Wed, 19 Jun 2024 13:34:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718804086;
-	bh=9x357pJEwSCl+JijoohLxH93mMSeXgJCnkgmoqq1PFg=;
+	s=korg; t=1718804089;
+	bh=Rzu3FWW4nvlQIlFmUAe/2O6WHzn86SdoX9jWS9lueDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2bdSzOBk557OF0fY9m1e5b606TSIrNqgCcbk4q6d9hiSEwrobIiv0a/NFcFJx7rNm
-	 Sj4Bv3O9MGj6h7S/n0RE4ZMzvZetl4868EQc29OovEH0/V8rI0yi4tpbj/72IM6yOL
-	 6njKPDzBotDXdeb4hUyAu0Ql0GTAX7ocqSJ05zls=
+	b=E7i/v3f62EWS3wZg35DFYlGJ57PhiUn5xRKv41rXQmBsltp1t+IDr+BShOyhPWAM3
+	 TdLrXY464ID+Hq7GWxzICd7xFC0C6qSyqowCtVsnE5iIE/bkcfez0YuKDPEQfNqTic
+	 90lQH7uZkfMaCwyuwbE6vx5Z0ZOpIcN+owY9Ulhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 6.1 173/217] tracing/selftests: Fix kprobe event name test for .isra. functions
-Date: Wed, 19 Jun 2024 14:56:56 +0200
-Message-ID: <20240619125603.363113416@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 174/217] null_blk: Print correct max open zones limit in null_init_zoned_dev()
+Date: Wed, 19 Jun 2024 14:56:57 +0200
+Message-ID: <20240619125603.402522851@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -51,50 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit 23a4b108accc29a6125ed14de4a044689ffeda78 upstream.
+commit 233e27b4d21c3e44eb863f03e566d3a22e81a7ae upstream.
 
-The kprobe_eventname.tc test checks if a function with .isra. can have a
-kprobe attached to it. It loops through the kallsyms file for all the
-functions that have the .isra. name, and checks if it exists in the
-available_filter_functions file, and if it does, it uses it to attach a
-kprobe to it.
+When changing the maximum number of open zones, print that number
+instead of the total number of zones.
 
-The issue is that kprobes can not attach to functions that are listed more
-than once in available_filter_functions. With the latest kernel, the
-function that is found is: rapl_event_update.isra.0
-
-  # grep rapl_event_update.isra.0 /sys/kernel/tracing/available_filter_functions
-  rapl_event_update.isra.0
-  rapl_event_update.isra.0
-
-It is listed twice. This causes the attached kprobe to it to fail which in
-turn fails the test. Instead of just picking the function function that is
-found in available_filter_functions, pick the first one that is listed
-only once in available_filter_functions.
-
+Fixes: dc4d137ee3b7 ("null_blk: add support for max open/active zone limit for zoned devices")
 Cc: stable@vger.kernel.org
-Fixes: 604e3548236d ("selftests/ftrace: Select an existing function in kprobe_eventname test")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Link: https://lore.kernel.org/r/20240528062852.437599-1-dlemoal@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/ftrace/test.d/kprobe/kprobe_eventname.tc |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/block/null_blk/zoned.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_eventname.tc
-+++ b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_eventname.tc
-@@ -30,7 +30,8 @@ find_dot_func() {
- 	fi
- 
- 	grep " [tT] .*\.isra\..*" /proc/kallsyms | cut -f 3 -d " " | while read f; do
--		if grep -s $f available_filter_functions; then
-+		cnt=`grep -s $f available_filter_functions | wc -l`;
-+		if [ $cnt -eq 1 ]; then
- 			echo $f
- 			break
- 		fi
+--- a/drivers/block/null_blk/zoned.c
++++ b/drivers/block/null_blk/zoned.c
+@@ -112,7 +112,7 @@ int null_init_zoned_dev(struct nullb_dev
+ 	if (dev->zone_max_active && dev->zone_max_open > dev->zone_max_active) {
+ 		dev->zone_max_open = dev->zone_max_active;
+ 		pr_info("changed the maximum number of open zones to %u\n",
+-			dev->nr_zones);
++			dev->zone_max_open);
+ 	} else if (dev->zone_max_open >= dev->nr_zones - dev->zone_nr_conv) {
+ 		dev->zone_max_open = 0;
+ 		pr_info("zone_max_open limit disabled, limit >= zone count\n");
 
 
