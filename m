@@ -1,43 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E308143757;
-	Wed, 19 Jun 2024 13:24:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A9E143757;
+	Wed, 19 Jun 2024 13:25:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803498; cv=none; b=g3+PxAtYT3QgAWqUkVJYmxMjlkz7HD4qLs0CMHZW32v3Aqs0PlbeoNRNuC4O1deaDPIlgz89J+SDi6ojWAZKxiQjjKFhn1gD7qcBRafsypz4R95Gjewh0rkl9T1clrLhoagHNptu7mLZDUB1R5gCWEAdI7JL0tLNA+Sp7Te4Avw=
+	t=1718803501; cv=none; b=cT50lhtZQtn/wzZJt2nJBqikrn/ZEH2UaUoQ0K7AUcGnDILHPE0HvL6quKhAKvCA1cfV51Irt4BtE1t1etk7b2dZDiSLlT9JoRnzGFKD+KIEBCXyeDaEM6B9R5OhKaKg32HqSDDGktguLx+csdJSsDNUkUUTeZHPr30O8+6VoUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803498; c=relaxed/simple;
-	bh=KTfaokCNG9O1CSAUDRI6XKPzOzzUNodcp5G5t1GkXPg=;
+	s=arc-20240116; t=1718803501; c=relaxed/simple;
+	bh=8ZBmUdfnT5eqHYgbbvFbMoX38vxR8WNE64X56jEnYU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kR0RGvfWEkOjk6zj4Cji6qJebBZYGnaYtklKS9G9pmqh7GRdb/Xzao2YWgonVMm2+WASQ9SBFdtW36wh6s0Fvyjxbd8TURUvPxtbhQET3ge0FdZgJwAuJd3/4MvMiFz2Z9gZyg9CXNL+TcELevWIOHMr4p/5uSSnx7kyTtMIzC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GpYxhmCh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SaM1UDSc6vfhoguy282sg9+1+n9hyjeHMlmUGD1rn6TeJkesVsgZ8rDvXbJiN0jqQmRITvUWw7hIjdoNMAgm9KfSVePvcNW88EzIkTDRfhSNgOHzOIQt6V6+5mWzXRg9IejeO+7NrrL0heoQa/cpT73abwVVotOxMvBn6R1qOAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ujzg70Wk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GpYxhmCh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13184C2BBFC;
-	Wed, 19 Jun 2024 13:24:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ujzg70Wk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDB02C2BBFC;
+	Wed, 19 Jun 2024 13:25:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803498;
-	bh=KTfaokCNG9O1CSAUDRI6XKPzOzzUNodcp5G5t1GkXPg=;
+	s=korg; t=1718803501;
+	bh=8ZBmUdfnT5eqHYgbbvFbMoX38vxR8WNE64X56jEnYU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GpYxhmChNNER++5fDaq97+QYC9PpconQmOWeXOVcQ5T2UcnzAIRMH73LJWXfaUJpz
-	 uDr6Z6C1guFyL9DS5XcHlptIduDgXG9rGHo3ykfe7Wu8F22FqtGsuB7ndxBGHH0r8S
-	 4kPsaV5XeLcYN7Qf8ZxK6WjNNhYvdDynlYLVHVfc=
+	b=Ujzg70Wkure5uwESIjW4XmJuNmsp+zEWRJ6FVagpoCyTNXkxMh+VbZ+tO8YLoHbI3
+	 25udQP5GT1LDJZ9aHLssjE1QFP712XKAs047un7ZwYNP3V8vvPFCSgPfhneJULxHFM
+	 GwKjZHTzVTrRQOPztphh0v4Hi4CdgmgUwJJGGZxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean Delvare <jdelvare@suse.de>,
-	Luis Oliveira <lolivei@synopsys.com>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Jan Dabros <jsd@semihalf.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Rachel Menge <rachelmenge@linux.microsoft.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Wei Fu <fuweid89@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Allen Pais <apais@linux.microsoft.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Joel Granados <j.granados@samsung.com>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	Mateusz Guzik <mjguzik@gmail.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Zqiang <qiang.zhang1211@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 280/281] i2c: designware: Fix the functionality flags of the slave-only interface
-Date: Wed, 19 Jun 2024 14:57:19 +0200
-Message-ID: <20240619125620.755268926@linuxfoundation.org>
+Subject: [PATCH 6.9 281/281] zap_pid_ns_processes: clear TIF_NOTIFY_SIGNAL along with TIF_SIGPENDING
+Date: Wed, 19 Jun 2024 14:57:20 +0200
+Message-ID: <20240619125620.793382495@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -56,43 +70,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean Delvare <jdelvare@suse.de>
+From: Oleg Nesterov <oleg@redhat.com>
 
-[ Upstream commit cbf3fb5b29e99e3689d63a88c3cddbffa1b8de99 ]
+[ Upstream commit 7fea700e04bd3f424c2d836e98425782f97b494e ]
 
-When an I2C adapter acts only as a slave, it should not claim to
-support I2C master capabilities.
+kernel_wait4() doesn't sleep and returns -EINTR if there is no
+eligible child and signal_pending() is true.
 
-Fixes: 5b6d721b266a ("i2c: designware: enable SLAVE in platform module")
-Signed-off-by: Jean Delvare <jdelvare@suse.de>
-Cc: Luis Oliveira <lolivei@synopsys.com>
-Cc: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Mika Westerberg <mika.westerberg@linux.intel.com>
-Cc: Jan Dabros <jsd@semihalf.com>
-Cc: Andi Shyti <andi.shyti@kernel.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Tested-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+That is why zap_pid_ns_processes() clears TIF_SIGPENDING but this is not
+enough, it should also clear TIF_NOTIFY_SIGNAL to make signal_pending()
+return false and avoid a busy-wait loop.
+
+Link: https://lkml.kernel.org/r/20240608120616.GB7947@redhat.com
+Fixes: 12db8b690010 ("entry: Add support for TIF_NOTIFY_SIGNAL")
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Reported-by: Rachel Menge <rachelmenge@linux.microsoft.com>
+Closes: https://lore.kernel.org/all/1386cd49-36d0-4a5c-85e9-bc42056a5a38@linux.microsoft.com/
+Reviewed-by: Boqun Feng <boqun.feng@gmail.com>
+Tested-by: Wei Fu <fuweid89@gmail.com>
+Reviewed-by: Jens Axboe <axboe@kernel.dk>
+Cc: Allen Pais <apais@linux.microsoft.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Frederic Weisbecker <frederic@kernel.org>
+Cc: Joel Fernandes (Google) <joel@joelfernandes.org>
+Cc: Joel Granados <j.granados@samsung.com>
+Cc: Josh Triplett <josh@joshtriplett.org>
+Cc: Lai Jiangshan <jiangshanlai@gmail.com>
+Cc: Mateusz Guzik <mjguzik@gmail.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Mike Christie <michael.christie@oracle.com>
+Cc: Neeraj Upadhyay <neeraj.upadhyay@kernel.org>
+Cc: Paul E. McKenney <paulmck@kernel.org>
+Cc: Steven Rostedt (Google) <rostedt@goodmis.org>
+Cc: Zqiang <qiang.zhang1211@gmail.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-designware-slave.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/pid_namespace.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/i2c/busses/i2c-designware-slave.c b/drivers/i2c/busses/i2c-designware-slave.c
-index 2e079cf20bb5b..78e2c47e3d7da 100644
---- a/drivers/i2c/busses/i2c-designware-slave.c
-+++ b/drivers/i2c/busses/i2c-designware-slave.c
-@@ -220,7 +220,7 @@ static const struct i2c_algorithm i2c_dw_algo = {
+diff --git a/kernel/pid_namespace.c b/kernel/pid_namespace.c
+index 7ade20e952321..415201ca0c7e4 100644
+--- a/kernel/pid_namespace.c
++++ b/kernel/pid_namespace.c
+@@ -218,6 +218,7 @@ void zap_pid_ns_processes(struct pid_namespace *pid_ns)
+ 	 */
+ 	do {
+ 		clear_thread_flag(TIF_SIGPENDING);
++		clear_thread_flag(TIF_NOTIFY_SIGNAL);
+ 		rc = kernel_wait4(-1, NULL, __WALL, NULL);
+ 	} while (rc != -ECHILD);
  
- void i2c_dw_configure_slave(struct dw_i2c_dev *dev)
- {
--	dev->functionality = I2C_FUNC_SLAVE | DW_IC_DEFAULT_FUNCTIONALITY;
-+	dev->functionality = I2C_FUNC_SLAVE;
- 
- 	dev->slave_cfg = DW_IC_CON_RX_FIFO_FULL_HLD_CTRL |
- 			 DW_IC_CON_RESTART_EN | DW_IC_CON_STOP_DET_IFADDRESSED;
 -- 
 2.43.0
 
