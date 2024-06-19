@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2375682871;
-	Wed, 19 Jun 2024 13:04:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A23F82871;
+	Wed, 19 Jun 2024 13:04:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802270; cv=none; b=QiCm/hdr/SNWQolDSNsH9ryvEvAAHfVE/B+vQ1pgbI6sEn4ClVi63RTmTv9yNeBpkvIRGBSoj4l46oilUOAfjzUhKNKPdLOBkt47MdOUSTQtItif+/zW6ivAaWOHlCIrb6sK7mHO/1aAWJX14SP0BPntAnwJmLX4QhAzdCr7Y3Q=
+	t=1718802273; cv=none; b=FoW/xctk4HFiYWl2248R49RbMoaHQypPHBN2MDpSAZSvcG73fZdGoHFbEjA3FbPJYWqmWqW31+tB/NdskMssEE9cAIn+v/GE6X/iMqjz8+rdeYCSpC0zm1JLzOwVyrmXeecH+hJfMBggriO9zAHfuEagOqCdccm9zsaahptFH6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802270; c=relaxed/simple;
-	bh=848hdcEFA8QQRiPjLogxnqrzm9WSSRk3QWuNX6lA2yE=;
+	s=arc-20240116; t=1718802273; c=relaxed/simple;
+	bh=jRIgtNfssuzajYyNgLJCWuj5EYFb3q1aSXDtapevWBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YGtdDHe4xpftFAjsF+eDyrcqYb/INSB55813d9vPbFe6fhQbdilYBJpOgQBvz2xWL9BVd6xuU7MpXP9CCjC3gyRmDyrHcfnB3YkquMj0yNRGsG/jh48vxntOTXJQvK4tYSRTw7JZAXmdw4IekmMREhz/rSJEoBZt2NvkmLUxsDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y134mFdO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lb/PWo3Q34xWrOapaYS5a3G14ktCgCERtl1zKp2EbddVG8/5IixFEhocCqWleyGzcA7EO5Yr4q87X4Se+FI1fJ7ii9HAtfXahi7I8heX3IBg/8s4MScaP4mS9tv9LEzYbuo7JPrfCnBch04N1MyVLkSlGwKSEvw73XKF6n4QwGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r8ifDTVi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y134mFdO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 939BCC2BBFC;
-	Wed, 19 Jun 2024 13:04:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r8ifDTVi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94BBBC2BBFC;
+	Wed, 19 Jun 2024 13:04:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802270;
-	bh=848hdcEFA8QQRiPjLogxnqrzm9WSSRk3QWuNX6lA2yE=;
+	s=korg; t=1718802273;
+	bh=jRIgtNfssuzajYyNgLJCWuj5EYFb3q1aSXDtapevWBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y134mFdO+VOTwwqR45RNSXzuQqbMb87IT66iNT8pGwGTUW6neI8iDIx+DYu3nYQna
-	 dQJi3fTryVPbwM10EJXwwS86Megqsc0ABm8z0ojSVH20hcDx+z5tFn6dB6o4PPW2V9
-	 +A+B7vJAlyCvzYdTZq+FNlawO/4Naf8tRzcVQwtE=
+	b=r8ifDTViU7uJLC2lBOvazbmj5ccJiPRRqTw3dUJs0RwUAwbPGniVQhO9VvhaWOB0f
+	 8YXbCIeGBbvyoOixoiOJraI+zN1HO3zU8Ttq+6Lj/6PJ5sgNVBwfUaL/NKNQxfrvgL
+	 GpYD0QYUXHWSNVWxU9h6ZM53vEU5agEEDJgzqFmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Forbes <ian.forbes@broadcom.com>,
-	Zack Rusin <zack.rusin@broadcom.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 139/267] drm/vmwgfx: Dont memcmp equivalent pointers
-Date: Wed, 19 Jun 2024 14:54:50 +0200
-Message-ID: <20240619125611.683397158@linuxfoundation.org>
+Subject: [PATCH 6.6 140/267] af_unix: Annotate data-race of sk->sk_state in unix_accept().
+Date: Wed, 19 Jun 2024 14:54:51 +0200
+Message-ID: <20240619125611.721295017@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -51,38 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Forbes <ian.forbes@broadcom.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 5703fc058efdafcdd6b70776ee562478f0753acb ]
+[ Upstream commit 1b536948e805aab61a48c5aa5db10c9afee880bd ]
 
-These pointers are frequently the same and memcmp does not compare the
-pointers before comparing their contents so this was wasting cycles
-comparing 16 KiB of memory which will always be equal.
+Once sk->sk_state is changed to TCP_LISTEN, it never changes.
 
-Fixes: bb6780aa5a1d ("drm/vmwgfx: Diff cursors when using cmds")
-Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240328190716.27367-1-ian.forbes@broadcom.com
+unix_accept() takes the advantage and reads sk->sk_state without
+holding unix_state_lock().
+
+Let's use READ_ONCE() there.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_kms.c | 2 +-
+ net/unix/af_unix.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-index 93e2a27daed0c..08f2470edab27 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-@@ -216,7 +216,7 @@ static bool vmw_du_cursor_plane_has_changed(struct vmw_plane_state *old_vps,
- 	new_image = vmw_du_cursor_plane_acquire_image(new_vps);
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -1710,7 +1710,7 @@ static int unix_accept(struct socket *so
+ 		goto out;
  
- 	changed = false;
--	if (old_image && new_image)
-+	if (old_image && new_image && old_image != new_image)
- 		changed = memcmp(old_image, new_image, size) != 0;
+ 	err = -EINVAL;
+-	if (sk->sk_state != TCP_LISTEN)
++	if (READ_ONCE(sk->sk_state) != TCP_LISTEN)
+ 		goto out;
  
- 	return changed;
--- 
-2.43.0
-
+ 	/* If socket state is TCP_LISTEN it cannot change (for now...),
 
 
