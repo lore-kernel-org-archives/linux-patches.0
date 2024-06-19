@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A8A143873;
-	Wed, 19 Jun 2024 13:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E590513DB90;
+	Wed, 19 Jun 2024 13:01:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802087; cv=none; b=i0B9e+h7Bhxcf9PFMabgqWZNWpAZ7RCmQd7yG5JLUEm33ZzsnEruNAgqeyhd6U60LW9HqZqgXs31zaok6mi4DDoyAumbiyX41BziJ/uG05cOeKAAJQD+9d5tV0TkHcrOAhxK8r+KYcNLCsVV2Ws3gK3lCZmX1uPFcYEYCi++tkA=
+	t=1718802090; cv=none; b=qvUxAn3cnERiy8Tua4oqlyEIRKJ1WLABpzFP9fsuWv40ywTnxY8AWTh+bbe9r9/CMkmYerlgz8tiiXH4z0JZXjXdvxozXXpw9kpbqq8r8wvVW7J41YGBdw96LOwJgdLSt10x8DQacTeIl4jhRDI52QCx6iIJNJfPXV0sbLc4rWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802087; c=relaxed/simple;
-	bh=YKK5CR3KuQqA/5lqDFU7RzK49ua/fYMJ6YaNjWH7BAU=;
+	s=arc-20240116; t=1718802090; c=relaxed/simple;
+	bh=WMfxHNsmxmhx9JgcPc/Vu1GpFlYAwNgpL+LcQYM1QaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QDQiG2gC12+m0jpu+/PzyfiP45U31ZDkMOWLywoujnN8+UvqyglRRihwrTD2tQdRKEspiUb06tQwqoL+sFh24ImV8rSPhqAtEeuyQl7z2S+2pxa2uBJsJx2LAq06hoq6xs5KTHNl8VTQ+wSrSrLycM5VqVaWG4I6yf+9AiwZzTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ClbB+r2C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aKb5Ssr9+CTTyAA7cCyqGeyDypduqn4mHjRAxnCPes63qgJH6tCxOzB7010cs8m1BaywVrjXuZs8WOa05f4mroS2W9QFEpGHtwspnQrSDYQk3RUgIfkiC+iJxWAt9/ss1KYxmOk2amp9piqsul4mnx/BIvuv0ozMQQRdCrF5POw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2UenQMEE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ClbB+r2C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76EF1C2BBFC;
-	Wed, 19 Jun 2024 13:01:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2UenQMEE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62D1BC2BBFC;
+	Wed, 19 Jun 2024 13:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802086;
-	bh=YKK5CR3KuQqA/5lqDFU7RzK49ua/fYMJ6YaNjWH7BAU=;
+	s=korg; t=1718802089;
+	bh=WMfxHNsmxmhx9JgcPc/Vu1GpFlYAwNgpL+LcQYM1QaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ClbB+r2CQZr7yXBYrz7Ukm6scL4d2kklo13h9L88NP6HvAuFvmQLXkZEccXdiz8rH
-	 gQVlV5UPqntSGtBkv/QxJctVGVqzETMLmUQEOWV4Ukq7awx9bnXk+GtI0eJNEbK6ZQ
-	 PqDb79nY6d183/0Wep1uBf0L1hCBn68mK+aTmc7c=
+	b=2UenQMEECGE6TPwoXZusBu1t78kC2YfsA74luwBroKzDGYK9eTGoM8Itb+bt7lGIY
+	 99BZsKFLOkhaDXj4AbxGJyWAmkuxoY47hXNwze/4Kn0hkaT922La05KvRPNSpxoc+z
+	 oGtOWrKDnMOtpJPabpaAZstNMuc1gw6uIrvjPpgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+c8166c541d3971bf6c87@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 077/267] nilfs2: fix nilfs_empty_dir() misjudgment and long loop on I/O errors
-Date: Wed, 19 Jun 2024 14:53:48 +0200
-Message-ID: <20240619125609.310208882@linuxfoundation.org>
+Subject: [PATCH 6.6 051/267] af_unix: Annotate data-races around sk->sk_state in unix_write_space() and poll().
+Date: Wed, 19 Jun 2024 14:53:22 +0200
+Message-ID: <20240619125608.321862156@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -52,49 +51,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 7373a51e7998b508af7136530f3a997b286ce81c ]
+[ Upstream commit eb0718fb3e97ad0d6f4529b810103451c90adf94 ]
 
-The error handling in nilfs_empty_dir() when a directory folio/page read
-fails is incorrect, as in the old ext2 implementation, and if the
-folio/page cannot be read or nilfs_check_folio() fails, it will falsely
-determine the directory as empty and corrupt the file system.
+unix_poll() and unix_dgram_poll() read sk->sk_state locklessly and
+calls unix_writable() which also reads sk->sk_state without holding
+unix_state_lock().
 
-In addition, since nilfs_empty_dir() does not immediately return on a
-failed folio/page read, but continues to loop, this can cause a long loop
-with I/O if i_size of the directory's inode is also corrupted, causing the
-log writer thread to wait and hang, as reported by syzbot.
+Let's use READ_ONCE() in unix_poll() and unix_dgram_poll() and pass
+it to unix_writable().
 
-Fix these issues by making nilfs_empty_dir() immediately return a false
-value (0) if it fails to get a directory folio/page.
+While at it, we remove TCP_SYN_SENT check in unix_dgram_poll() as
+that state does not exist for AF_UNIX socket since the code was added.
 
-Link: https://lkml.kernel.org/r/20240604134255.7165-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+c8166c541d3971bf6c87@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c8166c541d3971bf6c87
-Fixes: 2ba466d74ed7 ("nilfs2: directory entry operations")
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 1586a5877db9 ("af_unix: do not report POLLOUT on listeners")
+Fixes: 3c73419c09a5 ("af_unix: fix 'poll for write'/ connected DGRAM sockets")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/dir.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/unix/af_unix.c | 25 ++++++++++++-------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
 
-diff --git a/fs/nilfs2/dir.c b/fs/nilfs2/dir.c
-index c6b88be8a9d73..23a8357f127bc 100644
---- a/fs/nilfs2/dir.c
-+++ b/fs/nilfs2/dir.c
-@@ -627,7 +627,7 @@ int nilfs_empty_dir(struct inode *inode)
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 8d0918a112a9d..4a43091c95419 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -531,9 +531,9 @@ static int unix_dgram_peer_wake_me(struct sock *sk, struct sock *other)
+ 	return 0;
+ }
  
- 		kaddr = nilfs_get_page(inode, i, &page);
- 		if (IS_ERR(kaddr))
--			continue;
-+			return 0;
+-static int unix_writable(const struct sock *sk)
++static int unix_writable(const struct sock *sk, unsigned char state)
+ {
+-	return sk->sk_state != TCP_LISTEN &&
++	return state != TCP_LISTEN &&
+ 	       (refcount_read(&sk->sk_wmem_alloc) << 2) <= sk->sk_sndbuf;
+ }
  
- 		de = (struct nilfs_dir_entry *)kaddr;
- 		kaddr += nilfs_last_byte(inode, i) - NILFS_DIR_REC_LEN(1);
+@@ -542,7 +542,7 @@ static void unix_write_space(struct sock *sk)
+ 	struct socket_wq *wq;
+ 
+ 	rcu_read_lock();
+-	if (unix_writable(sk)) {
++	if (unix_writable(sk, READ_ONCE(sk->sk_state))) {
+ 		wq = rcu_dereference(sk->sk_wq);
+ 		if (skwq_has_sleeper(wq))
+ 			wake_up_interruptible_sync_poll(&wq->wait,
+@@ -3095,12 +3095,14 @@ static int unix_compat_ioctl(struct socket *sock, unsigned int cmd, unsigned lon
+ static __poll_t unix_poll(struct file *file, struct socket *sock, poll_table *wait)
+ {
+ 	struct sock *sk = sock->sk;
++	unsigned char state;
+ 	__poll_t mask;
+ 	u8 shutdown;
+ 
+ 	sock_poll_wait(file, sock, wait);
+ 	mask = 0;
+ 	shutdown = READ_ONCE(sk->sk_shutdown);
++	state = READ_ONCE(sk->sk_state);
+ 
+ 	/* exceptional events? */
+ 	if (READ_ONCE(sk->sk_err))
+@@ -3122,14 +3124,14 @@ static __poll_t unix_poll(struct file *file, struct socket *sock, poll_table *wa
+ 
+ 	/* Connection-based need to check for termination and startup */
+ 	if ((sk->sk_type == SOCK_STREAM || sk->sk_type == SOCK_SEQPACKET) &&
+-	    sk->sk_state == TCP_CLOSE)
++	    state == TCP_CLOSE)
+ 		mask |= EPOLLHUP;
+ 
+ 	/*
+ 	 * we set writable also when the other side has shut down the
+ 	 * connection. This prevents stuck sockets.
+ 	 */
+-	if (unix_writable(sk))
++	if (unix_writable(sk, state))
+ 		mask |= EPOLLOUT | EPOLLWRNORM | EPOLLWRBAND;
+ 
+ 	return mask;
+@@ -3140,12 +3142,14 @@ static __poll_t unix_dgram_poll(struct file *file, struct socket *sock,
+ {
+ 	struct sock *sk = sock->sk, *other;
+ 	unsigned int writable;
++	unsigned char state;
+ 	__poll_t mask;
+ 	u8 shutdown;
+ 
+ 	sock_poll_wait(file, sock, wait);
+ 	mask = 0;
+ 	shutdown = READ_ONCE(sk->sk_shutdown);
++	state = READ_ONCE(sk->sk_state);
+ 
+ 	/* exceptional events? */
+ 	if (READ_ONCE(sk->sk_err) ||
+@@ -3165,19 +3169,14 @@ static __poll_t unix_dgram_poll(struct file *file, struct socket *sock,
+ 		mask |= EPOLLIN | EPOLLRDNORM;
+ 
+ 	/* Connection-based need to check for termination and startup */
+-	if (sk->sk_type == SOCK_SEQPACKET) {
+-		if (sk->sk_state == TCP_CLOSE)
+-			mask |= EPOLLHUP;
+-		/* connection hasn't started yet? */
+-		if (sk->sk_state == TCP_SYN_SENT)
+-			return mask;
+-	}
++	if (sk->sk_type == SOCK_SEQPACKET && state == TCP_CLOSE)
++		mask |= EPOLLHUP;
+ 
+ 	/* No write status requested, avoid expensive OUT tests. */
+ 	if (!(poll_requested_events(wait) & (EPOLLWRBAND|EPOLLWRNORM|EPOLLOUT)))
+ 		return mask;
+ 
+-	writable = unix_writable(sk);
++	writable = unix_writable(sk, state);
+ 	if (writable) {
+ 		unix_state_lock(sk);
+ 
 -- 
 2.43.0
 
