@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D68143C43;
-	Wed, 19 Jun 2024 13:03:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3017143C43;
+	Wed, 19 Jun 2024 13:03:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802222; cv=none; b=QMEkQM88d/ylVRshWZLGykQG6B8qu6w+yvbkOGMujL5uyUOp4riCygN2tLRm13ffV2StIYoOveo+CVry0igHRXe4JOm6OWEsxMZUQLK7jZjH5V+Xtp/6B7i7jhzzf9GLyW1UjbAphnzqcJR+ZHYhu/+mkRaaAFw/g68UWm9R6aw=
+	t=1718802226; cv=none; b=Bjsbvmd4aWK/ifIqwGnyFwbcqEGunLGonT4027vBI3Wn2+iELrBTb87Pyd2QK2oyDowhRlNlfijdf97ZqLJbf1m4ck6T8CN+xUrY/Ai5hg0S48/4ClucflXsyllgaqbo8dnJmyj6lfdGD5NRO3Sdj5O/AMGP1IN6F3l++6+tZTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802222; c=relaxed/simple;
-	bh=vZPsptq6pb4IPVAJ6TcJm85DZLkNXdFejR5v2dR7xfU=;
+	s=arc-20240116; t=1718802226; c=relaxed/simple;
+	bh=covD3/NXmQmhfX8tkQ+nBcyVDLUyt/zJgZxwKRQILVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dj9vzsLAAuC9DOQ7uDWSEN9n70f5SjY9TVFSHyQH3CV3JV1w4k7GYL9HbFbyZ0T5GzEMkmZBphz8zp8N9auf1LHgOamqCNJGmzduNfZ2RpzkXs5ePyJInFPdhi+dSwOdWnmgyKsOvuI+yV3aCTODEYKh+pTMJrib+rps/wqGHhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SsF8hUMb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=koaBg08AgHpR+30ATvLpFGRc977t8dICCNbz0vH9fGgiuOAVOOGzR2FVW80QwcCXwjiYgxdl/g40H/Fcfypx82LYKz7ve9pqI42dlUow5v6xh4K48nNBearXPRUOvc3v603teIo0QSVins++/28Aw39NvQGPteBY5sdSFnLEwzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F4UePSC2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SsF8hUMb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B54AC2BBFC;
-	Wed, 19 Jun 2024 13:03:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F4UePSC2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 340DCC2BBFC;
+	Wed, 19 Jun 2024 13:03:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802222;
-	bh=vZPsptq6pb4IPVAJ6TcJm85DZLkNXdFejR5v2dR7xfU=;
+	s=korg; t=1718802225;
+	bh=covD3/NXmQmhfX8tkQ+nBcyVDLUyt/zJgZxwKRQILVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SsF8hUMbs7TCE4rGzcyWHRx3bQyi4WjQKTO/OUhP1BBvxAI6PtBumzFY/ocQfcrEy
-	 1xYhAJCvhSUT90s8H6/TVK0ip0GK9LiBfhQIoAhuYkLFkc3UFXYNd/F9pgg1AIhUnv
-	 rY8fvo6OO3l+uuvbD0vOCTCbGO9lAxgvccJOQfJc=
+	b=F4UePSC2d2FpOMBh7+N7QvP5ojkVd2Rt5yf4nmYOHrjff/NrRlE1C9WhYmj5vSCJ4
+	 e7lNXAojQ8lOhPHeLe/DLuMMvYWJF4gSsE2OpMLfoVMREXhhSyIx5kDQHnBpTmn4R3
+	 W2m+DlkpWXVcR4GwEAD3Mdo07CririyFHXDWtFOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Sunil Dhamne <amitsd@google.com>,
-	Ondrej Jirman <megi@xff.cz>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH 6.6 082/267] usb: typec: tcpm: fix use-after-free case in tcpm_register_source_caps
-Date: Wed, 19 Jun 2024 14:53:53 +0200
-Message-ID: <20240619125609.499503490@linuxfoundation.org>
+	Guenter Roeck <linux@roeck-us.net>,
+	Russell King <linux@armlinux.org.uk>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 117/267] clk: sifive: Do not register clkdevs for PRCI clocks
+Date: Wed, 19 Jun 2024 14:54:28 +0200
+Message-ID: <20240619125610.841815223@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -52,48 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Sunil Dhamne <amitsd@google.com>
+From: Samuel Holland <samuel.holland@sifive.com>
 
-commit e7e921918d905544500ca7a95889f898121ba886 upstream.
+[ Upstream commit 2607133196c35f31892ee199ce7ffa717bea4ad1 ]
 
-There could be a potential use-after-free case in
-tcpm_register_source_caps(). This could happen when:
- * new (say invalid) source caps are advertised
- * the existing source caps are unregistered
- * tcpm_register_source_caps() returns with an error as
-   usb_power_delivery_register_capabilities() fails
+These clkdevs were unnecessary, because systems using this driver always
+look up clocks using the devicetree. And as Russell King points out[1],
+since the provided device name was truncated, lookups via clkdev would
+never match.
 
-This causes port->partner_source_caps to hold on to the now freed source
-caps.
+Recently, commit 8d532528ff6a ("clkdev: report over-sized strings when
+creating clkdev entries") caused clkdev registration to fail due to the
+truncation, and this now prevents the driver from probing. Fix the
+driver by removing the clkdev registration.
 
-Reset port->partner_source_caps value to NULL after unregistering
-existing source caps.
-
-Fixes: 230ecdf71a64 ("usb: typec: tcpm: unregister existing source caps before re-registration")
-Cc: stable@vger.kernel.org
-Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
-Reviewed-by: Ondrej Jirman <megi@xff.cz>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20240514220134.2143181-1-amitsd@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/linux-clk/ZkfYqj+OcAxd9O2t@shell.armlinux.org.uk/ [1]
+Fixes: 30b8e27e3b58 ("clk: sifive: add a driver for the SiFive FU540 PRCI IP block")
+Fixes: 8d532528ff6a ("clkdev: report over-sized strings when creating clkdev entries")
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Closes: https://lore.kernel.org/linux-clk/7eda7621-0dde-4153-89e4-172e4c095d01@roeck-us.net/
+Suggested-by: Russell King <linux@armlinux.org.uk>
+Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
+Link: https://lore.kernel.org/r/20240528001432.1200403-1-samuel.holland@sifive.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/clk/sifive/sifive-prci.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -2436,8 +2436,10 @@ static int tcpm_register_sink_caps(struc
- 	memcpy(caps.pdo, port->sink_caps, sizeof(u32) * port->nr_sink_caps);
- 	caps.role = TYPEC_SINK;
+diff --git a/drivers/clk/sifive/sifive-prci.c b/drivers/clk/sifive/sifive-prci.c
+index af81eb835bc23..b1be6a2d24aa9 100644
+--- a/drivers/clk/sifive/sifive-prci.c
++++ b/drivers/clk/sifive/sifive-prci.c
+@@ -4,7 +4,6 @@
+  * Copyright (C) 2020 Zong Li
+  */
  
--	if (cap)
-+	if (cap) {
- 		usb_power_delivery_unregister_capabilities(cap);
-+		port->partner_source_caps = NULL;
-+	}
+-#include <linux/clkdev.h>
+ #include <linux/delay.h>
+ #include <linux/io.h>
+ #include <linux/of.h>
+@@ -536,13 +535,6 @@ static int __prci_register_clocks(struct device *dev, struct __prci_data *pd,
+ 			return r;
+ 		}
  
- 	cap = usb_power_delivery_register_capabilities(port->partner_pd, &caps);
- 	if (IS_ERR(cap))
+-		r = clk_hw_register_clkdev(&pic->hw, pic->name, dev_name(dev));
+-		if (r) {
+-			dev_warn(dev, "Failed to register clkdev for %s: %d\n",
+-				 init.name, r);
+-			return r;
+-		}
+-
+ 		pd->hw_clks.hws[i] = &pic->hw;
+ 	}
+ 
+-- 
+2.43.0
+
 
 
