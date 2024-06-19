@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB9B12FB31;
-	Wed, 19 Jun 2024 13:09:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A27212FB31;
+	Wed, 19 Jun 2024 13:09:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802594; cv=none; b=hVPBIs4uRqT/k5jRMFvENohSOHNwhDtP45Hkqx/VYhHCF4asHGJgDouuKuHUGx2sAFBvgZwk+NgCMD7H0A2Gom1dFJ5WBR+YvlfnAypbp4KK4QMmZdjWpXOGb7U0lowyTwfmv+eP/w1PeypzsAEbJ1SGALFx6D1EWv40ijHFBZY=
+	t=1718802597; cv=none; b=j8uZDA9kLnc47esdmWrNNKyguKevldPu0eJC7nfByAI/3XdjVjBUHmgw2PpHyC+lveNjkycfAUw+pznLwcI/nWVDNJKWkwFiYmcg/OVHD5ynehFu4k092/zKLpuEM3fGWBzQMnjNsyf5Jqq7/jXjD3u9qhBqE6jqTOmpzaL0j/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802594; c=relaxed/simple;
-	bh=XBjeOhCRQmqJLqO7p6lwr6yXekT/5Y61dCOSbiXE5xk=;
+	s=arc-20240116; t=1718802597; c=relaxed/simple;
+	bh=ozDu2eVXejd5SDD0eI3Oj6N0wD0nMnAQnyrPnXODm/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JeJwsxA7BbD1Un76Mu6/VUq7EaCA9hNIcfqukvAUKAbp9ALdBXG/eyHdT1+5JKEGGAtOx/5Ni23H41ogaUY9nQcli9FbacYTPIo+YxePAooYTPfcV252clq3lBIv66W77FiJ+8OL+7AlxAIGYgxinBXGACyWb6q9+99W+7d1lPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v5QGkvcs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KOd0PgPjCJQXAIpS423siKJQJjVX4bhq9Z4HBmKjQP3BnONEBWigaLzgiTLnmihbTMO4DBxJe6MEq/4OiS3lHOwGCDLwVF76oTtjrpjIViuVZ+ptucXaVbbsMr2ZsyqxkSt5pmMx0lJILEJkyytF+qdERJdrHEDsC4VkAQ/TlSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fLGeL3Ps; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v5QGkvcs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9CEFC2BBFC;
-	Wed, 19 Jun 2024 13:09:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fLGeL3Ps"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEAEAC2BBFC;
+	Wed, 19 Jun 2024 13:09:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802594;
-	bh=XBjeOhCRQmqJLqO7p6lwr6yXekT/5Y61dCOSbiXE5xk=;
+	s=korg; t=1718802597;
+	bh=ozDu2eVXejd5SDD0eI3Oj6N0wD0nMnAQnyrPnXODm/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v5QGkvcsEQsgFLnuX+kl2v8Ms2/qFd6of3tJr6sKDaS20EqM4oeBq5Fas2qnGEA3D
-	 r4+LU0G2aAJJi2D0sflfF/fNZiMILTBy64SJGwR2ufrEIDS8edJh7Tc4ehuYjPaNuB
-	 b1Z5f2vtpbaItpyOVlKYRAWT77ueTZuU24TIWDJ8=
+	b=fLGeL3PsDteA1RydNXvHcRsDeWLdxp995xvN0SCYo8wk8pAgC4jsMHW9DLXM5voCP
+	 F0QOUf3aci49j4+/xgrOhzW5jPxc/fnFZMVONm6ZWfOFZFsZordhlZKyUG/odjLH66
+	 tbv5RnlgVigvGVw5yOBR5DkyJvwP9IZ5R46VY6Xo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Benjamin Poirier <bpoirier@nvidia.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Po-Hsu Lin <po-hsu.lin@canonical.com>
-Subject: [PATCH 6.6 248/267] selftests: forwarding: Avoid failures to source net/lib.sh
-Date: Wed, 19 Jun 2024 14:56:39 +0200
-Message-ID: <20240619125615.839554332@linuxfoundation.org>
+	Beleswar Padhi <b-padhi@ti.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 6.6 249/267] remoteproc: k3-r5: Jump to error handling labels in start/stop errors
+Date: Wed, 19 Jun 2024 14:56:40 +0200
+Message-ID: <20240619125615.877003646@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -54,123 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Poirier <bpoirier@nvidia.com>
+From: Beleswar Padhi <b-padhi@ti.com>
 
-commit 2114e83381d3289a88378850f43069e79f848083 upstream.
+commit 1dc7242f6ee0c99852cb90676d7fe201cf5de422 upstream.
 
-The expression "source ../lib.sh" added to net/forwarding/lib.sh in commit
-25ae948b4478 ("selftests/net: add lib.sh") does not work for tests outside
-net/forwarding which source net/forwarding/lib.sh (1). It also does not
-work in some cases where only a subset of tests are exported (2).
+In case of errors during core start operation from sysfs, the driver
+directly returns with the -EPERM error code. Fix this to ensure that
+mailbox channels are freed on error before returning by jumping to the
+'put_mbox' error handling label. Similarly, jump to the 'out' error
+handling label to return with required -EPERM error code during the
+core stop operation from sysfs.
 
-Avoid the problems mentioned above by replacing the faulty expression with
-a copy of the content from net/lib.sh which is used by files under
-net/forwarding.
-
-A more thorough solution which avoids duplicating content between
-net/lib.sh and net/forwarding/lib.sh has been posted here:
-https://lore.kernel.org/netdev/20231222135836.992841-1-bpoirier@nvidia.com/
-
-The approach in the current patch is a stopgap solution to avoid submitting
-large changes at the eleventh hour of this development cycle.
-
-Example of problem 1)
-
-tools/testing/selftests/drivers/net/bonding$ ./dev_addr_lists.sh
-./net_forwarding_lib.sh: line 41: ../lib.sh: No such file or directory
-TEST: bonding cleanup mode active-backup                            [ OK ]
-TEST: bonding cleanup mode 802.3ad                                  [ OK ]
-TEST: bonding LACPDU multicast address to slave (from bond down)    [ OK ]
-TEST: bonding LACPDU multicast address to slave (from bond up)      [ OK ]
-
-An error message is printed but since the test does not use functions from
-net/lib.sh, the test results are not affected.
-
-Example of problem 2)
-
-tools/testing/selftests$ make install TARGETS="net/forwarding"
-tools/testing/selftests$ cd kselftest_install/net/forwarding/
-tools/testing/selftests/kselftest_install/net/forwarding$ ./pedit_ip.sh veth{0..3}
-lib.sh: line 41: ../lib.sh: No such file or directory
-TEST: ping                                                          [ OK ]
-TEST: ping6                                                         [ OK ]
-./pedit_ip.sh: line 135: busywait: command not found
-TEST: dev veth1 ingress pedit ip src set 198.51.100.1               [FAIL]
-        Expected to get 10 packets, but got .
-./pedit_ip.sh: line 135: busywait: command not found
-TEST: dev veth2 egress pedit ip src set 198.51.100.1                [FAIL]
-        Expected to get 10 packets, but got .
-./pedit_ip.sh: line 135: busywait: command not found
-TEST: dev veth1 ingress pedit ip dst set 198.51.100.1               [FAIL]
-        Expected to get 10 packets, but got .
-./pedit_ip.sh: line 135: busywait: command not found
-TEST: dev veth2 egress pedit ip dst set 198.51.100.1                [FAIL]
-        Expected to get 10 packets, but got .
-./pedit_ip.sh: line 135: busywait: command not found
-TEST: dev veth1 ingress pedit ip6 src set 2001:db8:2::1             [FAIL]
-        Expected to get 10 packets, but got .
-./pedit_ip.sh: line 135: busywait: command not found
-TEST: dev veth2 egress pedit ip6 src set 2001:db8:2::1              [FAIL]
-        Expected to get 10 packets, but got .
-./pedit_ip.sh: line 135: busywait: command not found
-TEST: dev veth1 ingress pedit ip6 dst set 2001:db8:2::1             [FAIL]
-        Expected to get 10 packets, but got .
-./pedit_ip.sh: line 135: busywait: command not found
-TEST: dev veth2 egress pedit ip6 dst set 2001:db8:2::1              [FAIL]
-        Expected to get 10 packets, but got .
-
-In this case, the test results are affected.
-
-Fixes: 25ae948b4478 ("selftests/net: add lib.sh")
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Suggested-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Tested-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Benjamin Poirier <bpoirier@nvidia.com>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://lore.kernel.org/r/20240104141109.100672-1-bpoirier@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Po-Hsu Lin <po-hsu.lin@canonical.com>
+Fixes: 3c8a9066d584 ("remoteproc: k3-r5: Do not allow core1 to power up before core0 via sysfs")
+Signed-off-by: Beleswar Padhi <b-padhi@ti.com>
+Link: https://lore.kernel.org/r/20240506141849.1735679-1-b-padhi@ti.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/forwarding/lib.sh |   27 +++++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ drivers/remoteproc/ti_k3_r5_remoteproc.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/tools/testing/selftests/net/forwarding/lib.sh
-+++ b/tools/testing/selftests/net/forwarding/lib.sh
-@@ -38,7 +38,32 @@ if [[ -f $relative_path/forwarding.confi
- 	source "$relative_path/forwarding.config"
- fi
+--- a/drivers/remoteproc/ti_k3_r5_remoteproc.c
++++ b/drivers/remoteproc/ti_k3_r5_remoteproc.c
+@@ -580,7 +580,8 @@ static int k3_r5_rproc_start(struct rpro
+ 		if (core != core0 && core0->rproc->state == RPROC_OFFLINE) {
+ 			dev_err(dev, "%s: can not start core 1 before core 0\n",
+ 				__func__);
+-			return -EPERM;
++			ret = -EPERM;
++			goto put_mbox;
+ 		}
  
--source ../lib.sh
-+# Kselftest framework requirement - SKIP code is 4.
-+ksft_skip=4
-+
-+busywait()
-+{
-+	local timeout=$1; shift
-+
-+	local start_time="$(date -u +%s%3N)"
-+	while true
-+	do
-+		local out
-+		out=$("$@")
-+		local ret=$?
-+		if ((!ret)); then
-+			echo -n "$out"
-+			return 0
-+		fi
-+
-+		local current_time="$(date -u +%s%3N)"
-+		if ((current_time - start_time > timeout)); then
-+			echo -n "$out"
-+			return 1
-+		fi
-+	done
-+}
-+
- ##############################################################################
- # Sanity checks
+ 		ret = k3_r5_core_run(core);
+@@ -648,7 +649,8 @@ static int k3_r5_rproc_stop(struct rproc
+ 		if (core != core1 && core1->rproc->state != RPROC_OFFLINE) {
+ 			dev_err(dev, "%s: can not stop core 0 before core 1\n",
+ 				__func__);
+-			return -EPERM;
++			ret = -EPERM;
++			goto out;
+ 		}
  
+ 		ret = k3_r5_core_halt(core);
 
 
