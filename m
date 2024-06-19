@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61FA04D9EA;
-	Wed, 19 Jun 2024 13:26:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585A94D9EA;
+	Wed, 19 Jun 2024 13:26:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803583; cv=none; b=fcWGFMaqsJmv1Eg6/SZYhEP0IQAHhpLbE1+ywES/UDOZLNoWJvRaZ0k9UOmUaPGl7JgpIUAKAHlBnNn0FsFPY5I9Ht01899sTYlnPiAs0OT5tHES0fun6HvRX1V6IDvqwqI7ZyzYr4INhB3HJqZLweV++IrcI4lcKIgBHzIc0eE=
+	t=1718803586; cv=none; b=dkW7bvvOUyiwigaHkg5aG4a0V6vIMTbsWNAAuuQlTKsTfG2KUssCFVXIl0Vcw59tWpsMjYjd1Gi0SPXFGSgB6s8NAwRV41cNn2us6/IogsYQ2o48Vlvkath8dgHt3VDkYaW+0ocZUi+R9gpKvfgv4tBH6Uj4MW0vkutUv2JgJzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803583; c=relaxed/simple;
-	bh=QpCcz8TFsFYjDqNkVgxdOLfw2L3ea88FpAyihwrwnQA=;
+	s=arc-20240116; t=1718803586; c=relaxed/simple;
+	bh=QVEt0jS8yKgcYRGK4eoxS8B3eFteVMjcajqDwimHo9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QoNtHvLCiR7RP2hf1uf/63NDo9x2kAe9rIa22UXaep9RyytJ+z7lI+AJDIsYHnsBzkPXe2ZVCzIZ0pfA0XMXPu0vMBG6MCYUhqZFcIuJtexBuHw55ngdlXf085D8e+/c2w2mQAJRmj6Rcv01qSAldH/nczbHKv17cDIIYCBvo10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hiofuf5a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kdt379K9kNHBJP0oNSvhEnvASzKN23GZBkmB0ZGowpeZVfPM86bMG07xzd4p/nvHI6bjQDEisT/swWaRn2adTdf4zkXjJLQlK1+PvbAkVn2PjuB4yXDOKHT2DKj5SYWX7AHW/8fyv2xK65bLeAofM2Je+LicvepK9nkgo6bPRK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xvJSoaTt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hiofuf5a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCFD4C2BBFC;
-	Wed, 19 Jun 2024 13:26:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xvJSoaTt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D321EC2BBFC;
+	Wed, 19 Jun 2024 13:26:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803583;
-	bh=QpCcz8TFsFYjDqNkVgxdOLfw2L3ea88FpAyihwrwnQA=;
+	s=korg; t=1718803586;
+	bh=QVEt0jS8yKgcYRGK4eoxS8B3eFteVMjcajqDwimHo9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hiofuf5aggY2NZOrPzaXN/1Um4XJK1+oUXE9jafzW6bN4kssXISRrTR6rAAn6Bduv
-	 E1LRD6psi8uZzziTbmVkZH0S39oguxpoSpI30ZbOkfnhUZ0/NbKfX5IadD2vKRgoQG
-	 wRUT3M6VyvEf0/tMHarksroHgmKfICIBHMifuHSQ=
+	b=xvJSoaTt82kEmlYblaJPOiFjVvZe2IlP3Vas/7qj1X/JreXBczU1hTadE5AgVnaYI
+	 5V76wrvaLO8+Z+u9xSQlCUwA7/DMU7/qib9MGIsv7k9PSncvHdN6cF7A33oX0UYF8K
+	 Cuys/13fTKVsN49FqCiEXpbgf8tt5KEG2JKeVcpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
 	Johannes Berg <johannes.berg@intel.com>,
+	Liad Kaufman <liad.kaufman@intel.com>,
+	Luciano Coelho <luciano.coelho@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 005/217] wifi: cfg80211: pmsr: use correct nla_get_uX functions
-Date: Wed, 19 Jun 2024 14:54:08 +0200
-Message-ID: <20240619125556.707058788@linuxfoundation.org>
+Subject: [PATCH 6.1 006/217] wifi: iwlwifi: mvm: revert gen2 TX A-MPDU size to 64
+Date: Wed, 19 Jun 2024 14:54:09 +0200
+Message-ID: <20240619125556.745971715@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -51,83 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit ab904521f4de52fef4f179d2dfc1877645ef5f5c ]
+[ Upstream commit 4a7aace2899711592327463c1a29ffee44fcc66e ]
 
-The commit 9bb7e0f24e7e ("cfg80211: add peer measurement with FTM
-initiator API") defines four attributes NL80211_PMSR_FTM_REQ_ATTR_
-{NUM_BURSTS_EXP}/{BURST_PERIOD}/{BURST_DURATION}/{FTMS_PER_BURST} in
-following ways.
+We don't actually support >64 even for HE devices, so revert
+back to 64. This fixes an issue where the session is refused
+because the queue is configured differently from the actual
+session later.
 
-static const struct nla_policy
-nl80211_pmsr_ftm_req_attr_policy[NL80211_PMSR_FTM_REQ_ATTR_MAX + 1] = {
-    ...
-    [NL80211_PMSR_FTM_REQ_ATTR_NUM_BURSTS_EXP] =
-        NLA_POLICY_MAX(NLA_U8, 15),
-    [NL80211_PMSR_FTM_REQ_ATTR_BURST_PERIOD] = { .type = NLA_U16 },
-    [NL80211_PMSR_FTM_REQ_ATTR_BURST_DURATION] =
-        NLA_POLICY_MAX(NLA_U8, 15),
-    [NL80211_PMSR_FTM_REQ_ATTR_FTMS_PER_BURST] =
-        NLA_POLICY_MAX(NLA_U8, 31),
-    ...
-};
-
-That is, those attributes are expected to be NLA_U8 and NLA_U16 types.
-However, the consumers of these attributes in `pmsr_parse_ftm` blindly
-all use `nla_get_u32`, which is incorrect and causes functionality issues
-on little-endian platforms. Hence, fix them with the correct `nla_get_u8`
-and `nla_get_u16` functions.
-
-Fixes: 9bb7e0f24e7e ("cfg80211: add peer measurement with FTM initiator API")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Link: https://msgid.link/20240521075059.47999-1-linma@zju.edu.cn
+Fixes: 514c30696fbc ("iwlwifi: add support for IEEE802.11ax")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Liad Kaufman <liad.kaufman@intel.com>
+Reviewed-by: Luciano Coelho <luciano.coelho@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240510170500.52f7b4cf83aa.If47e43adddf7fe250ed7f5571fbb35d8221c7c47@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/pmsr.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/rs.h | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/net/wireless/pmsr.c b/net/wireless/pmsr.c
-index 2bc647720cda5..d26daa0370e71 100644
---- a/net/wireless/pmsr.c
-+++ b/net/wireless/pmsr.c
-@@ -56,7 +56,7 @@ static int pmsr_parse_ftm(struct cfg80211_registered_device *rdev,
- 	out->ftm.burst_period = 0;
- 	if (tb[NL80211_PMSR_FTM_REQ_ATTR_BURST_PERIOD])
- 		out->ftm.burst_period =
--			nla_get_u32(tb[NL80211_PMSR_FTM_REQ_ATTR_BURST_PERIOD]);
-+			nla_get_u16(tb[NL80211_PMSR_FTM_REQ_ATTR_BURST_PERIOD]);
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rs.h b/drivers/net/wireless/intel/iwlwifi/mvm/rs.h
+index b7bc8c1b2ddae..00f04f675cbbb 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/rs.h
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/rs.h
+@@ -123,13 +123,8 @@ enum {
  
- 	out->ftm.asap = !!tb[NL80211_PMSR_FTM_REQ_ATTR_ASAP];
- 	if (out->ftm.asap && !capa->ftm.asap) {
-@@ -75,7 +75,7 @@ static int pmsr_parse_ftm(struct cfg80211_registered_device *rdev,
- 	out->ftm.num_bursts_exp = 0;
- 	if (tb[NL80211_PMSR_FTM_REQ_ATTR_NUM_BURSTS_EXP])
- 		out->ftm.num_bursts_exp =
--			nla_get_u32(tb[NL80211_PMSR_FTM_REQ_ATTR_NUM_BURSTS_EXP]);
-+			nla_get_u8(tb[NL80211_PMSR_FTM_REQ_ATTR_NUM_BURSTS_EXP]);
+ #define LINK_QUAL_AGG_FRAME_LIMIT_DEF	(63)
+ #define LINK_QUAL_AGG_FRAME_LIMIT_MAX	(63)
+-/*
+- * FIXME - various places in firmware API still use u8,
+- * e.g. LQ command and SCD config command.
+- * This should be 256 instead.
+- */
+-#define LINK_QUAL_AGG_FRAME_LIMIT_GEN2_DEF	(255)
+-#define LINK_QUAL_AGG_FRAME_LIMIT_GEN2_MAX	(255)
++#define LINK_QUAL_AGG_FRAME_LIMIT_GEN2_DEF	(64)
++#define LINK_QUAL_AGG_FRAME_LIMIT_GEN2_MAX	(64)
+ #define LINK_QUAL_AGG_FRAME_LIMIT_MIN	(0)
  
- 	if (capa->ftm.max_bursts_exponent >= 0 &&
- 	    out->ftm.num_bursts_exp > capa->ftm.max_bursts_exponent) {
-@@ -88,7 +88,7 @@ static int pmsr_parse_ftm(struct cfg80211_registered_device *rdev,
- 	out->ftm.burst_duration = 15;
- 	if (tb[NL80211_PMSR_FTM_REQ_ATTR_BURST_DURATION])
- 		out->ftm.burst_duration =
--			nla_get_u32(tb[NL80211_PMSR_FTM_REQ_ATTR_BURST_DURATION]);
-+			nla_get_u8(tb[NL80211_PMSR_FTM_REQ_ATTR_BURST_DURATION]);
- 
- 	out->ftm.ftms_per_burst = 0;
- 	if (tb[NL80211_PMSR_FTM_REQ_ATTR_FTMS_PER_BURST])
-@@ -107,7 +107,7 @@ static int pmsr_parse_ftm(struct cfg80211_registered_device *rdev,
- 	out->ftm.ftmr_retries = 3;
- 	if (tb[NL80211_PMSR_FTM_REQ_ATTR_NUM_FTMR_RETRIES])
- 		out->ftm.ftmr_retries =
--			nla_get_u32(tb[NL80211_PMSR_FTM_REQ_ATTR_NUM_FTMR_RETRIES]);
-+			nla_get_u8(tb[NL80211_PMSR_FTM_REQ_ATTR_NUM_FTMR_RETRIES]);
- 
- 	out->ftm.request_lci = !!tb[NL80211_PMSR_FTM_REQ_ATTR_REQUEST_LCI];
- 	if (out->ftm.request_lci && !capa->ftm.request_lci) {
+ #define LQ_SIZE		2	/* 2 mode tables:  "Active" and "Search" */
 -- 
 2.43.0
 
