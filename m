@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B4113E409;
-	Wed, 19 Jun 2024 13:28:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 195A113E409;
+	Wed, 19 Jun 2024 13:28:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803725; cv=none; b=WPCgfn1CIzKSp1RJL45WxxYM0/bgqTcT6dWvquY4NVtxz6Pg55bFYK9tWkWyN5h8QNs99gqgKyOs7N+J5CGWWZl/GpSLwCDYa7K/dcUSgZOahNFMqzcxBzrgLM+7fOQqhMgdgxH5fEM5kleGWD4gvdVdXFcYqwrnH2TFwZd18Bg=
+	t=1718803728; cv=none; b=JiqHTdFLSEwvOBQElVjHg4mVG9xozc1ELtEmwRxngbXV/IxWdSJbwhRzIqzTaNbMniFYBhHAzEfdmzBsoSiFKcpsKE9PCc3MWtHjvT88cUj4tW9y6tjoAe23i7RcKtV53G8z0GCAAIBTkfXNsksyMsNuOklz/ST7YbymCAAy2ZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803725; c=relaxed/simple;
-	bh=2Zjw+wXT1tkJbBawKLC2XYUGJOk1g9cVuijasova+UQ=;
+	s=arc-20240116; t=1718803728; c=relaxed/simple;
+	bh=4Kn4V8tc8Dg9hRmbI/ktmENWHIMZVCbixGVM3VltUkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iFSIfTh96D72AGKytfX1BF9qRdCiEDTF7E4Jc27le1L3KuB72XYAHHgMKuNCowBOsieX+iZPZ8rO0B8FeUqFNh1HKJ78F3nph7DuKxTlG5ckKto8iYcWQaT6sDnQMSFz+njpI9TYVY2c7NH4++RGK1bOBJy6R09lBRMzQkjEqFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TAkd89T8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OUYuCA0IoX7lZFikULLC+pHw/ySsPBb2nMRe8yQ7sTk56PSIABKvxeJsqZPRITMnMK5Yoc6aoGasJtdZRaGTJkNRS+uRiWk5Za+2/mTITISWUvCqIyKtN9MVO61Lu+a0ybl0Kk8xxKD0w2sRulGaFRFUJSMZOXWLV0RBOrp2HDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uz8ppCil; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TAkd89T8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EAC2C2BBFC;
-	Wed, 19 Jun 2024 13:28:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uz8ppCil"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94943C2BBFC;
+	Wed, 19 Jun 2024 13:28:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803725;
-	bh=2Zjw+wXT1tkJbBawKLC2XYUGJOk1g9cVuijasova+UQ=;
+	s=korg; t=1718803728;
+	bh=4Kn4V8tc8Dg9hRmbI/ktmENWHIMZVCbixGVM3VltUkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TAkd89T841CCFvWuQ2/1UaeMdJN+CJxDdW1dj9WWbqZ4dXnTeqSFxBI1Z22NeZxiR
-	 qIq6GMht7Y9nicvw/+LJKmKInQQTkJ7unnGJ0MgmFClcGa62A82Zrr5AhDBNbwL0i4
-	 e/MNXDc0g1Ul+fSFFICkrKzk5Df7WRKPlOnYwifE=
+	b=uz8ppCilTF77CvNnlHakCTeerTeNE8JtkhKQo7GVJKYomRVsjmo5pR2wnjm87TzNc
+	 bBVpga09cf+NXwg2hz9IKbKFT9/ntN1FG/WDFoibayjZG1SpywP120Kzj1NG5nOTlz
+	 AoCC0ug6NYCev3drxXIlKV9cNlqaAdunw7+8AuMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+c8166c541d3971bf6c87@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 083/217] nilfs2: fix nilfs_empty_dir() misjudgment and long loop on I/O errors
-Date: Wed, 19 Jun 2024 14:55:26 +0200
-Message-ID: <20240619125559.891470904@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 084/217] io_uring: check for non-NULL file pointer in io_file_can_poll()
+Date: Wed, 19 Jun 2024 14:55:27 +0200
+Message-ID: <20240619125559.930211343@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -52,51 +49,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 7373a51e7998b508af7136530f3a997b286ce81c ]
+commit 5fc16fa5f13b3c06fdb959ef262050bd810416a2 upstream.
 
-The error handling in nilfs_empty_dir() when a directory folio/page read
-fails is incorrect, as in the old ext2 implementation, and if the
-folio/page cannot be read or nilfs_check_folio() fails, it will falsely
-determine the directory as empty and corrupt the file system.
+In earlier kernels, it was possible to trigger a NULL pointer
+dereference off the forced async preparation path, if no file had
+been assigned. The trace leading to that looks as follows:
 
-In addition, since nilfs_empty_dir() does not immediately return on a
-failed folio/page read, but continues to loop, this can cause a long loop
-with I/O if i_size of the directory's inode is also corrupted, causing the
-log writer thread to wait and hang, as reported by syzbot.
+BUG: kernel NULL pointer dereference, address: 00000000000000b0
+PGD 0 P4D 0
+Oops: 0000 [#1] PREEMPT SMP
+CPU: 67 PID: 1633 Comm: buf-ring-invali Not tainted 6.8.0-rc3+ #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS unknown 2/2/2022
+RIP: 0010:io_buffer_select+0xc3/0x210
+Code: 00 00 48 39 d1 0f 82 ae 00 00 00 48 81 4b 48 00 00 01 00 48 89 73 70 0f b7 50 0c 66 89 53 42 85 ed 0f 85 d2 00 00 00 48 8b 13 <48> 8b 92 b0 00 00 00 48 83 7a 40 00 0f 84 21 01 00 00 4c 8b 20 5b
+RSP: 0018:ffffb7bec38c7d88 EFLAGS: 00010246
+RAX: ffff97af2be61000 RBX: ffff97af234f1700 RCX: 0000000000000040
+RDX: 0000000000000000 RSI: ffff97aecfb04820 RDI: ffff97af234f1700
+RBP: 0000000000000000 R08: 0000000000200030 R09: 0000000000000020
+R10: ffffb7bec38c7dc8 R11: 000000000000c000 R12: ffffb7bec38c7db8
+R13: ffff97aecfb05800 R14: ffff97aecfb05800 R15: ffff97af2be5e000
+FS:  00007f852f74b740(0000) GS:ffff97b1eeec0000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00000000000000b0 CR3: 000000016deab005 CR4: 0000000000370ef0
+Call Trace:
+ <TASK>
+ ? __die+0x1f/0x60
+ ? page_fault_oops+0x14d/0x420
+ ? do_user_addr_fault+0x61/0x6a0
+ ? exc_page_fault+0x6c/0x150
+ ? asm_exc_page_fault+0x22/0x30
+ ? io_buffer_select+0xc3/0x210
+ __io_import_iovec+0xb5/0x120
+ io_readv_prep_async+0x36/0x70
+ io_queue_sqe_fallback+0x20/0x260
+ io_submit_sqes+0x314/0x630
+ __do_sys_io_uring_enter+0x339/0xbc0
+ ? __do_sys_io_uring_register+0x11b/0xc50
+ ? vm_mmap_pgoff+0xce/0x160
+ do_syscall_64+0x5f/0x180
+ entry_SYSCALL_64_after_hwframe+0x46/0x4e
+RIP: 0033:0x55e0a110a67e
+Code: ba cc 00 00 00 45 31 c0 44 0f b6 92 d0 00 00 00 31 d2 41 b9 08 00 00 00 41 83 e2 01 41 c1 e2 04 41 09 c2 b8 aa 01 00 00 0f 05 <c3> 90 89 30 eb a9 0f 1f 40 00 48 8b 42 20 8b 00 a8 06 75 af 85 f6
 
-Fix these issues by making nilfs_empty_dir() immediately return a false
-value (0) if it fails to get a directory folio/page.
+because the request is marked forced ASYNC and has a bad file fd, and
+hence takes the forced async prep path.
 
-Link: https://lkml.kernel.org/r/20240604134255.7165-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+c8166c541d3971bf6c87@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c8166c541d3971bf6c87
-Fixes: 2ba466d74ed7 ("nilfs2: directory entry operations")
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Current kernels with the request async prep cleaned up can no longer hit
+this issue, but for ease of backporting, let's add this safety check in
+here too as it really doesn't hurt. For both cases, this will inevitably
+end with a CQE posted with -EBADF.
+
+Cc: stable@vger.kernel.org
+Fixes: a76c0b31eef5 ("io_uring: commit non-pollable provided mapped buffers upfront")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/dir.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/kbuf.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nilfs2/dir.c b/fs/nilfs2/dir.c
-index 4911f09eb68b0..e9668e455a35e 100644
---- a/fs/nilfs2/dir.c
-+++ b/fs/nilfs2/dir.c
-@@ -627,7 +627,7 @@ int nilfs_empty_dir(struct inode *inode)
+--- a/io_uring/kbuf.c
++++ b/io_uring/kbuf.c
+@@ -154,7 +154,8 @@ static void __user *io_ring_buffer_selec
+ 	req->buf_list = bl;
+ 	req->buf_index = buf->bid;
  
- 		kaddr = nilfs_get_page(inode, i, &page);
- 		if (IS_ERR(kaddr))
--			continue;
-+			return 0;
- 
- 		de = (struct nilfs_dir_entry *)kaddr;
- 		kaddr += nilfs_last_byte(inode, i) - NILFS_DIR_REC_LEN(1);
--- 
-2.43.0
-
+-	if (issue_flags & IO_URING_F_UNLOCKED || !file_can_poll(req->file)) {
++	if (issue_flags & IO_URING_F_UNLOCKED ||
++	    (req->file && !file_can_poll(req->file))) {
+ 		/*
+ 		 * If we came in unlocked, we have no choice but to consume the
+ 		 * buffer here, otherwise nothing ensures that the buffer won't
 
 
