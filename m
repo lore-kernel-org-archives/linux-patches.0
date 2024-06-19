@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313501419BA;
-	Wed, 19 Jun 2024 13:29:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED4314B96F;
+	Wed, 19 Jun 2024 13:29:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803778; cv=none; b=e4N3o8aLMTmp1yh5q2Rupx1YDcHmGAuLrEyt4qozjPDo8743OPuc+iY87/jsgVu2mH2Fuw5Nbo2kTaGlR8+2NsXkt9Up21+4Jxy3L/P+5No0pe5Vxz50Ns9K8ckBoPjSx8hEVzSQoPtPvAb4MCIgCk8gpXMYlivxaDsSPOikQWk=
+	t=1718803781; cv=none; b=AnhO7DY0in1uSm6/g7Bzs0I7pwZgTOfGpuI1Wzi3YwJjcu2DRRqo3L9VBNOuDPt6vIAzklOxai1k2FtUUOfih86yECPchkN/Z7cnMlejikKf5uOuDMNcEsNya08RZE/WI8FsJDTTRHdLYKEK6qJU1F7dXsGEJBB/4nAjcbaA4Xk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803778; c=relaxed/simple;
-	bh=FgNvg4gk7nOpVO+7pDYOGBA27ONUvTS4e7AMYpCexvA=;
+	s=arc-20240116; t=1718803781; c=relaxed/simple;
+	bh=n213PVulcsgTSFaO3dFR0kNLfYv3ZgD4Q4MdNs5K588=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UZgN3M5PTW3963tv1uIJShkrXu9YfVyiXNbP6+7RuVc7MwWi7wwWUQDYyF0N6kfV0st6QQdTnfBS4X/BOBxeXkuN+TiaNTvyeVpKbAtxv4RRXZXuS8xEHl1N1wYsATb3wheySz/Qh+DUvpsAB7ytZk38A9UVvT0c5txuIRFIqjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R7hlLi7n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=raX64SXxV7Y3E+KC8z9SB0F+KwrpGy3Of7gD+jQKZzMHj2liaiboEzp4dKiK+VAYzo1HkH4lBj7ZSE9oCu8ALjwqYnG4eBUEV8k43qX6tPltjAdqiX0a1SOz6za+1bldg4bpqs2W0dOGqVHuA3gn7acT9Bz9/EgyivWBcseSaeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Fz75new; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R7hlLi7n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD0F5C2BBFC;
-	Wed, 19 Jun 2024 13:29:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Fz75new"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DA6DC2BBFC;
+	Wed, 19 Jun 2024 13:29:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803778;
-	bh=FgNvg4gk7nOpVO+7pDYOGBA27ONUvTS4e7AMYpCexvA=;
+	s=korg; t=1718803781;
+	bh=n213PVulcsgTSFaO3dFR0kNLfYv3ZgD4Q4MdNs5K588=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R7hlLi7nutKPwyYvBUq8ReuqvMQcZNGGU1qHa8fnrqQZiycTFo5efLbUcm1v8wHl+
-	 chppC/VLb8I+Ajg7xYc+7tKJa5uYpNUhjBaMuHB/GK1YIIxVzHZnEyVMnQwcNSosY8
-	 cNo8ynxFXsfR8XPVphy6ElaU0sj347OArwEQYeck=
+	b=2Fz75newZ7/e9np8pkCHNDseEe7lDLNoPPDNCtbriBww8ydiAuL2l9uIS9kDi2MiV
+	 asKOXZAOocKRfrJ1VUJqrVCFuU1I+rvfCo9LbjbxBh6Vtc/zTmoKGVoWznNjGOiA5L
+	 sAc3lUIsha3Jr4Ud4VSvQVc6mMquyT1c9xrLl50M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Steev Klimaszewski <steev@kali.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 069/217] HID: i2c-hid: elan: fix reset suspend current leakage
-Date: Wed, 19 Jun 2024 14:55:12 +0200
-Message-ID: <20240619125559.345068773@linuxfoundation.org>
+Subject: [PATCH 6.1 070/217] i2c: add fwnode APIs
+Date: Wed, 19 Jun 2024 14:55:13 +0200
+Message-ID: <20240619125559.384665325@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -53,162 +52,288 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-[ Upstream commit 0eafc58f2194dbd01d4be40f99a697681171995b ]
+[ Upstream commit 373c612d72461ddaea223592df31e62c934aae61 ]
 
-The Elan eKTH5015M touch controller found on the Lenovo ThinkPad X13s
-shares the VCC33 supply with other peripherals that may remain powered
-during suspend (e.g. when enabled as wakeup sources).
+Add fwnode APIs for finding and getting I2C adapters, which will be
+used by the SFP code. These are passed the fwnode corresponding to
+the adapter, and return the I2C adapter. It is the responsibility of
+the caller to find the appropriate fwnode.
 
-The reset line is also wired so that it can be left deasserted when the
-supply is off.
+We keep the DT and ACPI interfaces, but where appropriate, recode them
+to use the fwnode interfaces internally.
 
-This is important as it avoids holding the controller in reset for
-extended periods of time when it remains powered, which can lead to
-increased power consumption, and also avoids leaking current through the
-X13s reset circuitry during suspend (and after driver unbind).
-
-Use the new 'no-reset-on-power-off' devicetree property to determine
-when reset needs to be asserted on power down.
-
-Notably this also avoids wasting power on machine variants without a
-touchscreen for which the driver would otherwise exit probe with reset
-asserted.
-
-Fixes: bd3cba00dcc6 ("HID: i2c-hid: elan: Add support for Elan eKTH6915 i2c-hid touchscreens")
-Cc: <stable@vger.kernel.org>	# 6.0
-Cc: Douglas Anderson <dianders@chromium.org>
-Tested-by: Steev Klimaszewski <steev@kali.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20240507144821.12275-5-johan+linaro@kernel.org
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Stable-dep-of: 3f858bbf04db ("i2c: acpi: Unbind mux adapters before delete")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/i2c-hid/i2c-hid-of-elan.c | 59 +++++++++++++++++++++------
- 1 file changed, 47 insertions(+), 12 deletions(-)
+ drivers/i2c/i2c-core-acpi.c | 13 +----
+ drivers/i2c/i2c-core-base.c | 98 +++++++++++++++++++++++++++++++++++++
+ drivers/i2c/i2c-core-of.c   | 66 -------------------------
+ include/linux/i2c.h         | 24 +++++++--
+ 4 files changed, 120 insertions(+), 81 deletions(-)
 
-diff --git a/drivers/hid/i2c-hid/i2c-hid-of-elan.c b/drivers/hid/i2c-hid/i2c-hid-of-elan.c
-index 35986e8297095..8d4deb2def97b 100644
---- a/drivers/hid/i2c-hid/i2c-hid-of-elan.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-of-elan.c
-@@ -31,6 +31,7 @@ struct i2c_hid_of_elan {
- 	struct regulator *vcc33;
- 	struct regulator *vccio;
- 	struct gpio_desc *reset_gpio;
-+	bool no_reset_on_power_off;
- 	const struct elan_i2c_hid_chip_data *chip_data;
- };
+diff --git a/drivers/i2c/i2c-core-acpi.c b/drivers/i2c/i2c-core-acpi.c
+index 4dd777cc0c89f..d6037a3286690 100644
+--- a/drivers/i2c/i2c-core-acpi.c
++++ b/drivers/i2c/i2c-core-acpi.c
+@@ -442,18 +442,7 @@ EXPORT_SYMBOL_GPL(i2c_acpi_find_adapter_by_handle);
  
-@@ -40,17 +41,17 @@ static int elan_i2c_hid_power_up(struct i2chid_ops *ops)
- 		container_of(ops, struct i2c_hid_of_elan, ops);
- 	int ret;
- 
-+	gpiod_set_value_cansleep(ihid_elan->reset_gpio, 1);
-+
- 	if (ihid_elan->vcc33) {
- 		ret = regulator_enable(ihid_elan->vcc33);
- 		if (ret)
--			return ret;
-+			goto err_deassert_reset;
- 	}
- 
- 	ret = regulator_enable(ihid_elan->vccio);
--	if (ret) {
--		regulator_disable(ihid_elan->vcc33);
--		return ret;
--	}
-+	if (ret)
-+		goto err_disable_vcc33;
- 
- 	if (ihid_elan->chip_data->post_power_delay_ms)
- 		msleep(ihid_elan->chip_data->post_power_delay_ms);
-@@ -60,6 +61,15 @@ static int elan_i2c_hid_power_up(struct i2chid_ops *ops)
- 		msleep(ihid_elan->chip_data->post_gpio_reset_on_delay_ms);
- 
- 	return 0;
-+
-+err_disable_vcc33:
-+	if (ihid_elan->vcc33)
-+		regulator_disable(ihid_elan->vcc33);
-+err_deassert_reset:
-+	if (ihid_elan->no_reset_on_power_off)
-+		gpiod_set_value_cansleep(ihid_elan->reset_gpio, 0);
-+
-+	return ret;
+ static struct i2c_client *i2c_acpi_find_client_by_adev(struct acpi_device *adev)
+ {
+-	struct device *dev;
+-	struct i2c_client *client;
+-
+-	dev = bus_find_device_by_acpi_dev(&i2c_bus_type, adev);
+-	if (!dev)
+-		return NULL;
+-
+-	client = i2c_verify_client(dev);
+-	if (!client)
+-		put_device(dev);
+-
+-	return client;
++	return i2c_find_device_by_fwnode(acpi_fwnode_handle(adev));
  }
  
- static void elan_i2c_hid_power_down(struct i2chid_ops *ops)
-@@ -67,7 +77,14 @@ static void elan_i2c_hid_power_down(struct i2chid_ops *ops)
- 	struct i2c_hid_of_elan *ihid_elan =
- 		container_of(ops, struct i2c_hid_of_elan, ops);
+ static int i2c_acpi_notify(struct notifier_block *nb, unsigned long value,
+diff --git a/drivers/i2c/i2c-core-base.c b/drivers/i2c/i2c-core-base.c
+index 1ebc953799149..8af82f42af30b 100644
+--- a/drivers/i2c/i2c-core-base.c
++++ b/drivers/i2c/i2c-core-base.c
+@@ -1017,6 +1017,35 @@ void i2c_unregister_device(struct i2c_client *client)
+ }
+ EXPORT_SYMBOL_GPL(i2c_unregister_device);
  
--	gpiod_set_value_cansleep(ihid_elan->reset_gpio, 1);
-+	/*
-+	 * Do not assert reset when the hardware allows for it to remain
-+	 * deasserted regardless of the state of the (shared) power supply to
-+	 * avoid wasting power when the supply is left on.
-+	 */
-+	if (!ihid_elan->no_reset_on_power_off)
-+		gpiod_set_value_cansleep(ihid_elan->reset_gpio, 1);
++/**
++ * i2c_find_device_by_fwnode() - find an i2c_client for the fwnode
++ * @fwnode: &struct fwnode_handle corresponding to the &struct i2c_client
++ *
++ * Look up and return the &struct i2c_client corresponding to the @fwnode.
++ * If no client can be found, or @fwnode is NULL, this returns NULL.
++ *
++ * The user must call put_device(&client->dev) once done with the i2c client.
++ */
++struct i2c_client *i2c_find_device_by_fwnode(struct fwnode_handle *fwnode)
++{
++	struct i2c_client *client;
++	struct device *dev;
 +
- 	if (ihid_elan->chip_data->post_gpio_reset_off_delay_ms)
- 		msleep(ihid_elan->chip_data->post_gpio_reset_off_delay_ms);
- 
-@@ -80,6 +97,7 @@ static int i2c_hid_of_elan_probe(struct i2c_client *client,
- 				 const struct i2c_device_id *id)
- {
- 	struct i2c_hid_of_elan *ihid_elan;
-+	int ret;
- 
- 	ihid_elan = devm_kzalloc(&client->dev, sizeof(*ihid_elan), GFP_KERNEL);
- 	if (!ihid_elan)
-@@ -94,21 +112,38 @@ static int i2c_hid_of_elan_probe(struct i2c_client *client,
- 	if (IS_ERR(ihid_elan->reset_gpio))
- 		return PTR_ERR(ihid_elan->reset_gpio);
- 
-+	ihid_elan->no_reset_on_power_off = of_property_read_bool(client->dev.of_node,
-+						"no-reset-on-power-off");
++	if (!fwnode)
++		return NULL;
 +
- 	ihid_elan->vccio = devm_regulator_get(&client->dev, "vccio");
--	if (IS_ERR(ihid_elan->vccio))
--		return PTR_ERR(ihid_elan->vccio);
-+	if (IS_ERR(ihid_elan->vccio)) {
-+		ret = PTR_ERR(ihid_elan->vccio);
-+		goto err_deassert_reset;
-+	}
++	dev = bus_find_device_by_fwnode(&i2c_bus_type, fwnode);
++	if (!dev)
++		return NULL;
++
++	client = i2c_verify_client(dev);
++	if (!client)
++		put_device(dev);
++
++	return client;
++}
++EXPORT_SYMBOL(i2c_find_device_by_fwnode);
++
  
- 	ihid_elan->chip_data = device_get_match_data(&client->dev);
+ static const struct i2c_device_id dummy_id[] = {
+ 	{ "dummy", 0 },
+@@ -1767,6 +1796,75 @@ int devm_i2c_add_adapter(struct device *dev, struct i2c_adapter *adapter)
+ }
+ EXPORT_SYMBOL_GPL(devm_i2c_add_adapter);
  
- 	if (ihid_elan->chip_data->main_supply_name) {
- 		ihid_elan->vcc33 = devm_regulator_get(&client->dev,
- 						      ihid_elan->chip_data->main_supply_name);
--		if (IS_ERR(ihid_elan->vcc33))
--			return PTR_ERR(ihid_elan->vcc33);
-+		if (IS_ERR(ihid_elan->vcc33)) {
-+			ret = PTR_ERR(ihid_elan->vcc33);
-+			goto err_deassert_reset;
-+		}
- 	}
- 
--	return i2c_hid_core_probe(client, &ihid_elan->ops,
--				  ihid_elan->chip_data->hid_descriptor_address, 0);
-+	ret = i2c_hid_core_probe(client, &ihid_elan->ops,
-+				 ihid_elan->chip_data->hid_descriptor_address, 0);
-+	if (ret)
-+		goto err_deassert_reset;
++static int i2c_dev_or_parent_fwnode_match(struct device *dev, const void *data)
++{
++	if (dev_fwnode(dev) == data)
++		return 1;
++
++	if (dev->parent && dev_fwnode(dev->parent) == data)
++		return 1;
 +
 +	return 0;
++}
 +
-+err_deassert_reset:
-+	if (ihid_elan->no_reset_on_power_off)
-+		gpiod_set_value_cansleep(ihid_elan->reset_gpio, 0);
++/**
++ * i2c_find_adapter_by_fwnode() - find an i2c_adapter for the fwnode
++ * @fwnode: &struct fwnode_handle corresponding to the &struct i2c_adapter
++ *
++ * Look up and return the &struct i2c_adapter corresponding to the @fwnode.
++ * If no adapter can be found, or @fwnode is NULL, this returns NULL.
++ *
++ * The user must call put_device(&adapter->dev) once done with the i2c adapter.
++ */
++struct i2c_adapter *i2c_find_adapter_by_fwnode(struct fwnode_handle *fwnode)
++{
++	struct i2c_adapter *adapter;
++	struct device *dev;
 +
-+	return ret;
++	if (!fwnode)
++		return NULL;
++
++	dev = bus_find_device(&i2c_bus_type, NULL, fwnode,
++			      i2c_dev_or_parent_fwnode_match);
++	if (!dev)
++		return NULL;
++
++	adapter = i2c_verify_adapter(dev);
++	if (!adapter)
++		put_device(dev);
++
++	return adapter;
++}
++EXPORT_SYMBOL(i2c_find_adapter_by_fwnode);
++
++/**
++ * i2c_get_adapter_by_fwnode() - find an i2c_adapter for the fwnode
++ * @fwnode: &struct fwnode_handle corresponding to the &struct i2c_adapter
++ *
++ * Look up and return the &struct i2c_adapter corresponding to the @fwnode,
++ * and increment the adapter module's use count. If no adapter can be found,
++ * or @fwnode is NULL, this returns NULL.
++ *
++ * The user must call i2c_put_adapter(adapter) once done with the i2c adapter.
++ * Note that this is different from i2c_find_adapter_by_node().
++ */
++struct i2c_adapter *i2c_get_adapter_by_fwnode(struct fwnode_handle *fwnode)
++{
++	struct i2c_adapter *adapter;
++
++	adapter = i2c_find_adapter_by_fwnode(fwnode);
++	if (!adapter)
++		return NULL;
++
++	if (!try_module_get(adapter->owner)) {
++		put_device(&adapter->dev);
++		adapter = NULL;
++	}
++
++	return adapter;
++}
++EXPORT_SYMBOL(i2c_get_adapter_by_fwnode);
++
+ static void i2c_parse_timing(struct device *dev, char *prop_name, u32 *cur_val_p,
+ 			    u32 def_val, bool use_def)
+ {
+diff --git a/drivers/i2c/i2c-core-of.c b/drivers/i2c/i2c-core-of.c
+index 1073f82d5dd47..545436b7dd535 100644
+--- a/drivers/i2c/i2c-core-of.c
++++ b/drivers/i2c/i2c-core-of.c
+@@ -113,72 +113,6 @@ void of_i2c_register_devices(struct i2c_adapter *adap)
+ 	of_node_put(bus);
  }
  
- static const struct elan_i2c_hid_chip_data elan_ekth6915_chip_data = {
+-static int of_dev_or_parent_node_match(struct device *dev, const void *data)
+-{
+-	if (dev->of_node == data)
+-		return 1;
+-
+-	if (dev->parent)
+-		return dev->parent->of_node == data;
+-
+-	return 0;
+-}
+-
+-/* must call put_device() when done with returned i2c_client device */
+-struct i2c_client *of_find_i2c_device_by_node(struct device_node *node)
+-{
+-	struct device *dev;
+-	struct i2c_client *client;
+-
+-	dev = bus_find_device_by_of_node(&i2c_bus_type, node);
+-	if (!dev)
+-		return NULL;
+-
+-	client = i2c_verify_client(dev);
+-	if (!client)
+-		put_device(dev);
+-
+-	return client;
+-}
+-EXPORT_SYMBOL(of_find_i2c_device_by_node);
+-
+-/* must call put_device() when done with returned i2c_adapter device */
+-struct i2c_adapter *of_find_i2c_adapter_by_node(struct device_node *node)
+-{
+-	struct device *dev;
+-	struct i2c_adapter *adapter;
+-
+-	dev = bus_find_device(&i2c_bus_type, NULL, node,
+-			      of_dev_or_parent_node_match);
+-	if (!dev)
+-		return NULL;
+-
+-	adapter = i2c_verify_adapter(dev);
+-	if (!adapter)
+-		put_device(dev);
+-
+-	return adapter;
+-}
+-EXPORT_SYMBOL(of_find_i2c_adapter_by_node);
+-
+-/* must call i2c_put_adapter() when done with returned i2c_adapter device */
+-struct i2c_adapter *of_get_i2c_adapter_by_node(struct device_node *node)
+-{
+-	struct i2c_adapter *adapter;
+-
+-	adapter = of_find_i2c_adapter_by_node(node);
+-	if (!adapter)
+-		return NULL;
+-
+-	if (!try_module_get(adapter->owner)) {
+-		put_device(&adapter->dev);
+-		adapter = NULL;
+-	}
+-
+-	return adapter;
+-}
+-EXPORT_SYMBOL(of_get_i2c_adapter_by_node);
+-
+ static const struct of_device_id*
+ i2c_of_match_device_sysfs(const struct of_device_id *matches,
+ 				  struct i2c_client *client)
+diff --git a/include/linux/i2c.h b/include/linux/i2c.h
+index f7c49bbdb8a18..cfc59c3371cb2 100644
+--- a/include/linux/i2c.h
++++ b/include/linux/i2c.h
+@@ -964,15 +964,33 @@ int i2c_handle_smbus_host_notify(struct i2c_adapter *adap, unsigned short addr);
+ 
+ #endif /* I2C */
+ 
++/* must call put_device() when done with returned i2c_client device */
++struct i2c_client *i2c_find_device_by_fwnode(struct fwnode_handle *fwnode);
++
++/* must call put_device() when done with returned i2c_adapter device */
++struct i2c_adapter *i2c_find_adapter_by_fwnode(struct fwnode_handle *fwnode);
++
++/* must call i2c_put_adapter() when done with returned i2c_adapter device */
++struct i2c_adapter *i2c_get_adapter_by_fwnode(struct fwnode_handle *fwnode);
++
+ #if IS_ENABLED(CONFIG_OF)
+ /* must call put_device() when done with returned i2c_client device */
+-struct i2c_client *of_find_i2c_device_by_node(struct device_node *node);
++static inline struct i2c_client *of_find_i2c_device_by_node(struct device_node *node)
++{
++	return i2c_find_device_by_fwnode(of_fwnode_handle(node));
++}
+ 
+ /* must call put_device() when done with returned i2c_adapter device */
+-struct i2c_adapter *of_find_i2c_adapter_by_node(struct device_node *node);
++static inline struct i2c_adapter *of_find_i2c_adapter_by_node(struct device_node *node)
++{
++	return i2c_find_adapter_by_fwnode(of_fwnode_handle(node));
++}
+ 
+ /* must call i2c_put_adapter() when done with returned i2c_adapter device */
+-struct i2c_adapter *of_get_i2c_adapter_by_node(struct device_node *node);
++static inline struct i2c_adapter *of_get_i2c_adapter_by_node(struct device_node *node)
++{
++	return i2c_get_adapter_by_fwnode(of_fwnode_handle(node));
++}
+ 
+ const struct of_device_id
+ *i2c_of_match_device(const struct of_device_id *matches,
 -- 
 2.43.0
 
