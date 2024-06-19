@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43BF414601E;
-	Wed, 19 Jun 2024 13:27:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75475149C43;
+	Wed, 19 Jun 2024 13:27:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803651; cv=none; b=H7P177mHUgowjoP0+sr0TqHuT2UA56Os7+vyp7nqlSPXSuiPV6hUaOkFoyxS6s9+pJjvTIoJT8gQ7phMIj6N8P4Omuy/MxNBxzzV4ytCV7gTsZo8dIdk9B73dZjSsmmDZt1R6rYDIlMGMFxs+BW7wz9w1xbV8kI4GnRZCU9jcAM=
+	t=1718803654; cv=none; b=OGWlZS5Buvz9OPYLaUwE7wqd37Fykahsibgi7qAVZC4GiAX+boPCvYyYmnjPQvJXfghhZSEix5PAvBlWsa1+YD9lUWV9s3mvAwkMcAtyBt6pMUbLSSfe3Ke0vC+i6WlX/fIECUR2TqT+jPjJOa/OPTN949yCJQWBffAk/lk3RX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803651; c=relaxed/simple;
-	bh=w/uCawQGf1An2rBL8Chcrr6z/sSBfn46q6Zmio6SOek=;
+	s=arc-20240116; t=1718803654; c=relaxed/simple;
+	bh=OXsgAqexVK+DCYngVWMRmJUQqY+T44O0P3CAmt0aSlw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uayiZj6Y1JKJyvyor1wrD0mAq/xsA30hVr7sMy3iQKU1cYSC4oRlfbT03835qPa9b7xhjtr3QGm6OzAhJtPsp52JeWNdzmkD5BpneTtYJPKocVsFANl4B4/yKTdWe2VqzB5zQ4fp2AqFOOZr25gbCfSkVdcyjwhCGQLrO4WF3/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=usmdNISm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fmqdoNPRQ6KyKkXEXQWaxExAcYP4b8l6vQm552XLTbLN5rjbelvjP4J14hnjQ1SDYP3gdaVnamK9samBBeKaoVGxaILSmXblAKI6div7jEvdgtmN7JqmRQ/MPMwmR7JHIF6Br2DHrA5JAimSs9pGzruV7cnQ9o2uE3/LhPGlESc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pSF2BCbf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="usmdNISm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0BC4C2BBFC;
-	Wed, 19 Jun 2024 13:27:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pSF2BCbf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6DA4C2BBFC;
+	Wed, 19 Jun 2024 13:27:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803651;
-	bh=w/uCawQGf1An2rBL8Chcrr6z/sSBfn46q6Zmio6SOek=;
+	s=korg; t=1718803654;
+	bh=OXsgAqexVK+DCYngVWMRmJUQqY+T44O0P3CAmt0aSlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=usmdNISmls/B0SNRZFM89hG7Spy/ZH6fHIJVe2qv5S4QlbfKSfEPYDDUoqKpMO6eE
-	 WFP2Uyhzev4rU9eJ7RlESVmy25D43uvatB5kiaXhyiixOLfGkvISp18iBWG6DIkXUJ
-	 5UI3hvRMLTf14OZ/Kuv9wJlO5PAqZl7tde259UiQ=
+	b=pSF2BCbfuWJrgQ2uA3nW2qXZ+0gVnyGnZlbXEdQdA40oGkKV5np7t3UdTz+ZdNEt5
+	 CaA/54zHXsyrtKJ6GqlXfAt91yxEf8G1TzZQsP9cJwkpd1gHN5w3VRDmvMnk3g6Ul8
+	 RQ10qvIcL14y0SxUzIdiI0Lq5cSEwDa0CFWfY7MA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Filippov <jcmvbkbc@gmail.com>,
+	Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 057/217] xtensa: fix MAKE_PC_FROM_RA second argument
-Date: Wed, 19 Jun 2024 14:55:00 +0200
-Message-ID: <20240619125558.880097334@linuxfoundation.org>
+Subject: [PATCH 6.1 058/217] drm/amd/display: drop unnecessary NULL checks in debugfs
+Date: Wed, 19 Jun 2024 14:55:01 +0200
+Message-ID: <20240619125558.918144539@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -50,124 +52,233 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Filippov <jcmvbkbc@gmail.com>
+From: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
 
-[ Upstream commit 0e60f0b75884677fb9f4f2ad40d52b43451564d5 ]
+[ Upstream commit f8e12e770e8049917f82387033b3cf44bc43b915 ]
 
-Xtensa has two-argument MAKE_PC_FROM_RA macro to convert a0 to an actual
-return address because when windowed ABI is used call{,x}{4,8,12}
-opcodes stuff encoded window size into the top 2 bits of the register
-that becomes a return address in the called function. Second argument of
-that macro is supposed to be an address having these 2 topmost bits set
-correctly, but the comment suggested that that could be the stack
-address. However the stack doesn't have to be in the same 1GByte region
-as the code, especially in noMMU XIP configurations.
+pipe_ctx pointer cannot be NULL when getting the address of
+an element of the pipe_ctx array. Moreover, the MAX_PIPES is
+defined as 6, so pipe_ctx is not NULL after the loop either.
 
-Fix the comment and use either _text or regs->pc as the second argument
-for the MAKE_PC_FROM_RA macro.
+Detected using the static analysis tool - Svace.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
+Signed-off-by: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 892b41b16f61 ("drm/amd/display: Fix incorrect DSC instance for MST")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/xtensa/include/asm/processor.h | 8 ++++----
- arch/xtensa/include/asm/ptrace.h    | 2 +-
- arch/xtensa/kernel/process.c        | 5 +++--
- arch/xtensa/kernel/stacktrace.c     | 3 ++-
- 4 files changed, 10 insertions(+), 8 deletions(-)
+ .../amd/display/amdgpu_dm/amdgpu_dm_debugfs.c | 72 +++++--------------
+ 1 file changed, 16 insertions(+), 56 deletions(-)
 
-diff --git a/arch/xtensa/include/asm/processor.h b/arch/xtensa/include/asm/processor.h
-index 228e4dff5fb2d..ab555a980147b 100644
---- a/arch/xtensa/include/asm/processor.h
-+++ b/arch/xtensa/include/asm/processor.h
-@@ -113,9 +113,9 @@
- #define MAKE_RA_FOR_CALL(ra,ws)   (((ra) & 0x3fffffff) | (ws) << 30)
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
+index ff7dd17ad0763..35ea58fbc1d9d 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
+@@ -1369,16 +1369,11 @@ static ssize_t dp_dsc_clock_en_read(struct file *f, char __user *buf,
  
- /* Convert return address to a valid pc
-- * Note: We assume that the stack pointer is in the same 1GB ranges as the ra
-+ * Note: 'text' is the address within the same 1GB range as the ra
-  */
--#define MAKE_PC_FROM_RA(ra,sp)    (((ra) & 0x3fffffff) | ((sp) & 0xc0000000))
-+#define MAKE_PC_FROM_RA(ra, text) (((ra) & 0x3fffffff) | ((unsigned long)(text) & 0xc0000000))
- 
- #elif defined(__XTENSA_CALL0_ABI__)
- 
-@@ -125,9 +125,9 @@
- #define MAKE_RA_FOR_CALL(ra, ws)   (ra)
- 
- /* Convert return address to a valid pc
-- * Note: We assume that the stack pointer is in the same 1GB ranges as the ra
-+ * Note: 'text' is not used as 'ra' is always the full address
-  */
--#define MAKE_PC_FROM_RA(ra, sp)    (ra)
-+#define MAKE_PC_FROM_RA(ra, text)  (ra)
- 
- #else
- #error Unsupported Xtensa ABI
-diff --git a/arch/xtensa/include/asm/ptrace.h b/arch/xtensa/include/asm/ptrace.h
-index 308f209a47407..17c5cbd1832e7 100644
---- a/arch/xtensa/include/asm/ptrace.h
-+++ b/arch/xtensa/include/asm/ptrace.h
-@@ -87,7 +87,7 @@ struct pt_regs {
- # define user_mode(regs) (((regs)->ps & 0x00000020)!=0)
- # define instruction_pointer(regs) ((regs)->pc)
- # define return_pointer(regs) (MAKE_PC_FROM_RA((regs)->areg[0], \
--					       (regs)->areg[1]))
-+					       (regs)->pc))
- 
- # ifndef CONFIG_SMP
- #  define profile_pc(regs) instruction_pointer(regs)
-diff --git a/arch/xtensa/kernel/process.c b/arch/xtensa/kernel/process.c
-index 68e0e2f06d660..3138f72dcbe2e 100644
---- a/arch/xtensa/kernel/process.c
-+++ b/arch/xtensa/kernel/process.c
-@@ -47,6 +47,7 @@
- #include <asm/asm-offsets.h>
- #include <asm/regs.h>
- #include <asm/hw_breakpoint.h>
-+#include <asm/sections.h>
- #include <asm/traps.h>
- 
- extern void ret_from_fork(void);
-@@ -379,7 +380,7 @@ unsigned long __get_wchan(struct task_struct *p)
- 	int count = 0;
- 
- 	sp = p->thread.sp;
--	pc = MAKE_PC_FROM_RA(p->thread.ra, p->thread.sp);
-+	pc = MAKE_PC_FROM_RA(p->thread.ra, _text);
- 
- 	do {
- 		if (sp < stack_page + sizeof(struct task_struct) ||
-@@ -391,7 +392,7 @@ unsigned long __get_wchan(struct task_struct *p)
- 
- 		/* Stack layout: sp-4: ra, sp-3: sp' */
- 
--		pc = MAKE_PC_FROM_RA(SPILL_SLOT(sp, 0), sp);
-+		pc = MAKE_PC_FROM_RA(SPILL_SLOT(sp, 0), _text);
- 		sp = SPILL_SLOT(sp, 1);
- 	} while (count++ < 16);
- 	return 0;
-diff --git a/arch/xtensa/kernel/stacktrace.c b/arch/xtensa/kernel/stacktrace.c
-index dcba743305efe..b69044893287f 100644
---- a/arch/xtensa/kernel/stacktrace.c
-+++ b/arch/xtensa/kernel/stacktrace.c
-@@ -13,6 +13,7 @@
- #include <linux/stacktrace.h>
- 
- #include <asm/ftrace.h>
-+#include <asm/sections.h>
- #include <asm/stacktrace.h>
- #include <asm/traps.h>
- #include <linux/uaccess.h>
-@@ -189,7 +190,7 @@ void walk_stackframe(unsigned long *sp,
- 		if (a1 <= (unsigned long)sp)
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+-		if (pipe_ctx && pipe_ctx->stream &&
++		if (pipe_ctx->stream &&
+ 		    pipe_ctx->stream->link == aconnector->dc_link)
  			break;
+ 	}
  
--		frame.pc = MAKE_PC_FROM_RA(a0, a1);
-+		frame.pc = MAKE_PC_FROM_RA(a0, _text);
- 		frame.sp = a1;
+-	if (!pipe_ctx) {
+-		kfree(rd_buf);
+-		return -ENXIO;
+-	}
+-
+ 	dsc = pipe_ctx->stream_res.dsc;
+ 	if (dsc)
+ 		dsc->funcs->dsc_read_state(dsc, &dsc_state);
+@@ -1475,12 +1470,12 @@ static ssize_t dp_dsc_clock_en_write(struct file *f, const char __user *buf,
  
- 		if (fn(&frame, data))
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+-		if (pipe_ctx && pipe_ctx->stream &&
++		if (pipe_ctx->stream &&
+ 		    pipe_ctx->stream->link == aconnector->dc_link)
+ 			break;
+ 	}
+ 
+-	if (!pipe_ctx || !pipe_ctx->stream)
++	if (!pipe_ctx->stream)
+ 		goto done;
+ 
+ 	// Get CRTC state
+@@ -1560,16 +1555,11 @@ static ssize_t dp_dsc_slice_width_read(struct file *f, char __user *buf,
+ 
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+-		if (pipe_ctx && pipe_ctx->stream &&
++		if (pipe_ctx->stream &&
+ 		    pipe_ctx->stream->link == aconnector->dc_link)
+ 			break;
+ 	}
+ 
+-	if (!pipe_ctx) {
+-		kfree(rd_buf);
+-		return -ENXIO;
+-	}
+-
+ 	dsc = pipe_ctx->stream_res.dsc;
+ 	if (dsc)
+ 		dsc->funcs->dsc_read_state(dsc, &dsc_state);
+@@ -1664,12 +1654,12 @@ static ssize_t dp_dsc_slice_width_write(struct file *f, const char __user *buf,
+ 
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+-		if (pipe_ctx && pipe_ctx->stream &&
++		if (pipe_ctx->stream &&
+ 		    pipe_ctx->stream->link == aconnector->dc_link)
+ 			break;
+ 	}
+ 
+-	if (!pipe_ctx || !pipe_ctx->stream)
++	if (!pipe_ctx->stream)
+ 		goto done;
+ 
+ 	// Safely get CRTC state
+@@ -1749,16 +1739,11 @@ static ssize_t dp_dsc_slice_height_read(struct file *f, char __user *buf,
+ 
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+-		if (pipe_ctx && pipe_ctx->stream &&
++		if (pipe_ctx->stream &&
+ 		    pipe_ctx->stream->link == aconnector->dc_link)
+ 			break;
+ 	}
+ 
+-	if (!pipe_ctx) {
+-		kfree(rd_buf);
+-		return -ENXIO;
+-	}
+-
+ 	dsc = pipe_ctx->stream_res.dsc;
+ 	if (dsc)
+ 		dsc->funcs->dsc_read_state(dsc, &dsc_state);
+@@ -1853,12 +1838,12 @@ static ssize_t dp_dsc_slice_height_write(struct file *f, const char __user *buf,
+ 
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+-		if (pipe_ctx && pipe_ctx->stream &&
++		if (pipe_ctx->stream &&
+ 		    pipe_ctx->stream->link == aconnector->dc_link)
+ 			break;
+ 	}
+ 
+-	if (!pipe_ctx || !pipe_ctx->stream)
++	if (!pipe_ctx->stream)
+ 		goto done;
+ 
+ 	// Get CRTC state
+@@ -1934,16 +1919,11 @@ static ssize_t dp_dsc_bits_per_pixel_read(struct file *f, char __user *buf,
+ 
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+-		if (pipe_ctx && pipe_ctx->stream &&
++		if (pipe_ctx->stream &&
+ 		    pipe_ctx->stream->link == aconnector->dc_link)
+ 			break;
+ 	}
+ 
+-	if (!pipe_ctx) {
+-		kfree(rd_buf);
+-		return -ENXIO;
+-	}
+-
+ 	dsc = pipe_ctx->stream_res.dsc;
+ 	if (dsc)
+ 		dsc->funcs->dsc_read_state(dsc, &dsc_state);
+@@ -2035,12 +2015,12 @@ static ssize_t dp_dsc_bits_per_pixel_write(struct file *f, const char __user *bu
+ 
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+-		if (pipe_ctx && pipe_ctx->stream &&
++		if (pipe_ctx->stream &&
+ 		    pipe_ctx->stream->link == aconnector->dc_link)
+ 			break;
+ 	}
+ 
+-	if (!pipe_ctx || !pipe_ctx->stream)
++	if (!pipe_ctx->stream)
+ 		goto done;
+ 
+ 	// Get CRTC state
+@@ -2114,16 +2094,11 @@ static ssize_t dp_dsc_pic_width_read(struct file *f, char __user *buf,
+ 
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+-		if (pipe_ctx && pipe_ctx->stream &&
++		if (pipe_ctx->stream &&
+ 		    pipe_ctx->stream->link == aconnector->dc_link)
+ 			break;
+ 	}
+ 
+-	if (!pipe_ctx) {
+-		kfree(rd_buf);
+-		return -ENXIO;
+-	}
+-
+ 	dsc = pipe_ctx->stream_res.dsc;
+ 	if (dsc)
+ 		dsc->funcs->dsc_read_state(dsc, &dsc_state);
+@@ -2175,16 +2150,11 @@ static ssize_t dp_dsc_pic_height_read(struct file *f, char __user *buf,
+ 
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+-		if (pipe_ctx && pipe_ctx->stream &&
++		if (pipe_ctx->stream &&
+ 		    pipe_ctx->stream->link == aconnector->dc_link)
+ 			break;
+ 	}
+ 
+-	if (!pipe_ctx) {
+-		kfree(rd_buf);
+-		return -ENXIO;
+-	}
+-
+ 	dsc = pipe_ctx->stream_res.dsc;
+ 	if (dsc)
+ 		dsc->funcs->dsc_read_state(dsc, &dsc_state);
+@@ -2251,16 +2221,11 @@ static ssize_t dp_dsc_chunk_size_read(struct file *f, char __user *buf,
+ 
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+-		if (pipe_ctx && pipe_ctx->stream &&
++		if (pipe_ctx->stream &&
+ 		    pipe_ctx->stream->link == aconnector->dc_link)
+ 			break;
+ 	}
+ 
+-	if (!pipe_ctx) {
+-		kfree(rd_buf);
+-		return -ENXIO;
+-	}
+-
+ 	dsc = pipe_ctx->stream_res.dsc;
+ 	if (dsc)
+ 		dsc->funcs->dsc_read_state(dsc, &dsc_state);
+@@ -2327,16 +2292,11 @@ static ssize_t dp_dsc_slice_bpg_offset_read(struct file *f, char __user *buf,
+ 
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+-		if (pipe_ctx && pipe_ctx->stream &&
++		if (pipe_ctx->stream &&
+ 		    pipe_ctx->stream->link == aconnector->dc_link)
+ 			break;
+ 	}
+ 
+-	if (!pipe_ctx) {
+-		kfree(rd_buf);
+-		return -ENXIO;
+-	}
+-
+ 	dsc = pipe_ctx->stream_res.dsc;
+ 	if (dsc)
+ 		dsc->funcs->dsc_read_state(dsc, &dsc_state);
 -- 
 2.43.0
 
