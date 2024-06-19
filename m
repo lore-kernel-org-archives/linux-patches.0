@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3057112FB27;
-	Wed, 19 Jun 2024 13:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80EF21459F2;
+	Wed, 19 Jun 2024 13:21:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803302; cv=none; b=oYjR+JxMp95xl5HFIY662uv+uhFnKNwdZivyT1nFJg1Q7M8Gqyr1hOmCoNGk32WZUKOAdC6bkufDZfVJoL46I7o3hwdk1T+hT2VBm6snYQ25rlDX5HbkkzPvgzI1IGACCc5eokI8Ugndq+75W3cIdvqfzad1VHPrW2pP8Le8ImQ=
+	t=1718803305; cv=none; b=X5elt3VZRz3JVWcT1xvh1ec2BfS5UyuxZ9Hn8Ddp1q6jTnzjZG1raM+Z8Buc5KWpx34RZtr1gq/sKrgdDdO23wKpfSnfUIwgSTEnWBqgVue2cFEwgejoPLKxnUnhCaOkqRNo0kWXG+YAS03ey9eqL7trbQWgEhFOIzxf0oi9zSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803302; c=relaxed/simple;
-	bh=7aT0NYE467mPvgsAyRtYefUBN70d7uEl7Qp7hXIm5G0=;
+	s=arc-20240116; t=1718803305; c=relaxed/simple;
+	bh=xg0tZFPh6UotqL88FLNXRPHb5h/Xt72IjgekniJdkmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oRoY987kkTOZgjQNfIW7UkVwFlqr4bHFjI1U7M9F9hQfycSX4BDKh7HTnXmja2xILn5AvI1+hH7ky2u8QfxsielJ1QZ+tXw5yGsOnBdhsl+HniGa4AyKbaIqO4veOuBEEi3xiWSvIza1kr871JHuPdvq1Ukhkvlm2Ii+hJySxdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sPzSMtCH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vGMLqU5VOtNP+IDNxks4ZKN8caGJgg0SvN5sfg2kFiDby8vWzms0bT1/BfeUQp8g9b1o80LR5V+nOplpCutGhJa9BzW7w2it/LQmMIdzoNPq8Uikdk62YdMwFAX0/USBWEp+bfkoMB9gC92GIBywLdbcz1qNt2uXQA5lBEf3/aE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s4WSu++X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sPzSMtCH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B04C2BBFC;
-	Wed, 19 Jun 2024 13:21:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s4WSu++X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96EB0C2BBFC;
+	Wed, 19 Jun 2024 13:21:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803302;
-	bh=7aT0NYE467mPvgsAyRtYefUBN70d7uEl7Qp7hXIm5G0=;
+	s=korg; t=1718803305;
+	bh=xg0tZFPh6UotqL88FLNXRPHb5h/Xt72IjgekniJdkmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sPzSMtCHSf2P9HhBWkBD3khaa10oaeM7ATIPR8OW36PD8darylAlrX/SN4kQ3RMpS
-	 KwBv7voIhXX3RstzFgTdtUdZ+6OHUHezKuW/8TnK+ToTM6z01fAzJYxCjL9CzqJnSa
-	 BbGyvyg/o1UvU2XAhuCf2y7hT+8Ob4HOwTI8Ah7w=
+	b=s4WSu++XudW4NtX7o9ILkSv/95Fe25v326PSQk5iCO4YGcpyh45SDG3TX/v6ib2W3
+	 z1omeAaB/k9QwzGhg0AQIsGNb0pzytwGPjTwoG9Rv/RQltiwJsdT4pJbiTUSSL9Wlu
+	 0ov0WizPzFFLGZG59xlwad8i03+RuTYBRymRof/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rene Petersen <renepetersen@posteo.de>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 6.9 222/281] wifi: mt76: mt7615: add missing chanctx ops
-Date: Wed, 19 Jun 2024 14:56:21 +0200
-Message-ID: <20240619125618.502855253@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Carlos Llamas <cmllamas@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 6.9 223/281] locking/atomic: scripts: fix ${atomic}_sub_and_test() kerneldoc
+Date: Wed, 19 Jun 2024 14:56:22 +0200
+Message-ID: <20240619125618.540842573@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -51,42 +52,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Carlos Llamas <cmllamas@google.com>
 
-commit 40cecacabc460f5074398753feb9ed7d43e8dfa6 upstream.
+commit f92a59f6d12e31ead999fee9585471b95a8ae8a3 upstream.
 
-Here's another one I missed during the initial conversion,
-fix that.
+For ${atomic}_sub_and_test() the @i parameter is the value to subtract,
+not add. Fix the typo in the kerneldoc template and generate the headers
+with this update.
 
+Fixes: ad8110706f38 ("locking/atomic: scripts: generate kerneldoc comments")
+Suggested-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
 Cc: stable@vger.kernel.org
-Reported-by: Rene Petersen <renepetersen@posteo.de>
-Fixes: 0a44dfc07074 ("wifi: mac80211: simplify non-chanctx drivers")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218895
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20240528142308.3f7db1821e68.I531135d7ad76331a50244d6d5288e14aa9668390@changeid
+Link: https://lkml.kernel.org/r/20240515133844.3502360-1-cmllamas@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7615/main.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/linux/atomic/atomic-arch-fallback.h |    6 +++---
+ include/linux/atomic/atomic-instrumented.h  |    8 ++++----
+ include/linux/atomic/atomic-long.h          |    4 ++--
+ scripts/atomic/kerneldoc/sub_and_test       |    2 +-
+ 4 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/main.c b/drivers/net/wireless/mediatek/mt76/mt7615/main.c
-index 0971c164b57e..c27acaf0eb1c 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/main.c
-@@ -1326,6 +1326,10 @@ static void mt7615_set_rekey_data(struct ieee80211_hw *hw,
- #endif /* CONFIG_PM */
+--- a/include/linux/atomic/atomic-arch-fallback.h
++++ b/include/linux/atomic/atomic-arch-fallback.h
+@@ -2242,7 +2242,7 @@ raw_atomic_try_cmpxchg_relaxed(atomic_t
  
- const struct ieee80211_ops mt7615_ops = {
-+	.add_chanctx = ieee80211_emulate_add_chanctx,
-+	.remove_chanctx = ieee80211_emulate_remove_chanctx,
-+	.change_chanctx = ieee80211_emulate_change_chanctx,
-+	.switch_vif_chanctx = ieee80211_emulate_switch_vif_chanctx,
- 	.tx = mt7615_tx,
- 	.start = mt7615_start,
- 	.stop = mt7615_stop,
--- 
-2.45.2
-
+ /**
+  * raw_atomic_sub_and_test() - atomic subtract and test if zero with full ordering
+- * @i: int value to add
++ * @i: int value to subtract
+  * @v: pointer to atomic_t
+  *
+  * Atomically updates @v to (@v - @i) with full ordering.
+@@ -4368,7 +4368,7 @@ raw_atomic64_try_cmpxchg_relaxed(atomic6
+ 
+ /**
+  * raw_atomic64_sub_and_test() - atomic subtract and test if zero with full ordering
+- * @i: s64 value to add
++ * @i: s64 value to subtract
+  * @v: pointer to atomic64_t
+  *
+  * Atomically updates @v to (@v - @i) with full ordering.
+@@ -4690,4 +4690,4 @@ raw_atomic64_dec_if_positive(atomic64_t
+ }
+ 
+ #endif /* _LINUX_ATOMIC_FALLBACK_H */
+-// 14850c0b0db20c62fdc78ccd1d42b98b88d76331
++// b565db590afeeff0d7c9485ccbca5bb6e155749f
+--- a/include/linux/atomic/atomic-instrumented.h
++++ b/include/linux/atomic/atomic-instrumented.h
+@@ -1349,7 +1349,7 @@ atomic_try_cmpxchg_relaxed(atomic_t *v,
+ 
+ /**
+  * atomic_sub_and_test() - atomic subtract and test if zero with full ordering
+- * @i: int value to add
++ * @i: int value to subtract
+  * @v: pointer to atomic_t
+  *
+  * Atomically updates @v to (@v - @i) with full ordering.
+@@ -2927,7 +2927,7 @@ atomic64_try_cmpxchg_relaxed(atomic64_t
+ 
+ /**
+  * atomic64_sub_and_test() - atomic subtract and test if zero with full ordering
+- * @i: s64 value to add
++ * @i: s64 value to subtract
+  * @v: pointer to atomic64_t
+  *
+  * Atomically updates @v to (@v - @i) with full ordering.
+@@ -4505,7 +4505,7 @@ atomic_long_try_cmpxchg_relaxed(atomic_l
+ 
+ /**
+  * atomic_long_sub_and_test() - atomic subtract and test if zero with full ordering
+- * @i: long value to add
++ * @i: long value to subtract
+  * @v: pointer to atomic_long_t
+  *
+  * Atomically updates @v to (@v - @i) with full ordering.
+@@ -5050,4 +5050,4 @@ atomic_long_dec_if_positive(atomic_long_
+ 
+ 
+ #endif /* _LINUX_ATOMIC_INSTRUMENTED_H */
+-// ce5b65e0f1f8a276268b667194581d24bed219d4
++// 8829b337928e9508259079d32581775ececd415b
+--- a/include/linux/atomic/atomic-long.h
++++ b/include/linux/atomic/atomic-long.h
+@@ -1535,7 +1535,7 @@ raw_atomic_long_try_cmpxchg_relaxed(atom
+ 
+ /**
+  * raw_atomic_long_sub_and_test() - atomic subtract and test if zero with full ordering
+- * @i: long value to add
++ * @i: long value to subtract
+  * @v: pointer to atomic_long_t
+  *
+  * Atomically updates @v to (@v - @i) with full ordering.
+@@ -1809,4 +1809,4 @@ raw_atomic_long_dec_if_positive(atomic_l
+ }
+ 
+ #endif /* _LINUX_ATOMIC_LONG_H */
+-// 1c4a26fc77f345342953770ebe3c4d08e7ce2f9a
++// eadf183c3600b8b92b91839dd3be6bcc560c752d
+--- a/scripts/atomic/kerneldoc/sub_and_test
++++ b/scripts/atomic/kerneldoc/sub_and_test
+@@ -1,7 +1,7 @@
+ cat <<EOF
+ /**
+  * ${class}${atomicname}() - atomic subtract and test if zero with ${desc_order} ordering
+- * @i: ${int} value to add
++ * @i: ${int} value to subtract
+  * @v: pointer to ${atomic}_t
+  *
+  * Atomically updates @v to (@v - @i) with ${desc_order} ordering.
 
 
