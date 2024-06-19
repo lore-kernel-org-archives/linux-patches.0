@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B15882495;
-	Wed, 19 Jun 2024 13:18:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AEC582495;
+	Wed, 19 Jun 2024 13:18:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803090; cv=none; b=VLB/eSZ1ahm6sOmAnUwSqpWH3NvSX3umOpxVmCoe4HtisQLJByDCAManB33sjObSAcXl4TVziQzkJSHY+M9dEp2oyWijxTgHJlopLxRQM44tXkZGK2+pzrCB9uxVgn7o1MUdqoJ0EXp8Z1qCHHYeV9vQ9ScLPJJbcEV3h7u+m/k=
+	t=1718803093; cv=none; b=cR+kj5YPnk1aF87iPhD/32nOH3vIQ6KImoFO8WkgMOncqN2XvP9tjfq1drbw2G10W1DmfRBFgltjJ7Ln255eNdDDE71XnrNNNESsSuBQ6OOTvEk11JDzO7X66yAZm6uvMsgbo+9X43cbASZWAh4lG4lF820ZxTAfgpWIMwc06mU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803090; c=relaxed/simple;
-	bh=DqUN0gTtLJNLoO7/w5dHV8+d6C0q9JNnN5bqV5FI05E=;
+	s=arc-20240116; t=1718803093; c=relaxed/simple;
+	bh=vApH9GKTC2i7KNYyQgx9IhMdTFT/SBpbHznO+LvWRxY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VH624hV6YGyauy1H3VtY3EKxzK9hDNah6TSvFA0Pc/0yablM4EgQQrgIB8VWDm6bMgSchOjm24J/KM/Iq76LxR3m2AlwzALYPq2Sq5Rnvq2/LUJQYf4nM1c04uP8uBOH7SwrjKe66zrrNMgaQNKQLwapvmK9IPqkFSyaRT88ShE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kQy0+TIk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ne102VaVACsgFYzNBos9hMf+2PMOhna6jKmGskQXl3B1k+ycr+z4+Inb38/dnmeWlVIsBAdka46ZnSg+b020V4dBFt2Aq0DtUHKHH4A6CMT1LcWu6zcw2OeyItbhqkXtuHz21AizNTLBF4OStVuZEZJqI6BywyRDRKuuQMhC3vE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nMzGyD3j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kQy0+TIk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D694DC2BBFC;
-	Wed, 19 Jun 2024 13:18:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nMzGyD3j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2BFAC2BBFC;
+	Wed, 19 Jun 2024 13:18:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803090;
-	bh=DqUN0gTtLJNLoO7/w5dHV8+d6C0q9JNnN5bqV5FI05E=;
+	s=korg; t=1718803093;
+	bh=vApH9GKTC2i7KNYyQgx9IhMdTFT/SBpbHznO+LvWRxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kQy0+TIk7GxM1lFzujQlmXpLNBr6KdUq1g8N2LTt/t7iTuKslkXx8w9F7vsbL5SK2
-	 HhIyRL2qSOavF2DyERGAGzSS5yKpETYqOMNbIFNzkABx9Y5mZKw5bjD2SiDeGx5IH5
-	 4+ThCB0BCnVidN3Fsc0iHNo9g2OFdPFIGW4Svx5M=
+	b=nMzGyD3jb7EtmDCaBhRBN71s0F005XcoTG+Mzdf4Otb/8QbbC3pmGRvB6e18rLrJI
+	 9ZqB1IP2ZXjqM/f0kM3ban/QiwQ1UT+U9shPoiCjT7A4e3OX5l362oqPbYnuBe8zoJ
+	 pnqWd0/DT9F7+wWsQTdFjqSX9L76Em1DDil45jpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Forbes <ian.forbes@broadcom.com>,
-	Zack Rusin <zack.rusin@broadcom.com>,
+	Sagar Cheluvegowda <quic_scheluve@quicinc.com>,
+	Simon Horman <horms@kernel.org>,
+	Andrew Halaney <ahalaney@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 142/281] drm/vmwgfx: Remove STDU logic from generic mode_valid function
-Date: Wed, 19 Jun 2024 14:55:01 +0200
-Message-ID: <20240619125615.305948277@linuxfoundation.org>
+Subject: [PATCH 6.9 151/281] net: stmmac: dwmac-qcom-ethqos: Configure host DMA width
+Date: Wed, 19 Jun 2024 14:55:10 +0200
+Message-ID: <20240619125615.651147521@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -51,91 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Forbes <ian.forbes@broadcom.com>
+From: Sagar Cheluvegowda <quic_scheluve@quicinc.com>
 
-[ Upstream commit dde1de06bd7248fd83c4ce5cf0dbe9e4e95bbb91 ]
+[ Upstream commit 0579f27249047006a818e463ee66a6c314d04cea ]
 
-STDU has its own mode_valid function now so this logic can be removed from
-the generic version.
+Commit 070246e4674b ("net: stmmac: Fix for mismatched host/device DMA
+address width") added support in the stmmac driver for platform drivers
+to indicate the host DMA width, but left it up to authors of the
+specific platforms to indicate if their width differed from the addr64
+register read from the MAC itself.
 
-Fixes: 935f795045a6 ("drm/vmwgfx: Refactor drm connector probing for display modes")
+Qualcomm's EMAC4 integration supports only up to 36 bit width (as
+opposed to the addr64 register indicating 40 bit width). Let's indicate
+that in the platform driver to avoid a scenario where the driver will
+allocate descriptors of size that is supported by the CPU which in our
+case is 36 bit, but as the addr64 register is still capable of 40 bits
+the device will use two descriptors as one address.
 
-Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240521184720.767-4-ian.forbes@broadcom.com
+Fixes: 8c4d92e82d50 ("net: stmmac: dwmac-qcom-ethqos: add support for emac4 on sa8775p platforms")
+Signed-off-by: Sagar Cheluvegowda <quic_scheluve@quicinc.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_drv.h |  3 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_kms.c | 26 +++++++++-----------------
- 2 files changed, 9 insertions(+), 20 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
-index b019a1a1787af..c1430e55474cb 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
-@@ -1066,9 +1066,6 @@ void vmw_kms_cursor_snoop(struct vmw_surface *srf,
- int vmw_kms_write_svga(struct vmw_private *vmw_priv,
- 		       unsigned width, unsigned height, unsigned pitch,
- 		       unsigned bpp, unsigned depth);
--bool vmw_kms_validate_mode_vram(struct vmw_private *dev_priv,
--				uint32_t pitch,
--				uint32_t height);
- int vmw_kms_present(struct vmw_private *dev_priv,
- 		    struct drm_file *file_priv,
- 		    struct vmw_framebuffer *vfb,
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-index 84ae4e10a2ebe..42fcf4698aba9 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-@@ -2157,13 +2157,12 @@ int vmw_kms_write_svga(struct vmw_private *vmw_priv,
- 	return 0;
- }
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+index e254b21fdb598..65d7370b47d57 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+@@ -93,6 +93,7 @@ struct ethqos_emac_driver_data {
+ 	bool has_emac_ge_3;
+ 	const char *link_clk_name;
+ 	bool has_integrated_pcs;
++	u32 dma_addr_width;
+ 	struct dwmac4_addrs dwmac4_addrs;
+ };
  
-+static
- bool vmw_kms_validate_mode_vram(struct vmw_private *dev_priv,
--				uint32_t pitch,
--				uint32_t height)
-+				u64 pitch,
-+				u64 height)
- {
--	return ((u64) pitch * (u64) height) < (u64)
--		((dev_priv->active_display_unit == vmw_du_screen_target) ?
--		 dev_priv->max_primary_mem : dev_priv->vram_size);
-+	return (pitch * height) < (u64)dev_priv->vram_size;
- }
+@@ -276,6 +277,7 @@ static const struct ethqos_emac_driver_data emac_v4_0_0_data = {
+ 	.has_emac_ge_3 = true,
+ 	.link_clk_name = "phyaux",
+ 	.has_integrated_pcs = true,
++	.dma_addr_width = 36,
+ 	.dwmac4_addrs = {
+ 		.dma_chan = 0x00008100,
+ 		.dma_chan_offset = 0x1000,
+@@ -845,6 +847,8 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+ 		plat_dat->flags |= STMMAC_FLAG_RX_CLK_RUNS_IN_LPI;
+ 	if (data->has_integrated_pcs)
+ 		plat_dat->flags |= STMMAC_FLAG_HAS_INTEGRATED_PCS;
++	if (data->dma_addr_width)
++		plat_dat->host_dma_width = data->dma_addr_width;
  
- /**
-@@ -2859,25 +2858,18 @@ int vmw_du_helper_plane_update(struct vmw_du_update_plane *update)
- enum drm_mode_status vmw_connector_mode_valid(struct drm_connector *connector,
- 					      struct drm_display_mode *mode)
- {
-+	enum drm_mode_status ret;
- 	struct drm_device *dev = connector->dev;
- 	struct vmw_private *dev_priv = vmw_priv(dev);
--	u32 max_width = dev_priv->texture_max_width;
--	u32 max_height = dev_priv->texture_max_height;
- 	u32 assumed_cpp = 4;
- 
- 	if (dev_priv->assume_16bpp)
- 		assumed_cpp = 2;
- 
--	if (dev_priv->active_display_unit == vmw_du_screen_target) {
--		max_width  = min(dev_priv->stdu_max_width,  max_width);
--		max_height = min(dev_priv->stdu_max_height, max_height);
--	}
--
--	if (max_width < mode->hdisplay)
--		return MODE_BAD_HVALUE;
--
--	if (max_height < mode->vdisplay)
--		return MODE_BAD_VVALUE;
-+	ret = drm_mode_validate_size(mode, dev_priv->texture_max_width,
-+				     dev_priv->texture_max_height);
-+	if (ret != MODE_OK)
-+		return ret;
- 
- 	if (!vmw_kms_validate_mode_vram(dev_priv,
- 					mode->hdisplay * assumed_cpp,
+ 	if (ethqos->serdes_phy) {
+ 		plat_dat->serdes_powerup = qcom_ethqos_serdes_powerup;
 -- 
 2.43.0
 
