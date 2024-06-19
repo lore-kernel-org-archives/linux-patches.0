@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890B814E2D9;
-	Wed, 19 Jun 2024 13:21:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16E014A0A7;
+	Wed, 19 Jun 2024 13:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803281; cv=none; b=U9Ss+cdKpv4oVppeo28tO1PrgEmVMMpJXD4IxmO9eiXD/LvawdKLUo/Nt1A9GzMiL8yXQAlgm4jH86o9s5hfbvCUSI48wMhObwHGwwAtLOKyw+ygqQR6QVvB6vp7RcIPJf45IOHZOLqB0Zfa56XSlOS9q7Hv+fM9Q7XKWsb3ODs=
+	t=1718803285; cv=none; b=B0bYk3YnkvveUTE3O3YBCSknnx4/KtRezLYeqkfABaJ8Bmc/E0hHoh4CkfkT+QA6EdFg7tAhroGhgq06hUlQVwdT0+KR7sSWJb+BqRz2MFhK5cNuwodS9yByUp0wHIYkbXNmII4m/xbanwODBFtK2sgjxxpghqbARNIizXdIGP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803281; c=relaxed/simple;
-	bh=H3DnCYOtTx/C08fmXXEN4gLzHmgFNuTF4XkOHNAypQ4=;
+	s=arc-20240116; t=1718803285; c=relaxed/simple;
+	bh=8GCv7lL6WQtX1KnDs7M1pMeWcj5brAJAF0dmWYAN3Bw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NLoZgu1DcVzHUPskei07VIShllhuVVXDNW1ERPSkdIGrAeDGj8PPEwt6lKGlomVmc53fFLIN/mvjOkRnrgdxyVl1TUX/JX2XXaTruB9hYUqSqReZtLUQ7NeworoQMUb/uYgqRwjbpTlwY08xXgrcsUmHZGnuU45gNrCXOIjrd5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JZ1fIgLT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IzsF9edMjgR9zvdFIFpbTT5NSFrgrOpC3ZjmszUNY09vrYGvWBGHKrgLF2KmFoxNKEhTA/JuTdtW3Krknt5mGPdirKL4eFQPBVToJww9xRQnqkM6X9XQWcDgrYCwVvMOx+ZjdFwCQAmWymBiczmgy+fy2On9jpOs6T1JQC8Nae8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=okjmOXTU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JZ1fIgLT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05031C2BBFC;
-	Wed, 19 Jun 2024 13:21:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="okjmOXTU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7C8C2BBFC;
+	Wed, 19 Jun 2024 13:21:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803281;
-	bh=H3DnCYOtTx/C08fmXXEN4gLzHmgFNuTF4XkOHNAypQ4=;
+	s=korg; t=1718803284;
+	bh=8GCv7lL6WQtX1KnDs7M1pMeWcj5brAJAF0dmWYAN3Bw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JZ1fIgLT5ZQEgzHPibyRFnXk4PkYlHd3HVN01ccBi0WXGTb75MYyKyXrtSjXUlZf3
-	 KHm6fzpHqV4PeMo3+pOM2/uPgUX0Uk6SMJk39Zn35nGl7CuRa9mllGud1kbSnUOYzI
-	 9YQsjx0bS1KW2qiDFFqMBBZh5Omu8NawxFSpjaGA=
+	b=okjmOXTUkZrZyBQCzEEdXmMnn2ZapEp62KN7K91IkgmSAJ6f8cPAq4CsTLAUbf9vI
+	 YZrKCfZxMlipSF6ljiGAHs8zREphbIjGNbU0i/7SmEhI7QfPUONpF6yb5Qydx95KZJ
+	 bk8jk8uW6KZGztNngwF2cW4QyPAwo0ysTm92TrwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taehee Yoo <ap420073@gmail.com>,
-	Brett Creeley <brett.creeley@amd.com>,
-	Shannon Nelson <shannon.nelson@amd.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 183/281] ionic: fix use after netif_napi_del()
-Date: Wed, 19 Jun 2024 14:55:42 +0200
-Message-ID: <20240619125616.878366125@linuxfoundation.org>
+Subject: [PATCH 6.9 184/281] bnxt_en: Cap the size of HWRM_PORT_PHY_QCFG forwarded response
+Date: Wed, 19 Jun 2024 14:55:43 +0200
+Message-ID: <20240619125616.916622623@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -53,95 +53,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taehee Yoo <ap420073@gmail.com>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit 79f18a41dd056115d685f3b0a419c7cd40055e13 ]
+[ Upstream commit 7d9df38c9c037ab84502ce7eeae9f1e1e7e72603 ]
 
-When queues are started, netif_napi_add() and napi_enable() are called.
-If there are 4 queues and only 3 queues are used for the current
-configuration, only 3 queues' napi should be registered and enabled.
-The ionic_qcq_enable() checks whether the .poll pointer is not NULL for
-enabling only the using queue' napi. Unused queues' napi will not be
-registered by netif_napi_add(), so the .poll pointer indicates NULL.
-But it couldn't distinguish whether the napi was unregistered or not
-because netif_napi_del() doesn't reset the .poll pointer to NULL.
-So, ionic_qcq_enable() calls napi_enable() for the queue, which was
-unregistered by netif_napi_del().
+Firmware interface 1.10.2.118 has increased the size of
+HWRM_PORT_PHY_QCFG response beyond the maximum size that can be
+forwarded.  When the VF's link state is not the default auto state,
+the PF will need to forward the response back to the VF to indicate
+the forced state.  This regression may cause the VF to fail to
+initialize.
 
-Reproducer:
-   ethtool -L <interface name> rx 1 tx 1 combined 0
-   ethtool -L <interface name> rx 0 tx 0 combined 1
-   ethtool -L <interface name> rx 0 tx 0 combined 4
+Fix it by capping the HWRM_PORT_PHY_QCFG response to the maximum
+96 bytes.  The SPEEDS2_SUPPORTED flag needs to be cleared because the
+new speeds2 fields are beyond the legacy structure.  Also modify
+bnxt_hwrm_fwd_resp() to print a warning if the message size exceeds 96
+bytes to make this failure more obvious.
 
-Splat looks like:
-kernel BUG at net/core/dev.c:6666!
-Oops: invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
-CPU: 3 PID: 1057 Comm: kworker/3:3 Not tainted 6.10.0-rc2+ #16
-Workqueue: events ionic_lif_deferred_work [ionic]
-RIP: 0010:napi_enable+0x3b/0x40
-Code: 48 89 c2 48 83 e2 f6 80 b9 61 09 00 00 00 74 0d 48 83 bf 60 01 00 00 00 74 03 80 ce 01 f0 4f
-RSP: 0018:ffffb6ed83227d48 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: ffff97560cda0828 RCX: 0000000000000029
-RDX: 0000000000000001 RSI: 0000000000000000 RDI: ffff97560cda0a28
-RBP: ffffb6ed83227d50 R08: 0000000000000400 R09: 0000000000000001
-R10: 0000000000000001 R11: 0000000000000001 R12: 0000000000000000
-R13: ffff97560ce3c1a0 R14: 0000000000000000 R15: ffff975613ba0a20
-FS:  0000000000000000(0000) GS:ffff975d5f780000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f8f734ee200 CR3: 0000000103e50000 CR4: 00000000007506f0
-PKRU: 55555554
-Call Trace:
- <TASK>
- ? die+0x33/0x90
- ? do_trap+0xd9/0x100
- ? napi_enable+0x3b/0x40
- ? do_error_trap+0x83/0xb0
- ? napi_enable+0x3b/0x40
- ? napi_enable+0x3b/0x40
- ? exc_invalid_op+0x4e/0x70
- ? napi_enable+0x3b/0x40
- ? asm_exc_invalid_op+0x16/0x20
- ? napi_enable+0x3b/0x40
- ionic_qcq_enable+0xb7/0x180 [ionic 59bdfc8a035436e1c4224ff7d10789e3f14643f8]
- ionic_start_queues+0xc4/0x290 [ionic 59bdfc8a035436e1c4224ff7d10789e3f14643f8]
- ionic_link_status_check+0x11c/0x170 [ionic 59bdfc8a035436e1c4224ff7d10789e3f14643f8]
- ionic_lif_deferred_work+0x129/0x280 [ionic 59bdfc8a035436e1c4224ff7d10789e3f14643f8]
- process_one_work+0x145/0x360
- worker_thread+0x2bb/0x3d0
- ? __pfx_worker_thread+0x10/0x10
- kthread+0xcc/0x100
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x2d/0x50
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1a/0x30
-
-Fixes: 0f3154e6bcb3 ("ionic: Add Tx and Rx handling")
-Signed-off-by: Taehee Yoo <ap420073@gmail.com>
-Reviewed-by: Brett Creeley <brett.creeley@amd.com>
-Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
-Link: https://lore.kernel.org/r/20240612060446.1754392-1-ap420073@gmail.com
+Fixes: 84a911db8305 ("bnxt_en: Update firmware interface to 1.10.2.118")
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://lore.kernel.org/r/20240612231736.57823-1-michael.chan@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_lif.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.h     | 51 +++++++++++++++++++
+ .../net/ethernet/broadcom/bnxt/bnxt_sriov.c   | 12 ++++-
+ 2 files changed, 61 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_lif.c b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-index 7f0c6cdc375e3..0cd819bc4ae35 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-@@ -304,10 +304,8 @@ static int ionic_qcq_enable(struct ionic_qcq *qcq)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+index dd849e715c9ba..c46abcccfca10 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+@@ -1419,6 +1419,57 @@ struct bnxt_l2_filter {
+ 	atomic_t		refcnt;
+ };
  
--	if (qcq->napi.poll)
--		napi_enable(&qcq->napi);
--
- 	if (qcq->flags & IONIC_QCQ_F_INTR) {
-+		napi_enable(&qcq->napi);
- 		irq_set_affinity_hint(qcq->intr.vector,
- 				      &qcq->intr.affinity_mask);
- 		ionic_intr_mask(idev->intr_ctrl, qcq->intr.index,
++/* Compat version of hwrm_port_phy_qcfg_output capped at 96 bytes.  The
++ * first 95 bytes are identical to hwrm_port_phy_qcfg_output in bnxt_hsi.h.
++ * The last valid byte in the compat version is different.
++ */
++struct hwrm_port_phy_qcfg_output_compat {
++	__le16	error_code;
++	__le16	req_type;
++	__le16	seq_id;
++	__le16	resp_len;
++	u8	link;
++	u8	active_fec_signal_mode;
++	__le16	link_speed;
++	u8	duplex_cfg;
++	u8	pause;
++	__le16	support_speeds;
++	__le16	force_link_speed;
++	u8	auto_mode;
++	u8	auto_pause;
++	__le16	auto_link_speed;
++	__le16	auto_link_speed_mask;
++	u8	wirespeed;
++	u8	lpbk;
++	u8	force_pause;
++	u8	module_status;
++	__le32	preemphasis;
++	u8	phy_maj;
++	u8	phy_min;
++	u8	phy_bld;
++	u8	phy_type;
++	u8	media_type;
++	u8	xcvr_pkg_type;
++	u8	eee_config_phy_addr;
++	u8	parallel_detect;
++	__le16	link_partner_adv_speeds;
++	u8	link_partner_adv_auto_mode;
++	u8	link_partner_adv_pause;
++	__le16	adv_eee_link_speed_mask;
++	__le16	link_partner_adv_eee_link_speed_mask;
++	__le32	xcvr_identifier_type_tx_lpi_timer;
++	__le16	fec_cfg;
++	u8	duplex_state;
++	u8	option_flags;
++	char	phy_vendor_name[16];
++	char	phy_vendor_partnumber[16];
++	__le16	support_pam4_speeds;
++	__le16	force_pam4_link_speed;
++	__le16	auto_pam4_link_speed_mask;
++	u8	link_partner_pam4_adv_speeds;
++	u8	valid;
++};
++
+ struct bnxt_link_info {
+ 	u8			phy_type;
+ 	u8			media_type;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_sriov.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_sriov.c
+index 175192ebaa773..22898d3d088b0 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_sriov.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_sriov.c
+@@ -950,8 +950,11 @@ static int bnxt_hwrm_fwd_resp(struct bnxt *bp, struct bnxt_vf_info *vf,
+ 	struct hwrm_fwd_resp_input *req;
+ 	int rc;
+ 
+-	if (BNXT_FWD_RESP_SIZE_ERR(msg_size))
++	if (BNXT_FWD_RESP_SIZE_ERR(msg_size)) {
++		netdev_warn_once(bp->dev, "HWRM fwd response too big (%d bytes)\n",
++				 msg_size);
+ 		return -EINVAL;
++	}
+ 
+ 	rc = hwrm_req_init(bp, req, HWRM_FWD_RESP);
+ 	if (!rc) {
+@@ -1085,7 +1088,7 @@ static int bnxt_vf_set_link(struct bnxt *bp, struct bnxt_vf_info *vf)
+ 		rc = bnxt_hwrm_exec_fwd_resp(
+ 			bp, vf, sizeof(struct hwrm_port_phy_qcfg_input));
+ 	} else {
+-		struct hwrm_port_phy_qcfg_output phy_qcfg_resp = {0};
++		struct hwrm_port_phy_qcfg_output_compat phy_qcfg_resp = {};
+ 		struct hwrm_port_phy_qcfg_input *phy_qcfg_req;
+ 
+ 		phy_qcfg_req =
+@@ -1096,6 +1099,11 @@ static int bnxt_vf_set_link(struct bnxt *bp, struct bnxt_vf_info *vf)
+ 		mutex_unlock(&bp->link_lock);
+ 		phy_qcfg_resp.resp_len = cpu_to_le16(sizeof(phy_qcfg_resp));
+ 		phy_qcfg_resp.seq_id = phy_qcfg_req->seq_id;
++		/* New SPEEDS2 fields are beyond the legacy structure, so
++		 * clear the SPEEDS2_SUPPORTED flag.
++		 */
++		phy_qcfg_resp.option_flags &=
++			~PORT_PHY_QCAPS_RESP_FLAGS2_SPEEDS2_SUPPORTED;
+ 		phy_qcfg_resp.valid = 1;
+ 
+ 		if (vf->flags & BNXT_VF_LINK_UP) {
 -- 
 2.43.0
 
