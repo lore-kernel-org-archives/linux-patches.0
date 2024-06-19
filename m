@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365CE82495;
-	Wed, 19 Jun 2024 13:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB6582495;
+	Wed, 19 Jun 2024 13:18:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803102; cv=none; b=jSWg0pRm8TGIcawnAzI/zDgUCONQoXccn+79wbrgfgGzFVSOgaRhkftr38M8bOscOKRom3b1P0gfrc6gfc9YsN4T4d1T9Q79uFyE2pru3zl4shoTZs4uD9/fKfS6rHpBnRRCRTzc1wsTFOzbViBeNNTttNkLHe//MvAnlBHy1PA=
+	t=1718803105; cv=none; b=kPV0CWgp4a3gn5Vmr/vd1Jyv5YnkvXL0vqKaYspVHrGp4WcAaDhtEkyD4RviNYW5i8Kfyu1kf6V3ifH8JL6lgrUcNijlvPFMhRoFuaNghoStNt9jJ8RKQhSBqegfkgvTocssRpa7D7am605eHIcKXVvyMIsH2YGU6oYPU6tOm2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803102; c=relaxed/simple;
-	bh=YQuEI2j4IwQQQd02OZ7/X0Gb6Ag2F40m4Dg6Q6FgDv4=;
+	s=arc-20240116; t=1718803105; c=relaxed/simple;
+	bh=XgRJMXI0SmNIDDFK9Oic2NtcCSl/2gQJVWmcur68210=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t+9hrJ2bNqd6/tRQLhi0WlNAfnWTcXYfX6ISYBbHZPoG0KvMYH8xsyEcY6zKZPluay5NhY61OfERBhQT/1qS8KSQvZxfJEugXz6KfeiH0aRaaj3wTzchmqhaMLfar3fW4Ix97mt62bhnLIkIQ6qacxMDxXyqJENpEj7uBTkYA4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ldvnfNDz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q3G0ZWz08pjtG2t92MX+Uh+eXqZ0z+X60tXOFrbUDgGD6O+JCLg3QpUT98uVMg1BkSWOv+bl1lNpTIAXTnxpWPLKpu9V27Ox/il6JKzEUOAZukK8p3bb1sL/LIaJz1EyhZdN/9KRfcoh8tl3XPdkqXExwQSOvvTbIKMtagYAwk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HGquKIaT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ldvnfNDz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC11C2BBFC;
-	Wed, 19 Jun 2024 13:18:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HGquKIaT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90B8EC2BBFC;
+	Wed, 19 Jun 2024 13:18:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803102;
-	bh=YQuEI2j4IwQQQd02OZ7/X0Gb6Ag2F40m4Dg6Q6FgDv4=;
+	s=korg; t=1718803105;
+	bh=XgRJMXI0SmNIDDFK9Oic2NtcCSl/2gQJVWmcur68210=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ldvnfNDzSp7jOFUKZBl+AC5fAsRcVqNCMgYHi65J1NhJ6OwZ9GKTJzVIjnCaN6ckI
-	 ZBrKncWRU4mlldjGDRFQeyP79bS/5waLJJdrG/QhR/nfXP9u7cWiZBPnBXmWZU2GrQ
-	 R12npnj+4KWEcFvrTygWkFDej0MGM19iLCoTg0Hg=
+	b=HGquKIaTL1E4yn5IAhiaUDq2dlcHmXSoK9SP/unCp8OcjYIt2Zx2cwEWyULQx1Ic1
+	 GHLHMCcXuCJTKiiO3yry4vTfmCWNdLsokDoVvcJzKXXounUWr6jDLUFkFITRmXkd97
+	 390HXkBbhgZBpVmmn9WrW5ygJ2VTf4DHt2Rtwrj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Miotk <adam.miotk@arm.com>,
-	Maxime Ripard <mripard@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 154/281] drm/bridge/panel: Fix runtime warning on panel bridge release
-Date: Wed, 19 Jun 2024 14:55:13 +0200
-Message-ID: <20240619125615.765615384@linuxfoundation.org>
+Subject: [PATCH 6.9 155/281] tcp: fix race in tcp_v6_syn_recv_sock()
+Date: Wed, 19 Jun 2024 14:55:14 +0200
+Message-ID: <20240619125615.803819571@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -51,49 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adam Miotk <adam.miotk@arm.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ce62600c4dbee8d43b02277669dd91785a9b81d9 ]
+[ Upstream commit d37fe4255abe8e7b419b90c5847e8ec2b8debb08 ]
 
-Device managed panel bridge wrappers are created by calling to
-drm_panel_bridge_add_typed() and registering a release handler for
-clean-up when the device gets unbound.
+tcp_v6_syn_recv_sock() calls ip6_dst_store() before
+inet_sk(newsk)->pinet6 has been set up.
 
-Since the memory for this bridge is also managed and linked to the panel
-device, the release function should not try to free that memory.
-Moreover, the call to devm_kfree() inside drm_panel_bridge_remove() will
-fail in this case and emit a warning because the panel bridge resource
-is no longer on the device resources list (it has been removed from
-there before the call to release handlers).
+This means ip6_dst_store() writes over the parent (listener)
+np->dst_cookie.
 
-Fixes: 67022227ffb1 ("drm/bridge: Add a devm_ allocator for panel bridge.")
-Signed-off-by: Adam Miotk <adam.miotk@arm.com>
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240610102739.139852-1-adam.miotk@arm.com
+This is racy because multiple threads could share the same
+parent and their final np->dst_cookie could be wrong.
+
+Move ip6_dst_store() call after inet_sk(newsk)->pinet6
+has been changed and after the copy of parent ipv6_pinfo.
+
+Fixes: e994b2f0fb92 ("tcp: do not lock listener to process SYN packets")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/panel.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/ipv6/tcp_ipv6.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/bridge/panel.c b/drivers/gpu/drm/bridge/panel.c
-index 7f41525f7a6e6..3d6e8f096a5d4 100644
---- a/drivers/gpu/drm/bridge/panel.c
-+++ b/drivers/gpu/drm/bridge/panel.c
-@@ -358,9 +358,12 @@ EXPORT_SYMBOL(drm_panel_bridge_set_orientation);
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index 5873b3c3562ed..2b2eda5a2894d 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -1438,7 +1438,6 @@ static struct sock *tcp_v6_syn_recv_sock(const struct sock *sk, struct sk_buff *
+ 	 */
  
- static void devm_drm_panel_bridge_release(struct device *dev, void *res)
- {
--	struct drm_bridge **bridge = res;
-+	struct drm_bridge *bridge = *(struct drm_bridge **)res;
+ 	newsk->sk_gso_type = SKB_GSO_TCPV6;
+-	ip6_dst_store(newsk, dst, NULL, NULL);
+ 	inet6_sk_rx_dst_set(newsk, skb);
  
--	drm_panel_bridge_remove(*bridge);
-+	if (!bridge)
-+		return;
+ 	inet_sk(newsk)->pinet6 = tcp_inet6_sk(newsk);
+@@ -1449,6 +1448,8 @@ static struct sock *tcp_v6_syn_recv_sock(const struct sock *sk, struct sk_buff *
+ 
+ 	memcpy(newnp, np, sizeof(struct ipv6_pinfo));
+ 
++	ip6_dst_store(newsk, dst, NULL, NULL);
 +
-+	drm_bridge_remove(bridge);
- }
- 
- /**
+ 	newsk->sk_v6_daddr = ireq->ir_v6_rmt_addr;
+ 	newnp->saddr = ireq->ir_v6_loc_addr;
+ 	newsk->sk_v6_rcv_saddr = ireq->ir_v6_loc_addr;
 -- 
 2.43.0
 
