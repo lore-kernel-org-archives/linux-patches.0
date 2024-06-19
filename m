@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2978AD58;
-	Wed, 19 Jun 2024 13:16:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A28AD58;
+	Wed, 19 Jun 2024 13:16:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803013; cv=none; b=Rj3ugJ8HwvHafLop3JUX02if82SV7QcURfl6/fJVAQhOypl3GhsnKv+6cZtDvw1wfAdBuqb23Pd13v2C1obXg8OKR/TcQ0uHek/Z8K2KZEawPoFz3FW0YHE33T+Nf/WIAphmTJBpQ8/Phqffnb3HzelJVWsVP25WhjaFdd0Y9W8=
+	t=1718803016; cv=none; b=E0olepV9rDZMcaRnzwXYEvuN0hWlTW0kzWq+plxdm5SR6giWBAyyexP7OslNdvcokDzC/xLEb2a3KjmlFuJjhm+sNWgmyPJkEBrQwi9CuenySyalEQxMimJxmBMfYGaYzp8qEsqKLGblxK1di8l85RPFMjL+6ahc9eJzmByZzZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803013; c=relaxed/simple;
-	bh=43ul5ftEKTSOXCGvbMivRst27y929MHEZuJ/JhSTFBE=;
+	s=arc-20240116; t=1718803016; c=relaxed/simple;
+	bh=UPv8wGyL73Cl3O/wS898dhg48iLDdlrrmHxqu1yVdJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u/gHIrtBtLF2LMKQCS1gH0ycZMGclSqW8XMFbG9G+KwVfIDEEjVGYTlS+FrswIv+CtguS1Rt0oOVAgD5cZPz5iQCqPM2p5y1JCjEVbX/lh+r5HLboiSp5MN4jGl/Bw/u564YQAg5QlgNuljl0EgXulUh2BC/D3Oo2NpHhG8NSN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hz8KfGRU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yaz7l6jf+/sen4jIsKhpXzNXDTeYtnuRF6wMkXuYGROsdkbo+8x94Zk0OEREsoXshnqqZITWq9LcutSinxDsadnY9w/a4aJhXnlKbPmY9BTDIupqHTi9GHJ7qrL3FDpvawH9FF5WMuZTEMQ9N3Mo3lSv3x3QvnXJ3nUzlf2ENUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q4+J015U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hz8KfGRU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285DDC2BBFC;
-	Wed, 19 Jun 2024 13:16:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4+J015U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F48CC2BBFC;
+	Wed, 19 Jun 2024 13:16:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803013;
-	bh=43ul5ftEKTSOXCGvbMivRst27y929MHEZuJ/JhSTFBE=;
+	s=korg; t=1718803016;
+	bh=UPv8wGyL73Cl3O/wS898dhg48iLDdlrrmHxqu1yVdJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hz8KfGRUqR6xx5ynG4xofomzABJp9xTEDuL4BD3wQo9Eo9u562jQPo8dh7aeWnkhH
-	 oumowVeY10USfoNuEj2eH0uDsI/U7mvNmii9hZ6XsMbGn6bwAfmTzG5F9ciSp5OZpt
-	 7PCBjXrgb0kJ5ghJHr1z/tx1OP0iWmhQQeOSNUOY=
+	b=q4+J015Urv7n522yXTY/A5XqrQm1dMcM1BDszKxDy3AMDDR7/1ecxafHeuWyGt4aK
+	 gmagoUx3lV70XHk1QgaMY9fXBQ2Hxd8Ks8nOzebU8j7UXjiW3rl9bdARblmdp+6r4Z
+	 gHfdJGqxJcppRP8F5h/uCHbqn5LCvn0ph8yRa0OQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neilb@suse.de>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Richard Kojedzinszky <richard+debian+bugreport@kojedz.in>
-Subject: [PATCH 6.9 124/281] NFS: add barriers when testing for NFS_FSDATA_BLOCKED
-Date: Wed, 19 Jun 2024 14:54:43 +0200
-Message-ID: <20240619125614.616691392@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.9 125/281] selftests/tracing: Fix event filter test to retry up to 10 times
+Date: Wed, 19 Jun 2024 14:54:44 +0200
+Message-ID: <20240619125614.655100036@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -52,149 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 99bc9f2eb3f79a2b4296d9bf43153e1d10ca50d3 ]
+[ Upstream commit 0f42bdf59b4e428485aa922bef871bfa6cc505e0 ]
 
-dentry->d_fsdata is set to NFS_FSDATA_BLOCKED while unlinking or
-renaming-over a file to ensure that no open succeeds while the NFS
-operation progressed on the server.
+Commit eb50d0f250e9 ("selftests/ftrace: Choose target function for filter
+test from samples") choose the target function from samples, but sometimes
+this test failes randomly because the target function does not hit at the
+next time. So retry getting samples up to 10 times.
 
-Setting dentry->d_fsdata to NFS_FSDATA_BLOCKED is done under ->d_lock
-after checking the refcount is not elevated.  Any attempt to open the
-file (through that name) will go through lookp_open() which will take
-->d_lock while incrementing the refcount, we can be sure that once the
-new value is set, __nfs_lookup_revalidate() *will* see the new value and
-will block.
-
-We don't have any locking guarantee that when we set ->d_fsdata to NULL,
-the wait_var_event() in __nfs_lookup_revalidate() will notice.
-wait/wake primitives do NOT provide barriers to guarantee order.  We
-must use smp_load_acquire() in wait_var_event() to ensure we look at an
-up-to-date value, and must use smp_store_release() before wake_up_var().
-
-This patch adds those barrier functions and factors out
-block_revalidate() and unblock_revalidate() far clarity.
-
-There is also a hypothetical bug in that if memory allocation fails
-(which never happens in practice) we might leave ->d_fsdata locked.
-This patch adds the missing call to unblock_revalidate().
-
-Reported-and-tested-by: Richard Kojedzinszky <richard+debian+bugreport@kojedz.in>
-Closes: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1071501
-Fixes: 3c59366c207e ("NFS: don't unhash dentry during unlink/rename")
-Signed-off-by: NeilBrown <neilb@suse.de>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: eb50d0f250e9 ("selftests/ftrace: Choose target function for filter test from samples")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/dir.c | 47 ++++++++++++++++++++++++++++++++---------------
- 1 file changed, 32 insertions(+), 15 deletions(-)
+ .../test.d/filter/event-filter-function.tc    | 20 ++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
-index ac505671efbdb..bdd6cb33a3708 100644
---- a/fs/nfs/dir.c
-+++ b/fs/nfs/dir.c
-@@ -1802,9 +1802,10 @@ __nfs_lookup_revalidate(struct dentry *dentry, unsigned int flags,
- 		if (parent != READ_ONCE(dentry->d_parent))
- 			return -ECHILD;
- 	} else {
--		/* Wait for unlink to complete */
-+		/* Wait for unlink to complete - see unblock_revalidate() */
- 		wait_var_event(&dentry->d_fsdata,
--			       dentry->d_fsdata != NFS_FSDATA_BLOCKED);
-+			       smp_load_acquire(&dentry->d_fsdata)
-+			       != NFS_FSDATA_BLOCKED);
- 		parent = dget_parent(dentry);
- 		ret = reval(d_inode(parent), dentry, flags);
- 		dput(parent);
-@@ -1817,6 +1818,29 @@ static int nfs_lookup_revalidate(struct dentry *dentry, unsigned int flags)
- 	return __nfs_lookup_revalidate(dentry, flags, nfs_do_lookup_revalidate);
+diff --git a/tools/testing/selftests/ftrace/test.d/filter/event-filter-function.tc b/tools/testing/selftests/ftrace/test.d/filter/event-filter-function.tc
+index 3f74c09c56b62..118247b8dd84d 100644
+--- a/tools/testing/selftests/ftrace/test.d/filter/event-filter-function.tc
++++ b/tools/testing/selftests/ftrace/test.d/filter/event-filter-function.tc
+@@ -10,7 +10,6 @@ fail() { #msg
  }
  
-+static void block_revalidate(struct dentry *dentry)
-+{
-+	/* old devname - just in case */
-+	kfree(dentry->d_fsdata);
-+
-+	/* Any new reference that could lead to an open
-+	 * will take ->d_lock in lookup_open() -> d_lookup().
-+	 * Holding this lock ensures we cannot race with
-+	 * __nfs_lookup_revalidate() and removes and need
-+	 * for further barriers.
-+	 */
-+	lockdep_assert_held(&dentry->d_lock);
-+
-+	dentry->d_fsdata = NFS_FSDATA_BLOCKED;
-+}
-+
-+static void unblock_revalidate(struct dentry *dentry)
-+{
-+	/* store_release ensures wait_var_event() sees the update */
-+	smp_store_release(&dentry->d_fsdata, NULL);
-+	wake_up_var(&dentry->d_fsdata);
-+}
-+
- /*
-  * A weaker form of d_revalidate for revalidating just the d_inode(dentry)
-  * when we don't really care about the dentry name. This is called when a
-@@ -2501,15 +2525,12 @@ int nfs_unlink(struct inode *dir, struct dentry *dentry)
- 		spin_unlock(&dentry->d_lock);
- 		goto out;
- 	}
--	/* old devname */
--	kfree(dentry->d_fsdata);
--	dentry->d_fsdata = NFS_FSDATA_BLOCKED;
-+	block_revalidate(dentry);
+ sample_events() {
+-    echo > trace
+     echo 1 > events/kmem/kmem_cache_free/enable
+     echo 1 > tracing_on
+     ls > /dev/null
+@@ -22,6 +21,7 @@ echo 0 > tracing_on
+ echo 0 > events/enable
  
- 	spin_unlock(&dentry->d_lock);
- 	error = nfs_safe_remove(dentry);
- 	nfs_dentry_remove_handle_error(dir, dentry, error);
--	dentry->d_fsdata = NULL;
--	wake_up_var(&dentry->d_fsdata);
-+	unblock_revalidate(dentry);
- out:
- 	trace_nfs_unlink_exit(dir, dentry, error);
- 	return error;
-@@ -2616,8 +2637,7 @@ nfs_unblock_rename(struct rpc_task *task, struct nfs_renamedata *data)
- {
- 	struct dentry *new_dentry = data->new_dentry;
+ echo "Get the most frequently calling function"
++echo > trace
+ sample_events
  
--	new_dentry->d_fsdata = NULL;
--	wake_up_var(&new_dentry->d_fsdata);
-+	unblock_revalidate(new_dentry);
- }
+ target_func=`cat trace | grep -o 'call_site=\([^+]*\)' | sed 's/call_site=//' | sort | uniq -c | sort | tail -n 1 | sed 's/^[ 0-9]*//'`
+@@ -32,7 +32,16 @@ echo > trace
  
- /*
-@@ -2679,11 +2699,6 @@ int nfs_rename(struct mnt_idmap *idmap, struct inode *old_dir,
- 		if (WARN_ON(new_dentry->d_flags & DCACHE_NFSFS_RENAMED) ||
- 		    WARN_ON(new_dentry->d_fsdata == NFS_FSDATA_BLOCKED))
- 			goto out;
--		if (new_dentry->d_fsdata) {
--			/* old devname */
--			kfree(new_dentry->d_fsdata);
--			new_dentry->d_fsdata = NULL;
--		}
+ echo "Test event filter function name"
+ echo "call_site.function == $target_func" > events/kmem/kmem_cache_free/filter
++
++sample_events
++max_retry=10
++while [ `grep kmem_cache_free trace| wc -l` -eq 0 ]; do
+ sample_events
++max_retry=$((max_retry - 1))
++if [ $max_retry -eq 0 ]; then
++	exit_fail
++fi
++done
  
- 		spin_lock(&new_dentry->d_lock);
- 		if (d_count(new_dentry) > 2) {
-@@ -2705,7 +2720,7 @@ int nfs_rename(struct mnt_idmap *idmap, struct inode *old_dir,
- 			new_dentry = dentry;
- 			new_inode = NULL;
- 		} else {
--			new_dentry->d_fsdata = NFS_FSDATA_BLOCKED;
-+			block_revalidate(new_dentry);
- 			must_unblock = true;
- 			spin_unlock(&new_dentry->d_lock);
- 		}
-@@ -2717,6 +2732,8 @@ int nfs_rename(struct mnt_idmap *idmap, struct inode *old_dir,
- 	task = nfs_async_rename(old_dir, new_dir, old_dentry, new_dentry,
- 				must_unblock ? nfs_unblock_rename : NULL);
- 	if (IS_ERR(task)) {
-+		if (must_unblock)
-+			unblock_revalidate(new_dentry);
- 		error = PTR_ERR(task);
- 		goto out;
- 	}
+ hitcnt=`grep kmem_cache_free trace| grep $target_func | wc -l`
+ misscnt=`grep kmem_cache_free trace| grep -v $target_func | wc -l`
+@@ -49,7 +58,16 @@ address=`grep " ${target_func}\$" /proc/kallsyms | cut -d' ' -f1`
+ 
+ echo "Test event filter function address"
+ echo "call_site.function == 0x$address" > events/kmem/kmem_cache_free/filter
++echo > trace
++sample_events
++max_retry=10
++while [ `grep kmem_cache_free trace| wc -l` -eq 0 ]; do
+ sample_events
++max_retry=$((max_retry - 1))
++if [ $max_retry -eq 0 ]; then
++	exit_fail
++fi
++done
+ 
+ hitcnt=`grep kmem_cache_free trace| grep $target_func | wc -l`
+ misscnt=`grep kmem_cache_free trace| grep -v $target_func | wc -l`
 -- 
 2.43.0
 
