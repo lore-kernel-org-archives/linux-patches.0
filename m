@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BC0912FB31;
-	Wed, 19 Jun 2024 13:09:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7904B14389C;
+	Wed, 19 Jun 2024 13:09:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802585; cv=none; b=FtZPQybRAt2OxMIfuv5kAGnEU9AqZU8n0Gv8Tc2EpLdWB3gK07aQlPgwtVxr2fMZKHf4yHcW+K50WQ//QLONhq/4hO/6IAbBz16qo2Mx/Cq5+2Yt1pkw2md61Nx9+Sed/4mwfGJ+dmLJT3pz9OPKrl+RT6PFmc2XtK4JJFztWuQ=
+	t=1718802588; cv=none; b=fhG9IOHFvnsvY8DYOJO+FIC80bfEtLGCaeO5hp8hu/d9+nDwHtiYeyz+07JtoKzMqfaAix83ivd9PJUiJnTSr936wN6CyGyILUU2ttsxGHCJzfpyg8hYxG+UFx49HoYrrJCPCmAe1aH/Fm1h24XPchkauWUMWxsnSPmQ1/yjyVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802585; c=relaxed/simple;
-	bh=MQo+UcnOfct0hNKkRCuNdRH51dATaMLh3mSdyf5e9DU=;
+	s=arc-20240116; t=1718802588; c=relaxed/simple;
+	bh=9AZwRBxiNBR9fZgm4Sb8YjecrwbZ/WiHm5RKHF8DJxo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o3YOaNLaQLijwdTnfUUkbaQomdi+tJiUskrfsG9X7LIkgJn1xbfDu3YB44UyzT9eG4uA2Jazs/mGonBhNI8HfkgJ5m3yAPLgi6suz/2F0n9smNADIXa82qpzMyS7nu3RMRACb5b0p/3LKuaNbrQdw1ADTSTmt52n0n6gMCkuVUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tYBC6u55; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XY5geCnKqXiPYEzVafMC+tcvK8HQ6lu2Trfysm6ij5Pm+3TShmga4XaGGP7k1hpAsizbjUhx9aPHONO4uZLn8c1R/bwDET5mwDgMYYJdvBZi5qDps6o0QfyV/dQ29qKzjIdyPDl0eUb0EPCL224fvZdzyrSJ51+h5S7qmqkVjQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GyictHwi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tYBC6u55"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 022EBC2BBFC;
-	Wed, 19 Jun 2024 13:09:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GyictHwi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1CFCC2BBFC;
+	Wed, 19 Jun 2024 13:09:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802585;
-	bh=MQo+UcnOfct0hNKkRCuNdRH51dATaMLh3mSdyf5e9DU=;
+	s=korg; t=1718802588;
+	bh=9AZwRBxiNBR9fZgm4Sb8YjecrwbZ/WiHm5RKHF8DJxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tYBC6u55zpGtN8AD+93mB0CnUwMMw6+StCHaPUg4FbrrkLZna6TZKTbYEDBp+8h7y
-	 RtmeQht0fZlHNdap6+DkHeMYiZVPk1hT081pfjhx55/Ft8K2bHacjQuxHT+NEhDVZc
-	 Cjb0z5mnJqr/FmOHklGrd7Jg6boM9Ei77+mw7UWU=
+	b=GyictHwi5C/XiB8TkZE8Wo8w2ZliDy8PTNU6YJrnAoQEc+H8YHZUS0KX/dFQn/jv5
+	 xhQF2jO5l220sVQy4f5OV2VEy5zNqRfbccSy5wDNDTU3tKRzcJli2IegC5cJyZ1fyN
+	 EUnQW4eNdwLCDkE8/oNPmoXaPLfqO6Eo1ESA5nBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Po-Hsu Lin <po-hsu.lin@canonical.com>
-Subject: [PATCH 6.6 246/267] selftests/net: add lib.sh
-Date: Wed, 19 Jun 2024 14:56:37 +0200
-Message-ID: <20240619125615.763345695@linuxfoundation.org>
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	stable@kernel.org
+Subject: [PATCH 6.6 220/267] intel_th: pci: Add Granite Rapids SOC support
+Date: Wed, 19 Jun 2024 14:56:11 +0200
+Message-ID: <20240619125614.770961216@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -52,179 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Alexander Shishkin <alexander.shishkin@linux.intel.com>
 
-commit 25ae948b447881bf689d459cd5bd4629d9c04b20 upstream.
+commit 854afe461b009801a171b3a49c5f75ea43e4c04c upstream.
 
-Add a lib.sh for net selftests. This file can be used to define commonly
-used variables and functions. Some commonly used functions can be moved
-from forwarding/lib.sh to this lib file. e.g. busywait().
+Add support for the Trace Hub in Granite Rapids SOC.
 
-Add function setup_ns() for user to create unique namespaces with given
-prefix name.
-
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[PHLin: add lib.sh to TEST_FILES directly as we already have upstream
-        commit 06efafd8 landed in 6.6.y]
-Signed-off-by: Po-Hsu Lin <po-hsu.lin@canonical.com>
+Signed-off-by: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: stable@kernel.org
+Link: https://lore.kernel.org/r/20240429130119.1518073-12-alexander.shishkin@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/Makefile          |    2 
- tools/testing/selftests/net/forwarding/lib.sh |   27 --------
- tools/testing/selftests/net/lib.sh            |   85 ++++++++++++++++++++++++++
- 3 files changed, 87 insertions(+), 27 deletions(-)
- create mode 100644 tools/testing/selftests/net/lib.sh
+ drivers/hwtracing/intel_th/pci.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/tools/testing/selftests/net/Makefile
-+++ b/tools/testing/selftests/net/Makefile
-@@ -92,7 +92,7 @@ TEST_PROGS += test_vxlan_nolocalbypass.s
- TEST_PROGS += test_bridge_backup_port.sh
- 
- TEST_FILES := settings
--TEST_FILES += in_netns.sh net_helper.sh setup_loopback.sh setup_veth.sh
-+TEST_FILES += in_netns.sh lib.sh net_helper.sh setup_loopback.sh setup_veth.sh
- 
- include ../lib.mk
- 
---- a/tools/testing/selftests/net/forwarding/lib.sh
-+++ b/tools/testing/selftests/net/forwarding/lib.sh
-@@ -4,9 +4,6 @@
- ##############################################################################
- # Defines
- 
--# Kselftest framework requirement - SKIP code is 4.
--ksft_skip=4
--
- # Can be overridden by the configuration file.
- PING=${PING:=ping}
- PING6=${PING6:=ping6}
-@@ -41,6 +38,7 @@ if [[ -f $relative_path/forwarding.confi
- 	source "$relative_path/forwarding.config"
- fi
- 
-+source ../lib.sh
- ##############################################################################
- # Sanity checks
- 
-@@ -395,29 +393,6 @@ log_info()
- 	echo "INFO: $msg"
- }
- 
--busywait()
--{
--	local timeout=$1; shift
--
--	local start_time="$(date -u +%s%3N)"
--	while true
--	do
--		local out
--		out=$("$@")
--		local ret=$?
--		if ((!ret)); then
--			echo -n "$out"
--			return 0
--		fi
--
--		local current_time="$(date -u +%s%3N)"
--		if ((current_time - start_time > timeout)); then
--			echo -n "$out"
--			return 1
--		fi
--	done
--}
--
- not()
- {
- 	"$@"
---- /dev/null
-+++ b/tools/testing/selftests/net/lib.sh
-@@ -0,0 +1,85 @@
-+#!/bin/bash
-+# SPDX-License-Identifier: GPL-2.0
-+
-+##############################################################################
-+# Defines
-+
-+# Kselftest framework requirement - SKIP code is 4.
-+ksft_skip=4
-+
-+##############################################################################
-+# Helpers
-+busywait()
-+{
-+	local timeout=$1; shift
-+
-+	local start_time="$(date -u +%s%3N)"
-+	while true
-+	do
-+		local out
-+		out=$("$@")
-+		local ret=$?
-+		if ((!ret)); then
-+			echo -n "$out"
-+			return 0
-+		fi
-+
-+		local current_time="$(date -u +%s%3N)"
-+		if ((current_time - start_time > timeout)); then
-+			echo -n "$out"
-+			return 1
-+		fi
-+	done
-+}
-+
-+cleanup_ns()
-+{
-+	local ns=""
-+	local errexit=0
-+	local ret=0
-+
-+	# disable errexit temporary
-+	if [[ $- =~ "e" ]]; then
-+		errexit=1
-+		set +e
-+	fi
-+
-+	for ns in "$@"; do
-+		ip netns delete "${ns}" &> /dev/null
-+		if ! busywait 2 ip netns list \| grep -vq "^$ns$" &> /dev/null; then
-+			echo "Warn: Failed to remove namespace $ns"
-+			ret=1
-+		fi
-+	done
-+
-+	[ $errexit -eq 1 ] && set -e
-+	return $ret
-+}
-+
-+# setup netns with given names as prefix. e.g
-+# setup_ns local remote
-+setup_ns()
-+{
-+	local ns=""
-+	local ns_name=""
-+	local ns_list=""
-+	for ns_name in "$@"; do
-+		# Some test may setup/remove same netns multi times
-+		if unset ${ns_name} 2> /dev/null; then
-+			ns="${ns_name,,}-$(mktemp -u XXXXXX)"
-+			eval readonly ${ns_name}="$ns"
-+		else
-+			eval ns='$'${ns_name}
-+			cleanup_ns "$ns"
-+
-+		fi
-+
-+		if ! ip netns add "$ns"; then
-+			echo "Failed to create namespace $ns_name"
-+			cleanup_ns "$ns_list"
-+			return $ksft_skip
-+		fi
-+		ip -n "$ns" link set lo up
-+		ns_list="$ns_list $ns"
-+	done
-+}
+--- a/drivers/hwtracing/intel_th/pci.c
++++ b/drivers/hwtracing/intel_th/pci.c
+@@ -310,6 +310,11 @@ static const struct pci_device_id intel_
+ 		.driver_data = (kernel_ulong_t)&intel_th_2x,
+ 	},
+ 	{
++		/* Granite Rapids SOC */
++		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x3256),
++		.driver_data = (kernel_ulong_t)&intel_th_2x,
++	},
++	{
+ 		/* Alder Lake CPU */
+ 		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x466f),
+ 		.driver_data = (kernel_ulong_t)&intel_th_2x,
 
 
