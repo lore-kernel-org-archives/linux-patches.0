@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1548B1474AD;
-	Wed, 19 Jun 2024 13:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6BF144D3E;
+	Wed, 19 Jun 2024 13:27:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803625; cv=none; b=WZ1Zivpkr3mNwhCuRdQF5Wb/VFGr/pYD93+sCXonzrvLgzjpv8mUIXoewEg6pzTV+CVAzOJmVnlc+lLHhjxFazfDqMXWCMrlbT854OWimJL9S7O3lu3SD6bJO5SF37wcXhJ3KjFxg+JPAYQIuiOCOtZnUR/t/q3ZWjUkD+KrOpo=
+	t=1718803627; cv=none; b=fG7oDRkZjcqm0aRMhCYRMCp7YIuDK8k/BMeBhdhvxAIHuNZBUnDTK2A8Tleiko83CVbtHnvTxL8mY54MLnnx2DMLKRwRN39O+taV4vxhTinO0QqyTSlFkRn42L3EgQ4F1bqrwfDNDMW9zo3bsrJvvSHSKmOxgs5nFOzmC4W1x1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803625; c=relaxed/simple;
-	bh=M6jrI2lJsL/bPWwZ7L9ECVASJKCRsfLTMC6yWoOhzho=;
+	s=arc-20240116; t=1718803627; c=relaxed/simple;
+	bh=ccxqq7Nnk6ZAf/tCHgVp+ycUCSkvIq2iuIHesbNc2Ys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JaesECRVfeBJrpBOrPioie7Vcjvzp21Z7I2v8dE9qUK1gpaO9yorDX2luOVzaVblqceO/5mwAUjTyZQ3x5cqVTXSkqoh/xBN1kt+0djlTzxgwGIIOyFEwkTxG2wn6cSFQ3ocAnEQYwwBP4M8LOgS5oeqpO11nJwu8P5HXDm1uGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tui8E4o0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gntSQOvIDyinV7+btNd6Q9fpAryNwH9/T8yOtJ3PLLQPDY3PvUrtQ7vkoaHBHNrAf8uDuMH/zcYpmV5atpQ0vQcwclmbdqvPBrltkjxLu2ZVokF/vcZo9ubT82a3Hr7adTXKC3OInMPrA2vRCjAZghUkX9zKMDYEDHtavQaXDPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rFNTnMY5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tui8E4o0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EA3CC2BBFC;
-	Wed, 19 Jun 2024 13:27:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rFNTnMY5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35228C2BBFC;
+	Wed, 19 Jun 2024 13:27:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803624;
-	bh=M6jrI2lJsL/bPWwZ7L9ECVASJKCRsfLTMC6yWoOhzho=;
+	s=korg; t=1718803627;
+	bh=ccxqq7Nnk6ZAf/tCHgVp+ycUCSkvIq2iuIHesbNc2Ys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tui8E4o0066LeFugvOTIk9gdZbpOwuUA7CVMk9quHdBOufrTWLS2OdHDQ3ofJPBt6
-	 CvlXCae+Dnvz4UgarDzOlEL5lR5zkGIeiLNZAi28VcsgduGZbQKgkg3xRrWJLplsXf
-	 WbDlB02YPcXqL3Q0cmMHD9WlCc0QEcb06mSfM8+g=
+	b=rFNTnMY5xeWlVhXnB6H8/bljSm2ko1qh5j5CAq8b5hy9vvCZt3KCveHaA5fke3rj3
+	 NnyIMOhsMXz4R8+gcBY5d9SkdNOsN7j6aIdVj0fOVFMlzq0ExgpnNFNU+sP8SCUmJJ
+	 FcFSu7RIVSr8MGCvhwcibuQyhpfzt/F+98NcTNJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Martin KaFai Lau <kafai@fb.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Janaki Ramaiah Thota <quic_janathot@quicinc.com>,
+	Matthias Kaehlcke <mka@chromium.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 049/217] ipv6: fix possible race in __fib6_drop_pcpu_from()
-Date: Wed, 19 Jun 2024 14:54:52 +0200
-Message-ID: <20240619125558.555148845@linuxfoundation.org>
+Subject: [PATCH 6.1 050/217] Bluetooth: qca: fix invalid device address check
+Date: Wed, 19 Jun 2024 14:54:53 +0200
+Message-ID: <20240619125558.592625896@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -52,128 +53,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit b01e1c030770ff3b4fe37fc7cc6bca03f594133f ]
+[ Upstream commit 32868e126c78876a8a5ddfcb6ac8cb2fffcf4d27 ]
 
-syzbot found a race in __fib6_drop_pcpu_from() [1]
+Qualcomm Bluetooth controllers may not have been provisioned with a
+valid device address and instead end up using the default address
+00:00:00:00:5a:ad.
 
-If compiler reads more than once (*ppcpu_rt),
-second read could read NULL, if another cpu clears
-the value in rt6_get_pcpu_route().
+This was previously believed to be due to lack of persistent storage for
+the address but it may also be due to integrators opting to not use the
+on-chip OTP memory and instead store the address elsewhere (e.g. in
+storage managed by secure world firmware).
 
-Add a READ_ONCE() to prevent this race.
+According to Qualcomm, at least WCN6750, WCN6855 and WCN7850 have
+on-chip OTP storage for the address.
 
-Also add rcu_read_lock()/rcu_read_unlock() because
-we rely on RCU protection while dereferencing pcpu_rt.
+As the device type alone cannot be used to determine when the address is
+valid, instead read back the address during setup() and only set the
+HCI_QUIRK_USE_BDADDR_PROPERTY flag when needed.
 
-[1]
+This specifically makes sure that controllers that have been provisioned
+with an address do not start as unconfigured.
 
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000012: 0000 [#1] PREEMPT SMP KASAN PTI
-KASAN: null-ptr-deref in range [0x0000000000000090-0x0000000000000097]
-CPU: 0 PID: 7543 Comm: kworker/u8:17 Not tainted 6.10.0-rc1-syzkaller-00013-g2bfcfd584ff5 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/02/2024
-Workqueue: netns cleanup_net
- RIP: 0010:__fib6_drop_pcpu_from.part.0+0x10a/0x370 net/ipv6/ip6_fib.c:984
-Code: f8 48 c1 e8 03 80 3c 28 00 0f 85 16 02 00 00 4d 8b 3f 4d 85 ff 74 31 e8 74 a7 fa f7 49 8d bf 90 00 00 00 48 89 f8 48 c1 e8 03 <80> 3c 28 00 0f 85 1e 02 00 00 49 8b 87 90 00 00 00 48 8b 0c 24 48
-RSP: 0018:ffffc900040df070 EFLAGS: 00010206
-RAX: 0000000000000012 RBX: 0000000000000001 RCX: ffffffff89932e16
-RDX: ffff888049dd1e00 RSI: ffffffff89932d7c RDI: 0000000000000091
-RBP: dffffc0000000000 R08: 0000000000000005 R09: 0000000000000007
-R10: 0000000000000001 R11: 0000000000000006 R12: ffff88807fa080b8
-R13: fffffbfff1a9a07d R14: ffffed100ff41022 R15: 0000000000000001
-FS:  0000000000000000(0000) GS:ffff8880b9200000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000001b32c26000 CR3: 000000005d56e000 CR4: 00000000003526f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
-  __fib6_drop_pcpu_from net/ipv6/ip6_fib.c:966 [inline]
-  fib6_drop_pcpu_from net/ipv6/ip6_fib.c:1027 [inline]
-  fib6_purge_rt+0x7f2/0x9f0 net/ipv6/ip6_fib.c:1038
-  fib6_del_route net/ipv6/ip6_fib.c:1998 [inline]
-  fib6_del+0xa70/0x17b0 net/ipv6/ip6_fib.c:2043
-  fib6_clean_node+0x426/0x5b0 net/ipv6/ip6_fib.c:2205
-  fib6_walk_continue+0x44f/0x8d0 net/ipv6/ip6_fib.c:2127
-  fib6_walk+0x182/0x370 net/ipv6/ip6_fib.c:2175
-  fib6_clean_tree+0xd7/0x120 net/ipv6/ip6_fib.c:2255
-  __fib6_clean_all+0x100/0x2d0 net/ipv6/ip6_fib.c:2271
-  rt6_sync_down_dev net/ipv6/route.c:4906 [inline]
-  rt6_disable_ip+0x7ed/0xa00 net/ipv6/route.c:4911
-  addrconf_ifdown.isra.0+0x117/0x1b40 net/ipv6/addrconf.c:3855
-  addrconf_notify+0x223/0x19e0 net/ipv6/addrconf.c:3778
-  notifier_call_chain+0xb9/0x410 kernel/notifier.c:93
-  call_netdevice_notifiers_info+0xbe/0x140 net/core/dev.c:1992
-  call_netdevice_notifiers_extack net/core/dev.c:2030 [inline]
-  call_netdevice_notifiers net/core/dev.c:2044 [inline]
-  dev_close_many+0x333/0x6a0 net/core/dev.c:1585
-  unregister_netdevice_many_notify+0x46d/0x19f0 net/core/dev.c:11193
-  unregister_netdevice_many net/core/dev.c:11276 [inline]
-  default_device_exit_batch+0x85b/0xae0 net/core/dev.c:11759
-  ops_exit_list+0x128/0x180 net/core/net_namespace.c:178
-  cleanup_net+0x5b7/0xbf0 net/core/net_namespace.c:640
-  process_one_work+0x9fb/0x1b60 kernel/workqueue.c:3231
-  process_scheduled_works kernel/workqueue.c:3312 [inline]
-  worker_thread+0x6c8/0xf70 kernel/workqueue.c:3393
-  kthread+0x2c1/0x3a0 kernel/kthread.c:389
-  ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
-  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
-
-Fixes: d52d3997f843 ("ipv6: Create percpu rt6_info")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Martin KaFai Lau <kafai@fb.com>
-Link: https://lore.kernel.org/r/20240604193549.981839-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
+Link: https://lore.kernel.org/r/124a7d54-5a18-4be7-9a76-a12017f6cce5@quicinc.com/
+Fixes: 5971752de44c ("Bluetooth: hci_qca: Set HCI_QUIRK_USE_BDADDR_PROPERTY for wcn3990")
+Fixes: e668eb1e1578 ("Bluetooth: hci_core: Don't stop BT if the BD address missing in dts")
+Fixes: 6945795bc81a ("Bluetooth: fix use-bdaddr-property quirk")
+Cc: stable@vger.kernel.org	# 6.5
+Cc: Matthias Kaehlcke <mka@chromium.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reported-by: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_fib.c | 6 +++++-
- net/ipv6/route.c   | 1 +
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btqca.c   | 38 +++++++++++++++++++++++++++++++++++++
+ drivers/bluetooth/hci_qca.c |  2 --
+ 2 files changed, 38 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
-index 8213626434b91..1123594ad2be7 100644
---- a/net/ipv6/ip6_fib.c
-+++ b/net/ipv6/ip6_fib.c
-@@ -962,6 +962,7 @@ static void __fib6_drop_pcpu_from(struct fib6_nh *fib6_nh,
- 	if (!fib6_nh->rt6i_pcpu)
- 		return;
+diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+index 2dda94a0875a6..8df2e53dcd63c 100644
+--- a/drivers/bluetooth/btqca.c
++++ b/drivers/bluetooth/btqca.c
+@@ -15,6 +15,8 @@
  
-+	rcu_read_lock();
- 	/* release the reference to this fib entry from
- 	 * all of its cached pcpu routes
- 	 */
-@@ -970,7 +971,9 @@ static void __fib6_drop_pcpu_from(struct fib6_nh *fib6_nh,
- 		struct rt6_info *pcpu_rt;
+ #define VERSION "0.1"
  
- 		ppcpu_rt = per_cpu_ptr(fib6_nh->rt6i_pcpu, cpu);
--		pcpu_rt = *ppcpu_rt;
++#define QCA_BDADDR_DEFAULT (&(bdaddr_t) {{ 0xad, 0x5a, 0x00, 0x00, 0x00, 0x00 }})
 +
-+		/* Paired with xchg() in rt6_get_pcpu_route() */
-+		pcpu_rt = READ_ONCE(*ppcpu_rt);
- 
- 		/* only dropping the 'from' reference if the cached route
- 		 * is using 'match'. The cached pcpu_rt->from only changes
-@@ -984,6 +987,7 @@ static void __fib6_drop_pcpu_from(struct fib6_nh *fib6_nh,
- 			fib6_info_release(from);
- 		}
- 	}
-+	rcu_read_unlock();
+ int qca_read_soc_version(struct hci_dev *hdev, struct qca_btsoc_version *ver,
+ 			 enum qca_btsoc_type soc_type)
+ {
+@@ -682,6 +684,38 @@ int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdaddr)
  }
+ EXPORT_SYMBOL_GPL(qca_set_bdaddr_rome);
  
- struct fib6_nh_pcpu_arg {
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 258e87055836f..627431722f9d6 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -1401,6 +1401,7 @@ static struct rt6_info *rt6_get_pcpu_route(const struct fib6_result *res)
- 		struct rt6_info *prev, **p;
++static int qca_check_bdaddr(struct hci_dev *hdev)
++{
++	struct hci_rp_read_bd_addr *bda;
++	struct sk_buff *skb;
++	int err;
++
++	if (bacmp(&hdev->public_addr, BDADDR_ANY))
++		return 0;
++
++	skb = __hci_cmd_sync(hdev, HCI_OP_READ_BD_ADDR, 0, NULL,
++			     HCI_INIT_TIMEOUT);
++	if (IS_ERR(skb)) {
++		err = PTR_ERR(skb);
++		bt_dev_err(hdev, "Failed to read device address (%d)", err);
++		return err;
++	}
++
++	if (skb->len != sizeof(*bda)) {
++		bt_dev_err(hdev, "Device address length mismatch");
++		kfree_skb(skb);
++		return -EIO;
++	}
++
++	bda = (struct hci_rp_read_bd_addr *)skb->data;
++	if (!bacmp(&bda->bdaddr, QCA_BDADDR_DEFAULT))
++		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
++
++	kfree_skb(skb);
++
++	return 0;
++}
++
+ static void qca_generate_hsp_nvm_name(char *fwname, size_t max_size,
+ 		struct qca_btsoc_version ver, u8 rom_ver, u16 bid)
+ {
+@@ -888,6 +922,10 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 		break;
+ 	}
  
- 		p = this_cpu_ptr(res->nh->rt6i_pcpu);
-+		/* Paired with READ_ONCE() in __fib6_drop_pcpu_from() */
- 		prev = xchg(p, NULL);
- 		if (prev) {
- 			dst_dev_put(&prev->dst);
++	err = qca_check_bdaddr(hdev);
++	if (err)
++		return err;
++
+ 	bt_dev_info(hdev, "QCA setup on UART is completed");
+ 
+ 	return 0;
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index a0e2b5d992695..070014d0fc994 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -1853,8 +1853,6 @@ static int qca_setup(struct hci_uart *hu)
+ 	case QCA_WCN6750:
+ 	case QCA_WCN6855:
+ 	case QCA_WCN7850:
+-		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
+-
+ 		qcadev = serdev_device_get_drvdata(hu->serdev);
+ 		if (qcadev->bdaddr_property_broken)
+ 			set_bit(HCI_QUIRK_BDADDR_PROPERTY_BROKEN, &hdev->quirks);
 -- 
 2.43.0
 
