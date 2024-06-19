@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF88613DDC0;
-	Wed, 19 Jun 2024 13:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F2013DDC0;
+	Wed, 19 Jun 2024 13:34:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718804071; cv=none; b=T9GDiGXyRgkYJ0gAG3wTEgsEAkXhmkxxjm2X1uECnzelK1td0rqcmJE0KTfI7kT2vO3l0uiZCo+8jzyrYNXkAx2lsuUsjt+np2Dtxoo4QcPw9CDUEM7f+Xkha1KVEM7HBb+Ro59gWa55h2bnX59kNXSc6+u0Ezn7RoQfHgIvEEQ=
+	t=1718804074; cv=none; b=V5NlmBhLjhYfmJ1O02JsZs6+ydhpgKa+KYgB948loW/BBX+7d+xTCvE7x2J6vFlZoq5Zj993gnAX9wG97bgayjD0ypFq1P8mFm7qIKNDhBo0Ps09xbOA/JULRwM/bg0nwi7Ezm4T19wGO5bMyi0kKLcWkHtnwSHQVjpSDe6G7uE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718804071; c=relaxed/simple;
-	bh=dK/wXZNghaqJOE0WfDkOwkbPCgcsRhu6UAiFmoVxtIk=;
+	s=arc-20240116; t=1718804074; c=relaxed/simple;
+	bh=aU1lPvm0KjlD5CiHpl1GkYabQPH7xhj9lx71vELqsrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UNob9vlLNIU11cmg+cJQvxjd8nKcKIRB192EjwJpBrPv3XeG+jqy8ASj1JTEhjWc1yvK+61qMHLBWB9ZfDQVm//02mJOXzR5OwY6zKlj1KA/F7cPzbQDgy/Btp8hXIsLevjgtS23e6brCCCzeKWnXbVasn3pTuugrm80SnWeooI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bDdnsSYO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NwBlopDaCzmY5UN+p3wFmEQXWWcA7UdsTxsl+/ZL0PaqAa+nQernXIZCw3OWt7pHu7Fyfn0jwCR84uPpbTp2qG3bJlz6YYyHqA/yUeGLfal6ti3CEIB0c0gSJ7bNBz+/tZyzLnHWWgoM/NI5bD00oCx5fZZ5UFsUKlBM9xMWfSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TSDAqYVP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bDdnsSYO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C0AC2BBFC;
-	Wed, 19 Jun 2024 13:34:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSDAqYVP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B247C2BBFC;
+	Wed, 19 Jun 2024 13:34:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718804071;
-	bh=dK/wXZNghaqJOE0WfDkOwkbPCgcsRhu6UAiFmoVxtIk=;
+	s=korg; t=1718804074;
+	bh=aU1lPvm0KjlD5CiHpl1GkYabQPH7xhj9lx71vELqsrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bDdnsSYOmMpNzlx7KGpafuWMAach9yyaFy8rrqBZI0OAR8pqffNen6Vf5gpEziI/y
-	 cCNfIZaWj9hOQA0sRGIRtDDGUGAuE4fCMNXoRuBuJZkf4bHgnynWeXAYKWGVc/l3AG
-	 7gQciv9uQIPRCTLprh48FoMNKzm7kxiyTmHvzqd0=
+	b=TSDAqYVPmgNmlUDlQY+T9yf7MsJ+HvGtgZimnqQnX5LR4fGYv+tmULT+0b9SyL5B3
+	 nAkmxYAyU45tXqzYWsE05ZSkctY6z01C3iq9U806P2XlBxZlu5EgR9tfTUHQfuR8qu
+	 32/Qp3GIm5TJyh7MkLwtd0cM7MuCr6lHcHYJYZ1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 198/217] btrfs: zoned: fix use-after-free due to race with dev replace
-Date: Wed, 19 Jun 2024 14:57:21 +0200
-Message-ID: <20240619125604.324365058@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 199/217] nilfs2: fix potential kernel bug due to lack of writeback flag waiting
+Date: Wed, 19 Jun 2024 14:57:22 +0200
+Message-ID: <20240619125604.364616174@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -51,107 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 0090d6e1b210551e63cf43958dc7a1ec942cdde9 upstream.
+commit a4ca369ca221bb7e06c725792ac107f0e48e82e7 upstream.
 
-While loading a zone's info during creation of a block group, we can race
-with a device replace operation and then trigger a use-after-free on the
-device that was just replaced (source device of the replace operation).
+Destructive writes to a block device on which nilfs2 is mounted can cause
+a kernel bug in the folio/page writeback start routine or writeback end
+routine (__folio_start_writeback in the log below):
 
-This happens because at btrfs_load_zone_info() we extract a device from
-the chunk map into a local variable and then use the device while not
-under the protection of the device replace rwsem. So if there's a device
-replace operation happening when we extract the device and that device
-is the source of the replace operation, we will trigger a use-after-free
-if before we finish using the device the replace operation finishes and
-frees the device.
+ kernel BUG at mm/page-writeback.c:3070!
+ Oops: invalid opcode: 0000 [#1] PREEMPT SMP KASAN PTI
+ ...
+ RIP: 0010:__folio_start_writeback+0xbaa/0x10e0
+ Code: 25 ff 0f 00 00 0f 84 18 01 00 00 e8 40 ca c6 ff e9 17 f6 ff ff
+  e8 36 ca c6 ff 4c 89 f7 48 c7 c6 80 c0 12 84 e8 e7 b3 0f 00 90 <0f>
+  0b e8 1f ca c6 ff 4c 89 f7 48 c7 c6 a0 c6 12 84 e8 d0 b3 0f 00
+ ...
+ Call Trace:
+  <TASK>
+  nilfs_segctor_do_construct+0x4654/0x69d0 [nilfs2]
+  nilfs_segctor_construct+0x181/0x6b0 [nilfs2]
+  nilfs_segctor_thread+0x548/0x11c0 [nilfs2]
+  kthread+0x2f0/0x390
+  ret_from_fork+0x4b/0x80
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
 
-Fix this by enlarging the critical section under the protection of the
-device replace rwsem so that all uses of the device are done inside the
-critical section.
+This is because when the log writer starts a writeback for segment summary
+blocks or a super root block that use the backing device's page cache, it
+does not wait for the ongoing folio/page writeback, resulting in an
+inconsistent writeback state.
 
-CC: stable@vger.kernel.org # 6.1.x: 15c12fcc50a1: btrfs: zoned: introduce a zone_info struct in btrfs_load_block_group_zone_info
-CC: stable@vger.kernel.org # 6.1.x: 09a46725cc84: btrfs: zoned: factor out per-zone logic from btrfs_load_block_group_zone_info
-CC: stable@vger.kernel.org # 6.1.x: 9e0e3e74dc69: btrfs: zoned: factor out single bg handling from btrfs_load_block_group_zone_info
-CC: stable@vger.kernel.org # 6.1.x: 87463f7e0250: btrfs: zoned: factor out DUP bg handling from btrfs_load_block_group_zone_info
-CC: stable@vger.kernel.org # 6.1.x
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fix this issue by waiting for ongoing writebacks when putting
+folios/pages on the backing device into writeback state.
+
+Link: https://lkml.kernel.org/r/20240530141556.4411-1-konishi.ryusuke@gmail.com
+Fixes: 9ff05123e3bf ("nilfs2: segment constructor")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/zoned.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ fs/nilfs2/segment.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -1281,7 +1281,7 @@ static int btrfs_load_zone_info(struct b
- 				struct map_lookup *map)
- {
- 	struct btrfs_dev_replace *dev_replace = &fs_info->dev_replace;
--	struct btrfs_device *device = map->stripes[zone_idx].dev;
-+	struct btrfs_device *device;
- 	int dev_replace_is_ongoing = 0;
- 	unsigned int nofs_flag;
- 	struct blk_zone zone;
-@@ -1289,7 +1289,11 @@ static int btrfs_load_zone_info(struct b
- 
- 	info->physical = map->stripes[zone_idx].physical;
- 
-+	down_read(&dev_replace->rwsem);
-+	device = map->stripes[zone_idx].dev;
-+
- 	if (!device->bdev) {
-+		up_read(&dev_replace->rwsem);
- 		info->alloc_offset = WP_MISSING_DEV;
- 		return 0;
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -1692,6 +1692,7 @@ static void nilfs_segctor_prepare_write(
+ 			if (bh->b_page != bd_page) {
+ 				if (bd_page) {
+ 					lock_page(bd_page);
++					wait_on_page_writeback(bd_page);
+ 					clear_page_dirty_for_io(bd_page);
+ 					set_page_writeback(bd_page);
+ 					unlock_page(bd_page);
+@@ -1705,6 +1706,7 @@ static void nilfs_segctor_prepare_write(
+ 			if (bh == segbuf->sb_super_root) {
+ 				if (bh->b_page != bd_page) {
+ 					lock_page(bd_page);
++					wait_on_page_writeback(bd_page);
+ 					clear_page_dirty_for_io(bd_page);
+ 					set_page_writeback(bd_page);
+ 					unlock_page(bd_page);
+@@ -1721,6 +1723,7 @@ static void nilfs_segctor_prepare_write(
  	}
-@@ -1299,6 +1303,7 @@ static int btrfs_load_zone_info(struct b
- 		__set_bit(zone_idx, active);
- 
- 	if (!btrfs_dev_is_sequential(device, info->physical)) {
-+		up_read(&dev_replace->rwsem);
- 		info->alloc_offset = WP_CONVENTIONAL;
- 		return 0;
- 	}
-@@ -1306,11 +1311,9 @@ static int btrfs_load_zone_info(struct b
- 	/* This zone will be used for allocation, so mark this zone non-empty. */
- 	btrfs_dev_clear_zone_empty(device, info->physical);
- 
--	down_read(&dev_replace->rwsem);
- 	dev_replace_is_ongoing = btrfs_dev_replace_is_ongoing(dev_replace);
- 	if (dev_replace_is_ongoing && dev_replace->tgtdev != NULL)
- 		btrfs_dev_clear_zone_empty(dev_replace->tgtdev, info->physical);
--	up_read(&dev_replace->rwsem);
- 
- 	/*
- 	 * The group is mapped to a sequential zone. Get the zone write pointer
-@@ -1321,6 +1324,7 @@ static int btrfs_load_zone_info(struct b
- 	ret = btrfs_get_dev_zone(device, info->physical, &zone);
- 	memalloc_nofs_restore(nofs_flag);
- 	if (ret) {
-+		up_read(&dev_replace->rwsem);
- 		if (ret != -EIO && ret != -EOPNOTSUPP)
- 			return ret;
- 		info->alloc_offset = WP_MISSING_DEV;
-@@ -1332,6 +1336,7 @@ static int btrfs_load_zone_info(struct b
- 		"zoned: unexpected conventional zone %llu on device %s (devid %llu)",
- 			zone.start << SECTOR_SHIFT, rcu_str_deref(device->name),
- 			device->devid);
-+		up_read(&dev_replace->rwsem);
- 		return -EIO;
- 	}
- 
-@@ -1359,6 +1364,8 @@ static int btrfs_load_zone_info(struct b
- 		break;
- 	}
- 
-+	up_read(&dev_replace->rwsem);
-+
- 	return 0;
- }
- 
+ 	if (bd_page) {
+ 		lock_page(bd_page);
++		wait_on_page_writeback(bd_page);
+ 		clear_page_dirty_for_io(bd_page);
+ 		set_page_writeback(bd_page);
+ 		unlock_page(bd_page);
 
 
