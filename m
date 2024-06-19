@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DAF3143757;
-	Wed, 19 Jun 2024 13:24:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202A6143757;
+	Wed, 19 Jun 2024 13:24:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803466; cv=none; b=PmEuDn958DiPskPgqWxOpMdaK4grAE8b5YeWA7XEQXBzp/NWLNPlEuzYb9/27oRys5hOq7hhTqB4ETOX1R9YjG9EaXxearwbLCWJ9dGvt6knTgxQTVLwCBduzk52mpux+YLlSU5hE9FumWHHDSVhfkvoGRTKGPJBr9XsYMDg/Sk=
+	t=1718803469; cv=none; b=XSnQjg+z5qF4yIhnlWUgo1mOzhZRY5xNadJpDzdiWgLPB0YYL5Ilx0hMPTgGx/q39slLeeIhB9ILtydRcDepgEHC3JawnoXJ9GliY8MiL35Tope6OoCYEF42dN4fuGgMbCBuFzTrbpQz9dVxwYqidDqkMCzmaY1O2NmMXlaT7b4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803466; c=relaxed/simple;
-	bh=Tiu7YgyUfTPRoFXxUqwZG6rOzIggQOQvJbu8j8S+ifM=;
+	s=arc-20240116; t=1718803469; c=relaxed/simple;
+	bh=HkSvvLInmpRoFnJPR2abKYHjamjfJB0f7Sl8jOJVZqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DpQvUFUX2KTvzasB5k+WYwfjs2z1WRDVM/e7TAwn4+aVqIwLoPG8qJkpsC9kQHzgSiY3OVOpryOMbiR7CsNukNgct+pkfJScZtvz71lXdW04ifAjhd6GkrM3SWz/vX52H+WiJCa8LIOgj2U/ezVSSkzSqSdCAacScwZf6OnDgGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nQJF/IoG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KehnrJ2v8dXwME8vCWStrlgd5dU7iOPvPF68GvYQOh21WyqMkY2K8DPIZtDOHlimZAe1S62uaOuJKchu4PxglI2tEWxKotddaxvkWn3O1nQsrgsfYykRHiHtzqyycREHb1YGh5NtJRDqS/l850DJfzOFYV717MEtfSroSNOL8dY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxM4dQfm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nQJF/IoG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E3EC2BBFC;
-	Wed, 19 Jun 2024 13:24:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxM4dQfm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D965C2BBFC;
+	Wed, 19 Jun 2024 13:24:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803466;
-	bh=Tiu7YgyUfTPRoFXxUqwZG6rOzIggQOQvJbu8j8S+ifM=;
+	s=korg; t=1718803468;
+	bh=HkSvvLInmpRoFnJPR2abKYHjamjfJB0f7Sl8jOJVZqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nQJF/IoGpYYPcBmZIeX12Jkf/Z5aarqz5m9yz5JITNRE8WI4lnKi8tW7zSQx8699j
-	 I0Wr52FpgxYSuHNSqO4VhIl/xAhkuruFXKuHV55eWCE7vQk4NSHXSl1HvgZoyDdMwp
-	 ncxW1ZIIM2FRGy3Uufk9zn3uBYQ+ZuhJjrwmzVhU=
+	b=vxM4dQfmstdERhVpvzP+lxUPZYRuo6DKBTkWwRUBvOh4P5ropvKGYzN1sU+v1NWHy
+	 vy73+slnQqoStqf6g37S3HUF5o6oVNVS8vXFxis83tbTIH1iSI79T1wJhCv+CCy57R
+	 FQjMvd3zds3Bat0XMHwsqlwsXNE3yV6itgWpXn2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Stephen Boyd <swboyd@chromium.org>,
+	xingwei lee <xrivendell7@gmail.com>,
+	yue sun <samsun1006219@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Shichao Lai <shichaorai@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 275/281] dt-bindings: usb: realtek,rts5411: Add missing "additionalProperties" on child nodes
-Date: Wed, 19 Jun 2024 14:57:14 +0200
-Message-ID: <20240619125620.563240615@linuxfoundation.org>
+Subject: [PATCH 6.9 276/281] usb-storage: alauda: Check whether the media is initialized
+Date: Wed, 19 Jun 2024 14:57:15 +0200
+Message-ID: <20240619125620.601368304@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -51,36 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Herring (Arm) <robh@kernel.org>
+From: Shichao Lai <shichaorai@gmail.com>
 
-[ Upstream commit e4228cfd092351c2d9b1a3048b2070287291ccbb ]
+[ Upstream commit 16637fea001ab3c8df528a8995b3211906165a30 ]
 
-All nodes need an explicit additionalProperties or unevaluatedProperties
-unless a $ref has one that's false. As that is not the case with
-usb-device.yaml, "additionalProperties" is needed here.
+The member "uzonesize" of struct alauda_info will remain 0
+if alauda_init_media() fails, potentially causing divide errors
+in alauda_read_data() and alauda_write_lba().
+- Add a member "media_initialized" to struct alauda_info.
+- Change a condition in alauda_check_media() to ensure the
+  first initialization.
+- Add an error check for the return value of alauda_init_media().
 
-Fixes: c44d9dab31d6 ("dt-bindings: usb: Add downstream facing ports to realtek binding")
-Signed-off-by: "Rob Herring (Arm)" <robh@kernel.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Link: https://lore.kernel.org/r/20240523194500.2958192-1-robh@kernel.org
+Fixes: e80b0fade09e ("[PATCH] USB Storage: add alauda support")
+Reported-by: xingwei lee <xrivendell7@gmail.com>
+Reported-by: yue sun <samsun1006219@gmail.com>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Shichao Lai <shichaorai@gmail.com>
+Link: https://lore.kernel.org/r/20240526012745.2852061-1-shichaorai@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/usb/realtek,rts5411.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/storage/alauda.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/usb/realtek,rts5411.yaml b/Documentation/devicetree/bindings/usb/realtek,rts5411.yaml
-index 0874fc21f66fb..6577a61cc0753 100644
---- a/Documentation/devicetree/bindings/usb/realtek,rts5411.yaml
-+++ b/Documentation/devicetree/bindings/usb/realtek,rts5411.yaml
-@@ -65,6 +65,7 @@ patternProperties:
-     description: The hard wired USB devices
-     type: object
-     $ref: /schemas/usb/usb-device.yaml
-+    additionalProperties: true
+diff --git a/drivers/usb/storage/alauda.c b/drivers/usb/storage/alauda.c
+index 115f05a6201a1..40d34cc28344a 100644
+--- a/drivers/usb/storage/alauda.c
++++ b/drivers/usb/storage/alauda.c
+@@ -105,6 +105,8 @@ struct alauda_info {
+ 	unsigned char sense_key;
+ 	unsigned long sense_asc;	/* additional sense code */
+ 	unsigned long sense_ascq;	/* additional sense code qualifier */
++
++	bool media_initialized;
+ };
  
- required:
-   - peer-hub
+ #define short_pack(lsb,msb) ( ((u16)(lsb)) | ( ((u16)(msb))<<8 ) )
+@@ -476,11 +478,12 @@ static int alauda_check_media(struct us_data *us)
+ 	}
+ 
+ 	/* Check for media change */
+-	if (status[0] & 0x08) {
++	if (status[0] & 0x08 || !info->media_initialized) {
+ 		usb_stor_dbg(us, "Media change detected\n");
+ 		alauda_free_maps(&MEDIA_INFO(us));
+-		alauda_init_media(us);
+-
++		rc = alauda_init_media(us);
++		if (rc == USB_STOR_TRANSPORT_GOOD)
++			info->media_initialized = true;
+ 		info->sense_key = UNIT_ATTENTION;
+ 		info->sense_asc = 0x28;
+ 		info->sense_ascq = 0x00;
 -- 
 2.43.0
 
