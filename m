@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CBAD143757;
-	Wed, 19 Jun 2024 13:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DAF3143757;
+	Wed, 19 Jun 2024 13:24:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803463; cv=none; b=hmYEAUEnhRgKlhx4puVVDxEk85/EHiNEsmQP4xqser+3Q+RbcMXHIEL+8Th31gLSjz0wBOiLK0j6Dkgn4hazKeKXjRKdSlctKpuiEKuVDtQsjPPH81TMbWGALv8XYFpi0HLI6w1vdSKR8jxwxYcuILLpcLSU6mqsgfIPuhZfatA=
+	t=1718803466; cv=none; b=PmEuDn958DiPskPgqWxOpMdaK4grAE8b5YeWA7XEQXBzp/NWLNPlEuzYb9/27oRys5hOq7hhTqB4ETOX1R9YjG9EaXxearwbLCWJ9dGvt6knTgxQTVLwCBduzk52mpux+YLlSU5hE9FumWHHDSVhfkvoGRTKGPJBr9XsYMDg/Sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803463; c=relaxed/simple;
-	bh=ZzlI6vLGWYdeE7YAcLDV0sS1LL1CjHRxw9jyRMFayOw=;
+	s=arc-20240116; t=1718803466; c=relaxed/simple;
+	bh=Tiu7YgyUfTPRoFXxUqwZG6rOzIggQOQvJbu8j8S+ifM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l+buBjsQV44KafMp2FygTajC+tbvHq/vteQQ9cSpSW8mafU6v5I/8ZfhKyap/r/FUVftoyEmwaNfk/hR6NJHzSct4Ow4o3EMwWZF7ljrxdtorTbTPH3wZk4sIaCtohpny1WyXBsFzRhFzdwLTpNZrW+OccVj2b0OY8/QTSL3aIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tq2wWlp0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DpQvUFUX2KTvzasB5k+WYwfjs2z1WRDVM/e7TAwn4+aVqIwLoPG8qJkpsC9kQHzgSiY3OVOpryOMbiR7CsNukNgct+pkfJScZtvz71lXdW04ifAjhd6GkrM3SWz/vX52H+WiJCa8LIOgj2U/ezVSSkzSqSdCAacScwZf6OnDgGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nQJF/IoG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tq2wWlp0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6672C32786;
-	Wed, 19 Jun 2024 13:24:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nQJF/IoG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E3EC2BBFC;
+	Wed, 19 Jun 2024 13:24:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803463;
-	bh=ZzlI6vLGWYdeE7YAcLDV0sS1LL1CjHRxw9jyRMFayOw=;
+	s=korg; t=1718803466;
+	bh=Tiu7YgyUfTPRoFXxUqwZG6rOzIggQOQvJbu8j8S+ifM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tq2wWlp05QeyoguPRtcpL50mZ9wOjmZRrwr9HCGm92d7rLjbe+ZYgRx0r/V/lYxXs
-	 vTXK5Gm+vmL3fTg/Cr0/4Ie/XYAWUMQMmJZPtJapZcGR+mE4dJiDqbT619m+DAXFDl
-	 mQOJ1SDpE34DUx5RreGK8JO6gPLvTJW1YG5v0I7Y=
+	b=nQJF/IoGpYYPcBmZIeX12Jkf/Z5aarqz5m9yz5JITNRE8WI4lnKi8tW7zSQx8699j
+	 I0Wr52FpgxYSuHNSqO4VhIl/xAhkuruFXKuHV55eWCE7vQk4NSHXSl1HvgZoyDdMwp
+	 ncxW1ZIIM2FRGy3Uufk9zn3uBYQ+ZuhJjrwmzVhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Stephen Boyd <swboyd@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 274/281] serial: 8250_dw: Dont use struct dw8250_data outside of 8250_dw
-Date: Wed, 19 Jun 2024 14:57:13 +0200
-Message-ID: <20240619125620.525525531@linuxfoundation.org>
+Subject: [PATCH 6.9 275/281] dt-bindings: usb: realtek,rts5411: Add missing "additionalProperties" on child nodes
+Date: Wed, 19 Jun 2024 14:57:14 +0200
+Message-ID: <20240619125620.563240615@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -50,107 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Rob Herring (Arm) <robh@kernel.org>
 
-[ Upstream commit 87d80bfbd577912462061b1a45c0ed9c7fcb872f ]
+[ Upstream commit e4228cfd092351c2d9b1a3048b2070287291ccbb ]
 
-The container of the struct dw8250_port_data is private to the actual
-driver. In particular, 8250_lpss and 8250_dw use different data types
-that are assigned to the UART port private_data. Hence, it must not
-be used outside the specific driver.
+All nodes need an explicit additionalProperties or unevaluatedProperties
+unless a $ref has one that's false. As that is not the case with
+usb-device.yaml, "additionalProperties" is needed here.
 
-Currently the only cpr_val is required by the common code, make it
-be available via struct dw8250_port_data.
-
-This fixes the UART breakage on Intel Galileo boards.
-
-Fixes: 593dea000bc1 ("serial: 8250: dw: Allow to use a fallback CPR value if not synthesized")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20240514190730.2787071-2-andriy.shevchenko@linux.intel.com
+Fixes: c44d9dab31d6 ("dt-bindings: usb: Add downstream facing ports to realtek binding")
+Signed-off-by: "Rob Herring (Arm)" <robh@kernel.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Link: https://lore.kernel.org/r/20240523194500.2958192-1-robh@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_dw.c    | 9 +++++++--
- drivers/tty/serial/8250/8250_dwlib.c | 3 +--
- drivers/tty/serial/8250/8250_dwlib.h | 3 ++-
- 3 files changed, 10 insertions(+), 5 deletions(-)
+ Documentation/devicetree/bindings/usb/realtek,rts5411.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/tty/serial/8250/8250_dw.c b/drivers/tty/serial/8250/8250_dw.c
-index 1300c92b8702a..94d680e4b5353 100644
---- a/drivers/tty/serial/8250/8250_dw.c
-+++ b/drivers/tty/serial/8250/8250_dw.c
-@@ -55,6 +55,7 @@
- #define DW_UART_QUIRK_SKIP_SET_RATE	BIT(2)
- #define DW_UART_QUIRK_IS_DMA_FC		BIT(3)
- #define DW_UART_QUIRK_APMC0D08		BIT(4)
-+#define DW_UART_QUIRK_CPR_VALUE		BIT(5)
+diff --git a/Documentation/devicetree/bindings/usb/realtek,rts5411.yaml b/Documentation/devicetree/bindings/usb/realtek,rts5411.yaml
+index 0874fc21f66fb..6577a61cc0753 100644
+--- a/Documentation/devicetree/bindings/usb/realtek,rts5411.yaml
++++ b/Documentation/devicetree/bindings/usb/realtek,rts5411.yaml
+@@ -65,6 +65,7 @@ patternProperties:
+     description: The hard wired USB devices
+     type: object
+     $ref: /schemas/usb/usb-device.yaml
++    additionalProperties: true
  
- static inline struct dw8250_data *clk_to_dw8250_data(struct notifier_block *nb)
- {
-@@ -445,6 +446,10 @@ static void dw8250_prepare_rx_dma(struct uart_8250_port *p)
- static void dw8250_quirks(struct uart_port *p, struct dw8250_data *data)
- {
- 	unsigned int quirks = data->pdata ? data->pdata->quirks : 0;
-+	u32 cpr_value = data->pdata ? data->pdata->cpr_value : 0;
-+
-+	if (quirks & DW_UART_QUIRK_CPR_VALUE)
-+		data->data.cpr_value = cpr_value;
- 
- #ifdef CONFIG_64BIT
- 	if (quirks & DW_UART_QUIRK_OCTEON) {
-@@ -727,8 +732,8 @@ static const struct dw8250_platform_data dw8250_armada_38x_data = {
- 
- static const struct dw8250_platform_data dw8250_renesas_rzn1_data = {
- 	.usr_reg = DW_UART_USR,
--	.cpr_val = 0x00012f32,
--	.quirks = DW_UART_QUIRK_IS_DMA_FC,
-+	.cpr_value = 0x00012f32,
-+	.quirks = DW_UART_QUIRK_CPR_VALUE | DW_UART_QUIRK_IS_DMA_FC,
- };
- 
- static const struct dw8250_platform_data dw8250_starfive_jh7100_data = {
-diff --git a/drivers/tty/serial/8250/8250_dwlib.c b/drivers/tty/serial/8250/8250_dwlib.c
-index 3e33ddf7bc800..5a2520943dfd5 100644
---- a/drivers/tty/serial/8250/8250_dwlib.c
-+++ b/drivers/tty/serial/8250/8250_dwlib.c
-@@ -242,7 +242,6 @@ static const struct serial_rs485 dw8250_rs485_supported = {
- void dw8250_setup_port(struct uart_port *p)
- {
- 	struct dw8250_port_data *pd = p->private_data;
--	struct dw8250_data *data = to_dw8250_data(pd);
- 	struct uart_8250_port *up = up_to_u8250p(p);
- 	u32 reg, old_dlf;
- 
-@@ -278,7 +277,7 @@ void dw8250_setup_port(struct uart_port *p)
- 
- 	reg = dw8250_readl_ext(p, DW_UART_CPR);
- 	if (!reg) {
--		reg = data->pdata->cpr_val;
-+		reg = pd->cpr_value;
- 		dev_dbg(p->dev, "CPR is not available, using 0x%08x instead\n", reg);
- 	}
- 	if (!reg)
-diff --git a/drivers/tty/serial/8250/8250_dwlib.h b/drivers/tty/serial/8250/8250_dwlib.h
-index f13e91f2cace9..794a9014cdac1 100644
---- a/drivers/tty/serial/8250/8250_dwlib.h
-+++ b/drivers/tty/serial/8250/8250_dwlib.h
-@@ -19,6 +19,7 @@ struct dw8250_port_data {
- 	struct uart_8250_dma	dma;
- 
- 	/* Hardware configuration */
-+	u32			cpr_value;
- 	u8			dlf_size;
- 
- 	/* RS485 variables */
-@@ -27,7 +28,7 @@ struct dw8250_port_data {
- 
- struct dw8250_platform_data {
- 	u8 usr_reg;
--	u32 cpr_val;
-+	u32 cpr_value;
- 	unsigned int quirks;
- };
- 
+ required:
+   - peer-hub
 -- 
 2.43.0
 
