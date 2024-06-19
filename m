@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3914B143757;
-	Wed, 19 Jun 2024 13:24:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1C7143757;
+	Wed, 19 Jun 2024 13:24:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803457; cv=none; b=r/PRJaZTkWhJlnj+2PR5lKlwJZBAHeJiQ43owDqkoOTAxxGKuIjb5/4PBEpOChL3r7p6H55y66bylkunD3WT/MUvqKrmkBH/f2eSlwRqko2MrX50OGzQADxkK21p4/E73kwj2OVT/agCu0YaVA1XUX5/mtQzXxk6eSp3ONS6Ayw=
+	t=1718803460; cv=none; b=cnQ7nf6PkRhNTtWiI1VFrS2LT0vjoWg2A1c66RV98DxzWANq+Z0fhh3p8VB40u1bIJCJbsI2WSuRQyMiDtl/o+nstoIEcXRKSTw6Tf0IhzsBCeZK66vHHd+tsde5GvTFqP6mWlMveMx/GHRHKpL1EWghRRCOuXT0MQ6J2SbYOV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803457; c=relaxed/simple;
-	bh=PTiMMkupUA8laevHPkINhA6wHdfQX7VNUXzZqVl295Y=;
+	s=arc-20240116; t=1718803460; c=relaxed/simple;
+	bh=9T754tmTfowfeFC5bz5BFdhJDOUI8TnCQ0vdyFv1lLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ddDxIGRDD8Qd26Jv84lPFtat6RagHxU6lEU6Xh6gU0+00Mvv/nwxqb8NHqJXV24k2CSVNFRqsmEUHRHdJzUUf2iSa2DvoQMk4NbB4zbv4IJQJEg26lqP33NVfD3bRM+IY50k5BMECIyb6FtwdbEcWDi2ZPOEEIQDTnCZ4zaV0QA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7/bQ4wR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R6EYwLCMAHOdbgmcLjCRzOC1NEwJTkthS3rDZFfKW7vEwQmDiPRkvteutoAzeqmqs03wk81a/E28GBFsojnp2g07mZen6joKxzpshsPf9YLs14eg5XamB7fIH80K9pivnfczOeOV/07NvSmvtsfpJcXBaI/fVRHQflXRinu1YZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gr1HKDP+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7/bQ4wR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B771BC2BBFC;
-	Wed, 19 Jun 2024 13:24:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gr1HKDP+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8AC9C2BBFC;
+	Wed, 19 Jun 2024 13:24:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803457;
-	bh=PTiMMkupUA8laevHPkINhA6wHdfQX7VNUXzZqVl295Y=;
+	s=korg; t=1718803460;
+	bh=9T754tmTfowfeFC5bz5BFdhJDOUI8TnCQ0vdyFv1lLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F7/bQ4wR4BMbu+QVv+G5HW1s361/w71CJociYXtMCS/9fXQxHKx/2qp6jF2klOsVX
-	 OUhFb9kxjqHs0BGpdM4JtdVSODKNKwj/rFK/7rraKwjw16Eh7XrtVHzmHiNLssuVQ3
-	 ywcNlpI+8bCzFKWzP/CBCGafIhLcQdmqkp0vwYsA=
+	b=gr1HKDP+4aWjuxACRtLScUP1ge/zfe428I9Fc/OMWzfBKgSu8pMAWE+sR8GXLpuem
+	 G1wUIA0pkQUYP0UO6Fx0zudA9F3PJqQwQUpqb55XZboAfcplOO2C6jp8pKGUGGoE9Q
+	 pAoeVNJx2Hx++wRWWg5YtD3B6ou5H3x0GUJny2jQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Apurva Nandan <a-nandan@ti.com>,
-	Beleswar Padhi <b-padhi@ti.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: [PATCH 6.9 246/281] remoteproc: k3-r5: Wait for core0 power-up before powering up core1
-Date: Wed, 19 Jun 2024 14:56:45 +0200
-Message-ID: <20240619125619.429320534@linuxfoundation.org>
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Mimi Zohar <zohar@linux.ibm.com>
+Subject: [PATCH 6.9 273/281] ima: Fix use-after-free on a dentrys dname.name
+Date: Wed, 19 Jun 2024 14:57:12 +0200
+Message-ID: <20240619125620.487645681@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -51,121 +51,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Apurva Nandan <a-nandan@ti.com>
+From: Stefan Berger <stefanb@linux.ibm.com>
 
-commit 61f6f68447aba08aeaa97593af3a7d85a114891f upstream.
+commit be84f32bb2c981ca670922e047cdde1488b233de upstream.
 
-PSC controller has a limitation that it can only power-up the second core
-when the first core is in ON state. Power-state for core0 should be equal
-to or higher than core1, else the kernel is seen hanging during rproc
-loading.
+->d_name.name can change on rename and the earlier value can be freed;
+there are conditions sufficient to stabilize it (->d_lock on dentry,
+->d_lock on its parent, ->i_rwsem exclusive on the parent's inode,
+rename_lock), but none of those are met at any of the sites. Take a stable
+snapshot of the name instead.
 
-Make the powering up of cores sequential, by waiting for the current core
-to power-up before proceeding to the next core, with a timeout of 2sec.
-Add a wait queue event in k3_r5_cluster_rproc_init call, that will wait
-for the current core to be released from reset before proceeding with the
-next core.
-
-Fixes: 6dedbd1d5443 ("remoteproc: k3-r5: Add a remoteproc driver for R5F subsystem")
-Signed-off-by: Apurva Nandan <a-nandan@ti.com>
-Signed-off-by: Beleswar Padhi <b-padhi@ti.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240430105307.1190615-2-b-padhi@ti.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Link: https://lore.kernel.org/all/20240202182732.GE2087318@ZenIV/
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/remoteproc/ti_k3_r5_remoteproc.c |   33 +++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+ security/integrity/ima/ima_api.c          |   16 ++++++++++++----
+ security/integrity/ima/ima_template_lib.c |   17 ++++++++++++++---
+ 2 files changed, 26 insertions(+), 7 deletions(-)
 
---- a/drivers/remoteproc/ti_k3_r5_remoteproc.c
-+++ b/drivers/remoteproc/ti_k3_r5_remoteproc.c
-@@ -103,12 +103,14 @@ struct k3_r5_soc_data {
-  * @dev: cached device pointer
-  * @mode: Mode to configure the Cluster - Split or LockStep
-  * @cores: list of R5 cores within the cluster
-+ * @core_transition: wait queue to sync core state changes
-  * @soc_data: SoC-specific feature data for a R5FSS
-  */
- struct k3_r5_cluster {
- 	struct device *dev;
- 	enum cluster_mode mode;
- 	struct list_head cores;
-+	wait_queue_head_t core_transition;
- 	const struct k3_r5_soc_data *soc_data;
- };
+--- a/security/integrity/ima/ima_api.c
++++ b/security/integrity/ima/ima_api.c
+@@ -245,8 +245,8 @@ int ima_collect_measurement(struct ima_i
+ 	const char *audit_cause = "failed";
+ 	struct inode *inode = file_inode(file);
+ 	struct inode *real_inode = d_real_inode(file_dentry(file));
+-	const char *filename = file->f_path.dentry->d_name.name;
+ 	struct ima_max_digest_data hash;
++	struct name_snapshot filename;
+ 	struct kstat stat;
+ 	int result = 0;
+ 	int length;
+@@ -317,9 +317,13 @@ out:
+ 		if (file->f_flags & O_DIRECT)
+ 			audit_cause = "failed(directio)";
  
-@@ -128,6 +130,7 @@ struct k3_r5_cluster {
-  * @atcm_enable: flag to control ATCM enablement
-  * @btcm_enable: flag to control BTCM enablement
-  * @loczrama: flag to dictate which TCM is at device address 0x0
-+ * @released_from_reset: flag to signal when core is out of reset
-  */
- struct k3_r5_core {
- 	struct list_head elem;
-@@ -144,6 +147,7 @@ struct k3_r5_core {
- 	u32 atcm_enable;
- 	u32 btcm_enable;
- 	u32 loczrama;
-+	bool released_from_reset;
- };
- 
- /**
-@@ -460,6 +464,8 @@ static int k3_r5_rproc_prepare(struct rp
- 			ret);
- 		return ret;
- 	}
-+	core->released_from_reset = true;
-+	wake_up_interruptible(&cluster->core_transition);
- 
- 	/*
- 	 * Newer IP revisions like on J7200 SoCs support h/w auto-initialization
-@@ -1140,6 +1146,12 @@ static int k3_r5_rproc_configure_mode(st
- 		return ret;
- 	}
- 
-+	/*
-+	 * Skip the waiting mechanism for sequential power-on of cores if the
-+	 * core has already been booted by another entity.
-+	 */
-+	core->released_from_reset = c_state;
++		take_dentry_name_snapshot(&filename, file->f_path.dentry);
 +
- 	ret = ti_sci_proc_get_status(core->tsp, &boot_vec, &cfg, &ctrl,
- 				     &stat);
- 	if (ret < 0) {
-@@ -1280,6 +1292,26 @@ init_rmem:
- 		    cluster->mode == CLUSTER_MODE_SINGLECPU ||
- 		    cluster->mode == CLUSTER_MODE_SINGLECORE)
- 			break;
+ 		integrity_audit_msg(AUDIT_INTEGRITY_DATA, inode,
+-				    filename, "collect_data", audit_cause,
+-				    result, 0);
++				    filename.name.name, "collect_data",
++				    audit_cause, result, 0);
 +
-+		/*
-+		 * R5 cores require to be powered on sequentially, core0
-+		 * should be in higher power state than core1 in a cluster
-+		 * So, wait for current core to power up before proceeding
-+		 * to next core and put timeout of 2sec for each core.
-+		 *
-+		 * This waiting mechanism is necessary because
-+		 * rproc_auto_boot_callback() for core1 can be called before
-+		 * core0 due to thread execution order.
-+		 */
-+		ret = wait_event_interruptible_timeout(cluster->core_transition,
-+						       core->released_from_reset,
-+						       msecs_to_jiffies(2000));
-+		if (ret <= 0) {
-+			dev_err(dev,
-+				"Timed out waiting for %s core to power up!\n",
-+				rproc->name);
-+			return ret;
-+		}
++		release_dentry_name_snapshot(&filename);
+ 	}
+ 	return result;
+ }
+@@ -432,6 +436,7 @@ out:
+  */
+ const char *ima_d_path(const struct path *path, char **pathbuf, char *namebuf)
+ {
++	struct name_snapshot filename;
+ 	char *pathname = NULL;
+ 
+ 	*pathbuf = __getname();
+@@ -445,7 +450,10 @@ const char *ima_d_path(const struct path
  	}
  
- 	return 0;
-@@ -1709,6 +1741,7 @@ static int k3_r5_probe(struct platform_d
- 	cluster->dev = dev;
- 	cluster->soc_data = data;
- 	INIT_LIST_HEAD(&cluster->cores);
-+	init_waitqueue_head(&cluster->core_transition);
+ 	if (!pathname) {
+-		strscpy(namebuf, path->dentry->d_name.name, NAME_MAX);
++		take_dentry_name_snapshot(&filename, path->dentry);
++		strscpy(namebuf, filename.name.name, NAME_MAX);
++		release_dentry_name_snapshot(&filename);
++
+ 		pathname = namebuf;
+ 	}
  
- 	ret = of_property_read_u32(np, "ti,cluster-mode", &cluster->mode);
- 	if (ret < 0 && ret != -EINVAL) {
+--- a/security/integrity/ima/ima_template_lib.c
++++ b/security/integrity/ima/ima_template_lib.c
+@@ -483,7 +483,10 @@ static int ima_eventname_init_common(str
+ 				     bool size_limit)
+ {
+ 	const char *cur_filename = NULL;
++	struct name_snapshot filename;
+ 	u32 cur_filename_len = 0;
++	bool snapshot = false;
++	int ret;
+ 
+ 	BUG_ON(event_data->filename == NULL && event_data->file == NULL);
+ 
+@@ -496,7 +499,10 @@ static int ima_eventname_init_common(str
+ 	}
+ 
+ 	if (event_data->file) {
+-		cur_filename = event_data->file->f_path.dentry->d_name.name;
++		take_dentry_name_snapshot(&filename,
++					  event_data->file->f_path.dentry);
++		snapshot = true;
++		cur_filename = filename.name.name;
+ 		cur_filename_len = strlen(cur_filename);
+ 	} else
+ 		/*
+@@ -505,8 +511,13 @@ static int ima_eventname_init_common(str
+ 		 */
+ 		cur_filename_len = IMA_EVENT_NAME_LEN_MAX;
+ out:
+-	return ima_write_template_field_data(cur_filename, cur_filename_len,
+-					     DATA_FMT_STRING, field_data);
++	ret = ima_write_template_field_data(cur_filename, cur_filename_len,
++					    DATA_FMT_STRING, field_data);
++
++	if (snapshot)
++		release_dentry_name_snapshot(&filename);
++
++	return ret;
+ }
+ 
+ /*
 
 
