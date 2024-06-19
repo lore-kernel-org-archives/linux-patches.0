@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A6B82495;
-	Wed, 19 Jun 2024 13:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0114E82495;
+	Wed, 19 Jun 2024 13:20:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803211; cv=none; b=Du+blc2yK+bCKiyWmTkITJLZUD/LMvLpReUHTrHzP22B2cUYDUqWNe8HhRDZ5TjbhIHbrmvxWWUSQrbfyNI8fx0m478mu4SGNgVPCK0uJSZJBTsOgn8hRmjAoT27/gHuufE/4E+3MmyveF9N9GyGWhTaXLQntmDgDUsW4nFQMAw=
+	t=1718803214; cv=none; b=o01iYPc1pHJgRLCL4tsLW9mO+98CCi2DNSsgarl7tOYTaBJQe6XWpku7VH+y0utnxnJ5t9er2agxn8QQEuATd/TEW2bRKdW1zQYcRtyxal7SRArvhVhStYi+NJYW8+7JpdPKx2UE8I5K21lsIUoOy+FhpAMrmigCV8PuK+rMILE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803211; c=relaxed/simple;
-	bh=j57I3MZfQEUdgVVq4wCwJiiBGjiwIbtak0+kDWewnIw=;
+	s=arc-20240116; t=1718803214; c=relaxed/simple;
+	bh=lbFVb5ZmHMNOlzNogOVD+D+jEgwzNefblVs3JOWv3BI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sLw4J8u16Wkvbw1r569sgAoMa3lj7Z+QaMNMYTWSz5zZCfIPYMiTZiOh6hZ2wWMNfp4mh+s1+MsPXWYbsdiIg3FgzGZKgyk8yKdv2u+JNqu0eQxSUnwIIhqBle6MDSaJjKVItLCQ7bs2kK9ERSVKQswGxnZkT9t9f+6Tq4ImCnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RKywKeq0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RMvQuZN02lmA/Rm10dG1xpPQRas/JOclK0rTMwxv1+azZLqKD4mtWno3ligWdirouugN6MaR/u3Ep9BGgEo3EkU9HhpVCid/lLg33Y1uHselAE4e6fiUIielh9LJGQd2HIwQf/OJL4yqS9+QVr9sG3qnUO27FVsAEhrkU1LYt6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IeOMm6OI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RKywKeq0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871F9C2BBFC;
-	Wed, 19 Jun 2024 13:20:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IeOMm6OI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 799E7C2BBFC;
+	Wed, 19 Jun 2024 13:20:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803210;
-	bh=j57I3MZfQEUdgVVq4wCwJiiBGjiwIbtak0+kDWewnIw=;
+	s=korg; t=1718803213;
+	bh=lbFVb5ZmHMNOlzNogOVD+D+jEgwzNefblVs3JOWv3BI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RKywKeq0p+PiXzzYZqY3SQZcHRKIMDJ5Mgd583QwJAgIoBQ/170SKD5DeAFZXHQAW
-	 +e3Sfvy8jf+uSeUOVA29MPaFcrKXMIaNtML6tOn6fwQBUf0+Uzp8T5i0YQz84VgUgR
-	 zOYwgSBfkH9vgUNBcf8ewRv2iLKr9toAvEO2op4k=
+	b=IeOMm6OItD440jjhB1/avRfbegPrU73zPZAf5l4gEMRX6IduFEiy2WPXvL1pt4uVX
+	 3h/pp8fQusDDNCj9as1Hk5PG3Fxg4HCaZdnilga7FnPLPf7vdbcNdvXGQM6Y2vF6JL
+	 ufrZMJjviI0/nU/a8zRasTmMKL0FuqjD9qouQgiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Genes Lists <lists@sapience.com>,
-	=?UTF-8?q?Johannes=20W=C3=BCller?= <johanneswueller@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Lee Jones <lee@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.9 191/281] leds: class: Revert: "If no default trigger is given, make hw_control trigger the default trigger"
-Date: Wed, 19 Jun 2024 14:55:50 +0200
-Message-ID: <20240619125617.298871497@linuxfoundation.org>
+	Ben Segall <bsegall@google.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.9 192/281] x86/boot: Dont add the EFI stub to targets, again
+Date: Wed, 19 Jun 2024 14:55:51 +0200
+Message-ID: <20240619125617.336934417@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -48,67 +45,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Benjamin Segall <bsegall@google.com>
 
-commit fcf2a9970ef587d8f358560c381ee6115a9108aa upstream.
+commit b2747f108b8034271fd5289bd8f3a7003e0775a3 upstream.
 
-Commit 66601a29bb23 ("leds: class: If no default trigger is given, make
-hw_control trigger the default trigger") causes ledtrig-netdev to get
-set as default trigger on various network LEDs.
+This is a re-commit of
 
-This causes users to hit a pre-existing AB-BA deadlock issue in
-ledtrig-netdev between the LED-trigger locks and the rtnl mutex,
-resulting in hung tasks in kernels >= 6.9.
+  da05b143a308 ("x86/boot: Don't add the EFI stub to targets")
 
-Solving the deadlock is non trivial, so for now revert the change to
-set the hw_control trigger as default trigger, so that ledtrig-netdev
-no longer gets activated automatically for various network LEDs.
+after the tagged patch incorrectly reverted it.
 
-The netdev trigger is not needed because the network LEDs are usually under
-hw-control and the netdev trigger tries to leave things that way so setting
-it as the active trigger for the LED class device is a no-op.
+vmlinux-objs-y is added to targets, with an assumption that they are all
+relative to $(obj); adding a $(objtree)/drivers/...  path causes the
+build to incorrectly create a useless
+arch/x86/boot/compressed/drivers/...  directory tree.
 
-Fixes: 66601a29bb23 ("leds: class: If no default trigger is given, make hw_control trigger the default trigger")
-Reported-by: Genes Lists <lists@sapience.com>
-Closes: https://lore.kernel.org/all/9d189ec329cfe68ed68699f314e191a10d4b5eda.camel@sapience.com/
-Reported-by: Johannes Wüller <johanneswueller@gmail.com>
-Closes: https://lore.kernel.org/lkml/e441605c-eaf2-4c2d-872b-d8e541f4cf60@gmail.com/
-Cc: stable@vger.kernel.org
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Acked-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fix this just by using a different make variable for the EFI stub.
+
+Fixes: cb8bda8ad443 ("x86/boot/compressed: Rename efi_thunk_64.S to efi-mixed.S")
+Signed-off-by: Ben Segall <bsegall@google.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Cc: stable@vger.kernel.org # v6.1+
+Link: https://lore.kernel.org/r/xm267ceukksz.fsf@bsegall.svl.corp.google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/leds/led-class.c | 6 ------
- 1 file changed, 6 deletions(-)
+ arch/x86/boot/compressed/Makefile |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/leds/led-class.c b/drivers/leds/led-class.c
-index 24fcff682b24..ba1be15cfd8e 100644
---- a/drivers/leds/led-class.c
-+++ b/drivers/leds/led-class.c
-@@ -552,12 +552,6 @@ int led_classdev_register_ext(struct device *parent,
- 	led_init_core(led_cdev);
+--- a/arch/x86/boot/compressed/Makefile
++++ b/arch/x86/boot/compressed/Makefile
+@@ -116,9 +116,9 @@ vmlinux-objs-$(CONFIG_UNACCEPTED_MEMORY)
  
- #ifdef CONFIG_LEDS_TRIGGERS
--	/*
--	 * If no default trigger was given and hw_control_trigger is set,
--	 * make it the default trigger.
--	 */
--	if (!led_cdev->default_trigger && led_cdev->hw_control_trigger)
--		led_cdev->default_trigger = led_cdev->hw_control_trigger;
- 	led_trigger_set_default(led_cdev);
- #endif
+ vmlinux-objs-$(CONFIG_EFI) += $(obj)/efi.o
+ vmlinux-objs-$(CONFIG_EFI_MIXED) += $(obj)/efi_mixed.o
+-vmlinux-objs-$(CONFIG_EFI_STUB) += $(objtree)/drivers/firmware/efi/libstub/lib.a
++vmlinux-libs-$(CONFIG_EFI_STUB) += $(objtree)/drivers/firmware/efi/libstub/lib.a
  
--- 
-2.45.2
-
+-$(obj)/vmlinux: $(vmlinux-objs-y) FORCE
++$(obj)/vmlinux: $(vmlinux-objs-y) $(vmlinux-libs-y) FORCE
+ 	$(call if_changed,ld)
+ 
+ OBJCOPYFLAGS_vmlinux.bin :=  -R .comment -S
 
 
