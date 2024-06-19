@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 751E84D9EA;
-	Wed, 19 Jun 2024 13:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90FA14659A;
+	Wed, 19 Jun 2024 13:25:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803539; cv=none; b=uJGpv17treoIBW5Y2a7O9IRqpABm57YyHyFi4TgihKou6PYBMIbFa7lbF8LzPwlMDbSmAounXlF6CNz0QAtis84jNLqQnJDklrDCc3qM5DpYXKowi9AJ0BvkV76QNY9t6hHIA6SCDEL4WikG7m2+mQ1xhS8xDXvEBL15TfeP3sg=
+	t=1718803542; cv=none; b=cNpVeDW3x4nIM+F7F5EYLomc6CrKPeYfhI6lo2i8zCauzRxLCJCPhDNezvOQj4f3BdCrsLeccAsD8VIbB+6TM9nv7g4xkns16xjPD4krdGWPqRA7f1r0VW/Aekoc7PgHm48kb0V8YZrDqaaFb+yf5DRe3Sj+5jgQ57HaLs97ud0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803539; c=relaxed/simple;
-	bh=NDTkKtibCqK3aQbTCstpC38Yo7/yGEWyloW5d+xkpzc=;
+	s=arc-20240116; t=1718803542; c=relaxed/simple;
+	bh=0pv3BTuxOdvuSLcEN4JjpPZdDalrTaBcPhYC+33FsiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ldK3Kr56x9d7CyXm6DQVK+wbSI24xe0j6LWUyb8uXeySXdQwOcKNh5VTCUJqluAvDhmz4eaS3DrT6rc4BtTq/FM4v1jMMGYwHFKsBRPVnRGSuTREH0qnG9Wh0HTMrp+vC7gFuhjysf8K9CiZMWhvBY00dboBl7EsPJf/LpPn4N0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xowz7kjH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qve5didzKPRFAJvuyh6tK4tKdp9ki8Yx7khs38e2qpN3OqUsQw5h1Ss4SRLGcUq5b1yCXAtZ+4nfb9MoZrXC5SnjeP/oR7QXxr7fw4FioGNl9qXD/FVVI/JHnBZhREB0VHy2trvQgk1x6Tw5weJpV7b/dJknQaIRZfpoDisezLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2BZ/8q2A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xowz7kjH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBB1BC2BBFC;
-	Wed, 19 Jun 2024 13:25:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2BZ/8q2A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBED5C2BBFC;
+	Wed, 19 Jun 2024 13:25:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803539;
-	bh=NDTkKtibCqK3aQbTCstpC38Yo7/yGEWyloW5d+xkpzc=;
+	s=korg; t=1718803542;
+	bh=0pv3BTuxOdvuSLcEN4JjpPZdDalrTaBcPhYC+33FsiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xowz7kjHcse06dafn5CWn/ucWjKnTTlx9xJWhwHrkNmw/luAcDPE9pj977isEm+Nf
-	 1k9iSvaFyj4hYQVO5vl8Eawm6TwTTeIn1twUZnmFGwSNsDqDFHae2hPpd7PZb2HjJj
-	 PwGb5MLwZ5bANcjkXSW5eSvbt0AH7xfPRq/GaLZU=
+	b=2BZ/8q2AlVU2eqCcJ0E1euJziaQWAFMIjcZQmBYQNLIG0pgKEaX7l/uH8+D4puWSV
+	 DYTK0G+pDMQU0BmCvhk48XLJVh3nIKsWIc9q+QzzHlal6lA2K5eQ3a5BX9IbDtpUmQ
+	 rPa/lHHLQJnmdl3xY/mFBi3hx67VmQjrsEfOQ8XE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Remi Pommarel <repk@triplefau.lt>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Hangyu Hua <hbh25y@gmail.com>,
+	Cong Wang <cong.wang@bytedance.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 002/217] wifi: mac80211: Fix deadlock in ieee80211_sta_ps_deliver_wakeup()
-Date: Wed, 19 Jun 2024 14:54:05 +0200
-Message-ID: <20240619125556.589177917@linuxfoundation.org>
+Subject: [PATCH 6.1 020/217] net: sched: sch_multiq: fix possible OOB write in multiq_tune()
+Date: Wed, 19 Jun 2024 14:54:23 +0200
+Message-ID: <20240619125557.424723941@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -51,107 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Remi Pommarel <repk@triplefau.lt>
+From: Hangyu Hua <hbh25y@gmail.com>
 
-[ Upstream commit 44c06bbde6443de206b30f513100b5670b23fc5e ]
+[ Upstream commit affc18fdc694190ca7575b9a86632a73b9fe043d ]
 
-The ieee80211_sta_ps_deliver_wakeup() function takes sta->ps_lock to
-synchronizes with ieee80211_tx_h_unicast_ps_buf() which is called from
-softirq context. However using only spin_lock() to get sta->ps_lock in
-ieee80211_sta_ps_deliver_wakeup() does not prevent softirq to execute
-on this same CPU, to run ieee80211_tx_h_unicast_ps_buf() and try to
-take this same lock ending in deadlock. Below is an example of rcu stall
-that arises in such situation.
+q->bands will be assigned to qopt->bands to execute subsequent code logic
+after kmalloc. So the old q->bands should not be used in kmalloc.
+Otherwise, an out-of-bounds write will occur.
 
- rcu: INFO: rcu_sched self-detected stall on CPU
- rcu:    2-....: (42413413 ticks this GP) idle=b154/1/0x4000000000000000 softirq=1763/1765 fqs=21206996
- rcu:    (t=42586894 jiffies g=2057 q=362405 ncpus=4)
- CPU: 2 PID: 719 Comm: wpa_supplicant Tainted: G        W          6.4.0-02158-g1b062f552873 #742
- Hardware name: RPT (r1) (DT)
- pstate: 00000005 (nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : queued_spin_lock_slowpath+0x58/0x2d0
- lr : invoke_tx_handlers_early+0x5b4/0x5c0
- sp : ffff00001ef64660
- x29: ffff00001ef64660 x28: ffff000009bc1070 x27: ffff000009bc0ad8
- x26: ffff000009bc0900 x25: ffff00001ef647a8 x24: 0000000000000000
- x23: ffff000009bc0900 x22: ffff000009bc0900 x21: ffff00000ac0e000
- x20: ffff00000a279e00 x19: ffff00001ef646e8 x18: 0000000000000000
- x17: ffff800016468000 x16: ffff00001ef608c0 x15: 0010533c93f64f80
- x14: 0010395c9faa3946 x13: 0000000000000000 x12: 00000000fa83b2da
- x11: 000000012edeceea x10: ffff0000010fbe00 x9 : 0000000000895440
- x8 : 000000000010533c x7 : ffff00000ad8b740 x6 : ffff00000c350880
- x5 : 0000000000000007 x4 : 0000000000000001 x3 : 0000000000000000
- x2 : 0000000000000000 x1 : 0000000000000001 x0 : ffff00000ac0e0e8
- Call trace:
-  queued_spin_lock_slowpath+0x58/0x2d0
-  ieee80211_tx+0x80/0x12c
-  ieee80211_tx_pending+0x110/0x278
-  tasklet_action_common.constprop.0+0x10c/0x144
-  tasklet_action+0x20/0x28
-  _stext+0x11c/0x284
-  ____do_softirq+0xc/0x14
-  call_on_irq_stack+0x24/0x34
-  do_softirq_own_stack+0x18/0x20
-  do_softirq+0x74/0x7c
-  __local_bh_enable_ip+0xa0/0xa4
-  _ieee80211_wake_txqs+0x3b0/0x4b8
-  __ieee80211_wake_queue+0x12c/0x168
-  ieee80211_add_pending_skbs+0xec/0x138
-  ieee80211_sta_ps_deliver_wakeup+0x2a4/0x480
-  ieee80211_mps_sta_status_update.part.0+0xd8/0x11c
-  ieee80211_mps_sta_status_update+0x18/0x24
-  sta_apply_parameters+0x3bc/0x4c0
-  ieee80211_change_station+0x1b8/0x2dc
-  nl80211_set_station+0x444/0x49c
-  genl_family_rcv_msg_doit.isra.0+0xa4/0xfc
-  genl_rcv_msg+0x1b0/0x244
-  netlink_rcv_skb+0x38/0x10c
-  genl_rcv+0x34/0x48
-  netlink_unicast+0x254/0x2bc
-  netlink_sendmsg+0x190/0x3b4
-  ____sys_sendmsg+0x1e8/0x218
-  ___sys_sendmsg+0x68/0x8c
-  __sys_sendmsg+0x44/0x84
-  __arm64_sys_sendmsg+0x20/0x28
-  do_el0_svc+0x6c/0xe8
-  el0_svc+0x14/0x48
-  el0t_64_sync_handler+0xb0/0xb4
-  el0t_64_sync+0x14c/0x150
-
-Using spin_lock_bh()/spin_unlock_bh() instead prevents softirq to raise
-on the same CPU that is holding the lock.
-
-Fixes: 1d147bfa6429 ("mac80211: fix AP powersave TX vs. wakeup race")
-Signed-off-by: Remi Pommarel <repk@triplefau.lt>
-Link: https://msgid.link/8e36fe07d0fbc146f89196cd47a53c8a0afe84aa.1716910344.git.repk@triplefau.lt
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: c2999f7fb05b ("net: sched: multiq: don't call qdisc_put() while holding tree lock")
+Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
+Acked-by: Cong Wang <cong.wang@bytedance.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/sta_info.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sched/sch_multiq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
-index bd56015b29258..f388b39531748 100644
---- a/net/mac80211/sta_info.c
-+++ b/net/mac80211/sta_info.c
-@@ -1555,7 +1555,7 @@ void ieee80211_sta_ps_deliver_wakeup(struct sta_info *sta)
- 	skb_queue_head_init(&pending);
+diff --git a/net/sched/sch_multiq.c b/net/sched/sch_multiq.c
+index 75c9c860182b4..0d6649d937c9f 100644
+--- a/net/sched/sch_multiq.c
++++ b/net/sched/sch_multiq.c
+@@ -185,7 +185,7 @@ static int multiq_tune(struct Qdisc *sch, struct nlattr *opt,
  
- 	/* sync with ieee80211_tx_h_unicast_ps_buf */
--	spin_lock(&sta->ps_lock);
-+	spin_lock_bh(&sta->ps_lock);
- 	/* Send all buffered frames to the station */
- 	for (ac = 0; ac < IEEE80211_NUM_ACS; ac++) {
- 		int count = skb_queue_len(&pending), tmp;
-@@ -1584,7 +1584,7 @@ void ieee80211_sta_ps_deliver_wakeup(struct sta_info *sta)
- 	 */
- 	clear_sta_flag(sta, WLAN_STA_PSPOLL);
- 	clear_sta_flag(sta, WLAN_STA_UAPSD);
--	spin_unlock(&sta->ps_lock);
-+	spin_unlock_bh(&sta->ps_lock);
+ 	qopt->bands = qdisc_dev(sch)->real_num_tx_queues;
  
- 	atomic_dec(&ps->num_sta_ps);
- 
+-	removed = kmalloc(sizeof(*removed) * (q->max_bands - q->bands),
++	removed = kmalloc(sizeof(*removed) * (q->max_bands - qopt->bands),
+ 			  GFP_KERNEL);
+ 	if (!removed)
+ 		return -ENOMEM;
 -- 
 2.43.0
 
