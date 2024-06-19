@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6BF144D3E;
-	Wed, 19 Jun 2024 13:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11431474AD;
+	Wed, 19 Jun 2024 13:27:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803627; cv=none; b=fG7oDRkZjcqm0aRMhCYRMCp7YIuDK8k/BMeBhdhvxAIHuNZBUnDTK2A8Tleiko83CVbtHnvTxL8mY54MLnnx2DMLKRwRN39O+taV4vxhTinO0QqyTSlFkRn42L3EgQ4F1bqrwfDNDMW9zo3bsrJvvSHSKmOxgs5nFOzmC4W1x1o=
+	t=1718803630; cv=none; b=Jipgd6vfyC9QyG8hL+uLbV3+kmmEWmi32/VL/eRN6KlfP/HOsr1QSojUPDaRAfueiNIoEByz5qnmxywD/i6Z03vryoJXVdjzQ37/shod026HsmdSEB+zva2/c7aHIxueyUWq6aqwrJgupJ4y7oNVlbUItqZsmo2DnNobCPW4tyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803627; c=relaxed/simple;
-	bh=ccxqq7Nnk6ZAf/tCHgVp+ycUCSkvIq2iuIHesbNc2Ys=;
+	s=arc-20240116; t=1718803630; c=relaxed/simple;
+	bh=zwWG6tJKF/JQvu/TxavtbkjH7cY5nDt8JCGIfTyZZSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gntSQOvIDyinV7+btNd6Q9fpAryNwH9/T8yOtJ3PLLQPDY3PvUrtQ7vkoaHBHNrAf8uDuMH/zcYpmV5atpQ0vQcwclmbdqvPBrltkjxLu2ZVokF/vcZo9ubT82a3Hr7adTXKC3OInMPrA2vRCjAZghUkX9zKMDYEDHtavQaXDPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rFNTnMY5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q+ANqRZ/o+8i9sT8EzWj15UrFzLoMfdVa4XbLxb+sSd60IMHKdawCY8bePqDVDQzX7e9U8Z0tJJac/W4WQMjUjj1NIA2yi0D+GTmlcmn6y/QBDLPShVV0zwLzb2g3RxjP65crh0RZyaKP5rqWoYRN2tWxacturUuQ1w8esdbYso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RHuhsa3f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rFNTnMY5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35228C2BBFC;
-	Wed, 19 Jun 2024 13:27:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RHuhsa3f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 298AEC2BBFC;
+	Wed, 19 Jun 2024 13:27:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803627;
-	bh=ccxqq7Nnk6ZAf/tCHgVp+ycUCSkvIq2iuIHesbNc2Ys=;
+	s=korg; t=1718803630;
+	bh=zwWG6tJKF/JQvu/TxavtbkjH7cY5nDt8JCGIfTyZZSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rFNTnMY5xeWlVhXnB6H8/bljSm2ko1qh5j5CAq8b5hy9vvCZt3KCveHaA5fke3rj3
-	 NnyIMOhsMXz4R8+gcBY5d9SkdNOsN7j6aIdVj0fOVFMlzq0ExgpnNFNU+sP8SCUmJJ
-	 FcFSu7RIVSr8MGCvhwcibuQyhpfzt/F+98NcTNJk=
+	b=RHuhsa3fqwexITOdfSaWyKVGiBBG0TgGg23SSf2tWxDpbQoRWt49D3c5TO4cnXk41
+	 6aG6oDhLBCeHkDcuvUJAwBWY6vPfNaYC4rVoisv7G9fCwUx8N6t1HtkXu1jmL8rC8p
+	 ysqN+qWRIjfzPJzrQUeeS6m5aiGdu9sMgdw7mytM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janaki Ramaiah Thota <quic_janathot@quicinc.com>,
-	Matthias Kaehlcke <mka@chromium.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 050/217] Bluetooth: qca: fix invalid device address check
-Date: Wed, 19 Jun 2024 14:54:53 +0200
-Message-ID: <20240619125558.592625896@linuxfoundation.org>
+Subject: [PATCH 6.1 051/217] btrfs: fix wrong block_start calculation for btrfs_drop_extent_map_range()
+Date: Wed, 19 Jun 2024 14:54:54 +0200
+Message-ID: <20240619125558.633372546@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -53,121 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 32868e126c78876a8a5ddfcb6ac8cb2fffcf4d27 ]
+[ Upstream commit fe1c6c7acce10baf9521d6dccc17268d91ee2305 ]
 
-Qualcomm Bluetooth controllers may not have been provisioned with a
-valid device address and instead end up using the default address
-00:00:00:00:5a:ad.
+[BUG]
+During my extent_map cleanup/refactor, with extra sanity checks,
+extent-map-tests::test_case_7() would not pass the checks.
 
-This was previously believed to be due to lack of persistent storage for
-the address but it may also be due to integrators opting to not use the
-on-chip OTP memory and instead store the address elsewhere (e.g. in
-storage managed by secure world firmware).
+The problem is, after btrfs_drop_extent_map_range(), the resulted
+extent_map has a @block_start way too large.
+Meanwhile my btrfs_file_extent_item based members are returning a
+correct @disk_bytenr/@offset combination.
 
-According to Qualcomm, at least WCN6750, WCN6855 and WCN7850 have
-on-chip OTP storage for the address.
+The extent map layout looks like this:
 
-As the device type alone cannot be used to determine when the address is
-valid, instead read back the address during setup() and only set the
-HCI_QUIRK_USE_BDADDR_PROPERTY flag when needed.
+     0        16K    32K       48K
+     | PINNED |      | Regular |
 
-This specifically makes sure that controllers that have been provisioned
-with an address do not start as unconfigured.
+The regular em at [32K, 48K) also has 32K @block_start.
 
-Reported-by: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
-Link: https://lore.kernel.org/r/124a7d54-5a18-4be7-9a76-a12017f6cce5@quicinc.com/
-Fixes: 5971752de44c ("Bluetooth: hci_qca: Set HCI_QUIRK_USE_BDADDR_PROPERTY for wcn3990")
-Fixes: e668eb1e1578 ("Bluetooth: hci_core: Don't stop BT if the BD address missing in dts")
-Fixes: 6945795bc81a ("Bluetooth: fix use-bdaddr-property quirk")
-Cc: stable@vger.kernel.org	# 6.5
-Cc: Matthias Kaehlcke <mka@chromium.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reported-by: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Then drop range [0, 36K), which should shrink the regular one to be
+[36K, 48K).
+However the @block_start is incorrect, we expect 32K + 4K, but got 52K.
+
+[CAUSE]
+Inside btrfs_drop_extent_map_range() function, if we hit an extent_map
+that covers the target range but is still beyond it, we need to split
+that extent map into half:
+
+	|<-- drop range -->|
+		 |<----- existing extent_map --->|
+
+And if the extent map is not compressed, we need to forward
+extent_map::block_start by the difference between the end of drop range
+and the extent map start.
+
+However in that particular case, the difference is calculated using
+(start + len - em->start).
+
+The problem is @start can be modified if the drop range covers any
+pinned extent.
+
+This leads to wrong calculation, and would be caught by my later
+extent_map sanity checks, which checks the em::block_start against
+btrfs_file_extent_item::disk_bytenr + btrfs_file_extent_item::offset.
+
+This is a regression caused by commit c962098ca4af ("btrfs: fix
+incorrect splitting in btrfs_drop_extent_map_range"), which removed the
+@len update for pinned extents.
+
+[FIX]
+Fix it by avoiding using @start completely, and use @end - em->start
+instead, which @end is exclusive bytenr number.
+
+And update the test case to verify the @block_start to prevent such
+problem from happening.
+
+Thankfully this is not going to lead to any data corruption, as IO path
+does not utilize btrfs_drop_extent_map_range() with @skip_pinned set.
+
+So this fix is only here for the sake of consistency/correctness.
+
+CC: stable@vger.kernel.org # 6.5+
+Fixes: c962098ca4af ("btrfs: fix incorrect splitting in btrfs_drop_extent_map_range")
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btqca.c   | 38 +++++++++++++++++++++++++++++++++++++
- drivers/bluetooth/hci_qca.c |  2 --
- 2 files changed, 38 insertions(+), 2 deletions(-)
+ fs/btrfs/extent_map.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index 2dda94a0875a6..8df2e53dcd63c 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -15,6 +15,8 @@
+diff --git a/fs/btrfs/extent_map.c b/fs/btrfs/extent_map.c
+index 56d7580fdc3c4..3518e638374ea 100644
+--- a/fs/btrfs/extent_map.c
++++ b/fs/btrfs/extent_map.c
+@@ -867,7 +867,7 @@ void btrfs_drop_extent_map_range(struct btrfs_inode *inode, u64 start, u64 end,
+ 					split->block_len = em->block_len;
+ 					split->orig_start = em->orig_start;
+ 				} else {
+-					const u64 diff = start + len - em->start;
++					const u64 diff = end - em->start;
  
- #define VERSION "0.1"
- 
-+#define QCA_BDADDR_DEFAULT (&(bdaddr_t) {{ 0xad, 0x5a, 0x00, 0x00, 0x00, 0x00 }})
-+
- int qca_read_soc_version(struct hci_dev *hdev, struct qca_btsoc_version *ver,
- 			 enum qca_btsoc_type soc_type)
- {
-@@ -682,6 +684,38 @@ int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdaddr)
- }
- EXPORT_SYMBOL_GPL(qca_set_bdaddr_rome);
- 
-+static int qca_check_bdaddr(struct hci_dev *hdev)
-+{
-+	struct hci_rp_read_bd_addr *bda;
-+	struct sk_buff *skb;
-+	int err;
-+
-+	if (bacmp(&hdev->public_addr, BDADDR_ANY))
-+		return 0;
-+
-+	skb = __hci_cmd_sync(hdev, HCI_OP_READ_BD_ADDR, 0, NULL,
-+			     HCI_INIT_TIMEOUT);
-+	if (IS_ERR(skb)) {
-+		err = PTR_ERR(skb);
-+		bt_dev_err(hdev, "Failed to read device address (%d)", err);
-+		return err;
-+	}
-+
-+	if (skb->len != sizeof(*bda)) {
-+		bt_dev_err(hdev, "Device address length mismatch");
-+		kfree_skb(skb);
-+		return -EIO;
-+	}
-+
-+	bda = (struct hci_rp_read_bd_addr *)skb->data;
-+	if (!bacmp(&bda->bdaddr, QCA_BDADDR_DEFAULT))
-+		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
-+
-+	kfree_skb(skb);
-+
-+	return 0;
-+}
-+
- static void qca_generate_hsp_nvm_name(char *fwname, size_t max_size,
- 		struct qca_btsoc_version ver, u8 rom_ver, u16 bid)
- {
-@@ -888,6 +922,10 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 		break;
- 	}
- 
-+	err = qca_check_bdaddr(hdev);
-+	if (err)
-+		return err;
-+
- 	bt_dev_info(hdev, "QCA setup on UART is completed");
- 
- 	return 0;
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index a0e2b5d992695..070014d0fc994 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1853,8 +1853,6 @@ static int qca_setup(struct hci_uart *hu)
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
- 	case QCA_WCN7850:
--		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
--
- 		qcadev = serdev_device_get_drvdata(hu->serdev);
- 		if (qcadev->bdaddr_property_broken)
- 			set_bit(HCI_QUIRK_BDADDR_PROPERTY_BROKEN, &hdev->quirks);
+ 					split->block_len = split->len;
+ 					split->block_start += diff;
 -- 
 2.43.0
 
