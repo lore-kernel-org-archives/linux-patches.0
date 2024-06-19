@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1BC0143873;
-	Wed, 19 Jun 2024 13:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E81714C584;
+	Wed, 19 Jun 2024 13:01:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802099; cv=none; b=uTr1s8altjIC2DqLflksIPerHc20dWwEekubgC3m0FzQqLLiNmcV9+/gRyDwk4bk2tvTtX0n+hU2++V8faCoP23YFuN/07eAH4bAC2aHIhyDljwTfRxeDuvp6wMaMnOuIVZreuDWPLPg8HGsf07OtlBxWXv5NlrmO0fqOzJNWeg=
+	t=1718802101; cv=none; b=Ndzx5DbTGrw2kDyqPXJHlebaLqYOw03HFhCWqgTtypYc2cwlEtAAYHtReExnhIm2z2n92+SsMgj+Pcswu+lpNbb5/+rK1JIMMiH53uGay8QR/toHrP3iNhyuaVaqFSI/EuuJVxXOCA39nGGqBXLckFRS7HCNaO+IjkdDs01pEUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802099; c=relaxed/simple;
-	bh=lXm+e5FBaEthuQ1pLVmLW/TZgE6HIbqLZU6SzhFXqaw=;
+	s=arc-20240116; t=1718802101; c=relaxed/simple;
+	bh=Ga9ETDnfSzUEKB4wt+zMPRmqos0ZG5Gf9KnsSQtPVC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GxEGF2b/+bOTs7vfC7ctI4Ve7+NhBdgKGCcaYbnJwZSq4Gx+slfuqMNv6IGxEKPI265jtM4Wj2djN4mtKvzfC05ACbZeZu8vNEf76t8q7Y8Ol/KSs96HwaX6KMaL3Q3+Gh43yccdYq0hJCQzqrbT5umciYTVr8jEhR+G6plc61c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOz4TXEq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LtXvRPfqLqKOpL6qV7isyJ1lbeIr20SpzeCurPepyJIGkFMoWOBcf5ek1wpXpEWqZHEQOGUY1q/exbvF17JS1TeZlFWzxzXoPM7tOP0ZFmbIJRrhm7eM9bZhNsc6RJPUg3c6yC7PWnOGRr7XqiO5VbQtQXgzj1zTmAYmrnlOJQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fFpdY5zR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOz4TXEq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EDB6C32786;
-	Wed, 19 Jun 2024 13:01:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fFpdY5zR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13F2AC2BBFC;
+	Wed, 19 Jun 2024 13:01:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802098;
-	bh=lXm+e5FBaEthuQ1pLVmLW/TZgE6HIbqLZU6SzhFXqaw=;
+	s=korg; t=1718802101;
+	bh=Ga9ETDnfSzUEKB4wt+zMPRmqos0ZG5Gf9KnsSQtPVC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eOz4TXEqC/p6+TjJzwpLlAAfTqrNCENeV8cDUQih3GYTs/2YTsNMMczCT4uDRvL4X
-	 KamZkIIHhWlQdn/Bu8aqpf/j7dck6awleU7jxudZXXn/EM+OYimC6dwnMfoUJ/DWHE
-	 B1zxrJ0b+lxxReULp0pqTt8YDcKRUx1XY7XI9Crw=
+	b=fFpdY5zRrEv7nqaXK+HLMKb35i0T+EWw0IuXC3vx6Y1Gy3veOAMpdca6BERO2cboR
+	 OwdkEzKos6POikorVYO0vmPz+afVZKl+H5sRbL+7m6feiWOWH0ShnZTu/+4YNiCZRb
+	 WmIwGKjz8PWdA84IaN4txf6eg25yWYdtevJ5627E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	syzbot+5f996b83575ef4058638@syzkaller.appspotmail.com,
-	syzbot+1b2abad17596ad03dcff@syzkaller.appspotmail.com
-Subject: [PATCH 6.6 080/267] USB: class: cdc-wdm: Fix CPU lockup caused by excessive log messages
-Date: Wed, 19 Jun 2024 14:53:51 +0200
-Message-ID: <20240619125609.423381094@linuxfoundation.org>
+	John Ernberg <john.ernberg@actia.se>
+Subject: [PATCH 6.6 081/267] USB: xen-hcd: Traverse host/ when CONFIG_USB_XEN_HCD is selected
+Date: Wed, 19 Jun 2024 14:53:52 +0200
+Message-ID: <20240619125609.460822548@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -51,78 +49,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: John Ernberg <john.ernberg@actia.se>
 
-commit 22f00812862564b314784167a89f27b444f82a46 upstream.
+commit 8475ffcfb381a77075562207ce08552414a80326 upstream.
 
-The syzbot fuzzer found that the interrupt-URB completion callback in
-the cdc-wdm driver was taking too long, and the driver's immediate
-resubmission of interrupt URBs with -EPROTO status combined with the
-dummy-hcd emulation to cause a CPU lockup:
+If no other USB HCDs are selected when compiling a small pure virutal
+machine, the Xen HCD driver cannot be built.
 
-cdc_wdm 1-1:1.0: nonzero urb status received: -71
-cdc_wdm 1-1:1.0: wdm_int_callback - 0 bytes
-watchdog: BUG: soft lockup - CPU#0 stuck for 26s! [syz-executor782:6625]
-CPU#0 Utilization every 4s during lockup:
-	#1:  98% system,	  0% softirq,	  3% hardirq,	  0% idle
-	#2:  98% system,	  0% softirq,	  3% hardirq,	  0% idle
-	#3:  98% system,	  0% softirq,	  3% hardirq,	  0% idle
-	#4:  98% system,	  0% softirq,	  3% hardirq,	  0% idle
-	#5:  98% system,	  1% softirq,	  3% hardirq,	  0% idle
-Modules linked in:
-irq event stamp: 73096
-hardirqs last  enabled at (73095): [<ffff80008037bc00>] console_emit_next_record kernel/printk/printk.c:2935 [inline]
-hardirqs last  enabled at (73095): [<ffff80008037bc00>] console_flush_all+0x650/0xb74 kernel/printk/printk.c:2994
-hardirqs last disabled at (73096): [<ffff80008af10b00>] __el1_irq arch/arm64/kernel/entry-common.c:533 [inline]
-hardirqs last disabled at (73096): [<ffff80008af10b00>] el1_interrupt+0x24/0x68 arch/arm64/kernel/entry-common.c:551
-softirqs last  enabled at (73048): [<ffff8000801ea530>] softirq_handle_end kernel/softirq.c:400 [inline]
-softirqs last  enabled at (73048): [<ffff8000801ea530>] handle_softirqs+0xa60/0xc34 kernel/softirq.c:582
-softirqs last disabled at (73043): [<ffff800080020de8>] __do_softirq+0x14/0x20 kernel/softirq.c:588
-CPU: 0 PID: 6625 Comm: syz-executor782 Tainted: G        W          6.10.0-rc2-syzkaller-g8867bbd4a056 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/02/2024
+Fix it by traversing down host/ if CONFIG_USB_XEN_HCD is selected.
 
-Testing showed that the problem did not occur if the two error
-messages -- the first two lines above -- were removed; apparently adding
-material to the kernel log takes a surprisingly large amount of time.
-
-In any case, the best approach for preventing these lockups and to
-avoid spamming the log with thousands of error messages per second is
-to ratelimit the two dev_err() calls.  Therefore we replace them with
-dev_err_ratelimited().
-
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Suggested-by: Greg KH <gregkh@linuxfoundation.org>
-Reported-and-tested-by: syzbot+5f996b83575ef4058638@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-usb/00000000000073d54b061a6a1c65@google.com/
-Reported-and-tested-by: syzbot+1b2abad17596ad03dcff@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-usb/000000000000f45085061aa9b37e@google.com/
-Fixes: 9908a32e94de ("USB: remove err() macro from usb class drivers")
-Link: https://lore.kernel.org/linux-usb/40dfa45b-5f21-4eef-a8c1-51a2f320e267@rowland.harvard.edu/
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/29855215-52f5-4385-b058-91f42c2bee18@rowland.harvard.edu
+Fixes: 494ed3997d75 ("usb: Introduce Xen pvUSB frontend (xen hcd)")
+Cc: stable@vger.kernel.org # v5.17+
+Signed-off-by: John Ernberg <john.ernberg@actia.se>
+Link: https://lore.kernel.org/r/20240517114345.1190755-1-john.ernberg@actia.se
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/cdc-wdm.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/Makefile |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/class/cdc-wdm.c
-+++ b/drivers/usb/class/cdc-wdm.c
-@@ -266,14 +266,14 @@ static void wdm_int_callback(struct urb
- 			dev_err(&desc->intf->dev, "Stall on int endpoint\n");
- 			goto sw; /* halt is cleared in work */
- 		default:
--			dev_err(&desc->intf->dev,
-+			dev_err_ratelimited(&desc->intf->dev,
- 				"nonzero urb status received: %d\n", status);
- 			break;
- 		}
- 	}
+--- a/drivers/usb/Makefile
++++ b/drivers/usb/Makefile
+@@ -35,6 +35,7 @@ obj-$(CONFIG_USB_R8A66597_HCD)	+= host/
+ obj-$(CONFIG_USB_FSL_USB2)	+= host/
+ obj-$(CONFIG_USB_FOTG210_HCD)	+= host/
+ obj-$(CONFIG_USB_MAX3421_HCD)	+= host/
++obj-$(CONFIG_USB_XEN_HCD)	+= host/
  
- 	if (urb->actual_length < sizeof(struct usb_cdc_notification)) {
--		dev_err(&desc->intf->dev, "wdm_int_callback - %d bytes\n",
-+		dev_err_ratelimited(&desc->intf->dev, "wdm_int_callback - %d bytes\n",
- 			urb->actual_length);
- 		goto exit;
- 	}
+ obj-$(CONFIG_USB_C67X00_HCD)	+= c67x00/
+ 
 
 
