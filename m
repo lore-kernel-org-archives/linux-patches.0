@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29A0146A85;
-	Wed, 19 Jun 2024 13:12:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6706143C58;
+	Wed, 19 Jun 2024 13:12:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802750; cv=none; b=OinvwFLR3o5G+QcfWYIKwIDj5etv+7HNzf5aEkrjXLN+nuevfeYPWPrp/yNjiREaLolj1KNif2eMgyfZZQq6a0hdzl5/SlWMSLXmbWhfkI7pbYKxSyhwv3uk9nWfZTWdOhtD6KcU0vah8MsZODvIkYuJboYu0Jkl89nWL4WfNxg=
+	t=1718802753; cv=none; b=i6RvtRRcZE9A3M5pnImMjCV7m/QNL9JqAItFhKl+A/pfHnI8fNn3z5vooknawIyjVFD5/mACW1Rmor33BXOjBfPAl2VcYU5P24/O+Hx2zbjBSjq8xE1AflN9XDC281NXOLoTFFz658UqTtNRDtFrAQ08OX+MyF89nI5gpNGbPuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802750; c=relaxed/simple;
-	bh=84xj3XJacx1thjNIADIUyZqpgb7tPWLzd/VOd2cNHxY=;
+	s=arc-20240116; t=1718802753; c=relaxed/simple;
+	bh=aMd9KQYVvw2G8r6N8XdRihiyAGMBPaSSkLK5EkCiFaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uEN3OASK5wVHpl9Mbwz8D0MpByOuVmsc9cDAl11qhOB65/R6jE1VFaLNFcpA+JfuZDnD1Cq/UILiXiN5eJr7B1+c5ipjDoHjLajJEdw+omgekb6M7+Ahwy0QOcw1/dwIdOAz2hUb6s+ZYUV3t8ImPOxbwg/sdVzpClrLknJTvLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gm+CtSxW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XYKufSHH0jFxsl73ZWiOKJFNobh1Ofh2AZslVBKaJIsi16NmAFXt+V8pWRa7mCanUvHoBkpW67+nlYeYa3JYgp8zsrkkDCLRs0wgJFfS6JfETbDed655k/CptgbpexYYdDqfWD+FbMDOHuHl0QoA0d1GylZMeJfxn2Y2FWMAi4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GblmtiXN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gm+CtSxW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48E34C2BBFC;
-	Wed, 19 Jun 2024 13:12:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GblmtiXN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D3C5C2BBFC;
+	Wed, 19 Jun 2024 13:12:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802750;
-	bh=84xj3XJacx1thjNIADIUyZqpgb7tPWLzd/VOd2cNHxY=;
+	s=korg; t=1718802753;
+	bh=aMd9KQYVvw2G8r6N8XdRihiyAGMBPaSSkLK5EkCiFaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gm+CtSxWYa55gEkT5a4z9H5E6bnL3eDqJtJLYWoxS5ldfG7i4a4zJ+m1g27wWR7kd
-	 O7dfE0e18LgaJNOhvFHigdW+mhEIh7EDLVao6WWLvP7CckzUa81rbob9WMP6j58x2q
-	 nmJhd9XVDlnrEcsz0ynY2kEehf5MUvF8YTcoBVY4=
+	b=GblmtiXNR4pyKfBlEa7BG8j2BjDQ179ZErPAjN7bfj8hJgT6lGcQFvslum+BAkmGz
+	 tJhm81EwmZA8VyV/gXcO4T8vnsci2TPPtsSha/FSXjCKMzCF4rtgPhpoNzxcLxwtSp
+	 agjX6ACugWngVvp6CG1MfZB3S/SZM86XyE85erXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	syzbot+3ab78ff125b7979e45f9@syzkaller.appspotmail.com,
+	Jiri Olsa <jolsa@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 034/281] net: tls: fix marking packets as decrypted
-Date: Wed, 19 Jun 2024 14:53:13 +0200
-Message-ID: <20240619125611.162651081@linuxfoundation.org>
+Subject: [PATCH 6.9 035/281] bpf: Set run context for rawtp test_run callback
+Date: Wed, 19 Jun 2024 14:53:14 +0200
+Message-ID: <20240619125611.201170044@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -52,44 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit a535d59432370343058755100ee75ab03c0e3f91 ]
+[ Upstream commit d0d1df8ba18abc57f28fb3bc053b2bf319367f2c ]
 
-For TLS offload we mark packets with skb->decrypted to make sure
-they don't escape the host without getting encrypted first.
-The crypto state lives in the socket, so it may get detached
-by a call to skb_orphan(). As a safety check - the egress path
-drops all packets with skb->decrypted and no "crypto-safe" socket.
+syzbot reported crash when rawtp program executed through the
+test_run interface calls bpf_get_attach_cookie helper or any
+other helper that touches task->bpf_ctx pointer.
 
-The skb marking was added to sendpage only (and not sendmsg),
-because tls_device injected data into the TCP stack using sendpage.
-This special case was missed when sendpage got folded into sendmsg.
+Setting the run context (task->bpf_ctx pointer) for test_run
+callback.
 
-Fixes: c5c37af6ecad ("tcp: Convert do_tcp_sendpages() to use MSG_SPLICE_PAGES")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240530232607.82686-1-kuba@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 7adfc6c9b315 ("bpf: Add bpf_get_attach_cookie() BPF helper to access bpf_cookie value")
+Reported-by: syzbot+3ab78ff125b7979e45f9@syzkaller.appspotmail.com
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Closes: https://syzkaller.appspot.com/bug?extid=3ab78ff125b7979e45f9
+Link: https://lore.kernel.org/bpf/20240604150024.359247-1-jolsa@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/bpf/test_run.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 66d77faca64f6..5c79836e4c9e7 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -1159,6 +1159,9 @@ int tcp_sendmsg_locked(struct sock *sk, struct msghdr *msg, size_t size)
+diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
+index 61efeadaff8db..4cd29fb490f7c 100644
+--- a/net/bpf/test_run.c
++++ b/net/bpf/test_run.c
+@@ -719,10 +719,16 @@ static void
+ __bpf_prog_test_run_raw_tp(void *data)
+ {
+ 	struct bpf_raw_tp_test_run_info *info = data;
++	struct bpf_trace_run_ctx run_ctx = {};
++	struct bpf_run_ctx *old_run_ctx;
++
++	old_run_ctx = bpf_set_run_ctx(&run_ctx.run_ctx);
  
- 			process_backlog++;
+ 	rcu_read_lock();
+ 	info->retval = bpf_prog_run(info->prog, info->ctx);
+ 	rcu_read_unlock();
++
++	bpf_reset_run_ctx(old_run_ctx);
+ }
  
-+#ifdef CONFIG_SKB_DECRYPTED
-+			skb->decrypted = !!(flags & MSG_SENDPAGE_DECRYPTED);
-+#endif
- 			tcp_skb_entail(sk, skb);
- 			copy = size_goal;
- 
+ int bpf_prog_test_run_raw_tp(struct bpf_prog *prog,
 -- 
 2.43.0
 
