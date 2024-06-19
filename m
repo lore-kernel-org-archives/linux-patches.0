@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644E74D9EA;
-	Wed, 19 Jun 2024 13:23:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 590AC4D9EA;
+	Wed, 19 Jun 2024 13:23:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803424; cv=none; b=BZ/RDDfcaR5xO52r1BiHEhaphPGQG+dL9YTe/oOvPzqQXm9Lo2EKDKpYca57lqcpzegqdYs5wDr+Uxz0sOdGYOitE+5jx0UF0xYkx7S+vOh6yICLL5lsw35ulKMlq7UDMz00jSgiqv2yNMSaPBtPbmZc+dwsZtKKW28MjF2+QTw=
+	t=1718803427; cv=none; b=j+E32wqaNs0xJ2IGLWK7bu/hZUCaDdNu1A4h8f0RjPQUFK0FCrWGoeILGnPwBjWUP0LRnQ8X/oJArWeb2TwJT9JV3Sx+FL0lnq18enJujIsYLUDsEyn0Ifbp1XP05Z/brT7CYft9vWsvdPljQJ7PQrp3fJ9MV9TyraBwHwZGmgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803424; c=relaxed/simple;
-	bh=r+mhcUL0/IaQgJX3DX+BfGuOPtX+7qTWD9qT8TP5qq0=;
+	s=arc-20240116; t=1718803427; c=relaxed/simple;
+	bh=HUGAJP8c261pdoqRb3wEyfoyWTbV0mxMplJr8POdJ5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CvJc3rLSj33KcgOlR7KwE/Ggo7oi/kBy3wCyoOrr7e6Kc4QSr6Bi6igRNvykvPtXhZBulvYBHongq4NIG1V3HKaRooL2Jl3+bgXzRkaOkdts48evvzsMPCByVnmyxVLO5xOuDO48QKDgK8YB+PzqO5ZMHKc2UB625Iz8bXX9/XY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=krUEA1Nt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J9FfTVYvXnAJ8WoJDmzgbEr1Ytbmcq4G94jIFu56pjSZLXP1L8DAXWqPwiqOX1e79YYQg5KKdWW0gpxmKZKNMThuQPrcWZvLmJwgdAciYJTQxN67qBrRLM5Kb0GRLquIcyPJ1dzagT3Q+zAQAc2NmZn2GJOoR4wkeDrbYGIUtb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E/OQGXP/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="krUEA1Nt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE096C2BBFC;
-	Wed, 19 Jun 2024 13:23:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E/OQGXP/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD322C2BBFC;
+	Wed, 19 Jun 2024 13:23:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803424;
-	bh=r+mhcUL0/IaQgJX3DX+BfGuOPtX+7qTWD9qT8TP5qq0=;
+	s=korg; t=1718803427;
+	bh=HUGAJP8c261pdoqRb3wEyfoyWTbV0mxMplJr8POdJ5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=krUEA1Nt5lU1xDdX0l8up36l1gAcIijXzfNTsRNFJxnVW6YUxDaeHHJfoOXa8tRy+
-	 g6RFZzN3vwXdCc2ktHvjbJvNyZzD6Mi4fIp3rIctX+RT/ogq+jrMUbZBYyDX8DQgF1
-	 w0oLiD2vR42wOhEbt2sI0P7DZYgYCLYXyjN34NiM=
+	b=E/OQGXP/o7q/H2gzNVNUI6DNGKbAvBsLkhHxr1X4buT4KfJgrx090FNXUA4XXNR6f
+	 f/XyJydFq//MljcfI9vU/vWrrXfZDnNDgRE9ZrmSbZ21vvP1HmXShSaUOTy+LB8E4c
+	 PkV3M/QDjK//SYZCiNj3Jdpf4eHZ9Uz3zeWS2Grw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	stable <stable@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH 6.9 245/281] drm/bridge: aux-hpd-bridge: correct devm_drm_dp_hpd_bridge_add() stub
-Date: Wed, 19 Jun 2024 14:56:44 +0200
-Message-ID: <20240619125619.391242954@linuxfoundation.org>
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	stable@kernel.org
+Subject: [PATCH 6.9 263/281] intel_th: pci: Add Sapphire Rapids SOC support
+Date: Wed, 19 Jun 2024 14:57:02 +0200
+Message-ID: <20240619125620.098478335@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -52,39 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Alexander Shishkin <alexander.shishkin@linux.intel.com>
 
-commit 51474ab44abf907023a8a875e799b07de461e466 upstream.
+commit 2e1da7efabe05cb0cf0b358883b2bc89080ed0eb upstream.
 
-If CONFIG_DRM_AUX_HPD_BRIDGE is not enabled, the aux-bridge.h header
-provides a stub for the bridge's functions. Correct the arguments list
-of one of those stubs to match the argument list of the non-stubbed
-function.
+Add support for the Trace Hub in Sapphire Rapids SOC.
 
-Fixes: e5ca263508f7 ("drm/bridge: aux-hpd: separate allocation and registration")
-Reported-by: kernel test robot <lkp@intel.com>
-Cc: stable <stable@kernel.org>
-Closes: https://lore.kernel.org/oe-kbuild-all/202405110428.TMCfb1Ut-lkp@intel.com/
-Cc: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20240511-fix-aux-hpd-stubs-v1-1-98dae71dfaec@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: stable@kernel.org
+Link: https://lore.kernel.org/r/20240429130119.1518073-13-alexander.shishkin@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/drm/bridge/aux-bridge.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwtracing/intel_th/pci.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/include/drm/bridge/aux-bridge.h
-+++ b/include/drm/bridge/aux-bridge.h
-@@ -33,7 +33,7 @@ static inline struct auxiliary_device *d
- 	return NULL;
- }
- 
--static inline int devm_drm_dp_hpd_bridge_add(struct auxiliary_device *adev)
-+static inline int devm_drm_dp_hpd_bridge_add(struct device *dev, struct auxiliary_device *adev)
- {
- 	return 0;
- }
+--- a/drivers/hwtracing/intel_th/pci.c
++++ b/drivers/hwtracing/intel_th/pci.c
+@@ -315,6 +315,11 @@ static const struct pci_device_id intel_
+ 		.driver_data = (kernel_ulong_t)&intel_th_2x,
+ 	},
+ 	{
++		/* Sapphire Rapids SOC */
++		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x3456),
++		.driver_data = (kernel_ulong_t)&intel_th_2x,
++	},
++	{
+ 		/* Alder Lake CPU */
+ 		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x466f),
+ 		.driver_data = (kernel_ulong_t)&intel_th_2x,
 
 
