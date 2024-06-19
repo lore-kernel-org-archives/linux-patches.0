@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7AE214C5B8;
-	Wed, 19 Jun 2024 13:21:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890B814E2D9;
+	Wed, 19 Jun 2024 13:21:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803278; cv=none; b=uu8ZygwPSnEbsLrBRCpFhPvWsOlxDQv1fJi5u6GCsdd/jChytEh1fUQ/kojN0vHbxW/lQdYzaaKTp9FZBUF0728eFIoXdkLv+oyEvHXwSbWR7sNqGuDWs8HzuHXtXdpl90jHNLlJ1XOGfNzXRkPiKgu3l33dNYRihiy8CoQi6Sc=
+	t=1718803281; cv=none; b=U9Ss+cdKpv4oVppeo28tO1PrgEmVMMpJXD4IxmO9eiXD/LvawdKLUo/Nt1A9GzMiL8yXQAlgm4jH86o9s5hfbvCUSI48wMhObwHGwwAtLOKyw+ygqQR6QVvB6vp7RcIPJf45IOHZOLqB0Zfa56XSlOS9q7Hv+fM9Q7XKWsb3ODs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803278; c=relaxed/simple;
-	bh=fmT5AtlN1JO0+48DGXsJXNyyTwTOcSrAS3gF25dwG/A=;
+	s=arc-20240116; t=1718803281; c=relaxed/simple;
+	bh=H3DnCYOtTx/C08fmXXEN4gLzHmgFNuTF4XkOHNAypQ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bkvkcqj/07pu8gIkDjsNYC9zU7+5x5IeGOj6SPJN8/SqGOSBWutsVisLvpBFQAXmkj9VHbvYGkCH7h6vPXdjd62mQelH4iu0Yf5CkzrS7sMtV/iXHC5HCQWFutgYtN9pBdodgxhdSVtdocJCN29wGYRHeaUTukf2+rx+3HlefVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pbrvIqEt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NLoZgu1DcVzHUPskei07VIShllhuVVXDNW1ERPSkdIGrAeDGj8PPEwt6lKGlomVmc53fFLIN/mvjOkRnrgdxyVl1TUX/JX2XXaTruB9hYUqSqReZtLUQ7NeworoQMUb/uYgqRwjbpTlwY08xXgrcsUmHZGnuU45gNrCXOIjrd5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JZ1fIgLT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pbrvIqEt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1415BC2BBFC;
-	Wed, 19 Jun 2024 13:21:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JZ1fIgLT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05031C2BBFC;
+	Wed, 19 Jun 2024 13:21:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803278;
-	bh=fmT5AtlN1JO0+48DGXsJXNyyTwTOcSrAS3gF25dwG/A=;
+	s=korg; t=1718803281;
+	bh=H3DnCYOtTx/C08fmXXEN4gLzHmgFNuTF4XkOHNAypQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pbrvIqEtCC0zvXy+r5J6u8MaHT0CuscvC3avUky1GdVXynODjf6t+EVy+1P0sdPHm
-	 cww2fzC57y8Cy3gPe6LJ6NhqAK7xWaEiok8udKyrV76TjSRivC9C3ZPeY8ujxol08X
-	 YvEkM9U1nYv64iERtOMIJDMOrQGRSKc2aDw7Nhcw=
+	b=JZ1fIgLT5ZQEgzHPibyRFnXk4PkYlHd3HVN01ccBi0WXGTb75MYyKyXrtSjXUlZf3
+	 KHm6fzpHqV4PeMo3+pOM2/uPgUX0Uk6SMJk39Zn35nGl7CuRa9mllGud1kbSnUOYzI
+	 9YQsjx0bS1KW2qiDFFqMBBZh5Omu8NawxFSpjaGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Riana Tauro <riana.tauro@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Taehee Yoo <ap420073@gmail.com>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 182/281] drm/xe: move disable_c6 call
-Date: Wed, 19 Jun 2024 14:55:41 +0200
-Message-ID: <20240619125616.839718122@linuxfoundation.org>
+Subject: [PATCH 6.9 183/281] ionic: fix use after netif_napi_del()
+Date: Wed, 19 Jun 2024 14:55:42 +0200
+Message-ID: <20240619125616.878366125@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -46,75 +47,101 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Riana Tauro <riana.tauro@intel.com>
+From: Taehee Yoo <ap420073@gmail.com>
 
-[ Upstream commit 2470b141bfae2b9695b5b6823e3b978b22d33dde ]
+[ Upstream commit 79f18a41dd056115d685f3b0a419c7cd40055e13 ]
 
-disable c6 called in guc_pc_fini_hw is unreachable.
+When queues are started, netif_napi_add() and napi_enable() are called.
+If there are 4 queues and only 3 queues are used for the current
+configuration, only 3 queues' napi should be registered and enabled.
+The ionic_qcq_enable() checks whether the .poll pointer is not NULL for
+enabling only the using queue' napi. Unused queues' napi will not be
+registered by netif_napi_add(), so the .poll pointer indicates NULL.
+But it couldn't distinguish whether the napi was unregistered or not
+because netif_napi_del() doesn't reset the .poll pointer to NULL.
+So, ionic_qcq_enable() calls napi_enable() for the queue, which was
+unregistered by netif_napi_del().
 
-GuC PC init returns earlier if skip_guc_pc is true and never
-registers the finish call thus making disable_c6 unreachable.
+Reproducer:
+   ethtool -L <interface name> rx 1 tx 1 combined 0
+   ethtool -L <interface name> rx 0 tx 0 combined 1
+   ethtool -L <interface name> rx 0 tx 0 combined 4
 
-move this call to gt idle.
+Splat looks like:
+kernel BUG at net/core/dev.c:6666!
+Oops: invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
+CPU: 3 PID: 1057 Comm: kworker/3:3 Not tainted 6.10.0-rc2+ #16
+Workqueue: events ionic_lif_deferred_work [ionic]
+RIP: 0010:napi_enable+0x3b/0x40
+Code: 48 89 c2 48 83 e2 f6 80 b9 61 09 00 00 00 74 0d 48 83 bf 60 01 00 00 00 74 03 80 ce 01 f0 4f
+RSP: 0018:ffffb6ed83227d48 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: ffff97560cda0828 RCX: 0000000000000029
+RDX: 0000000000000001 RSI: 0000000000000000 RDI: ffff97560cda0a28
+RBP: ffffb6ed83227d50 R08: 0000000000000400 R09: 0000000000000001
+R10: 0000000000000001 R11: 0000000000000001 R12: 0000000000000000
+R13: ffff97560ce3c1a0 R14: 0000000000000000 R15: ffff975613ba0a20
+FS:  0000000000000000(0000) GS:ffff975d5f780000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f8f734ee200 CR3: 0000000103e50000 CR4: 00000000007506f0
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ ? die+0x33/0x90
+ ? do_trap+0xd9/0x100
+ ? napi_enable+0x3b/0x40
+ ? do_error_trap+0x83/0xb0
+ ? napi_enable+0x3b/0x40
+ ? napi_enable+0x3b/0x40
+ ? exc_invalid_op+0x4e/0x70
+ ? napi_enable+0x3b/0x40
+ ? asm_exc_invalid_op+0x16/0x20
+ ? napi_enable+0x3b/0x40
+ ionic_qcq_enable+0xb7/0x180 [ionic 59bdfc8a035436e1c4224ff7d10789e3f14643f8]
+ ionic_start_queues+0xc4/0x290 [ionic 59bdfc8a035436e1c4224ff7d10789e3f14643f8]
+ ionic_link_status_check+0x11c/0x170 [ionic 59bdfc8a035436e1c4224ff7d10789e3f14643f8]
+ ionic_lif_deferred_work+0x129/0x280 [ionic 59bdfc8a035436e1c4224ff7d10789e3f14643f8]
+ process_one_work+0x145/0x360
+ worker_thread+0x2bb/0x3d0
+ ? __pfx_worker_thread+0x10/0x10
+ kthread+0xcc/0x100
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x2d/0x50
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1a/0x30
 
-v2: rebase
-v3: add fixes tag (Himal)
-
-Fixes: 975e4a3795d4 ("drm/xe: Manually setup C6 when skip_guc_pc is set")
-Signed-off-by: Riana Tauro <riana.tauro@intel.com>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240606100842.956072-3-riana.tauro@intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-(cherry picked from commit 6800e63cf97bae62bca56d8e691544540d945f53)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Fixes: 0f3154e6bcb3 ("ionic: Add Tx and Rx handling")
+Signed-off-by: Taehee Yoo <ap420073@gmail.com>
+Reviewed-by: Brett Creeley <brett.creeley@amd.com>
+Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
+Link: https://lore.kernel.org/r/20240612060446.1754392-1-ap420073@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_gt_idle.c | 7 +++++++
- drivers/gpu/drm/xe/xe_guc_pc.c  | 6 ------
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/pensando/ionic/ionic_lif.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_gt_idle.c b/drivers/gpu/drm/xe/xe_gt_idle.c
-index 1521b3d9933c7..e7a39ad7adba0 100644
---- a/drivers/gpu/drm/xe/xe_gt_idle.c
-+++ b/drivers/gpu/drm/xe/xe_gt_idle.c
-@@ -126,6 +126,13 @@ static const struct attribute *gt_idle_attrs[] = {
- static void gt_idle_sysfs_fini(struct drm_device *drm, void *arg)
- {
- 	struct kobject *kobj = arg;
-+	struct xe_gt *gt = kobj_to_gt(kobj->parent);
-+
-+	if (gt_to_xe(gt)->info.skip_guc_pc) {
-+		XE_WARN_ON(xe_force_wake_get(gt_to_fw(gt), XE_FW_GT));
-+		xe_gt_idle_disable_c6(gt);
-+		xe_force_wake_put(gt_to_fw(gt), XE_FW_GT);
-+	}
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_lif.c b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
+index 7f0c6cdc375e3..0cd819bc4ae35 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
+@@ -304,10 +304,8 @@ static int ionic_qcq_enable(struct ionic_qcq *qcq)
+ 	if (ret)
+ 		return ret;
  
- 	sysfs_remove_files(kobj, gt_idle_attrs);
- 	kobject_put(kobj);
-diff --git a/drivers/gpu/drm/xe/xe_guc_pc.c b/drivers/gpu/drm/xe/xe_guc_pc.c
-index f4b031b8d9deb..dd9d65f923da7 100644
---- a/drivers/gpu/drm/xe/xe_guc_pc.c
-+++ b/drivers/gpu/drm/xe/xe_guc_pc.c
-@@ -920,12 +920,6 @@ int xe_guc_pc_stop(struct xe_guc_pc *pc)
- static void xe_guc_pc_fini(struct drm_device *drm, void *arg)
- {
- 	struct xe_guc_pc *pc = arg;
--	struct xe_device *xe = pc_to_xe(pc);
+-	if (qcq->napi.poll)
+-		napi_enable(&qcq->napi);
 -
--	if (xe->info.skip_guc_pc) {
--		xe_gt_idle_disable_c6(pc_to_gt(pc));
--		return;
--	}
- 
- 	xe_force_wake_get(gt_to_fw(pc_to_gt(pc)), XE_FORCEWAKE_ALL);
- 	XE_WARN_ON(xe_guc_pc_gucrc_disable(pc));
+ 	if (qcq->flags & IONIC_QCQ_F_INTR) {
++		napi_enable(&qcq->napi);
+ 		irq_set_affinity_hint(qcq->intr.vector,
+ 				      &qcq->intr.affinity_mask);
+ 		ionic_intr_mask(idev->intr_ctrl, qcq->intr.index,
 -- 
 2.43.0
 
