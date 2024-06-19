@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD03C12FB31;
-	Wed, 19 Jun 2024 13:07:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E9212FB31;
+	Wed, 19 Jun 2024 13:07:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802426; cv=none; b=bxnAjJblJxWsoodxjLQrIFcP6iPq1wbWzJ1gzQZtJrgHV0192HczG1ajFa/93h9JeuO2CuJuwltOL+sTWgET8vHgUyvPOnqLpiXPjsLJ5bKTqHQxJsuCgmuhrvOf8DjvWQbqgnJ5//1xsEFtIY7gw+G9fbOiz0JOdz4bJTmR83w=
+	t=1718802429; cv=none; b=QzV9NFv7OK+SBibsMMrDZEKp4/triVlyYLoQZ0IWN2nbczHq+t5HN6mT6GSPPU/r3ATsEsY5WNGOhKynP7WxrT9s6M5jWO+t5Y9s3KkHg7v+ZEUmq33+U6ZN+nWseynbteM0vqTodhDX87ljFOw1qqeFv849DEPUYQhmnpzLI2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802426; c=relaxed/simple;
-	bh=lZ36BWbBv/69Iug7UkBud50yrNLOgRMEMKoZ4fZm0bM=;
+	s=arc-20240116; t=1718802429; c=relaxed/simple;
+	bh=zTv4Ki5DQkH0xeguoAkVF86OgvbxeCsdalVP4nAnRDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sdFRk64sslrSgVTGvROvtCYlkUxrImj9NkLHM7dy+Gl/v0A8Tb1Yi1zxAbq5xvARtoqS3ri9MpesEhW6IhSQgP+mZ4SCfVew6tiGNlx69sbyessnBQJDT0IAeCV+4Nut5OUCFKkKJCiY4hMEYjKEiX1jPSAMgR01+gWHm6DbGh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YD4nO2ky; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nv38/DeOTDlgH2qNwL1UZhz4ajdSVv2gNY4dEbgwsDGH9ZCy7/i3qZwKUdORxXqxPy0Fb/XiBiz+sF2jddlhQsEQaEtT66r++dBAuQGi87RnJMmFc4yXxw6b+R7VbP9zl8lej4BXfNL84pHP6z9LGgJsSB18Ey1LuyN/frG9RO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o6XZ/D2Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YD4nO2ky"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41180C2BBFC;
-	Wed, 19 Jun 2024 13:07:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o6XZ/D2Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DDBDC2BBFC;
+	Wed, 19 Jun 2024 13:07:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802426;
-	bh=lZ36BWbBv/69Iug7UkBud50yrNLOgRMEMKoZ4fZm0bM=;
+	s=korg; t=1718802429;
+	bh=zTv4Ki5DQkH0xeguoAkVF86OgvbxeCsdalVP4nAnRDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YD4nO2ky4cme4vQMt2sizgl7PPb7WUnAL9F2pHFBEdCQHX0QstvhhcuMMhhtYNyMG
-	 89JKp6prCPKPK+0cnTjC43VjSKpgZ2vqG8CeJ+za+VTcaMGNeCtRDh99PkQu6CHPJd
-	 w2idCAw2kZ1AYJymGHbwi+9gez1su1coC/1DUXEY=
+	b=o6XZ/D2ZUZ30gMVUD6x6UDEQlWPrbzYFDb5zKgDBC1Jrdfl/NEFMhIwAlF4Vu7KAs
+	 tpnFWZxSgkgx2T0Z+obDcbP0O0LV1DOPJPHoXymUiPsmhHJ/QZzukxkytreMUJV5A7
+	 Ih8PGdTRivdySTQ4gBbdM0Oiq0anS5z741mEpJ5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 6.6 193/267] perf auxtrace: Fix multiple use of --itrace option
-Date: Wed, 19 Jun 2024 14:55:44 +0200
-Message-ID: <20240619125613.745426247@linuxfoundation.org>
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	Nam Cao <namcao@linutronix.de>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
+	"Mike Rapoport (IBM)" <rppt@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.6 194/267] riscv: fix overlap of allocated page and PTR_ERR
+Date: Wed, 19 Jun 2024 14:55:45 +0200
+Message-ID: <20240619125613.782870171@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -48,72 +47,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Nam Cao <namcao@linutronix.de>
 
-commit bb69c912c4e8005cf1ee6c63782d2fc28838dee2 upstream.
+commit 994af1825a2aa286f4903ff64a1c7378b52defe6 upstream.
 
-If the --itrace option is used more than once, the options are
-combined, but "i" and "y" (sub-)options can be corrupted because
-itrace_do_parse_synth_opts() incorrectly overwrites the period type and
-period with default values.
+On riscv32, it is possible for the last page in virtual address space
+(0xfffff000) to be allocated. This page overlaps with PTR_ERR, so that
+shouldn't happen.
 
-For example, with:
+There is already some code to ensure memblock won't allocate the last page.
+However, buddy allocator is left unchecked.
 
-	--itrace=i0ns --itrace=e
+Fix this by reserving physical memory that would be mapped at virtual
+addresses greater than 0xfffff000.
 
-The processing of "--itrace=e", resets the "i" period from 0 nanoseconds
-to the default 100 microseconds.
-
-Fix by performing the default setting of period type and period only if
-"i" or "y" are present in the currently processed --itrace value.
-
-Fixes: f6986c95af84ff2a ("perf session: Add instruction tracing options")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240315071334.3478-2-adrian.hunter@intel.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Reported-by: Björn Töpel <bjorn@kernel.org>
+Closes: https://lore.kernel.org/linux-riscv/878r1ibpdn.fsf@all.your.base.are.belong.to.us
+Fixes: 76d2a0493a17 ("RISC-V: Init and Halt Code")
+Signed-off-by: Nam Cao <namcao@linutronix.de>
+Cc: <stable@vger.kernel.org>
+Tested-by: Björn Töpel <bjorn@rivosinc.com>
+Reviewed-by: Björn Töpel <bjorn@rivosinc.com>
+Reviewed-by: Mike Rapoport (IBM) <rppt@kernel.org>
+Link: https://lore.kernel.org/r/20240425115201.3044202-1-namcao@linutronix.de
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/auxtrace.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/riscv/mm/init.c |   21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
---- a/tools/perf/util/auxtrace.c
-+++ b/tools/perf/util/auxtrace.c
-@@ -1466,6 +1466,7 @@ int itrace_do_parse_synth_opts(struct it
- 	char *endptr;
- 	bool period_type_set = false;
- 	bool period_set = false;
-+	bool iy = false;
+--- a/arch/riscv/mm/init.c
++++ b/arch/riscv/mm/init.c
+@@ -234,18 +234,19 @@ static void __init setup_bootmem(void)
+ 		kernel_map.va_pa_offset = PAGE_OFFSET - phys_ram_base;
  
- 	synth_opts->set = true;
- 
-@@ -1484,6 +1485,7 @@ int itrace_do_parse_synth_opts(struct it
- 		switch (*p++) {
- 		case 'i':
- 		case 'y':
-+			iy = true;
- 			if (p[-1] == 'y')
- 				synth_opts->cycles = true;
- 			else
-@@ -1646,7 +1648,7 @@ int itrace_do_parse_synth_opts(struct it
- 		}
+ 	/*
+-	 * memblock allocator is not aware of the fact that last 4K bytes of
+-	 * the addressable memory can not be mapped because of IS_ERR_VALUE
+-	 * macro. Make sure that last 4k bytes are not usable by memblock
+-	 * if end of dram is equal to maximum addressable memory.  For 64-bit
+-	 * kernel, this problem can't happen here as the end of the virtual
+-	 * address space is occupied by the kernel mapping then this check must
+-	 * be done as soon as the kernel mapping base address is determined.
++	 * Reserve physical address space that would be mapped to virtual
++	 * addresses greater than (void *)(-PAGE_SIZE) because:
++	 *  - This memory would overlap with ERR_PTR
++	 *  - This memory belongs to high memory, which is not supported
++	 *
++	 * This is not applicable to 64-bit kernel, because virtual addresses
++	 * after (void *)(-PAGE_SIZE) are not linearly mapped: they are
++	 * occupied by kernel mapping. Also it is unrealistic for high memory
++	 * to exist on 64-bit platforms.
+ 	 */
+ 	if (!IS_ENABLED(CONFIG_64BIT)) {
+-		max_mapped_addr = __pa(~(ulong)0);
+-		if (max_mapped_addr == (phys_ram_end - 1))
+-			memblock_set_current_limit(max_mapped_addr - 4096);
++		max_mapped_addr = __va_to_pa_nodebug(-PAGE_SIZE);
++		memblock_reserve(max_mapped_addr, (phys_addr_t)-max_mapped_addr);
  	}
- out:
--	if (synth_opts->instructions || synth_opts->cycles) {
-+	if (iy) {
- 		if (!period_type_set)
- 			synth_opts->period_type =
- 					PERF_ITRACE_DEFAULT_PERIOD_TYPE;
+ 
+ 	min_low_pfn = PFN_UP(phys_ram_base);
 
 
