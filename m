@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808A982495;
-	Wed, 19 Jun 2024 13:19:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A63A12FB27;
+	Wed, 19 Jun 2024 13:19:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803193; cv=none; b=B8C/ukn+b0PNRxzjZ56FABAXaL6l+TgbxcrjpKywgQK72WHXeDc425x0TadOiTMIkYPeXGPpsx16Od+LBKHB4r/NIdmkJ+vUuTAlBdufoIBXUPXEVmDTefxABJvodcUfbIrrvhnNkkGu2/8z4RM1mOviLSv0bwcjZZ87W42MK80=
+	t=1718803196; cv=none; b=ejfcbmUsueF2FmT+ttZX5tlCon8V47JKwJ7wE25TEEvl3DdspwGeo8djXD7wgbLW7xwAueb+hqJmhWYfCR6sy9PO16OQ3FWEH9594MIRcI/CVYZhwRNLJpU2961fWkM71Z0jArZn6UD4Qlpf4Rnv12Tkpu7Ix3PynmF89Ol2Pao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803193; c=relaxed/simple;
-	bh=VCEQ4kbtCmSWwAt9pw+/LrJm66E8ZbCWKF/XkyQgM9U=;
+	s=arc-20240116; t=1718803196; c=relaxed/simple;
+	bh=9tYsadIpAZisQqtsdnlRNafilU1vDEwbhCFyzmNZjHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xu1Cq6B36OT5PosL8jO4aZeub1SOGrJmwaN68nTH93mMa8ktcupYc8gr3cKsTQoGwuaXBslUSs9rW7eatMv/aMBqVk011eo1/DT57gRTTjHl8xpJj2GIcrNQqYKJiut2rh6WRZBpdBWS3sl5Sx8MKzAHpsWR3W84Hmccbf2Q/bY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jsrZw1Fn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SZw6f4hU0iigBVAo9Vgr0T/aUR9r/tX31RZFVP16P54flkgdR2eXkDUa4GnEmKEGjPzx6WYpSz4Ds6ilYLk2yu8GdGNimuOhPWQnnwVRkWZW9S6JFmDwxLk3WnFAie9nCnnXDYFnBdrktVB5mZ++4wu+Jt/3wJ5cIBJljmwLwIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ap90bL3u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jsrZw1Fn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03136C2BBFC;
-	Wed, 19 Jun 2024 13:19:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ap90bL3u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6130C2BBFC;
+	Wed, 19 Jun 2024 13:19:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803193;
-	bh=VCEQ4kbtCmSWwAt9pw+/LrJm66E8ZbCWKF/XkyQgM9U=;
+	s=korg; t=1718803196;
+	bh=9tYsadIpAZisQqtsdnlRNafilU1vDEwbhCFyzmNZjHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jsrZw1FnjoFcVNqwXXpKrQ3dZnvsNVpKMgjM1kGZeirlio4E+ig18zorC5S9PnhX3
-	 WsATS4Xa1OYFDQcJ7MczITNtgyEzt13gRg8AhF7cEJJ+zyZZiQ5zUx3qfH7vd8BcJs
-	 /MVYZLGPInGO9au9GSFiB1MbSbAvqtynIBiKjYoc=
+	b=Ap90bL3uflnW4rIfaUrIJi2bbocNLAd85C3xOQN4mOUHfMgGYD2IJ3R2EsNSq6tDS
+	 SThQDBOWmH+tKvFh2UzUe5MLk+U4rY2syVCyKG0Kl9s1T2/FlB207jXyd+B3MuF6jd
+	 bMPg9BTNvQ2VVzh3+LkEIemXryngpIB8dvEz2r/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rao Shoaib <Rao.Shoaib@oracle.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 185/281] af_unix: Read with MSG_PEEK loops if the first unread byte is OOB
-Date: Wed, 19 Jun 2024 14:55:44 +0200
-Message-ID: <20240619125616.954220256@linuxfoundation.org>
+Subject: [PATCH 6.9 186/281] bnxt_en: Adjust logging of firmware messages in case of released token in __hwrm_send()
+Date: Wed, 19 Jun 2024 14:55:45 +0200
+Message-ID: <20240619125616.994014238@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -52,80 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rao Shoaib <Rao.Shoaib@oracle.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit a6736a0addd60fccc3a3508461d72314cc609772 ]
+[ Upstream commit a9b9741854a9fe9df948af49ca5514e0ed0429df ]
 
-Read with MSG_PEEK flag loops if the first byte to read is an OOB byte.
-commit 22dd70eb2c3d ("af_unix: Don't peek OOB data without MSG_OOB.")
-addresses the loop issue but does not address the issue that no data
-beyond OOB byte can be read.
+In case of token is released due to token->state == BNXT_HWRM_DEFERRED,
+released token (set to NULL) is used in log messages. This issue is
+expected to be prevented by HWRM_ERR_CODE_PF_UNAVAILABLE error code. But
+this error code is returned by recent firmware. So some firmware may not
+return it. This may lead to NULL pointer dereference.
+Adjust this issue by adding token pointer check.
 
->>> from socket import *
->>> c1, c2 = socketpair(AF_UNIX, SOCK_STREAM)
->>> c1.send(b'a', MSG_OOB)
-1
->>> c1.send(b'b')
-1
->>> c2.recv(1, MSG_PEEK | MSG_DONTWAIT)
-b'b'
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
->>> from socket import *
->>> c1, c2 = socketpair(AF_UNIX, SOCK_STREAM)
->>> c2.setsockopt(SOL_SOCKET, SO_OOBINLINE, 1)
->>> c1.send(b'a', MSG_OOB)
-1
->>> c1.send(b'b')
-1
->>> c2.recv(1, MSG_PEEK | MSG_DONTWAIT)
-b'a'
->>> c2.recv(1, MSG_PEEK | MSG_DONTWAIT)
-b'a'
->>> c2.recv(1, MSG_DONTWAIT)
-b'a'
->>> c2.recv(1, MSG_PEEK | MSG_DONTWAIT)
-b'b'
->>>
-
-Fixes: 314001f0bf92 ("af_unix: Add OOB support")
-Signed-off-by: Rao Shoaib <Rao.Shoaib@oracle.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20240611084639.2248934-1-Rao.Shoaib@oracle.com
+Fixes: 8fa4219dba8e ("bnxt_en: add dynamic debug support for HWRM messages")
+Suggested-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://lore.kernel.org/r/20240611082547.12178-1-amishin@t-argos.ru
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c |   18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_hwrm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -2672,18 +2672,18 @@ static struct sk_buff *manage_oob(struct
- 		if (skb == u->oob_skb) {
- 			if (copied) {
- 				skb = NULL;
--			} else if (sock_flag(sk, SOCK_URGINLINE)) {
--				if (!(flags & MSG_PEEK)) {
-+			} else if (!(flags & MSG_PEEK)) {
-+				if (sock_flag(sk, SOCK_URGINLINE)) {
- 					WRITE_ONCE(u->oob_skb, NULL);
- 					consume_skb(skb);
-+				} else {
-+					__skb_unlink(skb, &sk->sk_receive_queue);
-+					WRITE_ONCE(u->oob_skb, NULL);
-+					unlinked_skb = skb;
-+					skb = skb_peek(&sk->sk_receive_queue);
- 				}
--			} else if (flags & MSG_PEEK) {
--				skb = NULL;
--			} else {
--				__skb_unlink(skb, &sk->sk_receive_queue);
--				WRITE_ONCE(u->oob_skb, NULL);
--				unlinked_skb = skb;
--				skb = skb_peek(&sk->sk_receive_queue);
-+			} else if (!sock_flag(sk, SOCK_URGINLINE)) {
-+				skb = skb_peek_next(skb, &sk->sk_receive_queue);
- 			}
- 		}
- 
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_hwrm.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_hwrm.c
+index 1df3d56cc4b51..d2fd2d04ed474 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_hwrm.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_hwrm.c
+@@ -680,7 +680,7 @@ static int __hwrm_send(struct bnxt *bp, struct bnxt_hwrm_ctx *ctx)
+ 			    req_type);
+ 	else if (rc && rc != HWRM_ERR_CODE_PF_UNAVAILABLE)
+ 		hwrm_err(bp, ctx, "hwrm req_type 0x%x seq id 0x%x error 0x%x\n",
+-			 req_type, token->seq_id, rc);
++			 req_type, le16_to_cpu(ctx->req->seq_id), rc);
+ 	rc = __hwrm_to_stderr(rc);
+ exit:
+ 	if (token)
+-- 
+2.43.0
+
 
 
