@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F03614F9DC;
-	Wed, 19 Jun 2024 13:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E0101304AD;
+	Wed, 19 Jun 2024 13:01:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802066; cv=none; b=fYkjFyPc/huyJ/1KF9vim0GoLB+5NQqOLteQfeh+v3a62ilhEwKaXwr00OJFf4zBaNSPLpyleNn53IBXTacp78+ZHCX+vRjvjXeNQci3rLiCxj+lQ4m4vdzXIKwbX6cS9saLbqFBZmG/SyFOntRRBY++Z6G5o3A/T7xV98m5mww=
+	t=1718802069; cv=none; b=MBZEQM9Qrz+fv2czF9I9ChBzEI5cov6DwCq85FpJuV5Fln+g2wM39SsjH7774wJGhfYF0hfNwO5dGhX98b87FMF9T4iaozWaxfVGRHDuVRH2dVQVVX1jYY1tdRS9BgwonwTJK8A1dT3EuifYU8zWMkht8b5vrqyThfbYVFEwR8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802066; c=relaxed/simple;
-	bh=HWTcs6gw915ifSwD9O0Wy29tp7Uhpmsi536BRcr6iNA=;
+	s=arc-20240116; t=1718802069; c=relaxed/simple;
+	bh=+EjE2tPMHHhuoiB5txqcnd0A6YG7CbaBjf8DL+4g6BE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IHjAdEkUbpS/r2td0p+9x1/sSTJUpCWAUxQZ/tDrN4vfMbEucvGo/Ou4/1YGZF0Hsss6cm02gm8KwcJ6P1JpOMEgUKPQkqBZuVPeHImfaNFDD7v5ZBhDLtUrPNNdlkNOkz6YWBITjReCF5lZEmXa4NdQvwXzo4q95Hd7hnaT398=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BSWglaSC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QdFVByc5+xnFoozS9l6sZJIzdc00CeJR3idKrxgjVTDqOz31mz09K618nY+8718e9CtpG/96EojH2z9Y3w7ASfqUWzBI0SveQsq8Jpz4yqAr57r+vqK42ZhZc9vsYMfpQjAJ0W/ryqzVx6RRzcWs6TiFQFpB2W272Cgjoo3pk7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJCZLLwk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSWglaSC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D63C2BBFC;
-	Wed, 19 Jun 2024 13:01:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJCZLLwk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B61DCC2BBFC;
+	Wed, 19 Jun 2024 13:01:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802066;
-	bh=HWTcs6gw915ifSwD9O0Wy29tp7Uhpmsi536BRcr6iNA=;
+	s=korg; t=1718802069;
+	bh=+EjE2tPMHHhuoiB5txqcnd0A6YG7CbaBjf8DL+4g6BE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BSWglaSCCgZytOXO8dr97BAAvn0GUuT1cTkkh49ZMcieXhwDQWb3A//VWm7DJd7JC
-	 UkpJlvRlSqIJqi3mUvBl9R01unIwcC+kAewT753VnyqRduMQFaTpeiLWVqUNQV+v71
-	 3VzOgprZn2/2ZAxeIs07LLQvqG46ebMLHqBr04/o=
+	b=mJCZLLwk0JFdYa6trI+aYAsWIOlhkumRJLkOVNSepcBOwqlCBUysWmsev5FK6m3Hh
+	 OeGZSxnoixR+d+0QE68tJCYZkRy6iCuHzFyqfY0PL8QQ3pdoRnw2w2AGV2gx2t2+oM
+	 V2kRIDvmwO85bkARgISNGpCGXBCTPSAG9RT5zk6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dev Jain <dev.jain@arm.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Sri Jayaramappa <sjayaram@akamai.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Yu Chien Peter Lin <peterlin@andestech.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Randolph <randolph@andestech.com>,
+	Anup Patel <anup@brainfault.org>,
+	Atish Patra <atishp@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 070/267] selftests/mm: compaction_test: fix bogus test success on Aarch64
-Date: Wed, 19 Jun 2024 14:53:41 +0200
-Message-ID: <20240619125609.043856138@linuxfoundation.org>
+Subject: [PATCH 6.6 071/267] irqchip/riscv-intc: Allow large non-standard interrupt number
+Date: Wed, 19 Jun 2024 14:53:42 +0200
+Message-ID: <20240619125609.081985755@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -54,107 +54,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dev Jain <dev.jain@arm.com>
+From: Yu Chien Peter Lin <peterlin@andestech.com>
 
-[ Upstream commit d4202e66a4b1fe6968f17f9f09bbc30d08f028a1 ]
+[ Upstream commit 96303bcb401c21dc1426d8d9bb1fc74aae5c02a9 ]
 
-Patch series "Fixes for compaction_test", v2.
+Currently, the implementation of the RISC-V INTC driver uses the
+interrupt cause as the hardware interrupt number, with a maximum of
+64 interrupts. However, the platform can expand the interrupt number
+further for custom local interrupts.
 
-The compaction_test memory selftest introduces fragmentation in memory
-and then tries to allocate as many hugepages as possible. This series
-addresses some problems.
+To fully utilize the available local interrupt sources, switch
+to using irq_domain_create_tree() that creates the radix tree
+map, add global variables (riscv_intc_nr_irqs, riscv_intc_custom_base
+and riscv_intc_custom_nr_irqs) to determine the valid range of local
+interrupt number (hwirq).
 
-On Aarch64, if nr_hugepages == 0, then the test trivially succeeds since
-compaction_index becomes 0, which is less than 3, due to no division by
-zero exception being raised. We fix that by checking for division by
-zero.
-
-Secondly, correctly set the number of hugepages to zero before trying
-to set a large number of them.
-
-Now, consider a situation in which, at the start of the test, a non-zero
-number of hugepages have been already set (while running the entire
-selftests/mm suite, or manually by the admin). The test operates on 80%
-of memory to avoid OOM-killer invocation, and because some memory is
-already blocked by hugepages, it would increase the chance of OOM-killing.
-Also, since mem_free used in check_compaction() is the value before we
-set nr_hugepages to zero, the chance that the compaction_index will
-be small is very high if the preset nr_hugepages was high, leading to a
-bogus test success.
-
-This patch (of 3):
-
-Currently, if at runtime we are not able to allocate a huge page, the test
-will trivially pass on Aarch64 due to no exception being raised on
-division by zero while computing compaction_index.  Fix that by checking
-for nr_hugepages == 0.  Anyways, in general, avoid a division by zero by
-exiting the program beforehand.  While at it, fix a typo, and handle the
-case where the number of hugepages may overflow an integer.
-
-Link: https://lkml.kernel.org/r/20240521074358.675031-1-dev.jain@arm.com
-Link: https://lkml.kernel.org/r/20240521074358.675031-2-dev.jain@arm.com
-Fixes: bd67d5c15cc1 ("Test compaction of mlocked memory")
-Signed-off-by: Dev Jain <dev.jain@arm.com>
-Cc: Anshuman Khandual <anshuman.khandual@arm.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Sri Jayaramappa <sjayaram@akamai.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Yu Chien Peter Lin <peterlin@andestech.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Randolph <randolph@andestech.com>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Reviewed-by: Atish Patra <atishp@rivosinc.com>
+Link: https://lore.kernel.org/r/20240222083946.3977135-3-peterlin@andestech.com
+Stable-dep-of: 0110c4b11047 ("irqchip/riscv-intc: Prevent memory leak when riscv_intc_init_common() fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mm/compaction_test.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ drivers/irqchip/irq-riscv-intc.c | 26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/tools/testing/selftests/mm/compaction_test.c b/tools/testing/selftests/mm/compaction_test.c
-index 6aa6460b854ea..309b3750e57e1 100644
---- a/tools/testing/selftests/mm/compaction_test.c
-+++ b/tools/testing/selftests/mm/compaction_test.c
-@@ -82,12 +82,13 @@ int prereq(void)
- 	return -1;
+diff --git a/drivers/irqchip/irq-riscv-intc.c b/drivers/irqchip/irq-riscv-intc.c
+index e8d01b14ccdde..684875c397280 100644
+--- a/drivers/irqchip/irq-riscv-intc.c
++++ b/drivers/irqchip/irq-riscv-intc.c
+@@ -19,15 +19,16 @@
+ #include <linux/smp.h>
+ 
+ static struct irq_domain *intc_domain;
++static unsigned int riscv_intc_nr_irqs __ro_after_init = BITS_PER_LONG;
++static unsigned int riscv_intc_custom_base __ro_after_init = BITS_PER_LONG;
++static unsigned int riscv_intc_custom_nr_irqs __ro_after_init;
+ 
+ static asmlinkage void riscv_intc_irq(struct pt_regs *regs)
+ {
+ 	unsigned long cause = regs->cause & ~CAUSE_IRQ_FLAG;
+ 
+-	if (unlikely(cause >= BITS_PER_LONG))
+-		panic("unexpected interrupt cause");
+-
+-	generic_handle_domain_irq(intc_domain, cause);
++	if (generic_handle_domain_irq(intc_domain, cause))
++		pr_warn_ratelimited("Failed to handle interrupt (cause: %ld)\n", cause);
  }
  
--int check_compaction(unsigned long mem_free, unsigned int hugepage_size)
-+int check_compaction(unsigned long mem_free, unsigned long hugepage_size)
+ /*
+@@ -93,6 +94,14 @@ static int riscv_intc_domain_alloc(struct irq_domain *domain,
+ 	if (ret)
+ 		return ret;
+ 
++	/*
++	 * Only allow hwirq for which we have corresponding standard or
++	 * custom interrupt enable register.
++	 */
++	if ((hwirq >= riscv_intc_nr_irqs && hwirq < riscv_intc_custom_base) ||
++	    (hwirq >= riscv_intc_custom_base + riscv_intc_custom_nr_irqs))
++		return -EINVAL;
++
+ 	for (i = 0; i < nr_irqs; i++) {
+ 		ret = riscv_intc_domain_map(domain, virq + i, hwirq + i);
+ 		if (ret)
+@@ -117,8 +126,7 @@ static int __init riscv_intc_init_common(struct fwnode_handle *fn)
  {
-+	unsigned long nr_hugepages_ul;
- 	int fd, ret = -1;
- 	int compaction_index = 0;
--	char initial_nr_hugepages[10] = {0};
--	char nr_hugepages[10] = {0};
-+	char initial_nr_hugepages[20] = {0};
-+	char nr_hugepages[20] = {0};
+ 	int rc;
  
- 	/* We want to test with 80% of available memory. Else, OOM killer comes
- 	   in to play */
-@@ -136,7 +137,12 @@ int check_compaction(unsigned long mem_free, unsigned int hugepage_size)
+-	intc_domain = irq_domain_create_linear(fn, BITS_PER_LONG,
+-					       &riscv_intc_domain_ops, NULL);
++	intc_domain = irq_domain_create_tree(fn, &riscv_intc_domain_ops, NULL);
+ 	if (!intc_domain) {
+ 		pr_err("unable to add IRQ domain\n");
+ 		return -ENXIO;
+@@ -132,7 +140,11 @@ static int __init riscv_intc_init_common(struct fwnode_handle *fn)
  
- 	/* We should have been able to request at least 1/3 rd of the memory in
- 	   huge pages */
--	compaction_index = mem_free/(atoi(nr_hugepages) * hugepage_size);
-+	nr_hugepages_ul = strtoul(nr_hugepages, NULL, 10);
-+	if (!nr_hugepages_ul) {
-+		ksft_print_msg("ERROR: No memory is available as huge pages\n");
-+		goto close_fd;
+ 	riscv_set_intc_hwnode_fn(riscv_intc_hwnode);
+ 
+-	pr_info("%d local interrupts mapped\n", BITS_PER_LONG);
++	pr_info("%d local interrupts mapped\n", riscv_intc_nr_irqs);
++	if (riscv_intc_custom_nr_irqs) {
++		pr_info("%d custom local interrupts mapped\n",
++			riscv_intc_custom_nr_irqs);
 +	}
-+	compaction_index = mem_free/(nr_hugepages_ul * hugepage_size);
  
- 	lseek(fd, 0, SEEK_SET);
- 
-@@ -147,11 +153,11 @@ int check_compaction(unsigned long mem_free, unsigned int hugepage_size)
- 		goto close_fd;
- 	}
- 
--	ksft_print_msg("Number of huge pages allocated = %d\n",
--		       atoi(nr_hugepages));
-+	ksft_print_msg("Number of huge pages allocated = %lu\n",
-+		       nr_hugepages_ul);
- 
- 	if (compaction_index > 3) {
--		ksft_print_msg("ERROR: Less that 1/%d of memory is available\n"
-+		ksft_print_msg("ERROR: Less than 1/%d of memory is available\n"
- 			       "as huge pages\n", compaction_index);
- 		goto close_fd;
- 	}
+ 	return 0;
+ }
 -- 
 2.43.0
 
