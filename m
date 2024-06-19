@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D678143757;
-	Wed, 19 Jun 2024 13:25:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F2FA143757;
+	Wed, 19 Jun 2024 13:25:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803507; cv=none; b=Z+ODp/+A58M+HFLdu6YwDPtDCwGU1doD2JDx/E4GaXOP3B7HXYcH2xNHG6KT6VrQUyRT60jmMhJHZPPXxXPyLraZ024zo0H1yovScUcCnZihUSekxLamzMZTzFAn88Mltj0HZo7cgrSqPXGpdImdaYp5EDW/1rqQfK5y4A3m4MU=
+	t=1718803510; cv=none; b=PMF7GOycq8P2ABucBZJfua2i8vUS3jsRA4SNfqLJeqowIRrti0XQgCu9fJY1zdO1+k15dFAs4ACbdVorJ2SgqUP8r5+fzrZgUN/p4CEXKEECq9uasohGVc6Fj2laM2y8rZ7mUFIiKFJUGgilNpomt/UV8t066cHemIbxPEEpAr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803507; c=relaxed/simple;
-	bh=CUS3eRls1VBEHGKe1yn4HhXTAWm/M2REkZhXRFH2cCw=;
+	s=arc-20240116; t=1718803510; c=relaxed/simple;
+	bh=SuuKks/yYisA+i6IPYMPgnC+c8o6UvTJiX7F11jiU9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B6JFROEB2bwXOVbJ8tGE/5RGkjb/I9LMS3/jnp+Ms7306i8DXCICJt6QDFtXbO0xUYD9dWLNfKa0mPjBHbL0a+N2Mhy8WloyZzzsSntU+4fyfdlTG+e4F9Wktqlavs9NRtl3Y5gT0pjf5fZKsWwrarWBLTuX5MilSx8qaD6YqmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tbq50j1v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r3Txg90SfnFhiAlk4oU8vGFCj3T5gnHdFq3gqpfiYInNgXrsaTWjg2OsHff0y2Mzy15oJc55/ejceFcIU3QIPrb0wheDZgZm4H5ADJiBB9XUhB815xCZbuUiF0fb+H12qkMjqL0cV8+55UryTzp+zqGIDkhYfyWeVo1HsQ+xhVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fCBbtphb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tbq50j1v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5B2CC32786;
-	Wed, 19 Jun 2024 13:25:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fCBbtphb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1C73C2BBFC;
+	Wed, 19 Jun 2024 13:25:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803507;
-	bh=CUS3eRls1VBEHGKe1yn4HhXTAWm/M2REkZhXRFH2cCw=;
+	s=korg; t=1718803510;
+	bh=SuuKks/yYisA+i6IPYMPgnC+c8o6UvTJiX7F11jiU9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tbq50j1viuQdAgOZi4Ek3oOCfi1ng2q7Zl+fDaQs2MpnvCvm0b1K8oxffXKW2ciS9
-	 YRMAywwLUmQXRevCe/7wnsN2SedL4YNFmo0wrlHhW15aedTxdmqs09jQ9KBPq6fI4p
-	 XL59A9q6gztcPW86A7B+NVKEq0II7tYFJeUPvBZQ=
+	b=fCBbtphblCS9kvcTkDRnZD3bavpQdYVS5FF+JkuV4o4jWP7I9GdGZsl28J8Gf73C2
+	 6RScOWJdK3xBozLEe5HRrwV3QADDXjoRrn2uA6DbC/KrIyM/oENKIyrM2lLIANdrzh
+	 +sdNt6EenoWzjrj9VRXxYZQkb7+xw6Eet+mAfEFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Escande <nico.escande@gmail.com>,
+	Lingbo Kong <quic_lingbok@quicinc.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 001/217] wifi: mac80211: mesh: Fix leak of mesh_preq_queue objects
-Date: Wed, 19 Jun 2024 14:54:04 +0200
-Message-ID: <20240619125556.551304432@linuxfoundation.org>
+Subject: [PATCH 6.1 010/217] wifi: mac80211: correctly parse Spatial Reuse Parameter Set element
+Date: Wed, 19 Jun 2024 14:54:13 +0200
+Message-ID: <20240619125556.902502405@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -51,98 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Escande <nico.escande@gmail.com>
+From: Lingbo Kong <quic_lingbok@quicinc.com>
 
-[ Upstream commit b7d7f11a291830fdf69d3301075dd0fb347ced84 ]
+[ Upstream commit a26d8dc5227f449a54518a8b40733a54c6600a8b ]
 
-The hwmp code use objects of type mesh_preq_queue, added to a list in
-ieee80211_if_mesh, to keep track of mpath we need to resolve. If the mpath
-gets deleted, ex mesh interface is removed, the entries in that list will
-never get cleaned. Fix this by flushing all corresponding items of the
-preq_queue in mesh_path_flush_pending().
+Currently, the way of parsing Spatial Reuse Parameter Set element is
+incorrect and some members of struct ieee80211_he_obss_pd are not assigned.
 
-This should take care of KASAN reports like this:
+To address this issue, it must be parsed in the order of the elements of
+Spatial Reuse Parameter Set defined in the IEEE Std 802.11ax specification.
 
-unreferenced object 0xffff00000668d800 (size 128):
-  comm "kworker/u8:4", pid 67, jiffies 4295419552 (age 1836.444s)
-  hex dump (first 32 bytes):
-    00 1f 05 09 00 00 ff ff 00 d5 68 06 00 00 ff ff  ..........h.....
-    8e 97 ea eb 3e b8 01 00 00 00 00 00 00 00 00 00  ....>...........
-  backtrace:
-    [<000000007302a0b6>] __kmem_cache_alloc_node+0x1e0/0x35c
-    [<00000000049bd418>] kmalloc_trace+0x34/0x80
-    [<0000000000d792bb>] mesh_queue_preq+0x44/0x2a8
-    [<00000000c99c3696>] mesh_nexthop_resolve+0x198/0x19c
-    [<00000000926bf598>] ieee80211_xmit+0x1d0/0x1f4
-    [<00000000fc8c2284>] __ieee80211_subif_start_xmit+0x30c/0x764
-    [<000000005926ee38>] ieee80211_subif_start_xmit+0x9c/0x7a4
-    [<000000004c86e916>] dev_hard_start_xmit+0x174/0x440
-    [<0000000023495647>] __dev_queue_xmit+0xe24/0x111c
-    [<00000000cfe9ca78>] batadv_send_skb_packet+0x180/0x1e4
-    [<000000007bacc5d5>] batadv_v_elp_periodic_work+0x2f4/0x508
-    [<00000000adc3cd94>] process_one_work+0x4b8/0xa1c
-    [<00000000b36425d1>] worker_thread+0x9c/0x634
-    [<0000000005852dd5>] kthread+0x1bc/0x1c4
-    [<000000005fccd770>] ret_from_fork+0x10/0x20
-unreferenced object 0xffff000009051f00 (size 128):
-  comm "kworker/u8:4", pid 67, jiffies 4295419553 (age 1836.440s)
-  hex dump (first 32 bytes):
-    90 d6 92 0d 00 00 ff ff 00 d8 68 06 00 00 ff ff  ..........h.....
-    36 27 92 e4 02 e0 01 00 00 58 79 06 00 00 ff ff  6'.......Xy.....
-  backtrace:
-    [<000000007302a0b6>] __kmem_cache_alloc_node+0x1e0/0x35c
-    [<00000000049bd418>] kmalloc_trace+0x34/0x80
-    [<0000000000d792bb>] mesh_queue_preq+0x44/0x2a8
-    [<00000000c99c3696>] mesh_nexthop_resolve+0x198/0x19c
-    [<00000000926bf598>] ieee80211_xmit+0x1d0/0x1f4
-    [<00000000fc8c2284>] __ieee80211_subif_start_xmit+0x30c/0x764
-    [<000000005926ee38>] ieee80211_subif_start_xmit+0x9c/0x7a4
-    [<000000004c86e916>] dev_hard_start_xmit+0x174/0x440
-    [<0000000023495647>] __dev_queue_xmit+0xe24/0x111c
-    [<00000000cfe9ca78>] batadv_send_skb_packet+0x180/0x1e4
-    [<000000007bacc5d5>] batadv_v_elp_periodic_work+0x2f4/0x508
-    [<00000000adc3cd94>] process_one_work+0x4b8/0xa1c
-    [<00000000b36425d1>] worker_thread+0x9c/0x634
-    [<0000000005852dd5>] kthread+0x1bc/0x1c4
-    [<000000005fccd770>] ret_from_fork+0x10/0x20
+The diagram of the Spatial Reuse Parameter Set element (IEEE Std 802.11ax
+-2021-9.4.2.252).
 
-Fixes: 050ac52cbe1f ("mac80211: code for on-demand Hybrid Wireless Mesh Protocol")
-Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
-Link: https://msgid.link/20240528142605.1060566-1-nico.escande@gmail.com
+-------------------------------------------------------------------------
+|       |      |         |       |Non-SRG|  SRG  | SRG   | SRG  | SRG   |
+|Element|Length| Element |  SR   |OBSS PD|OBSS PD|OBSS PD| BSS  |Partial|
+|   ID  |      |   ID    |Control|  Max  |  Min  | Max   |Color | BSSID |
+|       |      |Extension|       | Offset| Offset|Offset |Bitmap|Bitmap |
+-------------------------------------------------------------------------
+
+Fixes: 1ced169cc1c2 ("mac80211: allow setting spatial reuse parameters from bss_conf")
+Signed-off-by: Lingbo Kong <quic_lingbok@quicinc.com>
+Link: https://msgid.link/20240516021854.5682-3-quic_lingbok@quicinc.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mesh_pathtbl.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ net/mac80211/he.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/net/mac80211/mesh_pathtbl.c b/net/mac80211/mesh_pathtbl.c
-index 69d5e1ec6edef..e7b9dcf30adc9 100644
---- a/net/mac80211/mesh_pathtbl.c
-+++ b/net/mac80211/mesh_pathtbl.c
-@@ -723,10 +723,23 @@ void mesh_path_discard_frame(struct ieee80211_sub_if_data *sdata,
-  */
- void mesh_path_flush_pending(struct mesh_path *mpath)
- {
-+	struct ieee80211_sub_if_data *sdata = mpath->sdata;
-+	struct ieee80211_if_mesh *ifmsh = &sdata->u.mesh;
-+	struct mesh_preq_queue *preq, *tmp;
- 	struct sk_buff *skb;
+diff --git a/net/mac80211/he.c b/net/mac80211/he.c
+index 0322abae08250..147ff0f71b9bb 100644
+--- a/net/mac80211/he.c
++++ b/net/mac80211/he.c
+@@ -231,15 +231,21 @@ ieee80211_he_spr_ie_to_bss_conf(struct ieee80211_vif *vif,
  
- 	while ((skb = skb_dequeue(&mpath->frame_queue)) != NULL)
- 		mesh_path_discard_frame(mpath->sdata, skb);
+ 	if (!he_spr_ie_elem)
+ 		return;
 +
-+	spin_lock_bh(&ifmsh->mesh_preq_queue_lock);
-+	list_for_each_entry_safe(preq, tmp, &ifmsh->preq_queue.list, list) {
-+		if (ether_addr_equal(mpath->dst, preq->dst)) {
-+			list_del(&preq->list);
-+			kfree(preq);
-+			--ifmsh->preq_queue_len;
-+		}
-+	}
-+	spin_unlock_bh(&ifmsh->mesh_preq_queue_lock);
- }
++	he_obss_pd->sr_ctrl = he_spr_ie_elem->he_sr_control;
+ 	data = he_spr_ie_elem->optional;
  
- /**
+ 	if (he_spr_ie_elem->he_sr_control &
+ 	    IEEE80211_HE_SPR_NON_SRG_OFFSET_PRESENT)
+-		data++;
++		he_obss_pd->non_srg_max_offset = *data++;
++
+ 	if (he_spr_ie_elem->he_sr_control &
+ 	    IEEE80211_HE_SPR_SRG_INFORMATION_PRESENT) {
+-		he_obss_pd->max_offset = *data++;
+ 		he_obss_pd->min_offset = *data++;
++		he_obss_pd->max_offset = *data++;
++		memcpy(he_obss_pd->bss_color_bitmap, data, 8);
++		data += 8;
++		memcpy(he_obss_pd->partial_bssid_bitmap, data, 8);
+ 		he_obss_pd->enable = true;
+ 	}
+ }
 -- 
 2.43.0
 
