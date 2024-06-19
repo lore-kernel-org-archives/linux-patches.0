@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609CC147C6E;
-	Wed, 19 Jun 2024 13:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DBC91419BA;
+	Wed, 19 Jun 2024 13:29:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803769; cv=none; b=Lz/XPHj/nW4ov+QlyS9D5BOuMsNn+SXtyQB7FBAi9ccfrlmFjCTn7v3wGSob73BSOz1NuSuXOSdjJoHyj56lnpRX7p+gE7N4DzFC7boQAQAVbAdEmqUAUMUYSI1YMgp3ugXojdCCR+ZEWUgD8Wt/kqb7/tkneaJ6KRlI3sfuNxI=
+	t=1718803772; cv=none; b=ktuWxBbvydT9OhR43MIybES7e3+jEjvT098I99DxzzEdEpSmrFQyXfvwhV4uN4wQhmknejoqr62nogojwwxofgy39N5OWA6+hyGAmfYfmyACPRIB3KxArJTmMl+IpofMGM7JxuvOKJ68WuwVe+g4gEvjIKy1usH4NAYe2QGVB9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803769; c=relaxed/simple;
-	bh=TRLwRBFjNYzn9wKW1u5BVa29CUCWjBMRpru/NobJVFg=;
+	s=arc-20240116; t=1718803772; c=relaxed/simple;
+	bh=fp5dhBdtQielZMFVxhekSx8KkpRxSGDrOaodON39M3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g7BnNFm8v7W6C60rBRq88yPoy/ZE5k3m32rFlU+RhbrARbYOEGL6G7pENo5owlAnhBHuzePneXor7Q8sxkbnzLWq1YQNlkc0qsB+zpyPMrnGPaiYCCpqhKtjZSHTkRWXqN0HJAVc2OeCuCklOQdgt8USwNKhmNBo6BNzlUyI8JI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=laioUaeS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YSkRcquunqI2oDIxIXxoIbtB94cEdlgy+1r7NnjEiQugG7jqwWMD0zNOuLtR4/Zi4C9vVyDc0qc7kO9NjC6tlNdR7G/RLU3/ro1PU+/r6lMVdm/ibPlC5JT8gi2McrAQ5ipvsgq62QylXnidmqOmqlr0SQy0/hlGyNoZWmKy79o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mK4noB5i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="laioUaeS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0699C2BBFC;
-	Wed, 19 Jun 2024 13:29:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mK4noB5i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C332DC2BBFC;
+	Wed, 19 Jun 2024 13:29:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803769;
-	bh=TRLwRBFjNYzn9wKW1u5BVa29CUCWjBMRpru/NobJVFg=;
+	s=korg; t=1718803772;
+	bh=fp5dhBdtQielZMFVxhekSx8KkpRxSGDrOaodON39M3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=laioUaeSHS6GjOAJlcfurDhagSqqwHNHLHwb49QciagADQwbh91z4SOuYTBwaIRPU
-	 dJZroQW2jxKNEVPXA2E2lCnwtsPEQJCdyR+Lz9xh1VGnMJOLcQrs+zYO/DL3fVYQyD
-	 psRcMr1I/JLJwqrrxIFfD/KibHMge0tgwb93Ffs4=
+	b=mK4noB5ilkzKI7aF0JnKVwhz61VWTFH06ktl0Za+UM8gAGmvxeYAqmhTjZFSAdLnk
+	 4eYrN9HUe+Ck39lfDQ/HQ4OdFl5UP0BLLY673AoH2Gl+ltEVXIV/fd+WLIk6n1CmzD
+	 Zmp0QpYkCwSjd/OGwZXwBb7dbPL2MIZEaxFen9OA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuangyi Chiang <ki.chiang65@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.1 096/217] xhci: Apply broken streams quirk to Etron EJ188 xHCI host
-Date: Wed, 19 Jun 2024 14:55:39 +0200
-Message-ID: <20240619125600.395118696@linuxfoundation.org>
+	Aapo Vienamo <aapo.vienamo@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.1 097/217] thunderbolt: debugfs: Fix margin debugfs node creation condition
+Date: Wed, 19 Jun 2024 14:55:40 +0200
+Message-ID: <20240619125600.433730217@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -50,37 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuangyi Chiang <ki.chiang65@gmail.com>
+From: Aapo Vienamo <aapo.vienamo@linux.intel.com>
 
-commit 91f7a1524a92c70ffe264db8bdfa075f15bbbeb9 upstream.
+commit 985cfe501b74f214905ab4817acee0df24627268 upstream.
 
-As described in commit 8f873c1ff4ca ("xhci: Blacklist using streams on the
-Etron EJ168 controller"), EJ188 have the same issue as EJ168, where Streams
-do not work reliable on EJ188. So apply XHCI_BROKEN_STREAMS quirk to EJ188
-as well.
+The margin debugfs node controls the "Enable Margin Test" field of the
+lane margining operations. This field selects between either low or high
+voltage margin values for voltage margin test or left or right timing
+margin values for timing margin test.
 
+According to the USB4 specification, whether or not the "Enable Margin
+Test" control applies, depends on the values of the "Independent
+High/Low Voltage Margin" or "Independent Left/Right Timing Margin"
+capability fields for voltage and timing margin tests respectively. The
+pre-existing condition enabled the debugfs node also in the case where
+both low/high or left/right margins are returned, which is incorrect.
+This change only enables the debugfs node in question, if the specific
+required capability values are met.
+
+Signed-off-by: Aapo Vienamo <aapo.vienamo@linux.intel.com>
+Fixes: d0f1e0c2a699 ("thunderbolt: Add support for receiver lane margining")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kuangyi Chiang <ki.chiang65@gmail.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20240611120610.3264502-4-mathias.nyman@linux.intel.com
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-pci.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/thunderbolt/debugfs.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -277,8 +277,10 @@ static void xhci_pci_quirks(struct devic
- 		xhci->quirks |= XHCI_BROKEN_STREAMS;
- 	}
- 	if (pdev->vendor == PCI_VENDOR_ID_ETRON &&
--			pdev->device == PCI_DEVICE_ID_EJ188)
-+			pdev->device == PCI_DEVICE_ID_EJ188) {
- 		xhci->quirks |= XHCI_RESET_ON_RESUME;
-+		xhci->quirks |= XHCI_BROKEN_STREAMS;
-+	}
+--- a/drivers/thunderbolt/debugfs.c
++++ b/drivers/thunderbolt/debugfs.c
+@@ -927,8 +927,9 @@ static void margining_port_init(struct t
+ 	debugfs_create_file("run", 0600, dir, port, &margining_run_fops);
+ 	debugfs_create_file("results", 0600, dir, port, &margining_results_fops);
+ 	debugfs_create_file("test", 0600, dir, port, &margining_test_fops);
+-	if (independent_voltage_margins(usb4) ||
+-	    (supports_time(usb4) && independent_time_margins(usb4)))
++	if (independent_voltage_margins(usb4) == USB4_MARGIN_CAP_0_VOLTAGE_HL ||
++	    (supports_time(usb4) &&
++	     independent_time_margins(usb4) == USB4_MARGIN_CAP_1_TIME_LR))
+ 		debugfs_create_file("margin", 0600, dir, port, &margining_margin_fops);
+ }
  
- 	if (pdev->vendor == PCI_VENDOR_ID_RENESAS &&
- 	    pdev->device == 0x0014) {
 
 
