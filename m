@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 797E23C0B;
-	Wed, 19 Jun 2024 13:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15BFF3C0B;
+	Wed, 19 Jun 2024 13:30:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803834; cv=none; b=YytBn0KG/GKXSPNNkyJYf+eYaJN7cd5o7A2A88EJR7UjQhiibjXOFZnOvo2bM09mk7LdaOOn8TGA0kQZbJStcleq32xV2RnqYjbcBihAt29ZatvZOQxxGfYidA0Iol+qPKLiZlw7CzBbrUtp7OufIZwSVw5TMT4wYqvlCHQc+F8=
+	t=1718803837; cv=none; b=mwynn4j4d+VLhzRp0HsXVG1aiQUxtMwzJxzmpW3JWN4aEg/O7/evFZYy4uyKNTKcGYH1EDj2QNTB2EV5bE8X8fq6C4Oan3yuN2ubldVTfgqL+96VL+iG8zE54jfyxdhSnuxknlusxU0vXiIYgE4o5rZXDYx0cBDQUtrBSpC9OLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803834; c=relaxed/simple;
-	bh=Djk6zTyPC8juspa5rOQyxxkkYbvdWOB3s2PGYvc1AT0=;
+	s=arc-20240116; t=1718803837; c=relaxed/simple;
+	bh=noXEukVCxN2BJIzq8A3kaF1KAlLMkEVo2JVglrNIcgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N/jedGNcwo2SH6LlkmRFWzm2+/OlmSZmKGyM57Q1UrmgFHsMsBer7QTDLoZ6HcGCfL1PJ+LpK7V7jIvs9d8JilgMYPRwG/P/3qdWHlpTj13sruQQD2rXh5zS9SkGBzkj0FpH18rZVQNF8J9k8e22Rb9Hc9/MNA9PtiU08zAB2QM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ofkVlSjq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=opmdmQUMpRwiffgiYgjJXzDX8mJXzYhKcxj5KymtaJ9A9WNoDVL8yUKEfIDofwGq3B8bi5O/NHFZjwI3aesmw9SgAuxyQdi15e6tMOsaT8L+a+ZoeYdpQmiozLTapX7Y6su6gW9Kpoq/NlxTLAl90f7DlHkKNpEpee/2snjbQ9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d/cv/Z8z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ofkVlSjq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A10B5C2BBFC;
-	Wed, 19 Jun 2024 13:30:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d/cv/Z8z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EAF5C2BBFC;
+	Wed, 19 Jun 2024 13:30:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803834;
-	bh=Djk6zTyPC8juspa5rOQyxxkkYbvdWOB3s2PGYvc1AT0=;
+	s=korg; t=1718803837;
+	bh=noXEukVCxN2BJIzq8A3kaF1KAlLMkEVo2JVglrNIcgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ofkVlSjqMytpAvo136nlKeMVAeSLxIRL/FJogRoZfLUjvxRsdoF1B3a++vacddAsH
-	 dhLsh7rbzeDAtUefte5clqexn1IC4PYiJKDcT7v3ecg/dQbOY+gjAc3IuD8fEzwQKP
-	 KVUK1PWcr78D9EqiuqeB9Yn30BUOqcDwHkzAvvsQ=
+	b=d/cv/Z8zPppbDy8sa4Kqq7DqIhC5L7W97EQ6xXGno+idIwdJqu1Au/8HXq0maG0Li
+	 O5H62RrGLGcBOQW7jfvxhVSh9zm+SZqHQK1NX/GqJq8+r76+mq5tklDORglTC6CcIH
+	 lzfxo7HZGCKVpHnrImHuTKh2GXCAlInQP0xyhXTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Russell King <linux@armlinux.org.uk>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Olga Kornievskaia <kolga@netapp.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 119/217] clk: sifive: Do not register clkdevs for PRCI clocks
-Date: Wed, 19 Jun 2024 14:56:02 +0200
-Message-ID: <20240619125601.281924745@linuxfoundation.org>
+Subject: [PATCH 6.1 120/217] NFSv4.1 enforce rootpath check in fs_location query
+Date: Wed, 19 Jun 2024 14:56:03 +0200
+Message-ID: <20240619125601.320394777@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -53,60 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Holland <samuel.holland@sifive.com>
+From: Olga Kornievskaia <kolga@netapp.com>
 
-[ Upstream commit 2607133196c35f31892ee199ce7ffa717bea4ad1 ]
+[ Upstream commit 28568c906c1bb5f7560e18082ed7d6295860f1c2 ]
 
-These clkdevs were unnecessary, because systems using this driver always
-look up clocks using the devicetree. And as Russell King points out[1],
-since the provided device name was truncated, lookups via clkdev would
-never match.
+In commit 4ca9f31a2be66 ("NFSv4.1 test and add 4.1 trunking transport"),
+we introduce the ability to query the NFS server for possible trunking
+locations of the existing filesystem. However, we never checked the
+returned file system path for these alternative locations. According
+to the RFC, the server can say that the filesystem currently known
+under "fs_root" of fs_location also resides under these server
+locations under the following "rootpath" pathname. The client cannot
+handle trunking a filesystem that reside under different location
+under different paths other than what the main path is. This patch
+enforces the check that fs_root path and rootpath path in fs_location
+reply is the same.
 
-Recently, commit 8d532528ff6a ("clkdev: report over-sized strings when
-creating clkdev entries") caused clkdev registration to fail due to the
-truncation, and this now prevents the driver from probing. Fix the
-driver by removing the clkdev registration.
-
-Link: https://lore.kernel.org/linux-clk/ZkfYqj+OcAxd9O2t@shell.armlinux.org.uk/ [1]
-Fixes: 30b8e27e3b58 ("clk: sifive: add a driver for the SiFive FU540 PRCI IP block")
-Fixes: 8d532528ff6a ("clkdev: report over-sized strings when creating clkdev entries")
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Closes: https://lore.kernel.org/linux-clk/7eda7621-0dde-4153-89e4-172e4c095d01@roeck-us.net/
-Suggested-by: Russell King <linux@armlinux.org.uk>
-Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
-Link: https://lore.kernel.org/r/20240528001432.1200403-1-samuel.holland@sifive.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: 4ca9f31a2be6 ("NFSv4.1 test and add 4.1 trunking transport")
+Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sifive/sifive-prci.c | 8 --------
- 1 file changed, 8 deletions(-)
+ fs/nfs/nfs4proc.c | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/sifive/sifive-prci.c b/drivers/clk/sifive/sifive-prci.c
-index 916d2fc28b9c1..39bfbd120e0bc 100644
---- a/drivers/clk/sifive/sifive-prci.c
-+++ b/drivers/clk/sifive/sifive-prci.c
-@@ -4,7 +4,6 @@
-  * Copyright (C) 2020 Zong Li
-  */
- 
--#include <linux/clkdev.h>
- #include <linux/delay.h>
- #include <linux/io.h>
- #include <linux/of_device.h>
-@@ -536,13 +535,6 @@ static int __prci_register_clocks(struct device *dev, struct __prci_data *pd,
- 			return r;
- 		}
- 
--		r = clk_hw_register_clkdev(&pic->hw, pic->name, dev_name(dev));
--		if (r) {
--			dev_warn(dev, "Failed to register clkdev for %s: %d\n",
--				 init.name, r);
--			return r;
--		}
--
- 		pd->hw_clks.hws[i] = &pic->hw;
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index bda3050817c90..ec641a8f6604b 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -4009,6 +4009,23 @@ static void test_fs_location_for_trunking(struct nfs4_fs_location *location,
  	}
+ }
  
++static bool _is_same_nfs4_pathname(struct nfs4_pathname *path1,
++				   struct nfs4_pathname *path2)
++{
++	int i;
++
++	if (path1->ncomponents != path2->ncomponents)
++		return false;
++	for (i = 0; i < path1->ncomponents; i++) {
++		if (path1->components[i].len != path2->components[i].len)
++			return false;
++		if (memcmp(path1->components[i].data, path2->components[i].data,
++				path1->components[i].len))
++			return false;
++	}
++	return true;
++}
++
+ static int _nfs4_discover_trunking(struct nfs_server *server,
+ 				   struct nfs_fh *fhandle)
+ {
+@@ -4042,9 +4059,13 @@ static int _nfs4_discover_trunking(struct nfs_server *server,
+ 	if (status)
+ 		goto out_free_3;
+ 
+-	for (i = 0; i < locations->nlocations; i++)
++	for (i = 0; i < locations->nlocations; i++) {
++		if (!_is_same_nfs4_pathname(&locations->fs_path,
++					&locations->locations[i].rootpath))
++			continue;
+ 		test_fs_location_for_trunking(&locations->locations[i], clp,
+ 					      server);
++	}
+ out_free_3:
+ 	kfree(locations->fattr);
+ out_free_2:
 -- 
 2.43.0
 
