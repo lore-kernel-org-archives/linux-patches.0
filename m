@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D5E13AA40;
-	Wed, 19 Jun 2024 13:02:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B2014389C;
+	Wed, 19 Jun 2024 13:02:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802125; cv=none; b=cvCUT3/oNgGXqMtElTWgdNt1xxo4TmqKdoKtOcdAak3OUzas9tFtlPpzYq8QAzSZN0fTlssN3AXes9hV9ZnLWAWuy8+G93LWwqexq5PDgQb7LnS9FCNTouMRIcfsLhFNeJ1kZ2dCEQsEFn03/4fa31S85wCTzWF5TKDhYzyB1Cc=
+	t=1718802128; cv=none; b=AGWLUp0nNsLLT092Scc0pf+TJcD9eugxlq4UFeq+YrNZCoJuUhyaGIhs8WDeSSKFbJK8hDFcf20p0928n9nWy2QRya+H40TdvLQVOzQH78DK/hDxYMGo193/puqLti0rmV7VBTtL1gSiYUjQ+hZu7JB+3s2/8R0eyJWKFL+h1B8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802125; c=relaxed/simple;
-	bh=qEWuqppaiTHtJwfP9qoULhjvxOwomqfcJgzkrCnvATY=;
+	s=arc-20240116; t=1718802128; c=relaxed/simple;
+	bh=KNeA4R4x12CckLbxRrykSixDPpXQMCxHCysG5c1U2C8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LytRhen+S1QWH6cRhhl9CckDN6JCOglvVPa7n8CcaJPmICuwmzXTEKKmP0WQx6Uc6Wv87RFYR+kzp8PB1FTvi8GgLDQSxgdBlgpmh2PsVGjSqxtZD5EjpNdvNQA8ccONkzDOstY3xRvmtloxxSATh3GHMfWcTdA1FpjMrcuazqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zt7NayIq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MmSYk0zcSYTWWfpHqfLXbTN7G0Mmmsd8rKZucl7YLwxotsrBsd0iH5TyiX04YTrYZXJLHxKWLMYaT1cKpVNQ7J+SqqrcnpRCrkCFKZJwVz7Msa1e9ABvvCEKAqL5TZ7bH0tsP6Gx8FaIdbP0Ekj5gpRnTAbnkQzqlV+s7zB7pHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nx70/ipQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zt7NayIq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0BACC2BBFC;
-	Wed, 19 Jun 2024 13:02:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nx70/ipQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5585C2BBFC;
+	Wed, 19 Jun 2024 13:02:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802125;
-	bh=qEWuqppaiTHtJwfP9qoULhjvxOwomqfcJgzkrCnvATY=;
+	s=korg; t=1718802128;
+	bh=KNeA4R4x12CckLbxRrykSixDPpXQMCxHCysG5c1U2C8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zt7NayIqBPGMFxAJyQPgMHLNGrd3nDTRhTYh2gb5Zy82aco3ZoVJhExmkKoBoRy95
-	 CD8YdqqAFJ4/8ATcP9oIWeOiTeluBH0qMCsjFW9qCBZXPLhRW80YM7CCblfcppjQdR
-	 B3WD5RUjdi4l9lQRXIU9E86ngZF5eWsuHY0PzKZQ=
+	b=Nx70/ipQqiua5tUB3/3WTynM7kiBza7cG+EG5XduJIU1donlRbT9t0sH2ks/BVj0g
+	 y0Af6+OXVhvtle4NM2ds1+oCD/cCwPbyu8Qh9zXAZ5gXmbzLy2pRy9lq6tVqFAYwHx
+	 455s2af51cJaHAeXMGhV5XMGysw0te4YS5w8Z6Mw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Tso <kyletso@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.6 083/267] usb: typec: tcpm: Ignore received Hard Reset in TOGGLING state
-Date: Wed, 19 Jun 2024 14:53:54 +0200
-Message-ID: <20240619125609.537068142@linuxfoundation.org>
+	Kuangyi Chiang <ki.chiang65@gmail.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.6 092/267] xhci: Apply broken streams quirk to Etron EJ188 xHCI host
+Date: Wed, 19 Jun 2024 14:54:03 +0200
+Message-ID: <20240619125609.883017689@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -50,54 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Tso <kyletso@google.com>
+From: Kuangyi Chiang <ki.chiang65@gmail.com>
 
-commit fc8fb9eea94d8f476e15f3a4a7addeb16b3b99d6 upstream.
+commit 91f7a1524a92c70ffe264db8bdfa075f15bbbeb9 upstream.
 
-Similar to what fixed in Commit a6fe37f428c1 ("usb: typec: tcpm: Skip
-hard reset when in error recovery"), the handling of the received Hard
-Reset has to be skipped during TOGGLING state.
+As described in commit 8f873c1ff4ca ("xhci: Blacklist using streams on the
+Etron EJ168 controller"), EJ188 have the same issue as EJ168, where Streams
+do not work reliable on EJ188. So apply XHCI_BROKEN_STREAMS quirk to EJ188
+as well.
 
-[ 4086.021288] VBUS off
-[ 4086.021295] pending state change SNK_READY -> SNK_UNATTACHED @ 650 ms [rev2 NONE_AMS]
-[ 4086.022113] VBUS VSAFE0V
-[ 4086.022117] state change SNK_READY -> SNK_UNATTACHED [rev2 NONE_AMS]
-[ 4086.022447] VBUS off
-[ 4086.022450] state change SNK_UNATTACHED -> SNK_UNATTACHED [rev2 NONE_AMS]
-[ 4086.023060] VBUS VSAFE0V
-[ 4086.023064] state change SNK_UNATTACHED -> SNK_UNATTACHED [rev2 NONE_AMS]
-[ 4086.023070] disable BIST MODE TESTDATA
-[ 4086.023766] disable vbus discharge ret:0
-[ 4086.023911] Setting usb_comm capable false
-[ 4086.028874] Setting voltage/current limit 0 mV 0 mA
-[ 4086.028888] polarity 0
-[ 4086.030305] Requesting mux state 0, usb-role 0, orientation 0
-[ 4086.033539] Start toggling
-[ 4086.038496] state change SNK_UNATTACHED -> TOGGLING [rev2 NONE_AMS]
-
-// This Hard Reset is unexpected
-[ 4086.038499] Received hard reset
-[ 4086.038501] state change TOGGLING -> HARD_RESET_START [rev2 HARD_RESET]
-
-Fixes: f0690a25a140 ("staging: typec: USB Type-C Port Manager (tcpm)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kyle Tso <kyletso@google.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240520154858.1072347-1-kyletso@google.com
+Signed-off-by: Kuangyi Chiang <ki.chiang65@gmail.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20240611120610.3264502-4-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/host/xhci-pci.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -5415,6 +5415,7 @@ static void _tcpm_pd_hard_reset(struct t
- 		port->tcpc->set_bist_data(port->tcpc, false);
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -463,8 +463,10 @@ static void xhci_pci_quirks(struct devic
+ 		xhci->quirks |= XHCI_BROKEN_STREAMS;
+ 	}
+ 	if (pdev->vendor == PCI_VENDOR_ID_ETRON &&
+-			pdev->device == PCI_DEVICE_ID_EJ188)
++			pdev->device == PCI_DEVICE_ID_EJ188) {
+ 		xhci->quirks |= XHCI_RESET_ON_RESUME;
++		xhci->quirks |= XHCI_BROKEN_STREAMS;
++	}
  
- 	switch (port->state) {
-+	case TOGGLING:
- 	case ERROR_RECOVERY:
- 	case PORT_RESET:
- 	case PORT_RESET_WAIT_OFF:
+ 	if (pdev->vendor == PCI_VENDOR_ID_RENESAS &&
+ 	    pdev->device == 0x0014) {
 
 
