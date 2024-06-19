@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F414147C74;
-	Wed, 19 Jun 2024 13:11:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91D014389C;
+	Wed, 19 Jun 2024 13:11:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802715; cv=none; b=li9QZc4awNIXtauuuN80j82rFODHms/F84jiWbQxN+S58imwOYT4HYYdL9d7VaDgFnIWsSm0TzWn94TTILpKsu91ZMdoFjHEpz7y0Jxc1o8jUDGY9Xi4Wno3STi2j78OpWofrBfoWYD3MVt+C+2eyMBXMHKal33bhuqfEnSd+dc=
+	t=1718802718; cv=none; b=YYtzI665Sf3ZoWJMYlCNBXRrrhgWzkKPHOlnz1vlpAKVkxjdOaDyPYeH2Ph8Gx/lpF91336u+pOZxYjWQvYydFdNC1pSQLePYZpfEJJ0rVyLqSVCeCnAdVYze1m0w0586VHVWE3bOITMRJeGGYtg5ALoXoaLOC+mtmO9xdscKJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802715; c=relaxed/simple;
-	bh=C6f94mmjFhtlAIVGBWUSyMOX1pNiCDEwKtaAHsIcJW4=;
+	s=arc-20240116; t=1718802718; c=relaxed/simple;
+	bh=eZ0BViPgLRBhm+57YIAa3KK1o0lg2Q+iVlukafhJJpw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KcZHpthShtXzW6L5w/aOZeKeA6nsIEAOxGwaN9Q7j+0t7WqtFFJ6t6hmTT9qI0lGSNfV9KkptCIGmEs455WXXG8w6+jzR0Yd/41kWSybt1sBpNkrF8/8ZPmKY/YAqM7fVZUMeBvqlDE2UD+QtD/z+CJ3PDY4AErzb1ZTdKPz+DE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RtDQ3TGT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q+GRGV4L8h6EAjDtnqV+a+DxnpqU9flJdd16gJfRTH3Z3NfG6E9Hzxnt8wo0z0aU+hg1lOxVoZQlWaG39tADgL20FYBrXpGBW4NunobrO5UqrkM/sKUluhdnqgUMCGjHditK6HonVAbP38mxsSa/NbU+AHhO8AUSmKetP/o4e6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZeozBkf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RtDQ3TGT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1D4EC2BBFC;
-	Wed, 19 Jun 2024 13:11:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZeozBkf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2639C2BBFC;
+	Wed, 19 Jun 2024 13:11:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802715;
-	bh=C6f94mmjFhtlAIVGBWUSyMOX1pNiCDEwKtaAHsIcJW4=;
+	s=korg; t=1718802718;
+	bh=eZ0BViPgLRBhm+57YIAa3KK1o0lg2Q+iVlukafhJJpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RtDQ3TGTgzoU/jIGp+S8dpk10deNoQCWiGgtvcl/XYp+JxhTeDHbOMyhJfGcmzOF8
-	 4WDRUCgt+PrZ8V0avWIoL04OjqXl3QQ4UL89Kbu9o0hPbzQQRvrwQzPoA3ElWPdj2H
-	 fUswagZmAYRs417PbJJGKa1SMty9XdiNMwrGG/+8=
+	b=jZeozBkf4UWujeIvhlhwG92jCnfgaYgBUfVC/Hd4TpxeMc+twpDAkAD3hoyry0mSm
+	 CWSLC5iYEGrJsQ3JYkB44Rj9kvIg+7hcj/Q1Eia7LmlAcE0K36GPk0MRxNO/3QlJ8+
+	 S798H52zLC64NoZGKWo+bwGupJEVunHIb1gcUL5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heng Qi <hengqi@linux.alibaba.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	Lars Kellogg-Stedman <lars@oddbit.com>,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Dan Cross <crossd@gmail.com>,
+	Chris Maness <christopher.maness@gmail.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 023/281] virtio_net: fix possible dim status unrecoverable
-Date: Wed, 19 Jun 2024 14:53:02 +0200
-Message-ID: <20240619125610.739375178@linuxfoundation.org>
+Subject: [PATCH 6.9 024/281] ax25: Fix refcount imbalance on inbound connections
+Date: Wed, 19 Jun 2024 14:53:03 +0200
+Message-ID: <20240619125610.777085509@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -54,50 +55,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heng Qi <hengqi@linux.alibaba.com>
+From: Lars Kellogg-Stedman <lars@oddbit.com>
 
-[ Upstream commit 9e0945b1901c9eed4fbee3b8a3870487b2bdc936 ]
+[ Upstream commit 3c34fb0bd4a4237592c5ecb5b2e2531900c55774 ]
 
-When the dim worker is scheduled, if it no longer needs to issue
-commands, dim may not be able to return to the working state later.
+When releasing a socket in ax25_release(), we call netdev_put() to
+decrease the refcount on the associated ax.25 device. However, the
+execution path for accepting an incoming connection never calls
+netdev_hold(). This imbalance leads to refcount errors, and ultimately
+to kernel crashes.
 
-For example, the following single queue scenario:
-  1. The dim worker of rxq0 is scheduled, and the dim status is
-     changed to DIM_APPLY_NEW_PROFILE;
-  2. dim is disabled or parameters have not been modified;
-  3. virtnet_rx_dim_work exits directly;
+A typical call trace for the above situation will start with one of the
+following errors:
 
-Then, even if net_dim is invoked again, it cannot work because the
-state is not restored to DIM_START_MEASURE.
+    refcount_t: decrement hit 0; leaking memory.
+    refcount_t: underflow; use-after-free.
 
-Fixes: 6208799553a8 ("virtio-net: support rx netdim")
-Signed-off-by: Heng Qi <hengqi@linux.alibaba.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20240528134116.117426-2-hengqi@linux.alibaba.com
+And will then have a trace like:
+
+    Call Trace:
+    <TASK>
+    ? show_regs+0x64/0x70
+    ? __warn+0x83/0x120
+    ? refcount_warn_saturate+0xb2/0x100
+    ? report_bug+0x158/0x190
+    ? prb_read_valid+0x20/0x30
+    ? handle_bug+0x3e/0x70
+    ? exc_invalid_op+0x1c/0x70
+    ? asm_exc_invalid_op+0x1f/0x30
+    ? refcount_warn_saturate+0xb2/0x100
+    ? refcount_warn_saturate+0xb2/0x100
+    ax25_release+0x2ad/0x360
+    __sock_release+0x35/0xa0
+    sock_close+0x19/0x20
+    [...]
+
+On reboot (or any attempt to remove the interface), the kernel gets
+stuck in an infinite loop:
+
+    unregister_netdevice: waiting for ax0 to become free. Usage count = 0
+
+This patch corrects these issues by ensuring that we call netdev_hold()
+and ax25_dev_hold() for new connections in ax25_accept(). This makes the
+logic leading to ax25_accept() match the logic for ax25_bind(): in both
+cases we increment the refcount, which is ultimately decremented in
+ax25_release().
+
+Fixes: 9fd75b66b8f6 ("ax25: Fix refcount leaks caused by ax25_cb_del()")
+Signed-off-by: Lars Kellogg-Stedman <lars@oddbit.com>
+Tested-by: Duoming Zhou <duoming@zju.edu.cn>
+Tested-by: Dan Cross <crossd@gmail.com>
+Tested-by: Chris Maness <christopher.maness@gmail.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20240529210242.3346844-2-lars@oddbit.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ax25/af_ax25.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index 115c3c5414f2a..574b052a517d7 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -3589,10 +3589,10 @@ static void virtnet_rx_dim_work(struct work_struct *work)
- 			if (err)
- 				pr_debug("%s: Failed to send dim parameters on rxq%d\n",
- 					 dev->name, qnum);
--			dim->state = DIM_START_MEASURE;
- 		}
- 	}
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index 9169efb2f43aa..5fff5930e4deb 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -1378,8 +1378,10 @@ static int ax25_accept(struct socket *sock, struct socket *newsock, int flags,
+ {
+ 	struct sk_buff *skb;
+ 	struct sock *newsk;
++	ax25_dev *ax25_dev;
+ 	DEFINE_WAIT(wait);
+ 	struct sock *sk;
++	ax25_cb *ax25;
+ 	int err = 0;
  
-+	dim->state = DIM_START_MEASURE;
- 	rtnl_unlock();
- }
+ 	if (sock->state != SS_UNCONNECTED)
+@@ -1434,6 +1436,10 @@ static int ax25_accept(struct socket *sock, struct socket *newsock, int flags,
+ 	kfree_skb(skb);
+ 	sk_acceptq_removed(sk);
+ 	newsock->state = SS_CONNECTED;
++	ax25 = sk_to_ax25(newsk);
++	ax25_dev = ax25->ax25_dev;
++	netdev_hold(ax25_dev->dev, &ax25->dev_tracker, GFP_ATOMIC);
++	ax25_dev_hold(ax25_dev);
  
+ out:
+ 	release_sock(sk);
 -- 
 2.43.0
 
