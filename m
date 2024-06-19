@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8890914389C;
-	Wed, 19 Jun 2024 13:11:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F414147C74;
+	Wed, 19 Jun 2024 13:11:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802712; cv=none; b=H6pnQhCc5j+jEWO6sFU/ddSq4NYTU4iHScr7MMYjxkkai8f95cC/AX3lqT6UHKgEhaoEypkl5S2gWnXrQIG9wsVsuYIdbLNfomP9C0p/yFmU+cjucb1eW3OfSI5UG+cTmcBDDHPGX2pTMzB+UfahvjHdkiTh6cISVqHxgaXES4I=
+	t=1718802715; cv=none; b=li9QZc4awNIXtauuuN80j82rFODHms/F84jiWbQxN+S58imwOYT4HYYdL9d7VaDgFnIWsSm0TzWn94TTILpKsu91ZMdoFjHEpz7y0Jxc1o8jUDGY9Xi4Wno3STi2j78OpWofrBfoWYD3MVt+C+2eyMBXMHKal33bhuqfEnSd+dc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802712; c=relaxed/simple;
-	bh=Z8+8A14pDz5uoOOgAjWBJqne6BS1EK8EzQSXSTkWS0Y=;
+	s=arc-20240116; t=1718802715; c=relaxed/simple;
+	bh=C6f94mmjFhtlAIVGBWUSyMOX1pNiCDEwKtaAHsIcJW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oo1vkNT8XUXz1yBCgSF64fyINte+kvnnUUsgGd8zcNBboAIC1/CHrlxigd40GcduYpBATfXJg4yFePKgTEbiTrFa4guM6fAC3COffAsmsC1cLPtt6SoHPjSku1Pb0m1vP1nUNvQM8YuNOQXw4h69eXwv9TN7mqbMq/FdXAs26As=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WxXBvn+y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KcZHpthShtXzW6L5w/aOZeKeA6nsIEAOxGwaN9Q7j+0t7WqtFFJ6t6hmTT9qI0lGSNfV9KkptCIGmEs455WXXG8w6+jzR0Yd/41kWSybt1sBpNkrF8/8ZPmKY/YAqM7fVZUMeBvqlDE2UD+QtD/z+CJ3PDY4AErzb1ZTdKPz+DE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RtDQ3TGT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WxXBvn+y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E30CC2BBFC;
-	Wed, 19 Jun 2024 13:11:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RtDQ3TGT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1D4EC2BBFC;
+	Wed, 19 Jun 2024 13:11:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802712;
-	bh=Z8+8A14pDz5uoOOgAjWBJqne6BS1EK8EzQSXSTkWS0Y=;
+	s=korg; t=1718802715;
+	bh=C6f94mmjFhtlAIVGBWUSyMOX1pNiCDEwKtaAHsIcJW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WxXBvn+ye93wtYzVuQbZdIbfOSce75SKT76OcPgDu+C5Z1WyPvZmIEtZoGjk67Oom
-	 r5aekruzfXl2inHYRkbweGMZuNK3jCGiBBlSvyaTrvl/FGqc/brmTnBHlrhi5ca5TK
-	 pAVXAD11O43nLAvw5AFP6fUY79R3z2uLUtmlfHBE=
+	b=RtDQ3TGTgzoU/jIGp+S8dpk10deNoQCWiGgtvcl/XYp+JxhTeDHbOMyhJfGcmzOF8
+	 4WDRUCgt+PrZ8V0avWIoL04OjqXl3QQ4UL89Kbu9o0hPbzQQRvrwQzPoA3ElWPdj2H
+	 fUswagZmAYRs417PbJJGKa1SMty9XdiNMwrGG/+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quan Zhou <zhouquan@iscas.ac.cn>,
-	Andrew Jones <ajones@ventanamicro.com>,
-	Anup Patel <anup@brainfault.org>,
+	Heng Qi <hengqi@linux.alibaba.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 022/281] RISC-V: KVM: Fix incorrect reg_subtype labels in kvm_riscv_vcpu_set_reg_isa_ext function
-Date: Wed, 19 Jun 2024 14:53:01 +0200
-Message-ID: <20240619125610.701801915@linuxfoundation.org>
+Subject: [PATCH 6.9 023/281] virtio_net: fix possible dim status unrecoverable
+Date: Wed, 19 Jun 2024 14:53:02 +0200
+Message-ID: <20240619125610.739375178@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -52,42 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quan Zhou <zhouquan@iscas.ac.cn>
+From: Heng Qi <hengqi@linux.alibaba.com>
 
-[ Upstream commit c66f3b40b17d3dfc4b6abb5efde8e71c46971821 ]
+[ Upstream commit 9e0945b1901c9eed4fbee3b8a3870487b2bdc936 ]
 
-In the function kvm_riscv_vcpu_set_reg_isa_ext, the original code
-used incorrect reg_subtype labels KVM_REG_RISCV_SBI_MULTI_EN/DIS.
-These have been corrected to KVM_REG_RISCV_ISA_MULTI_EN/DIS respectively.
-Although they are numerically equivalent, the actual processing
-will not result in errors, but it may lead to ambiguous code semantics.
+When the dim worker is scheduled, if it no longer needs to issue
+commands, dim may not be able to return to the working state later.
 
-Fixes: 613029442a4b ("RISC-V: KVM: Extend ONE_REG to enable/disable multiple ISA extensions")
-Signed-off-by: Quan Zhou <zhouquan@iscas.ac.cn>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Link: https://lore.kernel.org/r/ff1c6771a67d660db94372ac9aaa40f51e5e0090.1716429371.git.zhouquan@iscas.ac.cn
-Signed-off-by: Anup Patel <anup@brainfault.org>
+For example, the following single queue scenario:
+  1. The dim worker of rxq0 is scheduled, and the dim status is
+     changed to DIM_APPLY_NEW_PROFILE;
+  2. dim is disabled or parameters have not been modified;
+  3. virtnet_rx_dim_work exits directly;
+
+Then, even if net_dim is invoked again, it cannot work because the
+state is not restored to DIM_START_MEASURE.
+
+Fixes: 6208799553a8 ("virtio-net: support rx netdim")
+Signed-off-by: Heng Qi <hengqi@linux.alibaba.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20240528134116.117426-2-hengqi@linux.alibaba.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kvm/vcpu_onereg.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/virtio_net.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/kvm/vcpu_onereg.c b/arch/riscv/kvm/vcpu_onereg.c
-index 994adc26db4b1..e5706f5f2c71a 100644
---- a/arch/riscv/kvm/vcpu_onereg.c
-+++ b/arch/riscv/kvm/vcpu_onereg.c
-@@ -718,9 +718,9 @@ static int kvm_riscv_vcpu_set_reg_isa_ext(struct kvm_vcpu *vcpu,
- 	switch (reg_subtype) {
- 	case KVM_REG_RISCV_ISA_SINGLE:
- 		return riscv_vcpu_set_isa_ext_single(vcpu, reg_num, reg_val);
--	case KVM_REG_RISCV_SBI_MULTI_EN:
-+	case KVM_REG_RISCV_ISA_MULTI_EN:
- 		return riscv_vcpu_set_isa_ext_multi(vcpu, reg_num, reg_val, true);
--	case KVM_REG_RISCV_SBI_MULTI_DIS:
-+	case KVM_REG_RISCV_ISA_MULTI_DIS:
- 		return riscv_vcpu_set_isa_ext_multi(vcpu, reg_num, reg_val, false);
- 	default:
- 		return -ENOENT;
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index 115c3c5414f2a..574b052a517d7 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -3589,10 +3589,10 @@ static void virtnet_rx_dim_work(struct work_struct *work)
+ 			if (err)
+ 				pr_debug("%s: Failed to send dim parameters on rxq%d\n",
+ 					 dev->name, qnum);
+-			dim->state = DIM_START_MEASURE;
+ 		}
+ 	}
+ 
++	dim->state = DIM_START_MEASURE;
+ 	rtnl_unlock();
+ }
+ 
 -- 
 2.43.0
 
