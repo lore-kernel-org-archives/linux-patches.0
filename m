@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95CEC1E492;
-	Wed, 19 Jun 2024 13:31:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC131E492;
+	Wed, 19 Jun 2024 13:31:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803866; cv=none; b=XiL4i940PU5VV4Sk1MCClFxVG0yy3heuTk5+dHIOFL4kq5RUaxWPUBw2N72CHA5fHX8XeOsBAUhhFRd6Jcj9nsshprXJ/It7Gz+fj+xXmMLe62XOmCP2IwbaYWQNCVVJqMK3SSWF+if7WHCpFa2DoXsO6HTtsMS4VDiSHj2uXoE=
+	t=1718803869; cv=none; b=B1jL5N/LFvSSjk09WbhNlHXkKYPD3as7AvqJwVbdPZCZDzPXX+g2scLzltyEaSVqSu0TNGDdeT3HlPNmAQlhYWiHCvZlzuY9CqLX69D1G0zUOvuoQsFmYSyVUX9/dM8KhgcZ8fknEXxrXEfAY4+B+MDq4QHB8UPtfu3iyDBVNOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803866; c=relaxed/simple;
-	bh=2DPPLV1b3siWy27buoLCBws26S50paeG1t4jOFEno/8=;
+	s=arc-20240116; t=1718803869; c=relaxed/simple;
+	bh=M8mKp0FFCIZY0vI86ZsmXpq0aVKMA75o9BVvEOZs8ss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=henbi7RBp8mexq215BVrMxcGGsmyReYHvVrlP6t84rUAomfoNRE5+6oyD1smD/MG70zKJton0UQFvH8EEp/adhd27nSHTL4vhQQvp3QEqSu/morLjH7/lNyLzkfFPtASmaQz1HBRFVdZP+m6x7PmNadXwk8lb5//yoC37jG+Lik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y2cpYUMw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hnJi3YCrV9jKrXucYvW8KmVL8E5zSp4Ec/gw0i55MbXWOKl1m0wocT1Mje4LzG2ar2FID4Uh8+qk8pn5q0gL9awvvyODfwvU7tWX38ratBZhMN0zxkvFd/wyShTTPDrDB2mxDxhJu5uG7uP75tDssKYfWhs4qqqsePiYb+VMS54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1LT7wVpI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y2cpYUMw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A303C2BBFC;
-	Wed, 19 Jun 2024 13:31:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1LT7wVpI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16933C2BBFC;
+	Wed, 19 Jun 2024 13:31:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803866;
-	bh=2DPPLV1b3siWy27buoLCBws26S50paeG1t4jOFEno/8=;
+	s=korg; t=1718803869;
+	bh=M8mKp0FFCIZY0vI86ZsmXpq0aVKMA75o9BVvEOZs8ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y2cpYUMwazYQ9Csky2Vij2iAgkSdhjUQ6BmAL86iNeVx6YoWNY9+oapQYYc9GKiNU
-	 9EIA3NH1ZB8BoDxAfkXRN3zoH/HdVtBlWZKypBQt0UKpFDXGSE8VDs+n+XmHZRts45
-	 ETy4n0m7eEoQq7lnkkYjvIDbUrFT3xmb4kB8Qeds=
+	b=1LT7wVpIpnYB1SeatxvcnJztS2EfATkjFAIpkdPw0FV7gUiEgS5x1QENBT0YTFx9I
+	 6vmKTk9BgoLqUTPwuB2cnLX4BYOm1FKqbqKAg8i+RGIqTVWDzyUWlyBFlCLANuHwK8
+	 Engq8tiC4yMJGb+pyW0POy1376TNm4Ed3oaAT8xQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregor Herburger <gregor.herburger@tq-group.com>,
-	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	syzbot+5186630949e3c55f0799@syzkaller.appspotmail.com,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 129/217] gpio: tqmx86: fix broken IRQ_TYPE_EDGE_BOTH interrupt type
-Date: Wed, 19 Jun 2024 14:56:12 +0200
-Message-ID: <20240619125601.666097512@linuxfoundation.org>
+Subject: [PATCH 6.1 130/217] HID: core: remove unnecessary WARN_ON() in implement()
+Date: Wed, 19 Jun 2024 14:56:13 +0200
+Message-ID: <20240619125601.705891091@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -52,112 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit 90dd7de4ef7ba584823dfbeba834c2919a4bb55b ]
+[ Upstream commit 4aa2dcfbad538adf7becd0034a3754e1bd01b2b5 ]
 
-The TQMx86 GPIO controller only supports falling and rising edge
-triggers, but not both. Fix this by implementing a software both-edge
-mode that toggles the edge type after every interrupt.
+Syzkaller hit a warning [1] in a call to implement() when trying
+to write a value into a field of smaller size in an output report.
 
-Fixes: b868db94a6a7 ("gpio: tqmx86: Add GPIO from for this IO controller")
-Co-developed-by: Gregor Herburger <gregor.herburger@tq-group.com>
-Signed-off-by: Gregor Herburger <gregor.herburger@tq-group.com>
-Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
-Link: https://lore.kernel.org/r/515324f0491c4d44f4ef49f170354aca002d81ef.1717063994.git.matthias.schiffer@ew.tq-group.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Since implement() already has a warn message printed out with the
+help of hid_warn() and value in question gets trimmed with:
+	...
+	value &= m;
+	...
+WARN_ON may be considered superfluous. Remove it to suppress future
+syzkaller triggers.
+
+[1]
+WARNING: CPU: 0 PID: 5084 at drivers/hid/hid-core.c:1451 implement drivers/hid/hid-core.c:1451 [inline]
+WARNING: CPU: 0 PID: 5084 at drivers/hid/hid-core.c:1451 hid_output_report+0x548/0x760 drivers/hid/hid-core.c:1863
+Modules linked in:
+CPU: 0 PID: 5084 Comm: syz-executor424 Not tainted 6.9.0-rc7-syzkaller-00183-gcf87f46fd34d #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/02/2024
+RIP: 0010:implement drivers/hid/hid-core.c:1451 [inline]
+RIP: 0010:hid_output_report+0x548/0x760 drivers/hid/hid-core.c:1863
+...
+Call Trace:
+ <TASK>
+ __usbhid_submit_report drivers/hid/usbhid/hid-core.c:591 [inline]
+ usbhid_submit_report+0x43d/0x9e0 drivers/hid/usbhid/hid-core.c:636
+ hiddev_ioctl+0x138b/0x1f00 drivers/hid/usbhid/hiddev.c:726
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:904 [inline]
+ __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:890
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+...
+
+Fixes: 95d1c8951e5b ("HID: simplify implement() a bit")
+Reported-by: <syzbot+5186630949e3c55f0799@syzkaller.appspotmail.com>
+Suggested-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-tqmx86.c | 46 ++++++++++++++++++++++++++++++++++----
- 1 file changed, 42 insertions(+), 4 deletions(-)
+ drivers/hid/hid-core.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpio/gpio-tqmx86.c b/drivers/gpio/gpio-tqmx86.c
-index 7e428c872a257..f2e7e8754d95d 100644
---- a/drivers/gpio/gpio-tqmx86.c
-+++ b/drivers/gpio/gpio-tqmx86.c
-@@ -32,6 +32,10 @@
- #define TQMX86_GPII_NONE	0
- #define TQMX86_GPII_FALLING	BIT(0)
- #define TQMX86_GPII_RISING	BIT(1)
-+/* Stored in irq_type as a trigger type, but not actually valid as a register
-+ * value, so the name doesn't use "GPII"
-+ */
-+#define TQMX86_INT_BOTH		(BIT(0) | BIT(1))
- #define TQMX86_GPII_MASK	(BIT(0) | BIT(1))
- #define TQMX86_GPII_BITS	2
- /* Stored in irq_type with GPII bits */
-@@ -113,9 +117,15 @@ static void tqmx86_gpio_irq_config(struct tqmx86_gpio_data *gpio, int offset)
- {
- 	u8 type = TQMX86_GPII_NONE, gpiic;
- 
--	if (gpio->irq_type[offset] & TQMX86_INT_UNMASKED)
-+	if (gpio->irq_type[offset] & TQMX86_INT_UNMASKED) {
- 		type = gpio->irq_type[offset] & TQMX86_GPII_MASK;
- 
-+		if (type == TQMX86_INT_BOTH)
-+			type = tqmx86_gpio_get(&gpio->chip, offset + TQMX86_NGPO)
-+				? TQMX86_GPII_FALLING
-+				: TQMX86_GPII_RISING;
-+	}
-+
- 	gpiic = tqmx86_gpio_read(gpio, TQMX86_GPIIC);
- 	gpiic &= ~(TQMX86_GPII_MASK << (offset * TQMX86_GPII_BITS));
- 	gpiic |= type << (offset * TQMX86_GPII_BITS);
-@@ -169,7 +179,7 @@ static int tqmx86_gpio_irq_set_type(struct irq_data *data, unsigned int type)
- 		new_type = TQMX86_GPII_FALLING;
- 		break;
- 	case IRQ_TYPE_EDGE_BOTH:
--		new_type = TQMX86_GPII_FALLING | TQMX86_GPII_RISING;
-+		new_type = TQMX86_INT_BOTH;
- 		break;
- 	default:
- 		return -EINVAL; /* not supported */
-@@ -189,8 +199,8 @@ static void tqmx86_gpio_irq_handler(struct irq_desc *desc)
- 	struct gpio_chip *chip = irq_desc_get_handler_data(desc);
- 	struct tqmx86_gpio_data *gpio = gpiochip_get_data(chip);
- 	struct irq_chip *irq_chip = irq_desc_get_chip(desc);
--	unsigned long irq_bits;
--	int i = 0;
-+	unsigned long irq_bits, flags;
-+	int i;
- 	u8 irq_status;
- 
- 	chained_irq_enter(irq_chip, desc);
-@@ -199,6 +209,34 @@ static void tqmx86_gpio_irq_handler(struct irq_desc *desc)
- 	tqmx86_gpio_write(gpio, irq_status, TQMX86_GPIIS);
- 
- 	irq_bits = irq_status;
-+
-+	raw_spin_lock_irqsave(&gpio->spinlock, flags);
-+	for_each_set_bit(i, &irq_bits, TQMX86_NGPI) {
-+		/*
-+		 * Edge-both triggers are implemented by flipping the edge
-+		 * trigger after each interrupt, as the controller only supports
-+		 * either rising or falling edge triggers, but not both.
-+		 *
-+		 * Internally, the TQMx86 GPIO controller has separate status
-+		 * registers for rising and falling edge interrupts. GPIIC
-+		 * configures which bits from which register are visible in the
-+		 * interrupt status register GPIIS and defines what triggers the
-+		 * parent IRQ line. Writing to GPIIS always clears both rising
-+		 * and falling interrupt flags internally, regardless of the
-+		 * currently configured trigger.
-+		 *
-+		 * In consequence, we can cleanly implement the edge-both
-+		 * trigger in software by first clearing the interrupt and then
-+		 * setting the new trigger based on the current GPIO input in
-+		 * tqmx86_gpio_irq_config() - even if an edge arrives between
-+		 * reading the input and setting the trigger, we will have a new
-+		 * interrupt pending.
-+		 */
-+		if ((gpio->irq_type[i] & TQMX86_GPII_MASK) == TQMX86_INT_BOTH)
-+			tqmx86_gpio_irq_config(gpio, i);
-+	}
-+	raw_spin_unlock_irqrestore(&gpio->spinlock, flags);
-+
- 	for_each_set_bit(i, &irq_bits, TQMX86_NGPI)
- 		generic_handle_domain_irq(gpio->chip.irq.domain,
- 					  i + TQMX86_NGPO);
+diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
+index cdad3a0662876..e2e52aa0eeba9 100644
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -1451,7 +1451,6 @@ static void implement(const struct hid_device *hid, u8 *report,
+ 			hid_warn(hid,
+ 				 "%s() called with too large value %d (n: %d)! (%s)\n",
+ 				 __func__, value, n, current->comm);
+-			WARN_ON(1);
+ 			value &= m;
+ 		}
+ 	}
 -- 
 2.43.0
 
