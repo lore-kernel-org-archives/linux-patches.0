@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73C6982495;
-	Wed, 19 Jun 2024 13:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A6B82495;
+	Wed, 19 Jun 2024 13:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803208; cv=none; b=ar812wC2tvsuEi8eESPLZDzmuA7ZfaLNNqMpg2hfGgbdhGhu6RHWIVglqvQN92DO/JDW0OIzxv/wrsrLasINmCSWktNpQ/klte6kv+Xupe8P+gX0X59YaIbZjvWax+zgzvKAAtT3TMkOnlriiyNCFu5y1BsSQC17h3MZGisc7p0=
+	t=1718803211; cv=none; b=Du+blc2yK+bCKiyWmTkITJLZUD/LMvLpReUHTrHzP22B2cUYDUqWNe8HhRDZ5TjbhIHbrmvxWWUSQrbfyNI8fx0m478mu4SGNgVPCK0uJSZJBTsOgn8hRmjAoT27/gHuufE/4E+3MmyveF9N9GyGWhTaXLQntmDgDUsW4nFQMAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803208; c=relaxed/simple;
-	bh=Ezzu5qfMTEd2ejyJ2HpBMCqBl8yomQzAaTIMflc9t6o=;
+	s=arc-20240116; t=1718803211; c=relaxed/simple;
+	bh=j57I3MZfQEUdgVVq4wCwJiiBGjiwIbtak0+kDWewnIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P2rajILAOVkGz4sXn45t+D4DOzPUV3jWQihE5V5zdlLgTmc90xIFgWV064A36Aw1Wf+sGYvmSM4+tLFGtX9Tp49VgbN6TB+sKdu0yIleQsLeILxGWQvzS2TufaCYV42ddwCbr5GJ8IcLUsl/jcyLFlDPgePGepOlD/gkNjGAHcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k2M8gXl5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sLw4J8u16Wkvbw1r569sgAoMa3lj7Z+QaMNMYTWSz5zZCfIPYMiTZiOh6hZ2wWMNfp4mh+s1+MsPXWYbsdiIg3FgzGZKgyk8yKdv2u+JNqu0eQxSUnwIIhqBle6MDSaJjKVItLCQ7bs2kK9ERSVKQswGxnZkT9t9f+6Tq4ImCnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RKywKeq0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k2M8gXl5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E5BC2BBFC;
-	Wed, 19 Jun 2024 13:20:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RKywKeq0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871F9C2BBFC;
+	Wed, 19 Jun 2024 13:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803208;
-	bh=Ezzu5qfMTEd2ejyJ2HpBMCqBl8yomQzAaTIMflc9t6o=;
+	s=korg; t=1718803210;
+	bh=j57I3MZfQEUdgVVq4wCwJiiBGjiwIbtak0+kDWewnIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k2M8gXl5VWgGQ5mZut2kj2C+L7dkDxO+futcL4lllucK2Za/C4z2P3uWzFGKZjKpe
-	 gEaHm4/iY7G2JNUig7yW56V4/3zQVyXajQFj81UTUr57ZcoIiBRP8k5Gb0UZk9UcqN
-	 6CJbT3L9IGwbsYrOl9/ydo6ZLs4RVcnkDT4Z+cjM=
+	b=RKywKeq0p+PiXzzYZqY3SQZcHRKIMDJ5Mgd583QwJAgIoBQ/170SKD5DeAFZXHQAW
+	 +e3Sfvy8jf+uSeUOVA29MPaFcrKXMIaNtML6tOn6fwQBUf0+Uzp8T5i0YQz84VgUgR
+	 zOYwgSBfkH9vgUNBcf8ewRv2iLKr9toAvEO2op4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.9 190/281] tick/nohz_full: Dont abuse smp_call_function_single() in tick_setup_device()
-Date: Wed, 19 Jun 2024 14:55:49 +0200
-Message-ID: <20240619125617.260470941@linuxfoundation.org>
+	Genes Lists <lists@sapience.com>,
+	=?UTF-8?q?Johannes=20W=C3=BCller?= <johanneswueller@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Lee Jones <lee@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.9 191/281] leds: class: Revert: "If no default trigger is given, make hw_control trigger the default trigger"
+Date: Wed, 19 Jun 2024 14:55:50 +0200
+Message-ID: <20240619125617.298871497@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -44,100 +48,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 07c54cc5988f19c9642fd463c2dbdac7fc52f777 upstream.
+commit fcf2a9970ef587d8f358560c381ee6115a9108aa upstream.
 
-After the recent commit 5097cbcb38e6 ("sched/isolation: Prevent boot crash
-when the boot CPU is nohz_full") the kernel no longer crashes, but there is
-another problem.
+Commit 66601a29bb23 ("leds: class: If no default trigger is given, make
+hw_control trigger the default trigger") causes ledtrig-netdev to get
+set as default trigger on various network LEDs.
 
-In this case tick_setup_device() calls tick_take_do_timer_from_boot() to
-update tick_do_timer_cpu and this triggers the WARN_ON_ONCE(irqs_disabled)
-in smp_call_function_single().
+This causes users to hit a pre-existing AB-BA deadlock issue in
+ledtrig-netdev between the LED-trigger locks and the rtnl mutex,
+resulting in hung tasks in kernels >= 6.9.
 
-Kill tick_take_do_timer_from_boot() and just use WRITE_ONCE(), the new
-comment explains why this is safe (thanks Thomas!).
+Solving the deadlock is non trivial, so for now revert the change to
+set the hw_control trigger as default trigger, so that ledtrig-netdev
+no longer gets activated automatically for various network LEDs.
 
-Fixes: 08ae95f4fd3b ("nohz_full: Allow the boot CPU to be nohz_full")
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+The netdev trigger is not needed because the network LEDs are usually under
+hw-control and the netdev trigger tries to leave things that way so setting
+it as the active trigger for the LED class device is a no-op.
+
+Fixes: 66601a29bb23 ("leds: class: If no default trigger is given, make hw_control trigger the default trigger")
+Reported-by: Genes Lists <lists@sapience.com>
+Closes: https://lore.kernel.org/all/9d189ec329cfe68ed68699f314e191a10d4b5eda.camel@sapience.com/
+Reported-by: Johannes Wüller <johanneswueller@gmail.com>
+Closes: https://lore.kernel.org/lkml/e441605c-eaf2-4c2d-872b-d8e541f4cf60@gmail.com/
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240528122019.GA28794@redhat.com
-Link: https://lore.kernel.org/all/20240522151742.GA10400@redhat.com
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Acked-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/tick-common.c |   42 ++++++++++++++----------------------------
- 1 file changed, 14 insertions(+), 28 deletions(-)
+ drivers/leds/led-class.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
---- a/kernel/time/tick-common.c
-+++ b/kernel/time/tick-common.c
-@@ -178,26 +178,6 @@ void tick_setup_periodic(struct clock_ev
- 	}
- }
+diff --git a/drivers/leds/led-class.c b/drivers/leds/led-class.c
+index 24fcff682b24..ba1be15cfd8e 100644
+--- a/drivers/leds/led-class.c
++++ b/drivers/leds/led-class.c
+@@ -552,12 +552,6 @@ int led_classdev_register_ext(struct device *parent,
+ 	led_init_core(led_cdev);
  
--#ifdef CONFIG_NO_HZ_FULL
--static void giveup_do_timer(void *info)
--{
--	int cpu = *(unsigned int *)info;
--
--	WARN_ON(tick_do_timer_cpu != smp_processor_id());
--
--	tick_do_timer_cpu = cpu;
--}
--
--static void tick_take_do_timer_from_boot(void)
--{
--	int cpu = smp_processor_id();
--	int from = tick_do_timer_boot_cpu;
--
--	if (from >= 0 && from != cpu)
--		smp_call_function_single(from, giveup_do_timer, &cpu, 1);
--}
--#endif
--
- /*
-  * Setup the tick device
-  */
-@@ -221,19 +201,25 @@ static void tick_setup_device(struct tic
- 			tick_next_period = ktime_get();
- #ifdef CONFIG_NO_HZ_FULL
- 			/*
--			 * The boot CPU may be nohz_full, in which case set
--			 * tick_do_timer_boot_cpu so the first housekeeping
--			 * secondary that comes up will take do_timer from
--			 * us.
-+			 * The boot CPU may be nohz_full, in which case the
-+			 * first housekeeping secondary will take do_timer()
-+			 * from it.
- 			 */
- 			if (tick_nohz_full_cpu(cpu))
- 				tick_do_timer_boot_cpu = cpu;
- 
--		} else if (tick_do_timer_boot_cpu != -1 &&
--						!tick_nohz_full_cpu(cpu)) {
--			tick_take_do_timer_from_boot();
-+		} else if (tick_do_timer_boot_cpu != -1 && !tick_nohz_full_cpu(cpu)) {
- 			tick_do_timer_boot_cpu = -1;
--			WARN_ON(READ_ONCE(tick_do_timer_cpu) != cpu);
-+			/*
-+			 * The boot CPU will stay in periodic (NOHZ disabled)
-+			 * mode until clocksource_done_booting() called after
-+			 * smp_init() selects a high resolution clocksource and
-+			 * timekeeping_notify() kicks the NOHZ stuff alive.
-+			 *
-+			 * So this WRITE_ONCE can only race with the READ_ONCE
-+			 * check in tick_periodic() but this race is harmless.
-+			 */
-+			WRITE_ONCE(tick_do_timer_cpu, cpu);
+ #ifdef CONFIG_LEDS_TRIGGERS
+-	/*
+-	 * If no default trigger was given and hw_control_trigger is set,
+-	 * make it the default trigger.
+-	 */
+-	if (!led_cdev->default_trigger && led_cdev->hw_control_trigger)
+-		led_cdev->default_trigger = led_cdev->hw_control_trigger;
+ 	led_trigger_set_default(led_cdev);
  #endif
- 		}
  
+-- 
+2.45.2
+
 
 
