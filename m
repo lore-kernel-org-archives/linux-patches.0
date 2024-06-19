@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210721E492;
-	Wed, 19 Jun 2024 13:33:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 180501E492;
+	Wed, 19 Jun 2024 13:33:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803980; cv=none; b=RIQBgAPFdc24UjItcvkZnC2HdETOyYQajqkIgAa274ACMfWgyd6g/Jp5qUeHUt8y4mQpzZ6Za5L7hS78clpwDg5HUD3BSWilumLPhirJCjuykRhuYDRp9x6GFvqsBzGU651NkIbLSJD8N9maBwWywUMphw+LixPCIcm1XQeRz3c=
+	t=1718803983; cv=none; b=jkIwzusit/d26OiJE5ENKOGpuWiPprYTJzas/jEg2OImtNY++QvvjQJaV4/Hmd514wj5GxpgrZUZi8SmfITWoRYWJhq1I9z+AjGwlHmcCxRa6RmmtMSW/PeEmFZsG3MNweWkJs8HCz3z6eAT7jPVVkVxQXXJPXA6asaM9IGOAdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803980; c=relaxed/simple;
-	bh=0eE3zYqXwkg3NTeY+cUXK9VkKerf1XYwUf9X2dad9dA=;
+	s=arc-20240116; t=1718803983; c=relaxed/simple;
+	bh=y+8m7EM/zrG88ooWzF1pxqgI5ITNgbFVFAuU3bygFDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uR8P07A3slLLXQbiBfL2KO08R9d7hGGLdZ6GTg9TEK64d3uc83XacR/R8JMeFNGKyT8wrm+JHCHuzzJ14iSuS78kZpGzxDih34gSgKuureisoIkEhhZYz8Vumx0MeuaHTJg9VgTWzE8zoIncH5TxdHkVqCgZ1lodZQz+B0T3ZF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fpjFLOgF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AtfyYDhnQHsROttcahGOB9O2dB2Qo9vpxP8vygoAvKbadH2xn/Bbt7mOfQtxvmixe/Pyr67YQVDc/UEyjMJlA5lsnRJKoimw6sIyIpG8L/SN4VHoZjHBxDEmQiwyKwx7GBbNn9pDQFI6Ujs+ehS3buPWokS0Me6vrXMGtaJOGbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u8TgxYCm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fpjFLOgF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DB2CC2BBFC;
-	Wed, 19 Jun 2024 13:32:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u8TgxYCm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FCFEC2BBFC;
+	Wed, 19 Jun 2024 13:33:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803980;
-	bh=0eE3zYqXwkg3NTeY+cUXK9VkKerf1XYwUf9X2dad9dA=;
+	s=korg; t=1718803983;
+	bh=y+8m7EM/zrG88ooWzF1pxqgI5ITNgbFVFAuU3bygFDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fpjFLOgFnAl/gVnY4C16+IOXuQFP9N/3uCCsBdCkrOGTElkNQXDesvV7Wcspz2N/2
-	 i+rDLC1ZLkOdVV+a/Y5JadKpKe3VT2NyNaUQIblzxuwoL7m6mgsceH4R25+VLDWnRv
-	 jI96r2X5aJSIulCYgsOUAmy5E0kAPGvt5OuVXURo=
+	b=u8TgxYCmm6CPFYMe6nj0q78khFxfaRXK3ZReuxBGe90Lqvdx7CRQV/LNv2MbWpbH4
+	 zkV1cFhc9H6686rkJyn579WwuqFuh0r8Kz6xnkhCQg7pWs32vvH2gQjYqKoiCGx1NO
+	 WlKgeDqaa89bvRUH31rZEHfrPqRbBSX4hve3Fdg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Forbes <ian.forbes@broadcom.com>,
-	Zack Rusin <zack.rusin@broadcom.com>,
+	=?UTF-8?q?Cs=C3=B3k=C3=A1s,
+	=20Bence?= <csokas.bence@prolan.hu>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 137/217] drm/vmwgfx: Remove STDU logic from generic mode_valid function
-Date: Wed, 19 Jun 2024 14:56:20 +0200
-Message-ID: <20240619125601.976214197@linuxfoundation.org>
+Subject: [PATCH 6.1 138/217] net: sfp: Always call `sfp_sm_mod_remove()` on remove
+Date: Wed, 19 Jun 2024 14:56:21 +0200
+Message-ID: <20240619125602.015739519@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -45,97 +47,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Forbes <ian.forbes@broadcom.com>
+From: Csókás, Bence <csokas.bence@prolan.hu>
 
-[ Upstream commit dde1de06bd7248fd83c4ce5cf0dbe9e4e95bbb91 ]
+[ Upstream commit e96b2933152fd87b6a41765b2f58b158fde855b6 ]
 
-STDU has its own mode_valid function now so this logic can be removed from
-the generic version.
+If the module is in SFP_MOD_ERROR, `sfp_sm_mod_remove()` will
+not be run. As a consequence, `sfp_hwmon_remove()` is not getting
+run either, leaving a stale `hwmon` device behind. `sfp_sm_mod_remove()`
+itself checks `sfp->sm_mod_state` anyways, so this check was not
+really needed in the first place.
 
-Fixes: 935f795045a6 ("drm/vmwgfx: Refactor drm connector probing for display modes")
-
-Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240521184720.767-4-ian.forbes@broadcom.com
+Fixes: d2e816c0293f ("net: sfp: handle module remove outside state machine")
+Signed-off-by: "Csókás, Bence" <csokas.bence@prolan.hu>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20240605084251.63502-1-csokas.bence@prolan.hu
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_drv.h |  3 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_kms.c | 26 +++++++++-----------------
- 2 files changed, 9 insertions(+), 20 deletions(-)
+ drivers/net/phy/sfp.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
-index 00d9e58b7e149..b0c23559511a1 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
-@@ -1194,9 +1194,6 @@ void vmw_kms_cursor_snoop(struct vmw_surface *srf,
- int vmw_kms_write_svga(struct vmw_private *vmw_priv,
- 		       unsigned width, unsigned height, unsigned pitch,
- 		       unsigned bpp, unsigned depth);
--bool vmw_kms_validate_mode_vram(struct vmw_private *dev_priv,
--				uint32_t pitch,
--				uint32_t height);
- int vmw_kms_present(struct vmw_private *dev_priv,
- 		    struct drm_file *file_priv,
- 		    struct vmw_framebuffer *vfb,
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-index 7a2d29370a534..5b30e4ba2811a 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-@@ -2085,13 +2085,12 @@ int vmw_kms_write_svga(struct vmw_private *vmw_priv,
- 	return 0;
- }
+diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
+index 9b1403291d921..06dce78d7b0c9 100644
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -2150,8 +2150,7 @@ static void sfp_sm_module(struct sfp *sfp, unsigned int event)
  
-+static
- bool vmw_kms_validate_mode_vram(struct vmw_private *dev_priv,
--				uint32_t pitch,
--				uint32_t height)
-+				u64 pitch,
-+				u64 height)
- {
--	return ((u64) pitch * (u64) height) < (u64)
--		((dev_priv->active_display_unit == vmw_du_screen_target) ?
--		 dev_priv->max_primary_mem : dev_priv->vram_size);
-+	return (pitch * height) < (u64)dev_priv->vram_size;
- }
- 
- /**
-@@ -2775,25 +2774,18 @@ int vmw_du_helper_plane_update(struct vmw_du_update_plane *update)
- enum drm_mode_status vmw_connector_mode_valid(struct drm_connector *connector,
- 					      struct drm_display_mode *mode)
- {
-+	enum drm_mode_status ret;
- 	struct drm_device *dev = connector->dev;
- 	struct vmw_private *dev_priv = vmw_priv(dev);
--	u32 max_width = dev_priv->texture_max_width;
--	u32 max_height = dev_priv->texture_max_height;
- 	u32 assumed_cpp = 4;
- 
- 	if (dev_priv->assume_16bpp)
- 		assumed_cpp = 2;
- 
--	if (dev_priv->active_display_unit == vmw_du_screen_target) {
--		max_width  = min(dev_priv->stdu_max_width,  max_width);
--		max_height = min(dev_priv->stdu_max_height, max_height);
--	}
--
--	if (max_width < mode->hdisplay)
--		return MODE_BAD_HVALUE;
--
--	if (max_height < mode->vdisplay)
--		return MODE_BAD_VVALUE;
-+	ret = drm_mode_validate_size(mode, dev_priv->texture_max_width,
-+				     dev_priv->texture_max_height);
-+	if (ret != MODE_OK)
-+		return ret;
- 
- 	if (!vmw_kms_validate_mode_vram(dev_priv,
- 					mode->hdisplay * assumed_cpp,
+ 	/* Handle remove event globally, it resets this state machine */
+ 	if (event == SFP_E_REMOVE) {
+-		if (sfp->sm_mod_state > SFP_MOD_PROBE)
+-			sfp_sm_mod_remove(sfp);
++		sfp_sm_mod_remove(sfp);
+ 		sfp_sm_mod_next(sfp, SFP_MOD_EMPTY, 0);
+ 		return;
+ 	}
 -- 
 2.43.0
 
