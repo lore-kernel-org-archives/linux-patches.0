@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9421482495;
-	Wed, 19 Jun 2024 13:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D8682495;
+	Wed, 19 Jun 2024 13:23:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803409; cv=none; b=ENjvC8Q0Yj/Ckql6Mii6gy3i5Dx04YrBcyC5KYtfGp1LAXfCDcmJ2UjeS8pMbPuVZkAlm/xthm3355VCFsptfjWtEocqvrsUdMHO35CjzrrF+mBbCLSlZQcJj0rb6E+2s4sn2Umu2oSxidqFRlxrG9vg1cixTGB74+GiRS7qy2E=
+	t=1718803412; cv=none; b=OuP7etfCkHC9aPJLdp0EjHXq4mP95lVgxWTjIDGGOvZOgdlPRNcTIVdFtjDzJ6LSZ0HmemFoQsFtWF1n7V6tCBY0b99V/9/OHrQYrIRE42MzzbqLTJ/DnwXsSmvucqNOWQjM26J0g05pJZkjHBUWTqcxNb4c6XJnh+f3PZaS928=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803409; c=relaxed/simple;
-	bh=C2l9Umyl0SZEFem8jFHmXDhIHtMnTOpn9HB3r3xXoos=;
+	s=arc-20240116; t=1718803412; c=relaxed/simple;
+	bh=l7ILUkXuGXU7rD21qfutW+RyxjindHU9kFgkNl4Yf6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GPiRRBMvzVlOb0tMwcpckrRLAEusEkwW+L8uSN8ed1PPqiWdIw592Zl/Pd7EsNJSLpwHsxYtX1It/YnQNVnvGXCCPVZzOwEGAOgkAYWX8TAErSwc8XwwhFsb6LnOeKQTGCXcPAxtbVF6W+wsXo5qKDFO4wj+M0Q/B0AWf/YK3yk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WvCSrS0/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=A2m+UiRXYWMAIVxHkIx9bToX/5L1457tkdoYzDsS2oXsrOq/Rv5w1c2L+czGn24bXFqQNo9g4roPRuq2VMy1R+NtManh4QMKAsUngg5VwtjY3vbuu5hvLxTeX+7UNpYqm92dfxR97OX5Zpk0c05E00bshYdEX74/gjpAgx/sRFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P4+YZKBN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WvCSrS0/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B4BDC2BBFC;
-	Wed, 19 Jun 2024 13:23:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P4+YZKBN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09B0EC2BBFC;
+	Wed, 19 Jun 2024 13:23:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803409;
-	bh=C2l9Umyl0SZEFem8jFHmXDhIHtMnTOpn9HB3r3xXoos=;
+	s=korg; t=1718803412;
+	bh=l7ILUkXuGXU7rD21qfutW+RyxjindHU9kFgkNl4Yf6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WvCSrS0/VOY1bApsSrRwv+BjzmeK6jhLrTnvbxYmEZRLnpXuon3wHLO9CS9tZkR+G
-	 va5H9+Mo9fEtwNaNFVXWFiAysQlQ0lSRDXzS/+N9HQvC5I06zck6C0fEYijjyNUIR4
-	 ZFXv+Pr+JZBV+f/9ggWU03Jg+dbqHUQ6U02JLGTw=
+	b=P4+YZKBNiE4gD//l9HB3nbPyRsm1SfbqAvs4YD58U02EGJgQ+KcslD6TpuXuRldGx
+	 23OROwFEHoI0Nvm/b1q7QpcotAshz+8pUNT62WQW5rpp4UwxfNA6VSjd55LAJYuJsF
+	 PtZSro+wtmBOJrpM32O5Gs4gYOGQDBm4DbLqtj50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>,
-	Nirmoy Das <nirmoy.das@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
-Subject: [PATCH 6.9 258/281] drm/xe: Properly handle alloc_guc_id() failure
-Date: Wed, 19 Jun 2024 14:56:57 +0200
-Message-ID: <20240619125619.908461775@linuxfoundation.org>
+	Shawn Lee <shawn.c.lee@intel.com>,
+	Vidya Srinivas <vidya.srinivas@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.9 259/281] drm/i915/dpt: Make DPT object unshrinkable
+Date: Wed, 19 Jun 2024 14:56:58 +0200
+Message-ID: <20240619125619.947265977@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -54,37 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
+From: Vidya Srinivas <vidya.srinivas@intel.com>
 
-commit 6c5cd0807c79eb4c0cda70b48f6be668a241d584 upstream.
+commit 43e2b37e2ab660c3565d4cff27922bc70e79c3f1 upstream.
 
-Release the submission_state lock if alloc_guc_id() fails.
+In some scenarios, the DPT object gets shrunk but
+the actual framebuffer did not and thus its still
+there on the DPT's vm->bound_list. Then it tries to
+rewrite the PTEs via a stale CPU mapping. This causes panic.
 
-v2: Add Fixes tag and CC stable kernel
-
-Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
-Cc: <stable@vger.kernel.org> # v6.8+
-Signed-off-by: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
-Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: José Roberto de Souza <jose.souza@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240521201711.4934-1-niranjana.vishwanathapura@intel.com
-(cherry picked from commit 40672b792a36894aff3a337b695f6136ee6ac5d4)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: stable@vger.kernel.org
+Reported-by: Shawn Lee <shawn.c.lee@intel.com>
+Fixes: 0dc987b699ce ("drm/i915/display: Add smem fallback allocation for dpt")
+Signed-off-by: Vidya Srinivas <vidya.srinivas@intel.com>
+[vsyrjala: Add TODO comment]
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240520165634.1162470-1-vidya.srinivas@intel.com
+(cherry picked from commit 51064d471c53dcc8eddd2333c3f1c1d9131ba36c)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_guc_submit.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/i915/gem/i915_gem_object.h |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/xe/xe_guc_submit.c
-+++ b/drivers/gpu/drm/xe/xe_guc_submit.c
-@@ -1257,6 +1257,7 @@ static int guc_exec_queue_init(struct xe
- 	return 0;
+--- a/drivers/gpu/drm/i915/gem/i915_gem_object.h
++++ b/drivers/gpu/drm/i915/gem/i915_gem_object.h
+@@ -284,7 +284,9 @@ bool i915_gem_object_has_iomem(const str
+ static inline bool
+ i915_gem_object_is_shrinkable(const struct drm_i915_gem_object *obj)
+ {
+-	return i915_gem_object_type_has(obj, I915_GEM_OBJECT_IS_SHRINKABLE);
++	/* TODO: make DPT shrinkable when it has no bound vmas */
++	return i915_gem_object_type_has(obj, I915_GEM_OBJECT_IS_SHRINKABLE) &&
++		!obj->is_dpt;
+ }
  
- err_entity:
-+	mutex_unlock(&guc->submission_state.lock);
- 	xe_sched_entity_fini(&ge->entity);
- err_sched:
- 	xe_sched_fini(&ge->sched);
+ static inline bool
 
 
