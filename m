@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 911F613AA40;
-	Wed, 19 Jun 2024 13:08:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 831FC132129;
+	Wed, 19 Jun 2024 13:08:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802488; cv=none; b=NloaLXoFIu2kquzZkJiksIwRDREN9ur/CJL9j2sRYVpmQbk7QpOk7VzeNAaeSPdHOOtsOMiZeabSkj7YRh71Q5Sy5IXCzBUKRUoHF+0CCH8JqRYWtVH0X8A/EkQ5AKyjxAd3jXag1k7Kqo212lev4814ghKpbBnDELO7ayB7y3k=
+	t=1718802491; cv=none; b=IlhTU3RUzLo5PROrlOIa2eSDTcJUq4ncgpiTUSi+yFUJKfb0AA44MeFPZUUNYsswv09p/j3sfTQ1n04u6MZCOngVLGgGxR8ERQ9VWX27MNH9cwl1Lk+l+qvl/f/Uiq5k4zRURGwBJs7+ZJywlfhqgyaNcjOHKEZXqoTCfpf/L8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802488; c=relaxed/simple;
-	bh=mK+oQKAtCF4IXQl8VPVkwLOQEjWjF0X5esJXb3BtJ0w=;
+	s=arc-20240116; t=1718802491; c=relaxed/simple;
+	bh=PCRfG7Uwr6EPnVZT7V4d0hjsYUpwhJ/qr2bj+1Y98hQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f1ntFZs0ruiD/6gv7UIMOhAhAKuzSjGXOrsfWgsQ1v2uZAt1CWwzskolSlHpvhLQ1PtIGUMI5W1VJZc83+XcMbttXmgr9ujQ2bQCCUZuMv/F14YerjpkVOhhIyvroYKClJAAx1VPYWhG7o64HZDrfY6VukrOaicKOE2XwO49V8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOF4Xab/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=blxF5We9gnTVXnaH2JOB0Ga4vP2jmbpsFb0rH4MciheziMK4IbkZucORe2pyJI164CogPl4FZCLM1NwI+F36vyCRegaiNGhQmOYtd6i/N5y1tPHt9xyZi10Fab6HosmQNzZywFOoKpnxM0lI31MMBuZzZHMLgb5t+DGHMMxuua0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O8q4JtkO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOF4Xab/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F5E8C2BBFC;
-	Wed, 19 Jun 2024 13:08:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O8q4JtkO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0907FC2BBFC;
+	Wed, 19 Jun 2024 13:08:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802488;
-	bh=mK+oQKAtCF4IXQl8VPVkwLOQEjWjF0X5esJXb3BtJ0w=;
+	s=korg; t=1718802491;
+	bh=PCRfG7Uwr6EPnVZT7V4d0hjsYUpwhJ/qr2bj+1Y98hQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eOF4Xab/eY3Wc1Q+aN0vhmxBPLy6UozS7ZN5kpgxpSrD/lBwceNpOFPBpXb3tyUr/
-	 IaprHHWQMOuxdR28qbIqSExhjBVwaHSdu4BiTq7/bYu+Gya+bPDpLKEySS76fGLx3J
-	 xntrQY+MDYCk+RNLwMualhQt+kb1Uy7eVFHzytVk=
+	b=O8q4JtkObgq7WkDlYciPSnp8e5w+7tlGxIG4QAnD4Ail6kqLrzmtpidBR3ZXl0E5Y
+	 hCSDLzvW/c+jGFGFEl6yvH4aDPoS1rp9sQA0yDyeLtNsUZKvf97n7Yo7ksNZxjXgUB
+	 Kz+KcxX8iiGnuIO2MQeG0GqmyWIlPS1VJlWupuVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	YonglongLi <liyonglong@chinatelecom.cn>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 186/267] mptcp: pm: inc RmAddr MIB counter once per RM_ADDR ID
-Date: Wed, 19 Jun 2024 14:55:37 +0200
-Message-ID: <20240619125613.481885901@linuxfoundation.org>
+	Jonathan Corbet <corbet@lwn.net>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Daniel Bristot de Oliveira <bristot@kernel.org>
+Subject: [PATCH 6.6 213/267] rtla/timerlat: Simplify "no value" printing on top
+Date: Wed, 19 Jun 2024 14:56:04 +0200
+Message-ID: <20240619125614.501791773@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -51,67 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YonglongLi <liyonglong@chinatelecom.cn>
+From: Daniel Bristot de Oliveira <bristot@kernel.org>
 
-commit 6a09788c1a66e3d8b04b3b3e7618cc817bb60ae9 upstream.
+commit 5f0769331a965675cdfec97c09f3f6e875d7c246 upstream.
 
-The RmAddr MIB counter is supposed to be incremented once when a valid
-RM_ADDR has been received. Before this patch, it could have been
-incremented as many times as the number of subflows connected to the
-linked address ID, so it could have been 0, 1 or more than 1.
+Instead of printing three times the same output, print it only once,
+reducing lines and being sure that all no values have the same length.
 
-The "RmSubflow" is incremented after a local operation. In this case,
-it is normal to tied it with the number of subflows that have been
-actually removed.
+It also fixes an extra '\n' when running the with kernel threads, like
+here:
 
-The "remove invalid addresses" MP Join subtest has been modified to
-validate this case. A broadcast IP address is now used instead: the
-client will not be able to create a subflow to this address. The
-consequence is that when receiving the RM_ADDR with the ID attached to
-this broadcast IP address, no subflow linked to this ID will be found.
+     =============== %< ==============
+                                      Timer Latency
 
-Fixes: 7a7e52e38a40 ("mptcp: add RM_ADDR related mibs")
+   0 00:00:01   |          IRQ Timer Latency (us)        |         Thread Timer Latency (us)
+ CPU COUNT      |      cur       min       avg       max |      cur       min       avg       max
+   2 #0         |        -         -         -         - |      161       161       161       161
+   3 #0         |        -         -         -         - |      161       161       161       161
+   8 #1         |       54        54        54        54 |        -         -         -         -'\n'
+
+ ---------------|----------------------------------------|---------------------------------------
+ ALL #1      e0 |                 54        54        54 |                161       161       161
+     =============== %< ==============
+
+This '\n' should have been removed with the user-space support that
+added another '\n' if not running with kernel threads.
+
+Link: https://lkml.kernel.org/r/0a4d8085e7cd706733a5dc10a81ca38b82bd4992.1713968967.git.bristot@kernel.org
+
 Cc: stable@vger.kernel.org
-Co-developed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: YonglongLi <liyonglong@chinatelecom.cn>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://lore.kernel.org/r/20240607-upstream-net-20240607-misc-fixes-v1-2-1ab9ddfa3d00@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Juri Lelli <juri.lelli@redhat.com>
+Fixes: cdca4f4e5e8e ("rtla/timerlat_top: Add timerlat user-space support")
+Signed-off-by: Daniel Bristot de Oliveira <bristot@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c                          |    5 ++++-
- tools/testing/selftests/net/mptcp/mptcp_join.sh |    3 ++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ tools/tracing/rtla/src/timerlat_top.c |   17 +++++------------
+ 1 file changed, 5 insertions(+), 12 deletions(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -822,10 +822,13 @@ static void mptcp_pm_nl_rm_addr_or_subfl
- 			spin_lock_bh(&msk->pm.lock);
+--- a/tools/tracing/rtla/src/timerlat_top.c
++++ b/tools/tracing/rtla/src/timerlat_top.c
+@@ -211,6 +211,8 @@ static void timerlat_top_header(struct o
+ 	trace_seq_printf(s, "\n");
+ }
  
- 			removed = true;
--			__MPTCP_INC_STATS(sock_net(sk), rm_type);
-+			if (rm_type == MPTCP_MIB_RMSUBFLOW)
-+				__MPTCP_INC_STATS(sock_net(sk), rm_type);
- 		}
- 		if (rm_type == MPTCP_MIB_RMSUBFLOW)
- 			__set_bit(rm_id ? rm_id : msk->mpc_endpoint_id, msk->pm.id_avail_bitmap);
-+		else if (rm_type == MPTCP_MIB_RMADDR)
-+			__MPTCP_INC_STATS(sock_net(sk), rm_type);
- 		if (!removed)
- 			continue;
++static const char *no_value = "        -";
++
+ /*
+  * timerlat_top_print - prints the output of a given CPU
+  */
+@@ -238,10 +240,7 @@ static void timerlat_top_print(struct os
+ 	trace_seq_printf(s, "%3d #%-9d |", cpu, cpu_data->irq_count);
  
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -2394,7 +2394,8 @@ remove_tests()
- 		pm_nl_set_limits $ns1 3 3
- 		pm_nl_add_endpoint $ns1 10.0.12.1 flags signal
- 		pm_nl_add_endpoint $ns1 10.0.3.1 flags signal
--		pm_nl_add_endpoint $ns1 10.0.14.1 flags signal
-+		# broadcast IP: no packet for this address will be received on ns1
-+		pm_nl_add_endpoint $ns1 224.0.0.1 flags signal
- 		pm_nl_set_limits $ns2 3 3
- 		addr_nr_ns1=-3 speed=10 \
- 			run_tests $ns1 $ns2 10.0.1.1
+ 	if (!cpu_data->irq_count) {
+-		trace_seq_printf(s, "        - ");
+-		trace_seq_printf(s, "        - ");
+-		trace_seq_printf(s, "        - ");
+-		trace_seq_printf(s, "        - |");
++		trace_seq_printf(s, "%s %s %s %s |", no_value, no_value, no_value, no_value);
+ 	} else {
+ 		trace_seq_printf(s, "%9llu ", cpu_data->cur_irq / params->output_divisor);
+ 		trace_seq_printf(s, "%9llu ", cpu_data->min_irq / params->output_divisor);
+@@ -250,10 +249,7 @@ static void timerlat_top_print(struct os
+ 	}
+ 
+ 	if (!cpu_data->thread_count) {
+-		trace_seq_printf(s, "        - ");
+-		trace_seq_printf(s, "        - ");
+-		trace_seq_printf(s, "        - ");
+-		trace_seq_printf(s, "        -\n");
++		trace_seq_printf(s, "%s %s %s %s", no_value, no_value, no_value, no_value);
+ 	} else {
+ 		trace_seq_printf(s, "%9llu ", cpu_data->cur_thread / divisor);
+ 		trace_seq_printf(s, "%9llu ", cpu_data->min_thread / divisor);
+@@ -270,10 +266,7 @@ static void timerlat_top_print(struct os
+ 	trace_seq_printf(s, " |");
+ 
+ 	if (!cpu_data->user_count) {
+-		trace_seq_printf(s, "        - ");
+-		trace_seq_printf(s, "        - ");
+-		trace_seq_printf(s, "        - ");
+-		trace_seq_printf(s, "        -\n");
++		trace_seq_printf(s, "%s %s %s %s\n", no_value, no_value, no_value, no_value);
+ 	} else {
+ 		trace_seq_printf(s, "%9llu ", cpu_data->cur_user / divisor);
+ 		trace_seq_printf(s, "%9llu ", cpu_data->min_user / divisor);
 
 
