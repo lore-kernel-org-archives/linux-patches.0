@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B8113E037;
-	Wed, 19 Jun 2024 13:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C1A14B963;
+	Wed, 19 Jun 2024 13:31:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803905; cv=none; b=twtbSdMHGq3TEFPK9fk1h+WSeiCzhP+HacHJiMawCdI0J9NQ5aFd8JMwW5m4zejpHMwsmSTDSWWnYm6ddrPwRilKeI6A70Lc3FaDRdmtm9861rIgz+a/h4tR5RCMcI4nBdVU+aroUmkblmospHD19UMG1AaPBjoMRRTA1kyGnhM=
+	t=1718803908; cv=none; b=CLBv/Ya4PJ5oX/xAf3qZjre0lIhlEHx6gZVmbWFMsrkIMueSVCPtYVIb2CltkMBF5p/L+bHLBaAvxlRd87e97Im4DBzYl5y9ykDOljWs9xdTgaUjHz+2/Ocu6SQgbqhhaSOH4BczF1ogjIrwQWQ0m8G4DPodbhr4sQXhfMGtmXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803905; c=relaxed/simple;
-	bh=TCMBcqHCvT8L+HGaxImCuEy47dX4w0wiT5ycJxrhRWU=;
+	s=arc-20240116; t=1718803908; c=relaxed/simple;
+	bh=lrF1OKvhArM0cvRAycJ42iAm6hHGMHYvys74+welJlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Md1wcn8UJsyyzdcLLwU4/TZQQxOGP/Ohe89mWxO8DYAgrVhkKUjfqUV+5pHn0u2y3wUzoppvkAKiY3BTEdIFGW8KsXIknHxYrsS/c8Bp0FxQs4aQS7wIO3YwZcCckgN8o8w8wBzJDbzHgvCKT2oZ1dOOt6siqH4M0lusVpYr2Uw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YPftiq0H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bfqq65ik8Cu3NRpWPgzihvJ+yM58k93Q7kiXc7Xp21dcS1s6D7A0AGvjZOOTIVjQ5SCqDHGZ/4MVHiQLlKTO2EBk8Eg69b/JKdkYuAyl2sqsnafxA1PN0DjmL8bp4ac8c0D3EXUXxvXGP2i2DQFFdRGPzPX1foRBzd9fTKASzog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P7el5uWs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YPftiq0H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC772C2BBFC;
-	Wed, 19 Jun 2024 13:31:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P7el5uWs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B44DAC2BBFC;
+	Wed, 19 Jun 2024 13:31:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803905;
-	bh=TCMBcqHCvT8L+HGaxImCuEy47dX4w0wiT5ycJxrhRWU=;
+	s=korg; t=1718803908;
+	bh=lrF1OKvhArM0cvRAycJ42iAm6hHGMHYvys74+welJlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YPftiq0H1e61rJfmx06bUg0lDm2abNGrLB4BLUvhjy/xqxBE2Np5PwqquivHwSTWo
-	 e6EuBXFkLHaUfC0DlGd2Y7pERUeGQZSNZTMKRDFe/Wwrhw8cXjyWn80ey2mc/C6Y1q
-	 4TPQgGd3rmoo0Pt9h3Za3NXTYGeWZTrqsTzwWBHU=
+	b=P7el5uWsG70xw/JAkPoTZ94mhs9pNf1qebgL6PZjt1SPkASclY6s+QMHjahuS4dMM
+	 tZoGfuzlzqkqUXcUKzx3XwyG1xdinEY2oDUCk5dVQYch6zqmKJGw73nvHyOFpV7smT
+	 wVkTsxcQnsjS5A5E12U+ClZdJn5VYXPIeGZbmiuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
+	Gal Pressman <gal@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 144/217] tcp: fix race in tcp_v6_syn_recv_sock()
-Date: Wed, 19 Jun 2024 14:56:27 +0200
-Message-ID: <20240619125602.248174468@linuxfoundation.org>
+Subject: [PATCH 6.1 145/217] geneve: Fix incorrect inner network header offset when innerprotoinherit is set
+Date: Wed, 19 Jun 2024 14:56:28 +0200
+Message-ID: <20240619125602.285987377@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -52,52 +53,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit d37fe4255abe8e7b419b90c5847e8ec2b8debb08 ]
+[ Upstream commit c6ae073f5903f6c6439d0ac855836a4da5c0a701 ]
 
-tcp_v6_syn_recv_sock() calls ip6_dst_store() before
-inet_sk(newsk)->pinet6 has been set up.
+When innerprotoinherit is set, the tunneled packets do not have an inner
+Ethernet header.
+Change 'maclen' to not always assume the header length is ETH_HLEN, as
+there might not be a MAC header.
 
-This means ip6_dst_store() writes over the parent (listener)
-np->dst_cookie.
+This resolves issues with drivers (e.g. mlx5, in
+mlx5e_tx_tunnel_accel()) who rely on the skb inner network header offset
+to be correct, and use it for TX offloads.
 
-This is racy because multiple threads could share the same
-parent and their final np->dst_cookie could be wrong.
-
-Move ip6_dst_store() call after inet_sk(newsk)->pinet6
-has been changed and after the copy of parent ipv6_pinfo.
-
-Fixes: e994b2f0fb92 ("tcp: do not lock listener to process SYN packets")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: d8a6213d70ac ("geneve: fix header validation in geneve[6]_xmit_skb")
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/tcp_ipv6.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/geneve.c     | 10 ++++++----
+ include/net/ip_tunnels.h |  5 +++--
+ 2 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index ba9a22db5805c..4b0e05349862d 100644
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -1291,7 +1291,6 @@ static struct sock *tcp_v6_syn_recv_sock(const struct sock *sk, struct sk_buff *
- 	 */
+diff --git a/drivers/net/geneve.c b/drivers/net/geneve.c
+index 488ca1c854962..c4a49a75250e3 100644
+--- a/drivers/net/geneve.c
++++ b/drivers/net/geneve.c
+@@ -919,6 +919,7 @@ static int geneve_xmit_skb(struct sk_buff *skb, struct net_device *dev,
+ 			   struct geneve_dev *geneve,
+ 			   const struct ip_tunnel_info *info)
+ {
++	bool inner_proto_inherit = geneve->cfg.inner_proto_inherit;
+ 	bool xnet = !net_eq(geneve->net, dev_net(geneve->dev));
+ 	struct geneve_sock *gs4 = rcu_dereference(geneve->sock4);
+ 	const struct ip_tunnel_key *key = &info->key;
+@@ -930,7 +931,7 @@ static int geneve_xmit_skb(struct sk_buff *skb, struct net_device *dev,
+ 	__be16 sport;
+ 	int err;
  
- 	newsk->sk_gso_type = SKB_GSO_TCPV6;
--	ip6_dst_store(newsk, dst, NULL, NULL);
- 	inet6_sk_rx_dst_set(newsk, skb);
+-	if (!skb_vlan_inet_prepare(skb))
++	if (!skb_vlan_inet_prepare(skb, inner_proto_inherit))
+ 		return -EINVAL;
  
- 	inet_sk(newsk)->pinet6 = tcp_inet6_sk(newsk);
-@@ -1302,6 +1301,8 @@ static struct sock *tcp_v6_syn_recv_sock(const struct sock *sk, struct sk_buff *
+ 	sport = udp_flow_src_port(geneve->net, skb, 1, USHRT_MAX, true);
+@@ -1003,7 +1004,7 @@ static int geneve_xmit_skb(struct sk_buff *skb, struct net_device *dev,
+ 	}
  
- 	memcpy(newnp, np, sizeof(struct ipv6_pinfo));
+ 	err = geneve_build_skb(&rt->dst, skb, info, xnet, sizeof(struct iphdr),
+-			       geneve->cfg.inner_proto_inherit);
++			       inner_proto_inherit);
+ 	if (unlikely(err))
+ 		return err;
  
-+	ip6_dst_store(newsk, dst, NULL, NULL);
-+
- 	newsk->sk_v6_daddr = ireq->ir_v6_rmt_addr;
- 	newnp->saddr = ireq->ir_v6_loc_addr;
- 	newsk->sk_v6_rcv_saddr = ireq->ir_v6_loc_addr;
+@@ -1019,6 +1020,7 @@ static int geneve6_xmit_skb(struct sk_buff *skb, struct net_device *dev,
+ 			    struct geneve_dev *geneve,
+ 			    const struct ip_tunnel_info *info)
+ {
++	bool inner_proto_inherit = geneve->cfg.inner_proto_inherit;
+ 	bool xnet = !net_eq(geneve->net, dev_net(geneve->dev));
+ 	struct geneve_sock *gs6 = rcu_dereference(geneve->sock6);
+ 	const struct ip_tunnel_key *key = &info->key;
+@@ -1028,7 +1030,7 @@ static int geneve6_xmit_skb(struct sk_buff *skb, struct net_device *dev,
+ 	__be16 sport;
+ 	int err;
+ 
+-	if (!skb_vlan_inet_prepare(skb))
++	if (!skb_vlan_inet_prepare(skb, inner_proto_inherit))
+ 		return -EINVAL;
+ 
+ 	sport = udp_flow_src_port(geneve->net, skb, 1, USHRT_MAX, true);
+@@ -1083,7 +1085,7 @@ static int geneve6_xmit_skb(struct sk_buff *skb, struct net_device *dev,
+ 		ttl = ttl ? : ip6_dst_hoplimit(dst);
+ 	}
+ 	err = geneve_build_skb(dst, skb, info, xnet, sizeof(struct ipv6hdr),
+-			       geneve->cfg.inner_proto_inherit);
++			       inner_proto_inherit);
+ 	if (unlikely(err))
+ 		return err;
+ 
+diff --git a/include/net/ip_tunnels.h b/include/net/ip_tunnels.h
+index f9906b73e7ff4..0cc077c3dda30 100644
+--- a/include/net/ip_tunnels.h
++++ b/include/net/ip_tunnels.h
+@@ -353,9 +353,10 @@ static inline bool pskb_inet_may_pull(struct sk_buff *skb)
+ 
+ /* Variant of pskb_inet_may_pull().
+  */
+-static inline bool skb_vlan_inet_prepare(struct sk_buff *skb)
++static inline bool skb_vlan_inet_prepare(struct sk_buff *skb,
++					 bool inner_proto_inherit)
+ {
+-	int nhlen = 0, maclen = ETH_HLEN;
++	int nhlen = 0, maclen = inner_proto_inherit ? 0 : ETH_HLEN;
+ 	__be16 type = skb->protocol;
+ 
+ 	/* Essentially this is skb_protocol(skb, true)
 -- 
 2.43.0
 
