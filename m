@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0549412FB31;
-	Wed, 19 Jun 2024 13:05:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A870E12FB31;
+	Wed, 19 Jun 2024 13:06:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802359; cv=none; b=Wl/pox5M0B8N5i2JnR3Gi2A2+715OGt39zQt5L3pkfbZKpL9gfq5tU5Wdmd2xiP1xFZHJyYpAtJx8CfCw+/H5lE5t3lh3wttPWzaYBaOHR3XMGpafKUeIbKzl/S4mx3xGG8k5thG9Ffm+QkDe2uFy3ofyo9nM89EYmo+IHQC5wc=
+	t=1718802361; cv=none; b=bTq4QFk3N3cz9g6XxWSVuaJbjeWcCab0Uu7/oOXwyv0ddAAprpqTuZE8GncQL32gnI4y9MMreLxiKoh7/msBKhVgzauWyqIXVFrRJKHE/2OcFjPuytcGwPAD9Njxw6s3y4Uwko+gZAK559fUlE+2ukhwimHLn7vSBiwiRU9knfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802359; c=relaxed/simple;
-	bh=YRWQPErqdQheVKxlpUjqNAINrzxlPq+Fk3NzlZJIlgE=;
+	s=arc-20240116; t=1718802361; c=relaxed/simple;
+	bh=YwMu2Vad0/oPVu/BkPL/dD1ejUnSmX+SLEUZZHQpCyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G8A3dgQV8hYh5LeFRansUwEzKlLuOxo8GQyCiy300zDd5Y5UcpADg4VBkBdIqZBo8NnwsT2WJm+SfGwl4PtNUZK34/8jgViWwpZq3fKETS9/5sxF5ZB+DdJ8gn9t1KV/jnssyPPv73IVVFj1ocBLh6CwnQtuZ8h3Ez721yQpB9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LBEyO3nA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZpjFEq0AnLiha2YT/s+81FYr24hxTttS1B31eOQLxGvtIRaxN7YrYP/0b3kyX9b9SE9dBsOFO7TOYrMb1GT6YzrF9re7rYwhC1NJS0T5obKqgx1WYQaIx9lsiVfFareABPOkq1QkdVFC5rW3jW0UJvY7WsxbvuzCDxC2oe59A/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VQnztSe+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LBEyO3nA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C89C2BBFC;
-	Wed, 19 Jun 2024 13:05:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VQnztSe+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26B1DC2BBFC;
+	Wed, 19 Jun 2024 13:06:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802358;
-	bh=YRWQPErqdQheVKxlpUjqNAINrzxlPq+Fk3NzlZJIlgE=;
+	s=korg; t=1718802361;
+	bh=YwMu2Vad0/oPVu/BkPL/dD1ejUnSmX+SLEUZZHQpCyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LBEyO3nACIA78Q+ci4aDidULLlzkgG2pjWIu8IdSPHTLe1NyEaW453f+O6uPkm7Vd
-	 ZKogtMrBEu+OOWNNOZkfDltBiLKjkQY+4tcQFqzBOwF6nhlXl3HpT42hYEk6QcEaGv
-	 ygqu9L/h6hcDr7i2o5DEJJwm6VUwnuOdR8IUKXKw=
+	b=VQnztSe+D1ldz0gIWZDGIwcIImihqZD7tvvJWrMaJbw32k4CM+S2qOtbhaf0GnHnO
+	 qPVkxkFsbaRitjo+98JVG7Mrg1TvpeeHowd3MSPoKs0hEOcI00u7MrwV2NMG9alp31
+	 JmpdIByu5+f2QUA8NbYOMKL3Lu7Ra0XsYan/Jk5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gal Pressman <gal@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Rao Shoaib <Rao.Shoaib@oracle.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 152/267] net/mlx5e: Fix features validation check for tunneled UDP (non-VXLAN) packets
-Date: Wed, 19 Jun 2024 14:55:03 +0200
-Message-ID: <20240619125612.179766888@linuxfoundation.org>
+Subject: [PATCH 6.6 170/267] af_unix: Read with MSG_PEEK loops if the first unread byte is OOB
+Date: Wed, 19 Jun 2024 14:55:21 +0200
+Message-ID: <20240619125612.866818876@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -54,52 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gal Pressman <gal@nvidia.com>
+From: Rao Shoaib <Rao.Shoaib@oracle.com>
 
-[ Upstream commit 791b4089e326271424b78f2fae778b20e53d071b ]
+[ Upstream commit a6736a0addd60fccc3a3508461d72314cc609772 ]
 
-Move the vxlan_features_check() call to after we verified the packet is
-a tunneled VXLAN packet.
+Read with MSG_PEEK flag loops if the first byte to read is an OOB byte.
+commit 22dd70eb2c3d ("af_unix: Don't peek OOB data without MSG_OOB.")
+addresses the loop issue but does not address the issue that no data
+beyond OOB byte can be read.
 
-Without this, tunneled UDP non-VXLAN packets (for ex. GENENVE) might
-wrongly not get offloaded.
-In some cases, it worked by chance as GENEVE header is the same size as
-VXLAN, but it is obviously incorrect.
+>>> from socket import *
+>>> c1, c2 = socketpair(AF_UNIX, SOCK_STREAM)
+>>> c1.send(b'a', MSG_OOB)
+1
+>>> c1.send(b'b')
+1
+>>> c2.recv(1, MSG_PEEK | MSG_DONTWAIT)
+b'b'
 
-Fixes: e3cfc7e6b7bd ("net/mlx5e: TX, Add geneve tunnel stateless offload support")
-Signed-off-by: Gal Pressman <gal@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+>>> from socket import *
+>>> c1, c2 = socketpair(AF_UNIX, SOCK_STREAM)
+>>> c2.setsockopt(SOL_SOCKET, SO_OOBINLINE, 1)
+>>> c1.send(b'a', MSG_OOB)
+1
+>>> c1.send(b'b')
+1
+>>> c2.recv(1, MSG_PEEK | MSG_DONTWAIT)
+b'a'
+>>> c2.recv(1, MSG_PEEK | MSG_DONTWAIT)
+b'a'
+>>> c2.recv(1, MSG_DONTWAIT)
+b'a'
+>>> c2.recv(1, MSG_PEEK | MSG_DONTWAIT)
+b'b'
+>>>
+
+Fixes: 314001f0bf92 ("af_unix: Add OOB support")
+Signed-off-by: Rao Shoaib <Rao.Shoaib@oracle.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20240611084639.2248934-1-Rao.Shoaib@oracle.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/unix/af_unix.c |   18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index 455907b1167a0..e87a776ea2bfd 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -4704,7 +4704,7 @@ static netdev_features_t mlx5e_tunnel_features_check(struct mlx5e_priv *priv,
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -2596,18 +2596,18 @@ static struct sk_buff *manage_oob(struct
+ 		if (skb == u->oob_skb) {
+ 			if (copied) {
+ 				skb = NULL;
+-			} else if (sock_flag(sk, SOCK_URGINLINE)) {
+-				if (!(flags & MSG_PEEK)) {
++			} else if (!(flags & MSG_PEEK)) {
++				if (sock_flag(sk, SOCK_URGINLINE)) {
+ 					WRITE_ONCE(u->oob_skb, NULL);
+ 					consume_skb(skb);
++				} else {
++					__skb_unlink(skb, &sk->sk_receive_queue);
++					WRITE_ONCE(u->oob_skb, NULL);
++					unlinked_skb = skb;
++					skb = skb_peek(&sk->sk_receive_queue);
+ 				}
+-			} else if (flags & MSG_PEEK) {
+-				skb = NULL;
+-			} else {
+-				__skb_unlink(skb, &sk->sk_receive_queue);
+-				WRITE_ONCE(u->oob_skb, NULL);
+-				unlinked_skb = skb;
+-				skb = skb_peek(&sk->sk_receive_queue);
++			} else if (!sock_flag(sk, SOCK_URGINLINE)) {
++				skb = skb_peek_next(skb, &sk->sk_receive_queue);
+ 			}
+ 		}
  
- 		/* Verify if UDP port is being offloaded by HW */
- 		if (mlx5_vxlan_lookup_port(priv->mdev->vxlan, port))
--			return features;
-+			return vxlan_features_check(skb, features);
- 
- #if IS_ENABLED(CONFIG_GENEVE)
- 		/* Support Geneve offload for default UDP port */
-@@ -4730,7 +4730,6 @@ netdev_features_t mlx5e_features_check(struct sk_buff *skb,
- 	struct mlx5e_priv *priv = netdev_priv(netdev);
- 
- 	features = vlan_features_check(skb, features);
--	features = vxlan_features_check(skb, features);
- 
- 	/* Validate if the tunneled packet is being offloaded by HW */
- 	if (skb->encapsulation &&
--- 
-2.43.0
-
 
 
