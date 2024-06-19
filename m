@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3017143C43;
-	Wed, 19 Jun 2024 13:03:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE74143C43;
+	Wed, 19 Jun 2024 13:03:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802226; cv=none; b=Bjsbvmd4aWK/ifIqwGnyFwbcqEGunLGonT4027vBI3Wn2+iELrBTb87Pyd2QK2oyDowhRlNlfijdf97ZqLJbf1m4ck6T8CN+xUrY/Ai5hg0S48/4ClucflXsyllgaqbo8dnJmyj6lfdGD5NRO3Sdj5O/AMGP1IN6F3l++6+tZTk=
+	t=1718802228; cv=none; b=Yc4g01y9dGHxLhDFHWtqDQDYRIykoEwuehj17MCHplF1lzP1dvSngX/i3oxa22hYfMWwLNvTTfFHoKKIYXn7H3rDnFVr9TjmdVfjUNHMYs5rz0KMEw/v/gzKxYbRaHPi9Q7mlAXmm4OH/e/+A5aocTn6o4vTduLy67z4pvyElhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802226; c=relaxed/simple;
-	bh=covD3/NXmQmhfX8tkQ+nBcyVDLUyt/zJgZxwKRQILVs=;
+	s=arc-20240116; t=1718802228; c=relaxed/simple;
+	bh=NW0JfIrMx9adK61uPD0Om+nLjk2X8ML5EHP5bK53Udk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=koaBg08AgHpR+30ATvLpFGRc977t8dICCNbz0vH9fGgiuOAVOOGzR2FVW80QwcCXwjiYgxdl/g40H/Fcfypx82LYKz7ve9pqI42dlUow5v6xh4K48nNBearXPRUOvc3v603teIo0QSVins++/28Aw39NvQGPteBY5sdSFnLEwzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F4UePSC2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GwaB7eXaj6DTexUHGE+UPHrv6eue1Mq5tEBQynFTvOMVttjpuR9r8aJGToxoYBqgKZcQIAHoJYUm5iKQuOCN7s0j+2EXKN2jL3EKxtuL9O1zQCpwowZL0MMJe2kVJXzw3TMpHEW4ltfXxcHyGqjzK4/+y91nKCTR+ArnIDuFNj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hD4Zd6/n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F4UePSC2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 340DCC2BBFC;
-	Wed, 19 Jun 2024 13:03:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hD4Zd6/n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44468C2BBFC;
+	Wed, 19 Jun 2024 13:03:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802225;
-	bh=covD3/NXmQmhfX8tkQ+nBcyVDLUyt/zJgZxwKRQILVs=;
+	s=korg; t=1718802228;
+	bh=NW0JfIrMx9adK61uPD0Om+nLjk2X8ML5EHP5bK53Udk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F4UePSC2d2FpOMBh7+N7QvP5ojkVd2Rt5yf4nmYOHrjff/NrRlE1C9WhYmj5vSCJ4
-	 e7lNXAojQ8lOhPHeLe/DLuMMvYWJF4gSsE2OpMLfoVMREXhhSyIx5kDQHnBpTmn4R3
-	 W2m+DlkpWXVcR4GwEAD3Mdo07CririyFHXDWtFOA=
+	b=hD4Zd6/nAWBV3vKfdBv6AsfrrtP/mAXWEia9LxnDkzVdIC5WUHFWeRUSnDcZTLf6n
+	 9SQgXkitTuwqhWuPmS49mS2Oq85uLHeHfOQujkYNiVjERGbEhIFLpiXf46MD55ORXp
+	 jE6WEaBTsLPVuYKGXrl47Mh6kdCyiOwzam9ixx0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Russell King <linux@armlinux.org.uk>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 117/267] clk: sifive: Do not register clkdevs for PRCI clocks
-Date: Wed, 19 Jun 2024 14:54:28 +0200
-Message-ID: <20240619125610.841815223@linuxfoundation.org>
+Subject: [PATCH 6.6 126/267] gpio: tqmx86: introduce shadow register for GPIO output value
+Date: Wed, 19 Jun 2024 14:54:37 +0200
+Message-ID: <20240619125611.188469035@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -53,60 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Holland <samuel.holland@sifive.com>
+From: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
 
-[ Upstream commit 2607133196c35f31892ee199ce7ffa717bea4ad1 ]
+[ Upstream commit 9d6a811b522ba558bcb4ec01d12e72a0af8e9f6e ]
 
-These clkdevs were unnecessary, because systems using this driver always
-look up clocks using the devicetree. And as Russell King points out[1],
-since the provided device name was truncated, lookups via clkdev would
-never match.
+The TQMx86 GPIO controller uses the same register address for input and
+output data. Reading the register will always return current inputs
+rather than the previously set outputs (regardless of the current
+direction setting). Therefore, using a RMW pattern does not make sense
+when setting output values. Instead, the previously set output register
+value needs to be stored as a shadow register.
 
-Recently, commit 8d532528ff6a ("clkdev: report over-sized strings when
-creating clkdev entries") caused clkdev registration to fail due to the
-truncation, and this now prevents the driver from probing. Fix the
-driver by removing the clkdev registration.
+As there is no reliable way to get the current output values from the
+hardware, also initialize all channels to 0, to ensure that stored and
+actual output values match. This should usually not have any effect in
+practise, as the TQMx86 UEFI sets all outputs to 0 during boot.
 
-Link: https://lore.kernel.org/linux-clk/ZkfYqj+OcAxd9O2t@shell.armlinux.org.uk/ [1]
-Fixes: 30b8e27e3b58 ("clk: sifive: add a driver for the SiFive FU540 PRCI IP block")
-Fixes: 8d532528ff6a ("clkdev: report over-sized strings when creating clkdev entries")
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Closes: https://lore.kernel.org/linux-clk/7eda7621-0dde-4153-89e4-172e4c095d01@roeck-us.net/
-Suggested-by: Russell King <linux@armlinux.org.uk>
-Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
-Link: https://lore.kernel.org/r/20240528001432.1200403-1-samuel.holland@sifive.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Also prepare for extension of the driver to more than 8 GPIOs by using
+DECLARE_BITMAP.
+
+Fixes: b868db94a6a7 ("gpio: tqmx86: Add GPIO from for this IO controller")
+Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/d0555933becd45fa92a85675d26e4d59343ddc01.1717063994.git.matthias.schiffer@ew.tq-group.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sifive/sifive-prci.c | 8 --------
- 1 file changed, 8 deletions(-)
+ drivers/gpio/gpio-tqmx86.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/clk/sifive/sifive-prci.c b/drivers/clk/sifive/sifive-prci.c
-index af81eb835bc23..b1be6a2d24aa9 100644
---- a/drivers/clk/sifive/sifive-prci.c
-+++ b/drivers/clk/sifive/sifive-prci.c
-@@ -4,7 +4,6 @@
-  * Copyright (C) 2020 Zong Li
+diff --git a/drivers/gpio/gpio-tqmx86.c b/drivers/gpio/gpio-tqmx86.c
+index 3a28c1f273c39..b7e2dbbdc4ebe 100644
+--- a/drivers/gpio/gpio-tqmx86.c
++++ b/drivers/gpio/gpio-tqmx86.c
+@@ -6,6 +6,7 @@
+  *   Vadim V.Vlasov <vvlasov@dev.rtsoft.ru>
   */
  
--#include <linux/clkdev.h>
- #include <linux/delay.h>
- #include <linux/io.h>
- #include <linux/of.h>
-@@ -536,13 +535,6 @@ static int __prci_register_clocks(struct device *dev, struct __prci_data *pd,
- 			return r;
- 		}
++#include <linux/bitmap.h>
+ #include <linux/bitops.h>
+ #include <linux/errno.h>
+ #include <linux/gpio/driver.h>
+@@ -38,6 +39,7 @@ struct tqmx86_gpio_data {
+ 	void __iomem		*io_base;
+ 	int			irq;
+ 	raw_spinlock_t		spinlock;
++	DECLARE_BITMAP(output, TQMX86_NGPIO);
+ 	u8			irq_type[TQMX86_NGPI];
+ };
  
--		r = clk_hw_register_clkdev(&pic->hw, pic->name, dev_name(dev));
--		if (r) {
--			dev_warn(dev, "Failed to register clkdev for %s: %d\n",
--				 init.name, r);
--			return r;
--		}
--
- 		pd->hw_clks.hws[i] = &pic->hw;
- 	}
+@@ -64,15 +66,10 @@ static void tqmx86_gpio_set(struct gpio_chip *chip, unsigned int offset,
+ {
+ 	struct tqmx86_gpio_data *gpio = gpiochip_get_data(chip);
+ 	unsigned long flags;
+-	u8 val;
  
+ 	raw_spin_lock_irqsave(&gpio->spinlock, flags);
+-	val = tqmx86_gpio_read(gpio, TQMX86_GPIOD);
+-	if (value)
+-		val |= BIT(offset);
+-	else
+-		val &= ~BIT(offset);
+-	tqmx86_gpio_write(gpio, val, TQMX86_GPIOD);
++	__assign_bit(offset, gpio->output, value);
++	tqmx86_gpio_write(gpio, bitmap_get_value8(gpio->output, 0), TQMX86_GPIOD);
+ 	raw_spin_unlock_irqrestore(&gpio->spinlock, flags);
+ }
+ 
+@@ -277,6 +274,13 @@ static int tqmx86_gpio_probe(struct platform_device *pdev)
+ 
+ 	tqmx86_gpio_write(gpio, (u8)~TQMX86_DIR_INPUT_MASK, TQMX86_GPIODD);
+ 
++	/*
++	 * Reading the previous output state is not possible with TQMx86 hardware.
++	 * Initialize all outputs to 0 to have a defined state that matches the
++	 * shadow register.
++	 */
++	tqmx86_gpio_write(gpio, 0, TQMX86_GPIOD);
++
+ 	chip = &gpio->chip;
+ 	chip->label = "gpio-tqmx86";
+ 	chip->owner = THIS_MODULE;
 -- 
 2.43.0
 
