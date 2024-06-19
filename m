@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A09143C45;
-	Wed, 19 Jun 2024 12:58:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B72A145324;
+	Wed, 19 Jun 2024 12:58:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718801901; cv=none; b=QI9N8J6O+L5UVaLw1bN9j1Kfk2nMSFYuDNir3+c3hQtiAj+5lZt3hcx8uvCRTAggXWim4zpJI4Y4u6IH0MhHSdOlVzNdeV0m9jbSVYi3Jz7OSxnMU62Bz1oBEhhw3QtPafWI6ulGWZuO+fyC9AhvoY2sb62I4FJmC4BZIfdMpjY=
+	t=1718801904; cv=none; b=DEKoCZHTfM3nM9j8ej75dsUSS6WkqX102Ce6jE20E957Rz7KfTfjy7LAlR+/6bJQJF3/ltyeyWvGIh2sXvodJ9fn/bz0BryEMXXaw25I/IVqjeCNIuvnq+5HZB692OMJQLmq/IGFTqs45w52vNWHuHcN2ZHK3MMHcDOjCnu9LXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718801901; c=relaxed/simple;
-	bh=Vbc504efNP2rmVszqkpmhvlpegRiwtSvnr0eWswsuBs=;
+	s=arc-20240116; t=1718801904; c=relaxed/simple;
+	bh=m9vmMpTHCxZFcLIvZ/AJDQt2QHWNTRtS47s8XFP3EX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NtrzoelHtyyLMSeJNi6SIl3hIR3ZFMRmC0H8cq+LYLSQrR5WQqjAPFh6YCfPt4fvz728NNnYjtqRN+2/KlSm1X6uYxKseJ6HLvVQ/EawX5XjsztRZ71lUcsKA/Ep8UO8EJJbMRS3ULgqoIoghYoxM9wI6fyCLspk4iAVVEnpzlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A/yFHKRO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I8CKVSvV8Fewt1sDM/QdB2Cu1amKXfsXc26BfWyZL36w0FRwRwum0vEXkBwf7YQy/pgOpQ3BIUl6TD+DyvK8Yguzn1LAMd7Iy1s/uXeXYL8xzs5hS4DVtrTnhrE94p8GnlwUYrh7T5hMMMvLFhxVSR1Z/h6+rSfc8Nw1b7RAcrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N/VUk1tY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A/yFHKRO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2337C2BBFC;
-	Wed, 19 Jun 2024 12:58:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N/VUk1tY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95443C2BBFC;
+	Wed, 19 Jun 2024 12:58:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718801901;
-	bh=Vbc504efNP2rmVszqkpmhvlpegRiwtSvnr0eWswsuBs=;
+	s=korg; t=1718801904;
+	bh=m9vmMpTHCxZFcLIvZ/AJDQt2QHWNTRtS47s8XFP3EX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A/yFHKROMrHLRuaKHNT6iOEAqXx6eiTi58Sz3Uo4emoYUeYNw0ilIt3VLhaDuoqVS
-	 7qofzmaguxhOxwYu/l8mHU66hcRBh2Kuf39IL2tvayEKM1d7ChY4jkg5IyVzwsSf8g
-	 5qf7B/vCnObszC0isdNp9dpM15XMguUno1f8ChwM=
+	b=N/VUk1tY/To/GYhL69yBt5UdPPCpF3BBxHLzdQbMCAIdSNpHXB1hQaBgaR2W4ihaD
+	 xhjs2QqsN0c5wZHhMUq0n2Nh5QPwoQrwgrf+of0+EPB9Mww/7sFIxfKZAgBn0fkXHW
+	 K+FbgwMSmPtv5jFEgBiJF2bUeq9mi+apiVmwEySc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
+	Remi Pommarel <repk@triplefau.lt>,
+	Nicolas Escande <nico.escande@gmail.com>,
+	Antonio Quartulli <a@unstable.cc>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 003/267] wifi: cfg80211: fully move wiphy work to unbound workqueue
-Date: Wed, 19 Jun 2024 14:52:34 +0200
-Message-ID: <20240619125606.484111392@linuxfoundation.org>
+Subject: [PATCH 6.6 004/267] wifi: cfg80211: Lock wiphy in cfg80211_get_station
+Date: Wed, 19 Jun 2024 14:52:35 +0200
+Message-ID: <20240619125606.521802992@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -51,60 +53,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Remi Pommarel <repk@triplefau.lt>
 
-[ Upstream commit e296c95eac655008d5a709b8cf54d0018da1c916 ]
+[ Upstream commit 642f89daa34567d02f312d03e41523a894906dae ]
 
-Previously I had moved the wiphy work to the unbound
-system workqueue, but missed that when it restarts and
-during resume it was still using the normal system
-workqueue. Fix that.
+Wiphy should be locked before calling rdev_get_station() (see lockdep
+assert in ieee80211_get_station()).
 
-Fixes: 91d20ab9d9ca ("wifi: cfg80211: use system_unbound_wq for wiphy work")
-Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240522124126.7ca959f2cbd3.I3e2a71ef445d167b84000ccf934ea245aef8d395@changeid
+This fixes the following kernel NULL dereference:
+
+ Unable to handle kernel NULL pointer dereference at virtual address 0000000000000050
+ Mem abort info:
+   ESR = 0x0000000096000006
+   EC = 0x25: DABT (current EL), IL = 32 bits
+   SET = 0, FnV = 0
+   EA = 0, S1PTW = 0
+   FSC = 0x06: level 2 translation fault
+ Data abort info:
+   ISV = 0, ISS = 0x00000006
+   CM = 0, WnR = 0
+ user pgtable: 4k pages, 48-bit VAs, pgdp=0000000003001000
+ [0000000000000050] pgd=0800000002dca003, p4d=0800000002dca003, pud=08000000028e9003, pmd=0000000000000000
+ Internal error: Oops: 0000000096000006 [#1] SMP
+ Modules linked in: netconsole dwc3_meson_g12a dwc3_of_simple dwc3 ip_gre gre ath10k_pci ath10k_core ath9k ath9k_common ath9k_hw ath
+ CPU: 0 PID: 1091 Comm: kworker/u8:0 Not tainted 6.4.0-02144-g565f9a3a7911-dirty #705
+ Hardware name: RPT (r1) (DT)
+ Workqueue: bat_events batadv_v_elp_throughput_metric_update
+ pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : ath10k_sta_statistics+0x10/0x2dc [ath10k_core]
+ lr : sta_set_sinfo+0xcc/0xbd4
+ sp : ffff000007b43ad0
+ x29: ffff000007b43ad0 x28: ffff0000071fa900 x27: ffff00000294ca98
+ x26: ffff000006830880 x25: ffff000006830880 x24: ffff00000294c000
+ x23: 0000000000000001 x22: ffff000007b43c90 x21: ffff800008898acc
+ x20: ffff00000294c6e8 x19: ffff000007b43c90 x18: 0000000000000000
+ x17: 445946354d552d78 x16: 62661f7200000000 x15: 57464f445946354d
+ x14: 0000000000000000 x13: 00000000000000e3 x12: d5f0acbcebea978e
+ x11: 00000000000000e3 x10: 000000010048fe41 x9 : 0000000000000000
+ x8 : ffff000007b43d90 x7 : 000000007a1e2125 x6 : 0000000000000000
+ x5 : ffff0000024e0900 x4 : ffff800000a0250c x3 : ffff000007b43c90
+ x2 : ffff00000294ca98 x1 : ffff000006831920 x0 : 0000000000000000
+ Call trace:
+  ath10k_sta_statistics+0x10/0x2dc [ath10k_core]
+  sta_set_sinfo+0xcc/0xbd4
+  ieee80211_get_station+0x2c/0x44
+  cfg80211_get_station+0x80/0x154
+  batadv_v_elp_get_throughput+0x138/0x1fc
+  batadv_v_elp_throughput_metric_update+0x1c/0xa4
+  process_one_work+0x1ec/0x414
+  worker_thread+0x70/0x46c
+  kthread+0xdc/0xe0
+  ret_from_fork+0x10/0x20
+ Code: a9bb7bfd 910003fd a90153f3 f9411c40 (f9402814)
+
+This happens because STA has time to disconnect and reconnect before
+batadv_v_elp_throughput_metric_update() delayed work gets scheduled. In
+this situation, ath10k_sta_state() can be in the middle of resetting
+arsta data when the work queue get chance to be scheduled and ends up
+accessing it. Locking wiphy prevents that.
+
+Fixes: 7406353d43c8 ("cfg80211: implement cfg80211_get_station cfg80211 API")
+Signed-off-by: Remi Pommarel <repk@triplefau.lt>
+Reviewed-by: Nicolas Escande <nico.escande@gmail.com>
+Acked-by: Antonio Quartulli <a@unstable.cc>
+Link: https://msgid.link/983b24a6a176e0800c01aedcd74480d9b551cb13.1716046653.git.repk@triplefau.lt
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/core.c  | 2 +-
- net/wireless/sysfs.c | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ net/wireless/util.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/wireless/core.c b/net/wireless/core.c
-index ff743e1f2e2cb..68aa8f0d70140 100644
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -431,7 +431,7 @@ static void cfg80211_wiphy_work(struct work_struct *work)
- 	if (wk) {
- 		list_del_init(&wk->entry);
- 		if (!list_empty(&rdev->wiphy_work_list))
--			schedule_work(work);
-+			queue_work(system_unbound_wq, work);
- 		spin_unlock_irq(&rdev->wiphy_work_lock);
+diff --git a/net/wireless/util.c b/net/wireless/util.c
+index 9aa7bdce20b26..57ea6d5b092d4 100644
+--- a/net/wireless/util.c
++++ b/net/wireless/util.c
+@@ -2399,6 +2399,7 @@ int cfg80211_get_station(struct net_device *dev, const u8 *mac_addr,
+ {
+ 	struct cfg80211_registered_device *rdev;
+ 	struct wireless_dev *wdev;
++	int ret;
  
- 		wk->func(&rdev->wiphy, wk);
-diff --git a/net/wireless/sysfs.c b/net/wireless/sysfs.c
-index 565511a3f461e..62f26618f6747 100644
---- a/net/wireless/sysfs.c
-+++ b/net/wireless/sysfs.c
-@@ -5,7 +5,7 @@
-  *
-  * Copyright 2005-2006	Jiri Benc <jbenc@suse.cz>
-  * Copyright 2006	Johannes Berg <johannes@sipsolutions.net>
-- * Copyright (C) 2020-2021, 2023 Intel Corporation
-+ * Copyright (C) 2020-2021, 2023-2024 Intel Corporation
-  */
+ 	wdev = dev->ieee80211_ptr;
+ 	if (!wdev)
+@@ -2410,7 +2411,11 @@ int cfg80211_get_station(struct net_device *dev, const u8 *mac_addr,
  
- #include <linux/device.h>
-@@ -137,7 +137,7 @@ static int wiphy_resume(struct device *dev)
- 	if (rdev->wiphy.registered && rdev->ops->resume)
- 		ret = rdev_resume(rdev);
- 	rdev->suspended = false;
--	schedule_work(&rdev->wiphy_work);
-+	queue_work(system_unbound_wq, &rdev->wiphy_work);
- 	wiphy_unlock(&rdev->wiphy);
+ 	memset(sinfo, 0, sizeof(*sinfo));
  
- 	if (ret)
+-	return rdev_get_station(rdev, dev, mac_addr, sinfo);
++	wiphy_lock(&rdev->wiphy);
++	ret = rdev_get_station(rdev, dev, mac_addr, sinfo);
++	wiphy_unlock(&rdev->wiphy);
++
++	return ret;
+ }
+ EXPORT_SYMBOL(cfg80211_get_station);
+ 
 -- 
 2.43.0
 
