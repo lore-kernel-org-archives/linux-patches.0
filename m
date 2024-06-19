@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35586147C60;
-	Wed, 19 Jun 2024 13:22:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DBB9144D3E;
+	Wed, 19 Jun 2024 13:22:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803368; cv=none; b=eQ7VmBokWaSM+0RNIJoy93mHnGBne0O7/jsZEISa/tGWbwf0S81Wk/huxdOBzzGylmU1f4zf15Ll4dXvLaNkoEdSW3u6kqnvMYmJx91R1jeIjC2mmau5Hb8ZGX2rSKjCvWw9dk2BVX90Fhg3dSlYfWShwk3WJtCxiT1vTp4hb6k=
+	t=1718803371; cv=none; b=VKhuYiVLnmIrqYDIwfrs6e6a1yY2jaHh+Z9s9brE9a4pzZeZLwnijAkPAq9yTbf8OZWSCle1tpU8dSKlpqSt651RkcYUV1cm2MvDUmM562YVV9JaOdZWt2UdKvtpgX1CjXxvZp4JF3/vGN+SMtWZRSZFps0i0u+dHA4ocPCRKwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803368; c=relaxed/simple;
-	bh=dG1urc/0FYVY0+Z46o4v0fnX/b8RT18naUMFqqkniXs=;
+	s=arc-20240116; t=1718803371; c=relaxed/simple;
+	bh=USSVEqlWyS3ZvJDjw9CkxHIWzwj/rQNjUmczqRsgKk0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TmQz1ciWdjuVQJFbZg6Fia/5TasQgdMsr5gd1hGJcDeSMmT4lY3CV9l5SVwzlpKnMcC0qVT+tZz6Ekz+wE/ozBS0s40/KB598sYX87DJI0FOk2Yilo9YK7GOhzWi88u621SdGMvoONO3mN1iE3JbtkC4LAHf2+Pkp5HPdJiIaqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBGr2Nmc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MbBlZYAVOteaqphLPvaViWsfJHZ3cSQiIFh7t7TaIsmsX08BdI9W3t9WRxzyTIsnFTyHn93GSiv42mjoNJqJWuUDh3UR7JhuOtoGBos6uKlpe4+fKsOtye6V2C0xSPCN3N0znn112AWRgi/yEJvsjyLKzeUI4RUQRZX2lX3XSZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJR90RFy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBGr2Nmc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF8FAC2BBFC;
-	Wed, 19 Jun 2024 13:22:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJR90RFy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A544BC2BBFC;
+	Wed, 19 Jun 2024 13:22:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803368;
-	bh=dG1urc/0FYVY0+Z46o4v0fnX/b8RT18naUMFqqkniXs=;
+	s=korg; t=1718803371;
+	bh=USSVEqlWyS3ZvJDjw9CkxHIWzwj/rQNjUmczqRsgKk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RBGr2NmcMmB9XScXd280uBeRnftkZMXfIQeSrNnuXyCCivX7vgPfJxOLIQODNdZIn
-	 kPrSVBAGKO4hfXiOtv/guDQnUcSoRn+7eo2xUaNmUYAMc8P8smwCkoDJ+fO79meUSn
-	 xMr+lHPoB2+f4HMFN/oizNR/13elp9hQGz8h5OT0=
+	b=aJR90RFyHD8mc8j+ccmnYTf4oGnTZKyDDHU3b8nfILiFD1NeGiHmvbhbldmLSmDBx
+	 AcZ8hVWE6aj9nVR+S1fADyPVhI2uWFXcPmWfs9DczrVYffVpsVFfX96blmzNnp7r7M
+	 A30u3yH0FqPTlgXwE66QSV+HXGKREELsVpwG9MFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Eric Wheeler <linux-integrity@lists.ewheeler.net>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.9 242/281] dm-integrity: set discard_granularity to logical block size
-Date: Wed, 19 Jun 2024 14:56:41 +0200
-Message-ID: <20240619125619.274437021@linuxfoundation.org>
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Anup Patel <anup@brainfault.org>
+Subject: [PATCH 6.9 213/281] irqchip/sifive-plic: Chain to parent IRQ after handlers are ready
+Date: Wed, 19 Jun 2024 14:56:12 +0200
+Message-ID: <20240619125618.157085030@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -51,39 +53,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Samuel Holland <samuel.holland@sifive.com>
 
-commit 69381cf88a8dfa0ab27fb801b78be813e7e8fb80 upstream.
+commit e306a894bd511804ba9db7c00ca9cc05b55df1f2 upstream.
 
-dm-integrity could set discard_granularity lower than the logical block
-size. This could result in failures when sending discard requests to
-dm-integrity.
+Now that the PLIC uses a platform driver, the driver is probed later in the
+boot process, where interrupts from peripherals might already be pending.
 
-This fix is needed for kernels prior to 6.10.
+As a result, plic_handle_irq() may be called as early as the call to
+irq_set_chained_handler() completes. But this call happens before the
+per-context handler is completely set up, so there is a window where
+plic_handle_irq() can see incomplete per-context state and crash.
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Reported-by: Eric Wheeler <linux-integrity@lists.ewheeler.net>
-Cc: stable@vger.kernel.org # <= 6.9
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Avoid this by delaying the call to irq_set_chained_handler() until all
+handlers from all PLICs are initialized.
+
+Fixes: 8ec99b033147 ("irqchip/sifive-plic: Convert PLIC driver into a platform driver")
+Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240529215458.937817-1-samuel.holland@sifive.com
+Closes: https://lore.kernel.org/r/CAMuHMdVYFFR7K5SbHBLY-JHhb7YpgGMS_hnRWm8H0KD-wBo+4A@mail.gmail.com/
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-integrity.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/irqchip/irq-sifive-plic.c |   34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
-index 7f3dc8ee6ab8..417fddebe367 100644
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -3492,6 +3492,7 @@ static void dm_integrity_io_hints(struct dm_target *ti, struct queue_limits *lim
- 		limits->physical_block_size = ic->sectors_per_block << SECTOR_SHIFT;
- 		blk_limits_io_min(limits, ic->sectors_per_block << SECTOR_SHIFT);
- 		limits->dma_alignment = limits->logical_block_size - 1;
-+		limits->discard_granularity = ic->sectors_per_block << SECTOR_SHIFT;
+--- a/drivers/irqchip/irq-sifive-plic.c
++++ b/drivers/irqchip/irq-sifive-plic.c
+@@ -85,7 +85,7 @@ struct plic_handler {
+ 	struct plic_priv	*priv;
+ };
+ static int plic_parent_irq __ro_after_init;
+-static bool plic_cpuhp_setup_done __ro_after_init;
++static bool plic_global_setup_done __ro_after_init;
+ static DEFINE_PER_CPU(struct plic_handler, plic_handlers);
+ 
+ static int plic_irq_set_type(struct irq_data *d, unsigned int type);
+@@ -490,10 +490,8 @@ static int plic_probe(struct platform_de
+ 	unsigned long plic_quirks = 0;
+ 	struct plic_handler *handler;
+ 	u32 nr_irqs, parent_hwirq;
+-	struct irq_domain *domain;
+ 	struct plic_priv *priv;
+ 	irq_hw_number_t hwirq;
+-	bool cpuhp_setup;
+ 
+ 	if (is_of_node(dev->fwnode)) {
+ 		const struct of_device_id *id;
+@@ -552,14 +550,6 @@ static int plic_probe(struct platform_de
+ 			continue;
+ 		}
+ 
+-		/* Find parent domain and register chained handler */
+-		domain = irq_find_matching_fwnode(riscv_get_intc_hwnode(), DOMAIN_BUS_ANY);
+-		if (!plic_parent_irq && domain) {
+-			plic_parent_irq = irq_create_mapping(domain, RV_IRQ_EXT);
+-			if (plic_parent_irq)
+-				irq_set_chained_handler(plic_parent_irq, plic_handle_irq);
+-		}
+-
+ 		/*
+ 		 * When running in M-mode we need to ignore the S-mode handler.
+ 		 * Here we assume it always comes later, but that might be a
+@@ -600,25 +590,35 @@ done:
+ 		goto fail_cleanup_contexts;
+ 
+ 	/*
+-	 * We can have multiple PLIC instances so setup cpuhp state
++	 * We can have multiple PLIC instances so setup global state
+ 	 * and register syscore operations only once after context
+ 	 * handlers of all online CPUs are initialized.
+ 	 */
+-	if (!plic_cpuhp_setup_done) {
+-		cpuhp_setup = true;
++	if (!plic_global_setup_done) {
++		struct irq_domain *domain;
++		bool global_setup = true;
++
+ 		for_each_online_cpu(cpu) {
+ 			handler = per_cpu_ptr(&plic_handlers, cpu);
+ 			if (!handler->present) {
+-				cpuhp_setup = false;
++				global_setup = false;
+ 				break;
+ 			}
+ 		}
+-		if (cpuhp_setup) {
++
++		if (global_setup) {
++			/* Find parent domain and register chained handler */
++			domain = irq_find_matching_fwnode(riscv_get_intc_hwnode(), DOMAIN_BUS_ANY);
++			if (domain)
++				plic_parent_irq = irq_create_mapping(domain, RV_IRQ_EXT);
++			if (plic_parent_irq)
++				irq_set_chained_handler(plic_parent_irq, plic_handle_irq);
++
+ 			cpuhp_setup_state(CPUHP_AP_IRQ_SIFIVE_PLIC_STARTING,
+ 					  "irqchip/sifive/plic:starting",
+ 					  plic_starting_cpu, plic_dying_cpu);
+ 			register_syscore_ops(&plic_irq_syscore_ops);
+-			plic_cpuhp_setup_done = true;
++			plic_global_setup_done = true;
+ 		}
  	}
- 	limits->max_integrity_segments = USHRT_MAX;
- }
--- 
-2.45.2
-
+ 
 
 
