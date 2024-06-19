@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6448D147C6E;
-	Wed, 19 Jun 2024 13:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DDA114A609;
+	Wed, 19 Jun 2024 13:26:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803601; cv=none; b=TgF039w+VuuI/qrgtvmF1BESVdhlMwLtasmc4kvmC2MbrLYI8rxArd0ETPp2cwO0E2eaUmlxkjoy08jFTLqYfrR9U6vnsv704cJzhQLIzQQqYs1/D8YjGOJF2hZZWfelcQR5YkZmf0z/IIV8KGsf5D5q7TnHMqIBXl4UOER7t9U=
+	t=1718803604; cv=none; b=bMUdlkPvkZkzhCqZ2oiVtPYM9XlQ2XjDsZ1KmPGHqabRIy5D1qWLzki+pyPaxzTpfeDjbjKvqzZL7YnOTe8BSHh7jjCDDCoDNwu7/z6fbnoK/ZMKQhzUpj5gFFL1zHQFnNNNaEitwrI9eFM97jznaF65P9s1No+8ijrB4lJo7kI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803601; c=relaxed/simple;
-	bh=pHPrr+MpOOszytcllcR5OPjEd2yfo3zvpx5OY1g0PMY=;
+	s=arc-20240116; t=1718803604; c=relaxed/simple;
+	bh=ZrTeDAWyPxLs8ccYGTNSygLdBW+4VY0BIsPGanPkp/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nmB06pBBmQZfIu2LjAJQwGVU2fxL9zt9kEvcN95EnWc3G2C/f7owm52VMAeKLughkSVcdLkN8IBFQ6Qn5fHJ594JaXWXL731Yb5c6X30/g7mGao+A2WAeTNmmOYxakhWNA5YRzd640fP+xY9FRgCARO73r+OXsPwFLNIvJf3z54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ol9NCOgY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gJX1A7bqPCq06ijul4C3CtsspSzJ2NC0MmL5SXafTU8vI7DcdnPHUckx3cLXc3PDqbpkz8InOfr3wuwjc27/hF5sWb0QYiRLGRfaYV7ndIXds+hyn/nlvFI+nUXojR3+l64WNOvepxc82J4mZaa2AflbFuwIuqexX1xYrfv5CWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hceU72IF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ol9NCOgY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFAB4C32786;
-	Wed, 19 Jun 2024 13:26:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hceU72IF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE87BC4AF1A;
+	Wed, 19 Jun 2024 13:26:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803601;
-	bh=pHPrr+MpOOszytcllcR5OPjEd2yfo3zvpx5OY1g0PMY=;
+	s=korg; t=1718803604;
+	bh=ZrTeDAWyPxLs8ccYGTNSygLdBW+4VY0BIsPGanPkp/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ol9NCOgYU49Z8tt3ckPHKak6tpVZWIiuJ1n1pnGqnwf31Y5GHdZy6XX6LLbgVyX5t
-	 tzd5AcP8Cb4EG+zfDxMcO8t+WlrBqMq4KBHZ5EMwkEWSgWceSrRpyW+OVE0LiUXJCn
-	 t2Wgil+NFFtskPIc39WLuUcfMQAkYbcPUSHGMqsg=
+	b=hceU72IFLvBUn9mBsOHsi4Iu+hvIbtnL+qjKShhRfFPBCNFb5q4WlP0xlePsHHGDK
+	 otm9Jeg+Cu5RE+Pf5tLAfHAIz1IW0VCMhqlNxABk3mfUuPaupxPURA5QILQFbSQhXO
+	 YrP0HKIGUD2WY2wILn1I2GUAQfBStA6hWd9GDRjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Chandan Kumar Rout <chandanx.rout@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 033/217] ice: remove af_xdp_zc_qps bitmap
-Date: Wed, 19 Jun 2024 14:54:36 +0200
-Message-ID: <20240619125557.930526056@linuxfoundation.org>
+Subject: [PATCH 6.1 042/217] af_unix: Annotate data-races around sk->sk_state in UNIX_DIAG.
+Date: Wed, 19 Jun 2024 14:54:45 +0200
+Message-ID: <20240619125558.280560405@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -55,168 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Larysa Zaremba <larysa.zaremba@intel.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit adbf5a42341f6ea038d3626cd4437d9f0ad0b2dd ]
+[ Upstream commit 0aa3be7b3e1f8f997312cc4705f8165e02806f8f ]
 
-Referenced commit has introduced a bitmap to distinguish between ZC and
-copy-mode AF_XDP queues, because xsk_get_pool_from_qid() does not do this
-for us.
+While dumping AF_UNIX sockets via UNIX_DIAG, sk->sk_state is read
+locklessly.
 
-The bitmap would be especially useful when restoring previous state after
-rebuild, if only it was not reallocated in the process. This leads to e.g.
-xdpsock dying after changing number of queues.
+Let's use READ_ONCE() there.
 
-Instead of preserving the bitmap during the rebuild, remove it completely
-and distinguish between ZC and copy-mode queues based on the presence of
-a device associated with the pool.
+Note that the result could be inconsistent if the socket is dumped
+during the state change.  This is common for other SOCK_DIAG and
+similar interfaces.
 
-Fixes: e102db780e1c ("ice: track AF_XDP ZC enabled queues in bitmap")
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://lore.kernel.org/r/20240603-net-2024-05-30-intel-net-fixes-v2-3-e3563aa89b0c@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c9da99e6475f ("unix_diag: Fixup RQLEN extension report")
+Fixes: 2aac7a2cb0d9 ("unix_diag: Pending connections IDs NLA")
+Fixes: 45a96b9be6ec ("unix_diag: Dumping all sockets core")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice.h     | 32 ++++++++++++++++--------
- drivers/net/ethernet/intel/ice/ice_lib.c |  8 ------
- drivers/net/ethernet/intel/ice/ice_xsk.c | 13 +++++-----
- 3 files changed, 27 insertions(+), 26 deletions(-)
+ net/unix/diag.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice.h b/drivers/net/ethernet/intel/ice/ice.h
-index f2be383d97df5..6d75e5638f665 100644
---- a/drivers/net/ethernet/intel/ice/ice.h
-+++ b/drivers/net/ethernet/intel/ice/ice.h
-@@ -388,7 +388,6 @@ struct ice_vsi {
- 	struct ice_tc_cfg tc_cfg;
- 	struct bpf_prog *xdp_prog;
- 	struct ice_tx_ring **xdp_rings;	 /* XDP ring array */
--	unsigned long *af_xdp_zc_qps;	 /* tracks AF_XDP ZC enabled qps */
- 	u16 num_xdp_txq;		 /* Used XDP queues */
- 	u8 xdp_mapping_mode;		 /* ICE_MAP_MODE_[CONTIG|SCATTER] */
+diff --git a/net/unix/diag.c b/net/unix/diag.c
+index 3438b7af09af5..9151c72e742fc 100644
+--- a/net/unix/diag.c
++++ b/net/unix/diag.c
+@@ -65,7 +65,7 @@ static int sk_diag_dump_icons(struct sock *sk, struct sk_buff *nlskb)
+ 	u32 *buf;
+ 	int i;
  
-@@ -688,6 +687,25 @@ static inline void ice_set_ring_xdp(struct ice_tx_ring *ring)
- 	ring->flags |= ICE_TX_FLAGS_RING_XDP;
- }
+-	if (sk->sk_state == TCP_LISTEN) {
++	if (READ_ONCE(sk->sk_state) == TCP_LISTEN) {
+ 		spin_lock(&sk->sk_receive_queue.lock);
  
-+/**
-+ * ice_get_xp_from_qid - get ZC XSK buffer pool bound to a queue ID
-+ * @vsi: pointer to VSI
-+ * @qid: index of a queue to look at XSK buff pool presence
-+ *
-+ * Return: A pointer to xsk_buff_pool structure if there is a buffer pool
-+ * attached and configured as zero-copy, NULL otherwise.
-+ */
-+static inline struct xsk_buff_pool *ice_get_xp_from_qid(struct ice_vsi *vsi,
-+							u16 qid)
-+{
-+	struct xsk_buff_pool *pool = xsk_get_pool_from_qid(vsi->netdev, qid);
-+
-+	if (!ice_is_xdp_ena_vsi(vsi))
-+		return NULL;
-+
-+	return (pool && pool->dev) ? pool : NULL;
-+}
-+
- /**
-  * ice_xsk_pool - get XSK buffer pool bound to a ring
-  * @ring: Rx ring to use
-@@ -700,10 +718,7 @@ static inline struct xsk_buff_pool *ice_xsk_pool(struct ice_rx_ring *ring)
- 	struct ice_vsi *vsi = ring->vsi;
- 	u16 qid = ring->q_index;
- 
--	if (!ice_is_xdp_ena_vsi(vsi) || !test_bit(qid, vsi->af_xdp_zc_qps))
--		return NULL;
--
--	return xsk_get_pool_from_qid(vsi->netdev, qid);
-+	return ice_get_xp_from_qid(vsi, qid);
- }
- 
- /**
-@@ -728,12 +743,7 @@ static inline void ice_tx_xsk_pool(struct ice_vsi *vsi, u16 qid)
- 	if (!ring)
- 		return;
- 
--	if (!ice_is_xdp_ena_vsi(vsi) || !test_bit(qid, vsi->af_xdp_zc_qps)) {
--		ring->xsk_pool = NULL;
--		return;
--	}
--
--	ring->xsk_pool = xsk_get_pool_from_qid(vsi->netdev, qid);
-+	ring->xsk_pool = ice_get_xp_from_qid(vsi, qid);
- }
- 
- /**
-diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
-index cd161c03c5e39..7661e735d0992 100644
---- a/drivers/net/ethernet/intel/ice/ice_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_lib.c
-@@ -117,14 +117,8 @@ static int ice_vsi_alloc_arrays(struct ice_vsi *vsi)
- 	if (!vsi->q_vectors)
- 		goto err_vectors;
- 
--	vsi->af_xdp_zc_qps = bitmap_zalloc(max_t(int, vsi->alloc_txq, vsi->alloc_rxq), GFP_KERNEL);
--	if (!vsi->af_xdp_zc_qps)
--		goto err_zc_qps;
--
- 	return 0;
- 
--err_zc_qps:
--	devm_kfree(dev, vsi->q_vectors);
- err_vectors:
- 	devm_kfree(dev, vsi->rxq_map);
- err_rxq_map:
-@@ -320,8 +314,6 @@ static void ice_vsi_free_arrays(struct ice_vsi *vsi)
- 
- 	dev = ice_pf_to_dev(pf);
- 
--	bitmap_free(vsi->af_xdp_zc_qps);
--	vsi->af_xdp_zc_qps = NULL;
- 	/* free the ring and vector containers */
- 	devm_kfree(dev, vsi->q_vectors);
- 	vsi->q_vectors = NULL;
-diff --git a/drivers/net/ethernet/intel/ice/ice_xsk.c b/drivers/net/ethernet/intel/ice/ice_xsk.c
-index 48cf24709fe32..b917f271cdac1 100644
---- a/drivers/net/ethernet/intel/ice/ice_xsk.c
-+++ b/drivers/net/ethernet/intel/ice/ice_xsk.c
-@@ -281,7 +281,6 @@ static int ice_xsk_pool_disable(struct ice_vsi *vsi, u16 qid)
- 	if (!pool)
- 		return -EINVAL;
- 
--	clear_bit(qid, vsi->af_xdp_zc_qps);
- 	xsk_pool_dma_unmap(pool, ICE_RX_DMA_ATTR);
- 
- 	return 0;
-@@ -312,8 +311,6 @@ ice_xsk_pool_enable(struct ice_vsi *vsi, struct xsk_buff_pool *pool, u16 qid)
- 	if (err)
- 		return err;
- 
--	set_bit(qid, vsi->af_xdp_zc_qps);
--
- 	return 0;
- }
- 
-@@ -361,11 +358,13 @@ ice_realloc_rx_xdp_bufs(struct ice_rx_ring *rx_ring, bool pool_present)
- int ice_realloc_zc_buf(struct ice_vsi *vsi, bool zc)
+ 		attr = nla_reserve(nlskb, UNIX_DIAG_ICONS,
+@@ -103,7 +103,7 @@ static int sk_diag_show_rqlen(struct sock *sk, struct sk_buff *nlskb)
  {
- 	struct ice_rx_ring *rx_ring;
--	unsigned long q;
-+	uint i;
-+
-+	ice_for_each_rxq(vsi, i) {
-+		rx_ring = vsi->rx_rings[i];
-+		if (!rx_ring->xsk_pool)
-+			continue;
+ 	struct unix_diag_rqlen rql;
  
--	for_each_set_bit(q, vsi->af_xdp_zc_qps,
--			 max_t(int, vsi->alloc_txq, vsi->alloc_rxq)) {
--		rx_ring = vsi->rx_rings[q];
- 		if (ice_realloc_rx_xdp_bufs(rx_ring, zc))
- 			return -ENOMEM;
- 	}
+-	if (sk->sk_state == TCP_LISTEN) {
++	if (READ_ONCE(sk->sk_state) == TCP_LISTEN) {
+ 		rql.udiag_rqueue = sk->sk_receive_queue.qlen;
+ 		rql.udiag_wqueue = sk->sk_max_ack_backlog;
+ 	} else {
+@@ -136,7 +136,7 @@ static int sk_diag_fill(struct sock *sk, struct sk_buff *skb, struct unix_diag_r
+ 	rep = nlmsg_data(nlh);
+ 	rep->udiag_family = AF_UNIX;
+ 	rep->udiag_type = sk->sk_type;
+-	rep->udiag_state = sk->sk_state;
++	rep->udiag_state = READ_ONCE(sk->sk_state);
+ 	rep->pad = 0;
+ 	rep->udiag_ino = sk_ino;
+ 	sock_diag_save_cookie(sk, rep->udiag_cookie);
+@@ -215,7 +215,7 @@ static int unix_diag_dump(struct sk_buff *skb, struct netlink_callback *cb)
+ 		sk_for_each(sk, &net->unx.table.buckets[slot]) {
+ 			if (num < s_num)
+ 				goto next;
+-			if (!(req->udiag_states & (1 << sk->sk_state)))
++			if (!(req->udiag_states & (1 << READ_ONCE(sk->sk_state))))
+ 				goto next;
+ 			if (sk_diag_dump(sk, skb, req, sk_user_ns(skb->sk),
+ 					 NETLINK_CB(cb->skb).portid,
 -- 
 2.43.0
 
