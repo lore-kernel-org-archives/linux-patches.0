@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D4914900C;
-	Wed, 19 Jun 2024 13:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D5E13AA40;
+	Wed, 19 Jun 2024 13:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802122; cv=none; b=qIFOqSnaGW6nmgA5iq1fX7LL6tWHHPofbq8NjFld2SAE31LytAgZBTPcuFD4PR+Ktu1kX2ofU3obwRHgJn4xxNC+WP24GvIok2mFO623owH5Cf4l83n+7XsMpzH+XIoMRs53TJz+MWVmJmJrXTwyg9YbPoqBeyIWYJ74HImK8Tk=
+	t=1718802125; cv=none; b=cvCUT3/oNgGXqMtElTWgdNt1xxo4TmqKdoKtOcdAak3OUzas9tFtlPpzYq8QAzSZN0fTlssN3AXes9hV9ZnLWAWuy8+G93LWwqexq5PDgQb7LnS9FCNTouMRIcfsLhFNeJ1kZ2dCEQsEFn03/4fa31S85wCTzWF5TKDhYzyB1Cc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802122; c=relaxed/simple;
-	bh=EcWbleftUVtE2ZTnWOYHNP/BklYxmsB+HKgDARHz/+c=;
+	s=arc-20240116; t=1718802125; c=relaxed/simple;
+	bh=qEWuqppaiTHtJwfP9qoULhjvxOwomqfcJgzkrCnvATY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OhatTbOIgDKs0uvf4mgcK9nNH/YfYI53aA40vH1KPd11KcdZy6JzSE89/hBpQj8Q9CSevYAnZBJx0cF5UOiHVZ8JU3X7VHYbG6db7n8ldwP7YzWm9YweJl+qL3neFkcgR7cwAUvlbB1k82jTHUngmo9CTrrvOtvQ1lQBePrGlik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HNZQ0ADf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LytRhen+S1QWH6cRhhl9CckDN6JCOglvVPa7n8CcaJPmICuwmzXTEKKmP0WQx6Uc6Wv87RFYR+kzp8PB1FTvi8GgLDQSxgdBlgpmh2PsVGjSqxtZD5EjpNdvNQA8ccONkzDOstY3xRvmtloxxSATh3GHMfWcTdA1FpjMrcuazqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zt7NayIq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HNZQ0ADf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC5EEC2BBFC;
-	Wed, 19 Jun 2024 13:02:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zt7NayIq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0BACC2BBFC;
+	Wed, 19 Jun 2024 13:02:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802122;
-	bh=EcWbleftUVtE2ZTnWOYHNP/BklYxmsB+HKgDARHz/+c=;
+	s=korg; t=1718802125;
+	bh=qEWuqppaiTHtJwfP9qoULhjvxOwomqfcJgzkrCnvATY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HNZQ0ADfPgdQ9k6GIdr0qAxIVUkgRlpY1HKZcGNpU5VV2udkVXsoMjzgU+L3DPhhF
-	 QeDQGwj93bMGGvy3W3Lg+tQPv/O2ODfXH1c9kgqatjoI5610UvXKumfCaIw+p3528E
-	 DXdAHk9eHnuXWHmGlODbqkIa4hdI3Yf8TwMzKCjs=
+	b=Zt7NayIqBPGMFxAJyQPgMHLNGrd3nDTRhTYh2gb5Zy82aco3ZoVJhExmkKoBoRy95
+	 CD8YdqqAFJ4/8ATcP9oIWeOiTeluBH0qMCsjFW9qCBZXPLhRW80YM7CCblfcppjQdR
+	 B3WD5RUjdi4l9lQRXIU9E86ngZF5eWsuHY0PzKZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 048/267] af_unix: Set sk->sk_state under unix_state_lock() for truly disconencted peer.
-Date: Wed, 19 Jun 2024 14:53:19 +0200
-Message-ID: <20240619125608.209095299@linuxfoundation.org>
+	Kyle Tso <kyletso@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.6 083/267] usb: typec: tcpm: Ignore received Hard Reset in TOGGLING state
+Date: Wed, 19 Jun 2024 14:53:54 +0200
+Message-ID: <20240619125609.537068142@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -51,89 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Kyle Tso <kyletso@google.com>
 
-[ Upstream commit 26bfb8b57063f52b867f9b6c8d1742fcb5bd656c ]
+commit fc8fb9eea94d8f476e15f3a4a7addeb16b3b99d6 upstream.
 
-When a SOCK_DGRAM socket connect()s to another socket, the both sockets'
-sk->sk_state are changed to TCP_ESTABLISHED so that we can register them
-to BPF SOCKMAP.
+Similar to what fixed in Commit a6fe37f428c1 ("usb: typec: tcpm: Skip
+hard reset when in error recovery"), the handling of the received Hard
+Reset has to be skipped during TOGGLING state.
 
-When the socket disconnects from the peer by connect(AF_UNSPEC), the state
-is set back to TCP_CLOSE.
+[ 4086.021288] VBUS off
+[ 4086.021295] pending state change SNK_READY -> SNK_UNATTACHED @ 650 ms [rev2 NONE_AMS]
+[ 4086.022113] VBUS VSAFE0V
+[ 4086.022117] state change SNK_READY -> SNK_UNATTACHED [rev2 NONE_AMS]
+[ 4086.022447] VBUS off
+[ 4086.022450] state change SNK_UNATTACHED -> SNK_UNATTACHED [rev2 NONE_AMS]
+[ 4086.023060] VBUS VSAFE0V
+[ 4086.023064] state change SNK_UNATTACHED -> SNK_UNATTACHED [rev2 NONE_AMS]
+[ 4086.023070] disable BIST MODE TESTDATA
+[ 4086.023766] disable vbus discharge ret:0
+[ 4086.023911] Setting usb_comm capable false
+[ 4086.028874] Setting voltage/current limit 0 mV 0 mA
+[ 4086.028888] polarity 0
+[ 4086.030305] Requesting mux state 0, usb-role 0, orientation 0
+[ 4086.033539] Start toggling
+[ 4086.038496] state change SNK_UNATTACHED -> TOGGLING [rev2 NONE_AMS]
 
-Then, the peer's state is also set to TCP_CLOSE, but the update is done
-locklessly and unconditionally.
+// This Hard Reset is unexpected
+[ 4086.038499] Received hard reset
+[ 4086.038501] state change TOGGLING -> HARD_RESET_START [rev2 HARD_RESET]
 
-Let's say socket A connect()ed to B, B connect()ed to C, and A disconnects
-from B.
-
-After the first two connect()s, all three sockets' sk->sk_state are
-TCP_ESTABLISHED:
-
-  $ ss -xa
-  Netid State  Recv-Q Send-Q  Local Address:Port  Peer Address:PortProcess
-  u_dgr ESTAB  0      0       @A 641              * 642
-  u_dgr ESTAB  0      0       @B 642              * 643
-  u_dgr ESTAB  0      0       @C 643              * 0
-
-And after the disconnect, B's state is TCP_CLOSE even though it's still
-connected to C and C's state is TCP_ESTABLISHED.
-
-  $ ss -xa
-  Netid State  Recv-Q Send-Q  Local Address:Port  Peer Address:PortProcess
-  u_dgr UNCONN 0      0       @A 641              * 0
-  u_dgr UNCONN 0      0       @B 642              * 643
-  u_dgr ESTAB  0      0       @C 643              * 0
-
-In this case, we cannot register B to SOCKMAP.
-
-So, when a socket disconnects from the peer, we should not set TCP_CLOSE to
-the peer if the peer is connected to yet another socket, and this must be
-done under unix_state_lock().
-
-Note that we use WRITE_ONCE() for sk->sk_state as there are many lockless
-readers.  These data-races will be fixed in the following patches.
-
-Fixes: 83301b5367a9 ("af_unix: Set TCP_ESTABLISHED for datagram sockets too")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f0690a25a140 ("staging: typec: USB Type-C Port Manager (tcpm)")
+Cc: stable@vger.kernel.org
+Signed-off-by: Kyle Tso <kyletso@google.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240520154858.1072347-1-kyletso@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/unix/af_unix.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/usb/typec/tcpm/tcpm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index d01314dc86ecb..348f9e34f6696 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -571,7 +571,6 @@ static void unix_dgram_disconnected(struct sock *sk, struct sock *other)
- 			sk_error_report(other);
- 		}
- 	}
--	other->sk_state = TCP_CLOSE;
- }
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -5415,6 +5415,7 @@ static void _tcpm_pd_hard_reset(struct t
+ 		port->tcpc->set_bist_data(port->tcpc, false);
  
- static void unix_sock_destructor(struct sock *sk)
-@@ -1434,8 +1433,15 @@ static int unix_dgram_connect(struct socket *sock, struct sockaddr *addr,
- 
- 		unix_state_double_unlock(sk, other);
- 
--		if (other != old_peer)
-+		if (other != old_peer) {
- 			unix_dgram_disconnected(sk, old_peer);
-+
-+			unix_state_lock(old_peer);
-+			if (!unix_peer(old_peer))
-+				WRITE_ONCE(old_peer->sk_state, TCP_CLOSE);
-+			unix_state_unlock(old_peer);
-+		}
-+
- 		sock_put(old_peer);
- 	} else {
- 		unix_peer(sk) = other;
--- 
-2.43.0
-
+ 	switch (port->state) {
++	case TOGGLING:
+ 	case ERROR_RECOVERY:
+ 	case PORT_RESET:
+ 	case PORT_RESET_WAIT_OFF:
 
 
