@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7E0143C65;
-	Wed, 19 Jun 2024 13:24:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B99B2143757;
+	Wed, 19 Jun 2024 13:24:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803486; cv=none; b=iE0gTgOBQxZz+UD6gdxxY/SifrZNMwjarBO2LRpfyGNLeQf1WPHWa3rE3OCB9AHZzHWIVZeHEftifDKZLYk7Pb1AZQj8cvid1sJ3VeggtlHJhrojz+joEgZXUdkisLIQHyGTL2c4bYMw7AYSRjuUkjW30QajIYoBeMDt+pIYez8=
+	t=1718803489; cv=none; b=lBXJnaAefxIIPK1XyQxaZgI/3MKLw1Co7rqFb44g0pNwSuZmDQ5pmmSAdpsHaLOR52n9xDJhNOU6Sc7G6QS01/pvye1LFBPKcCxjBWo3l15lNeM6EYmKWpKQJP4Y1IyVgaMOMqSeFHqWmZB3W7Aq/wiyaSJJPoiVU7j/UqGCUyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803486; c=relaxed/simple;
-	bh=v0Biu0+VQAi9gTD3/EnQNsWwNCgdvob6bulNppOkcHY=;
+	s=arc-20240116; t=1718803489; c=relaxed/simple;
+	bh=Z7KDLXxmAz2kkcD6N8lfPRwHPzyupQWhWin7WQq2czU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZyJ/p0PJRxz7xXvJ4PzghchKvsOmOYwAu/DipddKGCu/x7W4HkQzhfgMw72a/zmp3e2hxXCXpCxPTFbBAaVRmCFCdSBX6MX+QtA0+DGbhYTRkbrjU70unHuEIP4f305Hle0hDgmVe9PXC3/xXD1aPh2Ly0r9AAz6LYzaPhJWw+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E68U54X3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=e+Cw66gP4WuPmtqUDtyFTLHfad3IYDPfbX1Av4ehY2G9YALbBACAeeW3dWed0Rntv/YCkN/Dn4+/guIDxGuilu4neKCED6ruq0Y1t3WZKo1hFBtE+WMFZn1bh/yxTwvrDJKvFlAbM7ZchP6mBlv0kf1K2fjvbbX44EWigw2IY2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Osciyg2V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E68U54X3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A8AFC2BBFC;
-	Wed, 19 Jun 2024 13:24:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Osciyg2V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E61DC2BBFC;
+	Wed, 19 Jun 2024 13:24:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803486;
-	bh=v0Biu0+VQAi9gTD3/EnQNsWwNCgdvob6bulNppOkcHY=;
+	s=korg; t=1718803489;
+	bh=Z7KDLXxmAz2kkcD6N8lfPRwHPzyupQWhWin7WQq2czU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E68U54X3ttPhSUCu7HxNjIB3RGFo/ysRB2DZTjjXWSGmFvkbkby52p/WYNwEiC3Mz
-	 yA/9SzfsWIQzh0gFaPsy6sBNJr0nJUEPRZAYHUqqcxJmATDojmoszfxig1IU5KA6gS
-	 ce/bmQ24p+qKTWCTwMp/jUwV66gVACz8NTEg1jYE=
+	b=Osciyg2VZ1rRteRm4FVl8aC3UGBhAQCvvetlqnUnOrRPGEWyKI+J6/DF+II/st+fp
+	 x8CS96mYYWmwB8BgV+IrY6VdIZdJhm1W78Xx5Q82ip51gg4W490Hwqbx2fMzXi5rTv
+	 JNE5fFmD5viuT5Pw1MgtXgMM350GydYER9LaSBpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nam Cao <namcao@linutronix.de>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.9 252/281] riscv: rewrite __kernel_map_pages() to fix sleeping in invalid context
-Date: Wed, 19 Jun 2024 14:56:51 +0200
-Message-ID: <20240619125619.674818258@linuxfoundation.org>
+	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: [PATCH 6.9 243/281] PCI: rockchip-ep: Remove wrong mask on subsys_vendor_id
+Date: Wed, 19 Jun 2024 14:56:42 +0200
+Message-ID: <20240619125619.313334512@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -45,105 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nam Cao <namcao@linutronix.de>
+From: Rick Wertenbroek <rick.wertenbroek@gmail.com>
 
-commit fb1cf0878328fe75d47f0aed0a65b30126fcefc4 upstream.
+commit 2dba285caba53f309d6060fca911b43d63f41697 upstream.
 
-__kernel_map_pages() is a debug function which clears the valid bit in page
-table entry for deallocated pages to detect illegal memory accesses to
-freed pages.
+Remove wrong mask on subsys_vendor_id. Both the Vendor ID and Subsystem
+Vendor ID are u16 variables and are written to a u32 register of the
+controller. The Subsystem Vendor ID was always 0 because the u16 value
+was masked incorrectly with GENMASK(31,16) resulting in all lower 16
+bits being set to 0 prior to the shift.
 
-This function set/clear the valid bit using __set_memory(). __set_memory()
-acquires init_mm's semaphore, and this operation may sleep. This is
-problematic, because  __kernel_map_pages() can be called in atomic context,
-and thus is illegal to sleep. An example warning that this causes:
+Remove both masks as they are unnecessary and set the register correctly
+i.e., the lower 16-bits are the Vendor ID and the upper 16-bits are the
+Subsystem Vendor ID.
 
-BUG: sleeping function called from invalid context at kernel/locking/rwsem.c:1578
-in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 2, name: kthreadd
-preempt_count: 2, expected: 0
-CPU: 0 PID: 2 Comm: kthreadd Not tainted 6.9.0-g1d4c6d784ef6 #37
-Hardware name: riscv-virtio,qemu (DT)
-Call Trace:
-[<ffffffff800060dc>] dump_backtrace+0x1c/0x24
-[<ffffffff8091ef6e>] show_stack+0x2c/0x38
-[<ffffffff8092baf8>] dump_stack_lvl+0x5a/0x72
-[<ffffffff8092bb24>] dump_stack+0x14/0x1c
-[<ffffffff8003b7ac>] __might_resched+0x104/0x10e
-[<ffffffff8003b7f4>] __might_sleep+0x3e/0x62
-[<ffffffff8093276a>] down_write+0x20/0x72
-[<ffffffff8000cf00>] __set_memory+0x82/0x2fa
-[<ffffffff8000d324>] __kernel_map_pages+0x5a/0xd4
-[<ffffffff80196cca>] __alloc_pages_bulk+0x3b2/0x43a
-[<ffffffff8018ee82>] __vmalloc_node_range+0x196/0x6ba
-[<ffffffff80011904>] copy_process+0x72c/0x17ec
-[<ffffffff80012ab4>] kernel_clone+0x60/0x2fe
-[<ffffffff80012f62>] kernel_thread+0x82/0xa0
-[<ffffffff8003552c>] kthreadd+0x14a/0x1be
-[<ffffffff809357de>] ret_from_fork+0xe/0x1c
+This is documented in the RK3399 TRM section 17.6.7.1.17
 
-Rewrite this function with apply_to_existing_page_range(). It is fine to
-not have any locking, because __kernel_map_pages() works with pages being
-allocated/deallocated and those pages are not changed by anyone else in the
-meantime.
-
-Fixes: 5fde3db5eb02 ("riscv: add ARCH_SUPPORTS_DEBUG_PAGEALLOC support")
-Signed-off-by: Nam Cao <namcao@linutronix.de>
+[kwilczynski: removed unnecesary newline]
+Fixes: cf590b078391 ("PCI: rockchip: Add EP driver for Rockchip PCIe controller")
+Link: https://lore.kernel.org/linux-pci/20240403144508.489835-1-rick.wertenbroek@gmail.com
+Signed-off-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Cc: stable@vger.kernel.org
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/1289ecba9606a19917bc12b6c27da8aa23e1e5ae.1715750938.git.namcao@linutronix.de
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/mm/pageattr.c |   28 ++++++++++++++++++++++------
- 1 file changed, 22 insertions(+), 6 deletions(-)
+ drivers/pci/controller/pcie-rockchip-ep.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/arch/riscv/mm/pageattr.c
-+++ b/arch/riscv/mm/pageattr.c
-@@ -387,17 +387,33 @@ int set_direct_map_default_noflush(struc
- }
+--- a/drivers/pci/controller/pcie-rockchip-ep.c
++++ b/drivers/pci/controller/pcie-rockchip-ep.c
+@@ -98,10 +98,8 @@ static int rockchip_pcie_ep_write_header
  
- #ifdef CONFIG_DEBUG_PAGEALLOC
-+static int debug_pagealloc_set_page(pte_t *pte, unsigned long addr, void *data)
-+{
-+	int enable = *(int *)data;
-+
-+	unsigned long val = pte_val(ptep_get(pte));
-+
-+	if (enable)
-+		val |= _PAGE_PRESENT;
-+	else
-+		val &= ~_PAGE_PRESENT;
-+
-+	set_pte(pte, __pte(val));
-+
-+	return 0;
-+}
-+
- void __kernel_map_pages(struct page *page, int numpages, int enable)
- {
- 	if (!debug_pagealloc_enabled())
- 		return;
- 
--	if (enable)
--		__set_memory((unsigned long)page_address(page), numpages,
--			     __pgprot(_PAGE_PRESENT), __pgprot(0));
--	else
--		__set_memory((unsigned long)page_address(page), numpages,
--			     __pgprot(0), __pgprot(_PAGE_PRESENT));
-+	unsigned long start = (unsigned long)page_address(page);
-+	unsigned long size = PAGE_SIZE * numpages;
-+
-+	apply_to_existing_page_range(&init_mm, start, size, debug_pagealloc_set_page, &enable);
-+
-+	flush_tlb_kernel_range(start, start + size);
- }
- #endif
+ 	/* All functions share the same vendor ID with function 0 */
+ 	if (fn == 0) {
+-		u32 vid_regs = (hdr->vendorid & GENMASK(15, 0)) |
+-			       (hdr->subsys_vendor_id & GENMASK(31, 16)) << 16;
+-
+-		rockchip_pcie_write(rockchip, vid_regs,
++		rockchip_pcie_write(rockchip,
++				    hdr->vendorid | hdr->subsys_vendor_id << 16,
+ 				    PCIE_CORE_CONFIG_VENDOR);
+ 	}
  
 
 
