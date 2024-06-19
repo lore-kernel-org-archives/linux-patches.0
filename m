@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D78D714373E;
-	Wed, 19 Jun 2024 13:28:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C382B14373E;
+	Wed, 19 Jun 2024 13:28:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803698; cv=none; b=EhX8HLaIV2lrFe1h9dQkeLconOLj2q7RCELZt9SpBUa65GrJ5htCRNRV5l+Bp9oca2CvUYVtL0ggND+NV2B+QuZTPYe89KIBra6U6O1NGrbWR4EN/G5j+3duadKJAAlnvD0DqfyPHvNLwLFtT9TXVnjHiSkmZXMNLEiKHrqBzjQ=
+	t=1718803701; cv=none; b=ILrO7rmSR0m3Stw3aDXSTc2WepUZU3YelEyXAxekCfJRQfWX2m3eofQlJWOGWaqHym9M6PaSRAFww3hbG6PN9hCoN91V8qKLUkvpAV1qei4ciRPA5vJmHKDrb4Ob3eIubiwx6Mj5cXMlK+XufI6Y/rBhQzztbid3miWiMcSD8eg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803698; c=relaxed/simple;
-	bh=o1PYL/ms42babaE4luvdeYXOL9Dmew5RvOoSxW13Dvo=;
+	s=arc-20240116; t=1718803701; c=relaxed/simple;
+	bh=SkKP3WRxtHN+/LGdX9/Bc19iYLeKLy3vxQ+QmPSffWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rGCOPASsqhsQafV+CuZDDsaAnGMv6UTGAiitaTzDqm6/ac8brQ5ckDKSoz6w/AJqtK820gxYvlKQIEdXXvAL5LqKpCsjMEmpGQ1m7iXFpD6JpF6pa9g72zLUtDDWKIrP+oA9/vOJw+Hx/A1022mZPnsC9+gkXElbMEBEFCB378M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1fFupJ0n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a6gaOLM5e2Ok7/2eEhrGPkG9uFG9yvGWVMRXobLiK9PiQNn0Kkm9r/J6kz6D4dhDlZIAlLKgZ9JA4s9AKxllTDo3fWgEMsIBfDB6aJ0aC+CmDSDH4sSB5XsbIuVL2IpAujJv5tZIQdZdhvjgR0jDoYEmMqqvKRqhqQN+luv+GXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xU9g+N/E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1fFupJ0n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CD4FC2BBFC;
-	Wed, 19 Jun 2024 13:28:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xU9g+N/E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0F9EC2BBFC;
+	Wed, 19 Jun 2024 13:28:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803698;
-	bh=o1PYL/ms42babaE4luvdeYXOL9Dmew5RvOoSxW13Dvo=;
+	s=korg; t=1718803701;
+	bh=SkKP3WRxtHN+/LGdX9/Bc19iYLeKLy3vxQ+QmPSffWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1fFupJ0n9/P5dquMhnw5yDVUNNsntRp2kBxOpSEIiyzo/WxmVt1VbUNGABD46em75
-	 D9xhVgKQKvOjrrAPENstv6qOBfAZm9fklxN4+TVIoGQWTlRh9eN+zmSqXVwKgUqVEa
-	 ZtvNfa12zErAop+7QpxXjIa30jPsX01jiDzTlb10=
+	b=xU9g+N/EFdg8TP+d4db+6QSoXk6LRMb5nW6fjPJmNjn17zM9gXa1/+tKCdTxqkp3l
+	 d+iHIdnJKNTSProk1dxqbpot2+/dNCOQjknsWE0aqEj++sMSTM6CrJzRumyZgyJ6Ai
+	 fvZ2GIvV7e4Ks5GaqbxLeiOSL4exUt7zfJwU07ms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 066/217] mmc: davinci: Dont strip remove function when driver is builtin
-Date: Wed, 19 Jun 2024 14:55:09 +0200
-Message-ID: <20240619125559.231909177@linuxfoundation.org>
+Subject: [PATCH 6.1 075/217] selftests/mm: conform test to TAP format output
+Date: Wed, 19 Jun 2024 14:55:18 +0200
+Message-ID: <20240619125559.579530090@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -45,61 +46,233 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
 
-[ Upstream commit 55c421b364482b61c4c45313a535e61ed5ae4ea3 ]
+[ Upstream commit 9a21701edc41465de56f97914741bfb7bfc2517d ]
 
-Using __exit for the remove function results in the remove callback being
-discarded with CONFIG_MMC_DAVINCI=y. When such a device gets unbound (e.g.
-using sysfs or hotplug), the driver is just removed without the cleanup
-being performed. This results in resource leaks. Fix it by compiling in the
-remove callback unconditionally.
+Conform the layout, informational and status messages to TAP.  No
+functional change is intended other than the layout of output messages.
 
-This also fixes a W=1 modpost warning:
-
-WARNING: modpost: drivers/mmc/host/davinci_mmc: section mismatch in
-reference: davinci_mmcsd_driver+0x10 (section: .data) ->
-davinci_mmcsd_remove (section: .exit.text)
-
-Fixes: b4cff4549b7a ("DaVinci: MMC: MMC/SD controller driver for DaVinci family")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240324114017.231936-2-u.kleine-koenig@pengutronix.de
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://lkml.kernel.org/r/20240101083614.1076768-1-usama.anjum@collabora.com
+Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: d4202e66a4b1 ("selftests/mm: compaction_test: fix bogus test success on Aarch64")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/davinci_mmc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/vm/compaction_test.c | 91 ++++++++++----------
+ 1 file changed, 44 insertions(+), 47 deletions(-)
 
-diff --git a/drivers/mmc/host/davinci_mmc.c b/drivers/mmc/host/davinci_mmc.c
-index 7138dfa065bfa..e89a97b415154 100644
---- a/drivers/mmc/host/davinci_mmc.c
-+++ b/drivers/mmc/host/davinci_mmc.c
-@@ -1345,7 +1345,7 @@ static int davinci_mmcsd_probe(struct platform_device *pdev)
- 	return ret;
+diff --git a/tools/testing/selftests/vm/compaction_test.c b/tools/testing/selftests/vm/compaction_test.c
+index 55dec92e1e58c..f81931c1f8386 100644
+--- a/tools/testing/selftests/vm/compaction_test.c
++++ b/tools/testing/selftests/vm/compaction_test.c
+@@ -33,7 +33,7 @@ int read_memory_info(unsigned long *memfree, unsigned long *hugepagesize)
+ 	FILE *cmdfile = popen(cmd, "r");
+ 
+ 	if (!(fgets(buffer, sizeof(buffer), cmdfile))) {
+-		perror("Failed to read meminfo\n");
++		ksft_print_msg("Failed to read meminfo: %s\n", strerror(errno));
+ 		return -1;
+ 	}
+ 
+@@ -44,7 +44,7 @@ int read_memory_info(unsigned long *memfree, unsigned long *hugepagesize)
+ 	cmdfile = popen(cmd, "r");
+ 
+ 	if (!(fgets(buffer, sizeof(buffer), cmdfile))) {
+-		perror("Failed to read meminfo\n");
++		ksft_print_msg("Failed to read meminfo: %s\n", strerror(errno));
+ 		return -1;
+ 	}
+ 
+@@ -62,14 +62,14 @@ int prereq(void)
+ 	fd = open("/proc/sys/vm/compact_unevictable_allowed",
+ 		  O_RDONLY | O_NONBLOCK);
+ 	if (fd < 0) {
+-		perror("Failed to open\n"
+-		       "/proc/sys/vm/compact_unevictable_allowed\n");
++		ksft_print_msg("Failed to open /proc/sys/vm/compact_unevictable_allowed: %s\n",
++			       strerror(errno));
+ 		return -1;
+ 	}
+ 
+ 	if (read(fd, &allowed, sizeof(char)) != sizeof(char)) {
+-		perror("Failed to read from\n"
+-		       "/proc/sys/vm/compact_unevictable_allowed\n");
++		ksft_print_msg("Failed to read from /proc/sys/vm/compact_unevictable_allowed: %s\n",
++			       strerror(errno));
+ 		close(fd);
+ 		return -1;
+ 	}
+@@ -78,12 +78,13 @@ int prereq(void)
+ 	if (allowed == '1')
+ 		return 0;
+ 
++	ksft_print_msg("Compaction isn't allowed\n");
+ 	return -1;
  }
  
--static int __exit davinci_mmcsd_remove(struct platform_device *pdev)
-+static int davinci_mmcsd_remove(struct platform_device *pdev)
+ int check_compaction(unsigned long mem_free, unsigned int hugepage_size)
  {
- 	struct mmc_davinci_host *host = platform_get_drvdata(pdev);
+-	int fd;
++	int fd, ret = -1;
+ 	int compaction_index = 0;
+ 	char initial_nr_hugepages[10] = {0};
+ 	char nr_hugepages[10] = {0};
+@@ -94,12 +95,14 @@ int check_compaction(unsigned long mem_free, unsigned int hugepage_size)
  
-@@ -1402,7 +1402,7 @@ static struct platform_driver davinci_mmcsd_driver = {
- 		.of_match_table = davinci_mmc_dt_ids,
- 	},
- 	.probe		= davinci_mmcsd_probe,
--	.remove		= __exit_p(davinci_mmcsd_remove),
-+	.remove		= davinci_mmcsd_remove,
- 	.id_table	= davinci_mmc_devtype,
- };
+ 	fd = open("/proc/sys/vm/nr_hugepages", O_RDWR | O_NONBLOCK);
+ 	if (fd < 0) {
+-		perror("Failed to open /proc/sys/vm/nr_hugepages");
++		ksft_test_result_fail("Failed to open /proc/sys/vm/nr_hugepages: %s\n",
++				      strerror(errno));
+ 		return -1;
+ 	}
  
+ 	if (read(fd, initial_nr_hugepages, sizeof(initial_nr_hugepages)) <= 0) {
+-		perror("Failed to read from /proc/sys/vm/nr_hugepages");
++		ksft_test_result_fail("Failed to read from /proc/sys/vm/nr_hugepages: %s\n",
++				      strerror(errno));
+ 		goto close_fd;
+ 	}
+ 
+@@ -107,7 +110,8 @@ int check_compaction(unsigned long mem_free, unsigned int hugepage_size)
+ 
+ 	/* Start with the initial condition of 0 huge pages*/
+ 	if (write(fd, "0", sizeof(char)) != sizeof(char)) {
+-		perror("Failed to write 0 to /proc/sys/vm/nr_hugepages\n");
++		ksft_test_result_fail("Failed to write 0 to /proc/sys/vm/nr_hugepages: %s\n",
++				      strerror(errno));
+ 		goto close_fd;
+ 	}
+ 
+@@ -116,14 +120,16 @@ int check_compaction(unsigned long mem_free, unsigned int hugepage_size)
+ 	/* Request a large number of huge pages. The Kernel will allocate
+ 	   as much as it can */
+ 	if (write(fd, "100000", (6*sizeof(char))) != (6*sizeof(char))) {
+-		perror("Failed to write 100000 to /proc/sys/vm/nr_hugepages\n");
++		ksft_test_result_fail("Failed to write 100000 to /proc/sys/vm/nr_hugepages: %s\n",
++				      strerror(errno));
+ 		goto close_fd;
+ 	}
+ 
+ 	lseek(fd, 0, SEEK_SET);
+ 
+ 	if (read(fd, nr_hugepages, sizeof(nr_hugepages)) <= 0) {
+-		perror("Failed to re-read from /proc/sys/vm/nr_hugepages\n");
++		ksft_test_result_fail("Failed to re-read from /proc/sys/vm/nr_hugepages: %s\n",
++				      strerror(errno));
+ 		goto close_fd;
+ 	}
+ 
+@@ -131,67 +137,58 @@ int check_compaction(unsigned long mem_free, unsigned int hugepage_size)
+ 	   huge pages */
+ 	compaction_index = mem_free/(atoi(nr_hugepages) * hugepage_size);
+ 
+-	if (compaction_index > 3) {
+-		printf("No of huge pages allocated = %d\n",
+-		       (atoi(nr_hugepages)));
+-		fprintf(stderr, "ERROR: Less that 1/%d of memory is available\n"
+-			"as huge pages\n", compaction_index);
+-		goto close_fd;
+-	}
+-
+-	printf("No of huge pages allocated = %d\n",
+-	       (atoi(nr_hugepages)));
+-
+ 	lseek(fd, 0, SEEK_SET);
+ 
+ 	if (write(fd, initial_nr_hugepages, strlen(initial_nr_hugepages))
+ 	    != strlen(initial_nr_hugepages)) {
+-		perror("Failed to write value to /proc/sys/vm/nr_hugepages\n");
++		ksft_test_result_fail("Failed to write value to /proc/sys/vm/nr_hugepages: %s\n",
++				      strerror(errno));
+ 		goto close_fd;
+ 	}
+ 
+-	close(fd);
+-	return 0;
++	if (compaction_index > 3) {
++		ksft_print_msg("ERROR: Less that 1/%d of memory is available\n"
++			       "as huge pages\n", compaction_index);
++		ksft_test_result_fail("No of huge pages allocated = %d\n", (atoi(nr_hugepages)));
++		goto close_fd;
++	}
++
++	ksft_test_result_pass("Memory compaction succeeded. No of huge pages allocated = %d\n",
++			      (atoi(nr_hugepages)));
++	ret = 0;
+ 
+  close_fd:
+ 	close(fd);
+-	printf("Not OK. Compaction test failed.");
+-	return -1;
++	return ret;
+ }
+ 
+ 
+ int main(int argc, char **argv)
+ {
+ 	struct rlimit lim;
+-	struct map_list *list, *entry;
++	struct map_list *list = NULL, *entry;
+ 	size_t page_size, i;
+ 	void *map = NULL;
+ 	unsigned long mem_free = 0;
+ 	unsigned long hugepage_size = 0;
+ 	long mem_fragmentable_MB = 0;
+ 
+-	if (prereq() != 0) {
+-		printf("Either the sysctl compact_unevictable_allowed is not\n"
+-		       "set to 1 or couldn't read the proc file.\n"
+-		       "Skipping the test\n");
+-		return KSFT_SKIP;
+-	}
++	ksft_print_header();
++
++	if (prereq() != 0)
++		return ksft_exit_pass();
++
++	ksft_set_plan(1);
+ 
+ 	lim.rlim_cur = RLIM_INFINITY;
+ 	lim.rlim_max = RLIM_INFINITY;
+-	if (setrlimit(RLIMIT_MEMLOCK, &lim)) {
+-		perror("Failed to set rlimit:\n");
+-		return -1;
+-	}
++	if (setrlimit(RLIMIT_MEMLOCK, &lim))
++		ksft_exit_fail_msg("Failed to set rlimit: %s\n", strerror(errno));
+ 
+ 	page_size = getpagesize();
+ 
+-	list = NULL;
+-
+-	if (read_memory_info(&mem_free, &hugepage_size) != 0) {
+-		printf("ERROR: Cannot read meminfo\n");
+-		return -1;
+-	}
++	if (read_memory_info(&mem_free, &hugepage_size) != 0)
++		ksft_exit_fail_msg("Failed to get meminfo\n");
+ 
+ 	mem_fragmentable_MB = mem_free * 0.8 / 1024;
+ 
+@@ -227,7 +224,7 @@ int main(int argc, char **argv)
+ 	}
+ 
+ 	if (check_compaction(mem_free, hugepage_size) == 0)
+-		return 0;
++		return ksft_exit_pass();
+ 
+-	return -1;
++	return ksft_exit_fail();
+ }
 -- 
 2.43.0
 
