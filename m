@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0BDA12FB31;
-	Wed, 19 Jun 2024 13:08:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4597D13AA40;
+	Wed, 19 Jun 2024 13:08:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802515; cv=none; b=dHUE5hDBzru77N12t4wiEqoqsQ53Yc6dH/7RxI6exSAc6VWRzSIQKpcOfFHlxvTlD9v7/HurVBMdgovyx1tOaDDkK5H/TUog90CRY+mF+v0DbnrO5Xw6JeASgh9NNs/RofyHx23dcGbzA6KWJ7xRd1DUjlHHu5Cey9yObnnkKTo=
+	t=1718802518; cv=none; b=hLvEcbMTdhvIp5eMnEDkjRl4yP2jTMTd+xlIIeUA9EiTwGG/+e6CpgBQ9tuxgVimmGENkgzUDDudmhr0KgHffijrcZUopx2PtELudvi9ILf/vXGz50fUzuMpSlXwOIq9VwNcVl0iNbFPCmn3friM1R2qlU2zL8wf2MQ63ZiWgn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802515; c=relaxed/simple;
-	bh=bWUZfzpuljJu198XuADiyT7chP3k2eU611aPCsxaZzI=;
+	s=arc-20240116; t=1718802518; c=relaxed/simple;
+	bh=ShQaeq1dQK++eEm83fJDMTLXC74Dhpqy/lyWpQY8Fus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cS+Dh3G9NyH1tjskMKDzsBZxkcNbLREGXNgRcJYBDkmMVPHuvBzgUt/EIOYKN0n+jOvzPUyJrmw8IC1GIY5O62SOQGdBp/NPNG39sZoUO3AiPYfPDV6Y+BleZPm+Uj8eXzteKbkem/w0BmSRXNJKpf4343wroCgTuABle3WzvI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sdDG/48B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TP4fnoXZJxkDwLeg2hLKn8jhvntaQGYwjlyaR5KfVTX6tL+Ruuokc5XbXB+9jTfm0RhfLDV5IAbfW2PlHQqo4rig9yX6f46bqCMppphZpyQuY7VvvPPNPmEn9XEq7mzQSooGFM1FYJz82t8Oj5dN5rsMI3HfrtizmlmqYhXCy0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJudeL7B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sdDG/48B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62D11C2BBFC;
-	Wed, 19 Jun 2024 13:08:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJudeL7B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 570E9C2BBFC;
+	Wed, 19 Jun 2024 13:08:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802514;
-	bh=bWUZfzpuljJu198XuADiyT7chP3k2eU611aPCsxaZzI=;
+	s=korg; t=1718802517;
+	bh=ShQaeq1dQK++eEm83fJDMTLXC74Dhpqy/lyWpQY8Fus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sdDG/48BvHmVAZtT/TMYx2uLBZpcE7VvwAbwlbdJTrb3qG3UPzufZABdF+4s8AeFI
-	 tpkBjqZ5JTrzd8VKn2L5Uo0AUJiVFtqVE83+X1atAv6a+Q//XFmWI0mlCPKAQQ7N+g
-	 lhSdNvBXlYsvVIytbZIeZXWDZ9Pr9ubQXcZwEDLw=
+	b=fJudeL7BAN1y6kQSQ6seg8EbfbZyqaqPAIiFB7W3wcTcx9Y8qdbOxHsMIVjfcf6w3
+	 BfCJgoZU83v01xPkhUyeKaqNoM78oPNsBR+ZkJd9yIgUsUITIat0w12qXGlTT4TdPi
+	 31bsMUOw5LGFfO6AKp1TycfmecrcLc2W3UQzy1SM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.6 191/267] x86/amd_nb: Check for invalid SMN reads
-Date: Wed, 19 Jun 2024 14:55:42 +0200
-Message-ID: <20240619125613.669801916@linuxfoundation.org>
+	Haifeng Xu <haifeng.xu@shopee.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>
+Subject: [PATCH 6.6 192/267] perf/core: Fix missing wakeup when waiting for context reference
+Date: Wed, 19 Jun 2024 14:55:43 +0200
+Message-ID: <20240619125613.707401258@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -50,59 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yazen Ghannam <yazen.ghannam@amd.com>
+From: Haifeng Xu <haifeng.xu@shopee.com>
 
-commit c625dabbf1c4a8e77e4734014f2fde7aa9071a1f upstream.
+commit 74751ef5c1912ebd3e65c3b65f45587e05ce5d36 upstream.
 
-AMD Zen-based systems use a System Management Network (SMN) that
-provides access to implementation-specific registers.
+In our production environment, we found many hung tasks which are
+blocked for more than 18 hours. Their call traces are like this:
 
-SMN accesses are done indirectly through an index/data pair in PCI
-config space. The PCI config access may fail and return an error code.
-This would prevent the "read" value from being updated.
+[346278.191038] __schedule+0x2d8/0x890
+[346278.191046] schedule+0x4e/0xb0
+[346278.191049] perf_event_free_task+0x220/0x270
+[346278.191056] ? init_wait_var_entry+0x50/0x50
+[346278.191060] copy_process+0x663/0x18d0
+[346278.191068] kernel_clone+0x9d/0x3d0
+[346278.191072] __do_sys_clone+0x5d/0x80
+[346278.191076] __x64_sys_clone+0x25/0x30
+[346278.191079] do_syscall_64+0x5c/0xc0
+[346278.191083] ? syscall_exit_to_user_mode+0x27/0x50
+[346278.191086] ? do_syscall_64+0x69/0xc0
+[346278.191088] ? irqentry_exit_to_user_mode+0x9/0x20
+[346278.191092] ? irqentry_exit+0x19/0x30
+[346278.191095] ? exc_page_fault+0x89/0x160
+[346278.191097] ? asm_exc_page_fault+0x8/0x30
+[346278.191102] entry_SYSCALL_64_after_hwframe+0x44/0xae
 
-However, the PCI config access may succeed, but the return value may be
-invalid. This is in similar fashion to PCI bad reads, i.e. return all
-bits set.
+The task was waiting for the refcount become to 1, but from the vmcore,
+we found the refcount has already been 1. It seems that the task didn't
+get woken up by perf_event_release_kernel() and got stuck forever. The
+below scenario may cause the problem.
 
-Most systems will return 0 for SMN addresses that are not accessible.
-This is in line with AMD convention that unavailable registers are
-Read-as-Zero/Writes-Ignored.
+Thread A					Thread B
+...						...
+perf_event_free_task				perf_event_release_kernel
+						   ...
+						   acquire event->child_mutex
+						   ...
+						   get_ctx
+   ...						   release event->child_mutex
+   acquire ctx->mutex
+   ...
+   perf_free_event (acquire/release event->child_mutex)
+   ...
+   release ctx->mutex
+   wait_var_event
+						   acquire ctx->mutex
+						   acquire event->child_mutex
+						   # move existing events to free_list
+						   release event->child_mutex
+						   release ctx->mutex
+						   put_ctx
+...						...
 
-However, some systems will return a "PCI Error Response" instead. This
-value, along with an error code of 0 from the PCI config access, will
-confuse callers of the amd_smn_read() function.
+In this case, all events of the ctx have been freed, so we couldn't
+find the ctx in free_list and Thread A will miss the wakeup. It's thus
+necessary to add a wakeup after dropping the reference.
 
-Check for this condition, clear the return value, and set a proper error
-code.
-
-Fixes: ddfe43cdc0da ("x86/amd_nb: Add SMN and Indirect Data Fabric access for AMD Fam17h")
-Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Fixes: 1cf8dfe8a661 ("perf/core: Fix race between close() and fork()")
+Signed-off-by: Haifeng Xu <haifeng.xu@shopee.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230403164244.471141-1-yazen.ghannam@amd.com
+Link: https://lkml.kernel.org/r/20240513103948.33570-1-haifeng.xu@shopee.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/amd_nb.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ kernel/events/core.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/arch/x86/kernel/amd_nb.c
-+++ b/arch/x86/kernel/amd_nb.c
-@@ -209,7 +209,14 @@ out:
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -5353,6 +5353,7 @@ int perf_event_release_kernel(struct per
+ again:
+ 	mutex_lock(&event->child_mutex);
+ 	list_for_each_entry(child, &event->child_list, child_list) {
++		void *var = NULL;
  
- int amd_smn_read(u16 node, u32 address, u32 *value)
- {
--	return __amd_smn_rw(node, address, value, false);
-+	int err = __amd_smn_rw(node, address, value, false);
-+
-+	if (PCI_POSSIBLE_ERROR(*value)) {
-+		err = -ENODEV;
-+		*value = 0;
-+	}
-+
-+	return err;
- }
- EXPORT_SYMBOL_GPL(amd_smn_read);
+ 		/*
+ 		 * Cannot change, child events are not migrated, see the
+@@ -5393,11 +5394,23 @@ again:
+ 			 * this can't be the last reference.
+ 			 */
+ 			put_event(event);
++		} else {
++			var = &ctx->refcount;
+ 		}
  
+ 		mutex_unlock(&event->child_mutex);
+ 		mutex_unlock(&ctx->mutex);
+ 		put_ctx(ctx);
++
++		if (var) {
++			/*
++			 * If perf_event_free_task() has deleted all events from the
++			 * ctx while the child_mutex got released above, make sure to
++			 * notify about the preceding put_ctx().
++			 */
++			smp_mb(); /* pairs with wait_var_event() */
++			wake_up_var(var);
++		}
+ 		goto again;
+ 	}
+ 	mutex_unlock(&event->child_mutex);
 
 
