@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4B84C74;
-	Wed, 19 Jun 2024 13:00:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678CD13F426;
+	Wed, 19 Jun 2024 13:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802007; cv=none; b=qd0l/qw6ibZkuOcQmHb1DfB92jXP3V4L54xLwcwxRHcFuch54MD+6W1c14JjT17PqzVjT33rXf1+01iToDqzSSxwgpNWEvmJKAsSBjV1BXJJhuREyZ9zwAhInfs6Ig1Q4kwDtUVKdaCKu+SAtQBlsTPXW/JkmOzquxQWWWHO0wk=
+	t=1718802010; cv=none; b=c6mnrjhkPfvy85P4uV6nyUzyYt8OdfT14nOtULcCuuPeZqkR+GWRLeGZuRQvt831mrOLZGehiwix0H+SIxeCi7UneaN2K9X5xnczojkpHGcOp1ra5tQUAEoLz8x3niwg/YWW5PIaDv8/nfEYAsrvU/cQunuW4qMeNIenayCbCpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802007; c=relaxed/simple;
-	bh=O3WtgIlRd75iJMg8Y8BDuP7ZkI9pPbWcdxhIOYs7/pE=;
+	s=arc-20240116; t=1718802010; c=relaxed/simple;
+	bh=46idOyPJblJ9aacubz8tWaLxBywLwBdwKchqbTG50kg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h22FHeqoWcF1k4TUPpbRljErV9+Ql0qRwViqub3G6uCRId9+WHm+eSpV+oqofeozpFvTGPlqBLDZZ2tP8PhRweYlU3HBrLcOtVQu/Cp2n3Io73awxXH6rMY2iHLSjlCKXddWuWqHx6EKC598w9bPqF5hK4X2YUWcGeU3MCg3/HI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xLSrFhlx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fjvRfP5YOImUtGDtKZStAZVyiWwtWnV2S19l/SEd46thJJi7tcLVOl35Dbjfz0ur8WSitluggEDmsA0DG+ApRkxcHWQf0ehcsmvV2TYqFpOl/DxYaAj0bN4OGD7rQxd/z9gk6oy6LMvBx358KRc7b6cdg43xKYSn505BvipZfNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WNAVuFJM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xLSrFhlx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C433DC32786;
-	Wed, 19 Jun 2024 13:00:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WNAVuFJM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2016C2BBFC;
+	Wed, 19 Jun 2024 13:00:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802007;
-	bh=O3WtgIlRd75iJMg8Y8BDuP7ZkI9pPbWcdxhIOYs7/pE=;
+	s=korg; t=1718802010;
+	bh=46idOyPJblJ9aacubz8tWaLxBywLwBdwKchqbTG50kg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xLSrFhlxE2SwqQrdRcRHXdepFp9pgBbqKa3Gffy8tulGFRzterzRnjVzwWuB53SFC
-	 uo09cB/RcqXdUgAS2S27TRXxLlht0BQPn3jcenLUbtHs/6mex5Q8XNwaGG9NFmWHp0
-	 yCRM+TZAyIJtfq4yg2dw0IMDI2OofKBPvQ2uVP04=
+	b=WNAVuFJMOplACZKmUB58edmHEFihRF+qDV371HbvQ5Er2Vpdzy8d0PSyVRRcCrCN3
+	 bDc3DruuDA2ASjlwjVN3kfT2+RVN4pix0JNCb4DwQbXiR5XYwH+eYdlBrUz49o85ON
+	 68dn4JcZbHSOcRkyUtEguGit2t543Nn26N4Mrua0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	DelphineCCChiu <delphine_cc_chiu@wiwynn.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tristram Ha <tristram.ha@microchip.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 019/267] net/ncsi: Fix the multi thread manner of NCSI driver
-Date: Wed, 19 Jun 2024 14:52:50 +0200
-Message-ID: <20240619125607.094437442@linuxfoundation.org>
+Subject: [PATCH 6.6 020/267] net: phy: micrel: fix KSZ9477 PHY issues after suspend/resume
+Date: Wed, 19 Jun 2024 14:52:51 +0200
+Message-ID: <20240619125607.132443829@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -51,218 +51,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: DelphineCCChiu <delphine_cc_chiu@wiwynn.com>
+From: Tristram Ha <tristram.ha@microchip.com>
 
-[ Upstream commit e85e271dec0270982afed84f70dc37703fcc1d52 ]
+[ Upstream commit 6149db4997f582e958da675092f21c666e3b67b7 ]
 
-Currently NCSI driver will send several NCSI commands back to back without
-waiting the response of previous NCSI command or timeout in some state
-when NIC have multi channel. This operation against the single thread
-manner defined by NCSI SPEC(section 6.3.2.3 in DSP0222_1.1.1)
+When the PHY is powered up after powered down most of the registers are
+reset, so the PHY setup code needs to be done again.  In addition the
+interrupt register will need to be setup again so that link status
+indication works again.
 
-According to NCSI SPEC(section 6.2.13.1 in DSP0222_1.1.1), we should probe
-one channel at a time by sending NCSI commands (Clear initial state, Get
-version ID, Get capabilities...), than repeat this steps until the max
-number of channels which we got from NCSI command (Get capabilities) has
-been probed.
-
-Fixes: e6f44ed6d04d ("net/ncsi: Package and channel management")
-Signed-off-by: DelphineCCChiu <delphine_cc_chiu@wiwynn.com>
-Link: https://lore.kernel.org/r/20240529065856.825241-1-delphine_cc_chiu@wiwynn.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 26dd2974c5b5 ("net: phy: micrel: Move KSZ9477 errata fixes to PHY driver")
+Signed-off-by: Tristram Ha <tristram.ha@microchip.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ncsi/internal.h    |  2 ++
- net/ncsi/ncsi-manage.c | 73 +++++++++++++++++++++---------------------
- net/ncsi/ncsi-rsp.c    |  4 ++-
- 3 files changed, 41 insertions(+), 38 deletions(-)
+ drivers/net/phy/micrel.c | 62 ++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 56 insertions(+), 6 deletions(-)
 
-diff --git a/net/ncsi/internal.h b/net/ncsi/internal.h
-index 374412ed780b6..ef0f8f73826f5 100644
---- a/net/ncsi/internal.h
-+++ b/net/ncsi/internal.h
-@@ -325,6 +325,7 @@ struct ncsi_dev_priv {
- 	spinlock_t          lock;            /* Protect the NCSI device    */
- 	unsigned int        package_probe_id;/* Current ID during probe    */
- 	unsigned int        package_num;     /* Number of packages         */
-+	unsigned int        channel_probe_id;/* Current cahnnel ID during probe */
- 	struct list_head    packages;        /* List of packages           */
- 	struct ncsi_channel *hot_channel;    /* Channel was ever active    */
- 	struct ncsi_request requests[256];   /* Request table              */
-@@ -343,6 +344,7 @@ struct ncsi_dev_priv {
- 	bool                multi_package;   /* Enable multiple packages   */
- 	bool                mlx_multi_host;  /* Enable multi host Mellanox */
- 	u32                 package_whitelist; /* Packages to configure    */
-+	unsigned char       channel_count;     /* Num of channels to probe   */
+diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
+index fc31fcfb0cdb4..048704758b150 100644
+--- a/drivers/net/phy/micrel.c
++++ b/drivers/net/phy/micrel.c
+@@ -1821,7 +1821,7 @@ static const struct ksz9477_errata_write ksz9477_errata_writes[] = {
+ 	{0x1c, 0x20, 0xeeee},
  };
  
- struct ncsi_cmd_arg {
-diff --git a/net/ncsi/ncsi-manage.c b/net/ncsi/ncsi-manage.c
-index f3d7fe86fea13..90c6cf676221a 100644
---- a/net/ncsi/ncsi-manage.c
-+++ b/net/ncsi/ncsi-manage.c
-@@ -510,17 +510,19 @@ static void ncsi_suspend_channel(struct ncsi_dev_priv *ndp)
- 
- 		break;
- 	case ncsi_dev_state_suspend_gls:
--		ndp->pending_req_num = np->channel_num;
-+		ndp->pending_req_num = 1;
- 
- 		nca.type = NCSI_PKT_CMD_GLS;
- 		nca.package = np->id;
-+		nca.channel = ndp->channel_probe_id;
-+		ret = ncsi_xmit_cmd(&nca);
-+		if (ret)
-+			goto error;
-+		ndp->channel_probe_id++;
- 
--		nd->state = ncsi_dev_state_suspend_dcnt;
--		NCSI_FOR_EACH_CHANNEL(np, nc) {
--			nca.channel = nc->id;
--			ret = ncsi_xmit_cmd(&nca);
--			if (ret)
--				goto error;
-+		if (ndp->channel_probe_id == ndp->channel_count) {
-+			ndp->channel_probe_id = 0;
-+			nd->state = ncsi_dev_state_suspend_dcnt;
- 		}
- 
- 		break;
-@@ -1340,7 +1342,6 @@ static void ncsi_probe_channel(struct ncsi_dev_priv *ndp)
+-static int ksz9477_config_init(struct phy_device *phydev)
++static int ksz9477_phy_errata(struct phy_device *phydev)
  {
- 	struct ncsi_dev *nd = &ndp->ndev;
- 	struct ncsi_package *np;
--	struct ncsi_channel *nc;
- 	struct ncsi_cmd_arg nca;
- 	unsigned char index;
- 	int ret;
-@@ -1418,23 +1419,6 @@ static void ncsi_probe_channel(struct ncsi_dev_priv *ndp)
- 
- 		nd->state = ncsi_dev_state_probe_cis;
- 		break;
--	case ncsi_dev_state_probe_cis:
--		ndp->pending_req_num = NCSI_RESERVED_CHANNEL;
--
--		/* Clear initial state */
--		nca.type = NCSI_PKT_CMD_CIS;
--		nca.package = ndp->active_package->id;
--		for (index = 0; index < NCSI_RESERVED_CHANNEL; index++) {
--			nca.channel = index;
--			ret = ncsi_xmit_cmd(&nca);
--			if (ret)
--				goto error;
--		}
--
--		nd->state = ncsi_dev_state_probe_gvi;
--		if (IS_ENABLED(CONFIG_NCSI_OEM_CMD_KEEP_PHY))
--			nd->state = ncsi_dev_state_probe_keep_phy;
--		break;
- 	case ncsi_dev_state_probe_keep_phy:
- 		ndp->pending_req_num = 1;
- 
-@@ -1447,14 +1431,17 @@ static void ncsi_probe_channel(struct ncsi_dev_priv *ndp)
- 
- 		nd->state = ncsi_dev_state_probe_gvi;
- 		break;
-+	case ncsi_dev_state_probe_cis:
- 	case ncsi_dev_state_probe_gvi:
- 	case ncsi_dev_state_probe_gc:
- 	case ncsi_dev_state_probe_gls:
- 		np = ndp->active_package;
--		ndp->pending_req_num = np->channel_num;
-+		ndp->pending_req_num = 1;
- 
--		/* Retrieve version, capability or link status */
--		if (nd->state == ncsi_dev_state_probe_gvi)
-+		/* Clear initial state Retrieve version, capability or link status */
-+		if (nd->state == ncsi_dev_state_probe_cis)
-+			nca.type = NCSI_PKT_CMD_CIS;
-+		else if (nd->state == ncsi_dev_state_probe_gvi)
- 			nca.type = NCSI_PKT_CMD_GVI;
- 		else if (nd->state == ncsi_dev_state_probe_gc)
- 			nca.type = NCSI_PKT_CMD_GC;
-@@ -1462,19 +1449,29 @@ static void ncsi_probe_channel(struct ncsi_dev_priv *ndp)
- 			nca.type = NCSI_PKT_CMD_GLS;
- 
- 		nca.package = np->id;
--		NCSI_FOR_EACH_CHANNEL(np, nc) {
--			nca.channel = nc->id;
--			ret = ncsi_xmit_cmd(&nca);
--			if (ret)
--				goto error;
--		}
-+		nca.channel = ndp->channel_probe_id;
- 
--		if (nd->state == ncsi_dev_state_probe_gvi)
-+		ret = ncsi_xmit_cmd(&nca);
-+		if (ret)
-+			goto error;
-+
-+		if (nd->state == ncsi_dev_state_probe_cis) {
-+			nd->state = ncsi_dev_state_probe_gvi;
-+			if (IS_ENABLED(CONFIG_NCSI_OEM_CMD_KEEP_PHY) && ndp->channel_probe_id == 0)
-+				nd->state = ncsi_dev_state_probe_keep_phy;
-+		} else if (nd->state == ncsi_dev_state_probe_gvi) {
- 			nd->state = ncsi_dev_state_probe_gc;
--		else if (nd->state == ncsi_dev_state_probe_gc)
-+		} else if (nd->state == ncsi_dev_state_probe_gc) {
- 			nd->state = ncsi_dev_state_probe_gls;
--		else
-+		} else {
-+			nd->state = ncsi_dev_state_probe_cis;
-+			ndp->channel_probe_id++;
-+		}
-+
-+		if (ndp->channel_probe_id == ndp->channel_count) {
-+			ndp->channel_probe_id = 0;
- 			nd->state = ncsi_dev_state_probe_dp;
-+		}
- 		break;
- 	case ncsi_dev_state_probe_dp:
- 		ndp->pending_req_num = 1;
-@@ -1775,6 +1772,7 @@ struct ncsi_dev *ncsi_register_dev(struct net_device *dev,
- 		ndp->requests[i].ndp = ndp;
- 		timer_setup(&ndp->requests[i].timer, ncsi_request_timeout, 0);
+ 	int err;
+ 	int i;
+@@ -1849,16 +1849,30 @@ static int ksz9477_config_init(struct phy_device *phydev)
+ 			return err;
  	}
-+	ndp->channel_count = NCSI_RESERVED_CHANNEL;
  
- 	spin_lock_irqsave(&ncsi_dev_lock, flags);
- 	list_add_tail_rcu(&ndp->node, &ncsi_dev_list);
-@@ -1808,6 +1806,7 @@ int ncsi_start_dev(struct ncsi_dev *nd)
- 
- 	if (!(ndp->flags & NCSI_DEV_PROBED)) {
- 		ndp->package_probe_id = 0;
-+		ndp->channel_probe_id = 0;
- 		nd->state = ncsi_dev_state_probe;
- 		schedule_work(&ndp->work);
- 		return 0;
-diff --git a/net/ncsi/ncsi-rsp.c b/net/ncsi/ncsi-rsp.c
-index 480e80e3c2836..f22d67cb04d37 100644
---- a/net/ncsi/ncsi-rsp.c
-+++ b/net/ncsi/ncsi-rsp.c
-@@ -795,12 +795,13 @@ static int ncsi_rsp_handler_gc(struct ncsi_request *nr)
- 	struct ncsi_rsp_gc_pkt *rsp;
- 	struct ncsi_dev_priv *ndp = nr->ndp;
- 	struct ncsi_channel *nc;
-+	struct ncsi_package *np;
- 	size_t size;
- 
- 	/* Find the channel */
- 	rsp = (struct ncsi_rsp_gc_pkt *)skb_network_header(nr->rsp);
- 	ncsi_find_package_and_channel(ndp, rsp->rsp.common.channel,
--				      NULL, &nc);
-+				      &np, &nc);
- 	if (!nc)
- 		return -ENODEV;
- 
-@@ -835,6 +836,7 @@ static int ncsi_rsp_handler_gc(struct ncsi_request *nr)
++	err = genphy_restart_aneg(phydev);
++	if (err)
++		return err;
++
++	return err;
++}
++
++static int ksz9477_config_init(struct phy_device *phydev)
++{
++	int err;
++
++	/* Only KSZ9897 family of switches needs this fix. */
++	if ((phydev->phy_id & 0xf) == 1) {
++		err = ksz9477_phy_errata(phydev);
++		if (err)
++			return err;
++	}
++
+ 	/* According to KSZ9477 Errata DS80000754C (Module 4) all EEE modes
+ 	 * in this switch shall be regarded as broken.
  	 */
- 	nc->vlan_filter.bitmap = U64_MAX;
- 	nc->vlan_filter.n_vids = rsp->vlan_cnt;
-+	np->ndp->channel_count = rsp->channel_cnt;
+ 	if (phydev->dev_flags & MICREL_NO_EEE)
+ 		phydev->eee_broken_modes = -1;
  
+-	err = genphy_restart_aneg(phydev);
+-	if (err)
+-		return err;
+-
+ 	return kszphy_config_init(phydev);
+ }
+ 
+@@ -1967,6 +1981,42 @@ static int kszphy_resume(struct phy_device *phydev)
  	return 0;
  }
+ 
++static int ksz9477_resume(struct phy_device *phydev)
++{
++	int ret;
++
++	/* No need to initialize registers if not powered down. */
++	ret = phy_read(phydev, MII_BMCR);
++	if (ret < 0)
++		return ret;
++	if (!(ret & BMCR_PDOWN))
++		return 0;
++
++	genphy_resume(phydev);
++
++	/* After switching from power-down to normal mode, an internal global
++	 * reset is automatically generated. Wait a minimum of 1 ms before
++	 * read/write access to the PHY registers.
++	 */
++	usleep_range(1000, 2000);
++
++	/* Only KSZ9897 family of switches needs this fix. */
++	if ((phydev->phy_id & 0xf) == 1) {
++		ret = ksz9477_phy_errata(phydev);
++		if (ret)
++			return ret;
++	}
++
++	/* Enable PHY Interrupts */
++	if (phy_interrupt_is_valid(phydev)) {
++		phydev->interrupts = PHY_INTERRUPT_ENABLED;
++		if (phydev->drv->config_intr)
++			phydev->drv->config_intr(phydev);
++	}
++
++	return 0;
++}
++
+ static int kszphy_probe(struct phy_device *phydev)
+ {
+ 	const struct kszphy_type *type = phydev->drv->driver_data;
+@@ -4916,7 +4966,7 @@ static struct phy_driver ksphy_driver[] = {
+ 	.config_intr	= kszphy_config_intr,
+ 	.handle_interrupt = kszphy_handle_interrupt,
+ 	.suspend	= genphy_suspend,
+-	.resume		= genphy_resume,
++	.resume		= ksz9477_resume,
+ 	.get_features	= ksz9477_get_features,
+ } };
+ 
 -- 
 2.43.0
 
