@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A478E770F4;
-	Wed, 19 Jun 2024 13:31:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87ACA1E526;
+	Wed, 19 Jun 2024 13:31:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803887; cv=none; b=PjMaEkineb0u3CRivnO4cFJ5dDyAGPhL5TrWnqjHy2auW9J9BdT9o/NuFIN8773IyU6dsHe28zGyWLlCy3pbez5FoBTJKByswtTQ/tNF20t1+FPvMmVEm9xUu6Xz3Or/+fmADP/PPTLiWDPUOnIGujomhbQISvdZxI8ol2V1dqs=
+	t=1718803890; cv=none; b=Cna2hkSjD1t615Bh/IYpU3d46UN3yL/Yg7CER9LGpIy52Xsu22SE7aD82fKEUT0fpnuXWYIbGtQhKjSPmM4smzCLPmxhZtlLnjlouz6p9c2SbAquWFAZcqFYQJ0H7W1CUFRpyVeffqCyJ+IiA8Zvp+doh4tPFXHPSuVEnNcRzrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803887; c=relaxed/simple;
-	bh=1i8TUsVw5t6BwRVdFeNsJLiNwHdFqCVlB4wTbe6S8Ac=;
+	s=arc-20240116; t=1718803890; c=relaxed/simple;
+	bh=xUzkRiSCj/WxUjyfrfjrL1ex2n7578Sy1shmXAf0fPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OnlBQp2qYoAWbRGtdjmnWya++mWTTKjfaWqqKavhlxUip3gHRy8KgMuz79MW8LW3wkGE1HfuGLGVdR6kCOJCdnnVIVh/rdG6XObf8UvY3BuJoG9oc+mPuXfCXd8e4DFdv8/3+9onQ4HIsBj1dxZy2pX8dG1RjIcFJQ4RXeNFPwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KSnGrcsd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=awiaY7QSqSmXoaQJudb9dL92zENUcdL/Bwx5DYTxncRoHNKm1SE8tfl1SkeRGxrBrzbeCTWUnUNTkgAL7e9ClxnFn9xtqB3DHZD90euvHr/A/HC+1CvvmjKAgtQALVPHj8Iml+tBKWMxelmN1NZ7KppLv2r9dYT6BB8Hh2HNhtU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qzIVEUEs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KSnGrcsd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21F3AC2BBFC;
-	Wed, 19 Jun 2024 13:31:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qzIVEUEs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EF49C2BBFC;
+	Wed, 19 Jun 2024 13:31:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803887;
-	bh=1i8TUsVw5t6BwRVdFeNsJLiNwHdFqCVlB4wTbe6S8Ac=;
+	s=korg; t=1718803890;
+	bh=xUzkRiSCj/WxUjyfrfjrL1ex2n7578Sy1shmXAf0fPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KSnGrcsdm1ShXiB7pMHu13l2e7b+hUDb+ElRykeG69wi0HlwtP7iN4GaYRPwKXNIH
-	 o8i6w5vL4L2rUB4Pg7OpFowy9bylOUnJZEXleviDKkJdYBpqD073F4gBCEF424Iuks
-	 4VNFJzOqc2evnIVrY7msKeGzxfGWpm4FHZjUOzZs=
+	b=qzIVEUEsm0hNpKJSD7jCvu4UTpgErQBUN+tKG12EVXixSTetLksG+/NL3KxvwxzH+
+	 xb6Z+oQpx3RBte6oNW9vFKCcTMZKmOrC+WV+yG8gnYYzuVt+XESg1hhNjjPrMUayNv
+	 eMsV6pkyEcX0jprun4wJ0eTSObV/IYvDtogJG8CM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jeff Layton <jlayton@kernel.org>,
 	Jia Zhu <zhujia.zj@bytedance.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Jingbo Xu <jefflexu@linux.alibaba.com>,
+	David Howells <dhowells@redhat.com>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 106/217] cachefiles: remove requests from xarray during flushing requests
-Date: Wed, 19 Jun 2024 14:55:49 +0200
-Message-ID: <20240619125600.780356671@linuxfoundation.org>
+Subject: [PATCH 6.1 107/217] cachefiles: introduce object ondemand state
+Date: Wed, 19 Jun 2024 14:55:50 +0200
+Message-ID: <20240619125600.818424287@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -55,60 +53,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Jia Zhu <zhujia.zj@bytedance.com>
 
-[ Upstream commit 0fc75c5940fa634d84e64c93bfc388e1274ed013 ]
+[ Upstream commit 357a18d033143617e9c7d420c8f0dd4cbab5f34d ]
 
-Even with CACHEFILES_DEAD set, we can still read the requests, so in the
-following concurrency the request may be used after it has been freed:
+Previously, @ondemand_id field was used not only to identify ondemand
+state of the object, but also to represent the index of the xarray.
+This commit introduces @state field to decouple the role of @ondemand_id
+and adds helpers to access it.
 
-     mount  |   daemon_thread1    |    daemon_thread2
-------------------------------------------------------------
- cachefiles_ondemand_init_object
-  cachefiles_ondemand_send_req
-   REQ_A = kzalloc(sizeof(*req) + data_len)
-   wait_for_completion(&REQ_A->done)
-            cachefiles_daemon_read
-             cachefiles_ondemand_daemon_read
-                                  // close dev fd
-                                  cachefiles_flush_reqs
-                                   complete(&REQ_A->done)
-   kfree(REQ_A)
-              xa_lock(&cache->reqs);
-              cachefiles_ondemand_select_req
-                req->msg.opcode != CACHEFILES_OP_READ
-                // req use-after-free !!!
-              xa_unlock(&cache->reqs);
-                                   xa_destroy(&cache->reqs)
-
-Hence remove requests from cache->reqs when flushing them to avoid
-accessing freed requests.
-
-Fixes: c8383054506c ("cachefiles: notify the user daemon when looking up cookie")
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Link: https://lore.kernel.org/r/20240522114308.2402121-3-libaokun@huaweicloud.com
-Acked-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Jia Zhu <zhujia.zj@bytedance.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Signed-off-by: Jia Zhu <zhujia.zj@bytedance.com>
+Link: https://lore.kernel.org/r/20231120041422.75170-2-zhujia.zj@bytedance.com
 Reviewed-by: Jingbo Xu <jefflexu@linux.alibaba.com>
+Reviewed-by: David Howells <dhowells@redhat.com>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 0a790040838c ("cachefiles: add spin_lock for cachefiles_ondemand_info")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cachefiles/daemon.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/cachefiles/internal.h | 21 +++++++++++++++++++++
+ fs/cachefiles/ondemand.c | 21 +++++++++------------
+ 2 files changed, 30 insertions(+), 12 deletions(-)
 
-diff --git a/fs/cachefiles/daemon.c b/fs/cachefiles/daemon.c
-index 5f4df9588620f..7d1f456e376dd 100644
---- a/fs/cachefiles/daemon.c
-+++ b/fs/cachefiles/daemon.c
-@@ -158,6 +158,7 @@ static void cachefiles_flush_reqs(struct cachefiles_cache *cache)
- 	xa_for_each(xa, index, req) {
- 		req->error = -EIO;
- 		complete(&req->done);
-+		__xa_erase(xa, index);
- 	}
- 	xa_unlock(xa);
+diff --git a/fs/cachefiles/internal.h b/fs/cachefiles/internal.h
+index 2ad58c4652084..00beedeaec183 100644
+--- a/fs/cachefiles/internal.h
++++ b/fs/cachefiles/internal.h
+@@ -44,6 +44,11 @@ struct cachefiles_volume {
+ 	struct dentry			*fanout[256];	/* Fanout subdirs */
+ };
  
++enum cachefiles_object_state {
++	CACHEFILES_ONDEMAND_OBJSTATE_CLOSE, /* Anonymous fd closed by daemon or initial state */
++	CACHEFILES_ONDEMAND_OBJSTATE_OPEN, /* Anonymous fd associated with object is available */
++};
++
+ /*
+  * Backing file state.
+  */
+@@ -62,6 +67,7 @@ struct cachefiles_object {
+ #define CACHEFILES_OBJECT_USING_TMPFILE	0		/* Have an unlinked tmpfile */
+ #ifdef CONFIG_CACHEFILES_ONDEMAND
+ 	int				ondemand_id;
++	enum cachefiles_object_state	state;
+ #endif
+ };
+ 
+@@ -296,6 +302,21 @@ extern void cachefiles_ondemand_clean_object(struct cachefiles_object *object);
+ extern int cachefiles_ondemand_read(struct cachefiles_object *object,
+ 				    loff_t pos, size_t len);
+ 
++#define CACHEFILES_OBJECT_STATE_FUNCS(_state, _STATE)	\
++static inline bool								\
++cachefiles_ondemand_object_is_##_state(const struct cachefiles_object *object) \
++{												\
++	return object->state == CACHEFILES_ONDEMAND_OBJSTATE_##_STATE; \
++}												\
++												\
++static inline void								\
++cachefiles_ondemand_set_object_##_state(struct cachefiles_object *object) \
++{												\
++	object->state = CACHEFILES_ONDEMAND_OBJSTATE_##_STATE; \
++}
++
++CACHEFILES_OBJECT_STATE_FUNCS(open, OPEN);
++CACHEFILES_OBJECT_STATE_FUNCS(close, CLOSE);
+ #else
+ static inline ssize_t cachefiles_ondemand_daemon_read(struct cachefiles_cache *cache,
+ 					char __user *_buffer, size_t buflen)
+diff --git a/fs/cachefiles/ondemand.c b/fs/cachefiles/ondemand.c
+index 0254ed39f68ce..90456b8a4b3e0 100644
+--- a/fs/cachefiles/ondemand.c
++++ b/fs/cachefiles/ondemand.c
+@@ -15,6 +15,7 @@ static int cachefiles_ondemand_fd_release(struct inode *inode,
+ 
+ 	xa_lock(&cache->reqs);
+ 	object->ondemand_id = CACHEFILES_ONDEMAND_ID_CLOSED;
++	cachefiles_ondemand_set_object_close(object);
+ 
+ 	/*
+ 	 * Flush all pending READ requests since their completion depends on
+@@ -176,6 +177,8 @@ int cachefiles_ondemand_copen(struct cachefiles_cache *cache, char *args)
+ 		set_bit(FSCACHE_COOKIE_NO_DATA_TO_READ, &cookie->flags);
+ 	trace_cachefiles_ondemand_copen(req->object, id, size);
+ 
++	cachefiles_ondemand_set_object_open(req->object);
++
+ out:
+ 	complete(&req->done);
+ 	return ret;
+@@ -363,7 +366,8 @@ static int cachefiles_ondemand_send_req(struct cachefiles_object *object,
+ 		/* coupled with the barrier in cachefiles_flush_reqs() */
+ 		smp_mb();
+ 
+-		if (opcode != CACHEFILES_OP_OPEN && object->ondemand_id <= 0) {
++		if (opcode != CACHEFILES_OP_OPEN &&
++			!cachefiles_ondemand_object_is_open(object)) {
+ 			WARN_ON_ONCE(object->ondemand_id == 0);
+ 			xas_unlock(&xas);
+ 			ret = -EIO;
+@@ -430,18 +434,11 @@ static int cachefiles_ondemand_init_close_req(struct cachefiles_req *req,
+ 					      void *private)
+ {
+ 	struct cachefiles_object *object = req->object;
+-	int object_id = object->ondemand_id;
+ 
+-	/*
+-	 * It's possible that object id is still 0 if the cookie looking up
+-	 * phase failed before OPEN request has ever been sent. Also avoid
+-	 * sending CLOSE request for CACHEFILES_ONDEMAND_ID_CLOSED, which means
+-	 * anon_fd has already been closed.
+-	 */
+-	if (object_id <= 0)
++	if (!cachefiles_ondemand_object_is_open(object))
+ 		return -ENOENT;
+ 
+-	req->msg.object_id = object_id;
++	req->msg.object_id = object->ondemand_id;
+ 	trace_cachefiles_ondemand_close(object, &req->msg);
+ 	return 0;
+ }
+@@ -460,7 +457,7 @@ static int cachefiles_ondemand_init_read_req(struct cachefiles_req *req,
+ 	int object_id = object->ondemand_id;
+ 
+ 	/* Stop enqueuing requests when daemon has closed anon_fd. */
+-	if (object_id <= 0) {
++	if (!cachefiles_ondemand_object_is_open(object)) {
+ 		WARN_ON_ONCE(object_id == 0);
+ 		pr_info_once("READ: anonymous fd closed prematurely.\n");
+ 		return -EIO;
+@@ -485,7 +482,7 @@ int cachefiles_ondemand_init_object(struct cachefiles_object *object)
+ 	 * creating a new tmpfile as the cache file. Reuse the previously
+ 	 * allocated object ID if any.
+ 	 */
+-	if (object->ondemand_id > 0)
++	if (cachefiles_ondemand_object_is_open(object))
+ 		return 0;
+ 
+ 	volume_key_size = volume->key[0] + 1;
 -- 
 2.43.0
 
