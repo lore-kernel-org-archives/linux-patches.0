@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AEB013AA40;
-	Wed, 19 Jun 2024 13:06:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A9712FB31;
+	Wed, 19 Jun 2024 13:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802397; cv=none; b=KG9lpV9aYllE7ulgzbGxmtGj21fdc5RFz27vTXV4Gfp3IVI78k2X34/MpYV0VulVgKeCDP8GbXPdGeMi8/rv+YjJFXhy2DQJIp8CzrXn0bJb9BmZBc6498OeZzhDw+h7rbXlcbnBKy22g+HgsmmeYbDQktRR71zjYug1CYuMPqU=
+	t=1718802400; cv=none; b=VLLoQT6Oirj82t/ZqY+dYLXXTwWHju5+9RI4pPemvKHgWbXu9XQehtqOTkvzzWfwdY7syqm6kovWyS9EKFuRupPkvThOTFXM5fqINeJpuUAxA4dUO9Vd65oZJiKnGtiE9o1+BfAEgumiVUOpHAUKwN3/podsTTYWS6DHHvOHdrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802397; c=relaxed/simple;
-	bh=u7w5qbk8tJI7dbPe1nOfy3Tej07tO3V94r5HXBpfBgA=;
+	s=arc-20240116; t=1718802400; c=relaxed/simple;
+	bh=MVhMPVidpCIxYZoidtKC28VKKgxYp0+SxK+dkfzI8Jg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jpvejyac6n0q3nscp/n7Ma8DBYOu15JNotMLJ4R8Bw8fACUcNhznFMgnkHmHWMkw3/JsLRrZKdg3vnXhPVfs/efMvblk6zHpAbYWPF6qN4n8nNJi0VAM3AM2PDHIg4YKhzRhsdOfXHQabmMi1iDB/MoQJQARCFGvGWSuVcMn0rE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FRcwKyjj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OqOJWmVC3lOWJRqOuSGeSd+1t7PxuceyCCylGoaXRKXCpFSpvZlFfxvviq3HR9G/liLg9RbdqcdPb6k0l0CbdV01CDyAsHpVUWNzNXmKz8CM7xsPteV/WT7WDmkp85Skkzp2h1VPxgbbL3xSzL/c4likBMbbaJs3Gt/9N6PhG6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g68k/Vum; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FRcwKyjj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA8A0C2BBFC;
-	Wed, 19 Jun 2024 13:06:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g68k/Vum"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF1F2C2BBFC;
+	Wed, 19 Jun 2024 13:06:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802397;
-	bh=u7w5qbk8tJI7dbPe1nOfy3Tej07tO3V94r5HXBpfBgA=;
+	s=korg; t=1718802400;
+	bh=MVhMPVidpCIxYZoidtKC28VKKgxYp0+SxK+dkfzI8Jg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FRcwKyjj71wQryTQ9AVi78JFe6RCfY+OIW43T9TTnE3nsHW85R29CChA8r3WjlD3b
-	 4H9pXym8z/uZS22CsdU4oQthHAgTFN3pzD4WTup7tK63wb77d0BjD+BwQAUuDHtGrC
-	 hJopz0PIEb0J1XyZmTvU20IMT0cNENfkbLXadgMg=
+	b=g68k/Vum9ki4kKXgKobe1J5QROTSokiNWhtiAkP4xLYkS4xUvP3kjn46kbrw+EHct
+	 5LwoDf4tcDsv6qjjUdLrgdIxbDcH6FVNOizRbHi/1KuZpDGESTx+4U/0X9uFIJuma3
+	 BTMkuy8qCQN93dJmHDVhfS7Dzwqll4MoefHF8ksY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John David Anglin <dave.anglin@bell.net>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.6 181/267] parisc: Try to fix random segmentation faults in package builds
-Date: Wed, 19 Jun 2024 14:55:32 +0200
-Message-ID: <20240619125613.291071154@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.6 182/267] ACPI: x86: Force StorageD3Enable on more products
+Date: Wed, 19 Jun 2024 14:55:33 +0200
+Message-ID: <20240619125613.329948465@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -50,811 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John David Anglin <dave@parisc-linux.org>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 72d95924ee35c8cd16ef52f912483ee938a34d49 upstream.
+commit e79a10652bbd320649da705ca1ea0c04351af403 upstream.
 
-PA-RISC systems with PA8800 and PA8900 processors have had problems
-with random segmentation faults for many years.  Systems with earlier
-processors are much more stable.
+A Rembrandt-based HP thin client is reported to have problems where
+the NVME disk isn't present after resume from s2idle.
 
-Systems with PA8800 and PA8900 processors have a large L2 cache which
-needs per page flushing for decent performance when a large range is
-flushed. The combined cache in these systems is also more sensitive to
-non-equivalent aliases than the caches in earlier systems.
+This is because the NVME disk wasn't put into D3 at suspend, and
+that happened because the StorageD3Enable _DSD was missing in the BIOS.
 
-The majority of random segmentation faults that I have looked at
-appear to be memory corruption in memory allocated using mmap and
-malloc.
+As AMD's architecture requires that the NVME is in D3 for s2idle, adjust
+the criteria for force_storage_d3 to match *all* Zen SoCs when the FADT
+advertises low power idle support.
 
-My first attempt at fixing the random faults didn't work. On
-reviewing the cache code, I realized that there were two issues
-which the existing code didn't handle correctly. Both relate
-to cache move-in. Another issue is that the present bit in PTEs
-is racy.
+This will ensure that any future products with this BIOS deficiency don't
+need to be added to the allow list of overrides.
 
-1) PA-RISC caches have a mind of their own and they can speculatively
-load data and instructions for a page as long as there is a entry in
-the TLB for the page which allows move-in. TLBs are local to each
-CPU. Thus, the TLB entry for a page must be purged before flushing
-the page. This is particularly important on SMP systems.
-
-In some of the flush routines, the flush routine would be called
-and then the TLB entry would be purged. This was because the flush
-routine needed the TLB entry to do the flush.
-
-2) My initial approach to trying the fix the random faults was to
-try and use flush_cache_page_if_present for all flush operations.
-This actually made things worse and led to a couple of hardware
-lockups. It finally dawned on me that some lines weren't being
-flushed because the pte check code was racy. This resulted in
-random inequivalent mappings to physical pages.
-
-The __flush_cache_page tmpalias flush sets up its own TLB entry
-and it doesn't need the existing TLB entry. As long as we can find
-the pte pointer for the vm page, we can get the pfn and physical
-address of the page. We can also purge the TLB entry for the page
-before doing the flush. Further, __flush_cache_page uses a special
-TLB entry that inhibits cache move-in.
-
-When switching page mappings, we need to ensure that lines are
-removed from the cache.  It is not sufficient to just flush the
-lines to memory as they may come back.
-
-This made it clear that we needed to implement all the required
-flush operations using tmpalias routines. This includes flushes
-for user and kernel pages.
-
-After modifying the code to use tmpalias flushes, it became clear
-that the random segmentation faults were not fully resolved. The
-frequency of faults was worse on systems with a 64 MB L2 (PA8900)
-and systems with more CPUs (rp4440).
-
-The warning that I added to flush_cache_page_if_present to detect
-pages that couldn't be flushed triggered frequently on some systems.
-
-Helge and I looked at the pages that couldn't be flushed and found
-that the PTE was either cleared or for a swap page. Ignoring pages
-that were swapped out seemed okay but pages with cleared PTEs seemed
-problematic.
-
-I looked at routines related to pte_clear and noticed ptep_clear_flush.
-The default implementation just flushes the TLB entry. However, it was
-obvious that on parisc we need to flush the cache page as well. If
-we don't flush the cache page, stale lines will be left in the cache
-and cause random corruption. Once a PTE is cleared, there is no way
-to find the physical address associated with the PTE and flush the
-associated page at a later time.
-
-I implemented an updated change with a parisc specific version of
-ptep_clear_flush. It fixed the random data corruption on Helge's rp4440
-and rp3440, as well as on my c8000.
-
-At this point, I realized that I could restore the code where we only
-flush in flush_cache_page_if_present if the page has been accessed.
-However, for this, we also need to flush the cache when the accessed
-bit is cleared in ptep_clear_flush_young to keep things synchronized.
-The default implementation only flushes the TLB entry.
-
-Other changes in this version are:
-
-1) Implement parisc specific version of ptep_get. It's identical to
-default but needed in arch/parisc/include/asm/pgtable.h.
-2) Revise parisc implementation of ptep_test_and_clear_young to use
-ptep_get (READ_ONCE).
-3) Drop parisc implementation of ptep_get_and_clear. We can use default.
-4) Revise flush_kernel_vmap_range and invalidate_kernel_vmap_range to
-use full data cache flush.
-5) Move flush_cache_vmap and flush_cache_vunmap to cache.c. Handle
-VM_IOREMAP case in flush_cache_vmap.
-
-At this time, I don't know whether it is better to always flush when
-the PTE present bit is set or when both the accessed and present bits
-are set. The later saves flushing pages that haven't been accessed,
-but we need to flush in ptep_clear_flush_young. It also needs a page
-table lookup to find the PTE pointer. The lpa instruction only needs
-a page table lookup when the PTE entry isn't in the TLB.
-
-We don't atomically handle setting and clearing the _PAGE_ACCESSED bit.
-If we miss an update, we may miss a flush and the cache may get corrupted.
-Whether the current code is effectively atomic depends on process control.
-
-When CONFIG_FLUSH_PAGE_ACCESSED is set to zero, the page will eventually
-be flushed when the PTE is cleared or in flush_cache_page_if_present. The
-_PAGE_ACCESSED bit is not used, so the problem is avoided.
-
-The flush method can be selected using the CONFIG_FLUSH_PAGE_ACCESSED
-define in cache.c. The default is 0. I didn't see a large difference
-in performance.
-
-Signed-off-by: John David Anglin <dave.anglin@bell.net>
-Cc: <stable@vger.kernel.org> # v6.6+
-Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Acked-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/include/asm/cacheflush.h |   15 -
- arch/parisc/include/asm/pgtable.h    |   27 +-
- arch/parisc/kernel/cache.c           |  411 +++++++++++++++++++++--------------
- 3 files changed, 274 insertions(+), 179 deletions(-)
+ drivers/acpi/x86/utils.c |   24 ++++++++++--------------
+ 1 file changed, 10 insertions(+), 14 deletions(-)
 
---- a/arch/parisc/include/asm/cacheflush.h
-+++ b/arch/parisc/include/asm/cacheflush.h
-@@ -31,18 +31,17 @@ void flush_cache_all_local(void);
- void flush_cache_all(void);
- void flush_cache_mm(struct mm_struct *mm);
+--- a/drivers/acpi/x86/utils.c
++++ b/drivers/acpi/x86/utils.c
+@@ -198,16 +198,16 @@ bool acpi_device_override_status(struct
+ }
  
--void flush_kernel_dcache_page_addr(const void *addr);
+ /*
+- * AMD systems from Renoir and Lucienne *require* that the NVME controller
++ * AMD systems from Renoir onwards *require* that the NVME controller
+  * is put into D3 over a Modern Standby / suspend-to-idle cycle.
+  *
+  * This is "typically" accomplished using the `StorageD3Enable`
+  * property in the _DSD that is checked via the `acpi_storage_d3` function
+- * but this property was introduced after many of these systems launched
+- * and most OEM systems don't have it in their BIOS.
++ * but some OEM systems still don't have it in their BIOS.
+  *
+  * The Microsoft documentation for StorageD3Enable mentioned that Windows has
+- * a hardcoded allowlist for D3 support, which was used for these platforms.
++ * a hardcoded allowlist for D3 support as well as a registry key to override
++ * the BIOS, which has been used for these cases.
+  *
+  * This allows quirking on Linux in a similar fashion.
+  *
+@@ -220,19 +220,15 @@ bool acpi_device_override_status(struct
+  *    https://bugzilla.kernel.org/show_bug.cgi?id=216773
+  *    https://bugzilla.kernel.org/show_bug.cgi?id=217003
+  * 2) On at least one HP system StorageD3Enable is missing on the second NVME
+-      disk in the system.
++ *    disk in the system.
++ * 3) On at least one HP Rembrandt system StorageD3Enable is missing on the only
++ *    NVME device.
+  */
+-static const struct x86_cpu_id storage_d3_cpu_ids[] = {
+-	X86_MATCH_VENDOR_FAM_MODEL(AMD, 23, 24, NULL),  /* Picasso */
+-	X86_MATCH_VENDOR_FAM_MODEL(AMD, 23, 96, NULL),	/* Renoir */
+-	X86_MATCH_VENDOR_FAM_MODEL(AMD, 23, 104, NULL),	/* Lucienne */
+-	X86_MATCH_VENDOR_FAM_MODEL(AMD, 25, 80, NULL),	/* Cezanne */
+-	{}
+-};
 -
- #define flush_kernel_dcache_range(start,size) \
- 	flush_kernel_dcache_range_asm((start), (start)+(size));
- 
-+/* The only way to flush a vmap range is to flush whole cache */
- #define ARCH_IMPLEMENTS_FLUSH_KERNEL_VMAP_RANGE 1
- void flush_kernel_vmap_range(void *vaddr, int size);
- void invalidate_kernel_vmap_range(void *vaddr, int size);
- 
--#define flush_cache_vmap(start, end)		flush_cache_all()
-+void flush_cache_vmap(unsigned long start, unsigned long end);
- #define flush_cache_vmap_early(start, end)	do { } while (0)
--#define flush_cache_vunmap(start, end)		flush_cache_all()
-+void flush_cache_vunmap(unsigned long start, unsigned long end);
- 
- void flush_dcache_folio(struct folio *folio);
- #define flush_dcache_folio flush_dcache_folio
-@@ -77,17 +76,11 @@ void flush_cache_page(struct vm_area_str
- void flush_cache_range(struct vm_area_struct *vma,
- 		unsigned long start, unsigned long end);
- 
--/* defined in pacache.S exported in cache.c used by flush_anon_page */
--void flush_dcache_page_asm(unsigned long phys_addr, unsigned long vaddr);
--
- #define ARCH_HAS_FLUSH_ANON_PAGE
- void flush_anon_page(struct vm_area_struct *vma, struct page *page, unsigned long vmaddr);
- 
- #define ARCH_HAS_FLUSH_ON_KUNMAP
--static inline void kunmap_flush_on_unmap(const void *addr)
--{
--	flush_kernel_dcache_page_addr(addr);
--}
-+void kunmap_flush_on_unmap(const void *addr);
- 
- #endif /* _PARISC_CACHEFLUSH_H */
- 
---- a/arch/parisc/include/asm/pgtable.h
-+++ b/arch/parisc/include/asm/pgtable.h
-@@ -448,14 +448,17 @@ static inline pte_t pte_swp_clear_exclus
- 	return pte;
- }
- 
-+static inline pte_t ptep_get(pte_t *ptep)
-+{
-+	return READ_ONCE(*ptep);
-+}
-+#define ptep_get ptep_get
-+
- static inline int ptep_test_and_clear_young(struct vm_area_struct *vma, unsigned long addr, pte_t *ptep)
+ bool force_storage_d3(void)
  {
- 	pte_t pte;
- 
--	if (!pte_young(*ptep))
--		return 0;
--
--	pte = *ptep;
-+	pte = ptep_get(ptep);
- 	if (!pte_young(pte)) {
- 		return 0;
- 	}
-@@ -463,17 +466,10 @@ static inline int ptep_test_and_clear_yo
- 	return 1;
+-	return x86_match_cpu(storage_d3_cpu_ids);
++	if (!cpu_feature_enabled(X86_FEATURE_ZEN))
++		return false;
++	return acpi_gbl_FADT.flags & ACPI_FADT_LOW_POWER_S0;
  }
  
--struct mm_struct;
--static inline pte_t ptep_get_and_clear(struct mm_struct *mm, unsigned long addr, pte_t *ptep)
--{
--	pte_t old_pte;
--
--	old_pte = *ptep;
--	set_pte(ptep, __pte(0));
--
--	return old_pte;
--}
-+int ptep_clear_flush_young(struct vm_area_struct *vma, unsigned long addr, pte_t *ptep);
-+pte_t ptep_clear_flush(struct vm_area_struct *vma, unsigned long addr, pte_t *ptep);
- 
-+struct mm_struct;
- static inline void ptep_set_wrprotect(struct mm_struct *mm, unsigned long addr, pte_t *ptep)
- {
- 	set_pte(ptep, pte_wrprotect(*ptep));
-@@ -511,7 +507,8 @@ static inline void ptep_set_wrprotect(st
- #define HAVE_ARCH_UNMAPPED_AREA_TOPDOWN
- 
- #define __HAVE_ARCH_PTEP_TEST_AND_CLEAR_YOUNG
--#define __HAVE_ARCH_PTEP_GET_AND_CLEAR
-+#define __HAVE_ARCH_PTEP_CLEAR_YOUNG_FLUSH
-+#define __HAVE_ARCH_PTEP_CLEAR_FLUSH
- #define __HAVE_ARCH_PTEP_SET_WRPROTECT
- #define __HAVE_ARCH_PTE_SAME
- 
---- a/arch/parisc/kernel/cache.c
-+++ b/arch/parisc/kernel/cache.c
-@@ -20,6 +20,7 @@
- #include <linux/sched.h>
- #include <linux/sched/mm.h>
- #include <linux/syscalls.h>
-+#include <linux/vmalloc.h>
- #include <asm/pdc.h>
- #include <asm/cache.h>
- #include <asm/cacheflush.h>
-@@ -31,20 +32,31 @@
- #include <asm/mmu_context.h>
- #include <asm/cachectl.h>
- 
-+#define PTR_PAGE_ALIGN_DOWN(addr) PTR_ALIGN_DOWN(addr, PAGE_SIZE)
-+
-+/*
-+ * When nonzero, use _PAGE_ACCESSED bit to try to reduce the number
-+ * of page flushes done flush_cache_page_if_present. There are some
-+ * pros and cons in using this option. It may increase the risk of
-+ * random segmentation faults.
-+ */
-+#define CONFIG_FLUSH_PAGE_ACCESSED	0
-+
- int split_tlb __ro_after_init;
- int dcache_stride __ro_after_init;
- int icache_stride __ro_after_init;
- EXPORT_SYMBOL(dcache_stride);
- 
-+/* Internal implementation in arch/parisc/kernel/pacache.S */
- void flush_dcache_page_asm(unsigned long phys_addr, unsigned long vaddr);
- EXPORT_SYMBOL(flush_dcache_page_asm);
- void purge_dcache_page_asm(unsigned long phys_addr, unsigned long vaddr);
- void flush_icache_page_asm(unsigned long phys_addr, unsigned long vaddr);
--
--/* Internal implementation in arch/parisc/kernel/pacache.S */
- void flush_data_cache_local(void *);  /* flushes local data-cache only */
- void flush_instruction_cache_local(void); /* flushes local code-cache only */
- 
-+static void flush_kernel_dcache_page_addr(const void *addr);
-+
- /* On some machines (i.e., ones with the Merced bus), there can be
-  * only a single PxTLB broadcast at a time; this must be guaranteed
-  * by software. We need a spinlock around all TLB flushes to ensure
-@@ -317,6 +329,18 @@ __flush_cache_page(struct vm_area_struct
- {
- 	if (!static_branch_likely(&parisc_has_cache))
- 		return;
-+
-+	/*
-+	 * The TLB is the engine of coherence on parisc.  The CPU is
-+	 * entitled to speculate any page with a TLB mapping, so here
-+	 * we kill the mapping then flush the page along a special flush
-+	 * only alias mapping. This guarantees that the page is no-longer
-+	 * in the cache for any process and nor may it be speculatively
-+	 * read in (until the user or kernel specifically accesses it,
-+	 * of course).
-+	 */
-+	flush_tlb_page(vma, vmaddr);
-+
- 	preempt_disable();
- 	flush_dcache_page_asm(physaddr, vmaddr);
- 	if (vma->vm_flags & VM_EXEC)
-@@ -324,46 +348,44 @@ __flush_cache_page(struct vm_area_struct
- 	preempt_enable();
- }
- 
--static void flush_user_cache_page(struct vm_area_struct *vma, unsigned long vmaddr)
-+static void flush_kernel_dcache_page_addr(const void *addr)
- {
--	unsigned long flags, space, pgd, prot;
--#ifdef CONFIG_TLB_PTLOCK
--	unsigned long pgd_lock;
--#endif
-+	unsigned long vaddr = (unsigned long)addr;
-+	unsigned long flags;
- 
--	vmaddr &= PAGE_MASK;
-+	/* Purge TLB entry to remove translation on all CPUs */
-+	purge_tlb_start(flags);
-+	pdtlb(SR_KERNEL, addr);
-+	purge_tlb_end(flags);
- 
-+	/* Use tmpalias flush to prevent data cache move-in */
- 	preempt_disable();
-+	flush_dcache_page_asm(__pa(vaddr), vaddr);
-+	preempt_enable();
-+}
- 
--	/* Set context for flush */
--	local_irq_save(flags);
--	prot = mfctl(8);
--	space = mfsp(SR_USER);
--	pgd = mfctl(25);
--#ifdef CONFIG_TLB_PTLOCK
--	pgd_lock = mfctl(28);
--#endif
--	switch_mm_irqs_off(NULL, vma->vm_mm, NULL);
--	local_irq_restore(flags);
--
--	flush_user_dcache_range_asm(vmaddr, vmaddr + PAGE_SIZE);
--	if (vma->vm_flags & VM_EXEC)
--		flush_user_icache_range_asm(vmaddr, vmaddr + PAGE_SIZE);
--	flush_tlb_page(vma, vmaddr);
-+static void flush_kernel_icache_page_addr(const void *addr)
-+{
-+	unsigned long vaddr = (unsigned long)addr;
-+	unsigned long flags;
- 
--	/* Restore previous context */
--	local_irq_save(flags);
--#ifdef CONFIG_TLB_PTLOCK
--	mtctl(pgd_lock, 28);
--#endif
--	mtctl(pgd, 25);
--	mtsp(space, SR_USER);
--	mtctl(prot, 8);
--	local_irq_restore(flags);
-+	/* Purge TLB entry to remove translation on all CPUs */
-+	purge_tlb_start(flags);
-+	pdtlb(SR_KERNEL, addr);
-+	purge_tlb_end(flags);
- 
-+	/* Use tmpalias flush to prevent instruction cache move-in */
-+	preempt_disable();
-+	flush_icache_page_asm(__pa(vaddr), vaddr);
- 	preempt_enable();
- }
- 
-+void kunmap_flush_on_unmap(const void *addr)
-+{
-+	flush_kernel_dcache_page_addr(addr);
-+}
-+EXPORT_SYMBOL(kunmap_flush_on_unmap);
-+
- void flush_icache_pages(struct vm_area_struct *vma, struct page *page,
- 		unsigned int nr)
- {
-@@ -371,13 +393,16 @@ void flush_icache_pages(struct vm_area_s
- 
- 	for (;;) {
- 		flush_kernel_dcache_page_addr(kaddr);
--		flush_kernel_icache_page(kaddr);
-+		flush_kernel_icache_page_addr(kaddr);
- 		if (--nr == 0)
- 			break;
- 		kaddr += PAGE_SIZE;
- 	}
- }
- 
-+/*
-+ * Walk page directory for MM to find PTEP pointer for address ADDR.
-+ */
- static inline pte_t *get_ptep(struct mm_struct *mm, unsigned long addr)
- {
- 	pte_t *ptep = NULL;
-@@ -406,6 +431,41 @@ static inline bool pte_needs_flush(pte_t
- 		== (_PAGE_PRESENT | _PAGE_ACCESSED);
- }
- 
-+/*
-+ * Return user physical address. Returns 0 if page is not present.
-+ */
-+static inline unsigned long get_upa(struct mm_struct *mm, unsigned long addr)
-+{
-+	unsigned long flags, space, pgd, prot, pa;
-+#ifdef CONFIG_TLB_PTLOCK
-+	unsigned long pgd_lock;
-+#endif
-+
-+	/* Save context */
-+	local_irq_save(flags);
-+	prot = mfctl(8);
-+	space = mfsp(SR_USER);
-+	pgd = mfctl(25);
-+#ifdef CONFIG_TLB_PTLOCK
-+	pgd_lock = mfctl(28);
-+#endif
-+
-+	/* Set context for lpa_user */
-+	switch_mm_irqs_off(NULL, mm, NULL);
-+	pa = lpa_user(addr);
-+
-+	/* Restore previous context */
-+#ifdef CONFIG_TLB_PTLOCK
-+	mtctl(pgd_lock, 28);
-+#endif
-+	mtctl(pgd, 25);
-+	mtsp(space, SR_USER);
-+	mtctl(prot, 8);
-+	local_irq_restore(flags);
-+
-+	return pa;
-+}
-+
- void flush_dcache_folio(struct folio *folio)
- {
- 	struct address_space *mapping = folio_flush_mapping(folio);
-@@ -454,50 +514,23 @@ void flush_dcache_folio(struct folio *fo
- 		if (addr + nr * PAGE_SIZE > vma->vm_end)
- 			nr = (vma->vm_end - addr) / PAGE_SIZE;
- 
--		if (parisc_requires_coherency()) {
--			for (i = 0; i < nr; i++) {
--				pte_t *ptep = get_ptep(vma->vm_mm,
--							addr + i * PAGE_SIZE);
--				if (!ptep)
--					continue;
--				if (pte_needs_flush(*ptep))
--					flush_user_cache_page(vma,
--							addr + i * PAGE_SIZE);
--				/* Optimise accesses to the same table? */
--				pte_unmap(ptep);
--			}
--		} else {
-+		if (old_addr == 0 || (old_addr & (SHM_COLOUR - 1))
-+					!= (addr & (SHM_COLOUR - 1))) {
-+			for (i = 0; i < nr; i++)
-+				__flush_cache_page(vma,
-+					addr + i * PAGE_SIZE,
-+					(pfn + i) * PAGE_SIZE);
- 			/*
--			 * The TLB is the engine of coherence on parisc:
--			 * The CPU is entitled to speculate any page
--			 * with a TLB mapping, so here we kill the
--			 * mapping then flush the page along a special
--			 * flush only alias mapping. This guarantees that
--			 * the page is no-longer in the cache for any
--			 * process and nor may it be speculatively read
--			 * in (until the user or kernel specifically
--			 * accesses it, of course)
-+			 * Software is allowed to have any number
-+			 * of private mappings to a page.
- 			 */
--			for (i = 0; i < nr; i++)
--				flush_tlb_page(vma, addr + i * PAGE_SIZE);
--			if (old_addr == 0 || (old_addr & (SHM_COLOUR - 1))
--					!= (addr & (SHM_COLOUR - 1))) {
--				for (i = 0; i < nr; i++)
--					__flush_cache_page(vma,
--						addr + i * PAGE_SIZE,
--						(pfn + i) * PAGE_SIZE);
--				/*
--				 * Software is allowed to have any number
--				 * of private mappings to a page.
--				 */
--				if (!(vma->vm_flags & VM_SHARED))
--					continue;
--				if (old_addr)
--					pr_err("INEQUIVALENT ALIASES 0x%lx and 0x%lx in file %pD\n",
--						old_addr, addr, vma->vm_file);
--				if (nr == folio_nr_pages(folio))
--					old_addr = addr;
--			}
-+			if (!(vma->vm_flags & VM_SHARED))
-+				continue;
-+			if (old_addr)
-+				pr_err("INEQUIVALENT ALIASES 0x%lx and 0x%lx in file %pD\n",
-+					old_addr, addr, vma->vm_file);
-+			if (nr == folio_nr_pages(folio))
-+				old_addr = addr;
- 		}
- 		WARN_ON(++count == 4096);
- 	}
-@@ -587,35 +620,28 @@ extern void purge_kernel_dcache_page_asm
- extern void clear_user_page_asm(void *, unsigned long);
- extern void copy_user_page_asm(void *, void *, unsigned long);
- 
--void flush_kernel_dcache_page_addr(const void *addr)
--{
--	unsigned long flags;
--
--	flush_kernel_dcache_page_asm(addr);
--	purge_tlb_start(flags);
--	pdtlb(SR_KERNEL, addr);
--	purge_tlb_end(flags);
--}
--EXPORT_SYMBOL(flush_kernel_dcache_page_addr);
--
- static void flush_cache_page_if_present(struct vm_area_struct *vma,
--	unsigned long vmaddr, unsigned long pfn)
-+	unsigned long vmaddr)
- {
-+#if CONFIG_FLUSH_PAGE_ACCESSED
- 	bool needs_flush = false;
--	pte_t *ptep;
-+	pte_t *ptep, pte;
- 
--	/*
--	 * The pte check is racy and sometimes the flush will trigger
--	 * a non-access TLB miss. Hopefully, the page has already been
--	 * flushed.
--	 */
- 	ptep = get_ptep(vma->vm_mm, vmaddr);
- 	if (ptep) {
--		needs_flush = pte_needs_flush(*ptep);
-+		pte = ptep_get(ptep);
-+		needs_flush = pte_needs_flush(pte);
- 		pte_unmap(ptep);
- 	}
- 	if (needs_flush)
--		flush_cache_page(vma, vmaddr, pfn);
-+		__flush_cache_page(vma, vmaddr, PFN_PHYS(pte_pfn(pte)));
-+#else
-+	struct mm_struct *mm = vma->vm_mm;
-+	unsigned long physaddr = get_upa(mm, vmaddr);
-+
-+	if (physaddr)
-+		__flush_cache_page(vma, vmaddr, PAGE_ALIGN_DOWN(physaddr));
-+#endif
- }
- 
- void copy_user_highpage(struct page *to, struct page *from,
-@@ -625,7 +651,7 @@ void copy_user_highpage(struct page *to,
- 
- 	kfrom = kmap_local_page(from);
- 	kto = kmap_local_page(to);
--	flush_cache_page_if_present(vma, vaddr, page_to_pfn(from));
-+	__flush_cache_page(vma, vaddr, PFN_PHYS(page_to_pfn(from)));
- 	copy_page_asm(kto, kfrom);
- 	kunmap_local(kto);
- 	kunmap_local(kfrom);
-@@ -634,16 +660,17 @@ void copy_user_highpage(struct page *to,
- void copy_to_user_page(struct vm_area_struct *vma, struct page *page,
- 		unsigned long user_vaddr, void *dst, void *src, int len)
- {
--	flush_cache_page_if_present(vma, user_vaddr, page_to_pfn(page));
-+	__flush_cache_page(vma, user_vaddr, PFN_PHYS(page_to_pfn(page)));
- 	memcpy(dst, src, len);
--	flush_kernel_dcache_range_asm((unsigned long)dst, (unsigned long)dst + len);
-+	flush_kernel_dcache_page_addr(PTR_PAGE_ALIGN_DOWN(dst));
- }
- 
- void copy_from_user_page(struct vm_area_struct *vma, struct page *page,
- 		unsigned long user_vaddr, void *dst, void *src, int len)
- {
--	flush_cache_page_if_present(vma, user_vaddr, page_to_pfn(page));
-+	__flush_cache_page(vma, user_vaddr, PFN_PHYS(page_to_pfn(page)));
- 	memcpy(dst, src, len);
-+	flush_kernel_dcache_page_addr(PTR_PAGE_ALIGN_DOWN(src));
- }
- 
- /* __flush_tlb_range()
-@@ -677,32 +704,10 @@ int __flush_tlb_range(unsigned long sid,
- 
- static void flush_cache_pages(struct vm_area_struct *vma, unsigned long start, unsigned long end)
- {
--	unsigned long addr, pfn;
--	pte_t *ptep;
-+	unsigned long addr;
- 
--	for (addr = start; addr < end; addr += PAGE_SIZE) {
--		bool needs_flush = false;
--		/*
--		 * The vma can contain pages that aren't present. Although
--		 * the pte search is expensive, we need the pte to find the
--		 * page pfn and to check whether the page should be flushed.
--		 */
--		ptep = get_ptep(vma->vm_mm, addr);
--		if (ptep) {
--			needs_flush = pte_needs_flush(*ptep);
--			pfn = pte_pfn(*ptep);
--			pte_unmap(ptep);
--		}
--		if (needs_flush) {
--			if (parisc_requires_coherency()) {
--				flush_user_cache_page(vma, addr);
--			} else {
--				if (WARN_ON(!pfn_valid(pfn)))
--					return;
--				__flush_cache_page(vma, addr, PFN_PHYS(pfn));
--			}
--		}
--	}
-+	for (addr = start; addr < end; addr += PAGE_SIZE)
-+		flush_cache_page_if_present(vma, addr);
- }
- 
- static inline unsigned long mm_total_size(struct mm_struct *mm)
-@@ -753,21 +758,19 @@ void flush_cache_range(struct vm_area_st
- 		if (WARN_ON(IS_ENABLED(CONFIG_SMP) && arch_irqs_disabled()))
- 			return;
- 		flush_tlb_range(vma, start, end);
--		flush_cache_all();
-+		if (vma->vm_flags & VM_EXEC)
-+			flush_cache_all();
-+		else
-+			flush_data_cache();
- 		return;
- 	}
- 
--	flush_cache_pages(vma, start, end);
-+	flush_cache_pages(vma, start & PAGE_MASK, end);
- }
- 
- void flush_cache_page(struct vm_area_struct *vma, unsigned long vmaddr, unsigned long pfn)
- {
--	if (WARN_ON(!pfn_valid(pfn)))
--		return;
--	if (parisc_requires_coherency())
--		flush_user_cache_page(vma, vmaddr);
--	else
--		__flush_cache_page(vma, vmaddr, PFN_PHYS(pfn));
-+	__flush_cache_page(vma, vmaddr, PFN_PHYS(pfn));
- }
- 
- void flush_anon_page(struct vm_area_struct *vma, struct page *page, unsigned long vmaddr)
-@@ -775,34 +778,133 @@ void flush_anon_page(struct vm_area_stru
- 	if (!PageAnon(page))
- 		return;
- 
--	if (parisc_requires_coherency()) {
--		if (vma->vm_flags & VM_SHARED)
--			flush_data_cache();
--		else
--			flush_user_cache_page(vma, vmaddr);
-+	__flush_cache_page(vma, vmaddr, PFN_PHYS(page_to_pfn(page)));
-+}
-+
-+int ptep_clear_flush_young(struct vm_area_struct *vma, unsigned long addr,
-+			   pte_t *ptep)
-+{
-+	pte_t pte = ptep_get(ptep);
-+
-+	if (!pte_young(pte))
-+		return 0;
-+	set_pte(ptep, pte_mkold(pte));
-+#if CONFIG_FLUSH_PAGE_ACCESSED
-+	__flush_cache_page(vma, addr, PFN_PHYS(pte_pfn(pte)));
-+#endif
-+	return 1;
-+}
-+
-+/*
-+ * After a PTE is cleared, we have no way to flush the cache for
-+ * the physical page. On PA8800 and PA8900 processors, these lines
-+ * can cause random cache corruption. Thus, we must flush the cache
-+ * as well as the TLB when clearing a PTE that's valid.
-+ */
-+pte_t ptep_clear_flush(struct vm_area_struct *vma, unsigned long addr,
-+		       pte_t *ptep)
-+{
-+	struct mm_struct *mm = (vma)->vm_mm;
-+	pte_t pte = ptep_get_and_clear(mm, addr, ptep);
-+	unsigned long pfn = pte_pfn(pte);
-+
-+	if (pfn_valid(pfn))
-+		__flush_cache_page(vma, addr, PFN_PHYS(pfn));
-+	else if (pte_accessible(mm, pte))
-+		flush_tlb_page(vma, addr);
-+
-+	return pte;
-+}
-+
-+/*
-+ * The physical address for pages in the ioremap case can be obtained
-+ * from the vm_struct struct. I wasn't able to successfully handle the
-+ * vmalloc and vmap cases. We have an array of struct page pointers in
-+ * the uninitialized vmalloc case but the flush failed using page_to_pfn.
-+ */
-+void flush_cache_vmap(unsigned long start, unsigned long end)
-+{
-+	unsigned long addr, physaddr;
-+	struct vm_struct *vm;
-+
-+	/* Prevent cache move-in */
-+	flush_tlb_kernel_range(start, end);
-+
-+	if (end - start >= parisc_cache_flush_threshold) {
-+		flush_cache_all();
- 		return;
- 	}
- 
--	flush_tlb_page(vma, vmaddr);
--	preempt_disable();
--	flush_dcache_page_asm(page_to_phys(page), vmaddr);
--	preempt_enable();
-+	if (WARN_ON_ONCE(!is_vmalloc_addr((void *)start))) {
-+		flush_cache_all();
-+		return;
-+	}
-+
-+	vm = find_vm_area((void *)start);
-+	if (WARN_ON_ONCE(!vm)) {
-+		flush_cache_all();
-+		return;
-+	}
-+
-+	/* The physical addresses of IOREMAP regions are contiguous */
-+	if (vm->flags & VM_IOREMAP) {
-+		physaddr = vm->phys_addr;
-+		for (addr = start; addr < end; addr += PAGE_SIZE) {
-+			preempt_disable();
-+			flush_dcache_page_asm(physaddr, start);
-+			flush_icache_page_asm(physaddr, start);
-+			preempt_enable();
-+			physaddr += PAGE_SIZE;
-+		}
-+		return;
-+	}
-+
-+	flush_cache_all();
- }
-+EXPORT_SYMBOL(flush_cache_vmap);
- 
-+/*
-+ * The vm_struct has been retired and the page table is set up. The
-+ * last page in the range is a guard page. Its physical address can't
-+ * be determined using lpa, so there is no way to flush the range
-+ * using flush_dcache_page_asm.
-+ */
-+void flush_cache_vunmap(unsigned long start, unsigned long end)
-+{
-+	/* Prevent cache move-in */
-+	flush_tlb_kernel_range(start, end);
-+	flush_data_cache();
-+}
-+EXPORT_SYMBOL(flush_cache_vunmap);
-+
-+/*
-+ * On systems with PA8800/PA8900 processors, there is no way to flush
-+ * a vmap range other than using the architected loop to flush the
-+ * entire cache. The page directory is not set up, so we can't use
-+ * fdc, etc. FDCE/FICE don't work to flush a portion of the cache.
-+ * L2 is physically indexed but FDCE/FICE instructions in virtual
-+ * mode output their virtual address on the core bus, not their
-+ * real address. As a result, the L2 cache index formed from the
-+ * virtual address will most likely not be the same as the L2 index
-+ * formed from the real address.
-+ */
- void flush_kernel_vmap_range(void *vaddr, int size)
- {
- 	unsigned long start = (unsigned long)vaddr;
- 	unsigned long end = start + size;
- 
--	if ((!IS_ENABLED(CONFIG_SMP) || !arch_irqs_disabled()) &&
--	    (unsigned long)size >= parisc_cache_flush_threshold) {
--		flush_tlb_kernel_range(start, end);
--		flush_data_cache();
-+	flush_tlb_kernel_range(start, end);
-+
-+	if (!static_branch_likely(&parisc_has_dcache))
-+		return;
-+
-+	/* If interrupts are disabled, we can only do local flush */
-+	if (WARN_ON(IS_ENABLED(CONFIG_SMP) && arch_irqs_disabled())) {
-+		flush_data_cache_local(NULL);
- 		return;
- 	}
- 
--	flush_kernel_dcache_range_asm(start, end);
--	flush_tlb_kernel_range(start, end);
-+	flush_data_cache();
- }
- EXPORT_SYMBOL(flush_kernel_vmap_range);
- 
-@@ -814,15 +916,18 @@ void invalidate_kernel_vmap_range(void *
- 	/* Ensure DMA is complete */
- 	asm_syncdma();
- 
--	if ((!IS_ENABLED(CONFIG_SMP) || !arch_irqs_disabled()) &&
--	    (unsigned long)size >= parisc_cache_flush_threshold) {
--		flush_tlb_kernel_range(start, end);
--		flush_data_cache();
-+	flush_tlb_kernel_range(start, end);
-+
-+	if (!static_branch_likely(&parisc_has_dcache))
-+		return;
-+
-+	/* If interrupts are disabled, we can only do local flush */
-+	if (WARN_ON(IS_ENABLED(CONFIG_SMP) && arch_irqs_disabled())) {
-+		flush_data_cache_local(NULL);
- 		return;
- 	}
- 
--	purge_kernel_dcache_range_asm(start, end);
--	flush_tlb_kernel_range(start, end);
-+	flush_data_cache();
- }
- EXPORT_SYMBOL(invalidate_kernel_vmap_range);
- 
+ /*
 
 
