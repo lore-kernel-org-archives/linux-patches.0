@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED78AD58;
-	Wed, 19 Jun 2024 13:16:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C04DAD58;
+	Wed, 19 Jun 2024 13:16:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802960; cv=none; b=qPZOWsuKCZ1f7xVRDKYYRBOwZ5Xnc7Cni3bq7X62DrrwXZxcosmNz4QUZyLXH09wllW6WnOPKK2RFW/eHlQCQ6L2XMWgHlKgr4Df2sywKwP5e3uQd0DrMExhMUrP27ysSz42icnv2NN52FMD3QJWcXIoA1sQk7Atme70jZraGv8=
+	t=1718802963; cv=none; b=ZNK179j3k5xLw+GyfpxUqJxl9i3iZAT/JoOKvzNkwYGZzBH8WyeExuWcfGmnt78MglTeiH94RQNLRUena5Lsz1VPLmZGB+ehWboLaV9yEflGshCTcg1MT6h85M5zK+n/nVO8o9GDo2CJjJq1RMI2cvrbEAUZYth0zrSI8HiZRLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802960; c=relaxed/simple;
-	bh=f8VzZlOzFxm0Q1goC6l7zBNlWJIwXl/QsgJ9Q5mpOVY=;
+	s=arc-20240116; t=1718802963; c=relaxed/simple;
+	bh=Egeh1QLE3n4ITCatH8BaFa/kQ5/FKX+yzPO1ymBA0DQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kvCDuesB4q+RT95Mma7bRC/uS/0KVqOoEuoo9aLiVowr4iGsCVx1wuTfT3UPW/p4MQvwgGPbI+SQX80Xmt++w2kI6PrhqiAXgNOenshpfoylEEWJahuUnugAaqMSr0J9EFLu4BTMsw++LWfhl+Le0lCTKo30QSHA405XewqKAzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KjqQFGIy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MCoOVeBmCR+Rhyd1w++IFst/4hm2/dm5kpvI/w56MiOJA3u8UzvhxSAu0JejFUVUICAYrLoUTTNTIPCbQXTWmwvTfzGMO95MZQOpWUlPSkRa8t4UA067KPQ6bEerXiPiQoEF5YK+aKFg/3HEJ/ShbRYUrGPCHquxOhKJ/LwuJR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vsefiia4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KjqQFGIy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E91E3C2BBFC;
-	Wed, 19 Jun 2024 13:15:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vsefiia4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7173C2BBFC;
+	Wed, 19 Jun 2024 13:16:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802960;
-	bh=f8VzZlOzFxm0Q1goC6l7zBNlWJIwXl/QsgJ9Q5mpOVY=;
+	s=korg; t=1718802963;
+	bh=Egeh1QLE3n4ITCatH8BaFa/kQ5/FKX+yzPO1ymBA0DQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KjqQFGIySKRFX0asqj53DKI/fs4Sy+vSlYaCmiA58qG4h4b/FYGes9u9ssVMRnUr1
-	 3w6khQuFsaytwkR34wBAFyJ/dXEOCHrLA8dPjvgltLedLPzF1M/LhJ1LULo4WSeG24
-	 a9yVdgwCmC2L/7S5o12XKKxSHCH6S+CjF3yLWIj4=
+	b=Vsefiia4vXx57lgqfNwmJEC8Ft3956+RqK7Nq5o4I+swIBWrZLY0CjFuhWOJu1bjx
+	 W0E+ZPlb1se2oMqx9+B5uBCg9D6IV2MLErvFmA5pQbjJs8jmePYehJ2SW8FpdvXNhH
+	 wwYa348muyL5rSa1EhMvHwFZ04k6w8hvxxkam0oE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shailend Chand <shailend@google.com>,
-	Ziwei Xiao <ziweixiao@google.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
-	Praveen Kaligineedi <pkaligineedi@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.9 104/281] gve: Clear napi->skb before dev_kfree_skb_any()
-Date: Wed, 19 Jun 2024 14:54:23 +0200
-Message-ID: <20240619125613.848963993@linuxfoundation.org>
+	Christian Zigotzky <chzigotzky@xenosoft.de>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Hari Bathini <hbathini@linux.ibm.com>
+Subject: [PATCH 6.9 105/281] powerpc/85xx: fix compile error without CONFIG_CRASH_DUMP
+Date: Wed, 19 Jun 2024 14:54:24 +0200
+Message-ID: <20240619125613.886769824@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -53,64 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ziwei Xiao <ziweixiao@google.com>
+From: Hari Bathini <hbathini@linux.ibm.com>
 
-commit 6f4d93b78ade0a4c2cafd587f7b429ce95abb02e upstream.
+commit 7b090b6ff51b9a9f002139660672f662b95f0630 upstream.
 
-gve_rx_free_skb incorrectly leaves napi->skb referencing an skb after it
-is freed with dev_kfree_skb_any(). This can result in a subsequent call
-to napi_get_frags returning a dangling pointer.
+Since commit 5c4233cc0920 ("powerpc/kdump: Split KEXEC_CORE and
+CRASH_DUMP dependency"), crashing_cpu is not available without
+CONFIG_CRASH_DUMP. Fix compile error on 64-BIT 85xx owing to this
+change.
 
-Fix this by clearing napi->skb before the skb is freed.
-
-Fixes: 9b8dd5e5ea48 ("gve: DQO: Add RX path")
-Cc: stable@vger.kernel.org
-Reported-by: Shailend Chand <shailend@google.com>
-Signed-off-by: Ziwei Xiao <ziweixiao@google.com>
-Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Reviewed-by: Shailend Chand <shailend@google.com>
-Reviewed-by: Praveen Kaligineedi <pkaligineedi@google.com>
-Link: https://lore.kernel.org/r/20240612001654.923887-1-ziweixiao@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 5c4233cc0920 ("powerpc/kdump: Split KEXEC_CORE and CRASH_DUMP dependency")
+Cc: stable@vger.kernel.org # v6.9+
+Reported-by: Christian Zigotzky <chzigotzky@xenosoft.de>
+Closes: https://lore.kernel.org/all/fa247ae4-5825-4dbe-a737-d93b7ab4d4b9@xenosoft.de/
+Suggested-by: Michael Ellerman <mpe@ellerman.id.au>
+Signed-off-by: Hari Bathini <hbathini@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240510080757.560159-1-hbathini@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/google/gve/gve_rx_dqo.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/powerpc/platforms/85xx/smp.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ethernet/google/gve/gve_rx_dqo.c
-+++ b/drivers/net/ethernet/google/gve/gve_rx_dqo.c
-@@ -581,11 +581,13 @@ static void gve_rx_skb_hash(struct sk_bu
- 	skb_set_hash(skb, le32_to_cpu(compl_desc->hash), hash_type);
- }
+--- a/arch/powerpc/platforms/85xx/smp.c
++++ b/arch/powerpc/platforms/85xx/smp.c
+@@ -398,6 +398,7 @@ static void mpc85xx_smp_kexec_cpu_down(i
+ 	hard_irq_disable();
+ 	mpic_teardown_this_cpu(secondary);
  
--static void gve_rx_free_skb(struct gve_rx_ring *rx)
-+static void gve_rx_free_skb(struct napi_struct *napi, struct gve_rx_ring *rx)
- {
- 	if (!rx->ctx.skb_head)
- 		return;
- 
-+	if (rx->ctx.skb_head == napi->skb)
-+		napi->skb = NULL;
- 	dev_kfree_skb_any(rx->ctx.skb_head);
- 	rx->ctx.skb_head = NULL;
- 	rx->ctx.skb_tail = NULL;
-@@ -884,7 +886,7 @@ int gve_rx_poll_dqo(struct gve_notify_bl
- 
- 		err = gve_rx_dqo(napi, rx, compl_desc, complq->head, rx->q_num);
- 		if (err < 0) {
--			gve_rx_free_skb(rx);
-+			gve_rx_free_skb(napi, rx);
- 			u64_stats_update_begin(&rx->statss);
- 			if (err == -ENOMEM)
- 				rx->rx_skb_alloc_fail++;
-@@ -927,7 +929,7 @@ int gve_rx_poll_dqo(struct gve_notify_bl
- 
- 		/* gve_rx_complete_skb() will consume skb if successful */
- 		if (gve_rx_complete_skb(rx, napi, compl_desc, feat) != 0) {
--			gve_rx_free_skb(rx);
-+			gve_rx_free_skb(napi, rx);
- 			u64_stats_update_begin(&rx->statss);
- 			rx->rx_desc_err_dropped_pkt++;
- 			u64_stats_update_end(&rx->statss);
++#ifdef CONFIG_CRASH_DUMP
+ 	if (cpu == crashing_cpu && cpu_thread_in_core(cpu) != 0) {
+ 		/*
+ 		 * We enter the crash kernel on whatever cpu crashed,
+@@ -406,9 +407,11 @@ static void mpc85xx_smp_kexec_cpu_down(i
+ 		 */
+ 		disable_threadbit = 1;
+ 		disable_cpu = cpu_first_thread_sibling(cpu);
+-	} else if (sibling != crashing_cpu &&
+-		   cpu_thread_in_core(cpu) == 0 &&
+-		   cpu_thread_in_core(sibling) != 0) {
++	} else if (sibling == crashing_cpu) {
++		return;
++	}
++#endif
++	if (cpu_thread_in_core(cpu) == 0 && cpu_thread_in_core(sibling) != 0) {
+ 		disable_threadbit = 2;
+ 		disable_cpu = sibling;
+ 	}
 
 
