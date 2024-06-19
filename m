@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2662CAD58;
-	Wed, 19 Jun 2024 13:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 130C8AD58;
+	Wed, 19 Jun 2024 13:16:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802972; cv=none; b=TAznjbmAuww0pHve3p2RB7IrjVC1GowX5rtL9Aum8mV+jNCdHP6Opk/mqxnP/q3fK7P6QpiWCJDR0G6v92j7034JMjHVMFIiFgzxMMIfdgy+tfUmDGCrxAqpu5sVWjvhZZ2+ZYMkNbZLPMeUvbpaPcD6bf4SKwJWPhSw+Y72Tl4=
+	t=1718802975; cv=none; b=EVr395V5tikZJTncMbp+nD2uSqfTl8OeOPOjNSW/IOVUeWHqzUMNHrdfeHFkRhFtDO/S7Q8ydQrWDfE3DnEdZpnfVXuXsOfseGqakVRpEV8hDx7Mu49cqyAAIupO11zdolDUsZGb0ZHCw7Zn/hGr0jrKtTQh5YrUUudhYR3kPXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802972; c=relaxed/simple;
-	bh=gK7V3+FYrcdciQ9GmHkkiN5h/hkt2FvN5mzN/xbRYo8=;
+	s=arc-20240116; t=1718802975; c=relaxed/simple;
+	bh=ue2bOQ031TXYWHzfJlb2lvGbVnUPV9GSazeEEdfpgUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KYb+XiNVLNs1WP3OC9nS2l2EGq1AM/zViZFRlC9dVHzwxYLgNt9keJA1a1Xs9hxXWIWw3eTZzVLU9RXh5+OEnX613NZU9hFfQgdZfM3LazBXwg5fVpNheoITJdrUXjqlk83i8i43tLt5fbTJPBrhOZ1quYOZqecwVypUlElyVT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBKtrxtS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=O8EG+TAkjCaNnE3TfOPq9j2sfUDnC06euuYMR6JexbdU3wIRF/BdTR83z4pjwOOkj5DJ+kPfuypTrpexLJdFO1wdzDuCJtR4x4h0W6Q23EQ64/oJ3erR42bZKtifcETvUIS64GWG9mAKjs07tCSnymdXNNQTqHZaxbbRP2PHzVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Er+1CF/O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBKtrxtS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FC1FC2BBFC;
-	Wed, 19 Jun 2024 13:16:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Er+1CF/O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E9DAC2BBFC;
+	Wed, 19 Jun 2024 13:16:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802972;
-	bh=gK7V3+FYrcdciQ9GmHkkiN5h/hkt2FvN5mzN/xbRYo8=;
+	s=korg; t=1718802974;
+	bh=ue2bOQ031TXYWHzfJlb2lvGbVnUPV9GSazeEEdfpgUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QBKtrxtSE3o/9s2jtpq4VvEqU5JP6q7yUWB9Y1n+MKwswn13hoGOkVu/DdY5Mto8g
-	 UEMmwy/YhrKS7NX/nNIRdS4K/WsEuwvy4ttyRkXkdTVMXGtEVVSBzbpQN8nGHEke/t
-	 7OOKrARQSufMegowTvOH8Rd3fLlx6H4wmsONdQ3I=
+	b=Er+1CF/OFjXtn46vbxEml4BfuBRYJsYi479JTA9KLL8JVWvTZXUAVC85LDBPZvcmo
+	 Q2fzuFOAju0NXs7yTQaFnUEUEpviHJzuk9H9eJHovZYu4DBRmRttM2uFMkpn/VMolc
+	 PL90RpCo2m2hh6FOIwn8TfqJOi/PnyWOupJnP3ng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Danny Lin <danny@kdrag0n.dev>,
+	=?UTF-8?q?=C3=8D=C3=B1igo=20Huguet?= <ihuguet@redhat.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Masahiro Yamada <masahiroy@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 078/281] eventfs: Update all the eventfs_inodes from the events descriptor
-Date: Wed, 19 Jun 2024 14:53:57 +0200
-Message-ID: <20240619125612.842967653@linuxfoundation.org>
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Subject: [PATCH 6.9 079/281] .editorconfig: remove trim_trailing_whitespace option
+Date: Wed, 19 Jun 2024 14:53:58 +0200
+Message-ID: <20240619125612.883402628@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -49,125 +47,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 340f0c7067a95281ad13734f8225f49c6cf52067 ]
+commit 7da9dfdd5a3dbfd3d2450d9c6a3d1d699d625c43 upstream.
 
-The change to update the permissions of the eventfs_inode had the
-misconception that using the tracefs_inode would find all the
-eventfs_inodes that have been updated and reset them on remount.
-The problem with this approach is that the eventfs_inodes are freed when
-they are no longer used (basically the reason the eventfs system exists).
-When they are freed, the updated eventfs_inodes are not reset on a remount
-because their tracefs_inodes have been freed.
+Some editors (like the vim variants), when seeing "trim_whitespace"
+decide to do just that for all of the whitespace in the file you are
+saving, even if it is not on a line that you have modified.  This plays
+havoc with diffs and is NOT something that should be intended.
 
-Instead, since the events directory eventfs_inode always has a
-tracefs_inode pointing to it (it is not freed when finished), and the
-events directory has a link to all its children, have the
-eventfs_remount() function only operate on the events eventfs_inode and
-have it descend into its children updating their uid and gids.
+As the "only trim whitespace on modified lines" is not part of the
+editorconfig standard yet, just delete these lines from the
+.editorconfig file so that we don't end up with diffs that are
+automatically rejected by maintainers for containing things they
+shouldn't.
 
-Link: https://lore.kernel.org/all/CAK7LNARXgaWw3kH9JgrnH4vK6fr8LDkNKf3wq8NhMWJrVwJyVQ@mail.gmail.com/
-Link: https://lore.kernel.org/linux-trace-kernel/20240523051539.754424703@goodmis.org
-
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Fixes: baa23a8d4360d ("tracefs: Reset permissions on remount if permissions are options")
-Reported-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Danny Lin <danny@kdrag0n.dev>
+Cc: Íñigo Huguet <ihuguet@redhat.com>
+Cc: Mickaël Salaün <mic@digikod.net>
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Fixes: 5a602de99797 ("Add .editorconfig file for basic formatting")
+Acked-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Link: https://lore.kernel.org/r/2024061137-jawless-dipped-e789@gregkh
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/tracefs/event_inode.c | 51 ++++++++++++++++++++++++++++++----------
- 1 file changed, 39 insertions(+), 12 deletions(-)
+ .editorconfig |    3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/fs/tracefs/event_inode.c b/fs/tracefs/event_inode.c
-index 55a40a730b10c..129d0f54ba62f 100644
---- a/fs/tracefs/event_inode.c
-+++ b/fs/tracefs/event_inode.c
-@@ -305,33 +305,60 @@ static const struct file_operations eventfs_file_operations = {
- 	.llseek		= generic_file_llseek,
- };
- 
--/*
-- * On a remount of tracefs, if UID or GID options are set, then
-- * the mount point inode permissions should be used.
-- * Reset the saved permission flags appropriately.
-- */
--void eventfs_remount(struct tracefs_inode *ti, bool update_uid, bool update_gid)
-+static void eventfs_set_attrs(struct eventfs_inode *ei, bool update_uid, kuid_t uid,
-+			      bool update_gid, kgid_t gid, int level)
- {
--	struct eventfs_inode *ei = ti->private;
-+	struct eventfs_inode *ei_child;
- 
--	if (!ei)
-+	/* Update events/<system>/<event> */
-+	if (WARN_ON_ONCE(level > 3))
- 		return;
- 
--	if (update_uid)
-+	if (update_uid) {
- 		ei->attr.mode &= ~EVENTFS_SAVE_UID;
-+		ei->attr.uid = uid;
-+	}
- 
--	if (update_gid)
-+	if (update_gid) {
- 		ei->attr.mode &= ~EVENTFS_SAVE_GID;
-+		ei->attr.gid = gid;
-+	}
-+
-+	list_for_each_entry(ei_child, &ei->children, list) {
-+		eventfs_set_attrs(ei_child, update_uid, uid, update_gid, gid, level + 1);
-+	}
- 
- 	if (!ei->entry_attrs)
- 		return;
- 
- 	for (int i = 0; i < ei->nr_entries; i++) {
--		if (update_uid)
-+		if (update_uid) {
- 			ei->entry_attrs[i].mode &= ~EVENTFS_SAVE_UID;
--		if (update_gid)
-+			ei->entry_attrs[i].uid = uid;
-+		}
-+		if (update_gid) {
- 			ei->entry_attrs[i].mode &= ~EVENTFS_SAVE_GID;
-+			ei->entry_attrs[i].gid = gid;
-+		}
- 	}
-+
-+}
-+
-+/*
-+ * On a remount of tracefs, if UID or GID options are set, then
-+ * the mount point inode permissions should be used.
-+ * Reset the saved permission flags appropriately.
-+ */
-+void eventfs_remount(struct tracefs_inode *ti, bool update_uid, bool update_gid)
-+{
-+	struct eventfs_inode *ei = ti->private;
-+
-+	/* Only the events directory does the updates */
-+	if (!ei || !ei->is_events || ei->is_freed)
-+		return;
-+
-+	eventfs_set_attrs(ei, update_uid, ti->vfs_inode.i_uid,
-+			  update_gid, ti->vfs_inode.i_gid, 0);
- }
- 
- /* Return the evenfs_inode of the "events" directory */
--- 
-2.43.0
-
+--- a/.editorconfig
++++ b/.editorconfig
+@@ -5,7 +5,6 @@ root = true
+ [{*.{awk,c,dts,dtsi,dtso,h,mk,s,S},Kconfig,Makefile,Makefile.*}]
+ charset = utf-8
+ end_of_line = lf
+-trim_trailing_whitespace = true
+ insert_final_newline = true
+ indent_style = tab
+ indent_size = 8
+@@ -13,7 +12,6 @@ indent_size = 8
+ [*.{json,py,rs}]
+ charset = utf-8
+ end_of_line = lf
+-trim_trailing_whitespace = true
+ insert_final_newline = true
+ indent_style = space
+ indent_size = 4
+@@ -26,7 +24,6 @@ indent_size = 8
+ [*.yaml]
+ charset = utf-8
+ end_of_line = lf
+-trim_trailing_whitespace = unset
+ insert_final_newline = true
+ indent_style = space
+ indent_size = 2
 
 
