@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B0182495;
-	Wed, 19 Jun 2024 13:19:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4890182495;
+	Wed, 19 Jun 2024 13:20:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803199; cv=none; b=GYf7iObRk3MUjFdqfkI++Td2RTP81RBGKsfJSA5lpxE+5eebAg0tDEt265JZe/YiAUpYSPDdowx8ZZGP0xEOcKU3/Q3Ive+vEmh/DJc1ID7Cap004vXwSxXu+1SxnnZnQ2V2kdtAKg2EwZywQbgRjNP4bpSnf1MS+xjQdNOiCdM=
+	t=1718803202; cv=none; b=S6V/WkRh0AuvdrTUXw6DppDPbGE049BQVON3fyLdlWYAOjKV5nJgEbRLsziiePbKe8dJtdGmApLjjeU4076n+rwMbeIUTUYmjsCA/eJQaaM2YQCcF2mx5Y6GGKGk65HNG9MX1oTWzKv8i7bJxOtAkA42WzKaofDHONDgFwXO59E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803199; c=relaxed/simple;
-	bh=RMUPxs9/sU/WFvHMRJ9utfmlnkqjvkWfRe6ZVqFkCZU=;
+	s=arc-20240116; t=1718803202; c=relaxed/simple;
+	bh=nBpC3t/X2oKLTANyju7Ix3mCrGVwpf5a5t5LMJaCnCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X2+gq8htrtCkPXT2MvIezpwEYlDPmnQp+I0Pbtjm6vjvf7PtaFH2oiaeEckRT9IZ0b5gMS/5fpAy7+4F4giqEOYaW/iPas/2QiWKu/DZKsm5TbfKyNXeBoN3yuJIl3tyOALPYiJuI7W2Uz1ycnYwlREovXuL8nXPwMBkSA/8tEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q3NuX9IJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Z5OIsHQmU+J4+QjIf1MFdaPvC39DSlyxUTdl60CXH2xMlf47r2htAR5urY36gK2oVvB0w3KpoJKdP6LGc7bWp3RDfl0CLkRsw7jf45guJM/9o+sYoxHrOGNMnyRt3zrxHeOjOYyIqyRvAES4Nx//ZIrSRR85PPSxyox2aT1bbHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WzgpHKWi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q3NuX9IJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C288CC2BBFC;
-	Wed, 19 Jun 2024 13:19:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WzgpHKWi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7884C2BBFC;
+	Wed, 19 Jun 2024 13:20:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803199;
-	bh=RMUPxs9/sU/WFvHMRJ9utfmlnkqjvkWfRe6ZVqFkCZU=;
+	s=korg; t=1718803202;
+	bh=nBpC3t/X2oKLTANyju7Ix3mCrGVwpf5a5t5LMJaCnCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q3NuX9IJ2gvtbQSB7WAFMJOj2ChlohRu7mkdK77MlvjvG7QmEepVOVXnVQ1ev/4Lm
-	 2RIoqnlh19LHjbE//lqvmIp5C22ITgNRXxtMRxQEN0a5mvOgTLVlxI6P46938Tpuph
-	 xzLhpBkk+MuHoninfNEY/ysbu9h8wM4pRa9v0lQk=
+	b=WzgpHKWiqeMnxMYSjWOHXNAKhUtoiS8e/FH+8bVk2OyY53VwVAvmGcCuYToigiFnw
+	 W8R+A1f9UaQksF2WnMTsO0JgIjzHuUaPbg5pLsM0z3d7476EAe0YbqR9gEixSlPvb3
+	 0aZgCwvVls79SHhPSI5Red4KRSOYSmkoUTTMRmOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongzhi Liu <hyperlyzcs@gmail.com>
-Subject: [PATCH 6.9 187/281] misc: microchip: pci1xxxx: fix double free in the error handling of gp_aux_bus_probe()
-Date: Wed, 19 Jun 2024 14:55:46 +0200
-Message-ID: <20240619125617.033549853@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.9 188/281] ksmbd: move leading slash check to smb2_get_name()
+Date: Wed, 19 Jun 2024 14:55:47 +0200
+Message-ID: <20240619125617.182043524@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -43,57 +44,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yongzhi Liu <hyperlyzcs@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 086c6cbcc563c81d55257f9b27e14faf1d0963d3 upstream.
+commit 1cdeca6a7264021e20157de0baf7880ff0ced822 upstream.
 
-When auxiliary_device_add() returns error and then calls
-auxiliary_device_uninit(), callback function
-gp_auxiliary_device_release() calls ida_free() and
-kfree(aux_device_wrapper) to free memory. We should't
-call them again in the error handling path.
+If the directory name in the root of the share starts with
+character like 镜(0x955c) or Ṝ(0x1e5c), it (and anything inside)
+cannot be accessed. The leading slash check must be checked after
+converting unicode to nls string.
 
-Fix this by skipping the redundant cleanup functions.
-
-Fixes: 393fc2f5948f ("misc: microchip: pci1xxxx: load auxiliary bus driver for the PIO function in the multi-function endpoint of pci1xxxx device.")
-Signed-off-by: Yongzhi Liu <hyperlyzcs@gmail.com>
-Link: https://lore.kernel.org/r/20240523121434.21855-3-hyperlyzcs@gmail.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gp.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/smb/server/smb2pdu.c |   15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
---- a/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gp.c
-+++ b/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gp.c
-@@ -111,6 +111,7 @@ static int gp_aux_bus_probe(struct pci_d
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -630,6 +630,12 @@ smb2_get_name(const char *src, const int
+ 		return name;
+ 	}
  
- err_aux_dev_add_1:
- 	auxiliary_device_uninit(&aux_bus->aux_device_wrapper[1]->aux_dev);
-+	goto err_aux_dev_add_0;
++	if (*name == '\\') {
++		pr_err("not allow directory name included leading slash\n");
++		kfree(name);
++		return ERR_PTR(-EINVAL);
++	}
++
+ 	ksmbd_conv_path_to_unix(name);
+ 	ksmbd_strip_last_slash(name);
+ 	return name;
+@@ -2842,20 +2848,11 @@ int smb2_open(struct ksmbd_work *work)
+ 	}
  
- err_aux_dev_init_1:
- 	ida_free(&gp_client_ida, aux_bus->aux_device_wrapper[1]->aux_dev.id);
-@@ -120,6 +121,7 @@ err_ida_alloc_1:
- 
- err_aux_dev_add_0:
- 	auxiliary_device_uninit(&aux_bus->aux_device_wrapper[0]->aux_dev);
-+	goto err_ret;
- 
- err_aux_dev_init_0:
- 	ida_free(&gp_client_ida, aux_bus->aux_device_wrapper[0]->aux_dev.id);
-@@ -127,6 +129,7 @@ err_aux_dev_init_0:
- err_ida_alloc_0:
- 	kfree(aux_bus->aux_device_wrapper[0]);
- 
-+err_ret:
- 	return retval;
- }
- 
+ 	if (req->NameLength) {
+-		if ((req->CreateOptions & FILE_DIRECTORY_FILE_LE) &&
+-		    *(char *)req->Buffer == '\\') {
+-			pr_err("not allow directory name included leading slash\n");
+-			rc = -EINVAL;
+-			goto err_out2;
+-		}
+-
+ 		name = smb2_get_name((char *)req + le16_to_cpu(req->NameOffset),
+ 				     le16_to_cpu(req->NameLength),
+ 				     work->conn->local_nls);
+ 		if (IS_ERR(name)) {
+ 			rc = PTR_ERR(name);
+-			if (rc != -ENOMEM)
+-				rc = -ENOENT;
+ 			name = NULL;
+ 			goto err_out2;
+ 		}
 
 
