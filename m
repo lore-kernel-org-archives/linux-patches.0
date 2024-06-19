@@ -1,48 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8513143757;
-	Wed, 19 Jun 2024 13:23:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9421482495;
+	Wed, 19 Jun 2024 13:23:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803406; cv=none; b=BlBgzhbTfYCtEpSmiwxzq3XTUwd1TXiiH38THDBBGA/PSM4C4ls3yQkoD136qD1aozpEUhG/08xEEItIWUvhQ05ql2szYOSKQBZUmRfvzYLX+wJK+AJTobHvXpwlSkJku7sby1epHIWRCW21Vhah6sl8FYIEoch3NqIY+FNvKog=
+	t=1718803409; cv=none; b=ENjvC8Q0Yj/Ckql6Mii6gy3i5Dx04YrBcyC5KYtfGp1LAXfCDcmJ2UjeS8pMbPuVZkAlm/xthm3355VCFsptfjWtEocqvrsUdMHO35CjzrrF+mBbCLSlZQcJj0rb6E+2s4sn2Umu2oSxidqFRlxrG9vg1cixTGB74+GiRS7qy2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803406; c=relaxed/simple;
-	bh=ycFEkXDl6y1C0l2RytQLpK194U5NA3UpzsP2SnMdgTY=;
+	s=arc-20240116; t=1718803409; c=relaxed/simple;
+	bh=C2l9Umyl0SZEFem8jFHmXDhIHtMnTOpn9HB3r3xXoos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HmQ4oa4klGrqZjQqm5ocZ1zS50ocu0TM7y3AjR/+EVE2JBO13y2K34VVlBZyKdmIany2OoECBfrFVNZ0lCoJc4Bv4X2yN2N7KdYDLP/VbEXH7VmgzDIjn3YrXd84labQEJO1p2K1z/AtGjXC9sBSU3cAW7mduxPN9tOL/AC7nwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fuR9pA8T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GPiRRBMvzVlOb0tMwcpckrRLAEusEkwW+L8uSN8ed1PPqiWdIw592Zl/Pd7EsNJSLpwHsxYtX1It/YnQNVnvGXCCPVZzOwEGAOgkAYWX8TAErSwc8XwwhFsb6LnOeKQTGCXcPAxtbVF6W+wsXo5qKDFO4wj+M0Q/B0AWf/YK3yk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WvCSrS0/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fuR9pA8T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F349CC2BBFC;
-	Wed, 19 Jun 2024 13:23:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WvCSrS0/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B4BDC2BBFC;
+	Wed, 19 Jun 2024 13:23:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803406;
-	bh=ycFEkXDl6y1C0l2RytQLpK194U5NA3UpzsP2SnMdgTY=;
+	s=korg; t=1718803409;
+	bh=C2l9Umyl0SZEFem8jFHmXDhIHtMnTOpn9HB3r3xXoos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fuR9pA8TgkV6QKeH9vkmyg3X+RZR47rIxhm8AxCrnuQat+ONQcP9kDML4MiaSmH8f
-	 98pBn4Kj6UXcSHpicqAEQXBdKOrLTWcjUNHvFBTtJ6OxThH0bHG2ATaLtHGm01qbsW
-	 dsCw/3hQowCLEQqyOZTXPZc5yREAJDDQ47OzZMko=
+	b=WvCSrS0/VOY1bApsSrRwv+BjzmeK6jhLrTnvbxYmEZRLnpXuon3wHLO9CS9tZkR+G
+	 va5H9+Mo9fEtwNaNFVXWFiAysQlQ0lSRDXzS/+N9HQvC5I06zck6C0fEYijjyNUIR4
+	 ZFXv+Pr+JZBV+f/9ggWU03Jg+dbqHUQ6U02JLGTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Noralf=20Tr=C3=B8nnes?= <noralf@tronnes.org>,
-	Eric Anholt <eric@anholt.net>,
-	Rob Herring <robh@kernel.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	dri-devel@lists.freedesktop.org,
-	"Wachowski, Karol" <karol.wachowski@intel.com>,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Wachowski
-Subject: [PATCH 6.9 257/281] drm/shmem-helper: Fix BUG_ON() on mmap(PROT_WRITE, MAP_PRIVATE)
-Date: Wed, 19 Jun 2024 14:56:56 +0200
-Message-ID: <20240619125619.869018718@linuxfoundation.org>
+	Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>,
+	Nirmoy Das <nirmoy.das@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
+Subject: [PATCH 6.9 258/281] drm/xe: Properly handle alloc_guc_id() failure
+Date: Wed, 19 Jun 2024 14:56:57 +0200
+Message-ID: <20240619125619.908461775@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -62,53 +54,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wachowski, Karol <karol.wachowski@intel.com>
+From: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
 
-commit 39bc27bd688066a63e56f7f64ad34fae03fbe3b8 upstream.
+commit 6c5cd0807c79eb4c0cda70b48f6be668a241d584 upstream.
 
-Lack of check for copy-on-write (COW) mapping in drm_gem_shmem_mmap
-allows users to call mmap with PROT_WRITE and MAP_PRIVATE flag
-causing a kernel panic due to BUG_ON in vmf_insert_pfn_prot:
-BUG_ON((vma->vm_flags & VM_PFNMAP) && is_cow_mapping(vma->vm_flags));
+Release the submission_state lock if alloc_guc_id() fails.
 
-Return -EINVAL early if COW mapping is detected.
+v2: Add Fixes tag and CC stable kernel
 
-This bug affects all drm drivers using default shmem helpers.
-It can be reproduced by this simple example:
-void *ptr = mmap(0, size, PROT_WRITE, MAP_PRIVATE, fd, mmap_offset);
-ptr[0] = 0;
-
-Fixes: 2194a63a818d ("drm: Add library for shmem backed GEM objects")
-Cc: Noralf Trønnes <noralf@tronnes.org>
-Cc: Eric Anholt <eric@anholt.net>
-Cc: Rob Herring <robh@kernel.org>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v5.2+
-Signed-off-by: Wachowski, Karol <karol.wachowski@intel.com>
-Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240520100514.925681-1-jacek.lawrynowicz@linux.intel.com
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Cc: <stable@vger.kernel.org> # v6.8+
+Signed-off-by: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
+Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: José Roberto de Souza <jose.souza@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240521201711.4934-1-niranjana.vishwanathapura@intel.com
+(cherry picked from commit 40672b792a36894aff3a337b695f6136ee6ac5d4)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_gem_shmem_helper.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/xe/xe_guc_submit.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/drm_gem_shmem_helper.c
-+++ b/drivers/gpu/drm/drm_gem_shmem_helper.c
-@@ -610,6 +610,9 @@ int drm_gem_shmem_mmap(struct drm_gem_sh
- 		return ret;
- 	}
+--- a/drivers/gpu/drm/xe/xe_guc_submit.c
++++ b/drivers/gpu/drm/xe/xe_guc_submit.c
+@@ -1257,6 +1257,7 @@ static int guc_exec_queue_init(struct xe
+ 	return 0;
  
-+	if (is_cow_mapping(vma->vm_flags))
-+		return -EINVAL;
-+
- 	dma_resv_lock(shmem->base.resv, NULL);
- 	ret = drm_gem_shmem_get_pages(shmem);
- 	dma_resv_unlock(shmem->base.resv);
+ err_entity:
++	mutex_unlock(&guc->submission_state.lock);
+ 	xe_sched_entity_fini(&ge->entity);
+ err_sched:
+ 	xe_sched_fini(&ge->sched);
 
 
