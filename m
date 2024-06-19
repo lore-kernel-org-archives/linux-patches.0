@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C224315F;
-	Wed, 19 Jun 2024 13:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 518FC145334;
+	Wed, 19 Jun 2024 13:17:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803028; cv=none; b=YCMVyOH0fO8zMznGi9LRFSdlEWwzVGXFRBsrwJcwKfSlhNLvNWwjlzkPJGwQDB0F/yH1N2QsSj5g8JTBddv96GaPDrcN2Ox7TWNJcgOB5+dwTjrnNqblXO3BVTwYk0eyXa4H6MO0+3sAzx8vdoI+woiFcHHFxUpsOg2qNHVGkns=
+	t=1718803031; cv=none; b=niSBDOE7e7zO6dIz0vL3J2/HQ6NgyS+noNyWZxmUPoJyHlim2851nbA7xXXHrqBY5qaz2D7upg1COXWEO5yFlmeokZVaaJxc4yDrWPTSHco9ecxqXrRSWT3a55SzTAIkzoqiQ/73S7pGM8mP+mBBIVy7fETHAYMaYJrTxo48HPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803028; c=relaxed/simple;
-	bh=maBNDNFB0Oa7CNyDTkF4ejAESCBSW700Z5d/fC5BFhg=;
+	s=arc-20240116; t=1718803031; c=relaxed/simple;
+	bh=LJ0Np/rfn4IDHsYwK43BqyFCm/clhpw99uG+SLJvzmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HASfOuSoGktejDQq7L1rQ8ZfO+cM3JrqE6n8TcI5Gwk2Dh/T7m1dUOV9gbodYY3sCs7frHgggM5zjAcwff1fPwAlzjReaFPkQf1OZ6u1Bo2avbEjHJHr7qtfItWIdCHLL54lCoLWjRVejRV0JTn9r/NCeklCV/ZxtbL6VWvH3wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KCBl/lDw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MKmnzS9Ny8bQwe3e1Aco936ClUZcl2X/PdQGUZaPWKXCMDrf/MzPOngmnDN5WUazb8DAwg9qvImA5fLnEoqUImKGY/TJl9M32gJwKxqEn/2lOyOaSMImRrekCo0PKre2N+IWIBzvRS05ss4LoiVI4RoRwjAV1LhxoYAdiFD658Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e1bViCBV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KCBl/lDw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D43C2BBFC;
-	Wed, 19 Jun 2024 13:17:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e1bViCBV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA42DC32786;
+	Wed, 19 Jun 2024 13:17:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803028;
-	bh=maBNDNFB0Oa7CNyDTkF4ejAESCBSW700Z5d/fC5BFhg=;
+	s=korg; t=1718803031;
+	bh=LJ0Np/rfn4IDHsYwK43BqyFCm/clhpw99uG+SLJvzmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KCBl/lDwjb64GcwKtEGlDlM7J8F1b5vQgB+yY+Ry7kv8i5AeN6Ds0MvG6BVLmVi4Y
-	 2yzUnK2/M0QNH2qZNGvmhLReS3a5FgY38HCbVGu54h3dY1I+Faq1NBFTFMhcttsN6+
-	 6+1xRboumUlPKOsk/hYL5j6aovUNcabE8S9oO2ww=
+	b=e1bViCBV4vJ/k/FT3L/nc/rxSAVKCMsVY1F1tChoD0XuPx8SVM7ULLoOTmFQvpNrW
+	 PJXR/3gN73Cf7pCt5LVQYtwV1y+byCjQ+7LyLIBYye3isxj+Zif/pv3QxKG2qC1Bob
+	 g3PGjNTaQkYFrGnebsWvVpPa0ps392A1QyJHhTow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Michael Riesch <michael.riesch@wolfvision.net>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Armin Wolf <W_Armin@gmx.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 128/281] drm/panel: sitronix-st7789v: Add check for of_drm_get_panel_orientation
-Date: Wed, 19 Jun 2024 14:54:47 +0200
-Message-ID: <20240619125614.770196313@linuxfoundation.org>
+Subject: [PATCH 6.9 129/281] platform/x86: dell-smbios: Fix wrong token data in sysfs
+Date: Wed, 19 Jun 2024 14:54:48 +0200
+Message-ID: <20240619125614.808402621@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -47,46 +46,228 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 629f2b4e05225e53125aaf7ff0b87d5d53897128 ]
+[ Upstream commit 1981b296f858010eae409548fd297659b2cc570e ]
 
-Add check for the return value of of_drm_get_panel_orientation() and
-return the error if it fails in order to catch the error.
+When reading token data from sysfs on my Inspiron 3505, the token
+locations and values are wrong. This happens because match_attribute()
+blindly assumes that all entries in da_tokens have an associated
+entry in token_attrs.
 
-Fixes: b27c0f6d208d ("drm/panel: sitronix-st7789v: add panel orientation support")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Reviewed-by: Michael Riesch <michael.riesch@wolfvision.net>
-Acked-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-Link: https://lore.kernel.org/r/20240528030832.2529471-1-nichen@iscas.ac.cn
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240528030832.2529471-1-nichen@iscas.ac.cn
+This however is not true as soon as da_tokens[] contains zeroed
+token entries. Those entries are being skipped when initialising
+token_attrs, breaking the core assumption of match_attribute().
+
+Fix this by defining an extra struct for each pair of token attributes
+and use container_of() to retrieve token information.
+
+Tested on a Dell Inspiron 3050.
+
+Fixes: 33b9ca1e53b4 ("platform/x86: dell-smbios: Add a sysfs interface for SMBIOS tokens")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20240528204903.445546-1-W_Armin@gmx.de
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-sitronix-st7789v.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/platform/x86/dell/dell-smbios-base.c | 92 ++++++++------------
+ 1 file changed, 36 insertions(+), 56 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-sitronix-st7789v.c b/drivers/gpu/drm/panel/panel-sitronix-st7789v.c
-index e8f385b9c6182..28bfc48a91272 100644
---- a/drivers/gpu/drm/panel/panel-sitronix-st7789v.c
-+++ b/drivers/gpu/drm/panel/panel-sitronix-st7789v.c
-@@ -643,7 +643,9 @@ static int st7789v_probe(struct spi_device *spi)
- 	if (ret)
- 		return dev_err_probe(dev, ret, "Failed to get backlight\n");
+diff --git a/drivers/platform/x86/dell/dell-smbios-base.c b/drivers/platform/x86/dell/dell-smbios-base.c
+index e61bfaf8b5c48..86b95206cb1bd 100644
+--- a/drivers/platform/x86/dell/dell-smbios-base.c
++++ b/drivers/platform/x86/dell/dell-smbios-base.c
+@@ -11,6 +11,7 @@
+  */
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
  
--	of_drm_get_panel_orientation(spi->dev.of_node, &ctx->orientation);
-+	ret = of_drm_get_panel_orientation(spi->dev.of_node, &ctx->orientation);
-+	if (ret)
-+		return dev_err_probe(&spi->dev, ret, "Failed to get orientation\n");
++#include <linux/container_of.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/capability.h>
+@@ -25,11 +26,16 @@ static u32 da_supported_commands;
+ static int da_num_tokens;
+ static struct platform_device *platform_device;
+ static struct calling_interface_token *da_tokens;
+-static struct device_attribute *token_location_attrs;
+-static struct device_attribute *token_value_attrs;
++static struct token_sysfs_data *token_entries;
+ static struct attribute **token_attrs;
+ static DEFINE_MUTEX(smbios_mutex);
  
- 	drm_panel_add(&ctx->panel);
++struct token_sysfs_data {
++	struct device_attribute location_attr;
++	struct device_attribute value_attr;
++	struct calling_interface_token *token;
++};
++
+ struct smbios_device {
+ 	struct list_head list;
+ 	struct device *device;
+@@ -416,47 +422,26 @@ static void __init find_tokens(const struct dmi_header *dm, void *dummy)
+ 	}
+ }
  
+-static int match_attribute(struct device *dev,
+-			   struct device_attribute *attr)
+-{
+-	int i;
+-
+-	for (i = 0; i < da_num_tokens * 2; i++) {
+-		if (!token_attrs[i])
+-			continue;
+-		if (strcmp(token_attrs[i]->name, attr->attr.name) == 0)
+-			return i/2;
+-	}
+-	dev_dbg(dev, "couldn't match: %s\n", attr->attr.name);
+-	return -EINVAL;
+-}
+-
+ static ssize_t location_show(struct device *dev,
+ 			     struct device_attribute *attr, char *buf)
+ {
+-	int i;
++	struct token_sysfs_data *data = container_of(attr, struct token_sysfs_data, location_attr);
+ 
+ 	if (!capable(CAP_SYS_ADMIN))
+ 		return -EPERM;
+ 
+-	i = match_attribute(dev, attr);
+-	if (i > 0)
+-		return sysfs_emit(buf, "%08x", da_tokens[i].location);
+-	return 0;
++	return sysfs_emit(buf, "%08x", data->token->location);
+ }
+ 
+ static ssize_t value_show(struct device *dev,
+ 			  struct device_attribute *attr, char *buf)
+ {
+-	int i;
++	struct token_sysfs_data *data = container_of(attr, struct token_sysfs_data, value_attr);
+ 
+ 	if (!capable(CAP_SYS_ADMIN))
+ 		return -EPERM;
+ 
+-	i = match_attribute(dev, attr);
+-	if (i > 0)
+-		return sysfs_emit(buf, "%08x", da_tokens[i].value);
+-	return 0;
++	return sysfs_emit(buf, "%08x", data->token->value);
+ }
+ 
+ static struct attribute_group smbios_attribute_group = {
+@@ -473,22 +458,15 @@ static int build_tokens_sysfs(struct platform_device *dev)
+ {
+ 	char *location_name;
+ 	char *value_name;
+-	size_t size;
+ 	int ret;
+ 	int i, j;
+ 
+-	/* (number of tokens  + 1 for null terminated */
+-	size = sizeof(struct device_attribute) * (da_num_tokens + 1);
+-	token_location_attrs = kzalloc(size, GFP_KERNEL);
+-	if (!token_location_attrs)
++	token_entries = kcalloc(da_num_tokens, sizeof(*token_entries), GFP_KERNEL);
++	if (!token_entries)
+ 		return -ENOMEM;
+-	token_value_attrs = kzalloc(size, GFP_KERNEL);
+-	if (!token_value_attrs)
+-		goto out_allocate_value;
+ 
+ 	/* need to store both location and value + terminator*/
+-	size = sizeof(struct attribute *) * ((2 * da_num_tokens) + 1);
+-	token_attrs = kzalloc(size, GFP_KERNEL);
++	token_attrs = kcalloc((2 * da_num_tokens) + 1, sizeof(*token_attrs), GFP_KERNEL);
+ 	if (!token_attrs)
+ 		goto out_allocate_attrs;
+ 
+@@ -496,27 +474,32 @@ static int build_tokens_sysfs(struct platform_device *dev)
+ 		/* skip empty */
+ 		if (da_tokens[i].tokenID == 0)
+ 			continue;
++
++		token_entries[i].token = &da_tokens[i];
++
+ 		/* add location */
+ 		location_name = kasprintf(GFP_KERNEL, "%04x_location",
+ 					  da_tokens[i].tokenID);
+ 		if (location_name == NULL)
+ 			goto out_unwind_strings;
+-		sysfs_attr_init(&token_location_attrs[i].attr);
+-		token_location_attrs[i].attr.name = location_name;
+-		token_location_attrs[i].attr.mode = 0444;
+-		token_location_attrs[i].show = location_show;
+-		token_attrs[j++] = &token_location_attrs[i].attr;
++
++		sysfs_attr_init(&token_entries[i].location_attr.attr);
++		token_entries[i].location_attr.attr.name = location_name;
++		token_entries[i].location_attr.attr.mode = 0444;
++		token_entries[i].location_attr.show = location_show;
++		token_attrs[j++] = &token_entries[i].location_attr.attr;
+ 
+ 		/* add value */
+ 		value_name = kasprintf(GFP_KERNEL, "%04x_value",
+ 				       da_tokens[i].tokenID);
+ 		if (value_name == NULL)
+ 			goto loop_fail_create_value;
+-		sysfs_attr_init(&token_value_attrs[i].attr);
+-		token_value_attrs[i].attr.name = value_name;
+-		token_value_attrs[i].attr.mode = 0444;
+-		token_value_attrs[i].show = value_show;
+-		token_attrs[j++] = &token_value_attrs[i].attr;
++
++		sysfs_attr_init(&token_entries[i].value_attr.attr);
++		token_entries[i].value_attr.attr.name = value_name;
++		token_entries[i].value_attr.attr.mode = 0444;
++		token_entries[i].value_attr.show = value_show;
++		token_attrs[j++] = &token_entries[i].value_attr.attr;
+ 		continue;
+ 
+ loop_fail_create_value:
+@@ -532,14 +515,12 @@ static int build_tokens_sysfs(struct platform_device *dev)
+ 
+ out_unwind_strings:
+ 	while (i--) {
+-		kfree(token_location_attrs[i].attr.name);
+-		kfree(token_value_attrs[i].attr.name);
++		kfree(token_entries[i].location_attr.attr.name);
++		kfree(token_entries[i].value_attr.attr.name);
+ 	}
+ 	kfree(token_attrs);
+ out_allocate_attrs:
+-	kfree(token_value_attrs);
+-out_allocate_value:
+-	kfree(token_location_attrs);
++	kfree(token_entries);
+ 
+ 	return -ENOMEM;
+ }
+@@ -551,12 +532,11 @@ static void free_group(struct platform_device *pdev)
+ 	sysfs_remove_group(&pdev->dev.kobj,
+ 				&smbios_attribute_group);
+ 	for (i = 0; i < da_num_tokens; i++) {
+-		kfree(token_location_attrs[i].attr.name);
+-		kfree(token_value_attrs[i].attr.name);
++		kfree(token_entries[i].location_attr.attr.name);
++		kfree(token_entries[i].value_attr.attr.name);
+ 	}
+ 	kfree(token_attrs);
+-	kfree(token_value_attrs);
+-	kfree(token_location_attrs);
++	kfree(token_entries);
+ }
+ 
+ static int __init dell_smbios_init(void)
 -- 
 2.43.0
 
