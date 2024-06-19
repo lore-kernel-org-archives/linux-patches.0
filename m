@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80EF21459F2;
-	Wed, 19 Jun 2024 13:21:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2437D1459F2;
+	Wed, 19 Jun 2024 13:21:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803305; cv=none; b=X5elt3VZRz3JVWcT1xvh1ec2BfS5UyuxZ9Hn8Ddp1q6jTnzjZG1raM+Z8Buc5KWpx34RZtr1gq/sKrgdDdO23wKpfSnfUIwgSTEnWBqgVue2cFEwgejoPLKxnUnhCaOkqRNo0kWXG+YAS03ey9eqL7trbQWgEhFOIzxf0oi9zSk=
+	t=1718803308; cv=none; b=qYJekahE339CWKmlZxz965hwSpXiQIkoFYVikUkkQlBtLSiKoBfFdLDLFyD6tCa42q/E63tbSVW4NDoCE6vpuwwspcQnx0V5pLA1fYfaF7r3N1nXF0mgsTOKSDc48mJPMnrY6zRFYKIY6MRo9izQdQKL6zmNJG/NmyJbmLjRu1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803305; c=relaxed/simple;
-	bh=xg0tZFPh6UotqL88FLNXRPHb5h/Xt72IjgekniJdkmE=;
+	s=arc-20240116; t=1718803308; c=relaxed/simple;
+	bh=TcB3JEw8ld6WiI5xC0wzW3QISw5Kp9SuYKqhl/Ag7tU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vGMLqU5VOtNP+IDNxks4ZKN8caGJgg0SvN5sfg2kFiDby8vWzms0bT1/BfeUQp8g9b1o80LR5V+nOplpCutGhJa9BzW7w2it/LQmMIdzoNPq8Uikdk62YdMwFAX0/USBWEp+bfkoMB9gC92GIBywLdbcz1qNt2uXQA5lBEf3/aE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s4WSu++X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=d0x/Qzh9VTI5+TQ/cERl3Y7nRO1tLjsZoOx6sMHVlBH7wELDtqdwYdVBLOnDi4g77XgUwFDaOv4n7e9RW9Z4SIWQvbXN4VByZE5hX4HMgO9ZnX/dfGcZIkZ3vl0ma99nTihpqlUw8KXoVA2TugSFzEte11hcbY01rtzWhq9SSf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tZqCCJje; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s4WSu++X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96EB0C2BBFC;
-	Wed, 19 Jun 2024 13:21:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZqCCJje"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 939ADC2BBFC;
+	Wed, 19 Jun 2024 13:21:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803305;
-	bh=xg0tZFPh6UotqL88FLNXRPHb5h/Xt72IjgekniJdkmE=;
+	s=korg; t=1718803308;
+	bh=TcB3JEw8ld6WiI5xC0wzW3QISw5Kp9SuYKqhl/Ag7tU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s4WSu++XudW4NtX7o9ILkSv/95Fe25v326PSQk5iCO4YGcpyh45SDG3TX/v6ib2W3
-	 z1omeAaB/k9QwzGhg0AQIsGNb0pzytwGPjTwoG9Rv/RQltiwJsdT4pJbiTUSSL9Wlu
-	 0ov0WizPzFFLGZG59xlwad8i03+RuTYBRymRof/g=
+	b=tZqCCJjeZrOIJFJlR7F1GZWaoSaaOp4u9Q+W7LNUGVkqy42H9i0Tnh02niU6KwmUb
+	 fH2kf7O181TpaCu6d8D6jv2iFGEmdUd0BDOTXPpBMt7ajWd4t/hh/VfqICGsrMxVw+
+	 jyWiIjDz14alHK+aX2ZasOkm1gIxeraV3Y6EyacQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Carlos Llamas <cmllamas@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 6.9 223/281] locking/atomic: scripts: fix ${atomic}_sub_and_test() kerneldoc
-Date: Wed, 19 Jun 2024 14:56:22 +0200
-Message-ID: <20240619125618.540842573@linuxfoundation.org>
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	Nam Cao <namcao@linutronix.de>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
+	"Mike Rapoport (IBM)" <rppt@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.9 224/281] riscv: fix overlap of allocated page and PTR_ERR
+Date: Wed, 19 Jun 2024 14:56:23 +0200
+Message-ID: <20240619125618.578259559@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -46,124 +47,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Nam Cao <namcao@linutronix.de>
 
-commit f92a59f6d12e31ead999fee9585471b95a8ae8a3 upstream.
+commit 994af1825a2aa286f4903ff64a1c7378b52defe6 upstream.
 
-For ${atomic}_sub_and_test() the @i parameter is the value to subtract,
-not add. Fix the typo in the kerneldoc template and generate the headers
-with this update.
+On riscv32, it is possible for the last page in virtual address space
+(0xfffff000) to be allocated. This page overlaps with PTR_ERR, so that
+shouldn't happen.
 
-Fixes: ad8110706f38 ("locking/atomic: scripts: generate kerneldoc comments")
-Suggested-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Cc: stable@vger.kernel.org
-Link: https://lkml.kernel.org/r/20240515133844.3502360-1-cmllamas@google.com
+There is already some code to ensure memblock won't allocate the last page.
+However, buddy allocator is left unchecked.
+
+Fix this by reserving physical memory that would be mapped at virtual
+addresses greater than 0xfffff000.
+
+Reported-by: Björn Töpel <bjorn@kernel.org>
+Closes: https://lore.kernel.org/linux-riscv/878r1ibpdn.fsf@all.your.base.are.belong.to.us
+Fixes: 76d2a0493a17 ("RISC-V: Init and Halt Code")
+Signed-off-by: Nam Cao <namcao@linutronix.de>
+Cc: <stable@vger.kernel.org>
+Tested-by: Björn Töpel <bjorn@rivosinc.com>
+Reviewed-by: Björn Töpel <bjorn@rivosinc.com>
+Reviewed-by: Mike Rapoport (IBM) <rppt@kernel.org>
+Link: https://lore.kernel.org/r/20240425115201.3044202-1-namcao@linutronix.de
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/atomic/atomic-arch-fallback.h |    6 +++---
- include/linux/atomic/atomic-instrumented.h  |    8 ++++----
- include/linux/atomic/atomic-long.h          |    4 ++--
- scripts/atomic/kerneldoc/sub_and_test       |    2 +-
- 4 files changed, 10 insertions(+), 10 deletions(-)
+ arch/riscv/mm/init.c |   21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
---- a/include/linux/atomic/atomic-arch-fallback.h
-+++ b/include/linux/atomic/atomic-arch-fallback.h
-@@ -2242,7 +2242,7 @@ raw_atomic_try_cmpxchg_relaxed(atomic_t
+--- a/arch/riscv/mm/init.c
++++ b/arch/riscv/mm/init.c
+@@ -235,18 +235,19 @@ static void __init setup_bootmem(void)
+ 		kernel_map.va_pa_offset = PAGE_OFFSET - phys_ram_base;
  
- /**
-  * raw_atomic_sub_and_test() - atomic subtract and test if zero with full ordering
-- * @i: int value to add
-+ * @i: int value to subtract
-  * @v: pointer to atomic_t
-  *
-  * Atomically updates @v to (@v - @i) with full ordering.
-@@ -4368,7 +4368,7 @@ raw_atomic64_try_cmpxchg_relaxed(atomic6
+ 	/*
+-	 * memblock allocator is not aware of the fact that last 4K bytes of
+-	 * the addressable memory can not be mapped because of IS_ERR_VALUE
+-	 * macro. Make sure that last 4k bytes are not usable by memblock
+-	 * if end of dram is equal to maximum addressable memory.  For 64-bit
+-	 * kernel, this problem can't happen here as the end of the virtual
+-	 * address space is occupied by the kernel mapping then this check must
+-	 * be done as soon as the kernel mapping base address is determined.
++	 * Reserve physical address space that would be mapped to virtual
++	 * addresses greater than (void *)(-PAGE_SIZE) because:
++	 *  - This memory would overlap with ERR_PTR
++	 *  - This memory belongs to high memory, which is not supported
++	 *
++	 * This is not applicable to 64-bit kernel, because virtual addresses
++	 * after (void *)(-PAGE_SIZE) are not linearly mapped: they are
++	 * occupied by kernel mapping. Also it is unrealistic for high memory
++	 * to exist on 64-bit platforms.
+ 	 */
+ 	if (!IS_ENABLED(CONFIG_64BIT)) {
+-		max_mapped_addr = __pa(~(ulong)0);
+-		if (max_mapped_addr == (phys_ram_end - 1))
+-			memblock_set_current_limit(max_mapped_addr - 4096);
++		max_mapped_addr = __va_to_pa_nodebug(-PAGE_SIZE);
++		memblock_reserve(max_mapped_addr, (phys_addr_t)-max_mapped_addr);
+ 	}
  
- /**
-  * raw_atomic64_sub_and_test() - atomic subtract and test if zero with full ordering
-- * @i: s64 value to add
-+ * @i: s64 value to subtract
-  * @v: pointer to atomic64_t
-  *
-  * Atomically updates @v to (@v - @i) with full ordering.
-@@ -4690,4 +4690,4 @@ raw_atomic64_dec_if_positive(atomic64_t
- }
- 
- #endif /* _LINUX_ATOMIC_FALLBACK_H */
--// 14850c0b0db20c62fdc78ccd1d42b98b88d76331
-+// b565db590afeeff0d7c9485ccbca5bb6e155749f
---- a/include/linux/atomic/atomic-instrumented.h
-+++ b/include/linux/atomic/atomic-instrumented.h
-@@ -1349,7 +1349,7 @@ atomic_try_cmpxchg_relaxed(atomic_t *v,
- 
- /**
-  * atomic_sub_and_test() - atomic subtract and test if zero with full ordering
-- * @i: int value to add
-+ * @i: int value to subtract
-  * @v: pointer to atomic_t
-  *
-  * Atomically updates @v to (@v - @i) with full ordering.
-@@ -2927,7 +2927,7 @@ atomic64_try_cmpxchg_relaxed(atomic64_t
- 
- /**
-  * atomic64_sub_and_test() - atomic subtract and test if zero with full ordering
-- * @i: s64 value to add
-+ * @i: s64 value to subtract
-  * @v: pointer to atomic64_t
-  *
-  * Atomically updates @v to (@v - @i) with full ordering.
-@@ -4505,7 +4505,7 @@ atomic_long_try_cmpxchg_relaxed(atomic_l
- 
- /**
-  * atomic_long_sub_and_test() - atomic subtract and test if zero with full ordering
-- * @i: long value to add
-+ * @i: long value to subtract
-  * @v: pointer to atomic_long_t
-  *
-  * Atomically updates @v to (@v - @i) with full ordering.
-@@ -5050,4 +5050,4 @@ atomic_long_dec_if_positive(atomic_long_
- 
- 
- #endif /* _LINUX_ATOMIC_INSTRUMENTED_H */
--// ce5b65e0f1f8a276268b667194581d24bed219d4
-+// 8829b337928e9508259079d32581775ececd415b
---- a/include/linux/atomic/atomic-long.h
-+++ b/include/linux/atomic/atomic-long.h
-@@ -1535,7 +1535,7 @@ raw_atomic_long_try_cmpxchg_relaxed(atom
- 
- /**
-  * raw_atomic_long_sub_and_test() - atomic subtract and test if zero with full ordering
-- * @i: long value to add
-+ * @i: long value to subtract
-  * @v: pointer to atomic_long_t
-  *
-  * Atomically updates @v to (@v - @i) with full ordering.
-@@ -1809,4 +1809,4 @@ raw_atomic_long_dec_if_positive(atomic_l
- }
- 
- #endif /* _LINUX_ATOMIC_LONG_H */
--// 1c4a26fc77f345342953770ebe3c4d08e7ce2f9a
-+// eadf183c3600b8b92b91839dd3be6bcc560c752d
---- a/scripts/atomic/kerneldoc/sub_and_test
-+++ b/scripts/atomic/kerneldoc/sub_and_test
-@@ -1,7 +1,7 @@
- cat <<EOF
- /**
-  * ${class}${atomicname}() - atomic subtract and test if zero with ${desc_order} ordering
-- * @i: ${int} value to add
-+ * @i: ${int} value to subtract
-  * @v: pointer to ${atomic}_t
-  *
-  * Atomically updates @v to (@v - @i) with ${desc_order} ordering.
+ 	min_low_pfn = PFN_UP(phys_ram_base);
 
 
