@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A63A12FB27;
-	Wed, 19 Jun 2024 13:19:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B0182495;
+	Wed, 19 Jun 2024 13:19:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803196; cv=none; b=ejfcbmUsueF2FmT+ttZX5tlCon8V47JKwJ7wE25TEEvl3DdspwGeo8djXD7wgbLW7xwAueb+hqJmhWYfCR6sy9PO16OQ3FWEH9594MIRcI/CVYZhwRNLJpU2961fWkM71Z0jArZn6UD4Qlpf4Rnv12Tkpu7Ix3PynmF89Ol2Pao=
+	t=1718803199; cv=none; b=GYf7iObRk3MUjFdqfkI++Td2RTP81RBGKsfJSA5lpxE+5eebAg0tDEt265JZe/YiAUpYSPDdowx8ZZGP0xEOcKU3/Q3Ive+vEmh/DJc1ID7Cap004vXwSxXu+1SxnnZnQ2V2kdtAKg2EwZywQbgRjNP4bpSnf1MS+xjQdNOiCdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803196; c=relaxed/simple;
-	bh=9tYsadIpAZisQqtsdnlRNafilU1vDEwbhCFyzmNZjHI=;
+	s=arc-20240116; t=1718803199; c=relaxed/simple;
+	bh=RMUPxs9/sU/WFvHMRJ9utfmlnkqjvkWfRe6ZVqFkCZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SZw6f4hU0iigBVAo9Vgr0T/aUR9r/tX31RZFVP16P54flkgdR2eXkDUa4GnEmKEGjPzx6WYpSz4Ds6ilYLk2yu8GdGNimuOhPWQnnwVRkWZW9S6JFmDwxLk3WnFAie9nCnnXDYFnBdrktVB5mZ++4wu+Jt/3wJ5cIBJljmwLwIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ap90bL3u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X2+gq8htrtCkPXT2MvIezpwEYlDPmnQp+I0Pbtjm6vjvf7PtaFH2oiaeEckRT9IZ0b5gMS/5fpAy7+4F4giqEOYaW/iPas/2QiWKu/DZKsm5TbfKyNXeBoN3yuJIl3tyOALPYiJuI7W2Uz1ycnYwlREovXuL8nXPwMBkSA/8tEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q3NuX9IJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ap90bL3u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6130C2BBFC;
-	Wed, 19 Jun 2024 13:19:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q3NuX9IJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C288CC2BBFC;
+	Wed, 19 Jun 2024 13:19:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803196;
-	bh=9tYsadIpAZisQqtsdnlRNafilU1vDEwbhCFyzmNZjHI=;
+	s=korg; t=1718803199;
+	bh=RMUPxs9/sU/WFvHMRJ9utfmlnkqjvkWfRe6ZVqFkCZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ap90bL3uflnW4rIfaUrIJi2bbocNLAd85C3xOQN4mOUHfMgGYD2IJ3R2EsNSq6tDS
-	 SThQDBOWmH+tKvFh2UzUe5MLk+U4rY2syVCyKG0Kl9s1T2/FlB207jXyd+B3MuF6jd
-	 bMPg9BTNvQ2VVzh3+LkEIemXryngpIB8dvEz2r/Q=
+	b=Q3NuX9IJ2gvtbQSB7WAFMJOj2ChlohRu7mkdK77MlvjvG7QmEepVOVXnVQ1ev/4Lm
+	 2RIoqnlh19LHjbE//lqvmIp5C22ITgNRXxtMRxQEN0a5mvOgTLVlxI6P46938Tpuph
+	 xzLhpBkk+MuHoninfNEY/ysbu9h8wM4pRa9v0lQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Chan <michael.chan@broadcom.com>,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 186/281] bnxt_en: Adjust logging of firmware messages in case of released token in __hwrm_send()
-Date: Wed, 19 Jun 2024 14:55:45 +0200
-Message-ID: <20240619125616.994014238@linuxfoundation.org>
+	Yongzhi Liu <hyperlyzcs@gmail.com>
+Subject: [PATCH 6.9 187/281] misc: microchip: pci1xxxx: fix double free in the error handling of gp_aux_bus_probe()
+Date: Wed, 19 Jun 2024 14:55:46 +0200
+Message-ID: <20240619125617.033549853@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -53,46 +49,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Yongzhi Liu <hyperlyzcs@gmail.com>
 
-[ Upstream commit a9b9741854a9fe9df948af49ca5514e0ed0429df ]
+commit 086c6cbcc563c81d55257f9b27e14faf1d0963d3 upstream.
 
-In case of token is released due to token->state == BNXT_HWRM_DEFERRED,
-released token (set to NULL) is used in log messages. This issue is
-expected to be prevented by HWRM_ERR_CODE_PF_UNAVAILABLE error code. But
-this error code is returned by recent firmware. So some firmware may not
-return it. This may lead to NULL pointer dereference.
-Adjust this issue by adding token pointer check.
+When auxiliary_device_add() returns error and then calls
+auxiliary_device_uninit(), callback function
+gp_auxiliary_device_release() calls ida_free() and
+kfree(aux_device_wrapper) to free memory. We should't
+call them again in the error handling path.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Fix this by skipping the redundant cleanup functions.
 
-Fixes: 8fa4219dba8e ("bnxt_en: add dynamic debug support for HWRM messages")
-Suggested-by: Michael Chan <michael.chan@broadcom.com>
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://lore.kernel.org/r/20240611082547.12178-1-amishin@t-argos.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 393fc2f5948f ("misc: microchip: pci1xxxx: load auxiliary bus driver for the PIO function in the multi-function endpoint of pci1xxxx device.")
+Signed-off-by: Yongzhi Liu <hyperlyzcs@gmail.com>
+Link: https://lore.kernel.org/r/20240523121434.21855-3-hyperlyzcs@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_hwrm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gp.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_hwrm.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_hwrm.c
-index 1df3d56cc4b51..d2fd2d04ed474 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_hwrm.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_hwrm.c
-@@ -680,7 +680,7 @@ static int __hwrm_send(struct bnxt *bp, struct bnxt_hwrm_ctx *ctx)
- 			    req_type);
- 	else if (rc && rc != HWRM_ERR_CODE_PF_UNAVAILABLE)
- 		hwrm_err(bp, ctx, "hwrm req_type 0x%x seq id 0x%x error 0x%x\n",
--			 req_type, token->seq_id, rc);
-+			 req_type, le16_to_cpu(ctx->req->seq_id), rc);
- 	rc = __hwrm_to_stderr(rc);
- exit:
- 	if (token)
--- 
-2.43.0
-
+--- a/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gp.c
++++ b/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gp.c
+@@ -111,6 +111,7 @@ static int gp_aux_bus_probe(struct pci_d
+ 
+ err_aux_dev_add_1:
+ 	auxiliary_device_uninit(&aux_bus->aux_device_wrapper[1]->aux_dev);
++	goto err_aux_dev_add_0;
+ 
+ err_aux_dev_init_1:
+ 	ida_free(&gp_client_ida, aux_bus->aux_device_wrapper[1]->aux_dev.id);
+@@ -120,6 +121,7 @@ err_ida_alloc_1:
+ 
+ err_aux_dev_add_0:
+ 	auxiliary_device_uninit(&aux_bus->aux_device_wrapper[0]->aux_dev);
++	goto err_ret;
+ 
+ err_aux_dev_init_0:
+ 	ida_free(&gp_client_ida, aux_bus->aux_device_wrapper[0]->aux_dev.id);
+@@ -127,6 +129,7 @@ err_aux_dev_init_0:
+ err_ida_alloc_0:
+ 	kfree(aux_bus->aux_device_wrapper[0]);
+ 
++err_ret:
+ 	return retval;
+ }
+ 
 
 
