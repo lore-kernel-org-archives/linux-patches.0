@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED4314B96F;
-	Wed, 19 Jun 2024 13:29:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2428E14C5B8;
+	Wed, 19 Jun 2024 13:29:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803781; cv=none; b=AnhO7DY0in1uSm6/g7Bzs0I7pwZgTOfGpuI1Wzi3YwJjcu2DRRqo3L9VBNOuDPt6vIAzklOxai1k2FtUUOfih86yECPchkN/Z7cnMlejikKf5uOuDMNcEsNya08RZE/WI8FsJDTTRHdLYKEK6qJU1F7dXsGEJBB/4nAjcbaA4Xk=
+	t=1718803784; cv=none; b=rqGL4XbdSId1CM9V8o0gCJC6RMnBpCdLCRPK8TZBrWoWGMnsM+iFe34AGpKDFRr3x6XDTXCsxAhstupAu9zDU3Y5h+rWI6SPgQZaV9Dc51/DgpogiF5CSICKa3VWx1Olejivpamrm+LP1C6gwebT3JtwRbYuKO+P53cV9nWgA/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803781; c=relaxed/simple;
-	bh=n213PVulcsgTSFaO3dFR0kNLfYv3ZgD4Q4MdNs5K588=;
+	s=arc-20240116; t=1718803784; c=relaxed/simple;
+	bh=2CmFFGBjg/H1c+uh1QEumLXxJw/Yta8yheFec1Eecxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=raX64SXxV7Y3E+KC8z9SB0F+KwrpGy3Of7gD+jQKZzMHj2liaiboEzp4dKiK+VAYzo1HkH4lBj7ZSE9oCu8ALjwqYnG4eBUEV8k43qX6tPltjAdqiX0a1SOz6za+1bldg4bpqs2W0dOGqVHuA3gn7acT9Bz9/EgyivWBcseSaeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Fz75new; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tFw7/EyrZeeiB8FA1KU8qotIOImbhaUDe2To85VUOHSnazJlXHXb+zg0FNahAwaraDL5a8vhpj/81gLbLTCDO7NWFQUzUp9g2Pmgsm7e75tua4B9vJlQA2iMaf8jCrgVWxbvheq0XypMocsMsDRs0IBku2KtSIn39kwivC/mfV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eoJGGs2N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Fz75new"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DA6DC2BBFC;
-	Wed, 19 Jun 2024 13:29:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eoJGGs2N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B569C2BBFC;
+	Wed, 19 Jun 2024 13:29:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803781;
-	bh=n213PVulcsgTSFaO3dFR0kNLfYv3ZgD4Q4MdNs5K588=;
+	s=korg; t=1718803784;
+	bh=2CmFFGBjg/H1c+uh1QEumLXxJw/Yta8yheFec1Eecxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Fz75newZ7/e9np8pkCHNDseEe7lDLNoPPDNCtbriBww8ydiAuL2l9uIS9kDi2MiV
-	 asKOXZAOocKRfrJ1VUJqrVCFuU1I+rvfCo9LbjbxBh6Vtc/zTmoKGVoWznNjGOiA5L
-	 sAc3lUIsha3Jr4Ud4VSvQVc6mMquyT1c9xrLl50M=
+	b=eoJGGs2NLef5ky00Yms2bZ0p/rM2tz6ZnyiWMChTFa115MH6LVcrPCPtbAzhzhlzC
+	 dRZTysS3UmrYQaXS4xBPRbhOrpT8bQml8gda2DfS7lnKBf180wfHwr8nlWnCNKHQ2O
+	 qXgc66TJgImvdTW4Tw4NK6hSB6l4Q2vUy/lpihWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Hamish Martin <hamish.martin@alliedtelesis.co.nz>,
 	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Wolfram Sang <wsa@kernel.org>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 070/217] i2c: add fwnode APIs
-Date: Wed, 19 Jun 2024 14:55:13 +0200
-Message-ID: <20240619125559.384665325@linuxfoundation.org>
+Subject: [PATCH 6.1 071/217] i2c: acpi: Unbind mux adapters before delete
+Date: Wed, 19 Jun 2024 14:55:14 +0200
+Message-ID: <20240619125559.423329164@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -52,288 +53,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+From: Hamish Martin <hamish.martin@alliedtelesis.co.nz>
 
-[ Upstream commit 373c612d72461ddaea223592df31e62c934aae61 ]
+[ Upstream commit 3f858bbf04dbac934ac279aaee05d49eb9910051 ]
 
-Add fwnode APIs for finding and getting I2C adapters, which will be
-used by the SFP code. These are passed the fwnode corresponding to
-the adapter, and return the I2C adapter. It is the responsibility of
-the caller to find the appropriate fwnode.
+There is an issue with ACPI overlay table removal specifically related
+to I2C multiplexers.
 
-We keep the DT and ACPI interfaces, but where appropriate, recode them
-to use the fwnode interfaces internally.
+Consider an ACPI SSDT Overlay that defines a PCA9548 I2C mux on an
+existing I2C bus. When this table is loaded we see the creation of a
+device for the overall PCA9548 chip and 8 further devices - one
+i2c_adapter each for the mux channels. These are all bound to their
+ACPI equivalents via an eventual invocation of acpi_bind_one().
 
+When we unload the SSDT overlay we run into the problem. The ACPI
+devices are deleted as normal via acpi_device_del_work_fn() and the
+acpi_device_del_list.
+
+However, the following warning and stack trace is output as the
+deletion does not go smoothly:
+------------[ cut here ]------------
+kernfs: can not remove 'physical_node', no directory
+WARNING: CPU: 1 PID: 11 at fs/kernfs/dir.c:1674 kernfs_remove_by_name_ns+0xb9/0xc0
+Modules linked in:
+CPU: 1 PID: 11 Comm: kworker/u128:0 Not tainted 6.8.0-rc6+ #1
+Hardware name: congatec AG conga-B7E3/conga-B7E3, BIOS 5.13 05/16/2023
+Workqueue: kacpi_hotplug acpi_device_del_work_fn
+RIP: 0010:kernfs_remove_by_name_ns+0xb9/0xc0
+Code: e4 00 48 89 ef e8 07 71 db ff 5b b8 fe ff ff ff 5d 41 5c 41 5d e9 a7 55 e4 00 0f 0b eb a6 48 c7 c7 f0 38 0d 9d e8 97 0a d5 ff <0f> 0b eb dc 0f 1f 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90
+RSP: 0018:ffff9f864008fb28 EFLAGS: 00010286
+RAX: 0000000000000000 RBX: ffff8ef90a8d4940 RCX: 0000000000000000
+RDX: ffff8f000e267d10 RSI: ffff8f000e25c780 RDI: ffff8f000e25c780
+RBP: ffff8ef9186f9870 R08: 0000000000013ffb R09: 00000000ffffbfff
+R10: 00000000ffffbfff R11: ffff8f000e0a0000 R12: ffff9f864008fb50
+R13: ffff8ef90c93dd60 R14: ffff8ef9010d0958 R15: ffff8ef9186f98c8
+FS:  0000000000000000(0000) GS:ffff8f000e240000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f48f5253a08 CR3: 00000003cb82e000 CR4: 00000000003506f0
+Call Trace:
+ <TASK>
+ ? kernfs_remove_by_name_ns+0xb9/0xc0
+ ? __warn+0x7c/0x130
+ ? kernfs_remove_by_name_ns+0xb9/0xc0
+ ? report_bug+0x171/0x1a0
+ ? handle_bug+0x3c/0x70
+ ? exc_invalid_op+0x17/0x70
+ ? asm_exc_invalid_op+0x1a/0x20
+ ? kernfs_remove_by_name_ns+0xb9/0xc0
+ ? kernfs_remove_by_name_ns+0xb9/0xc0
+ acpi_unbind_one+0x108/0x180
+ device_del+0x18b/0x490
+ ? srso_return_thunk+0x5/0x5f
+ ? srso_return_thunk+0x5/0x5f
+ device_unregister+0xd/0x30
+ i2c_del_adapter.part.0+0x1bf/0x250
+ i2c_mux_del_adapters+0xa1/0xe0
+ i2c_device_remove+0x1e/0x80
+ device_release_driver_internal+0x19a/0x200
+ bus_remove_device+0xbf/0x100
+ device_del+0x157/0x490
+ ? __pfx_device_match_fwnode+0x10/0x10
+ ? srso_return_thunk+0x5/0x5f
+ device_unregister+0xd/0x30
+ i2c_acpi_notify+0x10f/0x140
+ notifier_call_chain+0x58/0xd0
+ blocking_notifier_call_chain+0x3a/0x60
+ acpi_device_del_work_fn+0x85/0x1d0
+ process_one_work+0x134/0x2f0
+ worker_thread+0x2f0/0x410
+ ? __pfx_worker_thread+0x10/0x10
+ kthread+0xe3/0x110
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x2f/0x50
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1b/0x30
+ </TASK>
+---[ end trace 0000000000000000 ]---
+...
+repeated 7 more times, 1 for each channel of the mux
+...
+
+The issue is that the binding of the ACPI devices to their peer I2C
+adapters is not correctly cleaned up. Digging deeper into the issue we
+see that the deletion order is such that the ACPI devices matching the
+mux channel i2c adapters are deleted first during the SSDT overlay
+removal. For each of the channels we see a call to i2c_acpi_notify()
+with ACPI_RECONFIG_DEVICE_REMOVE but, because these devices are not
+actually i2c_clients, nothing is done for them.
+
+Later on, after each of the mux channels has been dealt with, we come
+to delete the i2c_client representing the PCA9548 device. This is the
+call stack we see above, whereby the kernel cleans up the i2c_client
+including destruction of the mux and its channel adapters. At this
+point we do attempt to unbind from the ACPI peers but those peers no
+longer exist and so we hit the kernfs errors.
+
+The fix is to augment i2c_acpi_notify() to handle i2c_adapters. But,
+given that the life cycle of the adapters is linked to the i2c_client,
+instead of deleting the i2c_adapters during the i2c_acpi_notify(), we
+just trigger unbinding of the ACPI device from the adapter device, and
+allow the clean up of the adapter to continue in the way it always has.
+
+Signed-off-by: Hamish Martin <hamish.martin@alliedtelesis.co.nz>
 Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Stable-dep-of: 3f858bbf04db ("i2c: acpi: Unbind mux adapters before delete")
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Fixes: 525e6fabeae2 ("i2c / ACPI: add support for ACPI reconfigure notifications")
+Cc: <stable@vger.kernel.org> # v4.8+
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/i2c-core-acpi.c | 13 +----
- drivers/i2c/i2c-core-base.c | 98 +++++++++++++++++++++++++++++++++++++
- drivers/i2c/i2c-core-of.c   | 66 -------------------------
- include/linux/i2c.h         | 24 +++++++--
- 4 files changed, 120 insertions(+), 81 deletions(-)
+ drivers/i2c/i2c-core-acpi.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/i2c/i2c-core-acpi.c b/drivers/i2c/i2c-core-acpi.c
-index 4dd777cc0c89f..d6037a3286690 100644
+index d6037a3286690..14ae0cfc325ef 100644
 --- a/drivers/i2c/i2c-core-acpi.c
 +++ b/drivers/i2c/i2c-core-acpi.c
-@@ -442,18 +442,7 @@ EXPORT_SYMBOL_GPL(i2c_acpi_find_adapter_by_handle);
- 
- static struct i2c_client *i2c_acpi_find_client_by_adev(struct acpi_device *adev)
- {
--	struct device *dev;
--	struct i2c_client *client;
--
--	dev = bus_find_device_by_acpi_dev(&i2c_bus_type, adev);
--	if (!dev)
--		return NULL;
--
--	client = i2c_verify_client(dev);
--	if (!client)
--		put_device(dev);
--
--	return client;
-+	return i2c_find_device_by_fwnode(acpi_fwnode_handle(adev));
+@@ -445,6 +445,11 @@ static struct i2c_client *i2c_acpi_find_client_by_adev(struct acpi_device *adev)
+ 	return i2c_find_device_by_fwnode(acpi_fwnode_handle(adev));
  }
  
++static struct i2c_adapter *i2c_acpi_find_adapter_by_adev(struct acpi_device *adev)
++{
++	return i2c_find_adapter_by_fwnode(acpi_fwnode_handle(adev));
++}
++
  static int i2c_acpi_notify(struct notifier_block *nb, unsigned long value,
-diff --git a/drivers/i2c/i2c-core-base.c b/drivers/i2c/i2c-core-base.c
-index 1ebc953799149..8af82f42af30b 100644
---- a/drivers/i2c/i2c-core-base.c
-+++ b/drivers/i2c/i2c-core-base.c
-@@ -1017,6 +1017,35 @@ void i2c_unregister_device(struct i2c_client *client)
- }
- EXPORT_SYMBOL_GPL(i2c_unregister_device);
- 
-+/**
-+ * i2c_find_device_by_fwnode() - find an i2c_client for the fwnode
-+ * @fwnode: &struct fwnode_handle corresponding to the &struct i2c_client
-+ *
-+ * Look up and return the &struct i2c_client corresponding to the @fwnode.
-+ * If no client can be found, or @fwnode is NULL, this returns NULL.
-+ *
-+ * The user must call put_device(&client->dev) once done with the i2c client.
-+ */
-+struct i2c_client *i2c_find_device_by_fwnode(struct fwnode_handle *fwnode)
-+{
-+	struct i2c_client *client;
-+	struct device *dev;
-+
-+	if (!fwnode)
-+		return NULL;
-+
-+	dev = bus_find_device_by_fwnode(&i2c_bus_type, fwnode);
-+	if (!dev)
-+		return NULL;
-+
-+	client = i2c_verify_client(dev);
-+	if (!client)
-+		put_device(dev);
-+
-+	return client;
-+}
-+EXPORT_SYMBOL(i2c_find_device_by_fwnode);
-+
- 
- static const struct i2c_device_id dummy_id[] = {
- 	{ "dummy", 0 },
-@@ -1767,6 +1796,75 @@ int devm_i2c_add_adapter(struct device *dev, struct i2c_adapter *adapter)
- }
- EXPORT_SYMBOL_GPL(devm_i2c_add_adapter);
- 
-+static int i2c_dev_or_parent_fwnode_match(struct device *dev, const void *data)
-+{
-+	if (dev_fwnode(dev) == data)
-+		return 1;
-+
-+	if (dev->parent && dev_fwnode(dev->parent) == data)
-+		return 1;
-+
-+	return 0;
-+}
-+
-+/**
-+ * i2c_find_adapter_by_fwnode() - find an i2c_adapter for the fwnode
-+ * @fwnode: &struct fwnode_handle corresponding to the &struct i2c_adapter
-+ *
-+ * Look up and return the &struct i2c_adapter corresponding to the @fwnode.
-+ * If no adapter can be found, or @fwnode is NULL, this returns NULL.
-+ *
-+ * The user must call put_device(&adapter->dev) once done with the i2c adapter.
-+ */
-+struct i2c_adapter *i2c_find_adapter_by_fwnode(struct fwnode_handle *fwnode)
-+{
-+	struct i2c_adapter *adapter;
-+	struct device *dev;
-+
-+	if (!fwnode)
-+		return NULL;
-+
-+	dev = bus_find_device(&i2c_bus_type, NULL, fwnode,
-+			      i2c_dev_or_parent_fwnode_match);
-+	if (!dev)
-+		return NULL;
-+
-+	adapter = i2c_verify_adapter(dev);
-+	if (!adapter)
-+		put_device(dev);
-+
-+	return adapter;
-+}
-+EXPORT_SYMBOL(i2c_find_adapter_by_fwnode);
-+
-+/**
-+ * i2c_get_adapter_by_fwnode() - find an i2c_adapter for the fwnode
-+ * @fwnode: &struct fwnode_handle corresponding to the &struct i2c_adapter
-+ *
-+ * Look up and return the &struct i2c_adapter corresponding to the @fwnode,
-+ * and increment the adapter module's use count. If no adapter can be found,
-+ * or @fwnode is NULL, this returns NULL.
-+ *
-+ * The user must call i2c_put_adapter(adapter) once done with the i2c adapter.
-+ * Note that this is different from i2c_find_adapter_by_node().
-+ */
-+struct i2c_adapter *i2c_get_adapter_by_fwnode(struct fwnode_handle *fwnode)
-+{
-+	struct i2c_adapter *adapter;
-+
-+	adapter = i2c_find_adapter_by_fwnode(fwnode);
-+	if (!adapter)
-+		return NULL;
-+
-+	if (!try_module_get(adapter->owner)) {
-+		put_device(&adapter->dev);
-+		adapter = NULL;
-+	}
-+
-+	return adapter;
-+}
-+EXPORT_SYMBOL(i2c_get_adapter_by_fwnode);
-+
- static void i2c_parse_timing(struct device *dev, char *prop_name, u32 *cur_val_p,
- 			    u32 def_val, bool use_def)
+ 			   void *arg)
  {
-diff --git a/drivers/i2c/i2c-core-of.c b/drivers/i2c/i2c-core-of.c
-index 1073f82d5dd47..545436b7dd535 100644
---- a/drivers/i2c/i2c-core-of.c
-+++ b/drivers/i2c/i2c-core-of.c
-@@ -113,72 +113,6 @@ void of_i2c_register_devices(struct i2c_adapter *adap)
- 	of_node_put(bus);
- }
+@@ -471,11 +476,17 @@ static int i2c_acpi_notify(struct notifier_block *nb, unsigned long value,
+ 			break;
  
--static int of_dev_or_parent_node_match(struct device *dev, const void *data)
--{
--	if (dev->of_node == data)
--		return 1;
--
--	if (dev->parent)
--		return dev->parent->of_node == data;
--
--	return 0;
--}
--
--/* must call put_device() when done with returned i2c_client device */
--struct i2c_client *of_find_i2c_device_by_node(struct device_node *node)
--{
--	struct device *dev;
--	struct i2c_client *client;
--
--	dev = bus_find_device_by_of_node(&i2c_bus_type, node);
--	if (!dev)
--		return NULL;
--
--	client = i2c_verify_client(dev);
--	if (!client)
--		put_device(dev);
--
--	return client;
--}
--EXPORT_SYMBOL(of_find_i2c_device_by_node);
--
--/* must call put_device() when done with returned i2c_adapter device */
--struct i2c_adapter *of_find_i2c_adapter_by_node(struct device_node *node)
--{
--	struct device *dev;
--	struct i2c_adapter *adapter;
--
--	dev = bus_find_device(&i2c_bus_type, NULL, node,
--			      of_dev_or_parent_node_match);
--	if (!dev)
--		return NULL;
--
--	adapter = i2c_verify_adapter(dev);
--	if (!adapter)
--		put_device(dev);
--
--	return adapter;
--}
--EXPORT_SYMBOL(of_find_i2c_adapter_by_node);
--
--/* must call i2c_put_adapter() when done with returned i2c_adapter device */
--struct i2c_adapter *of_get_i2c_adapter_by_node(struct device_node *node)
--{
--	struct i2c_adapter *adapter;
--
--	adapter = of_find_i2c_adapter_by_node(node);
--	if (!adapter)
--		return NULL;
--
--	if (!try_module_get(adapter->owner)) {
--		put_device(&adapter->dev);
--		adapter = NULL;
--	}
--
--	return adapter;
--}
--EXPORT_SYMBOL(of_get_i2c_adapter_by_node);
--
- static const struct of_device_id*
- i2c_of_match_device_sysfs(const struct of_device_id *matches,
- 				  struct i2c_client *client)
-diff --git a/include/linux/i2c.h b/include/linux/i2c.h
-index f7c49bbdb8a18..cfc59c3371cb2 100644
---- a/include/linux/i2c.h
-+++ b/include/linux/i2c.h
-@@ -964,15 +964,33 @@ int i2c_handle_smbus_host_notify(struct i2c_adapter *adap, unsigned short addr);
- 
- #endif /* I2C */
- 
-+/* must call put_device() when done with returned i2c_client device */
-+struct i2c_client *i2c_find_device_by_fwnode(struct fwnode_handle *fwnode);
+ 		client = i2c_acpi_find_client_by_adev(adev);
+-		if (!client)
+-			break;
++		if (client) {
++			i2c_unregister_device(client);
++			put_device(&client->dev);
++		}
 +
-+/* must call put_device() when done with returned i2c_adapter device */
-+struct i2c_adapter *i2c_find_adapter_by_fwnode(struct fwnode_handle *fwnode);
-+
-+/* must call i2c_put_adapter() when done with returned i2c_adapter device */
-+struct i2c_adapter *i2c_get_adapter_by_fwnode(struct fwnode_handle *fwnode);
-+
- #if IS_ENABLED(CONFIG_OF)
- /* must call put_device() when done with returned i2c_client device */
--struct i2c_client *of_find_i2c_device_by_node(struct device_node *node);
-+static inline struct i2c_client *of_find_i2c_device_by_node(struct device_node *node)
-+{
-+	return i2c_find_device_by_fwnode(of_fwnode_handle(node));
-+}
++		adapter = i2c_acpi_find_adapter_by_adev(adev);
++		if (adapter) {
++			acpi_unbind_one(&adapter->dev);
++			put_device(&adapter->dev);
++		}
  
- /* must call put_device() when done with returned i2c_adapter device */
--struct i2c_adapter *of_find_i2c_adapter_by_node(struct device_node *node);
-+static inline struct i2c_adapter *of_find_i2c_adapter_by_node(struct device_node *node)
-+{
-+	return i2c_find_adapter_by_fwnode(of_fwnode_handle(node));
-+}
+-		i2c_unregister_device(client);
+-		put_device(&client->dev);
+ 		break;
+ 	}
  
- /* must call i2c_put_adapter() when done with returned i2c_adapter device */
--struct i2c_adapter *of_get_i2c_adapter_by_node(struct device_node *node);
-+static inline struct i2c_adapter *of_get_i2c_adapter_by_node(struct device_node *node)
-+{
-+	return i2c_get_adapter_by_fwnode(of_fwnode_handle(node));
-+}
- 
- const struct of_device_id
- *i2c_of_match_device(const struct of_device_id *matches,
 -- 
 2.43.0
 
