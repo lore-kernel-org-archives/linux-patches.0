@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC52143757;
-	Wed, 19 Jun 2024 13:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D633C143757;
+	Wed, 19 Jun 2024 13:25:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803519; cv=none; b=UbL8P1FfjOa4hYeiCJAmO53AbUxkIcLJsEePjlDZGgHSw/NhvzzK2klPJUAhMVKORU3CKVVlm+lvL/1xhHCkmhzy1H9YKKDOgbL+wxNnMyIn8OUNOtdlruXCNr4YByELUwWbGAtTfyVZEiDk/PRXUFv46peEwth3TeZNHYId/6I=
+	t=1718803521; cv=none; b=dbgcArhcd0683fmhdD3097v91aHLxPju1vDv8BYqbUDBxsEmugEJ29mZu1Hx4/JPeFFC8MfRTAUD3gexJVCd4s5fvbXDsp4Lqet359cZzNvOEkNi4gN0DBvHHYonuOKuNOXXR5QDfD1F8yi2cYLajA7Jx0HawZApC8ZYfHM1Wro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803519; c=relaxed/simple;
-	bh=4DatPNcI1fXOgNn1BRefa5ywb8lcdaMlFJYiqSC29Hk=;
+	s=arc-20240116; t=1718803521; c=relaxed/simple;
+	bh=NPmpntSd1edEhfWbt5mtJZyvhVMuniVHp/UcVYBdbIA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BeD1p81ptUmLNOAEyBtJDSRoH19asJMbKN0FLefWTIhuO7A6tySBGiNou3jJy5ygDgV9C4jSoXFNGZi1Sde6DekD5Iav11Fi36PQ0BvLKkcW7x3UMAqt4GT/e8G9IDiHPr/lzG9+u1VyEeu280DnV3RAE2OR97NsyrhGE7cqRHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lg59T4xX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JsLqsvbSZOwr/tCRS6lGBOCe1do1fzCqUMjxRsm2zKPy0BnlLQHHAdhkHo9T7i/LRfrE5N7N/kbgj+ioAgn+/oEctLMDaP4GuG5uub1ZRDXd9YS9Pks8Rldid//orQJUIytz04XQqFfvd2RyOdfO8h6nGfxm9mqgvtcSVTNtbhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kOTi2W6p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lg59T4xX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76B17C2BBFC;
-	Wed, 19 Jun 2024 13:25:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kOTi2W6p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED32C2BBFC;
+	Wed, 19 Jun 2024 13:25:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803518;
-	bh=4DatPNcI1fXOgNn1BRefa5ywb8lcdaMlFJYiqSC29Hk=;
+	s=korg; t=1718803521;
+	bh=NPmpntSd1edEhfWbt5mtJZyvhVMuniVHp/UcVYBdbIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lg59T4xXW8QbSaETod5zPW88L8Rz0hIz1NggQk9hOdOZ+4Dsb6jtYfGV3zyetLsP9
-	 icpo4LaLjHOJRDLM3yANiTVAgBX7Z1YIv9WodZkwJMwKmGqNJiVM7yK6tU5Xl+umJI
-	 HAesnS2UX9sMIYy8FV1p0v2NA+5r0ONHmMsC7kcg=
+	b=kOTi2W6p+ec0jR26B+dfkEMerUH+mlz5S/w7K/Q/OpT18dpOacyNOvOsV7hxH5Rch
+	 fZKInSAYL9raE4stquowKQwv+eaYY9rAvs6CIjh/HTbutsEe5FjmW5c5vD7pKafGEb
+	 h+7hy/1yQmSXYQHq7eEcbtBKhCjphOFn1SvQRI+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Delevoryas <peter@pjd.dev>,
-	"David S. Miller" <davem@davemloft.net>,
+	DelphineCCChiu <delphine_cc_chiu@wiwynn.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 013/217] net/ncsi: Simplify Kconfig/dts control flow
-Date: Wed, 19 Jun 2024 14:54:16 +0200
-Message-ID: <20240619125557.151050423@linuxfoundation.org>
+Subject: [PATCH 6.1 014/217] net/ncsi: Fix the multi thread manner of NCSI driver
+Date: Wed, 19 Jun 2024 14:54:17 +0200
+Message-ID: <20240619125557.189366666@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -51,150 +51,218 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Delevoryas <peter@pjd.dev>
+From: DelphineCCChiu <delphine_cc_chiu@wiwynn.com>
 
-[ Upstream commit c797ce168930ce3d62a9b7fc4d7040963ee6a01e ]
+[ Upstream commit e85e271dec0270982afed84f70dc37703fcc1d52 ]
 
-Background:
+Currently NCSI driver will send several NCSI commands back to back without
+waiting the response of previous NCSI command or timeout in some state
+when NIC have multi channel. This operation against the single thread
+manner defined by NCSI SPEC(section 6.3.2.3 in DSP0222_1.1.1)
 
-1. CONFIG_NCSI_OEM_CMD_KEEP_PHY
+According to NCSI SPEC(section 6.2.13.1 in DSP0222_1.1.1), we should probe
+one channel at a time by sending NCSI commands (Clear initial state, Get
+version ID, Get capabilities...), than repeat this steps until the max
+number of channels which we got from NCSI command (Get capabilities) has
+been probed.
 
-If this is enabled, we send an extra OEM Intel command in the probe
-sequence immediately after discovering a channel (e.g. after "Clear
-Initial State").
-
-2. CONFIG_NCSI_OEM_CMD_GET_MAC
-
-If this is enabled, we send one of 3 OEM "Get MAC Address" commands from
-Broadcom, Mellanox (Nvidida), and Intel in the *configuration* sequence
-for a channel.
-
-3. mellanox,multi-host (or mlx,multi-host)
-
-Introduced by this patch:
-
-https://lore.kernel.org/all/20200108234341.2590674-1-vijaykhemka@fb.com/
-
-Which was actually originally from cosmo.chou@quantatw.com:
-
-https://github.com/facebook/openbmc-linux/commit/9f132a10ec48db84613519258cd8a317fb9c8f1b
-
-Cosmo claimed that the Nvidia ConnectX-4 and ConnectX-6 NIC's don't
-respond to Get Version ID, et. al in the probe sequence unless you send
-the Set MC Affinity command first.
-
-Problem Statement:
-
-We've been using a combination of #ifdef code blocks and IS_ENABLED()
-conditions to conditionally send these OEM commands.
-
-It makes adding any new code around these commands hard to understand.
-
-Solution:
-
-In this patch, I just want to remove the conditionally compiled blocks
-of code, and always use IS_ENABLED(...) to do dynamic control flow.
-
-I don't think the small amount of code this adds to non-users of the OEM
-Kconfigs is a big deal.
-
-Signed-off-by: Peter Delevoryas <peter@pjd.dev>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: e85e271dec02 ("net/ncsi: Fix the multi thread manner of NCSI driver")
+Fixes: e6f44ed6d04d ("net/ncsi: Package and channel management")
+Signed-off-by: DelphineCCChiu <delphine_cc_chiu@wiwynn.com>
+Link: https://lore.kernel.org/r/20240529065856.825241-1-delphine_cc_chiu@wiwynn.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ncsi/ncsi-manage.c | 20 +++-----------------
- 1 file changed, 3 insertions(+), 17 deletions(-)
+ net/ncsi/internal.h    |  2 ++
+ net/ncsi/ncsi-manage.c | 73 +++++++++++++++++++++---------------------
+ net/ncsi/ncsi-rsp.c    |  4 ++-
+ 3 files changed, 41 insertions(+), 38 deletions(-)
 
+diff --git a/net/ncsi/internal.h b/net/ncsi/internal.h
+index 374412ed780b6..ef0f8f73826f5 100644
+--- a/net/ncsi/internal.h
++++ b/net/ncsi/internal.h
+@@ -325,6 +325,7 @@ struct ncsi_dev_priv {
+ 	spinlock_t          lock;            /* Protect the NCSI device    */
+ 	unsigned int        package_probe_id;/* Current ID during probe    */
+ 	unsigned int        package_num;     /* Number of packages         */
++	unsigned int        channel_probe_id;/* Current cahnnel ID during probe */
+ 	struct list_head    packages;        /* List of packages           */
+ 	struct ncsi_channel *hot_channel;    /* Channel was ever active    */
+ 	struct ncsi_request requests[256];   /* Request table              */
+@@ -343,6 +344,7 @@ struct ncsi_dev_priv {
+ 	bool                multi_package;   /* Enable multiple packages   */
+ 	bool                mlx_multi_host;  /* Enable multi host Mellanox */
+ 	u32                 package_whitelist; /* Packages to configure    */
++	unsigned char       channel_count;     /* Num of channels to probe   */
+ };
+ 
+ struct ncsi_cmd_arg {
 diff --git a/net/ncsi/ncsi-manage.c b/net/ncsi/ncsi-manage.c
-index 80713febfac6d..f567957698935 100644
+index f567957698935..760b33fa03a8b 100644
 --- a/net/ncsi/ncsi-manage.c
 +++ b/net/ncsi/ncsi-manage.c
-@@ -689,8 +689,6 @@ static int set_one_vid(struct ncsi_dev_priv *ndp, struct ncsi_channel *nc,
- 	return 0;
- }
+@@ -510,17 +510,19 @@ static void ncsi_suspend_channel(struct ncsi_dev_priv *ndp)
  
--#if IS_ENABLED(CONFIG_NCSI_OEM_CMD_KEEP_PHY)
--
- static int ncsi_oem_keep_phy_intel(struct ncsi_cmd_arg *nca)
- {
- 	unsigned char data[NCSI_OEM_INTEL_CMD_KEEP_PHY_LEN];
-@@ -716,10 +714,6 @@ static int ncsi_oem_keep_phy_intel(struct ncsi_cmd_arg *nca)
- 	return ret;
- }
+ 		break;
+ 	case ncsi_dev_state_suspend_gls:
+-		ndp->pending_req_num = np->channel_num;
++		ndp->pending_req_num = 1;
  
--#endif
--
--#if IS_ENABLED(CONFIG_NCSI_OEM_CMD_GET_MAC)
--
- /* NCSI OEM Command APIs */
- static int ncsi_oem_gma_handler_bcm(struct ncsi_cmd_arg *nca)
- {
-@@ -856,8 +850,6 @@ static int ncsi_gma_handler(struct ncsi_cmd_arg *nca, unsigned int mf_id)
- 	return nch->handler(nca);
- }
+ 		nca.type = NCSI_PKT_CMD_GLS;
+ 		nca.package = np->id;
++		nca.channel = ndp->channel_probe_id;
++		ret = ncsi_xmit_cmd(&nca);
++		if (ret)
++			goto error;
++		ndp->channel_probe_id++;
  
--#endif /* CONFIG_NCSI_OEM_CMD_GET_MAC */
--
- /* Determine if a given channel from the channel_queue should be used for Tx */
- static bool ncsi_channel_is_tx(struct ncsi_dev_priv *ndp,
- 			       struct ncsi_channel *nc)
-@@ -1039,20 +1031,18 @@ static void ncsi_configure_channel(struct ncsi_dev_priv *ndp)
- 			goto error;
+-		nd->state = ncsi_dev_state_suspend_dcnt;
+-		NCSI_FOR_EACH_CHANNEL(np, nc) {
+-			nca.channel = nc->id;
+-			ret = ncsi_xmit_cmd(&nca);
+-			if (ret)
+-				goto error;
++		if (ndp->channel_probe_id == ndp->channel_count) {
++			ndp->channel_probe_id = 0;
++			nd->state = ncsi_dev_state_suspend_dcnt;
  		}
  
--		nd->state = ncsi_dev_state_config_oem_gma;
-+		nd->state = IS_ENABLED(CONFIG_NCSI_OEM_CMD_GET_MAC)
-+			  ? ncsi_dev_state_config_oem_gma
-+			  : ncsi_dev_state_config_clear_vids;
  		break;
- 	case ncsi_dev_state_config_oem_gma:
- 		nd->state = ncsi_dev_state_config_clear_vids;
--		ret = -1;
- 
--#if IS_ENABLED(CONFIG_NCSI_OEM_CMD_GET_MAC)
- 		nca.type = NCSI_PKT_CMD_OEM;
- 		nca.package = np->id;
- 		nca.channel = nc->id;
- 		ndp->pending_req_num = 1;
- 		ret = ncsi_gma_handler(&nca, nc->version.mf_id);
--#endif /* CONFIG_NCSI_OEM_CMD_GET_MAC */
--
- 		if (ret < 0)
- 			schedule_work(&ndp->work);
- 
-@@ -1404,7 +1394,6 @@ static void ncsi_probe_channel(struct ncsi_dev_priv *ndp)
- 
- 		schedule_work(&ndp->work);
- 		break;
--#if IS_ENABLED(CONFIG_NCSI_OEM_CMD_GET_MAC)
- 	case ncsi_dev_state_probe_mlx_gma:
- 		ndp->pending_req_num = 1;
- 
-@@ -1429,7 +1418,6 @@ static void ncsi_probe_channel(struct ncsi_dev_priv *ndp)
+@@ -1340,7 +1342,6 @@ static void ncsi_probe_channel(struct ncsi_dev_priv *ndp)
+ {
+ 	struct ncsi_dev *nd = &ndp->ndev;
+ 	struct ncsi_package *np;
+-	struct ncsi_channel *nc;
+ 	struct ncsi_cmd_arg nca;
+ 	unsigned char index;
+ 	int ret;
+@@ -1418,23 +1419,6 @@ static void ncsi_probe_channel(struct ncsi_dev_priv *ndp)
  
  		nd->state = ncsi_dev_state_probe_cis;
  		break;
--#endif /* CONFIG_NCSI_OEM_CMD_GET_MAC */
- 	case ncsi_dev_state_probe_cis:
- 		ndp->pending_req_num = NCSI_RESERVED_CHANNEL;
- 
-@@ -1447,7 +1435,6 @@ static void ncsi_probe_channel(struct ncsi_dev_priv *ndp)
- 		if (IS_ENABLED(CONFIG_NCSI_OEM_CMD_KEEP_PHY))
- 			nd->state = ncsi_dev_state_probe_keep_phy;
- 		break;
--#if IS_ENABLED(CONFIG_NCSI_OEM_CMD_KEEP_PHY)
+-	case ncsi_dev_state_probe_cis:
+-		ndp->pending_req_num = NCSI_RESERVED_CHANNEL;
+-
+-		/* Clear initial state */
+-		nca.type = NCSI_PKT_CMD_CIS;
+-		nca.package = ndp->active_package->id;
+-		for (index = 0; index < NCSI_RESERVED_CHANNEL; index++) {
+-			nca.channel = index;
+-			ret = ncsi_xmit_cmd(&nca);
+-			if (ret)
+-				goto error;
+-		}
+-
+-		nd->state = ncsi_dev_state_probe_gvi;
+-		if (IS_ENABLED(CONFIG_NCSI_OEM_CMD_KEEP_PHY))
+-			nd->state = ncsi_dev_state_probe_keep_phy;
+-		break;
  	case ncsi_dev_state_probe_keep_phy:
  		ndp->pending_req_num = 1;
  
-@@ -1460,7 +1447,6 @@ static void ncsi_probe_channel(struct ncsi_dev_priv *ndp)
+@@ -1447,14 +1431,17 @@ static void ncsi_probe_channel(struct ncsi_dev_priv *ndp)
  
  		nd->state = ncsi_dev_state_probe_gvi;
  		break;
--#endif /* CONFIG_NCSI_OEM_CMD_KEEP_PHY */
++	case ncsi_dev_state_probe_cis:
  	case ncsi_dev_state_probe_gvi:
  	case ncsi_dev_state_probe_gc:
  	case ncsi_dev_state_probe_gls:
+ 		np = ndp->active_package;
+-		ndp->pending_req_num = np->channel_num;
++		ndp->pending_req_num = 1;
+ 
+-		/* Retrieve version, capability or link status */
+-		if (nd->state == ncsi_dev_state_probe_gvi)
++		/* Clear initial state Retrieve version, capability or link status */
++		if (nd->state == ncsi_dev_state_probe_cis)
++			nca.type = NCSI_PKT_CMD_CIS;
++		else if (nd->state == ncsi_dev_state_probe_gvi)
+ 			nca.type = NCSI_PKT_CMD_GVI;
+ 		else if (nd->state == ncsi_dev_state_probe_gc)
+ 			nca.type = NCSI_PKT_CMD_GC;
+@@ -1462,19 +1449,29 @@ static void ncsi_probe_channel(struct ncsi_dev_priv *ndp)
+ 			nca.type = NCSI_PKT_CMD_GLS;
+ 
+ 		nca.package = np->id;
+-		NCSI_FOR_EACH_CHANNEL(np, nc) {
+-			nca.channel = nc->id;
+-			ret = ncsi_xmit_cmd(&nca);
+-			if (ret)
+-				goto error;
+-		}
++		nca.channel = ndp->channel_probe_id;
+ 
+-		if (nd->state == ncsi_dev_state_probe_gvi)
++		ret = ncsi_xmit_cmd(&nca);
++		if (ret)
++			goto error;
++
++		if (nd->state == ncsi_dev_state_probe_cis) {
++			nd->state = ncsi_dev_state_probe_gvi;
++			if (IS_ENABLED(CONFIG_NCSI_OEM_CMD_KEEP_PHY) && ndp->channel_probe_id == 0)
++				nd->state = ncsi_dev_state_probe_keep_phy;
++		} else if (nd->state == ncsi_dev_state_probe_gvi) {
+ 			nd->state = ncsi_dev_state_probe_gc;
+-		else if (nd->state == ncsi_dev_state_probe_gc)
++		} else if (nd->state == ncsi_dev_state_probe_gc) {
+ 			nd->state = ncsi_dev_state_probe_gls;
+-		else
++		} else {
++			nd->state = ncsi_dev_state_probe_cis;
++			ndp->channel_probe_id++;
++		}
++
++		if (ndp->channel_probe_id == ndp->channel_count) {
++			ndp->channel_probe_id = 0;
+ 			nd->state = ncsi_dev_state_probe_dp;
++		}
+ 		break;
+ 	case ncsi_dev_state_probe_dp:
+ 		ndp->pending_req_num = 1;
+@@ -1775,6 +1772,7 @@ struct ncsi_dev *ncsi_register_dev(struct net_device *dev,
+ 		ndp->requests[i].ndp = ndp;
+ 		timer_setup(&ndp->requests[i].timer, ncsi_request_timeout, 0);
+ 	}
++	ndp->channel_count = NCSI_RESERVED_CHANNEL;
+ 
+ 	spin_lock_irqsave(&ncsi_dev_lock, flags);
+ 	list_add_tail_rcu(&ndp->node, &ncsi_dev_list);
+@@ -1808,6 +1806,7 @@ int ncsi_start_dev(struct ncsi_dev *nd)
+ 
+ 	if (!(ndp->flags & NCSI_DEV_PROBED)) {
+ 		ndp->package_probe_id = 0;
++		ndp->channel_probe_id = 0;
+ 		nd->state = ncsi_dev_state_probe;
+ 		schedule_work(&ndp->work);
+ 		return 0;
+diff --git a/net/ncsi/ncsi-rsp.c b/net/ncsi/ncsi-rsp.c
+index 480e80e3c2836..f22d67cb04d37 100644
+--- a/net/ncsi/ncsi-rsp.c
++++ b/net/ncsi/ncsi-rsp.c
+@@ -795,12 +795,13 @@ static int ncsi_rsp_handler_gc(struct ncsi_request *nr)
+ 	struct ncsi_rsp_gc_pkt *rsp;
+ 	struct ncsi_dev_priv *ndp = nr->ndp;
+ 	struct ncsi_channel *nc;
++	struct ncsi_package *np;
+ 	size_t size;
+ 
+ 	/* Find the channel */
+ 	rsp = (struct ncsi_rsp_gc_pkt *)skb_network_header(nr->rsp);
+ 	ncsi_find_package_and_channel(ndp, rsp->rsp.common.channel,
+-				      NULL, &nc);
++				      &np, &nc);
+ 	if (!nc)
+ 		return -ENODEV;
+ 
+@@ -835,6 +836,7 @@ static int ncsi_rsp_handler_gc(struct ncsi_request *nr)
+ 	 */
+ 	nc->vlan_filter.bitmap = U64_MAX;
+ 	nc->vlan_filter.n_vids = rsp->vlan_cnt;
++	np->ndp->channel_count = rsp->channel_cnt;
+ 
+ 	return 0;
+ }
 -- 
 2.43.0
 
