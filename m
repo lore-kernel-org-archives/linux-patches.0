@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73FF2143757;
-	Wed, 19 Jun 2024 13:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5C2143757;
+	Wed, 19 Jun 2024 13:24:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803445; cv=none; b=XWyTk2alIIbWlqL5fVnwACvmCCE/Vza8yDgVTDd4gPIMj53uQjt1wTaeoy9VNjcv4urff3/ZoYNDILfTaP44UZ1xStMK6KMmDAkBLolUjiFcdIyAymTSJoX+xhIV8mFCNTwIJI00lI0FVeX85bi+8QfzI86gfy0INVKJlYJ0M/k=
+	t=1718803448; cv=none; b=TsOvk01rXhFNvfKzfyG2saNihnBaWB6xhRa36WAyDouI/XJ5rL8OIh2BXkhPgJaHj7nAjqjIMLzwXJzRxtYHyExfOYwMfUXMSAXylpOGMJxKDgv619hrN4RI1ODZvmyp01L0/XBYW75q96kSYAu5r1UX+9xGASmNp4Ny+zmv4bE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803445; c=relaxed/simple;
-	bh=dQF+xrEy8jayAWg9gJnhSZG8ECLrl5MdfdVlSIQbthc=;
+	s=arc-20240116; t=1718803448; c=relaxed/simple;
+	bh=LWeLbB6iwTlaw0u5ADgWgXOROnEQebARrqwOgoiTxko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oY+za9r6IpbWPPibXGFsMT4917uMYmWO+sCcXCExAdGY1y1nMhesTv8kFuz9WidElO5YNUDjj2Bt+c5GrISs/q7whLIYY6dGbAisNADeRKWnI0DNMAFOIY112pBP0Gpyuwwupx6/XF39pDe2s++XCzzfSC9ofJW6anRIKX+WHW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1iz/GYGu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aCPefRxCURlf2qUo4TKyYkC7VJyJtNEgwMz0OKOHn1EI8NN/XMSHZYdH5ImlU/AQcpaRwWJzHqBcZwr1uXHC52B0mSgLNkvoSfyZc8p9iVEWKmSrOux90bV4yk70tlsCh5Mz3AACRMpi6dL3LyK51CSA05TLxVOwLEdq005pKOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MyxT8W8L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1iz/GYGu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED3E2C2BBFC;
-	Wed, 19 Jun 2024 13:24:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MyxT8W8L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2D99C2BBFC;
+	Wed, 19 Jun 2024 13:24:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803445;
-	bh=dQF+xrEy8jayAWg9gJnhSZG8ECLrl5MdfdVlSIQbthc=;
+	s=korg; t=1718803448;
+	bh=LWeLbB6iwTlaw0u5ADgWgXOROnEQebARrqwOgoiTxko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1iz/GYGutbBBfrzBsDhn1wAY6RBFlyiK9If2yJGcBD5P4IucEv5D64EUK5Mn+BTfq
-	 +lXtgsrUB+P5Ik4lELPL5GyHqh0LUBPxtecjS3rq+O3O3Hd+lA+TVpXhhQZioTI72j
-	 CiZGYKt3Vl9YoJZMHzsY5YVDaj2UE7GxC33DXYP0=
+	b=MyxT8W8LSdJrx1L6l618284e8LKLjlpyOakVTxClE3DrYpM5nbmv0W83LWjqWM8OW
+	 6IHAIs/SoJ2DXwkaxwoGcaE9TB9tTWaK2h0aPDNbyWIoq9NrIIvfQXWtFwCc/wI30S
+	 DDXGEyabxoGw09VcBa6USI6qtOlqkHL/5OUbeyvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Subject: [PATCH 6.9 269/281] wifi: iwlwifi: mvm: fix a crash on 7265
-Date: Wed, 19 Jun 2024 14:57:08 +0200
-Message-ID: <20240619125620.332321181@linuxfoundation.org>
+	Miaohe Lin <linmiaohe@huawei.com>,
+	David Hildenbrand <david@redhat.com>,
+	Yang Shi <shy828301@gmail.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Xu Yu <xuyu@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.9 270/281] mm/huge_memory: dont unpoison huge_zero_folio
+Date: Wed, 19 Jun 2024 14:57:09 +0200
+Message-ID: <20240619125620.371139654@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -51,40 +56,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Miaohe Lin <linmiaohe@huawei.com>
 
-commit 788e4c75f831d06fcfbbec1d455fac429521e607 upstream.
+commit fe6f86f4b40855a130a19aa589f9ba7f650423f4 upstream.
 
-Since IWL_FW_CMD_VER_UNKNOWN = 99, then my change to consider
-cmd_ver >= 7 instead of cmd_ver = 7 included also firmwares that don't
-advertise the command version at all. This made us send a command with a
-bad size and because of that, the firmware hit a BAD_COMMAND immediately
-after handling the REDUCE_TX_POWER_CMD command.
+When I did memory failure tests recently, below panic occurs:
 
-Fixes: 8f892e225f41 ("wifi: iwlwifi: mvm: support iwl_dev_tx_power_cmd_v8")
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240512072733.eb20ff5050d3.Ie4fc6f5496cd296fd6ff20d15e98676f28a3cccd@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218963
+ kernel BUG at include/linux/mm.h:1135!
+ invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
+ CPU: 9 PID: 137 Comm: kswapd1 Not tainted 6.9.0-rc4-00491-gd5ce28f156fe-dirty #14
+ RIP: 0010:shrink_huge_zero_page_scan+0x168/0x1a0
+ RSP: 0018:ffff9933c6c57bd0 EFLAGS: 00000246
+ RAX: 000000000000003e RBX: 0000000000000000 RCX: ffff88f61fc5c9c8
+ RDX: 0000000000000000 RSI: 0000000000000027 RDI: ffff88f61fc5c9c0
+ RBP: ffffcd7c446b0000 R08: ffffffff9a9405f0 R09: 0000000000005492
+ R10: 00000000000030ea R11: ffffffff9a9405f0 R12: 0000000000000000
+ R13: 0000000000000000 R14: 0000000000000000 R15: ffff88e703c4ac00
+ FS:  0000000000000000(0000) GS:ffff88f61fc40000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 000055f4da6e9878 CR3: 0000000c71048000 CR4: 00000000000006f0
+ Call Trace:
+  <TASK>
+  do_shrink_slab+0x14f/0x6a0
+  shrink_slab+0xca/0x8c0
+  shrink_node+0x2d0/0x7d0
+  balance_pgdat+0x33a/0x720
+  kswapd+0x1f3/0x410
+  kthread+0xd5/0x100
+  ret_from_fork+0x2f/0x50
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
+ Modules linked in: mce_inject hwpoison_inject
+ ---[ end trace 0000000000000000 ]---
+ RIP: 0010:shrink_huge_zero_page_scan+0x168/0x1a0
+ RSP: 0018:ffff9933c6c57bd0 EFLAGS: 00000246
+ RAX: 000000000000003e RBX: 0000000000000000 RCX: ffff88f61fc5c9c8
+ RDX: 0000000000000000 RSI: 0000000000000027 RDI: ffff88f61fc5c9c0
+ RBP: ffffcd7c446b0000 R08: ffffffff9a9405f0 R09: 0000000000005492
+ R10: 00000000000030ea R11: ffffffff9a9405f0 R12: 0000000000000000
+ R13: 0000000000000000 R14: 0000000000000000 R15: ffff88e703c4ac00
+ FS:  0000000000000000(0000) GS:ffff88f61fc40000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 000055f4da6e9878 CR3: 0000000c71048000 CR4: 00000000000006f0
+
+The root cause is that HWPoison flag will be set for huge_zero_folio
+without increasing the folio refcnt.  But then unpoison_memory() will
+decrease the folio refcnt unexpectedly as it appears like a successfully
+hwpoisoned folio leading to VM_BUG_ON_PAGE(page_ref_count(page) == 0) when
+releasing huge_zero_folio.
+
+Skip unpoisoning huge_zero_folio in unpoison_memory() to fix this issue.
+We're not prepared to unpoison huge_zero_folio yet.
+
+Link: https://lkml.kernel.org/r/20240516122608.22610-1-linmiaohe@huawei.com
+Fixes: 478d134e9506 ("mm/huge_memory: do not overkill when splitting huge_zero_page")
+Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Yang Shi <shy828301@gmail.com>
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: Xu Yu <xuyu@linux.alibaba.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/fw.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/memory-failure.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
-@@ -884,8 +884,8 @@ int iwl_mvm_sar_select_profile(struct iw
- 	int ret;
- 	u16 len = 0;
- 	u32 n_subbands;
--	u8 cmd_ver = iwl_fw_lookup_cmd_ver(mvm->fw, cmd_id,
--					   IWL_FW_CMD_VER_UNKNOWN);
-+	u8 cmd_ver = iwl_fw_lookup_cmd_ver(mvm->fw, cmd_id, 3);
+--- a/mm/memory-failure.c
++++ b/mm/memory-failure.c
+@@ -2550,6 +2550,13 @@ int unpoison_memory(unsigned long pfn)
+ 		goto unlock_mutex;
+ 	}
+ 
++	if (is_huge_zero_page(&folio->page)) {
++		unpoison_pr_info("Unpoison: huge zero page is not supported %#lx\n",
++				 pfn, &unpoison_rs);
++		ret = -EOPNOTSUPP;
++		goto unlock_mutex;
++	}
 +
- 	if (cmd_ver >= 7) {
- 		len = sizeof(cmd.v7);
- 		n_subbands = IWL_NUM_SUB_BANDS_V2;
+ 	if (!PageHWPoison(p)) {
+ 		unpoison_pr_info("Unpoison: Page was already unpoisoned %#lx\n",
+ 				 pfn, &unpoison_rs);
 
 
