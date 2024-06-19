@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF0FC82495;
-	Wed, 19 Jun 2024 13:17:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D9882495;
+	Wed, 19 Jun 2024 13:17:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803066; cv=none; b=tFHDoOOMkiZqdR/+UKQtx8smJVT1GX3Urlxf1qvhtf87oz8S0fcUvDMQr3CY1l2LKw9eZdg+3k8AKS15iIPGbQC+pbP34mdV8oBtXzNrtqtJ8d6aoRyxQWXhtDfHF4a9XkLgrbRFJLJe/rxGhMltUNVSQf0hdYzJeeC58hoSxVA=
+	t=1718803069; cv=none; b=gz7huvRxiaa+d0kfyLAPCZCTFIcx2R1U7OcwzdHLmlHrhAOZGP4di4KTjicYtPksK8c/8ej4YxvvtnExfiP+B1XIj8yPs2LaBbTQYlu3YaVIsP7whjn0sRnymI79ErtDd6iI5ZJOY6t5QCnjk0JFN8O7Eu61DT32u9Dvho/ZoTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803066; c=relaxed/simple;
-	bh=Iu0GoAWFqk+I6/qJiV6ciinO3mrvEK029FchQ28J870=;
+	s=arc-20240116; t=1718803069; c=relaxed/simple;
+	bh=0poYw+htLpunm5k3JMNiJjEFNzbSWDr5q/bCqCoBKZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GAMIufbr3mjGbwtpfVuZfTuf2zd8YnL/OkqliNWMCB2KMuNNSF7zBo/wy6SC3UXqG3LWWM8BNGNIIXX9BA5/zByzvw6y1/XzXelvMtZL0aieJWImzJlLQPLr15aupv2gBoemnZNoWQe7TkaHY1X6pX0DrOlFifXgpz0XGfVHlLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bs2tGsaq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e34rS4dKrT6CKAupjz0aH91A6Om7hokN8i1QGyBTiBLhPnI4YNgfA9NqsGgy0KVLx1i0L3LHqcLNMRHm0KteA4Nplq4gYQK+ViY5Ybbkhcuez1rTgEDFFHkdvbTgcZa4cOPXtR8dn4NNe/Qe90qC07RJHZrud2WFv26V0XqIkRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A9kCrnSx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bs2tGsaq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44053C2BBFC;
-	Wed, 19 Jun 2024 13:17:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A9kCrnSx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D9AC2BBFC;
+	Wed, 19 Jun 2024 13:17:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803066;
-	bh=Iu0GoAWFqk+I6/qJiV6ciinO3mrvEK029FchQ28J870=;
+	s=korg; t=1718803069;
+	bh=0poYw+htLpunm5k3JMNiJjEFNzbSWDr5q/bCqCoBKZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bs2tGsaqM4gKI+wbzglNlYWGLcr3y/SewNhVELChEsr2c/2u2qNUbbIJrirOhDIVF
-	 yv4R9QZnz8LWpIRk/6R03brm1PEA8hM62R3Fiuy6VXoZ8uiYeYVVa2Vn40jrIB7PJs
-	 StChGbRBj2HP6tDF9T9niGJCxekkffdeQ6fEdFJQ=
+	b=A9kCrnSxaUtyXL3ABJs5YqmqvRKbpVOw0lZnyQM3cZc37FHLsiHRI4vsinBTiUsyq
+	 3ihRVmsCxs/BO+jExIqFye7jVLMh6idcBmq1Pq9qqqBNW4Tao0WDE84OKVmKTxsfuC
+	 y3mwrAK7Mks6PqxH81Ld+eClIaOwptWd16Y8mNes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Forbes <ian.forbes@broadcom.com>,
-	Zack Rusin <zack.rusin@broadcom.com>,
+	Hou Tao <houtao1@huawei.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Jia Zhu <zhujia.zj@bytedance.com>,
+	Jingbo Xu <jefflexu@linux.alibaba.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 140/281] drm/vmwgfx: Filter modes which exceed graphics memory
-Date: Wed, 19 Jun 2024 14:54:59 +0200
-Message-ID: <20240619125615.228426693@linuxfoundation.org>
+Subject: [PATCH 6.9 112/281] cachefiles: fix slab-use-after-free in cachefiles_ondemand_get_fd()
+Date: Wed, 19 Jun 2024 14:54:31 +0200
+Message-ID: <20240619125614.158651071@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -51,104 +55,186 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Forbes <ian.forbes@broadcom.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 426826933109093503e7ef15d49348fc5ab505fe ]
+[ Upstream commit de3e26f9e5b76fc628077578c001c4a51bf54d06 ]
 
-SVGA requires individual surfaces to fit within graphics memory
-(max_mob_pages) which means that modes with a final buffer size that would
-exceed graphics memory must be pruned otherwise creation will fail.
+We got the following issue in a fuzz test of randomly issuing the restore
+command:
 
-Additionally llvmpipe requires its buffer height and width to be a multiple
-of its tile size which is 64. As a result we have to anticipate that
-llvmpipe will round up the mode size passed to it by the compositor when
-it creates buffers and filter modes where this rounding exceeds graphics
-memory.
+==================================================================
+BUG: KASAN: slab-use-after-free in cachefiles_ondemand_daemon_read+0x609/0xab0
+Write of size 4 at addr ffff888109164a80 by task ondemand-04-dae/4962
 
-This fixes an issue where VMs with low graphics memory (< 64MiB) configured
-with high resolution mode boot to a black screen because surface creation
-fails.
+CPU: 11 PID: 4962 Comm: ondemand-04-dae Not tainted 6.8.0-rc7-dirty #542
+Call Trace:
+ kasan_report+0x94/0xc0
+ cachefiles_ondemand_daemon_read+0x609/0xab0
+ vfs_read+0x169/0xb50
+ ksys_read+0xf5/0x1e0
 
-Fixes: d947d1b71deb ("drm/vmwgfx: Add and connect connector helper function")
-Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240521184720.767-2-ian.forbes@broadcom.com
+Allocated by task 626:
+ __kmalloc+0x1df/0x4b0
+ cachefiles_ondemand_send_req+0x24d/0x690
+ cachefiles_create_tmpfile+0x249/0xb30
+ cachefiles_create_file+0x6f/0x140
+ cachefiles_look_up_object+0x29c/0xa60
+ cachefiles_lookup_cookie+0x37d/0xca0
+ fscache_cookie_state_machine+0x43c/0x1230
+ [...]
+
+Freed by task 626:
+ kfree+0xf1/0x2c0
+ cachefiles_ondemand_send_req+0x568/0x690
+ cachefiles_create_tmpfile+0x249/0xb30
+ cachefiles_create_file+0x6f/0x140
+ cachefiles_look_up_object+0x29c/0xa60
+ cachefiles_lookup_cookie+0x37d/0xca0
+ fscache_cookie_state_machine+0x43c/0x1230
+ [...]
+==================================================================
+
+Following is the process that triggers the issue:
+
+     mount  |   daemon_thread1    |    daemon_thread2
+------------------------------------------------------------
+ cachefiles_ondemand_init_object
+  cachefiles_ondemand_send_req
+   REQ_A = kzalloc(sizeof(*req) + data_len)
+   wait_for_completion(&REQ_A->done)
+
+            cachefiles_daemon_read
+             cachefiles_ondemand_daemon_read
+              REQ_A = cachefiles_ondemand_select_req
+              cachefiles_ondemand_get_fd
+              copy_to_user(_buffer, msg, n)
+            process_open_req(REQ_A)
+                                  ------ restore ------
+                                  cachefiles_ondemand_restore
+                                  xas_for_each(&xas, req, ULONG_MAX)
+                                   xas_set_mark(&xas, CACHEFILES_REQ_NEW);
+
+                                  cachefiles_daemon_read
+                                   cachefiles_ondemand_daemon_read
+                                    REQ_A = cachefiles_ondemand_select_req
+
+             write(devfd, ("copen %u,%llu", msg->msg_id, size));
+             cachefiles_ondemand_copen
+              xa_erase(&cache->reqs, id)
+              complete(&REQ_A->done)
+   kfree(REQ_A)
+                                    cachefiles_ondemand_get_fd(REQ_A)
+                                     fd = get_unused_fd_flags
+                                     file = anon_inode_getfile
+                                     fd_install(fd, file)
+                                     load = (void *)REQ_A->msg.data;
+                                     load->fd = fd;
+                                     // load UAF !!!
+
+This issue is caused by issuing a restore command when the daemon is still
+alive, which results in a request being processed multiple times thus
+triggering a UAF. So to avoid this problem, add an additional reference
+count to cachefiles_req, which is held while waiting and reading, and then
+released when the waiting and reading is over.
+
+Note that since there is only one reference count for waiting, we need to
+avoid the same request being completed multiple times, so we can only
+complete the request if it is successfully removed from the xarray.
+
+Fixes: e73fa11a356c ("cachefiles: add restore command to recover inflight ondemand read requests")
+Suggested-by: Hou Tao <houtao1@huawei.com>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Link: https://lore.kernel.org/r/20240522114308.2402121-4-libaokun@huaweicloud.com
+Acked-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Jia Zhu <zhujia.zj@bytedance.com>
+Reviewed-by: Jingbo Xu <jefflexu@linux.alibaba.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c | 45 ++++++++++++++++++++++++++--
- 1 file changed, 43 insertions(+), 2 deletions(-)
+ fs/cachefiles/internal.h |  1 +
+ fs/cachefiles/ondemand.c | 23 +++++++++++++++++++----
+ 2 files changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c b/drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c
-index 3c8414a13dbad..dbc44ecbd1f4a 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c
-@@ -41,7 +41,14 @@
- #define vmw_connector_to_stdu(x) \
- 	container_of(x, struct vmw_screen_target_display_unit, base.connector)
+diff --git a/fs/cachefiles/internal.h b/fs/cachefiles/internal.h
+index d33169f0018b1..7745b8abc3aa3 100644
+--- a/fs/cachefiles/internal.h
++++ b/fs/cachefiles/internal.h
+@@ -138,6 +138,7 @@ static inline bool cachefiles_in_ondemand_mode(struct cachefiles_cache *cache)
+ struct cachefiles_req {
+ 	struct cachefiles_object *object;
+ 	struct completion done;
++	refcount_t ref;
+ 	int error;
+ 	struct cachefiles_msg msg;
+ };
+diff --git a/fs/cachefiles/ondemand.c b/fs/cachefiles/ondemand.c
+index 4ba42f1fa3b40..c011fb24d2382 100644
+--- a/fs/cachefiles/ondemand.c
++++ b/fs/cachefiles/ondemand.c
+@@ -4,6 +4,12 @@
+ #include <linux/uio.h>
+ #include "internal.h"
  
--
-+/*
-+ * Some renderers such as llvmpipe will align the width and height of their
-+ * buffers to match their tile size. We need to keep this in mind when exposing
-+ * modes to userspace so that this possible over-allocation will not exceed
-+ * graphics memory. 64x64 pixels seems to be a reasonable upper bound for the
-+ * tile size of current renderers.
-+ */
-+#define GPU_TILE_SIZE 64
++static inline void cachefiles_req_put(struct cachefiles_req *req)
++{
++	if (refcount_dec_and_test(&req->ref))
++		kfree(req);
++}
++
+ static int cachefiles_ondemand_fd_release(struct inode *inode,
+ 					  struct file *file)
+ {
+@@ -330,6 +336,7 @@ ssize_t cachefiles_ondemand_daemon_read(struct cachefiles_cache *cache,
  
- enum stdu_content_type {
- 	SAME_AS_DISPLAY = 0,
-@@ -830,7 +837,41 @@ static void vmw_stdu_connector_destroy(struct drm_connector *connector)
- 	vmw_stdu_destroy(vmw_connector_to_stdu(connector));
+ 	xas_clear_mark(&xas, CACHEFILES_REQ_NEW);
+ 	cache->req_id_next = xas.xa_index + 1;
++	refcount_inc(&req->ref);
+ 	xa_unlock(&cache->reqs);
+ 
+ 	id = xas.xa_index;
+@@ -356,15 +363,22 @@ ssize_t cachefiles_ondemand_daemon_read(struct cachefiles_cache *cache,
+ 		complete(&req->done);
+ 	}
+ 
++	cachefiles_req_put(req);
+ 	return n;
+ 
+ err_put_fd:
+ 	if (msg->opcode == CACHEFILES_OP_OPEN)
+ 		close_fd(((struct cachefiles_open *)msg->data)->fd);
+ error:
+-	xa_erase(&cache->reqs, id);
+-	req->error = ret;
+-	complete(&req->done);
++	xas_reset(&xas);
++	xas_lock(&xas);
++	if (xas_load(&xas) == req) {
++		req->error = ret;
++		complete(&req->done);
++		xas_store(&xas, NULL);
++	}
++	xas_unlock(&xas);
++	cachefiles_req_put(req);
+ 	return ret;
  }
  
-+static enum drm_mode_status
-+vmw_stdu_connector_mode_valid(struct drm_connector *connector,
-+			      struct drm_display_mode *mode)
-+{
-+	enum drm_mode_status ret;
-+	struct drm_device *dev = connector->dev;
-+	struct vmw_private *dev_priv = vmw_priv(dev);
-+	u64 assumed_cpp = dev_priv->assume_16bpp ? 2 : 4;
-+	/* Align width and height to account for GPU tile over-alignment */
-+	u64 required_mem = ALIGN(mode->hdisplay, GPU_TILE_SIZE) *
-+			   ALIGN(mode->vdisplay, GPU_TILE_SIZE) *
-+			   assumed_cpp;
-+	required_mem = ALIGN(required_mem, PAGE_SIZE);
-+
-+	ret = drm_mode_validate_size(mode, dev_priv->stdu_max_width,
-+				     dev_priv->stdu_max_height);
-+	if (ret != MODE_OK)
-+		return ret;
+@@ -395,6 +409,7 @@ static int cachefiles_ondemand_send_req(struct cachefiles_object *object,
+ 		goto out;
+ 	}
  
-+	ret = drm_mode_validate_size(mode, dev_priv->texture_max_width,
-+				     dev_priv->texture_max_height);
-+	if (ret != MODE_OK)
-+		return ret;
-+
-+	if (required_mem > dev_priv->max_primary_mem)
-+		return MODE_MEM;
-+
-+	if (required_mem > dev_priv->max_mob_pages * PAGE_SIZE)
-+		return MODE_MEM;
-+
-+	if (required_mem > dev_priv->max_mob_size)
-+		return MODE_MEM;
-+
-+	return MODE_OK;
-+}
- 
- static const struct drm_connector_funcs vmw_stdu_connector_funcs = {
- 	.dpms = vmw_du_connector_dpms,
-@@ -846,7 +887,7 @@ static const struct drm_connector_funcs vmw_stdu_connector_funcs = {
- static const struct
- drm_connector_helper_funcs vmw_stdu_connector_helper_funcs = {
- 	.get_modes = vmw_connector_get_modes,
--	.mode_valid = vmw_connector_mode_valid
-+	.mode_valid = vmw_stdu_connector_mode_valid
- };
- 
- 
++	refcount_set(&req->ref, 1);
+ 	req->object = object;
+ 	init_completion(&req->done);
+ 	req->msg.opcode = opcode;
+@@ -456,7 +471,7 @@ static int cachefiles_ondemand_send_req(struct cachefiles_object *object,
+ 	wake_up_all(&cache->daemon_pollwq);
+ 	wait_for_completion(&req->done);
+ 	ret = req->error;
+-	kfree(req);
++	cachefiles_req_put(req);
+ 	return ret;
+ out:
+ 	/* Reset the object to close state in error handling path.
 -- 
 2.43.0
 
