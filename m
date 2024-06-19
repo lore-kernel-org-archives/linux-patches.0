@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C33B12FB31;
-	Wed, 19 Jun 2024 13:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3E312FB31;
+	Wed, 19 Jun 2024 13:10:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802612; cv=none; b=laGXKZxe1XbML9UFS9VoUJsefxflHwaFydaqXd26uQr64EobHYLM02DnpRA3vD7mO5SGFYOMhZgBMUWtUOVm1ZitG0LVtpQ1vSlfsUvwlFXIA/2PVWzDtln8dOP61SzlJ1mPWP2LSnATov3JlmAdld39U7FHQqCNoEGoVJUpov0=
+	t=1718802615; cv=none; b=NENyImWpHAX6bcUv6AYXuLWPzcgXBZcMnh5KxEUoT67diyX405XJYWveTtHIL7EhzM9QiT1KsGTYH5GLxrTpaCLXgY5c9WcYHXdoCQMmm8toJNNZDnzJSz7KFsDMd9I9nf07HbmZlNUfey0IJwGdwcy9FZeAxsL2woQUj5jr6kE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802612; c=relaxed/simple;
-	bh=vTBO3SzvxaXXEitez0LLJDFJq8JjNCAe5EeyeQJBZRE=;
+	s=arc-20240116; t=1718802615; c=relaxed/simple;
+	bh=hLFZ0V53/YVWkso+vrYu5vKK2v7zqjE+V3lRLLc/7X8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PiNk7EQL/84RzBO86IgA5XGtO9ZSEYYUcnx6elcmpeOs5cWTR2lFs7mNZMgTqy6TAdlhawBSsoTJyc3aoYKMjxvmGKAn2KwNxAVEYkfuy8STy735xJ4oFE93DnW2IMGw26ANDELg89HUCNz4qbE+6o7bdaFDwhXe/maWXZOztms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1DAHlshQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rekc2Vnlg+3CiI852UlYPBRF79LckkYYKGHDFXv/fdtIsdc8Ei9x4VaAMT1k76JEv2873uds1wquWLrzEXgZ3h1aHLrvbw5nHJoYBUYn8vIiYJIt2/PP8WbDLo7svO9+RXi+ydPjJfl1sWiiR2Kem8un9AbBbNJorhMmtyabs68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xxBSsw3s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1DAHlshQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97077C2BBFC;
-	Wed, 19 Jun 2024 13:10:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xxBSsw3s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 859B2C2BBFC;
+	Wed, 19 Jun 2024 13:10:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802612;
-	bh=vTBO3SzvxaXXEitez0LLJDFJq8JjNCAe5EeyeQJBZRE=;
+	s=korg; t=1718802614;
+	bh=hLFZ0V53/YVWkso+vrYu5vKK2v7zqjE+V3lRLLc/7X8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1DAHlshQLIcRqTRfrir/7xXMkNUtYiz8fQPzdKvatijfowEfQySSTtDHYgYQmeDCY
-	 2aK2/DdITM0fLqyNdyRm9FgQHsRqcL06IYbd0NCaIFKiKPZylH0xN7jgzzSWJw4fsy
-	 j7S5Gp6x48bp7uTtwp7esjJ5ajYg199BOHvL3BzI=
+	b=xxBSsw3szEKEcsQHc7iDWUirm1Aqe9bS62gwa+ZSaU0mRudCU3uY3z0mUqkAEQXr5
+	 RiygTQ7UjK5WV4mMQe/UtcLLe/qJ4PSwa1ZPKIuE4daqSptwUZuV4xbyq1+0oVH1yH
+	 7aT/6t49gFP3FXZJLE0T/678xmLRAoqaYkgLOqKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 224/267] pmdomain: ti-sci: Fix duplicate PD referrals
-Date: Wed, 19 Jun 2024 14:56:15 +0200
-Message-ID: <20240619125614.923407289@linuxfoundation.org>
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Christoph Hellwig <hch@lst.de>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.6 225/267] btrfs: zoned: introduce a zone_info struct in btrfs_load_block_group_zone_info
+Date: Wed, 19 Jun 2024 14:56:16 +0200
+Message-ID: <20240619125614.960962582@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -50,65 +51,242 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Christoph Hellwig <hch@lst.de>
 
-commit 670c900f69645db394efb38934b3344d8804171a upstream.
+commit 15c12fcc50a1b12a747f8b6ec05cdb18c537a4d1 upstream.
 
-When the dts file has multiple referrers to a single PD (e.g.
-simple-framebuffer and dss nodes both point to the DSS power-domain) the
-ti-sci driver will create two power domains, both with the same ID, and
-that will cause problems as one of the power domains will hide the other
-one.
+Add a new zone_info structure to hold per-zone information in
+btrfs_load_block_group_zone_info and prepare for breaking out helpers
+from it.
 
-Fix this checking if a PD with the ID has already been created, and only
-create a PD for new IDs.
-
-Fixes: efa5c01cd7ee ("soc: ti: ti_sci_pm_domains: switch to use multiple genpds instead of one")
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240415-ti-sci-pd-v1-1-a0e56b8ad897@ideasonboard.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/ti/ti_sci_pm_domains.c |   20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ fs/btrfs/zoned.c |   84 ++++++++++++++++++++++++-------------------------------
+ 1 file changed, 37 insertions(+), 47 deletions(-)
 
---- a/drivers/pmdomain/ti/ti_sci_pm_domains.c
-+++ b/drivers/pmdomain/ti/ti_sci_pm_domains.c
-@@ -114,6 +114,18 @@ static const struct of_device_id ti_sci_
- };
- MODULE_DEVICE_TABLE(of, ti_sci_pm_domain_matches);
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -1282,6 +1282,12 @@ out:
+ 	return ret;
+ }
  
-+static bool ti_sci_pm_idx_exists(struct ti_sci_genpd_provider *pd_provider, u32 idx)
-+{
-+	struct ti_sci_pm_domain *pd;
++struct zone_info {
++	u64 physical;
++	u64 capacity;
++	u64 alloc_offset;
++};
 +
-+	list_for_each_entry(pd, &pd_provider->pd_list, node) {
-+		if (pd->idx == idx)
-+			return true;
-+	}
-+
-+	return false;
-+}
-+
- static int ti_sci_pm_domain_probe(struct platform_device *pdev)
+ int btrfs_load_block_group_zone_info(struct btrfs_block_group *cache, bool new)
  {
- 	struct device *dev = &pdev->dev;
-@@ -149,8 +161,14 @@ static int ti_sci_pm_domain_probe(struct
- 				break;
+ 	struct btrfs_fs_info *fs_info = cache->fs_info;
+@@ -1291,12 +1297,10 @@ int btrfs_load_block_group_zone_info(str
+ 	struct btrfs_device *device;
+ 	u64 logical = cache->start;
+ 	u64 length = cache->length;
++	struct zone_info *zone_info = NULL;
+ 	int ret;
+ 	int i;
+ 	unsigned int nofs_flag;
+-	u64 *alloc_offsets = NULL;
+-	u64 *caps = NULL;
+-	u64 *physical = NULL;
+ 	unsigned long *active = NULL;
+ 	u64 last_alloc = 0;
+ 	u32 num_sequential = 0, num_conventional = 0;
+@@ -1328,20 +1332,8 @@ int btrfs_load_block_group_zone_info(str
+ 		goto out;
+ 	}
  
- 			if (args.args_count >= 1 && args.np == dev->of_node) {
--				if (args.args[0] > max_id)
-+				if (args.args[0] > max_id) {
- 					max_id = args.args[0];
-+				} else {
-+					if (ti_sci_pm_idx_exists(pd_provider, args.args[0])) {
-+						index++;
-+						continue;
-+					}
-+				}
+-	alloc_offsets = kcalloc(map->num_stripes, sizeof(*alloc_offsets), GFP_NOFS);
+-	if (!alloc_offsets) {
+-		ret = -ENOMEM;
+-		goto out;
+-	}
+-
+-	caps = kcalloc(map->num_stripes, sizeof(*caps), GFP_NOFS);
+-	if (!caps) {
+-		ret = -ENOMEM;
+-		goto out;
+-	}
+-
+-	physical = kcalloc(map->num_stripes, sizeof(*physical), GFP_NOFS);
+-	if (!physical) {
++	zone_info = kcalloc(map->num_stripes, sizeof(*zone_info), GFP_NOFS);
++	if (!zone_info) {
+ 		ret = -ENOMEM;
+ 		goto out;
+ 	}
+@@ -1353,20 +1345,21 @@ int btrfs_load_block_group_zone_info(str
+ 	}
  
- 				pd = devm_kzalloc(dev, sizeof(*pd), GFP_KERNEL);
- 				if (!pd)
+ 	for (i = 0; i < map->num_stripes; i++) {
++		struct zone_info *info = &zone_info[i];
+ 		bool is_sequential;
+ 		struct blk_zone zone;
+ 		struct btrfs_dev_replace *dev_replace = &fs_info->dev_replace;
+ 		int dev_replace_is_ongoing = 0;
+ 
+ 		device = map->stripes[i].dev;
+-		physical[i] = map->stripes[i].physical;
++		info->physical = map->stripes[i].physical;
+ 
+ 		if (device->bdev == NULL) {
+-			alloc_offsets[i] = WP_MISSING_DEV;
++			info->alloc_offset = WP_MISSING_DEV;
+ 			continue;
+ 		}
+ 
+-		is_sequential = btrfs_dev_is_sequential(device, physical[i]);
++		is_sequential = btrfs_dev_is_sequential(device, info->physical);
+ 		if (is_sequential)
+ 			num_sequential++;
+ 		else
+@@ -1380,7 +1373,7 @@ int btrfs_load_block_group_zone_info(str
+ 			__set_bit(i, active);
+ 
+ 		if (!is_sequential) {
+-			alloc_offsets[i] = WP_CONVENTIONAL;
++			info->alloc_offset = WP_CONVENTIONAL;
+ 			continue;
+ 		}
+ 
+@@ -1388,25 +1381,25 @@ int btrfs_load_block_group_zone_info(str
+ 		 * This zone will be used for allocation, so mark this zone
+ 		 * non-empty.
+ 		 */
+-		btrfs_dev_clear_zone_empty(device, physical[i]);
++		btrfs_dev_clear_zone_empty(device, info->physical);
+ 
+ 		down_read(&dev_replace->rwsem);
+ 		dev_replace_is_ongoing = btrfs_dev_replace_is_ongoing(dev_replace);
+ 		if (dev_replace_is_ongoing && dev_replace->tgtdev != NULL)
+-			btrfs_dev_clear_zone_empty(dev_replace->tgtdev, physical[i]);
++			btrfs_dev_clear_zone_empty(dev_replace->tgtdev, info->physical);
+ 		up_read(&dev_replace->rwsem);
+ 
+ 		/*
+ 		 * The group is mapped to a sequential zone. Get the zone write
+ 		 * pointer to determine the allocation offset within the zone.
+ 		 */
+-		WARN_ON(!IS_ALIGNED(physical[i], fs_info->zone_size));
++		WARN_ON(!IS_ALIGNED(info->physical, fs_info->zone_size));
+ 		nofs_flag = memalloc_nofs_save();
+-		ret = btrfs_get_dev_zone(device, physical[i], &zone);
++		ret = btrfs_get_dev_zone(device, info->physical, &zone);
+ 		memalloc_nofs_restore(nofs_flag);
+ 		if (ret == -EIO || ret == -EOPNOTSUPP) {
+ 			ret = 0;
+-			alloc_offsets[i] = WP_MISSING_DEV;
++			info->alloc_offset = WP_MISSING_DEV;
+ 			continue;
+ 		} else if (ret) {
+ 			goto out;
+@@ -1421,27 +1414,26 @@ int btrfs_load_block_group_zone_info(str
+ 			goto out;
+ 		}
+ 
+-		caps[i] = (zone.capacity << SECTOR_SHIFT);
++		info->capacity = (zone.capacity << SECTOR_SHIFT);
+ 
+ 		switch (zone.cond) {
+ 		case BLK_ZONE_COND_OFFLINE:
+ 		case BLK_ZONE_COND_READONLY:
+ 			btrfs_err(fs_info,
+ 		"zoned: offline/readonly zone %llu on device %s (devid %llu)",
+-				  physical[i] >> device->zone_info->zone_size_shift,
++				  info->physical >> device->zone_info->zone_size_shift,
+ 				  rcu_str_deref(device->name), device->devid);
+-			alloc_offsets[i] = WP_MISSING_DEV;
++			info->alloc_offset = WP_MISSING_DEV;
+ 			break;
+ 		case BLK_ZONE_COND_EMPTY:
+-			alloc_offsets[i] = 0;
++			info->alloc_offset = 0;
+ 			break;
+ 		case BLK_ZONE_COND_FULL:
+-			alloc_offsets[i] = caps[i];
++			info->alloc_offset = info->capacity;
+ 			break;
+ 		default:
+ 			/* Partially used zone */
+-			alloc_offsets[i] =
+-					((zone.wp - zone.start) << SECTOR_SHIFT);
++			info->alloc_offset = ((zone.wp - zone.start) << SECTOR_SHIFT);
+ 			__set_bit(i, active);
+ 			break;
+ 		}
+@@ -1468,15 +1460,15 @@ int btrfs_load_block_group_zone_info(str
+ 
+ 	switch (map->type & BTRFS_BLOCK_GROUP_PROFILE_MASK) {
+ 	case 0: /* single */
+-		if (alloc_offsets[0] == WP_MISSING_DEV) {
++		if (zone_info[0].alloc_offset == WP_MISSING_DEV) {
+ 			btrfs_err(fs_info,
+ 			"zoned: cannot recover write pointer for zone %llu",
+-				physical[0]);
++				zone_info[0].physical);
+ 			ret = -EIO;
+ 			goto out;
+ 		}
+-		cache->alloc_offset = alloc_offsets[0];
+-		cache->zone_capacity = caps[0];
++		cache->alloc_offset = zone_info[0].alloc_offset;
++		cache->zone_capacity = zone_info[0].capacity;
+ 		if (test_bit(0, active))
+ 			set_bit(BLOCK_GROUP_FLAG_ZONE_IS_ACTIVE, &cache->runtime_flags);
+ 		break;
+@@ -1486,21 +1478,21 @@ int btrfs_load_block_group_zone_info(str
+ 			ret = -EINVAL;
+ 			goto out;
+ 		}
+-		if (alloc_offsets[0] == WP_MISSING_DEV) {
++		if (zone_info[0].alloc_offset == WP_MISSING_DEV) {
+ 			btrfs_err(fs_info,
+ 			"zoned: cannot recover write pointer for zone %llu",
+-				physical[0]);
++				zone_info[0].physical);
+ 			ret = -EIO;
+ 			goto out;
+ 		}
+-		if (alloc_offsets[1] == WP_MISSING_DEV) {
++		if (zone_info[1].alloc_offset == WP_MISSING_DEV) {
+ 			btrfs_err(fs_info,
+ 			"zoned: cannot recover write pointer for zone %llu",
+-				physical[1]);
++				zone_info[1].physical);
+ 			ret = -EIO;
+ 			goto out;
+ 		}
+-		if (alloc_offsets[0] != alloc_offsets[1]) {
++		if (zone_info[0].alloc_offset != zone_info[1].alloc_offset) {
+ 			btrfs_err(fs_info,
+ 			"zoned: write pointer offset mismatch of zones in DUP profile");
+ 			ret = -EIO;
+@@ -1516,8 +1508,8 @@ int btrfs_load_block_group_zone_info(str
+ 				set_bit(BLOCK_GROUP_FLAG_ZONE_IS_ACTIVE,
+ 					&cache->runtime_flags);
+ 		}
+-		cache->alloc_offset = alloc_offsets[0];
+-		cache->zone_capacity = min(caps[0], caps[1]);
++		cache->alloc_offset = zone_info[0].alloc_offset;
++		cache->zone_capacity = min(zone_info[0].capacity, zone_info[1].capacity);
+ 		break;
+ 	case BTRFS_BLOCK_GROUP_RAID1:
+ 	case BTRFS_BLOCK_GROUP_RAID0:
+@@ -1570,9 +1562,7 @@ out:
+ 		cache->physical_map = NULL;
+ 	}
+ 	bitmap_free(active);
+-	kfree(physical);
+-	kfree(caps);
+-	kfree(alloc_offsets);
++	kfree(zone_info);
+ 	free_extent_map(em);
+ 
+ 	return ret;
 
 
