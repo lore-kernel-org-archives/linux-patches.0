@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1AD9143C4A;
-	Wed, 19 Jun 2024 13:02:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC241143C4A;
+	Wed, 19 Jun 2024 13:02:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802145; cv=none; b=aa0MNi3uByzVEwFuV3Dd5HS0tnLIZ+m5+mJRDbGLOi60uqYbisXaiSXky4xCtiGdNJd3x8v4bUGbnx9tMSnG9+YMKZfvGNI1y4tr1QixP23tTdfuaQFAjxCWEfHiUMwXfy5quNrzWd8V20pNT29SlXGxcsass/H0F2SUP7Y/sWI=
+	t=1718802148; cv=none; b=rEyF0TdyWd/BIa0LWQ7Vk/JG4xCCscAYBiZOKQWdpC4om9yOuVYkDaHTktWxDcQ4WimCNgpeVoFjzYW5i+eYwg0aLzT0hgjg2F/eSqK5jp6/+RNmgKKtBySh66utkma8Yap4mILcOsTan2FPMy+Nbdb3/8o+ME45g+SfJfCiN70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802145; c=relaxed/simple;
-	bh=O+gUPzujCZZ8cj+E9fQuIDuV0I6okX+CG+N9NJcnZR4=;
+	s=arc-20240116; t=1718802148; c=relaxed/simple;
+	bh=bef20dV7p+bi8Ha09C6K/2F7WH5ehZcc110lXriO1fw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=irj5VzU+xVQLcqLO0lI/DsUSF7jAIMf3D5YM6LDtID2GuCvFaV4Qy5/qt/GwFR14C03wUwCBahLImhDn6jWc5nY2gmrmf3xmxLlsUj5WuDI0VWnkiBrjZw5WIK1dg2+iaEnLnvj4e5JHXSIu9qirsK7EPWLqU3YqWKVlLa02Dqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gzvG5gR9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aeL6GEtXIuuR5Jp7Xd39KL9L2cdx7G8aEcAsZbKPlj1ADWufPt3niG3TOPFp28Qxx5/xjpA30COi5uiBg5xS/8Rm4zies0sgzA0vb79NYIP7cci8PFbneNxRmZ3XJSdu/YUPl6SX7a3gV09MKRfQ0fsssGsthnDG2XPRZ3IjfMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q6PATkGp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gzvG5gR9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54E0EC2BBFC;
-	Wed, 19 Jun 2024 13:02:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q6PATkGp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 511B0C32786;
+	Wed, 19 Jun 2024 13:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802145;
-	bh=O+gUPzujCZZ8cj+E9fQuIDuV0I6okX+CG+N9NJcnZR4=;
+	s=korg; t=1718802148;
+	bh=bef20dV7p+bi8Ha09C6K/2F7WH5ehZcc110lXriO1fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gzvG5gR9UFvvXOkdgfl2mWZjbc8X7URCa4JoVp9lwBPvFc3mz9ZrX10fOLcQyfjKr
-	 OSxSM9HC+bPu5QwXKltfFR5mFXy8rCRecUR8zUNtfAYeoY3ydKOBtkJMTc+tM67OkU
-	 pngyYtx0leTrOyzGdagRiOe8yisq2zdTTE2Z8cNI=
+	b=Q6PATkGptaZ83gQHB+jz+RA28CXJwkLUSAR5vfDeMF2K1vfjneVR4ZBfQQ18AZ+yH
+	 eY5wyvi6r7JYrtQ9KHqPurqJR28Uv+o4p3AsVDGd07AZ54qbQhpeXwdeX4Cqxi69S3
+	 roXh2+n6fyDCx/dse88oVkWgnBYch1W5+tz20AjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shailend Chand <shailend@google.com>,
-	Ziwei Xiao <ziweixiao@google.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
-	Praveen Kaligineedi <pkaligineedi@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 098/267] gve: Clear napi->skb before dev_kfree_skb_any()
-Date: Wed, 19 Jun 2024 14:54:09 +0200
-Message-ID: <20240619125610.115079520@linuxfoundation.org>
+	Kewen Lin <linkw@gcc.gnu.org>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 6.6 099/267] powerpc/uaccess: Fix build errors seen with GCC 13/14
+Date: Wed, 19 Jun 2024 14:54:10 +0200
+Message-ID: <20240619125610.152846619@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -53,64 +50,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ziwei Xiao <ziweixiao@google.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-commit 6f4d93b78ade0a4c2cafd587f7b429ce95abb02e upstream.
+commit 2d43cc701b96f910f50915ac4c2a0cae5deb734c upstream.
 
-gve_rx_free_skb incorrectly leaves napi->skb referencing an skb after it
-is freed with dev_kfree_skb_any(). This can result in a subsequent call
-to napi_get_frags returning a dangling pointer.
+Building ppc64le_defconfig with GCC 14 fails with assembler errors:
 
-Fix this by clearing napi->skb before the skb is freed.
+    CC      fs/readdir.o
+  /tmp/ccdQn0mD.s: Assembler messages:
+  /tmp/ccdQn0mD.s:212: Error: operand out of domain (18 is not a multiple of 4)
+  /tmp/ccdQn0mD.s:226: Error: operand out of domain (18 is not a multiple of 4)
+  ... [6 lines]
+  /tmp/ccdQn0mD.s:1699: Error: operand out of domain (18 is not a multiple of 4)
 
-Fixes: 9b8dd5e5ea48 ("gve: DQO: Add RX path")
-Cc: stable@vger.kernel.org
-Reported-by: Shailend Chand <shailend@google.com>
-Signed-off-by: Ziwei Xiao <ziweixiao@google.com>
-Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Reviewed-by: Shailend Chand <shailend@google.com>
-Reviewed-by: Praveen Kaligineedi <pkaligineedi@google.com>
-Link: https://lore.kernel.org/r/20240612001654.923887-1-ziweixiao@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+A snippet of the asm shows:
+
+  # ../fs/readdir.c:210:         unsafe_copy_dirent_name(dirent->d_name, name, namlen, efault_end);
+         ld 9,0(29)       # MEM[(u64 *)name_38(D) + _88 * 1], MEM[(u64 *)name_38(D) + _88 * 1]
+  # 210 "../fs/readdir.c" 1
+         1:      std 9,18(8)     # put_user       # *__pus_addr_52, MEM[(u64 *)name_38(D) + _88 * 1]
+
+The 'std' instruction requires a 4-byte aligned displacement because
+it is a DS-form instruction, and as the assembler says, 18 is not a
+multiple of 4.
+
+A similar error is seen with GCC 13 and CONFIG_UBSAN_SIGNED_WRAP=y.
+
+The fix is to change the constraint on the memory operand to put_user(),
+from "m" which is a general memory reference to "YZ".
+
+The "Z" constraint is documented in the GCC manual PowerPC machine
+constraints, and specifies a "memory operand accessed with indexed or
+indirect addressing". "Y" is not documented in the manual but specifies
+a "memory operand for a DS-form instruction". Using both allows the
+compiler to generate a DS-form "std" or X-form "stdx" as appropriate.
+
+The change has to be conditional on CONFIG_PPC_KERNEL_PREFIXED because
+the "Y" constraint does not guarantee 4-byte alignment when prefixed
+instructions are enabled.
+
+Unfortunately clang doesn't support the "Y" constraint so that has to be
+behind an ifdef.
+
+Although the build error is only seen with GCC 13/14, that appears
+to just be luck. The constraint has been incorrect since it was first
+added.
+
+Fixes: c20beffeec3c ("powerpc/uaccess: Use flexible addressing with __put_user()/__get_user()")
+Cc: stable@vger.kernel.org # v5.10+
+Suggested-by: Kewen Lin <linkw@gcc.gnu.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240529123029.146953-1-mpe@ellerman.id.au
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/google/gve/gve_rx_dqo.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/powerpc/include/asm/uaccess.h |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/drivers/net/ethernet/google/gve/gve_rx_dqo.c
-+++ b/drivers/net/ethernet/google/gve/gve_rx_dqo.c
-@@ -506,11 +506,13 @@ static void gve_rx_skb_hash(struct sk_bu
- 	skb_set_hash(skb, le32_to_cpu(compl_desc->hash), hash_type);
- }
+--- a/arch/powerpc/include/asm/uaccess.h
++++ b/arch/powerpc/include/asm/uaccess.h
+@@ -92,9 +92,25 @@ __pu_failed:							\
+ 		: label)
+ #endif
  
--static void gve_rx_free_skb(struct gve_rx_ring *rx)
-+static void gve_rx_free_skb(struct napi_struct *napi, struct gve_rx_ring *rx)
- {
- 	if (!rx->ctx.skb_head)
- 		return;
- 
-+	if (rx->ctx.skb_head == napi->skb)
-+		napi->skb = NULL;
- 	dev_kfree_skb_any(rx->ctx.skb_head);
- 	rx->ctx.skb_head = NULL;
- 	rx->ctx.skb_tail = NULL;
-@@ -783,7 +785,7 @@ int gve_rx_poll_dqo(struct gve_notify_bl
- 
- 		err = gve_rx_dqo(napi, rx, compl_desc, rx->q_num);
- 		if (err < 0) {
--			gve_rx_free_skb(rx);
-+			gve_rx_free_skb(napi, rx);
- 			u64_stats_update_begin(&rx->statss);
- 			if (err == -ENOMEM)
- 				rx->rx_skb_alloc_fail++;
-@@ -826,7 +828,7 @@ int gve_rx_poll_dqo(struct gve_notify_bl
- 
- 		/* gve_rx_complete_skb() will consume skb if successful */
- 		if (gve_rx_complete_skb(rx, napi, compl_desc, feat) != 0) {
--			gve_rx_free_skb(rx);
-+			gve_rx_free_skb(napi, rx);
- 			u64_stats_update_begin(&rx->statss);
- 			rx->rx_desc_err_dropped_pkt++;
- 			u64_stats_update_end(&rx->statss);
++#ifdef CONFIG_CC_IS_CLANG
++#define DS_FORM_CONSTRAINT "Z<>"
++#else
++#define DS_FORM_CONSTRAINT "YZ<>"
++#endif
++
+ #ifdef __powerpc64__
++#ifdef CONFIG_PPC_KERNEL_PREFIXED
+ #define __put_user_asm2_goto(x, ptr, label)			\
+ 	__put_user_asm_goto(x, ptr, label, "std")
++#else
++#define __put_user_asm2_goto(x, addr, label)			\
++	asm goto ("1: std%U1%X1 %0,%1	# put_user\n"		\
++		EX_TABLE(1b, %l2)				\
++		:						\
++		: "r" (x), DS_FORM_CONSTRAINT (*addr)		\
++		:						\
++		: label)
++#endif // CONFIG_PPC_KERNEL_PREFIXED
+ #else /* __powerpc64__ */
+ #define __put_user_asm2_goto(x, addr, label)			\
+ 	asm goto(					\
 
 
