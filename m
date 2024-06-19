@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2428E14C5B8;
-	Wed, 19 Jun 2024 13:29:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E6314B96F;
+	Wed, 19 Jun 2024 13:29:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803784; cv=none; b=rqGL4XbdSId1CM9V8o0gCJC6RMnBpCdLCRPK8TZBrWoWGMnsM+iFe34AGpKDFRr3x6XDTXCsxAhstupAu9zDU3Y5h+rWI6SPgQZaV9Dc51/DgpogiF5CSICKa3VWx1Olejivpamrm+LP1C6gwebT3JtwRbYuKO+P53cV9nWgA/A=
+	t=1718803787; cv=none; b=BuD4/wI+txd1kisdsFZbBVUFQLodL/wVtx+5L7UVueBYvwx8p2NQKDT9LNKtxeXEnuFar0c4nIsbaxNUpRWj89qIILkFLLP7S4n2xw94YCFSWQupnjfyZL/IkNbItvEPgnPCZnKnRPS242mBxgc+E0ixBYcQKhTAlKukDwDypRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803784; c=relaxed/simple;
-	bh=2CmFFGBjg/H1c+uh1QEumLXxJw/Yta8yheFec1Eecxw=;
+	s=arc-20240116; t=1718803787; c=relaxed/simple;
+	bh=dH0kR/iFLSON3irqr8qXIMFYOerx3atf6kxomtx0nPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tFw7/EyrZeeiB8FA1KU8qotIOImbhaUDe2To85VUOHSnazJlXHXb+zg0FNahAwaraDL5a8vhpj/81gLbLTCDO7NWFQUzUp9g2Pmgsm7e75tua4B9vJlQA2iMaf8jCrgVWxbvheq0XypMocsMsDRs0IBku2KtSIn39kwivC/mfV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eoJGGs2N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jqrDEJ6m16VNK1CMYDYxRIoQzmFWzkuammllratkzZdqliA1AzhKm1LdqpsaCDuGng99avjy18GH7mjksdhv20MVdJtOJNfy5dtDSWDJGvaXTOYbNbVastSUR4l5khGGMx+EOucdK+BN3gDIzwwWLm5Djl4NQ9PHaOaGuH2jT1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efEXfnjB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eoJGGs2N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B569C2BBFC;
-	Wed, 19 Jun 2024 13:29:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efEXfnjB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B700C2BBFC;
+	Wed, 19 Jun 2024 13:29:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803784;
-	bh=2CmFFGBjg/H1c+uh1QEumLXxJw/Yta8yheFec1Eecxw=;
+	s=korg; t=1718803786;
+	bh=dH0kR/iFLSON3irqr8qXIMFYOerx3atf6kxomtx0nPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eoJGGs2NLef5ky00Yms2bZ0p/rM2tz6ZnyiWMChTFa115MH6LVcrPCPtbAzhzhlzC
-	 dRZTysS3UmrYQaXS4xBPRbhOrpT8bQml8gda2DfS7lnKBf180wfHwr8nlWnCNKHQ2O
-	 qXgc66TJgImvdTW4Tw4NK6hSB6l4Q2vUy/lpihWA=
+	b=efEXfnjBBA1B0+VcpHcahQKkje+2/mc6iR7nCWi9poqoX1YRrf06L9uhjaT9yTvL6
+	 dDwVDmjBH3VzgpRdgSt6+/+7/I0QzTy74O5MAzrVPd7w6HgkiueqpJEbk16fZReStj
+	 qgi3s9qRBeXTypTkM9WoZ4TpZLNsci15cf2pA6t4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hamish Martin <hamish.martin@alliedtelesis.co.nz>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Michal Hocko <mhocko@suse.com>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Baoquan He <bhe@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 071/217] i2c: acpi: Unbind mux adapters before delete
-Date: Wed, 19 Jun 2024 14:55:14 +0200
-Message-ID: <20240619125559.423329164@linuxfoundation.org>
+Subject: [PATCH 6.1 072/217] mm, vmalloc: fix high order __GFP_NOFAIL allocations
+Date: Wed, 19 Jun 2024 14:55:15 +0200
+Message-ID: <20240619125559.462342381@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -53,156 +57,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hamish Martin <hamish.martin@alliedtelesis.co.nz>
+From: Michal Hocko <mhocko@suse.com>
 
-[ Upstream commit 3f858bbf04dbac934ac279aaee05d49eb9910051 ]
+[ Upstream commit e9c3cda4d86e56bf7fe403729f38c4f0f65d3860 ]
 
-There is an issue with ACPI overlay table removal specifically related
-to I2C multiplexers.
+Gao Xiang has reported that the page allocator complains about high order
+__GFP_NOFAIL request coming from the vmalloc core:
 
-Consider an ACPI SSDT Overlay that defines a PCA9548 I2C mux on an
-existing I2C bus. When this table is loaded we see the creation of a
-device for the overall PCA9548 chip and 8 further devices - one
-i2c_adapter each for the mux channels. These are all bound to their
-ACPI equivalents via an eventual invocation of acpi_bind_one().
+ __alloc_pages+0x1cb/0x5b0 mm/page_alloc.c:5549
+ alloc_pages+0x1aa/0x270 mm/mempolicy.c:2286
+ vm_area_alloc_pages mm/vmalloc.c:2989 [inline]
+ __vmalloc_area_node mm/vmalloc.c:3057 [inline]
+ __vmalloc_node_range+0x978/0x13c0 mm/vmalloc.c:3227
+ kvmalloc_node+0x156/0x1a0 mm/util.c:606
+ kvmalloc include/linux/slab.h:737 [inline]
+ kvmalloc_array include/linux/slab.h:755 [inline]
+ kvcalloc include/linux/slab.h:760 [inline]
 
-When we unload the SSDT overlay we run into the problem. The ACPI
-devices are deleted as normal via acpi_device_del_work_fn() and the
-acpi_device_del_list.
+it seems that I have completely missed high order allocation backing
+vmalloc areas case when implementing __GFP_NOFAIL support.  This means
+that [k]vmalloc at al.  can allocate higher order allocations with
+__GFP_NOFAIL which can trigger OOM killer for non-costly orders easily or
+cause a lot of reclaim/compaction activity if those requests cannot be
+satisfied.
 
-However, the following warning and stack trace is output as the
-deletion does not go smoothly:
-------------[ cut here ]------------
-kernfs: can not remove 'physical_node', no directory
-WARNING: CPU: 1 PID: 11 at fs/kernfs/dir.c:1674 kernfs_remove_by_name_ns+0xb9/0xc0
-Modules linked in:
-CPU: 1 PID: 11 Comm: kworker/u128:0 Not tainted 6.8.0-rc6+ #1
-Hardware name: congatec AG conga-B7E3/conga-B7E3, BIOS 5.13 05/16/2023
-Workqueue: kacpi_hotplug acpi_device_del_work_fn
-RIP: 0010:kernfs_remove_by_name_ns+0xb9/0xc0
-Code: e4 00 48 89 ef e8 07 71 db ff 5b b8 fe ff ff ff 5d 41 5c 41 5d e9 a7 55 e4 00 0f 0b eb a6 48 c7 c7 f0 38 0d 9d e8 97 0a d5 ff <0f> 0b eb dc 0f 1f 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90
-RSP: 0018:ffff9f864008fb28 EFLAGS: 00010286
-RAX: 0000000000000000 RBX: ffff8ef90a8d4940 RCX: 0000000000000000
-RDX: ffff8f000e267d10 RSI: ffff8f000e25c780 RDI: ffff8f000e25c780
-RBP: ffff8ef9186f9870 R08: 0000000000013ffb R09: 00000000ffffbfff
-R10: 00000000ffffbfff R11: ffff8f000e0a0000 R12: ffff9f864008fb50
-R13: ffff8ef90c93dd60 R14: ffff8ef9010d0958 R15: ffff8ef9186f98c8
-FS:  0000000000000000(0000) GS:ffff8f000e240000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f48f5253a08 CR3: 00000003cb82e000 CR4: 00000000003506f0
-Call Trace:
- <TASK>
- ? kernfs_remove_by_name_ns+0xb9/0xc0
- ? __warn+0x7c/0x130
- ? kernfs_remove_by_name_ns+0xb9/0xc0
- ? report_bug+0x171/0x1a0
- ? handle_bug+0x3c/0x70
- ? exc_invalid_op+0x17/0x70
- ? asm_exc_invalid_op+0x1a/0x20
- ? kernfs_remove_by_name_ns+0xb9/0xc0
- ? kernfs_remove_by_name_ns+0xb9/0xc0
- acpi_unbind_one+0x108/0x180
- device_del+0x18b/0x490
- ? srso_return_thunk+0x5/0x5f
- ? srso_return_thunk+0x5/0x5f
- device_unregister+0xd/0x30
- i2c_del_adapter.part.0+0x1bf/0x250
- i2c_mux_del_adapters+0xa1/0xe0
- i2c_device_remove+0x1e/0x80
- device_release_driver_internal+0x19a/0x200
- bus_remove_device+0xbf/0x100
- device_del+0x157/0x490
- ? __pfx_device_match_fwnode+0x10/0x10
- ? srso_return_thunk+0x5/0x5f
- device_unregister+0xd/0x30
- i2c_acpi_notify+0x10f/0x140
- notifier_call_chain+0x58/0xd0
- blocking_notifier_call_chain+0x3a/0x60
- acpi_device_del_work_fn+0x85/0x1d0
- process_one_work+0x134/0x2f0
- worker_thread+0x2f0/0x410
- ? __pfx_worker_thread+0x10/0x10
- kthread+0xe3/0x110
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x2f/0x50
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1b/0x30
- </TASK>
----[ end trace 0000000000000000 ]---
-...
-repeated 7 more times, 1 for each channel of the mux
-...
+Fix the issue by falling back to zero order allocations for __GFP_NOFAIL
+requests if the high order request fails.
 
-The issue is that the binding of the ACPI devices to their peer I2C
-adapters is not correctly cleaned up. Digging deeper into the issue we
-see that the deletion order is such that the ACPI devices matching the
-mux channel i2c adapters are deleted first during the SSDT overlay
-removal. For each of the channels we see a call to i2c_acpi_notify()
-with ACPI_RECONFIG_DEVICE_REMOVE but, because these devices are not
-actually i2c_clients, nothing is done for them.
-
-Later on, after each of the mux channels has been dealt with, we come
-to delete the i2c_client representing the PCA9548 device. This is the
-call stack we see above, whereby the kernel cleans up the i2c_client
-including destruction of the mux and its channel adapters. At this
-point we do attempt to unbind from the ACPI peers but those peers no
-longer exist and so we hit the kernfs errors.
-
-The fix is to augment i2c_acpi_notify() to handle i2c_adapters. But,
-given that the life cycle of the adapters is linked to the i2c_client,
-instead of deleting the i2c_adapters during the i2c_acpi_notify(), we
-just trigger unbinding of the ACPI device from the adapter device, and
-allow the clean up of the adapter to continue in the way it always has.
-
-Signed-off-by: Hamish Martin <hamish.martin@alliedtelesis.co.nz>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Fixes: 525e6fabeae2 ("i2c / ACPI: add support for ACPI reconfigure notifications")
-Cc: <stable@vger.kernel.org> # v4.8+
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://lkml.kernel.org/r/ZAXynvdNqcI0f6Us@dhcp22.suse.cz
+Fixes: 9376130c390a ("mm/vmalloc: add support for __GFP_NOFAIL")
+Reported-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+  Link: https://lkml.kernel.org/r/20230305053035.1911-1-hsiangkao@linux.alibaba.com
+Signed-off-by: Michal Hocko <mhocko@suse.com>
+Reviewed-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 8e0545c83d67 ("mm/vmalloc: fix vmalloc which may return null if called with __GFP_NOFAIL")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/i2c-core-acpi.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ mm/vmalloc.c | 28 +++++++++++++++++++++++-----
+ 1 file changed, 23 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/i2c/i2c-core-acpi.c b/drivers/i2c/i2c-core-acpi.c
-index d6037a3286690..14ae0cfc325ef 100644
---- a/drivers/i2c/i2c-core-acpi.c
-+++ b/drivers/i2c/i2c-core-acpi.c
-@@ -445,6 +445,11 @@ static struct i2c_client *i2c_acpi_find_client_by_adev(struct acpi_device *adev)
- 	return i2c_find_device_by_fwnode(acpi_fwnode_handle(adev));
- }
- 
-+static struct i2c_adapter *i2c_acpi_find_adapter_by_adev(struct acpi_device *adev)
-+{
-+	return i2c_find_adapter_by_fwnode(acpi_fwnode_handle(adev));
-+}
-+
- static int i2c_acpi_notify(struct notifier_block *nb, unsigned long value,
- 			   void *arg)
+diff --git a/mm/vmalloc.c b/mm/vmalloc.c
+index 67a10a04df041..cab30d9497e6b 100644
+--- a/mm/vmalloc.c
++++ b/mm/vmalloc.c
+@@ -2923,6 +2923,8 @@ vm_area_alloc_pages(gfp_t gfp, int nid,
+ 		unsigned int order, unsigned int nr_pages, struct page **pages)
  {
-@@ -471,11 +476,17 @@ static int i2c_acpi_notify(struct notifier_block *nb, unsigned long value,
- 			break;
+ 	unsigned int nr_allocated = 0;
++	gfp_t alloc_gfp = gfp;
++	bool nofail = false;
+ 	struct page *page;
+ 	int i;
  
- 		client = i2c_acpi_find_client_by_adev(adev);
--		if (!client)
--			break;
-+		if (client) {
-+			i2c_unregister_device(client);
-+			put_device(&client->dev);
-+		}
-+
-+		adapter = i2c_acpi_find_adapter_by_adev(adev);
-+		if (adapter) {
-+			acpi_unbind_one(&adapter->dev);
-+			put_device(&adapter->dev);
-+		}
+@@ -2933,6 +2935,7 @@ vm_area_alloc_pages(gfp_t gfp, int nid,
+ 	 * more permissive.
+ 	 */
+ 	if (!order) {
++		/* bulk allocator doesn't support nofail req. officially */
+ 		gfp_t bulk_gfp = gfp & ~__GFP_NOFAIL;
  
--		i2c_unregister_device(client);
--		put_device(&client->dev);
- 		break;
+ 		while (nr_allocated < nr_pages) {
+@@ -2971,20 +2974,35 @@ vm_area_alloc_pages(gfp_t gfp, int nid,
+ 			if (nr != nr_pages_request)
+ 				break;
+ 		}
++	} else if (gfp & __GFP_NOFAIL) {
++		/*
++		 * Higher order nofail allocations are really expensive and
++		 * potentially dangerous (pre-mature OOM, disruptive reclaim
++		 * and compaction etc.
++		 */
++		alloc_gfp &= ~__GFP_NOFAIL;
++		nofail = true;
  	}
  
+ 	/* High-order pages or fallback path if "bulk" fails. */
+-
+ 	while (nr_allocated < nr_pages) {
+ 		if (fatal_signal_pending(current))
+ 			break;
+ 
+ 		if (nid == NUMA_NO_NODE)
+-			page = alloc_pages(gfp, order);
++			page = alloc_pages(alloc_gfp, order);
+ 		else
+-			page = alloc_pages_node(nid, gfp, order);
+-		if (unlikely(!page))
+-			break;
++			page = alloc_pages_node(nid, alloc_gfp, order);
++		if (unlikely(!page)) {
++			if (!nofail)
++				break;
++
++			/* fall back to the zero order allocations */
++			alloc_gfp |= __GFP_NOFAIL;
++			order = 0;
++			continue;
++		}
++
+ 		/*
+ 		 * Higher order allocations must be able to be treated as
+ 		 * indepdenent small pages by callers (as they can with
 -- 
 2.43.0
 
