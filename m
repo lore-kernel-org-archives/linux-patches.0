@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C4F14A615;
-	Wed, 19 Jun 2024 13:21:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CCC614B95F;
+	Wed, 19 Jun 2024 13:21:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803287; cv=none; b=XTiQkkDvdHwMfkVQ39gVmpXWQhy4I5F1C21kjTwqhHwYoxDLkHT9d8QwZn8UI+DiPZXauFRDVorIC8qlqwDcYaHO2D9M9PHn2ElrA5PeCZr3IsYIS/CONyTLL+TNWsjM7IjUf3IA6avgpvl+kAuZC0Ef5Wt9zac52P0Fe2TReGs=
+	t=1718803290; cv=none; b=FE9qaHAMhfZ4VC95hntxAhsLTf4/9NpazkWJCX2ZGNnK7EAV4whsQQfS76mKsjPzaYjYEBOFkPtTN72XKLjyOiQmnD6TpptFB5XK4ITSE+L0SDxdABrTc7FgsgHdsgJQ0Uc1e5sBauilKOeKWwFEMAIHjpit2HyM123FvUPeDaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803287; c=relaxed/simple;
-	bh=RqHK9fXWnqippMKr6PKp/TfrktAHaWvVM7gY0EKWcOA=;
+	s=arc-20240116; t=1718803290; c=relaxed/simple;
+	bh=bKkFbpnDkg+/q1y08CtDs0GNDmjWqmBaz4ybv6TKlU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EqHBwVR1Gof5ONOH8z2D4kc7XgCb8+0j0sG/ODI6Tetal0NvX/qblt5HfiM9B1A7R0vWa7j2HiVtPnEcrf8IOVG4V1PBvuK/TrSLH6JI3pksYEL8/Tj0FvM3o+V5kscZyPG5QSYjSl36ni9F95lwBIaHP+BQFLXdOFUvMoAoma0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a66qr5K9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XxPFeWlMLQoAYRX9K1CzJtSDL712veYL/iALctJR4YUED9zc6+rbhQStsFhvcwyETWU8CWK5FQkeu+SZiOxA2ah7l8FYr1UzGEmaVTmyBJLDdHdaLWPBOA5gl1QfyqembBj7J93lBGUbOA21d8iy3V8nTxn+08R/V+A0dqAXFEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dke46IyT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a66qr5K9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFB7AC2BBFC;
-	Wed, 19 Jun 2024 13:21:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dke46IyT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1253C2BBFC;
+	Wed, 19 Jun 2024 13:21:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803287;
-	bh=RqHK9fXWnqippMKr6PKp/TfrktAHaWvVM7gY0EKWcOA=;
+	s=korg; t=1718803290;
+	bh=bKkFbpnDkg+/q1y08CtDs0GNDmjWqmBaz4ybv6TKlU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a66qr5K9D3hhH7uy2rhb+H/KFZkn35nvQKA50F5/3ZH8ILImx55gtJnPKhMesOgQy
-	 grjPYqTcElpYOIX2i9j77HXfz6LbY3lsc4INX96Tzj3be/mPzkSDFA7HA2YOMJpXfz
-	 2+6PeBFtISGvbQIrGaRNyq2TY/zNTTypZUqBgunQ=
+	b=Dke46IyTnqpKTqKOZdLihP8tDqYb3xmp+eOOXPhxYaWB3sLBXo2qyDt2s7gFbGxS1
+	 dv7ekUsplDwJZQ/O1lvJun+oAkookLlmUJ6VZ6VR6uFNE9MFbcvSwkRF6nl8+ZKosA
+	 BJPrPRB1QPP2Omux8of1Vkiq+qysMmvz4JmPnjm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Wagner <dwagner@suse.de>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 175/281] nvmet-passthru: propagate status from id override functions
-Date: Wed, 19 Jun 2024 14:55:34 +0200
-Message-ID: <20240619125616.569796903@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	Christoph Paasch <cpaasch@apple.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.9 210/281] mptcp: ensure snd_una is properly initialized on connect
+Date: Wed, 19 Jun 2024 14:56:09 +0200
+Message-ID: <20240619125618.040628284@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -53,46 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Wagner <dwagner@suse.de>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit d76584e53f4244dbc154bec447c3852600acc914 ]
+commit 8031b58c3a9b1db3ef68b3bd749fbee2e1e1aaa3 upstream.
 
-The id override functions return a status which is not propagated to the
-caller.
+This is strictly related to commit fb7a0d334894 ("mptcp: ensure snd_nxt
+is properly initialized on connect"). It turns out that syzkaller can
+trigger the retransmit after fallback and before processing any other
+incoming packet - so that snd_una is still left uninitialized.
 
-Fixes: c1fef73f793b ("nvmet: add passthru code to process commands")
-Signed-off-by: Daniel Wagner <dwagner@suse.de>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Address the issue explicitly initializing snd_una together with snd_nxt
+and write_seq.
+
+Suggested-by: Mat Martineau <martineau@kernel.org>
+Fixes: 8fd738049ac3 ("mptcp: fallback in case of simultaneous connect")
+Cc: stable@vger.kernel.org
+Reported-by: Christoph Paasch <cpaasch@apple.com>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/485
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://lore.kernel.org/r/20240607-upstream-net-20240607-misc-fixes-v1-1-1ab9ddfa3d00@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/passthru.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/mptcp/protocol.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/nvme/target/passthru.c b/drivers/nvme/target/passthru.c
-index bb4a69d538fd1..f003782d4ecff 100644
---- a/drivers/nvme/target/passthru.c
-+++ b/drivers/nvme/target/passthru.c
-@@ -226,13 +226,13 @@ static void nvmet_passthru_execute_cmd_work(struct work_struct *w)
- 	    req->cmd->common.opcode == nvme_admin_identify) {
- 		switch (req->cmd->identify.cns) {
- 		case NVME_ID_CNS_CTRL:
--			nvmet_passthru_override_id_ctrl(req);
-+			status = nvmet_passthru_override_id_ctrl(req);
- 			break;
- 		case NVME_ID_CNS_NS:
--			nvmet_passthru_override_id_ns(req);
-+			status = nvmet_passthru_override_id_ns(req);
- 			break;
- 		case NVME_ID_CNS_NS_DESC_LIST:
--			nvmet_passthru_override_id_descs(req);
-+			status = nvmet_passthru_override_id_descs(req);
- 			break;
- 		}
- 	} else if (status < 0)
--- 
-2.43.0
-
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -3731,6 +3731,7 @@ static int mptcp_connect(struct sock *sk
+ 
+ 	WRITE_ONCE(msk->write_seq, subflow->idsn);
+ 	WRITE_ONCE(msk->snd_nxt, subflow->idsn);
++	WRITE_ONCE(msk->snd_una, subflow->idsn);
+ 	if (likely(!__mptcp_check_fallback(msk)))
+ 		MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_MPCAPABLEACTIVE);
+ 
 
 
