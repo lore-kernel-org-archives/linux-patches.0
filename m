@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242ED14389C;
-	Wed, 19 Jun 2024 13:12:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10DC114389C;
+	Wed, 19 Jun 2024 13:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802730; cv=none; b=KD5EwPvjQ6iOZRNNaloF27IJuLUaitMuMmD58/lGmzACKI+58pPwb2exwRx761knDq/5xu8Ivif2I2GN3Oil3uA1zs1XBMz2W5CDIWzhvnTmSJwe1rsp4SGo7HEUEyG4Xwkm+2LjE3cxMinryV9C2H5CZR37vRLYpZPHdgYakow=
+	t=1718802733; cv=none; b=a5HX/0HFcE95vvCPoWzly8luCPJvSRNFl3KvJlRfdjsq9Vh2tUp67PbpBvDkOnwYsXt++qo5mb/E5vccajm7FRYRbm0eWB6VhzpPIzkLvfMQTsJixONumApMlnZ1A6OHo00/L3IqoeU8w+EU/jN+ABC7U/RuTJbWuPowLPZdpPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802730; c=relaxed/simple;
-	bh=TAZrouNyg7nlwLXd9SQvni8eJZhULbaXQNtODB6S4Ro=;
+	s=arc-20240116; t=1718802733; c=relaxed/simple;
+	bh=IFGAU7tS/8aHm2/QIct5LO+SZhCBxiaPc0uj98/rL0U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c+ovEmXFvnt756mNAqfA+YCcPzUucpXFnMWfMqL3B/GKdDMPKdroqECNTgNXcsbtJ5RKmveMXs75Ap9UfLj6GfSlKWdH4SXF0uqJc0+RxXW4u1AhWSBAT/1d3BgUKwVCtr/kjRKofTnSIM2oGyzlTKvsyPZoV6lOX5cH1j5lc9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o9Nyxy3E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Olct74Gmh2Koeh2Tx37IGuHt77SPs8sHwLV5P4qdbymMaO8v1wNqwk3Fl5qePLVlYlXUeDVt+uSY4Soz/ZPnxtQ3C0+6N5lqVbLshUpRR3n87lFM6kwF1jBdhc98Vlgul2PPMmdTgvkAJSmRwoAleB/5nWcVP1QE9m8weAoI4yI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBmtioY1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o9Nyxy3E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0583C2BBFC;
-	Wed, 19 Jun 2024 13:12:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBmtioY1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D16BC2BBFC;
+	Wed, 19 Jun 2024 13:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802730;
-	bh=TAZrouNyg7nlwLXd9SQvni8eJZhULbaXQNtODB6S4Ro=;
+	s=korg; t=1718802732;
+	bh=IFGAU7tS/8aHm2/QIct5LO+SZhCBxiaPc0uj98/rL0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o9Nyxy3Ebp1seGnmmM244FCTdEtgec+BafkjJICrBJZmxqj8eZgfgXZFEapfxHlmh
-	 U6ZR0FQKApzfkF79/PRqtNvKK0yhx96p+8OVCBpehM6KfhTpSEVnmcXBXyN6SZ9mpa
-	 Wyz+amMvNv2gH40CV4GW9AYy3BeK8uygoHW35zzo=
+	b=NBmtioY1r+uVGSR7aTwGaWpvMdFEas1wpCVH9T+D0MUoZS0NS6rI/8mVsKtVoav4Z
+	 WzBFibVY0xfX/pyAQPIgSfaSHxQvfTeR2CwPE0+JO8AQqtWuyyULvF9ktJ71VxhLj9
+	 HR29+aGarIXEK1z60OfJ/YU0Beh/DWQHAR+CM6ys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristram Ha <tristram.ha@microchip.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	syzbot+1989ee16d94720836244@syzkaller.appspotmail.com,
+	Cong Wang <cong.wang@bytedance.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 027/281] net: phy: micrel: fix KSZ9477 PHY issues after suspend/resume
-Date: Wed, 19 Jun 2024 14:53:06 +0200
-Message-ID: <20240619125610.890656649@linuxfoundation.org>
+Subject: [PATCH 6.9 028/281] bpf: Fix a potential use-after-free in bpf_link_free()
+Date: Wed, 19 Jun 2024 14:53:07 +0200
+Message-ID: <20240619125610.929082173@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -51,123 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristram Ha <tristram.ha@microchip.com>
+From: Cong Wang <cong.wang@bytedance.com>
 
-[ Upstream commit 6149db4997f582e958da675092f21c666e3b67b7 ]
+[ Upstream commit 2884dc7d08d98a89d8d65121524bb7533183a63a ]
 
-When the PHY is powered up after powered down most of the registers are
-reset, so the PHY setup code needs to be done again.  In addition the
-interrupt register will need to be setup again so that link status
-indication works again.
+After commit 1a80dbcb2dba, bpf_link can be freed by
+link->ops->dealloc_deferred, but the code still tests and uses
+link->ops->dealloc afterward, which leads to a use-after-free as
+reported by syzbot. Actually, one of them should be sufficient, so
+just call one of them instead of both. Also add a WARN_ON() in case
+of any problematic implementation.
 
-Fixes: 26dd2974c5b5 ("net: phy: micrel: Move KSZ9477 errata fixes to PHY driver")
-Signed-off-by: Tristram Ha <tristram.ha@microchip.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 1a80dbcb2dba ("bpf: support deferring bpf_link dealloc to after RCU grace period")
+Reported-by: syzbot+1989ee16d94720836244@syzkaller.appspotmail.com
+Signed-off-by: Cong Wang <cong.wang@bytedance.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/bpf/20240602182703.207276-1-xiyou.wangcong@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/micrel.c | 62 ++++++++++++++++++++++++++++++++++++----
- 1 file changed, 56 insertions(+), 6 deletions(-)
+ kernel/bpf/syscall.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
-index 13370439a7cae..c2d99344ade41 100644
---- a/drivers/net/phy/micrel.c
-+++ b/drivers/net/phy/micrel.c
-@@ -1858,7 +1858,7 @@ static const struct ksz9477_errata_write ksz9477_errata_writes[] = {
- 	{0x1c, 0x20, 0xeeee},
- };
- 
--static int ksz9477_config_init(struct phy_device *phydev)
-+static int ksz9477_phy_errata(struct phy_device *phydev)
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index cb61d8880dbe0..52ffe33356418 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -2985,6 +2985,7 @@ static int bpf_obj_get(const union bpf_attr *attr)
+ void bpf_link_init(struct bpf_link *link, enum bpf_link_type type,
+ 		   const struct bpf_link_ops *ops, struct bpf_prog *prog)
  {
- 	int err;
- 	int i;
-@@ -1886,16 +1886,30 @@ static int ksz9477_config_init(struct phy_device *phydev)
- 			return err;
++	WARN_ON(ops->dealloc && ops->dealloc_deferred);
+ 	atomic64_set(&link->refcnt, 1);
+ 	link->type = type;
+ 	link->id = 0;
+@@ -3043,16 +3044,17 @@ static void bpf_link_defer_dealloc_mult_rcu_gp(struct rcu_head *rcu)
+ /* bpf_link_free is guaranteed to be called from process context */
+ static void bpf_link_free(struct bpf_link *link)
+ {
++	const struct bpf_link_ops *ops = link->ops;
+ 	bool sleepable = false;
+ 
+ 	bpf_link_free_id(link->id);
+ 	if (link->prog) {
+ 		sleepable = link->prog->sleepable;
+ 		/* detach BPF program, clean up used resources */
+-		link->ops->release(link);
++		ops->release(link);
+ 		bpf_prog_put(link->prog);
  	}
- 
-+	err = genphy_restart_aneg(phydev);
-+	if (err)
-+		return err;
-+
-+	return err;
-+}
-+
-+static int ksz9477_config_init(struct phy_device *phydev)
-+{
-+	int err;
-+
-+	/* Only KSZ9897 family of switches needs this fix. */
-+	if ((phydev->phy_id & 0xf) == 1) {
-+		err = ksz9477_phy_errata(phydev);
-+		if (err)
-+			return err;
-+	}
-+
- 	/* According to KSZ9477 Errata DS80000754C (Module 4) all EEE modes
- 	 * in this switch shall be regarded as broken.
- 	 */
- 	if (phydev->dev_flags & MICREL_NO_EEE)
- 		phydev->eee_broken_modes = -1;
- 
--	err = genphy_restart_aneg(phydev);
--	if (err)
--		return err;
--
- 	return kszphy_config_init(phydev);
+-	if (link->ops->dealloc_deferred) {
++	if (ops->dealloc_deferred) {
+ 		/* schedule BPF link deallocation; if underlying BPF program
+ 		 * is sleepable, we need to first wait for RCU tasks trace
+ 		 * sync, then go through "classic" RCU grace period
+@@ -3061,9 +3063,8 @@ static void bpf_link_free(struct bpf_link *link)
+ 			call_rcu_tasks_trace(&link->rcu, bpf_link_defer_dealloc_mult_rcu_gp);
+ 		else
+ 			call_rcu(&link->rcu, bpf_link_defer_dealloc_rcu_gp);
+-	}
+-	if (link->ops->dealloc)
+-		link->ops->dealloc(link);
++	} else if (ops->dealloc)
++		ops->dealloc(link);
  }
  
-@@ -2004,6 +2018,42 @@ static int kszphy_resume(struct phy_device *phydev)
- 	return 0;
- }
- 
-+static int ksz9477_resume(struct phy_device *phydev)
-+{
-+	int ret;
-+
-+	/* No need to initialize registers if not powered down. */
-+	ret = phy_read(phydev, MII_BMCR);
-+	if (ret < 0)
-+		return ret;
-+	if (!(ret & BMCR_PDOWN))
-+		return 0;
-+
-+	genphy_resume(phydev);
-+
-+	/* After switching from power-down to normal mode, an internal global
-+	 * reset is automatically generated. Wait a minimum of 1 ms before
-+	 * read/write access to the PHY registers.
-+	 */
-+	usleep_range(1000, 2000);
-+
-+	/* Only KSZ9897 family of switches needs this fix. */
-+	if ((phydev->phy_id & 0xf) == 1) {
-+		ret = ksz9477_phy_errata(phydev);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	/* Enable PHY Interrupts */
-+	if (phy_interrupt_is_valid(phydev)) {
-+		phydev->interrupts = PHY_INTERRUPT_ENABLED;
-+		if (phydev->drv->config_intr)
-+			phydev->drv->config_intr(phydev);
-+	}
-+
-+	return 0;
-+}
-+
- static int kszphy_probe(struct phy_device *phydev)
- {
- 	const struct kszphy_type *type = phydev->drv->driver_data;
-@@ -4980,7 +5030,7 @@ static struct phy_driver ksphy_driver[] = {
- 	.config_intr	= kszphy_config_intr,
- 	.handle_interrupt = kszphy_handle_interrupt,
- 	.suspend	= genphy_suspend,
--	.resume		= genphy_resume,
-+	.resume		= ksz9477_resume,
- 	.get_features	= ksz9477_get_features,
- } };
- 
+ static void bpf_link_put_deferred(struct work_struct *work)
 -- 
 2.43.0
 
