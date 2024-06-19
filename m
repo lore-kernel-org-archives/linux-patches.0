@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5498714373E;
-	Wed, 19 Jun 2024 13:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C384143757;
+	Wed, 19 Jun 2024 13:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803666; cv=none; b=jLlLjCpy8nSRMpepFSIR0Box4/TiBafO3DphLFbnNxMgYBIr1pnw0DQVUANp9GdpyteJ6Ssp97wtaEWJS2RTX5AJrD2TDVsLawiktfQRN+4ubAyHvi0buneo6NbaLB/YQLCFxwRqwIgo7HvnIKGrNukkPfaqQxEMWDafQ8YLIwk=
+	t=1718803669; cv=none; b=ihbLfmPB1NmkWqsnYhOcJT4V5/d1bHpIKe6y9/sXOm/fih2i93pnjj9oKi0s5RUrlgoN8rv9Mp5GOC/HgIl1GC9O2oLzvdlIIN1LcRO8MzEBDV/jx96utHq18+TbOevWj/9xdDukPrDoD9v87msb87SyNgB6FrQaUI/IH+PXyEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803666; c=relaxed/simple;
-	bh=SM2NIXRxxD3e4G4WEA9h1+FdWMFMmh/Pif3vzGv+mvA=;
+	s=arc-20240116; t=1718803669; c=relaxed/simple;
+	bh=hvu6jlVImZTJHA0osk5jmrt0d8Gzd03rJaPEFI0jFYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hck8MgMzDhuxe1rqMRCAqZFOyYJx565fD8l6XkjI6XSX7ntMGvIT82Vzs3eW/l1x2pzq2To8fJDi6ndjVmZH3UB1nCh4C8LmcUk4P1LH3Xw4qbgL4yUgkezDkrRYtlMkxrAhtNIvCkYrenGpW1ArNSSJg9x3wQ00uIiPSi9KvaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N6U/VD96; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=j/I/Rr+B5Wdny7SSghftmClFoFvzT6Ee63tYd6BMj0HWO6g/Vnud0/yYiz3ExTu2fJlo3xelRWKyglaLMRubmRifYQb/SCi2hk8K6lstSRBMmL3Re12AMNyc7pAL2C41zQPUJ1dFJRtRZF0WhSwGeXOddKdjqNBN5zGlbX7dn0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iiT2aASE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N6U/VD96"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF5EEC2BBFC;
-	Wed, 19 Jun 2024 13:27:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iiT2aASE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B772FC2BBFC;
+	Wed, 19 Jun 2024 13:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803666;
-	bh=SM2NIXRxxD3e4G4WEA9h1+FdWMFMmh/Pif3vzGv+mvA=;
+	s=korg; t=1718803669;
+	bh=hvu6jlVImZTJHA0osk5jmrt0d8Gzd03rJaPEFI0jFYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N6U/VD962L23pYdcADKLMPYeu3TVjDps/drga62Yc6UCFmxZjy1suXhy8lxmZN7K2
-	 z/Fs7QE9nF4vnzDg1Y2Y+2TULIAsuB0vKvuVKOKAivB8gG4HVuvFR8GYRHq84coh0k
-	 w1RTKTCoWpq0QdrniWFYOpl4MpuOwk02+z3pkEOM=
+	b=iiT2aASElJoteG+jdRUVC8qPw2WBJrHHzRvmm3Dl8Zr9AVJN/ZOk2MAgze+3trl14
+	 wsgKDNlNgZF76xmdK0szlYavqqVGvw9KcYiok/f41gXM8mb55WoBaFsr+d2xzNrtC+
+	 b7V0M5+UMynGf7cgS2oaK53hgdy2g4x44KpN85vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 035/217] af_unix: Set sk->sk_state under unix_state_lock() for truly disconencted peer.
-Date: Wed, 19 Jun 2024 14:54:38 +0200
-Message-ID: <20240619125558.009106023@linuxfoundation.org>
+Subject: [PATCH 6.1 062/217] misc/pvpanic: deduplicate common code
+Date: Wed, 19 Jun 2024 14:55:05 +0200
+Message-ID: <20240619125559.079467575@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -45,93 +44,330 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit 26bfb8b57063f52b867f9b6c8d1742fcb5bd656c ]
+[ Upstream commit c1426d392aebc51da4944d950d89e483e43f6f14 ]
 
-When a SOCK_DGRAM socket connect()s to another socket, the both sockets'
-sk->sk_state are changed to TCP_ESTABLISHED so that we can register them
-to BPF SOCKMAP.
+pvpanic-mmio.c and pvpanic-pci.c share a lot of code.
+Refactor it into pvpanic.c where it doesn't have to be kept in sync
+manually and where the core logic can be understood more easily.
 
-When the socket disconnects from the peer by connect(AF_UNSPEC), the state
-is set back to TCP_CLOSE.
+No functional change.
 
-Then, the peer's state is also set to TCP_CLOSE, but the update is done
-locklessly and unconditionally.
-
-Let's say socket A connect()ed to B, B connect()ed to C, and A disconnects
-from B.
-
-After the first two connect()s, all three sockets' sk->sk_state are
-TCP_ESTABLISHED:
-
-  $ ss -xa
-  Netid State  Recv-Q Send-Q  Local Address:Port  Peer Address:PortProcess
-  u_dgr ESTAB  0      0       @A 641              * 642
-  u_dgr ESTAB  0      0       @B 642              * 643
-  u_dgr ESTAB  0      0       @C 643              * 0
-
-And after the disconnect, B's state is TCP_CLOSE even though it's still
-connected to C and C's state is TCP_ESTABLISHED.
-
-  $ ss -xa
-  Netid State  Recv-Q Send-Q  Local Address:Port  Peer Address:PortProcess
-  u_dgr UNCONN 0      0       @A 641              * 0
-  u_dgr UNCONN 0      0       @B 642              * 643
-  u_dgr ESTAB  0      0       @C 643              * 0
-
-In this case, we cannot register B to SOCKMAP.
-
-So, when a socket disconnects from the peer, we should not set TCP_CLOSE to
-the peer if the peer is connected to yet another socket, and this must be
-done under unix_state_lock().
-
-Note that we use WRITE_ONCE() for sk->sk_state as there are many lockless
-readers.  These data-races will be fixed in the following patches.
-
-Fixes: 83301b5367a9 ("af_unix: Set TCP_ESTABLISHED for datagram sockets too")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Link: https://lore.kernel.org/r/20231011-pvpanic-cleanup-v2-1-4b21d56f779f@weissschuh.net
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: ee59be35d7a8 ("misc/pvpanic-pci: register attributes via pci_driver")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/misc/pvpanic/pvpanic-mmio.c | 58 +---------------------
+ drivers/misc/pvpanic/pvpanic-pci.c  | 58 +---------------------
+ drivers/misc/pvpanic/pvpanic.c      | 76 ++++++++++++++++++++++++++++-
+ drivers/misc/pvpanic/pvpanic.h      | 10 +---
+ 4 files changed, 80 insertions(+), 122 deletions(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 7d2a3b42b456a..5d6203b6e25c3 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -558,7 +558,6 @@ static void unix_dgram_disconnected(struct sock *sk, struct sock *other)
- 			sk_error_report(other);
- 		}
+diff --git a/drivers/misc/pvpanic/pvpanic-mmio.c b/drivers/misc/pvpanic/pvpanic-mmio.c
+index eb97167c03fb4..9715798acce3d 100644
+--- a/drivers/misc/pvpanic/pvpanic-mmio.c
++++ b/drivers/misc/pvpanic/pvpanic-mmio.c
+@@ -24,52 +24,9 @@ MODULE_AUTHOR("Hu Tao <hutao@cn.fujitsu.com>");
+ MODULE_DESCRIPTION("pvpanic-mmio device driver");
+ MODULE_LICENSE("GPL");
+ 
+-static ssize_t capability_show(struct device *dev, struct device_attribute *attr, char *buf)
+-{
+-	struct pvpanic_instance *pi = dev_get_drvdata(dev);
+-
+-	return sysfs_emit(buf, "%x\n", pi->capability);
+-}
+-static DEVICE_ATTR_RO(capability);
+-
+-static ssize_t events_show(struct device *dev, struct device_attribute *attr, char *buf)
+-{
+-	struct pvpanic_instance *pi = dev_get_drvdata(dev);
+-
+-	return sysfs_emit(buf, "%x\n", pi->events);
+-}
+-
+-static ssize_t events_store(struct device *dev, struct device_attribute *attr,
+-			    const char *buf, size_t count)
+-{
+-	struct pvpanic_instance *pi = dev_get_drvdata(dev);
+-	unsigned int tmp;
+-	int err;
+-
+-	err = kstrtouint(buf, 16, &tmp);
+-	if (err)
+-		return err;
+-
+-	if ((tmp & pi->capability) != tmp)
+-		return -EINVAL;
+-
+-	pi->events = tmp;
+-
+-	return count;
+-}
+-static DEVICE_ATTR_RW(events);
+-
+-static struct attribute *pvpanic_mmio_dev_attrs[] = {
+-	&dev_attr_capability.attr,
+-	&dev_attr_events.attr,
+-	NULL
+-};
+-ATTRIBUTE_GROUPS(pvpanic_mmio_dev);
+-
+ static int pvpanic_mmio_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+-	struct pvpanic_instance *pi;
+ 	struct resource *res;
+ 	void __iomem *base;
+ 
+@@ -92,18 +49,7 @@ static int pvpanic_mmio_probe(struct platform_device *pdev)
+ 		return -EINVAL;
  	}
--	other->sk_state = TCP_CLOSE;
+ 
+-	pi = devm_kmalloc(dev, sizeof(*pi), GFP_KERNEL);
+-	if (!pi)
+-		return -ENOMEM;
+-
+-	pi->base = base;
+-	pi->capability = PVPANIC_PANICKED | PVPANIC_CRASH_LOADED;
+-
+-	/* initialize capability by RDPT */
+-	pi->capability &= ioread8(base);
+-	pi->events = pi->capability;
+-
+-	return devm_pvpanic_probe(dev, pi);
++	return devm_pvpanic_probe(dev, base);
  }
  
- static void unix_sock_destructor(struct sock *sk)
-@@ -1412,8 +1411,15 @@ static int unix_dgram_connect(struct socket *sock, struct sockaddr *addr,
+ static const struct of_device_id pvpanic_mmio_match[] = {
+@@ -123,7 +69,7 @@ static struct platform_driver pvpanic_mmio_driver = {
+ 		.name = "pvpanic-mmio",
+ 		.of_match_table = pvpanic_mmio_match,
+ 		.acpi_match_table = pvpanic_device_ids,
+-		.dev_groups = pvpanic_mmio_dev_groups,
++		.dev_groups = pvpanic_dev_groups,
+ 	},
+ 	.probe = pvpanic_mmio_probe,
+ };
+diff --git a/drivers/misc/pvpanic/pvpanic-pci.c b/drivers/misc/pvpanic/pvpanic-pci.c
+index 07eddb5ea30fa..689af4c28c2a9 100644
+--- a/drivers/misc/pvpanic/pvpanic-pci.c
++++ b/drivers/misc/pvpanic/pvpanic-pci.c
+@@ -22,51 +22,8 @@ MODULE_AUTHOR("Mihai Carabas <mihai.carabas@oracle.com>");
+ MODULE_DESCRIPTION("pvpanic device driver");
+ MODULE_LICENSE("GPL");
  
- 		unix_state_double_unlock(sk, other);
+-static ssize_t capability_show(struct device *dev, struct device_attribute *attr, char *buf)
+-{
+-	struct pvpanic_instance *pi = dev_get_drvdata(dev);
+-
+-	return sysfs_emit(buf, "%x\n", pi->capability);
+-}
+-static DEVICE_ATTR_RO(capability);
+-
+-static ssize_t events_show(struct device *dev, struct device_attribute *attr, char *buf)
+-{
+-	struct pvpanic_instance *pi = dev_get_drvdata(dev);
+-
+-	return sysfs_emit(buf, "%x\n", pi->events);
+-}
+-
+-static ssize_t events_store(struct device *dev, struct device_attribute *attr,
+-			    const char *buf, size_t count)
+-{
+-	struct pvpanic_instance *pi = dev_get_drvdata(dev);
+-	unsigned int tmp;
+-	int err;
+-
+-	err = kstrtouint(buf, 16, &tmp);
+-	if (err)
+-		return err;
+-
+-	if ((tmp & pi->capability) != tmp)
+-		return -EINVAL;
+-
+-	pi->events = tmp;
+-
+-	return count;
+-}
+-static DEVICE_ATTR_RW(events);
+-
+-static struct attribute *pvpanic_pci_dev_attrs[] = {
+-	&dev_attr_capability.attr,
+-	&dev_attr_events.attr,
+-	NULL
+-};
+-ATTRIBUTE_GROUPS(pvpanic_pci_dev);
+-
+ static int pvpanic_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ {
+-	struct pvpanic_instance *pi;
+ 	void __iomem *base;
+ 	int ret;
  
--		if (other != old_peer)
-+		if (other != old_peer) {
- 			unix_dgram_disconnected(sk, old_peer);
+@@ -78,18 +35,7 @@ static int pvpanic_pci_probe(struct pci_dev *pdev, const struct pci_device_id *e
+ 	if (!base)
+ 		return -ENOMEM;
+ 
+-	pi = devm_kmalloc(&pdev->dev, sizeof(*pi), GFP_KERNEL);
+-	if (!pi)
+-		return -ENOMEM;
+-
+-	pi->base = base;
+-	pi->capability = PVPANIC_PANICKED | PVPANIC_CRASH_LOADED;
+-
+-	/* initlize capability by RDPT */
+-	pi->capability &= ioread8(base);
+-	pi->events = pi->capability;
+-
+-	return devm_pvpanic_probe(&pdev->dev, pi);
++	return devm_pvpanic_probe(&pdev->dev, base);
+ }
+ 
+ static const struct pci_device_id pvpanic_pci_id_tbl[]  = {
+@@ -103,7 +49,7 @@ static struct pci_driver pvpanic_pci_driver = {
+ 	.id_table =     pvpanic_pci_id_tbl,
+ 	.probe =        pvpanic_pci_probe,
+ 	.driver = {
+-		.dev_groups = pvpanic_pci_dev_groups,
++		.dev_groups = pvpanic_dev_groups,
+ 	},
+ };
+ module_pci_driver(pvpanic_pci_driver);
+diff --git a/drivers/misc/pvpanic/pvpanic.c b/drivers/misc/pvpanic/pvpanic.c
+index 049a120063489..305b367e0ce34 100644
+--- a/drivers/misc/pvpanic/pvpanic.c
++++ b/drivers/misc/pvpanic/pvpanic.c
+@@ -7,6 +7,7 @@
+  *  Copyright (C) 2021 Oracle.
+  */
+ 
++#include <linux/device.h>
+ #include <linux/io.h>
+ #include <linux/kernel.h>
+ #include <linux/kexec.h>
+@@ -26,6 +27,13 @@ MODULE_AUTHOR("Mihai Carabas <mihai.carabas@oracle.com>");
+ MODULE_DESCRIPTION("pvpanic device driver");
+ MODULE_LICENSE("GPL");
+ 
++struct pvpanic_instance {
++	void __iomem *base;
++	unsigned int capability;
++	unsigned int events;
++	struct list_head list;
++};
 +
-+			unix_state_lock(old_peer);
-+			if (!unix_peer(old_peer))
-+				WRITE_ONCE(old_peer->sk_state, TCP_CLOSE);
-+			unix_state_unlock(old_peer);
-+		}
+ static struct list_head pvpanic_list;
+ static spinlock_t pvpanic_lock;
+ 
+@@ -81,11 +89,75 @@ static void pvpanic_remove(void *param)
+ 	spin_unlock(&pvpanic_lock);
+ }
+ 
+-int devm_pvpanic_probe(struct device *dev, struct pvpanic_instance *pi)
++static ssize_t capability_show(struct device *dev, struct device_attribute *attr, char *buf)
++{
++	struct pvpanic_instance *pi = dev_get_drvdata(dev);
 +
- 		sock_put(old_peer);
- 	} else {
- 		unix_peer(sk) = other;
++	return sysfs_emit(buf, "%x\n", pi->capability);
++}
++static DEVICE_ATTR_RO(capability);
++
++static ssize_t events_show(struct device *dev, struct device_attribute *attr, char *buf)
++{
++	struct pvpanic_instance *pi = dev_get_drvdata(dev);
++
++	return sysfs_emit(buf, "%x\n", pi->events);
++}
++
++static ssize_t events_store(struct device *dev, struct device_attribute *attr,
++			    const char *buf, size_t count)
++{
++	struct pvpanic_instance *pi = dev_get_drvdata(dev);
++	unsigned int tmp;
++	int err;
++
++	err = kstrtouint(buf, 16, &tmp);
++	if (err)
++		return err;
++
++	if ((tmp & pi->capability) != tmp)
++		return -EINVAL;
++
++	pi->events = tmp;
++
++	return count;
++}
++static DEVICE_ATTR_RW(events);
++
++static struct attribute *pvpanic_dev_attrs[] = {
++	&dev_attr_capability.attr,
++	&dev_attr_events.attr,
++	NULL
++};
++
++static const struct attribute_group pvpanic_dev_group = {
++	.attrs = pvpanic_dev_attrs,
++};
++
++const struct attribute_group *pvpanic_dev_groups[] = {
++	&pvpanic_dev_group,
++	NULL
++};
++EXPORT_SYMBOL_GPL(pvpanic_dev_groups);
++
++int devm_pvpanic_probe(struct device *dev, void __iomem *base)
+ {
+-	if (!pi || !pi->base)
++	struct pvpanic_instance *pi;
++
++	if (!base)
+ 		return -EINVAL;
+ 
++	pi = devm_kmalloc(dev, sizeof(*pi), GFP_KERNEL);
++	if (!pi)
++		return -ENOMEM;
++
++	pi->base = base;
++	pi->capability = PVPANIC_PANICKED | PVPANIC_CRASH_LOADED;
++
++	/* initlize capability by RDPT */
++	pi->capability &= ioread8(base);
++	pi->events = pi->capability;
++
+ 	spin_lock(&pvpanic_lock);
+ 	list_add(&pi->list, &pvpanic_list);
+ 	spin_unlock(&pvpanic_lock);
+diff --git a/drivers/misc/pvpanic/pvpanic.h b/drivers/misc/pvpanic/pvpanic.h
+index 4935459517548..46ffb10438adf 100644
+--- a/drivers/misc/pvpanic/pvpanic.h
++++ b/drivers/misc/pvpanic/pvpanic.h
+@@ -8,13 +8,7 @@
+ #ifndef PVPANIC_H_
+ #define PVPANIC_H_
+ 
+-struct pvpanic_instance {
+-	void __iomem *base;
+-	unsigned int capability;
+-	unsigned int events;
+-	struct list_head list;
+-};
+-
+-int devm_pvpanic_probe(struct device *dev, struct pvpanic_instance *pi);
++int devm_pvpanic_probe(struct device *dev, void __iomem *base);
++extern const struct attribute_group *pvpanic_dev_groups[];
+ 
+ #endif /* PVPANIC_H_ */
 -- 
 2.43.0
 
