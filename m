@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C460A13DDC0;
-	Wed, 19 Jun 2024 13:34:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADFAD13DDC0;
+	Wed, 19 Jun 2024 13:34:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718804095; cv=none; b=AyF1ZyQCG5rZ1pPOpSO3S3ugASVzh8XgKx1IusrFXyLwW5DJ8TUcDSU0V2RYVDNhydvZbO2UwEXYWny7xNHDvqDz18AHJ5CNbagMudJEjIZ4fArroCR8Ox8x0nJ9BEAPgQnS7xiwXnbDsQilfspgS7dEpOGdAcBExFUs3pnRM7w=
+	t=1718804098; cv=none; b=KohEi8i1/yszu4rTAsyuDnYamQHsL+To3kib7TNE88iWKIcu7M7+KlqNm7x/b2/+GfPOGRlO/0+TsOHglI9gMHvfl4zdOsnCRasrDj9uEl2xs2qyzi8OhbLv0ucgCKYvbbpD3V/wm0Rs/IbMEwzGVFgCOVMq8Gqeg28KUe5co3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718804095; c=relaxed/simple;
-	bh=RCgMBelj5qNMBcy7+PoozlNX7PcOlAeeJ5fjgig+UOA=;
+	s=arc-20240116; t=1718804098; c=relaxed/simple;
+	bh=hJqO9DvBVcUBQ9Wqwdz/5ty/dGecJgyn+6b2hl45Tu4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tELpg6mKefI8ArFbiijuUXRTenudmWLpHws7WXIWfdmQW/AEXjvl/Z5GuR5j3KupwU+7TO/fxRj306GZwzywvTDeKKdHZ18xPkAF4EE5/Uj08y/KCBZPD7bW+ZgFP0A9MX2Sg4FgzWakx3mD/y8zKjac89xl0EhfZZ+0aWl+4GM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cL36vKQC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OdSM0uOk2HznvZgTTt3uGipB8O8QlGtVLFts4nJjoBSJOaHUq5EY3YCwZz+PXp1BFDRiCeJc+7aN1+HmVFYzKxF9SBmIC46Eyl6FIJAXcQ2oY1v21ayeRyixlFOdZ1eC3wYt0yHO+JHVSIs4HMrkKZykAJTtVdrPDEavE3YeFCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=clQ980Ra; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cL36vKQC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 466FCC2BBFC;
-	Wed, 19 Jun 2024 13:34:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="clQ980Ra"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ACD7C2BBFC;
+	Wed, 19 Jun 2024 13:34:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718804095;
-	bh=RCgMBelj5qNMBcy7+PoozlNX7PcOlAeeJ5fjgig+UOA=;
+	s=korg; t=1718804098;
+	bh=hJqO9DvBVcUBQ9Wqwdz/5ty/dGecJgyn+6b2hl45Tu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cL36vKQCpChSwu+JF14V29pFSs28tyUVdv5aMpC8Nna/dPE4Hlj62J/HiNVrm0ASh
-	 1FVmrFc3L9jfZEXnh6OzHD1w0ziB0Aw7DnPeST7TcShn5lZqmrXw6/A6bR2SkATeNe
-	 CyWYV63WzzJ1cnhNMVwaswMjUqFRakffS0XoYTN4=
+	b=clQ980Ra6VkY4uwnpSyaT/SAKvfUz8SCHa75xTumDWMbqI8WoVMzoeAUnm501E8tV
+	 6JX5NeutgMeVxbufUraxaniHyeiuZ0QIQQ993ydwMadpD3lLa7HGQhvPklWR8QrTqL
+	 ASC9cmqWAZNIoB1gRXY0cTDQqCOdm2RxQ5G4yTUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Hagar Gamal Halim Hemdan <hagarhem@amazon.com>
-Subject: [PATCH 6.1 176/217] vmci: prevent speculation leaks by sanitizing event in event_deliver()
-Date: Wed, 19 Jun 2024 14:56:59 +0200
-Message-ID: <20240619125603.478680273@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	Christoph Paasch <cpaasch@apple.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 167/217] mptcp: ensure snd_una is properly initialized on connect
+Date: Wed, 19 Jun 2024 14:56:50 +0200
+Message-ID: <20240619125603.133472590@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -50,56 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hagar Gamal Halim Hemdan <hagarhem@amazon.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 8003f00d895310d409b2bf9ef907c56b42a4e0f4 upstream.
+commit 8031b58c3a9b1db3ef68b3bd749fbee2e1e1aaa3 upstream.
 
-Coverity spotted that event_msg is controlled by user-space,
-event_msg->event_data.event is passed to event_deliver() and used
-as an index without sanitization.
+This is strictly related to commit fb7a0d334894 ("mptcp: ensure snd_nxt
+is properly initialized on connect"). It turns out that syzkaller can
+trigger the retransmit after fallback and before processing any other
+incoming packet - so that snd_una is still left uninitialized.
 
-This change ensures that the event index is sanitized to mitigate any
-possibility of speculative information leaks.
+Address the issue explicitly initializing snd_una together with snd_nxt
+and write_seq.
 
-This bug was discovered and resolved using Coverity Static Analysis
-Security Testing (SAST) by Synopsys, Inc.
-
-Only compile tested, no access to HW.
-
-Fixes: 1d990201f9bb ("VMCI: event handling implementation.")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Hagar Gamal Halim Hemdan <hagarhem@amazon.com>
-Link: https://lore.kernel.org/stable/20231127193533.46174-1-hagarhem%40amazon.com
-Link: https://lore.kernel.org/r/20240430085916.4753-1-hagarhem@amazon.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Mat Martineau <martineau@kernel.org>
+Fixes: 8fd738049ac3 ("mptcp: fallback in case of simultaneous connect")
+Cc: stable@vger.kernel.org
+Reported-by: Christoph Paasch <cpaasch@apple.com>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/485
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://lore.kernel.org/r/20240607-upstream-net-20240607-misc-fixes-v1-1-1ab9ddfa3d00@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/vmw_vmci/vmci_event.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/mptcp/protocol.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/misc/vmw_vmci/vmci_event.c
-+++ b/drivers/misc/vmw_vmci/vmci_event.c
-@@ -9,6 +9,7 @@
- #include <linux/vmw_vmci_api.h>
- #include <linux/list.h>
- #include <linux/module.h>
-+#include <linux/nospec.h>
- #include <linux/sched.h>
- #include <linux/slab.h>
- #include <linux/rculist.h>
-@@ -86,9 +87,12 @@ static void event_deliver(struct vmci_ev
- {
- 	struct vmci_subscription *cur;
- 	struct list_head *subscriber_list;
-+	u32 sanitized_event, max_vmci_event;
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -3757,6 +3757,7 @@ static int mptcp_connect(struct sock *sk
  
- 	rcu_read_lock();
--	subscriber_list = &subscriber_array[event_msg->event_data.event];
-+	max_vmci_event = ARRAY_SIZE(subscriber_array);
-+	sanitized_event = array_index_nospec(event_msg->event_data.event, max_vmci_event);
-+	subscriber_list = &subscriber_array[sanitized_event];
- 	list_for_each_entry_rcu(cur, subscriber_list, node) {
- 		cur->callback(cur->id, &event_msg->event_data,
- 			      cur->callback_data);
+ 	WRITE_ONCE(msk->write_seq, subflow->idsn);
+ 	WRITE_ONCE(msk->snd_nxt, subflow->idsn);
++	WRITE_ONCE(msk->snd_una, subflow->idsn);
+ 	if (likely(!__mptcp_check_fallback(msk)))
+ 		MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_MPCAPABLEACTIVE);
+ 
 
 
