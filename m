@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30D9112FB31;
-	Wed, 19 Jun 2024 13:05:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14E7112FB31;
+	Wed, 19 Jun 2024 13:05:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802320; cv=none; b=JkQWHh+KHQ+MJyYjqRYuEgYYavf+mcOzZo6jytBX5XcVSTREGeHLFa+rbfkhFE3CUhjSu2FJVhqe2luV6+oZPmSLxRaHrXdDEwPRyAYgeY3ImuPbkFKRSTHG37RRihbxhJ6rPaUgUIJ7oUTetqGq1oGSfODmgBb+XqpomZCWpQs=
+	t=1718802323; cv=none; b=VaEbNZOqd/tiQhBCPrvT9jBl3+HmdDNx7Orjhc8WLqpoiyKZlpfdHQMX7sWUiq9z90v38EDgPe+fbWK3KXA2Y4fLRIpR/5rbMNaL+1QfosfQhdhXsOjF5MXl2eRSkesvN/JSUyGbgyFnujubAQmZ7LZt2vGp2GhsaZ4tUIphrT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802320; c=relaxed/simple;
-	bh=ATAZIlNZqKxh+Mcl3uUO93AypmoXUy0/qW8xXZjcq9Q=;
+	s=arc-20240116; t=1718802323; c=relaxed/simple;
+	bh=MJB8RduYxRAiiF8avJf0e0gacLlA7W5dXjztqUtNTUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pFP1xCWzB1hRT78HrJOC1jTvZkneynIW1rxDCBfCDpihmgLLt5HEovolqTz/y7GcVtqT+xp0XEFNqVWRI7KNfB4C1L4JZ5IKLene3briYb4VGubIB+Ob0UkAcsxTMQEeTOpMlAAFmnC16Bnz7QXRLb0NDhagCouZKqjI4TOWkFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yCaE4+xN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XEiaCRREsUE3oeEo9yEcKQm3hHsXHj1l7XchpU1GSJ6IO9gPu/FBPxlUxU5WNDj1dmxmFgjDhFkB675tCrJW/40cHbwQ8tExjkjPoCgtPgDwaLGsiQPryax+zByJZ2c5Ay2R07qNFnB1C+sMTsiD5ep0Wkd5dx9bDoMgRYF5M5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IvSV0sqY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yCaE4+xN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A77D7C2BBFC;
-	Wed, 19 Jun 2024 13:05:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IvSV0sqY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93679C2BBFC;
+	Wed, 19 Jun 2024 13:05:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802320;
-	bh=ATAZIlNZqKxh+Mcl3uUO93AypmoXUy0/qW8xXZjcq9Q=;
+	s=korg; t=1718802323;
+	bh=MJB8RduYxRAiiF8avJf0e0gacLlA7W5dXjztqUtNTUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yCaE4+xNn098CZAlwY9OTCE2s+P/iDE9nIS1IGwdi0or1qEbFKjJY63sJrKQF9jjL
-	 A86Dcz9tZcS9frRrzdAx7avFSJRLwt+gya0LtY1LnMad8K6nHPCteRS7tY7wJju5Tf
-	 ZqLLG6FWsWFLTpr+3C4R7nrkQwKd65XuErCNI5cA=
+	b=IvSV0sqYjYzbb5HZ35My5r99oE2KFqlzF5tYxJpz9OovkxNEms4RScJQQeYydv4Rq
+	 HAQBhvyJ32+iiJ6Ss/KpIpdjbxpWfir3V+otKwubYTEP2iijxKh41Vq7yD26/uNH40
+	 Q+hzRyJJMqd/e5OPEPx37KQEpxZaGKIiFzf5VLoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregor Herburger <gregor.herburger@tq-group.com>,
-	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 125/267] gpio: tqmx86: fix typo in Kconfig label
-Date: Wed, 19 Jun 2024 14:54:36 +0200
-Message-ID: <20240619125611.147496525@linuxfoundation.org>
+Subject: [PATCH 6.6 116/267] selftests/ftrace: Fix to check required event file
+Date: Wed, 19 Jun 2024 14:54:27 +0200
+Message-ID: <20240619125610.802601147@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -53,36 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregor Herburger <gregor.herburger@tq-group.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 8c219e52ca4d9a67cd6a7074e91bf29b55edc075 ]
+[ Upstream commit f6c3c83db1d939ebdb8c8922748ae647d8126d91 ]
 
-Fix description for GPIO_TQMX86 from QTMX86 to TQMx86.
+The dynevent/test_duplicates.tc test case uses `syscalls/sys_enter_openat`
+event for defining eprobe on it. Since this `syscalls` events depend on
+CONFIG_FTRACE_SYSCALLS=y, if it is not set, the test will fail.
 
-Fixes: b868db94a6a7 ("gpio: tqmx86: Add GPIO from for this IO controller")
-Signed-off-by: Gregor Herburger <gregor.herburger@tq-group.com>
-Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/e0e38c9944ad6d281d9a662a45d289b88edc808e.1717063994.git.matthias.schiffer@ew.tq-group.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Add the event file to `required` line so that the test will return
+`unsupported` result.
+
+Fixes: 297e1dcdca3d ("selftests/ftrace: Add selftest for testing duplicate eprobes and kprobes")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/Kconfig | 2 +-
+ .../testing/selftests/ftrace/test.d/dynevent/test_duplicates.tc | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/Kconfig b/drivers/gpio/Kconfig
-index d56b835359d3b..ebd4e113dc265 100644
---- a/drivers/gpio/Kconfig
-+++ b/drivers/gpio/Kconfig
-@@ -1507,7 +1507,7 @@ config GPIO_TPS68470
- 	  are "output only" GPIOs.
+diff --git a/tools/testing/selftests/ftrace/test.d/dynevent/test_duplicates.tc b/tools/testing/selftests/ftrace/test.d/dynevent/test_duplicates.tc
+index d3a79da215c8b..5f72abe6fa79b 100644
+--- a/tools/testing/selftests/ftrace/test.d/dynevent/test_duplicates.tc
++++ b/tools/testing/selftests/ftrace/test.d/dynevent/test_duplicates.tc
+@@ -1,7 +1,7 @@
+ #!/bin/sh
+ # SPDX-License-Identifier: GPL-2.0
+ # description: Generic dynamic event - check if duplicate events are caught
+-# requires: dynamic_events "e[:[<group>/][<event>]] <attached-group>.<attached-event> [<args>]":README
++# requires: dynamic_events "e[:[<group>/][<event>]] <attached-group>.<attached-event> [<args>]":README events/syscalls/sys_enter_openat
  
- config GPIO_TQMX86
--	tristate "TQ-Systems QTMX86 GPIO"
-+	tristate "TQ-Systems TQMx86 GPIO"
- 	depends on MFD_TQMX86 || COMPILE_TEST
- 	depends on HAS_IOPORT_MAP
- 	select GPIOLIB_IRQCHIP
+ echo 0 > events/enable
+ 
 -- 
 2.43.0
 
