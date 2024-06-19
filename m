@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5207146D49;
-	Wed, 19 Jun 2024 13:22:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9BCD1487F1;
+	Wed, 19 Jun 2024 13:22:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803320; cv=none; b=tR5fPjd6n8OAY9MnBUbygKnBCVL2vf4PT773tpnW+F5fruQNvLSgTAQSviQTV/neAalWZfvWiKKLVBkBOm+K5KPttAT2ye2MA5cLlDv9KxNFX7NGJhKEP7vD3gukfbo7S5ZPzxEUQFrXtMOew/sc9/VYmxoemleQJYw1oIcEFpo=
+	t=1718803323; cv=none; b=r7XbeHijlwWwfNc321lk5R4GcKciIxJT8kg0jtxPBS7CyEyr0Ia1nwAqP03gacoUYr1MkjDnSJAwTl7M6gHgLbjZN0nzujZIWajBZe2NDBolXAzdYOkVEN2oIlVOIIktNwnT9zlOI4ANkrVEW3OvmwOUdp94BXXb7ZoaO3iDbPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803320; c=relaxed/simple;
-	bh=cosMgF4WAWMiAZAQMUdcEZOyUgPKPIwQYKbDiRkWvp4=;
+	s=arc-20240116; t=1718803323; c=relaxed/simple;
+	bh=WZrLD7JY0c2pA2fxkeiXcfrKBJQzCT3RCzA6g1Q7w/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OZ5mzEOlKRsxUqAS3XBCMFGxGjkmaPBOkvOy4dBqXFmJAVkGzUraASFtXx/vInDvnSqf6Ifow8DfK9NtVrrS5xn8ryN0zqlt8PmSucj/Ypa4MRaB/1ZYt1nzNnlqnpOi+ngTwUr/f1+gqWSAen3JatZxIpS+Fc325DBMXxrrc1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GCy7FTOq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DKqzET9f1EpaMuB2oR7kRC9X5XHNokZL9KWzut8Rb2uemJcuQbWNb1BpluCRHSaRuHCXcXWBgLc+5c44yDr5nQXFaFhUlbmFqAywxZM2kBmLh3UhAsPLKPdojjlaZ1wmZa1kr4ne3MNhfpZU2uV2pnBLL0y4ShA3iZn+tN9VdWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zRTyR+tO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GCy7FTOq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5846FC2BBFC;
-	Wed, 19 Jun 2024 13:22:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zRTyR+tO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DF84C2BBFC;
+	Wed, 19 Jun 2024 13:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803320;
-	bh=cosMgF4WAWMiAZAQMUdcEZOyUgPKPIwQYKbDiRkWvp4=;
+	s=korg; t=1718803323;
+	bh=WZrLD7JY0c2pA2fxkeiXcfrKBJQzCT3RCzA6g1Q7w/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GCy7FTOqWrszRF1NFYpRt1EMYUy6vj4XM/igL8zostjvNag9WECflX+3+9gv/2LO0
-	 sq51wGqA5ipDNmi7JnY7KRxPvdOVyrBkO0Vrx15hQrcsHHFmOvYJ+9qlDUwO/spZsC
-	 DPRprydvwTOkFLw3Eq+TIJr5NiAASm2H7+VIwVgA=
+	b=zRTyR+tOcwmEIZCWk9scoX2iMFOEDEM1pLHfIbFqo5gH0lgO0wxMuja5vlPPjfwLq
+	 dmvEmB4RPoj0Neh3ZIaHXOQ6iX7wqHY0g9yNkcpwjfQcC5kqhk62i5OuIGKj7OtTR3
+	 rs8WAfrgHsvJMEk+tkcDkI2zXhFDIuOhj6/dPQJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Nader <dev@kayoway.com>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.9 228/281] ata: ahci: Do not apply Intel PCS quirk on Intel Alder Lake
-Date: Wed, 19 Jun 2024 14:56:27 +0200
-Message-ID: <20240619125618.731990091@linuxfoundation.org>
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	YonglongLi <liyonglong@chinatelecom.cn>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.9 211/281] mptcp: pm: inc RmAddr MIB counter once per RM_ADDR ID
+Date: Wed, 19 Jun 2024 14:56:10 +0200
+Message-ID: <20240619125618.078484055@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -50,56 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Nader <dev@kayoway.com>
+From: YonglongLi <liyonglong@chinatelecom.cn>
 
-commit 9e2f46cd87473c70d01fcaf8a559809e6d18dd50 upstream.
+commit 6a09788c1a66e3d8b04b3b3e7618cc817bb60ae9 upstream.
 
-Commit b8b8b4e0c052 ("ata: ahci: Add Intel Alder Lake-P AHCI controller
-to low power chipsets list") added Intel Alder Lake to the ahci_pci_tbl.
+The RmAddr MIB counter is supposed to be incremented once when a valid
+RM_ADDR has been received. Before this patch, it could have been
+incremented as many times as the number of subflows connected to the
+linked address ID, so it could have been 0, 1 or more than 1.
 
-Because of the way that the Intel PCS quirk was implemented, having
-an explicit entry in the ahci_pci_tbl caused the Intel PCS quirk to
-be applied. (The quirk was not being applied if there was no explict
-entry.)
+The "RmSubflow" is incremented after a local operation. In this case,
+it is normal to tied it with the number of subflows that have been
+actually removed.
 
-Thus, entries that were added to the ahci_pci_tbl also got the Intel
-PCS quirk applied.
+The "remove invalid addresses" MP Join subtest has been modified to
+validate this case. A broadcast IP address is now used instead: the
+client will not be able to create a subflow to this address. The
+consequence is that when receiving the RM_ADDR with the ID attached to
+this broadcast IP address, no subflow linked to this ID will be found.
 
-The quirk was cleaned up in commit 7edbb6059274 ("ahci: clean up
-intel_pcs_quirk"), such that it is clear which entries that actually
-applies the Intel PCS quirk.
-
-Newer Intel AHCI controllers do not need the Intel PCS quirk,
-and applying it when not needed actually breaks some platforms.
-
-Do not apply the Intel PCS quirk for Intel Alder Lake.
-This is in line with how things worked before commit b8b8b4e0c052 ("ata:
-ahci: Add Intel Alder Lake-P AHCI controller to low power chipsets list"),
-such that certain platforms using Intel Alder Lake will work once again.
-
-Cc: stable@vger.kernel.org # 6.7
-Fixes: b8b8b4e0c052 ("ata: ahci: Add Intel Alder Lake-P AHCI controller to low power chipsets list")
-Signed-off-by: Jason Nader <dev@kayoway.com>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Fixes: 7a7e52e38a40 ("mptcp: add RM_ADDR related mibs")
+Cc: stable@vger.kernel.org
+Co-developed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: YonglongLi <liyonglong@chinatelecom.cn>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://lore.kernel.org/r/20240607-upstream-net-20240607-misc-fixes-v1-2-1ab9ddfa3d00@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/ahci.c | 1 -
- 1 file changed, 1 deletion(-)
+ net/mptcp/pm_netlink.c                          |    5 ++++-
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |    3 ++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
-index 6548f10e61d9..07d66d2c5f0d 100644
---- a/drivers/ata/ahci.c
-+++ b/drivers/ata/ahci.c
-@@ -429,7 +429,6 @@ static const struct pci_device_id ahci_pci_tbl[] = {
- 	{ PCI_VDEVICE(INTEL, 0x02d7), board_ahci_pcs_quirk }, /* Comet Lake PCH RAID */
- 	/* Elkhart Lake IDs 0x4b60 & 0x4b62 https://sata-io.org/product/8803 not tested yet */
- 	{ PCI_VDEVICE(INTEL, 0x4b63), board_ahci_pcs_quirk }, /* Elkhart Lake AHCI */
--	{ PCI_VDEVICE(INTEL, 0x7ae2), board_ahci_pcs_quirk }, /* Alder Lake-P AHCI */
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -813,10 +813,13 @@ static void mptcp_pm_nl_rm_addr_or_subfl
+ 			spin_lock_bh(&msk->pm.lock);
  
- 	/* JMicron 360/1/3/5/6, match class to avoid IDE function */
- 	{ PCI_VENDOR_ID_JMICRON, PCI_ANY_ID, PCI_ANY_ID, PCI_ANY_ID,
--- 
-2.45.2
-
+ 			removed = true;
+-			__MPTCP_INC_STATS(sock_net(sk), rm_type);
++			if (rm_type == MPTCP_MIB_RMSUBFLOW)
++				__MPTCP_INC_STATS(sock_net(sk), rm_type);
+ 		}
+ 		if (rm_type == MPTCP_MIB_RMSUBFLOW)
+ 			__set_bit(rm_id ? rm_id : msk->mpc_endpoint_id, msk->pm.id_avail_bitmap);
++		else if (rm_type == MPTCP_MIB_RMADDR)
++			__MPTCP_INC_STATS(sock_net(sk), rm_type);
+ 		if (!removed)
+ 			continue;
+ 
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -2359,7 +2359,8 @@ remove_tests()
+ 		pm_nl_set_limits $ns1 3 3
+ 		pm_nl_add_endpoint $ns1 10.0.12.1 flags signal
+ 		pm_nl_add_endpoint $ns1 10.0.3.1 flags signal
+-		pm_nl_add_endpoint $ns1 10.0.14.1 flags signal
++		# broadcast IP: no packet for this address will be received on ns1
++		pm_nl_add_endpoint $ns1 224.0.0.1 flags signal
+ 		pm_nl_set_limits $ns2 3 3
+ 		addr_nr_ns1=-3 speed=10 \
+ 			run_tests $ns1 $ns2 10.0.1.1
 
 
