@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E94612FB31;
-	Wed, 19 Jun 2024 13:06:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D2512FB31;
+	Wed, 19 Jun 2024 13:06:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802409; cv=none; b=mkQPaN6VOeShhsiMReI0Mw43Jda/7nn8ueULZG212EL1LQjljXEIhFyHZVKrvEczeK0rMA+F4cXadOS1BcghiPIE2X3H477RyMj3ls/s9uYx1/rfzAa2L1KlVen7vw9+4Dn6zRFdDVHaWCgkHuFwMuN2exmZ+0oRHwACTj4CGWg=
+	t=1718802412; cv=none; b=uBt1Ykj6Z4/PScCB+aia52HoI6BMHd7TlUKnwcxOH3tKjiyZKLZBhs0uipjy//eaSUaOf8yBKy4jiZ7+0Z1B30ccDyQDOsw0MRhmW8hNEnVX3U9plQCvPG3xpV7JM6CQMXHTePMgFmFKRwDmduHxrlGb7YQt8q+RyQ+1Zmc9eOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802409; c=relaxed/simple;
-	bh=AUwBEpHYClO8wrEswkgxDSvaQrkXQu2OFXyNuvIx4ss=;
+	s=arc-20240116; t=1718802412; c=relaxed/simple;
+	bh=tsxqd5hM8nH19OSkO/4ZfQHO6vH3MoBOmCPncYNRmyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tEt5fRfJlOPPhglVYtKqUBtJtTOEL/hrufUtiSbxGsxAmlLBk1Un7+tLf90WiYBrOM8upoVfc5CO41Tnh50cPydsSpl5j/aOcAFCwQRqidLRIgFbjlu2aAiwSRU+KD7PphMS7Txz6o5//wTyZ17fzM5GQG9Y3YG/kW3xwFW9tZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kjWt9uup; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C9DKfyeaJg9fhH29A6AgtUBTK/lGidXfFOgLGG6kb2Zy++7flca7cwrZTCT2ikNSM+iH6frBU0oN0le9A5j2G0LHcJQCjf3Z2FRQLjcp418QO62lZHR5L8DtZl9tYiMWAmdql/eBUGv/bpF7JNCe8XWirTNvuhlU2fnAf3AJ7X8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gNJsocEq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kjWt9uup"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7A1EC2BBFC;
-	Wed, 19 Jun 2024 13:06:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gNJsocEq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B970C2BBFC;
+	Wed, 19 Jun 2024 13:06:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802409;
-	bh=AUwBEpHYClO8wrEswkgxDSvaQrkXQu2OFXyNuvIx4ss=;
+	s=korg; t=1718802412;
+	bh=tsxqd5hM8nH19OSkO/4ZfQHO6vH3MoBOmCPncYNRmyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kjWt9uupGgXJFoG+HfQBko+aCWmIlSHn2akhOsLtTtystacGqAu/KDFNtRxkJk/TP
-	 iSWDhHsPk26uyFOmUvn3E+CD0paK+6TJFTQpC0X0xgFcQYy88YBDIC9WUTXwz5bZWo
-	 qUcCrRvUKBfjfdXKutmZwznHm0mYkzCopAZIG9/w=
+	b=gNJsocEqh0Dtas+TxzMNFim67wwtMqEouZvGeZoHKF6Texv6P6pKqKkmPKin+9h3C
+	 vHLY0iVbto680vCDm6rnZl7AYC6bV8V/QU/Ps72poy6b13clhGl9KO+cV1aK1BJVsM
+	 DnGIoeQr5GOL0JcIgB6lWAGLEZvy7skhGIPR+njA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lion Ackermann <nnamrec@gmail.com>,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Uros Bizjak <ubizjak@gmail.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Josh Poimboeuf <jpoimboe@redhat.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 156/267] netfilter: ipset: Fix race between namespace cleanup and gc in the list:set type
-Date: Wed, 19 Jun 2024 14:55:07 +0200
-Message-ID: <20240619125612.331843461@linuxfoundation.org>
+Subject: [PATCH 6.6 157/267] x86/asm: Use %c/%n instead of %P operand modifier in asm templates
+Date: Wed, 19 Jun 2024 14:55:08 +0200
+Message-ID: <20240619125612.369676842@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -52,286 +55,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jozsef Kadlecsik <kadlec@netfilter.org>
+From: Uros Bizjak <ubizjak@gmail.com>
 
-[ Upstream commit 4e7aaa6b82d63e8ddcbfb56b4fd3d014ca586f10 ]
+[ Upstream commit 41cd2e1ee96e56401a18dbce6f42f0bdaebcbf3b ]
 
-Lion Ackermann reported that there is a race condition between namespace cleanup
-in ipset and the garbage collection of the list:set type. The namespace
-cleanup can destroy the list:set type of sets while the gc of the set type is
-waiting to run in rcu cleanup. The latter uses data from the destroyed set which
-thus leads use after free. The patch contains the following parts:
+The "P" asm operand modifier is a x86 target-specific modifier.
 
-- When destroying all sets, first remove the garbage collectors, then wait
-  if needed and then destroy the sets.
-- Fix the badly ordered "wait then remove gc" for the destroy a single set
-  case.
-- Fix the missing rcu locking in the list:set type in the userspace test
-  case.
-- Use proper RCU list handlings in the list:set type.
+When used with a constant, the "P" modifier emits "cst" instead of
+"$cst". This property is currently used to emit the bare constant
+without all syntax-specific prefixes.
 
-The patch depends on c1193d9bbbd3 (netfilter: ipset: Add list flush to cancel_gc).
+The generic "c" resp. "n" operand modifier should be used instead.
 
-Fixes: 97f7cf1cd80e (netfilter: ipset: fix performance regression in swap operation)
-Reported-by: Lion Ackermann <nnamrec@gmail.com>
-Tested-by: Lion Ackermann <nnamrec@gmail.com>
-Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+No functional changes intended.
+
+Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Josh Poimboeuf <jpoimboe@redhat.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Link: https://lore.kernel.org/r/20240319104418.284519-3-ubizjak@gmail.com
+Stable-dep-of: 8c860ed825cb ("x86/uaccess: Fix missed zeroing of ia32 u64 get_user() range checking")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipset/ip_set_core.c     | 81 +++++++++++++++------------
- net/netfilter/ipset/ip_set_list_set.c | 30 +++++-----
- 2 files changed, 60 insertions(+), 51 deletions(-)
+ arch/x86/boot/main.c               |  4 ++--
+ arch/x86/include/asm/alternative.h | 22 +++++++++++-----------
+ arch/x86/include/asm/atomic64_32.h |  2 +-
+ arch/x86/include/asm/cpufeature.h  |  2 +-
+ arch/x86/include/asm/irq_stack.h   |  2 +-
+ arch/x86/include/asm/uaccess.h     |  4 ++--
+ 6 files changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
-index 3184cc6be4c9d..c7ae4d9bf3d24 100644
---- a/net/netfilter/ipset/ip_set_core.c
-+++ b/net/netfilter/ipset/ip_set_core.c
-@@ -1172,23 +1172,50 @@ ip_set_setname_policy[IPSET_ATTR_CMD_MAX + 1] = {
- 				    .len = IPSET_MAXNAMELEN - 1 },
- };
+diff --git a/arch/x86/boot/main.c b/arch/x86/boot/main.c
+index c4ea5258ab558..9049f390d8347 100644
+--- a/arch/x86/boot/main.c
++++ b/arch/x86/boot/main.c
+@@ -119,8 +119,8 @@ static void init_heap(void)
+ 	char *stack_end;
  
-+/* In order to return quickly when destroying a single set, it is split
-+ * into two stages:
-+ * - Cancel garbage collector
-+ * - Destroy the set itself via call_rcu()
-+ */
-+
- static void
--ip_set_destroy_set(struct ip_set *set)
-+ip_set_destroy_set_rcu(struct rcu_head *head)
+ 	if (boot_params.hdr.loadflags & CAN_USE_HEAP) {
+-		asm("leal %P1(%%esp),%0"
+-		    : "=r" (stack_end) : "i" (-STACK_SIZE));
++		asm("leal %n1(%%esp),%0"
++		    : "=r" (stack_end) : "i" (STACK_SIZE));
+ 
+ 		heap_end = (char *)
+ 			((size_t)boot_params.hdr.heap_end_ptr + 0x200);
+diff --git a/arch/x86/include/asm/alternative.h b/arch/x86/include/asm/alternative.h
+index 65f79092c9d9e..cb9ce0f9e78e0 100644
+--- a/arch/x86/include/asm/alternative.h
++++ b/arch/x86/include/asm/alternative.h
+@@ -288,10 +288,10 @@ static inline int alternatives_text_reserved(void *start, void *end)
+  * Otherwise, if CPU has feature1, newinstr1 is used.
+  * Otherwise, oldinstr is used.
+  */
+-#define alternative_input_2(oldinstr, newinstr1, ft_flags1, newinstr2,	     \
+-			   ft_flags2, input...)				     \
+-	asm_inline volatile(ALTERNATIVE_2(oldinstr, newinstr1, ft_flags1,     \
+-		newinstr2, ft_flags2)					     \
++#define alternative_input_2(oldinstr, newinstr1, ft_flags1, newinstr2,	\
++			   ft_flags2, input...)				\
++	asm_inline volatile(ALTERNATIVE_2(oldinstr, newinstr1, ft_flags1, \
++		newinstr2, ft_flags2)					\
+ 		: : "i" (0), ## input)
+ 
+ /* Like alternative_input, but with a single output argument */
+@@ -301,7 +301,7 @@ static inline int alternatives_text_reserved(void *start, void *end)
+ 
+ /* Like alternative_io, but for replacing a direct call with another one. */
+ #define alternative_call(oldfunc, newfunc, ft_flags, output, input...)	\
+-	asm_inline volatile (ALTERNATIVE("call %P[old]", "call %P[new]", ft_flags) \
++	asm_inline volatile (ALTERNATIVE("call %c[old]", "call %c[new]", ft_flags) \
+ 		: output : [old] "i" (oldfunc), [new] "i" (newfunc), ## input)
+ 
+ /*
+@@ -310,12 +310,12 @@ static inline int alternatives_text_reserved(void *start, void *end)
+  * Otherwise, if CPU has feature1, function1 is used.
+  * Otherwise, old function is used.
+  */
+-#define alternative_call_2(oldfunc, newfunc1, ft_flags1, newfunc2, ft_flags2,   \
+-			   output, input...)				      \
+-	asm_inline volatile (ALTERNATIVE_2("call %P[old]", "call %P[new1]", ft_flags1,\
+-		"call %P[new2]", ft_flags2)				      \
+-		: output, ASM_CALL_CONSTRAINT				      \
+-		: [old] "i" (oldfunc), [new1] "i" (newfunc1),		      \
++#define alternative_call_2(oldfunc, newfunc1, ft_flags1, newfunc2, ft_flags2, \
++			   output, input...)				\
++	asm_inline volatile (ALTERNATIVE_2("call %c[old]", "call %c[new1]", ft_flags1, \
++		"call %c[new2]", ft_flags2)				\
++		: output, ASM_CALL_CONSTRAINT				\
++		: [old] "i" (oldfunc), [new1] "i" (newfunc1),		\
+ 		  [new2] "i" (newfunc2), ## input)
+ 
+ /*
+diff --git a/arch/x86/include/asm/atomic64_32.h b/arch/x86/include/asm/atomic64_32.h
+index 3486d91b8595f..d510405e4e1de 100644
+--- a/arch/x86/include/asm/atomic64_32.h
++++ b/arch/x86/include/asm/atomic64_32.h
+@@ -24,7 +24,7 @@ typedef struct {
+ 
+ #ifdef CONFIG_X86_CMPXCHG64
+ #define __alternative_atomic64(f, g, out, in...) \
+-	asm volatile("call %P[func]" \
++	asm volatile("call %c[func]" \
+ 		     : out : [func] "i" (atomic64_##g##_cx8), ## in)
+ 
+ #define ATOMIC64_DECL(sym) ATOMIC64_DECL_ONE(sym##_cx8)
+diff --git a/arch/x86/include/asm/cpufeature.h b/arch/x86/include/asm/cpufeature.h
+index 686e92d2663ee..3508f3fc928d4 100644
+--- a/arch/x86/include/asm/cpufeature.h
++++ b/arch/x86/include/asm/cpufeature.h
+@@ -173,7 +173,7 @@ extern void clear_cpu_cap(struct cpuinfo_x86 *c, unsigned int bit);
+ static __always_inline bool _static_cpu_has(u16 bit)
  {
--	pr_debug("set: %s\n",  set->name);
-+	struct ip_set *set = container_of(head, struct ip_set, rcu);
- 
--	/* Must call it without holding any lock */
- 	set->variant->destroy(set);
- 	module_put(set->type->me);
- 	kfree(set);
+ 	asm goto(
+-		ALTERNATIVE_TERNARY("jmp 6f", %P[feature], "", "jmp %l[t_no]")
++		ALTERNATIVE_TERNARY("jmp 6f", %c[feature], "", "jmp %l[t_no]")
+ 		".pushsection .altinstr_aux,\"ax\"\n"
+ 		"6:\n"
+ 		" testb %[bitnum]," _ASM_RIP(%P[cap_byte]) "\n"
+diff --git a/arch/x86/include/asm/irq_stack.h b/arch/x86/include/asm/irq_stack.h
+index 798183867d789..b71ad173f8776 100644
+--- a/arch/x86/include/asm/irq_stack.h
++++ b/arch/x86/include/asm/irq_stack.h
+@@ -100,7 +100,7 @@
  }
  
- static void
--ip_set_destroy_set_rcu(struct rcu_head *head)
-+_destroy_all_sets(struct ip_set_net *inst)
- {
--	struct ip_set *set = container_of(head, struct ip_set, rcu);
-+	struct ip_set *set;
-+	ip_set_id_t i;
-+	bool need_wait = false;
+ #define ASM_CALL_ARG0							\
+-	"call %P[__func]				\n"		\
++	"call %c[__func]				\n"		\
+ 	ASM_REACHABLE
  
--	ip_set_destroy_set(set);
-+	/* First cancel gc's: set:list sets are flushed as well */
-+	for (i = 0; i < inst->ip_set_max; i++) {
-+		set = ip_set(inst, i);
-+		if (set) {
-+			set->variant->cancel_gc(set);
-+			if (set->type->features & IPSET_TYPE_NAME)
-+				need_wait = true;
-+		}
-+	}
-+	/* Must wait for flush to be really finished  */
-+	if (need_wait)
-+		rcu_barrier();
-+	for (i = 0; i < inst->ip_set_max; i++) {
-+		set = ip_set(inst, i);
-+		if (set) {
-+			ip_set(inst, i) = NULL;
-+			set->variant->destroy(set);
-+			module_put(set->type->me);
-+			kfree(set);
-+		}
-+	}
- }
- 
- static int ip_set_destroy(struct sk_buff *skb, const struct nfnl_info *info,
-@@ -1202,11 +1229,10 @@ static int ip_set_destroy(struct sk_buff *skb, const struct nfnl_info *info,
- 	if (unlikely(protocol_min_failed(attr)))
- 		return -IPSET_ERR_PROTOCOL;
- 
--
- 	/* Commands are serialized and references are
- 	 * protected by the ip_set_ref_lock.
- 	 * External systems (i.e. xt_set) must call
--	 * ip_set_put|get_nfnl_* functions, that way we
-+	 * ip_set_nfnl_get_* functions, that way we
- 	 * can safely check references here.
- 	 *
- 	 * list:set timer can only decrement the reference
-@@ -1214,8 +1240,6 @@ static int ip_set_destroy(struct sk_buff *skb, const struct nfnl_info *info,
- 	 * without holding the lock.
- 	 */
- 	if (!attr[IPSET_ATTR_SETNAME]) {
--		/* Must wait for flush to be really finished in list:set */
--		rcu_barrier();
- 		read_lock_bh(&ip_set_ref_lock);
- 		for (i = 0; i < inst->ip_set_max; i++) {
- 			s = ip_set(inst, i);
-@@ -1226,15 +1250,7 @@ static int ip_set_destroy(struct sk_buff *skb, const struct nfnl_info *info,
- 		}
- 		inst->is_destroyed = true;
- 		read_unlock_bh(&ip_set_ref_lock);
--		for (i = 0; i < inst->ip_set_max; i++) {
--			s = ip_set(inst, i);
--			if (s) {
--				ip_set(inst, i) = NULL;
--				/* Must cancel garbage collectors */
--				s->variant->cancel_gc(s);
--				ip_set_destroy_set(s);
--			}
--		}
-+		_destroy_all_sets(inst);
- 		/* Modified by ip_set_destroy() only, which is serialized */
- 		inst->is_destroyed = false;
- 	} else {
-@@ -1255,12 +1271,12 @@ static int ip_set_destroy(struct sk_buff *skb, const struct nfnl_info *info,
- 		features = s->type->features;
- 		ip_set(inst, i) = NULL;
- 		read_unlock_bh(&ip_set_ref_lock);
-+		/* Must cancel garbage collectors */
-+		s->variant->cancel_gc(s);
- 		if (features & IPSET_TYPE_NAME) {
- 			/* Must wait for flush to be really finished  */
- 			rcu_barrier();
- 		}
--		/* Must cancel garbage collectors */
--		s->variant->cancel_gc(s);
- 		call_rcu(&s->rcu, ip_set_destroy_set_rcu);
- 	}
- 	return 0;
-@@ -2365,30 +2381,25 @@ ip_set_net_init(struct net *net)
- }
- 
- static void __net_exit
--ip_set_net_exit(struct net *net)
-+ip_set_net_pre_exit(struct net *net)
- {
- 	struct ip_set_net *inst = ip_set_pernet(net);
- 
--	struct ip_set *set = NULL;
--	ip_set_id_t i;
--
- 	inst->is_deleted = true; /* flag for ip_set_nfnl_put */
-+}
- 
--	nfnl_lock(NFNL_SUBSYS_IPSET);
--	for (i = 0; i < inst->ip_set_max; i++) {
--		set = ip_set(inst, i);
--		if (set) {
--			ip_set(inst, i) = NULL;
--			set->variant->cancel_gc(set);
--			ip_set_destroy_set(set);
--		}
--	}
--	nfnl_unlock(NFNL_SUBSYS_IPSET);
-+static void __net_exit
-+ip_set_net_exit(struct net *net)
-+{
-+	struct ip_set_net *inst = ip_set_pernet(net);
-+
-+	_destroy_all_sets(inst);
- 	kvfree(rcu_dereference_protected(inst->ip_set_list, 1));
- }
- 
- static struct pernet_operations ip_set_net_ops = {
- 	.init	= ip_set_net_init,
-+	.pre_exit = ip_set_net_pre_exit,
- 	.exit   = ip_set_net_exit,
- 	.id	= &ip_set_net_id,
- 	.size	= sizeof(struct ip_set_net),
-diff --git a/net/netfilter/ipset/ip_set_list_set.c b/net/netfilter/ipset/ip_set_list_set.c
-index 54e2a1dd7f5f5..bfae7066936bb 100644
---- a/net/netfilter/ipset/ip_set_list_set.c
-+++ b/net/netfilter/ipset/ip_set_list_set.c
-@@ -79,7 +79,7 @@ list_set_kadd(struct ip_set *set, const struct sk_buff *skb,
- 	struct set_elem *e;
- 	int ret;
- 
--	list_for_each_entry(e, &map->members, list) {
-+	list_for_each_entry_rcu(e, &map->members, list) {
- 		if (SET_WITH_TIMEOUT(set) &&
- 		    ip_set_timeout_expired(ext_timeout(e, set)))
- 			continue;
-@@ -99,7 +99,7 @@ list_set_kdel(struct ip_set *set, const struct sk_buff *skb,
- 	struct set_elem *e;
- 	int ret;
- 
--	list_for_each_entry(e, &map->members, list) {
-+	list_for_each_entry_rcu(e, &map->members, list) {
- 		if (SET_WITH_TIMEOUT(set) &&
- 		    ip_set_timeout_expired(ext_timeout(e, set)))
- 			continue;
-@@ -188,9 +188,10 @@ list_set_utest(struct ip_set *set, void *value, const struct ip_set_ext *ext,
- 	struct list_set *map = set->data;
- 	struct set_adt_elem *d = value;
- 	struct set_elem *e, *next, *prev = NULL;
--	int ret;
-+	int ret = 0;
- 
--	list_for_each_entry(e, &map->members, list) {
-+	rcu_read_lock();
-+	list_for_each_entry_rcu(e, &map->members, list) {
- 		if (SET_WITH_TIMEOUT(set) &&
- 		    ip_set_timeout_expired(ext_timeout(e, set)))
- 			continue;
-@@ -201,6 +202,7 @@ list_set_utest(struct ip_set *set, void *value, const struct ip_set_ext *ext,
- 
- 		if (d->before == 0) {
- 			ret = 1;
-+			goto out;
- 		} else if (d->before > 0) {
- 			next = list_next_entry(e, list);
- 			ret = !list_is_last(&e->list, &map->members) &&
-@@ -208,9 +210,11 @@ list_set_utest(struct ip_set *set, void *value, const struct ip_set_ext *ext,
- 		} else {
- 			ret = prev && prev->id == d->refid;
- 		}
--		return ret;
-+		goto out;
- 	}
--	return 0;
-+out:
-+	rcu_read_unlock();
-+	return ret;
- }
- 
- static void
-@@ -239,7 +243,7 @@ list_set_uadd(struct ip_set *set, void *value, const struct ip_set_ext *ext,
- 
- 	/* Find where to add the new entry */
- 	n = prev = next = NULL;
--	list_for_each_entry(e, &map->members, list) {
-+	list_for_each_entry_rcu(e, &map->members, list) {
- 		if (SET_WITH_TIMEOUT(set) &&
- 		    ip_set_timeout_expired(ext_timeout(e, set)))
- 			continue;
-@@ -316,9 +320,9 @@ list_set_udel(struct ip_set *set, void *value, const struct ip_set_ext *ext,
- {
- 	struct list_set *map = set->data;
- 	struct set_adt_elem *d = value;
--	struct set_elem *e, *next, *prev = NULL;
-+	struct set_elem *e, *n, *next, *prev = NULL;
- 
--	list_for_each_entry(e, &map->members, list) {
-+	list_for_each_entry_safe(e, n, &map->members, list) {
- 		if (SET_WITH_TIMEOUT(set) &&
- 		    ip_set_timeout_expired(ext_timeout(e, set)))
- 			continue;
-@@ -424,14 +428,8 @@ static void
- list_set_destroy(struct ip_set *set)
- {
- 	struct list_set *map = set->data;
--	struct set_elem *e, *n;
- 
--	list_for_each_entry_safe(e, n, &map->members, list) {
--		list_del(&e->list);
--		ip_set_put_byindex(map->net, e->id);
--		ip_set_ext_destroy(set, e);
--		kfree(e);
--	}
-+	WARN_ON_ONCE(!list_empty(&map->members));
- 	kfree(map);
- 
- 	set->data = NULL;
+ #define ASM_CALL_ARG1							\
+diff --git a/arch/x86/include/asm/uaccess.h b/arch/x86/include/asm/uaccess.h
+index 237dc8cdd12b9..0f9bab92a43d7 100644
+--- a/arch/x86/include/asm/uaccess.h
++++ b/arch/x86/include/asm/uaccess.h
+@@ -78,7 +78,7 @@ extern int __get_user_bad(void);
+ 	int __ret_gu;							\
+ 	register __inttype(*(ptr)) __val_gu asm("%"_ASM_DX);		\
+ 	__chk_user_ptr(ptr);						\
+-	asm volatile("call __" #fn "_%P4"				\
++	asm volatile("call __" #fn "_%c4"				\
+ 		     : "=a" (__ret_gu), "=r" (__val_gu),		\
+ 			ASM_CALL_CONSTRAINT				\
+ 		     : "0" (ptr), "i" (sizeof(*(ptr))));		\
+@@ -177,7 +177,7 @@ extern void __put_user_nocheck_8(void);
+ 	__chk_user_ptr(__ptr);						\
+ 	__ptr_pu = __ptr;						\
+ 	__val_pu = __x;							\
+-	asm volatile("call __" #fn "_%P[size]"				\
++	asm volatile("call __" #fn "_%c[size]"				\
+ 		     : "=c" (__ret_pu),					\
+ 			ASM_CALL_CONSTRAINT				\
+ 		     : "0" (__ptr_pu),					\
 -- 
 2.43.0
 
