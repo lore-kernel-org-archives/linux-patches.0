@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B46143C65;
-	Wed, 19 Jun 2024 13:25:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D678143757;
+	Wed, 19 Jun 2024 13:25:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803504; cv=none; b=A+QLULnUDdj4Ktqc6FDQ/qa9k3u3SswoEJ4V5WlChfyqvyPYfagj/lCMZUaFu/f4UpJK9AllAh3nz0FdHzY736EAnHLjcZk8Lvmw9/cx3xDYepr1ju2Su0GaSgmU1tWbJmE+kbZSN7aAc76P3n9bO8iDuT/EEPgclxQJRU1/mk4=
+	t=1718803507; cv=none; b=Z+ODp/+A58M+HFLdu6YwDPtDCwGU1doD2JDx/E4GaXOP3B7HXYcH2xNHG6KT6VrQUyRT60jmMhJHZPPXxXPyLraZ024zo0H1yovScUcCnZihUSekxLamzMZTzFAn88Mltj0HZo7cgrSqPXGpdImdaYp5EDW/1rqQfK5y4A3m4MU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803504; c=relaxed/simple;
-	bh=8i+i2vKCjTkhNTUksVBg3iNO2aZT5aYXIhpek2X8A3M=;
+	s=arc-20240116; t=1718803507; c=relaxed/simple;
+	bh=CUS3eRls1VBEHGKe1yn4HhXTAWm/M2REkZhXRFH2cCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oc3GebBF83M6qT0KQDzMV+RgmJKPO1p/kwrwavvt6kyMck228dzr7k0BQH21w3x+E75NjeGoaUr8iS+RKksV7mtjhxHiBeNkTnJ/aGn2UapwBOdZ3HItgx3wzD8u4+PJo4jGguCF/N0c/CZ8siRPg9IHLpeYfUOOBM9l3GaHCRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vU+0AOKS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B6JFROEB2bwXOVbJ8tGE/5RGkjb/I9LMS3/jnp+Ms7306i8DXCICJt6QDFtXbO0xUYD9dWLNfKa0mPjBHbL0a+N2Mhy8WloyZzzsSntU+4fyfdlTG+e4F9Wktqlavs9NRtl3Y5gT0pjf5fZKsWwrarWBLTuX5MilSx8qaD6YqmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tbq50j1v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vU+0AOKS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5FC0C32786;
-	Wed, 19 Jun 2024 13:25:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tbq50j1v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5B2CC32786;
+	Wed, 19 Jun 2024 13:25:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803504;
-	bh=8i+i2vKCjTkhNTUksVBg3iNO2aZT5aYXIhpek2X8A3M=;
+	s=korg; t=1718803507;
+	bh=CUS3eRls1VBEHGKe1yn4HhXTAWm/M2REkZhXRFH2cCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vU+0AOKSHY5+xcT6Jn5zyQk0oFY8DhfaanuIk3DmZwG2bB8bejoPZOhLQTXjsk+xW
-	 zjnSpt8glzJ5kOlqyIoFsbRgn4qO+04JeNX1H6qChSuwCf6/Z4FRGr3Mhmd5k0nrsK
-	 otdSb0CKGk2lYU2ecSGNrFenqdNjVabqEDtdrV8Y=
+	b=tbq50j1viuQdAgOZi4Ek3oOCfi1ng2q7Zl+fDaQs2MpnvCvm0b1K8oxffXKW2ciS9
+	 YRMAywwLUmQXRevCe/7wnsN2SedL4YNFmo0wrlHhW15aedTxdmqs09jQ9KBPq6fI4p
+	 XL59A9q6gztcPW86A7B+NVKEq0II7tYFJeUPvBZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Wentong Wu <wentong.wu@intel.com>,
+	Nicolas Escande <nico.escande@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 277/281] mei: vsc: Fix wrong invocation of ACPI SID method
-Date: Wed, 19 Jun 2024 14:57:16 +0200
-Message-ID: <20240619125620.638690490@linuxfoundation.org>
+Subject: [PATCH 6.1 001/217] wifi: mac80211: mesh: Fix leak of mesh_preq_queue objects
+Date: Wed, 19 Jun 2024 14:54:04 +0200
+Message-ID: <20240619125556.551304432@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
-References: <20240619125609.836313103@linuxfoundation.org>
+In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
+References: <20240619125556.491243678@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,54 +47,102 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.9-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Nicolas Escande <nico.escande@gmail.com>
 
-[ Upstream commit af076156ec6d70332f1555754e99d4a3771ec297 ]
+[ Upstream commit b7d7f11a291830fdf69d3301075dd0fb347ced84 ]
 
-When using an initializer for a union only one of the union members
-must be initialized. The initializer for the acpi_object union variable
-passed as argument to the SID ACPI method was initializing both
-the type and the integer members of the union.
+The hwmp code use objects of type mesh_preq_queue, added to a list in
+ieee80211_if_mesh, to keep track of mpath we need to resolve. If the mpath
+gets deleted, ex mesh interface is removed, the entries in that list will
+never get cleaned. Fix this by flushing all corresponding items of the
+preq_queue in mesh_path_flush_pending().
 
-Unfortunately rather then complaining about this gcc simply ignores
-the first initializer and only used the second integer.value = 1
-initializer. Leaving type set to 0 which leads to the argument being
-skipped by acpi acpi_ns_evaluate() resulting in:
+This should take care of KASAN reports like this:
 
-ACPI Warning: \_SB.PC00.SPI1.SPFD.CVFD.SID: Insufficient arguments -
-Caller passed 0, method requires 1 (20240322/nsarguments-232)
+unreferenced object 0xffff00000668d800 (size 128):
+  comm "kworker/u8:4", pid 67, jiffies 4295419552 (age 1836.444s)
+  hex dump (first 32 bytes):
+    00 1f 05 09 00 00 ff ff 00 d5 68 06 00 00 ff ff  ..........h.....
+    8e 97 ea eb 3e b8 01 00 00 00 00 00 00 00 00 00  ....>...........
+  backtrace:
+    [<000000007302a0b6>] __kmem_cache_alloc_node+0x1e0/0x35c
+    [<00000000049bd418>] kmalloc_trace+0x34/0x80
+    [<0000000000d792bb>] mesh_queue_preq+0x44/0x2a8
+    [<00000000c99c3696>] mesh_nexthop_resolve+0x198/0x19c
+    [<00000000926bf598>] ieee80211_xmit+0x1d0/0x1f4
+    [<00000000fc8c2284>] __ieee80211_subif_start_xmit+0x30c/0x764
+    [<000000005926ee38>] ieee80211_subif_start_xmit+0x9c/0x7a4
+    [<000000004c86e916>] dev_hard_start_xmit+0x174/0x440
+    [<0000000023495647>] __dev_queue_xmit+0xe24/0x111c
+    [<00000000cfe9ca78>] batadv_send_skb_packet+0x180/0x1e4
+    [<000000007bacc5d5>] batadv_v_elp_periodic_work+0x2f4/0x508
+    [<00000000adc3cd94>] process_one_work+0x4b8/0xa1c
+    [<00000000b36425d1>] worker_thread+0x9c/0x634
+    [<0000000005852dd5>] kthread+0x1bc/0x1c4
+    [<000000005fccd770>] ret_from_fork+0x10/0x20
+unreferenced object 0xffff000009051f00 (size 128):
+  comm "kworker/u8:4", pid 67, jiffies 4295419553 (age 1836.440s)
+  hex dump (first 32 bytes):
+    90 d6 92 0d 00 00 ff ff 00 d8 68 06 00 00 ff ff  ..........h.....
+    36 27 92 e4 02 e0 01 00 00 58 79 06 00 00 ff ff  6'.......Xy.....
+  backtrace:
+    [<000000007302a0b6>] __kmem_cache_alloc_node+0x1e0/0x35c
+    [<00000000049bd418>] kmalloc_trace+0x34/0x80
+    [<0000000000d792bb>] mesh_queue_preq+0x44/0x2a8
+    [<00000000c99c3696>] mesh_nexthop_resolve+0x198/0x19c
+    [<00000000926bf598>] ieee80211_xmit+0x1d0/0x1f4
+    [<00000000fc8c2284>] __ieee80211_subif_start_xmit+0x30c/0x764
+    [<000000005926ee38>] ieee80211_subif_start_xmit+0x9c/0x7a4
+    [<000000004c86e916>] dev_hard_start_xmit+0x174/0x440
+    [<0000000023495647>] __dev_queue_xmit+0xe24/0x111c
+    [<00000000cfe9ca78>] batadv_send_skb_packet+0x180/0x1e4
+    [<000000007bacc5d5>] batadv_v_elp_periodic_work+0x2f4/0x508
+    [<00000000adc3cd94>] process_one_work+0x4b8/0xa1c
+    [<00000000b36425d1>] worker_thread+0x9c/0x634
+    [<0000000005852dd5>] kthread+0x1bc/0x1c4
+    [<000000005fccd770>] ret_from_fork+0x10/0x20
 
-Fix this by initializing only the integer struct part of the union
-and initializing both members of the integer struct.
-
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Fixes: 566f5ca97680 ("mei: Add transport driver for IVSC device")
-Reviewed-by: Wentong Wu <wentong.wu@intel.com>
-Link: https://lore.kernel.org/r/20240603205050.505389-1-hdegoede@redhat.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 050ac52cbe1f ("mac80211: code for on-demand Hybrid Wireless Mesh Protocol")
+Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
+Link: https://msgid.link/20240528142605.1060566-1-nico.escande@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/mei/vsc-fw-loader.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/mesh_pathtbl.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/misc/mei/vsc-fw-loader.c b/drivers/misc/mei/vsc-fw-loader.c
-index ffa4ccd96a104..596a9d695dfc1 100644
---- a/drivers/misc/mei/vsc-fw-loader.c
-+++ b/drivers/misc/mei/vsc-fw-loader.c
-@@ -252,7 +252,7 @@ static int vsc_get_sensor_name(struct vsc_fw_loader *fw_loader,
+diff --git a/net/mac80211/mesh_pathtbl.c b/net/mac80211/mesh_pathtbl.c
+index 69d5e1ec6edef..e7b9dcf30adc9 100644
+--- a/net/mac80211/mesh_pathtbl.c
++++ b/net/mac80211/mesh_pathtbl.c
+@@ -723,10 +723,23 @@ void mesh_path_discard_frame(struct ieee80211_sub_if_data *sdata,
+  */
+ void mesh_path_flush_pending(struct mesh_path *mpath)
  {
- 	struct acpi_buffer buffer = { ACPI_ALLOCATE_BUFFER };
- 	union acpi_object obj = {
--		.type = ACPI_TYPE_INTEGER,
-+		.integer.type = ACPI_TYPE_INTEGER,
- 		.integer.value = 1,
- 	};
- 	struct acpi_object_list arg_list = {
++	struct ieee80211_sub_if_data *sdata = mpath->sdata;
++	struct ieee80211_if_mesh *ifmsh = &sdata->u.mesh;
++	struct mesh_preq_queue *preq, *tmp;
+ 	struct sk_buff *skb;
+ 
+ 	while ((skb = skb_dequeue(&mpath->frame_queue)) != NULL)
+ 		mesh_path_discard_frame(mpath->sdata, skb);
++
++	spin_lock_bh(&ifmsh->mesh_preq_queue_lock);
++	list_for_each_entry_safe(preq, tmp, &ifmsh->preq_queue.list, list) {
++		if (ether_addr_equal(mpath->dst, preq->dst)) {
++			list_del(&preq->list);
++			kfree(preq);
++			--ifmsh->preq_queue_len;
++		}
++	}
++	spin_unlock_bh(&ifmsh->mesh_preq_queue_lock);
+ }
+ 
+ /**
 -- 
 2.43.0
 
