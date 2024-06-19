@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E145A13DDC0;
-	Wed, 19 Jun 2024 13:34:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D23FB13DDC0;
+	Wed, 19 Jun 2024 13:34:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718804066; cv=none; b=sXXYGxBDJthmhZU/7v63yS2XbWcKIUD6F+Dm4lfuA0jhiKDz1CsT8sUm3reqmUOuuPSVia3xrV50HZPMU8hjZ9Bc4DgbeiYd/QzQ4IUW17xlnBtPk4FgjlO//A4UQELz/b2wyzG9zsLBc4srmfXi+h/jlSS18Hc1xy3WQctMI3w=
+	t=1718804068; cv=none; b=hNmOGvYd9LZhbi5jE4RkghDhJ5F85C0uo8KGS7sErmMa3Q66D+mhmpP7LT5A4lkfpqNAiTT3hD+smXaDVBgimLxSVQqrSrB0iSWSvDEUuxHUxbvKDC+kG4oMNggaNiYmdVw1aZg+SdZ+o8w5nEeClqx/do2JGElX3MGInLPdCU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718804066; c=relaxed/simple;
-	bh=7QaB9Y/8ls0+qQLkZRttnMnQfO81SI23mG7TyxqoggI=;
+	s=arc-20240116; t=1718804068; c=relaxed/simple;
+	bh=bei5RIhcBRpuFB6iBmELw8A+80lj/U5x1cNCXWyIFpw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tIZLt9rH4rtJMusYd99/gigul26KbI7RjpGNdJqHr6b0CKwAbhUMkxB8629GccaAoPy1v8lLLdnMcWd0bmlkL70y0nDGzx5gubYn4Vlifh7V7bdwdYMvj+MPagpyOoCq8R7Px/2RE5YPpjZyIaNulfAXwrJ1aTCn7Y9MMO+vvD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbqNiJUi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HgraRLGBDlWha2a7QQxZG2sA1MCf0m8lP/6+fBlmIh2IqcXqk1+OOreOpV0Wq6dxH+iHgJO4ZKwnhwSYz9FoirqJgv0rgiU3SH93SCwUwWHRwNA/KOiBsd7USfK2FnIl4lY6qs2LW2uOyQyLcaA0GKz8X+7n3zPUAKvti31nRk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RsoAHJLz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbqNiJUi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C8AC4AF1A;
-	Wed, 19 Jun 2024 13:34:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RsoAHJLz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 571EBC2BBFC;
+	Wed, 19 Jun 2024 13:34:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718804065;
-	bh=7QaB9Y/8ls0+qQLkZRttnMnQfO81SI23mG7TyxqoggI=;
+	s=korg; t=1718804068;
+	bh=bei5RIhcBRpuFB6iBmELw8A+80lj/U5x1cNCXWyIFpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gbqNiJUiEHMAMKJYjkAzGf5HVtN01h0p9wKBeuN2lnqOuWzUyp9BdrvxndxfFP3/3
-	 asebOTidXeweiI8htcY5+fVephbgOqzQ6bkngqq6Y6hOdnUqLgCXNmSiLqxWcc56L1
-	 QMCzF/in1vv3ZBEED+M/ehfXBwt8WTfFxbYB2pJs=
+	b=RsoAHJLzx4fA+eocQGsLU001BfNiouqFPKnpCREIj7uSegbRhV70/pCtTIq76Dyeq
+	 fMrHZ7TGAUx8YRN+9Rbg0UVyJOH3MSCJP29OivuOks8g5C7o+UkZVqzn6d1mMGizkI
+	 FYwSI/Wh64oPi/7ur8mlUAQarVJc0Sqk8f5UXyPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.1 170/217] x86/amd_nb: Check for invalid SMN reads
-Date: Wed, 19 Jun 2024 14:56:53 +0200
-Message-ID: <20240619125603.248754408@linuxfoundation.org>
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Christoph Hellwig <hch@lst.de>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 197/217] btrfs: zoned: factor out DUP bg handling from btrfs_load_block_group_zone_info
+Date: Wed, 19 Jun 2024 14:57:20 +0200
+Message-ID: <20240619125604.286005585@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -50,59 +51,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yazen Ghannam <yazen.ghannam@amd.com>
+From: Christoph Hellwig <hch@lst.de>
 
-commit c625dabbf1c4a8e77e4734014f2fde7aa9071a1f upstream.
+commit 87463f7e0250d471fac41e7c9c45ae21d83b5f85 upstream.
 
-AMD Zen-based systems use a System Management Network (SMN) that
-provides access to implementation-specific registers.
+Split the code handling a type DUP block group from
+btrfs_load_block_group_zone_info to make the code more readable.
 
-SMN accesses are done indirectly through an index/data pair in PCI
-config space. The PCI config access may fail and return an error code.
-This would prevent the "read" value from being updated.
-
-However, the PCI config access may succeed, but the return value may be
-invalid. This is in similar fashion to PCI bad reads, i.e. return all
-bits set.
-
-Most systems will return 0 for SMN addresses that are not accessible.
-This is in line with AMD convention that unavailable registers are
-Read-as-Zero/Writes-Ignored.
-
-However, some systems will return a "PCI Error Response" instead. This
-value, along with an error code of 0 from the PCI config access, will
-confuse callers of the amd_smn_read() function.
-
-Check for this condition, clear the return value, and set a proper error
-code.
-
-Fixes: ddfe43cdc0da ("x86/amd_nb: Add SMN and Indirect Data Fabric access for AMD Fam17h")
-Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230403164244.471141-1-yazen.ghannam@amd.com
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/amd_nb.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/btrfs/zoned.c |   79 +++++++++++++++++++++++++++++--------------------------
+ 1 file changed, 42 insertions(+), 37 deletions(-)
 
---- a/arch/x86/kernel/amd_nb.c
-+++ b/arch/x86/kernel/amd_nb.c
-@@ -195,7 +195,14 @@ out:
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -1380,6 +1380,47 @@ static int btrfs_load_block_group_single
+ 	return 0;
+ }
  
- int amd_smn_read(u16 node, u32 address, u32 *value)
- {
--	return __amd_smn_rw(node, address, value, false);
-+	int err = __amd_smn_rw(node, address, value, false);
-+
-+	if (PCI_POSSIBLE_ERROR(*value)) {
-+		err = -ENODEV;
-+		*value = 0;
++static int btrfs_load_block_group_dup(struct btrfs_block_group *bg,
++				      struct map_lookup *map,
++				      struct zone_info *zone_info,
++				      unsigned long *active)
++{
++	if (map->type & BTRFS_BLOCK_GROUP_DATA) {
++		btrfs_err(bg->fs_info,
++			  "zoned: profile DUP not yet supported on data bg");
++		return -EINVAL;
 +	}
 +
-+	return err;
- }
- EXPORT_SYMBOL_GPL(amd_smn_read);
- 
++	if (zone_info[0].alloc_offset == WP_MISSING_DEV) {
++		btrfs_err(bg->fs_info,
++			  "zoned: cannot recover write pointer for zone %llu",
++			  zone_info[0].physical);
++		return -EIO;
++	}
++	if (zone_info[1].alloc_offset == WP_MISSING_DEV) {
++		btrfs_err(bg->fs_info,
++			  "zoned: cannot recover write pointer for zone %llu",
++			  zone_info[1].physical);
++		return -EIO;
++	}
++	if (zone_info[0].alloc_offset != zone_info[1].alloc_offset) {
++		btrfs_err(bg->fs_info,
++			  "zoned: write pointer offset mismatch of zones in DUP profile");
++		return -EIO;
++	}
++
++	if (test_bit(0, active) != test_bit(1, active)) {
++		if (!btrfs_zone_activate(bg))
++			return -EIO;
++	} else if (test_bit(0, active)) {
++		set_bit(BLOCK_GROUP_FLAG_ZONE_IS_ACTIVE, &bg->runtime_flags);
++	}
++
++	bg->alloc_offset = zone_info[0].alloc_offset;
++	bg->zone_capacity = min(zone_info[0].capacity, zone_info[1].capacity);
++	return 0;
++}
++
+ int btrfs_load_block_group_zone_info(struct btrfs_block_group *cache, bool new)
+ {
+ 	struct btrfs_fs_info *fs_info = cache->fs_info;
+@@ -1469,43 +1510,7 @@ int btrfs_load_block_group_zone_info(str
+ 		ret = btrfs_load_block_group_single(cache, &zone_info[0], active);
+ 		break;
+ 	case BTRFS_BLOCK_GROUP_DUP:
+-		if (map->type & BTRFS_BLOCK_GROUP_DATA) {
+-			btrfs_err(fs_info, "zoned: profile DUP not yet supported on data bg");
+-			ret = -EINVAL;
+-			goto out;
+-		}
+-		if (zone_info[0].alloc_offset == WP_MISSING_DEV) {
+-			btrfs_err(fs_info,
+-			"zoned: cannot recover write pointer for zone %llu",
+-				zone_info[0].physical);
+-			ret = -EIO;
+-			goto out;
+-		}
+-		if (zone_info[1].alloc_offset == WP_MISSING_DEV) {
+-			btrfs_err(fs_info,
+-			"zoned: cannot recover write pointer for zone %llu",
+-				zone_info[1].physical);
+-			ret = -EIO;
+-			goto out;
+-		}
+-		if (zone_info[0].alloc_offset != zone_info[1].alloc_offset) {
+-			btrfs_err(fs_info,
+-			"zoned: write pointer offset mismatch of zones in DUP profile");
+-			ret = -EIO;
+-			goto out;
+-		}
+-		if (test_bit(0, active) != test_bit(1, active)) {
+-			if (!btrfs_zone_activate(cache)) {
+-				ret = -EIO;
+-				goto out;
+-			}
+-		} else {
+-			if (test_bit(0, active))
+-				set_bit(BLOCK_GROUP_FLAG_ZONE_IS_ACTIVE,
+-					&cache->runtime_flags);
+-		}
+-		cache->alloc_offset = zone_info[0].alloc_offset;
+-		cache->zone_capacity = min(zone_info[0].capacity, zone_info[1].capacity);
++		ret = btrfs_load_block_group_dup(cache, map, zone_info, active);
+ 		break;
+ 	case BTRFS_BLOCK_GROUP_RAID1:
+ 	case BTRFS_BLOCK_GROUP_RAID0:
 
 
