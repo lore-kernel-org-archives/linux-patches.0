@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2437D1459F2;
-	Wed, 19 Jun 2024 13:21:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CDB812FB27;
+	Wed, 19 Jun 2024 13:21:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803308; cv=none; b=qYJekahE339CWKmlZxz965hwSpXiQIkoFYVikUkkQlBtLSiKoBfFdLDLFyD6tCa42q/E63tbSVW4NDoCE6vpuwwspcQnx0V5pLA1fYfaF7r3N1nXF0mgsTOKSDc48mJPMnrY6zRFYKIY6MRo9izQdQKL6zmNJG/NmyJbmLjRu1g=
+	t=1718803311; cv=none; b=ZO6aAKDUrucFAB5r4NsD17U4KTQx+FbT+KxJM2EV18sYwnyRU9PcJwieZ9q4Kk1c7njRWO2S4TZYj62WurT9zgvIjHh0RNnldRjN3eQUp7svv/nQGyYlzmp41C6UzpTn93kAUHajef2f1zOYU00+FAd0xEDHcP+yO5vFHtmP1wY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803308; c=relaxed/simple;
-	bh=TcB3JEw8ld6WiI5xC0wzW3QISw5Kp9SuYKqhl/Ag7tU=;
+	s=arc-20240116; t=1718803311; c=relaxed/simple;
+	bh=8wRyrSWNQOJMa4qnIjWs/5SB2kMLu5v+yAG3n3N5vSU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d0x/Qzh9VTI5+TQ/cERl3Y7nRO1tLjsZoOx6sMHVlBH7wELDtqdwYdVBLOnDi4g77XgUwFDaOv4n7e9RW9Z4SIWQvbXN4VByZE5hX4HMgO9ZnX/dfGcZIkZ3vl0ma99nTihpqlUw8KXoVA2TugSFzEte11hcbY01rtzWhq9SSf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tZqCCJje; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TT9tmzkwz5ealt5ODYGi00OXs6YqjrjIm8J96oLcuh374C/6D5BZ0XTsZyADp+Iw0h+daW9pJUQiIS55f48oz45iZeOLX2ZbXnH4rrdZEqEXv60+Adf55rGPjohr6mzew2HJmZx5dHN76+WKnGciyWXWAjck2PomphbjxwAYqZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XNap1aY6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZqCCJje"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 939ADC2BBFC;
-	Wed, 19 Jun 2024 13:21:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XNap1aY6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F3DC2BBFC;
+	Wed, 19 Jun 2024 13:21:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803308;
-	bh=TcB3JEw8ld6WiI5xC0wzW3QISw5Kp9SuYKqhl/Ag7tU=;
+	s=korg; t=1718803311;
+	bh=8wRyrSWNQOJMa4qnIjWs/5SB2kMLu5v+yAG3n3N5vSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tZqCCJjeZrOIJFJlR7F1GZWaoSaaOp4u9Q+W7LNUGVkqy42H9i0Tnh02niU6KwmUb
-	 fH2kf7O181TpaCu6d8D6jv2iFGEmdUd0BDOTXPpBMt7ajWd4t/hh/VfqICGsrMxVw+
-	 jyWiIjDz14alHK+aX2ZasOkm1gIxeraV3Y6EyacQ=
+	b=XNap1aY6qI2CqpqF4IGIkm5nN3mVs6AXBYli6/jqveiz1WPbMxOpYd3QvO/kAxqxb
+	 /OqyZmviDkQC0hvzK5HSut3TotVR6NixnQ5hxGGe3KF6hpOAsYzhGKuQArY18uEaKA
+	 PQCUhG6pHH2f509KeEMG9dtK6VgCr4J9HQP+sQSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
-	Nam Cao <namcao@linutronix.de>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.9 224/281] riscv: fix overlap of allocated page and PTR_ERR
-Date: Wed, 19 Jun 2024 14:56:23 +0200
-Message-ID: <20240619125618.578259559@linuxfoundation.org>
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 6.9 225/281] tracing/selftests: Fix kprobe event name test for .isra. functions
+Date: Wed, 19 Jun 2024 14:56:24 +0200
+Message-ID: <20240619125618.616004600@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -47,73 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nam Cao <namcao@linutronix.de>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 994af1825a2aa286f4903ff64a1c7378b52defe6 upstream.
+commit 23a4b108accc29a6125ed14de4a044689ffeda78 upstream.
 
-On riscv32, it is possible for the last page in virtual address space
-(0xfffff000) to be allocated. This page overlaps with PTR_ERR, so that
-shouldn't happen.
+The kprobe_eventname.tc test checks if a function with .isra. can have a
+kprobe attached to it. It loops through the kallsyms file for all the
+functions that have the .isra. name, and checks if it exists in the
+available_filter_functions file, and if it does, it uses it to attach a
+kprobe to it.
 
-There is already some code to ensure memblock won't allocate the last page.
-However, buddy allocator is left unchecked.
+The issue is that kprobes can not attach to functions that are listed more
+than once in available_filter_functions. With the latest kernel, the
+function that is found is: rapl_event_update.isra.0
 
-Fix this by reserving physical memory that would be mapped at virtual
-addresses greater than 0xfffff000.
+  # grep rapl_event_update.isra.0 /sys/kernel/tracing/available_filter_functions
+  rapl_event_update.isra.0
+  rapl_event_update.isra.0
 
-Reported-by: Björn Töpel <bjorn@kernel.org>
-Closes: https://lore.kernel.org/linux-riscv/878r1ibpdn.fsf@all.your.base.are.belong.to.us
-Fixes: 76d2a0493a17 ("RISC-V: Init and Halt Code")
-Signed-off-by: Nam Cao <namcao@linutronix.de>
-Cc: <stable@vger.kernel.org>
-Tested-by: Björn Töpel <bjorn@rivosinc.com>
-Reviewed-by: Björn Töpel <bjorn@rivosinc.com>
-Reviewed-by: Mike Rapoport (IBM) <rppt@kernel.org>
-Link: https://lore.kernel.org/r/20240425115201.3044202-1-namcao@linutronix.de
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+It is listed twice. This causes the attached kprobe to it to fail which in
+turn fails the test. Instead of just picking the function function that is
+found in available_filter_functions, pick the first one that is listed
+only once in available_filter_functions.
+
+Cc: stable@vger.kernel.org
+Fixes: 604e3548236d ("selftests/ftrace: Select an existing function in kprobe_eventname test")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/mm/init.c |   21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ tools/testing/selftests/ftrace/test.d/kprobe/kprobe_eventname.tc |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/riscv/mm/init.c
-+++ b/arch/riscv/mm/init.c
-@@ -235,18 +235,19 @@ static void __init setup_bootmem(void)
- 		kernel_map.va_pa_offset = PAGE_OFFSET - phys_ram_base;
+--- a/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_eventname.tc
++++ b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_eventname.tc
+@@ -30,7 +30,8 @@ find_dot_func() {
+ 	fi
  
- 	/*
--	 * memblock allocator is not aware of the fact that last 4K bytes of
--	 * the addressable memory can not be mapped because of IS_ERR_VALUE
--	 * macro. Make sure that last 4k bytes are not usable by memblock
--	 * if end of dram is equal to maximum addressable memory.  For 64-bit
--	 * kernel, this problem can't happen here as the end of the virtual
--	 * address space is occupied by the kernel mapping then this check must
--	 * be done as soon as the kernel mapping base address is determined.
-+	 * Reserve physical address space that would be mapped to virtual
-+	 * addresses greater than (void *)(-PAGE_SIZE) because:
-+	 *  - This memory would overlap with ERR_PTR
-+	 *  - This memory belongs to high memory, which is not supported
-+	 *
-+	 * This is not applicable to 64-bit kernel, because virtual addresses
-+	 * after (void *)(-PAGE_SIZE) are not linearly mapped: they are
-+	 * occupied by kernel mapping. Also it is unrealistic for high memory
-+	 * to exist on 64-bit platforms.
- 	 */
- 	if (!IS_ENABLED(CONFIG_64BIT)) {
--		max_mapped_addr = __pa(~(ulong)0);
--		if (max_mapped_addr == (phys_ram_end - 1))
--			memblock_set_current_limit(max_mapped_addr - 4096);
-+		max_mapped_addr = __va_to_pa_nodebug(-PAGE_SIZE);
-+		memblock_reserve(max_mapped_addr, (phys_addr_t)-max_mapped_addr);
- 	}
- 
- 	min_low_pfn = PFN_UP(phys_ram_base);
+ 	grep " [tT] .*\.isra\..*" /proc/kallsyms | cut -f 3 -d " " | while read f; do
+-		if grep -s $f available_filter_functions; then
++		cnt=`grep -s $f available_filter_functions | wc -l`;
++		if [ $cnt -eq 1 ]; then
+ 			echo $f
+ 			break
+ 		fi
 
 
