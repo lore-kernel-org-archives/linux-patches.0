@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DDA114A609;
-	Wed, 19 Jun 2024 13:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A34314E2D7;
+	Wed, 19 Jun 2024 13:26:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803604; cv=none; b=bMUdlkPvkZkzhCqZ2oiVtPYM9XlQ2XjDsZ1KmPGHqabRIy5D1qWLzki+pyPaxzTpfeDjbjKvqzZL7YnOTe8BSHh7jjCDDCoDNwu7/z6fbnoK/ZMKQhzUpj5gFFL1zHQFnNNNaEitwrI9eFM97jznaF65P9s1No+8ijrB4lJo7kI=
+	t=1718803607; cv=none; b=XJTR2EboBav3FAwwVHkOMrIfQnE9wfBfTR59xnLYyIQW2LNSaf1zc8djJM1jBpyog4x64zYH9NT8k7I7DgwI5usJl6Fe6japsqMpvVl4m2qldxVOf9it6q7L7Alv9615ls6PNBJqZuYnZXCCYP5LBD+l7hwARgxogVX/567/gwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803604; c=relaxed/simple;
-	bh=ZrTeDAWyPxLs8ccYGTNSygLdBW+4VY0BIsPGanPkp/o=;
+	s=arc-20240116; t=1718803607; c=relaxed/simple;
+	bh=+e5WZM8p5Rdce8WBvaDo8INRlSk787khhtEhqRYRhek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gJX1A7bqPCq06ijul4C3CtsspSzJ2NC0MmL5SXafTU8vI7DcdnPHUckx3cLXc3PDqbpkz8InOfr3wuwjc27/hF5sWb0QYiRLGRfaYV7ndIXds+hyn/nlvFI+nUXojR3+l64WNOvepxc82J4mZaa2AflbFuwIuqexX1xYrfv5CWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hceU72IF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ed1H4/ldlWmAFm8GD6wS2gvMJETHUet9VfJW7A40n0Sq7+v/fVTR57MV1z5EktODLNMz14p/fMzwOX27EPHbEUg7wnRrhDCVflTB8PYK3TYY/T7lvt/qb80FjqK+n7ShMJe7UoavM9EN0+UC58SYUS9UvKri/gymmTsrggGl3U0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VhXOLd6C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hceU72IF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE87BC4AF1A;
-	Wed, 19 Jun 2024 13:26:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VhXOLd6C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6146C2BBFC;
+	Wed, 19 Jun 2024 13:26:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803604;
-	bh=ZrTeDAWyPxLs8ccYGTNSygLdBW+4VY0BIsPGanPkp/o=;
+	s=korg; t=1718803607;
+	bh=+e5WZM8p5Rdce8WBvaDo8INRlSk787khhtEhqRYRhek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hceU72IFLvBUn9mBsOHsi4Iu+hvIbtnL+qjKShhRfFPBCNFb5q4WlP0xlePsHHGDK
-	 otm9Jeg+Cu5RE+Pf5tLAfHAIz1IW0VCMhqlNxABk3mfUuPaupxPURA5QILQFbSQhXO
-	 YrP0HKIGUD2WY2wILn1I2GUAQfBStA6hWd9GDRjE=
+	b=VhXOLd6CKL3hxOxzJxT1eu6n0kZkd1MTU06rKo+5FyN5n/Z6Ungor3WBmjBQ1ajUf
+	 iRW01/N6xz5G158Bl/bYezzmHSHawWYPbVTl0LdaXwPkEaWsfFikJSTkfTOe9czGOz
+	 qSe5ddhmgxZsIzbNUqVEgBrURZOcEIDHGYJ3GPsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 042/217] af_unix: Annotate data-races around sk->sk_state in UNIX_DIAG.
-Date: Wed, 19 Jun 2024 14:54:45 +0200
-Message-ID: <20240619125558.280560405@linuxfoundation.org>
+Subject: [PATCH 6.1 043/217] af_unix: Annotate data-race of net->unx.sysctl_max_dgram_qlen.
+Date: Wed, 19 Jun 2024 14:54:46 +0200
+Message-ID: <20240619125558.318852778@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -53,67 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 0aa3be7b3e1f8f997312cc4705f8165e02806f8f ]
+[ Upstream commit bd9f2d05731f6a112d0c7391a0d537bfc588dbe6 ]
 
-While dumping AF_UNIX sockets via UNIX_DIAG, sk->sk_state is read
-locklessly.
+net->unx.sysctl_max_dgram_qlen is exposed as a sysctl knob and can be
+changed concurrently.
 
-Let's use READ_ONCE() there.
+Let's use READ_ONCE() in unix_create1().
 
-Note that the result could be inconsistent if the socket is dumped
-during the state change.  This is common for other SOCK_DIAG and
-similar interfaces.
-
-Fixes: c9da99e6475f ("unix_diag: Fixup RQLEN extension report")
-Fixes: 2aac7a2cb0d9 ("unix_diag: Pending connections IDs NLA")
-Fixes: 45a96b9be6ec ("unix_diag: Dumping all sockets core")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/diag.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/unix/af_unix.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/unix/diag.c b/net/unix/diag.c
-index 3438b7af09af5..9151c72e742fc 100644
---- a/net/unix/diag.c
-+++ b/net/unix/diag.c
-@@ -65,7 +65,7 @@ static int sk_diag_dump_icons(struct sock *sk, struct sk_buff *nlskb)
- 	u32 *buf;
- 	int i;
- 
--	if (sk->sk_state == TCP_LISTEN) {
-+	if (READ_ONCE(sk->sk_state) == TCP_LISTEN) {
- 		spin_lock(&sk->sk_receive_queue.lock);
- 
- 		attr = nla_reserve(nlskb, UNIX_DIAG_ICONS,
-@@ -103,7 +103,7 @@ static int sk_diag_show_rqlen(struct sock *sk, struct sk_buff *nlskb)
- {
- 	struct unix_diag_rqlen rql;
- 
--	if (sk->sk_state == TCP_LISTEN) {
-+	if (READ_ONCE(sk->sk_state) == TCP_LISTEN) {
- 		rql.udiag_rqueue = sk->sk_receive_queue.qlen;
- 		rql.udiag_wqueue = sk->sk_max_ack_backlog;
- 	} else {
-@@ -136,7 +136,7 @@ static int sk_diag_fill(struct sock *sk, struct sk_buff *skb, struct unix_diag_r
- 	rep = nlmsg_data(nlh);
- 	rep->udiag_family = AF_UNIX;
- 	rep->udiag_type = sk->sk_type;
--	rep->udiag_state = sk->sk_state;
-+	rep->udiag_state = READ_ONCE(sk->sk_state);
- 	rep->pad = 0;
- 	rep->udiag_ino = sk_ino;
- 	sock_diag_save_cookie(sk, rep->udiag_cookie);
-@@ -215,7 +215,7 @@ static int unix_diag_dump(struct sk_buff *skb, struct netlink_callback *cb)
- 		sk_for_each(sk, &net->unx.table.buckets[slot]) {
- 			if (num < s_num)
- 				goto next;
--			if (!(req->udiag_states & (1 << sk->sk_state)))
-+			if (!(req->udiag_states & (1 << READ_ONCE(sk->sk_state))))
- 				goto next;
- 			if (sk_diag_dump(sk, skb, req, sk_user_ns(skb->sk),
- 					 NETLINK_CB(cb->skb).portid,
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index f6ba015fffd2f..5cffbd0661406 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -966,7 +966,7 @@ static struct sock *unix_create1(struct net *net, struct socket *sock, int kern,
+ 	sk->sk_hash		= unix_unbound_hash(sk);
+ 	sk->sk_allocation	= GFP_KERNEL_ACCOUNT;
+ 	sk->sk_write_space	= unix_write_space;
+-	sk->sk_max_ack_backlog	= net->unx.sysctl_max_dgram_qlen;
++	sk->sk_max_ack_backlog	= READ_ONCE(net->unx.sysctl_max_dgram_qlen);
+ 	sk->sk_destruct		= unix_sock_destructor;
+ 	u = unix_sk(sk);
+ 	u->inflight = 0;
 -- 
 2.43.0
 
