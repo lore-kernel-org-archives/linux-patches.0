@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF7F1E492;
-	Wed, 19 Jun 2024 13:31:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670D6147C7B;
+	Wed, 19 Jun 2024 13:31:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803893; cv=none; b=mf9+WLohSEwi2jLpxumYnRhnPS4yIAY6JKaw/KCsjExojWk6vNR1wfMVOGjxdniCq4mj9MSwVW5bo6on/YN49s2e3Q4CFBsY8IjmB2avmcL2toDrFyzq0QrPS+vQIhCB1ht+QDDCwJYoUE8moNjjPBZ3K6Y6N9XqWbRCDEPWZhA=
+	t=1718803896; cv=none; b=bDatKRZrKuxvMwY4YkMX7ceLMBIGrlBkGjK9rX6UJeCn5QOlTvfhcb25dKKqOhLn7cfv7Kuq/Mz8FQGutM1I13sjYRxtezXpyfpRSmyF0o3WCWoU8eWeI9d9EJ3iGMexCEMteSWrAyyKaw5TtuyNDBEa88wI6W0vPGNzjYjnlic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803893; c=relaxed/simple;
-	bh=JhdGJuCp/bimEt5pWDneDfs76GViijvwj3Iq+/V6w48=;
+	s=arc-20240116; t=1718803896; c=relaxed/simple;
+	bh=HhZ6BhqYtdOoP1wpiIhHGhjt2c2fC5hs68t9EGVBMmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IL6zpyKwihRAGcsQDJvmcryyl7jT2N57fn7X3zVGhz4jhvJcvN1JvkI4BK5TiJL0DSVCjwi8ixILccw8zlDrTcydUM60dEn8eoB7cgLPngqeTU1GHCjnTmRbXxl1ClFtikyV2aVzd4b4pAhzTFAdVuoLQp8QItEdl0xxawvPyBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=un5gmKcn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g6M8k+CPVRQobBOGBEUD+i1oA59TsaiAVnScxs2kJvtcbpiUmRUrS4qMXCp9bSlmE3e/3QN3wC5NO6iUaG8ydtyw8uCVZvJSaJ9ke8WnGusMp9+XhK1d2kWydYpHCkkcmLoG6cO+J+1GDfkfAJujive5w/r9497KVRcT5ELOCxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wRq8c771; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="un5gmKcn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2ACCC2BBFC;
-	Wed, 19 Jun 2024 13:31:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wRq8c771"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1618C2BBFC;
+	Wed, 19 Jun 2024 13:31:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803893;
-	bh=JhdGJuCp/bimEt5pWDneDfs76GViijvwj3Iq+/V6w48=;
+	s=korg; t=1718803896;
+	bh=HhZ6BhqYtdOoP1wpiIhHGhjt2c2fC5hs68t9EGVBMmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=un5gmKcna2b1Y8N1sh2mdbIJF6ZuTKT6lNp0fl5xrfk6q9uZK+SvPCQwuiE8Gx6+K
-	 JyUQ4qMoCg/yvw5r+gVu7ScfuxUbyCXSwtWFjQuIiqzNkdZ8iXGKg/1tZslAvYJXmd
-	 493bxFNcpV0IUG1upKAJ6Qfsmx2BQo0T0iOSgl4M=
+	b=wRq8c771VAnvfd0GtXal35ZvGlnDW6m4DGq5DqS9ZqMffywfdr7uxL+C6wlVxdn9A
+	 iUeo3Sp/9fh1+8BH8e8K70e5zo8PmUa05P1CLN9ENSEZelV/S5anunzlOf+fX/Q+VT
+	 2KXi1t+IZxu21G52C6g5IS22EgSdqrzpn5pmt17c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia Zhu <zhujia.zj@bytedance.com>,
-	Jingbo Xu <jefflexu@linux.alibaba.com>,
-	David Howells <dhowells@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 108/217] cachefiles: extract ondemand info field from cachefiles_object
-Date: Wed, 19 Jun 2024 14:55:51 +0200
-Message-ID: <20240619125600.856080787@linuxfoundation.org>
+	Keith Busch <kbusch@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 099/217] scsi: mpt3sas: Avoid test/set_bit() operating in non-allocated memory
+Date: Wed, 19 Jun 2024 14:55:42 +0200
+Message-ID: <20240619125600.509735630@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -53,206 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Zhu <zhujia.zj@bytedance.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 3c5ecfe16e7699011c12c2d44e55437415331fa3 ]
+commit 4254dfeda82f20844299dca6c38cbffcfd499f41 upstream.
 
-We'll introduce a @work_struct field for @object in subsequent patches,
-it will enlarge the size of @object.
-As the result of that, this commit extracts ondemand info field from
-@object.
+There is a potential out-of-bounds access when using test_bit() on a single
+word. The test_bit() and set_bit() functions operate on long values, and
+when testing or setting a single word, they can exceed the word
+boundary. KASAN detects this issue and produces a dump:
 
-Signed-off-by: Jia Zhu <zhujia.zj@bytedance.com>
-Link: https://lore.kernel.org/r/20231120041422.75170-3-zhujia.zj@bytedance.com
-Reviewed-by: Jingbo Xu <jefflexu@linux.alibaba.com>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: 0a790040838c ("cachefiles: add spin_lock for cachefiles_ondemand_info")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+	 BUG: KASAN: slab-out-of-bounds in _scsih_add_device.constprop.0 (./arch/x86/include/asm/bitops.h:60 ./include/asm-generic/bitops/instrumented-atomic.h:29 drivers/scsi/mpt3sas/mpt3sas_scsih.c:7331) mpt3sas
+
+	 Write of size 8 at addr ffff8881d26e3c60 by task kworker/u1536:2/2965
+
+For full log, please look at [1].
+
+Make the allocation at least the size of sizeof(unsigned long) so that
+set_bit() and test_bit() have sufficient room for read/write operations
+without overwriting unallocated memory.
+
+[1] Link: https://lore.kernel.org/all/ZkNcALr3W3KGYYJG@gmail.com/
+
+Fixes: c696f7b83ede ("scsi: mpt3sas: Implement device_remove_in_progress check in IOCTL path")
+Cc: stable@vger.kernel.org
+Suggested-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://lore.kernel.org/r/20240605085530.499432-1-leitao@debian.org
+Reviewed-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cachefiles/interface.c |  7 ++++++-
- fs/cachefiles/internal.h  | 26 ++++++++++++++++++++++----
- fs/cachefiles/ondemand.c  | 34 ++++++++++++++++++++++++++++------
- 3 files changed, 56 insertions(+), 11 deletions(-)
+ drivers/scsi/mpt3sas/mpt3sas_base.c |   19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/fs/cachefiles/interface.c b/fs/cachefiles/interface.c
-index a69073a1d3f06..bde23e156a63c 100644
---- a/fs/cachefiles/interface.c
-+++ b/fs/cachefiles/interface.c
-@@ -31,6 +31,11 @@ struct cachefiles_object *cachefiles_alloc_object(struct fscache_cookie *cookie)
- 	if (!object)
- 		return NULL;
- 
-+	if (cachefiles_ondemand_init_obj_info(object, volume)) {
-+		kmem_cache_free(cachefiles_object_jar, object);
-+		return NULL;
-+	}
+--- a/drivers/scsi/mpt3sas/mpt3sas_base.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
+@@ -8497,6 +8497,12 @@ mpt3sas_base_attach(struct MPT3SAS_ADAPT
+ 	ioc->pd_handles_sz = (ioc->facts.MaxDevHandle / 8);
+ 	if (ioc->facts.MaxDevHandle % 8)
+ 		ioc->pd_handles_sz++;
++	/*
++	 * pd_handles_sz should have, at least, the minimal room for
++	 * set_bit()/test_bit(), otherwise out-of-memory touch may occur.
++	 */
++	ioc->pd_handles_sz = ALIGN(ioc->pd_handles_sz, sizeof(unsigned long));
 +
- 	refcount_set(&object->ref, 1);
- 
- 	spin_lock_init(&object->lock);
-@@ -88,7 +93,7 @@ void cachefiles_put_object(struct cachefiles_object *object,
- 		ASSERTCMP(object->file, ==, NULL);
- 
- 		kfree(object->d_name);
--
-+		cachefiles_ondemand_deinit_obj_info(object);
- 		cache = object->volume->cache->cache;
- 		fscache_put_cookie(object->cookie, fscache_cookie_put_object);
- 		object->cookie = NULL;
-diff --git a/fs/cachefiles/internal.h b/fs/cachefiles/internal.h
-index 00beedeaec183..b0fe76964bc0d 100644
---- a/fs/cachefiles/internal.h
-+++ b/fs/cachefiles/internal.h
-@@ -49,6 +49,12 @@ enum cachefiles_object_state {
- 	CACHEFILES_ONDEMAND_OBJSTATE_OPEN, /* Anonymous fd associated with object is available */
- };
- 
-+struct cachefiles_ondemand_info {
-+	int				ondemand_id;
-+	enum cachefiles_object_state	state;
-+	struct cachefiles_object	*object;
-+};
+ 	ioc->pd_handles = kzalloc(ioc->pd_handles_sz,
+ 	    GFP_KERNEL);
+ 	if (!ioc->pd_handles) {
+@@ -8514,6 +8520,13 @@ mpt3sas_base_attach(struct MPT3SAS_ADAPT
+ 	ioc->pend_os_device_add_sz = (ioc->facts.MaxDevHandle / 8);
+ 	if (ioc->facts.MaxDevHandle % 8)
+ 		ioc->pend_os_device_add_sz++;
 +
- /*
-  * Backing file state.
-  */
-@@ -66,8 +72,7 @@ struct cachefiles_object {
- 	unsigned long			flags;
- #define CACHEFILES_OBJECT_USING_TMPFILE	0		/* Have an unlinked tmpfile */
- #ifdef CONFIG_CACHEFILES_ONDEMAND
--	int				ondemand_id;
--	enum cachefiles_object_state	state;
-+	struct cachefiles_ondemand_info	*ondemand;
- #endif
- };
++	/*
++	 * pend_os_device_add_sz should have, at least, the minimal room for
++	 * set_bit()/test_bit(), otherwise out-of-memory may occur.
++	 */
++	ioc->pend_os_device_add_sz = ALIGN(ioc->pend_os_device_add_sz,
++					   sizeof(unsigned long));
+ 	ioc->pend_os_device_add = kzalloc(ioc->pend_os_device_add_sz,
+ 	    GFP_KERNEL);
+ 	if (!ioc->pend_os_device_add) {
+@@ -8805,6 +8818,12 @@ _base_check_ioc_facts_changes(struct MPT
+ 		if (ioc->facts.MaxDevHandle % 8)
+ 			pd_handles_sz++;
  
-@@ -302,17 +307,21 @@ extern void cachefiles_ondemand_clean_object(struct cachefiles_object *object);
- extern int cachefiles_ondemand_read(struct cachefiles_object *object,
- 				    loff_t pos, size_t len);
- 
-+extern int cachefiles_ondemand_init_obj_info(struct cachefiles_object *obj,
-+					struct cachefiles_volume *volume);
-+extern void cachefiles_ondemand_deinit_obj_info(struct cachefiles_object *obj);
-+
- #define CACHEFILES_OBJECT_STATE_FUNCS(_state, _STATE)	\
- static inline bool								\
- cachefiles_ondemand_object_is_##_state(const struct cachefiles_object *object) \
- {												\
--	return object->state == CACHEFILES_ONDEMAND_OBJSTATE_##_STATE; \
-+	return object->ondemand->state == CACHEFILES_ONDEMAND_OBJSTATE_##_STATE; \
- }												\
- 												\
- static inline void								\
- cachefiles_ondemand_set_object_##_state(struct cachefiles_object *object) \
- {												\
--	object->state = CACHEFILES_ONDEMAND_OBJSTATE_##_STATE; \
-+	object->ondemand->state = CACHEFILES_ONDEMAND_OBJSTATE_##_STATE; \
- }
- 
- CACHEFILES_OBJECT_STATE_FUNCS(open, OPEN);
-@@ -338,6 +347,15 @@ static inline int cachefiles_ondemand_read(struct cachefiles_object *object,
- {
- 	return -EOPNOTSUPP;
- }
-+
-+static inline int cachefiles_ondemand_init_obj_info(struct cachefiles_object *obj,
-+						struct cachefiles_volume *volume)
-+{
-+	return 0;
-+}
-+static inline void cachefiles_ondemand_deinit_obj_info(struct cachefiles_object *obj)
-+{
-+}
- #endif
- 
- /*
-diff --git a/fs/cachefiles/ondemand.c b/fs/cachefiles/ondemand.c
-index 90456b8a4b3e0..deb7e3007aa1d 100644
---- a/fs/cachefiles/ondemand.c
-+++ b/fs/cachefiles/ondemand.c
-@@ -9,12 +9,13 @@ static int cachefiles_ondemand_fd_release(struct inode *inode,
- {
- 	struct cachefiles_object *object = file->private_data;
- 	struct cachefiles_cache *cache = object->volume->cache;
--	int object_id = object->ondemand_id;
-+	struct cachefiles_ondemand_info *info = object->ondemand;
-+	int object_id = info->ondemand_id;
- 	struct cachefiles_req *req;
- 	XA_STATE(xas, &cache->reqs, 0);
- 
- 	xa_lock(&cache->reqs);
--	object->ondemand_id = CACHEFILES_ONDEMAND_ID_CLOSED;
-+	info->ondemand_id = CACHEFILES_ONDEMAND_ID_CLOSED;
- 	cachefiles_ondemand_set_object_close(object);
- 
- 	/*
-@@ -222,7 +223,7 @@ static int cachefiles_ondemand_get_fd(struct cachefiles_req *req)
- 	load = (void *)req->msg.data;
- 	load->fd = fd;
- 	req->msg.object_id = object_id;
--	object->ondemand_id = object_id;
-+	object->ondemand->ondemand_id = object_id;
- 
- 	cachefiles_get_unbind_pincount(cache);
- 	trace_cachefiles_ondemand_open(object, &req->msg, load);
-@@ -368,7 +369,7 @@ static int cachefiles_ondemand_send_req(struct cachefiles_object *object,
- 
- 		if (opcode != CACHEFILES_OP_OPEN &&
- 			!cachefiles_ondemand_object_is_open(object)) {
--			WARN_ON_ONCE(object->ondemand_id == 0);
-+			WARN_ON_ONCE(object->ondemand->ondemand_id == 0);
- 			xas_unlock(&xas);
- 			ret = -EIO;
- 			goto out;
-@@ -438,7 +439,7 @@ static int cachefiles_ondemand_init_close_req(struct cachefiles_req *req,
- 	if (!cachefiles_ondemand_object_is_open(object))
- 		return -ENOENT;
- 
--	req->msg.object_id = object->ondemand_id;
-+	req->msg.object_id = object->ondemand->ondemand_id;
- 	trace_cachefiles_ondemand_close(object, &req->msg);
- 	return 0;
- }
-@@ -454,7 +455,7 @@ static int cachefiles_ondemand_init_read_req(struct cachefiles_req *req,
- 	struct cachefiles_object *object = req->object;
- 	struct cachefiles_read *load = (void *)req->msg.data;
- 	struct cachefiles_read_ctx *read_ctx = private;
--	int object_id = object->ondemand_id;
-+	int object_id = object->ondemand->ondemand_id;
- 
- 	/* Stop enqueuing requests when daemon has closed anon_fd. */
- 	if (!cachefiles_ondemand_object_is_open(object)) {
-@@ -500,6 +501,27 @@ void cachefiles_ondemand_clean_object(struct cachefiles_object *object)
- 			cachefiles_ondemand_init_close_req, NULL);
- }
- 
-+int cachefiles_ondemand_init_obj_info(struct cachefiles_object *object,
-+				struct cachefiles_volume *volume)
-+{
-+	if (!cachefiles_in_ondemand_mode(volume->cache))
-+		return 0;
-+
-+	object->ondemand = kzalloc(sizeof(struct cachefiles_ondemand_info),
-+					GFP_KERNEL);
-+	if (!object->ondemand)
-+		return -ENOMEM;
-+
-+	object->ondemand->object = object;
-+	return 0;
-+}
-+
-+void cachefiles_ondemand_deinit_obj_info(struct cachefiles_object *object)
-+{
-+	kfree(object->ondemand);
-+	object->ondemand = NULL;
-+}
-+
- int cachefiles_ondemand_read(struct cachefiles_object *object,
- 			     loff_t pos, size_t len)
- {
--- 
-2.43.0
-
++		/*
++		 * pd_handles should have, at least, the minimal room for
++		 * set_bit()/test_bit(), otherwise out-of-memory touch may
++		 * occur.
++		 */
++		pd_handles_sz = ALIGN(pd_handles_sz, sizeof(unsigned long));
+ 		pd_handles = krealloc(ioc->pd_handles, pd_handles_sz,
+ 		    GFP_KERNEL);
+ 		if (!pd_handles) {
 
 
