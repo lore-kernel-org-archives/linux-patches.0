@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D89A147C60;
-	Wed, 19 Jun 2024 12:58:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3B2149DFC;
+	Wed, 19 Jun 2024 12:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718801931; cv=none; b=A3+iisklOr+NaTo66TcPqUV5aOGDOAR96Z+RTvvHWArM/ekhEA0aLuZrzHqTs9n3lJ6LCEhKR8zhD8xZEs2cNtwq0xbSo66SDRiDbEF1WOCb8SvlRiXq8NTWuzW/LjIxZ46qXcUfsRTg0uTjg+sQsr0P8T62O70q4Nh5ISXx4k8=
+	t=1718801934; cv=none; b=e3tEq3Wm21sg4xo098oF3aCWE/bYTf37IckiJ29umwLTh7ZE9tBu1/BwaiM249thXPg9/uB65j1rJtC3bDbIappbby7Nl2L/dnfzSnmYDJn/A+/IUUH2b//CCFnVxc4m6GPXud3LQ91oCXMM1DZ3P5/MiEiqeJNNrKiDyJ10T8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718801931; c=relaxed/simple;
-	bh=1LmvkUhxMkT6EkfciRLy9MBPNmiRIhunrzEkJ0DQINk=;
+	s=arc-20240116; t=1718801934; c=relaxed/simple;
+	bh=JYpMuuXO0EAlCRs2YDxp4qTqUzQl661rUHgdUsr6/Y0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GJRNHxnVl7n6DRmx1vPZm4Nvw71CSxjSqbieuHIu3P95H+M5fyzVwK1nqawvJb0WbEgOyCVty5BGB4DIJ/+XpvNVuvG9xUuJOr2wh7yrB3DcqxwuCIdvwS05KJw1TZ3XtwJl6AEgCmmuFCtmmliFLNTnNpjfG/R1lTCkNN3vzA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bcfYKC3Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CqBGQsCBelz8RMnsHo/wQxX6RzfoBxSCp5pIPiclqOYH+8x70NJOaCjYbrMjTRCxA46QhhI7PYBTFXhtAeTdRIDw/EhND/VsPMd/nCF/9eSfMUArvhB93kas2bVNnP816fwyi4LVqCgEgHCrI0FYn0GpS2b8R1oMftDdvNBLmTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XQ2G2RMN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bcfYKC3Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AD5BC2BBFC;
-	Wed, 19 Jun 2024 12:58:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XQ2G2RMN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76A3CC4AF49;
+	Wed, 19 Jun 2024 12:58:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718801930;
-	bh=1LmvkUhxMkT6EkfciRLy9MBPNmiRIhunrzEkJ0DQINk=;
+	s=korg; t=1718801933;
+	bh=JYpMuuXO0EAlCRs2YDxp4qTqUzQl661rUHgdUsr6/Y0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bcfYKC3ZBOPRCyDgM2M6cDZuOjPI17x7no9hGpV/pao6RUcDum4+L8hu8VVmAFzIZ
-	 uQ0XpKaQfu3iaV17hIC991Qv1VQqF2Mt2aaDJSU0PMogVjzWhgiTu6u0s1M3S8HRlq
-	 3oDYe/SSeyXVt4dSX1msjW8F/MBMzx7qxTfRL4P0=
+	b=XQ2G2RMNcgm6L3zUNTl+rNc/wWC0wjRJhPmCOUwpEwxtct4Z1IXZ7T5K8IjSFCqgD
+	 pSbncRcRufwLzzYJDzxXdkvhFYFSljsPBRlBOpx3ZnvB09EoTuqEVwFGfAV/bpFer9
+	 jyjdtlZQ4fL1mE4xj5lxaR4wjOrQRXEVQaezrp+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Kardashevskiy <aik@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Michael Roth <michael.roth@amd.com>,
+	Nikunj A Dadhania <nikunj@amd.com>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 025/267] KVM: SEV: Do not intercept accesses to MSR_IA32_XSS for SEV-ES guests
-Date: Wed, 19 Jun 2024 14:52:56 +0200
-Message-ID: <20240619125607.327017916@linuxfoundation.org>
+Subject: [PATCH 6.6 026/267] KVM: SEV-ES: Delegate LBR virtualization to the processor
+Date: Wed, 19 Jun 2024 14:52:57 +0200
+Message-ID: <20240619125607.366856126@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -53,109 +52,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Roth <michael.roth@amd.com>
+From: Ravi Bangoria <ravi.bangoria@amd.com>
 
-[ Upstream commit a26b7cd2254695f8258cc370f33280db0a9a3813 ]
+[ Upstream commit b7e4be0a224fe5c6be30c1c8bdda8d2317ad6ba4 ]
 
-When intercepts are enabled for MSR_IA32_XSS, the host will swap in/out
-the guest-defined values while context-switching to/from guest mode.
-However, in the case of SEV-ES, vcpu->arch.guest_state_protected is set,
-so the guest-defined value is effectively ignored when switching to
-guest mode with the understanding that the VMSA will handle swapping
-in/out this register state.
+As documented in APM[1], LBR Virtualization must be enabled for SEV-ES
+guests. Although KVM currently enforces LBRV for SEV-ES guests, there
+are multiple issues with it:
 
-However, SVM is still configured to intercept these accesses for SEV-ES
-guests, so the values in the initial MSR_IA32_XSS are effectively
-read-only, and a guest will experience undefined behavior if it actually
-tries to write to this MSR. Fortunately, only CET/shadowstack makes use
-of this register on SEV-ES-capable systems currently, which isn't yet
-widely used, but this may become more of an issue in the future.
+o MSR_IA32_DEBUGCTLMSR is still intercepted. Since MSR_IA32_DEBUGCTLMSR
+  interception is used to dynamically toggle LBRV for performance reasons,
+  this can be fatal for SEV-ES guests. For ex SEV-ES guest on Zen3:
 
-Additionally, enabling intercepts of MSR_IA32_XSS results in #VC
-exceptions in the guest in certain paths that can lead to unexpected #VC
-nesting levels. One example is SEV-SNP guests when handling #VC
-exceptions for CPUID instructions involving leaf 0xD, subleaf 0x1, since
-they will access MSR_IA32_XSS as part of servicing the CPUID #VC, then
-generate another #VC when accessing MSR_IA32_XSS, which can lead to
-guest crashes if an NMI occurs at that point in time. Running perf on a
-guest while it is issuing such a sequence is one example where these can
-be problematic.
+  [guest ~]# wrmsr 0x1d9 0x4
+  KVM: entry failed, hardware error 0xffffffff
+  EAX=00000004 EBX=00000000 ECX=000001d9 EDX=00000000
 
-Address this by disabling intercepts of MSR_IA32_XSS for SEV-ES guests
-if the host/guest configuration allows it. If the host/guest
-configuration doesn't allow for MSR_IA32_XSS, leave it intercepted so
-that it can be caught by the existing checks in
-kvm_{set,get}_msr_common() if the guest still attempts to access it.
+  Fix this by never intercepting MSR_IA32_DEBUGCTLMSR for SEV-ES guests.
+  No additional save/restore logic is required since MSR_IA32_DEBUGCTLMSR
+  is of swap type A.
+
+o KVM will disable LBRV if userspace sets MSR_IA32_DEBUGCTLMSR before the
+  VMSA is encrypted. Fix this by moving LBRV enablement code post VMSA
+  encryption.
+
+[1]: AMD64 Architecture Programmer's Manual Pub. 40332, Rev. 4.07 - June
+     2023, Vol 2, 15.35.2 Enabling SEV-ES.
+     https://bugzilla.kernel.org/attachment.cgi?id=304653
 
 Fixes: 376c6d285017 ("KVM: SVM: Provide support for SEV-ES vCPU creation/loading")
-Cc: Alexey Kardashevskiy <aik@amd.com>
-Suggested-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Michael Roth <michael.roth@amd.com>
-Message-Id: <20231016132819.1002933-4-michael.roth@amd.com>
+Co-developed-by: Nikunj A Dadhania <nikunj@amd.com>
+Signed-off-by: Nikunj A Dadhania <nikunj@amd.com>
+Signed-off-by: Ravi Bangoria <ravi.bangoria@amd.com>
+Message-ID: <20240531044644.768-4-ravi.bangoria@amd.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Stable-dep-of: b7e4be0a224f ("KVM: SEV-ES: Delegate LBR virtualization to the processor")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/sev.c | 19 +++++++++++++++++++
- arch/x86/kvm/svm/svm.c |  1 +
- arch/x86/kvm/svm/svm.h |  2 +-
- 3 files changed, 21 insertions(+), 1 deletion(-)
+ arch/x86/kvm/svm/sev.c | 13 ++++++++-----
+ arch/x86/kvm/svm/svm.c |  8 +++++++-
+ arch/x86/kvm/svm/svm.h |  3 ++-
+ 3 files changed, 17 insertions(+), 7 deletions(-)
 
 diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
-index 0e643d7a06d9e..f809dcfacc8a3 100644
+index f809dcfacc8a3..99e72b8a96ac0 100644
 --- a/arch/x86/kvm/svm/sev.c
 +++ b/arch/x86/kvm/svm/sev.c
-@@ -2994,6 +2994,25 @@ static void sev_es_vcpu_after_set_cpuid(struct vcpu_svm *svm)
+@@ -664,6 +664,14 @@ static int __sev_launch_update_vmsa(struct kvm *kvm, struct kvm_vcpu *vcpu,
+ 	  return ret;
  
- 		set_msr_interception(vcpu, svm->msrpm, MSR_TSC_AUX, v_tsc_aux, v_tsc_aux);
- 	}
+ 	vcpu->arch.guest_state_protected = true;
 +
 +	/*
-+	 * For SEV-ES, accesses to MSR_IA32_XSS should not be intercepted if
-+	 * the host/guest supports its use.
-+	 *
-+	 * guest_can_use() checks a number of requirements on the host/guest to
-+	 * ensure that MSR_IA32_XSS is available, but it might report true even
-+	 * if X86_FEATURE_XSAVES isn't configured in the guest to ensure host
-+	 * MSR_IA32_XSS is always properly restored. For SEV-ES, it is better
-+	 * to further check that the guest CPUID actually supports
-+	 * X86_FEATURE_XSAVES so that accesses to MSR_IA32_XSS by misbehaved
-+	 * guests will still get intercepted and caught in the normal
-+	 * kvm_emulate_rdmsr()/kvm_emulated_wrmsr() paths.
++	 * SEV-ES guest mandates LBR Virtualization to be _always_ ON. Enable it
++	 * only after setting guest_state_protected because KVM_SET_MSRS allows
++	 * dynamic toggling of LBRV (for performance reason) on write access to
++	 * MSR_IA32_DEBUGCTLMSR when guest_state_protected is not set.
 +	 */
-+	if (guest_can_use(vcpu, X86_FEATURE_XSAVES) &&
-+	    guest_cpuid_has(vcpu, X86_FEATURE_XSAVES))
-+		set_msr_interception(vcpu, svm->msrpm, MSR_IA32_XSS, 1, 1);
-+	else
-+		set_msr_interception(vcpu, svm->msrpm, MSR_IA32_XSS, 0, 0);
++	svm_enable_lbrv(vcpu);
+ 	return 0;
  }
  
- void sev_vcpu_after_set_cpuid(struct vcpu_svm *svm)
+@@ -3035,7 +3043,6 @@ static void sev_es_init_vmcb(struct vcpu_svm *svm)
+ 	struct kvm_vcpu *vcpu = &svm->vcpu;
+ 
+ 	svm->vmcb->control.nested_ctl |= SVM_NESTED_CTL_SEV_ES_ENABLE;
+-	svm->vmcb->control.virt_ext |= LBR_CTL_ENABLE_MASK;
+ 
+ 	/*
+ 	 * An SEV-ES guest requires a VMSA area that is a separate from the
+@@ -3087,10 +3094,6 @@ static void sev_es_init_vmcb(struct vcpu_svm *svm)
+ 	/* Clear intercepts on selected MSRs */
+ 	set_msr_interception(vcpu, svm->msrpm, MSR_EFER, 1, 1);
+ 	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_CR_PAT, 1, 1);
+-	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTBRANCHFROMIP, 1, 1);
+-	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTBRANCHTOIP, 1, 1);
+-	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTINTFROMIP, 1, 1);
+-	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTINTTOIP, 1, 1);
+ }
+ 
+ void sev_init_vmcb(struct vcpu_svm *svm)
 diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
-index 9e084e22a12f7..08f1397138c80 100644
+index 08f1397138c80..e3c2acc1adc73 100644
 --- a/arch/x86/kvm/svm/svm.c
 +++ b/arch/x86/kvm/svm/svm.c
-@@ -103,6 +103,7 @@ static const struct svm_direct_access_msrs {
+@@ -99,6 +99,7 @@ static const struct svm_direct_access_msrs {
+ 	{ .index = MSR_IA32_SPEC_CTRL,			.always = false },
+ 	{ .index = MSR_IA32_PRED_CMD,			.always = false },
+ 	{ .index = MSR_IA32_FLUSH_CMD,			.always = false },
++	{ .index = MSR_IA32_DEBUGCTLMSR,		.always = false },
+ 	{ .index = MSR_IA32_LASTBRANCHFROMIP,		.always = false },
  	{ .index = MSR_IA32_LASTBRANCHTOIP,		.always = false },
  	{ .index = MSR_IA32_LASTINTFROMIP,		.always = false },
- 	{ .index = MSR_IA32_LASTINTTOIP,		.always = false },
-+	{ .index = MSR_IA32_XSS,			.always = false },
- 	{ .index = MSR_EFER,				.always = false },
- 	{ .index = MSR_IA32_CR_PAT,			.always = false },
- 	{ .index = MSR_AMD64_SEV_ES_GHCB,		.always = true  },
+@@ -1008,7 +1009,7 @@ void svm_copy_lbrs(struct vmcb *to_vmcb, struct vmcb *from_vmcb)
+ 	vmcb_mark_dirty(to_vmcb, VMCB_LBR);
+ }
+ 
+-static void svm_enable_lbrv(struct kvm_vcpu *vcpu)
++void svm_enable_lbrv(struct kvm_vcpu *vcpu)
+ {
+ 	struct vcpu_svm *svm = to_svm(vcpu);
+ 
+@@ -1018,6 +1019,9 @@ static void svm_enable_lbrv(struct kvm_vcpu *vcpu)
+ 	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTINTFROMIP, 1, 1);
+ 	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTINTTOIP, 1, 1);
+ 
++	if (sev_es_guest(vcpu->kvm))
++		set_msr_interception(vcpu, svm->msrpm, MSR_IA32_DEBUGCTLMSR, 1, 1);
++
+ 	/* Move the LBR msrs to the vmcb02 so that the guest can see them. */
+ 	if (is_guest_mode(vcpu))
+ 		svm_copy_lbrs(svm->vmcb, svm->vmcb01.ptr);
+@@ -1027,6 +1031,8 @@ static void svm_disable_lbrv(struct kvm_vcpu *vcpu)
+ {
+ 	struct vcpu_svm *svm = to_svm(vcpu);
+ 
++	KVM_BUG_ON(sev_es_guest(vcpu->kvm), vcpu->kvm);
++
+ 	svm->vmcb->control.virt_ext &= ~LBR_CTL_ENABLE_MASK;
+ 	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTBRANCHFROMIP, 0, 0);
+ 	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTBRANCHTOIP, 0, 0);
 diff --git a/arch/x86/kvm/svm/svm.h b/arch/x86/kvm/svm/svm.h
-index 53bc4b0e388be..fb0ac8497fb20 100644
+index fb0ac8497fb20..37ada9808d9b5 100644
 --- a/arch/x86/kvm/svm/svm.h
 +++ b/arch/x86/kvm/svm/svm.h
 @@ -30,7 +30,7 @@
  #define	IOPM_SIZE PAGE_SIZE * 3
  #define	MSRPM_SIZE PAGE_SIZE * 2
  
--#define MAX_DIRECT_ACCESS_MSRS	46
-+#define MAX_DIRECT_ACCESS_MSRS	47
+-#define MAX_DIRECT_ACCESS_MSRS	47
++#define MAX_DIRECT_ACCESS_MSRS	48
  #define MSRPM_OFFSETS	32
  extern u32 msrpm_offsets[MSRPM_OFFSETS] __read_mostly;
  extern bool npt_enabled;
+@@ -542,6 +542,7 @@ u32 *svm_vcpu_alloc_msrpm(void);
+ void svm_vcpu_init_msrpm(struct kvm_vcpu *vcpu, u32 *msrpm);
+ void svm_vcpu_free_msrpm(u32 *msrpm);
+ void svm_copy_lbrs(struct vmcb *to_vmcb, struct vmcb *from_vmcb);
++void svm_enable_lbrv(struct kvm_vcpu *vcpu);
+ void svm_update_lbrv(struct kvm_vcpu *vcpu);
+ 
+ int svm_set_efer(struct kvm_vcpu *vcpu, u64 efer);
 -- 
 2.43.0
 
