@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF451146016;
-	Wed, 19 Jun 2024 13:29:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A347714373E;
+	Wed, 19 Jun 2024 13:29:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803748; cv=none; b=ZhhWWNWIeK/BV0Le7o4U02YjjDqlOyxRSp5nFVBiNcdoqgkj8RMa+tVWgbk5TDui7xV/gGNNoTBaJLTrAsVfpZB7Y7fNcwAb0Me/ZYSspRQLL64kdyiyqc9eDH3aRNdDby+OfHODay/GUtiYfimaB4OywwtPNa081oPidzQ4ge8=
+	t=1718803751; cv=none; b=QbWpTlSqnXye0olMAN02DSSdIuLS7IGeX6d98obDbOuBfgwgcz+UGH9MvGHGhDQGCY0a6bc4plVimRrlBVsiVGR07TrYQk/0qEC9RnVbMdAXPv9O130d0qS4LTTnQfY+Saezi0rx+XeqDQvEpQM2AIIGY0o5mblCzGHSWkvSaPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803748; c=relaxed/simple;
-	bh=hv2F3rUIGfdVtma68HIzZ4kA1PFKo7S9yid3tmcNfOw=;
+	s=arc-20240116; t=1718803751; c=relaxed/simple;
+	bh=LGktxfdLIZvAODVn27qdG+nfbfqAn4jilRJybCvGiUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=msZq3AA69oRltFr/yG/dZidcQRjrW0GbyvUCfBV3Drr2vXsi0YmV+Y6Dc97E7tIVQ8Ltx5/VA+RR5s6U41KIfYdFKeQoE8CS9CilwT0khV8IaBAIy1nrfsplylF0zDzlvmDxS7pf5eBIsqKhZaTOH0BYfPKneLck7tiDMwivfmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DU+ruQQU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HlxR1kvkRb09QgtsHdtF9+O1w7qkQFXxn5A0zVNF6OpJqCqdelCJWLNe7hWlOztCNkk/cz75zWj/tySmYTLNG9T5LmtGSV/Rj71JJdpj+Ohr4HQjDkAvLNJGLa9nn6sfxsTbBtLDWyNtRqfc6+WzkhJEWt6gU6LLJpUmLCRwMwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b5r5f50T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DU+ruQQU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 448F0C2BBFC;
-	Wed, 19 Jun 2024 13:29:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b5r5f50T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AF1CC2BBFC;
+	Wed, 19 Jun 2024 13:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803748;
-	bh=hv2F3rUIGfdVtma68HIzZ4kA1PFKo7S9yid3tmcNfOw=;
+	s=korg; t=1718803751;
+	bh=LGktxfdLIZvAODVn27qdG+nfbfqAn4jilRJybCvGiUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DU+ruQQUSFXzbfyarzLsMK4Pvc00SMydaMFukAYyEsi1nYO2zUUEXKoJ1TVITb2x0
-	 Zh9MSnchsAlQpHoON1DDWKEyJh9vLeDbyPGy8QcJ/QBZrJX6UaSicjKqtGfgzFM6th
-	 sEtkZhZ3gUlEZG8yg4D3jnz5kUpxLCeCxl89cHPQ=
+	b=b5r5f50Tt1UYdiVCbYoHUK3VfBC6QQZJcmgLj/eHUVTE/PZ+9yrtwfghWlvZwCNP4
+	 hA8N2/PDAulo2/L48L1v76SVKHGm51epmD6f1LzXLjEfHA4S6sJMxsOn0Dk4BRW+qb
+	 2VDPviiHsJyKijKViKc/cRPgg/bI3bIoKM0QPrUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadym Krevs <vkrevs@yahoo.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.1 090/217] tty: n_tty: Fix buffer offsets when lookahead is used
-Date: Wed, 19 Jun 2024 14:55:33 +0200
-Message-ID: <20240619125600.161618990@linuxfoundation.org>
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	Paul Moore <paul@paul-moore.com>,
+	syzbot+bf4903dc7e12b18ebc87@syzkaller.appspotmail.com,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
+Subject: [PATCH 6.1 091/217] landlock: Fix d_parent walk
+Date: Wed, 19 Jun 2024 14:55:34 +0200
+Message-ID: <20240619125600.199822604@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -51,64 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Mickaël Salaün <mic@digikod.net>
 
-commit b19ab7ee2c4c1ec5f27c18413c3ab63907f7d55c upstream.
+commit 88da52ccd66e65f2e63a6c35c9dff55d448ef4dc upstream.
 
-When lookahead has "consumed" some characters (la_count > 0),
-n_tty_receive_buf_standard() and n_tty_receive_buf_closing() for
-characters beyond the la_count are given wrong cp/fp offsets which
-leads to duplicating and losing some characters.
+The WARN_ON_ONCE() in collect_domain_accesses() can be triggered when
+trying to link a root mount point.  This cannot work in practice because
+this directory is mounted, but the VFS check is done after the call to
+security_path_link().
 
-If la_count > 0, correct buffer pointers and make count consistent too
-(the latter is not strictly necessary to fix the issue but seems more
-logical to adjust all variables immediately to keep state consistent).
+Do not use source directory's d_parent when the source directory is the
+mount point.
 
-Reported-by: Vadym Krevs <vkrevs@yahoo.com>
-Fixes: 6bb6fa6908eb ("tty: Implement lookahead to process XON/XOFF timely")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218834
-Tested-by: Vadym Krevs <vkrevs@yahoo.com>
+Cc: Günther Noack <gnoack@google.com>
+Cc: Paul Moore <paul@paul-moore.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20240514140429.12087-1-ilpo.jarvinen@linux.intel.com
+Reported-by: syzbot+bf4903dc7e12b18ebc87@syzkaller.appspotmail.com
+Fixes: b91c3e4ea756 ("landlock: Add support for file reparenting with LANDLOCK_ACCESS_FS_REFER")
+Closes: https://lore.kernel.org/r/000000000000553d3f0618198200@google.com
+Link: https://lore.kernel.org/r/20240516181935.1645983-2-mic@digikod.net
+[mic: Fix commit message]
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/n_tty.c |   22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ security/landlock/fs.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/n_tty.c
-+++ b/drivers/tty/n_tty.c
-@@ -1602,15 +1602,25 @@ static void __receive_buf(struct tty_str
- 	else if (ldata->raw || (L_EXTPROC(tty) && !preops))
- 		n_tty_receive_buf_raw(tty, cp, fp, count);
- 	else if (tty->closing && !L_EXTPROC(tty)) {
--		if (la_count > 0)
-+		if (la_count > 0) {
- 			n_tty_receive_buf_closing(tty, cp, fp, la_count, true);
--		if (count > la_count)
--			n_tty_receive_buf_closing(tty, cp, fp, count - la_count, false);
-+			cp += la_count;
-+			if (fp)
-+				fp += la_count;
-+			count -= la_count;
-+		}
-+		if (count > 0)
-+			n_tty_receive_buf_closing(tty, cp, fp, count, false);
- 	} else {
--		if (la_count > 0)
-+		if (la_count > 0) {
- 			n_tty_receive_buf_standard(tty, cp, fp, la_count, true);
--		if (count > la_count)
--			n_tty_receive_buf_standard(tty, cp, fp, count - la_count, false);
-+			cp += la_count;
-+			if (fp)
-+				fp += la_count;
-+			count -= la_count;
-+		}
-+		if (count > 0)
-+			n_tty_receive_buf_standard(tty, cp, fp, count, false);
+--- a/security/landlock/fs.c
++++ b/security/landlock/fs.c
+@@ -824,6 +824,7 @@ static int current_check_refer_path(stru
+ 	bool allow_parent1, allow_parent2;
+ 	access_mask_t access_request_parent1, access_request_parent2;
+ 	struct path mnt_dir;
++	struct dentry *old_parent;
+ 	layer_mask_t layer_masks_parent1[LANDLOCK_NUM_ACCESS_FS] = {},
+ 		     layer_masks_parent2[LANDLOCK_NUM_ACCESS_FS] = {};
  
- 		flush_echoes(tty);
- 		if (tty->ops->flush_chars)
+@@ -870,9 +871,17 @@ static int current_check_refer_path(stru
+ 	mnt_dir.mnt = new_dir->mnt;
+ 	mnt_dir.dentry = new_dir->mnt->mnt_root;
+ 
++	/*
++	 * old_dentry may be the root of the common mount point and
++	 * !IS_ROOT(old_dentry) at the same time (e.g. with open_tree() and
++	 * OPEN_TREE_CLONE).  We do not need to call dget(old_parent) because
++	 * we keep a reference to old_dentry.
++	 */
++	old_parent = (old_dentry == mnt_dir.dentry) ? old_dentry :
++						      old_dentry->d_parent;
++
+ 	/* new_dir->dentry is equal to new_dentry->d_parent */
+-	allow_parent1 = collect_domain_accesses(dom, mnt_dir.dentry,
+-						old_dentry->d_parent,
++	allow_parent1 = collect_domain_accesses(dom, mnt_dir.dentry, old_parent,
+ 						&layer_masks_parent1);
+ 	allow_parent2 = collect_domain_accesses(
+ 		dom, mnt_dir.dentry, new_dir->dentry, &layer_masks_parent2);
 
 
