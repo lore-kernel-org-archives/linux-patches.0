@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94FF147C85;
-	Wed, 19 Jun 2024 13:13:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9645414389C;
+	Wed, 19 Jun 2024 13:13:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802830; cv=none; b=AtM9fALcmBWDPZz1tpoTW8NiaY3/ClEs2UH/HycFKawc28JklcbmbbkOfpG29NcfkRfex1RUdeUs7a+TdGlft/ivzr4rGFIyJSUeAM6KdDCdpt+isgQZhRRBu5jTQDbxZLqKopJjMlEF0UVWkjl0iBWPlo5fxmZROHvRTtlyRKI=
+	t=1718802833; cv=none; b=VYm7WwX+cqSriPBHfn/WfR6Bz+CdEufdqpj9Y438VoEI2265dFWWgVZQEBywCdfqREh9wKX8eRWenFJkZNv1JJGaTCrDhxA+Ywd89yqptnnA/GiwM0am/TxgxIwn0hxeZTRBEPbBlo2hrsTlbG8MTg6UzeGg8TSsMUluci1p47A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802830; c=relaxed/simple;
-	bh=qQqz9n/fBSqTMonto1crGVjLu0GO5X2LXIS5kLlCaEc=;
+	s=arc-20240116; t=1718802833; c=relaxed/simple;
+	bh=LOIrDQfDBG+tyruSnMgDLlmI64W0Edlq9nVVLFy0tmc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZXV9X4PRn4IO+yH8O7bxqi6ubAYo79Mn2VMEUGvcFe10aU19oRNFilaTEvdWlHhyChhoCBwH8MgL7FJyVN4eMyvd3jDYOVAB/VkKWJWHi8TfjfMZP7a0WL2VzgrT7bctvgILKCJ3xI5ytkIG5PkAz2R4QvUHbLwNu5tQuum6PYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uxgalTLj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kgi8AxzrrG/o4R3K87krvBnnigY2MDovB5IJ72xu3bbFcMtNiXfOx1qpVrXw4VxQzsIckaZ7JxwOMjOe2STLmWdxFnavCRgIHAKxHXtVhaR8ljGFHvDBICmUGBuRCTqzCWviPLEWECrvQTDLPWPy2R67bo220BS8UmAGlyPBYdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KJ+cd/n7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uxgalTLj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 224FDC32786;
-	Wed, 19 Jun 2024 13:13:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJ+cd/n7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A854C2BBFC;
+	Wed, 19 Jun 2024 13:13:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802830;
-	bh=qQqz9n/fBSqTMonto1crGVjLu0GO5X2LXIS5kLlCaEc=;
+	s=korg; t=1718802833;
+	bh=LOIrDQfDBG+tyruSnMgDLlmI64W0Edlq9nVVLFy0tmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uxgalTLj7jJ5hidUuciGLO6vP6dAI1rhMi7hVruC06RgFuHCLvHuTgUflPXiwU72G
-	 g1xNUX6wsv6YqD63W59reWAvedFQoZzR4SyAUfrZX2HROWfGsYylDOUPSmMuy0fY64
-	 e0Y8YsekvgJWQBbw5bq861MgIWUwgm0AwmsZxNFk=
+	b=KJ+cd/n7fYbiQJebldLkqrhN+xUSG27F3OU+M02yYDn0D9NZ+Sb0dBpBpSYex01i4
+	 Ugf0jrhQJa9N34e92V7Qm153vWeEt4FT51Z+w74RSZEIFGFflmq4u3mGPlFthL/Qoz
+	 4VpjnoCY6WlKp7WtadOApGiHYwhkRYbWr1NyJK3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 061/281] af_unix: Annotate data-race of sk->sk_state in unix_stream_connect().
-Date: Wed, 19 Jun 2024 14:53:40 +0200
-Message-ID: <20240619125612.196173202@linuxfoundation.org>
+Subject: [PATCH 6.9 062/281] af_unix: Annotate data-races around sk->sk_state in sendmsg() and recvmsg().
+Date: Wed, 19 Jun 2024 14:53:41 +0200
+Message-ID: <20240619125612.234049951@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -53,56 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit a9bf9c7dc6a5899c01cb8f6e773a66315a5cd4b7 ]
+[ Upstream commit 8a34d4e8d9742a24f74998f45a6a98edd923319b ]
 
-As small optimisation, unix_stream_connect() prefetches the client's
-sk->sk_state without unix_state_lock() and checks if it's TCP_CLOSE.
+The following functions read sk->sk_state locklessly and proceed only if
+the state is TCP_ESTABLISHED.
 
-Later, sk->sk_state is checked again under unix_state_lock().
+  * unix_stream_sendmsg
+  * unix_stream_read_generic
+  * unix_seqpacket_sendmsg
+  * unix_seqpacket_recvmsg
 
-Let's use READ_ONCE() for the first check and TCP_CLOSE directly for
-the second check.
+Let's use READ_ONCE() there.
 
+Fixes: a05d2ad1c1f3 ("af_unix: Only allow recv on connected seqpacket sockets.")
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ net/unix/af_unix.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index a3eb241eb064e..f95aba56425fa 100644
+index f95aba56425fa..d92e664032121 100644
 --- a/net/unix/af_unix.c
 +++ b/net/unix/af_unix.c
-@@ -1481,7 +1481,6 @@ static int unix_stream_connect(struct socket *sock, struct sockaddr *uaddr,
- 	struct sk_buff *skb = NULL;
- 	long timeo;
- 	int err;
--	int st;
+@@ -2273,7 +2273,7 @@ static int unix_stream_sendmsg(struct socket *sock, struct msghdr *msg,
+ 	}
  
- 	err = unix_validate_addr(sunaddr, addr_len);
+ 	if (msg->msg_namelen) {
+-		err = sk->sk_state == TCP_ESTABLISHED ? -EISCONN : -EOPNOTSUPP;
++		err = READ_ONCE(sk->sk_state) == TCP_ESTABLISHED ? -EISCONN : -EOPNOTSUPP;
+ 		goto out_err;
+ 	} else {
+ 		err = -ENOTCONN;
+@@ -2387,7 +2387,7 @@ static int unix_seqpacket_sendmsg(struct socket *sock, struct msghdr *msg,
  	if (err)
-@@ -1571,9 +1570,7 @@ static int unix_stream_connect(struct socket *sock, struct sockaddr *uaddr,
+ 		return err;
  
- 	   Well, and we have to recheck the state after socket locked.
- 	 */
--	st = sk->sk_state;
--
--	switch (st) {
-+	switch (READ_ONCE(sk->sk_state)) {
- 	case TCP_CLOSE:
- 		/* This is ok... continue with connect */
- 		break;
-@@ -1588,7 +1585,7 @@ static int unix_stream_connect(struct socket *sock, struct sockaddr *uaddr,
+-	if (sk->sk_state != TCP_ESTABLISHED)
++	if (READ_ONCE(sk->sk_state) != TCP_ESTABLISHED)
+ 		return -ENOTCONN;
  
- 	unix_state_lock_nested(sk, U_LOCK_SECOND);
+ 	if (msg->msg_namelen)
+@@ -2401,7 +2401,7 @@ static int unix_seqpacket_recvmsg(struct socket *sock, struct msghdr *msg,
+ {
+ 	struct sock *sk = sock->sk;
  
--	if (sk->sk_state != st) {
-+	if (sk->sk_state != TCP_CLOSE) {
- 		unix_state_unlock(sk);
- 		unix_state_unlock(other);
- 		sock_put(other);
+-	if (sk->sk_state != TCP_ESTABLISHED)
++	if (READ_ONCE(sk->sk_state) != TCP_ESTABLISHED)
+ 		return -ENOTCONN;
+ 
+ 	return unix_dgram_recvmsg(sock, msg, size, flags);
+@@ -2730,7 +2730,7 @@ static int unix_stream_read_generic(struct unix_stream_read_state *state,
+ 	size_t size = state->size;
+ 	unsigned int last_len;
+ 
+-	if (unlikely(sk->sk_state != TCP_ESTABLISHED)) {
++	if (unlikely(READ_ONCE(sk->sk_state) != TCP_ESTABLISHED)) {
+ 		err = -EINVAL;
+ 		goto out;
+ 	}
 -- 
 2.43.0
 
