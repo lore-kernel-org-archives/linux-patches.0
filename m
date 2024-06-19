@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE00B13DDC0;
-	Wed, 19 Jun 2024 13:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA9E13DDC0;
+	Wed, 19 Jun 2024 13:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718804024; cv=none; b=tL8Q1Cpy5IUS3FRQMVsnJknDN9AYuRd1ZrFlqw/WqbvC9ZEevQcQbWyZzslgHDgutUVuaAzDSSwbX7Z+q5d3j6E95Kfgyk/KjdSLU4hfoM/nZMIWZ0xxYpu2SA4kHPcSGz3t6Nc7kMEXrJ/fFEr48DwbSfyrT55Bm05LfCLSPCM=
+	t=1718804027; cv=none; b=R0YwshIOGOkog4f5AAochtu/sfBViEtWHC6XyZlyjMRIQzuMI70k5+nAw6KQ4eP5XcurwyStYXPY1yMsb0+3J6bleAtfukupaF+X7emOkYR1XH6VAvW/CHgN2qVTvR7m2uUuap1p0vXEu+Szz7pcfo5NvRnMfJCG+iy7L5xLUfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718804024; c=relaxed/simple;
-	bh=2ljC4ku2AFRVaGpEmTBa3fKHrqLNKt1uSzeajN1/psM=;
+	s=arc-20240116; t=1718804027; c=relaxed/simple;
+	bh=JWgFXXd3ZCOIaRpB/zR3fU+DUuvgIFzfUXHUrZNUY5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FsVl32tgGgCx+ZbOoZpEFtif1bQjlDZxys7rcEc+E2NoVIIv3L/BTGwzP5lQ/2qFQSKmKr0donxbEJO8pphvXlla8PWUR1nQCI/cRsdMrsP8PsjJkOCqTEy2kpyl7lSxIPVPNi/8TEeykHjFjIkAb0kxQw2lBgPI1euqItkUYLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qZ81GA/F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rQ+U2VOx9hh8abB+GJcL0Ulb/zsib94S3RzmJkqvm/u1cPs/5yIdtRwQiQgZTq7WaQ82DeiLX9ReqUwxLkDPjoXwAXgtnMEkyhBn2bRKp2cRZbotYcfWlmXwBtXU4ivMVQGEZ+RTi8RlYjC0lZn2RYjf36ofjMLld5SJpsywaQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=js3ncoDF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qZ81GA/F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251A3C2BBFC;
-	Wed, 19 Jun 2024 13:33:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="js3ncoDF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06893C2BBFC;
+	Wed, 19 Jun 2024 13:33:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718804024;
-	bh=2ljC4ku2AFRVaGpEmTBa3fKHrqLNKt1uSzeajN1/psM=;
+	s=korg; t=1718804027;
+	bh=JWgFXXd3ZCOIaRpB/zR3fU+DUuvgIFzfUXHUrZNUY5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qZ81GA/FKoAYB1SR636pX9ZDSpbcDqeP7FyhQ21X25u+oz4ySIO1sSxYczZJ/BJLI
-	 anpehDpV9bmBJhJ4dWRagUmSyle2Ey31F/BBs6ivpvhB0JxAWsTF8vttbSC/ni/lIK
-	 5OU2IQyxmNq1DRBm54Ugg2W8ITeyoyO7asleW3aE=
+	b=js3ncoDFAiMFs1t2AEQDEwnLVBT8rt9JI1GX16R3YwX5Wvvaj/1KWoLjU2UzgwaAG
+	 NXkBzHjzS/ro/1UvnUS1kGBrTLQXkFGVuhGpYpXA3IABIU8YMZSVA/ue2aEiIwe6eX
+	 /75fJnfjau06p8EPXyhM2LLQiD/cZuVRfnfJA/3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Apurva Nandan <a-nandan@ti.com>,
 	Beleswar Padhi <b-padhi@ti.com>,
 	Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: [PATCH 6.1 184/217] remoteproc: k3-r5: Wait for core0 power-up before powering up core1
-Date: Wed, 19 Jun 2024 14:57:07 +0200
-Message-ID: <20240619125603.785714851@linuxfoundation.org>
+Subject: [PATCH 6.1 185/217] remoteproc: k3-r5: Do not allow core1 to power up before core0 via sysfs
+Date: Wed, 19 Jun 2024 14:57:08 +0200
+Message-ID: <20240619125603.824340072@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -51,121 +50,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Apurva Nandan <a-nandan@ti.com>
+From: Beleswar Padhi <b-padhi@ti.com>
 
-commit 61f6f68447aba08aeaa97593af3a7d85a114891f upstream.
+commit 3c8a9066d584f5010b6f4ba03bf6b19d28973d52 upstream.
 
-PSC controller has a limitation that it can only power-up the second core
-when the first core is in ON state. Power-state for core0 should be equal
-to or higher than core1, else the kernel is seen hanging during rproc
-loading.
+PSC controller has a limitation that it can only power-up the second
+core when the first core is in ON state. Power-state for core0 should be
+equal to or higher than core1.
 
-Make the powering up of cores sequential, by waiting for the current core
-to power-up before proceeding to the next core, with a timeout of 2sec.
-Add a wait queue event in k3_r5_cluster_rproc_init call, that will wait
-for the current core to be released from reset before proceeding with the
-next core.
+Therefore, prevent core1 from powering up before core0 during the start
+process from sysfs. Similarly, prevent core0 from shutting down before
+core1 has been shut down from sysfs.
 
 Fixes: 6dedbd1d5443 ("remoteproc: k3-r5: Add a remoteproc driver for R5F subsystem")
-Signed-off-by: Apurva Nandan <a-nandan@ti.com>
 Signed-off-by: Beleswar Padhi <b-padhi@ti.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240430105307.1190615-2-b-padhi@ti.com
+Link: https://lore.kernel.org/r/20240430105307.1190615-3-b-padhi@ti.com
 Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/remoteproc/ti_k3_r5_remoteproc.c |   33 +++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+ drivers/remoteproc/ti_k3_r5_remoteproc.c |   23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
 --- a/drivers/remoteproc/ti_k3_r5_remoteproc.c
 +++ b/drivers/remoteproc/ti_k3_r5_remoteproc.c
-@@ -98,12 +98,14 @@ struct k3_r5_soc_data {
-  * @dev: cached device pointer
-  * @mode: Mode to configure the Cluster - Split or LockStep
-  * @cores: list of R5 cores within the cluster
-+ * @core_transition: wait queue to sync core state changes
-  * @soc_data: SoC-specific feature data for a R5FSS
-  */
- struct k3_r5_cluster {
- 	struct device *dev;
- 	enum cluster_mode mode;
- 	struct list_head cores;
-+	wait_queue_head_t core_transition;
- 	const struct k3_r5_soc_data *soc_data;
- };
+@@ -543,7 +543,7 @@ static int k3_r5_rproc_start(struct rpro
+ 	struct k3_r5_rproc *kproc = rproc->priv;
+ 	struct k3_r5_cluster *cluster = kproc->cluster;
+ 	struct device *dev = kproc->dev;
+-	struct k3_r5_core *core;
++	struct k3_r5_core *core0, *core;
+ 	u32 boot_addr;
+ 	int ret;
  
-@@ -123,6 +125,7 @@ struct k3_r5_cluster {
-  * @atcm_enable: flag to control ATCM enablement
-  * @btcm_enable: flag to control BTCM enablement
-  * @loczrama: flag to dictate which TCM is at device address 0x0
-+ * @released_from_reset: flag to signal when core is out of reset
-  */
- struct k3_r5_core {
- 	struct list_head elem;
-@@ -139,6 +142,7 @@ struct k3_r5_core {
- 	u32 atcm_enable;
- 	u32 btcm_enable;
- 	u32 loczrama;
-+	bool released_from_reset;
- };
- 
- /**
-@@ -455,6 +459,8 @@ static int k3_r5_rproc_prepare(struct rp
- 			ret);
- 		return ret;
- 	}
-+	core->released_from_reset = true;
-+	wake_up_interruptible(&cluster->core_transition);
- 
- 	/*
- 	 * Newer IP revisions like on J7200 SoCs support h/w auto-initialization
-@@ -1137,6 +1143,12 @@ static int k3_r5_rproc_configure_mode(st
- 		return ret;
- 	}
- 
-+	/*
-+	 * Skip the waiting mechanism for sequential power-on of cores if the
-+	 * core has already been booted by another entity.
-+	 */
-+	core->released_from_reset = c_state;
-+
- 	ret = ti_sci_proc_get_status(core->tsp, &boot_vec, &cfg, &ctrl,
- 				     &stat);
- 	if (ret < 0) {
-@@ -1273,6 +1285,26 @@ init_rmem:
- 		if (cluster->mode == CLUSTER_MODE_LOCKSTEP ||
- 		    cluster->mode == CLUSTER_MODE_SINGLECPU)
- 			break;
-+
-+		/*
-+		 * R5 cores require to be powered on sequentially, core0
-+		 * should be in higher power state than core1 in a cluster
-+		 * So, wait for current core to power up before proceeding
-+		 * to next core and put timeout of 2sec for each core.
-+		 *
-+		 * This waiting mechanism is necessary because
-+		 * rproc_auto_boot_callback() for core1 can be called before
-+		 * core0 due to thread execution order.
-+		 */
-+		ret = wait_event_interruptible_timeout(cluster->core_transition,
-+						       core->released_from_reset,
-+						       msecs_to_jiffies(2000));
-+		if (ret <= 0) {
-+			dev_err(dev,
-+				"Timed out waiting for %s core to power up!\n",
-+				rproc->name);
-+			return ret;
+@@ -569,6 +569,15 @@ static int k3_r5_rproc_start(struct rpro
+ 				goto unroll_core_run;
+ 		}
+ 	} else {
++		/* do not allow core 1 to start before core 0 */
++		core0 = list_first_entry(&cluster->cores, struct k3_r5_core,
++					 elem);
++		if (core != core0 && core0->rproc->state == RPROC_OFFLINE) {
++			dev_err(dev, "%s: can not start core 1 before core 0\n",
++				__func__);
++			return -EPERM;
 +		}
- 	}
++
+ 		ret = k3_r5_core_run(core);
+ 		if (ret)
+ 			goto put_mbox;
+@@ -614,7 +623,8 @@ static int k3_r5_rproc_stop(struct rproc
+ {
+ 	struct k3_r5_rproc *kproc = rproc->priv;
+ 	struct k3_r5_cluster *cluster = kproc->cluster;
+-	struct k3_r5_core *core = kproc->core;
++	struct device *dev = kproc->dev;
++	struct k3_r5_core *core1, *core = kproc->core;
+ 	int ret;
  
- 	return 0;
-@@ -1708,6 +1740,7 @@ static int k3_r5_probe(struct platform_d
- 				CLUSTER_MODE_SPLIT : CLUSTER_MODE_LOCKSTEP;
- 	cluster->soc_data = data;
- 	INIT_LIST_HEAD(&cluster->cores);
-+	init_waitqueue_head(&cluster->core_transition);
- 
- 	ret = of_property_read_u32(np, "ti,cluster-mode", &cluster->mode);
- 	if (ret < 0 && ret != -EINVAL) {
+ 	/* halt all applicable cores */
+@@ -627,6 +637,15 @@ static int k3_r5_rproc_stop(struct rproc
+ 			}
+ 		}
+ 	} else {
++		/* do not allow core 0 to stop before core 1 */
++		core1 = list_last_entry(&cluster->cores, struct k3_r5_core,
++					elem);
++		if (core != core1 && core1->rproc->state != RPROC_OFFLINE) {
++			dev_err(dev, "%s: can not stop core 0 before core 1\n",
++				__func__);
++			return -EPERM;
++		}
++
+ 		ret = k3_r5_core_halt(core);
+ 		if (ret)
+ 			goto out;
 
 
