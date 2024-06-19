@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5D013DDC0;
-	Wed, 19 Jun 2024 13:34:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E145A13DDC0;
+	Wed, 19 Jun 2024 13:34:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718804063; cv=none; b=kNV+04cd3H6iSNrEQX2OE8AFViH6T8UkHyf5YdzNenLgrg6c1XUIePsmUrBjHD9tWBcvK8RiEcy0mSYM2LKqQAqioVfUshCga1KjPvkF40ID7tkg3SxtiS+/QU1jjvYQCu7K3wBL3LI/JTwi95LcOvFN6iRLSQqhKZXrJzDy+PA=
+	t=1718804066; cv=none; b=sXXYGxBDJthmhZU/7v63yS2XbWcKIUD6F+Dm4lfuA0jhiKDz1CsT8sUm3reqmUOuuPSVia3xrV50HZPMU8hjZ9Bc4DgbeiYd/QzQ4IUW17xlnBtPk4FgjlO//A4UQELz/b2wyzG9zsLBc4srmfXi+h/jlSS18Hc1xy3WQctMI3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718804063; c=relaxed/simple;
-	bh=Nq2FmWu+OI0y7phbCcGSqobAoe5FrRNfOPc+VVLWmoQ=;
+	s=arc-20240116; t=1718804066; c=relaxed/simple;
+	bh=7QaB9Y/8ls0+qQLkZRttnMnQfO81SI23mG7TyxqoggI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=htoid2pWVi+vRRwjfAISZz4IhI3l4Mm6ejcj8ZbRa7E54C8hYQmpLS5rJbyGzlTx5VG9uEgcuyDJh1+M00425OMXNpoZFs1MrZGrb9hFbVMsW4ClR/gpAXBDV7qyzVbW3f4Jeo8V2Z0npWXigPe8FF8ha4UqEIAhtigEkZXyjkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eB0ZMUND; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tIZLt9rH4rtJMusYd99/gigul26KbI7RjpGNdJqHr6b0CKwAbhUMkxB8629GccaAoPy1v8lLLdnMcWd0bmlkL70y0nDGzx5gubYn4Vlifh7V7bdwdYMvj+MPagpyOoCq8R7Px/2RE5YPpjZyIaNulfAXwrJ1aTCn7Y9MMO+vvD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbqNiJUi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eB0ZMUND"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56EFEC2BBFC;
-	Wed, 19 Jun 2024 13:34:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbqNiJUi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C8AC4AF1A;
+	Wed, 19 Jun 2024 13:34:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718804062;
-	bh=Nq2FmWu+OI0y7phbCcGSqobAoe5FrRNfOPc+VVLWmoQ=;
+	s=korg; t=1718804065;
+	bh=7QaB9Y/8ls0+qQLkZRttnMnQfO81SI23mG7TyxqoggI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eB0ZMUNDsdz7efmGPt7fBZQisBKkJEUYLnXVX9JhOc+owZe+SMtcevjAa4gXF2Tx8
-	 kSb3QISqBPtnWCXIZYPyGogAHIuw+acj9G4iFfcVdvLP+i//Q6KJjhYPHZhVuK3n7k
-	 GmoiZV5a9WHKdpzsTRuhIgS72o11Gkr1aYhgh5tU=
+	b=gbqNiJUiEHMAMKJYjkAzGf5HVtN01h0p9wKBeuN2lnqOuWzUyp9BdrvxndxfFP3/3
+	 asebOTidXeweiI8htcY5+fVephbgOqzQ6bkngqq6Y6hOdnUqLgCXNmSiLqxWcc56L1
+	 QMCzF/in1vv3ZBEED+M/ehfXBwt8WTfFxbYB2pJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Christoph Hellwig <hch@lst.de>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 196/217] btrfs: zoned: factor out single bg handling from btrfs_load_block_group_zone_info
-Date: Wed, 19 Jun 2024 14:57:19 +0200
-Message-ID: <20240619125604.247479182@linuxfoundation.org>
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.1 170/217] x86/amd_nb: Check for invalid SMN reads
+Date: Wed, 19 Jun 2024 14:56:53 +0200
+Message-ID: <20240619125603.248754408@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -51,67 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Yazen Ghannam <yazen.ghannam@amd.com>
 
-commit 9e0e3e74dc6928a0956f4e27e24d473c65887e96 upstream.
+commit c625dabbf1c4a8e77e4734014f2fde7aa9071a1f upstream.
 
-Split the code handling a type single block group from
-btrfs_load_block_group_zone_info to make the code more readable.
+AMD Zen-based systems use a System Management Network (SMN) that
+provides access to implementation-specific registers.
 
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+SMN accesses are done indirectly through an index/data pair in PCI
+config space. The PCI config access may fail and return an error code.
+This would prevent the "read" value from being updated.
+
+However, the PCI config access may succeed, but the return value may be
+invalid. This is in similar fashion to PCI bad reads, i.e. return all
+bits set.
+
+Most systems will return 0 for SMN addresses that are not accessible.
+This is in line with AMD convention that unavailable registers are
+Read-as-Zero/Writes-Ignored.
+
+However, some systems will return a "PCI Error Response" instead. This
+value, along with an error code of 0 from the PCI config access, will
+confuse callers of the amd_smn_read() function.
+
+Check for this condition, clear the return value, and set a proper error
+code.
+
+Fixes: ddfe43cdc0da ("x86/amd_nb: Add SMN and Indirect Data Fabric access for AMD Fam17h")
+Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230403164244.471141-1-yazen.ghannam@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/zoned.c |   30 +++++++++++++++++++-----------
- 1 file changed, 19 insertions(+), 11 deletions(-)
+ arch/x86/kernel/amd_nb.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -1362,6 +1362,24 @@ static int btrfs_load_zone_info(struct b
- 	return 0;
- }
+--- a/arch/x86/kernel/amd_nb.c
++++ b/arch/x86/kernel/amd_nb.c
+@@ -195,7 +195,14 @@ out:
  
-+static int btrfs_load_block_group_single(struct btrfs_block_group *bg,
-+					 struct zone_info *info,
-+					 unsigned long *active)
-+{
-+	if (info->alloc_offset == WP_MISSING_DEV) {
-+		btrfs_err(bg->fs_info,
-+			"zoned: cannot recover write pointer for zone %llu",
-+			info->physical);
-+		return -EIO;
+ int amd_smn_read(u16 node, u32 address, u32 *value)
+ {
+-	return __amd_smn_rw(node, address, value, false);
++	int err = __amd_smn_rw(node, address, value, false);
++
++	if (PCI_POSSIBLE_ERROR(*value)) {
++		err = -ENODEV;
++		*value = 0;
 +	}
 +
-+	bg->alloc_offset = info->alloc_offset;
-+	bg->zone_capacity = info->capacity;
-+	if (test_bit(0, active))
-+		set_bit(BLOCK_GROUP_FLAG_ZONE_IS_ACTIVE, &bg->runtime_flags);
-+	return 0;
-+}
-+
- int btrfs_load_block_group_zone_info(struct btrfs_block_group *cache, bool new)
- {
- 	struct btrfs_fs_info *fs_info = cache->fs_info;
-@@ -1448,17 +1466,7 @@ int btrfs_load_block_group_zone_info(str
++	return err;
+ }
+ EXPORT_SYMBOL_GPL(amd_smn_read);
  
- 	switch (map->type & BTRFS_BLOCK_GROUP_PROFILE_MASK) {
- 	case 0: /* single */
--		if (zone_info[0].alloc_offset == WP_MISSING_DEV) {
--			btrfs_err(fs_info,
--			"zoned: cannot recover write pointer for zone %llu",
--				zone_info[0].physical);
--			ret = -EIO;
--			goto out;
--		}
--		cache->alloc_offset = zone_info[0].alloc_offset;
--		cache->zone_capacity = zone_info[0].capacity;
--		if (test_bit(0, active))
--			set_bit(BLOCK_GROUP_FLAG_ZONE_IS_ACTIVE, &cache->runtime_flags);
-+		ret = btrfs_load_block_group_single(cache, &zone_info[0], active);
- 		break;
- 	case BTRFS_BLOCK_GROUP_DUP:
- 		if (map->type & BTRFS_BLOCK_GROUP_DATA) {
 
 
