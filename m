@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF46F143757;
-	Wed, 19 Jun 2024 13:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21FE143757;
+	Wed, 19 Jun 2024 13:24:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803492; cv=none; b=igYAHPOVMbHr7aVMONYN/WSr9oPqjVpdVexHORpA9qLACvaVMJ8AIDYBLCkChcAXAhJaAAmt0/24UxseKWZKd45c9F9cqOWpdt4lLqam1p7brWDw3MG43DF/V3OEUYJ8nME+UL8JWrGQdIEbT9p/LkLuqpg2b2iLplmqQ7mmlwI=
+	t=1718803495; cv=none; b=Kv33NWukjyS1dwOE2rRYx8EPLp2kCYOSj8zk9e0KksgSX6QcLUrDJSgrsWP8YyxGHS59q+x3DBSTXerbAGPwASL1T0U5hduG34cJVvg8flVIZwVty5CltrdBmbcaR6XkDd6Y/CdR0QWJQSGLIbkzNzfxq9ncR10KpTnKQFu8/SE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803492; c=relaxed/simple;
-	bh=HUVV6tqSU4RynbOXY+QnT2jrNQqO1qWCMEvJueFp+hc=;
+	s=arc-20240116; t=1718803495; c=relaxed/simple;
+	bh=rylpYBk7lwwYPN1CpAbLutVgHjlDdFYpsM+E21TBFk8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gaJCfyemFk/JXPJmkSuzxkQZgAq2NJi4Oru68xELj275M4TY5SE1yRqaqdm+wy9UuPyGeRAtxWh297Lgu+8c2NKN0PGlcZyAcX5PveMCWQ8zJ07aOzMwpxruOrty9vTum/SHhkPdRFOv4NEg1idfjy1PMdZuFAF4L4vn+bGhDmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HGXgpMeL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bab5+tVKPbuD+PO6PcerVnUKN/7da39zCA9BEd3ne9XBz3o7t+G9hp74h2CBHwh8S1PIC+1UeqRJCx9MEMstbj0mDCFL3K98XVJZ6Oc71GCouA8TY0n4YjsVNNor1Xs70OXEWcVPf4V5YNIrPlqAddVX0YggiQVlYIG6RON6ymY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g4KbeEFp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HGXgpMeL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32D3CC2BBFC;
-	Wed, 19 Jun 2024 13:24:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g4KbeEFp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D18C2BBFC;
+	Wed, 19 Jun 2024 13:24:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803492;
-	bh=HUVV6tqSU4RynbOXY+QnT2jrNQqO1qWCMEvJueFp+hc=;
+	s=korg; t=1718803495;
+	bh=rylpYBk7lwwYPN1CpAbLutVgHjlDdFYpsM+E21TBFk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HGXgpMeLdCCwe1GGVCnxYU0ZYVqlTj1f/LP8Qt9EENH7HmC7uk+7idODC0QzfWd8L
-	 KDkgI5XiZhlJUj3OI/hRs1BG971COc3F/LUYmVMJXPuUsizpsBxQyRAAp1jUAGkVw7
-	 Py+NUJTGohrJPoWnW21nFnklQFNsbvsJB7E+4DW8=
+	b=g4KbeEFpvMoIspuvK71JU29Fuqdroub45bdhMDlrvdud7MtEaFKwzXWe508xMx2BH
+	 SdB1SQbRAvfKwVwySu1jeWtFLCHeUEyVmM99JzS+5DiN6yBeyD3JAILpu1xd3qw1qd
+	 SWfsBHKdaA7I06DOf/zr+FISFmaPwdaTaswHHEJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongzhi Liu <hyperlyzcs@gmail.com>,
-	Kumaravel Thiagarajan <kumaravel.thiagarajan@microchip.com>,
+	Jean Delvare <jdelvare@suse.de>,
+	Juergen Fitschen <me@jue.yt>,
+	Ludovic Desroches <ludovic.desroches@microchip.com>,
+	Codrin Ciubotariu <codrin.ciubotariu@microchip.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 278/281] misc: microchip: pci1xxxx: Fix a memory leak in the error handling of gp_aux_bus_probe()
-Date: Wed, 19 Jun 2024 14:57:17 +0200
-Message-ID: <20240619125620.676151245@linuxfoundation.org>
+Subject: [PATCH 6.9 279/281] i2c: at91: Fix the functionality flags of the slave-only interface
+Date: Wed, 19 Jun 2024 14:57:18 +0200
+Message-ID: <20240619125620.715276875@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -51,42 +57,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongzhi Liu <hyperlyzcs@gmail.com>
+From: Jean Delvare <jdelvare@suse.de>
 
-[ Upstream commit 77427e3d5c353e3dd98c7c0af322f8d9e3131ace ]
+[ Upstream commit d6d5645e5fc1233a7ba950de4a72981c394a2557 ]
 
-There is a memory leak (forget to free allocated buffers) in a
-memory allocation failure path.
+When an I2C adapter acts only as a slave, it should not claim to
+support I2C master capabilities.
 
-Fix it to jump to the correct error handling code.
-
-Fixes: 393fc2f5948f ("misc: microchip: pci1xxxx: load auxiliary bus driver for the PIO function in the multi-function endpoint of pci1xxxx device.")
-Signed-off-by: Yongzhi Liu <hyperlyzcs@gmail.com>
-Reviewed-by: Kumaravel Thiagarajan <kumaravel.thiagarajan@microchip.com>
-Link: https://lore.kernel.org/r/20240523121434.21855-4-hyperlyzcs@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9d3ca54b550c ("i2c: at91: added slave mode support")
+Signed-off-by: Jean Delvare <jdelvare@suse.de>
+Cc: Juergen Fitschen <me@jue.yt>
+Cc: Ludovic Desroches <ludovic.desroches@microchip.com>
+Cc: Codrin Ciubotariu <codrin.ciubotariu@microchip.com>
+Cc: Andi Shyti <andi.shyti@kernel.org>
+Cc: Nicolas Ferre <nicolas.ferre@microchip.com>
+Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Cc: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gp.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-at91-slave.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gp.c b/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gp.c
-index de75d89ef53e8..34c9be437432a 100644
---- a/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gp.c
-+++ b/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gp.c
-@@ -69,8 +69,10 @@ static int gp_aux_bus_probe(struct pci_dev *pdev, const struct pci_device_id *id
+diff --git a/drivers/i2c/busses/i2c-at91-slave.c b/drivers/i2c/busses/i2c-at91-slave.c
+index d6eeea5166c04..131a67d9d4a68 100644
+--- a/drivers/i2c/busses/i2c-at91-slave.c
++++ b/drivers/i2c/busses/i2c-at91-slave.c
+@@ -106,8 +106,7 @@ static int at91_unreg_slave(struct i2c_client *slave)
  
- 	aux_bus->aux_device_wrapper[1] = kzalloc(sizeof(*aux_bus->aux_device_wrapper[1]),
- 						 GFP_KERNEL);
--	if (!aux_bus->aux_device_wrapper[1])
--		return -ENOMEM;
-+	if (!aux_bus->aux_device_wrapper[1]) {
-+		retval =  -ENOMEM;
-+		goto err_aux_dev_add_0;
-+	}
+ static u32 at91_twi_func(struct i2c_adapter *adapter)
+ {
+-	return I2C_FUNC_SLAVE | I2C_FUNC_I2C | I2C_FUNC_SMBUS_EMUL
+-		| I2C_FUNC_SMBUS_READ_BLOCK_DATA;
++	return I2C_FUNC_SLAVE;
+ }
  
- 	retval = ida_alloc(&gp_client_ida, GFP_KERNEL);
- 	if (retval < 0)
+ static const struct i2c_algorithm at91_twi_algorithm_slave = {
 -- 
 2.43.0
 
