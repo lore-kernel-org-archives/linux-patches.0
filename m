@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334DA82495;
-	Wed, 19 Jun 2024 13:22:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E8A814375A;
+	Wed, 19 Jun 2024 13:22:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803350; cv=none; b=Y5505Ou64pMlqlcEka56WO+7z3skwsEz6Ng8YjVKbv0B4JMcRXZmyS7hmnZuNzPhc2GqSt55Y3/3bjAZSptP9DV+A9iZIVEj1NE6Izuekt27VqNtHR4McOsS+U4/qQWvnet4Hqx1QXSOGFCEDNe1D2x9FGt9tOqnK84nsBlbixI=
+	t=1718803353; cv=none; b=pwwhMUJY9ku99OsM95K3Mc3H07lcITePZ3Es8ML3zusOvVXXRCqjep8eF6R6nSPG9P+4qOpb2HuGak8tLuraIYR+PYyS8d4BwDKJvcOHhvGyvo+ojGlNv2GewaGQC4O9Yeu98Fv61DVequtZoHWBpJobxampfim5NUYvBiPhh0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803350; c=relaxed/simple;
-	bh=9bjE166TNJ0DKM8bnZA8kBM2F4HephbWK68fBzRnyIU=;
+	s=arc-20240116; t=1718803353; c=relaxed/simple;
+	bh=l/c0aGzW941c/uodfuaysiQrvdZAQ3snSzsVk/ggPoo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HN7Hb7HVe72anepzgIxvZ1ofDfWVVPDy6m7yT3+jUuthp94u1BcXlf8qFjgMZAVaykzH5J7a4XYRp2Eodq/g3aFLK9qS6n03icmcXU3YiOYwokA1bQDpqjRpmKzcAOS8SX8jlPktENZTMTywi2r2NX8mPy9Wotsa5j68onYx/Fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AyodwWXI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=toWEpGuKsv5dLGpMpsH0Oo4zjEEVQnEN4qUG/ucfVP3DGDFqHRSc76d3KEHIhKr4PC0t1AfxJjXZICR6gMFMFLDykcDL9W7M15quf4MqV7gH6ziNxF+EiuSaPVZpDP4DePklyLCVjJJEGMQ57B+RoSBAkY2ITo1LvC8FAX9PwO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wsGv7KHj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AyodwWXI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE56C2BBFC;
-	Wed, 19 Jun 2024 13:22:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wsGv7KHj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D20C2BBFC;
+	Wed, 19 Jun 2024 13:22:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803350;
-	bh=9bjE166TNJ0DKM8bnZA8kBM2F4HephbWK68fBzRnyIU=;
+	s=korg; t=1718803353;
+	bh=l/c0aGzW941c/uodfuaysiQrvdZAQ3snSzsVk/ggPoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AyodwWXIRNx9JTXSjNnl7rQmQ0XwtEu1i8fKWM/WzAyt9hfRj93dkEP/n1DKuWs2u
-	 q/i4pwbM1ez2RoccK9Om/SMk/3q0z8+7wdrICjxTB6RxSWjs9zJcO6Vd42+yCeOJK/
-	 HmgXhaBfEagrPYNkp8WdOgX7E6JxuSPXoJ8Jjpg4=
+	b=wsGv7KHjbF7ZANbS+XOHC283R1w60Sde9/sqjicLbGmYLTpszmQcxLuwKyGH5fA/x
+	 r4bFESmw3CufJUgrogO1OatIMxIjEEiJLcSwTcKgz3SpWLyxjVqTmvHa+nRSDyrDGC
+	 ZmD2ZFNxEoe0Ncnw2FWS66FFTI54JwBHkgA/+7sc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rik van Riel <riel@surriel.com>,
 	Baoquan He <bhe@redhat.com>,
+	Jiri Slaby <jirislaby@kernel.org>,
 	Dave Young <dyoung@redhat.com>,
-	Vivek Goyal <vgoyal@redhat.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.9 237/281] fs/proc: fix softlockup in __read_vmcore
-Date: Wed, 19 Jun 2024 14:56:36 +0200
-Message-ID: <20240619125619.081032433@linuxfoundation.org>
+Subject: [PATCH 6.9 238/281] kexec: fix the unexpected kexec_dprintk() macro
+Date: Wed, 19 Jun 2024 14:56:37 +0200
+Message-ID: <20240619125619.120088154@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -53,42 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rik van Riel <riel@surriel.com>
+From: Baoquan He <bhe@redhat.com>
 
-commit 5cbcb62dddf5346077feb82b7b0c9254222d3445 upstream.
+commit f4af41bf177add167e39e4b0203460b1d0b531f6 upstream.
 
-While taking a kernel core dump with makedumpfile on a larger system,
-softlockup messages often appear.
+Jiri reported that the current kexec_dprintk() always prints out debugging
+message whenever kexec/kdmmp loading is triggered.  That is not wanted.
+The debugging message is supposed to be printed out when 'kexec -s -d' is
+specified for kexec/kdump loading.
 
-While softlockup warnings can be harmless, they can also interfere with
-things like RCU freeing memory, which can be problematic when the kdump
-kexec image is configured with as little memory as possible.
+After investigating, the reason is the current kexec_dprintk() takes
+printk(KERN_INFO) or printk(KERN_DEBUG) depending on whether '-d' is
+specified.  However, distros usually have defaulg log level like below:
 
-Avoid the softlockup, and give things like work items and RCU a chance to
-do their thing during __read_vmcore by adding a cond_resched.
+ [~]# cat /proc/sys/kernel/printk
+ 7       4      1       7
 
-Link: https://lkml.kernel.org/r/20240507091858.36ff767f@imladris.surriel.com
-Signed-off-by: Rik van Riel <riel@surriel.com>
-Acked-by: Baoquan He <bhe@redhat.com>
-Cc: Dave Young <dyoung@redhat.com>
-Cc: Vivek Goyal <vgoyal@redhat.com>
+So, even though '-d' is not specified, printk(KERN_DEBUG) also always
+prints out.  I thought printk(KERN_DEBUG) is equal to pr_debug(), it's
+not.
+
+Fix it by changing to use pr_info() instead which are expected to work.
+
+Link: https://lkml.kernel.org/r/20240409042238.1240462-1-bhe@redhat.com
+Fixes: cbc2fe9d9cb2 ("kexec_file: add kexec_file flag to control debug printing")
+Signed-off-by: Baoquan He <bhe@redhat.com>
+Reported-by: Jiri Slaby <jirislaby@kernel.org>
+Closes: https://lore.kernel.org/all/4c775fca-5def-4a2d-8437-7130b02722a2@kernel.org
+Reviewed-by: Dave Young <dyoung@redhat.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/vmcore.c |    2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/kexec.h | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/fs/proc/vmcore.c
-+++ b/fs/proc/vmcore.c
-@@ -383,6 +383,8 @@ static ssize_t __read_vmcore(struct iov_
- 		/* leave now if filled buffer already */
- 		if (!iov_iter_count(iter))
- 			return acc;
-+
-+		cond_resched();
- 	}
+diff --git a/include/linux/kexec.h b/include/linux/kexec.h
+index 060835bb82d5..f31bd304df45 100644
+--- a/include/linux/kexec.h
++++ b/include/linux/kexec.h
+@@ -461,10 +461,8 @@ static inline void arch_kexec_pre_free_pages(void *vaddr, unsigned int pages) {
  
- 	list_for_each_entry(m, &vmcore_list, list) {
+ extern bool kexec_file_dbg_print;
+ 
+-#define kexec_dprintk(fmt, ...)					\
+-	printk("%s" fmt,					\
+-	       kexec_file_dbg_print ? KERN_INFO : KERN_DEBUG,	\
+-	       ##__VA_ARGS__)
++#define kexec_dprintk(fmt, arg...) \
++        do { if (kexec_file_dbg_print) pr_info(fmt, ##arg); } while (0)
+ 
+ #else /* !CONFIG_KEXEC_CORE */
+ struct pt_regs;
+-- 
+2.45.2
+
 
 
