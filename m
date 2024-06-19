@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15BFF3C0B;
-	Wed, 19 Jun 2024 13:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F07F713D8BF;
+	Wed, 19 Jun 2024 13:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803837; cv=none; b=mwynn4j4d+VLhzRp0HsXVG1aiQUxtMwzJxzmpW3JWN4aEg/O7/evFZYy4uyKNTKcGYH1EDj2QNTB2EV5bE8X8fq6C4Oan3yuN2ubldVTfgqL+96VL+iG8zE54jfyxdhSnuxknlusxU0vXiIYgE4o5rZXDYx0cBDQUtrBSpC9OLA=
+	t=1718803840; cv=none; b=EaW8m+yqcMxm2HXBZ08LwEw8noO8/fj8RN6SK3h1hmiSCUfS0pz6M9Oq7+yD7ad012kmKRC1eYfaECVlN/jMyo6WzZgIqGhjSzUWtlnp65YdQwxh4yTxJqNvVb9VIh7Z3qbzBWYXNfHDiWAumFfwGzm5swNSqJCPiaztpFj4Pow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803837; c=relaxed/simple;
-	bh=noXEukVCxN2BJIzq8A3kaF1KAlLMkEVo2JVglrNIcgY=;
+	s=arc-20240116; t=1718803840; c=relaxed/simple;
+	bh=Q4O02rfqfeDpSm1xtE7m6er+bY413FkFv+LiP0AKFIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=opmdmQUMpRwiffgiYgjJXzDX8mJXzYhKcxj5KymtaJ9A9WNoDVL8yUKEfIDofwGq3B8bi5O/NHFZjwI3aesmw9SgAuxyQdi15e6tMOsaT8L+a+ZoeYdpQmiozLTapX7Y6su6gW9Kpoq/NlxTLAl90f7DlHkKNpEpee/2snjbQ9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d/cv/Z8z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tqKbZt+UfSlTrs8RcORtbxsqMH3GEKy/mtpH2cEQ09zntGFZkXHcdkND4cqp5RLUT/nHjTu2TMJGRSAvUJkD1gUOtk2F7ho/T2YucTr2mfoxKzHkAaEXffi+EAAynkf3usK3QERr7AHIt3Sajo6krgKV+kqgKXprSG2uatOPV8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GFR7A3H1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d/cv/Z8z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EAF5C2BBFC;
-	Wed, 19 Jun 2024 13:30:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GFR7A3H1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76BC8C32786;
+	Wed, 19 Jun 2024 13:30:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803837;
-	bh=noXEukVCxN2BJIzq8A3kaF1KAlLMkEVo2JVglrNIcgY=;
+	s=korg; t=1718803839;
+	bh=Q4O02rfqfeDpSm1xtE7m6er+bY413FkFv+LiP0AKFIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d/cv/Z8zPppbDy8sa4Kqq7DqIhC5L7W97EQ6xXGno+idIwdJqu1Au/8HXq0maG0Li
-	 O5H62RrGLGcBOQW7jfvxhVSh9zm+SZqHQK1NX/GqJq8+r76+mq5tklDORglTC6CcIH
-	 lzfxo7HZGCKVpHnrImHuTKh2GXCAlInQP0xyhXTU=
+	b=GFR7A3H1UxOcd8BWFyit0ZBafkwMMz6KXt3ewV/+9vEy6BUnCQka/sGM3kpGotb/Z
+	 6Xc4IpAlIUv02Wc4QT2N7QquCLrTL0jIwhPLS8XYulPQLCdTb7kFQxkfShZO6CG7ke
+	 eFz6Fj1yKLzXHtTpySCL1VSbrw/sX4r9I6MS4FjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <kolga@netapp.com>,
+	Chen Hanxiao <chenhx.fnst@fujitsu.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 120/217] NFSv4.1 enforce rootpath check in fs_location query
-Date: Wed, 19 Jun 2024 14:56:03 +0200
-Message-ID: <20240619125601.320394777@linuxfoundation.org>
+Subject: [PATCH 6.1 121/217] SUNRPC: return proper error from gss_wrap_req_priv
+Date: Wed, 19 Jun 2024 14:56:04 +0200
+Message-ID: <20240619125601.358178686@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -51,73 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Kornievskaia <kolga@netapp.com>
+From: Chen Hanxiao <chenhx.fnst@fujitsu.com>
 
-[ Upstream commit 28568c906c1bb5f7560e18082ed7d6295860f1c2 ]
+[ Upstream commit 33c94d7e3cb84f6d130678d6d59ba475a6c489cf ]
 
-In commit 4ca9f31a2be66 ("NFSv4.1 test and add 4.1 trunking transport"),
-we introduce the ability to query the NFS server for possible trunking
-locations of the existing filesystem. However, we never checked the
-returned file system path for these alternative locations. According
-to the RFC, the server can say that the filesystem currently known
-under "fs_root" of fs_location also resides under these server
-locations under the following "rootpath" pathname. The client cannot
-handle trunking a filesystem that reside under different location
-under different paths other than what the main path is. This patch
-enforces the check that fs_root path and rootpath path in fs_location
-reply is the same.
+don't return 0 if snd_buf->len really greater than snd_buf->buflen
 
-Fixes: 4ca9f31a2be6 ("NFSv4.1 test and add 4.1 trunking transport")
-Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
+Signed-off-by: Chen Hanxiao <chenhx.fnst@fujitsu.com>
+Fixes: 0c77668ddb4e ("SUNRPC: Introduce trace points in rpc_auth_gss.ko")
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
+ net/sunrpc/auth_gss/auth_gss.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index bda3050817c90..ec641a8f6604b 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -4009,6 +4009,23 @@ static void test_fs_location_for_trunking(struct nfs4_fs_location *location,
- 	}
- }
- 
-+static bool _is_same_nfs4_pathname(struct nfs4_pathname *path1,
-+				   struct nfs4_pathname *path2)
-+{
-+	int i;
-+
-+	if (path1->ncomponents != path2->ncomponents)
-+		return false;
-+	for (i = 0; i < path1->ncomponents; i++) {
-+		if (path1->components[i].len != path2->components[i].len)
-+			return false;
-+		if (memcmp(path1->components[i].data, path2->components[i].data,
-+				path1->components[i].len))
-+			return false;
+diff --git a/net/sunrpc/auth_gss/auth_gss.c b/net/sunrpc/auth_gss/auth_gss.c
+index 2d7b1e03110ae..3ef511d7af190 100644
+--- a/net/sunrpc/auth_gss/auth_gss.c
++++ b/net/sunrpc/auth_gss/auth_gss.c
+@@ -1858,8 +1858,10 @@ gss_wrap_req_priv(struct rpc_cred *cred, struct gss_cl_ctx *ctx,
+ 	offset = (u8 *)p - (u8 *)snd_buf->head[0].iov_base;
+ 	maj_stat = gss_wrap(ctx->gc_gss_ctx, offset, snd_buf, inpages);
+ 	/* slack space should prevent this ever happening: */
+-	if (unlikely(snd_buf->len > snd_buf->buflen))
++	if (unlikely(snd_buf->len > snd_buf->buflen)) {
++		status = -EIO;
+ 		goto wrap_failed;
 +	}
-+	return true;
-+}
-+
- static int _nfs4_discover_trunking(struct nfs_server *server,
- 				   struct nfs_fh *fhandle)
- {
-@@ -4042,9 +4059,13 @@ static int _nfs4_discover_trunking(struct nfs_server *server,
- 	if (status)
- 		goto out_free_3;
- 
--	for (i = 0; i < locations->nlocations; i++)
-+	for (i = 0; i < locations->nlocations; i++) {
-+		if (!_is_same_nfs4_pathname(&locations->fs_path,
-+					&locations->locations[i].rootpath))
-+			continue;
- 		test_fs_location_for_trunking(&locations->locations[i], clp,
- 					      server);
-+	}
- out_free_3:
- 	kfree(locations->fattr);
- out_free_2:
+ 	/* We're assuming that when GSS_S_CONTEXT_EXPIRED, the encryption was
+ 	 * done anyway, so it's safe to put the request on the wire: */
+ 	if (maj_stat == GSS_S_CONTEXT_EXPIRED)
 -- 
 2.43.0
 
