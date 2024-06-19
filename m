@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26383AD58;
-	Wed, 19 Jun 2024 13:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB16AD58;
+	Wed, 19 Jun 2024 13:16:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802990; cv=none; b=hjNiDzOu2qy9lyp5y1p37DCS6hnmCb64NAA98glCHyWQGxYa0cUFzl9JR0f9FOXPSYIVixQ3L5HG4E01rq6Atua8ZR0wdRXvPSYtkpmfa6XrhHm0hZJJYcNYJHcqoV7yfMydwRducrpZQO84fsnp/oTKOQf6WNDSngxsNbkGxTQ=
+	t=1718802993; cv=none; b=kQd2u869/j+olBej2h2PDIVSY8ye7rt4oEvIlJzMkwood+Jv21qWQ5BzTSf4t3uniMud6mXAw/hsaXxBcg/QnNqWqvW/IXQ2cmyOEUta0Jwx0nlKVAVI7bbM3xx8fFEkoMUBHiza9fV9Mhx/Bsex9bLtCIgTIzvQSWhwnvAL9PM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802990; c=relaxed/simple;
-	bh=7TC2TwH90Gchz71t9Ahnnoja4+kua/Jneo5payEt0A0=;
+	s=arc-20240116; t=1718802993; c=relaxed/simple;
+	bh=VnIVDj2ul2Y+Z/KvJ8WXoE6EuzRtNaEtfmLbBQtwWlY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TRGk/XBBhX+eZgtcbVhKTTcZczwj/Uow1vX6mobnnn9OchmagtRXkk1KQYJWYWDMHKzoZpBpcTTT0fNPiOSxDHFwx0HvoiY+kQBfC9bqp14xxMi0DC33Qf8eMcG34L0sfk5bEK/4St0cLHj259CeYYYLXucqcmpcYl0KDwKk/pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P8RflkR5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dyO745oBPblRf8sBiM3B/P3h/aioferw/X2aKucciqy15Btu1Dsw+xqvSnBhuzegb7jHpffGZq2KqP94l31NpcnJdW3H5XWgnClL5Dr1Ivj1YLz8Day2TzVmBakqkqlVl6CeMpQ8zGc/xtg4z94LwAhu+A/FvqjhPE4gsqh050A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KqOyU9JF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P8RflkR5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A34EAC2BBFC;
-	Wed, 19 Jun 2024 13:16:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KqOyU9JF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A48BC2BBFC;
+	Wed, 19 Jun 2024 13:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802990;
-	bh=7TC2TwH90Gchz71t9Ahnnoja4+kua/Jneo5payEt0A0=;
+	s=korg; t=1718802992;
+	bh=VnIVDj2ul2Y+Z/KvJ8WXoE6EuzRtNaEtfmLbBQtwWlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P8RflkR5Ujx4tBkiKLAqDYljtHrzcTPBwMmLrUoZrHAnL4V6H9o0Qniv2VrGUDbO/
-	 kfzAoKsNQKdVCBbbIj6IphnAsfM2J52fOBTB2tVvnnml3yeszsYv0SMIGbDt4sFcho
-	 bI5ojRNLlI0VwpZsCrUBEUIX5t6H9J9gvOim8+OQ=
+	b=KqOyU9JFbSgIHTTZdntDu4EvOJ7lzXRxROm6H9uclIpCk2ik/Yinm4qrXaUQjPAFS
+	 7bkisBe7MvaNt99pPGOMEutk9RPwDHJrcZeqnPEutkNxRaPRN0rIZXM4hUUHZaGj0m
+	 RYnslm60leh9NcB9GldR2CA77m/JpOagru2FKqPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Ingo Molnar <mingo@kernel.org>,
+	Li Zhijian <lizhijian@fujitsu.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 074/281] x86/cpu: Get rid of an unnecessary local variable in get_cpu_address_sizes()
-Date: Wed, 19 Jun 2024 14:53:53 +0200
-Message-ID: <20240619125612.689560201@linuxfoundation.org>
+Subject: [PATCH 6.9 109/281] cxl/region: Fix memregion leaks in devm_cxl_add_region()
+Date: Wed, 19 Jun 2024 14:54:28 +0200
+Message-ID: <20240619125614.043030949@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -51,61 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Li Zhijian <lizhijian@fujitsu.com>
 
-[ Upstream commit 95bfb35269b2e85cff0dd2c957b2d42ebf95ae5f ]
+[ Upstream commit 49ba7b515c4c0719b866d16f068e62d16a8a3dd1 ]
 
-Drop 'vp_bits_from_cpuid' as it is not really needed.
+Move the mode verification to __create_region() before allocating the
+memregion to avoid the memregion leaks.
 
-No functional changes.
-
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20240316120706.4352-1-bp@alien8.de
-Stable-dep-of: 2a38e4ca3022 ("x86/cpu: Provide default cache line size if not enumerated")
+Fixes: 6e099264185d ("cxl/region: Add volatile region creation support")
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Link: https://lore.kernel.org/r/20240507053421.456439-1-lizhijian@fujitsu.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/common.c | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+ drivers/cxl/core/region.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-index ae987a26f26e4..d636991536a5f 100644
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -1053,18 +1053,9 @@ void get_cpu_cap(struct cpuinfo_x86 *c)
- void get_cpu_address_sizes(struct cpuinfo_x86 *c)
- {
- 	u32 eax, ebx, ecx, edx;
--	bool vp_bits_from_cpuid = true;
+diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+index 812b2948b6c65..18b95149640b6 100644
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -2352,15 +2352,6 @@ static struct cxl_region *devm_cxl_add_region(struct cxl_root_decoder *cxlrd,
+ 	struct device *dev;
+ 	int rc;
  
- 	if (!cpu_has(c, X86_FEATURE_CPUID) ||
--	    (c->extended_cpuid_level < 0x80000008))
--		vp_bits_from_cpuid = false;
+-	switch (mode) {
+-	case CXL_DECODER_RAM:
+-	case CXL_DECODER_PMEM:
+-		break;
+-	default:
+-		dev_err(&cxlrd->cxlsd.cxld.dev, "unsupported mode %d\n", mode);
+-		return ERR_PTR(-EINVAL);
+-	}
 -
--	if (vp_bits_from_cpuid) {
--		cpuid(0x80000008, &eax, &ebx, &ecx, &edx);
--
--		c->x86_virt_bits = (eax >> 8) & 0xff;
--		c->x86_phys_bits = eax & 0xff;
--	} else {
-+	    (c->extended_cpuid_level < 0x80000008)) {
- 		if (IS_ENABLED(CONFIG_X86_64)) {
- 			c->x86_clflush_size = 64;
- 			c->x86_phys_bits = 36;
-@@ -1078,7 +1069,13 @@ void get_cpu_address_sizes(struct cpuinfo_x86 *c)
- 			    cpu_has(c, X86_FEATURE_PSE36))
- 				c->x86_phys_bits = 36;
- 		}
-+	} else {
-+		cpuid(0x80000008, &eax, &ebx, &ecx, &edx);
+ 	cxlr = cxl_region_alloc(cxlrd, id);
+ 	if (IS_ERR(cxlr))
+ 		return cxlr;
+@@ -2415,6 +2406,15 @@ static struct cxl_region *__create_region(struct cxl_root_decoder *cxlrd,
+ {
+ 	int rc;
+ 
++	switch (mode) {
++	case CXL_DECODER_RAM:
++	case CXL_DECODER_PMEM:
++		break;
++	default:
++		dev_err(&cxlrd->cxlsd.cxld.dev, "unsupported mode %d\n", mode);
++		return ERR_PTR(-EINVAL);
++	}
 +
-+		c->x86_virt_bits = (eax >> 8) & 0xff;
-+		c->x86_phys_bits = eax & 0xff;
- 	}
-+
- 	c->x86_cache_bits = c->x86_phys_bits;
- 	c->x86_cache_alignment = c->x86_clflush_size;
- }
+ 	rc = memregion_alloc(GFP_KERNEL);
+ 	if (rc < 0)
+ 		return ERR_PTR(rc);
 -- 
 2.43.0
 
