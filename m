@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2B6012FB31;
-	Wed, 19 Jun 2024 13:08:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D17613AA40;
+	Wed, 19 Jun 2024 13:08:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802523; cv=none; b=EDAh4a0ThtPUcRHxzbU36CIZJy2SCnOuR3QoBlB+0p/L3cy8GWdy4k7uz/u1aAkJObYcnWBYSoiXpBU3A5YdOCBI1tjlNRqEdyu8GguTFJdMSj4ETCvxYiJX5iWZ42Sp7ONfgQ73f8YAfpfV02liPdU/3jnLDd2dyMqIPtLb/UU=
+	t=1718802526; cv=none; b=uR8/DIf2WVWyAAou7Bz5JHgxXCy1FhlDRznhDDPye313BFVP4yhDa13iUX6Zaym7YBkp2neAhHigmnaIJexG34M3O/i+D6l0MbQAfVZJeOe9zB5/NsBgKbjkMjcycGOrYCPd9wvKyt06s9NQ/iwdmGXnWhc+aEozb2lUh+jZAkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802523; c=relaxed/simple;
-	bh=NY4vP88neayLIV3RLIpCxSWoaMqmB8d/LLyigu3sBEw=;
+	s=arc-20240116; t=1718802526; c=relaxed/simple;
+	bh=8lVgAKEycOldnQ4vPy3Fk/uCwGFunujiJu5HtjRzQdc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XT/as/YU5bKJKGDAU/Bk48uVFsogqDraTQdxscbfITQLTqitAQd7Ayk/UpMXFb/p1TMSZekN8h7x8xTXpWF2PqrqK4kQkjn/vfbLEYDsMOTMC7iPTgKiqShmPQYqSWu9tEHMwncDGLCSRpHZapOwLC+tnm1vnGwX0s5SE7lQ4y8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JZY23MWv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l/wZixVfnwK/o17V4LEdkMFGB32TBvTkPlkWmnRYreK0aC298jisSk4iF248jFRUXE4vJ0HQwKAGbIROxaPZqWhKHmVsRXGiNkmXAtJzRaoE45iq/1/uiFEcbDLrHZOAzvW2NFYGfIz9iSSU+5wlV6uXHQKJOZjslNWQ4ac29C4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G8GFJJuP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JZY23MWv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A08AC2BBFC;
-	Wed, 19 Jun 2024 13:08:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G8GFJJuP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22E0FC2BBFC;
+	Wed, 19 Jun 2024 13:08:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802523;
-	bh=NY4vP88neayLIV3RLIpCxSWoaMqmB8d/LLyigu3sBEw=;
+	s=korg; t=1718802526;
+	bh=8lVgAKEycOldnQ4vPy3Fk/uCwGFunujiJu5HtjRzQdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JZY23MWvc5adUOn1ivxuBoBXLHxqk3GDKMEpZ3/Q4OhWWbYwag3FWvKBsOOiCa3X3
-	 tvPsjVVzXNG2tnlZZF1jcuebXHrfQe2IIZziuyVo/Vvuvss5XyGa/mOR65bGbfpGL9
-	 RpYvIyq8h+U1mxo/27BLLCqJE5UDN5f5T4N1irG4=
+	b=G8GFJJuPQJ4TOxaa/1Q9wB0ecG8QA0rPfg5TZLMTru3mDVgg70iYygjP7/6BnDcJa
+	 fU6WfNYfHEOtKMXIoMMg+LlccfGash6Oqe4oKGYkBEYKXYvxbR9DKPnK4TbwUNilUJ
+	 ahqTaVztr2pKHmW/WlQGLG5jvYjyO4sYqijtEfyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Deak <imre.deak@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.6 218/267] drm/i915: Fix audio component initialization
-Date: Wed, 19 Jun 2024 14:56:09 +0200
-Message-ID: <20240619125614.693902728@linuxfoundation.org>
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Christoph Hellwig <hch@lst.de>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.6 227/267] btrfs: zoned: factor out single bg handling from btrfs_load_block_group_zone_info
+Date: Wed, 19 Jun 2024 14:56:18 +0200
+Message-ID: <20240619125615.038837103@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -50,115 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Deak <imre.deak@intel.com>
+From: Christoph Hellwig <hch@lst.de>
 
-commit 75800e2e4203ea83bbc9d4f63ad97ea582244a08 upstream.
+commit 9e0e3e74dc6928a0956f4e27e24d473c65887e96 upstream.
 
-After registering the audio component in i915_audio_component_init()
-the audio driver may call i915_audio_component_get_power() via the
-component ops. This could program AUD_FREQ_CNTRL with an uninitialized
-value if the latter function is called before display.audio.freq_cntrl
-gets initialized. The get_power() function also does a modeset which in
-the above case happens too early before the initialization step and
-triggers the
+Split the code handling a type single block group from
+btrfs_load_block_group_zone_info to make the code more readable.
 
-"Reject display access from task"
-
-error message added by the Fixes: commit below.
-
-Fix the above issue by registering the audio component only after the
-initialization step.
-
-Fixes: 87c1694533c9 ("drm/i915: save AUD_FREQ_CNTRL state at audio domain suspend")
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/10291
-Cc: stable@vger.kernel.org # v5.5+
-Signed-off-by: Imre Deak <imre.deak@intel.com>
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240521143022.3784539-1-imre.deak@intel.com
-(cherry picked from commit fdd0b80172758ce284f19fa8a26d90c61e4371d2)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_audio.c          |   32 +++++++++++++-------
- drivers/gpu/drm/i915/display/intel_audio.h          |    1 
- drivers/gpu/drm/i915/display/intel_display_driver.c |    2 +
- 3 files changed, 24 insertions(+), 11 deletions(-)
+ fs/btrfs/zoned.c |   30 +++++++++++++++++++-----------
+ 1 file changed, 19 insertions(+), 11 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_audio.c
-+++ b/drivers/gpu/drm/i915/display/intel_audio.c
-@@ -1251,17 +1251,6 @@ static const struct component_ops i915_a
- static void i915_audio_component_init(struct drm_i915_private *i915)
- {
- 	u32 aud_freq, aud_freq_init;
--	int ret;
--
--	ret = component_add_typed(i915->drm.dev,
--				  &i915_audio_component_bind_ops,
--				  I915_COMPONENT_AUDIO);
--	if (ret < 0) {
--		drm_err(&i915->drm,
--			"failed to add audio component (%d)\n", ret);
--		/* continue with reduced functionality */
--		return;
--	}
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -1374,6 +1374,24 @@ static int btrfs_load_zone_info(struct b
+ 	return 0;
+ }
  
- 	if (DISPLAY_VER(i915) >= 9) {
- 		aud_freq_init = intel_de_read(i915, AUD_FREQ_CNTRL);
-@@ -1284,6 +1273,21 @@ static void i915_audio_component_init(st
- 
- 	/* init with current cdclk */
- 	intel_audio_cdclk_change_post(i915);
-+}
-+
-+static void i915_audio_component_register(struct drm_i915_private *i915)
++static int btrfs_load_block_group_single(struct btrfs_block_group *bg,
++					 struct zone_info *info,
++					 unsigned long *active)
 +{
-+	int ret;
-+
-+	ret = component_add_typed(i915->drm.dev,
-+				  &i915_audio_component_bind_ops,
-+				  I915_COMPONENT_AUDIO);
-+	if (ret < 0) {
-+		drm_err(&i915->drm,
-+			"failed to add audio component (%d)\n", ret);
-+		/* continue with reduced functionality */
-+		return;
++	if (info->alloc_offset == WP_MISSING_DEV) {
++		btrfs_err(bg->fs_info,
++			"zoned: cannot recover write pointer for zone %llu",
++			info->physical);
++		return -EIO;
 +	}
- 
- 	i915->display.audio.component_registered = true;
- }
-@@ -1316,6 +1320,12 @@ void intel_audio_init(struct drm_i915_pr
- 		i915_audio_component_init(i915);
- }
- 
-+void intel_audio_register(struct drm_i915_private *i915)
-+{
-+	if (!i915->display.audio.lpe.platdev)
-+		i915_audio_component_register(i915);
++
++	bg->alloc_offset = info->alloc_offset;
++	bg->zone_capacity = info->capacity;
++	if (test_bit(0, active))
++		set_bit(BLOCK_GROUP_FLAG_ZONE_IS_ACTIVE, &bg->runtime_flags);
++	return 0;
 +}
 +
- /**
-  * intel_audio_deinit() - deinitialize the audio driver
-  * @i915: the i915 drm device private data
---- a/drivers/gpu/drm/i915/display/intel_audio.h
-+++ b/drivers/gpu/drm/i915/display/intel_audio.h
-@@ -28,6 +28,7 @@ void intel_audio_codec_get_config(struct
- void intel_audio_cdclk_change_pre(struct drm_i915_private *dev_priv);
- void intel_audio_cdclk_change_post(struct drm_i915_private *dev_priv);
- void intel_audio_init(struct drm_i915_private *dev_priv);
-+void intel_audio_register(struct drm_i915_private *i915);
- void intel_audio_deinit(struct drm_i915_private *dev_priv);
- void intel_audio_sdp_split_update(struct intel_encoder *encoder,
- 				  const struct intel_crtc_state *crtc_state);
---- a/drivers/gpu/drm/i915/display/intel_display_driver.c
-+++ b/drivers/gpu/drm/i915/display/intel_display_driver.c
-@@ -386,6 +386,8 @@ void intel_display_driver_register(struc
+ int btrfs_load_block_group_zone_info(struct btrfs_block_group *cache, bool new)
+ {
+ 	struct btrfs_fs_info *fs_info = cache->fs_info;
+@@ -1460,17 +1478,7 @@ int btrfs_load_block_group_zone_info(str
  
- 	intel_audio_init(i915);
- 
-+	intel_audio_register(i915);
-+
- 	intel_display_debugfs_register(i915);
- 
- 	/*
+ 	switch (map->type & BTRFS_BLOCK_GROUP_PROFILE_MASK) {
+ 	case 0: /* single */
+-		if (zone_info[0].alloc_offset == WP_MISSING_DEV) {
+-			btrfs_err(fs_info,
+-			"zoned: cannot recover write pointer for zone %llu",
+-				zone_info[0].physical);
+-			ret = -EIO;
+-			goto out;
+-		}
+-		cache->alloc_offset = zone_info[0].alloc_offset;
+-		cache->zone_capacity = zone_info[0].capacity;
+-		if (test_bit(0, active))
+-			set_bit(BLOCK_GROUP_FLAG_ZONE_IS_ACTIVE, &cache->runtime_flags);
++		ret = btrfs_load_block_group_single(cache, &zone_info[0], active);
+ 		break;
+ 	case BTRFS_BLOCK_GROUP_DUP:
+ 		if (map->type & BTRFS_BLOCK_GROUP_DATA) {
 
 
