@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E2682871;
-	Wed, 19 Jun 2024 13:03:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C98482871;
+	Wed, 19 Jun 2024 13:03:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802211; cv=none; b=lglWcsZtrAqL+se6/SQc8JIPg9i0Im+xO52UWDKTv21RFUD+ITUA5RwsXcDZV9CYsU+0gW8tXZwI5nFZTVXY2322J5E69rK5tgrqusHzJ9lsNCFMD3kuUxRnOnCLYzJ3RNJqElgjT169f9fyC/iOKgW7LAADySSr4aCRNuOo73s=
+	t=1718802214; cv=none; b=Si6I/KXqN7hwi8pVlLInxLrolc4fzdy8QVb17wsqKXGrtl4mNFFRD3YVKorvn1y4KM2IV24dEmrj3LH/Dmnin92GQuMm9Ss/+ssJ1jf4WlWsHZiERHLmSUfEevkpTpDpGsggeerZ6NPjOOSuDx/Jg/wBLijiPoYxjgxaq7SmLkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802211; c=relaxed/simple;
-	bh=7EBHy990zkScpeBJYkjV88a0BDEnJh1BRIf7CWUgwQM=;
+	s=arc-20240116; t=1718802214; c=relaxed/simple;
+	bh=c3Y9W8t/OV5gJUdpnFxh/V83CVXj5W1fttoXvf4xEd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=quZPnDcRWgnwxjKBN6fS6YBDHqkMJKDOPGsdwJCesLl+/dTStowsIyyVKV4HtuFGC8pa/gqSmdO90CqvTsQYrY/Qf25id0fhWwD5iFajgNh/KJo8Iyav0bxFYOQbiTNwHXj+6GTcBCcrb4i65PzkfqZxDNvqS+ic+sk2xKPKVlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q70yr146; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MIIOI10nE5wvJZ9af7NED40P15WGiqSoCvP3NsHx3JDz87HX0/wP3a1xteWv5Iv+/iCGY6OAuM9Su0F1LZi5zPygG0pQTjoc02IDQC/a5JvJ63+tQKEwd4d8ukk9KnqhsNpind9/BgFG4L9H+Q2S9ET5kMOgNKR29qHuDI9hGgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w9JrRkPL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q70yr146"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CAA7C2BBFC;
-	Wed, 19 Jun 2024 13:03:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w9JrRkPL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85221C2BBFC;
+	Wed, 19 Jun 2024 13:03:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802211;
-	bh=7EBHy990zkScpeBJYkjV88a0BDEnJh1BRIf7CWUgwQM=;
+	s=korg; t=1718802213;
+	bh=c3Y9W8t/OV5gJUdpnFxh/V83CVXj5W1fttoXvf4xEd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q70yr146cJ3eBJs10NOfZSr9hMMX4A+fIwbC4HWP9N+uWk9olGARyjNCMBzlTnIs/
-	 AKwXIXwmcOTWVPoZycqccmO7/MN/UjJF/kzTOYUWdoLwi4lhkX4ysNhdxijsseVWzx
-	 S9vY53R3JNcTzPnf8QxM4JRMG0U2cfnwGnmjHLvQ=
+	b=w9JrRkPLoJ5Agg4SySUlB48LMCEK/rXxfi6hhttvLPxsk2ydTNMMNhYeyViEh1zGg
+	 zk+u/dPHycsS+DfLQgC36RBanIiy3yYbVA9cFpIdW8x6tq6gvgmsO8c2SnNk/0tm37
+	 0nLx6V7uWV4RT/vEpKWynLSDCuwc+FHtcHRl0qsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9dfe490c8176301c1d06@syzkaller.appspotmail.com,
-	Dave Kleikamp <shaggy@kernel.org>
-Subject: [PATCH 6.6 088/267] jfs: xattr: fix buffer overflow for invalid xattr
-Date: Wed, 19 Jun 2024 14:53:59 +0200
-Message-ID: <20240619125609.728050004@linuxfoundation.org>
+	Pierre Tomon <pierretom+12@ik.me>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.6 089/267] xhci: Set correct transferred length for cancelled bulk transfers
+Date: Wed, 19 Jun 2024 14:54:00 +0200
+Message-ID: <20240619125609.766237070@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -50,40 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit 7c55b78818cfb732680c4a72ab270cc2d2ee3d0f upstream.
+commit f0260589b439e2637ad54a2b25f00a516ef28a57 upstream.
 
-When an xattr size is not what is expected, it is printed out to the
-kernel log in hex format as a form of debugging.  But when that xattr
-size is bigger than the expected size, printing it out can cause an
-access off the end of the buffer.
+The transferred length is set incorrectly for cancelled bulk
+transfer TDs in case the bulk transfer ring stops on the last transfer
+block with a 'Stop - Length Invalid' completion code.
 
-Fix this all up by properly restricting the size of the debug hex dump
-in the kernel log.
+length essentially ends up being set to the requested length:
+urb->actual_length = urb->transfer_buffer_length
 
-Reported-by: syzbot+9dfe490c8176301c1d06@syzkaller.appspotmail.com
-Cc: Dave Kleikamp <shaggy@kernel.org>
-Link: https://lore.kernel.org/r/2024051433-slider-cloning-98f9@gregkh
+Length for 'Stop - Length Invalid' cases should be the sum of all
+TRB transfer block lengths up to the one the ring stopped on,
+_excluding_ the one stopped on.
+
+Fix this by always summing up TRB lengths for 'Stop - Length Invalid'
+bulk cases.
+
+This issue was discovered by Alan Stern while debugging
+https://bugzilla.kernel.org/show_bug.cgi?id=218890, but does not
+solve that bug. Issue is older than 4.10 kernel but fix won't apply
+to those due to major reworks in that area.
+
+Tested-by: Pierre Tomon <pierretom+12@ik.me>
+Cc: stable@vger.kernel.org # v4.10+
+Cc: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20240611120610.3264502-2-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jfs/xattr.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/host/xhci-ring.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/fs/jfs/xattr.c
-+++ b/fs/jfs/xattr.c
-@@ -557,9 +557,11 @@ static int ea_get(struct inode *inode, s
- 
-       size_check:
- 	if (EALIST_SIZE(ea_buf->xattr) != ea_size) {
-+		int size = min_t(int, EALIST_SIZE(ea_buf->xattr), ea_size);
-+
- 		printk(KERN_ERR "ea_get: invalid extended attribute\n");
- 		print_hex_dump(KERN_ERR, "", DUMP_PREFIX_ADDRESS, 16, 1,
--				     ea_buf->xattr, ea_size, 1);
-+				     ea_buf->xattr, size, 1);
- 		ea_release(inode, ea_buf);
- 		rc = -EIO;
- 		goto clean_up;
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -2525,9 +2525,8 @@ static int process_bulk_intr_td(struct x
+ 		goto finish_td;
+ 	case COMP_STOPPED_LENGTH_INVALID:
+ 		/* stopped on ep trb with invalid length, exclude it */
+-		ep_trb_len	= 0;
+-		remaining	= 0;
+-		break;
++		td->urb->actual_length = sum_trb_lengths(xhci, ep_ring, ep_trb);
++		goto finish_td;
+ 	case COMP_USB_TRANSACTION_ERROR:
+ 		if (xhci->quirks & XHCI_NO_SOFT_RETRY ||
+ 		    (ep->err_count++ > MAX_SOFT_RETRY) ||
 
 
