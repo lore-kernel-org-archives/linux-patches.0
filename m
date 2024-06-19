@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E0101304AD;
-	Wed, 19 Jun 2024 13:01:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7845E1304AD;
+	Wed, 19 Jun 2024 13:01:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802069; cv=none; b=MBZEQM9Qrz+fv2czF9I9ChBzEI5cov6DwCq85FpJuV5Fln+g2wM39SsjH7774wJGhfYF0hfNwO5dGhX98b87FMF9T4iaozWaxfVGRHDuVRH2dVQVVX1jYY1tdRS9BgwonwTJK8A1dT3EuifYU8zWMkht8b5vrqyThfbYVFEwR8c=
+	t=1718802072; cv=none; b=KfFDCzDtghAKR52XQ4DI5/Yr975nEv7ORx6p7zUpcwfyM8YCzJYpJX2tPp8IsGEHK6IPkZHKcLNCVWv/4Ma7x7AmfRVeHzW7ZrPMfAVFNcDYkUPmWqxX/jixOGvyaVk46l+YaoWGW0p19dkx2GVsGGaOnEgd22BCGiomzcqYuE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802069; c=relaxed/simple;
-	bh=+EjE2tPMHHhuoiB5txqcnd0A6YG7CbaBjf8DL+4g6BE=;
+	s=arc-20240116; t=1718802072; c=relaxed/simple;
+	bh=BGduIpxCMTAk1FkdTuqzQgiH7fUD1LeM20uQ4RtyDAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QdFVByc5+xnFoozS9l6sZJIzdc00CeJR3idKrxgjVTDqOz31mz09K618nY+8718e9CtpG/96EojH2z9Y3w7ASfqUWzBI0SveQsq8Jpz4yqAr57r+vqK42ZhZc9vsYMfpQjAJ0W/ryqzVx6RRzcWs6TiFQFpB2W272Cgjoo3pk7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJCZLLwk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q0y2rbJCkxRt4PBHU4BArTgLH/nE8BweJtEBPB7G+1oX15atrCkk5cKLwAxBWXFsCgqidWLk/KJvecvPv6HQmtIRMHCOyB7GDLtLmZKYzgup5VdqRfDluN2aSSTPAfxO0xphRByLI0lOVXTJSFqDViOr1C9bQFhQYSpSs2NknJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qVCcjzx8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJCZLLwk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B61DCC2BBFC;
-	Wed, 19 Jun 2024 13:01:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qVCcjzx8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAC60C4AF1A;
+	Wed, 19 Jun 2024 13:01:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802069;
-	bh=+EjE2tPMHHhuoiB5txqcnd0A6YG7CbaBjf8DL+4g6BE=;
+	s=korg; t=1718802072;
+	bh=BGduIpxCMTAk1FkdTuqzQgiH7fUD1LeM20uQ4RtyDAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mJCZLLwk0JFdYa6trI+aYAsWIOlhkumRJLkOVNSepcBOwqlCBUysWmsev5FK6m3Hh
-	 OeGZSxnoixR+d+0QE68tJCYZkRy6iCuHzFyqfY0PL8QQ3pdoRnw2w2AGV2gx2t2+oM
-	 V2kRIDvmwO85bkARgISNGpCGXBCTPSAG9RT5zk6Q=
+	b=qVCcjzx89QL/CSBgicNuOU+136WSVJLK5GgX1UH34FW3A7fjiw4te+at0RA8MRnsI
+	 i6ATkpxRbTMvTaqG3CJU/XScb2jOY+pK89s9v414XvQ47ExTuRKqnB0j5lfwX+tAE3
+	 ES4qMGj8tL1py4QmbzIBx9bIetQ2XKfCxo88r5DQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,11 +31,10 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Randolph <randolph@andestech.com>,
 	Anup Patel <anup@brainfault.org>,
-	Atish Patra <atishp@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 071/267] irqchip/riscv-intc: Allow large non-standard interrupt number
-Date: Wed, 19 Jun 2024 14:53:42 +0200
-Message-ID: <20240619125609.081985755@linuxfoundation.org>
+Subject: [PATCH 6.6 072/267] irqchip/riscv-intc: Introduce Andes hart-level interrupt controller
+Date: Wed, 19 Jun 2024 14:53:43 +0200
+Message-ID: <20240619125609.120016853@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -56,94 +55,192 @@ Content-Transfer-Encoding: 8bit
 
 From: Yu Chien Peter Lin <peterlin@andestech.com>
 
-[ Upstream commit 96303bcb401c21dc1426d8d9bb1fc74aae5c02a9 ]
+[ Upstream commit f4cc33e78ba8624a79ba8dea98ce5c85aa9ca33c ]
 
-Currently, the implementation of the RISC-V INTC driver uses the
-interrupt cause as the hardware interrupt number, with a maximum of
-64 interrupts. However, the platform can expand the interrupt number
-further for custom local interrupts.
+Add support for the Andes hart-level interrupt controller. This
+controller provides interrupt mask/unmask functions to access the
+custom register (SLIE) where the non-standard S-mode local interrupt
+enable bits are located. The base of custom interrupt number is set
+to 256.
 
-To fully utilize the available local interrupt sources, switch
-to using irq_domain_create_tree() that creates the radix tree
-map, add global variables (riscv_intc_nr_irqs, riscv_intc_custom_base
-and riscv_intc_custom_nr_irqs) to determine the valid range of local
-interrupt number (hwirq).
+To share the riscv_intc_domain_map() with the generic RISC-V INTC and
+ACPI, add a chip parameter to riscv_intc_init_common(), so it can be
+passed to the irq_domain_set_info() as a private data.
+
+Andes hart-level interrupt controller requires the "andestech,cpu-intc"
+compatible string to be present in interrupt-controller of cpu node to
+enable the use of custom local interrupt source.
+e.g.,
+
+  cpu0: cpu@0 {
+      compatible = "andestech,ax45mp", "riscv";
+      ...
+      cpu0-intc: interrupt-controller {
+          #interrupt-cells = <0x01>;
+          compatible = "andestech,cpu-intc", "riscv,cpu-intc";
+          interrupt-controller;
+      };
+  };
 
 Signed-off-by: Yu Chien Peter Lin <peterlin@andestech.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Reviewed-by: Randolph <randolph@andestech.com>
 Reviewed-by: Anup Patel <anup@brainfault.org>
-Reviewed-by: Atish Patra <atishp@rivosinc.com>
-Link: https://lore.kernel.org/r/20240222083946.3977135-3-peterlin@andestech.com
+Link: https://lore.kernel.org/r/20240222083946.3977135-4-peterlin@andestech.com
 Stable-dep-of: 0110c4b11047 ("irqchip/riscv-intc: Prevent memory leak when riscv_intc_init_common() fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-riscv-intc.c | 26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+ drivers/irqchip/irq-riscv-intc.c | 58 ++++++++++++++++++++++++++++----
+ include/linux/soc/andes/irq.h    | 18 ++++++++++
+ 2 files changed, 69 insertions(+), 7 deletions(-)
+ create mode 100644 include/linux/soc/andes/irq.h
 
 diff --git a/drivers/irqchip/irq-riscv-intc.c b/drivers/irqchip/irq-riscv-intc.c
-index e8d01b14ccdde..684875c397280 100644
+index 684875c397280..0cd6b48a5dbf9 100644
 --- a/drivers/irqchip/irq-riscv-intc.c
 +++ b/drivers/irqchip/irq-riscv-intc.c
-@@ -19,15 +19,16 @@
+@@ -17,6 +17,7 @@
+ #include <linux/module.h>
+ #include <linux/of.h>
  #include <linux/smp.h>
++#include <linux/soc/andes/irq.h>
  
  static struct irq_domain *intc_domain;
-+static unsigned int riscv_intc_nr_irqs __ro_after_init = BITS_PER_LONG;
-+static unsigned int riscv_intc_custom_base __ro_after_init = BITS_PER_LONG;
-+static unsigned int riscv_intc_custom_nr_irqs __ro_after_init;
- 
- static asmlinkage void riscv_intc_irq(struct pt_regs *regs)
- {
- 	unsigned long cause = regs->cause & ~CAUSE_IRQ_FLAG;
- 
--	if (unlikely(cause >= BITS_PER_LONG))
--		panic("unexpected interrupt cause");
--
--	generic_handle_domain_irq(intc_domain, cause);
-+	if (generic_handle_domain_irq(intc_domain, cause))
-+		pr_warn_ratelimited("Failed to handle interrupt (cause: %ld)\n", cause);
+ static unsigned int riscv_intc_nr_irqs __ro_after_init = BITS_PER_LONG;
+@@ -48,6 +49,31 @@ static void riscv_intc_irq_unmask(struct irq_data *d)
+ 	csr_set(CSR_IE, BIT(d->hwirq));
  }
  
- /*
-@@ -93,6 +94,14 @@ static int riscv_intc_domain_alloc(struct irq_domain *domain,
- 	if (ret)
- 		return ret;
- 
++static void andes_intc_irq_mask(struct irq_data *d)
++{
 +	/*
-+	 * Only allow hwirq for which we have corresponding standard or
-+	 * custom interrupt enable register.
++	 * Andes specific S-mode local interrupt causes (hwirq)
++	 * are defined as (256 + n) and controlled by n-th bit
++	 * of SLIE.
 +	 */
-+	if ((hwirq >= riscv_intc_nr_irqs && hwirq < riscv_intc_custom_base) ||
-+	    (hwirq >= riscv_intc_custom_base + riscv_intc_custom_nr_irqs))
-+		return -EINVAL;
++	unsigned int mask = BIT(d->hwirq % BITS_PER_LONG);
 +
- 	for (i = 0; i < nr_irqs; i++) {
- 		ret = riscv_intc_domain_map(domain, virq + i, hwirq + i);
- 		if (ret)
-@@ -117,8 +126,7 @@ static int __init riscv_intc_init_common(struct fwnode_handle *fn)
++	if (d->hwirq < ANDES_SLI_CAUSE_BASE)
++		csr_clear(CSR_IE, mask);
++	else
++		csr_clear(ANDES_CSR_SLIE, mask);
++}
++
++static void andes_intc_irq_unmask(struct irq_data *d)
++{
++	unsigned int mask = BIT(d->hwirq % BITS_PER_LONG);
++
++	if (d->hwirq < ANDES_SLI_CAUSE_BASE)
++		csr_set(CSR_IE, mask);
++	else
++		csr_set(ANDES_CSR_SLIE, mask);
++}
++
+ static void riscv_intc_irq_eoi(struct irq_data *d)
  {
- 	int rc;
+ 	/*
+@@ -71,12 +97,21 @@ static struct irq_chip riscv_intc_chip = {
+ 	.irq_eoi = riscv_intc_irq_eoi,
+ };
  
--	intc_domain = irq_domain_create_linear(fn, BITS_PER_LONG,
--					       &riscv_intc_domain_ops, NULL);
-+	intc_domain = irq_domain_create_tree(fn, &riscv_intc_domain_ops, NULL);
- 	if (!intc_domain) {
- 		pr_err("unable to add IRQ domain\n");
- 		return -ENXIO;
-@@ -132,7 +140,11 @@ static int __init riscv_intc_init_common(struct fwnode_handle *fn)
- 
- 	riscv_set_intc_hwnode_fn(riscv_intc_hwnode);
- 
--	pr_info("%d local interrupts mapped\n", BITS_PER_LONG);
-+	pr_info("%d local interrupts mapped\n", riscv_intc_nr_irqs);
-+	if (riscv_intc_custom_nr_irqs) {
-+		pr_info("%d custom local interrupts mapped\n",
-+			riscv_intc_custom_nr_irqs);
-+	}
++static struct irq_chip andes_intc_chip = {
++	.name		= "RISC-V INTC",
++	.irq_mask	= andes_intc_irq_mask,
++	.irq_unmask	= andes_intc_irq_unmask,
++	.irq_eoi	= riscv_intc_irq_eoi,
++};
++
+ static int riscv_intc_domain_map(struct irq_domain *d, unsigned int irq,
+ 				 irq_hw_number_t hwirq)
+ {
++	struct irq_chip *chip = d->host_data;
++
+ 	irq_set_percpu_devid(irq);
+-	irq_domain_set_info(d, irq, hwirq, &riscv_intc_chip, d->host_data,
+-			    handle_percpu_devid_irq, NULL, NULL);
++	irq_domain_set_info(d, irq, hwirq, chip, NULL, handle_percpu_devid_irq,
++			    NULL, NULL);
  
  	return 0;
  }
+@@ -122,11 +157,12 @@ static struct fwnode_handle *riscv_intc_hwnode(void)
+ 	return intc_domain->fwnode;
+ }
+ 
+-static int __init riscv_intc_init_common(struct fwnode_handle *fn)
++static int __init riscv_intc_init_common(struct fwnode_handle *fn,
++					 struct irq_chip *chip)
+ {
+ 	int rc;
+ 
+-	intc_domain = irq_domain_create_tree(fn, &riscv_intc_domain_ops, NULL);
++	intc_domain = irq_domain_create_tree(fn, &riscv_intc_domain_ops, chip);
+ 	if (!intc_domain) {
+ 		pr_err("unable to add IRQ domain\n");
+ 		return -ENXIO;
+@@ -152,8 +188,9 @@ static int __init riscv_intc_init_common(struct fwnode_handle *fn)
+ static int __init riscv_intc_init(struct device_node *node,
+ 				  struct device_node *parent)
+ {
+-	int rc;
++	struct irq_chip *chip = &riscv_intc_chip;
+ 	unsigned long hartid;
++	int rc;
+ 
+ 	rc = riscv_of_parent_hartid(node, &hartid);
+ 	if (rc < 0) {
+@@ -178,10 +215,17 @@ static int __init riscv_intc_init(struct device_node *node,
+ 		return 0;
+ 	}
+ 
+-	return riscv_intc_init_common(of_node_to_fwnode(node));
++	if (of_device_is_compatible(node, "andestech,cpu-intc")) {
++		riscv_intc_custom_base = ANDES_SLI_CAUSE_BASE;
++		riscv_intc_custom_nr_irqs = ANDES_RV_IRQ_LAST;
++		chip = &andes_intc_chip;
++	}
++
++	return riscv_intc_init_common(of_node_to_fwnode(node), chip);
+ }
+ 
+ IRQCHIP_DECLARE(riscv, "riscv,cpu-intc", riscv_intc_init);
++IRQCHIP_DECLARE(andes, "andestech,cpu-intc", riscv_intc_init);
+ 
+ #ifdef CONFIG_ACPI
+ 
+@@ -208,7 +252,7 @@ static int __init riscv_intc_acpi_init(union acpi_subtable_headers *header,
+ 		return -ENOMEM;
+ 	}
+ 
+-	return riscv_intc_init_common(fn);
++	return riscv_intc_init_common(fn, &riscv_intc_chip);
+ }
+ 
+ IRQCHIP_ACPI_DECLARE(riscv_intc, ACPI_MADT_TYPE_RINTC, NULL,
+diff --git a/include/linux/soc/andes/irq.h b/include/linux/soc/andes/irq.h
+new file mode 100644
+index 0000000000000..edc3182d6e661
+--- /dev/null
++++ b/include/linux/soc/andes/irq.h
+@@ -0,0 +1,18 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/*
++ * Copyright (C) 2023 Andes Technology Corporation
++ */
++#ifndef __ANDES_IRQ_H
++#define __ANDES_IRQ_H
++
++/* Andes PMU irq number */
++#define ANDES_RV_IRQ_PMOVI		18
++#define ANDES_RV_IRQ_LAST		ANDES_RV_IRQ_PMOVI
++#define ANDES_SLI_CAUSE_BASE		256
++
++/* Andes PMU related registers */
++#define ANDES_CSR_SLIE			0x9c4
++#define ANDES_CSR_SLIP			0x9c5
++#define ANDES_CSR_SCOUNTEROF		0x9d4
++
++#endif /* __ANDES_IRQ_H */
 -- 
 2.43.0
 
