@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A8B1E492;
-	Wed, 19 Jun 2024 13:31:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C98A1E492;
+	Wed, 19 Jun 2024 13:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803872; cv=none; b=DQltRRwPw//EamzWh0aQlmtuJpVw0a0gHMGbgLzxnrOGXpXpNSoSEPOtTPRSS9mjn2mW9GnSaiEaRy+v5N37n91n3yY04wZWtu/8hPbWqOLbV5LBdt0OY7x5WuB3BqelfktCzmUVNtOJocyuEqqdbB7Pq5ay7cVunY5hTsrScVI=
+	t=1718803875; cv=none; b=nO2/FCoTtUNyziiGo4D1eBAmQA+585WUMeYXvoSq+jkFBi75uJxYHlHInruZk5MSal3uHmtrU78ee4u6Kp7dAZ6D196uGPlRymFijZAzc7uEL/QXpmYAcp80Ef3rldQ84sqTVDzybVCSe7DoC2oh2MXuZD3OSUcXoJmUePCh+t0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803872; c=relaxed/simple;
-	bh=/Ecka8V3B8LjAamGzmXqlxlDgeJWPSYrprd7Kc8fajc=;
+	s=arc-20240116; t=1718803875; c=relaxed/simple;
+	bh=ypalvhVOYV1/kJev/nK1VTlJgr9NwYbjjMIO0wmDOmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bxYxvkKX0WqbxFAYPn2tFIiqr2uY8z9XqtjShD1aSrsFgsZ/062th1jiheA465dfKGlrHxDFiw5tXH6VFWGGMyvYoAtpDOsRDs1+XWmB2zDe1r9Q1xHDzbN1h5y7CA7YhLewcGVHO4PZBlJ9olFiY3m+CihtJB1IJnZDmGWT9Ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DzObCKh6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=S8fBO0k/Ct10xuepTjI/CBdR1VR5yKSW06PaQnM/ama59+gBRszVHZiRl962fYrMhlTvu/YqEOmcO71dr4tOkavIvjkLNzEOEhHyNpr0mi27Sdcr1RUwd/1kMWsY8ssjuM9P2V1/uKLSwimFZZMFmuyl0d8jkByfyU6PO3bvf0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n/S8+Df6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DzObCKh6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEBCFC2BBFC;
-	Wed, 19 Jun 2024 13:31:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n/S8+Df6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7394C32786;
+	Wed, 19 Jun 2024 13:31:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803872;
-	bh=/Ecka8V3B8LjAamGzmXqlxlDgeJWPSYrprd7Kc8fajc=;
+	s=korg; t=1718803875;
+	bh=ypalvhVOYV1/kJev/nK1VTlJgr9NwYbjjMIO0wmDOmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DzObCKh6+STpj8WV77qKvTSo5Pa/how3OzrE7wkwScF4sYUoQ6b/G8hsjZiz8JfvU
-	 udNhqJdFKFCBw42YxKsg3SWxCEUXC7WdAynxk4F5tPRTywNpnmwCiynusQqv1Gtf+b
-	 NV6MNJvHH6qXAYeLDZ4wOYTLD2O2EtGT/gzPBahA=
+	b=n/S8+Df6aGHeoXvkUIxN/FsrgKfwvLDLCoo8XSd690wAn/YkzDltgF6unsMIeKrot
+	 sl5L7T9R0NTxGMnmQL3DGDMdf18WJ+5vCE7XwsAHp1/1SS0q8zQ79tuFMwDofyobaS
+	 qqDLitx69MdyzN9IdD1HzMzcnrw4TEUe080/O2Cw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kun(llfl)" <llfl@linux.alibaba.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 131/217] iommu/amd: Fix sysfs leak in iommu init
-Date: Wed, 19 Jun 2024 14:56:14 +0200
-Message-ID: <20240619125601.744485372@linuxfoundation.org>
+Subject: [PATCH 6.1 132/217] HID: logitech-dj: Fix memory leak in logi_dj_recv_switch_to_dj_mode()
+Date: Wed, 19 Jun 2024 14:56:15 +0200
+Message-ID: <20240619125601.783084084@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -46,51 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kun(llfl) <llfl@linux.alibaba.com>
+From: José Expósito <jose.exposito89@gmail.com>
 
-[ Upstream commit a295ec52c8624883885396fde7b4df1a179627c3 ]
+[ Upstream commit ce3af2ee95170b7d9e15fff6e500d67deab1e7b3 ]
 
-During the iommu initialization, iommu_init_pci() adds sysfs nodes.
-However, these nodes aren't remove in free_iommu_resources() subsequently.
+Fix a memory leak on logi_dj_recv_send_report() error path.
 
-Fixes: 39ab9555c241 ("iommu: Add sysfs bindings for struct iommu_device")
-Signed-off-by: Kun(llfl) <llfl@linux.alibaba.com>
-Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Link: https://lore.kernel.org/r/c8e0d11c6ab1ee48299c288009cf9c5dae07b42d.1715215003.git.llfl@linux.alibaba.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: 6f20d3261265 ("HID: logitech-dj: Fix error handling in logi_dj_recv_switch_to_dj_mode()")
+Signed-off-by: José Expósito <jose.exposito89@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/init.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/hid/hid-logitech-dj.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index cc94ac6662339..c9598c506ff94 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -1655,8 +1655,17 @@ static void __init free_pci_segments(void)
- 	}
- }
+diff --git a/drivers/hid/hid-logitech-dj.c b/drivers/hid/hid-logitech-dj.c
+index 57697605b2e24..dc7b0fe83478e 100644
+--- a/drivers/hid/hid-logitech-dj.c
++++ b/drivers/hid/hid-logitech-dj.c
+@@ -1284,8 +1284,10 @@ static int logi_dj_recv_switch_to_dj_mode(struct dj_receiver_dev *djrcv_dev,
+ 		 */
+ 		msleep(50);
  
-+static void __init free_sysfs(struct amd_iommu *iommu)
-+{
-+	if (iommu->iommu.dev) {
-+		iommu_device_unregister(&iommu->iommu);
-+		iommu_device_sysfs_remove(&iommu->iommu);
-+	}
-+}
-+
- static void __init free_iommu_one(struct amd_iommu *iommu)
- {
-+	free_sysfs(iommu);
- 	free_cwwb_sem(iommu);
- 	free_command_buffer(iommu);
- 	free_event_buffer(iommu);
+-		if (retval)
++		if (retval) {
++			kfree(dj_report);
+ 			return retval;
++		}
+ 	}
+ 
+ 	/*
 -- 
 2.43.0
 
