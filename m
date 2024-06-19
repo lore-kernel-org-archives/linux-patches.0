@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD4C82495;
-	Wed, 19 Jun 2024 13:19:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808A982495;
+	Wed, 19 Jun 2024 13:19:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803190; cv=none; b=ViFA3bviVg2Ebj7L6juVrw4WokuLyYfZ6sBlPkrcagYyNEtVAzAQyMUTzA85uuxoKtrkTFLvjSEw6z2RJ2MZciGxU3WALUauPhBSnDNTdINlSom8JP4FDzcp1KRq4SqYb86gNgoHOR4Vic6iImtbM0NhjMzMBcH6HzRWhuAtiqE=
+	t=1718803193; cv=none; b=B8C/ukn+b0PNRxzjZ56FABAXaL6l+TgbxcrjpKywgQK72WHXeDc425x0TadOiTMIkYPeXGPpsx16Od+LBKHB4r/NIdmkJ+vUuTAlBdufoIBXUPXEVmDTefxABJvodcUfbIrrvhnNkkGu2/8z4RM1mOviLSv0bwcjZZ87W42MK80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803190; c=relaxed/simple;
-	bh=oI84tCHi6gqdJQK0UOOtRmo/4oc9u3jyGVTuAcWWSx4=;
+	s=arc-20240116; t=1718803193; c=relaxed/simple;
+	bh=VCEQ4kbtCmSWwAt9pw+/LrJm66E8ZbCWKF/XkyQgM9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a74Q5rd0fqFgQVDFj2HtSAiJb/FLvmxAPPkiQFIQ3vjxKcj0g4NdvQ+OM0tNLSB3CduuDUEmDtf+KjP69TAOkAFFfVwp5sLr52Q8UJGosrQXh4Z0w8B4rk8am++lyDEgqnMCY5KUqdG28JPQ+2cwwN+e/KPT9pe0su9k02IMnyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bycgJWeu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xu1Cq6B36OT5PosL8jO4aZeub1SOGrJmwaN68nTH93mMa8ktcupYc8gr3cKsTQoGwuaXBslUSs9rW7eatMv/aMBqVk011eo1/DT57gRTTjHl8xpJj2GIcrNQqYKJiut2rh6WRZBpdBWS3sl5Sx8MKzAHpsWR3W84Hmccbf2Q/bY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jsrZw1Fn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bycgJWeu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F232C2BBFC;
-	Wed, 19 Jun 2024 13:19:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jsrZw1Fn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03136C2BBFC;
+	Wed, 19 Jun 2024 13:19:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803190;
-	bh=oI84tCHi6gqdJQK0UOOtRmo/4oc9u3jyGVTuAcWWSx4=;
+	s=korg; t=1718803193;
+	bh=VCEQ4kbtCmSWwAt9pw+/LrJm66E8ZbCWKF/XkyQgM9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bycgJWeuzQjT4skZfYKbovdrNP/d36Md5pqV9OSl2DVSqkuzTPuR2nHkD5PgvXAkH
-	 E7veLW2BrOzlnv7gIhmCEhuVnmja+VEejmZKZW723bun1aw+2exnOxZfsRbu6sfNOT
-	 0V1GDucjDF4ikPzkqi0uEtdNB+PEWszCbYxP1wig=
+	b=jsrZw1FnjoFcVNqwXXpKrQ3dZnvsNVpKMgjM1kGZeirlio4E+ig18zorC5S9PnhX3
+	 WsATS4Xa1OYFDQcJ7MczITNtgyEzt13gRg8AhF7cEJJ+zyZZiQ5zUx3qfH7vd8BcJs
+	 /MVYZLGPInGO9au9GSFiB1MbSbAvqtynIBiKjYoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	David Ahern <dsahern@kernel.org>,
+	Rao Shoaib <Rao.Shoaib@oracle.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 176/281] net/ipv6: Fix the RT cache flush via sysctl using a previous delay
-Date: Wed, 19 Jun 2024 14:55:35 +0200
-Message-ID: <20240619125616.607530655@linuxfoundation.org>
+Subject: [PATCH 6.9 185/281] af_unix: Read with MSG_PEEK loops if the first unread byte is OOB
+Date: Wed, 19 Jun 2024 14:55:44 +0200
+Message-ID: <20240619125616.954220256@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -52,53 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Pavlu <petr.pavlu@suse.com>
+From: Rao Shoaib <Rao.Shoaib@oracle.com>
 
-[ Upstream commit 14a20e5b4ad998793c5f43b0330d9e1388446cf3 ]
+[ Upstream commit a6736a0addd60fccc3a3508461d72314cc609772 ]
 
-The net.ipv6.route.flush system parameter takes a value which specifies
-a delay used during the flush operation for aging exception routes. The
-written value is however not used in the currently requested flush and
-instead utilized only in the next one.
+Read with MSG_PEEK flag loops if the first byte to read is an OOB byte.
+commit 22dd70eb2c3d ("af_unix: Don't peek OOB data without MSG_OOB.")
+addresses the loop issue but does not address the issue that no data
+beyond OOB byte can be read.
 
-A problem is that ipv6_sysctl_rtcache_flush() first reads the old value
-of net->ipv6.sysctl.flush_delay into a local delay variable and then
-calls proc_dointvec() which actually updates the sysctl based on the
-provided input.
+>>> from socket import *
+>>> c1, c2 = socketpair(AF_UNIX, SOCK_STREAM)
+>>> c1.send(b'a', MSG_OOB)
+1
+>>> c1.send(b'b')
+1
+>>> c2.recv(1, MSG_PEEK | MSG_DONTWAIT)
+b'b'
 
-Fix the problem by switching the order of the two operations.
+>>> from socket import *
+>>> c1, c2 = socketpair(AF_UNIX, SOCK_STREAM)
+>>> c2.setsockopt(SOL_SOCKET, SO_OOBINLINE, 1)
+>>> c1.send(b'a', MSG_OOB)
+1
+>>> c1.send(b'b')
+1
+>>> c2.recv(1, MSG_PEEK | MSG_DONTWAIT)
+b'a'
+>>> c2.recv(1, MSG_PEEK | MSG_DONTWAIT)
+b'a'
+>>> c2.recv(1, MSG_DONTWAIT)
+b'a'
+>>> c2.recv(1, MSG_PEEK | MSG_DONTWAIT)
+b'b'
+>>>
 
-Fixes: 4990509f19e8 ("[NETNS][IPV6]: Make sysctls route per namespace.")
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20240607112828.30285-1-petr.pavlu@suse.com
+Fixes: 314001f0bf92 ("af_unix: Add OOB support")
+Signed-off-by: Rao Shoaib <Rao.Shoaib@oracle.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20240611084639.2248934-1-Rao.Shoaib@oracle.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/unix/af_unix.c |   18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index bca6f33c7bb9e..8f8c8fcfd1c21 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -6343,12 +6343,12 @@ static int ipv6_sysctl_rtcache_flush(struct ctl_table *ctl, int write,
- 	if (!write)
- 		return -EINVAL;
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -2672,18 +2672,18 @@ static struct sk_buff *manage_oob(struct
+ 		if (skb == u->oob_skb) {
+ 			if (copied) {
+ 				skb = NULL;
+-			} else if (sock_flag(sk, SOCK_URGINLINE)) {
+-				if (!(flags & MSG_PEEK)) {
++			} else if (!(flags & MSG_PEEK)) {
++				if (sock_flag(sk, SOCK_URGINLINE)) {
+ 					WRITE_ONCE(u->oob_skb, NULL);
+ 					consume_skb(skb);
++				} else {
++					__skb_unlink(skb, &sk->sk_receive_queue);
++					WRITE_ONCE(u->oob_skb, NULL);
++					unlinked_skb = skb;
++					skb = skb_peek(&sk->sk_receive_queue);
+ 				}
+-			} else if (flags & MSG_PEEK) {
+-				skb = NULL;
+-			} else {
+-				__skb_unlink(skb, &sk->sk_receive_queue);
+-				WRITE_ONCE(u->oob_skb, NULL);
+-				unlinked_skb = skb;
+-				skb = skb_peek(&sk->sk_receive_queue);
++			} else if (!sock_flag(sk, SOCK_URGINLINE)) {
++				skb = skb_peek_next(skb, &sk->sk_receive_queue);
+ 			}
+ 		}
  
--	net = (struct net *)ctl->extra1;
--	delay = net->ipv6.sysctl.flush_delay;
- 	ret = proc_dointvec(ctl, write, buffer, lenp, ppos);
- 	if (ret)
- 		return ret;
- 
-+	net = (struct net *)ctl->extra1;
-+	delay = net->ipv6.sysctl.flush_delay;
- 	fib6_run_gc(delay <= 0 ? 0 : (unsigned long)delay, net, delay > 0);
- 	return 0;
- }
--- 
-2.43.0
-
 
 
