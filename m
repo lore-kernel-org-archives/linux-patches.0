@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2C613DDC0;
-	Wed, 19 Jun 2024 13:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C45613DDC0;
+	Wed, 19 Jun 2024 13:33:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718804030; cv=none; b=lbEOnJ/CnM3sKqLOHomPJ3UvYxIKHOxFC/LFYXSmzc770GYy8FZCG8bLvGn2EAuoqmyijw9/TAEE0lMvPsoU8GdtaJKa/+dmfBYYTejwioAqA6lomisNDU5u6YFtWUGDXI8Uy3FNNLsC7DaehMGWVira6VITK0l0lfSipOS0sD0=
+	t=1718804033; cv=none; b=JTZNi/r4tSiNcfX+Aq1VkNgkeOs4rrpJ7eYU73SpQKkf4MrljVKfp9oiSSRNTSReD+0psWnAhj3aMs3r7lHi/z3bDCAFqICxuKMGRXUiJe4fuNBjCWGFuccyFAqgZFxRVYPXv6VhEAyq/eahP2/22skZp0C6+4gNyNZ7vHqTCvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718804030; c=relaxed/simple;
-	bh=pQHi8p+UBQ8bTEvZPKLtqvdYLQzV3L8hhKgZEDOe2oU=;
+	s=arc-20240116; t=1718804033; c=relaxed/simple;
+	bh=uR75YvrNJUgg9ywhrQC0WzpK1q0kRqB0msfUvCt1r7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bxzz09q4wjWf69pBQS+q4OgX1hxyCRO/MGeVqBes2lZs3iucO6RW9N04ASSo5kbH65pNI9Th9Rs5Q7PmmtbHrstFzOJFjX/wOBDjL8liGSVpsNE9w44vdEWOYJf2zjKQb6J24n63NXJAe/jWmxr3lCmRTlCHupnKAilGEmHavHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wlMyCJZR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OnQ30N73mkUoi8LjQf7IMALo3CV4B+tAlY3oSRzEPJFFHOeKZpIrF3DSZ9GgOsISiMB2yNMIbPc2Fi+LzWfP12GwRg14d/i7rFl2Hh3KlETx5n3c2WMBSlC7sV+HHJkrsfVagI4H8IkWG7brIW87VGlWQwt627PDVYIEU26BbjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JRg8LHrB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wlMyCJZR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EADBCC2BBFC;
-	Wed, 19 Jun 2024 13:33:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JRg8LHrB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D64C4C2BBFC;
+	Wed, 19 Jun 2024 13:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718804030;
-	bh=pQHi8p+UBQ8bTEvZPKLtqvdYLQzV3L8hhKgZEDOe2oU=;
+	s=korg; t=1718804033;
+	bh=uR75YvrNJUgg9ywhrQC0WzpK1q0kRqB0msfUvCt1r7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wlMyCJZRgL+R75xl44U2jOere4T/agXh6EH0Axtefaw7gD62SFhVZcxgzCxT82iMr
-	 TP52+Jv5U3PxxP/TNmzAiS9Tya+W4Xwf2VxbRhMOdT6/13l5/oWEU1AOX/Fr/a8HAx
-	 Ve7gdbpph/bCNhFiZTE4RsgD3+cnNX3zNxJOtFoI=
+	b=JRg8LHrBf523a8CMpODmCy9tJHIXSRNbQFB15NfRWvRNmh8jPM9ntD1+HRCENwAKi
+	 SEnKkolisQVtCKic/rsOpW0QTew2TTQJgqL2HyL4YNEagga768bQ/eHGHVzAJ///TV
+	 rI01Xq8sUa+hrwGKFj8dLi32GLwl+9rSUw4WSHuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nam Cao <namcao@linutronix.de>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.1 186/217] riscv: rewrite __kernel_map_pages() to fix sleeping in invalid context
-Date: Wed, 19 Jun 2024 14:57:09 +0200
-Message-ID: <20240619125603.862327669@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>,
+	Hagar Hemdan <hagarhem@amazon.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.1 169/217] irqchip/gic-v3-its: Fix potential race condition in its_vlpi_prop_update()
+Date: Wed, 19 Jun 2024 14:56:52 +0200
+Message-ID: <20240619125603.210995800@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -51,99 +51,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nam Cao <namcao@linutronix.de>
+From: Hagar Hemdan <hagarhem@amazon.com>
 
-commit fb1cf0878328fe75d47f0aed0a65b30126fcefc4 upstream.
+commit b97e8a2f7130a4b30d1502003095833d16c028b3 upstream.
 
-__kernel_map_pages() is a debug function which clears the valid bit in page
-table entry for deallocated pages to detect illegal memory accesses to
-freed pages.
+its_vlpi_prop_update() calls lpi_write_config() which obtains the
+mapping information for a VLPI without lock held. So it could race
+with its_vlpi_unmap().
 
-This function set/clear the valid bit using __set_memory(). __set_memory()
-acquires init_mm's semaphore, and this operation may sleep. This is
-problematic, because  __kernel_map_pages() can be called in atomic context,
-and thus is illegal to sleep. An example warning that this causes:
+Since all calls from its_irq_set_vcpu_affinity() require the same
+lock to be held, hoist the locking there instead of sprinkling the
+locking all over the place.
 
-BUG: sleeping function called from invalid context at kernel/locking/rwsem.c:1578
-in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 2, name: kthreadd
-preempt_count: 2, expected: 0
-CPU: 0 PID: 2 Comm: kthreadd Not tainted 6.9.0-g1d4c6d784ef6 #37
-Hardware name: riscv-virtio,qemu (DT)
-Call Trace:
-[<ffffffff800060dc>] dump_backtrace+0x1c/0x24
-[<ffffffff8091ef6e>] show_stack+0x2c/0x38
-[<ffffffff8092baf8>] dump_stack_lvl+0x5a/0x72
-[<ffffffff8092bb24>] dump_stack+0x14/0x1c
-[<ffffffff8003b7ac>] __might_resched+0x104/0x10e
-[<ffffffff8003b7f4>] __might_sleep+0x3e/0x62
-[<ffffffff8093276a>] down_write+0x20/0x72
-[<ffffffff8000cf00>] __set_memory+0x82/0x2fa
-[<ffffffff8000d324>] __kernel_map_pages+0x5a/0xd4
-[<ffffffff80196cca>] __alloc_pages_bulk+0x3b2/0x43a
-[<ffffffff8018ee82>] __vmalloc_node_range+0x196/0x6ba
-[<ffffffff80011904>] copy_process+0x72c/0x17ec
-[<ffffffff80012ab4>] kernel_clone+0x60/0x2fe
-[<ffffffff80012f62>] kernel_thread+0x82/0xa0
-[<ffffffff8003552c>] kthreadd+0x14a/0x1be
-[<ffffffff809357de>] ret_from_fork+0xe/0x1c
+This bug was discovered using Coverity Static Analysis Security Testing
+(SAST) by Synopsys, Inc.
 
-Rewrite this function with apply_to_existing_page_range(). It is fine to
-not have any locking, because __kernel_map_pages() works with pages being
-allocated/deallocated and those pages are not changed by anyone else in the
-meantime.
+[ tglx: Use guard() instead of goto ]
 
-Fixes: 5fde3db5eb02 ("riscv: add ARCH_SUPPORTS_DEBUG_PAGEALLOC support")
-Signed-off-by: Nam Cao <namcao@linutronix.de>
+Fixes: 015ec0386ab6 ("irqchip/gic-v3-its: Add VLPI configuration handling")
+Suggested-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Hagar Hemdan <hagarhem@amazon.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/1289ecba9606a19917bc12b6c27da8aa23e1e5ae.1715750938.git.namcao@linutronix.de
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20240531162144.28650-1-hagarhem@amazon.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/mm/pageattr.c |   28 ++++++++++++++++++++++------
- 1 file changed, 22 insertions(+), 6 deletions(-)
+ drivers/irqchip/irq-gic-v3-its.c |   44 ++++++++++-----------------------------
+ 1 file changed, 12 insertions(+), 32 deletions(-)
 
---- a/arch/riscv/mm/pageattr.c
-+++ b/arch/riscv/mm/pageattr.c
-@@ -386,17 +386,33 @@ int set_direct_map_default_noflush(struc
- }
- 
- #ifdef CONFIG_DEBUG_PAGEALLOC
-+static int debug_pagealloc_set_page(pte_t *pte, unsigned long addr, void *data)
-+{
-+	int enable = *(int *)data;
-+
-+	unsigned long val = pte_val(ptep_get(pte));
-+
-+	if (enable)
-+		val |= _PAGE_PRESENT;
-+	else
-+		val &= ~_PAGE_PRESENT;
-+
-+	set_pte(pte, __pte(val));
-+
-+	return 0;
-+}
-+
- void __kernel_map_pages(struct page *page, int numpages, int enable)
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -1837,28 +1837,22 @@ static int its_vlpi_map(struct irq_data
  {
- 	if (!debug_pagealloc_enabled())
- 		return;
+ 	struct its_device *its_dev = irq_data_get_irq_chip_data(d);
+ 	u32 event = its_get_event_id(d);
+-	int ret = 0;
  
--	if (enable)
--		__set_memory((unsigned long)page_address(page), numpages,
--			     __pgprot(_PAGE_PRESENT), __pgprot(0));
--	else
--		__set_memory((unsigned long)page_address(page), numpages,
--			     __pgprot(0), __pgprot(_PAGE_PRESENT));
-+	unsigned long start = (unsigned long)page_address(page);
-+	unsigned long size = PAGE_SIZE * numpages;
-+
-+	apply_to_existing_page_range(&init_mm, start, size, debug_pagealloc_set_page, &enable);
-+
-+	flush_tlb_kernel_range(start, start + size);
+ 	if (!info->map)
+ 		return -EINVAL;
+ 
+-	raw_spin_lock(&its_dev->event_map.vlpi_lock);
+-
+ 	if (!its_dev->event_map.vm) {
+ 		struct its_vlpi_map *maps;
+ 
+ 		maps = kcalloc(its_dev->event_map.nr_lpis, sizeof(*maps),
+ 			       GFP_ATOMIC);
+-		if (!maps) {
+-			ret = -ENOMEM;
+-			goto out;
+-		}
++		if (!maps)
++			return -ENOMEM;
+ 
+ 		its_dev->event_map.vm = info->map->vm;
+ 		its_dev->event_map.vlpi_maps = maps;
+ 	} else if (its_dev->event_map.vm != info->map->vm) {
+-		ret = -EINVAL;
+-		goto out;
++		return -EINVAL;
+ 	}
+ 
+ 	/* Get our private copy of the mapping information */
+@@ -1890,46 +1884,32 @@ static int its_vlpi_map(struct irq_data
+ 		its_dev->event_map.nr_vlpis++;
+ 	}
+ 
+-out:
+-	raw_spin_unlock(&its_dev->event_map.vlpi_lock);
+-	return ret;
++	return 0;
  }
- #endif
  
+ static int its_vlpi_get(struct irq_data *d, struct its_cmd_info *info)
+ {
+ 	struct its_device *its_dev = irq_data_get_irq_chip_data(d);
+ 	struct its_vlpi_map *map;
+-	int ret = 0;
+-
+-	raw_spin_lock(&its_dev->event_map.vlpi_lock);
+ 
+ 	map = get_vlpi_map(d);
+ 
+-	if (!its_dev->event_map.vm || !map) {
+-		ret = -EINVAL;
+-		goto out;
+-	}
++	if (!its_dev->event_map.vm || !map)
++		return -EINVAL;
+ 
+ 	/* Copy our mapping information to the incoming request */
+ 	*info->map = *map;
+ 
+-out:
+-	raw_spin_unlock(&its_dev->event_map.vlpi_lock);
+-	return ret;
++	return 0;
+ }
+ 
+ static int its_vlpi_unmap(struct irq_data *d)
+ {
+ 	struct its_device *its_dev = irq_data_get_irq_chip_data(d);
+ 	u32 event = its_get_event_id(d);
+-	int ret = 0;
+ 
+-	raw_spin_lock(&its_dev->event_map.vlpi_lock);
+-
+-	if (!its_dev->event_map.vm || !irqd_is_forwarded_to_vcpu(d)) {
+-		ret = -EINVAL;
+-		goto out;
+-	}
++	if (!its_dev->event_map.vm || !irqd_is_forwarded_to_vcpu(d))
++		return -EINVAL;
+ 
+ 	/* Drop the virtual mapping */
+ 	its_send_discard(its_dev, event);
+@@ -1953,9 +1933,7 @@ static int its_vlpi_unmap(struct irq_dat
+ 		kfree(its_dev->event_map.vlpi_maps);
+ 	}
+ 
+-out:
+-	raw_spin_unlock(&its_dev->event_map.vlpi_lock);
+-	return ret;
++	return 0;
+ }
+ 
+ static int its_vlpi_prop_update(struct irq_data *d, struct its_cmd_info *info)
+@@ -1983,6 +1961,8 @@ static int its_irq_set_vcpu_affinity(str
+ 	if (!is_v4(its_dev->its))
+ 		return -EINVAL;
+ 
++	guard(raw_spinlock_irq)(&its_dev->event_map.vlpi_lock);
++
+ 	/* Unmap request? */
+ 	if (!info)
+ 		return its_vlpi_unmap(d);
 
 
