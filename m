@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E879C82871;
-	Wed, 19 Jun 2024 13:05:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5B182871;
+	Wed, 19 Jun 2024 13:05:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802344; cv=none; b=hZOyelZRHXkXE9qd3W0oOIWoa48Fca22CXGYeKyXhk/2lFlmBCb142tBgZ8AG8DbaK+Sum1zYqje6wIMV3YiLxtgs+FYnxjX4VC3tcmn5LecJ0hwowSur6iJ/WTLDnJyqCKqRe9CscZAcaJXDAtL1ZnYfjUNFbvonfiTC2XFOyM=
+	t=1718802347; cv=none; b=pMHzR1EyiXDA+URQl7mU9poCCnjkwRWJXqIvWkDzVOkkpLSSgOkhjC7Y50ETFbs1U1LYnEZoF2y8BoNMeU4RQohVm4N9NqNhT4/WARz05xOw2RnXQNyIeAUGrLHy7ruNtXuolsAwAEaIvGALDgwFHBS6JqKATxrwjBXWctR9ls8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802344; c=relaxed/simple;
-	bh=+13jNWMwRK7PXxSLdKLCDoFW76KbPFTFDw4D6DoSgS8=;
+	s=arc-20240116; t=1718802347; c=relaxed/simple;
+	bh=92CTZqfDb8HnWLpZ2oonnKRt+1ZjnYTY/c/u5t3seHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AE6icq0brNvRUzM1r2c+CARR7VU9H7ujymV77aXk2L1uIEgWd51zDpk5NFryUbX5JA/B//aKPHG8kCelsq8EfHxW049J2bmdMvpVKVB9UXYkvx4NeDi/zXpZn0r/FCY+c82G7umUTZIqGszDvxyxpo1dJu15uO4dhei4zSclPUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RmGVFBWc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LzTEU3pCTBsgBdy4oP+JGDubn9F465L92I2Ksl+IAwvd9gxCM4eNDp5nuqfbtCfzI+AMdxOzA1AZ69HADDNEKigoYsRNeCJFeC+DT4Nl+hNcxotX6hjxDJPwzZOePPSCCO4fzEZ7IwWSKU9scqeIrNgydpbSTZgNZ5+yo2z/4Os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KZ/yEmgr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RmGVFBWc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F0C5C2BBFC;
-	Wed, 19 Jun 2024 13:05:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KZ/yEmgr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64DEDC2BBFC;
+	Wed, 19 Jun 2024 13:05:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802343;
-	bh=+13jNWMwRK7PXxSLdKLCDoFW76KbPFTFDw4D6DoSgS8=;
+	s=korg; t=1718802346;
+	bh=92CTZqfDb8HnWLpZ2oonnKRt+1ZjnYTY/c/u5t3seHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RmGVFBWcChBBOVLAS0LyZejBe597HFwBeiB8GnFwwxVDS/iT019CRE2qB85kXpoF5
-	 /4iauBXQRG4JoHqUSs8XoSI7/fGhEemVTwQTk3dKc5kVB3SnRSDLLHCQLvp8hxAVUW
-	 2R4lDPBLo053z2tZhjb5f4+x8UlvjHFUP+RQeWjg=
+	b=KZ/yEmgrhXr1Tf0rTC20Bm2c1ZleELIRY5gnjgwXIgwh0N09RM7bEtb35Dy9WSxSY
+	 N37ItMbiPtA0kVzmmuJfoqI7avBDgzGJphI2GqJZHCTSN8r8GlKlCamtKH84qa+eae
+	 Rkd9cUn2NuDVNzqanyiQP1kQYU1WQTSL0PE2UMDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Wagner <dwagner@suse.de>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 165/267] nvmet-passthru: propagate status from id override functions
-Date: Wed, 19 Jun 2024 14:55:16 +0200
-Message-ID: <20240619125612.677909091@linuxfoundation.org>
+Subject: [PATCH 6.6 166/267] net/ipv6: Fix the RT cache flush via sysctl using a previous delay
+Date: Wed, 19 Jun 2024 14:55:17 +0200
+Message-ID: <20240619125612.715596793@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -53,44 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Wagner <dwagner@suse.de>
+From: Petr Pavlu <petr.pavlu@suse.com>
 
-[ Upstream commit d76584e53f4244dbc154bec447c3852600acc914 ]
+[ Upstream commit 14a20e5b4ad998793c5f43b0330d9e1388446cf3 ]
 
-The id override functions return a status which is not propagated to the
-caller.
+The net.ipv6.route.flush system parameter takes a value which specifies
+a delay used during the flush operation for aging exception routes. The
+written value is however not used in the currently requested flush and
+instead utilized only in the next one.
 
-Fixes: c1fef73f793b ("nvmet: add passthru code to process commands")
-Signed-off-by: Daniel Wagner <dwagner@suse.de>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+A problem is that ipv6_sysctl_rtcache_flush() first reads the old value
+of net->ipv6.sysctl.flush_delay into a local delay variable and then
+calls proc_dointvec() which actually updates the sysctl based on the
+provided input.
+
+Fix the problem by switching the order of the two operations.
+
+Fixes: 4990509f19e8 ("[NETNS][IPV6]: Make sysctls route per namespace.")
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20240607112828.30285-1-petr.pavlu@suse.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/passthru.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/ipv6/route.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/target/passthru.c b/drivers/nvme/target/passthru.c
-index 9fe07d7efa96c..d4a61645d61a5 100644
---- a/drivers/nvme/target/passthru.c
-+++ b/drivers/nvme/target/passthru.c
-@@ -226,13 +226,13 @@ static void nvmet_passthru_execute_cmd_work(struct work_struct *w)
- 	    req->cmd->common.opcode == nvme_admin_identify) {
- 		switch (req->cmd->identify.cns) {
- 		case NVME_ID_CNS_CTRL:
--			nvmet_passthru_override_id_ctrl(req);
-+			status = nvmet_passthru_override_id_ctrl(req);
- 			break;
- 		case NVME_ID_CNS_NS:
--			nvmet_passthru_override_id_ns(req);
-+			status = nvmet_passthru_override_id_ns(req);
- 			break;
- 		case NVME_ID_CNS_NS_DESC_LIST:
--			nvmet_passthru_override_id_descs(req);
-+			status = nvmet_passthru_override_id_descs(req);
- 			break;
- 		}
- 	} else if (status < 0)
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 0a37f04177337..29fa2ca07b46a 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -6332,12 +6332,12 @@ static int ipv6_sysctl_rtcache_flush(struct ctl_table *ctl, int write,
+ 	if (!write)
+ 		return -EINVAL;
+ 
+-	net = (struct net *)ctl->extra1;
+-	delay = net->ipv6.sysctl.flush_delay;
+ 	ret = proc_dointvec(ctl, write, buffer, lenp, ppos);
+ 	if (ret)
+ 		return ret;
+ 
++	net = (struct net *)ctl->extra1;
++	delay = net->ipv6.sysctl.flush_delay;
+ 	fib6_run_gc(delay <= 0 ? 0 : (unsigned long)delay, net, delay > 0);
+ 	return 0;
+ }
 -- 
 2.43.0
 
