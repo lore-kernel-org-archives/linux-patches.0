@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D66E44D9EA;
-	Wed, 19 Jun 2024 13:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0934D9EA;
+	Wed, 19 Jun 2024 13:23:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803385; cv=none; b=WVPZ0BTp2uzoRyyN2zsNTQEhdKh0s5gcFoXLfsoWgUNP1bxk/goQqErfAG9sC42yUY3BlG2+ur9tI8Lm7k1OkiQN9l/D4mZ6BQz/rMvZp3/0Vca+ibS1LqMTFRWxphZgw8DyGbClLBjqRIzlVN+1ib7bwy528b8FYl3GL3eJQ94=
+	t=1718803388; cv=none; b=JqBxkhIGV6N5Aa2ZFsOOtVWuaIWKMfTgUO3h/8h8F1F5Swt2MV8Mol/zN8Rs9KfWeYgjYkyccC5shUCFT9h3/0URXLrqbDt/1MWrP8+yulAZ/ZBb7vKqeKD+BfTUQ1DaM3I4Qog1FJ4utBgJhtk+GAZ8kKgWV1rZmDABtgfXZPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803385; c=relaxed/simple;
-	bh=QnG95PXbEj9oOm1jbis+IlzAfk9XDBtyvYI8zXs8Xlw=;
+	s=arc-20240116; t=1718803388; c=relaxed/simple;
+	bh=YuBZOINgqsRhmpedHYeXnElmRJK5DhWhORrlvCC4STs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OK8pydt/pHlB6z3RJj00dv4xWlrpPUoQxLbco7psQ/aWHncAJsqB19RsC6Pvm4D6DftnxOzZlyPOq5aKNHOicQA9+7WlZ+UpWnIjgMY6hmDfo+mTgFGCocGuCFv/BDgQ49W30KGeIVlIMtLMJDyS+xSgWXxKLjhGah8NY6Qa/so=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+BFUwIT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FaRjY+e5tKoCwLCPt5pD/DYGlR5RV0FYDmPF+rFSj5YyLvGGplGuQAxv1VQCND3sLxbRpUaJgXLXcSGBpzlddXeaxP0GYg1Rn0VLCfU982c1i5DLYaXdWA+2kZ1InxcTu3cO0gez0G3S+nJUQHeoAU1b29ZbyDTbVSaoMEkidzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PjGUNM63; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+BFUwIT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52372C2BBFC;
-	Wed, 19 Jun 2024 13:23:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PjGUNM63"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43439C2BBFC;
+	Wed, 19 Jun 2024 13:23:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803385;
-	bh=QnG95PXbEj9oOm1jbis+IlzAfk9XDBtyvYI8zXs8Xlw=;
+	s=korg; t=1718803388;
+	bh=YuBZOINgqsRhmpedHYeXnElmRJK5DhWhORrlvCC4STs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f+BFUwITW40o/GwCkdrDTTTcKA5ilAFT6jVyraJ9R5sRA6GlBpbpaoAjD4017Fylo
-	 VRIVsTD7Q1CZ7edZzZ0QePQ9GWLQsXlZzk76AVSXGzaOWt5g+3ShD1sKhsbkndDrpE
-	 LeiBYpgFQWBQJ6bPEaLOfhyCHbKBScoVlL3ff15Q=
+	b=PjGUNM63Nko0l3SRizSBbYc9nkY/zFQspXrOww0W0vFYJEuVIIw0DBV2GtlGVp1kM
+	 NjPDyXIrsVpql+sEuqPukG2p3hevfp68WD8e3OIcS2FyfAwogp43nnLykTDej03Ugf
+	 A45LZUQ+bDRbhV9KICJu/PtLVSlCmO9oVnVWrXjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 6.9 218/281] perf auxtrace: Fix multiple use of --itrace option
-Date: Wed, 19 Jun 2024 14:56:17 +0200
-Message-ID: <20240619125618.350097061@linuxfoundation.org>
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Inki Dae <inki.dae@samsung.com>
+Subject: [PATCH 6.9 209/281] drm/exynos: hdmi: report safe 640x480 mode as a fallback when no EDID found
+Date: Wed, 19 Jun 2024 14:56:08 +0200
+Message-ID: <20240619125617.994265043@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -54,66 +50,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-commit bb69c912c4e8005cf1ee6c63782d2fc28838dee2 upstream.
+commit 799d4b392417ed6889030a5b2335ccb6dcf030ab upstream.
 
-If the --itrace option is used more than once, the options are
-combined, but "i" and "y" (sub-)options can be corrupted because
-itrace_do_parse_synth_opts() incorrectly overwrites the period type and
-period with default values.
+When reading EDID fails and driver reports no modes available, the DRM
+core adds an artificial 1024x786 mode to the connector. Unfortunately
+some variants of the Exynos HDMI (like the one in Exynos4 SoCs) are not
+able to drive such mode, so report a safe 640x480 mode instead of nothing
+in case of the EDID reading failure.
 
-For example, with:
+This fixes the following issue observed on Trats2 board since commit
+13d5b040363c ("drm/exynos: do not return negative values from .get_modes()"):
 
-	--itrace=i0ns --itrace=e
+[drm] Exynos DRM: using 11c00000.fimd device for DMA mapping operations
+exynos-drm exynos-drm: bound 11c00000.fimd (ops fimd_component_ops)
+exynos-drm exynos-drm: bound 12c10000.mixer (ops mixer_component_ops)
+exynos-dsi 11c80000.dsi: [drm:samsung_dsim_host_attach] Attached s6e8aa0 device (lanes:4 bpp:24 mode-flags:0x10b)
+exynos-drm exynos-drm: bound 11c80000.dsi (ops exynos_dsi_component_ops)
+exynos-drm exynos-drm: bound 12d00000.hdmi (ops hdmi_component_ops)
+[drm] Initialized exynos 1.1.0 20180330 for exynos-drm on minor 1
+exynos-hdmi 12d00000.hdmi: [drm:hdmiphy_enable.part.0] *ERROR* PLL could not reach steady state
+panel-samsung-s6e8aa0 11c80000.dsi.0: ID: 0xa2, 0x20, 0x8c
+exynos-mixer 12c10000.mixer: timeout waiting for VSYNC
+------------[ cut here ]------------
+WARNING: CPU: 1 PID: 11 at drivers/gpu/drm/drm_atomic_helper.c:1682 drm_atomic_helper_wait_for_vblanks.part.0+0x2b0/0x2b8
+[CRTC:70:crtc-1] vblank wait timed out
+Modules linked in:
+CPU: 1 PID: 11 Comm: kworker/u16:0 Not tainted 6.9.0-rc5-next-20240424 #14913
+Hardware name: Samsung Exynos (Flattened Device Tree)
+Workqueue: events_unbound deferred_probe_work_func
+Call trace:
+ unwind_backtrace from show_stack+0x10/0x14
+ show_stack from dump_stack_lvl+0x68/0x88
+ dump_stack_lvl from __warn+0x7c/0x1c4
+ __warn from warn_slowpath_fmt+0x11c/0x1a8
+ warn_slowpath_fmt from drm_atomic_helper_wait_for_vblanks.part.0+0x2b0/0x2b8
+ drm_atomic_helper_wait_for_vblanks.part.0 from drm_atomic_helper_commit_tail_rpm+0x7c/0x8c
+ drm_atomic_helper_commit_tail_rpm from commit_tail+0x9c/0x184
+ commit_tail from drm_atomic_helper_commit+0x168/0x190
+ drm_atomic_helper_commit from drm_atomic_commit+0xb4/0xe0
+ drm_atomic_commit from drm_client_modeset_commit_atomic+0x23c/0x27c
+ drm_client_modeset_commit_atomic from drm_client_modeset_commit_locked+0x60/0x1cc
+ drm_client_modeset_commit_locked from drm_client_modeset_commit+0x24/0x40
+ drm_client_modeset_commit from __drm_fb_helper_restore_fbdev_mode_unlocked+0x9c/0xc4
+ __drm_fb_helper_restore_fbdev_mode_unlocked from drm_fb_helper_set_par+0x2c/0x3c
+ drm_fb_helper_set_par from fbcon_init+0x3d8/0x550
+ fbcon_init from visual_init+0xc0/0x108
+ visual_init from do_bind_con_driver+0x1b8/0x3a4
+ do_bind_con_driver from do_take_over_console+0x140/0x1ec
+ do_take_over_console from do_fbcon_takeover+0x70/0xd0
+ do_fbcon_takeover from fbcon_fb_registered+0x19c/0x1ac
+ fbcon_fb_registered from register_framebuffer+0x190/0x21c
+ register_framebuffer from __drm_fb_helper_initial_config_and_unlock+0x350/0x574
+ __drm_fb_helper_initial_config_and_unlock from exynos_drm_fbdev_client_hotplug+0x6c/0xb0
+ exynos_drm_fbdev_client_hotplug from drm_client_register+0x58/0x94
+ drm_client_register from exynos_drm_bind+0x160/0x190
+ exynos_drm_bind from try_to_bring_up_aggregate_device+0x200/0x2d8
+ try_to_bring_up_aggregate_device from __component_add+0xb0/0x170
+ __component_add from mixer_probe+0x74/0xcc
+ mixer_probe from platform_probe+0x5c/0xb8
+ platform_probe from really_probe+0xe0/0x3d8
+ really_probe from __driver_probe_device+0x9c/0x1e4
+ __driver_probe_device from driver_probe_device+0x30/0xc0
+ driver_probe_device from __device_attach_driver+0xa8/0x120
+ __device_attach_driver from bus_for_each_drv+0x80/0xcc
+ bus_for_each_drv from __device_attach+0xac/0x1fc
+ __device_attach from bus_probe_device+0x8c/0x90
+ bus_probe_device from deferred_probe_work_func+0x98/0xe0
+ deferred_probe_work_func from process_one_work+0x240/0x6d0
+ process_one_work from worker_thread+0x1a0/0x3f4
+ worker_thread from kthread+0x104/0x138
+ kthread from ret_from_fork+0x14/0x28
+Exception stack(0xf0895fb0 to 0xf0895ff8)
+...
+irq event stamp: 82357
+hardirqs last  enabled at (82363): [<c01a96e8>] vprintk_emit+0x308/0x33c
+hardirqs last disabled at (82368): [<c01a969c>] vprintk_emit+0x2bc/0x33c
+softirqs last  enabled at (81614): [<c0101644>] __do_softirq+0x320/0x500
+softirqs last disabled at (81609): [<c012dfe0>] __irq_exit_rcu+0x130/0x184
+---[ end trace 0000000000000000 ]---
+exynos-drm exynos-drm: [drm] *ERROR* flip_done timed out
+exynos-drm exynos-drm: [drm] *ERROR* [CRTC:70:crtc-1] commit wait timed out
+exynos-drm exynos-drm: [drm] *ERROR* flip_done timed out
+exynos-drm exynos-drm: [drm] *ERROR* [CONNECTOR:74:HDMI-A-1] commit wait timed out
+exynos-drm exynos-drm: [drm] *ERROR* flip_done timed out
+exynos-drm exynos-drm: [drm] *ERROR* [PLANE:56:plane-5] commit wait timed out
+exynos-mixer 12c10000.mixer: timeout waiting for VSYNC
 
-The processing of "--itrace=e", resets the "i" period from 0 nanoseconds
-to the default 100 microseconds.
-
-Fix by performing the default setting of period type and period only if
-"i" or "y" are present in the currently processed --itrace value.
-
-Fixes: f6986c95af84ff2a ("perf session: Add instruction tracing options")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240315071334.3478-2-adrian.hunter@intel.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 13d5b040363c ("drm/exynos: do not return negative values from .get_modes()")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/auxtrace.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/exynos/exynos_hdmi.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/tools/perf/util/auxtrace.c
-+++ b/tools/perf/util/auxtrace.c
-@@ -1466,6 +1466,7 @@ int itrace_do_parse_synth_opts(struct it
- 	char *endptr;
- 	bool period_type_set = false;
- 	bool period_set = false;
-+	bool iy = false;
+--- a/drivers/gpu/drm/exynos/exynos_hdmi.c
++++ b/drivers/gpu/drm/exynos/exynos_hdmi.c
+@@ -887,11 +887,11 @@ static int hdmi_get_modes(struct drm_con
+ 	int ret;
  
- 	synth_opts->set = true;
+ 	if (!hdata->ddc_adpt)
+-		return 0;
++		goto no_edid;
  
-@@ -1484,6 +1485,7 @@ int itrace_do_parse_synth_opts(struct it
- 		switch (*p++) {
- 		case 'i':
- 		case 'y':
-+			iy = true;
- 			if (p[-1] == 'y')
- 				synth_opts->cycles = true;
- 			else
-@@ -1649,7 +1651,7 @@ int itrace_do_parse_synth_opts(struct it
- 		}
- 	}
- out:
--	if (synth_opts->instructions || synth_opts->cycles) {
-+	if (iy) {
- 		if (!period_type_set)
- 			synth_opts->period_type =
- 					PERF_ITRACE_DEFAULT_PERIOD_TYPE;
+ 	edid = drm_get_edid(connector, hdata->ddc_adpt);
+ 	if (!edid)
+-		return 0;
++		goto no_edid;
+ 
+ 	hdata->dvi_mode = !connector->display_info.is_hdmi;
+ 	DRM_DEV_DEBUG_KMS(hdata->dev, "%s : width[%d] x height[%d]\n",
+@@ -906,6 +906,9 @@ static int hdmi_get_modes(struct drm_con
+ 	kfree(edid);
+ 
+ 	return ret;
++
++no_edid:
++	return drm_add_modes_noedid(connector, 640, 480);
+ }
+ 
+ static int hdmi_find_phy_conf(struct hdmi_context *hdata, u32 pixel_clock)
 
 
