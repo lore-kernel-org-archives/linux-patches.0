@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E8114C580;
-	Wed, 19 Jun 2024 13:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3233F14BF8D;
+	Wed, 19 Jun 2024 13:35:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718804125; cv=none; b=M2QVFQVW422Y8tCUmidfgZs4HklEKe/3PqYaaI7VmFZI7lS9ez5gJGiAIESCkVZoLDSdUlK/mhhk4HRW4P0UjiNQc2YlxFYmzJDlr/6KSq5X0b9A6w00G/3O3GNyo5IcviHmdHtGencbklb11Pr7FmzPdpeULvacAbnzkxG0A0c=
+	t=1718804128; cv=none; b=aYDsEeUKP1JEapfF15bP3UtcRO0bl/V1sF/pK5vMtvebAdqcjDsVmxdfrIrGtQOLAe2IOuTvKskDVaoTcVXSvTEccovqOvJoy3ftAxAkPall7EuzaPTDZ6Ob0AgBNewEE7LPw1cWBn0rnALXd7ZK7qrTG2eRPCHKlY3EDK0ntpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718804125; c=relaxed/simple;
-	bh=k9nUsWFYW3H+xIPly7BPE67emRGM/I/iKoXUnz5T21U=;
+	s=arc-20240116; t=1718804128; c=relaxed/simple;
+	bh=yBvuhzyTTo5MCSR4B92GBo/VtI8cInCfwPVaxiB6b+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WbynAFpqf/z8acnl1W9+QtDJshv7Sm24U6O4CeRrnrflhwIFDe1Y51ptGNtVHPzHo9FvD6zbKBULICxPKx+3WoUPMD3567/ZVtstWetOOk/NpSABmXCf1+87mJk8GFcN8VROBk7C7zhF2myyikkZFEr87x1PLaE/mwbh740/vYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oWO1w1gq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EX6UosLDk3NaLIc4abyLG6v49H4UImY6Y1zB0zYT9pl8AeOi5exQD7yxcev+sfw0xfmT4eSku/YBtnp798bi0PPQJ+og6l9Swr26h9h0SnyJoAPtZ28REh0QY2ZO6Bn5MO+rUO0Cx3EAQlyv5uR4t+pwQgTX6AZ1UiwuuEfQgYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nNzHRPi1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oWO1w1gq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9EF0C2BBFC;
-	Wed, 19 Jun 2024 13:35:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNzHRPi1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD2D6C2BBFC;
+	Wed, 19 Jun 2024 13:35:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718804125;
-	bh=k9nUsWFYW3H+xIPly7BPE67emRGM/I/iKoXUnz5T21U=;
+	s=korg; t=1718804128;
+	bh=yBvuhzyTTo5MCSR4B92GBo/VtI8cInCfwPVaxiB6b+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oWO1w1gqmnzXDMPVGfybm6VPW7gALDr2RqUedGW14WayN46qS4bLZZ+AsoslVl1uG
-	 SMP8RoncJa53kZGwZlnFG31EGiBIAycD06wj/o1r+9lm1cIUBoJAaWnBG0G0Yvt/TA
-	 pdtP8FSEI8R/cWhCKu0wdGgY5aGH3q7L64giD0xY=
+	b=nNzHRPi1GpL467dRVuVTPI+CyDwvFCpSBsxyP8lRdIxaIwrnC3TFcg/5b1j0PBVQ9
+	 0oG9mCfsPpWjBspAkJ1dMSYnK2ldT0tZcVWKPoI5LNvqkIslZU3O7r9lkd7SzLrBkh
+	 C7wdV2Yxs5e9oiUzX9+RC4Kg+6cOTQ92+AIa7iKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Brown <doug@schmorgal.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.1 203/217] serial: 8250_pxa: Configure tx_loadsz to match FIFO IRQ level
-Date: Wed, 19 Jun 2024 14:57:26 +0200
-Message-ID: <20240619125604.520183859@linuxfoundation.org>
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	YonglongLi <liyonglong@chinatelecom.cn>,
+	Mat Martineau <martineau@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 204/217] mptcp: pm: update add_addr counters after connect
+Date: Wed, 19 Jun 2024 14:57:27 +0200
+Message-ID: <20240619125604.558475813@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -50,35 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doug Brown <doug@schmorgal.com>
+From: YonglongLi <liyonglong@chinatelecom.cn>
 
-commit 5208e7ced520a813b4f4774451fbac4e517e78b2 upstream.
+commit 40eec1795cc27b076d49236649a29507c7ed8c2d upstream.
 
-The FIFO is 64 bytes, but the FCR is configured to fire the TX interrupt
-when the FIFO is half empty (bit 3 = 0). Thus, we should only write 32
-bytes when a TX interrupt occurs.
+The creation of new subflows can fail for different reasons. If no
+subflow have been created using the received ADD_ADDR, the related
+counters should not be updated, otherwise they will never be decremented
+for events related to this ID later on.
 
-This fixes a problem observed on the PXA168 that dropped a bunch of TX
-bytes during large transmissions.
+For the moment, the number of accepted ADD_ADDR is only decremented upon
+the reception of a related RM_ADDR, and only if the remote address ID is
+currently being used by at least one subflow. In other words, if no
+subflow can be created with the received address, the counter will not
+be decremented. In this case, it is then important not to increment
+pm.add_addr_accepted counter, and not to modify pm.accept_addr bit.
 
-Fixes: ab28f51c77cd ("serial: rewrite pxa2xx-uart to use 8250_core")
-Signed-off-by: Doug Brown <doug@schmorgal.com>
-Link: https://lore.kernel.org/r/20240519191929.122202-1-doug@schmorgal.com
-Cc: stable <stable@kernel.org>
+Note that this patch does not modify the behaviour in case of failures
+later on, e.g. if the MP Join is dropped or rejected.
+
+The "remove invalid addresses" MP Join subtest has been modified to
+validate this case. The broadcast IP address is added before the "valid"
+address that will be used to successfully create a subflow, and the
+limit is decreased by one: without this patch, it was not possible to
+create the last subflow, because:
+
+- the broadcast address would have been accepted even if it was not
+  usable: the creation of a subflow to this address results in an error,
+
+- the limit of 2 accepted ADD_ADDR would have then been reached.
+
+Fixes: 01cacb00b35c ("mptcp: add netlink-based PM")
+Cc: stable@vger.kernel.org
+Co-developed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: YonglongLi <liyonglong@chinatelecom.cn>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://lore.kernel.org/r/20240607-upstream-net-20240607-misc-fixes-v1-3-1ab9ddfa3d00@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Conflicts in the selftests, in the same context, because the next line
+  with 'run_tests' has been updated later by a few commits like commit
+  e571fb09c893 ("selftests: mptcp: add speed env var"). We don't need to
+  touch this line, nor to backport the long refactoring series. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_pxa.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/mptcp/pm_netlink.c                          |   16 ++++++++++------
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |    4 ++--
+ 2 files changed, 12 insertions(+), 8 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_pxa.c
-+++ b/drivers/tty/serial/8250/8250_pxa.c
-@@ -124,6 +124,7 @@ static int serial_pxa_probe(struct platf
- 	uart.port.regshift = 2;
- 	uart.port.irq = irq;
- 	uart.port.fifosize = 64;
-+	uart.tx_loadsz = 32;
- 	uart.port.flags = UPF_IOREMAP | UPF_SKIP_TEST | UPF_FIXED_TYPE;
- 	uart.port.dev = &pdev->dev;
- 	uart.port.uartclk = clk_get_rate(data->clk);
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -685,6 +685,7 @@ static void mptcp_pm_nl_add_addr_receive
+ 	unsigned int add_addr_accept_max;
+ 	struct mptcp_addr_info remote;
+ 	unsigned int subflows_max;
++	bool sf_created = false;
+ 	int i, nr;
+ 
+ 	add_addr_accept_max = mptcp_pm_get_add_addr_accept_max(msk);
+@@ -710,15 +711,18 @@ static void mptcp_pm_nl_add_addr_receive
+ 	 */
+ 	nr = fill_local_addresses_vec(msk, addrs);
+ 
+-	msk->pm.add_addr_accepted++;
+-	if (msk->pm.add_addr_accepted >= add_addr_accept_max ||
+-	    msk->pm.subflows >= subflows_max)
+-		WRITE_ONCE(msk->pm.accept_addr, false);
+-
+ 	spin_unlock_bh(&msk->pm.lock);
+ 	for (i = 0; i < nr; i++)
+-		__mptcp_subflow_connect(sk, &addrs[i], &remote);
++		if (__mptcp_subflow_connect(sk, &addrs[i], &remote) == 0)
++			sf_created = true;
+ 	spin_lock_bh(&msk->pm.lock);
++
++	if (sf_created) {
++		msk->pm.add_addr_accepted++;
++		if (msk->pm.add_addr_accepted >= add_addr_accept_max ||
++		    msk->pm.subflows >= subflows_max)
++			WRITE_ONCE(msk->pm.accept_addr, false);
++	}
+ }
+ 
+ void mptcp_pm_nl_addr_send_ack(struct mptcp_sock *msk)
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -2343,10 +2343,10 @@ remove_tests()
+ 	if reset "remove invalid addresses"; then
+ 		pm_nl_set_limits $ns1 3 3
+ 		pm_nl_add_endpoint $ns1 10.0.12.1 flags signal
+-		pm_nl_add_endpoint $ns1 10.0.3.1 flags signal
+ 		# broadcast IP: no packet for this address will be received on ns1
+ 		pm_nl_add_endpoint $ns1 224.0.0.1 flags signal
+-		pm_nl_set_limits $ns2 3 3
++		pm_nl_add_endpoint $ns1 10.0.3.1 flags signal
++		pm_nl_set_limits $ns2 2 2
+ 		run_tests $ns1 $ns2 10.0.1.1 0 -3 0 speed_10
+ 		chk_join_nr 1 1 1
+ 		chk_add_nr 3 3
 
 
