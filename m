@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2543813D525;
-	Wed, 19 Jun 2024 13:09:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13CC312FB31;
+	Wed, 19 Jun 2024 13:09:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802556; cv=none; b=Krp61mFIa66EyscRaC2ViK7HUX03x3XIo0FeUp2ktkcnch4nt2EMuYdFzbDi5CYCHhjgxMTQZ9hanoavseyBwBTy/mpqVCcGn357y0Jv3Wcz1eZdkUZH1zf9EI3H9iCdK4hlP8oTRf813e6s8UTeaz2ZBXkA+ydqsPCn+VAu9h4=
+	t=1718802559; cv=none; b=NoS+kOVxlM7u6IM/uzBXontNJOMk4sjpucNT1AFa45pajP4PrmPFkEp2k+LH+Z5jpmWh1efsk3fPE90s4N/eLXopljLIHt6xXwxe9NGOJBr9mLhAEbV1Xlncom/kdPcsM61B3z/teOKUNRQwSqNrjwMjzJ+3Cv2r5mcn6kEalT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802556; c=relaxed/simple;
-	bh=P0ifouM+umPDQ3xz10Q1UXqPxmdJ6n+Bgu92kZA4BCY=;
+	s=arc-20240116; t=1718802559; c=relaxed/simple;
+	bh=NutqWhcBYtrzNiyfNxdTN8Do55ak/ok2AhTzyYtBKR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KyTn8IE4s86r4OtVnI11Rp81x6mFIT84rwIG/BQY5sJ9/T/BvKPDI9Jd/W+WiJDB9Q94BV73zyElcGnAFXGqPxp5GPF+JkZaw2FfNaR6lEpLSQb/Wj38ZTM91wca1pGk/5uGaWaic260OtI1K8gWULWoRBYQimjqCuBwHff1sUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FRxYk7SB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CRdbiaD+uz59WiwORqlUGaGHygzoy4V9jdm4f/pex+s1acfkOJ/WiiCGGD9tyKWvuaROZexO9/y3fslbOoZ3vUtq+RpFj2bvcQslzvBZVNXYdgJwlQFCJfd+1/ohU+2jNkoo4epT8yQW7IxEONlnqFKyHqJVNvAD2PC7Sh/jPaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=On4QzqX5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FRxYk7SB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B029C2BBFC;
-	Wed, 19 Jun 2024 13:09:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="On4QzqX5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FADAC2BBFC;
+	Wed, 19 Jun 2024 13:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802556;
-	bh=P0ifouM+umPDQ3xz10Q1UXqPxmdJ6n+Bgu92kZA4BCY=;
+	s=korg; t=1718802559;
+	bh=NutqWhcBYtrzNiyfNxdTN8Do55ak/ok2AhTzyYtBKR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FRxYk7SBrgOGn49yB+U34VLE2YrVXhDIQLfgd/gOiNkLGY2B/se+PTl7d9P3sOyMI
-	 ZhhyyE5dHYJHCSFwFReQmQG37qx1ZN31I6xOu0Ct6Rbdxb3t+6B7xz9aG1j58IYCA4
-	 j4XE4yyJ+OsNHQZgSkrIf6WbL2otPbXBuHjLsnww=
+	b=On4QzqX5fBWjdUCM8/mbFVbBCPPpfvONsKaEHZfVYK9Qq5qygxuvXy7WTyznzXBuL
+	 5kcW8UoeiD+tp3FCM+QrVT/A5eWkOwd4CQ+zqGfyCu2vKIwv1qLmj+mpRCUxEozqj8
+	 85XqbWyHpn7pL+0N2VC4pD/onzSGuJAyl3dkzzes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	stable@kernel.org
-Subject: [PATCH 6.6 219/267] intel_th: pci: Add Granite Rapids support
-Date: Wed, 19 Jun 2024 14:56:10 +0200
-Message-ID: <20240619125614.733004076@linuxfoundation.org>
+	linux-xfs@vger.kernel.org,
+	Andrey Albershteyn <aalbersh@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Chandan Babu R <chandanbabu@kernel.org>,
+	Catherine Hoang <catherine.hoang@oracle.com>
+Subject: [PATCH 6.6 237/267] xfs: allow cross-linking special files without project quota
+Date: Wed, 19 Jun 2024 14:56:28 +0200
+Message-ID: <20240619125615.418224801@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -51,34 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+From: Andrey Albershteyn <aalbersh@redhat.com>
 
-commit e44937889bdf4ecd1f0c25762b7226406b9b7a69 upstream.
+commit e23d7e82b707d1d0a627e334fb46370e4f772c11 upstream.
 
-Add support for the Trace Hub in Granite Rapids.
+There's an issue that if special files is created before quota
+project is enabled, then it's not possible to link this file. This
+works fine for normal files. This happens because xfs_quota skips
+special files (no ioctls to set necessary flags). The check for
+having the same project ID for source and destination then fails as
+source file doesn't have any ID.
 
-Signed-off-by: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: stable@kernel.org
-Link: https://lore.kernel.org/r/20240429130119.1518073-11-alexander.shishkin@linux.intel.com
+mkfs.xfs -f /dev/sda
+mount -o prjquota /dev/sda /mnt/test
+
+mkdir /mnt/test/foo
+mkfifo /mnt/test/foo/fifo1
+
+xfs_quota -xc "project -sp /mnt/test/foo 9" /mnt/test
+> Setting up project 9 (path /mnt/test/foo)...
+> xfs_quota: skipping special file /mnt/test/foo/fifo1
+> Processed 1 (/etc/projects and cmdline) paths for project 9 with recursion depth infinite (-1).
+
+ln /mnt/test/foo/fifo1 /mnt/test/foo/fifo1_link
+> ln: failed to create hard link '/mnt/test/testdir/fifo1_link' => '/mnt/test/testdir/fifo1': Invalid cross-device link
+
+mkfifo /mnt/test/foo/fifo2
+ln /mnt/test/foo/fifo2 /mnt/test/foo/fifo2_link
+
+Fix this by allowing linking of special files to the project quota
+if special files doesn't have any ID set (ID = 0).
+
+Signed-off-by: Andrey Albershteyn <aalbersh@redhat.com>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
+Signed-off-by: Catherine Hoang <catherine.hoang@oracle.com>
+Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwtracing/intel_th/pci.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/xfs/xfs_inode.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/drivers/hwtracing/intel_th/pci.c
-+++ b/drivers/hwtracing/intel_th/pci.c
-@@ -305,6 +305,11 @@ static const struct pci_device_id intel_
- 		.driver_data = (kernel_ulong_t)&intel_th_2x,
- 	},
- 	{
-+		/* Granite Rapids */
-+		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x0963),
-+		.driver_data = (kernel_ulong_t)&intel_th_2x,
-+	},
-+	{
- 		/* Alder Lake CPU */
- 		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x466f),
- 		.driver_data = (kernel_ulong_t)&intel_th_2x,
+--- a/fs/xfs/xfs_inode.c
++++ b/fs/xfs/xfs_inode.c
+@@ -1239,8 +1239,19 @@ xfs_link(
+ 	 */
+ 	if (unlikely((tdp->i_diflags & XFS_DIFLAG_PROJINHERIT) &&
+ 		     tdp->i_projid != sip->i_projid)) {
+-		error = -EXDEV;
+-		goto error_return;
++		/*
++		 * Project quota setup skips special files which can
++		 * leave inodes in a PROJINHERIT directory without a
++		 * project ID set. We need to allow links to be made
++		 * to these "project-less" inodes because userspace
++		 * expects them to succeed after project ID setup,
++		 * but everything else should be rejected.
++		 */
++		if (!special_file(VFS_I(sip)->i_mode) ||
++		    sip->i_projid != 0) {
++			error = -EXDEV;
++			goto error_return;
++		}
+ 	}
+ 
+ 	if (!resblks) {
 
 
