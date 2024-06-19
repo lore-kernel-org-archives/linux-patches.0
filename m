@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4890182495;
-	Wed, 19 Jun 2024 13:20:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3466B82495;
+	Wed, 19 Jun 2024 13:20:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803202; cv=none; b=S6V/WkRh0AuvdrTUXw6DppDPbGE049BQVON3fyLdlWYAOjKV5nJgEbRLsziiePbKe8dJtdGmApLjjeU4076n+rwMbeIUTUYmjsCA/eJQaaM2YQCcF2mx5Y6GGKGk65HNG9MX1oTWzKv8i7bJxOtAkA42WzKaofDHONDgFwXO59E=
+	t=1718803205; cv=none; b=BfJWlf2lniQsiFKjyEt5XU3DxtyjcdbCZN79x11ORvdEZ3z2iN7elJnY7kJhfDkZVHQM27GpyPhp8fgBTvgN7gLvinvdu2+q9WEzrkLdcekpikmO8MWh48YQte9l7xsU7IJ5I8rTwRwvU0N91UB1ToJ+fo/RFUyNFC1Yy6ge+zs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803202; c=relaxed/simple;
-	bh=nBpC3t/X2oKLTANyju7Ix3mCrGVwpf5a5t5LMJaCnCE=;
+	s=arc-20240116; t=1718803205; c=relaxed/simple;
+	bh=OGs8P4Fv7SPVG122WM8vrBaGKDQgdmWM5TYgIB4Wdak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Z5OIsHQmU+J4+QjIf1MFdaPvC39DSlyxUTdl60CXH2xMlf47r2htAR5urY36gK2oVvB0w3KpoJKdP6LGc7bWp3RDfl0CLkRsw7jf45guJM/9o+sYoxHrOGNMnyRt3zrxHeOjOYyIqyRvAES4Nx//ZIrSRR85PPSxyox2aT1bbHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WzgpHKWi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qKnzsz5AAv7XZlQeVkrhbPikGclGsgOdKTGOOm2yJ+lE22/3ew5SQ2daaGTuv3utXCwTzBK0jIPGGXo6wkZPTGLfQaG8ZB7nEFMo4p5HOY2UUp3rIE5pZBqlvkp7MSQPI7w+kxwACYA0/GLmeFU/LNYqYjz0DHF1PSDcyzxfj9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mgv1330j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WzgpHKWi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7884C2BBFC;
-	Wed, 19 Jun 2024 13:20:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mgv1330j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEDF9C2BBFC;
+	Wed, 19 Jun 2024 13:20:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803202;
-	bh=nBpC3t/X2oKLTANyju7Ix3mCrGVwpf5a5t5LMJaCnCE=;
+	s=korg; t=1718803205;
+	bh=OGs8P4Fv7SPVG122WM8vrBaGKDQgdmWM5TYgIB4Wdak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WzgpHKWiqeMnxMYSjWOHXNAKhUtoiS8e/FH+8bVk2OyY53VwVAvmGcCuYToigiFnw
-	 W8R+A1f9UaQksF2WnMTsO0JgIjzHuUaPbg5pLsM0z3d7476EAe0YbqR9gEixSlPvb3
-	 0aZgCwvVls79SHhPSI5Red4KRSOYSmkoUTTMRmOs=
+	b=mgv1330jRwtYpN4GZO8Tph1+wrMXWUNz/O23itG3wjbkLth4AiJ65A0LhynhAiomv
+	 f7VQzUkPIhtdRWH4gMxW6Adjr6KYZm7Var9sa4oq+SD6qp4zzhL/ZmontKQWIUJ0I7
+	 2b1nN1fFOaufOJOEhV918lBWiZ8ktHQAXDsgXzm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Wang Zhaolong <wangzhaolong1@huawei.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.9 188/281] ksmbd: move leading slash check to smb2_get_name()
-Date: Wed, 19 Jun 2024 14:55:47 +0200
-Message-ID: <20240619125617.182043524@linuxfoundation.org>
+Subject: [PATCH 6.9 189/281] ksmbd: fix missing use of get_write in in smb2_set_ea()
+Date: Wed, 19 Jun 2024 14:55:48 +0200
+Message-ID: <20240619125617.220757248@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -44,7 +45,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
@@ -53,56 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 1cdeca6a7264021e20157de0baf7880ff0ced822 upstream.
+commit 2bfc4214c69c62da13a9da8e3c3db5539da2ccd3 upstream.
 
-If the directory name in the root of the share starts with
-character like 镜(0x955c) or Ṝ(0x1e5c), it (and anything inside)
-cannot be accessed. The leading slash check must be checked after
-converting unicode to nls string.
+Fix an issue where get_write is not used in smb2_set_ea().
 
+Fixes: 6fc0a265e1b9 ("ksmbd: fix potential circular locking issue in smb2_set_ea()")
 Cc: stable@vger.kernel.org
+Reported-by: Wang Zhaolong <wangzhaolong1@huawei.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |   15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ fs/smb/server/smb2pdu.c   |    7 ++++---
+ fs/smb/server/vfs.c       |   17 +++++++++++------
+ fs/smb/server/vfs.h       |    3 ++-
+ fs/smb/server/vfs_cache.c |    3 ++-
+ 4 files changed, 19 insertions(+), 11 deletions(-)
 
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -630,6 +630,12 @@ smb2_get_name(const char *src, const int
- 		return name;
- 	}
+@@ -2367,7 +2367,8 @@ static int smb2_set_ea(struct smb2_ea_in
+ 			if (rc > 0) {
+ 				rc = ksmbd_vfs_remove_xattr(idmap,
+ 							    path,
+-							    attr_name);
++							    attr_name,
++							    get_write);
  
-+	if (*name == '\\') {
-+		pr_err("not allow directory name included leading slash\n");
-+		kfree(name);
-+		return ERR_PTR(-EINVAL);
+ 				if (rc < 0) {
+ 					ksmbd_debug(SMB,
+@@ -2382,7 +2383,7 @@ static int smb2_set_ea(struct smb2_ea_in
+ 		} else {
+ 			rc = ksmbd_vfs_setxattr(idmap, path, attr_name, value,
+ 						le16_to_cpu(eabuf->EaValueLength),
+-						0, true);
++						0, get_write);
+ 			if (rc < 0) {
+ 				ksmbd_debug(SMB,
+ 					    "ksmbd_vfs_setxattr is failed(%d)\n",
+@@ -2474,7 +2475,7 @@ static int smb2_remove_smb_xattrs(const
+ 		    !strncmp(&name[XATTR_USER_PREFIX_LEN], STREAM_PREFIX,
+ 			     STREAM_PREFIX_LEN)) {
+ 			err = ksmbd_vfs_remove_xattr(idmap, path,
+-						     name);
++						     name, true);
+ 			if (err)
+ 				ksmbd_debug(SMB, "remove xattr failed : %s\n",
+ 					    name);
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -1058,16 +1058,21 @@ int ksmbd_vfs_fqar_lseek(struct ksmbd_fi
+ }
+ 
+ int ksmbd_vfs_remove_xattr(struct mnt_idmap *idmap,
+-			   const struct path *path, char *attr_name)
++			   const struct path *path, char *attr_name,
++			   bool get_write)
+ {
+ 	int err;
+ 
+-	err = mnt_want_write(path->mnt);
+-	if (err)
+-		return err;
++	if (get_write == true) {
++		err = mnt_want_write(path->mnt);
++		if (err)
++			return err;
 +	}
-+
- 	ksmbd_conv_path_to_unix(name);
- 	ksmbd_strip_last_slash(name);
- 	return name;
-@@ -2842,20 +2848,11 @@ int smb2_open(struct ksmbd_work *work)
- 	}
  
- 	if (req->NameLength) {
--		if ((req->CreateOptions & FILE_DIRECTORY_FILE_LE) &&
--		    *(char *)req->Buffer == '\\') {
--			pr_err("not allow directory name included leading slash\n");
--			rc = -EINVAL;
--			goto err_out2;
--		}
--
- 		name = smb2_get_name((char *)req + le16_to_cpu(req->NameOffset),
- 				     le16_to_cpu(req->NameLength),
- 				     work->conn->local_nls);
- 		if (IS_ERR(name)) {
- 			rc = PTR_ERR(name);
--			if (rc != -ENOMEM)
--				rc = -ENOENT;
- 			name = NULL;
- 			goto err_out2;
+ 	err = vfs_removexattr(idmap, path->dentry, attr_name);
+-	mnt_drop_write(path->mnt);
++
++	if (get_write == true)
++		mnt_drop_write(path->mnt);
+ 
+ 	return err;
+ }
+@@ -1380,7 +1385,7 @@ int ksmbd_vfs_remove_sd_xattrs(struct mn
+ 		ksmbd_debug(SMB, "%s, len %zd\n", name, strlen(name));
+ 
+ 		if (!strncmp(name, XATTR_NAME_SD, XATTR_NAME_SD_LEN)) {
+-			err = ksmbd_vfs_remove_xattr(idmap, path, name);
++			err = ksmbd_vfs_remove_xattr(idmap, path, name, true);
+ 			if (err)
+ 				ksmbd_debug(SMB, "remove xattr failed : %s\n", name);
  		}
+--- a/fs/smb/server/vfs.h
++++ b/fs/smb/server/vfs.h
+@@ -114,7 +114,8 @@ int ksmbd_vfs_setxattr(struct mnt_idmap
+ int ksmbd_vfs_xattr_stream_name(char *stream_name, char **xattr_stream_name,
+ 				size_t *xattr_stream_name_size, int s_type);
+ int ksmbd_vfs_remove_xattr(struct mnt_idmap *idmap,
+-			   const struct path *path, char *attr_name);
++			   const struct path *path, char *attr_name,
++			   bool get_write);
+ int ksmbd_vfs_kern_path_locked(struct ksmbd_work *work, char *name,
+ 			       unsigned int flags, struct path *parent_path,
+ 			       struct path *path, bool caseless);
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -254,7 +254,8 @@ static void __ksmbd_inode_close(struct k
+ 		ci->m_flags &= ~S_DEL_ON_CLS_STREAM;
+ 		err = ksmbd_vfs_remove_xattr(file_mnt_idmap(filp),
+ 					     &filp->f_path,
+-					     fp->stream.name);
++					     fp->stream.name,
++					     true);
+ 		if (err)
+ 			pr_err("remove xattr failed : %s\n",
+ 			       fp->stream.name);
 
 
