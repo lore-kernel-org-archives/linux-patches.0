@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3466B82495;
-	Wed, 19 Jun 2024 13:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73C6982495;
+	Wed, 19 Jun 2024 13:20:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803205; cv=none; b=BfJWlf2lniQsiFKjyEt5XU3DxtyjcdbCZN79x11ORvdEZ3z2iN7elJnY7kJhfDkZVHQM27GpyPhp8fgBTvgN7gLvinvdu2+q9WEzrkLdcekpikmO8MWh48YQte9l7xsU7IJ5I8rTwRwvU0N91UB1ToJ+fo/RFUyNFC1Yy6ge+zs=
+	t=1718803208; cv=none; b=ar812wC2tvsuEi8eESPLZDzmuA7ZfaLNNqMpg2hfGgbdhGhu6RHWIVglqvQN92DO/JDW0OIzxv/wrsrLasINmCSWktNpQ/klte6kv+Xupe8P+gX0X59YaIbZjvWax+zgzvKAAtT3TMkOnlriiyNCFu5y1BsSQC17h3MZGisc7p0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803205; c=relaxed/simple;
-	bh=OGs8P4Fv7SPVG122WM8vrBaGKDQgdmWM5TYgIB4Wdak=;
+	s=arc-20240116; t=1718803208; c=relaxed/simple;
+	bh=Ezzu5qfMTEd2ejyJ2HpBMCqBl8yomQzAaTIMflc9t6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qKnzsz5AAv7XZlQeVkrhbPikGclGsgOdKTGOOm2yJ+lE22/3ew5SQ2daaGTuv3utXCwTzBK0jIPGGXo6wkZPTGLfQaG8ZB7nEFMo4p5HOY2UUp3rIE5pZBqlvkp7MSQPI7w+kxwACYA0/GLmeFU/LNYqYjz0DHF1PSDcyzxfj9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mgv1330j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P2rajILAOVkGz4sXn45t+D4DOzPUV3jWQihE5V5zdlLgTmc90xIFgWV064A36Aw1Wf+sGYvmSM4+tLFGtX9Tp49VgbN6TB+sKdu0yIleQsLeILxGWQvzS2TufaCYV42ddwCbr5GJ8IcLUsl/jcyLFlDPgePGepOlD/gkNjGAHcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k2M8gXl5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mgv1330j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEDF9C2BBFC;
-	Wed, 19 Jun 2024 13:20:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k2M8gXl5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E5BC2BBFC;
+	Wed, 19 Jun 2024 13:20:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803205;
-	bh=OGs8P4Fv7SPVG122WM8vrBaGKDQgdmWM5TYgIB4Wdak=;
+	s=korg; t=1718803208;
+	bh=Ezzu5qfMTEd2ejyJ2HpBMCqBl8yomQzAaTIMflc9t6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mgv1330jRwtYpN4GZO8Tph1+wrMXWUNz/O23itG3wjbkLth4AiJ65A0LhynhAiomv
-	 f7VQzUkPIhtdRWH4gMxW6Adjr6KYZm7Var9sa4oq+SD6qp4zzhL/ZmontKQWIUJ0I7
-	 2b1nN1fFOaufOJOEhV918lBWiZ8ktHQAXDsgXzm4=
+	b=k2M8gXl5VWgGQ5mZut2kj2C+L7dkDxO+futcL4lllucK2Za/C4z2P3uWzFGKZjKpe
+	 gEaHm4/iY7G2JNUig7yW56V4/3zQVyXajQFj81UTUr57ZcoIiBRP8k5Gb0UZk9UcqN
+	 6CJbT3L9IGwbsYrOl9/ydo6ZLs4RVcnkDT4Z+cjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Zhaolong <wangzhaolong1@huawei.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.9 189/281] ksmbd: fix missing use of get_write in in smb2_set_ea()
-Date: Wed, 19 Jun 2024 14:55:48 +0200
-Message-ID: <20240619125617.220757248@linuxfoundation.org>
+	Oleg Nesterov <oleg@redhat.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.9 190/281] tick/nohz_full: Dont abuse smp_call_function_single() in tick_setup_device()
+Date: Wed, 19 Jun 2024 14:55:49 +0200
+Message-ID: <20240619125617.260470941@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -51,116 +50,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Oleg Nesterov <oleg@redhat.com>
 
-commit 2bfc4214c69c62da13a9da8e3c3db5539da2ccd3 upstream.
+commit 07c54cc5988f19c9642fd463c2dbdac7fc52f777 upstream.
 
-Fix an issue where get_write is not used in smb2_set_ea().
+After the recent commit 5097cbcb38e6 ("sched/isolation: Prevent boot crash
+when the boot CPU is nohz_full") the kernel no longer crashes, but there is
+another problem.
 
-Fixes: 6fc0a265e1b9 ("ksmbd: fix potential circular locking issue in smb2_set_ea()")
+In this case tick_setup_device() calls tick_take_do_timer_from_boot() to
+update tick_do_timer_cpu and this triggers the WARN_ON_ONCE(irqs_disabled)
+in smp_call_function_single().
+
+Kill tick_take_do_timer_from_boot() and just use WRITE_ONCE(), the new
+comment explains why this is safe (thanks Thomas!).
+
+Fixes: 08ae95f4fd3b ("nohz_full: Allow the boot CPU to be nohz_full")
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Reported-by: Wang Zhaolong <wangzhaolong1@huawei.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Link: https://lore.kernel.org/r/20240528122019.GA28794@redhat.com
+Link: https://lore.kernel.org/all/20240522151742.GA10400@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c   |    7 ++++---
- fs/smb/server/vfs.c       |   17 +++++++++++------
- fs/smb/server/vfs.h       |    3 ++-
- fs/smb/server/vfs_cache.c |    3 ++-
- 4 files changed, 19 insertions(+), 11 deletions(-)
+ kernel/time/tick-common.c |   42 ++++++++++++++----------------------------
+ 1 file changed, 14 insertions(+), 28 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -2367,7 +2367,8 @@ static int smb2_set_ea(struct smb2_ea_in
- 			if (rc > 0) {
- 				rc = ksmbd_vfs_remove_xattr(idmap,
- 							    path,
--							    attr_name);
-+							    attr_name,
-+							    get_write);
- 
- 				if (rc < 0) {
- 					ksmbd_debug(SMB,
-@@ -2382,7 +2383,7 @@ static int smb2_set_ea(struct smb2_ea_in
- 		} else {
- 			rc = ksmbd_vfs_setxattr(idmap, path, attr_name, value,
- 						le16_to_cpu(eabuf->EaValueLength),
--						0, true);
-+						0, get_write);
- 			if (rc < 0) {
- 				ksmbd_debug(SMB,
- 					    "ksmbd_vfs_setxattr is failed(%d)\n",
-@@ -2474,7 +2475,7 @@ static int smb2_remove_smb_xattrs(const
- 		    !strncmp(&name[XATTR_USER_PREFIX_LEN], STREAM_PREFIX,
- 			     STREAM_PREFIX_LEN)) {
- 			err = ksmbd_vfs_remove_xattr(idmap, path,
--						     name);
-+						     name, true);
- 			if (err)
- 				ksmbd_debug(SMB, "remove xattr failed : %s\n",
- 					    name);
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -1058,16 +1058,21 @@ int ksmbd_vfs_fqar_lseek(struct ksmbd_fi
+--- a/kernel/time/tick-common.c
++++ b/kernel/time/tick-common.c
+@@ -178,26 +178,6 @@ void tick_setup_periodic(struct clock_ev
+ 	}
  }
  
- int ksmbd_vfs_remove_xattr(struct mnt_idmap *idmap,
--			   const struct path *path, char *attr_name)
-+			   const struct path *path, char *attr_name,
-+			   bool get_write)
- {
- 	int err;
+-#ifdef CONFIG_NO_HZ_FULL
+-static void giveup_do_timer(void *info)
+-{
+-	int cpu = *(unsigned int *)info;
+-
+-	WARN_ON(tick_do_timer_cpu != smp_processor_id());
+-
+-	tick_do_timer_cpu = cpu;
+-}
+-
+-static void tick_take_do_timer_from_boot(void)
+-{
+-	int cpu = smp_processor_id();
+-	int from = tick_do_timer_boot_cpu;
+-
+-	if (from >= 0 && from != cpu)
+-		smp_call_function_single(from, giveup_do_timer, &cpu, 1);
+-}
+-#endif
+-
+ /*
+  * Setup the tick device
+  */
+@@ -221,19 +201,25 @@ static void tick_setup_device(struct tic
+ 			tick_next_period = ktime_get();
+ #ifdef CONFIG_NO_HZ_FULL
+ 			/*
+-			 * The boot CPU may be nohz_full, in which case set
+-			 * tick_do_timer_boot_cpu so the first housekeeping
+-			 * secondary that comes up will take do_timer from
+-			 * us.
++			 * The boot CPU may be nohz_full, in which case the
++			 * first housekeeping secondary will take do_timer()
++			 * from it.
+ 			 */
+ 			if (tick_nohz_full_cpu(cpu))
+ 				tick_do_timer_boot_cpu = cpu;
  
--	err = mnt_want_write(path->mnt);
--	if (err)
--		return err;
-+	if (get_write == true) {
-+		err = mnt_want_write(path->mnt);
-+		if (err)
-+			return err;
-+	}
- 
- 	err = vfs_removexattr(idmap, path->dentry, attr_name);
--	mnt_drop_write(path->mnt);
-+
-+	if (get_write == true)
-+		mnt_drop_write(path->mnt);
- 
- 	return err;
- }
-@@ -1380,7 +1385,7 @@ int ksmbd_vfs_remove_sd_xattrs(struct mn
- 		ksmbd_debug(SMB, "%s, len %zd\n", name, strlen(name));
- 
- 		if (!strncmp(name, XATTR_NAME_SD, XATTR_NAME_SD_LEN)) {
--			err = ksmbd_vfs_remove_xattr(idmap, path, name);
-+			err = ksmbd_vfs_remove_xattr(idmap, path, name, true);
- 			if (err)
- 				ksmbd_debug(SMB, "remove xattr failed : %s\n", name);
+-		} else if (tick_do_timer_boot_cpu != -1 &&
+-						!tick_nohz_full_cpu(cpu)) {
+-			tick_take_do_timer_from_boot();
++		} else if (tick_do_timer_boot_cpu != -1 && !tick_nohz_full_cpu(cpu)) {
+ 			tick_do_timer_boot_cpu = -1;
+-			WARN_ON(READ_ONCE(tick_do_timer_cpu) != cpu);
++			/*
++			 * The boot CPU will stay in periodic (NOHZ disabled)
++			 * mode until clocksource_done_booting() called after
++			 * smp_init() selects a high resolution clocksource and
++			 * timekeeping_notify() kicks the NOHZ stuff alive.
++			 *
++			 * So this WRITE_ONCE can only race with the READ_ONCE
++			 * check in tick_periodic() but this race is harmless.
++			 */
++			WRITE_ONCE(tick_do_timer_cpu, cpu);
+ #endif
  		}
---- a/fs/smb/server/vfs.h
-+++ b/fs/smb/server/vfs.h
-@@ -114,7 +114,8 @@ int ksmbd_vfs_setxattr(struct mnt_idmap
- int ksmbd_vfs_xattr_stream_name(char *stream_name, char **xattr_stream_name,
- 				size_t *xattr_stream_name_size, int s_type);
- int ksmbd_vfs_remove_xattr(struct mnt_idmap *idmap,
--			   const struct path *path, char *attr_name);
-+			   const struct path *path, char *attr_name,
-+			   bool get_write);
- int ksmbd_vfs_kern_path_locked(struct ksmbd_work *work, char *name,
- 			       unsigned int flags, struct path *parent_path,
- 			       struct path *path, bool caseless);
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -254,7 +254,8 @@ static void __ksmbd_inode_close(struct k
- 		ci->m_flags &= ~S_DEL_ON_CLS_STREAM;
- 		err = ksmbd_vfs_remove_xattr(file_mnt_idmap(filp),
- 					     &filp->f_path,
--					     fp->stream.name);
-+					     fp->stream.name,
-+					     true);
- 		if (err)
- 			pr_err("remove xattr failed : %s\n",
- 			       fp->stream.name);
+ 
 
 
