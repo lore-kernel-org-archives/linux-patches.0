@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 945E812FB31;
-	Wed, 19 Jun 2024 13:06:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A2112FB31;
+	Wed, 19 Jun 2024 13:06:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802376; cv=none; b=f39YoZ5F/17jLbxd+2AMVpnb37xSn/m41OUFuJnGAlf/b1Pi06uA3a/tqiLh13o3bx789NMInVURpsThtHIi74DSdxwNs5bdojOymbHqeLLJxoGgXbwEk1u8iTE3peO/BFFsFjDkT1GN/UXppeV0IN2p4+IGyTpcmrqp0qOzA0U=
+	t=1718802379; cv=none; b=btQ7TF7709pGjnxNa/Ft6s5OrX/A+fmGJeqgWJ5LhHs6SXZr6zn/ky3+nxVO6O7bVArINgtVU2Zx2XcaPNioANrOMuHomhIyieoK4IX3jRVWRaX3h9FFHjP56AbmqGs5GgZ999flAUY+bhoZut9ZSTE5bvsfb5AyB6kDt1Zi/rA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802376; c=relaxed/simple;
-	bh=Nk++o5bXqlx/UweZpPGPh3AYxikfZsLL1HKX93wdybE=;
+	s=arc-20240116; t=1718802379; c=relaxed/simple;
+	bh=1KPCmWVrC+SGKDijysGkBFkyytb7KFgcP9M7zTxA1lU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Un5ORHR88NFPVlYAax4HjVaqCgVlA7lt/OcKZVjKkCBTWNigArYzWOlaOjTNu7aqT+zwlE41sMEczQZJZuFvfcGy79R0i0xLAdJGyIh2c9PuI/A2nWwTqlMFgpkFddAbUEvEZVyZIo10TegUNPbAS8whtS+Ol/zDbtT3ctlQ6TI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y9MNXMxN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TVexaJ0D6COF7S/rUFyyCXcH1RN34VNkUVMkfvgV9AqRe06ZtHlKaNYnOi3CyHcCjbQYHsEk6qy+1ZHrty4+OXGa8krjqq+NNVnoM4B3IriCVBvXIzMx4To8y4Gkl1NnGPkp/hTnYlKsqy1cT0a+3oFSO5GYd2dFGEzJpeVsi34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKrVIRDa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y9MNXMxN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1E69C2BBFC;
-	Wed, 19 Jun 2024 13:06:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKrVIRDa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DF16C2BBFC;
+	Wed, 19 Jun 2024 13:06:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802376;
-	bh=Nk++o5bXqlx/UweZpPGPh3AYxikfZsLL1HKX93wdybE=;
+	s=korg; t=1718802379;
+	bh=1KPCmWVrC+SGKDijysGkBFkyytb7KFgcP9M7zTxA1lU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y9MNXMxNH2S1a647p9E1//52c1l0wABZoVOf1jBNMbBujWIxDEowsJR9be3fH/VdB
-	 Bx/F0ngyjKl/gHua+7p0xUSwY/pIJwNsBo5v2oS8XGS1ht8PAtC2HPee5b60nH9r67
-	 5qoLCQTX+LqK2rHIoK51PpdbSWcltKQO726JogkE=
+	b=jKrVIRDachP1XK3cVibmQhOtKOdQEXIedNtf9s7EDDw5eBlNvLe6PnMWBJ0kf+nyG
+	 cJJkt+tRnQ8Ycqc2FztGSB/xaIUEn+uKKlsZAX/H7j4cbazgXBMxGO82OIJLG0XX1+
+	 xkFDZC/85eOtOnCR+mRMtRWpc/uVJIsznx0jZ3n8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Segall <bsegall@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.6 175/267] x86/boot: Dont add the EFI stub to targets, again
-Date: Wed, 19 Jun 2024 14:55:26 +0200
-Message-ID: <20240619125613.060390566@linuxfoundation.org>
+	David Lechner <dlechner@baylibre.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.6 176/267] iio: adc: ad9467: fix scan type sign
+Date: Wed, 19 Jun 2024 14:55:27 +0200
+Message-ID: <20240619125613.099364395@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -51,47 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Segall <bsegall@google.com>
+From: David Lechner <dlechner@baylibre.com>
 
-commit b2747f108b8034271fd5289bd8f3a7003e0775a3 upstream.
+commit 8a01ef749b0a632f0e1f4ead0f08b3310d99fcb1 upstream.
 
-This is a re-commit of
+According to the IIO documentation, the sign in the scan type should be
+lower case. The ad9467 driver was incorrectly using upper case.
 
-  da05b143a308 ("x86/boot: Don't add the EFI stub to targets")
+Fix by changing to lower case.
 
-after the tagged patch incorrectly reverted it.
-
-vmlinux-objs-y is added to targets, with an assumption that they are all
-relative to $(obj); adding a $(objtree)/drivers/...  path causes the
-build to incorrectly create a useless
-arch/x86/boot/compressed/drivers/...  directory tree.
-
-Fix this just by using a different make variable for the EFI stub.
-
-Fixes: cb8bda8ad443 ("x86/boot/compressed: Rename efi_thunk_64.S to efi-mixed.S")
-Signed-off-by: Ben Segall <bsegall@google.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Cc: stable@vger.kernel.org # v6.1+
-Link: https://lore.kernel.org/r/xm267ceukksz.fsf@bsegall.svl.corp.google.com
+Fixes: 4606d0f4b05f ("iio: adc: ad9467: add support for AD9434 high-speed ADC")
+Fixes: ad6797120238 ("iio: adc: ad9467: add support AD9467 ADC")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Link: https://lore.kernel.org/r/20240503-ad9467-fix-scan-type-sign-v1-1-c7a1a066ebb9@baylibre.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/boot/compressed/Makefile |    4 ++--
+ drivers/iio/adc/ad9467.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/boot/compressed/Makefile
-+++ b/arch/x86/boot/compressed/Makefile
-@@ -116,9 +116,9 @@ vmlinux-objs-$(CONFIG_UNACCEPTED_MEMORY)
+--- a/drivers/iio/adc/ad9467.c
++++ b/drivers/iio/adc/ad9467.c
+@@ -225,11 +225,11 @@ static void __ad9467_get_scale(struct ad
+ }
  
- vmlinux-objs-$(CONFIG_EFI) += $(obj)/efi.o
- vmlinux-objs-$(CONFIG_EFI_MIXED) += $(obj)/efi_mixed.o
--vmlinux-objs-$(CONFIG_EFI_STUB) += $(objtree)/drivers/firmware/efi/libstub/lib.a
-+vmlinux-libs-$(CONFIG_EFI_STUB) += $(objtree)/drivers/firmware/efi/libstub/lib.a
+ static const struct iio_chan_spec ad9434_channels[] = {
+-	AD9467_CHAN(0, 0, 12, 'S'),
++	AD9467_CHAN(0, 0, 12, 's'),
+ };
  
--$(obj)/vmlinux: $(vmlinux-objs-y) FORCE
-+$(obj)/vmlinux: $(vmlinux-objs-y) $(vmlinux-libs-y) FORCE
- 	$(call if_changed,ld)
+ static const struct iio_chan_spec ad9467_channels[] = {
+-	AD9467_CHAN(0, 0, 16, 'S'),
++	AD9467_CHAN(0, 0, 16, 's'),
+ };
  
- OBJCOPYFLAGS_vmlinux.bin :=  -R .comment -S
+ static const struct ad9467_chip_info ad9467_chip_tbl = {
 
 
