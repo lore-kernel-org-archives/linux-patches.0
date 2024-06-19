@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9868D1474C8;
-	Wed, 19 Jun 2024 13:15:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E3013F435;
+	Wed, 19 Jun 2024 13:15:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802904; cv=none; b=NEAOH7Ot9Gml4Anuavf5kiMxu7pBA19MEkgP5DIVyUsm4qg4PX9I4zv2PNmKLRj7kLw1Ikx7YP0xJCdZvX4K87swIJmysDKlbEYdjuVW6Nj22QNlE4pmYuGowVzBjUG9RMEorC6hDapc9/4gOxScrwRKn1LCMvCib/GxOFKcNVo=
+	t=1718802907; cv=none; b=AyuYxEkSPusiNArMlh/HN9jIkWoaDq2P39RPYF3ReL+zLSd53zwVwAomdodq5bo6pRA5QHAtYPmO/1yhF2Nei7dnFxg13TYAMmXYEZtaFkH2cYXsB56Nc+bMlXhI0ppewUYl0yySUpGkHZWTWwLQCoXn0dLS5PvTO88xsD8/a+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802904; c=relaxed/simple;
-	bh=0jIb3T4Zv86pUGiBuiQdZ06ZjgvmQIwi25G8htLsyYk=;
+	s=arc-20240116; t=1718802907; c=relaxed/simple;
+	bh=X6wn1IRXE7ZaqFu2FkvA72i5T9XKKitg1gOyAXy0PDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IevV6fiaZMUZanqahccMQWLRzMZGAO8hJgi6arHU/n9ZxeQn27NTQyKP5uDEN30+dahGKtAQTcDcY7P/RnSZGhoJQ/aehU4EMuteqwwi2l0GLgCK0m0GbLdt9ixbQrjL8gHHuhsHTUHq/yzY0FmWgMgVu5pd3rZMVEgq3uVUdLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DiKli2f7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Srzh4trPloKalSRyoVdNZM79BnhOibLBXVHiWdbQEoZPDqyNPR0QbTExsmI+EIbDGL6j+ei1ceS4d8dyufCEzE0jketQs+Wy5theKQ4CiR3ixmg2SX+1n3zxnsxI0A1HTpjAfEGJJgC0TVMaeIsjnwo2+kkfpgQPNrq1WsnjLf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0OC/9Q6r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DiKli2f7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19C07C2BBFC;
-	Wed, 19 Jun 2024 13:15:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0OC/9Q6r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10CA9C2BBFC;
+	Wed, 19 Jun 2024 13:15:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802904;
-	bh=0jIb3T4Zv86pUGiBuiQdZ06ZjgvmQIwi25G8htLsyYk=;
+	s=korg; t=1718802907;
+	bh=X6wn1IRXE7ZaqFu2FkvA72i5T9XKKitg1gOyAXy0PDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DiKli2f7W2d4HNIpf0FuhuZIrLO01BLprRXVxOuEHaPt6yFh6/dtCKzqMTqEQCxC9
-	 5h52jBkIXrf0DfCjLxP8pfTXIrpyD7R05RpX4+ZL711VJOg/MkfO78P5CMv2w9dlr3
-	 nF3DkzHuxEieJA6hXPA39PIt0O7dGRUxgQJy460U=
+	b=0OC/9Q6rq3SM7p/aZbrwjPLtBVxIIlRAQWICAhvg0imNeZehc67oOqTUERTiHEYEl
+	 46UqRGGAo1u3t65WrOfWPVLymaRURI3TZHDqFhXfzZNwKPH3M/3bCMzxNshRXQhEVr
+	 qJMJP+yBhjMIOi9qw5L38U/LF6qlLNXBgc/p0NOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
+	Hao Yao <hao.yao@intel.com>,
+	Wentong Wu <wentong.wu@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Jason Chen <jason.z.chen@intel.com>,
 	Tomas Winkler <tomas.winkler@intel.com>
-Subject: [PATCH 6.9 087/281] mei: me: release irq in mei_me_pci_resume error path
-Date: Wed, 19 Jun 2024 14:54:06 +0200
-Message-ID: <20240619125613.197774041@linuxfoundation.org>
+Subject: [PATCH 6.9 088/281] mei: vsc: Dont stop/restart mei device during system suspend/resume
+Date: Wed, 19 Jun 2024 14:54:07 +0200
+Message-ID: <20240619125613.236508983@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -50,35 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomas Winkler <tomas.winkler@intel.com>
+From: Wentong Wu <wentong.wu@intel.com>
 
-commit 283cb234ef95d94c61f59e1cd070cd9499b51292 upstream.
+commit 9b5e045029d8bded4c6979874ed3abc347c1415c upstream.
 
-The mei_me_pci_resume doesn't release irq on the error path,
-in case mei_start() fails.
+The dynamically created mei client device (mei csi) is used as one V4L2
+sub device of the whole video pipeline, and the V4L2 connection graph is
+built by software node. The mei_stop() and mei_restart() will delete the
+old mei csi client device and create a new mei client device, which will
+cause the software node information saved in old mei csi device lost and
+the whole video pipeline will be broken.
 
-Cc: <stable@kernel.org>
-Fixes: 33ec08263147 ("mei: revamp mei reset state machine")
-Signed-off-by: Tomas Winkler <tomas.winkler@intel.com>
-Link: https://lore.kernel.org/r/20240604090728.1027307-1-tomas.winkler@intel.com
+Removing mei_stop()/mei_restart() during system suspend/resume can fix
+the issue above and won't impact hardware actual power saving logic.
+
+Fixes: f6085a96c973 ("mei: vsc: Unregister interrupt handler for system suspend")
+Cc: stable@vger.kernel.org # for 6.8+
+Reported-by: Hao Yao <hao.yao@intel.com>
+Signed-off-by: Wentong Wu <wentong.wu@intel.com>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Tested-by: Jason Chen <jason.z.chen@intel.com>
+Tested-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Acked-by: Tomas Winkler <tomas.winkler@intel.com>
+Link: https://lore.kernel.org/r/20240527123835.522384-1-wentong.wu@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/pci-me.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/misc/mei/platform-vsc.c |   39 +++++++++++++++------------------------
+ 1 file changed, 15 insertions(+), 24 deletions(-)
 
---- a/drivers/misc/mei/pci-me.c
-+++ b/drivers/misc/mei/pci-me.c
-@@ -385,8 +385,10 @@ static int mei_me_pci_resume(struct devi
- 	}
+--- a/drivers/misc/mei/platform-vsc.c
++++ b/drivers/misc/mei/platform-vsc.c
+@@ -399,41 +399,32 @@ static void mei_vsc_remove(struct platfo
  
- 	err = mei_restart(dev);
--	if (err)
-+	if (err) {
-+		free_irq(pdev->irq, dev);
- 		return err;
-+	}
+ static int mei_vsc_suspend(struct device *dev)
+ {
+-	struct mei_device *mei_dev = dev_get_drvdata(dev);
+-	struct mei_vsc_hw *hw = mei_dev_to_vsc_hw(mei_dev);
++	struct mei_device *mei_dev;
++	int ret = 0;
  
- 	/* Start timer if stopped in suspend */
- 	schedule_delayed_work(&dev->timer_work, HZ);
+-	mei_stop(mei_dev);
++	mei_dev = dev_get_drvdata(dev);
++	if (!mei_dev)
++		return -ENODEV;
+ 
+-	mei_disable_interrupts(mei_dev);
++	mutex_lock(&mei_dev->device_lock);
+ 
+-	vsc_tp_free_irq(hw->tp);
++	if (!mei_write_is_idle(mei_dev))
++		ret = -EAGAIN;
+ 
+-	return 0;
++	mutex_unlock(&mei_dev->device_lock);
++
++	return ret;
+ }
+ 
+ static int mei_vsc_resume(struct device *dev)
+ {
+-	struct mei_device *mei_dev = dev_get_drvdata(dev);
+-	struct mei_vsc_hw *hw = mei_dev_to_vsc_hw(mei_dev);
+-	int ret;
+-
+-	ret = vsc_tp_request_irq(hw->tp);
+-	if (ret)
+-		return ret;
+-
+-	ret = mei_restart(mei_dev);
+-	if (ret)
+-		goto err_free;
++	struct mei_device *mei_dev;
+ 
+-	/* start timer if stopped in suspend */
+-	schedule_delayed_work(&mei_dev->timer_work, HZ);
++	mei_dev = dev_get_drvdata(dev);
++	if (!mei_dev)
++		return -ENODEV;
+ 
+ 	return 0;
+-
+-err_free:
+-	vsc_tp_free_irq(hw->tp);
+-
+-	return ret;
+ }
+ 
+ static DEFINE_SIMPLE_DEV_PM_OPS(mei_vsc_pm_ops, mei_vsc_suspend, mei_vsc_resume);
 
 
