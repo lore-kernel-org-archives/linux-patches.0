@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C74D13DDC0;
-	Wed, 19 Jun 2024 13:33:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E1113F428;
+	Wed, 19 Jun 2024 13:33:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718804018; cv=none; b=R2sH8FhMd/OMNGhkIwLRv5wW4Re6caqRBhQvlmA94gkoSX10ImwXluVooYi7R0bAIaZTzMoXXbA8CjEv1QwzwHd+Xe1XHvbOeHxitX3PrdKwl7W8c51xIltIrKn91l9nCoaT4nBKfE8oefK8jnxuj231osrxxlNgCcGCgtTmmXw=
+	t=1718804021; cv=none; b=BKFiuj2zh1fjk1LY70wb3iKFcLDL+r3T6QeDDSvK7K+GtiF/fj6Xfg3bVVFYVoOrPS80CsK/bzwOXabYP3tlYWCH8lNqftNuGvAl0IYJIM0Fmiw7WrqJ67faPvCI6q5VnQCAtMMH3SJEbBA7DnaQgXJMUPIC/4QEl/9HOZmOtWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718804018; c=relaxed/simple;
-	bh=bXUrCzM7AqD01jMY/joYD+YhgUvVEwzo+rPQrQnzuA4=;
+	s=arc-20240116; t=1718804021; c=relaxed/simple;
+	bh=3GQ0yY1Qwx6JsM04lAJ3xYUPYbjGYMpk2/QW4Y5fHlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=plrNDAULQtsT2lPlMvYk2XBN5WLWyhVN8mG0GT5MMlFfJTcIu82rOxytEXMSTBYOefFiwB8xmel19JYz8X1Mn93cCXG76TKSgd63NzcGrDw2/GhYUtmJgc86fSZ+ML/PKN9XAoWuBpxDb0T7HTuJQHWIbAqDWt4hl0Gh1UUZpIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XaDMTVee; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qYhnJ5geLNAf4UFw2Y22cw0Vk2lF6M6hy3G0H0q7a0xZcZ0Ql3CVakN7JGGD8N4RMx+d44wWN7QUCz093CAC64S/a72w16lyR98rEOjD2VKmx60FR+L8bJ97NezRbyWwJQBatYwXYB2poYNaag3TD1ME3UPo3/CB4Psbv0DwlAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NhPSfVvF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XaDMTVee"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13B83C2BBFC;
-	Wed, 19 Jun 2024 13:33:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NhPSfVvF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F23A4C2BBFC;
+	Wed, 19 Jun 2024 13:33:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718804018;
-	bh=bXUrCzM7AqD01jMY/joYD+YhgUvVEwzo+rPQrQnzuA4=;
+	s=korg; t=1718804021;
+	bh=3GQ0yY1Qwx6JsM04lAJ3xYUPYbjGYMpk2/QW4Y5fHlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XaDMTVeewXqc7JQ4ObSeIJMPAkvwhqOrs9XMnkKEqb7QUfsRVc6td5EoJwCN54/2h
-	 /Ylicdwu1qZYPhFhVhaCvMQ+6y3YYMwxBCqYpYr7B8N4u5RCwebljyUbHGSbMwQGEv
-	 qIVawKYltGg34fXVN/wxSbOeOuB23sArfJrjd4B0=
+	b=NhPSfVvFCpfrKx84Y3zull3LmpeF633T+9rxfBX+gu9yMjWAIBIM/lQxMXCUx4Ihm
+	 SzKFS+OV5yRKsz5k5JKLE9pDZFm9szswC3BK5Xrs/+6ebLR9otr1bacJvBFpyzpD58
+	 p+ij4MsDtFXUky3y7n3s0wi0Jk+kUZPJet+ZZvi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Damien Le Moal <dlemoal@kernel.org>
-Subject: [PATCH 6.1 182/217] PCI: rockchip-ep: Remove wrong mask on subsys_vendor_id
-Date: Wed, 19 Jun 2024 14:57:05 +0200
-Message-ID: <20240619125603.709251951@linuxfoundation.org>
+	stable@kernel.org,
+	Nuno Sa <nuno.sa@analog.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.1 183/217] dmaengine: axi-dmac: fix possible race in remove()
+Date: Wed, 19 Jun 2024 14:57:06 +0200
+Message-ID: <20240619125603.747840652@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -46,56 +45,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rick Wertenbroek <rick.wertenbroek@gmail.com>
+From: Nuno Sa <nuno.sa@analog.com>
 
-commit 2dba285caba53f309d6060fca911b43d63f41697 upstream.
+commit 1bc31444209c8efae98cb78818131950d9a6f4d6 upstream.
 
-Remove wrong mask on subsys_vendor_id. Both the Vendor ID and Subsystem
-Vendor ID are u16 variables and are written to a u32 register of the
-controller. The Subsystem Vendor ID was always 0 because the u16 value
-was masked incorrectly with GENMASK(31,16) resulting in all lower 16
-bits being set to 0 prior to the shift.
+We need to first free the IRQ before calling of_dma_controller_free().
+Otherwise we could get an interrupt and schedule a tasklet while
+removing the DMA controller.
 
-Remove both masks as they are unnecessary and set the register correctly
-i.e., the lower 16-bits are the Vendor ID and the upper 16-bits are the
-Subsystem Vendor ID.
-
-This is documented in the RK3399 TRM section 17.6.7.1.17
-
-[kwilczynski: removed unnecesary newline]
-Fixes: cf590b078391 ("PCI: rockchip: Add EP driver for Rockchip PCIe controller")
-Link: https://lore.kernel.org/linux-pci/20240403144508.489835-1-rick.wertenbroek@gmail.com
-Signed-off-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Cc: stable@vger.kernel.org
+Fixes: 0e3b67b348b8 ("dmaengine: Add support for the Analog Devices AXI-DMAC DMA controller")
+Cc: stable@kernel.org
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20240328-axi-dmac-devm-probe-v3-1-523c0176df70@analog.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pcie-rockchip-ep.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/dma/dma-axi-dmac.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pci/controller/pcie-rockchip-ep.c
-+++ b/drivers/pci/controller/pcie-rockchip-ep.c
-@@ -98,10 +98,8 @@ static int rockchip_pcie_ep_write_header
+--- a/drivers/dma/dma-axi-dmac.c
++++ b/drivers/dma/dma-axi-dmac.c
+@@ -1036,8 +1036,8 @@ static int axi_dmac_remove(struct platfo
+ {
+ 	struct axi_dmac *dmac = platform_get_drvdata(pdev);
  
- 	/* All functions share the same vendor ID with function 0 */
- 	if (fn == 0) {
--		u32 vid_regs = (hdr->vendorid & GENMASK(15, 0)) |
--			       (hdr->subsys_vendor_id & GENMASK(31, 16)) << 16;
--
--		rockchip_pcie_write(rockchip, vid_regs,
-+		rockchip_pcie_write(rockchip,
-+				    hdr->vendorid | hdr->subsys_vendor_id << 16,
- 				    PCIE_CORE_CONFIG_VENDOR);
- 	}
- 
+-	of_dma_controller_free(pdev->dev.of_node);
+ 	free_irq(dmac->irq, dmac);
++	of_dma_controller_free(pdev->dev.of_node);
+ 	tasklet_kill(&dmac->chan.vchan.task);
+ 	dma_async_device_unregister(&dmac->dma_dev);
+ 	clk_disable_unprepare(dmac->clk);
 
 
