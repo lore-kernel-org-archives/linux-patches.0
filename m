@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B61B6143873;
-	Wed, 19 Jun 2024 13:02:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8FA143873;
+	Wed, 19 Jun 2024 13:02:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802163; cv=none; b=lSxZJNGwp+0cLWhOfPKxnPkIRc+3sg9gH1V5+O0Gv064358fmJU+q4g/nOATErsJwgL5Z+05fUyq+0i1OtsnU0tjrta7Hnwfh0WJ5dRFjMuYIVJKV0L5Q+GGwh/Ea0n1DNFP6AwtgD+m4zVVk+fQVo4CZI02U00Md8+5OGSAp6E=
+	t=1718802166; cv=none; b=Uv2AsHZe7+AYWy2KB6WsGEQ5UjqNUQFg4biOSuhUcDpEOQu1P0tHJnUPzeadoonWNnTtN2vS9U9bdJ8OY3XsdgmRFHgw3Zn/qKj9QuR++aoQmoKyC2Z4YBWJWHv/KCzS+ZT8+8W8cPIF825IRiPnBb6h1VMVV11MN4DEVarqd0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802163; c=relaxed/simple;
-	bh=WkVOuEnDKAW51Je0VkYkwn8AzA+CZkt3LisDwlTb2y4=;
+	s=arc-20240116; t=1718802166; c=relaxed/simple;
+	bh=HE3mek5D0vNrO54KrCxERc0m+W2oBpNgCsxFwmNWOmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a2x495Y8gaa6ezr4QSu1yAXeQoj0K1xwzrrmKJhF6w1WdbIdJsufxMAthRDzHPQS+mhINSOLS4e3+dA4l2ubxesXqF3zBhWiMfC3l2XKMd4ZxWS9pmm692WoUWJFczzgY4SrzODvhpZSJYa6Gc3+JnD01jZjO4CScPKe+X1PICo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FaGRsVaa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M5ZRhMoc6MlT/pBMhOYs0gS+ju9xIoSJBUSfQR2Znij4WB/rsZBoVZBZdGrG0N+OKTu0NUxjkZ40ql144k23Prrc19lpyx9KuFdKLxjEFM29huyx2ZcPeUE/9qdSqf4GtBbZq6cq8UU7f6M0cmpdGYMbGrH6I3UJ2nIfcVxyiEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lVppSTZh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FaGRsVaa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B065C2BBFC;
-	Wed, 19 Jun 2024 13:02:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lVppSTZh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF27C2BBFC;
+	Wed, 19 Jun 2024 13:02:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802163;
-	bh=WkVOuEnDKAW51Je0VkYkwn8AzA+CZkt3LisDwlTb2y4=;
+	s=korg; t=1718802166;
+	bh=HE3mek5D0vNrO54KrCxERc0m+W2oBpNgCsxFwmNWOmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FaGRsVaanzUMVn2YcRVGUw8xOVDxa6D4rpvP3OD1AzL2mzQ753QvV6lRck3zhbhkj
-	 8/IRNP7B15rgZe8zqjKbOjQa5gmXIRlLhUDCUujyfizBZo/EjJctl57A27z7wNybos
-	 t4ZqdRd4RWEWs+kRBnDyTls7Tuj1QyRtiBHiB1/o=
+	b=lVppSTZhP/3eR6mfo1ri9pUjtoH5TlbcebvMQncd70RNzaNWcztXbfieUmWr+vnoP
+	 pVUB6P38N+hvq8SdkwDKYROuLP4fN90BbwtMForv4yC/3+o1ooVX36kheRJ+fjURoi
+	 S0bCfLwtlYmFQNlJx2JNmCyVV+y0JWlHouNEU+yE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Baokun Li <libaokun1@huawei.com>,
 	Jeff Layton <jlayton@kernel.org>,
+	Jia Zhu <zhujia.zj@bytedance.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Jingbo Xu <jefflexu@linux.alibaba.com>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 103/267] cachefiles: add output string to cachefiles_obj_[get|put]_ondemand_fd
-Date: Wed, 19 Jun 2024 14:54:14 +0200
-Message-ID: <20240619125610.306760895@linuxfoundation.org>
+Subject: [PATCH 6.6 104/267] cachefiles: remove requests from xarray during flushing requests
+Date: Wed, 19 Jun 2024 14:54:15 +0200
+Message-ID: <20240619125610.344608355@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -55,36 +57,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit cc5ac966f26193ab185cc43d64d9f1ae998ccb6e ]
+[ Upstream commit 0fc75c5940fa634d84e64c93bfc388e1274ed013 ]
 
-This lets us see the correct trace output.
+Even with CACHEFILES_DEAD set, we can still read the requests, so in the
+following concurrency the request may be used after it has been freed:
+
+     mount  |   daemon_thread1    |    daemon_thread2
+------------------------------------------------------------
+ cachefiles_ondemand_init_object
+  cachefiles_ondemand_send_req
+   REQ_A = kzalloc(sizeof(*req) + data_len)
+   wait_for_completion(&REQ_A->done)
+            cachefiles_daemon_read
+             cachefiles_ondemand_daemon_read
+                                  // close dev fd
+                                  cachefiles_flush_reqs
+                                   complete(&REQ_A->done)
+   kfree(REQ_A)
+              xa_lock(&cache->reqs);
+              cachefiles_ondemand_select_req
+                req->msg.opcode != CACHEFILES_OP_READ
+                // req use-after-free !!!
+              xa_unlock(&cache->reqs);
+                                   xa_destroy(&cache->reqs)
+
+Hence remove requests from cache->reqs when flushing them to avoid
+accessing freed requests.
 
 Fixes: c8383054506c ("cachefiles: notify the user daemon when looking up cookie")
 Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Link: https://lore.kernel.org/r/20240522114308.2402121-2-libaokun@huaweicloud.com
+Link: https://lore.kernel.org/r/20240522114308.2402121-3-libaokun@huaweicloud.com
 Acked-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Jia Zhu <zhujia.zj@bytedance.com>
+Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Reviewed-by: Jingbo Xu <jefflexu@linux.alibaba.com>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/cachefiles.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/cachefiles/daemon.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/trace/events/cachefiles.h b/include/trace/events/cachefiles.h
-index cf4b98b9a9edc..e3213af847cdf 100644
---- a/include/trace/events/cachefiles.h
-+++ b/include/trace/events/cachefiles.h
-@@ -127,7 +127,9 @@ enum cachefiles_error_trace {
- 	EM(cachefiles_obj_see_lookup_cookie,	"SEE lookup_cookie")	\
- 	EM(cachefiles_obj_see_lookup_failed,	"SEE lookup_failed")	\
- 	EM(cachefiles_obj_see_withdraw_cookie,	"SEE withdraw_cookie")	\
--	E_(cachefiles_obj_see_withdrawal,	"SEE withdrawal")
-+	EM(cachefiles_obj_see_withdrawal,	"SEE withdrawal")	\
-+	EM(cachefiles_obj_get_ondemand_fd,      "GET ondemand_fd")	\
-+	E_(cachefiles_obj_put_ondemand_fd,      "PUT ondemand_fd")
+diff --git a/fs/cachefiles/daemon.c b/fs/cachefiles/daemon.c
+index 5f4df9588620f..7d1f456e376dd 100644
+--- a/fs/cachefiles/daemon.c
++++ b/fs/cachefiles/daemon.c
+@@ -158,6 +158,7 @@ static void cachefiles_flush_reqs(struct cachefiles_cache *cache)
+ 	xa_for_each(xa, index, req) {
+ 		req->error = -EIO;
+ 		complete(&req->done);
++		__xa_erase(xa, index);
+ 	}
+ 	xa_unlock(xa);
  
- #define cachefiles_coherency_traces					\
- 	EM(cachefiles_coherency_check_aux,	"BAD aux ")		\
 -- 
 2.43.0
 
