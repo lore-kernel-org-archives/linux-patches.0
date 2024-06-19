@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3E312FB31;
-	Wed, 19 Jun 2024 13:10:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 016DA12FB31;
+	Wed, 19 Jun 2024 13:10:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802615; cv=none; b=NENyImWpHAX6bcUv6AYXuLWPzcgXBZcMnh5KxEUoT67diyX405XJYWveTtHIL7EhzM9QiT1KsGTYH5GLxrTpaCLXgY5c9WcYHXdoCQMmm8toJNNZDnzJSz7KFsDMd9I9nf07HbmZlNUfey0IJwGdwcy9FZeAxsL2woQUj5jr6kE=
+	t=1718802618; cv=none; b=PtoaSbCAnKd5UX/eDeJ3ybGbfFDEkUjhizyuDo04mnXx88X9oJO6A3WjuJRJtDeLUmz37OFO7al7bfylWsABoqUtY9FqZM/lJpurUAFzv3aEHEronxDQBZtRI5mlcaeAydRIvGYuzraUuSp/ncJBNgtC9koJBPBPS4CkB8ausUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802615; c=relaxed/simple;
-	bh=hLFZ0V53/YVWkso+vrYu5vKK2v7zqjE+V3lRLLc/7X8=;
+	s=arc-20240116; t=1718802618; c=relaxed/simple;
+	bh=VxvISUPXQNRtsuZZnfe/3PSrdU0gKTX4+6XXlt32dOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rekc2Vnlg+3CiI852UlYPBRF79LckkYYKGHDFXv/fdtIsdc8Ei9x4VaAMT1k76JEv2873uds1wquWLrzEXgZ3h1aHLrvbw5nHJoYBUYn8vIiYJIt2/PP8WbDLo7svO9+RXi+ydPjJfl1sWiiR2Kem8un9AbBbNJorhMmtyabs68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xxBSsw3s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=solmsWhJ/Ey7E+lOqSMpQaUjTKbjkWeuE2NN5qpgbyFzw66ey0trF87QnLmSMSqQ4wVJnDQwBOpfejUTjcS93twf4nJD57J4XL8PGeLm8+hSD7KY7j2Gm0ILTcpGCORAiUNlN5xwWRgI45hRK9Y+IzDjmjxHCPZRrVnheyeUryQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqO9mfqm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xxBSsw3s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 859B2C2BBFC;
-	Wed, 19 Jun 2024 13:10:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqO9mfqm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B24FC4AF1D;
+	Wed, 19 Jun 2024 13:10:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802614;
-	bh=hLFZ0V53/YVWkso+vrYu5vKK2v7zqjE+V3lRLLc/7X8=;
+	s=korg; t=1718802617;
+	bh=VxvISUPXQNRtsuZZnfe/3PSrdU0gKTX4+6XXlt32dOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xxBSsw3szEKEcsQHc7iDWUirm1Aqe9bS62gwa+ZSaU0mRudCU3uY3z0mUqkAEQXr5
-	 RiygTQ7UjK5WV4mMQe/UtcLLe/qJ4PSwa1ZPKIuE4daqSptwUZuV4xbyq1+0oVH1yH
-	 7aT/6t49gFP3FXZJLE0T/678xmLRAoqaYkgLOqKc=
+	b=tqO9mfqmFCOYsaASxaxl70sm/NJygTvfYzlJqzTLAXVtSbWydx4aym9nfZVgZvLJ7
+	 +0TKlwav+4qDf8biOHSW/Dck6rMbo7i43IrTd9O6KLXcZlxA7vIP0NNTjBZGGUEjn+
+	 R3FfKwnEUcNq3YvVHNXR+Gq4GvtGm2Db2b1n4QPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	Christoph Hellwig <hch@lst.de>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 225/267] btrfs: zoned: introduce a zone_info struct in btrfs_load_block_group_zone_info
-Date: Wed, 19 Jun 2024 14:56:16 +0200
-Message-ID: <20240619125614.960962582@linuxfoundation.org>
+Subject: [PATCH 6.6 226/267] btrfs: zoned: factor out per-zone logic from btrfs_load_block_group_zone_info
+Date: Wed, 19 Jun 2024 14:56:17 +0200
+Message-ID: <20240619125614.999899852@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -53,11 +53,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Hellwig <hch@lst.de>
 
-commit 15c12fcc50a1b12a747f8b6ec05cdb18c537a4d1 upstream.
+commit 09a46725cc84165af452d978a3532d6b97a28796 upstream.
 
-Add a new zone_info structure to hold per-zone information in
-btrfs_load_block_group_zone_info and prepare for breaking out helpers
-from it.
+Split out a helper for the body of the per-zone loop in
+btrfs_load_block_group_zone_info to make the function easier to read and
+modify.
 
 Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Signed-off-by: Christoph Hellwig <hch@lst.de>
@@ -65,228 +65,221 @@ Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/zoned.c |   84 ++++++++++++++++++++++++-------------------------------
- 1 file changed, 37 insertions(+), 47 deletions(-)
+ fs/btrfs/zoned.c |  184 +++++++++++++++++++++++++++----------------------------
+ 1 file changed, 92 insertions(+), 92 deletions(-)
 
 --- a/fs/btrfs/zoned.c
 +++ b/fs/btrfs/zoned.c
-@@ -1282,6 +1282,12 @@ out:
- 	return ret;
- }
+@@ -1288,19 +1288,103 @@ struct zone_info {
+ 	u64 alloc_offset;
+ };
  
-+struct zone_info {
-+	u64 physical;
-+	u64 capacity;
-+	u64 alloc_offset;
-+};
++static int btrfs_load_zone_info(struct btrfs_fs_info *fs_info, int zone_idx,
++				struct zone_info *info, unsigned long *active,
++				struct map_lookup *map)
++{
++	struct btrfs_dev_replace *dev_replace = &fs_info->dev_replace;
++	struct btrfs_device *device = map->stripes[zone_idx].dev;
++	int dev_replace_is_ongoing = 0;
++	unsigned int nofs_flag;
++	struct blk_zone zone;
++	int ret;
++
++	info->physical = map->stripes[zone_idx].physical;
++
++	if (!device->bdev) {
++		info->alloc_offset = WP_MISSING_DEV;
++		return 0;
++	}
++
++	/* Consider a zone as active if we can allow any number of active zones. */
++	if (!device->zone_info->max_active_zones)
++		__set_bit(zone_idx, active);
++
++	if (!btrfs_dev_is_sequential(device, info->physical)) {
++		info->alloc_offset = WP_CONVENTIONAL;
++		return 0;
++	}
++
++	/* This zone will be used for allocation, so mark this zone non-empty. */
++	btrfs_dev_clear_zone_empty(device, info->physical);
++
++	down_read(&dev_replace->rwsem);
++	dev_replace_is_ongoing = btrfs_dev_replace_is_ongoing(dev_replace);
++	if (dev_replace_is_ongoing && dev_replace->tgtdev != NULL)
++		btrfs_dev_clear_zone_empty(dev_replace->tgtdev, info->physical);
++	up_read(&dev_replace->rwsem);
++
++	/*
++	 * The group is mapped to a sequential zone. Get the zone write pointer
++	 * to determine the allocation offset within the zone.
++	 */
++	WARN_ON(!IS_ALIGNED(info->physical, fs_info->zone_size));
++	nofs_flag = memalloc_nofs_save();
++	ret = btrfs_get_dev_zone(device, info->physical, &zone);
++	memalloc_nofs_restore(nofs_flag);
++	if (ret) {
++		if (ret != -EIO && ret != -EOPNOTSUPP)
++			return ret;
++		info->alloc_offset = WP_MISSING_DEV;
++		return 0;
++	}
++
++	if (zone.type == BLK_ZONE_TYPE_CONVENTIONAL) {
++		btrfs_err_in_rcu(fs_info,
++		"zoned: unexpected conventional zone %llu on device %s (devid %llu)",
++			zone.start << SECTOR_SHIFT, rcu_str_deref(device->name),
++			device->devid);
++		return -EIO;
++	}
++
++	info->capacity = (zone.capacity << SECTOR_SHIFT);
++
++	switch (zone.cond) {
++	case BLK_ZONE_COND_OFFLINE:
++	case BLK_ZONE_COND_READONLY:
++		btrfs_err(fs_info,
++		"zoned: offline/readonly zone %llu on device %s (devid %llu)",
++			  (info->physical >> device->zone_info->zone_size_shift),
++			  rcu_str_deref(device->name), device->devid);
++		info->alloc_offset = WP_MISSING_DEV;
++		break;
++	case BLK_ZONE_COND_EMPTY:
++		info->alloc_offset = 0;
++		break;
++	case BLK_ZONE_COND_FULL:
++		info->alloc_offset = info->capacity;
++		break;
++	default:
++		/* Partially used zone. */
++		info->alloc_offset = ((zone.wp - zone.start) << SECTOR_SHIFT);
++		__set_bit(zone_idx, active);
++		break;
++	}
++
++	return 0;
++}
 +
  int btrfs_load_block_group_zone_info(struct btrfs_block_group *cache, bool new)
  {
  	struct btrfs_fs_info *fs_info = cache->fs_info;
-@@ -1291,12 +1297,10 @@ int btrfs_load_block_group_zone_info(str
- 	struct btrfs_device *device;
+ 	struct extent_map_tree *em_tree = &fs_info->mapping_tree;
+ 	struct extent_map *em;
+ 	struct map_lookup *map;
+-	struct btrfs_device *device;
  	u64 logical = cache->start;
  	u64 length = cache->length;
-+	struct zone_info *zone_info = NULL;
+ 	struct zone_info *zone_info = NULL;
  	int ret;
  	int i;
- 	unsigned int nofs_flag;
--	u64 *alloc_offsets = NULL;
--	u64 *caps = NULL;
--	u64 *physical = NULL;
+-	unsigned int nofs_flag;
  	unsigned long *active = NULL;
  	u64 last_alloc = 0;
  	u32 num_sequential = 0, num_conventional = 0;
-@@ -1328,20 +1332,8 @@ int btrfs_load_block_group_zone_info(str
- 		goto out;
- 	}
- 
--	alloc_offsets = kcalloc(map->num_stripes, sizeof(*alloc_offsets), GFP_NOFS);
--	if (!alloc_offsets) {
--		ret = -ENOMEM;
--		goto out;
--	}
--
--	caps = kcalloc(map->num_stripes, sizeof(*caps), GFP_NOFS);
--	if (!caps) {
--		ret = -ENOMEM;
--		goto out;
--	}
--
--	physical = kcalloc(map->num_stripes, sizeof(*physical), GFP_NOFS);
--	if (!physical) {
-+	zone_info = kcalloc(map->num_stripes, sizeof(*zone_info), GFP_NOFS);
-+	if (!zone_info) {
- 		ret = -ENOMEM;
- 		goto out;
- 	}
-@@ -1353,20 +1345,21 @@ int btrfs_load_block_group_zone_info(str
+@@ -1345,98 +1429,14 @@ int btrfs_load_block_group_zone_info(str
  	}
  
  	for (i = 0; i < map->num_stripes; i++) {
-+		struct zone_info *info = &zone_info[i];
- 		bool is_sequential;
- 		struct blk_zone zone;
- 		struct btrfs_dev_replace *dev_replace = &fs_info->dev_replace;
- 		int dev_replace_is_ongoing = 0;
- 
- 		device = map->stripes[i].dev;
--		physical[i] = map->stripes[i].physical;
-+		info->physical = map->stripes[i].physical;
- 
- 		if (device->bdev == NULL) {
--			alloc_offsets[i] = WP_MISSING_DEV;
-+			info->alloc_offset = WP_MISSING_DEV;
- 			continue;
- 		}
- 
--		is_sequential = btrfs_dev_is_sequential(device, physical[i]);
-+		is_sequential = btrfs_dev_is_sequential(device, info->physical);
- 		if (is_sequential)
- 			num_sequential++;
- 		else
-@@ -1380,7 +1373,7 @@ int btrfs_load_block_group_zone_info(str
- 			__set_bit(i, active);
- 
- 		if (!is_sequential) {
--			alloc_offsets[i] = WP_CONVENTIONAL;
-+			info->alloc_offset = WP_CONVENTIONAL;
- 			continue;
- 		}
- 
-@@ -1388,25 +1381,25 @@ int btrfs_load_block_group_zone_info(str
- 		 * This zone will be used for allocation, so mark this zone
- 		 * non-empty.
- 		 */
--		btrfs_dev_clear_zone_empty(device, physical[i]);
-+		btrfs_dev_clear_zone_empty(device, info->physical);
- 
- 		down_read(&dev_replace->rwsem);
- 		dev_replace_is_ongoing = btrfs_dev_replace_is_ongoing(dev_replace);
- 		if (dev_replace_is_ongoing && dev_replace->tgtdev != NULL)
--			btrfs_dev_clear_zone_empty(dev_replace->tgtdev, physical[i]);
-+			btrfs_dev_clear_zone_empty(dev_replace->tgtdev, info->physical);
- 		up_read(&dev_replace->rwsem);
- 
- 		/*
- 		 * The group is mapped to a sequential zone. Get the zone write
- 		 * pointer to determine the allocation offset within the zone.
- 		 */
--		WARN_ON(!IS_ALIGNED(physical[i], fs_info->zone_size));
-+		WARN_ON(!IS_ALIGNED(info->physical, fs_info->zone_size));
- 		nofs_flag = memalloc_nofs_save();
--		ret = btrfs_get_dev_zone(device, physical[i], &zone);
-+		ret = btrfs_get_dev_zone(device, info->physical, &zone);
- 		memalloc_nofs_restore(nofs_flag);
- 		if (ret == -EIO || ret == -EOPNOTSUPP) {
- 			ret = 0;
--			alloc_offsets[i] = WP_MISSING_DEV;
-+			info->alloc_offset = WP_MISSING_DEV;
- 			continue;
- 		} else if (ret) {
+-		struct zone_info *info = &zone_info[i];
+-		bool is_sequential;
+-		struct blk_zone zone;
+-		struct btrfs_dev_replace *dev_replace = &fs_info->dev_replace;
+-		int dev_replace_is_ongoing = 0;
+-
+-		device = map->stripes[i].dev;
+-		info->physical = map->stripes[i].physical;
+-
+-		if (device->bdev == NULL) {
+-			info->alloc_offset = WP_MISSING_DEV;
+-			continue;
+-		}
+-
+-		is_sequential = btrfs_dev_is_sequential(device, info->physical);
+-		if (is_sequential)
+-			num_sequential++;
+-		else
+-			num_conventional++;
+-
+-		/*
+-		 * Consider a zone as active if we can allow any number of
+-		 * active zones.
+-		 */
+-		if (!device->zone_info->max_active_zones)
+-			__set_bit(i, active);
+-
+-		if (!is_sequential) {
+-			info->alloc_offset = WP_CONVENTIONAL;
+-			continue;
+-		}
+-
+-		/*
+-		 * This zone will be used for allocation, so mark this zone
+-		 * non-empty.
+-		 */
+-		btrfs_dev_clear_zone_empty(device, info->physical);
+-
+-		down_read(&dev_replace->rwsem);
+-		dev_replace_is_ongoing = btrfs_dev_replace_is_ongoing(dev_replace);
+-		if (dev_replace_is_ongoing && dev_replace->tgtdev != NULL)
+-			btrfs_dev_clear_zone_empty(dev_replace->tgtdev, info->physical);
+-		up_read(&dev_replace->rwsem);
+-
+-		/*
+-		 * The group is mapped to a sequential zone. Get the zone write
+-		 * pointer to determine the allocation offset within the zone.
+-		 */
+-		WARN_ON(!IS_ALIGNED(info->physical, fs_info->zone_size));
+-		nofs_flag = memalloc_nofs_save();
+-		ret = btrfs_get_dev_zone(device, info->physical, &zone);
+-		memalloc_nofs_restore(nofs_flag);
+-		if (ret == -EIO || ret == -EOPNOTSUPP) {
+-			ret = 0;
+-			info->alloc_offset = WP_MISSING_DEV;
+-			continue;
+-		} else if (ret) {
++		ret = btrfs_load_zone_info(fs_info, i, &zone_info[i], active, map);
++		if (ret)
  			goto out;
-@@ -1421,27 +1414,26 @@ int btrfs_load_block_group_zone_info(str
- 			goto out;
- 		}
+-		}
+-
+-		if (zone.type == BLK_ZONE_TYPE_CONVENTIONAL) {
+-			btrfs_err_in_rcu(fs_info,
+-	"zoned: unexpected conventional zone %llu on device %s (devid %llu)",
+-				zone.start << SECTOR_SHIFT,
+-				rcu_str_deref(device->name), device->devid);
+-			ret = -EIO;
+-			goto out;
+-		}
+-
+-		info->capacity = (zone.capacity << SECTOR_SHIFT);
  
--		caps[i] = (zone.capacity << SECTOR_SHIFT);
-+		info->capacity = (zone.capacity << SECTOR_SHIFT);
- 
- 		switch (zone.cond) {
- 		case BLK_ZONE_COND_OFFLINE:
- 		case BLK_ZONE_COND_READONLY:
- 			btrfs_err(fs_info,
- 		"zoned: offline/readonly zone %llu on device %s (devid %llu)",
--				  physical[i] >> device->zone_info->zone_size_shift,
-+				  info->physical >> device->zone_info->zone_size_shift,
- 				  rcu_str_deref(device->name), device->devid);
--			alloc_offsets[i] = WP_MISSING_DEV;
-+			info->alloc_offset = WP_MISSING_DEV;
- 			break;
- 		case BLK_ZONE_COND_EMPTY:
--			alloc_offsets[i] = 0;
-+			info->alloc_offset = 0;
- 			break;
- 		case BLK_ZONE_COND_FULL:
--			alloc_offsets[i] = caps[i];
-+			info->alloc_offset = info->capacity;
- 			break;
- 		default:
- 			/* Partially used zone */
--			alloc_offsets[i] =
--					((zone.wp - zone.start) << SECTOR_SHIFT);
-+			info->alloc_offset = ((zone.wp - zone.start) << SECTOR_SHIFT);
- 			__set_bit(i, active);
- 			break;
- 		}
-@@ -1468,15 +1460,15 @@ int btrfs_load_block_group_zone_info(str
- 
- 	switch (map->type & BTRFS_BLOCK_GROUP_PROFILE_MASK) {
- 	case 0: /* single */
--		if (alloc_offsets[0] == WP_MISSING_DEV) {
-+		if (zone_info[0].alloc_offset == WP_MISSING_DEV) {
- 			btrfs_err(fs_info,
- 			"zoned: cannot recover write pointer for zone %llu",
--				physical[0]);
-+				zone_info[0].physical);
- 			ret = -EIO;
- 			goto out;
- 		}
--		cache->alloc_offset = alloc_offsets[0];
--		cache->zone_capacity = caps[0];
-+		cache->alloc_offset = zone_info[0].alloc_offset;
-+		cache->zone_capacity = zone_info[0].capacity;
- 		if (test_bit(0, active))
- 			set_bit(BLOCK_GROUP_FLAG_ZONE_IS_ACTIVE, &cache->runtime_flags);
- 		break;
-@@ -1486,21 +1478,21 @@ int btrfs_load_block_group_zone_info(str
- 			ret = -EINVAL;
- 			goto out;
- 		}
--		if (alloc_offsets[0] == WP_MISSING_DEV) {
-+		if (zone_info[0].alloc_offset == WP_MISSING_DEV) {
- 			btrfs_err(fs_info,
- 			"zoned: cannot recover write pointer for zone %llu",
--				physical[0]);
-+				zone_info[0].physical);
- 			ret = -EIO;
- 			goto out;
- 		}
--		if (alloc_offsets[1] == WP_MISSING_DEV) {
-+		if (zone_info[1].alloc_offset == WP_MISSING_DEV) {
- 			btrfs_err(fs_info,
- 			"zoned: cannot recover write pointer for zone %llu",
--				physical[1]);
-+				zone_info[1].physical);
- 			ret = -EIO;
- 			goto out;
- 		}
--		if (alloc_offsets[0] != alloc_offsets[1]) {
-+		if (zone_info[0].alloc_offset != zone_info[1].alloc_offset) {
- 			btrfs_err(fs_info,
- 			"zoned: write pointer offset mismatch of zones in DUP profile");
- 			ret = -EIO;
-@@ -1516,8 +1508,8 @@ int btrfs_load_block_group_zone_info(str
- 				set_bit(BLOCK_GROUP_FLAG_ZONE_IS_ACTIVE,
- 					&cache->runtime_flags);
- 		}
--		cache->alloc_offset = alloc_offsets[0];
--		cache->zone_capacity = min(caps[0], caps[1]);
-+		cache->alloc_offset = zone_info[0].alloc_offset;
-+		cache->zone_capacity = min(zone_info[0].capacity, zone_info[1].capacity);
- 		break;
- 	case BTRFS_BLOCK_GROUP_RAID1:
- 	case BTRFS_BLOCK_GROUP_RAID0:
-@@ -1570,9 +1562,7 @@ out:
- 		cache->physical_map = NULL;
+-		switch (zone.cond) {
+-		case BLK_ZONE_COND_OFFLINE:
+-		case BLK_ZONE_COND_READONLY:
+-			btrfs_err(fs_info,
+-		"zoned: offline/readonly zone %llu on device %s (devid %llu)",
+-				  info->physical >> device->zone_info->zone_size_shift,
+-				  rcu_str_deref(device->name), device->devid);
+-			info->alloc_offset = WP_MISSING_DEV;
+-			break;
+-		case BLK_ZONE_COND_EMPTY:
+-			info->alloc_offset = 0;
+-			break;
+-		case BLK_ZONE_COND_FULL:
+-			info->alloc_offset = info->capacity;
+-			break;
+-		default:
+-			/* Partially used zone */
+-			info->alloc_offset = ((zone.wp - zone.start) << SECTOR_SHIFT);
+-			__set_bit(i, active);
+-			break;
+-		}
++		if (zone_info[i].alloc_offset == WP_CONVENTIONAL)
++			num_conventional++;
++		else
++			num_sequential++;
  	}
- 	bitmap_free(active);
--	kfree(physical);
--	kfree(caps);
--	kfree(alloc_offsets);
-+	kfree(zone_info);
- 	free_extent_map(em);
  
- 	return ret;
+ 	if (num_sequential > 0)
 
 
