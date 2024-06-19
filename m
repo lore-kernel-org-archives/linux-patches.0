@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CDAB82871;
-	Wed, 19 Jun 2024 13:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A2282871;
+	Wed, 19 Jun 2024 13:05:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802335; cv=none; b=B6uHcTv7riGK4KTc8JBVUSPiqCM4gqKLSXlEOvZTd4JabSN1FvKOvZ3Up1ujdyvMi2SM1cmG3z0zBohESfBgATAxlloCMRhxY2BjbdMaa202WC3Phq96ysWA/CGbNt/PAjkWZKisBOb5MjBw5U/K8QSf9ZEqBDOMXkT4z2ggY1U=
+	t=1718802338; cv=none; b=NLTtTRaSfUWpH1yJ0fIysI0oJTZL1kYJ5U1zwzK3RAZNsiDASlS2BA0U+gB8KovdyOp/FYnyMbR/ngHmF8yG+fwk3TvBH1I3LXVOepRFYpCGk7XJf2lC8kYBk5uIinIenYb1yYpYvdyZjUbZh9ePIyuJbfUp15S4d+ybvlmuJGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802335; c=relaxed/simple;
-	bh=QjB7q8LHJ4sYu0XdBJu4P1unCTn9cGIUHvyRSuVIxqE=;
+	s=arc-20240116; t=1718802338; c=relaxed/simple;
+	bh=EIBne5DbiZYUM3rQvpgPuRV9h3qa5x0QCV3DJvBe9wE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yo1ztiKO6WayCtjzOunzuNSiyAydtQydGk0F8uCo76AuwrW9j7/x3KwCGsgT17GHoVh0BXQX3DqkFKonNEiwUMzmN8bOmX1cAwj3L2du5KLIps08klVEnG6IGILqwjfv+5T6dcjQF4SoRavQK9FHZNcw+ETwOfOcTcRpVHDboNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2wa0VRS6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YU+rBBT2O384HX9j4cTjC++Ci/lu9TANRAGk6CdC8f2IXFE1PMhZcxBZvBaWN1gGqzgC4Emv1EUnoVvHft4NPGnr+EAJz2gsKcEhsHIIltJBdwV5qzh14Je6p8ObmR8g3n0Y5UQX4BhGnMtm1VWdqTOalqsFTLPO0OdsIYLN6oo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNYac9Ju; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2wa0VRS6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94320C2BBFC;
-	Wed, 19 Jun 2024 13:05:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNYac9Ju"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 833AAC2BBFC;
+	Wed, 19 Jun 2024 13:05:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802335;
-	bh=QjB7q8LHJ4sYu0XdBJu4P1unCTn9cGIUHvyRSuVIxqE=;
+	s=korg; t=1718802337;
+	bh=EIBne5DbiZYUM3rQvpgPuRV9h3qa5x0QCV3DJvBe9wE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2wa0VRS67d87OnHXI7xSFmB8BGRXYUGbLZGfqjffScAQWVAX3FmB8CEcVMa4VwxLV
-	 /w9TIPiaDBLDdBPCVMX2DIu95i5CSLxskAURPOubwdd0cefijdgbU7/YoSF+OpMuXR
-	 OQ1fFCEu1iWjb7etPZwuZLb2q2PvsYHP8Ma3IZJY=
+	b=vNYac9JujSCyeDTh9Jb5HpFzvbieKsjihUyVPo2gwQdXHzGDS53aSxj/H3zZHSIdj
+	 VXaMkUOtFi47Rmo7nmRG7Va3UPbAxJ3BOOvkPpJk/VNcjPZQP4Kd8jGTDD7w05GKcE
+	 sBVFIoCRvCMTIAypBfYNpYltLMTgsMFYvXA5K/y8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaolei Wang <xiaolei.wang@windriver.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Su Hui <suhui@nfschina.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 162/267] net: stmmac: replace priv->speed with the portTransmitRate from the tc-cbs parameters
-Date: Wed, 19 Jun 2024 14:55:13 +0200
-Message-ID: <20240619125612.561244752@linuxfoundation.org>
+Subject: [PATCH 6.6 163/267] block: sed-opal: avoid possible wrong address reference in read_sed_opal_key()
+Date: Wed, 19 Jun 2024 14:55:14 +0200
+Message-ID: <20240619125612.600065632@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -53,98 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaolei Wang <xiaolei.wang@windriver.com>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit be27b896529787e23a35ae4befb6337ce73fcca0 ]
+[ Upstream commit 9b1ebce6a1fded90d4a1c6c57dc6262dac4c4c14 ]
 
-The current cbs parameter depends on speed after uplinking,
-which is not needed and will report a configuration error
-if the port is not initially connected. The UAPI exposed by
-tc-cbs requires userspace to recalculate the send slope anyway,
-because the formula depends on port_transmit_rate (see man tc-cbs),
-which is not an invariant from tc's perspective. Therefore, we
-use offload->sendslope and offload->idleslope to derive the
-original port_transmit_rate from the CBS formula.
+Clang static checker (scan-build) warning:
+block/sed-opal.c:line 317, column 3
+Value stored to 'ret' is never read.
 
-Fixes: 1f705bc61aee ("net: stmmac: Add support for CBS QDISC")
-Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://lore.kernel.org/r/20240608143524.2065736-1-xiaolei.wang@windriver.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this problem by returning the error code when keyring_search() failed.
+Otherwise, 'key' will have a wrong value when 'kerf' stores the error code.
+
+Fixes: 3bfeb6125664 ("block: sed-opal: keyring support for SED keys")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Link: https://lore.kernel.org/r/20240611073659.429582-1-suhui@nfschina.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/stmicro/stmmac/stmmac_tc.c   | 25 ++++++++-----------
- 1 file changed, 11 insertions(+), 14 deletions(-)
+ block/sed-opal.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
-index 6ad3e0a119366..2467598f9d92f 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
-@@ -343,10 +343,11 @@ static int tc_setup_cbs(struct stmmac_priv *priv,
- 			struct tc_cbs_qopt_offload *qopt)
- {
- 	u32 tx_queues_count = priv->plat->tx_queues_to_use;
-+	s64 port_transmit_rate_kbps;
- 	u32 queue = qopt->queue;
--	u32 ptr, speed_div;
- 	u32 mode_to_use;
- 	u64 value;
-+	u32 ptr;
- 	int ret;
+diff --git a/block/sed-opal.c b/block/sed-opal.c
+index e27109be77690..1a1cb35bf4b79 100644
+--- a/block/sed-opal.c
++++ b/block/sed-opal.c
+@@ -313,7 +313,7 @@ static int read_sed_opal_key(const char *key_name, u_char *buffer, int buflen)
+ 			      &key_type_user, key_name, true);
  
- 	/* Queue 0 is not AVB capable */
-@@ -355,30 +356,26 @@ static int tc_setup_cbs(struct stmmac_priv *priv,
- 	if (!priv->dma_cap.av)
- 		return -EOPNOTSUPP;
+ 	if (IS_ERR(kref))
+-		ret = PTR_ERR(kref);
++		return PTR_ERR(kref);
  
-+	port_transmit_rate_kbps = qopt->idleslope - qopt->sendslope;
-+
- 	/* Port Transmit Rate and Speed Divider */
--	switch (priv->speed) {
-+	switch (div_s64(port_transmit_rate_kbps, 1000)) {
- 	case SPEED_10000:
--		ptr = 32;
--		speed_div = 10000000;
--		break;
- 	case SPEED_5000:
- 		ptr = 32;
--		speed_div = 5000000;
- 		break;
- 	case SPEED_2500:
--		ptr = 8;
--		speed_div = 2500000;
--		break;
- 	case SPEED_1000:
- 		ptr = 8;
--		speed_div = 1000000;
- 		break;
- 	case SPEED_100:
- 		ptr = 4;
--		speed_div = 100000;
- 		break;
- 	default:
--		return -EOPNOTSUPP;
-+		netdev_err(priv->dev,
-+			   "Invalid portTransmitRate %lld (idleSlope - sendSlope)\n",
-+			   port_transmit_rate_kbps);
-+		return -EINVAL;
- 	}
- 
- 	mode_to_use = priv->plat->tx_queues_cfg[queue].mode_to_use;
-@@ -398,10 +395,10 @@ static int tc_setup_cbs(struct stmmac_priv *priv,
- 	}
- 
- 	/* Final adjustments for HW */
--	value = div_s64(qopt->idleslope * 1024ll * ptr, speed_div);
-+	value = div_s64(qopt->idleslope * 1024ll * ptr, port_transmit_rate_kbps);
- 	priv->plat->tx_queues_cfg[queue].idle_slope = value & GENMASK(31, 0);
- 
--	value = div_s64(-qopt->sendslope * 1024ll * ptr, speed_div);
-+	value = div_s64(-qopt->sendslope * 1024ll * ptr, port_transmit_rate_kbps);
- 	priv->plat->tx_queues_cfg[queue].send_slope = value & GENMASK(31, 0);
- 
- 	value = qopt->hicredit * 1024ll * 8;
+ 	key = key_ref_to_ptr(kref);
+ 	down_read(&key->sem);
 -- 
 2.43.0
 
