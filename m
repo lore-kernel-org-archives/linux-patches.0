@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A03613DDC0;
-	Wed, 19 Jun 2024 13:33:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F5D13DDC0;
+	Wed, 19 Jun 2024 13:33:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718804036; cv=none; b=X6dCbWwtmIylJUa17Zx6G6ONLh7Z0HzrrHmQvil4EiG8fF2Hga+2Ene0B5rPj7v+9bdao1B/oWxWCRDEUg6yyVALPxDy8sW3AiHBdX/VC7ySZRi65aomuj6jnT87e6JxT5A0cxta2DiREqap3hNAeduoCqepTg5rQUcrqvbUp0o=
+	t=1718804039; cv=none; b=kd3jl6JR1TH8C8EvbVBm3XSX3ALd8UJFxP8tRV/+pKtwaxKAi+D59KFgPhYd8nbKVnuqHaBSDckCTYAIGLVUhNyjMlcpGE0baeTnh/aoLi9NkJVzlZFbEOGEpjix5lC/aQNmWOL7OR9BrHGqkhCShhjzbJA7ZGNvl7Y2UX1Yyq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718804036; c=relaxed/simple;
-	bh=oMwugdzWcpQmcBnwq1s4E2F2PQ150EErjivq2lSWE3w=;
+	s=arc-20240116; t=1718804039; c=relaxed/simple;
+	bh=Lew2qnw5w94fnmgtIpo9FCYKvo6Q2+yEsAAyMtVvHMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jE+B0x5QO8xggGWxt5eBoE+rpt5aTxXCpG252OkacKsOKs+Pj700K6yxHSUfa0XdpV13sHAkeLI3QeBmIoAxPfFRatmv8rxQ5rlNH+ZUzGP+KmGqhQoWfb3sbsDGM3JMXlUg7fVXZHuXDHaCbMSKCyP6VHGYK3Rvg73e8IAXLAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rNypDlpS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oKeH5oZtfHf/2lslsgB9ZhGpW/ZsVvADfQZmFX8ktMnn/SlJ9h0KqQLB6TFoMFdpyyUoFCCMPSHzdij7zBQ7rl5egjMmkeQF7wQkIfdZjOQ5LvJASi8q9N7cySlPNhXUc+Lc0Ff7fmvrYQ6k0olHwstz6KeXdzEEU+sL6hXvrmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kVdDXpB6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rNypDlpS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6063C2BBFC;
-	Wed, 19 Jun 2024 13:33:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kVdDXpB6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C23CCC2BBFC;
+	Wed, 19 Jun 2024 13:33:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718804036;
-	bh=oMwugdzWcpQmcBnwq1s4E2F2PQ150EErjivq2lSWE3w=;
+	s=korg; t=1718804039;
+	bh=Lew2qnw5w94fnmgtIpo9FCYKvo6Q2+yEsAAyMtVvHMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rNypDlpSF6NCFVgMP2Ff210nUEVsLzJ5VmFhGKTTGjvh9lgmdIPoGERlyPFskYR5B
-	 b8NEzIaxELRu7ze52hKY6xdeTc4QYrOJenu/jc5vbYbM4aVRd+o3kaUzjxgUoF4OOx
-	 iSuzhWzzUHVxAszJpd4+WUaCW95y4FQSv9bBZecw=
+	b=kVdDXpB6Wq2ll9Z6emssx/B6brBbcPcnLVjmGqXPMIga4glK1gw5ziQSxgTYlt6rI
+	 70g0nmC+/0Bo1rxlHQlXkMX9Cx2+dz5XZ2XPn0qsXqwsttLe9mwm9JeKRZjhYVuiJP
+	 Luidq2RhobYCvWV4Locjld1CmuTR2z0tzAMpbGEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Wilson <chris@chris-wilson.co.uk>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
-	Nirmoy Das <nirmoy.das@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
+	Shawn Lee <shawn.c.lee@intel.com>,
+	Vidya Srinivas <vidya.srinivas@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
 	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.1 187/217] drm/i915/gt: Disarm breadcrumbs if engines are already idle
-Date: Wed, 19 Jun 2024 14:57:10 +0200
-Message-ID: <20240619125603.900913190@linuxfoundation.org>
+Subject: [PATCH 6.1 188/217] drm/i915/dpt: Make DPT object unshrinkable
+Date: Wed, 19 Jun 2024 14:57:11 +0200
+Message-ID: <20240619125603.940454993@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -48,113 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chris Wilson <chris@chris-wilson.co.uk>
+From: Vidya Srinivas <vidya.srinivas@intel.com>
 
-commit 70cb9188ffc75e643debf292fcddff36c9dbd4ae upstream.
+commit 43e2b37e2ab660c3565d4cff27922bc70e79c3f1 upstream.
 
-The breadcrumbs use a GT wakeref for guarding the interrupt, but are
-disarmed during release of the engine wakeref. This leaves a hole where
-we may attach a breadcrumb just as the engine is parking (after it has
-parked its breadcrumbs), execute the irq worker with some signalers still
-attached, but never be woken again.
+In some scenarios, the DPT object gets shrunk but
+the actual framebuffer did not and thus its still
+there on the DPT's vm->bound_list. Then it tries to
+rewrite the PTEs via a stale CPU mapping. This causes panic.
 
-That issue manifests itself in CI with IGT runner timeouts while tests
-are waiting indefinitely for release of all GT wakerefs.
-
-<6> [209.151778] i915: Running live_engine_pm_selftests/live_engine_busy_stats
-<7> [209.231628] i915 0000:00:02.0: [drm:intel_power_well_disable [i915]] disabling PW_5
-<7> [209.231816] i915 0000:00:02.0: [drm:intel_power_well_disable [i915]] disabling PW_4
-<7> [209.231944] i915 0000:00:02.0: [drm:intel_power_well_disable [i915]] disabling PW_3
-<7> [209.232056] i915 0000:00:02.0: [drm:intel_power_well_disable [i915]] disabling PW_2
-<7> [209.232166] i915 0000:00:02.0: [drm:intel_power_well_disable [i915]] disabling DC_off
-<7> [209.232270] i915 0000:00:02.0: [drm:skl_enable_dc6 [i915]] Enabling DC6
-<7> [209.232368] i915 0000:00:02.0: [drm:gen9_set_dc_state.part.0 [i915]] Setting DC state from 00 to 02
-<4> [299.356116] [IGT] Inactivity timeout exceeded. Killing the current test with SIGQUIT.
-...
-<6> [299.356526] sysrq: Show State
-...
-<6> [299.373964] task:i915_selftest   state:D stack:11784 pid:5578  tgid:5578  ppid:873    flags:0x00004002
-<6> [299.373967] Call Trace:
-<6> [299.373968]  <TASK>
-<6> [299.373970]  __schedule+0x3bb/0xda0
-<6> [299.373974]  schedule+0x41/0x110
-<6> [299.373976]  intel_wakeref_wait_for_idle+0x82/0x100 [i915]
-<6> [299.374083]  ? __pfx_var_wake_function+0x10/0x10
-<6> [299.374087]  live_engine_busy_stats+0x9b/0x500 [i915]
-<6> [299.374173]  __i915_subtests+0xbe/0x240 [i915]
-<6> [299.374277]  ? __pfx___intel_gt_live_setup+0x10/0x10 [i915]
-<6> [299.374369]  ? __pfx___intel_gt_live_teardown+0x10/0x10 [i915]
-<6> [299.374456]  intel_engine_live_selftests+0x1c/0x30 [i915]
-<6> [299.374547]  __run_selftests+0xbb/0x190 [i915]
-<6> [299.374635]  i915_live_selftests+0x4b/0x90 [i915]
-<6> [299.374717]  i915_pci_probe+0x10d/0x210 [i915]
-
-At the end of the interrupt worker, if there are no more engines awake,
-disarm the breadcrumb and go to sleep.
-
-Fixes: 9d5612ca165a ("drm/i915/gt: Defer enabling the breadcrumb interrupt to after submission")
-Closes: https://gitlab.freedesktop.org/drm/intel/issues/10026
-Signed-off-by: Chris Wilson <chris@chris-wilson.co.uk>
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>
-Cc: <stable@vger.kernel.org> # v5.12+
-Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
-Acked-by: Nirmoy Das <nirmoy.das@intel.com>
-Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240423165505.465734-2-janusz.krzysztofik@linux.intel.com
-(cherry picked from commit fbad43eccae5cb14594195c20113369aabaa22b5)
+Cc: stable@vger.kernel.org
+Reported-by: Shawn Lee <shawn.c.lee@intel.com>
+Fixes: 0dc987b699ce ("drm/i915/display: Add smem fallback allocation for dpt")
+Signed-off-by: Vidya Srinivas <vidya.srinivas@intel.com>
+[vsyrjala: Add TODO comment]
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240520165634.1162470-1-vidya.srinivas@intel.com
+(cherry picked from commit 51064d471c53dcc8eddd2333c3f1c1d9131ba36c)
 Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gt/intel_breadcrumbs.c |   15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/i915/gem/i915_gem_object.h |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/gt/intel_breadcrumbs.c
-+++ b/drivers/gpu/drm/i915/gt/intel_breadcrumbs.c
-@@ -258,8 +258,13 @@ static void signal_irq_work(struct irq_w
- 		i915_request_put(rq);
- 	}
- 
-+	/* Lazy irq enabling after HW submission */
- 	if (!READ_ONCE(b->irq_armed) && !list_empty(&b->signalers))
- 		intel_breadcrumbs_arm_irq(b);
-+
-+	/* And confirm that we still want irqs enabled before we yield */
-+	if (READ_ONCE(b->irq_armed) && !atomic_read(&b->active))
-+		intel_breadcrumbs_disarm_irq(b);
+--- a/drivers/gpu/drm/i915/gem/i915_gem_object.h
++++ b/drivers/gpu/drm/i915/gem/i915_gem_object.h
+@@ -295,7 +295,9 @@ bool i915_gem_object_has_iomem(const str
+ static inline bool
+ i915_gem_object_is_shrinkable(const struct drm_i915_gem_object *obj)
+ {
+-	return i915_gem_object_type_has(obj, I915_GEM_OBJECT_IS_SHRINKABLE);
++	/* TODO: make DPT shrinkable when it has no bound vmas */
++	return i915_gem_object_type_has(obj, I915_GEM_OBJECT_IS_SHRINKABLE) &&
++		!obj->is_dpt;
  }
  
- struct intel_breadcrumbs *
-@@ -310,13 +315,7 @@ void __intel_breadcrumbs_park(struct int
- 		return;
- 
- 	/* Kick the work once more to drain the signalers, and disarm the irq */
--	irq_work_sync(&b->irq_work);
--	while (READ_ONCE(b->irq_armed) && !atomic_read(&b->active)) {
--		local_irq_disable();
--		signal_irq_work(&b->irq_work);
--		local_irq_enable();
--		cond_resched();
--	}
-+	irq_work_queue(&b->irq_work);
- }
- 
- void intel_breadcrumbs_free(struct kref *kref)
-@@ -399,7 +398,7 @@ static void insert_breadcrumb(struct i91
- 	 * the request as it may have completed and raised the interrupt as
- 	 * we were attaching it into the lists.
- 	 */
--	if (!b->irq_armed || __i915_request_is_complete(rq))
-+	if (!READ_ONCE(b->irq_armed) || __i915_request_is_complete(rq))
- 		irq_work_queue(&b->irq_work);
- }
- 
+ static inline bool
 
 
