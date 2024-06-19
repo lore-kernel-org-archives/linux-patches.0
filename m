@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7CCB1442F1;
-	Wed, 19 Jun 2024 12:58:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376091442F1;
+	Wed, 19 Jun 2024 12:58:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718801910; cv=none; b=NhWaI7hZgBUZehNUS+jZmeh903n5lrzTcqcfmefMnnIUAq9Pq2om5mWxABySEpPpeC7BQ/E/0tp2AgV5rS9ltI2IokGQBHcH1do8mzhP0MhVpxF8Uv/gNlXxPoRv1s7ZVbsszv5nKbCg0HtZHCT3ViuU5vJvftMxuGVzvrCsrM8=
+	t=1718801913; cv=none; b=dgWCvFCNfY50J00l68eneRiXah4FJQvKQd2Vvj/DpBBEAT5r34P24GrxLhx8TLOj2Tyodl/8zZXJkMBhRdc7AywgQzvNu60nhf3BWFjR8iaH4Szl94UlJLZRWFVmxp4Jmna2EqHH8CWoQKQ7ev/lRYJUPa5Qk1UngtyQ4dRGGG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718801910; c=relaxed/simple;
-	bh=gKx9kV1eLFIz915bDwRP8KuKXtY4ZktEIuMap9aDkAE=;
+	s=arc-20240116; t=1718801913; c=relaxed/simple;
+	bh=tMshOxDbmlQlJgjMOoEkgDyGsCJxmC2+yKONV0/w1Eo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HXym/dXa1vI+iFsXl6gSfXYIAzjGWIUgcwZ/+nqN1N5gWi9L0MdGnQB2wtOO7AnRKny+QJ7viItuxElp5hZc8EFQuGiXPESL5A2SoXXSlHJeLDJBcg20OWj1robUDwI2WnmcmYjbMJNPWrMoHCgmK84Ml3WOoSm5DUdEwYx1dJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rwugSurI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ss5jUCHCVsqjNDhGc4jyT2XAvydjOYUi37Ceauos/FrDesASAcdfo3Xm6Ru0t+xrYeKPem1uHPbyMlHr6JtMvUqB6ka48NqwCII2YT05ug73Xpe7jsxfWuqs9xdRuyxbRv9UfEqWot5L21jz1PxPaqVSttnm8FLXH+cxsBlXIsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wiztK9MI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rwugSurI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C7A6C2BBFC;
-	Wed, 19 Jun 2024 12:58:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wiztK9MI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FA0DC2BBFC;
+	Wed, 19 Jun 2024 12:58:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718801909;
-	bh=gKx9kV1eLFIz915bDwRP8KuKXtY4ZktEIuMap9aDkAE=;
+	s=korg; t=1718801912;
+	bh=tMshOxDbmlQlJgjMOoEkgDyGsCJxmC2+yKONV0/w1Eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rwugSurI7aFeDxtNe8t0bOgIdPCa9QjACs2ikopBYWe2jPSYDgBIuI2JMNksSFeN4
-	 TbLDD98kUbaRwoSxhwixdDBOIldwbUg3MyeQBAYQSDNk7QEg/Np1//oIrn9h9CT1v2
-	 qo8Ynif+Ex1M+lA8NPOkkw8Vj0I41DgtQ/RIjprA=
+	b=wiztK9MI7QEVSL5sePIp8N3CRMcVU/5hr0SBPMzvAMxnzGDDpKiOEkRmvqlGGbSyv
+	 u2oo9HNJB347GU8C/9BCnFKxThRrFi5NmlBMCBGvkpc6rfKKwdvG0pAV0ilH8myRFe
+	 gLfYg2OS8zQQF4b0zhRfcn29NsOHHnWjGNlfi5BI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
+	Liad Kaufman <liad.kaufman@intel.com>,
+	Luciano Coelho <luciano.coelho@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 006/267] wifi: iwlwifi: mvm: dont initialize csa_work twice
-Date: Wed, 19 Jun 2024 14:52:37 +0200
-Message-ID: <20240619125606.597174714@linuxfoundation.org>
+Subject: [PATCH 6.6 007/267] wifi: iwlwifi: mvm: revert gen2 TX A-MPDU size to 64
+Date: Wed, 19 Jun 2024 14:52:38 +0200
+Message-ID: <20240619125606.634881314@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -51,37 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 92158790ce4391ce4c35d8dfbce759195e4724cb ]
+[ Upstream commit 4a7aace2899711592327463c1a29ffee44fcc66e ]
 
-The initialization of this worker moved to iwl_mvm_mac_init_mvmvif
-but we removed only from the pre-MLD version of the add_interface
-callback. Remove it also from the MLD version.
+We don't actually support >64 even for HE devices, so revert
+back to 64. This fixes an issue where the session is refused
+because the queue is configured differently from the actual
+session later.
 
-Fixes: 0bcc2155983e ("wifi: iwlwifi: mvm: init vif works only once")
+Fixes: 514c30696fbc ("iwlwifi: add support for IEEE802.11ax")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Liad Kaufman <liad.kaufman@intel.com>
+Reviewed-by: Luciano Coelho <luciano.coelho@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://msgid.link/20240512152312.4f15b41604f0.Iec912158e5a706175531d3736d77d25adf02fba4@changeid
+Link: https://msgid.link/20240510170500.52f7b4cf83aa.If47e43adddf7fe250ed7f5571fbb35d8221c7c47@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/rs.h | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-index aef8824469e1e..4d9a872818a52 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-@@ -73,8 +73,6 @@ static int iwl_mvm_mld_mac_add_interface(struct ieee80211_hw *hw,
- 		goto out_free_bf;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rs.h b/drivers/net/wireless/intel/iwlwifi/mvm/rs.h
+index 1ca375a5cf6b5..639cecc7a6e60 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/rs.h
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/rs.h
+@@ -122,13 +122,8 @@ enum {
  
- 	iwl_mvm_tcm_add_vif(mvm, vif);
--	INIT_DELAYED_WORK(&mvmvif->csa_work,
--			  iwl_mvm_channel_switch_disconnect_wk);
+ #define LINK_QUAL_AGG_FRAME_LIMIT_DEF	(63)
+ #define LINK_QUAL_AGG_FRAME_LIMIT_MAX	(63)
+-/*
+- * FIXME - various places in firmware API still use u8,
+- * e.g. LQ command and SCD config command.
+- * This should be 256 instead.
+- */
+-#define LINK_QUAL_AGG_FRAME_LIMIT_GEN2_DEF	(255)
+-#define LINK_QUAL_AGG_FRAME_LIMIT_GEN2_MAX	(255)
++#define LINK_QUAL_AGG_FRAME_LIMIT_GEN2_DEF	(64)
++#define LINK_QUAL_AGG_FRAME_LIMIT_GEN2_MAX	(64)
+ #define LINK_QUAL_AGG_FRAME_LIMIT_MIN	(0)
  
- 	if (vif->type == NL80211_IFTYPE_MONITOR) {
- 		mvm->monitor_on = true;
+ #define LQ_SIZE		2	/* 2 mode tables:  "Active" and "Search" */
 -- 
 2.43.0
 
