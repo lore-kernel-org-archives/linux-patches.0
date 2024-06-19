@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D34148308;
-	Wed, 19 Jun 2024 13:25:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8291459F2;
+	Wed, 19 Jun 2024 13:25:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803548; cv=none; b=jvmXSpaNNgFJXkKMpGjgLGFSnnyxB0w0sYQnGdHRlSdhsKk7gAY6gchVxvgzKF2WvNxt1/2C/Ptc052V9U30OiCk/78H7pGQSIhLL1/bZXQVyqwmfdly1UclxjzLtRpMHA5ktNTPvmjS/yBHdbyPn0wPaDSQs65Z5oukgNIKPr0=
+	t=1718803551; cv=none; b=I7vD+9JliEOU+mdXoGEM+6/j9nJHOgGtMrUAXksfI4145e1q6fAWf224Z8D/LkXvaYVRKtbNtG7fvkAm22Imk8VcmyRgD45nuzfuqxagv8PuhsBWSQco4JUZCcm34WkzjWENEo7cAvCOOSWQFWiTSi0jJCkwUA8eHVxF3MtemIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803548; c=relaxed/simple;
-	bh=Lhx6TzdfzBA7lOxpcvAcDqPtghmB2OICavkRBz1vS44=;
+	s=arc-20240116; t=1718803551; c=relaxed/simple;
+	bh=Cl85Pvd7TzNn/L5+co9eAJ6TDtnNiVozvL4yAtG4kPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aYAy+XutnxRYnlWZ55ytPMIS7BL0/bTjyIkDFP36uAuPfpUL1Kc5i/jmCeBYQtygiA138wrHASvQeEflfIPfb7ySNPZLxEARqQFRC51R1o7OcvdmZlkh9GG6yNPM57mqonN4btgXQU3vUzZmoZONGRXyEB1qmBWaEWz6hfUCfug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C5k5uxlL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mWx5Ltdb9Jx70lwkxU0CqOU/T05buqfXb1LJaMT3hrEKDf635Zcm2RPcVh45qpMdkdoJIPh2OTQ8qAzqhVgwopb6FVLgMDO0ZrQNTQZJljNRcxbEcOkBHhcxSoRmRtR4q+HpIof0PeXbExnDZu6X/d6hWNXkgUO0QDsjS9Uhftc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xseuCOq0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C5k5uxlL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B911BC32786;
-	Wed, 19 Jun 2024 13:25:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xseuCOq0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AA23C4AF1A;
+	Wed, 19 Jun 2024 13:25:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803548;
-	bh=Lhx6TzdfzBA7lOxpcvAcDqPtghmB2OICavkRBz1vS44=;
+	s=korg; t=1718803551;
+	bh=Cl85Pvd7TzNn/L5+co9eAJ6TDtnNiVozvL4yAtG4kPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C5k5uxlLjCUAh0fodzRmguANyuUKwGgadP6ZUevW484mqoXg8qkKxr14m1umvd9tr
-	 l2rq7gPkdvGY+yrx0tezfPM2nbMg1M/Qy3z20luYpQ+35n1OYTqtExfAAOje3eoykT
-	 OUr2R9k2Yi9/vLxSm52ccBenePCknOcOdNlerex4=
+	b=xseuCOq0pV3AwWLLJz85TKi2ekH7qQ9Uw/ZAyh5WeLWqr/zPvVWqxjBkbuCYOwPFT
+	 E4G0zCSR8Yt2ueaFMfc1tPC3nyuZ9txLVIyZ0M6Z8U+hKBYMZ4oZrun+ZIADd40D6H
+	 BlvLGpYK9DwLeYyGabYCEn64Pw6lsDWy6O8yRR7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Xing <kernelxing@tencent.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Moshe Shemesh <moshe@mellanox.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 022/217] tcp: count CLOSE-WAIT sockets for TCP_MIB_CURRESTAB
-Date: Wed, 19 Jun 2024 14:54:25 +0200
-Message-ID: <20240619125557.502869473@linuxfoundation.org>
+Subject: [PATCH 6.1 023/217] net/mlx5: Stop waiting for PCI up if teardown was triggered
+Date: Wed, 19 Jun 2024 14:54:26 +0200
+Message-ID: <20240619125557.542685731@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -52,69 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Xing <kernelxing@tencent.com>
+From: Moshe Shemesh <moshe@mellanox.com>
 
-[ Upstream commit a46d0ea5c94205f40ecf912d1bb7806a8a64704f ]
+[ Upstream commit 8ff38e730c3f5ee717f25365ef8aa4739562d567 ]
 
-According to RFC 1213, we should also take CLOSE-WAIT sockets into
-consideration:
+If driver teardown is called while PCI is turned off, there is a race
+between health recovery and teardown. If health recovery already started
+it will wait 60 sec trying to see if PCI gets back and it can recover,
+but actually there is no need to wait anymore once teardown was called.
 
-  "tcpCurrEstab OBJECT-TYPE
-   ...
-   The number of TCP connections for which the current state
-   is either ESTABLISHED or CLOSE- WAIT."
+Use the MLX5_BREAK_FW_WAIT flag which is set on driver teardown to break
+waiting for PCI up.
 
-After this, CurrEstab counter will display the total number of
-ESTABLISHED and CLOSE-WAIT sockets.
-
-The logic of counting
-When we increment the counter?
-a) if we change the state to ESTABLISHED.
-b) if we change the state from SYN-RECEIVED to CLOSE-WAIT.
-
-When we decrement the counter?
-a) if the socket leaves ESTABLISHED and will never go into CLOSE-WAIT,
-say, on the client side, changing from ESTABLISHED to FIN-WAIT-1.
-b) if the socket leaves CLOSE-WAIT, say, on the server side, changing
-from CLOSE-WAIT to LAST-ACK.
-
-Please note: there are two chances that old state of socket can be changed
-to CLOSE-WAIT in tcp_fin(). One is SYN-RECV, the other is ESTABLISHED.
-So we have to take care of the former case.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Jason Xing <kernelxing@tencent.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Moshe Shemesh <moshe@mellanox.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Link: https://lore.kernel.org/r/20230314054234.267365-3-saeed@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 33afbfcc105a ("net/mlx5: Stop waiting for PCI if pci channel is offline")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/health.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 3447a09ee83a2..2d4f697d338f5 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -2758,6 +2758,10 @@ void tcp_set_state(struct sock *sk, int state)
- 		if (oldstate != TCP_ESTABLISHED)
- 			TCP_INC_STATS(sock_net(sk), TCP_MIB_CURRESTAB);
- 		break;
-+	case TCP_CLOSE_WAIT:
-+		if (oldstate == TCP_SYN_RECV)
-+			TCP_INC_STATS(sock_net(sk), TCP_MIB_CURRESTAB);
-+		break;
- 
- 	case TCP_CLOSE:
- 		if (oldstate == TCP_CLOSE_WAIT || oldstate == TCP_ESTABLISHED)
-@@ -2769,7 +2773,7 @@ void tcp_set_state(struct sock *sk, int state)
- 			inet_put_port(sk);
- 		fallthrough;
- 	default:
--		if (oldstate == TCP_ESTABLISHED)
-+		if (oldstate == TCP_ESTABLISHED || oldstate == TCP_CLOSE_WAIT)
- 			TCP_DEC_STATS(sock_net(sk), TCP_MIB_CURRESTAB);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/health.c b/drivers/net/ethernet/mellanox/mlx5/core/health.c
+index e42e4ac231c64..e9462de771fd3 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/health.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/health.c
+@@ -325,6 +325,10 @@ int mlx5_health_wait_pci_up(struct mlx5_core_dev *dev)
+ 	while (sensor_pci_not_working(dev)) {
+ 		if (time_after(jiffies, end))
+ 			return -ETIMEDOUT;
++		if (test_bit(MLX5_BREAK_FW_WAIT, &dev->intf_state)) {
++			mlx5_core_warn(dev, "device is being removed, stop waiting for PCI\n");
++			return -ENODEV;
++		}
+ 		msleep(100);
  	}
- 
+ 	return 0;
 -- 
 2.43.0
 
