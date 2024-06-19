@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA40113E037;
-	Wed, 19 Jun 2024 13:30:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6E9770F4;
+	Wed, 19 Jun 2024 13:30:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803848; cv=none; b=kW3AJYOETnYfmgXMISiQyhat5vdqr9BtyePfMXo33365zPtpi03ffQ4BUoBcHaIkXk3UZzgkVZvIt5R2D5R3pDJqzbW6jlm3jSEWRClpraZVqLfXmjI7wmuEGp2FGoaXkql2zTfqOX69dVz6J4WnMuJ+QRZHfUU7tLOyiGo0WhI=
+	t=1718803851; cv=none; b=mF6COAUExji+7NzsD+eRq79QDatDPSsjq6/q1F9WMvRclJfnMA1XGJAdAeJ67eliJ8aeVfznjRDydfx4CD3iNU40noHrKu2eOIEoxHp6qYwyaHQjclWHyIg1TofFjaE6+2SYFAw2Xej7szEiBvGfmFgnHyhWsbrUl8AQ9rSbWDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803848; c=relaxed/simple;
-	bh=5LP6ugaENPboJpGg/mbNgCn6BOc0bd72cruJSYFhonk=;
+	s=arc-20240116; t=1718803851; c=relaxed/simple;
+	bh=N7/oDHiQwJ0hGM6fFnJl6g/dJzcOvd7g8Aw4GKZq7uE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MsWpp1oYghTQ4mUlZm0FjXPToXvbbeZb4HY4EJ7wyTPn2n+cbzZZcBN829F+GgMj+URVlpn7t1RcmczjD7IR8F0Qbt+olFm5N49hmagVCD9HuJzj+uSoeeJm1Aa58VR1eClKvPLMRflmvQ9JaX44YzAa47RNd56jZXFgPEwvUpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kGqR585X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qD62WYf2NB52TnHJIqK04+tA3EHTmqoLCeQmdXhHIYShcqPznu/n1mQWXP0x3u9Nc4muI2mNmrKIPsmtc/eAENvy3gXFuPkmdXNCRom539Qz8FhJKahEnrhhaY5SYqwcQUZHCqmi3qnCN5SFMv+dxvypg7wwCcYmZJyg9lCdpBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YIXsADsX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kGqR585X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 602B0C2BBFC;
-	Wed, 19 Jun 2024 13:30:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YIXsADsX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5074FC2BBFC;
+	Wed, 19 Jun 2024 13:30:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803848;
-	bh=5LP6ugaENPboJpGg/mbNgCn6BOc0bd72cruJSYFhonk=;
+	s=korg; t=1718803851;
+	bh=N7/oDHiQwJ0hGM6fFnJl6g/dJzcOvd7g8Aw4GKZq7uE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kGqR585XMoTMVzubzTkGksH5TKVsQLW5CyMIrH/rjivdfev3XqUBEUFtsrGeyxfOs
-	 GUiWCnsfbn9FMY6bgn76ikW4+q6f6fN1iPBKQoK+kDzXy5Rr5QQ9mFe+/UrKFSGc9D
-	 tMPwlDFsxLZKlgmZeCUAta83Bi5P2FBU2no532/U=
+	b=YIXsADsXlk9x/ggD0vQzqCLA3KW/uP2S8sN502OW4bpwdIcbwtt9tyauJ64OUfSru
+	 GhUPIOIX4ssJ9WJAM7POm+yjcvW6ILHS6yzF8NOyU3CLt2EvNCzqQsx0eCaTSsI2wx
+	 olP0D1iYjd/QZ2bf8JWIvFv4xgPIwnW+cllSeduI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregor Herburger <gregor.herburger@tq-group.com>,
-	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Alexandru Ardelean <alex@shruggie.ro>,
+	Andrei Coardos <aboutphysycs@gmail.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 124/217] gpio: tqmx86: fix typo in Kconfig label
-Date: Wed, 19 Jun 2024 14:56:07 +0200
-Message-ID: <20240619125601.474116857@linuxfoundation.org>
+Subject: [PATCH 6.1 125/217] gpio: tqmx86: remove unneeded call to platform_set_drvdata()
+Date: Wed, 19 Jun 2024 14:56:08 +0200
+Message-ID: <20240619125601.512779878@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -53,36 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregor Herburger <gregor.herburger@tq-group.com>
+From: Andrei Coardos <aboutphysycs@gmail.com>
 
-[ Upstream commit 8c219e52ca4d9a67cd6a7074e91bf29b55edc075 ]
+[ Upstream commit 0a5e9306b812fe3517548fab92b3d3d6ce7576e5 ]
 
-Fix description for GPIO_TQMX86 from QTMX86 to TQMx86.
+This function call was found to be unnecessary as there is no equivalent
+platform_get_drvdata() call to access the private data of the driver. Also,
+the private data is defined in this driver, so there is no risk of it being
+accessed outside of this driver file.
 
-Fixes: b868db94a6a7 ("gpio: tqmx86: Add GPIO from for this IO controller")
-Signed-off-by: Gregor Herburger <gregor.herburger@tq-group.com>
-Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/e0e38c9944ad6d281d9a662a45d289b88edc808e.1717063994.git.matthias.schiffer@ew.tq-group.com
+Reviewed-by: Alexandru Ardelean <alex@shruggie.ro>
+Signed-off-by: Andrei Coardos <aboutphysycs@gmail.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Stable-dep-of: 9d6a811b522b ("gpio: tqmx86: introduce shadow register for GPIO output value")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-tqmx86.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/gpio/Kconfig b/drivers/gpio/Kconfig
-index 700f71c954956..b23ef29f56020 100644
---- a/drivers/gpio/Kconfig
-+++ b/drivers/gpio/Kconfig
-@@ -1416,7 +1416,7 @@ config GPIO_TPS68470
- 	  are "output only" GPIOs.
+diff --git a/drivers/gpio/gpio-tqmx86.c b/drivers/gpio/gpio-tqmx86.c
+index e739dcea61b23..f0a2cf4b06796 100644
+--- a/drivers/gpio/gpio-tqmx86.c
++++ b/drivers/gpio/gpio-tqmx86.c
+@@ -259,8 +259,6 @@ static int tqmx86_gpio_probe(struct platform_device *pdev)
  
- config GPIO_TQMX86
--	tristate "TQ-Systems QTMX86 GPIO"
-+	tristate "TQ-Systems TQMx86 GPIO"
- 	depends on MFD_TQMX86 || COMPILE_TEST
- 	depends on HAS_IOPORT_MAP
- 	select GPIOLIB_IRQCHIP
+ 	tqmx86_gpio_write(gpio, (u8)~TQMX86_DIR_INPUT_MASK, TQMX86_GPIODD);
+ 
+-	platform_set_drvdata(pdev, gpio);
+-
+ 	chip = &gpio->chip;
+ 	chip->label = "gpio-tqmx86";
+ 	chip->owner = THIS_MODULE;
 -- 
 2.43.0
 
