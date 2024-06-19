@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773261E492;
-	Wed, 19 Jun 2024 13:32:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC3F1E492;
+	Wed, 19 Jun 2024 13:32:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803965; cv=none; b=CYH4wN/N/Ns/PqCJ8jtf7CwqKRhK/uhMRUrPhC2WRuFTtlx2KdVBVVTyuHtgt602w+XeW4EwXH6SSwquuvXmhcmdGdxmix5No/4JdwsM0Q59C+6Iut4oMx5EC4R7kVDzzdoGxkk7ohaJic7+00+iCvPiFd89VygJh1Px85YK2W0=
+	t=1718803968; cv=none; b=jvRlGE2fFM7cMexyf1gacjIQbpqhZqcJrr67gXu8+v/kCTgcgFyYQikj0TqKGW05/5mBytpJMGI7VzUj9yybJs8MVuNFO5n9JxqCJjPKM8MJ3G5REgeozyyr5Ax4GI9IioA9QZV8OtbO7jBFzFGbH6elDi8Po0f1V5mCDEImVSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803965; c=relaxed/simple;
-	bh=VFt/f5AmiT7nkmjTXml/OAOpF5ABDdX5dFq+rntIpLU=;
+	s=arc-20240116; t=1718803968; c=relaxed/simple;
+	bh=QP0Zai9XSjIMx6FoZT2eT6XfLcRljsqYcQLHRBINb+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jk/vSO458GezmElR482RmDL2Pg3MXRQV8lmHp993vTzTiorI05vbL39jDnDxjR4vaI6Ogw7llFLoTij6Ap6QoxfgSb+KigbvS4o6M8mZFDEvb3uuSiKQ48oQ++xAAMg4ty0yjg4XhzYM3PW6T3y4roEc9fbo91AOLRv1rMILz7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H5rLZojN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BrGLLjA2vAoURbbEVy6Nl/2SCUveq8H3X7Ot0dJBkTS+bW46yUsrnoqp48R7BuMbfwBFwgBx93xOlclX5mtqS694M4zN1ze7YHGYppbpraYHqdG/33HF4RXLXLSwSSet9jUscOrQoJ1KxHfKDQU9aNGdaneSm189yZFi+4DfHLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WpK8mxEk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H5rLZojN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E606BC2BBFC;
-	Wed, 19 Jun 2024 13:32:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WpK8mxEk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D804EC2BBFC;
+	Wed, 19 Jun 2024 13:32:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803965;
-	bh=VFt/f5AmiT7nkmjTXml/OAOpF5ABDdX5dFq+rntIpLU=;
+	s=korg; t=1718803968;
+	bh=QP0Zai9XSjIMx6FoZT2eT6XfLcRljsqYcQLHRBINb+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H5rLZojNyFSmmcXTdhJj8tqZObzVeER8iuHOYY7OkZUEAYTR8ZmLzJT7igStKMPWy
-	 m8/HH99xvvwPipxfSEC2FMB1Z0jugEqoOvlQs9ZaG72VHrh+KL6dU3irdh+4HBvui3
-	 0BpzRvJf+6uhqJfDp5jotHORjYRxVpHb2aa4mbB4=
+	b=WpK8mxEk+SCMajlXes//fruwCDFm/w1VbkFRsVzRA2Zf2xXWXnerwyvIo6TXBxNpV
+	 limTlAdrLgn4NEbFLoGezzqn9louPWYUkcvJiGz/ft3f5trs8l5klmTY01FQCZJaUG
+	 3bMtH7AUREA+vPWOrvPxI3f94b7ey46yeB2rTZ5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Forbes <ian.forbes@broadcom.com>,
-	Zack Rusin <zack.rusin@broadcom.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 136/217] drm/vmwgfx: 3D disabled should not effect STDU memory limits
-Date: Wed, 19 Jun 2024 14:56:19 +0200
-Message-ID: <20240619125601.937945474@linuxfoundation.org>
+	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 163/217] iio: imu: inv_icm42600: delete unneeded update watermark call
+Date: Wed, 19 Jun 2024 14:56:46 +0200
+Message-ID: <20240619125602.980924497@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -51,45 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Forbes <ian.forbes@broadcom.com>
+From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 
-[ Upstream commit fb5e19d2dd03eb995ccd468d599b2337f7f66555 ]
+commit 245f3b149e6cc3ac6ee612cdb7042263bfc9e73c upstream.
 
-This limit became a hard cap starting with the change referenced below.
-Surface creation on the device will fail if the requested size is larger
-than this limit so altering the value arbitrarily will expose modes that
-are too large for the device's hard limits.
+Update watermark will be done inside the hwfifo_set_watermark callback
+just after the update_scan_mode. It is useless to do it here.
 
-Fixes: 7ebb47c9f9ab ("drm/vmwgfx: Read new register for GB memory when available")
-
-Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240521184720.767-3-ian.forbes@broadcom.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 7f85e42a6c54 ("iio: imu: inv_icm42600: add buffer support in iio devices")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Link: https://lore.kernel.org/r/20240527210008.612932-1-inv.git-commit@tdk.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_drv.c | 7 -------
- 1 file changed, 7 deletions(-)
+ drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c |    4 ----
+ drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c  |    4 ----
+ 2 files changed, 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
-index 0a75084cd32a2..be27f9a3bf67b 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
-@@ -938,13 +938,6 @@ static int vmw_driver_load(struct vmw_private *dev_priv, u32 pci_id)
- 				vmw_read(dev_priv,
- 					 SVGA_REG_SUGGESTED_GBOBJECT_MEM_SIZE_KB);
- 
--		/*
--		 * Workaround for low memory 2D VMs to compensate for the
--		 * allocation taken by fbdev
--		 */
--		if (!(dev_priv->capabilities & SVGA_CAP_3D))
--			mem_size *= 3;
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
+@@ -128,10 +128,6 @@ static int inv_icm42600_accel_update_sca
+ 	/* update data FIFO write */
+ 	inv_icm42600_timestamp_apply_odr(ts, 0, 0, 0);
+ 	ret = inv_icm42600_buffer_set_fifo_en(st, fifo_en | st->fifo.en);
+-	if (ret)
+-		goto out_unlock;
 -
- 		dev_priv->max_mob_pages = mem_size * 1024 / PAGE_SIZE;
- 		dev_priv->max_primary_mem =
- 			vmw_read(dev_priv, SVGA_REG_MAX_PRIMARY_MEM);
--- 
-2.43.0
-
+-	ret = inv_icm42600_buffer_update_watermark(st);
+ 
+ out_unlock:
+ 	mutex_unlock(&st->lock);
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
+@@ -128,10 +128,6 @@ static int inv_icm42600_gyro_update_scan
+ 	/* update data FIFO write */
+ 	inv_icm42600_timestamp_apply_odr(ts, 0, 0, 0);
+ 	ret = inv_icm42600_buffer_set_fifo_en(st, fifo_en | st->fifo.en);
+-	if (ret)
+-		goto out_unlock;
+-
+-	ret = inv_icm42600_buffer_update_watermark(st);
+ 
+ out_unlock:
+ 	mutex_unlock(&st->lock);
 
 
