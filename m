@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD18882495;
-	Wed, 19 Jun 2024 13:19:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58C182495;
+	Wed, 19 Jun 2024 13:19:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803175; cv=none; b=aJLN9MJBDyskRu9Lm9UJmykOzdpINQ0JrcMR2Mz1uKqsXu8vttdIKYz+owOA/HqvZXRCGgTYbQqNVbx0yYLlO+N1tjJ8hieAnrFpujRDJvqv9nx6hfaNfJfDh7pvhPhDDVnkAD1hQGjI6GVxjl8+3hjRIMch1zCR+sKwYYsv0fY=
+	t=1718803178; cv=none; b=IKYz9QH54IuVecN4f54SvapKhajULor4hQIYBIfInG8vkdcIU8iTLEI2AZscCLw34ClfP8YCy27YeApSQ8BFuI4qQN/UlqWYCCFEeNl3sHUopmg0kePWyKYUBMuoO4r7cUsoTnzvFVznDAP7qBHXnNHW1YoF/LTwuhuktQMYnQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803175; c=relaxed/simple;
-	bh=ynLAq1kCu99krt1mdqzLT78Annta5RJKIxKLfX2+02w=;
+	s=arc-20240116; t=1718803178; c=relaxed/simple;
+	bh=Uo2mvOkWto1mH2SDXeKhXRfkh2ysMJ6PY6GaR3ZbbKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oc6REej9Pfn6FpQVg0D+Z6lanL8NI3VRAyOmGrRivVVC35jpecVEXUFXwwgTG7+6HqKJ+xQm2cOPePxcFp4+9KQNjzpUl1p62jgT1bNgb9MnBy0wxo9D9KkjPSF8gRJFgXdcN/5YLR/C7Ny4zNTiXH5vKS3d4MpSPA10fME59Aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ct+i3BvW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qUTzngKWyK+j6vrUX82EDqZm++XUmMuOtGuPc0rcVngQ+XDEaSxGGlJr8484p3M3GiRZpy6qHAajZbatv5lbCHvhfViRiEcb6fXJ1yFmCAUP2/34Bssz6oduNsNYQks1jsNjmQkBZWFmsrlDuPtDDGuXE3JO9TqBRkBcf+A5JdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E/CfYv/m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ct+i3BvW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53BC2C2BBFC;
-	Wed, 19 Jun 2024 13:19:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E/CfYv/m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43918C2BBFC;
+	Wed, 19 Jun 2024 13:19:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803175;
-	bh=ynLAq1kCu99krt1mdqzLT78Annta5RJKIxKLfX2+02w=;
+	s=korg; t=1718803178;
+	bh=Uo2mvOkWto1mH2SDXeKhXRfkh2ysMJ6PY6GaR3ZbbKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ct+i3BvW+KfAgwc97JouldRPfRwEhVQTi6tfccLRgeKvwV6amG1pAfCJHYxdTTNt/
-	 3Nk2sa9Gx9ZHwuyYDcv4GZGHQPs+QiLeITcGZaykeFgPL5uP4hQd365j33PoNKW9lT
-	 WzglEBL/HlGYqSm28EiQ3pcm6SpLygGSa0azRzeE=
+	b=E/CfYv/mocV1pLnfP3rjcxhaTCIUjkKRBAKAz2mj7HClisajLIBPa2qU2N/s5boMA
+	 sEXbN7AcrEz0Ksv9y9xdl/0+xRHCxEk+ep2fvSm1dkaWeqtfOSwfDpEVsE9LbJM5UE
+	 hSOY5/N5iZ45EyMR1X14wXIhmM2yMh8RBzEtefqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonglong Liu <liuyonglong@huawei.com>,
+	Jie Wang <wangjie125@huawei.com>,
 	Jijie Shao <shaojijie@huawei.com>,
 	Simon Horman <horms@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 147/281] net: hns3: fix kernel crash problem in concurrent scenario
-Date: Wed, 19 Jun 2024 14:55:06 +0200
-Message-ID: <20240619125615.498527058@linuxfoundation.org>
+Subject: [PATCH 6.9 148/281] net: hns3: add cond_resched() to hns3 ring buffer init process
+Date: Wed, 19 Jun 2024 14:55:07 +0200
+Message-ID: <20240619125615.536366080@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -53,82 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonglong Liu <liuyonglong@huawei.com>
+From: Jie Wang <wangjie125@huawei.com>
 
-[ Upstream commit 12cda920212a49fa22d9e8b9492ac4ea013310a4 ]
+[ Upstream commit 968fde83841a8c23558dfbd0a0c69d636db52b55 ]
 
-When link status change, the nic driver need to notify the roce
-driver to handle this event, but at this time, the roce driver
-may uninit, then cause kernel crash.
+Currently hns3 ring buffer init process would hold cpu too long with big
+Tx/Rx ring depth. This could cause soft lockup.
 
-To fix the problem, when link status change, need to check
-whether the roce registered, and when uninit, need to wait link
-update finish.
+So this patch adds cond_resched() to the process. Then cpu can break to
+run other tasks instead of busy looping.
 
-Fixes: 45e92b7e4e27 ("net: hns3: add calling roce callback function when link status change")
-Signed-off-by: Yonglong Liu <liuyonglong@huawei.com>
+Fixes: a723fb8efe29 ("net: hns3: refine for set ring parameters")
+Signed-off-by: Jie Wang <wangjie125@huawei.com>
 Signed-off-by: Jijie Shao <shaojijie@huawei.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../hisilicon/hns3/hns3pf/hclge_main.c        | 21 ++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3_enet.c | 4 ++++
+ drivers/net/ethernet/hisilicon/hns3/hns3_enet.h | 2 ++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index ce60332d83c39..990d7bd397aa8 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -3042,9 +3042,7 @@ static void hclge_push_link_status(struct hclge_dev *hdev)
- 
- static void hclge_update_link_status(struct hclge_dev *hdev)
- {
--	struct hnae3_handle *rhandle = &hdev->vport[0].roce;
- 	struct hnae3_handle *handle = &hdev->vport[0].nic;
--	struct hnae3_client *rclient = hdev->roce_client;
- 	struct hnae3_client *client = hdev->nic_client;
- 	int state;
- 	int ret;
-@@ -3068,8 +3066,15 @@ static void hclge_update_link_status(struct hclge_dev *hdev)
- 
- 		client->ops->link_status_change(handle, state);
- 		hclge_config_mac_tnl_int(hdev, state);
--		if (rclient && rclient->ops->link_status_change)
--			rclient->ops->link_status_change(rhandle, state);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
+index 19668a8d22f76..c9258b1b2b429 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
+@@ -3539,6 +3539,9 @@ static int hns3_alloc_ring_buffers(struct hns3_enet_ring *ring)
+ 		ret = hns3_alloc_and_attach_buffer(ring, i);
+ 		if (ret)
+ 			goto out_buffer_fail;
 +
-+		if (test_bit(HCLGE_STATE_ROCE_REGISTERED, &hdev->state)) {
-+			struct hnae3_handle *rhandle = &hdev->vport[0].roce;
-+			struct hnae3_client *rclient = hdev->roce_client;
-+
-+			if (rclient && rclient->ops->link_status_change)
-+				rclient->ops->link_status_change(rhandle,
-+								 state);
-+		}
- 
- 		hclge_push_link_status(hdev);
++		if (!(i % HNS3_RESCHED_BD_NUM))
++			cond_resched();
  	}
-@@ -11245,6 +11250,12 @@ static int hclge_init_client_instance(struct hnae3_client *client,
- 	return ret;
- }
  
-+static bool hclge_uninit_need_wait(struct hclge_dev *hdev)
-+{
-+	return test_bit(HCLGE_STATE_RST_HANDLING, &hdev->state) ||
-+	       test_bit(HCLGE_STATE_LINK_UPDATING, &hdev->state);
-+}
+ 	return 0;
+@@ -5111,6 +5114,7 @@ int hns3_init_all_ring(struct hns3_nic_priv *priv)
+ 		}
+ 
+ 		u64_stats_init(&priv->ring[i].syncp);
++		cond_resched();
+ 	}
+ 
+ 	return 0;
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.h b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.h
+index acd756b0c7c9a..d36c4ed16d8dd 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.h
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.h
+@@ -214,6 +214,8 @@ enum hns3_nic_state {
+ #define HNS3_CQ_MODE_EQE			1U
+ #define HNS3_CQ_MODE_CQE			0U
+ 
++#define HNS3_RESCHED_BD_NUM			1024
 +
- static void hclge_uninit_client_instance(struct hnae3_client *client,
- 					 struct hnae3_ae_dev *ae_dev)
- {
-@@ -11253,7 +11264,7 @@ static void hclge_uninit_client_instance(struct hnae3_client *client,
- 
- 	if (hdev->roce_client) {
- 		clear_bit(HCLGE_STATE_ROCE_REGISTERED, &hdev->state);
--		while (test_bit(HCLGE_STATE_RST_HANDLING, &hdev->state))
-+		while (hclge_uninit_need_wait(hdev))
- 			msleep(HCLGE_WAIT_RESET_DONE);
- 
- 		hdev->roce_client->ops->uninit_instance(&vport->roce, 0);
+ enum hns3_pkt_l2t_type {
+ 	HNS3_L2_TYPE_UNICAST,
+ 	HNS3_L2_TYPE_MULTICAST,
 -- 
 2.43.0
 
