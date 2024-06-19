@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E6314B96F;
-	Wed, 19 Jun 2024 13:29:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C5AD14C5B8;
+	Wed, 19 Jun 2024 13:29:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803787; cv=none; b=BuD4/wI+txd1kisdsFZbBVUFQLodL/wVtx+5L7UVueBYvwx8p2NQKDT9LNKtxeXEnuFar0c4nIsbaxNUpRWj89qIILkFLLP7S4n2xw94YCFSWQupnjfyZL/IkNbItvEPgnPCZnKnRPS242mBxgc+E0ixBYcQKhTAlKukDwDypRE=
+	t=1718803790; cv=none; b=p12792Dnpr9tjo+aZPyaalHuVjheknZR+ZwHPR+bthYHF/DIXEShb0N06yLWdfn03m2YaMWejHbYBpPwcCXEVVsZbVZS0dZn1tMR83AHiZjY2yyi9uIZ2UwAKiZzPgH9235Q4RordhhHfnlfyiDEBkylY3phxO2qos7pcYUQmIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803787; c=relaxed/simple;
-	bh=dH0kR/iFLSON3irqr8qXIMFYOerx3atf6kxomtx0nPg=;
+	s=arc-20240116; t=1718803790; c=relaxed/simple;
+	bh=Xc71xN4rHHl+eNY48E8alQoz19K3j14wileFRz/Y2Hs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jqrDEJ6m16VNK1CMYDYxRIoQzmFWzkuammllratkzZdqliA1AzhKm1LdqpsaCDuGng99avjy18GH7mjksdhv20MVdJtOJNfy5dtDSWDJGvaXTOYbNbVastSUR4l5khGGMx+EOucdK+BN3gDIzwwWLm5Djl4NQ9PHaOaGuH2jT1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efEXfnjB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JXkY1LweC7EKRDJMq0FlB1xg8JszNrgpR8HB82ezVP70u8KyF6merBQ4K29NFdEZMhKjcot9yQclEmcTMdwcnhBPYNdRyTKFy34tSlE2YZRCMrjEy97nb8dKIfbRkhkx9rGxhVOkSgglCYepzpTHTMQGaNP8emeFoEVc6yNFeOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BMaYxomQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efEXfnjB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B700C2BBFC;
-	Wed, 19 Jun 2024 13:29:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BMaYxomQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 559C9C2BBFC;
+	Wed, 19 Jun 2024 13:29:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803786;
-	bh=dH0kR/iFLSON3irqr8qXIMFYOerx3atf6kxomtx0nPg=;
+	s=korg; t=1718803789;
+	bh=Xc71xN4rHHl+eNY48E8alQoz19K3j14wileFRz/Y2Hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=efEXfnjBBA1B0+VcpHcahQKkje+2/mc6iR7nCWi9poqoX1YRrf06L9uhjaT9yTvL6
-	 dDwVDmjBH3VzgpRdgSt6+/+7/I0QzTy74O5MAzrVPd7w6HgkiueqpJEbk16fZReStj
-	 qgi3s9qRBeXTypTkM9WoZ4TpZLNsci15cf2pA6t4=
+	b=BMaYxomQqu1jsqNxvOuDa4zgKwifmgphS5nbzpxFSK5WO9+yQSdv8ALDPiu7YOOLQ
+	 wvhpbSJF72arsVTVUsPrmkkLBOTGkHgQ77ynJ1RlA6UNPk6ThUxqAP2oDz5wfiVoZ1
+	 f6ZJg1NcJ/o3Jmtgq+ao7wHVBPD+CV4gzrQfzt3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	"Hailong.Liu" <hailong.liu@oppo.com>,
 	Michal Hocko <mhocko@suse.com>,
+	Barry Song <21cnbao@gmail.com>,
+	Oven <liyangouwen1@oppo.com>,
+	Barry Song <baohua@kernel.org>,
 	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Baoquan He <bhe@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Mel Gorman <mgorman@techsingularity.net>,
+	Chao Yu <chao@kernel.org>,
+	Christoph Hellwig <hch@infradead.org>,
+	Gao Xiang <xiang@kernel.org>,
+	Lorenzo Stoakes <lstoakes@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 072/217] mm, vmalloc: fix high order __GFP_NOFAIL allocations
-Date: Wed, 19 Jun 2024 14:55:15 +0200
-Message-ID: <20240619125559.462342381@linuxfoundation.org>
+Subject: [PATCH 6.1 073/217] mm/vmalloc: fix vmalloc which may return null if called with __GFP_NOFAIL
+Date: Wed, 19 Jun 2024 14:55:16 +0200
+Message-ID: <20240619125559.502263919@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -57,112 +60,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Hocko <mhocko@suse.com>
+From: Hailong.Liu <hailong.liu@oppo.com>
 
-[ Upstream commit e9c3cda4d86e56bf7fe403729f38c4f0f65d3860 ]
+[ Upstream commit 8e0545c83d672750632f46e3f9ad95c48c91a0fc ]
 
-Gao Xiang has reported that the page allocator complains about high order
-__GFP_NOFAIL request coming from the vmalloc core:
+commit a421ef303008 ("mm: allow !GFP_KERNEL allocations for kvmalloc")
+includes support for __GFP_NOFAIL, but it presents a conflict with commit
+dd544141b9eb ("vmalloc: back off when the current task is OOM-killed").  A
+possible scenario is as follows:
 
- __alloc_pages+0x1cb/0x5b0 mm/page_alloc.c:5549
- alloc_pages+0x1aa/0x270 mm/mempolicy.c:2286
- vm_area_alloc_pages mm/vmalloc.c:2989 [inline]
- __vmalloc_area_node mm/vmalloc.c:3057 [inline]
- __vmalloc_node_range+0x978/0x13c0 mm/vmalloc.c:3227
- kvmalloc_node+0x156/0x1a0 mm/util.c:606
- kvmalloc include/linux/slab.h:737 [inline]
- kvmalloc_array include/linux/slab.h:755 [inline]
- kvcalloc include/linux/slab.h:760 [inline]
+process-a
+__vmalloc_node_range(GFP_KERNEL | __GFP_NOFAIL)
+    __vmalloc_area_node()
+        vm_area_alloc_pages()
+		--> oom-killer send SIGKILL to process-a
+        if (fatal_signal_pending(current)) break;
+--> return NULL;
 
-it seems that I have completely missed high order allocation backing
-vmalloc areas case when implementing __GFP_NOFAIL support.  This means
-that [k]vmalloc at al.  can allocate higher order allocations with
-__GFP_NOFAIL which can trigger OOM killer for non-costly orders easily or
-cause a lot of reclaim/compaction activity if those requests cannot be
-satisfied.
+To fix this, do not check fatal_signal_pending() in vm_area_alloc_pages()
+if __GFP_NOFAIL set.
 
-Fix the issue by falling back to zero order allocations for __GFP_NOFAIL
-requests if the high order request fails.
+This issue occurred during OPLUS KASAN TEST. Below is part of the log
+-> oom-killer sends signal to process
+[65731.222840] [ T1308] oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=/,mems_allowed=0,global_oom,task_memcg=/apps/uid_10198,task=gs.intelligence,pid=32454,uid=10198
 
-Link: https://lkml.kernel.org/r/ZAXynvdNqcI0f6Us@dhcp22.suse.cz
+[65731.259685] [T32454] Call trace:
+[65731.259698] [T32454]  dump_backtrace+0xf4/0x118
+[65731.259734] [T32454]  show_stack+0x18/0x24
+[65731.259756] [T32454]  dump_stack_lvl+0x60/0x7c
+[65731.259781] [T32454]  dump_stack+0x18/0x38
+[65731.259800] [T32454]  mrdump_common_die+0x250/0x39c [mrdump]
+[65731.259936] [T32454]  ipanic_die+0x20/0x34 [mrdump]
+[65731.260019] [T32454]  atomic_notifier_call_chain+0xb4/0xfc
+[65731.260047] [T32454]  notify_die+0x114/0x198
+[65731.260073] [T32454]  die+0xf4/0x5b4
+[65731.260098] [T32454]  die_kernel_fault+0x80/0x98
+[65731.260124] [T32454]  __do_kernel_fault+0x160/0x2a8
+[65731.260146] [T32454]  do_bad_area+0x68/0x148
+[65731.260174] [T32454]  do_mem_abort+0x151c/0x1b34
+[65731.260204] [T32454]  el1_abort+0x3c/0x5c
+[65731.260227] [T32454]  el1h_64_sync_handler+0x54/0x90
+[65731.260248] [T32454]  el1h_64_sync+0x68/0x6c
+
+[65731.260269] [T32454]  z_erofs_decompress_queue+0x7f0/0x2258
+--> be->decompressed_pages = kvcalloc(be->nr_pages, sizeof(struct page *), GFP_KERNEL | __GFP_NOFAIL);
+	kernel panic by NULL pointer dereference.
+	erofs assume kvmalloc with __GFP_NOFAIL never return NULL.
+[65731.260293] [T32454]  z_erofs_runqueue+0xf30/0x104c
+[65731.260314] [T32454]  z_erofs_readahead+0x4f0/0x968
+[65731.260339] [T32454]  read_pages+0x170/0xadc
+[65731.260364] [T32454]  page_cache_ra_unbounded+0x874/0xf30
+[65731.260388] [T32454]  page_cache_ra_order+0x24c/0x714
+[65731.260411] [T32454]  filemap_fault+0xbf0/0x1a74
+[65731.260437] [T32454]  __do_fault+0xd0/0x33c
+[65731.260462] [T32454]  handle_mm_fault+0xf74/0x3fe0
+[65731.260486] [T32454]  do_mem_abort+0x54c/0x1b34
+[65731.260509] [T32454]  el0_da+0x44/0x94
+[65731.260531] [T32454]  el0t_64_sync_handler+0x98/0xb4
+[65731.260553] [T32454]  el0t_64_sync+0x198/0x19c
+
+Link: https://lkml.kernel.org/r/20240510100131.1865-1-hailong.liu@oppo.com
 Fixes: 9376130c390a ("mm/vmalloc: add support for __GFP_NOFAIL")
-Reported-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-  Link: https://lkml.kernel.org/r/20230305053035.1911-1-hsiangkao@linux.alibaba.com
-Signed-off-by: Michal Hocko <mhocko@suse.com>
+Signed-off-by: Hailong.Liu <hailong.liu@oppo.com>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Suggested-by: Barry Song <21cnbao@gmail.com>
+Reported-by: Oven <liyangouwen1@oppo.com>
+Reviewed-by: Barry Song <baohua@kernel.org>
 Reviewed-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
-Acked-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: Baoquan He <bhe@redhat.com>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Chao Yu <chao@kernel.org>
+Cc: Christoph Hellwig <hch@infradead.org>
+Cc: Gao Xiang <xiang@kernel.org>
+Cc: Lorenzo Stoakes <lstoakes@gmail.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 8e0545c83d67 ("mm/vmalloc: fix vmalloc which may return null if called with __GFP_NOFAIL")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/vmalloc.c | 28 +++++++++++++++++++++++-----
- 1 file changed, 23 insertions(+), 5 deletions(-)
+ mm/vmalloc.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/mm/vmalloc.c b/mm/vmalloc.c
-index 67a10a04df041..cab30d9497e6b 100644
+index cab30d9497e6b..c5e30b52844c8 100644
 --- a/mm/vmalloc.c
 +++ b/mm/vmalloc.c
-@@ -2923,6 +2923,8 @@ vm_area_alloc_pages(gfp_t gfp, int nid,
- 		unsigned int order, unsigned int nr_pages, struct page **pages)
+@@ -2924,7 +2924,7 @@ vm_area_alloc_pages(gfp_t gfp, int nid,
  {
  	unsigned int nr_allocated = 0;
-+	gfp_t alloc_gfp = gfp;
-+	bool nofail = false;
+ 	gfp_t alloc_gfp = gfp;
+-	bool nofail = false;
++	bool nofail = gfp & __GFP_NOFAIL;
  	struct page *page;
  	int i;
  
-@@ -2933,6 +2935,7 @@ vm_area_alloc_pages(gfp_t gfp, int nid,
- 	 * more permissive.
- 	 */
- 	if (!order) {
-+		/* bulk allocator doesn't support nofail req. officially */
- 		gfp_t bulk_gfp = gfp & ~__GFP_NOFAIL;
- 
- 		while (nr_allocated < nr_pages) {
-@@ -2971,20 +2974,35 @@ vm_area_alloc_pages(gfp_t gfp, int nid,
- 			if (nr != nr_pages_request)
- 				break;
- 		}
-+	} else if (gfp & __GFP_NOFAIL) {
-+		/*
-+		 * Higher order nofail allocations are really expensive and
-+		 * potentially dangerous (pre-mature OOM, disruptive reclaim
-+		 * and compaction etc.
-+		 */
-+		alloc_gfp &= ~__GFP_NOFAIL;
-+		nofail = true;
+@@ -2981,12 +2981,11 @@ vm_area_alloc_pages(gfp_t gfp, int nid,
+ 		 * and compaction etc.
+ 		 */
+ 		alloc_gfp &= ~__GFP_NOFAIL;
+-		nofail = true;
  	}
  
  	/* High-order pages or fallback path if "bulk" fails. */
--
  	while (nr_allocated < nr_pages) {
- 		if (fatal_signal_pending(current))
+-		if (fatal_signal_pending(current))
++		if (!nofail && fatal_signal_pending(current))
  			break;
  
  		if (nid == NUMA_NO_NODE)
--			page = alloc_pages(gfp, order);
-+			page = alloc_pages(alloc_gfp, order);
- 		else
--			page = alloc_pages_node(nid, gfp, order);
--		if (unlikely(!page))
--			break;
-+			page = alloc_pages_node(nid, alloc_gfp, order);
-+		if (unlikely(!page)) {
-+			if (!nofail)
-+				break;
-+
-+			/* fall back to the zero order allocations */
-+			alloc_gfp |= __GFP_NOFAIL;
-+			order = 0;
-+			continue;
-+		}
-+
- 		/*
- 		 * Higher order allocations must be able to be treated as
- 		 * indepdenent small pages by callers (as they can with
 -- 
 2.43.0
 
