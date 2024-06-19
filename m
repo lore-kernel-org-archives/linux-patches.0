@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7142147C7B;
-	Wed, 19 Jun 2024 13:01:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1BC0143873;
+	Wed, 19 Jun 2024 13:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802095; cv=none; b=VR364RMT4WyBXSor6seqInncAPFlYRjS8oPkPR1TG6S19hDOfHKTj7/rQoeZqs8XIThWkBVKYzSx8ffZMmRLAcwLpsEu/+UmuGynCPW+XDtDbaDNPWMonQmSW3C0CcnPbKK5sdUSgDTkloEnQ9ertgJQBpXG+76KMiVjebir+PY=
+	t=1718802099; cv=none; b=uTr1s8altjIC2DqLflksIPerHc20dWwEekubgC3m0FzQqLLiNmcV9+/gRyDwk4bk2tvTtX0n+hU2++V8faCoP23YFuN/07eAH4bAC2aHIhyDljwTfRxeDuvp6wMaMnOuIVZreuDWPLPg8HGsf07OtlBxWXv5NlrmO0fqOzJNWeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802095; c=relaxed/simple;
-	bh=0dFkM1gMymSSIfDi3EKvnwupUvxq2V81LYKbRE2Yah0=;
+	s=arc-20240116; t=1718802099; c=relaxed/simple;
+	bh=lXm+e5FBaEthuQ1pLVmLW/TZgE6HIbqLZU6SzhFXqaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JNjVQ5Rekit+V2WsHSX1ZixUusB9EaA7+bDZDF69TopPL8BsCOcQAIe/8ILLgpIU6OrsE+PeZ6DCQwbMfpruDDZQsxgPTOClKyceaqzFpw3mu3Z4r4nZZvsvGHZyF8SlFpgCk6YbbmOa++EWgbHGQvrtyg9U55lJlliUx+/+ORY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iQhJidrm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GxEGF2b/+bOTs7vfC7ctI4Ve7+NhBdgKGCcaYbnJwZSq4Gx+slfuqMNv6IGxEKPI265jtM4Wj2djN4mtKvzfC05ACbZeZu8vNEf76t8q7Y8Ol/KSs96HwaX6KMaL3Q3+Gh43yccdYq0hJCQzqrbT5umciYTVr8jEhR+G6plc61c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOz4TXEq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iQhJidrm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BC9FC2BBFC;
-	Wed, 19 Jun 2024 13:01:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOz4TXEq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EDB6C32786;
+	Wed, 19 Jun 2024 13:01:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802095;
-	bh=0dFkM1gMymSSIfDi3EKvnwupUvxq2V81LYKbRE2Yah0=;
+	s=korg; t=1718802098;
+	bh=lXm+e5FBaEthuQ1pLVmLW/TZgE6HIbqLZU6SzhFXqaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iQhJidrmBZdwq8F2MNGaDNBW596OZmmWh/QzXOaeHxhSGExuZoSg4Eo8G0Uj+UxV4
-	 7cXJW4kWOyNFZk7J+pxiH5Y2mFB/33y7oqvNnYkIkbPxiVUtOtXXhaomr4MzaccwAq
-	 xmlMy6Q5bMdW85CVzKH7ZgbfPr9OevEdiqQ0dbnI=
+	b=eOz4TXEqC/p6+TjJzwpLlAAfTqrNCENeV8cDUQih3GYTs/2YTsNMMczCT4uDRvL4X
+	 KamZkIIHhWlQdn/Bu8aqpf/j7dck6awleU7jxudZXXn/EM+OYimC6dwnMfoUJ/DWHE
+	 B1zxrJ0b+lxxReULp0pqTt8YDcKRUx1XY7XI9Crw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 079/267] io_uring: check for non-NULL file pointer in io_file_can_poll()
-Date: Wed, 19 Jun 2024 14:53:50 +0200
-Message-ID: <20240619125609.385477186@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	syzbot+5f996b83575ef4058638@syzkaller.appspotmail.com,
+	syzbot+1b2abad17596ad03dcff@syzkaller.appspotmail.com
+Subject: [PATCH 6.6 080/267] USB: class: cdc-wdm: Fix CPU lockup caused by excessive log messages
+Date: Wed, 19 Jun 2024 14:53:51 +0200
+Message-ID: <20240619125609.423381094@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -49,77 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 5fc16fa5f13b3c06fdb959ef262050bd810416a2 upstream.
+commit 22f00812862564b314784167a89f27b444f82a46 upstream.
 
-In earlier kernels, it was possible to trigger a NULL pointer
-dereference off the forced async preparation path, if no file had
-been assigned. The trace leading to that looks as follows:
+The syzbot fuzzer found that the interrupt-URB completion callback in
+the cdc-wdm driver was taking too long, and the driver's immediate
+resubmission of interrupt URBs with -EPROTO status combined with the
+dummy-hcd emulation to cause a CPU lockup:
 
-BUG: kernel NULL pointer dereference, address: 00000000000000b0
-PGD 0 P4D 0
-Oops: 0000 [#1] PREEMPT SMP
-CPU: 67 PID: 1633 Comm: buf-ring-invali Not tainted 6.8.0-rc3+ #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS unknown 2/2/2022
-RIP: 0010:io_buffer_select+0xc3/0x210
-Code: 00 00 48 39 d1 0f 82 ae 00 00 00 48 81 4b 48 00 00 01 00 48 89 73 70 0f b7 50 0c 66 89 53 42 85 ed 0f 85 d2 00 00 00 48 8b 13 <48> 8b 92 b0 00 00 00 48 83 7a 40 00 0f 84 21 01 00 00 4c 8b 20 5b
-RSP: 0018:ffffb7bec38c7d88 EFLAGS: 00010246
-RAX: ffff97af2be61000 RBX: ffff97af234f1700 RCX: 0000000000000040
-RDX: 0000000000000000 RSI: ffff97aecfb04820 RDI: ffff97af234f1700
-RBP: 0000000000000000 R08: 0000000000200030 R09: 0000000000000020
-R10: ffffb7bec38c7dc8 R11: 000000000000c000 R12: ffffb7bec38c7db8
-R13: ffff97aecfb05800 R14: ffff97aecfb05800 R15: ffff97af2be5e000
-FS:  00007f852f74b740(0000) GS:ffff97b1eeec0000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00000000000000b0 CR3: 000000016deab005 CR4: 0000000000370ef0
-Call Trace:
- <TASK>
- ? __die+0x1f/0x60
- ? page_fault_oops+0x14d/0x420
- ? do_user_addr_fault+0x61/0x6a0
- ? exc_page_fault+0x6c/0x150
- ? asm_exc_page_fault+0x22/0x30
- ? io_buffer_select+0xc3/0x210
- __io_import_iovec+0xb5/0x120
- io_readv_prep_async+0x36/0x70
- io_queue_sqe_fallback+0x20/0x260
- io_submit_sqes+0x314/0x630
- __do_sys_io_uring_enter+0x339/0xbc0
- ? __do_sys_io_uring_register+0x11b/0xc50
- ? vm_mmap_pgoff+0xce/0x160
- do_syscall_64+0x5f/0x180
- entry_SYSCALL_64_after_hwframe+0x46/0x4e
-RIP: 0033:0x55e0a110a67e
-Code: ba cc 00 00 00 45 31 c0 44 0f b6 92 d0 00 00 00 31 d2 41 b9 08 00 00 00 41 83 e2 01 41 c1 e2 04 41 09 c2 b8 aa 01 00 00 0f 05 <c3> 90 89 30 eb a9 0f 1f 40 00 48 8b 42 20 8b 00 a8 06 75 af 85 f6
+cdc_wdm 1-1:1.0: nonzero urb status received: -71
+cdc_wdm 1-1:1.0: wdm_int_callback - 0 bytes
+watchdog: BUG: soft lockup - CPU#0 stuck for 26s! [syz-executor782:6625]
+CPU#0 Utilization every 4s during lockup:
+	#1:  98% system,	  0% softirq,	  3% hardirq,	  0% idle
+	#2:  98% system,	  0% softirq,	  3% hardirq,	  0% idle
+	#3:  98% system,	  0% softirq,	  3% hardirq,	  0% idle
+	#4:  98% system,	  0% softirq,	  3% hardirq,	  0% idle
+	#5:  98% system,	  1% softirq,	  3% hardirq,	  0% idle
+Modules linked in:
+irq event stamp: 73096
+hardirqs last  enabled at (73095): [<ffff80008037bc00>] console_emit_next_record kernel/printk/printk.c:2935 [inline]
+hardirqs last  enabled at (73095): [<ffff80008037bc00>] console_flush_all+0x650/0xb74 kernel/printk/printk.c:2994
+hardirqs last disabled at (73096): [<ffff80008af10b00>] __el1_irq arch/arm64/kernel/entry-common.c:533 [inline]
+hardirqs last disabled at (73096): [<ffff80008af10b00>] el1_interrupt+0x24/0x68 arch/arm64/kernel/entry-common.c:551
+softirqs last  enabled at (73048): [<ffff8000801ea530>] softirq_handle_end kernel/softirq.c:400 [inline]
+softirqs last  enabled at (73048): [<ffff8000801ea530>] handle_softirqs+0xa60/0xc34 kernel/softirq.c:582
+softirqs last disabled at (73043): [<ffff800080020de8>] __do_softirq+0x14/0x20 kernel/softirq.c:588
+CPU: 0 PID: 6625 Comm: syz-executor782 Tainted: G        W          6.10.0-rc2-syzkaller-g8867bbd4a056 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/02/2024
 
-because the request is marked forced ASYNC and has a bad file fd, and
-hence takes the forced async prep path.
+Testing showed that the problem did not occur if the two error
+messages -- the first two lines above -- were removed; apparently adding
+material to the kernel log takes a surprisingly large amount of time.
 
-Current kernels with the request async prep cleaned up can no longer hit
-this issue, but for ease of backporting, let's add this safety check in
-here too as it really doesn't hurt. For both cases, this will inevitably
-end with a CQE posted with -EBADF.
+In any case, the best approach for preventing these lockups and to
+avoid spamming the log with thousands of error messages per second is
+to ratelimit the two dev_err() calls.  Therefore we replace them with
+dev_err_ratelimited().
 
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Suggested-by: Greg KH <gregkh@linuxfoundation.org>
+Reported-and-tested-by: syzbot+5f996b83575ef4058638@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-usb/00000000000073d54b061a6a1c65@google.com/
+Reported-and-tested-by: syzbot+1b2abad17596ad03dcff@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-usb/000000000000f45085061aa9b37e@google.com/
+Fixes: 9908a32e94de ("USB: remove err() macro from usb class drivers")
+Link: https://lore.kernel.org/linux-usb/40dfa45b-5f21-4eef-a8c1-51a2f320e267@rowland.harvard.edu/
 Cc: stable@vger.kernel.org
-Fixes: a76c0b31eef5 ("io_uring: commit non-pollable provided mapped buffers upfront")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://lore.kernel.org/r/29855215-52f5-4385-b058-91f42c2bee18@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/kbuf.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/class/cdc-wdm.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/io_uring/kbuf.c
-+++ b/io_uring/kbuf.c
-@@ -168,7 +168,8 @@ static void __user *io_ring_buffer_selec
- 	req->buf_list = bl;
- 	req->buf_index = buf->bid;
+--- a/drivers/usb/class/cdc-wdm.c
++++ b/drivers/usb/class/cdc-wdm.c
+@@ -266,14 +266,14 @@ static void wdm_int_callback(struct urb
+ 			dev_err(&desc->intf->dev, "Stall on int endpoint\n");
+ 			goto sw; /* halt is cleared in work */
+ 		default:
+-			dev_err(&desc->intf->dev,
++			dev_err_ratelimited(&desc->intf->dev,
+ 				"nonzero urb status received: %d\n", status);
+ 			break;
+ 		}
+ 	}
  
--	if (issue_flags & IO_URING_F_UNLOCKED || !file_can_poll(req->file)) {
-+	if (issue_flags & IO_URING_F_UNLOCKED ||
-+	    (req->file && !file_can_poll(req->file))) {
- 		/*
- 		 * If we came in unlocked, we have no choice but to consume the
- 		 * buffer here, otherwise nothing ensures that the buffer won't
+ 	if (urb->actual_length < sizeof(struct usb_cdc_notification)) {
+-		dev_err(&desc->intf->dev, "wdm_int_callback - %d bytes\n",
++		dev_err_ratelimited(&desc->intf->dev, "wdm_int_callback - %d bytes\n",
+ 			urb->actual_length);
+ 		goto exit;
+ 	}
 
 
