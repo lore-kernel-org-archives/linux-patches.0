@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A28AD58;
-	Wed, 19 Jun 2024 13:16:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C134315F;
+	Wed, 19 Jun 2024 13:16:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803016; cv=none; b=E0olepV9rDZMcaRnzwXYEvuN0hWlTW0kzWq+plxdm5SR6giWBAyyexP7OslNdvcokDzC/xLEb2a3KjmlFuJjhm+sNWgmyPJkEBrQwi9CuenySyalEQxMimJxmBMfYGaYzp8qEsqKLGblxK1di8l85RPFMjL+6ahc9eJzmByZzZg=
+	t=1718803019; cv=none; b=XhXZjCW534hFfEsGWhRRfCG3Fs8xCSLQrTeRo/5vkD3bHY+uHO94HGdqLK7lB52Nv+WGEaYBBTrbD/dlb+9wujvrvWRznR53oVOtyVlEjAxDYQ0O2UoAFUAMs6wJaK8PXjUKMAhBNXM6pgpUrw0IcxQ7HDcJwn3v6jXOnO2ccIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803016; c=relaxed/simple;
-	bh=UPv8wGyL73Cl3O/wS898dhg48iLDdlrrmHxqu1yVdJg=;
+	s=arc-20240116; t=1718803019; c=relaxed/simple;
+	bh=mF2mOPWDHBMM+TC8BtWIHOTxfz8fsFbjmcgq6li51j0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yaz7l6jf+/sen4jIsKhpXzNXDTeYtnuRF6wMkXuYGROsdkbo+8x94Zk0OEREsoXshnqqZITWq9LcutSinxDsadnY9w/a4aJhXnlKbPmY9BTDIupqHTi9GHJ7qrL3FDpvawH9FF5WMuZTEMQ9N3Mo3lSv3x3QvnXJ3nUzlf2ENUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q4+J015U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZhMRfEKC52Bw+4O5wI37VOAc9CY8Jsz+TxWr302vC1ziVl/hPTOjgfdmW7AeJyTjB51fh6hKORj30FH0L1MZPQfE4EubgOseCa78lyd514dR/yLFI6cAD92IOhJJDuaJTHsrDMREpZBdCADLBnorHegmQMNkwT4vUDFaGMaMPEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dvy8YZOY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4+J015U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F48CC2BBFC;
-	Wed, 19 Jun 2024 13:16:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dvy8YZOY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E707C32786;
+	Wed, 19 Jun 2024 13:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803016;
-	bh=UPv8wGyL73Cl3O/wS898dhg48iLDdlrrmHxqu1yVdJg=;
+	s=korg; t=1718803019;
+	bh=mF2mOPWDHBMM+TC8BtWIHOTxfz8fsFbjmcgq6li51j0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q4+J015Urv7n522yXTY/A5XqrQm1dMcM1BDszKxDy3AMDDR7/1ecxafHeuWyGt4aK
-	 gmagoUx3lV70XHk1QgaMY9fXBQ2Hxd8Ks8nOzebU8j7UXjiW3rl9bdARblmdp+6r4Z
-	 gHfdJGqxJcppRP8F5h/uCHbqn5LCvn0ph8yRa0OQ=
+	b=Dvy8YZOYSyW3ZNNztTKGc6Gxj1opu41GbkvLbnifPGrMai9QSJr5thXojJY62TJym
+	 DvHhKcVw6icNHKryL8flQM4QqGBaT02/QDiG6Gydl60FyGLf8HXzsiHQRCkWBaPtkk
+	 2tjXbcjj69Jbqb4CaQjDyl5612MtfJWqYBSGkTA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	John Hubbard <jhubbard@nvidia.com>,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 125/281] selftests/tracing: Fix event filter test to retry up to 10 times
-Date: Wed, 19 Jun 2024 14:54:44 +0200
-Message-ID: <20240619125614.655100036@linuxfoundation.org>
+Subject: [PATCH 6.9 126/281] selftests/futex: dont pass a const char* to asprintf(3)
+Date: Wed, 19 Jun 2024 14:54:45 +0200
+Message-ID: <20240619125614.693591261@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -51,77 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: John Hubbard <jhubbard@nvidia.com>
 
-[ Upstream commit 0f42bdf59b4e428485aa922bef871bfa6cc505e0 ]
+[ Upstream commit 4bf15b1c657d22d1d70173e43264e4606dfe75ff ]
 
-Commit eb50d0f250e9 ("selftests/ftrace: Choose target function for filter
-test from samples") choose the target function from samples, but sometimes
-this test failes randomly because the target function does not hit at the
-next time. So retry getting samples up to 10 times.
+When building with clang, via:
 
-Fixes: eb50d0f250e9 ("selftests/ftrace: Choose target function for filter test from samples")
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+    make LLVM=1 -C tools/testing/selftests
+
+...clang issues this warning:
+
+futex_requeue_pi.c:403:17: warning: passing 'const char **' to parameter
+of type 'char **' discards qualifiers in nested pointer types
+[-Wincompatible-pointer-types-discards-qualifiers]
+
+This warning fires because test_name is passed into asprintf(3), which
+then changes it.
+
+Fix this by simply removing the const qualifier. This is a local
+automatic variable in a very short function, so there is not much need
+to use the compiler to enforce const-ness at this scope.
+
+[1] https://lore.kernel.org/all/20240329-selftests-libmk-llvm-rfc-v1-1-2f9ed7d1c49f@valentinobst.de/
+
+Fixes: f17d8a87ecb5 ("selftests: fuxex: Report a unique test name per run of futex_requeue_pi")
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Signed-off-by: John Hubbard <jhubbard@nvidia.com>
 Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../test.d/filter/event-filter-function.tc    | 20 ++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ tools/testing/selftests/futex/functional/futex_requeue_pi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/ftrace/test.d/filter/event-filter-function.tc b/tools/testing/selftests/ftrace/test.d/filter/event-filter-function.tc
-index 3f74c09c56b62..118247b8dd84d 100644
---- a/tools/testing/selftests/ftrace/test.d/filter/event-filter-function.tc
-+++ b/tools/testing/selftests/ftrace/test.d/filter/event-filter-function.tc
-@@ -10,7 +10,6 @@ fail() { #msg
- }
+diff --git a/tools/testing/selftests/futex/functional/futex_requeue_pi.c b/tools/testing/selftests/futex/functional/futex_requeue_pi.c
+index 7f3ca5c78df12..215c6cb539b4a 100644
+--- a/tools/testing/selftests/futex/functional/futex_requeue_pi.c
++++ b/tools/testing/selftests/futex/functional/futex_requeue_pi.c
+@@ -360,7 +360,7 @@ int unit_test(int broadcast, long lock, int third_party_owner, long timeout_ns)
  
- sample_events() {
--    echo > trace
-     echo 1 > events/kmem/kmem_cache_free/enable
-     echo 1 > tracing_on
-     ls > /dev/null
-@@ -22,6 +21,7 @@ echo 0 > tracing_on
- echo 0 > events/enable
+ int main(int argc, char *argv[])
+ {
+-	const char *test_name;
++	char *test_name;
+ 	int c, ret;
  
- echo "Get the most frequently calling function"
-+echo > trace
- sample_events
- 
- target_func=`cat trace | grep -o 'call_site=\([^+]*\)' | sed 's/call_site=//' | sort | uniq -c | sort | tail -n 1 | sed 's/^[ 0-9]*//'`
-@@ -32,7 +32,16 @@ echo > trace
- 
- echo "Test event filter function name"
- echo "call_site.function == $target_func" > events/kmem/kmem_cache_free/filter
-+
-+sample_events
-+max_retry=10
-+while [ `grep kmem_cache_free trace| wc -l` -eq 0 ]; do
- sample_events
-+max_retry=$((max_retry - 1))
-+if [ $max_retry -eq 0 ]; then
-+	exit_fail
-+fi
-+done
- 
- hitcnt=`grep kmem_cache_free trace| grep $target_func | wc -l`
- misscnt=`grep kmem_cache_free trace| grep -v $target_func | wc -l`
-@@ -49,7 +58,16 @@ address=`grep " ${target_func}\$" /proc/kallsyms | cut -d' ' -f1`
- 
- echo "Test event filter function address"
- echo "call_site.function == 0x$address" > events/kmem/kmem_cache_free/filter
-+echo > trace
-+sample_events
-+max_retry=10
-+while [ `grep kmem_cache_free trace| wc -l` -eq 0 ]; do
- sample_events
-+max_retry=$((max_retry - 1))
-+if [ $max_retry -eq 0 ]; then
-+	exit_fail
-+fi
-+done
- 
- hitcnt=`grep kmem_cache_free trace| grep $target_func | wc -l`
- misscnt=`grep kmem_cache_free trace| grep -v $target_func | wc -l`
+ 	while ((c = getopt(argc, argv, "bchlot:v:")) != -1) {
 -- 
 2.43.0
 
