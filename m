@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D362AD58;
-	Wed, 19 Jun 2024 13:17:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C224315F;
+	Wed, 19 Jun 2024 13:17:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803025; cv=none; b=EvBn+POXMBXAQ0GoayJm00wVcEGwgfbxKGvi0TIeM8diuYb5YMaLGcD/OBMsTJtJk+U4U99ZuqheKc4jJ6OQYZBSuFhbr+dMsSSxeBXIOGBOFipcmAn9hWZxXN2xNOlJLC47G6LUVgQBiVKBxhH7nu/saPaQRBMQHe3pQHbdk3o=
+	t=1718803028; cv=none; b=YCMVyOH0fO8zMznGi9LRFSdlEWwzVGXFRBsrwJcwKfSlhNLvNWwjlzkPJGwQDB0F/yH1N2QsSj5g8JTBddv96GaPDrcN2Ox7TWNJcgOB5+dwTjrnNqblXO3BVTwYk0eyXa4H6MO0+3sAzx8vdoI+woiFcHHFxUpsOg2qNHVGkns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803025; c=relaxed/simple;
-	bh=3QwCABTARHq2W5IvndfRtik+OeC9Tx+VsCUzu7rL+cQ=;
+	s=arc-20240116; t=1718803028; c=relaxed/simple;
+	bh=maBNDNFB0Oa7CNyDTkF4ejAESCBSW700Z5d/fC5BFhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XTaruHrkfWoF3VsjyaSwoD5vOaNsGL3coYF8rBBTv63iG7WpfNGsnspy8HL895NVea7iMb2sy8EQQ5xzQmEz+lKLZI6ynoDBG2nVnMnfu8JdUqE2HgWHy/Ia/xGddQJVO4AO5GpBFqpBZ+Frp7Cd6Gv1aWBNOuyLxNfIYEBTHDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zdeWPRso; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HASfOuSoGktejDQq7L1rQ8ZfO+cM3JrqE6n8TcI5Gwk2Dh/T7m1dUOV9gbodYY3sCs7frHgggM5zjAcwff1fPwAlzjReaFPkQf1OZ6u1Bo2avbEjHJHr7qtfItWIdCHLL54lCoLWjRVejRV0JTn9r/NCeklCV/ZxtbL6VWvH3wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KCBl/lDw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zdeWPRso"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7048C2BBFC;
-	Wed, 19 Jun 2024 13:17:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KCBl/lDw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D43C2BBFC;
+	Wed, 19 Jun 2024 13:17:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803025;
-	bh=3QwCABTARHq2W5IvndfRtik+OeC9Tx+VsCUzu7rL+cQ=;
+	s=korg; t=1718803028;
+	bh=maBNDNFB0Oa7CNyDTkF4ejAESCBSW700Z5d/fC5BFhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zdeWPRsoTU50ChvGtF0JOEeeRPuNO3zj1oSEJEKcVxXDP7TKQGPYDJDSgl1RrR+Xb
-	 SirXA8GRy5RKN9MI4Nsr1nCLHQRAsWIZOijkwnJ9OtjxJAYIoHGIfurLx96v2i7UQ4
-	 Kj5aaOUubdcGKmtlA3XI3WjsbUbie32wQIJVc8Rs=
+	b=KCBl/lDwjb64GcwKtEGlDlM7J8F1b5vQgB+yY+Ry7kv8i5AeN6Ds0MvG6BVLmVi4Y
+	 2yzUnK2/M0QNH2qZNGvmhLReS3a5FgY38HCbVGu54h3dY1I+Faq1NBFTFMhcttsN6+
+	 6+1xRboumUlPKOsk/hYL5j6aovUNcabE8S9oO2ww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Jingbo Xu <jefflexu@linux.alibaba.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Michael Riesch <michael.riesch@wolfvision.net>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 110/281] cachefiles: add output string to cachefiles_obj_[get|put]_ondemand_fd
-Date: Wed, 19 Jun 2024 14:54:29 +0200
-Message-ID: <20240619125614.082408905@linuxfoundation.org>
+Subject: [PATCH 6.9 128/281] drm/panel: sitronix-st7789v: Add check for of_drm_get_panel_orientation
+Date: Wed, 19 Jun 2024 14:54:47 +0200
+Message-ID: <20240619125614.770196313@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -53,38 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit cc5ac966f26193ab185cc43d64d9f1ae998ccb6e ]
+[ Upstream commit 629f2b4e05225e53125aaf7ff0b87d5d53897128 ]
 
-This lets us see the correct trace output.
+Add check for the return value of of_drm_get_panel_orientation() and
+return the error if it fails in order to catch the error.
 
-Fixes: c8383054506c ("cachefiles: notify the user daemon when looking up cookie")
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Link: https://lore.kernel.org/r/20240522114308.2402121-2-libaokun@huaweicloud.com
-Acked-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Jingbo Xu <jefflexu@linux.alibaba.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: b27c0f6d208d ("drm/panel: sitronix-st7789v: add panel orientation support")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Reviewed-by: Michael Riesch <michael.riesch@wolfvision.net>
+Acked-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Link: https://lore.kernel.org/r/20240528030832.2529471-1-nichen@iscas.ac.cn
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240528030832.2529471-1-nichen@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/cachefiles.h | 4 +++-
+ drivers/gpu/drm/panel/panel-sitronix-st7789v.c | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/include/trace/events/cachefiles.h b/include/trace/events/cachefiles.h
-index cf4b98b9a9edc..e3213af847cdf 100644
---- a/include/trace/events/cachefiles.h
-+++ b/include/trace/events/cachefiles.h
-@@ -127,7 +127,9 @@ enum cachefiles_error_trace {
- 	EM(cachefiles_obj_see_lookup_cookie,	"SEE lookup_cookie")	\
- 	EM(cachefiles_obj_see_lookup_failed,	"SEE lookup_failed")	\
- 	EM(cachefiles_obj_see_withdraw_cookie,	"SEE withdraw_cookie")	\
--	E_(cachefiles_obj_see_withdrawal,	"SEE withdrawal")
-+	EM(cachefiles_obj_see_withdrawal,	"SEE withdrawal")	\
-+	EM(cachefiles_obj_get_ondemand_fd,      "GET ondemand_fd")	\
-+	E_(cachefiles_obj_put_ondemand_fd,      "PUT ondemand_fd")
+diff --git a/drivers/gpu/drm/panel/panel-sitronix-st7789v.c b/drivers/gpu/drm/panel/panel-sitronix-st7789v.c
+index e8f385b9c6182..28bfc48a91272 100644
+--- a/drivers/gpu/drm/panel/panel-sitronix-st7789v.c
++++ b/drivers/gpu/drm/panel/panel-sitronix-st7789v.c
+@@ -643,7 +643,9 @@ static int st7789v_probe(struct spi_device *spi)
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "Failed to get backlight\n");
  
- #define cachefiles_coherency_traces					\
- 	EM(cachefiles_coherency_check_aux,	"BAD aux ")		\
+-	of_drm_get_panel_orientation(spi->dev.of_node, &ctx->orientation);
++	ret = of_drm_get_panel_orientation(spi->dev.of_node, &ctx->orientation);
++	if (ret)
++		return dev_err_probe(&spi->dev, ret, "Failed to get orientation\n");
+ 
+ 	drm_panel_add(&ctx->panel);
+ 
 -- 
 2.43.0
 
