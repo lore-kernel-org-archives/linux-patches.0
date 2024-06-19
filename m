@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C45613DDC0;
-	Wed, 19 Jun 2024 13:33:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A03613DDC0;
+	Wed, 19 Jun 2024 13:33:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718804033; cv=none; b=JTZNi/r4tSiNcfX+Aq1VkNgkeOs4rrpJ7eYU73SpQKkf4MrljVKfp9oiSSRNTSReD+0psWnAhj3aMs3r7lHi/z3bDCAFqICxuKMGRXUiJe4fuNBjCWGFuccyFAqgZFxRVYPXv6VhEAyq/eahP2/22skZp0C6+4gNyNZ7vHqTCvI=
+	t=1718804036; cv=none; b=X6dCbWwtmIylJUa17Zx6G6ONLh7Z0HzrrHmQvil4EiG8fF2Hga+2Ene0B5rPj7v+9bdao1B/oWxWCRDEUg6yyVALPxDy8sW3AiHBdX/VC7ySZRi65aomuj6jnT87e6JxT5A0cxta2DiREqap3hNAeduoCqepTg5rQUcrqvbUp0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718804033; c=relaxed/simple;
-	bh=uR75YvrNJUgg9ywhrQC0WzpK1q0kRqB0msfUvCt1r7g=;
+	s=arc-20240116; t=1718804036; c=relaxed/simple;
+	bh=oMwugdzWcpQmcBnwq1s4E2F2PQ150EErjivq2lSWE3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OnQ30N73mkUoi8LjQf7IMALo3CV4B+tAlY3oSRzEPJFFHOeKZpIrF3DSZ9GgOsISiMB2yNMIbPc2Fi+LzWfP12GwRg14d/i7rFl2Hh3KlETx5n3c2WMBSlC7sV+HHJkrsfVagI4H8IkWG7brIW87VGlWQwt627PDVYIEU26BbjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JRg8LHrB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jE+B0x5QO8xggGWxt5eBoE+rpt5aTxXCpG252OkacKsOKs+Pj700K6yxHSUfa0XdpV13sHAkeLI3QeBmIoAxPfFRatmv8rxQ5rlNH+ZUzGP+KmGqhQoWfb3sbsDGM3JMXlUg7fVXZHuXDHaCbMSKCyP6VHGYK3Rvg73e8IAXLAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rNypDlpS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JRg8LHrB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D64C4C2BBFC;
-	Wed, 19 Jun 2024 13:33:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rNypDlpS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6063C2BBFC;
+	Wed, 19 Jun 2024 13:33:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718804033;
-	bh=uR75YvrNJUgg9ywhrQC0WzpK1q0kRqB0msfUvCt1r7g=;
+	s=korg; t=1718804036;
+	bh=oMwugdzWcpQmcBnwq1s4E2F2PQ150EErjivq2lSWE3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JRg8LHrBf523a8CMpODmCy9tJHIXSRNbQFB15NfRWvRNmh8jPM9ntD1+HRCENwAKi
-	 SEnKkolisQVtCKic/rsOpW0QTew2TTQJgqL2HyL4YNEagga768bQ/eHGHVzAJ///TV
-	 rI01Xq8sUa+hrwGKFj8dLi32GLwl+9rSUw4WSHuo=
+	b=rNypDlpSF6NCFVgMP2Ff210nUEVsLzJ5VmFhGKTTGjvh9lgmdIPoGERlyPFskYR5B
+	 b8NEzIaxELRu7ze52hKY6xdeTc4QYrOJenu/jc5vbYbM4aVRd+o3kaUzjxgUoF4OOx
+	 iSuzhWzzUHVxAszJpd4+WUaCW95y4FQSv9bBZecw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Hagar Hemdan <hagarhem@amazon.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.1 169/217] irqchip/gic-v3-its: Fix potential race condition in its_vlpi_prop_update()
-Date: Wed, 19 Jun 2024 14:56:52 +0200
-Message-ID: <20240619125603.210995800@linuxfoundation.org>
+	Chris Wilson <chris@chris-wilson.co.uk>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
+	Nirmoy Das <nirmoy.das@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.1 187/217] drm/i915/gt: Disarm breadcrumbs if engines are already idle
+Date: Wed, 19 Jun 2024 14:57:10 +0200
+Message-ID: <20240619125603.900913190@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -51,141 +54,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hagar Hemdan <hagarhem@amazon.com>
+From: Chris Wilson <chris@chris-wilson.co.uk>
 
-commit b97e8a2f7130a4b30d1502003095833d16c028b3 upstream.
+commit 70cb9188ffc75e643debf292fcddff36c9dbd4ae upstream.
 
-its_vlpi_prop_update() calls lpi_write_config() which obtains the
-mapping information for a VLPI without lock held. So it could race
-with its_vlpi_unmap().
+The breadcrumbs use a GT wakeref for guarding the interrupt, but are
+disarmed during release of the engine wakeref. This leaves a hole where
+we may attach a breadcrumb just as the engine is parking (after it has
+parked its breadcrumbs), execute the irq worker with some signalers still
+attached, but never be woken again.
 
-Since all calls from its_irq_set_vcpu_affinity() require the same
-lock to be held, hoist the locking there instead of sprinkling the
-locking all over the place.
+That issue manifests itself in CI with IGT runner timeouts while tests
+are waiting indefinitely for release of all GT wakerefs.
 
-This bug was discovered using Coverity Static Analysis Security Testing
-(SAST) by Synopsys, Inc.
+<6> [209.151778] i915: Running live_engine_pm_selftests/live_engine_busy_stats
+<7> [209.231628] i915 0000:00:02.0: [drm:intel_power_well_disable [i915]] disabling PW_5
+<7> [209.231816] i915 0000:00:02.0: [drm:intel_power_well_disable [i915]] disabling PW_4
+<7> [209.231944] i915 0000:00:02.0: [drm:intel_power_well_disable [i915]] disabling PW_3
+<7> [209.232056] i915 0000:00:02.0: [drm:intel_power_well_disable [i915]] disabling PW_2
+<7> [209.232166] i915 0000:00:02.0: [drm:intel_power_well_disable [i915]] disabling DC_off
+<7> [209.232270] i915 0000:00:02.0: [drm:skl_enable_dc6 [i915]] Enabling DC6
+<7> [209.232368] i915 0000:00:02.0: [drm:gen9_set_dc_state.part.0 [i915]] Setting DC state from 00 to 02
+<4> [299.356116] [IGT] Inactivity timeout exceeded. Killing the current test with SIGQUIT.
+...
+<6> [299.356526] sysrq: Show State
+...
+<6> [299.373964] task:i915_selftest   state:D stack:11784 pid:5578  tgid:5578  ppid:873    flags:0x00004002
+<6> [299.373967] Call Trace:
+<6> [299.373968]  <TASK>
+<6> [299.373970]  __schedule+0x3bb/0xda0
+<6> [299.373974]  schedule+0x41/0x110
+<6> [299.373976]  intel_wakeref_wait_for_idle+0x82/0x100 [i915]
+<6> [299.374083]  ? __pfx_var_wake_function+0x10/0x10
+<6> [299.374087]  live_engine_busy_stats+0x9b/0x500 [i915]
+<6> [299.374173]  __i915_subtests+0xbe/0x240 [i915]
+<6> [299.374277]  ? __pfx___intel_gt_live_setup+0x10/0x10 [i915]
+<6> [299.374369]  ? __pfx___intel_gt_live_teardown+0x10/0x10 [i915]
+<6> [299.374456]  intel_engine_live_selftests+0x1c/0x30 [i915]
+<6> [299.374547]  __run_selftests+0xbb/0x190 [i915]
+<6> [299.374635]  i915_live_selftests+0x4b/0x90 [i915]
+<6> [299.374717]  i915_pci_probe+0x10d/0x210 [i915]
 
-[ tglx: Use guard() instead of goto ]
+At the end of the interrupt worker, if there are no more engines awake,
+disarm the breadcrumb and go to sleep.
 
-Fixes: 015ec0386ab6 ("irqchip/gic-v3-its: Add VLPI configuration handling")
-Suggested-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Hagar Hemdan <hagarhem@amazon.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20240531162144.28650-1-hagarhem@amazon.com
+Fixes: 9d5612ca165a ("drm/i915/gt: Defer enabling the breadcrumb interrupt to after submission")
+Closes: https://gitlab.freedesktop.org/drm/intel/issues/10026
+Signed-off-by: Chris Wilson <chris@chris-wilson.co.uk>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>
+Cc: <stable@vger.kernel.org> # v5.12+
+Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+Acked-by: Nirmoy Das <nirmoy.das@intel.com>
+Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240423165505.465734-2-janusz.krzysztofik@linux.intel.com
+(cherry picked from commit fbad43eccae5cb14594195c20113369aabaa22b5)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c |   44 ++++++++++-----------------------------
- 1 file changed, 12 insertions(+), 32 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_breadcrumbs.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -1837,28 +1837,22 @@ static int its_vlpi_map(struct irq_data
- {
- 	struct its_device *its_dev = irq_data_get_irq_chip_data(d);
- 	u32 event = its_get_event_id(d);
--	int ret = 0;
- 
- 	if (!info->map)
- 		return -EINVAL;
- 
--	raw_spin_lock(&its_dev->event_map.vlpi_lock);
--
- 	if (!its_dev->event_map.vm) {
- 		struct its_vlpi_map *maps;
- 
- 		maps = kcalloc(its_dev->event_map.nr_lpis, sizeof(*maps),
- 			       GFP_ATOMIC);
--		if (!maps) {
--			ret = -ENOMEM;
--			goto out;
--		}
-+		if (!maps)
-+			return -ENOMEM;
- 
- 		its_dev->event_map.vm = info->map->vm;
- 		its_dev->event_map.vlpi_maps = maps;
- 	} else if (its_dev->event_map.vm != info->map->vm) {
--		ret = -EINVAL;
--		goto out;
-+		return -EINVAL;
+--- a/drivers/gpu/drm/i915/gt/intel_breadcrumbs.c
++++ b/drivers/gpu/drm/i915/gt/intel_breadcrumbs.c
+@@ -258,8 +258,13 @@ static void signal_irq_work(struct irq_w
+ 		i915_request_put(rq);
  	}
  
- 	/* Get our private copy of the mapping information */
-@@ -1890,46 +1884,32 @@ static int its_vlpi_map(struct irq_data
- 		its_dev->event_map.nr_vlpis++;
- 	}
- 
--out:
--	raw_spin_unlock(&its_dev->event_map.vlpi_lock);
--	return ret;
-+	return 0;
- }
- 
- static int its_vlpi_get(struct irq_data *d, struct its_cmd_info *info)
- {
- 	struct its_device *its_dev = irq_data_get_irq_chip_data(d);
- 	struct its_vlpi_map *map;
--	int ret = 0;
--
--	raw_spin_lock(&its_dev->event_map.vlpi_lock);
- 
- 	map = get_vlpi_map(d);
- 
--	if (!its_dev->event_map.vm || !map) {
--		ret = -EINVAL;
--		goto out;
--	}
-+	if (!its_dev->event_map.vm || !map)
-+		return -EINVAL;
- 
- 	/* Copy our mapping information to the incoming request */
- 	*info->map = *map;
- 
--out:
--	raw_spin_unlock(&its_dev->event_map.vlpi_lock);
--	return ret;
-+	return 0;
- }
- 
- static int its_vlpi_unmap(struct irq_data *d)
- {
- 	struct its_device *its_dev = irq_data_get_irq_chip_data(d);
- 	u32 event = its_get_event_id(d);
--	int ret = 0;
- 
--	raw_spin_lock(&its_dev->event_map.vlpi_lock);
--
--	if (!its_dev->event_map.vm || !irqd_is_forwarded_to_vcpu(d)) {
--		ret = -EINVAL;
--		goto out;
--	}
-+	if (!its_dev->event_map.vm || !irqd_is_forwarded_to_vcpu(d))
-+		return -EINVAL;
- 
- 	/* Drop the virtual mapping */
- 	its_send_discard(its_dev, event);
-@@ -1953,9 +1933,7 @@ static int its_vlpi_unmap(struct irq_dat
- 		kfree(its_dev->event_map.vlpi_maps);
- 	}
- 
--out:
--	raw_spin_unlock(&its_dev->event_map.vlpi_lock);
--	return ret;
-+	return 0;
- }
- 
- static int its_vlpi_prop_update(struct irq_data *d, struct its_cmd_info *info)
-@@ -1983,6 +1961,8 @@ static int its_irq_set_vcpu_affinity(str
- 	if (!is_v4(its_dev->its))
- 		return -EINVAL;
- 
-+	guard(raw_spinlock_irq)(&its_dev->event_map.vlpi_lock);
++	/* Lazy irq enabling after HW submission */
+ 	if (!READ_ONCE(b->irq_armed) && !list_empty(&b->signalers))
+ 		intel_breadcrumbs_arm_irq(b);
 +
- 	/* Unmap request? */
- 	if (!info)
- 		return its_vlpi_unmap(d);
++	/* And confirm that we still want irqs enabled before we yield */
++	if (READ_ONCE(b->irq_armed) && !atomic_read(&b->active))
++		intel_breadcrumbs_disarm_irq(b);
+ }
+ 
+ struct intel_breadcrumbs *
+@@ -310,13 +315,7 @@ void __intel_breadcrumbs_park(struct int
+ 		return;
+ 
+ 	/* Kick the work once more to drain the signalers, and disarm the irq */
+-	irq_work_sync(&b->irq_work);
+-	while (READ_ONCE(b->irq_armed) && !atomic_read(&b->active)) {
+-		local_irq_disable();
+-		signal_irq_work(&b->irq_work);
+-		local_irq_enable();
+-		cond_resched();
+-	}
++	irq_work_queue(&b->irq_work);
+ }
+ 
+ void intel_breadcrumbs_free(struct kref *kref)
+@@ -399,7 +398,7 @@ static void insert_breadcrumb(struct i91
+ 	 * the request as it may have completed and raised the interrupt as
+ 	 * we were attaching it into the lists.
+ 	 */
+-	if (!b->irq_armed || __i915_request_is_complete(rq))
++	if (!READ_ONCE(b->irq_armed) || __i915_request_is_complete(rq))
+ 		irq_work_queue(&b->irq_work);
+ }
+ 
 
 
