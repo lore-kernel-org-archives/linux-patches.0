@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E639C12FB31;
-	Wed, 19 Jun 2024 13:10:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9A112FB31;
+	Wed, 19 Jun 2024 13:10:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802621; cv=none; b=FBjOAeiPa4IAtCcm6a8Us1rQoaNGwS2d2S1l86O+N9NuyDEhfZD3dbau+Hrw5A8MJvh8vGBD6q11L5PkGiXC/wmIyPDg10XFW1NvD2vf65LYRxr0EZoI8NQ8c9OpYOhqF057oJyXmTKiwaGqbWulJiNEe7bbSnXHrL/O8zGnbmM=
+	t=1718802624; cv=none; b=PmtREWru4uJkUHBnnZ0f7JqtA+I4GTFTiaR2gcEQZ66qgqJfDmgcpzoFPmFeJ91c/IWibSI4QXQqPn09D/HDVWsfnvgnjb+m8mqhUnjoYZB1mdSmuQTbF7GCCbiyNYw9N16mhqt3oTxtYnEr/gTqS3R9yW9QrD4uzW4DCna4IuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802621; c=relaxed/simple;
-	bh=3oNGLoQAgRoMM68D8C6PNxeGmClh1Pb+BZrEHhPyI3g=;
+	s=arc-20240116; t=1718802624; c=relaxed/simple;
+	bh=A9ZSSzQeoWGeD+Mkb2ugQIllSkzmhVMG6z1VzBebIBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WBFYUR0fWgVx7L3AAG3elJUTJw6w74yN6vwyjsJX6MQ5+tn/HPtEmCv/mmO7K/qDxPayjbf/NlYIH+ScstuYJYoWVuLvUVnvI6ZsPMamx7Fx+zOApXpIvnNL4PlG6YVeUn65f9JHSmfuw08IW9pwnqOHqUA7qLhOREkF3EBUjWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nbmqkZEL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UFxrD+lKIKensy6PPwbD9qGqmgHbj56xovOiQ0TuLw7r3KhTLT/B3/Wnegu8AnhkTDuvp5cIP1FHrLytXP6Ixm/4tr70GaIS0RKsxechCzD/nEHFyT7O1yP5qlmJqomE+iVaZ/TeD4sYWlsOmvxNPnpG0ZyYxdYhcWpAHteyfj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ef6TsGDm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nbmqkZEL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AFA7C2BBFC;
-	Wed, 19 Jun 2024 13:10:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ef6TsGDm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61838C2BBFC;
+	Wed, 19 Jun 2024 13:10:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802620;
-	bh=3oNGLoQAgRoMM68D8C6PNxeGmClh1Pb+BZrEHhPyI3g=;
+	s=korg; t=1718802623;
+	bh=A9ZSSzQeoWGeD+Mkb2ugQIllSkzmhVMG6z1VzBebIBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nbmqkZELKcvlF5VBRMR7/NFThecd43kO9jjTLrkOLPHRoqBklyoR0wh5tPRwgGxZt
-	 EWuj3V3ZdxMdgN2IUFTOZPgoXPmD52NdDR7uthGZH+XvfpLQWsJLbizdIcip8W2+Un
-	 Mr5kEXpGvHQaqnfsSZSBdw1VOJFdnOjjz82EahJg=
+	b=ef6TsGDmMcR7fNShK67q2zZjnB1+wt8ehE95RhPi3PFQMJzd68ugLbqsxtyYGlA8/
+	 S4Ii7vsTgtvvGATvjvzCaJDR50z+aXGkfry3aQl4dcflpeIHPEkF34WdwiJXLsmUDZ
+	 7ZwmLD9sxqCTvTFxDNYY7FUCmZXFLjKKuuB26HLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Lee <shawn.c.lee@intel.com>,
-	Vidya Srinivas <vidya.srinivas@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.6 217/267] drm/i915/dpt: Make DPT object unshrinkable
-Date: Wed, 19 Jun 2024 14:56:08 +0200
-Message-ID: <20240619125614.656576312@linuxfoundation.org>
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.6 252/267] selftests/net/lib: no need to record ns name if it already exist
+Date: Wed, 19 Jun 2024 14:56:43 +0200
+Message-ID: <20240619125615.990867845@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -46,48 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vidya Srinivas <vidya.srinivas@intel.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-commit 43e2b37e2ab660c3565d4cff27922bc70e79c3f1 upstream.
+commit 83e93942796db58652288f0391ac00072401816f upstream.
 
-In some scenarios, the DPT object gets shrunk but
-the actual framebuffer did not and thus its still
-there on the DPT's vm->bound_list. Then it tries to
-rewrite the PTEs via a stale CPU mapping. This causes panic.
+There is no need to add the name to ns_list again if the netns already
+recoreded.
 
-Cc: stable@vger.kernel.org
-Reported-by: Shawn Lee <shawn.c.lee@intel.com>
-Fixes: 0dc987b699ce ("drm/i915/display: Add smem fallback allocation for dpt")
-Signed-off-by: Vidya Srinivas <vidya.srinivas@intel.com>
-[vsyrjala: Add TODO comment]
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240520165634.1162470-1-vidya.srinivas@intel.com
-(cherry picked from commit 51064d471c53dcc8eddd2333c3f1c1d9131ba36c)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Fixes: 25ae948b4478 ("selftests/net: add lib.sh")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_object.h |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/lib.sh |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/i915/gem/i915_gem_object.h
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_object.h
-@@ -285,7 +285,9 @@ bool i915_gem_object_has_iomem(const str
- static inline bool
- i915_gem_object_is_shrinkable(const struct drm_i915_gem_object *obj)
- {
--	return i915_gem_object_type_has(obj, I915_GEM_OBJECT_IS_SHRINKABLE);
-+	/* TODO: make DPT shrinkable when it has no bound vmas */
-+	return i915_gem_object_type_has(obj, I915_GEM_OBJECT_IS_SHRINKABLE) &&
-+		!obj->is_dpt;
- }
+--- a/tools/testing/selftests/net/lib.sh
++++ b/tools/testing/selftests/net/lib.sh
+@@ -73,15 +73,17 @@ setup_ns()
+ 	local ns=""
+ 	local ns_name=""
+ 	local ns_list=""
++	local ns_exist=
+ 	for ns_name in "$@"; do
+ 		# Some test may setup/remove same netns multi times
+ 		if unset ${ns_name} 2> /dev/null; then
+ 			ns="${ns_name,,}-$(mktemp -u XXXXXX)"
+ 			eval readonly ${ns_name}="$ns"
++			ns_exist=false
+ 		else
+ 			eval ns='$'${ns_name}
+ 			cleanup_ns "$ns"
+-
++			ns_exist=true
+ 		fi
  
- static inline bool
+ 		if ! ip netns add "$ns"; then
+@@ -90,7 +92,7 @@ setup_ns()
+ 			return $ksft_skip
+ 		fi
+ 		ip -n "$ns" link set lo up
+-		ns_list="$ns_list $ns"
++		! $ns_exist && ns_list="$ns_list $ns"
+ 	done
+ 	NS_LIST="$NS_LIST $ns_list"
+ }
 
 
