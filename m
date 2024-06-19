@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8EE712FB31;
-	Wed, 19 Jun 2024 13:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA09C143C4E;
+	Wed, 19 Jun 2024 13:07:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802476; cv=none; b=BHq/alTId1DMj+cSshvTNMlps8Utq6zgou7222nwWCIi43/y70g3TWzLk5ZJo03dqAHuZvde9JdSHg/G5FvE7FDNc/qGgm/SKyaki5awEvOtrZQUTERocmHs8Buzd3HuGIei9+QZZQOaVl+wlLbo9EqqC//qOJlqzMbvpT4dDi4=
+	t=1718802479; cv=none; b=hTP4/VWna/KTuUQJY28xdkFK3GAB/NjwLdYeoz3NcujIroc4YUOVmnuFNaOlEDxc4XPj0Y8wCLP01O+ctDD5Xr+hQ+RMQwhrMP/XcanmU4+9rvELjywpQHudNLkuOEoqN51HlYWtlPX5YEp1kbZn709UNZoW7guwejEQKLscpBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802476; c=relaxed/simple;
-	bh=pw5KmInRrC3H7NR5PW3SASx50yl8Wsto54GkO2zxUn8=;
+	s=arc-20240116; t=1718802479; c=relaxed/simple;
+	bh=XXx0oJcVK3PmEmjj/mG4ft8ZgNB/c4Rsq0EeuX0PZ9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oyl9M+R02355fSv0cgEC6Ar1V7urKtiFLc4AquvUoaUAt+Za8j/Iq8u3k19a8miIz2ddNBwLsssR4A61S1GUlIaPJsIkQOVjAC5aIAs8Q0grhCiWurG5ClNJHyKGSifLSKFJQt0Tnsqwqk8+9sDwuURKxhTpgdOf3wCPvBR5lBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g8Ru4Heb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sNTfM+ITrI4siTXT0N8E1fpwH/RN/vqOenwdFqBdLxGuLdnrcAkUGtA3M+HqV8Qqgk1RLP6u0bNGpRbf9dGKYR12V9k5DFPIsPelXutRoFqTWGJoUDyCPMOWKFW7v77OHHjC4aVBEujXe2zWzBSk5Gcuq7C5laAQ1pMdRuaRfNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o1bzttWM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g8Ru4Heb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 463E4C2BBFC;
-	Wed, 19 Jun 2024 13:07:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1bzttWM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36F8AC2BBFC;
+	Wed, 19 Jun 2024 13:07:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802476;
-	bh=pw5KmInRrC3H7NR5PW3SASx50yl8Wsto54GkO2zxUn8=;
+	s=korg; t=1718802479;
+	bh=XXx0oJcVK3PmEmjj/mG4ft8ZgNB/c4Rsq0EeuX0PZ9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g8Ru4HebM5tJh4q7KS7Ut8OvGNHaBLnWJr0AYJbfCq1l1aN6nHsc023Xd1tfJOHrR
-	 o9864AjdCivipVAw0jNE1Bp2bG2wY7abEYGer1Pg1rSxcz+fgmDDmGFuthesrATmLK
-	 pg9fYUS1bnn5Oc/a0nTdQzb4nup/uUvAZyZrVZhs=
+	b=o1bzttWMEogMrGMx8MMQ64XHOwWlm5Ox4J5srgstZS5RiUz/UZXMTHUFxsbTHOHEO
+	 UUu34lLx6LB2HZa1nOea+76Oah7OdLRbE6KmpslqC25HXRY8HhmSi8M2B2OzMexSEn
+	 kZg2hrpPDXl3/WviXgo2472fFCZabDiyusFCQS5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Beleswar Padhi <b-padhi@ti.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: [PATCH 6.6 209/267] remoteproc: k3-r5: Do not allow core1 to power up before core0 via sysfs
-Date: Wed, 19 Jun 2024 14:56:00 +0200
-Message-ID: <20240619125614.349966315@linuxfoundation.org>
+	Nuno Sa <nuno.sa@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.6 210/267] iio: adc: axi-adc: make sure AXI clock is enabled
+Date: Wed, 19 Jun 2024 14:56:01 +0200
+Message-ID: <20240619125614.388208842@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -50,80 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Beleswar Padhi <b-padhi@ti.com>
+From: Nuno Sa <nuno.sa@analog.com>
 
-commit 3c8a9066d584f5010b6f4ba03bf6b19d28973d52 upstream.
+commit 80721776c5af6f6dce7d84ba8df063957aa425a2 upstream.
 
-PSC controller has a limitation that it can only power-up the second
-core when the first core is in ON state. Power-state for core0 should be
-equal to or higher than core1.
+We can only access the IP core registers if the bus clock is enabled. As
+such we need to get and enable it and not rely on anyone else to do it.
 
-Therefore, prevent core1 from powering up before core0 during the start
-process from sysfs. Similarly, prevent core0 from shutting down before
-core1 has been shut down from sysfs.
+Note this clock is a very fundamental one that is typically enabled
+pretty early during boot. Independently of that, we should really rely on
+it to be enabled.
 
-Fixes: 6dedbd1d5443 ("remoteproc: k3-r5: Add a remoteproc driver for R5F subsystem")
-Signed-off-by: Beleswar Padhi <b-padhi@ti.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240430105307.1190615-3-b-padhi@ti.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Fixes: ef04070692a2 ("iio: adc: adi-axi-adc: add support for AXI ADC IP core")
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20240426-ad9467-new-features-v2-4-6361fc3ba1cc@analog.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/remoteproc/ti_k3_r5_remoteproc.c |   23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ drivers/iio/adc/adi-axi-adc.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/remoteproc/ti_k3_r5_remoteproc.c
-+++ b/drivers/remoteproc/ti_k3_r5_remoteproc.c
-@@ -548,7 +548,7 @@ static int k3_r5_rproc_start(struct rpro
- 	struct k3_r5_rproc *kproc = rproc->priv;
- 	struct k3_r5_cluster *cluster = kproc->cluster;
- 	struct device *dev = kproc->dev;
--	struct k3_r5_core *core;
-+	struct k3_r5_core *core0, *core;
- 	u32 boot_addr;
+--- a/drivers/iio/adc/adi-axi-adc.c
++++ b/drivers/iio/adc/adi-axi-adc.c
+@@ -175,6 +175,7 @@ static int adi_axi_adc_probe(struct plat
+ 	struct adi_axi_adc_state *st;
+ 	void __iomem *base;
+ 	unsigned int ver;
++	struct clk *clk;
  	int ret;
  
-@@ -574,6 +574,15 @@ static int k3_r5_rproc_start(struct rpro
- 				goto unroll_core_run;
- 		}
- 	} else {
-+		/* do not allow core 1 to start before core 0 */
-+		core0 = list_first_entry(&cluster->cores, struct k3_r5_core,
-+					 elem);
-+		if (core != core0 && core0->rproc->state == RPROC_OFFLINE) {
-+			dev_err(dev, "%s: can not start core 1 before core 0\n",
-+				__func__);
-+			return -EPERM;
-+		}
-+
- 		ret = k3_r5_core_run(core);
- 		if (ret)
- 			goto put_mbox;
-@@ -619,7 +628,8 @@ static int k3_r5_rproc_stop(struct rproc
- {
- 	struct k3_r5_rproc *kproc = rproc->priv;
- 	struct k3_r5_cluster *cluster = kproc->cluster;
--	struct k3_r5_core *core = kproc->core;
-+	struct device *dev = kproc->dev;
-+	struct k3_r5_core *core1, *core = kproc->core;
- 	int ret;
+ 	st = devm_kzalloc(&pdev->dev, sizeof(*st), GFP_KERNEL);
+@@ -195,6 +196,10 @@ static int adi_axi_adc_probe(struct plat
+ 	if (!expected_ver)
+ 		return -ENODEV;
  
- 	/* halt all applicable cores */
-@@ -632,6 +642,15 @@ static int k3_r5_rproc_stop(struct rproc
- 			}
- 		}
- 	} else {
-+		/* do not allow core 0 to stop before core 1 */
-+		core1 = list_last_entry(&cluster->cores, struct k3_r5_core,
-+					elem);
-+		if (core != core1 && core1->rproc->state != RPROC_OFFLINE) {
-+			dev_err(dev, "%s: can not stop core 0 before core 1\n",
-+				__func__);
-+			return -EPERM;
-+		}
++	clk = devm_clk_get_enabled(&pdev->dev, NULL);
++	if (IS_ERR(clk))
++		return PTR_ERR(clk);
 +
- 		ret = k3_r5_core_halt(core);
- 		if (ret)
- 			goto out;
+ 	/*
+ 	 * Force disable the core. Up to the frontend to enable us. And we can
+ 	 * still read/write registers...
 
 
