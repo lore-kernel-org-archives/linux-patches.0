@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075BD82495;
-	Wed, 19 Jun 2024 13:19:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B1D82495;
+	Wed, 19 Jun 2024 13:19:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803170; cv=none; b=dfn6pMmqxKZuSVgqG+9Hg8bmc9qLbwgSTvZDnyHrl0mNGqUqzHzO0TFscjbJLH+NOkzY9c87ou+1BIrQ2Rt/Scot3FC3ac65ytA+lNaONufbpse9uGRqb/Rqm5ohzG5/kbo1LE10cBMuq2vjzjpGjh0P+fx0KhKRXE5YG/Eco8g=
+	t=1718803173; cv=none; b=HBVEVAT060vw49YcncTaHUKt2KHHWRqFW3WcZdZQeTbgRNk3HkKMFqL6dnJA0Rg02DpX7hI35H4uYbxbY9cKdROgUsalkpNIuPxC5lXOkdn/MaR4WcVVVil5fL+u5FHKmfZlSfCYku6Uk7KFmkYTyey9uNKppM6uh3niv9vB3tY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803170; c=relaxed/simple;
-	bh=9Ypry8GwffCLuCOrIlexPV8+rpYiwlPRqzeBX8dA9eA=;
+	s=arc-20240116; t=1718803173; c=relaxed/simple;
+	bh=c8IXpsAll02yFIkZD8WE422lpBln71daATatUyEVylA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eqvUspi4x+MM4RKVUJXAevVnLuAGRf9yy6ziYIwaM7jt5hp6a8Jll6ql3VOhOUICHNxlhlMYQXI+3VgxLBe0B41YLGZVfCpKvOD/7aD4bQgg/80kQfTiSuvdaxHJImtgJMPTtsS3o/4tWrOcO7USvuTxHMh0Mvdpt54mDLs/LDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NFl9EF60; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GkI1+NGJ31ajdMXgWeqX3gy3Dsnm6oTWfqophvtxyZrpKmIkCg1Enom5wBh72EheCX88yR16AFzExMjcurxZ/ceE2Xw+pv9kNYRQbFBMo1iZKCaD8g5Pkf0iZAEPBT/ctY9vIs0b6nnXAiC3kkbyF9TL4C2leIhnCgilLO+9CSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MaC5fZVT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NFl9EF60"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F3DC2BBFC;
-	Wed, 19 Jun 2024 13:19:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MaC5fZVT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67262C2BBFC;
+	Wed, 19 Jun 2024 13:19:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803169;
-	bh=9Ypry8GwffCLuCOrIlexPV8+rpYiwlPRqzeBX8dA9eA=;
+	s=korg; t=1718803172;
+	bh=c8IXpsAll02yFIkZD8WE422lpBln71daATatUyEVylA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NFl9EF60cfSslITjTvlx5/F+YpFyr0h22GiYDbWt064ID3HlcLXx2loDIXHmlWjxX
-	 Vo6gRxpwV9jWpDVTHBKdMGb0FtB4XyrtyhDh2bN0OLornM2wAXPnqQmU3r9BtOO99G
-	 xcdK785pob2JAWV3kWtPovN1EoKLhS7z4nbrRy+Q=
+	b=MaC5fZVTgs3dDwala3JBcEvp7KA22dq4c6cJ6976LlsSRPy7CeVVW0ycwLL3+1giC
+	 MWii3p0V4lk+Z4tCgeZ9EYexm/SDSlBa98wsxsfJ+7aB5GL23itVLmySO6bDYsmSO7
+	 d0cmi9h6wRicNlWwTTxAfdO1KBvgk1jcpTbQMDy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Vincenzo Palazzo <vincenzopalazzodev@gmail.com>,
+	=?UTF-8?q?Cs=C3=B3k=C3=A1s,
+	=20Bence?= <csokas.bence@prolan.hu>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 145/281] modpost: do not warn about missing MODULE_DESCRIPTION() for vmlinux.o
-Date: Wed, 19 Jun 2024 14:55:04 +0200
-Message-ID: <20240619125615.420137792@linuxfoundation.org>
+Subject: [PATCH 6.9 146/281] net: sfp: Always call `sfp_sm_mod_remove()` on remove
+Date: Wed, 19 Jun 2024 14:55:05 +0200
+Message-ID: <20240619125615.458434739@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -45,48 +47,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Csókás, Bence <csokas.bence@prolan.hu>
 
-[ Upstream commit 9185afeac2a3dcce8300a5684291a43c2838cfd6 ]
+[ Upstream commit e96b2933152fd87b6a41765b2f58b158fde855b6 ]
 
-Building with W=1 incorrectly emits the following warning:
+If the module is in SFP_MOD_ERROR, `sfp_sm_mod_remove()` will
+not be run. As a consequence, `sfp_hwmon_remove()` is not getting
+run either, leaving a stale `hwmon` device behind. `sfp_sm_mod_remove()`
+itself checks `sfp->sm_mod_state` anyways, so this check was not
+really needed in the first place.
 
-  WARNING: modpost: missing MODULE_DESCRIPTION() in vmlinux.o
-
-This check should apply only to modules.
-
-Fixes: 1fffe7a34c89 ("script: modpost: emit a warning when the description is missing")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Reviewed-by: Vincenzo Palazzo <vincenzopalazzodev@gmail.com>
+Fixes: d2e816c0293f ("net: sfp: handle module remove outside state machine")
+Signed-off-by: "Csókás, Bence" <csokas.bence@prolan.hu>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20240605084251.63502-1-csokas.bence@prolan.hu
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/mod/modpost.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/phy/sfp.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-index 2f5b91da5afa9..c27c762e68807 100644
---- a/scripts/mod/modpost.c
-+++ b/scripts/mod/modpost.c
-@@ -1652,10 +1652,11 @@ static void read_symbols(const char *modname)
- 			namespace = get_next_modinfo(&info, "import_ns",
- 						     namespace);
- 		}
-+
-+		if (extra_warn && !get_modinfo(&info, "description"))
-+			warn("missing MODULE_DESCRIPTION() in %s\n", modname);
+diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
+index f75c9eb3958ef..d999d9baadb26 100644
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -2418,8 +2418,7 @@ static void sfp_sm_module(struct sfp *sfp, unsigned int event)
+ 
+ 	/* Handle remove event globally, it resets this state machine */
+ 	if (event == SFP_E_REMOVE) {
+-		if (sfp->sm_mod_state > SFP_MOD_PROBE)
+-			sfp_sm_mod_remove(sfp);
++		sfp_sm_mod_remove(sfp);
+ 		sfp_sm_mod_next(sfp, SFP_MOD_EMPTY, 0);
+ 		return;
  	}
- 
--	if (extra_warn && !get_modinfo(&info, "description"))
--		warn("missing MODULE_DESCRIPTION() in %s\n", modname);
- 	for (sym = info.symtab_start; sym < info.symtab_stop; sym++) {
- 		symname = remove_dot(info.strtab + sym->st_name);
- 
 -- 
 2.43.0
 
