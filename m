@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976D73C0B;
-	Wed, 19 Jun 2024 13:30:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 797E23C0B;
+	Wed, 19 Jun 2024 13:30:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803833; cv=none; b=EMStdZeHIf3CBIHNoSF6596F0pKOjD/imZkYrMd+Ssx9OwTkU8WGATA8MNPXRg/THgTttYMhSoV1TzkmOow1yYacC+/tCYkeqmSKZp7kUdc8b+lDGT8wGn7R/Sgrpy0IVCajOtUEb8/jOhYMPU6kBLQ85nm22m/Kgk6jXVd1Pco=
+	t=1718803834; cv=none; b=YytBn0KG/GKXSPNNkyJYf+eYaJN7cd5o7A2A88EJR7UjQhiibjXOFZnOvo2bM09mk7LdaOOn8TGA0kQZbJStcleq32xV2RnqYjbcBihAt29ZatvZOQxxGfYidA0Iol+qPKLiZlw7CzBbrUtp7OufIZwSVw5TMT4wYqvlCHQc+F8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803833; c=relaxed/simple;
-	bh=9NPh+mYbsEmt3G0cXVWEP+fiJgZLmpRkNYeeeLHA6Gs=;
+	s=arc-20240116; t=1718803834; c=relaxed/simple;
+	bh=Djk6zTyPC8juspa5rOQyxxkkYbvdWOB3s2PGYvc1AT0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KrBY5XIKvcoYh1rSDKYziNFDal/v0xgBhsuOlxa5Qw7VVVzdPK/Axh2hPrKK7Sr2UKUqHAXvNa488D9EiEGADi2qgAM4/aVJVYDCNm5lcRs2jpUpSAviZmI7YabjcbWp+THGzWMcfqNLtr8xBZCZNtoyAforYNvUCKC9cxkPjYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yCxm5LJE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N/jedGNcwo2SH6LlkmRFWzm2+/OlmSZmKGyM57Q1UrmgFHsMsBer7QTDLoZ6HcGCfL1PJ+LpK7V7jIvs9d8JilgMYPRwG/P/3qdWHlpTj13sruQQD2rXh5zS9SkGBzkj0FpH18rZVQNF8J9k8e22Rb9Hc9/MNA9PtiU08zAB2QM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ofkVlSjq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yCxm5LJE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B42D9C32786;
-	Wed, 19 Jun 2024 13:30:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ofkVlSjq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A10B5C2BBFC;
+	Wed, 19 Jun 2024 13:30:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803831;
-	bh=9NPh+mYbsEmt3G0cXVWEP+fiJgZLmpRkNYeeeLHA6Gs=;
+	s=korg; t=1718803834;
+	bh=Djk6zTyPC8juspa5rOQyxxkkYbvdWOB3s2PGYvc1AT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yCxm5LJElEUKcBkRECl38iuDfXg9eNscv0eU1slntyP9KQYF4EMeq0rkM+UfVfDAc
-	 w8/Tjf8YnJglEoWQhhzZr4HNPDV8HBa6ucwdSh6KZVcoac810X0F8G089sVphkvrlg
-	 t761Tzu/U36JoH32F/+FWjJyMtPwpbDLWmLwJrnE=
+	b=ofkVlSjqMytpAvo136nlKeMVAeSLxIRL/FJogRoZfLUjvxRsdoF1B3a++vacddAsH
+	 dhLsh7rbzeDAtUefte5clqexn1IC4PYiJKDcT7v3ecg/dQbOY+gjAc3IuD8fEzwQKP
+	 KVUK1PWcr78D9EqiuqeB9Yn30BUOqcDwHkzAvvsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shailend Chand <shailend@google.com>,
-	Ziwei Xiao <ziweixiao@google.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
-	Praveen Kaligineedi <pkaligineedi@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 101/217] gve: Clear napi->skb before dev_kfree_skb_any()
-Date: Wed, 19 Jun 2024 14:55:44 +0200
-Message-ID: <20240619125600.587546845@linuxfoundation.org>
+	Guenter Roeck <linux@roeck-us.net>,
+	Russell King <linux@armlinux.org.uk>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 119/217] clk: sifive: Do not register clkdevs for PRCI clocks
+Date: Wed, 19 Jun 2024 14:56:02 +0200
+Message-ID: <20240619125601.281924745@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -53,64 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ziwei Xiao <ziweixiao@google.com>
+From: Samuel Holland <samuel.holland@sifive.com>
 
-commit 6f4d93b78ade0a4c2cafd587f7b429ce95abb02e upstream.
+[ Upstream commit 2607133196c35f31892ee199ce7ffa717bea4ad1 ]
 
-gve_rx_free_skb incorrectly leaves napi->skb referencing an skb after it
-is freed with dev_kfree_skb_any(). This can result in a subsequent call
-to napi_get_frags returning a dangling pointer.
+These clkdevs were unnecessary, because systems using this driver always
+look up clocks using the devicetree. And as Russell King points out[1],
+since the provided device name was truncated, lookups via clkdev would
+never match.
 
-Fix this by clearing napi->skb before the skb is freed.
+Recently, commit 8d532528ff6a ("clkdev: report over-sized strings when
+creating clkdev entries") caused clkdev registration to fail due to the
+truncation, and this now prevents the driver from probing. Fix the
+driver by removing the clkdev registration.
 
-Fixes: 9b8dd5e5ea48 ("gve: DQO: Add RX path")
-Cc: stable@vger.kernel.org
-Reported-by: Shailend Chand <shailend@google.com>
-Signed-off-by: Ziwei Xiao <ziweixiao@google.com>
-Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Reviewed-by: Shailend Chand <shailend@google.com>
-Reviewed-by: Praveen Kaligineedi <pkaligineedi@google.com>
-Link: https://lore.kernel.org/r/20240612001654.923887-1-ziweixiao@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/linux-clk/ZkfYqj+OcAxd9O2t@shell.armlinux.org.uk/ [1]
+Fixes: 30b8e27e3b58 ("clk: sifive: add a driver for the SiFive FU540 PRCI IP block")
+Fixes: 8d532528ff6a ("clkdev: report over-sized strings when creating clkdev entries")
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Closes: https://lore.kernel.org/linux-clk/7eda7621-0dde-4153-89e4-172e4c095d01@roeck-us.net/
+Suggested-by: Russell King <linux@armlinux.org.uk>
+Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
+Link: https://lore.kernel.org/r/20240528001432.1200403-1-samuel.holland@sifive.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/google/gve/gve_rx_dqo.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/clk/sifive/sifive-prci.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
---- a/drivers/net/ethernet/google/gve/gve_rx_dqo.c
-+++ b/drivers/net/ethernet/google/gve/gve_rx_dqo.c
-@@ -465,11 +465,13 @@ static void gve_rx_skb_hash(struct sk_bu
- 	skb_set_hash(skb, le32_to_cpu(compl_desc->hash), hash_type);
- }
+diff --git a/drivers/clk/sifive/sifive-prci.c b/drivers/clk/sifive/sifive-prci.c
+index 916d2fc28b9c1..39bfbd120e0bc 100644
+--- a/drivers/clk/sifive/sifive-prci.c
++++ b/drivers/clk/sifive/sifive-prci.c
+@@ -4,7 +4,6 @@
+  * Copyright (C) 2020 Zong Li
+  */
  
--static void gve_rx_free_skb(struct gve_rx_ring *rx)
-+static void gve_rx_free_skb(struct napi_struct *napi, struct gve_rx_ring *rx)
- {
- 	if (!rx->ctx.skb_head)
- 		return;
+-#include <linux/clkdev.h>
+ #include <linux/delay.h>
+ #include <linux/io.h>
+ #include <linux/of_device.h>
+@@ -536,13 +535,6 @@ static int __prci_register_clocks(struct device *dev, struct __prci_data *pd,
+ 			return r;
+ 		}
  
-+	if (rx->ctx.skb_head == napi->skb)
-+		napi->skb = NULL;
- 	dev_kfree_skb_any(rx->ctx.skb_head);
- 	rx->ctx.skb_head = NULL;
- 	rx->ctx.skb_tail = NULL;
-@@ -693,7 +695,7 @@ int gve_rx_poll_dqo(struct gve_notify_bl
+-		r = clk_hw_register_clkdev(&pic->hw, pic->name, dev_name(dev));
+-		if (r) {
+-			dev_warn(dev, "Failed to register clkdev for %s: %d\n",
+-				 init.name, r);
+-			return r;
+-		}
+-
+ 		pd->hw_clks.hws[i] = &pic->hw;
+ 	}
  
- 		err = gve_rx_dqo(napi, rx, compl_desc, rx->q_num);
- 		if (err < 0) {
--			gve_rx_free_skb(rx);
-+			gve_rx_free_skb(napi, rx);
- 			u64_stats_update_begin(&rx->statss);
- 			if (err == -ENOMEM)
- 				rx->rx_skb_alloc_fail++;
-@@ -736,7 +738,7 @@ int gve_rx_poll_dqo(struct gve_notify_bl
- 
- 		/* gve_rx_complete_skb() will consume skb if successful */
- 		if (gve_rx_complete_skb(rx, napi, compl_desc, feat) != 0) {
--			gve_rx_free_skb(rx);
-+			gve_rx_free_skb(napi, rx);
- 			u64_stats_update_begin(&rx->statss);
- 			rx->rx_desc_err_dropped_pkt++;
- 			u64_stats_update_end(&rx->statss);
+-- 
+2.43.0
+
 
 
