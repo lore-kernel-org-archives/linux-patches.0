@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C44C91422B8;
-	Wed, 19 Jun 2024 13:12:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B63B21422B8;
+	Wed, 19 Jun 2024 13:12:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802771; cv=none; b=bVSlxGYFfuWhnjVy7nHLj6HjK75pcobI6KhFNkseeg8MQp5QMgl9qRWi7D++zGKz0gDrl2cRxQoQzGMj6uX22RjcrWv4B4uJmoLghMyH5/dDgRqmXxU5pDUb12BuTQLSVJAj2KSqRjS5zy+Vtdvp1u7C1Qrtm6h/Zz+6GcYPWI0=
+	t=1718802774; cv=none; b=CVm5O0yYmaY+pXyft0MRDb0vUq6K5Sl5/OP9yv8cBBat/lVzb/3k2n7rmmndMrEQ9ORDfQLeoV3ra0Inm05dqLxfasw/e0pgTB91anKwdCJEyrgUM09Ojsiome3OMRsuIlg1/7OmcmwJGVL6dhRBIt9x+ZBzOvsiEq3Whw9e2aU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802771; c=relaxed/simple;
-	bh=l0JJpMfXGJOtBsP74DtHUxGGr/1p6ULVmkRHhyjNpso=;
+	s=arc-20240116; t=1718802774; c=relaxed/simple;
+	bh=7cleDlm7Vjdxqa1DyB5CnDWcV3IUwCXZrBWDiWhYctc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m9kePGDs4WeeeLEtjKfWNVPHTpUXlS1xl5fWua0R9Fqb2hXTQExd0hvoazCq+mpKWxEhp4SQpM6mNvD5c3nYkm6QmtmDUS3+dblouPOvC24QXAuRgSGHJlwZled1hh0uI+om65oxD9tMqyQLvdYwoPh6XBmb9a25EINPzAwTEtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=th3t7ktz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YiNZqIjlVc2OfA2s3GrXhZ3pOb22nFZ2bfMeD5sQ617Pbg+6jYLdtk627YsScUAsU0rmRrcRVyAxfha8CyTOeZpBEZ+E8FqjjN6hoOIE81eFSdT4I/MHEkixj8zksawr6pznvHjgNPwwStAEOZZeLtOF8nWgLRLo0Uy/HQdSK1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3LUUApa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="th3t7ktz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A39EC2BBFC;
-	Wed, 19 Jun 2024 13:12:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3LUUApa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D3F4C2BBFC;
+	Wed, 19 Jun 2024 13:12:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802771;
-	bh=l0JJpMfXGJOtBsP74DtHUxGGr/1p6ULVmkRHhyjNpso=;
+	s=korg; t=1718802774;
+	bh=7cleDlm7Vjdxqa1DyB5CnDWcV3IUwCXZrBWDiWhYctc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=th3t7ktzN4P36npPQbCEZ9myuqXkrkW5II7gDS1W5n1zVK9f/o1jZ7LeusA/zR4c3
-	 R6m5Iyk3W9uFzCt7I+s4jOofPtKJyWPsEvTQaRsZx3gNsplyV1agvF0ikYYutQRTX6
-	 CFvYlJccd0bX2R2qhrsO7NO4+OnfsM3rVjN7XfjA=
+	b=U3LUUApaZQMFRs2r7I35xiVTlsZg7Ypp8VK974cbx1FsmkzksUr92iUf3evpf8qCg
+	 A7a/JrWVslttW/YAteyjauMheZ4Ye1sA/sbTrMpPAjZggQ+gjMM2nZ0bgQXovxVzGQ
+	 CzjyvGihzRc82GmcO8ONa3t4YkTVSheCHnkl/7Po=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
+	Aditya Kumar Singh <quic_adisi@quicinc.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 010/281] wifi: cfg80211: pmsr: use correct nla_get_uX functions
-Date: Wed, 19 Jun 2024 14:52:49 +0200
-Message-ID: <20240619125610.243026191@linuxfoundation.org>
+Subject: [PATCH 6.9 011/281] wifi: mac80211: pass proper link id for channel switch started notification
+Date: Wed, 19 Jun 2024 14:52:50 +0200
+Message-ID: <20240619125610.280896762@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -51,83 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Aditya Kumar Singh <quic_adisi@quicinc.com>
 
-[ Upstream commit ab904521f4de52fef4f179d2dfc1877645ef5f5c ]
+[ Upstream commit 8ecc4d7a7cd3e9704b63b8e4f6cd8b6b7314210f ]
 
-The commit 9bb7e0f24e7e ("cfg80211: add peer measurement with FTM
-initiator API") defines four attributes NL80211_PMSR_FTM_REQ_ATTR_
-{NUM_BURSTS_EXP}/{BURST_PERIOD}/{BURST_DURATION}/{FTMS_PER_BURST} in
-following ways.
+Original changes[1] posted is having proper changes. However, at the same
+time, there was chandef puncturing changes which had a conflict with this.
+While applying, two errors crept in -
+   a) Whitespace error.
+   b) Link ID being passed to channel switch started notifier function is
+      0. However proper link ID is present in the function.
 
-static const struct nla_policy
-nl80211_pmsr_ftm_req_attr_policy[NL80211_PMSR_FTM_REQ_ATTR_MAX + 1] = {
-    ...
-    [NL80211_PMSR_FTM_REQ_ATTR_NUM_BURSTS_EXP] =
-        NLA_POLICY_MAX(NLA_U8, 15),
-    [NL80211_PMSR_FTM_REQ_ATTR_BURST_PERIOD] = { .type = NLA_U16 },
-    [NL80211_PMSR_FTM_REQ_ATTR_BURST_DURATION] =
-        NLA_POLICY_MAX(NLA_U8, 15),
-    [NL80211_PMSR_FTM_REQ_ATTR_FTMS_PER_BURST] =
-        NLA_POLICY_MAX(NLA_U8, 31),
-    ...
-};
+Fix these now.
 
-That is, those attributes are expected to be NLA_U8 and NLA_U16 types.
-However, the consumers of these attributes in `pmsr_parse_ftm` blindly
-all use `nla_get_u32`, which is incorrect and causes functionality issues
-on little-endian platforms. Hence, fix them with the correct `nla_get_u8`
-and `nla_get_u16` functions.
+[1] https://lore.kernel.org/all/20240130140918.1172387-5-quic_adisi@quicinc.com/
 
-Fixes: 9bb7e0f24e7e ("cfg80211: add peer measurement with FTM initiator API")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Link: https://msgid.link/20240521075059.47999-1-linma@zju.edu.cn
+Fixes: 1a96bb4e8a79 ("wifi: mac80211: start and finalize channel switch on link basis")
+Signed-off-by: Aditya Kumar Singh <quic_adisi@quicinc.com>
+Link: https://msgid.link/20240509032555.263933-1-quic_adisi@quicinc.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/pmsr.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/mac80211/cfg.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/wireless/pmsr.c b/net/wireless/pmsr.c
-index e106dcea39778..c569c37da3175 100644
---- a/net/wireless/pmsr.c
-+++ b/net/wireless/pmsr.c
-@@ -56,7 +56,7 @@ static int pmsr_parse_ftm(struct cfg80211_registered_device *rdev,
- 	out->ftm.burst_period = 0;
- 	if (tb[NL80211_PMSR_FTM_REQ_ATTR_BURST_PERIOD])
- 		out->ftm.burst_period =
--			nla_get_u32(tb[NL80211_PMSR_FTM_REQ_ATTR_BURST_PERIOD]);
-+			nla_get_u16(tb[NL80211_PMSR_FTM_REQ_ATTR_BURST_PERIOD]);
+diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
+index 07abaf7820c56..51dc2d9dd6b84 100644
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -4012,7 +4012,7 @@ __ieee80211_channel_switch(struct wiphy *wiphy, struct net_device *dev,
+ 		goto out;
+ 	}
  
- 	out->ftm.asap = !!tb[NL80211_PMSR_FTM_REQ_ATTR_ASAP];
- 	if (out->ftm.asap && !capa->ftm.asap) {
-@@ -75,7 +75,7 @@ static int pmsr_parse_ftm(struct cfg80211_registered_device *rdev,
- 	out->ftm.num_bursts_exp = 0;
- 	if (tb[NL80211_PMSR_FTM_REQ_ATTR_NUM_BURSTS_EXP])
- 		out->ftm.num_bursts_exp =
--			nla_get_u32(tb[NL80211_PMSR_FTM_REQ_ATTR_NUM_BURSTS_EXP]);
-+			nla_get_u8(tb[NL80211_PMSR_FTM_REQ_ATTR_NUM_BURSTS_EXP]);
+-	link_data->csa_chanreq = chanreq; 
++	link_data->csa_chanreq = chanreq;
+ 	link_conf->csa_active = true;
  
- 	if (capa->ftm.max_bursts_exponent >= 0 &&
- 	    out->ftm.num_bursts_exp > capa->ftm.max_bursts_exponent) {
-@@ -88,7 +88,7 @@ static int pmsr_parse_ftm(struct cfg80211_registered_device *rdev,
- 	out->ftm.burst_duration = 15;
- 	if (tb[NL80211_PMSR_FTM_REQ_ATTR_BURST_DURATION])
- 		out->ftm.burst_duration =
--			nla_get_u32(tb[NL80211_PMSR_FTM_REQ_ATTR_BURST_DURATION]);
-+			nla_get_u8(tb[NL80211_PMSR_FTM_REQ_ATTR_BURST_DURATION]);
+ 	if (params->block_tx &&
+@@ -4023,7 +4023,7 @@ __ieee80211_channel_switch(struct wiphy *wiphy, struct net_device *dev,
+ 	}
  
- 	out->ftm.ftms_per_burst = 0;
- 	if (tb[NL80211_PMSR_FTM_REQ_ATTR_FTMS_PER_BURST])
-@@ -107,7 +107,7 @@ static int pmsr_parse_ftm(struct cfg80211_registered_device *rdev,
- 	out->ftm.ftmr_retries = 3;
- 	if (tb[NL80211_PMSR_FTM_REQ_ATTR_NUM_FTMR_RETRIES])
- 		out->ftm.ftmr_retries =
--			nla_get_u32(tb[NL80211_PMSR_FTM_REQ_ATTR_NUM_FTMR_RETRIES]);
-+			nla_get_u8(tb[NL80211_PMSR_FTM_REQ_ATTR_NUM_FTMR_RETRIES]);
+ 	cfg80211_ch_switch_started_notify(sdata->dev,
+-					  &link_data->csa_chanreq.oper, 0,
++					  &link_data->csa_chanreq.oper, link_id,
+ 					  params->count, params->block_tx);
  
- 	out->ftm.request_lci = !!tb[NL80211_PMSR_FTM_REQ_ATTR_REQUEST_LCI];
- 	if (out->ftm.request_lci && !capa->ftm.request_lci) {
+ 	if (changed) {
 -- 
 2.43.0
 
