@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA09C143C4E;
-	Wed, 19 Jun 2024 13:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E80132129;
+	Wed, 19 Jun 2024 13:08:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802479; cv=none; b=hTP4/VWna/KTuUQJY28xdkFK3GAB/NjwLdYeoz3NcujIroc4YUOVmnuFNaOlEDxc4XPj0Y8wCLP01O+ctDD5Xr+hQ+RMQwhrMP/XcanmU4+9rvELjywpQHudNLkuOEoqN51HlYWtlPX5YEp1kbZn709UNZoW7guwejEQKLscpBA=
+	t=1718802482; cv=none; b=EP+QuLqFBltuCMPXPuNQZDAOtTupVI1kDEgt2NHgmPBTR/b2okByl2ou0vN4oC32gJyuF3AGJkPjQJCWYW4xHOoyLUJkILyF0vTmqNjK/PMtXpPXOsoAhNpBbd3N6scHaEcBVdWb07UEopKINJAnrf5sPjevFKci9zUjZcoY+2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802479; c=relaxed/simple;
-	bh=XXx0oJcVK3PmEmjj/mG4ft8ZgNB/c4Rsq0EeuX0PZ9Q=;
+	s=arc-20240116; t=1718802482; c=relaxed/simple;
+	bh=yx5BZ6hYtGAfCNJSZDVfo9/+ikARv/wdKjSdID7/HVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sNTfM+ITrI4siTXT0N8E1fpwH/RN/vqOenwdFqBdLxGuLdnrcAkUGtA3M+HqV8Qqgk1RLP6u0bNGpRbf9dGKYR12V9k5DFPIsPelXutRoFqTWGJoUDyCPMOWKFW7v77OHHjC4aVBEujXe2zWzBSk5Gcuq7C5laAQ1pMdRuaRfNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o1bzttWM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uQH2iAe20sMrrCE5AIGYA3+ZDqaFWpt3loVsuGjW0JOLmFU9vQ3hzojAR5jzSHctgCMubEko1pC0VuqPmYV0Om9yjhorj6vsMc87v7EdQ8/nAywpInduZE9uhF95Hbx4b7kbPYjSKw5O83sYPTgOu/Re9JPOW2v3dl9i73A/hBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OnGpl7sJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1bzttWM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36F8AC2BBFC;
-	Wed, 19 Jun 2024 13:07:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OnGpl7sJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DB6EC2BBFC;
+	Wed, 19 Jun 2024 13:08:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718802479;
-	bh=XXx0oJcVK3PmEmjj/mG4ft8ZgNB/c4Rsq0EeuX0PZ9Q=;
+	s=korg; t=1718802482;
+	bh=yx5BZ6hYtGAfCNJSZDVfo9/+ikARv/wdKjSdID7/HVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o1bzttWMEogMrGMx8MMQ64XHOwWlm5Ox4J5srgstZS5RiUz/UZXMTHUFxsbTHOHEO
-	 UUu34lLx6LB2HZa1nOea+76Oah7OdLRbE6KmpslqC25HXRY8HhmSi8M2B2OzMexSEn
-	 kZg2hrpPDXl3/WviXgo2472fFCZabDiyusFCQS5g=
+	b=OnGpl7sJWdJ4sdmnLI13s+xWNFCM4Tloi5z8z882iFUy/KRW6Mmk6L3RQj0cg/npw
+	 CTZf7jIDASemcmVWvnQ4l6+lkbSu1ukiq4mkVAuoX4EwbFV5ChqoSI+OE30dZcCdZB
+	 bo91fK01URKqnBk3dyMY9rqRxbx1l8+C7CsUkjQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nuno Sa <nuno.sa@analog.com>,
-	Stable@vger.kernel.org,
+	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 210/267] iio: adc: axi-adc: make sure AXI clock is enabled
-Date: Wed, 19 Jun 2024 14:56:01 +0200
-Message-ID: <20240619125614.388208842@linuxfoundation.org>
+Subject: [PATCH 6.6 211/267] iio: invensense: fix interrupt timestamp alignment
+Date: Wed, 19 Jun 2024 14:56:02 +0200
+Message-ID: <20240619125614.425947863@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
 References: <20240619125606.345939659@linuxfoundation.org>
@@ -51,47 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nuno Sa <nuno.sa@analog.com>
+From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 
-commit 80721776c5af6f6dce7d84ba8df063957aa425a2 upstream.
+commit 0340dc4c82590d8735c58cf904a8aa1173273ab5 upstream.
 
-We can only access the IP core registers if the bus clock is enabled. As
-such we need to get and enable it and not rely on anyone else to do it.
+Restrict interrupt timestamp alignment for not overflowing max/min
+period thresholds.
 
-Note this clock is a very fundamental one that is typically enabled
-pretty early during boot. Independently of that, we should really rely on
-it to be enabled.
-
-Fixes: ef04070692a2 ("iio: adc: adi-axi-adc: add support for AXI ADC IP core")
-Signed-off-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20240426-ad9467-new-features-v2-4-6361fc3ba1cc@analog.com
-Cc: <Stable@vger.kernel.org>
+Fixes: 0ecc363ccea7 ("iio: make invensense timestamp module generic")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Link: https://lore.kernel.org/r/20240426135814.141837-1-inv.git-commit@tdk.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/adi-axi-adc.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/iio/common/inv_sensors/inv_sensors_timestamp.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/adc/adi-axi-adc.c
-+++ b/drivers/iio/adc/adi-axi-adc.c
-@@ -175,6 +175,7 @@ static int adi_axi_adc_probe(struct plat
- 	struct adi_axi_adc_state *st;
- 	void __iomem *base;
- 	unsigned int ver;
-+	struct clk *clk;
- 	int ret;
+--- a/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c
++++ b/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c
+@@ -105,6 +105,9 @@ static bool inv_update_chip_period(struc
  
- 	st = devm_kzalloc(&pdev->dev, sizeof(*st), GFP_KERNEL);
-@@ -195,6 +196,10 @@ static int adi_axi_adc_probe(struct plat
- 	if (!expected_ver)
- 		return -ENODEV;
+ static void inv_align_timestamp_it(struct inv_sensors_timestamp *ts)
+ {
++	const int64_t period_min = ts->min_period * ts->mult;
++	const int64_t period_max = ts->max_period * ts->mult;
++	int64_t add_max, sub_max;
+ 	int64_t delta, jitter;
+ 	int64_t adjust;
  
-+	clk = devm_clk_get_enabled(&pdev->dev, NULL);
-+	if (IS_ERR(clk))
-+		return PTR_ERR(clk);
-+
- 	/*
- 	 * Force disable the core. Up to the frontend to enable us. And we can
- 	 * still read/write registers...
+@@ -112,11 +115,13 @@ static void inv_align_timestamp_it(struc
+ 	delta = ts->it.lo - ts->timestamp;
+ 
+ 	/* adjust timestamp while respecting jitter */
++	add_max = period_max - (int64_t)ts->period;
++	sub_max = period_min - (int64_t)ts->period;
+ 	jitter = INV_SENSORS_TIMESTAMP_JITTER((int64_t)ts->period, ts->chip.jitter);
+ 	if (delta > jitter)
+-		adjust = jitter;
++		adjust = add_max;
+ 	else if (delta < -jitter)
+-		adjust = -jitter;
++		adjust = sub_max;
+ 	else
+ 		adjust = 0;
+ 
 
 
