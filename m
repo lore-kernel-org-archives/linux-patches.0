@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44FCE1422D9;
-	Wed, 19 Jun 2024 13:35:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E90C147C6E;
+	Wed, 19 Jun 2024 13:35:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718804137; cv=none; b=JBnt9pPJrVgkVtKAv3D8gBEk92XcJajM9BH6uDkqYiA7qV+USxBi0UWtG0DwMw290VfOoRsZGE3Hl80M/MRw2vbW0eUPevGPM3s2mFV8OGWfCKMb+EhQhsXlLVB2+6XX7bKzeY0PjQgb+QPqAS9QXMtSnxe8wTMduYoMdnioHOI=
+	t=1718804140; cv=none; b=lSeXUB9HuPbVM5hGNyed5eugbqUWSlECOu99mUuzZMtiCwkLSP00kGBPKhpo7yi9lLPLUUw4R7e/GkJ+/7Xt8+Cc/GGSegZLwMWTL09QqURiQ82N+/r2jJLO2TRrFJJ9eYzaj3tijRz5GPs+guEuTMBn0vB5s6nqnAvyWdYCN6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718804137; c=relaxed/simple;
-	bh=/hcqL9FwP19LMfUqAroGcHsNZE8fztLdGrWqB+2MuU0=;
+	s=arc-20240116; t=1718804140; c=relaxed/simple;
+	bh=tAY0Dc9FpLb7UAGd5uIWAwdmb6dZQS0YuPV9RCEFoz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cgPpdLzSyN3AdpfsF1du7VeNzPoRpPHp2Ld9FBBTVTXR9JEl9raFkYpxQzEHmopkVShFoKkzjw7kXIxw5yMle+Ii2Pnk18GJN9IYna6fmf/n74yhQ0tQK5PmV2z4NviRtZTOqZIFYOrv1vGnZlrN+ROlqdB/oQ/VJHtN747lms0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0n8cAb8m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n9VE2fjr+k/7mB8662Bjiji1qy4TU5TW4rwKRWzA08wTaQ8bdtPDYz60HroUaioQnoOycOtMVW082L8yanDyRZ+P09Ulgi34LucmRNdyLysne1ko/C3vttcybR7x1OMWS13xHWmoeD8Oxp2bqUFSbxnYRuScuHbEnbQHUz+5QtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gAdhf6PK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0n8cAb8m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 773E8C2BBFC;
-	Wed, 19 Jun 2024 13:35:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gAdhf6PK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 743D2C4AF1D;
+	Wed, 19 Jun 2024 13:35:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718804136;
-	bh=/hcqL9FwP19LMfUqAroGcHsNZE8fztLdGrWqB+2MuU0=;
+	s=korg; t=1718804139;
+	bh=tAY0Dc9FpLb7UAGd5uIWAwdmb6dZQS0YuPV9RCEFoz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0n8cAb8mRtew+pMlgyLn4K+ZiWNMGVadm7RL3MzBDVL+uFTwMNMCljLxi3U1pshcL
-	 kcHHeFp1hDIpOzbmlaw+eSRFVUT4gD1RkNiCA+MzRcJsl/r8PUSJ+BXoz0HPfTwvvi
-	 38QwA3i6nfKzg9Jg+u6w7TiTHGTGGHlsacr6TUEI=
+	b=gAdhf6PKhfA0W+StLwJsa0nKDzCOHoybFDutK7XXRC9JWP4HF/5EhU/dXK2BnEfWp
+	 m+wseYRPtuJAoDqJgnAM2E1MfCHMabO05bYSTdQdK5RWZKpSp+6eXuEa8bpbva/InT
+	 iGQQPS5IP0OFWzHZGmdhBkFFUYwVj8BFjD3LOmio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Dionne <marc.dionne@auristor.com>,
-	David Howells <dhowells@redhat.com>,
-	Gao Xiang <xiang@kernel.org>,
-	Chao Yu <chao@kernel.org>,
-	Yue Hu <huyue2@coolpad.com>,
-	Jeffle Xu <jefflexu@linux.alibaba.com>,
-	linux-erofs@lists.ozlabs.org,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org
-Subject: [PATCH 6.1 207/217] cachefiles, erofs: Fix NULL deref in when cachefiles is not doing ondemand-mode
-Date: Wed, 19 Jun 2024 14:57:30 +0200
-Message-ID: <20240619125604.674196659@linuxfoundation.org>
+	Doug Anderson <dianders@chromium.org>,
+	Janaki Ramaiah Thota <quic_janathot@quicinc.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.1 208/217] Bluetooth: qca: fix wcn3991 device address check
+Date: Wed, 19 Jun 2024 14:57:31 +0200
+Message-ID: <20240619125604.717499475@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125556.491243678@linuxfoundation.org>
 References: <20240619125556.491243678@linuxfoundation.org>
@@ -57,57 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit c3d6569a43322f371e7ba0ad386112723757ac8f upstream.
+commit 66c39332d02d65e311ec89b0051130bfcd00c9ac upstream.
 
-cachefiles_ondemand_init_object() as called from cachefiles_open_file() and
-cachefiles_create_tmpfile() does not check if object->ondemand is set
-before dereferencing it, leading to an oops something like:
+Qualcomm Bluetooth controllers may not have been provisioned with a
+valid device address and instead end up using the default address
+00:00:00:00:5a:ad.
 
-	RIP: 0010:cachefiles_ondemand_init_object+0x9/0x41
-	...
-	Call Trace:
-	 <TASK>
-	 cachefiles_open_file+0xc9/0x187
-	 cachefiles_lookup_cookie+0x122/0x2be
-	 fscache_cookie_state_machine+0xbe/0x32b
-	 fscache_cookie_worker+0x1f/0x2d
-	 process_one_work+0x136/0x208
-	 process_scheduled_works+0x3a/0x41
-	 worker_thread+0x1a2/0x1f6
-	 kthread+0xca/0xd2
-	 ret_from_fork+0x21/0x33
+This address is now used to determine if a controller has a valid
+address or if one needs to be provided through devicetree or by user
+space before the controller can be used.
 
-Fix this by making cachefiles_ondemand_init_object() return immediately if
-cachefiles->ondemand is NULL.
+It turns out that the WCN3991 controllers used in Chromium Trogdor
+machines use a different default address, 39:98:00:00:5a:ad, which also
+needs to be marked as invalid so that the correct address is fetched
+from the devicetree.
 
-Fixes: 3c5ecfe16e76 ("cachefiles: extract ondemand info field from cachefiles_object")
-Reported-by: Marc Dionne <marc.dionne@auristor.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Gao Xiang <xiang@kernel.org>
-cc: Chao Yu <chao@kernel.org>
-cc: Yue Hu <huyue2@coolpad.com>
-cc: Jeffle Xu <jefflexu@linux.alibaba.com>
-cc: linux-erofs@lists.ozlabs.org
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
+Qualcomm has unfortunately not yet provided any answers as to whether
+the 39:98 encodes a hardware id and if there are other variants of the
+default address that needs to be handled by the driver.
+
+For now, add the Trogdor WCN3991 default address to the device address
+check to avoid having these controllers start with the default address
+instead of their assigned addresses.
+
+Fixes: 32868e126c78 ("Bluetooth: qca: fix invalid device address check")
+Cc: stable@vger.kernel.org      # 6.5
+Cc: Doug Anderson <dianders@chromium.org>
+Cc: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cachefiles/ondemand.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/bluetooth/btqca.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/cachefiles/ondemand.c
-+++ b/fs/cachefiles/ondemand.c
-@@ -611,6 +611,9 @@ int cachefiles_ondemand_init_object(stru
- 	struct fscache_volume *volume = object->volume->vcookie;
- 	size_t volume_key_size, cookie_key_size, data_len;
+--- a/drivers/bluetooth/btqca.c
++++ b/drivers/bluetooth/btqca.c
+@@ -16,6 +16,7 @@
+ #define VERSION "0.1"
  
-+	if (!object->ondemand)
-+		return 0;
-+
- 	/*
- 	 * CacheFiles will firstly check the cache file under the root cache
- 	 * directory. If the coherency check failed, it will fallback to
+ #define QCA_BDADDR_DEFAULT (&(bdaddr_t) {{ 0xad, 0x5a, 0x00, 0x00, 0x00, 0x00 }})
++#define QCA_BDADDR_WCN3991 (&(bdaddr_t) {{ 0xad, 0x5a, 0x00, 0x00, 0x98, 0x39 }})
+ 
+ int qca_read_soc_version(struct hci_dev *hdev, struct qca_btsoc_version *ver,
+ 			 enum qca_btsoc_type soc_type)
+@@ -708,8 +709,10 @@ static int qca_check_bdaddr(struct hci_d
+ 	}
+ 
+ 	bda = (struct hci_rp_read_bd_addr *)skb->data;
+-	if (!bacmp(&bda->bdaddr, QCA_BDADDR_DEFAULT))
++	if (!bacmp(&bda->bdaddr, QCA_BDADDR_DEFAULT) ||
++	    !bacmp(&bda->bdaddr, QCA_BDADDR_WCN3991)) {
+ 		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
++	}
+ 
+ 	kfree_skb(skb);
+ 
 
 
