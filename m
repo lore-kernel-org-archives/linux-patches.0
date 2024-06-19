@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CC59AD58;
-	Wed, 19 Jun 2024 13:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D362AD58;
+	Wed, 19 Jun 2024 13:17:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803022; cv=none; b=HwYKwU0+Mm2wPKO8fE4afMhmUBOcXUPoHf2EIDf+Ag/DRRwi3QAjLwiRPaHKak1aPg2aXah0ReF3RvgNKREFMS1ncYwGQevspWzL4KRWHa5VknwrB+oIqvGgYDvGHoLMaA8cENsBwPd42AvjV4mb70bj0Vc7i7gEAvDdfDsnAqQ=
+	t=1718803025; cv=none; b=EvBn+POXMBXAQ0GoayJm00wVcEGwgfbxKGvi0TIeM8diuYb5YMaLGcD/OBMsTJtJk+U4U99ZuqheKc4jJ6OQYZBSuFhbr+dMsSSxeBXIOGBOFipcmAn9hWZxXN2xNOlJLC47G6LUVgQBiVKBxhH7nu/saPaQRBMQHe3pQHbdk3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803022; c=relaxed/simple;
-	bh=yIwcwDZ04LOD6rTUCieyPulYoiOYJC6QBxIuzW8UavM=;
+	s=arc-20240116; t=1718803025; c=relaxed/simple;
+	bh=3QwCABTARHq2W5IvndfRtik+OeC9Tx+VsCUzu7rL+cQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cvDeDJx3S9n3XN3VK74DX7Bo6iNzwOdox74dlgjAYmVt6K9oCWgahpJ7qVrP5sKGZ5whMWohXH8lV2jVlT42SZXVkj5ME/NmQ2/eadYC8V2MsHeJgqfEYYiZw3rZbtokbBcF0kID6QV0bTL6COtboL7g5tMzLB+3lJavraBLc78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rpdvwX1O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XTaruHrkfWoF3VsjyaSwoD5vOaNsGL3coYF8rBBTv63iG7WpfNGsnspy8HL895NVea7iMb2sy8EQQ5xzQmEz+lKLZI6ynoDBG2nVnMnfu8JdUqE2HgWHy/Ia/xGddQJVO4AO5GpBFqpBZ+Frp7Cd6Gv1aWBNOuyLxNfIYEBTHDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zdeWPRso; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rpdvwX1O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3536C2BBFC;
-	Wed, 19 Jun 2024 13:17:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zdeWPRso"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7048C2BBFC;
+	Wed, 19 Jun 2024 13:17:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718803022;
-	bh=yIwcwDZ04LOD6rTUCieyPulYoiOYJC6QBxIuzW8UavM=;
+	s=korg; t=1718803025;
+	bh=3QwCABTARHq2W5IvndfRtik+OeC9Tx+VsCUzu7rL+cQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rpdvwX1Ot7X/1ZC3KmRU8cwN648p9756w2htoUIQeKGXSKJ9f5iugDf3jNENrA8z+
-	 trobfuc5hAbK0oK+N7PY5JolfcfhDv4KUzPBLNReSEAYc7pWvv7LpTrfhIoR9UyD17
-	 /y1Ajzh7j/dDDq8dgRMMhw6KpkDyy2IVk1LhJJC4=
+	b=zdeWPRsoTU50ChvGtF0JOEeeRPuNO3zj1oSEJEKcVxXDP7TKQGPYDJDSgl1RrR+Xb
+	 SirXA8GRy5RKN9MI4Nsr1nCLHQRAsWIZOijkwnJ9OtjxJAYIoHGIfurLx96v2i7UQ4
+	 Kj5aaOUubdcGKmtlA3XI3WjsbUbie32wQIJVc8Rs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiwen Hu <huweiwen@linux.alibaba.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Jingbo Xu <jefflexu@linux.alibaba.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 127/281] nvme: fix nvme_pr_* status code parsing
-Date: Wed, 19 Jun 2024 14:54:46 +0200
-Message-ID: <20240619125614.732032046@linuxfoundation.org>
+Subject: [PATCH 6.9 110/281] cachefiles: add output string to cachefiles_obj_[get|put]_ondemand_fd
+Date: Wed, 19 Jun 2024 14:54:29 +0200
+Message-ID: <20240619125614.082408905@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
 References: <20240619125609.836313103@linuxfoundation.org>
@@ -51,33 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiwen Hu <huweiwen@linux.alibaba.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit b1a1fdd7096dd2d67911b07f8118ff113d815db4 ]
+[ Upstream commit cc5ac966f26193ab185cc43d64d9f1ae998ccb6e ]
 
-Fix the parsing if extra status bits (e.g. MORE) is present.
+This lets us see the correct trace output.
 
-Fixes: 7fb42780d06c ("nvme: Convert NVMe errors to PR errors")
-Signed-off-by: Weiwen Hu <huweiwen@linux.alibaba.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: c8383054506c ("cachefiles: notify the user daemon when looking up cookie")
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Link: https://lore.kernel.org/r/20240522114308.2402121-2-libaokun@huaweicloud.com
+Acked-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Jingbo Xu <jefflexu@linux.alibaba.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/trace/events/cachefiles.h | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/pr.c b/drivers/nvme/host/pr.c
-index e05571b2a1b0c..8fa1ffcdaed48 100644
---- a/drivers/nvme/host/pr.c
-+++ b/drivers/nvme/host/pr.c
-@@ -77,7 +77,7 @@ static int nvme_sc_to_pr_err(int nvme_sc)
- 	if (nvme_is_path_error(nvme_sc))
- 		return PR_STS_PATH_FAILED;
+diff --git a/include/trace/events/cachefiles.h b/include/trace/events/cachefiles.h
+index cf4b98b9a9edc..e3213af847cdf 100644
+--- a/include/trace/events/cachefiles.h
++++ b/include/trace/events/cachefiles.h
+@@ -127,7 +127,9 @@ enum cachefiles_error_trace {
+ 	EM(cachefiles_obj_see_lookup_cookie,	"SEE lookup_cookie")	\
+ 	EM(cachefiles_obj_see_lookup_failed,	"SEE lookup_failed")	\
+ 	EM(cachefiles_obj_see_withdraw_cookie,	"SEE withdraw_cookie")	\
+-	E_(cachefiles_obj_see_withdrawal,	"SEE withdrawal")
++	EM(cachefiles_obj_see_withdrawal,	"SEE withdrawal")	\
++	EM(cachefiles_obj_get_ondemand_fd,      "GET ondemand_fd")	\
++	E_(cachefiles_obj_put_ondemand_fd,      "PUT ondemand_fd")
  
--	switch (nvme_sc) {
-+	switch (nvme_sc & 0x7ff) {
- 	case NVME_SC_SUCCESS:
- 		return PR_STS_SUCCESS;
- 	case NVME_SC_RESERVATION_CONFLICT:
+ #define cachefiles_coherency_traces					\
+ 	EM(cachefiles_coherency_check_aux,	"BAD aux ")		\
 -- 
 2.43.0
 
