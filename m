@@ -1,67 +1,67 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76FD47CF30
-	for <patches@lists.linux.dev>; Thu, 20 Jun 2024 21:35:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1373F7406D
+	for <patches@lists.linux.dev>; Thu, 20 Jun 2024 21:35:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.18
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718919305; cv=fail; b=G8m+ClS+kgG9bQ4yarpu5iP3w9T/3aZBH2eUFJnceqg7aYdkg87k6LfTYpilninThue5+cGgWGAHLsjMT8C4m9sMz/mG2MwtKM+I427p9I0RXZrB+ZSiZDvo9YaEsDsnJtmAkxUEh+AdMKBfgpd0jjBh9JSbOCLCfYpEZCIIa+4=
+	t=1718919331; cv=fail; b=Om0qf95LW/0vKH+wFXxK07GCW+y+xK/LKNQK7uzhIl+uEhzHsFXwaWqGI27uPwXkUhrbc8dl5ERV+QZBeRdTMeRxyLsaVFa5GpTJodnvm+Epa+6J2bx0N+WnK0OL5QOvVNY43TEuEUS0DoYmaTUsiAp+xuzSGOZC7+7/1+P5P7E=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718919305; c=relaxed/simple;
-	bh=GCSsVyid/8O0IPU/FtYiVIbe1IYhDICa2DrSclA9Ets=;
+	s=arc-20240116; t=1718919331; c=relaxed/simple;
+	bh=CrERs4YaiZ0LZ6ZQfAZSumeIuZk2o1+0IZEtAkyLgJY=;
 	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=FLwGFN8mR00L8ahwOxzmorDaXYJLEVMY3/gXAxtv5FB2J9qQ+StxMkmUwe4w20zPP6NYBphU5D0ic4PFhTUyfHkeVlRzNcPLkw9G++/a2//1LofypXbfzWpIPUtXiSjvFmS5lNUGDuXzYwhwR/WBoVDBNPJeOMmVUkj9vDHRjWc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TY+9JT/Q; arc=fail smtp.client-ip=198.175.65.19
+	 Content-Type:MIME-Version; b=kc7KFZ5pWc3az6ljwtv/iQXGBvQ/JmGJtqgp8y6CqtGzr2r6ASY88THjP/+Zxuwxav6oL1WfNSswyykl+sGYPhVrkVkwcIuifueGIRcjRBUPU04MpkUhJ9sIcrzACYa2dJ0qy4tNp/B7k4gBtEG5CblopFvNs2GviCTItONS71o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=IaBTCdhq; arc=fail smtp.client-ip=198.175.65.18
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TY+9JT/Q"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="IaBTCdhq"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1718919303; x=1750455303;
+  t=1718919330; x=1750455330;
   h=message-id:date:subject:to:cc:references:from:
    in-reply-to:content-transfer-encoding:mime-version;
-  bh=GCSsVyid/8O0IPU/FtYiVIbe1IYhDICa2DrSclA9Ets=;
-  b=TY+9JT/QvRNr2y1bL7L8qX89qN+Sj6IHuvu4y1HmMZgji1VwXNGjQxyd
-   UJicVUQ/APRyYYT+JzI8M6d+eX+6IwDYtsooJGwZ732aCufbLoP/XbQVu
-   5cQjtt4lBlhsUP0vm/gHlCf9jZLDVgd6G/DfZidRUP15CRpckhm2++x4k
-   17FDG0xQ93eUt5nYF6ufAa80jlV/x7nM/BB8S06YUJo1kQhDKr36e9NFf
-   oVPOcKDscnRvAjgFa4U1kAC/TwMuWIUtDwVutS9G/8Ex1WpFffzraa6WD
-   bZndjYm3ByjaV9GyKxHLYfF+AUZpFCnOcBunGaVBe+7Hd2Vnna2L2Gi1/
-   A==;
-X-CSE-ConnectionGUID: Sdnsm+AmSbiA1wCJTLQQtA==
-X-CSE-MsgGUID: nnvt275DRb+ZreWvWA6WrA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11109"; a="15759476"
+  bh=CrERs4YaiZ0LZ6ZQfAZSumeIuZk2o1+0IZEtAkyLgJY=;
+  b=IaBTCdhq4o8FVEG+sDnmmepdl3LrniOKOPL04y6pdLTs48vfAuc6XIDd
+   i3iuzDaYOSgDOjFWEy88gk8vWuCU/g21IqkyqtZbPB4yAe9Uck95RCly8
+   lLrkW0wcR6P/r7X6FL5MgHgbeALqwijtIthQJk3iOs+WR8ZIF6S0cQ4CX
+   +vaepH0Z2h8KXSxiaeEBBcI4z/Js6KXbfxRUURKl9YlKk1TpTZPDSzXuG
+   WeujmRG8nlSxiOqhcFiin74nDsZHC9U6KFUmK4MFYHqlVni5cM9QcS0Gz
+   KA5DUjtR7Aler7TR7x2XdWLkDmpXF+KU+x7bkamd0VG+OTRlw7eXdGUYC
+   w==;
+X-CSE-ConnectionGUID: 6DaLT2ooT/eEFrUuTdJaAQ==
+X-CSE-MsgGUID: xaYA24hqRrefvWO41f8a4w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11109"; a="16076620"
 X-IronPort-AV: E=Sophos;i="6.08,252,1712646000"; 
-   d="scan'208";a="15759476"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jun 2024 14:35:03 -0700
-X-CSE-ConnectionGUID: UV1dVS/TQ3K/iPKgLK8mkg==
-X-CSE-MsgGUID: +w002xu/SZSUfxQTDW8p1g==
+   d="scan'208";a="16076620"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jun 2024 14:35:30 -0700
+X-CSE-ConnectionGUID: eJLeTjhfTyOS9eYfXPz9Gw==
+X-CSE-MsgGUID: oO8Sqw9ORFan/3yh5kfRcw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.08,252,1712646000"; 
-   d="scan'208";a="46723541"
-Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
-  by fmviesa003.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 20 Jun 2024 14:35:02 -0700
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
+   d="scan'208";a="42336973"
+Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
+  by fmviesa008.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 20 Jun 2024 14:35:29 -0700
+Received: from fmsmsx603.amr.corp.intel.com (10.18.126.83) by
+ fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Thu, 20 Jun 2024 14:35:02 -0700
+ 15.1.2507.39; Thu, 20 Jun 2024 14:35:29 -0700
 Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
- fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Thu, 20 Jun 2024 14:35:02 -0700
+ 15.1.2507.39 via Frontend Transport; Thu, 20 Jun 2024 14:35:29 -0700
 Received: from NAM11-CO1-obe.outbound.protection.outlook.com (104.47.56.169)
  by edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 20 Jun 2024 14:35:01 -0700
+ 15.1.2507.39; Thu, 20 Jun 2024 14:35:28 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=lpuIl7cNzJ4x+JE0Kfc2odyxoRaKF2/bzYHzv88YL7WPZ/lwdA/yCUmoNCW8uBWmx2j4l5d3QxXKOFcQMPSTrkzNvc3uQTZ8BxeT5rTm/QOqFHKLqkYNEgo3yea7Hcc4+/SdXMv101MW1S8eZUy6BKJbFxx61c7p/yLzQq3+cQxzQWWsPGd0SkWvI3kfW7Su4ios1DkoeaqBk2ZIlqSn7erptWU4jze07vobgb5mByFW1d9FB4HX0hpOCzTgWTYpFWku22LgauQVJYWjjoTbhgJBw11tsfEMZtcC8lOCKnDVbQLomzhWvMe7QI5N+BUAqkz9via6UQQz2Mt3t68zkA==
+ b=QggPmyWzgQGil0/cFeo4gCLDRZMRQQO7s1bW72NAeLYSJe4FV6d+2Gn8Gyy9GqsTbh9afLpBVFS3JQxnj2W9tVO+ySdM4KxQHSjmBLNVvKPFqS0wstiMh4ttg1ulSyt6wvqeMdlM8gLj2c7upb3gNKhzcUAxAKZOJU/8SeyHsdsS2rZENrm6HToK9uozYgmZMxCk9+RUu2gswqrO4SDb5rsm3hlM/lLw4beYqikrQGuIc3Ki4bwD2yG4v7Pd1uGFGMphBN/075oBfuJkebBoPJLiMQohqwqutVQ7827CmBOywOgVnqY81M7wVFqlI1CUUXyxbr0M71vNyE7uJrOeaA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uQvyccYnHECCdze3kyj3oRShwDy+HOa64ekHcyFUJUc=;
- b=nI3/px9tD2rjNpOwr+5eBC2t5EQeVYHN8euuTE1X9kmuSWMM//75yEQ11SGC9mqnkKYNGNToldH51hbA5EzX61FWHc/2jrI3YTgbBVZNPgxyUUku7wwAghoIenmd3A9giRIW+WUdtOjTaF2uNHZhCxxdQTZF7gOIO8swjQ2D+sgfglh4Jqxh1txDAGbMRNR6g7VfSCuYufJpWEaPMQ2DamHrj7WvtpQ1RMGxRKtPIHKWBJvviRy5iiQ/4easInl8it/fD7WpyU0xYSXi0i8GOE3ilWOFLgGieTxP3RXmCfiLrj+IiJpTS38l4Ietpf/+OzdkneAxmb6yd0E5PdpAzA==
+ bh=kI1Cg69cwA7j8L0f8yjb85nlWxWVHbEGF53jtlGgSXU=;
+ b=hGJidLBD55GXyEL0odwIlwSOk2jXcYuyv4dSrbGELF4P91eiYZrru/GOalpk55Xj8QNC52iXiMJaEyZ8R2x4nCeaawIR+bBf5CylblHeePx7M9E4hqBliNCI1W/x/MEfEnaMQmLU7sYfEPWsuFUQaveEvEIrDJo2BjGnWsFPip8txXav7lmmRvT2177mA/hwwaOOPiayYQVEE+zhI9JfvYXF4K7ZdCR4zfSGDfWcoQqsApeTBJPstia/HLOp5YCUyK+jayGes80IA+SPMgHupIAxjEQjbMQI6k7wraXe78czeJEn7WrOatI2gMZdElrjM6nLjti02eNV4pU5AGiXyw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
@@ -71,15 +71,16 @@ Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
  by SJ2PR11MB7714.namprd11.prod.outlook.com (2603:10b6:a03:4fd::14) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7677.31; Thu, 20 Jun
- 2024 21:34:55 +0000
+ 2024 21:35:27 +0000
 Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
  ([fe80::61a:aa57:1d81:a9cf]) by SJ2PR11MB7573.namprd11.prod.outlook.com
  ([fe80::61a:aa57:1d81:a9cf%3]) with mapi id 15.20.7698.017; Thu, 20 Jun 2024
- 21:34:51 +0000
-Message-ID: <5e8fee73-6d5f-497a-947b-f8f8da62d15c@intel.com>
-Date: Thu, 20 Jun 2024 14:34:47 -0700
+ 21:35:27 +0000
+Message-ID: <694c09c2-c0f8-4583-bf82-873c40a307e4@intel.com>
+Date: Thu, 20 Jun 2024 14:35:25 -0700
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v20 17/18] x86/resctrl: Sub-NUMA Cluster (SNC) detection
+Subject: Re: [PATCH v20 18/18] x86/resctrl: Update documentation with Sub-NUMA
+ cluster changes
 To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghua.yu@intel.com>,
 	"Maciej Wieczor-Retman" <maciej.wieczor-retman@intel.com>, Peter Newman
 	<peternewman@google.com>, James Morse <james.morse@arm.com>, Babu Moger
@@ -88,10 +89,10 @@ To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghua.yu@intel.com>,
 CC: <x86@kernel.org>, <linux-kernel@vger.kernel.org>,
 	<patches@lists.linux.dev>
 References: <20240610183528.349198-1-tony.luck@intel.com>
- <20240610183528.349198-18-tony.luck@intel.com>
+ <20240610183528.349198-19-tony.luck@intel.com>
 Content-Language: en-US
 From: Reinette Chatre <reinette.chatre@intel.com>
-In-Reply-To: <20240610183528.349198-18-tony.luck@intel.com>
+In-Reply-To: <20240610183528.349198-19-tony.luck@intel.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: MW4PR04CA0090.namprd04.prod.outlook.com
@@ -105,207 +106,161 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|SJ2PR11MB7714:EE_
-X-MS-Office365-Filtering-Correlation-Id: d5b5dd2e-b7ba-44c5-1440-08dc9170d14b
+X-MS-Office365-Filtering-Correlation-Id: f7482ce7-9804-4968-16e7-08dc9170e6be
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230037|366013|376011|1800799021;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?c0o5Ym92YkRnU0U1SXdyVnczK1VoaUxwdlE4RjR3eCtuNWoyUmZMWHRpb1c2?=
- =?utf-8?B?d2pGS0dhME1EMnQ2L0hMeVAzUTZRVzhLYWFBTnZnUjBtZzhrOEhua2VUTmhG?=
- =?utf-8?B?UGlscjBMcURSWWN2TFQ3MEd5aloxUlM1NHVOUnNWRkNscSs0TkZhdEdmR0Nz?=
- =?utf-8?B?dlorOWJiZ2IzdXE3WFlZTWZGMFVNREVyNjExZGdzNncxOFprQkpvZGc2S2JX?=
- =?utf-8?B?b1VLVlExMlpmU1pqbStmbzFQYkFYTG9UZDBkbEt1Y0htR1AxekhSaXl6TGNQ?=
- =?utf-8?B?K3dOcENXNW12LzA5MVhJZUQ0TWdFcUQ3OFBvandLN0c0NEgxRDlPbEJKT1ZS?=
- =?utf-8?B?OGtKZGhuTDdtR3Zwdm1EeUVaTWp5eHp1UEZzeDltM2NVQ2pjYm8yNGcvRWVK?=
- =?utf-8?B?ekJGeVcyNW01dlU3QnFDazQzTHIxS3QvNzF5dkNLOWtSZ1A4RUtZS1NhRWVj?=
- =?utf-8?B?N29rdE5MR0JSY1pzcGhHUk1MZEpXR0EveTc2ZDRITkYvY2JrczZzcGdPMnR1?=
- =?utf-8?B?V3JlM0ZmV1dkRVNLV2d2NGxrOU9Qb0taUDNad1dqZXMyYXVFWnJnQmdxeld1?=
- =?utf-8?B?UU9WOHpGQm5wNmZjY0NzYlBYM0pwdjlCL09QNTBuV0ZoMFlKM0hyenQyUk12?=
- =?utf-8?B?c1NPSFkrZk52N2ZJSlduQUxDK2JtQkZJNnA3Ymc2WmlnVmJ1ek9OMXpoMEpm?=
- =?utf-8?B?WXVValR5eDlmRlpqQUEwbVc1eldFZTZRbTJ4bmlsVUpadEQ0ZXU3L0pESE1v?=
- =?utf-8?B?K0RMVy9HNHJFbVZpVHU4UDk1MW9veW1FYXB5ZTQyaEtmaGRpbnkzbnpiSUZX?=
- =?utf-8?B?ZE1GRENkbmJDMDhxZ0hmSHdKemQ4MVNkR0UxYmRPQkdLQW1WdXZzYzU4ajB1?=
- =?utf-8?B?QXZvRHFLZmFVeWJwWFp2Zi83UmJ0NlkrRkdsQS85WXVqZ2V6bHZqSTZlYnJp?=
- =?utf-8?B?SzFNeDlWdERFcFlNSk15RDNVOXg4Qmlwc3M1U3RPcUJDSTJSOU5kbm81eitw?=
- =?utf-8?B?cVlxRjA1OUhFa2FRYWMxZkt4TENKVFhaRDJHTkUzbFRDN2hrbFpBdFRySU1q?=
- =?utf-8?B?eFVteHo4akZORVNPdDFoMTUzZi9LYnRpUTFXcUJoWmpyMDFadWxBMEMwY003?=
- =?utf-8?B?bWh3cGdKbFBXOUQxTEhsVkpmSTlSSmpWeisvTm96RkwwT1pMNzZha0NPVm9M?=
- =?utf-8?B?bmtYb3lSMG1qYnk4NjZ5bGJtWUM3YmNYK1RzZDlNaGJYNkYydDZmejlIYm4v?=
- =?utf-8?B?VFdTdXU0Mkc3SVoyT3ozNDlEM1lyeUtTOGJNNUZOMElTcHo3N2NFQUVmZ1V1?=
- =?utf-8?B?WmZ2VXcwT3kycFRjMXRvalR1TTN2TEJocE8xYVpUaFFRM3k1ZUdTNnczNXc2?=
- =?utf-8?B?QUFiRjRzUGowY0ErVnFsUWpyWFg3ei93UnNxbFBaWDlUOWpkY3Vjb24xVVpr?=
- =?utf-8?B?Z3JHUmhDc2x4YWRWVUlDWWMxRGJPRTIxalNRbmg3Um5ZM0luNzBYbGNwSEZQ?=
- =?utf-8?B?T2tmYlRwTlZRdGJlTjUwUlBLTjRvWHVqMmdGTmM5Mldwc3R6SXNDdFJNdW5H?=
- =?utf-8?B?R1Y5UFA4NUg2TzNDUjFwNEVZa1dDcHZWcWlUck1paVFqUU14R3d3V0loZmRN?=
- =?utf-8?B?TGhQbUd5a21zc2lLVS85aE5mZGkxR2FIRTdPODJVZElTOU1jaGo5alZodGdR?=
- =?utf-8?B?ZEQ2eUNRa2J3aEJpNnNvYzF4ZjBWOE9HQXlOMUNhemRSeUhUc0o2cDV4blBU?=
- =?utf-8?Q?8+BFa5t/CBvzoiOQFBtmDO7FoxdDVDobVzYRsjP?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?ZDEremtXRkE2dFZ0dWxlcHovaG9YUzFxNmJkRE5BYU1RdlJ0U3R6VG9xYVQv?=
+ =?utf-8?B?bm5PUmVBcUZTbU5zbVVDNFpYWVlYdklJMHptNElVMHl0WUxIYXVOMDkzSjF5?=
+ =?utf-8?B?NlpQSUd0SmZMdVZXVnFISytjaGI3NEVZcDBYc1BRVEo5UEE1c0ZXdGRIemNQ?=
+ =?utf-8?B?QWp3dEdsbS9NNDdZbDFGRU0vVmZwbGJuYTg0bUpJcWhGcHBPRStyQmFvNGkx?=
+ =?utf-8?B?bys1MC9JYlFsV1NTdXp3Um5pSDFOekZ0QWxLRjQzSjh1Nnl5K3NDZVNPWnBS?=
+ =?utf-8?B?blMrUi95VFNIV1ZjNnV6U1R5U1AwalRGc1JaVlA1UTliL1c4MFBINDNkckt4?=
+ =?utf-8?B?Unc0QWlLODMzTXhLUjkyRkU3UXRVSUgyYXFPeTlRbEJ6enBydVVYQXY1Q1Vl?=
+ =?utf-8?B?YnpFUmJ1SHllbTFjdjBkcTNja1c0Z2hsSG9QYkNsa3Y3cW40azVGRi9qcG50?=
+ =?utf-8?B?dEtZbG85aWY4NGEySU1nY3FDN3ZzbWlQZVVva0ppUHU2dVE5TWhkZkdvR0hV?=
+ =?utf-8?B?VTQ3aHpZUkxxRk4vdUxHWGQ2d1piWU53ZjNwQ0x6U1pzUXF1NnJ3TzhLa1J3?=
+ =?utf-8?B?T212Mis3NFdBbkpqdmZXYm8xclNNUlA5TkMwcy9wSHZ4Y3d1VzcwdkY4ZnRE?=
+ =?utf-8?B?bWZMbk5KczhtRVJCbXlaWmJWWHl4UUllV1MvZWZxVzJDZVdMQk4yMklXQ0pI?=
+ =?utf-8?B?UGp1TkJ2S1RSbTNVamU1ZmRBVmUzcG43NWRGaTdwWndWeFhkVTR0KzZDVjBU?=
+ =?utf-8?B?TTZ0VzFGalB5L01Oc1FxcEw3ZmM0ZHNQTUhCQllDcGtWYVZuV2dQQ2t6Q0F4?=
+ =?utf-8?B?WEpFQ3YzYW1LYWdCOWkxcFFUUDZkWUtreEEzb2FhRDQ0am94WkJ6ZWdoOU54?=
+ =?utf-8?B?cmw3VzNOSmF3S01UeUJDV1hXaVN2dnF3Q1RsQ3lxM05TYWkyNEdoemVYVmxr?=
+ =?utf-8?B?UWU4ME15ZzdxZk9ZQnBMclg2eEdpYjdsMDBicVoxZW9keUliSkRTZGordUNq?=
+ =?utf-8?B?VlhwTzRZakNOQVJVQVo3c0d2ZERaWng1YzF6REFlTytRSkpWRWd3SUlETVQx?=
+ =?utf-8?B?SjIyYjVEMElGYWlWbTcvZHVJTXJHSm83ckhaVzlVSlRBbXNHMnRWQ2QzWnh2?=
+ =?utf-8?B?UmJXWnpibmRicU1PaFNKWWI2SU9FMDhSVnhxWmNjQThqSVRITjRPSlRQSlpi?=
+ =?utf-8?B?YXhoSXh2TFNHemtIekpybjVsVGY4SzY3RGtmaUROOVNJTnVqTDdzUTlXMUFR?=
+ =?utf-8?B?MnZpd3Z0eVJPZllKS3BWZVhuSnNFa0NsWDJtc0N1K3RseGtNcU14a1VYY1d2?=
+ =?utf-8?B?SGUwc21pcHRPMnRmb29HSWFNaUJNWE1JVm5CcmxYSGJDSWJxb0tjUENQUGY5?=
+ =?utf-8?B?Szg1YUVJL1dBc0ExMGhjaTJJOTQweUhTU2hrVFFDYVZlWmlXeGZ3aVRLem9r?=
+ =?utf-8?B?cFY2YlpzZTJQczhkaDB5Y1hmNVhDYzFybk5JcjNDdjVSZUNYeW5Kd1g4OVJZ?=
+ =?utf-8?B?NnN2VWZNV08vQjNqSjFpbDdoN2gzbFRCcURaaFZTQ0Y1Zlp2ZjNRb0htQ2dr?=
+ =?utf-8?B?WW40NUIxV1hreDIramgvZ2E2d1VicXZXUVBaYnpmdlpYWGp1aGpqSU1NcUNj?=
+ =?utf-8?B?RE9aa0N4aHliTmxhT3F0SDlvaVMyK2xDeXh3SUUwa1RYbDVNZzhQZys0OXVT?=
+ =?utf-8?B?bUtvQ2N1aGdnbWVYdm0wZ0FiTjI2aCtUd2o3UFAwdFAraDVHaitLSi9FSTM0?=
+ =?utf-8?Q?E7k5Phf9GajkoW1Q9HO29SRRSRCACoE5+CB05MV?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230037)(366013)(376011)(1800799021);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bFdOQStHNzZuZVp1enhLWnBTQ2h3cG5pZE51ZjU2cm1WTWZSQ3hIYXFwVmpN?=
- =?utf-8?B?S3RKc3BZVlA5THJWZ0RheERCRzNtVHF0VHBlYitqRlo5TmpIbE1lSGU0L21z?=
- =?utf-8?B?SGJRNUh4VngvUUxwTHNabDJiZDA2UEhKdWV2U01aeHdweGpnZ0crSStsUVNw?=
- =?utf-8?B?VVVBeDlnYzNJd2c5WStJSlZzY2ZXMGQrTXNPK1dhK0plUkZQWVpuNC9ybUtr?=
- =?utf-8?B?c3hkZVZkVWhiK05EMjZKaUZ6dzJJY0tJby9qbmRld1F0Z21YcXN2V2s2ZEg4?=
- =?utf-8?B?cUVuM3NUc3ZtM21HUElBT05QK2JHN0taYnNIKzBuRDBaUUFNSU1UK1RMQXV5?=
- =?utf-8?B?SUVjNHNIZ3VDa3VJNUd6c0loS0VJUVpHQ0Q0L1hxTEJVaUl5SEhhbU5xaTI1?=
- =?utf-8?B?TGxFSFNMaFJla1FiTjloYVFpSm1OUG1ZZzdIMUtsb3U3OEFVdXZjUFF3b25m?=
- =?utf-8?B?MDltUk5LSEJjR1gxV0I2UDdIeVR6eEw5UGZzNjIxOXFvZEZFT3FERTB2N2t4?=
- =?utf-8?B?dVJUSjBKSit3d1Era3gvN0FOUEhvMnBIM2M0Y3RzTHV6dDk0Y2ZqSU4zNEts?=
- =?utf-8?B?TGxUaEhpKzJyRG4yTWRaelJQbU42NkZiK29ZMFVML0V3aTJkQVZOODdIZ0xn?=
- =?utf-8?B?TnA4TWtjWmVrc1NIMkh5RlJTeEk1NzlncG9UWlZjbDM2WVhWSlN2Rm5LSmth?=
- =?utf-8?B?OVRSN3VnSXp1Y0ZKSjQ4UUwyaWF3MHNTVyt0cy9kYjRMd2MwTjJFZFROU2RR?=
- =?utf-8?B?VWVwSy8xSmNqVVF5eXNDcVgreGR3Ym13a2U0alQxVXl0TklycmRBbGFKQTFW?=
- =?utf-8?B?cWduN3BaQldrOUtzbVdPL0NOUXN3ekVtVUJseDV5VlljclJRUHhBNk5Cc1lH?=
- =?utf-8?B?eFhzWDhnVkRGYmFjaElnUE5wVGhiTDJnWjdhZjcyTVR4YjRFOGFoY1VqMGxq?=
- =?utf-8?B?R0pKRUdxeWFtNlFmR1lzWXFEU2hBbzVNS05EbmVXbXhsZlM4OGpDL2IyRUhM?=
- =?utf-8?B?TGgwbXVUZHJ6NlgraWVTVWZXZ25wTGtKQkJiMzlkSmNZb01UOUNGc1FpUnkv?=
- =?utf-8?B?V0E5UXFVajJhZldoYXlKVXdkdGZ3WldxTUFieXZJc1UzNzQwSGZ0RkgxNDdh?=
- =?utf-8?B?eHJUTGY3VXZFVXRNSDVZM2tkbVB2MFNqVG5wdlZOVi9wOWVhQWl3MGpvVXY0?=
- =?utf-8?B?UUN1S2pXSVVOb2Znc0ptVmtjREsxNG9ma3JyN0twYVVxZDBkK2VsQ05JMDdz?=
- =?utf-8?B?WmY0YkZxbVA3eHpXZGFrWmVxYklhNkhUeWN2R3ZjYlpRQ1NQOFlQdkc0d1Ir?=
- =?utf-8?B?VGd4SDROT2lBa21aTWR0VHFvTloxcHZiVzhsWkY3YlplU2dhYVVmd1QxcWxG?=
- =?utf-8?B?Z3JKVVJuZ0VjYnE5Y0taTk1tSXk3UEtBQTNpYjBrb09lSHF0RVRhQWdhNEI2?=
- =?utf-8?B?a1dlWExMMUJwVmp5Z0lpM3VpR1hOb0JlUzdIVy9aMXVXQ0hBMVdRenhPWFh1?=
- =?utf-8?B?TjBqN29XZ29FZzlwZ3dHOHp5ZFlIMjdibTkxeXZEbEJvdmdmcVZSdkNlREkv?=
- =?utf-8?B?TGxwUmRhcnJNamlmRmEzeDRRM01Fd21NYWJEZWdzdjFWU1Q2cWdkd1h3Rmdm?=
- =?utf-8?B?MXgxcnJKRTJzSWpOcTl5WG1raW5oY3VkUXNpVVNiR0ZneVROdlpGWG01N1Ur?=
- =?utf-8?B?L3ZqM09mUDlrbnp3U0ZGK0RoNFJ0ZWZITk0vcDM5ME40akxCTHV2Y29kSWdD?=
- =?utf-8?B?OXhxNnlrOVoxS2JVUFpKcWVGNWJwNTV3ZGRFL3dwd2FGMFA3MndmL09Bd2pW?=
- =?utf-8?B?QnhlMFdnV0I0TzZrOVZJYlZSSXJ3TmVTMlBEcjdodjN0eWsyclZiM2Z1K1d0?=
- =?utf-8?B?QWxzTGVPN2xFempQNUMvR3l6NFhBL2Zyb0dvSnNpWkJ3NnYxVVNQWXFzQms4?=
- =?utf-8?B?c3VlbGR6alNxNXRCZXowdXhqUVZURURyVWRONzFoWjA4RHRjQUl0ZWRCNDg0?=
- =?utf-8?B?RGJzY2hsTFdibUVOaE15aDNxbnA4QVhydVU4UjRjZlVHRlFmaFFOMFBiVlF5?=
- =?utf-8?B?bjFMK1RPTUNoWEU3ckdQVStwaXhMLzRkT2VBTkR2dFcvZytEZmRDdmZlcVlL?=
- =?utf-8?B?eHloUUJ0TW5jMXJsak9OSUJkV3pBdTJ0QzlDOUpHTTFGdnhNc2RaUjM2Zkh4?=
- =?utf-8?B?RUE9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: d5b5dd2e-b7ba-44c5-1440-08dc9170d14b
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?OXJEeE1rUHhzUENjMmIrTEdKZk4zOW8rVEE5Q3d2cGcxbDNPNlhWaGpzVmJE?=
+ =?utf-8?B?M1RQeEJjZkNvM0luY1ZYZXBPVlhzOTY0aTlWWkhFOUhyV3Q0UmtZUGdFai85?=
+ =?utf-8?B?ZFdjS3hjZ3Z0WFNCOEdqM3pvT2xkVFl0RmlmNDRyT0FSNW1IR051ampkQjdt?=
+ =?utf-8?B?THlRTjFPekxjdGdZRTAvTE44djExZWZ4MHhoMWsxYTY5OEpWeFBKR2VObHlt?=
+ =?utf-8?B?Z1Y1cHZFYVRQSXU1TFlUYUdWNUNsVVdXaEJVdldVWTAzL1duOFBhY3YwUU5F?=
+ =?utf-8?B?cTJIc2ZFMHpCbWFPZ2gxS3BCcFZXcFVNUFJVaEpZVnM4TWlTMTByVFhRSFRx?=
+ =?utf-8?B?ZkpieDdFNVdJblZqWG1UNWROQXpsendLZUl5OHJ5MXI4eVNXOWxzUjFUUnBC?=
+ =?utf-8?B?YnQydGplQXc0Q2RCV3dwMWo0dTZWcldxWDRrdFQ5SDh3YWpjbHBmOUIvQktk?=
+ =?utf-8?B?OFlPTHVEZWlHNjJUcm9jV0wwWWVRUnZTSmZTUlY2OHlhUHl6ck5wK3hvbDEy?=
+ =?utf-8?B?aDd1ek5Sekxmdms1KzFFZjZlS0FucE0xZDNEQjZvcDNySFRhNXZOSGdGaEwv?=
+ =?utf-8?B?cldFQklwZ3JBWXJIbGUveDZZdTNqeDg1V05LbENNU0VKSUgxWHdOMC81QjY5?=
+ =?utf-8?B?elVYNUtsRFF2cDdTUDhxdFVrazlSaC9pYmMxS3Rqd05ydzRzUFJ5RDd4TVd2?=
+ =?utf-8?B?RURJRytxUjV4SzM1dWVmUTl1d2F4UnpBZlZtaDJSZ0h1bGJ6U2QyaUVtS1U4?=
+ =?utf-8?B?K09mZnpiWDdOMW5lUklHK1NLOXMzM2xUSnhIVkZDMzNGM3cxZXBRdXRoaDFq?=
+ =?utf-8?B?dUEvaDVjRURNSHUvM1pmeEswMmI1ZG5uQmEyb2VacVZ6TEtmcFlTNm5jd2dw?=
+ =?utf-8?B?amRwejRjeXJGdVl0M3hQd2JHNytqSGlGb3RqYy81dHR3NkZwckIwNCtKaFNh?=
+ =?utf-8?B?WnhyOXVmQ3N6eXhQRHpSZnphMS83UHhjUndYY2RhUGhVTjZ1RTlPSnZhUDhW?=
+ =?utf-8?B?cUI3RkVDTDMxczE1SGdTOUM5RjBPWE9pczZFYndETXg0SVdxbEwzNjlnZWda?=
+ =?utf-8?B?MjM1eFVzZTVIRUFBeVdSVVlGK3gzZDcvaE02OHJMUWdidUZPMFJLU2ExWndu?=
+ =?utf-8?B?eUZnMTBoWjB2MW1vUVZiTUtyTEI0NDZCUTFRTGNvQXFSRXM4YjcyOStyK2pR?=
+ =?utf-8?B?T3RacUR1ZnlPbmtmd3lvcXF1SGd5NG5zd3RKSFVJbU5rUm05dXBUM3RYMXZq?=
+ =?utf-8?B?ckdIKzdqSThrbVZIMzJJVEdreXpYZFJUOVcxdkJPNU1tSDRSM2F6TlZBeUZH?=
+ =?utf-8?B?cCtiaFVqVDlDZ0ZEdG9yaXR2bGFGd1BVbWRBWkVSN1ZwalYzUTBNM0E3WFpN?=
+ =?utf-8?B?a005M1FyeGwvaVlWZkNmRjc4Nm9MT3FIOE44clFvY2hMYW5kY0pVaDg4a015?=
+ =?utf-8?B?eDNERjArQWNYOWRmNGxrZ2tRcVJUbjdGUnN4aU9PWDlpSTJJd3RmV0tsaDlG?=
+ =?utf-8?B?eFJ4aVRjZzhCV1pKRXRvUXhpUmRzTjdSeVZjNjl0V2FvZnFPYWF2L2dRVWVl?=
+ =?utf-8?B?OXJrbUVyd2pVbTlHNWREVWtXbWxIbU5mWXU2dWlhT3pDWTFIcmpjQ296NXQz?=
+ =?utf-8?B?M2F2SXNtbEJwclRpTjVpazN1a0ZxdmpsNDlkaFc1ZkxQekYrU0NlajNqM2JQ?=
+ =?utf-8?B?SmxxbDdjT3RjalVNYTVqN0RUL25tT2NUZTg4dTdrSDdoV0MxNEpmd1dPMTBs?=
+ =?utf-8?B?NUZPOCtyZHQrUDR3QmNOcmtuQk5hcWVPTUNFMFc4cXpVZ1d3Z0FFM0EySUtw?=
+ =?utf-8?B?Qjllcm92YVJRdk1oeU13YWFxNXhBcDNZVW95ZlY1dG5vRC9VZnQ2eEFhQTRP?=
+ =?utf-8?B?VTlULzV2bWhIQmRIY3IvT3E1V2VnVnpaWENMZnJ4V3paQnAyZzBINkFpOWxN?=
+ =?utf-8?B?SFZkYTFhUVJPdi9yR2lSN0xVUHhZV1Fra2huRG5IbS9ubVpTYnh1TFJYVjdI?=
+ =?utf-8?B?emJzQStRZEQ1NDVSeFUwSU5aV3lzVCtzaW1UeHh0V0lzTDIxSUlWVU8rako1?=
+ =?utf-8?B?S1BSbHpaOWZ4WW1UTUk2UXAza0lVbDBnK1JrQnV1ODJXT2ozM2Z1dkVueTRL?=
+ =?utf-8?B?c0NZS1plWnFJOXRBQWtKM3JkVlVpUys4UjdYdVhPRVYyb0JmU0dPRStwdytW?=
+ =?utf-8?B?Unc9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: f7482ce7-9804-4968-16e7-08dc9170e6be
 X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jun 2024 21:34:51.4917
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jun 2024 21:35:27.4674
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Ro+brbyYAwJIChlVcrmXGolbgBf4N8XVeNpxh5R0yODA2mIPYOgFpbn2NEH7fnGUP9ZK3dRW8tqrIiqkf60orfMqyi6o6p6/tQ07gDbaSQs=
+X-MS-Exchange-CrossTenant-UserPrincipalName: RWlwEH7uJYNNfv3NXsXzpfakUpAj/+4PX/q6VOxZnf5RRWQ5gyiaorvFv9vpsHxq1QMuCo5g1XZjpyZgtXlNtMSnt+pSiTXZkpqLfwBYWZw=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR11MB7714
 X-OriginatorOrg: intel.com
 
 Hi Tony,
 
 On 6/10/24 11:35 AM, Tony Luck wrote:
-> There isn't a simple hardware bit that indicates whether a CPU is
-> running in Sub-NUMA Cluster (SNC) mode. Infer the state by comparing
-> the number of CPUs sharing the L3 cache with CPU0 to the number of CPUs in
-> the same NUMA node as CPU0.
+> With Sub-NUMA Cluster (SNC) mode enabled the scope of monitoring resources
+> is per-NODE instead of per-L3 cache. Backwards compatibility is mainatined
+
+mainatined -> maintained
+
+> by providing files in the mon_L3_XX directories that sum event counts
+> for all SNC nodes sharing an L3 cache.
 > 
-> If SNC mode is detected, print a single informational message to the
-> console.
+> New files provide per-SNC node event counts.
 > 
-> Add the missing definition of pr_fmt() to monitor.c. This wasn't
-> noticed before as there are only "can't happen" console messages
-> from this file.
+> Users should be aware that SNC mode also affects the amount of L3 cache
+> available for allocation within each SNC node.
 > 
 > Signed-off-by: Tony Luck <tony.luck@intel.com>
 > ---
->   arch/x86/kernel/cpu/resctrl/monitor.c | 66 +++++++++++++++++++++++++++
->   1 file changed, 66 insertions(+)
+>   Documentation/arch/x86/resctrl.rst | 27 +++++++++++++++++++++++++++
+>   1 file changed, 27 insertions(+)
 > 
-> diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-> index efbb84c00d79..9835706ef772 100644
-> --- a/arch/x86/kernel/cpu/resctrl/monitor.c
-> +++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-> @@ -15,6 +15,8 @@
->    * Software Developer Manual June 2016, volume 3, section 17.17.
->    */
+> diff --git a/Documentation/arch/x86/resctrl.rst b/Documentation/arch/x86/resctrl.rst
+> index 627e23869bca..6695b7bc698d 100644
+> --- a/Documentation/arch/x86/resctrl.rst
+> +++ b/Documentation/arch/x86/resctrl.rst
+> @@ -375,6 +375,10 @@ When monitoring is enabled all MON groups will also contain:
+>   	all tasks in the group. In CTRL_MON groups these files provide
+>   	the sum for all tasks in the CTRL_MON group and all tasks in
+>   	MON groups. Please see example section for more details on usage.
+> +	On systems with Sub-NUMA Cluster (SNC) enabled there are extra
+> +	directories for each node (located within the "mon_L3_XX" directory
+> +	for the L3 cache they occupy). These are named "mon_sub_L3_YY"
+> +	where "YY" is the node number.
 >   
-> +#define pr_fmt(fmt)	"resctrl: " fmt
-> +
->   #include <linux/cpu.h>
->   #include <linux/module.h>
->   #include <linux/sizes.h>
-> @@ -1108,6 +1110,68 @@ void arch_mon_domain_online(struct rdt_resource *r, struct rdt_mon_domain *d)
->   	wrmsrl(MSR_RMID_SNC_CONFIG, val);
->   }
+>   "mon_hw_id":
+>   	Available only with debug option. The identifier used by hardware
+> @@ -484,6 +488,29 @@ if non-contiguous 1s value is supported. On a system with a 20-bit mask
+>   each bit represents 5% of the capacity of the cache. You could partition
+>   the cache into four equal parts with masks: 0x1f, 0x3e0, 0x7c00, 0xf8000.
 >   
-> +/* CPU models that support MSR_RMID_SNC_CONFIG */
-> +static const struct x86_cpu_id snc_cpu_ids[] __initconst = {
-> +	X86_MATCH_VFM(INTEL_ICELAKE_X, 0),
-> +	X86_MATCH_VFM(INTEL_SAPPHIRERAPIDS_X, 0),
-> +	X86_MATCH_VFM(INTEL_EMERALDRAPIDS_X, 0),
-> +	X86_MATCH_VFM(INTEL_GRANITERAPIDS_X, 0),
-> +	X86_MATCH_VFM(INTEL_ATOM_CRESTMONT_X, 0),
-> +	{}
-> +};
+> +Notes on Sub-NUMA Cluster mode
+> +==============================
+> +When SNC mode is enabled, Linux may load balance tasks between Sub-NUMA
+> +nodes much more readily than between regular NUMA nodes since the CPUs
+> +on Sub-NUMA nodes share the same L3 cache and the system may report
+> +the NUMA distance between Sub-NUMA nodes with a lower value than used
+> +for regular NUMA nodes.
 > +
-> +/*
-> + * There isn't a simple hardware bit that indicates whether a CPU is running
-> + * in Sub-NUMA Cluster (SNC) mode. Infer the state by comparing the
-> + * number CPUs sharing the L3 cache with CPU0 to the number of CPUs in
+> +The top-level monitoring files in each "mon_L3_XX" directory provide
+> +the sum of data across all SNC nodes sharing an L3 cache instance.
+> +Users who bind tasks to the CPUs of a specific Sub-NUMA node can read
+> +the "llc_occupancy", "mbm_total_bytes", and "mbm_local_bytes" in the
+> +"mon_sub_L3_YY" directories to get node local data.
+> +
+> +Memory bandwidth allocation is still performed at the L3 cache
+> +level. I.e. throttling controls are applied to all SNC nodes.
+> +
+> +L3 cache allocation bitmaps also apply to all SNC nodes. But note that
+> +the amount of L3 cache represented by each bit is divided by the number
+> +of SNC nodes per L3 cache. E.g. with a 100MB cache on a system with 10-bit
+> +allocation masks each bit normally represents 10MB. With SNC mode enabled
+> +with two SNC nodes per L3 cache, each bit would only represent 5MB.
 
-"number CPUs sharing" -> "number of CPUs sharing"?
+"each bit would only represent 5MB" -> "each bit represents 5MB" or
+"each bit only represents 5MB" or "each bit represents only 5MB"?
 
-> + * the same NUMA node as CPU0.
-> + * It is not possible to accurately determine SNC state if the system is
-> + * booted with a maxcpus=N parameter. That distorts the ratio of SNC nodes
-> + * to L3 caches. It will be OK if system is booted with hyperthreading
-> + * disabled (since this doesn't affect the ratio).
-> + */
-> +static __init int snc_get_config(void)
-> +{
-> +	struct cacheinfo *ci = get_cpu_cacheinfo_level(0, RESCTRL_L3_CACHE);
-> +	const cpumask_t *node0_cpumask;
-> +	int cpus_per_node, cpus_per_l3;
-> +	int ret;
 > +
-> +	if (!x86_match_cpu(snc_cpu_ids) || !ci)
-> +		return 1;
-> +
-> +	cpus_read_lock();
-> +	if (num_online_cpus() != num_present_cpus())
-> +		pr_warn("Some CPUs offline, SNC detection may be incorrect\n");
-> +	cpus_read_unlock();
-> +
-> +	node0_cpumask = cpumask_of_node(cpu_to_node(0));
-> +
-> +	cpus_per_node = cpumask_weight(node0_cpumask);
-> +	cpus_per_l3 = cpumask_weight(&ci->shared_cpu_map);
-> +
-> +	if (!cpus_per_node || !cpus_per_l3)
-> +		return 1;
-> +
-> +	ret = cpus_per_l3 / cpus_per_node;
-> +
-> +	/* sanity check: Only valid results are 1, 2, 3, 4 */
-> +	switch (ret) {
-> +	case 1:
-> +		break;
-> +	case 2 ... 4:
-> +		pr_info("Sub-NUMA Cluster mode detected with %d nodes per L3 cache\n", ret);
-> +		rdt_resources_all[RDT_RESOURCE_L3].r_resctrl.mon_scope = RESCTRL_L3_NODE;
-> +		break;
-> +	default:
-> +		pr_warn("Ignore improbable SNC node count %d\n", ret);
-> +		ret = 1;
-> +		break;
-> +	}
-> +
-> +	return ret;
-> +}
-> +
->   int __init rdt_get_mon_l3_config(struct rdt_resource *r)
->   {
->   	unsigned int mbm_offset = boot_cpu_data.x86_cache_mbm_width_offset;
-> @@ -1115,6 +1179,8 @@ int __init rdt_get_mon_l3_config(struct rdt_resource *r)
->   	unsigned int threshold;
->   	int ret;
+>   Memory bandwidth Allocation and monitoring
+>   ==========================================
 >   
-> +	snc_nodes_per_l3_cache = snc_get_config();
-> +
->   	resctrl_rmid_realloc_limit = boot_cpu_data.x86_cache_size * 1024;
->   	hw_res->mon_scale = boot_cpu_data.x86_cache_occ_scale / snc_nodes_per_l3_cache;
->   	r->num_rmid = (boot_cpu_data.x86_cache_max_rmid + 1) / snc_nodes_per_l3_cache;
-
-With typo fixed:
 
 | Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
 
