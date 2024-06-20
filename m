@@ -1,111 +1,138 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBFE01AC229;
-	Thu, 20 Jun 2024 12:29:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D911ACE65
+	for <patches@lists.linux.dev>; Thu, 20 Jun 2024 13:14:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718886597; cv=none; b=GBRDyBVzHGxkvOQDgSJo6WzvKWeZbQSmlrNRSfcTbBpXiA1hqNLOYDUNY0sMAi5fpqNGugV1ffusw4NNKqgZS1bIRJJA5g/gfntb3ZOA60N1XlgYS8E7krPDyS3xC144Od3xWGbXFsagncxvDfobBs32UjkVgaCLW/trj8o7plU=
+	t=1718889266; cv=none; b=BsS9Twfq/hZrHoFrEcNuUX5XK+0oQfi0iZ8CFU4UUCGpBEykM4sSnEK8ef/F4cROvytHxOQMjFxzwiwmNfKEVMI3uYB/OJf5zJQdfcNXgCAbzupChltWipXiW+zPhCJvUSd+HBlyHyGi7zWgrmjA7kI3wTmLuQIW8MW9eMZm2BA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718886597; c=relaxed/simple;
-	bh=TbXzmIvEO7TjjoHW3NdmWzbgPUbd6HxMNpznqg0zLUI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TL9944OsR2e4jC0GnC021/MrEC+fdfSrOLdQexwKAzkU1tGkvRSk4cT0OnHA3F9KSu1OyKfMKlHl3Eq8mYzGXUxJNgc6DcLgsxnwAebvVdKvES7U0JqUROS9aKig+zQ1xU4mRebBDvknz6h1w5TP+mdnaPVOkCSNpu/kKT7jx8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uyYxtf5f; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1718889266; c=relaxed/simple;
+	bh=Y+MEEyx41IcOVMqXoXDJWkJ9+FrOPr++BZN75feuo1Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qWg/j+6bEAR1uAg6SW7CE43Put+obLZqpEMpMP2Kw2Ay8M84vHCbqw8Exv4JbJRUpqUleNZF3t9GZEwtHZ0j9loXAoCfUFlRqxUWecPJaPXdlE7IcwV49jN3mlwipdXXstMKBJfyhun12UDwwbE9Au0lTidGOiG7H+ZokcscndI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EBj4Pd6m; arc=none smtp.client-ip=209.85.160.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uyYxtf5f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB8B8C2BD10;
-	Thu, 20 Jun 2024 12:29:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718886596;
-	bh=TbXzmIvEO7TjjoHW3NdmWzbgPUbd6HxMNpznqg0zLUI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=uyYxtf5f9af/GSBjoWdLh0kD+eKh3XfeErWbdm7wMgVmh8r0tFM3nTNhzKLG8PitN
-	 h+uA3y2BoOThihevb1dlLDH/vGEfgWNdggjpfzcP48aUZw52muSvTR8XMmI6VHu6Cy
-	 8IL8J8nDCkw5OkKiWYylDmD2Qv2/Yxs6uVMQLxQ8=
-Date: Thu, 20 Jun 2024 14:29:53 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
-	Miaohe Lin <linmiaohe@huawei.com>, Arnd Bergmann <arnd@arndb.de>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	David Hildenbrand <david@redhat.com>,
-	Cgroups <cgroups@vger.kernel.org>, linux-mm <linux-mm@kvack.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>, jbeulich@suse.com,
-	LTP List <ltp@lists.linux.it>
-Subject: Re: [PATCH 6.9 000/281] 6.9.6-rc1 review
-Message-ID: <2024062028-caloric-cost-2ab9@gregkh>
-References: <20240619125609.836313103@linuxfoundation.org>
- <CA+G9fYtPV3kskAyc4NQws68-CpBrV+ohxkt1EEaAN54Dh6J6Uw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EBj4Pd6m"
+Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-4405743ac19so7931391cf.0
+        for <patches@lists.linux.dev>; Thu, 20 Jun 2024 06:14:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1718889263; x=1719494063; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=k8loiKfZnA+YA+BNdznuyc93e427hOVjzdhKBo4Mcdg=;
+        b=EBj4Pd6ms0iBxknECZo5XzR9aNheu9ZJi77vNvefzUF/8HNLOzRERoPZabi1Q4bHTh
+         lLUvNIr+VU5o3U4OtELoU0Td//6M/gHneVZ9zMmCbPEbNTOkHC/8nDpQ38M0c0iFgEeE
+         RYFL0VPIp4rePj8QyAGwlVfqRKr89ionHpmlK8+5Dj1E1Q7BleMOslDXGdFwoqQK3IjY
+         utHy5APiJvkE5D8vdzkZHwjc5Hllx1LjDoCmC21K3P+4KVFGz53n9U3q0Vy2FecERtil
+         QCSX+0bxruYCfMMrCDnX1mcU+KYy+FapnLW6nJcdrlWRf+6hJPKzGMZP1gQi4Mkfmhrk
+         lx/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718889263; x=1719494063;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=k8loiKfZnA+YA+BNdznuyc93e427hOVjzdhKBo4Mcdg=;
+        b=FRNIDAO243pRqnIo4rIiZHF/t90shFZp3r6XwDDUxcfnkK6pvLM76aFeQ+55pKfz88
+         +BZShnIZChtYBfXAp6qX6Y4Ol8a/cNBFFRpfL0DoaiFhTUyYLY+yH8T5AE9QtbPnbC67
+         UP/AnI43ScYqO+AfDYtpNqLX4y5YcQdwksMPNXBjcvMVc8yeF3xqYH4eIQ0CzQZ1kBPY
+         7FWNTlpUkSp/7EGaRXQIfiaIeZ8HWdlnhR2Ud+axu0iMkZtBpeH4uByLbjOV676ITLd6
+         hFD9hJGoO2sEUxLqLYaJSHibSwOCQDULVApsUTIy79MhPSt1LgoQKXJcwtzXEr8MEflR
+         3DdQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXW8wgUTxq+KF6XUupF670I/PtqqCgSvCTiPyzpl8OVuEFm2O5QoKjLBC9xotx/y9z9JdM5qnRV2aH3mes43B51sXg5lNbAHg==
+X-Gm-Message-State: AOJu0YzeKcAT2FZpVI9+w5GdGgiSwtHSkbgRqXfLbdxzj3gPbHcHJTzw
+	iwCneuRHqKuR07f+59AyxiikZfEcj/K5Y0B466wUCnHN2DGuQ26j0kib33hpCSMvXCjiEmJKXQE
+	Yv1VNv3n8bLgCwNL/4vaUPpjkKdDWiNYkAUP8OQ==
+X-Google-Smtp-Source: AGHT+IGiHKV+q2qJu/mkMnrbWS6TykUfrsN8Y6wuNtachV8KZU4pBm3Bkt8z8L8YuUKSny6A751rJg0UHn+YKbmJrf0=
+X-Received: by 2002:a05:622a:1813:b0:43f:f5e0:8e86 with SMTP id
+ d75a77b69052e-4449b90ec32mr145142351cf.10.1718889263444; Thu, 20 Jun 2024
+ 06:14:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+G9fYtPV3kskAyc4NQws68-CpBrV+ohxkt1EEaAN54Dh6J6Uw@mail.gmail.com>
+References: <20240619125609.836313103@linuxfoundation.org> <CA+G9fYtPV3kskAyc4NQws68-CpBrV+ohxkt1EEaAN54Dh6J6Uw@mail.gmail.com>
+ <2024062028-caloric-cost-2ab9@gregkh>
+In-Reply-To: <2024062028-caloric-cost-2ab9@gregkh>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Thu, 20 Jun 2024 18:44:11 +0530
+Message-ID: <CA+G9fYsr0=_Yzew1uyUtrZ7ayZFYqmaNzAwFZJPjFnDXZEwYcQ@mail.gmail.com>
+Subject: Re: [PATCH 6.9 000/281] 6.9.6-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	broonie@kernel.org, Miaohe Lin <linmiaohe@huawei.com>, Arnd Bergmann <arnd@arndb.de>, 
+	Dan Carpenter <dan.carpenter@linaro.org>, David Hildenbrand <david@redhat.com>, 
+	Cgroups <cgroups@vger.kernel.org>, linux-mm <linux-mm@kvack.org>, 
+	Baolin Wang <baolin.wang@linux.alibaba.com>, jbeulich@suse.com, 
+	LTP List <ltp@lists.linux.it>
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Jun 20, 2024 at 05:21:09PM +0530, Naresh Kamboju wrote:
-> On Wed, 19 Jun 2024 at 18:41, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
+On Thu, 20 Jun 2024 at 17:59, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> On Thu, Jun 20, 2024 at 05:21:09PM +0530, Naresh Kamboju wrote:
+> > On Wed, 19 Jun 2024 at 18:41, Greg Kroah-Hartman
+> > <gregkh@linuxfoundation.org> wrote:
+> > >
+> > > This is the start of the stable review cycle for the 6.9.6 release.
+> > > There are 281 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, please
+> > > let me know.
+> > >
+> > > Responses should be made by Fri, 21 Jun 2024 12:55:11 +0000.
+> > > Anything received after that time might be too late.
+> > >
+> > > The whole patch series can be found in one patch at:
+> > >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.9.6-rc1.gz
+> > > or in the git tree and branch at:
+> > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.9.y
+> > > and the diffstat can be found below.
+> > >
+> > > thanks,
+> > >
+> > > greg k-h
 > >
-> > This is the start of the stable review cycle for the 6.9.6 release.
-> > There are 281 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
+> > There are two major issues on arm64 Juno-r2 on Linux stable-rc 6.9.6-rc1
 > >
-> > Responses should be made by Fri, 21 Jun 2024 12:55:11 +0000.
-> > Anything received after that time might be too late.
+> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 > >
-> > The whole patch series can be found in one patch at:
-> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.9.6-rc1.gz
-> > or in the git tree and branch at:
-> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.9.y
-> > and the diffstat can be found below.
+> > 1)
+> > The LTP controllers cgroup_fj_stress test cases causing kernel crash
+> > on arm64 Juno-r2 with
+> > compat mode testing with stable-rc 6.9 kernel.
 > >
-> > thanks,
+> > In the recent past I have reported this issues on Linux mainline.
 > >
-> > greg k-h
-> 
-> There are two major issues on arm64 Juno-r2 on Linux stable-rc 6.9.6-rc1
-> 
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> 
-> 1)
-> The LTP controllers cgroup_fj_stress test cases causing kernel crash
-> on arm64 Juno-r2 with
-> compat mode testing with stable-rc 6.9 kernel.
-> 
-> In the recent past I have reported this issues on Linux mainline.
-> 
-> LTP: fork13: kernel panic on rk3399-rock-pi-4 running mainline 6.10.rc3
->   - https://lore.kernel.org/all/CA+G9fYvKmr84WzTArmfaypKM9+=Aw0uXCtuUKHQKFCNMGJyOgQ@mail.gmail.com/
-> 
-> it goes like this,
->   Unable to handle kernel NULL pointer dereference at virtual address
->   ...
->   Insufficient stack space to handle exception!
->   end Kernel panic - not syncing: kernel stack overflow
-> 
-> 2)
-> The LTP controllers cgroup_fj_stress test suite causing kernel oops on
-> arm64 Juno-r2 (with the clang-night build toolchain).
->   Unable to handle kernel NULL pointer dereference at virtual address
-> 0000000000000009
->   Internal error: Oops: 0000000096000044 [#1] PREEMPT SMP
->   pc : xprt_alloc_slot+0x54/0x1c8
->   lr : xprt_alloc_slot+0x30/0x1c8
+> > LTP: fork13: kernel panic on rk3399-rock-pi-4 running mainline 6.10.rc3
+> >   - https://lore.kernel.org/all/CA+G9fYvKmr84WzTArmfaypKM9+=Aw0uXCtuUKHQKFCNMGJyOgQ@mail.gmail.com/
+> >
+> > it goes like this,
+> >   Unable to handle kernel NULL pointer dereference at virtual address
+> >   ...
+> >   Insufficient stack space to handle exception!
+> >   end Kernel panic - not syncing: kernel stack overflow
+> >
+> > 2)
+> > The LTP controllers cgroup_fj_stress test suite causing kernel oops on
+> > arm64 Juno-r2 (with the clang-night build toolchain).
+> >   Unable to handle kernel NULL pointer dereference at virtual address
+> > 0000000000000009
+> >   Internal error: Oops: 0000000096000044 [#1] PREEMPT SMP
+> >   pc : xprt_alloc_slot+0x54/0x1c8
+> >   lr : xprt_alloc_slot+0x30/0x1c8
+>
+> And these are regressions?  Any chance to run 'git bisect'?
 
-And these are regressions?  Any chance to run 'git bisect'?
+it's difficult to reproduce the first one so we haven't been able to bisect it.
+It seemd like David and Baolin might have an idea what's causing it.
 
-thanks,
-
-greg k-h
+- Naresh
