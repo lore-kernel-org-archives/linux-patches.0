@@ -1,82 +1,118 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BC11AAE2E;
-	Thu, 20 Jun 2024 11:44:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3281AC768
+	for <patches@lists.linux.dev>; Thu, 20 Jun 2024 11:47:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718883859; cv=none; b=FSEUDM9BGkFHOxPuLzZ0Tk/Tw+VXlLKxL5g7tcjWO32oJXT8ivo94KpfPvc6aRnpKGrTVuQRaz4gPt/cEvVdVWEGl3ojmZG0z9+11ZyqII/l2A21P/8/52/1fI72mCe1YAhvN20Ql0SdtpZNgolLR+J5W+WabXgUwmjIJ7mPxQU=
+	t=1718884047; cv=none; b=mepRSU1p7rqAPtwH2REgal5q3tZIp/JSCSAHKw/39RzhKJ6qUdJTP3yTkScyId9K3JN3DPJBZ2Qoya6fb7Q3166V+Q9PoBwzw6mWI/pTXi3kkJNwGuFZNCK6rQAcUhTMTGZ0gNUP3AqjbAf4OpYF9Qg/N32bjX6b9uk9hbM5h8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718883859; c=relaxed/simple;
-	bh=fCzCVYmwVLtjDfxVSvewcoKsD/2i9tBOf7Yfa94ng3A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=crj31QlKoZGUXCckAksk16zFhU4/9uCMHeUthVprGe8CYLJz5nDhCy2gP+jpN7k38BjsjEf+TpNQK1VTLcFjzwoRQsI8E1nqLGTM6AIU07ZebtOwCn2dSb8jdWFlsnOxbJDOrTChaSr5rDVMs21DhjkOrhO6Wfwuv8liiFNA90o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O36NP9Wr; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1718884047; c=relaxed/simple;
+	bh=/1HS+rQtTslNAHKJd3uK2CeEl+AXFRv821YL7VlRfKo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sUC0A6Z273QcIpGI3je+TjtNNQNV0OQgAUgmUtVij9/L22KoLs2haShnRuyJVurvg0GwgQ6QO3Edo7Iq2e/3QBSRpJrKizaqdLahwMd+7AC+yUEUtIV2VlPfSR3YZ1GPr4BC9sHjAjMrNRX1pDpYnKtbhZ3B/OVtNv2B6JF0DlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b=eLhqqRLK; arc=none smtp.client-ip=209.85.216.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O36NP9Wr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF2EDC2BD10;
-	Thu, 20 Jun 2024 11:44:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718883858;
-	bh=fCzCVYmwVLtjDfxVSvewcoKsD/2i9tBOf7Yfa94ng3A=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=O36NP9WreWnFZ/6iWNUkEdTDNFg/xOwUer0meKixNWHn4+oU9K0+jaq9BBW4Gy7As
-	 iGzfWAM+BM9rvxj1BaKCnWyDMil1XGplYZN/6lj8tnuT/QdwbUWJRId45MWPTInZ52
-	 t/S20JWpMDoy+e7ZEZi+HqSLfl1G2Vj6OPl6NCzygEB0Yf/emQuZKlRnQdPAUPJWHP
-	 mKn+x0AbfkAA7eBC8IvadkMTkK80wPPrHH7dsn1jSHdudb/medEZ9Ew0OKz23ECy4x
-	 zorm1yuH+6XbnUurjdxv3/vvCcyIu0ReWH1FG5Z2uW10m3XOuG+LjBjynfIpHV9cjZ
-	 iLQvSWl3fFalA==
-Date: Thu, 20 Jun 2024 12:44:11 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com
-Subject: Re: [PATCH 6.9 000/281] 6.9.6-rc1 review
-Message-ID: <26921936-9a73-405a-b315-cb9f474fedac@sirena.org.uk>
-References: <20240619125609.836313103@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b="eLhqqRLK"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-2c2dee9d9cfso686986a91.3
+        for <patches@lists.linux.dev>; Thu, 20 Jun 2024 04:47:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=futuring-girl-com.20230601.gappssmtp.com; s=20230601; t=1718884045; x=1719488845; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oDbQvMs5FZ0E2LKJR9+/mbKWM6Cdi78nFokQhVSGaxc=;
+        b=eLhqqRLK0EC4dKj9oX8oGHWmbloQsMtkHc+lkUA/bAa71LroUyEesAHOthABxDUZ+A
+         8DVkp/fOl1Drj4pCKX9WQpO8BW3OSMscR/MFq12VTVlgGBCAYzqyXjlVWkLKwySffiLL
+         em9+D5wZFzvBZzXE0GMYZXoaGMmcVfuKFa/njPsT999n31+4bzpfj1gx1wi0Hy0C1XGH
+         uMHNdVzuJssIQZl2wXeUX7X/S+hPyKxEStTYMEy0qucPhpmqwSKGG+PnJbAOek82AMK0
+         7YWnjLy0fvn8f91Eh0cKLICPvn4rtEaJEoL3BukYP4Oet5KAM1c5bMsynOVc0hVUG45j
+         HEaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718884045; x=1719488845;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oDbQvMs5FZ0E2LKJR9+/mbKWM6Cdi78nFokQhVSGaxc=;
+        b=UCCaUYuqwhmQAXleIev1FS6Y2HgPhaOBhlsg0fhjgWNbZUHcfbq+ruoJIdyRuaW3Id
+         YDAHqL1LpocxgQP3VTUgRIRx35cnR4ich8fo8k4BUtKYBnJ3MPsnfI7Sz/v8uBE1Wgum
+         lA5ElDs85ozMmpZgj5AejhZ4NM7bpqii3hz6bwN0hUty17gR2oSZG5f0+fy60qEyW+kG
+         eOzj/lH+mPaYJuohQLER8gym9ggTjDpoeyw1v09e17u0Z+UT6ZqwgrIC34OvLmNcj75j
+         3YKmb3Xx/irP7BUeOgqzuZnbHFSYtrsK+lHxPOOQOEpL18w0+jiHy67814MIQgA80XlV
+         xsGQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUfFkgdURuwfpp3JH9ANohdzr3j3vEKnhtwYZA/BF7KXWW3W0sZMKJU1JK2MsMaYFIYCMbYynsxEIbL2YE9/Iu9GW+qnl2mfQ==
+X-Gm-Message-State: AOJu0YwJiV69/x6Iu+eJ5KntPcgTv9G5y5aFcUn8N1DXhsHrgzsS3LDS
+	t0tKeBA4RxXL0yYKs6P9Lbl/WSsJ8SdrEnWLf07hHLUG+5FX1anqhij/guayFYW7FasjdhVEyLD
+	us2jTMBPyiROwJddiBVSzupT2Dcmf0ZZL0BYuxA==
+X-Google-Smtp-Source: AGHT+IFH9K37gIw/JKx90Qnlyho5R03GHOY6Z/ykjRvo/B5y1YXbTFndIQjJKqj0qsSX4d+stSE44xU0DYi3Wyrzj2Y=
+X-Received: by 2002:a17:90a:ff11:b0:2c4:b495:49a2 with SMTP id
+ 98e67ed59e1d1-2c7b5d97dbemr4859556a91.39.1718884044893; Thu, 20 Jun 2024
+ 04:47:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="m+iZN+hwwN1Uq4kI"
-Content-Disposition: inline
-In-Reply-To: <20240619125609.836313103@linuxfoundation.org>
-X-Cookie: You're already carrying the sphere!
+References: <20240619125606.345939659@linuxfoundation.org>
+In-Reply-To: <20240619125606.345939659@linuxfoundation.org>
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Thu, 20 Jun 2024 20:47:14 +0900
+Message-ID: <CAKL4bV52_bZjWk7_JdaHAzf6eSG4-8V77zj5YzwJH98Mz9P1vA@mail.gmail.com>
+Subject: Re: [PATCH 6.6 000/267] 6.6.35-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hi Greg
 
---m+iZN+hwwN1Uq4kI
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Wed, Jun 19, 2024 at 02:52:39PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.9.6 release.
-> There are 281 patches in this series, all will be posted as a response
+On Wed, Jun 19, 2024 at 9:59=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.6.35 release.
+> There are 267 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
+>
+> Responses should be made by Fri, 21 Jun 2024 12:55:11 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.6.35-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.6.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-Tested-by: Mark Brown <broonie@kernel.org>
+6.6.35-rc1 tested.
 
---m+iZN+hwwN1Uq4kI
-Content-Type: application/pgp-signature; name="signature.asc"
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
 
------BEGIN PGP SIGNATURE-----
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmZ0FgsACgkQJNaLcl1U
-h9D7XAf/cqGbZVEr7K9YkgOZOvbSucce5boQ+Sqh3jxe0/nbaTY7h4AMEDMhBXEI
-o53U2B/i358QpQpxXz8sv+koGCoJXH3ut/W3GA279+o+5oAHqsaMxEdwyXGxcVtF
-HogIT3GvqRksw8hUSefTAX0L12IyNyU/6vViljJEVkQBsbJbT7kryF/AcKvXVXx4
-DNaWXsikIIrSXbVJiC0qdH71Ag8Lhv8i9srZ/AoAaPN+KAGd/C5VSUJ2SzUFWzQl
-7WFVesSD0AY+nUhm1n/JODCXXiFOytLZAhuxh/MXeyEd/MqAbWbwgZQ3H5WDcYiM
-IOc5rda/OZjMgcF0nN3p0O+fY6ir7w==
-=jAM4
------END PGP SIGNATURE-----
+[    0.000000] Linux version 6.6.35-rc1rv
+(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 14.1.1 20240522, GNU ld (GNU
+Binutils) 2.42.0) #1 SMP PREEMPT_DYNAMIC Thu Jun 20 19:16:30 JST 2024
 
---m+iZN+hwwN1Uq4kI--
+Thanks
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
