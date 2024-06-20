@@ -1,81 +1,111 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB4446BF;
-	Thu, 20 Jun 2024 12:18:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBFE01AC229;
+	Thu, 20 Jun 2024 12:29:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718885906; cv=none; b=jVlMvEEAPwkPLPylPAEA21h34UNOPTYRC4XADccnvfdhTCf2X8xR3y6bCmBxWPg2zGXvcoZSm8yJedcO7Y1fT1dy+LIGq1picERz+gb4ufuTl278l8AnOkUni6dRzyFfbZXvCgKwAZ/inY4jdGDawpAIuI5fRsgjUwT+Wp9VkJM=
+	t=1718886597; cv=none; b=GBRDyBVzHGxkvOQDgSJo6WzvKWeZbQSmlrNRSfcTbBpXiA1hqNLOYDUNY0sMAi5fpqNGugV1ffusw4NNKqgZS1bIRJJA5g/gfntb3ZOA60N1XlgYS8E7krPDyS3xC144Od3xWGbXFsagncxvDfobBs32UjkVgaCLW/trj8o7plU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718885906; c=relaxed/simple;
-	bh=m23wviM+nDSXF6oazxRjci1uVGHzXcEbpfM7cuR6PK0=;
+	s=arc-20240116; t=1718886597; c=relaxed/simple;
+	bh=TbXzmIvEO7TjjoHW3NdmWzbgPUbd6HxMNpznqg0zLUI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=asZAY4x308vPsmy5Ng2iJZX70AokdXzJLOOubnGwgoXw9kZ1muZPdFNcD7Aaj7C9jFo2FAVqbOGbibpD+AwpSkY8Gb5YXAU2+TiKVDZXEX5ZPf2KTp3pPP+n0OZrPd64NGcm4hqj3sIcmOe05i6acNpqUgX4tJLVRo/zZHdSB/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b=aboSZd6u; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=TL9944OsR2e4jC0GnC021/MrEC+fdfSrOLdQexwKAzkU1tGkvRSk4cT0OnHA3F9KSu1OyKfMKlHl3Eq8mYzGXUxJNgc6DcLgsxnwAebvVdKvES7U0JqUROS9aKig+zQ1xU4mRebBDvknz6h1w5TP+mdnaPVOkCSNpu/kKT7jx8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uyYxtf5f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="aboSZd6u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7064DC2BD10;
-	Thu, 20 Jun 2024 12:18:24 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="aboSZd6u"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1718885900;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=m23wviM+nDSXF6oazxRjci1uVGHzXcEbpfM7cuR6PK0=;
-	b=aboSZd6uL21FxB4j1vA5liGJeAwbow1aX8teBrnVa7pe73ANLZxHScBS/bywZR1LvoRLTu
-	EEIxN8pK/+rCTX9XbwhjbzlIwIYF4mMyZywSLtOsVWpGUuHF8KYKnQWrNl17zN3krfjsm+
-	Jj/qL9Sh3lK43R9rcNFkiMU3ejZFu6A=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 650c02c3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 20 Jun 2024 12:18:20 +0000 (UTC)
-Date: Thu, 20 Jun 2024 14:18:17 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Aleksa Sarai <cyphar@cyphar.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	tglx@linutronix.de, linux-crypto@vger.kernel.org,
-	linux-api@vger.kernel.org, x86@kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>,
-	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
-	Jann Horn <jannh@google.com>,
-	Christian Brauner <brauner@kernel.org>,
-	David Hildenbrand <dhildenb@redhat.com>
-Subject: Re: [PATCH v18 2/5] random: add vgetrandom_alloc() syscall
-Message-ID: <ZnQeCRjgNXEAQjEo@zx2c4.com>
-References: <20240620005339.1273434-1-Jason@zx2c4.com>
- <20240620005339.1273434-3-Jason@zx2c4.com>
- <20240620.020423-puny.wheat.mobile.arm-1wWnJHwWYyAl@cyphar.com>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uyYxtf5f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB8B8C2BD10;
+	Thu, 20 Jun 2024 12:29:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1718886596;
+	bh=TbXzmIvEO7TjjoHW3NdmWzbgPUbd6HxMNpznqg0zLUI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=uyYxtf5f9af/GSBjoWdLh0kD+eKh3XfeErWbdm7wMgVmh8r0tFM3nTNhzKLG8PitN
+	 h+uA3y2BoOThihevb1dlLDH/vGEfgWNdggjpfzcP48aUZw52muSvTR8XMmI6VHu6Cy
+	 8IL8J8nDCkw5OkKiWYylDmD2Qv2/Yxs6uVMQLxQ8=
+Date: Thu, 20 Jun 2024 14:29:53 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
+	Miaohe Lin <linmiaohe@huawei.com>, Arnd Bergmann <arnd@arndb.de>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	David Hildenbrand <david@redhat.com>,
+	Cgroups <cgroups@vger.kernel.org>, linux-mm <linux-mm@kvack.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>, jbeulich@suse.com,
+	LTP List <ltp@lists.linux.it>
+Subject: Re: [PATCH 6.9 000/281] 6.9.6-rc1 review
+Message-ID: <2024062028-caloric-cost-2ab9@gregkh>
+References: <20240619125609.836313103@linuxfoundation.org>
+ <CA+G9fYtPV3kskAyc4NQws68-CpBrV+ohxkt1EEaAN54Dh6J6Uw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240620.020423-puny.wheat.mobile.arm-1wWnJHwWYyAl@cyphar.com>
+In-Reply-To: <CA+G9fYtPV3kskAyc4NQws68-CpBrV+ohxkt1EEaAN54Dh6J6Uw@mail.gmail.com>
 
-Hey Aleksa,
+On Thu, Jun 20, 2024 at 05:21:09PM +0530, Naresh Kamboju wrote:
+> On Wed, 19 Jun 2024 at 18:41, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > This is the start of the stable review cycle for the 6.9.6 release.
+> > There are 281 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Fri, 21 Jun 2024 12:55:11 +0000.
+> > Anything received after that time might be too late.
+> >
+> > The whole patch series can be found in one patch at:
+> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.9.6-rc1.gz
+> > or in the git tree and branch at:
+> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.9.y
+> > and the diffstat can be found below.
+> >
+> > thanks,
+> >
+> > greg k-h
+> 
+> There are two major issues on arm64 Juno-r2 on Linux stable-rc 6.9.6-rc1
+> 
+> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> 
+> 1)
+> The LTP controllers cgroup_fj_stress test cases causing kernel crash
+> on arm64 Juno-r2 with
+> compat mode testing with stable-rc 6.9 kernel.
+> 
+> In the recent past I have reported this issues on Linux mainline.
+> 
+> LTP: fork13: kernel panic on rk3399-rock-pi-4 running mainline 6.10.rc3
+>   - https://lore.kernel.org/all/CA+G9fYvKmr84WzTArmfaypKM9+=Aw0uXCtuUKHQKFCNMGJyOgQ@mail.gmail.com/
+> 
+> it goes like this,
+>   Unable to handle kernel NULL pointer dereference at virtual address
+>   ...
+>   Insufficient stack space to handle exception!
+>   end Kernel panic - not syncing: kernel stack overflow
+> 
+> 2)
+> The LTP controllers cgroup_fj_stress test suite causing kernel oops on
+> arm64 Juno-r2 (with the clang-night build toolchain).
+>   Unable to handle kernel NULL pointer dereference at virtual address
+> 0000000000000009
+>   Internal error: Oops: 0000000096000044 [#1] PREEMPT SMP
+>   pc : xprt_alloc_slot+0x54/0x1c8
+>   lr : xprt_alloc_slot+0x30/0x1c8
 
-On Wed, Jun 19, 2024 at 07:13:26PM -0700, Aleksa Sarai wrote:
-> Then again, I guess since libc is planned to be the primary user,
-> creating a new syscall in a decade if necessary is probably not that big
-> of an issue.
+And these are regressions?  Any chance to run 'git bisect'?
 
-I'm not sure going the whole big struct thing is really necessary, and
-for an additional reason: this is only meant to be used with the vDSO
-function, which is also coupled with the kernel. It doesn't return
-information that's made to be used (or allowed to be used) anywhere
-else. So both the vdso code and the syscall code are part of the same
-basic thing that will evolve together. So I'm not convinced extensible
-struct really makes sense for this, as neat as it is.
+thanks,
 
-If there's wide consensus that it's desirable, in contrast to what I'm
-saying, I'm not vehemently opposed to it and could do it, but it just
-seems like massive overkill and not at all necessary. Things are
-intentionally as simple and straightforward as can be.
-
-Jason
+greg k-h
