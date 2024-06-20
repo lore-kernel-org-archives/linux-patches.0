@@ -1,224 +1,114 @@
-Received: from mail-ua1-f43.google.com (mail-ua1-f43.google.com [209.85.222.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F9A1AF6B6
-	for <patches@lists.linux.dev>; Thu, 20 Jun 2024 15:39:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A401AD411;
+	Thu, 20 Jun 2024 15:48:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718897997; cv=none; b=khjldWbiEMLN+Qt3+S+HVxWwwTUvzZ9kvPycg0F/WRogh1QFkyGLWJoMsopF7583vbU8mNF5qzxkvewTD0GEC64Ip8wSFQp/iu8Jhdz4HCRExK/cl7FWQm7Wpg+CGMp064dy48MeMo7e4xXLNmnHm9aJVHV9N0cMwmyU6pJUPRI=
+	t=1718898504; cv=none; b=n2IjUy4Nz+6kDpvVn3Nmb0h2g4drvVEqnMg04THj0nQz6pIfMxVelIy80ZLMDWCnIqz9Cv1VIOLlTKbGbN8UJGaOjX0JR7mmdCL5hv+AjRDc96bizCPlTVvAr5Yi8hiO5un8syroqJ8iMRA4TcBehZQDOPR1Ofzo+LVSqOjJ7bE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718897997; c=relaxed/simple;
-	bh=SAbg+wVYqph3TL90xOL1oynPwf5bkeyQps0mBCaXQX0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=l8kUPn4ihVu/SjBXdsCxBIuS79U0SZPuGmrhuleFwc8W69/iD3ftq87fUdww+vx0T79A2Oohxb/nN9lTYS2N5ct8sOObiWCT0S2SoZx6B3LSsPlfgsHwUhvoc4P6JKDDKvE3rg3mvtVE6tUghLpjFpBXvHnD0AkkPNPfrC9wRi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=y0qjIdBv; arc=none smtp.client-ip=209.85.222.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1718898504; c=relaxed/simple;
+	bh=ERDzmEKBIwJPWXFItLB7ZAVRuz4nYQB2+DCaWb+Lv9Q=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=NEuLpneFVJ3kzsS8zO8seWN13PkTTHBjXfKo4ZYMiACML3HyOsultj3ayY+tLrBlCl2DfeNLg1VkJKrepHFFB1N0mzXy+v9qdfzkfXz2t+F44UoBbSpevwgj2aWtD+zlKpPBdKp2eDdUzv2dvMv5hmCtrhpd3WOTh3bNtEADrWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WKsMBpoY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="y0qjIdBv"
-Received: by mail-ua1-f43.google.com with SMTP id a1e0cc1a2514c-80f636b0171so288438241.0
-        for <patches@lists.linux.dev>; Thu, 20 Jun 2024 08:39:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718897994; x=1719502794; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=5GUJPV8yOp4RRoYY7LVY9TGkg0HQmwQOmVMKijpbR4g=;
-        b=y0qjIdBvbItCnltynTsV3TRROD+vw6eSGZC5J/tdN3BlNuUehijwklHWnszfg5Mbid
-         /9njKfD3jGV36pmQI2+BXDWEICOMcdjQXmQqeu4k9AHDjgylxl+2GVBkDFr4c1/Y/YT8
-         GJoalE/lfSxaFPLDxYFeln19GVBhPNCgy28A+oHBUVzsjNWeEJA3fSW0d/6qsw3gxFEq
-         3Y5C0wDL/biW8geKgPLS6pCTWsBGFlwr46sTAm02Tal5XIF0IQVZL8wCJnik8pYHXYuo
-         lGUABM1iGeW8w+jFi8/OrRCLA2hTlaXErqF2v6EoPckNLiiPeTm7onBQwynAF+UdU0o0
-         p1OA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718897994; x=1719502794;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5GUJPV8yOp4RRoYY7LVY9TGkg0HQmwQOmVMKijpbR4g=;
-        b=AhQ4EAwrnsSfNEonh+6NEWFGZDiY23AliINlwuVJDjRHR4ak4ov309jiPCN6UpqyKN
-         Cx0oAw1QKdP6CHPS2Yjo/xgiATTNH9Vc7hDP5HaAo8ELpejogzAgOJx2C8buNX9Ab5TR
-         j6t4j/wlH/x4EWdfhg6B7Cks5VvrNyjRo1ldJwuATw/SjMHGkBV7Z/npQxJbR0L2az30
-         jaAyWOULFzdRngM29FQBqFPM8vasA0sfe8C3jp7eKvYSSJagF88QditEfELcGkIvlFf/
-         0/yBEx4xgklsQyGhW5csMPoMymeZN93iKkBotX1mLOHgsg/znQ6mGr68c/Fb+CMr7JK2
-         0dlA==
-X-Forwarded-Encrypted: i=1; AJvYcCVLgW5JmaHuzL6h2rORwHAcsReyUQWqAjoYRlV5Gs2mFjgv/6snaVtK3zJDVpqeq2f/2FV0TK8O4fRkFOcaUBy1kOWdrtBvmQ==
-X-Gm-Message-State: AOJu0YydzWVdjlWqwAWaYbTR73s20mbbLUw3gq8E6+MQFKHumXiwUdMR
-	OkuuIShGKlbH66zbj3sAHYs8RVzcyw+OJ4lAt6OPTQ1aNpP7WmSy2xj9hu2ni1AmvEnoDmtlnCk
-	26A4R9sfzZjJrc+kXFgSRCla5hqnQcN3llbcoyw==
-X-Google-Smtp-Source: AGHT+IHACjMP5RzFgepii/qD9qtk0+p5mwa6jnpfKmdaSdmp8lLICvVkXdDPSiF9XM3Dus6YHP7t5X5+bwf7WLuWK+4=
-X-Received: by 2002:a05:6122:1346:b0:4ec:f27b:ee9c with SMTP id
- 71dfb90a1353d-4ef276c041bmr6506472e0c.5.1718897992229; Thu, 20 Jun 2024
- 08:39:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WKsMBpoY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F870C2BD10;
+	Thu, 20 Jun 2024 15:48:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1718898503;
+	bh=ERDzmEKBIwJPWXFItLB7ZAVRuz4nYQB2+DCaWb+Lv9Q=;
+	h=From:Date:Subject:To:Cc:From;
+	b=WKsMBpoY25Fs48ZgJylb7NIQRdeMPAvjI62ChRSmww8tNYdAIeLgzcY5UObWfT+nn
+	 +jl073Ax5gqXQeZri6KaB65QlosptQnixQSi1L/A1BDY0PA5LpQpGCA7ewDs0eeRVp
+	 mM+PV3u5vjii+vACk2nvyMgJ/3ScRxGGzmNemNY72lU/lkau96l11p7HrD7RmWiSdu
+	 nell6aahNS8XKn09eiHQR/38hZ61l/5G9EL3yeQR3V1/XgES75zbTozXqDc2gi3zqv
+	 3gb2x/KQjEmiXhRpScfdZ/jvNKsNehfY+UDUXYZTIDz0uc9rBF298oVO9XM794HzCD
+	 xZdKyJf0KFzmg==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 20 Jun 2024 08:48:16 -0700
+Subject: [PATCH] drm/omap: Restrict compile testing to PAGE_SIZE less than
+ 64KB
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240619125609.836313103@linuxfoundation.org> <CA+G9fYtPV3kskAyc4NQws68-CpBrV+ohxkt1EEaAN54Dh6J6Uw@mail.gmail.com>
- <2024062028-caloric-cost-2ab9@gregkh> <CA+G9fYsr0=_Yzew1uyUtrZ7ayZFYqmaNzAwFZJPjFnDXZEwYcQ@mail.gmail.com>
- <36a38846-0250-4ac2-b2d0-c72e00d6898d@redhat.com> <CA+G9fYv4fZiB-pL7=4SNfudh2Aqknf5+OXo1RFAFRhJFZMsEsg@mail.gmail.com>
- <3cd2cdca-5c89-447e-b6f1-f68112cf3f7b@redhat.com>
-In-Reply-To: <3cd2cdca-5c89-447e-b6f1-f68112cf3f7b@redhat.com>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Thu, 20 Jun 2024 21:09:40 +0530
-Message-ID: <CA+G9fYutNa9ziuj7aayhukaMdxKFU9+81qKAjZbQ=dQa3fwYYg@mail.gmail.com>
-Subject: Re: [PATCH 6.9 000/281] 6.9.6-rc1 review
-To: David Hildenbrand <david@redhat.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
-	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
-	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org, 
-	Miaohe Lin <linmiaohe@huawei.com>, Arnd Bergmann <arnd@arndb.de>, 
-	Dan Carpenter <dan.carpenter@linaro.org>, Cgroups <cgroups@vger.kernel.org>, 
-	linux-mm <linux-mm@kvack.org>, Baolin Wang <baolin.wang@linux.alibaba.com>, jbeulich@suse.com, 
-	LTP List <ltp@lists.linux.it>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240620-omapdrm-restrict-compile-test-to-sub-64kb-page-size-v1-1-5e56de71ffca@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAD9PdGYC/x2NywrCMBBFf6XM2oGYllr8FXGRx6iDpgkzqUhL/
+ 73B5blw7tlASZgUrt0GQl9WznOD86mD8HLzk5BjY7DGDma0BnNyJUpCIa3CoWLIqfCHsLYBa0Z
+ dPI7D22NxzVZeCU2YYn+hfjLeQ3suQg/+/au3+74frQTP6oUAAAA=
+To: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ dri-devel@lists.freedesktop.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2819; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=ERDzmEKBIwJPWXFItLB7ZAVRuz4nYQB2+DCaWb+Lv9Q=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGkl/u6f7Ddf0HkjaeG9JMPjU2dy7+n/twUuT3h24Cyn5
+ 9uZzSs9OkpZGMS4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBEokMY/hldl9tQxFR4qojv
+ /7EnzKlSUUZe6lM09e90doYIbhbc1cLwvzB1XtEjhQ9P5G0MGNLO313TLe2/eELdtI17sud8NmJ
+ Q5wYA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Thu, 20 Jun 2024 at 19:50, David Hildenbrand <david@redhat.com> wrote:
->
-> On 20.06.24 16:02, Naresh Kamboju wrote:
-> > On Thu, 20 Jun 2024 at 19:23, David Hildenbrand <david@redhat.com> wrote:
-> >>
-> >> On 20.06.24 15:14, Naresh Kamboju wrote:
-> >>> On Thu, 20 Jun 2024 at 17:59, Greg Kroah-Hartman
-> >>> <gregkh@linuxfoundation.org> wrote:
-> >>>>
-> >>>> On Thu, Jun 20, 2024 at 05:21:09PM +0530, Naresh Kamboju wrote:
-> >>>>> On Wed, 19 Jun 2024 at 18:41, Greg Kroah-Hartman
-> >>>>> <gregkh@linuxfoundation.org> wrote:
-> >>>>>>
-> >>>>>> This is the start of the stable review cycle for the 6.9.6 release.
-> >>>>>> There are 281 patches in this series, all will be posted as a response
-> >>>>>> to this one.  If anyone has any issues with these being applied, please
-> >>>>>> let me know.
-> >>>>>>
-> >>>>>> Responses should be made by Fri, 21 Jun 2024 12:55:11 +0000.
-> >>>>>> Anything received after that time might be too late.
-> >>>>>>
-> >>>>>> The whole patch series can be found in one patch at:
-> >>>>>>           https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.9.6-rc1.gz
-> >>>>>> or in the git tree and branch at:
-> >>>>>>           git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.9.y
-> >>>>>> and the diffstat can be found below.
-> >>>>>>
-> >>>>>> thanks,
-> >>>>>>
-> >>>>>> greg k-h
-> >>>>>
-> >>>>> There are two major issues on arm64 Juno-r2 on Linux stable-rc 6.9.6-rc1
-> >>>>>
-> >>>>> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> >>>>>
-> >>>>> 1)
-> >>>>> The LTP controllers cgroup_fj_stress test cases causing kernel crash
-> >>>>> on arm64 Juno-r2 with
-> >>>>> compat mode testing with stable-rc 6.9 kernel.
-> >>>>>
-> >>>>> In the recent past I have reported this issues on Linux mainline.
-> >>>>>
-> >>>>> LTP: fork13: kernel panic on rk3399-rock-pi-4 running mainline 6.10.rc3
-> >>>>>     - https://lore.kernel.org/all/CA+G9fYvKmr84WzTArmfaypKM9+=Aw0uXCtuUKHQKFCNMGJyOgQ@mail.gmail.com/
-> >>>>>
-> >>>>> it goes like this,
-> >>>>>     Unable to handle kernel NULL pointer dereference at virtual address
-> >>>>>     ...
-> >>>>>     Insufficient stack space to handle exception!
-> >>>>>     end Kernel panic - not syncing: kernel stack overflow
-> >>>>>
-> >>
-> >> How is that related to 6.9.6-rc1? That report is from mainline (6.10.rc3).
-> >>
-> >> Can you share a similar kernel dmesg output from  the issue on 6.9.6-rc1?
-> >
-> > I request you to use this link for detailed boot log, test log and crash log.
-> >   - https://lkft.validation.linaro.org/scheduler/job/7687060#L23314
-> >
-> > Few more logs related to build artifacts links provided in the original
-> > email thread and bottom of this email.
-> >
-> > crash log:
-> > ---
-> >
+Prior to commit dc6fcaaba5a5 ("drm/omap: Allow build with
+COMPILE_TEST=y"), it was only possible to build the omapdrm driver with
+a 4KB page size. After that change, when the PAGE_SIZE is 64KB or
+larger, clang points out that the driver has some assumptions around the
+page size implicitly by passing PAGE_SIZE to a parameter with a type of
+u16:
 
-Thanks for investigating this crash report.
+  drivers/gpu/drm/omapdrm/omap_gem.c:758:7: error: implicit conversion from 'unsigned long' to 'u16' (aka 'unsigned short') changes value from 65536 to 0 [-Werror,-Wconstant-conversion]
+    757 |                 block = tiler_reserve_2d(fmt, omap_obj->width, omap_obj->height,
+        |                         ~~~~~~~~~~~~~~~~
+    758 |                                          PAGE_SIZE);
+        |                                          ^~~~~~~~~
+  arch/powerpc/include/asm/page.h:25:34: note: expanded from macro 'PAGE_SIZE'
+     25 | #define PAGE_SIZE               (ASM_CONST(1) << PAGE_SHIFT)
+        |                                  ~~~~~~~~~~~~~^~~~~~~~~~~~~
+  drivers/gpu/drm/omapdrm/omap_gem.c:1504:44: error: implicit conversion from 'unsigned long' to 'u16' (aka 'unsigned short') changes value from 65536 to 0 [-Werror,-Wconstant-conversion]
+   1504 |                         block = tiler_reserve_2d(fmts[i], w, h, PAGE_SIZE);
+        |                                 ~~~~~~~~~~~~~~~~                ^~~~~~~~~
+  arch/powerpc/include/asm/page.h:25:34: note: expanded from macro 'PAGE_SIZE'
+     25 | #define PAGE_SIZE               (ASM_CONST(1) << PAGE_SHIFT)
+        |                                  ~~~~~~~~~~~~~^~~~~~~~~~~~~
+  2 errors generated.
 
-> Thanks, so this is something different than the
->
-> "BUG: Bad page map in process fork13
->   BUG: Bad rss-counter state mm:"
->
-> stuff on mainline you referenced.
->
-> Looks like some recursive exception until we exhausted the stack.
+As there is a lot of use of a u16 type throughout this driver and it
+will only ever be run on hardware that has a 4KB page size, just
+restrict compile testing to when the page size is less than 64KB (as no
+other issues have been discussed and it keeps compile testing relatively
+more available).
 
-You are right !
-I see only one common case is, exhaust the stack.
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/omapdrm/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
->
->
-> Trying to connect the dots here, can you enlighten me how this is
-> related to the fork13 mainline report?
+diff --git a/drivers/gpu/drm/omapdrm/Kconfig b/drivers/gpu/drm/omapdrm/Kconfig
+index 85ed92042b74..3f7139e211d2 100644
+--- a/drivers/gpu/drm/omapdrm/Kconfig
++++ b/drivers/gpu/drm/omapdrm/Kconfig
+@@ -2,7 +2,7 @@
+ config DRM_OMAP
+ 	tristate "OMAP DRM"
+ 	depends on DRM && OF
+-	depends on ARCH_OMAP2PLUS || COMPILE_TEST
++	depends on ARCH_OMAP2PLUS || (COMPILE_TEST && PAGE_SIZE_LESS_THAN_64KB)
+ 	select DRM_KMS_HELPER
+ 	select FB_DMAMEM_HELPERS_DEFERRED if DRM_FBDEV_EMULATION
+ 	select VIDEOMODE_HELPERS
 
-I am not sure about the relation between these two reports.
-But as a common practice I have shared that report information.
+---
+base-commit: c62b4fc4b9b86ab35e5c4236f2053ce21ee81ebc
+change-id: 20240620-omapdrm-restrict-compile-test-to-sub-64kb-page-size-0c8d37e380bb
 
-> > [ 0.000000] Booting Linux on physical CPU 0x0000000100 [0x410fd033]
-> > [ 0.000000] Linux version 6.9.6-rc1 (tuxmake@tuxmake)
-> > (aarch64-linux-gnu-gcc (Debian 13.2.0-12) 13.2.0, GNU ld (GNU Binutils
-> > for Debian) 2.42) #1 SMP PREEMPT @1718817000
-> > ...
-> > [ 1786.336761] Unable to handle kernel NULL pointer dereference at
-> > virtual address 0000000000000070
-> > [ 1786.345564] Mem abort info:
-> > [ 1786.348359]   ESR = 0x0000000096000004
-> > [ 1786.352112]   EC = 0x25: DABT (current EL), IL = 32 bits
-> > [ 1786.357434]   SET = 0, FnV = 0
-> > [ 1786.360492]   EA = 0, S1PTW = 0
-> > [ 1786.363637]   FSC = 0x04: level 0 translation fault
-> > [ 1786.368523] Data abort info:
-> > [ 1786.371405]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
-> > [ 1786.376900]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-> > [ 1786.381960]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-> > [ 1786.387284] Unable to handle kernel NULL pointer dereference at
-> > virtual address 0000000000000070
-> > [ 1786.387293] Insufficient stack space to handle exception!
-> > [ 1786.387296] ESR: 0x0000000096000047 -- DABT (current EL)
-> > [ 1786.387302] FAR: 0xffff80008399ffe0
-> > [ 1786.387306] Task stack:     [0xffff8000839a0000..0xffff8000839a4000]
-> > [ 1786.387312] IRQ stack:      [0xffff8000837f8000..0xffff8000837fc000]
-> > [ 1786.387319] Overflow stack: [0xffff00097ec95320..0xffff00097ec96320]
-> > [ 1786.387327] CPU: 4 PID: 0 Comm: swapper/4 Not tainted 6.9.6-rc1 #1
-> > [ 1786.387338] Hardware name: ARM Juno development board (r2) (DT)
-> > [ 1786.387344] pstate: a00003c5 (NzCv DAIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> > [ 1786.387355] pc : _prb_read_valid (kernel/printk/printk_ringbuffer.c:2109)
-> > [ 1786.387374] lr : prb_read_valid (kernel/printk/printk_ringbuffer.c:2183)
-> > [ 1786.387385] sp : ffff80008399ffe0
-> > [ 1786.387390] x29: ffff8000839a0030 x28: ffff000800365f00 x27: ffff800082530008
-> > [ 1786.387407] x26: ffff8000834e33b8 x25: ffff8000839a00b0 x24: 0000000000000001
-> > [ 1786.387423] x23: ffff8000839a00a8 x22: ffff8000830e3e40 x21: 0000000000001e9e
-> > [ 1786.387438] x20: 0000000000000000 x19: ffff8000839a01c8 x18: 0000000000000010
-> > [ 1786.387453] x17: 72646461206c6175 x16: 7472697620746120 x15: 65636e6572656665
-> > [ 1786.387468] x14: 726564207265746e x13: 3037303030303030 x12: 3030303030303030
-> > [ 1786.387483] x11: 2073736572646461 x10: ffff800083151ea0 x9 : ffff80008014273c
-> > [ 1786.387498] x8 : ffff8000839a0120 x7 : 0000000000000000 x6 : 0000000000000e9f
-> > [ 1786.387512] x5 : ffff8000839a00c8 x4 : ffff8000837157c0 x3 : 0000000000000000
-> > [ 1786.387526] x2 : ffff8000839a00b0 x1 : 0000000000000000 x0 : ffff8000830e3f58
-> > [ 1786.387542] Kernel panic - not syncing: kernel stack overflow
-> > [ 1786.387549] SMP: stopping secondary CPUs
-> > [ 1787.510055] SMP: failed to stop secondary CPUs 0,4
-> > [ 1787.510065] Kernel Offset: disabled
-> > [ 1787.510068] CPU features: 0x4,00001061,e0100000,0200421b
-> > [ 1787.510076] Memory Limit: none
-> > [ 1787.680436] ---[ end Kernel panic - not syncing: kernel stack overflow ]---
->
->
-> --
-> Cheers,
->
-> David / dhildenb
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
 
-- Naresh
