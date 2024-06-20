@@ -1,99 +1,224 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f43.google.com (mail-ua1-f43.google.com [209.85.222.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FDBB27456;
-	Thu, 20 Jun 2024 15:21:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F9A1AF6B6
+	for <patches@lists.linux.dev>; Thu, 20 Jun 2024 15:39:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718896884; cv=none; b=Ec+BDOacuQ8Jhj2/7XIhzrRhtdwhq+Z84d4omFYXqND6K7g9sHnPrG7ZHMyW2UwnxLliF4AVuWQJAcfwXM8r6DNWr8ejilOehsu0SNBH/dPvo6fL3RDoRZT9qlzuKAYsXqtb+fPiNptlzf57R+dur2FSn/DiiC0YhIdx7aDJdUc=
+	t=1718897997; cv=none; b=khjldWbiEMLN+Qt3+S+HVxWwwTUvzZ9kvPycg0F/WRogh1QFkyGLWJoMsopF7583vbU8mNF5qzxkvewTD0GEC64Ip8wSFQp/iu8Jhdz4HCRExK/cl7FWQm7Wpg+CGMp064dy48MeMo7e4xXLNmnHm9aJVHV9N0cMwmyU6pJUPRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718896884; c=relaxed/simple;
-	bh=8/TFVK6BbkaFtuuCTEO1cNehJdCtbENbX/plMk2ZWeY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=cao5hXhXjz4uQnWJz3uQq1V/+s7mN68F8CresFtrDoPL+IiZDl5DF6ZiFGOAzjGctAKA7OtaNgfJgbLcYdjQMZM4OFT5N6EUEXRpDP8rMwi0CAEkBPJLys82Q6yPhorZpO/xki4AgThJZYYAkBekvacN+C2QmHBfJ1sZ4Zv/8TM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n1/bWsLX; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1718897997; c=relaxed/simple;
+	bh=SAbg+wVYqph3TL90xOL1oynPwf5bkeyQps0mBCaXQX0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=l8kUPn4ihVu/SjBXdsCxBIuS79U0SZPuGmrhuleFwc8W69/iD3ftq87fUdww+vx0T79A2Oohxb/nN9lTYS2N5ct8sOObiWCT0S2SoZx6B3LSsPlfgsHwUhvoc4P6JKDDKvE3rg3mvtVE6tUghLpjFpBXvHnD0AkkPNPfrC9wRi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=y0qjIdBv; arc=none smtp.client-ip=209.85.222.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n1/bWsLX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53495C2BD10;
-	Thu, 20 Jun 2024 15:21:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718896884;
-	bh=8/TFVK6BbkaFtuuCTEO1cNehJdCtbENbX/plMk2ZWeY=;
-	h=From:Date:Subject:To:Cc:From;
-	b=n1/bWsLXWbvCjFPzJ3L6nFPy/fcfokpv2EoyJ5a9ffixVZ5V5GCAzoJfYNY0z0Q6X
-	 OZtgsZy8IseX5K7xqNJ9QzTjYvEGtXUtB96hMBGZiKnRTHgc1/mHOgk0KBv4P8bG8K
-	 KISGpyhrh8ys40BxwxSt0XUR0aZwg0yfCOXgDjeKjtUpJiKkX7v6cW5qSe9soZr4U7
-	 ccPHjWbGMvChUJ/Xl8xQHFKQH2hVix1XRu1UKLC/2SUXR1v+/r0utmeCeHlKnz2RH9
-	 RZW4nKKsRniIoxn5LMZzUOZ61oPD+ZzYUFtQ6r3bcbRuUwFUqMOx0R8aeP28HMy3qD
-	 mKQNfrrwtck8A==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 20 Jun 2024 08:21:15 -0700
-Subject: [PATCH] phy: freescale: imx8qm-hsio: Include bitfield.h for
- FIELD_PREP
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="y0qjIdBv"
+Received: by mail-ua1-f43.google.com with SMTP id a1e0cc1a2514c-80f636b0171so288438241.0
+        for <patches@lists.linux.dev>; Thu, 20 Jun 2024 08:39:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1718897994; x=1719502794; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=5GUJPV8yOp4RRoYY7LVY9TGkg0HQmwQOmVMKijpbR4g=;
+        b=y0qjIdBvbItCnltynTsV3TRROD+vw6eSGZC5J/tdN3BlNuUehijwklHWnszfg5Mbid
+         /9njKfD3jGV36pmQI2+BXDWEICOMcdjQXmQqeu4k9AHDjgylxl+2GVBkDFr4c1/Y/YT8
+         GJoalE/lfSxaFPLDxYFeln19GVBhPNCgy28A+oHBUVzsjNWeEJA3fSW0d/6qsw3gxFEq
+         3Y5C0wDL/biW8geKgPLS6pCTWsBGFlwr46sTAm02Tal5XIF0IQVZL8wCJnik8pYHXYuo
+         lGUABM1iGeW8w+jFi8/OrRCLA2hTlaXErqF2v6EoPckNLiiPeTm7onBQwynAF+UdU0o0
+         p1OA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718897994; x=1719502794;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5GUJPV8yOp4RRoYY7LVY9TGkg0HQmwQOmVMKijpbR4g=;
+        b=AhQ4EAwrnsSfNEonh+6NEWFGZDiY23AliINlwuVJDjRHR4ak4ov309jiPCN6UpqyKN
+         Cx0oAw1QKdP6CHPS2Yjo/xgiATTNH9Vc7hDP5HaAo8ELpejogzAgOJx2C8buNX9Ab5TR
+         j6t4j/wlH/x4EWdfhg6B7Cks5VvrNyjRo1ldJwuATw/SjMHGkBV7Z/npQxJbR0L2az30
+         jaAyWOULFzdRngM29FQBqFPM8vasA0sfe8C3jp7eKvYSSJagF88QditEfELcGkIvlFf/
+         0/yBEx4xgklsQyGhW5csMPoMymeZN93iKkBotX1mLOHgsg/znQ6mGr68c/Fb+CMr7JK2
+         0dlA==
+X-Forwarded-Encrypted: i=1; AJvYcCVLgW5JmaHuzL6h2rORwHAcsReyUQWqAjoYRlV5Gs2mFjgv/6snaVtK3zJDVpqeq2f/2FV0TK8O4fRkFOcaUBy1kOWdrtBvmQ==
+X-Gm-Message-State: AOJu0YydzWVdjlWqwAWaYbTR73s20mbbLUw3gq8E6+MQFKHumXiwUdMR
+	OkuuIShGKlbH66zbj3sAHYs8RVzcyw+OJ4lAt6OPTQ1aNpP7WmSy2xj9hu2ni1AmvEnoDmtlnCk
+	26A4R9sfzZjJrc+kXFgSRCla5hqnQcN3llbcoyw==
+X-Google-Smtp-Source: AGHT+IHACjMP5RzFgepii/qD9qtk0+p5mwa6jnpfKmdaSdmp8lLICvVkXdDPSiF9XM3Dus6YHP7t5X5+bwf7WLuWK+4=
+X-Received: by 2002:a05:6122:1346:b0:4ec:f27b:ee9c with SMTP id
+ 71dfb90a1353d-4ef276c041bmr6506472e0c.5.1718897992229; Thu, 20 Jun 2024
+ 08:39:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240620-phy-fsl-imx8qm-hsio-add-bitfield-include-v1-1-5c7c09ed87e6@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAOpIdGYC/x2NQQqDMBBFryKzdiAGKbVXKS4SZ9IMxNQmKhbx7
- h0Kb/MW7/8TKhfhCo/mhMK7VHlnla5tYIouvxiF1MEa25ubNbjEL4aaUObj/pkxaoCOCL2sQTg
- RSp7SRozODz0PvvMK6NxSOMjxv3qO1/UDMkIpiXoAAAA=
-To: Vinod Koul <vkoul@kernel.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>
-Cc: Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
- Pengutronix Kernel Team <kernel@pengutronix.de>, 
- Fabio Estevam <festevam@gmail.com>, Frank Li <Frank.Li@nxp.com>, 
- Richard Zhu <hongxing.zhu@nxp.com>, linux-phy@lists.infradead.org, 
- imx@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1366; i=nathan@kernel.org;
- h=from:subject:message-id; bh=8/TFVK6BbkaFtuuCTEO1cNehJdCtbENbX/plMk2ZWeY=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDGklHp+vxvTuUeGex1hv+rdJrmmbxKkcPcnCo3zMe7U/V
- nZ90TrfUcrCIMbFICumyFL9WPW4oeGcs4w3Tk2CmcPKBDKEgYtTAC5yl5HhmtWXZ6cj8xyuPvlx
- eWHz5D0WR8OsbV4f+sbMs1Gl1ypwG8P/sqdL1jxjyUo8dCzEJyA6Zd3hr+17WQ+8FqtQX/1lU48
- GHwA=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+References: <20240619125609.836313103@linuxfoundation.org> <CA+G9fYtPV3kskAyc4NQws68-CpBrV+ohxkt1EEaAN54Dh6J6Uw@mail.gmail.com>
+ <2024062028-caloric-cost-2ab9@gregkh> <CA+G9fYsr0=_Yzew1uyUtrZ7ayZFYqmaNzAwFZJPjFnDXZEwYcQ@mail.gmail.com>
+ <36a38846-0250-4ac2-b2d0-c72e00d6898d@redhat.com> <CA+G9fYv4fZiB-pL7=4SNfudh2Aqknf5+OXo1RFAFRhJFZMsEsg@mail.gmail.com>
+ <3cd2cdca-5c89-447e-b6f1-f68112cf3f7b@redhat.com>
+In-Reply-To: <3cd2cdca-5c89-447e-b6f1-f68112cf3f7b@redhat.com>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Thu, 20 Jun 2024 21:09:40 +0530
+Message-ID: <CA+G9fYutNa9ziuj7aayhukaMdxKFU9+81qKAjZbQ=dQa3fwYYg@mail.gmail.com>
+Subject: Re: [PATCH 6.9 000/281] 6.9.6-rc1 review
+To: David Hildenbrand <david@redhat.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
+	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
+	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org, 
+	Miaohe Lin <linmiaohe@huawei.com>, Arnd Bergmann <arnd@arndb.de>, 
+	Dan Carpenter <dan.carpenter@linaro.org>, Cgroups <cgroups@vger.kernel.org>, 
+	linux-mm <linux-mm@kvack.org>, Baolin Wang <baolin.wang@linux.alibaba.com>, jbeulich@suse.com, 
+	LTP List <ltp@lists.linux.it>
+Content-Type: text/plain; charset="UTF-8"
 
-In various configurations/architectures, bitfield.h may not be
-transitively included, which results in a compiler error because
-FIELD_PREP is an unexpanded macro:
+On Thu, 20 Jun 2024 at 19:50, David Hildenbrand <david@redhat.com> wrote:
+>
+> On 20.06.24 16:02, Naresh Kamboju wrote:
+> > On Thu, 20 Jun 2024 at 19:23, David Hildenbrand <david@redhat.com> wrote:
+> >>
+> >> On 20.06.24 15:14, Naresh Kamboju wrote:
+> >>> On Thu, 20 Jun 2024 at 17:59, Greg Kroah-Hartman
+> >>> <gregkh@linuxfoundation.org> wrote:
+> >>>>
+> >>>> On Thu, Jun 20, 2024 at 05:21:09PM +0530, Naresh Kamboju wrote:
+> >>>>> On Wed, 19 Jun 2024 at 18:41, Greg Kroah-Hartman
+> >>>>> <gregkh@linuxfoundation.org> wrote:
+> >>>>>>
+> >>>>>> This is the start of the stable review cycle for the 6.9.6 release.
+> >>>>>> There are 281 patches in this series, all will be posted as a response
+> >>>>>> to this one.  If anyone has any issues with these being applied, please
+> >>>>>> let me know.
+> >>>>>>
+> >>>>>> Responses should be made by Fri, 21 Jun 2024 12:55:11 +0000.
+> >>>>>> Anything received after that time might be too late.
+> >>>>>>
+> >>>>>> The whole patch series can be found in one patch at:
+> >>>>>>           https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.9.6-rc1.gz
+> >>>>>> or in the git tree and branch at:
+> >>>>>>           git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.9.y
+> >>>>>> and the diffstat can be found below.
+> >>>>>>
+> >>>>>> thanks,
+> >>>>>>
+> >>>>>> greg k-h
+> >>>>>
+> >>>>> There are two major issues on arm64 Juno-r2 on Linux stable-rc 6.9.6-rc1
+> >>>>>
+> >>>>> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> >>>>>
+> >>>>> 1)
+> >>>>> The LTP controllers cgroup_fj_stress test cases causing kernel crash
+> >>>>> on arm64 Juno-r2 with
+> >>>>> compat mode testing with stable-rc 6.9 kernel.
+> >>>>>
+> >>>>> In the recent past I have reported this issues on Linux mainline.
+> >>>>>
+> >>>>> LTP: fork13: kernel panic on rk3399-rock-pi-4 running mainline 6.10.rc3
+> >>>>>     - https://lore.kernel.org/all/CA+G9fYvKmr84WzTArmfaypKM9+=Aw0uXCtuUKHQKFCNMGJyOgQ@mail.gmail.com/
+> >>>>>
+> >>>>> it goes like this,
+> >>>>>     Unable to handle kernel NULL pointer dereference at virtual address
+> >>>>>     ...
+> >>>>>     Insufficient stack space to handle exception!
+> >>>>>     end Kernel panic - not syncing: kernel stack overflow
+> >>>>>
+> >>
+> >> How is that related to 6.9.6-rc1? That report is from mainline (6.10.rc3).
+> >>
+> >> Can you share a similar kernel dmesg output from  the issue on 6.9.6-rc1?
+> >
+> > I request you to use this link for detailed boot log, test log and crash log.
+> >   - https://lkft.validation.linaro.org/scheduler/job/7687060#L23314
+> >
+> > Few more logs related to build artifacts links provided in the original
+> > email thread and bottom of this email.
+> >
+> > crash log:
+> > ---
+> >
 
-  drivers/phy/freescale/phy-fsl-imx8qm-hsio.c:459:8: error: call to undeclared function 'FIELD_PREP'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-    459 |         val = FIELD_PREP(HSIO_MODE_MASK, val);
-        |               ^
-  1 error generated.
+Thanks for investigating this crash report.
 
-Include bitfield.h explicitly to fix the build.
+> Thanks, so this is something different than the
+>
+> "BUG: Bad page map in process fork13
+>   BUG: Bad rss-counter state mm:"
+>
+> stuff on mainline you referenced.
+>
+> Looks like some recursive exception until we exhausted the stack.
 
-Fixes: 82c56b6dd24f ("phy: freescale: imx8qm-hsio: Add i.MX8QM HSIO PHY driver support")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/phy/freescale/phy-fsl-imx8qm-hsio.c | 1 +
- 1 file changed, 1 insertion(+)
+You are right !
+I see only one common case is, exhaust the stack.
 
-diff --git a/drivers/phy/freescale/phy-fsl-imx8qm-hsio.c b/drivers/phy/freescale/phy-fsl-imx8qm-hsio.c
-index dcf9c45ff5d6..5dca93cd325c 100644
---- a/drivers/phy/freescale/phy-fsl-imx8qm-hsio.c
-+++ b/drivers/phy/freescale/phy-fsl-imx8qm-hsio.c
-@@ -3,6 +3,7 @@
-  * Copyright 2024 NXP
-  */
- 
-+#include <linux/bitfield.h>
- #include <linux/clk.h>
- #include <linux/delay.h>
- #include <linux/io.h>
+>
+>
+> Trying to connect the dots here, can you enlighten me how this is
+> related to the fork13 mainline report?
 
----
-base-commit: 82c56b6dd24fcdf811f2b47b72e5585c8a79b685
-change-id: 20240620-phy-fsl-imx8qm-hsio-add-bitfield-include-ab94e9b1bb1b
+I am not sure about the relation between these two reports.
+But as a common practice I have shared that report information.
 
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
+> > [ 0.000000] Booting Linux on physical CPU 0x0000000100 [0x410fd033]
+> > [ 0.000000] Linux version 6.9.6-rc1 (tuxmake@tuxmake)
+> > (aarch64-linux-gnu-gcc (Debian 13.2.0-12) 13.2.0, GNU ld (GNU Binutils
+> > for Debian) 2.42) #1 SMP PREEMPT @1718817000
+> > ...
+> > [ 1786.336761] Unable to handle kernel NULL pointer dereference at
+> > virtual address 0000000000000070
+> > [ 1786.345564] Mem abort info:
+> > [ 1786.348359]   ESR = 0x0000000096000004
+> > [ 1786.352112]   EC = 0x25: DABT (current EL), IL = 32 bits
+> > [ 1786.357434]   SET = 0, FnV = 0
+> > [ 1786.360492]   EA = 0, S1PTW = 0
+> > [ 1786.363637]   FSC = 0x04: level 0 translation fault
+> > [ 1786.368523] Data abort info:
+> > [ 1786.371405]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+> > [ 1786.376900]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+> > [ 1786.381960]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+> > [ 1786.387284] Unable to handle kernel NULL pointer dereference at
+> > virtual address 0000000000000070
+> > [ 1786.387293] Insufficient stack space to handle exception!
+> > [ 1786.387296] ESR: 0x0000000096000047 -- DABT (current EL)
+> > [ 1786.387302] FAR: 0xffff80008399ffe0
+> > [ 1786.387306] Task stack:     [0xffff8000839a0000..0xffff8000839a4000]
+> > [ 1786.387312] IRQ stack:      [0xffff8000837f8000..0xffff8000837fc000]
+> > [ 1786.387319] Overflow stack: [0xffff00097ec95320..0xffff00097ec96320]
+> > [ 1786.387327] CPU: 4 PID: 0 Comm: swapper/4 Not tainted 6.9.6-rc1 #1
+> > [ 1786.387338] Hardware name: ARM Juno development board (r2) (DT)
+> > [ 1786.387344] pstate: a00003c5 (NzCv DAIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+> > [ 1786.387355] pc : _prb_read_valid (kernel/printk/printk_ringbuffer.c:2109)
+> > [ 1786.387374] lr : prb_read_valid (kernel/printk/printk_ringbuffer.c:2183)
+> > [ 1786.387385] sp : ffff80008399ffe0
+> > [ 1786.387390] x29: ffff8000839a0030 x28: ffff000800365f00 x27: ffff800082530008
+> > [ 1786.387407] x26: ffff8000834e33b8 x25: ffff8000839a00b0 x24: 0000000000000001
+> > [ 1786.387423] x23: ffff8000839a00a8 x22: ffff8000830e3e40 x21: 0000000000001e9e
+> > [ 1786.387438] x20: 0000000000000000 x19: ffff8000839a01c8 x18: 0000000000000010
+> > [ 1786.387453] x17: 72646461206c6175 x16: 7472697620746120 x15: 65636e6572656665
+> > [ 1786.387468] x14: 726564207265746e x13: 3037303030303030 x12: 3030303030303030
+> > [ 1786.387483] x11: 2073736572646461 x10: ffff800083151ea0 x9 : ffff80008014273c
+> > [ 1786.387498] x8 : ffff8000839a0120 x7 : 0000000000000000 x6 : 0000000000000e9f
+> > [ 1786.387512] x5 : ffff8000839a00c8 x4 : ffff8000837157c0 x3 : 0000000000000000
+> > [ 1786.387526] x2 : ffff8000839a00b0 x1 : 0000000000000000 x0 : ffff8000830e3f58
+> > [ 1786.387542] Kernel panic - not syncing: kernel stack overflow
+> > [ 1786.387549] SMP: stopping secondary CPUs
+> > [ 1787.510055] SMP: failed to stop secondary CPUs 0,4
+> > [ 1787.510065] Kernel Offset: disabled
+> > [ 1787.510068] CPU features: 0x4,00001061,e0100000,0200421b
+> > [ 1787.510076] Memory Limit: none
+> > [ 1787.680436] ---[ end Kernel panic - not syncing: kernel stack overflow ]---
+>
+>
+> --
+> Cheers,
+>
+> David / dhildenb
 
+- Naresh
