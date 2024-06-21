@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C185217C7D2
-	for <patches@lists.linux.dev>; Fri, 21 Jun 2024 22:39:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC3417C9E7
+	for <patches@lists.linux.dev>; Fri, 21 Jun 2024 22:39:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719009564; cv=none; b=g7UCE1BVv3Og3xHCgHotCyS49QP9ozvr1KYQyU7ZFVMaXjd28PmmasvW9aMd3yWtKIkSsUu1kn0vCGgWQC9G0IwLydj8qjJ0fhhjaOXpxKMPl/Ni+u2pB0JZukIueWEw/8lgS9811lWGUh74VgzZ1N+ci8oEuQeP/6hWgOr36QI=
+	t=1719009564; cv=none; b=HLC2fPXM0h+JhAUqCa3BH5qqBvtIPOfGQbRCRbWq4YxzAvIOvimZNfBHokT6fftRPv17Oo0KqF72oripyCit9GqxhElFwQUYuDJDB3FwZMlRYW0u4EFqLr/vuwFcp9JbX/6AEpIwkk5FyIkeNtCLdnaUBR72OIQxlsXsKPqkH70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1719009564; c=relaxed/simple;
-	bh=mgkrnNvCKBvh5zPYSU+t7ij+muwe6u7aX0KfH6c59xI=;
+	bh=2l7f6lDOELlYeE6YGD7wOuDWjXUX38xsa3dzLbcLFzk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p9wfwmNvN9EEnslvolGlSnoQLUvub7P5IJH5mhLaO19jKCBzefvPMalzuOFb3Ll2PxhbjbVnuqdz7LV9HOwXwDRrMC+znBvb2K/y7o1H3J32PUqhqnbJ1OdMKpzXIUaCsrllJcDENvtPi9SIyk0sy56fQNV7d06Le/lf8L7KcKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Pq5i/J/o; arc=none smtp.client-ip=192.198.163.11
+	 MIME-Version; b=lWl8mAprHIDhwRkvgmlE6uM0OukbSk3/2s1xIRqikX4ILImUibQCgZgpCEmugID+6Uzer+cqRYe8CySQAbZiYFNWKgCAPOaDtyUUNGtoeaj9W843nAxG/Ucn945KlaKW1pUZIbEZibu0Aw/m95xA9OYP24qhaz+8AbE1JtPsLXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=luAahNR6; arc=none smtp.client-ip=192.198.163.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Pq5i/J/o"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="luAahNR6"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1719009561; x=1750545561;
+  t=1719009562; x=1750545562;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=mgkrnNvCKBvh5zPYSU+t7ij+muwe6u7aX0KfH6c59xI=;
-  b=Pq5i/J/oATx0c8aMn/7U/szxn+BYej95ieqR6vnSByLc82q6pxdWT7OJ
-   Rz6moxUEaoqnKwOTWzhWR8LpwHHjpoxygoaEyPiRVm78XNpITbpbbJDsY
-   xJceW2FYfwhtiKkBPYDPc29KOte/0tNDJuHZ0a1kKhyRtMtb8taCls1Hz
-   t3Vx8hsV5yVfQ3uJzGUGyJwQP6+RwsVWl3OvdCw1MH0tSXfpE3GSm9q0I
-   YI8TyugZlbECXUxY1gUd/A81TvPzYI9tPbCIQMATo6GGmuq+aRQ6T1vGY
-   0M4QjRZKQFjhLnSMXLSEdt3nDWCTOB+FN1NWm71yYR4Vw5SQg681n4LUb
-   g==;
-X-CSE-ConnectionGUID: Ok3iRYzUS6iS/HNi6KtbGw==
-X-CSE-MsgGUID: ba0MITwoTueMAh4fk7hmXA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11110"; a="26691362"
+  bh=2l7f6lDOELlYeE6YGD7wOuDWjXUX38xsa3dzLbcLFzk=;
+  b=luAahNR6wIXNA33AL3QUpcE+i/tt/QWxC7nZQxhW4ac9zJpIBtkDDWIe
+   Z8eNa44YYnxTzgAZytq2wPRhv2pDLGgB7n3DsKuJbhhu2JY9WfyDOpHm0
+   D+LzTm856M9cHxGlqIg2zIXZUYLPjkB0KhUXUlNTKtHObVi7FdO4ceXOw
+   BFMMp5IxOAKRsRv5LhPTCzm7B/UGnqduGxrAZN/G5dprclsP9egOAgzHj
+   9kxLE6/1J0WL8pyaSr1CkB6z+SMp/p/pABT30AaEzQojjjrXZzwsJxAyI
+   WoX97kLaFxm8pa5NAqgQ7tlnambrE7WGzT5Mx2Ci21ArlrEcmU2Evpcqh
+   A==;
+X-CSE-ConnectionGUID: HLBiAZYpSHeslUi5XKvfDg==
+X-CSE-MsgGUID: G2I2F7y1S/aflb8jlQBLfg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11110"; a="26691377"
 X-IronPort-AV: E=Sophos;i="6.08,256,1712646000"; 
-   d="scan'208";a="26691362"
+   d="scan'208";a="26691377"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
   by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jun 2024 15:39:09 -0700
-X-CSE-ConnectionGUID: imXHGXXiTZetwJ8ki+1N1w==
-X-CSE-MsgGUID: mQYwNwOSRJCgFNHd0qibEg==
+X-CSE-ConnectionGUID: PaRqZGfbT0yLJhHV7AJ7hg==
+X-CSE-MsgGUID: +ueKP6e6Q5iQ4+/I4tNCuQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.08,256,1712646000"; 
-   d="scan'208";a="73935690"
+   d="scan'208";a="73935696"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
   by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jun 2024 15:39:09 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -56,9 +56,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v21 16/18] x86/resctrl: Enable shared RMID mode on Sub-NUMA Cluster (SNC) systems
-Date: Fri, 21 Jun 2024 15:38:57 -0700
-Message-ID: <20240621223859.43471-17-tony.luck@intel.com>
+Subject: [PATCH v21 18/18] x86/resctrl: Update documentation with Sub-NUMA cluster changes
+Date: Fri, 21 Jun 2024 15:38:59 -0700
+Message-ID: <20240621223859.43471-19-tony.luck@intel.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240621223859.43471-1-tony.luck@intel.com>
 References: <20240621223859.43471-1-tony.luck@intel.com>
@@ -70,110 +70,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hardware has two RMID configuration options for SNC systems. The default
-mode divides RMID counters between SNC nodes. E.g. with 200 RMIDs and
-two SNC nodes per L3 cache RMIDs 0..99 are used on node 0, and 100..199
-on node 1. This isn't compatible with Linux resctrl usage. On this
-example system a process using RMID 5 would only update monitor counters
-while running on SNC node 0.
+With Sub-NUMA Cluster (SNC) mode enabled the scope of monitoring resources
+is per-NODE instead of per-L3 cache. Backwards compatibility is maintained
+by providing files in the mon_L3_XX directories that sum event counts
+for all SNC nodes sharing an L3 cache.
 
-The other mode is "RMID Sharing Mode". This is enabled by clearing bit
-0 of the RMID_SNC_CONFIG (0xCA0) model specific register. In this mode
-the number of logical RMIDs is the number of physical RMIDs (from CPUID
-leaf 0xF) divided by the number of SNC nodes per L3 cache instance. A
-process can use the same RMID across different SNC nodes.
+New files provide per-SNC node event counts.
 
-See the "Intel Resource Director Technology Architecture Specification"
-for additional details.
-
-When SNC is enabled, update the MSR when a monitor domain is marked
-online. Technically this is overkill. It only needs to be done once
-per L3 cache instance rather than per SNC domain. But there is no harm
-in doing it more than once, and this is not in a critical path.
+Users should be aware that SNC mode also affects the amount of L3 cache
+available for allocation within each SNC node.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
- arch/x86/include/asm/msr-index.h       |  1 +
- arch/x86/kernel/cpu/resctrl/internal.h |  2 ++
- arch/x86/kernel/cpu/resctrl/core.c     |  2 ++
- arch/x86/kernel/cpu/resctrl/monitor.c  | 26 ++++++++++++++++++++++++++
- 4 files changed, 31 insertions(+)
+ Documentation/arch/x86/resctrl.rst | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/arch/x86/include/asm/msr-index.h b/arch/x86/include/asm/msr-index.h
-index e022e6eb766c..3cb8dd6311c3 100644
---- a/arch/x86/include/asm/msr-index.h
-+++ b/arch/x86/include/asm/msr-index.h
-@@ -1164,6 +1164,7 @@
- #define MSR_IA32_QM_CTR			0xc8e
- #define MSR_IA32_PQR_ASSOC		0xc8f
- #define MSR_IA32_L3_CBM_BASE		0xc90
-+#define MSR_RMID_SNC_CONFIG		0xca0
- #define MSR_IA32_L2_CBM_BASE		0xd10
- #define MSR_IA32_MBA_THRTL_BASE		0xd50
+diff --git a/Documentation/arch/x86/resctrl.rst b/Documentation/arch/x86/resctrl.rst
+index 627e23869bca..a824affd741d 100644
+--- a/Documentation/arch/x86/resctrl.rst
++++ b/Documentation/arch/x86/resctrl.rst
+@@ -375,6 +375,10 @@ When monitoring is enabled all MON groups will also contain:
+ 	all tasks in the group. In CTRL_MON groups these files provide
+ 	the sum for all tasks in the CTRL_MON group and all tasks in
+ 	MON groups. Please see example section for more details on usage.
++	On systems with Sub-NUMA Cluster (SNC) enabled there are extra
++	directories for each node (located within the "mon_L3_XX" directory
++	for the L3 cache they occupy). These are named "mon_sub_L3_YY"
++	where "YY" is the node number.
  
-diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-index e5013c8dac84..4ad757245bc1 100644
---- a/arch/x86/kernel/cpu/resctrl/internal.h
-+++ b/arch/x86/kernel/cpu/resctrl/internal.h
-@@ -534,6 +534,8 @@ static inline bool resctrl_arch_get_cdp_enabled(enum resctrl_res_level l)
+ "mon_hw_id":
+ 	Available only with debug option. The identifier used by hardware
+@@ -484,6 +488,29 @@ if non-contiguous 1s value is supported. On a system with a 20-bit mask
+ each bit represents 5% of the capacity of the cache. You could partition
+ the cache into four equal parts with masks: 0x1f, 0x3e0, 0x7c00, 0xf8000.
  
- int resctrl_arch_set_cdp_enabled(enum resctrl_res_level l, bool enable);
++Notes on Sub-NUMA Cluster mode
++==============================
++When SNC mode is enabled, Linux may load balance tasks between Sub-NUMA
++nodes much more readily than between regular NUMA nodes since the CPUs
++on Sub-NUMA nodes share the same L3 cache and the system may report
++the NUMA distance between Sub-NUMA nodes with a lower value than used
++for regular NUMA nodes.
++
++The top-level monitoring files in each "mon_L3_XX" directory provide
++the sum of data across all SNC nodes sharing an L3 cache instance.
++Users who bind tasks to the CPUs of a specific Sub-NUMA node can read
++the "llc_occupancy", "mbm_total_bytes", and "mbm_local_bytes" in the
++"mon_sub_L3_YY" directories to get node local data.
++
++Memory bandwidth allocation is still performed at the L3 cache
++level. I.e. throttling controls are applied to all SNC nodes.
++
++L3 cache allocation bitmaps also apply to all SNC nodes. But note that
++the amount of L3 cache represented by each bit is divided by the number
++of SNC nodes per L3 cache. E.g. with a 100MB cache on a system with 10-bit
++allocation masks each bit normally represents 10MB. With SNC mode enabled
++with two SNC nodes per L3 cache, each bit only represents 5MB.
++
+ Memory bandwidth Allocation and monitoring
+ ==========================================
  
-+void arch_mon_domain_online(struct rdt_resource *r, struct rdt_mon_domain *d);
-+
- /*
-  * To return the common struct rdt_resource, which is contained in struct
-  * rdt_hw_resource, walk the resctrl member of struct rdt_hw_resource.
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 95ef8fe3cb50..1930fce9dfe9 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -615,6 +615,8 @@ static void domain_add_cpu_mon(int cpu, struct rdt_resource *r)
- 	}
- 	cpumask_set_cpu(cpu, &d->hdr.cpu_mask);
- 
-+	arch_mon_domain_online(r, d);
-+
- 	if (arch_domain_mbm_alloc(r->num_rmid, hw_dom)) {
- 		mon_domain_free(hw_dom);
- 		return;
-diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-index 6812560bee3c..1729153b02c1 100644
---- a/arch/x86/kernel/cpu/resctrl/monitor.c
-+++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-@@ -1091,6 +1091,32 @@ static void l3_mon_evt_init(struct rdt_resource *r)
- 		list_add_tail(&mbm_local_event.list, &r->evt_list);
- }
- 
-+/*
-+ * The power-on reset value of MSR_RMID_SNC_CONFIG is 0x1
-+ * which indicates that RMIDs are configured in legacy mode.
-+ * This mode is incompatible with Linux resctrl semantics
-+ * as RMIDs are partitioned between SNC nodes, which requires
-+ * a user to know which RMID is allocated to a task.
-+ * Clearing bit 0 reconfigures the RMID counters for use
-+ * in RMID sharing mode. This mode is better for Linux.
-+ * The RMID space is divided between all SNC nodes with the
-+ * RMIDs renumbered to start from zero in each node when
-+ * counting operations from tasks. Code to read the counters
-+ * must adjust RMID counter numbers based on SNC node. See
-+ * logical_rmid_to_physical_rmid() for code that does this.
-+ */
-+void arch_mon_domain_online(struct rdt_resource *r, struct rdt_mon_domain *d)
-+{
-+	u64 val;
-+
-+	if (snc_nodes_per_l3_cache == 1)
-+		return;
-+
-+	rdmsrl(MSR_RMID_SNC_CONFIG, val);
-+	val &= ~BIT_ULL(0);
-+	wrmsrl(MSR_RMID_SNC_CONFIG, val);
-+}
-+
- int __init rdt_get_mon_l3_config(struct rdt_resource *r)
- {
- 	unsigned int mbm_offset = boot_cpu_data.x86_cache_mbm_width_offset;
 -- 
 2.45.2
 
