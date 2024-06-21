@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2EB9170843
-	for <patches@lists.linux.dev>; Fri, 21 Jun 2024 22:39:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5145A17C7B5
+	for <patches@lists.linux.dev>; Fri, 21 Jun 2024 22:39:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719009561; cv=none; b=JmJ0AOgB4oYbNFARSRD9X3tAwaY0884+AVktItj21eCpsqaEVeazf0w5HlgwQbqLyGr4CqGWeaSFF2MtvhPbZVx7+eEInBHzSe644BIj6FRJTuNPIHR1iUpuZsVQltbj3yuM85KdyN7mm/RTt6np10nMhIpZXjt17HOiSFrWDr8=
+	t=1719009563; cv=none; b=fai83lacIvFmxk6G2wkkeSNfvnOsilHwXNE7s5/7xmdN4aql2bVWiKIy4i/yxMhc6ikFZd66yiMVPU1/GsWH1iIOkmPXPgh+USGf2xSkyGYO2SJiTQDJglOY5kO7FL153ob6AlELKD6HRFtNg1RaRzgGkqkb5Z47oKdFsjVQL/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719009561; c=relaxed/simple;
-	bh=lZYzm3lNTQIwPtmBGlNcykYl5a3Sth3jQBN2NdO1s4I=;
+	s=arc-20240116; t=1719009563; c=relaxed/simple;
+	bh=BFYVmavpg96HbW7Gu6N1TdpXBLXj0wt2imRc5ZwN/XM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bkeG6eA5jl6fH2+SD70+TW8J40ucQcPfKrCdJgGoLDyZlpnO+wS2lYoZ/pu/66ZMf6y/OBQBE82yh4Eoz92R89YjHdSRP1ZW48OoIHP1mN4tR8UH/PpAjBE1e40T0o1PARU/QGSezU2Iezp6Ltf9sJczL396zkw66rmYHnaXVRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QZM06UGo; arc=none smtp.client-ip=192.198.163.11
+	 MIME-Version; b=EVX8+Oi/pCRf2XtJiXY7eSFdeZKTI/s6kugFSZ2CHgepP2mi39+744OGznPNBwD69xSWf1jcT9fVMIIAU/88zfmMflmIB0guTx4DYqgfR7Kfd6DapECZFzd0moW7dxsB72jLNATPrOyfR2K1UgpHSv+/+7e/pzko6PISw3e5Buw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YovHhcWS; arc=none smtp.client-ip=192.198.163.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QZM06UGo"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YovHhcWS"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1719009559; x=1750545559;
+  t=1719009561; x=1750545561;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=lZYzm3lNTQIwPtmBGlNcykYl5a3Sth3jQBN2NdO1s4I=;
-  b=QZM06UGoYaGjlujjBXyNDGY6OWIGzv+NMllS/9qUwcTnIcVSK4c2s0J2
-   yO/AKOlg6o483hb7IsnXOO1+A2Usmz9qsBnmk8a+MV7MwuHiM7OmRgdk9
-   Yi/ooqOf5VFrGQiHHIoNT/zmhdxNGhzVbKDUrAK98e5vEdu6HuZQOpwVR
-   ITDk0vJCIk3X4OYZZv/sP85ZKF2+WzW7eSnPBatK/zsd/SJ7Wau4AVRh1
-   g32j1j6eat13FnncaANinDa8jk6S74aSkvf3pwciuuWGD2m6yuHd+8bdb
-   9fBfioVODlyvuF9Wp+jTb96s4YOpuKiY2MneWI38IRkXDzV7yKAELhxns
+  bh=BFYVmavpg96HbW7Gu6N1TdpXBLXj0wt2imRc5ZwN/XM=;
+  b=YovHhcWSXImjNu+XURn3EhoHpps3TybAF9v/ztqovbROHax2feVJRUqk
+   TnBcMoPX6kdqZkVTxvn2XPRMoOMQ5J+1GNjpYJIURN/CBmbnKH17hfy7j
+   JIFOODc5Vg/WIomJ1yIotAxCcyvMmj4suUlvI17FnzBnpDl0gRzEDA9m9
+   zMAJ9vWcqW9TsCXI3BxFGzniMJdcyA1gqm09Gv6V6/3I9FeiaBAiOjMj7
+   1kg4yUAfN8JU8+yIyJ4zJlkR+56h5Svrp5TFpQZOyImAUcvg1EaeOM9eB
+   ryVoBjJDnnAETlyLl2tzayxBFOb7l7TIEoSvvf15adlM6UXOiLexWql2w
    A==;
-X-CSE-ConnectionGUID: WuzSaFZsS6OeozEcG4jISg==
-X-CSE-MsgGUID: qvjycOKlS4GqJUrsGDZWKw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11110"; a="26691348"
+X-CSE-ConnectionGUID: 9DfBVvVKRFm3DNx3HYHNcg==
+X-CSE-MsgGUID: cZpu3+swS92423DGs43MVQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11110"; a="26691369"
 X-IronPort-AV: E=Sophos;i="6.08,256,1712646000"; 
-   d="scan'208";a="26691348"
+   d="scan'208";a="26691369"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
   by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jun 2024 15:39:09 -0700
-X-CSE-ConnectionGUID: 9A6lfZKSSoKUwGgFqehWOg==
-X-CSE-MsgGUID: zxqyvMAUT8KFDAa25lNaow==
+X-CSE-ConnectionGUID: IezHQktKQqWSKP5ZIUBDGg==
+X-CSE-MsgGUID: uhErPMujRcqottFAnaYJAg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.08,256,1712646000"; 
-   d="scan'208";a="73935683"
+   d="scan'208";a="73935693"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
   by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jun 2024 15:39:09 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -56,9 +56,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v21 14/18] x86/resctrl: Fill out rmid_read structure for smp_call*() to read a counter
-Date: Fri, 21 Jun 2024 15:38:55 -0700
-Message-ID: <20240621223859.43471-15-tony.luck@intel.com>
+Subject: [PATCH v21 17/18] x86/resctrl: Sub-NUMA Cluster (SNC) detection
+Date: Fri, 21 Jun 2024 15:38:58 -0700
+Message-ID: <20240621223859.43471-18-tony.luck@intel.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240621223859.43471-1-tony.luck@intel.com>
 References: <20240621223859.43471-1-tony.luck@intel.com>
@@ -70,144 +70,115 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-mon_event_read() fills out most fields of the struct rmid_read that is
-passed via an smp_call*() function to a CPU that is part of the correct
-domain to read the monitor counters.
+There isn't a simple hardware bit that indicates whether a CPU is
+running in Sub-NUMA Cluster (SNC) mode. Infer the state by comparing
+the number of CPUs sharing the L3 cache with CPU0 to the number of CPUs in
+the same NUMA node as CPU0.
 
-With Sub-NUMA Cluster (SNC) mode there are now two cases to handle:
+If SNC mode is detected, print a single informational message to the
+console.
 
-1) Reading a file that returns a value for a single domain.
-   + Choose the CPU to execute from the domain cpu_mask
-
-2) Reading a file that must sum across domains sharing an L3 cache
-   instance.
-   + Indicate to called code that a sum is needed by passing a NULL
-     rdt_mon_domain pointer.
-   + Choose the CPU from the L3 shared_cpu_map.
+Add the missing definition of pr_fmt() to monitor.c. This wasn't
+noticed before as there are only "can't happen" console messages
+from this file.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
- arch/x86/kernel/cpu/resctrl/internal.h    |  2 +-
- arch/x86/kernel/cpu/resctrl/ctrlmondata.c | 40 ++++++++++++++++++-----
- arch/x86/kernel/cpu/resctrl/monitor.c     |  1 +
- arch/x86/kernel/cpu/resctrl/rdtgroup.c    |  2 +-
- 4 files changed, 35 insertions(+), 10 deletions(-)
+ arch/x86/kernel/cpu/resctrl/monitor.c | 66 +++++++++++++++++++++++++++
+ 1 file changed, 66 insertions(+)
 
-diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-index f66c7f12e91e..e5013c8dac84 100644
---- a/arch/x86/kernel/cpu/resctrl/internal.h
-+++ b/arch/x86/kernel/cpu/resctrl/internal.h
-@@ -632,7 +632,7 @@ void mon_event_count(void *info);
- int rdtgroup_mondata_show(struct seq_file *m, void *arg);
- void mon_event_read(struct rmid_read *rr, struct rdt_resource *r,
- 		    struct rdt_mon_domain *d, struct rdtgroup *rdtgrp,
--		    int evtid, int first);
-+		    cpumask_t *cpumask, int evtid, int first);
- void mbm_setup_overflow_handler(struct rdt_mon_domain *dom,
- 				unsigned long delay_ms,
- 				int exclude_cpu);
-diff --git a/arch/x86/kernel/cpu/resctrl/ctrlmondata.c b/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
-index 3b9383612c35..7da2992e2c45 100644
---- a/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
-+++ b/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
-@@ -515,7 +515,7 @@ static int smp_mon_event_count(void *arg)
- 
- void mon_event_read(struct rmid_read *rr, struct rdt_resource *r,
- 		    struct rdt_mon_domain *d, struct rdtgroup *rdtgrp,
--		    int evtid, int first)
-+		    cpumask_t *cpumask, int evtid, int first)
- {
- 	int cpu;
- 
-@@ -537,7 +537,7 @@ void mon_event_read(struct rmid_read *rr, struct rdt_resource *r,
- 		return;
- 	}
- 
--	cpu = cpumask_any_housekeeping(&d->hdr.cpu_mask, RESCTRL_PICK_ANY_CPU);
-+	cpu = cpumask_any_housekeeping(cpumask, RESCTRL_PICK_ANY_CPU);
- 
- 	/*
- 	 * cpumask_any_housekeeping() prefers housekeeping CPUs, but
-@@ -546,7 +546,7 @@ void mon_event_read(struct rmid_read *rr, struct rdt_resource *r,
- 	 * counters on some platforms if its called in IRQ context.
- 	 */
- 	if (tick_nohz_full_cpu(cpu))
--		smp_call_function_any(&d->hdr.cpu_mask, mon_event_count, rr, 1);
-+		smp_call_function_any(cpumask, mon_event_count, rr, 1);
- 	else
- 		smp_call_on_cpu(cpu, smp_mon_event_count, rr, false);
- 
-@@ -575,16 +575,40 @@ int rdtgroup_mondata_show(struct seq_file *m, void *arg)
- 	resid = md.u.rid;
- 	domid = md.u.domid;
- 	evtid = md.u.evtid;
--
- 	r = &rdt_resources_all[resid].r_resctrl;
--	hdr = rdt_find_domain(&r->mon_domains, domid, NULL);
--	if (!hdr || WARN_ON_ONCE(hdr->type != RESCTRL_MON_DOMAIN)) {
-+
-+	if (md.u.sum) {
-+		/*
-+		 * This file requires summing across all SNC domains that share
-+		 * the L3 cache id that was provided in the "domid" field of the
-+		 * mon_data_bits union. Search all domains in the resource for
-+		 * one that matches this cache id.
-+		 */
-+		list_for_each_entry(d, &r->mon_domains, hdr.list) {
-+			if (d->ci->id == domid) {
-+				rr.ci = d->ci;
-+				mon_event_read(&rr, r, NULL, rdtgrp,
-+					       &d->ci->shared_cpu_map, evtid, false);
-+				goto checkresult;
-+			}
-+		}
- 		ret = -ENOENT;
- 		goto out;
-+	} else {
-+		/*
-+		 * This file provides data from a single domain. Search
-+		 * the resource to find the domain with "domid".
-+		 */
-+		hdr = rdt_find_domain(&r->mon_domains, domid, NULL);
-+		if (!hdr || WARN_ON_ONCE(hdr->type != RESCTRL_MON_DOMAIN)) {
-+			ret = -ENOENT;
-+			goto out;
-+		}
-+		d = container_of(hdr, struct rdt_mon_domain, hdr);
-+		mon_event_read(&rr, r, d, rdtgrp, &d->hdr.cpu_mask, evtid, false);
- 	}
--	d = container_of(hdr, struct rdt_mon_domain, hdr);
- 
--	mon_event_read(&rr, r, d, rdtgrp, evtid, false);
-+checkresult:
- 
- 	if (rr.err == -EIO)
- 		seq_puts(m, "Error\n");
 diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-index ff4e74594a19..877d898e8fd0 100644
+index 1729153b02c1..0534fa3e6d34 100644
 --- a/arch/x86/kernel/cpu/resctrl/monitor.c
 +++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-@@ -785,6 +785,7 @@ static void mbm_update(struct rdt_resource *r, struct rdt_mon_domain *d,
- 	rr.first = false;
- 	rr.r = r;
- 	rr.d = d;
-+	rr.ci = NULL;
+@@ -15,6 +15,8 @@
+  * Software Developer Manual June 2016, volume 3, section 17.17.
+  */
  
- 	/*
- 	 * This is protected from concurrent reads from user
-diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-index 14482d88b68c..5b980cb05c5f 100644
---- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-+++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-@@ -3072,7 +3072,7 @@ static int mon_add_all_files(struct kernfs_node *kn, struct rdt_mon_domain *d,
- 			return ret;
++#define pr_fmt(fmt)	"resctrl: " fmt
++
+ #include <linux/cpu.h>
+ #include <linux/module.h>
+ #include <linux/sizes.h>
+@@ -1117,6 +1119,68 @@ void arch_mon_domain_online(struct rdt_resource *r, struct rdt_mon_domain *d)
+ 	wrmsrl(MSR_RMID_SNC_CONFIG, val);
+ }
  
- 		if (!do_sum && is_mbm_event(mevt->evtid))
--			mon_event_read(&rr, r, d, prgrp, mevt->evtid, true);
-+			mon_event_read(&rr, r, d, prgrp, &d->hdr.cpu_mask, mevt->evtid, true);
- 	}
++/* CPU models that support MSR_RMID_SNC_CONFIG */
++static const struct x86_cpu_id snc_cpu_ids[] __initconst = {
++	X86_MATCH_VFM(INTEL_ICELAKE_X, 0),
++	X86_MATCH_VFM(INTEL_SAPPHIRERAPIDS_X, 0),
++	X86_MATCH_VFM(INTEL_EMERALDRAPIDS_X, 0),
++	X86_MATCH_VFM(INTEL_GRANITERAPIDS_X, 0),
++	X86_MATCH_VFM(INTEL_ATOM_CRESTMONT_X, 0),
++	{}
++};
++
++/*
++ * There isn't a simple hardware bit that indicates whether a CPU is running
++ * in Sub-NUMA Cluster (SNC) mode. Infer the state by comparing the
++ * number of CPUs sharing the L3 cache with CPU0 to the number of CPUs in
++ * the same NUMA node as CPU0.
++ * It is not possible to accurately determine SNC state if the system is
++ * booted with a maxcpus=N parameter. That distorts the ratio of SNC nodes
++ * to L3 caches. It will be OK if system is booted with hyperthreading
++ * disabled (since this doesn't affect the ratio).
++ */
++static __init int snc_get_config(void)
++{
++	struct cacheinfo *ci = get_cpu_cacheinfo_level(0, RESCTRL_L3_CACHE);
++	const cpumask_t *node0_cpumask;
++	int cpus_per_node, cpus_per_l3;
++	int ret;
++
++	if (!x86_match_cpu(snc_cpu_ids) || !ci)
++		return 1;
++
++	cpus_read_lock();
++	if (num_online_cpus() != num_present_cpus())
++		pr_warn("Some CPUs offline, SNC detection may be incorrect\n");
++	cpus_read_unlock();
++
++	node0_cpumask = cpumask_of_node(cpu_to_node(0));
++
++	cpus_per_node = cpumask_weight(node0_cpumask);
++	cpus_per_l3 = cpumask_weight(&ci->shared_cpu_map);
++
++	if (!cpus_per_node || !cpus_per_l3)
++		return 1;
++
++	ret = cpus_per_l3 / cpus_per_node;
++
++	/* sanity check: Only valid results are 1, 2, 3, 4 */
++	switch (ret) {
++	case 1:
++		break;
++	case 2 ... 4:
++		pr_info("Sub-NUMA Cluster mode detected with %d nodes per L3 cache\n", ret);
++		rdt_resources_all[RDT_RESOURCE_L3].r_resctrl.mon_scope = RESCTRL_L3_NODE;
++		break;
++	default:
++		pr_warn("Ignore improbable SNC node count %d\n", ret);
++		ret = 1;
++		break;
++	}
++
++	return ret;
++}
++
+ int __init rdt_get_mon_l3_config(struct rdt_resource *r)
+ {
+ 	unsigned int mbm_offset = boot_cpu_data.x86_cache_mbm_width_offset;
+@@ -1124,6 +1188,8 @@ int __init rdt_get_mon_l3_config(struct rdt_resource *r)
+ 	unsigned int threshold;
+ 	int ret;
  
- 	return 0;
++	snc_nodes_per_l3_cache = snc_get_config();
++
+ 	resctrl_rmid_realloc_limit = boot_cpu_data.x86_cache_size * 1024;
+ 	hw_res->mon_scale = boot_cpu_data.x86_cache_occ_scale / snc_nodes_per_l3_cache;
+ 	r->num_rmid = (boot_cpu_data.x86_cache_max_rmid + 1) / snc_nodes_per_l3_cache;
 -- 
 2.45.2
 
