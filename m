@@ -1,60 +1,60 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6C116FF44
-	for <patches@lists.linux.dev>; Sat, 22 Jun 2024 16:37:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF517818
+	for <patches@lists.linux.dev>; Sat, 22 Jun 2024 17:21:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719074279; cv=none; b=ZzhdBX0kpIO8q2gN4PkYFJMe4Lfug8Qhmjb0l1q3bCrUJz7JawA3Z982uVpGg6bot442Ui3yIf+YZpkoOk2FquH/0iraFpBH1qqit8sn663TkEeipRqnQ1uUE/KuPGKE4NkI6RcWtHMC35yYTh8mV3vC66T/RY2mAyhSJ4uScr0=
+	t=1719076911; cv=none; b=JQ/oyV8Z9GyKsKzIF6N2UEG9zDfY5MK5b+F2Aa9vOxFTfZlR1Ad/Un8Afo+lixVcwxc8Da7p2bQD5QBvJnI1C+sfjiZwejesG63hWtsOsOm5UCq3o7QpgV9bs90Zzb1IpozOkkOWGDf+DNah1cgk31DlDG9J+sCIS+zSaPYaPkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719074279; c=relaxed/simple;
-	bh=wicbUPOHbDVXPTgZ3JV1UYv1hXKn5Q/LtgJ6YffpcnU=;
+	s=arc-20240116; t=1719076911; c=relaxed/simple;
+	bh=wi1zijj/NaTT97gyb/PBd3LtxmwV0hv21d/gsbmq8ic=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gqysC+TKe4g2nzdEKGCHCbMt6tKt2waXpKsd2lIdYP6cQwQc+n0yF5aTPVVHBP4U9gDYT5RQDIwlzYF9ScfraIiIKqF5+pnGrmf0q3vc/uJQUL0AqwOY+26uRueq/PuPZcb3qObZHqY1sGBAdwnGMeCWa3YtzFCDdZEfRkbqhz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bSr4nUXI; arc=none smtp.client-ip=209.85.214.169
+	 In-Reply-To:Content-Type; b=YInM8Pmv/UMHERpnQnq+sft4g9WniY6/hcL/T1zskzGQfaBL2lxO8LFRo9pLwkrM2qgYcx3HWMv87CG/hLoZXzTb0V0lGdeICaVHJml6zebGHWv5swwQ1REDUztu9AjvUIgtkniCYW6QYh8GnXOL485J3PW7mq00W2G/83nbbr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wu++tjgt; arc=none smtp.client-ip=209.85.210.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bSr4nUXI"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-1f700e4cb92so25503115ad.2
-        for <patches@lists.linux.dev>; Sat, 22 Jun 2024 09:37:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wu++tjgt"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-70656b43fd4so1167226b3a.0
+        for <patches@lists.linux.dev>; Sat, 22 Jun 2024 10:21:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719074278; x=1719679078; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1719076909; x=1719681709; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=LVWh8aXIRdw6KlJx42lPJzU1iUTgDenarPm7inF+GRU=;
-        b=bSr4nUXInaKtnjImGeIfd4BxFdEXPxiSOlmGdQKLSA+pL5JeuKKxSFuZNoM4ji7ZlJ
-         pENioH/mcQiFLbsE28xZTqP56FMwlgbDy8ZYu5zvyPPgckgNKedGWhoD+dV69wP13FNm
-         h7yw4uLrS24WafBQfB71wHwDGUoLnc5o831Fd8nJUJpJ9xVOTKaieD3OF4AMq7jPzTgW
-         uBKHXYFWUse0UCFDlQe9n15Jr1FsJQ4PGiU4vV2Twqmw3IWklkmzvyRDgFiBUCYUwGvt
-         hwBWI/hfPeWoxlnspqvl5MK3aXTlPSUkC2DXq0aLGoLmzi99Z3bIzMPZBfxQk/+A7wkV
-         bpDA==
+        bh=7EkDbyT3Dt70fUNnAz4nlBxrbTY5DZaErD75W4as88k=;
+        b=Wu++tjgtTyCrp3DZjaqzmbbF0ecyfICppyhm6weWGd8Bv7e/wayacwDsPwkJkJAFTM
+         VhIFV+6HbrKrYnTNZTTfhIke6obZls/EzjjLLHXAsLCgMpFl3C2CYMEgb1QHM7dbXh2e
+         riY2gisc1vhrs1pMI9aRgF3fp+2x2tACnRwr/CIyl4A3VPcXVyeAIjQVr5SlQ9Z2rtPw
+         W7aqbO9Pz1+ZPR35CPJi82Rd9I5tEv0QzwnYhY2Ljm/qg4k8XwUXbwdXaWvS8fsziPrs
+         3LE2+meHBDfprwovKoR8dyKoqNyAR34hdIqXJjc0++6HE9cRb0/PR+dVQ0aHvFPX0T74
+         aktw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719074278; x=1719679078;
+        d=1e100.net; s=20230601; t=1719076909; x=1719681709;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LVWh8aXIRdw6KlJx42lPJzU1iUTgDenarPm7inF+GRU=;
-        b=FM2xgVJcdejWh1yAc6JCCRbk7SUHYuPncr0cRjHe8t3XpA0wnzJbQphUPY0iVllDc8
-         4iLEbw+m2z1msBCZqOLF1n0k3kA+bYc4IT1np4dvpHqZwm0qEBrdV+cyHYbfM9P7yBbX
-         ZJ+wCriwvEbLwgty9LJJu3tfes6JCfYyG1o9fg8eSGCbMyyK7Hu6XrGdAGdG3EjFp9wc
-         mt5/FSKz0xhn7RYk9v7JtPiDRKk1Y5aEZXrotLwjhNYLT8+1fxUVUB+KJW45EQSZwpfy
-         zbt6Qz1VFA4z6amEgZg/pgsABgA5fzgPfBkaUXNY3P+FgEfaPs8om8DSnkSYTiaFcEfQ
-         mpFQ==
-X-Gm-Message-State: AOJu0YwWdfJsCLhf4ic8vQTWJvNknNrjrsd6u3NUNySWt2yth51NuhvD
-	Oz41Ei4Oawc5AHphGsbk42Jvr1xAQ4SKA8LsEZ8NcVWSheOkff8E
-X-Google-Smtp-Source: AGHT+IG6a4OA5LnNPQiwBz8nuGa5Qz7uWt4ILXcxnsimT2BzX691J9GZeOlylM4aKL+GQUkjZ1s6tw==
-X-Received: by 2002:a17:902:ec8e:b0:1fa:15ca:e61a with SMTP id d9443c01a7336-1fa23bd1afdmr5192875ad.8.1719074277601;
-        Sat, 22 Jun 2024 09:37:57 -0700 (PDT)
+        bh=7EkDbyT3Dt70fUNnAz4nlBxrbTY5DZaErD75W4as88k=;
+        b=aOUxUqsizOkn+OeyHZXCA8mRkp28XQYkSFZjuBLcWQCCaGQHpbeOys9XavYzlGkVQR
+         Sf5/ezVTbCFweURJEdvCAVSLRjHvfTDPHtGyoLpiR54uyBfVEb9bbiDwJoibGOCNOQX6
+         IqzqSpWeczdD8jKo0p5rUC9/V6dTO23VSHKlJPLKh3JfGvQ7WPujlZOdeptSFr8Ig52J
+         315F1ciBhxftdyEwEqp0jmEfyOSi7366Exi6pHmzuu03ncUnmvi02TClclI4wzHzblP6
+         jgoeUHc5rLrNQ4k9UZW11CAZ1FStMG2dmfojRY6T7aoEZfSP/dc57o1cRCZHRFCTF5Tp
+         lt7g==
+X-Gm-Message-State: AOJu0YyKJ5X6PsAxUc7a7eFG9mF6FoT8Y2qpo/76yyCgJfc/dXF6zZpS
+	hXUWPMIx99d/96hn5uqaGF66ChzA+xHb9PAyFekBCfi4ZnkvmdKL
+X-Google-Smtp-Source: AGHT+IHYEHPLjoCQlVctUffypJdS55HqBSmMlsOea7YoyGgEtJhzdDwTXJcnJHDFWNJkHod6UJcDBQ==
+X-Received: by 2002:a05:6a00:26d9:b0:704:2bdd:82fe with SMTP id d2e1a72fcca58-706745b2ademr451664b3a.15.1719076908935;
+        Sat, 22 Jun 2024 10:21:48 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f9eb3c6011sm32988965ad.144.2024.06.22.09.37.55
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7066857e9a8sm1411789b3a.89.2024.06.22.10.21.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 22 Jun 2024 09:37:56 -0700 (PDT)
+        Sat, 22 Jun 2024 10:21:48 -0700 (PDT)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <11983f65-ec2f-4092-917f-7a09bae7c4b2@roeck-us.net>
-Date: Sat, 22 Jun 2024 09:37:54 -0700
+Message-ID: <3171b508-eb23-4a2c-a78d-c538c50be615@roeck-us.net>
+Date: Sat, 22 Jun 2024 10:21:45 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -126,75 +126,17 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
 In-Reply-To: <48aa5db8-2605-42e3-a1e3-1bf3428380ee@gmx.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
 On 6/22/24 08:49, Helge Deller wrote:
-> On 6/22/24 17:34, Guenter Roeck wrote:
->> On 6/22/24 08:13, Helge Deller wrote:
->>> On 6/22/24 16:58, Guenter Roeck wrote:
->>>> [ Copying parisc maintainers - maybe they can test on real hardware ]
->>>>
->>>> On 6/19/24 05:54, Greg Kroah-Hartman wrote:
->>>>> This is the start of the stable review cycle for the 6.1.95 release.
->>>>> There are 217 patches in this series, all will be posted as a response
->>>>> to this one.  If anyone has any issues with these being applied, please
->>>>> let me know.
->>>>>
->>>>> Responses should be made by Fri, 21 Jun 2024 12:55:11 +0000.
->>>>> Anything received after that time might be too late.
->>>>>
->>>> ...
->>>>> Oleg Nesterov <oleg@redhat.com>
->>>>>      zap_pid_ns_processes: clear TIF_NOTIFY_SIGNAL along with TIF_SIGPENDING
->>>>>
->>>>
->>>> I can not explain it, but this patch causes all my parisc64 (C3700)
->>>> boot tests to crash. There are lots of memory corruption BUGs such as
->>>>
->>>> [    0.000000] =============================================================================
->>>> [    0.000000] BUG kmalloc-96 (Not tainted): Padding overwritten. 0x0000000043411dd0-0x0000000043411f5f @offset=3536
->>>>
->>>> ultimately followed by
->>>>
->>>> [    0.462562] Unaligned handler failed, ret = -14
->>>> ...
->>>> [    0.469160]  IAOQ[0]: idr_alloc_cyclic+0x48/0x118
->>>> [    0.469372]  IAOQ[1]: idr_alloc_cyclic+0x54/0x118
->>>> [    0.469548]  RP(r2): __kernfs_new_node.constprop.0+0x160/0x420
->>>> [    0.469782] Backtrace:
->>>> [    0.469928]  [<00000000404af108>] __kernfs_new_node.constprop.0+0x160/0x420
->>>> [    0.470285]  [<00000000404b0cac>] kernfs_new_node+0xbc/0x118
->>>> [    0.470523]  [<00000000404b158c>] kernfs_create_empty_dir+0x54/0xf0
->>>> [    0.470756]  [<00000000404b665c>] sysfs_create_mount_point+0x4c/0xb0
->>>> [    0.470996]  [<00000000401181cc>] cgroup_init+0x5b4/0x738
->>>> [    0.471213]  [<0000000040102220>] start_kernel+0x1238/0x1308
->>>> [    0.471429]  [<0000000040107c90>] start_parisc+0x188/0x1d0
->>>> ...
->>>> [    0.474956] Kernel panic - not syncing: Attempted to kill the idle task!
->>>> SeaBIOS wants SYSTEM RESET.
->>>>
->>>> This is with qemu v9.0.1.
->>>
->>> Just to be sure, did you tested the same kernel on physical hardware as well?
->>>
->>
->> No, I don't have hardware. I only have qemu. That is why I copied you and
->> the parisc mailing list.
-> 
-> Yes, sorry, I saw your top line in the mail after I already sent my reply....
-> 
->> I would hope that someone can either confirm that
->> this is a real problem or that it is qemu related. If it is qemu related,
->> I'll just stop testing c3700 64-bit support with qemu on v6.1.y and other
->> branches if/when the problem shows up there as well.
+[ ... ]
 > 
 > I just booted 6.1.95 successfully in qemu and on my physical C3700 machine.
-> I assume the problem can be reproduced with your .config ?
-> Please send it to me off-list, then I can try again.
-> 
 
-Done.
+FWIW, I don't see the problem either if I just build and boot
+generic-64bit_defconfig. Sorry, I didn't really expect this,
+so I didn't mention that my configuration adds lots of debug and
+unit test options.
 
-Thanks,
 Guenter
 
