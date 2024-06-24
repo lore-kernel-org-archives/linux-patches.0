@@ -1,175 +1,206 @@
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2043.outbound.protection.outlook.com [40.107.237.43])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8AA119E819;
-	Mon, 24 Jun 2024 17:12:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.237.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719249142; cv=fail; b=Ba0mMJYI3Z9H5FoqrbJXvJtbpxZJI+mUexQAZO8IDVOQOj2rVkTXI9DnZydHWVV1n+GbvV4eDouc4t1xEL9aGJXlGndiAcMf6fStU51VaOcWazv8QGE6M+xk88A9eF0UiH1urwHeD06Xs8qUPWQzesfmQVyF2StDlDLGhz9KI3M=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719249142; c=relaxed/simple;
-	bh=MuNphmKq+l6wTTtzlfXSRXDLFaTgiIm39spx9l5MdyE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=PTGDOvJ2b6ABy/GsQWE5PLbraX+e8hAU9BPk+JtqkWuAkkfIXB9UyjiYBOqYsces6qQwiVGWRzNd6YVkBXdwpVwImZYAz81Yo6iWmmmS8XVavfIfrRVs/OdHI9CVWYZMLF0JYN8ZebmW4gpg4R7bechzH6sfu9MNKNsJMBLpOiI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=KcPpl/Dh; arc=fail smtp.client-ip=40.107.237.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD4F1EA90
+	for <patches@lists.linux.dev>; Mon, 24 Jun 2024 22:00:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1719266451; cv=none; b=KxHanW2IEM6yGzVPMR1pDcP37K6kxrjZJZWo2u1fpqhOfCB1tQnUglZDc7nhVdFahtp/qLJu7fXyZE9zkl4yKT/Dnqs9H+bEAlk0rhUhJDsxIkRYfsMREY9g92Uya5wLdCHWXcDj+xlbsl3QoBmIGmBAOK8tW3lfxpB7Ltla7OM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1719266451; c=relaxed/simple;
+	bh=2xgvQxfKDYYKHdwbqGr6aj+ZVlY6zEkXkPra0awLJmY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 In-Reply-To:Content-Type:Content-Disposition; b=Xgwq72dJdLak2KuwWFs9Qao5zE/4/AbyqIZGU2fjmbpunWC5l6iYHPNiYkR+HUI23qSmXAnjTDX89TIw8Uac9HGfF9BpLFzLGRcmovMu0ayd8ty422kXhcDMyzmVyDSRYF1iw+iuNN1CTotHQ5ugYNKCSBD7UVTYd0RNp5r3GR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=LwOpgLSi; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="KcPpl/Dh"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ia7oxXOvdYJ27C5Ac5DACvtlsCsonure13ofV/ahIUsmY6y7lctxd8cCKER4ss2HesfmY8JoiCLe3P86Tg7GcANIKMp/Mukb6EiuPPyri+jlE0JnV7jlq1TBz8Sj03iZVOzeK2tPujew59ZxZOxmJo1PjjVHoj1/iVeoleUCKEJWK+yqVmoxuzvGu47kaf2wHbGPYWSH/Av3T8EIAhupGIEQwanj4GXn7Owohrw4VyImMZxf3iYeb16Ci9o13IwnRhBDl2VYzyTt1L41UeBQKhis8oGvC5Yifsr7U8Wt9Z3APjT6F+8O4OFnPzWniUXwaVRoZpQTbuaVGYcHWhx7fA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=MuNphmKq+l6wTTtzlfXSRXDLFaTgiIm39spx9l5MdyE=;
- b=dyHaw5VUl76CaoLLaibgCo9BwnA2PabhrLpNLbKoeOSmG+CTgx68t1rp4X6QEucpL7e3XdkkeXRtDJExsV5C4yHXh1jvXgHtISFtHXqqVIPDQr+gMN2tls3Jju0svObtF6lEXUaTq2YAFknPOgwTu7M8ZwEzP5LRd/WXZSu5OV1WLji9QiRsfC5Mrt8/tPrlnhnE/ctF0uOFl8WfaWZWvSVZF3H3AJ51MHChDyd4u9sNS574Njy0Nekw1pmQk8ap7DZAIeQFm1hxKr3LjbZc4q+PWKECqu8qX626oO1fvYgRMIH5hR1AOY7Q3kcOy6sTex8JT1FUyKpBGMLE08iSJg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=MuNphmKq+l6wTTtzlfXSRXDLFaTgiIm39spx9l5MdyE=;
- b=KcPpl/Dhg7MQ+q05bC/9dGwG5LXwPv22YLI+YWws3NmAeQZagGume5SeSxFyJ5Wc+oOpmCqx34otUefejCLLpH3YZefdzJaV6J/3GRTWnLllEiBgGzkd9Wk3jxpVFwyWKwCcXJ6R/nknVx5QNW9+eDYPQIlFCxeHLX8ZDS1lRDTlTpSdaCM/puXw/6PmqknnMFX+eQmOk5/RdFajXAY8Ywn2OmnFIgNuBrzWRgfqsvQ7bKWh22I3pV8flee4h61qFkr2jvN1dC4es1yKTl5aXn7O9x5Ih1hnEL1aHw0g6uVR0HXGAYVSJTMmySfSUCh1gEOpYC2/4rglddR8xehqDg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from BY5PR12MB3843.namprd12.prod.outlook.com (2603:10b6:a03:1a4::17)
- by BL1PR12MB5753.namprd12.prod.outlook.com (2603:10b6:208:390::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7698.29; Mon, 24 Jun
- 2024 17:12:15 +0000
-Received: from BY5PR12MB3843.namprd12.prod.outlook.com
- ([fe80::efc8:672:884:fafe]) by BY5PR12MB3843.namprd12.prod.outlook.com
- ([fe80::efc8:672:884:fafe%3]) with mapi id 15.20.7698.025; Mon, 24 Jun 2024
- 17:12:14 +0000
-Date: Mon, 24 Jun 2024 14:01:07 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Michael Shavit <mshavit@google.com>
-Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
-	Eric Auger <eric.auger@redhat.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Moritz Fischer <mdf@kernel.org>, Nicolin Chen <nicolinc@nvidia.com>,
-	patches@lists.linux.dev,
-	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-Subject: Re: [PATCH v8 10/14] iommu/arm-smmu-v3: Put the SVA mmu notifier in
- the smmu_domain
-Message-ID: <20240624170107.GU2494510@nvidia.com>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="LwOpgLSi"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1719266448;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=1AMy93E/6RDeqTW8YF5j9Etfag3YQAretpuNps4oyD0=;
+	b=LwOpgLSixLJh2/FPG3eEV3ogVryiTsho5LTZzLV/Tun+yEbaLYN77xFRuwWb8aiJmeq5LJ
+	Z2/wBmmMwWVUMwTlLqwKcu+HJtEtMvx9c108WTVzlr/1w52M8QSvSS6HBBqN7iLwFZxCpW
+	+r3RHrr6zNrRGTSZ4CdJy2mh3KfRroY=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-171-bGXxlE0ZPVy9zUsVL_7Q9w-1; Mon, 24 Jun 2024 18:00:47 -0400
+X-MC-Unique: bGXxlE0ZPVy9zUsVL_7Q9w-1
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-6b4febeeb1bso71725466d6.1
+        for <patches@lists.linux.dev>; Mon, 24 Jun 2024 15:00:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719266446; x=1719871246;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1AMy93E/6RDeqTW8YF5j9Etfag3YQAretpuNps4oyD0=;
+        b=Kn/s1KGxLGO6esRvQsPU0g2F07icrcSVMiMDO6OBgR/pRqaz6alFBYo1Eak1lcnWjP
+         3GIhbrC42azxtDZBEJVBE3s2vX++yP8onmOWiAWDMt4zhOOLycvF9FtMSL3sxJwC2JzO
+         8Cx0Rza7QSph6rbKt4waLdzhMQAayUPIyJJHRWka+F6YdCi6J8yhzrAKL3huG8g6KLie
+         91w//0zKux1FskletLM+3B3xK6I6IWUn/YR9X7L/1b6lbRWtdb4+zAjmq/RvEWaCy5O0
+         qvoXKfLEOz3s+Z2q1T+eNgZOsGBhsepe2VpqqlrjFvqycXX+91ngWUHQb3qoh1hbb2g7
+         d1jw==
+X-Forwarded-Encrypted: i=1; AJvYcCVPBOSRf9Js4Czm34V8587gqbESk6K/1gu7AF53KCGxp6ktXRQiTXPk8AhQ9LKKj4m8ReV/7OYc7nXCvNpeFknUWgxGBvcAqg==
+X-Gm-Message-State: AOJu0Yyml6m4nOxrGQhgNdHnrjQSSkwb2VH/0sAyskSH/fNtkwomw/xv
+	/n5j/J8How6xtTICMIUmgTn09CRemt4bCA5uWLFGzIgKDeLFMhOi3D5Z3xxI7EW2ANHCyXMlOGV
+	baPPIhSUJ7pVSriOwQU5deU4DJCIAlEpflXd6CWOYwM/XvxURCFG8rLE=
+X-Received: by 2002:ad4:5d4e:0:b0:6b5:40c:dfcc with SMTP id 6a1803df08f44-6b53bfdc130mr80326266d6.51.1719266446429;
+        Mon, 24 Jun 2024 15:00:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHGGavFgSVf/NgSKmV4ZpIuyflzpFXwlIpHXShwDcEDTfxV74+uTwR0khPnBobzGqeyJhmziA==
+X-Received: by 2002:ad4:5d4e:0:b0:6b5:40c:dfcc with SMTP id 6a1803df08f44-6b53bfdc130mr80325776d6.51.1719266445870;
+        Mon, 24 Jun 2024 15:00:45 -0700 (PDT)
+Received: from localhost (ip98-179-76-110.ph.ph.cox.net. [98.179.76.110])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6b51ef4def5sm38033086d6.110.2024.06.24.15.00.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Jun 2024 15:00:45 -0700 (PDT)
+Date: Mon, 24 Jun 2024 15:00:44 -0700
+From: Jerry Snitselaar <jsnitsel@redhat.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>, 
+	linux-arm-kernel@lists.infradead.org, Robin Murphy <robin.murphy@arm.com>, 
+	Will Deacon <will@kernel.org>, Eric Auger <eric.auger@redhat.com>, 
+	Jean-Philippe Brucker <jean-philippe@linaro.org>, Moritz Fischer <mdf@kernel.org>, 
+	Michael Shavit <mshavit@google.com>, Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev, 
+	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Subject: Re: [PATCH v8 00/14] Update SMMUv3 to the modern iommu API (part
+ 2b/3)
+Message-ID: <e3hvs7xpbuki7crn6tbyatzcofmk3yayblz5jbagek6urmq6zu@bm2dqfmqdiua>
 References: <0-v8-6f85cdc10ce7+563e-smmuv3_newapi_p2b_jgg@nvidia.com>
- <10-v8-6f85cdc10ce7+563e-smmuv3_newapi_p2b_jgg@nvidia.com>
- <CAKHBV27hj5cefib6nx9CM9-9P3N2k=Y2W-FwT06W4OoEFJ_zqA@mail.gmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAKHBV27hj5cefib6nx9CM9-9P3N2k=Y2W-FwT06W4OoEFJ_zqA@mail.gmail.com>
-X-ClientProxiedBy: MN2PR14CA0009.namprd14.prod.outlook.com
- (2603:10b6:208:23e::14) To BY5PR12MB3843.namprd12.prod.outlook.com
- (2603:10b6:a03:1a4::17)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BY5PR12MB3843:EE_|BL1PR12MB5753:EE_
-X-MS-Office365-Filtering-Correlation-Id: 65327c30-5e8b-41e7-0620-08dc9470cae3
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230037|366013|376011|7416011|1800799021;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?NgZFTxc9FD59xjSVmoRtW1byrsQT2UBcQElEoTynZ/OoltA0h3+EBjuuBYkO?=
- =?us-ascii?Q?rf6sJJViWijeHmswLycLt4cGARh2/N9ap94+qfJ2vaLh5C+zfHQm0Do3XLWc?=
- =?us-ascii?Q?2tEFFIbOE/wTRBW73qXt42jJ2vbySyzOLTSfe7S1hN0XuoBXvUMjbKwXlO7W?=
- =?us-ascii?Q?xiqNOFXUJozQ8BdH7XVXFDXgtEgskkG6BGT5p6GIxQUP/eoBRfR5NmO+fym1?=
- =?us-ascii?Q?GYYyAXpekeEfsjcsTPQz9ANdjS+hvR9oKq0WPxFmn2hkyJKXWcziAfsWrWGs?=
- =?us-ascii?Q?kD3L3p+59ygfGSOYhmzcEHJtkTEtadgDE4CVCGXMA/0AGXmnfuYQSDuKq2YY?=
- =?us-ascii?Q?L+n8SY8e2MzKRalIFQH+9M4O5AWQX2Bp/8ujCTCDqPLFyoDI+0gZYT+dNYZ7?=
- =?us-ascii?Q?RUx2XaMhmUbjdBCI4LdyCUiQOSrxvZ0mJuw/ptWtx7N5ZJI33rAw5Gnu55oO?=
- =?us-ascii?Q?NJJSuHFEsK3ib8CgGPg36CZp7Quby0ixrtUQ1XLS+khzJ9/Fi5Vq/r5/vMKF?=
- =?us-ascii?Q?FUrrfommqCsoJgx4GgzE9NIylvmIYIy05R+ozOfO/mjb7ALlpzX/UqfxBjdK?=
- =?us-ascii?Q?Ka41ESRWFAvev+FtwWLSJS73OIwCTwh/VE6I7WojdVmONFC5SKURwOjPXTGF?=
- =?us-ascii?Q?BWBSsavzsFUKTXj2RTgOlK6O50CUFkXz+OfkZ5yAazVh5uYDyTBN/6tAvMNl?=
- =?us-ascii?Q?DB2PnjjPT9/Drd+4SHBh3Yi7H4uwdWFszK7WJpMOWwh7ce1Ec74Ct/IhqKaI?=
- =?us-ascii?Q?SDnMWo7ZRz/3Unqx+pVjeyLZ5EORaeEYYXDobQR55cjoz7Thrv/CkUXST0PI?=
- =?us-ascii?Q?qWft42MfM/t1LFNByEHCBNqv24LMG2c/0FBWxuHo9j+K0ZFZNFC7a0AA0VI/?=
- =?us-ascii?Q?TMSeezTVGSowRfBuxNgSUWdMBuYc/nh4N4uk+jPny5DZU8zeTuwF2CBWhBR9?=
- =?us-ascii?Q?ap0cAp+ZW0T2jHiuw5qEqszzVQGiO9TNKGGFU2/gMNH3G7XAZLql8HfXTD/H?=
- =?us-ascii?Q?zkHTmFHN7ErRidMjRsi1+knQt0I0IOhsVeJdz+cMQFAGrx5XU19fnPNQCJKY?=
- =?us-ascii?Q?u6h/WafdzsWcYYj+06oMHTdfe4+Nd+oWC0KfeX47JqXLmGFInAFQ6wiIUxlY?=
- =?us-ascii?Q?HrFsGkluBCckwjVIMCDr8lC21OlDda/kL3Gqlu35qzsFHqtIVXrU5MORIAG/?=
- =?us-ascii?Q?gS+/fjVQrJvvRZ8iRIHhDaB/73bGDYPJOFltoRJtLLX87Mzr45psNTHatoVe?=
- =?us-ascii?Q?XYkMHDeAn/VfpqlCmaPxc4mTYGK5BRDE0KN+AiXqnraA9Bl2pK0zML8NM5yG?=
- =?us-ascii?Q?Ugs=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BY5PR12MB3843.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230037)(366013)(376011)(7416011)(1800799021);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?HJry8gEtArTQ8stmq7KzeZo1PT2VRD5n1fAhV5P1pGOkSjFiqBZ0vRgKPr2R?=
- =?us-ascii?Q?/Qz7a7uXJ5O7ToGnzZy81Ds7CyellLdcakVs5/MdMVUbtu4edptSjdSm12em?=
- =?us-ascii?Q?4O607W9zsmqukgNcHBPkS3iRsuUyJ2wEc7zfXRKnttw3yb/hjXp0qftAiQ5d?=
- =?us-ascii?Q?R6+53ZHMk9XgGTyYdwfARSEojOjDN1z9YFIDTkXcCUGZfJ7VSBCOFx/gZwU9?=
- =?us-ascii?Q?RE9Qbu4N3GU/C6z79jJr8L2V7auP73MAYJGAPRUbWuNiI+k/BOTvoY207CG0?=
- =?us-ascii?Q?3U/sHZAMqxz6xO1T5y203A/R/sPX4Qva320uxOklE8aFXneZxkpv1hJv6G/u?=
- =?us-ascii?Q?0LsO8nLVa3TP/OKknaUHXOvtIGmw8PtQ6II6U2qm/oYNS03M+NqBXmYXKdZJ?=
- =?us-ascii?Q?nIb8Nm47tvguZoUD0/fUyGwjh5wE4UlBAhhB5u/hI/6QhuymDMcL0DEfHg97?=
- =?us-ascii?Q?D3RMqHppfJH5YgMOiKXB+Q/WCX+qgSVtUohKGeQhAjFc4c3wpoEqQ4oZsH4m?=
- =?us-ascii?Q?gwip+jqrqRCCmgBXZ8RSetwM5uplroGKEhLW2qj2YM9t4rDtg+fL/a0SshOV?=
- =?us-ascii?Q?3I880iLzLdC7lcR6/MqwGQEMrEtsbTMzG+RMGdr8hlXtI2eIygrCeMT0C7Lc?=
- =?us-ascii?Q?qSVU5LDZUEVY4eWPC2tFWRxZYQjQ955W5KrY5Wtzk+cC2lGhZ9il9hbuBeVB?=
- =?us-ascii?Q?Wa+uBNFTRC4tZ5hiqrvX2v0YhvlLDyYbo7HlJbSoiwbNwQ7NzYUJ6eIpNM+J?=
- =?us-ascii?Q?QOL2Mb1mhf4mef5RrlyRohpb+YSn0KAVP3lGg8b07TWZl7JY64pD1Sy1u2p1?=
- =?us-ascii?Q?FD4cpLdS6ReOQvQlLREUNTsYm9qqfqB6cIct3u0IDSnq2t6aktTFEKmRoOWK?=
- =?us-ascii?Q?FM1TDA0sBucGbEn8oDzAMAH0GIwNZGA2ieLT1RHJObY05ig/1OQsFh6UsnB6?=
- =?us-ascii?Q?yJeuN4vgnO4onNFQsWAks2/hoQgmofLZpo+E0ZZJc2/5KZXuZKF1CTvEPoSk?=
- =?us-ascii?Q?X5qAbhJ9uwL09c6jhbCwGH6QjdNOzRh2jSjo+BWZ1tmcbOcCYEvXAld2qtQC?=
- =?us-ascii?Q?NGpmxA923SzUXETp7neAYXnmIBvOCavpPIBLYfrh8CAX/44s9R1vmCeWcjj9?=
- =?us-ascii?Q?Bb8tLV48e/Vh+rlKk6ZvkFoloGRXJ6enp5Zd+OMMrvos64YR4POTuG5+RLrA?=
- =?us-ascii?Q?9t6a30Yy9/7kkRxOqgwNnfs7XjumUu6mQXp1LIHCDuTdLVJtbHe8rTBULblM?=
- =?us-ascii?Q?2IWDbrRf8ilvkxSKk6dmlUa6r451fMRTuOJ7eftyn8Y/4kFLgZd7NS9fXJlK?=
- =?us-ascii?Q?h868X6OrWwcZ9uVkDwjOomPOxlWFNyysavZDOU/OIytkLkumAZtKFe/kdWSF?=
- =?us-ascii?Q?Cc7ysqbAyP3NJ0NiEDeF29K6b+r1WujI6/yp7sntd182hNfNVRxf96azUL5c?=
- =?us-ascii?Q?DjTnrigwhujbUWc9P5ZTQG8Ob9GqItGQ1jsHCseMYV+2Ac2zm02QoQrJRKbC?=
- =?us-ascii?Q?9HDxmlvjFLXROhf5KV6oOJabWqSURbAt82tp4F/P0FRwgmBwwpfclSMUfiYQ?=
- =?us-ascii?Q?YC/o7WRRsQ8327/TPoKkttVi26zrm/bBflzIUdBS?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 65327c30-5e8b-41e7-0620-08dc9470cae3
-X-MS-Exchange-CrossTenant-AuthSource: BY5PR12MB3843.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jun 2024 17:12:14.2176
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: i4eukalHxjB65B/cc+/70VYtH0ysuHWimiJKUPEGeJONIl60MVKwGVODFfh1fhdX
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5753
+In-Reply-To: <0-v8-6f85cdc10ce7+563e-smmuv3_newapi_p2b_jgg@nvidia.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On Mon, Jun 24, 2024 at 05:54:42PM +0800, Michael Shavit wrote:
+On Mon, Jun 03, 2024 at 09:15:45PM GMT, Jason Gunthorpe wrote:
+> Continuing the work of part 1 and 2a this part focuses on the PASID and
+> SVA code bringing these functional improvements:
+> 
+>  - attach_dev failure does not change the HW configuration.
+> 
+>  - Full PASID API support including:
+>     - S1/SVA domains attached to PASIDs
+>     - IDENTITY/BLOCKED/S1 attached to RID
+>     - Change of the RID domain while PASIDs are attached
+> 
+>  - Streamlined SVA support using the core infrastructure
+> 
+>  - Hitless, whenever possible, change between two domains
+> 
+> This requires some reorganizing how the invalidation is tracked, a
+> flexible linked list containing the SSIDs as well as the ATC information
+> is used instead of a single master.
+> 
+> The revised invalidation infrastructure is used to build generic support
+> for attaching any sort of domain to any SSID, including the necessary
+> maintenance of the invalidation list and the global ATS state. This
+> mechansim is used again in part 3 as part of the nesting series.
+> 
+> The ATS ordering is generalized and consolidated so that the PASID flow
+> can use it and put into a form where it is fully hitless, whenever
+> possible. This is necessary as changes to single PASIDs or RIDs can not
+> change global state like ATS without impacting other, still attached,
+> PASIDs or RIDs.
+> 
+> Next simply replace the entire outdated SVA mmu_notifier implementation in
+> one shot and switch it over to the newly created generic PASID layer and
+> generic invalidation logic. This avoids the messy and confusing approach
+> of trying to incrementally untangle this in place. The new code is small
+> and simple enough this is much better than trying to figure out smaller
+> steps.
+> 
+> Once SVA is resting on the consolidate PASID layer it is straightforward
+> to make the PASID interface functionally complete by supporting S1DSS to
+> allow concurrent change of the RID while a PASID is attached and allow
+> supporting PASID over an IDENTIY RID.
+> 
+> This continues to support lazy allocation and installation of the CD table
+> by continuing to use the CFG mode for IDENTITY/BLOCKED when when the PASID
+> table is empty.
+> 
+> Finally enable attaching any S1 domain to a PASID, not just SVA.
+> 
+> It achieves the same goals as the several series from Michael and the
+> S1DSS series from Nicolin that were trying to improve portions of the API.
+> 
+> This is on github:
+> https://github.com/jgunthorpe/linux/commits/smmuv3_newapi
+> 
+> v8:
+>  - Rebase on v6.10-rc2
+>  - Make arm_smmu_sva_domain_alloc NULL when SVA is disabled so the core
+>    code sees a NULL function pointer
+>  - Update comments around arm_smmu_attach_prepare()
+>  - Rename struct attach_state -> arm_smmu_attach_state and document
+>    better, include more common function paramters in state
+>  - Consistently use ats_enabled everywhere, replacing disable_ats in state
+>  - Move the note about ATS bypass/abort to arm_smmu_attach_prepare()
+>  - Remove temporary cd_table.in_ste check in arm_smmu_sva_set_dev_pasid()
+>  - Improve comments and clarity of logic in arm_smmu_attach_commit()
+>  - Shorten arm_smmu_mmu_notifier_free()
+>  - Fix domain -> sid_domain typo in arm_smmu_remove_dev_pasid()
+> v7: https://lore.kernel.org/r/0-v7-9597c885796c+d2-smmuv3_newapi_p2b_jgg@nvidia.com
+>  - Second half of the split series
+>  - Rebase on Joerg's latest
+>  - Accommodate ARM_SMMU_FEAT_ATTR_TYPES_OVR for the S1DSS code
+>  - Include the S1DSS kunit tests
+>  - Include hunks to adjust the unit tests to API changes from this series
+>  - Move 3 BTM related patches out of this series, they can go in the BTM
+>    enablement series.
+>  - Move the domain_alloc_sva() conversion to the first patch, and rebase
+>    on the accepted core code change
+>  - Use the new core APIs for the PASID ops
+>  - Revise commit messages
+> v6: https://lore.kernel.org/r/0-v6-228e7adf25eb+4155-smmuv3_newapi_p2_jgg@nvidia.com
+> 
+> Cc: Nicolin Chen <nicolinc@nvidia.com>
+> Cc: Michael Shavit <mshavit@google.com>
+> Cc: Jean-Philippe Brucker <jean-philippe@linaro.org>
+> Cc: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+> Cc: Eric Auger <eric.auger@redhat.com>
+> Cc: Moritz Fischer <mdf@kernel.org>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> 
+> Jason Gunthorpe (14):
+>   iommu/arm-smmu-v3: Convert to domain_alloc_sva()
+>   iommu/arm-smmu-v3: Start building a generic PASID layer
+>   iommu/arm-smmu-v3: Make smmu_domain->devices into an allocated list
+>   iommu/arm-smmu-v3: Make changing domains be hitless for ATS
+>   iommu/arm-smmu-v3: Add ssid to struct arm_smmu_master_domain
+>   iommu/arm-smmu-v3: Do not use master->sva_enable to restrict attaches
+>   iommu/arm-smmu-v3: Thread SSID through the arm_smmu_attach_*()
+>     interface
+>   iommu/arm-smmu-v3: Make SVA allocate a normal arm_smmu_domain
+>   iommu/arm-smmu-v3: Keep track of arm_smmu_master_domain for SVA
+>   iommu/arm-smmu-v3: Put the SVA mmu notifier in the smmu_domain
+>   iommu/arm-smmu-v3: Allow IDENTITY/BLOCKED to be set while PASID is
+>     used
+>   iommu/arm-smmu-v3: Test the STE S1DSS functionality
+>   iommu/arm-smmu-v3: Allow a PASID to be set when RID is
+>     IDENTITY/BLOCKED
+>   iommu/arm-smmu-v3: Allow setting a S1 domain to a PASID
+> 
+>  .../iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c   | 431 +++-----------
+>  .../iommu/arm/arm-smmu-v3/arm-smmu-v3-test.c  | 116 +++-
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   | 561 ++++++++++++++----
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h   |  52 +-
+>  4 files changed, 664 insertions(+), 496 deletions(-)
+> 
+> 
+> base-commit: c3f38fa61af77b49866b006939479069cd451173
+> -- 
+> 2.45.2
+> 
 
-> Can we leave a comment on ASID sharing in the code since it isn't
-> added back until the next patch series? There are references to ASID
-> sharing remaining (and even added in this commit) that don't make
-> sense without this function (e.g "Prevent arm_smmu_share_asid() from
-> trying to change the ASID").
+Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
 
-Yes, I left the comment references because I really do expect it to
-come back soon.
-
-My plan, broadly, is to allow the domain's to be shared across smmu
-instances which should introduce the infrastructure to avoid the
-invalidation race in unshare by letting the domain have multiple ASIDs
-at the same time.
-
-After that we would add in vBTM support, this is BTM on systems that
-only support S1 with no S2. This avoids the VMID issue that is
-blocking it while still being useful.
-
-pBTM would come after the IOMMUFD VIOMMU support that Nicolin is
-working on as the VIOMMU would be the vehicle to bring in the KVM VMID
-binding from userspace.
-
-I can delete the comments too, but then someone will ask why not
-delete all the locking as well. :\
-
-Thanks,
-Jason
