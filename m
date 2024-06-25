@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E964C149E06;
-	Tue, 25 Jun 2024 09:43:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2443A149E03;
+	Tue, 25 Jun 2024 09:43:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308586; cv=none; b=SiueQy6OxbqKJSNnkZBIqJ5rH96sGEfgwY9JMW9zZzdQMis5ykXNd/3smqqVybTjXDGqm9A7VecBu3bkZswYhL5nd6sgwb7fSzT/5MLknipvgsx7l+zwmAfIcGsqPzOfICIRQ7yuIfOhoya2d3ohaD/85sfouwOGWrYDPWvNBao=
+	t=1719308589; cv=none; b=EENLc/UBB5XHGSwsy34Rjk9Gxomw5/RkzNF0xwDFt/LEw7CXOffnR+r5J3Qm5rLULT49MJTd1jVy/0qLCg9vjx7pEbQ6zj5Vj3s9bTRdn8TOBxVmPQcY3f82IiM/MCzx0Vh4zjkxeLy2rdA8TenMoJI0P0A4PWuNozCrXkbd+G4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308586; c=relaxed/simple;
-	bh=NKMvFAAxNw6jm/cDiqaeADEDXRucdM4pzBf2Xy70b7s=;
+	s=arc-20240116; t=1719308589; c=relaxed/simple;
+	bh=+ebRd9D74V+mGSzFIUCiofFtXQKUOs8FAssnbRH6VF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u6rDPvdmYm/hRburX95MJ1nUk7wxRkHepN/Cg+SjLzPEcX4e3FKs4VQcrqtknK9vBCus5fEdvjymE2L9ECi1QsSZiGY1Ojp5Tvn4dcqeyGIx/HPrWNOK5Ui8tQcct+Qz0zLVTM7CrgDMvHuzr3KERdiCTlKRyGZt2AojC5bCSiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ikbZjn+Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=APiUgthUHN9vmBvFgTTtvbxN+7cosQgeA3R12aLDyyr9sbnHweW9xCAKiidMTtfwsWIuamwuCvpmOEx+2grm3etDAWwr9YWQixBfdOfKykBTl9R/oeS3Rn54uUmoVoV+xoP54MTD7U9LRrUDYTfQoJudCVWlZZOQmbEnk1RLQ24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cRXP3ugx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ikbZjn+Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CC23C32781;
-	Tue, 25 Jun 2024 09:43:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cRXP3ugx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 630E4C32781;
+	Tue, 25 Jun 2024 09:43:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308585;
-	bh=NKMvFAAxNw6jm/cDiqaeADEDXRucdM4pzBf2Xy70b7s=;
+	s=korg; t=1719308588;
+	bh=+ebRd9D74V+mGSzFIUCiofFtXQKUOs8FAssnbRH6VF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ikbZjn+QAhkuVFkLY6OGNrFURgXa+H/8M0ZSJedjWFqJDgz6jhD4V+wja/WBuwMwk
-	 e9T8yypNvoV3Mq9+oGWS7DywrJ7tM8fiKt/YbP8jlg9cbjMYw5yXNysH+EgnqROceD
-	 pt0fzDQFIGCP5NO0s/HNvBKXRWS9lzxcJGmlxxeI=
+	b=cRXP3ugxEzfRh96KUf4c5q+2vfpEdLaOAqigZNmGNePDACMEmppyKqKEbvpBzOYR1
+	 MquxkilKs1WIdiyVw+742SbOLaY3G3oRLKRuWJg1VuGYzYKZLjYgZgxQKusQ0ecQgr
+	 EIBHbqderrv+gFpifKFN/kQF++4vo1sxyzAn/6DA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Xi Ruoyao <xry111@xry111.site>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 172/250] firmware: psci: Fix return value from psci_system_suspend()
-Date: Tue, 25 Jun 2024 11:32:10 +0200
-Message-ID: <20240625085554.654586704@linuxfoundation.org>
+Subject: [PATCH 6.9 173/250] LoongArch: Only allow OBJTOOL & ORC unwinder if toolchain supports -mthin-add-sub
+Date: Tue, 25 Jun 2024 11:32:11 +0200
+Message-ID: <20240625085554.692758082@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -52,47 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Xi Ruoyao <xry111@xry111.site>
 
-[ Upstream commit e7c3696d4692e8046d25f6e63f983e934e12f2c5 ]
+[ Upstream commit 120dd4118e58dbda2ddb1dcf55f3c56cdfe8cee0 ]
 
-Currently we return the value from invoke_psci_fn() directly as return
-value from psci_system_suspend(). It is wrong to send the PSCI interface
-return value directly. psci_to_linux_errno() provide the mapping from
-PSCI return value to the one that can be returned to the callers within
-the kernel.
+GAS <= 2.41 does not support generating R_LARCH_{32,64}_PCREL for
+"label - ." and it generates R_LARCH_{ADD,SUB}{32,64} pairs instead.
+Objtool cannot handle R_LARCH_{ADD,SUB}{32,64} pair in __jump_table
+(static key implementation) and etc. so it will produce some warnings.
+This is causing the kernel CI systems to complain everywhere.
 
-Use psci_to_linux_errno() to convert and return the correct value from
-psci_system_suspend().
+For GAS we can check if -mthin-add-sub option is available to know if
+R_LARCH_{32,64}_PCREL are supported.
 
-Fixes: faf7ec4a92c0 ("drivers: firmware: psci: add system suspend support")
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-Link: https://lore.kernel.org/r/20240515095528.1949992-1-sudeep.holla@arm.com
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+For Clang, we require Clang >= 18 and Clang >= 17 already supports
+R_LARCH_{32,64}_PCREL. But unfortunately Clang has some other issues,
+so we disable objtool for Clang at present.
+
+Note that __jump_table here is not generated by the compiler, so
+-fno-jump-table is completely irrelevant for this issue.
+
+Fixes: cb8a2ef0848c ("LoongArch: Add ORC stack unwinder support")
+Closes: https://lore.kernel.org/loongarch/Zl5m1ZlVmGKitAof@yujie-X299/
+Closes: https://lore.kernel.org/loongarch/ZlY1gDDPi_mNrwJ1@slm.duckdns.org/
+Closes: https://lore.kernel.org/loongarch/1717478006.038663-1-hengqi@linux.alibaba.com/
+Link: https://sourceware.org/git/?p=binutils-gdb.git;a=commitdiff;h=816029e06768
+Link: https://github.com/llvm/llvm-project/commit/42cb3c6346fc
+Signed-off-by: Xi Ruoyao <xry111@xry111.site>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/psci/psci.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/loongarch/Kconfig       | 5 ++++-
+ arch/loongarch/Kconfig.debug | 1 +
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
-index d9629ff878619..2328ca58bba61 100644
---- a/drivers/firmware/psci/psci.c
-+++ b/drivers/firmware/psci/psci.c
-@@ -497,10 +497,12 @@ int psci_cpu_suspend_enter(u32 state)
+diff --git a/arch/loongarch/Kconfig b/arch/loongarch/Kconfig
+index 54ad04dacdee9..d1b94ce58f793 100644
+--- a/arch/loongarch/Kconfig
++++ b/arch/loongarch/Kconfig
+@@ -138,7 +138,7 @@ config LOONGARCH
+ 	select HAVE_LIVEPATCH
+ 	select HAVE_MOD_ARCH_SPECIFIC
+ 	select HAVE_NMI
+-	select HAVE_OBJTOOL if AS_HAS_EXPLICIT_RELOCS
++	select HAVE_OBJTOOL if AS_HAS_EXPLICIT_RELOCS && AS_HAS_THIN_ADD_SUB && !CC_IS_CLANG
+ 	select HAVE_PCI
+ 	select HAVE_PERF_EVENTS
+ 	select HAVE_PERF_REGS
+@@ -257,6 +257,9 @@ config AS_HAS_EXPLICIT_RELOCS
+ config AS_HAS_FCSR_CLASS
+ 	def_bool $(as-instr,movfcsr2gr \$t0$(comma)\$fcsr0)
  
- static int psci_system_suspend(unsigned long unused)
- {
-+	int err;
- 	phys_addr_t pa_cpu_resume = __pa_symbol(cpu_resume);
++config AS_HAS_THIN_ADD_SUB
++	def_bool $(cc-option,-Wa$(comma)-mthin-add-sub)
++
+ config AS_HAS_LSX_EXTENSION
+ 	def_bool $(as-instr,vld \$vr0$(comma)\$a0$(comma)0)
  
--	return invoke_psci_fn(PSCI_FN_NATIVE(1_0, SYSTEM_SUSPEND),
-+	err = invoke_psci_fn(PSCI_FN_NATIVE(1_0, SYSTEM_SUSPEND),
- 			      pa_cpu_resume, 0, 0);
-+	return psci_to_linux_errno(err);
- }
+diff --git a/arch/loongarch/Kconfig.debug b/arch/loongarch/Kconfig.debug
+index 98d60630c3d4b..8b2ce5b5d43e8 100644
+--- a/arch/loongarch/Kconfig.debug
++++ b/arch/loongarch/Kconfig.debug
+@@ -28,6 +28,7 @@ config UNWINDER_PROLOGUE
  
- static int psci_system_suspend_enter(suspend_state_t state)
+ config UNWINDER_ORC
+ 	bool "ORC unwinder"
++	depends on HAVE_OBJTOOL
+ 	select OBJTOOL
+ 	help
+ 	  This option enables the ORC (Oops Rewind Capability) unwinder for
 -- 
 2.43.0
 
