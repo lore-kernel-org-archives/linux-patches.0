@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6334D147C96;
-	Tue, 25 Jun 2024 09:50:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF7A149DE9;
+	Tue, 25 Jun 2024 09:50:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309042; cv=none; b=W/Z8O2Upb61m92L/3bxDb3PyBOT+14h117+xFYl7aHPH6FKg1mwGqCqqDycpVsY7z0x+CEFpQ+aVUfPOCa6mVcFsLApAyzxjMxXm66NTGZSv1Gsmflg+Ad+BI418C1qFBxn1cFT/pjfe9YWGDrWT1WN+SZiS3kZNMHdqGQq4aYw=
+	t=1719309045; cv=none; b=XBcHUM2oEBlES6aHAlHqI//qJ9y/y3cr6TXB9rR/hJRXDTM4AJJ0UxLq+cHFBxHqbi704k+uYz1QkdllCTpNMTTjPYZKTkfSTWjBb/7VRH7IAwwGGp77MOoOfMXGbAJikNPlwcuZ7yetBaoBePzbrFKcJqT5QDc9g675Q4EHh10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309042; c=relaxed/simple;
-	bh=kU5OKIqFoxceaOs+WEpHh38F7cwgtP4N64f2CB0yuvc=;
+	s=arc-20240116; t=1719309045; c=relaxed/simple;
+	bh=RSBtGZPfiKtPTdGrlbWvz9mBL7F1ah09w5XeHvBaFz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=geLaJCiUTmHNpLYi1cEsFeiv+RYFbzZyXTkOedChhMV2Gz5PXft6iuvm0M18LDEzVXjqlIgnHluTGMcBPYwDMp534qBTTsByLVbU56GOdLwLeD/Ba01crElX08ch6rZDimxpY17jUq8jaLvMhTtk7c+FAo5SksdwI8Pq8BM9ups=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SzdSdfdi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qmhsnWeW3hX2joBUyWZaK96mJWby5Chalvojb1bf8dF/M2oMG/HUTo6xYsgRKkuESiGJytlxWN30tJRSVZbDvw1pHZPOvLId6TzyTsIeqZ9ezNggvpwtS1Agt90/nNRtO7aZOibHV15huBFHI76isqojtWwD/ytZKJnCV/efx24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HWOn0b7n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SzdSdfdi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBA90C32781;
-	Tue, 25 Jun 2024 09:50:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HWOn0b7n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1741C32781;
+	Tue, 25 Jun 2024 09:50:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309042;
-	bh=kU5OKIqFoxceaOs+WEpHh38F7cwgtP4N64f2CB0yuvc=;
+	s=korg; t=1719309045;
+	bh=RSBtGZPfiKtPTdGrlbWvz9mBL7F1ah09w5XeHvBaFz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SzdSdfdirqnydYvVtPIy4dM+qVtYb8McsTapWp7V26yUTitA4pb2m2Q39L02cTQ5M
-	 Fer6gSdoNk97CBvC+G3zfqTp1GzNWVrQBKicBeUviG0KLIY9caDqiZVG9oW+H4TLL5
-	 TyhnG5Bt8TSo2Lyvh9MfvdzsSr89G4GuBXHjs0Ls=
+	b=HWOn0b7nA2DxAqrC5fDBarwjd1SVQswIk8pVBCZac0QJKBGDW1I9y6K1pCyFfgRqm
+	 gnoSbzzDnHCG2lqypveZCOSyKHicUcjGepQ5bmQR3xhpOmpIoQirecsTQHGtlluWwH
+	 NmRCNbq1bsLztpfP1SEsZC8I83TSF6P+2D819e2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Trimmer <simont@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 075/192] ALSA: hda: tas2781: Component should be unbound before deconstruction
-Date: Tue, 25 Jun 2024 11:32:27 +0200
-Message-ID: <20240625085540.055166377@linuxfoundation.org>
+Subject: [PATCH 6.6 049/192] usb: dwc3: pci: Dont set "linux,phy_charger_detect" property on Lenovo Yoga Tab2 1380
+Date: Tue, 25 Jun 2024 11:32:01 +0200
+Message-ID: <20240625085539.052042006@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -51,40 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Trimmer <simont@opensource.cirrus.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit d832b5a03e94a2a9f866dab3d04937a0f84ea116 ]
+[ Upstream commit 0fb782b5d5c462b2518b3b4fe7d652114c28d613 ]
 
-The interface associated with the hda_component should be deactivated
-before the driver is deconstructed during removal.
+The Lenovo Yoga Tablet 2 Pro 1380 model is the exception to the rule that
+devices which use the Crystal Cove PMIC without using ACPI for battery and
+AC power_supply class support use the USB-phy for charger detection.
 
-Fixes: 4e7914eb1dae ("ALSA: hda/tas2781: remove sound controls in unbind")
-Signed-off-by: Simon Trimmer <simont@opensource.cirrus.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://lore.kernel.org/r/20240613133713.75550-4-simont@opensource.cirrus.com
+Unlike the Lenovo Yoga Tablet 2 830 / 1050 models this model has an extra
+LC824206XA Micro USB switch which does the charger detection.
+
+Add a DMI quirk to not set the "linux,phy_charger_detect" property on
+the 1380 model. This quirk matches on the BIOS version to differentiate
+the 1380 model from the 830 and 1050 models which otherwise have
+the same DMI strings.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20240406140127.17885-1-hdegoede@redhat.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/tas2781_hda_i2c.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/dwc3/dwc3-pci.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/tas2781_hda_i2c.c b/sound/pci/hda/tas2781_hda_i2c.c
-index a3dec624132d4..75cc3676c1b92 100644
---- a/sound/pci/hda/tas2781_hda_i2c.c
-+++ b/sound/pci/hda/tas2781_hda_i2c.c
-@@ -683,11 +683,11 @@ static void tas2781_hda_remove(struct device *dev)
- {
- 	struct tas2781_hda *tas_hda = dev_get_drvdata(dev);
+diff --git a/drivers/usb/dwc3/dwc3-pci.c b/drivers/usb/dwc3/dwc3-pci.c
+index 497deed38c0c1..9ef821ca2fc71 100644
+--- a/drivers/usb/dwc3/dwc3-pci.c
++++ b/drivers/usb/dwc3/dwc3-pci.c
+@@ -8,6 +8,7 @@
+  *	    Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+  */
  
-+	component_del(tas_hda->dev, &tas2781_hda_comp_ops);
-+
- 	pm_runtime_get_sync(tas_hda->dev);
- 	pm_runtime_disable(tas_hda->dev);
++#include <linux/dmi.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/slab.h>
+@@ -220,6 +221,7 @@ static int dwc3_pci_quirks(struct dwc3_pci *dwc,
  
--	component_del(tas_hda->dev, &tas2781_hda_comp_ops);
--
- 	pm_runtime_put_noidle(tas_hda->dev);
+ 		if (pdev->device == PCI_DEVICE_ID_INTEL_BYT) {
+ 			struct gpio_desc *gpio;
++			const char *bios_ver;
+ 			int ret;
  
- 	tasdevice_remove(tas_hda->priv);
+ 			/* On BYT the FW does not always enable the refclock */
+@@ -277,8 +279,12 @@ static int dwc3_pci_quirks(struct dwc3_pci *dwc,
+ 			 * detection. These can be identified by them _not_
+ 			 * using the standard ACPI battery and ac drivers.
+ 			 */
++			bios_ver = dmi_get_system_info(DMI_BIOS_VERSION);
+ 			if (acpi_dev_present("INT33FD", "1", 2) &&
+-			    acpi_quirk_skip_acpi_ac_and_battery()) {
++			    acpi_quirk_skip_acpi_ac_and_battery() &&
++			    /* Lenovo Yoga Tablet 2 Pro 1380 uses LC824206XA instead */
++			    !(bios_ver &&
++			      strstarts(bios_ver, "BLADE_21.X64.0005.R00.1504101516"))) {
+ 				dev_info(&pdev->dev, "Using TUSB1211 phy for charger detection\n");
+ 				swnode = &dwc3_pci_intel_phy_charger_detect_swnode;
+ 			}
 -- 
 2.43.0
 
