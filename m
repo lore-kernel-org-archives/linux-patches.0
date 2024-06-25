@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF6413C90B;
-	Tue, 25 Jun 2024 10:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED4E13C90B;
+	Tue, 25 Jun 2024 10:02:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309771; cv=none; b=apxbLXZCNfPgsAuJvPF3tKjJ0joOyW5mJk2NoexCAV8nnDPj903w87LCZF4TU+9b3aS7zciZJ3RgrbKmyXBm9hE/c6EpPFTyVlCcqR/BCHTG7KGw+aDIx9CENfvh2axxHqGT/0qBBbyVN0UxIHwdxT0y+DUQgqVljNLXiv7gw+o=
+	t=1719309774; cv=none; b=pu2H93CqTu6zEVvmf4FJx5kRJbVL9xAMtJV7EzOPW9wmd00PRdKblq2QO5pRV0gE3k0bh4vmI9wWIViwquCkSfgYKPfTqHbpFHpZPT1SH1tV3WnGFvgLhh/nOWOJsifJgBWolBeSdqfFR2aZ44EYJAmqp4MhPpPEiTbksHd1duc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309771; c=relaxed/simple;
-	bh=MZ6vawK6dysJvEB3GAHqIk3Ainz2QSg0dfNuRQ1yik4=;
+	s=arc-20240116; t=1719309774; c=relaxed/simple;
+	bh=35eXQY1rIQdcD9cuYRduLZkIBz6zSwO5xAGrwMA/xDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZsXlE8AwSt3g+CeGWWLK85QFklb4ow9k9uOB60949W+hELXXV1S6rTGtzyK2aHN0i2vOQnU+xnZeVRaDq9goO5EUSVNrXKuT73eARZYXY4bsQnD2pmkSbFWc6haWkLWI+DZ3gmdVOGRF51sAI3U5yveecMtXqigbojnJiho97rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HJnQfOg0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=obsgH3Thjz1MhTw4R0G8UYetgjGr0aRYu31rWX8rxEZ1N/fU5Di5bcYkWn+bWU5ZENAcWYMTgR4oKgys7JxhMiBoagf0YcFF0tVSTwBmMrawE5KaaSXcZ0p48JBOxt0Pux7iqguQknweLNg6pa6KqLDMOIvRKoiT/ILRPjdandA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MSNJ0Nlg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HJnQfOg0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1444CC32781;
-	Tue, 25 Jun 2024 10:02:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MSNJ0Nlg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3347C32781;
+	Tue, 25 Jun 2024 10:02:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309771;
-	bh=MZ6vawK6dysJvEB3GAHqIk3Ainz2QSg0dfNuRQ1yik4=;
+	s=korg; t=1719309774;
+	bh=35eXQY1rIQdcD9cuYRduLZkIBz6zSwO5xAGrwMA/xDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HJnQfOg0j17gJbUH1qPQyCx7vuSB4LGZ3qewzfeFIBivb++sDABHmoz+JsXBClyjt
-	 Xpv1H36pmdhIOfX6etRYzp9LdygKaKDAk2stHefdL8nvH+WEbMhOV4ImSmos6Wcm8L
-	 69e2DC7PTgDQcDrcrxViNS9wJ2T27HAwGz9C4LE8=
+	b=MSNJ0Nlgga+jk8HvAOgrsOtpiW1OwkP3MKqIZAohwbAjST+4MqZCkXcDwar3MVPqg
+	 yAAknmdKrS1iWx5/E+3q0JxlyEPCOgGbHmHZ+QqSX0aW6fPjAiP4ELpHWWF0InEjOs
+	 56taRsCLC+YgYY6GfqeAaZXF33A1wM7GJhWjIYuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Martin Leung <martin.leung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.1 128/131] drm/amd/display: revert Exit idle optimizations before HDCP execution
-Date: Tue, 25 Jun 2024 11:34:43 +0200
-Message-ID: <20240625085530.800552900@linuxfoundation.org>
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Davide Caratti <dcaratti@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 129/131] net/sched: unregister lockdep keys in qdisc_create/qdisc_alloc error path
+Date: Tue, 25 Jun 2024 11:34:44 +0200
+Message-ID: <20240625085530.839291631@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085525.931079317@linuxfoundation.org>
 References: <20240625085525.931079317@linuxfoundation.org>
@@ -54,78 +54,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Leung <martin.leung@amd.com>
+From: Davide Caratti <dcaratti@redhat.com>
 
-commit f2703a3596a279b0be6eeed4c500bdbaa8dc3ce4 upstream.
+commit 86735b57c905e775f05de995df35379366b72168 upstream.
 
-why and how:
-causes black screen on PNP on DCN 3.5
+Naresh and Eric report several errors (corrupted elements in the dynamic
+key hash list), when running tdc.py or syzbot. The error path of
+qdisc_alloc() and qdisc_create() frees the qdisc memory, but it forgets
+to unregister the lockdep key, thus causing use-after-free like the
+following one:
 
-This reverts commit f30a3bea92bd ("drm/amd/display: Exit idle
-optimizations before HDCP execution")
+ ==================================================================
+ BUG: KASAN: slab-use-after-free in lockdep_register_key+0x5f2/0x700
+ Read of size 8 at addr ffff88811236f2a8 by task ip/7925
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Acked-by: Wayne Lin <wayne.lin@amd.com>
-Signed-off-by: Martin Leung <martin.leung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+ CPU: 26 PID: 7925 Comm: ip Kdump: loaded Not tainted 6.9.0-rc2+ #648
+ Hardware name: Supermicro SYS-6027R-72RF/X9DRH-7TF/7F/iTF/iF, BIOS 3.0  07/26/2013
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x7c/0xc0
+  print_report+0xc9/0x610
+  kasan_report+0x89/0xc0
+  lockdep_register_key+0x5f2/0x700
+  qdisc_alloc+0x21d/0xb60
+  qdisc_create_dflt+0x63/0x3c0
+  attach_one_default_qdisc.constprop.37+0x8e/0x170
+  dev_activate+0x4bd/0xc30
+  __dev_open+0x275/0x380
+  __dev_change_flags+0x3f1/0x570
+  dev_change_flags+0x7c/0x160
+  do_setlink+0x1ea1/0x34b0
+  __rtnl_newlink+0x8c9/0x1510
+  rtnl_newlink+0x61/0x90
+  rtnetlink_rcv_msg+0x2f0/0xbc0
+  netlink_rcv_skb+0x120/0x380
+  netlink_unicast+0x420/0x630
+  netlink_sendmsg+0x732/0xbc0
+  __sock_sendmsg+0x1ea/0x280
+  ____sys_sendmsg+0x5a9/0x990
+  ___sys_sendmsg+0xf1/0x180
+  __sys_sendmsg+0xd3/0x180
+  do_syscall_64+0x96/0x180
+  entry_SYSCALL_64_after_hwframe+0x71/0x79
+ RIP: 0033:0x7f9503f4fa07
+ Code: 0a 00 f7 d8 64 89 02 48 c7 c0 ff ff ff ff eb b9 0f 1f 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 2e 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 51 c3 48 83 ec 28 89 54 24 1c 48 89 74 24 10
+ RSP: 002b:00007fff6c729068 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+ RAX: ffffffffffffffda RBX: 000000006630c681 RCX: 00007f9503f4fa07
+ RDX: 0000000000000000 RSI: 00007fff6c7290d0 RDI: 0000000000000003
+ RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000078
+ R10: 000000000000009b R11: 0000000000000246 R12: 0000000000000001
+ R13: 00007fff6c729180 R14: 0000000000000000 R15: 000055bf67dd9040
+  </TASK>
+
+ Allocated by task 7745:
+  kasan_save_stack+0x1c/0x40
+  kasan_save_track+0x10/0x30
+  __kasan_kmalloc+0x7b/0x90
+  __kmalloc_node+0x1ff/0x460
+  qdisc_alloc+0xae/0xb60
+  qdisc_create+0xdd/0xfb0
+  tc_modify_qdisc+0x37e/0x1960
+  rtnetlink_rcv_msg+0x2f0/0xbc0
+  netlink_rcv_skb+0x120/0x380
+  netlink_unicast+0x420/0x630
+  netlink_sendmsg+0x732/0xbc0
+  __sock_sendmsg+0x1ea/0x280
+  ____sys_sendmsg+0x5a9/0x990
+  ___sys_sendmsg+0xf1/0x180
+  __sys_sendmsg+0xd3/0x180
+  do_syscall_64+0x96/0x180
+  entry_SYSCALL_64_after_hwframe+0x71/0x79
+
+ Freed by task 7745:
+  kasan_save_stack+0x1c/0x40
+  kasan_save_track+0x10/0x30
+  kasan_save_free_info+0x36/0x60
+  __kasan_slab_free+0xfe/0x180
+  kfree+0x113/0x380
+  qdisc_create+0xafb/0xfb0
+  tc_modify_qdisc+0x37e/0x1960
+  rtnetlink_rcv_msg+0x2f0/0xbc0
+  netlink_rcv_skb+0x120/0x380
+  netlink_unicast+0x420/0x630
+  netlink_sendmsg+0x732/0xbc0
+  __sock_sendmsg+0x1ea/0x280
+  ____sys_sendmsg+0x5a9/0x990
+  ___sys_sendmsg+0xf1/0x180
+  __sys_sendmsg+0xd3/0x180
+  do_syscall_64+0x96/0x180
+  entry_SYSCALL_64_after_hwframe+0x71/0x79
+
+Fix this ensuring that lockdep_unregister_key() is called before the
+qdisc struct is freed, also in the error path of qdisc_create() and
+qdisc_alloc().
+
+Fixes: af0cb3fa3f9e ("net/sched: fix false lockdep warning on qdisc root lock")
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Closes: https://lore.kernel.org/netdev/20240429221706.1492418-1-naresh.kamboju@linaro.org/
+Signed-off-by: Davide Caratti <dcaratti@redhat.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Tested-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://lore.kernel.org/r/2aa1ca0c0a3aa0acc15925c666c777a4b5de553c.1714496886.git.dcaratti@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c    |   10 ----------
- drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h |    8 --------
- 2 files changed, 18 deletions(-)
+ net/sched/sch_api.c     |    1 +
+ net/sched/sch_generic.c |    1 +
+ 2 files changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c
-+++ b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c
-@@ -88,14 +88,6 @@ static uint8_t is_cp_desired_hdcp2(struc
- 			!hdcp->connection.is_hdcp2_revoked;
- }
+--- a/net/sched/sch_api.c
++++ b/net/sched/sch_api.c
+@@ -1353,6 +1353,7 @@ err_out5:
+ 	if (ops->destroy)
+ 		ops->destroy(sch);
+ err_out3:
++	lockdep_unregister_key(&sch->root_lock_key);
+ 	netdev_put(dev, &sch->dev_tracker);
+ 	qdisc_free(sch);
+ err_out2:
+--- a/net/sched/sch_generic.c
++++ b/net/sched/sch_generic.c
+@@ -978,6 +978,7 @@ struct Qdisc *qdisc_alloc(struct netdev_
  
--static void exit_idle_optimizations(struct mod_hdcp *hdcp)
--{
--	struct mod_hdcp_dm *dm = &hdcp->config.dm;
--
--	if (dm->funcs.exit_idle_optimizations)
--		dm->funcs.exit_idle_optimizations(dm->handle);
--}
--
- static enum mod_hdcp_status execution(struct mod_hdcp *hdcp,
- 		struct mod_hdcp_event_context *event_ctx,
- 		union mod_hdcp_transition_input *input)
-@@ -551,8 +543,6 @@ enum mod_hdcp_status mod_hdcp_process_ev
- 	memset(&event_ctx, 0, sizeof(struct mod_hdcp_event_context));
- 	event_ctx.event = event;
- 
--	exit_idle_optimizations(hdcp);
--
- 	/* execute and transition */
- 	exec_status = execution(hdcp, &event_ctx, &hdcp->auth.trans_input);
- 	trans_status = transition(
---- a/drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h
-+++ b/drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h
-@@ -155,13 +155,6 @@ struct mod_hdcp_ddc {
- 	} funcs;
- };
- 
--struct mod_hdcp_dm {
--	void *handle;
--	struct {
--		void (*exit_idle_optimizations)(void *handle);
--	} funcs;
--};
--
- struct mod_hdcp_psp {
- 	void *handle;
- 	void *funcs;
-@@ -278,7 +271,6 @@ struct mod_hdcp_display_query {
- struct mod_hdcp_config {
- 	struct mod_hdcp_psp psp;
- 	struct mod_hdcp_ddc ddc;
--	struct mod_hdcp_dm dm;
- 	uint8_t index;
- };
- 
+ 	return sch;
+ errout1:
++	lockdep_unregister_key(&sch->root_lock_key);
+ 	kfree(sch);
+ errout:
+ 	return ERR_PTR(err);
 
 
