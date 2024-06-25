@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E72D146A67;
-	Tue, 25 Jun 2024 09:59:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C101465A8;
+	Tue, 25 Jun 2024 09:59:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309565; cv=none; b=XOu7aTnalC32Av4j2MLKJILHJnEaeJKrWmlVPGkWYXXExibxbNnvwcSv+nImYGcB5Xq9baCySQ2jzStaRdjZbNFyIiyPI7iHpy1kiNaH4IcJvBZIn4ZqfwybuFVzzC0kXV96dwflLNmjN0zaW6c80G9HktGrkesnply7UxHC6Lk=
+	t=1719309568; cv=none; b=SaomIZk9HKpwwaM5eoEfr062m5hb3a+N83ofShhP9mYoUoPhJRmGy2Dd7jNFn8yD+JWqrw3ysO7dU8/JrI5eEZANXsXcGY4vm8DzlwBbiUfJgHLbafpviArGlpbr+ujHkMzf0sFvWQ+6c17u9GvgLOJydbhlpJ+mpLK7QxEOvuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309565; c=relaxed/simple;
-	bh=PkU+2yc0N4en0NpubBMQzPwp+1Aq73TnN4h3fp0SY/E=;
+	s=arc-20240116; t=1719309568; c=relaxed/simple;
+	bh=eA8gg5Kiv5k4eQMhFFyS4NY74wcDouuqkPpl/EnXYww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UtaT2ba8DGbi92m51yL3sZQb+LI15tXcuyrHw3fUMFqMmeMjzb3FDOP6bmZ04/QFlwdxhzu8teBPRLwuYo9kF0wqyu7inHCX+wmnl+R1pFdzHzbfeCN2D6GAyNoF61VF1e5uomGFw/wa+8dpC/UzTXVLVAFMerilOahYgmEDM3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f9gvKC+A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n2etTMeYWNSvzeQ3g7Y/Crp/pIJGfF6S3gPyE98889ZUqry2IGZk29rayKs4F6MGghT149pz9GmkvRnVuJn8yPnTE+KV20glijLSirD4AkADzlk6P4VI2a+qG1mb/Pm3eyep1FuSFZ6KlOYK9nIr71ZkTSzl42qELU+8qDbcFnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LL+xfk5v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f9gvKC+A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA3F4C32781;
-	Tue, 25 Jun 2024 09:59:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LL+xfk5v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93899C32781;
+	Tue, 25 Jun 2024 09:59:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309565;
-	bh=PkU+2yc0N4en0NpubBMQzPwp+1Aq73TnN4h3fp0SY/E=;
+	s=korg; t=1719309568;
+	bh=eA8gg5Kiv5k4eQMhFFyS4NY74wcDouuqkPpl/EnXYww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f9gvKC+AtELt9wvRp4XvT7qV/uodikFgR5tJgBQDNumplBKrjOargpqCqSSQjjURH
-	 UOoc1RwpQv/02csMCZVnuYDOr72le78T6le2pvBC/zQ1G0SQ4cW8ryrtIvFJu/QvP/
-	 Ax+oa4FJB0nNMt3QqxoCp8IspLKllGbUumPghgh8=
+	b=LL+xfk5vFWY6kqssvNed6qgDEjzlpSqZQBicL2ZEsh8A1RMD8OhCMnjwGiOZ/PPOQ
+	 06PA9fUhmwdSNuADq5lFa/8mW1VIj/ckZUrjSEGgngrJMfoqVKoSMWLnHtKYm3s9XJ
+	 ataUgeUboOJNwZBHer76KpDr4aEyImamAsrw4BGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yue Haibing <yuehaibing@huawei.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 058/131] xfrm6: check ip6_dst_idev() return value in xfrm6_get_saddr()
-Date: Tue, 25 Jun 2024 11:33:33 +0200
-Message-ID: <20240625085528.154008629@linuxfoundation.org>
+Subject: [PATCH 6.1 059/131] netns: Make get_net_ns() handle zero refcount net
+Date: Tue, 25 Jun 2024 11:33:34 +0200
+Message-ID: <20240625085528.191777801@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085525.931079317@linuxfoundation.org>
 References: <20240625085525.931079317@linuxfoundation.org>
@@ -53,90 +51,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Yue Haibing <yuehaibing@huawei.com>
 
-[ Upstream commit d46401052c2d5614da8efea5788532f0401cb164 ]
+[ Upstream commit ff960f9d3edbe08a736b5a224d91a305ccc946b0 ]
 
-ip6_dst_idev() can return NULL, xfrm6_get_saddr() must act accordingly.
-
-syzbot reported:
-
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN PTI
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-CPU: 1 PID: 12 Comm: kworker/u8:1 Not tainted 6.10.0-rc2-syzkaller-00383-gb8481381d4e2 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/02/2024
-Workqueue: wg-kex-wg1 wg_packet_handshake_send_worker
- RIP: 0010:xfrm6_get_saddr+0x93/0x130 net/ipv6/xfrm6_policy.c:64
-Code: df 48 89 fa 48 c1 ea 03 80 3c 02 00 0f 85 97 00 00 00 4c 8b ab d8 00 00 00 48 b8 00 00 00 00 00 fc ff df 4c 89 ea 48 c1 ea 03 <80> 3c 02 00 0f 85 86 00 00 00 4d 8b 6d 00 e8 ca 13 47 01 48 b8 00
-RSP: 0018:ffffc90000117378 EFLAGS: 00010246
-RAX: dffffc0000000000 RBX: ffff88807b079dc0 RCX: ffffffff89a0d6d7
-RDX: 0000000000000000 RSI: ffffffff89a0d6e9 RDI: ffff88807b079e98
-RBP: ffff88807ad73248 R08: 0000000000000007 R09: fffffffffffff000
-R10: ffff88807b079dc0 R11: 0000000000000007 R12: ffffc90000117480
-R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
-FS:  0000000000000000(0000) GS:ffff8880b9300000(0000) knlGS:0000000000000000
+Syzkaller hit a warning:
+refcount_t: addition on 0; use-after-free.
+WARNING: CPU: 3 PID: 7890 at lib/refcount.c:25 refcount_warn_saturate+0xdf/0x1d0
+Modules linked in:
+CPU: 3 PID: 7890 Comm: tun Not tainted 6.10.0-rc3-00100-gcaa4f9578aba-dirty #310
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+RIP: 0010:refcount_warn_saturate+0xdf/0x1d0
+Code: 41 49 04 31 ff 89 de e8 9f 1e cd fe 84 db 75 9c e8 76 26 cd fe c6 05 b6 41 49 04 01 90 48 c7 c7 b8 8e 25 86 e8 d2 05 b5 fe 90 <0f> 0b 90 90 e9 79 ff ff ff e8 53 26 cd fe 0f b6 1
+RSP: 0018:ffff8881067b7da0 EFLAGS: 00010286
+RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffffff811c72ac
+RDX: ffff8881026a2140 RSI: ffffffff811c72b5 RDI: 0000000000000001
+RBP: ffff8881067b7db0 R08: 0000000000000000 R09: 205b5d3730353139
+R10: 0000000000000000 R11: 205d303938375420 R12: ffff8881086500c4
+R13: ffff8881086500c4 R14: ffff8881086500b0 R15: ffff888108650040
+FS:  00007f5b2961a4c0(0000) GS:ffff88823bd00000(0000) knlGS:0000000000000000
 CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f4586d00440 CR3: 0000000079042000 CR4: 00000000003506f0
+CR2: 000055d7ed36fd18 CR3: 00000001482f6000 CR4: 00000000000006f0
 DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
 DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
 Call Trace:
  <TASK>
-  xfrm_get_saddr net/xfrm/xfrm_policy.c:2452 [inline]
-  xfrm_tmpl_resolve_one net/xfrm/xfrm_policy.c:2481 [inline]
-  xfrm_tmpl_resolve+0xa26/0xf10 net/xfrm/xfrm_policy.c:2541
-  xfrm_resolve_and_create_bundle+0x140/0x2570 net/xfrm/xfrm_policy.c:2835
-  xfrm_bundle_lookup net/xfrm/xfrm_policy.c:3070 [inline]
-  xfrm_lookup_with_ifid+0x4d1/0x1e60 net/xfrm/xfrm_policy.c:3201
-  xfrm_lookup net/xfrm/xfrm_policy.c:3298 [inline]
-  xfrm_lookup_route+0x3b/0x200 net/xfrm/xfrm_policy.c:3309
-  ip6_dst_lookup_flow+0x15c/0x1d0 net/ipv6/ip6_output.c:1256
-  send6+0x611/0xd20 drivers/net/wireguard/socket.c:139
-  wg_socket_send_skb_to_peer+0xf9/0x220 drivers/net/wireguard/socket.c:178
-  wg_socket_send_buffer_to_peer+0x12b/0x190 drivers/net/wireguard/socket.c:200
-  wg_packet_send_handshake_initiation+0x227/0x360 drivers/net/wireguard/send.c:40
-  wg_packet_handshake_send_worker+0x1c/0x30 drivers/net/wireguard/send.c:51
-  process_one_work+0x9fb/0x1b60 kernel/workqueue.c:3231
-  process_scheduled_works kernel/workqueue.c:3312 [inline]
-  worker_thread+0x6c8/0xf70 kernel/workqueue.c:3393
-  kthread+0x2c1/0x3a0 kernel/kthread.c:389
-  ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
-  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+ ? show_regs+0xa3/0xc0
+ ? __warn+0xa5/0x1c0
+ ? refcount_warn_saturate+0xdf/0x1d0
+ ? report_bug+0x1fc/0x2d0
+ ? refcount_warn_saturate+0xdf/0x1d0
+ ? handle_bug+0xa1/0x110
+ ? exc_invalid_op+0x3c/0xb0
+ ? asm_exc_invalid_op+0x1f/0x30
+ ? __warn_printk+0xcc/0x140
+ ? __warn_printk+0xd5/0x140
+ ? refcount_warn_saturate+0xdf/0x1d0
+ get_net_ns+0xa4/0xc0
+ ? __pfx_get_net_ns+0x10/0x10
+ open_related_ns+0x5a/0x130
+ __tun_chr_ioctl+0x1616/0x2370
+ ? __sanitizer_cov_trace_switch+0x58/0xa0
+ ? __sanitizer_cov_trace_const_cmp2+0x1c/0x30
+ ? __pfx_tun_chr_ioctl+0x10/0x10
+ tun_chr_ioctl+0x2f/0x40
+ __x64_sys_ioctl+0x11b/0x160
+ x64_sys_call+0x1211/0x20d0
+ do_syscall_64+0x9e/0x1d0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f5b28f165d7
+Code: b3 66 90 48 8b 05 b1 48 2d 00 64 c7 00 26 00 00 00 48 c7 c0 ff ff ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 b8 10 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 81 48 2d 00 8
+RSP: 002b:00007ffc2b59c5e8 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f5b28f165d7
+RDX: 0000000000000000 RSI: 00000000000054e3 RDI: 0000000000000003
+RBP: 00007ffc2b59c650 R08: 00007f5b291ed8c0 R09: 00007f5b2961a4c0
+R10: 0000000029690010 R11: 0000000000000246 R12: 0000000000400730
+R13: 00007ffc2b59cf40 R14: 0000000000000000 R15: 0000000000000000
+ </TASK>
+Kernel panic - not syncing: kernel: panic_on_warn set ...
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20240615154231.234442-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This is trigger as below:
+          ns0                                    ns1
+tun_set_iff() //dev is tun0
+   tun->dev = dev
+//ip link set tun0 netns ns1
+                                       put_net() //ref is 0
+__tun_chr_ioctl() //TUNGETDEVNETNS
+   net = dev_net(tun->dev);
+   open_related_ns(&net->ns, get_net_ns); //ns1
+     get_net_ns()
+        get_net() //addition on 0
+
+Use maybe_get_net() in get_net_ns in case net's ref is zero to fix this
+
+Fixes: 0c3e0e3bb623 ("tun: Add ioctl() TUNGETDEVNETNS cmd to allow obtaining real net ns of tun device")
+Signed-off-by: Yue Haibing <yuehaibing@huawei.com>
+Link: https://lore.kernel.org/r/20240614131302.2698509-1-yuehaibing@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/xfrm6_policy.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/core/net_namespace.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/xfrm6_policy.c b/net/ipv6/xfrm6_policy.c
-index f0053087d2e47..b7b5dbf5d037b 100644
---- a/net/ipv6/xfrm6_policy.c
-+++ b/net/ipv6/xfrm6_policy.c
-@@ -56,12 +56,18 @@ static int xfrm6_get_saddr(struct net *net, int oif,
+diff --git a/net/core/net_namespace.c b/net/core/net_namespace.c
+index c33930a171629..1d95a5adce4ec 100644
+--- a/net/core/net_namespace.c
++++ b/net/core/net_namespace.c
+@@ -657,11 +657,16 @@ EXPORT_SYMBOL_GPL(__put_net);
+  * get_net_ns - increment the refcount of the network namespace
+  * @ns: common namespace (net)
+  *
+- * Returns the net's common namespace.
++ * Returns the net's common namespace or ERR_PTR() if ref is zero.
+  */
+ struct ns_common *get_net_ns(struct ns_common *ns)
  {
- 	struct dst_entry *dst;
- 	struct net_device *dev;
-+	struct inet6_dev *idev;
+-	return &get_net(container_of(ns, struct net, ns))->ns;
++	struct net *net;
++
++	net = maybe_get_net(container_of(ns, struct net, ns));
++	if (net)
++		return &net->ns;
++	return ERR_PTR(-EINVAL);
+ }
+ EXPORT_SYMBOL_GPL(get_net_ns);
  
- 	dst = xfrm6_dst_lookup(net, 0, oif, NULL, daddr, mark);
- 	if (IS_ERR(dst))
- 		return -EHOSTUNREACH;
- 
--	dev = ip6_dst_idev(dst)->dev;
-+	idev = ip6_dst_idev(dst);
-+	if (!idev) {
-+		dst_release(dst);
-+		return -EHOSTUNREACH;
-+	}
-+	dev = idev->dev;
- 	ipv6_dev_get_saddr(dev_net(dev), dev, &daddr->in6, 0, &saddr->in6);
- 	dst_release(dst);
- 	return 0;
 -- 
 2.43.0
 
