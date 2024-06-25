@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EBC712EBEA;
-	Tue, 25 Jun 2024 09:41:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1696E149C74;
+	Tue, 25 Jun 2024 09:41:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308498; cv=none; b=J0DUjlpTjqvi66SiSz/sfMInazlezCk3PNf51xvTh4pB6UXy/UHCIFIw/UCPjUm6WRkxw+5Xg3f2LdidJxiTn+AY1TZyutS1frahA+XkoXgzMTJhMRIQ/8fE9eL+aHE1TGysBERgiRZkF6hx/w9LMAhjB5wX2kIVLL/CwCOJN18=
+	t=1719308501; cv=none; b=FuaOgfYOX+zWZps1rNo2EZn9oQeh3n7tVa4dxAUhj+g/MguAi9XhZgxVtUPLI6llRR2xJ1RZtyXd/LcIsYfP4mOnoKwY6br+g92rgHK0UlyxtBAAqiYDzYxONgS8M6cVJs/UdttJ3rWuUyMoVATysI9Lf0dfDZrYdLZ6MgawMjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308498; c=relaxed/simple;
-	bh=nDbBk0aCWFSgaDGzlI7nrYYHg7o4cD2HVDWl0sVZY9M=;
+	s=arc-20240116; t=1719308501; c=relaxed/simple;
+	bh=HlFGP8XLPtpsYUtg7XoYZkteefc1TUlOBolN+gMS68A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jmoaedIGey+csrJ5O9Id3b6BXeIOCdbK3HaNsXnSKCqV6nBpOOjbbjjv55qesH32SuLp/6KCuDMi3mEvukNA+ACEDiMiDKn8P1Kl31Q8L7NE8leKpq11lPthfUHZJtN7fWOkviIu6MkJnMJVbLp49TDB3Q5ciiOJqrbLvOUp+fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x7X4u6iq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NfPToVPQ4UpcLR8Fl2JawKzNkU62g6eSYKjgc+a/By/yItts1oxHcJ+Jh4XLet9yGXw5UpAnlLF2i6/ksrqQBF0uvTFtwATVCd6+H9mKsPxOF9sksE+OFai2h9HFu5f1EJE/CTJ7kd49IB/qLrTiLMu2BfiPaRBUJFNXhnPG3PI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=08tUPMHh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x7X4u6iq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A810DC32781;
-	Tue, 25 Jun 2024 09:41:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="08tUPMHh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F694C32781;
+	Tue, 25 Jun 2024 09:41:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308498;
-	bh=nDbBk0aCWFSgaDGzlI7nrYYHg7o4cD2HVDWl0sVZY9M=;
+	s=korg; t=1719308501;
+	bh=HlFGP8XLPtpsYUtg7XoYZkteefc1TUlOBolN+gMS68A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x7X4u6iqC2CRCUM/W0N6wm8SNM0AYUi3GzOyLrWyr2MAdOixWMzmqHlr25WbBL/UJ
-	 U81GotwRSwUoD0xGWBW2rKZSbTXHyNTbYRzb4DrFLf6qn6nc/kpngrwAuZqf/iDpnN
-	 PEF/W4unOQodiaXq8pA8L/FGnLsGY4ztOXLtwdGE=
+	b=08tUPMHhCGv+6P6LN+WOB24gI7TJXvUTgVsBxd5lrHq7DBZCqdFce+bKqn+dnsHZb
+	 RcmylmbXWuZHhcfWLyiPaCjFOp6fdAGyQy6Jrd9ywO/dGVeMXRNQNEdcBrg4/W6d7+
+	 dfSlj7pDht7sWTRQ9Q5i+jpI0jN1OkMultRz6rfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Joao Paulo Goncalves <joao.goncalves@toradex.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 142/250] RDMA/bnxt_re: Fix the max msix vectors macro
-Date: Tue, 25 Jun 2024 11:31:40 +0200
-Message-ID: <20240625085553.509199172@linuxfoundation.org>
+Subject: [PATCH 6.9 143/250] arm64: dts: freescale: imx8mm-verdin: Fix GPU speed
+Date: Tue, 25 Jun 2024 11:31:41 +0200
+Message-ID: <20240625085553.547220262@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -51,47 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Selvin Xavier <selvin.xavier@broadcom.com>
+From: Joao Paulo Goncalves <joao.goncalves@toradex.com>
 
-[ Upstream commit 056620da899527c14cf36e5019a0decaf4cf0f79 ]
+[ Upstream commit 08f0fa5d6aa9488f752eb5410e32636f143b3d8e ]
 
-bnxt_re no longer decide the number of MSI-x vectors used by itself.
-Its decided by bnxt_en now. So when bnxt_en changes this value, system
-crash is seen.
+The GPU clock was reduced on iMX8MM SOC device tree to prevent boards
+that don't support GPU overdrive from being out of specification. However,
+this caused a regression in GPU speed for the Verdin iMX8MM, which does
+support GPU overdrive. This patch fixes this by enabling overdrive mode
+in the SOM dtsi.
 
-Depend on the max value reported by bnxt_en instead of using the its own macros.
-
-Fixes: 303432211324 ("bnxt_en: Remove runtime interrupt vector allocation")
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://lore.kernel.org/r/1716195418-11767-1-git-send-email-selvin.xavier@broadcom.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 1f794d3eed53 ("arm64: dts: imx8mm: Reduce GPU to nominal speed")
+Signed-off-by: Joao Paulo Goncalves <joao.goncalves@toradex.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/bnxt_re.h | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mm-verdin.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/bnxt_re.h b/drivers/infiniband/hw/bnxt_re/bnxt_re.h
-index 9dca451ed5221..6974922e5609a 100644
---- a/drivers/infiniband/hw/bnxt_re/bnxt_re.h
-+++ b/drivers/infiniband/hw/bnxt_re/bnxt_re.h
-@@ -107,8 +107,6 @@ struct bnxt_re_gsi_context {
- 	struct	bnxt_re_sqp_entries *sqp_tbl;
- };
+diff --git a/arch/arm64/boot/dts/freescale/imx8mm-verdin.dtsi b/arch/arm64/boot/dts/freescale/imx8mm-verdin.dtsi
+index 6f0811587142d..64e2f83f26498 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mm-verdin.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mm-verdin.dtsi
+@@ -6,6 +6,7 @@
+ #include <dt-bindings/phy/phy-imx8-pcie.h>
+ #include <dt-bindings/pwm/pwm.h>
+ #include "imx8mm.dtsi"
++#include "imx8mm-overdrive.dtsi"
  
--#define BNXT_RE_MIN_MSIX		2
--#define BNXT_RE_MAX_MSIX		9
- #define BNXT_RE_AEQ_IDX			0
- #define BNXT_RE_NQ_IDX			1
- #define BNXT_RE_GEN_P5_MAX_VF		64
-@@ -168,7 +166,7 @@ struct bnxt_re_dev {
- 	struct bnxt_qplib_rcfw		rcfw;
- 
- 	/* NQ */
--	struct bnxt_qplib_nq		nq[BNXT_RE_MAX_MSIX];
-+	struct bnxt_qplib_nq		nq[BNXT_MAX_ROCE_MSIX];
- 
- 	/* Device Resources */
- 	struct bnxt_qplib_dev_attr	dev_attr;
+ / {
+ 	chosen {
 -- 
 2.43.0
 
