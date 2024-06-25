@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBA5149C79;
-	Tue, 25 Jun 2024 09:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D994149E03;
+	Tue, 25 Jun 2024 09:43:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308577; cv=none; b=caTrFhnivwXoxSBVpUODCm2003+S/SLNiiSZOLxvzJFwOjRfbMCFEpRg5M19+Uwubkw7PKQ1hECJANynSwojoIrzlthZxS0Ok5lhw/JjM2Dvf6t1zMUf2gNN/85BFh4Trl60Ok5oQJz4x+ZfVYHmioNIHc5Fv1ZDxDjNAKr46JA=
+	t=1719308580; cv=none; b=WYhTqxjazJOLwZiHr7WfAdD/f4GpEH8cuhsNfH9MW4efKkqVxZLCUjQruXYW94HOCCzM5UmKzqVVd13iO0n2V9J3SrWnow7FZ6hGxIO839UUNiFW3V3VcBHgKdt/N1fmaLmq2MIlA0G1hE6NVhPnFWjSkwPd83FRGemJfB76XgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308577; c=relaxed/simple;
-	bh=jBsGVQsiranAUxobOqEjv7AKC+Cx5js2RTVaa6mv/H0=;
+	s=arc-20240116; t=1719308580; c=relaxed/simple;
+	bh=VJkr4i7p0zRqkzwGKIsJJNb6YdOSfiUHBkQGY3VPD0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k0hV+yjsu/tbTx907zdOFN7phvqvXPPqPH8MctQWdS4O/WzCxUBr7x3mu+XgLi4MNLTW5ncR/MPUap0ZJLgBrdBd6pXFAwnwO0Qu5Umn+uTwRpDhIXkYrMh46NSskMH/USVEXLvOS3OH4DnqktSlnuVuwACfifRxDtyqIz00yvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ip2L3HTW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C9w26s3HCoZXZQo4n3nLa+TnliSw9gsMLfO69nN3VYkqj5t5Hn2d5qilN8oil0cpzet7KXvFRiM/8lEUTDjBSpG52NtkCPVD5ZjEljnh7Km/oXa2Um1IwxJltW381MSyxmB+MIKLvFP94It6+6icuCnAhXFUVoLNTd6T0xXUbMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kq9q9PwT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ip2L3HTW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B882DC32781;
-	Tue, 25 Jun 2024 09:42:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kq9q9PwT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7D21C32781;
+	Tue, 25 Jun 2024 09:42:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308577;
-	bh=jBsGVQsiranAUxobOqEjv7AKC+Cx5js2RTVaa6mv/H0=;
+	s=korg; t=1719308580;
+	bh=VJkr4i7p0zRqkzwGKIsJJNb6YdOSfiUHBkQGY3VPD0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ip2L3HTW2Ye7C4DdFQYSK0zB3VpOu//XOkgBnd4clrpl6Gkq+RpTjqpYgd0ZJFJvJ
-	 2TukZB2IMm+oc0VE7t+6zOG+RFMPUBppV2htiW7tF29wOiYPeeyxIG9smky8BmDi9/
-	 q73E1nH6d+zGYPSKdvbfGGtuVdLALZ4gxbgwkzZ0=
+	b=kq9q9PwTCFQYTPln42iUV0gotoQbZ5UOHUd9eiGK4YULQaWo97McNcZEm3/b15cwI
+	 71fsxX1lRLl3Hyc2tbocQlsaTd7LBhZJhy16aH6Xtbd0Jx9ghyk0FydPeyeXV1DcwX
+	 XW2TlNKtvYM0zxP3n9nGchTaWQmTbx3+OsU/29DU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianguo Wu <wujianguo@chinatelecom.cn>,
+	Shuang Li <shuali@redhat.com>,
+	Xin Long <lucien.xin@gmail.com>,
 	Simon Horman <horms@kernel.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 137/250] seg6: fix parameter passing when calling NF_HOOK() in End.DX4 and End.DX6 behaviors
-Date: Tue, 25 Jun 2024 11:31:35 +0200
-Message-ID: <20240625085553.319495193@linuxfoundation.org>
+Subject: [PATCH 6.9 128/250] sched: act_ct: add netns into the key of tcf_ct_flow_table
+Date: Tue, 25 Jun 2024 11:31:26 +0200
+Message-ID: <20240625085552.979104238@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -52,95 +53,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianguo Wu <wujianguo@chinatelecom.cn>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 9a3bc8d16e0aacd65c31aaf23a2bced3288a7779 ]
+[ Upstream commit 88c67aeb14070bab61d3dd8be96c8b42ebcaf53a ]
 
-input_action_end_dx4() and input_action_end_dx6() are called NF_HOOK() for
-PREROUTING hook, in PREROUTING hook, we should passing a valid indev,
-and a NULL outdev to NF_HOOK(), otherwise may trigger a NULL pointer
-dereference, as below:
+zones_ht is a global hashtable for flow_table with zone as key. However,
+it does not consider netns when getting a flow_table from zones_ht in
+tcf_ct_init(), and it means an act_ct action in netns A may get a
+flow_table that belongs to netns B if it has the same zone value.
 
-    [74830.647293] BUG: kernel NULL pointer dereference, address: 0000000000000090
-    [74830.655633] #PF: supervisor read access in kernel mode
-    [74830.657888] #PF: error_code(0x0000) - not-present page
-    [74830.659500] PGD 0 P4D 0
-    [74830.660450] Oops: 0000 [#1] PREEMPT SMP PTI
-    ...
-    [74830.664953] Hardware name: Red Hat KVM, BIOS 0.5.1 01/01/2011
-    [74830.666569] RIP: 0010:rpfilter_mt+0x44/0x15e [ipt_rpfilter]
-    ...
-    [74830.689725] Call Trace:
-    [74830.690402]  <IRQ>
-    [74830.690953]  ? show_trace_log_lvl+0x1c4/0x2df
-    [74830.692020]  ? show_trace_log_lvl+0x1c4/0x2df
-    [74830.693095]  ? ipt_do_table+0x286/0x710 [ip_tables]
-    [74830.694275]  ? __die_body.cold+0x8/0xd
-    [74830.695205]  ? page_fault_oops+0xac/0x140
-    [74830.696244]  ? exc_page_fault+0x62/0x150
-    [74830.697225]  ? asm_exc_page_fault+0x22/0x30
-    [74830.698344]  ? rpfilter_mt+0x44/0x15e [ipt_rpfilter]
-    [74830.699540]  ipt_do_table+0x286/0x710 [ip_tables]
-    [74830.700758]  ? ip6_route_input+0x19d/0x240
-    [74830.701752]  nf_hook_slow+0x3f/0xb0
-    [74830.702678]  input_action_end_dx4+0x19b/0x1e0
-    [74830.703735]  ? input_action_end_t+0xe0/0xe0
-    [74830.704734]  seg6_local_input_core+0x2d/0x60
-    [74830.705782]  lwtunnel_input+0x5b/0xb0
-    [74830.706690]  __netif_receive_skb_one_core+0x63/0xa0
-    [74830.707825]  process_backlog+0x99/0x140
-    [74830.709538]  __napi_poll+0x2c/0x160
-    [74830.710673]  net_rx_action+0x296/0x350
-    [74830.711860]  __do_softirq+0xcb/0x2ac
-    [74830.713049]  do_softirq+0x63/0x90
+In Shuang's test with the TOPO:
 
-input_action_end_dx4() passing a NULL indev to NF_HOOK(), and finally
-trigger a NULL dereference in rpfilter_mt()->rpfilter_is_loopback():
+  tcf2_c <---> tcf2_sw1 <---> tcf2_sw2 <---> tcf2_s
 
-    static bool
-    rpfilter_is_loopback(const struct sk_buff *skb,
-          	       const struct net_device *in)
-    {
-            // in is NULL
-            return skb->pkt_type == PACKET_LOOPBACK ||
-          	 in->flags & IFF_LOOPBACK;
-    }
+tcf2_sw1 and tcf2_sw2 saw the same flow and used the same flow table,
+which caused their ct entries entering unexpected states and the
+TCP connection not able to end normally.
 
-Fixes: 7a3f5b0de364 ("netfilter: add netfilter hooks to SRv6 data plane")
-Signed-off-by: Jianguo Wu <wujianguo@chinatelecom.cn>
+This patch fixes the issue simply by adding netns into the key of
+tcf_ct_flow_table so that an act_ct action gets a flow_table that
+belongs to its own netns in tcf_ct_init().
+
+Note that for easy coding we don't use tcf_ct_flow_table.nf_ft.net,
+as the ct_ft is initialized after inserting it to the hashtable in
+tcf_ct_flow_table_get() and also it requires to implement several
+functions in rhashtable_params including hashfn, obj_hashfn and
+obj_cmpfn.
+
+Fixes: 64ff70b80fd4 ("net/sched: act_ct: Offload established connections to flow table")
+Reported-by: Shuang Li <shuali@redhat.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://lore.kernel.org/r/1db5b6cc6902c5fc6f8c6cbd85494a2008087be5.1718488050.git.lucien.xin@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/seg6_local.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/sched/act_ct.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv6/seg6_local.c b/net/ipv6/seg6_local.c
-index 24e2b4b494cb0..c434940131b1d 100644
---- a/net/ipv6/seg6_local.c
-+++ b/net/ipv6/seg6_local.c
-@@ -941,8 +941,8 @@ static int input_action_end_dx6(struct sk_buff *skb,
+diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
+index baac083fd8f10..2a96d9c1db65b 100644
+--- a/net/sched/act_ct.c
++++ b/net/sched/act_ct.c
+@@ -41,21 +41,26 @@ static struct workqueue_struct *act_ct_wq;
+ static struct rhashtable zones_ht;
+ static DEFINE_MUTEX(zones_mutex);
  
- 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
- 		return NF_HOOK(NFPROTO_IPV6, NF_INET_PRE_ROUTING,
--			       dev_net(skb->dev), NULL, skb, NULL,
--			       skb_dst(skb)->dev, input_action_end_dx6_finish);
-+			       dev_net(skb->dev), NULL, skb, skb->dev,
-+			       NULL, input_action_end_dx6_finish);
++struct zones_ht_key {
++	struct net *net;
++	u16 zone;
++};
++
+ struct tcf_ct_flow_table {
+ 	struct rhash_head node; /* In zones tables */
  
- 	return input_action_end_dx6_finish(dev_net(skb->dev), NULL, skb);
- drop:
-@@ -991,8 +991,8 @@ static int input_action_end_dx4(struct sk_buff *skb,
+ 	struct rcu_work rwork;
+ 	struct nf_flowtable nf_ft;
+ 	refcount_t ref;
+-	u16 zone;
++	struct zones_ht_key key;
  
- 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
- 		return NF_HOOK(NFPROTO_IPV4, NF_INET_PRE_ROUTING,
--			       dev_net(skb->dev), NULL, skb, NULL,
--			       skb_dst(skb)->dev, input_action_end_dx4_finish);
-+			       dev_net(skb->dev), NULL, skb, skb->dev,
-+			       NULL, input_action_end_dx4_finish);
+ 	bool dying;
+ };
  
- 	return input_action_end_dx4_finish(dev_net(skb->dev), NULL, skb);
- drop:
+ static const struct rhashtable_params zones_params = {
+ 	.head_offset = offsetof(struct tcf_ct_flow_table, node),
+-	.key_offset = offsetof(struct tcf_ct_flow_table, zone),
+-	.key_len = sizeof_field(struct tcf_ct_flow_table, zone),
++	.key_offset = offsetof(struct tcf_ct_flow_table, key),
++	.key_len = sizeof_field(struct tcf_ct_flow_table, key),
+ 	.automatic_shrinking = true,
+ };
+ 
+@@ -316,11 +321,12 @@ static struct nf_flowtable_type flowtable_ct = {
+ 
+ static int tcf_ct_flow_table_get(struct net *net, struct tcf_ct_params *params)
+ {
++	struct zones_ht_key key = { .net = net, .zone = params->zone };
+ 	struct tcf_ct_flow_table *ct_ft;
+ 	int err = -ENOMEM;
+ 
+ 	mutex_lock(&zones_mutex);
+-	ct_ft = rhashtable_lookup_fast(&zones_ht, &params->zone, zones_params);
++	ct_ft = rhashtable_lookup_fast(&zones_ht, &key, zones_params);
+ 	if (ct_ft && refcount_inc_not_zero(&ct_ft->ref))
+ 		goto out_unlock;
+ 
+@@ -329,7 +335,7 @@ static int tcf_ct_flow_table_get(struct net *net, struct tcf_ct_params *params)
+ 		goto err_alloc;
+ 	refcount_set(&ct_ft->ref, 1);
+ 
+-	ct_ft->zone = params->zone;
++	ct_ft->key = key;
+ 	err = rhashtable_insert_fast(&zones_ht, &ct_ft->node, zones_params);
+ 	if (err)
+ 		goto err_insert;
 -- 
 2.43.0
 
