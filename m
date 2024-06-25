@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B84FBEF;
-	Tue, 25 Jun 2024 09:37:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0D8FBEF;
+	Tue, 25 Jun 2024 09:37:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308238; cv=none; b=nfmiq7Y9IBKtteC2dclrvu10KKsIvs128hPQw83ngj26+t0j3kx9WGyEROSowbaoJrzmHVaxRe3BBHS4Hil3aD6E6UxELVRJ878CYlqZ4Is/Jt3NLaM0D3Z6b+2HaFsPjLuIqdd8q3UUcIt/U4n0KEOp53gEzRxyYEv83rYw+mg=
+	t=1719308241; cv=none; b=t81NAzix2u5/3iBoiATLIGbj2E45R1FQRcuie+St060iqsJUEqosXqd126+5SCrIJ7sbFaWWhH2hwxe0T89Sn+kjjjLkd1sv3LAf47sMiDdY4WoAkLPlnqwYqGMCAcovgKxQHcrGJ1GV9NK1DNRO/Hk5aUOu7BNLeDl8PsRbPXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308238; c=relaxed/simple;
-	bh=OyaouxUSFvus0i3q+WS79lhZvLWkiWSI0+boN5HzKvI=;
+	s=arc-20240116; t=1719308241; c=relaxed/simple;
+	bh=AI78WzMVQxi4lawqaFXd1seJfWpNyNLBUNOd277zqYI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TkqZfj2z5rPp8FZYSfizjvxTHk7a1FKDkXHkUT3sXetzQy0WvKzSvh3TBmHYQKJKEYcmzy9iHWf0ihbiYHaRrC9hT8SZ1kzZLeWQ0sv6dcxnPQV6Hcf3hIsUn0RyZnAW11ccRppuPDkAN69X/7ioJM5dV3vuJutxnp62z6KJAZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0de3Obtm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XkQgddg2VsIOsL8aS/rh5tO1OrsZXNQvBMwvv1p17o63wss3xSWeEscGfj1SqRf+ZUUs6pt0cbu8IOgL6ewWYvFjf4DcCSrGQ9Ad8qR6HD0tE1FzZx4tzvLGBitRlRRJkqGayEWoiFQPodgYcXPgzSw/s6AaohrZoajxeSXzhPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CoD3WFTm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0de3Obtm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D11EC32781;
-	Tue, 25 Jun 2024 09:37:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CoD3WFTm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14A48C32781;
+	Tue, 25 Jun 2024 09:37:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308238;
-	bh=OyaouxUSFvus0i3q+WS79lhZvLWkiWSI0+boN5HzKvI=;
+	s=korg; t=1719308241;
+	bh=AI78WzMVQxi4lawqaFXd1seJfWpNyNLBUNOd277zqYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0de3ObtmHG3vQc/IgZd+ZgPb46BAntDEiwuZFzKRkjmzpaBrvmaSluHNOezz1MSDm
-	 T+Rl+M4q3NYsJSvuhU1y5IjWx1FmzquhyZYTjGYG6ibdNTPj6fN901vKKsxAQBzimU
-	 2VTjnV/rKteLlnbNDbpv+NwEx/HDsOEYoC7W8m1Y=
+	b=CoD3WFTmwW0wCVvgXwrYhaf73G7TrTGlGdZq9UmSMD70BaanYGbcQKPXcRG+YmtPK
+	 3fDwMEsP5bEnDMoxMWGP2ZsRZGvsb8rxXnMoMTCoVDYJ9iE7YNFibMwGUVwdvYGQFd
+	 RKNA3EWNUy7QUqJs0R8QWUdy3F5iHqeHE2+7c5yY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Erico Nunes <nunes.erico@gmail.com>,
 	Qiang Yu <yuq825@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 053/250] drm/lima: add mask irq callback to gp and pp
-Date: Tue, 25 Jun 2024 11:30:11 +0200
-Message-ID: <20240625085550.097212799@linuxfoundation.org>
+Subject: [PATCH 6.9 054/250] drm/lima: include pp bcast irq in timeout handler check
+Date: Tue, 25 Jun 2024 11:30:12 +0200
+Message-ID: <20240625085550.135658412@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -53,141 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Erico Nunes <nunes.erico@gmail.com>
 
-[ Upstream commit 49c13b4d2dd4a831225746e758893673f6ae961c ]
+[ Upstream commit d8100caf40a35904d27ce446fb2088b54277997a ]
 
-This is needed because we want to reset those devices in device-agnostic
-code such as lima_sched.
-In particular, masking irqs will be useful before a hard reset to
-prevent race conditions.
+In commit 53cb55b20208 ("drm/lima: handle spurious timeouts due to high
+irq latency") a check was added to detect an unexpectedly high interrupt
+latency timeout.
+With further investigation it was noted that on Mali-450 the pp bcast
+irq may also be a trigger of race conditions against the timeout
+handler, so add it to this check too.
 
 Signed-off-by: Erico Nunes <nunes.erico@gmail.com>
 Signed-off-by: Qiang Yu <yuq825@gmail.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240405152951.1531555-2-nunes.erico@gmail.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20240405152951.1531555-3-nunes.erico@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/lima/lima_bcast.c | 12 ++++++++++++
- drivers/gpu/drm/lima/lima_bcast.h |  3 +++
- drivers/gpu/drm/lima/lima_gp.c    |  8 ++++++++
- drivers/gpu/drm/lima/lima_pp.c    | 18 ++++++++++++++++++
- drivers/gpu/drm/lima/lima_sched.h |  1 +
- 5 files changed, 42 insertions(+)
+ drivers/gpu/drm/lima/lima_sched.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/lima/lima_bcast.c b/drivers/gpu/drm/lima/lima_bcast.c
-index fbc43f243c54d..6d000504e1a4e 100644
---- a/drivers/gpu/drm/lima/lima_bcast.c
-+++ b/drivers/gpu/drm/lima/lima_bcast.c
-@@ -43,6 +43,18 @@ void lima_bcast_suspend(struct lima_ip *ip)
- 
- }
- 
-+int lima_bcast_mask_irq(struct lima_ip *ip)
-+{
-+	bcast_write(LIMA_BCAST_BROADCAST_MASK, 0);
-+	bcast_write(LIMA_BCAST_INTERRUPT_MASK, 0);
-+	return 0;
-+}
-+
-+int lima_bcast_reset(struct lima_ip *ip)
-+{
-+	return lima_bcast_hw_init(ip);
-+}
-+
- int lima_bcast_init(struct lima_ip *ip)
- {
- 	int i;
-diff --git a/drivers/gpu/drm/lima/lima_bcast.h b/drivers/gpu/drm/lima/lima_bcast.h
-index 465ee587bceb2..cd08841e47879 100644
---- a/drivers/gpu/drm/lima/lima_bcast.h
-+++ b/drivers/gpu/drm/lima/lima_bcast.h
-@@ -13,4 +13,7 @@ void lima_bcast_fini(struct lima_ip *ip);
- 
- void lima_bcast_enable(struct lima_device *dev, int num_pp);
- 
-+int lima_bcast_mask_irq(struct lima_ip *ip);
-+int lima_bcast_reset(struct lima_ip *ip);
-+
- #endif
-diff --git a/drivers/gpu/drm/lima/lima_gp.c b/drivers/gpu/drm/lima/lima_gp.c
-index 6b354e2fb61d4..e15295071533b 100644
---- a/drivers/gpu/drm/lima/lima_gp.c
-+++ b/drivers/gpu/drm/lima/lima_gp.c
-@@ -233,6 +233,13 @@ static void lima_gp_task_mmu_error(struct lima_sched_pipe *pipe)
- 	lima_sched_pipe_task_done(pipe);
- }
- 
-+static void lima_gp_task_mask_irq(struct lima_sched_pipe *pipe)
-+{
-+	struct lima_ip *ip = pipe->processor[0];
-+
-+	gp_write(LIMA_GP_INT_MASK, 0);
-+}
-+
- static int lima_gp_task_recover(struct lima_sched_pipe *pipe)
- {
- 	struct lima_ip *ip = pipe->processor[0];
-@@ -365,6 +372,7 @@ int lima_gp_pipe_init(struct lima_device *dev)
- 	pipe->task_error = lima_gp_task_error;
- 	pipe->task_mmu_error = lima_gp_task_mmu_error;
- 	pipe->task_recover = lima_gp_task_recover;
-+	pipe->task_mask_irq = lima_gp_task_mask_irq;
- 
- 	return 0;
- }
-diff --git a/drivers/gpu/drm/lima/lima_pp.c b/drivers/gpu/drm/lima/lima_pp.c
-index d0d2db0ef1ce8..a4a2ffe6527c2 100644
---- a/drivers/gpu/drm/lima/lima_pp.c
-+++ b/drivers/gpu/drm/lima/lima_pp.c
-@@ -429,6 +429,9 @@ static void lima_pp_task_error(struct lima_sched_pipe *pipe)
- 
- 		lima_pp_hard_reset(ip);
- 	}
-+
+diff --git a/drivers/gpu/drm/lima/lima_sched.c b/drivers/gpu/drm/lima/lima_sched.c
+index 00b19adfc8881..66841503a6183 100644
+--- a/drivers/gpu/drm/lima/lima_sched.c
++++ b/drivers/gpu/drm/lima/lima_sched.c
+@@ -422,6 +422,8 @@ static enum drm_gpu_sched_stat lima_sched_timedout_job(struct drm_sched_job *job
+ 	 */
+ 	for (i = 0; i < pipe->num_processor; i++)
+ 		synchronize_irq(pipe->processor[i]->irq);
 +	if (pipe->bcast_processor)
-+		lima_bcast_reset(pipe->bcast_processor);
- }
++		synchronize_irq(pipe->bcast_processor->irq);
  
- static void lima_pp_task_mmu_error(struct lima_sched_pipe *pipe)
-@@ -437,6 +440,20 @@ static void lima_pp_task_mmu_error(struct lima_sched_pipe *pipe)
- 		lima_sched_pipe_task_done(pipe);
- }
- 
-+static void lima_pp_task_mask_irq(struct lima_sched_pipe *pipe)
-+{
-+	int i;
-+
-+	for (i = 0; i < pipe->num_processor; i++) {
-+		struct lima_ip *ip = pipe->processor[i];
-+
-+		pp_write(LIMA_PP_INT_MASK, 0);
-+	}
-+
-+	if (pipe->bcast_processor)
-+		lima_bcast_mask_irq(pipe->bcast_processor);
-+}
-+
- static struct kmem_cache *lima_pp_task_slab;
- static int lima_pp_task_slab_refcnt;
- 
-@@ -468,6 +485,7 @@ int lima_pp_pipe_init(struct lima_device *dev)
- 	pipe->task_fini = lima_pp_task_fini;
- 	pipe->task_error = lima_pp_task_error;
- 	pipe->task_mmu_error = lima_pp_task_mmu_error;
-+	pipe->task_mask_irq = lima_pp_task_mask_irq;
- 
- 	return 0;
- }
-diff --git a/drivers/gpu/drm/lima/lima_sched.h b/drivers/gpu/drm/lima/lima_sched.h
-index 6bd4f3b701091..85b23ba901d53 100644
---- a/drivers/gpu/drm/lima/lima_sched.h
-+++ b/drivers/gpu/drm/lima/lima_sched.h
-@@ -80,6 +80,7 @@ struct lima_sched_pipe {
- 	void (*task_error)(struct lima_sched_pipe *pipe);
- 	void (*task_mmu_error)(struct lima_sched_pipe *pipe);
- 	int (*task_recover)(struct lima_sched_pipe *pipe);
-+	void (*task_mask_irq)(struct lima_sched_pipe *pipe);
- 
- 	struct work_struct recover_work;
- };
+ 	if (dma_fence_is_signaled(task->fence)) {
+ 		DRM_WARN("%s unexpectedly high interrupt latency\n", lima_ip_name(ip));
 -- 
 2.43.0
 
