@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39BC7FBEF;
-	Tue, 25 Jun 2024 09:36:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24AAD148315;
+	Tue, 25 Jun 2024 09:36:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308215; cv=none; b=t4CrwUaJjPe17wBl8+/TBYo8+GxcOODdkhUpu6p1mVkIsDFmQn6sA7qjfmxP/hHtGIzJ8Qi2cfXz33Ke3xaAkFOPa9bsMnz+dPZKUqvaK/0OfEFiVxKKkCFAFSrhoEApgLqRZ59MoRRN7zVyd5gtMEPTCBKiu29HVHpxg+lbikE=
+	t=1719308218; cv=none; b=fWNv0anc4Wb/cO/H03CalfHiEh8g5trusiInk0iMwgKM4kjtMUmSe7Rq/aoZubpPNgUhwPbXnuNfDwxngYIhF2jG5C0VZx0Y7PsF1kz+Y555GprVYnj7RkbfAeUegu+OYzEmm6olp6fVJe3MaTY7mCuejGL1o/WMYKhJoHirkqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308215; c=relaxed/simple;
-	bh=y7xPcgbd0BD6lZF0hQDQYvuDNs/9w39YpgiXuE3l3/s=;
+	s=arc-20240116; t=1719308218; c=relaxed/simple;
+	bh=WYwE9X3haBp3U7712ujhV9TGeenT1a1yX0zfs/OAFl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gTk8eidqF+JS2F+31F9yDeYTaoHDY5P5TVm/x4EpdkGltDb6+zzf9TGI3ahy5NDpdpbGgQ4/zQs4/zet/wHxz05TdYdjVjn2MJ0LuaS8WgAzgD4Jxl5vL74eFjKbc8LVUcY1ydI75Ki4rU3F51zYGJgcW14Y1Ul/hIvwkHwhrjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oYutqdCa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JyeoxhgfwlhUrdwcwcTWaF1zcpTgWU16QI86+CUqTo6XQrnvCYulail7Jv2U48azzXkibqaKsVfwlFSeXq7+8ctZRJ5bc9gIymkztVS4oeC7Xmu+Hegj5HgYZrpQdhzWwXgzSZvpniJGnIVvCM3/V9eEF8Q6Kuaxq+Bq8H/ELyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k310aJGA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oYutqdCa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABCECC32781;
-	Tue, 25 Jun 2024 09:36:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k310aJGA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D27DC32781;
+	Tue, 25 Jun 2024 09:36:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308215;
-	bh=y7xPcgbd0BD6lZF0hQDQYvuDNs/9w39YpgiXuE3l3/s=;
+	s=korg; t=1719308218;
+	bh=WYwE9X3haBp3U7712ujhV9TGeenT1a1yX0zfs/OAFl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oYutqdCakBea2pkaUwutmW0yuCar1bIE97/+kUAbTDt7WRneddVkgqf5JteWWAaCx
-	 V11aL3H3HWi4Udf8qo7VhD38vn0X3zwCF76p6fbD3JoQ2S1kAJMiy/Xa2U1+f6pEjO
-	 MvFdCsfOW/tUWe1JlsrGfjhibAxPwaf1UuFtIFpA=
+	b=k310aJGAGsOprLoLTRo0S9MAtqsbEKgpxaSbOCAzSIAxPrCsdYl1C1Xk7R0lAx07k
+	 Z1vo/XGxEXt2oJMxjoj0k4ZQc1v13caKu/cI2n5BktMH05ej8QbJw3n7N/09LwIAIC
+	 vAAD7KjVwVMSKASB77Yvm/75Uw6IZzvrvbl5XJ8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uri Arev <me@wantyapps.xyz>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 046/250] Bluetooth: ath3k: Fix multiple issues reported by checkpatch.pl
-Date: Tue, 25 Jun 2024 11:30:04 +0200
-Message-ID: <20240625085549.829207588@linuxfoundation.org>
+Subject: [PATCH 6.9 029/250] net: sfp: enhance quirk for Fibrestore 2.5G copper SFP module
+Date: Tue, 25 Jun 2024 11:29:47 +0200
+Message-ID: <20240625085549.174362251@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -45,194 +46,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uri Arev <me@wantyapps.xyz>
+From: Marek Behún <kabel@kernel.org>
 
-[ Upstream commit 68aa21054ec3a1a313af90a5f95ade16c3326d20 ]
+[ Upstream commit cd4a32e60061789676f7f018a94fcc9ec56732a0 ]
 
-This fixes some CHECKs reported by the checkpatch script.
+Enhance the quirk for Fibrestore 2.5G copper SFP module. The original
+commit e27aca3760c0 ("net: sfp: add quirk for FS's 2.5G copper SFP")
+introducing the quirk says that the PHY is inaccessible, but that is
+not true.
 
-Issues reported in ath3k.c:
--------
-ath3k.c
--------
-CHECK: Please don't use multiple blank lines
-+
-+
+The module uses Rollball protocol to talk to the PHY, and needs a 4
+second wait before probing it, same as FS 10G module.
 
-CHECK: Blank lines aren't necessary after an open brace '{'
-+static const struct usb_device_id ath3k_blist_tbl[] = {
-+
+The PHY inside the module is Realtek RTL8221B-VB-CG PHY. The realtek
+driver recently gained support to set it up via clause 45 accesses.
 
-CHECK: Alignment should match open parenthesis
-+static int ath3k_load_firmware(struct usb_device *udev,
-+                               const struct firmware *firmware)
-
-CHECK: Alignment should match open parenthesis
-+               err = usb_bulk_msg(udev, pipe, send_buf, size,
-+                                       &len, 3000);
-
-CHECK: Unnecessary parentheses around 'len != size'
-+               if (err || (len != size)) {
-
-CHECK: Alignment should match open parenthesis
-+static int ath3k_get_version(struct usb_device *udev,
-+                       struct ath3k_version *version)
-
-CHECK: Alignment should match open parenthesis
-+static int ath3k_load_fwfile(struct usb_device *udev,
-+               const struct firmware *firmware)
-
-CHECK: Alignment should match open parenthesis
-+               err = usb_bulk_msg(udev, pipe, send_buf, size,
-+                                       &len, 3000);
-
-CHECK: Unnecessary parentheses around 'len != size'
-+               if (err || (len != size)) {
-
-CHECK: Blank lines aren't necessary after an open brace '{'
-+       switch (fw_version.ref_clock) {
-+
-
-CHECK: Alignment should match open parenthesis
-+       snprintf(filename, ATH3K_NAME_LEN, "ar3k/ramps_0x%08x_%d%s",
-+               le32_to_cpu(fw_version.rom_version), clk_value, ".dfu");
-
-CHECK: Alignment should match open parenthesis
-+static int ath3k_probe(struct usb_interface *intf,
-+                       const struct usb_device_id *id)
-
-CHECK: Alignment should match open parenthesis
-+                       BT_ERR("Firmware file \"%s\" not found",
-+                                                       ATH3K_FIRMWARE);
-
-CHECK: Alignment should match open parenthesis
-+               BT_ERR("Firmware file \"%s\" request failed (err=%d)",
-+                                               ATH3K_FIRMWARE, ret);
-
-total: 0 errors, 0 warnings, 14 checks, 540 lines checked
-
-Signed-off-by: Uri Arev <me@wantyapps.xyz>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Marek Behún <kabel@kernel.org>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://lore.kernel.org/r/20240423085039.26957-2-kabel@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/ath3k.c | 25 +++++++++++--------------
- 1 file changed, 11 insertions(+), 14 deletions(-)
+ drivers/net/phy/sfp.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/bluetooth/ath3k.c b/drivers/bluetooth/ath3k.c
-index 88262d3a93923..ce97b336fbfb8 100644
---- a/drivers/bluetooth/ath3k.c
-+++ b/drivers/bluetooth/ath3k.c
-@@ -3,7 +3,6 @@
-  * Copyright (c) 2008-2009 Atheros Communications Inc.
-  */
- 
--
- #include <linux/module.h>
- #include <linux/kernel.h>
- #include <linux/init.h>
-@@ -128,7 +127,6 @@ MODULE_DEVICE_TABLE(usb, ath3k_table);
-  * for AR3012
-  */
- static const struct usb_device_id ath3k_blist_tbl[] = {
--
- 	/* Atheros AR3012 with sflash firmware*/
- 	{ USB_DEVICE(0x0489, 0xe04e), .driver_info = BTUSB_ATH3012 },
- 	{ USB_DEVICE(0x0489, 0xe04d), .driver_info = BTUSB_ATH3012 },
-@@ -202,7 +200,7 @@ static inline void ath3k_log_failed_loading(int err, int len, int size,
- #define TIMEGAP_USEC_MAX	100
- 
- static int ath3k_load_firmware(struct usb_device *udev,
--				const struct firmware *firmware)
-+			       const struct firmware *firmware)
- {
- 	u8 *send_buf;
- 	int len = 0;
-@@ -237,9 +235,9 @@ static int ath3k_load_firmware(struct usb_device *udev,
- 		memcpy(send_buf, firmware->data + sent, size);
- 
- 		err = usb_bulk_msg(udev, pipe, send_buf, size,
--					&len, 3000);
-+				   &len, 3000);
- 
--		if (err || (len != size)) {
-+		if (err || len != size) {
- 			ath3k_log_failed_loading(err, len, size, count);
- 			goto error;
- 		}
-@@ -262,7 +260,7 @@ static int ath3k_get_state(struct usb_device *udev, unsigned char *state)
+diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
+index d999d9baadb26..6e42d4034b520 100644
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -385,18 +385,23 @@ static void sfp_fixup_rollball(struct sfp *sfp)
+ 	sfp->phy_t_retry = msecs_to_jiffies(1000);
  }
  
- static int ath3k_get_version(struct usb_device *udev,
--			struct ath3k_version *version)
-+			     struct ath3k_version *version)
+-static void sfp_fixup_fs_10gt(struct sfp *sfp)
++static void sfp_fixup_fs_2_5gt(struct sfp *sfp)
  {
- 	return usb_control_msg_recv(udev, 0, ATH3K_GETVERSION,
- 				    USB_TYPE_VENDOR | USB_DIR_IN, 0, 0,
-@@ -271,7 +269,7 @@ static int ath3k_get_version(struct usb_device *udev,
+-	sfp_fixup_10gbaset_30m(sfp);
+ 	sfp_fixup_rollball(sfp);
+ 
+-	/* The RollBall fixup is not enough for FS modules, the AQR chip inside
++	/* The RollBall fixup is not enough for FS modules, the PHY chip inside
+ 	 * them does not return 0xffff for PHY ID registers in all MMDs for the
+ 	 * while initializing. They need a 4 second wait before accessing PHY.
+ 	 */
+ 	sfp->module_t_wait = msecs_to_jiffies(4000);
  }
  
- static int ath3k_load_fwfile(struct usb_device *udev,
--		const struct firmware *firmware)
-+			     const struct firmware *firmware)
++static void sfp_fixup_fs_10gt(struct sfp *sfp)
++{
++	sfp_fixup_10gbaset_30m(sfp);
++	sfp_fixup_fs_2_5gt(sfp);
++}
++
+ static void sfp_fixup_halny_gsfp(struct sfp *sfp)
  {
- 	u8 *send_buf;
- 	int len = 0;
-@@ -310,8 +308,8 @@ static int ath3k_load_fwfile(struct usb_device *udev,
- 		memcpy(send_buf, firmware->data + sent, size);
+ 	/* Ignore the TX_FAULT and LOS signals on this module.
+@@ -472,6 +477,10 @@ static const struct sfp_quirk sfp_quirks[] = {
+ 	// Rollball protocol to talk to the PHY.
+ 	SFP_QUIRK_F("FS", "SFP-10G-T", sfp_fixup_fs_10gt),
  
- 		err = usb_bulk_msg(udev, pipe, send_buf, size,
--					&len, 3000);
--		if (err || (len != size)) {
-+				   &len, 3000);
-+		if (err || len != size) {
- 			ath3k_log_failed_loading(err, len, size, count);
- 			kfree(send_buf);
- 			return err;
-@@ -425,7 +423,6 @@ static int ath3k_load_syscfg(struct usb_device *udev)
- 	}
++	// Fiberstore SFP-2.5G-T uses Rollball protocol to talk to the PHY and
++	// needs 4 sec wait before probing the PHY.
++	SFP_QUIRK_F("FS", "SFP-2.5G-T", sfp_fixup_fs_2_5gt),
++
+ 	// Fiberstore GPON-ONU-34-20BI can operate at 2500base-X, but report 1.2GBd
+ 	// NRZ in their EEPROM
+ 	SFP_QUIRK("FS", "GPON-ONU-34-20BI", sfp_quirk_2500basex,
+@@ -488,9 +497,6 @@ static const struct sfp_quirk sfp_quirks[] = {
+ 	SFP_QUIRK("HUAWEI", "MA5671A", sfp_quirk_2500basex,
+ 		  sfp_fixup_ignore_tx_fault),
  
- 	switch (fw_version.ref_clock) {
+-	// FS 2.5G Base-T
+-	SFP_QUIRK_M("FS", "SFP-2.5G-T", sfp_quirk_oem_2_5g),
 -
- 	case ATH3K_XTAL_FREQ_26M:
- 		clk_value = 26;
- 		break;
-@@ -441,7 +438,7 @@ static int ath3k_load_syscfg(struct usb_device *udev)
- 	}
- 
- 	snprintf(filename, ATH3K_NAME_LEN, "ar3k/ramps_0x%08x_%d%s",
--		le32_to_cpu(fw_version.rom_version), clk_value, ".dfu");
-+		 le32_to_cpu(fw_version.rom_version), clk_value, ".dfu");
- 
- 	ret = request_firmware(&firmware, filename, &udev->dev);
- 	if (ret < 0) {
-@@ -456,7 +453,7 @@ static int ath3k_load_syscfg(struct usb_device *udev)
- }
- 
- static int ath3k_probe(struct usb_interface *intf,
--			const struct usb_device_id *id)
-+		       const struct usb_device_id *id)
- {
- 	const struct firmware *firmware;
- 	struct usb_device *udev = interface_to_usbdev(intf);
-@@ -505,10 +502,10 @@ static int ath3k_probe(struct usb_interface *intf,
- 	if (ret < 0) {
- 		if (ret == -ENOENT)
- 			BT_ERR("Firmware file \"%s\" not found",
--							ATH3K_FIRMWARE);
-+			       ATH3K_FIRMWARE);
- 		else
- 			BT_ERR("Firmware file \"%s\" request failed (err=%d)",
--							ATH3K_FIRMWARE, ret);
-+			       ATH3K_FIRMWARE, ret);
- 		return ret;
- 	}
- 
+ 	// Lantech 8330-262D-E can operate at 2500base-X, but incorrectly report
+ 	// 2500MBd NRZ in their EEPROM
+ 	SFP_QUIRK_M("Lantech", "8330-262D-E", sfp_quirk_2500basex),
 -- 
 2.43.0
 
