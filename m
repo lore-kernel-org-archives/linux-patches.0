@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B8B2149C4F;
-	Tue, 25 Jun 2024 09:54:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 819CD149DEF;
+	Tue, 25 Jun 2024 09:54:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309242; cv=none; b=Iuc0V/jWW11YlmN4F1RoWpCgpJ5fvzZ5u67KK3T87p/USqTsiOiVJaKrPJ5ds2jGShf/fZmWCZouK1M5HmaAQ/1qlM2fvW4Q4iL+VlQxucbHiujQvdo3sdj9a/oeY91VJr6JyAzbya/Va/y0O0C415A713mcAhdLRnmGHupQ5lY=
+	t=1719309245; cv=none; b=kQrTptKdR3XbaprVOSEbKg5oqeWl+0XcFTjXM14SoI7jaB53GmMGGfggU0cF9NO40XQ7R3/alaA7OUBIX8bdbkuHny8dYdFcdDKQydjetD4rMTCPqnkU853JhumAjqCOlIWpoAvxNcRj+jp+sveX+46kXKPAsnZ0Ujk527eh04g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309242; c=relaxed/simple;
-	bh=VPN0MHHyyitlIwwP9Y1Nm3ctbTAnM3aU90eHYE6C/BM=;
+	s=arc-20240116; t=1719309245; c=relaxed/simple;
+	bh=z2S5YdNjfCP9nwNFNU6L5+0JmyosQ094GtfePxkJxEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ji1mGCO+MT2vThZDdVL/+tCE2bD0iHv9WIGf9vvj+cfaQHX2P3Y854X+NaISPb3KYjloGRmA8PkN5TudofLt6lAONmuYhbkJNG5GngRKcXnR4IHXPiu33aK6eBmeWW8+TLhh+IH8GLuXUjgub3kpfwIn8VxGhr6a5SJnpEeL1kk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yn5XO0DL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dao77zPGI5x/Covtn0PSAkaVEsYWXY9dh6p1K+IXR4QapcRrIGVuskBKWoXmvq4+f4gGwJqvmNnLNu1mCk8ptUozsTQqTPjJWy6u44ObrpWYPFeBAhRmZSjnnQfQR2hjCDCrvuDNS/ss/3LOQpentDKuIQ61vfUETajj2ISyrgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=teXr4DaA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yn5XO0DL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B24BBC32781;
-	Tue, 25 Jun 2024 09:54:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="teXr4DaA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A011CC32781;
+	Tue, 25 Jun 2024 09:54:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309242;
-	bh=VPN0MHHyyitlIwwP9Y1Nm3ctbTAnM3aU90eHYE6C/BM=;
+	s=korg; t=1719309245;
+	bh=z2S5YdNjfCP9nwNFNU6L5+0JmyosQ094GtfePxkJxEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yn5XO0DL0wGE1Xg51v3dhEVADZXOdCL8OAmYFpPXZ7WjPumjDB0XU5baZZxg3MD3+
-	 bpNETiqFIzpdrVqbTIj1aM7dz+c6wQ5BSH+U95tMoFtf/IsHaRxoFnWXTg3pcy//ml
-	 25K4a0hKjefAjj0CbzYTkRgXIJPv4ZxSpPB6iX+Y=
+	b=teXr4DaAyz2UOlz4pDN+fhFNahMbYf/ojOQswz2bs1l8yq3NeFzWbNasLA0m0ln2S
+	 49Gg8AD8LSbKo0bICl46suPcSo1gmg5r0OtdyWDdHug4JQZPt0o1rP3FcpzsNLx5/Q
+	 gm4mS9YrwaxT8r2YwyGupzThhXdczfUbSl9WQbIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 116/192] arm64: dts: imx8mp: Fix TC9595 reset GPIO on DH i.MX8M Plus DHCOM SoM
-Date: Tue, 25 Jun 2024 11:33:08 +0200
-Message-ID: <20240625085541.625770731@linuxfoundation.org>
+	Alexander Potapenko <glider@google.com>,
+	Oliver Upton <oliver.upton@linux.dev>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.6 143/192] KVM: arm64: Disassociate vcpus from redistributor region on teardown
+Date: Tue, 25 Jun 2024 11:33:35 +0200
+Message-ID: <20240625085542.647900536@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -51,37 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 418a7fc5397719c4b8f50eaeca6694879f89a6ec ]
+commit 0d92e4a7ffd5c42b9fa864692f82476c0bf8bcc8 upstream.
 
-The TC9595 reset GPIO is SAI1_RXC / GPIO4_IO01, fix the DT accordingly.
-The SAI5_RXD0 / GPIO3_IO21 is thus far unused TC9595 interrupt line.
+When tearing down a redistributor region, make sure we don't have
+any dangling pointer to that region stored in a vcpu.
 
-Fixes: 20d0b83e712b ("arm64: dts: imx8mp: Add TC9595 bridge on DH electronics i.MX8M Plus DHCOM")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
-Stable-dep-of: c03984d43a9d ("arm64: dts: imx8mp: Fix TC9595 input clock on DH i.MX8M Plus DHCOM SoM")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e5a35635464b ("kvm: arm64: vgic-v3: Introduce vgic_v3_free_redist_region()")
+Reported-by: Alexander Potapenko <glider@google.com>
+Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20240605175637.1635653-1-maz@kernel.org
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kvm/vgic/vgic-init.c    |    2 +-
+ arch/arm64/kvm/vgic/vgic-mmio-v3.c |   15 +++++++++++++--
+ arch/arm64/kvm/vgic/vgic.h         |    2 +-
+ 3 files changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi
-index cb1953d14aa90..eacf1da674778 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi
-@@ -252,7 +252,7 @@
- 				  <&clk IMX8MP_AUDIO_PLL2_OUT>;
- 		assigned-clock-parents = <&clk IMX8MP_AUDIO_PLL2_OUT>;
- 		assigned-clock-rates = <13000000>, <13000000>, <156000000>;
--		reset-gpios = <&gpio3 21 GPIO_ACTIVE_HIGH>;
-+		reset-gpios = <&gpio4 1 GPIO_ACTIVE_HIGH>;
- 		status = "disabled";
+--- a/arch/arm64/kvm/vgic/vgic-init.c
++++ b/arch/arm64/kvm/vgic/vgic-init.c
+@@ -355,7 +355,7 @@ static void kvm_vgic_dist_destroy(struct
  
- 		ports {
--- 
-2.43.0
-
+ 	if (dist->vgic_model == KVM_DEV_TYPE_ARM_VGIC_V3) {
+ 		list_for_each_entry_safe(rdreg, next, &dist->rd_regions, list)
+-			vgic_v3_free_redist_region(rdreg);
++			vgic_v3_free_redist_region(kvm, rdreg);
+ 		INIT_LIST_HEAD(&dist->rd_regions);
+ 	} else {
+ 		dist->vgic_cpu_base = VGIC_ADDR_UNDEF;
+--- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
++++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
+@@ -942,8 +942,19 @@ free:
+ 	return ret;
+ }
+ 
+-void vgic_v3_free_redist_region(struct vgic_redist_region *rdreg)
++void vgic_v3_free_redist_region(struct kvm *kvm, struct vgic_redist_region *rdreg)
+ {
++	struct kvm_vcpu *vcpu;
++	unsigned long c;
++
++	lockdep_assert_held(&kvm->arch.config_lock);
++
++	/* Garbage collect the region */
++	kvm_for_each_vcpu(c, vcpu, kvm) {
++		if (vcpu->arch.vgic_cpu.rdreg == rdreg)
++			vcpu->arch.vgic_cpu.rdreg = NULL;
++	}
++
+ 	list_del(&rdreg->list);
+ 	kfree(rdreg);
+ }
+@@ -968,7 +979,7 @@ int vgic_v3_set_redist_base(struct kvm *
+ 
+ 		mutex_lock(&kvm->arch.config_lock);
+ 		rdreg = vgic_v3_rdist_region_from_index(kvm, index);
+-		vgic_v3_free_redist_region(rdreg);
++		vgic_v3_free_redist_region(kvm, rdreg);
+ 		mutex_unlock(&kvm->arch.config_lock);
+ 		return ret;
+ 	}
+--- a/arch/arm64/kvm/vgic/vgic.h
++++ b/arch/arm64/kvm/vgic/vgic.h
+@@ -310,7 +310,7 @@ vgic_v3_rd_region_size(struct kvm *kvm,
+ 
+ struct vgic_redist_region *vgic_v3_rdist_region_from_index(struct kvm *kvm,
+ 							   u32 index);
+-void vgic_v3_free_redist_region(struct vgic_redist_region *rdreg);
++void vgic_v3_free_redist_region(struct kvm *kvm, struct vgic_redist_region *rdreg);
+ 
+ bool vgic_v3_rdist_overlap(struct kvm *kvm, gpa_t base, size_t size);
+ 
 
 
