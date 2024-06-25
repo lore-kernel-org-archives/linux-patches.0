@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4855B13C90B;
-	Tue, 25 Jun 2024 09:41:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63BCD12EBEA;
+	Tue, 25 Jun 2024 09:41:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308483; cv=none; b=YnKoMfotCWYg1LlHBpTqXHlj+oQbmw6wh6/CDFdCiy+NsZup8WcyG8hcSdFSyFSzcqubFBRdyvPyzQ2ZX2+yT1mNYUUfAN3Q6pR/yKSmZ01df+SCvam3S1aId48n4rxBe3tEgP2q/iZ7dQI12AK0cgN1LOFpAHJeG/DAX8jMsAk=
+	t=1719308486; cv=none; b=N9/oTY8ZeyCodIF2luZRXY58yVAfIbmOuCAmUNVZSPVW6tX9yzK3vcrx5ATu1Tlze25wecoxiwj7R8u5+eRNKzx5Cp/qIyldFWk1JIT4nkKpa6UUWc9z+oU4EShCL6HCeb/QMLJTlUvcdGq6jpbIYpTnoH6aVbLqOKKtlvIetVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308483; c=relaxed/simple;
-	bh=9tjio7ghbCv37N5F9PcKoXULlN/AHt0BFvvbBRWEknM=;
+	s=arc-20240116; t=1719308486; c=relaxed/simple;
+	bh=2VQZKXlfxvgF1I1Qua1zB3vjdbmf2lfVltlAVd8c5y8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tDZd/0GH+VUXkfn1/uG3ybn1isqNCcRNyx6oMW29Dc68w8AhieaQF6z37KOm2vQn7wmLQePHgegfsn86tqS0dSitDN6R7kKbB3ukO2mdNQkqipQvAFDrSxGV0pOc0lYC9mnEE4xDUkupYiWTt1+dYeWktQ9l3/7ZWEHjYOI3u7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0U84RJj3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZZkgvwRSNoJBt2sYDNa+3afyUUP2JJNuOUVxG53SHR4sMWWpvYupzN9aeQhF51xnqj9UA3XSF5dU7zRtJuLHqVrIaccBaB2iXpsn0ZmWRb0WPM6vLVlCv0F5ixwtheILPcjjML9iKXQG4EZXqQAzfzUtoTsalvBkqJmk1cE+Wtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z/3hC83C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0U84RJj3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0F8AC32781;
-	Tue, 25 Jun 2024 09:41:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/3hC83C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3283C32781;
+	Tue, 25 Jun 2024 09:41:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308483;
-	bh=9tjio7ghbCv37N5F9PcKoXULlN/AHt0BFvvbBRWEknM=;
+	s=korg; t=1719308486;
+	bh=2VQZKXlfxvgF1I1Qua1zB3vjdbmf2lfVltlAVd8c5y8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0U84RJj39AtckmnxKYiCxCJYZztyjoba/eBqmiMCaORY+1gEvMp9Bcz2VzH+dUoVW
-	 9XKq+OhfTnPFoTehPQ3/z9gTa9b2nbe//XRIdF9s3ntlglP9clcOa0O4wujWt1p6c4
-	 tlvZDQRwMoGTpq9AQqaysHmN33vlOFa0IpbmUrwo=
+	b=Z/3hC83CxO98RtpAJRSgwVBLbpoAEtzIJYlMTq6majSWwPNxnncuLg0BUPqJlPx/C
+	 P5eniG6RP/JEPjXy+wkEDUfT1ht9VZf6rI2OYLgT1Zcxl/mYMlmjbGYj74HzQhO+sq
+	 V+kPdVOE7pL50kxkEOteud97CrtuExF9xElG2PSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Heng Qi <hengqi@linux.alibaba.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Jianguo Wu <wujianguo@chinatelecom.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 129/250] ptp: fix integer overflow in max_vclocks_store
-Date: Tue, 25 Jun 2024 11:31:27 +0200
-Message-ID: <20240625085553.017180846@linuxfoundation.org>
+Subject: [PATCH 6.9 138/250] netfilter: move the sysctl nf_hooks_lwtunnel into the netfilter core
+Date: Tue, 25 Jun 2024 11:31:36 +0200
+Message-ID: <20240625085553.357145646@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -54,41 +51,200 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Jianguo Wu <wujianguo@chinatelecom.cn>
 
-[ Upstream commit 81d23d2a24012e448f651e007fac2cfd20a45ce0 ]
+[ Upstream commit a2225e0250c5fa397dcebf6ce65a9f05a114e0cf ]
 
-On 32bit systems, the "4 * max" multiply can overflow.  Use kcalloc()
-to do the allocation to prevent this.
+Currently, the sysctl net.netfilter.nf_hooks_lwtunnel depends on the
+nf_conntrack module, but the nf_conntrack module is not always loaded.
+Therefore, accessing net.netfilter.nf_hooks_lwtunnel may have an error.
 
-Fixes: 44c494c8e30e ("ptp: track available ptp vclocks information")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Heng Qi <hengqi@linux.alibaba.com>
-Link: https://lore.kernel.org/r/ee8110ed-6619-4bd7-9024-28c1f2ac24f4@moroto.mountain
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Move sysctl nf_hooks_lwtunnel into the netfilter core.
+
+Fixes: 7a3f5b0de364 ("netfilter: add netfilter hooks to SRv6 data plane")
+Suggested-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Jianguo Wu <wujianguo@chinatelecom.cn>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_sysfs.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ include/net/netns/netfilter.h           |    3 +
+ net/netfilter/core.c                    |   13 +++++-
+ net/netfilter/nf_conntrack_standalone.c |   15 -------
+ net/netfilter/nf_hooks_lwtunnel.c       |   67 ++++++++++++++++++++++++++++++++
+ net/netfilter/nf_internals.h            |    6 ++
+ 5 files changed, 87 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/ptp/ptp_sysfs.c b/drivers/ptp/ptp_sysfs.c
-index a15460aaa03b3..6b1b8f57cd951 100644
---- a/drivers/ptp/ptp_sysfs.c
-+++ b/drivers/ptp/ptp_sysfs.c
-@@ -296,8 +296,7 @@ static ssize_t max_vclocks_store(struct device *dev,
- 	if (max < ptp->n_vclocks)
- 		goto out;
+--- a/include/net/netns/netfilter.h
++++ b/include/net/netns/netfilter.h
+@@ -15,6 +15,9 @@ struct netns_nf {
+ 	const struct nf_logger __rcu *nf_loggers[NFPROTO_NUMPROTO];
+ #ifdef CONFIG_SYSCTL
+ 	struct ctl_table_header *nf_log_dir_header;
++#ifdef CONFIG_LWTUNNEL
++	struct ctl_table_header *nf_lwtnl_dir_header;
++#endif
+ #endif
+ 	struct nf_hook_entries __rcu *hooks_ipv4[NF_INET_NUMHOOKS];
+ 	struct nf_hook_entries __rcu *hooks_ipv6[NF_INET_NUMHOOKS];
+--- a/net/netfilter/core.c
++++ b/net/netfilter/core.c
+@@ -815,12 +815,21 @@ int __init netfilter_init(void)
+ 	if (ret < 0)
+ 		goto err;
  
--	size = sizeof(int) * max;
--	vclock_index = kzalloc(size, GFP_KERNEL);
-+	vclock_index = kcalloc(max, sizeof(int), GFP_KERNEL);
- 	if (!vclock_index) {
- 		err = -ENOMEM;
- 		goto out;
--- 
-2.43.0
-
++#ifdef CONFIG_LWTUNNEL
++	ret = netfilter_lwtunnel_init();
++	if (ret < 0)
++		goto err_lwtunnel_pernet;
++#endif
+ 	ret = netfilter_log_init();
+ 	if (ret < 0)
+-		goto err_pernet;
++		goto err_log_pernet;
+ 
+ 	return 0;
+-err_pernet:
++err_log_pernet:
++#ifdef CONFIG_LWTUNNEL
++	netfilter_lwtunnel_fini();
++err_lwtunnel_pernet:
++#endif
+ 	unregister_pernet_subsys(&netfilter_net_ops);
+ err:
+ 	return ret;
+--- a/net/netfilter/nf_conntrack_standalone.c
++++ b/net/netfilter/nf_conntrack_standalone.c
+@@ -22,9 +22,6 @@
+ #include <net/netfilter/nf_conntrack_acct.h>
+ #include <net/netfilter/nf_conntrack_zones.h>
+ #include <net/netfilter/nf_conntrack_timestamp.h>
+-#ifdef CONFIG_LWTUNNEL
+-#include <net/netfilter/nf_hooks_lwtunnel.h>
+-#endif
+ #include <linux/rculist_nulls.h>
+ 
+ static bool enable_hooks __read_mostly;
+@@ -612,9 +609,6 @@ enum nf_ct_sysctl_index {
+ 	NF_SYSCTL_CT_PROTO_TIMEOUT_GRE,
+ 	NF_SYSCTL_CT_PROTO_TIMEOUT_GRE_STREAM,
+ #endif
+-#ifdef CONFIG_LWTUNNEL
+-	NF_SYSCTL_CT_LWTUNNEL,
+-#endif
+ 
+ 	__NF_SYSCTL_CT_LAST_SYSCTL,
+ };
+@@ -948,15 +942,6 @@ static struct ctl_table nf_ct_sysctl_tab
+ 		.proc_handler   = proc_dointvec_jiffies,
+ 	},
+ #endif
+-#ifdef CONFIG_LWTUNNEL
+-	[NF_SYSCTL_CT_LWTUNNEL] = {
+-		.procname	= "nf_hooks_lwtunnel",
+-		.data		= NULL,
+-		.maxlen		= sizeof(int),
+-		.mode		= 0644,
+-		.proc_handler	= nf_hooks_lwtunnel_sysctl_handler,
+-	},
+-#endif
+ 	{}
+ };
+ 
+--- a/net/netfilter/nf_hooks_lwtunnel.c
++++ b/net/netfilter/nf_hooks_lwtunnel.c
+@@ -3,6 +3,9 @@
+ #include <linux/sysctl.h>
+ #include <net/lwtunnel.h>
+ #include <net/netfilter/nf_hooks_lwtunnel.h>
++#include <linux/netfilter.h>
++
++#include "nf_internals.h"
+ 
+ static inline int nf_hooks_lwtunnel_get(void)
+ {
+@@ -50,4 +53,68 @@ int nf_hooks_lwtunnel_sysctl_handler(str
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(nf_hooks_lwtunnel_sysctl_handler);
++
++static struct ctl_table nf_lwtunnel_sysctl_table[] = {
++	{
++		.procname	= "nf_hooks_lwtunnel",
++		.data		= NULL,
++		.maxlen		= sizeof(int),
++		.mode		= 0644,
++		.proc_handler	= nf_hooks_lwtunnel_sysctl_handler,
++	},
++};
++
++static int __net_init nf_lwtunnel_net_init(struct net *net)
++{
++	struct ctl_table_header *hdr;
++	struct ctl_table *table;
++
++	table = nf_lwtunnel_sysctl_table;
++	if (!net_eq(net, &init_net)) {
++		table = kmemdup(nf_lwtunnel_sysctl_table,
++				sizeof(nf_lwtunnel_sysctl_table),
++				GFP_KERNEL);
++		if (!table)
++			goto err_alloc;
++	}
++
++	hdr = register_net_sysctl_sz(net, "net/netfilter", table,
++				     ARRAY_SIZE(nf_lwtunnel_sysctl_table));
++	if (!hdr)
++		goto err_reg;
++
++	net->nf.nf_lwtnl_dir_header = hdr;
++
++	return 0;
++err_reg:
++	if (!net_eq(net, &init_net))
++		kfree(table);
++err_alloc:
++	return -ENOMEM;
++}
++
++static void __net_exit nf_lwtunnel_net_exit(struct net *net)
++{
++	const struct ctl_table *table;
++
++	table = net->nf.nf_lwtnl_dir_header->ctl_table_arg;
++	unregister_net_sysctl_table(net->nf.nf_lwtnl_dir_header);
++	if (!net_eq(net, &init_net))
++		kfree(table);
++}
++
++static struct pernet_operations nf_lwtunnel_net_ops = {
++	.init = nf_lwtunnel_net_init,
++	.exit = nf_lwtunnel_net_exit,
++};
++
++int __init netfilter_lwtunnel_init(void)
++{
++	return register_pernet_subsys(&nf_lwtunnel_net_ops);
++}
++
++void netfilter_lwtunnel_fini(void)
++{
++	unregister_pernet_subsys(&nf_lwtunnel_net_ops);
++}
+ #endif /* CONFIG_SYSCTL */
+--- a/net/netfilter/nf_internals.h
++++ b/net/netfilter/nf_internals.h
+@@ -29,6 +29,12 @@ void nf_queue_nf_hook_drop(struct net *n
+ /* nf_log.c */
+ int __init netfilter_log_init(void);
+ 
++#ifdef CONFIG_LWTUNNEL
++/* nf_hooks_lwtunnel.c */
++int __init netfilter_lwtunnel_init(void);
++void netfilter_lwtunnel_fini(void);
++#endif
++
+ /* core.c */
+ void nf_hook_entries_delete_raw(struct nf_hook_entries __rcu **pp,
+ 				const struct nf_hook_ops *reg);
 
 
