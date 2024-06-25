@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682681465A8;
-	Tue, 25 Jun 2024 09:49:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF8B1465A8;
+	Tue, 25 Jun 2024 09:49:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308974; cv=none; b=fIin0rYSE1jwh7mBqMgTiunBUbvs/u3IfPwLxdjF6mX3NOxQ0rtkNCtqy9AqOBdf5h770M4mzWFFOnVekZUzQEfEbT0AkDJ09+E+BQQg9TCWDPp00/2XakSSIEGXsbXANtmVFdJ9dZ0KtBNt6pfvdHNRuckyfx48IIMJ4fTd8WI=
+	t=1719308977; cv=none; b=ualSsUrY604FyRM7LDX7GZRtWOwGP7u4Jn/LcAFfQ1KHJNGoyohoJilQq4KdEDxJjwtfL58TpKDxFtcl8E+68nScZ3o76YQQyV2GdkoRUa76qFZNHfGZYzZcf6eoiUQrub0nyt8NaSA+m54t0vIWyEiyRPbyjUHWNDJhpnJEQh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308974; c=relaxed/simple;
-	bh=Q9uqWaZri5UCqffXSY3Qo8ogfIPQSt7yMGPsUduLJQY=;
+	s=arc-20240116; t=1719308977; c=relaxed/simple;
+	bh=RobkFU7g4zhMnyMuW1Afed25ikexBK/RHyO6X/Ogqt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LWJfC4fLoazJKSvtY43K4/YCUNvKjF+BBv1VSszOl46oWdwJyMYcXn9dSZ614UCUPV6cR8AJuwxCjH0FGaZgukdGEIRKtv+PyGkepTDGpAOL7rn1xFzbF4Wf6mrNfnsCWnIxI+El1QmtB83qGQYu7PQntqV1miFM24mv9iXfs1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Q9ll6Zn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=efAhyk176vo8ngHXz35CkUMd4MohAHar2L97gMuOB0Q78/hhe/xn4ktRVdti36tNSGIEuR9aL9QBHRl5qwo5KHWanJyow+DPbae+j7ZEfsa0dFr/vU+x+b0ER0LdVaCyGxJrRAi53cZf9wSh0a96ruR55fq0BbzYKVMG8ZAAghk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fquq9fhX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Q9ll6Zn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2FA0C32781;
-	Tue, 25 Jun 2024 09:49:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fquq9fhX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7718C32781;
+	Tue, 25 Jun 2024 09:49:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308974;
-	bh=Q9uqWaZri5UCqffXSY3Qo8ogfIPQSt7yMGPsUduLJQY=;
+	s=korg; t=1719308977;
+	bh=RobkFU7g4zhMnyMuW1Afed25ikexBK/RHyO6X/Ogqt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Q9ll6ZnDYorwK79xk5HD4zVoiQ9oo75Dvv2xEwPUnrpSV6IioXqiqZuvKYEXobVm
-	 PbKvddTAePfiA1pQ1nvF7D0Z2RSlvwYVMFVAhq36q3WwHSa6AB6VnptQZaiySG6Z3D
-	 6wW/uK8IL8Qh4LP9ZywK7gNpr4dCgyrDlpkbG4lE=
+	b=Fquq9fhXf2NHCMKqYCoDFy807ZyoxxV2AFLEo6ZGNN/EYc3wNGMlPlPNQuc+Vxurc
+	 BuoKqDCnDxd1X2Xd00+pf3+w+EDeMNHG9iQGCAstTTGwU0AzWTKGlz+rqubLnWMyQC
+	 4lyFBKtKJpkvIliJ9dA4CbbvxeLtWAOyd+khQfPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunwu Chan <chentao@kylinos.cn>,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Will Deacon <will@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 021/192] kselftest: arm64: Add a null pointer check
-Date: Tue, 25 Jun 2024 11:31:33 +0200
-Message-ID: <20240625085537.972090138@linuxfoundation.org>
+Subject: [PATCH 6.6 012/192] selftests/bpf: Fix flaky test btf_map_in_map/lookup_update
+Date: Tue, 25 Jun 2024 11:31:24 +0200
+Message-ID: <20240625085537.629035321@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -52,46 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunwu Chan <chentao@kylinos.cn>
+From: Yonghong Song <yonghong.song@linux.dev>
 
-[ Upstream commit 80164282b3620a3cb73de6ffda5592743e448d0e ]
+[ Upstream commit 14bb1e8c8d4ad5d9d2febb7d19c70a3cf536e1e5 ]
 
-There is a 'malloc' call, which can be unsuccessful.
-This patch will add the malloc failure checking
-to avoid possible null dereference and give more information
-about test fail reasons.
+Recently, I frequently hit the following test failure:
 
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-Reviewed-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Link: https://lore.kernel.org/r/20240423082102.2018886-1-chentao@kylinos.cn
-Signed-off-by: Will Deacon <will@kernel.org>
+  [root@arch-fb-vm1 bpf]# ./test_progs -n 33/1
+  test_lookup_update:PASS:skel_open 0 nsec
+  [...]
+  test_lookup_update:PASS:sync_rcu 0 nsec
+  test_lookup_update:FAIL:map1_leak inner_map1 leaked!
+  #33/1    btf_map_in_map/lookup_update:FAIL
+  #33      btf_map_in_map:FAIL
+
+In the test, after map is closed and then after two rcu grace periods,
+it is assumed that map_id is not available to user space.
+
+But the above assumption cannot be guaranteed. After zero or one
+or two rcu grace periods in different siturations, the actual
+freeing-map-work is put into a workqueue. Later on, when the work
+is dequeued, the map will be actually freed.
+See bpf_map_put() in kernel/bpf/syscall.c.
+
+By using workqueue, there is no ganrantee that map will be actually
+freed after a couple of rcu grace periods. This patch removed
+such map leak detection and then the test can pass consistently.
+
+Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20240322061353.632136-1-yonghong.song@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/arm64/tags/tags_test.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ .../selftests/bpf/prog_tests/btf_map_in_map.c | 26 +------------------
+ 1 file changed, 1 insertion(+), 25 deletions(-)
 
-diff --git a/tools/testing/selftests/arm64/tags/tags_test.c b/tools/testing/selftests/arm64/tags/tags_test.c
-index 5701163460ef7..955f87c1170d7 100644
---- a/tools/testing/selftests/arm64/tags/tags_test.c
-+++ b/tools/testing/selftests/arm64/tags/tags_test.c
-@@ -6,6 +6,7 @@
- #include <stdint.h>
- #include <sys/prctl.h>
- #include <sys/utsname.h>
-+#include "../../kselftest.h"
+diff --git a/tools/testing/selftests/bpf/prog_tests/btf_map_in_map.c b/tools/testing/selftests/bpf/prog_tests/btf_map_in_map.c
+index a8b53b8736f01..f66ceccd7029c 100644
+--- a/tools/testing/selftests/bpf/prog_tests/btf_map_in_map.c
++++ b/tools/testing/selftests/bpf/prog_tests/btf_map_in_map.c
+@@ -25,7 +25,7 @@ static void test_lookup_update(void)
+ 	int map1_fd, map2_fd, map3_fd, map4_fd, map5_fd, map1_id, map2_id;
+ 	int outer_arr_fd, outer_hash_fd, outer_arr_dyn_fd;
+ 	struct test_btf_map_in_map *skel;
+-	int err, key = 0, val, i, fd;
++	int err, key = 0, val, i;
  
- #define SHIFT_TAG(tag)		((uint64_t)(tag) << 56)
- #define SET_TAG(ptr, tag)	(((uint64_t)(ptr) & ~SHIFT_TAG(0xff)) | \
-@@ -21,6 +22,9 @@ int main(void)
- 	if (prctl(PR_SET_TAGGED_ADDR_CTRL, PR_TAGGED_ADDR_ENABLE, 0, 0, 0) == 0)
- 		tbi_enabled = 1;
- 	ptr = (struct utsname *)malloc(sizeof(*ptr));
-+	if (!ptr)
-+		ksft_exit_fail_msg("Failed to allocate utsname buffer\n");
-+
- 	if (tbi_enabled)
- 		tag = 0x42;
- 	ptr = (struct utsname *)SET_TAG(ptr, tag);
+ 	skel = test_btf_map_in_map__open_and_load();
+ 	if (CHECK(!skel, "skel_open", "failed to open&load skeleton\n"))
+@@ -102,30 +102,6 @@ static void test_lookup_update(void)
+ 	CHECK(map1_id == 0, "map1_id", "failed to get ID 1\n");
+ 	CHECK(map2_id == 0, "map2_id", "failed to get ID 2\n");
+ 
+-	test_btf_map_in_map__destroy(skel);
+-	skel = NULL;
+-
+-	/* we need to either wait for or force synchronize_rcu(), before
+-	 * checking for "still exists" condition, otherwise map could still be
+-	 * resolvable by ID, causing false positives.
+-	 *
+-	 * Older kernels (5.8 and earlier) freed map only after two
+-	 * synchronize_rcu()s, so trigger two, to be entirely sure.
+-	 */
+-	CHECK(kern_sync_rcu(), "sync_rcu", "failed\n");
+-	CHECK(kern_sync_rcu(), "sync_rcu", "failed\n");
+-
+-	fd = bpf_map_get_fd_by_id(map1_id);
+-	if (CHECK(fd >= 0, "map1_leak", "inner_map1 leaked!\n")) {
+-		close(fd);
+-		goto cleanup;
+-	}
+-	fd = bpf_map_get_fd_by_id(map2_id);
+-	if (CHECK(fd >= 0, "map2_leak", "inner_map2 leaked!\n")) {
+-		close(fd);
+-		goto cleanup;
+-	}
+-
+ cleanup:
+ 	test_btf_map_in_map__destroy(skel);
+ }
 -- 
 2.43.0
 
