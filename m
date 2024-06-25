@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2EF924B34;
-	Tue, 25 Jun 2024 09:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50B324B34;
+	Tue, 25 Jun 2024 09:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309168; cv=none; b=lqeIiuqGFrKnGUa+mBHTbbEOHoXQkhLPo/EJXxSUWk+MtuRt/5U02XyD5q073hp/dftZrqCXa7dSWSsQbLAPvSZvzGTvki+1pG8L5hVUFWBFJ3aY6FGBN0zLCRnbnUOjzSCXI56YZ9b915+c1/Hu6RoDCNr+S6dhTRP/dU3uc1c=
+	t=1719309171; cv=none; b=ORTbbmq66gNHIQ9OTU0UBd91AeIZWK+HhPWPw5l2R5KmeT/vxW6BYx3211BLI3iVZXvidLM9yHg4LqbAqiIh2AUIADmO7DJMBqKruXtOwWetsW2v4LDKMBgVot9xjaKPp8RCeHrz2+Mzf82TAoeayg3dXkR1shg69e5EN4xJRcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309168; c=relaxed/simple;
-	bh=r4jQIFBvBmT1XKLtp5kJ7w4Eh8cc6ber0jf/+OBKmWI=;
+	s=arc-20240116; t=1719309171; c=relaxed/simple;
+	bh=On9+3wCT3cr1Q3iv3WxJlPQBJTSRP/HJB6yHAejqO7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CFgcHZ0xSA8q5KFmUFAVmFDSpXr/MksVABtQ34RGyOBV/pFSW1ZjOvTnQ2AXiZ/rPrzAVoJAYcIqM83c8xCf05m9JQ28t1l1DcOWogFuBxhHwR1J2795kzApQ+etCsHQl/JuMmZQHC21b3cV0c+O08WFugZ3kk3P8hrNFPmt7wM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GbZhT2Rr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q4/DsHl5vFWbG6Ho5Zg1Sxo+fGh0u4MX7HNsJyrVUNZWvyzw6w9/MwQ20YteaybfmfmN4dj3jfMFWvycscSCHufWKHMM+LiGn0/8ggdqOkKzi11KsW0/zlJ5OyOvjk8kKyeLrfVKLPithUk7l6udQtKCPA3/pT0z+Tp6rQrBAYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kfv7U2gZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GbZhT2Rr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39068C32781;
-	Tue, 25 Jun 2024 09:52:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kfv7U2gZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CD53C32781;
+	Tue, 25 Jun 2024 09:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309168;
-	bh=r4jQIFBvBmT1XKLtp5kJ7w4Eh8cc6ber0jf/+OBKmWI=;
+	s=korg; t=1719309171;
+	bh=On9+3wCT3cr1Q3iv3WxJlPQBJTSRP/HJB6yHAejqO7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GbZhT2RrZhICvSJ4tWdysxetPI1/Oc0JuzvWIoAlK3Jdr06oRtQZ9+6WC8IW+dxBc
-	 D4WwOey2Wn1iJQLnGzC1hloPTVlp1ojEXte+Eizfwx3hUzGgHpkaIFweir71qRUPD7
-	 jppc0BRkIULB2z83/YgD0h5BkQxeXdFq+N6nydoQ=
+	b=kfv7U2gZ0/u6u7+lcdAgj6KxA4FCd0lF6yOG5m+dtpFDjJ3HuURl/3fyyyuITDcno
+	 n+zN7cORLkzU8gNQ3Ca0ib9+SciGfRso9/WOZqm0tR/FOCoM3Fq/p5eSE0Pyqj4gBq
+	 blKoVspQR8Arc0Fn+EpHTydEWekuhxGn0xdCKq/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b87c222546179f4513a7@syzkaller.appspotmail.com,
-	David Ruth <druth@chromium.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Shuang Li <shuali@redhat.com>,
+	Xin Long <lucien.xin@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 088/192] net/sched: act_api: fix possible infinite loop in tcf_idr_check_alloc()
-Date: Tue, 25 Jun 2024 11:32:40 +0200
-Message-ID: <20240625085540.553960717@linuxfoundation.org>
+Subject: [PATCH 6.6 089/192] tipc: force a dst refcount before doing decryption
+Date: Tue, 25 Jun 2024 11:32:41 +0200
+Message-ID: <20240625085540.591981090@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -53,74 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Ruth <druth@chromium.org>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit d864319871b05fadd153e0aede4811ca7008f5d6 ]
+[ Upstream commit 2ebe8f840c7450ecbfca9d18ac92e9ce9155e269 ]
 
-syzbot found hanging tasks waiting on rtnl_lock [1]
+As it says in commit 3bc07321ccc2 ("xfrm: Force a dst refcount before
+entering the xfrm type handlers"):
 
-A reproducer is available in the syzbot bug.
+"Crypto requests might return asynchronous. In this case we leave the
+ rcu protected region, so force a refcount on the skb's destination
+ entry before we enter the xfrm type input/output handlers."
 
-When a request to add multiple actions with the same index is sent, the
-second request will block forever on the first request. This holds
-rtnl_lock, and causes tasks to hang.
+On TIPC decryption path it has the same problem, and skb_dst_force()
+should be called before doing decryption to avoid a possible crash.
 
-Return -EAGAIN to prevent infinite looping, while keeping documented
-behavior.
+Shuang reported this issue when this warning is triggered:
 
-[1]
+  [] WARNING: include/net/dst.h:337 tipc_sk_rcv+0x1055/0x1ea0 [tipc]
+  [] Kdump: loaded Tainted: G W --------- - - 4.18.0-496.el8.x86_64+debug
+  [] Workqueue: crypto cryptd_queue_worker
+  [] RIP: 0010:tipc_sk_rcv+0x1055/0x1ea0 [tipc]
+  [] Call Trace:
+  [] tipc_sk_mcast_rcv+0x548/0xea0 [tipc]
+  [] tipc_rcv+0xcf5/0x1060 [tipc]
+  [] tipc_aead_decrypt_done+0x215/0x2e0 [tipc]
+  [] cryptd_aead_crypt+0xdb/0x190
+  [] cryptd_queue_worker+0xed/0x190
+  [] process_one_work+0x93d/0x17e0
 
-INFO: task kworker/1:0:5088 blocked for more than 143 seconds.
-Not tainted 6.9.0-rc4-syzkaller-00173-g3cdb45594619 #0
-"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-task:kworker/1:0 state:D stack:23744 pid:5088 tgid:5088 ppid:2 flags:0x00004000
-Workqueue: events_power_efficient reg_check_chans_work
-Call Trace:
-<TASK>
-context_switch kernel/sched/core.c:5409 [inline]
-__schedule+0xf15/0x5d00 kernel/sched/core.c:6746
-__schedule_loop kernel/sched/core.c:6823 [inline]
-schedule+0xe7/0x350 kernel/sched/core.c:6838
-schedule_preempt_disabled+0x13/0x30 kernel/sched/core.c:6895
-__mutex_lock_common kernel/locking/mutex.c:684 [inline]
-__mutex_lock+0x5b8/0x9c0 kernel/locking/mutex.c:752
-wiphy_lock include/net/cfg80211.h:5953 [inline]
-reg_leave_invalid_chans net/wireless/reg.c:2466 [inline]
-reg_check_chans_work+0x10a/0x10e0 net/wireless/reg.c:2481
-
-Fixes: 0190c1d452a9 ("net: sched: atomically check-allocate action")
-Reported-by: syzbot+b87c222546179f4513a7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b87c222546179f4513a7
-Signed-off-by: David Ruth <druth@chromium.org>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://lore.kernel.org/r/20240614190326.1349786-1-druth@chromium.org
+Fixes: fc1b6d6de220 ("tipc: introduce TIPC encryption & authentication")
+Reported-by: Shuang Li <shuali@redhat.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://lore.kernel.org/r/fbe3195fad6997a4eec62d9bf076b2ad03ac336b.1718476040.git.lucien.xin@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_api.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/tipc/node.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/sched/act_api.c b/net/sched/act_api.c
-index 5d34852ca5003..2d6d58e1b278a 100644
---- a/net/sched/act_api.c
-+++ b/net/sched/act_api.c
-@@ -830,7 +830,6 @@ int tcf_idr_check_alloc(struct tc_action_net *tn, u32 *index,
- 	u32 max;
- 
- 	if (*index) {
--again:
- 		rcu_read_lock();
- 		p = idr_find(&idrinfo->action_idr, *index);
- 
-@@ -839,7 +838,7 @@ int tcf_idr_check_alloc(struct tc_action_net *tn, u32 *index,
- 			 * index but did not assign the pointer yet.
- 			 */
- 			rcu_read_unlock();
--			goto again;
-+			return -EAGAIN;
- 		}
- 
- 		if (!p) {
+diff --git a/net/tipc/node.c b/net/tipc/node.c
+index 3105abe97bb9c..69053c0398252 100644
+--- a/net/tipc/node.c
++++ b/net/tipc/node.c
+@@ -2107,6 +2107,7 @@ void tipc_rcv(struct net *net, struct sk_buff *skb, struct tipc_bearer *b)
+ 	} else {
+ 		n = tipc_node_find_by_id(net, ehdr->id);
+ 	}
++	skb_dst_force(skb);
+ 	tipc_crypto_rcv(net, (n) ? n->crypto_rx : NULL, &skb, b);
+ 	if (!skb)
+ 		return;
 -- 
 2.43.0
 
