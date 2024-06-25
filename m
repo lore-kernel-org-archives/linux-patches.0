@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0B7148315;
-	Tue, 25 Jun 2024 09:37:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76112148315;
+	Tue, 25 Jun 2024 09:37:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308244; cv=none; b=PDJ3/uu5R7vmKoFGxQkc6x/hl5+afWcReKO6na8smBi2vwCfcmpc7q43QPNaqPIT4iaUxI7/AR+wZ+iWSgm5J2oyUPMM9zJGztFLLZJBIW5scUJIpf6FD2f2xYIlUtO7E5zdR093LfJCJ0vabXV7wIMq96KpkNjCTtJGU0RtGwQ=
+	t=1719308247; cv=none; b=seN9WAlhS2OhMRbq3JS+1dEJzqdAPpSfjuK0hLrZB+U3HE8jHkxXa1RPP3+UjUdmFPEqil7VZxrAJxW+BCZG2ry6KMFUnn/U/YHKv8E/L4/Z/0u4eadDMW3/zunOjZb0zJ3AnTKM1jr3BhjnjG/27mTxTG7tVmNPA/8gParbJz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308244; c=relaxed/simple;
-	bh=J5AZjz1olJayUsq1nMt1YGnl+eX6o0+bzuy2PyN95Q0=;
+	s=arc-20240116; t=1719308247; c=relaxed/simple;
+	bh=g6mdoN4pv64Oc5vIkLFqJVqFiLPVBFvju/SGVvcUuDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kPP1EgJZpGJJ0RphOCtBrztPT+CrDKRB6tS5EYoXcZwoZ17PxcjUhskvYv8if5IQusHm4sv30FvQUGGDZlpiDLdy/Glgcr886h459QgMWnpj4NUq7cbYzOSQJWoIeqWkfi00PgtavcBTFI+boWYd9ZVzrfTVS5pBqcxERz3v4VM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a6fY9m7j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UeRkI7QbH/oi0nIMUtxQAU8UHRSvMEHYHSQBrBIzvSrKS7w1zVsaNaXYdyh6yOLj4RVpOZN6y1rFAGJOiJqxcQjhdE+KLpwXKKjQlRHR+qMZEV+694e4/pAlTZEW7Vdm5bnjL19GFNDK/oxYQVu962y3823vRwxTlV+eLdILTnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oAi+pjSO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a6fY9m7j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00B7AC32781;
-	Tue, 25 Jun 2024 09:37:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oAi+pjSO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6334C32781;
+	Tue, 25 Jun 2024 09:37:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308244;
-	bh=J5AZjz1olJayUsq1nMt1YGnl+eX6o0+bzuy2PyN95Q0=;
+	s=korg; t=1719308247;
+	bh=g6mdoN4pv64Oc5vIkLFqJVqFiLPVBFvju/SGVvcUuDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a6fY9m7jFWXpsuqbG2ARYM0/5aEBZgqa8dZICpylzS27fDvTwdSibgJw5GHXpzXz8
-	 y1Y0Ld315r/RDrT9vpWhnGGKEWRAqX6a/nSzcdnSiJ/t0+7MShW6xTnAHTGIiDmOA1
-	 MImqR7h39mvTlz7LJxRfENuG7dYqVABitibAUMvc=
+	b=oAi+pjSO0gbWiP0YBYx+1t2NPKHZf4gk+zjku5B1hJDMbwlSLKJrO1xGLzICxwLZh
+	 EnkVLPM7/6IauhmfktpYTt4jrdLxiOLQS6hgPR802mz1TTs16QyLla3R78Z0+U9oXb
+	 VQL5wIZ9VCefPVC0qeM2NcckfMG5VlToHDSUmoB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erico Nunes <nunes.erico@gmail.com>,
-	Qiang Yu <yuq825@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 055/250] drm/lima: mask irqs in timeout path before hard reset
-Date: Tue, 25 Jun 2024 11:30:13 +0200
-Message-ID: <20240625085550.174349401@linuxfoundation.org>
+Subject: [PATCH 6.9 056/250] platform/x86: x86-android-tablets: Unregister devices in reverse order
+Date: Tue, 25 Jun 2024 11:30:14 +0200
+Message-ID: <20240625085550.212858924@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -51,61 +50,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Erico Nunes <nunes.erico@gmail.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit a421cc7a6a001b70415aa4f66024fa6178885a14 ]
+[ Upstream commit 3de0f2627ef849735f155c1818247f58404dddfe ]
 
-There is a race condition in which a rendering job might take just long
-enough to trigger the drm sched job timeout handler but also still
-complete before the hard reset is done by the timeout handler.
-This runs into race conditions not expected by the timeout handler.
-In some very specific cases it currently may result in a refcount
-imbalance on lima_pm_idle, with a stack dump such as:
+Not all subsystems support a device getting removed while there are
+still consumers of the device with a reference to the device.
 
-[10136.669170] WARNING: CPU: 0 PID: 0 at drivers/gpu/drm/lima/lima_devfreq.c:205 lima_devfreq_record_idle+0xa0/0xb0
-...
-[10136.669459] pc : lima_devfreq_record_idle+0xa0/0xb0
-...
-[10136.669628] Call trace:
-[10136.669634]  lima_devfreq_record_idle+0xa0/0xb0
-[10136.669646]  lima_sched_pipe_task_done+0x5c/0xb0
-[10136.669656]  lima_gp_irq_handler+0xa8/0x120
-[10136.669666]  __handle_irq_event_percpu+0x48/0x160
-[10136.669679]  handle_irq_event+0x4c/0xc0
+One example of this is the regulator subsystem. If a regulator gets
+unregistered while there are still drivers holding a reference
+a WARN() at drivers/regulator/core.c:5829 triggers, e.g.:
 
-We can prevent that race condition entirely by masking the irqs at the
-beginning of the timeout handler, at which point we give up on waiting
-for that job entirely.
-The irqs will be enabled again at the next hard reset which is already
-done as a recovery by the timeout handler.
+ WARNING: CPU: 1 PID: 1587 at drivers/regulator/core.c:5829 regulator_unregister
+ Hardware name: Intel Corp. VALLEYVIEW C0 PLATFORM/BYT-T FFD8, BIOS BLADE_21.X64.0005.R00.1504101516 FFD8_X64_R_2015_04_10_1516 04/10/2015
+ RIP: 0010:regulator_unregister
+ Call Trace:
+  <TASK>
+  regulator_unregister
+  devres_release_group
+  i2c_device_remove
+  device_release_driver_internal
+  bus_remove_device
+  device_del
+  device_unregister
+  x86_android_tablet_remove
 
-Signed-off-by: Erico Nunes <nunes.erico@gmail.com>
-Reviewed-by: Qiang Yu <yuq825@gmail.com>
-Signed-off-by: Qiang Yu <yuq825@gmail.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240405152951.1531555-4-nunes.erico@gmail.com
+On the Lenovo Yoga Tablet 2 series the bq24190 charger chip also provides
+a 5V boost converter output for powering USB devices connected to the micro
+USB port, the bq24190-charger driver exports this as a Vbus regulator.
+
+On the 830 (8") and 1050 ("10") models this regulator is controlled by
+a platform_device and x86_android_tablet_remove() removes platform_device-s
+before i2c_clients so the consumer gets removed first.
+
+But on the 1380 (13") model there is a lc824206xa micro-USB switch
+connected over I2C and the extcon driver for that controls the regulator.
+The bq24190 i2c-client *must* be registered first, because that creates
+the regulator with the lc824206xa listed as its consumer. If the regulator
+has not been registered yet the lc824206xa driver will end up getting
+a dummy regulator.
+
+Since in this case both the regulator provider and consumer are I2C
+devices, the only way to ensure that the consumer is unregistered first
+is to unregister the I2C devices in reverse order of in which they were
+created.
+
+For consistency and to avoid similar problems in the future change
+x86_android_tablet_remove() to unregister all device types in reverse
+order.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240406125058.13624-1-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/lima/lima_sched.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/platform/x86/x86-android-tablets/core.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/lima/lima_sched.c b/drivers/gpu/drm/lima/lima_sched.c
-index 66841503a6183..bbf3f8feab944 100644
---- a/drivers/gpu/drm/lima/lima_sched.c
-+++ b/drivers/gpu/drm/lima/lima_sched.c
-@@ -430,6 +430,13 @@ static enum drm_gpu_sched_stat lima_sched_timedout_job(struct drm_sched_job *job
- 		return DRM_GPU_SCHED_STAT_NOMINAL;
+diff --git a/drivers/platform/x86/x86-android-tablets/core.c b/drivers/platform/x86/x86-android-tablets/core.c
+index a3415f1c0b5f8..6559bb4ea7305 100644
+--- a/drivers/platform/x86/x86-android-tablets/core.c
++++ b/drivers/platform/x86/x86-android-tablets/core.c
+@@ -278,25 +278,25 @@ static void x86_android_tablet_remove(struct platform_device *pdev)
+ {
+ 	int i;
+ 
+-	for (i = 0; i < serdev_count; i++) {
++	for (i = serdev_count - 1; i >= 0; i--) {
+ 		if (serdevs[i])
+ 			serdev_device_remove(serdevs[i]);
  	}
  
-+	/*
-+	 * The task might still finish while this timeout handler runs.
-+	 * To prevent a race condition on its completion, mask all irqs
-+	 * on the running core until the next hard reset completes.
-+	 */
-+	pipe->task_mask_irq(pipe);
-+
- 	if (!pipe->error)
- 		DRM_ERROR("%s job timeout\n", lima_ip_name(ip));
+ 	kfree(serdevs);
  
+-	for (i = 0; i < pdev_count; i++)
++	for (i = pdev_count - 1; i >= 0; i--)
+ 		platform_device_unregister(pdevs[i]);
+ 
+ 	kfree(pdevs);
+ 	kfree(buttons);
+ 
+-	for (i = 0; i < spi_dev_count; i++)
++	for (i = spi_dev_count - 1; i >= 0; i--)
+ 		spi_unregister_device(spi_devs[i]);
+ 
+ 	kfree(spi_devs);
+ 
+-	for (i = 0; i < i2c_client_count; i++)
++	for (i = i2c_client_count - 1; i >= 0; i--)
+ 		i2c_unregister_device(i2c_clients[i]);
+ 
+ 	kfree(i2c_clients);
 -- 
 2.43.0
 
