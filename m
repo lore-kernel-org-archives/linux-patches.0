@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59A7212EBEA;
-	Tue, 25 Jun 2024 09:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4948412EBEA;
+	Tue, 25 Jun 2024 09:43:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308621; cv=none; b=HmWg7KEJTqtmWSc93CYcaqAAMClbKDXsA7IOsD8O9cREBaKyXwUxl6dHWMSMqfKtYp+jbaV8+tyIB8xXrObP8AHLrQayhumpSQxIIFSGBr/ZQ/92I6e2dQFeT5RTb0CxDqFYJzFI4IE9y66X+DiEfsXzfy7JvDVeR3UovAz/Pps=
+	t=1719308624; cv=none; b=Ok39fODuA46Upj335x3ixxQAwNz0Bl/ZpzFHRwMgQY34J7ZbrrXON3KlT3o5YbOBQYbS01AYlH3Q7Nx9Q1O3XUyST6dF9kT5q03SYluo2alU1vHndsDJxNGm80x83Qdr15Q5DVnXymxztHo2/EMzCZJ2ig5jUdpogLAbCb1+9/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308621; c=relaxed/simple;
-	bh=hpcN+LxtHndGzybQfaJmxtnT+WC0AHTD3X3bqXcXMds=;
+	s=arc-20240116; t=1719308624; c=relaxed/simple;
+	bh=G64Oy6nUlsBtFtD9NsOihC/AwKZeVsUg+yH5odiMpKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YVpkOIFYdKfaA0hE9YpXvvesTECF6ENiE7/Vk+83lfxNLOSsaykwQ9U5TkaFHs/LOyxB6e1mMr17Ecm9oruzixvUg+EFPC+a2Gx5xcR/ghtSuupjswflPncTCkhmEMVGCZUTAtaj+YBiTvpjd5j1IGKGfTN70K+x0ARKnyYFoUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bqBSpvrb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aFG0xTkHFILm60/ncE1EdH40rq2KlQu2ZJCoWjtipayLykLIdaTfeWwlT+ZXg4kz5QpeZjSpAqPSuoQ6n1Zkc4isscxZHpOeZxFfaVxn439lJriFVhhBIDgXfU2t68giUIFb3akRhqEZXRDohbkBBk3vb1hOiSEJXVRnJSoFPHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=whyip48t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bqBSpvrb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5071C32781;
-	Tue, 25 Jun 2024 09:43:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="whyip48t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C11F6C32781;
+	Tue, 25 Jun 2024 09:43:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308621;
-	bh=hpcN+LxtHndGzybQfaJmxtnT+WC0AHTD3X3bqXcXMds=;
+	s=korg; t=1719308624;
+	bh=G64Oy6nUlsBtFtD9NsOihC/AwKZeVsUg+yH5odiMpKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bqBSpvrb+fXbBRTbe6yHpC5B3P5E/bgcBg5tYL4fO0DsfDw929h32QmLzChB1rkAt
-	 KYGLzrgnuEDCXFVkMrPurATdt+E06KkK7BpBghagP8XuRtY+TeotopEWyQbcrdc6QV
-	 R6VaWTcbMaVqrsd2ozXnqG3HRWVaBk5xruhlKmpc=
+	b=whyip48tt7K6Lp1pIpUt33V+333IqWoiBkTNjvnN4gKzd74+VZAS017IBgxpBWlSM
+	 9yxxlVkDoMFo2/vB2oSZuIr2o3C0yO1FX6ISdtGxFwPMM8/CvrVePPVITglU5SZSdV
+	 hBFcaG41bXN/K9W5bB9eJr/GOE4eKEdQzczrJsik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.9 183/250] net: phy: dp83tg720: get master/slave configuration in link down state
-Date: Tue, 25 Jun 2024 11:32:21 +0200
-Message-ID: <20240625085555.076107810@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Ignat Korchagin <ignat@cloudflare.com>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.9 184/250] net: do not leave a dangling sk pointer, when socket creation fails
+Date: Tue, 25 Jun 2024 11:32:22 +0200
+Message-ID: <20240625085555.113737904@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -50,87 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Ignat Korchagin <ignat@cloudflare.com>
 
-commit 40a64cc9679540ff7c46ecc51178b07d42abbb1c upstream.
+commit 6cd4a78d962bebbaf8beb7d2ead3f34120e3f7b2 upstream.
 
-Get master/slave configuration for initial system start with the link in
-down state. This ensures ethtool shows current configuration.  Also
-fixes link reconfiguration with ethtool while in down state, preventing
-ethtool from displaying outdated configuration.
+It is possible to trigger a use-after-free by:
+  * attaching an fentry probe to __sock_release() and the probe calling the
+    bpf_get_socket_cookie() helper
+  * running traceroute -I 1.1.1.1 on a freshly booted VM
 
-Even though dp83tg720_config_init() is executed periodically as long as
-the link is in admin up state but no carrier is detected, this is not
-sufficient for the link in admin down state where
-dp83tg720_read_status() is not periodically executed. To cover this
-case, we need an extra read role configuration in
-dp83tg720_config_aneg().
+A KASAN enabled kernel will log something like below (decoded and stripped):
+==================================================================
+BUG: KASAN: slab-use-after-free in __sock_gen_cookie (./arch/x86/include/asm/atomic64_64.h:15 ./include/linux/atomic/atomic-arch-fallback.h:2583 ./include/linux/atomic/atomic-instrumented.h:1611 net/core/sock_diag.c:29)
+Read of size 8 at addr ffff888007110dd8 by task traceroute/299
 
-Fixes: cb80ee2f9bee1 ("net: phy: Add support for the DP83TG720S Ethernet PHY")
+CPU: 2 PID: 299 Comm: traceroute Tainted: G            E      6.10.0-rc2+ #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
+Call Trace:
+ <TASK>
+dump_stack_lvl (lib/dump_stack.c:117 (discriminator 1))
+print_report (mm/kasan/report.c:378 mm/kasan/report.c:488)
+? __sock_gen_cookie (./arch/x86/include/asm/atomic64_64.h:15 ./include/linux/atomic/atomic-arch-fallback.h:2583 ./include/linux/atomic/atomic-instrumented.h:1611 net/core/sock_diag.c:29)
+kasan_report (mm/kasan/report.c:603)
+? __sock_gen_cookie (./arch/x86/include/asm/atomic64_64.h:15 ./include/linux/atomic/atomic-arch-fallback.h:2583 ./include/linux/atomic/atomic-instrumented.h:1611 net/core/sock_diag.c:29)
+kasan_check_range (mm/kasan/generic.c:183 mm/kasan/generic.c:189)
+__sock_gen_cookie (./arch/x86/include/asm/atomic64_64.h:15 ./include/linux/atomic/atomic-arch-fallback.h:2583 ./include/linux/atomic/atomic-instrumented.h:1611 net/core/sock_diag.c:29)
+bpf_get_socket_ptr_cookie (./arch/x86/include/asm/preempt.h:94 ./include/linux/sock_diag.h:42 net/core/filter.c:5094 net/core/filter.c:5092)
+bpf_prog_875642cf11f1d139___sock_release+0x6e/0x8e
+bpf_trampoline_6442506592+0x47/0xaf
+__sock_release (net/socket.c:652)
+__sock_create (net/socket.c:1601)
+...
+Allocated by task 299 on cpu 2 at 78.328492s:
+kasan_save_stack (mm/kasan/common.c:48)
+kasan_save_track (mm/kasan/common.c:68)
+__kasan_slab_alloc (mm/kasan/common.c:312 mm/kasan/common.c:338)
+kmem_cache_alloc_noprof (mm/slub.c:3941 mm/slub.c:4000 mm/slub.c:4007)
+sk_prot_alloc (net/core/sock.c:2075)
+sk_alloc (net/core/sock.c:2134)
+inet_create (net/ipv4/af_inet.c:327 net/ipv4/af_inet.c:252)
+__sock_create (net/socket.c:1572)
+__sys_socket (net/socket.c:1660 net/socket.c:1644 net/socket.c:1706)
+__x64_sys_socket (net/socket.c:1718)
+do_syscall_64 (arch/x86/entry/common.c:52 arch/x86/entry/common.c:83)
+entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+
+Freed by task 299 on cpu 2 at 78.328502s:
+kasan_save_stack (mm/kasan/common.c:48)
+kasan_save_track (mm/kasan/common.c:68)
+kasan_save_free_info (mm/kasan/generic.c:582)
+poison_slab_object (mm/kasan/common.c:242)
+__kasan_slab_free (mm/kasan/common.c:256)
+kmem_cache_free (mm/slub.c:4437 mm/slub.c:4511)
+__sk_destruct (net/core/sock.c:2117 net/core/sock.c:2208)
+inet_create (net/ipv4/af_inet.c:397 net/ipv4/af_inet.c:252)
+__sock_create (net/socket.c:1572)
+__sys_socket (net/socket.c:1660 net/socket.c:1644 net/socket.c:1706)
+__x64_sys_socket (net/socket.c:1718)
+do_syscall_64 (arch/x86/entry/common.c:52 arch/x86/entry/common.c:83)
+entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+
+Fix this by clearing the struct socket reference in sk_common_release() to cover
+all protocol families create functions, which may already attached the
+reference to the sk object with sock_init_data().
+
+Fixes: c5dbb89fc2ac ("bpf: Expose bpf_get_socket_cookie to tracing programs")
+Suggested-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Ignat Korchagin <ignat@cloudflare.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://lore.kernel.org/r/20240614094516.1481231-2-o.rempel@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/netdev/20240613194047.36478-1-kuniyu@amazon.com/T/
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: D. Wythe <alibuda@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20240617210205.67311-1-ignat@cloudflare.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/dp83tg720.c | 24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ net/core/sock.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/phy/dp83tg720.c b/drivers/net/phy/dp83tg720.c
-index 1186dfc70fb3..c706429b225a 100644
---- a/drivers/net/phy/dp83tg720.c
-+++ b/drivers/net/phy/dp83tg720.c
-@@ -36,11 +36,20 @@
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -3743,6 +3743,9 @@ void sk_common_release(struct sock *sk)
  
- static int dp83tg720_config_aneg(struct phy_device *phydev)
- {
-+	int ret;
+ 	sk->sk_prot->unhash(sk);
+ 
++	if (sk->sk_socket)
++		sk->sk_socket->sk = NULL;
 +
- 	/* Autoneg is not supported and this PHY supports only one speed.
- 	 * We need to care only about master/slave configuration if it was
- 	 * changed by user.
- 	 */
--	return genphy_c45_pma_baset1_setup_master_slave(phydev);
-+	ret = genphy_c45_pma_baset1_setup_master_slave(phydev);
-+	if (ret)
-+		return ret;
-+
-+	/* Re-read role configuration to make changes visible even if
-+	 * the link is in administrative down state.
-+	 */
-+	return genphy_c45_pma_baset1_read_master_slave(phydev);
- }
- 
- static int dp83tg720_read_status(struct phy_device *phydev)
-@@ -69,6 +78,8 @@ static int dp83tg720_read_status(struct phy_device *phydev)
- 			return ret;
- 
- 		/* After HW reset we need to restore master/slave configuration.
-+		 * genphy_c45_pma_baset1_read_master_slave() call will be done
-+		 * by the dp83tg720_config_aneg() function.
- 		 */
- 		ret = dp83tg720_config_aneg(phydev);
- 		if (ret)
-@@ -168,8 +179,15 @@ static int dp83tg720_config_init(struct phy_device *phydev)
- 	/* In case the PHY is bootstrapped in managed mode, we need to
- 	 * wake it.
- 	 */
--	return phy_write_mmd(phydev, MDIO_MMD_VEND2, DP83TG720S_LPS_CFG3,
--			     DP83TG720S_LPS_CFG3_PWR_MODE_0);
-+	ret = phy_write_mmd(phydev, MDIO_MMD_VEND2, DP83TG720S_LPS_CFG3,
-+			    DP83TG720S_LPS_CFG3_PWR_MODE_0);
-+	if (ret)
-+		return ret;
-+
-+	/* Make role configuration visible for ethtool on init and after
-+	 * rest.
-+	 */
-+	return genphy_c45_pma_baset1_read_master_slave(phydev);
- }
- 
- static struct phy_driver dp83tg720_driver[] = {
--- 
-2.45.2
-
+ 	/*
+ 	 * In this point socket cannot receive new packets, but it is possible
+ 	 * that some packets are in flight because some CPU runs receiver and
 
 
