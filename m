@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38952146592;
-	Tue, 25 Jun 2024 10:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CD513C90B;
+	Tue, 25 Jun 2024 10:01:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309674; cv=none; b=RMCgdKNBA3eXqYf+qs7EtF8IpY8YlZ34FECzkLWfVMpc3IVpClAGE5D/Ikw6Zv5gy9lxaokAdO9Jlg0eWknvXxmne701BqFj27xJ+8DQGu1hL2BRFVW2Gr9fIPQHe2ndYfH5v+rtYZ+kY2O3wOLAafKuC4mWq3/3Iy0sF4BMZDs=
+	t=1719309677; cv=none; b=VHCV5HByErLhZbGJmu1fztaY0zdZspIEzvcnaW9S1vUp76d4SFM5DhFpaT/NaG+iyqL76VlwzVDYsJF4fEVSeqnUtk8MWnILGlynQq4LMXsPFxQKCp+c8doPOZfjECgJ4aAS4TIGanO+rTAC4f5C3Buoc2NBp5y9lQVIk/SjC0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309674; c=relaxed/simple;
-	bh=f1gT3U4423F01fP/UuE4mLvDuX+8CuA2f9ACHI1hO10=;
+	s=arc-20240116; t=1719309677; c=relaxed/simple;
+	bh=4Po4KdIdjkO6KZa6nE2OU5atAax/Tw69w0JukLqjC0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=e5R7WIwiIxRK26hNaWsrbPtcvzgRSTCho3fQFClTtY8JWToCeo8y3gC16trlrw0UGOWpNQZEfTMx8czYO98iSKEbBAosGbo/gIzIXJ2UX0uLAUDZh1izcOBVDqHBxTFmtiYncNhIJAw40IQsSWR0jTFkb0syt+3WfW8a/74qLGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mvJyAmMh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sYHid7jgSfDGVMDF/Se7Lpe/qrU25GBrlSEKH25jY3iSfnaaYYC4i6CG62uSSdA49aDl4E2YyOws/Xt+3p+kzxu+DRGOe6pIz8MKUpifH3JjQ5dlghyvdQGtylyp63d7iZ+7nlHAbXKPvG6BiIrx812zRDYwSoGvxbjIwsAiP1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EokfbXmc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mvJyAmMh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2FB7C32781;
-	Tue, 25 Jun 2024 10:01:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EokfbXmc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AACE2C32781;
+	Tue, 25 Jun 2024 10:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309674;
-	bh=f1gT3U4423F01fP/UuE4mLvDuX+8CuA2f9ACHI1hO10=;
+	s=korg; t=1719309677;
+	bh=4Po4KdIdjkO6KZa6nE2OU5atAax/Tw69w0JukLqjC0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mvJyAmMhdKX0zWnLnYPdbc0WsjKZcnYP72rvpMWF3izAsI41nvXH3mpDgwvmeMCaZ
-	 hAzLrdoPVOTwYUcCYrMG8bPbC3pixsUAtjaNhc+/xsFlVQRyzILjV7rfQeXmaH5FEB
-	 FnbtYyXDGVjxqKglXZbM0/WDWDf91NwhJYisIZx0=
+	b=EokfbXmcBfq4dI2MslTyP0czGbmn2nNh4tjhFlmK35ZsfwLKaWh8lLlUfSI2hwdYu
+	 nbuC9zGORR72kMVVuxCWaDWsboVEWUNozdXr4HbV/VjRtIf51RdCPUQ6gRO5gtkMOS
+	 XdohNNGIvjRbsVKZNrBHWc9iuWZ3N0vfhxtSCwGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongqin Liu <yongqin.liu@linaro.org>,
-	=?UTF-8?q?Antje=20Miederh=C3=B6fer?= <a.miederhoefer@gmx.de>,
-	Arne Fitzenreiter <arne_f@ipfire.org>,
-	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 095/131] net: usb: ax88179_178a: improve reset check
-Date: Tue, 25 Jun 2024 11:34:10 +0200
-Message-ID: <20240625085529.548694238@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Heng Qi <hengqi@linux.alibaba.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 069/131] ptp: fix integer overflow in max_vclocks_store
+Date: Tue, 25 Jun 2024 11:33:44 +0200
+Message-ID: <20240625085528.565324220@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085525.931079317@linuxfoundation.org>
 References: <20240625085525.931079317@linuxfoundation.org>
@@ -47,87 +48,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 7be4cb7189f747b4e5b6977d0e4387bde3204e62 upstream.
+[ Upstream commit 81d23d2a24012e448f651e007fac2cfd20a45ce0 ]
 
-After ecf848eb934b ("net: usb: ax88179_178a: fix link status when link is
-set to down/up") to not reset from usbnet_open after the reset from
-usbnet_probe at initialization stage to speed up this, some issues have
-been reported.
+On 32bit systems, the "4 * max" multiply can overflow.  Use kcalloc()
+to do the allocation to prevent this.
 
-It seems to happen that if the initialization is slower, and some time
-passes between the probe operation and the open operation, the second reset
-from open is necessary too to have the device working. The reason is that
-if there is no activity with the phy, this is "disconnected".
-
-In order to improve this, the solution is to detect when the phy is
-"disconnected", and we can use the phy status register for this. So we will
-only reset the device from reset operation in this situation, that is, only
-if necessary.
-
-The same bahavior is happening when the device is stopped (link set to
-down) and later is restarted (link set to up), so if the phy keeps working
-we only need to enable the mac again, but if enough time passes between the
-device stop and restart, reset is necessary, and we can detect the
-situation checking the phy status register too.
-
-cc: stable@vger.kernel.org # 6.6+
-Fixes: ecf848eb934b ("net: usb: ax88179_178a: fix link status when link is set to down/up")
-Reported-by: Yongqin Liu <yongqin.liu@linaro.org>
-Reported-by: Antje Miederhöfer <a.miederhoefer@gmx.de>
-Reported-by: Arne Fitzenreiter <arne_f@ipfire.org>
-Tested-by: Yongqin Liu <yongqin.liu@linaro.org>
-Tested-by: Antje Miederhöfer <a.miederhoefer@gmx.de>
-Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 44c494c8e30e ("ptp: track available ptp vclocks information")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Heng Qi <hengqi@linux.alibaba.com>
+Link: https://lore.kernel.org/r/ee8110ed-6619-4bd7-9024-28c1f2ac24f4@moroto.mountain
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/ax88179_178a.c |   18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/ptp/ptp_sysfs.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/net/usb/ax88179_178a.c
-+++ b/drivers/net/usb/ax88179_178a.c
-@@ -174,7 +174,6 @@ struct ax88179_data {
- 	u32 wol_supported;
- 	u32 wolopts;
- 	u8 disconnecting;
--	u8 initialized;
- };
+diff --git a/drivers/ptp/ptp_sysfs.c b/drivers/ptp/ptp_sysfs.c
+index 74b9c794d6363..1263612ef2759 100644
+--- a/drivers/ptp/ptp_sysfs.c
++++ b/drivers/ptp/ptp_sysfs.c
+@@ -283,8 +283,7 @@ static ssize_t max_vclocks_store(struct device *dev,
+ 	if (max < ptp->n_vclocks)
+ 		goto out;
  
- struct ax88179_int_data {
-@@ -1676,12 +1675,21 @@ static int ax88179_reset(struct usbnet *
- 
- static int ax88179_net_reset(struct usbnet *dev)
- {
--	struct ax88179_data *ax179_data = dev->driver_priv;
-+	u16 tmp16;
- 
--	if (ax179_data->initialized)
-+	ax88179_read_cmd(dev, AX_ACCESS_PHY, AX88179_PHY_ID, GMII_PHY_PHYSR,
-+			 2, &tmp16);
-+	if (tmp16) {
-+		ax88179_read_cmd(dev, AX_ACCESS_MAC, AX_MEDIUM_STATUS_MODE,
-+				 2, 2, &tmp16);
-+		if (!(tmp16 & AX_MEDIUM_RECEIVE_EN)) {
-+			tmp16 |= AX_MEDIUM_RECEIVE_EN;
-+			ax88179_write_cmd(dev, AX_ACCESS_MAC, AX_MEDIUM_STATUS_MODE,
-+					  2, 2, &tmp16);
-+		}
-+	} else {
- 		ax88179_reset(dev);
--	else
--		ax179_data->initialized = 1;
-+	}
- 
- 	return 0;
- }
+-	size = sizeof(int) * max;
+-	vclock_index = kzalloc(size, GFP_KERNEL);
++	vclock_index = kcalloc(max, sizeof(int), GFP_KERNEL);
+ 	if (!vclock_index) {
+ 		err = -ENOMEM;
+ 		goto out;
+-- 
+2.43.0
+
 
 
