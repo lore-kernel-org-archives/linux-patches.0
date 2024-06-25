@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1B514A4C9;
-	Tue, 25 Jun 2024 09:38:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7383914A0A4;
+	Tue, 25 Jun 2024 09:38:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308333; cv=none; b=BgXZ4bb1+Uq0PPMvDKW2dMsEplAQjSMqeh3NL7+yp3RTj3Waj8vQJt5jErEG5emgEA3i3Cj/n3uQfwDytcyC5AO2qysxeDxIu+toUtT+DQwATrP/UqWH9SSSBzZLrzV1MgZHBHYBMI76+Qd1oBJlf1J3zwxjI0JrVAgG3vdoIuk=
+	t=1719308336; cv=none; b=eaNO+uFNZRUdtJTsMN1Gx2EYD4uWfkscB04DeJO9SLHGng2EMkWr6autPsv1EzhxiZAsn8h+ow8bj5axMex2EIBI/ASF5T2Dy6vkZUrfIUr/qfp6VHN/PPFALarX8eh5zAsw31muAJeYPjRHIOAO8QGbJcCNqtrga9lvNhKyiuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308333; c=relaxed/simple;
-	bh=4jXP9q1QoVIN/4rn6q3HFBf9pyDK8wGb7+jPyraz2Rk=;
+	s=arc-20240116; t=1719308336; c=relaxed/simple;
+	bh=fad+DEvk7M/iy4V61KoHFKQWK+V77ZivJCVJXgLFzjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IHsXLIPG/JB9545odWjPEOFCuxLtGYpdqlUWuFQ3HDRB/ADkv++tp97JjknPGXe8cLPhL5ahJxCDRYmV/ZfI1LArl8+iKMfx+44GDA6XV5G7Qd4JOrJNBpxPC/6gapGTFRVx7Cm7y5pfZdQTpAbwYS4Hxedt0FQN2aNqoenroBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4brTDNx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=crItNmbTIPU1cGQ7fxYc8zEhLGeufL/dzbzDFCcvB/Er9XWcl4MCTQEiaszNjUpqZa2i75WCIGDRi2Wy1RK513KSeUtEbNQo3zyCkhN2aSLPEaY0pZS1JS9jQVXikQgA2kizn7/yxrNQnznfD43zuWkjdRrDXAPESWnvE0pYzF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KqfIoSAD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4brTDNx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 840A1C4AF09;
-	Tue, 25 Jun 2024 09:38:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KqfIoSAD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88286C32781;
+	Tue, 25 Jun 2024 09:38:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308332;
-	bh=4jXP9q1QoVIN/4rn6q3HFBf9pyDK8wGb7+jPyraz2Rk=;
+	s=korg; t=1719308335;
+	bh=fad+DEvk7M/iy4V61KoHFKQWK+V77ZivJCVJXgLFzjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M4brTDNxAL+pjWZVo0aLyEXpz1tkWETeUmpoCF/jClNFX5fnjzmanK1T0eOyzihjK
-	 sfb8jBiqTFWJdLcWQydowlMSoN/wGjC7t8zH0DMFVaHaMXAoKEea9sUssjVkwpQV+Y
-	 3RCOMlpYYEa2NfpvIAK3y44svsg2xJpF/FZ7LmD4=
+	b=KqfIoSADaPSp1qotO4I32DWNfr0vf7bDkwNOb90dFEorc2Ox5ymZwfEK94CJFynw/
+	 +KEIBDHa5ABUV1bQ3ivyHbs9yY18+Eq4WL85YSiPcnIiYA+ohJidIVbV9rmQKzkfbm
+	 DUQI1f6sAF6UrYAnjnCfnGihOUJlJ9djeQP4qcyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Neronin <niklas.neronin@linux.intel.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Daniel Starke <daniel.starke@siemens.com>,
+	syzbot <syzbot+dbac96d8e73b61aa559c@syzkaller.appspotmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 085/250] xhci: remove XHCI_TRUST_TX_LENGTH quirk
-Date: Tue, 25 Jun 2024 11:30:43 +0200
-Message-ID: <20240625085551.329914854@linuxfoundation.org>
+Subject: [PATCH 6.9 086/250] tty: add the option to have a tty reject a new ldisc
+Date: Tue, 25 Jun 2024 11:30:44 +0200
+Message-ID: <20240625085551.368621044@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -51,187 +55,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 34b67198244f2d7d8409fa4eb76204c409c0c97e ]
+[ Upstream commit 6bd23e0c2bb6c65d4f5754d1456bc9a4427fc59b ]
 
-If this quirk was set then driver would treat transfer events with
-'Success' completion code as 'Short packet' if there were untransferred
-bytes left.
+... and use it to limit the virtual terminals to just N_TTY.  They are
+kind of special, and in particular, the "con_write()" routine violates
+the "writes cannot sleep" rule that some ldiscs rely on.
 
-This is so common that turn it into default behavior.
+This avoids the
 
-xhci_warn_ratelimited() is no longer used after this, so remove it.
+   BUG: sleeping function called from invalid context at kernel/printk/printk.c:2659
 
-A success event with untransferred bytes left doesn't always mean a
-misbehaving controller. If there was an error mid a multi-TRB TD it's
-allowed to issue a success event for the last TRB in that TD.
+when N_GSM has been attached to a virtual console, and gsmld_write()
+calls con_write() while holding a spinlock, and con_write() then tries
+to get the console lock.
 
-See xhci 1.2 spec 4.9.1 Transfer Descriptors
-
-"Note: If an error is detected while processing a multi-TRB TD, the xHC
- shall generate a Transfer Event for the TRB that the error was detected
- on with the appropriate error Condition Code, then may advance to the
- next TD. If in the process of advancing to the next TD, a Transfer TRB
- is encountered with its IOC flag set, then the Condition Code of the
- Transfer Event generated for that Transfer TRB should be Success,
- because there was no error actually associated with the TRB that
- generated the Event. However, an xHC implementation may redundantly
- assert the original error Condition Code."
-
-Co-developed-by: Niklas Neronin <niklas.neronin@linux.intel.com>
-Signed-off-by: Niklas Neronin <niklas.neronin@linux.intel.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20240429140245.3955523-10-mathias.nyman@linux.intel.com
+Tested-by: Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
+Cc: Jiri Slaby <jirislaby@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Daniel Starke <daniel.starke@siemens.com>
+Reported-by: syzbot <syzbot+dbac96d8e73b61aa559c@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=dbac96d8e73b61aa559c
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/20240423163339.59780-1-torvalds@linux-foundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-pci.c  | 15 ++-------------
- drivers/usb/host/xhci-rcar.c |  6 ++----
- drivers/usb/host/xhci-ring.c | 15 +++++----------
- drivers/usb/host/xhci.h      |  4 +---
- 4 files changed, 10 insertions(+), 30 deletions(-)
+ drivers/tty/tty_ldisc.c    |  6 ++++++
+ drivers/tty/vt/vt.c        | 10 ++++++++++
+ include/linux/tty_driver.h |  8 ++++++++
+ 3 files changed, 24 insertions(+)
 
-diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
-index b271ec916926b..febf64723434c 100644
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -271,17 +271,12 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
- 				"QUIRK: Fresco Logic revision %u "
- 				"has broken MSI implementation",
- 				pdev->revision);
--		xhci->quirks |= XHCI_TRUST_TX_LENGTH;
+diff --git a/drivers/tty/tty_ldisc.c b/drivers/tty/tty_ldisc.c
+index 3f68e213df1f7..d80e9d4c974b4 100644
+--- a/drivers/tty/tty_ldisc.c
++++ b/drivers/tty/tty_ldisc.c
+@@ -545,6 +545,12 @@ int tty_set_ldisc(struct tty_struct *tty, int disc)
+ 		goto out;
  	}
  
- 	if (pdev->vendor == PCI_VENDOR_ID_FRESCO_LOGIC &&
- 			pdev->device == PCI_DEVICE_ID_FRESCO_LOGIC_FL1009)
- 		xhci->quirks |= XHCI_BROKEN_STREAMS;
++	if (tty->ops->ldisc_ok) {
++		retval = tty->ops->ldisc_ok(tty, disc);
++		if (retval)
++			goto out;
++	}
++
+ 	old_ldisc = tty->ldisc;
  
--	if (pdev->vendor == PCI_VENDOR_ID_FRESCO_LOGIC &&
--			pdev->device == PCI_DEVICE_ID_FRESCO_LOGIC_FL1100)
--		xhci->quirks |= XHCI_TRUST_TX_LENGTH;
--
- 	if (pdev->vendor == PCI_VENDOR_ID_NEC)
- 		xhci->quirks |= XHCI_NEC_HOST;
+ 	/* Shutdown the old discipline. */
+diff --git a/drivers/tty/vt/vt.c b/drivers/tty/vt/vt.c
+index 9b5b98dfc8b40..cd87e3d1291ed 100644
+--- a/drivers/tty/vt/vt.c
++++ b/drivers/tty/vt/vt.c
+@@ -3576,6 +3576,15 @@ static void con_cleanup(struct tty_struct *tty)
+ 	tty_port_put(&vc->port);
+ }
  
-@@ -308,11 +303,8 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
- 		xhci->quirks |= XHCI_RESET_ON_RESUME;
- 	}
- 
--	if (pdev->vendor == PCI_VENDOR_ID_AMD) {
--		xhci->quirks |= XHCI_TRUST_TX_LENGTH;
--		if (pdev->device == 0x43f7)
--			xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
--	}
-+	if (pdev->vendor == PCI_VENDOR_ID_AMD && pdev->device == 0x43f7)
-+		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
- 
- 	if ((pdev->vendor == PCI_VENDOR_ID_AMD) &&
- 		((pdev->device == PCI_DEVICE_ID_AMD_PROMONTORYA_4) ||
-@@ -400,7 +392,6 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
- 	if (pdev->vendor == PCI_VENDOR_ID_ETRON &&
- 			pdev->device == PCI_DEVICE_ID_EJ168) {
- 		xhci->quirks |= XHCI_RESET_ON_RESUME;
--		xhci->quirks |= XHCI_TRUST_TX_LENGTH;
- 		xhci->quirks |= XHCI_BROKEN_STREAMS;
- 	}
- 	if (pdev->vendor == PCI_VENDOR_ID_ETRON &&
-@@ -411,7 +402,6 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
- 
- 	if (pdev->vendor == PCI_VENDOR_ID_RENESAS &&
- 	    pdev->device == 0x0014) {
--		xhci->quirks |= XHCI_TRUST_TX_LENGTH;
- 		xhci->quirks |= XHCI_ZERO_64B_REGS;
- 	}
- 	if (pdev->vendor == PCI_VENDOR_ID_RENESAS &&
-@@ -441,7 +431,6 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
- 	}
- 	if (pdev->vendor == PCI_VENDOR_ID_ASMEDIA &&
- 		pdev->device == PCI_DEVICE_ID_ASMEDIA_1042A_XHCI) {
--		xhci->quirks |= XHCI_TRUST_TX_LENGTH;
- 		xhci->quirks |= XHCI_NO_64BIT_SUPPORT;
- 	}
- 	if (pdev->vendor == PCI_VENDOR_ID_ASMEDIA &&
-diff --git a/drivers/usb/host/xhci-rcar.c b/drivers/usb/host/xhci-rcar.c
-index ab9c5969e4624..8b357647728c2 100644
---- a/drivers/usb/host/xhci-rcar.c
-+++ b/drivers/usb/host/xhci-rcar.c
-@@ -214,8 +214,7 @@ static int xhci_rcar_resume_quirk(struct usb_hcd *hcd)
-  */
- #define SET_XHCI_PLAT_PRIV_FOR_RCAR(firmware)				\
- 	.firmware_name = firmware,					\
--	.quirks = XHCI_NO_64BIT_SUPPORT | XHCI_TRUST_TX_LENGTH |	\
--		  XHCI_SLOW_SUSPEND,					\
-+	.quirks = XHCI_NO_64BIT_SUPPORT |  XHCI_SLOW_SUSPEND,		\
- 	.init_quirk = xhci_rcar_init_quirk,				\
- 	.plat_start = xhci_rcar_start,					\
- 	.resume_quirk = xhci_rcar_resume_quirk,
-@@ -229,8 +228,7 @@ static const struct xhci_plat_priv xhci_plat_renesas_rcar_gen3 = {
++/*
++ * We can't deal with anything but the N_TTY ldisc,
++ * because we can sleep in our write() routine.
++ */
++static int con_ldisc_ok(struct tty_struct *tty, int ldisc)
++{
++	return ldisc == N_TTY ? 0 : -EINVAL;
++}
++
+ static int default_color           = 7; /* white */
+ static int default_italic_color    = 2; // green (ASCII)
+ static int default_underline_color = 3; // cyan (ASCII)
+@@ -3695,6 +3704,7 @@ static const struct tty_operations con_ops = {
+ 	.resize = vt_resize,
+ 	.shutdown = con_shutdown,
+ 	.cleanup = con_cleanup,
++	.ldisc_ok = con_ldisc_ok,
  };
  
- static const struct xhci_plat_priv xhci_plat_renesas_rzv2m = {
--	.quirks = XHCI_NO_64BIT_SUPPORT | XHCI_TRUST_TX_LENGTH |
--		  XHCI_SLOW_SUSPEND,
-+	.quirks = XHCI_NO_64BIT_SUPPORT | XHCI_SLOW_SUSPEND,
- 	.init_quirk = xhci_rzv2m_init_quirk,
- 	.plat_start = xhci_rzv2m_start,
- };
-diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index 850846c206ed4..48d745e9f9730 100644
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -2431,8 +2431,7 @@ static int process_isoc_td(struct xhci_hcd *xhci, struct xhci_virt_ep *ep,
- 			break;
- 		if (remaining) {
- 			frame->status = short_framestatus;
--			if (xhci->quirks & XHCI_TRUST_TX_LENGTH)
--				sum_trbs_for_length = true;
-+			sum_trbs_for_length = true;
- 			break;
- 		}
- 		frame->status = 0;
-@@ -2681,15 +2680,11 @@ static int handle_tx_event(struct xhci_hcd *xhci,
- 	 * transfer type
- 	 */
- 	case COMP_SUCCESS:
--		if (EVENT_TRB_LEN(le32_to_cpu(event->transfer_len)) == 0)
--			break;
--		if (xhci->quirks & XHCI_TRUST_TX_LENGTH ||
--		    ep_ring->last_td_was_short)
-+		if (EVENT_TRB_LEN(le32_to_cpu(event->transfer_len)) != 0) {
- 			trb_comp_code = COMP_SHORT_PACKET;
--		else
--			xhci_warn_ratelimited(xhci,
--					      "WARN Successful completion on short TX for slot %u ep %u: needs XHCI_TRUST_TX_LENGTH quirk?\n",
--					      slot_id, ep_index);
-+			xhci_dbg(xhci, "Successful completion on short TX for slot %u ep %u with last td short %d\n",
-+				 slot_id, ep_index, ep_ring->last_td_was_short);
-+		}
- 		break;
- 	case COMP_SHORT_PACKET:
- 		break;
-diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
-index 069a187540a0c..1683d779e4bc0 100644
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -1590,7 +1590,7 @@ struct xhci_hcd {
- #define XHCI_RESET_ON_RESUME	BIT_ULL(7)
- #define	XHCI_SW_BW_CHECKING	BIT_ULL(8)
- #define XHCI_AMD_0x96_HOST	BIT_ULL(9)
--#define XHCI_TRUST_TX_LENGTH	BIT_ULL(10)
-+#define XHCI_TRUST_TX_LENGTH	BIT_ULL(10) /* Deprecated */
- #define XHCI_LPM_SUPPORT	BIT_ULL(11)
- #define XHCI_INTEL_HOST		BIT_ULL(12)
- #define XHCI_SPURIOUS_REBOOT	BIT_ULL(13)
-@@ -1730,8 +1730,6 @@ static inline bool xhci_has_one_roothub(struct xhci_hcd *xhci)
- 	dev_err(xhci_to_hcd(xhci)->self.controller , fmt , ## args)
- #define xhci_warn(xhci, fmt, args...) \
- 	dev_warn(xhci_to_hcd(xhci)->self.controller , fmt , ## args)
--#define xhci_warn_ratelimited(xhci, fmt, args...) \
--	dev_warn_ratelimited(xhci_to_hcd(xhci)->self.controller , fmt , ## args)
- #define xhci_info(xhci, fmt, args...) \
- 	dev_info(xhci_to_hcd(xhci)->self.controller , fmt , ## args)
- 
+ static struct cdev vc0_cdev;
+diff --git a/include/linux/tty_driver.h b/include/linux/tty_driver.h
+index 7372124fbf90b..dd4b31ce6d5d4 100644
+--- a/include/linux/tty_driver.h
++++ b/include/linux/tty_driver.h
+@@ -154,6 +154,13 @@ struct serial_struct;
+  *
+  *	Optional. Called under the @tty->termios_rwsem. May sleep.
+  *
++ * @ldisc_ok: ``int ()(struct tty_struct *tty, int ldisc)``
++ *
++ *	This routine allows the @tty driver to decide if it can deal
++ *	with a particular @ldisc.
++ *
++ *	Optional. Called under the @tty->ldisc_sem and @tty->termios_rwsem.
++ *
+  * @set_ldisc: ``void ()(struct tty_struct *tty)``
+  *
+  *	This routine allows the @tty driver to be notified when the device's
+@@ -372,6 +379,7 @@ struct tty_operations {
+ 	void (*hangup)(struct tty_struct *tty);
+ 	int (*break_ctl)(struct tty_struct *tty, int state);
+ 	void (*flush_buffer)(struct tty_struct *tty);
++	int (*ldisc_ok)(struct tty_struct *tty, int ldisc);
+ 	void (*set_ldisc)(struct tty_struct *tty);
+ 	void (*wait_until_sent)(struct tty_struct *tty, int timeout);
+ 	void (*send_xchar)(struct tty_struct *tty, u8 ch);
 -- 
 2.43.0
 
