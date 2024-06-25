@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 574D81465A8;
-	Tue, 25 Jun 2024 09:45:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0E11465A8;
+	Tue, 25 Jun 2024 09:45:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308748; cv=none; b=sToqFzwvDYlcWkW3yRZxvEeVMhHn3wJ5JNKKIdFOz/FZ96l/SFz3rA7hjh1J2UX1JwxBD9wChjv4gmS1gD6+Ilqb4t0hT+G7J4ta+ulDt3ok8uStkSjMDnfulVjHw8IyxxGrsoQI0oDSTx6pJnmPeipv8+evO9XaGFvxHxm0fn0=
+	t=1719308751; cv=none; b=X0fvxhZEaOzJ0jM4UnhJy7J1oQeFiofJLY+aoGQFWYAohazADU1ryZcJuvMrkZKMbDp2KpAqzCj3ebRuFRp4756YWuMyryVgzHa2UzFE1UaqK2dajzv3+ioU8Q/YCNr/mfgHTo07AxE2TQwgv9fMf8XbC8tPDbb7r5fhEndRG/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308748; c=relaxed/simple;
-	bh=EsQ4GjJjDFl0xUBK1xHZqZHkYE/4zKwtnUCSI6Y4s0c=;
+	s=arc-20240116; t=1719308751; c=relaxed/simple;
+	bh=Hbzf5OVsyENcQtD2P3CIX9kojdCjwNRMdSJa+4aHI+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eTCILofSctwN+IlnwfXvfBZP8FjBZEm/E1PZ+IWP9ESN/nNKalHjvKQ37w1I3Xzvy1tAdf8R0+3smTeF8do/I6R18uH+dOBH+BPMUU+a+tt14yamUWJlDkFo4RGo3aifGIJpaJjc/s5KQGof8c6GGl0AE4OQq3MYvvs3z+NmAO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OgLEw54W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MIiTpUmAXXf6vOxR6qUDFUV63gh9EuH3cDVFweDHm6ytdxzBdna0mQItzIM18/NKSCWcDd/jk92Kj0xXo3Nx5FX6dkNifFSQW7mkhq8rPrZcDOXwUu3S5a1kICUxQMXs0NJf4RDsCXdwlRYG2nXLYVfySZA5bql5G0zVv3jy7GM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UV64Hy5q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OgLEw54W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD46BC32781;
-	Tue, 25 Jun 2024 09:45:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UV64Hy5q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C57FEC32781;
+	Tue, 25 Jun 2024 09:45:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308748;
-	bh=EsQ4GjJjDFl0xUBK1xHZqZHkYE/4zKwtnUCSI6Y4s0c=;
+	s=korg; t=1719308751;
+	bh=Hbzf5OVsyENcQtD2P3CIX9kojdCjwNRMdSJa+4aHI+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OgLEw54W5uOiaaPLCAxrce/h6qoSEAyPrtNUs+vCEgdCQVNzdpmuvDwluIhmtD7xR
-	 Ki8Je9Z4DPSSh9ZAm6D3xFb2exZYxVWZH/YxzyuTDxj+gvnPB02EIAA2Ouwd0nnkDq
-	 8wjgeJ6G2CtD9W4CsbP2vZuIqNunDrBToQzj+I0Y=
+	b=UV64Hy5qbBCN5Za+xulsSfnzy/L/x+ikLtq/15zM5ftTclNbXafCTV5fe3x9ygmuy
+	 uluoo3zpwOboMDWJ6CnGbaVEPqxeP1/cYCH0D/RbSmij8eyjXSfC0HLwnMZZsplU9i
+	 SXqPl+aT/1CUsWQLAIg87wO2FnCYodV4RkQlMi/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Simon Horman <horms@kernel.org>,
+	Neal Cardwell <ncardwell@google.com>,
+	Yuchung Cheng <ycheng@google.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.9 225/250] selftests: mptcp: userspace_pm: fixed subtest names
-Date: Tue, 25 Jun 2024 11:33:03 +0200
-Message-ID: <20240625085556.688891647@linuxfoundation.org>
+Subject: [PATCH 6.9 226/250] tcp: clear tp->retrans_stamp in tcp_rcv_fastopen_synack()
+Date: Tue, 25 Jun 2024 11:33:04 +0200
+Message-ID: <20240625085556.726001109@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -51,234 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-commit e874557fce1b6023efafd523aee0c347bf7f1694 upstream.
+commit 9e046bb111f13461d3f9331e24e974324245140e upstream.
 
-It is important to have fixed (sub)test names in TAP, because these
-names are used to identify them. If they are not fixed, tracking cannot
-be done.
+Some applications were reporting ETIMEDOUT errors on apparently
+good looking flows, according to packet dumps.
 
-Some subtests from the userspace_pm selftest were using random numbers
-in their names: the client and server address IDs from $RANDOM, and the
-client port number randomly picked by the kernel when creating the
-connection. These values have been replaced by 'client' and 'server'
-words: that's even more helpful than showing random numbers. Note that
-the addresses IDs are incremented and decremented in the test: +1 or -1
-are then displayed in these cases.
+We were able to root cause the issue to an accidental setting
+of tp->retrans_stamp in the following scenario:
 
-Not to loose info that can be useful for debugging in case of issues,
-these random numbers are now displayed at the beginning of the test.
+- client sends TFO SYN with data.
+- server has TFO disabled, ACKs only SYN but not payload.
+- client receives SYNACK covering only SYN.
+- tcp_ack() eats SYN and sets tp->retrans_stamp to 0.
+- tcp_rcv_fastopen_synack() calls tcp_xmit_retransmit_queue()
+  to retransmit TFO payload w/o SYN, sets tp->retrans_stamp to "now",
+  but we are not in any loss recovery state.
+- TFO payload is ACKed.
+- we are not in any loss recovery state, and don't see any dupacks,
+  so we don't get to any code path that clears tp->retrans_stamp.
+- tp->retrans_stamp stays non-zero for the lifetime of the connection.
+- after first RTO, tcp_clamp_rto_to_user_timeout() clamps second RTO
+  to 1 jiffy due to bogus tp->retrans_stamp.
+- on clamped RTO with non-zero icsk_retransmits, retransmits_timed_out()
+  sets start_ts from tp->retrans_stamp from TFO payload retransmit
+  hours/days ago, and computes bogus long elapsed time for loss recovery,
+  and suffers ETIMEDOUT early.
 
-Fixes: f589234e1af0 ("selftests: mptcp: userspace_pm: format subtests results in TAP")
-Cc: stable@vger.kernel.org
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240614-upstream-net-20240614-selftests-mptcp-uspace-pm-fixed-test-names-v1-1-460ad3edb429@kernel.org
+Fixes: a7abf3cd76e1 ("tcp: consider using standard rtx logic in tcp_rcv_fastopen_synack()")
+CC: stable@vger.kernel.org
+Co-developed-by: Neal Cardwell <ncardwell@google.com>
+Signed-off-by: Neal Cardwell <ncardwell@google.com>
+Co-developed-by: Yuchung Cheng <ycheng@google.com>
+Signed-off-by: Yuchung Cheng <ycheng@google.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240614130615.396837-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/userspace_pm.sh |   46 +++++++++++++---------
- 1 file changed, 28 insertions(+), 18 deletions(-)
+ net/ipv4/tcp_input.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/tools/testing/selftests/net/mptcp/userspace_pm.sh
-+++ b/tools/testing/selftests/net/mptcp/userspace_pm.sh
-@@ -160,10 +160,12 @@ make_connection()
- 	local is_v6=$1
- 	local app_port=$app4_port
- 	local connect_addr="10.0.1.1"
-+	local client_addr="10.0.1.2"
- 	local listen_addr="0.0.0.0"
- 	if [ "$is_v6" = "v6" ]
- 	then
- 		connect_addr="dead:beef:1::1"
-+		client_addr="dead:beef:1::2"
- 		listen_addr="::"
- 		app_port=$app6_port
- 	else
-@@ -206,6 +208,7 @@ make_connection()
- 		   [ "$server_serverside" = 1 ]
- 	then
- 		test_pass
-+		print_title "Connection info: ${client_addr}:${client_port} -> ${connect_addr}:${app_port}"
- 	else
- 		test_fail "Expected tokens (c:${client_token} - s:${server_token}) and server (c:${client_serverside} - s:${server_serverside})"
- 		mptcp_lib_result_print_all_tap
-@@ -297,7 +300,7 @@ test_announce()
- 	ip netns exec "$ns2"\
- 	   ./pm_nl_ctl ann 10.0.2.2 token "$client4_token" id $client_addr_id dev\
- 	   ns2eth1
--	print_test "ADD_ADDR id:${client_addr_id} 10.0.2.2 (ns2) => ns1, reuse port"
-+	print_test "ADD_ADDR id:client 10.0.2.2 (ns2) => ns1, reuse port"
- 	sleep 0.5
- 	verify_announce_event $server_evts $ANNOUNCED $server4_token "10.0.2.2" $client_addr_id \
- 			      "$client4_port"
-@@ -306,7 +309,7 @@ test_announce()
- 	:>"$server_evts"
- 	ip netns exec "$ns2" ./pm_nl_ctl ann\
- 	   dead:beef:2::2 token "$client6_token" id $client_addr_id dev ns2eth1
--	print_test "ADD_ADDR6 id:${client_addr_id} dead:beef:2::2 (ns2) => ns1, reuse port"
-+	print_test "ADD_ADDR6 id:client dead:beef:2::2 (ns2) => ns1, reuse port"
- 	sleep 0.5
- 	verify_announce_event "$server_evts" "$ANNOUNCED" "$server6_token" "dead:beef:2::2"\
- 			      "$client_addr_id" "$client6_port" "v6"
-@@ -316,7 +319,7 @@ test_announce()
- 	client_addr_id=$((client_addr_id+1))
- 	ip netns exec "$ns2" ./pm_nl_ctl ann 10.0.2.2 token "$client4_token" id\
- 	   $client_addr_id dev ns2eth1 port $new4_port
--	print_test "ADD_ADDR id:${client_addr_id} 10.0.2.2 (ns2) => ns1, new port"
-+	print_test "ADD_ADDR id:client+1 10.0.2.2 (ns2) => ns1, new port"
- 	sleep 0.5
- 	verify_announce_event "$server_evts" "$ANNOUNCED" "$server4_token" "10.0.2.2"\
- 			      "$client_addr_id" "$new4_port"
-@@ -327,7 +330,7 @@ test_announce()
- 	# ADD_ADDR from the server to client machine reusing the subflow port
- 	ip netns exec "$ns1" ./pm_nl_ctl ann 10.0.2.1 token "$server4_token" id\
- 	   $server_addr_id dev ns1eth2
--	print_test "ADD_ADDR id:${server_addr_id} 10.0.2.1 (ns1) => ns2, reuse port"
-+	print_test "ADD_ADDR id:server 10.0.2.1 (ns1) => ns2, reuse port"
- 	sleep 0.5
- 	verify_announce_event "$client_evts" "$ANNOUNCED" "$client4_token" "10.0.2.1"\
- 			      "$server_addr_id" "$app4_port"
-@@ -336,7 +339,7 @@ test_announce()
- 	:>"$client_evts"
- 	ip netns exec "$ns1" ./pm_nl_ctl ann dead:beef:2::1 token "$server6_token" id\
- 	   $server_addr_id dev ns1eth2
--	print_test "ADD_ADDR6 id:${server_addr_id} dead:beef:2::1 (ns1) => ns2, reuse port"
-+	print_test "ADD_ADDR6 id:server dead:beef:2::1 (ns1) => ns2, reuse port"
- 	sleep 0.5
- 	verify_announce_event "$client_evts" "$ANNOUNCED" "$client6_token" "dead:beef:2::1"\
- 			      "$server_addr_id" "$app6_port" "v6"
-@@ -346,7 +349,7 @@ test_announce()
- 	server_addr_id=$((server_addr_id+1))
- 	ip netns exec "$ns1" ./pm_nl_ctl ann 10.0.2.1 token "$server4_token" id\
- 	   $server_addr_id dev ns1eth2 port $new4_port
--	print_test "ADD_ADDR id:${server_addr_id} 10.0.2.1 (ns1) => ns2, new port"
-+	print_test "ADD_ADDR id:server+1 10.0.2.1 (ns1) => ns2, new port"
- 	sleep 0.5
- 	verify_announce_event "$client_evts" "$ANNOUNCED" "$client4_token" "10.0.2.1"\
- 			      "$server_addr_id" "$new4_port"
-@@ -380,7 +383,7 @@ test_remove()
- 	local invalid_token=$(( client4_token - 1 ))
- 	ip netns exec "$ns2" ./pm_nl_ctl rem token $invalid_token id\
- 	   $client_addr_id > /dev/null 2>&1
--	print_test "RM_ADDR id:${client_addr_id} ns2 => ns1, invalid token"
-+	print_test "RM_ADDR id:client ns2 => ns1, invalid token"
- 	local type
- 	type=$(mptcp_lib_evts_get_info type "$server_evts")
- 	if [ "$type" = "" ]
-@@ -394,7 +397,7 @@ test_remove()
- 	local invalid_id=$(( client_addr_id + 1 ))
- 	ip netns exec "$ns2" ./pm_nl_ctl rem token "$client4_token" id\
- 	   $invalid_id > /dev/null 2>&1
--	print_test "RM_ADDR id:${invalid_id} ns2 => ns1, invalid id"
-+	print_test "RM_ADDR id:client+1 ns2 => ns1, invalid id"
- 	type=$(mptcp_lib_evts_get_info type "$server_evts")
- 	if [ "$type" = "" ]
- 	then
-@@ -407,7 +410,7 @@ test_remove()
- 	:>"$server_evts"
- 	ip netns exec "$ns2" ./pm_nl_ctl rem token "$client4_token" id\
- 	   $client_addr_id
--	print_test "RM_ADDR id:${client_addr_id} ns2 => ns1"
-+	print_test "RM_ADDR id:client ns2 => ns1"
- 	sleep 0.5
- 	verify_remove_event "$server_evts" "$REMOVED" "$server4_token" "$client_addr_id"
- 
-@@ -416,7 +419,7 @@ test_remove()
- 	client_addr_id=$(( client_addr_id - 1 ))
- 	ip netns exec "$ns2" ./pm_nl_ctl rem token "$client4_token" id\
- 	   $client_addr_id
--	print_test "RM_ADDR id:${client_addr_id} ns2 => ns1"
-+	print_test "RM_ADDR id:client-1 ns2 => ns1"
- 	sleep 0.5
- 	verify_remove_event "$server_evts" "$REMOVED" "$server4_token" "$client_addr_id"
- 
-@@ -424,7 +427,7 @@ test_remove()
- 	:>"$server_evts"
- 	ip netns exec "$ns2" ./pm_nl_ctl rem token "$client6_token" id\
- 	   $client_addr_id
--	print_test "RM_ADDR6 id:${client_addr_id} ns2 => ns1"
-+	print_test "RM_ADDR6 id:client-1 ns2 => ns1"
- 	sleep 0.5
- 	verify_remove_event "$server_evts" "$REMOVED" "$server6_token" "$client_addr_id"
- 
-@@ -434,7 +437,7 @@ test_remove()
- 	# RM_ADDR from the server to client machine
- 	ip netns exec "$ns1" ./pm_nl_ctl rem token "$server4_token" id\
- 	   $server_addr_id
--	print_test "RM_ADDR id:${server_addr_id} ns1 => ns2"
-+	print_test "RM_ADDR id:server ns1 => ns2"
- 	sleep 0.5
- 	verify_remove_event "$client_evts" "$REMOVED" "$client4_token" "$server_addr_id"
- 
-@@ -443,7 +446,7 @@ test_remove()
- 	server_addr_id=$(( server_addr_id - 1 ))
- 	ip netns exec "$ns1" ./pm_nl_ctl rem token "$server4_token" id\
- 	   $server_addr_id
--	print_test "RM_ADDR id:${server_addr_id} ns1 => ns2"
-+	print_test "RM_ADDR id:server-1 ns1 => ns2"
- 	sleep 0.5
- 	verify_remove_event "$client_evts" "$REMOVED" "$client4_token" "$server_addr_id"
- 
-@@ -451,7 +454,7 @@ test_remove()
- 	:>"$client_evts"
- 	ip netns exec "$ns1" ./pm_nl_ctl rem token "$server6_token" id\
- 	   $server_addr_id
--	print_test "RM_ADDR6 id:${server_addr_id} ns1 => ns2"
-+	print_test "RM_ADDR6 id:server-1 ns1 => ns2"
- 	sleep 0.5
- 	verify_remove_event "$client_evts" "$REMOVED" "$client6_token" "$server_addr_id"
- }
-@@ -479,8 +482,14 @@ verify_subflow_events()
- 	local locid
- 	local remid
- 	local info
-+	local e_dport_txt
- 
--	info="${e_saddr} (${e_from}) => ${e_daddr}:${e_dport} (${e_to})"
-+	# only display the fixed ports
-+	if [ "${e_dport}" -ge "${app4_port}" ] && [ "${e_dport}" -le "${app6_port}" ]; then
-+		e_dport_txt=":${e_dport}"
-+	fi
-+
-+	info="${e_saddr} (${e_from}) => ${e_daddr}${e_dport_txt} (${e_to})"
- 
- 	if [ "$e_type" = "$SUB_ESTABLISHED" ]
- 	then
-@@ -766,7 +775,7 @@ test_subflows_v4_v6_mix()
- 	:>"$client_evts"
- 	ip netns exec "$ns1" ./pm_nl_ctl ann 10.0.2.1 token "$server6_token" id\
- 	   $server_addr_id dev ns1eth2
--	print_test "ADD_ADDR4 id:${server_addr_id} 10.0.2.1 (ns1) => ns2, reuse port"
-+	print_test "ADD_ADDR4 id:server 10.0.2.1 (ns1) => ns2, reuse port"
- 	sleep 0.5
- 	verify_announce_event "$client_evts" "$ANNOUNCED" "$client6_token" "10.0.2.1"\
- 			      "$server_addr_id" "$app6_port"
-@@ -861,7 +870,7 @@ test_listener()
- 	local listener_pid=$!
- 
- 	sleep 0.5
--	print_test "CREATE_LISTENER 10.0.2.2:$client4_port"
-+	print_test "CREATE_LISTENER 10.0.2.2 (client port)"
- 	verify_listener_events $client_evts $LISTENER_CREATED $AF_INET 10.0.2.2 $client4_port
- 
- 	# ADD_ADDR from client to server machine reusing the subflow port
-@@ -878,13 +887,14 @@ test_listener()
- 	mptcp_lib_kill_wait $listener_pid
- 
- 	sleep 0.5
--	print_test "CLOSE_LISTENER 10.0.2.2:$client4_port"
-+	print_test "CLOSE_LISTENER 10.0.2.2 (client port)"
- 	verify_listener_events $client_evts $LISTENER_CLOSED $AF_INET 10.0.2.2 $client4_port
- }
- 
- print_title "Make connections"
- make_connection
- make_connection "v6"
-+print_title "Will be using address IDs ${client_addr_id} (client) and ${server_addr_id} (server)"
- 
- test_announce
- test_remove
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -6289,6 +6289,7 @@ static bool tcp_rcv_fastopen_synack(stru
+ 		skb_rbtree_walk_from(data)
+ 			 tcp_mark_skb_lost(sk, data);
+ 		tcp_xmit_retransmit_queue(sk);
++		tp->retrans_stamp = 0;
+ 		NET_INC_STATS(sock_net(sk),
+ 				LINUX_MIB_TCPFASTOPENACTIVEFAIL);
+ 		return true;
 
 
