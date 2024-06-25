@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABC2C13C90B;
-	Tue, 25 Jun 2024 10:02:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A23171465B7;
+	Tue, 25 Jun 2024 10:02:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309765; cv=none; b=LGy4ncahB7aVnLthtPZ2t0WB1RnMxywY29pPiceJrKd5IEONWzjQCWpk43Ekw4kdpb7xYOMi054UYxtJ18fGtRbmqqMYk2X4WUKpd9627/+QHII/4VExHkg4yziFSSgudOMdYzlGLKGKBQ2E6VFyto5hXPVNZoTe3LPs2h00OV0=
+	t=1719309768; cv=none; b=qYEDoshtRZfoxm7rlk0ac30frQPtWNp+MFfab3S7qM5p2mZ684cpvKxcZ4b6Hx4k0CIkiQJdOAsF3nwSVYtWaLWE1uu3TIzFRHsXQgAdrY/GcbegUeF1zdUbqQfBjHWPRXZ2WewxXMsa3BIF4DGEPrBJLrOhBj/mm0RKDBhzEhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309765; c=relaxed/simple;
-	bh=KMRfRbT+AYzmvuidJ/C5JvCnxNYDpZZ3UYE65772PQ4=;
+	s=arc-20240116; t=1719309768; c=relaxed/simple;
+	bh=XLZcKpYJL5DtL5VmVyaRlegC9lJn4f5i2xuvM6jhYMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NS2HZzGbhHP/e7RJmFLOcuy0cFhqFi+oejzlps6IflF0xH5hJ3REYjbroEQHBDBvLkyqZBwyc9CMCnSbFxHdD6R6O/FbvdE2Quu03hOqsdofKMS4xQac2OPaYJePyihjMvKF1FTkf2po6qM5R1GFWLBw5v9SU5B6LCh9dT+t8Yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=afWL8WHB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qJ0dr5laQMpvmnmiSLfzp5SYYl9uhBVxw+aKgP2XqeDtbrrpGTnd7hRNTKxA4W6KqjrDSJlSWQGoJ2bgeetAykl9IBvrYcODafHBVY3ztramKZltMVVDm7eAwmb0vcv1bOZJ9MWv7WlzZDcT/LxRreMTRDUpRoIRlmANgPjoQYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BuathelN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="afWL8WHB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31A76C32781;
-	Tue, 25 Jun 2024 10:02:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BuathelN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C62CC32781;
+	Tue, 25 Jun 2024 10:02:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309765;
-	bh=KMRfRbT+AYzmvuidJ/C5JvCnxNYDpZZ3UYE65772PQ4=;
+	s=korg; t=1719309768;
+	bh=XLZcKpYJL5DtL5VmVyaRlegC9lJn4f5i2xuvM6jhYMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=afWL8WHBU1SORhU27VOOhEDVK8XRuHwpssdnKJoKE6vwxsKQIjIXcvviDjil7iQKr
-	 Ql++S+8Xctr8EAu9J3kDZ/V+I7cdH4wRt0ohuX7MVOQ3NsxIvoP/RSNp/6ZM7gLkxe
-	 why1QwyowVU3nKHcPamaFcWMy1aeOe1RTHTMo+Ts=
+	b=BuathelN9Pr4KBg2iP3P0CuOFa+7LaABqbNreyHdfVMDWXEz0+Rx+XJhF8sQLQYmd
+	 55AOh6Vgf79PjSRmTUswtNf6ufrmEaRLTfTrhcyxDnP9J3NqeU9OwT5akXYUJCoQX2
+	 eWJtE+RU1JRzjRVpJJf3v6RWCkUQ8y5UPhXlDYHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Matthias Maennich <maennich@google.com>,
 	Masahiro Yamada <masahiroy@kernel.org>,
-	Nicolas Schier <nicolas@fjasle.eu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 126/131] Revert "kheaders: substituting --sort in archive creation"
-Date: Tue, 25 Jun 2024 11:34:41 +0200
-Message-ID: <20240625085530.724599128@linuxfoundation.org>
+Subject: [PATCH 6.1 127/131] kheaders: explicitly define file modes for archived headers
+Date: Tue, 25 Jun 2024 11:34:42 +0200
+Message-ID: <20240625085530.762507929@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085525.931079317@linuxfoundation.org>
 References: <20240625085525.931079317@linuxfoundation.org>
@@ -51,46 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Matthias Maennich <maennich@google.com>
 
-[ Upstream commit 49c386ebbb43394ff4773ce24f726f6afc4c30c8 ]
+[ Upstream commit 3bd27a847a3a4827a948387cc8f0dbc9fa5931d5 ]
 
-This reverts commit 700dea5a0bea9f64eba89fae7cb2540326fdfdc1.
+Build environments might be running with different umask settings
+resulting in indeterministic file modes for the files contained in
+kheaders.tar.xz. The file itself is served with 444, i.e. world
+readable. Archive the files explicitly with 744,a+X to improve
+reproducibility across build environments.
 
-The reason for that commit was --sort=ORDER introduced in
-tar 1.28 (2014). More than 3 years have passed since then.
+--mode=0444 is not suitable as directories need to be executable. Also,
+444 makes it hard to delete all the readonly files after extraction.
 
-Requiring GNU tar 1.28 should be fine now because we require
-GCC 5.1 (2015).
-
+Cc: stable@vger.kernel.org
+Signed-off-by: Matthias Maennich <maennich@google.com>
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
-Stable-dep-of: 3bd27a847a3a ("kheaders: explicitly define file modes for archived headers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/gen_kheaders.sh | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ kernel/gen_kheaders.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/kernel/gen_kheaders.sh b/kernel/gen_kheaders.sh
-index 473036b43c832..99422673a782b 100755
+index 99422673a782b..12bcd08fe79d4 100755
 --- a/kernel/gen_kheaders.sh
 +++ b/kernel/gen_kheaders.sh
-@@ -81,12 +81,9 @@ find $cpio_dir -type f -print0 |
- 	xargs -0 -P8 -n1 perl -pi -e 'BEGIN {undef $/;}; s/\/\*((?!SPDX).)*?\*\///smg;'
+@@ -82,7 +82,7 @@ find $cpio_dir -type f -print0 |
  
  # Create archive and try to normalize metadata for reproducibility.
--# For compatibility with older versions of tar, files are fed to tar
--# pre-sorted, as --sort=name might not be available.
--find $cpio_dir -printf "./%P\n" | LC_ALL=C sort | \
--    tar "${KBUILD_BUILD_TIMESTAMP:+--mtime=$KBUILD_BUILD_TIMESTAMP}" \
--    --owner=0 --group=0 --numeric-owner --no-recursion \
--    -I $XZ -cf $tarfile -C $cpio_dir/ -T - > /dev/null
-+tar "${KBUILD_BUILD_TIMESTAMP:+--mtime=$KBUILD_BUILD_TIMESTAMP}" \
-+    --owner=0 --group=0 --sort=name --numeric-owner \
-+    -I $XZ -cf $tarfile -C $cpio_dir/ . > /dev/null
+ tar "${KBUILD_BUILD_TIMESTAMP:+--mtime=$KBUILD_BUILD_TIMESTAMP}" \
+-    --owner=0 --group=0 --sort=name --numeric-owner \
++    --owner=0 --group=0 --sort=name --numeric-owner --mode=u=rw,go=r,a+X \
+     -I $XZ -cf $tarfile -C $cpio_dir/ . > /dev/null
  
  echo $headers_md5 > kernel/kheaders.md5
- echo "$this_file_md5" >> kernel/kheaders.md5
 -- 
 2.43.0
 
