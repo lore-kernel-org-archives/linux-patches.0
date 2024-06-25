@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989C824B34;
-	Tue, 25 Jun 2024 09:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861141487E9;
+	Tue, 25 Jun 2024 09:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309086; cv=none; b=IsK9VWL/7CeDjs1FZj2yduzTLRq0qb/L8V1CmlhXiEhoOUeqh1VH8v3rttyNqUS29lvigiWz2fJ0Vf0hSTftNSBFxEvTB2HcipmgZI98EKmDFjLbQ/N/BkdKdMi7BauZYrfg7oqOVbHUO38JmvRCn5C0wXSC4RJzgSm74XFG53M=
+	t=1719309089; cv=none; b=gtF6PQAL4ijbZDbaxrkhwYHSEtpLPh8JpH5Qk/3NlvzvoOmQ2R9sxOByiV3/qqfjOqioLL8B4kAPYaDH3yI3aUJ0BqYQmr7Cky9P8/zdlraJGnsBEy66tE9nWZtbrXZNyWYmrDDFUrKIlKauxMP8WPzOOc0Zkavd2AGN+ptrric=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309086; c=relaxed/simple;
-	bh=Sfno34em+iXa6GB7tCbjVbONl9w9rnsH213fWjxpklM=;
+	s=arc-20240116; t=1719309089; c=relaxed/simple;
+	bh=NxE1BDarfzUbvXoOrStFE9GZKVGwpj7rJDY2kiMkr08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MA32+jyU4uMzBFqV9KEX8scAxk1Ze/dBAkuQQtuijijSAd3wkCdp/OEX/dPdlrJphWKDYoybVGVKYb1H9BxErZ+E7XfgDHkFx9na+9XhHLZ8TeqGvxcEkFtkS4a4vBoMOT49O+kAgpkMbahkZr893I9XX1FmK8YPJAmqalriE+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T2eI9EGz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a4nqk9wHWnbq+pU4mc2j+tM4jfIZBM7MYbEU14Kz2zuasJ1dQTyBprGmhrR1HzOyfZpiaUGHtchlfKcV6YqnLUHqrUDFu2GpHwxzYzbY2fRAqPT7tz5qvKPGhKbv9W3UCToFYvEd1a1EB6JWfNpuQo4oZZo7ms8jguYcgd7Pwv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLwlZmTv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T2eI9EGz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E337C32781;
-	Tue, 25 Jun 2024 09:51:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLwlZmTv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C5D4C32781;
+	Tue, 25 Jun 2024 09:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309086;
-	bh=Sfno34em+iXa6GB7tCbjVbONl9w9rnsH213fWjxpklM=;
+	s=korg; t=1719309089;
+	bh=NxE1BDarfzUbvXoOrStFE9GZKVGwpj7rJDY2kiMkr08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T2eI9EGzA7c2qEXg1AY0jguHXRqO8JMy9CYlFRdqbaOEvTTqAwA8XXZVrxt23R0Nz
-	 4Bg7Je0FDqTgflsiHTZLwpgjfWV7qMNEBO0Cmuv+zED/KBPrAU5DtfyYMtx8nuRuPE
-	 iH6m8YotL9T5WLYl7WfZ1+uLUUVH6sfgVCFdVWRM=
+	b=YLwlZmTvEY8SliHuE5mLpvqrqqPCvNxggA2f+42qN3tYS1R+IEiKW/h4to69a9+ap
+	 RtznWB/3cX8MU6NFTYre7/DSAeihzs2JzYU7e2BWL207XIV5D3I3gxJZtQrCZ0rNJC
+	 PKp7DCvXW7Cg8G4Q7zWxju5wHP3OcmbUeGmLboik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Heng Qi <hengqi@linux.alibaba.com>,
+	Simon Horman <horms@kernel.org>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 091/192] ptp: fix integer overflow in max_vclocks_store
-Date: Tue, 25 Jun 2024 11:32:43 +0200
-Message-ID: <20240625085540.669728688@linuxfoundation.org>
+Subject: [PATCH 6.6 092/192] selftests: openvswitch: Use bash as interpreter
+Date: Tue, 25 Jun 2024 11:32:44 +0200
+Message-ID: <20240625085540.708770680@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -54,39 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Simon Horman <horms@kernel.org>
 
-[ Upstream commit 81d23d2a24012e448f651e007fac2cfd20a45ce0 ]
+[ Upstream commit e2b447c9a1bba718f9c07513a1e8958209e862a1 ]
 
-On 32bit systems, the "4 * max" multiply can overflow.  Use kcalloc()
-to do the allocation to prevent this.
+openvswitch.sh makes use of substitutions of the form ${ns:0:1}, to
+obtain the first character of $ns. Empirically, this is works with bash
+but not dash. When run with dash these evaluate to an empty string and
+printing an error to stdout.
 
-Fixes: 44c494c8e30e ("ptp: track available ptp vclocks information")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Heng Qi <hengqi@linux.alibaba.com>
-Link: https://lore.kernel.org/r/ee8110ed-6619-4bd7-9024-28c1f2ac24f4@moroto.mountain
+ # dash -c 'ns=client; echo "${ns:0:1}"' 2>error
+ # cat error
+ dash: 1: Bad substitution
+ # bash -c 'ns=client; echo "${ns:0:1}"' 2>error
+ c
+ # cat error
+
+This leads to tests that neither pass nor fail.
+F.e.
+
+ TEST: arp_ping                                                      [START]
+ adding sandbox 'test_arp_ping'
+ Adding DP/Bridge IF: sbx:test_arp_ping dp:arpping {, , }
+ create namespaces
+ ./openvswitch.sh: 282: eval: Bad substitution
+ TEST: ct_connect_v4                                                 [START]
+ adding sandbox 'test_ct_connect_v4'
+ Adding DP/Bridge IF: sbx:test_ct_connect_v4 dp:ct4 {, , }
+ ./openvswitch.sh: 322: eval: Bad substitution
+ create namespaces
+
+Resolve this by making openvswitch.sh a bash script.
+
+Fixes: 918423fda910 ("selftests: openvswitch: add an initial flow programming case")
+Signed-off-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Link: https://lore.kernel.org/r/20240617-ovs-selftest-bash-v1-1-7ae6ccd3617b@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_sysfs.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ tools/testing/selftests/net/openvswitch/openvswitch.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ptp/ptp_sysfs.c b/drivers/ptp/ptp_sysfs.c
-index 34ea5c16123a1..aefc06ae5d099 100644
---- a/drivers/ptp/ptp_sysfs.c
-+++ b/drivers/ptp/ptp_sysfs.c
-@@ -294,8 +294,7 @@ static ssize_t max_vclocks_store(struct device *dev,
- 	if (max < ptp->n_vclocks)
- 		goto out;
- 
--	size = sizeof(int) * max;
--	vclock_index = kzalloc(size, GFP_KERNEL);
-+	vclock_index = kcalloc(max, sizeof(int), GFP_KERNEL);
- 	if (!vclock_index) {
- 		err = -ENOMEM;
- 		goto out;
+diff --git a/tools/testing/selftests/net/openvswitch/openvswitch.sh b/tools/testing/selftests/net/openvswitch/openvswitch.sh
+index 36e40256ab92a..bab7436c68348 100755
+--- a/tools/testing/selftests/net/openvswitch/openvswitch.sh
++++ b/tools/testing/selftests/net/openvswitch/openvswitch.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # SPDX-License-Identifier: GPL-2.0
+ #
+ # OVS kernel module self tests
 -- 
 2.43.0
 
