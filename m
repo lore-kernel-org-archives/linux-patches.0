@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E794414A0B3;
-	Tue, 25 Jun 2024 09:38:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2514149C50;
+	Tue, 25 Jun 2024 09:38:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308307; cv=none; b=sszXCf8Iw0q90ry8AM9myJU+D4O5jfyXC4/uulFvJElpx4rckmu7io5Xw93+YXGPfbmc+L29kxR60Gkt9g4dUfurn2QB6ZynFtmaIBuwc62EXFZDYzFRve/oJ5+rSmhDtEhtUz9OeuMWUIjl9w+ZK2JSA/NP9JhmBHNmQWUE2As=
+	t=1719308309; cv=none; b=WE4DHoSoun2OPEWLw9eFxhAFn18xt4Yk309pzRPtkfK0y/7T8KPBr1mUXwpGHnaG6XtYchGRuL3sBY9pNkCzmDx5XU6ciSGR6lkhCJZ3CVJPfZPKGqfOMVD4N7C+VlgUrikkQ1xTJXKj6uhXBsjAg+pU9uGN9YWpn7DQr4KHLTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308307; c=relaxed/simple;
-	bh=ulreocO1d1ypiPzy7azovcDUZIMtsvUbLvn9PdfrAHQ=;
+	s=arc-20240116; t=1719308309; c=relaxed/simple;
+	bh=VgvAqSo3QGlLFBQ3tfyc6YwuzvFa5l0Fxs6ViaFTuVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DdFy9YY1mxcnGVQjXuGdR2JXWr6mIHkB0OE76mJWsQZpBJxYb09psrkBnWn35uXKn8HfYMikZf1aT2d1mt/ryygGIBVkZ+YQ65HbMLg2cA23hEHLIXsOolpoRxxqzRRrUekp4RIErptVlDSshjrDxqGHWv9NyR9ebyT/KpCe2yk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GSC3w93N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LJ9CxQOskVvwfBQxbeFQcVb8CYHAv8IlESqdZCytrvWtjT1CqA/Naj7ktQdOC/aoUfeb8BPlVNhnb8qEC4YttROcTSD7lZ8S9S/eIAtqAOVoWwLfnpJjfPwYHqhPpvBYZsXLR8yYfY9wf3yvXhfNOwx5HWhZhiIDTamG/nJ75HY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ejHLj9/Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GSC3w93N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23F44C32781;
-	Tue, 25 Jun 2024 09:38:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ejHLj9/Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18307C32781;
+	Tue, 25 Jun 2024 09:38:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308306;
-	bh=ulreocO1d1ypiPzy7azovcDUZIMtsvUbLvn9PdfrAHQ=;
+	s=korg; t=1719308309;
+	bh=VgvAqSo3QGlLFBQ3tfyc6YwuzvFa5l0Fxs6ViaFTuVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GSC3w93NTb+8XZ6AIPk9Feh0NtburUd/Ttm0NvKYU1b9gOaD+zIIzfvE6YMDQluWf
-	 oSvseliZbirPOZnvZChvZbHpN4JCbJ57Ur9YoGvCQeQCGrK8c4C6yWOc5GmOxoBP+l
-	 DxG8NNdDPhGSgt8AexB/MIrEcobp8t9BEBavNFfM=
+	b=ejHLj9/Zxz9+1NP/EJDaPuSDziTf470Ljgv7do+64ab6EAtQ54L6LZHnb1qv0n9kZ
+	 1hD5zP4SXW1V69Tz7xl/zi92Dm7zt0PEl+BxpaxZnNq/XRUppWeqcsOEUnx70NY6P2
+	 Z1trpYI8+gxeFw6+HjLV7/XAAwxvCIR87xPwDt+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Jan Kara <jack@suse.cz>,
+	Roman Smirnov <r.smirnov@omp.ru>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 077/250] usb: typec: ucsi_glink: drop special handling for CCI_BUSY
-Date: Tue, 25 Jun 2024 11:30:35 +0200
-Message-ID: <20240625085551.021683716@linuxfoundation.org>
+Subject: [PATCH 6.9 078/250] udf: udftime: prevent overflow in udf_disk_stamp_to_time()
+Date: Tue, 25 Jun 2024 11:30:36 +0200
+Message-ID: <20240625085551.059542226@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -51,54 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Roman Smirnov <r.smirnov@omp.ru>
 
-[ Upstream commit 1a395af9d53c6240bf7799abc43b4dc292ca9dd0 ]
+[ Upstream commit 3b84adf460381169c085e4bc09e7b57e9e16db0a ]
 
-Newer Qualcomm platforms (sm8450+) successfully handle busy state and
-send the Command Completion after sending the Busy state. Older devices
-have firmware bug and can not continue after sending the CCI_BUSY state,
-but the command that leads to CCI_BUSY is already forbidden by the
-NO_PARTNER_PDOS quirk.
+An overflow can occur in a situation where src.centiseconds
+takes the value of 255. This situation is unlikely, but there
+is no validation check anywere in the code.
 
-Follow other UCSI glue drivers and drop special handling for CCI_BUSY
-event. Let the UCSI core properly handle this state.
+Found by Linux Verification Center (linuxtesting.org) with Svace.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240408-qcom-ucsi-fixes-bis-v1-3-716c145ca4b1@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Roman Smirnov <r.smirnov@omp.ru>
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Message-Id: <20240327132755.13945-1-r.smirnov@omp.ru>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi_glink.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ fs/udf/udftime.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-index 0e6f837f6c31b..1d0e2d87e9b31 100644
---- a/drivers/usb/typec/ucsi/ucsi_glink.c
-+++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-@@ -176,7 +176,8 @@ static int pmic_glink_ucsi_sync_write(struct ucsi *__ucsi, unsigned int offset,
- 	left = wait_for_completion_timeout(&ucsi->sync_ack, 5 * HZ);
- 	if (!left) {
- 		dev_err(ucsi->dev, "timeout waiting for UCSI sync write response\n");
--		ret = -ETIMEDOUT;
-+		/* return 0 here and let core UCSI code handle the CCI_BUSY */
-+		ret = 0;
- 	} else if (ucsi->sync_val) {
- 		dev_err(ucsi->dev, "sync write returned: %d\n", ucsi->sync_val);
- 	}
-@@ -243,10 +244,7 @@ static void pmic_glink_ucsi_notify(struct work_struct *work)
- 		ucsi_connector_change(ucsi->ucsi, con_num);
- 	}
+diff --git a/fs/udf/udftime.c b/fs/udf/udftime.c
+index 758163af39c26..78ecc633606fb 100644
+--- a/fs/udf/udftime.c
++++ b/fs/udf/udftime.c
+@@ -46,13 +46,18 @@ udf_disk_stamp_to_time(struct timespec64 *dest, struct timestamp src)
+ 	dest->tv_sec = mktime64(year, src.month, src.day, src.hour, src.minute,
+ 			src.second);
+ 	dest->tv_sec -= offset * 60;
+-	dest->tv_nsec = 1000 * (src.centiseconds * 10000 +
+-			src.hundredsOfMicroseconds * 100 + src.microseconds);
++
+ 	/*
+ 	 * Sanitize nanosecond field since reportedly some filesystems are
+ 	 * recorded with bogus sub-second values.
+ 	 */
+-	dest->tv_nsec %= NSEC_PER_SEC;
++	if (src.centiseconds < 100 && src.hundredsOfMicroseconds < 100 &&
++	    src.microseconds < 100) {
++		dest->tv_nsec = 1000 * (src.centiseconds * 10000 +
++			src.hundredsOfMicroseconds * 100 + src.microseconds);
++	} else {
++		dest->tv_nsec = 0;
++	}
+ }
  
--	if (ucsi->sync_pending && cci & UCSI_CCI_BUSY) {
--		ucsi->sync_val = -EBUSY;
--		complete(&ucsi->sync_ack);
--	} else if (ucsi->sync_pending &&
-+	if (ucsi->sync_pending &&
- 		   (cci & (UCSI_CCI_ACK_COMPLETE | UCSI_CCI_COMMAND_COMPLETE))) {
- 		complete(&ucsi->sync_ack);
- 	}
+ void
 -- 
 2.43.0
 
