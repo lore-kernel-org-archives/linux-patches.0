@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7E9146A9D;
-	Tue, 25 Jun 2024 09:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105B2146A9D;
+	Tue, 25 Jun 2024 09:48:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308912; cv=none; b=bIAZjAhpXSPkHJmSvVMtoQVqybKTgWXaHAdzNEypQAdVFKN8R0FS2/6QkGhekv0rRLHMnu7nokq764bWZYKoTf0QJ1g/gp0OMyxX72nF2ZBVoCvOw6JgbczPYulzjcZccjZUR/FQSJnJdW45vJGWOh4Kfnq6LGarSGzaHG24bsA=
+	t=1719308916; cv=none; b=qpMkE/2sL8hYUFjqfPh/Uocteos//ETXjX4VkPvX+zZ8a0dx8ESt/skNyrWht6lrZIsGnWgZFuSXGE1dtj9Ce0yT7epXWFoTAIw+BCv7FrQQrG7Chn0gCS/xwNDKe2owGM3Z/9KBnm+SjE9iRTIvC/C1WSqzJsp5sTEzg9gTnWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308912; c=relaxed/simple;
-	bh=fLUK1hICG8f4jGKP18nl2jakzCJ+pyvlxVuMT6/3eUw=;
+	s=arc-20240116; t=1719308916; c=relaxed/simple;
+	bh=CWnZe5EW6+gSNGJQyWPNOla5AxxQ1lZKVOWfKNlcVRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tjtoAQomg+rVg1vDbMedOfywuF+CgRW61SE2CQhRjLbU4TVgGKCfPPdfwpf5L2VcXI8fY8JD2yNk5KKT7FP9pNiRekbIz2tp1Tsv3PafTBqoymNFwXsqR0yVEHrTzBts5g0hCiqrS5sdHeSaoeRbyEfUywBn72qFO/Ujuklbzjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gGxphBj6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bcOkJljtLNv/810854PzpmLkSbQSaS04zdIwlxIvXigTMckKEoYGlz3ofm4imX89NK/QojG3EEc2C3wBRejaJ+kWQYrjrHXpGnhz5iqPdknkyBIBTcErYTRBzzUN1VPSTVvwI0PYu+MLlfdcxoPHE80L+VyYecInCVUp9mW9/74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AUKPpnQy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gGxphBj6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DDC7C32781;
-	Tue, 25 Jun 2024 09:48:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AUKPpnQy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D987C32781;
+	Tue, 25 Jun 2024 09:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308912;
-	bh=fLUK1hICG8f4jGKP18nl2jakzCJ+pyvlxVuMT6/3eUw=;
+	s=korg; t=1719308915;
+	bh=CWnZe5EW6+gSNGJQyWPNOla5AxxQ1lZKVOWfKNlcVRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gGxphBj69Kjq1RteYddSHrFKMFqgiMnchFvFe8WiSlema1ZUP322XQ4QxD7Z9qb5Z
-	 GcQrcmwEu/s5jPujdMeqPwxFuhDIfrhaiRM57KjbcVkglABZ2h5pDPTNL8ce8ovIVW
-	 Oa2MXYsl9hdwQixktfE8XZ7Pod0/buHL0uRk3YwQ=
+	b=AUKPpnQy80iqLl+Tx+rdK5+W8Kc8fTAsvN3q5iyDo6wARcidaad4kkxbkBDYXwk71
+	 gq18usjiOWbmy8Px4bGIWMB8Ha4g1oW4hmZt014Rt2MwCf33Lv1awRIbKrHjIanRx+
+	 iWy5KCUgaixu0Nfk1NJgI/58/NVWY7KVz8ifl9wg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Kees Cook <keescook@chromium.org>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 014/192] wifi: ath9k: work around memset overflow warning
-Date: Tue, 25 Jun 2024 11:31:26 +0200
-Message-ID: <20240625085537.705278565@linuxfoundation.org>
+Subject: [PATCH 6.6 032/192] ASoC: Intel: sof_sdw: add quirk for Dell SKU 0C0F
+Date: Tue, 25 Jun 2024 11:31:44 +0200
+Message-ID: <20240625085538.394251177@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -47,74 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit 61752ac69b69ed2e04444d090f6917c77ab36d42 ]
+[ Upstream commit b10cb955c6c0b8dbd9a768166d71cc12680b7fdf ]
 
-gcc-9 and some other older versions produce a false-positive warning
-for zeroing two fields
+The JD1 jack detection doesn't seem to work, use JD2.
+Also use the 4 speaker configuration.
 
-In file included from include/linux/string.h:369,
-                 from drivers/net/wireless/ath/ath9k/main.c:18:
-In function 'fortify_memset_chk',
-    inlined from 'ath9k_ps_wakeup' at drivers/net/wireless/ath/ath9k/main.c:140:3:
-include/linux/fortify-string.h:462:25: error: call to '__write_overflow_field' declared with attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror=attribute-warning]
-  462 |                         __write_overflow_field(p_size_field, size);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Using a struct_group seems to reliably avoid the warning and
-not make the code much uglier. The combined memset() should even
-save a couple of cpu cycles.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240328135509.3755090-3-arnd@kernel.org
+Link: https://github.com/thesofproject/linux/issues/4900
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://lore.kernel.org/r/20240411220347.131267-5-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath.h        | 6 ++++--
- drivers/net/wireless/ath/ath9k/main.c | 3 +--
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ sound/soc/intel/boards/sof_sdw.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath.h b/drivers/net/wireless/ath/ath.h
-index f02a308a9ffc5..34654f710d8a1 100644
---- a/drivers/net/wireless/ath/ath.h
-+++ b/drivers/net/wireless/ath/ath.h
-@@ -171,8 +171,10 @@ struct ath_common {
- 	unsigned int clockrate;
- 
- 	spinlock_t cc_lock;
--	struct ath_cycle_counters cc_ani;
--	struct ath_cycle_counters cc_survey;
-+	struct_group(cc,
-+		struct ath_cycle_counters cc_ani;
-+		struct ath_cycle_counters cc_survey;
-+	);
- 
- 	struct ath_regulatory regulatory;
- 	struct ath_regulatory reg_world_copy;
-diff --git a/drivers/net/wireless/ath/ath9k/main.c b/drivers/net/wireless/ath/ath9k/main.c
-index 1494feedb27db..aa271b82875e0 100644
---- a/drivers/net/wireless/ath/ath9k/main.c
-+++ b/drivers/net/wireless/ath/ath9k/main.c
-@@ -135,8 +135,7 @@ void ath9k_ps_wakeup(struct ath_softc *sc)
- 	if (power_mode != ATH9K_PM_AWAKE) {
- 		spin_lock(&common->cc_lock);
- 		ath_hw_cycle_counters_update(common);
--		memset(&common->cc_survey, 0, sizeof(common->cc_survey));
--		memset(&common->cc_ani, 0, sizeof(common->cc_ani));
-+		memset(&common->cc, 0, sizeof(common->cc));
- 		spin_unlock(&common->cc_lock);
- 	}
- 
+diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
+index 59621a9c389c7..91098d7922bef 100644
+--- a/sound/soc/intel/boards/sof_sdw.c
++++ b/sound/soc/intel/boards/sof_sdw.c
+@@ -436,6 +436,16 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
+ 					RT711_JD2 |
+ 					SOF_SDW_FOUR_SPK),
+ 	},
++	{
++		.callback = sof_sdw_quirk_cb,
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0C0F")
++		},
++		.driver_data = (void *)(SOF_SDW_TGL_HDMI |
++					RT711_JD2 |
++					SOF_SDW_FOUR_SPK),
++	},
+ 	{
+ 		.callback = sof_sdw_quirk_cb,
+ 		.matches = {
 -- 
 2.43.0
 
