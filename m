@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10AEA14A096;
-	Tue, 25 Jun 2024 09:40:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC2B414A4D2;
+	Tue, 25 Jun 2024 09:40:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308445; cv=none; b=HaJsoK72+SbMBzHbSq+81zF2K8+iGqtC0eDnhwrypUuZ8TB3bW+X8kZ466GqhtLLrtevn1IniufLQzssGYMrvcooG/+K4ID+pmHby44g2r+iI840zgEMKkBTXWBhfadbFS/WiKCKtxFl4b6qovxtxTzhirQ4EUxvmV3BFGsCzVI=
+	t=1719308447; cv=none; b=u1DaG+Zxmgk0Rg0vluBTQuKIvcSZWD5sPQw6HlX/TXlbu7/tf6dr13eWL7xKhyojgHe5/M+kslJHf/b7/bm9Zz2PnbU+fyfZ/+fidC0bQvxFiAyEJdjJlWBn7dBR9HxBNNFtEgwHUckejR++jrH42Gl3JQsY6C8WNcHIC5QEe/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308445; c=relaxed/simple;
-	bh=mxg1ThTRuMxZTsFmAOjvm9lzY9s2BeD/M0uA89X/3qw=;
+	s=arc-20240116; t=1719308447; c=relaxed/simple;
+	bh=XFFUa2MCYhatFRSBwdcKo+D7a5suA3tPwCScnQl7c78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mGY3ameTx//MgWbqUEAp1EAjwKpm/fygZoBFYFUNoqAH9oP4w8aUTb2qr6qd1QJhhhXKuZ6MnNXWKnMnJtiX7ocMi507OVvX4Gt6G3auiQeN5CTFZ/yu8vZlx6KJtUjIHn4JCnzUs5EFU6FSwDR+gFjr+MKuQYihIapQ6QaUGH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G57xQdM+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dmwAzFadqqOqu3SfJN3k4qh419lhTvnVJgB0QNwTlE+79p1rXsnwn4dpMfRnnAsFEDxcvIcgdnpQl3ToQy8wdNYVHZ5H3oakfIMrXYnAm2KfMxiZqtxJdSulEwYUKw1+hh4HtgyYwdK3QMM1uFGLiYb4k0VjAbaWpzEmtvNQaGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yhgBl1b3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G57xQdM+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88D38C32786;
-	Tue, 25 Jun 2024 09:40:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yhgBl1b3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6405BC32786;
+	Tue, 25 Jun 2024 09:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308444;
-	bh=mxg1ThTRuMxZTsFmAOjvm9lzY9s2BeD/M0uA89X/3qw=;
+	s=korg; t=1719308447;
+	bh=XFFUa2MCYhatFRSBwdcKo+D7a5suA3tPwCScnQl7c78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G57xQdM+2AhqFVBXzdbdkCwKPIK/CX9l1RqeMWg9Wh0op9lndgQnAS/CRYJhFzcLx
-	 3KhoV1j07mwIIQXXlG+YGRZmf2ZlC2R7fkex3tUzKBN3iWA4cpG99lf9iRPc0HgaxC
-	 McRKn9tmY2Wt1WCNL4Y96JDkABsDlA2pMJc9w/Ao=
+	b=yhgBl1b36HtU3RI+2J7xSxfStRaSm7HyJJMuuRP2VsZ/H8EqmCmnMSTsxtXV98n7m
+	 Keuw6x9sIJbGpoRgJ6evDJYdsxffGIuJLq1Qk8yIMaEctpckkCcb+qJAN5RaJP8T5+
+	 DxeY9LpRci6IPpaqTMMUItgeut6nRvIeEeMXeReE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Raju Lakkaraju <Raju.Lakkaraju@microchip.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 123/250] net: lan743x: disable WOL upon resume to restore full data path operation
-Date: Tue, 25 Jun 2024 11:31:21 +0200
-Message-ID: <20240625085552.789213273@linuxfoundation.org>
+Subject: [PATCH 6.9 097/250] MIPS: Routerboard 532: Fix vendor retry check code
+Date: Tue, 25 Jun 2024 11:30:55 +0200
+Message-ID: <20240625085551.794861248@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -46,149 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Raju Lakkaraju <Raju.Lakkaraju@microchip.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 7725363936a88351b71495774c1e0e852ae4cdca ]
+[ Upstream commit ae9daffd9028f2500c9ac1517e46d4f2b57efb80 ]
 
-When Wake-on-LAN (WoL) is active and the system is in suspend mode, triggering
-a system event can wake the system from sleep, which may block the data path.
-To restore normal data path functionality after waking, disable all wake-up
-events. Furthermore, clear all Write 1 to Clear (W1C) status bits by writing
-1's to them.
+read_config_dword() contains strange condition checking ret for a
+number of values. The ret variable, however, is always zero because
+config_access() never returns anything else. Thus, the retry is always
+taken until number of tries is exceeded.
 
-Fixes: 4d94282afd95 ("lan743x: Add power management support")
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Signed-off-by: Raju Lakkaraju <Raju.Lakkaraju@microchip.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The code looks like it wants to check *val instead of ret to see if the
+read gave an error response.
+
+Fixes: 73b4390fb234 ("[MIPS] Routerboard 532: Support for base system")
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan743x_main.c | 30 ++++++++++++++++---
- drivers/net/ethernet/microchip/lan743x_main.h | 24 +++++++++++++++
- 2 files changed, 50 insertions(+), 4 deletions(-)
+ arch/mips/pci/ops-rc32434.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan743x_main.c b/drivers/net/ethernet/microchip/lan743x_main.c
-index 75a988c0bd794..b88d99239a183 100644
---- a/drivers/net/ethernet/microchip/lan743x_main.c
-+++ b/drivers/net/ethernet/microchip/lan743x_main.c
-@@ -3568,7 +3568,7 @@ static void lan743x_pm_set_wol(struct lan743x_adapter *adapter)
- 
- 	/* clear wake settings */
- 	pmtctl = lan743x_csr_read(adapter, PMT_CTL);
--	pmtctl |= PMT_CTL_WUPS_MASK_;
-+	pmtctl |= PMT_CTL_WUPS_MASK_ | PMT_CTL_RES_CLR_WKP_MASK_;
- 	pmtctl &= ~(PMT_CTL_GPIO_WAKEUP_EN_ | PMT_CTL_EEE_WAKEUP_EN_ |
- 		PMT_CTL_WOL_EN_ | PMT_CTL_MAC_D3_RX_CLK_OVR_ |
- 		PMT_CTL_RX_FCT_RFE_D3_CLK_OVR_ | PMT_CTL_ETH_PHY_WAKE_EN_);
-@@ -3703,6 +3703,7 @@ static int lan743x_pm_resume(struct device *dev)
- 	struct pci_dev *pdev = to_pci_dev(dev);
- 	struct net_device *netdev = pci_get_drvdata(pdev);
- 	struct lan743x_adapter *adapter = netdev_priv(netdev);
-+	u32 data;
- 	int ret;
- 
- 	pci_set_power_state(pdev, PCI_D0);
-@@ -3721,6 +3722,30 @@ static int lan743x_pm_resume(struct device *dev)
- 		return ret;
- 	}
- 
-+	ret = lan743x_csr_read(adapter, MAC_WK_SRC);
-+	netif_dbg(adapter, drv, adapter->netdev,
-+		  "Wakeup source : 0x%08X\n", ret);
-+
-+	/* Clear the wol configuration and status bits. Note that
-+	 * the status bits are "Write One to Clear (W1C)"
-+	 */
-+	data = MAC_WUCSR_EEE_TX_WAKE_ | MAC_WUCSR_EEE_RX_WAKE_ |
-+	       MAC_WUCSR_RFE_WAKE_FR_ | MAC_WUCSR_PFDA_FR_ | MAC_WUCSR_WUFR_ |
-+	       MAC_WUCSR_MPR_ | MAC_WUCSR_BCAST_FR_;
-+	lan743x_csr_write(adapter, MAC_WUCSR, data);
-+
-+	data = MAC_WUCSR2_NS_RCD_ | MAC_WUCSR2_ARP_RCD_ |
-+	       MAC_WUCSR2_IPV6_TCPSYN_RCD_ | MAC_WUCSR2_IPV4_TCPSYN_RCD_;
-+	lan743x_csr_write(adapter, MAC_WUCSR2, data);
-+
-+	data = MAC_WK_SRC_ETH_PHY_WK_ | MAC_WK_SRC_IPV6_TCPSYN_RCD_WK_ |
-+	       MAC_WK_SRC_IPV4_TCPSYN_RCD_WK_ | MAC_WK_SRC_EEE_TX_WK_ |
-+	       MAC_WK_SRC_EEE_RX_WK_ | MAC_WK_SRC_RFE_FR_WK_ |
-+	       MAC_WK_SRC_PFDA_FR_WK_ | MAC_WK_SRC_MP_FR_WK_ |
-+	       MAC_WK_SRC_BCAST_FR_WK_ | MAC_WK_SRC_WU_FR_WK_ |
-+	       MAC_WK_SRC_WK_FR_SAVED_;
-+	lan743x_csr_write(adapter, MAC_WK_SRC, data);
-+
- 	/* open netdev when netdev is at running state while resume.
- 	 * For instance, it is true when system wakesup after pm-suspend
- 	 * However, it is false when system wakes up after suspend GUI menu
-@@ -3729,9 +3754,6 @@ static int lan743x_pm_resume(struct device *dev)
- 		lan743x_netdev_open(netdev);
- 
- 	netif_device_attach(netdev);
--	ret = lan743x_csr_read(adapter, MAC_WK_SRC);
--	netif_info(adapter, drv, adapter->netdev,
--		   "Wakeup source : 0x%08X\n", ret);
- 
- 	return 0;
- }
-diff --git a/drivers/net/ethernet/microchip/lan743x_main.h b/drivers/net/ethernet/microchip/lan743x_main.h
-index 645bc048e52ef..fac0f33d10b2e 100644
---- a/drivers/net/ethernet/microchip/lan743x_main.h
-+++ b/drivers/net/ethernet/microchip/lan743x_main.h
-@@ -61,6 +61,7 @@
- #define PMT_CTL_RX_FCT_RFE_D3_CLK_OVR_		BIT(18)
- #define PMT_CTL_GPIO_WAKEUP_EN_			BIT(15)
- #define PMT_CTL_EEE_WAKEUP_EN_			BIT(13)
-+#define PMT_CTL_RES_CLR_WKP_MASK_		GENMASK(9, 8)
- #define PMT_CTL_READY_				BIT(7)
- #define PMT_CTL_ETH_PHY_RST_			BIT(4)
- #define PMT_CTL_WOL_EN_				BIT(3)
-@@ -227,12 +228,31 @@
- #define MAC_WUCSR				(0x140)
- #define MAC_MP_SO_EN_				BIT(21)
- #define MAC_WUCSR_RFE_WAKE_EN_			BIT(14)
-+#define MAC_WUCSR_EEE_TX_WAKE_			BIT(13)
-+#define MAC_WUCSR_EEE_RX_WAKE_			BIT(11)
-+#define MAC_WUCSR_RFE_WAKE_FR_			BIT(9)
-+#define MAC_WUCSR_PFDA_FR_			BIT(7)
-+#define MAC_WUCSR_WUFR_				BIT(6)
-+#define MAC_WUCSR_MPR_				BIT(5)
-+#define MAC_WUCSR_BCAST_FR_			BIT(4)
- #define MAC_WUCSR_PFDA_EN_			BIT(3)
- #define MAC_WUCSR_WAKE_EN_			BIT(2)
- #define MAC_WUCSR_MPEN_				BIT(1)
- #define MAC_WUCSR_BCST_EN_			BIT(0)
- 
- #define MAC_WK_SRC				(0x144)
-+#define MAC_WK_SRC_ETH_PHY_WK_			BIT(17)
-+#define MAC_WK_SRC_IPV6_TCPSYN_RCD_WK_		BIT(16)
-+#define MAC_WK_SRC_IPV4_TCPSYN_RCD_WK_		BIT(15)
-+#define MAC_WK_SRC_EEE_TX_WK_			BIT(14)
-+#define MAC_WK_SRC_EEE_RX_WK_			BIT(13)
-+#define MAC_WK_SRC_RFE_FR_WK_			BIT(12)
-+#define MAC_WK_SRC_PFDA_FR_WK_			BIT(11)
-+#define MAC_WK_SRC_MP_FR_WK_			BIT(10)
-+#define MAC_WK_SRC_BCAST_FR_WK_			BIT(9)
-+#define MAC_WK_SRC_WU_FR_WK_			BIT(8)
-+#define MAC_WK_SRC_WK_FR_SAVED_			BIT(7)
-+
- #define MAC_MP_SO_HI				(0x148)
- #define MAC_MP_SO_LO				(0x14C)
- 
-@@ -295,6 +315,10 @@
- #define RFE_INDX(index)			(0x580 + (index << 2))
- 
- #define MAC_WUCSR2			(0x600)
-+#define MAC_WUCSR2_NS_RCD_		BIT(7)
-+#define MAC_WUCSR2_ARP_RCD_		BIT(6)
-+#define MAC_WUCSR2_IPV6_TCPSYN_RCD_	BIT(5)
-+#define MAC_WUCSR2_IPV4_TCPSYN_RCD_	BIT(4)
- 
- #define SGMII_ACC			(0x720)
- #define SGMII_ACC_SGMII_BZY_		BIT(31)
+diff --git a/arch/mips/pci/ops-rc32434.c b/arch/mips/pci/ops-rc32434.c
+index 874ed6df97683..34b9323bdabb0 100644
+--- a/arch/mips/pci/ops-rc32434.c
++++ b/arch/mips/pci/ops-rc32434.c
+@@ -112,8 +112,8 @@ static int read_config_dword(struct pci_bus *bus, unsigned int devfn,
+ 	 * gives them time to settle
+ 	 */
+ 	if (where == PCI_VENDOR_ID) {
+-		if (ret == 0xffffffff || ret == 0x00000000 ||
+-		    ret == 0x0000ffff || ret == 0xffff0000) {
++		if (*val == 0xffffffff || *val == 0x00000000 ||
++		    *val == 0x0000ffff || *val == 0xffff0000) {
+ 			if (delay > 4)
+ 				return 0;
+ 			delay *= 2;
 -- 
 2.43.0
 
