@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24DAF12EBEA;
-	Tue, 25 Jun 2024 09:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1702D12EBEA;
+	Tue, 25 Jun 2024 09:44:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308692; cv=none; b=jaEsoKjzSu3DluiGEfIcIRNgIgDwXcOLEGAv0RhZ2cUz4FhhUfr+vEMPbRuCg24DCxF2J5SFM5PC2rZQORR3R7Dkmxpl270yey7FcFTVFstTEtaVl+QLclSKTKW41wlwZPQOwoU2EaAzVZZjaAWODEjrtX/d2VM6ta70pKs51Q0=
+	t=1719308695; cv=none; b=dhS3DsZbY99hltS2m20Hx8XKYY77KE4+ZK4u7TjrETYtXrgh64dYOdSnOPWbaIuK2W1GlAYpEr3l6D1ZUSW0UPxtqlO/VjclLziNRkFYWnghsqN0F5F/3y13smCW0t4OD8b58FEuai5zMmzkiGjzehaEY1hsLwWGBpmKoG2vTIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308692; c=relaxed/simple;
-	bh=dY9GQo6t6p9mrCX16qlGRgma/Bh9UCWzGEm4avuAd0g=;
+	s=arc-20240116; t=1719308695; c=relaxed/simple;
+	bh=sHRQmKxh8wP8kAOdvpLMj1K76TCNmAntaOjxCdAbFkY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EEZ6TCCIRRZ9j34WJYF9Ww8E1pStnYRbnO4sHsWkZpar+RP2ZBZCk+jc89DU7VGlASPwuaoeoJUi4D/hcboF0bFXiwZDgBASLAouSStJ9+LyBaerBTASRh3igSv1ZOoSa00L6SeM3lK6RZEK3P9W4EMWWIdbcJsXY/IyO2FkV1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hy78bJ85; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sII+ZXBY46Edty+aZ94g4nyDcLQhW0kzhPoPur8gPzX+W0vdcfhCEKLtLi91MP/Dz0FXW/mzcjUpTJXRdiUvdIhCHGAdzkEZt6n2uBlGoObA8qTIRJg5TakhBPE5Kc/uuIbFexmp/P0iZozBkgYWDhPUP+E9ljYPcPfSvONNF5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=COmeo7zX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hy78bJ85"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 956AFC32781;
-	Tue, 25 Jun 2024 09:44:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="COmeo7zX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893B0C32781;
+	Tue, 25 Jun 2024 09:44:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308692;
-	bh=dY9GQo6t6p9mrCX16qlGRgma/Bh9UCWzGEm4avuAd0g=;
+	s=korg; t=1719308694;
+	bh=sHRQmKxh8wP8kAOdvpLMj1K76TCNmAntaOjxCdAbFkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hy78bJ85M4UnChwcrkFqdXQbOMWY6WRA6ceCR+egcdX0H6cY3tjv9nxNc4GmHTQms
-	 DIoHodC/rS044m612iFbu+94bEo20P3RP7H3KWdDDwAx2ETe5xD51MQ+iSccHCzd+N
-	 how4T5g48dwxl1U4+AuAwKRmaLo3oYRpKg4bmSCs=
+	b=COmeo7zXtG7aOkD79iELbPEEaE+qLJboj0Rebe6ceD7+hlkrODWgekJXka+mYrIS9
+	 CQEpWAc2naQGB2AB2xk9T7ZzPLr2bCWR43Onvd02du9YAZLBeRkdeoNx8Nwx/e9hDF
+	 EEugd1XAQ4TaOlGo59NNEEj2NG88nw7qREcL9fP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Michael Strauss <michael.strauss@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.9 208/250] drm/amd/display: Attempt to avoid empty TUs when endpoint is DPIA
-Date: Tue, 25 Jun 2024 11:32:46 +0200
-Message-ID: <20240625085556.037705662@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Peng Fan <peng.fan@nxp.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.9 209/250] dt-bindings: dma: fsl-edma: fix dma-channels constraints
+Date: Tue, 25 Jun 2024 11:32:47 +0200
+Message-ID: <20240625085556.076828469@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -52,133 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Strauss <michael.strauss@amd.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit c03d770c0b014a3007a5874bf6b3c3e64d32aaac upstream.
+commit 1345a13f18370ad9e5bc98995959a27f9bd71464 upstream.
 
-[WHY]
-Empty SST TUs are illegal to transmit over a USB4 DP tunnel.
-Current policy is to configure stream encoder to pack 2 pixels per pclk
-even when ODM combine is not in use, allowing seamless dynamic ODM
-reconfiguration. However, in extreme edge cases where average pixel
-count per TU is less than 2, this can lead to unexpected empty TU
-generation during compliance testing. For example, VIC 1 with a 1xHBR3
-link configuration will average 1.98 pix/TU.
+dma-channels is a number, not a list.  Apply proper constraints on the
+actual number.
 
-[HOW]
-Calculate average pixel count per TU, and block 2 pixels per clock if
-endpoint is a DPIA tunnel and pixel clock is low enough that we will
-never require 2:1 ODM combine.
-
-Cc: stable@vger.kernel.org # 6.6+
-Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
-Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Michael Strauss <michael.strauss@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 6eb439dff645 ("dt-bindings: fsl-dma: fsl-edma: add edma3 compatible string")
+Cc: stable@vger.kernel.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Link: https://lore.kernel.org/r/20240521083002.23262-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c |   72 ++++++++++++++++
- drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.h |    2 
- drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_init.c  |    2 
- 3 files changed, 75 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/dma/fsl,edma.yaml |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
-@@ -1373,3 +1373,75 @@ void dcn35_set_static_screen_control(str
- 			set_static_screen_control(pipe_ctx[i]->stream_res.tg,
- 					triggers, params->num_frames);
- }
-+
-+static bool should_avoid_empty_tu(struct pipe_ctx *pipe_ctx)
-+{
-+	/* Calculate average pixel count per TU, return false if under ~2.00 to
-+	 * avoid empty TUs. This is only required for DPIA tunneling as empty TUs
-+	 * are legal to generate for native DP links. Assume TU size 64 as there
-+	 * is currently no scenario where it's reprogrammed from HW default.
-+	 * MTPs have no such limitation, so this does not affect MST use cases.
-+	 */
-+	unsigned int pix_clk_mhz;
-+	unsigned int symclk_mhz;
-+	unsigned int avg_pix_per_tu_x1000;
-+	unsigned int tu_size_bytes = 64;
-+	struct dc_crtc_timing *timing = &pipe_ctx->stream->timing;
-+	struct dc_link_settings *link_settings = &pipe_ctx->link_config.dp_link_settings;
-+	const struct dc *dc = pipe_ctx->stream->link->dc;
-+
-+	if (pipe_ctx->stream->link->ep_type != DISPLAY_ENDPOINT_USB4_DPIA)
-+		return false;
-+
-+	// Not necessary for MST configurations
-+	if (pipe_ctx->stream->signal == SIGNAL_TYPE_DISPLAY_PORT_MST)
-+		return false;
-+
-+	pix_clk_mhz = timing->pix_clk_100hz / 10000;
-+
-+	// If this is true, can't block due to dynamic ODM
-+	if (pix_clk_mhz > dc->clk_mgr->bw_params->clk_table.entries[0].dispclk_mhz)
-+		return false;
-+
-+	switch (link_settings->link_rate) {
-+	case LINK_RATE_LOW:
-+		symclk_mhz = 162;
-+		break;
-+	case LINK_RATE_HIGH:
-+		symclk_mhz = 270;
-+		break;
-+	case LINK_RATE_HIGH2:
-+		symclk_mhz = 540;
-+		break;
-+	case LINK_RATE_HIGH3:
-+		symclk_mhz = 810;
-+		break;
-+	default:
-+		// We shouldn't be tunneling any other rates, something is wrong
-+		ASSERT(0);
-+		return false;
-+	}
-+
-+	avg_pix_per_tu_x1000 = (1000 * pix_clk_mhz * tu_size_bytes)
-+		/ (symclk_mhz * link_settings->lane_count);
-+
-+	// Add small empirically-decided margin to account for potential jitter
-+	return (avg_pix_per_tu_x1000 < 2020);
-+}
-+
-+bool dcn35_is_dp_dig_pixel_rate_div_policy(struct pipe_ctx *pipe_ctx)
-+{
-+	struct dc *dc = pipe_ctx->stream->ctx->dc;
-+
-+	if (!is_h_timing_divisible_by_2(pipe_ctx->stream))
-+		return false;
-+
-+	if (should_avoid_empty_tu(pipe_ctx))
-+		return false;
-+
-+	if (dc_is_dp_signal(pipe_ctx->stream->signal) && !dc->link_srv->dp_is_128b_132b_signal(pipe_ctx) &&
-+		dc->debug.enable_dp_dig_pixel_rate_div_policy)
-+		return true;
-+
-+	return false;
-+}
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.h
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.h
-@@ -93,4 +93,6 @@ void dcn35_set_drr(struct pipe_ctx **pip
- void dcn35_set_static_screen_control(struct pipe_ctx **pipe_ctx,
- 		int num_pipes, const struct dc_static_screen_params *params);
+--- a/Documentation/devicetree/bindings/dma/fsl,edma.yaml
++++ b/Documentation/devicetree/bindings/dma/fsl,edma.yaml
+@@ -48,8 +48,8 @@ properties:
+       - 3
  
-+bool dcn35_is_dp_dig_pixel_rate_div_policy(struct pipe_ctx *pipe_ctx);
-+
- #endif /* __DC_HWSS_DCN35_H__ */
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_init.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_init.c
-@@ -158,7 +158,7 @@ static const struct hwseq_private_funcs
- 	.setup_hpo_hw_control = dcn35_setup_hpo_hw_control,
- 	.calculate_dccg_k1_k2_values = dcn32_calculate_dccg_k1_k2_values,
- 	.set_pixels_per_cycle = dcn32_set_pixels_per_cycle,
--	.is_dp_dig_pixel_rate_div_policy = dcn32_is_dp_dig_pixel_rate_div_policy,
-+	.is_dp_dig_pixel_rate_div_policy = dcn35_is_dp_dig_pixel_rate_div_policy,
- 	.dsc_pg_control = dcn35_dsc_pg_control,
- 	.dsc_pg_status = dcn32_dsc_pg_status,
- 	.enable_plane = dcn35_enable_plane,
+   dma-channels:
+-    minItems: 1
+-    maxItems: 64
++    minimum: 1
++    maximum: 64
+ 
+   clocks:
+     minItems: 1
 
 
