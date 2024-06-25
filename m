@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 599A412EBEA;
-	Tue, 25 Jun 2024 09:44:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E6E12EBEA;
+	Tue, 25 Jun 2024 09:44:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308680; cv=none; b=M1PWfnVcmPzy6H9TmVqXQw4ZYWM6ou0YILcMqa1HnSXVJpQcns47YAbFIHyQREYHHwspzjUg8H9PqWic7cA2YWVgtKpn3tMabO8xjC7pdItcogcsnXXSQp0dKzKywdnMflLV7FBUlEnsFZjZK3qyNz4IBU3ZhVFJAZk2ShYUndA=
+	t=1719308683; cv=none; b=gjpfNlyBAjOIktxl1hHS6+WFHpakopVuhmKva0ISFTSWD33l/MGR/i3tPsEZYNnQf/NhBvDWdSaOTWWvOYVYwLY/+JzVbwuQbXDioPwxyLotpo4u1tWX4rZ4E/OaYhPdJXJ5Pc+1eRdhIHPYStTCIybwuXmjI/8HJDbaJOUR0Aw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308680; c=relaxed/simple;
-	bh=1RvfNkaUcjG4kMn+T77xx96XG2wEpXopz2RNORjaTPg=;
+	s=arc-20240116; t=1719308683; c=relaxed/simple;
+	bh=GRoDgkIauAnXkdEQk13Tegb6UGx7zM0jASV6Kj0BCkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OqnIrNmsyRB6wJtEGByIa7z7SuOKAt94uk/DvdQC9d4DpLJb7zOmknkDMbawS6Y2D3xuROEj2VFnieJhmFmta+itw5oc83Pq510BfYE7Wl4yV5vvQBL7kKk4gRrakaH5XK5YaPYOoan5pt5xyUznCQWS5zECoGwOK1raODKzdu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iPjmhaEs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=peL0s1BLaVGAA9hlgAk0jrG2zdKadLYX7JTwQeK0fuSENPO+RqAUbOCyM7s47d7BF0S/0ABvaD9+nmsmhbxd0h0gqisCG6CZw2d9jKTVp3htT91hI5C2ix5s9KVSF+qwe7uon/dHNamqnl19tj6psNHB2MqnSVLH4qw448DyP5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I2TNySwc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iPjmhaEs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC4CDC32781;
-	Tue, 25 Jun 2024 09:44:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I2TNySwc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0C52C32781;
+	Tue, 25 Jun 2024 09:44:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308680;
-	bh=1RvfNkaUcjG4kMn+T77xx96XG2wEpXopz2RNORjaTPg=;
+	s=korg; t=1719308683;
+	bh=GRoDgkIauAnXkdEQk13Tegb6UGx7zM0jASV6Kj0BCkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iPjmhaEssEf6SYULNfr3OBmtg5IaIBzhzSPyruyUfSoVZvPFf+vNgbeZHLoylk5l8
-	 XmaTEF33hTadLvV0pTKzrxBJCZzOx3vP/VfzEDU55Y8v0gwmV8Lwq2TnlbYlp61lfs
-	 I/K433klJ0R6qZ0YynjWrdxV1ZHiGtVG1YPVRCas=
+	b=I2TNySwcmQcJf1HgwS+MheLAuFuQGw5xTcvHq/V6q6c9EgbyqIl4pi1Pe1f4ql0ae
+	 VFa2tSxG5fCMQzEi3Iztjy8m2lEzREYlgmrezpzS2IwwZt8Vi1y4eJ1ZIvsbV0ABWd
+	 Xvb3AyyjZ/qAoGCwz2/VDqOBCsTLFbsJS9szaEyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Michael Guralnik <michaelgur@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 6.9 196/250] RDMA/mlx5: Follow rb_key.ats when creating new mkeys
-Date: Tue, 25 Jun 2024 11:32:34 +0200
-Message-ID: <20240625085555.573466680@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.9 205/250] drm/amdgpu: fix UBSAN warning in kv_dpm.c
+Date: Tue, 25 Jun 2024 11:32:43 +0200
+Message-ID: <20240625085555.923090169@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -51,37 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit f637040c3339a2ed8c12d65ad03f9552386e2fe7 upstream.
+commit f0d576f840153392d04b2d52cf3adab8f62e8cb6 upstream.
 
-When a cache ent already exists but doesn't have any mkeys in it the cache
-will automatically create a new one based on the specification in the
-ent->rb_key.
+Adds bounds check for sumo_vid_mapping_entry.
 
-ent->ats was missed when creating the new key and so ma_translation_mode
-was not being set even though the ent requires it.
-
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3392
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Fixes: 73d09b2fe833 ("RDMA/mlx5: Introduce mlx5r_cache_rb_key")
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
-Link: https://lore.kernel.org/r/7c5613458ecb89fbe5606b7aa4c8d990bdea5b9a.1716900410.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/mlx5/mr.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/pm/legacy-dpm/kv_dpm.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/infiniband/hw/mlx5/mr.c
-+++ b/drivers/infiniband/hw/mlx5/mr.c
-@@ -246,6 +246,7 @@ static void set_cache_mkc(struct mlx5_ca
- 	MLX5_SET(mkc, mkc, access_mode_1_0, ent->rb_key.access_mode & 0x3);
- 	MLX5_SET(mkc, mkc, access_mode_4_2,
- 		(ent->rb_key.access_mode >> 2) & 0x7);
-+	MLX5_SET(mkc, mkc, ma_translation_mode, !!ent->rb_key.ats);
+--- a/drivers/gpu/drm/amd/pm/legacy-dpm/kv_dpm.c
++++ b/drivers/gpu/drm/amd/pm/legacy-dpm/kv_dpm.c
+@@ -164,6 +164,8 @@ static void sumo_construct_vid_mapping_t
  
- 	MLX5_SET(mkc, mkc, translations_octword_size,
- 		 get_mkc_octo_size(ent->rb_key.access_mode,
+ 	for (i = 0; i < SUMO_MAX_HARDWARE_POWERLEVELS; i++) {
+ 		if (table[i].ulSupportedSCLK != 0) {
++			if (table[i].usVoltageIndex >= SUMO_MAX_NUMBER_VOLTAGES)
++				continue;
+ 			vid_mapping_table->entries[table[i].usVoltageIndex].vid_7bit =
+ 				table[i].usVoltageID;
+ 			vid_mapping_table->entries[table[i].usVoltageIndex].vid_2bit =
 
 
