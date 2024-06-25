@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41E11465A8;
-	Tue, 25 Jun 2024 09:47:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 940641465A8;
+	Tue, 25 Jun 2024 09:47:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308824; cv=none; b=dtqrjR4Q0GUMAm6BSHYh9bfgTKPTYOh3xprBG/qZNeNTD/PQtUIkjFhWj2BkifNEhdFWcgpF6+uUg8pFIRb/IrpRjq61OBz86wSh3RdcOBjSPS1Y/T65WN7xrNtzHV6Yz2QHCx2XnH7CC3ohms9rI+MDoHtlxyFGIbq+1ehWjSA=
+	t=1719308827; cv=none; b=K5vuxCc/DERD65lQu0oQ1l91IqOfE/rHSeEm7/sSfOfhgeaEQyKSwQVSYhOtW1rAru90AyX4FIerAW0P3C22jA78rnuhHPqGrvKyjB3KyI6J8MRrflA/IA4EKqJV1+f+Ymwhzz/ZRewWjYtyuYsIRtNcYEkkMGHmBmDsDDvIMy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308824; c=relaxed/simple;
-	bh=m25ANpDiZoECPY3B8Ea0AzWrea8TiZbWKM1gqin4tR0=;
+	s=arc-20240116; t=1719308827; c=relaxed/simple;
+	bh=5FldpkQGWBYEUi1RuNXYWOsIEksl4jLWSho1yv11hqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZHxUj5ZG7ZhV2r+VU0Vfh8lqA7MpY/iJQh0eIxV5gJQqm+6T0d1BZsWBqNAwNgOFhtCV+4xwd7arMBSbY89wLCYNsEsgQUlbTITo5MTz7B0pe0FNrc2MM4fquUQG8KLtIbFEQEmH+LCQ0Zy00GzsK3rlnn0l4bg0ueCwedbaRWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v05DDFjD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HAj8BvKGM4s6F3e/cPI4COjSXRQe6okhISABvCDmQcfslObBjfRLUOFQbmhTNAOqaJDyIbRMSZu1Qyd6Hk9nWzevNb5dqa290M/ow27EjDMiwh7o3xJ3L+0AwxmnatQdIP6zNVIfQk1zZ4l80Svcr8H/hEHhqMRg7+6/PWXXPG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dQJxkasR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v05DDFjD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27D24C32781;
-	Tue, 25 Jun 2024 09:47:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dQJxkasR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2D9C32781;
+	Tue, 25 Jun 2024 09:47:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308824;
-	bh=m25ANpDiZoECPY3B8Ea0AzWrea8TiZbWKM1gqin4tR0=;
+	s=korg; t=1719308827;
+	bh=5FldpkQGWBYEUi1RuNXYWOsIEksl4jLWSho1yv11hqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v05DDFjDXrhytOGwJGzY2ijgOmgoSdrAVV/XUB7qbLF2z5P0qwUSR+FyHZDEySp+t
-	 ODNZgRheOauWNz8XOeSvWkUUoxEGreO83nSfDHeI5VoygMfo6cm4xjAZxXdNgmZf42
-	 mJkFpzkjwNxSWEO/JjL0msp0n7JHL+AMumw5ale0=
+	b=dQJxkasRh19/BS9ZR+qjpkWlGUP9fBTZXepqcpNwy+F3a6vzWRQRJgBeS+l6AEeoc
+	 PCRlN3ni2XFX5IdqNqjKJ9uQbupLH8mI5DYgjy5xwZtjcaP2PM2tYgiHDQs38wNs/G
+	 6b9kqrHStAJhLafSaSu83YOhbjAirSles/TCP3FE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.9 233/250] thermal: int340x: processor_thermal: Support shared interrupts
-Date: Tue, 25 Jun 2024 11:33:11 +0200
-Message-ID: <20240625085556.996458138@linuxfoundation.org>
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.9 234/250] spi: stm32: qspi: Fix dual flash mode sanity test in stm32_qspi_setup()
+Date: Tue, 25 Jun 2024 11:33:12 +0200
+Message-ID: <20240625085557.037380384@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -50,46 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Patrice Chotard <patrice.chotard@foss.st.com>
 
-commit 096597cfe4ea08b1830e775436d76d7c9d6d3037 upstream.
+commit c2bd0791c5f02e964402624dfff45ca8995f5397 upstream.
 
-On some systems the processor thermal device interrupt is shared with
-other PCI devices. In this case return IRQ_NONE from the interrupt
-handler when the interrupt is not for the processor thermal device.
+Misplaced parenthesis make test of mode wrong in case mode is equal to
+SPI_TX_OCTAL or SPI_RX_OCTAL.
 
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Fixes: f0658708e863 ("thermal: int340x: processor_thermal: Use non MSI interrupts by default")
-Cc: 6.7+ <stable@vger.kernel.org> # 6.7+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Simplify this sanity test, if one of this bit is set, property
+cs-gpio must be present in DT.
+
+Fixes: a557fca630cc ("spi: stm32_qspi: Add transfer_one_message() spi callback")
+Cc: stable@vger.kernel.org
+Signed-off-by: Patrice Chotard <patrice.chotard@foss.st.com>
+Link: https://msgid.link/r/20240618132951.2743935-2-patrice.chotard@foss.st.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../intel/int340x_thermal/processor_thermal_device_pci.c       | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/spi/spi-stm32-qspi.c |   10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/thermal/intel/int340x_thermal/processor_thermal_device_pci.c b/drivers/thermal/intel/int340x_thermal/processor_thermal_device_pci.c
-index 14e34eabc419..4a1bfebb1b8e 100644
---- a/drivers/thermal/intel/int340x_thermal/processor_thermal_device_pci.c
-+++ b/drivers/thermal/intel/int340x_thermal/processor_thermal_device_pci.c
-@@ -150,7 +150,7 @@ static irqreturn_t proc_thermal_irq_handler(int irq, void *devid)
- {
- 	struct proc_thermal_pci *pci_info = devid;
- 	struct proc_thermal_device *proc_priv;
--	int ret = IRQ_HANDLED;
-+	int ret = IRQ_NONE;
- 	u32 status;
+--- a/drivers/spi/spi-stm32-qspi.c
++++ b/drivers/spi/spi-stm32-qspi.c
+@@ -653,9 +653,7 @@ static int stm32_qspi_setup(struct spi_d
+ 		return -EINVAL;
  
- 	proc_priv = pci_info->proc_priv;
-@@ -175,6 +175,7 @@ static irqreturn_t proc_thermal_irq_handler(int irq, void *devid)
- 		/* Disable enable interrupt flag */
- 		proc_thermal_mmio_write(pci_info, PROC_THERMAL_MMIO_INT_ENABLE_0, 0);
- 		pkg_thermal_schedule_work(&pci_info->work);
-+		ret = IRQ_HANDLED;
+ 	mode = spi->mode & (SPI_TX_OCTAL | SPI_RX_OCTAL);
+-	if ((mode == SPI_TX_OCTAL || mode == SPI_RX_OCTAL) ||
+-	    ((mode == (SPI_TX_OCTAL | SPI_RX_OCTAL)) &&
+-	    gpiod_count(qspi->dev, "cs") == -ENOENT)) {
++	if (mode && gpiod_count(qspi->dev, "cs") == -ENOENT) {
+ 		dev_err(qspi->dev, "spi-rx-bus-width\\/spi-tx-bus-width\\/cs-gpios\n");
+ 		dev_err(qspi->dev, "configuration not supported\n");
+ 
+@@ -676,10 +674,10 @@ static int stm32_qspi_setup(struct spi_d
+ 	qspi->cr_reg = CR_APMS | 3 << CR_FTHRES_SHIFT | CR_SSHIFT | CR_EN;
+ 
+ 	/*
+-	 * Dual flash mode is only enable in case SPI_TX_OCTAL and SPI_TX_OCTAL
+-	 * are both set in spi->mode and "cs-gpios" properties is found in DT
++	 * Dual flash mode is only enable in case SPI_TX_OCTAL or SPI_RX_OCTAL
++	 * is set in spi->mode and "cs-gpios" properties is found in DT
+ 	 */
+-	if (mode == (SPI_TX_OCTAL | SPI_RX_OCTAL)) {
++	if (mode) {
+ 		qspi->cr_reg |= CR_DFM;
+ 		dev_dbg(qspi->dev, "Dual flash mode enable");
  	}
- 
- 	pci_write_config_byte(pci_info->pdev, 0xdc, 0x01);
--- 
-2.45.2
-
 
 
