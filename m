@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82BC24B34;
-	Tue, 25 Jun 2024 09:52:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF62D24B34;
+	Tue, 25 Jun 2024 09:52:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309162; cv=none; b=uaTmKJe8ptg5zW0wg35c6UNnl6jCemjIchMs6LcR+ofHssJIMKAvtsROxQngMY94KNbaVtwGxO0Y3IvJH3T6vs8yRklC8+8wXAQoE30lZmu7uDmw3W3PJSLVQ9hLKn0P5CecTFpqTAGWUuB1CSerZ7bW8gw2j0cDfrQEkgIBduU=
+	t=1719309165; cv=none; b=WJqwu2rJ0MqhrsYUFHqSbNeffoC8rGZ+JXPYr2crUCuX7PJUhrA6glb7cepnRQbVEIo6S24JEvRmXRiego56d98jqbgef8BdkZF3v8815epoPwaLVU7j0Mbssidt2ia3U9bPdMHdftRMHkqJHJx4whbGIiDY8P5qam/m/J3TKwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309162; c=relaxed/simple;
-	bh=+GfsHCgnNttEGJQLBoseByYEl9wUEw9jWzyb1choyFw=;
+	s=arc-20240116; t=1719309165; c=relaxed/simple;
+	bh=MxO7U/tzN0JB5OS8pJ6Zs6Odj4rF3VmPAWhC2DWJyIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oR89aEnGk+UJ5x0Ue+2joZduzHjdJqchPWDpN5/mYyDIEfp5DWlhnSMn5Vimpw7TUYRpKU/CFk1mCRj2P96QuGKV0aEitIMSn9AmqAKHPb/6h/Wq/QhtPK+GZP8d9qne6CvWkv3u1drXEz1kwr9V5vUrQkBV47hnayXXTduQuLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ue4LC1E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SpUwcxIMZKoBt8NaUl1VkWUVBW6phVT7gOAl7M6sBFFO2eyifYimULPR8j3Nmgco5F0teMz+gNh8cv4/Q46Ip8JISh4b4ulw+++8uHP2h+xDHp7bn6L3ow/pdif1AT6TQ47ncAdsLkSwgLfsJ1AWWwswhfd79gcTOUzc+u5O8VA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G6pbPaoq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ue4LC1E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D545C32781;
-	Tue, 25 Jun 2024 09:52:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G6pbPaoq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464C1C32781;
+	Tue, 25 Jun 2024 09:52:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309162;
-	bh=+GfsHCgnNttEGJQLBoseByYEl9wUEw9jWzyb1choyFw=;
+	s=korg; t=1719309165;
+	bh=MxO7U/tzN0JB5OS8pJ6Zs6Odj4rF3VmPAWhC2DWJyIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0ue4LC1E3gaA+EY8WrASlEkOnYc+MyuBmLSoWPtKqDocQT4PDMSm5hIEyuGlXg1n5
-	 5rwAx067VAJZRve1awiCBYYY8D5mggFj8wBvc00knEI5pASdpwmypmu0QXBAz6/lHQ
-	 hIqmwCWg16wN7TtZGA6i6B33We8LWLboX/NPnBxo=
+	b=G6pbPaoqi5YRh5T0CZZip/m6Hw0Ces28hwR8b0Y/wzB8i2S4WAb4Y/eoxaVlc2Ljp
+	 3Al7kGMGRpRZWH4voG5KQo0z9PhnlNHgtRTKp2L0bsDQYCSGGg6EYXhNTh/sYcmFXu
+	 Hk6baRuVD85UEZghkFsFoVBwWRWpjADdOW+m1crQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Raju Lakkaraju <Raju.Lakkaraju@microchip.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Vlad Buslov <vladbu@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 086/192] net: phy: mxl-gpy: Remove interrupt mask clearing from config_init
-Date: Tue, 25 Jun 2024 11:32:38 +0200
-Message-ID: <20240625085540.477178576@linuxfoundation.org>
+Subject: [PATCH 6.6 087/192] net/sched: act_api: rely on rcu in tcf_idr_check_alloc
+Date: Tue, 25 Jun 2024 11:32:39 +0200
+Message-ID: <20240625085540.515506977@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -52,159 +53,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raju Lakkaraju <Raju.Lakkaraju@microchip.com>
+From: Pedro Tammela <pctammela@mojatatu.com>
 
-[ Upstream commit c44d3ffd85db03ebcc3090e55589e10d5af9f3a9 ]
+[ Upstream commit 4b55e86736d5b492cf689125da2600f59c7d2c39 ]
 
-When the system resumes from sleep, the phy_init_hw() function invokes
-config_init(), which clears all interrupt masks and causes wake events to be
-lost in subsequent wake sequences. Remove interrupt mask clearing from
-config_init() and preserve relevant masks in config_intr().
+Instead of relying only on the idrinfo->lock mutex for
+bind/alloc logic, rely on a combination of rcu + mutex + atomics
+to better scale the case where multiple rtnl-less filters are
+binding to the same action object.
 
-Fixes: 7d901a1e878a ("net: phy: add Maxlinear GPY115/21x/24x driver")
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Signed-off-by: Raju Lakkaraju <Raju.Lakkaraju@microchip.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Action binding happens when an action index is specified explicitly and
+an action exists which such index exists. Example:
+  tc actions add action drop index 1
+  tc filter add ... matchall action drop index 1
+  tc filter add ... matchall action drop index 1
+  tc filter add ... matchall action drop index 1
+  tc filter ls ...
+     filter protocol all pref 49150 matchall chain 0 filter protocol all pref 49150 matchall chain 0 handle 0x1
+     not_in_hw
+           action order 1: gact action drop
+            random type none pass val 0
+            index 1 ref 4 bind 3
+
+   filter protocol all pref 49151 matchall chain 0 filter protocol all pref 49151 matchall chain 0 handle 0x1
+     not_in_hw
+           action order 1: gact action drop
+            random type none pass val 0
+            index 1 ref 4 bind 3
+
+   filter protocol all pref 49152 matchall chain 0 filter protocol all pref 49152 matchall chain 0 handle 0x1
+     not_in_hw
+           action order 1: gact action drop
+            random type none pass val 0
+            index 1 ref 4 bind 3
+
+When no index is specified, as before, grab the mutex and allocate
+in the idr the next available id. In this version, as opposed to before,
+it's simplified to store the -EBUSY pointer instead of the previous
+alloc + replace combination.
+
+When an index is specified, rely on rcu to find if there's an object in
+such index. If there's none, fallback to the above, serializing on the
+mutex and reserving the specified id. If there's one, it can be an -EBUSY
+pointer, in which case we just try again until it's an action, or an action.
+Given the rcu guarantees, the action found could be dead and therefore
+we need to bump the refcount if it's not 0, handling the case it's
+in fact 0.
+
+As bind and the action refcount are already atomics, these increments can
+happen without the mutex protection while many tcf_idr_check_alloc race
+to bind to the same action instance.
+
+In case binding encounters a parallel delete or add, it will return
+-EAGAIN in order to try again. Both filter and action apis already
+have the retry machinery in-place. In case it's an unlocked filter it
+retries under the rtnl lock.
+
+Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Vlad Buslov <vladbu@nvidia.com>
+Link: https://lore.kernel.org/r/20231211181807.96028-2-pctammela@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: d864319871b0 ("net/sched: act_api: fix possible infinite loop in tcf_idr_check_alloc()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/mxl-gpy.c | 58 +++++++++++++++++++++++++--------------
- 1 file changed, 38 insertions(+), 20 deletions(-)
+ net/sched/act_api.c | 65 ++++++++++++++++++++++++++++++---------------
+ 1 file changed, 43 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/net/phy/mxl-gpy.c b/drivers/net/phy/mxl-gpy.c
-index ea1073adc5a16..034f5c4d03377 100644
---- a/drivers/net/phy/mxl-gpy.c
-+++ b/drivers/net/phy/mxl-gpy.c
-@@ -107,6 +107,7 @@ struct gpy_priv {
+diff --git a/net/sched/act_api.c b/net/sched/act_api.c
+index 9d3f26bf0440d..5d34852ca5003 100644
+--- a/net/sched/act_api.c
++++ b/net/sched/act_api.c
+@@ -816,6 +816,9 @@ EXPORT_SYMBOL(tcf_idr_cleanup);
+  * its reference and bind counters, and return 1. Otherwise insert temporary
+  * error pointer (to prevent concurrent users from inserting actions with same
+  * index) and return 0.
++ *
++ * May return -EAGAIN for binding actions in case of a parallel add/delete on
++ * the requested index.
+  */
  
- 	u8 fw_major;
- 	u8 fw_minor;
-+	u32 wolopts;
- 
- 	/* It takes 3 seconds to fully switch out of loopback mode before
- 	 * it can safely re-enter loopback mode. Record the time when
-@@ -221,6 +222,15 @@ static int gpy_hwmon_register(struct phy_device *phydev)
- }
- #endif
- 
-+static int gpy_ack_interrupt(struct phy_device *phydev)
-+{
-+	int ret;
-+
-+	/* Clear all pending interrupts */
-+	ret = phy_read(phydev, PHY_ISTAT);
-+	return ret < 0 ? ret : 0;
-+}
-+
- static int gpy_mbox_read(struct phy_device *phydev, u32 addr)
- {
- 	struct gpy_priv *priv = phydev->priv;
-@@ -262,16 +272,8 @@ static int gpy_mbox_read(struct phy_device *phydev, u32 addr)
- 
- static int gpy_config_init(struct phy_device *phydev)
- {
--	int ret;
--
--	/* Mask all interrupts */
--	ret = phy_write(phydev, PHY_IMASK, 0);
--	if (ret)
--		return ret;
--
--	/* Clear all pending interrupts */
--	ret = phy_read(phydev, PHY_ISTAT);
--	return ret < 0 ? ret : 0;
-+	/* Nothing to configure. Configuration Requirement Placeholder */
-+	return 0;
- }
- 
- static int gpy_probe(struct phy_device *phydev)
-@@ -619,11 +621,23 @@ static int gpy_read_status(struct phy_device *phydev)
- 
- static int gpy_config_intr(struct phy_device *phydev)
- {
-+	struct gpy_priv *priv = phydev->priv;
- 	u16 mask = 0;
-+	int ret;
-+
-+	ret = gpy_ack_interrupt(phydev);
-+	if (ret)
-+		return ret;
- 
- 	if (phydev->interrupts == PHY_INTERRUPT_ENABLED)
- 		mask = PHY_IMASK_MASK;
- 
-+	if (priv->wolopts & WAKE_MAGIC)
-+		mask |= PHY_IMASK_WOL;
-+
-+	if (priv->wolopts & WAKE_PHY)
-+		mask |= PHY_IMASK_LSTC;
-+
- 	return phy_write(phydev, PHY_IMASK, mask);
- }
- 
-@@ -670,6 +684,7 @@ static int gpy_set_wol(struct phy_device *phydev,
- 		       struct ethtool_wolinfo *wol)
- {
- 	struct net_device *attach_dev = phydev->attached_dev;
-+	struct gpy_priv *priv = phydev->priv;
+ int tcf_idr_check_alloc(struct tc_action_net *tn, u32 *index,
+@@ -824,43 +827,61 @@ int tcf_idr_check_alloc(struct tc_action_net *tn, u32 *index,
+ 	struct tcf_idrinfo *idrinfo = tn->idrinfo;
+ 	struct tc_action *p;
  	int ret;
++	u32 max;
  
- 	if (wol->wolopts & WAKE_MAGIC) {
-@@ -717,6 +732,8 @@ static int gpy_set_wol(struct phy_device *phydev,
- 		ret = phy_read(phydev, PHY_ISTAT);
- 		if (ret < 0)
- 			return ret;
+-again:
+-	mutex_lock(&idrinfo->lock);
+ 	if (*index) {
++again:
++		rcu_read_lock();
+ 		p = idr_find(&idrinfo->action_idr, *index);
 +
-+		priv->wolopts |= WAKE_MAGIC;
+ 		if (IS_ERR(p)) {
+ 			/* This means that another process allocated
+ 			 * index but did not assign the pointer yet.
+ 			 */
+-			mutex_unlock(&idrinfo->lock);
++			rcu_read_unlock();
+ 			goto again;
+ 		}
+ 
+-		if (p) {
+-			refcount_inc(&p->tcfa_refcnt);
+-			if (bind)
+-				atomic_inc(&p->tcfa_bindcnt);
+-			*a = p;
+-			ret = 1;
+-		} else {
+-			*a = NULL;
+-			ret = idr_alloc_u32(&idrinfo->action_idr, NULL, index,
+-					    *index, GFP_KERNEL);
+-			if (!ret)
+-				idr_replace(&idrinfo->action_idr,
+-					    ERR_PTR(-EBUSY), *index);
++		if (!p) {
++			/* Empty slot, try to allocate it */
++			max = *index;
++			rcu_read_unlock();
++			goto new;
++		}
++
++		if (!refcount_inc_not_zero(&p->tcfa_refcnt)) {
++			/* Action was deleted in parallel */
++			rcu_read_unlock();
++			return -EAGAIN;
+ 		}
++
++		if (bind)
++			atomic_inc(&p->tcfa_bindcnt);
++		*a = p;
++
++		rcu_read_unlock();
++
++		return 1;
  	} else {
- 		/* Disable magic packet matching */
- 		ret = phy_clear_bits_mmd(phydev, MDIO_MMD_VEND2,
-@@ -724,6 +741,13 @@ static int gpy_set_wol(struct phy_device *phydev,
- 					 WOL_EN);
- 		if (ret < 0)
- 			return ret;
-+
-+		/* Disable the WOL interrupt */
-+		ret = phy_clear_bits(phydev, PHY_IMASK, PHY_IMASK_WOL);
-+		if (ret < 0)
-+			return ret;
-+
-+		priv->wolopts &= ~WAKE_MAGIC;
++		/* Find a slot */
+ 		*index = 1;
+-		*a = NULL;
+-		ret = idr_alloc_u32(&idrinfo->action_idr, NULL, index,
+-				    UINT_MAX, GFP_KERNEL);
+-		if (!ret)
+-			idr_replace(&idrinfo->action_idr, ERR_PTR(-EBUSY),
+-				    *index);
++		max = UINT_MAX;
  	}
- 
- 	if (wol->wolopts & WAKE_PHY) {
-@@ -740,9 +764,11 @@ static int gpy_set_wol(struct phy_device *phydev,
- 		if (ret & (PHY_IMASK_MASK & ~PHY_IMASK_LSTC))
- 			phy_trigger_machine(phydev);
- 
-+		priv->wolopts |= WAKE_PHY;
- 		return 0;
- 	}
- 
-+	priv->wolopts &= ~WAKE_PHY;
- 	/* Disable the link state change interrupt */
- 	return phy_clear_bits(phydev, PHY_IMASK, PHY_IMASK_LSTC);
++
++new:
++	*a = NULL;
++
++	mutex_lock(&idrinfo->lock);
++	ret = idr_alloc_u32(&idrinfo->action_idr, ERR_PTR(-EBUSY), index, max,
++			    GFP_KERNEL);
+ 	mutex_unlock(&idrinfo->lock);
++
++	/* N binds raced for action allocation,
++	 * retry for all the ones that failed.
++	 */
++	if (ret == -ENOSPC && *index == max)
++		ret = -EAGAIN;
++
+ 	return ret;
  }
-@@ -750,18 +776,10 @@ static int gpy_set_wol(struct phy_device *phydev,
- static void gpy_get_wol(struct phy_device *phydev,
- 			struct ethtool_wolinfo *wol)
- {
--	int ret;
-+	struct gpy_priv *priv = phydev->priv;
- 
- 	wol->supported = WAKE_MAGIC | WAKE_PHY;
--	wol->wolopts = 0;
--
--	ret = phy_read_mmd(phydev, MDIO_MMD_VEND2, VPSPEC2_WOL_CTL);
--	if (ret & WOL_EN)
--		wol->wolopts |= WAKE_MAGIC;
--
--	ret = phy_read(phydev, PHY_IMASK);
--	if (ret & PHY_IMASK_LSTC)
--		wol->wolopts |= WAKE_PHY;
-+	wol->wolopts = priv->wolopts;
- }
- 
- static int gpy_loopback(struct phy_device *phydev, bool enable)
+ EXPORT_SYMBOL(tcf_idr_check_alloc);
 -- 
 2.43.0
 
