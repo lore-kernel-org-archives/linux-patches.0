@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0406513C90B;
-	Tue, 25 Jun 2024 10:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87FF13C90B;
+	Tue, 25 Jun 2024 10:01:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309704; cv=none; b=datjaDDNbf+VKmgNUGjUXU/Vn4QZGonQv/fuXC77iT352LHR8a3oVb5FTnfb2MXxXhByOhVLbRWqirqp1gKul3/Ag169d1UWgxxeBvi4K/rwiAhouCX0DhjbSPm3/kxxxuhVMUVQd+FyMdyMOBvTNS2xOrCwXhHYUC1gfiDjPws=
+	t=1719309707; cv=none; b=IGcvsdlAd/HgyXvsj8W7+qODroaHJUiyQjRhZIbum/NU46TZTWZ4dr8ozJG5mI+M4jGz2f0vzxRoIvDA6qiRtZfXl6dGp7NaWECJWl3FG3KtpuPW3QW1zQ/NA1kZB8TQ6murl544q3SElg9391jWPNv3z2C8dl/Q/jJ3it8eFSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309704; c=relaxed/simple;
-	bh=J32zr8wup2aeUhVUVTZjxoLI8cE0bux4fAxHKCarn88=;
+	s=arc-20240116; t=1719309707; c=relaxed/simple;
+	bh=uNtTeTcHz5nrUAPkSvo+zmmlyrTZP1RqL+KDYKTjUfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AJTpNV1iQ+QLjwK//ZYsE225i2m+ewQp1DE+Ze8jbpXBkh/ed+n6Rc0FLcM9XdS273K2EJeHXwPGtzFUlJtb3kMFNyyCAgyphRHx4giGqBKbTfcU06BhAtMn3UfUn1dv8hnkJhX4WJ+8AsyWd10nSvXTm/kFLxVn2OgGzbNhjq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vm0SA+PX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LQtrbJznHLH4Dn+zdY9laEQxNH6RFMys4bGbKO+EIxsxeklZ86agsilPEF1IQ0a61eQUfe0TGEIpRijsacUJduZksl9YMniEBq9qVUoQMIC58JaVbqSY5OabHMunwW5p1YdazSFPxucN6WxWD+El2PHZtT3rmGvgE4FlbK35++0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XKomIxZE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vm0SA+PX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B7D3C32781;
-	Tue, 25 Jun 2024 10:01:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XKomIxZE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AA67C32786;
+	Tue, 25 Jun 2024 10:01:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309703;
-	bh=J32zr8wup2aeUhVUVTZjxoLI8cE0bux4fAxHKCarn88=;
+	s=korg; t=1719309706;
+	bh=uNtTeTcHz5nrUAPkSvo+zmmlyrTZP1RqL+KDYKTjUfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vm0SA+PXKJ33xP5qJCJmPUaMcG0ew4hlNgiceg+Cvs0VhuVJmaeZB/vidPoJZkDy/
-	 eFG3lwV5pcdYpmnHE4NDXV0AqklVJEV06vugU4s9wA9RDVk7twgvGs3/gKmU5BzRch
-	 464FQuTAj1HzEcP5EXHZ0cx/j5YeEGD/rgpIgOHs=
+	b=XKomIxZECKhmekMTGHAZfiJhvS/PmEoB1ayHkUT3ys/qAuvyt02OLRT6iA1SVehJh
+	 HVKGBnvKD7XNEI/L66qfmcsRYz2aF5zmao+CMSRYnPkAqlLpYQ0RgbSPaqn3T5YinW
+	 1v2WQDNEkU/7ORHWrTycQ3SgzYkhXEE4wZst0c0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianguo Wu <wujianguo@chinatelecom.cn>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Marcin Szycik <marcin.szycik@linux.intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Simon Horman <horms@kernel.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 074/131] seg6: fix parameter passing when calling NF_HOOK() in End.DX4 and End.DX6 behaviors
-Date: Tue, 25 Jun 2024 11:33:49 +0200
-Message-ID: <20240625085528.755194670@linuxfoundation.org>
+Subject: [PATCH 6.1 075/131] ice: Fix VSI list rule with ICE_SW_LKUP_LAST type
+Date: Tue, 25 Jun 2024 11:33:50 +0200
+Message-ID: <20240625085528.793216959@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085525.931079317@linuxfoundation.org>
 References: <20240625085525.931079317@linuxfoundation.org>
@@ -52,95 +57,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianguo Wu <wujianguo@chinatelecom.cn>
+From: Marcin Szycik <marcin.szycik@linux.intel.com>
 
-[ Upstream commit 9a3bc8d16e0aacd65c31aaf23a2bced3288a7779 ]
+[ Upstream commit 74382aebc9035470ec4c789bdb0d09d8c14f261e ]
 
-input_action_end_dx4() and input_action_end_dx6() are called NF_HOOK() for
-PREROUTING hook, in PREROUTING hook, we should passing a valid indev,
-and a NULL outdev to NF_HOOK(), otherwise may trigger a NULL pointer
-dereference, as below:
+Adding/updating VSI list rule, as well as allocating/freeing VSI list
+resource are called several times with type ICE_SW_LKUP_LAST, which fails
+because ice_update_vsi_list_rule() and ice_aq_alloc_free_vsi_list()
+consider it invalid. Allow calling these functions with ICE_SW_LKUP_LAST.
 
-    [74830.647293] BUG: kernel NULL pointer dereference, address: 0000000000000090
-    [74830.655633] #PF: supervisor read access in kernel mode
-    [74830.657888] #PF: error_code(0x0000) - not-present page
-    [74830.659500] PGD 0 P4D 0
-    [74830.660450] Oops: 0000 [#1] PREEMPT SMP PTI
-    ...
-    [74830.664953] Hardware name: Red Hat KVM, BIOS 0.5.1 01/01/2011
-    [74830.666569] RIP: 0010:rpfilter_mt+0x44/0x15e [ipt_rpfilter]
-    ...
-    [74830.689725] Call Trace:
-    [74830.690402]  <IRQ>
-    [74830.690953]  ? show_trace_log_lvl+0x1c4/0x2df
-    [74830.692020]  ? show_trace_log_lvl+0x1c4/0x2df
-    [74830.693095]  ? ipt_do_table+0x286/0x710 [ip_tables]
-    [74830.694275]  ? __die_body.cold+0x8/0xd
-    [74830.695205]  ? page_fault_oops+0xac/0x140
-    [74830.696244]  ? exc_page_fault+0x62/0x150
-    [74830.697225]  ? asm_exc_page_fault+0x22/0x30
-    [74830.698344]  ? rpfilter_mt+0x44/0x15e [ipt_rpfilter]
-    [74830.699540]  ipt_do_table+0x286/0x710 [ip_tables]
-    [74830.700758]  ? ip6_route_input+0x19d/0x240
-    [74830.701752]  nf_hook_slow+0x3f/0xb0
-    [74830.702678]  input_action_end_dx4+0x19b/0x1e0
-    [74830.703735]  ? input_action_end_t+0xe0/0xe0
-    [74830.704734]  seg6_local_input_core+0x2d/0x60
-    [74830.705782]  lwtunnel_input+0x5b/0xb0
-    [74830.706690]  __netif_receive_skb_one_core+0x63/0xa0
-    [74830.707825]  process_backlog+0x99/0x140
-    [74830.709538]  __napi_poll+0x2c/0x160
-    [74830.710673]  net_rx_action+0x296/0x350
-    [74830.711860]  __do_softirq+0xcb/0x2ac
-    [74830.713049]  do_softirq+0x63/0x90
+This fixes at least one issue in switchdev mode, where the same rule with
+different action cannot be added, e.g.:
 
-input_action_end_dx4() passing a NULL indev to NF_HOOK(), and finally
-trigger a NULL dereference in rpfilter_mt()->rpfilter_is_loopback():
+  tc filter add dev $PF1 ingress protocol arp prio 0 flower skip_sw \
+    dst_mac ff:ff:ff:ff:ff:ff action mirred egress redirect dev $VF1_PR
+  tc filter add dev $PF1 ingress protocol arp prio 0 flower skip_sw \
+    dst_mac ff:ff:ff:ff:ff:ff action mirred egress redirect dev $VF2_PR
 
-    static bool
-    rpfilter_is_loopback(const struct sk_buff *skb,
-          	       const struct net_device *in)
-    {
-            // in is NULL
-            return skb->pkt_type == PACKET_LOOPBACK ||
-          	 in->flags & IFF_LOOPBACK;
-    }
-
-Fixes: 7a3f5b0de364 ("netfilter: add netfilter hooks to SRv6 data plane")
-Signed-off-by: Jianguo Wu <wujianguo@chinatelecom.cn>
+Fixes: 0f94570d0cae ("ice: allow adding advanced rules")
+Suggested-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Marcin Szycik <marcin.szycik@linux.intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://lore.kernel.org/r/20240618210206.981885-1-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/seg6_local.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_switch.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/seg6_local.c b/net/ipv6/seg6_local.c
-index 8370726ae7bf1..33cb0381b5749 100644
---- a/net/ipv6/seg6_local.c
-+++ b/net/ipv6/seg6_local.c
-@@ -554,8 +554,8 @@ static int input_action_end_dx6(struct sk_buff *skb,
- 
- 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
- 		return NF_HOOK(NFPROTO_IPV6, NF_INET_PRE_ROUTING,
--			       dev_net(skb->dev), NULL, skb, NULL,
--			       skb_dst(skb)->dev, input_action_end_dx6_finish);
-+			       dev_net(skb->dev), NULL, skb, skb->dev,
-+			       NULL, input_action_end_dx6_finish);
- 
- 	return input_action_end_dx6_finish(dev_net(skb->dev), NULL, skb);
- drop:
-@@ -604,8 +604,8 @@ static int input_action_end_dx4(struct sk_buff *skb,
- 
- 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
- 		return NF_HOOK(NFPROTO_IPV4, NF_INET_PRE_ROUTING,
--			       dev_net(skb->dev), NULL, skb, NULL,
--			       skb_dst(skb)->dev, input_action_end_dx4_finish);
-+			       dev_net(skb->dev), NULL, skb, skb->dev,
-+			       NULL, input_action_end_dx4_finish);
- 
- 	return input_action_end_dx4_finish(dev_net(skb->dev), NULL, skb);
- drop:
+diff --git a/drivers/net/ethernet/intel/ice/ice_switch.c b/drivers/net/ethernet/intel/ice/ice_switch.c
+index 5ea6365872571..735f995a3a687 100644
+--- a/drivers/net/ethernet/intel/ice/ice_switch.c
++++ b/drivers/net/ethernet/intel/ice/ice_switch.c
+@@ -1838,7 +1838,8 @@ ice_aq_alloc_free_vsi_list(struct ice_hw *hw, u16 *vsi_list_id,
+ 	    lkup_type == ICE_SW_LKUP_ETHERTYPE_MAC ||
+ 	    lkup_type == ICE_SW_LKUP_PROMISC ||
+ 	    lkup_type == ICE_SW_LKUP_PROMISC_VLAN ||
+-	    lkup_type == ICE_SW_LKUP_DFLT) {
++	    lkup_type == ICE_SW_LKUP_DFLT ||
++	    lkup_type == ICE_SW_LKUP_LAST) {
+ 		sw_buf->res_type = cpu_to_le16(ICE_AQC_RES_TYPE_VSI_LIST_REP);
+ 	} else if (lkup_type == ICE_SW_LKUP_VLAN) {
+ 		sw_buf->res_type =
+@@ -2764,7 +2765,8 @@ ice_update_vsi_list_rule(struct ice_hw *hw, u16 *vsi_handle_arr, u16 num_vsi,
+ 	    lkup_type == ICE_SW_LKUP_ETHERTYPE_MAC ||
+ 	    lkup_type == ICE_SW_LKUP_PROMISC ||
+ 	    lkup_type == ICE_SW_LKUP_PROMISC_VLAN ||
+-	    lkup_type == ICE_SW_LKUP_DFLT)
++	    lkup_type == ICE_SW_LKUP_DFLT ||
++	    lkup_type == ICE_SW_LKUP_LAST)
+ 		rule_type = remove ? ICE_AQC_SW_RULES_T_VSI_LIST_CLEAR :
+ 			ICE_AQC_SW_RULES_T_VSI_LIST_SET;
+ 	else if (lkup_type == ICE_SW_LKUP_VLAN)
 -- 
 2.43.0
 
