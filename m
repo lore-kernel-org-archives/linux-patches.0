@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269911465A8;
-	Tue, 25 Jun 2024 09:47:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5FD41465A8;
+	Tue, 25 Jun 2024 09:47:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308854; cv=none; b=ZtAFInlnaDdotRLbKCeb1V4OVQIz4HrvVbionnd4kgDnM+QjTqnnEPbGZb+FK8Mxx3sVdpPJ3yNo3JJR9sRfxpSXswc7nLrY2fDUwbFBEelNdbopcrN5CrtVbSKJr8wIKQ42WJopMQNwCZ6dnyOQKFCMTiRJfrRCEmKWYQxd0dA=
+	t=1719308856; cv=none; b=Maufe5oz70zDgw6ebk1rgR0z+YkSkM9tUVmz7G0/Q1LoV8KQlOOKaskne6uMuBzaXKY16DgJhFaCN2cldEfTWYzE5EN1VIIZ/dh45CJhuP1nFkPtIZUir42GtSJh5MPJ79YkofWjgbG9104QkFOKH98kAIrsyfSZvu5qlBIswuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308854; c=relaxed/simple;
-	bh=X+p9Om5vjqg5OJwEY/T9S5DgaIWqihmeZMVEt0Gnic4=;
+	s=arc-20240116; t=1719308856; c=relaxed/simple;
+	bh=mM3rPnHEWFF1Yxh4MWFw002EJ7VV7lGz+gF42TasOTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vn+aqZRrRr1RsisnReXGI6BploDYYbJKFrlPkqn34j4PSCQD9d6tSmo+36wV5Rx5uk3vqwKbtGCwOVVh+8KnQJJLQZ6NgxKTVT0tNkPUrly3iWDxjMW8EQqMjl4Clz68oO9jNS8y1GO+EXYMIMLTWDCXIDkOvwosCebLGNnLFcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NMtzV20a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dcfo2VIwlsIoIBAj/2L5wo8i6fAyVh2ByCNGjK7Nwe5v+osj06qCeAHPy6+SsBht1nRDDWaazgeST83c9doc9FFVhWIwFqRCdppYqbONgZhGUNeDfQxxPzxlkACL9mOGzkn8OGaJ0p6863hPFrslr2vMYtL5bVvsA4jtRhih1FE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RRclb30y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NMtzV20a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DEABC32781;
-	Tue, 25 Jun 2024 09:47:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RRclb30y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EDF3C32781;
+	Tue, 25 Jun 2024 09:47:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308853;
-	bh=X+p9Om5vjqg5OJwEY/T9S5DgaIWqihmeZMVEt0Gnic4=;
+	s=korg; t=1719308856;
+	bh=mM3rPnHEWFF1Yxh4MWFw002EJ7VV7lGz+gF42TasOTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NMtzV20aJfOjraqyjA/dgcD/Cf9z439VLBBtZg7o6RvLMoWaDhY7vma9aa9Lj/hXE
-	 dEw3+ne81evaOxkSq2v21r10RVa6BMRjjJRESSg/9yl/JCEQm/4HQWLR/nKYVfz3Mt
-	 E8hmXcX/jcaYmFiJjxrFyI1aH38c0A3TN0M0p92Y=
+	b=RRclb30ymjpAL9HFEOuT8W6y/DdTn4Kn36m7bYEVIGfts1Gx5TkE4H4Tk5fUhz4yt
+	 bdTw/mARkLHBh7okMuQpzZCO5i6NEIJD6wqvpHa8j3oaR8dTQjt769d6oK1WxkkMud
+	 9cfvwKTUVID5qQdgVlkvVWIJrlYP/881YjzojWDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0cb5bb0f4bf9e79db3b3@syzkaller.appspotmail.com,
+	Chenghai Huang <huangchenghai2@huawei.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
-	Daniel Jordan <daniel.m.jordan@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 002/192] padata: Disable BH when taking works lock on MT path
-Date: Tue, 25 Jun 2024 11:31:14 +0200
-Message-ID: <20240625085537.247706704@linuxfoundation.org>
+Subject: [PATCH 6.6 003/192] crypto: hisilicon/sec - Fix memory leak for sec resource release
+Date: Tue, 25 Jun 2024 11:31:15 +0200
+Message-ID: <20240625085537.285820956@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -52,60 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Chenghai Huang <huangchenghai2@huawei.com>
 
-[ Upstream commit 58329c4312031603bb1786b44265c26d5065fe72 ]
+[ Upstream commit bba4250757b4ae1680fea435a358d8093f254094 ]
 
-As the old padata code can execute in softirq context, disable
-softirqs for the new padata_do_mutithreaded code too as otherwise
-lockdep will get antsy.
+The AIV is one of the SEC resources. When releasing resources,
+it need to release the AIV resources at the same time.
+Otherwise, memory leakage occurs.
 
-Reported-by: syzbot+0cb5bb0f4bf9e79db3b3@syzkaller.appspotmail.com
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
+The aiv resource release is added to the sec resource release
+function.
+
+Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/padata.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/crypto/hisilicon/sec2/sec_crypto.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/padata.c b/kernel/padata.c
-index 179fb1518070c..c974568f65f5d 100644
---- a/kernel/padata.c
-+++ b/kernel/padata.c
-@@ -106,7 +106,7 @@ static int __init padata_work_alloc_mt(int nworks, void *data,
- {
- 	int i;
+diff --git a/drivers/crypto/hisilicon/sec2/sec_crypto.c b/drivers/crypto/hisilicon/sec2/sec_crypto.c
+index c3a630cb27a62..932cc277eb3a5 100644
+--- a/drivers/crypto/hisilicon/sec2/sec_crypto.c
++++ b/drivers/crypto/hisilicon/sec2/sec_crypto.c
+@@ -478,8 +478,10 @@ static void sec_alg_resource_free(struct sec_ctx *ctx,
  
--	spin_lock(&padata_works_lock);
-+	spin_lock_bh(&padata_works_lock);
- 	/* Start at 1 because the current task participates in the job. */
- 	for (i = 1; i < nworks; ++i) {
- 		struct padata_work *pw = padata_work_alloc();
-@@ -116,7 +116,7 @@ static int __init padata_work_alloc_mt(int nworks, void *data,
- 		padata_work_init(pw, padata_mt_helper, data, 0);
- 		list_add(&pw->pw_list, head);
- 	}
--	spin_unlock(&padata_works_lock);
-+	spin_unlock_bh(&padata_works_lock);
- 
- 	return i;
- }
-@@ -134,12 +134,12 @@ static void __init padata_works_free(struct list_head *works)
- 	if (list_empty(works))
- 		return;
- 
--	spin_lock(&padata_works_lock);
-+	spin_lock_bh(&padata_works_lock);
- 	list_for_each_entry_safe(cur, next, works, pw_list) {
- 		list_del(&cur->pw_list);
- 		padata_work_free(cur);
- 	}
--	spin_unlock(&padata_works_lock);
-+	spin_unlock_bh(&padata_works_lock);
+ 	if (ctx->pbuf_supported)
+ 		sec_free_pbuf_resource(dev, qp_ctx->res);
+-	if (ctx->alg_type == SEC_AEAD)
++	if (ctx->alg_type == SEC_AEAD) {
+ 		sec_free_mac_resource(dev, qp_ctx->res);
++		sec_free_aiv_resource(dev, qp_ctx->res);
++	}
  }
  
- static void padata_parallel_worker(struct work_struct *parallel_work)
+ static int sec_alloc_qp_ctx_resource(struct hisi_qm *qm, struct sec_ctx *ctx,
 -- 
 2.43.0
 
