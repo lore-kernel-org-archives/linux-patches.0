@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 811B91465A8;
-	Tue, 25 Jun 2024 09:48:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2411465A8;
+	Tue, 25 Jun 2024 09:49:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308939; cv=none; b=Vbrp5QBhdWnzrYQ+rEXHrGVGM7m9+YZarvC+ZO1iCvNE5fZZ9hM7x/DFTwsHpwSchcTB/YVsZCNtNGTI9VjGq2tAW8Oyyp2zlD1msmQ6onDLl8ttoVdQbAhCEEDFHO/eKJwHA0Q/Bn6gYiPigFBKfEbPIvM9kh+txGktPjwC4Uo=
+	t=1719308942; cv=none; b=Q78kmE8OhDpTwUqufEntfHImnfEvIwfEwbIjWTEDhWB+IWidFjbgtRS/VtIR1rAC1zSybf7qZmfypIY0R/3fdKO83eiR+X02yKkkbAFU3RB236yh4V+26rjZstiqFnlwpVYmlQHl/81LEVXUvPH2O3SAbZGuS6MsLHiXwHIIdcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308939; c=relaxed/simple;
-	bh=1Bs4fp4fUSFSxvPNYFXGD3nXYWpUoXVya7xg+Z6vpzA=;
+	s=arc-20240116; t=1719308942; c=relaxed/simple;
+	bh=fclVUKOCNwZfjnIqObbBVBZLmYNUTVCTdO+ydkbuEg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rUJYhr4lgDBpbOtg2F5HbFM0HsGLYUupsHHrps/hixiQWZ4ZJWP91m2T9Eq0tAklWx/zpWh5fonj/d+UZTynL6Ufz6CHMqwY23XC7UyfniipNVvvINZ30CdGx2QAlscIgIZ3qOhD3V5/VDhN58ZR+QMi68HBjmEfJ6aGJ6otpMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c4wE995p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HUCk5ndc7xwoXemPtCfuj/VunI0qXm5H6nJgk44knkdtwQm1ApTodOJORr+FUp+82UceGwESqejMoik5BuS9Cx/ODS66ujlGUd0IUZQCKLBh9zQyaopTFB0Tyl9wqGao5cWRfs/akL6qnU+cROW1WqJNwmp/C1XKnOjomjpvygA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJ3A0p5a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c4wE995p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4902C32781;
-	Tue, 25 Jun 2024 09:48:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJ3A0p5a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FCC9C32781;
+	Tue, 25 Jun 2024 09:49:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308939;
-	bh=1Bs4fp4fUSFSxvPNYFXGD3nXYWpUoXVya7xg+Z6vpzA=;
+	s=korg; t=1719308942;
+	bh=fclVUKOCNwZfjnIqObbBVBZLmYNUTVCTdO+ydkbuEg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c4wE995pr5+VPkfgwuD4XaVhvOQZt/z+q6Wx5ieo1TjxGId0FLqUuFZqUHVCHtyA7
-	 jbLgCHCvAs3Bgr1kMjGnSlhtHDMrkuLEDGc7ndG0hBWDTPs9kOwnq3F0JLTn76lDPD
-	 mC+haeR3Y9j4fy0adCia1+bJSh0buKrwhnJuh9oU=
+	b=lJ3A0p5aJBwAzcMPHO2WqGucmy9ikBijncueUNGRrketRtZGJB1D1/vxqgd/ZZ+/d
+	 mEIX+IVPRdWfv0qLptDppsqIu3+krBxyx4dsvo3Sk16oa6aORg6/FWBue4+bU9syR1
+	 Hkv8fJoSlaARQSgTwRMYVznqM6uQNq6PU8XkIQAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Fradella <bfradell@netapp.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Klara Modin <klarasmodin@gmail.com>,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Benson Leung <bleung@chromium.org>,
+	Prashant Malani <pmalani@chromium.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 040/192] platform/x86: p2sb: Dont init until unassigned resources have been assigned
-Date: Tue, 25 Jun 2024 11:31:52 +0200
-Message-ID: <20240625085538.703731170@linuxfoundation.org>
+Subject: [PATCH 6.6 041/192] power: supply: cros_usbpd: provide ID table for avoiding fallback match
+Date: Tue, 25 Jun 2024 11:31:53 +0200
+Message-ID: <20240625085538.741320969@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -54,83 +54,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Fradella <bfradell@netapp.com>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-[ Upstream commit 2c6370e6607663fc5fa0fd9ed58e2e01014898c7 ]
+[ Upstream commit 0f8678c34cbfdc63569a9b0ede1fe235ec6ec693 ]
 
-The P2SB could get an invalid BAR from the BIOS, and that won't be fixed
-up until pcibios_assign_resources(), which is an fs_initcall().
+Instead of using fallback driver name match, provide ID table[1] for the
+primary match.
 
-- Move p2sb_fs_init() to an fs_initcall_sync(). This is still early
-  enough to avoid a race with any dependent drivers.
+[1]: https://elixir.bootlin.com/linux/v6.8/source/drivers/base/platform.c#L1353
 
-- Add a check for IORESOURCE_UNSET in p2sb_valid_resource() to catch
-  unset BARs going forward.
-
-- Return error values from p2sb_fs_init() so that the 'initcall_debug'
-  cmdline arg provides useful data.
-
-Signed-off-by: Ben Fradella <bfradell@netapp.com>
-Acked-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Tested-by: Klara Modin <klarasmodin@gmail.com>
-Reviewed-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Link: https://lore.kernel.org/r/20240509164905.41016-1-bcfradella@proton.me
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Benson Leung <bleung@chromium.org>
+Reviewed-by: Prashant Malani <pmalani@chromium.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Link: https://lore.kernel.org/r/20240401030052.2887845-4-tzungbi@kernel.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/p2sb.c | 29 +++++++++++++++--------------
- 1 file changed, 15 insertions(+), 14 deletions(-)
+ drivers/power/supply/cros_usbpd-charger.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/p2sb.c b/drivers/platform/x86/p2sb.c
-index a64f56ddd4a44..053be5c5e0cad 100644
---- a/drivers/platform/x86/p2sb.c
-+++ b/drivers/platform/x86/p2sb.c
-@@ -56,12 +56,9 @@ static int p2sb_get_devfn(unsigned int *devfn)
- 	return 0;
- }
- 
--static bool p2sb_valid_resource(struct resource *res)
-+static bool p2sb_valid_resource(const struct resource *res)
- {
--	if (res->flags)
--		return true;
--
--	return false;
-+	return res->flags & ~IORESOURCE_UNSET;
- }
- 
- /* Copy resource from the first BAR of the device in question */
-@@ -220,16 +217,20 @@ EXPORT_SYMBOL_GPL(p2sb_bar);
- 
- static int __init p2sb_fs_init(void)
- {
--	p2sb_cache_resources();
--	return 0;
-+	return p2sb_cache_resources();
- }
- 
- /*
-- * pci_rescan_remove_lock to avoid access to unhidden P2SB devices can
-- * not be locked in sysfs pci bus rescan path because of deadlock. To
-- * avoid the deadlock, access to P2SB devices with the lock at an early
-- * step in kernel initialization and cache required resources. This
-- * should happen after subsys_initcall which initializes PCI subsystem
-- * and before device_initcall which requires P2SB resources.
-+ * pci_rescan_remove_lock() can not be locked in sysfs PCI bus rescan path
-+ * because of deadlock. To avoid the deadlock, access P2SB devices with the lock
-+ * at an early step in kernel initialization and cache required resources.
-+ *
-+ * We want to run as early as possible. If the P2SB was assigned a bad BAR,
-+ * we'll need to wait on pcibios_assign_resources() to fix it. So, our list of
-+ * initcall dependencies looks something like this:
-+ *
-+ * ...
-+ * subsys_initcall (pci_subsys_init)
-+ * fs_initcall     (pcibios_assign_resources)
+diff --git a/drivers/power/supply/cros_usbpd-charger.c b/drivers/power/supply/cros_usbpd-charger.c
+index b6c96376776a9..8008e31c0c098 100644
+--- a/drivers/power/supply/cros_usbpd-charger.c
++++ b/drivers/power/supply/cros_usbpd-charger.c
+@@ -5,6 +5,7 @@
+  * Copyright (c) 2014 - 2018 Google, Inc
   */
--fs_initcall(p2sb_fs_init);
-+fs_initcall_sync(p2sb_fs_init);
+ 
++#include <linux/mod_devicetable.h>
+ #include <linux/module.h>
+ #include <linux/platform_data/cros_ec_commands.h>
+ #include <linux/platform_data/cros_ec_proto.h>
+@@ -711,16 +712,22 @@ static int cros_usbpd_charger_resume(struct device *dev)
+ static SIMPLE_DEV_PM_OPS(cros_usbpd_charger_pm_ops, NULL,
+ 			 cros_usbpd_charger_resume);
+ 
++static const struct platform_device_id cros_usbpd_charger_id[] = {
++	{ DRV_NAME, 0 },
++	{}
++};
++MODULE_DEVICE_TABLE(platform, cros_usbpd_charger_id);
++
+ static struct platform_driver cros_usbpd_charger_driver = {
+ 	.driver = {
+ 		.name = DRV_NAME,
+ 		.pm = &cros_usbpd_charger_pm_ops,
+ 	},
+-	.probe = cros_usbpd_charger_probe
++	.probe = cros_usbpd_charger_probe,
++	.id_table = cros_usbpd_charger_id,
+ };
+ 
+ module_platform_driver(cros_usbpd_charger_driver);
+ 
+ MODULE_LICENSE("GPL");
+ MODULE_DESCRIPTION("ChromeOS EC USBPD charger");
+-MODULE_ALIAS("platform:" DRV_NAME);
 -- 
 2.43.0
 
