@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D691147C96;
-	Tue, 25 Jun 2024 09:48:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99AA91465A8;
+	Tue, 25 Jun 2024 09:48:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308921; cv=none; b=UfiN1zChzYiyy8rkT1EkkW/02c1Nz4IkInZMuphoSo0dJkPfxbyHU2wROIhlnXWF6McqrOLMZ1n+pOEv8OHuSrE2cZq8rD9VIAk7BpT/6cP3MUjDHvTMj1bBYEGt+T7uSYfz2VSLr57STkxasek3Uhp6fyxHvJV4KpJcD07XiQ4=
+	t=1719308924; cv=none; b=M4EbAjoTu04b/3pl6IzFlruVCyUCm9+JdavfeHqoj94U3+rPtdjN4qlLAk1eg+3y6+5FnXhoGoWSzJVB6rItFnF6BOdNZhwXxsydM3DRSGivDUIQ7eHM9rb1bsb+weck3r2n4hxQJt0EXz/QGLEMDYCrWTRsB1Pa44l3eg+qFJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308921; c=relaxed/simple;
-	bh=KGoKJU7EuENiNFe/3YZ3H6TNkc8IH4npPAmVGua4ohM=;
+	s=arc-20240116; t=1719308924; c=relaxed/simple;
+	bh=+PIkr1+XJlYh03lAvaN91MFmL6x1Rh4OFHWX+cE2GQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LZ0PdIphDfzTB68iRz4AqWnlrFqhBTFB4crXxlZDvBtI+AJKeKQjC0BCzUqN23+qRC9mhGlUk9oD0uqqhNiRew7HK6AWMMrT2lPieXdmWEkSQXXojxAQTK/GpMyVXU4NxwguRvLi4R4QepJKVePRM+M0LIkw1G0pXVcy24il+UE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yoMBMCf8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jfu5w2ZUGGswC5uGBRyGFn2gmgnyOc2ZT271c0NIQ7DvCmU31zjwyVs7MY91HZGbT+C2vaJyGuOIx2RZ0m+3hZspKNYTDrni2Dh9mGW8BnnzA4dNR9K030yjpkWpnmPHwH9iUJF6uM5hT7g7RcCETfSBjM8FDIldox4Ktc2AAeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0br/qLiT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yoMBMCf8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2399DC32786;
-	Tue, 25 Jun 2024 09:48:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0br/qLiT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CFCFC32781;
+	Tue, 25 Jun 2024 09:48:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308921;
-	bh=KGoKJU7EuENiNFe/3YZ3H6TNkc8IH4npPAmVGua4ohM=;
+	s=korg; t=1719308924;
+	bh=+PIkr1+XJlYh03lAvaN91MFmL6x1Rh4OFHWX+cE2GQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yoMBMCf8r33F6PxccEBf/ZniDFgWYO7322iT3UctcYDj2FBxG0LaLJRMDmW/CJkCd
-	 HYz1VcUR2NEz6wTkc+sD8YaOHe7E4lhoeKGprifJDav8CSPrDQMRZ9yANdOqXkHEHw
-	 AzrB+bhLgrN9L5SCWSbIGddrGl2hM663jvxeyhQg=
+	b=0br/qLiTLwPu/IsveHq049IbH/c7gwB4OOBMinoI5NTMkHcnBzp/FOzRIvoXKC8lq
+	 CL4hM+hkHzUfvHLEPODJcybLiTeyjTC6QsSeQ2m/d5TMQcgyC7Muad2oK9mIV2HEiY
+	 61G1ZJkIweSzD8JuzzhGrUD3b8eSwyT74Wa5y2Xw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erico Nunes <nunes.erico@gmail.com>,
-	Qiang Yu <yuq825@gmail.com>,
+	Stefan Binding <sbinding@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 034/192] drm/lima: mask irqs in timeout path before hard reset
-Date: Tue, 25 Jun 2024 11:31:46 +0200
-Message-ID: <20240625085538.471092385@linuxfoundation.org>
+Subject: [PATCH 6.6 035/192] ALSA: hda/realtek: Add quirks for Lenovo 13X
+Date: Tue, 25 Jun 2024 11:31:47 +0200
+Message-ID: <20240625085538.509798329@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -51,61 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Erico Nunes <nunes.erico@gmail.com>
+From: Stefan Binding <sbinding@opensource.cirrus.com>
 
-[ Upstream commit a421cc7a6a001b70415aa4f66024fa6178885a14 ]
+[ Upstream commit 25f46354dca912c84f1f79468fd636a94b8d287a ]
 
-There is a race condition in which a rendering job might take just long
-enough to trigger the drm sched job timeout handler but also still
-complete before the hard reset is done by the timeout handler.
-This runs into race conditions not expected by the timeout handler.
-In some very specific cases it currently may result in a refcount
-imbalance on lima_pm_idle, with a stack dump such as:
+Add laptop using CS35L41 HDA.
+This laptop does not have _DSD, so require entries in property
+configuration table for cs35l41_hda driver.
 
-[10136.669170] WARNING: CPU: 0 PID: 0 at drivers/gpu/drm/lima/lima_devfreq.c:205 lima_devfreq_record_idle+0xa0/0xb0
-...
-[10136.669459] pc : lima_devfreq_record_idle+0xa0/0xb0
-...
-[10136.669628] Call trace:
-[10136.669634]  lima_devfreq_record_idle+0xa0/0xb0
-[10136.669646]  lima_sched_pipe_task_done+0x5c/0xb0
-[10136.669656]  lima_gp_irq_handler+0xa8/0x120
-[10136.669666]  __handle_irq_event_percpu+0x48/0x160
-[10136.669679]  handle_irq_event+0x4c/0xc0
-
-We can prevent that race condition entirely by masking the irqs at the
-beginning of the timeout handler, at which point we give up on waiting
-for that job entirely.
-The irqs will be enabled again at the next hard reset which is already
-done as a recovery by the timeout handler.
-
-Signed-off-by: Erico Nunes <nunes.erico@gmail.com>
-Reviewed-by: Qiang Yu <yuq825@gmail.com>
-Signed-off-by: Qiang Yu <yuq825@gmail.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240405152951.1531555-4-nunes.erico@gmail.com
+Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
+Message-ID: <20240423162303.638211-3-sbinding@opensource.cirrus.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/lima/lima_sched.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/pci/hda/patch_realtek.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/lima/lima_sched.c b/drivers/gpu/drm/lima/lima_sched.c
-index ffd91a5ee2990..1114bffe38c83 100644
---- a/drivers/gpu/drm/lima/lima_sched.c
-+++ b/drivers/gpu/drm/lima/lima_sched.c
-@@ -402,6 +402,13 @@ static enum drm_gpu_sched_stat lima_sched_timedout_job(struct drm_sched_job *job
- 	struct lima_sched_task *task = to_lima_task(job);
- 	struct lima_device *ldev = pipe->ldev;
- 
-+	/*
-+	 * The task might still finish while this timeout handler runs.
-+	 * To prevent a race condition on its completion, mask all irqs
-+	 * on the running core until the next hard reset completes.
-+	 */
-+	pipe->task_mask_irq(pipe);
-+
- 	if (!pipe->error)
- 		DRM_ERROR("lima job timeout\n");
- 
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 2151fb1bd0de7..44478e0af1e41 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10257,6 +10257,8 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x3852, "Lenovo Yoga 7 14ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
+ 	SND_PCI_QUIRK(0x17aa, 0x3853, "Lenovo Yoga 7 15ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
+ 	SND_PCI_QUIRK(0x17aa, 0x3855, "Legion 7 16ITHG6", ALC287_FIXUP_LEGION_16ITHG6),
++	SND_PCI_QUIRK(0x17aa, 0x3865, "Lenovo 13X", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x17aa, 0x3866, "Lenovo 13X", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x3869, "Lenovo Yoga7 14IAL7", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x387d, "Yoga S780-16 pro Quad AAC", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x387e, "Yoga S780-16 pro Quad YC", ALC287_FIXUP_TAS2781_I2C),
 -- 
 2.43.0
 
