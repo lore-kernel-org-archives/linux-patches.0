@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4948412EBEA;
-	Tue, 25 Jun 2024 09:43:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D6612EBEA;
+	Tue, 25 Jun 2024 09:43:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308624; cv=none; b=Ok39fODuA46Upj335x3ixxQAwNz0Bl/ZpzFHRwMgQY34J7ZbrrXON3KlT3o5YbOBQYbS01AYlH3Q7Nx9Q1O3XUyST6dF9kT5q03SYluo2alU1vHndsDJxNGm80x83Qdr15Q5DVnXymxztHo2/EMzCZJ2ig5jUdpogLAbCb1+9/0=
+	t=1719308627; cv=none; b=P9EeR0l9O7Rn/AKGrvdEy323iM71jmf50H1U4bQGhPSDlZmoSS9J1QMHXruveGgNayScpI0Y5bpK2q+FI59J7E7WAtHKpFQdNcHKmwLVr0JzLlbgjy6LdVAhRITG+EKfoh+MeePDk2HSlmDsbSGPmw/NgV5MvRwW0BoJjJKw+DU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308624; c=relaxed/simple;
-	bh=G64Oy6nUlsBtFtD9NsOihC/AwKZeVsUg+yH5odiMpKw=;
+	s=arc-20240116; t=1719308627; c=relaxed/simple;
+	bh=YLItzNP+jA3/9R7hmnUc0TZrWimACmLNF43nM+l1RA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aFG0xTkHFILm60/ncE1EdH40rq2KlQu2ZJCoWjtipayLykLIdaTfeWwlT+ZXg4kz5QpeZjSpAqPSuoQ6n1Zkc4isscxZHpOeZxFfaVxn439lJriFVhhBIDgXfU2t68giUIFb3akRhqEZXRDohbkBBk3vb1hOiSEJXVRnJSoFPHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=whyip48t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wb9TA+mpIyx5pZFsdD90a9DlvkLbFU2Skncp2CWcTbUyC7tc8J11qOpbmU1Fz5WxY5yb8AzjU/DJQuREzU0aXsX1MKW38JPsWR4eXU6VTigw4LUARoZ5Cu93tJGdPUbwBO7BlfMIw0ld6Ys9ibf2Ipyn08dDuqogwrLiwIQ+86A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CnX3O34S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="whyip48t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C11F6C32781;
-	Tue, 25 Jun 2024 09:43:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CnX3O34S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCFD4C32781;
+	Tue, 25 Jun 2024 09:43:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308624;
-	bh=G64Oy6nUlsBtFtD9NsOihC/AwKZeVsUg+yH5odiMpKw=;
+	s=korg; t=1719308627;
+	bh=YLItzNP+jA3/9R7hmnUc0TZrWimACmLNF43nM+l1RA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=whyip48tt7K6Lp1pIpUt33V+333IqWoiBkTNjvnN4gKzd74+VZAS017IBgxpBWlSM
-	 9yxxlVkDoMFo2/vB2oSZuIr2o3C0yO1FX6ISdtGxFwPMM8/CvrVePPVITglU5SZSdV
-	 hBFcaG41bXN/K9W5bB9eJr/GOE4eKEdQzczrJsik=
+	b=CnX3O34SAm29Ald+BGDC1SxV9r+4Yub3aRUyeE3D7Gz7jw8VCsUgS7AO9jL0nK2TW
+	 CgPEU0L94i7Sn7zHPwY97FXDP7AOXNV7px8CoXI5mCC5y/UgXWZUseZdP4SKw9HYs6
+	 4IwOyxx7Voo9rfipV65iGTIIMt/sPXiXwXmtvWFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Ignat Korchagin <ignat@cloudflare.com>,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.9 184/250] net: do not leave a dangling sk pointer, when socket creation fails
-Date: Tue, 25 Jun 2024 11:32:22 +0200
-Message-ID: <20240625085555.113737904@linuxfoundation.org>
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.9 185/250] btrfs: retry block group reclaim without infinite loop
+Date: Tue, 25 Jun 2024 11:32:23 +0200
+Message-ID: <20240625085555.153064068@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -52,95 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ignat Korchagin <ignat@cloudflare.com>
+From: Boris Burkov <boris@bur.io>
 
-commit 6cd4a78d962bebbaf8beb7d2ead3f34120e3f7b2 upstream.
+commit 4eb4e85c4f818491efc67e9373aa16b123c3f522 upstream.
 
-It is possible to trigger a use-after-free by:
-  * attaching an fentry probe to __sock_release() and the probe calling the
-    bpf_get_socket_cookie() helper
-  * running traceroute -I 1.1.1.1 on a freshly booted VM
+If inc_block_group_ro systematically fails (e.g. due to ETXTBUSY from
+swap) or btrfs_relocate_chunk systematically fails (from lack of
+space), then this worker becomes an infinite loop.
 
-A KASAN enabled kernel will log something like below (decoded and stripped):
-==================================================================
-BUG: KASAN: slab-use-after-free in __sock_gen_cookie (./arch/x86/include/asm/atomic64_64.h:15 ./include/linux/atomic/atomic-arch-fallback.h:2583 ./include/linux/atomic/atomic-instrumented.h:1611 net/core/sock_diag.c:29)
-Read of size 8 at addr ffff888007110dd8 by task traceroute/299
+At the very least, this strands the cleaner thread, but can also result
+in hung tasks/RCU stalls on PREEMPT_NONE kernels and if the
+reclaim_bgs_lock mutex is not contended.
 
-CPU: 2 PID: 299 Comm: traceroute Tainted: G            E      6.10.0-rc2+ #2
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
-Call Trace:
- <TASK>
-dump_stack_lvl (lib/dump_stack.c:117 (discriminator 1))
-print_report (mm/kasan/report.c:378 mm/kasan/report.c:488)
-? __sock_gen_cookie (./arch/x86/include/asm/atomic64_64.h:15 ./include/linux/atomic/atomic-arch-fallback.h:2583 ./include/linux/atomic/atomic-instrumented.h:1611 net/core/sock_diag.c:29)
-kasan_report (mm/kasan/report.c:603)
-? __sock_gen_cookie (./arch/x86/include/asm/atomic64_64.h:15 ./include/linux/atomic/atomic-arch-fallback.h:2583 ./include/linux/atomic/atomic-instrumented.h:1611 net/core/sock_diag.c:29)
-kasan_check_range (mm/kasan/generic.c:183 mm/kasan/generic.c:189)
-__sock_gen_cookie (./arch/x86/include/asm/atomic64_64.h:15 ./include/linux/atomic/atomic-arch-fallback.h:2583 ./include/linux/atomic/atomic-instrumented.h:1611 net/core/sock_diag.c:29)
-bpf_get_socket_ptr_cookie (./arch/x86/include/asm/preempt.h:94 ./include/linux/sock_diag.h:42 net/core/filter.c:5094 net/core/filter.c:5092)
-bpf_prog_875642cf11f1d139___sock_release+0x6e/0x8e
-bpf_trampoline_6442506592+0x47/0xaf
-__sock_release (net/socket.c:652)
-__sock_create (net/socket.c:1601)
-...
-Allocated by task 299 on cpu 2 at 78.328492s:
-kasan_save_stack (mm/kasan/common.c:48)
-kasan_save_track (mm/kasan/common.c:68)
-__kasan_slab_alloc (mm/kasan/common.c:312 mm/kasan/common.c:338)
-kmem_cache_alloc_noprof (mm/slub.c:3941 mm/slub.c:4000 mm/slub.c:4007)
-sk_prot_alloc (net/core/sock.c:2075)
-sk_alloc (net/core/sock.c:2134)
-inet_create (net/ipv4/af_inet.c:327 net/ipv4/af_inet.c:252)
-__sock_create (net/socket.c:1572)
-__sys_socket (net/socket.c:1660 net/socket.c:1644 net/socket.c:1706)
-__x64_sys_socket (net/socket.c:1718)
-do_syscall_64 (arch/x86/entry/common.c:52 arch/x86/entry/common.c:83)
-entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+I believe the best long term fix is to manage reclaim via work queue,
+where we queue up a relocation on the triggering condition and re-queue
+on failure. In the meantime, this is an easy fix to apply to avoid the
+immediate pain.
 
-Freed by task 299 on cpu 2 at 78.328502s:
-kasan_save_stack (mm/kasan/common.c:48)
-kasan_save_track (mm/kasan/common.c:68)
-kasan_save_free_info (mm/kasan/generic.c:582)
-poison_slab_object (mm/kasan/common.c:242)
-__kasan_slab_free (mm/kasan/common.c:256)
-kmem_cache_free (mm/slub.c:4437 mm/slub.c:4511)
-__sk_destruct (net/core/sock.c:2117 net/core/sock.c:2208)
-inet_create (net/ipv4/af_inet.c:397 net/ipv4/af_inet.c:252)
-__sock_create (net/socket.c:1572)
-__sys_socket (net/socket.c:1660 net/socket.c:1644 net/socket.c:1706)
-__x64_sys_socket (net/socket.c:1718)
-do_syscall_64 (arch/x86/entry/common.c:52 arch/x86/entry/common.c:83)
-entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-
-Fix this by clearing the struct socket reference in sk_common_release() to cover
-all protocol families create functions, which may already attached the
-reference to the sk object with sock_init_data().
-
-Fixes: c5dbb89fc2ac ("bpf: Expose bpf_get_socket_cookie to tracing programs")
-Suggested-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Ignat Korchagin <ignat@cloudflare.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/netdev/20240613194047.36478-1-kuniyu@amazon.com/T/
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: D. Wythe <alibuda@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20240617210205.67311-1-ignat@cloudflare.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 7e2718099438 ("btrfs: reinsert BGs failed to reclaim")
+CC: stable@vger.kernel.org # 6.6+
+Signed-off-by: Boris Burkov <boris@bur.io>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/sock.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/btrfs/block-group.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -3743,6 +3743,9 @@ void sk_common_release(struct sock *sk)
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -1785,6 +1785,7 @@ void btrfs_reclaim_bgs_work(struct work_
+ 		container_of(work, struct btrfs_fs_info, reclaim_bgs_work);
+ 	struct btrfs_block_group *bg;
+ 	struct btrfs_space_info *space_info;
++	LIST_HEAD(retry_list);
  
- 	sk->sk_prot->unhash(sk);
+ 	if (!test_bit(BTRFS_FS_OPEN, &fs_info->flags))
+ 		return;
+@@ -1921,8 +1922,11 @@ void btrfs_reclaim_bgs_work(struct work_
+ 		}
  
-+	if (sk->sk_socket)
-+		sk->sk_socket->sk = NULL;
-+
- 	/*
- 	 * In this point socket cannot receive new packets, but it is possible
- 	 * that some packets are in flight because some CPU runs receiver and
+ next:
+-		if (ret)
+-			btrfs_mark_bg_to_reclaim(bg);
++		if (ret) {
++			/* Refcount held by the reclaim_bgs list after splice. */
++			btrfs_get_block_group(bg);
++			list_add_tail(&bg->bg_list, &retry_list);
++		}
+ 		btrfs_put_block_group(bg);
+ 
+ 		mutex_unlock(&fs_info->reclaim_bgs_lock);
+@@ -1942,6 +1946,9 @@ next:
+ 	spin_unlock(&fs_info->unused_bgs_lock);
+ 	mutex_unlock(&fs_info->reclaim_bgs_lock);
+ end:
++	spin_lock(&fs_info->unused_bgs_lock);
++	list_splice_tail(&retry_list, &fs_info->reclaim_bgs);
++	spin_unlock(&fs_info->unused_bgs_lock);
+ 	btrfs_exclop_finish(fs_info);
+ 	sb_end_write(fs_info->sb);
+ }
 
 
