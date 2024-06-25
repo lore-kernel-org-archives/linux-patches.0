@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 595271465A8;
-	Tue, 25 Jun 2024 09:47:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44FB1465A8;
+	Tue, 25 Jun 2024 09:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308848; cv=none; b=ThXwkiHAobbSL4LqH1TU/lP9AQrQqXBQ+sgb3/oIc90b+c+g4KfgueczVs+gCxX4isId8+WQhEPe1YrYAEOTEjmOjRCrFvhuAdMXpzzs7xmFO7W6nolLNNac0NGKebilubkcLihl+oB1mcSL5BeoaSHK7mIWkxtJa5qVhgyDRdA=
+	t=1719308850; cv=none; b=POaOncm/XhvnesckyT/YdjHvnQ+jNDqe4jB+V7JMN+1mP0eg8A5vlP62424cwczF0uyWqQqUAWXz2WzrkyppV4/9CW5xw7Q/uHnOGTTy/A/ogzpIYT5n/mYp8WHHpVpoaOEGM3KIbesA3Yjf2/lVqOG1Gq8x0X6eMDA2PEcNy6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308848; c=relaxed/simple;
-	bh=ZftK36LYvJ/n6PyeADegLXJMPcHce24GRgHdwpr5x/0=;
+	s=arc-20240116; t=1719308850; c=relaxed/simple;
+	bh=Lo0ck8H0X0NMBteVJjB4WgVhLgGGuLwBcAJOoxGj39Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gJMqv2/xEbt2ioNN/e55YVQz65vtU/f9e+ZQ9Sgh7jyZfHTOjkn9grIul1PJzawHzUC2lgi38OeiQU7ui2isMlyLZPXsnGX1zqmdZQaAvicf0Q4LFoj4foNyC+UINfW6nnBPsu3Ug+lGEqDLT8xMbKtXIvVTagZPe00q1Xvy7o0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mjILp54G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oc6NHVnw5jTrtF0WGUd1BHK71SlXg6cQSM6na3EM16LxDfVn+w20vLLkzmECIy5s0aihQtOz/U381OkEfNMA8JtbWdzZ6iK8ziyA4Pgi39I0i7mf+8zKyvEMo3jmJE0O7x4UbSa4iz7y2gQB0MrDbdhDOBzVLAAgk5p7dc0B5Zo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZaMFY0Yr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mjILp54G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75C6EC32781;
-	Tue, 25 Jun 2024 09:47:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZaMFY0Yr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E6A2C32781;
+	Tue, 25 Jun 2024 09:47:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308847;
-	bh=ZftK36LYvJ/n6PyeADegLXJMPcHce24GRgHdwpr5x/0=;
+	s=korg; t=1719308850;
+	bh=Lo0ck8H0X0NMBteVJjB4WgVhLgGGuLwBcAJOoxGj39Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mjILp54GX7l/cBQyU676g/yjWFiEvkJiWwurLGeq9t8XZd1O8J0dRpWfez7q1Lstr
-	 369nRC3Oax0b6EjvnmBJnfAllGhZ5RaDunEGhODp7+LABQauDzWSgfPMvAttUAxBBB
-	 DtvTONq7zvBW/22dTEU5JxWruj/hUTVF8QH209zY=
+	b=ZaMFY0YrUBT8Bh0wNmi1MiFcH/bsyvVfp8O06Ybm9OSev8l+FvAXIXNrSbZCUceOa
+	 jl31Nx47oNOJ6V+aQeJxo9PVjssQLIrHqr450LI2byOO6Yq7eRbOVnhjhS4dKxQmK/
+	 xl9GXHwg9w6mwR3h73VJeeMR2sm019C2eVlYCeB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rand Deeb <rand.sec96@gmail.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	"Alessandro Carminati (Red Hat)" <alessandro.carminati@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 010/192] ssb: Fix potential NULL pointer dereference in ssb_device_uevent()
-Date: Tue, 25 Jun 2024 11:31:22 +0200
-Message-ID: <20240625085537.551816719@linuxfoundation.org>
+Subject: [PATCH 6.6 011/192] selftests/bpf: Prevent client connect before server bind in test_tc_tunnel.sh
+Date: Tue, 25 Jun 2024 11:31:23 +0200
+Message-ID: <20240625085537.590386965@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -51,47 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rand Deeb <rand.sec96@gmail.com>
+From: Alessandro Carminati (Red Hat) <alessandro.carminati@gmail.com>
 
-[ Upstream commit 789c17185fb0f39560496c2beab9b57ce1d0cbe7 ]
+[ Upstream commit f803bcf9208a2540acb4c32bdc3616673169f490 ]
 
-The ssb_device_uevent() function first attempts to convert the 'dev' pointer
-to 'struct ssb_device *'. However, it mistakenly dereferences 'dev' before
-performing the NULL check, potentially leading to a NULL pointer
-dereference if 'dev' is NULL.
+In some systems, the netcat server can incur in delay to start listening.
+When this happens, the test can randomly fail in various points.
+This is an example error message:
 
-To fix this issue, move the NULL check before dereferencing the 'dev' pointer,
-ensuring that the pointer is valid before attempting to use it.
+   # ip gre none gso
+   # encap 192.168.1.1 to 192.168.1.2, type gre, mac none len 2000
+   # test basic connectivity
+   # Ncat: Connection refused.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+The issue stems from a race condition between the netcat client and server.
+The test author had addressed this problem by implementing a sleep, which
+I have removed in this patch.
+This patch introduces a function capable of sleeping for up to two seconds.
+However, it can terminate the waiting period early if the port is reported
+to be listening.
 
-Signed-off-by: Rand Deeb <rand.sec96@gmail.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20240306123028.164155-1-rand.sec96@gmail.com
+Signed-off-by: Alessandro Carminati (Red Hat) <alessandro.carminati@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20240314105911.213411-1-alessandro.carminati@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ssb/main.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/testing/selftests/bpf/test_tc_tunnel.sh | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ssb/main.c b/drivers/ssb/main.c
-index ab080cf26c9ff..0c736d51566dc 100644
---- a/drivers/ssb/main.c
-+++ b/drivers/ssb/main.c
-@@ -341,11 +341,13 @@ static int ssb_bus_match(struct device *dev, struct device_driver *drv)
+diff --git a/tools/testing/selftests/bpf/test_tc_tunnel.sh b/tools/testing/selftests/bpf/test_tc_tunnel.sh
+index 910044f08908a..7989ec6084545 100755
+--- a/tools/testing/selftests/bpf/test_tc_tunnel.sh
++++ b/tools/testing/selftests/bpf/test_tc_tunnel.sh
+@@ -72,7 +72,6 @@ cleanup() {
+ server_listen() {
+ 	ip netns exec "${ns2}" nc "${netcat_opt}" -l "${port}" > "${outfile}" &
+ 	server_pid=$!
+-	sleep 0.2
+ }
  
- static int ssb_device_uevent(const struct device *dev, struct kobj_uevent_env *env)
- {
--	const struct ssb_device *ssb_dev = dev_to_ssb_dev(dev);
-+	const struct ssb_device *ssb_dev;
+ client_connect() {
+@@ -93,6 +92,16 @@ verify_data() {
+ 	fi
+ }
  
- 	if (!dev)
- 		return -ENODEV;
- 
-+	ssb_dev = dev_to_ssb_dev(dev);
++wait_for_port() {
++	for i in $(seq 20); do
++		if ip netns exec "${ns2}" ss ${2:--4}OHntl | grep -q "$1"; then
++			return 0
++		fi
++		sleep 0.1
++	done
++	return 1
++}
 +
- 	return add_uevent_var(env,
- 			     "MODALIAS=ssb:v%04Xid%04Xrev%02X",
- 			     ssb_dev->id.vendor, ssb_dev->id.coreid,
+ set -e
+ 
+ # no arguments: automated test, run all
+@@ -193,6 +202,7 @@ setup
+ # basic communication works
+ echo "test basic connectivity"
+ server_listen
++wait_for_port ${port} ${netcat_opt}
+ client_connect
+ verify_data
+ 
+@@ -204,6 +214,7 @@ ip netns exec "${ns1}" tc filter add dev veth1 egress \
+ 	section "encap_${tuntype}_${mac}"
+ echo "test bpf encap without decap (expect failure)"
+ server_listen
++wait_for_port ${port} ${netcat_opt}
+ ! client_connect
+ 
+ if [[ "$tuntype" =~ "udp" ]]; then
 -- 
 2.43.0
 
