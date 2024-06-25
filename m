@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4EF5149E03;
-	Tue, 25 Jun 2024 09:43:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B956B12EBEA;
+	Tue, 25 Jun 2024 09:43:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308594; cv=none; b=WDJONyxqCyAurxefhel3XFMZ2DwxYmEqhymUqAYh1yJ91coln7qI/nGBLoWSqv3RknDFH7tYmznvoBIhw/D/R2Uu+CSuBbcQU7dSkEKCDG9s2X8t7Ow3rGe2gwARzDQvNi+jmb+p7txcHTK/MBSwE56zh1gpZmM6SeApsJPgbxQ=
+	t=1719308597; cv=none; b=PDI/b9RjK2/GgxNlUvlvFSlklR65yXMjwA8R++y51ju85/7Y8TWHui6f05JRGpUJs8ya3h6r+reIoK3PwDlsTRTpOHc2qwsRowHD1VdxsJ7/+aonVPQgPozxRxk8NCiZ0RdnbSsb/x1Jn6c7e+ixzP2Akr3s0m2QAL5xBUcLLdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308594; c=relaxed/simple;
-	bh=ylIDHTLw9sifm/FJVBWF76PD3kjDcPhVxlQzwhH2ZiA=;
+	s=arc-20240116; t=1719308597; c=relaxed/simple;
+	bh=0y8ap0uZ4SNSSa0xpFXmgFSemcUNb/vIsXp4OWeSL8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c/UmSS/BojdQdUUCYq8xDTUmQ3bJduSe2X6+iLJBwwVF0t/UFuc+59cSRnKO6Ys5rBnqTZok8wjqEcC27WJwF/hUkGpTY9ozwUmzAd/O49y6d27NAN6lD17Xgvoy8+h2yalS3OrCGchVxUyi7CigWkZRF6JcoXWTHUbnWSNWkas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cTCLvqvU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qRF2B8F/RlOdA1AhhPB3rYhMv0L0x1tPH+U+jSHTS0IGNI1ze+KLNcd8BUXpEfKQSQ92mNtHm0Sy6kW0hKY1zcqWkwo2BbmPMgjqC+EpI9vnDTIC9N14Y8wslQdgcdcLTLg3Ww/ggZfTjnpvpSuWjtfQOz94Ijjyn6B4g3Zq7Rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TRzrSIc4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cTCLvqvU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43A09C32781;
-	Tue, 25 Jun 2024 09:43:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TRzrSIc4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42248C32781;
+	Tue, 25 Jun 2024 09:43:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308594;
-	bh=ylIDHTLw9sifm/FJVBWF76PD3kjDcPhVxlQzwhH2ZiA=;
+	s=korg; t=1719308597;
+	bh=0y8ap0uZ4SNSSa0xpFXmgFSemcUNb/vIsXp4OWeSL8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cTCLvqvU9JmClnXQanHaxcdANOW0ueY82j08hZsNtUdc6VDSdini7VyYoy7iiidcD
-	 5ysHrkxUlLIo5ikD/7qdXRBChsxhJDoGJNEPl2C8zeRnxZADEvtx93YWJ4tA6pr2Ft
-	 cgbO4f+hapVPcLXQ1z6Tg+v/cP2+9JtYVlIW/5+c=
+	b=TRzrSIc4RRoGeyWeuIwT1aQC11odwBi9J5HCmYtsLAREmi9tx820RE45RiICmf1+m
+	 GbgWBwE82GYBVO+sXYDBs9tSCDUBwwSbJkHVxVu855CRNF8UTrnR2XOu93qIB3vN6O
+	 n8bP4qrliylUZveHJWGOP2mB3TEO9kjOnjgx0kSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrisious Haddad <phaddad@nvidia.com>,
+	Konstantin Taranov <kotaranov@microsoft.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 175/250] RDMA/mlx5: Add check for srq max_sge attribute
-Date: Tue, 25 Jun 2024 11:32:13 +0200
-Message-ID: <20240625085554.768520475@linuxfoundation.org>
+Subject: [PATCH 6.9 176/250] RDMA/mana_ib: Ignore optional access flags for MRs
+Date: Tue, 25 Jun 2024 11:32:14 +0200
+Message-ID: <20240625085554.807023448@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -51,52 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Konstantin Taranov <kotaranov@microsoft.com>
 
-[ Upstream commit 36ab7ada64caf08f10ee5a114d39964d1f91e81d ]
+[ Upstream commit 82a5cc783d49b86afd2f60e297ecd85223c39f88 ]
 
-max_sge attribute is passed by the user, and is inserted and used
-unchecked, so verify that the value doesn't exceed maximum allowed value
-before using it.
+Ignore optional ib_access_flags when an MR is created.
 
-Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Link: https://lore.kernel.org/r/277ccc29e8d57bfd53ddeb2ac633f2760cf8cdd0.1716900410.git.leon@kernel.org
+Fixes: 0266a177631d ("RDMA/mana_ib: Add a driver for Microsoft Azure Network Adapter")
+Signed-off-by: Konstantin Taranov <kotaranov@microsoft.com>
+Link: https://lore.kernel.org/r/1717575368-14879-1-git-send-email-kotaranov@linux.microsoft.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/srq.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/infiniband/hw/mana/mr.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/hw/mlx5/srq.c b/drivers/infiniband/hw/mlx5/srq.c
-index a056ea835da54..84be0c3d56995 100644
---- a/drivers/infiniband/hw/mlx5/srq.c
-+++ b/drivers/infiniband/hw/mlx5/srq.c
-@@ -199,17 +199,20 @@ int mlx5_ib_create_srq(struct ib_srq *ib_srq,
- 	int err;
- 	struct mlx5_srq_attr in = {};
- 	__u32 max_srq_wqes = 1 << MLX5_CAP_GEN(dev->mdev, log_max_srq_sz);
-+	__u32 max_sge_sz =  MLX5_CAP_GEN(dev->mdev, max_wqe_sz_rq) /
-+			    sizeof(struct mlx5_wqe_data_seg);
+diff --git a/drivers/infiniband/hw/mana/mr.c b/drivers/infiniband/hw/mana/mr.c
+index b70b13484f097..13a49d8fd49d5 100644
+--- a/drivers/infiniband/hw/mana/mr.c
++++ b/drivers/infiniband/hw/mana/mr.c
+@@ -112,6 +112,7 @@ struct ib_mr *mana_ib_reg_user_mr(struct ib_pd *ibpd, u64 start, u64 length,
+ 		  "start 0x%llx, iova 0x%llx length 0x%llx access_flags 0x%x",
+ 		  start, iova, length, access_flags);
  
- 	if (init_attr->srq_type != IB_SRQT_BASIC &&
- 	    init_attr->srq_type != IB_SRQT_XRC &&
- 	    init_attr->srq_type != IB_SRQT_TM)
- 		return -EOPNOTSUPP;
- 
--	/* Sanity check SRQ size before proceeding */
--	if (init_attr->attr.max_wr >= max_srq_wqes) {
--		mlx5_ib_dbg(dev, "max_wr %d, cap %d\n",
--			    init_attr->attr.max_wr,
--			    max_srq_wqes);
-+	/* Sanity check SRQ and sge size before proceeding */
-+	if (init_attr->attr.max_wr >= max_srq_wqes ||
-+	    init_attr->attr.max_sge > max_sge_sz) {
-+		mlx5_ib_dbg(dev, "max_wr %d,wr_cap %d,max_sge %d, sge_cap:%d\n",
-+			    init_attr->attr.max_wr, max_srq_wqes,
-+			    init_attr->attr.max_sge, max_sge_sz);
- 		return -EINVAL;
- 	}
++	access_flags &= ~IB_ACCESS_OPTIONAL;
+ 	if (access_flags & ~VALID_MR_FLAGS)
+ 		return ERR_PTR(-EINVAL);
  
 -- 
 2.43.0
