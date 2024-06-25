@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9C01465A8;
-	Tue, 25 Jun 2024 09:48:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CB51494AF;
+	Tue, 25 Jun 2024 09:48:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308904; cv=none; b=fUs1+otN0YMmhjsmA8XXX4v9aVpmP8hB0M6CxbfvGTHBBTENFUVmEPVzms7f35DKVTX5fduO6RxmlIHBWrKYbrkkGaI9GhvplnBtZo0m5ORLQ1/vRuTBvNLsOXuiPnTSXZO43hYY8GOGOWaY2xsr6bmT0q5/iRgvn2QJ2DyKoXI=
+	t=1719308907; cv=none; b=Wx+H5IcI8OJw5caOmJqHVi2hjadTD/g5UiwdWEV9Q9GBul0h/34Ez3SvcAaACaYCeGMU6W00v+crsXaTF01kXrzNdqBEnYZ9OwXGaBkQbeHXztoObsxp3EIQsJcPcTJrr5laD9UzMatJW75Dvim1cykAfaHx6Cft1Z2VlsRugMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308904; c=relaxed/simple;
-	bh=jNqJRQYg4s0ja8IX9iagX5PcwwDkTenGxj/QLyex7yg=;
+	s=arc-20240116; t=1719308907; c=relaxed/simple;
+	bh=ld8sFuzsRaR2Hcbdhs2i6t6UJLH7clUYSrAXqtGmuBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qlof2ZAzq8BnyOaKGagxk8JVUa1VzgqZD8Psb5whM8qm+vW454pcscdL6rQiG7p1/G1as4wHAUUzQHUsVaFbE3rb8Ij+ZicoZ4muh//6l6gkw12upFBcK+Ux5XQMXnXF61LF6OgvO0oC+8Kw+Un9NhfZSdU8+8SU/X7RciL4jMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HWMxhJgH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KRY+vyei1EEciwgXZs/t+DhZpv1HFm+zCuspIBH94UG7jwh1CHtO8VKYJpuQ0jMbLAgw+dOg12B7wdCK1RAu2n21Dhc2XEW9tUwaFcENvPSIjLy9+a4QW4PTaWtLscWzaV4fX4OdK30oU5FqrWTbphXEc+de4cOFIy+DlDmw8a4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q33Akyfx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HWMxhJgH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED0EC32781;
-	Tue, 25 Jun 2024 09:48:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q33Akyfx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70266C32781;
+	Tue, 25 Jun 2024 09:48:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308903;
-	bh=jNqJRQYg4s0ja8IX9iagX5PcwwDkTenGxj/QLyex7yg=;
+	s=korg; t=1719308906;
+	bh=ld8sFuzsRaR2Hcbdhs2i6t6UJLH7clUYSrAXqtGmuBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HWMxhJgHSap/h5oHNfVkqj2ZRCRV1G8WSL2NtntDrNkpXM80JlUDvWL7t2sULRLsX
-	 7/x7jHwax1zLZu1FEJ1HTTzEdwA4hhjH/uoQC+HU2/6ZRB3caLK3wTrjNYmTpcRnFD
-	 7XUDeFg7CAd4uFxGAyBQItwHrztUm4bAcPp1LxII=
+	b=Q33AkyfxPHm7cktKG7xLwWAA0B0XDXtq+XYYzSXJQwerGoHqVoGAKPmtbm/F4TX6H
+	 2Tb4dG0lsNvL521PLbef5A7/sld+MmkgyGvMbYHA/QmE79cNoshSoOYcK6bhUyiWvr
+	 ynsl+gdU9uSQyKUDin2mHRd3EeuYv1CDVLvzgIpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Charlene Liu <charlene.liu@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Arvid Norlander <lkml@vorpal.se>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 029/192] drm/amd/display: Exit idle optimizations before HDCP execution
-Date: Tue, 25 Jun 2024 11:31:41 +0200
-Message-ID: <20240625085538.280047738@linuxfoundation.org>
+Subject: [PATCH 6.6 030/192] platform/x86: toshiba_acpi: Add quirk for buttons on Z830
+Date: Tue, 25 Jun 2024 11:31:42 +0200
+Message-ID: <20240625085538.318097751@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -49,92 +45,143 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+From: Arvid Norlander <lkml@vorpal.se>
 
-[ Upstream commit f30a3bea92bdab398531129d187629fb1d28f598 ]
+[ Upstream commit 23f1d8b47d125dcd8c1ec62a91164e6bc5d691d0 ]
 
-[WHY]
-PSP can access DCN registers during command submission and we need
-to ensure that DCN is not in PG before doing so.
+The Z830 has some buttons that will only work properly as "quickstart"
+buttons. To enable them in that mode, a value between 1 and 7 must be
+used for HCI_HOTKEY_EVENT. Windows uses 0x5 on this laptop so use that for
+maximum predictability and compatibility.
 
-[HOW]
-Add a callback to DM to lock and notify DC for idle optimization exit.
-It can't be DC directly because of a potential race condition with the
-link protection thread and the rest of DM operation.
+As there is not yet a known way of auto detection, this patch uses a DMI
+quirk table. A module parameter is exposed to allow setting this on other
+models for testing.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Charlene Liu <charlene.liu@amd.com>
-Acked-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Arvid Norlander <lkml@vorpal.se>
+Tested-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240131111641.4418-3-W_Armin@gmx.de
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c    | 10 ++++++++++
- drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h |  8 ++++++++
- 2 files changed, 18 insertions(+)
+ drivers/platform/x86/toshiba_acpi.c | 36 ++++++++++++++++++++++++++---
+ 1 file changed, 33 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c
-index 5e01c6e24cbc8..9a5a1726acaf8 100644
---- a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c
-+++ b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c
-@@ -88,6 +88,14 @@ static uint8_t is_cp_desired_hdcp2(struct mod_hdcp *hdcp)
- 			!hdcp->connection.is_hdcp2_revoked;
- }
+diff --git a/drivers/platform/x86/toshiba_acpi.c b/drivers/platform/x86/toshiba_acpi.c
+index 291f14ef67024..2a5a651235fe6 100644
+--- a/drivers/platform/x86/toshiba_acpi.c
++++ b/drivers/platform/x86/toshiba_acpi.c
+@@ -57,6 +57,11 @@ module_param(turn_on_panel_on_resume, int, 0644);
+ MODULE_PARM_DESC(turn_on_panel_on_resume,
+ 	"Call HCI_PANEL_POWER_ON on resume (-1 = auto, 0 = no, 1 = yes");
  
-+static void exit_idle_optimizations(struct mod_hdcp *hdcp)
-+{
-+	struct mod_hdcp_dm *dm = &hdcp->config.dm;
++static int hci_hotkey_quickstart = -1;
++module_param(hci_hotkey_quickstart, int, 0644);
++MODULE_PARM_DESC(hci_hotkey_quickstart,
++		 "Call HCI_HOTKEY_EVENT with value 0x5 for quickstart button support (-1 = auto, 0 = no, 1 = yes");
 +
-+	if (dm->funcs.exit_idle_optimizations)
-+		dm->funcs.exit_idle_optimizations(dm->handle);
-+}
-+
- static enum mod_hdcp_status execution(struct mod_hdcp *hdcp,
- 		struct mod_hdcp_event_context *event_ctx,
- 		union mod_hdcp_transition_input *input)
-@@ -543,6 +551,8 @@ enum mod_hdcp_status mod_hdcp_process_event(struct mod_hdcp *hdcp,
- 	memset(&event_ctx, 0, sizeof(struct mod_hdcp_event_context));
- 	event_ctx.event = event;
+ #define TOSHIBA_WMI_EVENT_GUID "59142400-C6A3-40FA-BADB-8A2652834100"
  
-+	exit_idle_optimizations(hdcp);
+ /* Scan code for Fn key on TOS1900 models */
+@@ -136,6 +141,7 @@ MODULE_PARM_DESC(turn_on_panel_on_resume,
+ #define HCI_ACCEL_MASK			0x7fff
+ #define HCI_ACCEL_DIRECTION_MASK	0x8000
+ #define HCI_HOTKEY_DISABLE		0x0b
++#define HCI_HOTKEY_ENABLE_QUICKSTART	0x05
+ #define HCI_HOTKEY_ENABLE		0x09
+ #define HCI_HOTKEY_SPECIAL_FUNCTIONS	0x10
+ #define HCI_LCD_BRIGHTNESS_BITS		3
+@@ -2730,10 +2736,15 @@ static int toshiba_acpi_enable_hotkeys(struct toshiba_acpi_dev *dev)
+ 		return -ENODEV;
+ 
+ 	/*
++	 * Enable quickstart buttons if supported.
++	 *
+ 	 * Enable the "Special Functions" mode only if they are
+ 	 * supported and if they are activated.
+ 	 */
+-	if (dev->kbd_function_keys_supported && dev->special_functions)
++	if (hci_hotkey_quickstart)
++		result = hci_write(dev, HCI_HOTKEY_EVENT,
++				   HCI_HOTKEY_ENABLE_QUICKSTART);
++	else if (dev->kbd_function_keys_supported && dev->special_functions)
+ 		result = hci_write(dev, HCI_HOTKEY_EVENT,
+ 				   HCI_HOTKEY_SPECIAL_FUNCTIONS);
+ 	else
+@@ -3257,7 +3268,14 @@ static const char *find_hci_method(acpi_handle handle)
+  * works. toshiba_acpi_resume() uses HCI_PANEL_POWER_ON to avoid changing
+  * the configured brightness level.
+  */
+-static const struct dmi_system_id turn_on_panel_on_resume_dmi_ids[] = {
++#define QUIRK_TURN_ON_PANEL_ON_RESUME		BIT(0)
++/*
++ * Some Toshibas use "quickstart" keys. On these, HCI_HOTKEY_EVENT must use
++ * the value HCI_HOTKEY_ENABLE_QUICKSTART.
++ */
++#define QUIRK_HCI_HOTKEY_QUICKSTART		BIT(1)
 +
- 	/* execute and transition */
- 	exec_status = execution(hdcp, &event_ctx, &hdcp->auth.trans_input);
- 	trans_status = transition(
-diff --git a/drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h b/drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h
-index a4d344a4db9e1..cdb17b093f2b8 100644
---- a/drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h
-+++ b/drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h
-@@ -156,6 +156,13 @@ struct mod_hdcp_ddc {
- 	} funcs;
++static const struct dmi_system_id toshiba_dmi_quirks[] = {
+ 	{
+ 	 /* Toshiba Portégé R700 */
+ 	 /* https://bugzilla.kernel.org/show_bug.cgi?id=21012 */
+@@ -3265,6 +3283,7 @@ static const struct dmi_system_id turn_on_panel_on_resume_dmi_ids[] = {
+ 		DMI_MATCH(DMI_SYS_VENDOR, "TOSHIBA"),
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "PORTEGE R700"),
+ 		},
++	 .driver_data = (void *)QUIRK_TURN_ON_PANEL_ON_RESUME,
+ 	},
+ 	{
+ 	 /* Toshiba Satellite/Portégé R830 */
+@@ -3274,6 +3293,7 @@ static const struct dmi_system_id turn_on_panel_on_resume_dmi_ids[] = {
+ 		DMI_MATCH(DMI_SYS_VENDOR, "TOSHIBA"),
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "R830"),
+ 		},
++	 .driver_data = (void *)QUIRK_TURN_ON_PANEL_ON_RESUME,
+ 	},
+ 	{
+ 	 /* Toshiba Satellite/Portégé Z830 */
+@@ -3281,6 +3301,7 @@ static const struct dmi_system_id turn_on_panel_on_resume_dmi_ids[] = {
+ 		DMI_MATCH(DMI_SYS_VENDOR, "TOSHIBA"),
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "Z830"),
+ 		},
++	 .driver_data = (void *)(QUIRK_TURN_ON_PANEL_ON_RESUME | QUIRK_HCI_HOTKEY_QUICKSTART),
+ 	},
  };
  
-+struct mod_hdcp_dm {
-+	void *handle;
-+	struct {
-+		void (*exit_idle_optimizations)(void *handle);
-+	} funcs;
-+};
-+
- struct mod_hdcp_psp {
- 	void *handle;
- 	void *funcs;
-@@ -272,6 +279,7 @@ struct mod_hdcp_display_query {
- struct mod_hdcp_config {
- 	struct mod_hdcp_psp psp;
- 	struct mod_hdcp_ddc ddc;
-+	struct mod_hdcp_dm dm;
- 	uint8_t index;
- };
+@@ -3289,6 +3310,8 @@ static int toshiba_acpi_add(struct acpi_device *acpi_dev)
+ 	struct toshiba_acpi_dev *dev;
+ 	const char *hci_method;
+ 	u32 dummy;
++	const struct dmi_system_id *dmi_id;
++	long quirks = 0;
+ 	int ret = 0;
  
+ 	if (toshiba_acpi)
+@@ -3441,8 +3464,15 @@ static int toshiba_acpi_add(struct acpi_device *acpi_dev)
+ 	}
+ #endif
+ 
++	dmi_id = dmi_first_match(toshiba_dmi_quirks);
++	if (dmi_id)
++		quirks = (long)dmi_id->driver_data;
++
+ 	if (turn_on_panel_on_resume == -1)
+-		turn_on_panel_on_resume = dmi_check_system(turn_on_panel_on_resume_dmi_ids);
++		turn_on_panel_on_resume = !!(quirks & QUIRK_TURN_ON_PANEL_ON_RESUME);
++
++	if (hci_hotkey_quickstart == -1)
++		hci_hotkey_quickstart = !!(quirks & QUIRK_HCI_HOTKEY_QUICKSTART);
+ 
+ 	toshiba_wwan_available(dev);
+ 	if (dev->wwan_supported)
 -- 
 2.43.0
 
