@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95A51465A8;
-	Tue, 25 Jun 2024 09:41:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C5B148315;
+	Tue, 25 Jun 2024 09:41:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308515; cv=none; b=AhURJIAD4SGKNUAs6W+9e8Qglx4c74Z+wQx7CfaP0xpCC2XpLkEstI0o4xgbC2pqZl5aweOv6X9KjMjtCiqhIo/VIYWjK4qWoCT9+RVXAAuxDVxyqj16NkDgpuqv3+8HiJ1HDVnrBpWVwwu5riO/mJ7hBFrVTT3Vns1jsfboYeA=
+	t=1719308519; cv=none; b=mWXxqiSofNFdTZaVGM/H60zVN1x9ncY3JhGGLRRKuQXGzsSQjuyhfPwwuCf4HIsE5nn8PNR9FpEprTHMt3/a+rvS2oJLDQicBD/WOo7DIBqinOAn/35/Q+1YMD7FPneejtzPJDCNlcr6vMb4YbnMgtY1WJ0JYoCEJv9pLxn0PZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308515; c=relaxed/simple;
-	bh=yTXsoMFUZgyTWtzmpaAc9et7xK3y0dGnx44wndMkZeY=;
+	s=arc-20240116; t=1719308519; c=relaxed/simple;
+	bh=kky5IXcSE4nb6GUTKGUJoCNuBFTxUHUQVJEnawDQb6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NiPa1UodFg5Z3pxuUCUYGth5ncHzfezA2OUnRUHKBfHFLL9zgZNuX3UQbnLB4oMbNYJlnxdhjG1Q9oxOm+e7OtOEZlf48lAni6pYlKMTXBDlB76MCh4B947IUeeuZO7sNKLdUxuZ0i1Q1f0MvLrjiyAg2gvmzSR0SOGHB1OptIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bs/DJl43; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r60AbW9cB48UDEyrvYHvlreVnlod7LEshIv/LBtNbf/F8k9ufk1wwlC8xEFJauC3bGIYoLM5QeYf4RZn96n46eqBDHv8k8Afm09IAu+di66t62+QdmnL101HgxjIibg8ubnXAhcURCfkEWlsf4GclQD+IWOAgsMAQy7nQujhh+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D1yfyCnw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bs/DJl43"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EA08C32781;
-	Tue, 25 Jun 2024 09:41:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D1yfyCnw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F549C32781;
+	Tue, 25 Jun 2024 09:41:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308515;
-	bh=yTXsoMFUZgyTWtzmpaAc9et7xK3y0dGnx44wndMkZeY=;
+	s=korg; t=1719308518;
+	bh=kky5IXcSE4nb6GUTKGUJoCNuBFTxUHUQVJEnawDQb6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bs/DJl43PccxadHeQipMPa9FW2gaXKD6hheLlOS7fs8Do9V9rV5F0HW9m7C0kTmBu
-	 u8pJSX46lw4AwGuPc2iSAWUpF6rpeC31Vyp+nxa1R+sGWzr9EjWKAxLh1vI9k3Xynh
-	 a8x0wgXzk6C8K02od4O3vn/G+qHN5WqAmGKGyck0=
+	b=D1yfyCnwYpSKbQzZcPj4/wpQg7VLmmavri/SXXiWnDKStT14dunaCGYwNU4v867X2
+	 MaTo2+cI7GdNO5/xKTFW5iQSRhOB/zrjWaQGlnyLzCInj/HAfX0Qaquo5Xe3oxNkk1
+	 7tOKyZI+AzxhnDmiZW11bbsDwM7i194w3MC71kpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 130/250] selftests: openvswitch: Use bash as interpreter
-Date: Tue, 25 Jun 2024 11:31:28 +0200
-Message-ID: <20240625085553.055216366@linuxfoundation.org>
+Subject: [PATCH 6.9 148/250] spi: cs42l43: Correct SPI root clock speed
+Date: Tue, 25 Jun 2024 11:31:46 +0200
+Message-ID: <20240625085553.739284193@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -52,58 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit e2b447c9a1bba718f9c07513a1e8958209e862a1 ]
+[ Upstream commit 4eecb644b8b82f5279a348f6ebe77e3d6e5b1b05 ]
 
-openvswitch.sh makes use of substitutions of the form ${ns:0:1}, to
-obtain the first character of $ns. Empirically, this is works with bash
-but not dash. When run with dash these evaluate to an empty string and
-printing an error to stdout.
+The root clock is actually 49.152MHz not 40MHz, as it is derived from
+the primary audio clock, update the driver to match. This error can
+cause the actual clock rate to be higher than the requested clock rate
+on the SPI bus.
 
- # dash -c 'ns=client; echo "${ns:0:1}"' 2>error
- # cat error
- dash: 1: Bad substitution
- # bash -c 'ns=client; echo "${ns:0:1}"' 2>error
- c
- # cat error
-
-This leads to tests that neither pass nor fail.
-F.e.
-
- TEST: arp_ping                                                      [START]
- adding sandbox 'test_arp_ping'
- Adding DP/Bridge IF: sbx:test_arp_ping dp:arpping {, , }
- create namespaces
- ./openvswitch.sh: 282: eval: Bad substitution
- TEST: ct_connect_v4                                                 [START]
- adding sandbox 'test_ct_connect_v4'
- Adding DP/Bridge IF: sbx:test_ct_connect_v4 dp:ct4 {, , }
- ./openvswitch.sh: 322: eval: Bad substitution
- create namespaces
-
-Resolve this by making openvswitch.sh a bash script.
-
-Fixes: 918423fda910 ("selftests: openvswitch: add an initial flow programming case")
-Signed-off-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Link: https://lore.kernel.org/r/20240617-ovs-selftest-bash-v1-1-7ae6ccd3617b@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ef75e767167a ("spi: cs42l43: Add SPI controller support")
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://msgid.link/r/20240604131704.3227500-1-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/openvswitch/openvswitch.sh | 2 +-
+ drivers/spi/spi-cs42l43.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/openvswitch/openvswitch.sh b/tools/testing/selftests/net/openvswitch/openvswitch.sh
-index 5cae535438491..15bca07087179 100755
---- a/tools/testing/selftests/net/openvswitch/openvswitch.sh
-+++ b/tools/testing/selftests/net/openvswitch/openvswitch.sh
-@@ -1,4 +1,4 @@
--#!/bin/sh
-+#!/bin/bash
- # SPDX-License-Identifier: GPL-2.0
- #
- # OVS kernel module self tests
+diff --git a/drivers/spi/spi-cs42l43.c b/drivers/spi/spi-cs42l43.c
+index aabef9fc84bdf..0d9c948e119af 100644
+--- a/drivers/spi/spi-cs42l43.c
++++ b/drivers/spi/spi-cs42l43.c
+@@ -21,7 +21,7 @@
+ #include <linux/units.h>
+ 
+ #define CS42L43_FIFO_SIZE		16
+-#define CS42L43_SPI_ROOT_HZ		(40 * HZ_PER_MHZ)
++#define CS42L43_SPI_ROOT_HZ		49152000
+ #define CS42L43_SPI_MAX_LENGTH		65532
+ 
+ enum cs42l43_spi_cmd {
 -- 
 2.43.0
 
