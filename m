@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7B312EBEA;
-	Tue, 25 Jun 2024 09:43:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 160F712EBEA;
+	Tue, 25 Jun 2024 09:43:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308636; cv=none; b=R2y+h/Fe2qyj646NiMP15J2LVBkmGxjB8WmQoo3lQpTzdCVTjCySzxu6zVYXXTzCuXphOjzn0eTaQQSQZ+1VoRWF00m8s6xto7KeBiPUmuNQ5621F1T8yJPc/RnDJqSaOJiZw2bQl93xcejV9nP2ST7JlrTPO+xoxeiPjuhKBo8=
+	t=1719308639; cv=none; b=PLZ80F91W5gc6krQSocR6oDos5DrAa7DemmO1RPTRybjrBiF7k5Rf09WjOkmPu1Ys/obMBM3ZWx62CGGj2PchOSwo8gRdtnZBaSJcefinHbJBRhbzAZbslbvYnW9bFmiSHx3k/dGxBwiMuTrYC3T6Xxcx5hsBVolbkapp3zDJXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308636; c=relaxed/simple;
-	bh=sJn2e+UXYqTI22mzv94YtHWJCI8soNkWVtMBNrpiM6M=;
+	s=arc-20240116; t=1719308639; c=relaxed/simple;
+	bh=udgRffCHBzTE7XDP7ohW27m/8jiEuNTQbIAU5QJsELA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rmBNjvO+b3ty0ONZrJQ+oTl+eATPiSAeZQviVnO5mMhqqID3xWmelUZrVhYljdyQUKEQAsSVkfIEy3NqZU14IEuJCYVnykuP2ho3lNdK4HUY29wfhRe26U085aL+LBGJPbYu/Zn6NIumY9vbdQHMVIyKvxoBIQQeyYQyyPriCEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2D+KintP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ajIT1Xd2NmEP2yuvEVhyKKntyP5TnP/43DaSF8JPspmawgFlo/514Ev3Jgfb/nVJrCi1wLd2O5BLSdZLfaaU8eWF25dSdAw76Frpul+aeMxJdUu4anoAT2nf45xYGilIMWXvkxN6SoSEw5R0+4r/jGiNfzK0vrLxg51VM3Ac//g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a4b/z94Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2D+KintP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C3EFC32781;
-	Tue, 25 Jun 2024 09:43:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a4b/z94Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 886FDC32781;
+	Tue, 25 Jun 2024 09:43:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308636;
-	bh=sJn2e+UXYqTI22mzv94YtHWJCI8soNkWVtMBNrpiM6M=;
+	s=korg; t=1719308638;
+	bh=udgRffCHBzTE7XDP7ohW27m/8jiEuNTQbIAU5QJsELA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2D+KintP5O+jfT3ZFcLvYambD2whSAqYZPRBPDNB4e6/aSb8uV+NH94u2sIZYgeEb
-	 nIYZlie1fA1qS5OQsYbaP6q9VjbkZubGiXEFuFiRZVNqA8EuRT5GHVFh50xe83Xcwz
-	 14l3Rc7dN3/b6AQdxa97tIOAnis90ia9WoEtHR5Y=
+	b=a4b/z94Zv0FHphgWzrOiQUugeur/s19owc4PJGj+fh1nUgN9cbtjIY6ZxAXMjiKhI
+	 MmdE6OLfvfU8jTyWs6f6J/jDufcV6qs5hkw6VOggzET0ok4izDja0P+4o9EoTZ4QJW
+	 CZU2bEadUVDvX2tejXXNj7dlQuVLBkZETGjx0dck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hui Li <lihui@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.9 188/250] LoongArch: Fix watchpoint setting error
-Date: Tue, 25 Jun 2024 11:32:26 +0200
-Message-ID: <20240625085555.268576140@linuxfoundation.org>
+Subject: [PATCH 6.9 189/250] LoongArch: Trigger user-space watchpoints correctly
+Date: Tue, 25 Jun 2024 11:32:27 +0200
+Message-ID: <20240625085555.306436922@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -52,10 +52,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Hui Li <lihui@loongson.cn>
 
-commit f63a47b34b140ed1ca39d7e4bd4f1cdc617fc316 upstream.
+commit c8e57ab0995c5b443d3c81c8a36b588776dcd0c3 upstream.
 
-In the current code, when debugging the following code using gdb,
-"invalid argument ..." message will be displayed.
+In the current code, gdb can set the watchpoint successfully through
+ptrace interface, but watchpoint will not be triggered.
+
+When debugging the following code using gdb.
 
 lihui@bogon:~$ cat test.c
   #include <stdio.h>
@@ -63,175 +65,163 @@ lihui@bogon:~$ cat test.c
   int main()
   {
 	a = 1;
+	printf("a = %d\n", a);
 	return 0;
   }
 lihui@bogon:~$ gcc -g test.c -o test
 lihui@bogon:~$ gdb test
 ...
 (gdb) watch a
-Hardware watchpoint 1: a
+...
 (gdb) r
 ...
-Invalid argument setting hardware debug registers
+a = 1
+[Inferior 1 (process 4650) exited normally]
 
-There are mainly two types of issues.
+No watchpoints were triggered, the root causes are:
 
-1. Some incorrect judgment condition existed in user_watch_state
-   argument parsing, causing -EINVAL to be returned.
+1. Kernel uses perf_event and hw_breakpoint framework to control
+   watchpoint, but the perf_event corresponding to watchpoint is
+   not enabled. So it needs to be enabled according to MWPnCFG3
+   or FWPnCFG3 PLV bit field in ptrace_hbp_set_ctrl(), and privilege
+   is set according to the monitored addr in hw_breakpoint_control().
+   Furthermore, add a judgment in ptrace_hbp_set_addr() to ensure
+   kernel-space addr cannot be monitored in user mode.
 
-When setting up a watchpoint, gdb uses the ptrace interface,
-ptrace(PTRACE_SETREGSET, tid, NT_LOONGARCH_HW_WATCH, (void *) &iov)).
-Register values in user_watch_state as follows:
-
-  addr[0] = 0x0, mask[0] = 0x0, ctrl[0] = 0x0
-  addr[1] = 0x0, mask[1] = 0x0, ctrl[1] = 0x0
-  addr[2] = 0x0, mask[2] = 0x0, ctrl[2] = 0x0
-  addr[3] = 0x0, mask[3] = 0x0, ctrl[3] = 0x0
-  addr[4] = 0x0, mask[4] = 0x0, ctrl[4] = 0x0
-  addr[5] = 0x0, mask[5] = 0x0, ctrl[5] = 0x0
-  addr[6] = 0x0, mask[6] = 0x0, ctrl[6] = 0x0
-  addr[7] = 0x12000803c, mask[7] = 0x0, ctrl[7] = 0x610
-
-In arch_bp_generic_fields(), return -EINVAL when ctrl.len is
-LOONGARCH_BREAKPOINT_LEN_8(0b00). So delete the incorrect judgment here.
-
-In ptrace_hbp_fill_attr_ctrl(), when note_type is NT_LOONGARCH_HW_WATCH
-and ctrl[0] == 0x0, if ((type & HW_BREAKPOINT_RW) != type) will return
--EINVAL. Here ctrl.type should be set based on note_type, and unnecessary
-judgments can be removed.
-
-2. The watchpoint argument was not set correctly due to unnecessary
-   offset and alignment_mask.
-
-Modify ptrace_hbp_fill_attr_ctrl() and hw_breakpoint_arch_parse(), which
-ensure the watchpont argument is set correctly.
+2. The global enable control for all watchpoints is the WE bit of
+   CSR.CRMD, and hardware sets the value to 0 when an exception is
+   triggered. When the ERTN instruction is executed to return, the
+   hardware restores the value of the PWE field of CSR.PRMD here.
+   So, before a thread containing watchpoints be scheduled, the PWE
+   field of CSR.PRMD needs to be set to 1. Add this modification in
+   hw_breakpoint_control().
 
 All changes according to the LoongArch Reference Manual:
 https://loongson.github.io/LoongArch-Documentation/LoongArch-Vol1-EN.html#control-and-status-registers-related-to-watchpoints
+https://loongson.github.io/LoongArch-Documentation/LoongArch-Vol1-EN.html#basic-control-and-status-registers
+
+With this patch:
+
+lihui@bogon:~$ gdb test
+...
+(gdb) watch a
+Hardware watchpoint 1: a
+(gdb) r
+...
+Hardware watchpoint 1: a
+
+Old value = 0
+New value = 1
+main () at test.c:6
+6		printf("a = %d\n", a);
+(gdb) c
+Continuing.
+a = 1
+[Inferior 1 (process 775) exited normally]
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Hui Li <lihui@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/hw_breakpoint.h |    2 -
- arch/loongarch/kernel/hw_breakpoint.c      |   19 ++++-------------
- arch/loongarch/kernel/ptrace.c             |   32 +++++++++++++----------------
- 3 files changed, 21 insertions(+), 32 deletions(-)
+ arch/loongarch/include/asm/hw_breakpoint.h |    2 ++
+ arch/loongarch/kernel/hw_breakpoint.c      |   20 +++++++++++++++++---
+ arch/loongarch/kernel/ptrace.c             |   15 ++++++++++++---
+ 3 files changed, 31 insertions(+), 6 deletions(-)
 
 --- a/arch/loongarch/include/asm/hw_breakpoint.h
 +++ b/arch/loongarch/include/asm/hw_breakpoint.h
-@@ -101,7 +101,7 @@ struct perf_event;
- struct perf_event_attr;
+@@ -75,6 +75,8 @@ do {								\
+ #define CSR_MWPC_NUM		0x3f
  
- extern int arch_bp_generic_fields(struct arch_hw_breakpoint_ctrl ctrl,
--				  int *gen_len, int *gen_type, int *offset);
-+				  int *gen_len, int *gen_type);
- extern int arch_check_bp_in_kernelspace(struct arch_hw_breakpoint *hw);
- extern int hw_breakpoint_arch_parse(struct perf_event *bp,
- 				    const struct perf_event_attr *attr,
+ #define CTRL_PLV_ENABLE		0x1e
++#define CTRL_PLV0_ENABLE	0x02
++#define CTRL_PLV3_ENABLE	0x10
+ 
+ #define MWPnCFG3_LoadEn		8
+ #define MWPnCFG3_StoreEn	9
 --- a/arch/loongarch/kernel/hw_breakpoint.c
 +++ b/arch/loongarch/kernel/hw_breakpoint.c
-@@ -283,7 +283,7 @@ int arch_check_bp_in_kernelspace(struct
-  * to generic breakpoint descriptions.
-  */
- int arch_bp_generic_fields(struct arch_hw_breakpoint_ctrl ctrl,
--			   int *gen_len, int *gen_type, int *offset)
-+			   int *gen_len, int *gen_type)
+@@ -174,11 +174,21 @@ void flush_ptrace_hw_breakpoint(struct t
+ static int hw_breakpoint_control(struct perf_event *bp,
+ 				 enum hw_breakpoint_ops ops)
  {
- 	/* Type */
- 	switch (ctrl.type) {
-@@ -303,11 +303,6 @@ int arch_bp_generic_fields(struct arch_h
+-	u32 ctrl;
++	u32 ctrl, privilege;
+ 	int i, max_slots, enable;
++	struct pt_regs *regs;
+ 	struct perf_event **slots;
+ 	struct arch_hw_breakpoint *info = counter_arch_bp(bp);
+ 
++	if (arch_check_bp_in_kernelspace(info))
++		privilege = CTRL_PLV0_ENABLE;
++	else
++		privilege = CTRL_PLV3_ENABLE;
++
++	/*  Whether bp belongs to a task. */
++	if (bp->hw.target)
++		regs = task_pt_regs(bp->hw.target);
++
+ 	if (info->ctrl.type == LOONGARCH_BREAKPOINT_EXECUTE) {
+ 		/* Breakpoint */
+ 		slots = this_cpu_ptr(bp_on_reg);
+@@ -204,13 +214,15 @@ static int hw_breakpoint_control(struct
+ 		write_wb_reg(CSR_CFG_ASID, i, 0, 0);
+ 		write_wb_reg(CSR_CFG_ASID, i, 1, 0);
+ 		if (info->ctrl.type == LOONGARCH_BREAKPOINT_EXECUTE) {
+-			write_wb_reg(CSR_CFG_CTRL, i, 0, CTRL_PLV_ENABLE);
++			write_wb_reg(CSR_CFG_CTRL, i, 0, privilege);
+ 		} else {
+ 			ctrl = encode_ctrl_reg(info->ctrl);
+-			write_wb_reg(CSR_CFG_CTRL, i, 1, ctrl | CTRL_PLV_ENABLE);
++			write_wb_reg(CSR_CFG_CTRL, i, 1, ctrl | privilege);
+ 		}
+ 		enable = csr_read64(LOONGARCH_CSR_CRMD);
+ 		csr_write64(CSR_CRMD_WE | enable, LOONGARCH_CSR_CRMD);
++		if (bp->hw.target)
++			regs->csr_prmd |= CSR_PRMD_PWE;
+ 		break;
+ 	case HW_BREAKPOINT_UNINSTALL:
+ 		/* Reset the FWPnCFG/MWPnCFG 1~4 register. */
+@@ -222,6 +234,8 @@ static int hw_breakpoint_control(struct
+ 		write_wb_reg(CSR_CFG_CTRL, i, 1, 0);
+ 		write_wb_reg(CSR_CFG_ASID, i, 0, 0);
+ 		write_wb_reg(CSR_CFG_ASID, i, 1, 0);
++		if (bp->hw.target)
++			regs->csr_prmd &= ~CSR_PRMD_PWE;
+ 		break;
+ 	}
+ 
+--- a/arch/loongarch/kernel/ptrace.c
++++ b/arch/loongarch/kernel/ptrace.c
+@@ -608,9 +608,14 @@ static int ptrace_hbp_set_ctrl(unsigned
  		return -EINVAL;
  	}
  
--	if (!ctrl.len)
--		return -EINVAL;
--
--	*offset = __ffs(ctrl.len);
--
- 	/* Len */
- 	switch (ctrl.len) {
- 	case LOONGARCH_BREAKPOINT_LEN_1:
-@@ -386,21 +381,17 @@ int hw_breakpoint_arch_parse(struct perf
- 			     struct arch_hw_breakpoint *hw)
- {
- 	int ret;
--	u64 alignment_mask, offset;
-+	u64 alignment_mask;
- 
- 	/* Build the arch_hw_breakpoint. */
- 	ret = arch_build_bp_info(bp, attr, hw);
- 	if (ret)
- 		return ret;
- 
--	if (hw->ctrl.type != LOONGARCH_BREAKPOINT_EXECUTE)
--		alignment_mask = 0x7;
--	else
-+	if (hw->ctrl.type == LOONGARCH_BREAKPOINT_EXECUTE) {
- 		alignment_mask = 0x3;
--	offset = hw->address & alignment_mask;
--
--	hw->address &= ~alignment_mask;
--	hw->ctrl.len <<= offset;
-+		hw->address &= ~alignment_mask;
+-	err = ptrace_hbp_fill_attr_ctrl(note_type, ctrl, &attr);
+-	if (err)
+-		return err;
++	if (uctrl & CTRL_PLV_ENABLE) {
++		err = ptrace_hbp_fill_attr_ctrl(note_type, ctrl, &attr);
++		if (err)
++			return err;
++		attr.disabled = 0;
++	} else {
++		attr.disabled = 1;
 +	}
  
- 	return 0;
+ 	return modify_user_hw_breakpoint(bp, &attr);
  }
---- a/arch/loongarch/kernel/ptrace.c
-+++ b/arch/loongarch/kernel/ptrace.c
-@@ -494,28 +494,14 @@ static int ptrace_hbp_fill_attr_ctrl(uns
- 				     struct arch_hw_breakpoint_ctrl ctrl,
- 				     struct perf_event_attr *attr)
- {
--	int err, len, type, offset;
-+	int err, len, type;
+@@ -641,6 +646,10 @@ static int ptrace_hbp_set_addr(unsigned
+ 	struct perf_event *bp;
+ 	struct perf_event_attr attr;
  
--	err = arch_bp_generic_fields(ctrl, &len, &type, &offset);
-+	err = arch_bp_generic_fields(ctrl, &len, &type);
- 	if (err)
- 		return err;
- 
--	switch (note_type) {
--	case NT_LOONGARCH_HW_BREAK:
--		if ((type & HW_BREAKPOINT_X) != type)
--			return -EINVAL;
--		break;
--	case NT_LOONGARCH_HW_WATCH:
--		if ((type & HW_BREAKPOINT_RW) != type)
--			return -EINVAL;
--		break;
--	default:
--		return -EINVAL;
--	}
--
- 	attr->bp_len	= len;
- 	attr->bp_type	= type;
--	attr->bp_addr	+= offset;
- 
- 	return 0;
- }
-@@ -609,7 +595,19 @@ static int ptrace_hbp_set_ctrl(unsigned
- 		return PTR_ERR(bp);
- 
- 	attr = bp->attr;
--	decode_ctrl_reg(uctrl, &ctrl);
-+
-+	switch (note_type) {
-+	case NT_LOONGARCH_HW_BREAK:
-+		ctrl.type = LOONGARCH_BREAKPOINT_EXECUTE;
-+		ctrl.len = LOONGARCH_BREAKPOINT_LEN_4;
-+		break;
-+	case NT_LOONGARCH_HW_WATCH:
-+		decode_ctrl_reg(uctrl, &ctrl);
-+		break;
-+	default:
++	/* Kernel-space address cannot be monitored by user-space */
++	if ((unsigned long)addr >= XKPRANGE)
 +		return -EINVAL;
-+	}
 +
- 	err = ptrace_hbp_fill_attr_ctrl(note_type, ctrl, &attr);
- 	if (err)
- 		return err;
+ 	bp = ptrace_hbp_get_initialised_bp(note_type, tsk, idx);
+ 	if (IS_ERR(bp))
+ 		return PTR_ERR(bp);
 
 
