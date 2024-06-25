@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13DA124B34;
-	Tue, 25 Jun 2024 09:52:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E6F24B34;
+	Tue, 25 Jun 2024 09:52:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309154; cv=none; b=tP5BxA7Fdt2XUvJMOM+2wWXDD9BoOIPx7XY5apSeWpEZCNOt5Qx/8tWHMVug5oPlGD78u7ukTrfeEhk/NY+jvVL1i//aiqRr8bMgNXa86srTHbfiIPeGsOuN7dqdj9jymJlWj4LgvNU8zIzvzNPr6JehkvO6ufNoC/ZFNAJ/BAM=
+	t=1719309157; cv=none; b=ZdQANtbPIdnUNbO+Jec57sZxFfQ3CAvpIVYodvj+rlJXvbTg56IJ7sqtGk+jh6U6HGyvy0cvpGJXkidfX4puamK+x2PsJ64M/hCCbqxsbglfn3UoiyFc/Pos5rN7pOHFfBOOE5+FD9BREkmj80xyeC7PkOBq8Kyuop24gy09I3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309154; c=relaxed/simple;
-	bh=jMAWnpMbik+hYKwmKwbJIG4VspeBM967bSnHJZPq9b0=;
+	s=arc-20240116; t=1719309157; c=relaxed/simple;
+	bh=8xZEgIr0HBWLwlBkrWfiE2jqo5i2DuscIHEVAQDs4sE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tcEx7sHVM+tuzgOriE4tiBrGsTgTh77+Ol6YSCJ9MaVEKjN4stVL1ij7MI50YUxXwIvQ4KNaEnUN6B7y4hYc4SLHiL+hOAhbDGdeqPnJybSS9IQlNEBqW3wiG46q7xMU5qf+cApL57/CQRlLgyadXKrAWhwPgwpW7yUhj/CTEds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/8mD4Gx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bq5iBDhAUkbQkltc/tfWtl62ZEwzCZls7Y/2LAa+fnCmduPGXtHP8T/BBYv3q+olmd2P+7EEol19LuH3fcAYHD4xd4csvDkytxlJeYazt1bfuxRUmsVtn9rNRAFDJA0G4bPlXIfoZaXeYKqEyOX4B/mBb4zminOFF0xN9egPmrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zPHIJNFe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/8mD4Gx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F4B4C32789;
-	Tue, 25 Jun 2024 09:52:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zPHIJNFe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B13C32781;
+	Tue, 25 Jun 2024 09:52:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309154;
-	bh=jMAWnpMbik+hYKwmKwbJIG4VspeBM967bSnHJZPq9b0=;
+	s=korg; t=1719309156;
+	bh=8xZEgIr0HBWLwlBkrWfiE2jqo5i2DuscIHEVAQDs4sE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L/8mD4Gx0B20hboS6fhDKdHQhhcpoAG2PwvOUxBus2vBAOX3igQY++2jr9KLRAnYk
-	 /QQhI12untH2Hbbm42qJ0tcwrmEUd3r8aVgG+rsOOr86TY7gKrlo/e4D942RI2QGU+
-	 pfDX+w6F0j7ylH6aU5Kg9+XnXnS8bbgr56QdIleo=
+	b=zPHIJNFeGStUyF38A5KHYMFL3L4qEHvxNEriXV9T3c7lqGT4CXCWdvIMlmTFBvpNo
+	 QuF5UmsGyHL/FRHMV03aE1unj/h3ZbpVSb4QgyWh9psseB3E6OMCGIGIbYmr2Yr3Xf
+	 8fKzkeM2oqbDP4wiO+8+HhtvgXNrnm4Lk24nWbTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Peng Fan <peng.fan@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Raju Lakkaraju <Raju.Lakkaraju@microchip.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 112/192] dmaengine: fsl-edma: avoid linking both modules
-Date: Tue, 25 Jun 2024 11:33:04 +0200
-Message-ID: <20240625085541.470480632@linuxfoundation.org>
+Subject: [PATCH 6.6 084/192] net: lan743x: disable WOL upon resume to restore full data path operation
+Date: Tue, 25 Jun 2024 11:32:36 +0200
+Message-ID: <20240625085540.399000064@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -52,50 +52,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Raju Lakkaraju <Raju.Lakkaraju@microchip.com>
 
-[ Upstream commit fa555b5026d0bf1ba7c9e645ff75e2725a982631 ]
+[ Upstream commit 7725363936a88351b71495774c1e0e852ae4cdca ]
 
-Kbuild does not support having a source file compiled multiple times
-and linked into distinct modules, or built-in and modular at the
-same time. For fs-edma, there are two common components that are
-linked into the fsl-edma.ko for Arm and PowerPC, plus the mcf-edma.ko
-module on Coldfire. This violates the rule for compile-testing:
+When Wake-on-LAN (WoL) is active and the system is in suspend mode, triggering
+a system event can wake the system from sleep, which may block the data path.
+To restore normal data path functionality after waking, disable all wake-up
+events. Furthermore, clear all Write 1 to Clear (W1C) status bits by writing
+1's to them.
 
-scripts/Makefile.build:236: drivers/dma/Makefile: fsl-edma-common.o is added to multiple modules: fsl-edma mcf-edma
-scripts/Makefile.build:236: drivers/dma/Makefile: fsl-edma-trace.o is added to multiple modules: fsl-edma mcf-edma
-
-I tried splitting out the common parts into a separate modules, but
-that adds back the complexity that a cleanup patch removed, and it
-gets harder with the addition of the tracepoints.
-
-As a minimal workaround, address it at the Kconfig level, by disallowing
-the broken configurations.
-
-Link: https://lore.kernel.org/lkml/20240110232255.1099757-1-arnd@kernel.org/
-Fixes: 66aac8ea0a6c ("dmaengine: fsl-edma: clean up EXPORT_SYMBOL_GPL in fsl-edma-common.c")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Peng Fan <peng.fan@nxp.com>
-Link: https://lore.kernel.org/r/20240528115440.2965975-1-arnd@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 4d94282afd95 ("lan743x: Add power management support")
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Signed-off-by: Raju Lakkaraju <Raju.Lakkaraju@microchip.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/microchip/lan743x_main.c | 30 ++++++++++++++++---
+ drivers/net/ethernet/microchip/lan743x_main.h | 24 +++++++++++++++
+ 2 files changed, 50 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
-index 7a618f629e86b..e36506471a4f6 100644
---- a/drivers/dma/Kconfig
-+++ b/drivers/dma/Kconfig
-@@ -380,7 +380,7 @@ config LPC18XX_DMAMUX
+diff --git a/drivers/net/ethernet/microchip/lan743x_main.c b/drivers/net/ethernet/microchip/lan743x_main.c
+index 0b6174748d2b4..e5d9d9983c7f5 100644
+--- a/drivers/net/ethernet/microchip/lan743x_main.c
++++ b/drivers/net/ethernet/microchip/lan743x_main.c
+@@ -3519,7 +3519,7 @@ static void lan743x_pm_set_wol(struct lan743x_adapter *adapter)
  
- config MCF_EDMA
- 	tristate "Freescale eDMA engine support, ColdFire mcf5441x SoCs"
--	depends on M5441x || COMPILE_TEST
-+	depends on M5441x || (COMPILE_TEST && FSL_EDMA=n)
- 	select DMA_ENGINE
- 	select DMA_VIRTUAL_CHANNELS
- 	help
+ 	/* clear wake settings */
+ 	pmtctl = lan743x_csr_read(adapter, PMT_CTL);
+-	pmtctl |= PMT_CTL_WUPS_MASK_;
++	pmtctl |= PMT_CTL_WUPS_MASK_ | PMT_CTL_RES_CLR_WKP_MASK_;
+ 	pmtctl &= ~(PMT_CTL_GPIO_WAKEUP_EN_ | PMT_CTL_EEE_WAKEUP_EN_ |
+ 		PMT_CTL_WOL_EN_ | PMT_CTL_MAC_D3_RX_CLK_OVR_ |
+ 		PMT_CTL_RX_FCT_RFE_D3_CLK_OVR_ | PMT_CTL_ETH_PHY_WAKE_EN_);
+@@ -3654,6 +3654,7 @@ static int lan743x_pm_resume(struct device *dev)
+ 	struct pci_dev *pdev = to_pci_dev(dev);
+ 	struct net_device *netdev = pci_get_drvdata(pdev);
+ 	struct lan743x_adapter *adapter = netdev_priv(netdev);
++	u32 data;
+ 	int ret;
+ 
+ 	pci_set_power_state(pdev, PCI_D0);
+@@ -3672,6 +3673,30 @@ static int lan743x_pm_resume(struct device *dev)
+ 		return ret;
+ 	}
+ 
++	ret = lan743x_csr_read(adapter, MAC_WK_SRC);
++	netif_dbg(adapter, drv, adapter->netdev,
++		  "Wakeup source : 0x%08X\n", ret);
++
++	/* Clear the wol configuration and status bits. Note that
++	 * the status bits are "Write One to Clear (W1C)"
++	 */
++	data = MAC_WUCSR_EEE_TX_WAKE_ | MAC_WUCSR_EEE_RX_WAKE_ |
++	       MAC_WUCSR_RFE_WAKE_FR_ | MAC_WUCSR_PFDA_FR_ | MAC_WUCSR_WUFR_ |
++	       MAC_WUCSR_MPR_ | MAC_WUCSR_BCAST_FR_;
++	lan743x_csr_write(adapter, MAC_WUCSR, data);
++
++	data = MAC_WUCSR2_NS_RCD_ | MAC_WUCSR2_ARP_RCD_ |
++	       MAC_WUCSR2_IPV6_TCPSYN_RCD_ | MAC_WUCSR2_IPV4_TCPSYN_RCD_;
++	lan743x_csr_write(adapter, MAC_WUCSR2, data);
++
++	data = MAC_WK_SRC_ETH_PHY_WK_ | MAC_WK_SRC_IPV6_TCPSYN_RCD_WK_ |
++	       MAC_WK_SRC_IPV4_TCPSYN_RCD_WK_ | MAC_WK_SRC_EEE_TX_WK_ |
++	       MAC_WK_SRC_EEE_RX_WK_ | MAC_WK_SRC_RFE_FR_WK_ |
++	       MAC_WK_SRC_PFDA_FR_WK_ | MAC_WK_SRC_MP_FR_WK_ |
++	       MAC_WK_SRC_BCAST_FR_WK_ | MAC_WK_SRC_WU_FR_WK_ |
++	       MAC_WK_SRC_WK_FR_SAVED_;
++	lan743x_csr_write(adapter, MAC_WK_SRC, data);
++
+ 	/* open netdev when netdev is at running state while resume.
+ 	 * For instance, it is true when system wakesup after pm-suspend
+ 	 * However, it is false when system wakes up after suspend GUI menu
+@@ -3680,9 +3705,6 @@ static int lan743x_pm_resume(struct device *dev)
+ 		lan743x_netdev_open(netdev);
+ 
+ 	netif_device_attach(netdev);
+-	ret = lan743x_csr_read(adapter, MAC_WK_SRC);
+-	netif_info(adapter, drv, adapter->netdev,
+-		   "Wakeup source : 0x%08X\n", ret);
+ 
+ 	return 0;
+ }
+diff --git a/drivers/net/ethernet/microchip/lan743x_main.h b/drivers/net/ethernet/microchip/lan743x_main.h
+index f0b486f85450e..ee6de01d89bcc 100644
+--- a/drivers/net/ethernet/microchip/lan743x_main.h
++++ b/drivers/net/ethernet/microchip/lan743x_main.h
+@@ -61,6 +61,7 @@
+ #define PMT_CTL_RX_FCT_RFE_D3_CLK_OVR_		BIT(18)
+ #define PMT_CTL_GPIO_WAKEUP_EN_			BIT(15)
+ #define PMT_CTL_EEE_WAKEUP_EN_			BIT(13)
++#define PMT_CTL_RES_CLR_WKP_MASK_		GENMASK(9, 8)
+ #define PMT_CTL_READY_				BIT(7)
+ #define PMT_CTL_ETH_PHY_RST_			BIT(4)
+ #define PMT_CTL_WOL_EN_				BIT(3)
+@@ -227,12 +228,31 @@
+ #define MAC_WUCSR				(0x140)
+ #define MAC_MP_SO_EN_				BIT(21)
+ #define MAC_WUCSR_RFE_WAKE_EN_			BIT(14)
++#define MAC_WUCSR_EEE_TX_WAKE_			BIT(13)
++#define MAC_WUCSR_EEE_RX_WAKE_			BIT(11)
++#define MAC_WUCSR_RFE_WAKE_FR_			BIT(9)
++#define MAC_WUCSR_PFDA_FR_			BIT(7)
++#define MAC_WUCSR_WUFR_				BIT(6)
++#define MAC_WUCSR_MPR_				BIT(5)
++#define MAC_WUCSR_BCAST_FR_			BIT(4)
+ #define MAC_WUCSR_PFDA_EN_			BIT(3)
+ #define MAC_WUCSR_WAKE_EN_			BIT(2)
+ #define MAC_WUCSR_MPEN_				BIT(1)
+ #define MAC_WUCSR_BCST_EN_			BIT(0)
+ 
+ #define MAC_WK_SRC				(0x144)
++#define MAC_WK_SRC_ETH_PHY_WK_			BIT(17)
++#define MAC_WK_SRC_IPV6_TCPSYN_RCD_WK_		BIT(16)
++#define MAC_WK_SRC_IPV4_TCPSYN_RCD_WK_		BIT(15)
++#define MAC_WK_SRC_EEE_TX_WK_			BIT(14)
++#define MAC_WK_SRC_EEE_RX_WK_			BIT(13)
++#define MAC_WK_SRC_RFE_FR_WK_			BIT(12)
++#define MAC_WK_SRC_PFDA_FR_WK_			BIT(11)
++#define MAC_WK_SRC_MP_FR_WK_			BIT(10)
++#define MAC_WK_SRC_BCAST_FR_WK_			BIT(9)
++#define MAC_WK_SRC_WU_FR_WK_			BIT(8)
++#define MAC_WK_SRC_WK_FR_SAVED_			BIT(7)
++
+ #define MAC_MP_SO_HI				(0x148)
+ #define MAC_MP_SO_LO				(0x14C)
+ 
+@@ -295,6 +315,10 @@
+ #define RFE_INDX(index)			(0x580 + (index << 2))
+ 
+ #define MAC_WUCSR2			(0x600)
++#define MAC_WUCSR2_NS_RCD_		BIT(7)
++#define MAC_WUCSR2_ARP_RCD_		BIT(6)
++#define MAC_WUCSR2_IPV6_TCPSYN_RCD_	BIT(5)
++#define MAC_WUCSR2_IPV4_TCPSYN_RCD_	BIT(4)
+ 
+ #define SGMII_ACC			(0x720)
+ #define SGMII_ACC_SGMII_BZY_		BIT(31)
 -- 
 2.43.0
 
