@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF62D24B34;
-	Tue, 25 Jun 2024 09:52:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2EF924B34;
+	Tue, 25 Jun 2024 09:52:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309165; cv=none; b=WJqwu2rJ0MqhrsYUFHqSbNeffoC8rGZ+JXPYr2crUCuX7PJUhrA6glb7cepnRQbVEIo6S24JEvRmXRiego56d98jqbgef8BdkZF3v8815epoPwaLVU7j0Mbssidt2ia3U9bPdMHdftRMHkqJHJx4whbGIiDY8P5qam/m/J3TKwQ=
+	t=1719309168; cv=none; b=lqeIiuqGFrKnGUa+mBHTbbEOHoXQkhLPo/EJXxSUWk+MtuRt/5U02XyD5q073hp/dftZrqCXa7dSWSsQbLAPvSZvzGTvki+1pG8L5hVUFWBFJ3aY6FGBN0zLCRnbnUOjzSCXI56YZ9b915+c1/Hu6RoDCNr+S6dhTRP/dU3uc1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309165; c=relaxed/simple;
-	bh=MxO7U/tzN0JB5OS8pJ6Zs6Odj4rF3VmPAWhC2DWJyIQ=;
+	s=arc-20240116; t=1719309168; c=relaxed/simple;
+	bh=r4jQIFBvBmT1XKLtp5kJ7w4Eh8cc6ber0jf/+OBKmWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SpUwcxIMZKoBt8NaUl1VkWUVBW6phVT7gOAl7M6sBFFO2eyifYimULPR8j3Nmgco5F0teMz+gNh8cv4/Q46Ip8JISh4b4ulw+++8uHP2h+xDHp7bn6L3ow/pdif1AT6TQ47ncAdsLkSwgLfsJ1AWWwswhfd79gcTOUzc+u5O8VA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G6pbPaoq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CFgcHZ0xSA8q5KFmUFAVmFDSpXr/MksVABtQ34RGyOBV/pFSW1ZjOvTnQ2AXiZ/rPrzAVoJAYcIqM83c8xCf05m9JQ28t1l1DcOWogFuBxhHwR1J2795kzApQ+etCsHQl/JuMmZQHC21b3cV0c+O08WFugZ3kk3P8hrNFPmt7wM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GbZhT2Rr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G6pbPaoq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464C1C32781;
-	Tue, 25 Jun 2024 09:52:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GbZhT2Rr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39068C32781;
+	Tue, 25 Jun 2024 09:52:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309165;
-	bh=MxO7U/tzN0JB5OS8pJ6Zs6Odj4rF3VmPAWhC2DWJyIQ=;
+	s=korg; t=1719309168;
+	bh=r4jQIFBvBmT1XKLtp5kJ7w4Eh8cc6ber0jf/+OBKmWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G6pbPaoqi5YRh5T0CZZip/m6Hw0Ces28hwR8b0Y/wzB8i2S4WAb4Y/eoxaVlc2Ljp
-	 3Al7kGMGRpRZWH4voG5KQo0z9PhnlNHgtRTKp2L0bsDQYCSGGg6EYXhNTh/sYcmFXu
-	 Hk6baRuVD85UEZghkFsFoVBwWRWpjADdOW+m1crQ=
+	b=GbZhT2RrZhICvSJ4tWdysxetPI1/Oc0JuzvWIoAlK3Jdr06oRtQZ9+6WC8IW+dxBc
+	 D4WwOey2Wn1iJQLnGzC1hloPTVlp1ojEXte+Eizfwx3hUzGgHpkaIFweir71qRUPD7
+	 jppc0BRkIULB2z83/YgD0h5BkQxeXdFq+N6nydoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pedro Tammela <pctammela@mojatatu.com>,
+	syzbot+b87c222546179f4513a7@syzkaller.appspotmail.com,
+	David Ruth <druth@chromium.org>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Vlad Buslov <vladbu@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 087/192] net/sched: act_api: rely on rcu in tcf_idr_check_alloc
-Date: Tue, 25 Jun 2024 11:32:39 +0200
-Message-ID: <20240625085540.515506977@linuxfoundation.org>
+Subject: [PATCH 6.6 088/192] net/sched: act_api: fix possible infinite loop in tcf_idr_check_alloc()
+Date: Tue, 25 Jun 2024 11:32:40 +0200
+Message-ID: <20240625085540.553960717@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -53,171 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: David Ruth <druth@chromium.org>
 
-[ Upstream commit 4b55e86736d5b492cf689125da2600f59c7d2c39 ]
+[ Upstream commit d864319871b05fadd153e0aede4811ca7008f5d6 ]
 
-Instead of relying only on the idrinfo->lock mutex for
-bind/alloc logic, rely on a combination of rcu + mutex + atomics
-to better scale the case where multiple rtnl-less filters are
-binding to the same action object.
+syzbot found hanging tasks waiting on rtnl_lock [1]
 
-Action binding happens when an action index is specified explicitly and
-an action exists which such index exists. Example:
-  tc actions add action drop index 1
-  tc filter add ... matchall action drop index 1
-  tc filter add ... matchall action drop index 1
-  tc filter add ... matchall action drop index 1
-  tc filter ls ...
-     filter protocol all pref 49150 matchall chain 0 filter protocol all pref 49150 matchall chain 0 handle 0x1
-     not_in_hw
-           action order 1: gact action drop
-            random type none pass val 0
-            index 1 ref 4 bind 3
+A reproducer is available in the syzbot bug.
 
-   filter protocol all pref 49151 matchall chain 0 filter protocol all pref 49151 matchall chain 0 handle 0x1
-     not_in_hw
-           action order 1: gact action drop
-            random type none pass val 0
-            index 1 ref 4 bind 3
+When a request to add multiple actions with the same index is sent, the
+second request will block forever on the first request. This holds
+rtnl_lock, and causes tasks to hang.
 
-   filter protocol all pref 49152 matchall chain 0 filter protocol all pref 49152 matchall chain 0 handle 0x1
-     not_in_hw
-           action order 1: gact action drop
-            random type none pass val 0
-            index 1 ref 4 bind 3
+Return -EAGAIN to prevent infinite looping, while keeping documented
+behavior.
 
-When no index is specified, as before, grab the mutex and allocate
-in the idr the next available id. In this version, as opposed to before,
-it's simplified to store the -EBUSY pointer instead of the previous
-alloc + replace combination.
+[1]
 
-When an index is specified, rely on rcu to find if there's an object in
-such index. If there's none, fallback to the above, serializing on the
-mutex and reserving the specified id. If there's one, it can be an -EBUSY
-pointer, in which case we just try again until it's an action, or an action.
-Given the rcu guarantees, the action found could be dead and therefore
-we need to bump the refcount if it's not 0, handling the case it's
-in fact 0.
+INFO: task kworker/1:0:5088 blocked for more than 143 seconds.
+Not tainted 6.9.0-rc4-syzkaller-00173-g3cdb45594619 #0
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:kworker/1:0 state:D stack:23744 pid:5088 tgid:5088 ppid:2 flags:0x00004000
+Workqueue: events_power_efficient reg_check_chans_work
+Call Trace:
+<TASK>
+context_switch kernel/sched/core.c:5409 [inline]
+__schedule+0xf15/0x5d00 kernel/sched/core.c:6746
+__schedule_loop kernel/sched/core.c:6823 [inline]
+schedule+0xe7/0x350 kernel/sched/core.c:6838
+schedule_preempt_disabled+0x13/0x30 kernel/sched/core.c:6895
+__mutex_lock_common kernel/locking/mutex.c:684 [inline]
+__mutex_lock+0x5b8/0x9c0 kernel/locking/mutex.c:752
+wiphy_lock include/net/cfg80211.h:5953 [inline]
+reg_leave_invalid_chans net/wireless/reg.c:2466 [inline]
+reg_check_chans_work+0x10a/0x10e0 net/wireless/reg.c:2481
 
-As bind and the action refcount are already atomics, these increments can
-happen without the mutex protection while many tcf_idr_check_alloc race
-to bind to the same action instance.
-
-In case binding encounters a parallel delete or add, it will return
--EAGAIN in order to try again. Both filter and action apis already
-have the retry machinery in-place. In case it's an unlocked filter it
-retries under the rtnl lock.
-
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Vlad Buslov <vladbu@nvidia.com>
-Link: https://lore.kernel.org/r/20231211181807.96028-2-pctammela@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: d864319871b0 ("net/sched: act_api: fix possible infinite loop in tcf_idr_check_alloc()")
+Fixes: 0190c1d452a9 ("net: sched: atomically check-allocate action")
+Reported-by: syzbot+b87c222546179f4513a7@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=b87c222546179f4513a7
+Signed-off-by: David Ruth <druth@chromium.org>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://lore.kernel.org/r/20240614190326.1349786-1-druth@chromium.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_api.c | 65 ++++++++++++++++++++++++++++++---------------
- 1 file changed, 43 insertions(+), 22 deletions(-)
+ net/sched/act_api.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/net/sched/act_api.c b/net/sched/act_api.c
-index 9d3f26bf0440d..5d34852ca5003 100644
+index 5d34852ca5003..2d6d58e1b278a 100644
 --- a/net/sched/act_api.c
 +++ b/net/sched/act_api.c
-@@ -816,6 +816,9 @@ EXPORT_SYMBOL(tcf_idr_cleanup);
-  * its reference and bind counters, and return 1. Otherwise insert temporary
-  * error pointer (to prevent concurrent users from inserting actions with same
-  * index) and return 0.
-+ *
-+ * May return -EAGAIN for binding actions in case of a parallel add/delete on
-+ * the requested index.
-  */
+@@ -830,7 +830,6 @@ int tcf_idr_check_alloc(struct tc_action_net *tn, u32 *index,
+ 	u32 max;
  
- int tcf_idr_check_alloc(struct tc_action_net *tn, u32 *index,
-@@ -824,43 +827,61 @@ int tcf_idr_check_alloc(struct tc_action_net *tn, u32 *index,
- 	struct tcf_idrinfo *idrinfo = tn->idrinfo;
- 	struct tc_action *p;
- 	int ret;
-+	u32 max;
- 
--again:
--	mutex_lock(&idrinfo->lock);
  	if (*index) {
-+again:
-+		rcu_read_lock();
+-again:
+ 		rcu_read_lock();
  		p = idr_find(&idrinfo->action_idr, *index);
-+
- 		if (IS_ERR(p)) {
- 			/* This means that another process allocated
+ 
+@@ -839,7 +838,7 @@ int tcf_idr_check_alloc(struct tc_action_net *tn, u32 *index,
  			 * index but did not assign the pointer yet.
  			 */
--			mutex_unlock(&idrinfo->lock);
-+			rcu_read_unlock();
- 			goto again;
- 		}
- 
--		if (p) {
--			refcount_inc(&p->tcfa_refcnt);
--			if (bind)
--				atomic_inc(&p->tcfa_bindcnt);
--			*a = p;
--			ret = 1;
--		} else {
--			*a = NULL;
--			ret = idr_alloc_u32(&idrinfo->action_idr, NULL, index,
--					    *index, GFP_KERNEL);
--			if (!ret)
--				idr_replace(&idrinfo->action_idr,
--					    ERR_PTR(-EBUSY), *index);
-+		if (!p) {
-+			/* Empty slot, try to allocate it */
-+			max = *index;
-+			rcu_read_unlock();
-+			goto new;
-+		}
-+
-+		if (!refcount_inc_not_zero(&p->tcfa_refcnt)) {
-+			/* Action was deleted in parallel */
-+			rcu_read_unlock();
+ 			rcu_read_unlock();
+-			goto again;
 +			return -EAGAIN;
  		}
-+
-+		if (bind)
-+			atomic_inc(&p->tcfa_bindcnt);
-+		*a = p;
-+
-+		rcu_read_unlock();
-+
-+		return 1;
- 	} else {
-+		/* Find a slot */
- 		*index = 1;
--		*a = NULL;
--		ret = idr_alloc_u32(&idrinfo->action_idr, NULL, index,
--				    UINT_MAX, GFP_KERNEL);
--		if (!ret)
--			idr_replace(&idrinfo->action_idr, ERR_PTR(-EBUSY),
--				    *index);
-+		max = UINT_MAX;
- 	}
-+
-+new:
-+	*a = NULL;
-+
-+	mutex_lock(&idrinfo->lock);
-+	ret = idr_alloc_u32(&idrinfo->action_idr, ERR_PTR(-EBUSY), index, max,
-+			    GFP_KERNEL);
- 	mutex_unlock(&idrinfo->lock);
-+
-+	/* N binds raced for action allocation,
-+	 * retry for all the ones that failed.
-+	 */
-+	if (ret == -ENOSPC && *index == max)
-+		ret = -EAGAIN;
-+
- 	return ret;
- }
- EXPORT_SYMBOL(tcf_idr_check_alloc);
+ 
+ 		if (!p) {
 -- 
 2.43.0
 
