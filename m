@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0D8FBEF;
-	Tue, 25 Jun 2024 09:37:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0B7148315;
+	Tue, 25 Jun 2024 09:37:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308241; cv=none; b=t81NAzix2u5/3iBoiATLIGbj2E45R1FQRcuie+St060iqsJUEqosXqd126+5SCrIJ7sbFaWWhH2hwxe0T89Sn+kjjjLkd1sv3LAf47sMiDdY4WoAkLPlnqwYqGMCAcovgKxQHcrGJ1GV9NK1DNRO/Hk5aUOu7BNLeDl8PsRbPXM=
+	t=1719308244; cv=none; b=PDJ3/uu5R7vmKoFGxQkc6x/hl5+afWcReKO6na8smBi2vwCfcmpc7q43QPNaqPIT4iaUxI7/AR+wZ+iWSgm5J2oyUPMM9zJGztFLLZJBIW5scUJIpf6FD2f2xYIlUtO7E5zdR093LfJCJ0vabXV7wIMq96KpkNjCTtJGU0RtGwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308241; c=relaxed/simple;
-	bh=AI78WzMVQxi4lawqaFXd1seJfWpNyNLBUNOd277zqYI=;
+	s=arc-20240116; t=1719308244; c=relaxed/simple;
+	bh=J5AZjz1olJayUsq1nMt1YGnl+eX6o0+bzuy2PyN95Q0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XkQgddg2VsIOsL8aS/rh5tO1OrsZXNQvBMwvv1p17o63wss3xSWeEscGfj1SqRf+ZUUs6pt0cbu8IOgL6ewWYvFjf4DcCSrGQ9Ad8qR6HD0tE1FzZx4tzvLGBitRlRRJkqGayEWoiFQPodgYcXPgzSw/s6AaohrZoajxeSXzhPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CoD3WFTm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kPP1EgJZpGJJ0RphOCtBrztPT+CrDKRB6tS5EYoXcZwoZ17PxcjUhskvYv8if5IQusHm4sv30FvQUGGDZlpiDLdy/Glgcr886h459QgMWnpj4NUq7cbYzOSQJWoIeqWkfi00PgtavcBTFI+boWYd9ZVzrfTVS5pBqcxERz3v4VM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a6fY9m7j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CoD3WFTm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14A48C32781;
-	Tue, 25 Jun 2024 09:37:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a6fY9m7j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00B7AC32781;
+	Tue, 25 Jun 2024 09:37:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308241;
-	bh=AI78WzMVQxi4lawqaFXd1seJfWpNyNLBUNOd277zqYI=;
+	s=korg; t=1719308244;
+	bh=J5AZjz1olJayUsq1nMt1YGnl+eX6o0+bzuy2PyN95Q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CoD3WFTmwW0wCVvgXwrYhaf73G7TrTGlGdZq9UmSMD70BaanYGbcQKPXcRG+YmtPK
-	 3fDwMEsP5bEnDMoxMWGP2ZsRZGvsb8rxXnMoMTCoVDYJ9iE7YNFibMwGUVwdvYGQFd
-	 RKNA3EWNUy7QUqJs0R8QWUdy3F5iHqeHE2+7c5yY=
+	b=a6fY9m7jFWXpsuqbG2ARYM0/5aEBZgqa8dZICpylzS27fDvTwdSibgJw5GHXpzXz8
+	 y1Y0Ld315r/RDrT9vpWhnGGKEWRAqX6a/nSzcdnSiJ/t0+7MShW6xTnAHTGIiDmOA1
+	 MImqR7h39mvTlz7LJxRfENuG7dYqVABitibAUMvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Erico Nunes <nunes.erico@gmail.com>,
 	Qiang Yu <yuq825@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 054/250] drm/lima: include pp bcast irq in timeout handler check
-Date: Tue, 25 Jun 2024 11:30:12 +0200
-Message-ID: <20240625085550.135658412@linuxfoundation.org>
+Subject: [PATCH 6.9 055/250] drm/lima: mask irqs in timeout path before hard reset
+Date: Tue, 25 Jun 2024 11:30:13 +0200
+Message-ID: <20240625085550.174349401@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -53,36 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Erico Nunes <nunes.erico@gmail.com>
 
-[ Upstream commit d8100caf40a35904d27ce446fb2088b54277997a ]
+[ Upstream commit a421cc7a6a001b70415aa4f66024fa6178885a14 ]
 
-In commit 53cb55b20208 ("drm/lima: handle spurious timeouts due to high
-irq latency") a check was added to detect an unexpectedly high interrupt
-latency timeout.
-With further investigation it was noted that on Mali-450 the pp bcast
-irq may also be a trigger of race conditions against the timeout
-handler, so add it to this check too.
+There is a race condition in which a rendering job might take just long
+enough to trigger the drm sched job timeout handler but also still
+complete before the hard reset is done by the timeout handler.
+This runs into race conditions not expected by the timeout handler.
+In some very specific cases it currently may result in a refcount
+imbalance on lima_pm_idle, with a stack dump such as:
+
+[10136.669170] WARNING: CPU: 0 PID: 0 at drivers/gpu/drm/lima/lima_devfreq.c:205 lima_devfreq_record_idle+0xa0/0xb0
+...
+[10136.669459] pc : lima_devfreq_record_idle+0xa0/0xb0
+...
+[10136.669628] Call trace:
+[10136.669634]  lima_devfreq_record_idle+0xa0/0xb0
+[10136.669646]  lima_sched_pipe_task_done+0x5c/0xb0
+[10136.669656]  lima_gp_irq_handler+0xa8/0x120
+[10136.669666]  __handle_irq_event_percpu+0x48/0x160
+[10136.669679]  handle_irq_event+0x4c/0xc0
+
+We can prevent that race condition entirely by masking the irqs at the
+beginning of the timeout handler, at which point we give up on waiting
+for that job entirely.
+The irqs will be enabled again at the next hard reset which is already
+done as a recovery by the timeout handler.
 
 Signed-off-by: Erico Nunes <nunes.erico@gmail.com>
+Reviewed-by: Qiang Yu <yuq825@gmail.com>
 Signed-off-by: Qiang Yu <yuq825@gmail.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240405152951.1531555-3-nunes.erico@gmail.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20240405152951.1531555-4-nunes.erico@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/lima/lima_sched.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/lima/lima_sched.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/drivers/gpu/drm/lima/lima_sched.c b/drivers/gpu/drm/lima/lima_sched.c
-index 00b19adfc8881..66841503a6183 100644
+index 66841503a6183..bbf3f8feab944 100644
 --- a/drivers/gpu/drm/lima/lima_sched.c
 +++ b/drivers/gpu/drm/lima/lima_sched.c
-@@ -422,6 +422,8 @@ static enum drm_gpu_sched_stat lima_sched_timedout_job(struct drm_sched_job *job
- 	 */
- 	for (i = 0; i < pipe->num_processor; i++)
- 		synchronize_irq(pipe->processor[i]->irq);
-+	if (pipe->bcast_processor)
-+		synchronize_irq(pipe->bcast_processor->irq);
+@@ -430,6 +430,13 @@ static enum drm_gpu_sched_stat lima_sched_timedout_job(struct drm_sched_job *job
+ 		return DRM_GPU_SCHED_STAT_NOMINAL;
+ 	}
  
- 	if (dma_fence_is_signaled(task->fence)) {
- 		DRM_WARN("%s unexpectedly high interrupt latency\n", lima_ip_name(ip));
++	/*
++	 * The task might still finish while this timeout handler runs.
++	 * To prevent a race condition on its completion, mask all irqs
++	 * on the running core until the next hard reset completes.
++	 */
++	pipe->task_mask_irq(pipe);
++
+ 	if (!pipe->error)
+ 		DRM_ERROR("%s job timeout\n", lima_ip_name(ip));
+ 
 -- 
 2.43.0
 
