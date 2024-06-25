@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4F0FBEF;
-	Tue, 25 Jun 2024 09:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189AC148315;
+	Tue, 25 Jun 2024 09:35:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308105; cv=none; b=qLe/zgvcLB8ub2EUWQLQdBEuhrEOvKF6QFF7xLWMXuwNBVlUTwcnAn93SNlct1T94Dio2D+Ab96Qe0eyPHyfyKb0CAu8NE98UZzPO8JJHSsXQ8RO9xgC8JUPtgml3NLhzhyq6sEjlJMM32M/Q38RJ7mN8zKGAQh/E9rUdkk1SuA=
+	t=1719308108; cv=none; b=OiGiJnTnno/dg+MWs6aoHPlwZaAI+fY58qW7DVVWflPAWjR/++5CGoLurpFQlj/R7FPWo8nJai2hWtDdyXpTtCjD6/RwGFkkdcjc0xjeS1/ZNmyr32LV6F9c1ESX+DjoiXXnNfLnXoFZKJnTHaEAupA9BbdkzymXevbH7SxMzVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308105; c=relaxed/simple;
-	bh=aCatiaAqY1HabtQU+B7oOl+i5BGbNr1iD+gbIm93PcM=;
+	s=arc-20240116; t=1719308108; c=relaxed/simple;
+	bh=y6tUm1ekviqpSpAXcRKeWWl7Ao/DAI4nQ7shrM8ukUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kYJjdSKp56WAY4aTOoXEwb25tPVhj0Y8GFEs4dbaeMJqkWU5pu92oGXfUaSKlSDqlyDTj6XLF2MoJeb0LYBK3qWZeDE38gSem3vKaAkXYjsAyb8eOBHkdHp3RJUW1KBaqRSBywDi1nVuUj5fOhODFGnK+lkRJLSemBm5umsDfec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n9bxUCJ4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MuxKz3E/9rv97lxq8uC08w7nb3+vCsZMi5cdjK6eDOJeRNguTc7Z07jr8w5pdhrQw0PZTz0eRQRFe2r/cgDEi65iyWSjrR/hZUOFVqLGH0n7RwAKM0QB5BWHokrpjxcoUNlCANQlLn4TiOlWL59HCNv4keXaLEdLxqtmNqPeN6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yGkbKMhH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n9bxUCJ4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D430C32781;
-	Tue, 25 Jun 2024 09:35:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yGkbKMhH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7BEC32781;
+	Tue, 25 Jun 2024 09:35:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308104;
-	bh=aCatiaAqY1HabtQU+B7oOl+i5BGbNr1iD+gbIm93PcM=;
+	s=korg; t=1719308107;
+	bh=y6tUm1ekviqpSpAXcRKeWWl7Ao/DAI4nQ7shrM8ukUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n9bxUCJ4Pp7m53sqJaGSyT9q+JvH8/aSm728LuUA8pzTu9eKdRDBBzXogsCkEndl4
-	 K3MDr1y7aT9QMGrste1vU/EdnO3sC1gVDVr7pJ2gPkTEovr6bCgmmDmS4sqzo6VCP/
-	 khhF11PvvxO3G42xmN2N6SgK4Lvw6pBNVIejG/l4=
+	b=yGkbKMhHJTvJEXxYh1LV4j8eBARXYQj8SFMaC+4E3p4ViP8TMeNV0X0VvlKIBhNZ+
+	 vXavfnzrmZHkHwP22Rt22S7xdxfSaRMNFqphIwOiM4pg15d9erZtfsHjsjDhYv1WOT
+	 U59AQi7Ga5FKB5sqSVoHXdrzbGz3FfMQgwAjWNAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>,
+	Benson Leung <bleung@chromium.org>,
+	Prashant Malani <pmalani@chromium.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 001/250] fs/writeback: bail out if there is no more inodes for IO and queued once
-Date: Tue, 25 Jun 2024 11:29:19 +0200
-Message-ID: <20240625085548.092907113@linuxfoundation.org>
+Subject: [PATCH 6.9 010/250] platform/chrome: cros_usbpd_notify: provide ID table for avoiding fallback match
+Date: Tue, 25 Jun 2024 11:29:28 +0200
+Message-ID: <20240625085548.439357606@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -52,60 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-[ Upstream commit d92109891f21cf367caa2cc6dff11a4411d917f4 ]
+[ Upstream commit 8ad3b9652ed6a115c56214a0eab06952818b3ddf ]
 
-For case there is no more inodes for IO in io list from last wb_writeback,
-We may bail out early even there is inode in dirty list should be written
-back. Only bail out when we queued once to avoid missing dirtied inode.
+Instead of using fallback driver name match, provide ID table[1] for the
+primary match.
 
-This is from code reading...
+[1]: https://elixir.bootlin.com/linux/v6.8/source/drivers/base/platform.c#L1353
 
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Link: https://lore.kernel.org/r/20240228091958.288260-3-shikemeng@huaweicloud.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-[brauner@kernel.org: fold in memory corruption fix from Jan in [1]]
-Link: https://lore.kernel.org/r/20240405132346.bid7gibby3lxxhez@quack3 [1]
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Reviewed-by: Benson Leung <bleung@chromium.org>
+Acked-by: Prashant Malani <pmalani@chromium.org>
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+Link: https://lore.kernel.org/r/20240329075630.2069474-8-tzungbi@kernel.org
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fs-writeback.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/platform/chrome/cros_usbpd_notify.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
-index e4f17c53ddfcf..d31853032a931 100644
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -2069,6 +2069,7 @@ static long wb_writeback(struct bdi_writeback *wb,
- 	struct inode *inode;
- 	long progress;
- 	struct blk_plug plug;
-+	bool queued = false;
+diff --git a/drivers/platform/chrome/cros_usbpd_notify.c b/drivers/platform/chrome/cros_usbpd_notify.c
+index aacad022f21df..c83f81d86483c 100644
+--- a/drivers/platform/chrome/cros_usbpd_notify.c
++++ b/drivers/platform/chrome/cros_usbpd_notify.c
+@@ -6,6 +6,7 @@
+  */
  
- 	blk_start_plug(&plug);
- 	for (;;) {
-@@ -2111,8 +2112,10 @@ static long wb_writeback(struct bdi_writeback *wb,
- 			dirtied_before = jiffies;
+ #include <linux/acpi.h>
++#include <linux/mod_devicetable.h>
+ #include <linux/module.h>
+ #include <linux/platform_data/cros_ec_proto.h>
+ #include <linux/platform_data/cros_usbpd_notify.h>
+@@ -218,12 +219,19 @@ static void cros_usbpd_notify_remove_plat(struct platform_device *pdev)
+ 					   &pdnotify->nb);
+ }
  
- 		trace_writeback_start(wb, work);
--		if (list_empty(&wb->b_io))
-+		if (list_empty(&wb->b_io)) {
- 			queue_io(wb, work, dirtied_before);
-+			queued = true;
-+		}
- 		if (work->sb)
- 			progress = writeback_sb_inodes(work->sb, wb, work);
- 		else
-@@ -2127,7 +2130,7 @@ static long wb_writeback(struct bdi_writeback *wb,
- 		 * mean the overall work is done. So we keep looping as long
- 		 * as made some progress on cleaning pages or inodes.
- 		 */
--		if (progress) {
-+		if (progress || !queued) {
- 			spin_unlock(&wb->list_lock);
- 			continue;
- 		}
++static const struct platform_device_id cros_usbpd_notify_id[] = {
++	{ DRV_NAME, 0 },
++	{}
++};
++MODULE_DEVICE_TABLE(platform, cros_usbpd_notify_id);
++
+ static struct platform_driver cros_usbpd_notify_plat_driver = {
+ 	.driver = {
+ 		.name = DRV_NAME,
+ 	},
+ 	.probe = cros_usbpd_notify_probe_plat,
+ 	.remove_new = cros_usbpd_notify_remove_plat,
++	.id_table = cros_usbpd_notify_id,
+ };
+ 
+ static int __init cros_usbpd_notify_init(void)
+@@ -258,4 +266,3 @@ module_exit(cros_usbpd_notify_exit);
+ MODULE_LICENSE("GPL");
+ MODULE_DESCRIPTION("ChromeOS power delivery notifier device");
+ MODULE_AUTHOR("Jon Flatley <jflat@chromium.org>");
+-MODULE_ALIAS("platform:" DRV_NAME);
 -- 
 2.43.0
 
