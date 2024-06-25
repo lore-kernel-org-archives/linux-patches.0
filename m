@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6AC614A4FF;
-	Tue, 25 Jun 2024 09:55:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A10B914A090;
+	Tue, 25 Jun 2024 09:55:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309338; cv=none; b=LLNEDdM6OPdll84hge8eSrt7uqM7b6a3s2NVboAncycOtxhejjGxQTmNsrHBpDrcDZJmiYTPbsiB4tBQP1yKw1jxsGEkARQ8aJNzXDwdwGqW8E20Gbv3mVcfCTkZXmAsIbSTQvsmcJz4Of/GBZYwKzK8+e8eu85I/se2OtrFVYk=
+	t=1719309341; cv=none; b=UGzI6TkRzdMFUpYbw+t37k3cT43StAJBUITy+aAEYCN7gDneXenJH93eJvbjNY7HbKSnvFppjJzIl9AJx6i6YJcinndeUzxSPD+1ONVDaOK0MvptuTbxU+jd15On3J6cSaVvUSCs1EehnLIjpcXCyxbi8ai/EFL954y0KxscIXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309338; c=relaxed/simple;
-	bh=N4lJrWBeaUNroXedKqKHrh5fbZfY8kopTzpSCgLKOqU=;
+	s=arc-20240116; t=1719309341; c=relaxed/simple;
+	bh=sMxV0u7XHxF/Yfks5X8PbalLxKI8oZs+6Jkohv+ROWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZWwoWJJ6duP9mUOQl0nnj8pvsHXrAKZLkSpVfzPJA4H0DCAYN1EWn6JLA5gTusrFbnopah+pf9dRwhTYsgrFAgZoQuYzxrGE/T3leDmNiwSA8/6ZHcVU7oNva5bjvOKa0rUGcCxFh1/EQ3QMFuJoucUFROr1T6Q8fWQeF9AWhbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JcbGWxtu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B2jayAQq/qsGnFRc40I7pJQApnAN5cMIpQ/WQCFBKPrBRAOlvU+wIOQLu+Apj6eXmV+vjbQuAp1tEGGzfJyMgHa+2kEv5nFP4C+I0e3VqAOwm/uK8aEIL/HsI820UFKm2n2BaPlff96XxEbNJfVWx5p3BkLZ3dzOHGTDPCqRQeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hRxY5pyP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JcbGWxtu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A329C32781;
-	Tue, 25 Jun 2024 09:55:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hRxY5pyP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2396AC32781;
+	Tue, 25 Jun 2024 09:55:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309338;
-	bh=N4lJrWBeaUNroXedKqKHrh5fbZfY8kopTzpSCgLKOqU=;
+	s=korg; t=1719309341;
+	bh=sMxV0u7XHxF/Yfks5X8PbalLxKI8oZs+6Jkohv+ROWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JcbGWxtulX7D8X6gVtxOXGv605ZHtnJ6MSx4m4VHnvQYcOW0Xay5aOJVD8ReZSddd
-	 W933MvXKWt45VHZXCN/vBZ8dDlw8inXZiALybokkUnqtDEl3Sgsq+D41bpYzQKJ/Kk
-	 2K4VXWhHJ2LyNS8QjOYtideQkg7r8zTFIERxGG4E=
+	b=hRxY5pyPA5OcRirpDEo8CNJpij2fC2IwwXLeLnzCpJmIZJkw2ofvHnssLqnmKJ3YD
+	 ah7p5Oib+fMTISpuKymxSOSkmmsqR5foBX1Nlc90a7A74rsZKRekr9x2mVcBNkPVZG
+	 NeD0yTlb2t3NHw37dtpVjn7klfU7FSCj+Iz1GSi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Yue <glass.su@suse.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Jun Piao <piaojun@huawei.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Josef Bacik <jbacik@fb.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Markus Pargmann <mpa@pengutronix.de>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 175/192] ocfs2: update inode fsync transaction id in ocfs2_unlink and ocfs2_link
-Date: Tue, 25 Jun 2024 11:34:07 +0200
-Message-ID: <20240625085543.877052380@linuxfoundation.org>
+Subject: [PATCH 6.6 176/192] nbd: Improve the documentation of the locking assumptions
+Date: Tue, 25 Jun 2024 11:34:08 +0200
+Message-ID: <20240625085543.915962245@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -58,60 +55,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Su Yue <glass.su@suse.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 8c40984eeb8804cffcd28640f427f4fe829243fc ]
+[ Upstream commit 2a6751e052ab4789630bc889c814037068723bc1 ]
 
-transaction id should be updated in ocfs2_unlink and ocfs2_link.
-Otherwise, inode link will be wrong after journal replay even fsync was
-called before power failure:
-=======================================================================
-$ touch testdir/bar
-$ ln testdir/bar testdir/bar_link
-$ fsync testdir/bar
-$ stat -c %h $SCRATCH_MNT/testdir/bar
-1
-$ stat -c %h $SCRATCH_MNT/testdir/bar
-1
-=======================================================================
+Document locking assumptions with lockdep_assert_held() instead of source
+code comments. The advantage of lockdep_assert_held() is that it is
+verified at runtime if lockdep is enabled in the kernel config.
 
-Link: https://lkml.kernel.org/r/20240408082041.20925-4-glass.su@suse.com
-Fixes: ccd979bdbce9 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Signed-off-by: Su Yue <glass.su@suse.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Josef Bacik <jbacik@fb.com>
+Cc: Yu Kuai <yukuai3@huawei.com>
+Cc: Markus Pargmann <mpa@pengutronix.de>
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20240510202313.25209-4-bvanassche@acm.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: e56d4b633fff ("nbd: Fix signal handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/namei.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/block/nbd.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ocfs2/namei.c b/fs/ocfs2/namei.c
-index 791fc5050e46b..21b3d5b9be603 100644
---- a/fs/ocfs2/namei.c
-+++ b/fs/ocfs2/namei.c
-@@ -797,6 +797,7 @@ static int ocfs2_link(struct dentry *old_dentry,
- 	ocfs2_set_links_count(fe, inode->i_nlink);
- 	fe->i_ctime = cpu_to_le64(inode_get_ctime_sec(inode));
- 	fe->i_ctime_nsec = cpu_to_le32(inode_get_ctime_nsec(inode));
-+	ocfs2_update_inode_fsync_trans(handle, inode, 0);
- 	ocfs2_journal_dirty(handle, fe_bh);
+diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
+index df738eab02433..a906674f71147 100644
+--- a/drivers/block/nbd.c
++++ b/drivers/block/nbd.c
+@@ -569,7 +569,6 @@ static inline int was_interrupted(int result)
+ 	return result == -ERESTARTSYS || result == -EINTR;
+ }
  
- 	err = ocfs2_add_entry(handle, dentry, inode,
-@@ -993,6 +994,7 @@ static int ocfs2_unlink(struct inode *dir,
- 		drop_nlink(inode);
- 	drop_nlink(inode);
- 	ocfs2_set_links_count(fe, inode->i_nlink);
-+	ocfs2_update_inode_fsync_trans(handle, inode, 0);
- 	ocfs2_journal_dirty(handle, fe_bh);
+-/* always call with the tx_lock held */
+ static int nbd_send_cmd(struct nbd_device *nbd, struct nbd_cmd *cmd, int index)
+ {
+ 	struct request *req = blk_mq_rq_from_pdu(cmd);
+@@ -586,6 +585,9 @@ static int nbd_send_cmd(struct nbd_device *nbd, struct nbd_cmd *cmd, int index)
+ 	u32 nbd_cmd_flags = 0;
+ 	int sent = nsock->sent, skip = 0;
  
- 	inode_set_mtime_to_ts(dir, inode_set_ctime_current(dir));
++	lockdep_assert_held(&cmd->lock);
++	lockdep_assert_held(&nsock->tx_lock);
++
+ 	iov_iter_kvec(&from, ITER_SOURCE, &iov, 1, sizeof(request));
+ 
+ 	type = req_to_nbd_cmd_type(req);
+@@ -996,6 +998,8 @@ static int nbd_handle_cmd(struct nbd_cmd *cmd, int index)
+ 	struct nbd_sock *nsock;
+ 	int ret;
+ 
++	lockdep_assert_held(&cmd->lock);
++
+ 	config = nbd_get_config_unlocked(nbd);
+ 	if (!config) {
+ 		dev_err_ratelimited(disk_to_dev(nbd->disk),
 -- 
 2.43.0
 
