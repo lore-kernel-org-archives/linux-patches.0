@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1BAFBEF;
-	Tue, 25 Jun 2024 09:36:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5092FBEF;
+	Tue, 25 Jun 2024 09:36:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308173; cv=none; b=nz6l77COEce6JqgGbWhY7hzZQ0padkThbhL18YiWnJSZNbzfDQFSvN0wvssi31g7RguWAcVF8MkMOLo/ldtnqXvS7llT0rS3uJGpjor2vHJU843G3VmI6gwJqjH3bFMZMnCJZaq7nbMuzSZJ7jQaRvaLSbE4zKTG79Ll/kt+CCk=
+	t=1719308176; cv=none; b=IvBmiJ7U5NMhTAFSF4gQ5IGaixll3RHl+sK0FD5GX58cIxT1EL8a1SBT1WbLoKXU099sgsjp5uGut7C6qG2/o4hkxhlh/0Y387oKu7jTKIYoii31hhz7cfb54QbKz/11mnUzbYRJGUzi/HadVnsx7gtXxRKwty33w8WFR4fR6Ac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308173; c=relaxed/simple;
-	bh=z+64YcUIZFf/qz7btknw+cUI4J7YOZ+/WKanCURtI94=;
+	s=arc-20240116; t=1719308176; c=relaxed/simple;
+	bh=RFFom4l/y3go0QM0C++DgAOG/uU94IwMBHZh31Yuhzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G/yWcDBJBxESzB1lUUyPLZSNkwDV4vCyRw5gLB9KkZbFswp1L7iRhF6I+GPGrpbc/nkejsn3nPZ5ogsscoXjM5e8+IY8ZShOJnRxdPbvNII1+bDaTGa9PngXESRhak+dRBJm8y+vF4VsViwTQ5b5PAPyCDy8flHJ/nn3G711P9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PKai4WQW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=anV04pF+rD7EphCAndt7O6qZTneXbvfdmwJtwg955ocxZJyNcYoS//z970OLxz8Ep81YyqmiQppI0AoVwm77bWHUpK/1QKbW8I8H5sd09nLU43BJSRy6/Jqmp3aRXIxDLv9WhlHuFVZg6ge8+8q++CAIor78j5dwWt869mi7/7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xGuk/Fvv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PKai4WQW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4029FC32786;
-	Tue, 25 Jun 2024 09:36:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xGuk/Fvv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E7EC32781;
+	Tue, 25 Jun 2024 09:36:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308173;
-	bh=z+64YcUIZFf/qz7btknw+cUI4J7YOZ+/WKanCURtI94=;
+	s=korg; t=1719308176;
+	bh=RFFom4l/y3go0QM0C++DgAOG/uU94IwMBHZh31Yuhzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PKai4WQWOtNntoGDE77EKQ9jiTV99Tg+2oaRYp3uM8ymo8dlTuXub2Yj541Y73B7k
-	 3jsmMEeLtgcAQTY+8eKkZYBIqbNyAMWwcdtlDzSRywoMZjeLTkkX5T5mIrsldbINJl
-	 pNqKyAEmobZR3j/pJ8JJU18AuqzNSi7qBhOeDuA0=
+	b=xGuk/FvvMmAM77ypCGvIdC/W73mVdii38buK20U4ZqvK2acxnmMBhlaLiFY9Wq/uE
+	 IoQqGF3PDqb1P3ZmEveh+bib0LV22+isqq3KY9ua5kQy/nL87d+yyUstfc1Wj8cls7
+	 gw3p25x4ACsxYNAIIO6Xv+tE7ycbkp0hBOTgmpr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Paul E. McKenney" <paulmck@kernel.org>,
 	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 007/250] rcutorture: Make stall-tasks directly exit when rcutorture tests end
-Date: Tue, 25 Jun 2024 11:29:25 +0200
-Message-ID: <20240625085548.324748991@linuxfoundation.org>
+Subject: [PATCH 6.9 008/250] rcutorture: Fix invalid context warning when enable srcu barrier testing
+Date: Tue, 25 Jun 2024 11:29:26 +0200
+Message-ID: <20240625085548.362932796@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -54,99 +54,115 @@ Content-Transfer-Encoding: 8bit
 
 From: Zqiang <qiang.zhang1211@gmail.com>
 
-[ Upstream commit 431315a563015f259b28e34c5842f6166439e969 ]
+[ Upstream commit 668c0406d887467d53f8fe79261dda1d22d5b671 ]
 
-When the rcutorture tests start to exit, the rcu_torture_cleanup() is
-invoked to stop kthreads and release resources, if the stall-task
-kthreads exist, cpu-stall has started and the rcutorture.stall_cpu
-is set to a larger value, the rcu_torture_cleanup() will be blocked
-for a long time and the hung-task may occur, this commit therefore
-add kthread_should_stop() to the loop of cpu-stall operation, when
-rcutorture tests ends, no need to wait for cpu-stall to end, exit
-directly.
+When the torture_type is set srcu or srcud and cb_barrier is
+non-zero, running the rcutorture test will trigger the
+following warning:
 
-Use the following command to test:
+[  163.910989][    C1] BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
+[  163.910994][    C1] in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 0, name: swapper/1
+[  163.910999][    C1] preempt_count: 10001, expected: 0
+[  163.911002][    C1] RCU nest depth: 0, expected: 0
+[  163.911005][    C1] INFO: lockdep is turned off.
+[  163.911007][    C1] irq event stamp: 30964
+[  163.911010][    C1] hardirqs last  enabled at (30963): [<ffffffffabc7df52>] do_idle+0x362/0x500
+[  163.911018][    C1] hardirqs last disabled at (30964): [<ffffffffae616eff>] sysvec_call_function_single+0xf/0xd0
+[  163.911025][    C1] softirqs last  enabled at (0): [<ffffffffabb6475f>] copy_process+0x16ff/0x6580
+[  163.911033][    C1] softirqs last disabled at (0): [<0000000000000000>] 0x0
+[  163.911038][    C1] Preemption disabled at:
+[  163.911039][    C1] [<ffffffffacf1964b>] stack_depot_save_flags+0x24b/0x6c0
+[  163.911063][    C1] CPU: 1 PID: 0 Comm: swapper/1 Tainted: G        W          6.8.0-rc4-rt4-yocto-preempt-rt+ #3 1e39aa9a737dd024a3275c4f835a872f673a7d3a
+[  163.911071][    C1] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.2-0-gea1b7a073390-prebuilt.qemu.org 04/01/2014
+[  163.911075][    C1] Call Trace:
+[  163.911078][    C1]  <IRQ>
+[  163.911080][    C1]  dump_stack_lvl+0x88/0xd0
+[  163.911089][    C1]  dump_stack+0x10/0x20
+[  163.911095][    C1]  __might_resched+0x36f/0x530
+[  163.911105][    C1]  rt_spin_lock+0x82/0x1c0
+[  163.911112][    C1]  spin_lock_irqsave_ssp_contention+0xb8/0x100
+[  163.911121][    C1]  srcu_gp_start_if_needed+0x782/0xf00
+[  163.911128][    C1]  ? _raw_spin_unlock_irqrestore+0x46/0x70
+[  163.911136][    C1]  ? debug_object_active_state+0x336/0x470
+[  163.911148][    C1]  ? __pfx_srcu_gp_start_if_needed+0x10/0x10
+[  163.911156][    C1]  ? __pfx_lock_release+0x10/0x10
+[  163.911165][    C1]  ? __pfx_rcu_torture_barrier_cbf+0x10/0x10
+[  163.911188][    C1]  __call_srcu+0x9f/0xe0
+[  163.911196][    C1]  call_srcu+0x13/0x20
+[  163.911201][    C1]  srcu_torture_call+0x1b/0x30
+[  163.911224][    C1]  rcu_torture_barrier1cb+0x4a/0x60
+[  163.911247][    C1]  __flush_smp_call_function_queue+0x267/0xca0
+[  163.911256][    C1]  ? __pfx_rcu_torture_barrier1cb+0x10/0x10
+[  163.911281][    C1]  generic_smp_call_function_single_interrupt+0x13/0x20
+[  163.911288][    C1]  __sysvec_call_function_single+0x7d/0x280
+[  163.911295][    C1]  sysvec_call_function_single+0x93/0xd0
+[  163.911302][    C1]  </IRQ>
+[  163.911304][    C1]  <TASK>
+[  163.911308][    C1]  asm_sysvec_call_function_single+0x1b/0x20
+[  163.911313][    C1] RIP: 0010:default_idle+0x17/0x20
+[  163.911326][    C1] RSP: 0018:ffff888001997dc8 EFLAGS: 00000246
+[  163.911333][    C1] RAX: 0000000000000000 RBX: dffffc0000000000 RCX: ffffffffae618b51
+[  163.911337][    C1] RDX: 0000000000000000 RSI: ffffffffaea80920 RDI: ffffffffaec2de80
+[  163.911342][    C1] RBP: ffff888001997dc8 R08: 0000000000000001 R09: ffffed100d740cad
+[  163.911346][    C1] R10: ffffed100d740cac R11: ffff88806ba06563 R12: 0000000000000001
+[  163.911350][    C1] R13: ffffffffafe460c0 R14: ffffffffafe460c0 R15: 0000000000000000
+[  163.911358][    C1]  ? ct_kernel_exit.constprop.3+0x121/0x160
+[  163.911369][    C1]  ? lockdep_hardirqs_on+0xc4/0x150
+[  163.911376][    C1]  arch_cpu_idle+0x9/0x10
+[  163.911383][    C1]  default_idle_call+0x7a/0xb0
+[  163.911390][    C1]  do_idle+0x362/0x500
+[  163.911398][    C1]  ? __pfx_do_idle+0x10/0x10
+[  163.911404][    C1]  ? complete_with_flags+0x8b/0xb0
+[  163.911416][    C1]  cpu_startup_entry+0x58/0x70
+[  163.911423][    C1]  start_secondary+0x221/0x280
+[  163.911430][    C1]  ? __pfx_start_secondary+0x10/0x10
+[  163.911440][    C1]  secondary_startup_64_no_verify+0x17f/0x18b
+[  163.911455][    C1]  </TASK>
 
-insmod rcutorture.ko torture_type=srcu fwd_progress=0 stat_interval=4
-stall_cpu_block=1 stall_cpu=200 stall_cpu_holdoff=10 read_exit_burst=0
-object_debug=1
-rmmod rcutorture
-
-[15361.918610] INFO: task rmmod:878 blocked for more than 122 seconds.
-[15361.918613]       Tainted: G        W
-6.8.0-rc2-yoctodev-standard+ #25
-[15361.918615] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs"
-disables this message.
-[15361.918616] task:rmmod           state:D stack:0     pid:878
-tgid:878   ppid:773    flags:0x00004002
-[15361.918621] Call Trace:
-[15361.918623]  <TASK>
-[15361.918626]  __schedule+0xc0d/0x28f0
-[15361.918631]  ? __pfx___schedule+0x10/0x10
-[15361.918635]  ? rcu_is_watching+0x19/0xb0
-[15361.918638]  ? schedule+0x1f6/0x290
-[15361.918642]  ? __pfx_lock_release+0x10/0x10
-[15361.918645]  ? schedule+0xc9/0x290
-[15361.918648]  ? schedule+0xc9/0x290
-[15361.918653]  ? trace_preempt_off+0x54/0x100
-[15361.918657]  ? schedule+0xc9/0x290
-[15361.918661]  schedule+0xd0/0x290
-[15361.918665]  schedule_timeout+0x56d/0x7d0
-[15361.918669]  ? debug_smp_processor_id+0x1b/0x30
-[15361.918672]  ? rcu_is_watching+0x19/0xb0
-[15361.918676]  ? __pfx_schedule_timeout+0x10/0x10
-[15361.918679]  ? debug_smp_processor_id+0x1b/0x30
-[15361.918683]  ? rcu_is_watching+0x19/0xb0
-[15361.918686]  ? wait_for_completion+0x179/0x4c0
-[15361.918690]  ? __pfx_lock_release+0x10/0x10
-[15361.918693]  ? __kasan_check_write+0x18/0x20
-[15361.918696]  ? wait_for_completion+0x9d/0x4c0
-[15361.918700]  ? _raw_spin_unlock_irq+0x36/0x50
-[15361.918703]  ? wait_for_completion+0x179/0x4c0
-[15361.918707]  ? _raw_spin_unlock_irq+0x36/0x50
-[15361.918710]  ? wait_for_completion+0x179/0x4c0
-[15361.918714]  ? trace_preempt_on+0x54/0x100
-[15361.918718]  ? wait_for_completion+0x179/0x4c0
-[15361.918723]  wait_for_completion+0x181/0x4c0
-[15361.918728]  ? __pfx_wait_for_completion+0x10/0x10
-[15361.918738]  kthread_stop+0x152/0x470
-[15361.918742]  _torture_stop_kthread+0x44/0xc0 [torture
-7af7f9cbba28271a10503b653f9e05d518fbc8c3]
-[15361.918752]  rcu_torture_cleanup+0x2ac/0xe90 [rcutorture
-f2cb1f556ee7956270927183c4c2c7749a336529]
-[15361.918766]  ? __pfx_rcu_torture_cleanup+0x10/0x10 [rcutorture
-f2cb1f556ee7956270927183c4c2c7749a336529]
-[15361.918777]  ? __kasan_check_write+0x18/0x20
-[15361.918781]  ? __mutex_unlock_slowpath+0x17c/0x670
-[15361.918789]  ? __might_fault+0xcd/0x180
-[15361.918793]  ? find_module_all+0x104/0x1d0
-[15361.918799]  __x64_sys_delete_module+0x2a4/0x3f0
-[15361.918803]  ? __pfx___x64_sys_delete_module+0x10/0x10
-[15361.918807]  ? syscall_exit_to_user_mode+0x149/0x280
+This commit therefore use smp_call_on_cpu() instead of
+smp_call_function_single(), make rcu_torture_barrier1cb() invoked
+happens on task-context.
 
 Signed-off-by: Zqiang <qiang.zhang1211@gmail.com>
 Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/rcutorture.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/rcu/rcutorture.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/kernel/rcu/rcutorture.c b/kernel/rcu/rcutorture.c
-index 5dfea5c6de577..4a2cf312e695a 100644
+index 4a2cf312e695a..cf2e907534a8d 100644
 --- a/kernel/rcu/rcutorture.c
 +++ b/kernel/rcu/rcutorture.c
-@@ -2487,8 +2487,8 @@ static int rcu_torture_stall(void *args)
- 			preempt_disable();
- 		pr_alert("%s start on CPU %d.\n",
- 			  __func__, raw_smp_processor_id());
--		while (ULONG_CMP_LT((unsigned long)ktime_get_seconds(),
--				    stop_at))
-+		while (ULONG_CMP_LT((unsigned long)ktime_get_seconds(), stop_at) &&
-+		       !kthread_should_stop())
- 			if (stall_cpu_block) {
- #ifdef CONFIG_PREEMPTION
- 				preempt_schedule();
+@@ -3041,11 +3041,12 @@ static void rcu_torture_barrier_cbf(struct rcu_head *rcu)
+ }
+ 
+ /* IPI handler to get callback posted on desired CPU, if online. */
+-static void rcu_torture_barrier1cb(void *rcu_void)
++static int rcu_torture_barrier1cb(void *rcu_void)
+ {
+ 	struct rcu_head *rhp = rcu_void;
+ 
+ 	cur_ops->call(rhp, rcu_torture_barrier_cbf);
++	return 0;
+ }
+ 
+ /* kthread function to register callbacks used to test RCU barriers. */
+@@ -3071,11 +3072,9 @@ static int rcu_torture_barrier_cbs(void *arg)
+ 		 * The above smp_load_acquire() ensures barrier_phase load
+ 		 * is ordered before the following ->call().
+ 		 */
+-		if (smp_call_function_single(myid, rcu_torture_barrier1cb,
+-					     &rcu, 1)) {
+-			// IPI failed, so use direct call from current CPU.
++		if (smp_call_on_cpu(myid, rcu_torture_barrier1cb, &rcu, 1))
+ 			cur_ops->call(&rcu, rcu_torture_barrier_cbf);
+-		}
++
+ 		if (atomic_dec_and_test(&barrier_cbs_count))
+ 			wake_up(&barrier_wq);
+ 	} while (!torture_must_stop());
 -- 
 2.43.0
 
