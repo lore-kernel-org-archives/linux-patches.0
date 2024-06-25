@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98021494CB;
-	Tue, 25 Jun 2024 09:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDBB1149C7A;
+	Tue, 25 Jun 2024 09:36:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308192; cv=none; b=kTvgGOHW84o22uI45w8rxxUcADiyqBKcukQekfPgC6N8+zwy8t8SAQLI1Pvku+LykT+hkxoe2pprkTl0KEGbX04aM8LHjGXL5TkI5YMZUW9ZmVDlEJB2qsWcDj9lL+u6DqcN9iBYQroSl/TPkcSH3ibZpueXzska1spPr+SBExc=
+	t=1719308194; cv=none; b=huOy3UGQU9JHfFyakgIgpJZ9aozQVnGw277h7cuNevfWZXnCGnApzAjtz7Dufwyfs+7U4QrXKwseEFYR5iIulEFuqK0cm64w5FcY53NhT6o/mCUfxkaodyzoTL2MzGdQUjOKrKuG8tVSaj8QnWM9Mq4cNxoEc8obQj6R9mFxoNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308192; c=relaxed/simple;
-	bh=mB0VACFUZwZLi2qGFAsgS5G+azDtfhfwEcl4kM0Kmt0=;
+	s=arc-20240116; t=1719308194; c=relaxed/simple;
+	bh=UHpyNb+Ze7g4ZbHBmGuG9Co6SbdMQetlJPQUYpCSJas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TCvB4zIVEcfH2KEVHtoo53cyc4PPexTDQ8u7Y0bHW/nCQYQKOavyUj+aBPvZCUYScc6XHR6oFXh3sOSKdQR6OL2GoD+6FB9Jn9Az0/HQ6ZKK3B0BjnZlqFr4GKBJkbiF0VnOqifBT/MkfifRbNpOvlJS3aE+cRIz1lV//XoGViE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g0j+J/GS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=chy097ky8TiBkLViNOhAXSGozQfTpl64IckqrOmo8QdLDSfqlO/j34PHSIE5C1Yxx8T4ONnDgTsXdSivsL/QAykfkrgIj1/MUEQH8+QjL9S1vwtNODGxf2AIEzk+xt+amChJPpn4ZEuCejIVB+fsi9L6Tk8JM5dL0bQgxWQbZwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QRvJnQIj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g0j+J/GS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C55DC32781;
-	Tue, 25 Jun 2024 09:36:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QRvJnQIj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 452FCC4AF09;
+	Tue, 25 Jun 2024 09:36:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308191;
-	bh=mB0VACFUZwZLi2qGFAsgS5G+azDtfhfwEcl4kM0Kmt0=;
+	s=korg; t=1719308194;
+	bh=UHpyNb+Ze7g4ZbHBmGuG9Co6SbdMQetlJPQUYpCSJas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g0j+J/GS13PZSSWMMdQR7KoUuQ9Xa2z1o+JZ7Q09TZsYBqPiNkfWln6Ej7TEgtxLg
-	 g0EV/zlJAOqnmgTCqHmN/OkqN2gpTPkMffq0a9u9LEiHDLKcH4ZJa6EV8YsgkIKLf0
-	 nsK/i2YQa/yBQGhx6IOlJiuSnRyZspZIYSUSkjyw=
+	b=QRvJnQIjomxtdlCGVJhqaPRYLSQGGEKwIQGOwP0UWAG6X1x9fmPTme5M0BZ6F8QjM
+	 PYtl4XwJH49/zvZqrbQ8nVHMe442ZnkamZpFKpkME+OlpJT4mSW/QE0vryC6f48edZ
+	 aYMBoovwQkGr8ZKHm8zUMrXLc1U6ftqASbTCTs7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lingbo Kong <quic_lingbok@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Leon Yen <leon.yen@mediatek.com>,
+	Ming Yen Hsieh <MingYen.Hsieh@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 038/250] wifi: ath12k: fix the problem that down grade phy mode operation
-Date: Tue, 25 Jun 2024 11:29:56 +0200
-Message-ID: <20240625085549.521257462@linuxfoundation.org>
+Subject: [PATCH 6.9 039/250] wifi: mt76: mt7921s: fix potential hung tasks during chip recovery
+Date: Tue, 25 Jun 2024 11:29:57 +0200
+Message-ID: <20240625085549.559508458@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -46,93 +46,110 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lingbo Kong <quic_lingbok@quicinc.com>
+From: Leon Yen <leon.yen@mediatek.com>
 
-[ Upstream commit bf76b144fe53c7f0de9e294947d903fc7724776f ]
+[ Upstream commit ecf0b2b8a37c8464186620bef37812a117ff6366 ]
 
-Currently, when using WCN7850 or QCN9274 as AP, ath12k always performs down
-grade phy mode operation regardless of whether the firmware supports EHT
-capability or not and then vdev will start in HE mode. When stations that
-support EHT capability try to connect to the AP, the AP will set phy mode
-to EHT after receiving the association request packet, and then send
-WMI_PEER_ASSOC_CMDID command to firmware, AP’s firmware will crash.
+During chip recovery (e.g. chip reset), there is a possible situation that
+kernel worker reset_work is holding the lock and waiting for kernel thread
+stat_worker to be parked, while stat_worker is waiting for the release of
+the same lock.
+It causes a deadlock resulting in the dumping of hung tasks messages and
+possible rebooting of the device.
 
-This is because when the ath12k_mac_copy_sband_iftype_data() function
-handles EHT capability, it does not copy the EHT capability into the
-iftype[band][type] array according to the interface type. So, interface
-type should not be used as an index to get eht_cap in
-ath12k_mac_check_down_grade_phy_mode() function.
+This patch prevents the execution of stat_worker during the chip recovery.
 
-To address this issue, use types_mask to select the eht_cap in
-ath12k_mac_check_down_grade_phy_mode() function.
-
-This patch affects QCN9274 and WCN7850 because they have the same issue.
-
-Hostapd log:
-wlo1: STA 02:03:7f:37:12:34 IEEE 802.11: Could not set STA to kernel driver
-
-Kernel log:
-[270894.816076] ath12k_pci 0000:03:00.0: failed to send WMI_PEER_SET_PARAM cmd
-[270894.816111] ath12k_pci 0000:03:00.0: failed to setup peer SMPS for vdev 0: -108
-[270894.816122] ath12k_pci 0000:03:00.0: Failed to associate station: 02:03:7f:37:12:34
-[270894.843389] ieee80211 phy5: Hardware restart was requested
-[270894.843517] ath12k_pci 0000:03:00.0: failed to lookup peer 02:03:7f:37:12:34 on vdev 0
-[270894.843616] ath12k_pci 0000:03:00.0: failed to send WMI_PEER_DELETE cmd
-[270894.843650] ath12k_pci 0000:03:00.0: failed to delete peer vdev_id 0 addr 02:03:7f:37:12:34 ret -108
-[270894.843663] ath12k_pci 0000:03:00.0: Failed to delete peer: 02:03:7f:37:12:34 for VDEV: 0
-
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.0.1-00029-QCAHKSWPL_SILICONZ-1
-
-Signed-off-by: Lingbo Kong <quic_lingbok@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240425083837.5340-1-quic_lingbok@quicinc.com
+Signed-off-by: Leon Yen <leon.yen@mediatek.com>
+Signed-off-by: Ming Yen Hsieh <MingYen.Hsieh@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7921/mac.c      | 2 ++
+ drivers/net/wireless/mediatek/mt76/mt7921/pci_mac.c  | 2 --
+ drivers/net/wireless/mediatek/mt76/mt7921/sdio_mac.c | 2 --
+ drivers/net/wireless/mediatek/mt76/sdio.c            | 3 ++-
+ 4 files changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index 52a5fb8b03e9a..82ef4d4da681e 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -6286,14 +6286,24 @@ ath12k_mac_check_down_grade_phy_mode(struct ath12k *ar,
- 				     enum nl80211_band band,
- 				     enum nl80211_iftype type)
- {
--	struct ieee80211_sta_eht_cap *eht_cap;
-+	struct ieee80211_sta_eht_cap *eht_cap = NULL;
- 	enum wmi_phy_mode down_mode;
-+	int n = ar->mac.sbands[band].n_iftype_data;
-+	int i;
-+	struct ieee80211_sband_iftype_data *data;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mac.c b/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
+index 867e14f6b93a0..73e42ef429837 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
+@@ -663,6 +663,7 @@ void mt7921_mac_reset_work(struct work_struct *work)
+ 	int i, ret;
  
- 	if (mode < MODE_11BE_EHT20)
- 		return mode;
+ 	dev_dbg(dev->mt76.dev, "chip reset\n");
++	set_bit(MT76_RESET, &dev->mphy.state);
+ 	dev->hw_full_reset = true;
+ 	ieee80211_stop_queues(hw);
  
--	eht_cap = &ar->mac.iftype[band][type].eht_cap;
--	if (eht_cap->has_eht)
-+	data = ar->mac.iftype[band];
-+	for (i = 0; i < n; i++) {
-+		if (data[i].types_mask & BIT(type)) {
-+			eht_cap = &data[i].eht_cap;
-+			break;
-+		}
-+	}
-+
-+	if (eht_cap && eht_cap->has_eht)
- 		return mode;
+@@ -691,6 +692,7 @@ void mt7921_mac_reset_work(struct work_struct *work)
+ 	}
  
- 	switch (mode) {
+ 	dev->hw_full_reset = false;
++	clear_bit(MT76_RESET, &dev->mphy.state);
+ 	pm->suspended = false;
+ 	ieee80211_wake_queues(hw);
+ 	ieee80211_iterate_active_interfaces(hw,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/pci_mac.c b/drivers/net/wireless/mediatek/mt76/mt7921/pci_mac.c
+index c866144ff0613..031ba9aaa4e2f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/pci_mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/pci_mac.c
+@@ -64,7 +64,6 @@ int mt7921e_mac_reset(struct mt792x_dev *dev)
+ 	mt76_wr(dev, dev->irq_map->host_irq_enable, 0);
+ 	mt76_wr(dev, MT_PCIE_MAC_INT_ENABLE, 0x0);
+ 
+-	set_bit(MT76_RESET, &dev->mphy.state);
+ 	set_bit(MT76_MCU_RESET, &dev->mphy.state);
+ 	wake_up(&dev->mt76.mcu.wait);
+ 	skb_queue_purge(&dev->mt76.mcu.res_q);
+@@ -115,7 +114,6 @@ int mt7921e_mac_reset(struct mt792x_dev *dev)
+ 
+ 	err = __mt7921_start(&dev->phy);
+ out:
+-	clear_bit(MT76_RESET, &dev->mphy.state);
+ 
+ 	local_bh_disable();
+ 	napi_enable(&dev->mt76.tx_napi);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/sdio_mac.c b/drivers/net/wireless/mediatek/mt76/mt7921/sdio_mac.c
+index 389eb0903807e..1f77cf71ca701 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/sdio_mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/sdio_mac.c
+@@ -98,7 +98,6 @@ int mt7921s_mac_reset(struct mt792x_dev *dev)
+ 	mt76_connac_free_pending_tx_skbs(&dev->pm, NULL);
+ 	mt76_txq_schedule_all(&dev->mphy);
+ 	mt76_worker_disable(&dev->mt76.tx_worker);
+-	set_bit(MT76_RESET, &dev->mphy.state);
+ 	set_bit(MT76_MCU_RESET, &dev->mphy.state);
+ 	wake_up(&dev->mt76.mcu.wait);
+ 	skb_queue_purge(&dev->mt76.mcu.res_q);
+@@ -135,7 +134,6 @@ int mt7921s_mac_reset(struct mt792x_dev *dev)
+ 
+ 	err = __mt7921_start(&dev->phy);
+ out:
+-	clear_bit(MT76_RESET, &dev->mphy.state);
+ 
+ 	mt76_worker_enable(&dev->mt76.tx_worker);
+ 
+diff --git a/drivers/net/wireless/mediatek/mt76/sdio.c b/drivers/net/wireless/mediatek/mt76/sdio.c
+index 3e88798df0178..a4ed00eebc483 100644
+--- a/drivers/net/wireless/mediatek/mt76/sdio.c
++++ b/drivers/net/wireless/mediatek/mt76/sdio.c
+@@ -499,7 +499,8 @@ static void mt76s_tx_status_data(struct mt76_worker *worker)
+ 	dev = container_of(sdio, struct mt76_dev, sdio);
+ 
+ 	while (true) {
+-		if (test_bit(MT76_REMOVED, &dev->phy.state))
++		if (test_bit(MT76_RESET, &dev->phy.state) ||
++		    test_bit(MT76_REMOVED, &dev->phy.state))
+ 			break;
+ 
+ 		if (!dev->drv->tx_status_data(dev, &update))
 -- 
 2.43.0
 
