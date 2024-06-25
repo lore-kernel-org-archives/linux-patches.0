@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A2912EBEA;
-	Tue, 25 Jun 2024 09:44:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA86112EBEA;
+	Tue, 25 Jun 2024 09:44:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308650; cv=none; b=XIt37zoswhIz5G5twNd2IDdw7QBqcAzfLaG5gHwM7y5EwD1Q1HjHp/LX521PmnBZuAs5foynQVM4r1WwkcEGwbvrjIg8BBK3xaHssznihmXekx7h6QDWSjQSzeH0PhhkV1pTF/3pYVLhxvpx3TFctTRb32U5J4VY6n7NqwwpN0U=
+	t=1719308653; cv=none; b=rl9njfeSf869OL+lBZkOoltrnEFo6BFKnqhArk33qjUPFmcjRM0g5Gb5cPtuNe4zc++xHtwRGyfscUAlGCOhzmYIbHW7YxCWhboJbHsRQK/bSvd/XNw+7RvZAOpz6cqPKTtNlv3anFOLicQTZ06Q/34wxIw+APgfcOljWkKP0bs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308650; c=relaxed/simple;
-	bh=Ia38vSLdukPEr7X0Nz+xKZocu3HCawJ2U1d2Nxrcnqg=;
+	s=arc-20240116; t=1719308653; c=relaxed/simple;
+	bh=goAM+7IBuvr4p8KQ4I7T2Tbi0GdOMLSgMA5QkLb4t8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jhm07gD+IpIw9zgp5brCusehPy2dMnvXBEwgIRLAAfQdzt5gClsxuMgAwFeFYGiX2Zm1/rAFB5aKd+LLFG7hDOSmdslpAEz6V14Me+kxGNN6OHrTIP7GayeaniMFq5hX23fHT+gmIw5E4fvEbAAYNDPsNCJqMbuahjccbuqzS3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h13by+Du; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j1bIuQ0kB/0ofuExSwEfS7AeFSeWuViNZau4QhAJ0W+EXiqOGAR8D+NYYT2GgUbyKyebrDyi0jZF1OG5k6LsEpiUzjzDfH2Yw6fqpPD5cqzb4peDL9Zel1fmCAdM/93CflxRAcJK6TGSZxuIttBz/Y/Uwzd5BxepB56PEH4lAn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BGd3Jdia; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h13by+Du"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38023C32781;
-	Tue, 25 Jun 2024 09:44:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BGd3Jdia"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32D39C32781;
+	Tue, 25 Jun 2024 09:44:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308650;
-	bh=Ia38vSLdukPEr7X0Nz+xKZocu3HCawJ2U1d2Nxrcnqg=;
+	s=korg; t=1719308653;
+	bh=goAM+7IBuvr4p8KQ4I7T2Tbi0GdOMLSgMA5QkLb4t8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h13by+Duq+wb1W4F380MQZN3xogMwzVffIPWnCYlIxQOz6mUmfYnSAo7hJGivyBqa
-	 fLDQb5OXOCe0A+aV0kVksmmhdIZwbzBUjVNDFuzSVPn59nTXwgRATkEsB6B0ktZhWT
-	 S/7Tjkfh+QTBiW47S59r2WdsH3aOPt8IWK7Wsrf8=
+	b=BGd3JdialRQszMLg60gCvF9ZfCjtdQyQFmYIYjuD1Lfb9+DKfODu0QycLDKwE8Oxk
+	 mvdGo+A/ndgurR+UFamX4Wlevot9yNd++ZyUEckxVOx+Y2URFT2vxCnTd7fe4FpUzD
+	 cWt+fTMmAJc8KCPZ48F4D5lFfQG/9PLcOQOeYN7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Potapenko <glider@google.com>,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.9 192/250] KVM: arm64: Disassociate vcpus from redistributor region on teardown
-Date: Tue, 25 Jun 2024 11:32:30 +0200
-Message-ID: <20240625085555.421228123@linuxfoundation.org>
+	Adamos Ttofari <attofari@amazon.de>,
+	Raghavendra Rao Ananta <rananta@google.com>,
+	Jim Mattson <jmattson@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.9 193/250] KVM: x86: Always sync PIR to IRR prior to scanning I/O APIC routes
+Date: Tue, 25 Jun 2024 11:32:31 +0200
+Message-ID: <20240625085555.459148134@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -51,79 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 0d92e4a7ffd5c42b9fa864692f82476c0bf8bcc8 upstream.
+commit f3ced000a2df53f4b12849e121769045a81a3b22 upstream.
 
-When tearing down a redistributor region, make sure we don't have
-any dangling pointer to that region stored in a vcpu.
+Sync pending posted interrupts to the IRR prior to re-scanning I/O APIC
+routes, irrespective of whether the I/O APIC is emulated by userspace or
+by KVM.  If a level-triggered interrupt routed through the I/O APIC is
+pending or in-service for a vCPU, KVM needs to intercept EOIs on said
+vCPU even if the vCPU isn't the destination for the new routing, e.g. if
+servicing an interrupt using the old routing races with I/O APIC
+reconfiguration.
 
-Fixes: e5a35635464b ("kvm: arm64: vgic-v3: Introduce vgic_v3_free_redist_region()")
-Reported-by: Alexander Potapenko <glider@google.com>
-Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20240605175637.1635653-1-maz@kernel.org
+Commit fceb3a36c29a ("KVM: x86: ioapic: Fix level-triggered EOI and
+userspace I/OAPIC reconfigure race") fixed the common cases, but
+kvm_apic_pending_eoi() only checks if an interrupt is in the local
+APIC's IRR or ISR, i.e. misses the uncommon case where an interrupt is
+pending in the PIR.
+
+Failure to intercept EOI can manifest as guest hangs with Windows 11 if
+the guest uses the RTC as its timekeeping source, e.g. if the VMM doesn't
+expose a more modern form of time to the guest.
+
 Cc: stable@vger.kernel.org
+Cc: Adamos Ttofari <attofari@amazon.de>
+Cc: Raghavendra Rao Ananta <rananta@google.com>
+Reviewed-by: Jim Mattson <jmattson@google.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20240611014845.82795-1-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/vgic/vgic-init.c    |    2 +-
- arch/arm64/kvm/vgic/vgic-mmio-v3.c |   15 +++++++++++++--
- arch/arm64/kvm/vgic/vgic.h         |    2 +-
- 3 files changed, 15 insertions(+), 4 deletions(-)
+ arch/x86/kvm/x86.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/arch/arm64/kvm/vgic/vgic-init.c
-+++ b/arch/arm64/kvm/vgic/vgic-init.c
-@@ -355,7 +355,7 @@ static void kvm_vgic_dist_destroy(struct
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -10677,13 +10677,12 @@ static void vcpu_scan_ioapic(struct kvm_
  
- 	if (dist->vgic_model == KVM_DEV_TYPE_ARM_VGIC_V3) {
- 		list_for_each_entry_safe(rdreg, next, &dist->rd_regions, list)
--			vgic_v3_free_redist_region(rdreg);
-+			vgic_v3_free_redist_region(kvm, rdreg);
- 		INIT_LIST_HEAD(&dist->rd_regions);
- 	} else {
- 		dist->vgic_cpu_base = VGIC_ADDR_UNDEF;
---- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-+++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-@@ -919,8 +919,19 @@ free:
- 	return ret;
- }
+ 	bitmap_zero(vcpu->arch.ioapic_handled_vectors, 256);
  
--void vgic_v3_free_redist_region(struct vgic_redist_region *rdreg)
-+void vgic_v3_free_redist_region(struct kvm *kvm, struct vgic_redist_region *rdreg)
- {
-+	struct kvm_vcpu *vcpu;
-+	unsigned long c;
++	static_call_cond(kvm_x86_sync_pir_to_irr)(vcpu);
 +
-+	lockdep_assert_held(&kvm->arch.config_lock);
-+
-+	/* Garbage collect the region */
-+	kvm_for_each_vcpu(c, vcpu, kvm) {
-+		if (vcpu->arch.vgic_cpu.rdreg == rdreg)
-+			vcpu->arch.vgic_cpu.rdreg = NULL;
-+	}
-+
- 	list_del(&rdreg->list);
- 	kfree(rdreg);
- }
-@@ -945,7 +956,7 @@ int vgic_v3_set_redist_base(struct kvm *
+ 	if (irqchip_split(vcpu->kvm))
+ 		kvm_scan_ioapic_routes(vcpu, vcpu->arch.ioapic_handled_vectors);
+-	else {
+-		static_call_cond(kvm_x86_sync_pir_to_irr)(vcpu);
+-		if (ioapic_in_kernel(vcpu->kvm))
+-			kvm_ioapic_scan_entry(vcpu, vcpu->arch.ioapic_handled_vectors);
+-	}
++	else if (ioapic_in_kernel(vcpu->kvm))
++		kvm_ioapic_scan_entry(vcpu, vcpu->arch.ioapic_handled_vectors);
  
- 		mutex_lock(&kvm->arch.config_lock);
- 		rdreg = vgic_v3_rdist_region_from_index(kvm, index);
--		vgic_v3_free_redist_region(rdreg);
-+		vgic_v3_free_redist_region(kvm, rdreg);
- 		mutex_unlock(&kvm->arch.config_lock);
- 		return ret;
- 	}
---- a/arch/arm64/kvm/vgic/vgic.h
-+++ b/arch/arm64/kvm/vgic/vgic.h
-@@ -317,7 +317,7 @@ vgic_v3_rd_region_size(struct kvm *kvm,
- 
- struct vgic_redist_region *vgic_v3_rdist_region_from_index(struct kvm *kvm,
- 							   u32 index);
--void vgic_v3_free_redist_region(struct vgic_redist_region *rdreg);
-+void vgic_v3_free_redist_region(struct kvm *kvm, struct vgic_redist_region *rdreg);
- 
- bool vgic_v3_rdist_overlap(struct kvm *kvm, gpa_t base, size_t size);
- 
+ 	if (is_guest_mode(vcpu))
+ 		vcpu->arch.load_eoi_exitmap_pending = true;
 
 
