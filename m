@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB3001465A8;
-	Tue, 25 Jun 2024 09:46:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB60B1465A8;
+	Tue, 25 Jun 2024 09:47:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308818; cv=none; b=qnt6PI451nHvaAx8y0iocc8arITri8u+KaUklPUOwKOIPWKXfDcVJCWWFqxO0L773l9rImQEcyxpaKbLwyfe5f5HryIG0IIvRtoN6oo+L7ipJy23hPWSJY1XbOo5XAtvHGIEmktTW+ACF4lBDrhBWg1tvubGJBsNHJ6tTOr0/CY=
+	t=1719308821; cv=none; b=En4Ri5XQc4hbisYob1NAqoH0RL9JPH7c6NV07h7MjDZdWjMDIazghMDTwIEjvfMWKMUxaX5JMEey1Gxk1teaNxmiWupFIhYloK27QbNxtp+4g/h9dA930NCIxmEMro6vdmy+nnkdSNrP5bHSowXzsDBIWRxcNnPlRYs7BdueVMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308818; c=relaxed/simple;
-	bh=Q5mQcRtKcpnlV1TCnStJ6Zp7lnB8AbUIAkF+6ZQnwtY=;
+	s=arc-20240116; t=1719308821; c=relaxed/simple;
+	bh=C/crJdTz/xcyOxjiVwNiXiP+N46LfL+Zz7728SPvscA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ij/Wi9YzyZukES5m9AD/hZUt/oqk2qD0oBkOrKGxcTyykVGnEMr3QGd6F2WXYXRG1Z30QToAqjiNUjdbuw8/I5jucis9N0x1C8iPGLrKhIHFezBVOHztuzpJVTM0VoJfM6DRIZ7RBeXBXF9L4hMDQg2coveeJ+MDaPDiwe/NWjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ue3mN+3N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LdOvqEgnbFgvXDTt2hXRLV1MJx8XhzEZDh6pTQOuQM/UDr0PEZRI0XvWRU5pd3lCBAMl7opXL8KfR1JjY8w4xJw7Xsqh2rzTUKQsD3/XIvfsIzGgUW+81Cxwf0iuDNzP2lcGEtVcQ8a08022OfOlRluB1zuni64M3+yYobKni2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pS5H8swj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ue3mN+3N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 434E7C32781;
-	Tue, 25 Jun 2024 09:46:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pS5H8swj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31756C32781;
+	Tue, 25 Jun 2024 09:47:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308818;
-	bh=Q5mQcRtKcpnlV1TCnStJ6Zp7lnB8AbUIAkF+6ZQnwtY=;
+	s=korg; t=1719308821;
+	bh=C/crJdTz/xcyOxjiVwNiXiP+N46LfL+Zz7728SPvscA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ue3mN+3NxIPF+N5czKnohBD/HjvfXA8Xnmv2mDNr9DyV3rksSo9qCIuKxeRUYcPXA
-	 ucUoEZtuoYLtEYhdW2v7ti0+lA4wvW04PYeY7mlBHSmCmDxj4yBFUdo86Itv0akUNb
-	 uswiuqaN38eeLIjGbbhuBo9Dj2FWqUzcFDVTshlU=
+	b=pS5H8swj5RQoz9Yo9aEmlsgfvCCDK0b1p1p4znIjPa9dLktfD9b3FG2RdRjaLAmvE
+	 LgrmPR1yRB+/OmlRofg1T9rihg6ZMao8vDyMLe0NhwiEtPMMAp9by2PuXiPOoYgkm0
+	 WIXpsAyvUoaxxcHAHzmOiRvTR4sYMFi3v0A+8QZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rafael Aquini <aquini@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.9 250/250] Revert "mm: mmap: allow for the maximum number of bits for randomizing mmap_base by default"
-Date: Tue, 25 Jun 2024 11:33:28 +0200
-Message-ID: <20240625085557.645256639@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.9 232/250] dt-bindings: i2c: google,cros-ec-i2c-tunnel: correct path to i2c-controller schema
+Date: Tue, 25 Jun 2024 11:33:10 +0200
+Message-ID: <20240625085556.958990281@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -54,71 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 14d7c92f8df9c0964ae6f8b813c1b3ac38120825 upstream.
+commit 5c8cfd592bb7632200b4edac8f2c7ec892ed9d81 upstream.
 
-This reverts commit 3afb76a66b5559a7b595155803ce23801558a7a9.
+The referenced i2c-controller.yaml schema is provided by dtschema
+package (outside of Linux kernel), so use full path to reference it.
 
-This was a wrongheaded workaround for an issue that had already been
-fixed much better by commit 4ef9ad19e176 ("mm: huge_memory: don't force
-huge page alignment on 32 bit").
-
-Asking users questions at kernel compile time that they can't make sense
-of is not a viable strategy.  And the fact that even the kernel VM
-maintainers apparently didn't catch that this "fix" is not a fix any
-more pretty much proves the point that people can't be expected to
-understand the implications of the question.
-
-It may well be the case that we could improve things further, and that
-__thp_get_unmapped_area() should take the mapping randomization into
-account even for 64-bit kernels.  Maybe we should not be so eager to use
-THP mappings.
-
-But in no case should this be a kernel config option.
-
-Cc: Rafael Aquini <aquini@redhat.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Jiri Slaby <jirislaby@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: 1acd4577a66f ("dt-bindings: i2c: convert i2c-cros-ec-tunnel to json-schema")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/Kconfig |   12 ------------
- 1 file changed, 12 deletions(-)
+ Documentation/devicetree/bindings/i2c/google,cros-ec-i2c-tunnel.yaml |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/Kconfig
-+++ b/arch/Kconfig
-@@ -1029,21 +1029,10 @@ config ARCH_MMAP_RND_BITS_MAX
- config ARCH_MMAP_RND_BITS_DEFAULT
- 	int
+--- a/Documentation/devicetree/bindings/i2c/google,cros-ec-i2c-tunnel.yaml
++++ b/Documentation/devicetree/bindings/i2c/google,cros-ec-i2c-tunnel.yaml
+@@ -21,7 +21,7 @@ description: |
+   google,cros-ec-spi or google,cros-ec-i2c.
  
--config FORCE_MAX_MMAP_RND_BITS
--	bool "Force maximum number of bits to use for ASLR of mmap base address"
--	default y if !64BIT
--	help
--	  ARCH_MMAP_RND_BITS and ARCH_MMAP_RND_COMPAT_BITS represent the number
--	  of bits to use for ASLR and if no custom value is assigned (EXPERT)
--	  then the architecture's lower bound (minimum) value is assumed.
--	  This toggle changes that default assumption to assume the arch upper
--	  bound (maximum) value instead.
--
- config ARCH_MMAP_RND_BITS
- 	int "Number of bits to use for ASLR of mmap base address" if EXPERT
- 	range ARCH_MMAP_RND_BITS_MIN ARCH_MMAP_RND_BITS_MAX
- 	default ARCH_MMAP_RND_BITS_DEFAULT if ARCH_MMAP_RND_BITS_DEFAULT
--	default ARCH_MMAP_RND_BITS_MAX if FORCE_MAX_MMAP_RND_BITS
- 	default ARCH_MMAP_RND_BITS_MIN
- 	depends on HAVE_ARCH_MMAP_RND_BITS
- 	help
-@@ -1078,7 +1067,6 @@ config ARCH_MMAP_RND_COMPAT_BITS
- 	int "Number of bits to use for ASLR of mmap base address for compatible applications" if EXPERT
- 	range ARCH_MMAP_RND_COMPAT_BITS_MIN ARCH_MMAP_RND_COMPAT_BITS_MAX
- 	default ARCH_MMAP_RND_COMPAT_BITS_DEFAULT if ARCH_MMAP_RND_COMPAT_BITS_DEFAULT
--	default ARCH_MMAP_RND_COMPAT_BITS_MAX if FORCE_MAX_MMAP_RND_BITS
- 	default ARCH_MMAP_RND_COMPAT_BITS_MIN
- 	depends on HAVE_ARCH_MMAP_RND_COMPAT_BITS
- 	help
+ allOf:
+-  - $ref: i2c-controller.yaml#
++  - $ref: /schemas/i2c/i2c-controller.yaml#
+ 
+ properties:
+   compatible:
 
 
