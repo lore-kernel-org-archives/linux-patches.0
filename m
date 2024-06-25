@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 223A8FBEF;
-	Tue, 25 Jun 2024 09:36:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E9E7FBEF;
+	Tue, 25 Jun 2024 09:36:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308162; cv=none; b=SrhyDpbJkio/4T8XMfSmTdp9K4hM+Frr4cZcmo9ao2YQtAg23Z+rHeH+4XHbHCtG7EJuFhYBYj5aO+y0E5AbRNjsRKbICyULXFk2sG63RNAStVVhlCmOX96zvnut42bLb8bgeW9/LwS4jyFQxmk7N4Wj8C2hpw2zQMN9NyHmbno=
+	t=1719308165; cv=none; b=drvUEfn8J7qfzkMky91FWcvLhL2tnztN72ZXhPLsFe1zRg8YMHTf2WIv0tCNXPb+KZlvPx+Q5XfVM4crHInq9hsNuklxVK6B4Av8rE+WQgmr/uEfo82132gyCYOido5uWBzxoHCeQd8FeLK3kUrJYY0KD8LEAMCtkuaSUP2nf/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308162; c=relaxed/simple;
-	bh=h8NrlcKZGp5ZqBQtPyuT12llTUE4o2BPgnKH0mDsXyY=;
+	s=arc-20240116; t=1719308165; c=relaxed/simple;
+	bh=A07In+00EDxvLx5GFt8ux2oZmumpyIOz/qh1spdWWzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FjkD/xo0AyoMrIdpHHUh3NFp8yBPwi8XqJONCum0uzx6RQfHW+Jc9/Ljd4efYxsPAqrZK4gXE9bE2PqItm2NUsELFxsiV51igS8xSJMIppI5czqG1W6QsknLy1RSuDFd1uVnN85XywpqwXnrC7cYXv3KqmMLXtynK0db4JbnGXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3R0/3kZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rl2fzLLR7/MqU+EVeQCFM6l7oVDv8TuTng6IpLQem/8TsXnxSX18WPNydPq97ptYeAL58KNy/N8YwoC8udVE+X91pvihiVMIsT6IWHSba9McyP7urZcogpS4wY8kn4mpyMqPPfoBJbL11cJBU2yafm1lVPIK84/lT6Lho8CvSwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TXmHE6uY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3R0/3kZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 965F6C4AF09;
-	Tue, 25 Jun 2024 09:36:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TXmHE6uY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88DCFC32781;
+	Tue, 25 Jun 2024 09:36:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308162;
-	bh=h8NrlcKZGp5ZqBQtPyuT12llTUE4o2BPgnKH0mDsXyY=;
+	s=korg; t=1719308164;
+	bh=A07In+00EDxvLx5GFt8ux2oZmumpyIOz/qh1spdWWzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j3R0/3kZux8YHu1yY/HeonmeE3H+bNYgiWrWfFBehFA2WD36/EU6+qanWc/undzWX
-	 t8vetxO/X8hLUgQTt0pFVGiZynhFdcDkI3Dv72t/Txw4grF1gaezVbRVxpMWWjUoed
-	 4tb3cyQAs7qHADsQMGFh59Jd6pgLi1U+q2gxyU+w=
+	b=TXmHE6uYBU0S5akUtLrAsOna7J1bi2/kgnLN7Jm8zeMQETsFeCvlyqei6uitQ1aMs
+	 f3AcXli7bmOOGcEa5usIqNrKGFWLqRQpBjwSVtiXr+Soo2QiTdDUU7z5guNl2WxqA2
+	 I4TrXZazqIbeZczh8TLqoxFQb8m/dvD3L7VckQEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chenghai Huang <huangchenghai2@huawei.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 003/250] crypto: hisilicon/sec - Fix memory leak for sec resource release
-Date: Tue, 25 Jun 2024 11:29:21 +0200
-Message-ID: <20240625085548.169933515@linuxfoundation.org>
+Subject: [PATCH 6.9 004/250] crypto: hisilicon/qm - Add the err memory release process to qm uninit
+Date: Tue, 25 Jun 2024 11:29:22 +0200
+Message-ID: <20240625085548.208463556@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -53,38 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Chenghai Huang <huangchenghai2@huawei.com>
 
-[ Upstream commit bba4250757b4ae1680fea435a358d8093f254094 ]
+[ Upstream commit c9ccfd5e0ff0dd929ce86d1b5f3c6a414110947a ]
 
-The AIV is one of the SEC resources. When releasing resources,
-it need to release the AIV resources at the same time.
-Otherwise, memory leakage occurs.
+When the qm uninit command is executed, the err data needs to
+be released to prevent memory leakage. The error information
+release operation and uacce_remove are integrated in
+qm_remove_uacce.
 
-The aiv resource release is added to the sec resource release
-function.
+So add the qm_remove_uacce to qm uninit to avoid err memory
+leakage.
 
 Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/sec2/sec_crypto.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/crypto/hisilicon/qm.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/crypto/hisilicon/sec2/sec_crypto.c b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-index 93a972fcbf638..0558f98e221f6 100644
---- a/drivers/crypto/hisilicon/sec2/sec_crypto.c
-+++ b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-@@ -481,8 +481,10 @@ static void sec_alg_resource_free(struct sec_ctx *ctx,
+diff --git a/drivers/crypto/hisilicon/qm.c b/drivers/crypto/hisilicon/qm.c
+index 92f0a1d9b4a6b..13e413533f082 100644
+--- a/drivers/crypto/hisilicon/qm.c
++++ b/drivers/crypto/hisilicon/qm.c
+@@ -2893,12 +2893,9 @@ void hisi_qm_uninit(struct hisi_qm *qm)
+ 	hisi_qm_set_state(qm, QM_NOT_READY);
+ 	up_write(&qm->qps_lock);
  
- 	if (ctx->pbuf_supported)
- 		sec_free_pbuf_resource(dev, qp_ctx->res);
--	if (ctx->alg_type == SEC_AEAD)
-+	if (ctx->alg_type == SEC_AEAD) {
- 		sec_free_mac_resource(dev, qp_ctx->res);
-+		sec_free_aiv_resource(dev, qp_ctx->res);
-+	}
++	qm_remove_uacce(qm);
+ 	qm_irqs_unregister(qm);
+ 	hisi_qm_pci_uninit(qm);
+-	if (qm->use_sva) {
+-		uacce_remove(qm->uacce);
+-		qm->uacce = NULL;
+-	}
  }
+ EXPORT_SYMBOL_GPL(hisi_qm_uninit);
  
- static int sec_alloc_qp_ctx_resource(struct sec_ctx *ctx, struct sec_qp_ctx *qp_ctx)
 -- 
 2.43.0
 
