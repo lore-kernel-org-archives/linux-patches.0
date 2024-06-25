@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F66F149DE9;
-	Tue, 25 Jun 2024 09:50:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6334D147C96;
+	Tue, 25 Jun 2024 09:50:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309039; cv=none; b=A7yZkKDTDo01w+WMGmtk5f9ajg+1+DaQM8BARVjxlLJTgyEygiv7nUTSXmJIi7GHbuGaWDa5EPrdVdaf8XSB4bZAe256KEqvdjdPKByWmtRnR4GDX54qe4F8wg46DiZNBsKAtcn2mQI3zJJU7uK+rcGVtT6GP7qZPjs08YcjsDA=
+	t=1719309042; cv=none; b=W/Z8O2Upb61m92L/3bxDb3PyBOT+14h117+xFYl7aHPH6FKg1mwGqCqqDycpVsY7z0x+CEFpQ+aVUfPOCa6mVcFsLApAyzxjMxXm66NTGZSv1Gsmflg+Ad+BI418C1qFBxn1cFT/pjfe9YWGDrWT1WN+SZiS3kZNMHdqGQq4aYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309039; c=relaxed/simple;
-	bh=RenFB+JCfEO/wvO/Oopg6I/C9AG3JNYgRzF68ncY3FE=;
+	s=arc-20240116; t=1719309042; c=relaxed/simple;
+	bh=kU5OKIqFoxceaOs+WEpHh38F7cwgtP4N64f2CB0yuvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QOUFk5SYT2/jgORgO8I2mYCSqlFyFM8zX5hmvyiy0OigfbXByvl2uvAcMjLc+GOMUgdciKSKi7s/nzvaS4Nn/tjUw+m1NsYnDdOviQNWNt3gfbwRAv2CPr8lsbn6lQs874ZWGEAVy3q+0Cdn8sMwu7xP8CIckgj80xX/NeuVqo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pizvfaEI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=geLaJCiUTmHNpLYi1cEsFeiv+RYFbzZyXTkOedChhMV2Gz5PXft6iuvm0M18LDEzVXjqlIgnHluTGMcBPYwDMp534qBTTsByLVbU56GOdLwLeD/Ba01crElX08ch6rZDimxpY17jUq8jaLvMhTtk7c+FAo5SksdwI8Pq8BM9ups=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SzdSdfdi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pizvfaEI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB92DC32781;
-	Tue, 25 Jun 2024 09:50:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SzdSdfdi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBA90C32781;
+	Tue, 25 Jun 2024 09:50:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309039;
-	bh=RenFB+JCfEO/wvO/Oopg6I/C9AG3JNYgRzF68ncY3FE=;
+	s=korg; t=1719309042;
+	bh=kU5OKIqFoxceaOs+WEpHh38F7cwgtP4N64f2CB0yuvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pizvfaEIGHnvjXkim9/jv0q2hztku6mvTA2z4eA65lNBmnFoXeyCAl0FrXdtx/CrP
-	 QkXr3Izm2U792rc/f53ripAhhT1UyYUM9d9YSWUKQADZb5R4SzbIA7Pn7SrXm5P4gO
-	 5PsCRmNP5YiUnijUEHqLzLnV/+zevpmCF0yU8qQI=
+	b=SzdSdfdirqnydYvVtPIy4dM+qVtYb8McsTapWp7V26yUTitA4pb2m2Q39L02cTQ5M
+	 Fer6gSdoNk97CBvC+G3zfqTp1GzNWVrQBKicBeUviG0KLIY9caDqiZVG9oW+H4TLL5
+	 TyhnG5Bt8TSo2Lyvh9MfvdzsSr89G4GuBXHjs0Ls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Trimmer <simont@opensource.cirrus.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 074/192] ALSA: hda: cs35l56: Component should be unbound before deconstruction
-Date: Tue, 25 Jun 2024 11:32:26 +0200
-Message-ID: <20240625085540.017127413@linuxfoundation.org>
+Subject: [PATCH 6.6 075/192] ALSA: hda: tas2781: Component should be unbound before deconstruction
+Date: Tue, 25 Jun 2024 11:32:27 +0200
+Message-ID: <20240625085540.055166377@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -53,39 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Simon Trimmer <simont@opensource.cirrus.com>
 
-[ Upstream commit 721f2e6653f5ab0cc52b3a459c4a2158b92fcf80 ]
+[ Upstream commit d832b5a03e94a2a9f866dab3d04937a0f84ea116 ]
 
 The interface associated with the hda_component should be deactivated
 before the driver is deconstructed during removal.
 
-Fixes: 73cfbfa9caea ("ALSA: hda/cs35l56: Add driver for Cirrus Logic CS35L56 amplifier")
+Fixes: 4e7914eb1dae ("ALSA: hda/tas2781: remove sound controls in unbind")
 Signed-off-by: Simon Trimmer <simont@opensource.cirrus.com>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://lore.kernel.org/r/20240613133713.75550-2-simont@opensource.cirrus.com
+Link: https://lore.kernel.org/r/20240613133713.75550-4-simont@opensource.cirrus.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/cs35l56_hda.c | 4 ++--
+ sound/pci/hda/tas2781_hda_i2c.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/pci/hda/cs35l56_hda.c b/sound/pci/hda/cs35l56_hda.c
-index 15e20d9261393..78e2eeba49345 100644
---- a/sound/pci/hda/cs35l56_hda.c
-+++ b/sound/pci/hda/cs35l56_hda.c
-@@ -1021,12 +1021,12 @@ void cs35l56_hda_remove(struct device *dev)
+diff --git a/sound/pci/hda/tas2781_hda_i2c.c b/sound/pci/hda/tas2781_hda_i2c.c
+index a3dec624132d4..75cc3676c1b92 100644
+--- a/sound/pci/hda/tas2781_hda_i2c.c
++++ b/sound/pci/hda/tas2781_hda_i2c.c
+@@ -683,11 +683,11 @@ static void tas2781_hda_remove(struct device *dev)
  {
- 	struct cs35l56_hda *cs35l56 = dev_get_drvdata(dev);
+ 	struct tas2781_hda *tas_hda = dev_get_drvdata(dev);
  
-+	component_del(cs35l56->base.dev, &cs35l56_hda_comp_ops);
++	component_del(tas_hda->dev, &tas2781_hda_comp_ops);
 +
- 	pm_runtime_dont_use_autosuspend(cs35l56->base.dev);
- 	pm_runtime_get_sync(cs35l56->base.dev);
- 	pm_runtime_disable(cs35l56->base.dev);
+ 	pm_runtime_get_sync(tas_hda->dev);
+ 	pm_runtime_disable(tas_hda->dev);
  
--	component_del(cs35l56->base.dev, &cs35l56_hda_comp_ops);
+-	component_del(tas_hda->dev, &tas2781_hda_comp_ops);
 -
- 	cs_dsp_remove(&cs35l56->cs_dsp);
+ 	pm_runtime_put_noidle(tas_hda->dev);
  
- 	kfree(cs35l56->system_name);
+ 	tasdevice_remove(tas_hda->priv);
 -- 
 2.43.0
 
