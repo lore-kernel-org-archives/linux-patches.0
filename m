@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9356913C90B;
-	Tue, 25 Jun 2024 10:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EEDC13C90B;
+	Tue, 25 Jun 2024 10:02:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309718; cv=none; b=Fygn7IsLBTj35kjkOtoOslZvdPxqRVvoZKJOaEQC1lZXokCiNpsrKWPoLCH9NiucPSYMtRCaRiR1O7qMDGJ45iFRdIWlEIEkZx8WcIltR8N5spqxd39873NnuWwMGUI93Q/lW1uJRFDz2XaUwG7YfgHbBEQ7Bj+auz7q4TUBJbE=
+	t=1719309721; cv=none; b=T4xraZ8AFS5WY0VD5K9NYlyH1It/Q949lmSMT4ynGZnDTBaly7L68O6CQg/m/n/27e25Ji39igaoI96XieBNwXl4tuOcRAmEDTh72K8cwvrYlj4TfN0x00sdH8AJPJmrmyYd7GBmFj/1h3btFUHX5t5Rcsq/FW+Okv0zTFnCtmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309718; c=relaxed/simple;
-	bh=a5z+44Jpdgs5uL3mqxmECSHEQq/38OLqQmBNh5LvEkY=;
+	s=arc-20240116; t=1719309721; c=relaxed/simple;
+	bh=bWOE2PWYYE1sNsVjQ/zawOfhcBQ7SXXjGIaI4Au329Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IDUlb7BBkE2ZxnP3FDot/4csoCBXUNUlY9Mhzz1YeZQh4lJcV4gvruT9f+18rLJ9yEsghZrkzhQHAPX1YRoR/8pNzN8ajIPPIbSrcThhXha/F8FbmwTTCWMyOjJ8jrgDLeUXXCU2RpinWvt2mckv0MDps17ToP36d8yZawJbiIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2GbsuFdu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=puwnV8sHUAIoeF26z4l6GWrzsR7hjXLaBccesxNCJxex0bF6pEAv4uvfbhqF7OFF1DgdlnRIhlLXcabZlg3KX9S+96k3LCf+WfOvnjTQ0IGPD6AP9cfDKw2+hbfZnFeK1RlGwMzZGKgEaPchKyRgt/4orojihaI1NSu11gKsfVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yrJSzTb6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2GbsuFdu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17EF5C32781;
-	Tue, 25 Jun 2024 10:01:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yrJSzTb6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12DC9C32781;
+	Tue, 25 Jun 2024 10:02:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309718;
-	bh=a5z+44Jpdgs5uL3mqxmECSHEQq/38OLqQmBNh5LvEkY=;
+	s=korg; t=1719309721;
+	bh=bWOE2PWYYE1sNsVjQ/zawOfhcBQ7SXXjGIaI4Au329Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2GbsuFdulyGo2+Xm8dYZ1Ij6f63BUjoF3VDZ68huoGqqZdIrwHauK4o9GE0KXmArt
-	 UM77hq6dOYQ4r9QQ8+L8H5Gw2T2deg3gX0HN1FL7FqHqh7euGDp+n61E+/szdtDWoO
-	 kpmw3TUsqtCSU9aBtXR6ckmYixdYSKfcObZRblRU=
+	b=yrJSzTb6GADBKzDCcDH0e643axZg7l9CWyErzrxvlTEFr6EqJETOZb4P97fh7xApK
+	 tf2j5lZ6xTsp3BnXDq+ZtAKRs4A6lAL87+buWcyKfnFaBW6CL9osdBZ/RrNU4bROqY
+	 Mp7nOGxdyJGcaLVcEiD68zR5RTDWVA0GdqpGS2ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Xu <peterx@redhat.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 111/131] mm/page_table_check: fix crash on ZONE_DEVICE
-Date: Tue, 25 Jun 2024 11:34:26 +0200
-Message-ID: <20240625085530.157087398@linuxfoundation.org>
+	Grygorii Tertychnyi <grygorii.tertychnyi@leica-geosystems.com>,
+	Peter Korsgaard <peter@korsgaard.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.1 112/131] i2c: ocores: set IACK bit after core is enabled
+Date: Tue, 25 Jun 2024 11:34:27 +0200
+Message-ID: <20240625085530.194261169@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085525.931079317@linuxfoundation.org>
 References: <20240625085525.931079317@linuxfoundation.org>
@@ -53,71 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Xu <peterx@redhat.com>
+From: Grygorii Tertychnyi <grembeter@gmail.com>
 
-commit 8bb592c2eca8fd2bc06db7d80b38da18da4a2f43 upstream.
+commit 5a72477273066b5b357801ab2d315ef14949d402 upstream.
 
-Not all pages may apply to pgtable check.  One example is ZONE_DEVICE
-pages: they map PFNs directly, and they don't allocate page_ext at all
-even if there's struct page around.  One may reference
-devm_memremap_pages().
+Setting IACK bit when core is disabled does not clear the "Interrupt Flag"
+bit in the status register, and the interrupt remains pending.
 
-When both ZONE_DEVICE and page-table-check enabled, then try to map some
-dax memories, one can trigger kernel bug constantly now when the kernel
-was trying to inject some pfn maps on the dax device:
+Sometimes it causes failure for the very first message transfer, that is
+usually a device probe.
 
- kernel BUG at mm/page_table_check.c:55!
+Hence, set IACK bit after core is enabled to clear pending interrupt.
 
-While it's pretty legal to use set_pxx_at() for ZONE_DEVICE pages for page
-fault resolutions, skip all the checks if page_ext doesn't even exist in
-pgtable checker, which applies to ZONE_DEVICE but maybe more.
-
-Link: https://lkml.kernel.org/r/20240605212146.994486-1-peterx@redhat.com
-Fixes: df4e817b7108 ("mm: page table check")
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Pasha Tatashin <pasha.tatashin@soleen.com>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-Reviewed-by: Alistair Popple <apopple@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 18f98b1e3147 ("[PATCH] i2c: New bus driver for the OpenCores I2C controller")
+Signed-off-by: Grygorii Tertychnyi <grygorii.tertychnyi@leica-geosystems.com>
+Acked-by: Peter Korsgaard <peter@korsgaard.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_table_check.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-ocores.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/page_table_check.c
-+++ b/mm/page_table_check.c
-@@ -70,6 +70,9 @@ static void page_table_check_clear(struc
- 	page = pfn_to_page(pfn);
- 	page_ext = page_ext_get(page);
+--- a/drivers/i2c/busses/i2c-ocores.c
++++ b/drivers/i2c/busses/i2c-ocores.c
+@@ -442,8 +442,8 @@ static int ocores_init(struct device *de
+ 	oc_setreg(i2c, OCI2C_PREHIGH, prescale >> 8);
  
-+	if (!page_ext)
-+		return;
-+
- 	BUG_ON(PageSlab(page));
- 	anon = PageAnon(page);
+ 	/* Init the device */
+-	oc_setreg(i2c, OCI2C_CMD, OCI2C_CMD_IACK);
+ 	oc_setreg(i2c, OCI2C_CONTROL, ctrl | OCI2C_CTRL_EN);
++	oc_setreg(i2c, OCI2C_CMD, OCI2C_CMD_IACK);
  
-@@ -108,6 +111,9 @@ static void page_table_check_set(struct
- 	page = pfn_to_page(pfn);
- 	page_ext = page_ext_get(page);
- 
-+	if (!page_ext)
-+		return;
-+
- 	BUG_ON(PageSlab(page));
- 	anon = PageAnon(page);
- 
-@@ -138,7 +144,10 @@ void __page_table_check_zero(struct page
- 	BUG_ON(PageSlab(page));
- 
- 	page_ext = page_ext_get(page);
--	BUG_ON(!page_ext);
-+
-+	if (!page_ext)
-+		return;
-+
- 	for (i = 0; i < (1ul << order); i++) {
- 		struct page_table_check *ptc = get_page_table_check(page_ext);
- 
+ 	return 0;
+ }
 
 
