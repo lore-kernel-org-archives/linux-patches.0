@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5412213C90B;
-	Tue, 25 Jun 2024 10:03:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56931146592;
+	Tue, 25 Jun 2024 10:03:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309780; cv=none; b=jHuop6VGBEyO2fgPCTzpkSsdwyUDn2h+5tQKpGOoyt17ZHS8nYwFPWErh2OBUP+RLZY7OvbH7+7M9aXfaD88hIyXdvlr5KWGLILfVqo098Pg0JAv+k9NTj92OSuYIicKRDA1LDC3lTyG+3jpPCPly6qjhkFBvwaWt4U7RUgyaeg=
+	t=1719309783; cv=none; b=sED8O231MhzpUkbS7s22AOv3+zb/T8IOAEJLuI4IBrkau/5Zs5hBeMvthwffmhXLwC0DQLs2E3S4gcW6P6T/Cm86hOv1R/IqFCqPZtWuGa8KHcEaZO5XiU95x5qU/0TXWq1FkjpqhT/1LaeqOqzN2AMDAup2cSiKTmBLr1Cpcnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309780; c=relaxed/simple;
-	bh=s842r6vkNYt3ukRDPbS4YtpDV2WwHKyWOfTxvDpMXOg=;
+	s=arc-20240116; t=1719309783; c=relaxed/simple;
+	bh=gqO00KeIfAcS9jzvaOPrEU/I7nBxOA5QoFqShBM1+I0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QcEjVoPp6ZaJ7HGyPCpfUW0P6WaoJusMvRa04cHYYqgO49BCHzlvTQ/kHFIRWoxI8NrJo3OQgYFJApsY+XCUBkPguLzuujyVgEwylRCtUmt19+A8o4dXfRNaPzPHaOm8HhY7s7BmEreGB7OhZ6Vwz0u78W7412HVTI6cupz/t3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h/MDwphP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s5fJSbsirNabxipZ0PpbKbJGCoHjQIZ3N2wYr+NzqTy3d8OrqslZOWNyF1l6jDkI1a3VKRdGnmxigE+aaOWYcj8Mr86Fl2A2Jnid2wzr8P18Xe4LQni1ZiKohxlTNWXYyQnjS7XK0HVG25epazdol9io914fuOOh3d7/bHr+ejk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dB3SD23B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h/MDwphP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDEBBC32781;
-	Tue, 25 Jun 2024 10:02:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dB3SD23B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E41C32781;
+	Tue, 25 Jun 2024 10:03:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309780;
-	bh=s842r6vkNYt3ukRDPbS4YtpDV2WwHKyWOfTxvDpMXOg=;
+	s=korg; t=1719309783;
+	bh=gqO00KeIfAcS9jzvaOPrEU/I7nBxOA5QoFqShBM1+I0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h/MDwphPg21ZTcNmGVtM5OsRri4Z/2eIMoJk+UxUeCSRGegEDzA1K3t/+SdwffLLe
-	 jarF31iSa3g80ZUFhW/gwH1AbQoF4jg2TBRbh5I9anzHYj7EHPjrVqQd7OJ1ibU4yJ
-	 iEfAu8rgMfx6xCONEtPnVmoCerh8BeZjAtmvXQSs=
+	b=dB3SD23BpiC0Q6lTFKOaCKZafJGaacT3CGnXkRzoWKl8ERB3VCXUs9nsfJFV+KEhV
+	 cndtmlmUSLHfbpv8ozB1pS5AnpgdhIVeZyTa7CjegNdQmsIc/IIdYD/4ZNMrbGFyul
+	 cqQ35GU5vu/gmNpfTilSjikwuepYy48s5Dz/3zq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Ballance <andrewjballance@gmail.com>,
-	syzbot+07762f019fd03d01f04c@syzkaller.appspotmail.com,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 6.1 130/131] hid: asus: asus_report_fixup: fix potential read out of bounds
-Date: Tue, 25 Jun 2024 11:34:45 +0200
-Message-ID: <20240625085530.878127171@linuxfoundation.org>
+	Rafael Aquini <aquini@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.1 131/131] Revert "mm: mmap: allow for the maximum number of bits for randomizing mmap_base by default"
+Date: Tue, 25 Jun 2024 11:34:46 +0200
+Message-ID: <20240625085530.915234193@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085525.931079317@linuxfoundation.org>
 References: <20240625085525.931079317@linuxfoundation.org>
@@ -51,37 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Ballance <andrewjballance@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 89e1ee118d6f0ee6bd6e80d8fe08839875daa241 upstream.
+commit 14d7c92f8df9c0964ae6f8b813c1b3ac38120825 upstream.
 
-syzbot reported a potential read out of bounds in asus_report_fixup.
+This reverts commit 3afb76a66b5559a7b595155803ce23801558a7a9.
 
-this patch adds checks so that a read out of bounds will not occur
+This was a wrongheaded workaround for an issue that had already been
+fixed much better by commit 4ef9ad19e176 ("mm: huge_memory: don't force
+huge page alignment on 32 bit").
 
-Signed-off-by: Andrew Ballance <andrewjballance@gmail.com>
-Reported-by:  <syzbot+07762f019fd03d01f04c@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=07762f019fd03d01f04c
-Fixes: 59d2f5b7392e ("HID: asus: fix more n-key report descriptors if n-key quirked")
-Link: https://lore.kernel.org/r/20240602085023.1720492-1-andrewjballance@gmail.com
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Asking users questions at kernel compile time that they can't make sense
+of is not a viable strategy.  And the fact that even the kernel VM
+maintainers apparently didn't catch that this "fix" is not a fix any
+more pretty much proves the point that people can't be expected to
+understand the implications of the question.
+
+It may well be the case that we could improve things further, and that
+__thp_get_unmapped_area() should take the mapping randomization into
+account even for 64-bit kernels.  Maybe we should not be so eager to use
+THP mappings.
+
+But in no case should this be a kernel config option.
+
+Cc: Rafael Aquini <aquini@redhat.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Jiri Slaby <jirislaby@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-asus.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/Kconfig |   12 ------------
+ 1 file changed, 12 deletions(-)
 
---- a/drivers/hid/hid-asus.c
-+++ b/drivers/hid/hid-asus.c
-@@ -1247,8 +1247,8 @@ static __u8 *asus_report_fixup(struct hi
- 	}
+--- a/arch/Kconfig
++++ b/arch/Kconfig
+@@ -981,21 +981,10 @@ config ARCH_MMAP_RND_BITS_MAX
+ config ARCH_MMAP_RND_BITS_DEFAULT
+ 	int
  
- 	/* match many more n-key devices */
--	if (drvdata->quirks & QUIRK_ROG_NKEY_KEYBOARD) {
--		for (int i = 0; i < *rsize + 1; i++) {
-+	if (drvdata->quirks & QUIRK_ROG_NKEY_KEYBOARD && *rsize > 15) {
-+		for (int i = 0; i < *rsize - 15; i++) {
- 			/* offset to the count from 0x5a report part always 14 */
- 			if (rdesc[i] == 0x85 && rdesc[i + 1] == 0x5a &&
- 			    rdesc[i + 14] == 0x95 && rdesc[i + 15] == 0x05) {
+-config FORCE_MAX_MMAP_RND_BITS
+-	bool "Force maximum number of bits to use for ASLR of mmap base address"
+-	default y if !64BIT
+-	help
+-	  ARCH_MMAP_RND_BITS and ARCH_MMAP_RND_COMPAT_BITS represent the number
+-	  of bits to use for ASLR and if no custom value is assigned (EXPERT)
+-	  then the architecture's lower bound (minimum) value is assumed.
+-	  This toggle changes that default assumption to assume the arch upper
+-	  bound (maximum) value instead.
+-
+ config ARCH_MMAP_RND_BITS
+ 	int "Number of bits to use for ASLR of mmap base address" if EXPERT
+ 	range ARCH_MMAP_RND_BITS_MIN ARCH_MMAP_RND_BITS_MAX
+ 	default ARCH_MMAP_RND_BITS_DEFAULT if ARCH_MMAP_RND_BITS_DEFAULT
+-	default ARCH_MMAP_RND_BITS_MAX if FORCE_MAX_MMAP_RND_BITS
+ 	default ARCH_MMAP_RND_BITS_MIN
+ 	depends on HAVE_ARCH_MMAP_RND_BITS
+ 	help
+@@ -1030,7 +1019,6 @@ config ARCH_MMAP_RND_COMPAT_BITS
+ 	int "Number of bits to use for ASLR of mmap base address for compatible applications" if EXPERT
+ 	range ARCH_MMAP_RND_COMPAT_BITS_MIN ARCH_MMAP_RND_COMPAT_BITS_MAX
+ 	default ARCH_MMAP_RND_COMPAT_BITS_DEFAULT if ARCH_MMAP_RND_COMPAT_BITS_DEFAULT
+-	default ARCH_MMAP_RND_COMPAT_BITS_MAX if FORCE_MAX_MMAP_RND_BITS
+ 	default ARCH_MMAP_RND_COMPAT_BITS_MIN
+ 	depends on HAVE_ARCH_MMAP_RND_COMPAT_BITS
+ 	help
 
 
