@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D043613C90B;
-	Tue, 25 Jun 2024 09:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E9613C90B;
+	Tue, 25 Jun 2024 09:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308450; cv=none; b=FHnjAB+utgKtcaayvr7icbEE1c2WQgM1u1v1i6Qjzw7LkBHTPStbIgs+0Wu7ZsHUbvf1Ul98KdeQGp0Ne5aNaMj4Kg5sYrho3fWXqZCglAMDQmvlyso5ldw3bj2PLTOsUNPZh+xNHSvEAZWHgB9FgBvPushfZ/Im2TBcQJ2BaGg=
+	t=1719308453; cv=none; b=dZ+xk/pmxiQR4rncx1FQ0/Y0e8vXPkIvaDpNFogfD2AX5233xKH5HZ2xVw5GvQhIN+g7hbBIJJBxGNAJWzWDex1LxhSMHzQyb1xJ5GKO4VUE0PhP7MG0UDw1yu++4Tt1t1WVo4HOI3cQ5jvAl3CWBot5tl6oSlOjmEV9zJpnimY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308450; c=relaxed/simple;
-	bh=owkS7UeNGZPc8NrpAduaa2yLsmcaT+JBwYHCuiymt8Y=;
+	s=arc-20240116; t=1719308453; c=relaxed/simple;
+	bh=PhPTUy09dzaQYGsnJubO+wJ5/reUnlg38EdVwGvdihQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J9hg1G5NfnwXrtGhgRvFVMasD4s1PO7K1JZR2zyaoxMxesIYdk2GTHJLsiNeT/cW7Y2+I6gMZrArlajOz+om5dy/r1ggMkUSzBhPSXkOGK3e+Tt2Qlj/fHcAIuoFZ7B1D49/epw4Zde75Dg+5LgzkgAt3Z4Rc2O8VGy8nHF1JCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VwBGr4zF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KLJsjD7H2bQSjAJDIaJXWo6XNhKD7SB/NfMrFLMo+jPwh13o3jQ2sMPv1E8u9kYt/c934asXUVX4b27vhpGXOwsJ5zUPY7HF+LqrH98SVNdNgwUI0LkBW12Arvl3VUfEqDQVOVPHo1ZC+vGdbUzyJpSFnbDC6mfP0hBcF2GSXUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w2C84NCy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VwBGr4zF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55025C32781;
-	Tue, 25 Jun 2024 09:40:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w2C84NCy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416F2C32781;
+	Tue, 25 Jun 2024 09:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308450;
-	bh=owkS7UeNGZPc8NrpAduaa2yLsmcaT+JBwYHCuiymt8Y=;
+	s=korg; t=1719308453;
+	bh=PhPTUy09dzaQYGsnJubO+wJ5/reUnlg38EdVwGvdihQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VwBGr4zF6EvgkMCnCEpBkC4xRrN9eEG+RWVxjdVXn18DS1chz+U3plfs8WYWXADM5
-	 Neelzk7Cl1xEejfg/e0DhBWoxATxcMW9IDFpFn6nJA9kcSkW747hrBF9LZitdsMwOt
-	 yLynxKGyl0m5y+q/Qn9ehZUKa7ijwk0fUZIe1RPY=
+	b=w2C84NCy8wvA0DyRRfo04qds6JoOERL0Ydk0H3bWS/66U0kCPMCD9BfDZyDX46irM
+	 RG1TWIXG6UkxtInr/9IE2JRo3FeSR2CjAfHu5gNOOgHyal8p5wm86E/hZZGcA3UiGf
+	 vEVmuut2kPEHGRqtMu8BTN3wgnU0o3srtfEbgp6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Raju Lakkaraju <Raju.Lakkaraju@microchip.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 124/250] net: lan743x: Support WOL at both the PHY and MAC appropriately
-Date: Tue, 25 Jun 2024 11:31:22 +0200
-Message-ID: <20240625085552.826834736@linuxfoundation.org>
+Subject: [PATCH 6.9 125/250] net: phy: mxl-gpy: Remove interrupt mask clearing from config_init
+Date: Tue, 25 Jun 2024 11:31:23 +0200
+Message-ID: <20240625085552.864741415@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -54,161 +54,157 @@ Content-Transfer-Encoding: 8bit
 
 From: Raju Lakkaraju <Raju.Lakkaraju@microchip.com>
 
-[ Upstream commit 8c248cd836014339498486f14f435c0e344183a7 ]
+[ Upstream commit c44d3ffd85db03ebcc3090e55589e10d5af9f3a9 ]
 
-Prevent options not supported by the PHY from being requested to it by the MAC
-Whenever a WOL option is supported by both, the PHY is given priority
-since that usually leads to better power savings.
+When the system resumes from sleep, the phy_init_hw() function invokes
+config_init(), which clears all interrupt masks and causes wake events to be
+lost in subsequent wake sequences. Remove interrupt mask clearing from
+config_init() and preserve relevant masks in config_intr().
 
-Fixes: e9e13b6adc33 ("lan743x: fix for potential NULL pointer dereference with bare card")
+Fixes: 7d901a1e878a ("net: phy: add Maxlinear GPY115/21x/24x driver")
 Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
 Signed-off-by: Raju Lakkaraju <Raju.Lakkaraju@microchip.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/microchip/lan743x_ethtool.c  | 44 +++++++++++++++++--
- drivers/net/ethernet/microchip/lan743x_main.c | 18 ++++++--
- drivers/net/ethernet/microchip/lan743x_main.h |  4 ++
- 3 files changed, 58 insertions(+), 8 deletions(-)
+ drivers/net/phy/mxl-gpy.c | 58 +++++++++++++++++++++++++--------------
+ 1 file changed, 38 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan743x_ethtool.c b/drivers/net/ethernet/microchip/lan743x_ethtool.c
-index 8a6ae171e375b..def932035cba4 100644
---- a/drivers/net/ethernet/microchip/lan743x_ethtool.c
-+++ b/drivers/net/ethernet/microchip/lan743x_ethtool.c
-@@ -1148,8 +1148,12 @@ static void lan743x_ethtool_get_wol(struct net_device *netdev,
- 	if (netdev->phydev)
- 		phy_ethtool_get_wol(netdev->phydev, wol);
+diff --git a/drivers/net/phy/mxl-gpy.c b/drivers/net/phy/mxl-gpy.c
+index b2d36a3a96f1e..e5f8ac4b4604b 100644
+--- a/drivers/net/phy/mxl-gpy.c
++++ b/drivers/net/phy/mxl-gpy.c
+@@ -107,6 +107,7 @@ struct gpy_priv {
  
--	wol->supported |= WAKE_BCAST | WAKE_UCAST | WAKE_MCAST |
--		WAKE_MAGIC | WAKE_PHY | WAKE_ARP;
-+	if (wol->supported != adapter->phy_wol_supported)
-+		netif_warn(adapter, drv, adapter->netdev,
-+			   "PHY changed its supported WOL! old=%x, new=%x\n",
-+			   adapter->phy_wol_supported, wol->supported);
+ 	u8 fw_major;
+ 	u8 fw_minor;
++	u32 wolopts;
+ 
+ 	/* It takes 3 seconds to fully switch out of loopback mode before
+ 	 * it can safely re-enter loopback mode. Record the time when
+@@ -221,6 +222,15 @@ static int gpy_hwmon_register(struct phy_device *phydev)
+ }
+ #endif
+ 
++static int gpy_ack_interrupt(struct phy_device *phydev)
++{
++	int ret;
 +
-+	wol->supported |= MAC_SUPPORTED_WAKES;
- 
- 	if (adapter->is_pci11x1x)
- 		wol->supported |= WAKE_MAGICSECURE;
-@@ -1164,7 +1168,39 @@ static int lan743x_ethtool_set_wol(struct net_device *netdev,
++	/* Clear all pending interrupts */
++	ret = phy_read(phydev, PHY_ISTAT);
++	return ret < 0 ? ret : 0;
++}
++
+ static int gpy_mbox_read(struct phy_device *phydev, u32 addr)
  {
- 	struct lan743x_adapter *adapter = netdev_priv(netdev);
+ 	struct gpy_priv *priv = phydev->priv;
+@@ -262,16 +272,8 @@ static int gpy_mbox_read(struct phy_device *phydev, u32 addr)
  
-+	/* WAKE_MAGICSEGURE is a modifier of and only valid together with
-+	 * WAKE_MAGIC
-+	 */
-+	if ((wol->wolopts & WAKE_MAGICSECURE) && !(wol->wolopts & WAKE_MAGIC))
-+		return -EINVAL;
-+
-+	if (netdev->phydev) {
-+		struct ethtool_wolinfo phy_wol;
-+		int ret;
-+
-+		phy_wol.wolopts = wol->wolopts & adapter->phy_wol_supported;
-+
-+		/* If WAKE_MAGICSECURE was requested, filter out WAKE_MAGIC
-+		 * for PHYs that do not support WAKE_MAGICSECURE
-+		 */
-+		if (wol->wolopts & WAKE_MAGICSECURE &&
-+		    !(adapter->phy_wol_supported & WAKE_MAGICSECURE))
-+			phy_wol.wolopts &= ~WAKE_MAGIC;
-+
-+		ret = phy_ethtool_set_wol(netdev->phydev, &phy_wol);
-+		if (ret && (ret != -EOPNOTSUPP))
-+			return ret;
-+
-+		if (ret == -EOPNOTSUPP)
-+			adapter->phy_wolopts = 0;
-+		else
-+			adapter->phy_wolopts = phy_wol.wolopts;
-+	} else {
-+		adapter->phy_wolopts = 0;
-+	}
-+
- 	adapter->wolopts = 0;
-+	wol->wolopts &= ~adapter->phy_wolopts;
- 	if (wol->wolopts & WAKE_UCAST)
- 		adapter->wolopts |= WAKE_UCAST;
- 	if (wol->wolopts & WAKE_MCAST)
-@@ -1185,10 +1221,10 @@ static int lan743x_ethtool_set_wol(struct net_device *netdev,
- 		memset(adapter->sopass, 0, sizeof(u8) * SOPASS_MAX);
- 	}
- 
-+	wol->wolopts = adapter->wolopts | adapter->phy_wolopts;
- 	device_set_wakeup_enable(&adapter->pdev->dev, (bool)wol->wolopts);
- 
--	return netdev->phydev ? phy_ethtool_set_wol(netdev->phydev, wol)
--			: -ENETDOWN;
+ static int gpy_config_init(struct phy_device *phydev)
+ {
+-	int ret;
+-
+-	/* Mask all interrupts */
+-	ret = phy_write(phydev, PHY_IMASK, 0);
+-	if (ret)
+-		return ret;
+-
+-	/* Clear all pending interrupts */
+-	ret = phy_read(phydev, PHY_ISTAT);
+-	return ret < 0 ? ret : 0;
++	/* Nothing to configure. Configuration Requirement Placeholder */
 +	return 0;
  }
- #endif /* CONFIG_PM */
  
-diff --git a/drivers/net/ethernet/microchip/lan743x_main.c b/drivers/net/ethernet/microchip/lan743x_main.c
-index b88d99239a183..ecde3582e3dee 100644
---- a/drivers/net/ethernet/microchip/lan743x_main.c
-+++ b/drivers/net/ethernet/microchip/lan743x_main.c
-@@ -3111,6 +3111,17 @@ static int lan743x_netdev_open(struct net_device *netdev)
- 		if (ret)
- 			goto close_tx;
+ static int gpy21x_config_init(struct phy_device *phydev)
+@@ -627,11 +629,23 @@ static int gpy_read_status(struct phy_device *phydev)
+ 
+ static int gpy_config_intr(struct phy_device *phydev)
+ {
++	struct gpy_priv *priv = phydev->priv;
+ 	u16 mask = 0;
++	int ret;
++
++	ret = gpy_ack_interrupt(phydev);
++	if (ret)
++		return ret;
+ 
+ 	if (phydev->interrupts == PHY_INTERRUPT_ENABLED)
+ 		mask = PHY_IMASK_MASK;
+ 
++	if (priv->wolopts & WAKE_MAGIC)
++		mask |= PHY_IMASK_WOL;
++
++	if (priv->wolopts & WAKE_PHY)
++		mask |= PHY_IMASK_LSTC;
++
+ 	return phy_write(phydev, PHY_IMASK, mask);
+ }
+ 
+@@ -678,6 +692,7 @@ static int gpy_set_wol(struct phy_device *phydev,
+ 		       struct ethtool_wolinfo *wol)
+ {
+ 	struct net_device *attach_dev = phydev->attached_dev;
++	struct gpy_priv *priv = phydev->priv;
+ 	int ret;
+ 
+ 	if (wol->wolopts & WAKE_MAGIC) {
+@@ -725,6 +740,8 @@ static int gpy_set_wol(struct phy_device *phydev,
+ 		ret = phy_read(phydev, PHY_ISTAT);
+ 		if (ret < 0)
+ 			return ret;
++
++		priv->wolopts |= WAKE_MAGIC;
+ 	} else {
+ 		/* Disable magic packet matching */
+ 		ret = phy_clear_bits_mmd(phydev, MDIO_MMD_VEND2,
+@@ -732,6 +749,13 @@ static int gpy_set_wol(struct phy_device *phydev,
+ 					 WOL_EN);
+ 		if (ret < 0)
+ 			return ret;
++
++		/* Disable the WOL interrupt */
++		ret = phy_clear_bits(phydev, PHY_IMASK, PHY_IMASK_WOL);
++		if (ret < 0)
++			return ret;
++
++		priv->wolopts &= ~WAKE_MAGIC;
  	}
-+
-+#ifdef CONFIG_PM
-+	if (adapter->netdev->phydev) {
-+		struct ethtool_wolinfo wol = { .cmd = ETHTOOL_GWOL };
-+
-+		phy_ethtool_get_wol(netdev->phydev, &wol);
-+		adapter->phy_wol_supported = wol.supported;
-+		adapter->phy_wolopts = wol.wolopts;
-+	}
-+#endif
-+
- 	return 0;
  
- close_tx:
-@@ -3580,10 +3591,9 @@ static void lan743x_pm_set_wol(struct lan743x_adapter *adapter)
+ 	if (wol->wolopts & WAKE_PHY) {
+@@ -748,9 +772,11 @@ static int gpy_set_wol(struct phy_device *phydev,
+ 		if (ret & (PHY_IMASK_MASK & ~PHY_IMASK_LSTC))
+ 			phy_trigger_machine(phydev);
  
- 	pmtctl |= PMT_CTL_ETH_PHY_D3_COLD_OVR_ | PMT_CTL_ETH_PHY_D3_OVR_;
++		priv->wolopts |= WAKE_PHY;
+ 		return 0;
+ 	}
  
--	if (adapter->wolopts & WAKE_PHY) {
--		pmtctl |= PMT_CTL_ETH_PHY_EDPD_PLL_CTL_;
-+	if (adapter->phy_wolopts)
- 		pmtctl |= PMT_CTL_ETH_PHY_WAKE_EN_;
--	}
-+
- 	if (adapter->wolopts & WAKE_MAGIC) {
- 		wucsr |= MAC_WUCSR_MPEN_;
- 		macrx |= MAC_RX_RXEN_;
-@@ -3679,7 +3689,7 @@ static int lan743x_pm_suspend(struct device *dev)
- 	lan743x_csr_write(adapter, MAC_WUCSR2, 0);
- 	lan743x_csr_write(adapter, MAC_WK_SRC, 0xFFFFFFFF);
++	priv->wolopts &= ~WAKE_PHY;
+ 	/* Disable the link state change interrupt */
+ 	return phy_clear_bits(phydev, PHY_IMASK, PHY_IMASK_LSTC);
+ }
+@@ -758,18 +784,10 @@ static int gpy_set_wol(struct phy_device *phydev,
+ static void gpy_get_wol(struct phy_device *phydev,
+ 			struct ethtool_wolinfo *wol)
+ {
+-	int ret;
++	struct gpy_priv *priv = phydev->priv;
  
--	if (adapter->wolopts)
-+	if (adapter->wolopts || adapter->phy_wolopts)
- 		lan743x_pm_set_wol(adapter);
+ 	wol->supported = WAKE_MAGIC | WAKE_PHY;
+-	wol->wolopts = 0;
+-
+-	ret = phy_read_mmd(phydev, MDIO_MMD_VEND2, VPSPEC2_WOL_CTL);
+-	if (ret & WOL_EN)
+-		wol->wolopts |= WAKE_MAGIC;
+-
+-	ret = phy_read(phydev, PHY_IMASK);
+-	if (ret & PHY_IMASK_LSTC)
+-		wol->wolopts |= WAKE_PHY;
++	wol->wolopts = priv->wolopts;
+ }
  
- 	if (adapter->is_pci11x1x) {
-diff --git a/drivers/net/ethernet/microchip/lan743x_main.h b/drivers/net/ethernet/microchip/lan743x_main.h
-index fac0f33d10b2e..3b2585a384e2c 100644
---- a/drivers/net/ethernet/microchip/lan743x_main.h
-+++ b/drivers/net/ethernet/microchip/lan743x_main.h
-@@ -1042,6 +1042,8 @@ enum lan743x_sgmii_lsd {
- 	LINK_2500_SLAVE
- };
- 
-+#define MAC_SUPPORTED_WAKES  (WAKE_BCAST | WAKE_UCAST | WAKE_MCAST | \
-+			      WAKE_MAGIC | WAKE_ARP)
- struct lan743x_adapter {
- 	struct net_device       *netdev;
- 	struct mii_bus		*mdiobus;
-@@ -1049,6 +1051,8 @@ struct lan743x_adapter {
- #ifdef CONFIG_PM
- 	u32			wolopts;
- 	u8			sopass[SOPASS_MAX];
-+	u32			phy_wolopts;
-+	u32			phy_wol_supported;
- #endif
- 	struct pci_dev		*pdev;
- 	struct lan743x_csr      csr;
+ static int gpy_loopback(struct phy_device *phydev, bool enable)
 -- 
 2.43.0
 
