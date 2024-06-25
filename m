@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E9613C90B;
-	Tue, 25 Jun 2024 09:40:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF820149C51;
+	Tue, 25 Jun 2024 09:40:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308453; cv=none; b=dZ+xk/pmxiQR4rncx1FQ0/Y0e8vXPkIvaDpNFogfD2AX5233xKH5HZ2xVw5GvQhIN+g7hbBIJJBxGNAJWzWDex1LxhSMHzQyb1xJ5GKO4VUE0PhP7MG0UDw1yu++4Tt1t1WVo4HOI3cQ5jvAl3CWBot5tl6oSlOjmEV9zJpnimY=
+	t=1719308456; cv=none; b=l6ENbZKYg6YZDrEsxexkxtYGm4H7YhTXk/cDX3HUJH54XLMVp24RUdDQtZBJHY0soxlu4C0ZQMkPCzdHG0bQBNaqqJjyuVfPmUuhoM//YBBRE4x3XQ0u/BJ+rSxmfB1NeBMRAhIi51mFby5nFtk5YVOXhC8ynSj6AgdFIrtCb8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308453; c=relaxed/simple;
-	bh=PhPTUy09dzaQYGsnJubO+wJ5/reUnlg38EdVwGvdihQ=;
+	s=arc-20240116; t=1719308456; c=relaxed/simple;
+	bh=ReThsYj9pWpXhZV3hX63SjeKvfWcVtWRIECAlPhJiH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KLJsjD7H2bQSjAJDIaJXWo6XNhKD7SB/NfMrFLMo+jPwh13o3jQ2sMPv1E8u9kYt/c934asXUVX4b27vhpGXOwsJ5zUPY7HF+LqrH98SVNdNgwUI0LkBW12Arvl3VUfEqDQVOVPHo1ZC+vGdbUzyJpSFnbDC6mfP0hBcF2GSXUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w2C84NCy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PYFLYIIjHEVKEVPHa0PPXw6PqIo0YcQqUlXhF13n7TWi7wabhwrYr1kYS0vRld15ew0evYCNH9g0VyXmrOa6qlnJieJNVfRwqEXIQ2H9TFxEzZdsHUDiCOc4pbEtwi6Gg3NqGZmETYbTWLN0tkTGKdZKnequl9ugBNXR196LwjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qSP38a3W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w2C84NCy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416F2C32781;
-	Tue, 25 Jun 2024 09:40:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qSP38a3W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 363B6C32781;
+	Tue, 25 Jun 2024 09:40:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308453;
-	bh=PhPTUy09dzaQYGsnJubO+wJ5/reUnlg38EdVwGvdihQ=;
+	s=korg; t=1719308456;
+	bh=ReThsYj9pWpXhZV3hX63SjeKvfWcVtWRIECAlPhJiH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w2C84NCy8wvA0DyRRfo04qds6JoOERL0Ydk0H3bWS/66U0kCPMCD9BfDZyDX46irM
-	 RG1TWIXG6UkxtInr/9IE2JRo3FeSR2CjAfHu5gNOOgHyal8p5wm86E/hZZGcA3UiGf
-	 vEVmuut2kPEHGRqtMu8BTN3wgnU0o3srtfEbgp6s=
+	b=qSP38a3WIyeWphvSlFHFN8/QZysdrsLF7DzibJAFjTKeLc79Nw0PytfCCtBehDXjf
+	 HD9mmflNtPWXZineLAQ9BUPYfnbtyYWrWHtRkEp5+Sm+Y57Atnwfg2npfEEuyVDMUJ
+	 e0gmjPJJMJXmrcR9QX+YYqrBYnoG/EgMsiTqpKYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Raju Lakkaraju <Raju.Lakkaraju@microchip.com>,
+	syzbot+b87c222546179f4513a7@syzkaller.appspotmail.com,
+	David Ruth <druth@chromium.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 125/250] net: phy: mxl-gpy: Remove interrupt mask clearing from config_init
-Date: Tue, 25 Jun 2024 11:31:23 +0200
-Message-ID: <20240625085552.864741415@linuxfoundation.org>
+Subject: [PATCH 6.9 126/250] net/sched: act_api: fix possible infinite loop in tcf_idr_check_alloc()
+Date: Tue, 25 Jun 2024 11:31:24 +0200
+Message-ID: <20240625085552.902939033@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -52,159 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raju Lakkaraju <Raju.Lakkaraju@microchip.com>
+From: David Ruth <druth@chromium.org>
 
-[ Upstream commit c44d3ffd85db03ebcc3090e55589e10d5af9f3a9 ]
+[ Upstream commit d864319871b05fadd153e0aede4811ca7008f5d6 ]
 
-When the system resumes from sleep, the phy_init_hw() function invokes
-config_init(), which clears all interrupt masks and causes wake events to be
-lost in subsequent wake sequences. Remove interrupt mask clearing from
-config_init() and preserve relevant masks in config_intr().
+syzbot found hanging tasks waiting on rtnl_lock [1]
 
-Fixes: 7d901a1e878a ("net: phy: add Maxlinear GPY115/21x/24x driver")
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Signed-off-by: Raju Lakkaraju <Raju.Lakkaraju@microchip.com>
+A reproducer is available in the syzbot bug.
+
+When a request to add multiple actions with the same index is sent, the
+second request will block forever on the first request. This holds
+rtnl_lock, and causes tasks to hang.
+
+Return -EAGAIN to prevent infinite looping, while keeping documented
+behavior.
+
+[1]
+
+INFO: task kworker/1:0:5088 blocked for more than 143 seconds.
+Not tainted 6.9.0-rc4-syzkaller-00173-g3cdb45594619 #0
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:kworker/1:0 state:D stack:23744 pid:5088 tgid:5088 ppid:2 flags:0x00004000
+Workqueue: events_power_efficient reg_check_chans_work
+Call Trace:
+<TASK>
+context_switch kernel/sched/core.c:5409 [inline]
+__schedule+0xf15/0x5d00 kernel/sched/core.c:6746
+__schedule_loop kernel/sched/core.c:6823 [inline]
+schedule+0xe7/0x350 kernel/sched/core.c:6838
+schedule_preempt_disabled+0x13/0x30 kernel/sched/core.c:6895
+__mutex_lock_common kernel/locking/mutex.c:684 [inline]
+__mutex_lock+0x5b8/0x9c0 kernel/locking/mutex.c:752
+wiphy_lock include/net/cfg80211.h:5953 [inline]
+reg_leave_invalid_chans net/wireless/reg.c:2466 [inline]
+reg_check_chans_work+0x10a/0x10e0 net/wireless/reg.c:2481
+
+Fixes: 0190c1d452a9 ("net: sched: atomically check-allocate action")
+Reported-by: syzbot+b87c222546179f4513a7@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=b87c222546179f4513a7
+Signed-off-by: David Ruth <druth@chromium.org>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://lore.kernel.org/r/20240614190326.1349786-1-druth@chromium.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/mxl-gpy.c | 58 +++++++++++++++++++++++++--------------
- 1 file changed, 38 insertions(+), 20 deletions(-)
+ net/sched/act_api.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/phy/mxl-gpy.c b/drivers/net/phy/mxl-gpy.c
-index b2d36a3a96f1e..e5f8ac4b4604b 100644
---- a/drivers/net/phy/mxl-gpy.c
-+++ b/drivers/net/phy/mxl-gpy.c
-@@ -107,6 +107,7 @@ struct gpy_priv {
+diff --git a/net/sched/act_api.c b/net/sched/act_api.c
+index 9ee622fb1160f..2520708b06a12 100644
+--- a/net/sched/act_api.c
++++ b/net/sched/act_api.c
+@@ -830,7 +830,6 @@ int tcf_idr_check_alloc(struct tc_action_net *tn, u32 *index,
+ 	u32 max;
  
- 	u8 fw_major;
- 	u8 fw_minor;
-+	u32 wolopts;
+ 	if (*index) {
+-again:
+ 		rcu_read_lock();
+ 		p = idr_find(&idrinfo->action_idr, *index);
  
- 	/* It takes 3 seconds to fully switch out of loopback mode before
- 	 * it can safely re-enter loopback mode. Record the time when
-@@ -221,6 +222,15 @@ static int gpy_hwmon_register(struct phy_device *phydev)
- }
- #endif
+@@ -839,7 +838,7 @@ int tcf_idr_check_alloc(struct tc_action_net *tn, u32 *index,
+ 			 * index but did not assign the pointer yet.
+ 			 */
+ 			rcu_read_unlock();
+-			goto again;
++			return -EAGAIN;
+ 		}
  
-+static int gpy_ack_interrupt(struct phy_device *phydev)
-+{
-+	int ret;
-+
-+	/* Clear all pending interrupts */
-+	ret = phy_read(phydev, PHY_ISTAT);
-+	return ret < 0 ? ret : 0;
-+}
-+
- static int gpy_mbox_read(struct phy_device *phydev, u32 addr)
- {
- 	struct gpy_priv *priv = phydev->priv;
-@@ -262,16 +272,8 @@ static int gpy_mbox_read(struct phy_device *phydev, u32 addr)
- 
- static int gpy_config_init(struct phy_device *phydev)
- {
--	int ret;
--
--	/* Mask all interrupts */
--	ret = phy_write(phydev, PHY_IMASK, 0);
--	if (ret)
--		return ret;
--
--	/* Clear all pending interrupts */
--	ret = phy_read(phydev, PHY_ISTAT);
--	return ret < 0 ? ret : 0;
-+	/* Nothing to configure. Configuration Requirement Placeholder */
-+	return 0;
- }
- 
- static int gpy21x_config_init(struct phy_device *phydev)
-@@ -627,11 +629,23 @@ static int gpy_read_status(struct phy_device *phydev)
- 
- static int gpy_config_intr(struct phy_device *phydev)
- {
-+	struct gpy_priv *priv = phydev->priv;
- 	u16 mask = 0;
-+	int ret;
-+
-+	ret = gpy_ack_interrupt(phydev);
-+	if (ret)
-+		return ret;
- 
- 	if (phydev->interrupts == PHY_INTERRUPT_ENABLED)
- 		mask = PHY_IMASK_MASK;
- 
-+	if (priv->wolopts & WAKE_MAGIC)
-+		mask |= PHY_IMASK_WOL;
-+
-+	if (priv->wolopts & WAKE_PHY)
-+		mask |= PHY_IMASK_LSTC;
-+
- 	return phy_write(phydev, PHY_IMASK, mask);
- }
- 
-@@ -678,6 +692,7 @@ static int gpy_set_wol(struct phy_device *phydev,
- 		       struct ethtool_wolinfo *wol)
- {
- 	struct net_device *attach_dev = phydev->attached_dev;
-+	struct gpy_priv *priv = phydev->priv;
- 	int ret;
- 
- 	if (wol->wolopts & WAKE_MAGIC) {
-@@ -725,6 +740,8 @@ static int gpy_set_wol(struct phy_device *phydev,
- 		ret = phy_read(phydev, PHY_ISTAT);
- 		if (ret < 0)
- 			return ret;
-+
-+		priv->wolopts |= WAKE_MAGIC;
- 	} else {
- 		/* Disable magic packet matching */
- 		ret = phy_clear_bits_mmd(phydev, MDIO_MMD_VEND2,
-@@ -732,6 +749,13 @@ static int gpy_set_wol(struct phy_device *phydev,
- 					 WOL_EN);
- 		if (ret < 0)
- 			return ret;
-+
-+		/* Disable the WOL interrupt */
-+		ret = phy_clear_bits(phydev, PHY_IMASK, PHY_IMASK_WOL);
-+		if (ret < 0)
-+			return ret;
-+
-+		priv->wolopts &= ~WAKE_MAGIC;
- 	}
- 
- 	if (wol->wolopts & WAKE_PHY) {
-@@ -748,9 +772,11 @@ static int gpy_set_wol(struct phy_device *phydev,
- 		if (ret & (PHY_IMASK_MASK & ~PHY_IMASK_LSTC))
- 			phy_trigger_machine(phydev);
- 
-+		priv->wolopts |= WAKE_PHY;
- 		return 0;
- 	}
- 
-+	priv->wolopts &= ~WAKE_PHY;
- 	/* Disable the link state change interrupt */
- 	return phy_clear_bits(phydev, PHY_IMASK, PHY_IMASK_LSTC);
- }
-@@ -758,18 +784,10 @@ static int gpy_set_wol(struct phy_device *phydev,
- static void gpy_get_wol(struct phy_device *phydev,
- 			struct ethtool_wolinfo *wol)
- {
--	int ret;
-+	struct gpy_priv *priv = phydev->priv;
- 
- 	wol->supported = WAKE_MAGIC | WAKE_PHY;
--	wol->wolopts = 0;
--
--	ret = phy_read_mmd(phydev, MDIO_MMD_VEND2, VPSPEC2_WOL_CTL);
--	if (ret & WOL_EN)
--		wol->wolopts |= WAKE_MAGIC;
--
--	ret = phy_read(phydev, PHY_IMASK);
--	if (ret & PHY_IMASK_LSTC)
--		wol->wolopts |= WAKE_PHY;
-+	wol->wolopts = priv->wolopts;
- }
- 
- static int gpy_loopback(struct phy_device *phydev, bool enable)
+ 		if (!p) {
 -- 
 2.43.0
 
