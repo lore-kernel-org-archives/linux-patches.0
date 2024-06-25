@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87FF13C90B;
-	Tue, 25 Jun 2024 10:01:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D954B13C90B;
+	Tue, 25 Jun 2024 10:01:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309707; cv=none; b=IGcvsdlAd/HgyXvsj8W7+qODroaHJUiyQjRhZIbum/NU46TZTWZ4dr8ozJG5mI+M4jGz2f0vzxRoIvDA6qiRtZfXl6dGp7NaWECJWl3FG3KtpuPW3QW1zQ/NA1kZB8TQ6murl544q3SElg9391jWPNv3z2C8dl/Q/jJ3it8eFSE=
+	t=1719309709; cv=none; b=qIicrFS/LWw6InQdVQljnUp+crFV9LMNYL2H7aDwChm17F4nm3Cl6SZ3tRmURyy/KPLtteCFJouzwPvCbeJUAyebCHO+dLvKJoTWBR/3qKtCUwZXGTqD9ufs7j18p2MBdTh8zHZgWNpwgZj8vRvrIqUtbv8AWvyRTrCwrBzbc4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309707; c=relaxed/simple;
-	bh=uNtTeTcHz5nrUAPkSvo+zmmlyrTZP1RqL+KDYKTjUfQ=;
+	s=arc-20240116; t=1719309709; c=relaxed/simple;
+	bh=IKukQdcYThoBjGTemwGtEU/HmEUi62gvC3dscKD5I30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LQtrbJznHLH4Dn+zdY9laEQxNH6RFMys4bGbKO+EIxsxeklZ86agsilPEF1IQ0a61eQUfe0TGEIpRijsacUJduZksl9YMniEBq9qVUoQMIC58JaVbqSY5OabHMunwW5p1YdazSFPxucN6WxWD+El2PHZtT3rmGvgE4FlbK35++0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XKomIxZE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cdYa3/CtYcVFA9+z/fLa+YXWC1RgJp8Ue3qAH8efpRCaApIZMzoB2XdL9oq2OQqyHNONyacvEI+0NyBSh9ijJeiGi34aHkXIREqKWyON2r8sEF393irCyFnBuD/riek5uO+ch4hnXv5r3h3f9owXtRjuEfIfBXqGrsCjxUpxRIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q7UXdRzb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XKomIxZE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AA67C32786;
-	Tue, 25 Jun 2024 10:01:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q7UXdRzb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6063CC32781;
+	Tue, 25 Jun 2024 10:01:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309706;
-	bh=uNtTeTcHz5nrUAPkSvo+zmmlyrTZP1RqL+KDYKTjUfQ=;
+	s=korg; t=1719309709;
+	bh=IKukQdcYThoBjGTemwGtEU/HmEUi62gvC3dscKD5I30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XKomIxZECKhmekMTGHAZfiJhvS/PmEoB1ayHkUT3ys/qAuvyt02OLRT6iA1SVehJh
-	 HVKGBnvKD7XNEI/L66qfmcsRYz2aF5zmao+CMSRYnPkAqlLpYQ0RgbSPaqn3T5YinW
-	 1v2WQDNEkU/7ORHWrTycQ3SgzYkhXEE4wZst0c0w=
+	b=Q7UXdRzblbegTiPbmKqZEkZ5hPr/rYpw2UYw1/WBwCEb/NXP5FMkKBG60HeWVqw/4
+	 DHVqd074w5mRp5tBFlKJ4UmRHvSDo9Iz70ht3ZazuuLv4d+ow/GBUnbrTA5C5r0TFs
+	 3UTFQL2Gio5u2u3Wi0FyTxYax3V2QjUfDMbuEfgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Marcin Szycik <marcin.szycik@linux.intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+b87c222546179f4513a7@syzkaller.appspotmail.com,
+	David Ruth <druth@chromium.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 075/131] ice: Fix VSI list rule with ICE_SW_LKUP_LAST type
-Date: Tue, 25 Jun 2024 11:33:50 +0200
-Message-ID: <20240625085528.793216959@linuxfoundation.org>
+Subject: [PATCH 6.1 066/131] net/sched: act_api: fix possible infinite loop in tcf_idr_check_alloc()
+Date: Tue, 25 Jun 2024 11:33:41 +0200
+Message-ID: <20240625085528.454005547@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085525.931079317@linuxfoundation.org>
 References: <20240625085525.931079317@linuxfoundation.org>
@@ -57,63 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marcin Szycik <marcin.szycik@linux.intel.com>
+From: David Ruth <druth@chromium.org>
 
-[ Upstream commit 74382aebc9035470ec4c789bdb0d09d8c14f261e ]
+[ Upstream commit d864319871b05fadd153e0aede4811ca7008f5d6 ]
 
-Adding/updating VSI list rule, as well as allocating/freeing VSI list
-resource are called several times with type ICE_SW_LKUP_LAST, which fails
-because ice_update_vsi_list_rule() and ice_aq_alloc_free_vsi_list()
-consider it invalid. Allow calling these functions with ICE_SW_LKUP_LAST.
+syzbot found hanging tasks waiting on rtnl_lock [1]
 
-This fixes at least one issue in switchdev mode, where the same rule with
-different action cannot be added, e.g.:
+A reproducer is available in the syzbot bug.
 
-  tc filter add dev $PF1 ingress protocol arp prio 0 flower skip_sw \
-    dst_mac ff:ff:ff:ff:ff:ff action mirred egress redirect dev $VF1_PR
-  tc filter add dev $PF1 ingress protocol arp prio 0 flower skip_sw \
-    dst_mac ff:ff:ff:ff:ff:ff action mirred egress redirect dev $VF2_PR
+When a request to add multiple actions with the same index is sent, the
+second request will block forever on the first request. This holds
+rtnl_lock, and causes tasks to hang.
 
-Fixes: 0f94570d0cae ("ice: allow adding advanced rules")
-Suggested-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Marcin Szycik <marcin.szycik@linux.intel.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://lore.kernel.org/r/20240618210206.981885-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Return -EAGAIN to prevent infinite looping, while keeping documented
+behavior.
+
+[1]
+
+INFO: task kworker/1:0:5088 blocked for more than 143 seconds.
+Not tainted 6.9.0-rc4-syzkaller-00173-g3cdb45594619 #0
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:kworker/1:0 state:D stack:23744 pid:5088 tgid:5088 ppid:2 flags:0x00004000
+Workqueue: events_power_efficient reg_check_chans_work
+Call Trace:
+<TASK>
+context_switch kernel/sched/core.c:5409 [inline]
+__schedule+0xf15/0x5d00 kernel/sched/core.c:6746
+__schedule_loop kernel/sched/core.c:6823 [inline]
+schedule+0xe7/0x350 kernel/sched/core.c:6838
+schedule_preempt_disabled+0x13/0x30 kernel/sched/core.c:6895
+__mutex_lock_common kernel/locking/mutex.c:684 [inline]
+__mutex_lock+0x5b8/0x9c0 kernel/locking/mutex.c:752
+wiphy_lock include/net/cfg80211.h:5953 [inline]
+reg_leave_invalid_chans net/wireless/reg.c:2466 [inline]
+reg_check_chans_work+0x10a/0x10e0 net/wireless/reg.c:2481
+
+Fixes: 0190c1d452a9 ("net: sched: atomically check-allocate action")
+Reported-by: syzbot+b87c222546179f4513a7@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=b87c222546179f4513a7
+Signed-off-by: David Ruth <druth@chromium.org>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://lore.kernel.org/r/20240614190326.1349786-1-druth@chromium.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_switch.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/sched/act_api.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_switch.c b/drivers/net/ethernet/intel/ice/ice_switch.c
-index 5ea6365872571..735f995a3a687 100644
---- a/drivers/net/ethernet/intel/ice/ice_switch.c
-+++ b/drivers/net/ethernet/intel/ice/ice_switch.c
-@@ -1838,7 +1838,8 @@ ice_aq_alloc_free_vsi_list(struct ice_hw *hw, u16 *vsi_list_id,
- 	    lkup_type == ICE_SW_LKUP_ETHERTYPE_MAC ||
- 	    lkup_type == ICE_SW_LKUP_PROMISC ||
- 	    lkup_type == ICE_SW_LKUP_PROMISC_VLAN ||
--	    lkup_type == ICE_SW_LKUP_DFLT) {
-+	    lkup_type == ICE_SW_LKUP_DFLT ||
-+	    lkup_type == ICE_SW_LKUP_LAST) {
- 		sw_buf->res_type = cpu_to_le16(ICE_AQC_RES_TYPE_VSI_LIST_REP);
- 	} else if (lkup_type == ICE_SW_LKUP_VLAN) {
- 		sw_buf->res_type =
-@@ -2764,7 +2765,8 @@ ice_update_vsi_list_rule(struct ice_hw *hw, u16 *vsi_handle_arr, u16 num_vsi,
- 	    lkup_type == ICE_SW_LKUP_ETHERTYPE_MAC ||
- 	    lkup_type == ICE_SW_LKUP_PROMISC ||
- 	    lkup_type == ICE_SW_LKUP_PROMISC_VLAN ||
--	    lkup_type == ICE_SW_LKUP_DFLT)
-+	    lkup_type == ICE_SW_LKUP_DFLT ||
-+	    lkup_type == ICE_SW_LKUP_LAST)
- 		rule_type = remove ? ICE_AQC_SW_RULES_T_VSI_LIST_CLEAR :
- 			ICE_AQC_SW_RULES_T_VSI_LIST_SET;
- 	else if (lkup_type == ICE_SW_LKUP_VLAN)
+diff --git a/net/sched/act_api.c b/net/sched/act_api.c
+index ecede5158a295..5a361deb804a3 100644
+--- a/net/sched/act_api.c
++++ b/net/sched/act_api.c
+@@ -834,7 +834,6 @@ int tcf_idr_check_alloc(struct tc_action_net *tn, u32 *index,
+ 	u32 max;
+ 
+ 	if (*index) {
+-again:
+ 		rcu_read_lock();
+ 		p = idr_find(&idrinfo->action_idr, *index);
+ 
+@@ -843,7 +842,7 @@ int tcf_idr_check_alloc(struct tc_action_net *tn, u32 *index,
+ 			 * index but did not assign the pointer yet.
+ 			 */
+ 			rcu_read_unlock();
+-			goto again;
++			return -EAGAIN;
+ 		}
+ 
+ 		if (!p) {
 -- 
 2.43.0
 
