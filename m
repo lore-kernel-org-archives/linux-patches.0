@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C28E1465A8;
-	Tue, 25 Jun 2024 09:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB341465A8;
+	Tue, 25 Jun 2024 09:57:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309476; cv=none; b=pgEx9lI2+5boqQaztvvqLKf+6TG+uQKYln+lTiTdq/PR3Z9PxjMsts/yWUB+9yC2YRRQ52lLDRD40/vzMzI5uthn7VV+XrGws83Wvr1NiicziDEQQEDdAElTmlZ8VeZUwbt6aylcERnJ1hluwyisgnmKdigjn8aR5CG0vwg+Y2w=
+	t=1719309479; cv=none; b=OGKyUWEM2j4fkhmSFjOfIpCHTC5cAzzlY6dCdhGavQigLdEgPZ0CXkLjg768htVATcOG3x8HgHaoYsyVZIYxoGMnWRh/sL9ZU/EKGKPOne0WBiGlUHPvrX1joO+PP7OS6DMsQe4rGeim9Fh/U6cI5HgCG7DDPApD1kQyUPbmUgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309476; c=relaxed/simple;
-	bh=VzkdA+tyk6FTtX2M846mHsxabSChP+PlJzUxbEeH5Ts=;
+	s=arc-20240116; t=1719309479; c=relaxed/simple;
+	bh=TWt1NBK8veNTa5sKXwjeSGl/R30/xzFShdXk7OBUBiU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hGO5suqyGvSDuC8HNske+iVAlKU3Ni55SiXGYKT8lX4sGdn1lVUzhRbs6h5vqTLNjvtx2FGYH2O1cBTRr0/u0dOXL0WQpfUg0UesI64WyF9abU3/9IVJtmWXgvbdK7DL6ZeoPtuPMP/9YCZeqUg6zacNXSiPT/TiBSc9gVY/8WM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DnvvvsKc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tx3q13D87plsQ3LKoQNSyQZaY1kWOtaH845dVxmB362byI0DQbng0FfS4nBpu6DLsk1r1nhMA0MsGnRbs3J3vn4jEMRgpSWAso/0tT4KCgl5B90FRl4/+h5LFLPXxrbEcxXccdjFHcgWD4NlwU9Mi/jv7xv2rZ1k9vPel/TEyDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q9M2UhxT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DnvvvsKc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1806EC32789;
-	Tue, 25 Jun 2024 09:57:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q9M2UhxT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 062D5C32781;
+	Tue, 25 Jun 2024 09:57:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309476;
-	bh=VzkdA+tyk6FTtX2M846mHsxabSChP+PlJzUxbEeH5Ts=;
+	s=korg; t=1719309479;
+	bh=TWt1NBK8veNTa5sKXwjeSGl/R30/xzFShdXk7OBUBiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DnvvvsKcnQwp5QP5yZ0wJRrnELrzgegcLOWXjewr9BtQUm7FRt+2dBVQBVWFrpoUS
-	 /yEaMIjqPwd47o+tTo1GE5MxP2ksn/HzzeIuxySzGO94Kx2aIs61sbYGyciCesh4lS
-	 R2tDIPVP7XnuCiM8C7SarNHJFxaJfWG+SfHtpBjQ=
+	b=q9M2UhxTEuW4nwOLo2ZBbYaFAzxBSDe38+K4u1SpvdlFZBsfOuHXeF6PTNiNYLGU7
+	 8NbJ9acD9SKASLw0YIakV6YpgL+8qdBekxnCcuxegccFNVmOMmOl3IVG5o9kQLapR1
+	 I3IznFSrK2b07t1Ree+YEIbJ6DY6jDVSVgwoNLbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Binding <sbinding@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Nathan Lynch <nathanl@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 028/131] ALSA: hda/realtek: Add quirks for Lenovo 13X
-Date: Tue, 25 Jun 2024 11:33:03 +0200
-Message-ID: <20240625085527.020070139@linuxfoundation.org>
+Subject: [PATCH 6.1 029/131] powerpc/pseries: Enforce hcall result buffer validity and size
+Date: Tue, 25 Jun 2024 11:33:04 +0200
+Message-ID: <20240625085527.057915450@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085525.931079317@linuxfoundation.org>
 References: <20240625085525.931079317@linuxfoundation.org>
@@ -51,35 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Binding <sbinding@opensource.cirrus.com>
+From: Nathan Lynch <nathanl@linux.ibm.com>
 
-[ Upstream commit 25f46354dca912c84f1f79468fd636a94b8d287a ]
+[ Upstream commit ff2e185cf73df480ec69675936c4ee75a445c3e4 ]
 
-Add laptop using CS35L41 HDA.
-This laptop does not have _DSD, so require entries in property
-configuration table for cs35l41_hda driver.
+plpar_hcall(), plpar_hcall9(), and related functions expect callers to
+provide valid result buffers of certain minimum size. Currently this
+is communicated only through comments in the code and the compiler has
+no idea.
 
-Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
-Message-ID: <20240423162303.638211-3-sbinding@opensource.cirrus.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+For example, if I write a bug like this:
+
+  long retbuf[PLPAR_HCALL_BUFSIZE]; // should be PLPAR_HCALL9_BUFSIZE
+  plpar_hcall9(H_ALLOCATE_VAS_WINDOW, retbuf, ...);
+
+This compiles with no diagnostics emitted, but likely results in stack
+corruption at runtime when plpar_hcall9() stores results past the end
+of the array. (To be clear this is a contrived example and I have not
+found a real instance yet.)
+
+To make this class of error less likely, we can use explicitly-sized
+array parameters instead of pointers in the declarations for the hcall
+APIs. When compiled with -Warray-bounds[1], the code above now
+provokes a diagnostic like this:
+
+error: array argument is too small;
+is of size 32, callee requires at least 72 [-Werror,-Warray-bounds]
+   60 |                 plpar_hcall9(H_ALLOCATE_VAS_WINDOW, retbuf,
+      |                 ^                                   ~~~~~~
+
+[1] Enabled for LLVM builds but not GCC for now. See commit
+    0da6e5fd6c37 ("gcc: disable '-Warray-bounds' for gcc-13 too") and
+    related changes.
+
+Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240408-pseries-hvcall-retbuf-v1-1-ebc73d7253cf@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/powerpc/include/asm/hvcall.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 3a7104f72cabd..35dabe6ce0d7a 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10090,6 +10090,8 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x3852, "Lenovo Yoga 7 14ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
- 	SND_PCI_QUIRK(0x17aa, 0x3853, "Lenovo Yoga 7 15ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
- 	SND_PCI_QUIRK(0x17aa, 0x3855, "Legion 7 16ITHG6", ALC287_FIXUP_LEGION_16ITHG6),
-+	SND_PCI_QUIRK(0x17aa, 0x3865, "Lenovo 13X", ALC287_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x17aa, 0x3866, "Lenovo 13X", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x3869, "Lenovo Yoga7 14IAL7", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x3902, "Lenovo E50-80", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
- 	SND_PCI_QUIRK(0x17aa, 0x3977, "IdeaPad S210", ALC283_FIXUP_INT_MIC),
+diff --git a/arch/powerpc/include/asm/hvcall.h b/arch/powerpc/include/asm/hvcall.h
+index 47bc10cdb70b5..a56ec2f124eae 100644
+--- a/arch/powerpc/include/asm/hvcall.h
++++ b/arch/powerpc/include/asm/hvcall.h
+@@ -493,7 +493,7 @@ long plpar_hcall_norets_notrace(unsigned long opcode, ...);
+  * Used for all but the craziest of phyp interfaces (see plpar_hcall9)
+  */
+ #define PLPAR_HCALL_BUFSIZE 4
+-long plpar_hcall(unsigned long opcode, unsigned long *retbuf, ...);
++long plpar_hcall(unsigned long opcode, unsigned long retbuf[static PLPAR_HCALL_BUFSIZE], ...);
+ 
+ /**
+  * plpar_hcall_raw: - Make a hypervisor call without calculating hcall stats
+@@ -507,7 +507,7 @@ long plpar_hcall(unsigned long opcode, unsigned long *retbuf, ...);
+  * plpar_hcall, but plpar_hcall_raw works in real mode and does not
+  * calculate hypervisor call statistics.
+  */
+-long plpar_hcall_raw(unsigned long opcode, unsigned long *retbuf, ...);
++long plpar_hcall_raw(unsigned long opcode, unsigned long retbuf[static PLPAR_HCALL_BUFSIZE], ...);
+ 
+ /**
+  * plpar_hcall9: - Make a pseries hypervisor call with up to 9 return arguments
+@@ -518,8 +518,8 @@ long plpar_hcall_raw(unsigned long opcode, unsigned long *retbuf, ...);
+  * PLPAR_HCALL9_BUFSIZE to size the return argument buffer.
+  */
+ #define PLPAR_HCALL9_BUFSIZE 9
+-long plpar_hcall9(unsigned long opcode, unsigned long *retbuf, ...);
+-long plpar_hcall9_raw(unsigned long opcode, unsigned long *retbuf, ...);
++long plpar_hcall9(unsigned long opcode, unsigned long retbuf[static PLPAR_HCALL9_BUFSIZE], ...);
++long plpar_hcall9_raw(unsigned long opcode, unsigned long retbuf[static PLPAR_HCALL9_BUFSIZE], ...);
+ 
+ /* pseries hcall tracing */
+ extern struct static_key hcall_tracepoint_key;
 -- 
 2.43.0
 
