@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A0D13D62A;
-	Tue, 25 Jun 2024 09:39:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8F913D62A;
+	Tue, 25 Jun 2024 09:39:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308394; cv=none; b=Tzx0KvKkE91cmUCniHR0dbInQBCAki3UqKTKDT6XIaLc9cD56Qzk44Eim57/tltfO7qarSsRZMH0EbYmKF4HZujTYLxE5QIX2HJ9Hg2JCQ9zwRN4UNqrg4ii3J7ivc3FXZ5qRRZ12JPRTfpisPv6jWPdA2kgKw9G5eblCAk/B8c=
+	t=1719308398; cv=none; b=J8ek4FRVIzjDOkvmf4P/LlttmTmyYYwJw+E/PE1a5QSe6jLVbrIt85hZhxPIkduISMiKPsBynzzIn9BLAhQrCrQLViK/pCUGf4K38MyJS5XpWubO9vIQrrhFf5yVm0BDW0bt4XgZ106EVRvB1q6rzAz2iche6jpdsnrBMrfTw1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308394; c=relaxed/simple;
-	bh=hDod0EL5/1oDeNk0Ky+6tWhNOG5TKdHgU9OLbiyPA/0=;
+	s=arc-20240116; t=1719308398; c=relaxed/simple;
+	bh=0ZayWFmo4iGlLFeYzqRoheLkaJhp4GNvMuNPIojG/R0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cygsK1qwO73ar97cQXgzqSmwgF+fuPG2Y1Ok7pEM62CQrdHRlWsngQRCiOgPvS6HSob+wozqHS3sfYD6nIeUdvGgAUq+OGEXwVFgSJW/qUnTg22SZVMaM5y7WZChOOOc8BXhx47esXADNBkQG16II86E6Adb25cqNgg4k6ktuN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJXdn/ci; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dtmcZ9HOhHpBRqZURWHPA9/gwa2XSrHhA4R+DHDsIJ7uOG44tJhIEcQvKdPHX+08eerge/gGiXjSqO+VlkpRhswhH3vnbG3UPAnE3KvXKgs22YonM+7zpEm/stQAKHlPBOZpC2IX/oWEBS41WikI1j+IbMHOd4ATv71XFIBPNIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dhn+/Qhl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJXdn/ci"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D12C32781;
-	Tue, 25 Jun 2024 09:39:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dhn+/Qhl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D40BC32781;
+	Tue, 25 Jun 2024 09:39:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308394;
-	bh=hDod0EL5/1oDeNk0Ky+6tWhNOG5TKdHgU9OLbiyPA/0=;
+	s=korg; t=1719308397;
+	bh=0ZayWFmo4iGlLFeYzqRoheLkaJhp4GNvMuNPIojG/R0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BJXdn/ciZCCmoAk7zRNY8rkjBQwu3/0BRXV4ch6sXTeFLv+qpFzgFERzta+/rSN3e
-	 cMMWUd1Sar1VEpQjdEmJb/UDmkXGeEiKvB2mfoUXu7P6V7kmwBgwYnrlgQ/Wd6TnqQ
-	 5W7MXp9XQEwqt1SeZgxMvm2qr57N5vOXMrHpMAMg=
+	b=dhn+/QhlpS/klO3fvfssDzcSQMZVnkyW9jJzHrcm5bPKh2Jq9W/+uEwKB1vIFAzYj
+	 67Cz0cFyx9OonfQ68l57sOf8Avs/03A2j9zpbnnS+CVKB9YSBcINDnlH6/Dmpf+4B1
+	 YskUR5x8uuc+287hcQeEwrx0A7zDg851U7pL4tnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Juan=20Jos=C3=A9=20L=C3=B3pez=20Jaimez?= <jjlopezjaimez@google.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 107/250] bpf: Fix reg_set_min_max corruption of fake_reg
-Date: Tue, 25 Jun 2024 11:31:05 +0200
-Message-ID: <20240625085552.180549407@linuxfoundation.org>
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Naohiro Aota <Naohiro.Aota@wdc.com>
+Subject: [PATCH 6.9 108/250] btrfs: zoned: allocate dummy checksums for zoned NODATASUM writes
+Date: Tue, 25 Jun 2024 11:31:06 +0200
+Message-ID: <20240625085552.218452706@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -47,160 +48,124 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit 92424801261d1564a0bb759da3cf3ccd69fdf5a2 ]
+[ Upstream commit cebae292e0c32a228e8f2219c270a7237be24a6a ]
 
-Juan reported that after doing some changes to buzzer [0] and implementing
-a new fuzzing strategy guided by coverage, they noticed the following in
-one of the probes:
+Shin'ichiro reported that when he's running fstests' test-case
+btrfs/167 on emulated zoned devices, he's seeing the following NULL
+pointer dereference in 'btrfs_zone_finish_endio()':
 
-  [...]
-  13: (79) r6 = *(u64 *)(r0 +0)         ; R0=map_value(ks=4,vs=8) R6_w=scalar()
-  14: (b7) r0 = 0                       ; R0_w=0
-  15: (b4) w0 = -1                      ; R0_w=0xffffffff
-  16: (74) w0 >>= 1                     ; R0_w=0x7fffffff
-  17: (5c) w6 &= w0                     ; R0_w=0x7fffffff R6_w=scalar(smin=smin32=0,smax=umax=umax32=0x7fffffff,var_off=(0x0; 0x7fffffff))
-  18: (44) w6 |= 2                      ; R6_w=scalar(smin=umin=smin32=umin32=2,smax=umax=umax32=0x7fffffff,var_off=(0x2; 0x7ffffffd))
-  19: (56) if w6 != 0x7ffffffd goto pc+1
-  REG INVARIANTS VIOLATION (true_reg2): range bounds violation u64=[0x7fffffff, 0x7ffffffd] s64=[0x7fffffff, 0x7ffffffd] u32=[0x7fffffff, 0x7ffffffd] s32=[0x7fffffff, 0x7ffffffd] var_off=(0x7fffffff, 0x0)
-  REG INVARIANTS VIOLATION (false_reg1): range bounds violation u64=[0x7fffffff, 0x7ffffffd] s64=[0x7fffffff, 0x7ffffffd] u32=[0x7fffffff, 0x7ffffffd] s32=[0x7fffffff, 0x7ffffffd] var_off=(0x7fffffff, 0x0)
-  REG INVARIANTS VIOLATION (false_reg2): const tnum out of sync with range bounds u64=[0x0, 0xffffffffffffffff] s64=[0x8000000000000000, 0x7fffffffffffffff] u32=[0x0, 0xffffffff] s32=[0x80000000, 0x7fffffff] var_off=(0x7fffffff, 0x0)
-  19: R6_w=0x7fffffff
-  20: (95) exit
+  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000011: 0000 [#1] PREEMPT SMP KASAN NOPTI
+  KASAN: null-ptr-deref in range [0x0000000000000088-0x000000000000008f]
+  CPU: 4 PID: 2332440 Comm: kworker/u80:15 Tainted: G        W          6.10.0-rc2-kts+ #4
+  Hardware name: Supermicro Super Server/X11SPi-TF, BIOS 3.3 02/21/2020
+  Workqueue: btrfs-endio-write btrfs_work_helper [btrfs]
+  RIP: 0010:btrfs_zone_finish_endio.part.0+0x34/0x160 [btrfs]
 
-  from 19 to 21: R0=0x7fffffff R6=scalar(smin=umin=smin32=umin32=2,smax=umax=smax32=umax32=0x7ffffffe,var_off=(0x2; 0x7ffffffd)) R7=map_ptr(ks=4,vs=8) R9=ctx() R10=fp0 fp-24=map_ptr(ks=4,vs=8) fp-40=mmmmmmmm
-  21: R0=0x7fffffff R6=scalar(smin=umin=smin32=umin32=2,smax=umax=smax32=umax32=0x7ffffffe,var_off=(0x2; 0x7ffffffd)) R7=map_ptr(ks=4,vs=8) R9=ctx() R10=fp0 fp-24=map_ptr(ks=4,vs=8) fp-40=mmmmmmmm
-  21: (14) w6 -= 2147483632             ; R6_w=scalar(smin=umin=umin32=2,smax=umax=0xffffffff,smin32=0x80000012,smax32=14,var_off=(0x2; 0xfffffffd))
-  22: (76) if w6 s>= 0xe goto pc+1      ; R6_w=scalar(smin=umin=umin32=2,smax=umax=0xffffffff,smin32=0x80000012,smax32=13,var_off=(0x2; 0xfffffffd))
-  23: (95) exit
+  RSP: 0018:ffff88867f107a90 EFLAGS: 00010206
+  RAX: dffffc0000000000 RBX: 0000000000000000 RCX: ffffffff893e5534
+  RDX: 0000000000000011 RSI: 0000000000000004 RDI: 0000000000000088
+  RBP: 0000000000000002 R08: 0000000000000001 R09: ffffed1081696028
+  R10: ffff88840b4b0143 R11: ffff88834dfff600 R12: ffff88840b4b0000
+  R13: 0000000000020000 R14: 0000000000000000 R15: ffff888530ad5210
+  FS:  0000000000000000(0000) GS:ffff888e3f800000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007f87223fff38 CR3: 00000007a7c6a002 CR4: 00000000007706f0
+  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+  PKRU: 55555554
+  Call Trace:
+   <TASK>
+   ? __die_body.cold+0x19/0x27
+   ? die_addr+0x46/0x70
+   ? exc_general_protection+0x14f/0x250
+   ? asm_exc_general_protection+0x26/0x30
+   ? do_raw_read_unlock+0x44/0x70
+   ? btrfs_zone_finish_endio.part.0+0x34/0x160 [btrfs]
+   btrfs_finish_one_ordered+0x5d9/0x19a0 [btrfs]
+   ? __pfx_lock_release+0x10/0x10
+   ? do_raw_write_lock+0x90/0x260
+   ? __pfx_do_raw_write_lock+0x10/0x10
+   ? __pfx_btrfs_finish_one_ordered+0x10/0x10 [btrfs]
+   ? _raw_write_unlock+0x23/0x40
+   ? btrfs_finish_ordered_zoned+0x5a9/0x850 [btrfs]
+   ? lock_acquire+0x435/0x500
+   btrfs_work_helper+0x1b1/0xa70 [btrfs]
+   ? __schedule+0x10a8/0x60b0
+   ? __pfx___might_resched+0x10/0x10
+   process_one_work+0x862/0x1410
+   ? __pfx_lock_acquire+0x10/0x10
+   ? __pfx_process_one_work+0x10/0x10
+   ? assign_work+0x16c/0x240
+   worker_thread+0x5e6/0x1010
+   ? __pfx_worker_thread+0x10/0x10
+   kthread+0x2c3/0x3a0
+   ? trace_irq_enable.constprop.0+0xce/0x110
+   ? __pfx_kthread+0x10/0x10
+   ret_from_fork+0x31/0x70
+   ? __pfx_kthread+0x10/0x10
+   ret_from_fork_asm+0x1a/0x30
+   </TASK>
 
-  from 22 to 24: R0=0x7fffffff R6_w=14 R7=map_ptr(ks=4,vs=8) R9=ctx() R10=fp0 fp-24=map_ptr(ks=4,vs=8) fp-40=mmmmmmmm
-  24: R0=0x7fffffff R6_w=14 R7=map_ptr(ks=4,vs=8) R9=ctx() R10=fp0 fp-24=map_ptr(ks=4,vs=8) fp-40=mmmmmmmm
-  24: (14) w6 -= 14                     ; R6_w=0
-  [...]
+Enabling CONFIG_BTRFS_ASSERT revealed the following assertion to
+trigger:
 
-What can be seen here is a register invariant violation on line 19. After
-the binary-or in line 18, the verifier knows that bit 2 is set but knows
-nothing about the rest of the content which was loaded from a map value,
-meaning, range is [2,0x7fffffff] with var_off=(0x2; 0x7ffffffd). When in
-line 19 the verifier analyzes the branch, it splits the register states
-in reg_set_min_max() into the registers of the true branch (true_reg1,
-true_reg2) and the registers of the false branch (false_reg1, false_reg2).
+  assertion failed: !list_empty(&ordered->list), in fs/btrfs/zoned.c:1815
 
-Since the test is w6 != 0x7ffffffd, the src_reg is a known constant.
-Internally, the verifier creates a "fake" register initialized as scalar
-to the value of 0x7ffffffd, and then passes it onto reg_set_min_max(). Now,
-for line 19, it is mathematically impossible to take the false branch of
-this program, yet the verifier analyzes it. It is impossible because the
-second bit of r6 will be set due to the prior or operation and the
-constant in the condition has that bit unset (hex(fd) == binary(1111 1101).
+This indicates, that we're missing the checksums list on the
+ordered_extent. As btrfs/167 is doing a NOCOW write this is to be
+expected.
 
-When the verifier first analyzes the false / fall-through branch, it will
-compute an intersection between the var_off of r6 and of the constant. This
-is because the verifier creates a "fake" register initialized to the value
-of the constant. The intersection result later refines both registers in
-regs_refine_cond_op():
+Further analysis with drgn confirmed the assumption:
 
-  [...]
-  t = tnum_intersect(tnum_subreg(reg1->var_off), tnum_subreg(reg2->var_off));
-  reg1->var_off = tnum_with_subreg(reg1->var_off, t);
-  reg2->var_off = tnum_with_subreg(reg2->var_off, t);
-  [...]
+  >>> inode = prog.crashed_thread().stack_trace()[11]['ordered'].inode
+  >>> btrfs_inode = drgn.container_of(inode, "struct btrfs_inode", \
+         				"vfs_inode")
+  >>> print(btrfs_inode.flags)
+  (u32)1
 
-Since the verifier is analyzing the false branch of the conditional jump,
-reg1 is equal to false_reg1 and reg2 is equal to false_reg2, i.e. the reg2
-is the "fake" register that was meant to hold a constant value. The resulting
-var_off of the intersection says that both registers now hold a known value
-of var_off=(0x7fffffff, 0x0) or in other words: this operation manages to
-make the verifier think that the "constant" value that was passed in the
-jump operation now holds a different value.
+As zoned emulation mode simulates conventional zones on regular devices,
+we cannot use zone-append for writing. But we're only attaching dummy
+checksums if we're doing a zone-append write.
 
-Normally this would not be an issue since it should not influence the true
-branch, however, false_reg2 and true_reg2 are pointers to the same "fake"
-register. Meaning, the false branch can influence the results of the true
-branch. In line 24, the verifier assumes R6_w=0, but the actual runtime
-value in this case is 1. The fix is simply not passing in the same "fake"
-register location as inputs to reg_set_min_max(), but instead making a
-copy. Moving the fake_reg into the env also reduces stack consumption by
-120 bytes. With this, the verifier successfully rejects invalid accesses
-from the test program.
+So for NOCOW zoned data writes on conventional zones, also attach a
+dummy checksum.
 
-  [0] https://github.com/google/buzzer
-
-Fixes: 67420501e868 ("bpf: generalize reg_set_min_max() to handle non-const register comparisons")
-Reported-by: Juan José López Jaimez <jjlopezjaimez@google.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/r/20240613115310.25383-1-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Fixes: cbfce4c7fbde ("btrfs: optimize the logical to physical mapping for zoned writes")
+CC: Naohiro Aota <Naohiro.Aota@wdc.com> # 6.6+
+Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf_verifier.h |  2 ++
- kernel/bpf/verifier.c        | 14 ++++++++++----
- 2 files changed, 12 insertions(+), 4 deletions(-)
+ fs/btrfs/bio.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
-index 7cb1b75eee381..e742db470a711 100644
---- a/include/linux/bpf_verifier.h
-+++ b/include/linux/bpf_verifier.h
-@@ -737,6 +737,8 @@ struct bpf_verifier_env {
- 	/* Same as scratched_regs but for stack slots */
- 	u64 scratched_stack_slots;
- 	u64 prev_log_pos, prev_insn_print_pos;
-+	/* buffer used to temporary hold constants as scalar registers */
-+	struct bpf_reg_state fake_reg[2];
- 	/* buffer used to generate temporary string representations,
- 	 * e.g., in reg_type_str() to generate reg_type string
- 	 */
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 8a29309db4245..0ef18ae40bc5a 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -14973,7 +14973,6 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
- 	struct bpf_reg_state *regs = this_branch->frame[this_branch->curframe]->regs;
- 	struct bpf_reg_state *dst_reg, *other_branch_regs, *src_reg = NULL;
- 	struct bpf_reg_state *eq_branch_regs;
--	struct bpf_reg_state fake_reg = {};
- 	u8 opcode = BPF_OP(insn->code);
- 	bool is_jmp32;
- 	int pred = -1;
-@@ -15039,7 +15038,8 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
- 			verbose(env, "BPF_JMP/JMP32 uses reserved fields\n");
- 			return -EINVAL;
- 		}
--		src_reg = &fake_reg;
-+		src_reg = &env->fake_reg[0];
-+		memset(src_reg, 0, sizeof(*src_reg));
- 		src_reg->type = SCALAR_VALUE;
- 		__mark_reg_known(src_reg, insn->imm);
- 	}
-@@ -15099,10 +15099,16 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
- 				      &other_branch_regs[insn->src_reg],
- 				      dst_reg, src_reg, opcode, is_jmp32);
- 	} else /* BPF_SRC(insn->code) == BPF_K */ {
-+		/* reg_set_min_max() can mangle the fake_reg. Make a copy
-+		 * so that these are two different memory locations. The
-+		 * src_reg is not used beyond here in context of K.
-+		 */
-+		memcpy(&env->fake_reg[1], &env->fake_reg[0],
-+		       sizeof(env->fake_reg[0]));
- 		err = reg_set_min_max(env,
- 				      &other_branch_regs[insn->dst_reg],
--				      src_reg /* fake one */,
--				      dst_reg, src_reg /* same fake one */,
-+				      &env->fake_reg[0],
-+				      dst_reg, &env->fake_reg[1],
- 				      opcode, is_jmp32);
- 	}
- 	if (err)
+diff --git a/fs/btrfs/bio.c b/fs/btrfs/bio.c
+index 477f350a8bd09..e3a57196b0ee0 100644
+--- a/fs/btrfs/bio.c
++++ b/fs/btrfs/bio.c
+@@ -741,7 +741,9 @@ static bool btrfs_submit_chunk(struct btrfs_bio *bbio, int mirror_num)
+ 			ret = btrfs_bio_csum(bbio);
+ 			if (ret)
+ 				goto fail_put_bio;
+-		} else if (use_append) {
++		} else if (use_append ||
++			   (btrfs_is_zoned(fs_info) && inode &&
++			    inode->flags & BTRFS_INODE_NODATASUM)) {
+ 			ret = btrfs_alloc_dummy_sum(bbio);
+ 			if (ret)
+ 				goto fail_put_bio;
 -- 
 2.43.0
 
