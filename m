@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D961C149C4F;
-	Tue, 25 Jun 2024 10:00:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F92613C90B;
+	Tue, 25 Jun 2024 10:00:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309644; cv=none; b=M77FaO7Kstb9cvq93v031L36myQaeUqs5L30SFVPWSI9U6hSuTyfOGFrKTNdriekN6jhw4fhelb6UE9zwNA/RADtk/nKzNIlA30lfmxPz4RkpSU87SZGspJRpEqCCnFRa4jRCihUE9QXvN3IhD9OcLaKfcoAU9qxbo4DrZ+lpUs=
+	t=1719309647; cv=none; b=j3lzrC9o7ynEB2Kz+X3g1g475FR2UJjuLru3psFPWHA0YHLEry7dK7ewiEQaAfU69TmXVuiRIbo/4KEcVQWr2NFoPEYXJdhoyb+uT6HkAjVTIE+BLY7Q8sMlk+jszIAeqpBUvrBD8BlrYH2n+M7pWTnAKjn7ICw9O74onxn/zDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309644; c=relaxed/simple;
-	bh=F+9a4HiwBgmBWcWNLacD+GbYAbNAbkUpRebGT4nsqsY=;
+	s=arc-20240116; t=1719309647; c=relaxed/simple;
+	bh=vsativoUauqQ+CXFMFfeLJSK1VKiKefrmN3tPBQQgg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eQ9dXGh0n2iNoxTkABXPxdot3a0HfepU1JqxL/9F1kzJcSJDUuD1CZgADOV57uRqupaZ+ZYUefu/FHjztPHD1HOGQfLqaT1gB9gMYYasSCfX8IYI/CLcrFdXf5YR+kfYqKB/HFhXqJYQoXFCi/FDouhaxcY7e2pYt+PDgQU4ib8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ocmRFBx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sEFZrS3uK2XPeU57Q7Nztf1UY8sNC2SWvBz+4yDmWZcps3lg/qSdOLA1CHu02Otxam7sq5tapxC2ly1ILWqzby5mmp/wr6zO7bftYDCgTyRJyqcoQlJAIEtlMkk8krStz/c417vrlIoBmNFkfdD5PrpCX8xSmuVensoaRQKPib0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kqnu9HDV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ocmRFBx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A87DC32781;
-	Tue, 25 Jun 2024 10:00:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kqnu9HDV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07146C32781;
+	Tue, 25 Jun 2024 10:00:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309644;
-	bh=F+9a4HiwBgmBWcWNLacD+GbYAbNAbkUpRebGT4nsqsY=;
+	s=korg; t=1719309647;
+	bh=vsativoUauqQ+CXFMFfeLJSK1VKiKefrmN3tPBQQgg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0ocmRFBxisZkWl4u8NKrocZNw/vyuBNwhYnpq6yuwIzpobbRPXRAnhkYq+KqDr6bJ
-	 FYypwGqOK4dr3VhunMSPaUUlZnBUTImT/Oh9Hr8g+W9XI2DOSa5WwTe4WPuWBEsliC
-	 6ghKxbAejI62QjIV6SBCNTQfPlN1fJ8izOwFeZAY=
+	b=kqnu9HDVYe7g0czU0C3Q4gdhyjwaIDgn5zPdLmURYXAzBd8Jl0BUVmRJI5usfoY+B
+	 hl5R2hd8g7ZOVzc+A4QL0/J2BUmbchlzUgSIIasM7cDKg1stWowHtiG0axUC/hp4aY
+	 Kgj/q/F0ax3u6CBw7Qr9s1H3FXZTYS+vkXzkhxCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuang Li <shuali@redhat.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Kalle Niemi <kaleposti@gmail.com>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 068/131] sched: act_ct: add netns into the key of tcf_ct_flow_table
-Date: Tue, 25 Jun 2024 11:33:43 +0200
-Message-ID: <20240625085528.528783401@linuxfoundation.org>
+Subject: [PATCH 6.1 086/131] regulator: bd71815: fix ramp values
+Date: Tue, 25 Jun 2024 11:34:01 +0200
+Message-ID: <20240625085529.208264846@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085525.931079317@linuxfoundation.org>
 References: <20240625085525.931079317@linuxfoundation.org>
@@ -53,101 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Kalle Niemi <kaleposti@gmail.com>
 
-[ Upstream commit 88c67aeb14070bab61d3dd8be96c8b42ebcaf53a ]
+[ Upstream commit 4cac29b846f38d5f0654cdfff5c5bfc37305081c ]
 
-zones_ht is a global hashtable for flow_table with zone as key. However,
-it does not consider netns when getting a flow_table from zones_ht in
-tcf_ct_init(), and it means an act_ct action in netns A may get a
-flow_table that belongs to netns B if it has the same zone value.
+Ramp values are inverted. This caused wrong values written to register
+when ramp values were defined in device tree.
 
-In Shuang's test with the TOPO:
+Invert values in table to fix this.
 
-  tcf2_c <---> tcf2_sw1 <---> tcf2_sw2 <---> tcf2_s
-
-tcf2_sw1 and tcf2_sw2 saw the same flow and used the same flow table,
-which caused their ct entries entering unexpected states and the
-TCP connection not able to end normally.
-
-This patch fixes the issue simply by adding netns into the key of
-tcf_ct_flow_table so that an act_ct action gets a flow_table that
-belongs to its own netns in tcf_ct_init().
-
-Note that for easy coding we don't use tcf_ct_flow_table.nf_ft.net,
-as the ct_ft is initialized after inserting it to the hashtable in
-tcf_ct_flow_table_get() and also it requires to implement several
-functions in rhashtable_params including hashfn, obj_hashfn and
-obj_cmpfn.
-
-Fixes: 64ff70b80fd4 ("net/sched: act_ct: Offload established connections to flow table")
-Reported-by: Shuang Li <shuali@redhat.com>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/1db5b6cc6902c5fc6f8c6cbd85494a2008087be5.1718488050.git.lucien.xin@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Kalle Niemi <kaleposti@gmail.com>
+Fixes: 1aad39001e85 ("regulator: Support ROHM BD71815 regulators")
+Reviewed-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Link: https://lore.kernel.org/r/ZmmJXtuVJU6RgQAH@latitude5580
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_ct.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/regulator/bd71815-regulator.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
-index 84e15116f18c2..cd95a315fde82 100644
---- a/net/sched/act_ct.c
-+++ b/net/sched/act_ct.c
-@@ -39,21 +39,26 @@ static struct workqueue_struct *act_ct_wq;
- static struct rhashtable zones_ht;
- static DEFINE_MUTEX(zones_mutex);
+diff --git a/drivers/regulator/bd71815-regulator.c b/drivers/regulator/bd71815-regulator.c
+index c2b8b8be78242..4696255fca5d7 100644
+--- a/drivers/regulator/bd71815-regulator.c
++++ b/drivers/regulator/bd71815-regulator.c
+@@ -257,7 +257,7 @@ static int buck12_set_hw_dvs_levels(struct device_node *np,
+  * 10: 2.50mV/usec	10mV 4uS
+  * 11: 1.25mV/usec	10mV 8uS
+  */
+-static const unsigned int bd7181x_ramp_table[] = { 1250, 2500, 5000, 10000 };
++static const unsigned int bd7181x_ramp_table[] = { 10000, 5000, 2500, 1250 };
  
-+struct zones_ht_key {
-+	struct net *net;
-+	u16 zone;
-+};
-+
- struct tcf_ct_flow_table {
- 	struct rhash_head node; /* In zones tables */
- 
- 	struct rcu_work rwork;
- 	struct nf_flowtable nf_ft;
- 	refcount_t ref;
--	u16 zone;
-+	struct zones_ht_key key;
- 
- 	bool dying;
- };
- 
- static const struct rhashtable_params zones_params = {
- 	.head_offset = offsetof(struct tcf_ct_flow_table, node),
--	.key_offset = offsetof(struct tcf_ct_flow_table, zone),
--	.key_len = sizeof_field(struct tcf_ct_flow_table, zone),
-+	.key_offset = offsetof(struct tcf_ct_flow_table, key),
-+	.key_len = sizeof_field(struct tcf_ct_flow_table, key),
- 	.automatic_shrinking = true,
- };
- 
-@@ -312,11 +317,12 @@ static struct nf_flowtable_type flowtable_ct = {
- 
- static int tcf_ct_flow_table_get(struct net *net, struct tcf_ct_params *params)
- {
-+	struct zones_ht_key key = { .net = net, .zone = params->zone };
- 	struct tcf_ct_flow_table *ct_ft;
- 	int err = -ENOMEM;
- 
- 	mutex_lock(&zones_mutex);
--	ct_ft = rhashtable_lookup_fast(&zones_ht, &params->zone, zones_params);
-+	ct_ft = rhashtable_lookup_fast(&zones_ht, &key, zones_params);
- 	if (ct_ft && refcount_inc_not_zero(&ct_ft->ref))
- 		goto out_unlock;
- 
-@@ -325,7 +331,7 @@ static int tcf_ct_flow_table_get(struct net *net, struct tcf_ct_params *params)
- 		goto err_alloc;
- 	refcount_set(&ct_ft->ref, 1);
- 
--	ct_ft->zone = params->zone;
-+	ct_ft->key = key;
- 	err = rhashtable_insert_fast(&zones_ht, &ct_ft->node, zones_params);
- 	if (err)
- 		goto err_insert;
+ static int bd7181x_led_set_current_limit(struct regulator_dev *rdev,
+ 					int min_uA, int max_uA)
 -- 
 2.43.0
 
