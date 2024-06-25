@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9495B149C4F;
-	Tue, 25 Jun 2024 09:55:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5B4146A67;
+	Tue, 25 Jun 2024 09:55:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309356; cv=none; b=ZnLlyHIZr0EH3XJU8CqziAzAV02Meuea+GzXsSf6mLHbuxYNk1wsshBHP2vQn/k8tJwRJQhIx159U36bXFqeDEZag3NX5F0xilAehtCVTiGtqtjkMqpS+MBSkVprBAMEIEMrmBbWSWKlhmfqm7oHsudCfOKPdYnbjqruFI4uk80=
+	t=1719309359; cv=none; b=CXBTEYDNGoiC+r7uS05c6PWQLcn+lmQy+Ll+VbXSdmtHKKxoMNv/cDIWZR2CRjmwhl6sNXGjXpOWoN3vLSoCU4ISse4C7EfM9hvVuK6zMSTnSTT4uM3+iSH7lry9wUijkTIy2gkMsZbEG+l7Q4MPuXzI4rUzOeP0Mve3RH1/ArA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309356; c=relaxed/simple;
-	bh=wP4R0GDtFd0Xaouzn38AhQMpcuA+7Roobh7eW9ynfi4=;
+	s=arc-20240116; t=1719309359; c=relaxed/simple;
+	bh=4E2N0TRHW0VH9cyQEr5aH8HEmxmEhke+aemfIKuQp8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=se46IiUvb+xi1MJIAsPP3DRyEeDPlh7a7dnlXC4t0yE2aXth/9gT4P+Xln5o5Lj3G0/1ktGRE9215jYkSVmZp0bTdVXb5RKBMhBOWiRU5+8IfQQ7Gx/F6U/QKo3Mo3Wst8ROEaCQ8Tlhv4pLNMSAOnqcsL6skrdvhLDxB1vtIKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nG6pRlGd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eq2ydoKh0BbM+3H8J4pzYUlbplGgZTC+2duaK/wMPb1OmN+7fSK75Ou8g/WgwE34tULknmo9NuQVIFTHI2qwRbeb8J3no3ZpM7q78ccPV/wWospZm0iegdq9iXWwy95m/xwJ2fSlA8KDuVzTKHT+Y6+wzCH/2wa1Q0xrn+sNNhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QTFdPdUl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nG6pRlGd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB31C32781;
-	Tue, 25 Jun 2024 09:55:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTFdPdUl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F4BEC32781;
+	Tue, 25 Jun 2024 09:55:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309356;
-	bh=wP4R0GDtFd0Xaouzn38AhQMpcuA+7Roobh7eW9ynfi4=;
+	s=korg; t=1719309359;
+	bh=4E2N0TRHW0VH9cyQEr5aH8HEmxmEhke+aemfIKuQp8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nG6pRlGd2i8Ih8JEqT49maFV/bLBGA3mjV5MpXto+kF/0em/KnQa7X4beN7SGzMm5
-	 3f1r2+3T2srfuHP766IOKSaTNJIv2Yu2/mOPb9IBpq32eeFs5wBTb8fkprYX3GKGDq
-	 KjJAxwi/bJGlvoSAzamyB1uzGeiYR5fNm09mwprw=
+	b=QTFdPdUl2QNZXuJj3EYaQkeqt/z4IOdXvOhOkk/79HLorywhDjtYmOp4woEOJSYQg
+	 fHcDVOR8ImJqaBcdUjsoCqFGEzzSiJWfEdYTCsxnXZU8cGqOLozfqQo7gvQpV0BGFQ
+	 BtmJpqCJzL2l8a+bo8pTWBM20hMsGGj2WztIORbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pablo=20Ca=C3=B1o?= <pablocpascual@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 151/192] ALSA: hda/realtek: Add quirk for Lenovo Yoga Pro 7 14AHP9
-Date: Tue, 25 Jun 2024 11:33:43 +0200
-Message-ID: <20240625085542.955562473@linuxfoundation.org>
+	Ville Syrjala <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.6 152/192] drm/i915/mso: using joiner is not possible with eDP MSO
+Date: Tue, 25 Jun 2024 11:33:44 +0200
+Message-ID: <20240625085542.993584408@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -51,31 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Caño <pablocpascual@gmail.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-commit ad22051afdad962b6012f3823d0ed1a735935386 upstream.
+commit 49cc17967be95d64606d5684416ee51eec35e84a upstream.
 
-Lenovo Yoga Pro 7 14AHP9 (PCI SSID 17aa:3891) seems requiring a similar workaround like Yoga 9 model and Yoga 7 Pro 14APH8 for the bass speaker.
+It's not possible to use the joiner at the same time with eDP MSO. When
+a panel needs MSO, it's not optional, so MSO trumps joiner.
 
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/all/20231207182035.30248-1-tiwai@suse.de/
-Signed-off-by: Pablo Caño <pablocpascual@gmail.com>
-Link: https://patch.msgid.link/20240620152533.76712-1-pablocpascual@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+v3: Only change intel_dp_has_joiner(), leave debugfs alone (Ville)
+
+Fixes: bc71194e8897 ("drm/i915/edp: enable eDP MSO during link training")
+Cc: <stable@vger.kernel.org> # v5.13+
+Cc: Ville Syrjala <ville.syrjala@linux.intel.com>
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/1668
+Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240614142311.589089-1-jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 8b5a92ca24eb96bb71e2a55e352687487d87687f)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/i915/display/intel_dp.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10270,6 +10270,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x17aa, 0x3882, "Lenovo Yoga Pro 7 14APH8", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x3884, "Y780 YG DUAL", ALC287_FIXUP_TAS2781_I2C),
- 	SND_PCI_QUIRK(0x17aa, 0x3886, "Y780 VECO DUAL", ALC287_FIXUP_TAS2781_I2C),
-+	SND_PCI_QUIRK(0x17aa, 0x3891, "Lenovo Yoga Pro 7 14AHP9", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x38a7, "Y780P AMD YG dual", ALC287_FIXUP_TAS2781_I2C),
- 	SND_PCI_QUIRK(0x17aa, 0x38a8, "Y780P AMD VECO dual", ALC287_FIXUP_TAS2781_I2C),
- 	SND_PCI_QUIRK(0x17aa, 0x38ba, "Yoga S780-14.5 Air AMD quad YC", ALC287_FIXUP_TAS2781_I2C),
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -393,6 +393,10 @@ bool intel_dp_can_bigjoiner(struct intel
+ 	struct intel_encoder *encoder = &intel_dig_port->base;
+ 	struct drm_i915_private *dev_priv = to_i915(encoder->base.dev);
+ 
++	/* eDP MSO is not compatible with joiner */
++	if (intel_dp->mso_link_count)
++		return false;
++
+ 	return DISPLAY_VER(dev_priv) >= 12 ||
+ 		(DISPLAY_VER(dev_priv) == 11 &&
+ 		 encoder->port != PORT_A);
 
 
