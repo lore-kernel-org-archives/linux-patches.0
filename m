@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A624F148315;
-	Tue, 25 Jun 2024 09:40:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 999C8149C50;
+	Tue, 25 Jun 2024 09:40:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308412; cv=none; b=JuJQ0pGej0ho8/NdNV2L7DL+UPSDJgdnnMfBK9XOAwGHdn5Hc92dhGHne9kNEtdhwcL5TbwDHfnvmxz5Il0VXQ56aiX+5VjUbYDkBr3rKV1bDbAhaPJzU789VaglBsKUnrD/GqcHFpsZZ+fRsp7taD9rj/RpROVEz3fYpw5qx+Y=
+	t=1719308415; cv=none; b=RlTYXsILDaVUJLv4/K5wTMKZIe8aL+OA5iUMReeLw9xKaS9wusXsH9yUbAd0u8Lj3ssTHnvtlSu3yglSLTT+wy9UdCbdCv7G5pfyE0dmFqstRMC3puaFE6YSP/S+RGFm2u5qPoH2C45JP/547r/5e7DSlqSprxcOUAMgGmxwIxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308412; c=relaxed/simple;
-	bh=h7CTPoNYsnIPNeTlsnYqQxwJnEBQneN/ve9LxBAPA1A=;
+	s=arc-20240116; t=1719308415; c=relaxed/simple;
+	bh=4uQwZBN5d/kqVlq7JHnJBO86nWwC4iHyrECYE9H/Qt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J3pKbuSLyqIOFBFxzivHdRM2/VygRrbKxdcTjPL5kjOB7tjeNgrTbeH6McNB4iq7hXj1OKqezwG/KW6vg6kqWFt4ZF/G+Tg6aDoOOCHsK6u5/kg+AD8Sgh2jaBgv84nSj3mgg9QW1dgiOTPeNrC0D2GFgfnYBoL3WoJvQLcPVHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fT+v5WqA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a/mf/KUfAX1ICq0lkeE6ehskDHg7R20lc8BlWq9HriRs/YT4vrrDhlFfd8e87Aqmn80NxjIGpC2GYXSK6vMYfQDQ/WsKrVqAfAqBMCG0sOH86s4A+Vu4W9JYGuGVqJK/qdEesmE0RQROea5wbsMmv9iDYevbtA/NGBTytqhUplc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2c8kfFxs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fT+v5WqA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC46C32781;
-	Tue, 25 Jun 2024 09:40:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2c8kfFxs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 221ACC32781;
+	Tue, 25 Jun 2024 09:40:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308412;
-	bh=h7CTPoNYsnIPNeTlsnYqQxwJnEBQneN/ve9LxBAPA1A=;
+	s=korg; t=1719308415;
+	bh=4uQwZBN5d/kqVlq7JHnJBO86nWwC4iHyrECYE9H/Qt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fT+v5WqAvjD7Xbhx8oo7H11yILYPj76OrkFvZsDRgvI9tzRUtS0usDUDkamE2nl7M
-	 gUnjQtCm6rSPhyEYP4hTOgHDhYnOOr10HiJbnttJh8euluBcZ2VWyVfPkV7FevB8rn
-	 IC+OG3MuQQ4CB7cIrgTfUTa4ipEP40VVT5Lyeg3o=
+	b=2c8kfFxskiZlhh+iXEocE6QX5qKmZzOz+2qkgaV9o8/2vB181aMaszYvYSVHD9ezJ
+	 SCEbDxWYE+AwYmg9RGvScqLllqjUH2sYaf1DoD9qtFpjjM8Jb9+/b1Ytg1/s2Kw6tw
+	 Iiip3HWz/EnJm0UUQXVlLywd/mayRYgeORUd9ShU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Trimmer <simont@opensource.cirrus.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 113/250] ALSA: hda: tas2781: Component should be unbound before deconstruction
-Date: Tue, 25 Jun 2024 11:31:11 +0200
-Message-ID: <20240625085552.409511029@linuxfoundation.org>
+Subject: [PATCH 6.9 096/250] ALSA: seq: ump: Fix missing System Reset message handling
+Date: Tue, 25 Jun 2024 11:30:54 +0200
+Message-ID: <20240625085551.754789954@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -51,40 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Trimmer <simont@opensource.cirrus.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit d832b5a03e94a2a9f866dab3d04937a0f84ea116 ]
+[ Upstream commit 55fac50ea46f46a22a92e2139b92afaa3822ad19 ]
 
-The interface associated with the hda_component should be deactivated
-before the driver is deconstructed during removal.
+The conversion from System Reset event to UMP was missing.
+Add the entry for a conversion to a proper UMP System message.
 
-Fixes: 4e7914eb1dae ("ALSA: hda/tas2781: remove sound controls in unbind")
-Signed-off-by: Simon Trimmer <simont@opensource.cirrus.com>
+Fixes: e9e02819a98a ("ALSA: seq: Automatic conversion of UMP events")
+Link: https://lore.kernel.org/r/20240531123718.13420-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://lore.kernel.org/r/20240613133713.75550-4-simont@opensource.cirrus.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/tas2781_hda_i2c.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/core/seq/seq_ump_convert.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/pci/hda/tas2781_hda_i2c.c b/sound/pci/hda/tas2781_hda_i2c.c
-index 75f7674c66ee7..fdee6592c502d 100644
---- a/sound/pci/hda/tas2781_hda_i2c.c
-+++ b/sound/pci/hda/tas2781_hda_i2c.c
-@@ -777,11 +777,11 @@ static void tas2781_hda_remove(struct device *dev)
- {
- 	struct tas2781_hda *tas_hda = dev_get_drvdata(dev);
+diff --git a/sound/core/seq/seq_ump_convert.c b/sound/core/seq/seq_ump_convert.c
+index 171fb75267afa..d81f776a4c3dd 100644
+--- a/sound/core/seq/seq_ump_convert.c
++++ b/sound/core/seq/seq_ump_convert.c
+@@ -1075,6 +1075,8 @@ static const struct seq_ev_to_ump seq_ev_ump_encoders[] = {
+ 	  system_ev_to_ump_midi1, system_ev_to_ump_midi2 },
+ 	{ SNDRV_SEQ_EVENT_SENSING, UMP_SYSTEM_STATUS_ACTIVE_SENSING,
+ 	  system_ev_to_ump_midi1, system_ev_to_ump_midi2 },
++	{ SNDRV_SEQ_EVENT_RESET, UMP_SYSTEM_STATUS_RESET,
++	  system_ev_to_ump_midi1, system_ev_to_ump_midi2 },
+ };
  
-+	component_del(tas_hda->dev, &tas2781_hda_comp_ops);
-+
- 	pm_runtime_get_sync(tas_hda->dev);
- 	pm_runtime_disable(tas_hda->dev);
- 
--	component_del(tas_hda->dev, &tas2781_hda_comp_ops);
--
- 	pm_runtime_put_noidle(tas_hda->dev);
- 
- 	tasdevice_remove(tas_hda->priv);
+ static const struct seq_ev_to_ump *find_ump_encoder(int type)
 -- 
 2.43.0
 
