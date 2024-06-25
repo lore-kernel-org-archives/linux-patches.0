@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0E7524B34;
-	Tue, 25 Jun 2024 09:52:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC9C24B34;
+	Tue, 25 Jun 2024 09:52:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309174; cv=none; b=VfC2JQWY4KqPZ6Pa7Qy3M9ixkaR7C8f4jio8/Qmq/Ox5HJUag6BpNxHmyps1b1Hw6osc0+bZlg7gEkTFkZXMwL3aoVXVAAHYXQLE7H7z03u9sSzrH7MJ9vvbBldxBxy/tWBCoFVt35gwqk+toucguiBWI7GrZLos0EgBtj1Q/aw=
+	t=1719309177; cv=none; b=GtcHlZcVTFKeGlYVid0uyhCUawVhHE/KJOP5pxOb6TsRQ/0ESYr2AicZ6Fmx9T2fpRwy2mUI7E843jGT8AzOxEk29KU2MVym/VJaAmT6DUK40y5PVX8Wmps+GpKBxm4visy4OhHgAEElrShEu/eVJk9t0NvTomW/cUqCdQqGkcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309174; c=relaxed/simple;
-	bh=SeVKh9Xx9qI/86dH5+G7gBCQrYwqFCoV3Xy0Z5uymVI=;
+	s=arc-20240116; t=1719309177; c=relaxed/simple;
+	bh=SiPmeME/MarfjOKfJqc1UnPoqQMAMndtW82ifC6/qZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZJgpif2PERT1q3GzQ54IZHKaIDut2jYrh3P9oJHf8T458AGsFJB5v7NzcbKzLaN3zCDfGrdxMir6QpJj7D+Cs2MhnOb3f7sNdEPHN/OtD20N7gCj/RaM6bu1znUDl/bsdH+UUuAlEC/R0pd0gixh/tmwRwzDSN+sYVQxLp1YJQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q+4ZOEcm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=phBG9A9v7+tMxnvn4fKEL4WQ1GqJAKuA8l4A3F6PQ/EYKOigaBNAcGhX3GsYmbOt/vS1Z1uuwideHsWAP2SM7vdNHppFFMnDPuPEnBNwoA96B96knTz4+jMT0+JOFHFFlc+jh9FWafBnxg3lOLrMuwCS73VD37GcOTRjy5p1LQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1lVlRWm+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q+4ZOEcm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26A14C32781;
-	Tue, 25 Jun 2024 09:52:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1lVlRWm+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EF90C32781;
+	Tue, 25 Jun 2024 09:52:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309174;
-	bh=SeVKh9Xx9qI/86dH5+G7gBCQrYwqFCoV3Xy0Z5uymVI=;
+	s=korg; t=1719309177;
+	bh=SiPmeME/MarfjOKfJqc1UnPoqQMAMndtW82ifC6/qZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q+4ZOEcm9AQFXFuK5wXV0cQBfyOVWhI/hkETwE1Wt+UapGTZFq3Pb5By7V6Uxbq3c
-	 zNUz+Q586gRqTpofWHU10U7U1uu4VDPvmuzqCDDT8s40fWkyWhom7e2/dwPafa2jPy
-	 jSDD03jJ7iXEZ6hYW8qNfphX+fyQOtRySsellKqo=
+	b=1lVlRWm+tUdYPy+pb+iz1zH3EYzPy9C/UkGDtPYg4v7didSkiLHYA4V8895S0gD+N
+	 8AZ62MO4JJGw3wz3MxHI0F4/0KsHoAOKxttlLzX2/+ASqad+MguPryHOmp9N2inMIi
+	 g0LNWtMyvEmzOeUAgFJoPeYh0pm8ZtvFM2dfgYMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jason Xing <kerneljasonxing@gmail.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kalle Niemi <kaleposti@gmail.com>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 080/192] ipv6: prevent possible NULL dereference in rt6_probe()
-Date: Tue, 25 Jun 2024 11:32:32 +0200
-Message-ID: <20240625085540.246457034@linuxfoundation.org>
+Subject: [PATCH 6.6 114/192] regulator: bd71815: fix ramp values
+Date: Tue, 25 Jun 2024 11:33:06 +0200
+Message-ID: <20240625085541.549434286@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -53,84 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kalle Niemi <kaleposti@gmail.com>
 
-[ Upstream commit b86762dbe19a62e785c189f313cda5b989931f37 ]
+[ Upstream commit 4cac29b846f38d5f0654cdfff5c5bfc37305081c ]
 
-syzbot caught a NULL dereference in rt6_probe() [1]
+Ramp values are inverted. This caused wrong values written to register
+when ramp values were defined in device tree.
 
-Bail out if  __in6_dev_get() returns NULL.
+Invert values in table to fix this.
 
-[1]
-Oops: general protection fault, probably for non-canonical address 0xdffffc00000000cb: 0000 [#1] PREEMPT SMP KASAN PTI
-KASAN: null-ptr-deref in range [0x0000000000000658-0x000000000000065f]
-CPU: 1 PID: 22444 Comm: syz-executor.0 Not tainted 6.10.0-rc2-syzkaller-00383-gb8481381d4e2 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/02/2024
- RIP: 0010:rt6_probe net/ipv6/route.c:656 [inline]
- RIP: 0010:find_match+0x8c4/0xf50 net/ipv6/route.c:758
-Code: 14 fd f7 48 8b 85 38 ff ff ff 48 c7 45 b0 00 00 00 00 48 8d b8 5c 06 00 00 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <0f> b6 14 02 48 89 f8 83 e0 07 83 c0 03 38 d0 7c 08 84 d2 0f 85 19
-RSP: 0018:ffffc900034af070 EFLAGS: 00010203
-RAX: dffffc0000000000 RBX: 0000000000000000 RCX: ffffc90004521000
-RDX: 00000000000000cb RSI: ffffffff8990d0cd RDI: 000000000000065c
-RBP: ffffc900034af150 R08: 0000000000000005 R09: 0000000000000000
-R10: 0000000000000001 R11: 0000000000000002 R12: 000000000000000a
-R13: 1ffff92000695e18 R14: ffff8880244a1d20 R15: 0000000000000000
-FS:  00007f4844a5a6c0(0000) GS:ffff8880b9300000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000001b31b27000 CR3: 000000002d42c000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
-  rt6_nh_find_match+0xfa/0x1a0 net/ipv6/route.c:784
-  nexthop_for_each_fib6_nh+0x26d/0x4a0 net/ipv4/nexthop.c:1496
-  __find_rr_leaf+0x6e7/0xe00 net/ipv6/route.c:825
-  find_rr_leaf net/ipv6/route.c:853 [inline]
-  rt6_select net/ipv6/route.c:897 [inline]
-  fib6_table_lookup+0x57e/0xa30 net/ipv6/route.c:2195
-  ip6_pol_route+0x1cd/0x1150 net/ipv6/route.c:2231
-  pol_lookup_func include/net/ip6_fib.h:616 [inline]
-  fib6_rule_lookup+0x386/0x720 net/ipv6/fib6_rules.c:121
-  ip6_route_output_flags_noref net/ipv6/route.c:2639 [inline]
-  ip6_route_output_flags+0x1d0/0x640 net/ipv6/route.c:2651
-  ip6_dst_lookup_tail.constprop.0+0x961/0x1760 net/ipv6/ip6_output.c:1147
-  ip6_dst_lookup_flow+0x99/0x1d0 net/ipv6/ip6_output.c:1250
-  rawv6_sendmsg+0xdab/0x4340 net/ipv6/raw.c:898
-  inet_sendmsg+0x119/0x140 net/ipv4/af_inet.c:853
-  sock_sendmsg_nosec net/socket.c:730 [inline]
-  __sock_sendmsg net/socket.c:745 [inline]
-  sock_write_iter+0x4b8/0x5c0 net/socket.c:1160
-  new_sync_write fs/read_write.c:497 [inline]
-  vfs_write+0x6b6/0x1140 fs/read_write.c:590
-  ksys_write+0x1f8/0x260 fs/read_write.c:643
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: 52e1635631b3 ("[IPV6]: ROUTE: Add router_probe_interval sysctl.")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20240615151454.166404-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Kalle Niemi <kaleposti@gmail.com>
+Fixes: 1aad39001e85 ("regulator: Support ROHM BD71815 regulators")
+Reviewed-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Link: https://lore.kernel.org/r/ZmmJXtuVJU6RgQAH@latitude5580
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/regulator/bd71815-regulator.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index e40d05caf9550..eb3afaee62e8f 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -638,6 +638,8 @@ static void rt6_probe(struct fib6_nh *fib6_nh)
- 	rcu_read_lock();
- 	last_probe = READ_ONCE(fib6_nh->last_probe);
- 	idev = __in6_dev_get(dev);
-+	if (!idev)
-+		goto out;
- 	neigh = __ipv6_neigh_lookup_noref(dev, nh_gw);
- 	if (neigh) {
- 		if (READ_ONCE(neigh->nud_state) & NUD_VALID)
+diff --git a/drivers/regulator/bd71815-regulator.c b/drivers/regulator/bd71815-regulator.c
+index 26192d55a6858..79fbb45297f6b 100644
+--- a/drivers/regulator/bd71815-regulator.c
++++ b/drivers/regulator/bd71815-regulator.c
+@@ -256,7 +256,7 @@ static int buck12_set_hw_dvs_levels(struct device_node *np,
+  * 10: 2.50mV/usec	10mV 4uS
+  * 11: 1.25mV/usec	10mV 8uS
+  */
+-static const unsigned int bd7181x_ramp_table[] = { 1250, 2500, 5000, 10000 };
++static const unsigned int bd7181x_ramp_table[] = { 10000, 5000, 2500, 1250 };
+ 
+ static int bd7181x_led_set_current_limit(struct regulator_dev *rdev,
+ 					int min_uA, int max_uA)
 -- 
 2.43.0
 
