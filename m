@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D63B512EBEA;
-	Tue, 25 Jun 2024 09:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D825D1487D6;
+	Tue, 25 Jun 2024 09:38:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308291; cv=none; b=UXl5UF8scrNbAX7muBRPw5t2sMCe9xFU5g558TcmNk7dmwpXmgWvG2RY3yG3LbMQzx/l8l4qorydW6AZTBWU0AKAuHvNcFGTOp93mlj2HGB/pEKv97l/i6bIV3P2HTe20EzoEfHLO8kENa9GYVtQ+qqAq7nWNWkOSIqqNqDwiU4=
+	t=1719308294; cv=none; b=BlH0Nq2+4uBET56bJjmvClIzkr+8vusI1YbRKEMYA7O2vRV7BiWFyV8a7WNnDeRPmkfMe9iZjXNryiyUDBg5Hn4VF4TnBiYGhzTtMREY8vRuYnl2pa8m77h0JpE9NIud4lzmP8Jlq7i2ubnJcCmsGJcRYQUS+u1NFL09ZZiHR6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308291; c=relaxed/simple;
-	bh=6mEhdq90ijwRj5oxsLa6jX2WTYXSkraCLUp0bwiOqt0=;
+	s=arc-20240116; t=1719308294; c=relaxed/simple;
+	bh=sWCu6T3N3KO+gGIu4sg1rT+1x882+zgNY/pXCQ6NFbY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NHujKMPK21oCf1nC9s8ml6SO/EVezmWw0jJ9OEV/WNmH6NSIpmk8I7AH22MCkNEvatEs89FMxfW9LqZnd+tSYBf8ZjLdgq9rfjjcN0a90UsYgkHrydJGSt4xK0LI91KaOfgZ3s533HAaRIrVbWrj9XbeG8XDWlXyPWhylOZEzS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rn45J0nF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ipeRTqXwuu8uppE6/pDbAT0+xTLRJ3u88bMsmjzRFGkNHpZUxJy94BD7uLBCSwHpHHoME4iMAUYcNF5wJdOB5olL2e9BOKWVlxivCyNMmSUhL0rGjJwXoreieuSbjb2itEb7dMnZIrOFUF9OqTuYKOMx++acgAiv4OErxDNMEU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JC0YWkX7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rn45J0nF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CBDCC32789;
-	Tue, 25 Jun 2024 09:38:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JC0YWkX7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53636C32781;
+	Tue, 25 Jun 2024 09:38:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308291;
-	bh=6mEhdq90ijwRj5oxsLa6jX2WTYXSkraCLUp0bwiOqt0=;
+	s=korg; t=1719308294;
+	bh=sWCu6T3N3KO+gGIu4sg1rT+1x882+zgNY/pXCQ6NFbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rn45J0nF9l1TLOKrQTaHEHxlvGI5liodvpSoy8PMkazBjMnzAWCXkWwnzjoaMiJTy
-	 lIBLgZihGMw6AE449sOCq3wpomj7idOT4eciKNzbLhEmStwN8nTHG8nmYvrwSz0CeO
-	 pVz4U30R+g8ckghc0Wfegi2qbPUX+hkgb5sjpRNA=
+	b=JC0YWkX79Nd2lz810ywb8eI2KyJ4F1RHiCZh/936J7ew5m2fnz8NlNjSSxo18sN20
+	 lrBIeVEFH8UtYY8BlDprgXPEEIXK9DylEC3My0bZI2/bmPkrSyLWI0EZYe6s8IVT4a
+	 nLrIGnZbl3F1rRLq5VZdJdk4R85rDWUx62d7nOKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunlei He <heyunlei@oppo.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 072/250] f2fs: remove clear SB_INLINECRYPT flag in default_options
-Date: Tue, 25 Jun 2024 11:30:30 +0200
-Message-ID: <20240625085550.829628209@linuxfoundation.org>
+Subject: [PATCH 6.9 073/250] usb: typec: ucsi_glink: rework quirks implementation
+Date: Tue, 25 Jun 2024 11:30:31 +0200
+Message-ID: <20240625085550.867909544@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -52,47 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunlei He <heyunlei@oppo.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit ac5eecf481c29942eb9a862e758c0c8b68090c33 ]
+[ Upstream commit 3f81cf54c1889eeecbb8d9188f5f2f597622170e ]
 
-In f2fs_remount, SB_INLINECRYPT flag will be clear and re-set.
-If create new file or open file during this gap, these files
-will not use inlinecrypt. Worse case, it may lead to data
-corruption if wrappedkey_v0 is enable.
+In preparation to adding more quirks, extract quirks to the static
+variables and reference them through match->data. Otherwise adding
+more quirks will add the table really cumbersome.
 
-Thread A:                               Thread B:
-
--f2fs_remount				-f2fs_file_open or f2fs_new_inode
-  -default_options
-	<- clear SB_INLINECRYPT flag
-
-                                          -fscrypt_select_encryption_impl
-
-  -parse_options
-	<- set SB_INLINECRYPT again
-
-Signed-off-by: Yunlei He <heyunlei@oppo.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240329-qcom-ucsi-fixes-v2-8-0f5d37ed04db@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/usb/typec/ucsi/ucsi_glink.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index a4bc26dfdb1af..e4c795a711f0f 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -2132,8 +2132,6 @@ static void default_options(struct f2fs_sb_info *sbi, bool remount)
- 	F2FS_OPTION(sbi).memory_mode = MEMORY_MODE_NORMAL;
- 	F2FS_OPTION(sbi).errors = MOUNT_ERRORS_CONTINUE;
+diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
+index ce08eb33e5bec..0e6f837f6c31b 100644
+--- a/drivers/usb/typec/ucsi/ucsi_glink.c
++++ b/drivers/usb/typec/ucsi/ucsi_glink.c
+@@ -311,12 +311,14 @@ static void pmic_glink_ucsi_destroy(void *data)
+ 	mutex_unlock(&ucsi->lock);
+ }
  
--	sbi->sb->s_flags &= ~SB_INLINECRYPT;
--
- 	set_opt(sbi, INLINE_XATTR);
- 	set_opt(sbi, INLINE_DATA);
- 	set_opt(sbi, INLINE_DENTRY);
++static unsigned long quirk_sc8180x = UCSI_NO_PARTNER_PDOS;
++
+ static const struct of_device_id pmic_glink_ucsi_of_quirks[] = {
+-	{ .compatible = "qcom,qcm6490-pmic-glink", .data = (void *)UCSI_NO_PARTNER_PDOS, },
+-	{ .compatible = "qcom,sc8180x-pmic-glink", .data = (void *)UCSI_NO_PARTNER_PDOS, },
+-	{ .compatible = "qcom,sc8280xp-pmic-glink", .data = (void *)UCSI_NO_PARTNER_PDOS, },
+-	{ .compatible = "qcom,sm8350-pmic-glink", .data = (void *)UCSI_NO_PARTNER_PDOS, },
+-	{ .compatible = "qcom,sm8550-pmic-glink", .data = (void *)UCSI_NO_PARTNER_PDOS, },
++	{ .compatible = "qcom,qcm6490-pmic-glink", .data = &quirk_sc8180x, },
++	{ .compatible = "qcom,sc8180x-pmic-glink", .data = &quirk_sc8180x, },
++	{ .compatible = "qcom,sc8280xp-pmic-glink", .data = &quirk_sc8180x, },
++	{ .compatible = "qcom,sm8350-pmic-glink", .data = &quirk_sc8180x, },
++	{ .compatible = "qcom,sm8550-pmic-glink", .data = &quirk_sc8180x, },
+ 	{}
+ };
+ 
+@@ -354,7 +356,7 @@ static int pmic_glink_ucsi_probe(struct auxiliary_device *adev,
+ 
+ 	match = of_match_device(pmic_glink_ucsi_of_quirks, dev->parent);
+ 	if (match)
+-		ucsi->ucsi->quirks = (unsigned long)match->data;
++		ucsi->ucsi->quirks = *(unsigned long *)match->data;
+ 
+ 	ucsi_set_drvdata(ucsi->ucsi, ucsi);
+ 
 -- 
 2.43.0
 
