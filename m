@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D994149E03;
-	Tue, 25 Jun 2024 09:43:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F07212EBEA;
+	Tue, 25 Jun 2024 09:43:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308580; cv=none; b=WYhTqxjazJOLwZiHr7WfAdD/f4GpEH8cuhsNfH9MW4efKkqVxZLCUjQruXYW94HOCCzM5UmKzqVVd13iO0n2V9J3SrWnow7FZ6hGxIO839UUNiFW3V3VcBHgKdt/N1fmaLmq2MIlA0G1hE6NVhPnFWjSkwPd83FRGemJfB76XgY=
+	t=1719308583; cv=none; b=YRcF38CMKji6Me8jI0zouFIOh2gl3DaMOwMYh6EgrjcLp9zpsJcaQ2at3u4c8AsvXJz41NW9mtS8VRhKkfyBAwEWM+fdx5P4ko12n1NQ6Yvf+jx9pTfnatOhbBZGoUd3LnOufzhf/0rxc4Dfh506zo49xTAlfArI7Izpd1o+2Vg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308580; c=relaxed/simple;
-	bh=VJkr4i7p0zRqkzwGKIsJJNb6YdOSfiUHBkQGY3VPD0k=;
+	s=arc-20240116; t=1719308583; c=relaxed/simple;
+	bh=79Kk8rma4sugEBPZkYT7xy+ZmQ4I4tD3ODF+U16sQBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C9w26s3HCoZXZQo4n3nLa+TnliSw9gsMLfO69nN3VYkqj5t5Hn2d5qilN8oil0cpzet7KXvFRiM/8lEUTDjBSpG52NtkCPVD5ZjEljnh7Km/oXa2Um1IwxJltW381MSyxmB+MIKLvFP94It6+6icuCnAhXFUVoLNTd6T0xXUbMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kq9q9PwT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fJ0tmZsnmwe1Qzcw3YiDuSIQ9eP6YBvK9q5zc8QIvm4HNVZtszqzzBoZY/8W5KvAll9hzxMge9olurgxNuGcRRIjRUQRwn+qtpdsTKatTAHNquZ9XaapXWF5sWyjlyf8YxOK9+QzAJ1fO8Z7DYQUCYoCaGKOoBTRdFwW2MmrRCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CxIq9rrl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kq9q9PwT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7D21C32781;
-	Tue, 25 Jun 2024 09:42:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CxIq9rrl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8965DC32781;
+	Tue, 25 Jun 2024 09:43:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308580;
-	bh=VJkr4i7p0zRqkzwGKIsJJNb6YdOSfiUHBkQGY3VPD0k=;
+	s=korg; t=1719308582;
+	bh=79Kk8rma4sugEBPZkYT7xy+ZmQ4I4tD3ODF+U16sQBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kq9q9PwTCFQYTPln42iUV0gotoQbZ5UOHUd9eiGK4YULQaWo97McNcZEm3/b15cwI
-	 71fsxX1lRLl3Hyc2tbocQlsaTd7LBhZJhy16aH6Xtbd0Jx9ghyk0FydPeyeXV1DcwX
-	 XW2TlNKtvYM0zxP3n9nGchTaWQmTbx3+OsU/29DU=
+	b=CxIq9rrlWRu7LQJWAqMe1hJrN/kVSsfs3WtwZU6SJzEKxc5FkN5cLp1FR/+Xi036v
+	 rO/in6qyvd5T2uok6ECHUV0GDQsHc5KB7dWrlDkYkdNmHRJPGzJ7Hj9WQgdB41FY9A
+	 eGCEzwzcQKGmGyVMGRnofyM6jB0Cfl1Noxt29BiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuang Li <shuali@redhat.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 128/250] sched: act_ct: add netns into the key of tcf_ct_flow_table
-Date: Tue, 25 Jun 2024 11:31:26 +0200
-Message-ID: <20240625085552.979104238@linuxfoundation.org>
+Subject: [PATCH 6.9 163/250] arm64: dts: imx93-11x11-evk: Remove the no-sdio property
+Date: Tue, 25 Jun 2024 11:32:01 +0200
+Message-ID: <20240625085554.315503471@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -53,101 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Fabio Estevam <festevam@gmail.com>
 
-[ Upstream commit 88c67aeb14070bab61d3dd8be96c8b42ebcaf53a ]
+[ Upstream commit a5d400b6439ac734a5c0dbb641e26a38736abc17 ]
 
-zones_ht is a global hashtable for flow_table with zone as key. However,
-it does not consider netns when getting a flow_table from zones_ht in
-tcf_ct_init(), and it means an act_ct action in netns A may get a
-flow_table that belongs to netns B if it has the same zone value.
+The usdhc2 port is connected to the microSD slot. The presence of the
+'no-sdio' property prevents Wifi SDIO cards, such as CMP9010-X-EVB [1]
+to be detected.
 
-In Shuang's test with the TOPO:
+Remove the 'no-sdio' property so that SDIO cards could also work.
 
-  tcf2_c <---> tcf2_sw1 <---> tcf2_sw2 <---> tcf2_s
+[1] https://www.nxp.com/products/wireless-connectivity/wi-fi-plus-bluetooth-plus-802-15-4/cmp9010-x-evb-iw416-usd-interface-evaluation-board:CMP9010-X-EVB
 
-tcf2_sw1 and tcf2_sw2 saw the same flow and used the same flow table,
-which caused their ct entries entering unexpected states and the
-TCP connection not able to end normally.
-
-This patch fixes the issue simply by adding netns into the key of
-tcf_ct_flow_table so that an act_ct action gets a flow_table that
-belongs to its own netns in tcf_ct_init().
-
-Note that for easy coding we don't use tcf_ct_flow_table.nf_ft.net,
-as the ct_ft is initialized after inserting it to the hashtable in
-tcf_ct_flow_table_get() and also it requires to implement several
-functions in rhashtable_params including hashfn, obj_hashfn and
-obj_cmpfn.
-
-Fixes: 64ff70b80fd4 ("net/sched: act_ct: Offload established connections to flow table")
-Reported-by: Shuang Li <shuali@redhat.com>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/1db5b6cc6902c5fc6f8c6cbd85494a2008087be5.1718488050.git.lucien.xin@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: e37907bd8294 ("arm64: dts: freescale: add i.MX93 11x11 EVK basic support")
+Signed-off-by: Fabio Estevam <festevam@gmail.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_ct.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/freescale/imx93-11x11-evk.dts | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
-index baac083fd8f10..2a96d9c1db65b 100644
---- a/net/sched/act_ct.c
-+++ b/net/sched/act_ct.c
-@@ -41,21 +41,26 @@ static struct workqueue_struct *act_ct_wq;
- static struct rhashtable zones_ht;
- static DEFINE_MUTEX(zones_mutex);
- 
-+struct zones_ht_key {
-+	struct net *net;
-+	u16 zone;
-+};
-+
- struct tcf_ct_flow_table {
- 	struct rhash_head node; /* In zones tables */
- 
- 	struct rcu_work rwork;
- 	struct nf_flowtable nf_ft;
- 	refcount_t ref;
--	u16 zone;
-+	struct zones_ht_key key;
- 
- 	bool dying;
+diff --git a/arch/arm64/boot/dts/freescale/imx93-11x11-evk.dts b/arch/arm64/boot/dts/freescale/imx93-11x11-evk.dts
+index 9921ea13ab489..a7cb571d74023 100644
+--- a/arch/arm64/boot/dts/freescale/imx93-11x11-evk.dts
++++ b/arch/arm64/boot/dts/freescale/imx93-11x11-evk.dts
+@@ -175,7 +175,6 @@
+ 	vmmc-supply = <&reg_usdhc2_vmmc>;
+ 	bus-width = <4>;
+ 	status = "okay";
+-	no-sdio;
+ 	no-mmc;
  };
  
- static const struct rhashtable_params zones_params = {
- 	.head_offset = offsetof(struct tcf_ct_flow_table, node),
--	.key_offset = offsetof(struct tcf_ct_flow_table, zone),
--	.key_len = sizeof_field(struct tcf_ct_flow_table, zone),
-+	.key_offset = offsetof(struct tcf_ct_flow_table, key),
-+	.key_len = sizeof_field(struct tcf_ct_flow_table, key),
- 	.automatic_shrinking = true,
- };
- 
-@@ -316,11 +321,12 @@ static struct nf_flowtable_type flowtable_ct = {
- 
- static int tcf_ct_flow_table_get(struct net *net, struct tcf_ct_params *params)
- {
-+	struct zones_ht_key key = { .net = net, .zone = params->zone };
- 	struct tcf_ct_flow_table *ct_ft;
- 	int err = -ENOMEM;
- 
- 	mutex_lock(&zones_mutex);
--	ct_ft = rhashtable_lookup_fast(&zones_ht, &params->zone, zones_params);
-+	ct_ft = rhashtable_lookup_fast(&zones_ht, &key, zones_params);
- 	if (ct_ft && refcount_inc_not_zero(&ct_ft->ref))
- 		goto out_unlock;
- 
-@@ -329,7 +335,7 @@ static int tcf_ct_flow_table_get(struct net *net, struct tcf_ct_params *params)
- 		goto err_alloc;
- 	refcount_set(&ct_ft->ref, 1);
- 
--	ct_ft->zone = params->zone;
-+	ct_ft->key = key;
- 	err = rhashtable_insert_fast(&zones_ht, &ct_ft->node, zones_params);
- 	if (err)
- 		goto err_insert;
 -- 
 2.43.0
 
