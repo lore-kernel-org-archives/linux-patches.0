@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 806F41465A8;
-	Tue, 25 Jun 2024 09:49:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DEF41465A8;
+	Tue, 25 Jun 2024 09:49:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308989; cv=none; b=mAj5hzLCWLkCpuGFQKlKUKauj8w6NphW0KRuySInyA2Gz4ckwr0QPpoOdaiI/Ic/ltul7Y78B9sDkswFWDnFQQbKDbv4R6+3furUPORjj5pVih8C4xuQkjUik169nzp9tWBjQAsaKW1YlUqfVCtvohXDENvTqbeR4/uaObby1AA=
+	t=1719308992; cv=none; b=BxRrNM/IdMFA1jinLMnF/GhOgQlK9Euz5FGZ3z4SfvXEsgCwn9sBG7xhFgxqXXuPgJfFobRkrPOAMg8OBM73oUeSySeInoIvmL2vchejfRKYt/pDl4wX9gcGm7Sx7Ubv7TmEgdBuNjy7t+xuiycbDqEHiVa6HH0z1ToZXlZXMqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308989; c=relaxed/simple;
-	bh=gHgjg6bnDsqAk8AXZBg169iUukQ9mTePUyocuf8pqd4=;
+	s=arc-20240116; t=1719308992; c=relaxed/simple;
+	bh=PNstgtSoHkzQFTtImF3CMjNTLMrvCpqSVezzy6bK46Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=czNFmfGPNmQbYSqxIX79eXpg457fnJwS92B1y0eXn42nhM6Hk8HuP3J3JVpC0KKbJWXRfFk/MeZkg9wHOAxhdcwcvMxzYqa4svmPc6Po6Q71nGUJG+JBm0tw0kEYnFVoWVB/l2FAvOm6ensp14Dzun9sYJ0lLpaBiR1X0fzwyTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BQvyDwu4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t3wSrwN9YjPHTpA0Y26eJiRQI7oVH23HHRJeijidpdPwPD6FFQKfljQf2NTJ9GpZSst/nQ0X+ovDbEuOnFzIqTiftCkR1CALT09OMAckPDmbr5zHSpFwQsMveKbsVvkFxrd9eEHXs7/SVVawgUq/tiMvJdYO2DsaewfpN4Titv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gQdx4heS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BQvyDwu4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 074BBC32781;
-	Tue, 25 Jun 2024 09:49:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gQdx4heS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E86CCC32781;
+	Tue, 25 Jun 2024 09:49:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308989;
-	bh=gHgjg6bnDsqAk8AXZBg169iUukQ9mTePUyocuf8pqd4=;
+	s=korg; t=1719308992;
+	bh=PNstgtSoHkzQFTtImF3CMjNTLMrvCpqSVezzy6bK46Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BQvyDwu46X8tLmaI1TEv7tXLO02/E9tsKZP1Ilc8OxaVVautHM1quvsiRS7Ncvb4p
-	 GZad1NrrTIJp8OLc3ZtLvWg+Rn7GVTAJYUu9RrJGqSkeoRCpE1+VwBVK3/IVUstGLy
-	 PLFtLz3HR1r2STTfbzPwYr/leOr0C91M+9nXxS1s=
+	b=gQdx4heSBfHvkpROgvYXrE/otPE7/dF87cf2D7TCqII3bopAJRj9ouzfe0fEiewQf
+	 7pbIojBHV1wEcQTMZUy9YwK471t045HCDkI2EAWHMgqh/JTI6tTix/X4qocY1Emyw0
+	 n4Y2dX+KzOCHgrPInl/tEL7UG01VVhEK6AfWnGt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Daniel Starke <daniel.starke@siemens.com>,
-	syzbot <syzbot+dbac96d8e73b61aa559c@syzkaller.appspotmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 058/192] tty: add the option to have a tty reject a new ldisc
-Date: Tue, 25 Jun 2024 11:32:10 +0200
-Message-ID: <20240625085539.398852153@linuxfoundation.org>
+Subject: [PATCH 6.6 059/192] vfio/pci: Collect hot-reset devices to local buffer
+Date: Tue, 25 Jun 2024 11:32:11 +0200
+Message-ID: <20240625085539.437498489@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -55,109 +51,335 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Alex Williamson <alex.williamson@redhat.com>
 
-[ Upstream commit 6bd23e0c2bb6c65d4f5754d1456bc9a4427fc59b ]
+[ Upstream commit f6944d4a0b87c16bc34ae589169e1ded3d4db08e ]
 
-... and use it to limit the virtual terminals to just N_TTY.  They are
-kind of special, and in particular, the "con_write()" routine violates
-the "writes cannot sleep" rule that some ldiscs rely on.
+Lockdep reports the below circular locking dependency issue.  The
+mmap_lock acquisition while holding pci_bus_sem is due to the use of
+copy_to_user() from within a pci_walk_bus() callback.
 
-This avoids the
+Building the devices array directly into the user buffer is only for
+convenience.  Instead we can allocate a local buffer for the array,
+bounded by the number of devices on the bus/slot, fill the device
+information into this local buffer, then copy it into the user buffer
+outside the bus walk callback.
 
-   BUG: sleeping function called from invalid context at kernel/printk/printk.c:2659
+======================================================
+WARNING: possible circular locking dependency detected
+6.9.0-rc5+ #39 Not tainted
+------------------------------------------------------
+CPU 0/KVM/4113 is trying to acquire lock:
+ffff99a609ee18a8 (&vdev->vma_lock){+.+.}-{4:4}, at: vfio_pci_mmap_fault+0x35/0x1a0 [vfio_pci_core]
 
-when N_GSM has been attached to a virtual console, and gsmld_write()
-calls con_write() while holding a spinlock, and con_write() then tries
-to get the console lock.
+but task is already holding lock:
+ffff99a243a052a0 (&mm->mmap_lock){++++}-{4:4}, at: vaddr_get_pfns+0x3f/0x170 [vfio_iommu_type1]
 
-Tested-by: Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
-Cc: Jiri Slaby <jirislaby@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Daniel Starke <daniel.starke@siemens.com>
-Reported-by: syzbot <syzbot+dbac96d8e73b61aa559c@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=dbac96d8e73b61aa559c
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/20240423163339.59780-1-torvalds@linux-foundation.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+which lock already depends on the new lock.
+
+the existing dependency chain (in reverse order) is:
+
+-> #3 (&mm->mmap_lock){++++}-{4:4}:
+       __lock_acquire+0x4e4/0xb90
+       lock_acquire+0xbc/0x2d0
+       __might_fault+0x5c/0x80
+       _copy_to_user+0x1e/0x60
+       vfio_pci_fill_devs+0x9f/0x130 [vfio_pci_core]
+       vfio_pci_walk_wrapper+0x45/0x60 [vfio_pci_core]
+       __pci_walk_bus+0x6b/0xb0
+       vfio_pci_ioctl_get_pci_hot_reset_info+0x10b/0x1d0 [vfio_pci_core]
+       vfio_pci_core_ioctl+0x1cb/0x400 [vfio_pci_core]
+       vfio_device_fops_unl_ioctl+0x7e/0x140 [vfio]
+       __x64_sys_ioctl+0x8a/0xc0
+       do_syscall_64+0x8d/0x170
+       entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+-> #2 (pci_bus_sem){++++}-{4:4}:
+       __lock_acquire+0x4e4/0xb90
+       lock_acquire+0xbc/0x2d0
+       down_read+0x3e/0x160
+       pci_bridge_wait_for_secondary_bus.part.0+0x33/0x2d0
+       pci_reset_bus+0xdd/0x160
+       vfio_pci_dev_set_hot_reset+0x256/0x270 [vfio_pci_core]
+       vfio_pci_ioctl_pci_hot_reset_groups+0x1a3/0x280 [vfio_pci_core]
+       vfio_pci_core_ioctl+0x3b5/0x400 [vfio_pci_core]
+       vfio_device_fops_unl_ioctl+0x7e/0x140 [vfio]
+       __x64_sys_ioctl+0x8a/0xc0
+       do_syscall_64+0x8d/0x170
+       entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+-> #1 (&vdev->memory_lock){+.+.}-{4:4}:
+       __lock_acquire+0x4e4/0xb90
+       lock_acquire+0xbc/0x2d0
+       down_write+0x3b/0xc0
+       vfio_pci_zap_and_down_write_memory_lock+0x1c/0x30 [vfio_pci_core]
+       vfio_basic_config_write+0x281/0x340 [vfio_pci_core]
+       vfio_config_do_rw+0x1fa/0x300 [vfio_pci_core]
+       vfio_pci_config_rw+0x75/0xe50 [vfio_pci_core]
+       vfio_pci_rw+0xea/0x1a0 [vfio_pci_core]
+       vfs_write+0xea/0x520
+       __x64_sys_pwrite64+0x90/0xc0
+       do_syscall_64+0x8d/0x170
+       entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+-> #0 (&vdev->vma_lock){+.+.}-{4:4}:
+       check_prev_add+0xeb/0xcc0
+       validate_chain+0x465/0x530
+       __lock_acquire+0x4e4/0xb90
+       lock_acquire+0xbc/0x2d0
+       __mutex_lock+0x97/0xde0
+       vfio_pci_mmap_fault+0x35/0x1a0 [vfio_pci_core]
+       __do_fault+0x31/0x160
+       do_pte_missing+0x65/0x3b0
+       __handle_mm_fault+0x303/0x720
+       handle_mm_fault+0x10f/0x460
+       fixup_user_fault+0x7f/0x1f0
+       follow_fault_pfn+0x66/0x1c0 [vfio_iommu_type1]
+       vaddr_get_pfns+0xf2/0x170 [vfio_iommu_type1]
+       vfio_pin_pages_remote+0x348/0x4e0 [vfio_iommu_type1]
+       vfio_pin_map_dma+0xd2/0x330 [vfio_iommu_type1]
+       vfio_dma_do_map+0x2c0/0x440 [vfio_iommu_type1]
+       vfio_iommu_type1_ioctl+0xc5/0x1d0 [vfio_iommu_type1]
+       __x64_sys_ioctl+0x8a/0xc0
+       do_syscall_64+0x8d/0x170
+       entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+other info that might help us debug this:
+
+Chain exists of:
+  &vdev->vma_lock --> pci_bus_sem --> &mm->mmap_lock
+
+ Possible unsafe locking scenario:
+
+block dm-0: the capability attribute has been deprecated.
+       CPU0                    CPU1
+       ----                    ----
+  rlock(&mm->mmap_lock);
+                               lock(pci_bus_sem);
+                               lock(&mm->mmap_lock);
+  lock(&vdev->vma_lock);
+
+ *** DEADLOCK ***
+
+2 locks held by CPU 0/KVM/4113:
+ #0: ffff99a25f294888 (&iommu->lock#2){+.+.}-{4:4}, at: vfio_dma_do_map+0x60/0x440 [vfio_iommu_type1]
+ #1: ffff99a243a052a0 (&mm->mmap_lock){++++}-{4:4}, at: vaddr_get_pfns+0x3f/0x170 [vfio_iommu_type1]
+
+stack backtrace:
+CPU: 1 PID: 4113 Comm: CPU 0/KVM Not tainted 6.9.0-rc5+ #39
+Hardware name: Dell Inc. PowerEdge T640/04WYPY, BIOS 2.15.1 06/16/2022
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x64/0xa0
+ check_noncircular+0x131/0x150
+ check_prev_add+0xeb/0xcc0
+ ? add_chain_cache+0x10a/0x2f0
+ ? __lock_acquire+0x4e4/0xb90
+ validate_chain+0x465/0x530
+ __lock_acquire+0x4e4/0xb90
+ lock_acquire+0xbc/0x2d0
+ ? vfio_pci_mmap_fault+0x35/0x1a0 [vfio_pci_core]
+ ? lock_is_held_type+0x9a/0x110
+ __mutex_lock+0x97/0xde0
+ ? vfio_pci_mmap_fault+0x35/0x1a0 [vfio_pci_core]
+ ? lock_acquire+0xbc/0x2d0
+ ? vfio_pci_mmap_fault+0x35/0x1a0 [vfio_pci_core]
+ ? find_held_lock+0x2b/0x80
+ ? vfio_pci_mmap_fault+0x35/0x1a0 [vfio_pci_core]
+ vfio_pci_mmap_fault+0x35/0x1a0 [vfio_pci_core]
+ __do_fault+0x31/0x160
+ do_pte_missing+0x65/0x3b0
+ __handle_mm_fault+0x303/0x720
+ handle_mm_fault+0x10f/0x460
+ fixup_user_fault+0x7f/0x1f0
+ follow_fault_pfn+0x66/0x1c0 [vfio_iommu_type1]
+ vaddr_get_pfns+0xf2/0x170 [vfio_iommu_type1]
+ vfio_pin_pages_remote+0x348/0x4e0 [vfio_iommu_type1]
+ vfio_pin_map_dma+0xd2/0x330 [vfio_iommu_type1]
+ vfio_dma_do_map+0x2c0/0x440 [vfio_iommu_type1]
+ vfio_iommu_type1_ioctl+0xc5/0x1d0 [vfio_iommu_type1]
+ __x64_sys_ioctl+0x8a/0xc0
+ do_syscall_64+0x8d/0x170
+ ? rcu_core+0x8d/0x250
+ ? __lock_release+0x5e/0x160
+ ? rcu_core+0x8d/0x250
+ ? lock_release+0x5f/0x120
+ ? sched_clock+0xc/0x30
+ ? sched_clock_cpu+0xb/0x190
+ ? irqtime_account_irq+0x40/0xc0
+ ? __local_bh_enable+0x54/0x60
+ ? __do_softirq+0x315/0x3ca
+ ? lockdep_hardirqs_on_prepare.part.0+0x97/0x140
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+RIP: 0033:0x7f8300d0357b
+Code: ff ff ff 85 c0 79 9b 49 c7 c4 ff ff ff ff 5b 5d 4c 89 e0 41 5c c3 66 0f 1f 84 00 00 00 00 00 f3 0f 1e fa b8 10 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 75 68 0f 00 f7 d8 64 89 01 48
+RSP: 002b:00007f82ef3fb948 EFLAGS: 00000206 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f8300d0357b
+RDX: 00007f82ef3fb990 RSI: 0000000000003b71 RDI: 0000000000000023
+RBP: 00007f82ef3fb9c0 R08: 0000000000000000 R09: 0000561b7e0bcac2
+R10: 0000000000000000 R11: 0000000000000206 R12: 0000000000000000
+R13: 0000000200000000 R14: 0000381800000000 R15: 0000000000000000
+ </TASK>
+
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/20240503143138.3562116-1-alex.williamson@redhat.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/tty_ldisc.c    |  6 ++++++
- drivers/tty/vt/vt.c        | 10 ++++++++++
- include/linux/tty_driver.h |  8 ++++++++
- 3 files changed, 24 insertions(+)
+ drivers/vfio/pci/vfio_pci_core.c | 78 ++++++++++++++++++++------------
+ 1 file changed, 49 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/tty/tty_ldisc.c b/drivers/tty/tty_ldisc.c
-index 3f68e213df1f7..d80e9d4c974b4 100644
---- a/drivers/tty/tty_ldisc.c
-+++ b/drivers/tty/tty_ldisc.c
-@@ -545,6 +545,12 @@ int tty_set_ldisc(struct tty_struct *tty, int disc)
- 		goto out;
- 	}
- 
-+	if (tty->ops->ldisc_ok) {
-+		retval = tty->ops->ldisc_ok(tty, disc);
-+		if (retval)
-+			goto out;
-+	}
-+
- 	old_ldisc = tty->ldisc;
- 
- 	/* Shutdown the old discipline. */
-diff --git a/drivers/tty/vt/vt.c b/drivers/tty/vt/vt.c
-index e66ff9c11dade..a22da757ca6d1 100644
---- a/drivers/tty/vt/vt.c
-+++ b/drivers/tty/vt/vt.c
-@@ -3390,6 +3390,15 @@ static void con_cleanup(struct tty_struct *tty)
- 	tty_port_put(&vc->port);
+diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
+index 1929103ee59a3..a3c545dd174ee 100644
+--- a/drivers/vfio/pci/vfio_pci_core.c
++++ b/drivers/vfio/pci/vfio_pci_core.c
+@@ -778,25 +778,26 @@ static int vfio_pci_count_devs(struct pci_dev *pdev, void *data)
  }
  
-+/*
-+ * We can't deal with anything but the N_TTY ldisc,
-+ * because we can sleep in our write() routine.
-+ */
-+static int con_ldisc_ok(struct tty_struct *tty, int ldisc)
-+{
-+	return ldisc == N_TTY ? 0 : -EINVAL;
-+}
-+
- static int default_color           = 7; /* white */
- static int default_italic_color    = 2; // green (ASCII)
- static int default_underline_color = 3; // cyan (ASCII)
-@@ -3509,6 +3518,7 @@ static const struct tty_operations con_ops = {
- 	.resize = vt_resize,
- 	.shutdown = con_shutdown,
- 	.cleanup = con_cleanup,
-+	.ldisc_ok = con_ldisc_ok,
+ struct vfio_pci_fill_info {
+-	struct vfio_pci_dependent_device __user *devices;
+-	struct vfio_pci_dependent_device __user *devices_end;
+ 	struct vfio_device *vdev;
++	struct vfio_pci_dependent_device *devices;
++	int nr_devices;
+ 	u32 count;
+ 	u32 flags;
  };
  
- static struct cdev vc0_cdev;
-diff --git a/include/linux/tty_driver.h b/include/linux/tty_driver.h
-index 18beff0cec1ab..b4f99f6a5385a 100644
---- a/include/linux/tty_driver.h
-+++ b/include/linux/tty_driver.h
-@@ -155,6 +155,13 @@ struct serial_struct;
-  *
-  *	Optional. Called under the @tty->termios_rwsem. May sleep.
-  *
-+ * @ldisc_ok: ``int ()(struct tty_struct *tty, int ldisc)``
-+ *
-+ *	This routine allows the @tty driver to decide if it can deal
-+ *	with a particular @ldisc.
-+ *
-+ *	Optional. Called under the @tty->ldisc_sem and @tty->termios_rwsem.
-+ *
-  * @set_ldisc: ``void ()(struct tty_struct *tty)``
-  *
-  *	This routine allows the @tty driver to be notified when the device's
-@@ -373,6 +380,7 @@ struct tty_operations {
- 	void (*hangup)(struct tty_struct *tty);
- 	int (*break_ctl)(struct tty_struct *tty, int state);
- 	void (*flush_buffer)(struct tty_struct *tty);
-+	int (*ldisc_ok)(struct tty_struct *tty, int ldisc);
- 	void (*set_ldisc)(struct tty_struct *tty);
- 	void (*wait_until_sent)(struct tty_struct *tty, int timeout);
- 	void (*send_xchar)(struct tty_struct *tty, char ch);
+ static int vfio_pci_fill_devs(struct pci_dev *pdev, void *data)
+ {
+-	struct vfio_pci_dependent_device info = {
+-		.segment = pci_domain_nr(pdev->bus),
+-		.bus = pdev->bus->number,
+-		.devfn = pdev->devfn,
+-	};
++	struct vfio_pci_dependent_device *info;
+ 	struct vfio_pci_fill_info *fill = data;
+ 
+-	fill->count++;
+-	if (fill->devices >= fill->devices_end)
+-		return 0;
++	/* The topology changed since we counted devices */
++	if (fill->count >= fill->nr_devices)
++		return -EAGAIN;
++
++	info = &fill->devices[fill->count++];
++	info->segment = pci_domain_nr(pdev->bus);
++	info->bus = pdev->bus->number;
++	info->devfn = pdev->devfn;
+ 
+ 	if (fill->flags & VFIO_PCI_HOT_RESET_FLAG_DEV_ID) {
+ 		struct iommufd_ctx *iommufd = vfio_iommufd_device_ictx(fill->vdev);
+@@ -809,19 +810,19 @@ static int vfio_pci_fill_devs(struct pci_dev *pdev, void *data)
+ 		 */
+ 		vdev = vfio_find_device_in_devset(dev_set, &pdev->dev);
+ 		if (!vdev) {
+-			info.devid = VFIO_PCI_DEVID_NOT_OWNED;
++			info->devid = VFIO_PCI_DEVID_NOT_OWNED;
+ 		} else {
+ 			int id = vfio_iommufd_get_dev_id(vdev, iommufd);
+ 
+ 			if (id > 0)
+-				info.devid = id;
++				info->devid = id;
+ 			else if (id == -ENOENT)
+-				info.devid = VFIO_PCI_DEVID_OWNED;
++				info->devid = VFIO_PCI_DEVID_OWNED;
+ 			else
+-				info.devid = VFIO_PCI_DEVID_NOT_OWNED;
++				info->devid = VFIO_PCI_DEVID_NOT_OWNED;
+ 		}
+ 		/* If devid is VFIO_PCI_DEVID_NOT_OWNED, clear owned flag. */
+-		if (info.devid == VFIO_PCI_DEVID_NOT_OWNED)
++		if (info->devid == VFIO_PCI_DEVID_NOT_OWNED)
+ 			fill->flags &= ~VFIO_PCI_HOT_RESET_FLAG_DEV_ID_OWNED;
+ 	} else {
+ 		struct iommu_group *iommu_group;
+@@ -830,13 +831,10 @@ static int vfio_pci_fill_devs(struct pci_dev *pdev, void *data)
+ 		if (!iommu_group)
+ 			return -EPERM; /* Cannot reset non-isolated devices */
+ 
+-		info.group_id = iommu_group_id(iommu_group);
++		info->group_id = iommu_group_id(iommu_group);
+ 		iommu_group_put(iommu_group);
+ 	}
+ 
+-	if (copy_to_user(fill->devices, &info, sizeof(info)))
+-		return -EFAULT;
+-	fill->devices++;
+ 	return 0;
+ }
+ 
+@@ -1258,10 +1256,11 @@ static int vfio_pci_ioctl_get_pci_hot_reset_info(
+ {
+ 	unsigned long minsz =
+ 		offsetofend(struct vfio_pci_hot_reset_info, count);
++	struct vfio_pci_dependent_device *devices = NULL;
+ 	struct vfio_pci_hot_reset_info hdr;
+ 	struct vfio_pci_fill_info fill = {};
+ 	bool slot = false;
+-	int ret = 0;
++	int ret, count;
+ 
+ 	if (copy_from_user(&hdr, arg, minsz))
+ 		return -EFAULT;
+@@ -1277,9 +1276,23 @@ static int vfio_pci_ioctl_get_pci_hot_reset_info(
+ 	else if (pci_probe_reset_bus(vdev->pdev->bus))
+ 		return -ENODEV;
+ 
+-	fill.devices = arg->devices;
+-	fill.devices_end = arg->devices +
+-			   (hdr.argsz - sizeof(hdr)) / sizeof(arg->devices[0]);
++	ret = vfio_pci_for_each_slot_or_bus(vdev->pdev, vfio_pci_count_devs,
++					    &count, slot);
++	if (ret)
++		return ret;
++
++	if (count > (hdr.argsz - sizeof(hdr)) / sizeof(*devices)) {
++		hdr.count = count;
++		ret = -ENOSPC;
++		goto header;
++	}
++
++	devices = kcalloc(count, sizeof(*devices), GFP_KERNEL);
++	if (!devices)
++		return -ENOMEM;
++
++	fill.devices = devices;
++	fill.nr_devices = count;
+ 	fill.vdev = &vdev->vdev;
+ 
+ 	if (vfio_device_cdev_opened(&vdev->vdev))
+@@ -1291,16 +1304,23 @@ static int vfio_pci_ioctl_get_pci_hot_reset_info(
+ 					    &fill, slot);
+ 	mutex_unlock(&vdev->vdev.dev_set->lock);
+ 	if (ret)
+-		return ret;
++		goto out;
++
++	if (copy_to_user(arg->devices, devices,
++			 sizeof(*devices) * fill.count)) {
++		ret = -EFAULT;
++		goto out;
++	}
+ 
+ 	hdr.count = fill.count;
+ 	hdr.flags = fill.flags;
+-	if (copy_to_user(arg, &hdr, minsz))
+-		return -EFAULT;
+ 
+-	if (fill.count > fill.devices - arg->devices)
+-		return -ENOSPC;
+-	return 0;
++header:
++	if (copy_to_user(arg, &hdr, minsz))
++		ret = -EFAULT;
++out:
++	kfree(devices);
++	return ret;
+ }
+ 
+ static int
 -- 
 2.43.0
 
