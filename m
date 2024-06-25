@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04DC1465A8;
-	Tue, 25 Jun 2024 09:39:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A0D13D62A;
+	Tue, 25 Jun 2024 09:39:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308391; cv=none; b=Of1CQgrwUtwdTOxhoiO5sbOjnEYDdYQsBpDqJL0BMOGvzL7v4mze/lCLUStlSByOYiM7sv2yi8UuPKF3UNSpR/L3udhGW+M36wE8hu8kJGTeZWG2CCT6IzeYdOdeLK/E5gIMLswLLfy7sDUxTv+kbzoA0GXgDawk6MVIxmB+iIk=
+	t=1719308394; cv=none; b=Tzx0KvKkE91cmUCniHR0dbInQBCAki3UqKTKDT6XIaLc9cD56Qzk44Eim57/tltfO7qarSsRZMH0EbYmKF4HZujTYLxE5QIX2HJ9Hg2JCQ9zwRN4UNqrg4ii3J7ivc3FXZ5qRRZ12JPRTfpisPv6jWPdA2kgKw9G5eblCAk/B8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308391; c=relaxed/simple;
-	bh=6oboRPOa4epSK5BtCOXzTleQbxP3/7Hty5TETV385HM=;
+	s=arc-20240116; t=1719308394; c=relaxed/simple;
+	bh=hDod0EL5/1oDeNk0Ky+6tWhNOG5TKdHgU9OLbiyPA/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sO6BNGIrrKy8F3zg9iYWS9D86EgoLpMa6kSp4k+6n0VhlwhXTFVTar9wTlcYZB01jIXTqmtSCUsYceVfxL4sUzrHSSYl97XB3njsEdX4qvDuNo1yjwpL/VnjTo6huigTQR8scrSzmeijCr9Jqor6gliHI697LMu9dxuyFE1KJfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YfFb+Pqd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cygsK1qwO73ar97cQXgzqSmwgF+fuPG2Y1Ok7pEM62CQrdHRlWsngQRCiOgPvS6HSob+wozqHS3sfYD6nIeUdvGgAUq+OGEXwVFgSJW/qUnTg22SZVMaM5y7WZChOOOc8BXhx47esXADNBkQG16II86E6Adb25cqNgg4k6ktuN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJXdn/ci; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YfFb+Pqd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 537BAC32781;
-	Tue, 25 Jun 2024 09:39:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJXdn/ci"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D12C32781;
+	Tue, 25 Jun 2024 09:39:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308391;
-	bh=6oboRPOa4epSK5BtCOXzTleQbxP3/7Hty5TETV385HM=;
+	s=korg; t=1719308394;
+	bh=hDod0EL5/1oDeNk0Ky+6tWhNOG5TKdHgU9OLbiyPA/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YfFb+PqdpwRhy5iXOvPE2pSlsu3Un9UM4Mm7jzxaVP6No//VvLupXsDvOqKwSiiSt
-	 KnRuoDJhVZdET8vxhka5AQIT/bHxdntuqXUSrHnwU08mDF8l8jAICcqPB+4UJAvnzF
-	 aTr9egxBsWRr56KNJwFsMvD0Qs73eI5tCrTDQ7bE=
+	b=BJXdn/ciZCCmoAk7zRNY8rkjBQwu3/0BRXV4ch6sXTeFLv+qpFzgFERzta+/rSN3e
+	 cMMWUd1Sar1VEpQjdEmJb/UDmkXGeEiKvB2mfoUXu7P6V7kmwBgwYnrlgQ/Wd6TnqQ
+	 5W7MXp9XQEwqt1SeZgxMvm2qr57N5vOXMrHpMAMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Brett Creeley <brett.creeley@amd.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.9 106/250] ice: implement AQ download pkg retry
-Date: Tue, 25 Jun 2024 11:31:04 +0200
-Message-ID: <20240625085552.141437541@linuxfoundation.org>
+	=?UTF-8?q?Juan=20Jos=C3=A9=20L=C3=B3pez=20Jaimez?= <jjlopezjaimez@google.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.9 107/250] bpf: Fix reg_set_min_max corruption of fake_reg
+Date: Tue, 25 Jun 2024 11:31:05 +0200
+Message-ID: <20240625085552.180549407@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -49,74 +47,160 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wojciech Drewek <wojciech.drewek@intel.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit a27f6ac9d404ea84196639dcc456f969ef813c0f ]
+[ Upstream commit 92424801261d1564a0bb759da3cf3ccd69fdf5a2 ]
 
-ice_aqc_opc_download_pkg (0x0C40) AQ sporadically returns error due
-to FW issue. Fix this by retrying five times before moving to
-Safe Mode. Sleep for 20 ms before retrying. This was tested with the
-4.40 firmware.
+Juan reported that after doing some changes to buzzer [0] and implementing
+a new fuzzing strategy guided by coverage, they noticed the following in
+one of the probes:
 
-Fixes: c76488109616 ("ice: Implement Dynamic Device Personalization (DDP) download")
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Signed-off-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Reviewed-by: Brett Creeley <brett.creeley@amd.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+  [...]
+  13: (79) r6 = *(u64 *)(r0 +0)         ; R0=map_value(ks=4,vs=8) R6_w=scalar()
+  14: (b7) r0 = 0                       ; R0_w=0
+  15: (b4) w0 = -1                      ; R0_w=0xffffffff
+  16: (74) w0 >>= 1                     ; R0_w=0x7fffffff
+  17: (5c) w6 &= w0                     ; R0_w=0x7fffffff R6_w=scalar(smin=smin32=0,smax=umax=umax32=0x7fffffff,var_off=(0x0; 0x7fffffff))
+  18: (44) w6 |= 2                      ; R6_w=scalar(smin=umin=smin32=umin32=2,smax=umax=umax32=0x7fffffff,var_off=(0x2; 0x7ffffffd))
+  19: (56) if w6 != 0x7ffffffd goto pc+1
+  REG INVARIANTS VIOLATION (true_reg2): range bounds violation u64=[0x7fffffff, 0x7ffffffd] s64=[0x7fffffff, 0x7ffffffd] u32=[0x7fffffff, 0x7ffffffd] s32=[0x7fffffff, 0x7ffffffd] var_off=(0x7fffffff, 0x0)
+  REG INVARIANTS VIOLATION (false_reg1): range bounds violation u64=[0x7fffffff, 0x7ffffffd] s64=[0x7fffffff, 0x7ffffffd] u32=[0x7fffffff, 0x7ffffffd] s32=[0x7fffffff, 0x7ffffffd] var_off=(0x7fffffff, 0x0)
+  REG INVARIANTS VIOLATION (false_reg2): const tnum out of sync with range bounds u64=[0x0, 0xffffffffffffffff] s64=[0x8000000000000000, 0x7fffffffffffffff] u32=[0x0, 0xffffffff] s32=[0x80000000, 0x7fffffff] var_off=(0x7fffffff, 0x0)
+  19: R6_w=0x7fffffff
+  20: (95) exit
+
+  from 19 to 21: R0=0x7fffffff R6=scalar(smin=umin=smin32=umin32=2,smax=umax=smax32=umax32=0x7ffffffe,var_off=(0x2; 0x7ffffffd)) R7=map_ptr(ks=4,vs=8) R9=ctx() R10=fp0 fp-24=map_ptr(ks=4,vs=8) fp-40=mmmmmmmm
+  21: R0=0x7fffffff R6=scalar(smin=umin=smin32=umin32=2,smax=umax=smax32=umax32=0x7ffffffe,var_off=(0x2; 0x7ffffffd)) R7=map_ptr(ks=4,vs=8) R9=ctx() R10=fp0 fp-24=map_ptr(ks=4,vs=8) fp-40=mmmmmmmm
+  21: (14) w6 -= 2147483632             ; R6_w=scalar(smin=umin=umin32=2,smax=umax=0xffffffff,smin32=0x80000012,smax32=14,var_off=(0x2; 0xfffffffd))
+  22: (76) if w6 s>= 0xe goto pc+1      ; R6_w=scalar(smin=umin=umin32=2,smax=umax=0xffffffff,smin32=0x80000012,smax32=13,var_off=(0x2; 0xfffffffd))
+  23: (95) exit
+
+  from 22 to 24: R0=0x7fffffff R6_w=14 R7=map_ptr(ks=4,vs=8) R9=ctx() R10=fp0 fp-24=map_ptr(ks=4,vs=8) fp-40=mmmmmmmm
+  24: R0=0x7fffffff R6_w=14 R7=map_ptr(ks=4,vs=8) R9=ctx() R10=fp0 fp-24=map_ptr(ks=4,vs=8) fp-40=mmmmmmmm
+  24: (14) w6 -= 14                     ; R6_w=0
+  [...]
+
+What can be seen here is a register invariant violation on line 19. After
+the binary-or in line 18, the verifier knows that bit 2 is set but knows
+nothing about the rest of the content which was loaded from a map value,
+meaning, range is [2,0x7fffffff] with var_off=(0x2; 0x7ffffffd). When in
+line 19 the verifier analyzes the branch, it splits the register states
+in reg_set_min_max() into the registers of the true branch (true_reg1,
+true_reg2) and the registers of the false branch (false_reg1, false_reg2).
+
+Since the test is w6 != 0x7ffffffd, the src_reg is a known constant.
+Internally, the verifier creates a "fake" register initialized as scalar
+to the value of 0x7ffffffd, and then passes it onto reg_set_min_max(). Now,
+for line 19, it is mathematically impossible to take the false branch of
+this program, yet the verifier analyzes it. It is impossible because the
+second bit of r6 will be set due to the prior or operation and the
+constant in the condition has that bit unset (hex(fd) == binary(1111 1101).
+
+When the verifier first analyzes the false / fall-through branch, it will
+compute an intersection between the var_off of r6 and of the constant. This
+is because the verifier creates a "fake" register initialized to the value
+of the constant. The intersection result later refines both registers in
+regs_refine_cond_op():
+
+  [...]
+  t = tnum_intersect(tnum_subreg(reg1->var_off), tnum_subreg(reg2->var_off));
+  reg1->var_off = tnum_with_subreg(reg1->var_off, t);
+  reg2->var_off = tnum_with_subreg(reg2->var_off, t);
+  [...]
+
+Since the verifier is analyzing the false branch of the conditional jump,
+reg1 is equal to false_reg1 and reg2 is equal to false_reg2, i.e. the reg2
+is the "fake" register that was meant to hold a constant value. The resulting
+var_off of the intersection says that both registers now hold a known value
+of var_off=(0x7fffffff, 0x0) or in other words: this operation manages to
+make the verifier think that the "constant" value that was passed in the
+jump operation now holds a different value.
+
+Normally this would not be an issue since it should not influence the true
+branch, however, false_reg2 and true_reg2 are pointers to the same "fake"
+register. Meaning, the false branch can influence the results of the true
+branch. In line 24, the verifier assumes R6_w=0, but the actual runtime
+value in this case is 1. The fix is simply not passing in the same "fake"
+register location as inputs to reg_set_min_max(), but instead making a
+copy. Moving the fake_reg into the env also reduces stack consumption by
+120 bytes. With this, the verifier successfully rejects invalid accesses
+from the test program.
+
+  [0] https://github.com/google/buzzer
+
+Fixes: 67420501e868 ("bpf: generalize reg_set_min_max() to handle non-const register comparisons")
+Reported-by: Juan José López Jaimez <jjlopezjaimez@google.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/r/20240613115310.25383-1-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ddp.c | 23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ include/linux/bpf_verifier.h |  2 ++
+ kernel/bpf/verifier.c        | 14 ++++++++++----
+ 2 files changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ddp.c b/drivers/net/ethernet/intel/ice/ice_ddp.c
-index 4df561d64bc38..6e7d58243c7cb 100644
---- a/drivers/net/ethernet/intel/ice/ice_ddp.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ddp.c
-@@ -1329,6 +1329,7 @@ ice_dwnld_cfg_bufs_no_lock(struct ice_hw *hw, struct ice_buf *bufs, u32 start,
- 
- 	for (i = 0; i < count; i++) {
- 		bool last = false;
-+		int try_cnt = 0;
- 		int status;
- 
- 		bh = (struct ice_buf_hdr *)(bufs + start + i);
-@@ -1336,8 +1337,26 @@ ice_dwnld_cfg_bufs_no_lock(struct ice_hw *hw, struct ice_buf *bufs, u32 start,
- 		if (indicate_last)
- 			last = ice_is_last_download_buffer(bh, i, count);
- 
--		status = ice_aq_download_pkg(hw, bh, ICE_PKG_BUF_SIZE, last,
--					     &offset, &info, NULL);
-+		while (1) {
-+			status = ice_aq_download_pkg(hw, bh, ICE_PKG_BUF_SIZE,
-+						     last, &offset, &info,
-+						     NULL);
-+			if (hw->adminq.sq_last_status != ICE_AQ_RC_ENOSEC &&
-+			    hw->adminq.sq_last_status != ICE_AQ_RC_EBADSIG)
-+				break;
-+
-+			try_cnt++;
-+
-+			if (try_cnt == 5)
-+				break;
-+
-+			msleep(20);
-+		}
-+
-+		if (try_cnt)
-+			dev_dbg(ice_hw_to_dev(hw),
-+				"ice_aq_download_pkg number of retries: %d\n",
-+				try_cnt);
- 
- 		/* Save AQ status from download package */
- 		if (status) {
+diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
+index 7cb1b75eee381..e742db470a711 100644
+--- a/include/linux/bpf_verifier.h
++++ b/include/linux/bpf_verifier.h
+@@ -737,6 +737,8 @@ struct bpf_verifier_env {
+ 	/* Same as scratched_regs but for stack slots */
+ 	u64 scratched_stack_slots;
+ 	u64 prev_log_pos, prev_insn_print_pos;
++	/* buffer used to temporary hold constants as scalar registers */
++	struct bpf_reg_state fake_reg[2];
+ 	/* buffer used to generate temporary string representations,
+ 	 * e.g., in reg_type_str() to generate reg_type string
+ 	 */
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 8a29309db4245..0ef18ae40bc5a 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -14973,7 +14973,6 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
+ 	struct bpf_reg_state *regs = this_branch->frame[this_branch->curframe]->regs;
+ 	struct bpf_reg_state *dst_reg, *other_branch_regs, *src_reg = NULL;
+ 	struct bpf_reg_state *eq_branch_regs;
+-	struct bpf_reg_state fake_reg = {};
+ 	u8 opcode = BPF_OP(insn->code);
+ 	bool is_jmp32;
+ 	int pred = -1;
+@@ -15039,7 +15038,8 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
+ 			verbose(env, "BPF_JMP/JMP32 uses reserved fields\n");
+ 			return -EINVAL;
+ 		}
+-		src_reg = &fake_reg;
++		src_reg = &env->fake_reg[0];
++		memset(src_reg, 0, sizeof(*src_reg));
+ 		src_reg->type = SCALAR_VALUE;
+ 		__mark_reg_known(src_reg, insn->imm);
+ 	}
+@@ -15099,10 +15099,16 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
+ 				      &other_branch_regs[insn->src_reg],
+ 				      dst_reg, src_reg, opcode, is_jmp32);
+ 	} else /* BPF_SRC(insn->code) == BPF_K */ {
++		/* reg_set_min_max() can mangle the fake_reg. Make a copy
++		 * so that these are two different memory locations. The
++		 * src_reg is not used beyond here in context of K.
++		 */
++		memcpy(&env->fake_reg[1], &env->fake_reg[0],
++		       sizeof(env->fake_reg[0]));
+ 		err = reg_set_min_max(env,
+ 				      &other_branch_regs[insn->dst_reg],
+-				      src_reg /* fake one */,
+-				      dst_reg, src_reg /* same fake one */,
++				      &env->fake_reg[0],
++				      dst_reg, &env->fake_reg[1],
+ 				      opcode, is_jmp32);
+ 	}
+ 	if (err)
 -- 
 2.43.0
 
