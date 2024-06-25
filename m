@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189AC148315;
-	Tue, 25 Jun 2024 09:35:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B025D148315;
+	Tue, 25 Jun 2024 09:35:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308108; cv=none; b=OiGiJnTnno/dg+MWs6aoHPlwZaAI+fY58qW7DVVWflPAWjR/++5CGoLurpFQlj/R7FPWo8nJai2hWtDdyXpTtCjD6/RwGFkkdcjc0xjeS1/ZNmyr32LV6F9c1ESX+DjoiXXnNfLnXoFZKJnTHaEAupA9BbdkzymXevbH7SxMzVY=
+	t=1719308111; cv=none; b=jyuKyy4pBcF+t/0FzsQrDnZyinPw3E3/9keWM3P9ySdHgRZbHLupNO/wabhwg3M8prQWqbbAi8o8h+EPUKxeR1Ge7OoPt+5FcBEXptLLUgVEz/fz5sdaUCSp1oNT2zGy17ItMzrlwt1vi/jzBdBh/GeycnFSeUACo62RVTvJjhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308108; c=relaxed/simple;
-	bh=y6tUm1ekviqpSpAXcRKeWWl7Ao/DAI4nQ7shrM8ukUA=;
+	s=arc-20240116; t=1719308111; c=relaxed/simple;
+	bh=DrvNknv2MYIq5GLeZoOYnedz46NCdpVeB6fd23Npf04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MuxKz3E/9rv97lxq8uC08w7nb3+vCsZMi5cdjK6eDOJeRNguTc7Z07jr8w5pdhrQw0PZTz0eRQRFe2r/cgDEi65iyWSjrR/hZUOFVqLGH0n7RwAKM0QB5BWHokrpjxcoUNlCANQlLn4TiOlWL59HCNv4keXaLEdLxqtmNqPeN6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yGkbKMhH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gQgHHBFkKGYoXLF3oF7NoKBD1Wwb+c2bEgDgKYO4Ei7V8/OJiKecRS2PQTWl/2BS096UDJK2il7XuvotahX/rqtSjA3+EjXnurG6VW0L2vcCwI3liq/cUWMtFQtKRo6WKdLgSJHUJ0doKxriXQVC30jtflOjMrvHhH8bvkTPMQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0EwsMfGf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yGkbKMhH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7BEC32781;
-	Tue, 25 Jun 2024 09:35:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0EwsMfGf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E6CC32781;
+	Tue, 25 Jun 2024 09:35:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308107;
-	bh=y6tUm1ekviqpSpAXcRKeWWl7Ao/DAI4nQ7shrM8ukUA=;
+	s=korg; t=1719308111;
+	bh=DrvNknv2MYIq5GLeZoOYnedz46NCdpVeB6fd23Npf04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yGkbKMhHJTvJEXxYh1LV4j8eBARXYQj8SFMaC+4E3p4ViP8TMeNV0X0VvlKIBhNZ+
-	 vXavfnzrmZHkHwP22Rt22S7xdxfSaRMNFqphIwOiM4pg15d9erZtfsHjsjDhYv1WOT
-	 U59AQi7Ga5FKB5sqSVoHXdrzbGz3FfMQgwAjWNAI=
+	b=0EwsMfGfQbRhaKNWhHOYHRZf1MT3ig4hHmaE8OzVZaRRIl5dys/x9/Z0ZL34Gpft7
+	 Sa8I0BoVL3iNhB0mTfCNUuLGO1BuhqHQbO0j0UhxZxLYNZVMrHnIiV1DiKO4vbQ5Py
+	 wqOS7d4Oq/nXI4TloDFMURdLrTPoRZq3/6hXcZ2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benson Leung <bleung@chromium.org>,
-	Prashant Malani <pmalani@chromium.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Erhard Furtner <erhard_f@mailbox.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Justin Stitt <justinstitt@google.com>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 010/250] platform/chrome: cros_usbpd_notify: provide ID table for avoiding fallback match
-Date: Tue, 25 Jun 2024 11:29:28 +0200
-Message-ID: <20240625085548.439357606@linuxfoundation.org>
+Subject: [PATCH 6.9 011/250] ubsan: Avoid i386 UBSAN handler crashes with Clang
+Date: Tue, 25 Jun 2024 11:29:29 +0200
+Message-ID: <20240625085548.477870447@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -53,62 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 8ad3b9652ed6a115c56214a0eab06952818b3ddf ]
+[ Upstream commit 2e431b23a13ce4459cf484c8f0b3218c7048b515 ]
 
-Instead of using fallback driver name match, provide ID table[1] for the
-primary match.
+When generating Runtime Calls, Clang doesn't respect the -mregparm=3
+option used on i386. Hopefully this will be fixed correctly in Clang 19:
+https://github.com/llvm/llvm-project/pull/89707
+but we need to fix this for earlier Clang versions today. Force the
+calling convention to use non-register arguments.
 
-[1]: https://elixir.bootlin.com/linux/v6.8/source/drivers/base/platform.c#L1353
-
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Acked-by: Prashant Malani <pmalani@chromium.org>
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
-Link: https://lore.kernel.org/r/20240329075630.2069474-8-tzungbi@kernel.org
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Reported-by: Erhard Furtner <erhard_f@mailbox.org>
+Closes: https://github.com/KSPP/linux/issues/350
+Link: https://lore.kernel.org/r/20240424224026.it.216-kees@kernel.org
+Acked-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Justin Stitt <justinstitt@google.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_usbpd_notify.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ lib/ubsan.h | 41 +++++++++++++++++++++++++++--------------
+ 1 file changed, 27 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/platform/chrome/cros_usbpd_notify.c b/drivers/platform/chrome/cros_usbpd_notify.c
-index aacad022f21df..c83f81d86483c 100644
---- a/drivers/platform/chrome/cros_usbpd_notify.c
-+++ b/drivers/platform/chrome/cros_usbpd_notify.c
-@@ -6,6 +6,7 @@
-  */
+diff --git a/lib/ubsan.h b/lib/ubsan.h
+index 0abbbac8700d1..0982578fbd98f 100644
+--- a/lib/ubsan.h
++++ b/lib/ubsan.h
+@@ -124,19 +124,32 @@ typedef s64 s_max;
+ typedef u64 u_max;
+ #endif
  
- #include <linux/acpi.h>
-+#include <linux/mod_devicetable.h>
- #include <linux/module.h>
- #include <linux/platform_data/cros_ec_proto.h>
- #include <linux/platform_data/cros_usbpd_notify.h>
-@@ -218,12 +219,19 @@ static void cros_usbpd_notify_remove_plat(struct platform_device *pdev)
- 					   &pdnotify->nb);
- }
- 
-+static const struct platform_device_id cros_usbpd_notify_id[] = {
-+	{ DRV_NAME, 0 },
-+	{}
-+};
-+MODULE_DEVICE_TABLE(platform, cros_usbpd_notify_id);
+-void __ubsan_handle_add_overflow(void *data, void *lhs, void *rhs);
+-void __ubsan_handle_sub_overflow(void *data, void *lhs, void *rhs);
+-void __ubsan_handle_mul_overflow(void *data, void *lhs, void *rhs);
+-void __ubsan_handle_negate_overflow(void *_data, void *old_val);
+-void __ubsan_handle_divrem_overflow(void *_data, void *lhs, void *rhs);
+-void __ubsan_handle_type_mismatch(struct type_mismatch_data *data, void *ptr);
+-void __ubsan_handle_type_mismatch_v1(void *_data, void *ptr);
+-void __ubsan_handle_out_of_bounds(void *_data, void *index);
+-void __ubsan_handle_shift_out_of_bounds(void *_data, void *lhs, void *rhs);
+-void __ubsan_handle_builtin_unreachable(void *_data);
+-void __ubsan_handle_load_invalid_value(void *_data, void *val);
+-void __ubsan_handle_alignment_assumption(void *_data, unsigned long ptr,
+-					 unsigned long align,
+-					 unsigned long offset);
++/*
++ * When generating Runtime Calls, Clang doesn't respect the -mregparm=3
++ * option used on i386: https://github.com/llvm/llvm-project/issues/89670
++ * Fix this for earlier Clang versions by forcing the calling convention
++ * to use non-register arguments.
++ */
++#if defined(CONFIG_X86_32) && \
++    defined(CONFIG_CC_IS_CLANG) && CONFIG_CLANG_VERSION < 190000
++# define ubsan_linkage asmlinkage
++#else
++# define ubsan_linkage
++#endif
 +
- static struct platform_driver cros_usbpd_notify_plat_driver = {
- 	.driver = {
- 		.name = DRV_NAME,
- 	},
- 	.probe = cros_usbpd_notify_probe_plat,
- 	.remove_new = cros_usbpd_notify_remove_plat,
-+	.id_table = cros_usbpd_notify_id,
- };
++void ubsan_linkage __ubsan_handle_add_overflow(void *data, void *lhs, void *rhs);
++void ubsan_linkage __ubsan_handle_sub_overflow(void *data, void *lhs, void *rhs);
++void ubsan_linkage __ubsan_handle_mul_overflow(void *data, void *lhs, void *rhs);
++void ubsan_linkage __ubsan_handle_negate_overflow(void *_data, void *old_val);
++void ubsan_linkage __ubsan_handle_divrem_overflow(void *_data, void *lhs, void *rhs);
++void ubsan_linkage __ubsan_handle_type_mismatch(struct type_mismatch_data *data, void *ptr);
++void ubsan_linkage __ubsan_handle_type_mismatch_v1(void *_data, void *ptr);
++void ubsan_linkage __ubsan_handle_out_of_bounds(void *_data, void *index);
++void ubsan_linkage __ubsan_handle_shift_out_of_bounds(void *_data, void *lhs, void *rhs);
++void ubsan_linkage __ubsan_handle_builtin_unreachable(void *_data);
++void ubsan_linkage __ubsan_handle_load_invalid_value(void *_data, void *val);
++void ubsan_linkage __ubsan_handle_alignment_assumption(void *_data, unsigned long ptr,
++						       unsigned long align,
++						       unsigned long offset);
  
- static int __init cros_usbpd_notify_init(void)
-@@ -258,4 +266,3 @@ module_exit(cros_usbpd_notify_exit);
- MODULE_LICENSE("GPL");
- MODULE_DESCRIPTION("ChromeOS power delivery notifier device");
- MODULE_AUTHOR("Jon Flatley <jflat@chromium.org>");
--MODULE_ALIAS("platform:" DRV_NAME);
+ #endif
 -- 
 2.43.0
 
