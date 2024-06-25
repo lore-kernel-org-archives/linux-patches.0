@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F008612EBEA;
-	Tue, 25 Jun 2024 09:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A5812EBEA;
+	Tue, 25 Jun 2024 09:44:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308666; cv=none; b=Nzwc8e9M6m84WpRBvyBw4VkivMhZ2k20CNVgo6GJZMrVAvwBUn19B2VVpVU+rzLk2S81v586Dsshnt0eVO9JDkIcy7PKt0y4QqtruLiFxklLkWZ13Qzj840i2A4z7GYqOhQ4QMEBfrjNjzxDDn5WZlWhUgd0xaGLB8pFHKop3TI=
+	t=1719308668; cv=none; b=SjjvhNZm2RvJnt213Rp0xYmGSgyUAfnqxpaXeUV1lS6OobzHD5nLVFL9Su3v3Z8A0g0XjLme/HncLaNAbf6UluQu2fwaQn6Xh3zfl7jmnXQEUdzP27/8TklhfPDSe/oJ8qEU1SaMjuWDZo4GxQ+q8TLRwK+k2loW7oPbrEHB8Eo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308666; c=relaxed/simple;
-	bh=e0jZi+8BaNQf0DokQV/TWYhWdKAjOMHMY/0XItVHtYg=;
+	s=arc-20240116; t=1719308668; c=relaxed/simple;
+	bh=VSujvH/NNG35slGPeU+XMQOjLr/DhthOQxlQt7N1occ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V3xzePczfPlJf8tC1XWLZMx7SzEgw05JwhDjiGnEtfLfyy4WQt+HkWVLgmIfWYjvGF+v9sRob1B2CB+vlCYyHF7QQF6F4bpa1t4gS0NhNkdI5sWocxKR5uMNF/I+L7aIz+11xGmzpc/pDnJVox8LnM8nmUVDwflFgoPdQjYz61k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=thycQagQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pw88OIESWuCMDqd7PSSBGlNtW4luAJZmyDA+fJcS6jYCfrZ1bbIPx9jsmyhB65KOeeVgEKGcux9VU3y/TrRiG4gL+mzpYqEv5U2q7+MYl0B7cK7fY0LsmazAvsOLDTAGqafePmSCp9slQlmOtaDBkRDL/3OqOL9+rbrgR8xOMfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2pEVtaj+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="thycQagQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32CAFC32781;
-	Tue, 25 Jun 2024 09:44:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2pEVtaj+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A89C32781;
+	Tue, 25 Jun 2024 09:44:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308665;
-	bh=e0jZi+8BaNQf0DokQV/TWYhWdKAjOMHMY/0XItVHtYg=;
+	s=korg; t=1719308668;
+	bh=VSujvH/NNG35slGPeU+XMQOjLr/DhthOQxlQt7N1occ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=thycQagQP/dC0sIjhhi+74vwc/pINi9nP11adPEtLRhiAyj2l4L0OcGykNk1q+ZdO
-	 U3TMwNrFyks4mWzZola2auiAnr/5hjn91a9MO9DQ0ZfxcIXGRqeVMjqLsxsUy5DD6d
-	 P5Lp9ILgXZzfaR+NtuFjfFuFq4HYCUTf4S6kkMKA=
+	b=2pEVtaj+ww1/Pgujd3V3Pw9rDvaW8RhT0v3NPeD0FxW5zQ4eYGmDUnI6e6KrSrVTZ
+	 z+6A64p9t8cvfOj9nZ2TW5h9ObmT8pba1O4i6G8ieERxATkBDpDdPYkDkAvoc59Hka
+	 vCmvASUhedmXxUvmeNcjTuOTC/ywXgqcVJcyhCmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Martin <Dave.Martin@arm.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Reinette Chatre <reinette.chatre@intel.com>,
+	Stefan Moring <stefan.moring@technolution.nl>,
+	Stefan Bigler <linux@bigler.io>,
+	Clark Wang <xiaoning.wang@nxp.com>,
+	Carlos Song <carlos.song@nxp.com>,
+	Sebastian Reichel <sre@kernel.org>,
+	Thorsten Scherer <T.Scherer@eckelmann.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Thorsten Scherer <t.scherer@eckelmann.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 168/250] x86/resctrl: Dont try to free nonexistent RMIDs
-Date: Tue, 25 Jun 2024 11:32:06 +0200
-Message-ID: <20240625085554.503817430@linuxfoundation.org>
+Subject: [PATCH 6.9 169/250] spi: spi-imx: imx51: revert burst length calculation back to bits_per_word
+Date: Tue, 25 Jun 2024 11:32:07 +0200
+Message-ID: <20240625085554.541579383@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -52,70 +58,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Martin <Dave.Martin@arm.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit 739c9765793e5794578a64aab293c58607f1826a ]
+[ Upstream commit df75470b317b46affbe1f5f8f006b34175be9789 ]
 
-Commit
+The patch 15a6af94a277 ("spi: Increase imx51 ecspi burst length based
+on transfer length") increased the burst length calculation in
+mx51_ecspi_prepare_transfer() to be based on the transfer length.
 
-  6791e0ea3071 ("x86/resctrl: Access per-rmid structures by index")
+This breaks HW CS + SPI_CS_WORD support which was added in
+6e95b23a5b2d ("spi: imx: Implement support for CS_WORD") and transfers
+with bits-per-word != 8, 16, 32.
 
-adds logic to map individual monitoring groups into a global index space used
-for tracking allocated RMIDs.
+SPI_CS_WORD means the CS should be toggled after each word. The
+implementation in the imx-spi driver relies on the fact that the HW CS
+is toggled automatically by the controller after each burst length
+number of bits. Setting the burst length to the number of bits of the
+_whole_ message breaks this use case.
 
-Attempts to free the default RMID are ignored in free_rmid(), and this works
-fine on x86.
+Further the patch 15a6af94a277 ("spi: Increase imx51 ecspi burst
+length based on transfer length") claims to optimize the transfers.
+But even without this patch, on modern spi-imx controllers with
+"dynamic_burst = true" (imx51, imx6 and newer), the transfers are
+already optimized, i.e. the burst length is dynamically adjusted in
+spi_imx_push() to avoid the pause between the SPI bursts. This has
+been confirmed by a scope measurement on an imx6d.
 
-With arm64 MPAM, there is a latent bug here however: on platforms with no
-monitors exposed through resctrl, each control group still gets a different
-monitoring group ID as seen by the hardware, since the CLOSID always forms part
-of the monitoring group ID.
+Subsequent Patches tried to fix these and other problems:
 
-This means that when removing a control group, the code may try to free this
-group's default monitoring group RMID for real.  If there are no monitors
-however, the RMID tracking table rmid_ptrs[] would be a waste of memory and is
-never allocated, leading to a splat when free_rmid() tries to dereference the
-table.
+- 5f66db08cbd3 ("spi: imx: Take in account bits per word instead of assuming 8-bits")
+- e9b220aeacf1 ("spi: spi-imx: correctly configure burst length when using dma")
+- c712c05e46c8 ("spi: imx: fix the burst length at DMA mode and CPU mode")
+- cf6d79a0f576 ("spi: spi-imx: fix off-by-one in mx51 CPU mode burst length")
 
-One option would be to treat RMID 0 as special for every CLOSID, but this would
-be ugly since bookkeeping still needs to be done for these monitoring group IDs
-when there are monitors present in the hardware.
+but the HW CS + SPI_CS_WORD use case is still broken.
 
-Instead, add a gating check of resctrl_arch_mon_capable() in free_rmid(), and
-just do nothing if the hardware doesn't have monitors.
+To fix the problems revert the burst size calculation in
+mx51_ecspi_prepare_transfer() back to the original form, before
+15a6af94a277 ("spi: Increase imx51 ecspi burst length based on
+transfer length") was applied.
 
-This fix mirrors the gating checks already present in
-mkdir_rdt_prepare_rmid_alloc() and elsewhere.
-
-No functional change on x86.
-
-  [ bp: Massage commit message. ]
-
-Fixes: 6791e0ea3071 ("x86/resctrl: Access per-rmid structures by index")
-Signed-off-by: Dave Martin <Dave.Martin@arm.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Tested-by: Reinette Chatre <reinette.chatre@intel.com>
-Link: https://lore.kernel.org/r/20240618140152.83154-1-Dave.Martin@arm.com
+Cc: Stefan Moring <stefan.moring@technolution.nl>
+Cc: Stefan Bigler <linux@bigler.io>
+Cc: Clark Wang <xiaoning.wang@nxp.com>
+Cc: Carlos Song <carlos.song@nxp.com>
+Cc: Sebastian Reichel <sre@kernel.org>
+Cc: Thorsten Scherer <T.Scherer@eckelmann.de>
+Fixes: 15a6af94a277 ("spi: Increase imx51 ecspi burst length based on transfer length")
+Fixes: 5f66db08cbd3 ("spi: imx: Take in account bits per word instead of assuming 8-bits")
+Fixes: e9b220aeacf1 ("spi: spi-imx: correctly configure burst length when using dma")
+Fixes: c712c05e46c8 ("spi: imx: fix the burst length at DMA mode and CPU mode")
+Fixes: cf6d79a0f576 ("spi: spi-imx: fix off-by-one in mx51 CPU mode burst length")
+Link: https://lore.kernel.org/all/20240618-oxpecker-of-ideal-mastery-db59f8-mkl@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Tested-by: Thorsten Scherer <t.scherer@eckelmann.de>
+Link: https://msgid.link/r/20240618-spi-imx-fix-bustlength-v1-1-2053dd5fdf87@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/resctrl/monitor.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/spi/spi-imx.c | 14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-index c34a35ec0f031..2ce5f4913c820 100644
---- a/arch/x86/kernel/cpu/resctrl/monitor.c
-+++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-@@ -508,7 +508,8 @@ void free_rmid(u32 closid, u32 rmid)
- 	 * allows architectures that ignore the closid parameter to avoid an
- 	 * unnecessary check.
- 	 */
--	if (idx == resctrl_arch_rmid_idx_encode(RESCTRL_RESERVED_CLOSID,
-+	if (!resctrl_arch_mon_capable() ||
-+	    idx == resctrl_arch_rmid_idx_encode(RESCTRL_RESERVED_CLOSID,
- 						RESCTRL_RESERVED_RMID))
- 		return;
+diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
+index c3e5cee18bea7..09b6c1b45f1a1 100644
+--- a/drivers/spi/spi-imx.c
++++ b/drivers/spi/spi-imx.c
+@@ -660,18 +660,8 @@ static int mx51_ecspi_prepare_transfer(struct spi_imx_data *spi_imx,
+ 		ctrl |= (spi_imx->target_burst * 8 - 1)
+ 			<< MX51_ECSPI_CTRL_BL_OFFSET;
+ 	else {
+-		if (spi_imx->usedma) {
+-			ctrl |= (spi_imx->bits_per_word - 1)
+-				<< MX51_ECSPI_CTRL_BL_OFFSET;
+-		} else {
+-			if (spi_imx->count >= MX51_ECSPI_CTRL_MAX_BURST)
+-				ctrl |= (MX51_ECSPI_CTRL_MAX_BURST * BITS_PER_BYTE - 1)
+-						<< MX51_ECSPI_CTRL_BL_OFFSET;
+-			else
+-				ctrl |= (spi_imx->count / DIV_ROUND_UP(spi_imx->bits_per_word,
+-						BITS_PER_BYTE) * spi_imx->bits_per_word - 1)
+-						<< MX51_ECSPI_CTRL_BL_OFFSET;
+-		}
++		ctrl |= (spi_imx->bits_per_word - 1)
++			<< MX51_ECSPI_CTRL_BL_OFFSET;
+ 	}
  
+ 	/* set clock speed */
 -- 
 2.43.0
 
