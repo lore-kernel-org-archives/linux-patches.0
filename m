@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15BA146A67;
-	Tue, 25 Jun 2024 09:57:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B2FE146A67;
+	Tue, 25 Jun 2024 09:57:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309423; cv=none; b=eR2q4wF8vrSk6cD8j2TOOn/5QR9CeQqmNdGHJy2A8oZaYlJ2BBDMRR6Xm2pJ0gLPsRyNqOFdRzxTwZXC3BcmZj7omHVpm2tIPI7XGA1BFxgE7zbZJtOkl8YDbqPWo7iuBtiOIVNwUGItumiVxcHa1LIAcS8id17LMP8yINrs6lI=
+	t=1719309426; cv=none; b=vGoRCwAEMt85fY15KbRRez7av1emPxLiXmcZhugy9Kwk/kgQA/5OCxeesgwScsmXmMV8AgOEEfso0BCZj4qkODQuE6yeWAqQfRHuM+gWFnIor3LEAzcp96rdu1hFTjVXPdkuZiEEFHubqACHBRg/XQe4tKamtSxOX8PArkai+XE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309423; c=relaxed/simple;
-	bh=te7Bc/QhrtH5qgM6d0zblARVfFsStnwDw58ZkzlpMzg=;
+	s=arc-20240116; t=1719309426; c=relaxed/simple;
+	bh=jO90zSJvPvBivdqab+YnKeRMmf4RIeLIJzzmPbIQ+ms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PS5TTZmYyKNGavQaDD1vQGKR/wfCva+sGSUdH9DC7cj4Sz3UpqY1Ad9HitN2Oj0J/WybhdTOtF8oZ7CAZoi3LDaeML7Ec+wK472ynrqzJlFkxXlkuLa6As+hDLOcfN06qxCzeHlg5OF6nMOXE0f2ZTtkSpG4G8NmeywCEOJBawk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XjfvXn06; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TBx5GBtbayo3/JMh/TrNRd4Maz4efo6x/yhabP8cfJmP+GXKhBeJ0hIvrEwxCLL0rmUgAPIEUL/9bZL/2+PxXW9Zg3E13KiytxDop2eSRCLmhu/qaArDhLuok4ffJ10u/0/LwlM2w/65sQWD7hu1tlUfs3BwfyqGGVrDkxt611Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KxdwJyL1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XjfvXn06"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03152C32781;
-	Tue, 25 Jun 2024 09:57:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KxdwJyL1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 037D2C32781;
+	Tue, 25 Jun 2024 09:57:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309423;
-	bh=te7Bc/QhrtH5qgM6d0zblARVfFsStnwDw58ZkzlpMzg=;
+	s=korg; t=1719309426;
+	bh=jO90zSJvPvBivdqab+YnKeRMmf4RIeLIJzzmPbIQ+ms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XjfvXn06TDt10+dg2PC26yB5bdSrORVg5HwG7o2/w7FArH4OEo3aqiuTd05VRCv26
-	 N+fJc+LDpQDUCYzI++oIZXS1f7TGhS7oVSGqhCJVp6YF3F7iqnWvQVKZG27cMDyxtP
-	 /E6kLwxuUs18TBboZeS2RWCqlMiZ4I5SwFSZK5FU=
+	b=KxdwJyL1ry/YMC4e8+oirneuDsC3bLbOEshu9l2alwQ9w+N4kjVg5d1zrV2fjyLVn
+	 1XNgub14CAhFDkHC2TLNGXt7xH4RYWzHMRwvKLNVImaQxF6Rq0NbcB89MPQXgSATXe
+	 qLlj8QCWUORh0fy3w7UE/QgL+icHmQjanwIuY58U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Kees Cook <keescook@chromium.org>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 011/131] wifi: ath9k: work around memset overflow warning
-Date: Tue, 25 Jun 2024 11:32:46 +0200
-Message-ID: <20240625085526.370012885@linuxfoundation.org>
+Subject: [PATCH 6.1 012/131] af_packet: avoid a false positive warning in packet_setsockopt()
+Date: Tue, 25 Jun 2024 11:32:47 +0200
+Message-ID: <20240625085526.409562235@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085525.931079317@linuxfoundation.org>
 References: <20240625085525.931079317@linuxfoundation.org>
@@ -47,74 +49,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 61752ac69b69ed2e04444d090f6917c77ab36d42 ]
+[ Upstream commit 86d43e2bf93ccac88ef71cee36a23282ebd9e427 ]
 
-gcc-9 and some other older versions produce a false-positive warning
-for zeroing two fields
+Although the code is correct, the following line
 
-In file included from include/linux/string.h:369,
-                 from drivers/net/wireless/ath/ath9k/main.c:18:
-In function 'fortify_memset_chk',
-    inlined from 'ath9k_ps_wakeup' at drivers/net/wireless/ath/ath9k/main.c:140:3:
-include/linux/fortify-string.h:462:25: error: call to '__write_overflow_field' declared with attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror=attribute-warning]
-  462 |                         __write_overflow_field(p_size_field, size);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	copy_from_sockptr(&req_u.req, optval, len));
 
-Using a struct_group seems to reliably avoid the warning and
-not make the code much uglier. The combined memset() should even
-save a couple of cpu cycles.
+triggers this warning :
 
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+memcpy: detected field-spanning write (size 28) of single field "dst" at include/linux/sockptr.h:49 (size 16)
+
+Refactor the code to be more explicit.
+
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
 Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240328135509.3755090-3-arnd@kernel.org
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath.h        | 6 ++++--
- drivers/net/wireless/ath/ath9k/main.c | 3 +--
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ net/packet/af_packet.c | 26 ++++++++++++++------------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath.h b/drivers/net/wireless/ath/ath.h
-index f02a308a9ffc5..34654f710d8a1 100644
---- a/drivers/net/wireless/ath/ath.h
-+++ b/drivers/net/wireless/ath/ath.h
-@@ -171,8 +171,10 @@ struct ath_common {
- 	unsigned int clockrate;
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index 8888c09931ce3..c48cb7664c552 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -3791,28 +3791,30 @@ packet_setsockopt(struct socket *sock, int level, int optname, sockptr_t optval,
+ 	case PACKET_TX_RING:
+ 	{
+ 		union tpacket_req_u req_u;
+-		int len;
  
- 	spinlock_t cc_lock;
--	struct ath_cycle_counters cc_ani;
--	struct ath_cycle_counters cc_survey;
-+	struct_group(cc,
-+		struct ath_cycle_counters cc_ani;
-+		struct ath_cycle_counters cc_survey;
-+	);
- 
- 	struct ath_regulatory regulatory;
- 	struct ath_regulatory reg_world_copy;
-diff --git a/drivers/net/wireless/ath/ath9k/main.c b/drivers/net/wireless/ath/ath9k/main.c
-index 6360d3356e256..81412a67c1cbd 100644
---- a/drivers/net/wireless/ath/ath9k/main.c
-+++ b/drivers/net/wireless/ath/ath9k/main.c
-@@ -135,8 +135,7 @@ void ath9k_ps_wakeup(struct ath_softc *sc)
- 	if (power_mode != ATH9K_PM_AWAKE) {
- 		spin_lock(&common->cc_lock);
- 		ath_hw_cycle_counters_update(common);
--		memset(&common->cc_survey, 0, sizeof(common->cc_survey));
--		memset(&common->cc_ani, 0, sizeof(common->cc_ani));
-+		memset(&common->cc, 0, sizeof(common->cc));
- 		spin_unlock(&common->cc_lock);
++		ret = -EINVAL;
+ 		lock_sock(sk);
+ 		switch (po->tp_version) {
+ 		case TPACKET_V1:
+ 		case TPACKET_V2:
+-			len = sizeof(req_u.req);
++			if (optlen < sizeof(req_u.req))
++				break;
++			ret = copy_from_sockptr(&req_u.req, optval,
++						sizeof(req_u.req)) ?
++						-EINVAL : 0;
+ 			break;
+ 		case TPACKET_V3:
+ 		default:
+-			len = sizeof(req_u.req3);
++			if (optlen < sizeof(req_u.req3))
++				break;
++			ret = copy_from_sockptr(&req_u.req3, optval,
++						sizeof(req_u.req3)) ?
++						-EINVAL : 0;
+ 			break;
+ 		}
+-		if (optlen < len) {
+-			ret = -EINVAL;
+-		} else {
+-			if (copy_from_sockptr(&req_u.req, optval, len))
+-				ret = -EFAULT;
+-			else
+-				ret = packet_set_ring(sk, &req_u, 0,
+-						    optname == PACKET_TX_RING);
+-		}
++		if (!ret)
++			ret = packet_set_ring(sk, &req_u, 0,
++					      optname == PACKET_TX_RING);
+ 		release_sock(sk);
+ 		return ret;
  	}
- 
 -- 
 2.43.0
 
