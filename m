@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1027912EBEA;
-	Tue, 25 Jun 2024 09:45:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1ECE1465A8;
+	Tue, 25 Jun 2024 09:45:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308701; cv=none; b=gqIrMh9W5B5pguY3YwiQLTLr/NFFbiKHFaJMUL+tatb0ZFhnv200zLGun/xrm0kRdx2ay7B6MkL1X9a9PM1mXYPEyk6Z6F02GTP7dnaVrCGb0tFa9u9FeeiHzUHgcTT+iODxf2TqSOm+NInFumYrNGcyuo4To7XcPLKnbXRgvGA=
+	t=1719308704; cv=none; b=lhIjOREpArPq+lx6P365gmqMNSX8ZODnU+jj4UUDebG0rl47BCnwUtkRNjO3P7PDqDKXL7TraOj1dAiu/Cn6XZwwhZeQH6dmnU04Pv+E86Kn8SDrqzqqeIUHfXDFxONmD4sV8iN+bs9qxAaIVyKOomWPYhGJHR48tqx9q940RmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308701; c=relaxed/simple;
-	bh=ZVfAsKgaSBBHOhY/fWUuSZrrWjW9SaLnE/KyIVaf7Co=;
+	s=arc-20240116; t=1719308704; c=relaxed/simple;
+	bh=zkR2sY+wVdVcHCm8t47CY/oRdozrq/kdzPH2RbzR7bs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ctfVGxdh4Ygs85DS8lCkBq0dCN2ls7tWbSExa01zR2R3syTp5rVl6bbm74BqBipn86B7BHZSnfLNv2wEuZOn8j/ADLim444PKoAkRGxPOUDhTztYANPWtKeoE1Lzuo9D6idWpOH90tidJOjF0PsLZfud4YWJYarCF8JYEwPTR4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gNDfX8P3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s9UGN5RQ2Lt2jSII7AOZ7SZWQkawu8fhxWiG+sKgFzS58abdnFsPSQ46XGcg6h+H5PoG/+Jn9w0K8QMkUHOsvAKIdk64lEWU+ZHMAISBBdgrXANWAti7BN6TWWg/mJCf8OCAmH2D9eVfAPBYUw2znCZqVbJj0oNQqh10+DDY5J8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PzNXOOBD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gNDfX8P3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D141C32781;
-	Tue, 25 Jun 2024 09:45:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PzNXOOBD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0F9C32781;
+	Tue, 25 Jun 2024 09:45:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308700;
-	bh=ZVfAsKgaSBBHOhY/fWUuSZrrWjW9SaLnE/KyIVaf7Co=;
+	s=korg; t=1719308703;
+	bh=zkR2sY+wVdVcHCm8t47CY/oRdozrq/kdzPH2RbzR7bs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gNDfX8P39XwHnLQkxBSVZsA+JE5rYYUVB1uIX0n9c+DQw7NHyUl3T7+KA04ZPXdzC
-	 tfEJ48b/f/d3/bFXvCL5l16/vQjvcrzQhBaP09btq+FH0FjuDdFJGyGHjvhqsL4krV
-	 5ZQMOoaVZ3q+PAAnaILspPz7sLUyYncFJOw4zx3w=
+	b=PzNXOOBDK80hXIbTePAq3cGhQVRMqQjF7YXNxSbrCMaaAwh5R7nVQy5TD6gArzHmx
+	 AsFc8jFRgRNVm4OTirGo7fyVmdeZQPoBQUlfQ6fnr3ujTjDXDq3rj6znN2dgQcEAaS
+	 f8V16EwlsklMIbcEzdmF7VPI/mkUzYzpIRaf/vbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.9 211/250] ocfs2: fix NULL pointer dereference in ocfs2_abort_trigger()
-Date: Tue, 25 Jun 2024 11:32:49 +0200
-Message-ID: <20240625085556.153460883@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	Joao Machado <jocrismachado@gmail.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Christian Heusel <christian@heusel.eu>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.9 212/250] scsi: core: Introduce the BLIST_SKIP_IO_HINTS flag
+Date: Tue, 25 Jun 2024 11:32:50 +0200
+Message-ID: <20240625085556.192643638@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -57,364 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-commit 685d03c3795378fca6a1b3d43581f7f1a3fc095f upstream.
+commit 633aeefafc9c2a07a76a62be6aac1d73c3e3defa upstream.
 
-bdev->bd_super has been removed and commit 8887b94d9322 change the usage
-from bdev->bd_super to b_assoc_map->host->i_sb.  Since ocfs2 hasn't set
-bh->b_assoc_map, it will trigger NULL pointer dereference when calling
-into ocfs2_abort_trigger().
+Prepare for skipping the IO Advice Hints Grouping mode page for USB storage
+devices.
 
-Actually this was pointed out in history, see commit 74e364ad1b13.  But
-I've made a mistake when reviewing commit 8887b94d9322 and then
-re-introduce this regression.
-
-Since we cannot revive bdev in buffer head, so fix this issue by
-initializing all types of ocfs2 triggers when fill super, and then get the
-specific ocfs2 trigger from ocfs2_caching_info when access journal.
-
-[joseph.qi@linux.alibaba.com: v2]
-  Link: https://lkml.kernel.org/r/20240602112045.1112708-1-joseph.qi@linux.alibaba.com
-Link: https://lkml.kernel.org/r/20240530110630.3933832-2-joseph.qi@linux.alibaba.com
-Fixes: 8887b94d9322 ("ocfs2: stop using bdev->bd_super for journal error logging")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Heming Zhao <heming.zhao@suse.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>	[6.6+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Alan Stern <stern@rowland.harvard.edu>
+Cc: Joao Machado <jocrismachado@gmail.com>
+Cc: Andy Shevchenko <andy.shevchenko@gmail.com>
+Cc: Christian Heusel <christian@heusel.eu>
+Cc: stable@vger.kernel.org
+Fixes: 4f53138fffc2 ("scsi: sd: Translate data lifetime information")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20240613211828.2077477-2-bvanassche@acm.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/journal.c |  190 +++++++++++++++++++++++++++++------------------------
- fs/ocfs2/ocfs2.h   |   27 +++++++
- fs/ocfs2/super.c   |    4 -
- 3 files changed, 135 insertions(+), 86 deletions(-)
+ drivers/scsi/sd.c           |    4 ++++
+ include/scsi/scsi_devinfo.h |    4 +++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
---- a/fs/ocfs2/journal.c
-+++ b/fs/ocfs2/journal.c
-@@ -479,12 +479,6 @@ bail:
- 	return status;
- }
+--- a/drivers/scsi/sd.c
++++ b/drivers/scsi/sd.c
+@@ -63,6 +63,7 @@
+ #include <scsi/scsi_cmnd.h>
+ #include <scsi/scsi_dbg.h>
+ #include <scsi/scsi_device.h>
++#include <scsi/scsi_devinfo.h>
+ #include <scsi/scsi_driver.h>
+ #include <scsi/scsi_eh.h>
+ #include <scsi/scsi_host.h>
+@@ -3125,6 +3126,9 @@ static void sd_read_io_hints(struct scsi
+ 	struct scsi_mode_data data;
+ 	int res;
  
--
--struct ocfs2_triggers {
--	struct jbd2_buffer_trigger_type	ot_triggers;
--	int				ot_offset;
--};
--
- static inline struct ocfs2_triggers *to_ocfs2_trigger(struct jbd2_buffer_trigger_type *triggers)
- {
- 	return container_of(triggers, struct ocfs2_triggers, ot_triggers);
-@@ -548,85 +542,76 @@ static void ocfs2_db_frozen_trigger(stru
- static void ocfs2_abort_trigger(struct jbd2_buffer_trigger_type *triggers,
- 				struct buffer_head *bh)
- {
-+	struct ocfs2_triggers *ot = to_ocfs2_trigger(triggers);
-+
- 	mlog(ML_ERROR,
- 	     "ocfs2_abort_trigger called by JBD2.  bh = 0x%lx, "
- 	     "bh->b_blocknr = %llu\n",
- 	     (unsigned long)bh,
- 	     (unsigned long long)bh->b_blocknr);
- 
--	ocfs2_error(bh->b_assoc_map->host->i_sb,
-+	ocfs2_error(ot->sb,
- 		    "JBD2 has aborted our journal, ocfs2 cannot continue\n");
- }
- 
--static struct ocfs2_triggers di_triggers = {
--	.ot_triggers = {
--		.t_frozen = ocfs2_frozen_trigger,
--		.t_abort = ocfs2_abort_trigger,
--	},
--	.ot_offset	= offsetof(struct ocfs2_dinode, i_check),
--};
--
--static struct ocfs2_triggers eb_triggers = {
--	.ot_triggers = {
--		.t_frozen = ocfs2_frozen_trigger,
--		.t_abort = ocfs2_abort_trigger,
--	},
--	.ot_offset	= offsetof(struct ocfs2_extent_block, h_check),
--};
--
--static struct ocfs2_triggers rb_triggers = {
--	.ot_triggers = {
--		.t_frozen = ocfs2_frozen_trigger,
--		.t_abort = ocfs2_abort_trigger,
--	},
--	.ot_offset	= offsetof(struct ocfs2_refcount_block, rf_check),
--};
--
--static struct ocfs2_triggers gd_triggers = {
--	.ot_triggers = {
--		.t_frozen = ocfs2_frozen_trigger,
--		.t_abort = ocfs2_abort_trigger,
--	},
--	.ot_offset	= offsetof(struct ocfs2_group_desc, bg_check),
--};
--
--static struct ocfs2_triggers db_triggers = {
--	.ot_triggers = {
--		.t_frozen = ocfs2_db_frozen_trigger,
--		.t_abort = ocfs2_abort_trigger,
--	},
--};
--
--static struct ocfs2_triggers xb_triggers = {
--	.ot_triggers = {
--		.t_frozen = ocfs2_frozen_trigger,
--		.t_abort = ocfs2_abort_trigger,
--	},
--	.ot_offset	= offsetof(struct ocfs2_xattr_block, xb_check),
--};
--
--static struct ocfs2_triggers dq_triggers = {
--	.ot_triggers = {
--		.t_frozen = ocfs2_dq_frozen_trigger,
--		.t_abort = ocfs2_abort_trigger,
--	},
--};
--
--static struct ocfs2_triggers dr_triggers = {
--	.ot_triggers = {
--		.t_frozen = ocfs2_frozen_trigger,
--		.t_abort = ocfs2_abort_trigger,
--	},
--	.ot_offset	= offsetof(struct ocfs2_dx_root_block, dr_check),
--};
--
--static struct ocfs2_triggers dl_triggers = {
--	.ot_triggers = {
--		.t_frozen = ocfs2_frozen_trigger,
--		.t_abort = ocfs2_abort_trigger,
--	},
--	.ot_offset	= offsetof(struct ocfs2_dx_leaf, dl_check),
--};
-+static void ocfs2_setup_csum_triggers(struct super_block *sb,
-+				      enum ocfs2_journal_trigger_type type,
-+				      struct ocfs2_triggers *ot)
-+{
-+	BUG_ON(type >= OCFS2_JOURNAL_TRIGGER_COUNT);
-+
-+	switch (type) {
-+	case OCFS2_JTR_DI:
-+		ot->ot_triggers.t_frozen = ocfs2_frozen_trigger;
-+		ot->ot_offset = offsetof(struct ocfs2_dinode, i_check);
-+		break;
-+	case OCFS2_JTR_EB:
-+		ot->ot_triggers.t_frozen = ocfs2_frozen_trigger;
-+		ot->ot_offset = offsetof(struct ocfs2_extent_block, h_check);
-+		break;
-+	case OCFS2_JTR_RB:
-+		ot->ot_triggers.t_frozen = ocfs2_frozen_trigger;
-+		ot->ot_offset = offsetof(struct ocfs2_refcount_block, rf_check);
-+		break;
-+	case OCFS2_JTR_GD:
-+		ot->ot_triggers.t_frozen = ocfs2_frozen_trigger;
-+		ot->ot_offset = offsetof(struct ocfs2_group_desc, bg_check);
-+		break;
-+	case OCFS2_JTR_DB:
-+		ot->ot_triggers.t_frozen = ocfs2_db_frozen_trigger;
-+		break;
-+	case OCFS2_JTR_XB:
-+		ot->ot_triggers.t_frozen = ocfs2_frozen_trigger;
-+		ot->ot_offset = offsetof(struct ocfs2_xattr_block, xb_check);
-+		break;
-+	case OCFS2_JTR_DQ:
-+		ot->ot_triggers.t_frozen = ocfs2_dq_frozen_trigger;
-+		break;
-+	case OCFS2_JTR_DR:
-+		ot->ot_triggers.t_frozen = ocfs2_frozen_trigger;
-+		ot->ot_offset = offsetof(struct ocfs2_dx_root_block, dr_check);
-+		break;
-+	case OCFS2_JTR_DL:
-+		ot->ot_triggers.t_frozen = ocfs2_frozen_trigger;
-+		ot->ot_offset = offsetof(struct ocfs2_dx_leaf, dl_check);
-+		break;
-+	case OCFS2_JTR_NONE:
-+		/* To make compiler happy... */
++	if (sdp->sdev_bflags & BLIST_SKIP_IO_HINTS)
 +		return;
-+	}
 +
-+	ot->ot_triggers.t_abort = ocfs2_abort_trigger;
-+	ot->sb = sb;
-+}
-+
-+void ocfs2_initialize_journal_triggers(struct super_block *sb,
-+				       struct ocfs2_triggers triggers[])
-+{
-+	enum ocfs2_journal_trigger_type type;
-+
-+	for (type = OCFS2_JTR_DI; type < OCFS2_JOURNAL_TRIGGER_COUNT; type++)
-+		ocfs2_setup_csum_triggers(sb, type, &triggers[type]);
-+}
+ 	res = scsi_mode_sense(sdp, /*dbd=*/0x8, /*modepage=*/0x0a,
+ 			      /*subpage=*/0x05, buffer, SD_BUF_SIZE, SD_TIMEOUT,
+ 			      sdkp->max_retries, &data, &sshdr);
+--- a/include/scsi/scsi_devinfo.h
++++ b/include/scsi/scsi_devinfo.h
+@@ -69,8 +69,10 @@
+ #define BLIST_RETRY_ITF		((__force blist_flags_t)(1ULL << 32))
+ /* Always retry ABORTED_COMMAND with ASC 0xc1 */
+ #define BLIST_RETRY_ASC_C1	((__force blist_flags_t)(1ULL << 33))
++/* Do not query the IO Advice Hints Grouping mode page */
++#define BLIST_SKIP_IO_HINTS	((__force blist_flags_t)(1ULL << 34))
  
- static int __ocfs2_journal_access(handle_t *handle,
- 				  struct ocfs2_caching_info *ci,
-@@ -708,56 +693,91 @@ static int __ocfs2_journal_access(handle
- int ocfs2_journal_access_di(handle_t *handle, struct ocfs2_caching_info *ci,
- 			    struct buffer_head *bh, int type)
- {
--	return __ocfs2_journal_access(handle, ci, bh, &di_triggers, type);
-+	struct ocfs2_super *osb = OCFS2_SB(ocfs2_metadata_cache_get_super(ci));
-+
-+	return __ocfs2_journal_access(handle, ci, bh,
-+				      &osb->s_journal_triggers[OCFS2_JTR_DI],
-+				      type);
- }
+-#define __BLIST_LAST_USED BLIST_RETRY_ASC_C1
++#define __BLIST_LAST_USED BLIST_SKIP_IO_HINTS
  
- int ocfs2_journal_access_eb(handle_t *handle, struct ocfs2_caching_info *ci,
- 			    struct buffer_head *bh, int type)
- {
--	return __ocfs2_journal_access(handle, ci, bh, &eb_triggers, type);
-+	struct ocfs2_super *osb = OCFS2_SB(ocfs2_metadata_cache_get_super(ci));
-+
-+	return __ocfs2_journal_access(handle, ci, bh,
-+				      &osb->s_journal_triggers[OCFS2_JTR_EB],
-+				      type);
- }
- 
- int ocfs2_journal_access_rb(handle_t *handle, struct ocfs2_caching_info *ci,
- 			    struct buffer_head *bh, int type)
- {
--	return __ocfs2_journal_access(handle, ci, bh, &rb_triggers,
-+	struct ocfs2_super *osb = OCFS2_SB(ocfs2_metadata_cache_get_super(ci));
-+
-+	return __ocfs2_journal_access(handle, ci, bh,
-+				      &osb->s_journal_triggers[OCFS2_JTR_RB],
- 				      type);
- }
- 
- int ocfs2_journal_access_gd(handle_t *handle, struct ocfs2_caching_info *ci,
- 			    struct buffer_head *bh, int type)
- {
--	return __ocfs2_journal_access(handle, ci, bh, &gd_triggers, type);
-+	struct ocfs2_super *osb = OCFS2_SB(ocfs2_metadata_cache_get_super(ci));
-+
-+	return __ocfs2_journal_access(handle, ci, bh,
-+				     &osb->s_journal_triggers[OCFS2_JTR_GD],
-+				     type);
- }
- 
- int ocfs2_journal_access_db(handle_t *handle, struct ocfs2_caching_info *ci,
- 			    struct buffer_head *bh, int type)
- {
--	return __ocfs2_journal_access(handle, ci, bh, &db_triggers, type);
-+	struct ocfs2_super *osb = OCFS2_SB(ocfs2_metadata_cache_get_super(ci));
-+
-+	return __ocfs2_journal_access(handle, ci, bh,
-+				     &osb->s_journal_triggers[OCFS2_JTR_DB],
-+				     type);
- }
- 
- int ocfs2_journal_access_xb(handle_t *handle, struct ocfs2_caching_info *ci,
- 			    struct buffer_head *bh, int type)
- {
--	return __ocfs2_journal_access(handle, ci, bh, &xb_triggers, type);
-+	struct ocfs2_super *osb = OCFS2_SB(ocfs2_metadata_cache_get_super(ci));
-+
-+	return __ocfs2_journal_access(handle, ci, bh,
-+				     &osb->s_journal_triggers[OCFS2_JTR_XB],
-+				     type);
- }
- 
- int ocfs2_journal_access_dq(handle_t *handle, struct ocfs2_caching_info *ci,
- 			    struct buffer_head *bh, int type)
- {
--	return __ocfs2_journal_access(handle, ci, bh, &dq_triggers, type);
-+	struct ocfs2_super *osb = OCFS2_SB(ocfs2_metadata_cache_get_super(ci));
-+
-+	return __ocfs2_journal_access(handle, ci, bh,
-+				     &osb->s_journal_triggers[OCFS2_JTR_DQ],
-+				     type);
- }
- 
- int ocfs2_journal_access_dr(handle_t *handle, struct ocfs2_caching_info *ci,
- 			    struct buffer_head *bh, int type)
- {
--	return __ocfs2_journal_access(handle, ci, bh, &dr_triggers, type);
-+	struct ocfs2_super *osb = OCFS2_SB(ocfs2_metadata_cache_get_super(ci));
-+
-+	return __ocfs2_journal_access(handle, ci, bh,
-+				     &osb->s_journal_triggers[OCFS2_JTR_DR],
-+				     type);
- }
- 
- int ocfs2_journal_access_dl(handle_t *handle, struct ocfs2_caching_info *ci,
- 			    struct buffer_head *bh, int type)
- {
--	return __ocfs2_journal_access(handle, ci, bh, &dl_triggers, type);
-+	struct ocfs2_super *osb = OCFS2_SB(ocfs2_metadata_cache_get_super(ci));
-+
-+	return __ocfs2_journal_access(handle, ci, bh,
-+				     &osb->s_journal_triggers[OCFS2_JTR_DL],
-+				     type);
- }
- 
- int ocfs2_journal_access(handle_t *handle, struct ocfs2_caching_info *ci,
---- a/fs/ocfs2/ocfs2.h
-+++ b/fs/ocfs2/ocfs2.h
-@@ -284,6 +284,30 @@ enum ocfs2_mount_options
- #define OCFS2_OSB_ERROR_FS	0x0004
- #define OCFS2_DEFAULT_ATIME_QUANTUM	60
- 
-+struct ocfs2_triggers {
-+	struct jbd2_buffer_trigger_type	ot_triggers;
-+	int				ot_offset;
-+	struct super_block		*sb;
-+};
-+
-+enum ocfs2_journal_trigger_type {
-+	OCFS2_JTR_DI,
-+	OCFS2_JTR_EB,
-+	OCFS2_JTR_RB,
-+	OCFS2_JTR_GD,
-+	OCFS2_JTR_DB,
-+	OCFS2_JTR_XB,
-+	OCFS2_JTR_DQ,
-+	OCFS2_JTR_DR,
-+	OCFS2_JTR_DL,
-+	OCFS2_JTR_NONE  /* This must be the last entry */
-+};
-+
-+#define OCFS2_JOURNAL_TRIGGER_COUNT OCFS2_JTR_NONE
-+
-+void ocfs2_initialize_journal_triggers(struct super_block *sb,
-+				       struct ocfs2_triggers triggers[]);
-+
- struct ocfs2_journal;
- struct ocfs2_slot_info;
- struct ocfs2_recovery_map;
-@@ -351,6 +375,9 @@ struct ocfs2_super
- 	struct ocfs2_journal *journal;
- 	unsigned long osb_commit_interval;
- 
-+	/* Journal triggers for checksum */
-+	struct ocfs2_triggers s_journal_triggers[OCFS2_JOURNAL_TRIGGER_COUNT];
-+
- 	struct delayed_work		la_enable_wq;
- 
- 	/*
---- a/fs/ocfs2/super.c
-+++ b/fs/ocfs2/super.c
-@@ -1075,9 +1075,11 @@ static int ocfs2_fill_super(struct super
- 	debugfs_create_file("fs_state", S_IFREG|S_IRUSR, osb->osb_debug_root,
- 			    osb, &ocfs2_osb_debug_fops);
- 
--	if (ocfs2_meta_ecc(osb))
-+	if (ocfs2_meta_ecc(osb)) {
-+		ocfs2_initialize_journal_triggers(sb, osb->s_journal_triggers);
- 		ocfs2_blockcheck_stats_debugfs_install( &osb->osb_ecc_stats,
- 							osb->osb_debug_root);
-+	}
- 
- 	status = ocfs2_mount_volume(sb);
- 	if (status < 0)
+ #define __BLIST_HIGH_UNUSED (~(__BLIST_LAST_USED | \
+ 			       (__force blist_flags_t) \
 
 
