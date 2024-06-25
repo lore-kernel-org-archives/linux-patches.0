@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13258149C47;
-	Tue, 25 Jun 2024 09:51:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 066731487C6;
+	Tue, 25 Jun 2024 09:51:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309066; cv=none; b=t3Ed2hT7ftnPpCBy11yevsgQU6zmIsv/ac8cn9UX4QylhzDaOImhtImjgwi4r0aGIaAsICPPnzX02EdXpgC1RTnbPmv4SxcANCMp13ihze9yenEJrii69bk3oAuQ2Ak50b1Z+EQU1hy2RX6OjzU3ICS7xc1Ndp7MAX+jqdlFJ10=
+	t=1719309069; cv=none; b=OOLYylvMO4tYfI4dddCLwKgXZVktPf05vQGcne6uPYrAA0Cwc+rgBVTDF2T86QUfRScCrTMiPMqBT0c4HcxWSv4O/I+Cw6QpeCTMHCrnnnQDe0Qk3dW5KZi6ZDU2qRqjMtnC354DIPI7E6ytW8B8K5mB/PjGCX331+F5DZUgrYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309066; c=relaxed/simple;
-	bh=YkJ6I/pBdq1gvkziOLsFtlAyoxITPKhuG3e1PAnkmqw=;
+	s=arc-20240116; t=1719309069; c=relaxed/simple;
+	bh=wg3RIaXy88+Du8Zbv4f/eDzPbykz/ChyAYkhlhXidwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rLwkL6JAXVmXlKUqCZQR+st9Rb3TGDMjM0BmYZ8t6HwUY7DZo8R4l+gRYcdiXKDdSvQS4w+rszTcoWgyGUOmMjHpNQHSy9T+3wncFCiPMbcPMBQHLqevxUH6SMDqQ9t8tCWGx1QUjfeWuqsGcVc5zJO3mvKUK5Ei3rzcUkOmFAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0VtyEZNe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=juzyh/DY3smIDqfdfNH/Mzqv8pID9yKg3HewrOk8yKddNxWmb6ADC26o/vp9lUWtSzM/7QiMeozXmZ9HPG7YsQ6c2RUezb7ra1chd3iCsqVcnGtamRN7jsK+zaMLi8j/TBrlpk7YIzRhqyGkusWudh1cgwoCkUHw/K7vNBh1hwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EkWI6+iY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0VtyEZNe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85083C32781;
-	Tue, 25 Jun 2024 09:51:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EkWI6+iY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 817A5C32781;
+	Tue, 25 Jun 2024 09:51:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309065;
-	bh=YkJ6I/pBdq1gvkziOLsFtlAyoxITPKhuG3e1PAnkmqw=;
+	s=korg; t=1719309068;
+	bh=wg3RIaXy88+Du8Zbv4f/eDzPbykz/ChyAYkhlhXidwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0VtyEZNe8r/R+JJnMn6BEZoOmBOHHbgduV9bbBOp3e2B9DNqSp0bFPmNDD2km2Jcp
-	 PPiTJW+ZBiXr6T6bVqO/4PcDieg39/Y43SPD5jseYsMhYRjc37mKSAl8/1b/2v6Hhr
-	 ENBcNANnHG6pbuVlxEVVFVk4KQnPc7/qdeo3Ves0=
+	b=EkWI6+iYklnaESgVUmu/Q1ij4cvnQD+UFo03wX1+GmjWISgTfhWz/uSPrVikhsm0L
+	 zkKOk133aGbIxyBlg71TUZQaPs04HG3lZM/sCGfV1B97OLMLzECoXqw6DD+LPIDOLC
+	 PpzaOERRQocLb5Hz7NeEZd5v4PNDxaQdRENLjAKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Heintzmann <heintzmann.eric@free.fr>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Light=20Hsieh=20 ?= <Light.Hsieh@mediatek.com>,
+	Daeho Jeong <daehojeong@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 052/192] PCI/PM: Avoid D3cold for HP Pavilion 17 PC/1972 PCIe Ports
-Date: Tue, 25 Jun 2024 11:32:04 +0200
-Message-ID: <20240625085539.167242774@linuxfoundation.org>
+Subject: [PATCH 6.6 053/192] f2fs: dont set RO when shutting down f2fs
+Date: Tue, 25 Jun 2024 11:32:05 +0200
+Message-ID: <20240625085539.206090107@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -46,75 +47,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-[ Upstream commit 256df20c590bf0e4d63ac69330cf23faddac3e08 ]
+[ Upstream commit 3bdb7f161697e2d5123b89fe1778ef17a44858e7 ]
 
-Hewlett-Packard HP Pavilion 17 Notebook PC/1972 is an Intel Ivy Bridge
-system with a muxless AMD Radeon dGPU.  Attempting to use the dGPU fails
-with the following sequence:
+Shutdown does not check the error of thaw_super due to readonly, which
+causes a deadlock like below.
 
-  ACPI Error: Aborting method \AMD3._ON due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/psparse-529)
-  radeon 0000:01:00.0: not ready 1023ms after resume; waiting
-  radeon 0000:01:00.0: not ready 2047ms after resume; waiting
-  radeon 0000:01:00.0: not ready 4095ms after resume; waiting
-  radeon 0000:01:00.0: not ready 8191ms after resume; waiting
-  radeon 0000:01:00.0: not ready 16383ms after resume; waiting
-  radeon 0000:01:00.0: not ready 32767ms after resume; waiting
-  radeon 0000:01:00.0: not ready 65535ms after resume; giving up
-  radeon 0000:01:00.0: Unable to change power state from D3cold to D0, device inaccessible
+f2fs_ioc_shutdown(F2FS_GOING_DOWN_FULLSYNC)        issue_discard_thread
+ - bdev_freeze
+  - freeze_super
+ - f2fs_stop_checkpoint()
+  - f2fs_handle_critical_error                     - sb_start_write
+    - set RO                                         - waiting
+ - bdev_thaw
+  - thaw_super_locked
+    - return -EINVAL, if sb_rdonly()
+ - f2fs_stop_discard_thread
+  -> wait for kthread_stop(discard_thread);
 
-The issue is that the Root Port the dGPU is connected to can't handle the
-transition from D3cold to D0 so the dGPU can't properly exit runtime PM.
-
-The existing logic in pci_bridge_d3_possible() checks for systems that are
-newer than 2015 to decide that D3 is safe.  This would nominally work for
-an Ivy Bridge system (which was discontinued in 2015), but this system
-appears to have continued to receive BIOS updates until 2017 and so this
-existing logic doesn't appropriately capture it.
-
-Add the system to bridge_d3_blacklist to prevent D3cold from being used.
-
-Link: https://lore.kernel.org/r/20240307163709.323-1-mario.limonciello@amd.com
-Reported-by: Eric Heintzmann <heintzmann.eric@free.fr>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3229
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Eric Heintzmann <heintzmann.eric@free.fr>
+Reported-by: "Light Hsieh (謝明燈)" <Light.Hsieh@mediatek.com>
+Reviewed-by: Daeho Jeong <daehojeong@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ fs/f2fs/super.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index 6ea01007031a4..a41a1a6155411 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -3040,6 +3040,18 @@ static const struct dmi_system_id bridge_d3_blacklist[] = {
- 			DMI_MATCH(DMI_BOARD_VERSION, "Continental Z2"),
- 		},
- 	},
-+	{
-+		/*
-+		 * Changing power state of root port dGPU is connected fails
-+		 * https://gitlab.freedesktop.org/drm/amd/-/issues/3229
-+		 */
-+		.ident = "Hewlett-Packard HP Pavilion 17 Notebook PC/1972",
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "Hewlett-Packard"),
-+			DMI_MATCH(DMI_BOARD_NAME, "1972"),
-+			DMI_MATCH(DMI_BOARD_VERSION, "95.33"),
-+		},
-+	},
- #endif
- 	{ }
- };
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index 43424ca4f26c5..ce50d2253dd80 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -4107,9 +4107,15 @@ void f2fs_handle_critical_error(struct f2fs_sb_info *sbi, unsigned char reason,
+ 	if (shutdown)
+ 		set_sbi_flag(sbi, SBI_IS_SHUTDOWN);
+ 
+-	/* continue filesystem operators if errors=continue */
+-	if (continue_fs || f2fs_readonly(sb))
++	/*
++	 * Continue filesystem operators if errors=continue. Should not set
++	 * RO by shutdown, since RO bypasses thaw_super which can hang the
++	 * system.
++	 */
++	if (continue_fs || f2fs_readonly(sb) || shutdown) {
++		f2fs_warn(sbi, "Stopped filesystem due to reason: %d", reason);
+ 		return;
++	}
+ 
+ 	f2fs_warn(sbi, "Remounting filesystem read-only");
+ 	/*
 -- 
 2.43.0
 
