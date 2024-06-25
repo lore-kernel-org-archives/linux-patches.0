@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B730148315;
-	Tue, 25 Jun 2024 09:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656F4148315;
+	Tue, 25 Jun 2024 09:37:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308262; cv=none; b=LcFU7+cLDAoV84NoxR3WsLmxOLZHyLXyVpE0X66Z8lLRXXckJMUZPbNjfC4QvJ/C/FRrbLAdRwNqR6h2ItJTmos03f8cGZeKx02ritQw70HXu8bxPVdupnTwBU+RTFjVB6+uHzf4q62htgeqkQHJUTvJ17ovbfk77fpynBi8xRg=
+	t=1719308265; cv=none; b=TJctsSWPab1NGefbhK2sX8+rpv7o4+AK0lI1r1uQ6QLSmkzWq7au6VQc20D9/zOtzyit7REU2XWAw0FdXXploP3VVXnePkccQvJL8T9qRUDmo6xBO7FO+cUSdwwmfYypn585gdUpzEBiPcv77RKY9idL5oj78/O+2fTAknVnLmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308262; c=relaxed/simple;
-	bh=nA6tp7TvXpSIVuaCf02nGURuyIM8aIZbC1be6//kFYY=;
+	s=arc-20240116; t=1719308265; c=relaxed/simple;
+	bh=yEKjD5IL+D5qJnj+9gdtCxyT7CyoABVPj4i2499YRvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qW61mcsFwV+wtr66+DwU/u6n/yOT8pmHcG1lTbactVhxkSvLhRXYgEnuMLwtcLJNEIby7Q0AZf+qikQm2sDk9dz49S1Cem+fSqkgvmPj+YywVqHDyvtNTY+xnRqWKq3hfzZ3EYo3k6mDEHqFZjEioCbC+zdx+y2hNjyT5XUY8qg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LGcw8OEg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ksfp49kpZdBuFN3KS0krS5vOqPoDhj5z7aNlnAui4N33JzMJMovbgh8UTnvtEX2WCJco/YxcBo5gXwbeUyc19q0QUqevscOLxjaiuaLcaB6zUz+SXfNMhbiCSN3lqIlkW/9sUM0KUdK/4ksBihvzHkS+oDbEJLi+c6NwGBmbM5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z76RcDZW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LGcw8OEg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7622C32781;
-	Tue, 25 Jun 2024 09:37:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z76RcDZW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7B11C32781;
+	Tue, 25 Jun 2024 09:37:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308262;
-	bh=nA6tp7TvXpSIVuaCf02nGURuyIM8aIZbC1be6//kFYY=;
+	s=korg; t=1719308265;
+	bh=yEKjD5IL+D5qJnj+9gdtCxyT7CyoABVPj4i2499YRvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LGcw8OEgjEwyJ4EiAx0G+eENq3zCD321JBa1YK5DPxsnzJYjEp7Th+kNWUXzx03Ke
-	 4w6oSrDAiG3RpeEojYxOz/GoObLAeEy/T/LJCBxlu4NSWHYmwH/cFsWVNO93Ga07CW
-	 B87WqTSfPWJykx2NTEa6ij4lclUkOWvODzAsg5LM=
+	b=z76RcDZWcQjKzwBZmZlMUob40Qv8kZi1zEgDNq6lrHFFmecsMh0VOMh3r+L4E971X
+	 Cz8wb6oDEE8c9VUYrxmlkjb5zZSNpchbdxrWKYYMz/a0zZVfg8/G3jw/ruZMTIRbkz
+	 gRp/jSoYR1wt2xoNWf2UkKnB6tez6Qg1Yg93mRks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Lynch <nathanl@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Maxim Mikityanskiy <maxim@isovalent.com>,
+	Xiumei Mu <xmu@redhat.com>,
+	Christoph Paasch <cpaasch@apple.com>,
+	Davide Caratti <dcaratti@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 060/250] powerpc/pseries: Enforce hcall result buffer validity and size
-Date: Tue, 25 Jun 2024 11:30:18 +0200
-Message-ID: <20240625085550.367121580@linuxfoundation.org>
+Subject: [PATCH 6.9 031/250] net/sched: fix false lockdep warning on qdisc root lock
+Date: Tue, 25 Jun 2024 11:29:49 +0200
+Message-ID: <20240625085549.251763840@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -51,80 +54,190 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Lynch <nathanl@linux.ibm.com>
+From: Davide Caratti <dcaratti@redhat.com>
 
-[ Upstream commit ff2e185cf73df480ec69675936c4ee75a445c3e4 ]
+[ Upstream commit af0cb3fa3f9ed258d14abab0152e28a0f9593084 ]
 
-plpar_hcall(), plpar_hcall9(), and related functions expect callers to
-provide valid result buffers of certain minimum size. Currently this
-is communicated only through comments in the code and the compiler has
-no idea.
+Xiumei and Christoph reported the following lockdep splat, complaining of
+the qdisc root lock being taken twice:
 
-For example, if I write a bug like this:
+ ============================================
+ WARNING: possible recursive locking detected
+ 6.7.0-rc3+ #598 Not tainted
+ --------------------------------------------
+ swapper/2/0 is trying to acquire lock:
+ ffff888177190110 (&sch->q.lock){+.-.}-{2:2}, at: __dev_queue_xmit+0x1560/0x2e70
 
-  long retbuf[PLPAR_HCALL_BUFSIZE]; // should be PLPAR_HCALL9_BUFSIZE
-  plpar_hcall9(H_ALLOCATE_VAS_WINDOW, retbuf, ...);
+ but task is already holding lock:
+ ffff88811995a110 (&sch->q.lock){+.-.}-{2:2}, at: __dev_queue_xmit+0x1560/0x2e70
 
-This compiles with no diagnostics emitted, but likely results in stack
-corruption at runtime when plpar_hcall9() stores results past the end
-of the array. (To be clear this is a contrived example and I have not
-found a real instance yet.)
+ other info that might help us debug this:
+  Possible unsafe locking scenario:
 
-To make this class of error less likely, we can use explicitly-sized
-array parameters instead of pointers in the declarations for the hcall
-APIs. When compiled with -Warray-bounds[1], the code above now
-provokes a diagnostic like this:
+        CPU0
+        ----
+   lock(&sch->q.lock);
+   lock(&sch->q.lock);
 
-error: array argument is too small;
-is of size 32, callee requires at least 72 [-Werror,-Warray-bounds]
-   60 |                 plpar_hcall9(H_ALLOCATE_VAS_WINDOW, retbuf,
-      |                 ^                                   ~~~~~~
+  *** DEADLOCK ***
 
-[1] Enabled for LLVM builds but not GCC for now. See commit
-    0da6e5fd6c37 ("gcc: disable '-Warray-bounds' for gcc-13 too") and
-    related changes.
+  May be due to missing lock nesting notation
 
-Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240408-pseries-hvcall-retbuf-v1-1-ebc73d7253cf@linux.ibm.com
+ 5 locks held by swapper/2/0:
+  #0: ffff888135a09d98 ((&in_dev->mr_ifc_timer)){+.-.}-{0:0}, at: call_timer_fn+0x11a/0x510
+  #1: ffffffffaaee5260 (rcu_read_lock){....}-{1:2}, at: ip_finish_output2+0x2c0/0x1ed0
+  #2: ffffffffaaee5200 (rcu_read_lock_bh){....}-{1:2}, at: __dev_queue_xmit+0x209/0x2e70
+  #3: ffff88811995a110 (&sch->q.lock){+.-.}-{2:2}, at: __dev_queue_xmit+0x1560/0x2e70
+  #4: ffffffffaaee5200 (rcu_read_lock_bh){....}-{1:2}, at: __dev_queue_xmit+0x209/0x2e70
+
+ stack backtrace:
+ CPU: 2 PID: 0 Comm: swapper/2 Not tainted 6.7.0-rc3+ #598
+ Hardware name: Red Hat KVM, BIOS 1.13.0-2.module+el8.3.0+7353+9de0a3cc 04/01/2014
+ Call Trace:
+  <IRQ>
+  dump_stack_lvl+0x4a/0x80
+  __lock_acquire+0xfdd/0x3150
+  lock_acquire+0x1ca/0x540
+  _raw_spin_lock+0x34/0x80
+  __dev_queue_xmit+0x1560/0x2e70
+  tcf_mirred_act+0x82e/0x1260 [act_mirred]
+  tcf_action_exec+0x161/0x480
+  tcf_classify+0x689/0x1170
+  prio_enqueue+0x316/0x660 [sch_prio]
+  dev_qdisc_enqueue+0x46/0x220
+  __dev_queue_xmit+0x1615/0x2e70
+  ip_finish_output2+0x1218/0x1ed0
+  __ip_finish_output+0x8b3/0x1350
+  ip_output+0x163/0x4e0
+  igmp_ifc_timer_expire+0x44b/0x930
+  call_timer_fn+0x1a2/0x510
+  run_timer_softirq+0x54d/0x11a0
+  __do_softirq+0x1b3/0x88f
+  irq_exit_rcu+0x18f/0x1e0
+  sysvec_apic_timer_interrupt+0x6f/0x90
+  </IRQ>
+
+This happens when TC does a mirred egress redirect from the root qdisc of
+device A to the root qdisc of device B. As long as these two locks aren't
+protecting the same qdisc, they can be acquired in chain: add a per-qdisc
+lockdep key to silence false warnings.
+This dynamic key should safely replace the static key we have in sch_htb:
+it was added to allow enqueueing to the device "direct qdisc" while still
+holding the qdisc root lock.
+
+v2: don't use static keys anymore in HTB direct qdiscs (thanks Eric Dumazet)
+
+CC: Maxim Mikityanskiy <maxim@isovalent.com>
+CC: Xiumei Mu <xmu@redhat.com>
+Reported-by: Christoph Paasch <cpaasch@apple.com>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/451
+Signed-off-by: Davide Caratti <dcaratti@redhat.com>
+Link: https://lore.kernel.org/r/7dc06d6158f72053cf877a82e2a7a5bd23692faa.1713448007.git.dcaratti@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/hvcall.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ include/net/sch_generic.h |  1 +
+ net/sched/sch_generic.c   |  3 +++
+ net/sched/sch_htb.c       | 22 +++-------------------
+ 3 files changed, 7 insertions(+), 19 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/hvcall.h b/arch/powerpc/include/asm/hvcall.h
-index 51172625fa3a5..7a8495660c2f8 100644
---- a/arch/powerpc/include/asm/hvcall.h
-+++ b/arch/powerpc/include/asm/hvcall.h
-@@ -524,7 +524,7 @@ long plpar_hcall_norets_notrace(unsigned long opcode, ...);
-  * Used for all but the craziest of phyp interfaces (see plpar_hcall9)
-  */
- #define PLPAR_HCALL_BUFSIZE 4
--long plpar_hcall(unsigned long opcode, unsigned long *retbuf, ...);
-+long plpar_hcall(unsigned long opcode, unsigned long retbuf[static PLPAR_HCALL_BUFSIZE], ...);
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index 41ca14e81d55f..0014b9ee5e381 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -128,6 +128,7 @@ struct Qdisc {
  
- /**
-  * plpar_hcall_raw: - Make a hypervisor call without calculating hcall stats
-@@ -538,7 +538,7 @@ long plpar_hcall(unsigned long opcode, unsigned long *retbuf, ...);
-  * plpar_hcall, but plpar_hcall_raw works in real mode and does not
-  * calculate hypervisor call statistics.
-  */
--long plpar_hcall_raw(unsigned long opcode, unsigned long *retbuf, ...);
-+long plpar_hcall_raw(unsigned long opcode, unsigned long retbuf[static PLPAR_HCALL_BUFSIZE], ...);
+ 	struct rcu_head		rcu;
+ 	netdevice_tracker	dev_tracker;
++	struct lock_class_key	root_lock_key;
+ 	/* private data */
+ 	long privdata[] ____cacheline_aligned;
+ };
+diff --git a/net/sched/sch_generic.c b/net/sched/sch_generic.c
+index 10b1491d55809..ad43e75c9b701 100644
+--- a/net/sched/sch_generic.c
++++ b/net/sched/sch_generic.c
+@@ -946,7 +946,9 @@ struct Qdisc *qdisc_alloc(struct netdev_queue *dev_queue,
+ 	__skb_queue_head_init(&sch->gso_skb);
+ 	__skb_queue_head_init(&sch->skb_bad_txq);
+ 	gnet_stats_basic_sync_init(&sch->bstats);
++	lockdep_register_key(&sch->root_lock_key);
+ 	spin_lock_init(&sch->q.lock);
++	lockdep_set_class(&sch->q.lock, &sch->root_lock_key);
  
- /**
-  * plpar_hcall9: - Make a pseries hypervisor call with up to 9 return arguments
-@@ -549,8 +549,8 @@ long plpar_hcall_raw(unsigned long opcode, unsigned long *retbuf, ...);
-  * PLPAR_HCALL9_BUFSIZE to size the return argument buffer.
-  */
- #define PLPAR_HCALL9_BUFSIZE 9
--long plpar_hcall9(unsigned long opcode, unsigned long *retbuf, ...);
--long plpar_hcall9_raw(unsigned long opcode, unsigned long *retbuf, ...);
-+long plpar_hcall9(unsigned long opcode, unsigned long retbuf[static PLPAR_HCALL9_BUFSIZE], ...);
-+long plpar_hcall9_raw(unsigned long opcode, unsigned long retbuf[static PLPAR_HCALL9_BUFSIZE], ...);
+ 	if (ops->static_flags & TCQ_F_CPUSTATS) {
+ 		sch->cpu_bstats =
+@@ -1069,6 +1071,7 @@ static void __qdisc_destroy(struct Qdisc *qdisc)
+ 	if (ops->destroy)
+ 		ops->destroy(qdisc);
  
- /* pseries hcall tracing */
- extern struct static_key hcall_tracepoint_key;
++	lockdep_unregister_key(&qdisc->root_lock_key);
+ 	module_put(ops->owner);
+ 	netdev_put(dev, &qdisc->dev_tracker);
+ 
+diff --git a/net/sched/sch_htb.c b/net/sched/sch_htb.c
+index 93e6fb56f3b58..ff3de37874e4b 100644
+--- a/net/sched/sch_htb.c
++++ b/net/sched/sch_htb.c
+@@ -1039,13 +1039,6 @@ static void htb_work_func(struct work_struct *work)
+ 	rcu_read_unlock();
+ }
+ 
+-static void htb_set_lockdep_class_child(struct Qdisc *q)
+-{
+-	static struct lock_class_key child_key;
+-
+-	lockdep_set_class(qdisc_lock(q), &child_key);
+-}
+-
+ static int htb_offload(struct net_device *dev, struct tc_htb_qopt_offload *opt)
+ {
+ 	return dev->netdev_ops->ndo_setup_tc(dev, TC_SETUP_QDISC_HTB, opt);
+@@ -1132,7 +1125,6 @@ static int htb_init(struct Qdisc *sch, struct nlattr *opt,
+ 			return -ENOMEM;
+ 		}
+ 
+-		htb_set_lockdep_class_child(qdisc);
+ 		q->direct_qdiscs[ntx] = qdisc;
+ 		qdisc->flags |= TCQ_F_ONETXQUEUE | TCQ_F_NOPARENT;
+ 	}
+@@ -1468,7 +1460,6 @@ static int htb_graft(struct Qdisc *sch, unsigned long arg, struct Qdisc *new,
+ 	}
+ 
+ 	if (q->offload) {
+-		htb_set_lockdep_class_child(new);
+ 		/* One ref for cl->leaf.q, the other for dev_queue->qdisc. */
+ 		qdisc_refcount_inc(new);
+ 		old_q = htb_graft_helper(dev_queue, new);
+@@ -1733,11 +1724,8 @@ static int htb_delete(struct Qdisc *sch, unsigned long arg,
+ 		new_q = qdisc_create_dflt(dev_queue, &pfifo_qdisc_ops,
+ 					  cl->parent->common.classid,
+ 					  NULL);
+-		if (q->offload) {
+-			if (new_q)
+-				htb_set_lockdep_class_child(new_q);
++		if (q->offload)
+ 			htb_parent_to_leaf_offload(sch, dev_queue, new_q);
+-		}
+ 	}
+ 
+ 	sch_tree_lock(sch);
+@@ -1947,13 +1935,9 @@ static int htb_change_class(struct Qdisc *sch, u32 classid,
+ 		new_q = qdisc_create_dflt(dev_queue, &pfifo_qdisc_ops,
+ 					  classid, NULL);
+ 		if (q->offload) {
+-			if (new_q) {
+-				htb_set_lockdep_class_child(new_q);
+-				/* One ref for cl->leaf.q, the other for
+-				 * dev_queue->qdisc.
+-				 */
++			/* One ref for cl->leaf.q, the other for dev_queue->qdisc. */
++			if (new_q)
+ 				qdisc_refcount_inc(new_q);
+-			}
+ 			old_q = htb_graft_helper(dev_queue, new_q);
+ 			/* No qdisc_put needed. */
+ 			WARN_ON(!(old_q->flags & TCQ_F_BUILTIN));
 -- 
 2.43.0
 
