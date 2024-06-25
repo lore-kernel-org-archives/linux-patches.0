@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A23171465B7;
-	Tue, 25 Jun 2024 10:02:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF6413C90B;
+	Tue, 25 Jun 2024 10:02:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309768; cv=none; b=qYEDoshtRZfoxm7rlk0ac30frQPtWNp+MFfab3S7qM5p2mZ684cpvKxcZ4b6Hx4k0CIkiQJdOAsF3nwSVYtWaLWE1uu3TIzFRHsXQgAdrY/GcbegUeF1zdUbqQfBjHWPRXZ2WewxXMsa3BIF4DGEPrBJLrOhBj/mm0RKDBhzEhY=
+	t=1719309771; cv=none; b=apxbLXZCNfPgsAuJvPF3tKjJ0joOyW5mJk2NoexCAV8nnDPj903w87LCZF4TU+9b3aS7zciZJ3RgrbKmyXBm9hE/c6EpPFTyVlCcqR/BCHTG7KGw+aDIx9CENfvh2axxHqGT/0qBBbyVN0UxIHwdxT0y+DUQgqVljNLXiv7gw+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309768; c=relaxed/simple;
-	bh=XLZcKpYJL5DtL5VmVyaRlegC9lJn4f5i2xuvM6jhYMU=;
+	s=arc-20240116; t=1719309771; c=relaxed/simple;
+	bh=MZ6vawK6dysJvEB3GAHqIk3Ainz2QSg0dfNuRQ1yik4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qJ0dr5laQMpvmnmiSLfzp5SYYl9uhBVxw+aKgP2XqeDtbrrpGTnd7hRNTKxA4W6KqjrDSJlSWQGoJ2bgeetAykl9IBvrYcODafHBVY3ztramKZltMVVDm7eAwmb0vcv1bOZJ9MWv7WlzZDcT/LxRreMTRDUpRoIRlmANgPjoQYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BuathelN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZsXlE8AwSt3g+CeGWWLK85QFklb4ow9k9uOB60949W+hELXXV1S6rTGtzyK2aHN0i2vOQnU+xnZeVRaDq9goO5EUSVNrXKuT73eARZYXY4bsQnD2pmkSbFWc6haWkLWI+DZ3gmdVOGRF51sAI3U5yveecMtXqigbojnJiho97rw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HJnQfOg0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BuathelN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C62CC32781;
-	Tue, 25 Jun 2024 10:02:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HJnQfOg0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1444CC32781;
+	Tue, 25 Jun 2024 10:02:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309768;
-	bh=XLZcKpYJL5DtL5VmVyaRlegC9lJn4f5i2xuvM6jhYMU=;
+	s=korg; t=1719309771;
+	bh=MZ6vawK6dysJvEB3GAHqIk3Ainz2QSg0dfNuRQ1yik4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BuathelN9Pr4KBg2iP3P0CuOFa+7LaABqbNreyHdfVMDWXEz0+Rx+XJhF8sQLQYmd
-	 55AOh6Vgf79PjSRmTUswtNf6ufrmEaRLTfTrhcyxDnP9J3NqeU9OwT5akXYUJCoQX2
-	 eWJtE+RU1JRzjRVpJJf3v6RWCkUQ8y5UPhXlDYHg=
+	b=HJnQfOg0j17gJbUH1qPQyCx7vuSB4LGZ3qewzfeFIBivb++sDABHmoz+JsXBClyjt
+	 Xpv1H36pmdhIOfX6etRYzp9LdygKaKDAk2stHefdL8nvH+WEbMhOV4ImSmos6Wcm8L
+	 69e2DC7PTgDQcDrcrxViNS9wJ2T27HAwGz9C4LE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Maennich <maennich@google.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 127/131] kheaders: explicitly define file modes for archived headers
-Date: Tue, 25 Jun 2024 11:34:42 +0200
-Message-ID: <20240625085530.762507929@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Martin Leung <martin.leung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.1 128/131] drm/amd/display: revert Exit idle optimizations before HDCP execution
+Date: Tue, 25 Jun 2024 11:34:43 +0200
+Message-ID: <20240625085530.800552900@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085525.931079317@linuxfoundation.org>
 References: <20240625085525.931079317@linuxfoundation.org>
@@ -51,42 +54,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Maennich <maennich@google.com>
+From: Martin Leung <martin.leung@amd.com>
 
-[ Upstream commit 3bd27a847a3a4827a948387cc8f0dbc9fa5931d5 ]
+commit f2703a3596a279b0be6eeed4c500bdbaa8dc3ce4 upstream.
 
-Build environments might be running with different umask settings
-resulting in indeterministic file modes for the files contained in
-kheaders.tar.xz. The file itself is served with 444, i.e. world
-readable. Archive the files explicitly with 744,a+X to improve
-reproducibility across build environments.
+why and how:
+causes black screen on PNP on DCN 3.5
 
---mode=0444 is not suitable as directories need to be executable. Also,
-444 makes it hard to delete all the readonly files after extraction.
+This reverts commit f30a3bea92bd ("drm/amd/display: Exit idle
+optimizations before HDCP execution")
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Matthias Maennich <maennich@google.com>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Acked-by: Wayne Lin <wayne.lin@amd.com>
+Signed-off-by: Martin Leung <martin.leung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/gen_kheaders.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c    |   10 ----------
+ drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h |    8 --------
+ 2 files changed, 18 deletions(-)
 
-diff --git a/kernel/gen_kheaders.sh b/kernel/gen_kheaders.sh
-index 99422673a782b..12bcd08fe79d4 100755
---- a/kernel/gen_kheaders.sh
-+++ b/kernel/gen_kheaders.sh
-@@ -82,7 +82,7 @@ find $cpio_dir -type f -print0 |
+--- a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c
++++ b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c
+@@ -88,14 +88,6 @@ static uint8_t is_cp_desired_hdcp2(struc
+ 			!hdcp->connection.is_hdcp2_revoked;
+ }
  
- # Create archive and try to normalize metadata for reproducibility.
- tar "${KBUILD_BUILD_TIMESTAMP:+--mtime=$KBUILD_BUILD_TIMESTAMP}" \
--    --owner=0 --group=0 --sort=name --numeric-owner \
-+    --owner=0 --group=0 --sort=name --numeric-owner --mode=u=rw,go=r,a+X \
-     -I $XZ -cf $tarfile -C $cpio_dir/ . > /dev/null
+-static void exit_idle_optimizations(struct mod_hdcp *hdcp)
+-{
+-	struct mod_hdcp_dm *dm = &hdcp->config.dm;
+-
+-	if (dm->funcs.exit_idle_optimizations)
+-		dm->funcs.exit_idle_optimizations(dm->handle);
+-}
+-
+ static enum mod_hdcp_status execution(struct mod_hdcp *hdcp,
+ 		struct mod_hdcp_event_context *event_ctx,
+ 		union mod_hdcp_transition_input *input)
+@@ -551,8 +543,6 @@ enum mod_hdcp_status mod_hdcp_process_ev
+ 	memset(&event_ctx, 0, sizeof(struct mod_hdcp_event_context));
+ 	event_ctx.event = event;
  
- echo $headers_md5 > kernel/kheaders.md5
--- 
-2.43.0
-
+-	exit_idle_optimizations(hdcp);
+-
+ 	/* execute and transition */
+ 	exec_status = execution(hdcp, &event_ctx, &hdcp->auth.trans_input);
+ 	trans_status = transition(
+--- a/drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h
++++ b/drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h
+@@ -155,13 +155,6 @@ struct mod_hdcp_ddc {
+ 	} funcs;
+ };
+ 
+-struct mod_hdcp_dm {
+-	void *handle;
+-	struct {
+-		void (*exit_idle_optimizations)(void *handle);
+-	} funcs;
+-};
+-
+ struct mod_hdcp_psp {
+ 	void *handle;
+ 	void *funcs;
+@@ -278,7 +271,6 @@ struct mod_hdcp_display_query {
+ struct mod_hdcp_config {
+ 	struct mod_hdcp_psp psp;
+ 	struct mod_hdcp_ddc ddc;
+-	struct mod_hdcp_dm dm;
+ 	uint8_t index;
+ };
+ 
 
 
