@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2674813C90B;
-	Tue, 25 Jun 2024 10:01:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187D213C90B;
+	Tue, 25 Jun 2024 10:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309695; cv=none; b=oj0EyOSkB4ZfT6YGiVlIFZARAtpmMCa1XW+G2vB9lecwCjddgINL9ZOnP9ULcq1mNcucg1JUJoQJq+cXeV3ieCqSOnqxJxNgFu5fzTVfLjfu2hOuH/UXwdBhhe/ysLRV1VehPLunooh6o/P6MDvnd1RXdBJS+96XmPucGSVL4oU=
+	t=1719309698; cv=none; b=izrGxPmbdLvDZSN8sJ+sHg9Zs0I6oIlDoScdq9KL1qFXqN+RVBWpuW5oIgXy+0nrb9V099rxH2y0+7XprO2y5BrQGrUTBMxlgsjE5H6p+s/HtAW2qS+OxGxnuZWwqazNfF/AdsvOLRRkJANvkKaNHrOUdtpLA63Nj6Fe8u3ib2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309695; c=relaxed/simple;
-	bh=cfqRFxd9g1FbPN/wVJYI1Kt91LDsxwp3sOQDPwD7akk=;
+	s=arc-20240116; t=1719309698; c=relaxed/simple;
+	bh=11LpTUJXAkmywBP74/Ih+lN5c53vZE077yv8uIxAG2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NVHvQQ9CbilkD1bA5d6Yyur+uh/W8BCzHYxBagOANP4X996z0UEoLiyiBc6weIST8c556AJ91XRf/4YXLPnohiVD+zGkNmXyQ9UYgtqDY+IJWYUb/aGtl/E/+/vK66nxn1buqLBS0euWTJvXyV0XPnTEC/cVSZs6Zvjkm/bj6QE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0SpSNduX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DSuvwnFDN+YaptTnY2XNs3WHthY31pT21BfS6Kt2mG9lrx66gv6xUz0IVTtJXPK4hy2JL/KpOypImjHLCIiz34R8Nuqx6PMRMnD8jECGdZWflln0B3F9INXSnq0ua4mlkLoy/Vg5hOncxGfrBUVll+zlG7wFEWmOcvCGhwE/0EI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ul0fPaNX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0SpSNduX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 737EDC32781;
-	Tue, 25 Jun 2024 10:01:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ul0fPaNX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94BE1C32781;
+	Tue, 25 Jun 2024 10:01:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309695;
-	bh=cfqRFxd9g1FbPN/wVJYI1Kt91LDsxwp3sOQDPwD7akk=;
+	s=korg; t=1719309698;
+	bh=11LpTUJXAkmywBP74/Ih+lN5c53vZE077yv8uIxAG2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0SpSNduXYMv0/U9eR0NHvqcl5+Pb2RcrwSuWRWgZg35VqfRS8J8kYRhgUwcFBiFSi
-	 ERzMjR4QPGIcq8l/ScSBt01pzrA0Cz/vCGLggGQ72SJHcRNG+UslqyALdHbyUZQPTw
-	 5TVCD/KiyM+CtEBLCE+L6Hn1wAxpVonSk+wfdqNI=
+	b=Ul0fPaNXZ7+9kM9SaFKoNIoRmtlYbgkoC1ggbz2mBK5Ipc/MJnuo9inUmtJF1gevg
+	 ON1aKhEcdtX87Lmrvcxx56tlxQbRsWzHuPvLk/Br58x/pMQc9D2HcbbA5qD5hoivHr
+	 qbsyaE5EpYRUcY1WghvJ7dynT/ARM8Lk+NiSTwj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heng Qi <hengqi@linux.alibaba.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Jason Wang <jasowang@redhat.com>,
+	Simon Horman <horms@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 071/131] virtio_net: checksum offloading handling fix
-Date: Tue, 25 Jun 2024 11:33:46 +0200
-Message-ID: <20240625085528.641611936@linuxfoundation.org>
+Subject: [PATCH 6.1 072/131] octeontx2-pf: Add error handling to VLAN unoffload handling
+Date: Tue, 25 Jun 2024 11:33:47 +0200
+Message-ID: <20240625085528.679056092@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085525.931079317@linuxfoundation.org>
 References: <20240625085525.931079317@linuxfoundation.org>
@@ -53,62 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heng Qi <hengqi@linux.alibaba.com>
+From: Simon Horman <horms@kernel.org>
 
-[ Upstream commit 604141c036e1b636e2a71cf6e1aa09d1e45f40c2 ]
+[ Upstream commit b95a4afe2defd6f46891985f9436a568cd35a31c ]
 
-In virtio spec 0.95, VIRTIO_NET_F_GUEST_CSUM was designed to handle
-partially checksummed packets, and the validation of fully checksummed
-packets by the device is independent of VIRTIO_NET_F_GUEST_CSUM
-negotiation. However, the specification erroneously stated:
+otx2_sq_append_skb makes used of __vlan_hwaccel_push_inside()
+to unoffload VLANs - push them from skb meta data into skb data.
+However, it omitts a check for __vlan_hwaccel_push_inside()
+returning NULL.
 
-  "If VIRTIO_NET_F_GUEST_CSUM is not negotiated, the device MUST set flags
-   to zero and SHOULD supply a fully checksummed packet to the driver."
+Found by inspection based on [1] and [2].
+Compile tested only.
 
-This statement is inaccurate because even without VIRTIO_NET_F_GUEST_CSUM
-negotiation, the device can still set the VIRTIO_NET_HDR_F_DATA_VALID flag.
-Essentially, the device can facilitate the validation of these packets'
-checksums - a process known as RX checksum offloading - removing the need
-for the driver to do so.
+[1] Re: [PATCH net-next v1] net: stmmac: Enable TSO on VLANs
+    https://lore.kernel.org/all/ZmrN2W8Fye450TKs@shell.armlinux.org.uk/
+[2] Re: [PATCH net-next v2] net: stmmac: Enable TSO on VLANs
+    https://lore.kernel.org/all/CANn89i+11L5=tKsa7V7Aeyxaj6nYGRwy35PAbCRYJ73G+b25sg@mail.gmail.com/
 
-This scenario is currently not implemented in the driver and requires
-correction. The necessary specification correction[1] has been made and
-approved in the virtio TC vote.
-[1] https://lists.oasis-open.org/archives/virtio-comment/202401/msg00011.html
-
-Fixes: 4f49129be6fa ("virtio-net: Set RXCSUM feature if GUEST_CSUM is available")
-Signed-off-by: Heng Qi <hengqi@linux.alibaba.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
+Fixes: fd9d7859db6c ("octeontx2-pf: Implement ingress/egress VLAN offload")
+Signed-off-by: Simon Horman <horms@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index 32cddb633793d..61cc0ed1ddc13 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -3818,8 +3818,16 @@ static int virtnet_probe(struct virtio_device *vdev)
- 			dev->features |= dev->hw_features & NETIF_F_ALL_TSO;
- 		/* (!csum && gso) case will be fixed by register_netdev() */
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
+index aee392a15b23c..e579183e52392 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
+@@ -1152,8 +1152,11 @@ bool otx2_sq_append_skb(struct net_device *netdev, struct otx2_snd_queue *sq,
+ 
+ 	if (skb_shinfo(skb)->gso_size && !is_hw_tso_supported(pfvf, skb)) {
+ 		/* Insert vlan tag before giving pkt to tso */
+-		if (skb_vlan_tag_present(skb))
++		if (skb_vlan_tag_present(skb)) {
+ 			skb = __vlan_hwaccel_push_inside(skb);
++			if (!skb)
++				return true;
++		}
+ 		otx2_sq_append_tso(pfvf, sq, skb, qidx);
+ 		return true;
  	}
--	if (virtio_has_feature(vdev, VIRTIO_NET_F_GUEST_CSUM))
--		dev->features |= NETIF_F_RXCSUM;
-+
-+	/* 1. With VIRTIO_NET_F_GUEST_CSUM negotiation, the driver doesn't
-+	 * need to calculate checksums for partially checksummed packets,
-+	 * as they're considered valid by the upper layer.
-+	 * 2. Without VIRTIO_NET_F_GUEST_CSUM negotiation, the driver only
-+	 * receives fully checksummed packets. The device may assist in
-+	 * validating these packets' checksums, so the driver won't have to.
-+	 */
-+	dev->features |= NETIF_F_RXCSUM;
-+
- 	if (virtio_has_feature(vdev, VIRTIO_NET_F_GUEST_TSO4) ||
- 	    virtio_has_feature(vdev, VIRTIO_NET_F_GUEST_TSO6))
- 		dev->features |= NETIF_F_GRO_HW;
 -- 
 2.43.0
 
