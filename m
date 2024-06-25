@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15501FBEF;
-	Tue, 25 Jun 2024 09:37:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015E5FBEF;
+	Tue, 25 Jun 2024 09:37:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308221; cv=none; b=WkZggVXmzJlS3Lws6j/QkIS7I6EEdcBbCb+OpwqrMQ983rqVorwH1I+twbhFvApRBKAnxKvi2HMv7A32KQB8T2Rpb3ALjSidtWW/Cdy+VoJ/0SZ8C1+B8Lph5SxxwYs/KKmz2NXfXw4si9Qncx27pzfUxnFhuVjGj8ic/fvx41o=
+	t=1719308224; cv=none; b=X13neNRbDLuWulAuorfPFwrO8otTY1LRelGQDCe4CAevV1RlEhka3CCEmycHcpLGa8N0oxKTKS8pEYy5illAb6y2/Lx0MBqHda/qsCumtzMxhgBj00L+VUVUr5fPM12o/CYr5yT0H+J8vdHBuA2widtqohjT0wTgo9LW8w9MxJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308221; c=relaxed/simple;
-	bh=V2hP/fT5X/vXd86BjeXTTKKezvwpy05xEZNep+aruKE=;
+	s=arc-20240116; t=1719308224; c=relaxed/simple;
+	bh=ATUiry40TwbchxJvfMvb5loQtXfgTme7pU6ABsTjWGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qv3+FC0eGkWg+Exyc2fFJZIPBjUlj4L4zW2QwmKVCpuJRwOX9DuLYG5D9JuUN3vifVDmR/WfSuMzImRW9AvEsDZVkVbMNXNoyW9vq4jqO23weS+L/gyWn5nr2f8kiOplUtwPYHwm/g0Qnxn2Aghx+PtfQ6FLYoUmDYWr2BdxLXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nQ/TbrsY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bTN8ZQMEpLr6KVlDkJgN5Phibl/Um4WNJDkelZgeWEHl2Oi/5UFuX2ypNu6f/aBtltNJevV+KEmQvxxFWdpjdbBlBMqpb/wO10kV2zShU1lO5obzxkN1aZK0Nz45Vjx6ldPxsgJNdBfo7IByey0zh6z9pYehsHjEtGYl/JtBPl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ojVl4XS1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nQ/TbrsY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90415C32781;
-	Tue, 25 Jun 2024 09:37:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ojVl4XS1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A53BC32781;
+	Tue, 25 Jun 2024 09:37:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308220;
-	bh=V2hP/fT5X/vXd86BjeXTTKKezvwpy05xEZNep+aruKE=;
+	s=korg; t=1719308223;
+	bh=ATUiry40TwbchxJvfMvb5loQtXfgTme7pU6ABsTjWGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nQ/TbrsYD7nLwbKC58X+Zify0szOBLzUcCtoGHYYUEzuV/VrY4gOHw7EVOY/HTADD
-	 /GGAFqHiohdPil4xbXrak6VK06k3LtQ46cLI0Kb5tn8EeUFW6CFMktxldj++GrtLuP
-	 IxyxUi8FdHaLjEaV2VJVV8n54ryutCGje9X+7Alw=
+	b=ojVl4XS17H96FaFQORnVBL1x7wFi59vrS2PJV8i7nHFbrVGFQuq+uddBOOYFTJo6E
+	 8pfy1nJrPqy+r2zkjPFSlS239Bw8rwslAJbxhJtwLwtRrgPuCd+w1YgJn12tp3X1wu
+	 pXt53ybQEb/XFA/Mq8uRf04Vqtjy3lqscH+aSUCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Charlene Liu <charlene.liu@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
+	Duncan Ma <duncan.ma@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
 	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 047/250] drm/amd/display: Exit idle optimizations before HDCP execution
-Date: Tue, 25 Jun 2024 11:30:05 +0200
-Message-ID: <20240625085549.867131196@linuxfoundation.org>
+Subject: [PATCH 6.9 048/250] drm/amd/display: Workaround register access in idle race with cursor
+Date: Tue, 25 Jun 2024 11:30:06 +0200
+Message-ID: <20240625085549.905335452@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -57,84 +56,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-[ Upstream commit f30a3bea92bdab398531129d187629fb1d28f598 ]
+[ Upstream commit b5b6d6251579a29dafdad25f4bc7f3ff7bfd2c86 ]
 
-[WHY]
-PSP can access DCN registers during command submission and we need
-to ensure that DCN is not in PG before doing so.
+[Why]
+Cursor update can be pre-empted by a request for setting target flip
+submission.
 
-[HOW]
-Add a callback to DM to lock and notify DC for idle optimization exit.
-It can't be DC directly because of a potential race condition with the
-link protection thread and the rest of DM operation.
+This causes an issue where we're in the middle of the exit sequence
+trying to log to DM, but the pre-emption starts another DMCUB
+command submission that requires being out of idle.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Charlene Liu <charlene.liu@amd.com>
-Acked-by: Alex Hung <alex.hung@amd.com>
+The DC lock aqusition can fail, and depending on the DM/OS interface
+it's possible that the function inserted into this thread must not fail.
+
+This means that lock aqusition must be skipped and exit *must* occur.
+
+[How]
+Modify when we consider idle as active. Consider it exited only once
+the exit has fully finished.
+
+Consider it as entered prior to actual notification.
+
+Since we're on the same core/thread the cached values are coherent
+and we'll see that we still need to exit. Once the cursor update resumes
+it'll continue doing the double exit but this won't cause a functional
+issue, just a (potential) redundant operation.
+
+Reviewed-by: Duncan Ma <duncan.ma@amd.com>
+Acked-by: Wayne Lin <wayne.lin@amd.com>
 Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c    | 10 ++++++++++
- drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h |  8 ++++++++
- 2 files changed, 18 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c | 23 +++++++++++++++-----
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c
-index 5e01c6e24cbc8..9a5a1726acaf8 100644
---- a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c
-+++ b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c
-@@ -88,6 +88,14 @@ static uint8_t is_cp_desired_hdcp2(struct mod_hdcp *hdcp)
- 			!hdcp->connection.is_hdcp2_revoked;
+diff --git a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
+index 6083b1dcf050a..a72e849eced3f 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
++++ b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
+@@ -1340,16 +1340,27 @@ void dc_dmub_srv_apply_idle_power_optimizations(const struct dc *dc, bool allow_
+ 	 * Powering up the hardware requires notifying PMFW and DMCUB.
+ 	 * Clearing the driver idle allow requires a DMCUB command.
+ 	 * DMCUB commands requires the DMCUB to be powered up and restored.
+-	 *
+-	 * Exit out early to prevent an infinite loop of DMCUB commands
+-	 * triggering exit low power - use software state to track this.
+ 	 */
+-	dc_dmub_srv->idle_allowed = allow_idle;
+ 
+-	if (!allow_idle)
++	if (!allow_idle) {
+ 		dc_dmub_srv_exit_low_power_state(dc);
+-	else
++		/*
++		 * Idle is considered fully exited only after the sequence above
++		 * fully completes. If we have a race of two threads exiting
++		 * at the same time then it's safe to perform the sequence
++		 * twice as long as we're not re-entering.
++		 *
++		 * Infinite command submission is avoided by using the
++		 * dm_execute_dmub_cmd submission instead of the "wake" helpers.
++		 */
++		dc_dmub_srv->idle_allowed = false;
++	} else {
++		/* Consider idle as notified prior to the actual submission to
++		 * prevent multiple entries. */
++		dc_dmub_srv->idle_allowed = true;
++
+ 		dc_dmub_srv_notify_idle(dc, allow_idle);
++	}
  }
  
-+static void exit_idle_optimizations(struct mod_hdcp *hdcp)
-+{
-+	struct mod_hdcp_dm *dm = &hdcp->config.dm;
-+
-+	if (dm->funcs.exit_idle_optimizations)
-+		dm->funcs.exit_idle_optimizations(dm->handle);
-+}
-+
- static enum mod_hdcp_status execution(struct mod_hdcp *hdcp,
- 		struct mod_hdcp_event_context *event_ctx,
- 		union mod_hdcp_transition_input *input)
-@@ -543,6 +551,8 @@ enum mod_hdcp_status mod_hdcp_process_event(struct mod_hdcp *hdcp,
- 	memset(&event_ctx, 0, sizeof(struct mod_hdcp_event_context));
- 	event_ctx.event = event;
- 
-+	exit_idle_optimizations(hdcp);
-+
- 	/* execute and transition */
- 	exec_status = execution(hdcp, &event_ctx, &hdcp->auth.trans_input);
- 	trans_status = transition(
-diff --git a/drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h b/drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h
-index a4d344a4db9e1..cdb17b093f2b8 100644
---- a/drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h
-+++ b/drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h
-@@ -156,6 +156,13 @@ struct mod_hdcp_ddc {
- 	} funcs;
- };
- 
-+struct mod_hdcp_dm {
-+	void *handle;
-+	struct {
-+		void (*exit_idle_optimizations)(void *handle);
-+	} funcs;
-+};
-+
- struct mod_hdcp_psp {
- 	void *handle;
- 	void *funcs;
-@@ -272,6 +279,7 @@ struct mod_hdcp_display_query {
- struct mod_hdcp_config {
- 	struct mod_hdcp_psp psp;
- 	struct mod_hdcp_ddc ddc;
-+	struct mod_hdcp_dm dm;
- 	uint8_t index;
- };
- 
+ bool dc_wake_and_execute_dmub_cmd(const struct dc_context *ctx, union dmub_rb_cmd *cmd,
 -- 
 2.43.0
 
