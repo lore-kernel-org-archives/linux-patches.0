@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA0811465A8;
-	Tue, 25 Jun 2024 09:46:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF1CD1465A8;
+	Tue, 25 Jun 2024 09:46:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308774; cv=none; b=YwE5Wydj485y5OYsJ/xo2bWmSAOeDY8HDAvA/74/O11cD78FEKL9rDhMxzfNCFXz5Ddnp615n4zgahOnOjDYfhpZXmYyDSXXdIqrKuD+XaS//cYaBIni1s91H3gvGzmbQktcBJV6RLK/hSp+uMNGQ1uMBOBlmft68bBuN9nsCb4=
+	t=1719308778; cv=none; b=rlfknvJ/uwCfpgKDXB+yePHfCtywsx9b3DP3rUrFvnzgBXr9yrxtAwmN/qwsllM75JA66Db+3s/yPZkrjpmQWVSz3DL+oA9oJlq5ICIaX29SAxW3x2iuZqzQs2rj3g5f9nnWdMsqAEyNGgA42C011YkbY2+yTRflPt3/6Y1L5Hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308774; c=relaxed/simple;
-	bh=23EoCVj6K+7nup2r27lSVYHIxfeiB4bmYGAJossaEjo=;
+	s=arc-20240116; t=1719308778; c=relaxed/simple;
+	bh=wW2Fn7DXm1y1wL5+QhOri0Khd/yPdOpDpyqL0i5yEro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IbELVmBRCAGX+EEau90Ch9uz1z58aqZokwnN7uiPrQkmqnK9x1v+7SPy7mfm7FCZmXT2Cc6vo0AK/xpSFR2gdUmH+XFlbqHkrq11ovcN3uPIO5lqT4ipVcvJ/WCQMyHvPwAK+nPJAZdFSxwV8QjNbHTaCoQm7e3vmXvl5ywSSrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2BRPuSli; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lrob1vam0r/7nhhFd4sbVkv4qBhuJFsDlgVrFddSF3C/0hpDOwb7fq3BsXe93Zz2X7SQB/uSAay0ILHN+vqURFHmflLPBNLL661OpRg50EuVi2RDhfuuGKZNtYmLivvAXDUijb2h2xA52i6twdMNJk5JU/5vzJAF9ET/3etTAic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CayMMLma; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2BRPuSli"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 618B4C32781;
-	Tue, 25 Jun 2024 09:46:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CayMMLma"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A32CC32781;
+	Tue, 25 Jun 2024 09:46:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308774;
-	bh=23EoCVj6K+7nup2r27lSVYHIxfeiB4bmYGAJossaEjo=;
+	s=korg; t=1719308777;
+	bh=wW2Fn7DXm1y1wL5+QhOri0Khd/yPdOpDpyqL0i5yEro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2BRPuSliBxGuOu3xScGqiHqbpolmURl3y2jRhRE9Te8c3KWlL2PDKlXx3oUDxccsa
-	 VIGEcb5H1zvWv/31gwWV2O9tyO/LaDaXD3kwyF0i+2rdVjWHHI8njQVUn+1FgVdQxs
-	 fRcE35tRmWzGha2hZ2Mkk9RE5zqhnwr6UTAKVpr8=
+	b=CayMMLmahqw76NocnaUlVShkKktlQ/S9qK5JUE9Y79ICV34bf99Xzoz7RIQ0rTPN3
+	 SAoXjjWamzQvBq82j2xYLfgd9cYX03hL5eJWIcChmxxfCKhITWoKms782gMOzGG6xo
+	 McV374j/dym11hUKnN1Ix6skXnQVBkxw0FbT56rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.9 204/250] drm/radeon: fix UBSAN warning in kv_dpm.c
-Date: Tue, 25 Jun 2024 11:32:42 +0200
-Message-ID: <20240625085555.884477036@linuxfoundation.org>
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 6.9 195/250] RDMA/mlx5: Remove extra unlock on error path
+Date: Tue, 25 Jun 2024 11:32:33 +0200
+Message-ID: <20240625085555.535446960@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -50,30 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-commit a498df5421fd737d11bfd152428ba6b1c8538321 upstream.
+commit c1eb2512596fb3542357bb6c34c286f5e0374538 upstream.
 
-Adds bounds check for sumo_vid_mapping_entry.
+The below commit lifted the locking out of this function but left this
+error path unlock behind resulting in unbalanced locking. Remove the
+missed unlock too.
 
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
+Fixes: 627122280c87 ("RDMA/mlx5: Add work to remove temporary entries from the cache")
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
+Link: https://lore.kernel.org/r/78090c210c750f47219b95248f9f782f34548bb1.1716900410.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/radeon/sumo_dpm.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/infiniband/hw/mlx5/mr.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/radeon/sumo_dpm.c
-+++ b/drivers/gpu/drm/radeon/sumo_dpm.c
-@@ -1619,6 +1619,8 @@ void sumo_construct_vid_mapping_table(st
+--- a/drivers/infiniband/hw/mlx5/mr.c
++++ b/drivers/infiniband/hw/mlx5/mr.c
+@@ -641,10 +641,8 @@ static int mlx5_cache_ent_insert(struct
+ 			new = &((*new)->rb_left);
+ 		if (cmp < 0)
+ 			new = &((*new)->rb_right);
+-		if (cmp == 0) {
+-			mutex_unlock(&cache->rb_lock);
++		if (cmp == 0)
+ 			return -EEXIST;
+-		}
+ 	}
  
- 	for (i = 0; i < SUMO_MAX_HARDWARE_POWERLEVELS; i++) {
- 		if (table[i].ulSupportedSCLK != 0) {
-+			if (table[i].usVoltageIndex >= SUMO_MAX_NUMBER_VOLTAGES)
-+				continue;
- 			vid_mapping_table->entries[table[i].usVoltageIndex].vid_7bit =
- 				table[i].usVoltageID;
- 			vid_mapping_table->entries[table[i].usVoltageIndex].vid_2bit =
+ 	/* Add new node and rebalance tree. */
 
 
