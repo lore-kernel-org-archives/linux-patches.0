@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2E41465A8;
-	Tue, 25 Jun 2024 09:46:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12FF71465A8;
+	Tue, 25 Jun 2024 09:46:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308801; cv=none; b=uJCVOwpECWEBq+zLud9QJON7zAXX2C7lByarYo72ROQpowXjpNdPZTqmXmQg5WnSStsd59t4MWDN+iYGQolIAhbWWPsoJvjOCbSlWfdzihFqPbBepxwg3BJ4oruM/2bfojxh2ue3Q8y9N7D5uwMxjEpVDx/rwsBYjWPs6koF8bQ=
+	t=1719308804; cv=none; b=MR6frToHApEemBlLx2ppZGbEh09eixBxC9f9aogsgMaBwuNFZKsilCVu3WM0WIRXMmpIwLViPk8U/TVpGzmrg7jkQq2lRx3fZFnlER7IYpfrnL0SC0YRQ9hSuLbUbtsA9qe2RxQfbkDyFPV8Ag2O1EP1Y5JICXEd7bmeVZkbWe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308801; c=relaxed/simple;
-	bh=p29PLAnKFUCMxrYSrvvPiYfjythCtG5CuhoSYr1z+6I=;
+	s=arc-20240116; t=1719308804; c=relaxed/simple;
+	bh=ThUZl5A6RoTZnYz6dDhmQyr/m5A8IAKZFtrdgm2mt2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cOB6D9xaTnvPzw98MlT3IiNeZiUY3oXFA/egX0YjXYQEEl3bfcFLk+Gv8DM83Uuhj5YygRnZl+ZMhc/VOGCC/ZW356Mrw2+5CDYYj86VAB+gwarRdWlPIDf0X6zW44f7A3lQQNPxrOtnBJDB5eghedYUrOJth0xsmjAktVrmVUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0rNawRiD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DUJxFjA0alzXPG5Xc8p+vl7vo0HVpZyY64dfPbilRdrDwjjVt7OvmfGXl//Tvwud07xkbsW/OJEbOzbx98pt248NzqbP07u0DMi0VBwdo0ZgcceEwUeSlNkQcO4TnQ3sNRAg+1WiUDx4yyW9tD/JU/5vLaiEN+SUtOfSAK2jL8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oi8++TQn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0rNawRiD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC67AC32781;
-	Tue, 25 Jun 2024 09:46:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oi8++TQn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC09C32781;
+	Tue, 25 Jun 2024 09:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308801;
-	bh=p29PLAnKFUCMxrYSrvvPiYfjythCtG5CuhoSYr1z+6I=;
+	s=korg; t=1719308803;
+	bh=ThUZl5A6RoTZnYz6dDhmQyr/m5A8IAKZFtrdgm2mt2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0rNawRiDbqiJnYagY3fWhEb9Pkl1ZDy+F1BjxNbhrDkzkOqiL+RqutZR38YY8L1G1
-	 SHQm/OTTtJhsv5z2FMcGB3DMmflBI7MDSpUBDehfz9Jp89elULXyy44ngudJlukwAP
-	 qHgvT3iPeMaUJKdbvJ3qILOGDa5b30P5QMKTNIis=
+	b=Oi8++TQnwPstMmx3q/J8jXbeui3hUAv1lgnGmu6c5AXyPAhkJmwyhgjsW5RoR1FY1
+	 yCSJmDNM5alMj/c6Ur4d1DkvH08a7iG/ByDqCD9F3hZA2tK6Aza3pOYqgNMR9iWQae
+	 vvIM8Zc74KEChVVX1LzvF0wo+tdNrJz1mO/4+J4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>
-Subject: [PATCH 6.9 245/250] wifi: ath12k: check M3 buffer size as well whey trying to reuse it
-Date: Tue, 25 Jun 2024 11:33:23 +0200
-Message-ID: <20240625085557.455792857@linuxfoundation.org>
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.9 246/250] ASoC: Intel: sof-sdw: really remove FOUR_SPEAKER quirk
+Date: Tue, 25 Jun 2024 11:33:24 +0200
+Message-ID: <20240625085557.493272685@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -51,92 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-commit 05090ae82f44570fefddb4e1be1d7e5770d6de40 upstream.
+commit 0bab4cfd7c1560095e29919e2ebe01783b9096dc upstream.
 
-Currently in recovery/resume cases, we do not free M3 buffer but
-instead will reuse it. This is done by checking m3_mem->vaddr: if it
-is not NULL we believe M3 buffer is ready and go ahead to reuse it.
+Two independent GitHub PRs let to the addition of one quirk after it
+was removed..
 
-Note that m3_mem->size is not checked. This is safe for now because
-currently M3 reuse logic only gets executed in recovery/resume cases
-and the size keeps unchanged in either of them.
-
-However ideally the size should be checked as well, to make the code
-safer. So add the check there. Now if that check fails, free old M3
-buffer and reallocate a new one.
-
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
-
-Fixes: 303c017821d8 ("wifi: ath12k: fix kernel crash during resume")
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240425021740.29221-1-quic_bqiang@quicinc.com
+Fixes: b10cb955c6c0 ("ASoC: Intel: sof_sdw: add quirk for Dell SKU 0C0F")
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20240426152123.36284-10-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath12k/qmi.c |   36 +++++++++++++++++++---------------
- 1 file changed, 21 insertions(+), 15 deletions(-)
+ sound/soc/intel/boards/sof_sdw.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/net/wireless/ath/ath12k/qmi.c
-+++ b/drivers/net/wireless/ath/ath12k/qmi.c
-@@ -2685,6 +2685,19 @@ out:
- 	return ret;
- }
- 
-+static void ath12k_qmi_m3_free(struct ath12k_base *ab)
-+{
-+	struct m3_mem_region *m3_mem = &ab->qmi.m3_mem;
-+
-+	if (!m3_mem->vaddr)
-+		return;
-+
-+	dma_free_coherent(ab->dev, m3_mem->size,
-+			  m3_mem->vaddr, m3_mem->paddr);
-+	m3_mem->vaddr = NULL;
-+	m3_mem->size = 0;
-+}
-+
- static int ath12k_qmi_m3_load(struct ath12k_base *ab)
- {
- 	struct m3_mem_region *m3_mem = &ab->qmi.m3_mem;
-@@ -2715,8 +2728,14 @@ static int ath12k_qmi_m3_load(struct ath
- 		m3_len = fw->size;
- 	}
- 
--	if (m3_mem->vaddr)
--		goto skip_m3_alloc;
-+	/* In recovery/resume cases, M3 buffer is not freed, try to reuse that */
-+	if (m3_mem->vaddr) {
-+		if (m3_mem->size >= m3_len)
-+			goto skip_m3_alloc;
-+
-+		/* Old buffer is too small, free and reallocate */
-+		ath12k_qmi_m3_free(ab);
-+	}
- 
- 	m3_mem->vaddr = dma_alloc_coherent(ab->dev,
- 					   m3_len, &m3_mem->paddr,
-@@ -2740,19 +2759,6 @@ out:
- 	return ret;
- }
- 
--static void ath12k_qmi_m3_free(struct ath12k_base *ab)
--{
--	struct m3_mem_region *m3_mem = &ab->qmi.m3_mem;
--
--	if (!m3_mem->vaddr)
--		return;
--
--	dma_free_coherent(ab->dev, m3_mem->size,
--			  m3_mem->vaddr, m3_mem->paddr);
--	m3_mem->vaddr = NULL;
--	m3_mem->size = 0;
--}
--
- static int ath12k_qmi_wlanfw_m3_info_send(struct ath12k_base *ab)
- {
- 	struct m3_mem_region *m3_mem = &ab->qmi.m3_mem;
+--- a/sound/soc/intel/boards/sof_sdw.c
++++ b/sound/soc/intel/boards/sof_sdw.c
+@@ -436,8 +436,7 @@ static const struct dmi_system_id sof_sd
+ 			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0C0F")
+ 		},
+ 		.driver_data = (void *)(SOF_SDW_TGL_HDMI |
+-					RT711_JD2 |
+-					SOF_SDW_FOUR_SPK),
++					RT711_JD2),
+ 	},
+ 	{
+ 		.callback = sof_sdw_quirk_cb,
 
 
