@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E279A14A0B7;
-	Tue, 25 Jun 2024 09:58:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC7EC14A0BD;
+	Tue, 25 Jun 2024 09:58:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309518; cv=none; b=KVr+Is6ciKybxGJsFMGyZCfGzKsln8c/oL9+GWI09nFioJ+pLDKxcR9yFHYcvb4MWazTtQTBiRIe0rVbYciSvQq0FcCJvNTyazkEjONxpygZoh9m/FkWOdfl9aiwvJermgDRY4ailgLbRGO5YZOtPfFzel5I3+yCNaZEnG4voC4=
+	t=1719309520; cv=none; b=llm2bBwsdPaVP80iLS3TF3s9wXBP74DedkQA5GCLPy8xKesBZxqh0PvfbWWXKRirXBDMuJDj83IRHLtvIJ8tF2muodUsVtWA49LrH4L7IVJGIer/SM2pWGnKWLiFof6G4uZ6kNTGgrleYVN4HnhpurwkQZhgVm9UsdWwNRtLReQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309518; c=relaxed/simple;
-	bh=LAfFkxfBjZVAIq6q5nINoD9Pu63odIewZgjuaK30CCM=;
+	s=arc-20240116; t=1719309520; c=relaxed/simple;
+	bh=DCTuxaxZEheeDZSBaLginPzWEUrhEMN6s2+QMTKSrqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dWeTLFPXUb3t3OQZRKkt+FSWMTY5fhI9+mk6v5JVW2S3Ssr8/HKnjCA9AvtCmMZMFFmNNrZMzB+eFrz8SRXmLVIu02qzVXpKZZahuGk/22cKItaYK/51Yf1Xv4tGyPGuE6DWJOQDPqu80D+eFGxPK/wR4qEj+3EKnQkSARC4q5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oXM7uoGW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=np/zbwg0YssztwbedhzR6um//LWdPR5FycDuc0An+HxQxxiOjNqixP1CJV3/ou+54xY6LRO2nLGGXy+pA0/k4CiIFa7RoKpEkJmHI7xqTJcjpjcBSWl1G2M4k8eqWb84oPcW166gQZLV6qmyNjD73ZNFaGaf1eDNFnFy3tcM23o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rBjtPorU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oXM7uoGW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69938C32781;
-	Tue, 25 Jun 2024 09:58:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rBjtPorU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5593DC32781;
+	Tue, 25 Jun 2024 09:58:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309517;
-	bh=LAfFkxfBjZVAIq6q5nINoD9Pu63odIewZgjuaK30CCM=;
+	s=korg; t=1719309520;
+	bh=DCTuxaxZEheeDZSBaLginPzWEUrhEMN6s2+QMTKSrqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oXM7uoGWsHfraW3iodDy8iPleCG2OtHDluP++PHAGFQoTPyzLnPB2Ws8dIQrhGvSV
-	 eStyUxUQOygWWIOEdR/EbZf+tS0uyhc5Q3JYW4EvZJpqo3xaRTdW4wWtQiHfyGyjlc
-	 Y62iq0KSsewTyP/q5jK15Rr6Wsm8rBt5WQjCZM9Q=
+	b=rBjtPorUANNJKc2r4LzdVsWl2la445hF9uKvUnN1xlybDf5mvvT2jtoWkcmTO/fPa
+	 Ray9Am5wf2gS8tB9YeFAsqr2c+LZAbZVbgL5e2Z2H3j2ShsfRqLNyf8TB7R1ZDI3zS
+	 YzoU54NP5fD4nMlFHlePm0k8ArpmNKcucxV/yutg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Daniel Starke <daniel.starke@siemens.com>,
+	syzbot <syzbot+dbac96d8e73b61aa559c@syzkaller.appspotmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 043/131] usb: gadget: function: Remove usage of the deprecated ida_simple_xx() API
-Date: Tue, 25 Jun 2024 11:33:18 +0200
-Message-ID: <20240625085527.588755007@linuxfoundation.org>
+Subject: [PATCH 6.1 044/131] tty: add the option to have a tty reject a new ldisc
+Date: Tue, 25 Jun 2024 11:33:19 +0200
+Message-ID: <20240625085527.625846117@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085525.931079317@linuxfoundation.org>
 References: <20240625085525.931079317@linuxfoundation.org>
@@ -50,95 +55,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 920e7522e3bab5ebc2fb0cc1a034f4470c87fa97 ]
+[ Upstream commit 6bd23e0c2bb6c65d4f5754d1456bc9a4427fc59b ]
 
-ida_alloc() and ida_free() should be preferred to the deprecated
-ida_simple_get() and ida_simple_remove().
+... and use it to limit the virtual terminals to just N_TTY.  They are
+kind of special, and in particular, the "con_write()" routine violates
+the "writes cannot sleep" rule that some ldiscs rely on.
 
-Note that the upper limit of ida_simple_get() is exclusive, but the one of
-ida_alloc_max() is inclusive. So a -1 has been added when needed.
+This avoids the
 
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/7cd361e2b377a5373968fa7deee4169229992a1e.1713107386.git.christophe.jaillet@wanadoo.fr
+   BUG: sleeping function called from invalid context at kernel/printk/printk.c:2659
+
+when N_GSM has been attached to a virtual console, and gsmld_write()
+calls con_write() while holding a spinlock, and con_write() then tries
+to get the console lock.
+
+Tested-by: Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
+Cc: Jiri Slaby <jirislaby@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Daniel Starke <daniel.starke@siemens.com>
+Reported-by: syzbot <syzbot+dbac96d8e73b61aa559c@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=dbac96d8e73b61aa559c
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/20240423163339.59780-1-torvalds@linux-foundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_hid.c     | 6 +++---
- drivers/usb/gadget/function/f_printer.c | 6 +++---
- drivers/usb/gadget/function/rndis.c     | 4 ++--
- 3 files changed, 8 insertions(+), 8 deletions(-)
+ drivers/tty/tty_ldisc.c    |  6 ++++++
+ drivers/tty/vt/vt.c        | 10 ++++++++++
+ include/linux/tty_driver.h |  8 ++++++++
+ 3 files changed, 24 insertions(+)
 
-diff --git a/drivers/usb/gadget/function/f_hid.c b/drivers/usb/gadget/function/f_hid.c
-index f1ca9250cad96..bb558a575cb15 100644
---- a/drivers/usb/gadget/function/f_hid.c
-+++ b/drivers/usb/gadget/function/f_hid.c
-@@ -1025,9 +1025,9 @@ static inline int hidg_get_minor(void)
- {
- 	int ret;
- 
--	ret = ida_simple_get(&hidg_ida, 0, 0, GFP_KERNEL);
-+	ret = ida_alloc(&hidg_ida, GFP_KERNEL);
- 	if (ret >= HIDG_MINORS) {
--		ida_simple_remove(&hidg_ida, ret);
-+		ida_free(&hidg_ida, ret);
- 		ret = -ENODEV;
+diff --git a/drivers/tty/tty_ldisc.c b/drivers/tty/tty_ldisc.c
+index 776d8a62f77cc..7ca7731fa78ae 100644
+--- a/drivers/tty/tty_ldisc.c
++++ b/drivers/tty/tty_ldisc.c
+@@ -546,6 +546,12 @@ int tty_set_ldisc(struct tty_struct *tty, int disc)
+ 		goto out;
  	}
  
-@@ -1172,7 +1172,7 @@ static const struct config_item_type hid_func_type = {
++	if (tty->ops->ldisc_ok) {
++		retval = tty->ops->ldisc_ok(tty, disc);
++		if (retval)
++			goto out;
++	}
++
+ 	old_ldisc = tty->ldisc;
  
- static inline void hidg_put_minor(int minor)
- {
--	ida_simple_remove(&hidg_ida, minor);
-+	ida_free(&hidg_ida, minor);
+ 	/* Shutdown the old discipline. */
+diff --git a/drivers/tty/vt/vt.c b/drivers/tty/vt/vt.c
+index 48a9ed7c93c97..e2f9348725ff1 100644
+--- a/drivers/tty/vt/vt.c
++++ b/drivers/tty/vt/vt.c
+@@ -3440,6 +3440,15 @@ static void con_cleanup(struct tty_struct *tty)
+ 	tty_port_put(&vc->port);
  }
  
- static void hidg_free_inst(struct usb_function_instance *f)
-diff --git a/drivers/usb/gadget/function/f_printer.c b/drivers/usb/gadget/function/f_printer.c
-index a881c69b1f2bf..8545656419c71 100644
---- a/drivers/usb/gadget/function/f_printer.c
-+++ b/drivers/usb/gadget/function/f_printer.c
-@@ -1316,9 +1316,9 @@ static inline int gprinter_get_minor(void)
- {
- 	int ret;
++/*
++ * We can't deal with anything but the N_TTY ldisc,
++ * because we can sleep in our write() routine.
++ */
++static int con_ldisc_ok(struct tty_struct *tty, int ldisc)
++{
++	return ldisc == N_TTY ? 0 : -EINVAL;
++}
++
+ static int default_color           = 7; /* white */
+ static int default_italic_color    = 2; // green (ASCII)
+ static int default_underline_color = 3; // cyan (ASCII)
+@@ -3566,6 +3575,7 @@ static const struct tty_operations con_ops = {
+ 	.resize = vt_resize,
+ 	.shutdown = con_shutdown,
+ 	.cleanup = con_cleanup,
++	.ldisc_ok = con_ldisc_ok,
+ };
  
--	ret = ida_simple_get(&printer_ida, 0, 0, GFP_KERNEL);
-+	ret = ida_alloc(&printer_ida, GFP_KERNEL);
- 	if (ret >= PRINTER_MINORS) {
--		ida_simple_remove(&printer_ida, ret);
-+		ida_free(&printer_ida, ret);
- 		ret = -ENODEV;
- 	}
- 
-@@ -1327,7 +1327,7 @@ static inline int gprinter_get_minor(void)
- 
- static inline void gprinter_put_minor(int minor)
- {
--	ida_simple_remove(&printer_ida, minor);
-+	ida_free(&printer_ida, minor);
- }
- 
- static int gprinter_setup(int);
-diff --git a/drivers/usb/gadget/function/rndis.c b/drivers/usb/gadget/function/rndis.c
-index 29bf8664bf582..12c5d9cf450c1 100644
---- a/drivers/usb/gadget/function/rndis.c
-+++ b/drivers/usb/gadget/function/rndis.c
-@@ -869,12 +869,12 @@ EXPORT_SYMBOL_GPL(rndis_msg_parser);
- 
- static inline int rndis_get_nr(void)
- {
--	return ida_simple_get(&rndis_ida, 0, 1000, GFP_KERNEL);
-+	return ida_alloc_max(&rndis_ida, 999, GFP_KERNEL);
- }
- 
- static inline void rndis_put_nr(int nr)
- {
--	ida_simple_remove(&rndis_ida, nr);
-+	ida_free(&rndis_ida, nr);
- }
- 
- struct rndis_params *rndis_register(void (*resp_avail)(void *v), void *v)
+ static struct cdev vc0_cdev;
+diff --git a/include/linux/tty_driver.h b/include/linux/tty_driver.h
+index e00034118c7bc..1df868130adce 100644
+--- a/include/linux/tty_driver.h
++++ b/include/linux/tty_driver.h
+@@ -155,6 +155,13 @@ struct serial_struct;
+  *
+  *	Optional. Called under the @tty->termios_rwsem. May sleep.
+  *
++ * @ldisc_ok: ``int ()(struct tty_struct *tty, int ldisc)``
++ *
++ *	This routine allows the @tty driver to decide if it can deal
++ *	with a particular @ldisc.
++ *
++ *	Optional. Called under the @tty->ldisc_sem and @tty->termios_rwsem.
++ *
+  * @set_ldisc: ``void ()(struct tty_struct *tty)``
+  *
+  *	This routine allows the @tty driver to be notified when the device's
+@@ -374,6 +381,7 @@ struct tty_operations {
+ 	void (*hangup)(struct tty_struct *tty);
+ 	int (*break_ctl)(struct tty_struct *tty, int state);
+ 	void (*flush_buffer)(struct tty_struct *tty);
++	int (*ldisc_ok)(struct tty_struct *tty, int ldisc);
+ 	void (*set_ldisc)(struct tty_struct *tty);
+ 	void (*wait_until_sent)(struct tty_struct *tty, int timeout);
+ 	void (*send_xchar)(struct tty_struct *tty, char ch);
 -- 
 2.43.0
 
