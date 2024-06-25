@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A10B914A090;
-	Tue, 25 Jun 2024 09:55:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D39D14D294;
+	Tue, 25 Jun 2024 09:55:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309341; cv=none; b=UGzI6TkRzdMFUpYbw+t37k3cT43StAJBUITy+aAEYCN7gDneXenJH93eJvbjNY7HbKSnvFppjJzIl9AJx6i6YJcinndeUzxSPD+1ONVDaOK0MvptuTbxU+jd15On3J6cSaVvUSCs1EehnLIjpcXCyxbi8ai/EFL954y0KxscIXQ=
+	t=1719309344; cv=none; b=OSF5SvRvFHacV6RX4xnB/dQIoMz1mShIxxeJk4uRzpPsimzmBpf/2aPpZ0gIviCA3bArxUk4ZP8SghY+yIzMmoEBkSWrgwOsILBJKj5fc5ydxhMzpNP70tuHUvGtQmk2zsUebNv5h73djZu2G93bFYG/3p7mQ+Yc/0jmPP66pTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309341; c=relaxed/simple;
-	bh=sMxV0u7XHxF/Yfks5X8PbalLxKI8oZs+6Jkohv+ROWg=;
+	s=arc-20240116; t=1719309344; c=relaxed/simple;
+	bh=FEv67CNfgvamQv3usp42ck/XEBi4Lm8jQAT1C8CKA08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B2jayAQq/qsGnFRc40I7pJQApnAN5cMIpQ/WQCFBKPrBRAOlvU+wIOQLu+Apj6eXmV+vjbQuAp1tEGGzfJyMgHa+2kEv5nFP4C+I0e3VqAOwm/uK8aEIL/HsI820UFKm2n2BaPlff96XxEbNJfVWx5p3BkLZ3dzOHGTDPCqRQeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hRxY5pyP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E2TQvsj3tKr0jr/KRwMJqVxlUeYVfi5VoFKsEQ3NC+UY9AclsJ91IxulQIt0u+aZhfdsqHyU4C1ZPJDBLymi0LGqVralHUZyWNYr2O3eStp6XdFMIGW8UkBxc5bOkzqTybp2ESZhRE35QF+77RCC1CPCHFK19e2y/UCQP9bfzWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JIjNOkYG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hRxY5pyP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2396AC32781;
-	Tue, 25 Jun 2024 09:55:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JIjNOkYG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C6C8C4AF0D;
+	Tue, 25 Jun 2024 09:55:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309341;
-	bh=sMxV0u7XHxF/Yfks5X8PbalLxKI8oZs+6Jkohv+ROWg=;
+	s=korg; t=1719309344;
+	bh=FEv67CNfgvamQv3usp42ck/XEBi4Lm8jQAT1C8CKA08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hRxY5pyPA5OcRirpDEo8CNJpij2fC2IwwXLeLnzCpJmIZJkw2ofvHnssLqnmKJ3YD
-	 ah7p5Oib+fMTISpuKymxSOSkmmsqR5foBX1Nlc90a7A74rsZKRekr9x2mVcBNkPVZG
-	 NeD0yTlb2t3NHw37dtpVjn7klfU7FSCj+Iz1GSi0=
+	b=JIjNOkYGvmltu6MoTc3AEWZkNvL26VuFsGqiNFJhMRDidAti/6eW5/TESl56G7aCs
+	 XDBHhgUEFqm8XWIS6zIlsmme6wlPvEZ0XwJy1YxZi3knyEDSHyvuRYdclyh8iG4SIs
+	 26Qu4j53K55yy3b6jW6zIjHHupwa3IKKjvzUSo6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Josef Bacik <jbacik@fb.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Markus Pargmann <mpa@pengutronix.de>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 176/192] nbd: Improve the documentation of the locking assumptions
-Date: Tue, 25 Jun 2024 11:34:08 +0200
-Message-ID: <20240625085543.915962245@linuxfoundation.org>
+	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 150/192] ALSA: hda/realtek: Limit mic boost on N14AP7
+Date: Tue, 25 Jun 2024 11:33:42 +0200
+Message-ID: <20240625085542.917528788@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -55,60 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
 
-[ Upstream commit 2a6751e052ab4789630bc889c814037068723bc1 ]
+commit 86a433862912f52597263aa224a9ed82bcd533bf upstream.
 
-Document locking assumptions with lockdep_assert_held() instead of source
-code comments. The advantage of lockdep_assert_held() is that it is
-verified at runtime if lockdep is enabled in the kernel config.
+The internal mic boost on the N14AP7 is too high. Fix this by applying the
+ALC269_FIXUP_LIMIT_INT_MIC_BOOST fixup to the machine to limit the gain.
 
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Josef Bacik <jbacik@fb.com>
-Cc: Yu Kuai <yukuai3@huawei.com>
-Cc: Markus Pargmann <mpa@pengutronix.de>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20240510202313.25209-4-bvanassche@acm.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: e56d4b633fff ("nbd: Fix signal handling")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20240605153923.2837-1-edson.drosdeck@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/nbd.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
-index df738eab02433..a906674f71147 100644
---- a/drivers/block/nbd.c
-+++ b/drivers/block/nbd.c
-@@ -569,7 +569,6 @@ static inline int was_interrupted(int result)
- 	return result == -ERESTARTSYS || result == -EINTR;
- }
- 
--/* always call with the tx_lock held */
- static int nbd_send_cmd(struct nbd_device *nbd, struct nbd_cmd *cmd, int index)
- {
- 	struct request *req = blk_mq_rq_from_pdu(cmd);
-@@ -586,6 +585,9 @@ static int nbd_send_cmd(struct nbd_device *nbd, struct nbd_cmd *cmd, int index)
- 	u32 nbd_cmd_flags = 0;
- 	int sent = nsock->sent, skip = 0;
- 
-+	lockdep_assert_held(&cmd->lock);
-+	lockdep_assert_held(&nsock->tx_lock);
-+
- 	iov_iter_kvec(&from, ITER_SOURCE, &iov, 1, sizeof(request));
- 
- 	type = req_to_nbd_cmd_type(req);
-@@ -996,6 +998,8 @@ static int nbd_handle_cmd(struct nbd_cmd *cmd, int index)
- 	struct nbd_sock *nsock;
- 	int ret;
- 
-+	lockdep_assert_held(&cmd->lock);
-+
- 	config = nbd_get_config_unlocked(nbd);
- 	if (!config) {
- 		dev_err_ratelimited(disk_to_dev(nbd->disk),
--- 
-2.43.0
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10316,6 +10316,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1b7d, 0xa831, "Ordissimo EVE2 ", ALC269VB_FIXUP_ORDISSIMO_EVE2), /* Also known as Malata PC-B1303 */
+ 	SND_PCI_QUIRK(0x1c06, 0x2013, "Lemote A1802", ALC269_FIXUP_LEMOTE_A1802),
+ 	SND_PCI_QUIRK(0x1c06, 0x2015, "Lemote A190X", ALC269_FIXUP_LEMOTE_A190X),
++	SND_PCI_QUIRK(0x1c6c, 0x122a, "Positivo N14AP7", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x1c6c, 0x1251, "Positivo N14KP6-TG", ALC288_FIXUP_DELL1_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1d05, 0x1132, "TongFang PHxTxX1", ALC256_FIXUP_SET_COEF_DEFAULTS),
+ 	SND_PCI_QUIRK(0x1d05, 0x1096, "TongFang GMxMRxx", ALC269_FIXUP_NO_SHUTUP),
 
 
