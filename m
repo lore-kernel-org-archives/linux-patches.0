@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BACAA147C7F;
-	Tue, 25 Jun 2024 09:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AAA024B34;
+	Tue, 25 Jun 2024 09:52:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309118; cv=none; b=T2KQViA3GF2JLKC3oyuxAjYuFCkRGEftnZRGrQYuufK4Buv1O7cGq9Pqsd3eG7G83wviOU2/3pxxp73FIc9HSuNoLHegwl5vyGoDfIUvMGQAwX/78aTrd43K5m/xrzIqA3SbfHGeOlmAZQfwFhREjrlmKJ5VL28s80NZqS4fLvo=
+	t=1719309122; cv=none; b=nkx81iAVv33mZ74c18oCWAZLiCsarJXxYUPUg0j0+pge5ih+qC8lrrCFTy2ZxXiPOAqjiMKD3lQ3Y8eCS1hGwAUkQLvxPFTwPsM/OWERmKJkowxUYg6QncxQNGSanEDYgtPVZYJrIax0SV8uDVYXYg60wQfeO3/J3/PM8fwXlNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309118; c=relaxed/simple;
-	bh=bEAFdZ1UwEVcE6v7UW6nJQXWMRz6EkLc2Zvvs0CZ/PM=;
+	s=arc-20240116; t=1719309122; c=relaxed/simple;
+	bh=10xL8XP9GbggTN0xGRM4NOyIYZb96YO3hhXc9kN0a7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BBz84mH85ly8g5tpAYyaWwhZazQxbFI37oeCzjJBneFCoXtNrd/pKWLtLTwcoHUbLG58C91Mpl0pFyENy1zwGPOvrqBCeRmoW/0ASlTzN3MbSKLpieAbPTAMh7/NF7uEn8KMyLgS+jYaxig16yfffIQ/qeflp/2n5T0bK0DFSBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ahg1XqW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kffXnl17fUzYgwYRj2Bn166VJ3emcDwFzXH9HkKp5J4sMXC8BE+PS/5MENHxSZNB3D04JbYyoTqsi63B5QKqjmB/AfTXiNW3DIfVE7lJhfIshOU9PoLWDsrduFT36zQb99tWlXdenUvlQs5aRM2YXNmn1oi19bNFsv1A0x9di/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+jfMyqs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ahg1XqW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ADF0C32781;
-	Tue, 25 Jun 2024 09:51:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+jfMyqs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2801AC4AF09;
+	Tue, 25 Jun 2024 09:52:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309118;
-	bh=bEAFdZ1UwEVcE6v7UW6nJQXWMRz6EkLc2Zvvs0CZ/PM=;
+	s=korg; t=1719309121;
+	bh=10xL8XP9GbggTN0xGRM4NOyIYZb96YO3hhXc9kN0a7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ahg1XqW3GveF4TC7mnDEgorIEYAdYYILwx8uctudBvBDpC4pfGYw/DK99IGLLrD1
-	 wePYO4c/c30Sn1mazcQXpvWM3Y8scjt2DrDZrAdKRBqjrWIpqR5sD2twVQ+4hbEZpU
-	 zqAuzZM5wfPT2tJm+d/9upUvnvcT0GFYKiDzHChM=
+	b=x+jfMyqsIEp78OfPCFGA38Yiu8D9c/ZTS/F6E6GoPHsqjNAHjqGlmEE3I21Ec8m48
+	 0m0vpZRf7aTi5jyuESQQ7G5gB6BPPlhojWa+k6Mwkv0yqLWj/RAt0rZe4tyAQyJeOe
+	 TgP0fl0gGUMjUtyJeNRAqDqwr1FI4V7ZFylk0u68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Marcin Szycik <marcin.szycik@linux.intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	Simon Horman <horms@kernel.org>,
-	Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 101/192] ice: Fix VSI list rule with ICE_SW_LKUP_LAST type
-Date: Tue, 25 Jun 2024 11:32:53 +0200
-Message-ID: <20240625085541.054097009@linuxfoundation.org>
+Subject: [PATCH 6.6 102/192] bnxt_en: Restore PTP tx_avail count in case of skb_pad() error
+Date: Tue, 25 Jun 2024 11:32:54 +0200
+Message-ID: <20240625085541.092365500@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -57,63 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marcin Szycik <marcin.szycik@linux.intel.com>
+From: Pavan Chebbi <pavan.chebbi@broadcom.com>
 
-[ Upstream commit 74382aebc9035470ec4c789bdb0d09d8c14f261e ]
+[ Upstream commit 1e7962114c10957fe4d10a15eb714578a394e90b ]
 
-Adding/updating VSI list rule, as well as allocating/freeing VSI list
-resource are called several times with type ICE_SW_LKUP_LAST, which fails
-because ice_update_vsi_list_rule() and ice_aq_alloc_free_vsi_list()
-consider it invalid. Allow calling these functions with ICE_SW_LKUP_LAST.
+The current code only restores PTP tx_avail count when we get DMA
+mapping errors.  Fix it so that the PTP tx_avail count will be
+restored for both DMA mapping errors and skb_pad() errors.
+Otherwise PTP TX timestamp will not be available after a PTP
+packet hits the skb_pad() error.
 
-This fixes at least one issue in switchdev mode, where the same rule with
-different action cannot be added, e.g.:
-
-  tc filter add dev $PF1 ingress protocol arp prio 0 flower skip_sw \
-    dst_mac ff:ff:ff:ff:ff:ff action mirred egress redirect dev $VF1_PR
-  tc filter add dev $PF1 ingress protocol arp prio 0 flower skip_sw \
-    dst_mac ff:ff:ff:ff:ff:ff action mirred egress redirect dev $VF2_PR
-
-Fixes: 0f94570d0cae ("ice: allow adding advanced rules")
-Suggested-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Marcin Szycik <marcin.szycik@linux.intel.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Fixes: 83bb623c968e ("bnxt_en: Transmit and retrieve packet timestamps")
+Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
+Signed-off-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://lore.kernel.org/r/20240618210206.981885-1-anthony.l.nguyen@intel.com
+Link: https://lore.kernel.org/r/20240618215313.29631-4-michael.chan@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_switch.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_switch.c b/drivers/net/ethernet/intel/ice/ice_switch.c
-index 4c6d58bb2690d..d2a2388d4fa0a 100644
---- a/drivers/net/ethernet/intel/ice/ice_switch.c
-+++ b/drivers/net/ethernet/intel/ice/ice_switch.c
-@@ -1829,7 +1829,8 @@ ice_aq_alloc_free_vsi_list(struct ice_hw *hw, u16 *vsi_list_id,
- 	    lkup_type == ICE_SW_LKUP_ETHERTYPE_MAC ||
- 	    lkup_type == ICE_SW_LKUP_PROMISC ||
- 	    lkup_type == ICE_SW_LKUP_PROMISC_VLAN ||
--	    lkup_type == ICE_SW_LKUP_DFLT) {
-+	    lkup_type == ICE_SW_LKUP_DFLT ||
-+	    lkup_type == ICE_SW_LKUP_LAST) {
- 		sw_buf->res_type = cpu_to_le16(ICE_AQC_RES_TYPE_VSI_LIST_REP);
- 	} else if (lkup_type == ICE_SW_LKUP_VLAN) {
- 		if (opc == ice_aqc_opc_alloc_res)
-@@ -2775,7 +2776,8 @@ ice_update_vsi_list_rule(struct ice_hw *hw, u16 *vsi_handle_arr, u16 num_vsi,
- 	    lkup_type == ICE_SW_LKUP_ETHERTYPE_MAC ||
- 	    lkup_type == ICE_SW_LKUP_PROMISC ||
- 	    lkup_type == ICE_SW_LKUP_PROMISC_VLAN ||
--	    lkup_type == ICE_SW_LKUP_DFLT)
-+	    lkup_type == ICE_SW_LKUP_DFLT ||
-+	    lkup_type == ICE_SW_LKUP_LAST)
- 		rule_type = remove ? ICE_AQC_SW_RULES_T_VSI_LIST_CLEAR :
- 			ICE_AQC_SW_RULES_T_VSI_LIST_SET;
- 	else if (lkup_type == ICE_SW_LKUP_VLAN)
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 724624737d095..58a7bb75506a3 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -656,9 +656,6 @@ static netdev_tx_t bnxt_start_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	return NETDEV_TX_OK;
+ 
+ tx_dma_error:
+-	if (BNXT_TX_PTP_IS_SET(lflags))
+-		atomic_inc(&bp->ptp_cfg->tx_avail);
+-
+ 	last_frag = i;
+ 
+ 	/* start back at beginning and unmap skb */
+@@ -680,6 +677,8 @@ static netdev_tx_t bnxt_start_xmit(struct sk_buff *skb, struct net_device *dev)
+ tx_free:
+ 	dev_kfree_skb_any(skb);
+ tx_kick_pending:
++	if (BNXT_TX_PTP_IS_SET(lflags))
++		atomic_inc(&bp->ptp_cfg->tx_avail);
+ 	if (txr->kick_pending)
+ 		bnxt_txr_db_kick(bp, txr, txr->tx_prod);
+ 	txr->tx_buf_ring[txr->tx_prod].skb = NULL;
 -- 
 2.43.0
 
