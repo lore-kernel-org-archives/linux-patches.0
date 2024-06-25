@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 394ED149DE9;
-	Tue, 25 Jun 2024 09:39:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04DC1465A8;
+	Tue, 25 Jun 2024 09:39:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308389; cv=none; b=Whe0k+DeyDafTR86fYQPsXe/wZqPB9qEfXeTVTzS030NTuZwGPuk5P6f5ZoPe+Nvw5XgNm+5JkL1ZtO8G7KehAVBnB8a0bsBF+IgvP0YVUO9xT+7ts5/3I/LCckHd0l6yqXVD+kqn2vG8cUqY2E7lJGksnilCUE6cXekEzceGSE=
+	t=1719308391; cv=none; b=Of1CQgrwUtwdTOxhoiO5sbOjnEYDdYQsBpDqJL0BMOGvzL7v4mze/lCLUStlSByOYiM7sv2yi8UuPKF3UNSpR/L3udhGW+M36wE8hu8kJGTeZWG2CCT6IzeYdOdeLK/E5gIMLswLLfy7sDUxTv+kbzoA0GXgDawk6MVIxmB+iIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308389; c=relaxed/simple;
-	bh=jhz8Kt+5nlG2I6V0pZ2rcaQppOFAKcOypHMGotIts2w=;
+	s=arc-20240116; t=1719308391; c=relaxed/simple;
+	bh=6oboRPOa4epSK5BtCOXzTleQbxP3/7Hty5TETV385HM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cpTyxlLi5obZcwXnrkBB0oH1uNPUuwSBVbiTBliRUk1/nLWzZ5LQqbihfraHUlkXWr1kfg3XUnyXyGKs375N2dJwDQacnB9t+uszPTAclCVI0g7tRqtcs+LkMaJpqgVLCUe/NKiEeji+yNvYoNff7gHwvZAeUZQOAv/JhL4XUXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pr8pXpcF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sO6BNGIrrKy8F3zg9iYWS9D86EgoLpMa6kSp4k+6n0VhlwhXTFVTar9wTlcYZB01jIXTqmtSCUsYceVfxL4sUzrHSSYl97XB3njsEdX4qvDuNo1yjwpL/VnjTo6huigTQR8scrSzmeijCr9Jqor6gliHI697LMu9dxuyFE1KJfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YfFb+Pqd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pr8pXpcF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F2F0C32781;
-	Tue, 25 Jun 2024 09:39:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YfFb+Pqd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 537BAC32781;
+	Tue, 25 Jun 2024 09:39:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308388;
-	bh=jhz8Kt+5nlG2I6V0pZ2rcaQppOFAKcOypHMGotIts2w=;
+	s=korg; t=1719308391;
+	bh=6oboRPOa4epSK5BtCOXzTleQbxP3/7Hty5TETV385HM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pr8pXpcFxGeeeKsWZBH8dW8VyMeNZ7OhL1XpQs6bzzaReQyoIBgT15YI5nWetXAet
-	 BT24nmhS77m/7N/4L3VwjbJrtaTkTlugqDXwVuZXQt3tsnj3JwBdmMDS1gC5ohB9aa
-	 TyB+WRHgnLuqyUWossrPluBepc53HaEYgInNsuZ0=
+	b=YfFb+PqdpwRhy5iXOvPE2pSlsu3Un9UM4Mm7jzxaVP6No//VvLupXsDvOqKwSiiSt
+	 KnRuoDJhVZdET8vxhka5AQIT/bHxdntuqXUSrHnwU08mDF8l8jAICcqPB+4UJAvnzF
+	 aTr9egxBsWRr56KNJwFsMvD0Qs73eI5tCrTDQ7bE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Paul Greenwalt <paul.greenwalt@intel.com>,
-	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.9 105/250] ice: fix 200G link speed message log
-Date: Tue, 25 Jun 2024 11:31:03 +0200
-Message-ID: <20240625085552.101407617@linuxfoundation.org>
+Subject: [PATCH 6.9 106/250] ice: implement AQ download pkg retry
+Date: Tue, 25 Jun 2024 11:31:04 +0200
+Message-ID: <20240625085552.141437541@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -54,42 +55,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Greenwalt <paul.greenwalt@intel.com>
+From: Wojciech Drewek <wojciech.drewek@intel.com>
 
-[ Upstream commit aeccadb24d9dacdde673a0f68f0a9135c6be4993 ]
+[ Upstream commit a27f6ac9d404ea84196639dcc456f969ef813c0f ]
 
-Commit 24407a01e57c ("ice: Add 200G speed/phy type use") added support
-for 200G PHY speeds, but did not include 200G link speed message
-support. As a result the driver incorrectly reports Unknown for 200G
-link speed.
+ice_aqc_opc_download_pkg (0x0C40) AQ sporadically returns error due
+to FW issue. Fix this by retrying five times before moving to
+Safe Mode. Sleep for 20 ms before retrying. This was tested with the
+4.40 firmware.
 
-Fix this by adding 200G support to ice_print_link_msg().
-
-Fixes: 24407a01e57c ("ice: Add 200G speed/phy type use")
+Fixes: c76488109616 ("ice: Implement Dynamic Device Personalization (DDP) download")
 Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Signed-off-by: Paul Greenwalt <paul.greenwalt@intel.com>
-Reviewed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Signed-off-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Reviewed-by: Brett Creeley <brett.creeley@amd.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/intel/ice/ice_ddp.c | 23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index f052bccb50a08..61eef3259cbaa 100644
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -803,6 +803,9 @@ void ice_print_link_msg(struct ice_vsi *vsi, bool isup)
- 	}
+diff --git a/drivers/net/ethernet/intel/ice/ice_ddp.c b/drivers/net/ethernet/intel/ice/ice_ddp.c
+index 4df561d64bc38..6e7d58243c7cb 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ddp.c
++++ b/drivers/net/ethernet/intel/ice/ice_ddp.c
+@@ -1329,6 +1329,7 @@ ice_dwnld_cfg_bufs_no_lock(struct ice_hw *hw, struct ice_buf *bufs, u32 start,
  
- 	switch (vsi->port_info->phy.link_info.link_speed) {
-+	case ICE_AQ_LINK_SPEED_200GB:
-+		speed = "200 G";
-+		break;
- 	case ICE_AQ_LINK_SPEED_100GB:
- 		speed = "100 G";
- 		break;
+ 	for (i = 0; i < count; i++) {
+ 		bool last = false;
++		int try_cnt = 0;
+ 		int status;
+ 
+ 		bh = (struct ice_buf_hdr *)(bufs + start + i);
+@@ -1336,8 +1337,26 @@ ice_dwnld_cfg_bufs_no_lock(struct ice_hw *hw, struct ice_buf *bufs, u32 start,
+ 		if (indicate_last)
+ 			last = ice_is_last_download_buffer(bh, i, count);
+ 
+-		status = ice_aq_download_pkg(hw, bh, ICE_PKG_BUF_SIZE, last,
+-					     &offset, &info, NULL);
++		while (1) {
++			status = ice_aq_download_pkg(hw, bh, ICE_PKG_BUF_SIZE,
++						     last, &offset, &info,
++						     NULL);
++			if (hw->adminq.sq_last_status != ICE_AQ_RC_ENOSEC &&
++			    hw->adminq.sq_last_status != ICE_AQ_RC_EBADSIG)
++				break;
++
++			try_cnt++;
++
++			if (try_cnt == 5)
++				break;
++
++			msleep(20);
++		}
++
++		if (try_cnt)
++			dev_dbg(ice_hw_to_dev(hw),
++				"ice_aq_download_pkg number of retries: %d\n",
++				try_cnt);
+ 
+ 		/* Save AQ status from download package */
+ 		if (status) {
 -- 
 2.43.0
 
