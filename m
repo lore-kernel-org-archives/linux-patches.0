@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79985149DEF;
-	Tue, 25 Jun 2024 09:56:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB954149C58;
+	Tue, 25 Jun 2024 09:56:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309411; cv=none; b=NiUILHql0dLgXpPPYyruY8r8bYkOSYPp+sJhLN+sOaubhu519GtNRAFm9kCVQopqW8vMS2xDy8i91MmkBAM5YWR69f7qWNVC39u6JuNbLUA78ZWDD88EzhR70X4D0oJiM0AOW1O6ZBn+yFMl1+X6O8F2SJFjdcVIChiSo2d/euo=
+	t=1719309414; cv=none; b=E2Ofc+tHG8Kzz4MGfz2UhncEp3ZLrCO+KTX0RfTuMDmyYLNffGwcD4inypXyHL9Pj5wA5qn+W/mO5+H6+qf7XDWTDsIF/TsVD5DjS0U3jCF/zagFCFo1cDVdKevR/m5t7EPqtx5TjC1Egn+xlKxnZAHr0X0xyqtynhJCuqiK1XY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309411; c=relaxed/simple;
-	bh=3ca+VeseG2ELI8J4ptSoEgKlOO5FWZcybtYcdncnYIk=;
+	s=arc-20240116; t=1719309414; c=relaxed/simple;
+	bh=+5JF8htbFhs6VdRBYF8vJaP+LUsuo/8I7nzCMkzBZV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EcbB2c7XZVdqZycjlecTIw4IqUX4W2iFKkAD4N2Kw5EDdoghoenqJKjp1QNJ/xjZ3pdETZMeuxOUxaGlKrRjbPoYEQOAdO8yUPcUp/m+rM5yKwODr7bD4BzhEXXDqlhKp27zxAiPteMo10tmGLXNqF1KTG2mFrgQ4+wSvhmWWYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e2xWhqpF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t3k0r1FN7CJyF7qVJbLTT8vn47CU9K4bYiDa+7vELnNm8esFfDXvZeXK8QaClanxYY9o/Q1aUdygy/7xu+T6tnYwn/7tMFu8PHjxaNxxF3PE47Nxv7aSvJ8NBgvurudanTK9mit9Dyf5xHmrhcTKXVKjRbV/cGp6mqqylXeyNX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fg7+9tZ+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e2xWhqpF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C592BC32781;
-	Tue, 25 Jun 2024 09:56:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fg7+9tZ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30252C32781;
+	Tue, 25 Jun 2024 09:56:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309411;
-	bh=3ca+VeseG2ELI8J4ptSoEgKlOO5FWZcybtYcdncnYIk=;
+	s=korg; t=1719309414;
+	bh=+5JF8htbFhs6VdRBYF8vJaP+LUsuo/8I7nzCMkzBZV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e2xWhqpFzo2q2fztdolpI8U4xS4R8bX75fMUe82vEdVtF6pKeJo8d693ltllkaczj
-	 HWXIzp19/GAAakEEkFCbZJ5GSrIdPy/NExf0qkPp/TiXF32uVS83ex6P7lwhs15PVi
-	 Ki2WhFA7zHZIjWpuQiG+BpJ+WIBaRczCqTFxYACI=
+	b=fg7+9tZ+lHxETh11ZPL8oUP1g7hDIeD5rejV/b5aGvxCcM4XlgUkOVzdbFS0Ybv2O
+	 zzTG7Rg/a07P4y2waABRen17efpWiFdPiYXkdAjDk36Rh3OilrHTH3I4UIKUPqvysh
+	 si3lsQ1aCGsxD6Ke57IQJkF08IEgtOClIa6R/zSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Davide Caratti <dcaratti@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 189/192] net/sched: unregister lockdep keys in qdisc_create/qdisc_alloc error path
-Date: Tue, 25 Jun 2024 11:34:21 +0200
-Message-ID: <20240625085544.414563226@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Borislav Petkov <bp@alien8.de>,
+	Tony Luck <tony.luck@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	stable+noautosel@kernel.org
+Subject: [PATCH 6.6 180/192] x86/cpu: Fix x86_match_cpu() to match just X86_VENDOR_INTEL
+Date: Tue, 25 Jun 2024 11:34:12 +0200
+Message-ID: <20240625085544.068866457@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -54,135 +53,175 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Davide Caratti <dcaratti@redhat.com>
+From: Tony Luck <tony.luck@intel.com>
 
-commit 86735b57c905e775f05de995df35379366b72168 upstream.
+[ Upstream commit 93022482b2948a9a7e9b5a2bb685f2e1cb4c3348 ]
 
-Naresh and Eric report several errors (corrupted elements in the dynamic
-key hash list), when running tdc.py or syzbot. The error path of
-qdisc_alloc() and qdisc_create() frees the qdisc memory, but it forgets
-to unregister the lockdep key, thus causing use-after-free like the
-following one:
+Code in v6.9 arch/x86/kernel/smpboot.c was changed by commit
 
- ==================================================================
- BUG: KASAN: slab-use-after-free in lockdep_register_key+0x5f2/0x700
- Read of size 8 at addr ffff88811236f2a8 by task ip/7925
+  4db64279bc2b ("x86/cpu: Switch to new Intel CPU model defines") from:
 
- CPU: 26 PID: 7925 Comm: ip Kdump: loaded Not tainted 6.9.0-rc2+ #648
- Hardware name: Supermicro SYS-6027R-72RF/X9DRH-7TF/7F/iTF/iF, BIOS 3.0  07/26/2013
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x7c/0xc0
-  print_report+0xc9/0x610
-  kasan_report+0x89/0xc0
-  lockdep_register_key+0x5f2/0x700
-  qdisc_alloc+0x21d/0xb60
-  qdisc_create_dflt+0x63/0x3c0
-  attach_one_default_qdisc.constprop.37+0x8e/0x170
-  dev_activate+0x4bd/0xc30
-  __dev_open+0x275/0x380
-  __dev_change_flags+0x3f1/0x570
-  dev_change_flags+0x7c/0x160
-  do_setlink+0x1ea1/0x34b0
-  __rtnl_newlink+0x8c9/0x1510
-  rtnl_newlink+0x61/0x90
-  rtnetlink_rcv_msg+0x2f0/0xbc0
-  netlink_rcv_skb+0x120/0x380
-  netlink_unicast+0x420/0x630
-  netlink_sendmsg+0x732/0xbc0
-  __sock_sendmsg+0x1ea/0x280
-  ____sys_sendmsg+0x5a9/0x990
-  ___sys_sendmsg+0xf1/0x180
-  __sys_sendmsg+0xd3/0x180
-  do_syscall_64+0x96/0x180
-  entry_SYSCALL_64_after_hwframe+0x71/0x79
- RIP: 0033:0x7f9503f4fa07
- Code: 0a 00 f7 d8 64 89 02 48 c7 c0 ff ff ff ff eb b9 0f 1f 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 2e 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 51 c3 48 83 ec 28 89 54 24 1c 48 89 74 24 10
- RSP: 002b:00007fff6c729068 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
- RAX: ffffffffffffffda RBX: 000000006630c681 RCX: 00007f9503f4fa07
- RDX: 0000000000000000 RSI: 00007fff6c7290d0 RDI: 0000000000000003
- RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000078
- R10: 000000000000009b R11: 0000000000000246 R12: 0000000000000001
- R13: 00007fff6c729180 R14: 0000000000000000 R15: 000055bf67dd9040
-  </TASK>
+  static const struct x86_cpu_id intel_cod_cpu[] = {
+          X86_MATCH_INTEL_FAM6_MODEL(HASWELL_X, 0),       /* COD */
+          X86_MATCH_INTEL_FAM6_MODEL(BROADWELL_X, 0),     /* COD */
+          X86_MATCH_INTEL_FAM6_MODEL(ANY, 1),             /* SNC */	<--- 443
+          {}
+  };
 
- Allocated by task 7745:
-  kasan_save_stack+0x1c/0x40
-  kasan_save_track+0x10/0x30
-  __kasan_kmalloc+0x7b/0x90
-  __kmalloc_node+0x1ff/0x460
-  qdisc_alloc+0xae/0xb60
-  qdisc_create+0xdd/0xfb0
-  tc_modify_qdisc+0x37e/0x1960
-  rtnetlink_rcv_msg+0x2f0/0xbc0
-  netlink_rcv_skb+0x120/0x380
-  netlink_unicast+0x420/0x630
-  netlink_sendmsg+0x732/0xbc0
-  __sock_sendmsg+0x1ea/0x280
-  ____sys_sendmsg+0x5a9/0x990
-  ___sys_sendmsg+0xf1/0x180
-  __sys_sendmsg+0xd3/0x180
-  do_syscall_64+0x96/0x180
-  entry_SYSCALL_64_after_hwframe+0x71/0x79
+  static bool match_llc(struct cpuinfo_x86 *c, struct cpuinfo_x86 *o)
+  {
+          const struct x86_cpu_id *id = x86_match_cpu(intel_cod_cpu);
 
- Freed by task 7745:
-  kasan_save_stack+0x1c/0x40
-  kasan_save_track+0x10/0x30
-  kasan_save_free_info+0x36/0x60
-  __kasan_slab_free+0xfe/0x180
-  kfree+0x113/0x380
-  qdisc_create+0xafb/0xfb0
-  tc_modify_qdisc+0x37e/0x1960
-  rtnetlink_rcv_msg+0x2f0/0xbc0
-  netlink_rcv_skb+0x120/0x380
-  netlink_unicast+0x420/0x630
-  netlink_sendmsg+0x732/0xbc0
-  __sock_sendmsg+0x1ea/0x280
-  ____sys_sendmsg+0x5a9/0x990
-  ___sys_sendmsg+0xf1/0x180
-  __sys_sendmsg+0xd3/0x180
-  do_syscall_64+0x96/0x180
-  entry_SYSCALL_64_after_hwframe+0x71/0x79
+to:
 
-Fix this ensuring that lockdep_unregister_key() is called before the
-qdisc struct is freed, also in the error path of qdisc_create() and
-qdisc_alloc().
+  static const struct x86_cpu_id intel_cod_cpu[] = {
+           X86_MATCH_VFM(INTEL_HASWELL_X,   0),    /* COD */
+           X86_MATCH_VFM(INTEL_BROADWELL_X, 0),    /* COD */
+           X86_MATCH_VFM(INTEL_ANY,         1),    /* SNC */
+           {}
+   };
 
-Fixes: af0cb3fa3f9e ("net/sched: fix false lockdep warning on qdisc root lock")
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Closes: https://lore.kernel.org/netdev/20240429221706.1492418-1-naresh.kamboju@linaro.org/
-Signed-off-by: Davide Caratti <dcaratti@redhat.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Tested-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://lore.kernel.org/r/2aa1ca0c0a3aa0acc15925c666c777a4b5de553c.1714496886.git.dcaratti@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  static bool match_llc(struct cpuinfo_x86 *c, struct cpuinfo_x86 *o)
+  {
+          const struct x86_cpu_id *id = x86_match_cpu(intel_cod_cpu);
+
+On an Intel CPU with SNC enabled this code previously matched the rule on line
+443 to avoid printing messages about insane cache configuration.  The new code
+did not match any rules.
+
+Expanding the macros for the intel_cod_cpu[] array shows that the old is
+equivalent to:
+
+  static const struct x86_cpu_id intel_cod_cpu[] = {
+  [0] = { .vendor = 0, .family = 6, .model = 0x3F, .steppings = 0, .feature = 0, .driver_data = 0 },
+  [1] = { .vendor = 0, .family = 6, .model = 0x4F, .steppings = 0, .feature = 0, .driver_data = 0 },
+  [2] = { .vendor = 0, .family = 6, .model = 0x00, .steppings = 0, .feature = 0, .driver_data = 1 },
+  [3] = { .vendor = 0, .family = 0, .model = 0x00, .steppings = 0, .feature = 0, .driver_data = 0 }
+  }
+
+while the new code expands to:
+
+  static const struct x86_cpu_id intel_cod_cpu[] = {
+  [0] = { .vendor = 0, .family = 6, .model = 0x3F, .steppings = 0, .feature = 0, .driver_data = 0 },
+  [1] = { .vendor = 0, .family = 6, .model = 0x4F, .steppings = 0, .feature = 0, .driver_data = 0 },
+  [2] = { .vendor = 0, .family = 0, .model = 0x00, .steppings = 0, .feature = 0, .driver_data = 1 },
+  [3] = { .vendor = 0, .family = 0, .model = 0x00, .steppings = 0, .feature = 0, .driver_data = 0 }
+  }
+
+Looking at the code for x86_match_cpu():
+
+  const struct x86_cpu_id *x86_match_cpu(const struct x86_cpu_id *match)
+  {
+           const struct x86_cpu_id *m;
+           struct cpuinfo_x86 *c = &boot_cpu_data;
+
+           for (m = match;
+                m->vendor | m->family | m->model | m->steppings | m->feature;
+                m++) {
+       		...
+           }
+           return NULL;
+
+it is clear that there was no match because the ANY entry in the table (array
+index 2) is now the loop termination condition (all of vendor, family, model,
+steppings, and feature are zero).
+
+So this code was working before because the "ANY" check was looking for any
+Intel CPU in family 6. But fails now because the family is a wild card. So the
+root cause is that x86_match_cpu() has never been able to match on a rule with
+just X86_VENDOR_INTEL and all other fields set to wildcards.
+
+Add a new flags field to struct x86_cpu_id that has a bit set to indicate that
+this entry in the array is valid. Update X86_MATCH*() macros to set that bit.
+Change the end-marker check in x86_match_cpu() to just check the flags field
+for this bit.
+
+Backporter notes: The commit in Fixes is really the one that is broken:
+you can't have m->vendor as part of the loop termination conditional in
+x86_match_cpu() because it can happen - as it has happened above
+- that that whole conditional is 0 albeit vendor == 0 is a valid case
+- X86_VENDOR_INTEL is 0.
+
+However, the only case where the above happens is the SNC check added by
+4db64279bc2b1 so you only need this fix if you have backported that
+other commit
+
+  4db64279bc2b ("x86/cpu: Switch to new Intel CPU model defines")
+
+Fixes: 644e9cbbe3fc ("Add driver auto probing for x86 features v4")
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Suggested-by: Borislav Petkov <bp@alien8.de>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable+noautosel@kernel.org> # see above
+Link: https://lore.kernel.org/r/20240517144312.GBZkdtAOuJZCvxhFbJ@fat_crate.local
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_api.c     |    1 +
- net/sched/sch_generic.c |    1 +
- 2 files changed, 2 insertions(+)
+ arch/x86/include/asm/cpu_device_id.h | 5 +++++
+ arch/x86/kernel/cpu/match.c          | 4 +---
+ include/linux/mod_devicetable.h      | 2 ++
+ 3 files changed, 8 insertions(+), 3 deletions(-)
 
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -1360,6 +1360,7 @@ err_out4:
- 		ops->destroy(sch);
- 	qdisc_put_stab(rtnl_dereference(sch->stab));
- err_out3:
-+	lockdep_unregister_key(&sch->root_lock_key);
- 	netdev_put(dev, &sch->dev_tracker);
- 	qdisc_free(sch);
- err_out2:
---- a/net/sched/sch_generic.c
-+++ b/net/sched/sch_generic.c
-@@ -978,6 +978,7 @@ struct Qdisc *qdisc_alloc(struct netdev_
+diff --git a/arch/x86/include/asm/cpu_device_id.h b/arch/x86/include/asm/cpu_device_id.h
+index dd7b9463696f5..e8e3dbe7f1730 100644
+--- a/arch/x86/include/asm/cpu_device_id.h
++++ b/arch/x86/include/asm/cpu_device_id.h
+@@ -53,6 +53,9 @@
+ #define X86_CENTAUR_FAM6_C7_D		0xd
+ #define X86_CENTAUR_FAM6_NANO		0xf
  
- 	return sch;
- errout1:
-+	lockdep_unregister_key(&sch->root_lock_key);
- 	kfree(sch);
- errout:
- 	return ERR_PTR(err);
++/* x86_cpu_id::flags */
++#define X86_CPU_ID_FLAG_ENTRY_VALID	BIT(0)
++
+ #define X86_STEPPINGS(mins, maxs)    GENMASK(maxs, mins)
+ /**
+  * X86_MATCH_VENDOR_FAM_MODEL_STEPPINGS_FEATURE - Base macro for CPU matching
+@@ -79,6 +82,7 @@
+ 	.model		= _model,					\
+ 	.steppings	= _steppings,					\
+ 	.feature	= _feature,					\
++	.flags		= X86_CPU_ID_FLAG_ENTRY_VALID,			\
+ 	.driver_data	= (unsigned long) _data				\
+ }
+ 
+@@ -89,6 +93,7 @@
+ 	.model		= _model,					\
+ 	.steppings	= _steppings,					\
+ 	.feature	= _feature,					\
++	.flags		= X86_CPU_ID_FLAG_ENTRY_VALID,			\
+ 	.driver_data	= (unsigned long) _data				\
+ }
+ 
+diff --git a/arch/x86/kernel/cpu/match.c b/arch/x86/kernel/cpu/match.c
+index ad6776081e60d..ae71b8ef909c9 100644
+--- a/arch/x86/kernel/cpu/match.c
++++ b/arch/x86/kernel/cpu/match.c
+@@ -39,9 +39,7 @@ const struct x86_cpu_id *x86_match_cpu(const struct x86_cpu_id *match)
+ 	const struct x86_cpu_id *m;
+ 	struct cpuinfo_x86 *c = &boot_cpu_data;
+ 
+-	for (m = match;
+-	     m->vendor | m->family | m->model | m->steppings | m->feature;
+-	     m++) {
++	for (m = match; m->flags & X86_CPU_ID_FLAG_ENTRY_VALID; m++) {
+ 		if (m->vendor != X86_VENDOR_ANY && c->x86_vendor != m->vendor)
+ 			continue;
+ 		if (m->family != X86_FAMILY_ANY && c->x86 != m->family)
+diff --git a/include/linux/mod_devicetable.h b/include/linux/mod_devicetable.h
+index b0678b093cb27..0f51bc24ae595 100644
+--- a/include/linux/mod_devicetable.h
++++ b/include/linux/mod_devicetable.h
+@@ -690,6 +690,8 @@ struct x86_cpu_id {
+ 	__u16 model;
+ 	__u16 steppings;
+ 	__u16 feature;	/* bit index */
++	/* Solely for kernel-internal use: DO NOT EXPORT to userspace! */
++	__u16 flags;
+ 	kernel_ulong_t driver_data;
+ };
+ 
+-- 
+2.43.0
+
 
 
