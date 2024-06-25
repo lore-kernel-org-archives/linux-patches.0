@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24AAD148315;
-	Tue, 25 Jun 2024 09:36:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15501FBEF;
+	Tue, 25 Jun 2024 09:37:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308218; cv=none; b=fWNv0anc4Wb/cO/H03CalfHiEh8g5trusiInk0iMwgKM4kjtMUmSe7Rq/aoZubpPNgUhwPbXnuNfDwxngYIhF2jG5C0VZx0Y7PsF1kz+Y555GprVYnj7RkbfAeUegu+OYzEmm6olp6fVJe3MaTY7mCuejGL1o/WMYKhJoHirkqM=
+	t=1719308221; cv=none; b=WkZggVXmzJlS3Lws6j/QkIS7I6EEdcBbCb+OpwqrMQ983rqVorwH1I+twbhFvApRBKAnxKvi2HMv7A32KQB8T2Rpb3ALjSidtWW/Cdy+VoJ/0SZ8C1+B8Lph5SxxwYs/KKmz2NXfXw4si9Qncx27pzfUxnFhuVjGj8ic/fvx41o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308218; c=relaxed/simple;
-	bh=WYwE9X3haBp3U7712ujhV9TGeenT1a1yX0zfs/OAFl0=;
+	s=arc-20240116; t=1719308221; c=relaxed/simple;
+	bh=V2hP/fT5X/vXd86BjeXTTKKezvwpy05xEZNep+aruKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JyeoxhgfwlhUrdwcwcTWaF1zcpTgWU16QI86+CUqTo6XQrnvCYulail7Jv2U48azzXkibqaKsVfwlFSeXq7+8ctZRJ5bc9gIymkztVS4oeC7Xmu+Hegj5HgYZrpQdhzWwXgzSZvpniJGnIVvCM3/V9eEF8Q6Kuaxq+Bq8H/ELyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k310aJGA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qv3+FC0eGkWg+Exyc2fFJZIPBjUlj4L4zW2QwmKVCpuJRwOX9DuLYG5D9JuUN3vifVDmR/WfSuMzImRW9AvEsDZVkVbMNXNoyW9vq4jqO23weS+L/gyWn5nr2f8kiOplUtwPYHwm/g0Qnxn2Aghx+PtfQ6FLYoUmDYWr2BdxLXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nQ/TbrsY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k310aJGA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D27DC32781;
-	Tue, 25 Jun 2024 09:36:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nQ/TbrsY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90415C32781;
+	Tue, 25 Jun 2024 09:37:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308218;
-	bh=WYwE9X3haBp3U7712ujhV9TGeenT1a1yX0zfs/OAFl0=;
+	s=korg; t=1719308220;
+	bh=V2hP/fT5X/vXd86BjeXTTKKezvwpy05xEZNep+aruKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k310aJGAGsOprLoLTRo0S9MAtqsbEKgpxaSbOCAzSIAxPrCsdYl1C1Xk7R0lAx07k
-	 Z1vo/XGxEXt2oJMxjoj0k4ZQc1v13caKu/cI2n5BktMH05ej8QbJw3n7N/09LwIAIC
-	 vAAD7KjVwVMSKASB77Yvm/75Uw6IZzvrvbl5XJ8E=
+	b=nQ/TbrsYD7nLwbKC58X+Zify0szOBLzUcCtoGHYYUEzuV/VrY4gOHw7EVOY/HTADD
+	 /GGAFqHiohdPil4xbXrak6VK06k3LtQ46cLI0Kb5tn8EeUFW6CFMktxldj++GrtLuP
+	 IxyxUi8FdHaLjEaV2VJVV8n54ryutCGje9X+7Alw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Charlene Liu <charlene.liu@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 029/250] net: sfp: enhance quirk for Fibrestore 2.5G copper SFP module
-Date: Tue, 25 Jun 2024 11:29:47 +0200
-Message-ID: <20240625085549.174362251@linuxfoundation.org>
+Subject: [PATCH 6.9 047/250] drm/amd/display: Exit idle optimizations before HDCP execution
+Date: Tue, 25 Jun 2024 11:30:05 +0200
+Message-ID: <20240625085549.867131196@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -46,89 +49,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Behún <kabel@kernel.org>
+From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-[ Upstream commit cd4a32e60061789676f7f018a94fcc9ec56732a0 ]
+[ Upstream commit f30a3bea92bdab398531129d187629fb1d28f598 ]
 
-Enhance the quirk for Fibrestore 2.5G copper SFP module. The original
-commit e27aca3760c0 ("net: sfp: add quirk for FS's 2.5G copper SFP")
-introducing the quirk says that the PHY is inaccessible, but that is
-not true.
+[WHY]
+PSP can access DCN registers during command submission and we need
+to ensure that DCN is not in PG before doing so.
 
-The module uses Rollball protocol to talk to the PHY, and needs a 4
-second wait before probing it, same as FS 10G module.
+[HOW]
+Add a callback to DM to lock and notify DC for idle optimization exit.
+It can't be DC directly because of a potential race condition with the
+link protection thread and the rest of DM operation.
 
-The PHY inside the module is Realtek RTL8221B-VB-CG PHY. The realtek
-driver recently gained support to set it up via clause 45 accesses.
-
-Signed-off-by: Marek Behún <kabel@kernel.org>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://lore.kernel.org/r/20240423085039.26957-2-kabel@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Charlene Liu <charlene.liu@amd.com>
+Acked-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/sfp.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c    | 10 ++++++++++
+ drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h |  8 ++++++++
+ 2 files changed, 18 insertions(+)
 
-diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
-index d999d9baadb26..6e42d4034b520 100644
---- a/drivers/net/phy/sfp.c
-+++ b/drivers/net/phy/sfp.c
-@@ -385,18 +385,23 @@ static void sfp_fixup_rollball(struct sfp *sfp)
- 	sfp->phy_t_retry = msecs_to_jiffies(1000);
+diff --git a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c
+index 5e01c6e24cbc8..9a5a1726acaf8 100644
+--- a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c
++++ b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c
+@@ -88,6 +88,14 @@ static uint8_t is_cp_desired_hdcp2(struct mod_hdcp *hdcp)
+ 			!hdcp->connection.is_hdcp2_revoked;
  }
  
--static void sfp_fixup_fs_10gt(struct sfp *sfp)
-+static void sfp_fixup_fs_2_5gt(struct sfp *sfp)
- {
--	sfp_fixup_10gbaset_30m(sfp);
- 	sfp_fixup_rollball(sfp);
- 
--	/* The RollBall fixup is not enough for FS modules, the AQR chip inside
-+	/* The RollBall fixup is not enough for FS modules, the PHY chip inside
- 	 * them does not return 0xffff for PHY ID registers in all MMDs for the
- 	 * while initializing. They need a 4 second wait before accessing PHY.
- 	 */
- 	sfp->module_t_wait = msecs_to_jiffies(4000);
- }
- 
-+static void sfp_fixup_fs_10gt(struct sfp *sfp)
++static void exit_idle_optimizations(struct mod_hdcp *hdcp)
 +{
-+	sfp_fixup_10gbaset_30m(sfp);
-+	sfp_fixup_fs_2_5gt(sfp);
++	struct mod_hdcp_dm *dm = &hdcp->config.dm;
++
++	if (dm->funcs.exit_idle_optimizations)
++		dm->funcs.exit_idle_optimizations(dm->handle);
 +}
 +
- static void sfp_fixup_halny_gsfp(struct sfp *sfp)
- {
- 	/* Ignore the TX_FAULT and LOS signals on this module.
-@@ -472,6 +477,10 @@ static const struct sfp_quirk sfp_quirks[] = {
- 	// Rollball protocol to talk to the PHY.
- 	SFP_QUIRK_F("FS", "SFP-10G-T", sfp_fixup_fs_10gt),
+ static enum mod_hdcp_status execution(struct mod_hdcp *hdcp,
+ 		struct mod_hdcp_event_context *event_ctx,
+ 		union mod_hdcp_transition_input *input)
+@@ -543,6 +551,8 @@ enum mod_hdcp_status mod_hdcp_process_event(struct mod_hdcp *hdcp,
+ 	memset(&event_ctx, 0, sizeof(struct mod_hdcp_event_context));
+ 	event_ctx.event = event;
  
-+	// Fiberstore SFP-2.5G-T uses Rollball protocol to talk to the PHY and
-+	// needs 4 sec wait before probing the PHY.
-+	SFP_QUIRK_F("FS", "SFP-2.5G-T", sfp_fixup_fs_2_5gt),
++	exit_idle_optimizations(hdcp);
 +
- 	// Fiberstore GPON-ONU-34-20BI can operate at 2500base-X, but report 1.2GBd
- 	// NRZ in their EEPROM
- 	SFP_QUIRK("FS", "GPON-ONU-34-20BI", sfp_quirk_2500basex,
-@@ -488,9 +497,6 @@ static const struct sfp_quirk sfp_quirks[] = {
- 	SFP_QUIRK("HUAWEI", "MA5671A", sfp_quirk_2500basex,
- 		  sfp_fixup_ignore_tx_fault),
+ 	/* execute and transition */
+ 	exec_status = execution(hdcp, &event_ctx, &hdcp->auth.trans_input);
+ 	trans_status = transition(
+diff --git a/drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h b/drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h
+index a4d344a4db9e1..cdb17b093f2b8 100644
+--- a/drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h
++++ b/drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h
+@@ -156,6 +156,13 @@ struct mod_hdcp_ddc {
+ 	} funcs;
+ };
  
--	// FS 2.5G Base-T
--	SFP_QUIRK_M("FS", "SFP-2.5G-T", sfp_quirk_oem_2_5g),
--
- 	// Lantech 8330-262D-E can operate at 2500base-X, but incorrectly report
- 	// 2500MBd NRZ in their EEPROM
- 	SFP_QUIRK_M("Lantech", "8330-262D-E", sfp_quirk_2500basex),
++struct mod_hdcp_dm {
++	void *handle;
++	struct {
++		void (*exit_idle_optimizations)(void *handle);
++	} funcs;
++};
++
+ struct mod_hdcp_psp {
+ 	void *handle;
+ 	void *funcs;
+@@ -272,6 +279,7 @@ struct mod_hdcp_display_query {
+ struct mod_hdcp_config {
+ 	struct mod_hdcp_psp psp;
+ 	struct mod_hdcp_ddc ddc;
++	struct mod_hdcp_dm dm;
+ 	uint8_t index;
+ };
+ 
 -- 
 2.43.0
 
