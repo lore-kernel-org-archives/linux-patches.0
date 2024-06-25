@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D791465A8;
-	Tue, 25 Jun 2024 09:47:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A9FC1465A8;
+	Tue, 25 Jun 2024 09:47:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308842; cv=none; b=Gni0AvT0Lm2lphPc2Shix+87E0gCnSRjv0T1kzv+fPk4HlwmAnbpuRUEX0WxFqkrAjxBi38Ra07I0Z53jG+HdtbB7GkYy9XM8HUBBc9fF5Z66hw/PmCFZnMQL1hOtiI/zCS+RrGLwqL/14AFw2xFEHq7Rvzji8cX/naDYVb7ees=
+	t=1719308845; cv=none; b=WMD5cNUf8a+aV+DPUijUQX/M87/81zA0rdlp8WSesljJyW+WJ84euG8OPdthD4AKFHK1WS8YD+asfVB88n+dx5KPjQCktI+nMu9fWj8Xz8kc7xO9kGtHU7ciZUI1MQquUlnvxV74wXcRYUrw62E15VvHU9z6rHstLCFD7Vxb3/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308842; c=relaxed/simple;
-	bh=+GKT+vakkKofrflvUtVbugUqlU0sF+4KS7xEN30b92E=;
+	s=arc-20240116; t=1719308845; c=relaxed/simple;
+	bh=DYwf7b/gwjG9yw8SyYCqk9W3YALtN0wNct2qgeePs4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cFWFTSwU2MGZOE0R6grqhNqW3kn6S3htc6w+ZHgKuYJEI2NAhKEeBEEfWwxg4oj8VQF8NAdeeymbwgaSb/WlXQlM/w4AtNMCNjVaXe1wUua0F4mN0cOtA4U4o9gspM+FWYx9I4YjtV2FfTrFZIDUf4aZxvGLhuZMuwShcI0sgi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M0tsWXSq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NTa7R/KgfnmOpQzTQjt53ch/jE1hDInaU0lFyHZ8/1wOfLOjXQGSyGTqxSmGBqJN7Ny1lQxiWEk8JiFga9obRS2X1uMCloUgVJA//U8/EokSbcWUudu2HdN+Q6MGxisQgy9TLkiOakTZ850bFIr4i9AlotV/6pUfoDqYwhQf1is=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HcI3w89e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M0tsWXSq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7DD3C32786;
-	Tue, 25 Jun 2024 09:47:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HcI3w89e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9420FC32781;
+	Tue, 25 Jun 2024 09:47:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308842;
-	bh=+GKT+vakkKofrflvUtVbugUqlU0sF+4KS7xEN30b92E=;
+	s=korg; t=1719308845;
+	bh=DYwf7b/gwjG9yw8SyYCqk9W3YALtN0wNct2qgeePs4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M0tsWXSqVDhDQXvvutAxaYqYX0+TAFA+2ZxtPsdUPg+myQ5MBAavOnlfLUwPAvn0W
-	 aisF3oca2Norzg0yYQGU0uFrBrzQfF1G23PPa30p7QVMbkOSobI/CYGo/ojrAnTsnD
-	 7YAHgIi62RSn96bnVHNVd+EH5WtNO5t43ruE3hrM=
+	b=HcI3w89e5J3n52g4Zln+WSlc+an4Wn8PG3PtizzJX2FYbtl8/tR0A6GCDS/mAifDA
+	 JPU4ZERtKxhm24+69HoOpMJM1jXr3NrjP/hC2oPdY3F+OMJ68ZvRNEIuvnnOW97qDg
+	 8wLpvNtDf5TzJce/0cUzbARI5y6stz3pV7MpAUm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Grygorii Tertychnyi <grygorii.tertychnyi@leica-geosystems.com>,
-	Peter Korsgaard <peter@korsgaard.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.9 229/250] i2c: ocores: set IACK bit after core is enabled
-Date: Tue, 25 Jun 2024 11:33:07 +0200
-Message-ID: <20240625085556.844452416@linuxfoundation.org>
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 001/192] fs/writeback: bail out if there is no more inodes for IO and queued once
+Date: Tue, 25 Jun 2024 11:31:13 +0200
+Message-ID: <20240625085537.209869939@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
-References: <20240625085548.033507125@linuxfoundation.org>
+In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
+References: <20240625085537.150087723@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,43 +48,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.9-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Grygorii Tertychnyi <grembeter@gmail.com>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-commit 5a72477273066b5b357801ab2d315ef14949d402 upstream.
+[ Upstream commit d92109891f21cf367caa2cc6dff11a4411d917f4 ]
 
-Setting IACK bit when core is disabled does not clear the "Interrupt Flag"
-bit in the status register, and the interrupt remains pending.
+For case there is no more inodes for IO in io list from last wb_writeback,
+We may bail out early even there is inode in dirty list should be written
+back. Only bail out when we queued once to avoid missing dirtied inode.
 
-Sometimes it causes failure for the very first message transfer, that is
-usually a device probe.
+This is from code reading...
 
-Hence, set IACK bit after core is enabled to clear pending interrupt.
-
-Fixes: 18f98b1e3147 ("[PATCH] i2c: New bus driver for the OpenCores I2C controller")
-Signed-off-by: Grygorii Tertychnyi <grygorii.tertychnyi@leica-geosystems.com>
-Acked-by: Peter Korsgaard <peter@korsgaard.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Link: https://lore.kernel.org/r/20240228091958.288260-3-shikemeng@huaweicloud.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+[brauner@kernel.org: fold in memory corruption fix from Jan in [1]]
+Link: https://lore.kernel.org/r/20240405132346.bid7gibby3lxxhez@quack3 [1]
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-ocores.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/fs-writeback.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/i2c/busses/i2c-ocores.c
-+++ b/drivers/i2c/busses/i2c-ocores.c
-@@ -442,8 +442,8 @@ static int ocores_init(struct device *de
- 	oc_setreg(i2c, OCI2C_PREHIGH, prescale >> 8);
+diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
+index 1767493dffda7..0a498bc60f557 100644
+--- a/fs/fs-writeback.c
++++ b/fs/fs-writeback.c
+@@ -2044,6 +2044,7 @@ static long wb_writeback(struct bdi_writeback *wb,
+ 	struct inode *inode;
+ 	long progress;
+ 	struct blk_plug plug;
++	bool queued = false;
  
- 	/* Init the device */
--	oc_setreg(i2c, OCI2C_CMD, OCI2C_CMD_IACK);
- 	oc_setreg(i2c, OCI2C_CONTROL, ctrl | OCI2C_CTRL_EN);
-+	oc_setreg(i2c, OCI2C_CMD, OCI2C_CMD_IACK);
+ 	blk_start_plug(&plug);
+ 	for (;;) {
+@@ -2086,8 +2087,10 @@ static long wb_writeback(struct bdi_writeback *wb,
+ 			dirtied_before = jiffies;
  
- 	return 0;
- }
+ 		trace_writeback_start(wb, work);
+-		if (list_empty(&wb->b_io))
++		if (list_empty(&wb->b_io)) {
+ 			queue_io(wb, work, dirtied_before);
++			queued = true;
++		}
+ 		if (work->sb)
+ 			progress = writeback_sb_inodes(work->sb, wb, work);
+ 		else
+@@ -2102,7 +2105,7 @@ static long wb_writeback(struct bdi_writeback *wb,
+ 		 * mean the overall work is done. So we keep looping as long
+ 		 * as made some progress on cleaning pages or inodes.
+ 		 */
+-		if (progress) {
++		if (progress || !queued) {
+ 			spin_unlock(&wb->list_lock);
+ 			continue;
+ 		}
+-- 
+2.43.0
+
 
 
