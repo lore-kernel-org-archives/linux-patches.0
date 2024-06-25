@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1ECE1465A8;
-	Tue, 25 Jun 2024 09:45:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7875F149E16;
+	Tue, 25 Jun 2024 09:45:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308704; cv=none; b=lhIjOREpArPq+lx6P365gmqMNSX8ZODnU+jj4UUDebG0rl47BCnwUtkRNjO3P7PDqDKXL7TraOj1dAiu/Cn6XZwwhZeQH6dmnU04Pv+E86Kn8SDrqzqqeIUHfXDFxONmD4sV8iN+bs9qxAaIVyKOomWPYhGJHR48tqx9q940RmI=
+	t=1719308707; cv=none; b=JhMLlo4Me20Qhnqk2UdNLa6hqgYqg491ufwBizM/EkYHxJLYGXpUIp7sGhMI9N7iu/5P9wnYDuRVpQ+9OKcIRW22lcfutuFjLC/rPpvEcH6dwHmzyUXRTlFtVTvP3if8Cfgdk/etm5jDD9kgPN5+QV1dsJiItpgV0sxW73WH8rM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308704; c=relaxed/simple;
-	bh=zkR2sY+wVdVcHCm8t47CY/oRdozrq/kdzPH2RbzR7bs=;
+	s=arc-20240116; t=1719308707; c=relaxed/simple;
+	bh=J+Vm8a0wNISBTPr+yxkgJji+V8n2HxEtLMdrEU2Gk/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s9UGN5RQ2Lt2jSII7AOZ7SZWQkawu8fhxWiG+sKgFzS58abdnFsPSQ46XGcg6h+H5PoG/+Jn9w0K8QMkUHOsvAKIdk64lEWU+ZHMAISBBdgrXANWAti7BN6TWWg/mJCf8OCAmH2D9eVfAPBYUw2znCZqVbJj0oNQqh10+DDY5J8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PzNXOOBD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DSYbTuBNgcQTa+BlR8Ua9tb8n9JkotwlCctdNjPUhpjJry2DYkFraYRRD1uMC/RDiZuNynroXbtrMW3nBX8WVjHP8nHjtF//3A2u6qbgRtCWxEduFy2PxUJHmmpjtpTqeadV1YDZeBx0YwIXlCAv0luBSifCSfkEM2YmE56Q1L8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eTkkGM/N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PzNXOOBD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0F9C32781;
-	Tue, 25 Jun 2024 09:45:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eTkkGM/N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3495C32781;
+	Tue, 25 Jun 2024 09:45:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308703;
-	bh=zkR2sY+wVdVcHCm8t47CY/oRdozrq/kdzPH2RbzR7bs=;
+	s=korg; t=1719308707;
+	bh=J+Vm8a0wNISBTPr+yxkgJji+V8n2HxEtLMdrEU2Gk/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PzNXOOBDK80hXIbTePAq3cGhQVRMqQjF7YXNxSbrCMaaAwh5R7nVQy5TD6gArzHmx
-	 AsFc8jFRgRNVm4OTirGo7fyVmdeZQPoBQUlfQ6fnr3ujTjDXDq3rj6znN2dgQcEAaS
-	 f8V16EwlsklMIbcEzdmF7VPI/mkUzYzpIRaf/vbw=
+	b=eTkkGM/NA2HDuMQ+MaBKgZiWICCBLm5PmR6uaM3t+yGKtDdTcug5HlF8DfSpAyHEv
+	 Iday/FSXI0CY5emRpp8ENnGxU19XlKPA4VnSfOtWS41wc/yEI8yg3EUfPCJ47XAWPr
+	 U0AlhKCP91BCPugJ4necJLXaPOHL4/mrR5gDVHSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,12 +30,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alan Stern <stern@rowland.harvard.edu>,
 	Joao Machado <jocrismachado@gmail.com>,
 	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Christian Heusel <christian@heusel.eu>,
 	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.9 212/250] scsi: core: Introduce the BLIST_SKIP_IO_HINTS flag
-Date: Tue, 25 Jun 2024 11:32:50 +0200
-Message-ID: <20240625085556.192643638@linuxfoundation.org>
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Christian Heusel <christian@heusel.eu>
+Subject: [PATCH 6.9 213/250] scsi: usb: uas: Do not query the IO Advice Hints Grouping mode page for USB/UAS devices
+Date: Tue, 25 Jun 2024 11:32:51 +0200
+Message-ID: <20240625085556.230908515@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -56,59 +56,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Bart Van Assche <bvanassche@acm.org>
 
-commit 633aeefafc9c2a07a76a62be6aac1d73c3e3defa upstream.
+commit 57619f3cdeb5ae9f4252833b0ed600e9f81da722 upstream.
 
-Prepare for skipping the IO Advice Hints Grouping mode page for USB storage
-devices.
+Recently it was reported that the following USB storage devices are
+unusable with Linux kernel 6.9:
 
-Cc: Alan Stern <stern@rowland.harvard.edu>
-Cc: Joao Machado <jocrismachado@gmail.com>
-Cc: Andy Shevchenko <andy.shevchenko@gmail.com>
-Cc: Christian Heusel <christian@heusel.eu>
+ * Kingston DataTraveler G2
+ * Garmin FR35
+
+This is because attempting to read the IO Advice Hints Grouping mode page
+causes these devices to reset. Hence do not read the IO Advice Hints
+Grouping mode page from USB/UAS storage devices.
+
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
 Cc: stable@vger.kernel.org
 Fixes: 4f53138fffc2 ("scsi: sd: Translate data lifetime information")
+Reported-by: Joao Machado <jocrismachado@gmail.com>
+Closes: https://lore.kernel.org/linux-scsi/20240130214911.1863909-1-bvanassche@acm.org/T/#mf4e3410d8f210454d7e4c3d1fb5c0f41e651b85f
+Tested-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Bisected-by: Christian Heusel <christian@heusel.eu>
+Reported-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Closes: https://lore.kernel.org/linux-scsi/CACLx9VdpUanftfPo2jVAqXdcWe8Y43MsDeZmMPooTzVaVJAh2w@mail.gmail.com/
 Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20240613211828.2077477-2-bvanassche@acm.org
+Link: https://lore.kernel.org/r/20240613211828.2077477-3-bvanassche@acm.org
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/sd.c           |    4 ++++
- include/scsi/scsi_devinfo.h |    4 +++-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ drivers/usb/storage/scsiglue.c |    6 ++++++
+ drivers/usb/storage/uas.c      |    7 +++++++
+ 2 files changed, 13 insertions(+)
 
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -63,6 +63,7 @@
- #include <scsi/scsi_cmnd.h>
- #include <scsi/scsi_dbg.h>
- #include <scsi/scsi_device.h>
-+#include <scsi/scsi_devinfo.h>
- #include <scsi/scsi_driver.h>
- #include <scsi/scsi_eh.h>
- #include <scsi/scsi_host.h>
-@@ -3125,6 +3126,9 @@ static void sd_read_io_hints(struct scsi
- 	struct scsi_mode_data data;
- 	int res;
+--- a/drivers/usb/storage/scsiglue.c
++++ b/drivers/usb/storage/scsiglue.c
+@@ -86,6 +86,12 @@ static int slave_alloc (struct scsi_devi
+ 	if (us->protocol == USB_PR_BULK && us->max_lun > 0)
+ 		sdev->sdev_bflags |= BLIST_FORCELUN;
  
-+	if (sdp->sdev_bflags & BLIST_SKIP_IO_HINTS)
-+		return;
++	/*
++	 * Some USB storage devices reset if the IO advice hints grouping mode
++	 * page is queried. Hence skip that mode page.
++	 */
++	sdev->sdev_bflags |= BLIST_SKIP_IO_HINTS;
 +
- 	res = scsi_mode_sense(sdp, /*dbd=*/0x8, /*modepage=*/0x0a,
- 			      /*subpage=*/0x05, buffer, SD_BUF_SIZE, SD_TIMEOUT,
- 			      sdkp->max_retries, &data, &sshdr);
---- a/include/scsi/scsi_devinfo.h
-+++ b/include/scsi/scsi_devinfo.h
-@@ -69,8 +69,10 @@
- #define BLIST_RETRY_ITF		((__force blist_flags_t)(1ULL << 32))
- /* Always retry ABORTED_COMMAND with ASC 0xc1 */
- #define BLIST_RETRY_ASC_C1	((__force blist_flags_t)(1ULL << 33))
-+/* Do not query the IO Advice Hints Grouping mode page */
-+#define BLIST_SKIP_IO_HINTS	((__force blist_flags_t)(1ULL << 34))
+ 	return 0;
+ }
  
--#define __BLIST_LAST_USED BLIST_RETRY_ASC_C1
-+#define __BLIST_LAST_USED BLIST_SKIP_IO_HINTS
+--- a/drivers/usb/storage/uas.c
++++ b/drivers/usb/storage/uas.c
+@@ -21,6 +21,7 @@
+ #include <scsi/scsi.h>
+ #include <scsi/scsi_eh.h>
+ #include <scsi/scsi_dbg.h>
++#include <scsi/scsi_devinfo.h>
+ #include <scsi/scsi_cmnd.h>
+ #include <scsi/scsi_device.h>
+ #include <scsi/scsi_host.h>
+@@ -820,6 +821,12 @@ static int uas_slave_alloc(struct scsi_d
+ 	struct uas_dev_info *devinfo =
+ 		(struct uas_dev_info *)sdev->host->hostdata;
  
- #define __BLIST_HIGH_UNUSED (~(__BLIST_LAST_USED | \
- 			       (__force blist_flags_t) \
++	/*
++	 * Some USB storage devices reset if the IO advice hints grouping mode
++	 * page is queried. Hence skip that mode page.
++	 */
++	sdev->sdev_bflags |= BLIST_SKIP_IO_HINTS;
++
+ 	sdev->hostdata = devinfo;
+ 
+ 	/*
 
 
