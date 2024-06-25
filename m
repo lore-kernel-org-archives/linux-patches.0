@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA4624B34;
-	Tue, 25 Jun 2024 09:52:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C491487E9;
+	Tue, 25 Jun 2024 09:52:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309124; cv=none; b=o/WqL63P/5EHD7XUzKW0gXvKP22N1JzsqZIDP9e53zOstqGZJmibswWPRfy0TsEjUPv6MoG6PwpbiirMKpCn1UP6WK4krupkpG5sh4dmAtMnPLkQELiTGlXCUZTm+LoForLLBWRVRqc3/aryh5vOwo27g+xbqTpxbwgA+/hseeo=
+	t=1719309127; cv=none; b=qlKKK0N8tO2h3e7VcxnPYi/TYV8CkIZvHb8Ngy5no4hpt89ZiYhaRMBzLJiHZwcpAKkGOO3lgMxiAybzHKs9PQfL5np4f3MK6c9iG3i9cRzseQtkexKNIg3iaZ4tiTzSFGrY7zVJOlOqua15bGbYomjGf9eTKyw/SF59ilcEI2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309124; c=relaxed/simple;
-	bh=JvBXihk22MuBiBkt7GbOFuOwgthZ/xBM3ijCaYzFJrE=;
+	s=arc-20240116; t=1719309127; c=relaxed/simple;
+	bh=BE9rosMWpePzNrXbkb4ez2gT9dF33yBxIrxdw48nvRE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iu4b4YUSlfUbvbvI3Aa82Gtvghlh9XtDUVg/cGiJKMLWEGke3znzqTVh9vTiBOpAftAhxNcPRbk74m9YwxpT/uyFkov1DrznT1KcQuPicAvtWMuy2k5fWzzJ9N56uMKZCZucnYBCinLD2E+BmOhG+80bcccUr5pBiFtc2e/+SkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2jJGreIE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UrD8yGbzsb+Gxf8vXdeVmo6rPqsRB282jP2Nxw44O4tIgHiuQy44H4wNXfJhnuKVBJXVkDZRjBzfXufAPfTSDoz9ayd1BKMZ++Iug6ECouWgmmPXmKI0FTgDno1csXsV8JlkgIiLGLMqLF+S7CYOCGUfmnE1VErjixZsCIhuyG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1RxrMYtw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2jJGreIE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2512AC32786;
-	Tue, 25 Jun 2024 09:52:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1RxrMYtw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19797C32781;
+	Tue, 25 Jun 2024 09:52:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309124;
-	bh=JvBXihk22MuBiBkt7GbOFuOwgthZ/xBM3ijCaYzFJrE=;
+	s=korg; t=1719309127;
+	bh=BE9rosMWpePzNrXbkb4ez2gT9dF33yBxIrxdw48nvRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2jJGreIEp0TM2Ea2GzyQKdjm/PYNFsxXzYthqt0txfNO5H93dm7TtpH3yzpP44Q2P
-	 HK+BXTDor92e+wsfrOmOfvSc3MQVR2INZtFAR8wmX0tzdJuX3Gj99TXi8aL6G2tzRN
-	 3xGT17PBQnbZFqFpeMnDQ4UBBw5SQ6ZMc5Mo5kjI=
+	b=1RxrMYtwjXLwdxOBNCy1d7sOKDaxiCoFgfEq0ImQlgyd6pAVhqPM6BBsFO/jCjRb6
+	 rsZ27+sppfLd1IZzJcTF+IfpqSXqheT5VzEfAdpsFHA1dQiTRgCtGrDnzf7TsrqR+i
+	 Dj0gWcd/kuJ+8+w4tMg+0vqbpaXaB+dDAyXUjEKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5186630949e3c55f0799@syzkaller.appspotmail.com,
-	Oliver Neukum <oneukum@suse.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 103/192] net: usb: rtl8150 fix unintiatilzed variables in rtl8150_get_link_ksettings
-Date: Tue, 25 Jun 2024 11:32:55 +0200
-Message-ID: <20240625085541.130872769@linuxfoundation.org>
+Subject: [PATCH 6.6 104/192] RDMA/bnxt_re: Fix the max msix vectors macro
+Date: Tue, 25 Jun 2024 11:32:56 +0200
+Message-ID: <20240625085541.168320001@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -52,38 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Selvin Xavier <selvin.xavier@broadcom.com>
 
-[ Upstream commit fba383985354e83474f95f36d7c65feb75dba19d ]
+[ Upstream commit 056620da899527c14cf36e5019a0decaf4cf0f79 ]
 
-This functions retrieves values by passing a pointer. As the function
-that retrieves them can fail before touching the pointers, the variables
-must be initialized.
+bnxt_re no longer decide the number of MSI-x vectors used by itself.
+Its decided by bnxt_en now. So when bnxt_en changes this value, system
+crash is seen.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+5186630949e3c55f0799@syzkaller.appspotmail.com
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Link: https://lore.kernel.org/r/20240619132816.11526-1-oneukum@suse.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Depend on the max value reported by bnxt_en instead of using the its own macros.
+
+Fixes: 303432211324 ("bnxt_en: Remove runtime interrupt vector allocation")
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Link: https://lore.kernel.org/r/1716195418-11767-1-git-send-email-selvin.xavier@broadcom.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/rtl8150.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/bnxt_re/bnxt_re.h | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/net/usb/rtl8150.c b/drivers/net/usb/rtl8150.c
-index 97afd7335d868..01a3b2417a540 100644
---- a/drivers/net/usb/rtl8150.c
-+++ b/drivers/net/usb/rtl8150.c
-@@ -778,7 +778,8 @@ static int rtl8150_get_link_ksettings(struct net_device *netdev,
- 				      struct ethtool_link_ksettings *ecmd)
- {
- 	rtl8150_t *dev = netdev_priv(netdev);
--	short lpa, bmcr;
-+	short lpa = 0;
-+	short bmcr = 0;
- 	u32 supported;
+diff --git a/drivers/infiniband/hw/bnxt_re/bnxt_re.h b/drivers/infiniband/hw/bnxt_re/bnxt_re.h
+index 9fd9849ebdd14..5b481d8539eee 100644
+--- a/drivers/infiniband/hw/bnxt_re/bnxt_re.h
++++ b/drivers/infiniband/hw/bnxt_re/bnxt_re.h
+@@ -106,8 +106,6 @@ struct bnxt_re_gsi_context {
+ 	struct	bnxt_re_sqp_entries *sqp_tbl;
+ };
  
- 	supported = (SUPPORTED_10baseT_Half |
+-#define BNXT_RE_MIN_MSIX		2
+-#define BNXT_RE_MAX_MSIX		9
+ #define BNXT_RE_AEQ_IDX			0
+ #define BNXT_RE_NQ_IDX			1
+ #define BNXT_RE_GEN_P5_MAX_VF		64
+@@ -166,7 +164,7 @@ struct bnxt_re_dev {
+ 	struct bnxt_qplib_rcfw		rcfw;
+ 
+ 	/* NQ */
+-	struct bnxt_qplib_nq		nq[BNXT_RE_MAX_MSIX];
++	struct bnxt_qplib_nq		nq[BNXT_MAX_ROCE_MSIX];
+ 
+ 	/* Device Resources */
+ 	struct bnxt_qplib_dev_attr	dev_attr;
 -- 
 2.43.0
 
