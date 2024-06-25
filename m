@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B618314A0B8;
-	Tue, 25 Jun 2024 09:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13B014A4D2;
+	Tue, 25 Jun 2024 09:42:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308556; cv=none; b=X2PItVqK4vcrSwa8uxl4tOqvRvzmNH5qXUc2G7MwX1IwlzHonqfPQg4GUpIZ5hFTjb+D189wzB1GZOYhppETg/rgr8t/yC3qd1NMQH8gSkW2DvZtsr9SxeBZc63U/zMK2XCYmjt9zscJo+r2mUcR+5xzcDZXax/9KaSQp87ixok=
+	t=1719308559; cv=none; b=iXYPojeEL/UJvZtoGxdzMv0S8mXYgXjXB0k2QfGFRePQ+p2voLESo4v/3Y/ZJgpHkdyFlQ5bK78QG7on85ugauXu9wIdDurNJoWLrJv06PFuUzUnPAiv4BI4xrnQfQLU0uneEQxRis0lmuhKXzWuX7asoSTm82Oz68Mj49wsR5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308556; c=relaxed/simple;
-	bh=5peioEKuDdC9OYpptyA+Qi7mWqIO31/Xukc2TAVf/rM=;
+	s=arc-20240116; t=1719308559; c=relaxed/simple;
+	bh=xc3lbaWnUUdCA0btTAm1DXOC1/00mPmR/J3pxNxDFmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ltG5kQt0mww+KUoDyDVxaHmAtpOKm0bLAaSU0IWFiRka+4uZz03Ni4JEKlq5ImmDaoMLljveFDsZMDPyLafp6zYlESXSYf9IcgF5Yg200Htwrv4g9qMDgypehOKt32rtfoltMDh5RINLhXeD072E77mb37gzkD89OVEylkjLNL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=elkxBZwA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wbeu4K9Wrc66i+2RtT+A11d6Ykp0axRJ2iRXi1jpsa1hQ6LpfsW2fHFCTgRpMWDmhkGuvTUEmTo3DFbZ16rgY/It3DEqFRayRZmCU4UY2zzdSF+JhqwE8t81CtJwZ5Yb2NoWVjwFU0L3xdHkOwqJZpmycjPFve6v8UeuaoOF7dI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CGmlG/mm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="elkxBZwA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CC24C32781;
-	Tue, 25 Jun 2024 09:42:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CGmlG/mm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33D12C32781;
+	Tue, 25 Jun 2024 09:42:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308556;
-	bh=5peioEKuDdC9OYpptyA+Qi7mWqIO31/Xukc2TAVf/rM=;
+	s=korg; t=1719308559;
+	bh=xc3lbaWnUUdCA0btTAm1DXOC1/00mPmR/J3pxNxDFmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=elkxBZwAJnokJvO3LhYH7g+Vgtq9vwxSWgue9LjSWjUM7pfqQgHj0sclMznI4pn7L
-	 +dDxwSrRNtHBxpeMAQlN9phaZHqrXNFX6sudVg94L/ZErLiR1kjiPDynlbBLS2Ve7I
-	 /qVDZnI8krDzvnd1KH0R8EF3GWv1B93Nlh4CoB7I=
+	b=CGmlG/mmYLoyq/snnCdjx5K95HvRLVxuTvdCJpbn/YV6sasdRncReZELn16g/Ka8D
+	 UABMu5oCwM7kWmVwczPFZTFtOxjZ1pdh2w3Rt/vrjD2HiNjmjchQGPIhvJAUS9RatH
+	 yyiy47/YLaVRO/gIzEGVpWhWJ+HATfUztFEFp4qE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
+	Liu Ying <victor.liu@nxp.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 160/250] arm64: dts: imx8mp: Fix TC9595 input clock on DH i.MX8M Plus DHCOM SoM
-Date: Tue, 25 Jun 2024 11:31:58 +0200
-Message-ID: <20240625085554.202128355@linuxfoundation.org>
+Subject: [PATCH 6.9 161/250] arm: dts: imx53-qsb-hdmi: Disable panel instead of deleting node
+Date: Tue, 25 Jun 2024 11:31:59 +0200
+Message-ID: <20240625085554.240360222@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -51,39 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Liu Ying <victor.liu@nxp.com>
 
-[ Upstream commit c03984d43a9dd9282da54ccf275419f666029452 ]
+[ Upstream commit bcdea3e81ea51c9e89e3b11aac2612e1b4330bee ]
 
-The IMX8MP_CLK_CLKOUT2 supplies the TC9595 bridge with 13 MHz reference
-clock. The IMX8MP_CLK_CLKOUT2 is supplied from IMX8MP_AUDIO_PLL2_OUT.
-The IMX8MP_CLK_CLKOUT2 operates only as a power-of-two divider, and the
-current 156 MHz is not power-of-two divisible to achieve 13 MHz.
+We cannot use /delete-node/ directive to delete a node in a DT
+overlay.  The node won't be deleted effectively.  Instead, set
+the node's status property to "disabled" to achieve something
+similar.
 
-To achieve 13 MHz output from IMX8MP_CLK_CLKOUT2, set IMX8MP_AUDIO_PLL2_OUT
-to 208 MHz, because 208 MHz / 16 = 13 MHz.
-
-Fixes: 20d0b83e712b ("arm64: dts: imx8mp: Add TC9595 bridge on DH electronics i.MX8M Plus DHCOM")
-Signed-off-by: Marek Vasut <marex@denx.de>
+Fixes: eeb403df953f ("ARM: dts: imx53-qsb: add support for the HDMI expander")
+Signed-off-by: Liu Ying <victor.liu@nxp.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/nxp/imx/imx53-qsb-common.dtsi | 2 +-
+ arch/arm/boot/dts/nxp/imx/imx53-qsb-hdmi.dtso   | 6 ++++--
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi
-index 43f1d45ccc96f..f5115f9e8c473 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi
-@@ -254,7 +254,7 @@
- 				  <&clk IMX8MP_CLK_CLKOUT2>,
- 				  <&clk IMX8MP_AUDIO_PLL2_OUT>;
- 		assigned-clock-parents = <&clk IMX8MP_AUDIO_PLL2_OUT>;
--		assigned-clock-rates = <13000000>, <13000000>, <156000000>;
-+		assigned-clock-rates = <13000000>, <13000000>, <208000000>;
- 		reset-gpios = <&gpio4 1 GPIO_ACTIVE_HIGH>;
- 		status = "disabled";
+diff --git a/arch/arm/boot/dts/nxp/imx/imx53-qsb-common.dtsi b/arch/arm/boot/dts/nxp/imx/imx53-qsb-common.dtsi
+index d804404464737..05d7a462ea25a 100644
+--- a/arch/arm/boot/dts/nxp/imx/imx53-qsb-common.dtsi
++++ b/arch/arm/boot/dts/nxp/imx/imx53-qsb-common.dtsi
+@@ -85,7 +85,7 @@
+ 		};
+ 	};
  
+-	panel {
++	panel_dpi: panel {
+ 		compatible = "sii,43wvf1g";
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&pinctrl_display_power>;
+diff --git a/arch/arm/boot/dts/nxp/imx/imx53-qsb-hdmi.dtso b/arch/arm/boot/dts/nxp/imx/imx53-qsb-hdmi.dtso
+index c84e9b0525276..151e9cee3c87e 100644
+--- a/arch/arm/boot/dts/nxp/imx/imx53-qsb-hdmi.dtso
++++ b/arch/arm/boot/dts/nxp/imx/imx53-qsb-hdmi.dtso
+@@ -10,8 +10,6 @@
+ /plugin/;
+ 
+ &{/} {
+-	/delete-node/ panel;
+-
+ 	hdmi: connector-hdmi {
+ 		compatible = "hdmi-connector";
+ 		label = "hdmi";
+@@ -82,6 +80,10 @@
+ 	};
+ };
+ 
++&panel_dpi {
++	status = "disabled";
++};
++
+ &tve {
+ 	status = "disabled";
+ };
 -- 
 2.43.0
 
