@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC7EC14A0BD;
-	Tue, 25 Jun 2024 09:58:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65111465A8;
+	Tue, 25 Jun 2024 09:58:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309520; cv=none; b=llm2bBwsdPaVP80iLS3TF3s9wXBP74DedkQA5GCLPy8xKesBZxqh0PvfbWWXKRirXBDMuJDj83IRHLtvIJ8tF2muodUsVtWA49LrH4L7IVJGIer/SM2pWGnKWLiFof6G4uZ6kNTGgrleYVN4HnhpurwkQZhgVm9UsdWwNRtLReQ=
+	t=1719309523; cv=none; b=RMWZfrx6IqDvQjpfQheRyl9/kEMT3DtAxH51nqcPvxHh2HEXlWewc+hpWw4+7oBLIMGO6zrHHaHeBsW+FPTdDCqANb561KeRgyqOozx+e4oDltuP/dNk32b/y8e4VUrnlEy6tnZaJduDfj7XNDvHxlXCGLi+gyht2IFy8YmnCu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309520; c=relaxed/simple;
-	bh=DCTuxaxZEheeDZSBaLginPzWEUrhEMN6s2+QMTKSrqU=;
+	s=arc-20240116; t=1719309523; c=relaxed/simple;
+	bh=cNkkz1YDigUxIvfkxZDfOVdsd/a+Rheabcqwzf9wH3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=np/zbwg0YssztwbedhzR6um//LWdPR5FycDuc0An+HxQxxiOjNqixP1CJV3/ou+54xY6LRO2nLGGXy+pA0/k4CiIFa7RoKpEkJmHI7xqTJcjpjcBSWl1G2M4k8eqWb84oPcW166gQZLV6qmyNjD73ZNFaGaf1eDNFnFy3tcM23o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rBjtPorU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=u3hTxkjpqffTogMf4Nr4u3q3mBZiAYrRyMR38KPuWV99d6tRiYXEJqe1aPUxlIEPjagiSECCOzSwN4dq8yk/GQ9jd1r4llqVmxhvUXGjAqI50c83ghzd11HgqYIgbB6CXqRIzT3lTg8a4S4f+UG1CvXUuGd3seDRZbV6i04H6Kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c0/D3snq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rBjtPorU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5593DC32781;
-	Tue, 25 Jun 2024 09:58:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c0/D3snq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48C45C32781;
+	Tue, 25 Jun 2024 09:58:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309520;
-	bh=DCTuxaxZEheeDZSBaLginPzWEUrhEMN6s2+QMTKSrqU=;
+	s=korg; t=1719309523;
+	bh=cNkkz1YDigUxIvfkxZDfOVdsd/a+Rheabcqwzf9wH3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rBjtPorUANNJKc2r4LzdVsWl2la445hF9uKvUnN1xlybDf5mvvT2jtoWkcmTO/fPa
-	 Ray9Am5wf2gS8tB9YeFAsqr2c+LZAbZVbgL5e2Z2H3j2ShsfRqLNyf8TB7R1ZDI3zS
-	 YzoU54NP5fD4nMlFHlePm0k8ArpmNKcucxV/yutg=
+	b=c0/D3snq9zRT24AdTKwN1ZoYTKI5h00j8Oe6pCjS2RTv0Xj0lHanqNIwEpRTp2ccj
+	 Qm4kRnEYFtQhpKX/3DspWxUtQZnAxPYwf8RtsOFXSw/JWJMqSanxencdEJs8XYy6mF
+	 Q/6h9b4dGwAKEtDPoBS5fyE+Ew0xBk9Dr7mWVksg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Daniel Starke <daniel.starke@siemens.com>,
-	syzbot <syzbot+dbac96d8e73b61aa559c@syzkaller.appspotmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 044/131] tty: add the option to have a tty reject a new ldisc
-Date: Tue, 25 Jun 2024 11:33:19 +0200
-Message-ID: <20240625085527.625846117@linuxfoundation.org>
+Subject: [PATCH 6.1 045/131] MIPS: Routerboard 532: Fix vendor retry check code
+Date: Tue, 25 Jun 2024 11:33:20 +0200
+Message-ID: <20240625085527.664026264@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085525.931079317@linuxfoundation.org>
 References: <20240625085525.931079317@linuxfoundation.org>
@@ -49,115 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 6bd23e0c2bb6c65d4f5754d1456bc9a4427fc59b ]
+[ Upstream commit ae9daffd9028f2500c9ac1517e46d4f2b57efb80 ]
 
-... and use it to limit the virtual terminals to just N_TTY.  They are
-kind of special, and in particular, the "con_write()" routine violates
-the "writes cannot sleep" rule that some ldiscs rely on.
+read_config_dword() contains strange condition checking ret for a
+number of values. The ret variable, however, is always zero because
+config_access() never returns anything else. Thus, the retry is always
+taken until number of tries is exceeded.
 
-This avoids the
+The code looks like it wants to check *val instead of ret to see if the
+read gave an error response.
 
-   BUG: sleeping function called from invalid context at kernel/printk/printk.c:2659
-
-when N_GSM has been attached to a virtual console, and gsmld_write()
-calls con_write() while holding a spinlock, and con_write() then tries
-to get the console lock.
-
-Tested-by: Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
-Cc: Jiri Slaby <jirislaby@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Daniel Starke <daniel.starke@siemens.com>
-Reported-by: syzbot <syzbot+dbac96d8e73b61aa559c@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=dbac96d8e73b61aa559c
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/20240423163339.59780-1-torvalds@linux-foundation.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 73b4390fb234 ("[MIPS] Routerboard 532: Support for base system")
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/tty_ldisc.c    |  6 ++++++
- drivers/tty/vt/vt.c        | 10 ++++++++++
- include/linux/tty_driver.h |  8 ++++++++
- 3 files changed, 24 insertions(+)
+ arch/mips/pci/ops-rc32434.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/tty_ldisc.c b/drivers/tty/tty_ldisc.c
-index 776d8a62f77cc..7ca7731fa78ae 100644
---- a/drivers/tty/tty_ldisc.c
-+++ b/drivers/tty/tty_ldisc.c
-@@ -546,6 +546,12 @@ int tty_set_ldisc(struct tty_struct *tty, int disc)
- 		goto out;
- 	}
- 
-+	if (tty->ops->ldisc_ok) {
-+		retval = tty->ops->ldisc_ok(tty, disc);
-+		if (retval)
-+			goto out;
-+	}
-+
- 	old_ldisc = tty->ldisc;
- 
- 	/* Shutdown the old discipline. */
-diff --git a/drivers/tty/vt/vt.c b/drivers/tty/vt/vt.c
-index 48a9ed7c93c97..e2f9348725ff1 100644
---- a/drivers/tty/vt/vt.c
-+++ b/drivers/tty/vt/vt.c
-@@ -3440,6 +3440,15 @@ static void con_cleanup(struct tty_struct *tty)
- 	tty_port_put(&vc->port);
- }
- 
-+/*
-+ * We can't deal with anything but the N_TTY ldisc,
-+ * because we can sleep in our write() routine.
-+ */
-+static int con_ldisc_ok(struct tty_struct *tty, int ldisc)
-+{
-+	return ldisc == N_TTY ? 0 : -EINVAL;
-+}
-+
- static int default_color           = 7; /* white */
- static int default_italic_color    = 2; // green (ASCII)
- static int default_underline_color = 3; // cyan (ASCII)
-@@ -3566,6 +3575,7 @@ static const struct tty_operations con_ops = {
- 	.resize = vt_resize,
- 	.shutdown = con_shutdown,
- 	.cleanup = con_cleanup,
-+	.ldisc_ok = con_ldisc_ok,
- };
- 
- static struct cdev vc0_cdev;
-diff --git a/include/linux/tty_driver.h b/include/linux/tty_driver.h
-index e00034118c7bc..1df868130adce 100644
---- a/include/linux/tty_driver.h
-+++ b/include/linux/tty_driver.h
-@@ -155,6 +155,13 @@ struct serial_struct;
-  *
-  *	Optional. Called under the @tty->termios_rwsem. May sleep.
-  *
-+ * @ldisc_ok: ``int ()(struct tty_struct *tty, int ldisc)``
-+ *
-+ *	This routine allows the @tty driver to decide if it can deal
-+ *	with a particular @ldisc.
-+ *
-+ *	Optional. Called under the @tty->ldisc_sem and @tty->termios_rwsem.
-+ *
-  * @set_ldisc: ``void ()(struct tty_struct *tty)``
-  *
-  *	This routine allows the @tty driver to be notified when the device's
-@@ -374,6 +381,7 @@ struct tty_operations {
- 	void (*hangup)(struct tty_struct *tty);
- 	int (*break_ctl)(struct tty_struct *tty, int state);
- 	void (*flush_buffer)(struct tty_struct *tty);
-+	int (*ldisc_ok)(struct tty_struct *tty, int ldisc);
- 	void (*set_ldisc)(struct tty_struct *tty);
- 	void (*wait_until_sent)(struct tty_struct *tty, int timeout);
- 	void (*send_xchar)(struct tty_struct *tty, char ch);
+diff --git a/arch/mips/pci/ops-rc32434.c b/arch/mips/pci/ops-rc32434.c
+index 874ed6df97683..34b9323bdabb0 100644
+--- a/arch/mips/pci/ops-rc32434.c
++++ b/arch/mips/pci/ops-rc32434.c
+@@ -112,8 +112,8 @@ static int read_config_dword(struct pci_bus *bus, unsigned int devfn,
+ 	 * gives them time to settle
+ 	 */
+ 	if (where == PCI_VENDOR_ID) {
+-		if (ret == 0xffffffff || ret == 0x00000000 ||
+-		    ret == 0x0000ffff || ret == 0xffff0000) {
++		if (*val == 0xffffffff || *val == 0x00000000 ||
++		    *val == 0x0000ffff || *val == 0xffff0000) {
+ 			if (delay > 4)
+ 				return 0;
+ 			delay *= 2;
 -- 
 2.43.0
 
