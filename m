@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC70913C90B;
-	Tue, 25 Jun 2024 10:02:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4FE13C90B;
+	Tue, 25 Jun 2024 10:02:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309759; cv=none; b=ZHqsGjGZN2XQ0pEnx0WAEFwAmRsH/QX3NXhuyQ6FpTAX9eACi0MWiNZUqR1gtK1Ry7C+QVcs7DijZAfPoXhlKEUDec96S+rV9leeuXAEm5hETSkTG7NboNukHpgxehKRPnqKDj7LfvA5Nty1x6nRNCIa+9rVbuksSv+nkVKoVaQ=
+	t=1719309762; cv=none; b=EV00/3Jc3o71vthGF9/fhpCbzt7mm+0xNnvb+WqY3Va/x0/pGAEMp3UID8tF0uI7KlZSfpWP4lEQPjCmEBNqE9ob1AA75uvF3p9dapzMOncqNToFshLq5k15qYyZpaFeZdhW9RNdemX5aSHt/V76in4CharsPggo4IgsPzs2XfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309759; c=relaxed/simple;
-	bh=gtFdxNWWj36hUScSI5GZ+0gwDr98eiw/Gg4oP7zvi70=;
+	s=arc-20240116; t=1719309762; c=relaxed/simple;
+	bh=9lAWlpsdmLiPbCTrExs0Dy2n/CtiP0lsi/Ek9TiW1Jc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rd0lyb2Q1J0P2yQQXNrA6Euj+zgfZZ+FdaYfIfauc49Stm7tyEd9ilZmU5319gXxM7mSe2+n/66qMKa4V5xw//Cwn8DQ07841f/F3EWrqgUa+BJ1uJM8/I9cc8oB9pdut38x8RLHAm41gW5dECsdt71V+apZD2ry3PbOTc0shGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hvsu5Xbr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t17rfYdI6lWvDzSiOLsmyNeAZWqdeXLx/zYvN7xckvBxrYazRSa7ZYbEm/RJz3gfKiooflVqbmMizi1HnTh4HJsl6IW917i3MDRKRO6pUMQuEtNKgbhsLsviRTdd6Dr4YIazfdyEm5TUSMRV8JN1d7Y7d7IoL4gFhg2rS8/6bfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wz9vB1gt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hvsu5Xbr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52518C32781;
-	Tue, 25 Jun 2024 10:02:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wz9vB1gt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41E30C32781;
+	Tue, 25 Jun 2024 10:02:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309759;
-	bh=gtFdxNWWj36hUScSI5GZ+0gwDr98eiw/Gg4oP7zvi70=;
+	s=korg; t=1719309762;
+	bh=9lAWlpsdmLiPbCTrExs0Dy2n/CtiP0lsi/Ek9TiW1Jc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hvsu5Xbr+K6qQwIgSTgUrsnCQndt/8ihVMx6S9ckaI5ZEvW+1ydLRXFLViWu603Pb
-	 DmJNT5MGuIoS+lhQBWbUH9dLLlVVfsvlnSMMTAjE8znedBuX5u22QrwDk/EI3uw6QI
-	 tpkT/EBNiARDrEwGsB59qERo+BHGHwevPeYmLXdE=
+	b=wz9vB1gtg/m93lnJWYheyRpVSZyPds3/hcTVSvfpPPp3M0nn04nyMHsk28hthbIqy
+	 Su4f/vKbtUATLJ/zkVEufYmVxjxUM1WjI+9MArlEshmQj1drtzFdcjnFI7UOFRnd7I
+	 FSKFqmzoLLWTCHnNKbeSllevzfhcFKI5sPH0MEeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Thomas Gleixner <tglx@linutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 124/131] x86/cpu/vfm: Add new macros to work with (vendor/family/model) values
-Date: Tue, 25 Jun 2024 11:34:39 +0200
-Message-ID: <20240625085530.648013734@linuxfoundation.org>
+	Borislav Petkov <bp@alien8.de>,
+	Tony Luck <tony.luck@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	stable+noautosel@kernel.org
+Subject: [PATCH 6.1 125/131] x86/cpu: Fix x86_match_cpu() to match just X86_VENDOR_INTEL
+Date: Tue, 25 Jun 2024 11:34:40 +0200
+Message-ID: <20240625085530.685910266@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085525.931079317@linuxfoundation.org>
 References: <20240625085525.931079317@linuxfoundation.org>
@@ -54,142 +55,171 @@ Content-Transfer-Encoding: 8bit
 
 From: Tony Luck <tony.luck@intel.com>
 
-[ Upstream commit e6dfdc2e89a0adedf455814c91b977d6a584cc88 ]
+[ Upstream commit 93022482b2948a9a7e9b5a2bb685f2e1cb4c3348 ]
 
-To avoid adding a slew of new macros for each new Intel CPU family
-switch over from providing CPU model number #defines to a new
-scheme that encodes vendor, family, and model in a single number.
+Code in v6.9 arch/x86/kernel/smpboot.c was changed by commit
 
-  [ bp: s/casted/cast/g ]
+  4db64279bc2b ("x86/cpu: Switch to new Intel CPU model defines") from:
 
+  static const struct x86_cpu_id intel_cod_cpu[] = {
+          X86_MATCH_INTEL_FAM6_MODEL(HASWELL_X, 0),       /* COD */
+          X86_MATCH_INTEL_FAM6_MODEL(BROADWELL_X, 0),     /* COD */
+          X86_MATCH_INTEL_FAM6_MODEL(ANY, 1),             /* SNC */	<--- 443
+          {}
+  };
+
+  static bool match_llc(struct cpuinfo_x86 *c, struct cpuinfo_x86 *o)
+  {
+          const struct x86_cpu_id *id = x86_match_cpu(intel_cod_cpu);
+
+to:
+
+  static const struct x86_cpu_id intel_cod_cpu[] = {
+           X86_MATCH_VFM(INTEL_HASWELL_X,   0),    /* COD */
+           X86_MATCH_VFM(INTEL_BROADWELL_X, 0),    /* COD */
+           X86_MATCH_VFM(INTEL_ANY,         1),    /* SNC */
+           {}
+   };
+
+  static bool match_llc(struct cpuinfo_x86 *c, struct cpuinfo_x86 *o)
+  {
+          const struct x86_cpu_id *id = x86_match_cpu(intel_cod_cpu);
+
+On an Intel CPU with SNC enabled this code previously matched the rule on line
+443 to avoid printing messages about insane cache configuration.  The new code
+did not match any rules.
+
+Expanding the macros for the intel_cod_cpu[] array shows that the old is
+equivalent to:
+
+  static const struct x86_cpu_id intel_cod_cpu[] = {
+  [0] = { .vendor = 0, .family = 6, .model = 0x3F, .steppings = 0, .feature = 0, .driver_data = 0 },
+  [1] = { .vendor = 0, .family = 6, .model = 0x4F, .steppings = 0, .feature = 0, .driver_data = 0 },
+  [2] = { .vendor = 0, .family = 6, .model = 0x00, .steppings = 0, .feature = 0, .driver_data = 1 },
+  [3] = { .vendor = 0, .family = 0, .model = 0x00, .steppings = 0, .feature = 0, .driver_data = 0 }
+  }
+
+while the new code expands to:
+
+  static const struct x86_cpu_id intel_cod_cpu[] = {
+  [0] = { .vendor = 0, .family = 6, .model = 0x3F, .steppings = 0, .feature = 0, .driver_data = 0 },
+  [1] = { .vendor = 0, .family = 6, .model = 0x4F, .steppings = 0, .feature = 0, .driver_data = 0 },
+  [2] = { .vendor = 0, .family = 0, .model = 0x00, .steppings = 0, .feature = 0, .driver_data = 1 },
+  [3] = { .vendor = 0, .family = 0, .model = 0x00, .steppings = 0, .feature = 0, .driver_data = 0 }
+  }
+
+Looking at the code for x86_match_cpu():
+
+  const struct x86_cpu_id *x86_match_cpu(const struct x86_cpu_id *match)
+  {
+           const struct x86_cpu_id *m;
+           struct cpuinfo_x86 *c = &boot_cpu_data;
+
+           for (m = match;
+                m->vendor | m->family | m->model | m->steppings | m->feature;
+                m++) {
+       		...
+           }
+           return NULL;
+
+it is clear that there was no match because the ANY entry in the table (array
+index 2) is now the loop termination condition (all of vendor, family, model,
+steppings, and feature are zero).
+
+So this code was working before because the "ANY" check was looking for any
+Intel CPU in family 6. But fails now because the family is a wild card. So the
+root cause is that x86_match_cpu() has never been able to match on a rule with
+just X86_VENDOR_INTEL and all other fields set to wildcards.
+
+Add a new flags field to struct x86_cpu_id that has a bit set to indicate that
+this entry in the array is valid. Update X86_MATCH*() macros to set that bit.
+Change the end-marker check in x86_match_cpu() to just check the flags field
+for this bit.
+
+Backporter notes: The commit in Fixes is really the one that is broken:
+you can't have m->vendor as part of the loop termination conditional in
+x86_match_cpu() because it can happen - as it has happened above
+- that that whole conditional is 0 albeit vendor == 0 is a valid case
+- X86_VENDOR_INTEL is 0.
+
+However, the only case where the above happens is the SNC check added by
+4db64279bc2b1 so you only need this fix if you have backported that
+other commit
+
+  4db64279bc2b ("x86/cpu: Switch to new Intel CPU model defines")
+
+Fixes: 644e9cbbe3fc ("Add driver auto probing for x86 features v4")
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Suggested-by: Borislav Petkov <bp@alien8.de>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20240416211941.9369-3-tony.luck@intel.com
-Stable-dep-of: 93022482b294 ("x86/cpu: Fix x86_match_cpu() to match just X86_VENDOR_INTEL")
+Cc: <stable+noautosel@kernel.org> # see above
+Link: https://lore.kernel.org/r/20240517144312.GBZkdtAOuJZCvxhFbJ@fat_crate.local
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/cpu_device_id.h | 93 ++++++++++++++++++++++++++++
- 1 file changed, 93 insertions(+)
+ arch/x86/include/asm/cpu_device_id.h | 5 +++++
+ arch/x86/kernel/cpu/match.c          | 4 +---
+ include/linux/mod_devicetable.h      | 2 ++
+ 3 files changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/arch/x86/include/asm/cpu_device_id.h b/arch/x86/include/asm/cpu_device_id.h
-index eb8fcede9e3bf..dd7b9463696f5 100644
+index dd7b9463696f5..e8e3dbe7f1730 100644
 --- a/arch/x86/include/asm/cpu_device_id.h
 +++ b/arch/x86/include/asm/cpu_device_id.h
-@@ -2,6 +2,39 @@
- #ifndef _ASM_X86_CPU_DEVICE_ID
- #define _ASM_X86_CPU_DEVICE_ID
+@@ -53,6 +53,9 @@
+ #define X86_CENTAUR_FAM6_C7_D		0xd
+ #define X86_CENTAUR_FAM6_NANO		0xf
  
-+/*
-+ * Can't use <linux/bitfield.h> because it generates expressions that
-+ * cannot be used in structure initializers. Bitfield construction
-+ * here must match the union in struct cpuinfo_86:
-+ *	union {
-+ *		struct {
-+ *			__u8	x86_model;
-+ *			__u8	x86;
-+ *			__u8	x86_vendor;
-+ *			__u8	x86_reserved;
-+ *		};
-+ *		__u32		x86_vfm;
-+ *	};
-+ */
-+#define VFM_MODEL_BIT	0
-+#define VFM_FAMILY_BIT	8
-+#define VFM_VENDOR_BIT	16
-+#define VFM_RSVD_BIT	24
++/* x86_cpu_id::flags */
++#define X86_CPU_ID_FLAG_ENTRY_VALID	BIT(0)
 +
-+#define	VFM_MODEL_MASK	GENMASK(VFM_FAMILY_BIT - 1, VFM_MODEL_BIT)
-+#define	VFM_FAMILY_MASK	GENMASK(VFM_VENDOR_BIT - 1, VFM_FAMILY_BIT)
-+#define	VFM_VENDOR_MASK	GENMASK(VFM_RSVD_BIT - 1, VFM_VENDOR_BIT)
-+
-+#define VFM_MODEL(vfm)	(((vfm) & VFM_MODEL_MASK) >> VFM_MODEL_BIT)
-+#define VFM_FAMILY(vfm)	(((vfm) & VFM_FAMILY_MASK) >> VFM_FAMILY_BIT)
-+#define VFM_VENDOR(vfm)	(((vfm) & VFM_VENDOR_MASK) >> VFM_VENDOR_BIT)
-+
-+#define	VFM_MAKE(_vendor, _family, _model) (	\
-+	((_model) << VFM_MODEL_BIT) |		\
-+	((_family) << VFM_FAMILY_BIT) |		\
-+	((_vendor) << VFM_VENDOR_BIT)		\
-+)
-+
- /*
-  * Declare drivers belonging to specific x86 CPUs
-  * Similar in spirit to pci_device_id and related PCI functions
-@@ -49,6 +82,16 @@
+ #define X86_STEPPINGS(mins, maxs)    GENMASK(maxs, mins)
+ /**
+  * X86_MATCH_VENDOR_FAM_MODEL_STEPPINGS_FEATURE - Base macro for CPU matching
+@@ -79,6 +82,7 @@
+ 	.model		= _model,					\
+ 	.steppings	= _steppings,					\
+ 	.feature	= _feature,					\
++	.flags		= X86_CPU_ID_FLAG_ENTRY_VALID,			\
  	.driver_data	= (unsigned long) _data				\
  }
  
-+#define X86_MATCH_VENDORID_FAM_MODEL_STEPPINGS_FEATURE(_vendor, _family, _model, \
-+						    _steppings, _feature, _data) { \
-+	.vendor		= _vendor,					\
-+	.family		= _family,					\
-+	.model		= _model,					\
-+	.steppings	= _steppings,					\
-+	.feature	= _feature,					\
-+	.driver_data	= (unsigned long) _data				\
-+}
-+
- /**
-  * X86_MATCH_VENDOR_FAM_MODEL_FEATURE - Macro for CPU matching
-  * @_vendor:	The vendor name, e.g. INTEL, AMD, HYGON, ..., ANY
-@@ -164,6 +207,56 @@
- 	X86_MATCH_VENDOR_FAM_MODEL_STEPPINGS_FEATURE(INTEL, 6, INTEL_FAM6_##model, \
- 						     steppings, X86_FEATURE_ANY, data)
+@@ -89,6 +93,7 @@
+ 	.model		= _model,					\
+ 	.steppings	= _steppings,					\
+ 	.feature	= _feature,					\
++	.flags		= X86_CPU_ID_FLAG_ENTRY_VALID,			\
+ 	.driver_data	= (unsigned long) _data				\
+ }
  
-+/**
-+ * X86_MATCH_VFM - Match encoded vendor/family/model
-+ * @vfm:	Encoded 8-bits each for vendor, family, model
-+ * @data:	Driver specific data or NULL. The internal storage
-+ *		format is unsigned long. The supplied value, pointer
-+ *		etc. is cast to unsigned long internally.
-+ *
-+ * Stepping and feature are set to wildcards
-+ */
-+#define X86_MATCH_VFM(vfm, data)			\
-+	X86_MATCH_VENDORID_FAM_MODEL_STEPPINGS_FEATURE(	\
-+		VFM_VENDOR(vfm),			\
-+		VFM_FAMILY(vfm),			\
-+		VFM_MODEL(vfm),				\
-+		X86_STEPPING_ANY, X86_FEATURE_ANY, data)
-+
-+/**
-+ * X86_MATCH_VFM_STEPPINGS - Match encoded vendor/family/model/stepping
-+ * @vfm:	Encoded 8-bits each for vendor, family, model
-+ * @steppings:	Bitmask of steppings to match
-+ * @data:	Driver specific data or NULL. The internal storage
-+ *		format is unsigned long. The supplied value, pointer
-+ *		etc. is cast to unsigned long internally.
-+ *
-+ * feature is set to wildcard
-+ */
-+#define X86_MATCH_VFM_STEPPINGS(vfm, steppings, data)	\
-+	X86_MATCH_VENDORID_FAM_MODEL_STEPPINGS_FEATURE(	\
-+		VFM_VENDOR(vfm),			\
-+		VFM_FAMILY(vfm),			\
-+		VFM_MODEL(vfm),				\
-+		steppings, X86_FEATURE_ANY, data)
-+
-+/**
-+ * X86_MATCH_VFM_FEATURE - Match encoded vendor/family/model/feature
-+ * @vfm:	Encoded 8-bits each for vendor, family, model
-+ * @feature:	A X86_FEATURE bit
-+ * @data:	Driver specific data or NULL. The internal storage
-+ *		format is unsigned long. The supplied value, pointer
-+ *		etc. is cast to unsigned long internally.
-+ *
-+ * Steppings is set to wildcard
-+ */
-+#define X86_MATCH_VFM_FEATURE(vfm, feature, data)	\
-+	X86_MATCH_VENDORID_FAM_MODEL_STEPPINGS_FEATURE(	\
-+		VFM_VENDOR(vfm),			\
-+		VFM_FAMILY(vfm),			\
-+		VFM_MODEL(vfm),				\
-+		X86_STEPPING_ANY, feature, data)
-+
- /*
-  * Match specific microcode revisions.
-  *
+diff --git a/arch/x86/kernel/cpu/match.c b/arch/x86/kernel/cpu/match.c
+index ad6776081e60d..ae71b8ef909c9 100644
+--- a/arch/x86/kernel/cpu/match.c
++++ b/arch/x86/kernel/cpu/match.c
+@@ -39,9 +39,7 @@ const struct x86_cpu_id *x86_match_cpu(const struct x86_cpu_id *match)
+ 	const struct x86_cpu_id *m;
+ 	struct cpuinfo_x86 *c = &boot_cpu_data;
+ 
+-	for (m = match;
+-	     m->vendor | m->family | m->model | m->steppings | m->feature;
+-	     m++) {
++	for (m = match; m->flags & X86_CPU_ID_FLAG_ENTRY_VALID; m++) {
+ 		if (m->vendor != X86_VENDOR_ANY && c->x86_vendor != m->vendor)
+ 			continue;
+ 		if (m->family != X86_FAMILY_ANY && c->x86 != m->family)
+diff --git a/include/linux/mod_devicetable.h b/include/linux/mod_devicetable.h
+index 549590e9c644d..a18b7b43fbbbf 100644
+--- a/include/linux/mod_devicetable.h
++++ b/include/linux/mod_devicetable.h
+@@ -676,6 +676,8 @@ struct x86_cpu_id {
+ 	__u16 model;
+ 	__u16 steppings;
+ 	__u16 feature;	/* bit index */
++	/* Solely for kernel-internal use: DO NOT EXPORT to userspace! */
++	__u16 flags;
+ 	kernel_ulong_t driver_data;
+ };
+ 
 -- 
 2.43.0
 
