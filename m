@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB74146A67;
-	Tue, 25 Jun 2024 09:58:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D34146A67;
+	Tue, 25 Jun 2024 09:58:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309491; cv=none; b=DYZg7tBuBjhnZeCTqvN1xvtN1HbYP2n24G867QeLjhDPWVyeyDm4L33ymYjSncDp0o40LQ45pfxGfsJa00sCIqnO7onpDMXr4LSjsgPnZu06Kx7g9n6jEuaMoGobNoxGNHUkRfyHpgggiBHSbSWnCfGIUyR31cVSFBwvdq/7CSI=
+	t=1719309494; cv=none; b=NbchoAfWz4YZOrHTPraPLRdBDPIiqZauZ17Pxwn0ithlYO03kW9hFwod+hXMnTk9tBHLAXV9jFSWnLNhrMwkFnebmoLRvy5wm7z31Q9RCh1/LHUrfUs2oP/8dWzyDYd6xvHjGI1KA/ON9HxrsE02cX7YUap1ncnQa3JwoDZPqGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309491; c=relaxed/simple;
-	bh=lZnTzGYtmobE24SjhqZOmc9XllkDSHaB6EzqepzxAOM=;
+	s=arc-20240116; t=1719309494; c=relaxed/simple;
+	bh=CYGTJEbAu67Dw8JC7TKtNNFv3/9UUQ2Gm1hJBCPu7eE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N1u64k9mFdzei1Yug/TyAONzcuLQoI/QnKHRMlfnApD2Zpoocnxyb91KBcP6Lz2aW621JxP60nQiAR9Pe+JOwkiCmdtiy4fH49CDvwIWSUu4lVD/FHn+VBsetS8KfGvcfJHY+7fN7PBxRyxaZ2FWZy3FavSPnPuILt2DWzhueyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fpzo121B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E0B84B092qqVjzJg9VoVZo3G3U8+Pp1AEnMsSscuBfsiRYKjy2oR5frO9oG9MK8VAWTmeoWys+vwU8qG1cgwxHiwdH6TFiHZMxtAu53jah32kiHb6zEPWbI5OZgu9NXkzZy+c1yOMjB8zFILNC7VOQecXMy21N9/2xBU1V/Fk2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sg9miytY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fpzo121B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3B53C32781;
-	Tue, 25 Jun 2024 09:58:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sg9miytY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0A84C32786;
+	Tue, 25 Jun 2024 09:58:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309491;
-	bh=lZnTzGYtmobE24SjhqZOmc9XllkDSHaB6EzqepzxAOM=;
+	s=korg; t=1719309494;
+	bh=CYGTJEbAu67Dw8JC7TKtNNFv3/9UUQ2Gm1hJBCPu7eE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fpzo121BxMGF4WRhx4iHcQhI5ZKJK2zwExLtsvSe8BReEvApKbmApL7r5YVvc4D2F
-	 rZ/VpEc0iGX1wDD75A4auDL2YzDgz/1eaHHkd/UTPRfwbORDZx9WJmmcoj+DpLXgcH
-	 DZcBcLSFRc2XAZNnvZCK4aQjPVsYfo4Yd3Aydn3c=
+	b=sg9miytYNnRYBKeIUSq+rvmGvKT+DHuzTZwiXECOp5NySUDC82wnJr89D5pHGyRxS
+	 lRHR70SVSFBaijUvpzYihHWEL8aATKk+pMt5gda8ud7X7tkrV9fqz+ZvvAXnASD27S
+	 X7TboYezHViSkOs3oBKkB+i0UQzm0YjjrGeRSlzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benson Leung <bleung@chromium.org>,
-	Prashant Malani <pmalani@chromium.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 032/131] power: supply: cros_usbpd: provide ID table for avoiding fallback match
-Date: Tue, 25 Jun 2024 11:33:07 +0200
-Message-ID: <20240625085527.170982320@linuxfoundation.org>
+Subject: [PATCH 6.1 004/131] rcutorture: Fix rcu_torture_one_read() pipe_count overflow comment
+Date: Tue, 25 Jun 2024 11:32:39 +0200
+Message-ID: <20240625085526.104025472@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085525.931079317@linuxfoundation.org>
 References: <20240625085525.931079317@linuxfoundation.org>
@@ -54,63 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-[ Upstream commit 0f8678c34cbfdc63569a9b0ede1fe235ec6ec693 ]
+[ Upstream commit 8b9b443fa860276822b25057cb3ff3b28734dec0 ]
 
-Instead of using fallback driver name match, provide ID table[1] for the
-primary match.
+The "pipe_count > RCU_TORTURE_PIPE_LEN" check has a comment saying "Should
+not happen, but...".  This is only true when testing an RCU whose grace
+periods are always long enough.  This commit therefore fixes this comment.
 
-[1]: https://elixir.bootlin.com/linux/v6.8/source/drivers/base/platform.c#L1353
-
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Reviewed-by: Prashant Malani <pmalani@chromium.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://lore.kernel.org/r/20240401030052.2887845-4-tzungbi@kernel.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reported-by: Linus Torvalds <torvalds@linux-foundation.org>
+Closes: https://lore.kernel.org/lkml/CAHk-=wi7rJ-eGq+xaxVfzFEgbL9tdf6Kc8Z89rCpfcQOKm74Tw@mail.gmail.com/
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/cros_usbpd-charger.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ kernel/rcu/rcutorture.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/cros_usbpd-charger.c b/drivers/power/supply/cros_usbpd-charger.c
-index b6c96376776a9..8008e31c0c098 100644
---- a/drivers/power/supply/cros_usbpd-charger.c
-+++ b/drivers/power/supply/cros_usbpd-charger.c
-@@ -5,6 +5,7 @@
-  * Copyright (c) 2014 - 2018 Google, Inc
-  */
- 
-+#include <linux/mod_devicetable.h>
- #include <linux/module.h>
- #include <linux/platform_data/cros_ec_commands.h>
- #include <linux/platform_data/cros_ec_proto.h>
-@@ -711,16 +712,22 @@ static int cros_usbpd_charger_resume(struct device *dev)
- static SIMPLE_DEV_PM_OPS(cros_usbpd_charger_pm_ops, NULL,
- 			 cros_usbpd_charger_resume);
- 
-+static const struct platform_device_id cros_usbpd_charger_id[] = {
-+	{ DRV_NAME, 0 },
-+	{}
-+};
-+MODULE_DEVICE_TABLE(platform, cros_usbpd_charger_id);
-+
- static struct platform_driver cros_usbpd_charger_driver = {
- 	.driver = {
- 		.name = DRV_NAME,
- 		.pm = &cros_usbpd_charger_pm_ops,
- 	},
--	.probe = cros_usbpd_charger_probe
-+	.probe = cros_usbpd_charger_probe,
-+	.id_table = cros_usbpd_charger_id,
- };
- 
- module_platform_driver(cros_usbpd_charger_driver);
- 
- MODULE_LICENSE("GPL");
- MODULE_DESCRIPTION("ChromeOS EC USBPD charger");
--MODULE_ALIAS("platform:" DRV_NAME);
+diff --git a/kernel/rcu/rcutorture.c b/kernel/rcu/rcutorture.c
+index 503c2aa845a4a..2f6c52a863f2e 100644
+--- a/kernel/rcu/rcutorture.c
++++ b/kernel/rcu/rcutorture.c
+@@ -1946,7 +1946,8 @@ static bool rcu_torture_one_read(struct torture_random_state *trsp, long myid)
+ 	preempt_disable();
+ 	pipe_count = READ_ONCE(p->rtort_pipe_count);
+ 	if (pipe_count > RCU_TORTURE_PIPE_LEN) {
+-		/* Should not happen, but... */
++		// Should not happen in a correct RCU implementation,
++		// happens quite often for torture_type=busted.
+ 		pipe_count = RCU_TORTURE_PIPE_LEN;
+ 	}
+ 	completed = cur_ops->get_gp_seq();
 -- 
 2.43.0
 
