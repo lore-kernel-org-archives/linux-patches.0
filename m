@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25471465A8;
-	Tue, 25 Jun 2024 09:59:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C51841465A8;
+	Tue, 25 Jun 2024 09:59:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309579; cv=none; b=SE7UGKjED+JzY6u4zGl9usg8xwSsZX0DHyJVve/hrSf1htRleQ2Ju4XXEvHDnNw5xIYRmjyXJcTwF5Rb3sm69CRu/DpNeDge4u7zyBbNeWg6nYcFGksPl0BKwm3KEQ0bGP5iyL35y1UjLHuKLY1Fuux48IhH7qXDAiwYG6qm9Rk=
+	t=1719309582; cv=none; b=an/gaLouD+BVr94xUNTnm5gbYezy80yM/TXbIseR3o3FY336s1j2p0j1Nxj/nD9UIz65ZKpSmB9pS4vgCJRs0P2ImQc35py81T9bqAmO+5rIwQgWi4de2cnF6csYAIJRKG6f8tsyhVk6CiTZqg9nd4yHAoZuqtr1USNiVTXsTQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309579; c=relaxed/simple;
-	bh=Mj60ni1m6sooxEsMDmIAGAQHQb5HnZlycIAFXG5YmIM=;
+	s=arc-20240116; t=1719309582; c=relaxed/simple;
+	bh=0Mj3qBRiYkA9q4CZqbJSyQJg3XVnIgIWuHgOEVm5krM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lMUE5vu5ilHGHqOEVtN3N1GphMytf03CXXL/+qkdVrryoHZgCfN6cKMSJPG4yFK9ZeH8Ki7s/KZB1G1VmEHj6gcjaKFsvlPy0HRJUYYKd1p+WvfVwMqMPv0Em8UDyHuzy6k2uoVLeevOJj/udS9YDOk2byy6N/5gkj2Qg2es6Ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lEEroHhS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CbaffbLkZp7iqBPAvyxZBfv8A9bFJPsqRHmgOR9hhHjT9XxpYO9qoANs8nslOEFzEfmlFfowOV1IesaE6bsE7+rx5cWngl4/2xlN2ouzMdnoAqUXasoPhkUIMLqRbIrH7V+hKAgi6WqZmBj5wjCghwMvCTuxqyO6zfMMITCJp4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ivhFZQzh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lEEroHhS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50CDBC32781;
-	Tue, 25 Jun 2024 09:59:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ivhFZQzh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40672C32781;
+	Tue, 25 Jun 2024 09:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309579;
-	bh=Mj60ni1m6sooxEsMDmIAGAQHQb5HnZlycIAFXG5YmIM=;
+	s=korg; t=1719309582;
+	bh=0Mj3qBRiYkA9q4CZqbJSyQJg3XVnIgIWuHgOEVm5krM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lEEroHhSQms+/JhJdztl/+1ml+43o+NyclZf1Qncmmn0c+Rw6kGp7WKetnU04mQdw
-	 vF6o7SqEQp3faJ3LDIiME8NMDjAt6RX0KAsU3r8/a44To3bYdOpZ8nZQGeJwSHFHWY
-	 UHcdut7SF3qoerufj6s/YADaIkw5MsFyFtFkada8=
+	b=ivhFZQzhvb9f4fwx3qW/uo60FVPlW3FWJDZMqBiuJXnZ8Uz9oSDxGa1kAat9Y5khs
+	 8YAOgVSQJeckG5c8m7NHRkLUDgxbKM8nm34KhzOP3mUprYCc81GmodwXSE2006Xu3j
+	 oOYpm7J0Q8gJmFIt9F2Ndk9zlkn6m7O881guFdJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joao Pinto <jpinto@synopsys.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Xu Liang <lxu@maxlinear.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 036/131] Avoid hw_desc array overrun in dw-axi-dmac
-Date: Tue, 25 Jun 2024 11:33:11 +0200
-Message-ID: <20240625085527.325367198@linuxfoundation.org>
+Subject: [PATCH 6.1 063/131] net: phy: mxl-gpy: enhance delay time required by loopback disable function
+Date: Tue, 25 Jun 2024 11:33:38 +0200
+Message-ID: <20240625085528.341380441@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085525.931079317@linuxfoundation.org>
 References: <20240625085525.931079317@linuxfoundation.org>
@@ -51,75 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joao Pinto <Joao.Pinto@synopsys.com>
+From: Xu Liang <lxu@maxlinear.com>
 
-[ Upstream commit 333e11bf47fa8d477db90e2900b1ed3c9ae9b697 ]
+[ Upstream commit 0ba13995be9b416ea1d3daaf3ba871a67f45899b ]
 
-I have a use case where nr_buffers = 3 and in which each descriptor is composed by 3
-segments, resulting in the DMA channel descs_allocated to be 9. Since axi_desc_put()
-handles the hw_desc considering the descs_allocated, this scenario would result in a
-kernel panic (hw_desc array will be overrun).
+GPY2xx devices need 3 seconds to fully switch out of loopback mode
+before it can safely re-enter loopback mode. Implement timeout mechanism
+to guarantee 3 seconds waited before re-enter loopback mode.
 
-To fix this, the proposal is to add a new member to the axi_dma_desc structure,
-where we keep the number of allocated hw_descs (axi_desc_alloc()) and use it in
-axi_desc_put() to handle the hw_desc array correctly.
-
-Additionally I propose to remove the axi_chan_start_first_queued() call after completing
-the transfer, since it was identified that unbalance can occur (started descriptors can
-be interrupted and transfer ignored due to DMA channel not being enabled).
-
-Signed-off-by: Joao Pinto <jpinto@synopsys.com>
-Link: https://lore.kernel.org/r/1711536564-12919-1-git-send-email-jpinto@synopsys.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Xu Liang <lxu@maxlinear.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: c44d3ffd85db ("net: phy: mxl-gpy: Remove interrupt mask clearing from config_init")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 6 ++----
- drivers/dma/dw-axi-dmac/dw-axi-dmac.h          | 1 +
- 2 files changed, 3 insertions(+), 4 deletions(-)
+ drivers/net/phy/mxl-gpy.c | 35 +++++++++++++++++++++++++++++------
+ 1 file changed, 29 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index 152c5d98524d7..7596864bf8bb2 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -250,6 +250,7 @@ static struct axi_dma_desc *axi_desc_alloc(u32 num)
- 		kfree(desc);
- 		return NULL;
- 	}
-+	desc->nr_hw_descs = num;
+diff --git a/drivers/net/phy/mxl-gpy.c b/drivers/net/phy/mxl-gpy.c
+index cae24091fb6f7..1c4ad1ded2cb6 100644
+--- a/drivers/net/phy/mxl-gpy.c
++++ b/drivers/net/phy/mxl-gpy.c
+@@ -95,6 +95,13 @@ struct gpy_priv {
  
- 	return desc;
- }
-@@ -276,7 +277,7 @@ static struct axi_dma_lli *axi_desc_get(struct axi_dma_chan *chan,
- static void axi_desc_put(struct axi_dma_desc *desc)
- {
- 	struct axi_dma_chan *chan = desc->chan;
--	int count = atomic_read(&chan->descs_allocated);
-+	int count = desc->nr_hw_descs;
- 	struct axi_dma_hw_desc *hw_desc;
- 	int descs_put;
- 
-@@ -1087,9 +1088,6 @@ static void axi_chan_block_xfer_complete(struct axi_dma_chan *chan)
- 		/* Remove the completed descriptor from issued list before completing */
- 		list_del(&vd->node);
- 		vchan_cookie_complete(vd);
--
--		/* Submit queued descriptors after processing the completed ones */
--		axi_chan_start_first_queued(chan);
- 	}
- 
- out:
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-index e9d5eb0fd5948..764427a66f5e8 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-@@ -103,6 +103,7 @@ struct axi_dma_desc {
- 	u32				completed_blocks;
- 	u32				length;
- 	u32				period_len;
-+	u32				nr_hw_descs;
+ 	u8 fw_major;
+ 	u8 fw_minor;
++
++	/* It takes 3 seconds to fully switch out of loopback mode before
++	 * it can safely re-enter loopback mode. Record the time when
++	 * loopback is disabled. Check and wait if necessary before loopback
++	 * is enabled.
++	 */
++	u64 lb_dis_to;
  };
  
- struct axi_dma_chan_config {
+ static const struct {
+@@ -682,18 +689,34 @@ static void gpy_get_wol(struct phy_device *phydev,
+ 
+ static int gpy_loopback(struct phy_device *phydev, bool enable)
+ {
++	struct gpy_priv *priv = phydev->priv;
++	u16 set = 0;
+ 	int ret;
+ 
+-	ret = phy_modify(phydev, MII_BMCR, BMCR_LOOPBACK,
+-			 enable ? BMCR_LOOPBACK : 0);
+-	if (!ret) {
+-		/* It takes some time for PHY device to switch
+-		 * into/out-of loopback mode.
++	if (enable) {
++		u64 now = get_jiffies_64();
++
++		/* wait until 3 seconds from last disable */
++		if (time_before64(now, priv->lb_dis_to))
++			msleep(jiffies64_to_msecs(priv->lb_dis_to - now));
++
++		set = BMCR_LOOPBACK;
++	}
++
++	ret = phy_modify(phydev, MII_BMCR, BMCR_LOOPBACK, set);
++	if (ret <= 0)
++		return ret;
++
++	if (enable) {
++		/* It takes some time for PHY device to switch into
++		 * loopback mode.
+ 		 */
+ 		msleep(100);
++	} else {
++		priv->lb_dis_to = get_jiffies_64() + HZ * 3;
+ 	}
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ static int gpy115_loopback(struct phy_device *phydev, bool enable)
 -- 
 2.43.0
 
