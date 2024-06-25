@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6162F149C41;
-	Tue, 25 Jun 2024 09:56:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C757149C41;
+	Tue, 25 Jun 2024 09:56:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309374; cv=none; b=MRwaOKzOrrt9dn1r17C8L5HesvNdUM+kabYZFrpHmNMLDOA2q1Qs5cRjCabtpVhrNLQSV1bmm9l94IDClpaedF05t66g55oJYCdJFErut7RXyqqLGs673/wu8+kkbItYrt+/rX4/SMDVmsc4KhzybZlH8VSjnVLI1fLDKeJAfOA=
+	t=1719309377; cv=none; b=qoV5NI6xl4d6e0gAmzywTHpUdhMBwZGp9EQjO5+KipAGi59ktj9+uhAgLA7P9W0WpD+CzPx28xTJUvQfBV3yu/at44JRyOK20fpx3uUnYgA2cReZ9tsnXMgQR8qjk//E22x3z5L3HKCyiyXMU3IWumji47zDJkIgYS81WFLXmHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309374; c=relaxed/simple;
-	bh=DsjAvpWtqe2JPq5SXdLKAVSn1hzB+Cd8QL+TV+xGdtM=;
+	s=arc-20240116; t=1719309377; c=relaxed/simple;
+	bh=UK55V7P3YeDjoaguhtqajLD4eewMSDHc7RmSJc1DP38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tx89LANabjEmHS5C/AjR5iXvMp+Rr7kSI6/uivKTN3yMl0QMp3DhxXcwOoQMoC7iwPlcudoVSSGCamwpFoSe+aMwVBxA/HiuC8yqnKq4w7mmPzPCzFEkGXACoPakJiQQ3YnoEZwCnOIzzUk6PCkMNRrZyTYo+knFpDes8oGd8JM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x/5/OtN4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=brkl7VENlgShaNJhBy9pzF/08UwTkP8Qmc+dh/S0hoTaiP71SHzWr8aiXeT1hYLSJlGQkKVGIDoK5JP+YmJw19u+PzJrgNfV/QkYOfukP6pXK7EuANHCZdT7mOHrgiLxTD8BbBTxQ26tDfZ/iCsM6L3VnBtghGjrCdi2+ewSY6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CPY4h8Y4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x/5/OtN4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA26BC32781;
-	Tue, 25 Jun 2024 09:56:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CPY4h8Y4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D41C9C32781;
+	Tue, 25 Jun 2024 09:56:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309374;
-	bh=DsjAvpWtqe2JPq5SXdLKAVSn1hzB+Cd8QL+TV+xGdtM=;
+	s=korg; t=1719309377;
+	bh=UK55V7P3YeDjoaguhtqajLD4eewMSDHc7RmSJc1DP38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x/5/OtN4cs0iR9/cTu5Uds7H3C8BFHmyg4xsfCSnmkz9WCE4o+uTydPPonh9w0PP8
-	 0kNBD7l1pS6IJ7/9Chz11ug0ALXlY5ZDsdkPXY+zZN56fm7xs/XhScDgEXf91bwdHw
-	 h4GpwiZFnY0GZomYmIXpcZJ5d1gum6URPpAT9aeQ=
+	b=CPY4h8Y454xKhdAKRNbuPygtRk3ZpCD6cczxQ7Ith5322p9OSVH7PyfQMVngNuNy+
+	 Em35cj5/dbTJ+hdEQT8wCVAVIa11WWhWM7pacNgGpp4vA2iVnpE3O1iS0mHkDzVBcg
+	 LOhqZ0bOYpui5xPymH9FwEh+OnXpAl7O+DypDDCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Michael Guralnik <michaelgur@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 6.6 147/192] RDMA/mlx5: Follow rb_key.ats when creating new mkeys
-Date: Tue, 25 Jun 2024 11:33:39 +0200
-Message-ID: <20240625085542.800778177@linuxfoundation.org>
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 181/192] riscv: Dont use PGD entries for the linear mapping
+Date: Tue, 25 Jun 2024 11:34:13 +0200
+Message-ID: <20240625085544.108654741@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -51,37 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-commit f637040c3339a2ed8c12d65ad03f9552386e2fe7 upstream.
+[ Upstream commit 629db01c64ff6cea08fc61b52426362689ef8618 ]
 
-When a cache ent already exists but doesn't have any mkeys in it the cache
-will automatically create a new one based on the specification in the
-ent->rb_key.
+Propagating changes at this level is cumbersome as we need to go through
+all the page tables when that happens (either when changing the
+permissions or when splitting the mapping).
 
-ent->ats was missed when creating the new key and so ma_translation_mode
-was not being set even though the ent requires it.
+Note that this prevents the use of 4MB mapping for sv32 and 1GB mapping for
+sv39 in the linear mapping.
 
-Cc: stable@vger.kernel.org
-Fixes: 73d09b2fe833 ("RDMA/mlx5: Introduce mlx5r_cache_rb_key")
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
-Link: https://lore.kernel.org/r/7c5613458ecb89fbe5606b7aa4c8d990bdea5b9a.1716900410.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20231108075930.7157-2-alexghiti@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Stable-dep-of: c67ddf59ac44 ("riscv: force PAGE_SIZE linear mapping if debug_pagealloc is enabled")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/mr.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/riscv/mm/init.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/infiniband/hw/mlx5/mr.c
-+++ b/drivers/infiniband/hw/mlx5/mr.c
-@@ -308,6 +308,7 @@ static void set_cache_mkc(struct mlx5_ca
- 	MLX5_SET(mkc, mkc, access_mode_1_0, ent->rb_key.access_mode & 0x3);
- 	MLX5_SET(mkc, mkc, access_mode_4_2,
- 		(ent->rb_key.access_mode >> 2) & 0x7);
-+	MLX5_SET(mkc, mkc, ma_translation_mode, !!ent->rb_key.ats);
+diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
+index 83ac1eb8e7e68..4d62f54698b99 100644
+--- a/arch/riscv/mm/init.c
++++ b/arch/riscv/mm/init.c
+@@ -668,16 +668,16 @@ void __init create_pgd_mapping(pgd_t *pgdp,
+ static uintptr_t __init best_map_size(phys_addr_t pa, uintptr_t va,
+ 				      phys_addr_t size)
+ {
+-	if (!(pa & (PGDIR_SIZE - 1)) && !(va & (PGDIR_SIZE - 1)) && size >= PGDIR_SIZE)
+-		return PGDIR_SIZE;
+-
+-	if (!(pa & (P4D_SIZE - 1)) && !(va & (P4D_SIZE - 1)) && size >= P4D_SIZE)
++	if (pgtable_l5_enabled &&
++	    !(pa & (P4D_SIZE - 1)) && !(va & (P4D_SIZE - 1)) && size >= P4D_SIZE)
+ 		return P4D_SIZE;
  
- 	MLX5_SET(mkc, mkc, translations_octword_size,
- 		 get_mkc_octo_size(ent->rb_key.access_mode,
+-	if (!(pa & (PUD_SIZE - 1)) && !(va & (PUD_SIZE - 1)) && size >= PUD_SIZE)
++	if (pgtable_l4_enabled &&
++	    !(pa & (PUD_SIZE - 1)) && !(va & (PUD_SIZE - 1)) && size >= PUD_SIZE)
+ 		return PUD_SIZE;
+ 
+-	if (!(pa & (PMD_SIZE - 1)) && !(va & (PMD_SIZE - 1)) && size >= PMD_SIZE)
++	if (IS_ENABLED(CONFIG_64BIT) &&
++	    !(pa & (PMD_SIZE - 1)) && !(va & (PMD_SIZE - 1)) && size >= PMD_SIZE)
+ 		return PMD_SIZE;
+ 
+ 	return PAGE_SIZE;
+-- 
+2.43.0
+
 
 
