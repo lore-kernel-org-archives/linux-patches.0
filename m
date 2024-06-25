@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50B324B34;
-	Tue, 25 Jun 2024 09:52:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0E7524B34;
+	Tue, 25 Jun 2024 09:52:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309171; cv=none; b=ORTbbmq66gNHIQ9OTU0UBd91AeIZWK+HhPWPw5l2R5KmeT/vxW6BYx3211BLI3iVZXvidLM9yHg4LqbAqiIh2AUIADmO7DJMBqKruXtOwWetsW2v4LDKMBgVot9xjaKPp8RCeHrz2+Mzf82TAoeayg3dXkR1shg69e5EN4xJRcI=
+	t=1719309174; cv=none; b=VfC2JQWY4KqPZ6Pa7Qy3M9ixkaR7C8f4jio8/Qmq/Ox5HJUag6BpNxHmyps1b1Hw6osc0+bZlg7gEkTFkZXMwL3aoVXVAAHYXQLE7H7z03u9sSzrH7MJ9vvbBldxBxy/tWBCoFVt35gwqk+toucguiBWI7GrZLos0EgBtj1Q/aw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309171; c=relaxed/simple;
-	bh=On9+3wCT3cr1Q3iv3WxJlPQBJTSRP/HJB6yHAejqO7Y=;
+	s=arc-20240116; t=1719309174; c=relaxed/simple;
+	bh=SeVKh9Xx9qI/86dH5+G7gBCQrYwqFCoV3Xy0Z5uymVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q4/DsHl5vFWbG6Ho5Zg1Sxo+fGh0u4MX7HNsJyrVUNZWvyzw6w9/MwQ20YteaybfmfmN4dj3jfMFWvycscSCHufWKHMM+LiGn0/8ggdqOkKzi11KsW0/zlJ5OyOvjk8kKyeLrfVKLPithUk7l6udQtKCPA3/pT0z+Tp6rQrBAYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kfv7U2gZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZJgpif2PERT1q3GzQ54IZHKaIDut2jYrh3P9oJHf8T458AGsFJB5v7NzcbKzLaN3zCDfGrdxMir6QpJj7D+Cs2MhnOb3f7sNdEPHN/OtD20N7gCj/RaM6bu1znUDl/bsdH+UUuAlEC/R0pd0gixh/tmwRwzDSN+sYVQxLp1YJQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q+4ZOEcm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kfv7U2gZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CD53C32781;
-	Tue, 25 Jun 2024 09:52:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q+4ZOEcm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26A14C32781;
+	Tue, 25 Jun 2024 09:52:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309171;
-	bh=On9+3wCT3cr1Q3iv3WxJlPQBJTSRP/HJB6yHAejqO7Y=;
+	s=korg; t=1719309174;
+	bh=SeVKh9Xx9qI/86dH5+G7gBCQrYwqFCoV3Xy0Z5uymVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kfv7U2gZ0/u6u7+lcdAgj6KxA4FCd0lF6yOG5m+dtpFDjJ3HuURl/3fyyyuITDcno
-	 n+zN7cORLkzU8gNQ3Ca0ib9+SciGfRso9/WOZqm0tR/FOCoM3Fq/p5eSE0Pyqj4gBq
-	 blKoVspQR8Arc0Fn+EpHTydEWekuhxGn0xdCKq/0=
+	b=q+4ZOEcm9AQFXFuK5wXV0cQBfyOVWhI/hkETwE1Wt+UapGTZFq3Pb5By7V6Uxbq3c
+	 zNUz+Q586gRqTpofWHU10U7U1uu4VDPvmuzqCDDT8s40fWkyWhom7e2/dwPafa2jPy
+	 jSDD03jJ7iXEZ6hYW8qNfphX+fyQOtRySsellKqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuang Li <shuali@redhat.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 089/192] tipc: force a dst refcount before doing decryption
-Date: Tue, 25 Jun 2024 11:32:41 +0200
-Message-ID: <20240625085540.591981090@linuxfoundation.org>
+Subject: [PATCH 6.6 080/192] ipv6: prevent possible NULL dereference in rt6_probe()
+Date: Tue, 25 Jun 2024 11:32:32 +0200
+Message-ID: <20240625085540.246457034@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -52,56 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 2ebe8f840c7450ecbfca9d18ac92e9ce9155e269 ]
+[ Upstream commit b86762dbe19a62e785c189f313cda5b989931f37 ]
 
-As it says in commit 3bc07321ccc2 ("xfrm: Force a dst refcount before
-entering the xfrm type handlers"):
+syzbot caught a NULL dereference in rt6_probe() [1]
 
-"Crypto requests might return asynchronous. In this case we leave the
- rcu protected region, so force a refcount on the skb's destination
- entry before we enter the xfrm type input/output handlers."
+Bail out if  __in6_dev_get() returns NULL.
 
-On TIPC decryption path it has the same problem, and skb_dst_force()
-should be called before doing decryption to avoid a possible crash.
+[1]
+Oops: general protection fault, probably for non-canonical address 0xdffffc00000000cb: 0000 [#1] PREEMPT SMP KASAN PTI
+KASAN: null-ptr-deref in range [0x0000000000000658-0x000000000000065f]
+CPU: 1 PID: 22444 Comm: syz-executor.0 Not tainted 6.10.0-rc2-syzkaller-00383-gb8481381d4e2 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/02/2024
+ RIP: 0010:rt6_probe net/ipv6/route.c:656 [inline]
+ RIP: 0010:find_match+0x8c4/0xf50 net/ipv6/route.c:758
+Code: 14 fd f7 48 8b 85 38 ff ff ff 48 c7 45 b0 00 00 00 00 48 8d b8 5c 06 00 00 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <0f> b6 14 02 48 89 f8 83 e0 07 83 c0 03 38 d0 7c 08 84 d2 0f 85 19
+RSP: 0018:ffffc900034af070 EFLAGS: 00010203
+RAX: dffffc0000000000 RBX: 0000000000000000 RCX: ffffc90004521000
+RDX: 00000000000000cb RSI: ffffffff8990d0cd RDI: 000000000000065c
+RBP: ffffc900034af150 R08: 0000000000000005 R09: 0000000000000000
+R10: 0000000000000001 R11: 0000000000000002 R12: 000000000000000a
+R13: 1ffff92000695e18 R14: ffff8880244a1d20 R15: 0000000000000000
+FS:  00007f4844a5a6c0(0000) GS:ffff8880b9300000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000001b31b27000 CR3: 000000002d42c000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+  rt6_nh_find_match+0xfa/0x1a0 net/ipv6/route.c:784
+  nexthop_for_each_fib6_nh+0x26d/0x4a0 net/ipv4/nexthop.c:1496
+  __find_rr_leaf+0x6e7/0xe00 net/ipv6/route.c:825
+  find_rr_leaf net/ipv6/route.c:853 [inline]
+  rt6_select net/ipv6/route.c:897 [inline]
+  fib6_table_lookup+0x57e/0xa30 net/ipv6/route.c:2195
+  ip6_pol_route+0x1cd/0x1150 net/ipv6/route.c:2231
+  pol_lookup_func include/net/ip6_fib.h:616 [inline]
+  fib6_rule_lookup+0x386/0x720 net/ipv6/fib6_rules.c:121
+  ip6_route_output_flags_noref net/ipv6/route.c:2639 [inline]
+  ip6_route_output_flags+0x1d0/0x640 net/ipv6/route.c:2651
+  ip6_dst_lookup_tail.constprop.0+0x961/0x1760 net/ipv6/ip6_output.c:1147
+  ip6_dst_lookup_flow+0x99/0x1d0 net/ipv6/ip6_output.c:1250
+  rawv6_sendmsg+0xdab/0x4340 net/ipv6/raw.c:898
+  inet_sendmsg+0x119/0x140 net/ipv4/af_inet.c:853
+  sock_sendmsg_nosec net/socket.c:730 [inline]
+  __sock_sendmsg net/socket.c:745 [inline]
+  sock_write_iter+0x4b8/0x5c0 net/socket.c:1160
+  new_sync_write fs/read_write.c:497 [inline]
+  vfs_write+0x6b6/0x1140 fs/read_write.c:590
+  ksys_write+0x1f8/0x260 fs/read_write.c:643
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Shuang reported this issue when this warning is triggered:
-
-  [] WARNING: include/net/dst.h:337 tipc_sk_rcv+0x1055/0x1ea0 [tipc]
-  [] Kdump: loaded Tainted: G W --------- - - 4.18.0-496.el8.x86_64+debug
-  [] Workqueue: crypto cryptd_queue_worker
-  [] RIP: 0010:tipc_sk_rcv+0x1055/0x1ea0 [tipc]
-  [] Call Trace:
-  [] tipc_sk_mcast_rcv+0x548/0xea0 [tipc]
-  [] tipc_rcv+0xcf5/0x1060 [tipc]
-  [] tipc_aead_decrypt_done+0x215/0x2e0 [tipc]
-  [] cryptd_aead_crypt+0xdb/0x190
-  [] cryptd_queue_worker+0xed/0x190
-  [] process_one_work+0x93d/0x17e0
-
-Fixes: fc1b6d6de220 ("tipc: introduce TIPC encryption & authentication")
-Reported-by: Shuang Li <shuali@redhat.com>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Link: https://lore.kernel.org/r/fbe3195fad6997a4eec62d9bf076b2ad03ac336b.1718476040.git.lucien.xin@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 52e1635631b3 ("[IPV6]: ROUTE: Add router_probe_interval sysctl.")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20240615151454.166404-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/node.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/ipv6/route.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/tipc/node.c b/net/tipc/node.c
-index 3105abe97bb9c..69053c0398252 100644
---- a/net/tipc/node.c
-+++ b/net/tipc/node.c
-@@ -2107,6 +2107,7 @@ void tipc_rcv(struct net *net, struct sk_buff *skb, struct tipc_bearer *b)
- 	} else {
- 		n = tipc_node_find_by_id(net, ehdr->id);
- 	}
-+	skb_dst_force(skb);
- 	tipc_crypto_rcv(net, (n) ? n->crypto_rx : NULL, &skb, b);
- 	if (!skb)
- 		return;
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index e40d05caf9550..eb3afaee62e8f 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -638,6 +638,8 @@ static void rt6_probe(struct fib6_nh *fib6_nh)
+ 	rcu_read_lock();
+ 	last_probe = READ_ONCE(fib6_nh->last_probe);
+ 	idev = __in6_dev_get(dev);
++	if (!idev)
++		goto out;
+ 	neigh = __ipv6_neigh_lookup_noref(dev, nh_gw);
+ 	if (neigh) {
+ 		if (READ_ONCE(neigh->nud_state) & NUD_VALID)
 -- 
 2.43.0
 
