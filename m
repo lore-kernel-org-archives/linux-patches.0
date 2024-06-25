@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3CF146A67;
-	Tue, 25 Jun 2024 09:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C2B1465A8;
+	Tue, 25 Jun 2024 09:57:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309447; cv=none; b=VR5aq2romaRwF0kW6UdMA4DadThWQMvcxmap4g/Nu5z+bY1huclJrmxUhbhu8cMxAU2JkHqMgjjMyyWcpXnMc9O/xqND69QkyHkpuxddy/C2AQuBYwWQrjEydXMjEldzKjgGysTjfSUi1nAxhw9P4KLzufYSGl2wjSEnmCeojDY=
+	t=1719309450; cv=none; b=oW3UsGeRwiBxlyQRL/vi6hnXFDmOLZjA6mjik/tnJFduAw2zQlimcspCpa/V1Z8o0XDplKd/eA68Nap6rBfuafAZ5BM9ig7tAZDkMFC1ns8sQ+LXXo/5e/lGriAtSdOppPrQ7KhnKhXz/X4ThwNOjirDULFe1OfYNKxETb2sX0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309447; c=relaxed/simple;
-	bh=vZ0gyFxDwMxxUszcqCWk68kg69quaU8XNTCGrKqE4Qw=;
+	s=arc-20240116; t=1719309450; c=relaxed/simple;
+	bh=k0K1vyI8dCW/DFRB1atGzRdQS7BUZW7rEc2pCEL7fD0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dWzSouwyoq8gmrc59Zk73kQr+jBcYmwXJIa+H3S8SJVktgUXrDhwmyc85z9pD1VrMAYqGBTDu4YTiwOh6o5ZcfNB7fdDyMLhlmrHsq2F21p+nT5ZBWGQH1hOB8MRR7ueaoaYfTACTJD51xY9Tbm3zl/b4jcLcY1WMuIJrVG2KkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GwYOYXP0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rgo7roG/vTYGxGBBIsKQGP4fagzZOZDHjp9JejlJkDZwR+ssDSuV3/cS/AljN5oFtTdV8Z9KCsrXRgeV7zyWHMHl+6FQz3x8VcEt5XPteguKgF5QuWDauQvNUO/iI+Q9WZ71wlvRoccc4McD8Kpt+help1PeumNaIbbQysdWiIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L4tMG1b0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GwYOYXP0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C2B2C32786;
-	Tue, 25 Jun 2024 09:57:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L4tMG1b0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80493C32781;
+	Tue, 25 Jun 2024 09:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309446;
-	bh=vZ0gyFxDwMxxUszcqCWk68kg69quaU8XNTCGrKqE4Qw=;
+	s=korg; t=1719309449;
+	bh=k0K1vyI8dCW/DFRB1atGzRdQS7BUZW7rEc2pCEL7fD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GwYOYXP0BT8RwcwMSMvxb3+p3yarkAf3vMW0x039oASp5u+T4mflQvaunlwfVrpjb
-	 BY5cnpmojfo+NmYTZJmCm5Zaa2E9DmwDzkazWM+Jd2PBaf6XUHxLRB8B2WjvmgHz/6
-	 eWQDxOwpEna3E4SFWTWo8+N67DdWeuXoWPePOcGY=
+	b=L4tMG1b0Nw2Z3XRLOtPXGH2DSDKhqPsvtS0dInn204MVjFANYYVvSPIE2C+d4MA2H
+	 VY/n+HufStccUP3kX+9yfnGcEMczE3T/1dXhi41UF1fhKXHPEv4xEMIC/Zy+XCQFbe
+	 +qoYbZsOEsR3QS4FUGlDjH/lDhlEGPzO06wv2V8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Yen <leon.yen@mediatek.com>,
-	Ming Yen Hsieh <MingYen.Hsieh@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Chenghai Huang <huangchenghai2@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 019/131] wifi: mt76: mt7921s: fix potential hung tasks during chip recovery
-Date: Tue, 25 Jun 2024 11:32:54 +0200
-Message-ID: <20240625085526.677782611@linuxfoundation.org>
+Subject: [PATCH 6.1 002/131] crypto: hisilicon/sec - Fix memory leak for sec resource release
+Date: Tue, 25 Jun 2024 11:32:37 +0200
+Message-ID: <20240625085526.027328922@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085525.931079317@linuxfoundation.org>
 References: <20240625085525.931079317@linuxfoundation.org>
@@ -52,104 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Yen <leon.yen@mediatek.com>
+From: Chenghai Huang <huangchenghai2@huawei.com>
 
-[ Upstream commit ecf0b2b8a37c8464186620bef37812a117ff6366 ]
+[ Upstream commit bba4250757b4ae1680fea435a358d8093f254094 ]
 
-During chip recovery (e.g. chip reset), there is a possible situation that
-kernel worker reset_work is holding the lock and waiting for kernel thread
-stat_worker to be parked, while stat_worker is waiting for the release of
-the same lock.
-It causes a deadlock resulting in the dumping of hung tasks messages and
-possible rebooting of the device.
+The AIV is one of the SEC resources. When releasing resources,
+it need to release the AIV resources at the same time.
+Otherwise, memory leakage occurs.
 
-This patch prevents the execution of stat_worker during the chip recovery.
+The aiv resource release is added to the sec resource release
+function.
 
-Signed-off-by: Leon Yen <leon.yen@mediatek.com>
-Signed-off-by: Ming Yen Hsieh <MingYen.Hsieh@mediatek.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/mac.c      | 2 ++
- drivers/net/wireless/mediatek/mt76/mt7921/pci_mac.c  | 2 --
- drivers/net/wireless/mediatek/mt76/mt7921/sdio_mac.c | 2 --
- drivers/net/wireless/mediatek/mt76/sdio.c            | 3 ++-
- 4 files changed, 4 insertions(+), 5 deletions(-)
+ drivers/crypto/hisilicon/sec2/sec_crypto.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mac.c b/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
-index 49ddca84f7862..cae7c21ca1f8b 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
-@@ -883,6 +883,7 @@ void mt7921_mac_reset_work(struct work_struct *work)
- 	int i, ret;
+diff --git a/drivers/crypto/hisilicon/sec2/sec_crypto.c b/drivers/crypto/hisilicon/sec2/sec_crypto.c
+index cae7c414bdaf4..09a20307d01e3 100644
+--- a/drivers/crypto/hisilicon/sec2/sec_crypto.c
++++ b/drivers/crypto/hisilicon/sec2/sec_crypto.c
+@@ -479,8 +479,10 @@ static void sec_alg_resource_free(struct sec_ctx *ctx,
  
- 	dev_dbg(dev->mt76.dev, "chip reset\n");
-+	set_bit(MT76_RESET, &dev->mphy.state);
- 	dev->hw_full_reset = true;
- 	ieee80211_stop_queues(hw);
+ 	if (ctx->pbuf_supported)
+ 		sec_free_pbuf_resource(dev, qp_ctx->res);
+-	if (ctx->alg_type == SEC_AEAD)
++	if (ctx->alg_type == SEC_AEAD) {
+ 		sec_free_mac_resource(dev, qp_ctx->res);
++		sec_free_aiv_resource(dev, qp_ctx->res);
++	}
+ }
  
-@@ -911,6 +912,7 @@ void mt7921_mac_reset_work(struct work_struct *work)
- 	}
- 
- 	dev->hw_full_reset = false;
-+	clear_bit(MT76_RESET, &dev->mphy.state);
- 	pm->suspended = false;
- 	ieee80211_wake_queues(hw);
- 	ieee80211_iterate_active_interfaces(hw,
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/pci_mac.c b/drivers/net/wireless/mediatek/mt76/mt7921/pci_mac.c
-index 8dd60408b117e..cb20ddcad137c 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/pci_mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/pci_mac.c
-@@ -78,7 +78,6 @@ int mt7921e_mac_reset(struct mt7921_dev *dev)
- 	mt76_wr(dev, MT_WFDMA0_HOST_INT_ENA, 0);
- 	mt76_wr(dev, MT_PCIE_MAC_INT_ENABLE, 0x0);
- 
--	set_bit(MT76_RESET, &dev->mphy.state);
- 	set_bit(MT76_MCU_RESET, &dev->mphy.state);
- 	wake_up(&dev->mt76.mcu.wait);
- 	skb_queue_purge(&dev->mt76.mcu.res_q);
-@@ -129,7 +128,6 @@ int mt7921e_mac_reset(struct mt7921_dev *dev)
- 
- 	err = __mt7921_start(&dev->phy);
- out:
--	clear_bit(MT76_RESET, &dev->mphy.state);
- 
- 	local_bh_disable();
- 	napi_enable(&dev->mt76.tx_napi);
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/sdio_mac.c b/drivers/net/wireless/mediatek/mt76/mt7921/sdio_mac.c
-index fd07b66233920..46af03803de73 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/sdio_mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/sdio_mac.c
-@@ -98,7 +98,6 @@ int mt7921s_mac_reset(struct mt7921_dev *dev)
- 	mt76_connac_free_pending_tx_skbs(&dev->pm, NULL);
- 	mt76_txq_schedule_all(&dev->mphy);
- 	mt76_worker_disable(&dev->mt76.tx_worker);
--	set_bit(MT76_RESET, &dev->mphy.state);
- 	set_bit(MT76_MCU_RESET, &dev->mphy.state);
- 	wake_up(&dev->mt76.mcu.wait);
- 	skb_queue_purge(&dev->mt76.mcu.res_q);
-@@ -135,7 +134,6 @@ int mt7921s_mac_reset(struct mt7921_dev *dev)
- 
- 	err = __mt7921_start(&dev->phy);
- out:
--	clear_bit(MT76_RESET, &dev->mphy.state);
- 
- 	mt76_worker_enable(&dev->mt76.tx_worker);
- 
-diff --git a/drivers/net/wireless/mediatek/mt76/sdio.c b/drivers/net/wireless/mediatek/mt76/sdio.c
-index fc4fb94635645..2a81c2f663449 100644
---- a/drivers/net/wireless/mediatek/mt76/sdio.c
-+++ b/drivers/net/wireless/mediatek/mt76/sdio.c
-@@ -499,7 +499,8 @@ static void mt76s_tx_status_data(struct mt76_worker *worker)
- 	dev = container_of(sdio, struct mt76_dev, sdio);
- 
- 	while (true) {
--		if (test_bit(MT76_REMOVED, &dev->phy.state))
-+		if (test_bit(MT76_RESET, &dev->phy.state) ||
-+		    test_bit(MT76_REMOVED, &dev->phy.state))
- 			break;
- 
- 		if (!dev->drv->tx_status_data(dev, &update))
+ static int sec_alloc_qp_ctx_resource(struct hisi_qm *qm, struct sec_ctx *ctx,
 -- 
 2.43.0
 
