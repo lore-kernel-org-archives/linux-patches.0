@@ -1,156 +1,103 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C4D14AD2B;
-	Tue, 25 Jun 2024 12:52:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD900157E74
+	for <patches@lists.linux.dev>; Tue, 25 Jun 2024 13:31:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719319944; cv=none; b=TvPL9YRLuflMiVj/FA7qhZHt44ZxPjlpTczcY8TX5NTJQxlm0k7kzuqHFfywHug/DzJXzZGxzpWaV3Zhib97XBL/mZ1A5UW/RU1jF2BsGep1MuPqJub6UjiaDmv/uu7Smg9pR70afAVR5l0ipH6UeQD2cHHYnTzU6R/u7LUsjog=
+	t=1719322263; cv=none; b=DJ/wYjPSZ537FvnheU9xC4m/xJBIHE3hPcaR7SPq7bzFaQFeAtfDmsOHBTCKyuufiZwJx/WufA3rf1lwauwlr9PL48DjuH7tcfPIfIDMxOAp35sL5b5Q6jCRkAxZwDV23itYfUi0GnV73WzF27PM+X4OzwyeuZZQVw04XzKuGAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719319944; c=relaxed/simple;
-	bh=DqQkhxxkF1ywIPNKmbIKr6300vxrVQAt7ItYkuvNEAo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YRmfUNAGMUvXYQbQL3RoqsyBnW3I6BziWjzlu+6vHWtIOBGSVwewaYcxwHgBpkE3X8TKsAbIQ3X4qdjn4k/LV1AUcQQn8ZAKxWX3VPVBPAn/W4O+s9GroWMwVMoTf9t9i9W/I44vKsj9h+Ah3jyK1EEsxvX41iy2ryXlis6JnXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MRERz4i2; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1719322263; c=relaxed/simple;
+	bh=o0udTKHZEk0pg4zJtJ33LRzt+kH4A8KT9v6IDXkPB14=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=aNkYU1EjJTrmlUEBqMdIw2/XLnDPqNqC240etUqI1RvYZZ4h3pVIhb+FLt8n4WFQeOU65bcoBLlZgF/jWI7WLBa61r1PWUEOisFSHy7H/TZTTufuYDIwoRhDTb3Q/iNPx/v12draWB6g7o20APKJNNVhsEHPybFfxM4YQ0qlTcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=Zl5Nl4bO; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MRERz4i2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80E74C32786;
-	Tue, 25 Jun 2024 12:52:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719319944;
-	bh=DqQkhxxkF1ywIPNKmbIKr6300vxrVQAt7ItYkuvNEAo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MRERz4i2elIBflylaPuoLgJWScA/nqp4di5FDIxkpNx29rVftPVpGXEPZnq6d8eho
-	 wqgdPWNiKfxhsdC5aa5+7qIl0eOLjI2vHiRolQmXwdNGo/N3j/4bVWU/7b3XZDlCVK
-	 UDn7LneZqBGKIXTY2yeYhog+4+x9NerBI4ExbCew=
-Date: Tue, 25 Jun 2024 14:52:21 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Jani Nikula <jani.nikula@intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>, Dave Airlie <airlied@gmail.com>,
-	"Vetter, Daniel" <daniel.vetter@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	tursulin@ursulin.net, Francois Dugast <francois.dugast@intel.com>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Thomas =?iso-8859-1?Q?Hellstr=F6m?= <thomas.hellstrom@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: Re: [PATCH 6.9 073/281] drm/xe: Use ordered WQ for G2H handler
-Message-ID: <2024062537-panorama-sled-3025@gregkh>
-References: <20240619125609.836313103@linuxfoundation.org>
- <20240619125612.651602452@linuxfoundation.org>
- <ZnLlMdyrtHEnrWkB@fdugast-desk>
- <2024061946-salvaging-tying-a320@gregkh>
- <ZnqyFRf9zPa4kfwL@intel.com>
- <2024062502-corporate-manned-1201@gregkh>
- <87ed8ldwjv.fsf@intel.com>
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="Zl5Nl4bO"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-57d1679ee83so5948725a12.2
+        for <patches@lists.linux.dev>; Tue, 25 Jun 2024 06:31:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20230601; t=1719322260; x=1719927060; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jCPI9zmJcO9n3warYFnR4HzozQlCIFB1YY1JSHQ5z7I=;
+        b=Zl5Nl4bO//fuY7Yl2zsujNBuTTuqcWmo9yiSBtEMHbVjG66oJLEzQz6DM+Hw4ALxZU
+         NrLF7IgNlFL6Lb9gis1xyw+c+IMU2WPb+aHnSXj4x9ONGNYILTocpoKvw8pGEbCnuvUJ
+         A8yMjxx0gI+/3CfmaxBdzwcI1qoPwaXbcLf/W6y9lvK1CeUVSCK/SC0k9cvfw+zhQPlA
+         jW0pCwrwlW8xsBRAxC9jt03Ip/aV6ZH6b55shdm/mo3Z5SJYej3cpDevxZBfAHZEL1+m
+         8jkbBIIqV33JOBWjx5E/QeXyhi9cwvkQucQ//NB0EqoRQacVXk04P9Lwyns/ctfja7IK
+         vFsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719322260; x=1719927060;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jCPI9zmJcO9n3warYFnR4HzozQlCIFB1YY1JSHQ5z7I=;
+        b=fTtwyn/9Mx/p8PrDBiMnGt+Ivb5YhCbAipLk9he8bIIyetnKloOnzETioRWCY+HLSu
+         rngf/tILYIZZnn514i0JCa9VrCbDdn1loAb6IdODJ5bbLefZU6x1BjeYBPy+wM74DUqB
+         i7VozY+aHWAT8FSgbd2pqDnU83M2vAOkAhIzEKeVgfJnMRmZ2v1epmJ1dMXq2gJIvC72
+         UaAIzwfrtBrDWS4/dowumP4iSagTGAViGoKpzQboxaL76ISUYynmfqIV/gdVZ0j13PG/
+         ZN62ChyGMBv02fA2f+KJTlDUCnieLPHVfgGjiqQbKz1aZQ8z5f6ntHk9G3RM9zaYQHnC
+         F2pQ==
+X-Gm-Message-State: AOJu0YxhSN4G5jozIMTmGmThV0S9eynWDvK63NuB2cw7W2Z5ZdO/MSEu
+	lDvVyZ6PfAyjqQUBSNzLyKfJFik4Vl6kpyGOjYdIpIkmyw6Z8s8=
+X-Google-Smtp-Source: AGHT+IG8IvhbNWQyXNXBiabqfJKUTBxylBnGUaRIv/YzGLRkZZGtz9/ovU3Wq+9nBRyusriSfRd5Kg==
+X-Received: by 2002:a17:906:c096:b0:a6f:86fd:72b8 with SMTP id a640c23a62f3a-a715f97972bmr535116366b.42.1719322259708;
+        Tue, 25 Jun 2024 06:30:59 -0700 (PDT)
+Received: from [192.168.1.3] (p5b2b4a32.dip0.t-ipconnect.de. [91.43.74.50])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a72452140e0sm315467366b.217.2024.06.25.06.30.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Jun 2024 06:30:59 -0700 (PDT)
+Message-ID: <971a36d8-b774-438c-a4a2-e2d35ae9495b@googlemail.com>
+Date: Tue, 25 Jun 2024 15:30:57 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87ed8ldwjv.fsf@intel.com>
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.6 000/192] 6.6.36-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240625085537.150087723@linuxfoundation.org>
+Content-Language: de-DE
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jun 25, 2024 at 03:41:24PM +0300, Jani Nikula wrote:
-> On Tue, 25 Jun 2024, Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-> > On Tue, Jun 25, 2024 at 08:03:33AM -0400, Rodrigo Vivi wrote:
-> >> On Wed, Jun 19, 2024 at 04:16:56PM +0200, Greg Kroah-Hartman wrote:
-> >> > On Wed, Jun 19, 2024 at 04:03:29PM +0200, Francois Dugast wrote:
-> >> > > On Wed, Jun 19, 2024 at 02:53:52PM +0200, Greg Kroah-Hartman wrote:
-> >> > > > 6.9-stable review patch.  If anyone has any objections, please let me know.
-> >> > > 
-> >> > > Hi Greg,
-> >> > > 
-> >> > > This patch seems to be a duplicate and should be dropped.
-> >> 
-> >> Please also drop the 6.9.7-rc1:
-> >> 
-> >> https://lore.kernel.org/stable/20240625085557.190548833@linuxfoundation.org/T/#u
-> >
-> > Done.
-> >
-> >> > How are we supposed to be able to determine this?
-> >> > 
-> >> > When you all check in commits into multiple branches, and tag them for
-> >> > stable: and then they hit Linus's tree, and all hell breaks loose on our
-> >> > scripts.  "Normally" this tag:
-> >> > 
-> >> > > > (cherry picked from commit 50aec9665e0babd62b9eee4e613d9a1ef8d2b7de)
-> >> > 
-> >> > Would help out here, but it doesn't.  
-> >> 
-> >> I wonder if there would be a way of automate this on stable scripts
-> >> to avoid attempting a cherry pick that is already there.
-> >
-> > Please tell me how to do so.
-> >
-> >> But I do understand that any change like this would cause a 'latency'
-> >> on the scripts and slow down everything.
-> >
-> > Depends, I already put a huge latency on drm stable patches because of
-> > this mess.  And I see few, if any, actual backports for when I report
-> > FAILED stable patches, so what is going to get slower than it currently
-> > is?
-> >
-> >> > Why not, what went wrong?
-> >> 
-> >> worst thing in this case is that git applied this cleanly, although
-> >> the change was already there.
-> >
-> > Yup.
-> >
-> >> But also a timing thing. The faulty patch was already in the master.
-> >> At the moment we applied the fix in our drm-xe-next, we had already
-> >> sent the latest changes to the upcoming merge-window, so it propagated
-> >> there as a cherry-pick, but we had to also send to the current -rc
-> >> cycle and then the second cherry-pick also goes there.
-> >> 
-> >> This fast propagation to the current active development branch in general
-> >> shouldn't be a problem, but a good thing so it is ensured that the fix
-> >> gets quickly there. But clearly this configure a problem to the later
-> >> propagation to the stable trees.
-> >
-> > Normally you all tag these cherry-picks as such.  You didn't do that
-> > here or either place, so there was no way for anyone to know.  Please
-> > fix that.
-> >
-> >> > I'll go drop this, but ugh, what a mess. It makes me dread every drm
-> >> > patch that gets tagged for stable, and so I postpone taking them until I
-> >> > am done with everything else and can't ignore them anymore.
-> >> > 
-> >> > Please fix your broken process.
-> >> 
-> >> When you say drm, do you have same problem with patches coming from
-> >> other drm drivers, drm-misc, or is it really only Intel trees?
-> >> (only drm-intel (i915) and drm-xe)?
-> >
-> > Intel trees have traditionally been the worst, but normally you all give
-> > me some cherry-pick clue on the commits so I can weed them out.  That
-> > didn't happen here.
-> >
-> > But, I will note that the AMD drm tree is now starting to do this, in
-> > much worse ways than the Intel tree because there is NO cherry-pick
-> > information anywhere, so again, I have no idea what to do and massive
-> > conflicts happen.
-> >
-> > So AMD is copying your bad behavior, please, both of you stop and fix
-> > this so that it isn't so broken.
-> >
-> > Again, I understand the need/want to have multiple versions of the same
-> > patch in different branches to get fixes merged quicker, but when you do
-> > that, please give me a way to determine this, otherwise we have no
-> > chance.
-> 
-> To be fair, this one seems to have been an accident. The same commit was
-> cherry-picked to *two* different branches by two different people
-> [1][2], and this is something we try not to do. Any cherry-picks should
-> go to one tree only, it's checked by our scripts, but it's not race free
-> when two people are doing this roughly at the same time.
+Am 25.06.2024 um 11:31 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.6.36 release.
+> There are 192 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-any cherry-pick SHOULD have the git id referenced when they are
-cherry-picked, that's what the id is there for.  Please always do that.
+Builds, boots and works fine w/o regressions on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. 
+Nothing unusual in dmesg output. Running 16 VMs in parallel for an hour now, and am 
+starting to compile 6.9.7-rc1 which I will boot-test too. Everything works as smoothly as 
+it gets with all CPUs at ~100%...
 
-greg k-h
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+
+
+Beste Grüße,
+Peter Schneider
+
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
+
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
