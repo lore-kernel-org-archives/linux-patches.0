@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A921465A8;
-	Tue, 25 Jun 2024 09:59:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05931465A8;
+	Tue, 25 Jun 2024 09:59:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309591; cv=none; b=A9/5Qyfi4gRAGrbCGQEWwlMuriVg1UOEwgzc7yhXP3QkeELw4QnPNcOJxrDtIIl034/+rZVEWtm2hLQa1o9FZQ9v64Do9EXCAylULZBkrvUVsHEIZHwBOsOUXUWR43+U5diIHiGqHvMAG6avKZ9e2QUEOVGYMVJ1lSLUa7yosPw=
+	t=1719309595; cv=none; b=XHF8FIBY1CUB1brF2+EBZdPMfgvI1xzw+IRMf2a7GhvGkTAaQ5Tb+W13TA6jZnPPjAOJKfsNnrEPknKno5K5n3rrW7yRbRWXhFrDQ9WljlSOwGHRuJH6MTX2UFebZpL7ywbUOh556v0g7nFP04NCyd2pJtabPxpR28HQ54ubhk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309591; c=relaxed/simple;
-	bh=2NMCPkRoIlbdtHaZs9H2nkz9/zgyxvcACbJkCeY9DTU=;
+	s=arc-20240116; t=1719309595; c=relaxed/simple;
+	bh=DhEWAxzHEAHjYaTTELpLCKRu9v5SBHusOnoSVzDGOQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FxYuAr6jMNa1BaEV0KZIu5pRFxyQ6XUqh2d7FpqzUDmDN6uTxOp7l/9fYnQLfBQ2P/yhV4vjqPq82xuxtXAW1SPDLk6ebV49icL8TGlxYJf0b6hsB3Q0FXiIXyHLj2775gRsuTXliO8A0upSoI5WYAOz9vuO2Te6mTk9FHXMHak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SN+64suT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q8hWXStjvmdzuViwAn1Ciae8VCgbNpkh23/QR7hoUvsYl9QzDaeL6npZEpyDnknQJP3CwJdYRilhgHDo12SmLAvN2lcc4LGkriXq1IVN99NgB2SvojWOXYOQNrpqpJIrBwZLBxcYhCDPeY3m9wzWbxSAm1W31nvllgv0qel6mHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CY0OjtQy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SN+64suT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19C93C32781;
-	Tue, 25 Jun 2024 09:59:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CY0OjtQy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07104C32781;
+	Tue, 25 Jun 2024 09:59:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309591;
-	bh=2NMCPkRoIlbdtHaZs9H2nkz9/zgyxvcACbJkCeY9DTU=;
+	s=korg; t=1719309594;
+	bh=DhEWAxzHEAHjYaTTELpLCKRu9v5SBHusOnoSVzDGOQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SN+64suTf4fjntAeCiRV52eTFN/9v4uNonPrDfelWLtlan5exNTdCYG9++iyywPsO
-	 UBovHNPt+re6p9yBxPbiyW/XXefECkpvNPJjVCfof4rR5dcMGTUu+iDOoMOa5+S79A
-	 bcVsAzpplvMIByxppBaaFeCHMC8tYu9U3yl9873Y=
+	b=CY0OjtQy6PmVSnIZHv+n3aQEMIZlchqAoQ1+aS8uCLVaFyx48u+o0muv50XJfbu3T
+	 jTfry0UxI2RV8b5F+MwovTxx1c/K0KXTG8dmhCzhiFfybADwgnpofXAeh3iWOhWG0f
+	 TRPgEzfTxE7OGNVCRUCPtmmKwlkIx/wqUppDosgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Jan Kara <jack@suse.cz>,
+	Roman Smirnov <r.smirnov@omp.ru>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 037/131] usb: dwc3: pci: Dont set "linux,phy_charger_detect" property on Lenovo Yoga Tab2 1380
-Date: Tue, 25 Jun 2024 11:33:12 +0200
-Message-ID: <20240625085527.362842564@linuxfoundation.org>
+Subject: [PATCH 6.1 038/131] udf: udftime: prevent overflow in udf_disk_stamp_to_time()
+Date: Tue, 25 Jun 2024 11:33:13 +0200
+Message-ID: <20240625085527.399981034@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085525.931079317@linuxfoundation.org>
 References: <20240625085525.931079317@linuxfoundation.org>
@@ -51,65 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Roman Smirnov <r.smirnov@omp.ru>
 
-[ Upstream commit 0fb782b5d5c462b2518b3b4fe7d652114c28d613 ]
+[ Upstream commit 3b84adf460381169c085e4bc09e7b57e9e16db0a ]
 
-The Lenovo Yoga Tablet 2 Pro 1380 model is the exception to the rule that
-devices which use the Crystal Cove PMIC without using ACPI for battery and
-AC power_supply class support use the USB-phy for charger detection.
+An overflow can occur in a situation where src.centiseconds
+takes the value of 255. This situation is unlikely, but there
+is no validation check anywere in the code.
 
-Unlike the Lenovo Yoga Tablet 2 830 / 1050 models this model has an extra
-LC824206XA Micro USB switch which does the charger detection.
+Found by Linux Verification Center (linuxtesting.org) with Svace.
 
-Add a DMI quirk to not set the "linux,phy_charger_detect" property on
-the 1380 model. This quirk matches on the BIOS version to differentiate
-the 1380 model from the 830 and 1050 models which otherwise have
-the same DMI strings.
-
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20240406140127.17885-1-hdegoede@redhat.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Roman Smirnov <r.smirnov@omp.ru>
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Message-Id: <20240327132755.13945-1-r.smirnov@omp.ru>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/dwc3-pci.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/udf/udftime.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/dwc3/dwc3-pci.c b/drivers/usb/dwc3/dwc3-pci.c
-index ae25ee832ec03..6110ab1f91318 100644
---- a/drivers/usb/dwc3/dwc3-pci.c
-+++ b/drivers/usb/dwc3/dwc3-pci.c
-@@ -8,6 +8,7 @@
-  *	    Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-  */
+diff --git a/fs/udf/udftime.c b/fs/udf/udftime.c
+index fce4ad976c8c2..26169b1f482c3 100644
+--- a/fs/udf/udftime.c
++++ b/fs/udf/udftime.c
+@@ -60,13 +60,18 @@ udf_disk_stamp_to_time(struct timespec64 *dest, struct timestamp src)
+ 	dest->tv_sec = mktime64(year, src.month, src.day, src.hour, src.minute,
+ 			src.second);
+ 	dest->tv_sec -= offset * 60;
+-	dest->tv_nsec = 1000 * (src.centiseconds * 10000 +
+-			src.hundredsOfMicroseconds * 100 + src.microseconds);
++
+ 	/*
+ 	 * Sanitize nanosecond field since reportedly some filesystems are
+ 	 * recorded with bogus sub-second values.
+ 	 */
+-	dest->tv_nsec %= NSEC_PER_SEC;
++	if (src.centiseconds < 100 && src.hundredsOfMicroseconds < 100 &&
++	    src.microseconds < 100) {
++		dest->tv_nsec = 1000 * (src.centiseconds * 10000 +
++			src.hundredsOfMicroseconds * 100 + src.microseconds);
++	} else {
++		dest->tv_nsec = 0;
++	}
+ }
  
-+#include <linux/dmi.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/slab.h>
-@@ -219,6 +220,7 @@ static int dwc3_pci_quirks(struct dwc3_pci *dwc,
- 
- 		if (pdev->device == PCI_DEVICE_ID_INTEL_BYT) {
- 			struct gpio_desc *gpio;
-+			const char *bios_ver;
- 			int ret;
- 
- 			/* On BYT the FW does not always enable the refclock */
-@@ -276,8 +278,12 @@ static int dwc3_pci_quirks(struct dwc3_pci *dwc,
- 			 * detection. These can be identified by them _not_
- 			 * using the standard ACPI battery and ac drivers.
- 			 */
-+			bios_ver = dmi_get_system_info(DMI_BIOS_VERSION);
- 			if (acpi_dev_present("INT33FD", "1", 2) &&
--			    acpi_quirk_skip_acpi_ac_and_battery()) {
-+			    acpi_quirk_skip_acpi_ac_and_battery() &&
-+			    /* Lenovo Yoga Tablet 2 Pro 1380 uses LC824206XA instead */
-+			    !(bios_ver &&
-+			      strstarts(bios_ver, "BLADE_21.X64.0005.R00.1504101516"))) {
- 				dev_info(&pdev->dev, "Using TUSB1211 phy for charger detection\n");
- 				swnode = &dwc3_pci_intel_phy_charger_detect_swnode;
- 			}
+ void
 -- 
 2.43.0
 
