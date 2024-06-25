@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6285E149C4F;
-	Tue, 25 Jun 2024 09:59:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6284A149C41;
+	Tue, 25 Jun 2024 09:59:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309547; cv=none; b=UWtlm64n8bLniMitVuWXz/7oNabXUzhKjXGr2xQjebvsz2Mzj3E7MFlCHzZ2yde0XFN99NFFzpsf2AxBNQClHOdUaS57pap0Ot6LVpo87vJ9QcZEagQf39dLdoZPnp926ADzEfp3vbLIyAY5+7qfy2OXpqsk5X9XiB3lh5OCmgo=
+	t=1719309550; cv=none; b=l++zanU8mjyVzQCwu60GS3YeGPaMDpahiu/XW4wI3pqF66UoWE1QqtiTmS0h3esE1Hpxy+jKdsojqtVsy/owmcjCjPMPyIdoNnptmNO709qA1yPrtt8QDGlx1jL+ALciJUAVOxoodpGACsDd9WBJ8RJfIYQ5wYNxZTxuHBbEPyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309547; c=relaxed/simple;
-	bh=a5LiCamK/t8jn0h1e+AVW8XdW6qElB3eZrhvUUlelPw=;
+	s=arc-20240116; t=1719309550; c=relaxed/simple;
+	bh=3JlPbhTvOajTuMAvUJRQW3lmOSsbjEcjg4PDEoEfrog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F+xSpqP8CQJe6+4adjSj8IG3DyiaqznadcVTS/HHzIRuoIYWevrn6RUmDy3sxM1qC/1J2reXLvTHZT+ilofPg0p88hJx+IJ4RhzHEL78XFkEMU26nor072h8hcqfIOa1+RlO+ZLjIwAUXGytqUUE2mzzPokU39Omp8rZlZp/Dws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T5WVDZmD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W8krU6bEtMWZNh6koTkIoYViHjD4LcUmFlHyH2PRfNOa5pUFjSJQ22ac+OhFLgkiI9rszm5JDv+kaaJFd0jMAI1BTqj1FL3r6vd0EZTDfw9z8uuveWDmImWNLFI5lI1u6YzwTZ9K8htGvdjGzA0HORVwPNXm9GSBaCObG4gX2Sk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CnrQtygC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T5WVDZmD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC8E2C32781;
-	Tue, 25 Jun 2024 09:59:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CnrQtygC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D154FC32781;
+	Tue, 25 Jun 2024 09:59:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309547;
-	bh=a5LiCamK/t8jn0h1e+AVW8XdW6qElB3eZrhvUUlelPw=;
+	s=korg; t=1719309550;
+	bh=3JlPbhTvOajTuMAvUJRQW3lmOSsbjEcjg4PDEoEfrog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T5WVDZmDU+Wo1Ikd/yneRExJJjTXjp9Gt/0CGeUVBFMCIb9kG885Ls369aOCTJ+kp
-	 pS3vTsAwqo2k1tCS2m3VL7P34FKMU9STiWQOSFoF7DGfngWvdylAdhsXNBY4Bp2VTS
-	 et/W9btTQYtNSXv2QPXFffmkuoNvR6GE0iAdpfSU=
+	b=CnrQtygCGi9/m9Ekx0R5BY4FEvx/aHYgce/h5QphwiIEG7ste6XIwtcJSYWQRM5lp
+	 9lNqqQCC2YI03ktCuhVt+G5izlfburmfAiwXjiCll+TmG1t3O9vXl1jyuEnOE6dtDm
+	 ckcx1hGu/vw3MILhHrHX4V05sBBk0CSEj3/WEtkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Henrie <alexhenrie24@gmail.com>,
+	syzbot+0c4150bff9fff3bf023c@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Florian Westphal <fw@strlen.de>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 035/131] usb: misc: uss720: check for incompatible versions of the Belkin F5U002
-Date: Tue, 25 Jun 2024 11:33:10 +0200
-Message-ID: <20240625085527.287071223@linuxfoundation.org>
+Subject: [PATCH 6.1 053/131] bpf: Avoid splat in pskb_pull_reason
+Date: Tue, 25 Jun 2024 11:33:28 +0200
+Message-ID: <20240625085527.965908566@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085525.931079317@linuxfoundation.org>
 References: <20240625085525.931079317@linuxfoundation.org>
@@ -50,72 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Henrie <alexhenrie24@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 3295f1b866bfbcabd625511968e8a5c541f9ab32 ]
+[ Upstream commit 2bbe3e5a2f4ef69d13be54f1cf895b4658287080 ]
 
-The incompatible device in my possession has a sticker that says
-"F5U002 Rev 2" and "P80453-B", and lsusb identifies it as
-"050d:0002 Belkin Components IEEE-1284 Controller". There is a bug
-report from 2007 from Michael Trausch who was seeing the exact same
-errors that I saw in 2024 trying to use this cable.
+syzkaller builds (CONFIG_DEBUG_NET=y) frequently trigger a debug
+hint in pskb_may_pull.
 
-Link: https://lore.kernel.org/all/46DE5830.9060401@trausch.us/
-Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
-Link: https://lore.kernel.org/r/20240326150723.99939-5-alexhenrie24@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+We'd like to retain this debug check because it might hint at integer
+overflows and other issues (kernel code should pull headers, not huge
+value).
+
+In bpf case, this splat isn't interesting at all: such (nonsensical)
+bpf programs are typically generated by a fuzzer anyway.
+
+Do what Eric suggested and suppress such warning.
+
+For CONFIG_DEBUG_NET=n we don't need the extra check because
+pskb_may_pull will do the right thing: return an error without the
+WARN() backtrace.
+
+Fixes: 219eee9c0d16 ("net: skbuff: add overflow debug check to pull/push helpers")
+Reported-by: syzbot+0c4150bff9fff3bf023c@syzkaller.appspotmail.com
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Closes: https://syzkaller.appspot.com/bug?extid=0c4150bff9fff3bf023c
+Link: https://lore.kernel.org/netdev/9f254c96-54f2-4457-b7ab-1d9f6187939c@gmail.com/
+Link: https://lore.kernel.org/bpf/20240614101801.9496-1-fw@strlen.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/misc/uss720.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ net/core/filter.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/usb/misc/uss720.c b/drivers/usb/misc/uss720.c
-index b00d92db5dfd1..eb5a8e0d9e2d6 100644
---- a/drivers/usb/misc/uss720.c
-+++ b/drivers/usb/misc/uss720.c
-@@ -677,7 +677,7 @@ static int uss720_probe(struct usb_interface *intf,
- 	struct parport_uss720_private *priv;
- 	struct parport *pp;
- 	unsigned char reg;
--	int i;
-+	int ret;
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 1d8b271ef8cc2..7a07413913538 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -1655,6 +1655,11 @@ static DEFINE_PER_CPU(struct bpf_scratchpad, bpf_sp);
+ static inline int __bpf_try_make_writable(struct sk_buff *skb,
+ 					  unsigned int write_len)
+ {
++#ifdef CONFIG_DEBUG_NET
++	/* Avoid a splat in pskb_may_pull_reason() */
++	if (write_len > INT_MAX)
++		return -EINVAL;
++#endif
+ 	return skb_ensure_writable(skb, write_len);
+ }
  
- 	dev_dbg(&intf->dev, "probe: vendor id 0x%x, device id 0x%x\n",
- 		le16_to_cpu(usbdev->descriptor.idVendor),
-@@ -688,8 +688,8 @@ static int uss720_probe(struct usb_interface *intf,
- 		usb_put_dev(usbdev);
- 		return -ENODEV;
- 	}
--	i = usb_set_interface(usbdev, intf->altsetting->desc.bInterfaceNumber, 2);
--	dev_dbg(&intf->dev, "set interface result %d\n", i);
-+	ret = usb_set_interface(usbdev, intf->altsetting->desc.bInterfaceNumber, 2);
-+	dev_dbg(&intf->dev, "set interface result %d\n", ret);
- 
- 	interface = intf->cur_altsetting;
- 
-@@ -725,12 +725,18 @@ static int uss720_probe(struct usb_interface *intf,
- 	set_1284_register(pp, 7, 0x00, GFP_KERNEL);
- 	set_1284_register(pp, 6, 0x30, GFP_KERNEL);  /* PS/2 mode */
- 	set_1284_register(pp, 2, 0x0c, GFP_KERNEL);
--	/* debugging */
--	get_1284_register(pp, 0, &reg, GFP_KERNEL);
-+
-+	/* The Belkin F5U002 Rev 2 P80453-B USB parallel port adapter shares the
-+	 * device ID 050d:0002 with some other device that works with this
-+	 * driver, but it itself does not. Detect and handle the bad cable
-+	 * here. */
-+	ret = get_1284_register(pp, 0, &reg, GFP_KERNEL);
- 	dev_dbg(&intf->dev, "reg: %7ph\n", priv->reg);
-+	if (ret < 0)
-+		return ret;
- 
--	i = usb_find_last_int_in_endpoint(interface, &epd);
--	if (!i) {
-+	ret = usb_find_last_int_in_endpoint(interface, &epd);
-+	if (!ret) {
- 		dev_dbg(&intf->dev, "epaddr %d interval %d\n",
- 				epd->bEndpointAddress, epd->bInterval);
- 	}
 -- 
 2.43.0
 
