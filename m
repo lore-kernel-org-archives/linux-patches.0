@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B6D148315;
-	Tue, 25 Jun 2024 09:45:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82500148315;
+	Tue, 25 Jun 2024 09:45:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308727; cv=none; b=bUEVt4Zu5TG0HN3B1YblhAJ/p5e+eGGzJEsg9KRtFTUPKl0nVT72FGZE8TsdHfa13NPVkzbZqaR0ynbUSEsfZiaQnxWqDHC67qddk/YBt8jVuwMg4mQ+w8Zhn9Nsf9w0nL7Xb9zHAKsGUkw+RML99FKk3zABuLjma5mneiXRp3M=
+	t=1719308730; cv=none; b=miaRGPrifkg3zs9qvo2ZrYa5HOekk64fJ1IbqtBnpzMVnGZ/XkIMWR3rjqSuLAocOUZGIEj7zNZf8if+Mx6rc3Q5kzO50/pDQg99oZxl9N6VFKxkmFxy/mb1lvPcQAfi3Cyodr7o4hg9/vfmbNNNMtsQ8bAjDO9PKOu+g/yOg78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308727; c=relaxed/simple;
-	bh=6VopJ9iYNrBC4nxTuBJCaMgf+x2yKmCR1iNkz26CsOs=;
+	s=arc-20240116; t=1719308730; c=relaxed/simple;
+	bh=qLONA/CrCJRmHY2ca10H3gTpYbOSWHdid9opLv7ic3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ye4m7KL+6cH9qEENJtFOgFMJUgo+hnxgHRENhAYtZwE17vlzZ6Obsd0dJ2tp3Cqqp++9noeB3o6JQxnaS8CwNCeYshwqrVhDB7FBCF7Th63HK424pqh/4Sagb0UnLxvon9ED712gtCivkRCYTZmLibHMAYss//Qu21lYHtGp0TA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vq317C7J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qbvdSkATbucEJ5705wWcv+FOZ7cvpO6bwfYAeZcDk/IUVozWw7VwVrlC2NGutSneUswPDq2pdGAz4TzoHilYw1byGRO02jurFxUBgEubBe1cCSqpBjwVgjyw78o8YLb/NKeeNTUX9AdYEqPmAff83P6RFL7oJXiuFoLjGM+AIkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xFN9XT66; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vq317C7J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11DE6C32781;
-	Tue, 25 Jun 2024 09:45:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xFN9XT66"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09169C32781;
+	Tue, 25 Jun 2024 09:45:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308727;
-	bh=6VopJ9iYNrBC4nxTuBJCaMgf+x2yKmCR1iNkz26CsOs=;
+	s=korg; t=1719308730;
+	bh=qLONA/CrCJRmHY2ca10H3gTpYbOSWHdid9opLv7ic3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vq317C7JnqyPcelRVKOe0ozuqZycGapbOsoWg+GYiGSPrzSWyZa5v/g4PiuH/OPQW
-	 vyPS4UEmyKtecbq331ua+46epZlVPqKLgxzCuADhP6gdJR/igOR6+gGMwrNYcxihfa
-	 zEsAxwHO9ENSF79HQDyX97Cdp53PBmCCATEoYToE=
+	b=xFN9XT660XT2KnVm46iKplyn0sqTT018eG6aNQxxaHgMMu+ho8XT7vTsdpMcgU+OD
+	 HHLE52EjZhgKyXltDvc2aWznX8aXVeuUf86RO6Z7zLQAGLs73FCUNieNdO15EOthql
+	 Tj1tIqNBjcaPEW8Y++ZuQU/eT+0RdnAoOFXuACdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashish Kalra <Ashish.Kalra@amd.com>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.9 219/250] efi/x86: Free EFI memory map only when installing a new one.
-Date: Tue, 25 Jun 2024 11:32:57 +0200
-Message-ID: <20240625085556.458619382@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 6.9 220/250] serial: 8250_dw: Revert "Move definitions to the shared header"
+Date: Tue, 25 Jun 2024 11:32:58 +0200
+Message-ID: <20240625085556.496426615@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -50,109 +49,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit 75dde792d6f6c2d0af50278bd374bf0c512fe196 upstream.
+commit 2c94512055f362dd789e0f87b8566feeddec83c9 upstream.
 
-The logic in __efi_memmap_init() is shared between two different
-execution flows:
-- mapping the EFI memory map early or late into the kernel VA space, so
-  that its entries can be accessed;
-- the x86 specific cloning of the EFI memory map in order to insert new
-  entries that are created as a result of making a memory reservation
-  via a call to efi_mem_reserve().
+This reverts commit d9666dfb314e1ffd6eb9c3c4243fe3e094c047a7.
 
-In the former case, the underlying memory containing the kernel's view
-of the EFI memory map (which may be heavily modified by the kernel
-itself on x86) is not modified at all, and the only thing that changes
-is the virtual mapping of this memory, which is different between early
-and late boot.
+The container of the struct dw8250_port_data is private to the actual
+driver. In particular, 8250_lpss and 8250_dw use different data types
+that are assigned to the UART port private_data. Hence, it must not
+be used outside the specific driver.
 
-In the latter case, an entirely new allocation is created that carries a
-new, updated version of the kernel's view of the EFI memory map. When
-installing this new version, the old version will no longer be
-referenced, and if the memory was allocated by the kernel, it will leak
-unless it gets freed.
+Fix the mistake made in the past by moving the respective definitions
+to the specific driver.
 
-The logic that implements this freeing currently lives on the code path
-that is shared between these two use cases, but it should only apply to
-the latter. So move it to the correct spot.
-
-While at it, drop the dummy definition for non-x86 architectures, as
-that is no longer needed.
-
-Cc: <stable@vger.kernel.org>
-Fixes: f0ef6523475f ("efi: Fix efi_memmap_alloc() leaks")
-Tested-by: Ashish Kalra <Ashish.Kalra@amd.com>
-Link: https://lore.kernel.org/all/36ad5079-4326-45ed-85f6-928ff76483d3@amd.com
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20240514190730.2787071-3-andriy.shevchenko@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/efi.h     |    1 -
- arch/x86/platform/efi/memmap.c |   12 +++++++++++-
- drivers/firmware/efi/memmap.c  |    9 ---------
- 3 files changed, 11 insertions(+), 11 deletions(-)
+ drivers/tty/serial/8250/8250_dw.c    |   27 +++++++++++++++++++++++++++
+ drivers/tty/serial/8250/8250_dwlib.h |   32 --------------------------------
+ 2 files changed, 27 insertions(+), 32 deletions(-)
 
---- a/arch/x86/include/asm/efi.h
-+++ b/arch/x86/include/asm/efi.h
-@@ -401,7 +401,6 @@ extern int __init efi_memmap_alloc(unsig
- 				   struct efi_memory_map_data *data);
- extern void __efi_memmap_free(u64 phys, unsigned long size,
- 			      unsigned long flags);
--#define __efi_memmap_free __efi_memmap_free
+--- a/drivers/tty/serial/8250/8250_dw.c
++++ b/drivers/tty/serial/8250/8250_dw.c
+@@ -57,6 +57,33 @@
+ #define DW_UART_QUIRK_APMC0D08		BIT(4)
+ #define DW_UART_QUIRK_CPR_VALUE		BIT(5)
  
- extern int __init efi_memmap_install(struct efi_memory_map_data *data);
- extern int __init efi_memmap_split_count(efi_memory_desc_t *md,
---- a/arch/x86/platform/efi/memmap.c
-+++ b/arch/x86/platform/efi/memmap.c
-@@ -92,12 +92,22 @@ int __init efi_memmap_alloc(unsigned int
-  */
- int __init efi_memmap_install(struct efi_memory_map_data *data)
++struct dw8250_platform_data {
++	u8 usr_reg;
++	u32 cpr_value;
++	unsigned int quirks;
++};
++
++struct dw8250_data {
++	struct dw8250_port_data	data;
++	const struct dw8250_platform_data *pdata;
++
++	int			msr_mask_on;
++	int			msr_mask_off;
++	struct clk		*clk;
++	struct clk		*pclk;
++	struct notifier_block	clk_notifier;
++	struct work_struct	clk_work;
++	struct reset_control	*rst;
++
++	unsigned int		skip_autocfg:1;
++	unsigned int		uart_16550_compatible:1;
++};
++
++static inline struct dw8250_data *to_dw8250_data(struct dw8250_port_data *data)
++{
++	return container_of(data, struct dw8250_data, data);
++}
++
+ static inline struct dw8250_data *clk_to_dw8250_data(struct notifier_block *nb)
  {
-+	unsigned long size = efi.memmap.desc_size * efi.memmap.nr_map;
-+	unsigned long flags = efi.memmap.flags;
-+	u64 phys = efi.memmap.phys_map;
-+	int ret;
-+
- 	efi_memmap_unmap();
+ 	return container_of(nb, struct dw8250_data, clk_notifier);
+--- a/drivers/tty/serial/8250/8250_dwlib.h
++++ b/drivers/tty/serial/8250/8250_dwlib.h
+@@ -2,15 +2,10 @@
+ /* Synopsys DesignWare 8250 library header file. */
  
- 	if (efi_enabled(EFI_PARAVIRT))
- 		return 0;
+ #include <linux/io.h>
+-#include <linux/notifier.h>
+ #include <linux/types.h>
+-#include <linux/workqueue.h>
  
--	return __efi_memmap_init(data);
-+	ret = __efi_memmap_init(data);
-+	if (ret)
-+		return ret;
-+
-+	__efi_memmap_free(phys, size, flags);
-+	return 0;
- }
+ #include "8250.h"
  
- /**
---- a/drivers/firmware/efi/memmap.c
-+++ b/drivers/firmware/efi/memmap.c
-@@ -15,10 +15,6 @@
- #include <asm/early_ioremap.h>
- #include <asm/efi.h>
- 
--#ifndef __efi_memmap_free
--#define __efi_memmap_free(phys, size, flags) do { } while (0)
--#endif
+-struct clk;
+-struct reset_control;
 -
- /**
-  * __efi_memmap_init - Common code for mapping the EFI memory map
-  * @data: EFI memory map data
-@@ -51,11 +47,6 @@ int __init __efi_memmap_init(struct efi_
- 		return -ENOMEM;
- 	}
+ struct dw8250_port_data {
+ 	/* Port properties */
+ 	int			line;
+@@ -26,36 +21,9 @@ struct dw8250_port_data {
+ 	bool			hw_rs485_support;
+ };
  
--	if (efi.memmap.flags & (EFI_MEMMAP_MEMBLOCK | EFI_MEMMAP_SLAB))
--		__efi_memmap_free(efi.memmap.phys_map,
--				  efi.memmap.desc_size * efi.memmap.nr_map,
--				  efi.memmap.flags);
+-struct dw8250_platform_data {
+-	u8 usr_reg;
+-	u32 cpr_value;
+-	unsigned int quirks;
+-};
 -
- 	map.phys_map = data->phys_map;
- 	map.nr_map = data->size / data->desc_size;
- 	map.map_end = map.map + data->size;
+-struct dw8250_data {
+-	struct dw8250_port_data	data;
+-	const struct dw8250_platform_data *pdata;
+-
+-	int			msr_mask_on;
+-	int			msr_mask_off;
+-	struct clk		*clk;
+-	struct clk		*pclk;
+-	struct notifier_block	clk_notifier;
+-	struct work_struct	clk_work;
+-	struct reset_control	*rst;
+-
+-	unsigned int		skip_autocfg:1;
+-	unsigned int		uart_16550_compatible:1;
+-};
+-
+ void dw8250_do_set_termios(struct uart_port *p, struct ktermios *termios, const struct ktermios *old);
+ void dw8250_setup_port(struct uart_port *p);
+ 
+-static inline struct dw8250_data *to_dw8250_data(struct dw8250_port_data *data)
+-{
+-	return container_of(data, struct dw8250_data, data);
+-}
+-
+ static inline u32 dw8250_readl_ext(struct uart_port *p, int offset)
+ {
+ 	if (p->iotype == UPIO_MEM32BE)
 
 
