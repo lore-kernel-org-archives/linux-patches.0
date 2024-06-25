@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9931146A9D;
-	Tue, 25 Jun 2024 09:49:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99C41465A8;
+	Tue, 25 Jun 2024 09:49:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308959; cv=none; b=fNGLJL9Nqw3wOOpQ7OlMQeUkJPFzjALOkBAPxhCmWSPNeu7L7+141OjqFf2vVVY8v8xD/94QIZLB5uiUPxAybJrhWukVHdl7F2vIJHwCiyJD6faPWNWCL+TkHrA/V51cShC0RriAAprSOYCB9yh0o9vGN4UK1jFjxHiVWxPwmLE=
+	t=1719308962; cv=none; b=V/lfq3rBxsRB33q9/my6WYU0wgTcleGMAdngZbLgsYLI271QtMcTOWeGQxFFkmNGDe9Af/HeErCyprYxwmGIjGsnRye9OoLq0Glz1U2kWMqWDmYWkPRtQi4G3H/DVL+askt9ej5XJ8dbePkzaVtNtgGe9cfEaguYKIpa2DapUI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308959; c=relaxed/simple;
-	bh=wecDaOtBoainBcv8e++OPPRlZnbHGkAKhxT9D8lE/bA=;
+	s=arc-20240116; t=1719308962; c=relaxed/simple;
+	bh=W6bHwlKOcMIAkLDAqUyQ0M7hSf4M317WLu0+JOgiwbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oTONqWjMXW6tYD8cttM+oaQvFGbQ69BhLFH0cPgIZ3+DqFAD3wJ2Rn/S8ThjfDTVCqzvSCPQti/1o0+NmZdM7uXdAPD1K3axaRKb/bud+jkHcF0Bo5yxsJtpxDCQentT67Q1SvMWeNY7X5aBs9t3S7vSglx08qE+D5bWgzPO9PI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uj868ys2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HDikPUtjq5LhMBGo/YinTtzqxlmAmg6uoGUrNtYM86PLBscqADQKlc9GvUnH6HXP8gO1BliTrtzJVRNpl35pN1hZJ0Q37xI8CYVxPixPQGNmtSzJLiNdIDBDuPsTZN3yR3CknglDEMS9LRcsc5n/7Uuj4vg2dwOc2MBTu5Ng4e0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A28k2m3O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uj868ys2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D524C32789;
-	Tue, 25 Jun 2024 09:49:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A28k2m3O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29ADBC32781;
+	Tue, 25 Jun 2024 09:49:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308959;
-	bh=wecDaOtBoainBcv8e++OPPRlZnbHGkAKhxT9D8lE/bA=;
+	s=korg; t=1719308962;
+	bh=W6bHwlKOcMIAkLDAqUyQ0M7hSf4M317WLu0+JOgiwbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uj868ys21MzKtrGfmzeDZkj3Mli/b1GnBvaUrRyQEcJbwoO+wfl0toN3xOuhK1dFK
-	 +vrf3NMhZUI0E6+vs8Y/NsUGQipgYD7fKdJFxh0rrh5cPJCDZAYN5lwsjxxkVP8Eid
-	 hqdBzhs5z1+ONKnHuBNMysKNVLbR/oltgDfuqdu0=
+	b=A28k2m3OBzn3IckQSOm2fOQKwXvfHAkyGjEh5S51teYpBQjSXiio+KOnv9N/e63if
+	 pmbWh/6PGWGWHvF2VArVBGCW7HxWk2/2ZdLDImW3NTR9KMLHSYPZO4CSNUonEY3fg8
+	 Qm/iNC5Y4IEBdpvtuvvqT5fqydZLgz3IxQX4oVAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Wander Lairson Costa <wander@redhat.com>,
+	Hu Chunyu <chuhu@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 016/192] ACPI: x86: Add PNP_UART1_SKIP quirk for Lenovo Blade2 tablets
-Date: Tue, 25 Jun 2024 11:31:28 +0200
-Message-ID: <20240625085537.780791857@linuxfoundation.org>
+Subject: [PATCH 6.6 017/192] drop_monitor: replace spin_lock by raw_spin_lock
+Date: Tue, 25 Jun 2024 11:31:29 +0200
+Message-ID: <20240625085537.819487672@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085537.150087723@linuxfoundation.org>
 References: <20240625085537.150087723@linuxfoundation.org>
@@ -51,87 +52,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Wander Lairson Costa <wander@redhat.com>
 
-[ Upstream commit d8f20383a2fc3a3844b08a4999cf0e81164a0e56 ]
+[ Upstream commit f1e197a665c2148ebc25fe09c53689e60afea195 ]
 
-The x86 Android tablets on which quirks to skip looking for a matching
-UartSerialBus resource and instead unconditionally create a serial bus
-device (serdev) are necessary there are 2 sorts of serialports:
+trace_drop_common() is called with preemption disabled, and it acquires
+a spin_lock. This is problematic for RT kernels because spin_locks are
+sleeping locks in this configuration, which causes the following splat:
 
-ACPI enumerated highspeed designware UARTs, these are the ones which
-typcially need to be skipped since they need a serdev for the attached
-BT HCI.
+BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
+in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 449, name: rcuc/47
+preempt_count: 1, expected: 0
+RCU nest depth: 2, expected: 2
+5 locks held by rcuc/47/449:
+ #0: ff1100086ec30a60 ((softirq_ctrl.lock)){+.+.}-{2:2}, at: __local_bh_disable_ip+0x105/0x210
+ #1: ffffffffb394a280 (rcu_read_lock){....}-{1:2}, at: rt_spin_lock+0xbf/0x130
+ #2: ffffffffb394a280 (rcu_read_lock){....}-{1:2}, at: __local_bh_disable_ip+0x11c/0x210
+ #3: ffffffffb394a160 (rcu_callback){....}-{0:0}, at: rcu_do_batch+0x360/0xc70
+ #4: ff1100086ee07520 (&data->lock){+.+.}-{2:2}, at: trace_drop_common.constprop.0+0xb5/0x290
+irq event stamp: 139909
+hardirqs last  enabled at (139908): [<ffffffffb1df2b33>] _raw_spin_unlock_irqrestore+0x63/0x80
+hardirqs last disabled at (139909): [<ffffffffb19bd03d>] trace_drop_common.constprop.0+0x26d/0x290
+softirqs last  enabled at (139892): [<ffffffffb07a1083>] __local_bh_enable_ip+0x103/0x170
+softirqs last disabled at (139898): [<ffffffffb0909b33>] rcu_cpu_kthread+0x93/0x1f0
+Preemption disabled at:
+[<ffffffffb1de786b>] rt_mutex_slowunlock+0xab/0x2e0
+CPU: 47 PID: 449 Comm: rcuc/47 Not tainted 6.9.0-rc2-rt1+ #7
+Hardware name: Dell Inc. PowerEdge R650/0Y2G81, BIOS 1.6.5 04/15/2022
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x8c/0xd0
+ dump_stack+0x14/0x20
+ __might_resched+0x21e/0x2f0
+ rt_spin_lock+0x5e/0x130
+ ? trace_drop_common.constprop.0+0xb5/0x290
+ ? skb_queue_purge_reason.part.0+0x1bf/0x230
+ trace_drop_common.constprop.0+0xb5/0x290
+ ? preempt_count_sub+0x1c/0xd0
+ ? _raw_spin_unlock_irqrestore+0x4a/0x80
+ ? __pfx_trace_drop_common.constprop.0+0x10/0x10
+ ? rt_mutex_slowunlock+0x26a/0x2e0
+ ? skb_queue_purge_reason.part.0+0x1bf/0x230
+ ? __pfx_rt_mutex_slowunlock+0x10/0x10
+ ? skb_queue_purge_reason.part.0+0x1bf/0x230
+ trace_kfree_skb_hit+0x15/0x20
+ trace_kfree_skb+0xe9/0x150
+ kfree_skb_reason+0x7b/0x110
+ skb_queue_purge_reason.part.0+0x1bf/0x230
+ ? __pfx_skb_queue_purge_reason.part.0+0x10/0x10
+ ? mark_lock.part.0+0x8a/0x520
+...
 
-A PNP enumerated UART which is part of the PCU. So far the existing
-quirks have ignored this. But on the Lenovo Yoga Tablet 2 Pro 1380
-models this is used for a custom fastcharging protocol. There is
-a Micro USB switch which can switch the USB data lines to this uart
-and then a 600 baud protocol is used to configure the charger for
-a voltage higher then 5V.
+trace_drop_common() also disables interrupts, but this is a minor issue
+because we could easily replace it with a local_lock.
 
-Add a new ACPI_QUIRK_PNP_UART1_SKIP quirk type and set this for
-the existing entry for the Lenovo Yoga Tablet 2 830 / 1050 models.
-Note this will lead to unnecessarily also creating a serdev for
-the PCU UART on the 830 / 1050 which don't need this, but the UART
-is not used otherwise there so that is not a problem.
+Replace the spin_lock with raw_spin_lock to avoid sleeping in atomic
+context.
 
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Wander Lairson Costa <wander@redhat.com>
+Reported-by: Hu Chunyu <chuhu@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/x86/utils.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ net/core/drop_monitor.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/acpi/x86/utils.c b/drivers/acpi/x86/utils.c
-index ac05e2557435e..e035cec614dc8 100644
---- a/drivers/acpi/x86/utils.c
-+++ b/drivers/acpi/x86/utils.c
-@@ -257,9 +257,10 @@ bool force_storage_d3(void)
- #define ACPI_QUIRK_SKIP_I2C_CLIENTS				BIT(0)
- #define ACPI_QUIRK_UART1_SKIP					BIT(1)
- #define ACPI_QUIRK_UART1_TTY_UART2_SKIP				BIT(2)
--#define ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY			BIT(3)
--#define ACPI_QUIRK_USE_ACPI_AC_AND_BATTERY			BIT(4)
--#define ACPI_QUIRK_SKIP_GPIO_EVENT_HANDLERS			BIT(5)
-+#define ACPI_QUIRK_PNP_UART1_SKIP				BIT(3)
-+#define ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY			BIT(4)
-+#define ACPI_QUIRK_USE_ACPI_AC_AND_BATTERY			BIT(5)
-+#define ACPI_QUIRK_SKIP_GPIO_EVENT_HANDLERS			BIT(6)
+diff --git a/net/core/drop_monitor.c b/net/core/drop_monitor.c
+index b240d9aae4a64..58843a52bad0e 100644
+--- a/net/core/drop_monitor.c
++++ b/net/core/drop_monitor.c
+@@ -74,7 +74,7 @@ struct net_dm_hw_entries {
+ };
  
- static const struct dmi_system_id acpi_quirk_skip_dmi_ids[] = {
- 	/*
-@@ -339,6 +340,7 @@ static const struct dmi_system_id acpi_quirk_skip_dmi_ids[] = {
- 			DMI_MATCH(DMI_BIOS_VERSION, "BLADE_21"),
- 		},
- 		.driver_data = (void *)(ACPI_QUIRK_SKIP_I2C_CLIENTS |
-+					ACPI_QUIRK_PNP_UART1_SKIP |
- 					ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY),
- 	},
- 	{
-@@ -437,14 +439,18 @@ static int acpi_dmi_skip_serdev_enumeration(struct device *controller_parent, bo
- 	if (ret)
- 		return 0;
+ struct per_cpu_dm_data {
+-	spinlock_t		lock;	/* Protects 'skb', 'hw_entries' and
++	raw_spinlock_t		lock;	/* Protects 'skb', 'hw_entries' and
+ 					 * 'send_timer'
+ 					 */
+ 	union {
+@@ -168,9 +168,9 @@ static struct sk_buff *reset_per_cpu_data(struct per_cpu_dm_data *data)
+ err:
+ 	mod_timer(&data->send_timer, jiffies + HZ / 10);
+ out:
+-	spin_lock_irqsave(&data->lock, flags);
++	raw_spin_lock_irqsave(&data->lock, flags);
+ 	swap(data->skb, skb);
+-	spin_unlock_irqrestore(&data->lock, flags);
++	raw_spin_unlock_irqrestore(&data->lock, flags);
  
--	/* to not match on PNP enumerated debug UARTs */
--	if (!dev_is_platform(controller_parent))
--		return 0;
--
- 	dmi_id = dmi_first_match(acpi_quirk_skip_dmi_ids);
- 	if (dmi_id)
- 		quirks = (unsigned long)dmi_id->driver_data;
+ 	if (skb) {
+ 		struct nlmsghdr *nlh = (struct nlmsghdr *)skb->data;
+@@ -225,7 +225,7 @@ static void trace_drop_common(struct sk_buff *skb, void *location)
  
-+	if (!dev_is_platform(controller_parent)) {
-+		/* PNP enumerated UARTs */
-+		if ((quirks & ACPI_QUIRK_PNP_UART1_SKIP) && uid == 1)
-+			*skip = true;
-+
-+		return 0;
-+	}
-+
- 	if ((quirks & ACPI_QUIRK_UART1_SKIP) && uid == 1)
- 		*skip = true;
+ 	local_irq_save(flags);
+ 	data = this_cpu_ptr(&dm_cpu_data);
+-	spin_lock(&data->lock);
++	raw_spin_lock(&data->lock);
+ 	dskb = data->skb;
  
+ 	if (!dskb)
+@@ -259,7 +259,7 @@ static void trace_drop_common(struct sk_buff *skb, void *location)
+ 	}
+ 
+ out:
+-	spin_unlock_irqrestore(&data->lock, flags);
++	raw_spin_unlock_irqrestore(&data->lock, flags);
+ }
+ 
+ static void trace_kfree_skb_hit(void *ignore, struct sk_buff *skb,
+@@ -314,9 +314,9 @@ net_dm_hw_reset_per_cpu_data(struct per_cpu_dm_data *hw_data)
+ 		mod_timer(&hw_data->send_timer, jiffies + HZ / 10);
+ 	}
+ 
+-	spin_lock_irqsave(&hw_data->lock, flags);
++	raw_spin_lock_irqsave(&hw_data->lock, flags);
+ 	swap(hw_data->hw_entries, hw_entries);
+-	spin_unlock_irqrestore(&hw_data->lock, flags);
++	raw_spin_unlock_irqrestore(&hw_data->lock, flags);
+ 
+ 	return hw_entries;
+ }
+@@ -448,7 +448,7 @@ net_dm_hw_trap_summary_probe(void *ignore, const struct devlink *devlink,
+ 		return;
+ 
+ 	hw_data = this_cpu_ptr(&dm_hw_cpu_data);
+-	spin_lock_irqsave(&hw_data->lock, flags);
++	raw_spin_lock_irqsave(&hw_data->lock, flags);
+ 	hw_entries = hw_data->hw_entries;
+ 
+ 	if (!hw_entries)
+@@ -477,7 +477,7 @@ net_dm_hw_trap_summary_probe(void *ignore, const struct devlink *devlink,
+ 	}
+ 
+ out:
+-	spin_unlock_irqrestore(&hw_data->lock, flags);
++	raw_spin_unlock_irqrestore(&hw_data->lock, flags);
+ }
+ 
+ static const struct net_dm_alert_ops net_dm_alert_summary_ops = {
+@@ -1673,7 +1673,7 @@ static struct notifier_block dropmon_net_notifier = {
+ 
+ static void __net_dm_cpu_data_init(struct per_cpu_dm_data *data)
+ {
+-	spin_lock_init(&data->lock);
++	raw_spin_lock_init(&data->lock);
+ 	skb_queue_head_init(&data->drop_queue);
+ 	u64_stats_init(&data->stats.syncp);
+ }
 -- 
 2.43.0
 
