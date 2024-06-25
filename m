@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 629771465A8;
-	Tue, 25 Jun 2024 09:47:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3DC1465A8;
+	Tue, 25 Jun 2024 09:47:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308836; cv=none; b=aaShlK7Uqx9iOWGMgJFRogCy/u8Z287QLENHWQ4x7tQDDIYDc8kiPIht8KyD8LDTSz4GucnfHxNtp+Sl6Bf49ElNF3T2CzXGgXrNK9QS46kWg6UvPifKG9TdpvGW+KN6opO3PV45LDLaYOOUD67aMic1gSCv6goqhciOd9p2NyM=
+	t=1719308839; cv=none; b=VIWeej/pDMHovbmWmbGTh5YtkYBZdmiPJK0fkl0RitYcA7youFfOkryTG1UMfc55A6NyEOg7bpeIWuEBLwoozXWP41Jnf4fe/rySBPbbR5PsbTjw4aKjZleyHvuR4mPtdvfQK7phnIhzlU7BcYq7AIYrYBewiIWX2wL8FHJ7c0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308836; c=relaxed/simple;
-	bh=kBohpD91IW0VPhIigxSuoVDTsBOGQeOOwto+WpoNKoM=;
+	s=arc-20240116; t=1719308839; c=relaxed/simple;
+	bh=6UqHI/1G7nMtEWCLvaunXwbyKVgTM3pOdRVdUZr4PLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dKBcujy1zWT5bca6XopDfR4TOr0Zf3kvHDC35rpoDcNSUP+kVO6o8p21SoY5r5dg0yhrqOZQ0zd1hXwmyLeUZWDb9YLSBAGnxgyV43QRzAxLKr2TXitiMCIumPfB7CrHWwgcZjWVL7zmIU1Avl4+sjrTNiirVUKLVfuXbqicW3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nq0QR98Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mIdCut4+IqmaFNwjQ3xZ25Z/YJs/ENOJxzVSj02Hca+mzBBMjL6rCoCj7WddgS7SqjC+BEqdbUX0t/8lc2RN5OzOyxTpixyRqNIlExyHGPIfFbwumWRA7Sh8664o0x7eOyoOLTwyAdQzrOsjPbwz5yLyM6AXMXAZDwh1LWhsI8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=leqlvfyq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nq0QR98Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9B6BC32789;
-	Tue, 25 Jun 2024 09:47:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="leqlvfyq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C65E3C32781;
+	Tue, 25 Jun 2024 09:47:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308836;
-	bh=kBohpD91IW0VPhIigxSuoVDTsBOGQeOOwto+WpoNKoM=;
+	s=korg; t=1719308839;
+	bh=6UqHI/1G7nMtEWCLvaunXwbyKVgTM3pOdRVdUZr4PLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nq0QR98QdsN9q07qD4XZTQtWku1NW5OhOxHXFNX+LvANbQJtxB7kTB6wzzgD3k5LM
-	 DG4vkdHAofSSj9zILN2Ys91MpuRb9aK8iE+Ud/jxERq0CJdNGywDC4fcxtx2n5qUbx
-	 gP7Ov40t7H1YpWXKubx014vEMMJxfjNvT/MmQ5d0=
+	b=leqlvfyqhh34GvY70F2hJ91RdzgarOgwHtDBDKx9hKrXLAX7hMtP/M1E4f5t5KIRU
+	 lIbU9EjlkvJkRwCqsMOPx6Vh8ols6uWMotCKHPQw3LSdZh1EBaK8GBP7tcfs9xP1aG
+	 XKaGVtZH/8bJa7rwhwVazxtBlagRdyla3vaZYGYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.9 237/250] spi: stm32: qspi: Clamp stm32_qspi_get_mode() output to CCR_BUSWIDTH_4
-Date: Tue, 25 Jun 2024 11:33:15 +0200
-Message-ID: <20240625085557.152689990@linuxfoundation.org>
+	Matthew Brost <matthew.brost@intel.com>,
+	Francois Dugast <francois.dugast@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.9 238/250] drm/xe: Use ordered WQ for G2H handler
+Date: Tue, 25 Jun 2024 11:33:16 +0200
+Message-ID: <20240625085557.190548833@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -44,41 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Patrice Chotard <patrice.chotard@foss.st.com>
+From: Matthew Brost <matthew.brost@intel.com>
 
-commit 63deee52811b2f84ed2da55ad47252f0e8145d62 upstream.
+[ Upstream commit 2d9c72f676e6f79a021b74c6c1c88235e7d5b722 ]
 
-In case usage of OCTAL mode, buswidth parameter can take the value 8.
-As return value of stm32_qspi_get_mode() is used to configure fields
-of CCR registers that are 2 bits only (fields IMODE, ADMODE, ADSIZE,
- DMODE), clamp return value of stm32_qspi_get_mode() to 4.
+System work queues are shared, use a dedicated work queue for G2H
+processing to avoid G2H processing getting block behind system tasks.
 
-Fixes: a557fca630cc ("spi: stm32_qspi: Add transfer_one_message() spi callback")
-Cc: stable@vger.kernel.org
-Signed-off-by: Patrice Chotard <patrice.chotard@foss.st.com>
-Link: https://msgid.link/r/20240618132951.2743935-3-patrice.chotard@foss.st.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Francois Dugast <francois.dugast@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240506034758.3697397-1-matthew.brost@intel.com
+(cherry picked from commit 50aec9665e0babd62b9eee4e613d9a1ef8d2b7de)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-stm32-qspi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_guc_ct.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/spi/spi-stm32-qspi.c
-+++ b/drivers/spi/spi-stm32-qspi.c
-@@ -349,7 +349,7 @@ static int stm32_qspi_wait_poll_status(s
+diff --git a/drivers/gpu/drm/xe/xe_guc_ct.c b/drivers/gpu/drm/xe/xe_guc_ct.c
+index 8bbfa45798e2e..6ac86936faaf9 100644
+--- a/drivers/gpu/drm/xe/xe_guc_ct.c
++++ b/drivers/gpu/drm/xe/xe_guc_ct.c
+@@ -146,6 +146,10 @@ int xe_guc_ct_init(struct xe_guc_ct *ct)
  
- static int stm32_qspi_get_mode(u8 buswidth)
- {
--	if (buswidth == 4)
-+	if (buswidth >= 4)
- 		return CCR_BUSWIDTH_4;
+ 	xe_assert(xe, !(guc_ct_size() % PAGE_SIZE));
  
- 	return buswidth;
++	ct->g2h_wq = alloc_ordered_workqueue("xe-g2h-wq", 0);
++	if (!ct->g2h_wq)
++		return -ENOMEM;
++
+ 	ct->g2h_wq = alloc_ordered_workqueue("xe-g2h-wq", 0);
+ 	if (!ct->g2h_wq)
+ 		return -ENOMEM;
+-- 
+2.43.0
+
 
 
