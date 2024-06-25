@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB39D14A0B8;
-	Tue, 25 Jun 2024 09:42:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E3114A0B8;
+	Tue, 25 Jun 2024 09:42:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308550; cv=none; b=f8N0V8oRGVUkiGOObJ9ZiGYgUrN4waI8uQJKqvIV41NL8P+xklvBGuhaIZrjDnYte7IY9IXgT4RAv0vmsIAPIwbG2lA38wGN68AsV8w9Fu1VLpOlpLmY/JDdf8Debn3fa4kXG1REe4QqcFe8ZDQCqIvgEQZ3HRe29a0LHhI2uKM=
+	t=1719308553; cv=none; b=Ip8tpnqt1P2I7GsSrSoG4qog3Z5q8B5gRuJMgkrcnHkHiANKF913StthTA5Tptxo6uwLikUx1AjSA8WGg9obOojYKWOYNgaTuDKOEZ43EqncxJbcCM3hyfq9IXLdpfq41TJfPJJv4Y6Xmzx4PwbbIzizslTCIfyMtg98r1BHow8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308550; c=relaxed/simple;
-	bh=h4pLq9qyk9aUYis3SYX+zZc95hlbcZ9SRdiaLtYyH6I=;
+	s=arc-20240116; t=1719308553; c=relaxed/simple;
+	bh=vEnKquRZaY9zrQ98NeVD/vphGmmYoFa+3N+XF8A3sOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZwZ9VToucFGTQHCQ3w65x2opSyf1HDg674d87zh7DsQZBhOdkG3nBhxYziy4jyc17VRKsEbjMZ8HGV99hmzzrLv6C1aVG5vFU6MN0VTtwbfII6z8sQBpcXnFalLEq3PEcLlVN4KwUx7A3umfWPYaLj1J/YHVkOVUFFfqUMHcyE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SF8mMlRQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kX+fN08ExCuIFJEX6cuEcO2z8ZZwbEIIRANCUJk/vwOEcy/zEgetQlgD28sxBV+a/h/B2yVjLK8dBnjxWNNBtNjmxVoZLpPmvehxRNGCIbSTpUKAIImfRJ0vn5/Gs1+WNC2HsMKHrdrScwyn/VG8XnT90mrFPrStAAU8ys0IYWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V0+61uka; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SF8mMlRQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F862C32786;
-	Tue, 25 Jun 2024 09:42:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V0+61uka"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E61AC32781;
+	Tue, 25 Jun 2024 09:42:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308550;
-	bh=h4pLq9qyk9aUYis3SYX+zZc95hlbcZ9SRdiaLtYyH6I=;
+	s=korg; t=1719308553;
+	bh=vEnKquRZaY9zrQ98NeVD/vphGmmYoFa+3N+XF8A3sOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SF8mMlRQ9G1TgyWJH3RMS8SU8WOHpbN/+0tWOAi6g1tN1n2zpHFC2/Mi/igeXSL3U
-	 47K8ZbXJGM9sIl49DA/LFh88Mqvc9dbQVLoBUB5niEGQzbkKdDJu+6FaDbqVR/riFT
-	 QvImfT0M4hAP1ZVcWg7+WGCUW3YPmJUjFelYKekw=
+	b=V0+61uka6ilrj8ahpo/ocqcB/iSridUPYMVSUFBh9QHaPWKtRRrU3Msfy50olxd9/
+	 hVTx6nPk8Gf9ZAKKt3WLUUYPUlrzCagLULWpfguJ7Y4VbSlRhQxrQXDuUfb4/oS5o8
+	 7fXZtSHOEGox6b0Asv80G6MUSe0a3hUcqAAXmHr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalle Niemi <kaleposti@gmail.com>,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Julien Panis <jpanis@baylibre.com>,
+	Nicolas Pitre <npitre@baylibre.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 158/250] regulator: bd71815: fix ramp values
-Date: Tue, 25 Jun 2024 11:31:56 +0200
-Message-ID: <20240625085554.126120375@linuxfoundation.org>
+Subject: [PATCH 6.9 159/250] thermal/drivers/mediatek/lvts_thermal: Return error in case of invalid efuse data
+Date: Tue, 25 Jun 2024 11:31:57 +0200
+Message-ID: <20240625085554.163961437@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -52,38 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kalle Niemi <kaleposti@gmail.com>
+From: Julien Panis <jpanis@baylibre.com>
 
-[ Upstream commit 4cac29b846f38d5f0654cdfff5c5bfc37305081c ]
+[ Upstream commit 72cacd06e47d86d89b0e7179fbc9eb3a0f39cd93 ]
 
-Ramp values are inverted. This caused wrong values written to register
-when ramp values were defined in device tree.
+This patch prevents from registering thermal entries and letting the
+driver misbehave if efuse data is invalid. A device is not properly
+calibrated if the golden temperature is zero.
 
-Invert values in table to fix this.
-
-Signed-off-by: Kalle Niemi <kaleposti@gmail.com>
-Fixes: 1aad39001e85 ("regulator: Support ROHM BD71815 regulators")
-Reviewed-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Link: https://lore.kernel.org/r/ZmmJXtuVJU6RgQAH@latitude5580
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: f5f633b18234 ("thermal/drivers/mediatek: Add the Low Voltage Thermal Sensor driver")
+Signed-off-by: Julien Panis <jpanis@baylibre.com>
+Reviewed-by: Nicolas Pitre <npitre@baylibre.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20240604-mtk-thermal-calib-check-v2-1-8f258254051d@baylibre.com
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/bd71815-regulator.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/thermal/mediatek/lvts_thermal.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/bd71815-regulator.c b/drivers/regulator/bd71815-regulator.c
-index 26192d55a6858..79fbb45297f6b 100644
---- a/drivers/regulator/bd71815-regulator.c
-+++ b/drivers/regulator/bd71815-regulator.c
-@@ -256,7 +256,7 @@ static int buck12_set_hw_dvs_levels(struct device_node *np,
-  * 10: 2.50mV/usec	10mV 4uS
-  * 11: 1.25mV/usec	10mV 8uS
-  */
--static const unsigned int bd7181x_ramp_table[] = { 1250, 2500, 5000, 10000 };
-+static const unsigned int bd7181x_ramp_table[] = { 10000, 5000, 2500, 1250 };
+diff --git a/drivers/thermal/mediatek/lvts_thermal.c b/drivers/thermal/mediatek/lvts_thermal.c
+index 4e5c213a89225..6b9422bd8795d 100644
+--- a/drivers/thermal/mediatek/lvts_thermal.c
++++ b/drivers/thermal/mediatek/lvts_thermal.c
+@@ -740,7 +740,11 @@ static int lvts_golden_temp_init(struct device *dev, u32 *value, int temp_offset
  
- static int bd7181x_led_set_current_limit(struct regulator_dev *rdev,
- 					int min_uA, int max_uA)
+ 	gt = (*value) >> 24;
+ 
+-	if (gt && gt < LVTS_GOLDEN_TEMP_MAX)
++	/* A zero value for gt means that device has invalid efuse data */
++	if (!gt)
++		return -ENODATA;
++
++	if (gt < LVTS_GOLDEN_TEMP_MAX)
+ 		golden_temp = gt;
+ 
+ 	golden_temp_offset = golden_temp * 500 + temp_offset;
 -- 
 2.43.0
 
