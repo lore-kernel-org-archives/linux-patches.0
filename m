@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB341465A8;
-	Tue, 25 Jun 2024 09:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DDEC1465A8;
+	Tue, 25 Jun 2024 09:58:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309479; cv=none; b=OGKyUWEM2j4fkhmSFjOfIpCHTC5cAzzlY6dCdhGavQigLdEgPZ0CXkLjg768htVATcOG3x8HgHaoYsyVZIYxoGMnWRh/sL9ZU/EKGKPOne0WBiGlUHPvrX1joO+PP7OS6DMsQe4rGeim9Fh/U6cI5HgCG7DDPApD1kQyUPbmUgk=
+	t=1719309482; cv=none; b=iWNbFfb29a7brfmrjC9X/DxKmUdfBAaJI/4f0YVuf1buCuIBTl1cQP0DhuPhbIqUsXAIr270GDXVoB9GmRzccoaBkT7zYEp6lIhk/1eHAJ0uh/gfuAQmHgPrpa7p4joOW2w1k4yU2T0FppWJgWPHHaJT65dFVKLgpA5HxWLpaR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309479; c=relaxed/simple;
-	bh=TWt1NBK8veNTa5sKXwjeSGl/R30/xzFShdXk7OBUBiU=;
+	s=arc-20240116; t=1719309482; c=relaxed/simple;
+	bh=KTttK6OmGZlmnM8oyIdLubgpw04RnoTmcdgXaflH0fo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tx3q13D87plsQ3LKoQNSyQZaY1kWOtaH845dVxmB362byI0DQbng0FfS4nBpu6DLsk1r1nhMA0MsGnRbs3J3vn4jEMRgpSWAso/0tT4KCgl5B90FRl4/+h5LFLPXxrbEcxXccdjFHcgWD4NlwU9Mi/jv7xv2rZ1k9vPel/TEyDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q9M2UhxT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rr5APlvsT1jE+65ofj8xdb96DDG9KhALrdiq80AMUNXU0g3tns/+uOBhSmzmh/8afvpFslORKLVBaz0IM+e+EivR/Ag1HUJS+pHd1z0H4JGRQa2fhdnabNtPUb4MSDt99J5EMkcRpLXhGbPmmnTI5GIX2tHUV48k/SZaP2r8czM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eILNQ2ir; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q9M2UhxT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 062D5C32781;
-	Tue, 25 Jun 2024 09:57:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eILNQ2ir"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A9CC32781;
+	Tue, 25 Jun 2024 09:58:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719309479;
-	bh=TWt1NBK8veNTa5sKXwjeSGl/R30/xzFShdXk7OBUBiU=;
+	s=korg; t=1719309482;
+	bh=KTttK6OmGZlmnM8oyIdLubgpw04RnoTmcdgXaflH0fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q9M2UhxTEuW4nwOLo2ZBbYaFAzxBSDe38+K4u1SpvdlFZBsfOuHXeF6PTNiNYLGU7
-	 8NbJ9acD9SKASLw0YIakV6YpgL+8qdBekxnCcuxegccFNVmOMmOl3IVG5o9kQLapR1
-	 I3IznFSrK2b07t1Ree+YEIbJ6DY6jDVSVgwoNLbE=
+	b=eILNQ2irOt1e15hhzeYoQS5bBD4oHV96rYGknsu+hV7GrpTEVyn/RaNJKMnth94uM
+	 nucWXZoNOYRF7aEnqIPjWDe2WytmM1BoarDQjmY93ywI7QoxEd5wKJY2xP0svhBaOu
+	 n6UBnR82GcdC10TvNsmTjoSNWOx0TNrI1Stf8+do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Lynch <nathanl@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 029/131] powerpc/pseries: Enforce hcall result buffer validity and size
-Date: Tue, 25 Jun 2024 11:33:04 +0200
-Message-ID: <20240625085527.057915450@linuxfoundation.org>
+Subject: [PATCH 6.1 003/131] io_uring/sqpoll: work around a potential audit memory leak
+Date: Tue, 25 Jun 2024 11:32:38 +0200
+Message-ID: <20240625085526.065319441@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085525.931079317@linuxfoundation.org>
 References: <20240625085525.931079317@linuxfoundation.org>
@@ -51,80 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Lynch <nathanl@linux.ibm.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit ff2e185cf73df480ec69675936c4ee75a445c3e4 ]
+[ Upstream commit c4ce0ab27646f4206a9eb502d6fe45cb080e1cae ]
 
-plpar_hcall(), plpar_hcall9(), and related functions expect callers to
-provide valid result buffers of certain minimum size. Currently this
-is communicated only through comments in the code and the compiler has
-no idea.
+kmemleak complains that there's a memory leak related to connect
+handling:
 
-For example, if I write a bug like this:
+unreferenced object 0xffff0001093bdf00 (size 128):
+comm "iou-sqp-455", pid 457, jiffies 4294894164
+hex dump (first 32 bytes):
+02 00 fa ea 7f 00 00 01 00 00 00 00 00 00 00 00  ................
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+backtrace (crc 2e481b1a):
+[<00000000c0a26af4>] kmemleak_alloc+0x30/0x38
+[<000000009c30bb45>] kmalloc_trace+0x228/0x358
+[<000000009da9d39f>] __audit_sockaddr+0xd0/0x138
+[<0000000089a93e34>] move_addr_to_kernel+0x1a0/0x1f8
+[<000000000b4e80e6>] io_connect_prep+0x1ec/0x2d4
+[<00000000abfbcd99>] io_submit_sqes+0x588/0x1e48
+[<00000000e7c25e07>] io_sq_thread+0x8a4/0x10e4
+[<00000000d999b491>] ret_from_fork+0x10/0x20
 
-  long retbuf[PLPAR_HCALL_BUFSIZE]; // should be PLPAR_HCALL9_BUFSIZE
-  plpar_hcall9(H_ALLOCATE_VAS_WINDOW, retbuf, ...);
+which can can happen if:
 
-This compiles with no diagnostics emitted, but likely results in stack
-corruption at runtime when plpar_hcall9() stores results past the end
-of the array. (To be clear this is a contrived example and I have not
-found a real instance yet.)
+1) The command type does something on the prep side that triggers an
+   audit call.
+2) The thread hasn't done any operations before this that triggered
+   an audit call inside ->issue(), where we have audit_uring_entry()
+   and audit_uring_exit().
 
-To make this class of error less likely, we can use explicitly-sized
-array parameters instead of pointers in the declarations for the hcall
-APIs. When compiled with -Warray-bounds[1], the code above now
-provokes a diagnostic like this:
+Work around this by issuing a blanket NOP operation before the SQPOLL
+does anything.
 
-error: array argument is too small;
-is of size 32, callee requires at least 72 [-Werror,-Warray-bounds]
-   60 |                 plpar_hcall9(H_ALLOCATE_VAS_WINDOW, retbuf,
-      |                 ^                                   ~~~~~~
-
-[1] Enabled for LLVM builds but not GCC for now. See commit
-    0da6e5fd6c37 ("gcc: disable '-Warray-bounds' for gcc-13 too") and
-    related changes.
-
-Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240408-pseries-hvcall-retbuf-v1-1-ebc73d7253cf@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/hvcall.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ io_uring/sqpoll.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/powerpc/include/asm/hvcall.h b/arch/powerpc/include/asm/hvcall.h
-index 47bc10cdb70b5..a56ec2f124eae 100644
---- a/arch/powerpc/include/asm/hvcall.h
-+++ b/arch/powerpc/include/asm/hvcall.h
-@@ -493,7 +493,7 @@ long plpar_hcall_norets_notrace(unsigned long opcode, ...);
-  * Used for all but the craziest of phyp interfaces (see plpar_hcall9)
-  */
- #define PLPAR_HCALL_BUFSIZE 4
--long plpar_hcall(unsigned long opcode, unsigned long *retbuf, ...);
-+long plpar_hcall(unsigned long opcode, unsigned long retbuf[static PLPAR_HCALL_BUFSIZE], ...);
+diff --git a/io_uring/sqpoll.c b/io_uring/sqpoll.c
+index 7b6facf529b8d..11610a70573ab 100644
+--- a/io_uring/sqpoll.c
++++ b/io_uring/sqpoll.c
+@@ -235,6 +235,14 @@ static int io_sq_thread(void *data)
+ 		set_cpus_allowed_ptr(current, cpu_online_mask);
+ 	current->flags |= PF_NO_SETAFFINITY;
  
- /**
-  * plpar_hcall_raw: - Make a hypervisor call without calculating hcall stats
-@@ -507,7 +507,7 @@ long plpar_hcall(unsigned long opcode, unsigned long *retbuf, ...);
-  * plpar_hcall, but plpar_hcall_raw works in real mode and does not
-  * calculate hypervisor call statistics.
-  */
--long plpar_hcall_raw(unsigned long opcode, unsigned long *retbuf, ...);
-+long plpar_hcall_raw(unsigned long opcode, unsigned long retbuf[static PLPAR_HCALL_BUFSIZE], ...);
- 
- /**
-  * plpar_hcall9: - Make a pseries hypervisor call with up to 9 return arguments
-@@ -518,8 +518,8 @@ long plpar_hcall_raw(unsigned long opcode, unsigned long *retbuf, ...);
-  * PLPAR_HCALL9_BUFSIZE to size the return argument buffer.
-  */
- #define PLPAR_HCALL9_BUFSIZE 9
--long plpar_hcall9(unsigned long opcode, unsigned long *retbuf, ...);
--long plpar_hcall9_raw(unsigned long opcode, unsigned long *retbuf, ...);
-+long plpar_hcall9(unsigned long opcode, unsigned long retbuf[static PLPAR_HCALL9_BUFSIZE], ...);
-+long plpar_hcall9_raw(unsigned long opcode, unsigned long retbuf[static PLPAR_HCALL9_BUFSIZE], ...);
- 
- /* pseries hcall tracing */
- extern struct static_key hcall_tracepoint_key;
++	/*
++	 * Force audit context to get setup, in case we do prep side async
++	 * operations that would trigger an audit call before any issue side
++	 * audit has been done.
++	 */
++	audit_uring_entry(IORING_OP_NOP);
++	audit_uring_exit(true, 0);
++
+ 	mutex_lock(&sqd->lock);
+ 	while (1) {
+ 		bool cap_entries, sqt_spin = false;
 -- 
 2.43.0
 
