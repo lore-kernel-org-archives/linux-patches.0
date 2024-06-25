@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 999C8149C50;
-	Tue, 25 Jun 2024 09:40:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C6313D62A;
+	Tue, 25 Jun 2024 09:40:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308415; cv=none; b=RlTYXsILDaVUJLv4/K5wTMKZIe8aL+OA5iUMReeLw9xKaS9wusXsH9yUbAd0u8Lj3ssTHnvtlSu3yglSLTT+wy9UdCbdCv7G5pfyE0dmFqstRMC3puaFE6YSP/S+RGFm2u5qPoH2C45JP/547r/5e7DSlqSprxcOUAMgGmxwIxs=
+	t=1719308418; cv=none; b=MAKV/rwPEw2XrM8b/twfgAU/CcDmhMk7hr7PoL7x9ZemPiCDYYA5wS6Gqo1zDMBJ/nQvpQU7OQDMIoABMB3s2HxhBPgrrQPY8ylBRd1sE3ZOMn4F5XVce+jUF3uvobuRCJdL2PVquH0Gr0xEXani1BXQ0zA6O0PjxmQuZVGHNI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308415; c=relaxed/simple;
-	bh=4uQwZBN5d/kqVlq7JHnJBO86nWwC4iHyrECYE9H/Qt0=;
+	s=arc-20240116; t=1719308418; c=relaxed/simple;
+	bh=XS0YS4B9DxnXCowR3XvmIkmtAuERFd8Q+c3+dROlViI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a/mf/KUfAX1ICq0lkeE6ehskDHg7R20lc8BlWq9HriRs/YT4vrrDhlFfd8e87Aqmn80NxjIGpC2GYXSK6vMYfQDQ/WsKrVqAfAqBMCG0sOH86s4A+Vu4W9JYGuGVqJK/qdEesmE0RQROea5wbsMmv9iDYevbtA/NGBTytqhUplc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2c8kfFxs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hL7ULKeIhJ2EMiCu6LZ12duoPySS83kDAfHSAXgeyxsXw0aCj1VgMALDpkY5u7O8/q6zIKedc85dkGOFW5W6mBRjxPS2GdMIm7nwWCQxTDeD8uLAWZZ8sDhcfF20qwcs0/Jwuqg1VzuuumANW10XF8PIlfLrbODQXfRGeregYkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sgHDckQj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2c8kfFxs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 221ACC32781;
-	Tue, 25 Jun 2024 09:40:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sgHDckQj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BEEEC32781;
+	Tue, 25 Jun 2024 09:40:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308415;
-	bh=4uQwZBN5d/kqVlq7JHnJBO86nWwC4iHyrECYE9H/Qt0=;
+	s=korg; t=1719308418;
+	bh=XS0YS4B9DxnXCowR3XvmIkmtAuERFd8Q+c3+dROlViI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2c8kfFxskiZlhh+iXEocE6QX5qKmZzOz+2qkgaV9o8/2vB181aMaszYvYSVHD9ezJ
-	 SCEbDxWYE+AwYmg9RGvScqLllqjUH2sYaf1DoD9qtFpjjM8Jb9+/b1Ytg1/s2Kw6tw
-	 Iiip3HWz/EnJm0UUQXVlLywd/mayRYgeORUd9ShU=
+	b=sgHDckQjLLSfQq94+6+i1v1K6rkZOqRod0Frq8orDt+OoWvsEUJ1FN7YncXbYotNt
+	 GlJhpHD0+cYtUCP+25/oo6mpawLfzOq5fQh1ouIfojnu8dDv+f3q8VSiVO09wljMg5
+	 v904K3ynmKTQP9HDB6zvw+zOprlQCL8gh22M5xs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	syzbot+0c4150bff9fff3bf023c@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Florian Westphal <fw@strlen.de>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 096/250] ALSA: seq: ump: Fix missing System Reset message handling
-Date: Tue, 25 Jun 2024 11:30:54 +0200
-Message-ID: <20240625085551.754789954@linuxfoundation.org>
+Subject: [PATCH 6.9 114/250] bpf: Avoid splat in pskb_pull_reason
+Date: Tue, 25 Jun 2024 11:31:12 +0200
+Message-ID: <20240625085552.447467619@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -50,34 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 55fac50ea46f46a22a92e2139b92afaa3822ad19 ]
+[ Upstream commit 2bbe3e5a2f4ef69d13be54f1cf895b4658287080 ]
 
-The conversion from System Reset event to UMP was missing.
-Add the entry for a conversion to a proper UMP System message.
+syzkaller builds (CONFIG_DEBUG_NET=y) frequently trigger a debug
+hint in pskb_may_pull.
 
-Fixes: e9e02819a98a ("ALSA: seq: Automatic conversion of UMP events")
-Link: https://lore.kernel.org/r/20240531123718.13420-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+We'd like to retain this debug check because it might hint at integer
+overflows and other issues (kernel code should pull headers, not huge
+value).
+
+In bpf case, this splat isn't interesting at all: such (nonsensical)
+bpf programs are typically generated by a fuzzer anyway.
+
+Do what Eric suggested and suppress such warning.
+
+For CONFIG_DEBUG_NET=n we don't need the extra check because
+pskb_may_pull will do the right thing: return an error without the
+WARN() backtrace.
+
+Fixes: 219eee9c0d16 ("net: skbuff: add overflow debug check to pull/push helpers")
+Reported-by: syzbot+0c4150bff9fff3bf023c@syzkaller.appspotmail.com
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Closes: https://syzkaller.appspot.com/bug?extid=0c4150bff9fff3bf023c
+Link: https://lore.kernel.org/netdev/9f254c96-54f2-4457-b7ab-1d9f6187939c@gmail.com/
+Link: https://lore.kernel.org/bpf/20240614101801.9496-1-fw@strlen.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_ump_convert.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/core/filter.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/sound/core/seq/seq_ump_convert.c b/sound/core/seq/seq_ump_convert.c
-index 171fb75267afa..d81f776a4c3dd 100644
---- a/sound/core/seq/seq_ump_convert.c
-+++ b/sound/core/seq/seq_ump_convert.c
-@@ -1075,6 +1075,8 @@ static const struct seq_ev_to_ump seq_ev_ump_encoders[] = {
- 	  system_ev_to_ump_midi1, system_ev_to_ump_midi2 },
- 	{ SNDRV_SEQ_EVENT_SENSING, UMP_SYSTEM_STATUS_ACTIVE_SENSING,
- 	  system_ev_to_ump_midi1, system_ev_to_ump_midi2 },
-+	{ SNDRV_SEQ_EVENT_RESET, UMP_SYSTEM_STATUS_RESET,
-+	  system_ev_to_ump_midi1, system_ev_to_ump_midi2 },
- };
+diff --git a/net/core/filter.c b/net/core/filter.c
+index a5856a8b4498b..ce255e0a2fbd9 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -1662,6 +1662,11 @@ static DEFINE_PER_CPU(struct bpf_scratchpad, bpf_sp);
+ static inline int __bpf_try_make_writable(struct sk_buff *skb,
+ 					  unsigned int write_len)
+ {
++#ifdef CONFIG_DEBUG_NET
++	/* Avoid a splat in pskb_may_pull_reason() */
++	if (write_len > INT_MAX)
++		return -EINVAL;
++#endif
+ 	return skb_ensure_writable(skb, write_len);
+ }
  
- static const struct seq_ev_to_ump *find_ump_encoder(int type)
 -- 
 2.43.0
 
