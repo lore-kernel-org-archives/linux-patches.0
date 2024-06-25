@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356DC12EBEA;
-	Tue, 25 Jun 2024 09:42:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0D012EBEA;
+	Tue, 25 Jun 2024 09:42:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719308539; cv=none; b=Kc7bP/Jwim1EzAcZz6FgDySujU6yp5Kl6hwpVXzr11URFdt3wYTbQt+tSwhcoFnGKiOr6MAS9pBpZM7d558n6IAm0GDismCb72LlPvlsg5twzZmdya9Cg1FQN9/72Whs3iTV3rHvYD+pPRvXkjjoNQUlnyT781gVQCz1yoAqVN4=
+	t=1719308542; cv=none; b=AL/TbRBrbkIxhA7RsAoyehJm7fKptMtL6n8RJcHbuFOFZ1j6dWCLzl6j+QAO3AI/HMvEKKQcdMF//JQudD3fzJwweGdFFg5MPo5jINqAZXgdtvY5Px9AHBZ7/GL9Jpa0yQm/rnk9wLgtLLA7IUw+J+4JcCpbeiBgl8M1HBwyQtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719308539; c=relaxed/simple;
-	bh=57oky4nXdTuJ8eDnsmFAozyMN14avNosbcwAedDHRfE=;
+	s=arc-20240116; t=1719308542; c=relaxed/simple;
+	bh=5UhygooAb0VgqCdRdqAnDrQJqHRU2SrF4LP33d7jhps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j8Me9WDlx1JYy1Spw0rmAvz9vAS2zwEMlP6KsM61Pie2tLYFHhqOU2d4qnJNQVcw0P8ISqKLvF1Zl7DNV2xAr5p1WrziX/2NUKxD5WR6gT02j6i6mKDsMIsEaw7RsY+dii1k0BKFs21NYXUU0z4HV3uF2zO1qGKvEQfByweMGBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TmpG9Cn4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pEIXnBphxZfM67MHRaiyz7o1gUJX1QePE/dkm2SvoyIvuJNL5lmmVKHraITAlzIr5QjmgdQD5N/fG+ROb7FrOkLZYJJCvRvG+BZCuplFfZuN027aKDEKL00Phuqt31R1cqhwe3OOsK753vVBlEpfKONXYzbPceHeClWrDGhXm30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ok1gkGwL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TmpG9Cn4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD43AC32781;
-	Tue, 25 Jun 2024 09:42:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ok1gkGwL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 970C0C32781;
+	Tue, 25 Jun 2024 09:42:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719308539;
-	bh=57oky4nXdTuJ8eDnsmFAozyMN14avNosbcwAedDHRfE=;
+	s=korg; t=1719308542;
+	bh=5UhygooAb0VgqCdRdqAnDrQJqHRU2SrF4LP33d7jhps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TmpG9Cn4PCEwxI13uHF0SQ8hqAZCGDeAd5vRL1TMDTkBu/BxxK5+ngEqVKBkYUeOw
-	 rEcU1cFufsksliKOLId0AYbT68XTN46MmKcNJVr7/QqHkoTvcYeJjmXKX3qP8noDLM
-	 ZJVTNTzEK3T17f3c6RjMa5d2qb5F8oQuYdUP2Xg4=
+	b=Ok1gkGwLQYfPGfnyJFuL5YlgiQ7F4NZhHbSiBZmZVzbP29lZtzW9pWsPctNTH8ie1
+	 LVMwdkFSp2l/ayoXfPOoCqw2jz08oiwl+WSGCVJbDWURquYZ26bHaOb3Dop/mIbYya
+	 MHQmgO7BurSnswtvk9qOSkNeNN+vgEXK+KrubCBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Shubin <n.shubin@yadro.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Peng Fan <peng.fan@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 155/250] dmaengine: ioatdma: Fix kmemleak in ioat_pci_probe()
-Date: Tue, 25 Jun 2024 11:31:53 +0200
-Message-ID: <20240625085554.012042337@linuxfoundation.org>
+Subject: [PATCH 6.9 156/250] dmaengine: fsl-edma: avoid linking both modules
+Date: Tue, 25 Jun 2024 11:31:54 +0200
+Message-ID: <20240625085554.050280324@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240625085548.033507125@linuxfoundation.org>
 References: <20240625085548.033507125@linuxfoundation.org>
@@ -52,64 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Shubin <n.shubin@yadro.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 29b7cd255f3628e0d65be33a939d8b5bba10aa62 ]
+[ Upstream commit fa555b5026d0bf1ba7c9e645ff75e2725a982631 ]
 
-If probing fails we end up with leaking ioatdma_device and each
-allocated channel.
+Kbuild does not support having a source file compiled multiple times
+and linked into distinct modules, or built-in and modular at the
+same time. For fs-edma, there are two common components that are
+linked into the fsl-edma.ko for Arm and PowerPC, plus the mcf-edma.ko
+module on Coldfire. This violates the rule for compile-testing:
 
-Following kmemleak easy to reproduce by injecting an error in
-ioat_alloc_chan_resources() when doing ioat_dma_self_test().
+scripts/Makefile.build:236: drivers/dma/Makefile: fsl-edma-common.o is added to multiple modules: fsl-edma mcf-edma
+scripts/Makefile.build:236: drivers/dma/Makefile: fsl-edma-trace.o is added to multiple modules: fsl-edma mcf-edma
 
-unreferenced object 0xffff888014ad5800 (size 1024): [..]
-    [<ffffffff827692ca>] kmemleak_alloc+0x4a/0x80
-    [<ffffffff81430600>] kmalloc_trace+0x270/0x2f0
-    [<ffffffffa000b7d1>] ioat_pci_probe+0xc1/0x1c0 [ioatdma]
-[..]
+I tried splitting out the common parts into a separate modules, but
+that adds back the complexity that a cleanup patch removed, and it
+gets harder with the addition of the tracepoints.
 
-repeated for each ioatdma channel:
+As a minimal workaround, address it at the Kconfig level, by disallowing
+the broken configurations.
 
-unreferenced object 0xffff8880148e5c00 (size 512): [..]
-    [<ffffffff827692ca>] kmemleak_alloc+0x4a/0x80
-    [<ffffffff81430600>] kmalloc_trace+0x270/0x2f0
-    [<ffffffffa0009641>] ioat_enumerate_channels+0x101/0x2d0 [ioatdma]
-    [<ffffffffa000b266>] ioat3_dma_probe+0x4d6/0x970 [ioatdma]
-    [<ffffffffa000b891>] ioat_pci_probe+0x181/0x1c0 [ioatdma]
-[..]
-
-Fixes: bf453a0a18b2 ("dmaengine: ioat: Support in-use unbind")
-Signed-off-by: Nikita Shubin <n.shubin@yadro.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20240528-ioatdma-fixes-v2-3-a9f2fbe26ab1@yadro.com
+Link: https://lore.kernel.org/lkml/20240110232255.1099757-1-arnd@kernel.org/
+Fixes: 66aac8ea0a6c ("dmaengine: fsl-edma: clean up EXPORT_SYMBOL_GPL in fsl-edma-common.c")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Peng Fan <peng.fan@nxp.com>
+Link: https://lore.kernel.org/r/20240528115440.2965975-1-arnd@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ioat/init.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/dma/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/ioat/init.c b/drivers/dma/ioat/init.c
-index 26964b7c8cf14..cf688b0c8444c 100644
---- a/drivers/dma/ioat/init.c
-+++ b/drivers/dma/ioat/init.c
-@@ -1347,6 +1347,7 @@ static int ioat_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	void __iomem * const *iomap;
- 	struct device *dev = &pdev->dev;
- 	struct ioatdma_device *device;
-+	unsigned int i;
- 	u8 version;
- 	int err;
+diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
+index 002a5ec806207..9fc99cfbef08c 100644
+--- a/drivers/dma/Kconfig
++++ b/drivers/dma/Kconfig
+@@ -394,7 +394,7 @@ config LS2X_APB_DMA
  
-@@ -1384,6 +1385,9 @@ static int ioat_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 
- 	err = ioat3_dma_probe(device, ioat_dca_enabled);
- 	if (err) {
-+		for (i = 0; i < IOAT_MAX_CHANS; i++)
-+			kfree(device->idx[i]);
-+		kfree(device);
- 		dev_err(dev, "Intel(R) I/OAT DMA Engine init failed\n");
- 		return -ENODEV;
- 	}
+ config MCF_EDMA
+ 	tristate "Freescale eDMA engine support, ColdFire mcf5441x SoCs"
+-	depends on M5441x || COMPILE_TEST
++	depends on M5441x || (COMPILE_TEST && FSL_EDMA=n)
+ 	select DMA_ENGINE
+ 	select DMA_VIRTUAL_CHANNELS
+ 	help
 -- 
 2.43.0
 
