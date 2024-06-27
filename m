@@ -1,50 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AACB14AD10;
-	Thu, 27 Jun 2024 11:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6462619A2A8;
+	Thu, 27 Jun 2024 17:14:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719487725; cv=none; b=moch5yoJ5ZSluTigEsNWhfF6aDvle6/229IqEb2S4Ba1jMoQOsv+n3UPFzgBdTrfriK5wi2KvMaeeQ+6XyxenWepPG95jigSgPmNNdvZqCWQ2YDPWauUfZAJuL4OFUnRG4gy7KT5rduly7YZ6QRpv1mRoPBgPbfv5baQDoZNTLE=
+	t=1719508446; cv=none; b=UIIrXUe2OLQUoT2oT6dUsEltAUEFQTfjcE8O91HBc5eWmOEUHp5EcpzlPm+Sbdhtfd9gGXgvqPRfLnYBYYgzWHI9FNIvX28HGmU4L2mg76AKyRKSxgMj3Uqs1iO85wgzsQjFy/qw5D6GMB4sp/qngGH30Kw5k/PpqPQCSSll5NM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719487725; c=relaxed/simple;
-	bh=KQbjQGX5zAl5/p5eRMiU6mnWze+fsZIcCgtOf9y2lSw=;
+	s=arc-20240116; t=1719508446; c=relaxed/simple;
+	bh=tNR6ArIGiHkLTpGQkaqhID9T8qBWrrtgctZsjePiA8k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rSymV+/fhDKCI6yME6mkuNfzzN2bDlI4pUuWrZRU4dYfqTCWT/A6DcJ8QqHg/xKyUFexwu0yMtBi/EdPpWqFnRBpLmcGrQqDXu7TmyMwvuICTXXIULURvfO6oeMzK6k7cNFbsSJydAdZlDeHPh3ag2bWB0pGPKoUDgcTPeNFdl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C08pB1iK; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=ec4NOu1vEK7HIOu30BjmyTMUJJmT+at+IyEv9FEE/5mcm3ajRNiZjCpXeeL8JD+Nnw4yIYoaC+Kb82MTwXJkWKEyPSvd+2+zmobukfLIkQjpo6qpg/HrGMDUCInYXkGFLyWQdbuO1lYCKizgf1C4dStWHhdzTiM13sQ8PuRyaac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RtAcu1FG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C08pB1iK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33C84C2BBFC;
-	Thu, 27 Jun 2024 11:28:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719487724;
-	bh=KQbjQGX5zAl5/p5eRMiU6mnWze+fsZIcCgtOf9y2lSw=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RtAcu1FG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09DF5C2BD10;
+	Thu, 27 Jun 2024 17:14:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1719508446;
+	bh=tNR6ArIGiHkLTpGQkaqhID9T8qBWrrtgctZsjePiA8k=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=C08pB1iKbIFo2XxcCO9PCQgM/OF/Upz1vxgxCR30E1NONxEOCfUOPBppmMKDvE0eK
-	 8uuvU4ZqrxyF8kfdYrYN7b3o6z1qlGyONb60oN5A862kNfhfP6bvBR7TY+CoQLeaZj
-	 iQYyFqI/7qaInZT89K9FUGPympR+TO7Y+fGRryfE=
-Date: Thu, 27 Jun 2024 13:28:41 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Arnd Bergmann <arnd@arndb.de>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Guenter Roeck <linux@roeck-us.net>, shuah <shuah@kernel.org>,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	Pavel Machek <pavel@denx.de>, Jon Hunter <jonathanh@nvidia.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Sudip Mukherjee <sudipm.mukherjee@gmail.com>, srw@sladewatkins.net,
-	rwarsow@gmx.de, Conor Dooley <conor@kernel.org>,
-	Allen <allen.lkml@gmail.com>, Mark Brown <broonie@kernel.org>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>
-Subject: Re: [PATCH 6.6 000/192] 6.6.36-rc1 review
-Message-ID: <2024062713-overbid-either-2f92@gregkh>
-References: <20240625085537.150087723@linuxfoundation.org>
- <CA+G9fYuWjzLJmBy+ty8uOCkJSdGEziXs-UYuEQSC-XFb5n938g@mail.gmail.com>
- <CA+G9fYsn8r7V=6K1_a-mYAM4icHKt-amiisFMwBbfPeSPyqz-g@mail.gmail.com>
- <70d09795-5e70-4528-9811-d0bafe7ffe07@app.fastmail.com>
+	b=RtAcu1FGJ6P2bbf/X4dsur5Hnf5L/FVULlmeohzDRYKuz6ePZ+uKKYm74H3EdgNmo
+	 XlWBAZeCr43+0xZjyJrKO78GGKQ785KXaJGxLHBbA+7vLgm8dj5LPhJLEdRfFSeXwr
+	 FzJSivkdhNDkiLgaKBQA001ga1cAY/Tp37wpV9noXkqcWyZ4fBhv6RIsjNPqYLiIbx
+	 R/u4GNIbrvU1JRSvc2fyK2KxRnnepks0MHIywrbegr/DKmu06qiHTZnd/A5lsnwNny
+	 j6JSGuPX7j0jJww7j2jrCZvvQKOucgU4nDRiE3PYJCL0T8PFOfIc4lDIGr76Iam4Dn
+	 AvxHsaRMYypIw==
+Date: Thu, 27 Jun 2024 10:14:05 -0700
+From: Kees Cook <kees@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Jiri Slaby <jirislaby@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>, linux-serial@vger.kernel.org,
+	imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+	linux-hardening@vger.kernel.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev, stable@vger.kernel.org
+Subject: Re: [PATCH] tty: mxser: Remove __counted_by from mxser_board.ports[]
+Message-ID: <202406271009.4E90DF8@keescook>
+References: <20240529-drop-counted-by-ports-mxser-board-v1-1-0ab217f4da6d@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -53,32 +48,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <70d09795-5e70-4528-9811-d0bafe7ffe07@app.fastmail.com>
+In-Reply-To: <20240529-drop-counted-by-ports-mxser-board-v1-1-0ab217f4da6d@kernel.org>
 
-On Tue, Jun 25, 2024 at 05:08:19PM +0200, Arnd Bergmann wrote:
-> On Tue, Jun 25, 2024, at 16:43, Naresh Kamboju wrote:
-> > On Tue, 25 Jun 2024 at 16:39, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
-> >> On Tue, 25 Jun 2024 at 15:18, Greg Kroah-Hartman
-> >> <gregkh@linuxfoundation.org> wrote:
-> >> arm-linux-gnueabihf-ld: drivers/firmware/efi/efi-init.o: in function
-> >> `.LANCHOR1':
-> >> efi-init.c:(.data+0x0): multiple definition of `screen_info';
-> >> arch/arm/kernel/setup.o:setup.c:(.data+0x12c): first defined here
-> >> make[3]: *** [scripts/Makefile.vmlinux_o:62: vmlinux.o] Error 1
-> >
-> > git bisect is pointing to this commit,
-> > [13cfc04b25c30b9fea2c953b7ed1c61de4c56c1f] efi: move screen_info into
-> > efi init code
+On Wed, May 29, 2024 at 02:29:42PM -0700, Nathan Chancellor wrote:
+> Work for __counted_by on generic pointers in structures (not just
+> flexible array members) has started landing in Clang 19 (current tip of
+> tree). During the development of this feature, a restriction was added
+> to __counted_by to prevent the flexible array member's element type from
+> including a flexible array member itself such as:
 > 
-> I think we should drop this patch: it's not a bugfix but was only
-> pulled in as a dependency for another patch. The series was rather
-> complicated to stage correctly, so keeping my screen_info patch
-> would require pulling in more stuff.
+>   struct foo {
+>     int count;
+>     char buf[];
+>   };
+> 
+>   struct bar {
+>     int count;
+>     struct foo data[] __counted_by(count);
+>   };
+> 
+> because the size of data cannot be calculated with the standard array
+> size formula:
+> 
+>   sizeof(struct foo) * count
+> 
+> This restriction was downgraded to a warning but due to CONFIG_WERROR,
+> it can still break the build. The application of __counted_by on the
+> ports member of 'struct mxser_board' triggers this restriction,
+> resulting in:
+> 
+>   drivers/tty/mxser.c:291:2: error: 'counted_by' should not be applied to an array with element of unknown size because 'struct mxser_port' is a struct type with a flexible array member. This will be an error in a future compiler version [-Werror,-Wbounds-safety-counted-by-elt-type-unknown-size]
+>     291 |         struct mxser_port ports[] __counted_by(nports);
+>         |         ^~~~~~~~~~~~~~~~~~~~~~~~~
+>   1 error generated.
+> 
+> Remove this use of __counted_by to fix the warning/error. However,
+> rather than remove it altogether, leave it commented, as it may be
+> possible to support this in future compiler releases.
+> 
+> Cc: stable@vger.kernel.org
+> Closes: https://github.com/ClangBuiltLinux/linux/issues/2026
+> Fixes: f34907ecca71 ("mxser: Annotate struct mxser_board with __counted_by")
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-Now dropped.  I've fixed up the other patches that was pulled in here to
-not need this one, it was a simple one-line loongarch-only fix that
-should be fine now.
+Since this fixes a build issue under Clang, can we please land this so
+v6.7 and later will build again? Gustavo is still working on the more
+complete fix (which was already on his radar, so it won't be lost).
 
-thanks,
+If it's easier/helpful, I can land this via the hardening tree? I was
+the one who sent the bad patch originally. :)
 
-greg k-h
+Thanks!
+
+-Kees
+
+-- 
+Kees Cook
