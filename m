@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821F31353FE
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10D413774B
 	for <patches@lists.linux.dev>; Fri, 28 Jun 2024 21:56:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719611798; cv=none; b=C38W0xENRlHzY2aJjj3F7mOybmQ658vF6X1er3LxzolEsUAqvtCN1DGGBOYB2+qcbfvxhsN6BlN5R6dlD5ENmGcHb2vECY0lSa+HccEjA7f9k2wVGStUE8rg4t4kaeRdyuy2/D/06Gjdzw0cGr4zpWnVStGIrtP1BwverNWCnOU=
+	t=1719611798; cv=none; b=poazrrMqxNinoidLFM3EOtBqm+gf2ZuTOPPB36WSspNmRvE1S0E7yhyQ1Y9mynv3q1VdEBh1W9JtjS6g3LgcIE7VsrK+zJ0G6JS0k80pF2lsCcetv08Zz/ljvsZTj1P0c5Uoav4ZET7EYbvu32UFiEjdQZnFRP/8RuvltIpbe/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1719611798; c=relaxed/simple;
-	bh=7gwzf/trQEcQpsp3Q62b5pMAB6BI8DFeIhWQ/vV4hOM=;
+	bh=fm2QZisifdMg+3x+dqCxv5EqypsHdl6yyTP9VR+uJyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f3Me6MNhmitODOrv5gUpcoIqyNqx3qoL9AMu0reKydv0nwcdF5mWK0KvNYzAEJWvmIhjcRWqv0+5iW8UdFXqtoEGPFuQTkAnmVMDsGH1SjpO42gEbzICSHPDHRAs27w/QmjT7FpWFuCMuXD4JKJZaR+GZH2vpqeWJcKyFkG3sLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=K4L7BPrL; arc=none smtp.client-ip=198.175.65.21
+	 MIME-Version; b=tvT2pBqVKXW3n/AxaVjVntxrYUotVxphxTxx5V0I15RLCzQTlrZO4Z9CZqejk8EW90D8vaxM0Mv6YZdsahiC6kulTZ8YBE1ftf0uoCQKDfENVuB7SNVb+Rt5I/Ix7gwSv6wSSHIqOil01buoH0Nk3L2um6xA7J6ogxd11xoZxN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=PojRRDlb; arc=none smtp.client-ip=198.175.65.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="K4L7BPrL"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="PojRRDlb"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1719611797; x=1751147797;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=7gwzf/trQEcQpsp3Q62b5pMAB6BI8DFeIhWQ/vV4hOM=;
-  b=K4L7BPrL1iAtjaPlEjUTvXIkzwFZrQqld9baqHAPLz+eQQxRGHHbWgQQ
-   xwSgDowMfH5VHjIEXB1TIE2lyRFZGtc2HSA12gGmHP2OWDyTOipUG/6i3
-   CSR1/5KqLhSC/Zy+E/hJtwKIqZ2aJ3zGFRAWAbzWz/VmR/WaT3d9O6AGm
-   Dat8YWbIUwQA0PDHhsYOMIQcramCJxZ5iXToxWbdgnABSdrnYSDBatA1l
-   d/+uqAYLXIXzHfP9Z/DvQ/OxJQyor2sAa2XKhIOAf20FtB3CQaCvtXmwC
-   aWCVIGBXytmRNuOfDIlSkvl6fxOrbWMBVVD/6Kwz1NRG6b2Y5tOeDKZfv
-   Q==;
-X-CSE-ConnectionGUID: A47Bb3wGQ3q/R5Ep8/9rJA==
-X-CSE-MsgGUID: F+mVQV5YTwmR7uTlMJInMA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11117"; a="16762618"
+  bh=fm2QZisifdMg+3x+dqCxv5EqypsHdl6yyTP9VR+uJyY=;
+  b=PojRRDlbNuUiC4+AzC7VJXQnLrMFUCs9dlGZBXh57eeyPOzhV9hTc3lM
+   VK7aHQMsXV2MTE5vqP3ExE6uX7trrElp6j32YIlvit1N5x1z3pux3AlVg
+   J7RdRtR489Fi4AEpX6ctzvr0SMmB9ZBl4DxahZAX3kpil0bAqIbsJYRQz
+   216JDx6KpASCRzNCWP5Oow3G5n+9nGVbwDJLYTi8ZZrUt9Ck0AbegzJoh
+   Yf5zOqsEoaqfH1R8CwMKpc87RGr2pmS+eL1r9ggYs6gitZd9icsxm+7/Y
+   F0Dcpu+8Rb0tUr5wvtLVzwbGMa2ETqjjLQzsnYeDbyMla98ya+KsxKebO
+   g==;
+X-CSE-ConnectionGUID: MXhxiT6MSRyAoPsJ7AiqYg==
+X-CSE-MsgGUID: lKWMycr7SK6j/dCnMnhVXQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11117"; a="16762589"
 X-IronPort-AV: E=Sophos;i="6.09,170,1716274800"; 
-   d="scan'208";a="16762618"
+   d="scan'208";a="16762589"
 Received: from fmviesa002.fm.intel.com ([10.60.135.142])
   by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jun 2024 14:56:28 -0700
-X-CSE-ConnectionGUID: QWV9m6F7T/6zO3o57zoSuQ==
-X-CSE-MsgGUID: Yy/X5S/ZSg6ntkxze2J4xQ==
+X-CSE-ConnectionGUID: uWBR2WMUSv65y3+vnd5c5w==
+X-CSE-MsgGUID: LXqVnXS9RXmzsxcXaL+iUA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.09,170,1716274800"; 
-   d="scan'208";a="68065672"
+   d="scan'208";a="68065660"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
   by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jun 2024 14:56:27 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -56,9 +56,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v23 13/19] x86/resctrl: Create Sub-NUMA Cluster (SNC) monitor files
-Date: Fri, 28 Jun 2024 14:56:13 -0700
-Message-ID: <20240628215619.76401-14-tony.luck@intel.com>
+Subject: [PATCH v23 09/19] x86/resctrl: Add a new field to struct rmid_read for summation of domains
+Date: Fri, 28 Jun 2024 14:56:09 -0700
+Message-ID: <20240628215619.76401-10-tony.luck@intel.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240628215619.76401-1-tony.luck@intel.com>
 References: <20240628215619.76401-1-tony.luck@intel.com>
@@ -70,123 +70,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When SNC mode is enabled, create subdirectories and files to monitor
-at the SNC node granularity. Legacy behavior is preserved by tagging
-the monitor files at the L3 granularity with the "sum" attribute.
-When the user reads these files the kernel will read monitor data
-from all SNC nodes that share the same L3 cache instance and return
-the aggregated value to the user.
+When a user reads a monitor file rdtgroup_mondata_show() calls
+mon_event_read() to package up all the required details into an rmid_read
+structure which is passed across the smp_call*() infrastructure to code
+that will read data from hardware and return the value (or error status)
+in the rmid_read structure.
 
-Note that the "domid" field for files that must sum across SNC domains
-has the L3 cache instance id, while non-summing files use the domain id.
+Sub-NUMA Cluster (SNC) mode adds files with new semantics. These require
+the smp_call-ed code to sum event data from all domains that share an
+L3 cache.
 
-The "sum" files do not need to make a call to mon_event_read() to
-initialize the MBM counters. This will be handled by initializing the
-individual SNC nodes that share the L3.
+Add a pointer to the L3 "cacheinfo" structure to struct rmid_read
+for the data collection routines to use to pick the domains to be
+summed.
 
+Reinette suggested that the rmid_read structure has become complex enough
+to warrant documentation of each of its fields and provided the kerneldoc
+documentation for struct rmid_read.
+
+Co-developed-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
- arch/x86/kernel/cpu/resctrl/rdtgroup.c | 62 +++++++++++++++++++-------
- 1 file changed, 46 insertions(+), 16 deletions(-)
+ arch/x86/kernel/cpu/resctrl/internal.h | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-index 9c38ddcfe150..8502385e389f 100644
---- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-+++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-@@ -3026,7 +3026,8 @@ static void rmdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
- }
+diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
+index 135190e0711c..681b5bdcd2f9 100644
+--- a/arch/x86/kernel/cpu/resctrl/internal.h
++++ b/arch/x86/kernel/cpu/resctrl/internal.h
+@@ -144,12 +144,31 @@ union mon_data_bits {
+ 	} u;
+ };
  
- static int mon_add_all_files(struct kernfs_node *kn, struct rdt_mon_domain *d,
--			     struct rdt_resource *r, struct rdtgroup *prgrp)
-+			     struct rdt_resource *r, struct rdtgroup *prgrp,
-+			     bool do_sum)
- {
- 	struct rmid_read rr = {0};
- 	union mon_data_bits priv;
-@@ -3037,14 +3038,15 @@ static int mon_add_all_files(struct kernfs_node *kn, struct rdt_mon_domain *d,
- 		return -EPERM;
- 
- 	priv.u.rid = r->rid;
--	priv.u.domid = d->hdr.id;
-+	priv.u.domid = do_sum ? d->ci->id : d->hdr.id;
-+	priv.u.sum = do_sum;
- 	list_for_each_entry(mevt, &r->evt_list, list) {
- 		priv.u.evtid = mevt->evtid;
- 		ret = mon_addfile(kn, mevt->name, priv.priv);
- 		if (ret)
- 			return ret;
- 
--		if (is_mbm_event(mevt->evtid))
-+		if (!do_sum && is_mbm_event(mevt->evtid))
- 			mon_event_read(&rr, r, d, prgrp, mevt->evtid, true);
- 	}
- 
-@@ -3055,23 +3057,51 @@ static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
- 				struct rdt_mon_domain *d,
- 				struct rdt_resource *r, struct rdtgroup *prgrp)
- {
--	struct kernfs_node *kn;
-+	struct kernfs_node *kn, *ckn;
- 	char name[32];
--	int ret;
-+	bool snc_mode;
-+	int ret = 0;
- 
--	sprintf(name, "mon_%s_%02d", r->name, d->hdr.id);
--	/* create the directory */
--	kn = kernfs_create_dir(parent_kn, name, parent_kn->mode, prgrp);
--	if (IS_ERR(kn))
--		return PTR_ERR(kn);
-+	lockdep_assert_held(&rdtgroup_mutex);
- 
--	ret = rdtgroup_kn_set_ugid(kn);
--	if (ret)
--		goto out_destroy;
-+	snc_mode = r->mon_scope == RESCTRL_L3_NODE;
-+	sprintf(name, "mon_%s_%02d", r->name, snc_mode ? d->ci->id : d->hdr.id);
-+	kn = kernfs_find_and_get(parent_kn, name);
-+	if (kn) {
-+		/*
-+		 * rdtgroup_mutex will prevent this directory from being
-+		 * removed. No need to keep this hold.
-+		 */
-+		kernfs_put(kn);
-+	} else {
-+		kn = kernfs_create_dir(parent_kn, name, parent_kn->mode, prgrp);
-+		if (IS_ERR(kn))
-+			return PTR_ERR(kn);
- 
--	ret = mon_add_all_files(kn, d, r, prgrp);
--	if (ret)
--		goto out_destroy;
-+		ret = rdtgroup_kn_set_ugid(kn);
-+		if (ret)
-+			goto out_destroy;
-+		ret = mon_add_all_files(kn, d, r, prgrp, snc_mode);
-+		if (ret)
-+			goto out_destroy;
-+	}
-+
-+	if (snc_mode) {
-+		sprintf(name, "mon_sub_%s_%02d", r->name, d->hdr.id);
-+		ckn = kernfs_create_dir(kn, name, parent_kn->mode, prgrp);
-+		if (IS_ERR(ckn)) {
-+			ret = -EINVAL;
-+			goto out_destroy;
-+		}
-+
-+		ret = rdtgroup_kn_set_ugid(ckn);
-+		if (ret)
-+			goto out_destroy;
-+
-+		ret = mon_add_all_files(ckn, d, r, prgrp, false);
-+		if (ret)
-+			goto out_destroy;
-+	}
- 
- 	kernfs_activate(kn);
- 	return 0;
++/**
++ * struct rmid_read - Data passed across smp_call*() to read event count.
++ * @rgrp:  Resource group for which the counter is being read. If it is a parent
++ *	   resource group then its event count is summed with the count from all
++ *	   its child resource groups.
++ * @r:	   Resource describing the properties of the event being read.
++ * @d:	   Domain that the counter should be read from. If NULL then sum all
++ *	   domains in @r sharing L3 @ci.id
++ * @evtid: Which monitor event to read.
++ * @first: Initialize MBM counter when true.
++ * @ci:    Cacheinfo for L3. Only set when @d is NULL. Used when summing domains.
++ * @err:   Error encountered when reading counter.
++ * @val:   Returned value of event counter. If @rgrp is a parent resource group,
++ *	   @val includes the sum of event counts from its child resource groups.
++ *	   If @d is NULL, @val includes the sum of all domains in @r sharing @ci.id,
++ *	   (summed across child resource groups if @rgrp is a parent resource group).
++ * @arch_mon_ctx: Hardware monitor allocated for this read request (MPAM only).
++ */
+ struct rmid_read {
+ 	struct rdtgroup		*rgrp;
+ 	struct rdt_resource	*r;
+ 	struct rdt_mon_domain	*d;
+ 	enum resctrl_event_id	evtid;
+ 	bool			first;
++	struct cacheinfo	*ci;
+ 	int			err;
+ 	u64			val;
+ 	void			*arch_mon_ctx;
 -- 
 2.45.2
 
