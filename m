@@ -1,65 +1,74 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C153D69;
-	Sat, 29 Jun 2024 06:25:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABC1C6FB9;
+	Sat, 29 Jun 2024 08:07:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719642339; cv=none; b=iZ6qJdddIli5gRjemik3w5FSVEllcSWc+FnJrQc4+RquAUHTgVWUxidaHDTmiBiezYVUn0gAjq39FuF0lm9SyZfgtHt+EfRUzME/cO8digj39dHmKL0BoaUJfSohgjc3+Dz5tRqpORyl2GlXDyMj/JS8qOx4cwzchvXtHxqBAiI=
+	t=1719648455; cv=none; b=tkl+0xxwi9nG/lgB+5JWa6R2oQ2MG4wHym4h132X1MRPZatYaivgKatLyu6jiNkotPd6ZS5rPRIQhpWoIxhoN6XqrF738ib9Uo9NXikvJtvxZNzmMdcETlVKVBy67XOmHoPbAcBmlP2SeY4dGjGQKQnnQYFwH52zKJP0fWXecjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719642339; c=relaxed/simple;
-	bh=fs48/52NADoG38JxBDzweblcs7YENA8fbMWo1V11K3E=;
+	s=arc-20240116; t=1719648455; c=relaxed/simple;
+	bh=HZyRI4VrAeEz1YY6UlpfHipWqgudDrSenhok5CLTIvE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PpoqJ2OUSrVV4VpVxLeoe1OFeLvKEc7rJiebol9AbFXW/Zi3qzaZaqL3x9fBuc/slpLXkP2DaAH5lMQh5RYPUk6n/MnzxgkTz5AMG+tg5AX2+uwvGpowtLV7+EPrlzxfEdLBEPVNZLA8PP89JhVuTVFevQLCw3eCrEn51GTScs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=bombadil.srs.infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=cbPxcAT3; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bombadil.srs.infradead.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=JnAu5LJkfFw45OQSrbQnzx5YQzFKUrn92A2oT2hsh+f2zRKfeCSqwCCgHdTuFX55Z1UsMhvfe9FhvMkKQxt/6sr5/roZUYpRHpJOAfIf/bFseHApO6YbQAWO1SV3eX+47yWq1yRMMuRl36pkdeLVP4lHKCAojKB6ov9Uq1VMrRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=krT/cYZy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="cbPxcAT3"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=In-Reply-To:Content-Type:MIME-Version
-	:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=jF9YptaNEcUba9vHIIDGNCL4tXi5jsBItIWsaKNJPwg=; b=cbPxcAT3Gh3u2Oz3d7cmQVA67k
-	347sgcuute+AWlp4+E7nY+LkVucOZZalnmncbVo28Ij1pWEBh87fgItCyKJUbmUKDuFXSmSGxjnag
-	JtrpNd5T6b57FdFYWoeycdTF+hQwU20E6FjE9hu1qIQUzTktVbPkhd+vQIP7Akg431skZZhkHev1j
-	23nQWUdYuEKMBFWH6FeezVP08ObPx8gl4GxgxAITn6pkvvkGd4lN49Dxiw0mavc1MOagQjwlyb87+
-	hLmTLtV25YjxKuD5ihXB8J92uBMslXNFAV9dEk9XqoZIdYZXmlNrhV6spFSu0xi2CfZ9QHQtmWUjL
-	Z8VBY0Jw==;
-Received: from hch by bombadil.infradead.org with local (Exim 4.97.1 #2 (Red Hat Linux))
-	id 1sNRWg-0000000G0B4-2Z6g;
-	Sat, 29 Jun 2024 06:25:34 +0000
-Date: Fri, 28 Jun 2024 23:25:34 -0700
-From: Christoph Hellwig <hch@infradead.org>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: p.raghav@samsung.com, hare@suse.de, kbusch@kernel.org,
-	david@fromorbit.com, neilb@suse.de, gost.dev@samsung.com,
-	linux-block@vger.kernel.org, linux-mm@kvack.org,
-	patches@lists.linux.dev
-Subject: Re: [RFC] bdev: use bdev_io_min() for statx DIO min IO
-Message-ID: <Zn-o3jQj4RkJobjS@infradead.org>
-References: <20240628212350.3577766-1-mcgrof@kernel.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="krT/cYZy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36CC8C2BBFC;
+	Sat, 29 Jun 2024 08:07:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1719648455;
+	bh=HZyRI4VrAeEz1YY6UlpfHipWqgudDrSenhok5CLTIvE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=krT/cYZy904cb6qHLyG4jWtZ85weqEZ+mlCsMeDVZnTdScLRw4F6/mwUtvIpGmwce
+	 nFPKT7sWgq+mbPkMRchaTDFxER/gI2S72kx1qDq6EGciJ+Y56QLW6TMKtaOWaa2iJA
+	 Z5yQ4u67gsSY8jhrreoPVtptz8jQjM3AjBx2EC2A=
+Date: Sat, 29 Jun 2024 10:07:29 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Marek =?iso-8859-1?Q?Beh=FAn?= <kabel@kernel.org>
+Cc: Eric Woudstra <ericwouds@gmail.com>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Jiri Pirko <jiri@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.9 029/250] net: sfp: enhance quirk for Fibrestore 2.5G
+ copper SFP module
+Message-ID: <2024062902-retrieval-distort-4718@gregkh>
+References: <20240625085548.033507125@linuxfoundation.org>
+ <20240625085549.174362251@linuxfoundation.org>
+ <20240628172211.17ccefe9@dellmb>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20240628212350.3577766-1-mcgrof@kernel.org>
-X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240628172211.17ccefe9@dellmb>
 
-On Fri, Jun 28, 2024 at 02:23:50PM -0700, Luis Chamberlain wrote:
-> We currently rely on the block device logical block size for the
-> offset alignment. While this *works* it doesn't work with performance
-> in mind. That's exactly what the minimum_io_size attribute is for.
+On Fri, Jun 28, 2024 at 05:22:11PM +0200, Marek Behún wrote:
+> On Tue, 25 Jun 2024 11:29:47 +0200
+> Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 > 
-> This would for example enhance performance for DIO on 4k IU drives which
-> have for example an LBA format of 512 bytes for both HDDs and NVMe.
-> Another use case is to ensure that DIO will be used with 16k IOs on
-> existing market 16k IU drives with an LBA format of 4k or 512 bytes.
+> > 6.9-stable review patch.  If anyone has any objections, please let me know.
+> 
+> Sorry I overlooked this, I thought I already replied to this, but in
+> fact I replied to another patch not to be backported:
+> 
+>   net: sfp: add quirk for another multigig RollBall transceiver
+>   https://lore.kernel.org/stable/20240527165441.2c5516c9@dellmb/
+> 
+> This patch (net: sfp: enhance quirk for Fibrestore 2.5G copper SFP
+> module) has the same problem: it depends on the same series, so it
+> should not be backported.
+> 
+> Eric informs me that it was already released as 6.9.7 :-(
+> 
+> What can we do?
 
-The minimum_io_size clearly is the minimum I/O size, not the minimal
-nice to have one.  Changing this will break existing setups.
+Revert is the best, want to send it or can you wait until Monday when I
+can do it (am traveling this weekend).
 
+thanks,
+
+greg k-h
