@@ -1,111 +1,65 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F46B80635
-	for <patches@lists.linux.dev>; Fri, 28 Jun 2024 23:35:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C153D69;
+	Sat, 29 Jun 2024 06:25:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719617752; cv=none; b=Gq10HFBI11e5hM76Yg+Iz4VDkNuiMcIW3d09hbP3WB+AXVbDiB7FqbVxF12tc9fhcrgvUl+bvR90NwfXakchp45QchGtQiwWHKFtYQbfzrT7oT6I0cIEcEARcIdVh3hyFaUSuggiyzgeA8l20ceYGeUaYn7ns6pCD/rkOmhVJDY=
+	t=1719642339; cv=none; b=iZ6qJdddIli5gRjemik3w5FSVEllcSWc+FnJrQc4+RquAUHTgVWUxidaHDTmiBiezYVUn0gAjq39FuF0lm9SyZfgtHt+EfRUzME/cO8digj39dHmKL0BoaUJfSohgjc3+Dz5tRqpORyl2GlXDyMj/JS8qOx4cwzchvXtHxqBAiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719617752; c=relaxed/simple;
-	bh=nQh6PiV/uejYwwxC/7SvfuZ8z+tRvvLwVBKHdSI3S/0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rdSLvRcUtH5Fmffnl965a3BmR2IeV/8b5Ws4HI9dOL2t5m71Ric7nB3am+ZYsAIB78sEKwyD0D6xT9qZ1PqaQSAvlyErLwJUH7G9tvHU8edpCyXzF5Zr89O9gh1PkTSDsWEFa8TVjsQr7BJEM2476OUsYktGuGyy/1e9ZG1r8yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gTOnB3eA; arc=none smtp.client-ip=198.175.65.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1719642339; c=relaxed/simple;
+	bh=fs48/52NADoG38JxBDzweblcs7YENA8fbMWo1V11K3E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PpoqJ2OUSrVV4VpVxLeoe1OFeLvKEc7rJiebol9AbFXW/Zi3qzaZaqL3x9fBuc/slpLXkP2DaAH5lMQh5RYPUk6n/MnzxgkTz5AMG+tg5AX2+uwvGpowtLV7+EPrlzxfEdLBEPVNZLA8PP89JhVuTVFevQLCw3eCrEn51GTScs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=bombadil.srs.infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=cbPxcAT3; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bombadil.srs.infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gTOnB3eA"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1719617751; x=1751153751;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=nQh6PiV/uejYwwxC/7SvfuZ8z+tRvvLwVBKHdSI3S/0=;
-  b=gTOnB3eAVpVawKHVqGRGVBu+inhEsmQAt9GlvgRIJQnIZJ4OvASqWjf1
-   TSx3SQ45oAjM8Z297iPJc7F/GSPoYb76j2aaxJ7BwgbP7Rd6LebvNjhGQ
-   pVtUemQ6Va/NMnln+WMhhv4hLUGiMN7qKBh6empJDv35YvsPPgYzH3/oo
-   yEo24hciF06VvlysT2y8cJ5wrDoJddXRLJVPa104Qx61jnpOtPY0SsWsl
-   0aEaVSWRieTIwxh1XC22wDKTADdhfU4mairy+sXc1gHPhw0xeKteudVZi
-   8eK1NGv7dIXnpcdSFhFLtG6CZbYv669Tcc8EKKfByKkMlSEb1D2qyXEvl
-   A==;
-X-CSE-ConnectionGUID: IJ4jm+vUR76dCa1U1OoBHg==
-X-CSE-MsgGUID: 8LpQuF/+TLyhKYx3DBZ92g==
-X-IronPort-AV: E=McAfee;i="6700,10204,11117"; a="20575396"
-X-IronPort-AV: E=Sophos;i="6.09,170,1716274800"; 
-   d="scan'208";a="20575396"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jun 2024 16:35:48 -0700
-X-CSE-ConnectionGUID: h95JEMSJQIG5vIFOROq0hA==
-X-CSE-MsgGUID: IZH4+3OERyidObRE9yyqoA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,170,1716274800"; 
-   d="scan'208";a="45300266"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
-  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jun 2024 16:35:48 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	x86@kernel.org
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v7 1/2] x86/cpu/vfm: Delete X86_MATCH_INTEL_FAM6_MODEL[_STEPPING]() macros
-Date: Fri, 28 Jun 2024 16:35:39 -0700
-Message-ID: <20240628233540.77900-2-tony.luck@intel.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240628233540.77900-1-tony.luck@intel.com>
-References: <20240628233540.77900-1-tony.luck@intel.com>
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="cbPxcAT3"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=In-Reply-To:Content-Type:MIME-Version
+	:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=jF9YptaNEcUba9vHIIDGNCL4tXi5jsBItIWsaKNJPwg=; b=cbPxcAT3Gh3u2Oz3d7cmQVA67k
+	347sgcuute+AWlp4+E7nY+LkVucOZZalnmncbVo28Ij1pWEBh87fgItCyKJUbmUKDuFXSmSGxjnag
+	JtrpNd5T6b57FdFYWoeycdTF+hQwU20E6FjE9hu1qIQUzTktVbPkhd+vQIP7Akg431skZZhkHev1j
+	23nQWUdYuEKMBFWH6FeezVP08ObPx8gl4GxgxAITn6pkvvkGd4lN49Dxiw0mavc1MOagQjwlyb87+
+	hLmTLtV25YjxKuD5ihXB8J92uBMslXNFAV9dEk9XqoZIdYZXmlNrhV6spFSu0xi2CfZ9QHQtmWUjL
+	Z8VBY0Jw==;
+Received: from hch by bombadil.infradead.org with local (Exim 4.97.1 #2 (Red Hat Linux))
+	id 1sNRWg-0000000G0B4-2Z6g;
+	Sat, 29 Jun 2024 06:25:34 +0000
+Date: Fri, 28 Jun 2024 23:25:34 -0700
+From: Christoph Hellwig <hch@infradead.org>
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: p.raghav@samsung.com, hare@suse.de, kbusch@kernel.org,
+	david@fromorbit.com, neilb@suse.de, gost.dev@samsung.com,
+	linux-block@vger.kernel.org, linux-mm@kvack.org,
+	patches@lists.linux.dev
+Subject: Re: [RFC] bdev: use bdev_io_min() for statx DIO min IO
+Message-ID: <Zn-o3jQj4RkJobjS@infradead.org>
+References: <20240628212350.3577766-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240628212350.3577766-1-mcgrof@kernel.org>
+X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
 
-These macros have been replaced by X86_MATCH_VFM[_STEPPING]()
+On Fri, Jun 28, 2024 at 02:23:50PM -0700, Luis Chamberlain wrote:
+> We currently rely on the block device logical block size for the
+> offset alignment. While this *works* it doesn't work with performance
+> in mind. That's exactly what the minimum_io_size attribute is for.
+> 
+> This would for example enhance performance for DIO on 4k IU drives which
+> have for example an LBA format of 512 bytes for both HDDs and NVMe.
+> Another use case is to ensure that DIO will be used with 16k IOs on
+> existing market 16k IU drives with an LBA format of 4k or 512 bytes.
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- arch/x86/include/asm/cpu_device_id.h | 20 --------------------
- 1 file changed, 20 deletions(-)
-
-diff --git a/arch/x86/include/asm/cpu_device_id.h b/arch/x86/include/asm/cpu_device_id.h
-index 3831f612e89c..e4121d9aa9e1 100644
---- a/arch/x86/include/asm/cpu_device_id.h
-+++ b/arch/x86/include/asm/cpu_device_id.h
-@@ -192,26 +192,6 @@
- #define X86_MATCH_VENDOR_FAM(vendor, family, data)			\
- 	X86_MATCH_VENDOR_FAM_MODEL(vendor, family, X86_MODEL_ANY, data)
- 
--/**
-- * X86_MATCH_INTEL_FAM6_MODEL - Match vendor INTEL, family 6 and model
-- * @model:	The model name without the INTEL_FAM6_ prefix or ANY
-- *		The model name is expanded to INTEL_FAM6_@model internally
-- * @data:	Driver specific data or NULL. The internal storage
-- *		format is unsigned long. The supplied value, pointer
-- *		etc. is casted to unsigned long internally.
-- *
-- * The vendor is set to INTEL, the family to 6 and all other missing
-- * arguments of X86_MATCH_VENDOR_FAM_MODEL_FEATURE() are set to wildcards.
-- *
-- * See X86_MATCH_VENDOR_FAM_MODEL_FEATURE() for further information.
-- */
--#define X86_MATCH_INTEL_FAM6_MODEL(model, data)				\
--	X86_MATCH_VENDOR_FAM_MODEL(INTEL, 6, INTEL_FAM6_##model, data)
--
--#define X86_MATCH_INTEL_FAM6_MODEL_STEPPINGS(model, steppings, data)	\
--	X86_MATCH_VENDOR_FAM_MODEL_STEPPINGS_FEATURE(INTEL, 6, INTEL_FAM6_##model, \
--						     steppings, X86_FEATURE_ANY, data)
--
- /**
-  * X86_MATCH_VFM - Match encoded vendor/family/model
-  * @vfm:	Encoded 8-bits each for vendor, family, model
--- 
-2.45.2
+The minimum_io_size clearly is the minimum I/O size, not the minimal
+nice to have one.  Changing this will break existing setups.
 
