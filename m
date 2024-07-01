@@ -1,111 +1,126 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9F34206C;
-	Mon,  1 Jul 2024 18:27:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BA1016EB70;
+	Mon,  1 Jul 2024 18:36:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719858420; cv=none; b=Sb1GOVs0uBy53jR4ZYjpgeAXyYpS22Yr3zt0rcuh6Uvo0pTpmKBhwOCfCjkm/Lp+9hgdzxYeP/3GDUvhOUtHGU1nSQ+2RIVcHcvZBdnERoQ6onJBk661OsQqWi356XwUsP+udwSzaMMk19vy/jypYFaVF4+Ec9EcrpDFhyW9Lmg=
+	t=1719859008; cv=none; b=LtXuh7xn9VvUO859ibFcPpTK2DSFvybgvrfwhiHIRUAbxPqcPK3P4DKxBaLKGGpe+roU2XJEAGcD0Q0+g5yYPEcdNQXkY5LSPeGNps3D3RQYxj4eteVN0StMrFQuZw+EVt0aRf0BFvqiJbO+Zmq/uN75cbsPEwXSnzU06epUBo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719858420; c=relaxed/simple;
-	bh=wDmAHasbwyDrav/gjz/1HfTelzHzs8MHoUaZv+UsTFU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=PYZSkYWEt8NrH5SewHqC/ORHKzM8l35ynza+dZ5jJbyChKJj25NmLkkJDb28c/8JsOoddUsrwNMKiTwT1+r3mkFqw3MFwdZAjdLPlAyHjUq3vxkhSEmsZqX1D6/8aO09TKOy0O+KhHg2um+jLLkHwoDAesw2u0B32mjC4mPcNjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ImT+Hj/5; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1719859008; c=relaxed/simple;
+	bh=6irQFrUOYtg/mtmSRairb5nPKj33UQSNuMI8G+CrdDQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=lyaU7Tu5k0/FpBpsYcuRLKWszSRhdfx8mdG1jNt+Qvv9Br9y6Xy+wJYClVm5Vo+M0D/6Oe+mgROs9EA7OPyf+l5iCkafFD67ECNUGFwbcGsysihAXgw9Uzve5359/tbQKMj5TUZNq7+DftNoDE6uJVKjziOO5m+5P0EJPdEq0xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eI08Fa6F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ImT+Hj/5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8271C116B1;
-	Mon,  1 Jul 2024 18:26:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eI08Fa6F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FFCCC116B1;
+	Mon,  1 Jul 2024 18:36:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719858420;
-	bh=wDmAHasbwyDrav/gjz/1HfTelzHzs8MHoUaZv+UsTFU=;
-	h=From:Date:Subject:To:Cc:From;
-	b=ImT+Hj/5dJ6/oeZzaMtoDUKPqVouhuQg5ZghBti5V/Zb9CIbeYILdEXNobBZR7OZM
-	 6/F3s18gDPLwS+5+BU46R/28U5CRFYH300eR7xtiMYAZ6jFeY7nFfgWsfVAwRLdB6X
-	 L/LaGyvl6O+1EiVdU4/vyUMtUjWrHEldxrMEU0AN5YmlcUoUP9slhUx4qFk8hMaG6m
-	 aTI03n62QvpZUZzHSI6aaIrdrn6ji1Owb0G2Db7Q8mpLPwCXlE6AX/u4fqVLerKtMY
-	 sAB8NKe6T8mPqmCt3Uljd1pNc6i9Y9ufOs9XP1MJgXuc8Uf8FvuA8V0JexnQMJid5H
-	 Vd0gB9q7jZAOw==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Mon, 01 Jul 2024 11:26:38 -0700
-Subject: [PATCH] ASoC: fsl: lpc3xxx-i2s: Include bitfield.h for FIELD_PREP
+	s=k20201202; t=1719859007;
+	bh=6irQFrUOYtg/mtmSRairb5nPKj33UQSNuMI8G+CrdDQ=;
+	h=From:To:Cc:Subject:Date:From;
+	b=eI08Fa6FHYRAQ9oWAZP/phH9d0fNiZ3U2wg54VsMNcCg7s7FAIJPB9LlGl2Rza28T
+	 JH44p144BD43MWITsEL3wCNpD/7luxZMOnN26y4WpYK7bjjrW0G84LfQ5VStbwV1x0
+	 tNWnhpJ1KNucxrdJgrVfu/2v4I+8h5s+I/q6uP2thOn7ghl/r69a5eWyZY06ZibMTg
+	 cZo9n5oZUCb+zoXbkWWiPu2kezosL+oLIPsy0CUca76qqGyNP1yZSuaPySoL5YiPxJ
+	 eARQ46XlzEaTQRlnchs+vIVL+MmZIIY0iptky2nJfs7A9OfG350yysH7G6SbsBfe+s
+	 sMmNFuVpKOhYg==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH 00/13] Support several Rust toolchain versions
+Date: Mon,  1 Jul 2024 20:36:10 +0200
+Message-ID: <20240701183625.665574-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240701-lpc32xx-asoc-fix-include-for-field_prep-v1-1-0c5d7f71921b@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAN30gmYC/x3NXQrDIBAE4KuEfe7Cai39uUopxeimXRAVJUUIu
- XuWPn7DMLNB5ybc4TFt0PgnXUpWmNME4evzh1GiGixZR1cymGo42zHQ9xJwkYGSQ1oj41KamlN
- 818YVjaM439zFW7qDrmmo7f/T87XvB2yNv3N5AAAA
-To: Mark Brown <broonie@kernel.org>, 
- "J.M.B. Downing" <jonathan.downing@nautel.com>, 
- Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>
-Cc: Vladimir Zapolskiy <vz@mleia.com>, alsa-devel@alsa-project.org, 
- linuxppc-dev@lists.ozlabs.org, linux-sound@vger.kernel.org, 
- patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2810; i=nathan@kernel.org;
- h=from:subject:message-id; bh=wDmAHasbwyDrav/gjz/1HfTelzHzs8MHoUaZv+UsTFU=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDGlNXz7XTWQI3vX8Z+WFtsqwSZJCPwvOnNXlsv5SxPirZ
- kJz3ErpjlIWBjEuBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjCRDdUM//PUFujO11fQ/po4
- a/MK4bnLf+Qp95d/YJv2suyfgmVs0VGG//XZ6ayv2O4oq+azrayL5L9ReDj6jHw/e+utz4FWN97
- q8AEA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-bitfield.h is not explicitly included but it is required for FIELD_PREP
-to be expanded by the preprocessor. If it is not implicitly included,
-there will be a compiler error (as seen with ARCH=hexagon allmodconfig):
+Hi all,
 
-  sound/soc/fsl/lpc3xxx-i2s.c:169:10: error: call to undeclared function 'FIELD_PREP'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-    169 |                 tmp |= LPC3XXX_I2S_WW8 | LPC3XXX_I2S_WS_HP(LPC3XXX_I2S_WW8_HP);
-        |                        ^
-  sound/soc/fsl/lpc3xxx-i2s.h:42:30: note: expanded from macro 'LPC3XXX_I2S_WW8'
-     42 | #define LPC3XXX_I2S_WW8      FIELD_PREP(0x3, 0) /* Word width is 8bit */
-        |                              ^
-  sound/soc/fsl/lpc3xxx-i2s.c:205:34: error: call to undeclared function 'FIELD_PREP'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-    205 |                              LPC3XXX_I2S_DMA1_TX_EN | LPC3XXX_I2S_DMA0_TX_DEPTH(4));
-        |                                                       ^
-  sound/soc/fsl/lpc3xxx-i2s.h:65:38: note: expanded from macro 'LPC3XXX_I2S_DMA0_TX_DEPTH'
-     65 | #define LPC3XXX_I2S_DMA0_TX_DEPTH(s) FIELD_PREP(0xF0000, s) /* Set the DMA1 TX Request level */
-        |                                      ^
-  sound/soc/fsl/lpc3xxx-i2s.c:210:34: error: call to undeclared function 'FIELD_PREP'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-    210 |                              LPC3XXX_I2S_DMA0_RX_EN | LPC3XXX_I2S_DMA1_RX_DEPTH(4));
-        |                                                       ^
-  sound/soc/fsl/lpc3xxx-i2s.h:70:38: note: expanded from macro 'LPC3XXX_I2S_DMA1_RX_DEPTH'
-     70 | #define LPC3XXX_I2S_DMA1_RX_DEPTH(s) FIELD_PREP(0x700, s) /* Set the DMA1 RX Request level */
-        |                                      ^
+It is time to start supporting several Rust toolchain versions and thus
+establish a minimum Rust compiler and `bindgen` version.
 
-Include bitfield.h explicitly, so that FIELD_PREP is always expanded,
-clearing up the compiler error.
+For the Rust compiler, we will start with a window of two stable
+releases, and widen it over time. This series keeps the minimum where
+it is (1.78.0), but adds support for the recently released 1.79.0.
 
-Fixes: 0959de657a10 ("ASoC: fsl: Add i2s and pcm drivers for LPC32xx CPUs")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- sound/soc/fsl/lpc3xxx-i2s.h | 1 +
- 1 file changed, 1 insertion(+)
+This should already be enough for kernel developers in distributions that
+provide recent Rust compiler versions routinely, such as Arch Linux,
+Debian Unstable (outside the freeze period), Fedora Linux, Gentoo
+Linux (especially the testing channel), Nix (unstable) and openSUSE
+Tumbleweed. A documentation adds the instructions for each of them.
 
-diff --git a/sound/soc/fsl/lpc3xxx-i2s.h b/sound/soc/fsl/lpc3xxx-i2s.h
-index eec755448478..b6657853017a 100644
---- a/sound/soc/fsl/lpc3xxx-i2s.h
-+++ b/sound/soc/fsl/lpc3xxx-i2s.h
-@@ -9,6 +9,7 @@
- #ifndef __SOUND_SOC_LPC3XXX_I2S_H
- #define __SOUND_SOC_LPC3XXX_I2S_H
- 
-+#include <linux/bitfield.h>
- #include <linux/types.h>
- #include <linux/regmap.h>
- 
+In addition, Rust for Linux is now being built-tested in Rust's
+pre-merge CI. That is, every change that is attempting to land into the
+Rust compiler is tested against the kernel, and it is merged only if it
+passes -- thanks to the Rust project for that!
 
----
-base-commit: 55f0a1fa6ea4e339c797e9a3292ca0caa4ab3885
-change-id: 20240701-lpc32xx-asoc-fix-include-for-field_prep-140db845a209
+Thus, with the pre-merge CI in place, both projects hope to avoid
+unintentional changes to Rust that break the kernel. This means that,
+in general, apart from intentional changes on their side (that we will
+need to workaround conditionally on our side), the upcoming Rust compiler
+versions should generally work.
 
-Best regards,
+For instance, currently, the beta (1.80.0) and nightly (1.81.0) branches
+work as well.
+
+Similarly, we kept the minimum as it is for `bindgen`. `bindgen` is also
+adding the kernel to its CI -- thanks!
+
+Cheers,
+Miguel
+
+
+Miguel Ojeda (13):
+  rust: macros: indent list item in `paste!`'s docs
+  rust: init: simplify from `map_err` to `inspect_err`
+  rust: allow `dead_code` for never constructed bindings
+  rust: relax most deny-level lints to warnings
+  rust: simplify Clippy warning flags set
+  rust: start supporting several compiler versions
+  rust: warn about `bindgen` versions 0.66.0 and 0.66.1
+  rust: work around `bindgen` 0.69.0 issue
+  rust: avoid assuming a particular `bindgen` build
+  rust: start supporting several `bindgen` versions
+  kbuild: rust: add `rustc-version` support
+  rust: support the new `-Zub-checks` flag
+  docs: rust: quick-start: add section on Linux distributions
+
+ Documentation/process/changes.rst  |   9 +--
+ Documentation/rust/quick-start.rst | 118 +++++++++++++++++++++++------
+ Makefile                           |  29 +++----
+ init/Kconfig                       |  11 ++-
+ lib/Kconfig.debug                  |  18 +++++
+ rust/Makefile                      |   4 +-
+ rust/bindings/lib.rs               |   1 +
+ rust/kernel/init.rs                |  12 +--
+ rust/macros/lib.rs                 |   2 +-
+ rust/uapi/lib.rs                   |   1 +
+ scripts/Kconfig.include            |   6 ++
+ scripts/Makefile.compiler          |   4 +
+ scripts/rust_is_available.sh       |  20 ++---
+ scripts/rust_is_available_test.py  |  40 +++++-----
+ scripts/rustc-version.sh           |  52 +++++++++++++
+ 15 files changed, 238 insertions(+), 89 deletions(-)
+ create mode 100755 scripts/rustc-version.sh
+
+
+base-commit: f2661062f16b2de5d7b6a5c42a9a5c96326b8454
 -- 
-Nathan Chancellor <nathan@kernel.org>
+2.45.2
 
