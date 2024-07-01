@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5328B16F85A;
-	Mon,  1 Jul 2024 18:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F79E172762;
+	Mon,  1 Jul 2024 18:37:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719859050; cv=none; b=XfyUYuDGlpPku4BTUvnt7NFCjJjj12lL2PhZdvQI9b3hppu1+BiUat8QN9AbRx/NWiPuKk/JDUUsCTw3s4SjdFrEVLBSzB3dG8m7NAnsqGFg7SRvlGfDkYQD2RBpz9DzwS9hOXWeS5GGOqoGzS9d6nlBcYC9yn823FXi58fTtLo=
+	t=1719859055; cv=none; b=XCop/B2Fbl7cr3CVsLyg0/pQ4vIAnqRw7aFrUM9M9JB8dPeTEu5wwXBz1Hh4+O2kBvRJ2O2h0ZgpuqYpRpNCCV1BWdiZpAhN5oohjuzv9Qzbck/2qv8i6iT9hzV68i+oKi7TN1mgAIePLOVTiZc+xZcaETBosEbM+msbVQsFSn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719859050; c=relaxed/simple;
-	bh=zVhKqiDyQv5ZxblaWNctxIc8aVp6zkdLOh1twpo4mPY=;
+	s=arc-20240116; t=1719859055; c=relaxed/simple;
+	bh=i7Bpv+VkURk8Dn67Vw4shxE1NjlQlY/Yr/USg4ZFdIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ewKxrdfHzF1xPAHDySVWwRvZqJ04l3JXHU/hW7p6eMGUR7f/pyeAIyqL9HgnobG1vNXlamfo0DVkfacauj9gCtdJSk6m5migApTqQ7hQQp0+IslAVNhpU6/tMtoF6/vgslkw3KhKDcbSTjwJrt43h4nRAauDMLKOiU9uPUCC08Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lmxXY9T0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EGC5VOcbszzPH4zC8Go33v2PHDirjHe2EojrwkWObHCwY7ltmV8/KO4J0CSLF4aExfA8DdLy56seqHUhrRaMwu9rA/ZwEK1/9g4TornaRQFG7+RtY0op/AmpHMGN5UghMdaUbW4atBAvt3CI8F/hdXl9sIwmF5i2eODZYuRd9G4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ev3LeNfS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lmxXY9T0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48CE6C32781;
-	Mon,  1 Jul 2024 18:37:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ev3LeNfS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADBD8C4AF0A;
+	Mon,  1 Jul 2024 18:37:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719859049;
-	bh=zVhKqiDyQv5ZxblaWNctxIc8aVp6zkdLOh1twpo4mPY=;
+	s=k20201202; t=1719859054;
+	bh=i7Bpv+VkURk8Dn67Vw4shxE1NjlQlY/Yr/USg4ZFdIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lmxXY9T0gVgM1GjHGIB2bLLksN4SLVL2FgPfNS44HUpwo/dMA3cWl+dw1Y4UoIUY9
-	 Ue7OCEz7UGPdjCcNu+ncK7oJ+MVOruRi1H56W1uuwYpCCe33kaMCKTNMP3gtxpOTj0
-	 T6W1BXuvUWu7GHtHccpwQkY5rA1Km3hO4MibGHW277k/zISGw1xJ2gK5aEzAGdtq1M
-	 BzkZvcP06SmB2Z+fdYj/h7a3tP0U+VtafkaF0IMZBkpf7r3B7x1Q2ALzprwoyG4JTk
-	 pdUF+w4zRCs3s2OYemzeCh4V4cR4BJD5oabI2akzw69EEYJ2/yfWbIe3eDpB7y34yG
-	 J4Yhs+2V7YBAA==
+	b=ev3LeNfSuNuWP66VnIObsN5piFJIp+D9E1BVdCRjKtmgAUSmWejmivQVa6syEA/6b
+	 4HdnTuQa9hVxh+jwAInPsBA/EH0jwdwRKYR/Yz2mQv5FD1n5TazevfxgGyky5dyIFz
+	 sw5MDEPXrHPjcKiuTV7F7C5bvFT53QdPRrlcZi7v3S+Cahv30HiSccvs2JQyrCysuw
+	 4/3kzN5l/sAhi87uEq9GX23J/86zIRgcnKQr9EkDY2ImtD6DIQfiy86+KnY0V8Lv8A
+	 Lwedkso4XTmSMhzNxXJQrVRve2+FtUH5y5NMIwEYcNFKE+8AuOYqqhKk9ykF3H+WUn
+	 CFnA6ZC+BFfsg==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>,
 	Wedson Almeida Filho <wedsonaf@gmail.com>,
@@ -39,11 +39,13 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	Jonathan Corbet <corbet@lwn.net>,
-	linux-doc@vger.kernel.org
-Subject: [PATCH 10/13] rust: start supporting several `bindgen` versions
-Date: Mon,  1 Jul 2024 20:36:20 +0200
-Message-ID: <20240701183625.665574-11-ojeda@kernel.org>
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	linux-kbuild@vger.kernel.org
+Subject: [PATCH 11/13] kbuild: rust: add `rustc-version` support
+Date: Mon,  1 Jul 2024 20:36:21 +0200
+Message-ID: <20240701183625.665574-12-ojeda@kernel.org>
 In-Reply-To: <20240701183625.665574-1-ojeda@kernel.org>
 References: <20240701183625.665574-1-ojeda@kernel.org>
 Precedence: bulk
@@ -54,78 +56,141 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-With both the workaround for `bindgen` 0.69.0 and the warning about
-0.66.0 and 0.66.1 in place, start supporting several `bindgen` versions,
-like it was done for the Rust compiler in a previous patch.
+Now that we are starting to support several Rust versions, introduce
+`rustc-version` support, mimicking the C side:
 
-All other versions, including the latest 0.69.4, build without errors.
+  - `scripts/rustc-version.sh`, that mimics the other version scripts
+     (with one more digit, e.g. Rust 1.79.0 is 107900).
 
-The `bindgen` project, like Rust, has also agreed to have the kernel
-in their CI [1] -- thanks! This should help both projects: `bindgen`
-will be able to detect early issues like those mentioned above, and the
-kernel will be very likely build with new releases (at least for the
-basic configuration being tested).
+  - `rustc-{info,name,version}` Kbuild macros.
 
-Link: https://github.com/rust-lang/rust-bindgen/pull/2851 [1]
+  - `CONFIG_RUSTC_VERSION` Kconfig symbol that calls `rustc-version`.
+
+  - `rustc-min-version` Kbuild macro that uses `CONFIG_RUSTC_VERSION`.
+
+With these, we can easily support flags conditionally depending on
+`rustc`'s version -- a user comes in the next patch.
+
+Another user will be the `-Ctarget-feature=+reserve-x18`/`-Zfixed-x18`
+arm64 flags [1].
+
+Link: https://lore.kernel.org/rust-for-linux/20240305-shadow-call-stack-v2-1-c7b4a3f4d616@google.com/ [1]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- Documentation/rust/quick-start.rst | 5 +++--
- scripts/rust_is_available.sh       | 8 --------
- scripts/rust_is_available_test.py  | 5 -----
- 3 files changed, 3 insertions(+), 15 deletions(-)
+ init/Kconfig              |  6 +++++
+ scripts/Kconfig.include   |  6 +++++
+ scripts/Makefile.compiler |  4 +++
+ scripts/rustc-version.sh  | 52 +++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 68 insertions(+)
+ create mode 100755 scripts/rustc-version.sh
 
-diff --git a/Documentation/rust/quick-start.rst b/Documentation/rust/quick-start.rst
-index f411cad4cc02..f624b913ff89 100644
---- a/Documentation/rust/quick-start.rst
-+++ b/Documentation/rust/quick-start.rst
-@@ -100,9 +100,10 @@ bindgen
- *******
+diff --git a/init/Kconfig b/init/Kconfig
+index 94e20d3b99d4..7d344f248785 100644
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -1920,6 +1920,12 @@ config RUST
  
- The bindings to the C side of the kernel are generated at build time using
--the ``bindgen`` tool. A particular version is required.
-+the ``bindgen`` tool.
+ 	  If unsure, say N.
  
--Install it via (note that this will download and build the tool from source)::
-+Install it, for instance, via (note that this will download and build the tool
-+from source)::
++config RUSTC_VERSION
++	int
++	depends on RUST
++	default $(rustc-version)
++	default 0
++
+ config RUSTC_VERSION_TEXT
+ 	string
+ 	depends on RUST
+diff --git a/scripts/Kconfig.include b/scripts/Kconfig.include
+index 3ee8ecfb8c04..82ab889725db 100644
+--- a/scripts/Kconfig.include
++++ b/scripts/Kconfig.include
+@@ -45,6 +45,12 @@ $(error-if,$(success,test -z "$(cc-info)"),Sorry$(comma) this C compiler is not
+ cc-name := $(shell,set -- $(cc-info) && echo $1)
+ cc-version := $(shell,set -- $(cc-info) && echo $2)
  
- 	cargo install --locked --version $(scripts/min-tool-version.sh bindgen) bindgen-cli
++# Get the Rust compiler name, version, and error out if it is not supported.
++rustc-info := $(shell,$(srctree)/scripts/rustc-version.sh $(RUSTC))
++$(error-if,$(success,test -z "$(rustc-info)"),Sorry$(comma) this Rust compiler is not supported.)
++rustc-name := $(shell,set -- $(rustc-info) && echo $1)
++rustc-version := $(shell,set -- $(rustc-info) && echo $2)
++
+ # Get the assembler name, version, and error out if it is not supported.
+ as-info := $(shell,$(srctree)/scripts/as-version.sh $(CC) $(CLANG_FLAGS))
+ $(error-if,$(success,test -z "$(as-info)"),Sorry$(comma) this assembler is not supported.)
+diff --git a/scripts/Makefile.compiler b/scripts/Makefile.compiler
+index 92be0c9a13ee..17eaa085b59c 100644
+--- a/scripts/Makefile.compiler
++++ b/scripts/Makefile.compiler
+@@ -69,6 +69,10 @@ gcc-min-version = $(call test-ge, $(CONFIG_GCC_VERSION), $1)
+ # Usage: cflags-$(call clang-min-version, 110000) += -foo
+ clang-min-version = $(call test-ge, $(CONFIG_CLANG_VERSION), $1)
  
-diff --git a/scripts/rust_is_available.sh b/scripts/rust_is_available.sh
-index cfda8157dce9..537accc73334 100755
---- a/scripts/rust_is_available.sh
-+++ b/scripts/rust_is_available.sh
-@@ -161,14 +161,6 @@ if [ "$rust_bindings_generator_cversion" -lt "$rust_bindings_generator_min_cvers
- 	echo >&2 "***"
- 	exit 1
- fi
--if [ "$rust_bindings_generator_cversion" -gt "$rust_bindings_generator_min_cversion" ]; then
--	echo >&2 "***"
--	echo >&2 "*** Rust bindings generator '$BINDGEN' is too new. This may or may not work."
--	echo >&2 "***   Your version:     $rust_bindings_generator_version"
--	echo >&2 "***   Expected version: $rust_bindings_generator_min_version"
--	echo >&2 "***"
--	warning=1
--fi
- if [ "$rust_bindings_generator_cversion" -eq 6600 ] || [ "$rust_bindings_generator_cversion" -eq 6601 ]; then
- 	echo >&2 "***"
- 	echo >&2 "*** Rust bindings generator '$BINDGEN' versions 0.66.0 and 0.66.1 may not"
-diff --git a/scripts/rust_is_available_test.py b/scripts/rust_is_available_test.py
-index f5ebafff002c..927cd8bbc09c 100755
---- a/scripts/rust_is_available_test.py
-+++ b/scripts/rust_is_available_test.py
-@@ -231,11 +231,6 @@ else:
-         result = self.run_script(self.Expected.FAILURE, { "BINDGEN": bindgen })
-         self.assertIn(f"Rust bindings generator '{bindgen}' is too old.", result.stderr)
- 
--    def test_bindgen_new_version(self):
--        bindgen = self.generate_bindgen_version("bindgen 0.999.0")
--        result = self.run_script(self.Expected.SUCCESS_WITH_WARNINGS, { "BINDGEN": bindgen })
--        self.assertIn(f"Rust bindings generator '{bindgen}' is too new. This may or may not work.", result.stderr)
--
-     def test_bindgen_bad_version_0_66_0_and_0_66_1(self):
-         for version in ("0.66.0", "0.66.1"):
-             with self.subTest(version=version):
++# rustc-min-version
++# Usage: rustflags-$(call rustc-min-version, 107900) += -foo
++rustc-min-version = $(call test-ge, $(CONFIG_RUSTC_VERSION), $1)
++
+ # ld-option
+ # Usage: KBUILD_LDFLAGS += $(call ld-option, -X, -Y)
+ ld-option = $(call try-run, $(LD) $(KBUILD_LDFLAGS) $(1) -v,$(1),$(2),$(3))
+diff --git a/scripts/rustc-version.sh b/scripts/rustc-version.sh
+new file mode 100755
+index 000000000000..4e658fd55ae6
+--- /dev/null
++++ b/scripts/rustc-version.sh
+@@ -0,0 +1,52 @@
++#!/bin/sh
++# SPDX-License-Identifier: GPL-2.0
++#
++# Print the Rust compiler name and its version in a 5 or 6-digit form.
++# Also, perform the minimum version check.
++
++set -e
++
++# Convert the version string x.y.z to a canonical up-to-7-digits form.
++#
++# Note that this function uses one more digit (compared to other
++# instances in other version scripts) to give a bit more space to
++# `rustc` since it will reach 1.100.0 in late 2026.
++get_canonical_version()
++{
++	IFS=.
++	set -- $1
++	echo $((100000 * $1 + 100 * $2 + $3))
++}
++
++orig_args="$@"
++
++set -- $("$@" --version)
++
++name=$1
++
++min_tool_version=$(dirname $0)/min-tool-version.sh
++
++case "$name" in
++rustc)
++	version=$2
++	min_version=$($min_tool_version rustc)
++	;;
++*)
++	echo "$orig_args: unknown Rust compiler" >&2
++	exit 1
++	;;
++esac
++
++rustcversion=$(get_canonical_version $version)
++min_rustcversion=$(get_canonical_version $min_version)
++
++if [ "$rustcversion" -lt "$min_rustcversion" ]; then
++	echo >&2 "***"
++	echo >&2 "*** Rust compiler is too old."
++	echo >&2 "***   Your $name version:    $version"
++	echo >&2 "***   Minimum $name version: $min_version"
++	echo >&2 "***"
++	exit 1
++fi
++
++echo $name $rustcversion
 -- 
 2.45.2
 
