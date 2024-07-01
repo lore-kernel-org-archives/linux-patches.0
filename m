@@ -1,34 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3897016D4C7;
-	Mon,  1 Jul 2024 16:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9F34206C;
+	Mon,  1 Jul 2024 18:27:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719851067; cv=none; b=CLub7RIg8fhWBAZjGQlWFnaFzRAt5ZSzf9FwYPsewyPWNG2HpmwG6j12NNNR7Muc+AKTFxvlHYAROa9DEHIs/U5325PcEs/ClFYLCxJnSaN1cG+aFMJ8twtLkzT2BZdHuNoAYz7y55cvXyfnuJrLib2xSFzJZ/wxHNuWHRoBFDU=
+	t=1719858420; cv=none; b=Sb1GOVs0uBy53jR4ZYjpgeAXyYpS22Yr3zt0rcuh6Uvo0pTpmKBhwOCfCjkm/Lp+9hgdzxYeP/3GDUvhOUtHGU1nSQ+2RIVcHcvZBdnERoQ6onJBk661OsQqWi356XwUsP+udwSzaMMk19vy/jypYFaVF4+Ec9EcrpDFhyW9Lmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719851067; c=relaxed/simple;
-	bh=oBVFJlu3MmnNdnNe9Q9BhkVgV1GOgRax+RD1hh59NIs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=qahsrmhxkjfKlngcQXSsWboxaXcosh1xImTZwXkyOu6i86kaHr82csV3YbFQHmgjRODf3Mm8fwILpF8OkqUcPquIwxp1pSjfYzc+ZFM99AFJdSsxGl/Q4qIrcG1p9/6+FBVYxlvPwLdsTG4ddjA2UB7I7RFpJRHsT5QDmHZtzfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MNfaOgTI; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1719858420; c=relaxed/simple;
+	bh=wDmAHasbwyDrav/gjz/1HfTelzHzs8MHoUaZv+UsTFU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=PYZSkYWEt8NrH5SewHqC/ORHKzM8l35ynza+dZ5jJbyChKJj25NmLkkJDb28c/8JsOoddUsrwNMKiTwT1+r3mkFqw3MFwdZAjdLPlAyHjUq3vxkhSEmsZqX1D6/8aO09TKOy0O+KhHg2um+jLLkHwoDAesw2u0B32mjC4mPcNjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ImT+Hj/5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MNfaOgTI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F67C116B1;
-	Mon,  1 Jul 2024 16:24:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ImT+Hj/5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8271C116B1;
+	Mon,  1 Jul 2024 18:26:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719851065;
-	bh=oBVFJlu3MmnNdnNe9Q9BhkVgV1GOgRax+RD1hh59NIs=;
+	s=k20201202; t=1719858420;
+	bh=wDmAHasbwyDrav/gjz/1HfTelzHzs8MHoUaZv+UsTFU=;
 	h=From:Date:Subject:To:Cc:From;
-	b=MNfaOgTI38XHbTvoSalMKLauxUd+9J/w1Q99eE96NJCsllyoTZgXBI6Sy4yc5ZAWz
-	 9lhd7stnTg5qOwtBlWhzRf1bZEBM2Z1+KvGrt35Pga41dHChLFpsASxl2s7rcG5WEd
-	 IjTwmuvK9w6t2J3u5OVbPThQV2tY13Pro0/kDpUpeRyNlgPqSg4MZKVN3fUJHcLynI
-	 uM2rFprmO8AIyyoheuuoCfSd2mPaz4x/Fu1dYLf3ndPBr+SxBUowtowO8S2yRpptyQ
-	 /RZPof4m2qkjmhkp5DlG79wllZAAWMyyC+6SIlZNoY6TuR0RRpLC07brLaOhD0aXAo
-	 ZQkCdYNG01+ZQ==
+	b=ImT+Hj/5dJ6/oeZzaMtoDUKPqVouhuQg5ZghBti5V/Zb9CIbeYILdEXNobBZR7OZM
+	 6/F3s18gDPLwS+5+BU46R/28U5CRFYH300eR7xtiMYAZ6jFeY7nFfgWsfVAwRLdB6X
+	 L/LaGyvl6O+1EiVdU4/vyUMtUjWrHEldxrMEU0AN5YmlcUoUP9slhUx4qFk8hMaG6m
+	 aTI03n62QvpZUZzHSI6aaIrdrn6ji1Owb0G2Db7Q8mpLPwCXlE6AX/u4fqVLerKtMY
+	 sAB8NKe6T8mPqmCt3Uljd1pNc6i9Y9ufOs9XP1MJgXuc8Uf8FvuA8V0JexnQMJid5H
+	 Vd0gB9q7jZAOw==
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Mon, 01 Jul 2024 09:24:16 -0700
-Subject: [PATCH] ASoC: fsl: lpc3xxx-i2s: Avoid using ret uninitialized in
- lpc32xx_i2s_probe()
+Date: Mon, 01 Jul 2024 11:26:38 -0700
+Subject: [PATCH] ASoC: fsl: lpc3xxx-i2s: Include bitfield.h for FIELD_PREP
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,70 +36,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240701-lpc32xx-asoc-fix-uninitialized-ret-v1-1-985d86189739@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAC/YgmYC/x2NzQqDMBAGX0X23IVN/ANfpfQQkm39QKIkVoLiu
- zf0ODDMXJQ1QTNNzUVJD2SssYJ5NORnFz/KCJXJiu1kFMPL5ltbCru8en6j8DciYodbcGrgpDt
- 3o0gYQt8P3lANbUmr+J88X/f9AyTAwd50AAAA
-To: "J.M.B. Downing" <jonathan.downing@nautel.com>, 
- Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>, 
- Mark Brown <broonie@kernel.org>
-Cc: Vladimir Zapolskiy <vz@mleia.com>, Liam Girdwood <lgirdwood@gmail.com>, 
- alsa-devel@alsa-project.org, linuxppc-dev@lists.ozlabs.org, 
- linux-sound@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
+Message-Id: <20240701-lpc32xx-asoc-fix-include-for-field_prep-v1-1-0c5d7f71921b@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAN30gmYC/x3NXQrDIBAE4KuEfe7Cai39uUopxeimXRAVJUUIu
+ XuWPn7DMLNB5ybc4TFt0PgnXUpWmNME4evzh1GiGixZR1cymGo42zHQ9xJwkYGSQ1oj41KamlN
+ 818YVjaM439zFW7qDrmmo7f/T87XvB2yNv3N5AAAA
+To: Mark Brown <broonie@kernel.org>, 
+ "J.M.B. Downing" <jonathan.downing@nautel.com>, 
+ Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>
+Cc: Vladimir Zapolskiy <vz@mleia.com>, alsa-devel@alsa-project.org, 
+ linuxppc-dev@lists.ozlabs.org, linux-sound@vger.kernel.org, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2122; i=nathan@kernel.org;
- h=from:subject:message-id; bh=oBVFJlu3MmnNdnNe9Q9BhkVgV1GOgRax+RD1hh59NIs=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDGlNNyxOBzy1UVET3irgUXTDdu7+cq5F79i0f9i/ydsUF
- LG55862jlIWBjEuBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjCRp0cZGXr631qo3FnZemTN
- 5k6jhZ1rBSbECur+dFZelzgnU3eH3T9GhjX3eNamS0ZNeMxY1K8eef8+q6tI9MMgwRiFpSrX8rh
- d2QE=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2810; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=wDmAHasbwyDrav/gjz/1HfTelzHzs8MHoUaZv+UsTFU=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGlNXz7XTWQI3vX8Z+WFtsqwSZJCPwvOnNXlsv5SxPirZ
+ kJz3ErpjlIWBjEuBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjCRDdUM//PUFujO11fQ/po4
+ a/MK4bnLf+Qp95d/YJv2suyfgmVs0VGG//XZ6ayv2O4oq+azrayL5L9ReDj6jHw/e+utz4FWN97
+ q8AEA
 X-Developer-Key: i=nathan@kernel.org; a=openpgp;
  fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-clang points out that ret may be used uninitialized in
-lpc32xx_i2s_probe() in an error pointer path (which becomes fatal with
-CONFIG_WERROR):
+bitfield.h is not explicitly included but it is required for FIELD_PREP
+to be expanded by the preprocessor. If it is not implicitly included,
+there will be a compiler error (as seen with ARCH=hexagon allmodconfig):
 
-  sound/soc/fsl/lpc3xxx-i2s.c:326:47: error: variable 'ret' is uninitialized when used here [-Werror,-Wuninitialized]
-    326 |                                      "failed to init register map: %d\n", ret);
-        |                                                                           ^~~
-  sound/soc/fsl/lpc3xxx-i2s.c:310:9: note: initialize the variable 'ret' to silence this warning
-    310 |         int ret;
-        |                ^
-        |                 = 0
-  1 error generated.
+  sound/soc/fsl/lpc3xxx-i2s.c:169:10: error: call to undeclared function 'FIELD_PREP'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    169 |                 tmp |= LPC3XXX_I2S_WW8 | LPC3XXX_I2S_WS_HP(LPC3XXX_I2S_WW8_HP);
+        |                        ^
+  sound/soc/fsl/lpc3xxx-i2s.h:42:30: note: expanded from macro 'LPC3XXX_I2S_WW8'
+     42 | #define LPC3XXX_I2S_WW8      FIELD_PREP(0x3, 0) /* Word width is 8bit */
+        |                              ^
+  sound/soc/fsl/lpc3xxx-i2s.c:205:34: error: call to undeclared function 'FIELD_PREP'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    205 |                              LPC3XXX_I2S_DMA1_TX_EN | LPC3XXX_I2S_DMA0_TX_DEPTH(4));
+        |                                                       ^
+  sound/soc/fsl/lpc3xxx-i2s.h:65:38: note: expanded from macro 'LPC3XXX_I2S_DMA0_TX_DEPTH'
+     65 | #define LPC3XXX_I2S_DMA0_TX_DEPTH(s) FIELD_PREP(0xF0000, s) /* Set the DMA1 TX Request level */
+        |                                      ^
+  sound/soc/fsl/lpc3xxx-i2s.c:210:34: error: call to undeclared function 'FIELD_PREP'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    210 |                              LPC3XXX_I2S_DMA0_RX_EN | LPC3XXX_I2S_DMA1_RX_DEPTH(4));
+        |                                                       ^
+  sound/soc/fsl/lpc3xxx-i2s.h:70:38: note: expanded from macro 'LPC3XXX_I2S_DMA1_RX_DEPTH'
+     70 | #define LPC3XXX_I2S_DMA1_RX_DEPTH(s) FIELD_PREP(0x700, s) /* Set the DMA1 RX Request level */
+        |                                      ^
 
-One solution would be a small refactoring of the second parameter in
-dev_err_probe(), PTR_ERR(i2s_info_p->regs), to be the value of ret in
-the if statement. However, a nicer solution for debugging purposes,
-which is the point of this statement, would be to use the '%pe'
-specifier to symbolically print the error pointer value. Do so, which
-eliminates the uninitialized use of ret, clearing up the warning.
+Include bitfield.h explicitly, so that FIELD_PREP is always expanded,
+clearing up the compiler error.
 
 Fixes: 0959de657a10 ("ASoC: fsl: Add i2s and pcm drivers for LPC32xx CPUs")
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- sound/soc/fsl/lpc3xxx-i2s.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/fsl/lpc3xxx-i2s.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/fsl/lpc3xxx-i2s.c b/sound/soc/fsl/lpc3xxx-i2s.c
-index 0e5b4d5202ff..af995ca081a3 100644
---- a/sound/soc/fsl/lpc3xxx-i2s.c
-+++ b/sound/soc/fsl/lpc3xxx-i2s.c
-@@ -323,7 +323,7 @@ static int lpc32xx_i2s_probe(struct platform_device *pdev)
- 	i2s_info_p->regs = devm_regmap_init_mmio(dev, iomem, &lpc32xx_i2s_regconfig);
- 	if (IS_ERR(i2s_info_p->regs))
- 		return dev_err_probe(dev, PTR_ERR(i2s_info_p->regs),
--				     "failed to init register map: %d\n", ret);
-+				     "failed to init register map: %pe\n", i2s_info_p->regs);
+diff --git a/sound/soc/fsl/lpc3xxx-i2s.h b/sound/soc/fsl/lpc3xxx-i2s.h
+index eec755448478..b6657853017a 100644
+--- a/sound/soc/fsl/lpc3xxx-i2s.h
++++ b/sound/soc/fsl/lpc3xxx-i2s.h
+@@ -9,6 +9,7 @@
+ #ifndef __SOUND_SOC_LPC3XXX_I2S_H
+ #define __SOUND_SOC_LPC3XXX_I2S_H
  
- 	i2s_info_p->clk = devm_clk_get(dev, NULL);
- 	if (IS_ERR(i2s_info_p->clk))
++#include <linux/bitfield.h>
+ #include <linux/types.h>
+ #include <linux/regmap.h>
+ 
 
 ---
-base-commit: 878f4c36f9235e8a15fe0c2ecde066d92c50c8ff
-change-id: 20240701-lpc32xx-asoc-fix-uninitialized-ret-4700d6d556c1
+base-commit: 55f0a1fa6ea4e339c797e9a3292ca0caa4ab3885
+change-id: 20240701-lpc32xx-asoc-fix-include-for-field_prep-140db845a209
 
 Best regards,
 -- 
