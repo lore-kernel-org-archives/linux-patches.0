@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E7816EB70;
-	Mon,  1 Jul 2024 18:36:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF6016F858;
+	Mon,  1 Jul 2024 18:36:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719859015; cv=none; b=jpuZ/ldu5clbku9Ka3XEE8JTkKlRmBAfPKgHntMdKNh8tagnhA6GOKQcceWvwR+tzyK+W1tNLCOpqJAs7v86H682n0ILDxf7iUfTLKLsTfbs7L9MIxiv5qfViWVOG7QcWIoaiC5LVSTk0jsWppAki9zH6jZiTyBYXXOs1VTkjgI=
+	t=1719859019; cv=none; b=ZZRkOXMuq/xMV7ZwZ0Zv+2+shSVtNAhmT+gvpSBPPPRT/DU0bpniH5VkQIS2z0nyouM45WG5Uv3XcV3e4NP2Fj4HkdTlE/WnTWIOIydUxIV+nOqlypArsZEzEDUYGzp9ni5UAfNF7n5eLB4Wn+bf5EVm72xktPyO2kDGfGC7aGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719859015; c=relaxed/simple;
-	bh=PvREQnxwsEdit5kOrHUwIps8b0ZBIllpQYHuS2aVQXQ=;
+	s=arc-20240116; t=1719859019; c=relaxed/simple;
+	bh=rm8M/J0bYu0L+Ae9lzxK5fSlBMY0XQYEBrgyKIJ6aAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dr+WB5qPpnTtt3XjDbjTmYNYm6JxYOFfqT1/LBycDVMeizvsLpt/zigVvOEPT7M1hQalu5UD+oq2RVgJ/+FxFWNa9s/zNBdodUKn2OBQTIj2TC6YF//5Tqc+GBir3t+QO5jwRgfnUDA+l5VdChfavIdruxxbGUqCZ0HOodSzKxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=el/BWU4f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A53ei0oPhrpfuskKvoiCrFoHqAqbDwgRjfcEf5xzfeNN7dk7mk2ZUTYMmZRgVkV9C3mA+z236Fwtpm7NOtj1/PUdW6azLZ+J/a257ytNJUSYFZUc3kFUhaYUW3syz8/ZV4jiIkIuTtHEF7+KuKl7SBQNkYK7IXrgpsdwq3O0iyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h/ozxgse; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="el/BWU4f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38114C116B1;
-	Mon,  1 Jul 2024 18:36:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h/ozxgse"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BF93C116B1;
+	Mon,  1 Jul 2024 18:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719859015;
-	bh=PvREQnxwsEdit5kOrHUwIps8b0ZBIllpQYHuS2aVQXQ=;
+	s=k20201202; t=1719859019;
+	bh=rm8M/J0bYu0L+Ae9lzxK5fSlBMY0XQYEBrgyKIJ6aAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=el/BWU4fixCo0+/Leys6OQjnzW+dVQBfCWRbrSX2+xeuGUKUr+Ff7eBBbZpEd+u6U
-	 WTP77gu2hgetW8Q5O74u6sWzibaioHnkH/sG4YoN8Kh1O92W4IIjpqu7mSDXjWWNN4
-	 tzFAy1xREuZluiZqAj3sj/hqvEZ8MuAX3KyrL/muHFb58Ty0yF3Xj7f38N/KMueHMR
-	 Fq7J4uAQ1OrBlU/bt0i0KeSb6qgvbFxYeIp4JP+XiPJVgNhHBqOdg1/WcG+GTqv/AZ
-	 ziqBiYwkO7Nw0lBygUTOwCjDDXPMGrBXF31qybOdNUB+A0+wcpuRYlmUYjhiX9+FnH
-	 +WQnazzDixvYA==
+	b=h/ozxgseXMekCcRSxI2x+cLzbgHBCb6CG0o7zxQwoNmyxk9yXucEQTDkx7zjcRJI/
+	 wYTEL9wej3+Ceqndq2VkRUZ1ETsjVhh52x4dl4/egKPcUeQ/jhr0cHIKAnDKh8EAVT
+	 gUHD33OmfHxoiq4UjVSWuMgLz4vyTsjE8PEqnsGmidzJO5SKrzfanQtjhqNwXLD/MB
+	 LUv+3fStNPXOwTo7ZY7EPCwHDJPc7dal+WCLJEOLLirLu00Q2CIpaA197HSrjQxoRd
+	 CPboo+OD5ShIBhU9s6f7dLKIR+xtM3JwXRFJ5CaaFvgPowTxZHNC17cEN7QffJce54
+	 +x1b2/fmnPxkQ==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>,
 	Wedson Almeida Filho <wedsonaf@gmail.com>,
@@ -39,9 +39,9 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH 02/13] rust: init: simplify from `map_err` to `inspect_err`
-Date: Mon,  1 Jul 2024 20:36:12 +0200
-Message-ID: <20240701183625.665574-3-ojeda@kernel.org>
+Subject: [PATCH 03/13] rust: allow `dead_code` for never constructed bindings
+Date: Mon,  1 Jul 2024 20:36:13 +0200
+Message-ID: <20240701183625.665574-4-ojeda@kernel.org>
 In-Reply-To: <20240701183625.665574-1-ojeda@kernel.org>
 References: <20240701183625.665574-1-ojeda@kernel.org>
 Precedence: bulk
@@ -52,66 +52,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A new complexity lint, `manual_inspect` [1], has been introduced in
-the upcoming Rust 1.81 (currently in nightly), which checks for uses of
-`map*` which return the original item:
+Starting with the upcoming Rust 1.80.0 (since upstream commit 35130d7233e9
+("Detect pub structs never constructed and unused associated constants
+in traits")), the `dead_code` pass detects more cases, which triggers
+in the `bindings` crate:
 
-    error:
-    --> rust/kernel/init.rs:846:23
+    warning: struct `boot_params` is never constructed
+        --> rust/bindings/bindings_generated.rs:10684:12
         |
-    846 |         (self.1)(val).map_err(|e| {
-        |                       ^^^^^^^
+    10684 | pub struct boot_params {
+        |            ^^^^^^^^^^^
         |
-        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#manual_inspect
-        = note: `-D clippy::manual-inspect` implied by `-D warnings`
-        = help: to override `-D warnings` add `#[allow(clippy::manual_inspect)]`
-    help: try
-        |
-    846 ~         (self.1)(val).inspect_err(|e| {
-    847 |             // SAFETY: `slot` was initialized above.
-    848 ~             unsafe { core::ptr::drop_in_place(slot) };
-        |
+        = note: `#[warn(dead_code)]` on by default
 
-Thus clean them up.
+As well as in the `uapi` one:
 
-Link: https://rust-lang.github.io/rust-clippy/master/index.html#/manual_inspect [1]
+    warning: struct `boot_params` is never constructed
+        --> rust/uapi/uapi_generated.rs:10392:12
+        |
+    10392 | pub struct boot_params {
+        |            ^^^^^^^^^^^
+        |
+        = note: `#[warn(dead_code)]` on by default
+
+These are all expected, since we do not use all the structs in the
+bindings that `bindgen` generates from the C headers.
+
+Therefore, allow them.
+
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- rust/kernel/init.rs | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ rust/bindings/lib.rs | 1 +
+ rust/uapi/lib.rs     | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/rust/kernel/init.rs b/rust/kernel/init.rs
-index 68605b633e73..07bacf134c19 100644
---- a/rust/kernel/init.rs
-+++ b/rust/kernel/init.rs
-@@ -843,11 +843,9 @@ unsafe fn __pinned_init(self, slot: *mut T) -> Result<(), E> {
-         let val = unsafe { &mut *slot };
-         // SAFETY: `slot` is considered pinned.
-         let val = unsafe { Pin::new_unchecked(val) };
--        (self.1)(val).map_err(|e| {
-+        (self.1)(val).inspect_err(|_|
-             // SAFETY: `slot` was initialized above.
--            unsafe { core::ptr::drop_in_place(slot) };
--            e
--        })
-+            unsafe { core::ptr::drop_in_place(slot) })
-     }
- }
+diff --git a/rust/bindings/lib.rs b/rust/bindings/lib.rs
+index 40ddaee50d8b..93a1a3fc97bc 100644
+--- a/rust/bindings/lib.rs
++++ b/rust/bindings/lib.rs
+@@ -24,6 +24,7 @@
+     unsafe_op_in_unsafe_fn
+ )]
  
-@@ -941,11 +939,9 @@ unsafe fn __init(self, slot: *mut T) -> Result<(), E> {
-         // SAFETY: All requirements fulfilled since this function is `__init`.
-         unsafe { self.0.__pinned_init(slot)? };
-         // SAFETY: The above call initialized `slot` and we still have unique access.
--        (self.1)(unsafe { &mut *slot }).map_err(|e| {
-+        (self.1)(unsafe { &mut *slot }).inspect_err(|_|
-             // SAFETY: `slot` was initialized above.
--            unsafe { core::ptr::drop_in_place(slot) };
--            e
--        })
-+            unsafe { core::ptr::drop_in_place(slot) })
-     }
- }
- 
++#[allow(dead_code)]
+ mod bindings_raw {
+     // Use glob import here to expose all helpers.
+     // Symbols defined within the module will take precedence to the glob import.
+diff --git a/rust/uapi/lib.rs b/rust/uapi/lib.rs
+index 0caad902ba40..80a00260e3e7 100644
+--- a/rust/uapi/lib.rs
++++ b/rust/uapi/lib.rs
+@@ -14,6 +14,7 @@
+ #![cfg_attr(test, allow(unsafe_op_in_unsafe_fn))]
+ #![allow(
+     clippy::all,
++    dead_code,
+     missing_docs,
+     non_camel_case_types,
+     non_upper_case_globals,
 -- 
 2.45.2
 
