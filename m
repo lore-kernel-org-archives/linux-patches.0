@@ -1,87 +1,93 @@
-Received: from ganesha.gnumonks.org (ganesha.gnumonks.org [213.95.27.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D4416E893;
-	Mon,  1 Jul 2024 21:53:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.95.27.120
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65581171655
+	for <patches@lists.linux.dev>; Mon,  1 Jul 2024 21:58:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719870791; cv=none; b=dlVGNUWkjUa+ZW8+eyNnBCGjUNJ0yLVDQKmDImUJ9Hkgdhq/riD4YkyfTcC3BGmGBSUodcxl+PU900RS/qpOx9ToTAdRSrMcLXVYrgkxieSg2n72K0gd+JegqZn0uSiM6y9ke3t7taEmCNUq1U7SbHfiTbqpizyEzLoYa1DoTuQ=
+	t=1719871096; cv=none; b=AA+Xob+znm7UJIOv95Wqqm9vJsW5wjwofc6AhuoEAuMjF7cb1maFYqrN8xg8wZk4fg522E1tlitdBQR/s/7wzvXzpPpRPC4I0uB7K2JIMJdAJdjVLRIlGZVri2Xr0TJiEowrIJMcChUNyDuK/xtJSAdHV37MRbXI+5J419jt6NA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719870791; c=relaxed/simple;
-	bh=0xRG/K2ne/2zW/PFU8qmwsk5KYrEt26kg1GOOqiu+i4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SCezQ3BDv+d2s5p8Gc6riexKcTprP8gEO4wWEiq5cAqsvNPk/PenL420aP/yOb4v4Qjhit4sqOh1Ra5GFEu6bnA0AiFSAFLP35bswc5JCOKn25YVntbFRrdUWTZArucOcC5weTtYKaNWM356usUhp0vid3kC06DTqyExImmDUE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=netfilter.org; spf=pass smtp.mailfrom=gnumonks.org; arc=none smtp.client-ip=213.95.27.120
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=netfilter.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gnumonks.org
-Received: from [31.221.216.127] (port=3132 helo=gnumonks.org)
-	by ganesha.gnumonks.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <pablo@gnumonks.org>)
-	id 1sOOxL-00HQyz-AU; Mon, 01 Jul 2024 23:53:05 +0200
-Date: Mon, 1 Jul 2024 23:52:57 +0200
-From: Pablo Neira Ayuso <pablo@netfilter.org>
-To: Ben Hutchings <ben@decadent.org.uk>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-	netfilter-devel@vger.kernel.org, patches@lists.linux.dev,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Thorsten Alteholz <squeeze-lts@alteholz.de>, jeremy@azazel.net
-Subject: Re: [PATCH 4.19 164/213] netfilter: nft_set_rbtree: Switch to node
- list walk for overlap detection
-Message-ID: <ZoMlOF3HVq3UP0aa@calendula>
-References: <20240613113227.969123070@linuxfoundation.org>
- <20240613113234.312205246@linuxfoundation.org>
- <861740945d6a21d549d82249475b6b5a573bc9ed.camel@decadent.org.uk>
- <ZoMkPqf8AOpROvRd@calendula>
+	s=arc-20240116; t=1719871096; c=relaxed/simple;
+	bh=PYgsuVyYvkn+AqFLpRd88UBBXKZnKbAdz2lU4GdaAz4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gcIU6yqW4FCLyRuYCJrbHU+hZq8gytoj6FUEU1N4lFmrBxnJQDEH6E+fpqNbheXI/ZamGNK09Ze9nwyixKCJSh7S1ObHormLoi4pBLjbz6hy9E+WCljRhzzHGTHSfu5hhd0rp5kQG26MZGo0P7q3xSP+XTQCc/RmR/VVEzziwIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aIu3NrSq; arc=none smtp.client-ip=209.85.216.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aIu3NrSq"
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-2c70c372755so2310331a91.1
+        for <patches@lists.linux.dev>; Mon, 01 Jul 2024 14:58:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1719871095; x=1720475895; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PYgsuVyYvkn+AqFLpRd88UBBXKZnKbAdz2lU4GdaAz4=;
+        b=aIu3NrSqZ3iCSxNtb+FO5YJ21KUQxEanICSb0PCrOiswxLZa0nlFoXr1do/0J/PJOs
+         stndyaK+86ZDKQaSl7GnngmF9ls49950WTGPlHHEr4GppqQG1YH0Vop/MPazjnMUZtEr
+         w//qNBJ8G8qPr7l0iZYdkdSPeSeF5Egb/fJp6AUemIkFArVuDbbDKm87r4pnxtLf0Gg2
+         PtTkOSWtCdcm+gi0NJqYQ4p2ojotQhtUDd/7BMttnkVJ6L/o/9B9z4IDIVglFNmrk1gD
+         zDHn2K3W/+WpOjfC2KmyMCfsKuyW/9dXUWlhfjdf9GJSsgVb99LJ0IvDdHLSbmoRa9C+
+         XJtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719871095; x=1720475895;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PYgsuVyYvkn+AqFLpRd88UBBXKZnKbAdz2lU4GdaAz4=;
+        b=UTL1la3zld1BlqfMSIoRMQi7Azn+cMRtNYGGVQk/OStC+XsQdcs9WeAJYwyroc2Y/L
+         1QQlvvZA0MeJk5xOCkWdc3MqG+0sOjY8t1bl6v+Nx/OvJWoL1fgRRx/4XFl3nGxvIn0d
+         Pw236pqtnjSC+v7M4SDvJ5JaolcHtNJzRgW1RC0yfQw8Ufl/urQ+cXOc000CXXWyFf1G
+         Yq6wyTw+3CEgqZux/jTbqgHZeDgYDooW+74bxs63bVwkVWywvg4LYkoR42sTNbNC0cy5
+         WA9HZGovbRflaw6W/HY7azep3Ke4aANaNhBHCsn2XKLQYzTERE8PCR/Afm821IjXE5Z+
+         mWqg==
+X-Forwarded-Encrypted: i=1; AJvYcCX2s1qnXdZ2dQQCXT7XN3ND7gjOS6RmqGeWxT4sQhDnLN4z8qslH1SaZmHwOfuiREXFY1EgX+jaRAZDNZm0XdAgivHc6y88vA==
+X-Gm-Message-State: AOJu0YyTam12pQTyNYth/EWJcxCTDfjm+u48TqVsGS59J5wsQ7fwyE3b
+	J5Lubxjedl9YKQD9FEqiBgrv2TxESpu5u+IJca36rPkQzFlfzB3D+060UZ+JVVL+DSoysj1n6+j
+	iD/ZzuP9NfaVlt7OxxSLsnNrbQLk=
+X-Google-Smtp-Source: AGHT+IGKpBsvB7xlkrEGXyjToca9aZ2muSAK+blJa2KJ4Fw+Akc1Xvvtwh2hiQRXNfmE84QKngmHExcKXXuRbb0D4HA=
+X-Received: by 2002:a17:90b:3143:b0:2c8:dc6e:ec4c with SMTP id
+ 98e67ed59e1d1-2c93d72a15dmr3766653a91.2.1719871094631; Mon, 01 Jul 2024
+ 14:58:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZoMkPqf8AOpROvRd@calendula>
-X-Spam-Score: -1.9 (-)
+References: <20240701183625.665574-1-ojeda@kernel.org> <20240701183625.665574-5-ojeda@kernel.org>
+ <WGFMwMlEU5xZ0Gz_9eqp_ATSk4UiloYSjxQi3JpxZsPQK_HU5S0RYxvLO9KXJEkADsKWKmtDfRYdpAkLrUpprgS2tbo-vIKfAW6Inc-Lhxc=@protonmail.com>
+In-Reply-To: <WGFMwMlEU5xZ0Gz_9eqp_ATSk4UiloYSjxQi3JpxZsPQK_HU5S0RYxvLO9KXJEkADsKWKmtDfRYdpAkLrUpprgS2tbo-vIKfAW6Inc-Lhxc=@protonmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Mon, 1 Jul 2024 23:58:02 +0200
+Message-ID: <CANiq72kQSmbnb7h=Brq3Kr=ffnbxNG-Rwmh=Zr37BHAFB+2mGQ@mail.gmail.com>
+Subject: Re: [PATCH 04/13] rust: relax most deny-level lints to warnings
+To: =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, Benno Lossin <benno.lossin@proton.me>, 
+	Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl <aliceryhl@google.com>, 
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, Masahiro Yamada <masahiroy@kernel.org>, 
+	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jul 01, 2024 at 11:48:51PM +0200, Pablo Neira Ayuso wrote:
-> On Mon, Jul 01, 2024 at 10:51:17PM +0200, Ben Hutchings wrote:
-> > On Thu, 2024-06-13 at 13:33 +0200, Greg Kroah-Hartman wrote:
-> > > 4.19-stable review patch.  If anyone has any objections, please let me know.
-> > > 
-> > > ------------------
-> > > 
-> > > From: Pablo Neira Ayuso <pablo@netfilter.org>
-> > > 
-> > > commit c9e6978e2725a7d4b6cd23b2facd3f11422c0643 upstream.
-> > [...]
-> > 
-> > This turns out to cause a regression for nftables user-space versions
-> > older than v0.9.3, specifically before:
-> > 
-> > commit a4ec053812610400b7a9e6c060d8b7589dedd5b1
-> > Author: Pablo Neira Ayuso <pablo@netfilter.org>
-> > Date:   Wed Oct 9 11:54:32 2019 +0200
-> >  
-> >     segtree: always close interval in non-anonymous sets
-> 
-> This is really fixing up userspace as the commit describes, otherwise
-> incremental updates are not possible on a set/map.
-> 
-> > Should nft_set_rbtree detect and fix-up the bad set messages that
-> > nftables user-space used to send?
-> 
-> Problem is that a non-anonymous set really needs close intervals,
-> otherwise incremental updates on it are not possible.
-> 
-> It should be possible to backport a fix for such nftables version.
-> 
-> I can see Debian 10 (Buster, oldoldstable) is using 0.9.0 but it was
-> discontinued in june 2022? But who is using such an old userspace version?
+On Mon, Jul 1, 2024 at 9:49=E2=80=AFPM Bj=C3=B6rn Roy Baron <bjorn3_gh@prot=
+onmail.com> wrote:
+>
+> Maybe also keep non_ascii_idents as error? It shouldn't have any false po=
+sitives.
 
-Oh, I misread, it is still supported in oldoldstable in Debian.
+I was on the fence for that one too. It is also unlikely that having
+it as `-W` helps "productivity", i.e. I don't expect anybody to be
+helped by being able to type non-ASCII identifiers during development.
+:)
 
-Then, userspace really needs this fix, because incremental updates on
-a set are not really possible.
+Happy either way.
 
-I can take a look and send a backport of this for nftables 0.9.0.
+Thanks for the quick review, too!
+
+Cheers,
+Miguel
