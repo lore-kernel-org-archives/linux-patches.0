@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7A51514DC;
-	Tue,  2 Jul 2024 17:27:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7046A1514DC;
+	Tue,  2 Jul 2024 17:27:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941226; cv=none; b=lJW/xScQTYkjwY/nAyzmApG57lZEn6jcaznd1uLnWgFH5wyhQWbzjadIC2LiY7ZVk7sm1j5N+ALkw1NYR+wO34pQIDABRXEAVdr002kdJf2uAQdV9HMqmKKqiMgnzue6jxq0OAzH7FEm/ECfHFiZqVRkHEXC0mqtKypaqMrvfpk=
+	t=1719941229; cv=none; b=jiSIICEuOjBjye7eBeWc2dxEz6E/Vl13w8hJkEVE6y//9OYxqSsnvI24L9gonXHdcWWq7eojYsl/y9nQQ8K7lUJ6IoeBt0zxjioY8D8EbKBo5f7+xXL8+NXZS/jgi6R3235QQ3VCqGbu6lItWYmgrK8QNVLb9jJEdpOayqQ/8SU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941226; c=relaxed/simple;
-	bh=58sI27AyId/knF8KzrVLir853RDMIeBM6RIKmLimn8E=;
+	s=arc-20240116; t=1719941229; c=relaxed/simple;
+	bh=SapN4vWpsvNQLK6wHDuAQJsLZtzyOelUnpWkaSKxVBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NP16H8XhLhIXQ/KTsrS1JxrDqCKyUD741Lx4zwGHyZwTIhn6TgiNUU4rBlzyJMyRfDxvxxwuubRI7VuS2scbvxRz6/fEbmtNBzXon/lVf3aE4ZNs+qqhyA1VkuRFlANbJuvzgyw1lSp2Sx/KhW08k/ZRxKFXvihLu4zsMfOLYaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YrEwCRgJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r+6iPzyVMponjZU7YE/LLaNM13I/vEQ2FbBuhZpG1fZEK5YN3aczHWo0uiKZ6r9dUwXl5wI69xv7WwHB4PbARG0gwDHiRJ/t00EU/O6y9rfr0ZyQ14iTGD8HYFVnwZ23W3f17NLnwFCp0CJjZLKjIbgvzoTkU0ihWUTtrlouqLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b4TPmTX4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YrEwCRgJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA346C116B1;
-	Tue,  2 Jul 2024 17:27:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b4TPmTX4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE46EC116B1;
+	Tue,  2 Jul 2024 17:27:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941226;
-	bh=58sI27AyId/knF8KzrVLir853RDMIeBM6RIKmLimn8E=;
+	s=korg; t=1719941229;
+	bh=SapN4vWpsvNQLK6wHDuAQJsLZtzyOelUnpWkaSKxVBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YrEwCRgJGqXs76RemIMmoJo0L6XLvE/2lJEgJOVFPFV4UW4lMdXDzuwWxtLynSVBQ
-	 9hOeYw/m8LDMaIROpcFrtoupYEGVwrpIVfvztjW+w9nFHnvuOTixvYv8yniRpxY5Tz
-	 kKwwt0uK6AJPoj8typ86/ySST6Tv6xFZkCUN76T4=
+	b=b4TPmTX4DT2EpWfBZRbTEoGdEPJRBhcZVW5rtcTA+AoZkwFqMnFF2w/sJq2wFH2WU
+	 ROuk5vjc+dswUcJwBduVObAZC4fVKyFJr9b0Xln/fuhuJ1Y5H9N1hF/0GPxWjvQ6p9
+	 r0cO3iymG384WKoQ4x/e4JWcal106eA5ai62QgEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.6 139/163] drm/i915/gt: Fix potential UAF by revoke of fence registers
-Date: Tue,  2 Jul 2024 19:04:13 +0200
-Message-ID: <20240702170238.314598097@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Lyude Paul <lyude@redhat.com>
+Subject: [PATCH 6.6 140/163] drm/nouveau/dispnv04: fix null pointer dereference in nv17_tv_get_hd_modes
+Date: Tue,  2 Jul 2024 19:04:14 +0200
+Message-ID: <20240702170238.353168015@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -51,84 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 996c3412a06578e9d779a16b9e79ace18125ab50 upstream.
+commit 6d411c8ccc0137a612e0044489030a194ff5c843 upstream.
 
-CI has been sporadically reporting the following issue triggered by
-igt@i915_selftest@live@hangcheck on ADL-P and similar machines:
+In nv17_tv_get_hd_modes(), the return value of drm_mode_duplicate() is
+assigned to mode, which will lead to a possible NULL pointer dereference
+on failure of drm_mode_duplicate(). The same applies to drm_cvt_mode().
+Add a check to avoid null pointer dereference.
 
-<6> [414.049203] i915: Running intel_hangcheck_live_selftests/igt_reset_evict_fence
-...
-<6> [414.068804] i915 0000:00:02.0: [drm] GT0: GUC: submission enabled
-<6> [414.068812] i915 0000:00:02.0: [drm] GT0: GUC: SLPC enabled
-<3> [414.070354] Unable to pin Y-tiled fence; err:-4
-<3> [414.071282] i915_vma_revoke_fence:301 GEM_BUG_ON(!i915_active_is_idle(&fence->active))
-...
-<4>[  609.603992] ------------[ cut here ]------------
-<2>[  609.603995] kernel BUG at drivers/gpu/drm/i915/gt/intel_ggtt_fencing.c:301!
-<4>[  609.604003] invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
-<4>[  609.604006] CPU: 0 PID: 268 Comm: kworker/u64:3 Tainted: G     U  W          6.9.0-CI_DRM_14785-g1ba62f8cea9c+ #1
-<4>[  609.604008] Hardware name: Intel Corporation Alder Lake Client Platform/AlderLake-P DDR4 RVP, BIOS RPLPFWI1.R00.4035.A00.2301200723 01/20/2023
-<4>[  609.604010] Workqueue: i915 __i915_gem_free_work [i915]
-<4>[  609.604149] RIP: 0010:i915_vma_revoke_fence+0x187/0x1f0 [i915]
-...
-<4>[  609.604271] Call Trace:
-<4>[  609.604273]  <TASK>
-...
-<4>[  609.604716]  __i915_vma_evict+0x2e9/0x550 [i915]
-<4>[  609.604852]  __i915_vma_unbind+0x7c/0x160 [i915]
-<4>[  609.604977]  force_unbind+0x24/0xa0 [i915]
-<4>[  609.605098]  i915_vma_destroy+0x2f/0xa0 [i915]
-<4>[  609.605210]  __i915_gem_object_pages_fini+0x51/0x2f0 [i915]
-<4>[  609.605330]  __i915_gem_free_objects.isra.0+0x6a/0xc0 [i915]
-<4>[  609.605440]  process_scheduled_works+0x351/0x690
-...
-
-In the past, there were similar failures reported by CI from other IGT
-tests, observed on other platforms.
-
-Before commit 63baf4f3d587 ("drm/i915/gt: Only wait for GPU activity
-before unbinding a GGTT fence"), i915_vma_revoke_fence() was waiting for
-idleness of vma->active via fence_update().   That commit introduced
-vma->fence->active in order for the fence_update() to be able to wait
-selectively on that one instead of vma->active since only idleness of
-fence registers was needed.  But then, another commit 0d86ee35097a
-("drm/i915/gt: Make fence revocation unequivocal") replaced the call to
-fence_update() in i915_vma_revoke_fence() with only fence_write(), and
-also added that GEM_BUG_ON(!i915_active_is_idle(&fence->active)) in front.
-No justification was provided on why we might then expect idleness of
-vma->fence->active without first waiting on it.
-
-The issue can be potentially caused by a race among revocation of fence
-registers on one side and sequential execution of signal callbacks invoked
-on completion of a request that was using them on the other, still
-processed in parallel to revocation of those fence registers.  Fix it by
-waiting for idleness of vma->fence->active in i915_vma_revoke_fence().
-
-Fixes: 0d86ee35097a ("drm/i915/gt: Make fence revocation unequivocal")
-Closes: https://gitlab.freedesktop.org/drm/intel/issues/10021
-Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
-Cc: stable@vger.kernel.org # v5.8+
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240603195446.297690-2-janusz.krzysztofik@linux.intel.com
-(cherry picked from commit 24bb052d3dd499c5956abad5f7d8e4fd07da7fb1)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240625081029.2619437-1-make24@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gt/intel_ggtt_fencing.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/nouveau/dispnv04/tvnv17.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/gpu/drm/i915/gt/intel_ggtt_fencing.c
-+++ b/drivers/gpu/drm/i915/gt/intel_ggtt_fencing.c
-@@ -298,6 +298,7 @@ void i915_vma_revoke_fence(struct i915_v
- 		return;
+--- a/drivers/gpu/drm/nouveau/dispnv04/tvnv17.c
++++ b/drivers/gpu/drm/nouveau/dispnv04/tvnv17.c
+@@ -260,6 +260,8 @@ static int nv17_tv_get_hd_modes(struct d
+ 		if (modes[i].hdisplay == output_mode->hdisplay &&
+ 		    modes[i].vdisplay == output_mode->vdisplay) {
+ 			mode = drm_mode_duplicate(encoder->dev, output_mode);
++			if (!mode)
++				continue;
+ 			mode->type |= DRM_MODE_TYPE_PREFERRED;
  
- 	GEM_BUG_ON(fence->vma != vma);
-+	i915_active_wait(&fence->active);
- 	GEM_BUG_ON(!i915_active_is_idle(&fence->active));
- 	GEM_BUG_ON(atomic_read(&fence->pin_count));
+ 		} else {
+@@ -267,6 +269,8 @@ static int nv17_tv_get_hd_modes(struct d
+ 					    modes[i].vdisplay, 60, false,
+ 					    (output_mode->flags &
+ 					     DRM_MODE_FLAG_INTERLACE), false);
++			if (!mode)
++				continue;
+ 		}
  
+ 		/* CVT modes are sometimes unsuitable... */
 
 
