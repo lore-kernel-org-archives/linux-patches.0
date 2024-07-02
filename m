@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9F215B0FE;
-	Tue,  2 Jul 2024 17:14:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03DC715B0FE;
+	Tue,  2 Jul 2024 17:14:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940491; cv=none; b=tOUotG/Kf7CYNlYSJAjnqrWrOZqr3TkokxOxVpzPWgVB8SDIyntCTIyUP5y1uTP+ajxnOIpKUOx/Kkxhx61x2CGkOqPnUi27yWKikT49cydWy40VZoofFErEqXbCpm4N+aQ7buPVCECMImffArSOjnN7d9pfNPXgXiT/oxcmNho=
+	t=1719940495; cv=none; b=Lk76Vrtl2gUlciSGJUiSep7bbfq30Q/wb/Y2+4AZC5NaobXD9AJOOBkYtuXUNL+Q287TT0aw2MKwE1ihEScKtIYo3Bse+uQosmxvCueJ64FD/XlPmQt8xNYaxHkGD9+/nkFAw1PlB7ZNhOr11XhLdFwqOFTDjDz3dwX6FCxhGTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940491; c=relaxed/simple;
-	bh=iEqEmCFwcuaFkralKCC19lo2wMHth8Yys8bY3ALHWxA=;
+	s=arc-20240116; t=1719940495; c=relaxed/simple;
+	bh=cv7Yy7oztt668SxbI8pl/8CqUTJ2h02wKrdhAuZQeog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GRLQi6NxR33L/vc2QuYRi/hfgQn1tRX0WCbIJp9aycTS314fnVaP6ojd/+i85jffGY5cRFSjjnK71h4sS7b2OMUbza1YAWz8jgB81WFonvoYpKa5kETJkBLqRQ24zPDTa8feXlQIkc/ITRBGtT7+5uSmhx2LQJLqN67bBSy2Muo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y0GkV3D/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IwTm2l5tcxFivduhOgTeyu88Wxz5/NicbDhdrYQ08zNE4pkYkbt3gftvLS/LosJviWg6bBAFvznLirg9a8peznzZ1V6Lrk/XswE1kYblyMs8EN+UlQ0nir0xBfL1j9wRrl8/qkBYbQX8aN3JKekVpx0kIWDgbhsDdvqz3ncFWx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jlsg7myd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0GkV3D/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D5AC116B1;
-	Tue,  2 Jul 2024 17:14:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jlsg7myd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7749CC116B1;
+	Tue,  2 Jul 2024 17:14:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940491;
-	bh=iEqEmCFwcuaFkralKCC19lo2wMHth8Yys8bY3ALHWxA=;
+	s=korg; t=1719940494;
+	bh=cv7Yy7oztt668SxbI8pl/8CqUTJ2h02wKrdhAuZQeog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y0GkV3D/tZdAFhld+qlHCs7hLU6xqFUrSLnRvGkjIJynnyFuAIUWWqW681lsyUbOo
-	 53LKQlgzVnQdyrAYoMwGBS5LEKXiCOzgsr/tMz7YPLsrbT4T62G3HhEPRYp+00pOom
-	 VYz2W2X/jMsT1sD2xQ0MDkwjw7HlCqGJhKks5iA4=
+	b=jlsg7mydzHGpySenaPhjygNF/9jq188MDpA/BsSycdtoyUxRU1An8vO8huYYUyZQd
+	 gRCticQBx8onSxifWqd6Qo+kvnpTf+ExvKV7ofTfvEQH3AfWHfATrAezKZy/1rojX2
+	 zBz98yMDLu1vWB16fEU010/mpO/9KN+EvFaDBitk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Huacai Chen <chenhuacai@loongson.cn>,
 	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.9 170/222] irqchip/loongson-eiointc: Use early_cpu_to_node() instead of cpu_to_node()
-Date: Tue,  2 Jul 2024 19:03:28 +0200
-Message-ID: <20240702170250.474551904@linuxfoundation.org>
+Subject: [PATCH 6.9 171/222] cpu: Fix broken cmdline "nosmp" and "maxcpus=0"
+Date: Tue,  2 Jul 2024 19:03:29 +0200
+Message-ID: <20240702170250.513173972@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -52,68 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 2d64eaeeeda5659d52da1af79d237269ba3c2d2c upstream.
+commit 6ef8eb5125722c241fd60d7b0c872d5c2e5dd4ca upstream.
 
-Multi-bridge machines required that all eiointc controllers in the system
-are initialized, otherwise the system does not boot.
+After the rework of "Parallel CPU bringup", the cmdline "nosmp" and
+"maxcpus=0" parameters are not working anymore. These parameters set
+setup_max_cpus to zero and that's handed to bringup_nonboot_cpus().
 
-The initialization happens on the boot CPU during early boot and relies on
-cpu_to_node() for identifying the individual nodes.
+The code there does a decrement before checking for zero, which brings it
+into the negative space and brings up all CPUs.
 
-That works when the number of possible CPUs is large enough, but with a
-command line limit, e.g. "nr_cpus=$N" for kdump, but fails when the CPUs
-of the secondary nodes are not covered.
+Add a zero check at the beginning of the function to prevent this.
 
-During early ACPI enumeration all CPU to node mappings are recorded up to
-CONFIG_NR_CPUS. These are accessible via early_cpu_to_node() even in the
-case that "nr_cpus=N" truncates the number of possible CPUs and only
-provides the possible CPUs via cpu_to_node() translation.
+[ tglx: Massaged change log ]
 
-Change the node lookup in the driver to use early_cpu_to_node() so that
-even with a limitation on the number of possible CPUs all eointc instances
-are initialized.
-
-This can't obviously cure the case where CONFIG_NR_CPUS is too small.
-
-[ tglx: Massaged changelog ]
-
-Fixes: 64cc451e45e1 ("irqchip/loongson-eiointc: Fix incorrect use of acpi_get_vec_parent")
+Fixes: 18415f33e2ac4ab382 ("cpu/hotplug: Allow "parallel" bringup up to CPUHP_BP_KICK_AP_STATE")
+Fixes: 06c6796e0304234da6 ("cpu/hotplug: Fix off by one in cpuhp_bringup_mask()")
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240623034113.1808727-1-chenhuacai@loongson.cn
+Link: https://lore.kernel.org/r/20240618081336.3996825-1-chenhuacai@loongson.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-loongson-eiointc.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ kernel/cpu.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/irqchip/irq-loongson-eiointc.c
-+++ b/drivers/irqchip/irq-loongson-eiointc.c
-@@ -15,6 +15,7 @@
- #include <linux/irqchip/chained_irq.h>
- #include <linux/kernel.h>
- #include <linux/syscore_ops.h>
-+#include <asm/numa.h>
+--- a/kernel/cpu.c
++++ b/kernel/cpu.c
+@@ -1859,6 +1859,9 @@ static inline bool cpuhp_bringup_cpus_pa
  
- #define EIOINTC_REG_NODEMAP	0x14a0
- #define EIOINTC_REG_IPMAP	0x14c0
-@@ -339,7 +340,7 @@ static int __init pch_msi_parse_madt(uni
- 	int node;
- 
- 	if (cpu_has_flatmode)
--		node = cpu_to_node(eiointc_priv[nr_pics - 1]->node * CORES_PER_EIO_NODE);
-+		node = early_cpu_to_node(eiointc_priv[nr_pics - 1]->node * CORES_PER_EIO_NODE);
- 	else
- 		node = eiointc_priv[nr_pics - 1]->node;
- 
-@@ -431,7 +432,7 @@ int __init eiointc_acpi_init(struct irq_
- 		goto out_free_handle;
- 
- 	if (cpu_has_flatmode)
--		node = cpu_to_node(acpi_eiointc->node * CORES_PER_EIO_NODE);
-+		node = early_cpu_to_node(acpi_eiointc->node * CORES_PER_EIO_NODE);
- 	else
- 		node = acpi_eiointc->node;
- 	acpi_set_vec_parent(node, priv->eiointc_domain, pch_group);
+ void __init bringup_nonboot_cpus(unsigned int max_cpus)
+ {
++	if (!max_cpus)
++		return;
++
+ 	/* Try parallel bringup optimization if enabled */
+ 	if (cpuhp_bringup_cpus_parallel(max_cpus))
+ 		return;
 
 
