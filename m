@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147CA15218A;
-	Tue,  2 Jul 2024 17:26:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D74151BE223;
+	Tue,  2 Jul 2024 17:26:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941173; cv=none; b=rvF7PrvGVqHzvf8QPBQ0Di88gkChF8hOFhh/WL+yPQpuDAzG2FSnS32ZfV0+I2sGTGy30iTgklG65Y2dhJeIdGMFUjjYR/8m9v2b22j/kpLLziGXKwbg5xndM7BYoqNw5PweoQkkHvi1cHsfseS6wUBPxVR1q9ZxlKW0WCtVMhQ=
+	t=1719941176; cv=none; b=iiPwO1tGahwlN8gYu3zwJ65n7KdSp0gZlUBw2U16+pNDZjKkoNDNuoBdBttRVO/Bt6i9CUilNMEZLM2bGZN+U2uvhomoI9cukGliXDlNKo0eYkrkNlgUz566ovDqhar6bWffcqH//6pIIFqoQPxLHZj01jFf2rtzgNO9c7UtFAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941173; c=relaxed/simple;
-	bh=WEqxZInY+TSTquqY+RmEcolal41cdZKsbweYHvMlzu4=;
+	s=arc-20240116; t=1719941176; c=relaxed/simple;
+	bh=nY0X2K5NZcoCXMH3I4H9r1PMC5Y22lBKyxmKeYwAlzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=enS3ZqHA4VJuhoAOskxsRZwC1Fd5Pz/uwP6KmUbKUMuw+ASL8ZQt+lnxzWJG0rFFXHEVFr50KbOHZPBRu3xm+tCP3ORJHP4oRinHrHKibE2JAQZbG5J3C8sVN2zm/EsoFvu+WwNovBR7stkJEuohGntKq93U5EuHgvvY9u9iJpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=McSrC4sD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=p8q34OyP2XwZQ0BGjOgH4WoWOnZYdn9DcxTmQNSKL6FRDyF1h9fPKWWfQGQ7+YPEH2lH140E8NqdjTr9nP8e39bSxTep9vUApUKJf21g1L0D4pV57hIUkA90Y3GNheBOd8v0F5lI8VtgcpM2z73gp5t0WUbeZFmcBX1ijzjQAvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qV3YQMue; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="McSrC4sD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CB99C4AF07;
-	Tue,  2 Jul 2024 17:26:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qV3YQMue"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFBC0C4AF0A;
+	Tue,  2 Jul 2024 17:26:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941173;
-	bh=WEqxZInY+TSTquqY+RmEcolal41cdZKsbweYHvMlzu4=;
+	s=korg; t=1719941176;
+	bh=nY0X2K5NZcoCXMH3I4H9r1PMC5Y22lBKyxmKeYwAlzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=McSrC4sDT2oGSS/8Pk0ILYAVBOEcPPfhuh9Qr5FyoMQigZR2vOl0fHc/e+kP+Kf6G
-	 GxqyWezP0u/dW4eU1JIVS5rTF4lWIaiiztIvPU2qPWmOd37T8N01rs/4ANfA/cGRan
-	 7eLc7Mp6l0bC0mOOV2O2PptqVzLyTGzrPxIVZbE0=
+	b=qV3YQMuerVQBcPhth9NqgfaZqa2sQKjxOnzs6kWMSjJW6bITg6Wdeo5y6xhIcY7Sq
+	 K0g6q3+HjWIU6mBI3mpWAPTtIJKe8h2lyKtVrcKSnxNR14hV+uLtEjjYroX5fiuT+a
+	 c0iqIFHTWzIiB/KKCrJy2p23tmxTP+erKoEw3VMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiqun Leng <yqleng@linux.alibaba.com>,
-	Jingbo Xu <jefflexu@linux.alibaba.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Yue Hu <huyue2@coolpad.com>,
-	Chao Yu <chao@kernel.org>,
-	Hongbo Li <lihongbo22@huawei.com>
-Subject: [PATCH 6.6 150/163] erofs: fix NULL dereference of dif->bdev_handle in fscache mode
-Date: Tue,  2 Jul 2024 19:04:24 +0200
-Message-ID: <20240702170238.740497033@linuxfoundation.org>
+	Trevor Gamblin <tgamblin@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+Subject: [PATCH 6.6 151/163] pwm: stm32: Refuse too small period requests
+Date: Tue,  2 Jul 2024 19:04:25 +0200
+Message-ID: <20240702170238.778033678@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -48,70 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jingbo Xu <jefflexu@linux.alibaba.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-commit 8bd90b6ae7856dd5000b75691d905b39b9ea5d6b upstream.
+commit c45fcf46ca2368dafe7e5c513a711a6f0f974308 upstream.
 
-Avoid NULL dereference of dif->bdev_handle, as dif->bdev_handle is NULL
-in fscache mode.
+If period_ns is small, prd might well become 0. Catch that case because
+otherwise with
 
- BUG: kernel NULL pointer dereference, address: 0000000000000000
- RIP: 0010:erofs_map_dev+0xbd/0x1c0
- Call Trace:
-  <TASK>
-  erofs_fscache_data_read_slice+0xa7/0x340
-  erofs_fscache_data_read+0x11/0x30
-  erofs_fscache_readahead+0xd9/0x100
-  read_pages+0x47/0x1f0
-  page_cache_ra_order+0x1e5/0x270
-  filemap_get_pages+0xf2/0x5f0
-  filemap_read+0xb8/0x2e0
-  vfs_read+0x18d/0x2b0
-  ksys_read+0x53/0xd0
-  do_syscall_64+0x42/0xf0
-  entry_SYSCALL_64_after_hwframe+0x6e/0x76
+	regmap_write(priv->regmap, TIM_ARR, prd - 1);
 
-Reported-by: Yiqun Leng <yqleng@linux.alibaba.com>
-Closes: https://bugzilla.openanolis.cn/show_bug.cgi?id=7245
-Fixes: 49845720080d ("erofs: Convert to use bdev_open_by_path()")
-Signed-off-by: Jingbo Xu <jefflexu@linux.alibaba.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Reviewed-by: Yue Hu <huyue2@coolpad.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Link: https://lore.kernel.org/r/20231114070704.23398-1-jefflexu@linux.alibaba.com
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Hongbo Li <lihongbo22@huawei.com>
+a few lines down quite a big period is configured.
+
+Fixes: 7edf7369205b ("pwm: Add driver for STM32 plaftorm")
+Cc: stable@vger.kernel.org
+Reviewed-by: Trevor Gamblin <tgamblin@baylibre.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://lore.kernel.org/r/b86f62f099983646f97eeb6bfc0117bb2d0c340d.1718979150.git.u.kleine-koenig@baylibre.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/data.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/pwm/pwm-stm32.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/erofs/data.c
-+++ b/fs/erofs/data.c
-@@ -222,7 +222,7 @@ int erofs_map_dev(struct super_block *sb
- 			up_read(&devs->rwsem);
- 			return 0;
- 		}
--		map->m_bdev = dif->bdev_handle->bdev;
-+		map->m_bdev = dif->bdev_handle ? dif->bdev_handle->bdev : NULL;
- 		map->m_daxdev = dif->dax_dev;
- 		map->m_dax_part_off = dif->dax_part_off;
- 		map->m_fscache = dif->fscache;
-@@ -240,7 +240,8 @@ int erofs_map_dev(struct super_block *sb
- 			if (map->m_pa >= startoff &&
- 			    map->m_pa < startoff + length) {
- 				map->m_pa -= startoff;
--				map->m_bdev = dif->bdev_handle->bdev;
-+				map->m_bdev = dif->bdev_handle ?
-+					      dif->bdev_handle->bdev : NULL;
- 				map->m_daxdev = dif->dax_dev;
- 				map->m_dax_part_off = dif->dax_part_off;
- 				map->m_fscache = dif->fscache;
+--- a/drivers/pwm/pwm-stm32.c
++++ b/drivers/pwm/pwm-stm32.c
+@@ -344,6 +344,9 @@ static int stm32_pwm_config(struct stm32
+ 
+ 	prd = div;
+ 
++	if (!prd)
++		return -EINVAL;
++
+ 	if (prescaler > MAX_TIM_PSC)
+ 		return -EINVAL;
+ 
 
 
