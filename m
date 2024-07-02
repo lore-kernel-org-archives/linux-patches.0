@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D9F41BD4F8;
-	Tue,  2 Jul 2024 17:26:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71C415218A;
+	Tue,  2 Jul 2024 17:26:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941180; cv=none; b=lWg5o0fyMDz9Sp0j9EXpxuUkfVP7Wix8OOWuLS9H+2EcDyE5ahwXuuau70FjoLv2PkBWlqpxKJIRaSd8deTaAJcb+lxitt1aTZyAYZbig1a5plurm9snemTUek4Xv9H4bAatX6dq0r3fNHaWmBlAV3tTUvFMMorMmYcGR7KV9jU=
+	t=1719941184; cv=none; b=KfBFEL3E+ITltlMDIaNIspVPaq8clPVlQD7No+HXupcbemw3dTeEbj089umzmnBz4tzyPYYlQ635km11G/9/gKejaj1n1XPQHSl/uGsPDYyDa4DWh2+LPw1Yigw7PaAch3NEl0QwX0GIyHDwj+5JjqoLtfTpul4a2I6EdJSfp0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941180; c=relaxed/simple;
-	bh=LmXyfZTchV1LVjlO4+bpTz/bhYjaw84tRscvpraQ+Zo=;
+	s=arc-20240116; t=1719941184; c=relaxed/simple;
+	bh=wNZYrPVPnlFJRyquo99lOxk2rLH2BrBAob8Mnj91hZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sMUuhpEKhrCz5trOWgu9qCKsfVPYNR/JKEpYqkq1QrQge7JP/4jVE4XopNGJ/8eIGLqRbfVC8uG20Pk3BZLiBLsJCpB94vjEBOvp7DyOeowOUXskMMgvVajOHvNOuSI0ZhUyeOblJ9c7Z4DJTHzSzQvEEWSBnMi6qVPicImaEaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=INxI/9sA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IhM9RFsi7kktbmb3W8yLh8G/Bm3884F0o+1vr7Ulnmr9sUykLLc/6ICYU0qOxXwPKkghzY51nnx2rcWBcTbXOPPQsn+J9KuzvxptaOP1MBUHRKB7yCB7hBhjg/f8daQ7KUsV0g4thNa0cvyghTCvn/H01++f63SD/lqjY54W6g0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHkN7+AU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="INxI/9sA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86AF0C4AF0A;
-	Tue,  2 Jul 2024 17:26:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHkN7+AU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D03E9C4AF07;
+	Tue,  2 Jul 2024 17:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941179;
-	bh=LmXyfZTchV1LVjlO4+bpTz/bhYjaw84tRscvpraQ+Zo=;
+	s=korg; t=1719941183;
+	bh=wNZYrPVPnlFJRyquo99lOxk2rLH2BrBAob8Mnj91hZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=INxI/9sART7gh8mjh0ITvWJvZPoBSeYeM8qJCZcsIWCz1Dc8VjGe/1igPYdO7zuvD
-	 Ps2WKZj+PeB/A6i3KpZh8JQbomlfi0eh9F6t3d1AdEoywiVx6HDCHCjo5JyVa4SZ7V
-	 zJfS2qDpjGT3eb/IXzQloa2sZ65Y9F+k2m0lbi8g=
+	b=NHkN7+AU4ZFARh7qBUvpMwjUpXuRMMw7lvnOtVT4qL9xH+hA7Pq3HX9PrukuKj7Wl
+	 pnvQ7N328ddr0rVJ8Uqt1WpY9HyOxOSGCuqprJYX1k2aLgaycNIMrE6BVEMnsi4SCO
+	 n0G0iM7FJbgrVsW3Zz30z1TxcV4XPG+RnWBe0wYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lars Wendler <wendler.lars@web.de>,
-	Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
-	Peter Jung <ptr1337@cachyos.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.6 152/163] Revert "cpufreq: amd-pstate: Fix the inconsistency in max frequency units"
-Date: Tue,  2 Jul 2024 19:04:26 +0200
-Message-ID: <20240702170238.814615259@linuxfoundation.org>
+	yangge <yangge1116@126.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <21cnbao@gmail.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 153/163] mm/page_alloc: Separate THP PCP into movable and non-movable categories
+Date: Tue,  2 Jul 2024 19:04:27 +0200
+Message-ID: <20240702170238.852826789@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -54,36 +53,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: yangge <yangge1116@126.com>
 
-This reverts commit 8f893e52b9e030a25ea62e31271bf930b01f2f07 which is
-commit e4731baaf29438508197d3a8a6d4f5a8c51663f8 upstream.
+commit bf14ed81f571f8dba31cd72ab2e50fbcc877cc31 upstream.
 
-It causes a regression in kernels older than 6.9.y, so drop it from
-here.
+Since commit 5d0a661d808f ("mm/page_alloc: use only one PCP list for
+THP-sized allocations") no longer differentiates the migration type of
+pages in THP-sized PCP list, it's possible that non-movable allocation
+requests may get a CMA page from the list, in some cases, it's not
+acceptable.
 
-Link: https://lore.kernel.org/r/18882bfe-4ca5-495c-ace5-b9bcab796ae5@amd.com
-Reported-by: Lars Wendler <wendler.lars@web.de>
-Cc: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Cc: Peter Jung <ptr1337@cachyos.org>
-Cc: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+If a large number of CMA memory are configured in system (for example, the
+CMA memory accounts for 50% of the system memory), starting a virtual
+machine with device passthrough will get stuck.  During starting the
+virtual machine, it will call pin_user_pages_remote(..., FOLL_LONGTERM,
+...) to pin memory.  Normally if a page is present and in CMA area,
+pin_user_pages_remote() will migrate the page from CMA area to non-CMA
+area because of FOLL_LONGTERM flag.  But if non-movable allocation
+requests return CMA memory, migrate_longterm_unpinnable_pages() will
+migrate a CMA page to another CMA page, which will fail to pass the check
+in check_and_migrate_movable_pages() and cause migration endless.
+
+Call trace:
+pin_user_pages_remote
+--__gup_longterm_locked // endless loops in this function
+----_get_user_pages_locked
+----check_and_migrate_movable_pages
+------migrate_longterm_unpinnable_pages
+--------alloc_migration_target
+
+This problem will also have a negative impact on CMA itself.  For example,
+when CMA is borrowed by THP, and we need to reclaim it through cma_alloc()
+or dma_alloc_coherent(), we must move those pages out to ensure CMA's
+users can retrieve that contigous memory.  Currently, CMA's memory is
+occupied by non-movable pages, meaning we can't relocate them.  As a
+result, cma_alloc() is more likely to fail.
+
+To fix the problem above, we add one PCP list for THP, which will not
+introduce a new cacheline for struct per_cpu_pages.  THP will have 2 PCP
+lists, one PCP list is used by MOVABLE allocation, and the other PCP list
+is used by UNMOVABLE allocation.  MOVABLE allocation contains GPF_MOVABLE,
+and UNMOVABLE allocation contains GFP_UNMOVABLE and GFP_RECLAIMABLE.
+
+Link: https://lkml.kernel.org/r/1718845190-4456-1-git-send-email-yangge1116@126.com
+Fixes: 5d0a661d808f ("mm/page_alloc: use only one PCP list for THP-sized allocations")
+Signed-off-by: yangge <yangge1116@126.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <21cnbao@gmail.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/amd-pstate.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/mmzone.h |    9 ++++-----
+ mm/page_alloc.c        |    9 +++++++--
+ 2 files changed, 11 insertions(+), 7 deletions(-)
 
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -675,7 +675,7 @@ static int amd_pstate_set_boost(struct c
- 	if (state)
- 		policy->cpuinfo.max_freq = cpudata->max_freq;
- 	else
--		policy->cpuinfo.max_freq = cpudata->nominal_freq * 1000;
-+		policy->cpuinfo.max_freq = cpudata->nominal_freq;
+--- a/include/linux/mmzone.h
++++ b/include/linux/mmzone.h
+@@ -664,13 +664,12 @@ enum zone_watermarks {
+ };
  
- 	policy->max = policy->cpuinfo.max_freq;
+ /*
+- * One per migratetype for each PAGE_ALLOC_COSTLY_ORDER. One additional list
+- * for THP which will usually be GFP_MOVABLE. Even if it is another type,
+- * it should not contribute to serious fragmentation causing THP allocation
+- * failures.
++ * One per migratetype for each PAGE_ALLOC_COSTLY_ORDER. Two additional lists
++ * are added for THP. One PCP list is used by GPF_MOVABLE, and the other PCP list
++ * is used by GFP_UNMOVABLE and GFP_RECLAIMABLE.
+  */
+ #ifdef CONFIG_TRANSPARENT_HUGEPAGE
+-#define NR_PCP_THP 1
++#define NR_PCP_THP 2
+ #else
+ #define NR_PCP_THP 0
+ #endif
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -519,10 +519,15 @@ out:
  
+ static inline unsigned int order_to_pindex(int migratetype, int order)
+ {
++	bool __maybe_unused movable;
++
+ #ifdef CONFIG_TRANSPARENT_HUGEPAGE
+ 	if (order > PAGE_ALLOC_COSTLY_ORDER) {
+ 		VM_BUG_ON(order != pageblock_order);
+-		return NR_LOWORDER_PCP_LISTS;
++
++		movable = migratetype == MIGRATE_MOVABLE;
++
++		return NR_LOWORDER_PCP_LISTS + movable;
+ 	}
+ #else
+ 	VM_BUG_ON(order > PAGE_ALLOC_COSTLY_ORDER);
+@@ -536,7 +541,7 @@ static inline int pindex_to_order(unsign
+ 	int order = pindex / MIGRATE_PCPTYPES;
+ 
+ #ifdef CONFIG_TRANSPARENT_HUGEPAGE
+-	if (pindex == NR_LOWORDER_PCP_LISTS)
++	if (pindex >= NR_LOWORDER_PCP_LISTS)
+ 		order = pageblock_order;
+ #else
+ 	VM_BUG_ON(order > PAGE_ALLOC_COSTLY_ORDER);
 
 
