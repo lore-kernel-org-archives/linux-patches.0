@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A789414293;
-	Tue,  2 Jul 2024 17:21:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E38773D978;
+	Tue,  2 Jul 2024 17:21:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940915; cv=none; b=R/DaLjxW9bKniPjurRpIfMLS2ecUFY/Sg3484QDDV+kxOFkzteo01jZve1S9m/hI2CuA6Ead8mi2/xiNy3igRtYCCdwRZc+AZxl57mq69ii4ND98FH4jCQSyH6Q8K2wO+KL0liK8tWOR8aJmkbE0FmMxWHj9mmrdGvV8cni4JuQ=
+	t=1719940919; cv=none; b=Za8QoDfzmOSN3HrjqMhClX1XsXIelKf7QpknQOEL9IB2GTaFEUZBfJcpOWOUJksHLQ55XM+bfD+IYsjhmCHZGJNaKueHtbNWy3ZNTqYuoMLGge1xO7Fl2OFpqGDr/gRbMdVlgdgB6PJokHbISTzm88qQut1d2CJ9YH4oQxGFwfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940915; c=relaxed/simple;
-	bh=hdXozXLfdRnvok+0HCY5FdA/YfFQySySf6mAKJGgAeI=;
+	s=arc-20240116; t=1719940919; c=relaxed/simple;
+	bh=23eru5sUMM+nO4ddJaSiMIYzDIygQSfUUlWpohgt99o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S5BVygDuOa+Ctgh4afRmchpOseiwR25xcr8om9lA8vt56gwAY+pIZ3Uiu7YxUWA5fTYOPoIl6ziVqz4/uXX7FfXtSOJtEZmBZls7RJWG4cHDorJs88W20n0nP2mrE9CEsD6bwLiufM1OHtPcYdK2phZ8wuZF8agz5oNY/Kny4+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FahKWJkD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qSZFXQ3I6j4zsSsURcm3Ykedh/qv68hp4kByaAlQgWOPdRgDsz2vTP/42qVk9cYZaNQ63lcI+23Bo8fv6IGH1+oT+MFng5mbJv3CvUCNHcMd3o+fWMfX9vcHkwLDb3dwvUG2sv3M9chYqWwYpN5b4Ny3U4RjT1S6SuWWvHHweNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ds1Jrfkk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FahKWJkD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12508C116B1;
-	Tue,  2 Jul 2024 17:21:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ds1Jrfkk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 552D1C116B1;
+	Tue,  2 Jul 2024 17:21:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940915;
-	bh=hdXozXLfdRnvok+0HCY5FdA/YfFQySySf6mAKJGgAeI=;
+	s=korg; t=1719940918;
+	bh=23eru5sUMM+nO4ddJaSiMIYzDIygQSfUUlWpohgt99o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FahKWJkDtm5ryk0aNOQRQu1vsiSzo1ekGXmoqFGKF8A/4x9TdQd2T7rrhfiyhpG2m
-	 zDbRw75lAvn6ehAMArG4glo+LppU0NI4Aa1fesBewWPVYlDE4cWqM0OKoqqxv0QebU
-	 ncwT5OJoQuz8zIg4pTmnjIc5t+6YQ14+MELq2nUM=
+	b=Ds1JrfkkhUgY34ypF80M66OYr33tjBNo/eC9bErTewOXvCKUT6sB1Swgq7cPfnH9i
+	 g18g+IEBHGE1xZRZjStf9G7cS7yyKKgLdPS72xaDucB6hDIjDa5paP+xm+bEH6KyQ0
+	 rH/x/x2rJGF2Rjx5Bwa3iMGKkNe4tiQ304JVapuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 044/163] parisc: use correct compat recv/recvfrom syscalls
-Date: Tue,  2 Jul 2024 19:02:38 +0200
-Message-ID: <20240702170234.730134031@linuxfoundation.org>
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Jan Sokolowski <jan.sokolowski@intel.com>,
+	Karen Ostrowska <karen.ostrowska@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.6 035/163] ice: Rebuild TC queues on VSI queue reconfiguration
+Date: Tue,  2 Jul 2024 19:02:29 +0200
+Message-ID: <20240702170234.386554941@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -51,46 +55,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Jan Sokolowski <jan.sokolowski@intel.com>
 
-[ Upstream commit 20a50787349fadf66ac5c48f62e58d753878d2bb ]
+[ Upstream commit f4b91c1d17c676b8ad4c6bd674da874f3f7d5701 ]
 
-Johannes missed parisc back when he introduced the compat version
-of these syscalls, so receiving cmsg messages that require a compat
-conversion is still broken.
+TC queues needs to be correctly updated when the number of queues on
+a VSI is reconfigured, so netdev's queue and TC settings will be
+dynamically adjusted and could accurately represent the underlying
+hardware state after changes to the VSI queue counts.
 
-Use the correct calls like the other architectures do.
-
-Fixes: 1dacc76d0014 ("net/compat/wext: send different messages to compat tasks")
-Acked-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: 0754d65bd4be ("ice: Add infrastructure for mqprio support via ndo_setup_tc")
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Signed-off-by: Jan Sokolowski <jan.sokolowski@intel.com>
+Signed-off-by: Karen Ostrowska <karen.ostrowska@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/kernel/syscalls/syscall.tbl | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_main.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/arch/parisc/kernel/syscalls/syscall.tbl b/arch/parisc/kernel/syscalls/syscall.tbl
-index e97c175b56f96..47b3bb90080de 100644
---- a/arch/parisc/kernel/syscalls/syscall.tbl
-+++ b/arch/parisc/kernel/syscalls/syscall.tbl
-@@ -108,7 +108,7 @@
- 95	common	fchown			sys_fchown
- 96	common	getpriority		sys_getpriority
- 97	common	setpriority		sys_setpriority
--98	common	recv			sys_recv
-+98	common	recv			sys_recv			compat_sys_recv
- 99	common	statfs			sys_statfs			compat_sys_statfs
- 100	common	fstatfs			sys_fstatfs			compat_sys_fstatfs
- 101	common	stat64			sys_stat64
-@@ -135,7 +135,7 @@
- 120	common	clone			sys_clone_wrapper
- 121	common	setdomainname		sys_setdomainname
- 122	common	sendfile		sys_sendfile			compat_sys_sendfile
--123	common	recvfrom		sys_recvfrom
-+123	common	recvfrom		sys_recvfrom			compat_sys_recvfrom
- 124	32	adjtimex		sys_adjtimex_time32
- 124	64	adjtimex		sys_adjtimex
- 125	common	mprotect		sys_mprotect
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index 26ef8aec4cfdf..600a2f5370875 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -3958,7 +3958,7 @@ bool ice_is_wol_supported(struct ice_hw *hw)
+ int ice_vsi_recfg_qs(struct ice_vsi *vsi, int new_rx, int new_tx, bool locked)
+ {
+ 	struct ice_pf *pf = vsi->back;
+-	int err = 0, timeout = 50;
++	int i, err = 0, timeout = 50;
+ 
+ 	if (!new_rx && !new_tx)
+ 		return -EINVAL;
+@@ -3984,6 +3984,14 @@ int ice_vsi_recfg_qs(struct ice_vsi *vsi, int new_rx, int new_tx, bool locked)
+ 
+ 	ice_vsi_close(vsi);
+ 	ice_vsi_rebuild(vsi, ICE_VSI_FLAG_NO_INIT);
++
++	ice_for_each_traffic_class(i) {
++		if (vsi->tc_cfg.ena_tc & BIT(i))
++			netdev_set_tc_queue(vsi->netdev,
++					    vsi->tc_cfg.tc_info[i].netdev_tc,
++					    vsi->tc_cfg.tc_info[i].qcount_tx,
++					    vsi->tc_cfg.tc_info[i].qoffset);
++	}
+ 	ice_pf_dcb_recfg(pf, locked);
+ 	ice_vsi_open(vsi);
+ done:
 -- 
 2.43.0
 
