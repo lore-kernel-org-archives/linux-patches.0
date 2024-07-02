@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03DC715B0FE;
-	Tue,  2 Jul 2024 17:14:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5982F15B0FE;
+	Tue,  2 Jul 2024 17:14:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940495; cv=none; b=Lk76Vrtl2gUlciSGJUiSep7bbfq30Q/wb/Y2+4AZC5NaobXD9AJOOBkYtuXUNL+Q287TT0aw2MKwE1ihEScKtIYo3Bse+uQosmxvCueJ64FD/XlPmQt8xNYaxHkGD9+/nkFAw1PlB7ZNhOr11XhLdFwqOFTDjDz3dwX6FCxhGTQ=
+	t=1719940498; cv=none; b=Ou0I11CbYaNQ8qcndrICDcisMtkiIkzUI/X/WbIPJGcHJSIcB6mGb2gsykAea8cn128IGTXLb6/evi6t1nGn1ENlg7nMmaIm/2mK8dSrBBoEr4m6NeUi7BHBx0ORGY1f5CGQHJy95Ejk0pj6lhuPbsWYzrUvTnQH0vOAeHhq6Lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940495; c=relaxed/simple;
-	bh=cv7Yy7oztt668SxbI8pl/8CqUTJ2h02wKrdhAuZQeog=;
+	s=arc-20240116; t=1719940498; c=relaxed/simple;
+	bh=tHI3nzixY0QiXbkASZnXAvMjnk9MZNDkoqJkLxVxkz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IwTm2l5tcxFivduhOgTeyu88Wxz5/NicbDhdrYQ08zNE4pkYkbt3gftvLS/LosJviWg6bBAFvznLirg9a8peznzZ1V6Lrk/XswE1kYblyMs8EN+UlQ0nir0xBfL1j9wRrl8/qkBYbQX8aN3JKekVpx0kIWDgbhsDdvqz3ncFWx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jlsg7myd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JajrBQxdgCyIZoUeSika+nRUHNEym/xZAcbNG1EFpYy43noZNyY2hV6EWgk07iZxRgpkeyo1xHiX8ChiKAT+f+K5N3H59SQZRAjPVm50pcTTn4WpqhzbYGOVl9SjJRm1sxsoC9zGstw0kdgS3nTdj/4DvtLYNGWMbbmLCwJUiyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aSPUsmcd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jlsg7myd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7749CC116B1;
-	Tue,  2 Jul 2024 17:14:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aSPUsmcd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0AA5C116B1;
+	Tue,  2 Jul 2024 17:14:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940494;
-	bh=cv7Yy7oztt668SxbI8pl/8CqUTJ2h02wKrdhAuZQeog=;
+	s=korg; t=1719940498;
+	bh=tHI3nzixY0QiXbkASZnXAvMjnk9MZNDkoqJkLxVxkz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jlsg7mydzHGpySenaPhjygNF/9jq188MDpA/BsSycdtoyUxRU1An8vO8huYYUyZQd
-	 gRCticQBx8onSxifWqd6Qo+kvnpTf+ExvKV7ofTfvEQH3AfWHfATrAezKZy/1rojX2
-	 zBz98yMDLu1vWB16fEU010/mpO/9KN+EvFaDBitk=
+	b=aSPUsmcdDjAErbQ8oUdFewHEVtiKOVaMryKyD08+cstdOm0hxkAmng85Z/W8UMmcw
+	 oMgbxEehhw0SdpQdeEi05Um5O2pOixAWTum7i5zhdZz4/UV5V27ZR8vlJqsSObXrx6
+	 nQ+sNmRLVoh/S5NRnwcZ+wiAsr+2LNsZ/cKHDitk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Yuntao Wang <ytcoode@gmail.com>,
 	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.9 171/222] cpu: Fix broken cmdline "nosmp" and "maxcpus=0"
-Date: Tue,  2 Jul 2024 19:03:29 +0200
-Message-ID: <20240702170250.513173972@linuxfoundation.org>
+Subject: [PATCH 6.9 172/222] cpu/hotplug: Fix dynstate assignment in __cpuhp_setup_state_cpuslocked()
+Date: Tue,  2 Jul 2024 19:03:30 +0200
+Message-ID: <20240702170250.551504072@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -50,43 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Yuntao Wang <ytcoode@gmail.com>
 
-commit 6ef8eb5125722c241fd60d7b0c872d5c2e5dd4ca upstream.
+commit 932d8476399f622aa0767a4a0a9e78e5341dc0e1 upstream.
 
-After the rework of "Parallel CPU bringup", the cmdline "nosmp" and
-"maxcpus=0" parameters are not working anymore. These parameters set
-setup_max_cpus to zero and that's handed to bringup_nonboot_cpus().
+Commit 4205e4786d0b ("cpu/hotplug: Provide dynamic range for prepare
+stage") added a dynamic range for the prepare states, but did not handle
+the assignment of the dynstate variable in __cpuhp_setup_state_cpuslocked().
 
-The code there does a decrement before checking for zero, which brings it
-into the negative space and brings up all CPUs.
+This causes the corresponding startup callback not to be invoked when
+calling __cpuhp_setup_state_cpuslocked() with the CPUHP_BP_PREPARE_DYN
+parameter, even though it should be.
 
-Add a zero check at the beginning of the function to prevent this.
+Currently, the users of __cpuhp_setup_state_cpuslocked(), for one reason or
+another, have not triggered this bug.
 
-[ tglx: Massaged change log ]
-
-Fixes: 18415f33e2ac4ab382 ("cpu/hotplug: Allow "parallel" bringup up to CPUHP_BP_KICK_AP_STATE")
-Fixes: 06c6796e0304234da6 ("cpu/hotplug: Fix off by one in cpuhp_bringup_mask()")
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: 4205e4786d0b ("cpu/hotplug: Provide dynamic range for prepare stage")
+Signed-off-by: Yuntao Wang <ytcoode@gmail.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240618081336.3996825-1-chenhuacai@loongson.cn
+Link: https://lore.kernel.org/r/20240515134554.427071-1-ytcoode@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cpu.c |    3 +++
- 1 file changed, 3 insertions(+)
+ kernel/cpu.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 --- a/kernel/cpu.c
 +++ b/kernel/cpu.c
-@@ -1859,6 +1859,9 @@ static inline bool cpuhp_bringup_cpus_pa
+@@ -2449,7 +2449,7 @@ EXPORT_SYMBOL_GPL(__cpuhp_state_add_inst
+  * The caller needs to hold cpus read locked while calling this function.
+  * Return:
+  *   On success:
+- *      Positive state number if @state is CPUHP_AP_ONLINE_DYN;
++ *      Positive state number if @state is CPUHP_AP_ONLINE_DYN or CPUHP_BP_PREPARE_DYN;
+  *      0 for all other states
+  *   On failure: proper (negative) error code
+  */
+@@ -2472,7 +2472,7 @@ int __cpuhp_setup_state_cpuslocked(enum
+ 	ret = cpuhp_store_callbacks(state, name, startup, teardown,
+ 				    multi_instance);
  
- void __init bringup_nonboot_cpus(unsigned int max_cpus)
- {
-+	if (!max_cpus)
-+		return;
-+
- 	/* Try parallel bringup optimization if enabled */
- 	if (cpuhp_bringup_cpus_parallel(max_cpus))
- 		return;
+-	dynstate = state == CPUHP_AP_ONLINE_DYN;
++	dynstate = state == CPUHP_AP_ONLINE_DYN || state == CPUHP_BP_PREPARE_DYN;
+ 	if (ret > 0 && dynstate) {
+ 		state = ret;
+ 		ret = 0;
+@@ -2503,8 +2503,8 @@ int __cpuhp_setup_state_cpuslocked(enum
+ out:
+ 	mutex_unlock(&cpuhp_state_mutex);
+ 	/*
+-	 * If the requested state is CPUHP_AP_ONLINE_DYN, return the
+-	 * dynamically allocated state in case of success.
++	 * If the requested state is CPUHP_AP_ONLINE_DYN or CPUHP_BP_PREPARE_DYN,
++	 * return the dynamically allocated state in case of success.
+ 	 */
+ 	if (!ret && dynstate)
+ 		return state;
 
 
