@@ -1,100 +1,122 @@
-Received: from todd.t-8ch.de (todd.t-8ch.de [159.69.126.157])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71AA9129E93;
-	Tue,  2 Jul 2024 19:09:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.69.126.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8664A1514DC;
+	Tue,  2 Jul 2024 19:18:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719947388; cv=none; b=M8SRIwl0yqV4qjvhOgTRkdvwkN7DX5Of6ApmUtjpM5b99dLw0x8PKGZdHg85+sjwnW63xCTMYA9TzunwOnfJzbwBnB6yrVvIA7Xdqwc31Vjq5UlrlGE9xAgq2f7IC6nwUJ+5zJde1hb3kwDUJyqmvbjwjZ95xWJnCPtveCBaHjw=
+	t=1719947889; cv=none; b=Z0ZSLsslNXFD4+2tFB4N6plIJWIIdP0vSLDoDHttnV3qe6GT5gVCfuunmyCu8Hma6luJ7RurfISqlTHRfiT06DXovBmdHX/bISONQ2mOiQuSNQ+wpF8hDaA4loZ+2BBHkS1evydnGRrflcrqcWc56suRxeW/90I4zKdJAWIV/fA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719947388; c=relaxed/simple;
-	bh=yoJGjYSz4OqNu58CzNDNVNoOs+cu1lvky6yS4xaj54Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QPEy76VcIbkC10iJjTaVniLblyHC8OJLzfWfnA7E8Zog4v4Knzgp9Zwg/eI4qdYjDTsSVdzGf1f32aj7DDmZ03Ri8cYUN/uvfMX2Fv0XpOfoZDPy9gn25GJZAKceC3FV1Ov0sN2InowBffPmm0zg1HShHcgF8OdzjgdzxNQZkxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net; spf=pass smtp.mailfrom=weissschuh.net; dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b=TbW7yWji; arc=none smtp.client-ip=159.69.126.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=weissschuh.net
+	s=arc-20240116; t=1719947889; c=relaxed/simple;
+	bh=xd/DF0+Gmml8wqZbl8HrFxX/XgUfPC57AW2BJIJfTXY=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=Xlu66eW1uYcbhV4bqMkslCNa4hN9iI7g1XPAtRNew9FsahN+z6jhQk3+lodYy30ZOC7ug1HLvqG1bHxb165253VLMRmAnd1AIH/lq6fKoYSiSQecogeP69d3SU2zBUZZdANaJGGGDdwxgDgXj5YSJEE/0fdoMe4aRW5bQT8tcc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bqq7tp5+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b="TbW7yWji"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=weissschuh.net;
-	s=mail; t=1719947382;
-	bh=yoJGjYSz4OqNu58CzNDNVNoOs+cu1lvky6yS4xaj54Q=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TbW7yWjisbGtI68gpn9U6dR9u5puJYC687+psWSUcnUMzcv1icgRIHZTvUn2MMmzj
-	 l8vZa7+QoT3zCy/jbDDygkhaGEllRHwL+BgGedvSFmBNjKp++7AWUWhImgVoZPbENh
-	 G9nGnl7CTgGwceqhbDXyTmDYFF0wL0Q+hJlu7ysY=
-Date: Tue, 2 Jul 2024 21:09:42 +0200
-From: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas@weissschuh.net>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Tzung-Bi Shih <tzungbi@kernel.org>, Benson Leung <bleung@chromium.org>, 
-	Guenter Roeck <groeck@chromium.org>, Sebastian Reichel <sre@kernel.org>, 
-	chrome-platform@lists.linux.dev, linux-pm@vger.kernel.org, llvm@lists.linux.dev, 
-	patches@lists.linux.dev
-Subject: Re: [PATCH] power: supply: cros_charge-control: Avoid accessing
- attributes out of bounds
-Message-ID: <63208f3f-7d10-4126-b94b-f03887cf20d1@t-8ch.de>
-References: <20240702-cros_charge-control-fix-clang-array-bounds-warning-v1-1-ae04d995cd1d@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bqq7tp5+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95910C116B1;
+	Tue,  2 Jul 2024 19:18:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1719947889;
+	bh=xd/DF0+Gmml8wqZbl8HrFxX/XgUfPC57AW2BJIJfTXY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Bqq7tp5+hTMiyNGbgSMgQ99TOX6fR/z/muDMhS47Fi1dhftU0tmbkDaEEaFHAvZXz
+	 mdNw8t485NLwPbQr2YpPSTFz7OiC6y710mTHr6YVdXO9NGXkKqS/r0tz3b2p+V1jyl
+	 IdlI0XdDF7BGCcoxGEe9nmFDptDR0Lo6HfTS9quvcp+zkLcXVT8dsOI5apTFcJTRFS
+	 phjwIfQSm9hZAIqIQyJZACpJuh2E9Qdz/b2J9AhqgLZlnOwyVx9CtunBEz1cueGYd1
+	 lYh8MVFJ/+fmprUw7aV4CVYoYZ0Oc4f9BPD3gGUHBlBdslsyUza4iTqaw3iaMbRvfp
+	 6cGIBp7ep8MDg==
+From: SeongJae Park <sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	broonie@kernel.org,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 6.1 000/128] 6.1.97-rc1 review
+Date: Tue,  2 Jul 2024 12:18:05 -0700
+Message-Id: <20240702191805.70782-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240702170226.231899085@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240702-cros_charge-control-fix-clang-array-bounds-warning-v1-1-ae04d995cd1d@kernel.org>
 
-Hi Nathan,
+Hello,
 
-Thanks!
+On Tue,  2 Jul 2024 19:03:21 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-On 2024-07-02 07:48:48+0000, Nathan Chancellor wrote:
-> Clang warns (or errors with CONFIG_WERROR=y):
+> This is the start of the stable review cycle for the 6.1.97 release.
+> There are 128 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
->   drivers/power/supply/cros_charge-control.c:319:2: error: array index 3 is past the end of the array (that has type 'struct attribute *[3]') [-Werror,-Warray-bounds]
->     319 |         priv->attributes[_CROS_CHCTL_ATTR_COUNT] = NULL;
->         |         ^                ~~~~~~~~~~~~~~~~~~~~~~
->   drivers/power/supply/cros_charge-control.c:49:2: note: array 'attributes' declared here
->      49 |         struct attribute *attributes[_CROS_CHCTL_ATTR_COUNT];
->         |         ^
->   1 error generated.
+> Responses should be made by Thu, 04 Jul 2024 17:01:55 +0000.
+> Anything received after that time might be too late.
 > 
-> In earlier revisions of the driver, the attributes array in
-> cros_chctl_priv had four elements with four distinct assignments but
-> during review, the number of elements was changed to three through use
-> of an enum and the assignments became a for loop, except for this one,
-> which is now out of bounds. This assignment is no longer necessary
-> because the size of the attributes array no longer accounts for it, so
-> just remove it to clear up the warning.
-> 
-> Fixes: c6ed48ef5259 ("power: supply: add ChromeOS EC based charge control driver")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.97-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
 
-Acked-by: Thomas Weißschuh <linux@weissschuh.net>
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
 
-> ---
->  drivers/power/supply/cros_charge-control.c | 1 -
->  1 file changed, 1 deletion(-)
-> 
-> diff --git a/drivers/power/supply/cros_charge-control.c b/drivers/power/supply/cros_charge-control.c
-> index 73d7f2dc0fa3..2dd8ddbd56bc 100644
-> --- a/drivers/power/supply/cros_charge-control.c
-> +++ b/drivers/power/supply/cros_charge-control.c
-> @@ -316,7 +316,6 @@ static int cros_chctl_probe(struct platform_device *pdev)
->  		sysfs_attr_init(&priv->device_attrs[i].attr);
->  		priv->attributes[i] = &priv->device_attrs[i].attr;
->  	}
-> -	priv->attributes[_CROS_CHCTL_ATTR_COUNT] = NULL;
->  	priv->group.is_visible = cros_chtl_attr_is_visible;
->  	priv->group.attrs = priv->attributes;
->  
-> 
-> ---
-> base-commit: 3664706e875f84bd4e3fa25ed1c6e46934cb32cd
-> change-id: 20240702-cros_charge-control-fix-clang-array-bounds-warning-b84fd0f642a0
-> 
-> Best regards,
-> -- 
-> Nathan Chancellor <nathan@kernel.org>
-> 
+Tested-by: SeongJae Park <sj@kernel.org>
+
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] 54f35067ea4e ("Linux 6.1.97-rc1")
+
+Thanks,
+SJ
+
+[...]
+
+---
+
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 2 selftests: damon: debugfs_schemes.sh
+ok 3 selftests: damon: debugfs_target_ids.sh
+ok 4 selftests: damon: debugfs_empty_targets.sh
+ok 5 selftests: damon: debugfs_huge_count_read_write.sh
+ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 7 selftests: damon: sysfs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_m68k.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
