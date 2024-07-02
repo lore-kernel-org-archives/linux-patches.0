@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FE51BD505;
-	Tue,  2 Jul 2024 17:08:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA90178381;
+	Tue,  2 Jul 2024 17:08:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940097; cv=none; b=M2nxcDH1a7v/lzuL19913EPwXRAyiGMCCho5qBACDhrs842Mk8BoLjnDBcmLcZYeu1JGsMSfqDFNDpFgF1Eu75anpOGbG6L/4Kppd3DLtf+q9O8Rzk6VEIc8IJoUFqw/FudHbtlv464l0KJfBIUBcmhyLbzrR+S7xSnq0n7TqNM=
+	t=1719940100; cv=none; b=WRxoyzlisOuTA38LMpWWfsPc6sv4QB4IHa37q8LJd+Tei5qBpP9DXVUQ8a0dWg1v+IP/gy8cRd6zvWz8RIAwIcSa4n4A4tGUCglKX2iTTCC4BQ7LLkbuyooz8Sxu1CtHtYMtbrpWmhox9i6P5MmfVS2ZIdbptZdjs8zgc1n5OZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940097; c=relaxed/simple;
-	bh=u/HSBbtWFxFdCo9xo6Spp1d3WMKWLVqfItu7S5C7Ico=;
+	s=arc-20240116; t=1719940100; c=relaxed/simple;
+	bh=1lJzpq0Vut+MHIMfQKLJbQZgSQY/glriu5DNG08vnMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UVgXqQpmBjkrpox4cWY9sGeFZRchtUPiKJ8T6zQtu2KUlc4IjwAswAFn+1cDp9dQv/xBpslfUdOLLEuP+O2vNFaX3EUxD1buRWl5mtoJDhwhEH+66HfxfZb/latHM6izlcKMK5/W9YB8JSKe0UZiw9dQ7m1T/tAB9kLoq6W0dmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DbFVdZ5u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=T2dr94ouztDAwIrinPkwpms4yhkTJL0fheSdMAzP8rdXWQhFFAhXbv3M2hfgPDdWtY5CNFPU9FSvXwc1on7GTl9y97Gc6w4YrV/kpStmqEJPFcRHsjkrDYEo+gNjFpFcXZu1dT0Ft+XNPKYOs6/2F3TC0LJB6FqRF4Ah9v3lFzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rbl1SSTR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DbFVdZ5u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10897C116B1;
-	Tue,  2 Jul 2024 17:08:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rbl1SSTR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DDA2C116B1;
+	Tue,  2 Jul 2024 17:08:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940096;
-	bh=u/HSBbtWFxFdCo9xo6Spp1d3WMKWLVqfItu7S5C7Ico=;
+	s=korg; t=1719940100;
+	bh=1lJzpq0Vut+MHIMfQKLJbQZgSQY/glriu5DNG08vnMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DbFVdZ5u7QUXDic3s+GfFfCPrbah0QHR9ZkN4O86/ICSJ0fDbi3vFbATO54+fldWp
-	 txKHLhpPh62TmpvUfY3LPYEVeFffx9p2eExKL1hhU+f2+4lDKkXV40m/DRlEJW846u
-	 ipbAc0C5lIRdyRrHaLy+p2bu9roi8wjioPAruz38=
+	b=Rbl1SSTRIvazvEbN7mtwJW1qphMWp42pHEsoj8ejJ7r/j8wN3+fAZItYEHK1sAC4H
+	 45QM8SEm3567UEtiAbHpjkADbkrfa2AezOLOVt6YrE6kxFS74TYlN5weCf19LqqybT
+	 oEcG5si7Pj0vymrzY0NPzNr76CDEMkwLRNsrwlE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 020/222] ASoC: q6apm-lpass-dai: close graph on prepare errors
-Date: Tue,  2 Jul 2024 19:00:58 +0200
-Message-ID: <20240702170244.748983665@linuxfoundation.org>
+Subject: [PATCH 6.9 011/222] pwm: stm32: Improve precision of calculation in .apply()
+Date: Tue,  2 Jul 2024 19:00:49 +0200
+Message-ID: <20240702170244.404924581@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -46,113 +44,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit be1fae62cf253a5b67526cee9fbc07689b97c125 ]
+[ Upstream commit e419617847b688799a91126eb6c94b936bfb35ff ]
 
-There is an issue around with error handling and graph management with
-the exising code, none of the error paths close the graph, which result in
-leaving the loaded graph in dsp, however the driver thinks otherwise.
+While mathematically it's ok to calculate the number of cyles for the
+duty cycle as:
 
-This can have a nasty side effect specially when we try to load the same
-graph to dsp, dsp returns error which leaves the board with no sound and
-requires restart.
+	duty_cycles = period_cycles * duty_ns / period_ns
 
-Fix this by properly closing the graph when we hit errors between
-open and close.
+this doesn't always give the right result when doing integer math. This
+is best demonstrated using an example: With the input clock running at
+208877930 Hz a request for duty_cycle = 383 ns and period = 49996 ns
+results in
 
-Fixes: 30ad723b93ad ("ASoC: qdsp6: audioreach: add q6apm lpass dai support")
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # X13s
-Link: https://lore.kernel.org/r/20240613-q6apm-fixes-v1-1-d88953675ab3@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+	period_cycles = clkrate * period_ns / NSEC_PER_SEC = 10443.06098828
+
+Now calculating duty_cycles with the above formula gives:
+
+	duty_cycles = 10443.06098828 * 383 / 49996 = 80.00024719
+
+However with period_cycle truncated to an integer results in:
+
+	duty_cycles = 10443 * 383 / 49996 = 79.99977998239859
+
+So while a value of (a little more than) 80 would be the right result,
+only 79 is used here. The problem here is that 14443 is a rounded result
+that should better not be used to do further math. So to fix that use
+the exact formular similar to how period_cycles is calculated.
+
+Link: https://lore.kernel.org/r/7628ecd8a7538aa5a7397f0fc4199a077168e8a6.1710711976.git.u.kleine-koenig@pengutronix.de
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Stable-dep-of: c45fcf46ca23 ("pwm: stm32: Refuse too small period requests")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6apm-lpass-dais.c | 32 +++++++++++++++----------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+ drivers/pwm/pwm-stm32.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c b/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
-index 68a38f63a2dbf..66b911b49e3f4 100644
---- a/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
-+++ b/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
-@@ -141,14 +141,17 @@ static void q6apm_lpass_dai_shutdown(struct snd_pcm_substream *substream, struct
- 	struct q6apm_lpass_dai_data *dai_data = dev_get_drvdata(dai->dev);
- 	int rc;
+diff --git a/drivers/pwm/pwm-stm32.c b/drivers/pwm/pwm-stm32.c
+index 0c028d17c0752..d50194ad24b1c 100644
+--- a/drivers/pwm/pwm-stm32.c
++++ b/drivers/pwm/pwm-stm32.c
+@@ -351,8 +351,9 @@ static int stm32_pwm_config(struct stm32_pwm *priv, unsigned int ch,
+ 	regmap_set_bits(priv->regmap, TIM_CR1, TIM_CR1_ARPE);
  
--	if (!dai_data->is_port_started[dai->id])
--		return;
--	rc = q6apm_graph_stop(dai_data->graph[dai->id]);
--	if (rc < 0)
--		dev_err(dai->dev, "fail to close APM port (%d)\n", rc);
-+	if (dai_data->is_port_started[dai->id]) {
-+		rc = q6apm_graph_stop(dai_data->graph[dai->id]);
-+		dai_data->is_port_started[dai->id] = false;
-+		if (rc < 0)
-+			dev_err(dai->dev, "fail to close APM port (%d)\n", rc);
-+	}
+ 	/* Calculate the duty cycles */
+-	dty = prd * duty_ns;
+-	do_div(dty, period_ns);
++	dty = (unsigned long long)clk_get_rate(priv->clk) * duty_ns;
++	do_div(dty, prescaler + 1);
++	do_div(dty, NSEC_PER_SEC);
  
--	q6apm_graph_close(dai_data->graph[dai->id]);
--	dai_data->is_port_started[dai->id] = false;
-+	if (dai_data->graph[dai->id]) {
-+		q6apm_graph_close(dai_data->graph[dai->id]);
-+		dai_data->graph[dai->id] = NULL;
-+	}
- }
+ 	regmap_write(priv->regmap, TIM_CCR1 + 4 * ch, dty);
  
- static int q6apm_lpass_dai_prepare(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
-@@ -163,8 +166,10 @@ static int q6apm_lpass_dai_prepare(struct snd_pcm_substream *substream, struct s
- 		q6apm_graph_stop(dai_data->graph[dai->id]);
- 		dai_data->is_port_started[dai->id] = false;
- 
--		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
-+		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
- 			q6apm_graph_close(dai_data->graph[dai->id]);
-+			dai_data->graph[dai->id] = NULL;
-+		}
- 	}
- 
- 	/**
-@@ -183,26 +188,29 @@ static int q6apm_lpass_dai_prepare(struct snd_pcm_substream *substream, struct s
- 
- 	cfg->direction = substream->stream;
- 	rc = q6apm_graph_media_format_pcm(dai_data->graph[dai->id], cfg);
--
- 	if (rc) {
- 		dev_err(dai->dev, "Failed to set media format %d\n", rc);
--		return rc;
-+		goto err;
- 	}
- 
- 	rc = q6apm_graph_prepare(dai_data->graph[dai->id]);
- 	if (rc) {
- 		dev_err(dai->dev, "Failed to prepare Graph %d\n", rc);
--		return rc;
-+		goto err;
- 	}
- 
- 	rc = q6apm_graph_start(dai_data->graph[dai->id]);
- 	if (rc < 0) {
- 		dev_err(dai->dev, "fail to start APM port %x\n", dai->id);
--		return rc;
-+		goto err;
- 	}
- 	dai_data->is_port_started[dai->id] = true;
- 
- 	return 0;
-+err:
-+	q6apm_graph_close(dai_data->graph[dai->id]);
-+	dai_data->graph[dai->id] = NULL;
-+	return rc;
- }
- 
- static int q6apm_lpass_dai_startup(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
 -- 
 2.43.0
 
