@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98091BE222;
-	Tue,  2 Jul 2024 17:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5787F1BE24A;
+	Tue,  2 Jul 2024 17:07:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940036; cv=none; b=rbOwDSE/l+cunwzCcPAAjIh875C/rTt+SEdeh3vvQWpISpoYNBpq1WT5qMklZAZjWcj9e5IVmboCB5+HZr0QR/E67MvXPWTTIndlD3QQyGnhSx4859BUZWGRpfhYsviSDwWt3YQBV5dIPuAq5B2w9Mo0kD8RaTxX4kY16EcF6/I=
+	t=1719940040; cv=none; b=ud1w3eQv7CvUh0FzsBAEd3Ar+USZoJxSYPVUYfBfp0S8OAToU5FGCkKVOn9gHAhR/ibsYGAihZA0tB4I9CqK8L/pFtSwaHUNLAfCzQ0s0LzkgmRjRlsSsgf/y5I5DQOqWbM32SnUlXk2ftWB4CEkkLaj3HZddHtujOUdB4zgH9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940036; c=relaxed/simple;
-	bh=RuKdTle0IDLSbzCl7PcLx085U6Y9cD4ZZ96fAK64z9M=;
+	s=arc-20240116; t=1719940040; c=relaxed/simple;
+	bh=LPGd2yCDDTrZwBagybFhdmweOYYHNVh1EWFoFa18HnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BvVSpFVA7PqcmryFNDHk+qZ7DoU6eb2YUq143PGwKAp2zwSYC0atJTabRrpWrYMv+vXDjKmJDOrxabtOpGgcVqIIlQLsjL/oRTMqVTE9fu2DyCwS0FnPyDseHTZs2UFviWCZ681JX/ieWmwXFNS7pDuKF1FOwy1OYvBBnFdLIwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gorNA/Qq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RlS97YBo458JG00dkH95uBKUbYziRKINeIzutFTcAX6qL3mlDsBb1qji0K2zU+rs3K/LxftEYGncP3yKV9d/sAxFBKiYh1iHcfrOmu84Ma6+5yQuX5u042l3fuKptblq7aOX1XbDktFg8FFOolU4+uj5bly7PIYvV71bVR3oDJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PAYAmcPt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gorNA/Qq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2859EC116B1;
-	Tue,  2 Jul 2024 17:07:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PAYAmcPt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 842F9C4AF0D;
+	Tue,  2 Jul 2024 17:07:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940036;
-	bh=RuKdTle0IDLSbzCl7PcLx085U6Y9cD4ZZ96fAK64z9M=;
+	s=korg; t=1719940039;
+	bh=LPGd2yCDDTrZwBagybFhdmweOYYHNVh1EWFoFa18HnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gorNA/QqfVJxBcvZbssJDsH5v39D7QP6VPcQ6l8NIVYOOQUEaQTdqS/NDKfaDb7wZ
-	 lQpZQxwRUh5lKiRi9Kkh5JlKA1969c9oGQGEyQquQ72IWg/EQn4z1OE4FbSr5NEXQb
-	 Neg9o5tMkYH8xF6WKtKQyv8aMZcx1Q7UjHG+m7+Y=
+	b=PAYAmcPtOLaG0cUPQsC89zMuhWYin3IjDTG1i2tqVvyvP9McSvqYBVZQS/2qD+hdz
+	 oEU6PVw9f2mjPhoVjoSTyA4K8k1SlTYJYQQG7Ishi+WkF3O+262yLL0edQ8ZUEzUlg
+	 zaYVA4H/1cRLZltpX939rHotGdeV/dNEjn26PYRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taehee Yoo <ap420073@gmail.com>,
-	Shannon Nelson <shannon.nelson@amd.com>,
+	Maksym Yaremchuk <maksymy@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Petr Machata <petrm@nvidia.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 033/222] ionic: fix kernel panic due to multi-buffer handling
-Date: Tue,  2 Jul 2024 19:01:11 +0200
-Message-ID: <20240702170245.243095837@linuxfoundation.org>
+Subject: [PATCH 6.9 034/222] mlxsw: pci: Fix driver initialization with Spectrum-4
+Date: Tue,  2 Jul 2024 19:01:12 +0200
+Message-ID: <20240702170245.280912940@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -52,135 +54,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taehee Yoo <ap420073@gmail.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit e3f02f32a05009a688a87f5799e049ed6b55bab5 ]
+[ Upstream commit 0602697d6f4d72b0bc5edbc76afabf6aaa029a69 ]
 
-Currently, the ionic_run_xdp() doesn't handle multi-buffer packets
-properly for XDP_TX and XDP_REDIRECT.
-When a jumbo frame is received, the ionic_run_xdp() first makes xdp
-frame with all necessary pages in the rx descriptor.
-And if the action is either XDP_TX or XDP_REDIRECT, it should unmap
-dma-mapping and reset page pointer to NULL for all pages, not only the
-first page.
-But it doesn't for SG pages. So, SG pages unexpectedly will be reused.
-It eventually causes kernel panic.
+Cited commit added support for a new reset flow ("all reset") which is
+deeper than the existing reset flow ("software reset") and allows the
+device's PCI firmware to be upgraded.
 
-Oops: general protection fault, probably for non-canonical address 0x504f4e4dbebc64ff: 0000 [#1] PREEMPT SMP NOPTI
-CPU: 3 PID: 0 Comm: swapper/3 Not tainted 6.10.0-rc3+ #25
-RIP: 0010:xdp_return_frame+0x42/0x90
-Code: 01 75 12 5b 4c 89 e6 5d 31 c9 41 5c 31 d2 41 5d e9 73 fd ff ff 44 8b 6b 20 0f b7 43 0a 49 81 ed 68 01 00 00 49 29 c5 49 01 fd <41> 80 7d0
-RSP: 0018:ffff99d00122ce08 EFLAGS: 00010202
-RAX: 0000000000005453 RBX: ffff8d325f904000 RCX: 0000000000000001
-RDX: 00000000670e1000 RSI: 000000011f90d000 RDI: 504f4e4d4c4b4a49
-RBP: ffff99d003907740 R08: 0000000000000000 R09: 0000000000000000
-R10: 000000011f90d000 R11: 0000000000000000 R12: ffff8d325f904010
-R13: 504f4e4dbebc64fd R14: ffff8d3242b070c8 R15: ffff99d0039077c0
-FS:  0000000000000000(0000) GS:ffff8d399f780000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f41f6c85e38 CR3: 000000037ac30000 CR4: 00000000007506f0
-PKRU: 55555554
-Call Trace:
- <IRQ>
- ? die_addr+0x33/0x90
- ? exc_general_protection+0x251/0x2f0
- ? asm_exc_general_protection+0x22/0x30
- ? xdp_return_frame+0x42/0x90
- ionic_tx_clean+0x211/0x280 [ionic 15881354510e6a9c655c59c54812b319ed2cd015]
- ionic_tx_cq_service+0xd3/0x210 [ionic 15881354510e6a9c655c59c54812b319ed2cd015]
- ionic_txrx_napi+0x41/0x1b0 [ionic 15881354510e6a9c655c59c54812b319ed2cd015]
- __napi_poll.constprop.0+0x29/0x1b0
- net_rx_action+0x2c4/0x350
- handle_softirqs+0xf4/0x320
- irq_exit_rcu+0x78/0xa0
- common_interrupt+0x77/0x90
+In the new flow the driver first tells the firmware that "all reset" is
+required by issuing a new reset command (i.e., MRSR.command=6) and then
+triggers the reset by having the PCI core issue a secondary bus reset
+(SBR).
 
-Fixes: 5377805dc1c0 ("ionic: implement xdp frags support")
-Signed-off-by: Taehee Yoo <ap420073@gmail.com>
-Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
+However, due to a race condition in the device's firmware the device is
+not always able to recover from this reset, resulting in initialization
+failures [1].
+
+New firmware versions include a fix for the bug and advertise it using a
+new capability bit in the Management Capabilities Mask (MCAM) register.
+
+Avoid initialization failures by reading the new capability bit and
+triggering the new reset flow only if the bit is set. If the bit is not
+set, trigger a normal PCI hot reset by skipping the call to the
+Management Reset and Shutdown Register (MRSR).
+
+Normal PCI hot reset is weaker than "all reset", but it results in a
+fully operational driver and allows users to flash a new firmware, if
+they want to.
+
+[1]
+mlxsw_spectrum4 0000:01:00.0: not ready 1023ms after bus reset; waiting
+mlxsw_spectrum4 0000:01:00.0: not ready 2047ms after bus reset; waiting
+mlxsw_spectrum4 0000:01:00.0: not ready 4095ms after bus reset; waiting
+mlxsw_spectrum4 0000:01:00.0: not ready 8191ms after bus reset; waiting
+mlxsw_spectrum4 0000:01:00.0: not ready 16383ms after bus reset; waiting
+mlxsw_spectrum4 0000:01:00.0: not ready 32767ms after bus reset; waiting
+mlxsw_spectrum4 0000:01:00.0: not ready 65535ms after bus reset; giving up
+mlxsw_spectrum4 0000:01:00.0: PCI function reset failed with -25
+mlxsw_spectrum4 0000:01:00.0: cannot register bus device
+mlxsw_spectrum4: probe of 0000:01:00.0 failed with error -25
+
+Fixes: f257c73e5356 ("mlxsw: pci: Add support for new reset flow")
+Reported-by: Maksym Yaremchuk <maksymy@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Tested-by: Maksym Yaremchuk <maksymy@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/pensando/ionic/ionic_txrx.c  | 27 ++++++++++++-------
- 1 file changed, 18 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/mellanox/mlxsw/pci.c | 18 +++++++++++++++---
+ drivers/net/ethernet/mellanox/mlxsw/reg.h |  2 ++
+ 2 files changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_txrx.c b/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
-index 2427610f4306d..aed7d9cbce038 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
-@@ -480,6 +480,20 @@ int ionic_xdp_xmit(struct net_device *netdev, int n,
- 	return nxmit;
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/pci.c b/drivers/net/ethernet/mellanox/mlxsw/pci.c
+index f42a1b1c93687..653a47dd43862 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/pci.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/pci.c
+@@ -1490,18 +1490,25 @@ static int mlxsw_pci_sys_ready_wait(struct mlxsw_pci *mlxsw_pci,
+ 	return -EBUSY;
  }
  
-+static void ionic_xdp_rx_put_bufs(struct ionic_queue *q,
-+				  struct ionic_buf_info *buf_info,
-+				  int nbufs)
-+{
-+	int i;
-+
-+	for (i = 0; i < nbufs; i++) {
-+		dma_unmap_page(q->dev, buf_info->dma_addr,
-+			       IONIC_PAGE_SIZE, DMA_FROM_DEVICE);
-+		buf_info->page = NULL;
-+		buf_info++;
+-static int mlxsw_pci_reset_at_pci_disable(struct mlxsw_pci *mlxsw_pci)
++static int mlxsw_pci_reset_at_pci_disable(struct mlxsw_pci *mlxsw_pci,
++					  bool pci_reset_sbr_supported)
+ {
+ 	struct pci_dev *pdev = mlxsw_pci->pdev;
+ 	char mrsr_pl[MLXSW_REG_MRSR_LEN];
+ 	int err;
+ 
++	if (!pci_reset_sbr_supported) {
++		pci_dbg(pdev, "Performing PCI hot reset instead of \"all reset\"\n");
++		goto sbr;
 +	}
-+}
 +
- static bool ionic_run_xdp(struct ionic_rx_stats *stats,
- 			  struct net_device *netdev,
- 			  struct bpf_prog *xdp_prog,
-@@ -493,6 +507,7 @@ static bool ionic_run_xdp(struct ionic_rx_stats *stats,
- 	struct netdev_queue *nq;
- 	struct xdp_frame *xdpf;
- 	int remain_len;
-+	int nbufs = 1;
- 	int frag_len;
- 	int err = 0;
+ 	mlxsw_reg_mrsr_pack(mrsr_pl,
+ 			    MLXSW_REG_MRSR_COMMAND_RESET_AT_PCI_DISABLE);
+ 	err = mlxsw_reg_write(mlxsw_pci->core, MLXSW_REG(mrsr), mrsr_pl);
+ 	if (err)
+ 		return err;
  
-@@ -542,6 +557,7 @@ static bool ionic_run_xdp(struct ionic_rx_stats *stats,
- 			if (page_is_pfmemalloc(bi->page))
- 				xdp_buff_set_frag_pfmemalloc(&xdp_buf);
- 		} while (remain_len > 0);
-+		nbufs += sinfo->nr_frags;
- 	}
++sbr:
+ 	device_lock_assert(&pdev->dev);
  
- 	xdp_action = bpf_prog_run_xdp(xdp_prog, &xdp_buf);
-@@ -574,9 +590,6 @@ static bool ionic_run_xdp(struct ionic_rx_stats *stats,
- 			goto out_xdp_abort;
- 		}
+ 	pci_cfg_access_lock(pdev);
+@@ -1529,6 +1536,7 @@ static int
+ mlxsw_pci_reset(struct mlxsw_pci *mlxsw_pci, const struct pci_device_id *id)
+ {
+ 	struct pci_dev *pdev = mlxsw_pci->pdev;
++	bool pci_reset_sbr_supported = false;
+ 	char mcam_pl[MLXSW_REG_MCAM_LEN];
+ 	bool pci_reset_supported = false;
+ 	u32 sys_status;
+@@ -1548,13 +1556,17 @@ mlxsw_pci_reset(struct mlxsw_pci *mlxsw_pci, const struct pci_device_id *id)
+ 	mlxsw_reg_mcam_pack(mcam_pl,
+ 			    MLXSW_REG_MCAM_FEATURE_GROUP_ENHANCED_FEATURES);
+ 	err = mlxsw_reg_query(mlxsw_pci->core, MLXSW_REG(mcam), mcam_pl);
+-	if (!err)
++	if (!err) {
+ 		mlxsw_reg_mcam_unpack(mcam_pl, MLXSW_REG_MCAM_PCI_RESET,
+ 				      &pci_reset_supported);
++		mlxsw_reg_mcam_unpack(mcam_pl, MLXSW_REG_MCAM_PCI_RESET_SBR,
++				      &pci_reset_sbr_supported);
++	}
  
--		dma_unmap_page(rxq->dev, buf_info->dma_addr,
--			       IONIC_PAGE_SIZE, DMA_FROM_DEVICE);
--
- 		err = ionic_xdp_post_frame(txq, xdpf, XDP_TX,
- 					   buf_info->page,
- 					   buf_info->page_offset,
-@@ -586,23 +599,19 @@ static bool ionic_run_xdp(struct ionic_rx_stats *stats,
- 			netdev_dbg(netdev, "tx ionic_xdp_post_frame err %d\n", err);
- 			goto out_xdp_abort;
- 		}
--		buf_info->page = NULL;
-+		ionic_xdp_rx_put_bufs(rxq, buf_info, nbufs);
- 		stats->xdp_tx++;
+ 	if (pci_reset_supported) {
+ 		pci_dbg(pdev, "Starting PCI reset flow\n");
+-		err = mlxsw_pci_reset_at_pci_disable(mlxsw_pci);
++		err = mlxsw_pci_reset_at_pci_disable(mlxsw_pci,
++						     pci_reset_sbr_supported);
+ 	} else {
+ 		pci_dbg(pdev, "Starting software reset flow\n");
+ 		err = mlxsw_pci_reset_sw(mlxsw_pci);
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/reg.h b/drivers/net/ethernet/mellanox/mlxsw/reg.h
+index 8892654c685f3..010eecab5147a 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/reg.h
++++ b/drivers/net/ethernet/mellanox/mlxsw/reg.h
+@@ -10668,6 +10668,8 @@ enum mlxsw_reg_mcam_mng_feature_cap_mask_bits {
+ 	MLXSW_REG_MCAM_MCIA_128B = 34,
+ 	/* If set, MRSR.command=6 is supported. */
+ 	MLXSW_REG_MCAM_PCI_RESET = 48,
++	/* If set, MRSR.command=6 is supported with Secondary Bus Reset. */
++	MLXSW_REG_MCAM_PCI_RESET_SBR = 67,
+ };
  
- 		/* the Tx completion will free the buffers */
- 		break;
- 
- 	case XDP_REDIRECT:
--		/* unmap the pages before handing them to a different device */
--		dma_unmap_page(rxq->dev, buf_info->dma_addr,
--			       IONIC_PAGE_SIZE, DMA_FROM_DEVICE);
--
- 		err = xdp_do_redirect(netdev, &xdp_buf, xdp_prog);
- 		if (err) {
- 			netdev_dbg(netdev, "xdp_do_redirect err %d\n", err);
- 			goto out_xdp_abort;
- 		}
--		buf_info->page = NULL;
-+		ionic_xdp_rx_put_bufs(rxq, buf_info, nbufs);
- 		rxq->xdp_flush = true;
- 		stats->xdp_redirect++;
- 		break;
+ #define MLXSW_REG_BYTES_PER_DWORD 0x4
 -- 
 2.43.0
 
