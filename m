@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213591B5814;
-	Tue,  2 Jul 2024 17:19:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4BB39847;
+	Tue,  2 Jul 2024 17:19:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940786; cv=none; b=InN+8v/0tmRybBbU0Gu9eDt2Rb2UDiJ3bqJID1mgTr+xUAnZDvB6DbvHlNKw+1gEH4TohB2jBAObolZzcyvciQJSlvsSxSz6zrTcZYDYaOpGIgQZY0dxZWtK2hDy3cCpRgKSbhTObOBm6VDqO8MB2R3jZcg6ODUuQCPveIeRe+s=
+	t=1719940789; cv=none; b=oVRERMZZXC3xaynGemrtXV9iFVyJrg3Yqr2vqYT5MhQ5LV8n+oP8e1Ryyj1UWWsPFFLPWU9HctzWTjHV4eBthpza9v6/YssNGohiSiA7DtU6AdJDC2YCsXeSvBegLxBOgyqO7KmWbxVaBdzcakU6NK6FpLz8ITuPFNC1TEF8VaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940786; c=relaxed/simple;
-	bh=IU0SHoL8aakp/WONAUKcZxeBawD8Je5V2vRup08wx/Y=;
+	s=arc-20240116; t=1719940789; c=relaxed/simple;
+	bh=WmlYWkJjDlgzDfkf/2NfeGkMBea0IDeA4aj1IRS24Q4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S2fVifZXWaVUj89rVF8IuqkL58AjIsJA4h545pvZj1/ZAKJCSov+nybvQL0aFTrzek6JjukHrYwcv4ubjLNlhjwCjLMx24wWeVOE2mVIPFalzcc4IaKPfYMm0izxYQ9O92NuYz4c0RmJBi2vGhkzqLfY6qL+b/URqQ2kihE2W44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gd2xyZHS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lcSvS8kAe8wePcRyKQ7RPfMxGX7P0bM9c8TD1O0LNQZ1MIkHxtfGJYFTuV7HGargjU5LCiNrZ7Bl2ADO2ikXhmfvPwSeZWEbeLKR2jthD7XTK9+x2sw+RrWvyiOHxsXJj1Crvz1sb/sEPX3N0wAWUbT2x8962HNB9Cx5WbQ1Gaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z/yaxbSk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gd2xyZHS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95DC5C116B1;
-	Tue,  2 Jul 2024 17:19:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/yaxbSk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D225DC116B1;
+	Tue,  2 Jul 2024 17:19:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940786;
-	bh=IU0SHoL8aakp/WONAUKcZxeBawD8Je5V2vRup08wx/Y=;
+	s=korg; t=1719940789;
+	bh=WmlYWkJjDlgzDfkf/2NfeGkMBea0IDeA4aj1IRS24Q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gd2xyZHSUjul0psZbCUogDE8XhS60YokXNCgGmfzI9iyLVbcDnblqLaAvySz7iPvd
-	 2Ax98QeFDJz90Yd0oy04egPuPV3LbY02a3heVv4lTrZG6Ubos1nYZy/zp8NcCMllBw
-	 Yewu57WVZ4e+S887oh8WzB7t+zEuGXF/u8ELjMuI=
+	b=z/yaxbSkyzdoN25vxkzX5OBn1uLxNoTUUGBBYGBp2ga6B+//Isoz+f9JR3amu4nag
+	 7y+nznr+XS4MGZJzQ7nQpciZw4eb/ytV4qZWpw7Ple/tOKGJ75n3uQ/lgn9Z/JRWG1
+	 Xe5KV78Hyn1LQFl+Pe5qXP9sN83sgBB2sYXuHZjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Enguerrand de Ribaucourt <enguerrand.de-ribaucourt@savoirfairelinux.com>,
-	Woojung Huh <Woojung.huh@microchip.com>,
-	Arun Ramadoss <arun.ramadoss@microchip.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
+	John Keeping <jkeeping@inmusicbrands.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 034/163] net: dsa: microchip: use collision based back pressure mode
-Date: Tue,  2 Jul 2024 19:02:28 +0200
-Message-ID: <20240702170234.349197184@linuxfoundation.org>
+Subject: [PATCH 6.6 006/163] Input: ili210x - fix ili251x_read_touch_data() return value
+Date: Tue,  2 Jul 2024 19:02:00 +0200
+Message-ID: <20240702170233.293255106@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -54,53 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Enguerrand de Ribaucourt <enguerrand.de-ribaucourt@savoirfairelinux.com>
+From: John Keeping <jkeeping@inmusicbrands.com>
 
-[ Upstream commit d963c95bc9840d070a788c35e41b715a648717f7 ]
+[ Upstream commit 9f0fad0382124e7e23b3c730fa78818c22c89c0a ]
 
-Errata DS80000758 states that carrier sense back pressure mode can cause
-link down issues in 100BASE-TX half duplex mode. The datasheet also
-recommends to always use the collision based back pressure mode.
+The caller of this function treats all non-zero values as an error, so
+the return value of i2c_master_recv() cannot be returned directly.
 
-Fixes: b987e98e50ab ("dsa: add DSA switch driver for Microchip KSZ9477")
-Signed-off-by: Enguerrand de Ribaucourt <enguerrand.de-ribaucourt@savoirfairelinux.com>
-Reviewed-by: Woojung Huh <Woojung.huh@microchip.com>
-Acked-by: Arun Ramadoss <arun.ramadoss@microchip.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+This fixes touch reporting when there are more than 6 active touches.
+
+Fixes: ef536abd3afd1 ("Input: ili210x - define and use chip operations structure")
+Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
+Link: https://lore.kernel.org/r/20240523085624.2295988-1-jkeeping@inmusicbrands.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/microchip/ksz9477.c     | 4 ++++
- drivers/net/dsa/microchip/ksz9477_reg.h | 1 +
- 2 files changed, 5 insertions(+)
+ drivers/input/touchscreen/ili210x.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/dsa/microchip/ksz9477.c b/drivers/net/dsa/microchip/ksz9477.c
-index 353c41e031f1a..a7e8fcdf25768 100644
---- a/drivers/net/dsa/microchip/ksz9477.c
-+++ b/drivers/net/dsa/microchip/ksz9477.c
-@@ -1112,6 +1112,10 @@ int ksz9477_setup(struct dsa_switch *ds)
- 	/* Enable REG_SW_MTU__2 reg by setting SW_JUMBO_PACKET */
- 	ksz_cfg(dev, REG_SW_MAC_CTRL_1, SW_JUMBO_PACKET, true);
+diff --git a/drivers/input/touchscreen/ili210x.c b/drivers/input/touchscreen/ili210x.c
+index ad6828e4f2e2d..ae7ba0c419f5a 100644
+--- a/drivers/input/touchscreen/ili210x.c
++++ b/drivers/input/touchscreen/ili210x.c
+@@ -261,8 +261,8 @@ static int ili251x_read_touch_data(struct i2c_client *client, u8 *data)
+ 	if (!error && data[0] == 2) {
+ 		error = i2c_master_recv(client, data + ILI251X_DATA_SIZE1,
+ 					ILI251X_DATA_SIZE2);
+-		if (error >= 0 && error != ILI251X_DATA_SIZE2)
+-			error = -EIO;
++		if (error >= 0)
++			error = error == ILI251X_DATA_SIZE2 ? 0 : -EIO;
+ 	}
  
-+	/* Use collision based back pressure mode. */
-+	ksz_cfg(dev, REG_SW_MAC_CTRL_1, SW_BACK_PRESSURE,
-+		SW_BACK_PRESSURE_COLLISION);
-+
- 	/* Now we can configure default MTU value */
- 	ret = regmap_update_bits(ksz_regmap_16(dev), REG_SW_MTU__2, REG_SW_MTU_MASK,
- 				 VLAN_ETH_FRAME_LEN + ETH_FCS_LEN);
-diff --git a/drivers/net/dsa/microchip/ksz9477_reg.h b/drivers/net/dsa/microchip/ksz9477_reg.h
-index cba3dba58bc37..a2ef4b18349c4 100644
---- a/drivers/net/dsa/microchip/ksz9477_reg.h
-+++ b/drivers/net/dsa/microchip/ksz9477_reg.h
-@@ -267,6 +267,7 @@
- #define REG_SW_MAC_CTRL_1		0x0331
- 
- #define SW_BACK_PRESSURE		BIT(5)
-+#define SW_BACK_PRESSURE_COLLISION	0
- #define FAIR_FLOW_CTRL			BIT(4)
- #define NO_EXC_COLLISION_DROP		BIT(3)
- #define SW_JUMBO_PACKET			BIT(2)
+ 	return error;
 -- 
 2.43.0
 
