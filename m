@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D6E1BD002;
-	Tue,  2 Jul 2024 17:10:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD3C15B0FE;
+	Tue,  2 Jul 2024 17:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940259; cv=none; b=PgP13M+17GWI5qFm1FUoLaltV65zOQ3Rijxm/l1ERPfs3j9g7k6OniZLtM/7jC5RevBo6MqbLs0oIQthqDe1UPZ+4FIMc8Xt5wtuaMf0eqr5MQK5d7z0rs4gZxO1qlY1QgXBEH20hElFpIjO44EK5g2QOm4rZLyX6XbP3ugudNM=
+	t=1719940263; cv=none; b=Uw9PM6s3ivDYv2Poxm38g+WNHmwuIA8kZ40UGItLctZVU1iFd59tq1sNcy4uOhGZb1dCJYPEGyQRnpSgCxIi1icL6psNPedQ5CDdJ/E0RgWkXW/ctI7z6AYPQsM5tr/0S4a/JVB7cx0Rz+3/YgSWAux8qr4jlIscha2xtxdzseQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940259; c=relaxed/simple;
-	bh=6KW1WDhY7shtYeTTgQc+ea8DaNau6F2mFesg0VRkO40=;
+	s=arc-20240116; t=1719940263; c=relaxed/simple;
+	bh=MmfwdZdHXpUVv8Jhu1NJf6MQzS2ei8tV+WYLpYq6Lk4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N4SwTxRC2t9cWW8IHbJFuO262EMxDqqJc2CtgkE7+PZq7zgUq2gtTa3E7t3v2Tq1cr0oy0sMpd0lw+vIYPoiw28iV4S1hzwBuf3nP34OoOtIprYo7zrGGy1NdZ5W+6xXNCfyEknctnwBEEJALF01LlnfYMhh8ubmcKrdlC40MRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IoYeQNGh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PGi7oLngolXQRxSdsDEJ/WYcuCf2NNbvGkRp3EQyB0CyiHBw3GfuwCqVrA6mUWjssBWgQL0aQThIx+eGL3bSG+VyyCFGIQ/Jy5c5ftctdiuCiE418Sio3KySJzOKVaXPvxjQE/lDJYrr0MOyx8z0MEQtv7lrRrwpnJlUDMqaIWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uBfBDwQq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IoYeQNGh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CD11C116B1;
-	Tue,  2 Jul 2024 17:10:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uBfBDwQq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F43C116B1;
+	Tue,  2 Jul 2024 17:11:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940259;
-	bh=6KW1WDhY7shtYeTTgQc+ea8DaNau6F2mFesg0VRkO40=;
+	s=korg; t=1719940262;
+	bh=MmfwdZdHXpUVv8Jhu1NJf6MQzS2ei8tV+WYLpYq6Lk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IoYeQNGhkn6uo8Z47to08CrGzCWccJJjKnhMfCApp2UiygnSzhv5IfDAmwPHGA65i
-	 v14Kx6MRIPqmdHYjCPU1lJHkaYI1ofdYOa3OO//bg7R+v1ukR2t+x789vv1/H4LMpb
-	 xd8ahFFsA8/6O1LBJ7sY/npC+NY3xdD8QWKAt++k=
+	b=uBfBDwQqMv0Ya59PEAw/Vg0bP/KHT2PouHxl/IE3Rcj3mjvYWhhAwu7WfGYE0SIw/
+	 itImoeMY0+tmOT504nkyzAzzwCkm90cfkyv15hZiIG2daprLmqAJOpTK5E3/e7UszL
+	 I6hIbZ4+x3KK8G00vFZkBUZkaDyNZXjth5KNy39Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sourabh Jain <sourabhjain@linux.ibm.com>,
-	NeilBrown <neilb@suse.de>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Jesse Taube <jesse@rivosinc.com>,
+	Charlie Jenkins <charlie@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 100/222] nfsd: initialise nfsd_info.mutex early.
-Date: Tue,  2 Jul 2024 19:02:18 +0200
-Message-ID: <20240702170247.791872173@linuxfoundation.org>
+Subject: [PATCH 6.9 101/222] RISC-V: fix vector insn load/store width mask
+Date: Tue,  2 Jul 2024 19:02:19 +0200
+Message-ID: <20240702170247.829150050@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -53,53 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Jesse Taube <jesse@rivosinc.com>
 
-[ Upstream commit e0011bca603c101f2a3c007bdb77f7006fa78fb1 ]
+[ Upstream commit 04a2aef59cfe192aa99020601d922359978cc72a ]
 
-nfsd_info.mutex can be dereferenced by svc_pool_stats_start()
-immediately after the new netns is created.  Currently this can
-trigger an oops.
+RVFDQ_FL_FS_WIDTH_MASK should be 3 bits [14-12], shifted down by 12 bits.
+Replace GENMASK(3, 0) with GENMASK(2, 0).
 
-Move the initialisation earlier before it can possibly be dereferenced.
-
-Fixes: 7b207ccd9833 ("svc: don't hold reference for poolstats, only mutex.")
-Reported-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Closes: https://lore.kernel.org/all/c2e9f6de-1ec4-4d3a-b18d-d5a6ec0814a0@linux.ibm.com/
-Signed-off-by: NeilBrown <neilb@suse.de>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: cd054837243b ("riscv: Allocate user's vector context in the first-use trap")
+Signed-off-by: Jesse Taube <jesse@rivosinc.com>
+Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
+Link: https://lore.kernel.org/r/20240606182800.415831-1-jesse@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfsctl.c | 2 ++
- fs/nfsd/nfssvc.c | 1 -
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ arch/riscv/include/asm/insn.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
-index 4d23bb1d08c0a..332847daa1b41 100644
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -1679,6 +1679,8 @@ static __net_init int nfsd_net_init(struct net *net)
- 	nn->nfsd_svcstats.program = &nfsd_program;
- 	nn->nfsd_versions = NULL;
- 	nn->nfsd4_minorversions = NULL;
-+	nn->nfsd_info.mutex = &nfsd_mutex;
-+	nn->nfsd_serv = NULL;
- 	nfsd4_init_leases_net(nn);
- 	get_random_bytes(&nn->siphash_key, sizeof(nn->siphash_key));
- 	seqlock_init(&nn->writeverf_lock);
-diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
-index c0d17b92b249f..f23b00cb9f631 100644
---- a/fs/nfsd/nfssvc.c
-+++ b/fs/nfsd/nfssvc.c
-@@ -673,7 +673,6 @@ int nfsd_create_serv(struct net *net)
- 		return error;
- 	}
- 	spin_lock(&nfsd_notifier_lock);
--	nn->nfsd_info.mutex = &nfsd_mutex;
- 	nn->nfsd_serv = serv;
- 	spin_unlock(&nfsd_notifier_lock);
+diff --git a/arch/riscv/include/asm/insn.h b/arch/riscv/include/asm/insn.h
+index 06e439eeef9ad..09fde95a5e8f7 100644
+--- a/arch/riscv/include/asm/insn.h
++++ b/arch/riscv/include/asm/insn.h
+@@ -145,7 +145,7 @@
  
+ /* parts of opcode for RVF, RVD and RVQ */
+ #define RVFDQ_FL_FS_WIDTH_OFF	12
+-#define RVFDQ_FL_FS_WIDTH_MASK	GENMASK(3, 0)
++#define RVFDQ_FL_FS_WIDTH_MASK	GENMASK(2, 0)
+ #define RVFDQ_FL_FS_WIDTH_W	2
+ #define RVFDQ_FL_FS_WIDTH_D	3
+ #define RVFDQ_LS_FS_WIDTH_Q	4
 -- 
 2.43.0
 
