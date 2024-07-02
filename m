@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E771BE223;
-	Tue,  2 Jul 2024 17:24:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31EE815218A;
+	Tue,  2 Jul 2024 17:24:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941071; cv=none; b=YldIe3J5EzCc8zYfhekQ1Hs+loU5GlrOppnsWNM9Mtuoh6HsQ9uByBcn/e+toXSghh0OhqvSyO6ZLPPC7qlFoEQGfbC8yz/T9biie0hm2/iq8RuXUzCzGj1g0x8frQPB5JJsZSAxE0vMWXcGZJ/sp/RoyFiVMwebbfCh1PMSYXo=
+	t=1719941075; cv=none; b=s7lPEHLN5N7Cm7ikZaZNNcj7xJ+rRBmderTELQa+R0zA91JjtadSWYW2LwZi4xb8JFVe1cI7McV/pns8ySEnoslTiKAhaIFkyClqySDj4iiboKmVmvddB7ZasEqF5rwyW/7VlJXkS4nRBy5ukXWkwyOJ9AvdJrYRoyT9NabHx/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941071; c=relaxed/simple;
-	bh=YkducO6tRX4Xm6JmCkpFjpb8I+zIgAweyD6NjS13sPM=;
+	s=arc-20240116; t=1719941075; c=relaxed/simple;
+	bh=F99BS3cEpkrByMkG4SajQFWcQFdd3sIT6QWC0yHR/V4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZaZcXXmrMEs04LDJK5QHnYriwTFutkkFYPmI3EBrK68R5b/fK9ZFiVNLG80/uM64MpiGC0IpElBwisDwRZ8Cp63UtwOXVjy0N/nXohOBP7amTkca6Z6p/ZjcfuhgQZgkDMDg433x6q2E41KopBuBNgDwB6Ro/cu1iqBJo/jC2TY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fOEGXXxL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zvygs0KvbFVcbcGeNps2XHuJl/9VgKuu+sqeKxcWpLnJgFv5fbfkfl9c77/lVgxYm8c/fkgygE1lVvuDg011TXoImthWBqHFn8CeUIB1KIPU99RPSMYPTBLCRi153UjCBXmC7yiEsBsTd1ARSqUGXEmQFlXGmEsVNYbdHkklLxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hgBkF8f5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fOEGXXxL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 389E6C116B1;
-	Tue,  2 Jul 2024 17:24:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hgBkF8f5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 953B1C116B1;
+	Tue,  2 Jul 2024 17:24:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941071;
-	bh=YkducO6tRX4Xm6JmCkpFjpb8I+zIgAweyD6NjS13sPM=;
+	s=korg; t=1719941075;
+	bh=F99BS3cEpkrByMkG4SajQFWcQFdd3sIT6QWC0yHR/V4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fOEGXXxLiTR3xst1X99Bk9rrycJPjkTTUmbiJZ3ijcBOpoXj1E3sARw+pD1JiYP/8
-	 enIrbt5JdGY9s0ncox+P7PNc5lDLt9+HwXPyFJRFgvUMssaFvIAfHgWvgtE6gr9Gaa
-	 APAihn3+h07nadZ7oEq6DbEDyxQ3vRAB0c6oCu0Q=
+	b=hgBkF8f5CFY3jBguJe1kla+N2+j1+XqKTqS3r6LyY+CZuTy0J0hX0qEtNErIP1z7F
+	 uCs37DeHCXq++kx68BzxY2YQbLgnxm8QNARIWlFFsWf98tTA6kyO3JqSGnDp5dKGRF
+	 0aURnoCRiYK+ja7AZwaij+yojNOmxzaKP7cbfeA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dirk Su <dirk.su@canonical.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 120/163] ALSA: hda/realtek: fix mute/micmute LEDs dont work for EliteBook 645/665 G11.
-Date: Tue,  2 Jul 2024 19:03:54 +0200
-Message-ID: <20240702170237.594817265@linuxfoundation.org>
+	Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.6 121/163] tty: mcf: MCF54418 has 10 UARTS
+Date: Tue,  2 Jul 2024 19:03:55 +0200
+Message-ID: <20240702170237.632547459@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -50,33 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dirk Su <dirk.su@canonical.com>
+From: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
 
-commit 3cd59d8ef8df7d7a079f54d56502dae8f716b39b upstream.
+commit 7c92a8bd53f24d50c8cf4aba53bb75505b382fed upstream.
 
-HP EliteBook 645/665 G11 needs ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF quirk to
-make mic-mute/audio-mute working.
+Most of the colfires have up to 5 UARTs but MCF54418 has up-to 10 !
+Change the maximum value authorized.
 
-Signed-off-by: Dirk Su <dirk.su@canonical.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240626021437.77039-1-dirk.su@canonical.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
+Cc: stable <stable@kernel.org>
+Fixes: 2545cf6e94b4 ("m68knommu: allow 4 coldfire serial ports")
+Link: https://lore.kernel.org/r/20240620-upstream-uart-v1-1-a9d0d95fb19e@yoseli.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/tty/serial/mcf.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9963,6 +9963,9 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x8c7c, "HP ProBook 445 G11", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8c7d, "HP ProBook 465 G11", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8c7e, "HP ProBook 465 G11", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
-+	SND_PCI_QUIRK(0x103c, 0x8c7f, "HP EliteBook 645 G11", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
-+	SND_PCI_QUIRK(0x103c, 0x8c80, "HP EliteBook 645 G11", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
-+	SND_PCI_QUIRK(0x103c, 0x8c81, "HP EliteBook 665 G11", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8c89, "HP ProBook 460 G11", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8c8a, "HP EliteBook 630", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8c8c, "HP EliteBook 660", ALC236_FIXUP_HP_GPIO_LED),
+--- a/drivers/tty/serial/mcf.c
++++ b/drivers/tty/serial/mcf.c
+@@ -462,7 +462,7 @@ static const struct uart_ops mcf_uart_op
+ 	.verify_port	= mcf_verify_port,
+ };
+ 
+-static struct mcf_uart mcf_ports[4];
++static struct mcf_uart mcf_ports[10];
+ 
+ #define	MCF_MAXPORTS	ARRAY_SIZE(mcf_ports)
+ 
 
 
