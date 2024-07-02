@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910311BD4E9;
-	Tue,  2 Jul 2024 17:16:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1AC178381;
+	Tue,  2 Jul 2024 17:16:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940567; cv=none; b=E21UZaZspnnGWmbAXgcslinxOiGen200NCJVcnyo8MTmOCYP89VU9CWpagoWMa/ACJalMAOQ2k2NYlkMPl1JUL8cF008begWwnbvFilwZNYbp4kywxSkHmqy0h7tEU8pgSfBgvxn3OSUD5byfbbe7uy3l6OlV1g11eUJW5LXfx0=
+	t=1719940571; cv=none; b=TMXX2gLbgBfAo4Q0ZJ8PLNRLTZJ2P8gVyRLqCUJew/HGTN+2jEcnG/32C5XHme/8d42lXxFHaxvdW4khhE/R68SFHWhov8w3BGbD4nsvETpsdB+qR+qhawM4cafXSLrcJDdS0p/yPr5RjfMRgLHlK+pQhYpqj/pBzzG7PAM57pY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940567; c=relaxed/simple;
-	bh=LYxfBVec0qqI74ix3N9k7DL23VGYWCvNwpXsbcfNwMk=;
+	s=arc-20240116; t=1719940571; c=relaxed/simple;
+	bh=ytRU+nqiiHEJuMYRw8O7tZ2rd8EEKZMv43bBTLpgbbI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jqNSXoC250Ww7pdlc0f7T0XPoBovTREbK36fpE8dYUpSc1zYWYIFk4JhNkgbZ6+9anPu7w+gZYJcSNu8yky4LfIFXiqEV+Kko2YUc40bI6Uo8sikwZdWpu9zIgnhFaoFfIL0LHEfZGDv9QBnpq52GWJAJOQ8CTW+l2Bp9ERXXYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s7t5Z8M5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jN8NV0Z0M/shogpLcQ0dKAF8XahBMv9Pd2GCB0PchfUEFcoIo2H762wLO/vfqdzGkW1/rY620/r1GkegGSEH/4vFFzWP+tYATS1+B/U/V+lpQ3HJRbA+vMi8A+dVnHdU9dp4cWbd6z+LfJVmcKNuWJu9CHrQ4rKPRfy2br54fkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J1XRtKHo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s7t5Z8M5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3115C116B1;
-	Tue,  2 Jul 2024 17:16:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J1XRtKHo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FA69C116B1;
+	Tue,  2 Jul 2024 17:16:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940567;
-	bh=LYxfBVec0qqI74ix3N9k7DL23VGYWCvNwpXsbcfNwMk=;
+	s=korg; t=1719940570;
+	bh=ytRU+nqiiHEJuMYRw8O7tZ2rd8EEKZMv43bBTLpgbbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s7t5Z8M57V0z2TIqIxbdO2EcKLgHzKvyau6qMguQB+ZTEOq6zfNa9GLgHjLe1Cjys
-	 tq8fwIdXMKj9/LjrwDHfjQd8/Ylg6B9LmsTevLlTvEe9TUcgKJzixEptpjrOKGFoAs
-	 /mMKGe0Tm8J+pnezodpzD30XJCR7BxeLK+zazTY8=
+	b=J1XRtKHoKOPrtStWVQ3d8y4Ds3u4JyrRCQGLxLVS9CEIyyRfg1IFVwmNdFVA1FGdm
+	 yQOtKYoK2uUH18xoRsQip8dlcw6mz5h31XiWuNqWgeCt190jhdJTtFidT+WuyZZkSI
+	 PMY3NfrnVRtu8ISDwSVoA87+PrFugAVt+OWYd4ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Guenter Roeck <linux@roeck-us.net>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	kernel test robot <lkp@intel.com>,
 	Arnd Bergmann <arnd@arndb.de>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 6.9 194/222] syscalls: fix compat_sys_io_pgetevents_time64 usage
-Date: Tue,  2 Jul 2024 19:03:52 +0200
-Message-ID: <20240702170251.400488170@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.9 195/222] syscalls: fix sys_fanotify_mark prototype
+Date: Tue,  2 Jul 2024 19:03:53 +0200
+Message-ID: <20240702170251.439719444@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -52,140 +55,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnd Bergmann <arnd@arndb.de>
 
-commit d3882564a77c21eb746ba5364f3fa89b88de3d61 upstream.
+[ Upstream commit 63e2f40c9e3187641afacde4153f54b3ee4dbc8c ]
 
-Using sys_io_pgetevents() as the entry point for compat mode tasks
-works almost correctly, but misses the sign extension for the min_nr
-and nr arguments.
+My earlier fix missed an incorrect function prototype that shows up on
+native 32-bit builds:
 
-This was addressed on parisc by switching to
-compat_sys_io_pgetevents_time64() in commit 6431e92fc827 ("parisc:
-io_pgetevents_time64() needs compat syscall in 32-bit compat mode"),
-as well as by using more sophisticated system call wrappers on x86 and
-s390. However, arm64, mips, powerpc, sparc and riscv still have the
-same bug.
+In file included from fs/notify/fanotify/fanotify_user.c:14:
+include/linux/syscalls.h:248:25: error: conflicting types for 'sys_fanotify_mark'; have 'long int(int,  unsigned int,  u32,  u32,  int,  const char *)' {aka 'long int(int,  unsigned int,  unsigned int,  unsigned int,  int,  const char *)'}
+ 1924 | SYSCALL32_DEFINE6(fanotify_mark,
+      | ^~~~~~~~~~~~~~~~~
+include/linux/syscalls.h:862:17: note: previous declaration of 'sys_fanotify_mark' with type 'long int(int,  unsigned int,  u64,  int, const char *)' {aka 'long int(int,  unsigned int,  long long unsigned int,  int,  const char *)'}
 
-Change all of them over to use compat_sys_io_pgetevents_time64()
-like parisc already does. This was clearly the intention when the
-function was originally added, but it got hooked up incorrectly in
-the tables.
+On x86 and powerpc, the prototype is also wrong but hidden in an #ifdef,
+so it never caused problems.
 
+Add another alternative declaration that matches the conditional function
+definition.
+
+Fixes: 403f17a33073 ("parisc: use generic sys_fanotify_mark implementation")
 Cc: stable@vger.kernel.org
-Fixes: 48166e6ea47d ("y2038: add 64-bit time_t syscalls to all 32-bit architectures")
-Acked-by: Heiko Carstens <hca@linux.ibm.com> # s390
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Reported-by: kernel test robot <lkp@intel.com>
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/unistd32.h         |    2 +-
- arch/mips/kernel/syscalls/syscall_n32.tbl |    2 +-
- arch/mips/kernel/syscalls/syscall_o32.tbl |    2 +-
- arch/powerpc/kernel/syscalls/syscall.tbl  |    2 +-
- arch/s390/kernel/syscalls/syscall.tbl     |    2 +-
- arch/sparc/kernel/syscalls/syscall.tbl    |    2 +-
- arch/x86/entry/syscalls/syscall_32.tbl    |    2 +-
- include/uapi/asm-generic/unistd.h         |    2 +-
- kernel/sys_ni.c                           |    2 +-
- 9 files changed, 9 insertions(+), 9 deletions(-)
+ include/linux/syscalls.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/arch/arm64/include/asm/unistd32.h
-+++ b/arch/arm64/include/asm/unistd32.h
-@@ -840,7 +840,7 @@ __SYSCALL(__NR_pselect6_time64, compat_s
- #define __NR_ppoll_time64 414
- __SYSCALL(__NR_ppoll_time64, compat_sys_ppoll_time64)
- #define __NR_io_pgetevents_time64 416
--__SYSCALL(__NR_io_pgetevents_time64, sys_io_pgetevents)
-+__SYSCALL(__NR_io_pgetevents_time64, compat_sys_io_pgetevents_time64)
- #define __NR_recvmmsg_time64 417
- __SYSCALL(__NR_recvmmsg_time64, compat_sys_recvmmsg_time64)
- #define __NR_mq_timedsend_time64 418
---- a/arch/mips/kernel/syscalls/syscall_n32.tbl
-+++ b/arch/mips/kernel/syscalls/syscall_n32.tbl
-@@ -354,7 +354,7 @@
- 412	n32	utimensat_time64		sys_utimensat
- 413	n32	pselect6_time64			compat_sys_pselect6_time64
- 414	n32	ppoll_time64			compat_sys_ppoll_time64
--416	n32	io_pgetevents_time64		sys_io_pgetevents
-+416	n32	io_pgetevents_time64		compat_sys_io_pgetevents_time64
- 417	n32	recvmmsg_time64			compat_sys_recvmmsg_time64
- 418	n32	mq_timedsend_time64		sys_mq_timedsend
- 419	n32	mq_timedreceive_time64		sys_mq_timedreceive
---- a/arch/mips/kernel/syscalls/syscall_o32.tbl
-+++ b/arch/mips/kernel/syscalls/syscall_o32.tbl
-@@ -403,7 +403,7 @@
- 412	o32	utimensat_time64		sys_utimensat			sys_utimensat
- 413	o32	pselect6_time64			sys_pselect6			compat_sys_pselect6_time64
- 414	o32	ppoll_time64			sys_ppoll			compat_sys_ppoll_time64
--416	o32	io_pgetevents_time64		sys_io_pgetevents		sys_io_pgetevents
-+416	o32	io_pgetevents_time64		sys_io_pgetevents		compat_sys_io_pgetevents_time64
- 417	o32	recvmmsg_time64			sys_recvmmsg			compat_sys_recvmmsg_time64
- 418	o32	mq_timedsend_time64		sys_mq_timedsend		sys_mq_timedsend
- 419	o32	mq_timedreceive_time64		sys_mq_timedreceive		sys_mq_timedreceive
---- a/arch/powerpc/kernel/syscalls/syscall.tbl
-+++ b/arch/powerpc/kernel/syscalls/syscall.tbl
-@@ -506,7 +506,7 @@
- 412	32	utimensat_time64		sys_utimensat			sys_utimensat
- 413	32	pselect6_time64			sys_pselect6			compat_sys_pselect6_time64
- 414	32	ppoll_time64			sys_ppoll			compat_sys_ppoll_time64
--416	32	io_pgetevents_time64		sys_io_pgetevents		sys_io_pgetevents
-+416	32	io_pgetevents_time64		sys_io_pgetevents		compat_sys_io_pgetevents_time64
- 417	32	recvmmsg_time64			sys_recvmmsg			compat_sys_recvmmsg_time64
- 418	32	mq_timedsend_time64		sys_mq_timedsend		sys_mq_timedsend
- 419	32	mq_timedreceive_time64		sys_mq_timedreceive		sys_mq_timedreceive
---- a/arch/s390/kernel/syscalls/syscall.tbl
-+++ b/arch/s390/kernel/syscalls/syscall.tbl
-@@ -418,7 +418,7 @@
- 412	32	utimensat_time64	-				sys_utimensat
- 413	32	pselect6_time64		-				compat_sys_pselect6_time64
- 414	32	ppoll_time64		-				compat_sys_ppoll_time64
--416	32	io_pgetevents_time64	-				sys_io_pgetevents
-+416	32	io_pgetevents_time64	-				compat_sys_io_pgetevents_time64
- 417	32	recvmmsg_time64		-				compat_sys_recvmmsg_time64
- 418	32	mq_timedsend_time64	-				sys_mq_timedsend
- 419	32	mq_timedreceive_time64	-				sys_mq_timedreceive
---- a/arch/sparc/kernel/syscalls/syscall.tbl
-+++ b/arch/sparc/kernel/syscalls/syscall.tbl
-@@ -461,7 +461,7 @@
- 412	32	utimensat_time64		sys_utimensat			sys_utimensat
- 413	32	pselect6_time64			sys_pselect6			compat_sys_pselect6_time64
- 414	32	ppoll_time64			sys_ppoll			compat_sys_ppoll_time64
--416	32	io_pgetevents_time64		sys_io_pgetevents		sys_io_pgetevents
-+416	32	io_pgetevents_time64		sys_io_pgetevents		compat_sys_io_pgetevents_time64
- 417	32	recvmmsg_time64			sys_recvmmsg			compat_sys_recvmmsg_time64
- 418	32	mq_timedsend_time64		sys_mq_timedsend		sys_mq_timedsend
- 419	32	mq_timedreceive_time64		sys_mq_timedreceive		sys_mq_timedreceive
---- a/arch/x86/entry/syscalls/syscall_32.tbl
-+++ b/arch/x86/entry/syscalls/syscall_32.tbl
-@@ -420,7 +420,7 @@
- 412	i386	utimensat_time64	sys_utimensat
- 413	i386	pselect6_time64		sys_pselect6			compat_sys_pselect6_time64
- 414	i386	ppoll_time64		sys_ppoll			compat_sys_ppoll_time64
--416	i386	io_pgetevents_time64	sys_io_pgetevents
-+416	i386	io_pgetevents_time64	sys_io_pgetevents		compat_sys_io_pgetevents_time64
- 417	i386	recvmmsg_time64		sys_recvmmsg			compat_sys_recvmmsg_time64
- 418	i386	mq_timedsend_time64	sys_mq_timedsend
- 419	i386	mq_timedreceive_time64	sys_mq_timedreceive
---- a/include/uapi/asm-generic/unistd.h
-+++ b/include/uapi/asm-generic/unistd.h
-@@ -737,7 +737,7 @@ __SC_COMP(__NR_pselect6_time64, sys_psel
- #define __NR_ppoll_time64 414
- __SC_COMP(__NR_ppoll_time64, sys_ppoll, compat_sys_ppoll_time64)
- #define __NR_io_pgetevents_time64 416
--__SYSCALL(__NR_io_pgetevents_time64, sys_io_pgetevents)
-+__SC_COMP(__NR_io_pgetevents_time64, sys_io_pgetevents, compat_sys_io_pgetevents_time64)
- #define __NR_recvmmsg_time64 417
- __SC_COMP(__NR_recvmmsg_time64, sys_recvmmsg, compat_sys_recvmmsg_time64)
- #define __NR_mq_timedsend_time64 418
---- a/kernel/sys_ni.c
-+++ b/kernel/sys_ni.c
-@@ -46,8 +46,8 @@ COND_SYSCALL(io_getevents_time32);
- COND_SYSCALL(io_getevents);
- COND_SYSCALL(io_pgetevents_time32);
- COND_SYSCALL(io_pgetevents);
--COND_SYSCALL_COMPAT(io_pgetevents_time32);
- COND_SYSCALL_COMPAT(io_pgetevents);
-+COND_SYSCALL_COMPAT(io_pgetevents_time64);
- COND_SYSCALL(io_uring_setup);
- COND_SYSCALL(io_uring_enter);
- COND_SYSCALL(io_uring_register);
+diff --git a/include/linux/syscalls.h b/include/linux/syscalls.h
+index 1f3d710afe4d7..ac3db59a74e23 100644
+--- a/include/linux/syscalls.h
++++ b/include/linux/syscalls.h
+@@ -858,9 +858,15 @@ asmlinkage long sys_prlimit64(pid_t pid, unsigned int resource,
+ 				const struct rlimit64 __user *new_rlim,
+ 				struct rlimit64 __user *old_rlim);
+ asmlinkage long sys_fanotify_init(unsigned int flags, unsigned int event_f_flags);
++#if defined(CONFIG_ARCH_SPLIT_ARG64)
++asmlinkage long sys_fanotify_mark(int fanotify_fd, unsigned int flags,
++                                unsigned int mask_1, unsigned int mask_2,
++				int dfd, const char  __user * pathname);
++#else
+ asmlinkage long sys_fanotify_mark(int fanotify_fd, unsigned int flags,
+ 				  u64 mask, int fd,
+ 				  const char  __user *pathname);
++#endif
+ asmlinkage long sys_name_to_handle_at(int dfd, const char __user *name,
+ 				      struct file_handle __user *handle,
+ 				      int __user *mnt_id, int flag);
+-- 
+2.43.0
+
 
 
