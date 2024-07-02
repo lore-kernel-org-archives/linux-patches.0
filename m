@@ -1,45 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D147E1BD50C;
-	Tue,  2 Jul 2024 17:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDCEB1BD00C;
+	Tue,  2 Jul 2024 17:32:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941548; cv=none; b=uVSkea2q9jdrfz5cFs+mWqNNGt/2GIjrUdr2dSFDxzwtWT/gCsm0otA8kZTPPQnc2VYAKG1yU6rpDBHqm3vciujlL034a0mOzqdtAeOdxBUbwaBCabrYoQ6iDdcU5hfP6RL9UZj1k8FJhK39FOUjhlwAML6f6iz7L+9sWVoaRh4=
+	t=1719941552; cv=none; b=PF9Td7B/pF72i9ODY5v78WW/rqQdk1FzERfa/rvjP6j8nq+A6UmQvC5yHdpotNu1zb9iF3gwnxLwbITGpewk32e06v6P5ZgINaAI+ZjSZ+AOYGlJMMPkGv0hpsJ/a08u5AzEFwBGnQ5BpRuUZi/O9oSZsr0JQl9kTM0hOr2UvhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941548; c=relaxed/simple;
-	bh=Ku3WlfexE5ooHqOyct1rNzBU+IW6SZc+gz9WTwQZV4U=;
+	s=arc-20240116; t=1719941552; c=relaxed/simple;
+	bh=/cCikUa5jiU8B1EG43VLO8dZfduhI22O8eHMkORZwE8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=agSSDvUKgKEyELVQWnINBSP5k+YECQhmRB5MHecUYHnXruJeIwzBmgHmQtoOqviEMX1o6o877nSGDTkjXgyIkltQkW/wNNatx/Do0o4x36Gm2GY2rHSeJ8jGyZQsxo4H2+6PgRVdyItJNyLK7iXjC7HZBIRLkU9tSlCfDATsUq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z4XEeECs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UHArSK3d5c/iIe+GQhGi0+MlhPvPPw3qhtBJ95GNhQ3tyyHxgGV9HXkitKl34P9MAr6euIdhZxmXXYg/NwVg8+W8aVVS18Q7klINozOmVBoS8W+hckUjdkQyVFYs08M7xk8z7YuE+iVoinyKiKGBmRtkgVU+YdajXabMFDLfqrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqhXJKzQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z4XEeECs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 571B7C116B1;
-	Tue,  2 Jul 2024 17:32:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqhXJKzQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 351A5C116B1;
+	Tue,  2 Jul 2024 17:32:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941548;
-	bh=Ku3WlfexE5ooHqOyct1rNzBU+IW6SZc+gz9WTwQZV4U=;
+	s=korg; t=1719941551;
+	bh=/cCikUa5jiU8B1EG43VLO8dZfduhI22O8eHMkORZwE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z4XEeECsRPspqBQDAe/sKYTZVEg9QBQ1QEs4thy5H0Av7KtGUo/iG9w+fKZnMJpPK
-	 H5cC37TqeqaGroyL2yuItZtj5nKJ1EIaKXKL7i7CY77LN+gYfp0j9FNkz7Z/GWiTWx
-	 j/22kArhIQ8gXfxYIYDwp3qnqyeCDdTPYZaSnUgg=
+	b=tqhXJKzQOXP/Pnxz4tk5Lry4dMLxwqx9wovghuFItmzgfKy+oev8hdfjQjFn7AC20
+	 oKR/Yo2D7t7/o8H6bzoiU7uH4mdk/zoSirjaLCwyaHj4vFUmUe5uaNZu/M25PHPhvo
+	 VWAk+co3a5E2iVfPHIyf+LySPREHOHmRNuHM7/D4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Barry Song <v-songbaohua@oppo.com>,
+	Martin Wege <martin.l.wege@gmail.com>,
+	NeilBrown <neilb@suse.de>,
+	Anna Schumaker <anna@kernel.org>,
+	Steve French <sfrench@samba.org>,
+	Trond Myklebust <trondmy@kernel.org>,
+	Chuanhua Han <hanchuanhua@oppo.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Chris Li <chrisl@kernel.org>,
+	"Huang, Ying" <ying.huang@intel.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Matthew Wilcox <willy@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 066/128] ocfs2: fix DIO failure due to insufficient transaction credits
-Date: Tue,  2 Jul 2024 19:04:27 +0200
-Message-ID: <20240702170228.731085079@linuxfoundation.org>
+Subject: [PATCH 6.1 067/128] nfs: drop the incorrect assertion in nfs_swap_rw()
+Date: Tue,  2 Jul 2024 19:04:28 +0200
+Message-ID: <20240702170228.769694258@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170226.231899085@linuxfoundation.org>
 References: <20240702170226.231899085@linuxfoundation.org>
@@ -58,141 +62,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Christoph Hellwig <hch@lst.de>
 
-commit be346c1a6eeb49d8fda827d2a9522124c2f72f36 upstream.
+commit 54e7d59841dab977f6cb1183d658b1b82c9f4e94 upstream.
 
-The code in ocfs2_dio_end_io_write() estimates number of necessary
-transaction credits using ocfs2_calc_extend_credits().  This however does
-not take into account that the IO could be arbitrarily large and can
-contain arbitrary number of extents.
+Since commit 2282679fb20b ("mm: submit multipage write for SWP_FS_OPS
+swap-space"), we can plug multiple pages then unplug them all together.
+That means iov_iter_count(iter) could be way bigger than PAGE_SIZE, it
+actually equals the size of iov_iter_npages(iter, INT_MAX).
 
-Extent tree manipulations do often extend the current transaction but not
-in all of the cases.  For example if we have only single block extents in
-the tree, ocfs2_mark_extent_written() will end up calling
-ocfs2_replace_extent_rec() all the time and we will never extend the
-current transaction and eventually exhaust all the transaction credits if
-the IO contains many single block extents.  Once that happens a
-WARN_ON(jbd2_handle_buffer_credits(handle) <= 0) is triggered in
-jbd2_journal_dirty_metadata() and subsequently OCFS2 aborts in response to
-this error.  This was actually triggered by one of our customers on a
-heavily fragmented OCFS2 filesystem.
+Note this issue has nothing to do with large folios as we don't support
+THP_SWPOUT to non-block devices.
 
-To fix the issue make sure the transaction always has enough credits for
-one extent insert before each call of ocfs2_mark_extent_written().
-
-Heming Zhao said:
-
-------
-PANIC: "Kernel panic - not syncing: OCFS2: (device dm-1): panic forced after error"
-
-PID: xxx  TASK: xxxx  CPU: 5  COMMAND: "SubmitThread-CA"
-  #0 machine_kexec at ffffffff8c069932
-  #1 __crash_kexec at ffffffff8c1338fa
-  #2 panic at ffffffff8c1d69b9
-  #3 ocfs2_handle_error at ffffffffc0c86c0c [ocfs2]
-  #4 __ocfs2_abort at ffffffffc0c88387 [ocfs2]
-  #5 ocfs2_journal_dirty at ffffffffc0c51e98 [ocfs2]
-  #6 ocfs2_split_extent at ffffffffc0c27ea3 [ocfs2]
-  #7 ocfs2_change_extent_flag at ffffffffc0c28053 [ocfs2]
-  #8 ocfs2_mark_extent_written at ffffffffc0c28347 [ocfs2]
-  #9 ocfs2_dio_end_io_write at ffffffffc0c2bef9 [ocfs2]
-#10 ocfs2_dio_end_io at ffffffffc0c2c0f5 [ocfs2]
-#11 dio_complete at ffffffff8c2b9fa7
-#12 do_blockdev_direct_IO at ffffffff8c2bc09f
-#13 ocfs2_direct_IO at ffffffffc0c2b653 [ocfs2]
-#14 generic_file_direct_write at ffffffff8c1dcf14
-#15 __generic_file_write_iter at ffffffff8c1dd07b
-#16 ocfs2_file_write_iter at ffffffffc0c49f1f [ocfs2]
-#17 aio_write at ffffffff8c2cc72e
-#18 kmem_cache_alloc at ffffffff8c248dde
-#19 do_io_submit at ffffffff8c2ccada
-#20 do_syscall_64 at ffffffff8c004984
-#21 entry_SYSCALL_64_after_hwframe at ffffffff8c8000ba
-
-Link: https://lkml.kernel.org/r/20240617095543.6971-1-jack@suse.cz
-Link: https://lkml.kernel.org/r/20240614145243.8837-1-jack@suse.cz
-Fixes: c15471f79506 ("ocfs2: fix sparse file & data ordering issue in direct io")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Heming Zhao <heming.zhao@suse.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
+[v-songbaohua@oppo.com: figure out the cause and correct the commit message]
+Link: https://lkml.kernel.org/r/20240618065647.21791-1-21cnbao@gmail.com
+Fixes: 2282679fb20b ("mm: submit multipage write for SWP_FS_OPS swap-space")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Barry Song <v-songbaohua@oppo.com>
+Closes: https://lore.kernel.org/linux-mm/20240617053201.GA16852@lst.de/
+Reviewed-by: Martin Wege <martin.l.wege@gmail.com>
+Cc: NeilBrown <neilb@suse.de>
+Cc: Anna Schumaker <anna@kernel.org>
+Cc: Steve French <sfrench@samba.org>
+Cc: Trond Myklebust <trondmy@kernel.org>
+Cc: Chuanhua Han <hanchuanhua@oppo.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Chris Li <chrisl@kernel.org>
+Cc: "Huang, Ying" <ying.huang@intel.com>
+Cc: Jeff Layton <jlayton@kernel.org>
+Cc: Matthew Wilcox <willy@infradead.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/aops.c        |    5 +++++
- fs/ocfs2/journal.c     |   17 +++++++++++++++++
- fs/ocfs2/journal.h     |    2 ++
- fs/ocfs2/ocfs2_trace.h |    2 ++
- 4 files changed, 26 insertions(+)
+ fs/nfs/direct.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/fs/ocfs2/aops.c
-+++ b/fs/ocfs2/aops.c
-@@ -2370,6 +2370,11 @@ static int ocfs2_dio_end_io_write(struct
- 	}
+--- a/fs/nfs/direct.c
++++ b/fs/nfs/direct.c
+@@ -131,8 +131,6 @@ int nfs_swap_rw(struct kiocb *iocb, stru
+ {
+ 	ssize_t ret;
  
- 	list_for_each_entry(ue, &dwc->dw_zero_list, ue_node) {
-+		ret = ocfs2_assure_trans_credits(handle, credits);
-+		if (ret < 0) {
-+			mlog_errno(ret);
-+			break;
-+		}
- 		ret = ocfs2_mark_extent_written(inode, &et, handle,
- 						ue->ue_cpos, 1,
- 						ue->ue_phys,
---- a/fs/ocfs2/journal.c
-+++ b/fs/ocfs2/journal.c
-@@ -448,6 +448,23 @@ bail:
- }
- 
- /*
-+ * Make sure handle has at least 'nblocks' credits available. If it does not
-+ * have that many credits available, we will try to extend the handle to have
-+ * enough credits. If that fails, we will restart transaction to have enough
-+ * credits. Similar notes regarding data consistency and locking implications
-+ * as for ocfs2_extend_trans() apply here.
-+ */
-+int ocfs2_assure_trans_credits(handle_t *handle, int nblocks)
-+{
-+	int old_nblks = jbd2_handle_buffer_credits(handle);
-+
-+	trace_ocfs2_assure_trans_credits(old_nblks);
-+	if (old_nblks >= nblocks)
-+		return 0;
-+	return ocfs2_extend_trans(handle, nblocks - old_nblks);
-+}
-+
-+/*
-  * If we have fewer than thresh credits, extend by OCFS2_MAX_TRANS_DATA.
-  * If that fails, restart the transaction & regain write access for the
-  * buffer head which is used for metadata modifications.
---- a/fs/ocfs2/journal.h
-+++ b/fs/ocfs2/journal.h
-@@ -243,6 +243,8 @@ handle_t		    *ocfs2_start_trans(struct
- int			     ocfs2_commit_trans(struct ocfs2_super *osb,
- 						handle_t *handle);
- int			     ocfs2_extend_trans(handle_t *handle, int nblocks);
-+int			     ocfs2_assure_trans_credits(handle_t *handle,
-+						int nblocks);
- int			     ocfs2_allocate_extend_trans(handle_t *handle,
- 						int thresh);
- 
---- a/fs/ocfs2/ocfs2_trace.h
-+++ b/fs/ocfs2/ocfs2_trace.h
-@@ -2578,6 +2578,8 @@ DEFINE_OCFS2_ULL_UINT_EVENT(ocfs2_commit
- 
- DEFINE_OCFS2_INT_INT_EVENT(ocfs2_extend_trans);
- 
-+DEFINE_OCFS2_INT_EVENT(ocfs2_assure_trans_credits);
-+
- DEFINE_OCFS2_INT_EVENT(ocfs2_extend_trans_restart);
- 
- DEFINE_OCFS2_INT_INT_EVENT(ocfs2_allocate_extend_trans);
+-	VM_BUG_ON(iov_iter_count(iter) != PAGE_SIZE);
+-
+ 	if (iov_iter_rw(iter) == READ)
+ 		ret = nfs_file_direct_read(iocb, iter, true);
+ 	else
 
 
