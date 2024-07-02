@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE5F178381;
-	Tue,  2 Jul 2024 17:06:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33321BD51B;
+	Tue,  2 Jul 2024 17:06:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940000; cv=none; b=ucio9V/lup8KiA25BfBsVJZZk/f59DqpPVkOvqom5yqraVQGHQPMxU9Z+dBx67VUBkXoIdIHfKVRUS2CovaJk4DWwOH6h9j7sB2p/QoAQcbFY1YZ9Ct71wPh8T3IxK94j++XIjAMEH9fhwm1WVs+/MwsVi9w+I3pqmIFI0KV7BU=
+	t=1719940003; cv=none; b=L1J/tl+K3VZZb1t6ngfgD7vIkFpLRJ+IzKO8vc1IBJWxFbQprDYaxTXa4i418GiTiKphkMI7Ql63bfSSQ8Gof/sqM0vfpAs/TZW0DyAkpDXJGquwgUBO7i9cYB5ia9uHIJnCA/Lb2g+Cb/XEbjdZvKBCIKERfKyLJILL78gbDsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940000; c=relaxed/simple;
-	bh=YaPn7TODEsyVPuOLrTbyRa0NFj0pv0ThxeO2soIb/zc=;
+	s=arc-20240116; t=1719940003; c=relaxed/simple;
+	bh=w4iqkxGd3bOOiGzDH9v/APCfXUQ0FMUi1qfmcJa8pI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WJypFHSP5bDueilLqQmIfQsR9VHW/nfFskS1eBmwA3msbXue+Knbd5qWcuzCYVGVWH+xGgFitz0Kk27q3mhA1pExVKa066B47e6mRqky/PUWWOMpsCVKUNVjHkNtyKE6CyeIOuEeAvSEkMur+rzdJRgaRgU+FgRDEsBNB39HvUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Fb/BeSi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fmvFfHopwWdszocwb0l4ThnGRA3q69h/vTlPXJGRCUuCQTiMf3PJLQvWWBW0mRJNr4wTnG39fSDJJ6v1BxB2QHMeq5Kum7eCFlv4iKjextaVWCsDlKVDGgWlU2sBlC460ujbObVcaBOMOIihB86Yh8d2mQK1nPUfDkYSUfUMZl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2SUx1CiR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Fb/BeSi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD273C116B1;
-	Tue,  2 Jul 2024 17:06:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2SUx1CiR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE094C116B1;
+	Tue,  2 Jul 2024 17:06:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940000;
-	bh=YaPn7TODEsyVPuOLrTbyRa0NFj0pv0ThxeO2soIb/zc=;
+	s=korg; t=1719940003;
+	bh=w4iqkxGd3bOOiGzDH9v/APCfXUQ0FMUi1qfmcJa8pI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Fb/BeSiMJ8JcD/rbOhCywQsZR4U5Xy/sb0sbXn6njjKsHHbaOTfqq2eQedwN1SEz
-	 ZnVioYez2lR7+TUgMmnB2R8I/Am056jUVBf9T5puxW0JvUQtfKsa8eRFtQ9zQbThV5
-	 OT4jpsd1MsQs/1fLULNO+GqbtXvmcc7yqn1RoJ54=
+	b=2SUx1CiRAG9relAG/s4X45HsnJJKfNZjQkFJ0jSN05NbwkgM/tySKM5w91nViM+8d
+	 gIQKYYW12fI5l3XuHFYNFjXaHRYi7cY95igpMSa8BQkQeXROPOsaZA+u+7u9ey7sN6
+	 x0AtUXKa2zysjQN4teHdZaQWBJSiSFNfPxM1rb0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Boqiao Fu <bfu@redhat.com>,
+	Sebastian Mitterle <smitterl@redhat.com>,
+	Thomas Huth <thuth@redhat.com>,
+	Eric Farman <farman@linux.ibm.com>,
+	Halil Pasic <pasic@linux.ibm.com>,
 	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 023/222] s390/pci: Add missing virt_to_phys() for directed DIBV
-Date: Tue,  2 Jul 2024 19:01:01 +0200
-Message-ID: <20240702170244.864730821@linuxfoundation.org>
+Subject: [PATCH 6.9 024/222] s390/virtio_ccw: Fix config change notifications
+Date: Tue,  2 Jul 2024 19:01:02 +0200
+Message-ID: <20240702170244.902497233@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -52,37 +55,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Halil Pasic <pasic@linux.ibm.com>
 
-[ Upstream commit 4181b51c38875de9f6f11248fa0bcf3246c19c82 ]
+[ Upstream commit d8354a1de2c4cc693812f6130fc922537a59217d ]
 
-In commit 4e4dc65ab578 ("s390/pci: use phys_to_virt() for AIBVs/DIBVs")
-the setting of dibv_addr was missed when adding virt_to_phys(). This
-only affects systems with directed interrupt delivery enabled which are
-not generally available.
+Commit e3e9bda38e6d ("s390/virtio_ccw: use DMA handle from DMA API")
+broke configuration change notifications for virtio-ccw by putting the
+DMA address of *indicatorp directly into ccw->cda disregarding the fact
+that if !!(vcdev->is_thinint) then the function
+virtio_ccw_register_adapter_ind() will overwrite that ccw->cda value
+with the address of the virtio_thinint_area so it can actually set up
+the adapter interrupts via CCW_CMD_SET_IND_ADAPTER.  Thus we end up
+pointing to the wrong object for both CCW_CMD_SET_IND if setting up the
+adapter interrupts fails, and for CCW_CMD_SET_CONF_IND regardless
+whether it succeeds or fails.
 
-Fixes: 4e4dc65ab578 ("s390/pci: use phys_to_virt() for AIBVs/DIBVs")
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+To fix this, let us save away the dma address of *indicatorp in a local
+variable, and copy it to ccw->cda after the "vcdev->is_thinint" branch.
+
+Fixes: e3e9bda38e6d ("s390/virtio_ccw: use DMA handle from DMA API")
+Reported-by: Boqiao Fu <bfu@redhat.com>
+Reported-by: Sebastian Mitterle <smitterl@redhat.com>
+Closes: https://issues.redhat.com/browse/RHEL-39983
+Tested-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Signed-off-by: Halil Pasic <pasic@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240611214716.1002781-1-pasic@linux.ibm.com
 Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/pci/pci_irq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/s390/virtio/virtio_ccw.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/s390/pci/pci_irq.c b/arch/s390/pci/pci_irq.c
-index ff8f24854c646..0ef83b6ac0db7 100644
---- a/arch/s390/pci/pci_irq.c
-+++ b/arch/s390/pci/pci_irq.c
-@@ -410,7 +410,7 @@ static void __init cpu_enable_directed_irq(void *unused)
- 	union zpci_sic_iib iib = {{0}};
- 	union zpci_sic_iib ziib = {{0}};
+diff --git a/drivers/s390/virtio/virtio_ccw.c b/drivers/s390/virtio/virtio_ccw.c
+index d7569f3955591..d6491fc84e8c5 100644
+--- a/drivers/s390/virtio/virtio_ccw.c
++++ b/drivers/s390/virtio/virtio_ccw.c
+@@ -698,6 +698,7 @@ static int virtio_ccw_find_vqs(struct virtio_device *vdev, unsigned nvqs,
+ 	dma64_t *indicatorp = NULL;
+ 	int ret, i, queue_idx = 0;
+ 	struct ccw1 *ccw;
++	dma32_t indicatorp_dma = 0;
  
--	iib.cdiib.dibv_addr = (u64) zpci_ibv[smp_processor_id()]->vector;
-+	iib.cdiib.dibv_addr = virt_to_phys(zpci_ibv[smp_processor_id()]->vector);
- 
- 	zpci_set_irq_ctrl(SIC_IRQ_MODE_SET_CPU, 0, &iib);
- 	zpci_set_irq_ctrl(SIC_IRQ_MODE_D_SINGLE, PCI_ISC, &ziib);
+ 	ccw = ccw_device_dma_zalloc(vcdev->cdev, sizeof(*ccw), NULL);
+ 	if (!ccw)
+@@ -725,7 +726,7 @@ static int virtio_ccw_find_vqs(struct virtio_device *vdev, unsigned nvqs,
+ 	*/
+ 	indicatorp = ccw_device_dma_zalloc(vcdev->cdev,
+ 					   sizeof(*indicatorp),
+-					   &ccw->cda);
++					   &indicatorp_dma);
+ 	if (!indicatorp)
+ 		goto out;
+ 	*indicatorp = indicators_dma(vcdev);
+@@ -735,6 +736,7 @@ static int virtio_ccw_find_vqs(struct virtio_device *vdev, unsigned nvqs,
+ 			/* no error, just fall back to legacy interrupts */
+ 			vcdev->is_thinint = false;
+ 	}
++	ccw->cda = indicatorp_dma;
+ 	if (!vcdev->is_thinint) {
+ 		/* Register queue indicators with host. */
+ 		*indicators(vcdev) = 0;
 -- 
 2.43.0
 
