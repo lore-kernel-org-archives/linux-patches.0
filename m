@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E8515218A;
-	Tue,  2 Jul 2024 17:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263A115218A;
+	Tue,  2 Jul 2024 17:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941041; cv=none; b=tcUFzIjj6FgZKl0MGb5yINE0GpooxmG5Cs1D6O8Slb2NvTgCWBS04czlkwll01AO3AzS2JHUzrGaWt1JiEZhWpAdFTB/QKEeBWxYk4BkSDvYAofvgOqLG+Fgsjzye4KWHHm48dEBOzjhXI36WB/lIzjckt6RUxfmNEyBg31qiU0=
+	t=1719941045; cv=none; b=HyFpd72DiknAvxcgA6SGhk6ZQSRGqFSUada8G/tSv7vKKHO7tyitcV8YtP9UNkIAFguQPMNFIPeoiLHRkW/ryrC3RgMFy6yE+6tUPgxTywNK+pcStAaGGb4Mao1qDFTqV4BgBSN2x6RBzzAqQJ4lfWDRGc477XnDTje9W1B91k8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941041; c=relaxed/simple;
-	bh=eJgZV2PpMYHV/C42LDZeoy8m9FuO34yc00pCjPFVX/A=;
+	s=arc-20240116; t=1719941045; c=relaxed/simple;
+	bh=uFr+SmR9EAk8/PDCoiJsGVQDg7Gt8de5iSbo2lFW0Oc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IOS8u+6wzP2kh7BNoO+u3LQDBUepoqlvs4nUvE//eKCQ9uMO4pllQldgKhpQzXfcB+ZvVFquwryJluZxSdIQExMW0TWN5aMvd5NGIHgaC29fzWnhDK8NoSlwArHW3WmzaHPQnky3d1Q4ITTyIKrLr7Du09ZjcmzG2Y6Att/+89I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=whgi/Qlg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h/IS8Ng+KWiCcMc3sQIgVsvs+GMN1cqYLPc85s1s+Dlah2ba0VDrB7Vsy3N5VyhbGUm5NYByDr9IBAN7Bl5slwfSK/goBAgnejWGMf03oolWx0uDTcUlk1BQUhxfqh0qwPMGesdstqDLGjdtMyjj26c8jKijrDcn7Tz4qkYpyRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tf/WNaro; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="whgi/Qlg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A76C116B1;
-	Tue,  2 Jul 2024 17:24:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tf/WNaro"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BBF0C116B1;
+	Tue,  2 Jul 2024 17:24:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941041;
-	bh=eJgZV2PpMYHV/C42LDZeoy8m9FuO34yc00pCjPFVX/A=;
+	s=korg; t=1719941045;
+	bh=uFr+SmR9EAk8/PDCoiJsGVQDg7Gt8de5iSbo2lFW0Oc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=whgi/Qlg6BekBUO513wAYsF1Q4V7BzDWlCZs1K+miAatixna5BJHPePYI8eRsaiV7
-	 sM6Ntcwr0kCDl6WfigbQA+3eiq679/c8qWUuelQc9mTrMt/GdNSB9Q/ks5iLOKKNxE
-	 P1DP33zzwa08bFpCBoL5Y0yJI73dhXpR1viWrxV4=
+	b=tf/WNarocPp2HO4BqSMVFdNVBH+leTaujShqAYHdXJDO2k40U0YKk/RQY9yjY+y2p
+	 IP75KyZepPtrjzCcF05CUFzrFkIdWRy7BCsSXrVjtgPZzOredbKKd3I8mEmSLRyPIn
+	 Mj2ogIP8jVf72ZPFY1DEGCm47hJvvzLXFB4Yp66E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasileios Amoiridis <vassilisamir@gmail.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 103/163] iio: chemical: bme680: Fix sensor data read operation
-Date: Tue,  2 Jul 2024 19:03:37 +0200
-Message-ID: <20240702170236.959463460@linuxfoundation.org>
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	stable <stable@kernel.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.6 112/163] usb: ucsi: stm32: fix command completion handling
+Date: Tue,  2 Jul 2024 19:03:46 +0200
+Message-ID: <20240702170237.296831064@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -51,138 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasileios Amoiridis <vassilisamir@gmail.com>
+From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
 
-commit 4241665e6ea063a9c1d734de790121a71db763fc upstream.
+commit 8e1ec117efdfd4b2f59f57bd0ad16b4edf5b963f upstream.
 
-A read operation is happening as follows:
+Sometimes errors are seen, when doing DR swap, like:
+[   24.672481] ucsi-stm32g0-i2c 0-0035: UCSI_GET_PDOS failed (-5)
+[   24.720188] ucsi-stm32g0-i2c 0-0035: ucsi_handle_connector_change:
+ GET_CONNECTOR_STATUS failed (-5)
 
-a) Set sensor to forced mode
-b) Sensor measures values and update data registers and sleeps again
-c) Read data registers
+There may be some race, which lead to read CCI, before the command complete
+flag is set, hence returning -EIO. Similar fix has been done also in
+ucsi_acpi [1].
 
-In the current implementation the read operation happens immediately
-after the sensor is set to forced mode so the sensor does not have
-the time to update properly the registers. This leads to the following
-2 problems:
+In case of a spurious or otherwise delayed notification it is
+possible that CCI still reports the previous completion. The
+UCSI spec is aware of this and provides two completion bits in
+CCI, one for normal commands and one for acks. As acks and commands
+alternate the notification handler can determine if the completion
+bit is from the current command.
 
-1) The first ever value which is read by the register is always wrong
-2) Every read operation, puts the register into forced mode and reads
-the data that were calculated in the previous conversion.
+To fix this add the ACK_PENDING bit for ucsi_stm32g0 and only complete
+commands if the completion bit matches.
 
-This behaviour was tested in 2 ways:
+[1] https://lore.kernel.org/lkml/20240121204123.275441-3-lk@c--e.de/
 
-1) The internal meas_status_0 register was read before and after every
-read operation in order to verify that the data were ready even before
-the register was set to forced mode and also to check that after the
-forced mode was set the new data were not yet ready.
-
-2) Physically changing the temperature and measuring the temperature
-
-This commit adds the waiting time in between the set of the forced mode
-and the read of the data. The function is taken from the Bosch BME68x
-Sensor API [1].
-
-[1]: https://github.com/boschsensortec/BME68x_SensorAPI/blob/v4.4.8/bme68x.c#L490
-
-Fixes: 1b3bd8592780 ("iio: chemical: Add support for Bosch BME680 sensor")
-Signed-off-by: Vasileios Amoiridis <vassilisamir@gmail.com>
-Link: https://lore.kernel.org/r/20240606212313.207550-5-vassilisamir@gmail.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 72849d4fcee7 ("usb: typec: ucsi: stm32g0: add support for stm32g0 controller")
+Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Link: https://lore.kernel.org/stable/20240612124656.2305603-1-fabrice.gasnier%40foss.st.com
+Cc: stable <stable@kernel.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240612124656.2305603-1-fabrice.gasnier@foss.st.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/chemical/bme680.h      |    2 +
- drivers/iio/chemical/bme680_core.c |   46 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 48 insertions(+)
+ drivers/usb/typec/ucsi/ucsi_stm32g0.c |   19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
---- a/drivers/iio/chemical/bme680.h
-+++ b/drivers/iio/chemical/bme680.h
-@@ -54,7 +54,9 @@
- #define   BME680_NB_CONV_MASK			GENMASK(3, 0)
- 
- #define BME680_REG_MEAS_STAT_0			0x1D
-+#define   BME680_NEW_DATA_BIT			BIT(7)
- #define   BME680_GAS_MEAS_BIT			BIT(6)
-+#define   BME680_MEAS_BIT			BIT(5)
- 
- /* Calibration Parameters */
- #define BME680_T2_LSB_REG	0x8A
---- a/drivers/iio/chemical/bme680_core.c
-+++ b/drivers/iio/chemical/bme680_core.c
-@@ -10,6 +10,7 @@
-  */
- #include <linux/acpi.h>
- #include <linux/bitfield.h>
-+#include <linux/delay.h>
- #include <linux/device.h>
- #include <linux/module.h>
- #include <linux/log2.h>
-@@ -532,6 +533,43 @@ static u8 bme680_oversampling_to_reg(u8
- 	return ilog2(val) + 1;
- }
- 
-+/*
-+ * Taken from Bosch BME680 API:
-+ * https://github.com/boschsensortec/BME68x_SensorAPI/blob/v4.4.8/bme68x.c#L490
-+ */
-+static int bme680_wait_for_eoc(struct bme680_data *data)
-+{
-+	struct device *dev = regmap_get_device(data->regmap);
-+	unsigned int check;
-+	int ret;
-+	/*
-+	 * (Sum of oversampling ratios * time per oversampling) +
-+	 * TPH measurement + gas measurement + wait transition from forced mode
-+	 * + heater duration
-+	 */
-+	int wait_eoc_us = ((data->oversampling_temp + data->oversampling_press +
-+			   data->oversampling_humid) * 1936) + (477 * 4) +
-+			   (477 * 5) + 1000 + (data->heater_dur * 1000);
-+
-+	usleep_range(wait_eoc_us, wait_eoc_us + 100);
-+
-+	ret = regmap_read(data->regmap, BME680_REG_MEAS_STAT_0, &check);
-+	if (ret) {
-+		dev_err(dev, "failed to read measurement status register.\n");
-+		return ret;
-+	}
-+	if (check & BME680_MEAS_BIT) {
-+		dev_err(dev, "Device measurement cycle incomplete.\n");
-+		return -EBUSY;
-+	}
-+	if (!(check & BME680_NEW_DATA_BIT)) {
-+		dev_err(dev, "No new data available from the device.\n");
-+		return -ENODATA;
-+	}
-+
-+	return 0;
-+}
-+
- static int bme680_chip_config(struct bme680_data *data)
+--- a/drivers/usb/typec/ucsi/ucsi_stm32g0.c
++++ b/drivers/usb/typec/ucsi/ucsi_stm32g0.c
+@@ -64,6 +64,7 @@ struct ucsi_stm32g0 {
+ 	struct completion complete;
+ 	struct device *dev;
+ 	unsigned long flags;
++#define ACK_PENDING	2
+ 	const char *fw_name;
+ 	struct ucsi *ucsi;
+ 	bool suspended;
+@@ -395,9 +396,13 @@ static int ucsi_stm32g0_sync_write(struc
+ 				   size_t len)
  {
- 	struct device *dev = regmap_get_device(data->regmap);
-@@ -622,6 +660,10 @@ static int bme680_read_temp(struct bme68
- 	if (ret < 0)
- 		return ret;
+ 	struct ucsi_stm32g0 *g0 = ucsi_get_drvdata(ucsi);
++	bool ack = UCSI_COMMAND(*(u64 *)val) == UCSI_ACK_CC_CI;
+ 	int ret;
  
-+	ret = bme680_wait_for_eoc(data);
-+	if (ret)
-+		return ret;
-+
- 	ret = regmap_bulk_read(data->regmap, BME680_REG_TEMP_MSB,
- 			       &tmp, 3);
- 	if (ret < 0) {
-@@ -738,6 +780,10 @@ static int bme680_read_gas(struct bme680
- 	if (ret < 0)
- 		return ret;
+-	set_bit(COMMAND_PENDING, &g0->flags);
++	if (ack)
++		set_bit(ACK_PENDING, &g0->flags);
++	else
++		set_bit(COMMAND_PENDING, &g0->flags);
  
-+	ret = bme680_wait_for_eoc(data);
-+	if (ret)
-+		return ret;
-+
- 	ret = regmap_read(data->regmap, BME680_REG_MEAS_STAT_0, &check);
- 	if (check & BME680_GAS_MEAS_BIT) {
- 		dev_err(dev, "gas measurement incomplete\n");
+ 	ret = ucsi_stm32g0_async_write(ucsi, offset, val, len);
+ 	if (ret)
+@@ -405,9 +410,14 @@ static int ucsi_stm32g0_sync_write(struc
+ 
+ 	if (!wait_for_completion_timeout(&g0->complete, msecs_to_jiffies(5000)))
+ 		ret = -ETIMEDOUT;
++	else
++		return 0;
+ 
+ out_clear_bit:
+-	clear_bit(COMMAND_PENDING, &g0->flags);
++	if (ack)
++		clear_bit(ACK_PENDING, &g0->flags);
++	else
++		clear_bit(COMMAND_PENDING, &g0->flags);
+ 
+ 	return ret;
+ }
+@@ -428,8 +438,9 @@ static irqreturn_t ucsi_stm32g0_irq_hand
+ 	if (UCSI_CCI_CONNECTOR(cci))
+ 		ucsi_connector_change(g0->ucsi, UCSI_CCI_CONNECTOR(cci));
+ 
+-	if (test_bit(COMMAND_PENDING, &g0->flags) &&
+-	    cci & (UCSI_CCI_ACK_COMPLETE | UCSI_CCI_COMMAND_COMPLETE))
++	if (cci & UCSI_CCI_ACK_COMPLETE && test_and_clear_bit(ACK_PENDING, &g0->flags))
++		complete(&g0->complete);
++	if (cci & UCSI_CCI_COMMAND_COMPLETE && test_and_clear_bit(COMMAND_PENDING, &g0->flags))
+ 		complete(&g0->complete);
+ 
+ 	return IRQ_HANDLED;
 
 
