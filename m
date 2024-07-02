@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F307315B0FE;
-	Tue,  2 Jul 2024 17:13:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F06115B0FE;
+	Tue,  2 Jul 2024 17:13:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940435; cv=none; b=mrfMnjXjKV6k85EvIwtUU0NpPSqF37gAAOBIE+Yy2izXqQMn7t37hMmk/ROy68EThMoNlcMdZ0SJwEDGuHgM2Nijarh+AoI/Z8fpfvSNrbHjGDe2VRMqAeYEEVrOJiHiUPdW7+ZKwrsaizXtPn2FdJvxvgtEQ46aIW/Yq1k92Wc=
+	t=1719940438; cv=none; b=JaQHcO0C4emurLygPeLYjJTywLi2s7Rf0GYFRVegCaRrf4pCxXSIfM/lB9wiMblSnsY4xKwC4W6UXuZzBJVB9I3RZCjF7vilNirNW3PqmQwcfhvbJEkMC/ZVmKZ0HVJd3SsYUzV4iGYBtXZxdmyfiLdjVvqLIVUNZbfDj5R2D7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940435; c=relaxed/simple;
-	bh=UyTIzAQQGFI09v1zVYZezqmwSj5RSeSKEF+3BIgJyRE=;
+	s=arc-20240116; t=1719940438; c=relaxed/simple;
+	bh=W05amaoU2RGfQOVp7izCNjoPD/AQUPz86daaJigAgTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mXqMDc2IR5Ha9c3NtcOWNuQqyQ+uqrHCskLm5KGY6nUBq6cIFH2XtPChETSvFGTFMFS1ITbHtLWvLUxg4fGmHvksaZqKIitGofBrYmmV5M9OvHMVF7amAx6h3hh6vBodkn5AoS53jp8QI869oZwZ1GhQdGnpRTx507vDzS+//9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uQVZAXFQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rt1fEIq7nzeCs+R12RbxROsa8McRYldw0yh6w7eJQo8+Om45sdsI7QpFh9YeZKTKOF8S7WdlKrhxq+X0ZM9/29ScTqAGvYMUW0ufjnikn7ItnETlq7x7oMVpm0PJSL5BTwjCq6XUEDeeRiqfVwSvno9X3AFdRtHryqaH+MwC35s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1AOH9cTf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uQVZAXFQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76655C116B1;
-	Tue,  2 Jul 2024 17:13:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1AOH9cTf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE3EBC116B1;
+	Tue,  2 Jul 2024 17:13:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940434;
-	bh=UyTIzAQQGFI09v1zVYZezqmwSj5RSeSKEF+3BIgJyRE=;
+	s=korg; t=1719940438;
+	bh=W05amaoU2RGfQOVp7izCNjoPD/AQUPz86daaJigAgTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uQVZAXFQaSzvW4n7H70xnhmquMgdRSMh+yUw5aUHbKY4lw/lCPbAoaaREau35cD1I
-	 atYbB3+fs5uwKgzbuYVzLjaUzoKX5XT5MhI79wExHASxRxzI34T9Oi0TlmvwWH1zCl
-	 aXADVQKyaNPoaPrHyFFqHv0V5UHzGdCJXSP5/6Lw=
+	b=1AOH9cTfEAB0hzmUrYHb8FCj3vFBuzKnylOhz3pNMVvNaSQ1WJhWd3KX5qMwCqpKe
+	 s6ZKXZ9PCZmlo5TDtuktS7vw4dFtxSlvmXNYFT04bgepMSFLRQUNByMNQG47/FnPpn
+	 sGwUrcL9sHqYbprPapYaXLTj6hXOsnXjO/XrtzrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.9 113/222] Revert "MIPS: pci: lantiq: restore reset gpio polarity"
-Date: Tue,  2 Jul 2024 19:02:31 +0200
-Message-ID: <20240702170248.288069122@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	syzbot+00c18ee8497dd3be6ade@syzkaller.appspotmail.com
+Subject: [PATCH 6.9 147/222] usb: atm: cxacru: fix endpoint checking in cxacru_bind()
+Date: Tue,  2 Jul 2024 19:03:05 +0200
+Message-ID: <20240702170249.595995305@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -49,52 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit 6e5aee08bd2517397c9572243a816664f2ead547 upstream.
+commit 2eabb655a968b862bc0c31629a09f0fbf3c80d51 upstream.
 
-This reverts commit 277a0363120276645ae598d8d5fea7265e076ae9.
+Syzbot is still reporting quite an old issue [1] that occurs due to
+incomplete checking of present usb endpoints. As such, wrong
+endpoints types may be used at urb sumbitting stage which in turn
+triggers a warning in usb_submit_urb().
 
-While fixing old boards with broken DTs, this change will break
-newer ones with correct gpio polarity annotation.
+Fix the issue by verifying that required endpoint types are present
+for both in and out endpoints, taking into account cmd endpoint type.
 
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Unfortunately, this patch has not been tested on real hardware.
+
+[1] Syzbot report:
+usb 1-1: BOGUS urb xfer, pipe 1 != type 3
+WARNING: CPU: 0 PID: 8667 at drivers/usb/core/urb.c:502 usb_submit_urb+0xed2/0x18a0 drivers/usb/core/urb.c:502
+Modules linked in:
+CPU: 0 PID: 8667 Comm: kworker/0:4 Not tainted 5.14.0-rc4-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
+Workqueue: usb_hub_wq hub_event
+RIP: 0010:usb_submit_urb+0xed2/0x18a0 drivers/usb/core/urb.c:502
+...
+Call Trace:
+ cxacru_cm+0x3c0/0x8e0 drivers/usb/atm/cxacru.c:649
+ cxacru_card_status+0x22/0xd0 drivers/usb/atm/cxacru.c:760
+ cxacru_bind+0x7ac/0x11a0 drivers/usb/atm/cxacru.c:1209
+ usbatm_usb_probe+0x321/0x1ae0 drivers/usb/atm/usbatm.c:1055
+ cxacru_usb_probe+0xdf/0x1e0 drivers/usb/atm/cxacru.c:1363
+ usb_probe_interface+0x315/0x7f0 drivers/usb/core/driver.c:396
+ call_driver_probe drivers/base/dd.c:517 [inline]
+ really_probe+0x23c/0xcd0 drivers/base/dd.c:595
+ __driver_probe_device+0x338/0x4d0 drivers/base/dd.c:747
+ driver_probe_device+0x4c/0x1a0 drivers/base/dd.c:777
+ __device_attach_driver+0x20b/0x2f0 drivers/base/dd.c:894
+ bus_for_each_drv+0x15f/0x1e0 drivers/base/bus.c:427
+ __device_attach+0x228/0x4a0 drivers/base/dd.c:965
+ bus_probe_device+0x1e4/0x290 drivers/base/bus.c:487
+ device_add+0xc2f/0x2180 drivers/base/core.c:3354
+ usb_set_configuration+0x113a/0x1910 drivers/usb/core/message.c:2170
+ usb_generic_driver_probe+0xba/0x100 drivers/usb/core/generic.c:238
+ usb_probe_device+0xd9/0x2c0 drivers/usb/core/driver.c:293
+
+Reported-and-tested-by: syzbot+00c18ee8497dd3be6ade@syzkaller.appspotmail.com
+Fixes: 902ffc3c707c ("USB: cxacru: Use a bulk/int URB to access the command endpoint")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Link: https://lore.kernel.org/r/20240609131546.3932-1-n.zhandarovich@fintech.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/pci/pci-lantiq.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/usb/atm/cxacru.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/arch/mips/pci/pci-lantiq.c
-+++ b/arch/mips/pci/pci-lantiq.c
-@@ -124,14 +124,14 @@ static int ltq_pci_startup(struct platfo
- 		clk_disable(clk_external);
+--- a/drivers/usb/atm/cxacru.c
++++ b/drivers/usb/atm/cxacru.c
+@@ -1131,6 +1131,7 @@ static int cxacru_bind(struct usbatm_dat
+ 	struct cxacru_data *instance;
+ 	struct usb_device *usb_dev = interface_to_usbdev(intf);
+ 	struct usb_host_endpoint *cmd_ep = usb_dev->ep_in[CXACRU_EP_CMD];
++	struct usb_endpoint_descriptor *in, *out;
+ 	int ret;
  
- 	/* setup reset gpio used by pci */
--	reset_gpio = devm_gpiod_get_optional(&pdev->dev, "reset", GPIOD_ASIS);
-+	reset_gpio = devm_gpiod_get_optional(&pdev->dev, "reset",
-+					     GPIOD_OUT_LOW);
- 	error = PTR_ERR_OR_ZERO(reset_gpio);
- 	if (error) {
- 		dev_err(&pdev->dev, "failed to request gpio: %d\n", error);
- 		return error;
+ 	/* instance init */
+@@ -1176,6 +1177,19 @@ static int cxacru_bind(struct usbatm_dat
+ 		ret = -ENODEV;
+ 		goto fail;
  	}
- 	gpiod_set_consumer_name(reset_gpio, "pci_reset");
--	gpiod_direction_output(reset_gpio, 1);
++
++	if (usb_endpoint_xfer_int(&cmd_ep->desc))
++		ret = usb_find_common_endpoints(intf->cur_altsetting,
++						NULL, NULL, &in, &out);
++	else
++		ret = usb_find_common_endpoints(intf->cur_altsetting,
++						&in, &out, NULL, NULL);
++
++	if (ret) {
++		usb_err(usbatm_instance, "cxacru_bind: interface has incorrect endpoints\n");
++		ret = -ENODEV;
++		goto fail;
++	}
  
- 	/* enable auto-switching between PCI and EBU */
- 	ltq_pci_w32(0xa, PCI_CR_CLK_CTRL);
-@@ -194,10 +194,10 @@ static int ltq_pci_startup(struct platfo
- 
- 	/* toggle reset pin */
- 	if (reset_gpio) {
--		gpiod_set_value_cansleep(reset_gpio, 0);
-+		gpiod_set_value_cansleep(reset_gpio, 1);
- 		wmb();
- 		mdelay(1);
--		gpiod_set_value_cansleep(reset_gpio, 1);
-+		gpiod_set_value_cansleep(reset_gpio, 0);
- 	}
- 	return 0;
- }
+ 	if ((cmd_ep->desc.bmAttributes & USB_ENDPOINT_XFERTYPE_MASK)
+ 			== USB_ENDPOINT_XFER_INT) {
 
 
