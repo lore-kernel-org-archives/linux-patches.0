@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E343D978;
-	Tue,  2 Jul 2024 17:18:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCE1BE5A;
+	Tue,  2 Jul 2024 17:18:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940730; cv=none; b=Zy0/iD43bZeHyZPB9PkggJ5u0CWQL+rPQHodqiK/1R8Gzc7ZyKFz4X+oZu0fFkFbBUwapFLR787dfVIv+zKuiGN5zUGnBRYCQ1Qir99DZQXP/VBWoC7AhjXGenzVInpSYL+tGSJmEY9kwLcQ5CTOo+bdwnw/0aooM6ksfo8VLAc=
+	t=1719940733; cv=none; b=t3+vVIH5J6U/CCy9AcwZ+kNqVnIqM8Z7K3QtUGSqZ+vvXVHT2UFEQ5w31uuz8MCQ1VjNTsV/voMcR4erSeHvRgN2LsVifq83E2whNr8DgAKYDwZUPD2a7kU8hfTetrNEJHZ8itM0o2AsuffH0q95tO7qIevZcNA88vu5WFjKl+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940730; c=relaxed/simple;
-	bh=vEeE3tZyLN6tMyWZjxS9cBLTEW0HGczKfPl2wiiV3fw=;
+	s=arc-20240116; t=1719940733; c=relaxed/simple;
+	bh=qEg/JPLpa8wa1dVWdrxRatvcbFAQXlG3mwQ//9L8fXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RYaqg7B6mdH/zNdjmX39ZmUHg/WxF6tigluF7skRdPwyMdlEws0w29HoMNOsbYRka6XhlFH9oF3qdyQ4cwEosxYKYbmRPaWl9eSRG0akA175oiIiPDpD0loBVbYsCYSkdEfoz78jPghnN7pMLAg9lr/VQX5DazTLRBPoaSP1/+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SweLAIFL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nX9rZzN1rFLdgBmEKv8lvH0j+bJOb8OecVREuVElGnkwj3M89mtJ3r2yml+bpSgj4aBdSfZjTsjiGzeJU2G38JjvAQ9tLfQ6V/BJcoIjw4dwTKjZshpUq9dkq6CkLn1lgljSkGepXewLdHU+41FSB/XObjOPFGu++bfUDKO+Axo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wepS92mG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SweLAIFL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D435C116B1;
-	Tue,  2 Jul 2024 17:18:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wepS92mG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD55C116B1;
+	Tue,  2 Jul 2024 17:18:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940729;
-	bh=vEeE3tZyLN6tMyWZjxS9cBLTEW0HGczKfPl2wiiV3fw=;
+	s=korg; t=1719940733;
+	bh=qEg/JPLpa8wa1dVWdrxRatvcbFAQXlG3mwQ//9L8fXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SweLAIFLDRZ8mVxESFiCnRYs6K/R5j3COSIicWfAS/vOValm0lA8NoGKs4c5w/ihf
-	 QJ09b0AcvPdSdpff/Gg2R0LWIxKmKx13jdVgSjDl2UnxGn07eSe0Hi+Rgvfk6fyTJc
-	 86RFryp0WUonKZKvcaLAjVG3wuCT/acXd03/Rs+Y=
+	b=wepS92mGQg3QPeMGK50SDzRj7bE1KI0O56PRpiMfkoAerhUwgNE8+4H4NEp2JodwQ
+	 2MvRVbNIRLiPq8hebuHlj0x4lHevFkMDjhGjvranrSqqzEH5fTbAQ8P3RCl1Eey6sf
+	 PYPNdAmVNCFmAxgcdVY5LybK/eyieqphd9FeB2nc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenchao Hao <haowenchao22@gmail.com>,
-	Audra Mitchell <audra@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 020/163] workqueue: Increase worker descs length to 32
-Date: Tue,  2 Jul 2024 19:02:14 +0200
-Message-ID: <20240702170233.822893251@linuxfoundation.org>
+Subject: [PATCH 6.6 021/163] ASoC: q6apm-lpass-dai: close graph on prepare errors
+Date: Tue,  2 Jul 2024 19:02:15 +0200
+Message-ID: <20240702170233.860817084@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -52,38 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenchao Hao <haowenchao22@gmail.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-[ Upstream commit 231035f18d6b80e5c28732a20872398116a54ecd ]
+[ Upstream commit be1fae62cf253a5b67526cee9fbc07689b97c125 ]
 
-Commit 31c89007285d ("workqueue.c: Increase workqueue name length")
-increased WQ_NAME_LEN from 24 to 32, but forget to increase
-WORKER_DESC_LEN, which would cause truncation when setting kworker's
-desc from workqueue_struct's name, process_one_work() for example.
+There is an issue around with error handling and graph management with
+the exising code, none of the error paths close the graph, which result in
+leaving the loaded graph in dsp, however the driver thinks otherwise.
 
-Fixes: 31c89007285d ("workqueue.c: Increase workqueue name length")
+This can have a nasty side effect specially when we try to load the same
+graph to dsp, dsp returns error which leaves the board with no sound and
+requires restart.
 
-Signed-off-by: Wenchao Hao <haowenchao22@gmail.com>
-CC: Audra Mitchell <audra@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fix this by properly closing the graph when we hit errors between
+open and close.
+
+Fixes: 30ad723b93ad ("ASoC: qdsp6: audioreach: add q6apm lpass dai support")
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # X13s
+Link: https://lore.kernel.org/r/20240613-q6apm-fixes-v1-1-d88953675ab3@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/workqueue.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/qcom/qdsp6/q6apm-lpass-dais.c | 32 +++++++++++++++----------
+ 1 file changed, 20 insertions(+), 12 deletions(-)
 
-diff --git a/include/linux/workqueue.h b/include/linux/workqueue.h
-index 24b1e5070f4d4..52c6dd6d80ac0 100644
---- a/include/linux/workqueue.h
-+++ b/include/linux/workqueue.h
-@@ -84,7 +84,7 @@ enum {
- 	WORK_BUSY_RUNNING	= 1 << 1,
+diff --git a/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c b/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
+index 7ad604b80e25e..6511f0a08de16 100644
+--- a/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
++++ b/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
+@@ -140,14 +140,17 @@ static void q6apm_lpass_dai_shutdown(struct snd_pcm_substream *substream, struct
+ 	struct q6apm_lpass_dai_data *dai_data = dev_get_drvdata(dai->dev);
+ 	int rc;
  
- 	/* maximum string length for set_worker_desc() */
--	WORKER_DESC_LEN		= 24,
-+	WORKER_DESC_LEN		= 32,
- };
+-	if (!dai_data->is_port_started[dai->id])
+-		return;
+-	rc = q6apm_graph_stop(dai_data->graph[dai->id]);
+-	if (rc < 0)
+-		dev_err(dai->dev, "fail to close APM port (%d)\n", rc);
++	if (dai_data->is_port_started[dai->id]) {
++		rc = q6apm_graph_stop(dai_data->graph[dai->id]);
++		dai_data->is_port_started[dai->id] = false;
++		if (rc < 0)
++			dev_err(dai->dev, "fail to close APM port (%d)\n", rc);
++	}
  
- /* Convenience constants - of type 'unsigned long', not 'enum'! */
+-	q6apm_graph_close(dai_data->graph[dai->id]);
+-	dai_data->is_port_started[dai->id] = false;
++	if (dai_data->graph[dai->id]) {
++		q6apm_graph_close(dai_data->graph[dai->id]);
++		dai_data->graph[dai->id] = NULL;
++	}
+ }
+ 
+ static int q6apm_lpass_dai_prepare(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
+@@ -162,8 +165,10 @@ static int q6apm_lpass_dai_prepare(struct snd_pcm_substream *substream, struct s
+ 		q6apm_graph_stop(dai_data->graph[dai->id]);
+ 		dai_data->is_port_started[dai->id] = false;
+ 
+-		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
++		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
+ 			q6apm_graph_close(dai_data->graph[dai->id]);
++			dai_data->graph[dai->id] = NULL;
++		}
+ 	}
+ 
+ 	/**
+@@ -182,26 +187,29 @@ static int q6apm_lpass_dai_prepare(struct snd_pcm_substream *substream, struct s
+ 
+ 	cfg->direction = substream->stream;
+ 	rc = q6apm_graph_media_format_pcm(dai_data->graph[dai->id], cfg);
+-
+ 	if (rc) {
+ 		dev_err(dai->dev, "Failed to set media format %d\n", rc);
+-		return rc;
++		goto err;
+ 	}
+ 
+ 	rc = q6apm_graph_prepare(dai_data->graph[dai->id]);
+ 	if (rc) {
+ 		dev_err(dai->dev, "Failed to prepare Graph %d\n", rc);
+-		return rc;
++		goto err;
+ 	}
+ 
+ 	rc = q6apm_graph_start(dai_data->graph[dai->id]);
+ 	if (rc < 0) {
+ 		dev_err(dai->dev, "fail to start APM port %x\n", dai->id);
+-		return rc;
++		goto err;
+ 	}
+ 	dai_data->is_port_started[dai->id] = true;
+ 
+ 	return 0;
++err:
++	q6apm_graph_close(dai_data->graph[dai->id]);
++	dai_data->graph[dai->id] = NULL;
++	return rc;
+ }
+ 
+ static int q6apm_lpass_dai_startup(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
 -- 
 2.43.0
 
