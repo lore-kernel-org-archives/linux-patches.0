@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DBE61BE226;
-	Tue,  2 Jul 2024 17:20:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8370C43152;
+	Tue,  2 Jul 2024 17:20:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940809; cv=none; b=hx+e1b3crV2P+wOQx57kv2e4tmfX6AdxRwJ2VvS3Cy16D1IAl6laj6uz3HMB5FuEiXK1i+a/hZUeVwTUloZohGHK1n8PRiLprjsAiLCURpISFePq0d0ue9bdHi/Ak1UHW9sHsO5HP0zq7Y4VFegitalvUCwgve4MfUaYpG0KrVI=
+	t=1719940813; cv=none; b=lJcRHBDs7oo5uFPSTpDwPHYQsi5mwJ3XVzjLoAzHi26xtdzhpCAPUMAJhXHAWfwEFtGJ5P/T8iISV4unmrqmumpZobuZV58CGd2W9n+3D2KYmGvcmyBpLMjU20Y9i/JjqDsJmKIeoYU2ycN67lOMdznYzCYy1TBdW5BFMzjIMLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940809; c=relaxed/simple;
-	bh=fAUg+VBC1tjeQ5LW4U44yTs49HE3HhJj4juoC29jQPQ=;
+	s=arc-20240116; t=1719940813; c=relaxed/simple;
+	bh=ByR2asmIGYtwYysblBZVDKlF+fnE2fyOjw5cQO4Q+3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LGZfOwXmofq5Rlmeto5bBJwHxlSMbMaA/0ZoxTd9buEHQfUxu5kUAwEu06+QyoSrGk+r7zcH28RpHgXGroRFrbyEVtepNqPc+HvpyPXi4GFFZa+Ch6vGXS/OAZzZhGTaZYrQ+rahKzAyrxJlxVlojs/bAvPXML24hEF4rTvXymo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qut/XLbj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ABELu3gQpqQ6lu9dLuN7o+1qEGFOaB9x1wVkkmhDVXs802h/Pki5pIcjZV8Ssf6FmTSvWdXjFu+njRt+bktREiMDtXprQbnyCAP3TdoI8PpBphzkTw53GfRPAoNJAHV3wkSML8SyJ8jXe/REqI8F3tKDLZ2VhjHmiaII7Y5c43M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=un+kMp5R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qut/XLbj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECF4BC116B1;
-	Tue,  2 Jul 2024 17:20:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="un+kMp5R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 728E6C116B1;
+	Tue,  2 Jul 2024 17:20:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940809;
-	bh=fAUg+VBC1tjeQ5LW4U44yTs49HE3HhJj4juoC29jQPQ=;
+	s=korg; t=1719940813;
+	bh=ByR2asmIGYtwYysblBZVDKlF+fnE2fyOjw5cQO4Q+3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qut/XLbjoLaI5/3My34tgZW4FWHovH4PbpTKH0bJ73Hezr4Y8TU6qa8q0aHDmtUsV
-	 509s3OtpRbqgniFcy5p/E3vTbk3EFa1WjcInE+FlNRApLXmTXajP2P95B1WXizu41N
-	 b8TrgC/2AiG77bB7Zh1QokrAYCZhm458XW2OjyLY=
+	b=un+kMp5RZu1XmSHeRqackf1YXiABMB5Qn+BlbQm65EejulePMg4G8TcTrVvFV+F4G
+	 YMlatiQlNYemhVQJzYUvEmHhZJMpt8QxouLqPmO/c7ktKtkyrcIztthY5HAH4jLcP7
+	 KYYrzCiQA3ySM3bLMr5eLAcNXZQH83NA2QMqwUe8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Rizkalla <ajarizzo@gmail.com>,
-	Vasileios Amoiridis <vassilisamir@gmail.com>,
-	Angel Iglesias <ang.iglesiasg@gmail.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Daniil Dulov <d.dulov@aladdin.ru>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 002/163] iio: pressure: bmp280: Fix BMP580 temperature reading
-Date: Tue,  2 Jul 2024 19:01:56 +0200
-Message-ID: <20240702170233.143724864@linuxfoundation.org>
+Subject: [PATCH 6.6 036/163] xdp: Remove WARN() from __xdp_reg_mem_model()
+Date: Tue,  2 Jul 2024 19:02:30 +0200
+Message-ID: <20240702170234.426226163@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -54,46 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adam Rizkalla <ajarizzo@gmail.com>
+From: Daniil Dulov <d.dulov@aladdin.ru>
 
-[ Upstream commit 0f0f6306617cb4b6231fc9d4ec68ab9a56dba7c0 ]
+[ Upstream commit 7e9f79428372c6eab92271390851be34ab26bfb4 ]
 
-Fix overflow issue when storing BMP580 temperature reading and
-properly preserve sign of 24-bit data.
+syzkaller reports a warning in __xdp_reg_mem_model().
 
-Signed-off-by: Adam Rizkalla <ajarizzo@gmail.com>
-Tested-By: Vasileios Amoiridis <vassilisamir@gmail.com>
-Acked-by: Angel Iglesias <ang.iglesiasg@gmail.com>
-Link: https://lore.kernel.org/r/Zin2udkXRD0+GrML@adam-asahi.lan
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+The warning occurs only if __mem_id_init_hash_table() returns an error. It
+returns the error in two cases:
+
+  1. memory allocation fails;
+  2. rhashtable_init() fails when some fields of rhashtable_params
+     struct are not initialized properly.
+
+The second case cannot happen since there is a static const rhashtable_params
+struct with valid fields. So, warning is only triggered when there is a
+problem with memory allocation.
+
+Thus, there is no sense in using WARN() to handle this error and it can be
+safely removed.
+
+WARNING: CPU: 0 PID: 5065 at net/core/xdp.c:299 __xdp_reg_mem_model+0x2d9/0x650 net/core/xdp.c:299
+
+CPU: 0 PID: 5065 Comm: syz-executor883 Not tainted 6.8.0-syzkaller-05271-gf99c5f563c17 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
+RIP: 0010:__xdp_reg_mem_model+0x2d9/0x650 net/core/xdp.c:299
+
+Call Trace:
+ xdp_reg_mem_model+0x22/0x40 net/core/xdp.c:344
+ xdp_test_run_setup net/bpf/test_run.c:188 [inline]
+ bpf_test_run_xdp_live+0x365/0x1e90 net/bpf/test_run.c:377
+ bpf_prog_test_run_xdp+0x813/0x11b0 net/bpf/test_run.c:1267
+ bpf_prog_test_run+0x33a/0x3b0 kernel/bpf/syscall.c:4240
+ __sys_bpf+0x48d/0x810 kernel/bpf/syscall.c:5649
+ __do_sys_bpf kernel/bpf/syscall.c:5738 [inline]
+ __se_sys_bpf kernel/bpf/syscall.c:5736 [inline]
+ __x64_sys_bpf+0x7c/0x90 kernel/bpf/syscall.c:5736
+ do_syscall_64+0xfb/0x240
+ entry_SYSCALL_64_after_hwframe+0x6d/0x75
+
+Found by Linux Verification Center (linuxtesting.org) with syzkaller.
+
+Fixes: 8d5d88527587 ("xdp: rhashtable with allocator ID to pointer mapping")
+Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Link: https://lore.kernel.org/all/20240617162708.492159-1-d.dulov@aladdin.ru
+Link: https://lore.kernel.org/bpf/20240624080747.36858-1-d.dulov@aladdin.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/pressure/bmp280-core.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/core/xdp.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/iio/pressure/bmp280-core.c b/drivers/iio/pressure/bmp280-core.c
-index 4c493db7db965..a65630d5742f0 100644
---- a/drivers/iio/pressure/bmp280-core.c
-+++ b/drivers/iio/pressure/bmp280-core.c
-@@ -1385,12 +1385,12 @@ static int bmp580_read_temp(struct bmp280_data *data, int *val, int *val2)
+diff --git a/net/core/xdp.c b/net/core/xdp.c
+index a70670fe9a2dc..5fe4c099f30a3 100644
+--- a/net/core/xdp.c
++++ b/net/core/xdp.c
+@@ -294,10 +294,8 @@ static struct xdp_mem_allocator *__xdp_reg_mem_model(struct xdp_mem_info *mem,
+ 		mutex_lock(&mem_id_lock);
+ 		ret = __mem_id_init_hash_table();
+ 		mutex_unlock(&mem_id_lock);
+-		if (ret < 0) {
+-			WARN_ON(1);
++		if (ret < 0)
+ 			return ERR_PTR(ret);
+-		}
+ 	}
  
- 	/*
- 	 * Temperature is returned in Celsius degrees in fractional
--	 * form down 2^16. We rescale by x1000 to return milli Celsius
--	 * to respect IIO ABI.
-+	 * form down 2^16. We rescale by x1000 to return millidegrees
-+	 * Celsius to respect IIO ABI.
- 	 */
--	*val = raw_temp * 1000;
--	*val2 = 16;
--	return IIO_VAL_FRACTIONAL_LOG2;
-+	raw_temp = sign_extend32(raw_temp, 23);
-+	*val = ((s64)raw_temp * 1000) / (1 << 16);
-+	return IIO_VAL_INT;
- }
- 
- static int bmp580_read_press(struct bmp280_data *data, int *val, int *val2)
+ 	xdp_alloc = kzalloc(sizeof(*xdp_alloc), gfp);
 -- 
 2.43.0
 
