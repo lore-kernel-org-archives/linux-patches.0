@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F84BBE5A;
-	Tue,  2 Jul 2024 17:09:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82769BE5A;
+	Tue,  2 Jul 2024 17:09:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940167; cv=none; b=cfafcFyfM20AaZj7EqYNTERvi3BdHoRG3eiTBjmripYz1tOMiAnEEfyiAvT36xpRZ5RtQG5dBamsykWLG9NTNKsoKWduAqEAhzZ/un65XbKUdS1qia+1ohHYOPowoJXknK5Rvpb4LFueNyndsm1tQuL/CLjJcFJ1UuFQ+dr29Fo=
+	t=1719940170; cv=none; b=tzlueQY0EqV8/dXP+S7h5AlyTqbxMwPyqcfbLfFE1C0rnCc5ibX6v3Q/WMJr8avgthWIB7C68GhJ0sY1r6ZDV3HrnQH3qZNPY06yO8qDONfCKffFOCv++HTym8PyjecbSK3GnfbhcI/BRWFIz+LabBXMhu+E35GIwx2RKpNhddg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940167; c=relaxed/simple;
-	bh=7xJL3FB2do9fC11Zl+S0a06nFqJpZwHOhXVU/K9i+EY=;
+	s=arc-20240116; t=1719940170; c=relaxed/simple;
+	bh=492McN/CjzrLjcLZqCyGBjvPIlwSXqtHkrCVuVUfLCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AHECuzCUDh19jqvESoJgJjeqwya0GitCpUMF6TwGSyF09WObKIf3eC/xE5Ki3ugw4EEMrM3Fq9Gp7IVjSTY8Gl5w6pHUQUoUFLbgZsUvBGhRSwoSdhaQAcUkDbWmf1QA7TJ/P+fo8/rcCP7Tf/IJkhmDTBCBQ1i8fyvARqPREKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sTQAB3br; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JC67aIiYps1rBPG7o8gQmZSRDrSpWeQbRVbj9gt4T67imzwFSI7p5a0DFWhUElGIP5zdRqtJtD3+DUNIfhRVUk4Stqzrllyhzv0v97CS15VT8V7vrAcQdwYqLOYe0vTdzxearU0Ikg0esylSLrjBePVIMh6CL8+JDKjYzwop+Wc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d0FSnhdl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sTQAB3br"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0A03C116B1;
-	Tue,  2 Jul 2024 17:09:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d0FSnhdl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 000E7C116B1;
+	Tue,  2 Jul 2024 17:09:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940167;
-	bh=7xJL3FB2do9fC11Zl+S0a06nFqJpZwHOhXVU/K9i+EY=;
+	s=korg; t=1719940170;
+	bh=492McN/CjzrLjcLZqCyGBjvPIlwSXqtHkrCVuVUfLCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sTQAB3brbnXq0S93gbgJ2EYUKEnQ3AHrI2aaFaQy4Oilm8yH1tpxWgj7ITCUEvK/D
-	 uvEUQjStuKVN+EWFNVWQ9X+cDsqghPfoPpDDDSr0U67VH5amwjtyySvXT1OOWwc6Js
-	 YndF/H90UIBKtPyFmec/C4vM7CQwfVYG/FqH3xdQ=
+	b=d0FSnhdlI7KgZ4/9aBGWOhEefBnY/WSzZ9/TwDrCK7rCCpBSPz+nnqKVihInBUGsF
+	 Sq8Ddy1rmBtC0DHrKjDNs1NLmMiaZg59Wrl8tKySjOA5bYG2eaDcwCjarmwHt2zcsE
+	 TZ6YSGMMepIGvKEj+PhG3efV808vVb4QoOEXLV8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	Nirmoy Das <nirmoy.das@intel.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Sherry Wang <Yao.Wang1@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 072/222] drm/xe: Add a NULL check in xe_ttm_stolen_mgr_init
-Date: Tue,  2 Jul 2024 19:01:50 +0200
-Message-ID: <20240702170246.732865129@linuxfoundation.org>
+Subject: [PATCH 6.9 073/222] drm/amd/display: correct hostvm flag
+Date: Tue,  2 Jul 2024 19:01:51 +0200
+Message-ID: <20240702170246.771225948@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -51,38 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nirmoy Das <nirmoy.das@intel.com>
+From: Sherry Wang <Yao.Wang1@amd.com>
 
-[ Upstream commit a6eff8f9c7e844cb24ccb188ca24abcd59734e74 ]
+[ Upstream commit 3a13d1fddaf51b98cdba20b486cb8fd6080b71b7 ]
 
-Add an explicit check to ensure that the mgr is not NULL.
+[Why]
+Hostvm should be enabled/disabled accordding to the status of
+riommu_active, but hostvm always be disabled on DCN31 which causes
+underflow
 
-Cc: Matthew Auld <matthew.auld@intel.com>
-Signed-off-by: Nirmoy Das <nirmoy.das@intel.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240319130925.22399-1-nirmoy.das@intel.com
+[How]
+Set correct hostvm flag on DCN31
+
+Acked-by: Wayne Lin <wayne.lin@amd.com>
+Signed-off-by: Sherry Wang <Yao.Wang1@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_ttm_stolen_mgr.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/amd/display/dc/resource/dcn31/dcn31_resource.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_ttm_stolen_mgr.c b/drivers/gpu/drm/xe/xe_ttm_stolen_mgr.c
-index 3107d2a12426c..fb35e46d68b49 100644
---- a/drivers/gpu/drm/xe/xe_ttm_stolen_mgr.c
-+++ b/drivers/gpu/drm/xe/xe_ttm_stolen_mgr.c
-@@ -207,6 +207,11 @@ void xe_ttm_stolen_mgr_init(struct xe_device *xe)
- 	u64 stolen_size, io_size, pgsize;
- 	int err;
+diff --git a/drivers/gpu/drm/amd/display/dc/resource/dcn31/dcn31_resource.c b/drivers/gpu/drm/amd/display/dc/resource/dcn31/dcn31_resource.c
+index 04d142f974745..2fb1d00ff9654 100644
+--- a/drivers/gpu/drm/amd/display/dc/resource/dcn31/dcn31_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/resource/dcn31/dcn31_resource.c
+@@ -892,7 +892,7 @@ static const struct dc_debug_options debug_defaults_drv = {
+ 	.disable_z10 = true,
+ 	.enable_legacy_fast_update = true,
+ 	.enable_z9_disable_interface = true, /* Allow support for the PMFW interface for disable Z9*/
+-	.dml_hostvm_override = DML_HOSTVM_OVERRIDE_FALSE,
++	.dml_hostvm_override = DML_HOSTVM_NO_OVERRIDE,
+ 	.using_dml2 = false,
+ };
  
-+	if (!mgr) {
-+		drm_dbg_kms(&xe->drm, "Stolen mgr init failed\n");
-+		return;
-+	}
-+
- 	if (IS_SRIOV_VF(xe))
- 		stolen_size = 0;
- 	else if (IS_DGFX(xe))
 -- 
 2.43.0
 
