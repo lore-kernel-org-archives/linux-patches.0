@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A205015B0FE;
-	Tue,  2 Jul 2024 17:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961CE1BE22F;
+	Tue,  2 Jul 2024 17:15:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940501; cv=none; b=C67h9tns4UDJtVFQs9XONfMLb5qMDIVDTJ0uVrv79cL3gwPxFjchVeCMIgxVwVS83ZJSNkgPFiEzo1Ns4qIGUO5IKxPoojMK1fV2+On//jJvRCV8HBDthU0OOV40K68ExRs4Rip8jkeyyuBttxmj4DaeaitnYyQCtMemcMoIhBg=
+	t=1719940504; cv=none; b=YYxIL9EGoM/7xgdSYHp1qMN6MCSBaQ1UwP6+65RbPiT8mhY51AzK/7HzBWxCzuw4sSq/M1xmNY5Oq1wHN+zfjbV1ResKsXdlC/kTNWyLqJ2T+xs1IaIUQsgP6t46UpAdaXZ63RWK2ZhAUS7I52mJOTwb2FfbBdjL50GRvA8dAWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940501; c=relaxed/simple;
-	bh=3PNfVrGqJN/gaiYW/SsKeQFKMqPpTepQ4u6efltq7ck=;
+	s=arc-20240116; t=1719940504; c=relaxed/simple;
+	bh=vaUmNJOy/RcA2KrPfBX+G73YKSsbe49oWbjYVYKkga0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qW9eDHOrei5buOgMrxU6/Lde5Uws3iBsU3LPCf/CoFBrItyxt1f+b/cpTmpiabXnEVD6N1Nf5CKRAyx/h4GM5t4fUNNw+luqJ5JSepisnV8+nnpC7CX+GtlK2Qujaj7UVlL4EAZZr3L0CQ6MBOqzYfrTzSaMkF4fhd90243s3UI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eBEXU8Cc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IAfF9//4NI3ER/BEOD5G+tfK6DfAYjGcD9TrBZ/y1NJieC2e8K6wGWBdn3h3FqJiVU7XiLePlBO5nzt4B8+O9shyYcyfYxRRy0XF9KWOSH049uQAV7PrRh3F+1i1FT5iM2CWRNuLxFe0dxBdI0RsbbLjs1wAEUiVry9Tih6bUiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uXgj5scq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eBEXU8Cc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F09EC116B1;
-	Tue,  2 Jul 2024 17:15:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uXgj5scq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F835C4AF0A;
+	Tue,  2 Jul 2024 17:15:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940501;
-	bh=3PNfVrGqJN/gaiYW/SsKeQFKMqPpTepQ4u6efltq7ck=;
+	s=korg; t=1719940504;
+	bh=vaUmNJOy/RcA2KrPfBX+G73YKSsbe49oWbjYVYKkga0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eBEXU8CcDmEBY3HSyYknlHQV+zyuo0wiMWX0dJAiiP2DAjzr1nm+kfXPZCdd1G0zF
-	 +fNcXCIQMkTDNOlZwaVPYJy2aJ7GF1ZwmPUkISbFL6aBUed+T4wakHaJ21DmMh2+sh
-	 6rLOjrCZkX8uptF8gi4TCXkogpbMdD4UjcrRjm3c=
+	b=uXgj5scqnYoopRdtJOXoGMydnzFCZNfEg0OX5ikwgBOxPtet9pwg6dt6CX03fyc3l
+	 3lZatELpusaKj01LlrgFWmkcsf9D9fycDj+wqiqRJP/gyeHc4KOTyfIgI9Bmu0+MHD
+	 ll5mYgL+QRFFMhMzyB7lLBTu7oPAV60RsWlKLj1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianli Xiong <xiongtianli@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.9 173/222] irqchip/loongson-liointc: Set different ISRs for different cores
-Date: Tue,  2 Jul 2024 19:03:31 +0200
-Message-ID: <20240702170250.589786232@linuxfoundation.org>
+	Diederik de Haas <didi.debian@cknow.org>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 6.9 174/222] kbuild: Install dtb files as 0644 in Makefile.dtbinst
+Date: Tue,  2 Jul 2024 19:03:32 +0200
+Message-ID: <20240702170250.627869282@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -51,53 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Dragan Simic <dsimic@manjaro.org>
 
-commit a9c3ee5d0fdb069b54902300df6ac822027f3b0a upstream.
+commit 9cc5f3bf63aa98bd7cc7ce8a8599077fde13283e upstream.
 
-The liointc hardware provides separate Interrupt Status Registers (ISR) for
-each core. The current code uses always the ISR of core #0, which works
-during boot because by default all interrupts are routed to core #0.
+The compiled dtb files aren't executable, so install them with 0644 as their
+permission mode, instead of defaulting to 0755 for the permission mode and
+installing them with the executable bits set.
 
-When the interrupt routing changes in the firmware configuration then this
-causes interrupts to be lost because they are not configured in the
-corresponding core.
+Some Linux distributions, including Debian, [1][2][3] already include fixes
+in their kernel package build recipes to change the dtb file permissions to
+0644 in their kernel packages.  These changes, when additionally propagated
+into the long-term kernel versions, will allow such distributions to remove
+their downstream fixes.
 
-Use the core index to access the correct ISR instead of a hardcoded 0.
+[1] https://salsa.debian.org/kernel-team/linux/-/merge_requests/642
+[2] https://salsa.debian.org/kernel-team/linux/-/merge_requests/749
+[3] https://salsa.debian.org/kernel-team/linux/-/blob/debian/6.8.12-1/debian/rules.real#L193
 
-[ tglx: Massaged changelog ]
-
-Fixes: 0858ed035a85 ("irqchip/loongson-liointc: Add ACPI init support")
-Co-developed-by: Tianli Xiong <xiongtianli@loongson.cn>
-Signed-off-by: Tianli Xiong <xiongtianli@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: Diederik de Haas <didi.debian@cknow.org>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20240622043338.1566945-1-chenhuacai@loongson.cn
+Fixes: aefd80307a05 ("kbuild: refactor Makefile.dtbinst more")
+Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-loongson-liointc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ scripts/Makefile.dtbinst |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/irqchip/irq-loongson-liointc.c
-+++ b/drivers/irqchip/irq-loongson-liointc.c
-@@ -28,7 +28,7 @@
+--- a/scripts/Makefile.dtbinst
++++ b/scripts/Makefile.dtbinst
+@@ -17,7 +17,7 @@ include $(srctree)/scripts/Kbuild.includ
+ dst := $(INSTALL_DTBS_PATH)
  
- #define LIOINTC_INTC_CHIP_START	0x20
+ quiet_cmd_dtb_install = INSTALL $@
+-      cmd_dtb_install = install -D $< $@
++      cmd_dtb_install = install -D -m 0644 $< $@
  
--#define LIOINTC_REG_INTC_STATUS	(LIOINTC_INTC_CHIP_START + 0x20)
-+#define LIOINTC_REG_INTC_STATUS(core)	(LIOINTC_INTC_CHIP_START + 0x20 + (core) * 8)
- #define LIOINTC_REG_INTC_EN_STATUS	(LIOINTC_INTC_CHIP_START + 0x04)
- #define LIOINTC_REG_INTC_ENABLE	(LIOINTC_INTC_CHIP_START + 0x08)
- #define LIOINTC_REG_INTC_DISABLE	(LIOINTC_INTC_CHIP_START + 0x0c)
-@@ -217,7 +217,7 @@ static int liointc_init(phys_addr_t addr
- 		goto out_free_priv;
- 
- 	for (i = 0; i < LIOINTC_NUM_CORES; i++)
--		priv->core_isr[i] = base + LIOINTC_REG_INTC_STATUS;
-+		priv->core_isr[i] = base + LIOINTC_REG_INTC_STATUS(i);
- 
- 	for (i = 0; i < LIOINTC_NUM_PARENT; i++)
- 		priv->handler[i].parent_int_map = parent_int_map[i];
+ $(dst)/%: $(obj)/%
+ 	$(call cmd,dtb_install)
 
 
