@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6819D15218A;
-	Tue,  2 Jul 2024 17:22:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D70DC15218A;
+	Tue,  2 Jul 2024 17:22:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940946; cv=none; b=XwjFV/Ms7i65G+AUbcDRaM2AdC4qegYCcGCwne/3ZNqPg4QjlN/o/mEo1/spMFNHCGKH9X95WxPklFYx8TiP9UBz/djdJXUZtudgVQvyF6Zt2DW2AwwRB8Y0M9WcTgHvJscgiuWoCvkp/uDwwqG7Mohhq8EWooLwXkHWgJRgGkU=
+	t=1719940949; cv=none; b=Tn4kPr3tBeNohmcf7sXZdtQv6PW4+cszQ+UKHnRi/x8M3U+yNYDjgqY7S2tH6cA+KhiT4UynlAnqGzI1Hb7y8sqPeHJlJtMRjmIGWCNgPXazrVnayr5SgYZIC7sNjpOWpwjDHE7U521QmRk8ozhL3MnPVRhd7vXPxovLfBkzPMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940946; c=relaxed/simple;
-	bh=j9bUT9153Szy/mwE+/IGsvcGOxK9iu4hdNHmABO49bM=;
+	s=arc-20240116; t=1719940949; c=relaxed/simple;
+	bh=X0TtqjYsP6wDSK0t8AaKuvC7n3Q4YIk/0Szf0ctni5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NyjmRv8uKf7rMvlZtenivFXRTXBINYfVs0ocnOHMZx90eX8Ml9wX7VgXjA7I3+DF1u5/VO7NUM2AqzoG0b9RsrkSzRF1d+8qN6/Tt6o4Uzz6c56bSp7pxYe6ocRbMXI+D7AVgGBpZVPa7wkTmNET52Y8KYJmftqPGHHfgAMxAKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mxl/XLUH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cVFQpDQDN2B2hZQz/eG9VbPRdLjekLzRBv7Ye5j5nRnHR01NVtGZ3L6r2kdJ4z1wUf3hoOb4bCVotYZEzhiX+6Eb1Bkx9TpK7jUQDlnwMFDFT8XCOY/94lXXUJ84seqCYhIqbwoXB5u5kxk6gPin6XZBEbVUP6pxEEjT6580qrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CP1Hm54P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mxl/XLUH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A31C116B1;
-	Tue,  2 Jul 2024 17:22:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CP1Hm54P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 436C2C116B1;
+	Tue,  2 Jul 2024 17:22:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940946;
-	bh=j9bUT9153Szy/mwE+/IGsvcGOxK9iu4hdNHmABO49bM=;
+	s=korg; t=1719940949;
+	bh=X0TtqjYsP6wDSK0t8AaKuvC7n3Q4YIk/0Szf0ctni5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mxl/XLUHZ5cAHIdeUDYQrIw/rI5/MQNMoz5G2xuFLQ8vbcxayuGNsaM0MowH8JGX8
-	 co26Bqkw5b40OBWY9l4s270YnkCQkk2LpYDZ07sc3gGzVoLOuL3+Do8zvGjWKYgTvM
-	 g/3eG/RQ3gLR4SQtdpmIXPpbh2vsrmGPIBQw+PpY=
+	b=CP1Hm54PCWNVKDCNwTjSE3Pb3mF02S1bO9sA3NTNlL9spwuF01NDAkT+v/F1wze93
+	 FP//RqxaRv11vpGvPklYCBD7v9jC4I4h+8slN6mK0wekNh/jYxlJAzDvVlzUXKiZYi
+	 lDaRQeUJ/DHUOyCeG6W7odLX49zeZJqpVgpvw6LM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhaoyang Huang <zhaoyang.huang@unisoc.com>,
-	"Hailong.Liu" <hailong.liu@oppo.com>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
-	Baoquan He <bhe@redhat.com>,
-	Christoph Hellwig <hch@infradead.org>,
-	Lorenzo Stoakes <lstoakes@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 084/163] mm: fix incorrect vbq reference in purge_fragmented_block
-Date: Tue,  2 Jul 2024 19:03:18 +0200
-Message-ID: <20240702170236.244894977@linuxfoundation.org>
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.6 085/163] mmc: sdhci-pci-o2micro: Convert PCIBIOS_* return codes to errnos
+Date: Tue,  2 Jul 2024 19:03:19 +0200
+Message-ID: <20240702170236.281917074@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -57,202 +52,215 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit 8c61291fd8500e3b35c7ec0c781b273d8cc96cde upstream.
+commit a91bf3b3beadbb4f8b3bbc7969fb2ae1615e25c8 upstream.
 
-xa_for_each() in _vm_unmap_aliases() loops through all vbs.  However,
-since commit 062eacf57ad9 ("mm: vmalloc: remove a global vmap_blocks
-xarray") the vb from xarray may not be on the corresponding CPU
-vmap_block_queue.  Consequently, purge_fragmented_block() might use the
-wrong vbq->lock to protect the free list, leading to vbq->free breakage.
+sdhci_pci_o2_probe() uses pci_read_config_{byte,dword}() that return
+PCIBIOS_* codes. The return code is then returned as is but as
+sdhci_pci_o2_probe() is probe function chain, it should return normal
+errnos.
 
-Incorrect lock protection can exhaust all vmalloc space as follows:
-CPU0                                            CPU1
-+--------------------------------------------+
-|    +--------------------+     +-----+      |
-+--> |                    |---->|     |------+
-     | CPU1:vbq free_list |     | vb1 |
-+--- |                    |<----|     |<-----+
-|    +--------------------+     +-----+      |
-+--------------------------------------------+
+Convert PCIBIOS_* returns code using pcibios_err_to_errno() into normal
+errno before returning them. Add a label for read failure so that the
+conversion can be done in one place rather than on all of the return
+statements.
 
-_vm_unmap_aliases()                             vb_alloc()
-                                                new_vmap_block()
-xa_for_each(&vbq->vmap_blocks, idx, vb)
---> vb in CPU1:vbq->freelist
-
-purge_fragmented_block(vb)
-spin_lock(&vbq->lock)                           spin_lock(&vbq->lock)
---> use CPU0:vbq->lock                          --> use CPU1:vbq->lock
-
-list_del_rcu(&vb->free_list)                    list_add_tail_rcu(&vb->free_list, &vbq->free)
-    __list_del(vb->prev, vb->next)
-        next->prev = prev
-    +--------------------+
-    |                    |
-    | CPU1:vbq free_list |
-+---|                    |<--+
-|   +--------------------+   |
-+----------------------------+
-                                                __list_add(new, head->prev, head)
-+--------------------------------------------+
-|    +--------------------+     +-----+      |
-+--> |                    |---->|     |------+
-     | CPU1:vbq free_list |     | vb2 |
-+--- |                    |<----|     |<-----+
-|    +--------------------+     +-----+      |
-+--------------------------------------------+
-
-        prev->next = next
-+--------------------------------------------+
-|----------------------------+               |
-|    +--------------------+  |  +-----+      |
-+--> |                    |--+  |     |------+
-     | CPU1:vbq free_list |     | vb2 |
-+--- |                    |<----|     |<-----+
-|    +--------------------+     +-----+      |
-+--------------------------------------------+
-Here’s a list breakdown. All vbs, which were to be added to
-‘prev’, cannot be used by list_for_each_entry_rcu(vb, &vbq->free,
-free_list) in vb_alloc(). Thus, vmalloc space is exhausted.
-
-This issue affects both erofs and f2fs, the stacktrace is as follows:
-erofs:
-[<ffffffd4ffb93ad4>] __switch_to+0x174
-[<ffffffd4ffb942f0>] __schedule+0x624
-[<ffffffd4ffb946f4>] schedule+0x7c
-[<ffffffd4ffb947cc>] schedule_preempt_disabled+0x24
-[<ffffffd4ffb962ec>] __mutex_lock+0x374
-[<ffffffd4ffb95998>] __mutex_lock_slowpath+0x14
-[<ffffffd4ffb95954>] mutex_lock+0x24
-[<ffffffd4fef2900c>] reclaim_and_purge_vmap_areas+0x44
-[<ffffffd4fef25908>] alloc_vmap_area+0x2e0
-[<ffffffd4fef24ea0>] vm_map_ram+0x1b0
-[<ffffffd4ff1b46f4>] z_erofs_lz4_decompress+0x278
-[<ffffffd4ff1b8ac4>] z_erofs_decompress_queue+0x650
-[<ffffffd4ff1b8328>] z_erofs_runqueue+0x7f4
-[<ffffffd4ff1b66a8>] z_erofs_read_folio+0x104
-[<ffffffd4feeb6fec>] filemap_read_folio+0x6c
-[<ffffffd4feeb68c4>] filemap_fault+0x300
-[<ffffffd4fef0ecac>] __do_fault+0xc8
-[<ffffffd4fef0c908>] handle_mm_fault+0xb38
-[<ffffffd4ffb9f008>] do_page_fault+0x288
-[<ffffffd4ffb9ed64>] do_translation_fault[jt]+0x40
-[<ffffffd4fec39c78>] do_mem_abort+0x58
-[<ffffffd4ffb8c3e4>] el0_ia+0x70
-[<ffffffd4ffb8c260>] el0t_64_sync_handler[jt]+0xb0
-[<ffffffd4fec11588>] ret_to_user[jt]+0x0
-
-f2fs:
-[<ffffffd4ffb93ad4>] __switch_to+0x174
-[<ffffffd4ffb942f0>] __schedule+0x624
-[<ffffffd4ffb946f4>] schedule+0x7c
-[<ffffffd4ffb947cc>] schedule_preempt_disabled+0x24
-[<ffffffd4ffb962ec>] __mutex_lock+0x374
-[<ffffffd4ffb95998>] __mutex_lock_slowpath+0x14
-[<ffffffd4ffb95954>] mutex_lock+0x24
-[<ffffffd4fef2900c>] reclaim_and_purge_vmap_areas+0x44
-[<ffffffd4fef25908>] alloc_vmap_area+0x2e0
-[<ffffffd4fef24ea0>] vm_map_ram+0x1b0
-[<ffffffd4ff1a3b60>] f2fs_prepare_decomp_mem+0x144
-[<ffffffd4ff1a6c24>] f2fs_alloc_dic+0x264
-[<ffffffd4ff175468>] f2fs_read_multi_pages+0x428
-[<ffffffd4ff17b46c>] f2fs_mpage_readpages+0x314
-[<ffffffd4ff1785c4>] f2fs_readahead+0x50
-[<ffffffd4feec3384>] read_pages+0x80
-[<ffffffd4feec32c0>] page_cache_ra_unbounded+0x1a0
-[<ffffffd4feec39e8>] page_cache_ra_order+0x274
-[<ffffffd4feeb6cec>] do_sync_mmap_readahead+0x11c
-[<ffffffd4feeb6764>] filemap_fault+0x1a0
-[<ffffffd4ff1423bc>] f2fs_filemap_fault+0x28
-[<ffffffd4fef0ecac>] __do_fault+0xc8
-[<ffffffd4fef0c908>] handle_mm_fault+0xb38
-[<ffffffd4ffb9f008>] do_page_fault+0x288
-[<ffffffd4ffb9ed64>] do_translation_fault[jt]+0x40
-[<ffffffd4fec39c78>] do_mem_abort+0x58
-[<ffffffd4ffb8c3e4>] el0_ia+0x70
-[<ffffffd4ffb8c260>] el0t_64_sync_handler[jt]+0xb0
-[<ffffffd4fec11588>] ret_to_user[jt]+0x0
-
-To fix this, introducee cpu within vmap_block to record which this vb
-belongs to.
-
-Link: https://lkml.kernel.org/r/20240614021352.1822225-1-zhaoyang.huang@unisoc.com
-Link: https://lkml.kernel.org/r/20240607023116.1720640-1-zhaoyang.huang@unisoc.com
-Fixes: fc1e0d980037 ("mm/vmalloc: prevent stale TLBs in fully utilized blocks")
-Signed-off-by: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
-Suggested-by: Hailong.Liu <hailong.liu@oppo.com>
-Reviewed-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
-Cc: Baoquan He <bhe@redhat.com>
-Cc: Christoph Hellwig <hch@infradead.org>
-Cc: Lorenzo Stoakes <lstoakes@gmail.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 3d757ddbd68c ("mmc: sdhci-pci-o2micro: add Bayhub new chip GG8 support for UHS-I")
+Fixes: d599005afde8 ("mmc: sdhci-pci-o2micro: Add missing checks in sdhci_pci_o2_probe")
+Fixes: 706adf6bc31c ("mmc: sdhci-pci-o2micro: Add SeaBird SeaEagle SD3 support")
+Fixes: 01acf6917aed ("mmc: sdhci-pci: add support of O2Micro/BayHubTech SD hosts")
+Fixes: 26daa1ed40c6 ("mmc: sdhci: Disable ADMA on some O2Micro SD/MMC parts.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20240527132443.14038-2-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmalloc.c |   21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ drivers/mmc/host/sdhci-pci-o2micro.c |   41 ++++++++++++++++++-----------------
+ 1 file changed, 22 insertions(+), 19 deletions(-)
 
---- a/mm/vmalloc.c
-+++ b/mm/vmalloc.c
-@@ -1939,6 +1939,7 @@ struct vmap_block {
- 	struct list_head free_list;
- 	struct rcu_head rcu_head;
- 	struct list_head purge;
-+	unsigned int cpu;
- };
+--- a/drivers/mmc/host/sdhci-pci-o2micro.c
++++ b/drivers/mmc/host/sdhci-pci-o2micro.c
+@@ -823,7 +823,7 @@ static int sdhci_pci_o2_probe(struct sdh
+ 		ret = pci_read_config_byte(chip->pdev,
+ 				O2_SD_LOCK_WP, &scratch);
+ 		if (ret)
+-			return ret;
++			goto read_fail;
+ 		scratch &= 0x7f;
+ 		pci_write_config_byte(chip->pdev, O2_SD_LOCK_WP, scratch);
  
- /* Queue of free and dirty vmap blocks, for allocation and flushing purposes */
-@@ -2066,8 +2067,15 @@ static void *new_vmap_block(unsigned int
- 		free_vmap_area(va);
- 		return ERR_PTR(err);
+@@ -834,7 +834,7 @@ static int sdhci_pci_o2_probe(struct sdh
+ 		ret = pci_read_config_byte(chip->pdev,
+ 				O2_SD_CLKREQ, &scratch);
+ 		if (ret)
+-			return ret;
++			goto read_fail;
+ 		scratch |= 0x20;
+ 		pci_write_config_byte(chip->pdev, O2_SD_CLKREQ, scratch);
+ 
+@@ -843,7 +843,7 @@ static int sdhci_pci_o2_probe(struct sdh
+ 		 */
+ 		ret = pci_read_config_byte(chip->pdev, O2_SD_CAPS, &scratch);
+ 		if (ret)
+-			return ret;
++			goto read_fail;
+ 		scratch |= 0x01;
+ 		pci_write_config_byte(chip->pdev, O2_SD_CAPS, scratch);
+ 		pci_write_config_byte(chip->pdev, O2_SD_CAPS, 0x73);
+@@ -856,7 +856,7 @@ static int sdhci_pci_o2_probe(struct sdh
+ 		ret = pci_read_config_byte(chip->pdev,
+ 				O2_SD_INF_MOD, &scratch);
+ 		if (ret)
+-			return ret;
++			goto read_fail;
+ 		scratch |= 0x08;
+ 		pci_write_config_byte(chip->pdev, O2_SD_INF_MOD, scratch);
+ 
+@@ -864,7 +864,7 @@ static int sdhci_pci_o2_probe(struct sdh
+ 		ret = pci_read_config_byte(chip->pdev,
+ 				O2_SD_LOCK_WP, &scratch);
+ 		if (ret)
+-			return ret;
++			goto read_fail;
+ 		scratch |= 0x80;
+ 		pci_write_config_byte(chip->pdev, O2_SD_LOCK_WP, scratch);
+ 		break;
+@@ -875,7 +875,7 @@ static int sdhci_pci_o2_probe(struct sdh
+ 		ret = pci_read_config_byte(chip->pdev,
+ 				O2_SD_LOCK_WP, &scratch);
+ 		if (ret)
+-			return ret;
++			goto read_fail;
+ 
+ 		scratch &= 0x7f;
+ 		pci_write_config_byte(chip->pdev, O2_SD_LOCK_WP, scratch);
+@@ -886,7 +886,7 @@ static int sdhci_pci_o2_probe(struct sdh
+ 						    O2_SD_FUNC_REG0,
+ 						    &scratch_32);
+ 			if (ret)
+-				return ret;
++				goto read_fail;
+ 			scratch_32 = ((scratch_32 & 0xFF000000) >> 24);
+ 
+ 			/* Check Whether subId is 0x11 or 0x12 */
+@@ -898,7 +898,7 @@ static int sdhci_pci_o2_probe(struct sdh
+ 							    O2_SD_FUNC_REG4,
+ 							    &scratch_32);
+ 				if (ret)
+-					return ret;
++					goto read_fail;
+ 
+ 				/* Enable Base Clk setting change */
+ 				scratch_32 |= O2_SD_FREG4_ENABLE_CLK_SET;
+@@ -921,7 +921,7 @@ static int sdhci_pci_o2_probe(struct sdh
+ 		ret = pci_read_config_dword(chip->pdev,
+ 					    O2_SD_CLK_SETTING, &scratch_32);
+ 		if (ret)
+-			return ret;
++			goto read_fail;
+ 
+ 		scratch_32 &= ~(0xFF00);
+ 		scratch_32 |= 0x07E0C800;
+@@ -931,14 +931,14 @@ static int sdhci_pci_o2_probe(struct sdh
+ 		ret = pci_read_config_dword(chip->pdev,
+ 					    O2_SD_CLKREQ, &scratch_32);
+ 		if (ret)
+-			return ret;
++			goto read_fail;
+ 		scratch_32 |= 0x3;
+ 		pci_write_config_dword(chip->pdev, O2_SD_CLKREQ, scratch_32);
+ 
+ 		ret = pci_read_config_dword(chip->pdev,
+ 					    O2_SD_PLL_SETTING, &scratch_32);
+ 		if (ret)
+-			return ret;
++			goto read_fail;
+ 
+ 		scratch_32 &= ~(0x1F3F070E);
+ 		scratch_32 |= 0x18270106;
+@@ -949,7 +949,7 @@ static int sdhci_pci_o2_probe(struct sdh
+ 		ret = pci_read_config_dword(chip->pdev,
+ 					    O2_SD_CAP_REG2, &scratch_32);
+ 		if (ret)
+-			return ret;
++			goto read_fail;
+ 		scratch_32 &= ~(0xE0);
+ 		pci_write_config_dword(chip->pdev,
+ 				       O2_SD_CAP_REG2, scratch_32);
+@@ -961,7 +961,7 @@ static int sdhci_pci_o2_probe(struct sdh
+ 		ret = pci_read_config_byte(chip->pdev,
+ 					   O2_SD_LOCK_WP, &scratch);
+ 		if (ret)
+-			return ret;
++			goto read_fail;
+ 		scratch |= 0x80;
+ 		pci_write_config_byte(chip->pdev, O2_SD_LOCK_WP, scratch);
+ 		break;
+@@ -971,7 +971,7 @@ static int sdhci_pci_o2_probe(struct sdh
+ 		ret = pci_read_config_byte(chip->pdev,
+ 				O2_SD_LOCK_WP, &scratch);
+ 		if (ret)
+-			return ret;
++			goto read_fail;
+ 
+ 		scratch &= 0x7f;
+ 		pci_write_config_byte(chip->pdev, O2_SD_LOCK_WP, scratch);
+@@ -979,7 +979,7 @@ static int sdhci_pci_o2_probe(struct sdh
+ 		ret = pci_read_config_dword(chip->pdev,
+ 					    O2_SD_PLL_SETTING, &scratch_32);
+ 		if (ret)
+-			return ret;
++			goto read_fail;
+ 
+ 		if ((scratch_32 & 0xff000000) == 0x01000000) {
+ 			scratch_32 &= 0x0000FFFF;
+@@ -998,7 +998,7 @@ static int sdhci_pci_o2_probe(struct sdh
+ 						    O2_SD_FUNC_REG4,
+ 						    &scratch_32);
+ 			if (ret)
+-				return ret;
++				goto read_fail;
+ 			scratch_32 |= (1 << 22);
+ 			pci_write_config_dword(chip->pdev,
+ 					       O2_SD_FUNC_REG4, scratch_32);
+@@ -1017,7 +1017,7 @@ static int sdhci_pci_o2_probe(struct sdh
+ 		ret = pci_read_config_byte(chip->pdev,
+ 					   O2_SD_LOCK_WP, &scratch);
+ 		if (ret)
+-			return ret;
++			goto read_fail;
+ 		scratch |= 0x80;
+ 		pci_write_config_byte(chip->pdev, O2_SD_LOCK_WP, scratch);
+ 		break;
+@@ -1028,7 +1028,7 @@ static int sdhci_pci_o2_probe(struct sdh
+ 		/* UnLock WP */
+ 		ret = pci_read_config_byte(chip->pdev, O2_SD_LOCK_WP, &scratch);
+ 		if (ret)
+-			return ret;
++			goto read_fail;
+ 		scratch &= 0x7f;
+ 		pci_write_config_byte(chip->pdev, O2_SD_LOCK_WP, scratch);
+ 
+@@ -1057,13 +1057,16 @@ static int sdhci_pci_o2_probe(struct sdh
+ 		/* Lock WP */
+ 		ret = pci_read_config_byte(chip->pdev, O2_SD_LOCK_WP, &scratch);
+ 		if (ret)
+-			return ret;
++			goto read_fail;
+ 		scratch |= 0x80;
+ 		pci_write_config_byte(chip->pdev, O2_SD_LOCK_WP, scratch);
+ 		break;
  	}
--
--	vbq = raw_cpu_ptr(&vmap_block_queue);
-+	/*
-+	 * list_add_tail_rcu could happened in another core
-+	 * rather than vb->cpu due to task migration, which
-+	 * is safe as list_add_tail_rcu will ensure the list's
-+	 * integrity together with list_for_each_rcu from read
-+	 * side.
-+	 */
-+	vb->cpu = raw_smp_processor_id();
-+	vbq = per_cpu_ptr(&vmap_block_queue, vb->cpu);
- 	spin_lock(&vbq->lock);
- 	list_add_tail_rcu(&vb->free_list, &vbq->free);
- 	spin_unlock(&vbq->lock);
-@@ -2093,9 +2101,10 @@ static void free_vmap_block(struct vmap_
+ 
+ 	return 0;
++
++read_fail:
++	return pcibios_err_to_errno(ret);
  }
  
- static bool purge_fragmented_block(struct vmap_block *vb,
--		struct vmap_block_queue *vbq, struct list_head *purge_list,
--		bool force_purge)
-+		struct list_head *purge_list, bool force_purge)
- {
-+	struct vmap_block_queue *vbq = &per_cpu(vmap_block_queue, vb->cpu);
-+
- 	if (vb->free + vb->dirty != VMAP_BBMAP_BITS ||
- 	    vb->dirty == VMAP_BBMAP_BITS)
- 		return false;
-@@ -2143,7 +2152,7 @@ static void purge_fragmented_blocks(int
- 			continue;
- 
- 		spin_lock(&vb->lock);
--		purge_fragmented_block(vb, vbq, &purge, true);
-+		purge_fragmented_block(vb, &purge, true);
- 		spin_unlock(&vb->lock);
- 	}
- 	rcu_read_unlock();
-@@ -2280,7 +2289,7 @@ static void _vm_unmap_aliases(unsigned l
- 			 * not purgeable, check whether there is dirty
- 			 * space to be flushed.
- 			 */
--			if (!purge_fragmented_block(vb, vbq, &purge_list, false) &&
-+			if (!purge_fragmented_block(vb, &purge_list, false) &&
- 			    vb->dirty_max && vb->dirty != VMAP_BBMAP_BITS) {
- 				unsigned long va_start = vb->va->va_start;
- 				unsigned long s, e;
+ #ifdef CONFIG_PM_SLEEP
 
 
