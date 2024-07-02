@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A7CBE5A;
-	Tue,  2 Jul 2024 17:09:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B896BE5A;
+	Tue,  2 Jul 2024 17:09:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940157; cv=none; b=MRi1scWpAQXbH/aZ2m+31SxJx/dWDl6SlKRtKZ0cZBxGTqTspx1PKIuiMr59OUoEkzq15BUt5c+9hZxZ0CWfxt4WQuAliY79SBbX1HSZhE/ER/NsQzKHsr33YyvOOoWtjBTk6jO4WujLA20jclQkISwAhTMA8BGeFPhBFBNYSJQ=
+	t=1719940160; cv=none; b=BMkTTfy167gJKZ9/hYlXW6mCtwGpIyz1HhtNZp3OS4t1G5TOoqLR9QJk+vh2THGtNNoIK/O8VkS2n4YFOLMi0wJl2gFIs9gFnACTZNHXcEmI8vclzt/Z//85ZrxS/9H/TBieLPvxJaTqF2gttIW5qbWBeAvBG7s2wEfM/c+5RuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940157; c=relaxed/simple;
-	bh=SpHS5fqnD9Yb/VCDc9Lj5e60yDUq+V+0ifsnrQ1ZrnI=;
+	s=arc-20240116; t=1719940160; c=relaxed/simple;
+	bh=jE6eytjcdqdx4w4nsP7AGNmWr2jX/2ECWvsiLfvJxP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jH5BKhbPth0utIlU6p0neI6MP0KaqXsBzawVzFkTVOHhCaCNrY/JLB4eBFiFLSGQSPBnzkKQw+13L4GTxmZA5GJhj6r3Oced8mI322D0J0Yf0zZDElBokES1Nl+SpT1qrw1JFdjzDUzurhWPXrW/gYlZ316AhgfxxgBgh9Resws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0lK97Zcp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OVZwoPbz39uWsPvJUxwK+bKpmGQ1JDlRPCyPG1iBwbkH3w4hVgCucz1/nIVU4vlGZ7n1kmjKsYUzFTTswkO8s7X3AQtxX1OsSwvOxRyLJdoiliMXv5hrH/RR+DHnBtQk/rfUZIhTO9DExhNgEerzvqi5HUW4N3NL73kxxU+zgv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ohz6ON2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0lK97Zcp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0CBC116B1;
-	Tue,  2 Jul 2024 17:09:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ohz6ON2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B917C116B1;
+	Tue,  2 Jul 2024 17:09:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940157;
-	bh=SpHS5fqnD9Yb/VCDc9Lj5e60yDUq+V+0ifsnrQ1ZrnI=;
+	s=korg; t=1719940160;
+	bh=jE6eytjcdqdx4w4nsP7AGNmWr2jX/2ECWvsiLfvJxP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0lK97Zcpe1nnXAZyCusYN7Ztew09q2/eS85OQBLvE2Vt8OSksjdIC61pIHi6BSCmN
-	 LU4fzBehwqwdoFSBgomPLpqDDypKk8ULs7IzTHbMA2UXVSWxZDWTxZXkMov2HSZzhX
-	 g0GXfo8RQlaTwIocV3cP+VWEIOcQaV7+DFYKGbNk=
+	b=1ohz6ON2p6LUA4hDN5QPXYRsEouekYoATR+1jL9U4FAsQ77xW/KKC5/+YUnpQp1CR
+	 V01A9DzwhwL4N1H1/gpMDFPQRpo9nVLO3qO7k2u+eCUQ0yFGNa2GMsrseR3JJbDt2Z
+	 PkyHR3K9Aabq4vPFdEWRXz0ddpPVKzAFMmXdK7tQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Wang <jasowang@redhat.com>,
-	Xie Yongji <xieyongji@bytedance.com>,
-	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
 	Maxime Coquelin <maxime.coquelin@redhat.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	Xie Yongji <xieyongji@bytedance.com>,
+	Jason Wang <jasowang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 069/222] vduse: validate block features only with block devices
-Date: Tue,  2 Jul 2024 19:01:47 +0200
-Message-ID: <20240702170246.618832044@linuxfoundation.org>
+Subject: [PATCH 6.9 070/222] vduse: Temporarily fail if control queue feature requested
+Date: Tue,  2 Jul 2024 19:01:48 +0200
+Message-ID: <20240702170246.656359839@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -57,58 +57,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Maxime Coquelin <maxime.coquelin@redhat.com>
 
-[ Upstream commit a115b5716fc9a64652aa9cb332070087178ffafa ]
+[ Upstream commit 56e71885b0349241c07631a7b979b61e81afab6a ]
 
-This patch is preliminary work to enable network device
-type support to VDUSE.
+Virtio-net driver control queue implementation is not safe
+when used with VDUSE. If the VDUSE application does not
+reply to control queue messages, it currently ends up
+hanging the kernel thread sending this command.
 
-As VIRTIO_BLK_F_CONFIG_WCE shares the same value as
-VIRTIO_NET_F_HOST_TSO4, we need to restrict its check
-to Virtio-blk device type.
+Some work is on-going to make the control queue
+implementation robust with VDUSE. Until it is completed,
+let's fail features check if control-queue feature is
+requested.
 
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Xie Yongji <xieyongji@bytedance.com>
-Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
 Signed-off-by: Maxime Coquelin <maxime.coquelin@redhat.com>
-Message-Id: <20240109111025.1320976-2-maxime.coquelin@redhat.com>
+Message-Id: <20240109111025.1320976-3-maxime.coquelin@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Stable-dep-of: 56e71885b034 ("vduse: Temporarily fail if control queue feature requested")
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Reviewed-by: Xie Yongji <xieyongji@bytedance.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_user/vduse_dev.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/vdpa/vdpa_user/vduse_dev.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/drivers/vdpa/vdpa_user/vduse_dev.c b/drivers/vdpa/vdpa_user/vduse_dev.c
-index 73c89701fc9d4..7c3d117b22deb 100644
+index 7c3d117b22deb..ac8b5b52e3dc4 100644
 --- a/drivers/vdpa/vdpa_user/vduse_dev.c
 +++ b/drivers/vdpa/vdpa_user/vduse_dev.c
-@@ -1705,13 +1705,14 @@ static bool device_is_allowed(u32 device_id)
- 	return false;
+@@ -8,6 +8,7 @@
+  *
+  */
+ 
++#include "linux/virtio_net.h"
+ #include <linux/init.h>
+ #include <linux/module.h>
+ #include <linux/cdev.h>
+@@ -28,6 +29,7 @@
+ #include <uapi/linux/virtio_config.h>
+ #include <uapi/linux/virtio_ids.h>
+ #include <uapi/linux/virtio_blk.h>
++#include <uapi/linux/virtio_ring.h>
+ #include <linux/mod_devicetable.h>
+ 
+ #include "iova_domain.h"
+@@ -1714,6 +1716,9 @@ static bool features_is_valid(struct vduse_dev_config *config)
+ 	if ((config->device_id == VIRTIO_ID_BLOCK) &&
+ 			(config->features & BIT_ULL(VIRTIO_BLK_F_CONFIG_WCE)))
+ 		return false;
++	else if ((config->device_id == VIRTIO_ID_NET) &&
++			(config->features & BIT_ULL(VIRTIO_NET_F_CTRL_VQ)))
++		return false;
+ 
+ 	return true;
  }
- 
--static bool features_is_valid(u64 features)
-+static bool features_is_valid(struct vduse_dev_config *config)
- {
--	if (!(features & (1ULL << VIRTIO_F_ACCESS_PLATFORM)))
-+	if (!(config->features & BIT_ULL(VIRTIO_F_ACCESS_PLATFORM)))
- 		return false;
- 
- 	/* Now we only support read-only configuration space */
--	if (features & (1ULL << VIRTIO_BLK_F_CONFIG_WCE))
-+	if ((config->device_id == VIRTIO_ID_BLOCK) &&
-+			(config->features & BIT_ULL(VIRTIO_BLK_F_CONFIG_WCE)))
- 		return false;
- 
- 	return true;
-@@ -1738,7 +1739,7 @@ static bool vduse_validate_config(struct vduse_dev_config *config)
- 	if (!device_is_allowed(config->device_id))
- 		return false;
- 
--	if (!features_is_valid(config->features))
-+	if (!features_is_valid(config))
- 		return false;
- 
- 	return true;
 -- 
 2.43.0
 
