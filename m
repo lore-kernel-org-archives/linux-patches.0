@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE65D1BE22B;
-	Tue,  2 Jul 2024 17:29:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B3CF1BE22B;
+	Tue,  2 Jul 2024 17:29:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941353; cv=none; b=jN76F7XGZPZ/GAYWEm+ORV61yufhrTlwA5WnKeJv1XR63bAzdMAmYnZ4HWd0GmJvj+B05CZfli36NUbuip/XtvAaEuG67PZ/vG96o28WKsYqH8obEZ0PNVPvs159tWpN2CFNCQ/2wdmO4AT0FWmbxj/rNJJnXhVIIVB0oUEwD4U=
+	t=1719941356; cv=none; b=J6jdio5w+hji0z9Zqscabw7uKAMR5/eeahG0Z1owfTTLLUq0md+GMQhN/eJqMt4TiHQrB8da1NkURK2rx4h9Ys6OIJlv8W7XmiS4Iqvq62RRcwZ+Iymsrn22WzGX9IkxQJOliAfHKixGKOnmSyK3WmMoAyqBqiUB6MPaDz1McaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941353; c=relaxed/simple;
-	bh=an3yqWV00t7ayZ+Z7tDS1imUBLr6m9ia1aGzijfpTkI=;
+	s=arc-20240116; t=1719941356; c=relaxed/simple;
+	bh=64zkpMYtgzeZMTduHgPJpBf6YvLaGylHb4msWL4CqfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mPRr0FpbcVl9fEsnOeSQj+gDz6jRHrHF9l/xb4oYa+XGNF4QLSSl6qzgXSiVE3XGulcV0RPWVSfD1jqnVTLWQtFja8GUrmTQqu0E66xUYVprP2X4A86onY75gglTmnE+040+7DSJxN4s/jzZj1rTTMGcpSBrADfkKqVX9HEi9Bo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RAen88S4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WzfZBLc+QsXwToLm6MKEPVyoSSSDDTXljPElBa56Y7nk32NZR2t9NLl8gfe05bezE0GIUsiwhyOsWhcOrJ58oeaKXKNkaNQpF7aNwlLMmEcwT4bVCnQ/i94jwM3nVr1HzT5GJFFLTytn1zHauoHwgG0dECfnvgbWfr01J5vaPFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WxFsPzF5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RAen88S4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D76C116B1;
-	Tue,  2 Jul 2024 17:29:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WxFsPzF5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7F8C116B1;
+	Tue,  2 Jul 2024 17:29:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941352;
-	bh=an3yqWV00t7ayZ+Z7tDS1imUBLr6m9ia1aGzijfpTkI=;
+	s=korg; t=1719941356;
+	bh=64zkpMYtgzeZMTduHgPJpBf6YvLaGylHb4msWL4CqfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RAen88S4qExyx2btGrIJE/WtfwZfK2ofRbmf8tZCpY0YQs0jwaV7xaYvpv45vvww5
-	 su6mw4VbNrxMN+HgBr/A/28IIbOL0DA930YqHgRyJc8lroC5ZHo4iHrpFP+rZWvrRM
-	 sqpJYHqHVYVBepp5Gub8g19iLXF9ZMl6PipBlsXQ=
+	b=WxFsPzF5fbrPUddURLVY3zQbJzStTLdOqOgyNE92eyXwx2kAS+ieJ3fEILH1pexHv
+	 KPjYurfghiRwUDceq6ORVcux6xZUkRSRMFHP4TT8dTNhgg2uFcCpvAtcmKQhMKIURJ
+	 0UD15Uaefsbpu96hGZGiIK+fkhS+0eHky/zj3gm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Coquelin <maxime.coquelin@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
-	Xie Yongji <xieyongji@bytedance.com>,
-	Jason Wang <jasowang@redhat.com>,
+	Uros Bizjak <ubizjak@gmail.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Andy Lutomirski <luto@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 039/128] vduse: Temporarily fail if control queue feature requested
-Date: Tue,  2 Jul 2024 19:04:00 +0200
-Message-ID: <20240702170227.711109409@linuxfoundation.org>
+Subject: [PATCH 6.1 040/128] x86/fpu: Fix AMD X86_BUG_FXSAVE_LEAK fixup
+Date: Tue,  2 Jul 2024 19:04:01 +0200
+Message-ID: <20240702170227.752131524@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170226.231899085@linuxfoundation.org>
 References: <20240702170226.231899085@linuxfoundation.org>
@@ -48,68 +48,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maxime Coquelin <maxime.coquelin@redhat.com>
+From: Uros Bizjak <ubizjak@gmail.com>
 
-[ Upstream commit 56e71885b0349241c07631a7b979b61e81afab6a ]
+[ Upstream commit 5d31174f3c8c465d9dbe88f6b9d1fe5716f44981 ]
 
-Virtio-net driver control queue implementation is not safe
-when used with VDUSE. If the VDUSE application does not
-reply to control queue messages, it currently ends up
-hanging the kernel thread sending this command.
+The assembly snippet in restore_fpregs_from_fpstate() that implements
+X86_BUG_FXSAVE_LEAK fixup loads the value from a random variable,
+preferably the one that is already in the L1 cache.
 
-Some work is on-going to make the control queue
-implementation robust with VDUSE. Until it is completed,
-let's fail features check if control-queue feature is
-requested.
+However, the access to fpinit_state via *fpstate pointer is not
+implemented correctly. The "m" asm constraint requires dereferenced
+pointer variable, otherwise the compiler just reloads the value
+via temporary stack slot. The current asm code reflects this:
 
-Signed-off-by: Maxime Coquelin <maxime.coquelin@redhat.com>
-Message-Id: <20240109111025.1320976-3-maxime.coquelin@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
-Reviewed-by: Xie Yongji <xieyongji@bytedance.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
+     mov    %rdi,(%rsp)
+     ...
+     fildl  (%rsp)
+
+With dereferenced pointer variable, the code does what the
+comment above the asm snippet says:
+
+     fildl  (%rdi)
+
+Also, remove the pointless %P operand modifier. The modifier is
+ineffective on non-symbolic references - it was used to prevent
+%rip-relative addresses in .altinstr sections, but FILDL in the
+.text section can use %rip-relative addresses without problems.
+
+Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/20240315081849.5187-1-ubizjak@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_user/vduse_dev.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/x86/kernel/fpu/core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/vdpa/vdpa_user/vduse_dev.c b/drivers/vdpa/vdpa_user/vduse_dev.c
-index cb35a76146b39..0ccece3f4f7da 100644
---- a/drivers/vdpa/vdpa_user/vduse_dev.c
-+++ b/drivers/vdpa/vdpa_user/vduse_dev.c
-@@ -8,6 +8,7 @@
-  *
-  */
+diff --git a/arch/x86/kernel/fpu/core.c b/arch/x86/kernel/fpu/core.c
+index 1d190761d00fd..f1446f532b17b 100644
+--- a/arch/x86/kernel/fpu/core.c
++++ b/arch/x86/kernel/fpu/core.c
+@@ -145,8 +145,8 @@ void restore_fpregs_from_fpstate(struct fpstate *fpstate, u64 mask)
+ 		asm volatile(
+ 			"fnclex\n\t"
+ 			"emms\n\t"
+-			"fildl %P[addr]"	/* set F?P to defined value */
+-			: : [addr] "m" (fpstate));
++			"fildl %[addr]"	/* set F?P to defined value */
++			: : [addr] "m" (*fpstate));
+ 	}
  
-+#include "linux/virtio_net.h"
- #include <linux/init.h>
- #include <linux/module.h>
- #include <linux/cdev.h>
-@@ -28,6 +29,7 @@
- #include <uapi/linux/virtio_config.h>
- #include <uapi/linux/virtio_ids.h>
- #include <uapi/linux/virtio_blk.h>
-+#include <uapi/linux/virtio_ring.h>
- #include <linux/mod_devicetable.h>
- 
- #include "iova_domain.h"
-@@ -1425,6 +1427,9 @@ static bool features_is_valid(struct vduse_dev_config *config)
- 	if ((config->device_id == VIRTIO_ID_BLOCK) &&
- 			(config->features & BIT_ULL(VIRTIO_BLK_F_CONFIG_WCE)))
- 		return false;
-+	else if ((config->device_id == VIRTIO_ID_NET) &&
-+			(config->features & BIT_ULL(VIRTIO_NET_F_CTRL_VQ)))
-+		return false;
- 
- 	return true;
- }
+ 	if (use_xsave()) {
 -- 
 2.43.0
 
