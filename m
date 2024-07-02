@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1ADC1BD005;
-	Tue,  2 Jul 2024 17:34:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0251BD005;
+	Tue,  2 Jul 2024 17:34:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941642; cv=none; b=oERvl8vU1kZhULUZWehFfgg2BGVFq97vZPeWYJRDx9ocE6cOOv3xR4TabbrO4xUDEKU2kt/XKmDnDPD8GAupQkKifN+2Mhh/nJsUVA0a56L4l3ZL2CFiBc5gCxE3LrF9q1bJGFGprhm27nip/Td/h0E/M2Z+Ipw004I3m8LEhmY=
+	t=1719941645; cv=none; b=J9iKflhMVr4dMiaGoAN2CTXRc64VG6zLmtuVKnteH5P/FrdauNQr6e3ggWT0YJ8OErqXQ5XKXMrErs2UgrBMVfXMI88EMok54g1TPFl4M/Sd8SKzVZC+KWymPRNINgJBQ+ldzEAqvDuRe/DfbN1Cb776EYy+x3ahzx3E5IN4iI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941642; c=relaxed/simple;
-	bh=cFEPzgMykpKq6xhTQpEHypfwVpyJH7tdwKoClFtn4Tg=;
+	s=arc-20240116; t=1719941645; c=relaxed/simple;
+	bh=WTfBV/znjDYkC7z5qaz/HBSA7mOo6BpSkMpqVAjvQyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nlj4txbvjKl6nX8YVxeQfk9cErHFD8L1hV4HYnbFP76kh4lxBQugYjA7tEt0EpaezZlwmGa3gv+RTxmFeVNmOgSsV75Zg/GkEepbf9Lq9qu0FiYUK/ZuKMw+xlAQQD6698bm89HkG1H4UWkCH7853IAFnU+V5wXG9cIN2k9pKtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jNxJq28m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hMpOqL4m7iiFfkvdTYKcJudcTKIZSTLyvOKkm6OGRcuU4aKqCeKSzUa69o5KJgPneKtewvEzIpO4bFY/OC2xEZetiUR2BkI2RlUDeZGdFbX9A2uEL1D+jT2EpaSQ2AbBBakZ5zn9o9JM3xYoHZ/6nbK2NWpfu+KyAZ2Dpn0IMpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6XK9kh+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jNxJq28m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2F47C116B1;
-	Tue,  2 Jul 2024 17:34:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6XK9kh+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9D6C116B1;
+	Tue,  2 Jul 2024 17:34:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941641;
-	bh=cFEPzgMykpKq6xhTQpEHypfwVpyJH7tdwKoClFtn4Tg=;
+	s=korg; t=1719941645;
+	bh=WTfBV/znjDYkC7z5qaz/HBSA7mOo6BpSkMpqVAjvQyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jNxJq28mbP3MaZyV/YFnOZfua3eR1BEIXho6gF7TeK+Snn71CtCwale65kakQK/WW
-	 q9loNLBDfq1ayA4gHRl7UdOoq0hnXRwWqL4d3AAnIgU7JwkPnBTSkh84sHJ3knHnoU
-	 d17rY8jP1DGp1vYTx8OozJIbWUiN6obmKojq5Ml0=
+	b=E6XK9kh+jpEZxzI/4WSpgq4IVBZohv0lI7V3SLDv/1yKTMcp7QPBW+trH1Nq0wX9y
+	 wFxhylcCQSEBM4Yuss/JUAqkVgDBH6o8uaxxSdw/002bLH58MaYN1ELK9MkIAEMfnO
+	 1sJgQIpuHzHO2FNcqKQvPl7srl35Qd9vt+pN3Co0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 124/128] arm64: dts: rockchip: Fix SD NAND and eMMC init on rk3308-rock-pi-s
-Date: Tue,  2 Jul 2024 19:05:25 +0200
-Message-ID: <20240702170230.910106581@linuxfoundation.org>
+	Yuntao Wang <ytcoode@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.1 098/128] cpu/hotplug: Fix dynstate assignment in __cpuhp_setup_state_cpuslocked()
+Date: Tue,  2 Jul 2024 19:04:59 +0200
+Message-ID: <20240702170229.927495089@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170226.231899085@linuxfoundation.org>
 References: <20240702170226.231899085@linuxfoundation.org>
@@ -51,58 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Karlman <jonas@kwiboo.se>
+From: Yuntao Wang <ytcoode@gmail.com>
 
-[ Upstream commit 1fb98c855ccd7bc7f50c7a9626fbb8440454760b ]
+commit 932d8476399f622aa0767a4a0a9e78e5341dc0e1 upstream.
 
-Radxa ROCK Pi S have optional onboard SD NAND on board revision v1.1,
-v1.2 and v1.3, revision v1.5 changed to use optional onboard eMMC.
+Commit 4205e4786d0b ("cpu/hotplug: Provide dynamic range for prepare
+stage") added a dynamic range for the prepare states, but did not handle
+the assignment of the dynstate variable in __cpuhp_setup_state_cpuslocked().
 
-The optional SD NAND typically fails to initialize:
+This causes the corresponding startup callback not to be invoked when
+calling __cpuhp_setup_state_cpuslocked() with the CPUHP_BP_PREPARE_DYN
+parameter, even though it should be.
 
-  mmc_host mmc0: Bus speed (slot 0) = 400000Hz (slot req 400000Hz, actual 400000HZ div = 0)
-  mmc0: error -110 whilst initialising SD card
-  mmc_host mmc0: Bus speed (slot 0) = 300000Hz (slot req 300000Hz, actual 300000HZ div = 0)
-  mmc0: error -110 whilst initialising SD card
-  mmc_host mmc0: Bus speed (slot 0) = 200000Hz (slot req 200000Hz, actual 200000HZ div = 0)
-  mmc0: error -110 whilst initialising SD card
-  mmc_host mmc0: Bus speed (slot 0) = 100000Hz (slot req 100000Hz, actual 100000HZ div = 0)
-  mmc0: error -110 whilst initialising SD card
+Currently, the users of __cpuhp_setup_state_cpuslocked(), for one reason or
+another, have not triggered this bug.
 
-Add pinctrl and cap-sd-highspeed to fix SD NAND initialization. Also
-drop bus-width and mmc-hs200-1_8v to fix eMMC initialization on the new
-v1.5 board revision, only 3v3 signal voltage is used.
-
-Fixes: 2e04c25b1320 ("arm64: dts: rockchip: add ROCK Pi S DTS support")
-Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Link: https://lore.kernel.org/r/20240521211029.1236094-4-jonas@kwiboo.se
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4205e4786d0b ("cpu/hotplug: Provide dynamic range for prepare stage")
+Signed-off-by: Yuntao Wang <ytcoode@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240515134554.427071-1-ytcoode@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ kernel/cpu.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts b/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts
-index a71f249ed384e..e9d5d55f0a8ae 100644
---- a/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts
-@@ -127,10 +127,12 @@
- };
+--- a/kernel/cpu.c
++++ b/kernel/cpu.c
+@@ -2116,7 +2116,7 @@ EXPORT_SYMBOL_GPL(__cpuhp_state_add_inst
+  * The caller needs to hold cpus read locked while calling this function.
+  * Return:
+  *   On success:
+- *      Positive state number if @state is CPUHP_AP_ONLINE_DYN;
++ *      Positive state number if @state is CPUHP_AP_ONLINE_DYN or CPUHP_BP_PREPARE_DYN;
+  *      0 for all other states
+  *   On failure: proper (negative) error code
+  */
+@@ -2139,7 +2139,7 @@ int __cpuhp_setup_state_cpuslocked(enum
+ 	ret = cpuhp_store_callbacks(state, name, startup, teardown,
+ 				    multi_instance);
  
- &emmc {
--	bus-width = <4>;
- 	cap-mmc-highspeed;
--	mmc-hs200-1_8v;
-+	cap-sd-highspeed;
-+	no-sdio;
- 	non-removable;
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&emmc_bus8 &emmc_clk &emmc_cmd>;
- 	vmmc-supply = <&vcc_io>;
- 	status = "okay";
- };
--- 
-2.43.0
-
+-	dynstate = state == CPUHP_AP_ONLINE_DYN;
++	dynstate = state == CPUHP_AP_ONLINE_DYN || state == CPUHP_BP_PREPARE_DYN;
+ 	if (ret > 0 && dynstate) {
+ 		state = ret;
+ 		ret = 0;
+@@ -2170,8 +2170,8 @@ int __cpuhp_setup_state_cpuslocked(enum
+ out:
+ 	mutex_unlock(&cpuhp_state_mutex);
+ 	/*
+-	 * If the requested state is CPUHP_AP_ONLINE_DYN, return the
+-	 * dynamically allocated state in case of success.
++	 * If the requested state is CPUHP_AP_ONLINE_DYN or CPUHP_BP_PREPARE_DYN,
++	 * return the dynamically allocated state in case of success.
+ 	 */
+ 	if (!ret && dynstate)
+ 		return state;
 
 
