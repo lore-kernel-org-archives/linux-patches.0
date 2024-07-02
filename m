@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E091BE85E;
-	Tue,  2 Jul 2024 17:07:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743D51BE22F;
+	Tue,  2 Jul 2024 17:07:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940059; cv=none; b=Z5wC/TMkBFpIDH06q58qnHqJbzfQ2IXL1I1O1XoJkYlsYF6quKE1fXJUSHgGLKQjOWVSvtVQEl6L96YSXT2Ir6pJPPmBlfy0rmzUkj1v5zaoq7kKEgwPdy4lFgUaQBo/jVw6fijKhaJPBdtR4J/CNGubfR1+goZaaDxsLJa8lo4=
+	t=1719940063; cv=none; b=ZJy1ByBAjkN1xx92zHcHslJO53lSLyecXp4RGALtvP50coy6kdTY0IGqQGmZxUwHy5MbD9OKvzG1948SCT4VRkHt//d6s5wyHzKffZt+jjIgK1fUeiOYqc8KC9YxlEd5nthovllMYd8oNnHVBLh7DcJf6FL36q0GF6ZHNtqjigk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940059; c=relaxed/simple;
-	bh=rvTE0d9e6oUQbHH1xOGjwM1AuuaT353F4TqWgqLYjEY=;
+	s=arc-20240116; t=1719940063; c=relaxed/simple;
+	bh=9ub4YLPs1Euwdk9z+3X3pW7tOhjJylLu2jZw0UlIkmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oO/AkbReRxZ2VXucMvS8XYBq/KIRMyhkWuNKv4jjvinr7sLw6CZQyEXKtvRau1yp3l/ylN7W8lwTipkXlTbpnsg5jWiSe1LxRBeS/GqitqbeMR7HSGdvmrTnm40Fh6twD8MctlK04oB4YITPNGBMw0eIG5o3K68/QsQCcx24me4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IPu9QXmI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZwKqlbXXJ4ZQ8VVHS2fcxyslv4xVEW8S8pTYm48mOhFjUFcE2w1xmhXQ+kUmVEug1blsYc7ixvtDyqfizd3c1y/3ZcF+4FNeMu/dYXJyXmnOssnRw8waNsIFqdbNHvC0uQYTf/qr6/ZuHUiKKOjMdvDSlkfPokSJPwlj04VnZro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NKzIPG1n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IPu9QXmI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00011C4AF07;
-	Tue,  2 Jul 2024 17:07:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NKzIPG1n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B62BFC116B1;
+	Tue,  2 Jul 2024 17:07:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940059;
-	bh=rvTE0d9e6oUQbHH1xOGjwM1AuuaT353F4TqWgqLYjEY=;
+	s=korg; t=1719940063;
+	bh=9ub4YLPs1Euwdk9z+3X3pW7tOhjJylLu2jZw0UlIkmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IPu9QXmIc7Th7B5FKS69td69QL3p343MTieLcpr8XUPbaQeu8az3rm4YsJ6TGQab+
-	 RUaiALOCj/1sO6AoATewuGO8+A1IfEX+KHbxHu5t+3ECQBC0sp3WPiVGczZS1P/LYS
-	 aHHXdjBjYdNjrkgRRRVCOOFPLKj6Y2uY58q99bls=
+	b=NKzIPG1nYmEHh18f/WcUBTbcrtFoW8dU8vgyda+Sgx0GG19ys6MPPCvO4wp81+wej
+	 6htJWLgGRQyoaHGsGnQDkxqTNxLi0nGXY9ZNO1Zom1PnPWdHJbowcGJ1e9y0/H4pry
+	 aQcX/z9VnMbkumO0ujj6mN3P+heG548kicKWdxqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Enguerrand de Ribaucourt <enguerrand.de-ribaucourt@savoirfairelinux.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
+	Trevor Gamblin <tgamblin@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 040/222] net: phy: micrel: add Microchip KSZ 9477 to the device table
-Date: Tue,  2 Jul 2024 19:01:18 +0200
-Message-ID: <20240702170245.507620067@linuxfoundation.org>
+Subject: [PATCH 6.9 014/222] pwm: stm32: Refuse too small period requests
+Date: Tue,  2 Jul 2024 19:00:52 +0200
+Message-ID: <20240702170244.519414513@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -46,40 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Enguerrand de Ribaucourt <enguerrand.de-ribaucourt@savoirfairelinux.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit 54a4e5c16382e871c01dd82b47e930fdce30406b ]
+[ Upstream commit c45fcf46ca2368dafe7e5c513a711a6f0f974308 ]
 
-PHY_ID_KSZ9477 was supported but not added to the device table passed to
-MODULE_DEVICE_TABLE.
+If period_ns is small, prd might well become 0. Catch that case because
+otherwise with
 
-Fixes: fc3973a1fa09 ("phy: micrel: add Microchip KSZ 9477 Switch PHY support")
-Signed-off-by: Enguerrand de Ribaucourt <enguerrand.de-ribaucourt@savoirfairelinux.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+	regmap_write(priv->regmap, TIM_ARR, prd - 1);
+
+a few lines down quite a big period is configured.
+
+Fixes: 7edf7369205b ("pwm: Add driver for STM32 plaftorm")
+Cc: stable@vger.kernel.org
+Reviewed-by: Trevor Gamblin <tgamblin@baylibre.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://lore.kernel.org/r/b86f62f099983646f97eeb6bfc0117bb2d0c340d.1718979150.git.u.kleine-koenig@baylibre.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/micrel.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pwm/pwm-stm32.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
-index 4b22bb6393e26..4a28b654ce877 100644
---- a/drivers/net/phy/micrel.c
-+++ b/drivers/net/phy/micrel.c
-@@ -5094,6 +5094,7 @@ static struct mdio_device_id __maybe_unused micrel_tbl[] = {
- 	{ PHY_ID_KSZ8081, MICREL_PHY_ID_MASK },
- 	{ PHY_ID_KSZ8873MLL, MICREL_PHY_ID_MASK },
- 	{ PHY_ID_KSZ886X, MICREL_PHY_ID_MASK },
-+	{ PHY_ID_KSZ9477, MICREL_PHY_ID_MASK },
- 	{ PHY_ID_LAN8814, MICREL_PHY_ID_MASK },
- 	{ PHY_ID_LAN8804, MICREL_PHY_ID_MASK },
- 	{ PHY_ID_LAN8841, MICREL_PHY_ID_MASK },
+diff --git a/drivers/pwm/pwm-stm32.c b/drivers/pwm/pwm-stm32.c
+index 1c8911353b81d..a8a1075f932df 100644
+--- a/drivers/pwm/pwm-stm32.c
++++ b/drivers/pwm/pwm-stm32.c
+@@ -337,6 +337,8 @@ static int stm32_pwm_config(struct stm32_pwm *priv, unsigned int ch,
+ 
+ 	prd = mul_u64_u64_div_u64(period_ns, clk_get_rate(priv->clk),
+ 				  (u64)NSEC_PER_SEC * (prescaler + 1));
++	if (!prd)
++		return -EINVAL;
+ 
+ 	/*
+ 	 * All channels share the same prescaler and counter so when two
 -- 
 2.43.0
 
