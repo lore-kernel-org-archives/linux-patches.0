@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C2A1BF301;
-	Tue,  2 Jul 2024 17:15:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1882B1BE22A;
+	Tue,  2 Jul 2024 17:15:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940508; cv=none; b=cfD8XAStwfo1anT4B/EJS4LkdpGoGeQ955C/Z8GTF8vQOSLuF7a7gG+08UIbtAV0vJnufjOq8ng5bAGq0LJ9wq4aX3nPEJglNV+91Cov1cuQNpQw+y/MpON/k4PyKTNS1eF0OeuYsSpmfJnxmOTzfC5/HPk4ZXGR5wCl9gPBiJw=
+	t=1719940511; cv=none; b=hHb4Y2gowiPntfIm6HBtH6sjunFJCxURXKatUkK8AM7S7HwTWW64RkChAKG5mKDR51cgDm2URgBmHAYO4CnqQZsrnHp4yuti9sIjBcgFQUcw6nJXzYIMlUYMe7g0hZYWkah2B7B8Q4aflBnmY29PAXL204cHnzMAH3L5uZFhD8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940508; c=relaxed/simple;
-	bh=rw5Gi67vN7T6vY+rX23B8sxgXhX4QLvYGoGxazAj0vk=;
+	s=arc-20240116; t=1719940511; c=relaxed/simple;
+	bh=VGkN7Uxr6h3U8ybUL1JVNQYVEUfxN0KoTLSxEPGAe9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=duowCYyrebEniAGAV8m468Zjd1kdtb/CYjLBz9iRMkmQWlz+M42uTengM7iuOEFY47kZ1PBdPpiGmSgr7uyqrDa2FELSTK3qisNJIO/1TG4ea3L0gJuDFocuw6Mk5vp5OosKxrgKQYJukrO6bpgquz7QElfq5dn1HlChP144cRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxVEh8xI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PydsFvkInnLf3/Mgpdc9XjDB/PDcN6W4z+DfVUJu85r/qoKDmaHMNBKgXWcFfWJSoLj+IP6bE8VnFrA2HRPyaVByJ6VaRArACow6tVVyjSzkTd+iw1OYnkch4swQ9cL6JYmau+hb5KolacJAQNYWOMqKgkU2+qe9he10QRV2KhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ini+5ock; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxVEh8xI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D4E5C4AF0A;
-	Tue,  2 Jul 2024 17:15:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ini+5ock"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 974C5C116B1;
+	Tue,  2 Jul 2024 17:15:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940507;
-	bh=rw5Gi67vN7T6vY+rX23B8sxgXhX4QLvYGoGxazAj0vk=;
+	s=korg; t=1719940511;
+	bh=VGkN7Uxr6h3U8ybUL1JVNQYVEUfxN0KoTLSxEPGAe9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yxVEh8xIhHTzoRZb7Mep+iX6iiDM5dHH40F6ccOtzHsr+39rSDGoDiLuKqHglJdlP
-	 H6SDLfyhBgXakGdoCy9mDHjEgMSyBCJI3VtE0VEPjXcD1aHAgRpizJRzND3tPM4ow8
-	 6jErF/5zwSZeqIw34E2BOCRZnUYKwjtz10OpQAD0=
+	b=ini+5ockzqO//Mt5hKGZA7Yjl/SsUm3szysrvl+y7Dv/dAQWBKpD+/hdSda6QjSPi
+	 ZOh7LIxnEQnFvPXqmnA9qxYlG/laCRnrTjpzrqdyBSyk8mexgl8cgQGubmhgYRwlwe
+	 ZAgCY8271N25VYaIr9OW1hOv07r8TPrEzKo6mpj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 6.9 175/222] sh: rework sync_file_range ABI
-Date: Tue,  2 Jul 2024 19:03:33 +0200
-Message-ID: <20240702170250.666142023@linuxfoundation.org>
+	Neal Liu <neal_liu@aspeedtech.com>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Jeremy Kerr <jk@codeconstruct.com.au>
+Subject: [PATCH 6.9 149/222] usb: gadget: aspeed_udc: fix device address configuration
+Date: Tue,  2 Jul 2024 19:03:07 +0200
+Message-ID: <20240702170249.671260622@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -50,72 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Jeremy Kerr <jk@codeconstruct.com.au>
 
-commit 30766f1105d6d2459c3b9fe34a3e52b637a72950 upstream.
+commit dba7567c2fbbf10a4de2471cdb0e16e5572dc007 upstream.
 
-The unusual function calling conventions on SuperH ended up causing
-sync_file_range to have the wrong argument order, with the 'flags'
-argument getting sorted before 'nbytes' by the compiler.
+In the aspeed UDC setup, we configure the UDC hardware with the assigned
+USB device address.
 
-In userspace, I found that musl, glibc, uclibc and strace all expect the
-normal calling conventions with 'nbytes' last, so changing the kernel
-to match them should make all of those work.
+However, we have an off-by-one in the bitmask, so we're only setting the
+lower 6 bits of the address (USB addresses being 7 bits, and the
+hardware bitmask being bits 0:6).
 
-In order to be able to also fix libc implementations to work with existing
-kernels, they need to be able to tell which ABI is used. An easy way
-to do this is to add yet another system call using the sync_file_range2
-ABI that works the same on all architectures.
+This means that device enumeration fails if the assigned address is
+greater than 64:
 
-Old user binaries can now work on new kernels, and new binaries can
-try the new sync_file_range2() to work with new kernels or fall back
-to the old sync_file_range() version if that doesn't exist.
+[  344.607255] usb 1-1: new high-speed USB device number 63 using ehci-platform
+[  344.808459] usb 1-1: New USB device found, idVendor=cc00, idProduct=cc00, bcdDevice= 6.10
+[  344.817684] usb 1-1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[  344.825671] usb 1-1: Product: Test device
+[  344.831075] usb 1-1: Manufacturer: Test vendor
+[  344.836335] usb 1-1: SerialNumber: 00
+[  349.917181] usb 1-1: USB disconnect, device number 63
+[  352.036775] usb 1-1: new high-speed USB device number 64 using ehci-platform
+[  352.249432] usb 1-1: device descriptor read/all, error -71
+[  352.696740] usb 1-1: new high-speed USB device number 65 using ehci-platform
+[  352.909431] usb 1-1: device descriptor read/all, error -71
 
+Use the correct mask of 0x7f (rather than 0x3f), and generate this
+through the GENMASK macro, so we have numbers that correspond exactly
+to the hardware register definition.
+
+Fixes: 055276c13205 ("usb: gadget: add Aspeed ast2600 udc driver")
 Cc: stable@vger.kernel.org
-Fixes: 75c92acdd5b1 ("sh: Wire up new syscalls.")
-Acked-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Neal Liu <neal_liu@aspeedtech.com>
+Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Link: https://lore.kernel.org/r/20240613-aspeed-udc-v2-1-29501ce9cb7a@codeconstruct.com.au
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sh/kernel/sys_sh32.c           |   11 +++++++++++
- arch/sh/kernel/syscalls/syscall.tbl |    3 ++-
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/udc/aspeed_udc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/sh/kernel/sys_sh32.c
-+++ b/arch/sh/kernel/sys_sh32.c
-@@ -59,3 +59,14 @@ asmlinkage int sys_fadvise64_64_wrapper(
- 				 (u64)len0 << 32 | len1, advice);
- #endif
- }
-+
-+/*
-+ * swap the arguments the way that libc wants them instead of
-+ * moving flags ahead of the 64-bit nbytes argument
-+ */
-+SYSCALL_DEFINE6(sh_sync_file_range6, int, fd, SC_ARG64(offset),
-+                SC_ARG64(nbytes), unsigned int, flags)
-+{
-+        return ksys_sync_file_range(fd, SC_VAL64(loff_t, offset),
-+                                    SC_VAL64(loff_t, nbytes), flags);
-+}
---- a/arch/sh/kernel/syscalls/syscall.tbl
-+++ b/arch/sh/kernel/syscalls/syscall.tbl
-@@ -321,7 +321,7 @@
- 311	common	set_robust_list			sys_set_robust_list
- 312	common	get_robust_list			sys_get_robust_list
- 313	common	splice				sys_splice
--314	common	sync_file_range			sys_sync_file_range
-+314	common	sync_file_range			sys_sh_sync_file_range6
- 315	common	tee				sys_tee
- 316	common	vmsplice			sys_vmsplice
- 317	common	move_pages			sys_move_pages
-@@ -395,6 +395,7 @@
- 385	common	pkey_alloc			sys_pkey_alloc
- 386	common	pkey_free			sys_pkey_free
- 387	common	rseq				sys_rseq
-+388	common	sync_file_range2		sys_sync_file_range2
- # room for arch specific syscalls
- 393	common	semget				sys_semget
- 394	common	semctl				sys_semctl
+--- a/drivers/usb/gadget/udc/aspeed_udc.c
++++ b/drivers/usb/gadget/udc/aspeed_udc.c
+@@ -66,8 +66,8 @@
+ #define USB_UPSTREAM_EN			BIT(0)
+ 
+ /* Main config reg */
+-#define UDC_CFG_SET_ADDR(x)		((x) & 0x3f)
+-#define UDC_CFG_ADDR_MASK		(0x3f)
++#define UDC_CFG_SET_ADDR(x)		((x) & UDC_CFG_ADDR_MASK)
++#define UDC_CFG_ADDR_MASK		GENMASK(6, 0)
+ 
+ /* Interrupt ctrl & status reg */
+ #define UDC_IRQ_EP_POOL_NAK		BIT(17)
 
 
