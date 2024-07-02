@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D1E39847;
-	Tue,  2 Jul 2024 17:16:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5381A1BE863;
+	Tue,  2 Jul 2024 17:17:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940619; cv=none; b=peC0EoIkNUlMT1PfusI9fvSIdI1rZ2F3hFzjDvxAgPmtwcVIkRuUCi4m79b+tiuXaw2pEWVLq+a1OW5QOJuH5xZ0shtfzW19rueLRNKD5pgve3qPUajxMYCpbuGpPJwpofCNQuqaWAKQdoC98prObFqtBAmimXDMeagAv1B1Sx4=
+	t=1719940623; cv=none; b=W9JwXRRmcTyinfOrsA7GTLAUehURiJm5n7D3M8lowyr541TPovBJGqzQsE855jT4bTUnl8XIJ2u4ns/L+oLs/xWtiobr2nxRsgPWIt4jpsTsLkbt0K9yU2k8Xp4DsrUxVZ4vqV43PHdF3wjQhcIZZX8xhjI535puimJSkn5IrUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940619; c=relaxed/simple;
-	bh=6qV1Zq4lxHusgA7cwV4KOzN5yTqMHtltNiM3C2M1xTk=;
+	s=arc-20240116; t=1719940623; c=relaxed/simple;
+	bh=GRWCGHfGcLqgJNHYMjlJ8XTDwfFoDY5XDT436N3d4Q8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qp4M566sLIueNu31xfNE0tgHXh5UzfQZpulQAWNb6CcQnMeRRh0fyX50+7MhtQTUPib59fsTmZEgl1yBaG2EreEJWP5fgTgkPvOnQCMRda7ZdFBSl6dY7Ut4QmjF7s+l39Nuwkwh2qzAce179iEB9KaxF7RARqeMp1MUhPMiN74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eLG5OCfR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WthEjVCPGoEBLRd3LeRH3ddzpIeXT3nAyV5UFLG/zvyy+FiNYaisC9B3U32GYQSEK3kvVu/0IIPIYysdzNrakbH+/CSrBAVk2vQ78O6hRIFELmHD/WEuzU1WPMU4+dhK+2jE0MmuyVo8t0oy7ZTG5/Pyevq4CEzO0Ux4UqZUW4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XfhzdFQk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eLG5OCfR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F38C4AF07;
-	Tue,  2 Jul 2024 17:16:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XfhzdFQk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85F1C116B1;
+	Tue,  2 Jul 2024 17:17:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940619;
-	bh=6qV1Zq4lxHusgA7cwV4KOzN5yTqMHtltNiM3C2M1xTk=;
+	s=korg; t=1719940623;
+	bh=GRWCGHfGcLqgJNHYMjlJ8XTDwfFoDY5XDT436N3d4Q8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eLG5OCfR9xvktGuCx83vnJSc+i+ZRFR0rL2TdsWVZTKjyG62wUw55LIO3zGNUuEkh
-	 /eThB6ZsSmjDL6000mKKLStVMpcFuxbdBugsd1kXUxfcZrBuxMT02C2sYE4stJTIQG
-	 Pk0zA/UBQKZqOzgCuvsiRfukXn2E/E8MmGmodVY4=
+	b=XfhzdFQk8dZGsf4et55RL4kwnE5x09Ex2J92u14D5RFgrt7oIhuGit7h1l9AGPiIa
+	 gECPLSyx9fy7KJNg/7M0alGBZK3TCclhdDqlhUnV04iB6t+A2NPSaacEJYBuY7eRiy
+	 AMqKCddbrbHWfMU/c9lTd5YmRjGjpO2WVdNrMul0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Jonker <jbx6244@gmail.com>,
+	FUKAUMI Naoki <naoki@radxa.com>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 209/222] ARM: dts: rockchip: rk3066a: add #sound-dai-cells to hdmi node
-Date: Tue,  2 Jul 2024 19:04:07 +0200
-Message-ID: <20240702170251.975913171@linuxfoundation.org>
+Subject: [PATCH 6.9 210/222] Revert "arm64: dts: rockchip: remove redundant cd-gpios from rk3588 sdmmc nodes"
+Date: Tue,  2 Jul 2024 19:04:08 +0200
+Message-ID: <20240702170252.013473845@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -51,35 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Jonker <jbx6244@gmail.com>
+From: FUKAUMI Naoki <naoki@radxa.com>
 
-[ Upstream commit cca46f811d0000c1522a5e18ea48c27a15e45c05 ]
+[ Upstream commit b56aed4a613e2d2cb3bfe05fd222dbf480f6b5d8 ]
 
-'#sound-dai-cells' is required to properly interpret
-the list of DAI specified in the 'sound-dai' property,
-so add them to the 'hdmi' node for 'rk3066a.dtsi'.
+This reverts commit d859ad305ed19d9a77d8c8ecd22459b73da36ba6.
 
-Fixes: fadc78062477 ("ARM: dts: rockchip: add rk3066 hdmi nodes")
-Signed-off-by: Johan Jonker <jbx6244@gmail.com>
-Link: https://lore.kernel.org/r/8b229dcc-94e4-4bbc-9efc-9d5ddd694532@gmail.com
+Inserting and removing microSD card is not detected since above commit.
+Reverting it fixes this problem.
+
+This is probably the same thing as 5 years ago on rk3399
+https://lore.kernel.org/all/0608599d485117a9d99f5fb274fbb1b55f6ba9f7.1547466003.git.robin.murphy@arm.com/
+
+So we'll go back to cd-gpios for now.
+
+this patch is tested on Radxa ROCK 5A and 5B.
+
+Fixes: d859ad305ed1 ("arm64: dts: rockchip: remove redundant cd-gpios from rk3588 sdmmc nodes")
+Signed-off-by: FUKAUMI Naoki <naoki@radxa.com>
+Link: https://lore.kernel.org/r/20240613001757.1350-1-naoki@radxa.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/rockchip/rk3066a.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/rockchip/rk3588-orangepi-5-plus.dts | 1 +
+ arch/arm64/boot/dts/rockchip/rk3588-quartzpro64.dts     | 1 +
+ arch/arm64/boot/dts/rockchip/rk3588-rock-5b.dts         | 1 +
+ arch/arm64/boot/dts/rockchip/rk3588s-rock-5a.dts        | 1 +
+ 4 files changed, 4 insertions(+)
 
-diff --git a/arch/arm/boot/dts/rockchip/rk3066a.dtsi b/arch/arm/boot/dts/rockchip/rk3066a.dtsi
-index 30139f21de64d..15cbd94d7ec05 100644
---- a/arch/arm/boot/dts/rockchip/rk3066a.dtsi
-+++ b/arch/arm/boot/dts/rockchip/rk3066a.dtsi
-@@ -128,6 +128,7 @@
- 		pinctrl-0 = <&hdmii2c_xfer>, <&hdmi_hpd>;
- 		power-domains = <&power RK3066_PD_VIO>;
- 		rockchip,grf = <&grf>;
-+		#sound-dai-cells = <0>;
- 		status = "disabled";
- 
- 		ports {
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588-orangepi-5-plus.dts b/arch/arm64/boot/dts/rockchip/rk3588-orangepi-5-plus.dts
+index 1a604429fb266..e74871491ef56 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3588-orangepi-5-plus.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3588-orangepi-5-plus.dts
+@@ -444,6 +444,7 @@
+ &sdmmc {
+ 	bus-width = <4>;
+ 	cap-sd-highspeed;
++	cd-gpios = <&gpio0 RK_PA4 GPIO_ACTIVE_LOW>;
+ 	disable-wp;
+ 	max-frequency = <150000000>;
+ 	no-sdio;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588-quartzpro64.dts b/arch/arm64/boot/dts/rockchip/rk3588-quartzpro64.dts
+index 22bbfbe729c11..b6628889b707e 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3588-quartzpro64.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3588-quartzpro64.dts
+@@ -429,6 +429,7 @@
+ &sdmmc {
+ 	bus-width = <4>;
+ 	cap-sd-highspeed;
++	cd-gpios = <&gpio0 RK_PA4 GPIO_ACTIVE_LOW>;
+ 	disable-wp;
+ 	max-frequency = <150000000>;
+ 	no-sdio;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588-rock-5b.dts b/arch/arm64/boot/dts/rockchip/rk3588-rock-5b.dts
+index 1fe8b2a0ed75e..9b7bf6cec8bd1 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3588-rock-5b.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3588-rock-5b.dts
+@@ -378,6 +378,7 @@
+ 	bus-width = <4>;
+ 	cap-mmc-highspeed;
+ 	cap-sd-highspeed;
++	cd-gpios = <&gpio0 RK_PA4 GPIO_ACTIVE_LOW>;
+ 	disable-wp;
+ 	sd-uhs-sdr104;
+ 	vmmc-supply = <&vcc_3v3_s3>;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588s-rock-5a.dts b/arch/arm64/boot/dts/rockchip/rk3588s-rock-5a.dts
+index 00afb90d4eb10..2002fd0221fa3 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3588s-rock-5a.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3588s-rock-5a.dts
+@@ -366,6 +366,7 @@
+ 	bus-width = <4>;
+ 	cap-mmc-highspeed;
+ 	cap-sd-highspeed;
++	cd-gpios = <&gpio0 RK_PA4 GPIO_ACTIVE_LOW>;
+ 	disable-wp;
+ 	max-frequency = <150000000>;
+ 	no-sdio;
 -- 
 2.43.0
 
