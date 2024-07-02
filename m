@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D959178381;
-	Tue,  2 Jul 2024 17:07:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 732A9178381;
+	Tue,  2 Jul 2024 17:07:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940030; cv=none; b=F4OuIerD5XyIF2u4nX/vv1lzAKaBJlY2/98rhrA2MGhTAa0jHE9hHbZu5Wz3k9b0HLWJ/vnUAoKu2MLR+Y0nrZsWzQXLF6suXxVQJmgYN2s5fo2ZRlgYe7pP/iES3S6hK5junlSvLZmBuDwY8Y2B4VJT5hE5RFZPIDjmTlY1jis=
+	t=1719940033; cv=none; b=BELfUwmWaEtrhB2upLOfVdlQr7Bp7lwbqIclSGouUPQE8cUJwkSD1EtbAYHO+pOuWqWtmri99Nl7+WzK3t+sA4TkBWxGvXtb8VcUxBvvudp9D8/ywP60nDo+F2kj5ABk3gdfat+1MlnSBXNopDPoW/IZYxn1efzJJHXOteRoS0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940030; c=relaxed/simple;
-	bh=RIlrVx70uNlV4kgDa3/bV4yG1+RuSWOpRGt4ZU6jL6E=;
+	s=arc-20240116; t=1719940033; c=relaxed/simple;
+	bh=Os3qFv+l2R8GoLtH9D3QP9XQc72tnYQsxvIloXyaDjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vDRu5vL+0J+RCbepyOvEw23t/weQXkq9jW2Jbl5oMTTNvQG+Lxw1hWJI+B062XgvO0L0jAfn1evB379ukChleorEKcmRCoagbuKqU894A2WcDKpaB2bpuuHT9fn80O1Ew0JECRrxoYR6pEjd1w4jU6VrjlgJXHM1s0fMfqq2vn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OlIFCku8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TdYJeMbgIB14udk5d07H4kJSpQfLJzURsxfsWxDeDLiiwz6PQ+9inFFCZjKkGFBch+2r0TRjgU4FlgkH9ZEtGcmnd5DS8+rHAhB6OGZlYhOf/7fX5DZeW4Vidr28KEGiUgcGWsQLFrVuNJVn6mUt27TxSlpeYZyZQbiCDgeUK94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HxRMgQ2k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OlIFCku8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0393FC116B1;
-	Tue,  2 Jul 2024 17:07:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HxRMgQ2k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E43A6C116B1;
+	Tue,  2 Jul 2024 17:07:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940029;
-	bh=RIlrVx70uNlV4kgDa3/bV4yG1+RuSWOpRGt4ZU6jL6E=;
+	s=korg; t=1719940033;
+	bh=Os3qFv+l2R8GoLtH9D3QP9XQc72tnYQsxvIloXyaDjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OlIFCku8DWOJ7P/wXgYtE13DOdIW8+34nArVa2BdzmBwMc5Olubqd2hAcb+mPymZU
-	 0ZhLy1JLG72zTiVGlzwsSkt57hOb7eDi8gn48LjpiSzv8NfnjLIGbBLrdBxnUzEK4t
-	 oBWjyHv5A6H4HY+dKnHhZAQq0V4OKrGiNvifRaNo=
+	b=HxRMgQ2kwMqLGdbKZ07cjPJ/n+SIP921fSfvSNFBzpACvyj5ebP2b3IhRvuHjTU1x
+	 dM8CfmKw9j44/+xfmlfgyIZ2esDrpyQRXp3ITuffc3bCtj54ibWFluPRQTfqzNRRap
+	 YNdaKIvHtlWobdnbbetnyJHZaAobux7ypScarAa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Xin Long <lucien.xin@gmail.com>,
-	Aaron Conole <aconole@redhat.com>,
+	Liang Li <liali@redhat.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Kory Maincent <kory.maincent@bootlin.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 031/222] openvswitch: get related ct labels from its master if it is not confirmed
-Date: Tue,  2 Jul 2024 19:01:09 +0200
-Message-ID: <20240702170245.167676010@linuxfoundation.org>
+Subject: [PATCH 6.9 032/222] bonding: fix incorrect software timestamping report
+Date: Tue,  2 Jul 2024 19:01:10 +0200
+Message-ID: <20240702170245.205400213@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -53,56 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit a23ac973f67f37e77b3c634e8b1ad5b0164fcc1f ]
+[ Upstream commit a95b031c6796bf9972da2d4b4b524a57734f3a0a ]
 
-Ilya found a failure in running check-kernel tests with at_groups=144
-(144: conntrack - FTP SNAT orig tuple) in OVS repo. After his further
-investigation, the root cause is that the labels sent to userspace
-for related ct are incorrect.
+The __ethtool_get_ts_info function returns directly if the device has a
+get_ts_info() method. For bonding with an active slave, this works correctly
+as we simply return the real device's timestamping information. However,
+when there is no active slave, we only check the slave's TX software
+timestamp information. We still need to set the phc index and RX timestamp
+information manually. Otherwise, the result will be look like:
 
-The labels for unconfirmed related ct should use its master's labels.
-However, the changes made in commit 8c8b73320805 ("openvswitch: set
-IPS_CONFIRMED in tmpl status only when commit is set in conntrack")
-led to getting labels from this related ct.
+  Time stamping parameters for bond0:
+  Capabilities:
+          software-transmit
+  PTP Hardware Clock: 0
+  Hardware Transmit Timestamp Modes: none
+  Hardware Receive Filter Modes: none
 
-So fix it in ovs_ct_get_labels() by changing to copy labels from its
-master ct if it is a unconfirmed related ct. Note that there is no
-fix needed for ct->mark, as it was already copied from its master
-ct for related ct in init_conntrack().
+This issue does not affect VLAN or MACVLAN devices, as they only have one
+downlink and can directly use the downlink's timestamping information.
 
-Fixes: 8c8b73320805 ("openvswitch: set IPS_CONFIRMED in tmpl status only when commit is set in conntrack")
-Reported-by: Ilya Maximets <i.maximets@ovn.org>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Tested-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
+Fixes: b8768dc40777 ("net: ethtool: Refactor identical get_ts_info implementations.")
+Reported-by: Liang Li <liali@redhat.com>
+Closes: https://issues.redhat.com/browse/RHEL-42409
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Acked-by: Kory Maincent <kory.maincent@bootlin.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/conntrack.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/bonding/bond_main.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/openvswitch/conntrack.c b/net/openvswitch/conntrack.c
-index 2928c142a2ddb..3b980bf2770bb 100644
---- a/net/openvswitch/conntrack.c
-+++ b/net/openvswitch/conntrack.c
-@@ -168,8 +168,13 @@ static u32 ovs_ct_get_mark(const struct nf_conn *ct)
- static void ovs_ct_get_labels(const struct nf_conn *ct,
- 			      struct ovs_key_ct_labels *labels)
- {
--	struct nf_conn_labels *cl = ct ? nf_ct_labels_find(ct) : NULL;
-+	struct nf_conn_labels *cl = NULL;
- 
-+	if (ct) {
-+		if (ct->master && !nf_ct_is_confirmed(ct))
-+			ct = ct->master;
-+		cl = nf_ct_labels_find(ct);
-+	}
- 	if (cl)
- 		memcpy(labels, cl->bits, OVS_CT_LABELS_LEN);
- 	else
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index bceda85f0dcf6..cb66310c8d76b 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -5773,6 +5773,9 @@ static int bond_ethtool_get_ts_info(struct net_device *bond_dev,
+ 	if (real_dev) {
+ 		ret = ethtool_get_ts_info_by_layer(real_dev, info);
+ 	} else {
++		info->phc_index = -1;
++		info->so_timestamping = SOF_TIMESTAMPING_RX_SOFTWARE |
++					SOF_TIMESTAMPING_SOFTWARE;
+ 		/* Check if all slaves support software tx timestamping */
+ 		rcu_read_lock();
+ 		bond_for_each_slave_rcu(bond, slave, iter) {
 -- 
 2.43.0
 
