@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A241BD002;
-	Tue,  2 Jul 2024 17:10:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D6E1BD002;
+	Tue,  2 Jul 2024 17:10:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940256; cv=none; b=pocnd616AfXP1zARrPHBJYDMmBD5dKuuH0vFRZh7xXDm+rDHmOpV/y4RO31pyoFcfwCL79BfOd9Q/2Kx6W/Hyklf8QvFsGQvGo12CKBDeGyQvL2Cf/jCvYwAW2wiKtjXNRGkFt6MZopT+66U36wjDrUQgQhArDL2b9GqcmiV9QE=
+	t=1719940259; cv=none; b=PgP13M+17GWI5qFm1FUoLaltV65zOQ3Rijxm/l1ERPfs3j9g7k6OniZLtM/7jC5RevBo6MqbLs0oIQthqDe1UPZ+4FIMc8Xt5wtuaMf0eqr5MQK5d7z0rs4gZxO1qlY1QgXBEH20hElFpIjO44EK5g2QOm4rZLyX6XbP3ugudNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940256; c=relaxed/simple;
-	bh=+JxtE16RxdIFc9qPfBrgxVs1HYhMWOd/XSuoLdbniGQ=;
+	s=arc-20240116; t=1719940259; c=relaxed/simple;
+	bh=6KW1WDhY7shtYeTTgQc+ea8DaNau6F2mFesg0VRkO40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DeG1qIaTGNs6foCLIstMlSthOKAwot61rohk+meT3AGpA2w/hFLKss5hTg2MXYcL3ARpJyCNMKJ9kIlxrTR/KHVf7CKnUKier8B24s8Xjzzc68meN1SBuIpGemOJmRggq27EUiiedh45SzAdNuiaXgLviEmK7P3bCjwdzTmxTtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y9Asfkez; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N4SwTxRC2t9cWW8IHbJFuO262EMxDqqJc2CtgkE7+PZq7zgUq2gtTa3E7t3v2Tq1cr0oy0sMpd0lw+vIYPoiw28iV4S1hzwBuf3nP34OoOtIprYo7zrGGy1NdZ5W+6xXNCfyEknctnwBEEJALF01LlnfYMhh8ubmcKrdlC40MRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IoYeQNGh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y9Asfkez"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5E5FC116B1;
-	Tue,  2 Jul 2024 17:10:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IoYeQNGh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CD11C116B1;
+	Tue,  2 Jul 2024 17:10:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940256;
-	bh=+JxtE16RxdIFc9qPfBrgxVs1HYhMWOd/XSuoLdbniGQ=;
+	s=korg; t=1719940259;
+	bh=6KW1WDhY7shtYeTTgQc+ea8DaNau6F2mFesg0VRkO40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y9AsfkezdRpFojlokdZurFD9WDvomzvhuomGIQjcSJr4KfGjG2QEW5h/KpME7VQJK
-	 5lHvPrPqf55sZr7OJz3dpsVBvfrgOrlvZtB5aX2YTwoxVCI8jdhqCr862zy0MONFNP
-	 wBd2321uZnDWrjx4a189aNHCh+Q35iIKCm3TWM0A=
+	b=IoYeQNGhkn6uo8Z47to08CrGzCWccJJjKnhMfCApp2UiygnSzhv5IfDAmwPHGA65i
+	 v14Kx6MRIPqmdHYjCPU1lJHkaYI1ofdYOa3OO//bg7R+v1ukR2t+x789vv1/H4LMpb
+	 xd8ahFFsA8/6O1LBJ7sY/npC+NY3xdD8QWKAt++k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zenghui Yu <yuzenghui@huawei.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Will Deacon <will@kernel.org>,
+	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	NeilBrown <neilb@suse.de>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 099/222] arm64: Clear the initial ID map correctly before remapping
-Date: Tue,  2 Jul 2024 19:02:17 +0200
-Message-ID: <20240702170247.753335606@linuxfoundation.org>
+Subject: [PATCH 6.9 100/222] nfsd: initialise nfsd_info.mutex early.
+Date: Tue,  2 Jul 2024 19:02:18 +0200
+Message-ID: <20240702170247.791872173@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -52,39 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zenghui Yu <yuzenghui@huawei.com>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit ecc54006f158ae0245a13e59026da2f0239c1b86 ]
+[ Upstream commit e0011bca603c101f2a3c007bdb77f7006fa78fb1 ]
 
-In the attempt to clear and recreate the initial ID map for LPA2, we
-wrongly use 'start - end' as the map size and make the memset() almost a
-nop.
+nfsd_info.mutex can be dereferenced by svc_pool_stats_start()
+immediately after the new netns is created.  Currently this can
+trigger an oops.
 
-Fix it by passing the correct map size.
+Move the initialisation earlier before it can possibly be dereferenced.
 
-Fixes: 9684ec186f8f ("arm64: Enable LPA2 at boot if supported by the system")
-Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://lore.kernel.org/r/20240621092809.162-1-yuzenghui@huawei.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 7b207ccd9833 ("svc: don't hold reference for poolstats, only mutex.")
+Reported-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Closes: https://lore.kernel.org/all/c2e9f6de-1ec4-4d3a-b18d-d5a6ec0814a0@linux.ibm.com/
+Signed-off-by: NeilBrown <neilb@suse.de>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/pi/map_kernel.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfsctl.c | 2 ++
+ fs/nfsd/nfssvc.c | 1 -
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kernel/pi/map_kernel.c b/arch/arm64/kernel/pi/map_kernel.c
-index 5fa08e13e17e5..f374a3e5a5fe1 100644
---- a/arch/arm64/kernel/pi/map_kernel.c
-+++ b/arch/arm64/kernel/pi/map_kernel.c
-@@ -173,7 +173,7 @@ static void __init remap_idmap_for_lpa2(void)
- 	 * Don't bother with the FDT, we no longer need it after this.
- 	 */
- 	memset(init_idmap_pg_dir, 0,
--	       (u64)init_idmap_pg_dir - (u64)init_idmap_pg_end);
-+	       (u64)init_idmap_pg_end - (u64)init_idmap_pg_dir);
+diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
+index 4d23bb1d08c0a..332847daa1b41 100644
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -1679,6 +1679,8 @@ static __net_init int nfsd_net_init(struct net *net)
+ 	nn->nfsd_svcstats.program = &nfsd_program;
+ 	nn->nfsd_versions = NULL;
+ 	nn->nfsd4_minorversions = NULL;
++	nn->nfsd_info.mutex = &nfsd_mutex;
++	nn->nfsd_serv = NULL;
+ 	nfsd4_init_leases_net(nn);
+ 	get_random_bytes(&nn->siphash_key, sizeof(nn->siphash_key));
+ 	seqlock_init(&nn->writeverf_lock);
+diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
+index c0d17b92b249f..f23b00cb9f631 100644
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -673,7 +673,6 @@ int nfsd_create_serv(struct net *net)
+ 		return error;
+ 	}
+ 	spin_lock(&nfsd_notifier_lock);
+-	nn->nfsd_info.mutex = &nfsd_mutex;
+ 	nn->nfsd_serv = serv;
+ 	spin_unlock(&nfsd_notifier_lock);
  
- 	create_init_idmap(init_idmap_pg_dir, mask);
- 	dsb(ishst);
 -- 
 2.43.0
 
