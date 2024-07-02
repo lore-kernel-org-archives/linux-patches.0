@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5964763D;
-	Tue,  2 Jul 2024 17:32:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D147E1BD50C;
+	Tue,  2 Jul 2024 17:32:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941545; cv=none; b=JKtX6FUgL9IGMtZVhvrYNWzc3dDSUyUZsTixVL7D/SaiDRWm9hpGlCN0mMFz+e/R25LuYX6xjfh+78Tp6d6AH9QPplZFXJXxcWpIeVlgqWDmcuA92U8NSbsZ+gKJdznXQCECPyuwXvJuTLJhbSOvT3i95YpifCto6XslfbvLy70=
+	t=1719941548; cv=none; b=uVSkea2q9jdrfz5cFs+mWqNNGt/2GIjrUdr2dSFDxzwtWT/gCsm0otA8kZTPPQnc2VYAKG1yU6rpDBHqm3vciujlL034a0mOzqdtAeOdxBUbwaBCabrYoQ6iDdcU5hfP6RL9UZj1k8FJhK39FOUjhlwAML6f6iz7L+9sWVoaRh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941545; c=relaxed/simple;
-	bh=5ClzP0Kf8xNIGh9iexwh+w4+tB0X1exiRy7NVl9sOTM=;
+	s=arc-20240116; t=1719941548; c=relaxed/simple;
+	bh=Ku3WlfexE5ooHqOyct1rNzBU+IW6SZc+gz9WTwQZV4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xd81MoTj/iG5Rmt6oRni6upAEb9enkSmLQ9GS+V2FhYPyh05JD2mA5TmDOKbjG9VPgd8KRY0mbnpGel/CoOhdDzVtGsJ9ETTP+twtGrPEo/nUF0p2gPppYewTIoPAnrDJtfhqoHYuPoJDfTC0QGYCR/Pd/cZuNh6cw4aG41LxPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FxjNzVdv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=agSSDvUKgKEyELVQWnINBSP5k+YECQhmRB5MHecUYHnXruJeIwzBmgHmQtoOqviEMX1o6o877nSGDTkjXgyIkltQkW/wNNatx/Do0o4x36Gm2GY2rHSeJ8jGyZQsxo4H2+6PgRVdyItJNyLK7iXjC7HZBIRLkU9tSlCfDATsUq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z4XEeECs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FxjNzVdv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC6B4C116B1;
-	Tue,  2 Jul 2024 17:32:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z4XEeECs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 571B7C116B1;
+	Tue,  2 Jul 2024 17:32:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941545;
-	bh=5ClzP0Kf8xNIGh9iexwh+w4+tB0X1exiRy7NVl9sOTM=;
+	s=korg; t=1719941548;
+	bh=Ku3WlfexE5ooHqOyct1rNzBU+IW6SZc+gz9WTwQZV4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FxjNzVdvMi7dbAH5ZdXhXj8tCYkStL5iPD+vvCu4UEtJCm3oCVnbfS8d7IR+lCFu7
-	 FO8/donJPvnXCyUVI7Igr4F+47qxZf88IulSkiCQl1xb92tWyt8uCNrvR1p7P9DbBs
-	 iSubj+8L0h3+oLNJ6y4OEMV9v2eKrHJJ5HeHDrqc=
+	b=z4XEeECsRPspqBQDAe/sKYTZVEg9QBQ1QEs4thy5H0Av7KtGUo/iG9w+fKZnMJpPK
+	 H5cC37TqeqaGroyL2yuItZtj5nKJ1EIaKXKL7i7CY77LN+gYfp0j9FNkz7Z/GWiTWx
+	 j/22kArhIQ8gXfxYIYDwp3qnqyeCDdTPYZaSnUgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 6.1 065/128] pinctrl: qcom: spmi-gpio: drop broken pm8008 support
-Date: Tue,  2 Jul 2024 19:04:26 +0200
-Message-ID: <20240702170228.691105889@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 066/128] ocfs2: fix DIO failure due to insufficient transaction credits
+Date: Tue,  2 Jul 2024 19:04:27 +0200
+Message-ID: <20240702170228.731085079@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170226.231899085@linuxfoundation.org>
 References: <20240702170226.231899085@linuxfoundation.org>
@@ -52,46 +58,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Jan Kara <jack@suse.cz>
 
-commit 8da86499d4cd125a9561f9cd1de7fba99b0aecbf upstream.
+commit be346c1a6eeb49d8fda827d2a9522124c2f72f36 upstream.
 
-The SPMI GPIO driver assumes that the parent device is an SPMI device
-and accesses random data when backcasting the parent struct device
-pointer for non-SPMI devices.
+The code in ocfs2_dio_end_io_write() estimates number of necessary
+transaction credits using ocfs2_calc_extend_credits().  This however does
+not take into account that the IO could be arbitrarily large and can
+contain arbitrary number of extents.
 
-Fortunately this does not seem to cause any issues currently when the
-parent device is an I2C client like the PM8008, but this could change if
-the structures are reorganised (e.g. using structure randomisation).
+Extent tree manipulations do often extend the current transaction but not
+in all of the cases.  For example if we have only single block extents in
+the tree, ocfs2_mark_extent_written() will end up calling
+ocfs2_replace_extent_rec() all the time and we will never extend the
+current transaction and eventually exhaust all the transaction credits if
+the IO contains many single block extents.  Once that happens a
+WARN_ON(jbd2_handle_buffer_credits(handle) <= 0) is triggered in
+jbd2_journal_dirty_metadata() and subsequently OCFS2 aborts in response to
+this error.  This was actually triggered by one of our customers on a
+heavily fragmented OCFS2 filesystem.
 
-Notably the interrupt implementation is also broken for non-SPMI devices.
+To fix the issue make sure the transaction always has enough credits for
+one extent insert before each call of ocfs2_mark_extent_written().
 
-Also note that the two GPIO pins on PM8008 are used for interrupts and
-reset so their practical use should be limited.
+Heming Zhao said:
 
-Drop the broken GPIO support for PM8008 for now.
+------
+PANIC: "Kernel panic - not syncing: OCFS2: (device dm-1): panic forced after error"
 
-Fixes: ea119e5a482a ("pinctrl: qcom-pmic-gpio: Add support for pm8008")
-Cc: stable@vger.kernel.org	# 5.13
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20240529162958.18081-9-johan+linaro@kernel.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+PID: xxx  TASK: xxxx  CPU: 5  COMMAND: "SubmitThread-CA"
+  #0 machine_kexec at ffffffff8c069932
+  #1 __crash_kexec at ffffffff8c1338fa
+  #2 panic at ffffffff8c1d69b9
+  #3 ocfs2_handle_error at ffffffffc0c86c0c [ocfs2]
+  #4 __ocfs2_abort at ffffffffc0c88387 [ocfs2]
+  #5 ocfs2_journal_dirty at ffffffffc0c51e98 [ocfs2]
+  #6 ocfs2_split_extent at ffffffffc0c27ea3 [ocfs2]
+  #7 ocfs2_change_extent_flag at ffffffffc0c28053 [ocfs2]
+  #8 ocfs2_mark_extent_written at ffffffffc0c28347 [ocfs2]
+  #9 ocfs2_dio_end_io_write at ffffffffc0c2bef9 [ocfs2]
+#10 ocfs2_dio_end_io at ffffffffc0c2c0f5 [ocfs2]
+#11 dio_complete at ffffffff8c2b9fa7
+#12 do_blockdev_direct_IO at ffffffff8c2bc09f
+#13 ocfs2_direct_IO at ffffffffc0c2b653 [ocfs2]
+#14 generic_file_direct_write at ffffffff8c1dcf14
+#15 __generic_file_write_iter at ffffffff8c1dd07b
+#16 ocfs2_file_write_iter at ffffffffc0c49f1f [ocfs2]
+#17 aio_write at ffffffff8c2cc72e
+#18 kmem_cache_alloc at ffffffff8c248dde
+#19 do_io_submit at ffffffff8c2ccada
+#20 do_syscall_64 at ffffffff8c004984
+#21 entry_SYSCALL_64_after_hwframe at ffffffff8c8000ba
+
+Link: https://lkml.kernel.org/r/20240617095543.6971-1-jack@suse.cz
+Link: https://lkml.kernel.org/r/20240614145243.8837-1-jack@suse.cz
+Fixes: c15471f79506 ("ocfs2: fix sparse file & data ordering issue in direct io")
+Signed-off-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/qcom/pinctrl-spmi-gpio.c |    1 -
- 1 file changed, 1 deletion(-)
+ fs/ocfs2/aops.c        |    5 +++++
+ fs/ocfs2/journal.c     |   17 +++++++++++++++++
+ fs/ocfs2/journal.h     |    2 ++
+ fs/ocfs2/ocfs2_trace.h |    2 ++
+ 4 files changed, 26 insertions(+)
 
---- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-+++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-@@ -1204,7 +1204,6 @@ static const struct of_device_id pmic_gp
- 	{ .compatible = "qcom,pm7250b-gpio", .data = (void *) 12 },
- 	{ .compatible = "qcom,pm7325-gpio", .data = (void *) 10 },
- 	{ .compatible = "qcom,pm8005-gpio", .data = (void *) 4 },
--	{ .compatible = "qcom,pm8008-gpio", .data = (void *) 2 },
- 	{ .compatible = "qcom,pm8019-gpio", .data = (void *) 6 },
- 	/* pm8150 has 10 GPIOs with holes on 2, 5, 7 and 8 */
- 	{ .compatible = "qcom,pm8150-gpio", .data = (void *) 10 },
+--- a/fs/ocfs2/aops.c
++++ b/fs/ocfs2/aops.c
+@@ -2370,6 +2370,11 @@ static int ocfs2_dio_end_io_write(struct
+ 	}
+ 
+ 	list_for_each_entry(ue, &dwc->dw_zero_list, ue_node) {
++		ret = ocfs2_assure_trans_credits(handle, credits);
++		if (ret < 0) {
++			mlog_errno(ret);
++			break;
++		}
+ 		ret = ocfs2_mark_extent_written(inode, &et, handle,
+ 						ue->ue_cpos, 1,
+ 						ue->ue_phys,
+--- a/fs/ocfs2/journal.c
++++ b/fs/ocfs2/journal.c
+@@ -448,6 +448,23 @@ bail:
+ }
+ 
+ /*
++ * Make sure handle has at least 'nblocks' credits available. If it does not
++ * have that many credits available, we will try to extend the handle to have
++ * enough credits. If that fails, we will restart transaction to have enough
++ * credits. Similar notes regarding data consistency and locking implications
++ * as for ocfs2_extend_trans() apply here.
++ */
++int ocfs2_assure_trans_credits(handle_t *handle, int nblocks)
++{
++	int old_nblks = jbd2_handle_buffer_credits(handle);
++
++	trace_ocfs2_assure_trans_credits(old_nblks);
++	if (old_nblks >= nblocks)
++		return 0;
++	return ocfs2_extend_trans(handle, nblocks - old_nblks);
++}
++
++/*
+  * If we have fewer than thresh credits, extend by OCFS2_MAX_TRANS_DATA.
+  * If that fails, restart the transaction & regain write access for the
+  * buffer head which is used for metadata modifications.
+--- a/fs/ocfs2/journal.h
++++ b/fs/ocfs2/journal.h
+@@ -243,6 +243,8 @@ handle_t		    *ocfs2_start_trans(struct
+ int			     ocfs2_commit_trans(struct ocfs2_super *osb,
+ 						handle_t *handle);
+ int			     ocfs2_extend_trans(handle_t *handle, int nblocks);
++int			     ocfs2_assure_trans_credits(handle_t *handle,
++						int nblocks);
+ int			     ocfs2_allocate_extend_trans(handle_t *handle,
+ 						int thresh);
+ 
+--- a/fs/ocfs2/ocfs2_trace.h
++++ b/fs/ocfs2/ocfs2_trace.h
+@@ -2578,6 +2578,8 @@ DEFINE_OCFS2_ULL_UINT_EVENT(ocfs2_commit
+ 
+ DEFINE_OCFS2_INT_INT_EVENT(ocfs2_extend_trans);
+ 
++DEFINE_OCFS2_INT_EVENT(ocfs2_assure_trans_credits);
++
+ DEFINE_OCFS2_INT_EVENT(ocfs2_extend_trans_restart);
+ 
+ DEFINE_OCFS2_INT_INT_EVENT(ocfs2_allocate_extend_trans);
 
 
