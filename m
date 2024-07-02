@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929921514DC;
-	Tue,  2 Jul 2024 17:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00771514DC;
+	Tue,  2 Jul 2024 17:27:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941232; cv=none; b=J6VCOVdrS0NypLLV253w7Tue3025d2VAjKs2xvwJ7NqtSIIBO744rzi6uO6xEXov54LMJBg6NsskfCytt2gleFQE+jSEeJRm4BTnUtvR2EyCAIQawLjwyY/+0ErFnG2l7HKZnUrwVsRTxNRhf63KyxcHg4DxE+wRD1Mg39MNT10=
+	t=1719941235; cv=none; b=JHofdRYkVUk5Mu75Jfx6mwHj9zrrgID7HOekw0HPOE1IA5Kon+pGBUBnfOjRk2PLAJ9zcX6884kSkk+8TD133exVZFZkBD4BFJGLLZOyYWXsUMHLxXOUNsJU6v2PgS28/gR4fqm9nyPgZINlR136Puw8As8goYPyFYAhKO2nQvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941232; c=relaxed/simple;
-	bh=DzrzmuicDvTk7sQyURiR4pEWTzgBqgQ2E24KzjpIIPk=;
+	s=arc-20240116; t=1719941235; c=relaxed/simple;
+	bh=Ytw8ylg8k8pk5mrn9Lde8YA8zb16q4XAThw2jANUEWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RRyeRV9Y0p2Iht5EIsTqGsW8bvvmyItqa/6s+LQHn8ZZMSamN5bZ9LqmfR6s/7b2XL6oGfXkQZjoVVL/1ASHwrd6QnRwWXytDQBRUTLUSBkDTuxM1cUDk5T8iCAW5RRxX/7EM83aLuMN8BVkAyjqpywtMoUOTxY6Ww7sGr6CaOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zJfJrmyZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oorReLfSWMZezom2zVsJbZEjXvzG+2KubyOtoREX8t311a8jrHSD6Cdgvm48cB0ArZSUsvoUNOKHnmuohaO0k3nrRwligrYB73A0yXZEvz765Wb1mnWOrFn5TYBmCfN5s2z7uKtyz2WLxYqupYoOeDm7ikQ+szmkc4jD8UZOp+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T2CBhXtE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zJfJrmyZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B4AAC116B1;
-	Tue,  2 Jul 2024 17:27:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T2CBhXtE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44AC2C4AF07;
+	Tue,  2 Jul 2024 17:27:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941232;
-	bh=DzrzmuicDvTk7sQyURiR4pEWTzgBqgQ2E24KzjpIIPk=;
+	s=korg; t=1719941235;
+	bh=Ytw8ylg8k8pk5mrn9Lde8YA8zb16q4XAThw2jANUEWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zJfJrmyZw8ploLXjVrn5sak4CI3wo6aymeZ5pKNc3BtDlrr0yJmwif62JhOtHcCaj
-	 Mh3giTFMzJKpWMKj4yN1AiNVkoze+Fgyzf45JVHHqNFKAeRJagut909febY6gnV1lt
-	 axaq2Zqd1Voaaqw/TwNRu3UTxT/+c7cuRMUkHbvg=
+	b=T2CBhXtErf74tgPvPZZ4OMWjw56a6rSe0BbC65FKU4ql4TPahJP09Oit7n/B6OIBo
+	 UiFriotbGR4lGu3YV3PixLUlVCMbfPZgeWiQm3wQBWH6Fllu98DbH6bU4KdcAfgMpf
+	 6JnsVSUQYW2tkVCmxZ8RXYwNbC5EdOsyPvld2SA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Michael Strauss <michael.strauss@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.6 141/163] drm/amd/display: Send DP_TOTAL_LTTPR_CNT during detection if LTTPR is present
-Date: Tue,  2 Jul 2024 19:04:15 +0200
-Message-ID: <20240702170238.390502441@linuxfoundation.org>
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 142/163] drm/amdgpu/atomfirmware: fix parsing of vram_info
+Date: Tue,  2 Jul 2024 19:04:16 +0200
+Message-ID: <20240702170238.428898561@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -54,62 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Strauss <michael.strauss@amd.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 2ec6c7f802332d1eff16f03e7c757f1543ee1183 upstream.
+commit f6f49dda49db72e7a0b4ca32c77391d5ff5ce232 upstream.
 
-[WHY]
-New register field added in DP2.1 SCR, needed for auxless ALPM
+v3.x changed the how vram width was encoded.  The previous
+implementation actually worked correctly for most boards.
+Fix the implementation to work correctly everywhere.
 
-[HOW]
-Echo value read from 0xF0007 back to sink
+This fixes the vram width reported in the kernel log on
+some boards.
 
-Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Michael Strauss <michael.strauss@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c |   10 +++++++++-
- drivers/gpu/drm/amd/display/include/dpcd_defs.h                    |    5 +++++
- 2 files changed, 14 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-@@ -1584,9 +1584,17 @@ static bool retrieve_link_cap(struct dc_
- 			return false;
- 	}
- 
--	if (dp_is_lttpr_present(link))
-+	if (dp_is_lttpr_present(link)) {
- 		configure_lttpr_mode_transparent(link);
- 
-+		// Echo TOTAL_LTTPR_CNT back downstream
-+		core_link_write_dpcd(
-+				link,
-+				DP_TOTAL_LTTPR_CNT,
-+				&link->dpcd_caps.lttpr_caps.phy_repeater_cnt,
-+				sizeof(link->dpcd_caps.lttpr_caps.phy_repeater_cnt));
-+	}
-+
- 	/* Read DP tunneling information. */
- 	status = dpcd_get_tunneling_device_data(link);
- 
---- a/drivers/gpu/drm/amd/display/include/dpcd_defs.h
-+++ b/drivers/gpu/drm/amd/display/include/dpcd_defs.h
-@@ -177,4 +177,9 @@ enum dpcd_psr_sink_states {
- #define DP_SINK_PR_PIXEL_DEVIATION_PER_LINE     0x379
- #define DP_SINK_PR_MAX_NUMBER_OF_DEVIATION_LINE 0x37A
- 
-+/* Remove once drm_dp_helper.h is updated upstream */
-+#ifndef DP_TOTAL_LTTPR_CNT
-+#define DP_TOTAL_LTTPR_CNT                                  0xF000A /* 2.1 */
-+#endif
-+
- #endif /* __DAL_DPCD_DEFS_H__ */
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c
+@@ -399,7 +399,7 @@ amdgpu_atomfirmware_get_vram_info(struct
+ 					mem_channel_number = vram_info->v30.channel_num;
+ 					mem_channel_width = vram_info->v30.channel_width;
+ 					if (vram_width)
+-						*vram_width = mem_channel_number * (1 << mem_channel_width);
++						*vram_width = mem_channel_number * 16;
+ 					break;
+ 				default:
+ 					return -EINVAL;
 
 
