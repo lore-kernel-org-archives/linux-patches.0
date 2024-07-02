@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499C315218A;
-	Tue,  2 Jul 2024 17:24:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57EB215218A;
+	Tue,  2 Jul 2024 17:25:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941100; cv=none; b=Ozi1PmRPAAgCqpxs669A/q4V9GnbrGVIcQyfTYEjhjIvjrL4VVStALXcMzhyu9rTuQ5lTBPq8dLMm21o+FjK5gkAUWWX85GcALYNvNW4ntFFwBGUztJh5mM3FGDJYyJs3TlXE3ZOYWAhVQuGOiWunfZPzAbMzkZaopbv9XxKgVc=
+	t=1719941103; cv=none; b=qHO5zoR+eyZAoEyMarACYrtj5kuzOwL0sqNodFiSI1vHPwkScvk+HOKx8/un/MzLLhyPPlhfUtp7N+1t8Ie42kaLPMH7cl6sfEChQU85M/uAb/KiHs6aFX4FLXVxBE8whh0hGgvutqCqC0bimXnzOjxDK5RDgurgQ7aN+1rTTn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941100; c=relaxed/simple;
-	bh=JkFejznC6/v5V6uihbkStKiIDPkz6lgIYMchfIvrg3E=;
+	s=arc-20240116; t=1719941103; c=relaxed/simple;
+	bh=4gd+f/Awi64kZKeajVqo1SJX8UzaT4fGXVT+bTN8w2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aoBxOBwFHM5GYAYbeACRHHdfB8GkLS7OS0Q1NFHQ0IGpQgVsdQ44kKF7iFQJ9MOFkkcCG6i6zIe0g193nx7PaCwp/VyV/1cwUsVIN3OcPFu/W6z2291cgNYg6B9xGcSSn1NTiOp8ewJbGAkmDKmIqzqS++XzVHA1k/dxKngUwUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zaoFJOYj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dGxMXFNZPAavhg4k4F9DAK53CljULew/COJunE09Bj1yj+8ny4V9dLJYIlJcpP8Zvxx06TAo3uVfgOlOAjPVxxqgo/twxSvQ1+CFW5gZTMUmj8Ro61a++ZiYZe3iD9SKQDENwfRJHYh4eBy1csdYQ3Obe4a/fN2axh1hF87E/X4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TX9mjiNC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zaoFJOYj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52E06C116B1;
-	Tue,  2 Jul 2024 17:24:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TX9mjiNC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD79EC116B1;
+	Tue,  2 Jul 2024 17:25:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941099;
-	bh=JkFejznC6/v5V6uihbkStKiIDPkz6lgIYMchfIvrg3E=;
+	s=korg; t=1719941103;
+	bh=4gd+f/Awi64kZKeajVqo1SJX8UzaT4fGXVT+bTN8w2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zaoFJOYjVCGS7CYwOd2QlmN2J6IDdeP6zXX+Fowr/iynsvfCPGiwYQyOmxqJ8rZFN
-	 l/v21oIGbRkvebsDZhl3nZYUntPtebhwECU73OOgvpQ7wNiCs2dkAND8Evf5B24Thc
-	 6TUhKjXdQiqc8gICck5A10mbTywYoptYFDBchHjI=
+	b=TX9mjiNCfQQ1flefUULhtjTtqV92NUqwlNO8CAeuY7xxDpRYXxyD14JEIx8L5/dYS
+	 uXCTV9cecP5Dk02Mq83EUg+dOX4BxHEMWtZm+Nj1oLZlIiT1raDxee9zYgUtBDy1aF
+	 hEWHuS6C/Eb9pET2WrlEK6mveVK/LAWNuAsLCRFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Yuntao Wang <ytcoode@gmail.com>,
 	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.6 127/163] irqchip/loongson-eiointc: Use early_cpu_to_node() instead of cpu_to_node()
-Date: Tue,  2 Jul 2024 19:04:01 +0200
-Message-ID: <20240702170237.858712522@linuxfoundation.org>
+Subject: [PATCH 6.6 128/163] cpu/hotplug: Fix dynstate assignment in __cpuhp_setup_state_cpuslocked()
+Date: Tue,  2 Jul 2024 19:04:02 +0200
+Message-ID: <20240702170237.895539631@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -50,70 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Yuntao Wang <ytcoode@gmail.com>
 
-commit 2d64eaeeeda5659d52da1af79d237269ba3c2d2c upstream.
+commit 932d8476399f622aa0767a4a0a9e78e5341dc0e1 upstream.
 
-Multi-bridge machines required that all eiointc controllers in the system
-are initialized, otherwise the system does not boot.
+Commit 4205e4786d0b ("cpu/hotplug: Provide dynamic range for prepare
+stage") added a dynamic range for the prepare states, but did not handle
+the assignment of the dynstate variable in __cpuhp_setup_state_cpuslocked().
 
-The initialization happens on the boot CPU during early boot and relies on
-cpu_to_node() for identifying the individual nodes.
+This causes the corresponding startup callback not to be invoked when
+calling __cpuhp_setup_state_cpuslocked() with the CPUHP_BP_PREPARE_DYN
+parameter, even though it should be.
 
-That works when the number of possible CPUs is large enough, but with a
-command line limit, e.g. "nr_cpus=$N" for kdump, but fails when the CPUs
-of the secondary nodes are not covered.
+Currently, the users of __cpuhp_setup_state_cpuslocked(), for one reason or
+another, have not triggered this bug.
 
-During early ACPI enumeration all CPU to node mappings are recorded up to
-CONFIG_NR_CPUS. These are accessible via early_cpu_to_node() even in the
-case that "nr_cpus=N" truncates the number of possible CPUs and only
-provides the possible CPUs via cpu_to_node() translation.
-
-Change the node lookup in the driver to use early_cpu_to_node() so that
-even with a limitation on the number of possible CPUs all eointc instances
-are initialized.
-
-This can't obviously cure the case where CONFIG_NR_CPUS is too small.
-
-[ tglx: Massaged changelog ]
-
-Fixes: 64cc451e45e1 ("irqchip/loongson-eiointc: Fix incorrect use of acpi_get_vec_parent")
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: 4205e4786d0b ("cpu/hotplug: Provide dynamic range for prepare stage")
+Signed-off-by: Yuntao Wang <ytcoode@gmail.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240623034113.1808727-1-chenhuacai@loongson.cn
+Link: https://lore.kernel.org/r/20240515134554.427071-1-ytcoode@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-loongson-eiointc.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ kernel/cpu.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/irqchip/irq-loongson-eiointc.c
-+++ b/drivers/irqchip/irq-loongson-eiointc.c
-@@ -15,6 +15,7 @@
- #include <linux/irqchip/chained_irq.h>
- #include <linux/kernel.h>
- #include <linux/syscore_ops.h>
-+#include <asm/numa.h>
+--- a/kernel/cpu.c
++++ b/kernel/cpu.c
+@@ -2495,7 +2495,7 @@ EXPORT_SYMBOL_GPL(__cpuhp_state_add_inst
+  * The caller needs to hold cpus read locked while calling this function.
+  * Return:
+  *   On success:
+- *      Positive state number if @state is CPUHP_AP_ONLINE_DYN;
++ *      Positive state number if @state is CPUHP_AP_ONLINE_DYN or CPUHP_BP_PREPARE_DYN;
+  *      0 for all other states
+  *   On failure: proper (negative) error code
+  */
+@@ -2518,7 +2518,7 @@ int __cpuhp_setup_state_cpuslocked(enum
+ 	ret = cpuhp_store_callbacks(state, name, startup, teardown,
+ 				    multi_instance);
  
- #define EIOINTC_REG_NODEMAP	0x14a0
- #define EIOINTC_REG_IPMAP	0x14c0
-@@ -349,7 +350,7 @@ static int __init pch_msi_parse_madt(uni
- 	int node;
- 
- 	if (cpu_has_flatmode)
--		node = cpu_to_node(eiointc_priv[nr_pics - 1]->node * CORES_PER_EIO_NODE);
-+		node = early_cpu_to_node(eiointc_priv[nr_pics - 1]->node * CORES_PER_EIO_NODE);
- 	else
- 		node = eiointc_priv[nr_pics - 1]->node;
- 
-@@ -441,7 +442,7 @@ int __init eiointc_acpi_init(struct irq_
- 		goto out_free_handle;
- 
- 	if (cpu_has_flatmode)
--		node = cpu_to_node(acpi_eiointc->node * CORES_PER_EIO_NODE);
-+		node = early_cpu_to_node(acpi_eiointc->node * CORES_PER_EIO_NODE);
- 	else
- 		node = acpi_eiointc->node;
- 	acpi_set_vec_parent(node, priv->eiointc_domain, pch_group);
+-	dynstate = state == CPUHP_AP_ONLINE_DYN;
++	dynstate = state == CPUHP_AP_ONLINE_DYN || state == CPUHP_BP_PREPARE_DYN;
+ 	if (ret > 0 && dynstate) {
+ 		state = ret;
+ 		ret = 0;
+@@ -2549,8 +2549,8 @@ int __cpuhp_setup_state_cpuslocked(enum
+ out:
+ 	mutex_unlock(&cpuhp_state_mutex);
+ 	/*
+-	 * If the requested state is CPUHP_AP_ONLINE_DYN, return the
+-	 * dynamically allocated state in case of success.
++	 * If the requested state is CPUHP_AP_ONLINE_DYN or CPUHP_BP_PREPARE_DYN,
++	 * return the dynamically allocated state in case of success.
+ 	 */
+ 	if (!ret && dynstate)
+ 		return state;
 
 
