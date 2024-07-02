@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2E51514DC;
-	Tue,  2 Jul 2024 17:28:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7F81BE251;
+	Tue,  2 Jul 2024 17:28:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941314; cv=none; b=BLBD/HU+C7PREQb1fXUao5//TG8ooRD4633huqVPX615DDCZ+lUeQQdwEsheHa460y6u+1Ujfne+dIFatImGlgOuoMSfFRNMuuXLyu2D7A2o7QzIb17KIMDwmCGfye4bpgOuDw1HfT7Vrw6kkCj81unnM0HAtNRsmU629uTN9P8=
+	t=1719941317; cv=none; b=otJVdNlzCbnH761asaG3NqraKYIObMygTiWtFLaYfR7pVfroqWvl5H3JlsoZIZ9yE7xSR9XXUL1WojHg3MEhHPK8qjZIoDCIo29trJii6FWXUh+I0sxZXchqIpnqEsytYdzQJ/1IJzofkNg083Dq9UgFH9V0iCiMs6JE0TzvPIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941314; c=relaxed/simple;
-	bh=b8WKXVz+A5evtNU0RmLy2PcjkNI/fHyWJ14VR/pDUVs=;
+	s=arc-20240116; t=1719941317; c=relaxed/simple;
+	bh=6/mZEM5GQYS6cfM2ZD0TvrXBurqNf9KZjv7BdsdxHyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tu5UMUrvdKznE/CtZSQv9Y71C8ZyhrvKb0rRZpGAWyX+1fFp7gpS9ww2qJFg6Pf2hC0hhIID8SK7sOrOe7RCC/nXkw7t6dGFOL1MYDmzvgfM4inENU/uK4P+Kj1AnUVdytNOxwepIziMkdooU1ELcjSk49Gs4MjSgffLweiOslg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kGzu6nJ+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uJY4ybVeGKheD7b9jpJ8fWbXv9kdutAWLDhMSoSS1xMkTdcHa/C+DbrXw9UQCfcxl5OIj2QZKdPDYwoDuziuDkEAVTAClObk1/BuPoAS1Y+AQZaOjLYoPexpJ5YNZyt5/0dKpSBa5MFjpsfbeT7tpm1SpYw6ZwY5AuiUgqzWfgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AIXvm4d4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kGzu6nJ+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6F3C116B1;
-	Tue,  2 Jul 2024 17:28:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AIXvm4d4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3A7AC116B1;
+	Tue,  2 Jul 2024 17:28:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941314;
-	bh=b8WKXVz+A5evtNU0RmLy2PcjkNI/fHyWJ14VR/pDUVs=;
+	s=korg; t=1719941317;
+	bh=6/mZEM5GQYS6cfM2ZD0TvrXBurqNf9KZjv7BdsdxHyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kGzu6nJ+Of8W0xJX2x0UqLeCs5tCn7FjxPyPlm8Efbk9meo/1rko8YLSYtzQM3+fV
-	 EbEkQ8KgvAR4AWJ0ZYaTJZ2NuuleS8AOw9zlOm0aefheAkj4y/CIDUCFItIetRHwkO
-	 wZJkhnxVIpuYXF8Rsl64TxFuOU2LwlCivYFSDfiw=
+	b=AIXvm4d492rvb9ogxeX4+BBVrZaCxQUXW5hT7FpmZ04t5NcMik/9R2kI6Ix3m+OO9
+	 eZLuW0etNhiAU7GpVLskQfusDB3hrIRIgJEG+2uqhIwKs0niAc2sKcZTb75UBWpxGx
+	 fibcglAQt+BP9a2NG6Lo8Q8WkwTzzu5xMqGjQ6YY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Narasimhan V <Narasimhan.V@amd.com>,
-	Jan Beulich <jbeulich@suse.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Stuart Axon <stuaxo2@yahoo.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 003/128] x86/mm/numa: Use NUMA_NO_NODE when calling memblock_set_node()
-Date: Tue,  2 Jul 2024 19:03:24 +0200
-Message-ID: <20240702170226.364430407@linuxfoundation.org>
+Subject: [PATCH 6.1 004/128] ACPI: x86: utils: Add Picasso to the list for forcing StorageD3Enable
+Date: Tue,  2 Jul 2024 19:03:25 +0200
+Message-ID: <20240702170226.401226297@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170226.231899085@linuxfoundation.org>
 References: <20240702170226.231899085@linuxfoundation.org>
@@ -54,56 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Beulich <jbeulich@suse.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 3ac36aa7307363b7247ccb6f6a804e11496b2b36 ]
+[ Upstream commit 10b6b4a8ac6120ec36555fd286eed577f7632e3b ]
 
-memblock_set_node() warns about using MAX_NUMNODES, see
+Picasso was the first APU that introduced s2idle support from AMD,
+and it was predating before vendors started to use `StorageD3Enable`
+in their firmware.
 
-  e0eec24e2e19 ("memblock: make memblock_set_node() also warn about use of MAX_NUMNODES")
+Windows doesn't have problems with this hardware and NVME so it was
+likely on the list of hardcoded CPUs to use this behavior in Windows.
 
-for details.
+Add it to the list for Linux to avoid NVME resume issues.
 
-Reported-by: Narasimhan V <Narasimhan.V@amd.com>
-Signed-off-by: Jan Beulich <jbeulich@suse.com>
-Cc: stable@vger.kernel.org
-[bp: commit message]
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Mike Rapoport (IBM) <rppt@kernel.org>
-Tested-by: Paul E. McKenney <paulmck@kernel.org>
-Link: https://lore.kernel.org/r/20240603141005.23261-1-bp@kernel.org
-Link: https://lore.kernel.org/r/abadb736-a239-49e4-ab42-ace7acdd4278@suse.com
-Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
+Reported-by: Stuart Axon <stuaxo2@yahoo.com>
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2449
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: e79a10652bbd ("ACPI: x86: Force StorageD3Enable on more products")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/numa.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/acpi/x86/utils.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/mm/numa.c b/arch/x86/mm/numa.c
-index c7fa5396c0f05..c281326baa144 100644
---- a/arch/x86/mm/numa.c
-+++ b/arch/x86/mm/numa.c
-@@ -523,7 +523,7 @@ static void __init numa_clear_kernel_node_hotplug(void)
- 	for_each_reserved_mem_region(mb_region) {
- 		int nid = memblock_get_region_node(mb_region);
- 
--		if (nid != MAX_NUMNODES)
-+		if (nid != NUMA_NO_NODE)
- 			node_set(nid, reserved_nodemask);
- 	}
- 
-@@ -643,9 +643,9 @@ static int __init numa_init(int (*init_func)(void))
- 	nodes_clear(node_online_map);
- 	memset(&numa_meminfo, 0, sizeof(numa_meminfo));
- 	WARN_ON(memblock_set_node(0, ULLONG_MAX, &memblock.memory,
--				  MAX_NUMNODES));
-+				  NUMA_NO_NODE));
- 	WARN_ON(memblock_set_node(0, ULLONG_MAX, &memblock.reserved,
--				  MAX_NUMNODES));
-+				  NUMA_NO_NODE));
- 	/* In case that parsing SRAT failed. */
- 	WARN_ON(memblock_clear_hotplug(0, ULLONG_MAX));
- 	numa_reset_distance();
+diff --git a/drivers/acpi/x86/utils.c b/drivers/acpi/x86/utils.c
+index e45285d4e62a4..ef431393381a0 100644
+--- a/drivers/acpi/x86/utils.c
++++ b/drivers/acpi/x86/utils.c
+@@ -213,6 +213,7 @@ bool acpi_device_override_status(struct acpi_device *adev, unsigned long long *s
+       disk in the system.
+  */
+ static const struct x86_cpu_id storage_d3_cpu_ids[] = {
++	X86_MATCH_VENDOR_FAM_MODEL(AMD, 23, 24, NULL),  /* Picasso */
+ 	X86_MATCH_VENDOR_FAM_MODEL(AMD, 23, 96, NULL),	/* Renoir */
+ 	X86_MATCH_VENDOR_FAM_MODEL(AMD, 23, 104, NULL),	/* Lucienne */
+ 	X86_MATCH_VENDOR_FAM_MODEL(AMD, 25, 80, NULL),	/* Cezanne */
 -- 
 2.43.0
 
