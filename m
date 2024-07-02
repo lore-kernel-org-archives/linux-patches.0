@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9E015218A;
-	Tue,  2 Jul 2024 17:23:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E8515218A;
+	Tue,  2 Jul 2024 17:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941036; cv=none; b=PuXBHbwVRcdVgUvUcUxadmxwdLVsGPQesQxNwENWl90IRTKDYl6bbFusMgLsqvFOuYShwJ2+nQFOjPr+K0AmG78toWUX2o3zZIzuGA99khaS+qb+KqXKHhHmsqyAZQEY5KcM+lRw4qcJU3OFARZHewf5zY25VqxQyvHTEsckkeM=
+	t=1719941041; cv=none; b=tcUFzIjj6FgZKl0MGb5yINE0GpooxmG5Cs1D6O8Slb2NvTgCWBS04czlkwll01AO3AzS2JHUzrGaWt1JiEZhWpAdFTB/QKEeBWxYk4BkSDvYAofvgOqLG+Fgsjzye4KWHHm48dEBOzjhXI36WB/lIzjckt6RUxfmNEyBg31qiU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941036; c=relaxed/simple;
-	bh=1Rva4NJ0zE8W7WnfxIxScwCE234edJYlbZZB5LwpSPQ=;
+	s=arc-20240116; t=1719941041; c=relaxed/simple;
+	bh=eJgZV2PpMYHV/C42LDZeoy8m9FuO34yc00pCjPFVX/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l34J2z5ssUWHzD9W8DkkJLIp+nQ2Ybj4Nxer/LzMzNccT9KP/WgtC7X/FYXqQVnsgIy8TJQZF3khpC8SnnNnDVhr4tx9vScqR2DtrUN4JDmW9O+JUVXLLsyAWIxzFNs16z+AKoCHScDPJDjL0Cm3t19J6ca5oxDxdb6gw3hJENM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m1nfotlG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IOS8u+6wzP2kh7BNoO+u3LQDBUepoqlvs4nUvE//eKCQ9uMO4pllQldgKhpQzXfcB+ZvVFquwryJluZxSdIQExMW0TWN5aMvd5NGIHgaC29fzWnhDK8NoSlwArHW3WmzaHPQnky3d1Q4ITTyIKrLr7Du09ZjcmzG2Y6Att/+89I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=whgi/Qlg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m1nfotlG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4806C116B1;
-	Tue,  2 Jul 2024 17:23:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="whgi/Qlg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A76C116B1;
+	Tue,  2 Jul 2024 17:24:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941036;
-	bh=1Rva4NJ0zE8W7WnfxIxScwCE234edJYlbZZB5LwpSPQ=;
+	s=korg; t=1719941041;
+	bh=eJgZV2PpMYHV/C42LDZeoy8m9FuO34yc00pCjPFVX/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m1nfotlG2qHwfby7AnPR0JlAHsr4Nl9sKGKmh0uPnP4XgHDhvHNKSZF/H59ei4XE6
-	 1sbeeIC5G+PAEQ13XfJmyCFSmxpGFlIwlT9pep6UhCtiE2U88KrSrNI10mYW2qFjFR
-	 BNe6KziMO1x/ggEhi9XM/ghbtMwpHgzh+ca5OxQ8=
+	b=whgi/Qlg6BekBUO513wAYsF1Q4V7BzDWlCZs1K+miAatixna5BJHPePYI8eRsaiV7
+	 sM6Ntcwr0kCDl6WfigbQA+3eiq679/c8qWUuelQc9mTrMt/GdNSB9Q/ks5iLOKKNxE
+	 P1DP33zzwa08bFpCBoL5Y0yJI73dhXpR1viWrxV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 068/163] gfs2: Fix NULL pointer dereference in gfs2_log_flush
-Date: Tue,  2 Jul 2024 19:03:02 +0200
-Message-ID: <20240702170235.639535508@linuxfoundation.org>
+	Vasileios Amoiridis <vassilisamir@gmail.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.6 103/163] iio: chemical: bme680: Fix sensor data read operation
+Date: Tue,  2 Jul 2024 19:03:37 +0200
+Message-ID: <20240702170236.959463460@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -50,60 +51,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Vasileios Amoiridis <vassilisamir@gmail.com>
 
-[ Upstream commit 35264909e9d1973ab9aaa2a1b07cda70f12bb828 ]
+commit 4241665e6ea063a9c1d734de790121a71db763fc upstream.
 
-In gfs2_jindex_free(), set sdp->sd_jdesc to NULL under the log flush
-lock to provide exclusion against gfs2_log_flush().
+A read operation is happening as follows:
 
-In gfs2_log_flush(), check if sdp->sd_jdesc is non-NULL before
-dereferencing it.  Otherwise, we could run into a NULL pointer
-dereference when outstanding glock work races with an unmount
-(glock_work_func -> run_queue -> do_xmote -> inode_go_sync ->
-gfs2_log_flush).
+a) Set sensor to forced mode
+b) Sensor measures values and update data registers and sleeps again
+c) Read data registers
 
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In the current implementation the read operation happens immediately
+after the sensor is set to forced mode so the sensor does not have
+the time to update properly the registers. This leads to the following
+2 problems:
+
+1) The first ever value which is read by the register is always wrong
+2) Every read operation, puts the register into forced mode and reads
+the data that were calculated in the previous conversion.
+
+This behaviour was tested in 2 ways:
+
+1) The internal meas_status_0 register was read before and after every
+read operation in order to verify that the data were ready even before
+the register was set to forced mode and also to check that after the
+forced mode was set the new data were not yet ready.
+
+2) Physically changing the temperature and measuring the temperature
+
+This commit adds the waiting time in between the set of the forced mode
+and the read of the data. The function is taken from the Bosch BME68x
+Sensor API [1].
+
+[1]: https://github.com/boschsensortec/BME68x_SensorAPI/blob/v4.4.8/bme68x.c#L490
+
+Fixes: 1b3bd8592780 ("iio: chemical: Add support for Bosch BME680 sensor")
+Signed-off-by: Vasileios Amoiridis <vassilisamir@gmail.com>
+Link: https://lore.kernel.org/r/20240606212313.207550-5-vassilisamir@gmail.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/gfs2/log.c   | 3 ++-
- fs/gfs2/super.c | 4 ++++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ drivers/iio/chemical/bme680.h      |    2 +
+ drivers/iio/chemical/bme680_core.c |   46 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 48 insertions(+)
 
-diff --git a/fs/gfs2/log.c b/fs/gfs2/log.c
-index 88bc9b1b22650..767549066066c 100644
---- a/fs/gfs2/log.c
-+++ b/fs/gfs2/log.c
-@@ -1102,7 +1102,8 @@ void gfs2_log_flush(struct gfs2_sbd *sdp, struct gfs2_glock *gl, u32 flags)
- 	lops_before_commit(sdp, tr);
- 	if (gfs2_withdrawing_or_withdrawn(sdp))
- 		goto out_withdraw;
--	gfs2_log_submit_bio(&sdp->sd_jdesc->jd_log_bio, REQ_OP_WRITE);
-+	if (sdp->sd_jdesc)
-+		gfs2_log_submit_bio(&sdp->sd_jdesc->jd_log_bio, REQ_OP_WRITE);
- 	if (gfs2_withdrawing_or_withdrawn(sdp))
- 		goto out_withdraw;
+--- a/drivers/iio/chemical/bme680.h
++++ b/drivers/iio/chemical/bme680.h
+@@ -54,7 +54,9 @@
+ #define   BME680_NB_CONV_MASK			GENMASK(3, 0)
  
-diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
-index 2e1d1eca4d14a..8b34c6cf9293f 100644
---- a/fs/gfs2/super.c
-+++ b/fs/gfs2/super.c
-@@ -67,9 +67,13 @@ void gfs2_jindex_free(struct gfs2_sbd *sdp)
- 	sdp->sd_journals = 0;
- 	spin_unlock(&sdp->sd_jindex_spin);
+ #define BME680_REG_MEAS_STAT_0			0x1D
++#define   BME680_NEW_DATA_BIT			BIT(7)
+ #define   BME680_GAS_MEAS_BIT			BIT(6)
++#define   BME680_MEAS_BIT			BIT(5)
  
-+	down_write(&sdp->sd_log_flush_lock);
- 	sdp->sd_jdesc = NULL;
-+	up_write(&sdp->sd_log_flush_lock);
+ /* Calibration Parameters */
+ #define BME680_T2_LSB_REG	0x8A
+--- a/drivers/iio/chemical/bme680_core.c
++++ b/drivers/iio/chemical/bme680_core.c
+@@ -10,6 +10,7 @@
+  */
+ #include <linux/acpi.h>
+ #include <linux/bitfield.h>
++#include <linux/delay.h>
+ #include <linux/device.h>
+ #include <linux/module.h>
+ #include <linux/log2.h>
+@@ -532,6 +533,43 @@ static u8 bme680_oversampling_to_reg(u8
+ 	return ilog2(val) + 1;
+ }
+ 
++/*
++ * Taken from Bosch BME680 API:
++ * https://github.com/boschsensortec/BME68x_SensorAPI/blob/v4.4.8/bme68x.c#L490
++ */
++static int bme680_wait_for_eoc(struct bme680_data *data)
++{
++	struct device *dev = regmap_get_device(data->regmap);
++	unsigned int check;
++	int ret;
++	/*
++	 * (Sum of oversampling ratios * time per oversampling) +
++	 * TPH measurement + gas measurement + wait transition from forced mode
++	 * + heater duration
++	 */
++	int wait_eoc_us = ((data->oversampling_temp + data->oversampling_press +
++			   data->oversampling_humid) * 1936) + (477 * 4) +
++			   (477 * 5) + 1000 + (data->heater_dur * 1000);
 +
- 	while (!list_empty(&list)) {
- 		jd = list_first_entry(&list, struct gfs2_jdesc, jd_list);
-+		BUG_ON(jd->jd_log_bio);
- 		gfs2_free_journal_extents(jd);
- 		list_del(&jd->jd_list);
- 		iput(jd->jd_inode);
--- 
-2.43.0
-
++	usleep_range(wait_eoc_us, wait_eoc_us + 100);
++
++	ret = regmap_read(data->regmap, BME680_REG_MEAS_STAT_0, &check);
++	if (ret) {
++		dev_err(dev, "failed to read measurement status register.\n");
++		return ret;
++	}
++	if (check & BME680_MEAS_BIT) {
++		dev_err(dev, "Device measurement cycle incomplete.\n");
++		return -EBUSY;
++	}
++	if (!(check & BME680_NEW_DATA_BIT)) {
++		dev_err(dev, "No new data available from the device.\n");
++		return -ENODATA;
++	}
++
++	return 0;
++}
++
+ static int bme680_chip_config(struct bme680_data *data)
+ {
+ 	struct device *dev = regmap_get_device(data->regmap);
+@@ -622,6 +660,10 @@ static int bme680_read_temp(struct bme68
+ 	if (ret < 0)
+ 		return ret;
+ 
++	ret = bme680_wait_for_eoc(data);
++	if (ret)
++		return ret;
++
+ 	ret = regmap_bulk_read(data->regmap, BME680_REG_TEMP_MSB,
+ 			       &tmp, 3);
+ 	if (ret < 0) {
+@@ -738,6 +780,10 @@ static int bme680_read_gas(struct bme680
+ 	if (ret < 0)
+ 		return ret;
+ 
++	ret = bme680_wait_for_eoc(data);
++	if (ret)
++		return ret;
++
+ 	ret = regmap_read(data->regmap, BME680_REG_MEAS_STAT_0, &check);
+ 	if (check & BME680_GAS_MEAS_BIT) {
+ 		dev_err(dev, "gas measurement incomplete\n");
 
 
