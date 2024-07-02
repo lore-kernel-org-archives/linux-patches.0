@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6166C1BD005;
-	Tue,  2 Jul 2024 17:31:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2E71BC06B;
+	Tue,  2 Jul 2024 17:31:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941494; cv=none; b=octLkYXV+l4ttSFjXduK+UCal8E+YT08iCaxxEquW2I4zUMvtIvx/1xwgc+kxnKVh3GoTBph8lgJn32N62VtQ069mpXnT4uzyeN8fyxW5EWeClK1nMl5c5HJsZSNzwHCEseoE1X1j8EhXhOeVKW81wim/XAjcsyEtyCC1ey+Hjw=
+	t=1719941497; cv=none; b=INKi71ywArKNvDxOsTSZ7iUDHWF5/xLWspUuRaAhJMPkDtz99nDY0c48qiQepzC/MmLn7f0bhW0YYaUE4ipx854p4YubzwPG3kzZc2YNnA6D3dKCT8pG1jjzkA+jdYRhnsqjnzzD+nlpiyh4mi9CKmMw13o79BOt0RhB+JF3iVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941494; c=relaxed/simple;
-	bh=NhJljT6A59HZTj1p1GgtffrLWRV0y2IORChOirLjoiE=;
+	s=arc-20240116; t=1719941497; c=relaxed/simple;
+	bh=xtwueXOvediKGoQjDZitdYqIO4dmIslZ/DI7tihkofA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gmCwdUo8YDLz5pzOp9640n1OWCmTSrpZB8q3X9n2pl1rcf0PUIFWUbYFxwveqY0dRIoUq7MzdqTLo1toKibOlqU4536QyUWS6u3uIwTvKGX6n59AG2YSqLsuj4r9rTVQX4b1ztPhDtCxBPiKhEqdTDD0p1PLZ/WcxNJVrG6lJXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jaJ+mZg+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=epRcGqDHBs8tdCybxVe+E0OUQWOfo2l4Y2M/9PGvUXcJRlDm3e1qu5nqdNE8J2rhb42pomeqxG1jVbuujO111XniK8j27FdSXQSmVsGG8jr/+S8QO5nx9pDCYN6EiQj2SjhL+GiajDuOidSLVvqyHzsvRLqJ+oENgTlRgkDDZdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a7Ss2aPt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jaJ+mZg+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CED9CC116B1;
-	Tue,  2 Jul 2024 17:31:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a7Ss2aPt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2F8EC116B1;
+	Tue,  2 Jul 2024 17:31:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941494;
-	bh=NhJljT6A59HZTj1p1GgtffrLWRV0y2IORChOirLjoiE=;
+	s=korg; t=1719941497;
+	bh=xtwueXOvediKGoQjDZitdYqIO4dmIslZ/DI7tihkofA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jaJ+mZg+MdHov6ttyZJ4HUhqeEH3p8VTFyUDyIANJtGX27vBLHqd/uRpNX6CCOido
-	 XGYZlt1bQyTjYJJMksQsx2gIKPUwK9UpIZ0vveqr4uS7G3llSAY38wIjWV86iAx44T
-	 9iiulvbD/TuVX3fEl9Iu3rxc2QrO1FNyrbkYhiGc=
+	b=a7Ss2aPtrB7dZmHr51htdchVMZKrwVEFthOdj0PnEbbovQBo6e80DADJDcunLVN3r
+	 EMVzFnBoJDDY+uaW4zfK2eJL/viqenxeKQ/4o+cBu+jWaiJFFkL3ugsP8lrIo5q2fV
+	 EuFisDkzbtjPFs+4RklcVDn8sPXvRjZx5srqfVLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adhemerval Zanella <adhemerval.zanella@linaro.org>,
-	Helge Deller <deller@gmx.de>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 063/128] parisc: use generic sys_fanotify_mark implementation
-Date: Tue,  2 Jul 2024 19:04:24 +0200
-Message-ID: <20240702170228.616097638@linuxfoundation.org>
+	Vasileios Amoiridis <vassilisamir@gmail.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 081/128] iio: chemical: bme680: Fix sensor data read operation
+Date: Tue,  2 Jul 2024 19:04:42 +0200
+Message-ID: <20240702170229.289333543@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170226.231899085@linuxfoundation.org>
 References: <20240702170226.231899085@linuxfoundation.org>
@@ -52,99 +51,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Vasileios Amoiridis <vassilisamir@gmail.com>
 
-[ Upstream commit 403f17a330732a666ae793f3b15bc75bb5540524 ]
+commit 4241665e6ea063a9c1d734de790121a71db763fc upstream.
 
-The sys_fanotify_mark() syscall on parisc uses the reverse word order
-for the two halves of the 64-bit argument compared to all syscalls on
-all 32-bit architectures. As far as I can tell, the problem is that
-the function arguments on parisc are sorted backwards (26, 25, 24, 23,
-...) compared to everyone else, so the calling conventions of using an
-even/odd register pair in native word order result in the lower word
-coming first in function arguments, matching the expected behavior
-on little-endian architectures. The system call conventions however
-ended up matching what the other 32-bit architectures do.
+A read operation is happening as follows:
 
-A glibc cleanup in 2020 changed the userspace behavior in a way that
-handles all architectures consistently, but this inadvertently broke
-parisc32 by changing to the same method as everyone else.
+a) Set sensor to forced mode
+b) Sensor measures values and update data registers and sleeps again
+c) Read data registers
 
-The change made it into glibc-2.35 and subsequently into debian 12
-(bookworm), which is the latest stable release. This means we
-need to choose between reverting the glibc change or changing the
-kernel to match it again, but either hange will leave some systems
-broken.
+In the current implementation the read operation happens immediately
+after the sensor is set to forced mode so the sensor does not have
+the time to update properly the registers. This leads to the following
+2 problems:
 
-Pick the option that is more likely to help current and future
-users and change the kernel to match current glibc. This also
-means the behavior is now consistent across architectures, but
-it breaks running new kernels with old glibc builds before 2.35.
+1) The first ever value which is read by the register is always wrong
+2) Every read operation, puts the register into forced mode and reads
+the data that were calculated in the previous conversion.
 
-Link: https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=d150181d73d9
-Link: https://git.kernel.org/pub/scm/linux/kernel/git/history/history.git/commit/arch/parisc/kernel/sys_parisc.c?h=57b1dfbd5b4a39d
-Cc: Adhemerval Zanella <adhemerval.zanella@linaro.org>
-Tested-by: Helge Deller <deller@gmx.de>
-Acked-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+This behaviour was tested in 2 ways:
+
+1) The internal meas_status_0 register was read before and after every
+read operation in order to verify that the data were ready even before
+the register was set to forced mode and also to check that after the
+forced mode was set the new data were not yet ready.
+
+2) Physically changing the temperature and measuring the temperature
+
+This commit adds the waiting time in between the set of the forced mode
+and the read of the data. The function is taken from the Bosch BME68x
+Sensor API [1].
+
+[1]: https://github.com/boschsensortec/BME68x_SensorAPI/blob/v4.4.8/bme68x.c#L490
+
+Fixes: 1b3bd8592780 ("iio: chemical: Add support for Bosch BME680 sensor")
+Signed-off-by: Vasileios Amoiridis <vassilisamir@gmail.com>
+Link: https://lore.kernel.org/r/20240606212313.207550-5-vassilisamir@gmail.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
-I found this through code inspection, please double-check to make
-sure I got the bug and the fix right.
+ drivers/iio/chemical/bme680.h      |    2 +
+ drivers/iio/chemical/bme680_core.c |   46 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 48 insertions(+)
 
-The alternative is to fix this by reverting glibc back to the
-unusual behavior.
-
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- arch/parisc/Kconfig                     | 1 +
- arch/parisc/kernel/sys_parisc32.c       | 9 ---------
- arch/parisc/kernel/syscalls/syscall.tbl | 2 +-
- 3 files changed, 2 insertions(+), 10 deletions(-)
-
-diff --git a/arch/parisc/Kconfig b/arch/parisc/Kconfig
-index abf39ecda6fb1..5762633ea95e4 100644
---- a/arch/parisc/Kconfig
-+++ b/arch/parisc/Kconfig
-@@ -14,6 +14,7 @@ config PARISC
- 	select ARCH_HAS_UBSAN_SANITIZE_ALL
- 	select ARCH_HAS_PTE_SPECIAL
- 	select ARCH_NO_SG_CHAIN
-+	select ARCH_SPLIT_ARG64 if !64BIT
- 	select ARCH_SUPPORTS_HUGETLBFS if PA20
- 	select ARCH_SUPPORTS_MEMORY_FAILURE
- 	select ARCH_STACKWALK
-diff --git a/arch/parisc/kernel/sys_parisc32.c b/arch/parisc/kernel/sys_parisc32.c
-index 2a12a547b447b..826c8e51b5853 100644
---- a/arch/parisc/kernel/sys_parisc32.c
-+++ b/arch/parisc/kernel/sys_parisc32.c
-@@ -23,12 +23,3 @@ asmlinkage long sys32_unimplemented(int r26, int r25, int r24, int r23,
-     	current->comm, current->pid, r20);
-     return -ENOSYS;
+--- a/drivers/iio/chemical/bme680.h
++++ b/drivers/iio/chemical/bme680.h
+@@ -54,7 +54,9 @@
+ #define   BME680_NB_CONV_MASK			GENMASK(3, 0)
+ 
+ #define BME680_REG_MEAS_STAT_0			0x1D
++#define   BME680_NEW_DATA_BIT			BIT(7)
+ #define   BME680_GAS_MEAS_BIT			BIT(6)
++#define   BME680_MEAS_BIT			BIT(5)
+ 
+ /* Calibration Parameters */
+ #define BME680_T2_LSB_REG	0x8A
+--- a/drivers/iio/chemical/bme680_core.c
++++ b/drivers/iio/chemical/bme680_core.c
+@@ -10,6 +10,7 @@
+  */
+ #include <linux/acpi.h>
+ #include <linux/bitfield.h>
++#include <linux/delay.h>
+ #include <linux/device.h>
+ #include <linux/module.h>
+ #include <linux/log2.h>
+@@ -532,6 +533,43 @@ static u8 bme680_oversampling_to_reg(u8
+ 	return ilog2(val) + 1;
  }
--
--asmlinkage long sys32_fanotify_mark(compat_int_t fanotify_fd, compat_uint_t flags,
--	compat_uint_t mask0, compat_uint_t mask1, compat_int_t dfd,
--	const char  __user * pathname)
--{
--	return sys_fanotify_mark(fanotify_fd, flags,
--			((__u64)mask1 << 32) | mask0,
--			 dfd, pathname);
--}
-diff --git a/arch/parisc/kernel/syscalls/syscall.tbl b/arch/parisc/kernel/syscalls/syscall.tbl
-index ba4884eaa5057..42702f5d49f28 100644
---- a/arch/parisc/kernel/syscalls/syscall.tbl
-+++ b/arch/parisc/kernel/syscalls/syscall.tbl
-@@ -364,7 +364,7 @@
- 320	common	accept4			sys_accept4
- 321	common	prlimit64		sys_prlimit64
- 322	common	fanotify_init		sys_fanotify_init
--323	common	fanotify_mark		sys_fanotify_mark		sys32_fanotify_mark
-+323	common	fanotify_mark		sys_fanotify_mark		compat_sys_fanotify_mark
- 324	32	clock_adjtime		sys_clock_adjtime32
- 324	64	clock_adjtime		sys_clock_adjtime
- 325	common	name_to_handle_at	sys_name_to_handle_at
--- 
-2.43.0
-
+ 
++/*
++ * Taken from Bosch BME680 API:
++ * https://github.com/boschsensortec/BME68x_SensorAPI/blob/v4.4.8/bme68x.c#L490
++ */
++static int bme680_wait_for_eoc(struct bme680_data *data)
++{
++	struct device *dev = regmap_get_device(data->regmap);
++	unsigned int check;
++	int ret;
++	/*
++	 * (Sum of oversampling ratios * time per oversampling) +
++	 * TPH measurement + gas measurement + wait transition from forced mode
++	 * + heater duration
++	 */
++	int wait_eoc_us = ((data->oversampling_temp + data->oversampling_press +
++			   data->oversampling_humid) * 1936) + (477 * 4) +
++			   (477 * 5) + 1000 + (data->heater_dur * 1000);
++
++	usleep_range(wait_eoc_us, wait_eoc_us + 100);
++
++	ret = regmap_read(data->regmap, BME680_REG_MEAS_STAT_0, &check);
++	if (ret) {
++		dev_err(dev, "failed to read measurement status register.\n");
++		return ret;
++	}
++	if (check & BME680_MEAS_BIT) {
++		dev_err(dev, "Device measurement cycle incomplete.\n");
++		return -EBUSY;
++	}
++	if (!(check & BME680_NEW_DATA_BIT)) {
++		dev_err(dev, "No new data available from the device.\n");
++		return -ENODATA;
++	}
++
++	return 0;
++}
++
+ static int bme680_chip_config(struct bme680_data *data)
+ {
+ 	struct device *dev = regmap_get_device(data->regmap);
+@@ -622,6 +660,10 @@ static int bme680_read_temp(struct bme68
+ 	if (ret < 0)
+ 		return ret;
+ 
++	ret = bme680_wait_for_eoc(data);
++	if (ret)
++		return ret;
++
+ 	ret = regmap_bulk_read(data->regmap, BME680_REG_TEMP_MSB,
+ 			       &tmp, 3);
+ 	if (ret < 0) {
+@@ -738,6 +780,10 @@ static int bme680_read_gas(struct bme680
+ 	if (ret < 0)
+ 		return ret;
+ 
++	ret = bme680_wait_for_eoc(data);
++	if (ret)
++		return ret;
++
+ 	ret = regmap_read(data->regmap, BME680_REG_MEAS_STAT_0, &check);
+ 	if (check & BME680_GAS_MEAS_BIT) {
+ 		dev_err(dev, "gas measurement incomplete\n");
 
 
