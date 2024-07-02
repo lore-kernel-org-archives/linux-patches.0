@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739EE178381;
-	Tue,  2 Jul 2024 17:07:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A251BE241;
+	Tue,  2 Jul 2024 17:07:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940046; cv=none; b=W2vWlTeVdigQOpjpmbGT4pui/oDssS23IsjIAopJesxYl1mHZlG847Nfj1jSdTYlr4Np/NeAr+Dnlsp0kAUlrYG/ahh0a8h/dUs29K48RpKgdPOzkQZ/Conuu1CJK/PF6s32j0YRp7OXZOReGlUV8jiRb65RWooUyAKZE2No8rY=
+	t=1719940049; cv=none; b=pzwIYxmzDqZQ0BEsb0d73pofBGguqCk630ihxSO4nZ3il8KLBF8GA2/ovmJfy5cFsHeVguch4wNkuwBq2IH+w1mOOC5LCl192ENdx8E0P8ReplOaaaAapmtyBqrzqtu07rOZCMKwaOXkYcp/qsIUpds47a/9lBh4v+2M13r5hoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940046; c=relaxed/simple;
-	bh=M9VfU4zB+oLYbem4oDZIpSeo2Evf870zIhOx9QdpL44=;
+	s=arc-20240116; t=1719940049; c=relaxed/simple;
+	bh=nBNzm2HoeZMymkEcmW9xWyyc3XrxvCL8KHqeMlDR08I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gEREVR6H4+9W+2y7pI5ZmWA2CMpe4+XNrg15bzTgAOuw5DCxNCYEzWQ+Zt09Rj6Gssj4wVFzhXFOOM2y+GkEdUclgOUQtOCMUkqKGkh4u5RoU+0sgh8rkcqlDvjgE9yLTzoo3tQPnHV7IDtUTU8JbSnoc1IXqC6Lr9pd8hjLuP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xT61RXYm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PNvHiFGjXfnYkat6fW1gciLkhm5pOmLJ8dnd2+wzuyWLJdnxI1OR25n69OzvS2t1w/BqH7yG47qGQabyJwY4tWZ4a5UGX3h8ssrib/DhXDM0uUEMcQPwCCcrRzg7s8G4LeaPpM4scYoEWWOKpdtQ1r/B+VRLczMjXtKaOOaRJL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gdl/TgKl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xT61RXYm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3F54C116B1;
-	Tue,  2 Jul 2024 17:07:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gdl/TgKl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11935C116B1;
+	Tue,  2 Jul 2024 17:07:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940046;
-	bh=M9VfU4zB+oLYbem4oDZIpSeo2Evf870zIhOx9QdpL44=;
+	s=korg; t=1719940049;
+	bh=nBNzm2HoeZMymkEcmW9xWyyc3XrxvCL8KHqeMlDR08I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xT61RXYmCCjCPmDUqN2y0P03jyv8qq22F+sYx/0HHazREMSz7+Zp1mgMLJkLmOKch
-	 XFbsQzOOF337UkZCQb35EQ2bshcQzjdomzouKba3pin0XNpD0K4IY5lBzhBs/kpWh9
-	 xTf+5BRmXRMM8M/5ZaBKLE8DUfL9i/H7hfO5s/Mk=
+	b=gdl/TgKlKuB/epGtZn+lWuPbKYJbyV0nTcR+ql/H6Eqyyfiiajmuv+1t/DkuqbiOT
+	 9cf7MRwBbyJttxNgyceYz081wXa0zcXK0rUZ84tATGY9JfqZ9Mit9BTW4jl7LhROJ1
+	 VVFf7GCvYxrxjr4G0fpaA6CiihoU9Ox9fo8tHEoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zac Ecob <zacecob@protonmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Bing-Jhong Billy Jheng <billy@starlabs.sg>,
+	Muhammad Ramdhan <ramdhan@starlabs.sg>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Daniel Borkmann <daniel@iogearbox.net>,
-	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 036/222] bpf: Fix the corner case with may_goto and jump to the 1st insn.
-Date: Tue,  2 Jul 2024 19:01:14 +0200
-Message-ID: <20240702170245.356351536@linuxfoundation.org>
+Subject: [PATCH 6.9 037/222] bpf: Fix overrunning reservations in ringbuf
+Date: Tue,  2 Jul 2024 19:01:15 +0200
+Message-ID: <20240702170245.393938461@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -53,156 +53,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 5337ac4c9b807bc46baa0713121a0afa8beacd70 ]
+[ Upstream commit cfa1a2329a691ffd991fcf7248a57d752e712881 ]
 
-When the following program is processed by the verifier:
-L1: may_goto L2
-    goto L1
-L2: w0 = 0
-    exit
+The BPF ring buffer internally is implemented as a power-of-2 sized circular
+buffer, with two logical and ever-increasing counters: consumer_pos is the
+consumer counter to show which logical position the consumer consumed the
+data, and producer_pos which is the producer counter denoting the amount of
+data reserved by all producers.
 
-the may_goto insn is first converted to:
-L1: r11 = *(u64 *)(r10 -8)
-    if r11 == 0x0 goto L2
-    r11 -= 1
-    *(u64 *)(r10 -8) = r11
-    goto L1
-L2: w0 = 0
-    exit
+Each time a record is reserved, the producer that "owns" the record will
+successfully advance producer counter. In user space each time a record is
+read, the consumer of the data advanced the consumer counter once it finished
+processing. Both counters are stored in separate pages so that from user
+space, the producer counter is read-only and the consumer counter is read-write.
 
-then later as the last step the verifier inserts:
-  *(u64 *)(r10 -8) = BPF_MAX_LOOPS
-as the first insn of the program to initialize loop count.
+One aspect that simplifies and thus speeds up the implementation of both
+producers and consumers is how the data area is mapped twice contiguously
+back-to-back in the virtual memory, allowing to not take any special measures
+for samples that have to wrap around at the end of the circular buffer data
+area, because the next page after the last data page would be first data page
+again, and thus the sample will still appear completely contiguous in virtual
+memory.
 
-When the first insn happens to be a branch target of some jmp the
-bpf_patch_insn_data() logic will produce:
-L1: *(u64 *)(r10 -8) = BPF_MAX_LOOPS
-    r11 = *(u64 *)(r10 -8)
-    if r11 == 0x0 goto L2
-    r11 -= 1
-    *(u64 *)(r10 -8) = r11
-    goto L1
-L2: w0 = 0
-    exit
+Each record has a struct bpf_ringbuf_hdr { u32 len; u32 pg_off; } header for
+book-keeping the length and offset, and is inaccessible to the BPF program.
+Helpers like bpf_ringbuf_reserve() return `(void *)hdr + BPF_RINGBUF_HDR_SZ`
+for the BPF program to use. Bing-Jhong and Muhammad reported that it is however
+possible to make a second allocated memory chunk overlapping with the first
+chunk and as a result, the BPF program is now able to edit first chunk's
+header.
 
-because instruction patching adjusts all jmps and calls, but for this
-particular corner case it's incorrect and the L1 label should be one
-instruction down, like:
-    *(u64 *)(r10 -8) = BPF_MAX_LOOPS
-L1: r11 = *(u64 *)(r10 -8)
-    if r11 == 0x0 goto L2
-    r11 -= 1
-    *(u64 *)(r10 -8) = r11
-    goto L1
-L2: w0 = 0
-    exit
+For example, consider the creation of a BPF_MAP_TYPE_RINGBUF map with size
+of 0x4000. Next, the consumer_pos is modified to 0x3000 /before/ a call to
+bpf_ringbuf_reserve() is made. This will allocate a chunk A, which is in
+[0x0,0x3008], and the BPF program is able to edit [0x8,0x3008]. Now, lets
+allocate a chunk B with size 0x3000. This will succeed because consumer_pos
+was edited ahead of time to pass the `new_prod_pos - cons_pos > rb->mask`
+check. Chunk B will be in range [0x3008,0x6010], and the BPF program is able
+to edit [0x3010,0x6010]. Due to the ring buffer memory layout mentioned
+earlier, the ranges [0x0,0x4000] and [0x4000,0x8000] point to the same data
+pages. This means that chunk B at [0x4000,0x4008] is chunk A's header.
+bpf_ringbuf_submit() / bpf_ringbuf_discard() use the header's pg_off to then
+locate the bpf_ringbuf itself via bpf_ringbuf_restore_from_rec(). Once chunk
+B modified chunk A's header, then bpf_ringbuf_commit() refers to the wrong
+page and could cause a crash.
 
-and that's what this patch is fixing.
-After bpf_patch_insn_data() call adjust_jmp_off() to adjust all jmps
-that point to newly insert BPF_ST insn to point to insn after.
+Fix it by calculating the oldest pending_pos and check whether the range
+from the oldest outstanding record to the newest would span beyond the ring
+buffer size. If that is the case, then reject the request. We've tested with
+the ring buffer benchmark in BPF selftests (./benchs/run_bench_ringbufs.sh)
+before/after the fix and while it seems a bit slower on some benchmarks, it
+is still not significantly enough to matter.
 
-Note that bpf_patch_insn_data() cannot easily be changed to accommodate
-this logic, since jumps that point before or after a sequence of patched
-instructions have to be adjusted with the full length of the patch.
-
-Conceptually it's somewhat similar to "insert" of instructions between other
-instructions with weird semantics. Like "insert" before 1st insn would require
-adjustment of CALL insns to point to newly inserted 1st insn, but not an
-adjustment JMP insns that point to 1st, yet still adjusting JMP insns that
-cross over 1st insn (point to insn before or insn after), hence use simple
-adjust_jmp_off() logic to fix this corner case. Ideally bpf_patch_insn_data()
-would have an auxiliary info to say where 'the start of newly inserted patch
-is', but it would be too complex for backport.
-
-Fixes: 011832b97b31 ("bpf: Introduce may_goto instruction")
-Reported-by: Zac Ecob <zacecob@protonmail.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 457f44363a88 ("bpf: Implement BPF ring buffer and verifier support for it")
+Reported-by: Bing-Jhong Billy Jheng <billy@starlabs.sg>
+Reported-by: Muhammad Ramdhan <ramdhan@starlabs.sg>
+Co-developed-by: Bing-Jhong Billy Jheng <billy@starlabs.sg>
+Co-developed-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Bing-Jhong Billy Jheng <billy@starlabs.sg>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Closes: https://lore.kernel.org/bpf/CAADnVQJ_WWx8w4b=6Gc2EpzAjgv+6A0ridnMz2TvS2egj4r3Gw@mail.gmail.com/
-Link: https://lore.kernel.org/bpf/20240619011859.79334-1-alexei.starovoitov@gmail.com
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20240621140828.18238-1-daniel@iogearbox.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 50 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 50 insertions(+)
+ kernel/bpf/ringbuf.c | 31 +++++++++++++++++++++++++------
+ 1 file changed, 25 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index add5ccbe87523..2233bf50a9012 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -12546,6 +12546,16 @@ static bool signed_add32_overflows(s32 a, s32 b)
- 	return res < a;
- }
+diff --git a/kernel/bpf/ringbuf.c b/kernel/bpf/ringbuf.c
+index 0ee653a936ea0..e20b90c361316 100644
+--- a/kernel/bpf/ringbuf.c
++++ b/kernel/bpf/ringbuf.c
+@@ -51,7 +51,8 @@ struct bpf_ringbuf {
+ 	 * This prevents a user-space application from modifying the
+ 	 * position and ruining in-kernel tracking. The permissions of the
+ 	 * pages depend on who is producing samples: user-space or the
+-	 * kernel.
++	 * kernel. Note that the pending counter is placed in the same
++	 * page as the producer, so that it shares the same cache line.
+ 	 *
+ 	 * Kernel-producer
+ 	 * ---------------
+@@ -70,6 +71,7 @@ struct bpf_ringbuf {
+ 	 */
+ 	unsigned long consumer_pos __aligned(PAGE_SIZE);
+ 	unsigned long producer_pos __aligned(PAGE_SIZE);
++	unsigned long pending_pos;
+ 	char data[] __aligned(PAGE_SIZE);
+ };
  
-+static bool signed_add16_overflows(s16 a, s16 b)
-+{
-+	/* Do the add in u16, where overflow is well-defined */
-+	s16 res = (s16)((u16)a + (u16)b);
-+
-+	if (b < 0)
-+		return res > a;
-+	return res < a;
-+}
-+
- static bool signed_sub_overflows(s64 a, s64 b)
- {
- 	/* Do the sub in u64, where overflow is well-defined */
-@@ -18564,6 +18574,39 @@ static struct bpf_prog *bpf_patch_insn_data(struct bpf_verifier_env *env, u32 of
- 	return new_prog;
- }
+@@ -179,6 +181,7 @@ static struct bpf_ringbuf *bpf_ringbuf_alloc(size_t data_sz, int numa_node)
+ 	rb->mask = data_sz - 1;
+ 	rb->consumer_pos = 0;
+ 	rb->producer_pos = 0;
++	rb->pending_pos = 0;
  
-+/*
-+ * For all jmp insns in a given 'prog' that point to 'tgt_idx' insn adjust the
-+ * jump offset by 'delta'.
-+ */
-+static int adjust_jmp_off(struct bpf_prog *prog, u32 tgt_idx, u32 delta)
-+{
-+	struct bpf_insn *insn = prog->insnsi;
-+	u32 insn_cnt = prog->len, i;
-+
-+	for (i = 0; i < insn_cnt; i++, insn++) {
-+		u8 code = insn->code;
-+
-+		if ((BPF_CLASS(code) != BPF_JMP && BPF_CLASS(code) != BPF_JMP32) ||
-+		    BPF_OP(code) == BPF_CALL || BPF_OP(code) == BPF_EXIT)
-+			continue;
-+
-+		if (insn->code == (BPF_JMP32 | BPF_JA)) {
-+			if (i + 1 + insn->imm != tgt_idx)
-+				continue;
-+			if (signed_add32_overflows(insn->imm, delta))
-+				return -ERANGE;
-+			insn->imm += delta;
-+		} else {
-+			if (i + 1 + insn->off != tgt_idx)
-+				continue;
-+			if (signed_add16_overflows(insn->imm, delta))
-+				return -ERANGE;
-+			insn->off += delta;
-+		}
-+	}
-+	return 0;
-+}
-+
- static int adjust_subprog_starts_after_remove(struct bpf_verifier_env *env,
- 					      u32 off, u32 cnt)
+ 	return rb;
+ }
+@@ -404,9 +407,9 @@ bpf_ringbuf_restore_from_rec(struct bpf_ringbuf_hdr *hdr)
+ 
+ static void *__bpf_ringbuf_reserve(struct bpf_ringbuf *rb, u64 size)
  {
-@@ -20268,6 +20311,13 @@ static int do_misc_fixups(struct bpf_verifier_env *env)
- 		if (!new_prog)
- 			return -ENOMEM;
- 		env->prog = prog = new_prog;
-+		/*
-+		 * If may_goto is a first insn of a prog there could be a jmp
-+		 * insn that points to it, hence adjust all such jmps to point
-+		 * to insn after BPF_ST that inits may_goto count.
-+		 * Adjustment will succeed because bpf_patch_insn_data() didn't fail.
-+		 */
-+		WARN_ON(adjust_jmp_off(env->prog, subprog_start, 1));
+-	unsigned long cons_pos, prod_pos, new_prod_pos, flags;
+-	u32 len, pg_off;
++	unsigned long cons_pos, prod_pos, new_prod_pos, pend_pos, flags;
+ 	struct bpf_ringbuf_hdr *hdr;
++	u32 len, pg_off, tmp_size, hdr_len;
+ 
+ 	if (unlikely(size > RINGBUF_MAX_RECORD_SZ))
+ 		return NULL;
+@@ -424,13 +427,29 @@ static void *__bpf_ringbuf_reserve(struct bpf_ringbuf *rb, u64 size)
+ 		spin_lock_irqsave(&rb->spinlock, flags);
  	}
  
- 	/* Since poke tab is now finalized, publish aux to tracker. */
++	pend_pos = rb->pending_pos;
+ 	prod_pos = rb->producer_pos;
+ 	new_prod_pos = prod_pos + len;
+ 
+-	/* check for out of ringbuf space by ensuring producer position
+-	 * doesn't advance more than (ringbuf_size - 1) ahead
++	while (pend_pos < prod_pos) {
++		hdr = (void *)rb->data + (pend_pos & rb->mask);
++		hdr_len = READ_ONCE(hdr->len);
++		if (hdr_len & BPF_RINGBUF_BUSY_BIT)
++			break;
++		tmp_size = hdr_len & ~BPF_RINGBUF_DISCARD_BIT;
++		tmp_size = round_up(tmp_size + BPF_RINGBUF_HDR_SZ, 8);
++		pend_pos += tmp_size;
++	}
++	rb->pending_pos = pend_pos;
++
++	/* check for out of ringbuf space:
++	 * - by ensuring producer position doesn't advance more than
++	 *   (ringbuf_size - 1) ahead
++	 * - by ensuring oldest not yet committed record until newest
++	 *   record does not span more than (ringbuf_size - 1)
+ 	 */
+-	if (new_prod_pos - cons_pos > rb->mask) {
++	if (new_prod_pos - cons_pos > rb->mask ||
++	    new_prod_pos - pend_pos > rb->mask) {
+ 		spin_unlock_irqrestore(&rb->spinlock, flags);
+ 		return NULL;
+ 	}
 -- 
 2.43.0
 
