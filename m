@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC9E1BE226;
-	Tue,  2 Jul 2024 17:28:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672631BE846;
+	Tue,  2 Jul 2024 17:28:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941304; cv=none; b=FuUtxtFYlYJrDWNXn34PnDLUHkitIcKrlfaeMPLt3Nc56+gJAeLAjySTAiz6Qt0NjikFNTK6Iidq7rgLiZA7Tyu6LkUN/qJgHEZUGEt5oSfVCJikpOhIc1E3REoOHaegVgokATT3Wi97/6+HMPZicSx3CvmalyLzUVZe0coDSCQ=
+	t=1719941307; cv=none; b=Mjmbhn2foxQIz+xLeldPaeXkB+ytf6ojZ3Hjbgs9n2CPXe+XF9pGz8a5QGUxMDTpZ4Lu7nlJwDfuInOEP05V/ZJgAh2n92qB8md0VKyKMt2Wngm1VU1w6oLNtaglAKx9zpbKYsRmpO7u+GiCDRIUjE84GDgyGSN9idbf7xoZP/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941304; c=relaxed/simple;
-	bh=Xv14gKyXYXEfsnDKkZN137Ug5V0axGi2e7wDiNtunas=;
+	s=arc-20240116; t=1719941307; c=relaxed/simple;
+	bh=DX4DtjZ/VuZ+QSLSIPJ0/Omm5+8vlK0MRB8pfry77pw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f/irI1fol/g5rf7x+96P5EzYOoaLRmmYZVXqGerIKVuPnVi6qWWLf8ciNBH9VLBoDbwCOFtyTAITUIlCf6XauBekkf3SyJPFQnsvvtNixmZKcpVvDsiNFBmn4G9BrJAqkn5jF4I9Y9aCTU9FCpiNyQXeJwN1aZli4pZshUxV0Rs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tuBsD5Xz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E5vAV/cY9q1Oq3EmZ4c1Bmgr2/2KWxiWX5TEdjR2LyK27aLDGa1BQmuNa0GzHCRdOWE7FOHzPCp4bU31P5t5A0Rj3EQiMwshjVmVqRL24G5n40RL3t6cejwjAaWFzddmIeXozSoNbaSpnHLZNPSBS2YKl9dGzpYNQ2Z6erGokbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eoP7dV0S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tuBsD5Xz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C96FC116B1;
-	Tue,  2 Jul 2024 17:28:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eoP7dV0S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93BFC4AF07;
+	Tue,  2 Jul 2024 17:28:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941303;
-	bh=Xv14gKyXYXEfsnDKkZN137Ug5V0axGi2e7wDiNtunas=;
+	s=korg; t=1719941307;
+	bh=DX4DtjZ/VuZ+QSLSIPJ0/Omm5+8vlK0MRB8pfry77pw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tuBsD5Xz05sD/EQGajQmx0OGpxUyVXxmMm7lxcZIF1kiNKV2W7154YnpOnIqGTVk9
-	 YqrI2hr6QueGJvUHupgy82GnH2vsNZI7kAGGUHB6DGkps9GmCykZQlOiOUidZkr7Jz
-	 cGBln55dps9wKDJd1Qegy8T6KrscOX08x9ABCWSc=
+	b=eoP7dV0SQCxDNOd2bWLpwXcdJ10xJmwnOzbU7bH3ha/FfaphKydXRCIPN8gDWCORt
+	 5M5sTy4hdqHuil400xs/qseydfX+toOegDfYeaY36jOvtUOsoPw/kzdanrh0MzBc/h
+	 GWN3zITfqZzn3/fttIVWFhx0BEppHdShMmxknbPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Enguerrand de Ribaucourt <enguerrand.de-ribaucourt@savoirfairelinux.com>,
+	Woojung Huh <Woojung.huh@microchip.com>,
+	Arun Ramadoss <arun.ramadoss@microchip.com>,
 	Andrew Lunn <andrew@lunn.ch>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/128] net: phy: micrel: add Microchip KSZ 9477 to the device table
-Date: Tue,  2 Jul 2024 19:03:45 +0200
-Message-ID: <20240702170227.146927909@linuxfoundation.org>
+Subject: [PATCH 6.1 025/128] net: dsa: microchip: use collision based back pressure mode
+Date: Tue,  2 Jul 2024 19:03:46 +0200
+Message-ID: <20240702170227.184486904@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170226.231899085@linuxfoundation.org>
 References: <20240702170226.231899085@linuxfoundation.org>
@@ -54,32 +56,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Enguerrand de Ribaucourt <enguerrand.de-ribaucourt@savoirfairelinux.com>
 
-[ Upstream commit 54a4e5c16382e871c01dd82b47e930fdce30406b ]
+[ Upstream commit d963c95bc9840d070a788c35e41b715a648717f7 ]
 
-PHY_ID_KSZ9477 was supported but not added to the device table passed to
-MODULE_DEVICE_TABLE.
+Errata DS80000758 states that carrier sense back pressure mode can cause
+link down issues in 100BASE-TX half duplex mode. The datasheet also
+recommends to always use the collision based back pressure mode.
 
-Fixes: fc3973a1fa09 ("phy: micrel: add Microchip KSZ 9477 Switch PHY support")
+Fixes: b987e98e50ab ("dsa: add DSA switch driver for Microchip KSZ9477")
 Signed-off-by: Enguerrand de Ribaucourt <enguerrand.de-ribaucourt@savoirfairelinux.com>
+Reviewed-by: Woojung Huh <Woojung.huh@microchip.com>
+Acked-by: Arun Ramadoss <arun.ramadoss@microchip.com>
 Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/micrel.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/dsa/microchip/ksz9477.c     | 4 ++++
+ drivers/net/dsa/microchip/ksz9477_reg.h | 1 +
+ 2 files changed, 5 insertions(+)
 
-diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
-index 98c6d0caf8faf..90f3953cf9066 100644
---- a/drivers/net/phy/micrel.c
-+++ b/drivers/net/phy/micrel.c
-@@ -3405,6 +3405,7 @@ static struct mdio_device_id __maybe_unused micrel_tbl[] = {
- 	{ PHY_ID_KSZ8081, MICREL_PHY_ID_MASK },
- 	{ PHY_ID_KSZ8873MLL, MICREL_PHY_ID_MASK },
- 	{ PHY_ID_KSZ886X, MICREL_PHY_ID_MASK },
-+	{ PHY_ID_KSZ9477, MICREL_PHY_ID_MASK },
- 	{ PHY_ID_LAN8814, MICREL_PHY_ID_MASK },
- 	{ PHY_ID_LAN8804, MICREL_PHY_ID_MASK },
- 	{ }
+diff --git a/drivers/net/dsa/microchip/ksz9477.c b/drivers/net/dsa/microchip/ksz9477.c
+index 9181be2d8abb2..e9fa92a833227 100644
+--- a/drivers/net/dsa/microchip/ksz9477.c
++++ b/drivers/net/dsa/microchip/ksz9477.c
+@@ -1150,6 +1150,10 @@ int ksz9477_setup(struct dsa_switch *ds)
+ 	/* Enable REG_SW_MTU__2 reg by setting SW_JUMBO_PACKET */
+ 	ksz_cfg(dev, REG_SW_MAC_CTRL_1, SW_JUMBO_PACKET, true);
+ 
++	/* Use collision based back pressure mode. */
++	ksz_cfg(dev, REG_SW_MAC_CTRL_1, SW_BACK_PRESSURE,
++		SW_BACK_PRESSURE_COLLISION);
++
+ 	/* Now we can configure default MTU value */
+ 	ret = regmap_update_bits(dev->regmap[1], REG_SW_MTU__2, REG_SW_MTU_MASK,
+ 				 VLAN_ETH_FRAME_LEN + ETH_FCS_LEN);
+diff --git a/drivers/net/dsa/microchip/ksz9477_reg.h b/drivers/net/dsa/microchip/ksz9477_reg.h
+index 53c68d286dd3a..04086e9ab0a0f 100644
+--- a/drivers/net/dsa/microchip/ksz9477_reg.h
++++ b/drivers/net/dsa/microchip/ksz9477_reg.h
+@@ -267,6 +267,7 @@
+ #define REG_SW_MAC_CTRL_1		0x0331
+ 
+ #define SW_BACK_PRESSURE		BIT(5)
++#define SW_BACK_PRESSURE_COLLISION	0
+ #define FAIR_FLOW_CTRL			BIT(4)
+ #define NO_EXC_COLLISION_DROP		BIT(3)
+ #define SW_JUMBO_PACKET			BIT(2)
 -- 
 2.43.0
 
