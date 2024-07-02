@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A10F1C006A;
-	Tue,  2 Jul 2024 17:16:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF76A1BE226;
+	Tue,  2 Jul 2024 17:16:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940606; cv=none; b=BR/CYhH9hysfcYJpwTU2l6eGSOwj/iNNEulH78e+CJLCuWZ39uQNww5JCLRGqhmRkF3gsoJVLeMY/F0jPTka/m3Vntt7s+r6RjRBpLREvGRvS5QYo/t9QRko1IMovFQtHA/9o7IEO1h8i8lAeujKc0nqGKDqJPdV8YMJliyQ0Dk=
+	t=1719940610; cv=none; b=Kx4HugYdB3cAFK3vcQBPOIxclCn2ZdT5h4Ny0XXKunJaEwvBgxL69BPR44lGm0+GcCcrZ2yz4n2dHDLS73K5s3M6bdS5OBghR24wmhx0hEC1LI0bJ0W9ce7btktPplkdgBb59qVqF+K4s/X4mbD8hiEtITt6/XpcIj7rLhF1bT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940606; c=relaxed/simple;
-	bh=4du2s4hoeO8pCtbLL5Nvv/p1+GwyTEx8C0Qk+Y5U8tw=;
+	s=arc-20240116; t=1719940610; c=relaxed/simple;
+	bh=kbofdHiKNiFfT0QkMuu+OS92Dt4NyGRAAq1DcwssfaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pa2mpB3dTGtTXNImM3C0CKEXBSzR/uUi3llqeuOdZUBvfDUDK1p1HxUODxeSmEpnPnM4PsKgvTYcDwSgsMoskUw/vtc1kX+p26FNHf0RZw1e9Wr1Y45fPlDGIK/pY8F/AXGDlUlnUykGMHq27VNl4HMFyfEl2Wrnejix0sVQfoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w9NUCS/9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rxzVI3p51wBBh0PVGZxK+lss2x2RIwEY9DzPo57zQ98itzbJ4JjsSHqWZVZScCLUPE54nfC++7481WQi+5f9CgJhv0BlNNTKtidZuR7YkvMAsCXZiDyOR22MVz5w3Xew/6rDq2JH5K7hSmHy3iJm8Bg3AzoJiwdxTCSEO9N191A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tC0hRbkA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w9NUCS/9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EFF7C4AF0F;
-	Tue,  2 Jul 2024 17:16:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tC0hRbkA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A549C116B1;
+	Tue,  2 Jul 2024 17:16:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940606;
-	bh=4du2s4hoeO8pCtbLL5Nvv/p1+GwyTEx8C0Qk+Y5U8tw=;
+	s=korg; t=1719940609;
+	bh=kbofdHiKNiFfT0QkMuu+OS92Dt4NyGRAAq1DcwssfaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w9NUCS/9qXfeJHTqguclZ+wm/9Qw6ltp+MA2PtdGud2twmq686cXhJ0rw97HKbo4F
-	 /A780fnACQdbkXh1eE/aeCfhte2RCLEjHsgVDIAlCtGSY9yt+0kvOo3qaeTrv8dtnk
-	 hkwbba2V1OFw+hH4CECdQLMS56MT+Oly37AkldGk=
+	b=tC0hRbkA7KbgFDADv7VI+xuEU+HuSzfgVXgtCV+qX3pU1DcD5dYUTXaTOJt2bcyGM
+	 gXP+kL9MsF3mpX9eAsEEYYRhrY8AB83BDe4iIslA4pB3I7+hF4yuQ1IqUOgmhJDE84
+	 vlrQu2Dd9akzRb72Qt2fKo1Bg3njnjql3SoVP8/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jonas Karlman <jonas@kwiboo.se>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 205/222] arm64: dts: rockchip: Fix SD NAND and eMMC init on rk3308-rock-pi-s
-Date: Tue,  2 Jul 2024 19:04:03 +0200
-Message-ID: <20240702170251.822255565@linuxfoundation.org>
+Subject: [PATCH 6.9 206/222] arm64: dts: rockchip: Rename LED related pinctrl nodes on rk3308-rock-pi-s
+Date: Tue,  2 Jul 2024 19:04:04 +0200
+Message-ID: <20240702170251.860576264@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -53,54 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit 1fb98c855ccd7bc7f50c7a9626fbb8440454760b ]
+[ Upstream commit d2a52f678883fe4bc00bca89366b1ba504750abf ]
 
-Radxa ROCK Pi S have optional onboard SD NAND on board revision v1.1,
-v1.2 and v1.3, revision v1.5 changed to use optional onboard eMMC.
+The nodename, <name>-gpio, of referenced pinctrl nodes for the two LEDs
+on the ROCK Pi S cause DT schema validation error:
 
-The optional SD NAND typically fails to initialize:
+  leds: green-led-gpio: {'rockchip,pins': [[0, 6, 0, 90]], 'phandle': [[98]]} is not of type 'array'
+        from schema $id: http://devicetree.org/schemas/gpio/gpio-consumer.yaml#
+  leds: heartbeat-led-gpio: {'rockchip,pins': [[0, 5, 0, 90]], 'phandle': [[99]]} is not of type 'array'
+        from schema $id: http://devicetree.org/schemas/gpio/gpio-consumer.yaml#
 
-  mmc_host mmc0: Bus speed (slot 0) = 400000Hz (slot req 400000Hz, actual 400000HZ div = 0)
-  mmc0: error -110 whilst initialising SD card
-  mmc_host mmc0: Bus speed (slot 0) = 300000Hz (slot req 300000Hz, actual 300000HZ div = 0)
-  mmc0: error -110 whilst initialising SD card
-  mmc_host mmc0: Bus speed (slot 0) = 200000Hz (slot req 200000Hz, actual 200000HZ div = 0)
-  mmc0: error -110 whilst initialising SD card
-  mmc_host mmc0: Bus speed (slot 0) = 100000Hz (slot req 100000Hz, actual 100000HZ div = 0)
-  mmc0: error -110 whilst initialising SD card
-
-Add pinctrl and cap-sd-highspeed to fix SD NAND initialization. Also
-drop bus-width and mmc-hs200-1_8v to fix eMMC initialization on the new
-v1.5 board revision, only 3v3 signal voltage is used.
+Rename the pinctrl nodes and symbols to pass DT schema validation, also
+extend LED nodes with information about color and function.
 
 Fixes: 2e04c25b1320 ("arm64: dts: rockchip: add ROCK Pi S DTS support")
 Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Link: https://lore.kernel.org/r/20240521211029.1236094-4-jonas@kwiboo.se
+Link: https://lore.kernel.org/r/20240521211029.1236094-7-jonas@kwiboo.se
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts b/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts
-index b47fe02c33fbd..84f4b4a44644c 100644
+index 84f4b4a44644c..079101cddd65f 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts
-@@ -126,10 +126,12 @@
- };
+@@ -5,6 +5,8 @@
+  */
  
- &emmc {
--	bus-width = <4>;
- 	cap-mmc-highspeed;
--	mmc-hs200-1_8v;
-+	cap-sd-highspeed;
-+	no-sdio;
- 	non-removable;
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&emmc_bus8 &emmc_clk &emmc_cmd>;
- 	vmmc-supply = <&vcc_io>;
- 	status = "okay";
- };
+ /dts-v1/;
++
++#include <dt-bindings/leds/common.h>
+ #include "rk3308.dtsi"
+ 
+ / {
+@@ -24,17 +26,21 @@
+ 	leds {
+ 		compatible = "gpio-leds";
+ 		pinctrl-names = "default";
+-		pinctrl-0 = <&green_led_gio>, <&heartbeat_led_gpio>;
++		pinctrl-0 = <&green_led>, <&heartbeat_led>;
+ 
+ 		green-led {
++			color = <LED_COLOR_ID_GREEN>;
+ 			default-state = "on";
++			function = LED_FUNCTION_POWER;
+ 			gpios = <&gpio0 RK_PA6 GPIO_ACTIVE_HIGH>;
+ 			label = "rockpis:green:power";
+ 			linux,default-trigger = "default-on";
+ 		};
+ 
+ 		blue-led {
++			color = <LED_COLOR_ID_BLUE>;
+ 			default-state = "on";
++			function = LED_FUNCTION_HEARTBEAT;
+ 			gpios = <&gpio0 RK_PA5 GPIO_ACTIVE_HIGH>;
+ 			label = "rockpis:blue:user";
+ 			linux,default-trigger = "heartbeat";
+@@ -216,11 +222,11 @@
+ 	pinctrl-0 = <&rtc_32k>;
+ 
+ 	leds {
+-		green_led_gio: green-led-gpio {
++		green_led: green-led {
+ 			rockchip,pins = <0 RK_PA6 RK_FUNC_GPIO &pcfg_pull_none>;
+ 		};
+ 
+-		heartbeat_led_gpio: heartbeat-led-gpio {
++		heartbeat_led: heartbeat-led {
+ 			rockchip,pins = <0 RK_PA5 RK_FUNC_GPIO &pcfg_pull_none>;
+ 		};
+ 	};
 -- 
 2.43.0
 
