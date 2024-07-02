@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D5C15B0FE;
-	Tue,  2 Jul 2024 17:10:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F841BE847;
+	Tue,  2 Jul 2024 17:10:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940227; cv=none; b=GL6SLPAGc9RVDfK4dghbI4dzDX/Vis67kotT+koo+2+UGPJVnT/Ajn0U0iYOGuB+/Xh91qgApgdPReUlJLx1LPeYc02n5jg3Yxc/Dq+eg1dBGD15UTWao8Cj9t7n2K49jaxunfMlZExEYhaRV/30gmpJPzWfvaBSzDZC/BG9Kpo=
+	t=1719940230; cv=none; b=MHA2jszONn4S+8WA3/kaKnf+o4t3akzkHy1bZA0eP3vBbmkp6YR6btkM0PjlDutcdw0/etRcM9Rfvu8ZZsgzyLtthSxwLAKo6bfBGYHPt8+udd0bTOip1UcpFpm4+dVvkQ+JJ8y8igv4zCWx45oT+1f3UdTUP22JDU12VmTLgRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940227; c=relaxed/simple;
-	bh=Va3GTSb9ev6gE+rilAMEj5KMAi1uuEsPsOF9byrwK48=;
+	s=arc-20240116; t=1719940230; c=relaxed/simple;
+	bh=rZQkhXm+GeCgSL4PAhG4pErRBOOc8KLQ36Bh33Kadlg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nPuRTILDyiyQfpnSlXJ92CLPeEml/TDZ8LEAJQz1gCwE2ZjHX1A7OVCgqoLpkknk8SBtJruV0MiCbkIl4AlRYwTp+a96r3qXmmhAA+lt/cPGrMAB1rkPIdtlxRxJgjDZKr23Q4UXS/AiZIzMwJQicQtQHJ6dvQkmPWgWBFLkqoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iltHqc+/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qTMdQM6B0Gx6mvSOodHeKAUb7RxWHUuvrCD+DmnIQBnvJF/0ovUl74c9TIkabdldVPnrko+pCoov10/bhiHApyIXYSulmAD3om5uts617dQAzZGz4I6EAXvtTeymTaQURRB94rjngodHbctUsksBtsOSH8aTCkVSz1qEuX1oNcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AOMIL946; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iltHqc+/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5B45C116B1;
-	Tue,  2 Jul 2024 17:10:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AOMIL946"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2AFAC116B1;
+	Tue,  2 Jul 2024 17:10:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940227;
-	bh=Va3GTSb9ev6gE+rilAMEj5KMAi1uuEsPsOF9byrwK48=;
+	s=korg; t=1719940230;
+	bh=rZQkhXm+GeCgSL4PAhG4pErRBOOc8KLQ36Bh33Kadlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iltHqc+/cH1XP2Ay/D8Lnc9yx+rX570RoAWbbfd+pjfhATaim6smhfyOWbonQcOCo
-	 HUuN2a2WJuqDv2m/BilfYFcvXJ4UkHebYky7ZOPS7dSq8fGTQwnYog4w90nOtSX22n
-	 jkPysK8Iu8iJm8+zK0EBmHou22Qz+5ipPKsGiQqA=
+	b=AOMIL946Iby690+A+PFcX6N2WTJz4UJJsyWuMbixfTDK/bXQv5GwmsL35boM3YO+h
+	 ewQ2QzFhIFbwDI2JtL9smPmUYVKMG2jWhzx/gPOiU57dFNkvNnY8aAgcsOlbV3sm80
+	 8oDimNJwVBa1oAi6YpTQnfwZt8sLxBrE4kqMPHG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Erick Archer <erick.archer@outlook.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 091/222] evm: Enforce signatures on unsupported filesystem for EVM_INIT_X509
-Date: Tue,  2 Jul 2024 19:02:09 +0200
-Message-ID: <20240702170247.452866502@linuxfoundation.org>
+Subject: [PATCH 6.9 092/222] drm/radeon/radeon_display: Decrease the size of allocated memory
+Date: Tue,  2 Jul 2024 19:02:10 +0200
+Message-ID: <20240702170247.489838889@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -45,77 +46,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Berger <stefanb@linux.ibm.com>
+From: Erick Archer <erick.archer@outlook.com>
 
-[ Upstream commit 47add87ad181473e5ef2438918669540ba5016a6 ]
+[ Upstream commit ae6a233092747e9652eb793d92f79d0820e01c6a ]
 
-Unsupported filesystems currently do not enforce any signatures. Add
-support for signature enforcement of the "original" and "portable &
-immutable" signatures when EVM_INIT_X509 is enabled.
+This is an effort to get rid of all multiplications from allocation
+functions in order to prevent integer overflows [1] [2].
 
-The "original" signature type contains filesystem specific metadata.
-Thus it cannot be copied up and verified. However with EVM_INIT_X509
-and EVM_ALLOW_METADATA_WRITES enabled, the "original" file signature
-may be written.
+In this case, the memory allocated to store RADEONFB_CONN_LIMIT pointers
+to "drm_connector" structures can be avoided. This is because this
+memory area is never accessed.
 
-When EVM_ALLOW_METADATA_WRITES is not set or once it is removed from
-/sys/kernel/security/evm by setting EVM_INIT_HMAC for example, it is not
-possible to write or remove xattrs on the overlay filesystem.
+Also, in the kzalloc function, it is preferred to use sizeof(*pointer)
+instead of sizeof(type) due to the type of the variable can change and
+one needs not change the former (unlike the latter).
 
-This change still prevents EVM from writing HMAC signatures on
-unsupported filesystem when EVM_INIT_HMAC is enabled.
+At the same time take advantage to remove the "#if 0" block, the code
+where the removed memory area was accessed, and the RADEONFB_CONN_LIMIT
+constant due to now is never used.
 
-Co-developed-by: Mimi Zohar <zohar@linux.ibm.com>
-Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Link: https://www.kernel.org/doc/html/latest/process/deprecated.html#open-coded-arithmetic-in-allocator-arguments [1]
+Link: https://github.com/KSPP/linux/issues/160 [2]
+Acked-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Erick Archer <erick.archer@outlook.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/evm/evm_main.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/radeon/radeon.h         | 1 -
+ drivers/gpu/drm/radeon/radeon_display.c | 8 +-------
+ 2 files changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/security/integrity/evm/evm_main.c b/security/integrity/evm/evm_main.c
-index 81dbade5b9b3d..518b3090cdb77 100644
---- a/security/integrity/evm/evm_main.c
-+++ b/security/integrity/evm/evm_main.c
-@@ -192,7 +192,11 @@ static enum integrity_status evm_verify_hmac(struct dentry *dentry,
- 		     iint->evm_status == INTEGRITY_PASS_IMMUTABLE))
- 		return iint->evm_status;
+diff --git a/drivers/gpu/drm/radeon/radeon.h b/drivers/gpu/drm/radeon/radeon.h
+index 3e5ff17e3cafb..0999c8eaae94a 100644
+--- a/drivers/gpu/drm/radeon/radeon.h
++++ b/drivers/gpu/drm/radeon/radeon.h
+@@ -132,7 +132,6 @@ extern int radeon_cik_support;
+ /* RADEON_IB_POOL_SIZE must be a power of 2 */
+ #define RADEON_IB_POOL_SIZE			16
+ #define RADEON_DEBUGFS_MAX_COMPONENTS		32
+-#define RADEONFB_CONN_LIMIT			4
+ #define RADEON_BIOS_NUM_SCRATCH			8
  
--	if (is_unsupported_fs(dentry))
-+	/*
-+	 * On unsupported filesystems without EVM_INIT_X509 enabled, skip
-+	 * signature verification.
-+	 */
-+	if (!(evm_initialized & EVM_INIT_X509) && is_unsupported_fs(dentry))
- 		return INTEGRITY_UNKNOWN;
+ /* internal ring indices */
+diff --git a/drivers/gpu/drm/radeon/radeon_display.c b/drivers/gpu/drm/radeon/radeon_display.c
+index efd18c8d84c83..5f1d24d3120c4 100644
+--- a/drivers/gpu/drm/radeon/radeon_display.c
++++ b/drivers/gpu/drm/radeon/radeon_display.c
+@@ -683,7 +683,7 @@ static void radeon_crtc_init(struct drm_device *dev, int index)
+ 	struct radeon_device *rdev = dev->dev_private;
+ 	struct radeon_crtc *radeon_crtc;
  
- 	/* if status is not PASS, try to check again - against -ENOMEM */
-@@ -260,7 +264,8 @@ static enum integrity_status evm_verify_hmac(struct dentry *dentry,
- 				evm_status = INTEGRITY_PASS_IMMUTABLE;
- 			} else if (!IS_RDONLY(inode) &&
- 				   !(inode->i_sb->s_readonly_remount) &&
--				   !IS_IMMUTABLE(inode)) {
-+				   !IS_IMMUTABLE(inode) &&
-+				   !is_unsupported_fs(dentry)) {
- 				evm_update_evmxattr(dentry, xattr_name,
- 						    xattr_value,
- 						    xattr_value_len);
-@@ -418,9 +423,6 @@ enum integrity_status evm_verifyxattr(struct dentry *dentry,
- 	if (!evm_key_loaded() || !evm_protected_xattr(xattr_name))
- 		return INTEGRITY_UNKNOWN;
+-	radeon_crtc = kzalloc(sizeof(struct radeon_crtc) + (RADEONFB_CONN_LIMIT * sizeof(struct drm_connector *)), GFP_KERNEL);
++	radeon_crtc = kzalloc(sizeof(*radeon_crtc), GFP_KERNEL);
+ 	if (radeon_crtc == NULL)
+ 		return;
  
--	if (is_unsupported_fs(dentry))
--		return INTEGRITY_UNKNOWN;
+@@ -709,12 +709,6 @@ static void radeon_crtc_init(struct drm_device *dev, int index)
+ 	dev->mode_config.cursor_width = radeon_crtc->max_cursor_width;
+ 	dev->mode_config.cursor_height = radeon_crtc->max_cursor_height;
+ 
+-#if 0
+-	radeon_crtc->mode_set.crtc = &radeon_crtc->base;
+-	radeon_crtc->mode_set.connectors = (struct drm_connector **)(radeon_crtc + 1);
+-	radeon_crtc->mode_set.num_connectors = 0;
+-#endif
 -
- 	return evm_verify_hmac(dentry, xattr_name, xattr_value,
- 				 xattr_value_len);
- }
+ 	if (rdev->is_atom_bios && (ASIC_IS_AVIVO(rdev) || radeon_r4xx_atom))
+ 		radeon_atombios_init_crtc(dev, radeon_crtc);
+ 	else
 -- 
 2.43.0
 
