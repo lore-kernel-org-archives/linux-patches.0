@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D29839847;
-	Tue,  2 Jul 2024 17:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECF21C004C;
+	Tue,  2 Jul 2024 17:19:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940792; cv=none; b=jMTnpngTiCfhx6ajmhFVqcLkNrLdJc+NAKz92EtrYfQ6PH5lFqQk24TQL6F9f1GIJktVna+EIMVgIjERMRavY1tjup4WGsfueqnS0VWlFP4RRmavMUp8CkenkbUD53+69RN3UcUe2hdhKrOyyw2d6ie6wARY25nqjtoWu4x27dg=
+	t=1719940796; cv=none; b=NGfjdUADJO2vkEKtq8AZqVdaRuhP1f0LIFQ4tqiMbDFTPyVTUApkMaZUsCZ7hbZFqs+r2FPQIef7S4mcU3UitwDsmsI2uF8cLHM75mMmkoITv+H6q90ozw0Cb+KEC+dgExSieiQXXdT3LeH3O48fIJs+KCijaadg47VD6m6Yvy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940792; c=relaxed/simple;
-	bh=XKyXLIWbb85t9sofe3fTnKAdikZmHsDOJoDafk4bOIA=;
+	s=arc-20240116; t=1719940796; c=relaxed/simple;
+	bh=YYnZ6a0XRswKVZiDhSgMYu9dnhMMwKrOWVD3jId3xxo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C/xAQFA9rq7ZzcmK1in5jgGNB2FEUWp+46jcgKWTsXSDIQlSR/8CktSPgrXDIoKzS6/Zos8FrlmXGAFYvNdo4wJpsBW0lSHZ0cjJoFeAwKPBZuaSFmFiquCbEVp2yCIOubdRkPaae06fMtWK6Cb/ho9tNXsgrfaJxlenWObXzbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2li0iUjE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qa8P93E+SL8mKzKGCerW3X4AY6GErSJQRMjIO33/Boi2Obe+38G/uus5bQG+FjaomAKKQrwuNDLmLT4GulXCEXs1aETM9f0+8v28MxLSm3ddO8hwsmF/gPeALxXRIYMeTtkK73EWyG7JaxDXj+03dWDjsapiqhGGqDlEP2kJv6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H0hhhyap; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2li0iUjE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15643C116B1;
-	Tue,  2 Jul 2024 17:19:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H0hhhyap"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C561C116B1;
+	Tue,  2 Jul 2024 17:19:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940792;
-	bh=XKyXLIWbb85t9sofe3fTnKAdikZmHsDOJoDafk4bOIA=;
+	s=korg; t=1719940795;
+	bh=YYnZ6a0XRswKVZiDhSgMYu9dnhMMwKrOWVD3jId3xxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2li0iUjEc8eAmANcj68rkbfZn2XNOdl8KOAfHMRFIaLgaXWRvngLlqJA8Mp7OGUks
-	 lKP/SF8zDc2ej6jjnoV/1QYG//vpO6pF72PQsP/M4hT3UXtwrAWFCCOC/6fRW9HBC9
-	 DYkA7NB5eLhyxTjRKSbZndqicBxFV6WlWPgpExVw=
+	b=H0hhhyapaBceruDNerJq6lUDTKqBHg4oz+eeJ8XjI2fvAjiTGBBYc4rmJOFznshVh
+	 5Mssp1FklYPmOAGu3ut9lcMZvoD2og3+G/mlZ0eKR0gJzLerik1eVDwPWVq5wUvMwK
+	 gWkZTk6qBl28eCS9iMIX74z7Q6oLvvdfDQcBuuDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Heyne <mheyne@amazon.de>,
-	Hagar Hemdan <hagarhem@amazon.com>,
+	Huang-Huang Bao <i@eh5.me>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 007/163] pinctrl: fix deadlock in create_pinctrl() when handling -EPROBE_DEFER
-Date: Tue,  2 Jul 2024 19:02:01 +0200
-Message-ID: <20240702170233.330757582@linuxfoundation.org>
+Subject: [PATCH 6.6 008/163] pinctrl: rockchip: fix pinmux bits for RK3328 GPIO2-B pins
+Date: Tue,  2 Jul 2024 19:02:02 +0200
+Message-ID: <20240702170233.368907903@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -52,46 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hagar Hemdan <hagarhem@amazon.com>
+From: Huang-Huang Bao <i@eh5.me>
 
-[ Upstream commit adec57ff8e66aee632f3dd1f93787c13d112b7a1 ]
+[ Upstream commit e8448a6c817c2aa6c6af785b1d45678bd5977e8d ]
 
-In create_pinctrl(), pinctrl_maps_mutex is acquired before calling
-add_setting(). If add_setting() returns -EPROBE_DEFER, create_pinctrl()
-calls pinctrl_free(). However, pinctrl_free() attempts to acquire
-pinctrl_maps_mutex, which is already held by create_pinctrl(), leading to
-a potential deadlock.
+The pinmux bits for GPIO2-B0 to GPIO2-B6 actually have 2 bits width,
+correct the bank flag for GPIO2-B. The pinmux bits for GPIO2-B7 is
+recalculated so it remain unchanged.
 
-This patch resolves the issue by releasing pinctrl_maps_mutex before
-calling pinctrl_free(), preventing the deadlock.
+The pinmux bits for those pins are not explicitly specified in RK3328
+TRM, however we can get hint from pad name and its correspinding IOMUX
+setting for pins in interface descriptions. The correspinding IOMIX
+settings for GPIO2-B0 to GPIO2-B6 can be found in the same row next to
+occurrences of following pad names in RK3328 TRM.
 
-This bug was discovered and resolved using Coverity Static Analysis
-Security Testing (SAST) by Synopsys, Inc.
+GPIO2-B0: IO_SPIclkm0_GPIO2B0vccio5
+GPIO2-B1: IO_SPItxdm0_GPIO2B1vccio5
+GPIO2-B2: IO_SPIrxdm0_GPIO2B2vccio5
+GPIO2-B3: IO_SPIcsn0m0_GPIO2B3vccio5
+GPIO2-B4: IO_SPIcsn1m0_FLASHvol_sel_GPIO2B4vccio5
+GPIO2-B5: IO_ I2C2sda_TSADCshut_GPIO2B5vccio5
+GPIO2-B6: IO_ I2C2scl_GPIO2B6vccio5
 
-Fixes: 42fed7ba44e4 ("pinctrl: move subsystem mutex to pinctrl_dev struct")
-Suggested-by: Maximilian Heyne <mheyne@amazon.de>
-Signed-off-by: Hagar Hemdan <hagarhem@amazon.com>
-Link: https://lore.kernel.org/r/20240604085838.3344-1-hagarhem@amazon.com
+This fix has been tested on NanoPi R2S for fixing confliting pinmux bits
+between GPIO2-B7 with GPIO2-B5.
+
+Signed-off-by: Huang-Huang Bao <i@eh5.me>
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 3818e4a7678e ("pinctrl: rockchip: Add rk3328 pinctrl support")
+Link: https://lore.kernel.org/r/20240606125755.53778-2-i@eh5.me
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-rockchip.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/drivers/pinctrl/core.c b/drivers/pinctrl/core.c
-index 9e7b3e6c79cb1..e19ee66e027bb 100644
---- a/drivers/pinctrl/core.c
-+++ b/drivers/pinctrl/core.c
-@@ -1098,8 +1098,8 @@ static struct pinctrl *create_pinctrl(struct device *dev,
- 		 * an -EPROBE_DEFER later, as that is the worst case.
- 		 */
- 		if (ret == -EPROBE_DEFER) {
--			pinctrl_free(p, false);
- 			mutex_unlock(&pinctrl_maps_mutex);
-+			pinctrl_free(p, false);
- 			return ERR_PTR(ret);
- 		}
- 	}
+diff --git a/drivers/pinctrl/pinctrl-rockchip.c b/drivers/pinctrl/pinctrl-rockchip.c
+index 45e416f68e74f..c99a290a938af 100644
+--- a/drivers/pinctrl/pinctrl-rockchip.c
++++ b/drivers/pinctrl/pinctrl-rockchip.c
+@@ -634,12 +634,6 @@ static struct rockchip_mux_recalced_data rk3308_mux_recalced_data[] = {
+ 
+ static struct rockchip_mux_recalced_data rk3328_mux_recalced_data[] = {
+ 	{
+-		.num = 2,
+-		.pin = 12,
+-		.reg = 0x24,
+-		.bit = 8,
+-		.mask = 0x3
+-	}, {
+ 		.num = 2,
+ 		.pin = 15,
+ 		.reg = 0x28,
+@@ -3765,7 +3759,7 @@ static struct rockchip_pin_bank rk3328_pin_banks[] = {
+ 	PIN_BANK_IOMUX_FLAGS(0, 32, "gpio0", 0, 0, 0, 0),
+ 	PIN_BANK_IOMUX_FLAGS(1, 32, "gpio1", 0, 0, 0, 0),
+ 	PIN_BANK_IOMUX_FLAGS(2, 32, "gpio2", 0,
+-			     IOMUX_WIDTH_3BIT,
++			     0,
+ 			     IOMUX_WIDTH_3BIT,
+ 			     0),
+ 	PIN_BANK_IOMUX_FLAGS(3, 32, "gpio3",
 -- 
 2.43.0
 
