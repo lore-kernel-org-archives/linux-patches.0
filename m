@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D3014293;
-	Tue,  2 Jul 2024 17:21:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A65D14293;
+	Tue,  2 Jul 2024 17:21:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940896; cv=none; b=RkFYqTXgYRWFfEzXh6l7IO71LxdNRWknwM9U2FtSM4SiVMyz3MFaYgrDWtfIsfl0dPCsF8/ZRlqFklmDP8l/DIC8yn7sZHy1Exgjeg/lS4yijJC/b5mdW2FtvYLvEJgTjyZdwrH2oqfakg7NwJx6uX2tKSLic7FkHT+oWfmfzaE=
+	t=1719940899; cv=none; b=rvVZvpsqj6NEWs2P5umixzdjrC48hFtVjohwWAVS9RD6IInsQ0I5h4KJ0aBH0rrr2n+VFrHVG7gY9rVkyDKDHjMc5qsxo18WbSY5R381U4HIL7gqTkYenBbahLqOzlnvfYdBWcub/6NruFEVyl3Gd2k+r/UTSz5rlOnyWX+8dqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940896; c=relaxed/simple;
-	bh=QObmch+mpMpEo9cmUkBjM1HkVuTuGlv4g/l6gWjKL0I=;
+	s=arc-20240116; t=1719940899; c=relaxed/simple;
+	bh=g8LnxbnbX0udakfV5pkjuPLmtdKbwhJe9155O/N8nyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yvs0iq+Nx07whcyzaaepuRoooN1OguCfkrKVw4N6jtMHNicUiSkAJkZk2VgTBeAL9hJy+Blb1jq9dw3crwQY3Sn2ioUjqhRjx0JJehsP9I5rnAqOeC434vHanqUesSSt9V041NfPA/FFcYT/dFIVDCzvKzQjQN7rc2c4cv/VG0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b1i4gWuJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fvTvBtJ2IKejiOeIrAMwlw5YHS2ZoZb9HOsA+FBdoC+EvFC/zMJK6dxuXoFLrK7lULes9KMsTAxD1aJLEGNAvoZsSZ+ilHp12UUKvLXLt3Kucoja6+quaniAu6oZTLwUJSKDMzJu3IKVc8QDYTRMoot3nmL+TXDyPrJ0p2/xJps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R0Vge8sa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b1i4gWuJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF3BC116B1;
-	Tue,  2 Jul 2024 17:21:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R0Vge8sa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB062C116B1;
+	Tue,  2 Jul 2024 17:21:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940896;
-	bh=QObmch+mpMpEo9cmUkBjM1HkVuTuGlv4g/l6gWjKL0I=;
+	s=korg; t=1719940899;
+	bh=g8LnxbnbX0udakfV5pkjuPLmtdKbwhJe9155O/N8nyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b1i4gWuJWJiF3fiNvVR1ygSLdn0FQq7rJhJM/qHAbRmL45vKaD9sZWD/rMv/NxiaD
-	 kgl9pC4C1ZbS7V5rhTqXSvcjHq0quQdVpLSJXezrKGjYsVtZQHONTMsGMdcfJuSacl
-	 OeMA3YBmP10dT8tRoIB6lm5l1LWm8bFk6EpPXKNU=
+	b=R0Vge8saCiQMuRu6N/B8Dv54Cvi3n8dYjNiPd9XiOWD+jLWw8m0Hu/LUgmOa35AKy
+	 UogLp4KTtCIcZbJA0tJvNdKa8CUmxG5tHWPyOY3ER+bK0NP+n7aHcXfvdBR+vcjRWl
+	 Y8wlGRFrjiCfR5PGoYoslCcufWLUdoowH+RBCsmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Davis <afd@ti.com>,
-	Nishanth Menon <nm@ti.com>,
+	luoxuanqiang <luoxuanqiang@kylinos.cn>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 067/163] soc: ti: wkup_m3_ipc: Send NULL dummy message instead of pointer message
-Date: Tue,  2 Jul 2024 19:03:01 +0200
-Message-ID: <20240702170235.601894084@linuxfoundation.org>
+Subject: [PATCH 6.6 039/163] Fix race for duplicate reqsk on identical SYN
+Date: Tue,  2 Jul 2024 19:02:33 +0200
+Message-ID: <20240702170234.540122471@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -51,68 +53,193 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Davis <afd@ti.com>
+From: luoxuanqiang <luoxuanqiang@kylinos.cn>
 
-[ Upstream commit ddbf3204f600a4d1f153498f618369fca352ae00 ]
+[ Upstream commit ff46e3b4421923937b7f6e44ffcd3549a074f321 ]
 
-mbox_send_message() sends a u32 bit message, not a pointer to a message.
-We only convert to a pointer type as a generic type. If we want to send
-a dummy message of 0, then simply send 0 (NULL).
+When bonding is configured in BOND_MODE_BROADCAST mode, if two identical
+SYN packets are received at the same time and processed on different CPUs,
+it can potentially create the same sk (sock) but two different reqsk
+(request_sock) in tcp_conn_request().
 
-Signed-off-by: Andrew Davis <afd@ti.com>
-Link: https://lore.kernel.org/r/20240325165507.30323-1-afd@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+These two different reqsk will respond with two SYNACK packets, and since
+the generation of the seq (ISN) incorporates a timestamp, the final two
+SYNACK packets will have different seq values.
+
+The consequence is that when the Client receives and replies with an ACK
+to the earlier SYNACK packet, we will reset(RST) it.
+
+========================================================================
+
+This behavior is consistently reproducible in my local setup,
+which comprises:
+
+                  | NETA1 ------ NETB1 |
+PC_A --- bond --- |                    | --- bond --- PC_B
+                  | NETA2 ------ NETB2 |
+
+- PC_A is the Server and has two network cards, NETA1 and NETA2. I have
+  bonded these two cards using BOND_MODE_BROADCAST mode and configured
+  them to be handled by different CPU.
+
+- PC_B is the Client, also equipped with two network cards, NETB1 and
+  NETB2, which are also bonded and configured in BOND_MODE_BROADCAST mode.
+
+If the client attempts a TCP connection to the server, it might encounter
+a failure. Capturing packets from the server side reveals:
+
+10.10.10.10.45182 > localhost: Flags [S], seq 320236027,
+10.10.10.10.45182 > localhost: Flags [S], seq 320236027,
+localhost > 10.10.10.10.45182: Flags [S.], seq 2967855116,
+localhost > 10.10.10.10.45182: Flags [S.], seq 2967855123, <==
+10.10.10.10.45182 > localhost: Flags [.], ack 4294967290,
+10.10.10.10.45182 > localhost: Flags [.], ack 4294967290,
+localhost > 10.10.10.10.45182: Flags [R], seq 2967855117, <==
+localhost > 10.10.10.10.45182: Flags [R], seq 2967855117,
+
+Two SYNACKs with different seq numbers are sent by localhost,
+resulting in an anomaly.
+
+========================================================================
+
+The attempted solution is as follows:
+Add a return value to inet_csk_reqsk_queue_hash_add() to confirm if the
+ehash insertion is successful (Up to now, the reason for unsuccessful
+insertion is that a reqsk for the same connection has already been
+inserted). If the insertion fails, release the reqsk.
+
+Due to the refcnt, Kuniyuki suggests also adding a return value check
+for the DCCP module; if ehash insertion fails, indicating a successful
+insertion of the same connection, simply release the reqsk as well.
+
+Simultaneously, In the reqsk_queue_hash_req(), the start of the
+req->rsk_timer is adjusted to be after successful insertion.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: luoxuanqiang <luoxuanqiang@kylinos.cn>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240621013929.1386815-1-luoxuanqiang@kylinos.cn
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/ti/wkup_m3_ipc.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ include/net/inet_connection_sock.h |  2 +-
+ net/dccp/ipv4.c                    |  7 +++++--
+ net/dccp/ipv6.c                    |  7 +++++--
+ net/ipv4/inet_connection_sock.c    | 17 +++++++++++++----
+ net/ipv4/tcp_input.c               |  7 ++++++-
+ 5 files changed, 30 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/soc/ti/wkup_m3_ipc.c b/drivers/soc/ti/wkup_m3_ipc.c
-index 3aff106fc11a0..9a22932984232 100644
---- a/drivers/soc/ti/wkup_m3_ipc.c
-+++ b/drivers/soc/ti/wkup_m3_ipc.c
-@@ -16,7 +16,6 @@
- #include <linux/irq.h>
- #include <linux/module.h>
- #include <linux/of.h>
--#include <linux/omap-mailbox.h>
- #include <linux/platform_device.h>
- #include <linux/remoteproc.h>
- #include <linux/suspend.h>
-@@ -314,7 +313,6 @@ static irqreturn_t wkup_m3_txev_handler(int irq, void *ipc_data)
- static int wkup_m3_ping(struct wkup_m3_ipc *m3_ipc)
- {
- 	struct device *dev = m3_ipc->dev;
--	mbox_msg_t dummy_msg = 0;
- 	int ret;
+diff --git a/include/net/inet_connection_sock.h b/include/net/inet_connection_sock.h
+index 6ecac01115d9c..fee1e56505510 100644
+--- a/include/net/inet_connection_sock.h
++++ b/include/net/inet_connection_sock.h
+@@ -264,7 +264,7 @@ struct dst_entry *inet_csk_route_child_sock(const struct sock *sk,
+ struct sock *inet_csk_reqsk_queue_add(struct sock *sk,
+ 				      struct request_sock *req,
+ 				      struct sock *child);
+-void inet_csk_reqsk_queue_hash_add(struct sock *sk, struct request_sock *req,
++bool inet_csk_reqsk_queue_hash_add(struct sock *sk, struct request_sock *req,
+ 				   unsigned long timeout);
+ struct sock *inet_csk_complete_hashdance(struct sock *sk, struct sock *child,
+ 					 struct request_sock *req,
+diff --git a/net/dccp/ipv4.c b/net/dccp/ipv4.c
+index 524b7e581a036..65a6733fc897f 100644
+--- a/net/dccp/ipv4.c
++++ b/net/dccp/ipv4.c
+@@ -655,8 +655,11 @@ int dccp_v4_conn_request(struct sock *sk, struct sk_buff *skb)
+ 	if (dccp_v4_send_response(sk, req))
+ 		goto drop_and_free;
  
- 	if (!m3_ipc->mbox) {
-@@ -330,7 +328,7 @@ static int wkup_m3_ping(struct wkup_m3_ipc *m3_ipc)
- 	 * the RX callback to avoid multiple interrupts being received
- 	 * by the CM3.
+-	inet_csk_reqsk_queue_hash_add(sk, req, DCCP_TIMEOUT_INIT);
+-	reqsk_put(req);
++	if (unlikely(!inet_csk_reqsk_queue_hash_add(sk, req, DCCP_TIMEOUT_INIT)))
++		reqsk_free(req);
++	else
++		reqsk_put(req);
++
+ 	return 0;
+ 
+ drop_and_free:
+diff --git a/net/dccp/ipv6.c b/net/dccp/ipv6.c
+index 6f5a556f4f6d7..683e4291b348a 100644
+--- a/net/dccp/ipv6.c
++++ b/net/dccp/ipv6.c
+@@ -398,8 +398,11 @@ static int dccp_v6_conn_request(struct sock *sk, struct sk_buff *skb)
+ 	if (dccp_v6_send_response(sk, req))
+ 		goto drop_and_free;
+ 
+-	inet_csk_reqsk_queue_hash_add(sk, req, DCCP_TIMEOUT_INIT);
+-	reqsk_put(req);
++	if (unlikely(!inet_csk_reqsk_queue_hash_add(sk, req, DCCP_TIMEOUT_INIT)))
++		reqsk_free(req);
++	else
++		reqsk_put(req);
++
+ 	return 0;
+ 
+ drop_and_free:
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index a018981b45142..8720f3840b698 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -1116,25 +1116,34 @@ static void reqsk_timer_handler(struct timer_list *t)
+ 	inet_csk_reqsk_queue_drop_and_put(oreq->rsk_listener, oreq);
+ }
+ 
+-static void reqsk_queue_hash_req(struct request_sock *req,
++static bool reqsk_queue_hash_req(struct request_sock *req,
+ 				 unsigned long timeout)
+ {
++	bool found_dup_sk = false;
++
++	if (!inet_ehash_insert(req_to_sk(req), NULL, &found_dup_sk))
++		return false;
++
++	/* The timer needs to be setup after a successful insertion. */
+ 	timer_setup(&req->rsk_timer, reqsk_timer_handler, TIMER_PINNED);
+ 	mod_timer(&req->rsk_timer, jiffies + timeout);
+ 
+-	inet_ehash_insert(req_to_sk(req), NULL, NULL);
+ 	/* before letting lookups find us, make sure all req fields
+ 	 * are committed to memory and refcnt initialized.
  	 */
--	ret = mbox_send_message(m3_ipc->mbox, &dummy_msg);
-+	ret = mbox_send_message(m3_ipc->mbox, NULL);
- 	if (ret < 0) {
- 		dev_err(dev, "%s: mbox_send_message() failed: %d\n",
- 			__func__, ret);
-@@ -352,7 +350,6 @@ static int wkup_m3_ping(struct wkup_m3_ipc *m3_ipc)
- static int wkup_m3_ping_noirq(struct wkup_m3_ipc *m3_ipc)
+ 	smp_wmb();
+ 	refcount_set(&req->rsk_refcnt, 2 + 1);
++	return true;
+ }
+ 
+-void inet_csk_reqsk_queue_hash_add(struct sock *sk, struct request_sock *req,
++bool inet_csk_reqsk_queue_hash_add(struct sock *sk, struct request_sock *req,
+ 				   unsigned long timeout)
  {
- 	struct device *dev = m3_ipc->dev;
--	mbox_msg_t dummy_msg = 0;
- 	int ret;
+-	reqsk_queue_hash_req(req, timeout);
++	if (!reqsk_queue_hash_req(req, timeout))
++		return false;
++
+ 	inet_csk_reqsk_queue_added(sk);
++	return true;
+ }
+ EXPORT_SYMBOL_GPL(inet_csk_reqsk_queue_hash_add);
  
- 	if (!m3_ipc->mbox) {
-@@ -361,7 +358,7 @@ static int wkup_m3_ping_noirq(struct wkup_m3_ipc *m3_ipc)
- 		return -EIO;
- 	}
- 
--	ret = mbox_send_message(m3_ipc->mbox, &dummy_msg);
-+	ret = mbox_send_message(m3_ipc->mbox, NULL);
- 	if (ret < 0) {
- 		dev_err(dev, "%s: mbox_send_message() failed: %d\n",
- 			__func__, ret);
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index abd6e95d2dca8..64707a5227f5a 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -7091,7 +7091,12 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
+ 		tcp_rsk(req)->tfo_listener = false;
+ 		if (!want_cookie) {
+ 			req->timeout = tcp_timeout_init((struct sock *)req);
+-			inet_csk_reqsk_queue_hash_add(sk, req, req->timeout);
++			if (unlikely(!inet_csk_reqsk_queue_hash_add(sk, req,
++								    req->timeout))) {
++				reqsk_free(req);
++				return 0;
++			}
++
+ 		}
+ 		af_ops->send_synack(sk, dst, &fl, req, &foc,
+ 				    !want_cookie ? TCP_SYNACK_NORMAL :
 -- 
 2.43.0
 
