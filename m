@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC061514DC;
-	Tue,  2 Jul 2024 17:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D48EF1514DC;
+	Tue,  2 Jul 2024 17:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941283; cv=none; b=mq4rpcQTitkgj7XL072b+oY6cr358LHSSY3mzeHbnZpz5mcDfEzgkFH2qma400tqBFGY/QF+onnB2SVZ0fa+P1dLtaRQHIJgprktWp1x30GERYY9QqIh04YM5Az++AyHQyx/9mJF20KcHXq7xk7eSQtO8iztr5J0ioJG8gpns1o=
+	t=1719941286; cv=none; b=sp++aXdMZ11E/Fx1TnrbgvZxMcqoSMkFJUlHNJ1ZIMD7d6E3oZ7VCC1DCww9HGkWfxdKAp0kpZjT+LHzYuewTGnXkzvg79NcJIMsTR4+MFzwV2h3T2xbKbfdvKGdHyTaZUHmKh5xDew/pXRdfcnEe1fdSoVO8nmt+Qcv84Reb44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941283; c=relaxed/simple;
-	bh=mjV9FnJ2ATPoPGAuBBdW1ORNMUAGvSUhGsffgKscA0o=;
+	s=arc-20240116; t=1719941286; c=relaxed/simple;
+	bh=rZPyIZHdCdGVWN5wJxOolxUmP/o2impAzFBiKBVYN68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WXF5cRpIb3EfQPHt2aCKA0utiEr2OKqaaIaMsmR9n1RZNhMfn4GmrLlN9sOnK/DY2eodkPzjNeskoPLLlapUwKSh2VWnDqh0A5Nn0HV725MyuTB4C50cQ1DLUlivnFWS8f6fMugNNKColutIf04uBWxylBESCP/j4OvEpnHAIgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JaS6la7r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Niagb4fhWh9pdssYphUK62pb1z6uVe9LlYrcdoieiERrx26zN5MqN9jSUzBYzrSBBG7IEv3hwYGPNUi/rs7OyziG2+8SQ6RqFKhDUhdYGN0ILMTwfGJPNIf/LViztVAcIkLfrTncD2ujV/1yJikOp7E1Hv1eHTW8UwxC/3p4k4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=shoA9OQL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JaS6la7r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F2CC116B1;
-	Tue,  2 Jul 2024 17:28:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="shoA9OQL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4344BC116B1;
+	Tue,  2 Jul 2024 17:28:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941283;
-	bh=mjV9FnJ2ATPoPGAuBBdW1ORNMUAGvSUhGsffgKscA0o=;
+	s=korg; t=1719941286;
+	bh=rZPyIZHdCdGVWN5wJxOolxUmP/o2impAzFBiKBVYN68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JaS6la7rCOphBJ03gBLm9cBYx5vvRGOL9fKRehvd+EVJbaDcN7afX5USN2YbDOB8Q
-	 UzFGscrmuFqGu7ht51c2LwPoEdnQVUwX6+FmEGKuhWdnHNVGJZaT44xAERgrlUznGN
-	 dS2EM0jM+GSqgRU2q5MmH+2HZ5qlGdqrjfRgxH7Q=
+	b=shoA9OQLrqgbjySt1SDm0nCRmuXLQ0dmmhssVpm5a3lOc471cnhZccUPR6UyWH8hQ
+	 GbBwOqwZuGfFmDCesVz8xcwZ+kzRBrcmON/4abG9yhBELauVswM7HtF845aAE+f+DC
+	 CjjmcwDC+IQOaiHUUX3PuxJHjx0kfKCFxjCPliJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Elinor Montmasson <elinor.montmasson@savoirfairelinux.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ammy Yi <ammy.yi@intel.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 019/128] ASoC: fsl-asoc-card: set priv->pdev before using it
-Date: Tue,  2 Jul 2024 19:03:40 +0200
-Message-ID: <20240702170226.959264753@linuxfoundation.org>
+Subject: [PATCH 6.1 002/128] usb: typec: ucsi: Ack also failed Get Error commands
+Date: Tue,  2 Jul 2024 19:03:23 +0200
+Message-ID: <20240702170226.327691447@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170226.231899085@linuxfoundation.org>
 References: <20240702170226.231899085@linuxfoundation.org>
@@ -51,54 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Elinor Montmasson <elinor.montmasson@savoirfairelinux.com>
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-[ Upstream commit 90f3feb24172185f1832636264943e8b5e289245 ]
+[ Upstream commit 8bdf8a42bca4f47646fd105a387ab6926948c7f1 ]
 
-priv->pdev pointer was set after being used in
-fsl_asoc_card_audmux_init().
-Move this assignment at the start of the probe function, so
-sub-functions can correctly use pdev through priv.
+It is possible that also the GET_ERROR command fails. If
+that happens, the command completion still needs to be
+acknowledged. Otherwise the interface will be stuck until
+it's reset.
 
-fsl_asoc_card_audmux_init() dereferences priv->pdev to get access to the
-dev struct, used with dev_err macros.
-As priv is zero-initialised, there would be a NULL pointer dereference.
-Note that if priv->dev is dereferenced before assignment but never used,
-for example if there is no error to be printed, the driver won't crash
-probably due to compiler optimisations.
-
-Fixes: 708b4351f08c ("ASoC: fsl: Add Freescale Generic ASoC Sound Card with ASRC support")
-Signed-off-by: Elinor Montmasson <elinor.montmasson@savoirfairelinux.com>
-Link: https://patch.msgid.link/20240620132511.4291-2-elinor.montmasson@savoirfairelinux.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: Ammy Yi <ammy.yi@intel.com>
+Fixes: bdc62f2bae8f ("usb: typec: ucsi: Simplified registration and I/O API")
+Cc: stable@vger.kernel.org
+Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240531104653.1303519-1-heikki.krogerus@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl-asoc-card.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/typec/ucsi/ucsi.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/fsl/fsl-asoc-card.c b/sound/soc/fsl/fsl-asoc-card.c
-index 8d14b5593658d..8b29099975c91 100644
---- a/sound/soc/fsl/fsl-asoc-card.c
-+++ b/sound/soc/fsl/fsl-asoc-card.c
-@@ -545,6 +545,8 @@ static int fsl_asoc_card_probe(struct platform_device *pdev)
- 	if (!priv)
- 		return -ENOMEM;
- 
-+	priv->pdev = pdev;
-+
- 	cpu_np = of_parse_phandle(np, "audio-cpu", 0);
- 	/* Give a chance to old DT binding */
- 	if (!cpu_np)
-@@ -754,7 +756,6 @@ static int fsl_asoc_card_probe(struct platform_device *pdev)
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -140,8 +140,13 @@ static int ucsi_exec_command(struct ucsi
  	}
  
- 	/* Initialize sound card */
--	priv->pdev = pdev;
- 	priv->card.dev = &pdev->dev;
- 	priv->card.owner = THIS_MODULE;
- 	ret = snd_soc_of_parse_card_name(&priv->card, "model");
--- 
-2.43.0
-
+ 	if (cci & UCSI_CCI_ERROR) {
+-		if (cmd == UCSI_GET_ERROR_STATUS)
++		if (cmd == UCSI_GET_ERROR_STATUS) {
++			ret = ucsi_acknowledge(ucsi, false);
++			if (ret)
++				return ret;
++
+ 			return -EIO;
++		}
+ 		return ucsi_read_error(ucsi);
+ 	}
+ 
 
 
