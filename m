@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B041514DC;
-	Tue,  2 Jul 2024 17:27:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05CC1514DC;
+	Tue,  2 Jul 2024 17:27:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941259; cv=none; b=sDGDQHnjKxM65ytf4JLI+2f7aDA+hfcrq5Gyce+LYhm+XK2q+P02itIbH40OJ9PwMN/wLsMRcSIR+E46ZDtbanYPYhK5LFw5quXzZQn/f5HiVreDW+SrFD4wg4p29a9Lyr7Xg3ZG/i+B0eZKLlex+LnFt968v0m3tgXgOCoKxb4=
+	t=1719941263; cv=none; b=rFD+TXxvvKN1a5wt0Mb3jKGmJA/nB7a9k2qd6YoxHFpWaZIGmLq71qYTckGg447jveG3E00vcvvAEPsJ9OZVZ3ggMPc35s2GQ9UWkisM/QvgGRrrvTIhRYJV2rkhBH5gM+dgQt1y0WOVx4i7T5CruqkrjK90BGKTQwRJI6hNOU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941259; c=relaxed/simple;
-	bh=v0mzWV2mJFQSmee/PSUSrvYVX/Ovg+6fwMoX+WdutkM=;
+	s=arc-20240116; t=1719941263; c=relaxed/simple;
+	bh=zJHX+i+WFyHfjYn3keIzFTnnY9jVC44zcUqWxe1kuwk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IrmO71ixGNxE5a82W3x3AVtdftUyGm42Fy1zA9ukW+JFrmsE7zgkA/+05UYjiwF6avfkqup14m+P/4m9+gp0245WcmFL8eCNeTKliJ0tR2qjGchQHhCp8tg4aIJ2+swzdPb3iLIQJrUQ9PqiVyha26EIy6n4+6yYbuV40XoZt5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LhdAt9aD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YasR3NLsIUDeD3fpqW6Edk4erK9/7pJ1RCJGIXQm67R5CsDUh1nl+w2MRQxSk7hrD8XoNg1XGCpzrdnONJhqNMGNTJQjISg4xJb/MORavJ8Ass5WQ2wgeNy9UepYKZNZNVWg5nZeH71NGckAMldt35u8JTBq3iveZ01RE1IoatM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZNz6ME3/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LhdAt9aD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D81C116B1;
-	Tue,  2 Jul 2024 17:27:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZNz6ME3/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D6ECC116B1;
+	Tue,  2 Jul 2024 17:27:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941259;
-	bh=v0mzWV2mJFQSmee/PSUSrvYVX/Ovg+6fwMoX+WdutkM=;
+	s=korg; t=1719941262;
+	bh=zJHX+i+WFyHfjYn3keIzFTnnY9jVC44zcUqWxe1kuwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LhdAt9aDx/n+o9ihgz0SbR5qQiSpxDSwNDQA8fLlq6TT7yxP3B8UZgg3NJBWyL+Lw
-	 G8M8uJ40FSZ3MZmvSUtqH3igV11/LjjjoQ15uFsZz0OPsNBzXzsx+Ho56IR9OwhEa8
-	 18p4n2iwqtAVwHsOr/H/4psrJVJCkX4zHTwF+Z0A=
+	b=ZNz6ME3/zCTIE497DwKt8EMfRJx3KketLc5g6Pz9R8D9COxvyywdOkCfj5lWiNHiq
+	 xdo/S2UtMhQGgM7JLiaMDV9siyQ2bkZjf6WDdmVSOXyAl9AE5thV5bBl2/0haqB6yZ
+	 EyfY1OzBC7/D5DIputGIzhvhCfS62O3zzkGa2d7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Schiller <ms@dev.tdt.de>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Alain Volmat <alain.volmat@foss.st.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 012/128] MIPS: pci: lantiq: restore reset gpio polarity
-Date: Tue,  2 Jul 2024 19:03:33 +0200
-Message-ID: <20240702170226.699245531@linuxfoundation.org>
+Subject: [PATCH 6.1 013/128] dt-bindings: i2c: Drop unneeded quotes
+Date: Tue,  2 Jul 2024 19:03:34 +0200
+Message-ID: <20240702170226.735963571@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170226.231899085@linuxfoundation.org>
 References: <20240702170226.231899085@linuxfoundation.org>
@@ -51,71 +55,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Schiller <ms@dev.tdt.de>
+From: Rob Herring <robh@kernel.org>
 
-[ Upstream commit 277a0363120276645ae598d8d5fea7265e076ae9 ]
+[ Upstream commit fc114c75680da73c3815512d880f69cecc9a9b87 ]
 
-Commit 90c2d2eb7ab5 ("MIPS: pci: lantiq: switch to using gpiod API") not
-only switched to the gpiod API, but also inverted / changed the polarity
-of the GPIO.
+Cleanup bindings dropping unneeded quotes. Once all these are fixed,
+checking for this can be enabled in yamllint.
 
-According to the PCI specification, the RST# pin is an active-low
-signal. However, most of the device trees that have been widely used for
-a long time (mainly in the openWrt project) define this GPIO as
-active-high and the old driver code inverted the signal internally.
-
-Apparently there are actually boards where the reset gpio must be
-operated inverted. For this reason, we cannot use the GPIOD_OUT_LOW/HIGH
-flag for initialization. Instead, we must explicitly set the gpio to
-value 1 in order to take into account any "GPIO_ACTIVE_LOW" flag that
-may have been set.
-
-In order to remain compatible with all these existing device trees, we
-should therefore keep the logic as it was before the commit.
-
-Fixes: 90c2d2eb7ab5 ("MIPS: pci: lantiq: switch to using gpiod API")
-Cc: stable@vger.kernel.org
-Signed-off-by: Martin Schiller <ms@dev.tdt.de>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Reviewed-by: Alain Volmat <alain.volmat@foss.st.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Stable-dep-of: d4e001ffeccf ("dt-bindings: i2c: atmel,at91sam: correct path to i2c-controller schema")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/pci/pci-lantiq.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ Documentation/devicetree/bindings/i2c/amlogic,meson6-i2c.yaml | 4 ++--
+ Documentation/devicetree/bindings/i2c/apple,i2c.yaml          | 4 ++--
+ Documentation/devicetree/bindings/i2c/atmel,at91sam-i2c.yaml  | 2 +-
+ Documentation/devicetree/bindings/i2c/cdns,i2c-r1p10.yaml     | 4 ++--
+ Documentation/devicetree/bindings/i2c/i2c-mux-gpio.yaml       | 4 ++--
+ Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml | 4 ++--
+ Documentation/devicetree/bindings/i2c/st,stm32-i2c.yaml       | 2 +-
+ .../devicetree/bindings/i2c/xlnx,xps-iic-2.00.a.yaml          | 4 ++--
+ 8 files changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/arch/mips/pci/pci-lantiq.c b/arch/mips/pci/pci-lantiq.c
-index 8d16cd021f604..5c83f54341299 100644
---- a/arch/mips/pci/pci-lantiq.c
-+++ b/arch/mips/pci/pci-lantiq.c
-@@ -124,14 +124,14 @@ static int ltq_pci_startup(struct platform_device *pdev)
- 		clk_disable(clk_external);
+diff --git a/Documentation/devicetree/bindings/i2c/amlogic,meson6-i2c.yaml b/Documentation/devicetree/bindings/i2c/amlogic,meson6-i2c.yaml
+index 199a354ccb970..26bed558c6b87 100644
+--- a/Documentation/devicetree/bindings/i2c/amlogic,meson6-i2c.yaml
++++ b/Documentation/devicetree/bindings/i2c/amlogic,meson6-i2c.yaml
+@@ -2,8 +2,8 @@
+ # Copyright 2019 BayLibre, SAS
+ %YAML 1.2
+ ---
+-$id: "http://devicetree.org/schemas/i2c/amlogic,meson6-i2c.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++$id: http://devicetree.org/schemas/i2c/amlogic,meson6-i2c.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
  
- 	/* setup reset gpio used by pci */
--	reset_gpio = devm_gpiod_get_optional(&pdev->dev, "reset",
--					     GPIOD_OUT_LOW);
-+	reset_gpio = devm_gpiod_get_optional(&pdev->dev, "reset", GPIOD_ASIS);
- 	error = PTR_ERR_OR_ZERO(reset_gpio);
- 	if (error) {
- 		dev_err(&pdev->dev, "failed to request gpio: %d\n", error);
- 		return error;
- 	}
- 	gpiod_set_consumer_name(reset_gpio, "pci_reset");
-+	gpiod_direction_output(reset_gpio, 1);
+ title: Amlogic Meson I2C Controller
  
- 	/* enable auto-switching between PCI and EBU */
- 	ltq_pci_w32(0xa, PCI_CR_CLK_CTRL);
-@@ -194,10 +194,10 @@ static int ltq_pci_startup(struct platform_device *pdev)
+diff --git a/Documentation/devicetree/bindings/i2c/apple,i2c.yaml b/Documentation/devicetree/bindings/i2c/apple,i2c.yaml
+index 4ac61fec90e26..243da7003cec5 100644
+--- a/Documentation/devicetree/bindings/i2c/apple,i2c.yaml
++++ b/Documentation/devicetree/bindings/i2c/apple,i2c.yaml
+@@ -1,8 +1,8 @@
+ # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+ %YAML 1.2
+ ---
+-$id: "http://devicetree.org/schemas/i2c/apple,i2c.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++$id: http://devicetree.org/schemas/i2c/apple,i2c.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
  
- 	/* toggle reset pin */
- 	if (reset_gpio) {
--		gpiod_set_value_cansleep(reset_gpio, 1);
-+		gpiod_set_value_cansleep(reset_gpio, 0);
- 		wmb();
- 		mdelay(1);
--		gpiod_set_value_cansleep(reset_gpio, 0);
-+		gpiod_set_value_cansleep(reset_gpio, 1);
- 	}
- 	return 0;
- }
+ title: Apple/PASemi I2C controller
+ 
+diff --git a/Documentation/devicetree/bindings/i2c/atmel,at91sam-i2c.yaml b/Documentation/devicetree/bindings/i2c/atmel,at91sam-i2c.yaml
+index ea2303c0e1431..6adedd3ec399b 100644
+--- a/Documentation/devicetree/bindings/i2c/atmel,at91sam-i2c.yaml
++++ b/Documentation/devicetree/bindings/i2c/atmel,at91sam-i2c.yaml
+@@ -75,7 +75,7 @@ required:
+   - clocks
+ 
+ allOf:
+-  - $ref: "i2c-controller.yaml"
++  - $ref: i2c-controller.yaml
+   - if:
+       properties:
+         compatible:
+diff --git a/Documentation/devicetree/bindings/i2c/cdns,i2c-r1p10.yaml b/Documentation/devicetree/bindings/i2c/cdns,i2c-r1p10.yaml
+index 2e95cda7262ad..7a675aa08c442 100644
+--- a/Documentation/devicetree/bindings/i2c/cdns,i2c-r1p10.yaml
++++ b/Documentation/devicetree/bindings/i2c/cdns,i2c-r1p10.yaml
+@@ -1,8 +1,8 @@
+ # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+ %YAML 1.2
+ ---
+-$id: "http://devicetree.org/schemas/i2c/cdns,i2c-r1p10.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++$id: http://devicetree.org/schemas/i2c/cdns,i2c-r1p10.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+ title: Cadence I2C controller
+ 
+diff --git a/Documentation/devicetree/bindings/i2c/i2c-mux-gpio.yaml b/Documentation/devicetree/bindings/i2c/i2c-mux-gpio.yaml
+index 6e0a5686af048..f34cc7ad5a00e 100644
+--- a/Documentation/devicetree/bindings/i2c/i2c-mux-gpio.yaml
++++ b/Documentation/devicetree/bindings/i2c/i2c-mux-gpio.yaml
+@@ -45,7 +45,7 @@ properties:
+ 
+   i2c-parent:
+     description: phandle of the I2C bus that this multiplexer's master-side port is connected to
+-    $ref: "/schemas/types.yaml#/definitions/phandle"
++    $ref: /schemas/types.yaml#/definitions/phandle
+ 
+   mux-gpios:
+     description: list of GPIOs used to control the muxer
+@@ -55,7 +55,7 @@ properties:
+   idle-state:
+     description: Value to set the muxer to when idle. When no value is given, it defaults to the
+       last value used.
+-    $ref: "/schemas/types.yaml#/definitions/uint32"
++    $ref: /schemas/types.yaml#/definitions/uint32
+ 
+ allOf:
+   - $ref: i2c-mux.yaml
+diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+index 0e7ed00562e21..5a44fdcbdd59b 100644
+--- a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
++++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+@@ -1,8 +1,8 @@
+ # SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+ %YAML 1.2
+ ---
+-$id: "http://devicetree.org/schemas/i2c/qcom,i2c-geni-qcom.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++$id: http://devicetree.org/schemas/i2c/qcom,i2c-geni-qcom.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+ title: Qualcomm Geni based QUP I2C Controller
+ 
+diff --git a/Documentation/devicetree/bindings/i2c/st,stm32-i2c.yaml b/Documentation/devicetree/bindings/i2c/st,stm32-i2c.yaml
+index bf396e9466aaf..94b75d9f66cdb 100644
+--- a/Documentation/devicetree/bindings/i2c/st,stm32-i2c.yaml
++++ b/Documentation/devicetree/bindings/i2c/st,stm32-i2c.yaml
+@@ -90,7 +90,7 @@ properties:
+   st,syscfg-fmp:
+     description: Use to set Fast Mode Plus bit within SYSCFG when Fast Mode
+       Plus speed is selected by slave.
+-    $ref: "/schemas/types.yaml#/definitions/phandle-array"
++    $ref: /schemas/types.yaml#/definitions/phandle-array
+     items:
+       - items:
+           - description: phandle to syscfg
+diff --git a/Documentation/devicetree/bindings/i2c/xlnx,xps-iic-2.00.a.yaml b/Documentation/devicetree/bindings/i2c/xlnx,xps-iic-2.00.a.yaml
+index 8d241a703d855..f3b53ecae5625 100644
+--- a/Documentation/devicetree/bindings/i2c/xlnx,xps-iic-2.00.a.yaml
++++ b/Documentation/devicetree/bindings/i2c/xlnx,xps-iic-2.00.a.yaml
+@@ -1,8 +1,8 @@
+ # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+ %YAML 1.2
+ ---
+-$id: "http://devicetree.org/schemas/i2c/xlnx,xps-iic-2.00.a.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++$id: http://devicetree.org/schemas/i2c/xlnx,xps-iic-2.00.a.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+ title: Xilinx IIC controller
+ 
 -- 
 2.43.0
 
