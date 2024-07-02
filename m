@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1690015B0FE;
-	Tue,  2 Jul 2024 17:14:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D3A15B0FE;
+	Tue,  2 Jul 2024 17:14:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940465; cv=none; b=OWCkpPMVx3GlXr36gtI4OMUTwb8ez3ks8iFV4uQ0/2NMYWSfOf33b4HXOEWzqlwAMPGAsUf4fZ+NUMUREuAF6WjCz0/Y7ozR8Dw3e5Y6LlVuc4/nsw3a9a6y0Q2emVBC/iZ7i62CrbmczzoVLKx/A1UOs07kpuHolOIJx0jqZe4=
+	t=1719940468; cv=none; b=atwmQo8mfJ0AENHIcd8z4EB3FGR3ijS+iDUcH2WUdt8g4eY7M5MtVbeRn+eFMkVLt8AEG5AUvtFQSaRpz5h1mjeEUHYBt3GeyvKfSBpgfm2JuzeUX/fRK2bIoTfi1+D41DxGdA6BVZ4X0olEj0eBhI6Xc/YI/PDZ099/ouHSITI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940465; c=relaxed/simple;
-	bh=sNicwKdJyLHuiWQmAYd/4mgyZLj4oIF775P16CaBxDY=;
+	s=arc-20240116; t=1719940468; c=relaxed/simple;
+	bh=OOWFuoPuqsBw6h8yJw259gmEuSPC5dy4Kt1g4G+6hT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pYBEvPwop3z2u6/Lt0aBtMEhK+z5uOg7BaFeGpEHrvfn91sGWgbD+Dq/HYFypqnDDU8Thc3KZdGdxAwd5XxNA4d+tFxmw+CsCGSIoUHRYEovuGSs0DohU+Y0luVlJfoI7+EHYxi5n9B8hSGu7PCgoZp+hK6/6+K9I9E8lTjUuyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3UtzOY0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Exbl58YdrMrkzpmRd9T32/NbIqhZUEJwY4sXV1SZOG45KqsFGU/phM4ph7IWDjlGYAfU17SyKdZfWAfGbmwvoH6uF6BwfAf7Rnjl8eFymDgNzVAiZQ71RCHtI/iQttEGpJuN5WVdFe0lUdqvv2jo06zSxXKM2AK5lslsfkZy7Js=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ow6Ag3zW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3UtzOY0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 774CFC116B1;
-	Tue,  2 Jul 2024 17:14:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ow6Ag3zW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1AC7C116B1;
+	Tue,  2 Jul 2024 17:14:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940465;
-	bh=sNicwKdJyLHuiWQmAYd/4mgyZLj4oIF775P16CaBxDY=;
+	s=korg; t=1719940468;
+	bh=OOWFuoPuqsBw6h8yJw259gmEuSPC5dy4Kt1g4G+6hT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P3UtzOY0/abQFcHY5iDKT8pFVqlO0X+t3b1fQVk0faPu0ybusVJ15fqwUAA6SHmC4
-	 0mmYM9g1Nc3ABSme3LEDDn1fyk1Nj6HtLSH3n1xXIKQ3bevwtDQxjjFab4ej++H/r1
-	 2t85/F+X+/gu806YDqaQ+crhtyTc/VUyqJbVHLDs=
+	b=Ow6Ag3zWtNZsHefsZoyOz7E0oa6Xs3p+buU8zSRlp6jvINsoo15oVQWORtsMYrGpL
+	 t5QhjSfoTozTI021vi19xlOFowSR++4npJm9zYTjEGvN1mZ5HHUjwndJ1FsCEqjH8t
+	 cs6VDX+YJwrMsnCtgEWlBblkjtQJkEyFiqdMcu3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.9 163/222] tty: mcf: MCF54418 has 10 UARTS
-Date: Tue,  2 Jul 2024 19:03:21 +0200
-Message-ID: <20240702170250.207675158@linuxfoundation.org>
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Shigeru Yoshida <syoshida@redhat.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	syzbot+5681e40d297b30f5b513@syzkaller.appspotmail.com
+Subject: [PATCH 6.9 164/222] net: can: j1939: Initialize unused data in j1939_send_one()
+Date: Tue,  2 Jul 2024 19:03:22 +0200
+Message-ID: <20240702170250.246216137@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -50,32 +52,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-commit 7c92a8bd53f24d50c8cf4aba53bb75505b382fed upstream.
+commit b7cdf1dd5d2a2d8200efd98d1893684db48fe134 upstream.
 
-Most of the colfires have up to 5 UARTs but MCF54418 has up-to 10 !
-Change the maximum value authorized.
+syzbot reported kernel-infoleak in raw_recvmsg() [1]. j1939_send_one()
+creates full frame including unused data, but it doesn't initialize
+it. This causes the kernel-infoleak issue. Fix this by initializing
+unused data.
 
-Signed-off-by: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
-Cc: stable <stable@kernel.org>
-Fixes: 2545cf6e94b4 ("m68knommu: allow 4 coldfire serial ports")
-Link: https://lore.kernel.org/r/20240620-upstream-uart-v1-1-a9d0d95fb19e@yoseli.org
+[1]
+BUG: KMSAN: kernel-infoleak in instrument_copy_to_user include/linux/instrumented.h:114 [inline]
+BUG: KMSAN: kernel-infoleak in copy_to_user_iter lib/iov_iter.c:24 [inline]
+BUG: KMSAN: kernel-infoleak in iterate_ubuf include/linux/iov_iter.h:29 [inline]
+BUG: KMSAN: kernel-infoleak in iterate_and_advance2 include/linux/iov_iter.h:245 [inline]
+BUG: KMSAN: kernel-infoleak in iterate_and_advance include/linux/iov_iter.h:271 [inline]
+BUG: KMSAN: kernel-infoleak in _copy_to_iter+0x366/0x2520 lib/iov_iter.c:185
+ instrument_copy_to_user include/linux/instrumented.h:114 [inline]
+ copy_to_user_iter lib/iov_iter.c:24 [inline]
+ iterate_ubuf include/linux/iov_iter.h:29 [inline]
+ iterate_and_advance2 include/linux/iov_iter.h:245 [inline]
+ iterate_and_advance include/linux/iov_iter.h:271 [inline]
+ _copy_to_iter+0x366/0x2520 lib/iov_iter.c:185
+ copy_to_iter include/linux/uio.h:196 [inline]
+ memcpy_to_msg include/linux/skbuff.h:4113 [inline]
+ raw_recvmsg+0x2b8/0x9e0 net/can/raw.c:1008
+ sock_recvmsg_nosec net/socket.c:1046 [inline]
+ sock_recvmsg+0x2c4/0x340 net/socket.c:1068
+ ____sys_recvmsg+0x18a/0x620 net/socket.c:2803
+ ___sys_recvmsg+0x223/0x840 net/socket.c:2845
+ do_recvmmsg+0x4fc/0xfd0 net/socket.c:2939
+ __sys_recvmmsg net/socket.c:3018 [inline]
+ __do_sys_recvmmsg net/socket.c:3041 [inline]
+ __se_sys_recvmmsg net/socket.c:3034 [inline]
+ __x64_sys_recvmmsg+0x397/0x490 net/socket.c:3034
+ x64_sys_call+0xf6c/0x3b50 arch/x86/include/generated/asm/syscalls_64.h:300
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Uninit was created at:
+ slab_post_alloc_hook mm/slub.c:3804 [inline]
+ slab_alloc_node mm/slub.c:3845 [inline]
+ kmem_cache_alloc_node+0x613/0xc50 mm/slub.c:3888
+ kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:577
+ __alloc_skb+0x35b/0x7a0 net/core/skbuff.c:668
+ alloc_skb include/linux/skbuff.h:1313 [inline]
+ alloc_skb_with_frags+0xc8/0xbf0 net/core/skbuff.c:6504
+ sock_alloc_send_pskb+0xa81/0xbf0 net/core/sock.c:2795
+ sock_alloc_send_skb include/net/sock.h:1842 [inline]
+ j1939_sk_alloc_skb net/can/j1939/socket.c:878 [inline]
+ j1939_sk_send_loop net/can/j1939/socket.c:1142 [inline]
+ j1939_sk_sendmsg+0xc0a/0x2730 net/can/j1939/socket.c:1277
+ sock_sendmsg_nosec net/socket.c:730 [inline]
+ __sock_sendmsg+0x30f/0x380 net/socket.c:745
+ ____sys_sendmsg+0x877/0xb60 net/socket.c:2584
+ ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2638
+ __sys_sendmsg net/socket.c:2667 [inline]
+ __do_sys_sendmsg net/socket.c:2676 [inline]
+ __se_sys_sendmsg net/socket.c:2674 [inline]
+ __x64_sys_sendmsg+0x307/0x4a0 net/socket.c:2674
+ x64_sys_call+0xc4b/0x3b50 arch/x86/include/generated/asm/syscalls_64.h:47
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Bytes 12-15 of 16 are uninitialized
+Memory access of size 16 starts at ffff888120969690
+Data copied to user address 00000000200017c0
+
+CPU: 1 PID: 5050 Comm: syz-executor198 Not tainted 6.9.0-rc5-syzkaller-00031-g71b1543c83d6 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
+
+Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
+Reported-and-tested-by: syzbot+5681e40d297b30f5b513@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5681e40d297b30f5b513
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Link: https://lore.kernel.org/all/20240517035953.2617090-1-syoshida@redhat.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/mcf.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/can/j1939/main.c |    6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
---- a/drivers/tty/serial/mcf.c
-+++ b/drivers/tty/serial/mcf.c
-@@ -462,7 +462,7 @@ static const struct uart_ops mcf_uart_op
- 	.verify_port	= mcf_verify_port,
- };
+--- a/net/can/j1939/main.c
++++ b/net/can/j1939/main.c
+@@ -30,10 +30,6 @@ MODULE_ALIAS("can-proto-" __stringify(CA
+ /* CAN_HDR: #bytes before can_frame data part */
+ #define J1939_CAN_HDR (offsetof(struct can_frame, data))
  
--static struct mcf_uart mcf_ports[4];
-+static struct mcf_uart mcf_ports[10];
+-/* CAN_FTR: #bytes beyond data part */
+-#define J1939_CAN_FTR (sizeof(struct can_frame) - J1939_CAN_HDR - \
+-		 sizeof(((struct can_frame *)0)->data))
+-
+ /* lowest layer */
+ static void j1939_can_recv(struct sk_buff *iskb, void *data)
+ {
+@@ -342,7 +338,7 @@ int j1939_send_one(struct j1939_priv *pr
+ 	memset(cf, 0, J1939_CAN_HDR);
  
- #define	MCF_MAXPORTS	ARRAY_SIZE(mcf_ports)
+ 	/* make it a full can frame again */
+-	skb_put(skb, J1939_CAN_FTR + (8 - dlc));
++	skb_put_zero(skb, 8 - dlc);
  
+ 	canid = CAN_EFF_FLAG |
+ 		(skcb->priority << 26) |
 
 
