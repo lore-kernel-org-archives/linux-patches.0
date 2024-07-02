@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743ED1BD51B;
-	Tue,  2 Jul 2024 17:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC7F71BD51B;
+	Tue,  2 Jul 2024 17:07:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940076; cv=none; b=LPCWOwSwxY23MwAyCqxdv4q/VKeaC6U3UfnCPra2fV/qVWaJgSvT0zmnRuqUNj8biKUPbt80Z6ESExXqPn2d376vvMHmZ39P0lCb6RWG9m7HzrzFJMbCKCdhx2+STzPOZBbnebFtirRz+msKyJhm7+tw9tQqkPv0Z+cOqJAgAr8=
+	t=1719940079; cv=none; b=Jw07EKmzktplwc842n8szXCDohDx+0/gdbF9VrntUl6B0661Vh4pwDgS827dSKoHz8/FD1m6YArp8ma70wiOxK0LjuW6DUvLRQWgl5BoDnce6QJ8MPhr+fvllFphBiiZwYjoHrJ1GHyLTgo6S07/Q3Rnnm62AXynecXohmayvSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940076; c=relaxed/simple;
-	bh=hsrr1maGcx5UbpHBr/tRDhSpEC9lCMu0BJk3KFJy9c0=;
+	s=arc-20240116; t=1719940079; c=relaxed/simple;
+	bh=J4tV59TfLx04wl2g0R1AmfHnY3p3fLvtJccEfl/3ekc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U7LZnRAovd0F6A/hDup5eHsQ9TCbk4ZVqbJI+EH30GwPVGSRDXdyVhtJNADChdyEeGnf6abe9XmhIfrnHWAMPGf0s6jNHeJ8t2GPuPlip/Epw+uwq8erotII+CX0vueAUOihPsyc0eZJ5MgaqJacaz24gxcbuwrZlWcNETdS7A8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NKA2u+7B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dIVF6p1cgogVul/ol4Ta9pJ3pDIci8C//4HrAPC7DoS+DZdVW0iRChMgB2a2bPeBVl2hCrCUMi+Q9gO7ajafCdjxnDI9ZmYEOkGlrc6uy11CTgKfncOXZmAL/HVqkeXUWSZPO8xjlEaPFRuYiYVMsHD63J7zNEKq9wDOqSr1DfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEC6TiU0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NKA2u+7B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE22C116B1;
-	Tue,  2 Jul 2024 17:07:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEC6TiU0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 296BDC116B1;
+	Tue,  2 Jul 2024 17:07:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940076;
-	bh=hsrr1maGcx5UbpHBr/tRDhSpEC9lCMu0BJk3KFJy9c0=;
+	s=korg; t=1719940079;
+	bh=J4tV59TfLx04wl2g0R1AmfHnY3p3fLvtJccEfl/3ekc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NKA2u+7ByDdp07jO/BPSXBL6l8HbWxb5JveuZ7fDeuYyZDjJYHYn675tFuuJuCt+0
-	 gjjNzqBeXzWR/1XSS6MRHwV0pwpez/XPdxQZv/se5wbLfS3CIR2vcVmDiIJ2boVYwc
-	 kx9ycemdRzS9Lk86rObGBNinUKVHtTvli3FBTcy0=
+	b=tEC6TiU07zKWb92VkOqqTspfQ08Gz88dqF91xDZj0A9E3RWkIMeW37SRyjyOgsZNV
+	 9hkaOpGjfcHZIss3l+E3atz5MEobneX3D8Iptc84kwVRYUgewVcd+rgDzN8S1kGcXU
+	 fISzT0SYOvHdyi4p0ZMIC0MzNgfSaJU5WKzGbKiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Dulov <d.dulov@aladdin.ru>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Maciej Strozek <mstrozek@opensource.cirrus.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 044/222] xdp: Remove WARN() from __xdp_reg_mem_model()
-Date: Tue,  2 Jul 2024 19:01:22 +0200
-Message-ID: <20240702170245.660743418@linuxfoundation.org>
+Subject: [PATCH 6.9 015/222] ASoC: cs42l43: Increase default type detect time and button delay
+Date: Tue,  2 Jul 2024 19:00:53 +0200
+Message-ID: <20240702170244.557016477@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -52,74 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniil Dulov <d.dulov@aladdin.ru>
+From: Maciej Strozek <mstrozek@opensource.cirrus.com>
 
-[ Upstream commit 7e9f79428372c6eab92271390851be34ab26bfb4 ]
+[ Upstream commit afe377286ad49e0b69071d2a767e2c6553f4094b ]
 
-syzkaller reports a warning in __xdp_reg_mem_model().
+Some problematic headsets have been discovered, to help with correctly
+identifying these, the detect time must be increased. Also improve the
+reliability of the impedance value from the button detect by slightly
+increasing the button detect delay.
 
-The warning occurs only if __mem_id_init_hash_table() returns an error. It
-returns the error in two cases:
-
-  1. memory allocation fails;
-  2. rhashtable_init() fails when some fields of rhashtable_params
-     struct are not initialized properly.
-
-The second case cannot happen since there is a static const rhashtable_params
-struct with valid fields. So, warning is only triggered when there is a
-problem with memory allocation.
-
-Thus, there is no sense in using WARN() to handle this error and it can be
-safely removed.
-
-WARNING: CPU: 0 PID: 5065 at net/core/xdp.c:299 __xdp_reg_mem_model+0x2d9/0x650 net/core/xdp.c:299
-
-CPU: 0 PID: 5065 Comm: syz-executor883 Not tainted 6.8.0-syzkaller-05271-gf99c5f563c17 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
-RIP: 0010:__xdp_reg_mem_model+0x2d9/0x650 net/core/xdp.c:299
-
-Call Trace:
- xdp_reg_mem_model+0x22/0x40 net/core/xdp.c:344
- xdp_test_run_setup net/bpf/test_run.c:188 [inline]
- bpf_test_run_xdp_live+0x365/0x1e90 net/bpf/test_run.c:377
- bpf_prog_test_run_xdp+0x813/0x11b0 net/bpf/test_run.c:1267
- bpf_prog_test_run+0x33a/0x3b0 kernel/bpf/syscall.c:4240
- __sys_bpf+0x48d/0x810 kernel/bpf/syscall.c:5649
- __do_sys_bpf kernel/bpf/syscall.c:5738 [inline]
- __se_sys_bpf kernel/bpf/syscall.c:5736 [inline]
- __x64_sys_bpf+0x7c/0x90 kernel/bpf/syscall.c:5736
- do_syscall_64+0xfb/0x240
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-Found by Linux Verification Center (linuxtesting.org) with syzkaller.
-
-Fixes: 8d5d88527587 ("xdp: rhashtable with allocator ID to pointer mapping")
-Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Link: https://lore.kernel.org/all/20240617162708.492159-1-d.dulov@aladdin.ru
-Link: https://lore.kernel.org/bpf/20240624080747.36858-1-d.dulov@aladdin.ru
+Fixes: 686b8f711b99 ("ASoC: cs42l43: Lower default type detect time")
+Signed-off-by: Maciej Strozek <mstrozek@opensource.cirrus.com>
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://msgid.link/r/20240604132843.3309114-1-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/xdp.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ sound/soc/codecs/cs42l43-jack.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/xdp.c b/net/core/xdp.c
-index 41693154e426f..022c12059cf2f 100644
---- a/net/core/xdp.c
-+++ b/net/core/xdp.c
-@@ -295,10 +295,8 @@ static struct xdp_mem_allocator *__xdp_reg_mem_model(struct xdp_mem_info *mem,
- 		mutex_lock(&mem_id_lock);
- 		ret = __mem_id_init_hash_table();
- 		mutex_unlock(&mem_id_lock);
--		if (ret < 0) {
--			WARN_ON(1);
-+		if (ret < 0)
- 			return ERR_PTR(ret);
--		}
+diff --git a/sound/soc/codecs/cs42l43-jack.c b/sound/soc/codecs/cs42l43-jack.c
+index 901b9dbcf5854..d9ab003e166bf 100644
+--- a/sound/soc/codecs/cs42l43-jack.c
++++ b/sound/soc/codecs/cs42l43-jack.c
+@@ -121,7 +121,7 @@ int cs42l43_set_jack(struct snd_soc_component *component,
+ 		priv->buttons[3] = 735;
  	}
  
- 	xdp_alloc = kzalloc(sizeof(*xdp_alloc), gfp);
+-	ret = cs42l43_find_index(priv, "cirrus,detect-us", 1000, &priv->detect_us,
++	ret = cs42l43_find_index(priv, "cirrus,detect-us", 50000, &priv->detect_us,
+ 				 cs42l43_accdet_us, ARRAY_SIZE(cs42l43_accdet_us));
+ 	if (ret < 0)
+ 		goto error;
+@@ -433,7 +433,7 @@ irqreturn_t cs42l43_button_press(int irq, void *data)
+ 
+ 	// Wait for 2 full cycles of comb filter to ensure good reading
+ 	queue_delayed_work(system_wq, &priv->button_press_work,
+-			   msecs_to_jiffies(10));
++			   msecs_to_jiffies(20));
+ 
+ 	return IRQ_HANDLED;
+ }
 -- 
 2.43.0
 
