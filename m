@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E12315218A;
-	Tue,  2 Jul 2024 17:24:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7643015218A;
+	Tue,  2 Jul 2024 17:24:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941058; cv=none; b=Gh/YZrNY4r7xDB6l9dza+y3W7bpAY0BvyQZhRx+4gk0pQNh8+dXskNipK3WNI1/VcZ6fyNMrxOGhAq5lmszsVNIuixVxaoEYoujLKU0DQMVrYmxJb7B52bL6PN2KGmLm99w3Irpc9y0PMDWan3fFC1qCqOStTdYXHBrfdctBmXs=
+	t=1719941061; cv=none; b=EkjQXl2bOqEf+W2CZ4Yc54AIOhjJy0Jx93ps0gLMDO8iM4PGaAR0JuS3DtYpIU6hX4ATOrcuu4S3c3ZOLtUb2yuCkdNWfdHxD/PpV57iIumZHlaLHFwPnYgeEt8rqvHsg1OoTzDxPo9965RWFMpLdr5g2r7HlX2PF7yw8S5omuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941058; c=relaxed/simple;
-	bh=tBDlXoEI8Yx1Y7gI8pAupH1O9nN3v7Ev15AJLofoLGc=;
+	s=arc-20240116; t=1719941061; c=relaxed/simple;
+	bh=oBKtzy06sf7Rhis1jN67WVCIgf3hYdkWbGv0ZAFebHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sm9Om7GoT6icWwmQAGxOjwHjxxv7H+Wm6xH/TgkQX8XneX+QEkFFnzCkt3T6O/qbS8dyWybt6uVx2u543DMKWB+oou79+E5vI8jrxIqsA1vKSoS1KJCQXR2hMs1m+mA/BBpmvqKZx+dpOEE+5O/uDg3U8iWE9O2r9dR5UgYfFu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tunPFUOP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ng/co+39255jnSQFCESVL0jFmKXIgK5noHwc7hvgpmVSR9g/ws8tBe4Aq7oBXnndEOvOFIYjTEQxf/NkfP3DdpGg4M+8QPOOb+quHcxyL4EUOyQN2WDVZ03Dmyo0OECJMXSfRz7NVZiXrbPcGTFx/JCE3CTbXS8y8v5Vn8rg3Ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A1PRvPaX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tunPFUOP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF2CC116B1;
-	Tue,  2 Jul 2024 17:24:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A1PRvPaX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9B5BC4AF0A;
+	Tue,  2 Jul 2024 17:24:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941058;
-	bh=tBDlXoEI8Yx1Y7gI8pAupH1O9nN3v7Ev15AJLofoLGc=;
+	s=korg; t=1719941061;
+	bh=oBKtzy06sf7Rhis1jN67WVCIgf3hYdkWbGv0ZAFebHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tunPFUOPSy3SMLV1VY2pj7sD/vtsid/oYZrcQ9IWzxVo0OH+vGYJ/aDAJavEqjcsC
-	 T1kTqtqXhwzrykZ+X2EUi9ZqecjZQttrxU872av1JkecWIMLNlNCazGFVEqsmgL6uW
-	 +p8wFEAEMXoQHWgxYio4m/jB8f0HGBg0uAgvSAu4=
+	b=A1PRvPaXe4zYxMnW8muS7Lkq7us0jgJqHFXnSehsuxteH34a39262AaNE4nbMZPdO
+	 hLG4ypSewvHLg6aDnJ5WLAJidLrp38BlCNmR7s20xPcE3dGbIWgnOPJWWqdxKomOhS
+	 XqUMh73paIali2OuQkAXkccxNEty+kATbbY6X9NU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Udit Kumar <u-kumar1@ti.com>
-Subject: [PATCH 6.6 116/163] serial: 8250_omap: Implementation of Errata i2310
-Date: Tue,  2 Jul 2024 19:03:50 +0200
-Message-ID: <20240702170237.446836585@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Stefan Eichenberger <stefan.eichenberger@toradex.com>
+Subject: [PATCH 6.6 117/163] serial: imx: set receiver level before starting uart
+Date: Tue,  2 Jul 2024 19:03:51 +0200
+Message-ID: <20240702170237.484023961@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -49,67 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Udit Kumar <u-kumar1@ti.com>
+From: Stefan Eichenberger <stefan.eichenberger@toradex.com>
 
-commit 9d141c1e615795eeb93cd35501ad144ee997a826 upstream.
+commit a81dbd0463eca317eee44985a66aa6cc2ce5c101 upstream.
 
-As per Errata i2310[0], Erroneous timeout can be triggered,
-if this Erroneous interrupt is not cleared then it may leads
-to storm of interrupts, therefore apply Errata i2310 solution.
+Set the receiver level to something > 0 before calling imx_uart_start_rx
+in rs485_config. This is necessary to avoid an interrupt storm that
+might prevent the system from booting. This was seen on an i.MX7 device
+when the rs485-rts-active-low property was active in the device tree.
 
-[0] https://www.ti.com/lit/pdf/sprz536 page 23
-
-Fixes: b67e830d38fa ("serial: 8250: 8250_omap: Fix possible interrupt storm on K3 SoCs")
-Cc: stable@vger.kernel.org
-Signed-off-by: Udit Kumar <u-kumar1@ti.com>
-Link: https://lore.kernel.org/r/20240619105903.165434-1-u-kumar1@ti.com
+Fixes: 6d215f83e5fc ("serial: imx: warn user when using unsupported configuration")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Stefan Eichenberger <stefan.eichenberger@toradex.com>
+Link: https://lore.kernel.org/r/20240621153829.183780-1-eichest@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_omap.c |   25 ++++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ drivers/tty/serial/imx.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/serial/8250/8250_omap.c
-+++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -165,6 +165,10 @@ static u32 uart_read(struct omap8250_pri
- 	return readl(priv->membase + (reg << OMAP_UART_REGSHIFT));
+--- a/drivers/tty/serial/imx.c
++++ b/drivers/tty/serial/imx.c
+@@ -1959,8 +1959,10 @@ static int imx_uart_rs485_config(struct
+ 
+ 	/* Make sure Rx is enabled in case Tx is active with Rx disabled */
+ 	if (!(rs485conf->flags & SER_RS485_ENABLED) ||
+-	    rs485conf->flags & SER_RS485_RX_DURING_TX)
++	    rs485conf->flags & SER_RS485_RX_DURING_TX) {
++		imx_uart_setup_ufcr(sport, TXTL_DEFAULT, RXTL_DEFAULT);
+ 		imx_uart_start_rx(port);
++	}
+ 
+ 	return 0;
  }
- 
-+/* Timeout low and High */
-+#define UART_OMAP_TO_L                 0x26
-+#define UART_OMAP_TO_H                 0x27
-+
- /*
-  * Called on runtime PM resume path from omap8250_restore_regs(), and
-  * omap8250_set_mctrl().
-@@ -646,13 +650,24 @@ static irqreturn_t omap8250_irq(int irq,
- 
- 	/*
- 	 * On K3 SoCs, it is observed that RX TIMEOUT is signalled after
--	 * FIFO has been drained, in which case a dummy read of RX FIFO
--	 * is required to clear RX TIMEOUT condition.
-+	 * FIFO has been drained or erroneously.
-+	 * So apply solution of Errata i2310 as mentioned in
-+	 * https://www.ti.com/lit/pdf/sprz536
- 	 */
- 	if (priv->habit & UART_RX_TIMEOUT_QUIRK &&
--	    (iir & UART_IIR_RX_TIMEOUT) == UART_IIR_RX_TIMEOUT &&
--	    serial_port_in(port, UART_OMAP_RX_LVL) == 0) {
--		serial_port_in(port, UART_RX);
-+		(iir & UART_IIR_RX_TIMEOUT) == UART_IIR_RX_TIMEOUT) {
-+		unsigned char efr2, timeout_h, timeout_l;
-+
-+		efr2 = serial_in(up, UART_OMAP_EFR2);
-+		timeout_h = serial_in(up, UART_OMAP_TO_H);
-+		timeout_l = serial_in(up, UART_OMAP_TO_L);
-+		serial_out(up, UART_OMAP_TO_H, 0xFF);
-+		serial_out(up, UART_OMAP_TO_L, 0xFF);
-+		serial_out(up, UART_OMAP_EFR2, UART_OMAP_EFR2_TIMEOUT_BEHAVE);
-+		serial_in(up, UART_IIR);
-+		serial_out(up, UART_OMAP_EFR2, efr2);
-+		serial_out(up, UART_OMAP_TO_H, timeout_h);
-+		serial_out(up, UART_OMAP_TO_L, timeout_l);
- 	}
- 
- 	/* Stop processing interrupts on input overrun */
 
 
