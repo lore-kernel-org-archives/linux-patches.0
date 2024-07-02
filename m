@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544B815218A;
-	Tue,  2 Jul 2024 17:11:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886BC15218A;
+	Tue,  2 Jul 2024 17:11:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940314; cv=none; b=rgGswdk9mL2ioqVD7OeZo/e47E9xSFsVAOzA96aUiHPNIk8XKd617z0H/9T9goFz53lC1KqxvTCrWj8dXN+F4OTWn2kqnAMUwjvhQqB/lLCoWRpMQu/b0VnnVxbxENoZ4PQRWtK8yxZlP6NHcxyfP62hmdLwO+3ZOR4KthkiJFg=
+	t=1719940317; cv=none; b=nsOW23mo9qhJsMdtG8NOuyGPN0NC39BLBUSrg5sjRMzWCdqNMSHwxYZ/SUpnkifJHfZI3LW24Ny2dadqXikd4N/dDjUE++lANzGfS7TQbRbIdGkoQ96GXdIZgzp/sYVmbJ4X7/oW6Ot4Mw3nDjdMlsS4d0tbEC0Q9B7EJ2H+1Ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940314; c=relaxed/simple;
-	bh=5t0RyREuQ9zsH0143+R1R8Uh2XxRivtbAL5kACEd9tM=;
+	s=arc-20240116; t=1719940317; c=relaxed/simple;
+	bh=J36xiiIEOCnuF3Q4ovoEPTkPuImhkn4TamV1WhsfQ9s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ix0nJ29F1p/8hG5P3urIiay1swgemfwG0DbwsAnedabLw81CsuKikixjfBymJwgpkrGSqvPyxKTozCOcDbIBCOmG+jUNN56XP5tU5SNBNMwb3hiWccPRSOadUkARuujGaiWsRnXsIVMKKCzqWRYtnHTfyeU3ywV32QCgYzomI5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1WSd9brr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pktt/55kX8A0w3wfuAc1+7yXiga8u13loRCSJwWZfd6EPwpbn+RtHt7gaGVKEArR9mgAcdG6nMDmXDkYb/asOds+J5GuBDDx36Y5Ly1KuexCBaYmGQY3Db6xqWqi3Rm68SDDsr4GLgd5yccq0W65p9eX1gqC8miDm9UE4UetNcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tS6PBTT8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1WSd9brr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA2D4C116B1;
-	Tue,  2 Jul 2024 17:11:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tS6PBTT8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A7FC4AF0A;
+	Tue,  2 Jul 2024 17:11:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940314;
-	bh=5t0RyREuQ9zsH0143+R1R8Uh2XxRivtbAL5kACEd9tM=;
+	s=korg; t=1719940317;
+	bh=J36xiiIEOCnuF3Q4ovoEPTkPuImhkn4TamV1WhsfQ9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1WSd9brrLDuCQn9Fi1MD5bE6vZUSfPDxxx5p7XiBC6FQceiw6QwDZ8o4EVe3ZP71v
-	 Q6S3A4tFpvnlkgDfMP+rvsL+zwq3kZ0DaW0LbOfYthIjHx/CHeSVT1n1z2AowZdJoq
-	 CEBldcOIa4rpAp/WZydU5xiT+9zHd5O+Im1hkcvY=
+	b=tS6PBTT8j1BrCZszWZcL+yNhbuo50UgrP8BWXT6qY6EZJVk8HQdeHxV2CfDAD4+Gf
+	 m1hW8v8CX91F64JGtyEtu41+z3HoIRQGBO6JI8qJTXthSI/Fn3WiJxIGNwNJrrWbXB
+	 SQVlM+kemalGw1HxgMbkTurf/uyfskhgGeqUa3eE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 086/222] media: dvbdev: Initialize sbuf
-Date: Tue,  2 Jul 2024 19:02:04 +0200
-Message-ID: <20240702170247.264321585@linuxfoundation.org>
+Subject: [PATCH 6.9 087/222] irqchip/loongson: Select GENERIC_IRQ_EFFECTIVE_AFF_MASK if SMP for IRQ_LOONGARCH_CPU
+Date: Tue,  2 Jul 2024 19:02:05 +0200
+Message-ID: <20240702170247.302391657@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -45,44 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit 17d1316de0d7dc1bdc5d6e3ad4efd30a9bf1a381 ]
+[ Upstream commit 42a7d887664b02a747ef5d479f6fd01081564af8 ]
 
-Because the size passed to copy_from_user() cannot be known beforehand,
-it needs to be checked during runtime with check_object_size. That makes
-gcc believe that the content of sbuf can be used before init.
+An interrupt's effective affinity can only be different from its configured
+affinity if there are multiple CPUs. Make it clear that this option is only
+meaningful when SMP is enabled. Otherwise, there exists "WARNING: unmet
+direct dependencies detected for GENERIC_IRQ_EFFECTIVE_AFF_MASK" when make
+menuconfig if CONFIG_SMP is not set on LoongArch.
 
-Fix:
-./include/linux/thread_info.h:215:17: warning: ‘sbuf’ may be used uninitialized [-Wmaybe-uninitialized]
-
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20240326121130.16622-3-yangtiezhu@loongson.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-core/dvbdev.c | 2 +-
+ drivers/irqchip/Kconfig | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/dvb-core/dvbdev.c b/drivers/media/dvb-core/dvbdev.c
-index 733d0bc4b4cc3..b43695bc51e75 100644
---- a/drivers/media/dvb-core/dvbdev.c
-+++ b/drivers/media/dvb-core/dvbdev.c
-@@ -956,7 +956,7 @@ int dvb_usercopy(struct file *file,
- 		 int (*func)(struct file *file,
- 			     unsigned int cmd, void *arg))
- {
--	char    sbuf[128];
-+	char    sbuf[128] = {};
- 	void    *mbuf = NULL;
- 	void    *parg = NULL;
- 	int     err  = -EINVAL;
+diff --git a/drivers/irqchip/Kconfig b/drivers/irqchip/Kconfig
+index 72c07a12f5e18..bfa1d77749f3e 100644
+--- a/drivers/irqchip/Kconfig
++++ b/drivers/irqchip/Kconfig
+@@ -568,7 +568,7 @@ config IRQ_LOONGARCH_CPU
+ 	bool
+ 	select GENERIC_IRQ_CHIP
+ 	select IRQ_DOMAIN
+-	select GENERIC_IRQ_EFFECTIVE_AFF_MASK
++	select GENERIC_IRQ_EFFECTIVE_AFF_MASK if SMP
+ 	select LOONGSON_HTVEC
+ 	select LOONGSON_LIOINTC
+ 	select LOONGSON_EIOINTC
 -- 
 2.43.0
 
