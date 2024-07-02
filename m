@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F4D915218A;
-	Tue,  2 Jul 2024 17:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7A51514DC;
+	Tue,  2 Jul 2024 17:27:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941223; cv=none; b=cta8abESbrH/lYtCdymdMUfoufs9OUzk3SICAAEMoN8Gpke/iStabG8uv14aENEZaf/iVnPu7StfsLSABzeMXsY3oA9zDaS0Q/ZfFR4WnGZBSL84hWib32LSLYkwyv+lEg8gYKKe2ihLsZbWjNDS1iLcCLKPBUgzbsg3t3BSVto=
+	t=1719941226; cv=none; b=lJW/xScQTYkjwY/nAyzmApG57lZEn6jcaznd1uLnWgFH5wyhQWbzjadIC2LiY7ZVk7sm1j5N+ALkw1NYR+wO34pQIDABRXEAVdr002kdJf2uAQdV9HMqmKKqiMgnzue6jxq0OAzH7FEm/ECfHFiZqVRkHEXC0mqtKypaqMrvfpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941223; c=relaxed/simple;
-	bh=hG7FJPAIaPSdmg8tjqyi3brawauj8BHJSMmLsEFAyg0=;
+	s=arc-20240116; t=1719941226; c=relaxed/simple;
+	bh=58sI27AyId/knF8KzrVLir853RDMIeBM6RIKmLimn8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QQwIAGKyR5FiBnL2G17WhuiElIcb47xyGwYBJt7zE1G448RKPdd8G6gf2SKpeTHvygU7RjytW3saGmfR6Eud0UDXkz00dLKAiq6SRZ1qU2odQQMGrm7p4UgS78sOvai/gOnUyJwArZ3oK+xCwn7M1ourO4S/BOEqu6NUn3KZOrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KKw7ki/C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NP16H8XhLhIXQ/KTsrS1JxrDqCKyUD741Lx4zwGHyZwTIhn6TgiNUU4rBlzyJMyRfDxvxxwuubRI7VuS2scbvxRz6/fEbmtNBzXon/lVf3aE4ZNs+qqhyA1VkuRFlANbJuvzgyw1lSp2Sx/KhW08k/ZRxKFXvihLu4zsMfOLYaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YrEwCRgJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KKw7ki/C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7ED2C116B1;
-	Tue,  2 Jul 2024 17:27:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YrEwCRgJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA346C116B1;
+	Tue,  2 Jul 2024 17:27:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941223;
-	bh=hG7FJPAIaPSdmg8tjqyi3brawauj8BHJSMmLsEFAyg0=;
+	s=korg; t=1719941226;
+	bh=58sI27AyId/knF8KzrVLir853RDMIeBM6RIKmLimn8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KKw7ki/CSh9DZd6+7q+2gPT19otbK7sEJ1DETysQ9fj3c47jVuJEi3Wp71EUJ0xCB
-	 orSQ7OxYHG9lo2aM7h82UmzYkJnah7ju6F0dVPNgpKQ6N9bM54+A+3/sJLOJ19qgFJ
-	 lHUD5SIFR7GKrJmhqy8ND1Iynhyy7yHTJQer1YyE=
+	b=YrEwCRgJGqXs76RemIMmoJo0L6XLvE/2lJEgJOVFPFV4UW4lMdXDzuwWxtLynSVBQ
+	 9hOeYw/m8LDMaIROpcFrtoupYEGVwrpIVfvztjW+w9nFHnvuOTixvYv8yniRpxY5Tz
+	 kKwwt0uK6AJPoj8typ86/ySST6Tv6xFZkCUN76T4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fusheng Huang <fusheng.huang@ecarxgroup.com>,
-	Julia Zhang <Julia.Zhang@amd.com>,
-	Huang Rui <ray.huang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 138/163] drm/amdgpu: avoid using null object of framebuffer
-Date: Tue,  2 Jul 2024 19:04:12 +0200
-Message-ID: <20240702170238.277601459@linuxfoundation.org>
+	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.6 139/163] drm/i915/gt: Fix potential UAF by revoke of fence registers
+Date: Tue,  2 Jul 2024 19:04:13 +0200
+Message-ID: <20240702170238.314598097@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -52,69 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julia Zhang <julia.zhang@amd.com>
+From: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
 
-commit bcfa48ff785bd121316592b131ff6531e3e696bb upstream.
+commit 996c3412a06578e9d779a16b9e79ace18125ab50 upstream.
 
-Instead of using state->fb->obj[0] directly, get object from framebuffer
-by calling drm_gem_fb_get_obj() and return error code when object is
-null to avoid using null object of framebuffer.
+CI has been sporadically reporting the following issue triggered by
+igt@i915_selftest@live@hangcheck on ADL-P and similar machines:
 
-Reported-by: Fusheng Huang <fusheng.huang@ecarxgroup.com>
-Signed-off-by: Julia Zhang <Julia.Zhang@amd.com>
-Reviewed-by: Huang Rui <ray.huang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+<6> [414.049203] i915: Running intel_hangcheck_live_selftests/igt_reset_evict_fence
+...
+<6> [414.068804] i915 0000:00:02.0: [drm] GT0: GUC: submission enabled
+<6> [414.068812] i915 0000:00:02.0: [drm] GT0: GUC: SLPC enabled
+<3> [414.070354] Unable to pin Y-tiled fence; err:-4
+<3> [414.071282] i915_vma_revoke_fence:301 GEM_BUG_ON(!i915_active_is_idle(&fence->active))
+...
+<4>[  609.603992] ------------[ cut here ]------------
+<2>[  609.603995] kernel BUG at drivers/gpu/drm/i915/gt/intel_ggtt_fencing.c:301!
+<4>[  609.604003] invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
+<4>[  609.604006] CPU: 0 PID: 268 Comm: kworker/u64:3 Tainted: G     U  W          6.9.0-CI_DRM_14785-g1ba62f8cea9c+ #1
+<4>[  609.604008] Hardware name: Intel Corporation Alder Lake Client Platform/AlderLake-P DDR4 RVP, BIOS RPLPFWI1.R00.4035.A00.2301200723 01/20/2023
+<4>[  609.604010] Workqueue: i915 __i915_gem_free_work [i915]
+<4>[  609.604149] RIP: 0010:i915_vma_revoke_fence+0x187/0x1f0 [i915]
+...
+<4>[  609.604271] Call Trace:
+<4>[  609.604273]  <TASK>
+...
+<4>[  609.604716]  __i915_vma_evict+0x2e9/0x550 [i915]
+<4>[  609.604852]  __i915_vma_unbind+0x7c/0x160 [i915]
+<4>[  609.604977]  force_unbind+0x24/0xa0 [i915]
+<4>[  609.605098]  i915_vma_destroy+0x2f/0xa0 [i915]
+<4>[  609.605210]  __i915_gem_object_pages_fini+0x51/0x2f0 [i915]
+<4>[  609.605330]  __i915_gem_free_objects.isra.0+0x6a/0xc0 [i915]
+<4>[  609.605440]  process_scheduled_works+0x351/0x690
+...
+
+In the past, there were similar failures reported by CI from other IGT
+tests, observed on other platforms.
+
+Before commit 63baf4f3d587 ("drm/i915/gt: Only wait for GPU activity
+before unbinding a GGTT fence"), i915_vma_revoke_fence() was waiting for
+idleness of vma->active via fence_update().   That commit introduced
+vma->fence->active in order for the fence_update() to be able to wait
+selectively on that one instead of vma->active since only idleness of
+fence registers was needed.  But then, another commit 0d86ee35097a
+("drm/i915/gt: Make fence revocation unequivocal") replaced the call to
+fence_update() in i915_vma_revoke_fence() with only fence_write(), and
+also added that GEM_BUG_ON(!i915_active_is_idle(&fence->active)) in front.
+No justification was provided on why we might then expect idleness of
+vma->fence->active without first waiting on it.
+
+The issue can be potentially caused by a race among revocation of fence
+registers on one side and sequential execution of signal callbacks invoked
+on completion of a request that was using them on the other, still
+processed in parallel to revocation of those fence registers.  Fix it by
+waiting for idleness of vma->fence->active in i915_vma_revoke_fence().
+
+Fixes: 0d86ee35097a ("drm/i915/gt: Make fence revocation unequivocal")
+Closes: https://gitlab.freedesktop.org/drm/intel/issues/10021
+Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+Cc: stable@vger.kernel.org # v5.8+
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240603195446.297690-2-janusz.krzysztofik@linux.intel.com
+(cherry picked from commit 24bb052d3dd499c5956abad5f7d8e4fd07da7fb1)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_ggtt_fencing.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.c
-@@ -2,6 +2,7 @@
- 
- #include <drm/drm_atomic_helper.h>
- #include <drm/drm_simple_kms_helper.h>
-+#include <drm/drm_gem_framebuffer_helper.h>
- #include <drm/drm_vblank.h>
- 
- #include "amdgpu.h"
-@@ -313,7 +314,13 @@ static int amdgpu_vkms_prepare_fb(struct
- 		return 0;
- 	}
- 	afb = to_amdgpu_framebuffer(new_state->fb);
--	obj = new_state->fb->obj[0];
-+
-+	obj = drm_gem_fb_get_obj(new_state->fb, 0);
-+	if (!obj) {
-+		DRM_ERROR("Failed to get obj from framebuffer\n");
-+		return -EINVAL;
-+	}
-+
- 	rbo = gem_to_amdgpu_bo(obj);
- 	adev = amdgpu_ttm_adev(rbo->tbo.bdev);
- 
-@@ -367,12 +374,19 @@ static void amdgpu_vkms_cleanup_fb(struc
- 				   struct drm_plane_state *old_state)
- {
- 	struct amdgpu_bo *rbo;
-+	struct drm_gem_object *obj;
- 	int r;
- 
- 	if (!old_state->fb)
+--- a/drivers/gpu/drm/i915/gt/intel_ggtt_fencing.c
++++ b/drivers/gpu/drm/i915/gt/intel_ggtt_fencing.c
+@@ -298,6 +298,7 @@ void i915_vma_revoke_fence(struct i915_v
  		return;
  
--	rbo = gem_to_amdgpu_bo(old_state->fb->obj[0]);
-+	obj = drm_gem_fb_get_obj(old_state->fb, 0);
-+	if (!obj) {
-+		DRM_ERROR("Failed to get obj from framebuffer\n");
-+		return;
-+	}
-+
-+	rbo = gem_to_amdgpu_bo(obj);
- 	r = amdgpu_bo_reserve(rbo, false);
- 	if (unlikely(r)) {
- 		DRM_ERROR("failed to reserve rbo before unpin\n");
+ 	GEM_BUG_ON(fence->vma != vma);
++	i915_active_wait(&fence->active);
+ 	GEM_BUG_ON(!i915_active_is_idle(&fence->active));
+ 	GEM_BUG_ON(atomic_read(&fence->pin_count));
+ 
 
 
