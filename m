@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB29E1BE229;
-	Tue,  2 Jul 2024 17:12:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC5A15B0FE;
+	Tue,  2 Jul 2024 17:12:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940348; cv=none; b=SQjrpZ0nap0ekWcMWyetC8GbrkJ0ZPVicpOv27GKDdajEoeT7ANQGQqZA2Bk7IPdgs5fLifUt6N8Pbq6JZZH40McD362uCwKDA1S17TilKQpMV4T1hHom/x/QEhTijQm9NgxI7lHDcWs8p0tUs1+1Kz9RiQdqJAeTQAGSdWTye8=
+	t=1719940351; cv=none; b=bxK7AdFO+grFfkPYlM1m7End0V/Nvq5YqsxZkkMBmDjgVRrVPRntFRsEHoPtkBWQmFIJYo9NpfKHgDwiWN6+e+E1MXB5ONuakRb0ry7QhMJv7oO94zOKZjVwbCW7byaMgPkuV4oRlL7cM0hzjge5mG7bQOs5PO4K9T2TnPRSQ68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940348; c=relaxed/simple;
-	bh=x7vVgyrixu/Pm4pf47lo5ebNEMNSHw6RaxvRdjxrVSw=;
+	s=arc-20240116; t=1719940351; c=relaxed/simple;
+	bh=BJ515ChxV1Ba3PIJthzHAdQFkPYTLorsUFYjijEuK94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kWx8Ks9WE3Ios0UJewPt+2rJmYnTiMI1ttMIBSvLg9qZI7nulFk+KEYoLcrILS0oTE95Zlbv7iSXr/R7fcSEVCVswf4g9mS8eCzDMjm+Vah2c9tPpIc/vrONO/4+SjSblP5ZdcUubzcfre/50ZJ4GoA1dGm0D2EqzkVn4WTXGms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wJp5UU1t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IVBArNWfrrS8txXy/mbocpFtli+13pK1CIf6kKe6D/8ii11oKHHXAChqGrAss45N9E/mAo3g1j+Ra/oy4IFYwgthtGewuOoPu+A59L0eiHLBcTwK9DF7TS4Gcg1EapPd5l7xkojJM9PtE4EJvtKwckIDYqeyjvvl8PKqW+TbhrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GgJ35raZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wJp5UU1t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E789AC116B1;
-	Tue,  2 Jul 2024 17:12:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GgJ35raZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5065BC116B1;
+	Tue,  2 Jul 2024 17:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940347;
-	bh=x7vVgyrixu/Pm4pf47lo5ebNEMNSHw6RaxvRdjxrVSw=;
+	s=korg; t=1719940350;
+	bh=BJ515ChxV1Ba3PIJthzHAdQFkPYTLorsUFYjijEuK94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wJp5UU1t88NcsYhODKZl0szgJzwvdtW8FeJucGxD01FgFV7QX9Jl4RbHFnkIfQKjj
-	 8mMJs+iVTKiAAhvPmKueqYV5mHv8PHcEUir7dweVxVXPpzqySPsxQhce7gbblBDla8
-	 JGoNH1I4gRQ30PfhZZoWBhXcUtppx4jDy3Q5+yPw=
+	b=GgJ35raZuO8mRJGlCk6WlZMdn7MnUQl0Y+Ogc4J9zv+HAwHlzJPdiBhsn5o3z8wlK
+	 4Qwh2/KT8v4KQ1CQ2Nf5K0wFGlWwQvOlw7vGxfemudRhe3CMulfn++vagwCV/rYubI
+	 yqb6CF+shtRHtNAaZbYOYeZth0m2JS4lXyC/BkCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Judith Mendez <jm@ti.com>,
-	David Lechner <dlechner@baylibre.com>,
-	William Breathitt Gray <wbg@kernel.org>,
+	Mark-PK Tsai <mark-pk.tsai@mediatek.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 128/222] counter: ti-eqep: enable clock at probe
-Date: Tue,  2 Jul 2024 19:02:46 +0200
-Message-ID: <20240702170248.863755934@linuxfoundation.org>
+Subject: [PATCH 6.9 129/222] kbuild: doc: Update default INSTALL_MOD_DIR from extra to updates
+Date: Tue,  2 Jul 2024 19:02:47 +0200
+Message-ID: <20240702170248.901406118@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -52,57 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Mark-PK Tsai <mark-pk.tsai@mediatek.com>
 
-[ Upstream commit 0cf81c73e4c6a4861128a8f27861176ec312af4e ]
+[ Upstream commit 07d4cc2e7444356faac6552d0688a1670cc9d749 ]
 
-The TI eQEP clock is both a functional and interface clock. Since it is
-required for the device to function, we should be enabling it at probe.
+The default INSTALL_MOD_DIR was changed from 'extra' to
+'updates' in commit b74d7bb7ca24 ("kbuild: Modify default
+INSTALL_MOD_DIR from extra to updates").
 
-Up to now, we've just been lucky that the clock was enabled by something
-else on the system already.
+This commit updates the documentation to align with the
+latest kernel.
 
-Fixes: f213729f6796 ("counter: new TI eQEP driver")
-Reviewed-by: Judith Mendez <jm@ti.com>
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Link: https://lore.kernel.org/r/20240621-ti-eqep-enable-clock-v2-1-edd3421b54d4@baylibre.com
-Signed-off-by: William Breathitt Gray <wbg@kernel.org>
+Fixes: b74d7bb7ca24 ("kbuild: Modify default INSTALL_MOD_DIR from extra to updates")
+Signed-off-by: Mark-PK Tsai <mark-pk.tsai@mediatek.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/counter/ti-eqep.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ Documentation/kbuild/modules.rst | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/counter/ti-eqep.c b/drivers/counter/ti-eqep.c
-index b0f24cf3e891d..4d3de4a35801f 100644
---- a/drivers/counter/ti-eqep.c
-+++ b/drivers/counter/ti-eqep.c
-@@ -6,6 +6,7 @@
-  */
+diff --git a/Documentation/kbuild/modules.rst b/Documentation/kbuild/modules.rst
+index a1f3eb7a43e23..131863142cbb3 100644
+--- a/Documentation/kbuild/modules.rst
++++ b/Documentation/kbuild/modules.rst
+@@ -128,7 +128,7 @@ executed to make module versioning work.
  
- #include <linux/bitops.h>
-+#include <linux/clk.h>
- #include <linux/counter.h>
- #include <linux/kernel.h>
- #include <linux/mod_devicetable.h>
-@@ -376,6 +377,7 @@ static int ti_eqep_probe(struct platform_device *pdev)
- 	struct counter_device *counter;
- 	struct ti_eqep_cnt *priv;
- 	void __iomem *base;
-+	struct clk *clk;
- 	int err;
+ 	modules_install
+ 		Install the external module(s). The default location is
+-		/lib/modules/<kernel_release>/extra/, but a prefix may
++		/lib/modules/<kernel_release>/updates/, but a prefix may
+ 		be added with INSTALL_MOD_PATH (discussed in section 5).
  
- 	counter = devm_counter_alloc(dev, sizeof(*priv));
-@@ -415,6 +417,10 @@ static int ti_eqep_probe(struct platform_device *pdev)
- 	pm_runtime_enable(dev);
- 	pm_runtime_get_sync(dev);
+ 	clean
+@@ -417,7 +417,7 @@ directory:
  
-+	clk = devm_clk_get_enabled(dev, NULL);
-+	if (IS_ERR(clk))
-+		return dev_err_probe(dev, PTR_ERR(clk), "failed to enable clock\n");
-+
- 	err = counter_add(counter);
- 	if (err < 0) {
- 		pm_runtime_put_sync(dev);
+ And external modules are installed in:
+ 
+-	/lib/modules/$(KERNELRELEASE)/extra/
++	/lib/modules/$(KERNELRELEASE)/updates/
+ 
+ 5.1 INSTALL_MOD_PATH
+ --------------------
+@@ -438,10 +438,10 @@ And external modules are installed in:
+ -------------------
+ 
+ 	External modules are by default installed to a directory under
+-	/lib/modules/$(KERNELRELEASE)/extra/, but you may wish to
++	/lib/modules/$(KERNELRELEASE)/updates/, but you may wish to
+ 	locate modules for a specific functionality in a separate
+ 	directory. For this purpose, use INSTALL_MOD_DIR to specify an
+-	alternative name to "extra."::
++	alternative name to "updates."::
+ 
+ 		$ make INSTALL_MOD_DIR=gandalf -C $KDIR \
+ 		       M=$PWD modules_install
 -- 
 2.43.0
 
