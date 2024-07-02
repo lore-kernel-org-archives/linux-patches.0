@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A65D14293;
-	Tue,  2 Jul 2024 17:21:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD0F14293;
+	Tue,  2 Jul 2024 17:21:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940899; cv=none; b=rvVZvpsqj6NEWs2P5umixzdjrC48hFtVjohwWAVS9RD6IInsQ0I5h4KJ0aBH0rrr2n+VFrHVG7gY9rVkyDKDHjMc5qsxo18WbSY5R381U4HIL7gqTkYenBbahLqOzlnvfYdBWcub/6NruFEVyl3Gd2k+r/UTSz5rlOnyWX+8dqo=
+	t=1719940902; cv=none; b=plGafcyQ8nlF2d9tJoAuhSwOtPWQ1gc6wcLvyk4RX5B0vFT5WQx5dklsRpQpVd2ItH1JigIacbmmv9UMvnhVwrlnpL16aoedrA38QIjt4SU4MjP715YWtGgoytgYFC819qXkSO01mH2M3/vXfk1OUtlGVoTIko34piEQ+IXMjnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940899; c=relaxed/simple;
-	bh=g8LnxbnbX0udakfV5pkjuPLmtdKbwhJe9155O/N8nyw=;
+	s=arc-20240116; t=1719940902; c=relaxed/simple;
+	bh=HZFJOv4s2gvUyTQz/iETrPbUZ7BzUvbzUK57VqH5v4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fvTvBtJ2IKejiOeIrAMwlw5YHS2ZoZb9HOsA+FBdoC+EvFC/zMJK6dxuXoFLrK7lULes9KMsTAxD1aJLEGNAvoZsSZ+ilHp12UUKvLXLt3Kucoja6+quaniAu6oZTLwUJSKDMzJu3IKVc8QDYTRMoot3nmL+TXDyPrJ0p2/xJps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R0Vge8sa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HraW5+Q4EBybyLCgGTZjQpZ1TiXF//at0+TuVDivXHstGDvV9LfRWjkwn4pH7WqD2ZQU+aitrbzpbLFPAGN6qTVymtTjR8XZ4Peq9gYMcRL3Jfm9u6GWRADcGkUSse0exPxWzeGgNwvJ3Q1lrQwNiBGvCz8ckgTBVLDPglpj1go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LPTddp1e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R0Vge8sa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB062C116B1;
-	Tue,  2 Jul 2024 17:21:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPTddp1e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4258AC116B1;
+	Tue,  2 Jul 2024 17:21:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940899;
-	bh=g8LnxbnbX0udakfV5pkjuPLmtdKbwhJe9155O/N8nyw=;
+	s=korg; t=1719940902;
+	bh=HZFJOv4s2gvUyTQz/iETrPbUZ7BzUvbzUK57VqH5v4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R0Vge8saCiQMuRu6N/B8Dv54Cvi3n8dYjNiPd9XiOWD+jLWw8m0Hu/LUgmOa35AKy
-	 UogLp4KTtCIcZbJA0tJvNdKa8CUmxG5tHWPyOY3ER+bK0NP+n7aHcXfvdBR+vcjRWl
-	 Y8wlGRFrjiCfR5PGoYoslCcufWLUdoowH+RBCsmU=
+	b=LPTddp1eosDs/5uWDIRHSSl04MAZYtFrcrN+gkm7d60r8JAGb4/fHcZojpEGuBFcj
+	 bulD9PTf3Iqwh0xDb/x3qb3IsHV/XRnKiMyNivI0wcIIycGsjYYmjiVxlHNiAVdbzo
+	 t8b2YXQ+XZLLDcwnJVCt7oMcaHVmym/z+GiL1/Ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	luoxuanqiang <luoxuanqiang@kylinos.cn>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 039/163] Fix race for duplicate reqsk on identical SYN
-Date: Tue,  2 Jul 2024 19:02:33 +0200
-Message-ID: <20240702170234.540122471@linuxfoundation.org>
+Subject: [PATCH 6.6 040/163] ALSA: seq: Fix missing channel at encoding RPN/NRPN MIDI2 messages
+Date: Tue,  2 Jul 2024 19:02:34 +0200
+Message-ID: <20240702170234.577567406@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -53,193 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: luoxuanqiang <luoxuanqiang@kylinos.cn>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit ff46e3b4421923937b7f6e44ffcd3549a074f321 ]
+[ Upstream commit c5ab94ea280a9b4108723eecf0a636e22a5bb137 ]
 
-When bonding is configured in BOND_MODE_BROADCAST mode, if two identical
-SYN packets are received at the same time and processed on different CPUs,
-it can potentially create the same sk (sock) but two different reqsk
-(request_sock) in tcp_conn_request().
+The conversion from the legacy event to MIDI2 UMP for RPN and NRPN
+missed the setup of the channel number, resulting in always the
+channel 0.  Fix it.
 
-These two different reqsk will respond with two SYNACK packets, and since
-the generation of the seq (ISN) incorporates a timestamp, the final two
-SYNACK packets will have different seq values.
-
-The consequence is that when the Client receives and replies with an ACK
-to the earlier SYNACK packet, we will reset(RST) it.
-
-========================================================================
-
-This behavior is consistently reproducible in my local setup,
-which comprises:
-
-                  | NETA1 ------ NETB1 |
-PC_A --- bond --- |                    | --- bond --- PC_B
-                  | NETA2 ------ NETB2 |
-
-- PC_A is the Server and has two network cards, NETA1 and NETA2. I have
-  bonded these two cards using BOND_MODE_BROADCAST mode and configured
-  them to be handled by different CPU.
-
-- PC_B is the Client, also equipped with two network cards, NETB1 and
-  NETB2, which are also bonded and configured in BOND_MODE_BROADCAST mode.
-
-If the client attempts a TCP connection to the server, it might encounter
-a failure. Capturing packets from the server side reveals:
-
-10.10.10.10.45182 > localhost: Flags [S], seq 320236027,
-10.10.10.10.45182 > localhost: Flags [S], seq 320236027,
-localhost > 10.10.10.10.45182: Flags [S.], seq 2967855116,
-localhost > 10.10.10.10.45182: Flags [S.], seq 2967855123, <==
-10.10.10.10.45182 > localhost: Flags [.], ack 4294967290,
-10.10.10.10.45182 > localhost: Flags [.], ack 4294967290,
-localhost > 10.10.10.10.45182: Flags [R], seq 2967855117, <==
-localhost > 10.10.10.10.45182: Flags [R], seq 2967855117,
-
-Two SYNACKs with different seq numbers are sent by localhost,
-resulting in an anomaly.
-
-========================================================================
-
-The attempted solution is as follows:
-Add a return value to inet_csk_reqsk_queue_hash_add() to confirm if the
-ehash insertion is successful (Up to now, the reason for unsuccessful
-insertion is that a reqsk for the same connection has already been
-inserted). If the insertion fails, release the reqsk.
-
-Due to the refcnt, Kuniyuki suggests also adding a return value check
-for the DCCP module; if ehash insertion fails, indicating a successful
-insertion of the same connection, simply release the reqsk as well.
-
-Simultaneously, In the reqsk_queue_hash_req(), the start of the
-req->rsk_timer is adjusted to be after successful insertion.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: luoxuanqiang <luoxuanqiang@kylinos.cn>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240621013929.1386815-1-luoxuanqiang@kylinos.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: e9e02819a98a ("ALSA: seq: Automatic conversion of UMP events")
+Link: https://patch.msgid.link/20240625095200.25745-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/inet_connection_sock.h |  2 +-
- net/dccp/ipv4.c                    |  7 +++++--
- net/dccp/ipv6.c                    |  7 +++++--
- net/ipv4/inet_connection_sock.c    | 17 +++++++++++++----
- net/ipv4/tcp_input.c               |  7 ++++++-
- 5 files changed, 30 insertions(+), 10 deletions(-)
+ sound/core/seq/seq_ump_convert.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/inet_connection_sock.h b/include/net/inet_connection_sock.h
-index 6ecac01115d9c..fee1e56505510 100644
---- a/include/net/inet_connection_sock.h
-+++ b/include/net/inet_connection_sock.h
-@@ -264,7 +264,7 @@ struct dst_entry *inet_csk_route_child_sock(const struct sock *sk,
- struct sock *inet_csk_reqsk_queue_add(struct sock *sk,
- 				      struct request_sock *req,
- 				      struct sock *child);
--void inet_csk_reqsk_queue_hash_add(struct sock *sk, struct request_sock *req,
-+bool inet_csk_reqsk_queue_hash_add(struct sock *sk, struct request_sock *req,
- 				   unsigned long timeout);
- struct sock *inet_csk_complete_hashdance(struct sock *sk, struct sock *child,
- 					 struct request_sock *req,
-diff --git a/net/dccp/ipv4.c b/net/dccp/ipv4.c
-index 524b7e581a036..65a6733fc897f 100644
---- a/net/dccp/ipv4.c
-+++ b/net/dccp/ipv4.c
-@@ -655,8 +655,11 @@ int dccp_v4_conn_request(struct sock *sk, struct sk_buff *skb)
- 	if (dccp_v4_send_response(sk, req))
- 		goto drop_and_free;
+diff --git a/sound/core/seq/seq_ump_convert.c b/sound/core/seq/seq_ump_convert.c
+index d81f776a4c3dd..6687efdceea13 100644
+--- a/sound/core/seq/seq_ump_convert.c
++++ b/sound/core/seq/seq_ump_convert.c
+@@ -791,7 +791,8 @@ static int paf_ev_to_ump_midi2(const struct snd_seq_event *event,
  
--	inet_csk_reqsk_queue_hash_add(sk, req, DCCP_TIMEOUT_INIT);
--	reqsk_put(req);
-+	if (unlikely(!inet_csk_reqsk_queue_hash_add(sk, req, DCCP_TIMEOUT_INIT)))
-+		reqsk_free(req);
-+	else
-+		reqsk_put(req);
-+
- 	return 0;
- 
- drop_and_free:
-diff --git a/net/dccp/ipv6.c b/net/dccp/ipv6.c
-index 6f5a556f4f6d7..683e4291b348a 100644
---- a/net/dccp/ipv6.c
-+++ b/net/dccp/ipv6.c
-@@ -398,8 +398,11 @@ static int dccp_v6_conn_request(struct sock *sk, struct sk_buff *skb)
- 	if (dccp_v6_send_response(sk, req))
- 		goto drop_and_free;
- 
--	inet_csk_reqsk_queue_hash_add(sk, req, DCCP_TIMEOUT_INIT);
--	reqsk_put(req);
-+	if (unlikely(!inet_csk_reqsk_queue_hash_add(sk, req, DCCP_TIMEOUT_INIT)))
-+		reqsk_free(req);
-+	else
-+		reqsk_put(req);
-+
- 	return 0;
- 
- drop_and_free:
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index a018981b45142..8720f3840b698 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -1116,25 +1116,34 @@ static void reqsk_timer_handler(struct timer_list *t)
- 	inet_csk_reqsk_queue_drop_and_put(oreq->rsk_listener, oreq);
- }
- 
--static void reqsk_queue_hash_req(struct request_sock *req,
-+static bool reqsk_queue_hash_req(struct request_sock *req,
- 				 unsigned long timeout)
+ /* set up the MIDI2 RPN/NRPN packet data from the parsed info */
+ static void fill_rpn(struct snd_seq_ump_midi2_bank *cc,
+-		     union snd_ump_midi2_msg *data)
++		     union snd_ump_midi2_msg *data,
++		     unsigned char channel)
  {
-+	bool found_dup_sk = false;
-+
-+	if (!inet_ehash_insert(req_to_sk(req), NULL, &found_dup_sk))
-+		return false;
-+
-+	/* The timer needs to be setup after a successful insertion. */
- 	timer_setup(&req->rsk_timer, reqsk_timer_handler, TIMER_PINNED);
- 	mod_timer(&req->rsk_timer, jiffies + timeout);
- 
--	inet_ehash_insert(req_to_sk(req), NULL, NULL);
- 	/* before letting lookups find us, make sure all req fields
- 	 * are committed to memory and refcnt initialized.
- 	 */
- 	smp_wmb();
- 	refcount_set(&req->rsk_refcnt, 2 + 1);
-+	return true;
+ 	if (cc->rpn_set) {
+ 		data->rpn.status = UMP_MSG_STATUS_RPN;
+@@ -808,6 +809,7 @@ static void fill_rpn(struct snd_seq_ump_midi2_bank *cc,
+ 	}
+ 	data->rpn.data = upscale_14_to_32bit((cc->cc_data_msb << 7) |
+ 					     cc->cc_data_lsb);
++	data->rpn.channel = channel;
+ 	cc->cc_data_msb = cc->cc_data_lsb = 0;
  }
  
--void inet_csk_reqsk_queue_hash_add(struct sock *sk, struct request_sock *req,
-+bool inet_csk_reqsk_queue_hash_add(struct sock *sk, struct request_sock *req,
- 				   unsigned long timeout)
- {
--	reqsk_queue_hash_req(req, timeout);
-+	if (!reqsk_queue_hash_req(req, timeout))
-+		return false;
-+
- 	inet_csk_reqsk_queue_added(sk);
-+	return true;
- }
- EXPORT_SYMBOL_GPL(inet_csk_reqsk_queue_hash_add);
+@@ -855,7 +857,7 @@ static int cc_ev_to_ump_midi2(const struct snd_seq_event *event,
+ 		cc->cc_data_lsb = val;
+ 		if (!(cc->rpn_set || cc->nrpn_set))
+ 			return 0; // skip
+-		fill_rpn(cc, data);
++		fill_rpn(cc, data, channel);
+ 		return 1;
+ 	}
  
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index abd6e95d2dca8..64707a5227f5a 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -7091,7 +7091,12 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
- 		tcp_rsk(req)->tfo_listener = false;
- 		if (!want_cookie) {
- 			req->timeout = tcp_timeout_init((struct sock *)req);
--			inet_csk_reqsk_queue_hash_add(sk, req, req->timeout);
-+			if (unlikely(!inet_csk_reqsk_queue_hash_add(sk, req,
-+								    req->timeout))) {
-+				reqsk_free(req);
-+				return 0;
-+			}
-+
- 		}
- 		af_ops->send_synack(sk, dst, &fl, req, &foc,
- 				    !want_cookie ? TCP_SYNACK_NORMAL :
+@@ -957,7 +959,7 @@ static int ctrl14_ev_to_ump_midi2(const struct snd_seq_event *event,
+ 		cc->cc_data_lsb = lsb;
+ 		if (!(cc->rpn_set || cc->nrpn_set))
+ 			return 0; // skip
+-		fill_rpn(cc, data);
++		fill_rpn(cc, data, channel);
+ 		return 1;
+ 	}
+ 
 -- 
 2.43.0
 
