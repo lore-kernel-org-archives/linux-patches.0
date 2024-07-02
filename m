@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88EA15B0FE;
-	Tue,  2 Jul 2024 17:14:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5E915B0FE;
+	Tue,  2 Jul 2024 17:14:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940485; cv=none; b=K0Zzt6V8eKY969LUF+eIP9ZEMWlBvpS/6PT8bnEG/FxO32U31C4ZyEBvuV9dbGy8clJJhiGHKhud2o0N7tvGtwRaDq8jLi2v9kO8DVr0t2yQ8yFYa6p3wsXn4ApTGipx6ApepFRveONmB0ceXuHs3lBQhW3ba0xVKbzwiKNng5k=
+	t=1719940488; cv=none; b=hko6mB0RDQhu3zfxh+h0yygZx3jg5yZx9iM0kD1GDF7P7FLNFuTVNkBKtFRry/I3dRhn9Tb4P7Vb/hQ6+W1HeNsJ+Nl6X1fDhxgZDMDVRCVxnQ8Cm3AuYhg8qAJNmDNvEgHjpWvmZTbhjfMoEsXTe1ipNI62DVjZXQ9v8eqAqo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940485; c=relaxed/simple;
-	bh=tSyv2BNtAwtAK4eDX6CWiioKg6d2/QZ7kY6StIV4TT4=;
+	s=arc-20240116; t=1719940488; c=relaxed/simple;
+	bh=3AestHnHKfDKcXFfh/fr9KZIM1V5xpwalSj87YbV8ac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Chu+4O0hqN3yni07dLJ4UD9UMaHT7XbDRcIdTyr5yYNd4ovI168RpSdOfFOUY2Zn1E6umOUmqZyqGarNLckhsoR/Yofcx4OsRJDf3fNqoGMeypn89jxKr5gBl3b8gFTSUjUfZD+Rnn1bvA/d4Bu0RpZzul3L7IsECQ59OmUYH/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1EI/rL7j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nvhqAxzuU6c67JjjVkJzEYlVjVXeGZIbmzcRdFDIHR4FLdAlUx5f2tfvl4OB5Qj8CAVz66mFLqEMtG1FbB28cGfAvuky669kACav3zJ86nOnosdUXWQCK5wZLz9ElqpdC96S9kIhFowtFs5jnUoaned3oqXlwiCtdt12t7+epac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vatJKjCR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1EI/rL7j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D4BFC116B1;
-	Tue,  2 Jul 2024 17:14:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vatJKjCR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98DA3C116B1;
+	Tue,  2 Jul 2024 17:14:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940484;
-	bh=tSyv2BNtAwtAK4eDX6CWiioKg6d2/QZ7kY6StIV4TT4=;
+	s=korg; t=1719940488;
+	bh=3AestHnHKfDKcXFfh/fr9KZIM1V5xpwalSj87YbV8ac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1EI/rL7j32BZscO1KZxzRkXBoEBVeMZ/AGiDHym076pbpFU3S9tH+jn1BCW1z9t8W
-	 CQWYrw8zjYjrCNsLEqBSR5pHbBH3GPgqd4gJzLkpnq1quVBdxjYj/FS0+0dKa9lFhA
-	 UcmPHnBRx0RVNIncXhIhYfvT8Ll3rV54BAVsPBL8=
+	b=vatJKjCRe17R6GHUMDHhAuxOVpvkZ4bR4XMdGfCO13ISXVhWdp6MulpU7eIVkHqhu
+	 bEUWMXv8yeC8qyATm/I6140lGC7/SKSSIymJfgzpZ1SooFh+MQwTRXMdDu6uWMwh+Q
+	 pvOcALQyHkORIJUyt/OuQxRGHYTodbJ29t4wviLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.9 168/222] nvmet-fc: Remove __counted_by from nvmet_fc_tgt_queue.fod[]
-Date: Tue,  2 Jul 2024 19:03:26 +0200
-Message-ID: <20240702170250.397887175@linuxfoundation.org>
+	Aaron Rainbolt <arainbolt@kfocus.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.9 169/222] cpufreq: intel_pstate: Use HWP to initialize ITMT if CPPC is missing
+Date: Tue,  2 Jul 2024 19:03:27 +0200
+Message-ID: <20240702170250.435704317@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -50,65 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 440e2051c577896275c0e0513ec26964e04c7810 upstream.
+commit a1ff59784b277795a613beaa5d3dd9c5595c69a7 upstream.
 
-Work for __counted_by on generic pointers in structures (not just
-flexible array members) has started landing in Clang 19 (current tip of
-tree). During the development of this feature, a restriction was added
-to __counted_by to prevent the flexible array member's element type from
-including a flexible array member itself such as:
+It is reported that single-thread performance on some hybrid systems
+dropped significantly after commit 7feec7430edd ("ACPI: CPPC: Only probe
+for _CPC if CPPC v2 is acked") which prevented _CPC from being used if
+the support for it had not been confirmed by the platform firmware.
 
-  struct foo {
-    int count;
-    char buf[];
-  };
+The problem is that if the platform firmware does not confirm CPPC v2
+support, cppc_get_perf_caps() returns an error which prevents the
+intel_pstate driver from enabling ITMT.  Consequently, the scheduler
+does not get any hints on CPU performance differences, so in a hybrid
+system some tasks may run on CPUs with lower capacity even though they
+should be running on high-capacity CPUs.
 
-  struct bar {
-    int count;
-    struct foo data[] __counted_by(count);
-  };
+To address this, modify intel_pstate to use the information from
+MSR_HWP_CAPABILITIES to enable ITMT if CPPC is not available (which is
+done already if the highest performance number coming from CPPC is not
+realistic).
 
-because the size of data cannot be calculated with the standard array
-size formula:
-
-  sizeof(struct foo) * count
-
-This restriction was downgraded to a warning but due to CONFIG_WERROR,
-it can still break the build. The application of __counted_by on the fod
-member of 'struct nvmet_fc_tgt_queue' triggers this restriction,
-resulting in:
-
-  drivers/nvme/target/fc.c:151:2: error: 'counted_by' should not be applied to an array with element of unknown size because 'struct nvmet_fc_fcp_iod' is a struct type with a flexible array member. This will be an error in a future compiler version [-Werror,-Wbounds-safety-counted-by-elt-type-unknown-size]
-    151 |         struct nvmet_fc_fcp_iod         fod[] __counted_by(sqsize);
-        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  1 error generated.
-
-Remove this use of __counted_by to fix the warning/error. However,
-rather than remove it altogether, leave it commented, as it may be
-possible to support this in future compiler releases.
-
-Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2027
-Fixes: ccd3129aca28 ("nvmet-fc: Annotate struct nvmet_fc_tgt_queue with __counted_by")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 7feec7430edd ("ACPI: CPPC: Only probe for _CPC if CPPC v2 is acked")
+Closes: https://lore.kernel.org/linux-acpi/d01b0a1f-bd33-47fe-ab41-43843d8a374f@kfocus.org
+Link: https://lore.kernel.org/linux-acpi/ZnD22b3Br1ng7alf@kf-XE
+Reported-by: Aaron Rainbolt <arainbolt@kfocus.org>
+Tested-by: Aaron Rainbolt <arainbolt@kfocus.org>
+Cc: 5.19+ <stable@vger.kernel.org> # 5.19+
+Link: https://patch.msgid.link/12460110.O9o76ZdvQC@rjwysocki.net
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/fc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/intel_pstate.c |   13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
---- a/drivers/nvme/target/fc.c
-+++ b/drivers/nvme/target/fc.c
-@@ -148,7 +148,7 @@ struct nvmet_fc_tgt_queue {
- 	struct workqueue_struct		*work_q;
- 	struct kref			ref;
- 	/* array of fcp_iods */
--	struct nvmet_fc_fcp_iod		fod[] __counted_by(sqsize);
-+	struct nvmet_fc_fcp_iod		fod[] /* __counted_by(sqsize) */;
- } __aligned(sizeof(unsigned long long));
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -357,15 +357,14 @@ static void intel_pstate_set_itmt_prio(i
+ 	int ret;
  
- struct nvmet_fc_hostport {
+ 	ret = cppc_get_perf_caps(cpu, &cppc_perf);
+-	if (ret)
+-		return;
+-
+ 	/*
+-	 * On some systems with overclocking enabled, CPPC.highest_perf is hardcoded to 0xff.
+-	 * In this case we can't use CPPC.highest_perf to enable ITMT.
+-	 * In this case we can look at MSR_HWP_CAPABILITIES bits [8:0] to decide.
++	 * If CPPC is not available, fall back to MSR_HWP_CAPABILITIES bits [8:0].
++	 *
++	 * Also, on some systems with overclocking enabled, CPPC.highest_perf is
++	 * hardcoded to 0xff, so CPPC.highest_perf cannot be used to enable ITMT.
++	 * Fall back to MSR_HWP_CAPABILITIES then too.
+ 	 */
+-	if (cppc_perf.highest_perf == CPPC_MAX_PERF)
++	if (ret || cppc_perf.highest_perf == CPPC_MAX_PERF)
+ 		cppc_perf.highest_perf = HWP_HIGHEST_PERF(READ_ONCE(all_cpu_data[cpu]->hwp_cap_cached));
+ 
+ 	/*
 
 
