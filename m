@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BAB51DFE3;
-	Tue,  2 Jul 2024 18:44:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ECD41DFE3;
+	Tue,  2 Jul 2024 18:44:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719945849; cv=none; b=O1kq4DvM0UUKuuvKcIPLNdxaQZehYodWXockVOaQ0T0fOviIHtDZbB/z5Y1hOeWzi9VL5MkNlGwyH38b701skQLdpc714Gef4tL7N6R9xl7ptqaP621ZQDSNcFlznZhVBUFrUiwzHK+muyQJcREFqJU5Ebxt/mHaeDd7jUXwJK0=
+	t=1719945852; cv=none; b=l4WOm5z2UxSiDH3ybeGkFVqbA8mOEloVlVGL45wzodN+LogH/A4aW+LXapdjzW6VXJ1jsVUlj0X/p4WvZcq3CmqzhrTvqjYMs7PjPKRMPRXoJ+ZQdlVbvC0oVCwXX7bY6pM1FhuDhQwlzlxb1J17SQnCo16Z85nMgAOIxTRaGDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719945849; c=relaxed/simple;
-	bh=66C8i7qkSrSY41acZyFnGawC/LjDY1QgwSkwsu5VS0s=;
+	s=arc-20240116; t=1719945852; c=relaxed/simple;
+	bh=/5GZtjF9qjU9eTXWrxSuMBTVrsE4ll/KrD9Z9X6VDz4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=p8uvzAoyLPbjWm7OUzf1ynnhPKIyQ9aXgXCRD/XDYjBlDEyiokPlEF1rR1cplKduKFdfcxjifa6eCtOj90KKwDKrDpEn4Zg+kUvzL1rt2raPUAwV5iv39D2kAkRZcwMBOCGly53zzxcpKkFZKM3xqsy9v+7rBQO6e/4K3a9U0bI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mozSCd3L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NtI/NCsA4Dg3+2jyx8FFc3k4O2eSXw5nd2q9KYWilXjWnXvzfdMOaRvrt/Yty/069yUKecYq73ymVSJ/NU7b9mLeiQIN4k5hZbGJB7gyhnDWwreFZTo9g21ivQ4NySxeDNgCoIQnKaC4mSAPEZHEysz4hpmgYAbMl/i0+xajW38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VhzCE5AT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mozSCd3L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A26CC116B1;
-	Tue,  2 Jul 2024 18:44:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VhzCE5AT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34951C4AF07;
+	Tue,  2 Jul 2024 18:44:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719945848;
-	bh=66C8i7qkSrSY41acZyFnGawC/LjDY1QgwSkwsu5VS0s=;
+	s=k20201202; t=1719945852;
+	bh=/5GZtjF9qjU9eTXWrxSuMBTVrsE4ll/KrD9Z9X6VDz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mozSCd3LQ4RR4NXWH3TWUirzOerfyBPpGY5vbezVXVhKptqYwaKVkHjtOMullnQms
-	 BO3Ivdyj1unEps6wUFIOk6/kPPXD+ALZ7ttiujz31i3BaFsxsGEMsv5Iqub/ofZM5P
-	 rhXBLe5PrAUO94C+iZefDL0gXyJmlPrkMo8dLBp2R9Hx+/esqZhH+JojmC6P8Re7vm
-	 AYfQ+4Gc9CGqaAeiTQF2Amw29D3ggxFGKp7wPCiLBHufPSEXFNGBiPZAs0vD2wFsz+
-	 /JOiOoTkCuX5z9X82lW9dU3fG60c5WxOPUzK7VBGdNsDP4U9IlQzSOfhW9Mz+iDKW6
-	 uxHj4/KKWzJBQ==
+	b=VhzCE5AT7CiEk8Ikh5UY3pkckHkfh83GzYET38iMbJYEcaF3zqmHufHNsmr8yuMvv
+	 TGV/M4avPXDFG23aDKO80VrTB5KtmbM+ZIVj3B7IBbyfBRzespAHVzsYo/CNxBnW2Y
+	 67x9p1TgUxNwxg1BiWiI2BCQR1J10p1Psk8kTUsZi1p71vTm/xtI0R4V5La63i0YSv
+	 5neQiruD3Y4EfNW6pgsa4WgftdlCGwK0dHO25uGPbm4L5q3KfEweKFcFvaRgErxetr
+	 uKGEYIg7wzH0cboXf42mVIORtAtBauhWXsW1CZpOAzjVkgwxEBCinf31SmEOVfZ7jb
+	 5lXe19W75OyYg==
 From: Will Deacon <will@kernel.org>
 To: iommu@lists.linux.dev,
 	Joerg Roedel <joro@8bytes.org>,
@@ -35,17 +35,20 @@ To: iommu@lists.linux.dev,
 Cc: catalin.marinas@arm.com,
 	kernel-team@android.com,
 	Will Deacon <will@kernel.org>,
+	Eric Auger <eric.auger@redhat.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	Jerry Snitselaar <jsnitsel@redhat.com>,
+	Moritz Fischer <mdf@kernel.org>,
 	Michael Shavit <mshavit@google.com>,
 	Nicolin Chen <nicolinc@nvidia.com>,
 	patches@lists.linux.dev,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Mostafa Saleh <smostafa@google.com>
-Subject: Re: [PATCH v2 00/10] Tidy some minor things in the stream table/cd table area
-Date: Tue,  2 Jul 2024 19:43:57 +0100
-Message-Id: <171993432202.3894040.591624933816619356.b4-ty@kernel.org>
+	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+Subject: Re: [PATCH v9 00/14] Update SMMUv3 to the modern iommu API (part 2b/3)
+Date: Tue,  2 Jul 2024 19:43:58 +0100
+Message-Id: <171993119078.3391106.2602141691668707805.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <0-v2-318ed5f6983b+198f-smmuv3_tidy_jgg@nvidia.com>
-References: <0-v2-318ed5f6983b+198f-smmuv3_tidy_jgg@nvidia.com>
+In-Reply-To: <0-v9-5cd718286059+79186-smmuv3_newapi_p2b_jgg@nvidia.com>
+References: <0-v9-5cd718286059+79186-smmuv3_newapi_p2b_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -55,30 +58,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-On Mon, 10 Jun 2024 21:31:09 -0300, Jason Gunthorpe wrote:
-> Will pointed out that two places referring to the CD/STE struct did not
-> get the new types. While auditing this code a few more oddities were
-> noticed. Based on a feedback from Mostafa and Nicolin a few more things
-> were fixed up too
+On Tue, 25 Jun 2024 09:37:31 -0300, Jason Gunthorpe wrote:
+> Continuing the work of part 1 and 2a this part focuses on the PASID and
+> SVA code bringing these functional improvements:
 > 
-> - Use types for all the HW structures everywhere even for the L1
->   descriptors that are just a single 8 bytes. This helps with clarity of
->   what everthing is pointing at
-> - Use indexing helpers for the STE/CD two level calculations
-> - Use sizeof(struct X) instead of open coded math on constants. The sizeof
->   naturally follows the type of the related variable in almost all cases
-> - Remove redundant dma_addr_t's and save some memory
-> - Remove redundant devm usage
-> - Use the modern rbtree API
+>  - attach_dev failure does not change the HW configuration.
+> 
+>  - Full PASID API support including:
+>     - S1/SVA domains attached to PASIDs
+>     - IDENTITY/BLOCKED/S1 attached to RID
+>     - Change of the RID domain while PASIDs are attached
 > 
 > [...]
 
-Applied first two to will (for-joerg/arm-smmu/updates), thanks!
+Applied to will (for-joerg/arm-smmu/updates), thanks!
 
-[01/10] iommu/arm-smmu-v3: Do not zero the strtab twice
-        https://git.kernel.org/will/c/c84c5ab76c9c
-[02/10] iommu/arm-smmu-v3: Shrink the strtab l1_desc array
-        https://git.kernel.org/will/c/a4d75360f7a6
+[01/14] iommu/arm-smmu-v3: Convert to domain_alloc_sva()
+        https://git.kernel.org/will/c/678d79b98028
+[02/14] iommu/arm-smmu-v3: Start building a generic PASID layer
+        https://git.kernel.org/will/c/85f2fb6ef413
+[03/14] iommu/arm-smmu-v3: Make smmu_domain->devices into an allocated list
+        https://git.kernel.org/will/c/ad10dce61303
+[04/14] iommu/arm-smmu-v3: Make changing domains be hitless for ATS
+        https://git.kernel.org/will/c/7497f4211f4f
+[05/14] iommu/arm-smmu-v3: Add ssid to struct arm_smmu_master_domain
+        https://git.kernel.org/will/c/64efb3def3a5
+[06/14] iommu/arm-smmu-v3: Do not use master->sva_enable to restrict attaches
+        https://git.kernel.org/will/c/be7c90de39fd
+[07/14] iommu/arm-smmu-v3: Thread SSID through the arm_smmu_attach_*() interface
+        https://git.kernel.org/will/c/1d5f34f0002f
+[08/14] iommu/arm-smmu-v3: Make SVA allocate a normal arm_smmu_domain
+        https://git.kernel.org/will/c/d7b2d2ba1b84
+[09/14] iommu/arm-smmu-v3: Keep track of arm_smmu_master_domain for SVA
+        https://git.kernel.org/will/c/49db2ed23c52
+[10/14] iommu/arm-smmu-v3: Put the SVA mmu notifier in the smmu_domain
+        https://git.kernel.org/will/c/d38c28dbefee
+[11/14] iommu/arm-smmu-v3: Allow IDENTITY/BLOCKED to be set while PASID is used
+        https://git.kernel.org/will/c/ce26ea9e6e12
+[12/14] iommu/arm-smmu-v3: Test the STE S1DSS functionality
+        https://git.kernel.org/will/c/3b5302cbb06a
+[13/14] iommu/arm-smmu-v3: Allow a PASID to be set when RID is IDENTITY/BLOCKED
+        https://git.kernel.org/will/c/8ee9175c2582
+[14/14] iommu/arm-smmu-v3: Allow setting a S1 domain to a PASID
+        https://git.kernel.org/will/c/f3b273b7c7e4
 
 Cheers,
 -- 
