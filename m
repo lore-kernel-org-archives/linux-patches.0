@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21EB61BBBD7;
-	Tue,  2 Jul 2024 17:24:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2802B15218A;
+	Tue,  2 Jul 2024 17:24:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941079; cv=none; b=axjHBbEfcIGTJR+JPi+Yg3LNzcYya+55l4eaJoBtBPAbCuAcySUlXvKHJ81YAjkNwPajncXn3nnCmQf5JdIQ6PmP+qphWr9sii7uAATrTHn6Z/FkmcGjvcCh8N304E0PoIqh++FPdcVHiRFbpBPtsl6oq6c6HwzmhcaX7wPPyCY=
+	t=1719941082; cv=none; b=C46Zt5g20U9sAMtdR5RgDtigi9c5wSYh6kaZi5cTs28M0L1JXoN+f14R2yywBEB1yP0wAyvfKKQjwpDbvufZ79I4dtjP75GzDFhxnGXT8byLqTIedlEiQP+ZXdhMnz3f36BsFGoyq5k6A6augpfYDcEPZnAp62BcAiibVWwxJCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941079; c=relaxed/simple;
-	bh=pLFVMU4uUkfKmZtBCXcF4Q7YN9ZedLOcYgdwu7L6X9Y=;
+	s=arc-20240116; t=1719941082; c=relaxed/simple;
+	bh=DaeWz72n7Lqrk0wUaeFSzZcTmxhryhZFBe0Zlzrr9aY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pO7nFQx374p6ZzMcYZdTzMsjnZWPdA9FBbsW9NYU24Dj+ThELfBDC+s3TVukpKX4h5gVz7Es7b1gAcdEYYTusOn0QtLcjMIFHVcCc4S91+KxvDRVYZIf6Y6Jhi6wAIWBM+3c1X9xqOfZRbx4V4RdVMlaT68vJLmtptxANwL4PwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YqAq7ytU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PQrRONR06B1QI9iaIQknYIOh4kujjAupDyMA66wHUDjjIZ67EnD/bpFVJ7MMfZaFp9zPPDT7nXQo7f/XfGto+jQjgI3vUN6dJsPqFsYMxVJWT4GFkfDSxgEIYecKr4Lz13wcM9hv8LHdm+Vxo/d/X+2aXnPy2I1ukdNFeqMKDAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yFbD5z8E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YqAq7ytU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16DA6C116B1;
-	Tue,  2 Jul 2024 17:24:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yFbD5z8E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D5F7C116B1;
+	Tue,  2 Jul 2024 17:24:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941078;
-	bh=pLFVMU4uUkfKmZtBCXcF4Q7YN9ZedLOcYgdwu7L6X9Y=;
+	s=korg; t=1719941082;
+	bh=DaeWz72n7Lqrk0wUaeFSzZcTmxhryhZFBe0Zlzrr9aY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YqAq7ytUbNywsWSMXQBd+yIlRETx0AkqEvBvADQFOE8GP4ZOE4Yje0/PpSSzjZK98
-	 IIxyjXaRsfuIrdDlipBpvcTtw8mnGlsrHpZ7lfKLa3pV7qgCwpZqLLpEyu0Gy/JMMY
-	 MRHyjQyhDdCoIEBAEUqYiS1SZjw8RdAXRY3lz5Lw=
+	b=yFbD5z8EQ7RPeL/UPlhhsEuwQ1jLQcBy7vnw4Ix3ZX/OytufqWsYCtkejRoZIbIdL
+	 cAEeblhBd4fi7veIs3e8q7f+AsTqTqH+PT2wtCoyaVCVVr+8ShWou6TuHI5WfJcH/Z
+	 hWuCbzpPva//0Dj9+fNuYyR0SIJ5tF2eEfGJUdys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.6 104/163] net: usb: ax88179_178a: improve link status logs
-Date: Tue,  2 Jul 2024 19:03:38 +0200
-Message-ID: <20240702170236.996680286@linuxfoundation.org>
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Shigeru Yoshida <syoshida@redhat.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	syzbot+5681e40d297b30f5b513@syzkaller.appspotmail.com
+Subject: [PATCH 6.6 122/163] net: can: j1939: Initialize unused data in j1939_send_one()
+Date: Tue,  2 Jul 2024 19:03:56 +0200
+Message-ID: <20240702170237.670067554@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -51,57 +52,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-commit 058722ee350c0bdd664e467156feb2bf5d9cc271 upstream.
+commit b7cdf1dd5d2a2d8200efd98d1893684db48fe134 upstream.
 
-Avoid spurious link status logs that may ultimately be wrong; for example,
-if the link is set to down with the cable plugged, then the cable is
-unplugged and after this the link is set to up, the last new log that is
-appearing is incorrectly telling that the link is up.
+syzbot reported kernel-infoleak in raw_recvmsg() [1]. j1939_send_one()
+creates full frame including unused data, but it doesn't initialize
+it. This causes the kernel-infoleak issue. Fix this by initializing
+unused data.
 
-In order to avoid errors, show link status logs after link_reset
-processing, and in order to avoid spurious as much as possible, only show
-the link loss when some link status change is detected.
+[1]
+BUG: KMSAN: kernel-infoleak in instrument_copy_to_user include/linux/instrumented.h:114 [inline]
+BUG: KMSAN: kernel-infoleak in copy_to_user_iter lib/iov_iter.c:24 [inline]
+BUG: KMSAN: kernel-infoleak in iterate_ubuf include/linux/iov_iter.h:29 [inline]
+BUG: KMSAN: kernel-infoleak in iterate_and_advance2 include/linux/iov_iter.h:245 [inline]
+BUG: KMSAN: kernel-infoleak in iterate_and_advance include/linux/iov_iter.h:271 [inline]
+BUG: KMSAN: kernel-infoleak in _copy_to_iter+0x366/0x2520 lib/iov_iter.c:185
+ instrument_copy_to_user include/linux/instrumented.h:114 [inline]
+ copy_to_user_iter lib/iov_iter.c:24 [inline]
+ iterate_ubuf include/linux/iov_iter.h:29 [inline]
+ iterate_and_advance2 include/linux/iov_iter.h:245 [inline]
+ iterate_and_advance include/linux/iov_iter.h:271 [inline]
+ _copy_to_iter+0x366/0x2520 lib/iov_iter.c:185
+ copy_to_iter include/linux/uio.h:196 [inline]
+ memcpy_to_msg include/linux/skbuff.h:4113 [inline]
+ raw_recvmsg+0x2b8/0x9e0 net/can/raw.c:1008
+ sock_recvmsg_nosec net/socket.c:1046 [inline]
+ sock_recvmsg+0x2c4/0x340 net/socket.c:1068
+ ____sys_recvmsg+0x18a/0x620 net/socket.c:2803
+ ___sys_recvmsg+0x223/0x840 net/socket.c:2845
+ do_recvmmsg+0x4fc/0xfd0 net/socket.c:2939
+ __sys_recvmmsg net/socket.c:3018 [inline]
+ __do_sys_recvmmsg net/socket.c:3041 [inline]
+ __se_sys_recvmmsg net/socket.c:3034 [inline]
+ __x64_sys_recvmmsg+0x397/0x490 net/socket.c:3034
+ x64_sys_call+0xf6c/0x3b50 arch/x86/include/generated/asm/syscalls_64.h:300
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-cc: stable@vger.kernel.org
-Fixes: e2ca90c276e1 ("ax88179_178a: ASIX AX88179_178A USB 3.0/2.0 to gigabit ethernet adapter driver")
-Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Uninit was created at:
+ slab_post_alloc_hook mm/slub.c:3804 [inline]
+ slab_alloc_node mm/slub.c:3845 [inline]
+ kmem_cache_alloc_node+0x613/0xc50 mm/slub.c:3888
+ kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:577
+ __alloc_skb+0x35b/0x7a0 net/core/skbuff.c:668
+ alloc_skb include/linux/skbuff.h:1313 [inline]
+ alloc_skb_with_frags+0xc8/0xbf0 net/core/skbuff.c:6504
+ sock_alloc_send_pskb+0xa81/0xbf0 net/core/sock.c:2795
+ sock_alloc_send_skb include/net/sock.h:1842 [inline]
+ j1939_sk_alloc_skb net/can/j1939/socket.c:878 [inline]
+ j1939_sk_send_loop net/can/j1939/socket.c:1142 [inline]
+ j1939_sk_sendmsg+0xc0a/0x2730 net/can/j1939/socket.c:1277
+ sock_sendmsg_nosec net/socket.c:730 [inline]
+ __sock_sendmsg+0x30f/0x380 net/socket.c:745
+ ____sys_sendmsg+0x877/0xb60 net/socket.c:2584
+ ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2638
+ __sys_sendmsg net/socket.c:2667 [inline]
+ __do_sys_sendmsg net/socket.c:2676 [inline]
+ __se_sys_sendmsg net/socket.c:2674 [inline]
+ __x64_sys_sendmsg+0x307/0x4a0 net/socket.c:2674
+ x64_sys_call+0xc4b/0x3b50 arch/x86/include/generated/asm/syscalls_64.h:47
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Bytes 12-15 of 16 are uninitialized
+Memory access of size 16 starts at ffff888120969690
+Data copied to user address 00000000200017c0
+
+CPU: 1 PID: 5050 Comm: syz-executor198 Not tainted 6.9.0-rc5-syzkaller-00031-g71b1543c83d6 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
+
+Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
+Reported-and-tested-by: syzbot+5681e40d297b30f5b513@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5681e40d297b30f5b513
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Link: https://lore.kernel.org/all/20240517035953.2617090-1-syoshida@redhat.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/ax88179_178a.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/can/j1939/main.c |    6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
---- a/drivers/net/usb/ax88179_178a.c
-+++ b/drivers/net/usb/ax88179_178a.c
-@@ -326,7 +326,8 @@ static void ax88179_status(struct usbnet
+--- a/net/can/j1939/main.c
++++ b/net/can/j1939/main.c
+@@ -30,10 +30,6 @@ MODULE_ALIAS("can-proto-" __stringify(CA
+ /* CAN_HDR: #bytes before can_frame data part */
+ #define J1939_CAN_HDR (offsetof(struct can_frame, data))
  
- 	if (netif_carrier_ok(dev->net) != link) {
- 		usbnet_link_change(dev, link, 1);
--		netdev_info(dev->net, "ax88179 - Link status is: %d\n", link);
-+		if (!link)
-+			netdev_info(dev->net, "ax88179 - Link status is: 0\n");
- 	}
- }
+-/* CAN_FTR: #bytes beyond data part */
+-#define J1939_CAN_FTR (sizeof(struct can_frame) - J1939_CAN_HDR - \
+-		 sizeof(((struct can_frame *)0)->data))
+-
+ /* lowest layer */
+ static void j1939_can_recv(struct sk_buff *iskb, void *data)
+ {
+@@ -342,7 +338,7 @@ int j1939_send_one(struct j1939_priv *pr
+ 	memset(cf, 0, J1939_CAN_HDR);
  
-@@ -1540,6 +1541,7 @@ static int ax88179_link_reset(struct usb
- 			 GMII_PHY_PHYSR, 2, &tmp16);
+ 	/* make it a full can frame again */
+-	skb_put(skb, J1939_CAN_FTR + (8 - dlc));
++	skb_put_zero(skb, 8 - dlc);
  
- 	if (!(tmp16 & GMII_PHY_PHYSR_LINK)) {
-+		netdev_info(dev->net, "ax88179 - Link status is: 0\n");
- 		return 0;
- 	} else if (GMII_PHY_PHYSR_GIGA == (tmp16 & GMII_PHY_PHYSR_SMASK)) {
- 		mode |= AX_MEDIUM_GIGAMODE | AX_MEDIUM_EN_125MHZ;
-@@ -1577,6 +1579,8 @@ static int ax88179_link_reset(struct usb
- 
- 	netif_carrier_on(dev->net);
- 
-+	netdev_info(dev->net, "ax88179 - Link status is: 1\n");
-+
- 	return 0;
- }
- 
+ 	canid = CAN_EFF_FLAG |
+ 		(skcb->priority << 26) |
 
 
