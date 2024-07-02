@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2DB1BE22A;
-	Tue,  2 Jul 2024 17:07:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079F01BD51C;
+	Tue,  2 Jul 2024 17:07:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940066; cv=none; b=QgPTx3kUe6k+604oXflPneCTF/D+e2xcs4gL4/DlaDHtgRjwYU0zFdC1j0sbxKs4lqEH7CzejXbW4az6KBkQZOC7BXvCFpt3fIA+pdqLhi7hAt1szcA9qN8hv+jOK4MXPpm5ekgmONCpzIuI9QDAGNamWS0J97+ICJ7yW+FWsnE=
+	t=1719940070; cv=none; b=asvK2FRrTZva69zJNaH3TQBuEZM6bZc4bn+yvAGtmYOyzTXoIQuxr7Jy0RIBrUxdXrFalkWF92opl94+1I50UNm1HcEoOJssQPAyiCJsjk3r5ejWjBzfwiom/b8ZQQczUOnieE2mygu8b9f9j1wXY/bsZsx77HxDxXmXkGwc5XM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940066; c=relaxed/simple;
-	bh=WF8IOG8ZwW7onlW0mmxyl410i4XyKJGhSfncyZlyJKw=;
+	s=arc-20240116; t=1719940070; c=relaxed/simple;
+	bh=hWCXbp8WoJR4gAwJEo04VdkaEYsP5W0id0LzbEeXwKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V9Rh3yIo3KrxuucSh/wLcXtCec87GcHls5uEm53w+bKrsCgSQORG2DA3qC52EzXcRfLjmklphOeFQl7Vr1+GmGXhtyQkqnOEOvedMBOJMOrpHkBfY+NlWum+cM8qkrp+kz7Ow6+0IPaDzKa+d0IqHCoXEtSrLt8ZKmdgZKzjuuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d0teGZMc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s/44GDJSPdJLqMTb1f2m5Q7Vu+tBiWTKFXwVZ2dssb1XK9bsneVAiDQC+ESgpDUw8VR+jnkwVvsUrdWmU6fcCZibgcBylONV2TYQMk2rUw6KWvWDbNa9HIntPiC9p4gChggSx2uoFYWEnoUo3le9wtJffSBFXnldhi/SyCfbPXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gWy9mKhY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d0teGZMc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C222C4AF07;
-	Tue,  2 Jul 2024 17:07:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gWy9mKhY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 813E2C116B1;
+	Tue,  2 Jul 2024 17:07:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940066;
-	bh=WF8IOG8ZwW7onlW0mmxyl410i4XyKJGhSfncyZlyJKw=;
+	s=korg; t=1719940069;
+	bh=hWCXbp8WoJR4gAwJEo04VdkaEYsP5W0id0LzbEeXwKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d0teGZMccXZQuff9JhuTPRiWWGje6MyABr58tolzjdrPIy+ZKOKEtRci9sHkIb4Nr
-	 GvPQrIcDR6f5rB2YBh723KTbt3cETlqhpGz/aHJ3djfPhTSQ+pvZrj3bMxsobctAGl
-	 TQN65JcbJwnNA8RMmpLe7XHAzIKHSqXWAW6DZfBE=
+	b=gWy9mKhYyYLA3vZeiXhcaPtTUAQC0JFgruMBBUjs7k6qIGkaYgR930FyFG0ZsMEW0
+	 8+bs12HJ1oXnyOn5iyMyOcN4I4ag//DUNSPQpwrMyTUYrG0T+qK1S7nvH595PF6gI6
+	 NIA6bZTc5Haex0+tagxTgiY059+cdV5ELETSEmKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Enguerrand de Ribaucourt <enguerrand.de-ribaucourt@savoirfairelinux.com>,
-	Woojung Huh <Woojung.huh@microchip.com>,
-	Arun Ramadoss <arun.ramadoss@microchip.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Jan Sokolowski <jan.sokolowski@intel.com>,
+	Karen Ostrowska <karen.ostrowska@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 041/222] net: dsa: microchip: use collision based back pressure mode
-Date: Tue,  2 Jul 2024 19:01:19 +0200
-Message-ID: <20240702170245.545649349@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.9 042/222] ice: Rebuild TC queues on VSI queue reconfiguration
+Date: Tue,  2 Jul 2024 19:01:20 +0200
+Message-ID: <20240702170245.583475242@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -54,53 +55,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Enguerrand de Ribaucourt <enguerrand.de-ribaucourt@savoirfairelinux.com>
+From: Jan Sokolowski <jan.sokolowski@intel.com>
 
-[ Upstream commit d963c95bc9840d070a788c35e41b715a648717f7 ]
+[ Upstream commit f4b91c1d17c676b8ad4c6bd674da874f3f7d5701 ]
 
-Errata DS80000758 states that carrier sense back pressure mode can cause
-link down issues in 100BASE-TX half duplex mode. The datasheet also
-recommends to always use the collision based back pressure mode.
+TC queues needs to be correctly updated when the number of queues on
+a VSI is reconfigured, so netdev's queue and TC settings will be
+dynamically adjusted and could accurately represent the underlying
+hardware state after changes to the VSI queue counts.
 
-Fixes: b987e98e50ab ("dsa: add DSA switch driver for Microchip KSZ9477")
-Signed-off-by: Enguerrand de Ribaucourt <enguerrand.de-ribaucourt@savoirfairelinux.com>
-Reviewed-by: Woojung Huh <Woojung.huh@microchip.com>
-Acked-by: Arun Ramadoss <arun.ramadoss@microchip.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Fixes: 0754d65bd4be ("ice: Add infrastructure for mqprio support via ndo_setup_tc")
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Signed-off-by: Jan Sokolowski <jan.sokolowski@intel.com>
+Signed-off-by: Karen Ostrowska <karen.ostrowska@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/microchip/ksz9477.c     | 4 ++++
- drivers/net/dsa/microchip/ksz9477_reg.h | 1 +
- 2 files changed, 5 insertions(+)
+ drivers/net/ethernet/intel/ice/ice_main.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/microchip/ksz9477.c b/drivers/net/dsa/microchip/ksz9477.c
-index 05767d3025f77..dde5c65c2c366 100644
---- a/drivers/net/dsa/microchip/ksz9477.c
-+++ b/drivers/net/dsa/microchip/ksz9477.c
-@@ -1303,6 +1303,10 @@ int ksz9477_setup(struct dsa_switch *ds)
- 	/* Enable REG_SW_MTU__2 reg by setting SW_JUMBO_PACKET */
- 	ksz_cfg(dev, REG_SW_MAC_CTRL_1, SW_JUMBO_PACKET, true);
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index 61eef3259cbaa..88d4675cc3428 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -4102,7 +4102,7 @@ bool ice_is_wol_supported(struct ice_hw *hw)
+ int ice_vsi_recfg_qs(struct ice_vsi *vsi, int new_rx, int new_tx, bool locked)
+ {
+ 	struct ice_pf *pf = vsi->back;
+-	int err = 0, timeout = 50;
++	int i, err = 0, timeout = 50;
  
-+	/* Use collision based back pressure mode. */
-+	ksz_cfg(dev, REG_SW_MAC_CTRL_1, SW_BACK_PRESSURE,
-+		SW_BACK_PRESSURE_COLLISION);
+ 	if (!new_rx && !new_tx)
+ 		return -EINVAL;
+@@ -4128,6 +4128,14 @@ int ice_vsi_recfg_qs(struct ice_vsi *vsi, int new_rx, int new_tx, bool locked)
+ 
+ 	ice_vsi_close(vsi);
+ 	ice_vsi_rebuild(vsi, ICE_VSI_FLAG_NO_INIT);
 +
- 	/* Now we can configure default MTU value */
- 	ret = regmap_update_bits(ksz_regmap_16(dev), REG_SW_MTU__2, REG_SW_MTU_MASK,
- 				 VLAN_ETH_FRAME_LEN + ETH_FCS_LEN);
-diff --git a/drivers/net/dsa/microchip/ksz9477_reg.h b/drivers/net/dsa/microchip/ksz9477_reg.h
-index f3a205ee483f2..fb124be8edd30 100644
---- a/drivers/net/dsa/microchip/ksz9477_reg.h
-+++ b/drivers/net/dsa/microchip/ksz9477_reg.h
-@@ -247,6 +247,7 @@
- #define REG_SW_MAC_CTRL_1		0x0331
- 
- #define SW_BACK_PRESSURE		BIT(5)
-+#define SW_BACK_PRESSURE_COLLISION	0
- #define FAIR_FLOW_CTRL			BIT(4)
- #define NO_EXC_COLLISION_DROP		BIT(3)
- #define SW_JUMBO_PACKET			BIT(2)
++	ice_for_each_traffic_class(i) {
++		if (vsi->tc_cfg.ena_tc & BIT(i))
++			netdev_set_tc_queue(vsi->netdev,
++					    vsi->tc_cfg.tc_info[i].netdev_tc,
++					    vsi->tc_cfg.tc_info[i].qcount_tx,
++					    vsi->tc_cfg.tc_info[i].qoffset);
++	}
+ 	ice_pf_dcb_recfg(pf, locked);
+ 	ice_vsi_open(vsi);
+ done:
 -- 
 2.43.0
 
