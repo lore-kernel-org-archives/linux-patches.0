@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA1D1C0056;
-	Tue,  2 Jul 2024 17:29:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22891BF31D;
+	Tue,  2 Jul 2024 17:29:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941341; cv=none; b=eIPD9ZH0DMA35VewPmxqqfHDljrbNRnHBFd0tmOcCV0AdOVcrbYrBnLC+zIK/WWoysLoHf43Nyo9STo2XAnlhac1lUPvZ5jaOVba2NQ4FDiKksj2lU4LYsygA/rmuCuNoAckhDmPuowVmZ7s7OEIDlf38T3FS9gUmXvKNMIMHGw=
+	t=1719941344; cv=none; b=si0CjU4IJzEus9JDD4/DE5dMuFGxR7UVcJT8yCq06Zm7K0zSGVptM97ppMfpL62TkPq16kzc2h6ofp+9dptnALr6z5SbMRDOag60Y05fb1g5JKallY1JJ+UJrOMuD3YJOFmlYqssW/RdGf8dOkWTkHPyEkqngFQEDBtcGSybIyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941341; c=relaxed/simple;
-	bh=gnitumKiTxGPY6PIiL6PCmbUfYDh4ugabyBQBqR8APQ=;
+	s=arc-20240116; t=1719941344; c=relaxed/simple;
+	bh=ikdGvtg9j0M/6SIA5Vbd0yl0RWKsYP7XSsG/AgS83Lg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tEfPe6SEK0UfRKD7Jl4LySRHD2zHvaGZdW5NWZN5YJSNBkkAGeRsIFJ8LfxhX3QO+IJvU8SY6e+/qIjn94bl3ojAT3J7IxcqGWTiw9uPgen3xY60ZzJyWLodXLqs8+qLDNfqMcZjF0VHPDW7tzGYCkkE2DuaAC+T9/H4NR7M3zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cIGviO5N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Faq9ka5rBNNA3VtR1la8yMxy4gwk96pcHYdBpdDBhcRRQSQ1L32YZY57J6EULH0y1a8aP2wWiUnCNNijL3jmOXYF/yrEQjoe2QvBYQXFmBCFyS8EQveF2AGTPxavuWlaD9SI4gqGUenveh2f+uD74ABrKULNbBkHkpcD/PkIOF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F5gsmwen; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cIGviO5N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3AEAC116B1;
-	Tue,  2 Jul 2024 17:29:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5gsmwen"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DFE5C116B1;
+	Tue,  2 Jul 2024 17:29:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941341;
-	bh=gnitumKiTxGPY6PIiL6PCmbUfYDh4ugabyBQBqR8APQ=;
+	s=korg; t=1719941344;
+	bh=ikdGvtg9j0M/6SIA5Vbd0yl0RWKsYP7XSsG/AgS83Lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cIGviO5NWSmTlkSy+ef+zQ1uZ+nXuuWHPFXoAGogPA9y27CkSb5B81iNisjXM4K4P
-	 tTJS/OdahFDhdNFa/mC5uJwKqV6RpMeqP9DtdjABEsPL/3FjmIh0mh3RYdU5yH/lFq
-	 ia1STasN24YGtJynvjyzTzZ6is1DMsD7Sd6bLI/s=
+	b=F5gsmwenGqAj9wQqXTvOYU/mVOANomenjfINcpAxhubJVMvGEY2KDKRmccJUXOFmI
+	 dWPwnmtyDkQFrDPwhLq6DkWMIb3878aEVnjpnq9R8ndAmkUWMDDQ+56yOFNELVQeHx
+	 s++dhbM28bLpa2FQJqtAjG4N78nTn9NLnYDjCkjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristram Ha <tristram.ha@microchip.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 028/128] net: dsa: microchip: fix wrong register write when masking interrupt
-Date: Tue,  2 Jul 2024 19:03:49 +0200
-Message-ID: <20240702170227.297846734@linuxfoundation.org>
+Subject: [PATCH 6.1 037/128] drm/panel: ilitek-ili9881c: Fix warning with GPIO controllers that sleep
+Date: Tue,  2 Jul 2024 19:03:58 +0200
+Message-ID: <20240702170227.636480516@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170226.231899085@linuxfoundation.org>
 References: <20240702170226.231899085@linuxfoundation.org>
@@ -51,51 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristram Ha <tristram.ha@microchip.com>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit b1c4b4d45263241ec6c2405a8df8265d4b58e707 ]
+[ Upstream commit ee7860cd8b5763017f8dc785c2851fecb7a0c565 ]
 
-The switch global port interrupt mask, REG_SW_PORT_INT_MASK__4, is
-defined as 0x001C in ksz9477_reg.h.  The designers used 32-bit value in
-anticipation for increase of port count in future product but currently
-the maximum port count is 7 and the effective value is 0x7F in register
-0x001F.  Each port has its own interrupt mask and is defined as 0x#01F.
-It uses only 4 bits for different interrupts.
+The ilitek-ili9881c controls the reset GPIO using the non-sleeping
+gpiod_set_value() function. This complains loudly when the GPIO
+controller needs to sleep. As the caller can sleep, use
+gpiod_set_value_cansleep() to fix the issue.
 
-The developer who implemented the current interrupt mechanism in the
-switch driver noticed there are similarities between the mechanism to
-mask port interrupts in global interrupt and individual interrupts in
-each port and so used the same code to handle these interrupts.  He
-updated the code to use the new macro REG_SW_PORT_INT_MASK__1 which is
-defined as 0x1F in ksz_common.h but he forgot to update the 32-bit write
-to 8-bit as now the mask registers are 0x1F and 0x#01F.
-
-In addition all KSZ switches other than the KSZ9897/KSZ9893 and LAN937X
-families use only 8-bit access and so this common code will eventually
-be changed to accommodate them.
-
-Fixes: e1add7dd6183 ("net: dsa: microchip: use common irq routines for girq and pirq")
-Signed-off-by: Tristram Ha <tristram.ha@microchip.com>
-Link: https://lore.kernel.org/r/1719009262-2948-1-git-send-email-Tristram.Ha@microchip.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20240317154839.21260-1-laurent.pinchart@ideasonboard.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240317154839.21260-1-laurent.pinchart@ideasonboard.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/microchip/ksz_common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/panel/panel-ilitek-ili9881c.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/dsa/microchip/ksz_common.c b/drivers/net/dsa/microchip/ksz_common.c
-index f9f43897f86c1..9dbe188f09c3c 100644
---- a/drivers/net/dsa/microchip/ksz_common.c
-+++ b/drivers/net/dsa/microchip/ksz_common.c
-@@ -1790,7 +1790,7 @@ static void ksz_irq_bus_sync_unlock(struct irq_data *d)
- 	struct ksz_device *dev = kirq->dev;
- 	int ret;
+diff --git a/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c b/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
+index cbb68caa36f26..4014c537e397d 100644
+--- a/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
++++ b/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
+@@ -716,10 +716,10 @@ static int ili9881c_prepare(struct drm_panel *panel)
+ 	msleep(5);
  
--	ret = ksz_write32(dev, kirq->reg_mask, kirq->masked);
-+	ret = ksz_write8(dev, kirq->reg_mask, kirq->masked);
- 	if (ret)
- 		dev_err(dev->dev, "failed to change IRQ mask\n");
+ 	/* And reset it */
+-	gpiod_set_value(ctx->reset, 1);
++	gpiod_set_value_cansleep(ctx->reset, 1);
+ 	msleep(20);
  
+-	gpiod_set_value(ctx->reset, 0);
++	gpiod_set_value_cansleep(ctx->reset, 0);
+ 	msleep(20);
+ 
+ 	for (i = 0; i < ctx->desc->init_length; i++) {
+@@ -774,7 +774,7 @@ static int ili9881c_unprepare(struct drm_panel *panel)
+ 
+ 	mipi_dsi_dcs_enter_sleep_mode(ctx->dsi);
+ 	regulator_disable(ctx->power);
+-	gpiod_set_value(ctx->reset, 1);
++	gpiod_set_value_cansleep(ctx->reset, 1);
+ 
+ 	return 0;
+ }
 -- 
 2.43.0
 
