@@ -1,102 +1,120 @@
-Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E25ED1BE842
-	for <patches@lists.linux.dev>; Tue,  2 Jul 2024 17:28:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81C091BE873;
+	Tue,  2 Jul 2024 17:28:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941329; cv=none; b=ti/dbqO+TTvE5gQ37r3lJKsm6M3HR4J29HJlUTWUrrZrhB+aa6qEprCuHvSScoL5xmnQ4RqNql7TCwLC0bs29cUI4rjH55yy5AAZ4stuSG4zd0nekfYtae1oiHlvbaaS+L7ZRyuWd8lLeD/I32Jq//2SiJrN9u+r+jH8MPq1NIM=
+	t=1719941331; cv=none; b=D3qA6cUwhgLS1QkGjHvf3P9fQnRAitzfFuS9owfNolcVVlea/B6tv8CyRriVGP9R9lBI9F67kUV+tOge6ZnoqBu7GlIxe+3o2+tQavnlzMeQXojtBeSQDiWfBLF3GuxC1t8PHD0B4SmbyiUTPa8CklLIgCKIMIwY8JPsaehC83M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941329; c=relaxed/simple;
-	bh=jYeWnTV95BPaOOrj5p1AkHVGYGcZWkWIYQfSGVcLzm4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Lj/Iq0NMwS3yKeB4GUEnTVefAsuPVuE4KoM05E24r7CEsBy9BjoIam3WjkBl6K2UtoF4V4VSV+KGDULJZD2f5LDc/h6lOpZJ2bNa+KgcRqUe09hv/RrFERwXGROtFZbDGf5C15TvtXL+5cMYD8xzdzSSk37kHRaDI7dvVo3ADQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=c8YB6Dpf; arc=none smtp.client-ip=65.109.113.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
+	s=arc-20240116; t=1719941331; c=relaxed/simple;
+	bh=ZXjEVqn8tKZx+jqWX004fk3GIZijEFSTKU52b6dq4zU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=QU+0utDhYG16PNJVr1wuBPwKsIZnE0gymCEp1TSgrTqJmkEb0XJRXmTE8321loogI3lRX/t0fkPB8x1b9uWsJ/SbuleQ4ui5KlEwklgUpuml3df6faXbJGNp2LBGPX3Grpr67kt7a2aYQqVD0TcUvkwOEtUKZ7/uB2pq7IgXzck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMgPC67S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="c8YB6Dpf"
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 7E06540E0185;
-	Tue,  2 Jul 2024 17:28:38 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
-	header.d=alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id QGawDHv-E1CW; Tue,  2 Jul 2024 17:28:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1719941314; bh=JXRnBEz8iHQChbdVPhfaSsanLqGse6ktf9ce0Vm9MNE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=c8YB6DpfF7+kNM0Y6AVrfahVRUPo+56UPmTO8MdmnwMwiKhwpPqtmmCIBDywghbjI
-	 Fh/SULqXlIKobZA+9MSI8N+MQeQ8tenRkJzLG+ULN3Xq3KRQXnOrOpttXSIHOHvPsZ
-	 249rxhD8VmiFjYzGz4mw1FTL7rHAf9HWTUd/6Ec7Pord2rdtZde1LzgKr2eIM2TWJv
-	 ujnhusJUSYHO80GPewfI+BB0kq2LCv3iZ/ONJtcsurc1AZD8kQNflF67SMbX4HmgNn
-	 TRGAidYLH6fGYBDsBUfp7yLzaJHbJO0KS+JoNUisFnKMwQ+o3T9IKyMw4EK2CMI7Ec
-	 P3m6sTwgLH9LuHgNTWaJkJOcDS1nYdBzMrj2VNpCge2hLF65Ph+GtNt3Fb5juHgTNt
-	 eKL3IJhVRp/ou+RYMxeVo8sjnu2vnVjjm5EmP/HSbJlB5Z6gVfddOjSajH/0LeV6Dy
-	 NYDpn8NYzKXQSUEChv+RKB5lcaTyHQ9EZNQHlu4JIr8iJScgsetopZKwOex2kux3mu
-	 eL7VLR/SaBv7gExdXf3z+QYKaO4tzB+Z85tewXeI234Er33PV6VDKkQz0qO2OBNpbN
-	 kISpECB6LBBWKEwtFn9dm3xgCvUb9a7tRaJPqYQbS88alg3O8j2vm3BlvYXYoXtwEY
-	 93pxbCimogN+7mZoyu8zYIj4=
-Received: from zn.tnic (p5de8ee85.dip0.t-ipconnect.de [93.232.238.133])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 75A5440E0187;
-	Tue,  2 Jul 2024 17:28:22 +0000 (UTC)
-Date: Tue, 2 Jul 2024 19:28:09 +0200
-From: Borislav Petkov <bp@alien8.de>
-To: Tony Luck <tony.luck@intel.com>
-Cc: Fenghua Yu <fenghua.yu@intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
-	Drew Fustini <dfustini@baylibre.com>,
-	Dave Martin <Dave.Martin@arm.com>, x86@kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v23 14/19] x86/resctrl: Handle removing directories in
- Sub-NUMA Cluster (SNC) mode
-Message-ID: <20240702172809.GGZoQ4qW6OOkL0bQQ7@fat_crate.local>
-References: <20240628215619.76401-1-tony.luck@intel.com>
- <20240628215619.76401-15-tony.luck@intel.com>
- <20240702085337.GAZoPAEaEBtT18iD3V@fat_crate.local>
- <ZoQ1937ntIdMNQwL@agluck-desk3.sc.intel.com>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMgPC67S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92177C4AF0C;
+	Tue,  2 Jul 2024 17:28:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1719941331;
+	bh=ZXjEVqn8tKZx+jqWX004fk3GIZijEFSTKU52b6dq4zU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=XMgPC67SRtj76Q047kRZeA9mUEFxMxehSa8AxYrEyabzwAlcS9d3TESj5fX9VailB
+	 A6E6slGTh79FIggsaFb/dbpJUGZOjk4vw2MJx53lCLaS240sENYTqeB0zURfrd7oKS
+	 hS+kxiZglSstye3wMNTjPMCjjAID9Lz8iQnSGy6k=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Huang-Huang Bao <i@eh5.me>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 008/128] pinctrl: rockchip: fix pinmux bits for RK3328 GPIO2-B pins
+Date: Tue,  2 Jul 2024 19:03:29 +0200
+Message-ID: <20240702170226.550005005@linuxfoundation.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240702170226.231899085@linuxfoundation.org>
+References: <20240702170226.231899085@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZoQ1937ntIdMNQwL@agluck-desk3.sc.intel.com>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jul 02, 2024 at 10:16:39AM -0700, Tony Luck wrote:
-> A helper will avoid this duplication. Draft below. Is this
-> what you want?
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
-Yap, looks good.
+------------------
 
-> Is the function name OK. I wasn't sure if the
-> "mon" looked better at the beginning. Or as rmdir_one_mon_subdir()
+From: Huang-Huang Bao <i@eh5.me>
 
-It's a static function so the namespace doesn't matter that much, I'd say.
+[ Upstream commit e8448a6c817c2aa6c6af785b1d45678bd5977e8d ]
 
-> I've also fixed up part 17 to use msr_clear_bit()
+The pinmux bits for GPIO2-B0 to GPIO2-B6 actually have 2 bits width,
+correct the bank flag for GPIO2-B. The pinmux bits for GPIO2-B7 is
+recalculated so it remain unchanged.
 
-Good.
+The pinmux bits for those pins are not explicitly specified in RK3328
+TRM, however we can get hint from pad name and its correspinding IOMUX
+setting for pins in interface descriptions. The correspinding IOMIX
+settings for GPIO2-B0 to GPIO2-B6 can be found in the same row next to
+occurrences of following pad names in RK3328 TRM.
 
-> Are you still digging through the patches?
+GPIO2-B0: IO_SPIclkm0_GPIO2B0vccio5
+GPIO2-B1: IO_SPItxdm0_GPIO2B1vccio5
+GPIO2-B2: IO_SPIrxdm0_GPIO2B2vccio5
+GPIO2-B3: IO_SPIcsn0m0_GPIO2B3vccio5
+GPIO2-B4: IO_SPIcsn1m0_FLASHvol_sel_GPIO2B4vccio5
+GPIO2-B5: IO_ I2C2sda_TSADCshut_GPIO2B5vccio5
+GPIO2-B6: IO_ I2C2scl_GPIO2B6vccio5
 
-Yap, and you can send me only those two which you've modified and I'll
-integrate them with the rest and queue them.
+This fix has been tested on NanoPi R2S for fixing confliting pinmux bits
+between GPIO2-B7 with GPIO2-B5.
 
-Thx.
+Signed-off-by: Huang-Huang Bao <i@eh5.me>
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 3818e4a7678e ("pinctrl: rockchip: Add rk3328 pinctrl support")
+Link: https://lore.kernel.org/r/20240606125755.53778-2-i@eh5.me
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/pinctrl/pinctrl-rockchip.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
+diff --git a/drivers/pinctrl/pinctrl-rockchip.c b/drivers/pinctrl/pinctrl-rockchip.c
+index 0276b52f37168..7ebfa37b601e5 100644
+--- a/drivers/pinctrl/pinctrl-rockchip.c
++++ b/drivers/pinctrl/pinctrl-rockchip.c
+@@ -635,12 +635,6 @@ static struct rockchip_mux_recalced_data rk3308_mux_recalced_data[] = {
+ 
+ static struct rockchip_mux_recalced_data rk3328_mux_recalced_data[] = {
+ 	{
+-		.num = 2,
+-		.pin = 12,
+-		.reg = 0x24,
+-		.bit = 8,
+-		.mask = 0x3
+-	}, {
+ 		.num = 2,
+ 		.pin = 15,
+ 		.reg = 0x28,
+@@ -3766,7 +3760,7 @@ static struct rockchip_pin_bank rk3328_pin_banks[] = {
+ 	PIN_BANK_IOMUX_FLAGS(0, 32, "gpio0", 0, 0, 0, 0),
+ 	PIN_BANK_IOMUX_FLAGS(1, 32, "gpio1", 0, 0, 0, 0),
+ 	PIN_BANK_IOMUX_FLAGS(2, 32, "gpio2", 0,
+-			     IOMUX_WIDTH_3BIT,
++			     0,
+ 			     IOMUX_WIDTH_3BIT,
+ 			     0),
+ 	PIN_BANK_IOMUX_FLAGS(3, 32, "gpio3",
 -- 
-Regards/Gruss,
-    Boris.
+2.43.0
 
-https://people.kernel.org/tglx/notes-about-netiquette
+
+
