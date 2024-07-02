@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E0931CF3FB;
-	Tue,  2 Jul 2024 17:34:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D361C0DE3;
+	Tue,  2 Jul 2024 17:34:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941659; cv=none; b=ujmcnrtCrZpC2poYzMKgTr13xYE2D84UMdqnnV9gwsfPpSEQEvxz87U30drf6G5Nz9B/kNg5R2nyAErXOAULEv5Hq9logW5zPmtsPMqIQrOFMMxEJGySeqcPQ/4t9+JcftykxJkJTX8Tbv+6ANwIJkiRNqdFJPp7/k2TorvBaa8=
+	t=1719941662; cv=none; b=i4/rPSfdSi5QrwJk8TfF98kbsrJ0nYXKsbe1UKvfOWxU7ixoLZvDkoEbNYZEL7cjmeNE+/GTOt2bhs3Vf/BFwv0eNnwTebGbeOd6gFRE2ZbJWZoA8YxcHhQtAiV9Tdxjm74fUDxPVOvxi7/oVN1Zv4twtCE1py6YcH0gLEcH3bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941659; c=relaxed/simple;
-	bh=u3RXAhLbypo1G0Gy4KiVRTEbnj7xWtfeuj4QhdiDX30=;
+	s=arc-20240116; t=1719941662; c=relaxed/simple;
+	bh=dFIxSSN8TO6d6LAfmSucnIXK+BHKSdVv6RBOtWX6bQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AmeBt87Ec9kioQEYP33WBK6vlzZdnxGNky/cgeDMtFfjfaNyL2KMRAKf00NEGBhShNbu8iQ5s8U5BfRRp2FV6PsK6x1WZLx24gUg5s5hNxC5+PCWKlvqqzctN/Hk/skhXBGGn6WKq1le+gGs8oyy6w13/VQbbiPhl/GuPPOuihs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jVdpOFem; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=es7e+PkS+rnUAZv2wK7u/mlz17DkhuLXFex2MImtZyKR/NFNKmTC4OsBKwPputZ2CMbAPmvY9flUhY2mDmrXt/a1SWOendlYmy8nSShfBL/ldk9mDx9vJBIJtVqrEKiHiy3jp2hgRaHi0HRbOnS+33if5TrDLhkwrp1RoB2KIb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OE6nG6P3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jVdpOFem"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD2B1C4AF15;
-	Tue,  2 Jul 2024 17:34:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OE6nG6P3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0C0EC4AF07;
+	Tue,  2 Jul 2024 17:34:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941659;
-	bh=u3RXAhLbypo1G0Gy4KiVRTEbnj7xWtfeuj4QhdiDX30=;
+	s=korg; t=1719941662;
+	bh=dFIxSSN8TO6d6LAfmSucnIXK+BHKSdVv6RBOtWX6bQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jVdpOFemeDlJjgqW0PvjEVRqG7Rees3WyFrNvdGjsswvDYxKtEVFJ6TyQQkajz/HN
-	 3gSUR0Qc5Dtgu4VlogXhrVkkQD2yTW69kENGp33b67OfkB2ncUjbYUJhgxA98DnClP
-	 3JN0GqssgWwXTLw0Dt0whZmdGIGDADd2yXjk6kto=
+	b=OE6nG6P3iwQBUAF2UI5/P2igIvRE7ccXVo/SYuNSEKBWfu1mkw+cbHOUhApd6dyvn
+	 ZTuANjjCIPTJ0o6TRZIULkgmje1WLG4aBAZeJf6YoTLBJTpGCyhD2A96KH5YqEZWQK
+	 aZi4FrVehkw2E3UbU3JR9cC1Ig0M86zzk+pmYiLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Bee <knaerzche@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 128/128] arm64: dts: rockchip: Add sound-dai-cells for RK3368
-Date: Tue,  2 Jul 2024 19:05:29 +0200
-Message-ID: <20240702170231.061351954@linuxfoundation.org>
+	Tianli Xiong <xiongtianli@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.1 099/128] irqchip/loongson-liointc: Set different ISRs for different cores
+Date: Tue,  2 Jul 2024 19:05:00 +0200
+Message-ID: <20240702170229.966256517@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170226.231899085@linuxfoundation.org>
 References: <20240702170226.231899085@linuxfoundation.org>
@@ -51,52 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Bee <knaerzche@gmail.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit 8d7ec44aa5d1eb94a30319074762a1740440cdc8 ]
+commit a9c3ee5d0fdb069b54902300df6ac822027f3b0a upstream.
 
-Add the missing #sound-dai-cells for RK3368's I2S and S/PDIF controllers.
+The liointc hardware provides separate Interrupt Status Registers (ISR) for
+each core. The current code uses always the ISR of core #0, which works
+during boot because by default all interrupts are routed to core #0.
 
-Fixes: f7d89dfe1e31 ("arm64: dts: rockchip: add i2s nodes support for RK3368 SoCs")
-Fixes: 0328d68ea76d ("arm64: dts: rockchip: add rk3368 spdif node")
-Signed-off-by: Alex Bee <knaerzche@gmail.com>
-Link: https://lore.kernel.org/r/20240623090116.670607-4-knaerzche@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+When the interrupt routing changes in the firmware configuration then this
+causes interrupts to be lost because they are not configured in the
+corresponding core.
+
+Use the core index to access the correct ISR instead of a hardcoded 0.
+
+[ tglx: Massaged changelog ]
+
+Fixes: 0858ed035a85 ("irqchip/loongson-liointc: Add ACPI init support")
+Co-developed-by: Tianli Xiong <xiongtianli@loongson.cn>
+Signed-off-by: Tianli Xiong <xiongtianli@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20240622043338.1566945-1-chenhuacai@loongson.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3368.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/irqchip/irq-loongson-liointc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3368.dtsi b/arch/arm64/boot/dts/rockchip/rk3368.dtsi
-index a4c5aaf1f4579..cac58ad951b2e 100644
---- a/arch/arm64/boot/dts/rockchip/rk3368.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3368.dtsi
-@@ -790,6 +790,7 @@
- 		dma-names = "tx";
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&spdif_tx>;
-+		#sound-dai-cells = <0>;
- 		status = "disabled";
- 	};
+--- a/drivers/irqchip/irq-loongson-liointc.c
++++ b/drivers/irqchip/irq-loongson-liointc.c
+@@ -28,7 +28,7 @@
  
-@@ -801,6 +802,7 @@
- 		clocks = <&cru SCLK_I2S_2CH>, <&cru HCLK_I2S_2CH>;
- 		dmas = <&dmac_bus 6>, <&dmac_bus 7>;
- 		dma-names = "tx", "rx";
-+		#sound-dai-cells = <0>;
- 		status = "disabled";
- 	};
+ #define LIOINTC_INTC_CHIP_START	0x20
  
-@@ -814,6 +816,7 @@
- 		dma-names = "tx", "rx";
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&i2s_8ch_bus>;
-+		#sound-dai-cells = <0>;
- 		status = "disabled";
- 	};
+-#define LIOINTC_REG_INTC_STATUS	(LIOINTC_INTC_CHIP_START + 0x20)
++#define LIOINTC_REG_INTC_STATUS(core)	(LIOINTC_INTC_CHIP_START + 0x20 + (core) * 8)
+ #define LIOINTC_REG_INTC_EN_STATUS	(LIOINTC_INTC_CHIP_START + 0x04)
+ #define LIOINTC_REG_INTC_ENABLE	(LIOINTC_INTC_CHIP_START + 0x08)
+ #define LIOINTC_REG_INTC_DISABLE	(LIOINTC_INTC_CHIP_START + 0x0c)
+@@ -196,7 +196,7 @@ static int liointc_init(phys_addr_t addr
+ 		goto out_free_priv;
  
--- 
-2.43.0
-
+ 	for (i = 0; i < LIOINTC_NUM_CORES; i++)
+-		priv->core_isr[i] = base + LIOINTC_REG_INTC_STATUS;
++		priv->core_isr[i] = base + LIOINTC_REG_INTC_STATUS(i);
+ 
+ 	for (i = 0; i < LIOINTC_NUM_PARENT; i++)
+ 		priv->handler[i].parent_int_map = parent_int_map[i];
 
 
