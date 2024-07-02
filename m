@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C21C71BE223;
-	Tue,  2 Jul 2024 17:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C5581F;
+	Tue,  2 Jul 2024 17:16:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940596; cv=none; b=f+d99/lGgtzPmNtdvVpU6+comqoKpFTljl1Dd8mpPqhP3VIuKHr75gIFh4QWjY2tOlqXfBnWQDlapyZ/2hp9p4wUKPbe4R4KGkTRXP8GGMT3UnU0bTvKBp574Vj9MyE7sA7z1kJVfCtB0p6ztNP9y6prq2/O1UZJrsL2582Lk7I=
+	t=1719940600; cv=none; b=I2iQ/g1NMvBbSAdzo/RZ7hDqAyIcUKr3zqZAYBmSGvk8C0CxQ+Kse7NrVlh9cGJAc7ZWKMuVGfkxRhLYjWNUUmwxi9Lgp7HHFWM5BDjw12A6UapPaD9KJWn+ZheX6rEvjLP4P+qp9sVQEyhGbPz6CR31KZTvPKqYBHq4hIW6kkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940596; c=relaxed/simple;
-	bh=IyA/ubz4lxv8kiYGpVVLYhCndhyapOZNaQ9m78NV7Rw=;
+	s=arc-20240116; t=1719940600; c=relaxed/simple;
+	bh=0lqckJxqI8HDIuP+TlfVDgGqhaud15KaZATOkqvFwXQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t1fo2cLK+b+ZCwzwBm6P+Gcc5cep833zosecZYITaKmR6yCFCprAgnQwqZKoqMYT9IKwtg5ClLhszJJ3Vs+hA+u75DXoK2xZzlkMHiMbHj9cQHkulX7FP+MDIeIR+fhSwebbKE/S08Ml6GvfYjZLFnocfNWhKegjpD6s1mGYkt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxhOugz5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bBBAOQ/Acww94AzUsURtdPk/apBoiR6UnyUcKPj0i5QOZu/Z641LjeNXCgchT9XM9pfWF4OoOpKuLxQSTXY+SDgEozCNUw8qNnkhWAEWDsx0xN1Dqz9Kf7+9WH8rReHviIjuGmaq1r/ylyj/CyJNzi0mcJATYqi/59mcUVlcFU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=skqkuxhv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxhOugz5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48AEDC116B1;
-	Tue,  2 Jul 2024 17:16:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="skqkuxhv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 910CDC4AF0A;
+	Tue,  2 Jul 2024 17:16:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940596;
-	bh=IyA/ubz4lxv8kiYGpVVLYhCndhyapOZNaQ9m78NV7Rw=;
+	s=korg; t=1719940600;
+	bh=0lqckJxqI8HDIuP+TlfVDgGqhaud15KaZATOkqvFwXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dxhOugz5JLDBF20tQvp5brmtDXJtiMMtHWj62kFu1lpN9M3vaGgEfRsbI95jbU4CY
-	 B7OhE5GNM7exYyJMrRUhuSvSqld1hUsb3MAhhw34ua7RjR3HBRT82K/XJXRyJ5K7Ls
-	 k3QReWQAEslWgPl/SGDF3aZoH7rDObiNm+sWeevU=
+	b=skqkuxhvoqwHFY8ikSll1NWLpje5E3LRqcN+mf3OSPhxgs6KSlsXy0ihrAMoqCrJf
+	 7v7ifm4fkr+SWo8Jv0Xqd5IvKDcv7Z+uoJiuPE3LG/ja+cwW5MdPZfiyzkhNLnQNlT
+	 D994VJT3p40d7dvfwzxVZ0H8XGG5LNBuFyl63vyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	yangge <yangge1116@126.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <21cnbao@gmail.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.9 202/222] mm/page_alloc: Separate THP PCP into movable and non-movable categories
-Date: Tue,  2 Jul 2024 19:04:00 +0200
-Message-ID: <20240702170251.706841578@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+Subject: [PATCH 6.9 203/222] pwm: stm32: Fix calculation of prescaler
+Date: Tue,  2 Jul 2024 19:04:01 +0200
+Message-ID: <20240702170251.745545326@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -47,115 +44,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: yangge <yangge1116@126.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-commit bf14ed81f571f8dba31cd72ab2e50fbcc877cc31 upstream.
+commit dab8f9f0fe3aada61c0eb013dcf7d3ff75a2c336 upstream.
 
-Since commit 5d0a661d808f ("mm/page_alloc: use only one PCP list for
-THP-sized allocations") no longer differentiates the migration type of
-pages in THP-sized PCP list, it's possible that non-movable allocation
-requests may get a CMA page from the list, in some cases, it's not
-acceptable.
+A small prescaler is beneficial, as this improves the resolution of the
+duty_cycle configuration. However if the prescaler is too small, the
+maximal possible period becomes considerably smaller than the requested
+value.
 
-If a large number of CMA memory are configured in system (for example, the
-CMA memory accounts for 50% of the system memory), starting a virtual
-machine with device passthrough will get stuck.  During starting the
-virtual machine, it will call pin_user_pages_remote(..., FOLL_LONGTERM,
-...) to pin memory.  Normally if a page is present and in CMA area,
-pin_user_pages_remote() will migrate the page from CMA area to non-CMA
-area because of FOLL_LONGTERM flag.  But if non-movable allocation
-requests return CMA memory, migrate_longterm_unpinnable_pages() will
-migrate a CMA page to another CMA page, which will fail to pass the check
-in check_and_migrate_movable_pages() and cause migration endless.
+One situation where this goes wrong is the following: With a parent
+clock rate of 208877930 Hz and max_arr = 0xffff = 65535, a request for
+period = 941243 ns currently results in PSC = 1. The value for ARR is
+then calculated to
 
-Call trace:
-pin_user_pages_remote
---__gup_longterm_locked // endless loops in this function
-----_get_user_pages_locked
-----check_and_migrate_movable_pages
-------migrate_longterm_unpinnable_pages
---------alloc_migration_target
+	ARR = 941243 * 208877930 / (1000000000 * 2) - 1 = 98301
 
-This problem will also have a negative impact on CMA itself.  For example,
-when CMA is borrowed by THP, and we need to reclaim it through cma_alloc()
-or dma_alloc_coherent(), we must move those pages out to ensure CMA's
-users can retrieve that contigous memory.  Currently, CMA's memory is
-occupied by non-movable pages, meaning we can't relocate them.  As a
-result, cma_alloc() is more likely to fail.
+This value is bigger than 65535 however and so doesn't fit into the
+respective register field. In this particular case the PWM was
+configured for a period of 313733.4806027616 ns (with ARR = 98301 &
+0xffff). Even if ARR was configured to its maximal value, only period =
+627495.6861167669 ns would be achievable.
 
-To fix the problem above, we add one PCP list for THP, which will not
-introduce a new cacheline for struct per_cpu_pages.  THP will have 2 PCP
-lists, one PCP list is used by MOVABLE allocation, and the other PCP list
-is used by UNMOVABLE allocation.  MOVABLE allocation contains GPF_MOVABLE,
-and UNMOVABLE allocation contains GFP_UNMOVABLE and GFP_RECLAIMABLE.
+Fix the calculation accordingly and adapt the comment to match the new
+algorithm.
 
-Link: https://lkml.kernel.org/r/1718845190-4456-1-git-send-email-yangge1116@126.com
-Fixes: 5d0a661d808f ("mm/page_alloc: use only one PCP list for THP-sized allocations")
-Signed-off-by: yangge <yangge1116@126.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <21cnbao@gmail.com>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+With the calculation fixed the above case results in PSC = 2 and so an
+actual period of 941229.1667195285 ns.
+
+Fixes: 8002fbeef1e4 ("pwm: stm32: Calculate prescaler with a division instead of a loop")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://lore.kernel.org/r/b4d96b79917617434a540df45f20cb5de4142f88.1718979150.git.u.kleine-koenig@baylibre.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/mmzone.h |    9 ++++-----
- mm/page_alloc.c        |    9 +++++++--
- 2 files changed, 11 insertions(+), 7 deletions(-)
+ drivers/pwm/pwm-stm32.c |   18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
---- a/include/linux/mmzone.h
-+++ b/include/linux/mmzone.h
-@@ -651,13 +651,12 @@ enum zone_watermarks {
- };
+--- a/drivers/pwm/pwm-stm32.c
++++ b/drivers/pwm/pwm-stm32.c
+@@ -321,17 +321,23 @@ static int stm32_pwm_config(struct stm32
+ 	 * First we need to find the minimal value for prescaler such that
+ 	 *
+ 	 *        period_ns * clkrate
+-	 *   ------------------------------
++	 *   ------------------------------ < max_arr + 1
+ 	 *   NSEC_PER_SEC * (prescaler + 1)
+ 	 *
+-	 * isn't bigger than max_arr.
++	 * This equation is equivalent to
++	 *
++	 *        period_ns * clkrate
++	 *   ---------------------------- < prescaler + 1
++	 *   NSEC_PER_SEC * (max_arr + 1)
++	 *
++	 * Using integer division and knowing that the right hand side is
++	 * integer, this is further equivalent to
++	 *
++	 *   (period_ns * clkrate) // (NSEC_PER_SEC * (max_arr + 1)) ≤ prescaler
+ 	 */
  
- /*
-- * One per migratetype for each PAGE_ALLOC_COSTLY_ORDER. One additional list
-- * for THP which will usually be GFP_MOVABLE. Even if it is another type,
-- * it should not contribute to serious fragmentation causing THP allocation
-- * failures.
-+ * One per migratetype for each PAGE_ALLOC_COSTLY_ORDER. Two additional lists
-+ * are added for THP. One PCP list is used by GPF_MOVABLE, and the other PCP list
-+ * is used by GFP_UNMOVABLE and GFP_RECLAIMABLE.
-  */
- #ifdef CONFIG_TRANSPARENT_HUGEPAGE
--#define NR_PCP_THP 1
-+#define NR_PCP_THP 2
- #else
- #define NR_PCP_THP 0
- #endif
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -521,10 +521,15 @@ out:
+ 	prescaler = mul_u64_u64_div_u64(period_ns, clk_get_rate(priv->clk),
+-					(u64)NSEC_PER_SEC * priv->max_arr);
+-	if (prescaler > 0)
+-		prescaler -= 1;
+-
++					(u64)NSEC_PER_SEC * ((u64)priv->max_arr + 1));
+ 	if (prescaler > MAX_TIM_PSC)
+ 		return -EINVAL;
  
- static inline unsigned int order_to_pindex(int migratetype, int order)
- {
-+	bool __maybe_unused movable;
-+
- #ifdef CONFIG_TRANSPARENT_HUGEPAGE
- 	if (order > PAGE_ALLOC_COSTLY_ORDER) {
- 		VM_BUG_ON(order != pageblock_order);
--		return NR_LOWORDER_PCP_LISTS;
-+
-+		movable = migratetype == MIGRATE_MOVABLE;
-+
-+		return NR_LOWORDER_PCP_LISTS + movable;
- 	}
- #else
- 	VM_BUG_ON(order > PAGE_ALLOC_COSTLY_ORDER);
-@@ -538,7 +543,7 @@ static inline int pindex_to_order(unsign
- 	int order = pindex / MIGRATE_PCPTYPES;
- 
- #ifdef CONFIG_TRANSPARENT_HUGEPAGE
--	if (pindex == NR_LOWORDER_PCP_LISTS)
-+	if (pindex >= NR_LOWORDER_PCP_LISTS)
- 		order = pageblock_order;
- #else
- 	VM_BUG_ON(order > PAGE_ALLOC_COSTLY_ORDER);
 
 
