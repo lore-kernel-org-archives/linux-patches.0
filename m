@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0F915218A;
-	Tue,  2 Jul 2024 17:22:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E510A15218A;
+	Tue,  2 Jul 2024 17:22:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940970; cv=none; b=DNl4T8ukJmESsTfW5jQlStRUXcfCYvBovEGsWA0PjL+4kzxr7zrIJjkBtP/jxynOWH7dm+0yomxopAhlhbHQn7zIX4OrPFQjJ995qWuOrz6bPxUW+4fvngAhmrdC2HpGGezXLlA0BuVj8E9bSuUdwuGsHI6snX7C7gIvt8xxhbA=
+	t=1719940974; cv=none; b=RVW6QNnx5ZrPeOckmdi3cIuZnLQOXuNpAf7YjREsotzkXYwJWcacVjdmfxjxKuyeVbCz9VaI3vY2/mwytgtv2++0HSZ3SMhAKOYiiSQejp79lWqGtcYTzwshGSjTi+RTRekMYLuZ6skWx9wTnBZtz8EhKrpVuunvqpQMAlyQFyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940970; c=relaxed/simple;
-	bh=nLcQdP7YjK8UaiXVjiCFKgCjYRGe3bd2ofxMHXauCqw=;
+	s=arc-20240116; t=1719940974; c=relaxed/simple;
+	bh=qXKyAPiBLs5W1n8/wERxyLk/DhUjQvlvuILs+Ln+WBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FJJPzappLA8gMsrBgQ5dPUADLnxJtPf25lr6ZRXsAo/tRyW0r7HqGMDQYRM110yUmcRQyqTbkyyyEsc4tQ8JfJK7Sf+2k3POsMeem6lKV/dmVuNnFeofmsblUsdYmPANnm6R6K92RCRKQ30D9QU8YzdFxcg7XkEG0lUNlb3jeuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YySvBuNW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nUHPMAkBDmo4b6eKNowM9LQaEZpzw74m83/yTorvnm1nDE6tcrUM+FklKeoaUK2dY9s1fxp19+qWljBSc4DXnvaIXI0WE5OJqCpOWQwEE4sxpxp4pzaMesJ0fuiw/MO/pN+iHq7iFwyN0XkP323kwWqhJE9yxiokyNFHheA6iNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3P36TXb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YySvBuNW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F0FAC116B1;
-	Tue,  2 Jul 2024 17:22:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3P36TXb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52EC7C116B1;
+	Tue,  2 Jul 2024 17:22:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940970;
-	bh=nLcQdP7YjK8UaiXVjiCFKgCjYRGe3bd2ofxMHXauCqw=;
+	s=korg; t=1719940973;
+	bh=qXKyAPiBLs5W1n8/wERxyLk/DhUjQvlvuILs+Ln+WBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YySvBuNWuXORTBysGaa/2tznKuI/rrAR+5uRkATuG3BTD9l6vv8L6JHre9Sino/cu
-	 P4QfPociDNKHwE5gIsnD9nbaQ2smxBaEbxzSxukwZHOqZ4GysGgb8L5JTdQZjruenv
-	 0fVZhgQnwbAO1Xw2jmsgD8FrHaFQdkwf7FQTLX/E=
+	b=j3P36TXbxK8unsWLvOrkMJbjv3qy1zf/rSGE81smD6Eogydj0Hh3AIjRGm+K/gRPK
+	 hxRzDZxJ04XA6DJcSKjokNwF0UOp0bubNbRugWugnn9zBGJ1AuJ80O3Bt0niyEGsiv
+	 jDJFgNnaG33VlX/4/7ltI+VsU/S1fhxJZG9LA2n4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Judith Mendez <jm@ti.com>,
+	David Lechner <dlechner@baylibre.com>,
+	William Breathitt Gray <wbg@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 090/163] iio: xilinx-ams: Dont include ams_ctrl_channels in scan_mask
-Date: Tue,  2 Jul 2024 19:03:24 +0200
-Message-ID: <20240702170236.468812653@linuxfoundation.org>
+Subject: [PATCH 6.6 091/163] counter: ti-eqep: enable clock at probe
+Date: Tue,  2 Jul 2024 19:03:25 +0200
+Message-ID: <20240702170236.507227732@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -51,44 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: David Lechner <dlechner@baylibre.com>
 
-[ Upstream commit 89b898c627a49b978a4c323ea6856eacfc21f6ba ]
+[ Upstream commit 0cf81c73e4c6a4861128a8f27861176ec312af4e ]
 
-ams_enable_channel_sequence constructs a "scan_mask" for all the PS and
-PL channels. This works out fine, since scan_index for these channels is
-less than 64. However, it also includes the ams_ctrl_channels, where
-scan_index is greater than 64, triggering undefined behavior. Since we
-don't need these channels anyway, just exclude them.
+The TI eQEP clock is both a functional and interface clock. Since it is
+required for the device to function, we should be enabling it at probe.
 
-Fixes: d5c70627a794 ("iio: adc: Add Xilinx AMS driver")
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Link: https://lore.kernel.org/r/20240311162800.11074-1-sean.anderson@linux.dev
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Up to now, we've just been lucky that the clock was enabled by something
+else on the system already.
+
+Fixes: f213729f6796 ("counter: new TI eQEP driver")
+Reviewed-by: Judith Mendez <jm@ti.com>
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Link: https://lore.kernel.org/r/20240621-ti-eqep-enable-clock-v2-1-edd3421b54d4@baylibre.com
+Signed-off-by: William Breathitt Gray <wbg@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/xilinx-ams.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/counter/ti-eqep.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/iio/adc/xilinx-ams.c b/drivers/iio/adc/xilinx-ams.c
-index f0b71a1220e02..f52abf759260f 100644
---- a/drivers/iio/adc/xilinx-ams.c
-+++ b/drivers/iio/adc/xilinx-ams.c
-@@ -414,8 +414,12 @@ static void ams_enable_channel_sequence(struct iio_dev *indio_dev)
+diff --git a/drivers/counter/ti-eqep.c b/drivers/counter/ti-eqep.c
+index b0f24cf3e891d..4d3de4a35801f 100644
+--- a/drivers/counter/ti-eqep.c
++++ b/drivers/counter/ti-eqep.c
+@@ -6,6 +6,7 @@
+  */
  
- 	/* Run calibration of PS & PL as part of the sequence */
- 	scan_mask = BIT(0) | BIT(AMS_PS_SEQ_MAX);
--	for (i = 0; i < indio_dev->num_channels; i++)
--		scan_mask |= BIT_ULL(indio_dev->channels[i].scan_index);
-+	for (i = 0; i < indio_dev->num_channels; i++) {
-+		const struct iio_chan_spec *chan = &indio_dev->channels[i];
+ #include <linux/bitops.h>
++#include <linux/clk.h>
+ #include <linux/counter.h>
+ #include <linux/kernel.h>
+ #include <linux/mod_devicetable.h>
+@@ -376,6 +377,7 @@ static int ti_eqep_probe(struct platform_device *pdev)
+ 	struct counter_device *counter;
+ 	struct ti_eqep_cnt *priv;
+ 	void __iomem *base;
++	struct clk *clk;
+ 	int err;
+ 
+ 	counter = devm_counter_alloc(dev, sizeof(*priv));
+@@ -415,6 +417,10 @@ static int ti_eqep_probe(struct platform_device *pdev)
+ 	pm_runtime_enable(dev);
+ 	pm_runtime_get_sync(dev);
+ 
++	clk = devm_clk_get_enabled(dev, NULL);
++	if (IS_ERR(clk))
++		return dev_err_probe(dev, PTR_ERR(clk), "failed to enable clock\n");
 +
-+		if (chan->scan_index < AMS_CTRL_SEQ_BASE)
-+			scan_mask |= BIT_ULL(chan->scan_index);
-+	}
- 
- 	if (ams->ps_base) {
- 		/* put sysmon in a soft reset to change the sequence */
+ 	err = counter_add(counter);
+ 	if (err < 0) {
+ 		pm_runtime_put_sync(dev);
 -- 
 2.43.0
 
