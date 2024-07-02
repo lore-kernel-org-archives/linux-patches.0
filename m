@@ -1,109 +1,72 @@
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58731DA30E;
-	Tue,  2 Jul 2024 22:39:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD0C1DA30E;
+	Tue,  2 Jul 2024 22:39:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719959956; cv=none; b=JS0Ki9jHhqIwRQJ8PWfM/hS1zmSoS491ZSv1DM9SlT1SwgnxoQmM0ZLR8tK2MJux9uOmbgF/LW6SIWQOlSxTkK0Jh/xoTVjbsodZp1SAXk/Pm9N0s3m7tMhaNzf8BKjxO4BgrELXSYAUsM5mvvGiyY718llFMBedhnGUGQw/IG0=
+	t=1719959966; cv=none; b=Y2iZciSXqiRy+gqhnrRuYhuhf2AIWJiXBVedmPY3TS3JrrCc7cH6qSlIoHsByBw2xjKG9bOx81qDvN6APvTopufHXqvAz3sGO34lOC0caJNeag5X/EGgoPTAL98oJZAWAfnH2h6oIb9+ohVS7DaxYORwGLfFRcgCrAnSj8F1s8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719959956; c=relaxed/simple;
-	bh=AAXTr1TExBe3gk+DNojZaJirkXbvIOWJhgwD6gel2Ds=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C4GrRloiI4KOXcOfF9SxJEMwuumrIx1O7yMCjXCoArk0LkScen/6DGFTwVoI8L6L0UusWycI8QMXWPkfXBdA3+hPWFwo/jb/R1sE2nOEuSIYiVWafejiTpjHKX6vnmpnhkB2I6s27GmMiHdpB38OJoZy1GY3cAI6UhJN4XUgtZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu; spf=pass smtp.mailfrom=heusel.eu; dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b=msvxH7rB; arc=none smtp.client-ip=212.227.126.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=heusel.eu
+	s=arc-20240116; t=1719959966; c=relaxed/simple;
+	bh=LgnI/y/ID6Jy6F31lOFO9UJIUnQJCf1qYLS9n9iNhAM=;
+	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
+	 Subject:From:Cc:To:Date; b=gdfD1TOH4iwuoqIkRMOx9uIS9+yZRbkmsVZ3HgiWtDLxJ4tuZWT+3gL6Fx2+o7sEeagUzvXhJFmMsMcFv95rGFf7XHCH0M4w/nDZuSMBefIR1nChmyww3tEuamZA4wBLGBv0KUy1MPavYsG2gBM2pxWoxmRgUsHgR4VNqsg9qNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NY4oq/I7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b="msvxH7rB"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=heusel.eu;
-	s=s1-ionos; t=1719959934; x=1720564734; i=christian@heusel.eu;
-	bh=LtxDyP5UIQp8b7Vpfhxf1W4aVmwu+wOGuYeadRxap8U=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:In-Reply-To:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=msvxH7rBbHyA7h5OdoFaXYaCZGUoNO4Md1VXKgtYVQut5BCuDBbtoh2+B8mcRY4x
-	 h/ZtZCVGA5XywtIMeYnabo19r3LR9Vy49PBPDqE0rr5K/Yge0FAbCadIBSp7ZFOcW
-	 RAGZ5PYclQ/eefOY5hxYzAg47dzHXejskdtHQIRZO/bRacsAKVKAKACUk1d2JQKOX
-	 MkwVytZZaZqX2iS2B36hZ+ojpQrXZmdW9UVUV6fFDyhfttJ7qyF7JDyG+Di90HTg7
-	 wn4NsgHXKKYsA1+CN+CQTW19xYiMf9yKNrMIICKZuOU32wxvgTDZpJcGe/6HAlUZq
-	 R1HCwJDmLSH6VVOyBA==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from localhost ([84.170.80.43]) by mrelayeu.kundenserver.de
- (mreue010 [212.227.15.167]) with ESMTPSA (Nemesis) id
- 1MLRI3-1shGoG3zE3-00TuYE; Wed, 03 Jul 2024 00:32:56 +0200
-Date: Wed, 3 Jul 2024 00:32:51 +0200
-From: Christian Heusel <christian@heusel.eu>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
-	allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 6.9 000/222] 6.9.8-rc1 review
-Message-ID: <1b8eef46-0f75-4403-a216-2101f299213e@heusel.eu>
-References: <20240702170243.963426416@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NY4oq/I7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59534C116B1;
+	Tue,  2 Jul 2024 22:39:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1719959965;
+	bh=LgnI/y/ID6Jy6F31lOFO9UJIUnQJCf1qYLS9n9iNhAM=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=NY4oq/I7w5IZfNPKQcSPPbrf+mR/IhrVFUXlrVxQQXGchIqAFgHzIxznu7UQeAf3+
+	 r5kwVgJVg9xCHZAccEJxvWG95SADm+ZQdSsSzAhuDYVbvddjyurP3UYSzR2Se5UUS9
+	 MLaFmKTtYwNkODF7N0fjGJq7J7MCiwj64AcybBuRRcmZSqsM9P+a/uVQGb9cssmtNV
+	 in4oHMY7hzoQ1QwWZiq/q1epeB37+ivyO3OmOT6eqgtzBkk4aTkujQDjAMsa3O+jcb
+	 ki2+UyIFajsB6ky8XlKMwjIwuWltdSzNoIE1HQhYahkPAf4ED4VxLPuc66EI16Jw6o
+	 H9G6DSxj0QsQw==
+Message-ID: <2863a45a9fa0479707672c52164ceb0d.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="mnacg57codumhvsu"
-Content-Disposition: inline
-In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
-X-Provags-ID: V03:K1:nhtFSUYL/TDj3XrId7AHYcwIS17tl/QbIweHdWCpMTJ8T3+72bv
- 56wddLQnHeWjjBkMo1OXXSF2JDqVmvx+OMDKMqWSCvJZbBYkMoBKmlaA6w28YNFZJq1rE9q
- zWLbi1AF5fa7mD3yIxb0yWUWEXoPkzuAbEjRv8EN4f30PLVJwSB9UFdddMXfgr4aJXbAEoO
- u9H0DyOpjS6zQ00ymySEQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:y3Ypxlzf6KY=;D8rVEB7gukuieiCawB9G/8+icMa
- 6rFogIhII/Um4ALmCIF2/e72ofVlz0MexJ0in6Lu+o1E5V/YdP6xvoIR6VnxeIfGrdg2L0ibn
- 08Llx39KqX80SUH8MQcQeAkyxwLINn/+uxIgmQ/2UOpo4zFj+xuCi7dsVif9u25iPE3ls6T4t
- OiUfpG+Z34zXLbZAoT1LuNYbaZgbS+dV66PNOJfRFrCIbOmZgkXVvsmxbeXxCxwOg0Z6e4O5D
- F6pANLA2Iz+GxDb1Gbw1YFQOC6NgudcUkQbsWC0hORRnhEy1lu+5vLsooYWCjnssN3qZuzTgK
- HLdnZiYPau+8IuFTeHiHPutbznHGfWb3b9D3mes7aNqormegfAXkLNGvwZNk96daCwCCcek08
- qGsbi0QacSaOSuTS2tAjRzuS5v9M4+6F8qNa5kF8APtCS2zZNYhRFvCowXju+1ag+NyGYFWvJ
- jrrElN3FcbanrXVOyEAiorJrpU2gNpFQtpZdUkSb89fACWY8CdT0ezEDTS4nGAFMcmvjGK14r
- mKlrrCXvy4BLadHnoHQDPlXbLKbZU4BC62VWGKRVmhmOy2U6bPMWwjTa6fNzkWfLMAHWkxFJL
- hl/R80jJV/fBP3xkMC5FkrDZ1symnir431mNejaDv8GcFgfMp+VvMpThAzOKdNsmnEAOUonUV
- 9XjakelA4eAcXeGtzXy4gptmznjAqgnvKIdw8mJsIgCg7w3nvvYmK3z64bVzr6rLK9TpFaUhc
- 8e21fxefbqI0uUK47oTHwj86J0P087ovuLA6ThMrU8mw+dymlNDFi8=
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CABVgOS=duqR0Lea0i92pWR-618iRGkvvATk30MJrU7RRDR8LPg@mail.gmail.com>
+References: <20240603223811.3815762-1-sboyd@kernel.org> <20240603223811.3815762-3-sboyd@kernel.org> <CABVgOS=duqR0Lea0i92pWR-618iRGkvvATk30MJrU7RRDR8LPg@mail.gmail.com>
+Subject: Re: [PATCH v5 02/11] of: Add test managed wrappers for of_overlay_apply()/of_node_put()
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org, Brendan Higgins <brendan.higgins@linux.dev>, Rae Moar <rmoar@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rafael J . Wysocki <rafael@kernel.org>, Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>, Daniel Latypov <dlatypov@google.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Maxime Ripard <maxime@cerno.tech>
+To: David Gow <davidgow@google.com>
+Date: Tue, 02 Jul 2024 15:39:23 -0700
+User-Agent: alot/0.10
 
+Quoting David Gow (2024-06-13 00:48:54)
+>=20
+> This looks good to me.
+>=20
+> I was a little confused at first by some of the wrapper names: in
+> particular that of_overlay_fdt_apply_kunit() is applying the overlay
+> immediately, and deferring a cleanup action, but of_node_put_kunit()
+> is not doing anything immediately, and deferring the put action. My
+> feeling is that the ideal thing would be to have wrappers for all of
+> the of_* functions which return a node which needs to be 'put', and
+> have those wrappers add an of_node_put() action. You could then have
+> of_node_put_kunit() provide a way to trigger that action early. But
+> that seems like it'd be a lot of work and generate a lot of wrappers
+> we otherwise wouldn't need, so this seems an okay compromise to be
+> able to keep using the existing of_ functions. The documentation /
+> comments help make this more clear, too.
+>=20
+> So, no actual problems. (Assuming you don't want to put the
+> documentation under the devicetree rather than under KUnit -- it can
+> go either way.)
+>=20
+> Reviewed-by: David Gow <davidgow@google.com>
+>=20
 
---mnacg57codumhvsu
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On 24/07/02 07:00PM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.9.8 release.
-> There are 222 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-Tested-by: Christian Heusel <christian@heusel.eu>
-
---mnacg57codumhvsu
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEb3ea3iR6a4oPcswTwEfU8yi1JYUFAmaEgBMACgkQwEfU8yi1
-JYXGLQ/+NZJkpHORYr62hZSn5GEgoAIJ9FPxiAY8hsoioKofultA3AU926qGZX32
-NG96fqFDgNnEB3M7SH7X9OyT/tqu3fwNETnQctaWbwu9vUW5Ogjp26jplNrMy8x3
-XyT/I/ceFXlu5NE5KGZShejjr+jV/d+nPF6NiygYXEKRh0YBc3YlrLu4Ph/7jQ3J
-8wcXrE0J8p1ZwoJiXnvZ06SOvnQoIc7Z2k3ujeBeeaLGHB4el9G3zEiej01J7Qkm
-gmCuJTt5YZGsdq/xuW46324J6rtJTlD7Lo0f3aGHai/tvnSnQ35+OTHfOgWSyuiX
-aalDklpOYa5nIoiIdP1GteFegyOzoLdCyILPS/RL8DTys7JuK99QyY+lzx3RItOg
-e0OexOI8LLb7NI7Mw6MzVnh/+jxFQXqSDOm4dxmNvQI7IppN26L8y7HnLnwnMi4O
-c3rH5xbXLCiJevo+5Fc6E2Mja4sC/l4tvLKrqPzskDwC49EyXjin2nGJUP8h6K0g
-As9MIO2UOGayYqAgS9NokxS5yr8ursB1nw6GDoMcbyOwpOXPfCAGBNTODnDALJCU
-YoIhBkHmMgPK4OY1oFODaS5yqr1cml6HsOqQLY4nGH0ckfkh41gi9Y3kBLuM9jgW
-DXIZM7Vg+IHMCW66rw+zUCG4hpuulLam6R9mCTG27F4guRoYV7Q=
-=DF2x
------END PGP SIGNATURE-----
-
---mnacg57codumhvsu--
+Thanks. I'll just leave this alone as I feel like the kunit postfix
+means "do stuff when test is done".
