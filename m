@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997B815B0FE;
-	Tue,  2 Jul 2024 17:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D58615B0FE;
+	Tue,  2 Jul 2024 17:11:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940266; cv=none; b=o6AuKJ4JvzTLTJOklhVL9JZrwGSAYYQQBXygcefz0TQ/UceEm6T7mDl6B2Vev5CFytjdSzwq9vQ95VAkIVL9znXbIrKkr4tKYlZ+kz8waHDouNvvt7JYNNxeq/gOpxR9z3JiPXJxjcnfeXYy4O7jvFc97T8rt/RVgEkoHIbKn4w=
+	t=1719940269; cv=none; b=ZDXK38D3G8BQJcznIzN+cbeuwjeCc9QnGefz8CoI9OEj36jWGCu80v1rPGvIgUNxVdZIdqksffmimxyXRA7LQZ23YXSywNWR2Mt1UiIlxva3L6+zngeG8nI6RfnZFaMObMiVetSEkhvmOtUoNP94miG/tyF0huQ8gc6LXlFjFpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940266; c=relaxed/simple;
-	bh=1ucRHKF5RqviqWN6kl0GKurFbkL9AKHCPPMEQnBHCGc=;
+	s=arc-20240116; t=1719940269; c=relaxed/simple;
+	bh=+FiqPcT1qwdyyRJUNMgQVJ8odC1mVSdtcLWnkO3GSTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WrHtY3L70DkYYAprMCZ+h6fw7ZHvuITgw/Gb1LQg5Z1rvMw/66PmR0xEl8ueyoXLGP3L6rewKgqkhEzLpFH82r4dfJrD6FFFMVbrn2fp2DzfFsDwyrhaHtIuB9WgprB7iK/OXvpN1GnbFrqQx8GW3+E1tE+hyVkM4bFI72/h3wI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vI7oqORN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bFUyMxsPlA2gebzbH5ZcZlLVq71qxuktmzu0XXRfS3YwB+8TQ5/tV3TOKOLDVBD7+PDbwvl5Y3ymZ5QovztypDYcz8W29HokxPJEhpsd4EeGo2RAtoqVpHhtxok7qF6ol7UgH40biNALjg3hoL0t0M7SwiYst/roOtQy2DL7VH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HGitIsSF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vI7oqORN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C95E5C116B1;
-	Tue,  2 Jul 2024 17:11:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HGitIsSF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE515C116B1;
+	Tue,  2 Jul 2024 17:11:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940266;
-	bh=1ucRHKF5RqviqWN6kl0GKurFbkL9AKHCPPMEQnBHCGc=;
+	s=korg; t=1719940269;
+	bh=+FiqPcT1qwdyyRJUNMgQVJ8odC1mVSdtcLWnkO3GSTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vI7oqORNamBWyI7ZhiXnmpz0YJvuzOY6rPjvwpoKm+2MuGpXkb+ZjI1StMomXlgLK
-	 fWqbSU97zeI1ddNVObnjtGB0xDnqPoD26eNBedH4UgRTv3u+0K66iUDLg01Vi/UUW+
-	 6rcX8+3FAJhURMhwL7dde14ymdg1WDoyzX8mYYQs=
+	b=HGitIsSFMSD9u/JUmXvX3vjMNGtP8HaLSd7mb2VF7VJ/C6xT82T7XHt7R28sKBxgG
+	 T5QMMI9fVA18DBB5U2gcx3GFYiZZNrojb/2h8sKMAjAay/qFsyCQCX9Z89arTs06JA
+	 m/4DoLZ/UJDMD8xJuP67586pCSbg82k/X2aS9ybY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Feifei Xu <Feifei.Xu@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Andy Chiu <andy.chiu@sifive.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 102/222] drm/amdgpu: Fix pci state save during mode-1 reset
-Date: Tue,  2 Jul 2024 19:02:20 +0200
-Message-ID: <20240702170247.866363417@linuxfoundation.org>
+Subject: [PATCH 6.9 103/222] riscv: stacktrace: convert arch_stack_walk() to noinstr
+Date: Tue,  2 Jul 2024 19:02:21 +0200
+Message-ID: <20240702170247.904866984@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -53,45 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Andy Chiu <andy.chiu@sifive.com>
 
-[ Upstream commit 74fa02c4a5ea1ade5156a6ce494d3ea83881c2d8 ]
+[ Upstream commit 23b2188920a25e88d447dd7d819a0b0f62fb4455 ]
 
-Cache the PCI state before bus master is disabled. The saved state is
-later used for other cases like restoring config space after mode-2
-reset.
+arch_stack_walk() is called intensively in function_graph when the
+kernel is compiled with CONFIG_TRACE_IRQFLAGS. As a result, the kernel
+logs a lot of arch_stack_walk and its sub-functions into the ftrace
+buffer. However, these functions should not appear on the trace log
+because they are part of the ftrace itself. This patch references what
+arm64 does for the smae function. So it further prevent the re-enter
+kprobe issue, which is also possible on riscv.
 
-Fixes: 5c03e5843e6b ("drm/amdgpu:add smu mode1/2 support for aldebaran")
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Feifei Xu <Feifei.Xu@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Related-to: commit 0fbcd8abf337 ("arm64: Prohibit instrumentation on arch_stack_walk()")
+Fixes: 680341382da5 ("riscv: add CALLER_ADDRx support")
+Signed-off-by: Andy Chiu <andy.chiu@sifive.com>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20240613-dev-andyc-dyn-ftrace-v4-v1-1-1a538e12c01e@sifive.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/riscv/kernel/stacktrace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 941d6e379b8a6..eb8af023326ab 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -5121,11 +5121,14 @@ int amdgpu_device_mode1_reset(struct amdgpu_device *adev)
+diff --git a/arch/riscv/kernel/stacktrace.c b/arch/riscv/kernel/stacktrace.c
+index 528ec7cc9a622..0d3f00eb0baee 100644
+--- a/arch/riscv/kernel/stacktrace.c
++++ b/arch/riscv/kernel/stacktrace.c
+@@ -156,7 +156,7 @@ unsigned long __get_wchan(struct task_struct *task)
+ 	return pc;
+ }
  
- 	dev_info(adev->dev, "GPU mode1 reset\n");
- 
-+	/* Cache the state before bus master disable. The saved config space
-+	 * values are used in other cases like restore after mode-2 reset.
-+	 */
-+	amdgpu_device_cache_pci_state(adev->pdev);
-+
- 	/* disable BM */
- 	pci_clear_master(adev->pdev);
- 
--	amdgpu_device_cache_pci_state(adev->pdev);
--
- 	if (amdgpu_dpm_is_mode1_reset_supported(adev)) {
- 		dev_info(adev->dev, "GPU smu mode1 reset\n");
- 		ret = amdgpu_dpm_mode1_reset(adev);
+-noinline void arch_stack_walk(stack_trace_consume_fn consume_entry, void *cookie,
++noinline noinstr void arch_stack_walk(stack_trace_consume_fn consume_entry, void *cookie,
+ 		     struct task_struct *task, struct pt_regs *regs)
+ {
+ 	walk_stackframe(task, regs, consume_entry, cookie);
 -- 
 2.43.0
 
