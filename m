@@ -1,97 +1,104 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8B916F85B
-	for <patches@lists.linux.dev>; Tue,  2 Jul 2024 12:27:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF921B583F;
+	Tue,  2 Jul 2024 14:48:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719923281; cv=none; b=UbD1FAVbbX4r2A5AuoTbHTiTi9gLX0p36XihTl5ulFWmTfc8xRAdbtqZmA0nIESCQGHcEe3MBJMMyX+ClsyfQK7oRLTk5hOmF1cAUYITI/WZrkQAE/AuEiMDRGrJr7tIf6Q7PUtUPuIjoZxtCCYHBtijN6H4L2/fcJD7fHd7pvk=
+	t=1719931734; cv=none; b=JfcoQi2+Jip5UrCIldMTS9+Vbm35e27h/ojLThptW4VUSsh/DW8zJ2ph4LhGXd5Hm0i+5g42Oy7l5+SB62C6flENqMzWzlQ+/KLgpvaM74sP96UvYQFbrG5X5gvrC+L6XF7fo3MjzZETPbvQRnY3ScFkssQmGcPhIOJi6R4eujg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719923281; c=relaxed/simple;
-	bh=1v5lOVUChevQP+N2QZWisjCxH7AUTxAWh+Bnio2PItY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cD7bo20eeyhcXh2Zgmkym5lY/8K8Re5s22y1+HRHTfWDIeJuj5pf0XJYfilwFy7AN8K6VohwG/3cjesFLAtMjBShnygZEJs7eeoQSIpq9uc1CCi7nWDHG1APkbNlCIY25HTSaMAiGqp8ug8rg2P91GcjQZUS4ERGFv5fjFb37pQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=cwM9n6RZ; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1719931734; c=relaxed/simple;
+	bh=6nM7P33MSykyTDjnm62rbDQplKtWiymkghofPsMaMPA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=dpcQxhLXUZ+xHm8VFSYeApTCXgeUnR5uNb7udtsnKCbCpLqCDTu3oCoumTUhh6yVNsn0bkyPY3Nqm3EOFaIptX7kbq6Sai1vxwpUZblzeiLMe4PPFEehrir/DkDAwmXt3dVUYJ42YeetU4kqxJtWXBVDqqxVz3y0YWzw7K0yZcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=grlDPDnN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="cwM9n6RZ"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-425814992aeso14378465e9.1
-        for <patches@lists.linux.dev>; Tue, 02 Jul 2024 05:27:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1719923278; x=1720528078; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1v5lOVUChevQP+N2QZWisjCxH7AUTxAWh+Bnio2PItY=;
-        b=cwM9n6RZCfMKUMeSAGuMIfM6g2MrD+5qrEsKj6ez3e+6xSG55/uJrmPRcxPZaEEx5q
-         HhmGr5DOePXOMzn2cbJW9qk1lr/bBwWnaeBAdwXjABAL2BbF2sS6Pg3ZVWx2r7Jz3IW7
-         xmudmWEIG4QGXWLqV712F25nVe2lLx/MMgXyquDTidDLgVeficb6/JmmsLktc9PIFJtQ
-         qfva1h+ouXv7xoCrD5Is6lj1LowJ6DIr+nM/C0UCSlG0pBmb8ovOH4nY9bPWpLs/M4P4
-         oGkF4DbNNr5NQQREy/mZ8mDUansSqmjUY/imRjiiu/9sG/W2+/RYVsjbqOyHuD0CS7I7
-         bgfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719923278; x=1720528078;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1v5lOVUChevQP+N2QZWisjCxH7AUTxAWh+Bnio2PItY=;
-        b=E+DtbALG9eKeKgNBk8qTxKa44F4+KDBrzZ/y4JbqepJpkOfNlQ3iEG1B/bZb7wFAOI
-         QsKJdLHP6/X0LKwsKjECHh/rPn6aQA4d/vILkPu3MjXuLTWUEQPE+mmlcLohiL9ihYBe
-         biDmzJwmWqldfFlvgTRxmwHT0iKDZRoW4Z+NzPt7QwXqsPedWL7QRduAt8GjZo7CLuj9
-         ZsZY4EhWK6v/KAXLT8yNoZqzBtTIqKDiaeUHGypwb1kmtbRpkz5Z5+jUdunzKEJqIbh3
-         SGcWWsCplA84+pbdc2rlpXbC5fg4dU/5YjPAraxvObKmq2HxVWKETVL+apJV7bxN+Nzi
-         /qRA==
-X-Forwarded-Encrypted: i=1; AJvYcCVEaxuA7UVPoeGNYNpJcMb/02J/sFyWZdjsDJty9VzC+bjbKql4Oi1r28VQzN4dV6CqL9S7LtTvNpjZumQuTyqeXaJA4GRYHw==
-X-Gm-Message-State: AOJu0Yxwut1hGsbIbU+ABPJE6omJ5KkqXX8dFDmGDOZvfiw196vGwt16
-	8TM4R/jfGGcy11otxcrusop54Id7GdLOvSuebdBTFk4GT6m2ywD1Rt0fTTy0fcpVC0b4LbNppzp
-	5fJIFGydSASctEDvYrGhX/8TKZntvONvVgU8L
-X-Google-Smtp-Source: AGHT+IF4qZD52kZRJjBUJxyc2yqwkhHDch0UUTYE9b5JxPadLBBqquNx7emNw9zg4DSnlg0OkbPdmI7A1w5xcyHHBrU=
-X-Received: by 2002:a05:6000:1045:b0:367:13a:5276 with SMTP id
- ffacd0b85a97d-367756ad617mr5683027f8f.20.1719923277752; Tue, 02 Jul 2024
- 05:27:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="grlDPDnN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECCE7C116B1;
+	Tue,  2 Jul 2024 14:48:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1719931733;
+	bh=6nM7P33MSykyTDjnm62rbDQplKtWiymkghofPsMaMPA=;
+	h=From:Date:Subject:To:Cc:From;
+	b=grlDPDnNujQAEKfRF0P/1fSNQduOUujHvXT1bZDSV/dvZShvannniXiPSKpTgSbjJ
+	 DEYv0GEF/+eiriFBUjwQ5d7YwjxCOoLyNTTamBFL3JCBLOmxhpF5kR4YnQI3hLxJ+a
+	 752XPRKF2xSaQadJ/xN8GxOcWvztplosmWGBt6BT2EqNeVR1UewveC0G4Ykczn5qym
+	 PnnYexgjtP0d7s1dQFgJEYzu/cmvINn8Ft7LsMZ1bAmq2ihB9aJTMJLDgVCEcSP7Ov
+	 u1OXVJNcoTghUYo+Fciii+qwUbTrOLO+9wi6KX0WZCyAmWhfsrEDM57KSiAISRjazO
+	 Lhv55qIKGXJng==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 02 Jul 2024 07:48:48 -0700
+Subject: [PATCH] power: supply: cros_charge-control: Avoid accessing
+ attributes out of bounds
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240701183625.665574-1-ojeda@kernel.org> <20240701183625.665574-3-ojeda@kernel.org>
- <ap7u5hpgfdzYgTkobIleYc0uolBIsAVbq56CwMJG6k4x57wXeEtu4fpLpgSOvQtbJHvB6D0J1wlBaqDV-xt2owlVejhfABUv_ivILyJ2J9o=@protonmail.com>
- <CANiq72kMaPm2OsGb3o0VUtdoMhSUoo8QEsCFzVjYFtCThvNJ1w@mail.gmail.com>
-In-Reply-To: <CANiq72kMaPm2OsGb3o0VUtdoMhSUoo8QEsCFzVjYFtCThvNJ1w@mail.gmail.com>
-From: Alice Ryhl <aliceryhl@google.com>
-Date: Tue, 2 Jul 2024 14:27:45 +0200
-Message-ID: <CAH5fLgiApXtur45Uz+o+xOTX4qqFAf6LnB+Csz2-0CGmJue40g@mail.gmail.com>
-Subject: Re: [PATCH 02/13] rust: init: simplify from `map_err` to `inspect_err`
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Miguel Ojeda <ojeda@kernel.org>, 
-	Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	Andreas Hindborg <a.hindborg@samsung.com>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240702-cros_charge-control-fix-clang-array-bounds-warning-v1-1-ae04d995cd1d@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAE8ThGYC/x2N2wrCMAyGX2Xk2kAtRcVXEZGuTTUwEkk9jbF3X
+ /Dy+48LdDKmDudhAaMPd1Zx2O8GKI8sd0KuzhBDTOEYIhbTfnPL3CoqL9MJG/+wTJ7GbJZnHPU
+ tteM3m7CL4ym1GtohxRzAh59G3vifXq7rugEPrgOThAAAAA==
+To: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas@weissschuh.net>, 
+ Tzung-Bi Shih <tzungbi@kernel.org>, Benson Leung <bleung@chromium.org>
+Cc: Guenter Roeck <groeck@chromium.org>, Sebastian Reichel <sre@kernel.org>, 
+ chrome-platform@lists.linux.dev, linux-pm@vger.kernel.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2030; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=6nM7P33MSykyTDjnm62rbDQplKtWiymkghofPsMaMPA=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGktwiH/eg+0M804/NP2ArtjWqR867/Gq+1Pl+6IXGc1z
+ diJ+/bPjlIWBjEuBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjARhVaGf2acfmnxi/M+ePeU
+ ZWyvr2Sbuvyxi/r1mE/NL00yhDz+SzAyvOL3bJDUlYirufbaz2BT/8Rligl6UX8YIv9OkZuQ1by
+ REwA=
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Mon, Jul 1, 2024 at 11:58=E2=80=AFPM Miguel Ojeda
-<miguel.ojeda.sandonis@gmail.com> wrote:
->
-> On Mon, Jul 1, 2024 at 10:05=E2=80=AFPM Bj=C3=B6rn Roy Baron
-> <bjorn3_gh@protonmail.com> wrote:
-> >
-> > The formatting here is a bit weird. I would have expected the ) ending =
-the inspect_err call to be placed on a new line given that the unsafe block=
- isn't placed on the same line as the start of the inspect_err call either.=
- This seems to be a case where rustfmt mostly gives up on formatting. If I =
-deindent the comment and unsafe block rustfmt will keep it that way and if =
-I add a trailing space to the inspect_err line it will keep it and emit an =
-error that it left behind trailing whitespace. Maybe add a block around the=
- comment and unsafe block to make rustfmt work again?
->
-> Benno: any preference here? Or even open coding it.
+Clang warns (or errors with CONFIG_WERROR=y):
 
-I would open code it with an `if res.is_err() { drop }`. Using inspect
-for a side effect other than printing seems weird to me.
+  drivers/power/supply/cros_charge-control.c:319:2: error: array index 3 is past the end of the array (that has type 'struct attribute *[3]') [-Werror,-Warray-bounds]
+    319 |         priv->attributes[_CROS_CHCTL_ATTR_COUNT] = NULL;
+        |         ^                ~~~~~~~~~~~~~~~~~~~~~~
+  drivers/power/supply/cros_charge-control.c:49:2: note: array 'attributes' declared here
+     49 |         struct attribute *attributes[_CROS_CHCTL_ATTR_COUNT];
+        |         ^
+  1 error generated.
 
-Alice
+In earlier revisions of the driver, the attributes array in
+cros_chctl_priv had four elements with four distinct assignments but
+during review, the number of elements was changed to three through use
+of an enum and the assignments became a for loop, except for this one,
+which is now out of bounds. This assignment is no longer necessary
+because the size of the attributes array no longer accounts for it, so
+just remove it to clear up the warning.
+
+Fixes: c6ed48ef5259 ("power: supply: add ChromeOS EC based charge control driver")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/power/supply/cros_charge-control.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/drivers/power/supply/cros_charge-control.c b/drivers/power/supply/cros_charge-control.c
+index 73d7f2dc0fa3..2dd8ddbd56bc 100644
+--- a/drivers/power/supply/cros_charge-control.c
++++ b/drivers/power/supply/cros_charge-control.c
+@@ -316,7 +316,6 @@ static int cros_chctl_probe(struct platform_device *pdev)
+ 		sysfs_attr_init(&priv->device_attrs[i].attr);
+ 		priv->attributes[i] = &priv->device_attrs[i].attr;
+ 	}
+-	priv->attributes[_CROS_CHCTL_ATTR_COUNT] = NULL;
+ 	priv->group.is_visible = cros_chtl_attr_is_visible;
+ 	priv->group.attrs = priv->attributes;
+ 
+
+---
+base-commit: 3664706e875f84bd4e3fa25ed1c6e46934cb32cd
+change-id: 20240702-cros_charge-control-fix-clang-array-bounds-warning-b84fd0f642a0
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
