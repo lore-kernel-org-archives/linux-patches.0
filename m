@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BBE31BD505;
-	Tue,  2 Jul 2024 17:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A20178381;
+	Tue,  2 Jul 2024 17:06:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940010; cv=none; b=IneN9kn8dRMpoOqM0eQbOOOvttS2koKB6wmy17IBuPdpCkIIr7tGkfFMmDL3Wx2i+rwyezsxH5eacfMReSnJnqv0XAvaqiNJ6bCxlV0V2BcnndWcJ+G1OykDJZFwHsSdeciN85xuhAM5HIu8D82Zh5heXaIEr9Ei6Zvk8OWGy+Y=
+	t=1719940013; cv=none; b=IEIn20gg6F5PbRUjc7LDn5bcaYJrOpVw5eImX8dviWtr8dzhrs4yyjcnjU11w+Y5DiZGKQvL+o/E2pFn1HH5kG6y1DhzAtTldP2u43D1i3NEDBCtpInaFYC2+c6EOua99jt6xkiU1mHYPbL6QsIlAs7uv8menyHu/wInQoBxrBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940010; c=relaxed/simple;
-	bh=qGzmHjZBnrI75XQfdq2JidqCTmTbARzXvvEEH05i6Sw=;
+	s=arc-20240116; t=1719940013; c=relaxed/simple;
+	bh=ciaLK4mZTB8Kk7uqW2iP6BlV4Uei6uflkq2jm7P3iLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TS/oboBYkjxKwYIB/Ini9tQVBnTKNft8f5q53aUa3atlMY3MieeexPRsDisGXDyCQVkymD+qr+kNRRUOZfImX3/cBKJo6Na01Gr3D36dw5KTyGAAhtdNT82dTPPvc/N9UozFbepoNodVzsCB1gxNK0SJugw5pSy33JZOB3ipazw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pbZbuRSH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XNRCLdKXdk7vrU1rkSddUnPYAmLfBPNN/jdCsNYYpyulnh59i/O34Wm0RAPHxHBkbL6EzDRETRqlKOVls0d79lvcH0znp8PsEtTrnMi2hMX//iaqME8rjAW8ANvG61qXBRbbt4aVFXJa8eXR4P4nXhlJnWtoMBWL9Q29PLHU8aU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DTukdTY2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pbZbuRSH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B6D1C116B1;
-	Tue,  2 Jul 2024 17:06:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DTukdTY2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3719DC116B1;
+	Tue,  2 Jul 2024 17:06:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940010;
-	bh=qGzmHjZBnrI75XQfdq2JidqCTmTbARzXvvEEH05i6Sw=;
+	s=korg; t=1719940013;
+	bh=ciaLK4mZTB8Kk7uqW2iP6BlV4Uei6uflkq2jm7P3iLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pbZbuRSH1GBdpCSTOAPFB0OYoIPhjY6xzLiKCMGYiJx6jK6FUBiOUjJJvDMH9tCD0
-	 CeX9tt9dcvZ77jqOdeh7xISaJZ5lckYu2x5XuWcK+lPuWOM6XX8AMaE5mgla2qEmU5
-	 TQuPbUBehInFcfqJMxkOWQh/NJ8U8a/9IaN07Xhs=
+	b=DTukdTY2lNOroedWQfO7FyfEA1PApufpCjA1yNKYJ90W7zvF2BMNvMZJ08bZ4yYfg
+	 CtSRVbDu3+okd7ZOHDqFkXuY7DkKCrQ+WoMXNztPKqJCwZxnvz7uSJfZu2Wt0HAnGh
+	 FWQSrOWEm6KkOE2ZgUAWBMIkg+yArxgVR3/ViImw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 026/222] ASoC: amd: acp: add a null check for chip_pdev structure
-Date: Tue,  2 Jul 2024 19:01:04 +0200
-Message-ID: <20240702170244.978181409@linuxfoundation.org>
+Subject: [PATCH 6.9 027/222] ASoC: amd: acp: remove i2s configuration check in acp_i2s_probe()
+Date: Tue,  2 Jul 2024 19:01:05 +0200
+Message-ID: <20240702170245.015801273@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -53,40 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 
-[ Upstream commit 98d919dfee1cc402ca29d45da642852d7c9a2301 ]
+[ Upstream commit 70fa3900c3ed92158628710e81d274e5cb52f92b ]
 
-When acp platform device creation is skipped, chip->chip_pdev value will
-remain NULL. Add NULL check for chip->chip_pdev structure in
-snd_acp_resume() function to avoid null pointer dereference.
+ACP supports different pin configurations for I2S IO. Checking ACP pin
+configuration value against specific value breaks the functionality for
+other I2S pin configurations. This check is no longer required in i2s dai
+driver probe call as i2s configuration check will be verified during acp
+platform device creation sequence.
+Remove i2s_mode check in acp_i2s_probe() function.
 
-Fixes: 088a40980efb ("ASoC: amd: acp: add pm ops support for acp pci driver")
+Fixes: b24484c18b10 ("ASoC: amd: acp: ACP code generic to support newer platforms")
 Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Link: https://msgid.link/r/20240617072844.871468-1-Vijendar.Mukunda@amd.com
+Link: https://msgid.link/r/20240617072844.871468-2-Vijendar.Mukunda@amd.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/acp-pci.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ sound/soc/amd/acp/acp-i2s.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/sound/soc/amd/acp/acp-pci.c b/sound/soc/amd/acp/acp-pci.c
-index ad320b29e87dc..aa3e72d134518 100644
---- a/sound/soc/amd/acp/acp-pci.c
-+++ b/sound/soc/amd/acp/acp-pci.c
-@@ -199,10 +199,12 @@ static int __maybe_unused snd_acp_resume(struct device *dev)
- 	ret = acp_init(chip);
- 	if (ret)
- 		dev_err(dev, "ACP init failed\n");
--	child = chip->chip_pdev->dev;
--	adata = dev_get_drvdata(&child);
--	if (adata)
--		acp_enable_interrupts(adata);
-+	if (chip->chip_pdev) {
-+		child = chip->chip_pdev->dev;
-+		adata = dev_get_drvdata(&child);
-+		if (adata)
-+			acp_enable_interrupts(adata);
-+	}
- 	return ret;
+diff --git a/sound/soc/amd/acp/acp-i2s.c b/sound/soc/amd/acp/acp-i2s.c
+index 60cbc881be6e1..ef12f97ddc69e 100644
+--- a/sound/soc/amd/acp/acp-i2s.c
++++ b/sound/soc/amd/acp/acp-i2s.c
+@@ -588,20 +588,12 @@ static int acp_i2s_probe(struct snd_soc_dai *dai)
+ {
+ 	struct device *dev = dai->component->dev;
+ 	struct acp_dev_data *adata = dev_get_drvdata(dev);
+-	struct acp_resource *rsrc = adata->rsrc;
+-	unsigned int val;
+ 
+ 	if (!adata->acp_base) {
+ 		dev_err(dev, "I2S base is NULL\n");
+ 		return -EINVAL;
+ 	}
+ 
+-	val = readl(adata->acp_base + rsrc->i2s_pin_cfg_offset);
+-	if (val != rsrc->i2s_mode) {
+-		dev_err(dev, "I2S Mode not supported val %x\n", val);
+-		return -EINVAL;
+-	}
+-
+ 	return 0;
  }
  
 -- 
