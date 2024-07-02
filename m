@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D0A15218A;
-	Tue,  2 Jul 2024 17:09:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D26BE5A;
+	Tue,  2 Jul 2024 17:09:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940150; cv=none; b=rWVPzZgFwyUAoBZ0BGdwHtElbQlHApjvHCKXNorAqNG/0KaJWjVeOi+xliKKtMCoeylpSm9pXy+PdIgrG7bRtJeepicNZAzXRmh8fwd+E7Hft85+DE0FklpadB49f7Qep3HDtuNeF9n25FPJRQsqxmDkx+DoALGIhoEiIGQ6EC0=
+	t=1719940153; cv=none; b=H3DBeKem9s1fIlLo/oci3I0mlzzVfYBd7DRiaxlgSxm2TMc80VC/ChSlebr7kI7hJZFM7qB7O1lIcTMogJszlXgbjI/zAEtr810e7dYxnrkh26ou6UElJYhsPgKE/JkhYW1UGJRmkykwH4KhOoUXw40FNX8d/lG4Hc/5oF5CxIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940150; c=relaxed/simple;
-	bh=Zgjwjv8dVd8WsQ+6RAOCuVpZfi3nVqNU0SMqMgS9s7o=;
+	s=arc-20240116; t=1719940153; c=relaxed/simple;
+	bh=BV7XAeBYHQ/vKzmO6GTW3rrUxs2gcHRF09aVTqina1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aHyziRjOiHWMrJyqSWjvFm0RWx6HKadK8YKfFz1r6L4EVlaTt8BYeIgYmhgfOV+o+S1uU+5gTaQoeu/H0R5oTgE4ky0GJl1hjimv+GdetRw09ly4woooloP0/TYDIgjntyYgyFV40fTUqZ0Vpe0LjW3ENjB4citKkTI6YEOOWSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=imonLVTT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UdF+8P/dlHGYighwWvJKw1d8O9CxLRxuw3Bo29BNnP4sktD/deJhw2R+QdA+b75XXnIwKZS2sGvh6jO0+jsebX0f1dG8JBmfGt2uTjyt0ZMmyaClMgwKCBvuYUbcxlealK2vqq5ys3UfS4fMI7hyVQQHcMGLxrQdxcYVW+tX1CI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LvjTaWqa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imonLVTT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA0CAC116B1;
-	Tue,  2 Jul 2024 17:09:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LvjTaWqa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C200C116B1;
+	Tue,  2 Jul 2024 17:09:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940150;
-	bh=Zgjwjv8dVd8WsQ+6RAOCuVpZfi3nVqNU0SMqMgS9s7o=;
+	s=korg; t=1719940153;
+	bh=BV7XAeBYHQ/vKzmO6GTW3rrUxs2gcHRF09aVTqina1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=imonLVTTIcjkIc3Lo2yUKOw+yzW9hF3Gl9fVLr6GOURNwE7ZOTkDKMFfc6yeOHar5
-	 v9on7uPmaDAOsNbJKVFXwHe36SA7kxhPokxBStFtx2ZeCWfiDWmWnQTFR9Q+SybXii
-	 JOQiRhocFbMaSUV/Y0extBWDdVMUSEQpqyXb3Hl4=
+	b=LvjTaWqa3/DOiuauF+ea2h/v1MENs+KA4Vm8oURG1ZWX6aiUt38cwsb8+fi5Rneou
+	 +SIu2ZQHqo0VVWRMbIMByK66wfTmh2HYlQvQlIH4s/3iJsy3rJ+tOI2/JZqK7FjWcB
+	 GGj7QsbFRrCjhAfY/GNFVJHc237AtjvWApiAJ9Z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Nirmoy Das <nirmoy.das@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 067/222] drm/panel: ilitek-ili9881c: Fix warning with GPIO controllers that sleep
-Date: Tue,  2 Jul 2024 19:01:45 +0200
-Message-ID: <20240702170246.542678342@linuxfoundation.org>
+Subject: [PATCH 6.9 068/222] drm/xe: Fix potential integer overflow in page size calculation
+Date: Tue,  2 Jul 2024 19:01:46 +0200
+Message-ID: <20240702170246.580647354@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -51,51 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+From: Nirmoy Das <nirmoy.das@intel.com>
 
-[ Upstream commit ee7860cd8b5763017f8dc785c2851fecb7a0c565 ]
+[ Upstream commit 4f4fcafde343a54465f85a2909fc684918507a4b ]
 
-The ilitek-ili9881c controls the reset GPIO using the non-sleeping
-gpiod_set_value() function. This complains loudly when the GPIO
-controller needs to sleep. As the caller can sleep, use
-gpiod_set_value_cansleep() to fix the issue.
+Explicitly cast tbo->page_alignment to u64 before bit-shifting to
+prevent overflow when assigning to min_page_size.
 
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20240317154839.21260-1-laurent.pinchart@ideasonboard.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240317154839.21260-1-laurent.pinchart@ideasonboard.com
+Cc: Matthew Auld <matthew.auld@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Nirmoy Das <nirmoy.das@intel.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240318164342.3094-1-nirmoy.das@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-ilitek-ili9881c.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/xe/xe_ttm_vram_mgr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c b/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
-index 2ffe5f68a8903..4c8c317191f3c 100644
---- a/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
-+++ b/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
-@@ -1080,10 +1080,10 @@ static int ili9881c_prepare(struct drm_panel *panel)
- 	msleep(5);
+diff --git a/drivers/gpu/drm/xe/xe_ttm_vram_mgr.c b/drivers/gpu/drm/xe/xe_ttm_vram_mgr.c
+index 115ec745e5029..0678faf832126 100644
+--- a/drivers/gpu/drm/xe/xe_ttm_vram_mgr.c
++++ b/drivers/gpu/drm/xe/xe_ttm_vram_mgr.c
+@@ -91,7 +91,7 @@ static int xe_ttm_vram_mgr_new(struct ttm_resource_manager *man,
  
- 	/* And reset it */
--	gpiod_set_value(ctx->reset, 1);
-+	gpiod_set_value_cansleep(ctx->reset, 1);
- 	msleep(20);
+ 	min_page_size = mgr->default_page_size;
+ 	if (tbo->page_alignment)
+-		min_page_size = tbo->page_alignment << PAGE_SHIFT;
++		min_page_size = (u64)tbo->page_alignment << PAGE_SHIFT;
  
--	gpiod_set_value(ctx->reset, 0);
-+	gpiod_set_value_cansleep(ctx->reset, 0);
- 	msleep(20);
- 
- 	for (i = 0; i < ctx->desc->init_length; i++) {
-@@ -1138,7 +1138,7 @@ static int ili9881c_unprepare(struct drm_panel *panel)
- 
- 	mipi_dsi_dcs_enter_sleep_mode(ctx->dsi);
- 	regulator_disable(ctx->power);
--	gpiod_set_value(ctx->reset, 1);
-+	gpiod_set_value_cansleep(ctx->reset, 1);
- 
- 	return 0;
- }
+ 	if (WARN_ON(min_page_size < mm->chunk_size)) {
+ 		err = -EINVAL;
 -- 
 2.43.0
 
