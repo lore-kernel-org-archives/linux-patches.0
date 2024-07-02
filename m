@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A1D15B0FE;
-	Tue,  2 Jul 2024 17:13:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D4615B0FE;
+	Tue,  2 Jul 2024 17:13:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940427; cv=none; b=uH/iRk0SjauYJxB73Nl4DCKM/+e+cO8p+zcnAvCsN6JbkeZUkDPN5JZTIvA/8bG5LKd9GesaSzk+sEra7k3jm5YjByq0RgiviHcA5YSEAAQP74EKdPQGPO6QYntXl+v+39CB/z+v/5SLq2TUS5OjZbAn3aj01Rj5A5jXEcTsTJ8=
+	t=1719940430; cv=none; b=OQqp5iSUk2tujv7jUv7bzlIapecI62kqKhLUiZbdvKZiNebhBye+2+BGKiVeZDjjB+mPdlkU0JONVi77ssd/0u8uoOZGLE/4d8xh882J2R9d5DZwURPZ55daS6Kf642uBVdX6hme6QN7CjiUXsUSSiEmScS0Y4ADT5O+Uu4IJV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940427; c=relaxed/simple;
-	bh=QmjlO+vxYbqLCY+PZCYOPk3VuCTBQ+zC4fn4s45ba3k=;
+	s=arc-20240116; t=1719940430; c=relaxed/simple;
+	bh=IVRGkFJApjXA6mEqt2lxrlxPa/XUaO+FQgOmQVCVo9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=E3tyzoEvqszP5fOZVPRliQnrYM02FIkVXwc7A1X/6sgON7NrCznU64uFeCQ4RO8cm2b+P5MxH+duxhOsPlfd053FvF/KUJZF0qWUeSuejOnN+0inCseQcOPK4OSZG8erAzi9TpMYgbN0FEmrjONeIktEFIZwkP5QH3R97TqCHzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HiD58B2J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X6y+qMmEhltmCwjrPcc/Z1trPqrQOYk3f4JxI3BwqyqnW2sBA7WvRKp0AgQfE1MfmcKlpNaVvsxJ1RUFYRz6lQaHJnFsiZ3wFKF6HJSgId+Dkt0UVJAknqfHbcy5gZTsejajkReLEDvC4hwApDwa12MU1FFX8I4eQqq8Xfp+T9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FQaGNL7T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HiD58B2J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D81FEC116B1;
-	Tue,  2 Jul 2024 17:13:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FQaGNL7T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16FFBC116B1;
+	Tue,  2 Jul 2024 17:13:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940427;
-	bh=QmjlO+vxYbqLCY+PZCYOPk3VuCTBQ+zC4fn4s45ba3k=;
+	s=korg; t=1719940430;
+	bh=IVRGkFJApjXA6mEqt2lxrlxPa/XUaO+FQgOmQVCVo9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HiD58B2JbInY3UH/2sZ/QZDIjPpZjcvMYc9i3ihVPhmRCiQ9wbh4GwsowNtVJl98c
-	 u/rKjnlAh9AZ7+egLmaX4VEtq7md5DkeE82jmvqmvUfdP5mvn7pmHxXhdzd9itUTVX
-	 iLJ/rNBLofcNuePQq2M8wh+2lMvjAShkDn71NGtg=
+	b=FQaGNL7TGZQ3+/UqFNILk2KDBFi8948FcFqVTPcL3IxA27LB5u8HJe89zJonsgMNv
+	 39gu6syvAJEsxhWwzGiIrG8IW14u43V2nIEW3UbMtqKmI3Snc/T1Cp2/U/4kDTQrw7
+	 RMSy7TUtxetdKJCP7IOuFrVadQ/aRhtQx6o+owVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
+	Kamal Dasu <kamal.dasu@broadcom.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.9 121/222] mmc: sdhci-pci-o2micro: Convert PCIBIOS_* return codes to errnos
-Date: Tue,  2 Jul 2024 19:02:39 +0200
-Message-ID: <20240702170248.594915489@linuxfoundation.org>
+Subject: [PATCH 6.9 122/222] mmc: sdhci-brcmstb: check R1_STATUS for erase/trim/discard
+Date: Tue,  2 Jul 2024 19:02:40 +0200
+Message-ID: <20240702170248.633738666@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -45,222 +44,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Kamal Dasu <kamal.dasu@broadcom.com>
 
-commit a91bf3b3beadbb4f8b3bbc7969fb2ae1615e25c8 upstream.
+commit d77dc388cd61dfdafe30b98025fa827498378199 upstream.
 
-sdhci_pci_o2_probe() uses pci_read_config_{byte,dword}() that return
-PCIBIOS_* codes. The return code is then returned as is but as
-sdhci_pci_o2_probe() is probe function chain, it should return normal
-errnos.
+When erase/trim/discard completion was converted to mmc_poll_for_busy(),
+optional support to poll with the host_ops->card_busy() callback was also
+added.
 
-Convert PCIBIOS_* returns code using pcibios_err_to_errno() into normal
-errno before returning them. Add a label for read failure so that the
-conversion can be done in one place rather than on all of the return
-statements.
+The common sdhci's ->card_busy() turns out not to be working as expected
+for the sdhci-brcmstb variant, as it keeps returning busy beyond the card's
+busy period. In particular, this leads to the below splat for
+mmc_do_erase() when running a discard (BLKSECDISCARD) operation during
+mkfs.f2fs:
 
-Fixes: 3d757ddbd68c ("mmc: sdhci-pci-o2micro: add Bayhub new chip GG8 support for UHS-I")
-Fixes: d599005afde8 ("mmc: sdhci-pci-o2micro: Add missing checks in sdhci_pci_o2_probe")
-Fixes: 706adf6bc31c ("mmc: sdhci-pci-o2micro: Add SeaBird SeaEagle SD3 support")
-Fixes: 01acf6917aed ("mmc: sdhci-pci: add support of O2Micro/BayHubTech SD hosts")
-Fixes: 26daa1ed40c6 ("mmc: sdhci: Disable ADMA on some O2Micro SD/MMC parts.")
+    Info: [/dev/mmcblk1p9] Discarding device
+    [   39.597258] sysrq: Show Blocked State
+    [   39.601183] task:mkfs.f2fs       state:D stack:0     pid:1561  tgid:1561  ppid:1542   flags:0x0000000d
+    [   39.610609] Call trace:
+    [   39.613098]  __switch_to+0xd8/0xf4
+    [   39.616582]  __schedule+0x440/0x4f4
+    [   39.620137]  schedule+0x2c/0x48
+    [   39.623341]  schedule_hrtimeout_range_clock+0xe0/0x114
+    [   39.628562]  schedule_hrtimeout_range+0x10/0x18
+    [   39.633169]  usleep_range_state+0x5c/0x90
+    [   39.637253]  __mmc_poll_for_busy+0xec/0x128
+    [   39.641514]  mmc_poll_for_busy+0x48/0x70
+    [   39.645511]  mmc_do_erase+0x1ec/0x210
+    [   39.649237]  mmc_erase+0x1b4/0x1d4
+    [   39.652701]  mmc_blk_mq_issue_rq+0x35c/0x6ac
+    [   39.657037]  mmc_mq_queue_rq+0x18c/0x214
+    [   39.661022]  blk_mq_dispatch_rq_list+0x3a8/0x528
+    [   39.665722]  __blk_mq_sched_dispatch_requests+0x3a0/0x4ac
+    [   39.671198]  blk_mq_sched_dispatch_requests+0x28/0x5c
+    [   39.676322]  blk_mq_run_hw_queue+0x11c/0x12c
+    [   39.680668]  blk_mq_flush_plug_list+0x200/0x33c
+    [   39.685278]  blk_add_rq_to_plug+0x68/0xd8
+    [   39.689365]  blk_mq_submit_bio+0x3a4/0x458
+    [   39.693539]  __submit_bio+0x1c/0x80
+    [   39.697096]  submit_bio_noacct_nocheck+0x94/0x174
+    [   39.701875]  submit_bio_noacct+0x1b0/0x22c
+    [   39.706042]  submit_bio+0xac/0xe8
+    [   39.709424]  blk_next_bio+0x4c/0x5c
+    [   39.712973]  blkdev_issue_secure_erase+0x118/0x170
+    [   39.717835]  blkdev_common_ioctl+0x374/0x728
+    [   39.722175]  blkdev_ioctl+0x8c/0x2b0
+    [   39.725816]  vfs_ioctl+0x24/0x40
+    [   39.729117]  __arm64_sys_ioctl+0x5c/0x8c
+    [   39.733114]  invoke_syscall+0x68/0xec
+    [   39.736839]  el0_svc_common.constprop.0+0x70/0xd8
+    [   39.741609]  do_el0_svc+0x18/0x20
+    [   39.744981]  el0_svc+0x68/0x94
+    [   39.748107]  el0t_64_sync_handler+0x88/0x124
+    [   39.752455]  el0t_64_sync+0x168/0x16c
+
+To fix the problem let's override the host_ops->card_busy() callback by
+setting it to NULL, which forces the mmc core to poll with a CMD13 and
+checking the R1_STATUS in the mmc_busy_cb() function.
+
+Signed-off-by: Kamal Dasu <kamal.dasu@broadcom.com>
+Fixes: 0d84c3e6a5b2 ("mmc: core: Convert to mmc_poll_for_busy() for erase/trim/discard")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20240527132443.14038-2-ilpo.jarvinen@linux.intel.com
+Link: https://lore.kernel.org/r/20240603220834.21989-2-kamal.dasu@broadcom.com
+[Ulf: Clarified the commit message]
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-pci-o2micro.c |   41 ++++++++++++++++++-----------------
- 1 file changed, 22 insertions(+), 19 deletions(-)
+ drivers/mmc/host/sdhci-brcmstb.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/mmc/host/sdhci-pci-o2micro.c
-+++ b/drivers/mmc/host/sdhci-pci-o2micro.c
-@@ -823,7 +823,7 @@ static int sdhci_pci_o2_probe(struct sdh
- 		ret = pci_read_config_byte(chip->pdev,
- 				O2_SD_LOCK_WP, &scratch);
- 		if (ret)
--			return ret;
-+			goto read_fail;
- 		scratch &= 0x7f;
- 		pci_write_config_byte(chip->pdev, O2_SD_LOCK_WP, scratch);
+--- a/drivers/mmc/host/sdhci-brcmstb.c
++++ b/drivers/mmc/host/sdhci-brcmstb.c
+@@ -24,6 +24,7 @@
+ #define BRCMSTB_MATCH_FLAGS_NO_64BIT		BIT(0)
+ #define BRCMSTB_MATCH_FLAGS_BROKEN_TIMEOUT	BIT(1)
+ #define BRCMSTB_MATCH_FLAGS_HAS_CLOCK_GATE	BIT(2)
++#define BRCMSTB_MATCH_FLAGS_USE_CARD_BUSY	BIT(4)
  
-@@ -834,7 +834,7 @@ static int sdhci_pci_o2_probe(struct sdh
- 		ret = pci_read_config_byte(chip->pdev,
- 				O2_SD_CLKREQ, &scratch);
- 		if (ret)
--			return ret;
-+			goto read_fail;
- 		scratch |= 0x20;
- 		pci_write_config_byte(chip->pdev, O2_SD_CLKREQ, scratch);
+ #define BRCMSTB_PRIV_FLAGS_HAS_CQE		BIT(0)
+ #define BRCMSTB_PRIV_FLAGS_GATE_CLOCK		BIT(1)
+@@ -384,6 +385,9 @@ static int sdhci_brcmstb_probe(struct pl
+ 	if (match_priv->flags & BRCMSTB_MATCH_FLAGS_BROKEN_TIMEOUT)
+ 		host->quirks |= SDHCI_QUIRK_BROKEN_TIMEOUT_VAL;
  
-@@ -843,7 +843,7 @@ static int sdhci_pci_o2_probe(struct sdh
- 		 */
- 		ret = pci_read_config_byte(chip->pdev, O2_SD_CAPS, &scratch);
- 		if (ret)
--			return ret;
-+			goto read_fail;
- 		scratch |= 0x01;
- 		pci_write_config_byte(chip->pdev, O2_SD_CAPS, scratch);
- 		pci_write_config_byte(chip->pdev, O2_SD_CAPS, 0x73);
-@@ -856,7 +856,7 @@ static int sdhci_pci_o2_probe(struct sdh
- 		ret = pci_read_config_byte(chip->pdev,
- 				O2_SD_INF_MOD, &scratch);
- 		if (ret)
--			return ret;
-+			goto read_fail;
- 		scratch |= 0x08;
- 		pci_write_config_byte(chip->pdev, O2_SD_INF_MOD, scratch);
- 
-@@ -864,7 +864,7 @@ static int sdhci_pci_o2_probe(struct sdh
- 		ret = pci_read_config_byte(chip->pdev,
- 				O2_SD_LOCK_WP, &scratch);
- 		if (ret)
--			return ret;
-+			goto read_fail;
- 		scratch |= 0x80;
- 		pci_write_config_byte(chip->pdev, O2_SD_LOCK_WP, scratch);
- 		break;
-@@ -875,7 +875,7 @@ static int sdhci_pci_o2_probe(struct sdh
- 		ret = pci_read_config_byte(chip->pdev,
- 				O2_SD_LOCK_WP, &scratch);
- 		if (ret)
--			return ret;
-+			goto read_fail;
- 
- 		scratch &= 0x7f;
- 		pci_write_config_byte(chip->pdev, O2_SD_LOCK_WP, scratch);
-@@ -886,7 +886,7 @@ static int sdhci_pci_o2_probe(struct sdh
- 						    O2_SD_FUNC_REG0,
- 						    &scratch_32);
- 			if (ret)
--				return ret;
-+				goto read_fail;
- 			scratch_32 = ((scratch_32 & 0xFF000000) >> 24);
- 
- 			/* Check Whether subId is 0x11 or 0x12 */
-@@ -898,7 +898,7 @@ static int sdhci_pci_o2_probe(struct sdh
- 							    O2_SD_FUNC_REG4,
- 							    &scratch_32);
- 				if (ret)
--					return ret;
-+					goto read_fail;
- 
- 				/* Enable Base Clk setting change */
- 				scratch_32 |= O2_SD_FREG4_ENABLE_CLK_SET;
-@@ -921,7 +921,7 @@ static int sdhci_pci_o2_probe(struct sdh
- 		ret = pci_read_config_dword(chip->pdev,
- 					    O2_SD_CLK_SETTING, &scratch_32);
- 		if (ret)
--			return ret;
-+			goto read_fail;
- 
- 		scratch_32 &= ~(0xFF00);
- 		scratch_32 |= 0x07E0C800;
-@@ -931,14 +931,14 @@ static int sdhci_pci_o2_probe(struct sdh
- 		ret = pci_read_config_dword(chip->pdev,
- 					    O2_SD_CLKREQ, &scratch_32);
- 		if (ret)
--			return ret;
-+			goto read_fail;
- 		scratch_32 |= 0x3;
- 		pci_write_config_dword(chip->pdev, O2_SD_CLKREQ, scratch_32);
- 
- 		ret = pci_read_config_dword(chip->pdev,
- 					    O2_SD_PLL_SETTING, &scratch_32);
- 		if (ret)
--			return ret;
-+			goto read_fail;
- 
- 		scratch_32 &= ~(0x1F3F070E);
- 		scratch_32 |= 0x18270106;
-@@ -949,7 +949,7 @@ static int sdhci_pci_o2_probe(struct sdh
- 		ret = pci_read_config_dword(chip->pdev,
- 					    O2_SD_CAP_REG2, &scratch_32);
- 		if (ret)
--			return ret;
-+			goto read_fail;
- 		scratch_32 &= ~(0xE0);
- 		pci_write_config_dword(chip->pdev,
- 				       O2_SD_CAP_REG2, scratch_32);
-@@ -961,7 +961,7 @@ static int sdhci_pci_o2_probe(struct sdh
- 		ret = pci_read_config_byte(chip->pdev,
- 					   O2_SD_LOCK_WP, &scratch);
- 		if (ret)
--			return ret;
-+			goto read_fail;
- 		scratch |= 0x80;
- 		pci_write_config_byte(chip->pdev, O2_SD_LOCK_WP, scratch);
- 		break;
-@@ -971,7 +971,7 @@ static int sdhci_pci_o2_probe(struct sdh
- 		ret = pci_read_config_byte(chip->pdev,
- 				O2_SD_LOCK_WP, &scratch);
- 		if (ret)
--			return ret;
-+			goto read_fail;
- 
- 		scratch &= 0x7f;
- 		pci_write_config_byte(chip->pdev, O2_SD_LOCK_WP, scratch);
-@@ -979,7 +979,7 @@ static int sdhci_pci_o2_probe(struct sdh
- 		ret = pci_read_config_dword(chip->pdev,
- 					    O2_SD_PLL_SETTING, &scratch_32);
- 		if (ret)
--			return ret;
-+			goto read_fail;
- 
- 		if ((scratch_32 & 0xff000000) == 0x01000000) {
- 			scratch_32 &= 0x0000FFFF;
-@@ -998,7 +998,7 @@ static int sdhci_pci_o2_probe(struct sdh
- 						    O2_SD_FUNC_REG4,
- 						    &scratch_32);
- 			if (ret)
--				return ret;
-+				goto read_fail;
- 			scratch_32 |= (1 << 22);
- 			pci_write_config_dword(chip->pdev,
- 					       O2_SD_FUNC_REG4, scratch_32);
-@@ -1017,7 +1017,7 @@ static int sdhci_pci_o2_probe(struct sdh
- 		ret = pci_read_config_byte(chip->pdev,
- 					   O2_SD_LOCK_WP, &scratch);
- 		if (ret)
--			return ret;
-+			goto read_fail;
- 		scratch |= 0x80;
- 		pci_write_config_byte(chip->pdev, O2_SD_LOCK_WP, scratch);
- 		break;
-@@ -1028,7 +1028,7 @@ static int sdhci_pci_o2_probe(struct sdh
- 		/* UnLock WP */
- 		ret = pci_read_config_byte(chip->pdev, O2_SD_LOCK_WP, &scratch);
- 		if (ret)
--			return ret;
-+			goto read_fail;
- 		scratch &= 0x7f;
- 		pci_write_config_byte(chip->pdev, O2_SD_LOCK_WP, scratch);
- 
-@@ -1057,13 +1057,16 @@ static int sdhci_pci_o2_probe(struct sdh
- 		/* Lock WP */
- 		ret = pci_read_config_byte(chip->pdev, O2_SD_LOCK_WP, &scratch);
- 		if (ret)
--			return ret;
-+			goto read_fail;
- 		scratch |= 0x80;
- 		pci_write_config_byte(chip->pdev, O2_SD_LOCK_WP, scratch);
- 		break;
- 	}
- 
- 	return 0;
++	if (!(match_priv->flags & BRCMSTB_MATCH_FLAGS_USE_CARD_BUSY))
++		host->mmc_host_ops.card_busy = NULL;
 +
-+read_fail:
-+	return pcibios_err_to_errno(ret);
- }
- 
- #ifdef CONFIG_PM_SLEEP
+ 	/* Change the base clock frequency if the DT property exists */
+ 	if (device_property_read_u32(&pdev->dev, "clock-frequency",
+ 				     &priv->base_freq_hz) != 0)
 
 
