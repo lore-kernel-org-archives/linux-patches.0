@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7E415218A;
-	Tue,  2 Jul 2024 17:09:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA1015218A;
+	Tue,  2 Jul 2024 17:09:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940194; cv=none; b=RZ7lBc7IYf22GD24Ra//Aw5kPwEB8r/kEDhoEtlnjQdIzAUAsqtmSViBEAS8TeNvQOYhdcewtHiYs0rBKsPf4UCptbMALA1OLKN3NSV6n3w7huIrx/w2dn13hcyf1gJzpAVjlb0xgVFsKNVh3S8qTMIRFiM1QV+w36ffnA+tblU=
+	t=1719940197; cv=none; b=E66Pk0i9aIrXjKrQX6yp94Sh1QNBvP950TvZ0uxjbGIpSa2ZhHIEs+Smsd4x3Z/x/HiUjkVi0mClJ2krri36a3k4W6aS3Bk5s7KQ6Xp3+n56kJ2+O91IGwUEvCTZke3eHeNm798q8dGKVFWX7RRNIN/GFgBsngMORk7p+eS8/Zc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940194; c=relaxed/simple;
-	bh=1cTlnh8fUyfz+3qXrn2auYToXWikyXbi9i4tiQ+uPv4=;
+	s=arc-20240116; t=1719940197; c=relaxed/simple;
+	bh=kCMo0ICsw1+WTD6Y7RW/N9//f3T79aGffi2qziW60p4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ubj8nNAvgCczeodkrVAvFr+XBnxWRJ/sagh3cyCX6TqwVIAIaXLJ7/cKtNZH1ew4anS9QHx/u8ACeQEpsb1TZr7sEm97d0HfH1tq/o6xO2k69M6Q9ClXp+bqxE4obusywlOkq8shDINx+A7utVaqmWuyVL8oxTGE/l9NInILyU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uy/ZjAUq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T0rdhvUDCTbgyqTgbwufXxYQSVfnfdadY95T1jwaSbcBL3swc93uZaLeWTyMROGlgNoU9KrD0/TwgyrAVeMr/p+0+yELf9fZDqUl4ANHX/SBzwERyZU2jl5sYEroMqXWzcoY11T8eG2XMHe4w5nfhGc18m/bYocNOib/IZ7a+0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=srKmbRh9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uy/ZjAUq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3345C116B1;
-	Tue,  2 Jul 2024 17:09:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="srKmbRh9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A886C116B1;
+	Tue,  2 Jul 2024 17:09:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940194;
-	bh=1cTlnh8fUyfz+3qXrn2auYToXWikyXbi9i4tiQ+uPv4=;
+	s=korg; t=1719940197;
+	bh=kCMo0ICsw1+WTD6Y7RW/N9//f3T79aGffi2qziW60p4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uy/ZjAUqMwyzJzlDCQO0OMIGqekgHaUOIbZuznXXb0R0o+cjxIzVufTQpZrWrzkyC
-	 kHFzCHXR4yeE0SvlaFm5CFpZ9Kc60bLQGDmTzJMbsb6dxmeaavh9Wlfb+kLNGqehjY
-	 xDedKThUuH1R7ByeINAG8auNvaJvi5YlBSgPKbh4=
+	b=srKmbRh9rGcKl5nTZ02ErbJjqTRIxtDsLFctO0WAL48Ji4L4xCkdbLtvUHceHrVZx
+	 wVuWvhbZO0MPcOI/glQe8ZGfvDBLftv0WfVdK/lgRC6rU6KNVN5o4dZm5xaaJ9I3L2
+	 EXyMcuDJFoxB94vcUQCGBk7UoLb6fG7ByklvD4Jw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Tristram Ha <tristram.ha@microchip.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 049/222] ALSA: seq: Fix missing channel at encoding RPN/NRPN MIDI2 messages
-Date: Tue,  2 Jul 2024 19:01:27 +0200
-Message-ID: <20240702170245.851585642@linuxfoundation.org>
+Subject: [PATCH 6.9 050/222] net: dsa: microchip: fix wrong register write when masking interrupt
+Date: Tue,  2 Jul 2024 19:01:28 +0200
+Message-ID: <20240702170245.889345515@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -50,61 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Tristram Ha <tristram.ha@microchip.com>
 
-[ Upstream commit c5ab94ea280a9b4108723eecf0a636e22a5bb137 ]
+[ Upstream commit b1c4b4d45263241ec6c2405a8df8265d4b58e707 ]
 
-The conversion from the legacy event to MIDI2 UMP for RPN and NRPN
-missed the setup of the channel number, resulting in always the
-channel 0.  Fix it.
+The switch global port interrupt mask, REG_SW_PORT_INT_MASK__4, is
+defined as 0x001C in ksz9477_reg.h.  The designers used 32-bit value in
+anticipation for increase of port count in future product but currently
+the maximum port count is 7 and the effective value is 0x7F in register
+0x001F.  Each port has its own interrupt mask and is defined as 0x#01F.
+It uses only 4 bits for different interrupts.
 
-Fixes: e9e02819a98a ("ALSA: seq: Automatic conversion of UMP events")
-Link: https://patch.msgid.link/20240625095200.25745-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+The developer who implemented the current interrupt mechanism in the
+switch driver noticed there are similarities between the mechanism to
+mask port interrupts in global interrupt and individual interrupts in
+each port and so used the same code to handle these interrupts.  He
+updated the code to use the new macro REG_SW_PORT_INT_MASK__1 which is
+defined as 0x1F in ksz_common.h but he forgot to update the 32-bit write
+to 8-bit as now the mask registers are 0x1F and 0x#01F.
+
+In addition all KSZ switches other than the KSZ9897/KSZ9893 and LAN937X
+families use only 8-bit access and so this common code will eventually
+be changed to accommodate them.
+
+Fixes: e1add7dd6183 ("net: dsa: microchip: use common irq routines for girq and pirq")
+Signed-off-by: Tristram Ha <tristram.ha@microchip.com>
+Link: https://lore.kernel.org/r/1719009262-2948-1-git-send-email-Tristram.Ha@microchip.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_ump_convert.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/net/dsa/microchip/ksz_common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/core/seq/seq_ump_convert.c b/sound/core/seq/seq_ump_convert.c
-index d81f776a4c3dd..6687efdceea13 100644
---- a/sound/core/seq/seq_ump_convert.c
-+++ b/sound/core/seq/seq_ump_convert.c
-@@ -791,7 +791,8 @@ static int paf_ev_to_ump_midi2(const struct snd_seq_event *event,
+diff --git a/drivers/net/dsa/microchip/ksz_common.c b/drivers/net/dsa/microchip/ksz_common.c
+index 2a5861a88d0e6..e54f83a2e7d30 100644
+--- a/drivers/net/dsa/microchip/ksz_common.c
++++ b/drivers/net/dsa/microchip/ksz_common.c
+@@ -2129,7 +2129,7 @@ static void ksz_irq_bus_sync_unlock(struct irq_data *d)
+ 	struct ksz_device *dev = kirq->dev;
+ 	int ret;
  
- /* set up the MIDI2 RPN/NRPN packet data from the parsed info */
- static void fill_rpn(struct snd_seq_ump_midi2_bank *cc,
--		     union snd_ump_midi2_msg *data)
-+		     union snd_ump_midi2_msg *data,
-+		     unsigned char channel)
- {
- 	if (cc->rpn_set) {
- 		data->rpn.status = UMP_MSG_STATUS_RPN;
-@@ -808,6 +809,7 @@ static void fill_rpn(struct snd_seq_ump_midi2_bank *cc,
- 	}
- 	data->rpn.data = upscale_14_to_32bit((cc->cc_data_msb << 7) |
- 					     cc->cc_data_lsb);
-+	data->rpn.channel = channel;
- 	cc->cc_data_msb = cc->cc_data_lsb = 0;
- }
- 
-@@ -855,7 +857,7 @@ static int cc_ev_to_ump_midi2(const struct snd_seq_event *event,
- 		cc->cc_data_lsb = val;
- 		if (!(cc->rpn_set || cc->nrpn_set))
- 			return 0; // skip
--		fill_rpn(cc, data);
-+		fill_rpn(cc, data, channel);
- 		return 1;
- 	}
- 
-@@ -957,7 +959,7 @@ static int ctrl14_ev_to_ump_midi2(const struct snd_seq_event *event,
- 		cc->cc_data_lsb = lsb;
- 		if (!(cc->rpn_set || cc->nrpn_set))
- 			return 0; // skip
--		fill_rpn(cc, data);
-+		fill_rpn(cc, data, channel);
- 		return 1;
- 	}
+-	ret = ksz_write32(dev, kirq->reg_mask, kirq->masked);
++	ret = ksz_write8(dev, kirq->reg_mask, kirq->masked);
+ 	if (ret)
+ 		dev_err(dev->dev, "failed to change IRQ mask\n");
  
 -- 
 2.43.0
