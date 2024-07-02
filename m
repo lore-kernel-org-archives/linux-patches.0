@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F1D63D;
-	Tue,  2 Jul 2024 17:33:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C02463D;
+	Tue,  2 Jul 2024 17:33:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941617; cv=none; b=TWw36fZo8y3JXUPMLyEMGBMWfCqs4xd1IhjjcsfPiO0lRbVcXJRfPQRpCWMTLEqSyhJOKWxrNFGTwRNSi7a0PSo6cRCrfiPiVUrugudKJzWCr7gee9X4dz9wqAF0OEDUErq0x3dPITOAwClyoxJaP9FeZ+dHELCIAzSJ2bFc+58=
+	t=1719941620; cv=none; b=XQTCMIJSbfvr59LqjbIrLxWyt3fawV/PdW5Yt/lNE6rOWKyvDO8X+KPVmzmb0ncvVSdfPE8kNTOZobYLTpdTcOG0RmOPGG4zdFuIZB0qLMZLiteFIfIMxSTrw7wcOyHGN8W+nTM4eOJXmRsTVofsifpo034GElucfMojOtv7c3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941617; c=relaxed/simple;
-	bh=6hPLp9rVOwxCDVvuG+cm1VmI7Zvicj02oGv8eXlF3Wg=;
+	s=arc-20240116; t=1719941620; c=relaxed/simple;
+	bh=ssPE6u7HICBbmFr4aUrRndaYhrLgKwh5Xo5oF5LWf8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CxdwzFEuHAmYgwMi2lt8fhpG78Mukccuik+IRRb6fZ+MymFp7YjcVWTZF9IgsssILkn1ofjTTUc1+lFszU4kzeyKU0dn655iSMOr2Q+mqditn+lnEKZRPZL2XYB5dqSEQKz7ZCDqwokBeLWGwG4PpIg3dvgmQ5+OHS/IpVq7nL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QHtLow7X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h3g+wtuney/Np+8dH3iHIo4tXQZC6CnbnN9HSIlTRBmQVRbHfMoQKLXON08qiVFUJGJrCftkYL6DaBsg7foxpZpsWsttDgSF4VPgFqYDWt32vz1kiBx4vLmKxxuUe2HrA1VEAcHManedH7+CGCftCnyktV0tuyRsiVQo9TMB82U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wpblIFVB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QHtLow7X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA7FEC4AF0D;
-	Tue,  2 Jul 2024 17:33:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wpblIFVB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09CBCC116B1;
+	Tue,  2 Jul 2024 17:33:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941617;
-	bh=6hPLp9rVOwxCDVvuG+cm1VmI7Zvicj02oGv8eXlF3Wg=;
+	s=korg; t=1719941620;
+	bh=ssPE6u7HICBbmFr4aUrRndaYhrLgKwh5Xo5oF5LWf8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QHtLow7XDzNpgQB0fHfi9WEHAR0lcAIerCULttLTnRk2DY1kndxng5rmzdULw6Dl8
-	 RmSuvf2DoiGwRTGV16FlK3Q872VKCwawgb6EriOZ4hCFIjMkqqJCCLWyY/R6Bzcylb
-	 KsfQiEmAkcx/JYrDnA+fogTHRvUHXe3q1Z4SBqDA=
+	b=wpblIFVBZFaJ9imacWaNGD7DRcZqPwz1Hz9SbZMi4ODaIRr3EvDfVd5Ho5F9cRgCK
+	 Y/w/tkDsOEerQp4Rd40CdX7X3DeJrj7EiDJ4dGrXYRQcVfU+O6KEIPuFabQRsycNeD
+	 i+e1KhzwZWc4XeCULpILWyeKzSjiRwRqhrNgSa6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trevor Gamblin <tgamblin@baylibre.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
-Subject: [PATCH 6.1 117/128] pwm: stm32: Refuse too small period requests
-Date: Tue,  2 Jul 2024 19:05:18 +0200
-Message-ID: <20240702170230.646438781@linuxfoundation.org>
+	Lars Wendler <wendler.lars@web.de>,
+	Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+	Peter Jung <ptr1337@cachyos.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.1 118/128] Revert "cpufreq: amd-pstate: Fix the inconsistency in max frequency units"
+Date: Tue,  2 Jul 2024 19:05:19 +0200
+Message-ID: <20240702170230.684573773@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170226.231899085@linuxfoundation.org>
 References: <20240702170226.231899085@linuxfoundation.org>
@@ -45,46 +48,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit c45fcf46ca2368dafe7e5c513a711a6f0f974308 upstream.
+This reverts commit 82590ce3a0d0f26d06b0a70886ca2d444e64acbf which is
+commit e4731baaf29438508197d3a8a6d4f5a8c51663f8 upstream.
 
-If period_ns is small, prd might well become 0. Catch that case because
-otherwise with
+It causes a regression in kernels older than 6.9.y, so drop it from
+here.
 
-	regmap_write(priv->regmap, TIM_ARR, prd - 1);
-
-a few lines down quite a big period is configured.
-
-Fixes: 7edf7369205b ("pwm: Add driver for STM32 plaftorm")
-Cc: stable@vger.kernel.org
-Reviewed-by: Trevor Gamblin <tgamblin@baylibre.com>
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/b86f62f099983646f97eeb6bfc0117bb2d0c340d.1718979150.git.u.kleine-koenig@baylibre.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Link: https://lore.kernel.org/r/18882bfe-4ca5-495c-ace5-b9bcab796ae5@amd.com
+Reported-by: Lars Wendler <wendler.lars@web.de>
+Cc: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Gautham R. Shenoy <gautham.shenoy@amd.com>
+Cc: Peter Jung <ptr1337@cachyos.org>
+Cc: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/pwm-stm32.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/cpufreq/amd-pstate.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pwm/pwm-stm32.c
-+++ b/drivers/pwm/pwm-stm32.c
-@@ -340,6 +340,9 @@ static int stm32_pwm_config(struct stm32
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -424,7 +424,7 @@ static int amd_pstate_set_boost(struct c
+ 	if (state)
+ 		policy->cpuinfo.max_freq = cpudata->max_freq;
+ 	else
+-		policy->cpuinfo.max_freq = cpudata->nominal_freq * 1000;
++		policy->cpuinfo.max_freq = cpudata->nominal_freq;
  
- 	prd = div;
- 
-+	if (!prd)
-+		return -EINVAL;
-+
- 	if (prescaler > MAX_TIM_PSC)
- 		return -EINVAL;
+ 	policy->max = policy->cpuinfo.max_freq;
  
 
 
