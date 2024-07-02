@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0CF415218A;
-	Tue,  2 Jul 2024 17:25:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387911BE227;
+	Tue,  2 Jul 2024 17:25:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941119; cv=none; b=QjR5DJoNqNPtArSOM7vHJB9pOkpQWXzIA6vVB1r85FbyJUJ5JH1OmvtkQYa9XZdKco7r/jooFa1CreOMkBXdNvn4RMXP2epYIr0jApZqiyP0TvDTTsMF0g1sMpzvuZLjxOw+hJoz+4Hr0OKE5Z2f+94wu8dr1vsZrRppr6abvgU=
+	t=1719941123; cv=none; b=o2u0cjMKf4vd7qT0ToQ9U/v3MHOUNfWMOR0dYflWjdHtucwpPiT2cmixf6h9u8SiP/D2g0Jo/Uk4cNohK7QFdFoAeC0HE+OyDhwiTZIbhJeyoipioiZIpKBDHDftLuUF/m+ZP6xGjOlCrXYtxmtt/eBofxs/LrufA+FPRO+jWCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941119; c=relaxed/simple;
-	bh=CuZlntJWmHl1LHvOAD3obo3UOVO4Tdf96RsCCWX3NJE=;
+	s=arc-20240116; t=1719941123; c=relaxed/simple;
+	bh=1AeR2rBsINyXDmAWwDLbAG9zhLNa33nJ0Vbut49i6U4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t1xiPHKksoiQsrHjbqY3qEoFicoYGAjRO/1fHI0BVzrU1tyW77C2uq2kGAM5Txl2D/XsmahsZpGpmPlZz6+vKElxfVtbnOuayRGu3Zlo/JtxvQkNa7EN5yI5mtdnbhntXbvEiPAqR+BLAdnxNdhq17hOxK1Af1pg2Mwqv9sC0fk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LKT7iTaB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HNbEhuLGdFgtsKZGeYY8jIIWT7SWbD+/NlLWLaypLEJ+Ex68YMVYKtoAcgem5FscHbT639Rcx4PesxbFFLgbeuU+NEYHzlp45gDJ6U2nBdiOGkJt/VMDOScz/YyaSOI5iHvl0cZBfo0xtEvGJIWgPJa6I/j00Xqs7LoODqD2sf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V3x3B8LT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LKT7iTaB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FB6FC116B1;
-	Tue,  2 Jul 2024 17:25:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V3x3B8LT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CE2FC116B1;
+	Tue,  2 Jul 2024 17:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941119;
-	bh=CuZlntJWmHl1LHvOAD3obo3UOVO4Tdf96RsCCWX3NJE=;
+	s=korg; t=1719941123;
+	bh=1AeR2rBsINyXDmAWwDLbAG9zhLNa33nJ0Vbut49i6U4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LKT7iTaBg18RT+9KUIHRR95evbrR6ytV0nGkjxMBJl42mEe1JP9FA26+X31RCAyCn
-	 TsR1GEF2k4iND0sU6yRk+jezIBdl2xNIb6NRd9EMwAXToXy60Fjnoo3gpZhZJ3kou+
-	 uyAjPSrfywPub4BA/McRXBjHvnGu0k/jBwoNX/+s=
+	b=V3x3B8LTk4Q06ijjbSLIDCI+6iwmfdPaT6oXON4FtQfeOxmXMk1HkFQzIweSxwWID
+	 t5msG0PHwIub4XJrkBRYqO1QWCFT8doyIerD8tXKytbeVW18+XVi+saUhiiDOnDueE
+	 Y2B92aCQ5m+0U7JZ0swhJAu20dX0RPxO3OnnI3Cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 132/163] btrfs: zoned: fix initial free space detection
-Date: Tue,  2 Jul 2024 19:04:06 +0200
-Message-ID: <20240702170238.050105415@linuxfoundation.org>
+	Guo Ren <guoren@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 6.6 133/163] csky, hexagon: fix broken sys_sync_file_range
+Date: Tue,  2 Jul 2024 19:04:07 +0200
+Message-ID: <20240702170238.088202286@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -51,46 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naohiro Aota <naohiro.aota@wdc.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit b9fd2affe4aa99a4ca14ee87e1f38fea22ece52a upstream.
+commit 3339b99ef6fe38dac43b534cba3a8a0e29fb2eff upstream.
 
-When creating a new block group, it calls btrfs_add_new_free_space() to add
-the entire block group range into the free space accounting.
-__btrfs_add_free_space_zoned() checks if size == block_group->length to
-detect the initial free space adding, and proceed that case properly.
+Both of these architectures require u64 function arguments to be
+passed in even/odd pairs of registers or stack slots, which in case of
+sync_file_range would result in a seven-argument system call that is
+not currently possible. The system call is therefore incompatible with
+all existing binaries.
 
-However, if the zone_capacity == zone_size and the over-write speed is fast
-enough, the entire zone can be over-written within one transaction. That
-confuses __btrfs_add_free_space_zoned() to handle it as an initial free
-space accounting. As a result, that block group becomes a strange state: 0
-used bytes, 0 zone_unusable bytes, but alloc_offset == zone_capacity (no
-allocation anymore).
+While it would be possible to implement support for seven arguments
+like on mips, it seems better to use a six-argument version, either
+with the normal argument order but misaligned as on most architectures
+or with the reordered sync_file_range2() calling conventions as on
+arm and powerpc.
 
-The initial free space accounting can properly be checked by checking
-alloc_offset too.
-
-Fixes: 98173255bddd ("btrfs: zoned: calculate free space from zone capacity")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Acked-by: Guo Ren <guoren@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/free-space-cache.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/csky/include/uapi/asm/unistd.h    |    1 +
+ arch/hexagon/include/uapi/asm/unistd.h |    1 +
+ 2 files changed, 2 insertions(+)
 
---- a/fs/btrfs/free-space-cache.c
-+++ b/fs/btrfs/free-space-cache.c
-@@ -2695,7 +2695,7 @@ static int __btrfs_add_free_space_zoned(
- 	u64 offset = bytenr - block_group->start;
- 	u64 to_free, to_unusable;
- 	int bg_reclaim_threshold = 0;
--	bool initial = (size == block_group->length);
-+	bool initial = ((size == block_group->length) && (block_group->alloc_offset == 0));
- 	u64 reclaimable_unusable;
+--- a/arch/csky/include/uapi/asm/unistd.h
++++ b/arch/csky/include/uapi/asm/unistd.h
+@@ -6,6 +6,7 @@
+ #define __ARCH_WANT_SYS_CLONE3
+ #define __ARCH_WANT_SET_GET_RLIMIT
+ #define __ARCH_WANT_TIME32_SYSCALLS
++#define __ARCH_WANT_SYNC_FILE_RANGE2
+ #include <asm-generic/unistd.h>
  
- 	WARN_ON(!initial && offset + size > block_group->zone_capacity);
+ #define __NR_set_thread_area	(__NR_arch_specific_syscall + 0)
+--- a/arch/hexagon/include/uapi/asm/unistd.h
++++ b/arch/hexagon/include/uapi/asm/unistd.h
+@@ -36,5 +36,6 @@
+ #define __ARCH_WANT_SYS_VFORK
+ #define __ARCH_WANT_SYS_FORK
+ #define __ARCH_WANT_TIME32_SYSCALLS
++#define __ARCH_WANT_SYNC_FILE_RANGE2
+ 
+ #include <asm-generic/unistd.h>
 
 
