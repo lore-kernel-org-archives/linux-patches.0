@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1357F178381;
-	Tue,  2 Jul 2024 17:15:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55AB61BE22B;
+	Tue,  2 Jul 2024 17:15:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940537; cv=none; b=iCJkKkV9yiDpu6aWsYkX1VLS5G3csKUtGRO43/JtaGcJdpYKgkVwB+gs5LItybrQc0e6poKo/U2UC+ijmgT1Rq7fDtwQNKEw+upnGcXzRrek5jTHf7QIyNaFu+pEUZFarF10rAlh6qgUBsxqY1xFcf/Gsjil0eNXZiYkjmG2/GY=
+	t=1719940540; cv=none; b=CkrpwddkuFJkPUtXx3TBKTelI6MQ7AlWrLcEmIomNx6YgQhDeYz9GtbBlThqwN3TneTlsjfmiBucbKx1eX71aVG5Up96UXOX7w1MrwbYhSnUlIkmQST1vbfrohWR+Xz3X6ydcaLyH68ixyzeQZ0ZFoHOSWQa/HdqRUtHItRs4Sw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940537; c=relaxed/simple;
-	bh=6QOvTFE3adh0cvWzuI4KzWlW1YsuiucrPjQMPozDwEw=;
+	s=arc-20240116; t=1719940540; c=relaxed/simple;
+	bh=oEP2vb3wSEqEKmz1U9kBhmgQ6egR3Oo8cAraKhSSrW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fdgSntNJRHOG1pxFHrB2AnDR0THnzBTjpJiypfBK3QFiUCoazaX+V5jv3JxB7KE3fdOxRxHSgKm+xtZdW0Z+ug6Nlm0BDRSNfroURL7lU7v2PUFWhbEOpO9xg/+lkcWBzKb8+usNvBZg7+7yuA2b3i/W6uZK4GbrZMwcjbh9iNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CZCjKtJN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AEbAVNMRYHquNXKNlLtkC2JZ5VOgEN8Nj9Mi9wr8jrTFd4RNVm8uhwIdaNGGtpG/TE4fG2XvSvH1cbVPCT34gwS7ewaFcr7yoE5YZnyzrUQPFL3H2yemgjOw56XdICo3xqQQiU8GkZnZr/pAo2/VwanBXsLJAK/GVXS5gyFlcTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xpmQeNRC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CZCjKtJN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7867BC116B1;
-	Tue,  2 Jul 2024 17:15:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpmQeNRC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCBA4C116B1;
+	Tue,  2 Jul 2024 17:15:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940537;
-	bh=6QOvTFE3adh0cvWzuI4KzWlW1YsuiucrPjQMPozDwEw=;
+	s=korg; t=1719940540;
+	bh=oEP2vb3wSEqEKmz1U9kBhmgQ6egR3Oo8cAraKhSSrW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CZCjKtJNmkn3JOqvNcc0mANecwnCn5JTFgn+tMw64fuun676tGpLzLPj9LZlexauC
-	 EFVo99PSH9oK/7fVc3AAK4ok0QBaf/3EjyRx7CK7Gjbys9ING4EzFlEzQ5FVk/MmDl
-	 VGnDlWKyZYuDKi5WSIIDQlWm3bqIPPlCyOK/D4BI=
+	b=xpmQeNRCDGsq9SJREZqHXYiuBQ8GFCKObn1M2FEsAcMOWE4kmMV+ihks+/KkXEDg8
+	 gMz4yZJyo/oJ0OdcshxAawrGn6Rt8h+KaOov0ixRPPN3AwEvTyM6WRdbisZa3xT03j
+	 31yOOAKMoTKWnGgCcBE5N52S+noxMAV8oqVOzGyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Ferry Toth <fntoth@gmail.com>
-Subject: [PATCH 6.9 152/222] Revert "usb: gadget: u_ether: Replace netif_stop_queue with netif_device_detach"
-Date: Tue,  2 Jul 2024 19:03:10 +0200
-Message-ID: <20240702170249.787319635@linuxfoundation.org>
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	stable <stable@kernel.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.9 153/222] usb: ucsi: stm32: fix command completion handling
+Date: Tue,  2 Jul 2024 19:03:11 +0200
+Message-ID: <20240702170249.826273321@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -50,44 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ferry Toth <ftoth@exalondelft.nl>
+From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
 
-commit c50814a288dcee687285abc0cf935e9fe8928e59 upstream.
+commit 8e1ec117efdfd4b2f59f57bd0ad16b4edf5b963f upstream.
 
-This reverts commit f49449fbc21e7e9550a5203902d69c8ae7dfd918.
+Sometimes errors are seen, when doing DR swap, like:
+[   24.672481] ucsi-stm32g0-i2c 0-0035: UCSI_GET_PDOS failed (-5)
+[   24.720188] ucsi-stm32g0-i2c 0-0035: ucsi_handle_connector_change:
+ GET_CONNECTOR_STATUS failed (-5)
 
-This commit breaks u_ether on some setups (at least Merrifield). The fix
-"usb: gadget: u_ether: Re-attach netif device to mirror detachment" party
-restores u-ether. However the netif usb: remains up even usb is switched
-from device to host mode. This creates problems for user space as the
-interface remains in the routing table while not realy present and network
-managers (connman) not detecting a network change.
+There may be some race, which lead to read CCI, before the command complete
+flag is set, hence returning -EIO. Similar fix has been done also in
+ucsi_acpi [1].
 
-Various attempts to find the root cause were unsuccesful up to now. Therefore
-revert until a solution is found.
+In case of a spurious or otherwise delayed notification it is
+possible that CCI still reports the previous completion. The
+UCSI spec is aware of this and provides two completion bits in
+CCI, one for normal commands and one for acks. As acks and commands
+alternate the notification handler can determine if the completion
+bit is from the current command.
 
-Link: https://lore.kernel.org/linux-usb/20231006141231.7220-1-hgajjar@de.adit-jv.com/
-Reported-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Reported-by: Ferry Toth <fntoth@gmail.com>
-Fixes: f49449fbc21e ("usb: gadget: u_ether: Replace netif_stop_queue with netif_device_detach")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ferry Toth <fntoth@gmail.com>
-Link: https://lore.kernel.org/r/20240620204832.24518-3-ftoth@exalondelft.nl
+To fix this add the ACK_PENDING bit for ucsi_stm32g0 and only complete
+commands if the completion bit matches.
+
+[1] https://lore.kernel.org/lkml/20240121204123.275441-3-lk@c--e.de/
+
+Fixes: 72849d4fcee7 ("usb: typec: ucsi: stm32g0: add support for stm32g0 controller")
+Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Link: https://lore.kernel.org/stable/20240612124656.2305603-1-fabrice.gasnier%40foss.st.com
+Cc: stable <stable@kernel.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240612124656.2305603-1-fabrice.gasnier@foss.st.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/u_ether.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/typec/ucsi/ucsi_stm32g0.c |   19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/gadget/function/u_ether.c
-+++ b/drivers/usb/gadget/function/u_ether.c
-@@ -1200,7 +1200,7 @@ void gether_disconnect(struct gether *li
+--- a/drivers/usb/typec/ucsi/ucsi_stm32g0.c
++++ b/drivers/usb/typec/ucsi/ucsi_stm32g0.c
+@@ -64,6 +64,7 @@ struct ucsi_stm32g0 {
+ 	struct completion complete;
+ 	struct device *dev;
+ 	unsigned long flags;
++#define ACK_PENDING	2
+ 	const char *fw_name;
+ 	struct ucsi *ucsi;
+ 	bool suspended;
+@@ -395,9 +396,13 @@ static int ucsi_stm32g0_sync_write(struc
+ 				   size_t len)
+ {
+ 	struct ucsi_stm32g0 *g0 = ucsi_get_drvdata(ucsi);
++	bool ack = UCSI_COMMAND(*(u64 *)val) == UCSI_ACK_CC_CI;
+ 	int ret;
  
- 	DBG(dev, "%s\n", __func__);
+-	set_bit(COMMAND_PENDING, &g0->flags);
++	if (ack)
++		set_bit(ACK_PENDING, &g0->flags);
++	else
++		set_bit(COMMAND_PENDING, &g0->flags);
  
--	netif_device_detach(dev->net);
-+	netif_stop_queue(dev->net);
- 	netif_carrier_off(dev->net);
+ 	ret = ucsi_stm32g0_async_write(ucsi, offset, val, len);
+ 	if (ret)
+@@ -405,9 +410,14 @@ static int ucsi_stm32g0_sync_write(struc
  
- 	/* disable endpoints, forcing (synchronous) completion
+ 	if (!wait_for_completion_timeout(&g0->complete, msecs_to_jiffies(5000)))
+ 		ret = -ETIMEDOUT;
++	else
++		return 0;
+ 
+ out_clear_bit:
+-	clear_bit(COMMAND_PENDING, &g0->flags);
++	if (ack)
++		clear_bit(ACK_PENDING, &g0->flags);
++	else
++		clear_bit(COMMAND_PENDING, &g0->flags);
+ 
+ 	return ret;
+ }
+@@ -428,8 +438,9 @@ static irqreturn_t ucsi_stm32g0_irq_hand
+ 	if (UCSI_CCI_CONNECTOR(cci))
+ 		ucsi_connector_change(g0->ucsi, UCSI_CCI_CONNECTOR(cci));
+ 
+-	if (test_bit(COMMAND_PENDING, &g0->flags) &&
+-	    cci & (UCSI_CCI_ACK_COMPLETE | UCSI_CCI_COMMAND_COMPLETE))
++	if (cci & UCSI_CCI_ACK_COMPLETE && test_and_clear_bit(ACK_PENDING, &g0->flags))
++		complete(&g0->complete);
++	if (cci & UCSI_CCI_COMMAND_COMPLETE && test_and_clear_bit(COMMAND_PENDING, &g0->flags))
+ 		complete(&g0->complete);
+ 
+ 	return IRQ_HANDLED;
 
 
