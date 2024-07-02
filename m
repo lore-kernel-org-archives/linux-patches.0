@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C2A1514DC;
-	Tue,  2 Jul 2024 17:28:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC9E1BE226;
+	Tue,  2 Jul 2024 17:28:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941301; cv=none; b=FRx1HJ7ehLkuaaM1wHLNqaDXOo71GwbRfWRJeAwyu/7h8kZaUsiEZNaVB3wOfEnAjXxWfTiuGuYrTSekksXj8rKSJyQeT7SIB45e/I43HpFaPefowhuKhHM28vjGlI/KSGp6+XnMtob92yP9lSW5PShno3G45+/2DeLX4uP4tg4=
+	t=1719941304; cv=none; b=FuUtxtFYlYJrDWNXn34PnDLUHkitIcKrlfaeMPLt3Nc56+gJAeLAjySTAiz6Qt0NjikFNTK6Iidq7rgLiZA7Tyu6LkUN/qJgHEZUGEt5oSfVCJikpOhIc1E3REoOHaegVgokATT3Wi97/6+HMPZicSx3CvmalyLzUVZe0coDSCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941301; c=relaxed/simple;
-	bh=Qua3BFbP8n/KHJ4g1qzPtbWKrqFQQnvcQz1KqwdRjrY=;
+	s=arc-20240116; t=1719941304; c=relaxed/simple;
+	bh=Xv14gKyXYXEfsnDKkZN137Ug5V0axGi2e7wDiNtunas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ahRCjyH8dsTqJ9JzrJWHVeySyiIb3jpZ+Unm1AGZEpe7weP1WXXbYsg4fXr6lFs1o5mUIs+Pxg7yX8GIYmISOB8UsX01dFMgFbJNgUzuZs9ZsJ0R989gG7D48KWmGwISlfwAOsYn3lfA/jM1uWP5jFU5tso3uWZorAqCxx+A+Ho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DB1wisNw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f/irI1fol/g5rf7x+96P5EzYOoaLRmmYZVXqGerIKVuPnVi6qWWLf8ciNBH9VLBoDbwCOFtyTAITUIlCf6XauBekkf3SyJPFQnsvvtNixmZKcpVvDsiNFBmn4G9BrJAqkn5jF4I9Y9aCTU9FCpiNyQXeJwN1aZli4pZshUxV0Rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tuBsD5Xz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DB1wisNw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB455C116B1;
-	Tue,  2 Jul 2024 17:28:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tuBsD5Xz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C96FC116B1;
+	Tue,  2 Jul 2024 17:28:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941300;
-	bh=Qua3BFbP8n/KHJ4g1qzPtbWKrqFQQnvcQz1KqwdRjrY=;
+	s=korg; t=1719941303;
+	bh=Xv14gKyXYXEfsnDKkZN137Ug5V0axGi2e7wDiNtunas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DB1wisNwFhkToxFV6eCF2FhC03ljvpFcdBZhwcmBmadtKlo6Sy+RUTGIbij80K1V3
-	 PZD0ZxmandOh7etfk4PFkDNP5iZrYLiZDcItCI7O0d0ApqTKzWhSzJ/RC96ARB5euk
-	 R7UAygMdGUOjjbXyOe3a0Vl/Idqcs/0QGab5acWw=
+	b=tuBsD5Xz05sD/EQGajQmx0OGpxUyVXxmMm7lxcZIF1kiNKV2W7154YnpOnIqGTVk9
+	 YqrI2hr6QueGJvUHupgy82GnH2vsNZI7kAGGUHB6DGkps9GmCykZQlOiOUidZkr7Jz
+	 cGBln55dps9wKDJd1Qegy8T6KrscOX08x9ABCWSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Child <nnac123@linux.ibm.com>,
+	Enguerrand de Ribaucourt <enguerrand.de-ribaucourt@savoirfairelinux.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 023/128] ibmvnic: Free any outstanding tx skbs during scrq reset
-Date: Tue,  2 Jul 2024 19:03:44 +0200
-Message-ID: <20240702170227.111131753@linuxfoundation.org>
+Subject: [PATCH 6.1 024/128] net: phy: micrel: add Microchip KSZ 9477 to the device table
+Date: Tue,  2 Jul 2024 19:03:45 +0200
+Message-ID: <20240702170227.146927909@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170226.231899085@linuxfoundation.org>
 References: <20240702170226.231899085@linuxfoundation.org>
@@ -51,58 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nick Child <nnac123@linux.ibm.com>
+From: Enguerrand de Ribaucourt <enguerrand.de-ribaucourt@savoirfairelinux.com>
 
-[ Upstream commit 49bbeb5719c2f56907d3a9623b47c6c15c2c431d ]
+[ Upstream commit 54a4e5c16382e871c01dd82b47e930fdce30406b ]
 
-There are 2 types of outstanding tx skb's:
-Type 1: Packets that are sitting in the drivers ind_buff that are
-waiting to be batch sent to the NIC. During a device reset, these are
-freed with a call to ibmvnic_tx_scrq_clean_buffer()
-Type 2: Packets that have been sent to the NIC and are awaiting a TX
-completion IRQ. These are free'd during a reset with a call to
-clean_tx_pools()
+PHY_ID_KSZ9477 was supported but not added to the device table passed to
+MODULE_DEVICE_TABLE.
 
-During any reset which requires us to free the tx irq, ensure that the
-Type 2 skb references are freed. Since the irq is released, it is
-impossible for the NIC to inform of any completions.
-
-Furthermore, later in the reset process is a call to init_tx_pools()
-which marks every entry in the tx pool as free (ie not outstanding).
-So if the driver is to make a call to init_tx_pools(), it must first
-be sure that the tx pool is empty of skb references.
-
-This issue was discovered by observing the following in the logs during
-EEH testing:
-	TX free map points to untracked skb (tso_pool 0 idx=4)
-	TX free map points to untracked skb (tso_pool 0 idx=5)
-	TX free map points to untracked skb (tso_pool 1 idx=36)
-
-Fixes: 65d6470d139a ("ibmvnic: clean pending indirect buffs during reset")
-Signed-off-by: Nick Child <nnac123@linux.ibm.com>
+Fixes: fc3973a1fa09 ("phy: micrel: add Microchip KSZ 9477 Switch PHY support")
+Signed-off-by: Enguerrand de Ribaucourt <enguerrand.de-ribaucourt@savoirfairelinux.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/ibmvnic.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/phy/micrel.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/ibm/ibmvnic.c b/drivers/net/ethernet/ibm/ibmvnic.c
-index 157be4e9be4b7..8f377d0a80fe6 100644
---- a/drivers/net/ethernet/ibm/ibmvnic.c
-+++ b/drivers/net/ethernet/ibm/ibmvnic.c
-@@ -3859,6 +3859,12 @@ static void release_sub_crqs(struct ibmvnic_adapter *adapter, bool do_h_free)
- 		adapter->num_active_tx_scrqs = 0;
- 	}
- 
-+	/* Clean any remaining outstanding SKBs
-+	 * we freed the irq so we won't be hearing
-+	 * from them
-+	 */
-+	clean_tx_pools(adapter);
-+
- 	if (adapter->rx_scrq) {
- 		for (i = 0; i < adapter->num_active_rx_scrqs; i++) {
- 			if (!adapter->rx_scrq[i])
+diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
+index 98c6d0caf8faf..90f3953cf9066 100644
+--- a/drivers/net/phy/micrel.c
++++ b/drivers/net/phy/micrel.c
+@@ -3405,6 +3405,7 @@ static struct mdio_device_id __maybe_unused micrel_tbl[] = {
+ 	{ PHY_ID_KSZ8081, MICREL_PHY_ID_MASK },
+ 	{ PHY_ID_KSZ8873MLL, MICREL_PHY_ID_MASK },
+ 	{ PHY_ID_KSZ886X, MICREL_PHY_ID_MASK },
++	{ PHY_ID_KSZ9477, MICREL_PHY_ID_MASK },
+ 	{ PHY_ID_LAN8814, MICREL_PHY_ID_MASK },
+ 	{ PHY_ID_LAN8804, MICREL_PHY_ID_MASK },
+ 	{ }
 -- 
 2.43.0
 
