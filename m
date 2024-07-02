@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 927D01BE22C;
-	Tue,  2 Jul 2024 17:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D23471BE23E;
+	Tue,  2 Jul 2024 17:06:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719939990; cv=none; b=KPKHUu/WHJA/91vCyIcqEKYoPPooK9frVUwWNCcMVHmua02mA+Ho0F/gs5iI5KURIZgKqvlX0Bgw8D3jA55KboWXgw/GQF/I3OXetD/zSk7SFkWZL5p3OSlvfaW6rhHJ2q995m8Yfm6/7FULVCM9+g5YidIcHVpgTUkQQh0XY7c=
+	t=1719939993; cv=none; b=XelxGGwBxzT8plGULg19YrxFtzPccGrvNDuYrfdy8Ki8YE3hNGZbhJ7z+/9TJ/p/kSuLZZWqavJjIJwHVXjSfLwnbVPQUyEhupBFkglPIl64UHKkxhq6Yw5/Ij07CJhBgZUlQ/5QsYMr3w56S0Borc8bIFiM9C6SENb//Emt7N0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719939990; c=relaxed/simple;
-	bh=DGqCP8FevJMts5EvU7An+AgkrYtRiY1Uh8UHdomLZi8=;
+	s=arc-20240116; t=1719939993; c=relaxed/simple;
+	bh=/XKiYV7rSAUGX0pMT+Yy6ozpO3xa7B4+uasdpCGJ9Q0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Rd38Is6A35wbhFxfBhZvZemQBW42CpK3ObDqhFczW5D2m/NSMKZ+BKwNjnA7hDDajUhCnGSIgc2Y5Ss/HwXRMH/Czg37ySJl6IL+lU/ejpwLy+K7Bl2LkExkpolcnCyBUSqj9aBxKK/3+n91gsC4PlyczmnC64+PJVt6xdhZr0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3NEv1ot; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H/76dr6KqNS1QrvJS2mDToXzaO9GrB5UVEdAgfbRHchhSaCYNauQciQ5/9HV9LyKhC4Ax9ma505K0VDHs953zoixvztdK1SuYNx/HwWqFmb56x5CU4AZyidB6gQoLZaO30hQIV8HdJtVClDf0MDmwZ8hZmtNovxoXZnDo+ngfyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zZCxoXnI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3NEv1ot"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09E0FC116B1;
-	Tue,  2 Jul 2024 17:06:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zZCxoXnI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 531D6C4AF07;
+	Tue,  2 Jul 2024 17:06:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719939990;
-	bh=DGqCP8FevJMts5EvU7An+AgkrYtRiY1Uh8UHdomLZi8=;
+	s=korg; t=1719939993;
+	bh=/XKiYV7rSAUGX0pMT+Yy6ozpO3xa7B4+uasdpCGJ9Q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a3NEv1otcyNWTTb110eOJAudCkBiZMZUZRE5LHNRlOaVHaEoLN2f043V3Fg6G5Mv4
-	 WfaINQAkBK6LMv1iNgPm9wQSLgxlcJs4jTXrN8Tu+il3+Um9S+TR9WHPgjir49DyDT
-	 bvLH/3f+QQR/kBsG8OKI5XItakDdLjWXiZgVxlIM=
+	b=zZCxoXnIygLUrNptIyws5uIq6pGd3BdpH5pKKXkviJWyOH0td9/gltbU6gsSqPnxV
+	 DkUiTZXwBv6ZRfbfibTHOjqdUoddPAqUJTJxCMBTmoIc9dNM08l8I5LEr/7XV3Xwmh
+	 EVGBJqM9JbhgrFI16m81RPMDy22sCZpFJZMmIo2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Zac Ecob <zacecob@protonmail.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 012/222] pwm: stm32: Fix for settings using period > UINT32_MAX
-Date: Tue,  2 Jul 2024 19:00:50 +0200
-Message-ID: <20240702170244.442979853@linuxfoundation.org>
+Subject: [PATCH 6.9 021/222] bpf: Add missed var_off setting in set_sext32_default_val()
+Date: Tue,  2 Jul 2024 19:00:59 +0200
+Message-ID: <20240702170244.788462698@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -44,91 +46,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Yonghong Song <yonghong.song@linux.dev>
 
-[ Upstream commit d44d635635a7192c773a75e674a8590a163e879e ]
+[ Upstream commit 380d5f89a4815ff88461a45de2fb6f28533df708 ]
 
-stm32_pwm_config() took the duty_cycle and period values with the type
-int, however stm32_pwm_apply() passed u64 values there. Expand the
-function parameters to u64 to not discard relevant bits and adapt the
-calculations to the wider type.
+Zac reported a verification failure and Alexei reproduced the issue
+with a simple reproducer ([1]). The verification failure is due to missed
+setting for var_off.
 
-To ensure the calculations won't overflow, check in .probe() the input
-clk doesn't run faster than 1 GHz.
+The following is the reproducer in [1]:
+  0: R1=ctx() R10=fp0
+  0: (71) r3 = *(u8 *)(r10 -387)        ;
+     R3_w=scalar(smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff)) R10=fp0
+  1: (bc) w7 = (s8)w3                   ;
+     R3_w=scalar(smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff))
+     R7_w=scalar(smin=smin32=0,smax=umax=smax32=umax32=127,var_off=(0x0; 0x7f))
+  2: (36) if w7 >= 0x2533823b goto pc-3
+     mark_precise: frame0: last_idx 2 first_idx 0 subseq_idx -1
+     mark_precise: frame0: regs=r7 stack= before 1: (bc) w7 = (s8)w3
+     mark_precise: frame0: regs=r3 stack= before 0: (71) r3 = *(u8 *)(r10 -387)
+  2: R7_w=scalar(smin=smin32=0,smax=umax=smax32=umax32=127,var_off=(0x0; 0x7f))
+  3: (b4) w0 = 0                        ; R0_w=0
+  4: (95) exit
 
-Link: https://lore.kernel.org/r/06b4a650a608d0887d934c1b2b8919e0f78e4db2.1710711976.git.u.kleine-koenig@pengutronix.de
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Stable-dep-of: c45fcf46ca23 ("pwm: stm32: Refuse too small period requests")
+Note that after insn 1, the var_off for R7 is (0x0; 0x7f). This is not correct
+since upper 24 bits of w7 could be 0 or 1. So correct var_off should be
+(0x0; 0xffffffff). Missing var_off setting in set_sext32_default_val() caused later
+incorrect analysis in zext_32_to_64(dst_reg) and reg_bounds_sync(dst_reg).
+
+To fix the issue, set var_off correctly in set_sext32_default_val(). The correct
+reg state after insn 1 becomes:
+  1: (bc) w7 = (s8)w3                   ;
+     R3_w=scalar(smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff))
+     R7_w=scalar(smin=0,smax=umax=0xffffffff,smin32=-128,smax32=127,var_off=(0x0; 0xffffffff))
+and at insn 2, the verifier correctly determines either branch is possible.
+
+  [1] https://lore.kernel.org/bpf/CAADnVQLPU0Shz7dWV4bn2BgtGdxN3uFHPeobGBA72tpg5Xoykw@mail.gmail.com/
+
+Fixes: 8100928c8814 ("bpf: Support new sign-extension mov insns")
+Reported-by: Zac Ecob <zacecob@protonmail.com>
+Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/20240615174626.3994813-1-yonghong.song@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-stm32.c | 28 ++++++++++++++++++++--------
- 1 file changed, 20 insertions(+), 8 deletions(-)
+ kernel/bpf/verifier.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pwm/pwm-stm32.c b/drivers/pwm/pwm-stm32.c
-index d50194ad24b1c..27fcc90504f67 100644
---- a/drivers/pwm/pwm-stm32.c
-+++ b/drivers/pwm/pwm-stm32.c
-@@ -309,16 +309,18 @@ static int stm32_pwm_capture(struct pwm_chip *chip, struct pwm_device *pwm,
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 0ef18ae40bc5a..4ad77ed8059e4 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -6223,6 +6223,7 @@ static void set_sext32_default_val(struct bpf_reg_state *reg, int size)
+ 	}
+ 	reg->u32_min_value = 0;
+ 	reg->u32_max_value = U32_MAX;
++	reg->var_off = tnum_subreg(tnum_unknown);
  }
  
- static int stm32_pwm_config(struct stm32_pwm *priv, unsigned int ch,
--			    int duty_ns, int period_ns)
-+			    u64 duty_ns, u64 period_ns)
- {
- 	unsigned long long prd, div, dty;
- 	unsigned int prescaler = 0;
- 	u32 ccmr, mask, shift;
- 
--	/* Period and prescaler values depends on clock rate */
--	div = (unsigned long long)clk_get_rate(priv->clk) * period_ns;
--
--	do_div(div, NSEC_PER_SEC);
-+	/*
-+	 * .probe() asserted that clk_get_rate() is not bigger than 1 GHz, so
-+	 * this won't overflow.
-+	 */
-+	div = mul_u64_u64_div_u64(period_ns, clk_get_rate(priv->clk),
-+				  NSEC_PER_SEC);
- 	prd = div;
- 
- 	while (div > priv->max_arr) {
-@@ -351,9 +353,8 @@ static int stm32_pwm_config(struct stm32_pwm *priv, unsigned int ch,
- 	regmap_set_bits(priv->regmap, TIM_CR1, TIM_CR1_ARPE);
- 
- 	/* Calculate the duty cycles */
--	dty = (unsigned long long)clk_get_rate(priv->clk) * duty_ns;
--	do_div(dty, prescaler + 1);
--	do_div(dty, NSEC_PER_SEC);
-+	dty = mul_u64_u64_div_u64(duty_ns, clk_get_rate(priv->clk),
-+				  (u64)NSEC_PER_SEC * (prescaler + 1));
- 
- 	regmap_write(priv->regmap, TIM_CCR1 + 4 * ch, dty);
- 
-@@ -657,6 +658,17 @@ static int stm32_pwm_probe(struct platform_device *pdev)
- 
- 	stm32_pwm_detect_complementary(priv);
- 
-+	ret = devm_clk_rate_exclusive_get(dev, priv->clk);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Failed to lock clock\n");
-+
-+	/*
-+	 * With the clk running with not more than 1 GHz the calculations in
-+	 * .apply() won't overflow.
-+	 */
-+	if (clk_get_rate(priv->clk) > 1000000000)
-+		return dev_err_probe(dev, -EINVAL, "Failed to lock clock\n");
-+
- 	chip->ops = &stm32pwm_ops;
- 
- 	/* Initialize clock refcount to number of enabled PWM channels. */
+ static void coerce_subreg_to_size_sx(struct bpf_reg_state *reg, int size)
 -- 
 2.43.0
 
