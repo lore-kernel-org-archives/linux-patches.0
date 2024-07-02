@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA9AE15218A;
-	Tue,  2 Jul 2024 17:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544B815218A;
+	Tue,  2 Jul 2024 17:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940310; cv=none; b=o88Sodkhz8H+qhogygTCa8itCrkayyK7EDDiyMaRm35631u0asL5sgJVgNQvVSGH11b4leM7wW+s5vYiqL/AkqYrzjopiwvsq+yRTfLU7ZqhNMeEmo7m8ix29d3u06eEMXTL5gIyyM3zCuvNctjdJgJmlM8biL/DOCNupH784wM=
+	t=1719940314; cv=none; b=rgGswdk9mL2ioqVD7OeZo/e47E9xSFsVAOzA96aUiHPNIk8XKd617z0H/9T9goFz53lC1KqxvTCrWj8dXN+F4OTWn2kqnAMUwjvhQqB/lLCoWRpMQu/b0VnnVxbxENoZ4PQRWtK8yxZlP6NHcxyfP62hmdLwO+3ZOR4KthkiJFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940310; c=relaxed/simple;
-	bh=KL3rbepGwjwNOZpPG+o+6e/fTpgqlzSu1T01etyklyU=;
+	s=arc-20240116; t=1719940314; c=relaxed/simple;
+	bh=5t0RyREuQ9zsH0143+R1R8Uh2XxRivtbAL5kACEd9tM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OyWs1OMU/Ek8e2Nn6ISJbIigxeUez8y+xTkAlxu41viOCF1B/3clx9swOcOk73EnOrg1TnJMxLzrqqtbFHdBUo+8gx35PMcU0w+UrJyP4rFQlYM8TmXimQPorAEpsK64yyvcL5eT74dISkT9V0qd/454cJjGtfYjTX5ydl/8KZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mEusRCbh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ix0nJ29F1p/8hG5P3urIiay1swgemfwG0DbwsAnedabLw81CsuKikixjfBymJwgpkrGSqvPyxKTozCOcDbIBCOmG+jUNN56XP5tU5SNBNMwb3hiWccPRSOadUkARuujGaiWsRnXsIVMKKCzqWRYtnHTfyeU3ywV32QCgYzomI5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1WSd9brr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mEusRCbh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 466AEC116B1;
-	Tue,  2 Jul 2024 17:11:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1WSd9brr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA2D4C116B1;
+	Tue,  2 Jul 2024 17:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940310;
-	bh=KL3rbepGwjwNOZpPG+o+6e/fTpgqlzSu1T01etyklyU=;
+	s=korg; t=1719940314;
+	bh=5t0RyREuQ9zsH0143+R1R8Uh2XxRivtbAL5kACEd9tM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mEusRCbhEvuatYs5+JzgWCsUiHB019/FYT4TvtoUDapJDjleuOqWLf7avgz46ScXA
-	 kl2qH58akbprBw4LB+lgTY9uaL8Fd7IgbcNgGYRc62239s1wP8f13pBZy77dQQTseU
-	 Oy+D7IjM9aMljKg45vMLJEXnNZOZSYoscPPU1RHA=
+	b=1WSd9brrLDuCQn9Fi1MD5bE6vZUSfPDxxx5p7XiBC6FQceiw6QwDZ8o4EVe3ZP71v
+	 Q6S3A4tFpvnlkgDfMP+rvsL+zwq3kZ0DaW0LbOfYthIjHx/CHeSVT1n1z2AowZdJoq
+	 CEBldcOIa4rpAp/WZydU5xiT+9zHd5O+Im1hkcvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
-	Takashi Iwai <tiwai@suse.de>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 085/222] ALSA: emux: improve patch ioctl data validation
-Date: Tue,  2 Jul 2024 19:02:03 +0200
-Message-ID: <20240702170247.226676132@linuxfoundation.org>
+Subject: [PATCH 6.9 086/222] media: dvbdev: Initialize sbuf
+Date: Tue,  2 Jul 2024 19:02:04 +0200
+Message-ID: <20240702170247.264321585@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -45,85 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 89b32ccb12ae67e630c6453d778ec30a592a212f ]
+[ Upstream commit 17d1316de0d7dc1bdc5d6e3ad4efd30a9bf1a381 ]
 
-In load_data(), make the validation of and skipping over the main info
-block match that in load_guspatch().
+Because the size passed to copy_from_user() cannot be known beforehand,
+it needs to be checked during runtime with check_object_size. That makes
+gcc believe that the content of sbuf can be used before init.
 
-In load_guspatch(), add checking that the specified patch length matches
-the actually supplied data, like load_data() already did.
+Fix:
+./include/linux/thread_info.h:215:17: warning: ‘sbuf’ may be used uninitialized [-Wmaybe-uninitialized]
 
-Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Message-ID: <20240406064830.1029573-8-oswald.buddenhagen@gmx.de>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/synth/emux/soundfont.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/media/dvb-core/dvbdev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/synth/emux/soundfont.c b/sound/synth/emux/soundfont.c
-index 16f00097cb95a..eed47e4830248 100644
---- a/sound/synth/emux/soundfont.c
-+++ b/sound/synth/emux/soundfont.c
-@@ -701,7 +701,6 @@ load_data(struct snd_sf_list *sflist, const void __user *data, long count)
- 	struct snd_soundfont *sf;
- 	struct soundfont_sample_info sample_info;
- 	struct snd_sf_sample *sp;
--	long off;
- 
- 	/* patch must be opened */
- 	sf = sflist->currsf;
-@@ -711,12 +710,16 @@ load_data(struct snd_sf_list *sflist, const void __user *data, long count)
- 	if (is_special_type(sf->type))
- 		return -EINVAL;
- 
-+	if (count < (long)sizeof(sample_info)) {
-+		return -EINVAL;
-+	}
- 	if (copy_from_user(&sample_info, data, sizeof(sample_info)))
- 		return -EFAULT;
-+	data += sizeof(sample_info);
-+	count -= sizeof(sample_info);
- 
--	off = sizeof(sample_info);
--
--	if (sample_info.size != (count-off)/2)
-+	// SoundFont uses S16LE samples.
-+	if (sample_info.size * 2 != count)
- 		return -EINVAL;
- 
- 	/* Check for dup */
-@@ -744,7 +747,7 @@ load_data(struct snd_sf_list *sflist, const void __user *data, long count)
- 		int  rc;
- 		rc = sflist->callback.sample_new
- 			(sflist->callback.private_data, sp, sflist->memhdr,
--			 data + off, count - off);
-+			 data, count);
- 		if (rc < 0) {
- 			sf_sample_delete(sflist, sf, sp);
- 			return rc;
-@@ -957,10 +960,12 @@ load_guspatch(struct snd_sf_list *sflist, const char __user *data,
- 	}
- 	if (copy_from_user(&patch, data, sizeof(patch)))
- 		return -EFAULT;
--	
- 	count -= sizeof(patch);
- 	data += sizeof(patch);
- 
-+	if ((patch.len << (patch.mode & WAVE_16_BITS ? 1 : 0)) != count)
-+		return -EINVAL;
-+
- 	sf = newsf(sflist, SNDRV_SFNT_PAT_TYPE_GUS|SNDRV_SFNT_PAT_SHARED, NULL);
- 	if (sf == NULL)
- 		return -ENOMEM;
+diff --git a/drivers/media/dvb-core/dvbdev.c b/drivers/media/dvb-core/dvbdev.c
+index 733d0bc4b4cc3..b43695bc51e75 100644
+--- a/drivers/media/dvb-core/dvbdev.c
++++ b/drivers/media/dvb-core/dvbdev.c
+@@ -956,7 +956,7 @@ int dvb_usercopy(struct file *file,
+ 		 int (*func)(struct file *file,
+ 			     unsigned int cmd, void *arg))
+ {
+-	char    sbuf[128];
++	char    sbuf[128] = {};
+ 	void    *mbuf = NULL;
+ 	void    *parg = NULL;
+ 	int     err  = -EINVAL;
 -- 
 2.43.0
 
