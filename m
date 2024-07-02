@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AEB91BD005;
-	Tue,  2 Jul 2024 17:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F461BD005;
+	Tue,  2 Jul 2024 17:32:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941564; cv=none; b=UG4G/jObK8ET5VNAUCDOkhbWgPyhd2bbvujDdncdYjENhkVIaW+iTWBbXVko1rGn0fiHA3q5o41vF+8dA5apUhCu6Es5fIBZaUNywJSU+FjOVskzdDWbhmAbmyocORPQFhteVOdJJYeKKSLswlq9aZsfsdKxlYO/wQJ2tDgh1Rs=
+	t=1719941567; cv=none; b=iTjF+I+XbksqqcvprOWjY6A6Ue6JmUlsSadUX0wPHdLxL3C7bM/Kc+RakpdxO3T594rwq4QrTVntWqSE6lXv8RZciuF6KTSmdmyNNHWrgvWf15JxTNgezWgrLySvoMWaBnKJncQLVfpBF5k5G7y3B3aiUFSQ5OA/ny+yyKiIB34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941564; c=relaxed/simple;
-	bh=tk/1KlN585iJP8Nudu/EPWX8+LWnkaLpRZQkV70qF+8=;
+	s=arc-20240116; t=1719941567; c=relaxed/simple;
+	bh=DRGus4GGmavnF5Mo3bgJmRikgsUCj1B7M43f0QWZ66o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P2nhoXf33NJAMpHsZJL/FSwKcwweFgCtmmUBjlr7wM+ASdLVpZ/OpV0DqU+h7cot11lF2wf2uuw7vHcj2gM5jxe6EpjEpuVazQ3aEfMMvX1Js0M9KygFfonQd/mkklRWhYmM4wuNNknCGbsV9w8HWIkHTXIQJFkh2svV8qvb/UM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ogx2w8jC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SX8xWPYd3TSXehi1WTSEh+ny+YQ9r6Wu+P9DoMkac5KXa96wBu5XlnRp5FfkAyrA4WElKyNRfzwVi+31Bfg+NMXdOrPytiFImwVhF/XzgYVQOLQRCHrFDZZxjP87J6HtPK0EV7lUHMtJHros1F4532JeCJ4Yleklo5kAB2DqoMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RU2WmZXY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ogx2w8jC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BFACC116B1;
-	Tue,  2 Jul 2024 17:32:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RU2WmZXY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 811F9C116B1;
+	Tue,  2 Jul 2024 17:32:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941563;
-	bh=tk/1KlN585iJP8Nudu/EPWX8+LWnkaLpRZQkV70qF+8=;
+	s=korg; t=1719941566;
+	bh=DRGus4GGmavnF5Mo3bgJmRikgsUCj1B7M43f0QWZ66o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ogx2w8jCcesBApWighL70ydskf9mUQJK8ya9VhhSEz/tomWP3A18M6JaRjlGrX00r
-	 1mMGJ61Xus9lKn5DI8k+0G+sMVucopBl3smEy5OFpb00i0peLfhaSXmEmuBaL6BQZA
-	 ySIm2D7uxpch7fEhpSC5gV0uHaFHL2MoKHEN9DHI=
+	b=RU2WmZXYl8CoCErXe+b3ljZRojCUtyYFWC03KLjCKM46YdhWSTvR2mgg5a2dLLpwb
+	 Zj1FeniUDlWWibd+CEUKW3wCwUiBd8zrmuW8dP113o6oIiZpfsFncd9Kjyhbp2fpbP
+	 qVRSC8IJtIXZnNKoiliUENYqTZULS0QnJAOAiORo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 070/128] mmc: sdhci: Do not invert write-protect twice
-Date: Tue,  2 Jul 2024 19:04:31 +0200
-Message-ID: <20240702170228.880812703@linuxfoundation.org>
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 061/128] ima: Fix use-after-free on a dentrys dname.name
+Date: Tue,  2 Jul 2024 19:04:22 +0200
+Message-ID: <20240702170228.541271536@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170226.231899085@linuxfoundation.org>
 References: <20240702170226.231899085@linuxfoundation.org>
@@ -50,90 +52,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Stefan Berger <stefanb@linux.ibm.com>
 
-commit fbd64f902b93fe9658b855b9892ae59ef6ea22b9 upstream.
+[ Upstream commit be84f32bb2c981ca670922e047cdde1488b233de ]
 
-mmc_of_parse() reads device property "wp-inverted" and sets
-MMC_CAP2_RO_ACTIVE_HIGH if it is true. MMC_CAP2_RO_ACTIVE_HIGH is used
-to invert a write-protect (AKA read-only) GPIO value.
+->d_name.name can change on rename and the earlier value can be freed;
+there are conditions sufficient to stabilize it (->d_lock on dentry,
+->d_lock on its parent, ->i_rwsem exclusive on the parent's inode,
+rename_lock), but none of those are met at any of the sites. Take a stable
+snapshot of the name instead.
 
-sdhci_get_property() also reads "wp-inverted" and sets
-SDHCI_QUIRK_INVERTED_WRITE_PROTECT which is used to invert the
-write-protect value as well but also acts upon a value read out from the
-SDHCI_PRESENT_STATE register.
-
-Many drivers call both mmc_of_parse() and sdhci_get_property(),
-so that both MMC_CAP2_RO_ACTIVE_HIGH and
-SDHCI_QUIRK_INVERTED_WRITE_PROTECT will be set if the controller has
-device property "wp-inverted".
-
-Amend the logic in sdhci_check_ro() to allow for that possibility,
-so that the write-protect value is not inverted twice.
-
-Also do not invert the value if it is a negative error value. Note that
-callers treat an error the same as not-write-protected, so the result is
-functionally the same in that case.
-
-Also do not invert the value if sdhci host operation ->get_ro() is used.
-None of the users of that callback set SDHCI_QUIRK_INVERTED_WRITE_PROTECT
-directly or indirectly, but two do call mmc_gpio_get_ro(), so leave it to
-them to deal with that if they ever set SDHCI_QUIRK_INVERTED_WRITE_PROTECT
-in the future.
-
-Fixes: 6d5cd068ee59 ("mmc: sdhci: use WP GPIO in sdhci_check_ro()")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240614080051.4005-2-adrian.hunter@intel.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/all/20240202182732.GE2087318@ZenIV/
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci.c |   22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ security/integrity/ima/ima_api.c          |   16 ++++++++++++----
+ security/integrity/ima/ima_template_lib.c |   17 ++++++++++++++---
+ 2 files changed, 26 insertions(+), 7 deletions(-)
 
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -2539,26 +2539,34 @@ EXPORT_SYMBOL_GPL(sdhci_get_cd_nogpio);
+--- a/security/integrity/ima/ima_api.c
++++ b/security/integrity/ima/ima_api.c
+@@ -244,8 +244,8 @@ int ima_collect_measurement(struct integ
+ 	const char *audit_cause = "failed";
+ 	struct inode *inode = file_inode(file);
+ 	struct inode *real_inode = d_real_inode(file_dentry(file));
+-	const char *filename = file->f_path.dentry->d_name.name;
+ 	struct ima_max_digest_data hash;
++	struct name_snapshot filename;
+ 	int result = 0;
+ 	int length;
+ 	void *tmpbuf;
+@@ -319,9 +319,13 @@ out:
+ 		if (file->f_flags & O_DIRECT)
+ 			audit_cause = "failed(directio)";
  
- static int sdhci_check_ro(struct sdhci_host *host)
- {
-+	bool allow_invert = false;
- 	unsigned long flags;
- 	int is_readonly;
- 
- 	spin_lock_irqsave(&host->lock, flags);
- 
--	if (host->flags & SDHCI_DEVICE_DEAD)
-+	if (host->flags & SDHCI_DEVICE_DEAD) {
- 		is_readonly = 0;
--	else if (host->ops->get_ro)
-+	} else if (host->ops->get_ro) {
- 		is_readonly = host->ops->get_ro(host);
--	else if (mmc_can_gpio_ro(host->mmc))
-+	} else if (mmc_can_gpio_ro(host->mmc)) {
- 		is_readonly = mmc_gpio_get_ro(host->mmc);
--	else
-+		/* Do not invert twice */
-+		allow_invert = !(host->mmc->caps2 & MMC_CAP2_RO_ACTIVE_HIGH);
-+	} else {
- 		is_readonly = !(sdhci_readl(host, SDHCI_PRESENT_STATE)
- 				& SDHCI_WRITE_PROTECT);
-+		allow_invert = true;
-+	}
- 
- 	spin_unlock_irqrestore(&host->lock, flags);
- 
--	/* This quirk needs to be replaced by a callback-function later */
--	return host->quirks & SDHCI_QUIRK_INVERTED_WRITE_PROTECT ?
--		!is_readonly : is_readonly;
-+	if (is_readonly >= 0 &&
-+	    allow_invert &&
-+	    (host->quirks & SDHCI_QUIRK_INVERTED_WRITE_PROTECT))
-+		is_readonly = !is_readonly;
++		take_dentry_name_snapshot(&filename, file->f_path.dentry);
 +
-+	return is_readonly;
+ 		integrity_audit_msg(AUDIT_INTEGRITY_DATA, inode,
+-				    filename, "collect_data", audit_cause,
+-				    result, 0);
++				    filename.name.name, "collect_data",
++				    audit_cause, result, 0);
++
++		release_dentry_name_snapshot(&filename);
+ 	}
+ 	return result;
+ }
+@@ -434,6 +438,7 @@ out:
+  */
+ const char *ima_d_path(const struct path *path, char **pathbuf, char *namebuf)
+ {
++	struct name_snapshot filename;
+ 	char *pathname = NULL;
+ 
+ 	*pathbuf = __getname();
+@@ -447,7 +452,10 @@ const char *ima_d_path(const struct path
+ 	}
+ 
+ 	if (!pathname) {
+-		strscpy(namebuf, path->dentry->d_name.name, NAME_MAX);
++		take_dentry_name_snapshot(&filename, path->dentry);
++		strscpy(namebuf, filename.name.name, NAME_MAX);
++		release_dentry_name_snapshot(&filename);
++
+ 		pathname = namebuf;
+ 	}
+ 
+--- a/security/integrity/ima/ima_template_lib.c
++++ b/security/integrity/ima/ima_template_lib.c
+@@ -483,7 +483,10 @@ static int ima_eventname_init_common(str
+ 				     bool size_limit)
+ {
+ 	const char *cur_filename = NULL;
++	struct name_snapshot filename;
+ 	u32 cur_filename_len = 0;
++	bool snapshot = false;
++	int ret;
+ 
+ 	BUG_ON(event_data->filename == NULL && event_data->file == NULL);
+ 
+@@ -496,7 +499,10 @@ static int ima_eventname_init_common(str
+ 	}
+ 
+ 	if (event_data->file) {
+-		cur_filename = event_data->file->f_path.dentry->d_name.name;
++		take_dentry_name_snapshot(&filename,
++					  event_data->file->f_path.dentry);
++		snapshot = true;
++		cur_filename = filename.name.name;
+ 		cur_filename_len = strlen(cur_filename);
+ 	} else
+ 		/*
+@@ -505,8 +511,13 @@ static int ima_eventname_init_common(str
+ 		 */
+ 		cur_filename_len = IMA_EVENT_NAME_LEN_MAX;
+ out:
+-	return ima_write_template_field_data(cur_filename, cur_filename_len,
+-					     DATA_FMT_STRING, field_data);
++	ret = ima_write_template_field_data(cur_filename, cur_filename_len,
++					    DATA_FMT_STRING, field_data);
++
++	if (snapshot)
++		release_dentry_name_snapshot(&filename);
++
++	return ret;
  }
  
- #define SAMPLE_COUNT	5
+ /*
 
 
