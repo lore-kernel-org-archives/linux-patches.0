@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A651C2319;
-	Tue,  2 Jul 2024 17:17:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8748A1BE846;
+	Tue,  2 Jul 2024 17:17:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940639; cv=none; b=idr48tKgpzNlNZzj8e0OgoZ1SD9BrBECsf2TM21pQS/Uzip/m0eaqPFTwZQf978WyhUbktArG4/tIT3/7e+yEmSr+5uXPEbL5uTPKN/OEjiQ9fVo/wtP17Dz5Wm4RyZ7RyuvgYqGyU0buOBqbWxrPBqStvDjPVvGSsx3gLtEaDw=
+	t=1719940642; cv=none; b=D/nv3aLryJ1hOkyDFnjIXeF4I8Xk8EwSX82RZ2N41L5wc5YgRrGC7vN3j18ZohZP9JW9YaHw6QE9L67XvrBsKfxwnq5DrzAZunSpsEIlXy3RncHNxDihXP+6OTiiF2G/CidzNLNEMH65gh8Me8bsqwzTA7oTWdBWMK9ef4jT7PM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940639; c=relaxed/simple;
-	bh=llnxrEQcIivxNRw9QjLE6CEvdCgOt9wN2d8rwixSDN4=;
+	s=arc-20240116; t=1719940642; c=relaxed/simple;
+	bh=IiEqP1J6dk/eYn83NAUGFXa4Pgr7Ls9S1breN+C44xI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m0/9slxdQMM7cpImnA9iie/4qD1qQn+yMh9/iSsGgHrYvQ0g+/ivxDs+7c3DwQw+rZgSRHWVhX0cIgk0+0r9E9Im5Nzb/PMDuszHwBKNDSOYMxAvPdXbHKP0LJYTjxk3dPvbRFingFBmN1KZh7zpCesyCmtAg1T/IT/5J2Oq6yU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zfd5YSSB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dh3htcWpz/ahsxBMvf3thE3dagSvbGaEN+0AY58XJ/A9fos9WWQ6P4/MtEhIXhxKEO0CY5CHbubou4F3TubxmFRenYWxZiOl9FcohvfmzzQ7tOlFudcpCjZK8RCs8HzjdWI7I64Dgc4tEl8SVj5DljlGuw6xKEZMSCQczNLfRu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=llDPVIfy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zfd5YSSB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74921C116B1;
-	Tue,  2 Jul 2024 17:17:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="llDPVIfy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB010C116B1;
+	Tue,  2 Jul 2024 17:17:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940638;
-	bh=llnxrEQcIivxNRw9QjLE6CEvdCgOt9wN2d8rwixSDN4=;
+	s=korg; t=1719940642;
+	bh=IiEqP1J6dk/eYn83NAUGFXa4Pgr7Ls9S1breN+C44xI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zfd5YSSBVsYjcp1Q8MspgmjHyuMQglB1F+QC0ix22BfXEEQAi2R9ZuIew6ODdJD4v
-	 tN60nJjK6Jn9EDIwHFl7PtQvJWKTMOj4QPsH0HrnRgMxi63CAvPLcTmNC53HmPt/FU
-	 gxUaIMNRTTYz5SkGQvdR1U3owQSMHqVRhr0kwkzE=
+	b=llDPVIfyRfZXb6LGMwiG8ypWzhCdbVdtXcFpVVxdkVx6D5CEIikBYubL0sEKaZIpG
+	 1WnnkK7qvnW7a1DOklseYHJNJpLzKAm81k1LaWe5UB9nrpCHFiLGZEV2KIeNgdlRkR
+	 FaSSA25AM41h1oqCgvy8nzzCb2Lcb4EiK/gyoGhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	FUKAUMI Naoki <naoki@radxa.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 214/222] arm64: dts: rockchip: fix PMIC interrupt pin on ROCK Pi E
-Date: Tue,  2 Jul 2024 19:04:12 +0200
-Message-ID: <20240702170252.166413565@linuxfoundation.org>
+	Wenjing Liu <wenjing.liu@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Michael Strauss <michael.strauss@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.9 185/222] drm/amd/display: Send DP_TOTAL_LTTPR_CNT during detection if LTTPR is present
+Date: Tue,  2 Jul 2024 19:03:43 +0200
+Message-ID: <20240702170251.057435123@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -51,39 +54,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: FUKAUMI Naoki <naoki@radxa.com>
+From: Michael Strauss <michael.strauss@amd.com>
 
-[ Upstream commit 02afd3d5b9fa4ffed284c0f7e7bec609097804fc ]
+commit 2ec6c7f802332d1eff16f03e7c757f1543ee1183 upstream.
 
-use GPIO0_A2 as interrupt pin for PMIC. GPIO2_A6 was used for
-pre-production board.
+[WHY]
+New register field added in DP2.1 SCR, needed for auxless ALPM
 
-Fixes: b918e81f2145 ("arm64: dts: rockchip: rk3328: Add Radxa ROCK Pi E")
-Signed-off-by: FUKAUMI Naoki <naoki@radxa.com>
-Link: https://lore.kernel.org/r/20240619050047.1217-1-naoki@radxa.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[HOW]
+Echo value read from 0xF0007 back to sink
+
+Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Michael Strauss <michael.strauss@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3328-rock-pi-e.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c |   10 +++++++++-
+ drivers/gpu/drm/amd/display/include/dpcd_defs.h                    |    5 +++++
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3328-rock-pi-e.dts b/arch/arm64/boot/dts/rockchip/rk3328-rock-pi-e.dts
-index f09d60bbe6c4f..a608a219543e5 100644
---- a/arch/arm64/boot/dts/rockchip/rk3328-rock-pi-e.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3328-rock-pi-e.dts
-@@ -241,8 +241,8 @@
- 	rk805: pmic@18 {
- 		compatible = "rockchip,rk805";
- 		reg = <0x18>;
--		interrupt-parent = <&gpio2>;
--		interrupts = <6 IRQ_TYPE_LEVEL_LOW>;
-+		interrupt-parent = <&gpio0>;
-+		interrupts = <2 IRQ_TYPE_LEVEL_LOW>;
- 		#clock-cells = <1>;
- 		clock-output-names = "xin32k", "rk805-clkout2";
- 		gpio-controller;
--- 
-2.43.0
-
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
+@@ -1590,9 +1590,17 @@ static bool retrieve_link_cap(struct dc_
+ 			return false;
+ 	}
+ 
+-	if (dp_is_lttpr_present(link))
++	if (dp_is_lttpr_present(link)) {
+ 		configure_lttpr_mode_transparent(link);
+ 
++		// Echo TOTAL_LTTPR_CNT back downstream
++		core_link_write_dpcd(
++				link,
++				DP_TOTAL_LTTPR_CNT,
++				&link->dpcd_caps.lttpr_caps.phy_repeater_cnt,
++				sizeof(link->dpcd_caps.lttpr_caps.phy_repeater_cnt));
++	}
++
+ 	/* Read DP tunneling information. */
+ 	status = dpcd_get_tunneling_device_data(link);
+ 
+--- a/drivers/gpu/drm/amd/display/include/dpcd_defs.h
++++ b/drivers/gpu/drm/amd/display/include/dpcd_defs.h
+@@ -177,4 +177,9 @@ enum dpcd_psr_sink_states {
+ #define DP_SINK_PR_PIXEL_DEVIATION_PER_LINE     0x379
+ #define DP_SINK_PR_MAX_NUMBER_OF_DEVIATION_LINE 0x37A
+ 
++/* Remove once drm_dp_helper.h is updated upstream */
++#ifndef DP_TOTAL_LTTPR_CNT
++#define DP_TOTAL_LTTPR_CNT                                  0xF000A /* 2.1 */
++#endif
++
+ #endif /* __DAL_DPCD_DEFS_H__ */
 
 
