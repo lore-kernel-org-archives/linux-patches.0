@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55AB61BE22B;
-	Tue,  2 Jul 2024 17:15:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE1DD178381;
+	Tue,  2 Jul 2024 17:15:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940540; cv=none; b=CkrpwddkuFJkPUtXx3TBKTelI6MQ7AlWrLcEmIomNx6YgQhDeYz9GtbBlThqwN3TneTlsjfmiBucbKx1eX71aVG5Up96UXOX7w1MrwbYhSnUlIkmQST1vbfrohWR+Xz3X6ydcaLyH68ixyzeQZ0ZFoHOSWQa/HdqRUtHItRs4Sw=
+	t=1719940543; cv=none; b=AC94zyuQ4ZrQxNbr5gzwqUzQ920y6pvJgJPs1TQyEvYLDtr+TfwmsZAoBR/+gc/uhv0BYmPGWtskYWiXDF0ApFqmIJH2DPekBCZXz3aMl38AxKLNCsh3XIdz2JCmzHCCDZ4wTny9MjTM1CETobJUG42d6M9hOWNMkvwwMjtJPxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940540; c=relaxed/simple;
-	bh=oEP2vb3wSEqEKmz1U9kBhmgQ6egR3Oo8cAraKhSSrW0=;
+	s=arc-20240116; t=1719940543; c=relaxed/simple;
+	bh=UPgLQsy/3id1s3TYqrSWv4t9HwweA7iT7juYPvdWT4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AEbAVNMRYHquNXKNlLtkC2JZ5VOgEN8Nj9Mi9wr8jrTFd4RNVm8uhwIdaNGGtpG/TE4fG2XvSvH1cbVPCT34gwS7ewaFcr7yoE5YZnyzrUQPFL3H2yemgjOw56XdICo3xqQQiU8GkZnZr/pAo2/VwanBXsLJAK/GVXS5gyFlcTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xpmQeNRC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NA0iWTuwQYxDr/Xn5KLhlpVxK61Uu8vlxNhS49nmanCW4Jl4VivWSfPqtt1e3qw1Bcxo7qJ0k5xFaa42efrkmXWMyAeDEqd9k2cypdaLVNlYhWkM4gdht/dHcouwul90u7Ykx+nyyvojlXB9me28AgPe+1W2O2HbxshHpTBh794=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w4hGoXU+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpmQeNRC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCBA4C116B1;
-	Tue,  2 Jul 2024 17:15:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w4hGoXU+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DA53C4AF0C;
+	Tue,  2 Jul 2024 17:15:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940540;
-	bh=oEP2vb3wSEqEKmz1U9kBhmgQ6egR3Oo8cAraKhSSrW0=;
+	s=korg; t=1719940543;
+	bh=UPgLQsy/3id1s3TYqrSWv4t9HwweA7iT7juYPvdWT4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xpmQeNRCDGsq9SJREZqHXYiuBQ8GFCKObn1M2FEsAcMOWE4kmMV+ihks+/KkXEDg8
-	 gMz4yZJyo/oJ0OdcshxAawrGn6Rt8h+KaOov0ixRPPN3AwEvTyM6WRdbisZa3xT03j
-	 31yOOAKMoTKWnGgCcBE5N52S+noxMAV8oqVOzGyI=
+	b=w4hGoXU+MgYMrJaGbnaClHIF1fRv5qPPKPruyB2bQ8qdRof3C8q3Bpz2SRW2l4vXY
+	 XffAOjmwnRRgx/SG53q7ypSu7OSvQq/kQcfZKyv+bfnF25yjAVHv8Ee4zNh/Zu/Kos
+	 iDyUG2TYBTcbYpVM2eanW7EZP/MxprOy5i568StU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	stable <stable@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.9 153/222] usb: ucsi: stm32: fix command completion handling
-Date: Tue,  2 Jul 2024 19:03:11 +0200
-Message-ID: <20240702170249.826273321@linuxfoundation.org>
+	Jos Wang <joswang@lenovo.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.9 154/222] usb: dwc3: core: Workaround for CSR read timeout
+Date: Tue,  2 Jul 2024 19:03:12 +0200
+Message-ID: <20240702170249.864246563@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -51,94 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+From: Jos Wang <joswang@lenovo.com>
 
-commit 8e1ec117efdfd4b2f59f57bd0ad16b4edf5b963f upstream.
+commit fc1d1a712b517bbcb383b1f1f7ef478e7d0579f2 upstream.
 
-Sometimes errors are seen, when doing DR swap, like:
-[   24.672481] ucsi-stm32g0-i2c 0-0035: UCSI_GET_PDOS failed (-5)
-[   24.720188] ucsi-stm32g0-i2c 0-0035: ucsi_handle_connector_change:
- GET_CONNECTOR_STATUS failed (-5)
+This is a workaround for STAR 4846132, which only affects
+DWC_usb31 version2.00a operating in host mode.
 
-There may be some race, which lead to read CCI, before the command complete
-flag is set, hence returning -EIO. Similar fix has been done also in
-ucsi_acpi [1].
+There is a problem in DWC_usb31 version 2.00a operating
+in host mode that would cause a CSR read timeout When CSR
+read coincides with RAM Clock Gating Entry. By disable
+Clock Gating, sacrificing power consumption for normal
+operation.
 
-In case of a spurious or otherwise delayed notification it is
-possible that CCI still reports the previous completion. The
-UCSI spec is aware of this and provides two completion bits in
-CCI, one for normal commands and one for acks. As acks and commands
-alternate the notification handler can determine if the completion
-bit is from the current command.
-
-To fix this add the ACK_PENDING bit for ucsi_stm32g0 and only complete
-commands if the completion bit matches.
-
-[1] https://lore.kernel.org/lkml/20240121204123.275441-3-lk@c--e.de/
-
-Fixes: 72849d4fcee7 ("usb: typec: ucsi: stm32g0: add support for stm32g0 controller")
-Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Link: https://lore.kernel.org/stable/20240612124656.2305603-1-fabrice.gasnier%40foss.st.com
-Cc: stable <stable@kernel.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240612124656.2305603-1-fabrice.gasnier@foss.st.com
+Cc: stable <stable@kernel.org> # 5.10.x: 1e43c86d: usb: dwc3: core: Add DWC31 version 2.00a controller
+Signed-off-by: Jos Wang <joswang@lenovo.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20240619114529.3441-1-joswang1221@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi_stm32g0.c |   19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ drivers/usb/dwc3/core.c |   20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/typec/ucsi/ucsi_stm32g0.c
-+++ b/drivers/usb/typec/ucsi/ucsi_stm32g0.c
-@@ -64,6 +64,7 @@ struct ucsi_stm32g0 {
- 	struct completion complete;
- 	struct device *dev;
- 	unsigned long flags;
-+#define ACK_PENDING	2
- 	const char *fw_name;
- 	struct ucsi *ucsi;
- 	bool suspended;
-@@ -395,9 +396,13 @@ static int ucsi_stm32g0_sync_write(struc
- 				   size_t len)
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -879,12 +879,16 @@ static bool dwc3_core_is_valid(struct dw
+ 
+ static void dwc3_core_setup_global_control(struct dwc3 *dwc)
  {
- 	struct ucsi_stm32g0 *g0 = ucsi_get_drvdata(ucsi);
-+	bool ack = UCSI_COMMAND(*(u64 *)val) == UCSI_ACK_CC_CI;
- 	int ret;
++	unsigned int power_opt;
++	unsigned int hw_mode;
+ 	u32 reg;
  
--	set_bit(COMMAND_PENDING, &g0->flags);
-+	if (ack)
-+		set_bit(ACK_PENDING, &g0->flags);
-+	else
-+		set_bit(COMMAND_PENDING, &g0->flags);
+ 	reg = dwc3_readl(dwc->regs, DWC3_GCTL);
+ 	reg &= ~DWC3_GCTL_SCALEDOWN_MASK;
++	hw_mode = DWC3_GHWPARAMS0_MODE(dwc->hwparams.hwparams0);
++	power_opt = DWC3_GHWPARAMS1_EN_PWROPT(dwc->hwparams.hwparams1);
  
- 	ret = ucsi_stm32g0_async_write(ucsi, offset, val, len);
- 	if (ret)
-@@ -405,9 +410,14 @@ static int ucsi_stm32g0_sync_write(struc
+-	switch (DWC3_GHWPARAMS1_EN_PWROPT(dwc->hwparams.hwparams1)) {
++	switch (power_opt) {
+ 	case DWC3_GHWPARAMS1_EN_PWROPT_CLK:
+ 		/**
+ 		 * WORKAROUND: DWC3 revisions between 2.10a and 2.50a have an
+@@ -917,6 +921,20 @@ static void dwc3_core_setup_global_contr
+ 		break;
+ 	}
  
- 	if (!wait_for_completion_timeout(&g0->complete, msecs_to_jiffies(5000)))
- 		ret = -ETIMEDOUT;
-+	else
-+		return 0;
- 
- out_clear_bit:
--	clear_bit(COMMAND_PENDING, &g0->flags);
-+	if (ack)
-+		clear_bit(ACK_PENDING, &g0->flags);
-+	else
-+		clear_bit(COMMAND_PENDING, &g0->flags);
- 
- 	return ret;
- }
-@@ -428,8 +438,9 @@ static irqreturn_t ucsi_stm32g0_irq_hand
- 	if (UCSI_CCI_CONNECTOR(cci))
- 		ucsi_connector_change(g0->ucsi, UCSI_CCI_CONNECTOR(cci));
- 
--	if (test_bit(COMMAND_PENDING, &g0->flags) &&
--	    cci & (UCSI_CCI_ACK_COMPLETE | UCSI_CCI_COMMAND_COMPLETE))
-+	if (cci & UCSI_CCI_ACK_COMPLETE && test_and_clear_bit(ACK_PENDING, &g0->flags))
-+		complete(&g0->complete);
-+	if (cci & UCSI_CCI_COMMAND_COMPLETE && test_and_clear_bit(COMMAND_PENDING, &g0->flags))
- 		complete(&g0->complete);
- 
- 	return IRQ_HANDLED;
++	/*
++	 * This is a workaround for STAR#4846132, which only affects
++	 * DWC_usb31 version2.00a operating in host mode.
++	 *
++	 * There is a problem in DWC_usb31 version 2.00a operating
++	 * in host mode that would cause a CSR read timeout When CSR
++	 * read coincides with RAM Clock Gating Entry. By disable
++	 * Clock Gating, sacrificing power consumption for normal
++	 * operation.
++	 */
++	if (power_opt != DWC3_GHWPARAMS1_EN_PWROPT_NO &&
++	    hw_mode != DWC3_GHWPARAMS0_MODE_GADGET && DWC3_VER_IS(DWC31, 200A))
++		reg |= DWC3_GCTL_DSBLCLKGTNG;
++
+ 	/* check if current dwc3 is on simulation board */
+ 	if (dwc->hwparams.hwparams6 & DWC3_GHWPARAMS6_EN_FPGA) {
+ 		dev_info(dwc->dev, "Running with FPGA optimizations\n");
 
 
