@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 733BE15218A;
-	Tue,  2 Jul 2024 17:22:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630F715218A;
+	Tue,  2 Jul 2024 17:22:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940933; cv=none; b=U4fyPyL+BdNjltb6CDDvbdRAxmF3c1sac7LDkzSlPreo9rQvQ6TSULNJnNzCMvjcHDPxWL7SUmTwBziRx4nVjG3oYVVfJUKZchvsufyzCz3lSL8dnKpq5ehho3j97gz/v/QPyUrX/+5zSAkwUyM6FpuWxqx/NIXyjmWPct3FYWQ=
+	t=1719940936; cv=none; b=CYRpcJJjyOaUG49IyV/uYHQOfehrlQXyfEcY5VvlxkofVeN4UJTEogsKk/nJ3GihwlHUQVptufCRTWamd/m8z4FeL8yXTTyo8VJ2CA6RqnbZYzfYrRam1FUQtiKs+9+TxstquFTj1Au4riPQTBCQaGzG78eH24XgldHfZPlWUTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940933; c=relaxed/simple;
-	bh=JY/X8N1Tf7bkDDpI5OjStF4CcjwjpJx/fszVKayEvfA=;
+	s=arc-20240116; t=1719940936; c=relaxed/simple;
+	bh=a0ZQVZ0d3ZPp8wEQcrp4s+s4WeINAGboSpV2dMyzVjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cn7q7Cq4WDHY0p8c+z8f37La1gxwcBDG1VDJ+pt8Xl2Bb6OgNPjadH9C6WcrO0Eul+OEg80G/+YTFqI8pF3q3kKRjGqr+LElFNpg4X1L0jJnKvGPbFdCPSFQIvyHfKOD0GDMVuuJReTo9aefwbImnog6NaFBf60b8rnIgrRUTzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hx8co11V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GxCSQoFaRNJGW/iLoGBW/O4+re2GkLCLGzGLbM1BsTDxo4hzordeATJh+gtM9UkU2gOqAnmv71cMfBvM+09olr7D4kyH+Mt61RDxaIGMjHXd5CXqDjM8LBBeZMIimdCfOF0EJK6eY2dbcyX988RyVjv/yVJnD6+zhyPaM5cPzk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QpRh5ViV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hx8co11V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75BCDC116B1;
-	Tue,  2 Jul 2024 17:22:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QpRh5ViV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B86A9C116B1;
+	Tue,  2 Jul 2024 17:22:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940932;
-	bh=JY/X8N1Tf7bkDDpI5OjStF4CcjwjpJx/fszVKayEvfA=;
+	s=korg; t=1719940936;
+	bh=a0ZQVZ0d3ZPp8wEQcrp4s+s4WeINAGboSpV2dMyzVjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hx8co11VfDK7h283IVt2tpnF4k54WnOnVsm2y05QR1FC31dJjHJbrQVtPA9H1mNwX
-	 /OTkhPxp/T8XRo1SpvdnkEuOsSo2Uns7i1IQacls7TezhRLCSm/LLfFsAnKa/bd8l7
-	 OFXm4MzRdFY8wv+rswMHzGaNzs+fhUIBiI7rR4Mc=
+	b=QpRh5ViVzea9XLqNWendSTHlPzuiETXwjSY7KhI2RxwimHOjvS1w26/s35hzicrOE
+	 A6w/csCNR9gsPDkcjUDhNvovsvrX0uZ66A1m3C87DiP1zCY96h1ELNImAe/lXPqNor
+	 +3W8USwk3b6nUzwH2I6C6o3tX6lgB8wMIEBAHcFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.6 080/163] Revert "MIPS: pci: lantiq: restore reset gpio polarity"
-Date: Tue,  2 Jul 2024 19:03:14 +0200
-Message-ID: <20240702170236.090316103@linuxfoundation.org>
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.6 081/163] pinctrl: qcom: spmi-gpio: drop broken pm8008 support
+Date: Tue,  2 Jul 2024 19:03:15 +0200
+Message-ID: <20240702170236.128455844@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -49,52 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 6e5aee08bd2517397c9572243a816664f2ead547 upstream.
+commit 8da86499d4cd125a9561f9cd1de7fba99b0aecbf upstream.
 
-This reverts commit 277a0363120276645ae598d8d5fea7265e076ae9.
+The SPMI GPIO driver assumes that the parent device is an SPMI device
+and accesses random data when backcasting the parent struct device
+pointer for non-SPMI devices.
 
-While fixing old boards with broken DTs, this change will break
-newer ones with correct gpio polarity annotation.
+Fortunately this does not seem to cause any issues currently when the
+parent device is an I2C client like the PM8008, but this could change if
+the structures are reorganised (e.g. using structure randomisation).
 
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Notably the interrupt implementation is also broken for non-SPMI devices.
+
+Also note that the two GPIO pins on PM8008 are used for interrupts and
+reset so their practical use should be limited.
+
+Drop the broken GPIO support for PM8008 for now.
+
+Fixes: ea119e5a482a ("pinctrl: qcom-pmic-gpio: Add support for pm8008")
+Cc: stable@vger.kernel.org	# 5.13
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20240529162958.18081-9-johan+linaro@kernel.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/pci/pci-lantiq.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-spmi-gpio.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/arch/mips/pci/pci-lantiq.c
-+++ b/arch/mips/pci/pci-lantiq.c
-@@ -124,14 +124,14 @@ static int ltq_pci_startup(struct platfo
- 		clk_disable(clk_external);
- 
- 	/* setup reset gpio used by pci */
--	reset_gpio = devm_gpiod_get_optional(&pdev->dev, "reset", GPIOD_ASIS);
-+	reset_gpio = devm_gpiod_get_optional(&pdev->dev, "reset",
-+					     GPIOD_OUT_LOW);
- 	error = PTR_ERR_OR_ZERO(reset_gpio);
- 	if (error) {
- 		dev_err(&pdev->dev, "failed to request gpio: %d\n", error);
- 		return error;
- 	}
- 	gpiod_set_consumer_name(reset_gpio, "pci_reset");
--	gpiod_direction_output(reset_gpio, 1);
- 
- 	/* enable auto-switching between PCI and EBU */
- 	ltq_pci_w32(0xa, PCI_CR_CLK_CTRL);
-@@ -194,10 +194,10 @@ static int ltq_pci_startup(struct platfo
- 
- 	/* toggle reset pin */
- 	if (reset_gpio) {
--		gpiod_set_value_cansleep(reset_gpio, 0);
-+		gpiod_set_value_cansleep(reset_gpio, 1);
- 		wmb();
- 		mdelay(1);
--		gpiod_set_value_cansleep(reset_gpio, 1);
-+		gpiod_set_value_cansleep(reset_gpio, 0);
- 	}
- 	return 0;
- }
+--- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
++++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+@@ -1207,7 +1207,6 @@ static const struct of_device_id pmic_gp
+ 	{ .compatible = "qcom,pm7325-gpio", .data = (void *) 10 },
+ 	{ .compatible = "qcom,pm7550ba-gpio", .data = (void *) 8},
+ 	{ .compatible = "qcom,pm8005-gpio", .data = (void *) 4 },
+-	{ .compatible = "qcom,pm8008-gpio", .data = (void *) 2 },
+ 	{ .compatible = "qcom,pm8019-gpio", .data = (void *) 6 },
+ 	/* pm8150 has 10 GPIOs with holes on 2, 5, 7 and 8 */
+ 	{ .compatible = "qcom,pm8150-gpio", .data = (void *) 10 },
 
 
