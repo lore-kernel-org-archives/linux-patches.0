@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 019AA1BBBD7;
-	Tue,  2 Jul 2024 17:18:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F667178381;
+	Tue,  2 Jul 2024 17:18:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940713; cv=none; b=bnEKKjZ7s7zXaryD6tBx9MASey+QM3LUJ5Vq3IHHxPO9FUrmihtaEpaCWX59eWjwJEawdzroeJ03J08+VtdSCEwvHx4w1JJRBq2es/GHyQgnYih5uHrhjYpuWdFBC3Q4gdrwSx5UAHt3Id+OYPNoXi0dI/Fm5n+VUKmADyY1WqM=
+	t=1719940716; cv=none; b=nMrXUGCjek+Mv+pVRkMf0rfFyB99oFJ8fqsTruG2/mVQGv2tRS1iAbiGjW09KYJu5uK5T7gPn1dxlfSygcVtwy/jXWketsMfcL/ajLILLJjyjumPRraeemYV8AuefqmAg9PjyLf2N6QFVyEWZA3/tij8UUr0DVxvKNBZnkiGyfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940713; c=relaxed/simple;
-	bh=Sz6gtsUMIRUEe6oOlAWAG9vbqiL8lDo8LRYEiec+EmE=;
+	s=arc-20240116; t=1719940716; c=relaxed/simple;
+	bh=5eCt+1Q6pyAeDGe7Yi6iJ6Hf2XyUKweOc3Agk9Jt0pQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tfKHYGXNi/1eArymnKOsSR8f9YSEhlI5zxBMQPGKnOhPC9DOtHiHoYonRjRV6HTqrw1Ni+i2b4dBO1JWEaGQcLluBrpt9cy9JTbKVf0yVa6j8dPCKRfPIMSfkkqKlXkdaT39OYPBP0MSEdZ6l4edTWXcaZcVovGYJSNJXE/tsaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=klCe9XsP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h0FAWanvUNoFwS2pkaGuLCHDbtVAtLvlYgw0QDx5BtDXPdxeYBw0y5e6vp8r0mwBoGm2Ua35L7hFdpvGVSQ56C/9HPa18pOFy5EY8SQEc8e3Soi2+cXnifmSKWnmbSTTp4ztvwAl0JbuXjbe9TN33XD8i2P3S2oskoJxEr58S2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cxjS/lCK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="klCe9XsP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66575C116B1;
-	Tue,  2 Jul 2024 17:18:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cxjS/lCK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3573C116B1;
+	Tue,  2 Jul 2024 17:18:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940712;
-	bh=Sz6gtsUMIRUEe6oOlAWAG9vbqiL8lDo8LRYEiec+EmE=;
+	s=korg; t=1719940716;
+	bh=5eCt+1Q6pyAeDGe7Yi6iJ6Hf2XyUKweOc3Agk9Jt0pQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=klCe9XsPtw0EtwpYyt7jStKCsM5bcnaq4bNx76G4drBmIh8zLWf8+vG8KFTSwakjr
-	 57XO+TXmlACiew76ROgPNR1f3u84ivLsSd0xxZiUamZpjd5w00K+xf4P/SNXNqyesr
-	 m2cd9+7eQxyyAdRxKKzF9Z1iBKbgZsoJVKGXJ18c=
+	b=cxjS/lCKDP+xcC01ofVe9PlnsX0MMOFunRK3aLNLZ2PnLefRHomLEisOaEXF3Dagz
+	 ewCYllu7DA3+cdci1tkWv7xB2euRGF6DHca7bRtoD0aHmzHdgcamQiuUxkq3W9gIDA
+	 jQXvAvYC9gwowxH4z7/3noXJWUlGxKsaeZY1UXwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Alibek Omarov <a1ba.omarov@gmail.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 015/163] wifi: mac80211: Use flexible array in struct ieee80211_tim_ie
-Date: Tue,  2 Jul 2024 19:02:09 +0200
-Message-ID: <20240702170233.633864085@linuxfoundation.org>
+Subject: [PATCH 6.6 016/163] ASoC: rockchip: i2s-tdm: Fix trcm mode by setting clock on right mclk
+Date: Tue,  2 Jul 2024 19:02:10 +0200
+Message-ID: <20240702170233.672348444@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -52,66 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Johnson <quic_jjohnson@quicinc.com>
+From: Alibek Omarov <a1ba.omarov@gmail.com>
 
-[ Upstream commit 2ae5c9248e06dac2c2360be26b4e25f673238337 ]
+[ Upstream commit ccd8d753f0fe8f16745fa2b6be5946349731d901 ]
 
-Currently struct ieee80211_tim_ie defines:
-	u8 virtual_map[1];
+When TRCM mode is enabled, I2S RX and TX clocks are synchronized through
+selected clock source. Without this fix BCLK and LRCK might get parented
+to an uninitialized MCLK and the DAI will receive data at wrong pace.
 
-Per the guidance in [1] change this to be a flexible array.
+However, unlike in original i2s-tdm driver, there is no need to manually
+synchronize mclk_rx and mclk_tx, as only one gets used anyway.
 
-Per the discussion in [2] wrap the virtual_map in a union with a u8
-item in order to preserve the existing expectation that the
-virtual_map must contain at least one octet (at least when used in a
-non-S1G PPDU). This means that no driver changes are required.
+Tested on a board with RK3568 SoC and Silergy SY24145S codec with enabled and
+disabled TRCM mode.
 
-[1] https://docs.kernel.org/process/deprecated.html#zero-length-and-one-element-arrays
-[2] https://lore.kernel.org/linux-wireless/202308301529.AC90A9EF98@keescook/
-
-Suggested-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20230831-ieee80211_tim_ie-v3-2-e10ff584ab5d@quicinc.com
-[add wifi prefix]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 9e2ab4b18ebd ("ASoC: rockchip: i2s-tdm: Fix inaccurate sampling rates")
+Signed-off-by: Alibek Omarov <a1ba.omarov@gmail.com>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Link: https://msgid.link/r/20240604184752.697313-1-a1ba.omarov@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ieee80211.h | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ sound/soc/rockchip/rockchip_i2s_tdm.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/ieee80211.h b/include/linux/ieee80211.h
-index aaaa5b90bfe25..5fbc08930941c 100644
---- a/include/linux/ieee80211.h
-+++ b/include/linux/ieee80211.h
-@@ -951,17 +951,24 @@ struct ieee80211_wide_bw_chansw_ie {
-  * @dtim_count: DTIM Count
-  * @dtim_period: DTIM Period
-  * @bitmap_ctrl: Bitmap Control
-+ * @required_octet: "Syntatic sugar" to force the struct size to the
-+ *                  minimum valid size when carried in a non-S1G PPDU
-  * @virtual_map: Partial Virtual Bitmap
-  *
-  * This structure represents the payload of the "TIM element" as
-- * described in IEEE Std 802.11-2020 section 9.4.2.5.
-+ * described in IEEE Std 802.11-2020 section 9.4.2.5. Note that this
-+ * definition is only applicable when the element is carried in a
-+ * non-S1G PPDU. When the TIM is carried in an S1G PPDU, the Bitmap
-+ * Control and Partial Virtual Bitmap may not be present.
-  */
- struct ieee80211_tim_ie {
- 	u8 dtim_count;
- 	u8 dtim_period;
- 	u8 bitmap_ctrl;
--	/* variable size: 1 - 251 bytes */
--	u8 virtual_map[1];
-+	union {
-+		u8 required_octet;
-+		DECLARE_FLEX_ARRAY(u8, virtual_map);
-+	};
- } __packed;
+diff --git a/sound/soc/rockchip/rockchip_i2s_tdm.c b/sound/soc/rockchip/rockchip_i2s_tdm.c
+index 15f8919fd224a..e6a6eabc47e5b 100644
+--- a/sound/soc/rockchip/rockchip_i2s_tdm.c
++++ b/sound/soc/rockchip/rockchip_i2s_tdm.c
+@@ -657,8 +657,17 @@ static int rockchip_i2s_tdm_hw_params(struct snd_pcm_substream *substream,
+ 	int err;
  
- /**
+ 	if (i2s_tdm->is_master_mode) {
+-		struct clk *mclk = (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) ?
+-			i2s_tdm->mclk_tx : i2s_tdm->mclk_rx;
++		struct clk *mclk;
++
++		if (i2s_tdm->clk_trcm == TRCM_TX) {
++			mclk = i2s_tdm->mclk_tx;
++		} else if (i2s_tdm->clk_trcm == TRCM_RX) {
++			mclk = i2s_tdm->mclk_rx;
++		} else if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
++			mclk = i2s_tdm->mclk_tx;
++		} else {
++			mclk = i2s_tdm->mclk_rx;
++		}
+ 
+ 		err = clk_set_rate(mclk, DEFAULT_MCLK_FS * params_rate(params));
+ 		if (err)
 -- 
 2.43.0
 
