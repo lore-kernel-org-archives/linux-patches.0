@@ -1,107 +1,71 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B9D4CB23;
-	Tue,  2 Jul 2024 07:42:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6906114E2D8;
+	Tue,  2 Jul 2024 08:42:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719906176; cv=none; b=V7YH7+VRLODwSvZI1MV0RI/rxMnODh+MHue0SsPKfzFhYo/GwGRpoxaBGooy5djsB63npcrsrmgeENQVYsV5m9lRLCoYnoMCa1Dn7y6weGLbavQZ/mIYmtMmyHw6Un26Efs2jF4TWl5y4gpU7gjqAR7pcKB1OI4FCceVXBnibwE=
+	t=1719909765; cv=none; b=Rfl8Pr9aS8lziA6MbFekWlCe7ep5s1oM0boMjpO8DHjYvfo1POf3OMzD0Gv3lC6FkLob3onFtxANw+oO6aGigEjYDodPydQetqrJvkCiPAfUV5W/k6/Lkejgy4vy35Y9FXR2pBWFlLzo3dyjPQOJ6cJYCP43dwFQlV3ghn5VW+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719906176; c=relaxed/simple;
-	bh=b9oO32qfFgklf7sETD8/dcIhc/Mu840qILzRUiMTpP4=;
-	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
-	 Mime-Version:Content-Type; b=SRVdjxAvNkRauoJP4T7ggZiLCyzJ1I7ArehIkiYDZF2JytK6u6QVs7sq15Od0/xAxs/FnnoLm/0X4cWcofnHuWtxdFOM+vYcdJbWBN4f27gDQMgbIz+6w6jI3EwnWlcLshxm/QG/5ovD1MQAHGFLv01HSbYlkUTgaUmdPDF/zMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=OshYRO+R; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1719909765; c=relaxed/simple;
+	bh=5Nsih7U/aO4FDaKQBrW36vzZDZ8b0W+azxYjgclNQlU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gnY4C6BABixIkSJwmqgiTbQ1E+IVeGuE4e3HOBcvNEd2SkkYsN3GQjeKh/8PvJ6iFKCuSVnNoNpVBRmtfWMvjoYojZ8k1737MQOneOmlsJ1SZjmVV8pz9opGSrTZPDEIw/lhfESlB5DXGKPQTXaUbmdTQtFXRQuog+AhscptHmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LK7R3hU7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="OshYRO+R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9194C116B1;
-	Tue,  2 Jul 2024 07:42:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1719906175;
-	bh=b9oO32qfFgklf7sETD8/dcIhc/Mu840qILzRUiMTpP4=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=OshYRO+RqtW//uVs0njfZO7RS9kJp7HLUpkuV1+ecHPNjZ4TMDFd+ugEBS0Pi7c1j
-	 4NzTC/LyznWWg2EQLbG1xW5vZ28wBuRKvTHc7rpWhFih0+wqUumCbAP7TXxdJ0vmlT
-	 +XaG2OR5kNm6vFn4gpH1YXOJO7gEKW7cQ4RcGDmU=
-Date: Tue, 2 Jul 2024 00:42:54 -0700
-From: Andrew Morton <akpm@linux-foundation.org>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- tglx@linutronix.de, linux-crypto@vger.kernel.org,
- linux-api@vger.kernel.org, x86@kernel.org, Greg Kroah-Hartman
- <gregkh@linuxfoundation.org>, Adhemerval Zanella Netto
- <adhemerval.zanella@linaro.org>, Carlos O'Donell <carlos@redhat.com>,
- Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>, Jann
- Horn <jannh@google.com>, Christian Brauner <brauner@kernel.org>, David
- Hildenbrand <dhildenb@redhat.com>, linux-mm@kvack.org
-Subject: Re: [PATCH v19 1/5] mm: add VM_DROPPABLE for designating always
- lazily freeable mappings
-Message-Id: <20240702004254.3ab2db4a98cb7fdd245407cb@linux-foundation.org>
-In-Reply-To: <20240701135801.3698-2-Jason@zx2c4.com>
-References: <20240701135801.3698-1-Jason@zx2c4.com>
-	<20240701135801.3698-2-Jason@zx2c4.com>
-X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LK7R3hU7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABA0CC4AF0C;
+	Tue,  2 Jul 2024 08:42:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1719909765;
+	bh=5Nsih7U/aO4FDaKQBrW36vzZDZ8b0W+azxYjgclNQlU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=LK7R3hU71yLTUK+9P7JB4kRVQbvtCiJ/Zt9foC/8C8W1PA8lz7h3QPCdLKZ3kNjAS
+	 ZTxL2UCmtGozOlddTbAj+YG5PVhfGe59eiw4TmyOVup6u4nV3yp5oLkSoNrAsQdrXL
+	 kInQLSZY5Z5pFSDqHEEkTR/C8ra8kU+k41M6jY2E=
+Date: Tue, 2 Jul 2024 10:42:41 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Marek =?iso-8859-1?Q?Beh=FAn?= <kabel@kernel.org>
+Cc: Eric Woudstra <ericwouds@gmail.com>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Jiri Pirko <jiri@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.9 029/250] net: sfp: enhance quirk for Fibrestore 2.5G
+ copper SFP module
+Message-ID: <2024070235-troubling-effort-056e@gregkh>
+References: <20240625085548.033507125@linuxfoundation.org>
+ <20240625085549.174362251@linuxfoundation.org>
+ <20240628172211.17ccefe9@dellmb>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240628172211.17ccefe9@dellmb>
 
-On Mon,  1 Jul 2024 15:57:55 +0200 "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
+On Fri, Jun 28, 2024 at 05:22:11PM +0200, Marek Behún wrote:
+> On Tue, 25 Jun 2024 11:29:47 +0200
+> Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+> 
+> > 6.9-stable review patch.  If anyone has any objections, please let me know.
+> 
+> Sorry I overlooked this, I thought I already replied to this, but in
+> fact I replied to another patch not to be backported:
+> 
+>   net: sfp: add quirk for another multigig RollBall transceiver
+>   https://lore.kernel.org/stable/20240527165441.2c5516c9@dellmb/
+> 
+> This patch (net: sfp: enhance quirk for Fibrestore 2.5G copper SFP
+> module) has the same problem: it depends on the same series, so it
+> should not be backported.
+> 
+> Eric informs me that it was already released as 6.9.7 :-(
+> 
+> What can we do?
 
-> The vDSO getrandom() implementation works with a buffer allocated with a
-> new system call that has certain requirements:
-> 
-> - It shouldn't be written to core dumps.
->   * Easy: VM_DONTDUMP.
-> - It should be zeroed on fork.
->   * Easy: VM_WIPEONFORK.
-> 
-> - It shouldn't be written to swap.
->   * Uh-oh: mlock is rlimited.
->   * Uh-oh: mlock isn't inherited by forks.
-> 
-> It turns out that the vDSO getrandom() function has three really nice
-> characteristics that we can exploit to solve this problem:
-> 
-> 1) Due to being wiped during fork(), the vDSO code is already robust to
->    having the contents of the pages it reads zeroed out midway through
->    the function's execution.
-> 
-> 2) In the absolute worst case of whatever contingency we're coding for,
->    we have the option to fallback to the getrandom() syscall, and
->    everything is fine.
-> 
-> 3) The buffers the function uses are only ever useful for a maximum of
->    60 seconds -- a sort of cache, rather than a long term allocation.
-> 
-> These characteristics mean that we can introduce VM_DROPPABLE, which
-> has the following semantics:
-> 
-> a) It never is written out to swap.
-> b) Under memory pressure, mm can just drop the pages (so that they're
->    zero when read back again).
-> c) It is inherited by fork.
-> d) It doesn't count against the mlock budget, since nothing is locked.
-> 
-> This is fairly simple to implement, with the one snag that we have to
-> use 64-bit VM_* flags, but this shouldn't be a problem, since the only
-> consumers will probably be 64-bit anyway.
-> 
-> This way, allocations used by vDSO getrandom() can use:
-> 
->     VM_DROPPABLE | VM_DONTDUMP | VM_WIPEONFORK | VM_NORESERVE
-> 
-> And there will be no problem with using memory when not in use, not
-> wiping on fork(), coredumps, or writing out to swap.
+Now reverted, thanks.
 
-The patch is impressively comment-free.  It is a little harsh to make
-readers go poking around in the git history to figure out what
-VM_DROPPABLE is, and why it exists.
-
-Seems hard to test that this mode is working correctly.  Can you think
-of a way for userspace to check this?  And if so, add it to selftests?
-
+greg k-h
