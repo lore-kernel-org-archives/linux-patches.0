@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03953D978;
-	Tue,  2 Jul 2024 17:20:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA3F3D978;
+	Tue,  2 Jul 2024 17:20:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940850; cv=none; b=eP3aJgRZ0bPfuJVCq2yeI+J8totnUDELHQ5KTMuBaA6eXC8y32HpocwBDad7YU/N/Doj8H+S/Jie2+qoDW2eLbE9mUgoL1iZbXnqKDYMlY11UIkgQHMDn85zs/SMFNuq8eAcBnuzAwO8mcgcbxLRD6/+8UI7Upm37rkVSykZh4c=
+	t=1719940854; cv=none; b=Dse8j9Fr0a+fvWUf6vUP5ejraPushuT+LB8n7Z2eoLG8Szd0mN+P++Fh+veArh/7CglWDTx5mEFEQWgLPI9O6F5xkpz/oqMW60x7Z39St5NxvSIwenOy9ZuDyui1ot5ihpr+c0g6KNWqJo4OoTe0i9nTnGFmaVdj8qFvxGZeYXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940850; c=relaxed/simple;
-	bh=PFyEynGUMsQrl97R6WzH5wfq9P+Ndw56n0p/xSa/2C8=;
+	s=arc-20240116; t=1719940854; c=relaxed/simple;
+	bh=30mGicKbY6reWOBfBttFRZRF/GUTN49ZlubxI7HSDoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RmbUL14ZugaRTfiwxSuXsSU3NilD8EjznTgtCrp38FCpp0xMbov3CQpy+Hso3upiK64r5U7W8Tovk+LZdrfw+NE2mkwQWMjA1SFXhmK2kM4v25MGlDb6KbRse48hc4mlEyV5XXGgGVRJyExY3EiMi3EE7MJ2G2icNv2uVJaelMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vZjU/+Ij; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fEzK4Xp76MgyWTt0PdiHkQwBELsyPzdEwJIk9pcc2ZpGKqEfPoWEv8NbvM/gSl0HtL6CjbuDYODs1ZFhj4YgtfHhKt5gNjsM1kiiPxz0cbQklNc22QUycnH0TJou8qhPuPvEYys250AwKmVJGjygvAuo0bDsxYbn+Fpd++tGOxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dKbqmZYs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZjU/+Ij"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24298C116B1;
-	Tue,  2 Jul 2024 17:20:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dKbqmZYs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C766C116B1;
+	Tue,  2 Jul 2024 17:20:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940850;
-	bh=PFyEynGUMsQrl97R6WzH5wfq9P+Ndw56n0p/xSa/2C8=;
+	s=korg; t=1719940854;
+	bh=30mGicKbY6reWOBfBttFRZRF/GUTN49ZlubxI7HSDoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vZjU/+Ij6LyhnPMz4gJ+AbfCizZSpLxK7KS2I6CwbWNYOOgGWB0ed2ix1OeQdDIsj
-	 jSsW5PQ+kzFNfRxZ+rATAVLTvsRRt1xM3zGiuTtWm9yXCDbKnoFSI61vUP49/TS7r7
-	 pkSCWaT/6siH6kBQe0e8lfRw2nN4q3dpgo8HoRPI=
+	b=dKbqmZYsZNC830r9hw1H6VIJsr6nX1aVXEvLQb7bhV1Sz/Q/rbid85udFlUgZQUiB
+	 smc6RFXt6FKAkuG70eonlEw2fcwbItI2gjh+HAECw690KNQetINZoOIO0jjC7P0CCH
+	 L3mDZOTRJa2tvajXEmeq0J823e3maMsHY5gKaFL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mirsad Todorovac <mtodorovac69@gmail.com>,
-	kernel test robot <lkp@intel.com>,
-	Jianguo Wu <wujianguo@chinatelecom.cn>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Maxime Coquelin <maxime.coquelin@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	Xie Yongji <xieyongji@bytedance.com>,
+	Jason Wang <jasowang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 037/163] netfilter: fix undefined reference to netfilter_lwtunnel_* when CONFIG_SYSCTL=n
-Date: Tue,  2 Jul 2024 19:02:31 +0200
-Message-ID: <20240702170234.463938437@linuxfoundation.org>
+Subject: [PATCH 6.6 055/163] vduse: Temporarily fail if control queue feature requested
+Date: Tue,  2 Jul 2024 19:02:49 +0200
+Message-ID: <20240702170235.145238861@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -47,50 +48,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jianguo Wu <wujianguo@chinatelecom.cn>
+From: Maxime Coquelin <maxime.coquelin@redhat.com>
 
-[ Upstream commit aef5daa2c49d510436b733827d4f0bab79fcc4a0 ]
+[ Upstream commit 56e71885b0349241c07631a7b979b61e81afab6a ]
 
-if CONFIG_SYSFS is not enabled in config, we get the below compile error,
+Virtio-net driver control queue implementation is not safe
+when used with VDUSE. If the VDUSE application does not
+reply to control queue messages, it currently ends up
+hanging the kernel thread sending this command.
 
-All errors (new ones prefixed by >>):
+Some work is on-going to make the control queue
+implementation robust with VDUSE. Until it is completed,
+let's fail features check if control-queue feature is
+requested.
 
-   csky-linux-ld: net/netfilter/core.o: in function `netfilter_init':
-   core.c:(.init.text+0x42): undefined reference to `netfilter_lwtunnel_init'
->> csky-linux-ld: core.c:(.init.text+0x56): undefined reference to `netfilter_lwtunnel_fini'
->> csky-linux-ld: core.c:(.init.text+0x70): undefined reference to `netfilter_lwtunnel_init'
-   csky-linux-ld: core.c:(.init.text+0x78): undefined reference to `netfilter_lwtunnel_fini'
-
-Fixes: a2225e0250c5 ("netfilter: move the sysctl nf_hooks_lwtunnel into the netfilter core")
-Reported-by: Mirsad Todorovac <mtodorovac69@gmail.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202406210511.8vbByYj3-lkp@intel.com/
-Closes: https://lore.kernel.org/oe-kbuild-all/202406210520.6HmrUaA2-lkp@intel.com/
-Signed-off-by: Jianguo Wu <wujianguo@chinatelecom.cn>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Maxime Coquelin <maxime.coquelin@redhat.com>
+Message-Id: <20240109111025.1320976-3-maxime.coquelin@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Reviewed-by: Xie Yongji <xieyongji@bytedance.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_hooks_lwtunnel.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/vdpa/vdpa_user/vduse_dev.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/netfilter/nf_hooks_lwtunnel.c b/net/netfilter/nf_hooks_lwtunnel.c
-index 7cdb59bb4459f..d8ebebc9775d7 100644
---- a/net/netfilter/nf_hooks_lwtunnel.c
-+++ b/net/netfilter/nf_hooks_lwtunnel.c
-@@ -117,4 +117,7 @@ void netfilter_lwtunnel_fini(void)
- {
- 	unregister_pernet_subsys(&nf_lwtunnel_net_ops);
+diff --git a/drivers/vdpa/vdpa_user/vduse_dev.c b/drivers/vdpa/vdpa_user/vduse_dev.c
+index d91fe7e0733b6..d7bda179ef79f 100644
+--- a/drivers/vdpa/vdpa_user/vduse_dev.c
++++ b/drivers/vdpa/vdpa_user/vduse_dev.c
+@@ -8,6 +8,7 @@
+  *
+  */
+ 
++#include "linux/virtio_net.h"
+ #include <linux/init.h>
+ #include <linux/module.h>
+ #include <linux/cdev.h>
+@@ -28,6 +29,7 @@
+ #include <uapi/linux/virtio_config.h>
+ #include <uapi/linux/virtio_ids.h>
+ #include <uapi/linux/virtio_blk.h>
++#include <uapi/linux/virtio_ring.h>
+ #include <linux/mod_devicetable.h>
+ 
+ #include "iova_domain.h"
+@@ -1671,6 +1673,9 @@ static bool features_is_valid(struct vduse_dev_config *config)
+ 	if ((config->device_id == VIRTIO_ID_BLOCK) &&
+ 			(config->features & BIT_ULL(VIRTIO_BLK_F_CONFIG_WCE)))
+ 		return false;
++	else if ((config->device_id == VIRTIO_ID_NET) &&
++			(config->features & BIT_ULL(VIRTIO_NET_F_CTRL_VQ)))
++		return false;
+ 
+ 	return true;
  }
-+#else
-+int __init netfilter_lwtunnel_init(void) { return 0; }
-+void netfilter_lwtunnel_fini(void) {}
- #endif /* CONFIG_SYSCTL */
 -- 
 2.43.0
 
