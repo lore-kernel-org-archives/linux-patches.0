@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16F81B583A;
-	Tue,  2 Jul 2024 17:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A46A515218A;
+	Tue,  2 Jul 2024 17:24:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941089; cv=none; b=U/EJbQCvfZ/AMGnban7YL3DuJtuGtzZ2v3bOHFS7eYDUbr+/wNXTNDvWXjbsNTV5os6A5qmJcGfD0MfU5ji5w31vK2O0Ist5cHRKgCGVmcrAjJsSKZzOIBWppwDISlFjtGwh7SuxQXcfQSKEnx9o7sw1rCCs7Pff16f9pnbSP1I=
+	t=1719941092; cv=none; b=jl4vGlEs5dn8ZTyim/zLx6P/CnumTLMckGkgYpbzLtL2JUtRXdxvALyp9x5L47al/D84IzGr963CSusw95sDGL8uxYOcnHn9ZHsn57pu3Tvx4/ddVOrbD9uKRsMNJU7AX03CNbriDOZRMjFBWxAtq5LfWlHoqMZn6J4UfhKbauY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941089; c=relaxed/simple;
-	bh=9tJqgm4TofYRzNmV/de+AcGQO8VVgoWd+/mJicq5u6U=;
+	s=arc-20240116; t=1719941092; c=relaxed/simple;
+	bh=cJXpNC0I8D7r8RIwX5OGTQyBCPyZxCpJON79IEp/SJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W160f/JfC2S+s0pND8fjd542ftGal3I/Js402V/w9mtXIp3ewY8bkGx1YEN6BvFVRiqvB7fLllxFOfAqgMv4ravkVahNMeTvjnTzKlGc4flcPD62pmjO94t+yM6iBNpFeP5C/+Mvd1+Pe0MAl9JMNLFUu4x7A31oML3Zsu0QHc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dXspqi0g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oie4snvz7ulVFi7gwKxNCCaS+GW8eWt0ql/b+ULkbtDtJDfZcRlr9g1iageITvTH1wZKP404oM7Olo2Dff/LGRA1hEdFngR68BBgz9Mo2LlpoyENsQVebLGnFNE/B1prW/u24z3XYJ97jXPy9TfopwL5biBmFxj7HJgQLhHexxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H6yU1fqO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dXspqi0g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52121C116B1;
-	Tue,  2 Jul 2024 17:24:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H6yU1fqO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7B3FC116B1;
+	Tue,  2 Jul 2024 17:24:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941088;
-	bh=9tJqgm4TofYRzNmV/de+AcGQO8VVgoWd+/mJicq5u6U=;
+	s=korg; t=1719941092;
+	bh=cJXpNC0I8D7r8RIwX5OGTQyBCPyZxCpJON79IEp/SJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dXspqi0gM/075YkIiHzz/w13YWR1ZuK7KNVUHa0psPxX6ziuK5P7e25WR+zXdpMBb
-	 JC5ZWDsen4CLVlOo6+qC4Dy4h7Daeux0U9vr+ZHeIa7BUPwmJ9RpzFN7KRg2Q0pWsY
-	 M7aw3CUWnMUONGetnlLlXE1NJRfRXG7SBVQv1LbY=
+	b=H6yU1fqOAvSqw0n7I9+oc7pwML9KCOAB/6HJ1U3HX6ozeB06CwW/ceH3BTY6khJaX
+	 drjmVMT2j1+XycfPAZiDCNh6JkgLCJaSx3ZSv/+Uv6+nVZKGlpTIWQYu4uKdXdlM+S
+	 WP7Uk5VRnqRlmlgN4SJt8EQCGHTnUdI1hBFdkwzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+daa36413a5cedf799ae4@syzkaller.appspotmail.com,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.6 124/163] net: can: j1939: enhanced error handling for tightly received RTS messages in xtp_rx_rts_session_new
-Date: Tue,  2 Jul 2024 19:03:58 +0200
-Message-ID: <20240702170237.746481186@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Mostafa Saleh <smostafa@google.com>,
+	Bjorn Heelgas <bhelgaas@google.com>
+Subject: [PATCH 6.6 125/163] PCI/MSI: Fix UAF in msi_capability_init
+Date: Tue,  2 Jul 2024 19:03:59 +0200
+Message-ID: <20240702170237.783974391@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -51,73 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Mostafa Saleh <smostafa@google.com>
 
-commit d3e2904f71ea0fe7eaff1d68a2b0363c888ea0fb upstream.
+commit 9eee5330656bf92f51cb1f09b2dc9f8cf975b3d1 upstream.
 
-This patch enhances error handling in scenarios with RTS (Request to
-Send) messages arriving closely. It replaces the less informative WARN_ON_ONCE
-backtraces with a new error handling method. This provides clearer error
-messages and allows for the early termination of problematic sessions.
-Previously, sessions were only released at the end of j1939_xtp_rx_rts().
+KFENCE reports the following UAF:
 
-Potentially this could be reproduced with something like:
-testj1939 -r vcan0:0x80 &
-while true; do
-	# send first RTS
-	cansend vcan0 18EC8090#1014000303002301;
-	# send second RTS
-	cansend vcan0 18EC8090#1014000303002301;
-	# send abort
-	cansend vcan0 18EC8090#ff00000000002301;
-done
+ BUG: KFENCE: use-after-free read in __pci_enable_msi_range+0x2c0/0x488
 
-Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
-Reported-by: syzbot+daa36413a5cedf799ae4@syzkaller.appspotmail.com
+ Use-after-free read at 0x0000000024629571 (in kfence-#12):
+  __pci_enable_msi_range+0x2c0/0x488
+  pci_alloc_irq_vectors_affinity+0xec/0x14c
+  pci_alloc_irq_vectors+0x18/0x28
+
+ kfence-#12: 0x0000000008614900-0x00000000e06c228d, size=104, cache=kmalloc-128
+
+ allocated by task 81 on cpu 7 at 10.808142s:
+  __kmem_cache_alloc_node+0x1f0/0x2bc
+  kmalloc_trace+0x44/0x138
+  msi_alloc_desc+0x3c/0x9c
+  msi_domain_insert_msi_desc+0x30/0x78
+  msi_setup_msi_desc+0x13c/0x184
+  __pci_enable_msi_range+0x258/0x488
+  pci_alloc_irq_vectors_affinity+0xec/0x14c
+  pci_alloc_irq_vectors+0x18/0x28
+
+ freed by task 81 on cpu 7 at 10.811436s:
+  msi_domain_free_descs+0xd4/0x10c
+  msi_domain_free_locked.part.0+0xc0/0x1d8
+  msi_domain_alloc_irqs_all_locked+0xb4/0xbc
+  pci_msi_setup_msi_irqs+0x30/0x4c
+  __pci_enable_msi_range+0x2a8/0x488
+  pci_alloc_irq_vectors_affinity+0xec/0x14c
+  pci_alloc_irq_vectors+0x18/0x28
+
+Descriptor allocation done in:
+__pci_enable_msi_range
+    msi_capability_init
+        msi_setup_msi_desc
+            msi_insert_msi_desc
+                msi_domain_insert_msi_desc
+                    msi_alloc_desc
+                        ...
+
+Freed in case of failure in __msi_domain_alloc_locked()
+__pci_enable_msi_range
+    msi_capability_init
+        pci_msi_setup_msi_irqs
+            msi_domain_alloc_irqs_all_locked
+                msi_domain_alloc_locked
+                    __msi_domain_alloc_locked => fails
+                    msi_domain_free_locked
+                        ...
+
+That failure propagates back to pci_msi_setup_msi_irqs() in
+msi_capability_init() which accesses the descriptor for unmasking in the
+error exit path.
+
+Cure it by copying the descriptor and using the copy for the error exit path
+unmask operation.
+
+[ tglx: Massaged change log ]
+
+Fixes: bf6e054e0e3f ("genirq/msi: Provide msi_device_populate/destroy_sysfs()")
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Mostafa Saleh <smostafa@google.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: Bjorn Heelgas <bhelgaas@google.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://lore.kernel.org/all/20231117124959.961171-1-o.rempel@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Link: https://lore.kernel.org/r/20240624203729.1094506-1-smostafa@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/j1939/transport.c |   19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ drivers/pci/msi/msi.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/net/can/j1939/transport.c
-+++ b/net/can/j1939/transport.c
-@@ -1593,8 +1593,8 @@ j1939_session *j1939_xtp_rx_rts_session_
- 	struct j1939_sk_buff_cb skcb = *j1939_skb_to_cb(skb);
- 	struct j1939_session *session;
- 	const u8 *dat;
-+	int len, ret;
- 	pgn_t pgn;
--	int len;
+--- a/drivers/pci/msi/msi.c
++++ b/drivers/pci/msi/msi.c
+@@ -348,7 +348,7 @@ static int msi_capability_init(struct pc
+ 			       struct irq_affinity *affd)
+ {
+ 	struct irq_affinity_desc *masks = NULL;
+-	struct msi_desc *entry;
++	struct msi_desc *entry, desc;
+ 	int ret;
  
- 	netdev_dbg(priv->ndev, "%s\n", __func__);
+ 	/* Reject multi-MSI early on irq domain enabled architectures */
+@@ -373,6 +373,12 @@ static int msi_capability_init(struct pc
+ 	/* All MSIs are unmasked by default; mask them all */
+ 	entry = msi_first_desc(&dev->dev, MSI_DESC_ALL);
+ 	pci_msi_mask(entry, msi_multi_mask(entry));
++	/*
++	 * Copy the MSI descriptor for the error path because
++	 * pci_msi_setup_msi_irqs() will free it for the hierarchical
++	 * interrupt domain case.
++	 */
++	memcpy(&desc, entry, sizeof(desc));
  
-@@ -1653,7 +1653,22 @@ j1939_session *j1939_xtp_rx_rts_session_
- 	session->tskey = priv->rx_tskey++;
- 	j1939_sk_errqueue(session, J1939_ERRQUEUE_RX_RTS);
+ 	/* Configure MSI capability structure */
+ 	ret = pci_msi_setup_msi_irqs(dev, nvec, PCI_CAP_ID_MSI);
+@@ -392,7 +398,7 @@ static int msi_capability_init(struct pc
+ 	goto unlock;
  
--	WARN_ON_ONCE(j1939_session_activate(session));
-+	ret = j1939_session_activate(session);
-+	if (ret) {
-+		/* Entering this scope indicates an issue with the J1939 bus.
-+		 * Possible scenarios include:
-+		 * - A time lapse occurred, and a new session was initiated
-+		 *   due to another packet being sent correctly. This could
-+		 *   have been caused by too long interrupt, debugger, or being
-+		 *   out-scheduled by another task.
-+		 * - The bus is receiving numerous erroneous packets, either
-+		 *   from a malfunctioning device or during a test scenario.
-+		 */
-+		netdev_alert(priv->ndev, "%s: 0x%p: concurrent session with same addr (%02x %02x) is already active.\n",
-+			     __func__, session, skcb.addr.sa, skcb.addr.da);
-+		j1939_session_put(session);
-+		return NULL;
-+	}
- 
- 	return session;
- }
+ err:
+-	pci_msi_unmask(entry, msi_multi_mask(entry));
++	pci_msi_unmask(&desc, msi_multi_mask(&desc));
+ 	pci_free_msi_irqs(dev);
+ fail:
+ 	dev->msi_enabled = 0;
 
 
