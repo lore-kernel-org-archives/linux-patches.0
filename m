@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE1DD178381;
-	Tue,  2 Jul 2024 17:15:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1D6178381;
+	Tue,  2 Jul 2024 17:15:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940543; cv=none; b=AC94zyuQ4ZrQxNbr5gzwqUzQ920y6pvJgJPs1TQyEvYLDtr+TfwmsZAoBR/+gc/uhv0BYmPGWtskYWiXDF0ApFqmIJH2DPekBCZXz3aMl38AxKLNCsh3XIdz2JCmzHCCDZ4wTny9MjTM1CETobJUG42d6M9hOWNMkvwwMjtJPxM=
+	t=1719940547; cv=none; b=G4IUd8WIxaTtpOi2ca3Xa1tHV+LiNNX6n0WEZzSq4MKefblP8A8/kzK+Lu7dbPtF6/pwKPHUHryog/H0XY9Dtg4SsB3UKKpUDljrCUvEAHdMkNmOhmcYyibmy3Cic5OQtH9/BQX5t56Aoh06gQ5YF289BCuPbaUOPLHVBxnz1uA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940543; c=relaxed/simple;
-	bh=UPgLQsy/3id1s3TYqrSWv4t9HwweA7iT7juYPvdWT4Y=;
+	s=arc-20240116; t=1719940547; c=relaxed/simple;
+	bh=+7hFTAgTWfhPBHWp0D/8EiMx3u3/qny7j2OX+4AZ3AU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NA0iWTuwQYxDr/Xn5KLhlpVxK61Uu8vlxNhS49nmanCW4Jl4VivWSfPqtt1e3qw1Bcxo7qJ0k5xFaa42efrkmXWMyAeDEqd9k2cypdaLVNlYhWkM4gdht/dHcouwul90u7Ykx+nyyvojlXB9me28AgPe+1W2O2HbxshHpTBh794=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w4hGoXU+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j9o5s4GQ2Mlmk99DxlWch3OSblLJji3uj8jy65q3hfE+pNSN1rBhizDXEJm9mdOmzvnRl0neurHk9Gv3kfeYLfxGKBTh1oWeS06/B0wgDcZMvsmloh7il8km+0vN0zz0sH3XV772K2eyo8i/oR1H4rJN0Ca3AuWUWDJAfQ+3cpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hg1Vk7LM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w4hGoXU+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DA53C4AF0C;
-	Tue,  2 Jul 2024 17:15:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hg1Vk7LM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AAD0C116B1;
+	Tue,  2 Jul 2024 17:15:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940543;
-	bh=UPgLQsy/3id1s3TYqrSWv4t9HwweA7iT7juYPvdWT4Y=;
+	s=korg; t=1719940547;
+	bh=+7hFTAgTWfhPBHWp0D/8EiMx3u3/qny7j2OX+4AZ3AU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w4hGoXU+MgYMrJaGbnaClHIF1fRv5qPPKPruyB2bQ8qdRof3C8q3Bpz2SRW2l4vXY
-	 XffAOjmwnRRgx/SG53q7ypSu7OSvQq/kQcfZKyv+bfnF25yjAVHv8Ee4zNh/Zu/Kos
-	 iDyUG2TYBTcbYpVM2eanW7EZP/MxprOy5i568StU=
+	b=hg1Vk7LMtZzbjJcz3whzSgzS2JMS4vQBxlGulWKsDcJ/2kfQSv8CI2+UulizZfBgX
+	 6BJCk9Oq7JFMYQYrOGapOumjUCufj7S0NSckC4lxl8Hxt68D7sCCq8cz6C6532exe7
+	 IJ9gQj/3uKTfTcOPBYmNEEwu8SRu/tN97qEY5E1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jos Wang <joswang@lenovo.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.9 154/222] usb: dwc3: core: Workaround for CSR read timeout
-Date: Tue,  2 Jul 2024 19:03:12 +0200
-Message-ID: <20240702170249.864246563@linuxfoundation.org>
+	Doug Brown <doug@schmorgal.com>
+Subject: [PATCH 6.9 155/222] Revert "serial: core: only stop transmit when HW fifo is empty"
+Date: Tue,  2 Jul 2024 19:03:13 +0200
+Message-ID: <20240702170249.903686296@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -51,68 +49,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jos Wang <joswang@lenovo.com>
+From: Doug Brown <doug@schmorgal.com>
 
-commit fc1d1a712b517bbcb383b1f1f7ef478e7d0579f2 upstream.
+commit c5603e2a621dac10c5e21cc430848ebcfa6c7e01 upstream.
 
-This is a workaround for STAR 4846132, which only affects
-DWC_usb31 version2.00a operating in host mode.
+This reverts commit 7bfb915a597a301abb892f620fe5c283a9fdbd77.
 
-There is a problem in DWC_usb31 version 2.00a operating
-in host mode that would cause a CSR read timeout When CSR
-read coincides with RAM Clock Gating Entry. By disable
-Clock Gating, sacrificing power consumption for normal
-operation.
+This commit broke pxa and omap-serial, because it inhibited them from
+calling stop_tx() if their TX FIFOs weren't completely empty. This
+resulted in these two drivers hanging during transmits because the TX
+interrupt would stay enabled, and a new TX interrupt would never fire.
 
-Cc: stable <stable@kernel.org> # 5.10.x: 1e43c86d: usb: dwc3: core: Add DWC31 version 2.00a controller
-Signed-off-by: Jos Wang <joswang@lenovo.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20240619114529.3441-1-joswang1221@gmail.com
+Cc: stable@vger.kernel.org
+Fixes: 7bfb915a597a ("serial: core: only stop transmit when HW fifo is empty")
+Signed-off-by: Doug Brown <doug@schmorgal.com>
+Link: https://lore.kernel.org/r/20240606195632.173255-2-doug@schmorgal.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.c |   20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ include/linux/serial_core.h |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -879,12 +879,16 @@ static bool dwc3_core_is_valid(struct dw
- 
- static void dwc3_core_setup_global_control(struct dwc3 *dwc)
- {
-+	unsigned int power_opt;
-+	unsigned int hw_mode;
- 	u32 reg;
- 
- 	reg = dwc3_readl(dwc->regs, DWC3_GCTL);
- 	reg &= ~DWC3_GCTL_SCALEDOWN_MASK;
-+	hw_mode = DWC3_GHWPARAMS0_MODE(dwc->hwparams.hwparams0);
-+	power_opt = DWC3_GHWPARAMS1_EN_PWROPT(dwc->hwparams.hwparams1);
- 
--	switch (DWC3_GHWPARAMS1_EN_PWROPT(dwc->hwparams.hwparams1)) {
-+	switch (power_opt) {
- 	case DWC3_GHWPARAMS1_EN_PWROPT_CLK:
- 		/**
- 		 * WORKAROUND: DWC3 revisions between 2.10a and 2.50a have an
-@@ -917,6 +921,20 @@ static void dwc3_core_setup_global_contr
- 		break;
- 	}
- 
-+	/*
-+	 * This is a workaround for STAR#4846132, which only affects
-+	 * DWC_usb31 version2.00a operating in host mode.
-+	 *
-+	 * There is a problem in DWC_usb31 version 2.00a operating
-+	 * in host mode that would cause a CSR read timeout When CSR
-+	 * read coincides with RAM Clock Gating Entry. By disable
-+	 * Clock Gating, sacrificing power consumption for normal
-+	 * operation.
-+	 */
-+	if (power_opt != DWC3_GHWPARAMS1_EN_PWROPT_NO &&
-+	    hw_mode != DWC3_GHWPARAMS0_MODE_GADGET && DWC3_VER_IS(DWC31, 200A))
-+		reg |= DWC3_GCTL_DSBLCLKGTNG;
-+
- 	/* check if current dwc3 is on simulation board */
- 	if (dwc->hwparams.hwparams6 & DWC3_GHWPARAMS6_EN_FPGA) {
- 		dev_info(dwc->dev, "Running with FPGA optimizations\n");
+--- a/include/linux/serial_core.h
++++ b/include/linux/serial_core.h
+@@ -789,8 +789,7 @@ enum UART_TX_FLAGS {
+ 	if (pending < WAKEUP_CHARS) {					      \
+ 		uart_write_wakeup(__port);				      \
+ 									      \
+-		if (!((flags) & UART_TX_NOSTOP) && pending == 0 &&	      \
+-		    __port->ops->tx_empty(__port))			      \
++		if (!((flags) & UART_TX_NOSTOP) && pending == 0)	      \
+ 			__port->ops->stop_tx(__port);			      \
+ 	}								      \
+ 									      \
 
 
