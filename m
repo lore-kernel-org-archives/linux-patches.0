@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D931315B0FE;
-	Tue,  2 Jul 2024 17:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502A31BC08A;
+	Tue,  2 Jul 2024 17:12:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940340; cv=none; b=V0NyAMQUJ5fhef+ynymnL+LMIwwzNJYoDIChGstwPn+vDsz0dEB8N7tWbc8xbjRpt3TnKe1BK4T4ptQaDBXLJlHci+wA4QH/2gfU2AUOq+ziNFua2jAGp67NmslQyiBSHJC9BinsiX2IDtdcyFRYlf4hMpq8YW21aJnMaD9Hiuo=
+	t=1719940344; cv=none; b=go2JHMJbEZlSmCWaQGs9gbZNAN9yqI5shsDMoGQp1OKvjxMltV/6m8XReIzU3ZfVZeU0PamvyBLkAuqdXZyvMd6fE9jc1QcEXN6l0nMxUt8XF/+MBdjQERswMIyLlKTlZ09RaK0GPpaWh6CsAJG1lGgFHszkIQ2TXwF6I00QIr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940340; c=relaxed/simple;
-	bh=ffX5SkokPYxExM8L83WRqJrrAxeuaB4thLeYuO1V9i4=;
+	s=arc-20240116; t=1719940344; c=relaxed/simple;
+	bh=FOVpnDjkpa5TdaBXAg63xC9zuQFDw7/TMVWeiMDRSUg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EBy9UobPkBBzFtYE86nBtXMfCTJu6nyP5ClWSeKO3Lnz2MtU6PYwK+/vPKevRLgBPAePbXVnm88rccIdlAfsBmsjKO73A3BZyQStejBYeI4T3PTpqACmSTVa7Vhei41n6ANU1cKgWwmwFdXJQdXYgPVvCjEwIJg74Ma1y5nl8uw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2jFqvO4G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DPKCnt0lrQFXbwK8fI/w5kIX6jv1g2NTxn+zQESAI3M/zTlCSb7rht6zLNKm/dFdzbPpjZEdciTPR3Mm1p1Xbb/lWhXzpfZilsdMY8N3g506c5quAz68S7MJzhiWt70+JkBLnCaBICLJT2VcuBVnx1VgplY3x2UNf4M1a6MSv/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kdqUhqbF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2jFqvO4G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47AFBC116B1;
-	Tue,  2 Jul 2024 17:12:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kdqUhqbF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A1E4C116B1;
+	Tue,  2 Jul 2024 17:12:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940340;
-	bh=ffX5SkokPYxExM8L83WRqJrrAxeuaB4thLeYuO1V9i4=;
+	s=korg; t=1719940343;
+	bh=FOVpnDjkpa5TdaBXAg63xC9zuQFDw7/TMVWeiMDRSUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2jFqvO4G8WiRCTRggDoJN9Kxuy+IrxvjkYa7CnTyS86FNDri4qqAn7sa65Vb+q1jT
-	 0UuxchqUf3NM3C845nXI943v7flJ7rFsYcoln3joZqw38utH/NI25NlCZ4Ro5nqr+c
-	 PPzb3MUvlMN6K6hsvsr1uhe9XPNqkuPZCUOpmuz8=
+	b=kdqUhqbFH7nu9QMgVtVrjGt+zkJVbC1ISNQFYFAOMBHeTEibD4Go1f5ILgL5LFLjG
+	 LzQmAr5oYtz5cXcwz2mfThAPVpiwMY3fygyN0VkbQ3OC3tdoxD04BbkD0O/hbE5UVT
+	 x2Hif2qENTKqAzhBxaJ9517SMq2AtuppxNyT/l80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 126/222] iio: xilinx-ams: Dont include ams_ctrl_channels in scan_mask
-Date: Tue,  2 Jul 2024 19:02:44 +0200
-Message-ID: <20240702170248.785007316@linuxfoundation.org>
+Subject: [PATCH 6.9 127/222] SUNRPC: Fix backchannel reply, again
+Date: Tue,  2 Jul 2024 19:02:45 +0200
+Message-ID: <20240702170248.823706034@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -51,44 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 89b898c627a49b978a4c323ea6856eacfc21f6ba ]
+[ Upstream commit 6ddc9deacc1312762c2edd9de00ce76b00f69f7c ]
 
-ams_enable_channel_sequence constructs a "scan_mask" for all the PS and
-PL channels. This works out fine, since scan_index for these channels is
-less than 64. However, it also includes the ams_ctrl_channels, where
-scan_index is greater than 64, triggering undefined behavior. Since we
-don't need these channels anyway, just exclude them.
+I still see "RPC: Could not send backchannel reply error: -110"
+quite often, along with slow-running tests. Debugging shows that the
+backchannel is still stumbling when it has to queue a callback reply
+on a busy transport.
 
-Fixes: d5c70627a794 ("iio: adc: Add Xilinx AMS driver")
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Link: https://lore.kernel.org/r/20240311162800.11074-1-sean.anderson@linux.dev
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Note that every one of these timeouts causes a connection loss by
+virtue of the xprt_conditional_disconnect() call in that arm of
+call_cb_transmit_status().
+
+I found that setting to_maxval is necessary to get the RPC timeout
+logic to behave whenever to_exponential is not set.
+
+Fixes: 57331a59ac0d ("NFSv4.1: Use the nfs_client's rpc timeouts for backchannel")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/xilinx-ams.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/sunrpc/svc.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/adc/xilinx-ams.c b/drivers/iio/adc/xilinx-ams.c
-index f0b71a1220e02..f52abf759260f 100644
---- a/drivers/iio/adc/xilinx-ams.c
-+++ b/drivers/iio/adc/xilinx-ams.c
-@@ -414,8 +414,12 @@ static void ams_enable_channel_sequence(struct iio_dev *indio_dev)
+diff --git a/net/sunrpc/svc.c b/net/sunrpc/svc.c
+index 2b4b1276d4e86..d9cda1e53a017 100644
+--- a/net/sunrpc/svc.c
++++ b/net/sunrpc/svc.c
+@@ -1557,9 +1557,11 @@ void svc_process(struct svc_rqst *rqstp)
+  */
+ void svc_process_bc(struct rpc_rqst *req, struct svc_rqst *rqstp)
+ {
++	struct rpc_timeout timeout = {
++		.to_increment		= 0,
++	};
+ 	struct rpc_task *task;
+ 	int proc_error;
+-	struct rpc_timeout timeout;
  
- 	/* Run calibration of PS & PL as part of the sequence */
- 	scan_mask = BIT(0) | BIT(AMS_PS_SEQ_MAX);
--	for (i = 0; i < indio_dev->num_channels; i++)
--		scan_mask |= BIT_ULL(indio_dev->channels[i].scan_index);
-+	for (i = 0; i < indio_dev->num_channels; i++) {
-+		const struct iio_chan_spec *chan = &indio_dev->channels[i];
-+
-+		if (chan->scan_index < AMS_CTRL_SEQ_BASE)
-+			scan_mask |= BIT_ULL(chan->scan_index);
-+	}
+ 	/* Build the svc_rqst used by the common processing routine */
+ 	rqstp->rq_xid = req->rq_xid;
+@@ -1612,6 +1614,7 @@ void svc_process_bc(struct rpc_rqst *req, struct svc_rqst *rqstp)
+ 		timeout.to_initval = req->rq_xprt->timeout->to_initval;
+ 		timeout.to_retries = req->rq_xprt->timeout->to_retries;
+ 	}
++	timeout.to_maxval = timeout.to_initval;
+ 	memcpy(&req->rq_snd_buf, &rqstp->rq_res, sizeof(req->rq_snd_buf));
+ 	task = rpc_run_bc_task(req, &timeout);
  
- 	if (ams->ps_base) {
- 		/* put sysmon in a soft reset to change the sequence */
 -- 
 2.43.0
 
