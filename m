@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2436315218A;
-	Tue,  2 Jul 2024 17:10:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D5C15B0FE;
+	Tue,  2 Jul 2024 17:10:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940224; cv=none; b=eGwn430BrsJA9tosNDWAiyBjpEPpseqbA5DFD3G//CuHGBLZQfQLPtsn469ZMCumXvdZoWFDPdyx/9pTugrC2KddM/jvPqtdjYRw+FA8By8BTC/sFoZud08Dagsf3Pu9w2yH781BeORD8amzhtzi9k+zXJczSgx0FmRowfXMMc4=
+	t=1719940227; cv=none; b=GL6SLPAGc9RVDfK4dghbI4dzDX/Vis67kotT+koo+2+UGPJVnT/Ajn0U0iYOGuB+/Xh91qgApgdPReUlJLx1LPeYc02n5jg3Yxc/Dq+eg1dBGD15UTWao8Cj9t7n2K49jaxunfMlZExEYhaRV/30gmpJPzWfvaBSzDZC/BG9Kpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940224; c=relaxed/simple;
-	bh=tiTqfn78M7gMYBNmCS1w5BHe7j5Pl9RkaD+6LexcobE=;
+	s=arc-20240116; t=1719940227; c=relaxed/simple;
+	bh=Va3GTSb9ev6gE+rilAMEj5KMAi1uuEsPsOF9byrwK48=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FkPH+JU4yVOpYU9uhtl8AbiPujrXS0At5VnGLzV+qRfBJc7/VQ6TTG/mDgwpOkKDeEilZFoKwxsag2ivLbOxEqRlXGaebZuasp3ZuzCugOwPmqLlSuojjWG4U/D5ZUVz9Ymm+IouNWLBvBoHOtw7cErPsRF8KEzFRJ6zCI7jm/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D9LnUP2W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nPuRTILDyiyQfpnSlXJ92CLPeEml/TDZ8LEAJQz1gCwE2ZjHX1A7OVCgqoLpkknk8SBtJruV0MiCbkIl4AlRYwTp+a96r3qXmmhAA+lt/cPGrMAB1rkPIdtlxRxJgjDZKr23Q4UXS/AiZIzMwJQicQtQHJ6dvQkmPWgWBFLkqoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iltHqc+/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D9LnUP2W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92202C116B1;
-	Tue,  2 Jul 2024 17:10:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iltHqc+/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5B45C116B1;
+	Tue,  2 Jul 2024 17:10:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940224;
-	bh=tiTqfn78M7gMYBNmCS1w5BHe7j5Pl9RkaD+6LexcobE=;
+	s=korg; t=1719940227;
+	bh=Va3GTSb9ev6gE+rilAMEj5KMAi1uuEsPsOF9byrwK48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D9LnUP2WonuIPzQbY9J3TaMbL34m+onQgslhbaBddKwGlNRbo+dU6aWwBnDn4jmwk
-	 6Yiw+1ltUxttaGHjbCtOwQdQHeFTeJUSHCoGwLy07m5NdPqiVfk3PCQNEY/QurbS7A
-	 onLLf39YyC2KteIg+ncfVtSRGajv3ObBkbQpmlyk=
+	b=iltHqc+/cH1XP2Ay/D8Lnc9yx+rX570RoAWbbfd+pjfhATaim6smhfyOWbonQcOCo
+	 HUuN2a2WJuqDv2m/BilfYFcvXJ4UkHebYky7ZOPS7dSq8fGTQwnYog4w90nOtSX22n
+	 jkPysK8Iu8iJm8+zK0EBmHou22Qz+5ipPKsGiQqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 090/222] gfs2: Fix NULL pointer dereference in gfs2_log_flush
-Date: Tue,  2 Jul 2024 19:02:08 +0200
-Message-ID: <20240702170247.415604116@linuxfoundation.org>
+Subject: [PATCH 6.9 091/222] evm: Enforce signatures on unsupported filesystem for EVM_INIT_X509
+Date: Tue,  2 Jul 2024 19:02:09 +0200
+Message-ID: <20240702170247.452866502@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -50,58 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Stefan Berger <stefanb@linux.ibm.com>
 
-[ Upstream commit 35264909e9d1973ab9aaa2a1b07cda70f12bb828 ]
+[ Upstream commit 47add87ad181473e5ef2438918669540ba5016a6 ]
 
-In gfs2_jindex_free(), set sdp->sd_jdesc to NULL under the log flush
-lock to provide exclusion against gfs2_log_flush().
+Unsupported filesystems currently do not enforce any signatures. Add
+support for signature enforcement of the "original" and "portable &
+immutable" signatures when EVM_INIT_X509 is enabled.
 
-In gfs2_log_flush(), check if sdp->sd_jdesc is non-NULL before
-dereferencing it.  Otherwise, we could run into a NULL pointer
-dereference when outstanding glock work races with an unmount
-(glock_work_func -> run_queue -> do_xmote -> inode_go_sync ->
-gfs2_log_flush).
+The "original" signature type contains filesystem specific metadata.
+Thus it cannot be copied up and verified. However with EVM_INIT_X509
+and EVM_ALLOW_METADATA_WRITES enabled, the "original" file signature
+may be written.
 
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+When EVM_ALLOW_METADATA_WRITES is not set or once it is removed from
+/sys/kernel/security/evm by setting EVM_INIT_HMAC for example, it is not
+possible to write or remove xattrs on the overlay filesystem.
+
+This change still prevents EVM from writing HMAC signatures on
+unsupported filesystem when EVM_INIT_HMAC is enabled.
+
+Co-developed-by: Mimi Zohar <zohar@linux.ibm.com>
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/log.c   | 3 ++-
- fs/gfs2/super.c | 4 ++++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ security/integrity/evm/evm_main.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/fs/gfs2/log.c b/fs/gfs2/log.c
-index 8cddf955ebc0c..a6dd68b458cec 100644
---- a/fs/gfs2/log.c
-+++ b/fs/gfs2/log.c
-@@ -1108,7 +1108,8 @@ void gfs2_log_flush(struct gfs2_sbd *sdp, struct gfs2_glock *gl, u32 flags)
- 	lops_before_commit(sdp, tr);
- 	if (gfs2_withdrawing_or_withdrawn(sdp))
- 		goto out_withdraw;
--	gfs2_log_submit_bio(&sdp->sd_jdesc->jd_log_bio, REQ_OP_WRITE);
-+	if (sdp->sd_jdesc)
-+		gfs2_log_submit_bio(&sdp->sd_jdesc->jd_log_bio, REQ_OP_WRITE);
- 	if (gfs2_withdrawing_or_withdrawn(sdp))
- 		goto out_withdraw;
+diff --git a/security/integrity/evm/evm_main.c b/security/integrity/evm/evm_main.c
+index 81dbade5b9b3d..518b3090cdb77 100644
+--- a/security/integrity/evm/evm_main.c
++++ b/security/integrity/evm/evm_main.c
+@@ -192,7 +192,11 @@ static enum integrity_status evm_verify_hmac(struct dentry *dentry,
+ 		     iint->evm_status == INTEGRITY_PASS_IMMUTABLE))
+ 		return iint->evm_status;
  
-diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
-index 2d780b4701a23..ee61fcb7f200d 100644
---- a/fs/gfs2/super.c
-+++ b/fs/gfs2/super.c
-@@ -67,9 +67,13 @@ void gfs2_jindex_free(struct gfs2_sbd *sdp)
- 	sdp->sd_journals = 0;
- 	spin_unlock(&sdp->sd_jindex_spin);
+-	if (is_unsupported_fs(dentry))
++	/*
++	 * On unsupported filesystems without EVM_INIT_X509 enabled, skip
++	 * signature verification.
++	 */
++	if (!(evm_initialized & EVM_INIT_X509) && is_unsupported_fs(dentry))
+ 		return INTEGRITY_UNKNOWN;
  
-+	down_write(&sdp->sd_log_flush_lock);
- 	sdp->sd_jdesc = NULL;
-+	up_write(&sdp->sd_log_flush_lock);
-+
- 	while (!list_empty(&list)) {
- 		jd = list_first_entry(&list, struct gfs2_jdesc, jd_list);
-+		BUG_ON(jd->jd_log_bio);
- 		gfs2_free_journal_extents(jd);
- 		list_del(&jd->jd_list);
- 		iput(jd->jd_inode);
+ 	/* if status is not PASS, try to check again - against -ENOMEM */
+@@ -260,7 +264,8 @@ static enum integrity_status evm_verify_hmac(struct dentry *dentry,
+ 				evm_status = INTEGRITY_PASS_IMMUTABLE;
+ 			} else if (!IS_RDONLY(inode) &&
+ 				   !(inode->i_sb->s_readonly_remount) &&
+-				   !IS_IMMUTABLE(inode)) {
++				   !IS_IMMUTABLE(inode) &&
++				   !is_unsupported_fs(dentry)) {
+ 				evm_update_evmxattr(dentry, xattr_name,
+ 						    xattr_value,
+ 						    xattr_value_len);
+@@ -418,9 +423,6 @@ enum integrity_status evm_verifyxattr(struct dentry *dentry,
+ 	if (!evm_key_loaded() || !evm_protected_xattr(xattr_name))
+ 		return INTEGRITY_UNKNOWN;
+ 
+-	if (is_unsupported_fs(dentry))
+-		return INTEGRITY_UNKNOWN;
+-
+ 	return evm_verify_hmac(dentry, xattr_name, xattr_value,
+ 				 xattr_value_len);
+ }
 -- 
 2.43.0
 
