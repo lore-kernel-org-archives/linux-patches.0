@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886BC15218A;
-	Tue,  2 Jul 2024 17:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD39F15218A;
+	Tue,  2 Jul 2024 17:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940317; cv=none; b=nsOW23mo9qhJsMdtG8NOuyGPN0NC39BLBUSrg5sjRMzWCdqNMSHwxYZ/SUpnkifJHfZI3LW24Ny2dadqXikd4N/dDjUE++lANzGfS7TQbRbIdGkoQ96GXdIZgzp/sYVmbJ4X7/oW6Ot4Mw3nDjdMlsS4d0tbEC0Q9B7EJ2H+1Ao=
+	t=1719940320; cv=none; b=hdc4r6oVx70x2Yr9A81reRnHwsVv1Yb/zXTTb4h0K5iO4p7wflV2K3JtEtnebqa5rhY/N3ruo1ttA2290bT9ZQSyDN7jDxxN5b/nbq+c91RRJvtqqbTAkG4Ylt15urdqeZ2wntGjY9iaC+nL9cLs02WYZy8xsp4Fv1+UwPacnyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940317; c=relaxed/simple;
-	bh=J36xiiIEOCnuF3Q4ovoEPTkPuImhkn4TamV1WhsfQ9s=;
+	s=arc-20240116; t=1719940320; c=relaxed/simple;
+	bh=BpFGrtqNnlqxVF1jDQtIzOZC3Q9jHX6GP0uIcf9KEYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pktt/55kX8A0w3wfuAc1+7yXiga8u13loRCSJwWZfd6EPwpbn+RtHt7gaGVKEArR9mgAcdG6nMDmXDkYb/asOds+J5GuBDDx36Y5Ly1KuexCBaYmGQY3Db6xqWqi3Rm68SDDsr4GLgd5yccq0W65p9eX1gqC8miDm9UE4UetNcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tS6PBTT8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VNZ69s85TFuOzCcdlsk8CG1LgF0T0B1gvOF6LKBiBRFDNAYrHCLTqLDOE1OqQzQoVPuMJpt88q5uWuK05AkE9+J2PXpmJ4/wbfzNsfTtw6I1pUQ0d6cZwT0e5Uk1vi5QkkxrsWHdsFhM9v1JLfOthAJhpb6pfYwXpEGr5OvxphM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y74Qg//G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tS6PBTT8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A7FC4AF0A;
-	Tue,  2 Jul 2024 17:11:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y74Qg//G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D251C116B1;
+	Tue,  2 Jul 2024 17:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940317;
-	bh=J36xiiIEOCnuF3Q4ovoEPTkPuImhkn4TamV1WhsfQ9s=;
+	s=korg; t=1719940320;
+	bh=BpFGrtqNnlqxVF1jDQtIzOZC3Q9jHX6GP0uIcf9KEYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tS6PBTT8j1BrCZszWZcL+yNhbuo50UgrP8BWXT6qY6EZJVk8HQdeHxV2CfDAD4+Gf
-	 m1hW8v8CX91F64JGtyEtu41+z3HoIRQGBO6JI8qJTXthSI/Fn3WiJxIGNwNJrrWbXB
-	 SQVlM+kemalGw1HxgMbkTurf/uyfskhgGeqUa3eE=
+	b=Y74Qg//G4GWjjZVEE7rxnv+B7YhzDAiUScJbV9wc/r5YvQGABqUrhvtb4ccxe1IZp
+	 YW15FDkIK7e4tj9poekPVF+Zv3oivxJDEM2s/FO1IujZr0/ClASecHxgybiVnxOYrb
+	 K2Wghin6yj40Vd+TeI/uUAhUh+K4zoHiGCHJjwXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 087/222] irqchip/loongson: Select GENERIC_IRQ_EFFECTIVE_AFF_MASK if SMP for IRQ_LOONGARCH_CPU
-Date: Tue,  2 Jul 2024 19:02:05 +0200
-Message-ID: <20240702170247.302391657@linuxfoundation.org>
+Subject: [PATCH 6.9 088/222] iommu/arm-smmu-v3: Do not allow a SVA domain to be set on the wrong PASID
+Date: Tue,  2 Jul 2024 19:02:06 +0200
+Message-ID: <20240702170247.339561863@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -51,37 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit 42a7d887664b02a747ef5d479f6fd01081564af8 ]
+[ Upstream commit fdc69d39e77f88264ee6e8174ff9aaf0953aecd9 ]
 
-An interrupt's effective affinity can only be different from its configured
-affinity if there are multiple CPUs. Make it clear that this option is only
-meaningful when SMP is enabled. Otherwise, there exists "WARNING: unmet
-direct dependencies detected for GENERIC_IRQ_EFFECTIVE_AFF_MASK" when make
-menuconfig if CONFIG_SMP is not set on LoongArch.
+The SVA code is wired to assume that the SVA is programmed onto the
+mm->pasid. The current core code always does this, so it is fine.
 
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20240326121130.16622-3-yangtiezhu@loongson.cn
+Add a check for clarity.
+
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Tested-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/3-v6-228e7adf25eb+4155-smmuv3_newapi_p2_jgg@nvidia.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/irqchip/Kconfig b/drivers/irqchip/Kconfig
-index 72c07a12f5e18..bfa1d77749f3e 100644
---- a/drivers/irqchip/Kconfig
-+++ b/drivers/irqchip/Kconfig
-@@ -568,7 +568,7 @@ config IRQ_LOONGARCH_CPU
- 	bool
- 	select GENERIC_IRQ_CHIP
- 	select IRQ_DOMAIN
--	select GENERIC_IRQ_EFFECTIVE_AFF_MASK
-+	select GENERIC_IRQ_EFFECTIVE_AFF_MASK if SMP
- 	select LOONGSON_HTVEC
- 	select LOONGSON_LIOINTC
- 	select LOONGSON_EIOINTC
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
+index 2cd433a9c8a0f..41b44baef15e8 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
+@@ -569,6 +569,9 @@ static int arm_smmu_sva_set_dev_pasid(struct iommu_domain *domain,
+ 	int ret = 0;
+ 	struct mm_struct *mm = domain->mm;
+ 
++	if (mm_get_enqcmd_pasid(mm) != id)
++		return -EINVAL;
++
+ 	mutex_lock(&sva_lock);
+ 	ret = __arm_smmu_sva_bind(dev, id, mm);
+ 	mutex_unlock(&sva_lock);
 -- 
 2.43.0
 
