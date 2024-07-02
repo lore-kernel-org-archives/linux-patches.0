@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2AB514293;
-	Tue,  2 Jul 2024 17:21:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B2514293;
+	Tue,  2 Jul 2024 17:21:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940867; cv=none; b=Ib5+b4MoS0++b2pmM7zn3Ku6vIsZguUO1AlgGYh6evbecxf2edOH5IXWBsQByXW+g9Cu5JxMhfHqO4NqQ7nbAaNQAvVx0SOuBSVdkLiRQpc+Blj1gYscXVO/evvSIvicBKQ34dDtn45i0Dm/gu0R7ZcPv6s2G7OG5c5P9O9NTAw=
+	t=1719940871; cv=none; b=Ehe9c1PDPrVdOckv20UH78LCGP95Y/onUxtQGfumY4xFG1XRHqGIDAgNutg3LDoVy0fE8mpO5JYGGoTTDqowaaYw/8Gn2Xl+ZyHDXP/5tv6YUeqLga2RDvRx8pLtaDDtHzF71MFa42P/j5j4TNvPdYwX8SvNQxZiJenJBX1WNNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940867; c=relaxed/simple;
-	bh=GYKGm4JdOtQEg92vAwkJNyXx+7LlBVXiOvUTpOj/bGE=;
+	s=arc-20240116; t=1719940871; c=relaxed/simple;
+	bh=OAMK/bZVVVbWnQB3QsLZ1mu2GFTo3eIj/4APr5CzB0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TcasGWta29ApcILob9eDWwvz8UvBzx9u+xQPJiDVCpqCIkf18C7lenzUcIq/sOS1acYm9tfdIaJy7PlR0fQy4g1uh2muNW70AcdJwibmZKuA6cGqegqOh3ZuX5J/uo0tB0naN11PdiPu+L3EyJctFJ9tRgtS0Gj0qBbV0IyVGMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pu0iK+mW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z1PuERpdGmmoHxYmYF7v+lYJclfIl5XXGVyqCmbJZk/nVtKwwQFTHVjp2XY+viDUdV86EVayOWKeQlSFBafAJ3KwUt066hL1lZdQ0ytcq9CRXl1WPY/D5V8bCI4ziReDbse+SnITrgyNr3FJXmioDEpfMMHNdr+OL0KT2ID7uMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OETMHnGe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pu0iK+mW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21AE5C116B1;
-	Tue,  2 Jul 2024 17:21:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OETMHnGe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5036CC116B1;
+	Tue,  2 Jul 2024 17:21:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940866;
-	bh=GYKGm4JdOtQEg92vAwkJNyXx+7LlBVXiOvUTpOj/bGE=;
+	s=korg; t=1719940870;
+	bh=OAMK/bZVVVbWnQB3QsLZ1mu2GFTo3eIj/4APr5CzB0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pu0iK+mWYwWmyKnG2EQwfj68nsM0Pqh87x5Uf79MkthqP++UvNl6KX6fHSVCNCzlA
-	 ijZTjZFsVS/CaD/tgnHZcahdViFRj64+DJoUPQUMU7LRW7OfvibwdkTD4i8OdXxao3
-	 Ae8b+eviebmym9qODlScYH9LMa0h5dv3xVCRlbTM=
+	b=OETMHnGeMfpB116P5Giew9gh5xhy9Gp1+/+YuopW8ZCV8zxf9r2v3ffYsMRCr4yKD
+	 bVNFluqFag1JRRPet56/cRirXw4kTZ5xfRZdQNRpPraO0XIPZmMnebOuflfqC6pufA
+	 vH8K6cLE1Heihf8+sMrJ4e0karRBCj/IB4uiYZ64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+603bcd9b0bf1d94dbb9b@syzkaller.appspotmail.com,
-	syzbot+eb02dc7f03dce0ef39f3@syzkaller.appspotmail.com,
-	syzbot+b4e65ca24fd4d0c734c3@syzkaller.appspotmail.com,
-	syzbot+d2b113dc9fea5e1d2848@syzkaller.appspotmail.com,
-	syzbot+1a3cf6f08d68868f9db3@syzkaller.appspotmail.com,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Wenchao Hao <haowenchao2@huawei.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 059/163] bpf: Mark bpf prog stack with kmsan_unposion_memory in interpreter mode
-Date: Tue,  2 Jul 2024 19:02:53 +0200
-Message-ID: <20240702170235.298944140@linuxfoundation.org>
+Subject: [PATCH 6.6 060/163] RDMA/restrack: Fix potential invalid address access
+Date: Tue,  2 Jul 2024 19:02:54 +0200
+Message-ID: <20240702170235.337114732@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -57,88 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin KaFai Lau <martin.lau@kernel.org>
+From: Wenchao Hao <haowenchao2@huawei.com>
 
-[ Upstream commit e8742081db7d01f980c6161ae1e8a1dbc1e30979 ]
+[ Upstream commit ca537a34775c103f7b14d7bbd976403f1d1525d8 ]
 
-syzbot reported uninit memory usages during map_{lookup,delete}_elem.
+struct rdma_restrack_entry's kern_name was set to KBUILD_MODNAME
+in ib_create_cq(), while if the module exited but forgot del this
+rdma_restrack_entry, it would cause a invalid address access in
+rdma_restrack_clean() when print the owner of this rdma_restrack_entry.
 
-==========
-BUG: KMSAN: uninit-value in __dev_map_lookup_elem kernel/bpf/devmap.c:441 [inline]
-BUG: KMSAN: uninit-value in dev_map_lookup_elem+0xf3/0x170 kernel/bpf/devmap.c:796
-__dev_map_lookup_elem kernel/bpf/devmap.c:441 [inline]
-dev_map_lookup_elem+0xf3/0x170 kernel/bpf/devmap.c:796
-____bpf_map_lookup_elem kernel/bpf/helpers.c:42 [inline]
-bpf_map_lookup_elem+0x5c/0x80 kernel/bpf/helpers.c:38
-___bpf_prog_run+0x13fe/0xe0f0 kernel/bpf/core.c:1997
-__bpf_prog_run256+0xb5/0xe0 kernel/bpf/core.c:2237
-==========
+These code is used to help find one forgotten PD release in one of the
+ULPs. But it is not needed anymore, so delete them.
 
-The reproducer should be in the interpreter mode.
-
-The C reproducer is trying to run the following bpf prog:
-
-    0: (18) r0 = 0x0
-    2: (18) r1 = map[id:49]
-    4: (b7) r8 = 16777216
-    5: (7b) *(u64 *)(r10 -8) = r8
-    6: (bf) r2 = r10
-    7: (07) r2 += -229
-            ^^^^^^^^^^
-
-    8: (b7) r3 = 8
-    9: (b7) r4 = 0
-   10: (85) call dev_map_lookup_elem#1543472
-   11: (95) exit
-
-It is due to the "void *key" (r2) passed to the helper. bpf allows uninit
-stack memory access for bpf prog with the right privileges. This patch
-uses kmsan_unpoison_memory() to mark the stack as initialized.
-
-This should address different syzbot reports on the uninit "void *key"
-argument during map_{lookup,delete}_elem.
-
-Reported-by: syzbot+603bcd9b0bf1d94dbb9b@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/bpf/000000000000f9ce6d061494e694@google.com/
-Reported-by: syzbot+eb02dc7f03dce0ef39f3@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/bpf/000000000000a5c69c06147c2238@google.com/
-Reported-by: syzbot+b4e65ca24fd4d0c734c3@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/bpf/000000000000ac56fb06143b6cfa@google.com/
-Reported-by: syzbot+d2b113dc9fea5e1d2848@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/bpf/0000000000000d69b206142d1ff7@google.com/
-Reported-by: syzbot+1a3cf6f08d68868f9db3@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/bpf/0000000000006f876b061478e878@google.com/
-Tested-by: syzbot+1a3cf6f08d68868f9db3@syzkaller.appspotmail.com
-Suggested-by: Yonghong Song <yonghong.song@linux.dev>
-Suggested-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://lore.kernel.org/r/20240328185801.1843078-1-martin.lau@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Wenchao Hao <haowenchao2@huawei.com>
+Link: https://lore.kernel.org/r/20240318092320.1215235-1-haowenchao2@huawei.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/infiniband/core/restrack.c | 51 +-----------------------------
+ 1 file changed, 1 insertion(+), 50 deletions(-)
 
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index bdbce41d1bb4a..77a9b12e00af7 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -2174,6 +2174,7 @@ static unsigned int PROG_NAME(stack_size)(const void *ctx, const struct bpf_insn
- 	u64 stack[stack_size / sizeof(u64)]; \
- 	u64 regs[MAX_BPF_EXT_REG] = {}; \
- \
-+	kmsan_unpoison_memory(stack, sizeof(stack)); \
- 	FP = (u64) (unsigned long) &stack[ARRAY_SIZE(stack)]; \
- 	ARG1 = (u64) (unsigned long) ctx; \
- 	return ___bpf_prog_run(regs, insn); \
-@@ -2187,6 +2188,7 @@ static u64 PROG_NAME_ARGS(stack_size)(u64 r1, u64 r2, u64 r3, u64 r4, u64 r5, \
- 	u64 stack[stack_size / sizeof(u64)]; \
- 	u64 regs[MAX_BPF_EXT_REG]; \
- \
-+	kmsan_unpoison_memory(stack, sizeof(stack)); \
- 	FP = (u64) (unsigned long) &stack[ARRAY_SIZE(stack)]; \
- 	BPF_R1 = r1; \
- 	BPF_R2 = r2; \
+diff --git a/drivers/infiniband/core/restrack.c b/drivers/infiniband/core/restrack.c
+index 01a499a8b88db..438ed35881752 100644
+--- a/drivers/infiniband/core/restrack.c
++++ b/drivers/infiniband/core/restrack.c
+@@ -37,22 +37,6 @@ int rdma_restrack_init(struct ib_device *dev)
+ 	return 0;
+ }
+ 
+-static const char *type2str(enum rdma_restrack_type type)
+-{
+-	static const char * const names[RDMA_RESTRACK_MAX] = {
+-		[RDMA_RESTRACK_PD] = "PD",
+-		[RDMA_RESTRACK_CQ] = "CQ",
+-		[RDMA_RESTRACK_QP] = "QP",
+-		[RDMA_RESTRACK_CM_ID] = "CM_ID",
+-		[RDMA_RESTRACK_MR] = "MR",
+-		[RDMA_RESTRACK_CTX] = "CTX",
+-		[RDMA_RESTRACK_COUNTER] = "COUNTER",
+-		[RDMA_RESTRACK_SRQ] = "SRQ",
+-	};
+-
+-	return names[type];
+-};
+-
+ /**
+  * rdma_restrack_clean() - clean resource tracking
+  * @dev:  IB device
+@@ -60,47 +44,14 @@ static const char *type2str(enum rdma_restrack_type type)
+ void rdma_restrack_clean(struct ib_device *dev)
+ {
+ 	struct rdma_restrack_root *rt = dev->res;
+-	struct rdma_restrack_entry *e;
+-	char buf[TASK_COMM_LEN];
+-	bool found = false;
+-	const char *owner;
+ 	int i;
+ 
+ 	for (i = 0 ; i < RDMA_RESTRACK_MAX; i++) {
+ 		struct xarray *xa = &dev->res[i].xa;
+ 
+-		if (!xa_empty(xa)) {
+-			unsigned long index;
+-
+-			if (!found) {
+-				pr_err("restrack: %s", CUT_HERE);
+-				dev_err(&dev->dev, "BUG: RESTRACK detected leak of resources\n");
+-			}
+-			xa_for_each(xa, index, e) {
+-				if (rdma_is_kernel_res(e)) {
+-					owner = e->kern_name;
+-				} else {
+-					/*
+-					 * There is no need to call get_task_struct here,
+-					 * because we can be here only if there are more
+-					 * get_task_struct() call than put_task_struct().
+-					 */
+-					get_task_comm(buf, e->task);
+-					owner = buf;
+-				}
+-
+-				pr_err("restrack: %s %s object allocated by %s is not freed\n",
+-				       rdma_is_kernel_res(e) ? "Kernel" :
+-							       "User",
+-				       type2str(e->type), owner);
+-			}
+-			found = true;
+-		}
++		WARN_ON(!xa_empty(xa));
+ 		xa_destroy(xa);
+ 	}
+-	if (found)
+-		pr_err("restrack: %s", CUT_HERE);
+-
+ 	kfree(rt);
+ }
+ 
 -- 
 2.43.0
 
