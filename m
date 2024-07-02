@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BECE71514DC;
-	Tue,  2 Jul 2024 17:29:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C011514DC;
+	Tue,  2 Jul 2024 17:29:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941393; cv=none; b=k9pwegZXh0xNGMkXP3PwrgRoX62Ty+pphk4SzHtc27Hv+VwxxQeJt/KyjWNGxbZ7jASaed3j6WOh2A5bcIL73peo3SKqlGIm1fzc6UdYuMaYY4R1Pua4AbReQqpO43JGJ6GtOYHvuFXHFsr9h8qdyvfnbug1To1zbi0j9A+Snb4=
+	t=1719941397; cv=none; b=IGzfNuKHXSD4+C0prcouwuynd49FsjQ2cwXl267o0K1r4Q8YplZYlQQaBwyuIsfooK0oh4PFq/f5lyxnwgtNYu3s6EeD840ZG/ucqbRCEVNxWuwC2z420oidf1GF3TLYepjrP7b2s+hf9clWxiniRF2/jFsqz61pHptQz6kPAcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941393; c=relaxed/simple;
-	bh=tOOezIBvnK8YvKWcxsuwCVh/oW+0jaxcdmwSuDufhPM=;
+	s=arc-20240116; t=1719941397; c=relaxed/simple;
+	bh=qFvIRaP5htAS3D6ey4tGPj75U04WBaiLyhcmkmDw0YQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ApS7flLdB5VCGNB7cpFp0ssh3ba9ABwkUCIC1sXKuhSHF05wyKUtDlZkY/O9yPi6t20mYjUzV7swphDlFvm81yKd1FAElhsydpktrhl+AMdgE6tndrRxn5zhmOH0312wbA67KFliYVX86QdkU3nmteooZAxoSIdyFSc1fxQKJKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h6ltkHxc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NAAbUpRP/OCvTrVrBp6ZeHbG2IuxFm/8/jqeyOs5U9hFZwSQ2Qzp8KI4KGJDPxaTD6OF6X03YkmoSIK1OHBTngoau/93kbArzUJUte3+HV8ZuhEzI2TFIPU9YYwEL3LVtTeS9o4CBeNuuyZJMl9tn6g2gegKPjQFLaqGpEYTWAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zc6CEazE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h6ltkHxc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DAD4C116B1;
-	Tue,  2 Jul 2024 17:29:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zc6CEazE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A28DAC116B1;
+	Tue,  2 Jul 2024 17:29:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941393;
-	bh=tOOezIBvnK8YvKWcxsuwCVh/oW+0jaxcdmwSuDufhPM=;
+	s=korg; t=1719941397;
+	bh=qFvIRaP5htAS3D6ey4tGPj75U04WBaiLyhcmkmDw0YQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h6ltkHxcgue/1vhtZ0KFNceHz8W4uJ7V2L2HFDoxOlvTaWgTkIfTvwHJIQxGMxIVU
-	 bjyEO982hpKvcqFydkJeSI/MDl3cYpdiLePFj6/I0Thr04LaHQXRmmMEYkSSfTsHsq
-	 lhndYiiazBdINweS8W7J6UB6lhFHRbtn6nlXtJDc=
+	b=Zc6CEazEkQf5pRlFp3Tt2P9ll7bwQGIgUYvuFtvEBivz8Y3XWpPiaJc1E3606bziH
+	 lpldLfxgAdDO+59hTsEDz/CVtAdXBzOvKXAg73Y2Uz4WDkeAHpfspRPSGcMXuBSDRr
+	 z55LMW6UMlGJV4C/pM+3l48xlLKeB/i1gCvjCg5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Andrew Davis <afd@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 050/128] media: dvbdev: Initialize sbuf
-Date: Tue,  2 Jul 2024 19:04:11 +0200
-Message-ID: <20240702170228.126787230@linuxfoundation.org>
+Subject: [PATCH 6.1 051/128] soc: ti: wkup_m3_ipc: Send NULL dummy message instead of pointer message
+Date: Tue,  2 Jul 2024 19:04:12 +0200
+Message-ID: <20240702170228.163923417@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170226.231899085@linuxfoundation.org>
 References: <20240702170226.231899085@linuxfoundation.org>
@@ -45,44 +45,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Andrew Davis <afd@ti.com>
 
-[ Upstream commit 17d1316de0d7dc1bdc5d6e3ad4efd30a9bf1a381 ]
+[ Upstream commit ddbf3204f600a4d1f153498f618369fca352ae00 ]
 
-Because the size passed to copy_from_user() cannot be known beforehand,
-it needs to be checked during runtime with check_object_size. That makes
-gcc believe that the content of sbuf can be used before init.
+mbox_send_message() sends a u32 bit message, not a pointer to a message.
+We only convert to a pointer type as a generic type. If we want to send
+a dummy message of 0, then simply send 0 (NULL).
 
-Fix:
-./include/linux/thread_info.h:215:17: warning: ‘sbuf’ may be used uninitialized [-Wmaybe-uninitialized]
-
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Andrew Davis <afd@ti.com>
+Link: https://lore.kernel.org/r/20240325165507.30323-1-afd@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-core/dvbdev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/ti/wkup_m3_ipc.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/dvb-core/dvbdev.c b/drivers/media/dvb-core/dvbdev.c
-index aefee2277254d..04b7ce479fc38 100644
---- a/drivers/media/dvb-core/dvbdev.c
-+++ b/drivers/media/dvb-core/dvbdev.c
-@@ -964,7 +964,7 @@ int dvb_usercopy(struct file *file,
- 		     int (*func)(struct file *file,
- 		     unsigned int cmd, void *arg))
+diff --git a/drivers/soc/ti/wkup_m3_ipc.c b/drivers/soc/ti/wkup_m3_ipc.c
+index 343c58ed58961..103d793bae748 100644
+--- a/drivers/soc/ti/wkup_m3_ipc.c
++++ b/drivers/soc/ti/wkup_m3_ipc.c
+@@ -16,7 +16,6 @@
+ #include <linux/irq.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+-#include <linux/omap-mailbox.h>
+ #include <linux/platform_device.h>
+ #include <linux/remoteproc.h>
+ #include <linux/suspend.h>
+@@ -314,7 +313,6 @@ static irqreturn_t wkup_m3_txev_handler(int irq, void *ipc_data)
+ static int wkup_m3_ping(struct wkup_m3_ipc *m3_ipc)
  {
--	char    sbuf[128];
-+	char    sbuf[128] = {};
- 	void    *mbuf = NULL;
- 	void    *parg = NULL;
- 	int     err  = -EINVAL;
+ 	struct device *dev = m3_ipc->dev;
+-	mbox_msg_t dummy_msg = 0;
+ 	int ret;
+ 
+ 	if (!m3_ipc->mbox) {
+@@ -330,7 +328,7 @@ static int wkup_m3_ping(struct wkup_m3_ipc *m3_ipc)
+ 	 * the RX callback to avoid multiple interrupts being received
+ 	 * by the CM3.
+ 	 */
+-	ret = mbox_send_message(m3_ipc->mbox, &dummy_msg);
++	ret = mbox_send_message(m3_ipc->mbox, NULL);
+ 	if (ret < 0) {
+ 		dev_err(dev, "%s: mbox_send_message() failed: %d\n",
+ 			__func__, ret);
+@@ -352,7 +350,6 @@ static int wkup_m3_ping(struct wkup_m3_ipc *m3_ipc)
+ static int wkup_m3_ping_noirq(struct wkup_m3_ipc *m3_ipc)
+ {
+ 	struct device *dev = m3_ipc->dev;
+-	mbox_msg_t dummy_msg = 0;
+ 	int ret;
+ 
+ 	if (!m3_ipc->mbox) {
+@@ -361,7 +358,7 @@ static int wkup_m3_ping_noirq(struct wkup_m3_ipc *m3_ipc)
+ 		return -EIO;
+ 	}
+ 
+-	ret = mbox_send_message(m3_ipc->mbox, &dummy_msg);
++	ret = mbox_send_message(m3_ipc->mbox, NULL);
+ 	if (ret < 0) {
+ 		dev_err(dev, "%s: mbox_send_message() failed: %d\n",
+ 			__func__, ret);
 -- 
 2.43.0
 
