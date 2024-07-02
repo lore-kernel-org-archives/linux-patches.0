@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A08F3D978;
-	Tue,  2 Jul 2024 17:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBDDC1B583A;
+	Tue,  2 Jul 2024 17:21:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940857; cv=none; b=EGaH7U7CBpkkR5z0aCuHlZ67vi5rQEunPHo22kh33hWDPjWAO4wJqT5ZRWg2weyuOtUNPcRxsE6E7iBbaOPuERoj5Pi1AV7bBhH9AsQPYWfE6uHeeNPGwzTaRzbC25NJiReZacWQoXSoKKVUDbO79zo81UX/Bm2iWogu592ZGPE=
+	t=1719940860; cv=none; b=mNnT38Qgao3ZZzcOObjBRa6nFmdDDnSll1IiYMgDHDGxeQIwjWrnVgn87E9RpA2D62Z3/xnBfuWkGAAMDAoiznvSDlqbSad7Kx4X9ZKKLcOup2pJF8yT8dy1QAZiVDVDGh8lKXIKxT0xxwj5YBZ1AXCYp5ozUGXOKLawntoV2Wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940857; c=relaxed/simple;
-	bh=xk9ipmGIh3KzgglVozoyPI8Frt4WBXUX3RwLJoiOs60=;
+	s=arc-20240116; t=1719940860; c=relaxed/simple;
+	bh=U1a2wtliN/+DlJiI1XInp1XtDshL9OXE6tyWMeTIlio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kw/dEtFUiRhXCShYL94W46j07JhyUVRRsdd4uOk8Gp6vQYR+2vFc7/vJWn+tRXCLT6VlepQ2BJzijxGQpDH9Em+NUG+Ueyokyo7Z6bvsLE1zXmnbRLnTyb2JO/91mAsEYRFwqBES8Sex9aGi3VnWsfTp4kYu0XuD9wl4a2fH9V8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oKO/KqE6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p/ZEU8X7PfnqJnxYbU8MbloHfWDRQ3cD6MdssTf9poJM3RZPnDoLMdpBBkwhrNhEGPecW7iI3DNYZxT9JrAu1FAKqkqTr+ibg25M+HuaEuNTg6krmsxfDbjuf/M2QKV+qeKzzzbWOQa+6Ski+c4K+oVZbRJvh6xmRUBaJleDrNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fI6e5QKQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oKO/KqE6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF1B7C4AF0A;
-	Tue,  2 Jul 2024 17:20:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fI6e5QKQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3956C116B1;
+	Tue,  2 Jul 2024 17:20:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940857;
-	bh=xk9ipmGIh3KzgglVozoyPI8Frt4WBXUX3RwLJoiOs60=;
+	s=korg; t=1719940860;
+	bh=U1a2wtliN/+DlJiI1XInp1XtDshL9OXE6tyWMeTIlio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oKO/KqE6y7uLBlUUA3OCnI9sDePTN6TXp4QZXq2w8UtGenjLaMS2ekWGYfHN4JEqR
-	 /UyTFCwBPeU/VnA6Ovml71mECSg7e1luHSsbhr1obhJUQYDIpBUYjfjf9ejqSWtJfo
-	 9ul2QB0OYoLLeNeYBPgx3gNcSDL+CqPO1ZTKAZtI=
+	b=fI6e5QKQBR+zF9qkmU4AWcjGA9GpOPK0WsB10Yk4O0b6hefEfomi7VVextwg2jIfJ
+	 NOco49aV4NuAwKVGgAfljIFnESkowHr0Xxmdw7ncyWaKKpf5vy7nTxal+kV1JOwhS0
+	 DqT4b8Q3kmFcYhVz0L5sKDRpdpf/KYo368MfYScM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uros Bizjak <ubizjak@gmail.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Andy Lutomirski <luto@kernel.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Denis Arefev <arefev@swemel.ru>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 056/163] x86/fpu: Fix AMD X86_BUG_FXSAVE_LEAK fixup
-Date: Tue,  2 Jul 2024 19:02:50 +0200
-Message-ID: <20240702170235.182922725@linuxfoundation.org>
+Subject: [PATCH 6.6 057/163] mtd: partitions: redboot: Added conversion of operands to a larger type
+Date: Tue,  2 Jul 2024 19:02:51 +0200
+Message-ID: <20240702170235.222094351@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -54,59 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uros Bizjak <ubizjak@gmail.com>
+From: Denis Arefev <arefev@swemel.ru>
 
-[ Upstream commit 5d31174f3c8c465d9dbe88f6b9d1fe5716f44981 ]
+[ Upstream commit 1162bc2f8f5de7da23d18aa4b7fbd4e93c369c50 ]
 
-The assembly snippet in restore_fpregs_from_fpstate() that implements
-X86_BUG_FXSAVE_LEAK fixup loads the value from a random variable,
-preferably the one that is already in the L1 cache.
+The value of an arithmetic expression directory * master->erasesize is
+subject to overflow due to a failure to cast operands to a larger data
+type before perfroming arithmetic
 
-However, the access to fpinit_state via *fpstate pointer is not
-implemented correctly. The "m" asm constraint requires dereferenced
-pointer variable, otherwise the compiler just reloads the value
-via temporary stack slot. The current asm code reflects this:
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-     mov    %rdi,(%rsp)
-     ...
-     fildl  (%rsp)
-
-With dereferenced pointer variable, the code does what the
-comment above the asm snippet says:
-
-     fildl  (%rdi)
-
-Also, remove the pointless %P operand modifier. The modifier is
-ineffective on non-symbolic references - it was used to prevent
-%rip-relative addresses in .altinstr sections, but FILDL in the
-.text section can use %rip-relative addresses without problems.
-
-Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: H. Peter Anvin <hpa@zytor.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/20240315081849.5187-1-ubizjak@gmail.com
+Signed-off-by: Denis Arefev <arefev@swemel.ru>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20240315093758.20790-1-arefev@swemel.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/fpu/core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mtd/parsers/redboot.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/fpu/core.c b/arch/x86/kernel/fpu/core.c
-index a21a4d0ecc345..4b414b0ab0692 100644
---- a/arch/x86/kernel/fpu/core.c
-+++ b/arch/x86/kernel/fpu/core.c
-@@ -145,8 +145,8 @@ void restore_fpregs_from_fpstate(struct fpstate *fpstate, u64 mask)
- 		asm volatile(
- 			"fnclex\n\t"
- 			"emms\n\t"
--			"fildl %P[addr]"	/* set F?P to defined value */
--			: : [addr] "m" (fpstate));
-+			"fildl %[addr]"	/* set F?P to defined value */
-+			: : [addr] "m" (*fpstate));
- 	}
- 
- 	if (use_xsave()) {
+diff --git a/drivers/mtd/parsers/redboot.c b/drivers/mtd/parsers/redboot.c
+index a16b42a885816..3b55b676ca6b9 100644
+--- a/drivers/mtd/parsers/redboot.c
++++ b/drivers/mtd/parsers/redboot.c
+@@ -102,7 +102,7 @@ static int parse_redboot_partitions(struct mtd_info *master,
+ 			offset -= master->erasesize;
+ 		}
+ 	} else {
+-		offset = directory * master->erasesize;
++		offset = (unsigned long) directory * master->erasesize;
+ 		while (mtd_block_isbad(master, offset)) {
+ 			offset += master->erasesize;
+ 			if (offset == master->size)
 -- 
 2.43.0
 
