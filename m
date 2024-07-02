@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3E815B0FE;
-	Tue,  2 Jul 2024 17:12:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E1815B0FE;
+	Tue,  2 Jul 2024 17:12:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940357; cv=none; b=fR2dBkcrzDblaCsrVF/EXJ/pGdBPwgSnT6Gr+aHwUqg+kdwQI+UjGpYzdZHZkTwRFP8Z2jgMSMm7XJPwHcJ+3LoKBhNz1cH07XUuUmb/y8rbhwJW9J0LuX1w7W6XTNXoWQWcOH9bXDb/+pN3wsm42gjph94dschAHsj9LUO4qrE=
+	t=1719940360; cv=none; b=T+VV0+Xr+33jKNBcba/QZHaLrmtDt9NgWRQaswEZ3EavA/JWwz4QJ/QDumzoKccBNkBIwcpS47JDK6DNfymkbT0284B28HIyWsV7L0aJMxX2efTqvokOd6zCzPpmnVmFYyaML+uRjWrvSEzFPBIP5RicEGjd5V96sOPdppY9fSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940357; c=relaxed/simple;
-	bh=9aCDg2uq4h732Ei97rqWYtVfRkp1Zwtq8kaKYblTw+0=;
+	s=arc-20240116; t=1719940360; c=relaxed/simple;
+	bh=tpzRYEoRd7TKUlxnT2U0iNCv+a5I4IOqSbAKI0mHWAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cioxpGz58xVMexmKcjF6AR+O+y/C/M6RuIXTNWGnEb86Il5xRIfjJYay86webTLeGNTxmRTOpooEGM1q0Eg7jFZfYlRyIXg1lVFLICwODkxZyrs7nJyej2v3aFWG1/q1UZLbxNikynU3fNspghjjRnFUepoW/3IZCbEDEjJ0lYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p2Ao7Rx8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dvTh5B4nAeI7H3rsBr3HZ9rTvM+77flC7iRFgyVakRYI5e0dqd63/F0PAMJiYNJj5wpLPryS3Sw4SyIzK3zCVjcWdh1KIYp5rU3FxCbdCixiM4z4IMLu9R3tPdBXRCehEnSxLCZjaFKdi/8MN2o/TH0en8nhdf/ZMWR3BtdMTtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YzEiv3+w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p2Ao7Rx8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9B92C116B1;
-	Tue,  2 Jul 2024 17:12:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YzEiv3+w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 270BBC116B1;
+	Tue,  2 Jul 2024 17:12:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940357;
-	bh=9aCDg2uq4h732Ei97rqWYtVfRkp1Zwtq8kaKYblTw+0=;
+	s=korg; t=1719940360;
+	bh=tpzRYEoRd7TKUlxnT2U0iNCv+a5I4IOqSbAKI0mHWAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p2Ao7Rx8X/ExtZWFWTOqRcFoqzia4YAHsmwqkH8qa/6j8aJl3fUSSktiZv/haZwar
-	 Gcl1JpFbykXnTaJ/AavDd2Tr6/jZt/+7oB4Ww3EMAGtCGXVnZOikD0vHNRDmKGxdq7
-	 qaEajGAYdvio9jq53yTYWMa2+F1kdvE25zs4THE4=
+	b=YzEiv3+wd0rIwglMRxbJzSq+fSGHyERZsewu+vRFToTks3brBEfnzocnOyHzUOagM
+	 qQeXpVkLokxHr6kaZRmivlNCyw6adL98UNIdUUi8Kl3XJC5DyUI9Y7nXtu5JvcIngw
+	 n37H1yk6K45uPf8ciAfuqif1dCuLb5fNVmdPpPKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 131/222] kbuild: rpm-pkg: fix build error with CONFIG_MODULES=n
-Date: Tue,  2 Jul 2024 19:02:49 +0200
-Message-ID: <20240702170248.976814304@linuxfoundation.org>
+Subject: [PATCH 6.9 132/222] i2c: testunit: dont erase registers after STOP
+Date: Tue,  2 Jul 2024 19:02:50 +0200
+Message-ID: <20240702170249.015554191@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -51,73 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 8d1001f7bdd0553a796998f4fff07ee13e1c1cad ]
+[ Upstream commit c422b6a630240f706063e0ecbb894aa8491b1fa1 ]
 
-When CONFIG_MODULES is disabled, 'make (bin)rpm-pkg' fails:
+STOP fallsthrough to WRITE_REQUESTED but this became problematic when
+clearing the testunit registers was added to the latter. Actually, there
+is no reason to clear the testunit state after STOP. Doing it when a new
+WRITE_REQUESTED arrives is enough. So, no need to fallthrough, at all.
 
-  $ make allnoconfig binrpm-pkg
-    [ snip ]
-  error: File not found: .../linux/rpmbuild/BUILDROOT/kernel-6.10.0_rc3-1.i386/lib/modules/6.10.0-rc3/kernel
-  error: File not found: .../linux/rpmbuild/BUILDROOT/kernel-6.10.0_rc3-1.i386/lib/modules/6.10.0-rc3/modules.order
-
-To make it work irrespective of CONFIG_MODULES, this commit specifies
-the directory path, /lib/modules/%{KERNELRELEASE}, instead of individual
-files.
-
-However, doing so would cause new warnings:
-
-  warning: File listed twice: /lib/modules/6.10.0-rc3-dirty/modules.alias
-  warning: File listed twice: /lib/modules/6.10.0-rc3-dirty/modules.alias.bin
-  warning: File listed twice: /lib/modules/6.10.0-rc3-dirty/modules.builtin.alias.bin
-  warning: File listed twice: /lib/modules/6.10.0-rc3-dirty/modules.builtin.bin
-  warning: File listed twice: /lib/modules/6.10.0-rc3-dirty/modules.dep
-  warning: File listed twice: /lib/modules/6.10.0-rc3-dirty/modules.dep.bin
-  warning: File listed twice: /lib/modules/6.10.0-rc3-dirty/modules.devname
-  warning: File listed twice: /lib/modules/6.10.0-rc3-dirty/modules.softdep
-  warning: File listed twice: /lib/modules/6.10.0-rc3-dirty/modules.symbols
-  warning: File listed twice: /lib/modules/6.10.0-rc3-dirty/modules.symbols.bin
-
-These files exist in /lib/modules/%{KERNELRELEASE} and are also explicitly
-marked as %ghost.
-
-Suppress depmod because depmod-generated files are not packaged.
-
-Fixes: 615b3a3d2d41 ("kbuild: rpm-pkg: do not include depmod-generated files")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: b39ab96aa894 ("i2c: testunit: add support for block process calls")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/package/kernel.spec | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/i2c/i2c-slave-testunit.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/package/kernel.spec b/scripts/package/kernel.spec
-index e095eb1e290ec..fffc8af8deb17 100644
---- a/scripts/package/kernel.spec
-+++ b/scripts/package/kernel.spec
-@@ -57,7 +57,8 @@ patch -p1 < %{SOURCE2}
- %install
- mkdir -p %{buildroot}/lib/modules/%{KERNELRELEASE}
- cp $(%{make} %{makeflags} -s image_name) %{buildroot}/lib/modules/%{KERNELRELEASE}/vmlinuz
--%{make} %{makeflags} INSTALL_MOD_PATH=%{buildroot} modules_install
-+# DEPMOD=true makes depmod no-op. We do not package depmod-generated files.
-+%{make} %{makeflags} INSTALL_MOD_PATH=%{buildroot} DEPMOD=true modules_install
- %{make} %{makeflags} INSTALL_HDR_PATH=%{buildroot}/usr headers_install
- cp System.map %{buildroot}/lib/modules/%{KERNELRELEASE}
- cp .config %{buildroot}/lib/modules/%{KERNELRELEASE}/config
-@@ -70,10 +71,7 @@ ln -fns /usr/src/kernels/%{KERNELRELEASE} %{buildroot}/lib/modules/%{KERNELRELEA
- %endif
+diff --git a/drivers/i2c/i2c-slave-testunit.c b/drivers/i2c/i2c-slave-testunit.c
+index a49642bbae4b7..a5dcbc3c2c141 100644
+--- a/drivers/i2c/i2c-slave-testunit.c
++++ b/drivers/i2c/i2c-slave-testunit.c
+@@ -118,7 +118,7 @@ static int i2c_slave_testunit_slave_cb(struct i2c_client *client,
+ 			queue_delayed_work(system_long_wq, &tu->worker,
+ 					   msecs_to_jiffies(10 * tu->regs[TU_REG_DELAY]));
+ 		}
+-		fallthrough;
++		break;
  
- {
--	for x in System.map config kernel modules.builtin \
--			modules.builtin.modinfo modules.order vmlinuz; do
--		echo "/lib/modules/%{KERNELRELEASE}/${x}"
--	done
-+	echo "/lib/modules/%{KERNELRELEASE}"
- 
- 	for x in alias alias.bin builtin.alias.bin builtin.bin dep dep.bin \
- 					devname softdep symbols symbols.bin; do
+ 	case I2C_SLAVE_WRITE_REQUESTED:
+ 		memset(tu->regs, 0, TU_NUM_REGS);
 -- 
 2.43.0
 
