@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC921514DC;
-	Tue,  2 Jul 2024 17:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2E51514DC;
+	Tue,  2 Jul 2024 17:28:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941310; cv=none; b=XaY1aOquWi8Ka+1FOzOYHVBVto9l6U+xE7GFVkAHAiZybOgb6Mrk+N5gdt0auyPzc7knC5kcMErGELhJmYV0CFSoCJq7Qnu+rDUYnNajZf0fnlF4Ox4WKyCPbnJroAToqS1BSEWENayzqHRpRqx9Y3BFMsmjDwzBXSzX4o52JQI=
+	t=1719941314; cv=none; b=BLBD/HU+C7PREQb1fXUao5//TG8ooRD4633huqVPX615DDCZ+lUeQQdwEsheHa460y6u+1Ujfne+dIFatImGlgOuoMSfFRNMuuXLyu2D7A2o7QzIb17KIMDwmCGfye4bpgOuDw1HfT7Vrw6kkCj81unnM0HAtNRsmU629uTN9P8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941310; c=relaxed/simple;
-	bh=vRtGjc6bVLeeKNuYKYgc0ESvwu1DpIK+6DnZsCuDRS8=;
+	s=arc-20240116; t=1719941314; c=relaxed/simple;
+	bh=b8WKXVz+A5evtNU0RmLy2PcjkNI/fHyWJ14VR/pDUVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kkrdI5dSOpSyxNhRWTXl3m/js+BoTfpGrcsb0X59M0Fv1xTL2CRIlWhQm0Tcy7f6xxczC1L8hoGBSarvRdlZP6sdrhHQ/qkLKnKaOUMgdJc9VwLSsAxjfa7leb8ywiFd42kTCCOsu6kZ63J9WPVlChZsyGwpruEdP1N5UdJkdPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g4TMXxVo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tu5UMUrvdKznE/CtZSQv9Y71C8ZyhrvKb0rRZpGAWyX+1fFp7gpS9ww2qJFg6Pf2hC0hhIID8SK7sOrOe7RCC/nXkw7t6dGFOL1MYDmzvgfM4inENU/uK4P+Kj1AnUVdytNOxwepIziMkdooU1ELcjSk49Gs4MjSgffLweiOslg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kGzu6nJ+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g4TMXxVo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 218AEC4AF0A;
-	Tue,  2 Jul 2024 17:28:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kGzu6nJ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6F3C116B1;
+	Tue,  2 Jul 2024 17:28:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941310;
-	bh=vRtGjc6bVLeeKNuYKYgc0ESvwu1DpIK+6DnZsCuDRS8=;
+	s=korg; t=1719941314;
+	bh=b8WKXVz+A5evtNU0RmLy2PcjkNI/fHyWJ14VR/pDUVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g4TMXxVos9ujb19URIK7PoqBP5HLcFXlwvqqfoxVCi1rFPV2bh1FyMCOjCMD4T2uF
-	 S2WYgLdfdPJY4rjXEdSgdPNN3vXOQjxbSNKsG0Fwh5kk5ThO7PQyxWGudfKv3apUZm
-	 jE07mXFK/opJTt+ewMt5i6yADCHEP3GKl7UZlZQg=
+	b=kGzu6nJ+Of8W0xJX2x0UqLeCs5tCn7FjxPyPlm8Efbk9meo/1rko8YLSYtzQM3+fV
+	 EbEkQ8KgvAR4AWJ0ZYaTJZ2NuuleS8AOw9zlOm0aefheAkj4y/CIDUCFItIetRHwkO
+	 wZJkhnxVIpuYXF8Rsl64TxFuOU2LwlCivYFSDfiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Dulov <d.dulov@aladdin.ru>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Narasimhan V <Narasimhan.V@amd.com>,
+	Jan Beulich <jbeulich@suse.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	"Mike Rapoport (IBM)" <rppt@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 026/128] xdp: Remove WARN() from __xdp_reg_mem_model()
-Date: Tue,  2 Jul 2024 19:03:47 +0200
-Message-ID: <20240702170227.223236132@linuxfoundation.org>
+Subject: [PATCH 6.1 003/128] x86/mm/numa: Use NUMA_NO_NODE when calling memblock_set_node()
+Date: Tue,  2 Jul 2024 19:03:24 +0200
+Message-ID: <20240702170226.364430407@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170226.231899085@linuxfoundation.org>
 References: <20240702170226.231899085@linuxfoundation.org>
@@ -52,74 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniil Dulov <d.dulov@aladdin.ru>
+From: Jan Beulich <jbeulich@suse.com>
 
-[ Upstream commit 7e9f79428372c6eab92271390851be34ab26bfb4 ]
+[ Upstream commit 3ac36aa7307363b7247ccb6f6a804e11496b2b36 ]
 
-syzkaller reports a warning in __xdp_reg_mem_model().
+memblock_set_node() warns about using MAX_NUMNODES, see
 
-The warning occurs only if __mem_id_init_hash_table() returns an error. It
-returns the error in two cases:
+  e0eec24e2e19 ("memblock: make memblock_set_node() also warn about use of MAX_NUMNODES")
 
-  1. memory allocation fails;
-  2. rhashtable_init() fails when some fields of rhashtable_params
-     struct are not initialized properly.
+for details.
 
-The second case cannot happen since there is a static const rhashtable_params
-struct with valid fields. So, warning is only triggered when there is a
-problem with memory allocation.
-
-Thus, there is no sense in using WARN() to handle this error and it can be
-safely removed.
-
-WARNING: CPU: 0 PID: 5065 at net/core/xdp.c:299 __xdp_reg_mem_model+0x2d9/0x650 net/core/xdp.c:299
-
-CPU: 0 PID: 5065 Comm: syz-executor883 Not tainted 6.8.0-syzkaller-05271-gf99c5f563c17 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
-RIP: 0010:__xdp_reg_mem_model+0x2d9/0x650 net/core/xdp.c:299
-
-Call Trace:
- xdp_reg_mem_model+0x22/0x40 net/core/xdp.c:344
- xdp_test_run_setup net/bpf/test_run.c:188 [inline]
- bpf_test_run_xdp_live+0x365/0x1e90 net/bpf/test_run.c:377
- bpf_prog_test_run_xdp+0x813/0x11b0 net/bpf/test_run.c:1267
- bpf_prog_test_run+0x33a/0x3b0 kernel/bpf/syscall.c:4240
- __sys_bpf+0x48d/0x810 kernel/bpf/syscall.c:5649
- __do_sys_bpf kernel/bpf/syscall.c:5738 [inline]
- __se_sys_bpf kernel/bpf/syscall.c:5736 [inline]
- __x64_sys_bpf+0x7c/0x90 kernel/bpf/syscall.c:5736
- do_syscall_64+0xfb/0x240
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-Found by Linux Verification Center (linuxtesting.org) with syzkaller.
-
-Fixes: 8d5d88527587 ("xdp: rhashtable with allocator ID to pointer mapping")
-Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Link: https://lore.kernel.org/all/20240617162708.492159-1-d.dulov@aladdin.ru
-Link: https://lore.kernel.org/bpf/20240624080747.36858-1-d.dulov@aladdin.ru
+Reported-by: Narasimhan V <Narasimhan.V@amd.com>
+Signed-off-by: Jan Beulich <jbeulich@suse.com>
+Cc: stable@vger.kernel.org
+[bp: commit message]
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Mike Rapoport (IBM) <rppt@kernel.org>
+Tested-by: Paul E. McKenney <paulmck@kernel.org>
+Link: https://lore.kernel.org/r/20240603141005.23261-1-bp@kernel.org
+Link: https://lore.kernel.org/r/abadb736-a239-49e4-ab42-ace7acdd4278@suse.com
+Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/xdp.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/x86/mm/numa.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/xdp.c b/net/core/xdp.c
-index 844c9d99dc0ec..c3f6653b42742 100644
---- a/net/core/xdp.c
-+++ b/net/core/xdp.c
-@@ -292,10 +292,8 @@ static struct xdp_mem_allocator *__xdp_reg_mem_model(struct xdp_mem_info *mem,
- 		mutex_lock(&mem_id_lock);
- 		ret = __mem_id_init_hash_table();
- 		mutex_unlock(&mem_id_lock);
--		if (ret < 0) {
--			WARN_ON(1);
-+		if (ret < 0)
- 			return ERR_PTR(ret);
--		}
+diff --git a/arch/x86/mm/numa.c b/arch/x86/mm/numa.c
+index c7fa5396c0f05..c281326baa144 100644
+--- a/arch/x86/mm/numa.c
++++ b/arch/x86/mm/numa.c
+@@ -523,7 +523,7 @@ static void __init numa_clear_kernel_node_hotplug(void)
+ 	for_each_reserved_mem_region(mb_region) {
+ 		int nid = memblock_get_region_node(mb_region);
+ 
+-		if (nid != MAX_NUMNODES)
++		if (nid != NUMA_NO_NODE)
+ 			node_set(nid, reserved_nodemask);
  	}
  
- 	xdp_alloc = kzalloc(sizeof(*xdp_alloc), gfp);
+@@ -643,9 +643,9 @@ static int __init numa_init(int (*init_func)(void))
+ 	nodes_clear(node_online_map);
+ 	memset(&numa_meminfo, 0, sizeof(numa_meminfo));
+ 	WARN_ON(memblock_set_node(0, ULLONG_MAX, &memblock.memory,
+-				  MAX_NUMNODES));
++				  NUMA_NO_NODE));
+ 	WARN_ON(memblock_set_node(0, ULLONG_MAX, &memblock.reserved,
+-				  MAX_NUMNODES));
++				  NUMA_NO_NODE));
+ 	/* In case that parsing SRAT failed. */
+ 	WARN_ON(memblock_clear_hotplug(0, ULLONG_MAX));
+ 	numa_reset_distance();
 -- 
 2.43.0
 
