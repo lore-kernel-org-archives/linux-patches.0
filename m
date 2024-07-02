@@ -1,139 +1,162 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM02-BN1-obe.outbound.protection.outlook.com (mail-bn1nam02on2080.outbound.protection.outlook.com [40.107.212.80])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F32FC374D3
-	for <patches@lists.linux.dev>; Tue,  2 Jul 2024 16:41:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719938475; cv=none; b=h+H6bHJT8W+QYiD/8DWZx2C65V/2lgM4p7LjXWZ9eynDdNE5qiQi/mSXeJu49zNWWMNKywzCviTM9DIOEMkcXSeuLWtuFLgyPUH2DvCdfNZzkU67iNvQh5eR4Q1YqIT7TddqCRDl0Ej7QvSTJ4y7oEje6SlFsWk+KqTRKEUMKw4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719938475; c=relaxed/simple;
-	bh=hrR1qTpjCYxMI+tohq1SLUm7xMaux6bit4k4/AiVhD8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=r4tnJQ8TiF8DlxWHq49hN6hJZXq9dyzqzisTuBwq8G3h+N5XaNqvmvgcLOcuGcnBQw3ysMMUB6wbyHcOKccy23GDaY/RzXLKG/SafYYJDjnV5VyE3PuZz3H8BX3JJy7tPngU017s/ogmSwvp/PkB0htCuF+hhh7CySj0bUErC8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=K6uJ0W0T; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D0D178381;
+	Tue,  2 Jul 2024 17:03:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.212.80
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1719939828; cv=fail; b=t3NEsltwy9xbLaaV1ps4Mr/lmNr11mubT8PWaCBHucKFYCrkFe20E8NiGqluXYgdFoSo7D+yxq8kUM3aqBPR0NJanu8NiNLjH41Lb37uocWRKrjkqFLQKjQDt/VRJcrx5nydJQs3dcxIaqRMvadQGLFvDZ7msIUGQty+KOpVFj0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1719939828; c=relaxed/simple;
+	bh=1M6ZkstuF5HMgd/YmH8jo+CAjMD9TM8tKYSmkS0snIs=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oDbldGkkeQW4eZeeK/6zlYUr4T/kE/0plqlr6aAh1BSShUXU2ouok7L5t1EpZCRsjA3CItbzYk2prtw5P9SRRtVnMw4H/stPAyUExZ2s2/w8bGGiyftQsBopmlDkFCXYZsIT73fgI8D32FdVnFt/0ek7eYe/86zJ3P8EhQ2hqvg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=RPdoBgqF; arc=fail smtp.client-ip=40.107.212.80
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="K6uJ0W0T"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-364ff42999eso2184235f8f.3
-        for <patches@lists.linux.dev>; Tue, 02 Jul 2024 09:41:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1719938472; x=1720543272; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cdEhN7egg4GTetScTgi2yWO5StQG3EhkGlVLI6a6mXM=;
-        b=K6uJ0W0TuCOgWXPhZt7gjcJBv6mA5uteRCEgJ4YBQs7CF4dliELrp+TtCyZSQU40bu
-         lheAwnWrXVBstUnJp+esgtAsPRZ+NUvBiFW6g29r/ViFh02mOaQrepEHpFzjRAGUKyHW
-         A4i5OSSrKfJ39bDfErdN/HRWDUkZHb9q3F0kCVozmyELkyTvZR72uzGfQAyiUIgHCXaq
-         Pp1zBPtBknd2f6itQ1n9tLOwCuuXf/SI8OrHbCsbXEikHJETaWoZo/xUpC6O7Yds57S4
-         NI1iteKj5Li7jOYy+pEF+4NQhmilAAhxljjli+vY9ByOmzOHoBrGAPI2lxLz4xPMORsb
-         Y4bA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719938472; x=1720543272;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cdEhN7egg4GTetScTgi2yWO5StQG3EhkGlVLI6a6mXM=;
-        b=fRMr6PJR1JDNAd38lcnumlMUT8e4XonxIUSVU54fqVr3AfIwIbmgVjACZ/7EM6L4UM
-         A6imfbGPRIgxDVfqMSt04O7y++WixcmL8+LAQ+BSKxgyx2h0gIANziAv8wzjBenpqTbe
-         YvvstEgxPaWCOerS+XL4Fnob/CgvJequeFqzZ7dLU6QBtpvMfF2IqhDV88AZb9dI07jh
-         swyaOsvI55ZMraF8WMLlNXcOb72/w4etXYyz5+jiYxyr1Av0UwmFnXgBBTTR2WtcngLF
-         uaogxx9T3W4edUd5ZA210kIkr1Y+yt7oc2lgFIQmssPapy1J8UaiRhpFgXx7WiZAj7u4
-         KgMQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWAGsu/IpeF0CekrDCrt5OCKNcsROZsnEXhlZr6jUIuNUlst7vyrPVPqxe96dpG5gTk0/EehdhtkJt/NbSIndWSYG4xxWvZBg==
-X-Gm-Message-State: AOJu0YwKfnxqaNHdp4/TmVPNspHvR03+LOfSW46sw8xnoLrng9TNXsaR
-	4dnnDxNt1G7stm0kLuAdQTEZB6ajZ4xZ9Oz/tzY/AWqVu3wmCCtdNuw+I+dDQ5Ro8X0XT2GQPZq
-	qd5VaZPyKwkS4nOsxymTNopLg6ZZNZc8nJY+O
-X-Google-Smtp-Source: AGHT+IHmYsZn/Vy3aZXo1dvsiv+ZReJUZGbhaq1QATW22XsOqABArbPhv8Sbvt3RE2ym1iLvf5P0H4DKXuYSyJ0kisU=
-X-Received: by 2002:a5d:5889:0:b0:366:eba0:8d8c with SMTP id
- ffacd0b85a97d-36775724976mr8558555f8f.54.1719938472236; Tue, 02 Jul 2024
- 09:41:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="RPdoBgqF"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=neif2ugi/x7AxFb42AO/skQkpwNhmJ/XxgSCkqTWVVk0IeQAGNKDuBwTnsVZAgDiCZGlyoTu7iycRH8Yx0HWbT9SOVNPdRl9HuOFGTXqAA3ypFAeo6aM1ATWFlru2zRFkch187DG0wvaXseXJ82DsQsSj7CfgDefWqLIHgofsK2I7LHgVSdpoZnRfywOSwkIXuPRLGSJ4gB0fLuKyMnTfymXETCFU9asARevJAETAn3hRS12RCb82lJw+kyHHeXIoX21UfEGqYbxW5nMzEP6bLpN0HuhZ0jOVNGcwfNKgiCrvBbNydiJ6CeEJlPhbmJcDpqK9J1gH7au2V+DTTtdBw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8uJwtqa7YMSeeRD3lTutVhFbOQJcZ0BAskGf6rw6SDY=;
+ b=cX1F0lnjGpCAJymuoKgI4rWLVnKeOocW7w5a5wXiCyGw7sd/V4nypIu7/9MuRaxwMUl/oJSGMEoSinic8ZZDMushL3Z2odAtAvtjkggpTVB3+xsx0gSXnUppovTtYNDhiIv7bAClSXNbVOG7rIrtn3UPnzlEzXmVkAvQDVTGuVc/Jdm9s9lHl4au6R4jCZL8QGIJAAR1SGChRG+h6w498PTfk3QjiySCa3UjHDt4grjwfedYqBmwCrxBlOObyQTiL5OlIlPxkgtDMa/VI+qTMF4juJYskachbsoNHYFWeq7YFO1OYkA0x9CTZTjpamdzKwg2woQ2VaN8kHZcgflb3g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=kernel.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8uJwtqa7YMSeeRD3lTutVhFbOQJcZ0BAskGf6rw6SDY=;
+ b=RPdoBgqFeKlqHH0bu2J1WS+YR0WExI8d9NVDPJiBVfsKZDjIWszu1xlRgOCYw+gPOEMfB3U5PG3eACNqcFaOf8hnpUBiP2msM6i/P7n0PLCiKIbOdbBk6WidK+zk5fa1pqrZeKS7WlV+PgKXw5o9kLJlwE9p/tIVV2Pi30meTguHA6hv6yqd5yf4zZrmp0SdsaTsBpTyz+Tty8h0Wvzqhy9uDOQ1++diwr1alkhGr+FHbI/10evQEKNEhkmCmt9ostz7gbNwezTAiVamgXJj+INSLQsO2vb7nPwKjSSsYS0tO/hK9eebYy7N3yIeJJZoub2UpSxIkFUA0RK4ZH1Uwg==
+Received: from SN7PR04CA0169.namprd04.prod.outlook.com (2603:10b6:806:125::24)
+ by SA0PR12MB7073.namprd12.prod.outlook.com (2603:10b6:806:2d5::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7719.32; Tue, 2 Jul
+ 2024 17:03:43 +0000
+Received: from SN1PEPF000252A1.namprd05.prod.outlook.com
+ (2603:10b6:806:125:cafe::9d) by SN7PR04CA0169.outlook.office365.com
+ (2603:10b6:806:125::24) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7719.33 via Frontend
+ Transport; Tue, 2 Jul 2024 17:03:43 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ SN1PEPF000252A1.mail.protection.outlook.com (10.167.242.8) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7741.18 via Frontend Transport; Tue, 2 Jul 2024 17:03:42 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 2 Jul 2024
+ 10:03:11 -0700
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 2 Jul 2024
+ 10:03:10 -0700
+Received: from Asurada-Nvidia (10.127.8.13) by mail.nvidia.com (10.129.68.10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
+ Transport; Tue, 2 Jul 2024 10:03:09 -0700
+Date: Tue, 2 Jul 2024 10:03:08 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Will Deacon <will@kernel.org>
+CC: Jason Gunthorpe <jgg@nvidia.com>, <iommu@lists.linux.dev>, Joerg Roedel
+	<joro@8bytes.org>, <linux-arm-kernel@lists.infradead.org>, Robin Murphy
+	<robin.murphy@arm.com>, Eric Auger <eric.auger@redhat.com>, "Jean-Philippe
+ Brucker" <jean-philippe@linaro.org>, Jerry Snitselaar <jsnitsel@redhat.com>,
+	Moritz Fischer <mdf@kernel.org>, Michael Shavit <mshavit@google.com>,
+	<patches@lists.linux.dev>, Shameerali Kolothum Thodi
+	<shameerali.kolothum.thodi@huawei.com>
+Subject: Re: [PATCH v9 02/14] iommu/arm-smmu-v3: Start building a generic
+ PASID layer
+Message-ID: <ZoQyzJTmJtG4WIy/@Asurada-Nvidia>
+References: <0-v9-5cd718286059+79186-smmuv3_newapi_p2b_jgg@nvidia.com>
+ <2-v9-5cd718286059+79186-smmuv3_newapi_p2b_jgg@nvidia.com>
+ <20240702145705.GA4135@willie-the-truck>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240702155800.166503-2-vbabka@suse.cz>
-In-Reply-To: <20240702155800.166503-2-vbabka@suse.cz>
-From: Alice Ryhl <aliceryhl@google.com>
-Date: Tue, 2 Jul 2024 18:40:59 +0200
-Message-ID: <CAH5fLgj=uOktnNCEm+npBh8LLbYUEO8uO30YUBsLS-iK+BKQJQ@mail.gmail.com>
-Subject: Re: [PATCH] mm, slab: extend kmalloc() alignment for non power-of-two sizes
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: linux-mm@kvack.org, David Rientjes <rientjes@google.com>, 
-	Christoph Lameter <cl@linux.com>, Hyeonggon Yoo <42.hyeyoo@gmail.com>, 
-	Roman Gushchin <roman.gushchin@linux.dev>, Kees Cook <keescook@chromium.org>, 
-	Boqun Feng <boqun.feng@gmail.com>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20240702145705.GA4135@willie-the-truck>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN1PEPF000252A1:EE_|SA0PR12MB7073:EE_
+X-MS-Office365-Filtering-Correlation-Id: ab45342b-0f45-4000-a25a-08dc9ab8eda0
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|376014|82310400026|1800799024|36860700013;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?lmKkwUsqBTDGLK86qEyXAehynqbF4aGaEU0XZ8mmklAdf1I26vW6EXpLXxly?=
+ =?us-ascii?Q?1K67ahCTtyn3L2CsH5TRgjuUW2DeoNnQZM1niPsGLJm4mB99OYI0JS44SeeE?=
+ =?us-ascii?Q?GQKg8y6WHIlJ12uZu16k17LH1wzh//4t3dJj7HjpsmfRmp2He340C+6cdKvN?=
+ =?us-ascii?Q?PpIfcXPNjVsuqK7e9E9b+VAxNNx0QZ0dB2X8XKem4HPu+DuvX97r1N4SAigp?=
+ =?us-ascii?Q?dfvznohN4CXlgbiykALBI9eT9kExcTTpiFfiaH+VIW67O5FxDb1JXt16bLma?=
+ =?us-ascii?Q?aNLV2xIfqzo7LkAnHWD46dgNtJN7pDTqe4ZVb3l78iNNfCJMxkJX5HQcz81p?=
+ =?us-ascii?Q?rFlPZx3NQ+G0nf6XPY56gWw9vCezte9ZlQb+0CZpMfK3Gw03AVd/fwB2fO7o?=
+ =?us-ascii?Q?hNYi2zC/0Qheh9CZerIBsBaxHQuLrS9AacSYAJiaLddMRERtCjWFhFtI5dNP?=
+ =?us-ascii?Q?+8/Hwenn8uZKy0qMbJu4sFF7M1UKhF/f+OcFOwxDSg/a/8qvS1WZtRpW4L0T?=
+ =?us-ascii?Q?Cs+J338h0Vevjv7kLePZpqPbjYbVDArfKf8eDQ3I+ep8W8XDUVg8+InC9rN6?=
+ =?us-ascii?Q?IKHqXei3ED30iZ545gLOnE1LZ+xpFT+SbK+dNhgSBWgc6cVpCJGYIC9egOdG?=
+ =?us-ascii?Q?j+nrfR/i/EDayQI/IAbJwjoUivzra/FF7ZtcC8dp7PPVfMmZ39nWrPYCKIxH?=
+ =?us-ascii?Q?PTO4VZA7CDXcUu1uO3GWJHH4hyB3vnYa7r56L5wEPEFKn9dTZd/owtFNfCpf?=
+ =?us-ascii?Q?snYIF2kwPXJpwqkNknTMzlUOpJu7BRzEuq/iVWauQq5W0gjsWs+vSrdnmqU6?=
+ =?us-ascii?Q?sJPgiNVioo20W2zZXAbWSegSfrzdgI5hUynd32ed1UukEPHuzGQkk2uVSS+p?=
+ =?us-ascii?Q?e/QGTOeL3TUOARGFwYHsaASxjp5efHQkos+1KwqurNIH7qNmP1eixh0heZT+?=
+ =?us-ascii?Q?6de1Ay9yY2hVrrzaMUGJJMyPzBQE6Pgifujye+Djo4W3KIfNq7w+MMLz51b8?=
+ =?us-ascii?Q?AmOcYFdwREg2PS32xwRKDP2IZ+coZ4GPPugbkDn0qBnZb61MdSZ9uoq4o0xR?=
+ =?us-ascii?Q?4Lnvuom+dwqKfeMzzjMrbsKWu5FPH5EdeUIEWq5kfrkHzQpJVKvACbgGs45+?=
+ =?us-ascii?Q?dLzhqQdhdyjon17XWJkg9ZPu+JJ0IfZ/cVcCscUc743lErnRMqHE9oaa3MiO?=
+ =?us-ascii?Q?lCABLhUq22zCX/21BwIMmpppG7YEvRp5n5GhN+rZm5vTdvZVz2/iQ5v+xKYv?=
+ =?us-ascii?Q?Cc/qQn4dSuvcj7mi7BL3ITAN8hWkZuRDYWbwo7cQajMxdKORN9W2UULegZq6?=
+ =?us-ascii?Q?aNtyZ4IQTTDJwDm7i1yV9LeQkejMf7ZInDprasq+Op8oQcFW3686jaOpTXCB?=
+ =?us-ascii?Q?zl1vqZWap2wNATtKY3tUPrTf4GQjruug5+W+QHWgJqnga8Hoi1wg5IPn6rwi?=
+ =?us-ascii?Q?AE6xfmIU0MYM8ARWG9d5B5f49w4HtOQy?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(7416014)(376014)(82310400026)(1800799024)(36860700013);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jul 2024 17:03:42.9749
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: ab45342b-0f45-4000-a25a-08dc9ab8eda0
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SN1PEPF000252A1.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR12MB7073
 
-On Tue, Jul 2, 2024 at 5:58=E2=80=AFPM Vlastimil Babka <vbabka@suse.cz> wro=
-te:
->
-> Slab allocators have been guaranteeing natural alignment for
-> power-of-two sizes since commit 59bb47985c1d ("mm, sl[aou]b: guarantee
-> natural alignment for kmalloc(power-of-two)"), while any other sizes are
-> aligned only to ARCH_KMALLOC_MINALIGN bytes.
->
-> Rust's allocator API specifies size and alignment per allocation, which
-> have to satisfy the following rules, per Alice Ryhl [1]:
->
->   1. The alignment is a power of two.
->   2. The size is non-zero.
->   3. When you round up the size to the next multiple of the alignment,
->      then it must not overflow the signed type isize / ssize_t.
->
-> In order to map this to kmalloc()'s guarantees, some requested
-> allocation sizes have to be enlarged to the next power-of-two size [2].
-> For example, an allocation of size 96 and alignment of 32 will be
-> enlarged to an allocation of size 128, because the existing kmalloc-96
-> bucket doesn't guarantee alignent above ARCH_KMALLOC_MINALIGN. Without
-> slab debugging active, the layout of the kmalloc-96 slabs however
-> naturally aligns the objects to 32 bytes, so extending the size to 128
-> bytes is wasteful.
->
-> To improve the situation we can extend the kmalloc() alignment
-> guarantees in a way that
->
-> 1) doesn't change the current slab layout (and thus does not increase
->    internal fragmentation) when slab debugging is not active
-> 2) reduces waste in the Rust allocator use case
-> 3) is a superset of the current guarantee for power-of-two sizes.
->
-> The extended guarantee is that alignment is at least the largest
-> power-of-two divisor of the requested size. For power-of-two sizes the
-> largest divisor is the size itself, but let's keep this case documented
-> separately for clarity.
->
-> For current kmalloc size buckets, it means kmalloc-96 will guarantee
-> alignment of 32 bytes and kmalloc-196 will guarantee 64 bytes.
->
-> This covers the rules 1 and 2 above of Rust's API as long as the size is
-> a multiple of the alignment. The Rust layer should now only need to
-> round up the size to the next multiple if it isn't, while enforcing the
-> rule 3.
->
-> Implementation-wise, this changes the alignment calculation in
-> create_boot_cache(). While at it also do the calulation only for caches
-> with the SLAB_KMALLOC flag, because the function is also used to create
-> the initial kmem_cache and kmem_cache_node caches, where no alignment
-> guarantee is necessary.
->
-> Link: https://lore.kernel.org/all/CAH5fLggjrbdUuT-H-5vbQfMazjRDpp2%2Bk3%3=
-DYhPyS17ezEqxwcw@mail.gmail.com/ [1]
-> Link: https://lore.kernel.org/all/CAH5fLghsZRemYUwVvhk77o6y1foqnCeDzW4WZv=
-6ScEWna2+_jw@mail.gmail.com/ [2]
-> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+On Tue, Jul 02, 2024 at 03:57:05PM +0100, Will Deacon wrote:
+> > @@ -611,10 +599,9 @@ void arm_smmu_sva_remove_dev_pasid(struct iommu_domain *domain,
+> >       struct arm_smmu_bond *bond = NULL, *t;
+> >       struct arm_smmu_master *master = dev_iommu_priv_get(dev);
+> >
+> > +     arm_smmu_remove_pasid(master, to_smmu_domain(domain), id);
+> > +
+> >       mutex_lock(&sva_lock);
+> > -
+> > -     arm_smmu_clear_cd(master, id);
+> 
+> This looks a bit alarming, as you're effectively moving the CD
+> modification outside of the critical section. I assume we're relying on
+> the iommu group mutex to serialise this in the caller? I can't see any
+> consistent locking in the driver for arm_smmu_clear_cd().
 
-Thanks!
+Hi Will, your assumption is correct. Jason had the same remark
+during the v7 review:
+https://lore.kernel.org/linux-iommu/ZkDAL+TX93QfTFMc@nvidia.com/
 
-Since this change is motivated by Rust, why not also include the Rust
-change in this patch? You would need to remove the if inside
-krealloc_aligned in rust/kernel/alloc/allocator.rs and update the
-comments.
-
-Alice
+Thanks
+Nicolin
