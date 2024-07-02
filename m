@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F001BE86C;
-	Tue,  2 Jul 2024 17:32:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9458263D;
+	Tue,  2 Jul 2024 17:32:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941532; cv=none; b=uSlc/vDsVzgSJ6x6m7xyWcTkEXfQ1pGpyzOVdvJC8xxfbMxLiqhH+4TTPV9ulIkNvf23/xT5tS7TiKoaL73dGCOdUVkFx76uMM0jP5kAYBv5OdL7YTCNakJ4iT9B1Zii0fViIRQPU3AXUSnEhXqpXUDTt3qGJL5RGVA0+vTLqQw=
+	t=1719941535; cv=none; b=Khcf/jT8WcUVhkFlTDXn1nc4qOFRblgs6//4kfK2HKyOXTcWZVwxEOrCnAdzmOaat/3nD02ls5dpzLYvU1F5FlHgqmf5hTVoKwm/WkgCV7pOe5Np6N/saexnYi7J4LejR9Znj5/fBZVMI+NKaTaBafuDth12AwN8sQJuI2DaDqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941532; c=relaxed/simple;
-	bh=zVWpyYN2uHpKM51G8csXzUmip5nrQhAc2+bYh53a9s8=;
+	s=arc-20240116; t=1719941535; c=relaxed/simple;
+	bh=V/qcKav7FAJwVLJxOsq3Uv4L5jOM0Q1mcw3g1N4/q1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NFHq0Pcchie/QG7IS4d8nz40Ryy58SywbTlujM6oBjSmFx5C3qTa/jPjFmvlUx7NwuLxmaLpD/zlTMrnAlc9knTkL/+Vb7qcSZP/pQ2hf061OIrNf9gQqBTZ39sCbX4TchhGsi8S1tomezKFbRdlFfi+h+NL1401mxJP46wFMyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DQ07LEEH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VPTXUjPaqyIBu0Uq3tg1OyYy0mkvXjy+RMmwm7TgyaOx7E+/X/Bnh74g4puY+tqG5rAjBUSu0g3i3SG9SwctWlbOz4UKn4YD8HSFs8ss/YW6//lCfMnibjNdXhF1fElpFiInZfng3kpJp0KaNpwj5r2vZTYvB82s0j2bs/yOs8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W0L/3HAa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DQ07LEEH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFCBDC4AF0A;
-	Tue,  2 Jul 2024 17:32:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W0L/3HAa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09BCAC116B1;
+	Tue,  2 Jul 2024 17:32:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941532;
-	bh=zVWpyYN2uHpKM51G8csXzUmip5nrQhAc2+bYh53a9s8=;
+	s=korg; t=1719941535;
+	bh=V/qcKav7FAJwVLJxOsq3Uv4L5jOM0Q1mcw3g1N4/q1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DQ07LEEHXic3A4ef/WuLX1YZIZztYY51RJIfS4T9lpD+/L+62AnswDl+YYO+jy0fl
-	 2yNHyz64R5sNNU1BlD7bHJjxjKOlkb0CIEG6KzQJ9BCMnJhxPKoJzcOo+0JBul/KMB
-	 P75tvthD578wpoiJpk5oHotOM1jVE9bpOjWQkQx8=
+	b=W0L/3HAahLvuw3Ak4J/XyZDH8yjwLD9SUJp/+l0aNmKFGGr+Z8pZdS8YfJaU2Uv75
+	 oQUGeh3BuC1p+WjHfRiTVvMD0tX252KTHJtjv0cwyhIUBmj4r2rLxQsTLrN7Y+bH3c
+	 9wcAQw02+m9Jc6oWfmZhbApqgVlnGx1GXpKy8PPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Stefan Eichenberger <stefan.eichenberger@toradex.com>
-Subject: [PATCH 6.1 091/128] serial: imx: set receiver level before starting uart
-Date: Tue,  2 Jul 2024 19:04:52 +0200
-Message-ID: <20240702170229.664632784@linuxfoundation.org>
+	Dirk Su <dirk.su@canonical.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 092/128] ALSA: hda/realtek: fix mute/micmute LEDs dont work for EliteBook 645/665 G11.
+Date: Tue,  2 Jul 2024 19:04:53 +0200
+Message-ID: <20240702170229.700882537@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170226.231899085@linuxfoundation.org>
 References: <20240702170226.231899085@linuxfoundation.org>
@@ -50,37 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Eichenberger <stefan.eichenberger@toradex.com>
+From: Dirk Su <dirk.su@canonical.com>
 
-commit a81dbd0463eca317eee44985a66aa6cc2ce5c101 upstream.
+commit 3cd59d8ef8df7d7a079f54d56502dae8f716b39b upstream.
 
-Set the receiver level to something > 0 before calling imx_uart_start_rx
-in rs485_config. This is necessary to avoid an interrupt storm that
-might prevent the system from booting. This was seen on an i.MX7 device
-when the rs485-rts-active-low property was active in the device tree.
+HP EliteBook 645/665 G11 needs ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF quirk to
+make mic-mute/audio-mute working.
 
-Fixes: 6d215f83e5fc ("serial: imx: warn user when using unsupported configuration")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Stefan Eichenberger <stefan.eichenberger@toradex.com>
-Link: https://lore.kernel.org/r/20240621153829.183780-1-eichest@gmail.com
+Signed-off-by: Dirk Su <dirk.su@canonical.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20240626021437.77039-1-dirk.su@canonical.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/imx.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/tty/serial/imx.c
-+++ b/drivers/tty/serial/imx.c
-@@ -1978,8 +1978,10 @@ static int imx_uart_rs485_config(struct
- 
- 	/* Make sure Rx is enabled in case Tx is active with Rx disabled */
- 	if (!(rs485conf->flags & SER_RS485_ENABLED) ||
--	    rs485conf->flags & SER_RS485_RX_DURING_TX)
-+	    rs485conf->flags & SER_RS485_RX_DURING_TX) {
-+		imx_uart_setup_ufcr(sport, TXTL_DEFAULT, RXTL_DEFAULT);
- 		imx_uart_start_rx(port);
-+	}
- 
- 	return 0;
- }
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9807,6 +9807,9 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x103c, 0x8c7c, "HP ProBook 445 G11", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8c7d, "HP ProBook 465 G11", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8c7e, "HP ProBook 465 G11", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
++	SND_PCI_QUIRK(0x103c, 0x8c7f, "HP EliteBook 645 G11", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
++	SND_PCI_QUIRK(0x103c, 0x8c80, "HP EliteBook 645 G11", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
++	SND_PCI_QUIRK(0x103c, 0x8c81, "HP EliteBook 665 G11", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8c89, "HP ProBook 460 G11", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8c8a, "HP EliteBook 630", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8c8c, "HP EliteBook 660", ALC236_FIXUP_HP_GPIO_LED),
 
 
