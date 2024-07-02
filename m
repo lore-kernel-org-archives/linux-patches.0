@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F06ED15218A;
-	Tue,  2 Jul 2024 17:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D301BD002;
+	Tue,  2 Jul 2024 17:12:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940324; cv=none; b=fiF9naQge5x3vrK29rSe9kDWyJ2ghyMEd1ny5Qs6wPfNYBahVn1HvFn5OlR4MlUpoWXjB0J/vud0VuPH6z5LY7cEefN564mYgcKRiBrkGbzZU+wpjEDjl42FImnWKaKya5BQEjWOxvafxv4++fKfws4nuBNIlL6XXbjx6SfW7zg=
+	t=1719940327; cv=none; b=mJYC1YlXw0SyEilhUudlLid0vav1fjTGGwUrSkSlpjRnsjtak6kWTVuXkr1w8hIbYtRoM04m17UyvvumnStMiXieO6dkgHneBB6ppAZsFtrHGI2PiuqUmaIyVfY1jx6UKGN8dJE8ntUEqR4vV+K8JYZcEZW9ylqi9cpRi/MI4Mk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940324; c=relaxed/simple;
-	bh=l6RbndkR2CFvO/vR2LDxdGzw9jnXmVkTRVQ6PKOpR18=;
+	s=arc-20240116; t=1719940327; c=relaxed/simple;
+	bh=ghxwVPj3pWKrA3pHlLW1JMK5ekvKcEN7DmJ0dAT5Tao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=E7gUgQN7U8Nl/+/f7gb/idQWrPVyr+NP9CNyVNpM4eUMcQzoSwH3yyiChJ3+8HRqBBPKdGrvuY6TncBnRB2S7hHWFrn9dRwW+BVtyV4I4JZHo+oTsurYVDAXWmLiVzFtpz0cB8ndODd5ajPNjU+otLPTbxlBCWUTOsS73z5zd6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zNPBlWAg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iM+m1pRZbFShMQuH2eRWH1G7Myob7f7ern67XHA+Yblwr2XwUepDv5C074XoDdR6uwdeqr0uzq16YI2RUFvanZBjZPIanh5mYSeKOHEf7GeYlEeTLQkQO2G9W/1i3cwJIkgcFWh900AIc0luMYfNHGQk5Q4Aq6OiZZSCHTFtPMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AIaDb8b0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zNPBlWAg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6213EC116B1;
-	Tue,  2 Jul 2024 17:12:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AIaDb8b0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4D44C4AF0A;
+	Tue,  2 Jul 2024 17:12:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940323;
-	bh=l6RbndkR2CFvO/vR2LDxdGzw9jnXmVkTRVQ6PKOpR18=;
+	s=korg; t=1719940327;
+	bh=ghxwVPj3pWKrA3pHlLW1JMK5ekvKcEN7DmJ0dAT5Tao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zNPBlWAgTPz74pxXGL2CVpaQIkiohmVUyCoXp6FAI+ywy7UZ1J7+kBlzN8OwXafyX
-	 9jQngVTD/i8fNwJ2D9od8L+44aPt3z8TDu12EjcmjmhGnksA3VSLUDfNtd/1k9N14K
-	 lqjh9JWY6aPa9ZLcxAkGu18fiCM3+Hp0grVif4nk=
+	b=AIaDb8b0E9tbbagHStbWT4iWQ/NnjnmvOpfGDRsicmM5rd7FywURhJnOS2K1nOZET
+	 kwDk3WVWRopEJzqmFyuweSm3meMn2CvUwWRu2EJhoYMWjbfNiEVgCl+GIfkxWS/bUf
+	 SlLduCRbdeMF0fMFDcdPyHVUfbbXKwT5tsN6t4dM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Ashutosh Dixit <ashutosh.dixit@intel.com>,
-	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 079/222] drm/xe/xe_devcoredump: Check NULL before assignments
-Date: Tue,  2 Jul 2024 19:01:57 +0200
-Message-ID: <20240702170246.999703496@linuxfoundation.org>
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.9 114/222] pinctrl: qcom: spmi-gpio: drop broken pm8008 support
+Date: Tue,  2 Jul 2024 19:02:32 +0200
+Message-ID: <20240702170248.326065604@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -48,76 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit b15e65349553b1689d15fbdebea874ca5ae2274a ]
+commit 8da86499d4cd125a9561f9cd1de7fba99b0aecbf upstream.
 
-Assign 'xe_devcoredump_snapshot *' and 'xe_device *' only if
-'coredump' is not NULL.
+The SPMI GPIO driver assumes that the parent device is an SPMI device
+and accesses random data when backcasting the parent struct device
+pointer for non-SPMI devices.
 
-v2
-- Fix commit messages.
+Fortunately this does not seem to cause any issues currently when the
+parent device is an I2C client like the PM8008, but this could change if
+the structures are reorganised (e.g. using structure randomisation).
 
-v3
-- Define variables before code.(Ashutosh/Jose)
+Notably the interrupt implementation is also broken for non-SPMI devices.
 
-v4
-- Drop return check for coredump_to_xe. (Jose/Rodrigo)
+Also note that the two GPIO pins on PM8008 are used for interrupts and
+reset so their practical use should be limited.
 
-v5
-- Modify misleading commit message. (Matt)
+Drop the broken GPIO support for PM8008 for now.
 
-Cc: Matt Roper <matthew.d.roper@intel.com>
-Cc: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Cc: José Roberto de Souza <jose.souza@intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Reviewed-by: José Roberto de Souza <jose.souza@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240328123739.3633428-1-himal.prasad.ghimiray@intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: ea119e5a482a ("pinctrl: qcom-pmic-gpio: Add support for pm8008")
+Cc: stable@vger.kernel.org	# 5.13
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20240529162958.18081-9-johan+linaro@kernel.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_devcoredump.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-spmi-gpio.c |    1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_devcoredump.c b/drivers/gpu/drm/xe/xe_devcoredump.c
-index 68d3d623a05bf..ccec291b02ccd 100644
---- a/drivers/gpu/drm/xe/xe_devcoredump.c
-+++ b/drivers/gpu/drm/xe/xe_devcoredump.c
-@@ -74,17 +74,19 @@ static ssize_t xe_devcoredump_read(char *buffer, loff_t offset,
- 				   size_t count, void *data, size_t datalen)
- {
- 	struct xe_devcoredump *coredump = data;
--	struct xe_device *xe = coredump_to_xe(coredump);
--	struct xe_devcoredump_snapshot *ss = &coredump->snapshot;
-+	struct xe_device *xe;
-+	struct xe_devcoredump_snapshot *ss;
- 	struct drm_printer p;
- 	struct drm_print_iterator iter;
- 	struct timespec64 ts;
- 	int i;
- 
--	/* Our device is gone already... */
--	if (!data || !coredump_to_xe(coredump))
-+	if (!coredump)
- 		return -ENODEV;
- 
-+	xe = coredump_to_xe(coredump);
-+	ss = &coredump->snapshot;
-+
- 	/* Ensure delayed work is captured before continuing */
- 	flush_work(&ss->work);
- 
--- 
-2.43.0
-
+--- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
++++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+@@ -1206,7 +1206,6 @@ static const struct of_device_id pmic_gp
+ 	{ .compatible = "qcom,pm7325-gpio", .data = (void *) 10 },
+ 	{ .compatible = "qcom,pm7550ba-gpio", .data = (void *) 8},
+ 	{ .compatible = "qcom,pm8005-gpio", .data = (void *) 4 },
+-	{ .compatible = "qcom,pm8008-gpio", .data = (void *) 2 },
+ 	{ .compatible = "qcom,pm8019-gpio", .data = (void *) 6 },
+ 	/* pm8150 has 10 GPIOs with holes on 2, 5, 7 and 8 */
+ 	{ .compatible = "qcom,pm8150-gpio", .data = (void *) 10 },
 
 
