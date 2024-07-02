@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35B151BD002;
-	Tue,  2 Jul 2024 17:10:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A241BD002;
+	Tue,  2 Jul 2024 17:10:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940253; cv=none; b=UAnUBrM33wrGLQreq3gc37qj5rKyMDlyagPE5rvY/GkKyHdBJ2bxiOKd/PxDjDCzw4wZ0yGrcP4GYsugkAGVDFYaCtukEyr/Qe84wgy4NeLEoF2wffIUEcJfI4dsgOCqyH/M2EaqhWkJb1IhUBTxAvU5HWzar2qDRAcDvAYyoS4=
+	t=1719940256; cv=none; b=pocnd616AfXP1zARrPHBJYDMmBD5dKuuH0vFRZh7xXDm+rDHmOpV/y4RO31pyoFcfwCL79BfOd9Q/2Kx6W/Hyklf8QvFsGQvGo12CKBDeGyQvL2Cf/jCvYwAW2wiKtjXNRGkFt6MZopT+66U36wjDrUQgQhArDL2b9GqcmiV9QE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940253; c=relaxed/simple;
-	bh=YM1UqZYlirbQ/OiNPQ/F45/cvQDfU6TxyuYMWRFse8I=;
+	s=arc-20240116; t=1719940256; c=relaxed/simple;
+	bh=+JxtE16RxdIFc9qPfBrgxVs1HYhMWOd/XSuoLdbniGQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UHj6tzx4AxU/QfNOM/ZQO4BQwx4uYizJznUm30wmR/i59M8OlT0UkhmHSq2KtvsftaaHEGfuW0ew2J3lAXPU28Yav4j+6RW0k5WpobpTPl1rSWzxJrv2tuhWsIN5u7PDnmjX6X4urwe8tznSQPRFGtl7Zp3kR4iFpYedF+xVKFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ugc/2ulE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DeG1qIaTGNs6foCLIstMlSthOKAwot61rohk+meT3AGpA2w/hFLKss5hTg2MXYcL3ARpJyCNMKJ9kIlxrTR/KHVf7CKnUKier8B24s8Xjzzc68meN1SBuIpGemOJmRggq27EUiiedh45SzAdNuiaXgLviEmK7P3bCjwdzTmxTtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y9Asfkez; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ugc/2ulE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABF13C116B1;
-	Tue,  2 Jul 2024 17:10:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y9Asfkez"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5E5FC116B1;
+	Tue,  2 Jul 2024 17:10:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940253;
-	bh=YM1UqZYlirbQ/OiNPQ/F45/cvQDfU6TxyuYMWRFse8I=;
+	s=korg; t=1719940256;
+	bh=+JxtE16RxdIFc9qPfBrgxVs1HYhMWOd/XSuoLdbniGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ugc/2ulEuF6wDj/4KF2EmUNpxqxDfVYzVXBD5QPo3LzKzBUiAHAJ8ZqElLB/VMjbT
-	 2wyiTceKbjYQe9EbFSvD3jyFDcWln7+llQ5FWSwzEK/LE63PJtESetOoL5s/qdQwyC
-	 NqkFoLg/ZzP7iifquW9noeEsdWZY34e6iuL7bgeM=
+	b=y9AsfkezdRpFojlokdZurFD9WDvomzvhuomGIQjcSJr4KfGjG2QEW5h/KpME7VQJK
+	 5lHvPrPqf55sZr7OJz3dpsVBvfrgOrlvZtB5aX2YTwoxVCI8jdhqCr862zy0MONFNP
+	 wBd2321uZnDWrjx4a189aNHCh+Q35iIKCm3TWM0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dawei Li <dawei.li@shingroup.cn>,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zenghui Yu <yuzenghui@huawei.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 081/222] net/iucv: Avoid explicit cpumask var allocation on stack
-Date: Tue,  2 Jul 2024 19:01:59 +0200
-Message-ID: <20240702170247.075783909@linuxfoundation.org>
+Subject: [PATCH 6.9 099/222] arm64: Clear the initial ID map correctly before remapping
+Date: Tue,  2 Jul 2024 19:02:17 +0200
+Message-ID: <20240702170247.753335606@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -52,83 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Li <dawei.li@shingroup.cn>
+From: Zenghui Yu <yuzenghui@huawei.com>
 
-[ Upstream commit be4e1304419c99a164b4c0e101c7c2a756b635b9 ]
+[ Upstream commit ecc54006f158ae0245a13e59026da2f0239c1b86 ]
 
-For CONFIG_CPUMASK_OFFSTACK=y kernel, explicit allocation of cpumask
-variable on stack is not recommended since it can cause potential stack
-overflow.
+In the attempt to clear and recreate the initial ID map for LPA2, we
+wrongly use 'start - end' as the map size and make the memset() almost a
+nop.
 
-Instead, kernel code should always use *cpumask_var API(s) to allocate
-cpumask var in config-neutral way, leaving allocation strategy to
-CONFIG_CPUMASK_OFFSTACK.
+Fix it by passing the correct map size.
 
-Use *cpumask_var API(s) to address it.
-
-Signed-off-by: Dawei Li <dawei.li@shingroup.cn>
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Link: https://lore.kernel.org/r/20240331053441.1276826-2-dawei.li@shingroup.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 9684ec186f8f ("arm64: Enable LPA2 at boot if supported by the system")
+Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://lore.kernel.org/r/20240621092809.162-1-yuzenghui@huawei.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/iucv/iucv.c | 26 ++++++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
+ arch/arm64/kernel/pi/map_kernel.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/iucv/iucv.c b/net/iucv/iucv.c
-index a4ab615ca3e3e..5e37a8ceebcb8 100644
---- a/net/iucv/iucv.c
-+++ b/net/iucv/iucv.c
-@@ -520,7 +520,7 @@ static void iucv_setmask_mp(void)
-  */
- static void iucv_setmask_up(void)
- {
--	cpumask_t cpumask;
-+	static cpumask_t cpumask;
- 	int cpu;
+diff --git a/arch/arm64/kernel/pi/map_kernel.c b/arch/arm64/kernel/pi/map_kernel.c
+index 5fa08e13e17e5..f374a3e5a5fe1 100644
+--- a/arch/arm64/kernel/pi/map_kernel.c
++++ b/arch/arm64/kernel/pi/map_kernel.c
+@@ -173,7 +173,7 @@ static void __init remap_idmap_for_lpa2(void)
+ 	 * Don't bother with the FDT, we no longer need it after this.
+ 	 */
+ 	memset(init_idmap_pg_dir, 0,
+-	       (u64)init_idmap_pg_dir - (u64)init_idmap_pg_end);
++	       (u64)init_idmap_pg_end - (u64)init_idmap_pg_dir);
  
- 	/* Disable all cpu but the first in cpu_irq_cpumask. */
-@@ -628,23 +628,33 @@ static int iucv_cpu_online(unsigned int cpu)
- 
- static int iucv_cpu_down_prep(unsigned int cpu)
- {
--	cpumask_t cpumask;
-+	cpumask_var_t cpumask;
-+	int ret = 0;
- 
- 	if (!iucv_path_table)
- 		return 0;
- 
--	cpumask_copy(&cpumask, &iucv_buffer_cpumask);
--	cpumask_clear_cpu(cpu, &cpumask);
--	if (cpumask_empty(&cpumask))
-+	if (!alloc_cpumask_var(&cpumask, GFP_KERNEL))
-+		return -ENOMEM;
-+
-+	cpumask_copy(cpumask, &iucv_buffer_cpumask);
-+	cpumask_clear_cpu(cpu, cpumask);
-+	if (cpumask_empty(cpumask)) {
- 		/* Can't offline last IUCV enabled cpu. */
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto __free_cpumask;
-+	}
- 
- 	iucv_retrieve_cpu(NULL);
- 	if (!cpumask_empty(&iucv_irq_cpumask))
--		return 0;
-+		goto __free_cpumask;
-+
- 	smp_call_function_single(cpumask_first(&iucv_buffer_cpumask),
- 				 iucv_allow_cpu, NULL, 1);
--	return 0;
-+
-+__free_cpumask:
-+	free_cpumask_var(cpumask);
-+	return ret;
- }
- 
- /**
+ 	create_init_idmap(init_idmap_pg_dir, mask);
+ 	dsb(ishst);
 -- 
 2.43.0
 
