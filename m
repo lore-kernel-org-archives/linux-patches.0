@@ -1,77 +1,107 @@
-Received: from mail-40131.protonmail.ch (mail-40131.protonmail.ch [185.70.40.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF6BB4CB23
-	for <patches@lists.linux.dev>; Tue,  2 Jul 2024 06:28:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B9D4CB23;
+	Tue,  2 Jul 2024 07:42:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719901692; cv=none; b=G5XFanZDR0zJn75/HNNJrKH9cDWxpL4rl9600CdCnYQsMSQ+qgR9XbVcVfpuilr25yGL4E9IhD2LNglb7i/Mj1sAQeHpPYQxUgi6Gcqse0jKEksxftNVCUkoniMU5vG8Ko1HT9l5HWO8sgIa9YgQITYSA/Kxg35r/JUrai3LL88=
+	t=1719906176; cv=none; b=V7YH7+VRLODwSvZI1MV0RI/rxMnODh+MHue0SsPKfzFhYo/GwGRpoxaBGooy5djsB63npcrsrmgeENQVYsV5m9lRLCoYnoMCa1Dn7y6weGLbavQZ/mIYmtMmyHw6Un26Efs2jF4TWl5y4gpU7gjqAR7pcKB1OI4FCceVXBnibwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719901692; c=relaxed/simple;
-	bh=pJLbr97ZcJmIstk3829Yol82mUBfeqKgdCDrOnJSUWI=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=F0BN6WM7HY7NFCXAZlkJQXkmW8gi0stEfqdirshhbeRoQiYA1+DpyxuMJgTioJ4XnXrZq8EZyigSMMdfwGEQke4+KSZirJ0/tkS4w7OMsS7LghjTpxQHcsNJHNPmSaJgvNTXafU7aePxC7KMat1imbSZfr0belzlYmB9IcJBiDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=D6c7imaR; arc=none smtp.client-ip=185.70.40.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
+	s=arc-20240116; t=1719906176; c=relaxed/simple;
+	bh=b9oO32qfFgklf7sETD8/dcIhc/Mu840qILzRUiMTpP4=;
+	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
+	 Mime-Version:Content-Type; b=SRVdjxAvNkRauoJP4T7ggZiLCyzJ1I7ArehIkiYDZF2JytK6u6QVs7sq15Od0/xAxs/FnnoLm/0X4cWcofnHuWtxdFOM+vYcdJbWBN4f27gDQMgbIz+6w6jI3EwnWlcLshxm/QG/5ovD1MQAHGFLv01HSbYlkUTgaUmdPDF/zMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=OshYRO+R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="D6c7imaR"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=abfdaa263rdfdi2xhukkc4emkq.protonmail; t=1719901689; x=1720160889;
-	bh=1y0bYAfpS02/2yoYIaQkGAqT8Yh0A7VVxasMlNBr9yY=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=D6c7imaRSYIfSQAujmH+l8zWYbhZBLs6rHp13COfMOxmJ9mRjx1cExIZ5ipUzfeKo
-	 6wFMLqicLcBDjBw4L+8/mv0wtbq9wGYoWjK/S6hhGT5DKxF2il2JzHfCeZRxbyahSC
-	 hscoe72Seybjano37IiuA8mxpWrZHrlBjdNCtXqFUY5W75uEcTSKoqfm62eONkFgrS
-	 Jrq7PZikHNlaieufq96cVPOveE6wuqv677CCklETzDbVyKuUUYEni6a4yRochCq7qa
-	 xjmA8oLKHl2VcQ3A8iTm8epJiSvD+CHq1R/fL6ay7A4JSeCiSJNLzicL9FMIQkfVYa
-	 e8dQ66qVhD0RA==
-Date: Tue, 02 Jul 2024 06:28:03 +0000
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
-From: Benno Lossin <benno.lossin@proton.me>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH 02/13] rust: init: simplify from `map_err` to `inspect_err`
-Message-ID: <b379184a-c1ca-47b5-856f-62144edf3baf@proton.me>
-In-Reply-To: <CANiq72kMaPm2OsGb3o0VUtdoMhSUoo8QEsCFzVjYFtCThvNJ1w@mail.gmail.com>
-References: <20240701183625.665574-1-ojeda@kernel.org> <20240701183625.665574-3-ojeda@kernel.org> <ap7u5hpgfdzYgTkobIleYc0uolBIsAVbq56CwMJG6k4x57wXeEtu4fpLpgSOvQtbJHvB6D0J1wlBaqDV-xt2owlVejhfABUv_ivILyJ2J9o=@protonmail.com> <CANiq72kMaPm2OsGb3o0VUtdoMhSUoo8QEsCFzVjYFtCThvNJ1w@mail.gmail.com>
-Feedback-ID: 71780778:user:proton
-X-Pm-Message-ID: e08b99f84c62c4cfa206ef6818fc00e68acef6a6
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="OshYRO+R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9194C116B1;
+	Tue,  2 Jul 2024 07:42:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
+	s=korg; t=1719906175;
+	bh=b9oO32qfFgklf7sETD8/dcIhc/Mu840qILzRUiMTpP4=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=OshYRO+RqtW//uVs0njfZO7RS9kJp7HLUpkuV1+ecHPNjZ4TMDFd+ugEBS0Pi7c1j
+	 4NzTC/LyznWWg2EQLbG1xW5vZ28wBuRKvTHc7rpWhFih0+wqUumCbAP7TXxdJ0vmlT
+	 +XaG2OR5kNm6vFn4gpH1YXOJO7gEKW7cQ4RcGDmU=
+Date: Tue, 2 Jul 2024 00:42:54 -0700
+From: Andrew Morton <akpm@linux-foundation.org>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ tglx@linutronix.de, linux-crypto@vger.kernel.org,
+ linux-api@vger.kernel.org, x86@kernel.org, Greg Kroah-Hartman
+ <gregkh@linuxfoundation.org>, Adhemerval Zanella Netto
+ <adhemerval.zanella@linaro.org>, Carlos O'Donell <carlos@redhat.com>,
+ Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>, Jann
+ Horn <jannh@google.com>, Christian Brauner <brauner@kernel.org>, David
+ Hildenbrand <dhildenb@redhat.com>, linux-mm@kvack.org
+Subject: Re: [PATCH v19 1/5] mm: add VM_DROPPABLE for designating always
+ lazily freeable mappings
+Message-Id: <20240702004254.3ab2db4a98cb7fdd245407cb@linux-foundation.org>
+In-Reply-To: <20240701135801.3698-2-Jason@zx2c4.com>
+References: <20240701135801.3698-1-Jason@zx2c4.com>
+	<20240701135801.3698-2-Jason@zx2c4.com>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On 01.07.24 23:58, Miguel Ojeda wrote:
-> On Mon, Jul 1, 2024 at 10:05=E2=80=AFPM Bj=C3=B6rn Roy Baron
-> <bjorn3_gh@protonmail.com> wrote:
->>
->> The formatting here is a bit weird. I would have expected the ) ending t=
-he inspect_err call to be placed on a new line given that the unsafe block =
-isn't placed on the same line as the start of the inspect_err call either. =
-This seems to be a case where rustfmt mostly gives up on formatting. If I d=
-eindent the comment and unsafe block rustfmt will keep it that way and if I=
- add a trailing space to the inspect_err line it will keep it and emit an e=
-rror that it left behind trailing whitespace. Maybe add a block around the =
-comment and unsafe block to make rustfmt work again?
->=20
-> Benno: any preference here? Or even open coding it.
+On Mon,  1 Jul 2024 15:57:55 +0200 "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
 
-I would put the comment outside of the closure:
+> The vDSO getrandom() implementation works with a buffer allocated with a
+> new system call that has certain requirements:
+> 
+> - It shouldn't be written to core dumps.
+>   * Easy: VM_DONTDUMP.
+> - It should be zeroed on fork.
+>   * Easy: VM_WIPEONFORK.
+> 
+> - It shouldn't be written to swap.
+>   * Uh-oh: mlock is rlimited.
+>   * Uh-oh: mlock isn't inherited by forks.
+> 
+> It turns out that the vDSO getrandom() function has three really nice
+> characteristics that we can exploit to solve this problem:
+> 
+> 1) Due to being wiped during fork(), the vDSO code is already robust to
+>    having the contents of the pages it reads zeroed out midway through
+>    the function's execution.
+> 
+> 2) In the absolute worst case of whatever contingency we're coding for,
+>    we have the option to fallback to the getrandom() syscall, and
+>    everything is fine.
+> 
+> 3) The buffers the function uses are only ever useful for a maximum of
+>    60 seconds -- a sort of cache, rather than a long term allocation.
+> 
+> These characteristics mean that we can introduce VM_DROPPABLE, which
+> has the following semantics:
+> 
+> a) It never is written out to swap.
+> b) Under memory pressure, mm can just drop the pages (so that they're
+>    zero when read back again).
+> c) It is inherited by fork.
+> d) It doesn't count against the mlock budget, since nothing is locked.
+> 
+> This is fairly simple to implement, with the one snag that we have to
+> use 64-bit VM_* flags, but this shouldn't be a problem, since the only
+> consumers will probably be 64-bit anyway.
+> 
+> This way, allocations used by vDSO getrandom() can use:
+> 
+>     VM_DROPPABLE | VM_DONTDUMP | VM_WIPEONFORK | VM_NORESERVE
+> 
+> And there will be no problem with using memory when not in use, not
+> wiping on fork(), coredumps, or writing out to swap.
 
-    let val =3D unsafe { &mut *slot };
-    // SAFETY: `slot` is considered pinned.
-    let val =3D unsafe { Pin::new_unchecked(val) };
-    // SAFETY: `slot` was initialized above.
-    (self.1)(val).inspect_err(|_| unsafe { core::ptr::drop_in_place(slot) }=
-)
+The patch is impressively comment-free.  It is a little harsh to make
+readers go poking around in the git history to figure out what
+VM_DROPPABLE is, and why it exists.
 
----
-Cheers,
-Benno
+Seems hard to test that this mode is working correctly.  Can you think
+of a way for userspace to check this?  And if so, add it to selftests?
 
