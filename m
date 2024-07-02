@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E09D16B394;
-	Tue,  2 Jul 2024 17:15:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C425F1BBBC7;
+	Tue,  2 Jul 2024 17:15:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940530; cv=none; b=BOen2pMkacUH5MjP/govH16mcJw0ygz2QvrYyiJvIiVF1FRwEL2S24SvN+CioSZBVHRQQRO7EX56I/WdmYo4iZ8YK+3A2xu+pf988i/mjNKgl2J/+KcXtKMaupTHdkmYDDakDWuS/NOEZm542vz1V0ASH385xi8/hbGu02XcvHw=
+	t=1719940533; cv=none; b=f/9BL36tZ5Dr26DY29AbWBuooom8YIG1bhXJPSIyPOtUOBX1N/95vjk6qdIDFrRIrNNzC/fLm6CrgJi3DfR1PbN8m3Q8kAqo8cPLqA/rPLEhV7yJ1pyRD3fLGHtLQNyAs7iJp4aT9wCEUUTGwe0SpNWheCL8D/mlEdaN0zmVcD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940530; c=relaxed/simple;
-	bh=BurpgmlbN+plYt0LLmS6kkyOJzQwcsEbKxPBMeIRdSA=;
+	s=arc-20240116; t=1719940533; c=relaxed/simple;
+	bh=tiCP8hxSPbMm2kNzWud47NYhkmuLdJRh/kRM4zI2G1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jw6xQhnGVYs7KTy+CtzE8befo+qtouXwUHYglmi7dBQ/vhMyB+RUeiSD0d+NILyMj/etPttAtZW0lo1shQkFTG01jA/AXN3FQBXV83FpTCeXh+WiOYK1X4WYlKYlaUeO8VQKjK/G+E2rzd90Mhe2tbdCAVcjXX5Z+OOCaEzENA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kJ5DO1KZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aHb9WsK3oBTC/FrhTPzWU941s2xiMOF37L01cazEEYzQSXAKo0znjJv7Lc5ngNvPIec8tItZz+QhawdNb48WhMQeuHS2/YM/AAXa3bV+i72YHNGet+2pLvOzXNKM+Fi52fNpo6x7IdTyA1UCMxHrQurqYPWfZpFntWqzr62q+yg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s+UmNuX9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kJ5DO1KZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5440C116B1;
-	Tue,  2 Jul 2024 17:15:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s+UmNuX9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 343EBC116B1;
+	Tue,  2 Jul 2024 17:15:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940530;
-	bh=BurpgmlbN+plYt0LLmS6kkyOJzQwcsEbKxPBMeIRdSA=;
+	s=korg; t=1719940533;
+	bh=tiCP8hxSPbMm2kNzWud47NYhkmuLdJRh/kRM4zI2G1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kJ5DO1KZcFLqpk4uz0QEWgIBYObnb2DLYfnFocHC13RSrySyZlOm5HucSrxWtwDQs
-	 l8gc9HuAgF8G8l4Af//rr2MMehhzuZLskDCZjoAvdk/5sr9q8RwuGVLbqbKxmGWIgl
-	 YUkGJG6E2bA7ig51Kmhg2aPtXHJmeauuxCLnXBk4=
+	b=s+UmNuX9BYvQRipTLh8o0LGzNnbqRI2RBKwflLwI23jmit/9bt1NXdZVIfjeoSLFo
+	 Enlj2BV0MjvmKztu2M7ps4SpZ/gZIU3ckgn9r7HazlcBSORBO70F3KxqRtgDJf+FUY
+	 rYV+v4qY2j6wkMRkAjDEQrevs6AkToyO5EW3dIEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.9 150/222] usb: typec: ucsi: glink: fix child node release in probe function
-Date: Tue,  2 Jul 2024 19:03:08 +0200
-Message-ID: <20240702170249.709614582@linuxfoundation.org>
+	Ferry Toth <fntoth@gmail.com>
+Subject: [PATCH 6.9 151/222] Revert "usb: gadget: u_ether: Re-attach netif device to mirror detachment"
+Date: Tue,  2 Jul 2024 19:03:09 +0200
+Message-ID: <20240702170249.748885067@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -51,52 +49,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Ferry Toth <ftoth@exalondelft.nl>
 
-commit c68942624e254a4e8a65afcd3c17ed95acda5489 upstream.
+commit 24bf27b92b1c6a322faa88977de2207aa8c26509 upstream.
 
-The device_for_each_child_node() macro requires explicit calls to
-fwnode_handle_put() in all early exits of the loop if the child node is
-not required outside. Otherwise, the child node's refcount is not
-decremented and the resource is not released.
+This reverts commit 76c945730cdffb572c7767073cc6515fd3f646b4.
 
-The current implementation of pmic_glink_ucsi_probe() makes use of the
-device_for_each_child_node(), but does not release the child node on
-early returns. Add the missing calls to fwnode_handle_put().
+Prerequisite revert for the reverting of the original commit f49449fbc21e.
 
+Fixes: 76c945730cdf ("usb: gadget: u_ether: Re-attach netif device to mirror detachment")
+Fixes: f49449fbc21e ("usb: gadget: u_ether: Replace netif_stop_queue with netif_device_detach")
+Reported-by: Ferry Toth <fntoth@gmail.com>
 Cc: stable@vger.kernel.org
-Fixes: c6165ed2f425 ("usb: ucsi: glink: use the connector orientation GPIO to provide switch events")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240613-ucsi-glink-release-node-v1-1-f7629a56f70a@gmail.com
+Signed-off-by: Ferry Toth <fntoth@gmail.com>
+Link: https://lore.kernel.org/r/20240620204832.24518-2-ftoth@exalondelft.nl
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi_glink.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/function/u_ether.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi_glink.c
-+++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-@@ -365,6 +365,7 @@ static int pmic_glink_ucsi_probe(struct
- 		ret = fwnode_property_read_u32(fwnode, "reg", &port);
- 		if (ret < 0) {
- 			dev_err(dev, "missing reg property of %pOFn\n", fwnode);
-+			fwnode_handle_put(fwnode);
- 			return ret;
- 		}
+--- a/drivers/usb/gadget/function/u_ether.c
++++ b/drivers/usb/gadget/function/u_ether.c
+@@ -1163,8 +1163,6 @@ struct net_device *gether_connect(struct
+ 		if (netif_running(dev->net))
+ 			eth_start(dev, GFP_ATOMIC);
  
-@@ -379,9 +380,11 @@ static int pmic_glink_ucsi_probe(struct
- 		if (!desc)
- 			continue;
- 
--		if (IS_ERR(desc))
-+		if (IS_ERR(desc)) {
-+			fwnode_handle_put(fwnode);
- 			return dev_err_probe(dev, PTR_ERR(desc),
- 					     "unable to acquire orientation gpio\n");
-+		}
- 		ucsi->port_orientation[port] = desc;
- 
- 		ucsi->port_switch[port] = fwnode_typec_switch_get(fwnode);
+-		netif_device_attach(dev->net);
+-
+ 	/* on error, disable any endpoints  */
+ 	} else {
+ 		(void) usb_ep_disable(link->out_ep);
 
 
