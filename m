@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7046A1514DC;
-	Tue,  2 Jul 2024 17:27:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929921514DC;
+	Tue,  2 Jul 2024 17:27:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941229; cv=none; b=jiSIICEuOjBjye7eBeWc2dxEz6E/Vl13w8hJkEVE6y//9OYxqSsnvI24L9gonXHdcWWq7eojYsl/y9nQQ8K7lUJ6IoeBt0zxjioY8D8EbKBo5f7+xXL8+NXZS/jgi6R3235QQ3VCqGbu6lItWYmgrK8QNVLb9jJEdpOayqQ/8SU=
+	t=1719941232; cv=none; b=J6VCOVdrS0NypLLV253w7Tue3025d2VAjKs2xvwJ7NqtSIIBO744rzi6uO6xEXov54LMJBg6NsskfCytt2gleFQE+jSEeJRm4BTnUtvR2EyCAIQawLjwyY/+0ErFnG2l7HKZnUrwVsRTxNRhf63KyxcHg4DxE+wRD1Mg39MNT10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941229; c=relaxed/simple;
-	bh=SapN4vWpsvNQLK6wHDuAQJsLZtzyOelUnpWkaSKxVBE=;
+	s=arc-20240116; t=1719941232; c=relaxed/simple;
+	bh=DzrzmuicDvTk7sQyURiR4pEWTzgBqgQ2E24KzjpIIPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r+6iPzyVMponjZU7YE/LLaNM13I/vEQ2FbBuhZpG1fZEK5YN3aczHWo0uiKZ6r9dUwXl5wI69xv7WwHB4PbARG0gwDHiRJ/t00EU/O6y9rfr0ZyQ14iTGD8HYFVnwZ23W3f17NLnwFCp0CJjZLKjIbgvzoTkU0ihWUTtrlouqLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b4TPmTX4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RRyeRV9Y0p2Iht5EIsTqGsW8bvvmyItqa/6s+LQHn8ZZMSamN5bZ9LqmfR6s/7b2XL6oGfXkQZjoVVL/1ASHwrd6QnRwWXytDQBRUTLUSBkDTuxM1cUDk5T8iCAW5RRxX/7EM83aLuMN8BVkAyjqpywtMoUOTxY6Ww7sGr6CaOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zJfJrmyZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b4TPmTX4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE46EC116B1;
-	Tue,  2 Jul 2024 17:27:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zJfJrmyZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B4AAC116B1;
+	Tue,  2 Jul 2024 17:27:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941229;
-	bh=SapN4vWpsvNQLK6wHDuAQJsLZtzyOelUnpWkaSKxVBE=;
+	s=korg; t=1719941232;
+	bh=DzrzmuicDvTk7sQyURiR4pEWTzgBqgQ2E24KzjpIIPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b4TPmTX4DT2EpWfBZRbTEoGdEPJRBhcZVW5rtcTA+AoZkwFqMnFF2w/sJq2wFH2WU
-	 ROuk5vjc+dswUcJwBduVObAZC4fVKyFJr9b0Xln/fuhuJ1Y5H9N1hF/0GPxWjvQ6p9
-	 r0cO3iymG384WKoQ4x/e4JWcal106eA5ai62QgEI=
+	b=zJfJrmyZw8ploLXjVrn5sak4CI3wo6aymeZ5pKNc3BtDlrr0yJmwif62JhOtHcCaj
+	 Mh3giTFMzJKpWMKj4yN1AiNVkoze+Fgyzf45JVHHqNFKAeRJagut909febY6gnV1lt
+	 axaq2Zqd1Voaaqw/TwNRu3UTxT/+c7cuRMUkHbvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Lyude Paul <lyude@redhat.com>
-Subject: [PATCH 6.6 140/163] drm/nouveau/dispnv04: fix null pointer dereference in nv17_tv_get_hd_modes
-Date: Tue,  2 Jul 2024 19:04:14 +0200
-Message-ID: <20240702170238.353168015@linuxfoundation.org>
+	Wenjing Liu <wenjing.liu@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Michael Strauss <michael.strauss@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.6 141/163] drm/amd/display: Send DP_TOTAL_LTTPR_CNT during detection if LTTPR is present
+Date: Tue,  2 Jul 2024 19:04:15 +0200
+Message-ID: <20240702170238.390502441@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -50,43 +54,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Michael Strauss <michael.strauss@amd.com>
 
-commit 6d411c8ccc0137a612e0044489030a194ff5c843 upstream.
+commit 2ec6c7f802332d1eff16f03e7c757f1543ee1183 upstream.
 
-In nv17_tv_get_hd_modes(), the return value of drm_mode_duplicate() is
-assigned to mode, which will lead to a possible NULL pointer dereference
-on failure of drm_mode_duplicate(). The same applies to drm_cvt_mode().
-Add a check to avoid null pointer dereference.
+[WHY]
+New register field added in DP2.1 SCR, needed for auxless ALPM
 
+[HOW]
+Echo value read from 0xF0007 back to sink
+
+Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240625081029.2619437-1-make24@iscas.ac.cn
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Michael Strauss <michael.strauss@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/dispnv04/tvnv17.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c |   10 +++++++++-
+ drivers/gpu/drm/amd/display/include/dpcd_defs.h                    |    5 +++++
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/nouveau/dispnv04/tvnv17.c
-+++ b/drivers/gpu/drm/nouveau/dispnv04/tvnv17.c
-@@ -260,6 +260,8 @@ static int nv17_tv_get_hd_modes(struct d
- 		if (modes[i].hdisplay == output_mode->hdisplay &&
- 		    modes[i].vdisplay == output_mode->vdisplay) {
- 			mode = drm_mode_duplicate(encoder->dev, output_mode);
-+			if (!mode)
-+				continue;
- 			mode->type |= DRM_MODE_TYPE_PREFERRED;
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
+@@ -1584,9 +1584,17 @@ static bool retrieve_link_cap(struct dc_
+ 			return false;
+ 	}
  
- 		} else {
-@@ -267,6 +269,8 @@ static int nv17_tv_get_hd_modes(struct d
- 					    modes[i].vdisplay, 60, false,
- 					    (output_mode->flags &
- 					     DRM_MODE_FLAG_INTERLACE), false);
-+			if (!mode)
-+				continue;
- 		}
+-	if (dp_is_lttpr_present(link))
++	if (dp_is_lttpr_present(link)) {
+ 		configure_lttpr_mode_transparent(link);
  
- 		/* CVT modes are sometimes unsuitable... */
++		// Echo TOTAL_LTTPR_CNT back downstream
++		core_link_write_dpcd(
++				link,
++				DP_TOTAL_LTTPR_CNT,
++				&link->dpcd_caps.lttpr_caps.phy_repeater_cnt,
++				sizeof(link->dpcd_caps.lttpr_caps.phy_repeater_cnt));
++	}
++
+ 	/* Read DP tunneling information. */
+ 	status = dpcd_get_tunneling_device_data(link);
+ 
+--- a/drivers/gpu/drm/amd/display/include/dpcd_defs.h
++++ b/drivers/gpu/drm/amd/display/include/dpcd_defs.h
+@@ -177,4 +177,9 @@ enum dpcd_psr_sink_states {
+ #define DP_SINK_PR_PIXEL_DEVIATION_PER_LINE     0x379
+ #define DP_SINK_PR_MAX_NUMBER_OF_DEVIATION_LINE 0x37A
+ 
++/* Remove once drm_dp_helper.h is updated upstream */
++#ifndef DP_TOTAL_LTTPR_CNT
++#define DP_TOTAL_LTTPR_CNT                                  0xF000A /* 2.1 */
++#endif
++
+ #endif /* __DAL_DPCD_DEFS_H__ */
 
 
