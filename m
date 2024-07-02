@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C44F815218A;
-	Tue,  2 Jul 2024 17:10:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3955015218A;
+	Tue,  2 Jul 2024 17:10:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940207; cv=none; b=VCcyEGYqF5fmtkxE1qJTSvxgFqvM84D1Y4gkTB409yiBDhSS9WIbGygQ8kbEwkE6qQgRAD8qF4LIUPv8QC5WgEN1kwMIejShLkrYblnV3cCJDdvcXLyovkVwRXXNII+x6+lJg9HG9vIcRWrUgpM/RNrtw5MOWD7KgHlUadAz1c0=
+	t=1719940211; cv=none; b=nGI2fMb8D9IX2uNkVzIq2IJoAClDzq6fZ/FjLOLXPPyj5LeGAmnWsJenG403m+ITfBD/VzceOnRHKAQSwBo1M9gxlMGkwVJDLs1R53v0lZr426JvGVaQTflJmsEHuSW2bcZHZDCvgev/zBYjCxWwR0ou87bUbX4gYF/k8ViY/No=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940207; c=relaxed/simple;
-	bh=U/DZ6pNgDhiAIQS1skJTpBY5j0FIZf389fA7kfZOiJQ=;
+	s=arc-20240116; t=1719940211; c=relaxed/simple;
+	bh=dbfLk45TVIZu/uwzR97HUW8PhassuGR92ob7zs6C+s4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sJMU8gst5P0rrNnw/xMPqPC8TYWsbZWchrN1gGzwUQ2uRD3NIBeDfutdM/QWa3OHVRuSJ9AoF6+Fu3slHDErLHx/TGyBJw/9WUNHlyPcnLFFSYbY96B9fN0YOihb6Q13SmU1j2KemwfHsLblJ1ui8qD2T6l9SOehs5tomddSO/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=srfd+y+q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zfs0jx+Nyyj9QvYJcFZo+rFva5Bu4Q1MgCvr2AQrnjQV+7b9D08ggVvrD/jeQTz5968+Z/l3oXGMqOdZDOn+wVeOlcZXpJiWx3x31moqx7mn88fzWQMTdWQYBBSV4iiIVYrUVjfnvO1iTVnKuCdn4Y/8KsabxXEckn5EhvJr2TE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pldvkvse; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="srfd+y+q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28EB1C116B1;
-	Tue,  2 Jul 2024 17:10:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pldvkvse"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F8D2C116B1;
+	Tue,  2 Jul 2024 17:10:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940207;
-	bh=U/DZ6pNgDhiAIQS1skJTpBY5j0FIZf389fA7kfZOiJQ=;
+	s=korg; t=1719940211;
+	bh=dbfLk45TVIZu/uwzR97HUW8PhassuGR92ob7zs6C+s4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=srfd+y+qwoLaonrkP6kVlxRMRxVe92CBNeVohv+YmQ6UzsVioU0nFx5LS+qEx55UP
-	 U6LlCBFahwZ+dTXtWq2s/ufDN/T+3yqBnhyN84YGo21aqLlt2+KZrKcdrDS4uz+dsj
-	 m1/IfdYeB0VkQxDGsnibQk1iCZvwBIw1OiEPEq6Q=
+	b=pldvkvseNwMJM31rHATJdDd2rXVKdYydkx5KDvOR7ncP5ZI7kFrXIw42Ds0tHtjwl
+	 WsZMLOkipu1Q+fMj1k8ItTBS+olhsQR3b+ZEaaU6ssG4xOKHCXPFROlHkOI3sTckj9
+	 KSf8IongG6IVxMTSjrU58xVZvzWPAZ0lD9VGtrxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 053/222] parisc: use correct compat recv/recvfrom syscalls
-Date: Tue,  2 Jul 2024 19:01:31 +0200
-Message-ID: <20240702170246.003158351@linuxfoundation.org>
+Subject: [PATCH 6.9 054/222] powerpc: restore some missing spu syscalls
+Date: Tue,  2 Jul 2024 19:01:32 +0200
+Message-ID: <20240702170246.049690414@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -53,44 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 20a50787349fadf66ac5c48f62e58d753878d2bb ]
+[ Upstream commit b1e31c134a8ab2e8f5fd62323b6b45a950ac704d ]
 
-Johannes missed parisc back when he introduced the compat version
-of these syscalls, so receiving cmsg messages that require a compat
-conversion is still broken.
+A couple of system calls were inadventently removed from the table during
+a bugfix for 32-bit powerpc entry. Restore the original behavior.
 
-Use the correct calls like the other architectures do.
-
-Fixes: 1dacc76d0014 ("net/compat/wext: send different messages to compat tasks")
-Acked-by: Helge Deller <deller@gmx.de>
+Fixes: e23750623835 ("powerpc/32: fix syscall wrappers with 64-bit arguments of unaligned register-pairs")
+Acked-by: Michael Ellerman <mpe@ellerman.id.au>
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/kernel/syscalls/syscall.tbl | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/powerpc/kernel/syscalls/syscall.tbl | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/parisc/kernel/syscalls/syscall.tbl b/arch/parisc/kernel/syscalls/syscall.tbl
-index b236a84c4e127..58ecf687d98da 100644
---- a/arch/parisc/kernel/syscalls/syscall.tbl
-+++ b/arch/parisc/kernel/syscalls/syscall.tbl
-@@ -108,7 +108,7 @@
- 95	common	fchown			sys_fchown
- 96	common	getpriority		sys_getpriority
- 97	common	setpriority		sys_setpriority
--98	common	recv			sys_recv
-+98	common	recv			sys_recv			compat_sys_recv
- 99	common	statfs			sys_statfs			compat_sys_statfs
- 100	common	fstatfs			sys_fstatfs			compat_sys_fstatfs
- 101	common	stat64			sys_stat64
-@@ -135,7 +135,7 @@
- 120	common	clone			sys_clone_wrapper
- 121	common	setdomainname		sys_setdomainname
- 122	common	sendfile		sys_sendfile			compat_sys_sendfile
--123	common	recvfrom		sys_recvfrom
-+123	common	recvfrom		sys_recvfrom			compat_sys_recvfrom
- 124	32	adjtimex		sys_adjtimex_time32
- 124	64	adjtimex		sys_adjtimex
- 125	common	mprotect		sys_mprotect
+diff --git a/arch/powerpc/kernel/syscalls/syscall.tbl b/arch/powerpc/kernel/syscalls/syscall.tbl
+index 17173b82ca21d..9d7e4a313d332 100644
+--- a/arch/powerpc/kernel/syscalls/syscall.tbl
++++ b/arch/powerpc/kernel/syscalls/syscall.tbl
+@@ -230,8 +230,10 @@
+ 178	nospu 	rt_sigsuspend			sys_rt_sigsuspend		compat_sys_rt_sigsuspend
+ 179	32	pread64				sys_ppc_pread64			compat_sys_ppc_pread64
+ 179	64	pread64				sys_pread64
++179	spu	pread64				sys_pread64
+ 180	32	pwrite64			sys_ppc_pwrite64		compat_sys_ppc_pwrite64
+ 180	64	pwrite64			sys_pwrite64
++180	spu	pwrite64			sys_pwrite64
+ 181	common	chown				sys_chown
+ 182	common	getcwd				sys_getcwd
+ 183	common	capget				sys_capget
+@@ -246,6 +248,7 @@
+ 190	common	ugetrlimit			sys_getrlimit			compat_sys_getrlimit
+ 191	32	readahead			sys_ppc_readahead		compat_sys_ppc_readahead
+ 191	64	readahead			sys_readahead
++191	spu	readahead			sys_readahead
+ 192	32	mmap2				sys_mmap2			compat_sys_mmap2
+ 193	32	truncate64			sys_ppc_truncate64		compat_sys_ppc_truncate64
+ 194	32	ftruncate64			sys_ppc_ftruncate64		compat_sys_ppc_ftruncate64
+@@ -293,6 +296,7 @@
+ 232	nospu	set_tid_address			sys_set_tid_address
+ 233	32	fadvise64			sys_ppc32_fadvise64		compat_sys_ppc32_fadvise64
+ 233	64	fadvise64			sys_fadvise64
++233	spu	fadvise64			sys_fadvise64
+ 234	nospu	exit_group			sys_exit_group
+ 235	nospu	lookup_dcookie			sys_ni_syscall
+ 236	common	epoll_create			sys_epoll_create
 -- 
 2.43.0
 
