@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4941D1C007E;
-	Tue,  2 Jul 2024 17:15:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89E041BE249;
+	Tue,  2 Jul 2024 17:15:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940554; cv=none; b=Ypjs1Jbtz7zgOVb1Muo9T0KVd6SkFnuYZ0pNTuW2/e6cXSthcW0QYDwh3P5Utx3xduZFoIm6xdb8x9GgE31E4cu2ro2I3Q4OvbNfw9Qxuo55SdvApZ5HK9zcP2U+a1pWiVa5WSMaXZNcg2KL+vds6e3dlyjFqf2q9tKfHTx4wso=
+	t=1719940557; cv=none; b=BQ9ZgQ0yGkHAbP0y/unXFoXWAUyVcOOyZHRYgITJG90CSbAIGy6MwgYdRAgGuELNjvJZjU6DrkTHnu+m9iMopWX8ybAxewsjfw8wZBcrJdQEOuyq+21AqGHzcFZU3FLfc8NqCNFTjNxUieHHLQzj4ESksFQeqKb2JlUy9HdW4n4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940554; c=relaxed/simple;
-	bh=9D6DgNaanRFq106gdP1fbcWxFR5t481UzLYdW6p8SNc=;
+	s=arc-20240116; t=1719940557; c=relaxed/simple;
+	bh=9wlabYvIucez4QbkhCREE+h1musnbdtCCINC04o3wl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UXR2498UqPfhT4lVOS+m63JBn7nqs8vbSthinqrSYub9GyCXJ3tcQZSIIyTO9WhqJ/KMOixEmNBIAOeKrz84Treib+aE7c5tjGv37lmOIWvdFqf9NpmQL1tffGtGkRcqv+dsL/BTbOZvpzyD+UI9rbAmZVUwyH2hHMrWL2f4vzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ExTgFY6+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GlAcWhRpgQeeiBM9521gAkgzYpEPrqvSCTFbv1Rwx4jxkQIA3DGtdzVxgHgHM9rC0ghqrr6NCrWEuAsjgERUSyAgC9ec15QtLsctbW0rtj8pnDojy/Yn+Ms5tuiX+yLjGRXfFmShQOqp5oUyP0uHDFxkA8UmWU6ipprlaNV3blE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CyrWkRue; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ExTgFY6+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F382C4AF0C;
-	Tue,  2 Jul 2024 17:15:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CyrWkRue"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F276AC116B1;
+	Tue,  2 Jul 2024 17:15:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940554;
-	bh=9D6DgNaanRFq106gdP1fbcWxFR5t481UzLYdW6p8SNc=;
+	s=korg; t=1719940557;
+	bh=9wlabYvIucez4QbkhCREE+h1musnbdtCCINC04o3wl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ExTgFY6+o6eEOCw6QOrEV/Fd5yEVQBt2j++0dEHFIOMuwY5FiJaI4okCHQbPWu8DT
-	 1fBga5aqNVDDEd1todkaDZaIXorlg6c8CAllBdbShnRrJMnuvJjyu0wmTKhCdbRVfQ
-	 03bdaphGRue+s/kGRCKIRvTyOAclLIO3rKyz7dbk=
+	b=CyrWkRueMiJxSPPLWgkq5SHwG1LY45Gw3FztubDqpYOf8AUfKtx6CsLMHWn5zjevL
+	 BkVzx5guaklHZiFruCBj1DjHA60bHAmPOcJ1b7PPWWvrClDfpM9VMh4HV6oUcAPR8s
+	 UKhcDM0aY4hKRCNK6/3awnt0d+4/8WElTfpWdDzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fusheng Huang <fusheng.huang@ecarxgroup.com>,
-	Julia Zhang <Julia.Zhang@amd.com>,
-	Huang Rui <ray.huang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.9 182/222] drm/amdgpu: avoid using null object of framebuffer
-Date: Tue,  2 Jul 2024 19:03:40 +0200
-Message-ID: <20240702170250.934566579@linuxfoundation.org>
+	Alessandro Maggio <alex.tkd.alex@gmail.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 6.9 191/222] ata: libata-core: Add ATA_HORKAGE_NOLPM for all Crucial BX SSD1 models
+Date: Tue,  2 Jul 2024 19:03:49 +0200
+Message-ID: <20240702170251.285804789@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -52,69 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julia Zhang <julia.zhang@amd.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-commit bcfa48ff785bd121316592b131ff6531e3e696bb upstream.
+commit 1066fe825987da007669d7c25306b4dbb50bd7dd upstream.
 
-Instead of using state->fb->obj[0] directly, get object from framebuffer
-by calling drm_gem_fb_get_obj() and return error code when object is
-null to avoid using null object of framebuffer.
+We got another report that CT1000BX500SSD1 does not work with LPM.
 
-Reported-by: Fusheng Huang <fusheng.huang@ecarxgroup.com>
-Signed-off-by: Julia Zhang <Julia.Zhang@amd.com>
-Reviewed-by: Huang Rui <ray.huang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+If you look in libata-core.c, we have six different Crucial devices that
+are marked with ATA_HORKAGE_NOLPM. This model would have been the seventh.
+(This quirk is used on Crucial models starting with both CT* and
+Crucial_CT*)
+
+It is obvious that this vendor does not have a great history of supporting
+LPM properly, therefore, add the ATA_HORKAGE_NOLPM quirk for all Crucial
+BX SSD1 models.
+
+Fixes: 7627a0edef54 ("ata: ahci: Drop low power policy board type")
 Cc: stable@vger.kernel.org
+Reported-by: Alessandro Maggio <alex.tkd.alex@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218832
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20240627105551.4159447-2-cassel@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/ata/libata-core.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.c
-@@ -3,6 +3,7 @@
- #include <drm/drm_atomic_helper.h>
- #include <drm/drm_edid.h>
- #include <drm/drm_simple_kms_helper.h>
-+#include <drm/drm_gem_framebuffer_helper.h>
- #include <drm/drm_vblank.h>
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -4181,8 +4181,7 @@ static const struct ata_blacklist_entry
+ 	{ "PIONEER BD-RW   BDR-205",	NULL,	ATA_HORKAGE_NOLPM },
  
- #include "amdgpu.h"
-@@ -314,7 +315,13 @@ static int amdgpu_vkms_prepare_fb(struct
- 		return 0;
- 	}
- 	afb = to_amdgpu_framebuffer(new_state->fb);
--	obj = new_state->fb->obj[0];
-+
-+	obj = drm_gem_fb_get_obj(new_state->fb, 0);
-+	if (!obj) {
-+		DRM_ERROR("Failed to get obj from framebuffer\n");
-+		return -EINVAL;
-+	}
-+
- 	rbo = gem_to_amdgpu_bo(obj);
- 	adev = amdgpu_ttm_adev(rbo->tbo.bdev);
+ 	/* Crucial devices with broken LPM support */
+-	{ "CT500BX100SSD1",		NULL,	ATA_HORKAGE_NOLPM },
+-	{ "CT240BX500SSD1",		NULL,	ATA_HORKAGE_NOLPM },
++	{ "CT*0BX*00SSD1",		NULL,	ATA_HORKAGE_NOLPM },
  
-@@ -368,12 +375,19 @@ static void amdgpu_vkms_cleanup_fb(struc
- 				   struct drm_plane_state *old_state)
- {
- 	struct amdgpu_bo *rbo;
-+	struct drm_gem_object *obj;
- 	int r;
- 
- 	if (!old_state->fb)
- 		return;
- 
--	rbo = gem_to_amdgpu_bo(old_state->fb->obj[0]);
-+	obj = drm_gem_fb_get_obj(old_state->fb, 0);
-+	if (!obj) {
-+		DRM_ERROR("Failed to get obj from framebuffer\n");
-+		return;
-+	}
-+
-+	rbo = gem_to_amdgpu_bo(obj);
- 	r = amdgpu_bo_reserve(rbo, false);
- 	if (unlikely(r)) {
- 		DRM_ERROR("failed to reserve rbo before unpin\n");
+ 	/* 512GB MX100 with MU01 firmware has both queued TRIM and LPM issues */
+ 	{ "Crucial_CT512MX100*",	"MU01",	ATA_HORKAGE_NO_NCQ_TRIM |
 
 
