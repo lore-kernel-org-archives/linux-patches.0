@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 698061BD00C;
-	Tue,  2 Jul 2024 17:31:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DAC71BD4EA;
+	Tue,  2 Jul 2024 17:31:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941516; cv=none; b=Nf/4CkaD4RH8vmnau7F3zqBO8SuxSpjzaRAXQP67a12bHRgfRcoXdf+hOpY9yoPq5ufZrmj36oxC4AZ5Q29MhEJAf2mF44E4D/KHA5sdtu0NV2Sr4ZlP8Kcyt7Eqfa65ljOm/2ps5pUtOvpnn9jNAfrwg7DdclYYuYzk1cZgKeE=
+	t=1719941519; cv=none; b=BRCy4gncrriW2t20CrsqpyU6fL54fV+f/QpDOJ2MR4t4mX2ILSP9uvtnmoWkjuCt1SFFj0N124Foj07C/dwTP3kI9T4AUy3S6ycPWnrtza6OaQinRwZkMI0TPWLp9Kq3RLZAsc/f9Qaw095oIbsRh5YpvhR6+lrxXeAREx/lX34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941516; c=relaxed/simple;
-	bh=htT1zAgEkAVVia9OXqNn33H4SLqhyUSfuJqvac3opto=;
+	s=arc-20240116; t=1719941519; c=relaxed/simple;
+	bh=QLB+Du/t2w5uujg3Hh6MSfV6jsQThM+hk7On1GT1KuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MpoZbONl2bL9VJVPbIcYyPFygAmjxNbPF6WMnTJ12x2YNODcuxsjlV/AdjDh0imVLMN9Q3lnOQidwJf6GsDjwa4gY0ZF4tMTahn8UoDZMhqJcNNfj+a1j4DzP0Dbffp08lQOJb6YTuUZY6gZ8tAy6YqYelBSO8DuITp4Tz5Re8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XWldVqfd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nCqXXxr50mgWvibkbQ6uOejRkweHtJA8ewKCyX7rXmfXppZyR/IpA6u7PtAlQq4oG1PAg7BaN1XPmc/zMqK2Wdd7nGtY4pRtzW6BI57oULDfWUHHQEhAWH58Zhw4ZBU4R/Y7VQ0dKjuOV6fEId5xWsY1Oq92z+RMk0HfEXsJ+qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bng2AWTk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XWldVqfd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5CC8C4AF07;
-	Tue,  2 Jul 2024 17:31:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bng2AWTk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7F52C116B1;
+	Tue,  2 Jul 2024 17:31:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941516;
-	bh=htT1zAgEkAVVia9OXqNn33H4SLqhyUSfuJqvac3opto=;
+	s=korg; t=1719941519;
+	bh=QLB+Du/t2w5uujg3Hh6MSfV6jsQThM+hk7On1GT1KuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XWldVqfdrub+Y+eT6j87df75jkg4mN9TWHytvE57IAwIg1TN/g8xLR4qDXNrJe+v1
-	 A5sKhb7gkPFdjx7IuHAAmwJCdKZzaKt69nrqHeCBywWNkKoLDw1gIyHjIOC27S3sKv
-	 pObCryo1+N2qAWeHuGnZ+LVRqFvP5waGVbwEAxHQ=
+	b=bng2AWTkUMN84s6jcPSSKwbV+DPdvmlSOmrhdQIszTVD4nzPxJeyqLLJcu8ejKRL8
+	 OtDSZiMDTtnkfZsqKTnXl8Bw1zenY11mZn4V24xmebV982DPKlR3YQMI1WPG2zCg5L
+	 +LuvcElqgAqUfOiJ5GSJbSxV09t0EWpjSzI67zQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Meng Li <Meng.Li@windriver.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.1 087/128] usb: dwc3: core: remove lock of otg mode during gadget suspend/resume to avoid deadlock
-Date: Tue,  2 Jul 2024 19:04:48 +0200
-Message-ID: <20240702170229.510842335@linuxfoundation.org>
+	Neal Liu <neal_liu@aspeedtech.com>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Jeremy Kerr <jk@codeconstruct.com.au>
+Subject: [PATCH 6.1 088/128] usb: gadget: aspeed_udc: fix device address configuration
+Date: Tue,  2 Jul 2024 19:04:49 +0200
+Message-ID: <20240702170229.552214498@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170226.231899085@linuxfoundation.org>
 References: <20240702170226.231899085@linuxfoundation.org>
@@ -51,77 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meng Li <Meng.Li@windriver.com>
+From: Jeremy Kerr <jk@codeconstruct.com.au>
 
-commit 7838de15bb700c2898a7d741db9b1f3cbc86c136 upstream.
+commit dba7567c2fbbf10a4de2471cdb0e16e5572dc007 upstream.
 
-When config CONFIG_USB_DWC3_DUAL_ROLE is selected, and trigger system
-to enter suspend status with below command:
-echo mem > /sys/power/state
-There will be a deadlock issue occurring. Detailed invoking path as
-below:
-dwc3_suspend_common()
-    spin_lock_irqsave(&dwc->lock, flags);              <-- 1st
-    dwc3_gadget_suspend(dwc);
-        dwc3_gadget_soft_disconnect(dwc);
-            spin_lock_irqsave(&dwc->lock, flags);      <-- 2nd
-This issue is exposed by commit c7ebd8149ee5 ("usb: dwc3: gadget: Fix
-NULL pointer dereference in dwc3_gadget_suspend") that removes the code
-of checking whether dwc->gadget_driver is NULL or not. It causes the
-following code is executed and deadlock occurs when trying to get the
-spinlock. In fact, the root cause is the commit 5265397f9442("usb: dwc3:
-Remove DWC3 locking during gadget suspend/resume") that forgot to remove
-the lock of otg mode. So, remove the redundant lock of otg mode during
-gadget suspend/resume.
+In the aspeed UDC setup, we configure the UDC hardware with the assigned
+USB device address.
 
-Fixes: 5265397f9442 ("usb: dwc3: Remove DWC3 locking during gadget suspend/resume")
-Cc: Xu Yang <xu.yang_2@nxp.com>
+However, we have an off-by-one in the bitmask, so we're only setting the
+lower 6 bits of the address (USB addresses being 7 bits, and the
+hardware bitmask being bits 0:6).
+
+This means that device enumeration fails if the assigned address is
+greater than 64:
+
+[  344.607255] usb 1-1: new high-speed USB device number 63 using ehci-platform
+[  344.808459] usb 1-1: New USB device found, idVendor=cc00, idProduct=cc00, bcdDevice= 6.10
+[  344.817684] usb 1-1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[  344.825671] usb 1-1: Product: Test device
+[  344.831075] usb 1-1: Manufacturer: Test vendor
+[  344.836335] usb 1-1: SerialNumber: 00
+[  349.917181] usb 1-1: USB disconnect, device number 63
+[  352.036775] usb 1-1: new high-speed USB device number 64 using ehci-platform
+[  352.249432] usb 1-1: device descriptor read/all, error -71
+[  352.696740] usb 1-1: new high-speed USB device number 65 using ehci-platform
+[  352.909431] usb 1-1: device descriptor read/all, error -71
+
+Use the correct mask of 0x7f (rather than 0x3f), and generate this
+through the GENMASK macro, so we have numbers that correspond exactly
+to the hardware register definition.
+
+Fixes: 055276c13205 ("usb: gadget: add Aspeed ast2600 udc driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Meng Li <Meng.Li@windriver.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20240618031918.2585799-1-Meng.Li@windriver.com
+Reviewed-by: Neal Liu <neal_liu@aspeedtech.com>
+Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Link: https://lore.kernel.org/r/20240613-aspeed-udc-v2-1-29501ce9cb7a@codeconstruct.com.au
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.c |    6 ------
- 1 file changed, 6 deletions(-)
+ drivers/usb/gadget/udc/aspeed_udc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -2087,7 +2087,6 @@ assert_reset:
+--- a/drivers/usb/gadget/udc/aspeed_udc.c
++++ b/drivers/usb/gadget/udc/aspeed_udc.c
+@@ -66,8 +66,8 @@
+ #define USB_UPSTREAM_EN			BIT(0)
  
- static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
- {
--	unsigned long	flags;
- 	u32 reg;
+ /* Main config reg */
+-#define UDC_CFG_SET_ADDR(x)		((x) & 0x3f)
+-#define UDC_CFG_ADDR_MASK		(0x3f)
++#define UDC_CFG_SET_ADDR(x)		((x) & UDC_CFG_ADDR_MASK)
++#define UDC_CFG_ADDR_MASK		GENMASK(6, 0)
  
- 	switch (dwc->current_dr_role) {
-@@ -2125,9 +2124,7 @@ static int dwc3_suspend_common(struct dw
- 			break;
- 
- 		if (dwc->current_otg_role == DWC3_OTG_ROLE_DEVICE) {
--			spin_lock_irqsave(&dwc->lock, flags);
- 			dwc3_gadget_suspend(dwc);
--			spin_unlock_irqrestore(&dwc->lock, flags);
- 			synchronize_irq(dwc->irq_gadget);
- 		}
- 
-@@ -2144,7 +2141,6 @@ static int dwc3_suspend_common(struct dw
- 
- static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
- {
--	unsigned long	flags;
- 	int		ret;
- 	u32		reg;
- 
-@@ -2193,9 +2189,7 @@ static int dwc3_resume_common(struct dwc
- 		if (dwc->current_otg_role == DWC3_OTG_ROLE_HOST) {
- 			dwc3_otg_host_init(dwc);
- 		} else if (dwc->current_otg_role == DWC3_OTG_ROLE_DEVICE) {
--			spin_lock_irqsave(&dwc->lock, flags);
- 			dwc3_gadget_resume(dwc);
--			spin_unlock_irqrestore(&dwc->lock, flags);
- 		}
- 
- 		break;
+ /* Interrupt ctrl & status reg */
+ #define UDC_IRQ_EP_POOL_NAK		BIT(17)
 
 
