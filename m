@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D202215B0FE;
-	Tue,  2 Jul 2024 17:14:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32EE71BC08A;
+	Tue,  2 Jul 2024 17:14:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940441; cv=none; b=U4rAafaNqefBOqjFTVVqkey05BscP6BTyKP+z1bqLXg+R0J+Kv9/l0n5MEUUyxSFLV+P1tFs/MttJqYY3PYKt3qIWPk5N2+HM4QJFrXlq/4wtKPTD9fLKmV4vcCAFhpQNafwOi8jp3deBXxqRM5lklTUmKKB8LeonfWg02+pHYg=
+	t=1719940445; cv=none; b=flQ3UNI0aGBTWm0XK58iXAy2sQQWj7gbK9yCxxSGpv8Or5mx+2fGXN0sHIoKXn2LmkW1dT/wqz6eaqcVaqm8aWmNwkgXdlo0/xX3PK5T9EnZc3HBQ7+ciyrExE2bbEa6gd7G63dBoItSxffpa7tarJNDwNFQO6rmsk6of2Jp+kY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940441; c=relaxed/simple;
-	bh=etmRwNtAWjCs1tYH7E+qG1i53vogADHYtiFknRF678I=;
+	s=arc-20240116; t=1719940445; c=relaxed/simple;
+	bh=UotsEWMsy1dHkwX3yk9bPRVtooNNAM1iQfWrL7zfrnU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HG2BdJjyQ/j0fGWx2ur4mSsSZIhYkSkDs/sCptuIrHUR+cjD+J3aAickLhhro0ovEOqGBuB8g+ws+kk1SVW57bnNM/rp+Uiyuoh97GKrVyy5V/X0cfhjV60O265uUJ9mJYLZh7oB705u4wAZWn2+IPx9xAA2XDpk9wzSI/+JCuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mS4J2TAH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KWjzM5hWco48MHveL71ey0CslWL9E799JiK7g8TezbEr0qaMHLyu4BtDdfIqdizFxnTsV34qS/NEOrrUIGYN+msdJRZKpH9W2EBjB5zcyyK9XPc/DQs661pibZJYBWAR3SaW5Eu/lHKVSbHiBLG7JbO/4n++M8cseFOJMlGl7ag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DaKt3qvY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mS4J2TAH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4030FC116B1;
-	Tue,  2 Jul 2024 17:14:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DaKt3qvY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BBA1C116B1;
+	Tue,  2 Jul 2024 17:14:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940441;
-	bh=etmRwNtAWjCs1tYH7E+qG1i53vogADHYtiFknRF678I=;
+	s=korg; t=1719940445;
+	bh=UotsEWMsy1dHkwX3yk9bPRVtooNNAM1iQfWrL7zfrnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mS4J2TAHMI24UgM7v+jMZunFy7ngLF+NYrthZhWyITTH80srei4v1nLk4EMc9vVMX
-	 mcW0mC5tLhxw17CUxRgJrCC7/z7SUZRtXu1XOTIt3gsiuEZAsbXBs+R/wDdOWT+o9f
-	 geZdmln0NeMmkTGdLlqBLmfLsaYtThZUWCvMrZo4=
+	b=DaKt3qvYOLWRqaVfsdOd0GT98POjDkNgn4x5VZDSMDJ7qus98omx4SuUU/CH4jKjx
+	 6xaWSEbHg+vAKupRqKMX2+QGUIAl3mR8yXqzytq2Q9nj+paHvkmmLVj9Hdh/as8wMs
+	 W9qxRn8KucbveqKbwMWStmoYvBE3tVXba2aDWMd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Crescent Hsieh <crescentcy.hsieh@moxa.com>,
-	Andy Shevchenko <andy@kernel.org>
-Subject: [PATCH 6.9 156/222] tty: serial: 8250: Fix port count mismatch with the device
-Date: Tue,  2 Jul 2024 19:03:14 +0200
-Message-ID: <20240702170249.941264180@linuxfoundation.org>
+	Udit Kumar <u-kumar1@ti.com>
+Subject: [PATCH 6.9 157/222] serial: 8250_omap: Implementation of Errata i2310
+Date: Tue,  2 Jul 2024 19:03:15 +0200
+Message-ID: <20240702170249.979424911@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -51,58 +49,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Crescent Hsieh <crescentcy.hsieh@moxa.com>
+From: Udit Kumar <u-kumar1@ti.com>
 
-commit 0ac18dac43103ab1df6d26ec9a781c0126f83ced upstream.
+commit 9d141c1e615795eeb93cd35501ad144ee997a826 upstream.
 
-Normally, the number of ports is indicated by the third digit of the
-device ID on Moxa PCI serial boards. For example, `0x1121` indicates a
-device with 2 ports.
+As per Errata i2310[0], Erroneous timeout can be triggered,
+if this Erroneous interrupt is not cleared then it may leads
+to storm of interrupts, therefore apply Errata i2310 solution.
 
-However, `CP116E_A_A` and `CP116E_A_B` are exceptions; they have 8
-ports, but the third digit of the device ID is `6`.
+[0] https://www.ti.com/lit/pdf/sprz536 page 23
 
-This patch introduces a function to retrieve the number of ports on Moxa
-PCI serial boards, addressing the issue described above.
-
-Fixes: 37058fd5d239 ("tty: serial: 8250: Add support for MOXA Mini PCIe boards")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Crescent Hsieh <crescentcy.hsieh@moxa.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Link: https://lore.kernel.org/r/20240617063058.18866-1-crescentcy.hsieh@moxa.com
+Fixes: b67e830d38fa ("serial: 8250: 8250_omap: Fix possible interrupt storm on K3 SoCs")
+Cc: stable@vger.kernel.org
+Signed-off-by: Udit Kumar <u-kumar1@ti.com>
+Link: https://lore.kernel.org/r/20240619105903.165434-1-u-kumar1@ti.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_pci.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/tty/serial/8250/8250_omap.c |   25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_pci.c
-+++ b/drivers/tty/serial/8250/8250_pci.c
-@@ -1985,6 +1985,17 @@ enum {
- 	MOXA_SUPP_RS485 = BIT(2),
- };
+--- a/drivers/tty/serial/8250/8250_omap.c
++++ b/drivers/tty/serial/8250/8250_omap.c
+@@ -116,6 +116,10 @@
+ /* RX FIFO occupancy indicator */
+ #define UART_OMAP_RX_LVL		0x19
  
-+static unsigned short moxa_get_nports(unsigned short device)
-+{
-+	switch (device) {
-+	case PCI_DEVICE_ID_MOXA_CP116E_A_A:
-+	case PCI_DEVICE_ID_MOXA_CP116E_A_B:
-+		return 8;
-+	}
++/* Timeout low and High */
++#define UART_OMAP_TO_L                 0x26
++#define UART_OMAP_TO_H                 0x27
 +
-+	return FIELD_GET(0x00F0, device);
-+}
-+
- static bool pci_moxa_is_mini_pcie(unsigned short device)
- {
- 	if (device == PCI_DEVICE_ID_MOXA_CP102N	||
-@@ -2038,7 +2049,7 @@ static int pci_moxa_init(struct pci_dev
- {
- 	unsigned short device = dev->device;
- 	resource_size_t iobar_addr = pci_resource_start(dev, 2);
--	unsigned int num_ports = (device & 0x00F0) >> 4, i;
-+	unsigned int i, num_ports = moxa_get_nports(device);
- 	u8 val, init_mode = MOXA_RS232;
+ /*
+  * Copy of the genpd flags for the console.
+  * Only used if console suspend is disabled
+@@ -664,13 +668,24 @@ static irqreturn_t omap8250_irq(int irq,
  
- 	if (!(pci_moxa_supported_rs(dev) & MOXA_SUPP_RS232)) {
+ 	/*
+ 	 * On K3 SoCs, it is observed that RX TIMEOUT is signalled after
+-	 * FIFO has been drained, in which case a dummy read of RX FIFO
+-	 * is required to clear RX TIMEOUT condition.
++	 * FIFO has been drained or erroneously.
++	 * So apply solution of Errata i2310 as mentioned in
++	 * https://www.ti.com/lit/pdf/sprz536
+ 	 */
+ 	if (priv->habit & UART_RX_TIMEOUT_QUIRK &&
+-	    (iir & UART_IIR_RX_TIMEOUT) == UART_IIR_RX_TIMEOUT &&
+-	    serial_port_in(port, UART_OMAP_RX_LVL) == 0) {
+-		serial_port_in(port, UART_RX);
++		(iir & UART_IIR_RX_TIMEOUT) == UART_IIR_RX_TIMEOUT) {
++		unsigned char efr2, timeout_h, timeout_l;
++
++		efr2 = serial_in(up, UART_OMAP_EFR2);
++		timeout_h = serial_in(up, UART_OMAP_TO_H);
++		timeout_l = serial_in(up, UART_OMAP_TO_L);
++		serial_out(up, UART_OMAP_TO_H, 0xFF);
++		serial_out(up, UART_OMAP_TO_L, 0xFF);
++		serial_out(up, UART_OMAP_EFR2, UART_OMAP_EFR2_TIMEOUT_BEHAVE);
++		serial_in(up, UART_IIR);
++		serial_out(up, UART_OMAP_EFR2, efr2);
++		serial_out(up, UART_OMAP_TO_H, timeout_h);
++		serial_out(up, UART_OMAP_TO_L, timeout_l);
+ 	}
+ 
+ 	/* Stop processing interrupts on input overrun */
 
 
