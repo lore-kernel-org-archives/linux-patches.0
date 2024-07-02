@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D92291C0057;
-	Tue,  2 Jul 2024 17:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579D91BE876;
+	Tue,  2 Jul 2024 17:18:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940702; cv=none; b=MG8EPKicDAY6sw+NZ25WtovjumvYogK5HjVWhwbTIaFsh2Mjdx/PrqfYJnPuOW3P3MpW0c1NjHwsPpLiV1Ojt7M0EMZWBvwl41qxkLBxYEZ1n/Hgucb5XPj/PXwLulgei6kj7ijieJOKqkp85sJI3BvP9QzVIczmUyq4qN5vtF4=
+	t=1719940706; cv=none; b=OidPzT5Dlaf91lPQot+odeR+1PJSe65WRSRcSIkY1Nc4qT/7rktGFU40QxW+IWUJy9561Sc0iJY1Ub8SGmtL6Y8jI50H0K4+RI+8njKKBmmS1G1n7Zo5Q+RjnN/ErBAP3tvvEN6naPjYJLU7IWbHGxyYOe/DWV8Te6l/UeN58wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940702; c=relaxed/simple;
-	bh=wYvsTWB7CBe5hXOQxklPwAgSGTbCi57jbDgy6fvKl4g=;
+	s=arc-20240116; t=1719940706; c=relaxed/simple;
+	bh=lmtfx44iPpzHUTEEZyIpSXpJqnvDZT4xT72B1kDHryg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zbww+dY7iDFY077hcTBmj8XrVqcN4mKUG8O2BFoB5ULYd2zQaRstcWUHuLzidl0mzt8zl5GxMvteqHvT61zl04egTrX3p8WKSGFY+5SVIG3A/6jUSPn67nr0ZzY4NSpZzzpHzju3OqQCWsYTcqkjWhHOe0Qxh9THNMOAK62In8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IlA6LGvR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qZRv1YSvAAZJsdfQbYTr8Ssvb62CRVDRclKM5dyPzIEGIJTbinpZxJ/7d7n8r9P/UciHzOgapYA/uZYLNAMWgetPCl9dJ/5UWp5JReIaf6BhUgGjeglR6eOD9khsp22Jg/c7VgfBV6Dq2BlIOq/gY6cNdprR9XcT7Btg84+naNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=to+pakXY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IlA6LGvR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44CCDC116B1;
-	Tue,  2 Jul 2024 17:18:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="to+pakXY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAD12C116B1;
+	Tue,  2 Jul 2024 17:18:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940702;
-	bh=wYvsTWB7CBe5hXOQxklPwAgSGTbCi57jbDgy6fvKl4g=;
+	s=korg; t=1719940706;
+	bh=lmtfx44iPpzHUTEEZyIpSXpJqnvDZT4xT72B1kDHryg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IlA6LGvRV4TUj28VJg9UA42Xwo02L+kI2+RDbztSe8D/93RN80OUYYGiLXZ1ZBbL5
-	 Q+nmBDsmh0x0NyZELukjQoLOQXv7NRneZgmtZxmKFAcN5qzkI8Uy7SM6CNekse42JC
-	 JdVt+YLe9Jr8ZN6YT6O++GzyeaY1Mr1L2DwJtlt8=
+	b=to+pakXYDZAs1xCsargf8zuFYdhgyNzvfP198VNoC8yLJJVd/Yz6q//fFU2CFx5tx
+	 c80FF91C0Hd/1ITtD1k721sX9EaIULjUXTZkjQjFtGpfqCdouwVpxSm0Td9d+nel41
+	 aK+erI5xM5OJ8mdFazYBrQS1469ubF8PFcxx9UqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Schiller <ms@dev.tdt.de>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 012/163] MIPS: pci: lantiq: restore reset gpio polarity
-Date: Tue,  2 Jul 2024 19:02:06 +0200
-Message-ID: <20240702170233.518918073@linuxfoundation.org>
+Subject: [PATCH 6.6 013/163] selftests: mptcp: print_test out of verify_listener_events
+Date: Tue,  2 Jul 2024 19:02:07 +0200
+Message-ID: <20240702170233.556504198@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -51,71 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Schiller <ms@dev.tdt.de>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit 277a0363120276645ae598d8d5fea7265e076ae9 ]
+[ Upstream commit 8ebb44196585d3c9405fba1e409cf2312bca30ac ]
 
-Commit 90c2d2eb7ab5 ("MIPS: pci: lantiq: switch to using gpiod API") not
-only switched to the gpiod API, but also inverted / changed the polarity
-of the GPIO.
+verify_listener_events() helper will be exported into mptcp_lib.sh as a
+public function, but print_test() is invoked in it, which is a private
+function in userspace_pm.sh only. So this patch moves print_test() out of
+verify_listener_events().
 
-According to the PCI specification, the RST# pin is an active-low
-signal. However, most of the device trees that have been widely used for
-a long time (mainly in the openWrt project) define this GPIO as
-active-high and the old driver code inverted the signal internally.
-
-Apparently there are actually boards where the reset gpio must be
-operated inverted. For this reason, we cannot use the GPIOD_OUT_LOW/HIGH
-flag for initialization. Instead, we must explicitly set the gpio to
-value 1 in order to take into account any "GPIO_ACTIVE_LOW" flag that
-may have been set.
-
-In order to remain compatible with all these existing device trees, we
-should therefore keep the logic as it was before the commit.
-
-Fixes: 90c2d2eb7ab5 ("MIPS: pci: lantiq: switch to using gpiod API")
-Cc: stable@vger.kernel.org
-Signed-off-by: Martin Schiller <ms@dev.tdt.de>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://lore.kernel.org/r/20240308-upstream-net-next-20240308-selftests-mptcp-unification-v1-12-4f42c347b653@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: e874557fce1b ("selftests: mptcp: userspace_pm: fixed subtest names")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/pci/pci-lantiq.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ tools/testing/selftests/net/mptcp/userspace_pm.sh | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/arch/mips/pci/pci-lantiq.c b/arch/mips/pci/pci-lantiq.c
-index 80f7293166bb7..0dabee7a1c511 100644
---- a/arch/mips/pci/pci-lantiq.c
-+++ b/arch/mips/pci/pci-lantiq.c
-@@ -124,14 +124,14 @@ static int ltq_pci_startup(struct platform_device *pdev)
- 		clk_disable(clk_external);
+diff --git a/tools/testing/selftests/net/mptcp/userspace_pm.sh b/tools/testing/selftests/net/mptcp/userspace_pm.sh
+index 4c62114de0637..305a0f6716c38 100755
+--- a/tools/testing/selftests/net/mptcp/userspace_pm.sh
++++ b/tools/testing/selftests/net/mptcp/userspace_pm.sh
+@@ -917,12 +917,6 @@ verify_listener_events()
+ 	local saddr
+ 	local sport
  
- 	/* setup reset gpio used by pci */
--	reset_gpio = devm_gpiod_get_optional(&pdev->dev, "reset",
--					     GPIOD_OUT_LOW);
-+	reset_gpio = devm_gpiod_get_optional(&pdev->dev, "reset", GPIOD_ASIS);
- 	error = PTR_ERR_OR_ZERO(reset_gpio);
- 	if (error) {
- 		dev_err(&pdev->dev, "failed to request gpio: %d\n", error);
- 		return error;
- 	}
- 	gpiod_set_consumer_name(reset_gpio, "pci_reset");
-+	gpiod_direction_output(reset_gpio, 1);
+-	if [ $e_type = $LISTENER_CREATED ]; then
+-		print_test "CREATE_LISTENER $e_saddr:$e_sport"
+-	elif [ $e_type = $LISTENER_CLOSED ]; then
+-		print_test "CLOSE_LISTENER $e_saddr:$e_sport"
+-	fi
+-
+ 	type=$(mptcp_lib_evts_get_info type $evt $e_type)
+ 	family=$(mptcp_lib_evts_get_info family $evt $e_type)
+ 	sport=$(mptcp_lib_evts_get_info sport $evt $e_type)
+@@ -954,6 +948,7 @@ test_listener()
+ 	local listener_pid=$!
  
- 	/* enable auto-switching between PCI and EBU */
- 	ltq_pci_w32(0xa, PCI_CR_CLK_CTRL);
-@@ -194,10 +194,10 @@ static int ltq_pci_startup(struct platform_device *pdev)
+ 	sleep 0.5
++	print_test "CREATE_LISTENER 10.0.2.2:$client4_port"
+ 	verify_listener_events $client_evts $LISTENER_CREATED $AF_INET 10.0.2.2 $client4_port
  
- 	/* toggle reset pin */
- 	if (reset_gpio) {
--		gpiod_set_value_cansleep(reset_gpio, 1);
-+		gpiod_set_value_cansleep(reset_gpio, 0);
- 		wmb();
- 		mdelay(1);
--		gpiod_set_value_cansleep(reset_gpio, 0);
-+		gpiod_set_value_cansleep(reset_gpio, 1);
- 	}
- 	return 0;
+ 	# ADD_ADDR from client to server machine reusing the subflow port
+@@ -970,6 +965,7 @@ test_listener()
+ 	mptcp_lib_kill_wait $listener_pid
+ 
+ 	sleep 0.5
++	print_test "CLOSE_LISTENER 10.0.2.2:$client4_port"
+ 	verify_listener_events $client_evts $LISTENER_CLOSED $AF_INET 10.0.2.2 $client4_port
  }
+ 
 -- 
 2.43.0
 
