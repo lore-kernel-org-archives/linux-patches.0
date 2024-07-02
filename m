@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD841C0057;
-	Tue,  2 Jul 2024 17:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711191BE226;
+	Tue,  2 Jul 2024 17:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940685; cv=none; b=knZVki69h1x+DYFDTCQC0+RrAfmwUKtrnw5Ua5q3Egjw1gPL7kIQATsqkfaXsKVEG3fEff5xeONDHIaM6hf0ZHXxNh9Fmo05gW774jyQvMxvZ3cmWDggaa8x3gwxX5jgf17dAJA6Fhaes3j8/GjLBQe1pmNuhWBmbPJfktvID7E=
+	t=1719940689; cv=none; b=ODGzSAHKFXt6tKVbk7yk4aP9bsk8w+gFbV9TbeBc1wer0i7hK9m8VUZdd6/0KrXHv+IkZF+bidF3HQzzpRwNvJtMuFeaAZbYP5+SmuG5QvRCWVtlbdO3b63J5nlem2TwaumOtxAIlRUEEqlK027KzJA0Ekzn/Ji71mby1Y2DRAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940685; c=relaxed/simple;
-	bh=EON+gqEufkTPjkcJvb2LKu94Uj13qfooeC/bdqwFgY0=;
+	s=arc-20240116; t=1719940689; c=relaxed/simple;
+	bh=deOwfQEeSyoY4n8dzRwazHOz1bNLHSUABDSINAOTQVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oTIAPStTPctjJR/kKNJVp0eEeRqujLzoyYcXlsySxi/0eHkp1saDgylVXfFhQwn3PFv8LNOec/RVhvGa8qA/4WfoMBCQmQFFicvuPxImTHC+ocItcCtcSkC3Wv+b2egEGGGtLlUNPficYlRJYPWj61fmn6fmuHTzVC2QGo9NGLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVfK0B4/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O8+VRLEKsIRmF904ePqIRD73bclJ3cphleFqPyxUIUsOUWzVfJlSSt3Ku1MXUoTyCp5b59zKRWsd79QntFJGRtulJXk2BfGUkxBJm69ivEUC8d3uK8yj1JdlJmfy50ulF09T9lpWKYjpOmk9A5IBz9ylrr3Vna+Exy8xUx5GWQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zTIWNzP5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVfK0B4/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F146AC116B1;
-	Tue,  2 Jul 2024 17:18:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zTIWNzP5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2BCAC116B1;
+	Tue,  2 Jul 2024 17:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940685;
-	bh=EON+gqEufkTPjkcJvb2LKu94Uj13qfooeC/bdqwFgY0=;
+	s=korg; t=1719940689;
+	bh=deOwfQEeSyoY4n8dzRwazHOz1bNLHSUABDSINAOTQVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AVfK0B4/VLfszVK2GVrRYavPxtQL8FYWFuozactC36JVOt9Ah+d36yWpl99QIPfCd
-	 cx0SWA0+iF2gSb8/PM4U5fg/ElEWxYF1uhcc/bi4iXMnnkeal8a6L1ZR4l7iZ79zFc
-	 IfapPgM1qdYDbI7XXJoCGNY0+KEFCNj8umtgaqo0=
+	b=zTIWNzP5aoup7sWq2JS9BPYx8E3CJLWS+tV6x+juOd/YWZmnFNRpX7tFrOYRoXEyc
+	 hgXwsOjT53Xkac1eEwraJzzuMQeOUxEn23/d2qnNy/8bfSlNZuVC1zvkZotdu003fu
+	 bU7t4htLWmoFLMZykORDhAxgzEpa+gaQl7F9dHkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Jeff Layton <jlayton@kernel.org>,
-	netfs@lists.linux.dev,
-	v9fs@lists.linux.dev,
-	linux-afs@lists.infradead.org,
-	linux-cifs@vger.kernel.org,
-	linux-mm@kvack.org,
-	linux-fsdevel@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 222/222] netfs: Fix netfs_page_mkwrite() to flush conflicting data, not wait
-Date: Tue,  2 Jul 2024 19:04:20 +0200
-Message-ID: <20240702170252.473065522@linuxfoundation.org>
+Subject: [PATCH 6.9 215/222] reset: gpio: Fix missing gpiolib dependency for GPIO reset controller
+Date: Tue,  2 Jul 2024 19:04:13 +0200
+Message-ID: <20240702170252.205481301@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -59,47 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 9d66154f73b7c7007c3be1113dfb50b99b791f8f ]
+[ Upstream commit 01f6a84c7a3eaabafd787608d630db31c6904f5c ]
 
-Fix netfs_page_mkwrite() to use filemap_fdatawrite_range(), not
-filemap_fdatawait_range() to flush conflicting data.
+The GPIO reset controller uses gpiolib but there is no Kconfig
+dependency reflecting this fact, add one.
 
-Fixes: 102a7e2c598c ("netfs: Allow buffered shared-writeable mmap through netfs_page_mkwrite()")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/614300.1719228243@warthog.procyon.org.uk
-cc: Matthew Wilcox <willy@infradead.org>
-cc: Jeff Layton <jlayton@kernel.org>
-cc: netfs@lists.linux.dev
-cc: v9fs@lists.linux.dev
-cc: linux-afs@lists.infradead.org
-cc: linux-cifs@vger.kernel.org
-cc: linux-mm@kvack.org
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+With the addition of the controller to the arm64 defconfig this is
+causing build breaks for arm64 virtconfig in -next:
+
+aarch64-linux-gnu-ld: drivers/reset/core.o: in function `__reset_add_reset_gpio_lookup':
+/build/stage/linux/drivers/reset/core.c:861:(.text+0xccc): undefined reference to `gpio_device_find_by_fwnode'
+
+Fixes: cee544a40e44 ("reset: gpio: Add GPIO-based reset controller")
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20240325-reset-gpiolib-deps-v2-1-3ed2517f5f53@kernel.org
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/buffered_write.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/reset/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/netfs/buffered_write.c b/fs/netfs/buffered_write.c
-index 72e4fa233c526..d2ce0849bb53d 100644
---- a/fs/netfs/buffered_write.c
-+++ b/fs/netfs/buffered_write.c
-@@ -535,9 +535,9 @@ vm_fault_t netfs_page_mkwrite(struct vm_fault *vmf, struct netfs_group *netfs_gr
+diff --git a/drivers/reset/Kconfig b/drivers/reset/Kconfig
+index 85b27c42cf65b..f426b4c391796 100644
+--- a/drivers/reset/Kconfig
++++ b/drivers/reset/Kconfig
+@@ -68,6 +68,7 @@ config RESET_BRCMSTB_RESCAL
  
- 	if (netfs_folio_group(folio) != netfs_group) {
- 		folio_unlock(folio);
--		err = filemap_fdatawait_range(mapping,
--					      folio_pos(folio),
--					      folio_pos(folio) + folio_size(folio));
-+		err = filemap_fdatawrite_range(mapping,
-+					       folio_pos(folio),
-+					       folio_pos(folio) + folio_size(folio));
- 		switch (err) {
- 		case 0:
- 			ret = VM_FAULT_RETRY;
+ config RESET_GPIO
+ 	tristate "GPIO reset controller"
++	depends on GPIOLIB
+ 	help
+ 	  This enables a generic reset controller for resets attached via
+ 	  GPIOs.  Typically for OF platforms this driver expects "reset-gpios"
 -- 
 2.43.0
 
