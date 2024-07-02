@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A5DB16B394;
-	Tue,  2 Jul 2024 17:29:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD6A21514DC;
+	Tue,  2 Jul 2024 17:29:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941383; cv=none; b=fOJ5rhV4v1IumC9WUSwefYhiByR5euTEEGHbudSFHYSiuk4oksyySPpZbxyiD6mNS0m0FY0OnDfvl8NrEBB8x7qBJRps8uy8PHH+4Juoebfbr+sH1zRVhu9jzeJt6Qt24qBG0OjHX53dfDS3RLW/8App5VcNfSzCqieuwNeMvzk=
+	t=1719941386; cv=none; b=ES8gxEcJSOMgh/ffHhbUVk/e+GSt96BPHysJ9VJWLwoLF2OOqSzQlIyWUqCuM1GTlrvcqahwKwIey32gEtYQRpec87M5ZIyzIFilrEBF6snRRos4UubE6evQYabvemxm5bCg1wa3pM5NSx3n5ODVMuISWGZk1VsAjsWL23BkI08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941383; c=relaxed/simple;
-	bh=OWDXNZv3j+4JyBTwCu3/J3EoSI+hHXJqHKjKxOQK1uI=;
+	s=arc-20240116; t=1719941386; c=relaxed/simple;
+	bh=OjiZu7I9NU/c4fH945zFo2yj6m/p5Pf9Jhg8DfflOpk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TxovP3dvENBAhty+9vfmtDlqsXSAnQRA0/IoGPxBzvq/2ISpO8+OyKwTvTOI5jsxXvNEWsxF2xvG1CTUYY9itOIvB9jQUi7bjhqPxuBM+gIdcoUb4gY7zVcdseaHrN/YK/mjoJIB+oiRPGMdHUqnCY84WMvCH1w6Ds68U6NzDBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rwwAhbLf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PfZE2/wi2lR1G7cEHhUbLMU431lIstaBDdHKFFubT9njKLsCa72iYrAQkGoEk3/ctY02U/q5uhoYnt7oz/4EnO4PMxUqgpLi+J0BAHbyT9qznoKLetQabH2c+O37BIfBYetqdlwULXn9f+zBy8NCUTxSXAq2DdCELzS1ii7KyMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j0lemFa1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rwwAhbLf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BAC9C116B1;
-	Tue,  2 Jul 2024 17:29:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j0lemFa1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB33C116B1;
+	Tue,  2 Jul 2024 17:29:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941383;
-	bh=OWDXNZv3j+4JyBTwCu3/J3EoSI+hHXJqHKjKxOQK1uI=;
+	s=korg; t=1719941386;
+	bh=OjiZu7I9NU/c4fH945zFo2yj6m/p5Pf9Jhg8DfflOpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rwwAhbLf+EnZCD2c+XERMBmmyO7DB6NLoCQSZdNnPn3dVue4/yYpYY+vs/OxACRzW
-	 ZoLzh9H6OhgxkM6AlQ/E6TsUC7NGjxwzxXqSyqXHKal+2e3Or397oOrJG6T57JVe3K
-	 OWJ81aMlPpE/z9I5eZKpMOUCvDlrQoGUagBxljaw=
+	b=j0lemFa1uoH/UdJ/M84tIcsE6ZC/KoGM3jCUCIybtOX5LLdrEMsZ+tiA74VFMuWI5
+	 3ClsjepQZYTBJLUKRWbErmafKCFY7MkaBpBYOVzTVAjDPYnTt8YJ4c4MBweun8bBP9
+	 z04NLp0wlWLK/3RdP+Kvmr6+R/YQWM7JqUCjscUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dawei Li <dawei.li@shingroup.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Joachim Vandersmissen <git@jvdsn.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 047/128] net/dpaa2: Avoid explicit cpumask var allocation on stack
-Date: Tue,  2 Jul 2024 19:04:08 +0200
-Message-ID: <20240702170228.014714952@linuxfoundation.org>
+Subject: [PATCH 6.1 048/128] crypto: ecdh - explicitly zeroize private_key
+Date: Tue,  2 Jul 2024 19:04:09 +0200
+Message-ID: <20240702170228.051727350@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170226.231899085@linuxfoundation.org>
 References: <20240702170226.231899085@linuxfoundation.org>
@@ -51,70 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Li <dawei.li@shingroup.cn>
+From: Joachim Vandersmissen <git@jvdsn.com>
 
-[ Upstream commit d33fe1714a44ff540629b149d8fab4ac6967585c ]
+[ Upstream commit 73e5984e540a76a2ee1868b91590c922da8c24c9 ]
 
-For CONFIG_CPUMASK_OFFSTACK=y kernel, explicit allocation of cpumask
-variable on stack is not recommended since it can cause potential stack
-overflow.
+private_key is overwritten with the key parameter passed in by the
+caller (if present), or alternatively a newly generated private key.
+However, it is possible that the caller provides a key (or the newly
+generated key) which is shorter than the previous key. In that
+scenario, some key material from the previous key would not be
+overwritten. The easiest solution is to explicitly zeroize the entire
+private_key array first.
 
-Instead, kernel code should always use *cpumask_var API(s) to allocate
-cpumask var in config-neutral way, leaving allocation strategy to
-CONFIG_CPUMASK_OFFSTACK.
+Note that this patch slightly changes the behavior of this function:
+previously, if the ecc_gen_privkey failed, the old private_key would
+remain. Now, the private_key is always zeroized. This behavior is
+consistent with the case where params.key is set and ecc_is_key_valid
+fails.
 
-Use *cpumask_var API(s) to address it.
-
-Signed-off-by: Dawei Li <dawei.li@shingroup.cn>
-Link: https://lore.kernel.org/r/20240331053441.1276826-3-dawei.li@shingroup.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Joachim Vandersmissen <git@jvdsn.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ crypto/ecdh.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-index de62eee58a00e..bbbe7c5b5d35a 100644
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-@@ -2754,11 +2754,14 @@ static int dpaa2_eth_xdp_xmit(struct net_device *net_dev, int n,
- static int update_xps(struct dpaa2_eth_priv *priv)
- {
- 	struct net_device *net_dev = priv->net_dev;
--	struct cpumask xps_mask;
--	struct dpaa2_eth_fq *fq;
- 	int i, num_queues, netdev_queues;
-+	struct dpaa2_eth_fq *fq;
-+	cpumask_var_t xps_mask;
- 	int err = 0;
+diff --git a/crypto/ecdh.c b/crypto/ecdh.c
+index 80afee3234fbe..3049f147e0117 100644
+--- a/crypto/ecdh.c
++++ b/crypto/ecdh.c
+@@ -33,6 +33,8 @@ static int ecdh_set_secret(struct crypto_kpp *tfm, const void *buf,
+ 	    params.key_size > sizeof(u64) * ctx->ndigits)
+ 		return -EINVAL;
  
-+	if (!alloc_cpumask_var(&xps_mask, GFP_KERNEL))
-+		return -ENOMEM;
++	memset(ctx->private_key, 0, sizeof(ctx->private_key));
 +
- 	num_queues = dpaa2_eth_queue_count(priv);
- 	netdev_queues = (net_dev->num_tc ? : 1) * num_queues;
- 
-@@ -2768,16 +2771,17 @@ static int update_xps(struct dpaa2_eth_priv *priv)
- 	for (i = 0; i < netdev_queues; i++) {
- 		fq = &priv->fq[i % num_queues];
- 
--		cpumask_clear(&xps_mask);
--		cpumask_set_cpu(fq->target_cpu, &xps_mask);
-+		cpumask_clear(xps_mask);
-+		cpumask_set_cpu(fq->target_cpu, xps_mask);
- 
--		err = netif_set_xps_queue(net_dev, &xps_mask, i);
-+		err = netif_set_xps_queue(net_dev, xps_mask, i);
- 		if (err) {
- 			netdev_warn_once(net_dev, "Error setting XPS queue\n");
- 			break;
- 		}
- 	}
- 
-+	free_cpumask_var(xps_mask);
- 	return err;
- }
- 
+ 	if (!params.key || !params.key_size)
+ 		return ecc_gen_privkey(ctx->curve_id, ctx->ndigits,
+ 				       ctx->private_key);
 -- 
 2.43.0
 
