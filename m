@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDF7D178381;
-	Tue,  2 Jul 2024 17:08:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BF9C14293;
+	Tue,  2 Jul 2024 17:08:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940131; cv=none; b=lDVeL3V1CLnaNrO/vUILJjzs8j0wC2HYdavbIoNq8PJadzl65cFjkc+M5bhIbUm6rHbSTR3s7xy2YhPRPvMXTAgJ0HZi+fqKpsRDSQfjTcyKJJdiOYeCBlW2ST4xdLkwOdinfw1f8kh9KK54tP6gd5XkBjXrnuwYZIwVgFPsQd8=
+	t=1719940134; cv=none; b=GxsEb/XeqUpfbH8SHWRbUH2Kbv8Y4GTFecFaZBmiH8ZzzhoaRhy5TYZcYCdPNFMiNd4PAXJNLJyKBAc2oRlAYXlytsoox27mXg+BkB8CnL/PpYgElj3RnweEi5/rIognxD84RAK8jKdRS/EsQ42WDryN9fa3XwhkUr1GjnH1sqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940131; c=relaxed/simple;
-	bh=Z3pgO1sfuubEYt3JcV5z0P2bs/qF8XVc9ajFxCJi4SE=;
+	s=arc-20240116; t=1719940134; c=relaxed/simple;
+	bh=pUqIs3zw9Mt/gqgFanzTqyZ5uCpieLJd1Ly23bWk/XI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KKnmAZr2HzvRc2/SvjWEXwfC9UjvqlcjQMuhmOSwfi1przCeqPJ/rppAoS8ckmAUhOXR1pNELPWiWrNqw8zrNEIKBu+uPIpYiWy2dmUIDZsdnyVlEg9qa87eJCMi/R+scAqwIIP6yrffz/w+z31W93cf5t3odassF+pnLMa0RXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xyIso/08; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SOOkuxWG5lzxWmDnoQFnirTbiL0Jdd6njaZmLyVd4KxmWFj1eni5xNVpqFiN0eZ+UUxZRuGQI7ZKg3JndQFoqn0OPx8JZhi9JSEhix55lFeGa9rXGgYphEWiV73mYGZUUI+/79jhcYIpM6mnHYQav9IJIcoN9KS91mi+rqOqmug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zsM6/EVh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xyIso/08"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F11BC116B1;
-	Tue,  2 Jul 2024 17:08:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zsM6/EVh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B915C116B1;
+	Tue,  2 Jul 2024 17:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940130;
-	bh=Z3pgO1sfuubEYt3JcV5z0P2bs/qF8XVc9ajFxCJi4SE=;
+	s=korg; t=1719940133;
+	bh=pUqIs3zw9Mt/gqgFanzTqyZ5uCpieLJd1Ly23bWk/XI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xyIso/08XVII5XMwgNBlI4zlZxpN77jIznm58ps0F4T1WBVefEJ0gKs4j4LdtrUfD
-	 al+YUYg6XRrigGWM8pB4b/rSmpnSeuCaTjXvvIz2KzCnaTkHkrpuXda8dRH/nhKSVg
-	 v31NKJiRZCoCAAg5Jn4y+74EUg5SGBNLV6yyH3JY=
+	b=zsM6/EVhfQHCHvtQQER/yZ6Md4R0UpP9pem3oAO0jvkuYiuDMzrZcyhfzamPfIW49
+	 hiWE7GgY+h0ZcqIHAH0qPfQiRcaWVuNkHZhlQCe65YtiqhKvHsl6JrsWOfFDtxtFfR
+	 55NtSxg7F/WiuyCL0cxpMMKqsi7rpbKK9xKWGQlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 062/222] af_unix: Dont stop recv() at consumed ex-OOB skb.
-Date: Tue,  2 Jul 2024 19:01:40 +0200
-Message-ID: <20240702170246.353376939@linuxfoundation.org>
+Subject: [PATCH 6.9 063/222] af_unix: Fix wrong ioctl(SIOCATMARK) when consumed OOB skb is at the head.
+Date: Tue,  2 Jul 2024 19:01:41 +0200
+Message-ID: <20240702170246.391011673@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -53,67 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 36893ef0b661671ee64eb37bf5f345f33d2cabb7 ]
+[ Upstream commit e400cfa38bb0419cf1313e5494ea2b7d114e86d7 ]
 
-Currently, recv() is stopped at a consumed OOB skb even if a new
-OOB skb is queued and we can ignore the old OOB skb.
-
-  >>> from socket import *
-  >>> c1, c2 = socket(AF_UNIX, SOCK_STREAM)
-  >>> c1.send(b'hellowor', MSG_OOB)
-  8
-  >>> c2.recv(1, MSG_OOB)  # consume OOB data stays at middle of recvq.
-  b'r'
-  >>> c1.send(b'ld', MSG_OOB)
-  2
-  >>> c2.recv(10)          # recv() stops at the old consumed OOB
-  b'hellowo'               # should be 'hellowol'
-
-manage_oob() should not stop recv() at the old consumed OOB skb if
-there is a new OOB data queued.
-
-Note that TCP behaviour is apparently wrong in this test case because
-we can recv() the same OOB data twice.
+Even if OOB data is recv()ed, ioctl(SIOCATMARK) must return 1 when the
+OOB skb is at the head of the receive queue and no new OOB data is queued.
 
 Without fix:
 
-  #  RUN           msg_oob.no_peek.ex_oob_ahead_break ...
-  # msg_oob.c:138:ex_oob_ahead_break:AF_UNIX :hellowo
-  # msg_oob.c:139:ex_oob_ahead_break:Expected:hellowol
-  # msg_oob.c:141:ex_oob_ahead_break:Expected ret[0] (7) == expected_len (8)
-  # ex_oob_ahead_break: Test terminated by assertion
-  #          FAIL  msg_oob.no_peek.ex_oob_ahead_break
-  not ok 11 msg_oob.no_peek.ex_oob_ahead_break
+  #  RUN           msg_oob.no_peek.oob ...
+  # msg_oob.c:305:oob:Expected answ[0] (0) == oob_head (1)
+  # oob: Test terminated by assertion
+  #          FAIL  msg_oob.no_peek.oob
+  not ok 2 msg_oob.no_peek.oob
 
 With fix:
 
-  #  RUN           msg_oob.no_peek.ex_oob_ahead_break ...
-  # msg_oob.c:146:ex_oob_ahead_break:AF_UNIX :hellowol
-  # msg_oob.c:147:ex_oob_ahead_break:TCP     :helloworl
-  #            OK  msg_oob.no_peek.ex_oob_ahead_break
-  ok 11 msg_oob.no_peek.ex_oob_ahead_break
+  #  RUN           msg_oob.no_peek.oob ...
+  #            OK  msg_oob.no_peek.oob
+  ok 2 msg_oob.no_peek.oob
 
 Fixes: 314001f0bf92 ("af_unix: Add OOB support")
 Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/unix/af_unix.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
 diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 645ac77e4dda3..e0fea73317de8 100644
+index e0fea73317de8..24286ce0ef3ee 100644
 --- a/net/unix/af_unix.c
 +++ b/net/unix/af_unix.c
-@@ -2665,7 +2665,7 @@ static struct sk_buff *manage_oob(struct sk_buff *skb, struct sock *sk,
+@@ -3154,12 +3154,23 @@ static int unix_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
+ #if IS_ENABLED(CONFIG_AF_UNIX_OOB)
+ 	case SIOCATMARK:
+ 		{
++			struct unix_sock *u = unix_sk(sk);
+ 			struct sk_buff *skb;
+ 			int answ = 0;
  
- 		spin_lock(&sk->sk_receive_queue.lock);
- 
--		if (copied) {
-+		if (copied && (!u->oob_skb || skb == u->oob_skb)) {
- 			skb = NULL;
- 		} else if (flags & MSG_PEEK) {
- 			skb = skb_peek_next(skb, &sk->sk_receive_queue);
++			mutex_lock(&u->iolock);
++
+ 			skb = skb_peek(&sk->sk_receive_queue);
+-			if (skb && skb == READ_ONCE(unix_sk(sk)->oob_skb))
+-				answ = 1;
++			if (skb) {
++				struct sk_buff *oob_skb = READ_ONCE(u->oob_skb);
++
++				if (skb == oob_skb ||
++				    (!oob_skb && !unix_skb_len(skb)))
++					answ = 1;
++			}
++
++			mutex_unlock(&u->iolock);
++
+ 			err = put_user(answ, (int __user *)arg);
+ 		}
+ 		break;
 -- 
 2.43.0
 
