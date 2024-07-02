@@ -1,104 +1,117 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF921B583F;
-	Tue,  2 Jul 2024 14:48:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D961DFFC;
+	Tue,  2 Jul 2024 14:57:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719931734; cv=none; b=JfcoQi2+Jip5UrCIldMTS9+Vbm35e27h/ojLThptW4VUSsh/DW8zJ2ph4LhGXd5Hm0i+5g42Oy7l5+SB62C6flENqMzWzlQ+/KLgpvaM74sP96UvYQFbrG5X5gvrC+L6XF7fo3MjzZETPbvQRnY3ScFkssQmGcPhIOJi6R4eujg=
+	t=1719932232; cv=none; b=BTrzdAXOZyFziMdQu/Fulvj7IsJrzUHQ6f+ueWOnxMnv+foS7WjmbsKI6W7Ae88IJViBmPWdBmigE9qpQx58iZll9oRuN+TD8rrrWeJ76vG99zQl1Uz3AGjQhEbTOmBwpScLRuUpHfJz6AftxIk4XjvmgmfdOxvxNzVcOaWR8qM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719931734; c=relaxed/simple;
-	bh=6nM7P33MSykyTDjnm62rbDQplKtWiymkghofPsMaMPA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=dpcQxhLXUZ+xHm8VFSYeApTCXgeUnR5uNb7udtsnKCbCpLqCDTu3oCoumTUhh6yVNsn0bkyPY3Nqm3EOFaIptX7kbq6Sai1vxwpUZblzeiLMe4PPFEehrir/DkDAwmXt3dVUYJ42YeetU4kqxJtWXBVDqqxVz3y0YWzw7K0yZcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=grlDPDnN; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1719932232; c=relaxed/simple;
+	bh=tJJ5oDpsdhd4yOJL5nnPQ6va4IfZoOj+e5qS1B/EmZQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Blr7Qg/dDDsGXYAmX50exOg3NRU5lXORdRsZg9kppfyvbIOAd0j1pugQLk+wsuYElXeguac1kKYiJpcjfurxxHCpeb4L4SXJjUCBj4g4muDkQtBmn3YJ7s7KQWh6sK3wDU5b2cu9YCLYx1Q82nvz1H6sEDAJV4SXRbAPnm6/xCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n7DJoo8C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="grlDPDnN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECCE7C116B1;
-	Tue,  2 Jul 2024 14:48:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n7DJoo8C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E95DC116B1;
+	Tue,  2 Jul 2024 14:57:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719931733;
-	bh=6nM7P33MSykyTDjnm62rbDQplKtWiymkghofPsMaMPA=;
-	h=From:Date:Subject:To:Cc:From;
-	b=grlDPDnNujQAEKfRF0P/1fSNQduOUujHvXT1bZDSV/dvZShvannniXiPSKpTgSbjJ
-	 DEYv0GEF/+eiriFBUjwQ5d7YwjxCOoLyNTTamBFL3JCBLOmxhpF5kR4YnQI3hLxJ+a
-	 752XPRKF2xSaQadJ/xN8GxOcWvztplosmWGBt6BT2EqNeVR1UewveC0G4Ykczn5qym
-	 PnnYexgjtP0d7s1dQFgJEYzu/cmvINn8Ft7LsMZ1bAmq2ihB9aJTMJLDgVCEcSP7Ov
-	 u1OXVJNcoTghUYo+Fciii+qwUbTrOLO+9wi6KX0WZCyAmWhfsrEDM57KSiAISRjazO
-	 Lhv55qIKGXJng==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 02 Jul 2024 07:48:48 -0700
-Subject: [PATCH] power: supply: cros_charge-control: Avoid accessing
- attributes out of bounds
+	s=k20201202; t=1719932231;
+	bh=tJJ5oDpsdhd4yOJL5nnPQ6va4IfZoOj+e5qS1B/EmZQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=n7DJoo8C3IhVv5Jpg+hODp1pXKtpwYyq719rETqMdrxyi4/yEM4dM5GAOX0gRv8uk
+	 9R1f4p6ZJ4zLqPjG4Ycp/OcWO/JHO+FIpgg4HG9uCUSd8q/+GExkH95t+qxAM8nVhr
+	 2ap+ooyJ0YAzb+Nk7MKLMbAP8loSe5sUcNGfFH4FystXJVGRoiWIn3JhbD8usDJlHl
+	 6ytNK2RRy45FxddMQXE0YR6evC4iDFFHyJjPAGMmHnkH5Dvj7fT6kQFLPBFNvMr1nB
+	 obsC9lmOspEdEHuBiawqpZpTAkZ7r5XU/KqQ0kb9Hv6m/poM1Ns8BQWEM2pIUS35yN
+	 fjolOC4/73sIw==
+Date: Tue, 2 Jul 2024 15:57:05 +0100
+From: Will Deacon <will@kernel.org>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Robin Murphy <robin.murphy@arm.com>,
+	Eric Auger <eric.auger@redhat.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	Jerry Snitselaar <jsnitsel@redhat.com>,
+	Moritz Fischer <mdf@kernel.org>,
+	Michael Shavit <mshavit@google.com>,
+	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
+	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+Subject: Re: [PATCH v9 02/14] iommu/arm-smmu-v3: Start building a generic
+ PASID layer
+Message-ID: <20240702145705.GA4135@willie-the-truck>
+References: <0-v9-5cd718286059+79186-smmuv3_newapi_p2b_jgg@nvidia.com>
+ <2-v9-5cd718286059+79186-smmuv3_newapi_p2b_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240702-cros_charge-control-fix-clang-array-bounds-warning-v1-1-ae04d995cd1d@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAE8ThGYC/x2N2wrCMAyGX2Xk2kAtRcVXEZGuTTUwEkk9jbF3X
- /Dy+48LdDKmDudhAaMPd1Zx2O8GKI8sd0KuzhBDTOEYIhbTfnPL3CoqL9MJG/+wTJ7GbJZnHPU
- tteM3m7CL4ym1GtohxRzAh59G3vifXq7rugEPrgOThAAAAA==
-To: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas@weissschuh.net>, 
- Tzung-Bi Shih <tzungbi@kernel.org>, Benson Leung <bleung@chromium.org>
-Cc: Guenter Roeck <groeck@chromium.org>, Sebastian Reichel <sre@kernel.org>, 
- chrome-platform@lists.linux.dev, linux-pm@vger.kernel.org, 
- llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2030; i=nathan@kernel.org;
- h=from:subject:message-id; bh=6nM7P33MSykyTDjnm62rbDQplKtWiymkghofPsMaMPA=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDGktwiH/eg+0M804/NP2ArtjWqR867/Gq+1Pl+6IXGc1z
- diJ+/bPjlIWBjEuBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjARhVaGf2acfmnxi/M+ePeU
- ZWyvr2Sbuvyxi/r1mE/NL00yhDz+SzAyvOL3bJDUlYirufbaz2BT/8Rligl6UX8YIv9OkZuQ1by
- REwA=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2-v9-5cd718286059+79186-smmuv3_newapi_p2b_jgg@nvidia.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-Clang warns (or errors with CONFIG_WERROR=y):
+On Tue, Jun 25, 2024 at 09:37:33AM -0300, Jason Gunthorpe wrote:
+> Add arm_smmu_set_pasid()/arm_smmu_remove_pasid() which are to be used by
+> callers that already constructed the arm_smmu_cd they wish to program.
+> 
+> These functions will encapsulate the shared logic to setup a CD entry that
+> will be shared by SVA and S1 domain cases.
+> 
+> Prior fixes had already moved most of this logic up into
+> __arm_smmu_sva_bind(), move it to it's final home.
+> 
+> Following patches will relieve some of the remaining SVA restrictions:
+> 
+>  - The RID domain is a S1 domain and has already setup the STE to point to
+>    the CD table
+>  - The programmed PASID is the mm_get_enqcmd_pasid()
+>  - Nothing changes while SVA is running (sva_enable)
+> 
+> SVA invalidation will still iterate over the S1 domain's master list,
+> later patches will resolve that.
+> 
+> Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+> Tested-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+> Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  .../iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c   | 57 ++++++++++---------
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   | 32 ++++++++++-
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h   |  9 ++-
+>  3 files changed, 67 insertions(+), 31 deletions(-)
 
-  drivers/power/supply/cros_charge-control.c:319:2: error: array index 3 is past the end of the array (that has type 'struct attribute *[3]') [-Werror,-Warray-bounds]
-    319 |         priv->attributes[_CROS_CHCTL_ATTR_COUNT] = NULL;
-        |         ^                ~~~~~~~~~~~~~~~~~~~~~~
-  drivers/power/supply/cros_charge-control.c:49:2: note: array 'attributes' declared here
-     49 |         struct attribute *attributes[_CROS_CHCTL_ATTR_COUNT];
-        |         ^
-  1 error generated.
+[...]
 
-In earlier revisions of the driver, the attributes array in
-cros_chctl_priv had four elements with four distinct assignments but
-during review, the number of elements was changed to three through use
-of an enum and the assignments became a for loop, except for this one,
-which is now out of bounds. This assignment is no longer necessary
-because the size of the attributes array no longer accounts for it, so
-just remove it to clear up the warning.
+> @@ -611,10 +599,9 @@ void arm_smmu_sva_remove_dev_pasid(struct iommu_domain *domain,
+>  	struct arm_smmu_bond *bond = NULL, *t;
+>  	struct arm_smmu_master *master = dev_iommu_priv_get(dev);
+>  
+> +	arm_smmu_remove_pasid(master, to_smmu_domain(domain), id);
+> +
+>  	mutex_lock(&sva_lock);
+> -
+> -	arm_smmu_clear_cd(master, id);
 
-Fixes: c6ed48ef5259 ("power: supply: add ChromeOS EC based charge control driver")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/power/supply/cros_charge-control.c | 1 -
- 1 file changed, 1 deletion(-)
+This looks a bit alarming, as you're effectively moving the CD
+modification outside of the critical section. I assume we're relying on
+the iommu group mutex to serialise this in the caller? I can't see any
+consistent locking in the driver for arm_smmu_clear_cd().
 
-diff --git a/drivers/power/supply/cros_charge-control.c b/drivers/power/supply/cros_charge-control.c
-index 73d7f2dc0fa3..2dd8ddbd56bc 100644
---- a/drivers/power/supply/cros_charge-control.c
-+++ b/drivers/power/supply/cros_charge-control.c
-@@ -316,7 +316,6 @@ static int cros_chctl_probe(struct platform_device *pdev)
- 		sysfs_attr_init(&priv->device_attrs[i].attr);
- 		priv->attributes[i] = &priv->device_attrs[i].attr;
- 	}
--	priv->attributes[_CROS_CHCTL_ATTR_COUNT] = NULL;
- 	priv->group.is_visible = cros_chtl_attr_is_visible;
- 	priv->group.attrs = priv->attributes;
- 
+As an additional patch, perhaps we should consider documenting what each
+lock in the driver protects and the lock ordering requirements they
+have? We've got a few global locks with generic names and after a few
+rounds of refactoring it's really hard to know who's responsible for
+what, especially now that we have stale comments referring to
+arm_smmu_share_asid(). We've also grown a number of places where we
+drop a lock in the callee and immediately re-take it in the caller,
+which tends to be a source of bugs.
 
----
-base-commit: 3664706e875f84bd4e3fa25ed1c6e46934cb32cd
-change-id: 20240702-cros_charge-control-fix-clang-array-bounds-warning-b84fd0f642a0
+Thanks,
 
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+Will
