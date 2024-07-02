@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2EBA1BD002;
-	Tue,  2 Jul 2024 17:09:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F84BBE5A;
+	Tue,  2 Jul 2024 17:09:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940164; cv=none; b=coceicMPobYu1luutwAeS1Uvhb8i3bPDFcoL8gSJcFSbquAKfHs5Tzn73n6qqTWr1wvCZHTwvAr8HReXTJgsqiXuweD4gs0OE+s02rJjH6j0vo4eEi0t2jifVsTAYx7kwdwajJR2rcpTM1oJVzKNnWQ7Ds8neCNBCG+8d1t8f58=
+	t=1719940167; cv=none; b=cfafcFyfM20AaZj7EqYNTERvi3BdHoRG3eiTBjmripYz1tOMiAnEEfyiAvT36xpRZ5RtQG5dBamsykWLG9NTNKsoKWduAqEAhzZ/un65XbKUdS1qia+1ohHYOPowoJXknK5Rvpb4LFueNyndsm1tQuL/CLjJcFJ1UuFQ+dr29Fo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940164; c=relaxed/simple;
-	bh=h8SGg87h/5F7skgFxWGNvSN4LBstXx+PlLnlUk9AyVA=;
+	s=arc-20240116; t=1719940167; c=relaxed/simple;
+	bh=7xJL3FB2do9fC11Zl+S0a06nFqJpZwHOhXVU/K9i+EY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m2mmFMrue3w9FftX5t26398r9bVaDNDKw625Hj4m/+mowGQW4dT3Q2RUjNDIsco4ioloZ97L5lSXJmnkNwQ/B7RXqP4dT34/eso7byUHVTUWqlnxcPf2PEWxNqkC7ZgKqA6r91yJ+fJJUvbWQ7bAQ+g5CM1t3Dp1+1ANdV4UY/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wyEMzzgL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AHECuzCUDh19jqvESoJgJjeqwya0GitCpUMF6TwGSyF09WObKIf3eC/xE5Ki3ugw4EEMrM3Fq9Gp7IVjSTY8Gl5w6pHUQUoUFLbgZsUvBGhRSwoSdhaQAcUkDbWmf1QA7TJ/P+fo8/rcCP7Tf/IJkhmDTBCBQ1i8fyvARqPREKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sTQAB3br; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wyEMzzgL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BBADC116B1;
-	Tue,  2 Jul 2024 17:09:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sTQAB3br"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0A03C116B1;
+	Tue,  2 Jul 2024 17:09:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940163;
-	bh=h8SGg87h/5F7skgFxWGNvSN4LBstXx+PlLnlUk9AyVA=;
+	s=korg; t=1719940167;
+	bh=7xJL3FB2do9fC11Zl+S0a06nFqJpZwHOhXVU/K9i+EY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wyEMzzgLzY7KiRVkR0EyYo5BemHDFwzckdFWP5P7kprZwo9NBn6KbTeqYmyqsKswp
-	 lrZMEyYNMZZ2EJECpdFXEsp2X7WlKvDwy9ID29AnkAzWMxoKoXMVS2skAIFGrkSNP3
-	 SDZ/vcH637QRJqSUsW0eC453MVf7WXF/vaSB28Kk=
+	b=sTQAB3brbnXq0S93gbgJ2EYUKEnQ3AHrI2aaFaQy4Oilm8yH1tpxWgj7ITCUEvK/D
+	 uvEUQjStuKVN+EWFNVWQ9X+cDsqghPfoPpDDDSr0U67VH5amwjtyySvXT1OOWwc6Js
+	 YndF/H90UIBKtPyFmec/C4vM7CQwfVYG/FqH3xdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uros Bizjak <ubizjak@gmail.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Andy Lutomirski <luto@kernel.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Nirmoy Das <nirmoy.das@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 071/222] x86/fpu: Fix AMD X86_BUG_FXSAVE_LEAK fixup
-Date: Tue,  2 Jul 2024 19:01:49 +0200
-Message-ID: <20240702170246.694778248@linuxfoundation.org>
+Subject: [PATCH 6.9 072/222] drm/xe: Add a NULL check in xe_ttm_stolen_mgr_init
+Date: Tue,  2 Jul 2024 19:01:50 +0200
+Message-ID: <20240702170246.732865129@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -54,59 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uros Bizjak <ubizjak@gmail.com>
+From: Nirmoy Das <nirmoy.das@intel.com>
 
-[ Upstream commit 5d31174f3c8c465d9dbe88f6b9d1fe5716f44981 ]
+[ Upstream commit a6eff8f9c7e844cb24ccb188ca24abcd59734e74 ]
 
-The assembly snippet in restore_fpregs_from_fpstate() that implements
-X86_BUG_FXSAVE_LEAK fixup loads the value from a random variable,
-preferably the one that is already in the L1 cache.
+Add an explicit check to ensure that the mgr is not NULL.
 
-However, the access to fpinit_state via *fpstate pointer is not
-implemented correctly. The "m" asm constraint requires dereferenced
-pointer variable, otherwise the compiler just reloads the value
-via temporary stack slot. The current asm code reflects this:
-
-     mov    %rdi,(%rsp)
-     ...
-     fildl  (%rsp)
-
-With dereferenced pointer variable, the code does what the
-comment above the asm snippet says:
-
-     fildl  (%rdi)
-
-Also, remove the pointless %P operand modifier. The modifier is
-ineffective on non-symbolic references - it was used to prevent
-%rip-relative addresses in .altinstr sections, but FILDL in the
-.text section can use %rip-relative addresses without problems.
-
-Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: H. Peter Anvin <hpa@zytor.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/20240315081849.5187-1-ubizjak@gmail.com
+Cc: Matthew Auld <matthew.auld@intel.com>
+Signed-off-by: Nirmoy Das <nirmoy.das@intel.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240319130925.22399-1-nirmoy.das@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/fpu/core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/xe_ttm_stolen_mgr.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/x86/kernel/fpu/core.c b/arch/x86/kernel/fpu/core.c
-index 520deb411a702..1209c7aebb211 100644
---- a/arch/x86/kernel/fpu/core.c
-+++ b/arch/x86/kernel/fpu/core.c
-@@ -145,8 +145,8 @@ void restore_fpregs_from_fpstate(struct fpstate *fpstate, u64 mask)
- 		asm volatile(
- 			"fnclex\n\t"
- 			"emms\n\t"
--			"fildl %P[addr]"	/* set F?P to defined value */
--			: : [addr] "m" (fpstate));
-+			"fildl %[addr]"	/* set F?P to defined value */
-+			: : [addr] "m" (*fpstate));
- 	}
+diff --git a/drivers/gpu/drm/xe/xe_ttm_stolen_mgr.c b/drivers/gpu/drm/xe/xe_ttm_stolen_mgr.c
+index 3107d2a12426c..fb35e46d68b49 100644
+--- a/drivers/gpu/drm/xe/xe_ttm_stolen_mgr.c
++++ b/drivers/gpu/drm/xe/xe_ttm_stolen_mgr.c
+@@ -207,6 +207,11 @@ void xe_ttm_stolen_mgr_init(struct xe_device *xe)
+ 	u64 stolen_size, io_size, pgsize;
+ 	int err;
  
- 	if (use_xsave()) {
++	if (!mgr) {
++		drm_dbg_kms(&xe->drm, "Stolen mgr init failed\n");
++		return;
++	}
++
+ 	if (IS_SRIOV_VF(xe))
+ 		stolen_size = 0;
+ 	else if (IS_DGFX(xe))
 -- 
 2.43.0
 
