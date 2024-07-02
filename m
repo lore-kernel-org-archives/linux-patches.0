@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1882B1BE22A;
-	Tue,  2 Jul 2024 17:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2264B1BD519;
+	Tue,  2 Jul 2024 17:15:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940511; cv=none; b=hHb4Y2gowiPntfIm6HBtH6sjunFJCxURXKatUkK8AM7S7HwTWW64RkChAKG5mKDR51cgDm2URgBmHAYO4CnqQZsrnHp4yuti9sIjBcgFQUcw6nJXzYIMlUYMe7g0hZYWkah2B7B8Q4aflBnmY29PAXL204cHnzMAH3L5uZFhD8M=
+	t=1719940514; cv=none; b=arsB1+vJsKJolS6P0bscCJ2CVVtv8mV0VA+FTCf1fQkvp0QFn4musOq1Y/PPIYAXqgmMjuEPcYq3FiUEuFk6WnvH0hs8e4OPZhr3eluD9haNsmLduMagUZ+5BboK7YBWyY/eFBNm0Qr4bie569HVYhcTjVhxDQTpCIUzVlvmp2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940511; c=relaxed/simple;
-	bh=VGkN7Uxr6h3U8ybUL1JVNQYVEUfxN0KoTLSxEPGAe9Q=;
+	s=arc-20240116; t=1719940514; c=relaxed/simple;
+	bh=tn16fLeCbRaFXazyQLvClau7FzIbJX4dS+AoIuUPc5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PydsFvkInnLf3/Mgpdc9XjDB/PDcN6W4z+DfVUJu85r/qoKDmaHMNBKgXWcFfWJSoLj+IP6bE8VnFrA2HRPyaVByJ6VaRArACow6tVVyjSzkTd+iw1OYnkch4swQ9cL6JYmau+hb5KolacJAQNYWOMqKgkU2+qe9he10QRV2KhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ini+5ock; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n88Edo+1rZWE6FwoxReoiyTqaMlyiymgmBET96njnyBnNKW1/z/qCyyyIFmEpksk9kmWfFpIzeJFT5OG7Wav7x+7I0VHtC78zV8j3P+EBubfsJ9foj+x/z+02URh5buK7NykrOI7seRxMT+LCJxtBpuqzymb3zml16yL7cFjvyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=usZ0PdQT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ini+5ock"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 974C5C116B1;
-	Tue,  2 Jul 2024 17:15:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="usZ0PdQT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DC57C116B1;
+	Tue,  2 Jul 2024 17:15:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940511;
-	bh=VGkN7Uxr6h3U8ybUL1JVNQYVEUfxN0KoTLSxEPGAe9Q=;
+	s=korg; t=1719940514;
+	bh=tn16fLeCbRaFXazyQLvClau7FzIbJX4dS+AoIuUPc5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ini+5ockzqO//Mt5hKGZA7Yjl/SsUm3szysrvl+y7Dv/dAQWBKpD+/hdSda6QjSPi
-	 ZOh7LIxnEQnFvPXqmnA9qxYlG/laCRnrTjpzrqdyBSyk8mexgl8cgQGubmhgYRwlwe
-	 ZAgCY8271N25VYaIr9OW1hOv07r8TPrEzKo6mpj0=
+	b=usZ0PdQTawHwsrMljM6stsd/a6zAJ1sr6hwjwVyC6xAYGv4s5XiWFfarmHFQeG5PG
+	 0UezSeni3X+rrQb3rzQMelbjc2839vfVEICgDwEpQEqaF4SEHowxBaUhrj9+xIsXtQ
+	 yVRJjwu/0PF8c6UM/9E9ui7/Krsdp8e0exXpPr9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neal Liu <neal_liu@aspeedtech.com>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Jeremy Kerr <jk@codeconstruct.com.au>
-Subject: [PATCH 6.9 149/222] usb: gadget: aspeed_udc: fix device address configuration
-Date: Tue,  2 Jul 2024 19:03:07 +0200
-Message-ID: <20240702170249.671260622@linuxfoundation.org>
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.9 176/222] btrfs: zoned: fix initial free space detection
+Date: Tue,  2 Jul 2024 19:03:34 +0200
+Message-ID: <20240702170250.704082425@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -51,60 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeremy Kerr <jk@codeconstruct.com.au>
+From: Naohiro Aota <naohiro.aota@wdc.com>
 
-commit dba7567c2fbbf10a4de2471cdb0e16e5572dc007 upstream.
+commit b9fd2affe4aa99a4ca14ee87e1f38fea22ece52a upstream.
 
-In the aspeed UDC setup, we configure the UDC hardware with the assigned
-USB device address.
+When creating a new block group, it calls btrfs_add_new_free_space() to add
+the entire block group range into the free space accounting.
+__btrfs_add_free_space_zoned() checks if size == block_group->length to
+detect the initial free space adding, and proceed that case properly.
 
-However, we have an off-by-one in the bitmask, so we're only setting the
-lower 6 bits of the address (USB addresses being 7 bits, and the
-hardware bitmask being bits 0:6).
+However, if the zone_capacity == zone_size and the over-write speed is fast
+enough, the entire zone can be over-written within one transaction. That
+confuses __btrfs_add_free_space_zoned() to handle it as an initial free
+space accounting. As a result, that block group becomes a strange state: 0
+used bytes, 0 zone_unusable bytes, but alloc_offset == zone_capacity (no
+allocation anymore).
 
-This means that device enumeration fails if the assigned address is
-greater than 64:
+The initial free space accounting can properly be checked by checking
+alloc_offset too.
 
-[  344.607255] usb 1-1: new high-speed USB device number 63 using ehci-platform
-[  344.808459] usb 1-1: New USB device found, idVendor=cc00, idProduct=cc00, bcdDevice= 6.10
-[  344.817684] usb 1-1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
-[  344.825671] usb 1-1: Product: Test device
-[  344.831075] usb 1-1: Manufacturer: Test vendor
-[  344.836335] usb 1-1: SerialNumber: 00
-[  349.917181] usb 1-1: USB disconnect, device number 63
-[  352.036775] usb 1-1: new high-speed USB device number 64 using ehci-platform
-[  352.249432] usb 1-1: device descriptor read/all, error -71
-[  352.696740] usb 1-1: new high-speed USB device number 65 using ehci-platform
-[  352.909431] usb 1-1: device descriptor read/all, error -71
-
-Use the correct mask of 0x7f (rather than 0x3f), and generate this
-through the GENMASK macro, so we have numbers that correspond exactly
-to the hardware register definition.
-
-Fixes: 055276c13205 ("usb: gadget: add Aspeed ast2600 udc driver")
-Cc: stable@vger.kernel.org
-Reviewed-by: Neal Liu <neal_liu@aspeedtech.com>
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
-Link: https://lore.kernel.org/r/20240613-aspeed-udc-v2-1-29501ce9cb7a@codeconstruct.com.au
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 98173255bddd ("btrfs: zoned: calculate free space from zone capacity")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/aspeed_udc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/btrfs/free-space-cache.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/udc/aspeed_udc.c
-+++ b/drivers/usb/gadget/udc/aspeed_udc.c
-@@ -66,8 +66,8 @@
- #define USB_UPSTREAM_EN			BIT(0)
+--- a/fs/btrfs/free-space-cache.c
++++ b/fs/btrfs/free-space-cache.c
+@@ -2697,7 +2697,7 @@ static int __btrfs_add_free_space_zoned(
+ 	u64 offset = bytenr - block_group->start;
+ 	u64 to_free, to_unusable;
+ 	int bg_reclaim_threshold = 0;
+-	bool initial = (size == block_group->length);
++	bool initial = ((size == block_group->length) && (block_group->alloc_offset == 0));
+ 	u64 reclaimable_unusable;
  
- /* Main config reg */
--#define UDC_CFG_SET_ADDR(x)		((x) & 0x3f)
--#define UDC_CFG_ADDR_MASK		(0x3f)
-+#define UDC_CFG_SET_ADDR(x)		((x) & UDC_CFG_ADDR_MASK)
-+#define UDC_CFG_ADDR_MASK		GENMASK(6, 0)
- 
- /* Interrupt ctrl & status reg */
- #define UDC_IRQ_EP_POOL_NAK		BIT(17)
+ 	WARN_ON(!initial && offset + size > block_group->zone_capacity);
 
 
