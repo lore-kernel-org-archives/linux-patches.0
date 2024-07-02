@@ -1,82 +1,173 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1EA1494BC;
-	Tue,  2 Jul 2024 22:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9659D1DA302;
+	Tue,  2 Jul 2024 22:25:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719957627; cv=none; b=GZatGM0c0M0ytO1gvkPoK3Jc/VH4XtncbkZdfhXJoOT1/jekdvxcMixA079f1KQk21ED+AZDplHi7ZhOQ4AqZw1W9GEoya+RXTSWw6Cs34Bw5b0wtnFRH8nspPTaHekD8g8tx3fMEw7fASP2VqgThU2swPcDfBOSLBA+yThoZ68=
+	t=1719959150; cv=none; b=Qr3Vz+BU3Gpd3Pr/2Ij6rd0zhL6LoIHYRu6VoEwR1DU/lcTw7tnbtuUKRNTZ2lQs0gnDMQBLJDg1stMC67skgaXl+c0tHatjOPiG86m0xt957jK6wsgsPoJdVqH390BgH6q4hlfT31WEEI9qP4GCh6kMpxyqCQh98wF+rk0FHBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719957627; c=relaxed/simple;
-	bh=vlbE0Gyo7sOV6hR8YSh/Jr8L0EFK2OAZEA5MRP7sHE8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rJsHFqRpU8rNO2AKLv5JfImX4fNPKbi2J7XxfCdN81iOWXtGmN7PSC+ehE3+k3gtZysXRT1qw4hYNvsBt9qwG6vbMUEywCjo9FvdbXtQtiUuK9SfYTVn1dAr6EFT3lMkQCoM6Y6XqVI40IhqZFhP47A3yA5Nu1AeCvhPtAdN2Ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OuSlEY/U; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1719959150; c=relaxed/simple;
+	bh=xPUDoFRaSIIRZKlVHUF3wDN0LVVADMlRmKTOrYQ/+WQ=;
+	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
+	 Subject:From:Cc:To:Date; b=lhlC9INB25LEj3me44bTf+/5nhxyTuPfnlAX02zYT14cAeud/IUHIMMJY79rHWRrRU/uH8//CIBCKU6E+xPgNsjpXS3Eh1BbvJkkhhZprXWXlbv9NmP3lpxaPXq8k4jVUbGmjQaCIByTgsC4vI9zsJxerVAvRDoCKeuvxFZ2vWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NLPZewcd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OuSlEY/U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1355BC116B1;
-	Tue,  2 Jul 2024 22:00:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NLPZewcd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE852C116B1;
+	Tue,  2 Jul 2024 22:25:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719957626;
-	bh=vlbE0Gyo7sOV6hR8YSh/Jr8L0EFK2OAZEA5MRP7sHE8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=OuSlEY/UJMDyweRAnUTcCVpNUjsqRE4+Ijfoa+57+2sieJHQTIVofAwU8e7ccpWAw
-	 S/D1BcNXFZ+a5b/ZOJucfar5/y7glAb6X9JIOtFCZOvjJ1YOSHKjH1tUC+CaNmj2zK
-	 u2GR6Joh6UWwFi1J9dPb97y8pg6B8Dl9XEg41CLXVum1pXbob0gVODVMKtO+lYljwW
-	 /XnaQn3q4ost5pgbu/ohyxy9ZYGVHM7bsWY3KVRsUYQZgdIJDu04/DBFxpJqzoDZ3f
-	 vg1ngwfuPDLwS+uuWOh/iEir0UjVCGNQgGm8/monEuMpyRfS/M1z3PWtejLZLGxkec
-	 TqRqqVJs14K4w==
-Date: Tue, 2 Jul 2024 23:00:20 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com
-Subject: Re: [PATCH 6.1 000/128] 6.1.97-rc1 review
-Message-ID: <c0cdcf48-6be4-4df2-97f3-5561fd8f81a0@sirena.org.uk>
-References: <20240702170226.231899085@linuxfoundation.org>
+	s=k20201202; t=1719959150;
+	bh=xPUDoFRaSIIRZKlVHUF3wDN0LVVADMlRmKTOrYQ/+WQ=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=NLPZewcddc/jeneoRtTxm3HZYkNS05iJd83e+K5Yn+iMQ/xm1D4HupLCMLI8KTDeL
+	 dXKL+ZYzLOkJ4gS7b5UdXjzYJMV3VcjaRrFc87cisdMGPqePm7Jbl855imMgfn8ORN
+	 v9kWaZy3oUESimmQfiwFQIoPrExNGpT7hdg3e2cFwLoDDaNeD4/4RtLrAtkc+vub46
+	 6/b1sCFW0fOIY9i6Da8J9UXAw3D+s0iOTMhmkbczwfDyj/zpfPOKss/wVnmYh/kfYV
+	 QlA14ALAvcJRoxdL/PDwJUsuv34EdOQ5hOpb/sHDkBIcdLOh62NepK/j46YFP473Ea
+	 yg/laUu19IetA==
+Message-ID: <c88fbeb65cfda6c568b4d8d69215139f.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="HE2EiyA1jZRU7HBG"
-Content-Disposition: inline
-In-Reply-To: <20240702170226.231899085@linuxfoundation.org>
-X-Cookie: Phasers locked on target, Captain.
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CABVgOS=4Qnb7pvc_mmkPGdyVFGNWU9wdyn9p-QBKKG+rbJGtfA@mail.gmail.com>
+References: <20240603223811.3815762-1-sboyd@kernel.org> <20240603223811.3815762-12-sboyd@kernel.org> <CABVgOS=4Qnb7pvc_mmkPGdyVFGNWU9wdyn9p-QBKKG+rbJGtfA@mail.gmail.com>
+Subject: Re: [PATCH v5 11/11] clk: Add KUnit tests for clks registered with struct clk_parent_data
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org, Brendan Higgins <brendan.higgins@linux.dev>, Rae Moar <rmoar@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rafael J . Wysocki <rafael@kernel.org>, Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>, Daniel Latypov <dlatypov@google.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Maxime Ripard <maxime@cerno.tech>
+To: David Gow <davidgow@google.com>
+Date: Tue, 02 Jul 2024 15:25:47 -0700
+User-Agent: alot/0.10
 
+Quoting David Gow (2024-06-13 00:56:08)
+> On Tue, 4 Jun 2024 at 06:38, Stephen Boyd <sboyd@kernel.org> wrote:
+> >
+> > Test that clks registered with 'struct clk_parent_data' work as
+> > intended and can find their parents.
+> >
+> > Cc: Christian Marangi <ansuelsmth@gmail.com>
+> > Cc: Brendan Higgins <brendan.higgins@linux.dev>
+> > Cc: David Gow <davidgow@google.com>
+> > Cc: Rae Moar <rmoar@google.com>
+> > Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+> > ---
+>=20
+> This seems good to me overall, but will break if we can't compile the
+> dtbo.o file. Maybe these need to live behind a  #if
+> IS_ENABLED(CONFIG_OF) or equivalent.
+>=20
+> Also, there's a cast to kunit_action_t* which needs to use a wrapper.
+>=20
+> Otherwise,
+> Reviewed-by: David Gow <davidgow@google.com>
+>=20
+> Cheers,
+> -- David
+>=20
+> >  drivers/clk/Kconfig                         |   1 +
+> >  drivers/clk/Makefile                        |   3 +-
+> >  drivers/clk/clk_parent_data_test.h          |  10 +
+> >  drivers/clk/clk_test.c                      | 451 +++++++++++++++++++-
+> >  drivers/clk/kunit_clk_parent_data_test.dtso |  28 ++
+> >  5 files changed, 491 insertions(+), 2 deletions(-)
+> >  create mode 100644 drivers/clk/clk_parent_data_test.h
+> >  create mode 100644 drivers/clk/kunit_clk_parent_data_test.dtso
+> >
+> > diff --git a/drivers/clk/Kconfig b/drivers/clk/Kconfig
+> > index f649f2a0279c..c33fdf9fdcd6 100644
+> > --- a/drivers/clk/Kconfig
+> > +++ b/drivers/clk/Kconfig
+> > @@ -508,6 +508,7 @@ config CLK_KUNIT_TEST
+> >         tristate "Basic Clock Framework Kunit Tests" if !KUNIT_ALL_TESTS
+> >         depends on KUNIT
+> >         default KUNIT_ALL_TESTS
+> > +       select OF_OVERLAY if OF
+> >         help
+> >           Kunit tests for the common clock framework.
+> >
+> > diff --git a/drivers/clk/Makefile b/drivers/clk/Makefile
+> > index 7b57e3d22cee..ed4e1a0e6943 100644
+> > --- a/drivers/clk/Makefile
+> > +++ b/drivers/clk/Makefile
+> > @@ -2,7 +2,8 @@
+> >  # common clock types
+> >  obj-$(CONFIG_HAVE_CLK)         +=3D clk-devres.o clk-bulk.o clkdev.o
+> >  obj-$(CONFIG_COMMON_CLK)       +=3D clk.o
+> > -obj-$(CONFIG_CLK_KUNIT_TEST)   +=3D clk_test.o
+> > +obj-$(CONFIG_CLK_KUNIT_TEST)   +=3D clk_test.o \
+> > +                                  kunit_clk_parent_data_test.dtbo.o
+>=20
+> This breaks if CONFIG_OF isn't enabled, as there's no rule to compile it:
+> make[5]: *** No rule to make target
+> 'drivers/clk/kunit_clk_parent_data_test.dtbo.o', needed by
+> 'drivers/clk/modules.order'.  Stop.
+>=20
 
---HE2EiyA1jZRU7HBG
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Ah, I see that I need to set CONFIG_DTC or the DT compiler (dtc) won't
+be built. Maybe I should just select OF_OVERLAY instead of being nice
+and letting OF be disabled? The problem is that I can't test the
+CONFIG_OF=3Dn case easily then.
 
-On Tue, Jul 02, 2024 at 07:03:21PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.97 release.
-> There are 128 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+For now I'll go with 'select DTC', but it really feels like we should
+just get rid of that Kconfig and build 'dtc' if it is needed.
 
-Tested-by: Mark Brown <broonie@kernel.org>
+> > diff --git a/drivers/clk/clk_test.c b/drivers/clk/clk_test.c
+> > index 39e2b5ff4f51..bdf3c4bb2243 100644
+> > --- a/drivers/clk/clk_test.c
+> > +++ b/drivers/clk/clk_test.c
+> > @@ -4,12 +4,19 @@
+> >   */
+> >  #include <linux/clk.h>
+> >  #include <linux/clk-provider.h>
+> > +#include <linux/of.h>
+> > +#include <linux/platform_device.h>
+> >
+> >  /* Needed for clk_hw_get_clk() */
+> >  #include "clk.h"
+[...]
+> > +
+> > +/**
+> > + * struct clk_register_clk_parent_data_of_ctx - Context for clk_parent=
+_data OF tests
+> > + * @np: device node of clk under test
+> > + * @hw: clk_hw for clk under test
+> > + */
+> > +struct clk_register_clk_parent_data_of_ctx {
+> > +       struct device_node *np;
+> > +       struct clk_hw hw;
+> > +};
+> > +
+> > +static int clk_register_clk_parent_data_of_test_init(struct kunit *tes=
+t)
+> > +{
+> > +       struct clk_register_clk_parent_data_of_ctx *ctx;
+> > +
+> > +       KUNIT_ASSERT_EQ(test, 0,
+> > +                       of_overlay_apply_kunit(test, kunit_clk_parent_d=
+ata_test));
+> > +
+> > +       ctx =3D kunit_kzalloc(test, sizeof(*ctx), GFP_KERNEL);
+> > +       if (!ctx)
+> > +               return -ENOMEM;
+> > +       test->priv =3D ctx;
+> > +
+> > +       ctx->np =3D of_find_compatible_node(NULL, NULL, "test,clk-paren=
+t-data");
+> > +       if (!ctx->np)
+> > +               return -ENODEV;
+> > +
+> > +       return kunit_add_action_or_reset(test, (kunit_action_t *)&of_no=
+de_put, ctx->np);
+>=20
+> We should use an action wrapper here (KUNIT_DEFINE_ACTION_WRAPPER()),
+> as casting function pointers to kunit_action_t* breaks control-flow
+> integrity.
 
---HE2EiyA1jZRU7HBG
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmaEeHMACgkQJNaLcl1U
-h9AfsAf/bZ33S2MTKdriq3XXgm0b5qcEdFc7PbwEKKIaT46xNl+X4jBm6FX87ihc
-emnakbb9L6ijFjkaANCvSwJdv/cDxiXMJgOjUcY3l/e3uWCGMGMGplVRW0fxPCzh
-mJ+A1IC5EArhaCYdu6eTwnyBnlFZ99QFk5tqAgXy2rk2gNam8udsI8vkl3AxmgSS
-iayMyU/GRD/v4maEspChZeYxsbC7qizOkNhjaAC0lM7kOK+7+Qn6TzSOXHRoGnUx
-H4+570f/yFfclBmOzoIp9DD7tACoWdMmYh5gJSRAfRWQcUqyG1AmaWoAtYwplOen
-au5PMg2XJQQrV1SgtvBHX2okI3hVvg==
-=tcFX
------END PGP SIGNATURE-----
-
---HE2EiyA1jZRU7HBG--
+Got it, thanks. Maybe there should be an of_node_put_kunit_exit() helper th=
+at
+does that and can be used anywhere.
