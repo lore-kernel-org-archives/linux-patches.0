@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC5A15B0FE;
-	Tue,  2 Jul 2024 17:12:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBD11BC08A;
+	Tue,  2 Jul 2024 17:12:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940351; cv=none; b=bxK7AdFO+grFfkPYlM1m7End0V/Nvq5YqsxZkkMBmDjgVRrVPRntFRsEHoPtkBWQmFIJYo9NpfKHgDwiWN6+e+E1MXB5ONuakRb0ry7QhMJv7oO94zOKZjVwbCW7byaMgPkuV4oRlL7cM0hzjge5mG7bQOs5PO4K9T2TnPRSQ68=
+	t=1719940354; cv=none; b=Nospi/u27ytj0ZqJJR1oSF5/7T4oJAu3gEK74l9PQAxC1Mi8qjIalv9Qd7ueuPmEATbriyc3idm06RLOr5D54W/x1D6c91GpjTwoXgdteHXUl/HItu7RE1LU37BK/kx6WcNkRuz7jHaYw4jw0urQPBXIr+u1qAn+p0areIDWxIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940351; c=relaxed/simple;
-	bh=BJ515ChxV1Ba3PIJthzHAdQFkPYTLorsUFYjijEuK94=;
+	s=arc-20240116; t=1719940354; c=relaxed/simple;
+	bh=BZTXdX8Q5VEQllcLGqCcejHQwoB1n6mTrYkZqVEYHLY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IVBArNWfrrS8txXy/mbocpFtli+13pK1CIf6kKe6D/8ii11oKHHXAChqGrAss45N9E/mAo3g1j+Ra/oy4IFYwgthtGewuOoPu+A59L0eiHLBcTwK9DF7TS4Gcg1EapPd5l7xkojJM9PtE4EJvtKwckIDYqeyjvvl8PKqW+TbhrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GgJ35raZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uFXqBMlhR2wSh5GiGkBGSx3WHh/GCZOB/kWkUaEJIJv879qZgq4xSbW94SNjRZPF5PDgEGbd1yFAaAmDvQbXZ4VFRGqs2yuAlLjjAMCYIuBRX7NJazeLDUWAY2juXHvbJtgdIV3irV5AEQWZAJ4j6RLYQkhYQm8C6ODBRXmmLYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s12Uri1H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GgJ35raZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5065BC116B1;
-	Tue,  2 Jul 2024 17:12:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s12Uri1H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFDE6C116B1;
+	Tue,  2 Jul 2024 17:12:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940350;
-	bh=BJ515ChxV1Ba3PIJthzHAdQFkPYTLorsUFYjijEuK94=;
+	s=korg; t=1719940354;
+	bh=BZTXdX8Q5VEQllcLGqCcejHQwoB1n6mTrYkZqVEYHLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GgJ35raZuO8mRJGlCk6WlZMdn7MnUQl0Y+Ogc4J9zv+HAwHlzJPdiBhsn5o3z8wlK
-	 4Qwh2/KT8v4KQ1CQ2Nf5K0wFGlWwQvOlw7vGxfemudRhe3CMulfn++vagwCV/rYubI
-	 yqb6CF+shtRHtNAaZbYOYeZth0m2JS4lXyC/BkCU=
+	b=s12Uri1HBqJ4j0+ryDw9vqjoP+u7m2jC1SElPMxqwSNXQpqf1t5oLbEOG9x0sJ2HS
+	 JEPHm6ec/NhpR900aLJ2N+07vaIMkj2zYpCpgrKIgAliG+1bDgU5TIlhDY8u1JQkEI
+	 E4gXrJKC00PMtbuCY2FnE6VFGAKPddEv2GcNX8U8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark-PK Tsai <mark-pk.tsai@mediatek.com>,
+	Thayne Harbaugh <thayne@mastodonlabs.com>,
 	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 129/222] kbuild: doc: Update default INSTALL_MOD_DIR from extra to updates
-Date: Tue,  2 Jul 2024 19:02:47 +0200
-Message-ID: <20240702170248.901406118@linuxfoundation.org>
+Subject: [PATCH 6.9 130/222] kbuild: Fix build target deb-pkg: ln: failed to create hard link
+Date: Tue,  2 Jul 2024 19:02:48 +0200
+Message-ID: <20240702170248.939516728@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -51,60 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark-PK Tsai <mark-pk.tsai@mediatek.com>
+From: Thayne Harbaugh <thayne@mastodonlabs.com>
 
-[ Upstream commit 07d4cc2e7444356faac6552d0688a1670cc9d749 ]
+[ Upstream commit c61566538968ffb040acc411246fd7ad38c7e8c9 ]
 
-The default INSTALL_MOD_DIR was changed from 'extra' to
-'updates' in commit b74d7bb7ca24 ("kbuild: Modify default
-INSTALL_MOD_DIR from extra to updates").
+The make deb-pkg target calls debian-orig which attempts to either
+hard link the source .tar to the build-output location or copy the
+source .tar to the build-output location.  The test to determine
+whether to ln or cp is incorrectly expanded by Make and consequently
+always attempts to ln the source .tar.  This fix corrects the escaping
+of '$' so that the test is expanded by the shell rather than by Make
+and appropriately selects between ln and cp.
 
-This commit updates the documentation to align with the
-latest kernel.
-
-Fixes: b74d7bb7ca24 ("kbuild: Modify default INSTALL_MOD_DIR from extra to updates")
-Signed-off-by: Mark-PK Tsai <mark-pk.tsai@mediatek.com>
+Fixes: b44aa8c96e9e ("kbuild: deb-pkg: make .orig tarball a hard link if possible")
+Signed-off-by: Thayne Harbaugh <thayne@mastodonlabs.com>
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/kbuild/modules.rst | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ scripts/Makefile.package | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/kbuild/modules.rst b/Documentation/kbuild/modules.rst
-index a1f3eb7a43e23..131863142cbb3 100644
---- a/Documentation/kbuild/modules.rst
-+++ b/Documentation/kbuild/modules.rst
-@@ -128,7 +128,7 @@ executed to make module versioning work.
- 
- 	modules_install
- 		Install the external module(s). The default location is
--		/lib/modules/<kernel_release>/extra/, but a prefix may
-+		/lib/modules/<kernel_release>/updates/, but a prefix may
- 		be added with INSTALL_MOD_PATH (discussed in section 5).
- 
- 	clean
-@@ -417,7 +417,7 @@ directory:
- 
- And external modules are installed in:
- 
--	/lib/modules/$(KERNELRELEASE)/extra/
-+	/lib/modules/$(KERNELRELEASE)/updates/
- 
- 5.1 INSTALL_MOD_PATH
- --------------------
-@@ -438,10 +438,10 @@ And external modules are installed in:
- -------------------
- 
- 	External modules are by default installed to a directory under
--	/lib/modules/$(KERNELRELEASE)/extra/, but you may wish to
-+	/lib/modules/$(KERNELRELEASE)/updates/, but you may wish to
- 	locate modules for a specific functionality in a separate
- 	directory. For this purpose, use INSTALL_MOD_DIR to specify an
--	alternative name to "extra."::
-+	alternative name to "updates."::
- 
- 		$ make INSTALL_MOD_DIR=gandalf -C $KDIR \
- 		       M=$PWD modules_install
+diff --git a/scripts/Makefile.package b/scripts/Makefile.package
+index 38653f3e81088..bf016af8bf8ad 100644
+--- a/scripts/Makefile.package
++++ b/scripts/Makefile.package
+@@ -103,7 +103,7 @@ debian-orig: private version = $(shell dpkg-parsechangelog -S Version | sed 's/-
+ debian-orig: private orig-name = $(source)_$(version).orig.tar$(debian-orig-suffix)
+ debian-orig: mkdebian-opts = --need-source
+ debian-orig: linux.tar$(debian-orig-suffix) debian
+-	$(Q)if [ "$(df  --output=target .. 2>/dev/null)" = "$(df --output=target $< 2>/dev/null)" ]; then \
++	$(Q)if [ "$$(df  --output=target .. 2>/dev/null)" = "$$(df --output=target $< 2>/dev/null)" ]; then \
+ 		ln -f $< ../$(orig-name); \
+ 	else \
+ 		cp $< ../$(orig-name); \
 -- 
 2.43.0
 
