@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D57E1BE229;
-	Tue,  2 Jul 2024 17:10:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35B151BD002;
+	Tue,  2 Jul 2024 17:10:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940250; cv=none; b=hlKC3YQp2PVlaK9ldOuUgdffN7HdgOifLocxCtPBbkJ/ysFRVJ8dDe9lH797/bibcRLWegn59a1mZcYPQK7ZlrD0tQsg0Vx3PzH1D170YQ2EXo7A8SCLG+uFUnnKBzHAAA3yTk1UlewhGHTyrPq1cd8yXj86sibsoDqd5gw92dc=
+	t=1719940253; cv=none; b=UAnUBrM33wrGLQreq3gc37qj5rKyMDlyagPE5rvY/GkKyHdBJ2bxiOKd/PxDjDCzw4wZ0yGrcP4GYsugkAGVDFYaCtukEyr/Qe84wgy4NeLEoF2wffIUEcJfI4dsgOCqyH/M2EaqhWkJb1IhUBTxAvU5HWzar2qDRAcDvAYyoS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940250; c=relaxed/simple;
-	bh=VIgq2G8BX6aAsMF/8EgmsVLg/hE9bgtUo7jymFecdZ8=;
+	s=arc-20240116; t=1719940253; c=relaxed/simple;
+	bh=YM1UqZYlirbQ/OiNPQ/F45/cvQDfU6TxyuYMWRFse8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FsME2mx6dWhxaIic1i0rFw+pqjsZ0vd+HoWXBwflGcgxsnj/wtOF4T0flfkq0/df5ynjgujeDOvHGXq+3ixdgIWe4IOYVlnPa84XonKNWNACU5SUsDKQAPSxCzsq9eEmg3RP3LTWyCP3U5POLrgWa2bWmnFmAl0gkmSfA+g+1+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sUaR+RTR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UHj6tzx4AxU/QfNOM/ZQO4BQwx4uYizJznUm30wmR/i59M8OlT0UkhmHSq2KtvsftaaHEGfuW0ew2J3lAXPU28Yav4j+6RW0k5WpobpTPl1rSWzxJrv2tuhWsIN5u7PDnmjX6X4urwe8tznSQPRFGtl7Zp3kR4iFpYedF+xVKFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ugc/2ulE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sUaR+RTR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69172C4AF07;
-	Tue,  2 Jul 2024 17:10:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ugc/2ulE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABF13C116B1;
+	Tue,  2 Jul 2024 17:10:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940249;
-	bh=VIgq2G8BX6aAsMF/8EgmsVLg/hE9bgtUo7jymFecdZ8=;
+	s=korg; t=1719940253;
+	bh=YM1UqZYlirbQ/OiNPQ/F45/cvQDfU6TxyuYMWRFse8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sUaR+RTR0HuGRbPjgj90giwnFgod/LWSxYifXh4L7c5gwrJuJw+3h5I1oqa/cKbbW
-	 CE9GZJDuOoo+tjnJuCaTH5NIlq57G5I1sGYhNUrR2o2TXd8USl3ib6jsoC1eKVGcnD
-	 Lo/4ar7DD/QfhzGV59rwoRNn/uXFxY7p21I8C1ws=
+	b=ugc/2ulEuF6wDj/4KF2EmUNpxqxDfVYzVXBD5QPo3LzKzBUiAHAJ8ZqElLB/VMjbT
+	 2wyiTceKbjYQe9EbFSvD3jyFDcWln7+llQ5FWSwzEK/LE63PJtESetOoL5s/qdQwyC
+	 NqkFoLg/ZzP7iifquW9noeEsdWZY34e6iuL7bgeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Dawei Li <dawei.li@shingroup.cn>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 098/222] gpio: davinci: Validate the obtained number of IRQs
-Date: Tue,  2 Jul 2024 19:02:16 +0200
-Message-ID: <20240702170247.715179465@linuxfoundation.org>
+Subject: [PATCH 6.9 081/222] net/iucv: Avoid explicit cpumask var allocation on stack
+Date: Tue,  2 Jul 2024 19:01:59 +0200
+Message-ID: <20240702170247.075783909@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 References: <20240702170243.963426416@linuxfoundation.org>
@@ -51,45 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Dawei Li <dawei.li@shingroup.cn>
 
-[ Upstream commit 7aa9b96e9a73e4ec1771492d0527bd5fc5ef9164 ]
+[ Upstream commit be4e1304419c99a164b4c0e101c7c2a756b635b9 ]
 
-Value of pdata->gpio_unbanked is taken from Device Tree. In case of broken
-DT due to any error this value can be any. Without this value validation
-there can be out of chips->irqs array boundaries access in
-davinci_gpio_probe().
+For CONFIG_CPUMASK_OFFSTACK=y kernel, explicit allocation of cpumask
+variable on stack is not recommended since it can cause potential stack
+overflow.
 
-Validate the obtained nirq value so that it won't exceed the maximum
-number of IRQs per bank.
+Instead, kernel code should always use *cpumask_var API(s) to allocate
+cpumask var in config-neutral way, leaving allocation strategy to
+CONFIG_CPUMASK_OFFSTACK.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Use *cpumask_var API(s) to address it.
 
-Fixes: eb3744a2dd01 ("gpio: davinci: Do not assume continuous IRQ numbering")
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Link: https://lore.kernel.org/r/20240618144344.16943-1-amishin@t-argos.ru
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Dawei Li <dawei.li@shingroup.cn>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240331053441.1276826-2-dawei.li@shingroup.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-davinci.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/iucv/iucv.c | 26 ++++++++++++++++++--------
+ 1 file changed, 18 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpio/gpio-davinci.c b/drivers/gpio/gpio-davinci.c
-index bb499e3629125..1d0175d6350b7 100644
---- a/drivers/gpio/gpio-davinci.c
-+++ b/drivers/gpio/gpio-davinci.c
-@@ -225,6 +225,11 @@ static int davinci_gpio_probe(struct platform_device *pdev)
- 	else
- 		nirq = DIV_ROUND_UP(ngpio, 16);
+diff --git a/net/iucv/iucv.c b/net/iucv/iucv.c
+index a4ab615ca3e3e..5e37a8ceebcb8 100644
+--- a/net/iucv/iucv.c
++++ b/net/iucv/iucv.c
+@@ -520,7 +520,7 @@ static void iucv_setmask_mp(void)
+  */
+ static void iucv_setmask_up(void)
+ {
+-	cpumask_t cpumask;
++	static cpumask_t cpumask;
+ 	int cpu;
  
-+	if (nirq > MAX_INT_PER_BANK) {
-+		dev_err(dev, "Too many IRQs!\n");
-+		return -EINVAL;
-+	}
+ 	/* Disable all cpu but the first in cpu_irq_cpumask. */
+@@ -628,23 +628,33 @@ static int iucv_cpu_online(unsigned int cpu)
+ 
+ static int iucv_cpu_down_prep(unsigned int cpu)
+ {
+-	cpumask_t cpumask;
++	cpumask_var_t cpumask;
++	int ret = 0;
+ 
+ 	if (!iucv_path_table)
+ 		return 0;
+ 
+-	cpumask_copy(&cpumask, &iucv_buffer_cpumask);
+-	cpumask_clear_cpu(cpu, &cpumask);
+-	if (cpumask_empty(&cpumask))
++	if (!alloc_cpumask_var(&cpumask, GFP_KERNEL))
++		return -ENOMEM;
 +
- 	chips = devm_kzalloc(dev, sizeof(*chips), GFP_KERNEL);
- 	if (!chips)
- 		return -ENOMEM;
++	cpumask_copy(cpumask, &iucv_buffer_cpumask);
++	cpumask_clear_cpu(cpu, cpumask);
++	if (cpumask_empty(cpumask)) {
+ 		/* Can't offline last IUCV enabled cpu. */
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto __free_cpumask;
++	}
+ 
+ 	iucv_retrieve_cpu(NULL);
+ 	if (!cpumask_empty(&iucv_irq_cpumask))
+-		return 0;
++		goto __free_cpumask;
++
+ 	smp_call_function_single(cpumask_first(&iucv_buffer_cpumask),
+ 				 iucv_allow_cpu, NULL, 1);
+-	return 0;
++
++__free_cpumask:
++	free_cpumask_var(cpumask);
++	return ret;
+ }
+ 
+ /**
 -- 
 2.43.0
 
