@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246D71BE24E;
-	Tue,  2 Jul 2024 17:20:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 366A71BE23F;
+	Tue,  2 Jul 2024 17:20:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719940834; cv=none; b=T8m68N5MwJhEr8ioJyGNnIpN0tRPTwVbVIPNRO7eZZ7Xv2hzHpWHwMOVQVXed6g3Ct2vtH4OtSv/ieatx/1z19s20gtMqVj5RqVQSfM88gjJdHHpjMboKQocy4I51lUmxZmmmXwFAx7a/nQmEnJxk2z3dydxjZNaDB6rKGylwFw=
+	t=1719940837; cv=none; b=fkW9wDVjggb2zuYa7lE0LidVYPbvZUkN7x2Ge2JFsImxX1exsc63LarVq8s7LkeZjF32FhienbzSBn5v4Axrh7i+qP8wmVWt8cYNiNo9F9BUYjnxXU2CQ6E+T/a7q9tGD5ws+GgWeSpexb2QqDFeW1+QY99M1uZ3CAXJnSBzJh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719940834; c=relaxed/simple;
-	bh=qiDpRR+WZfjYtdpNQuDyuQvcVLtHNYv988MSm9f48Ro=;
+	s=arc-20240116; t=1719940837; c=relaxed/simple;
+	bh=nnqQToZES+f9GhmD+VNADMymRkL/EHP6W+BbyrQ0EMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XBcnELmBHUOzwT+ud0TocfZkAoiMS5g/9uplYEG7Bs/pkoPXo9N3vc7hasaFzhve46rG5ESTbgPRxnS2Pe8vRHyDjkkTJMDeRKuBeMWM5IFDp7PReCdGFwdRLNLHdgEZIb8Of4oN0QGfb0+tKFEeOKebaQ6CMsG2qdOmbGfzcEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PYh9bel+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V4MLq93+a8cTmkK/HKCyYZdFLbUwFB5KgPj14mp8cq2QxR9kNrY0EL7bTjCcO4OiX27NMwyMSP5gxEwFjhcy1vsv5okehIKXfcbuLb3d3/dayS3fGQ/SqVYVAbBxLvRt2/mOS1EH2e0ymxbST65C7hX1E3U9opn9+9r7gIHTe+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w99xcWyh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PYh9bel+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DBDDC4AF0A;
-	Tue,  2 Jul 2024 17:20:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w99xcWyh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96E54C116B1;
+	Tue,  2 Jul 2024 17:20:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719940833;
-	bh=qiDpRR+WZfjYtdpNQuDyuQvcVLtHNYv988MSm9f48Ro=;
+	s=korg; t=1719940837;
+	bh=nnqQToZES+f9GhmD+VNADMymRkL/EHP6W+BbyrQ0EMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PYh9bel+8kQi+IX0bHiv7/Y/AuuhchUD2bNPJ0fsD7PasfxYvNY42uJEi8zLxhoDU
-	 kaf1ze81PUlQS5V/nGoJOcAyoj/2IAqFU7xoVx0kOYNv+aLaFqNnxcwNSyLkRmhooK
-	 to4h3I2uk1o+nW5qqlAybfc7VDT++HnY0p/sEmuw=
+	b=w99xcWyhPCaz0DwpZkK8xQZmZIdl2JSPpjYcvKoMeWQjihT65R9Xy8pKJqda1CvyI
+	 YT0gEuhO0MWeyhf584TJO2O6lHa2RC+qELkadifNEfouwgUn7s4ELYhpDHUjyi05J8
+	 Xc8so8FfUH2PnILs3uLJ2rd1qBPqX2t1y/IelpTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	"linux-hardening@vger.kernel.org" <linux-hardening@vger.kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 050/163] net: mana: Fix possible double free in error handling path
-Date: Tue,  2 Jul 2024 19:02:44 +0200
-Message-ID: <20240702170234.956842021@linuxfoundation.org>
+Subject: [PATCH 6.6 051/163] bpf: Take return from set_memory_ro() into account with bpf_prog_lock_ro()
+Date: Tue,  2 Jul 2024 19:02:45 +0200
+Message-ID: <20240702170234.995247911@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -51,37 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 1864b8224195d0e43ddb92a8151f54f6562090cc ]
+[ Upstream commit 7d2cc63eca0c993c99d18893214abf8f85d566d8 ]
 
-When auxiliary_device_add() returns error and then calls
-auxiliary_device_uninit(), callback function adev_release
-calls kfree(madev). We shouldn't call kfree(madev) again
-in the error handling path. Set 'madev' to NULL.
+set_memory_ro() can fail, leaving memory unprotected.
 
-Fixes: a69839d4327d ("net: mana: Add support for auxiliary device")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Link: https://patch.msgid.link/20240625130314.2661257-1-make24@iscas.ac.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Check its return and take it into account as an error.
+
+Link: https://github.com/KSPP/linux/issues/7
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: linux-hardening@vger.kernel.org <linux-hardening@vger.kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Message-ID: <286def78955e04382b227cb3e4b6ba272a7442e3.1709850515.git.christophe.leroy@csgroup.eu>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microsoft/mana/mana_en.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/filter.h | 5 +++--
+ kernel/bpf/core.c      | 4 +++-
+ kernel/bpf/verifier.c  | 8 ++++++--
+ 3 files changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
-index e443d69e39511..a09001d22b49c 100644
---- a/drivers/net/ethernet/microsoft/mana/mana_en.c
-+++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-@@ -2752,6 +2752,8 @@ static int add_adev(struct gdma_dev *gd)
- 	if (ret)
- 		goto init_fail;
+diff --git a/include/linux/filter.h b/include/linux/filter.h
+index 5090e940ba3e4..5a2800ec94ea6 100644
+--- a/include/linux/filter.h
++++ b/include/linux/filter.h
+@@ -842,14 +842,15 @@ bpf_ctx_narrow_access_offset(u32 off, u32 size, u32 size_default)
  
-+	/* madev is owned by the auxiliary device */
-+	madev = NULL;
- 	ret = auxiliary_device_add(adev);
- 	if (ret)
- 		goto add_fail;
+ #define bpf_classic_proglen(fprog) (fprog->len * sizeof(fprog->filter[0]))
+ 
+-static inline void bpf_prog_lock_ro(struct bpf_prog *fp)
++static inline int __must_check bpf_prog_lock_ro(struct bpf_prog *fp)
+ {
+ #ifndef CONFIG_BPF_JIT_ALWAYS_ON
+ 	if (!fp->jited) {
+ 		set_vm_flush_reset_perms(fp);
+-		set_memory_ro((unsigned long)fp, fp->pages);
++		return set_memory_ro((unsigned long)fp, fp->pages);
+ 	}
+ #endif
++	return 0;
+ }
+ 
+ static inline void bpf_jit_binary_lock_ro(struct bpf_binary_header *hdr)
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index 05445a4d55181..bdbce41d1bb4a 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -2373,7 +2373,9 @@ struct bpf_prog *bpf_prog_select_runtime(struct bpf_prog *fp, int *err)
+ 	}
+ 
+ finalize:
+-	bpf_prog_lock_ro(fp);
++	*err = bpf_prog_lock_ro(fp);
++	if (*err)
++		return fp;
+ 
+ 	/* The tail call compatibility check can only be done at
+ 	 * this late stage as we need to determine, if we deal
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 171045b6956d9..aa546355918cb 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -18625,10 +18625,14 @@ static int jit_subprogs(struct bpf_verifier_env *env)
+ 	 * bpf_prog_load will add the kallsyms for the main program.
+ 	 */
+ 	for (i = 1; i < env->subprog_cnt; i++) {
+-		bpf_prog_lock_ro(func[i]);
+-		bpf_prog_kallsyms_add(func[i]);
++		err = bpf_prog_lock_ro(func[i]);
++		if (err)
++			goto out_free;
+ 	}
+ 
++	for (i = 1; i < env->subprog_cnt; i++)
++		bpf_prog_kallsyms_add(func[i]);
++
+ 	/* Last step: make now unused interpreter insns from main
+ 	 * prog consistent for later dump requests, so they can
+ 	 * later look the same as if they were interpreted only.
 -- 
 2.43.0
 
