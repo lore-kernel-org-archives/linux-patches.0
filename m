@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57EB215218A;
-	Tue,  2 Jul 2024 17:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE76A15218A;
+	Tue,  2 Jul 2024 17:25:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941103; cv=none; b=qHO5zoR+eyZAoEyMarACYrtj5kuzOwL0sqNodFiSI1vHPwkScvk+HOKx8/un/MzLLhyPPlhfUtp7N+1t8Ie42kaLPMH7cl6sfEChQU85M/uAb/KiHs6aFX4FLXVxBE8whh0hGgvutqCqC0bimXnzOjxDK5RDgurgQ7aN+1rTTn0=
+	t=1719941106; cv=none; b=JBHeEQfGjXO6HpnRnpwIL8ZWos1tA5GWsViI7FdGh6X7aI9NGOpKQzFXhNhEWeUkViIoaeGJIZtSNl4+HgQ0C8h1CyEI5wIhmHa+uMG+1/vwMuA8o0NXU062CIP9Amq8M4VGnzibQxZHo/XJz5wsy/fvOlYhvZbdVX2OBOGONSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941103; c=relaxed/simple;
-	bh=4gd+f/Awi64kZKeajVqo1SJX8UzaT4fGXVT+bTN8w2Y=;
+	s=arc-20240116; t=1719941106; c=relaxed/simple;
+	bh=ofQVzxrEVV72kLG31fWOLSRiwGpjATxPmXCylRuElvA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dGxMXFNZPAavhg4k4F9DAK53CljULew/COJunE09Bj1yj+8ny4V9dLJYIlJcpP8Zvxx06TAo3uVfgOlOAjPVxxqgo/twxSvQ1+CFW5gZTMUmj8Ro61a++ZiYZe3iD9SKQDENwfRJHYh4eBy1csdYQ3Obe4a/fN2axh1hF87E/X4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TX9mjiNC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mmR78iVSEyTG4b5qxuOIod3VPIGHK3uZhS2ULHCPKlFeqcwnapMnjtoG+7T6N6acObP9+anEAj7ifL4/mJXwUK0IAwhVIwbP8JQUKcVBWZqveYpoINUJQNJFCVuQZU0unS4+H7YnBUu3BgtLrjfZfOw6IxNt+i40CUKIfNOFaXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y8xBC9gt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TX9mjiNC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD79EC116B1;
-	Tue,  2 Jul 2024 17:25:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8xBC9gt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E72AFC116B1;
+	Tue,  2 Jul 2024 17:25:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941103;
-	bh=4gd+f/Awi64kZKeajVqo1SJX8UzaT4fGXVT+bTN8w2Y=;
+	s=korg; t=1719941106;
+	bh=ofQVzxrEVV72kLG31fWOLSRiwGpjATxPmXCylRuElvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TX9mjiNCfQQ1flefUULhtjTtqV92NUqwlNO8CAeuY7xxDpRYXxyD14JEIx8L5/dYS
-	 uXCTV9cecP5Dk02Mq83EUg+dOX4BxHEMWtZm+Nj1oLZlIiT1raDxee9zYgUtBDy1aF
-	 hEWHuS6C/Eb9pET2WrlEK6mveVK/LAWNuAsLCRFY=
+	b=y8xBC9gt1tNuY/wktxJnmDxkx1kCBUCSlx/MuC7Doi1spqATZdHgTdRWePtHMmNeu
+	 TmNPUGZs4zb9qVfZYU8mLwQTLs9oLYrm/5HL4fDg6A1xX2gcIzf9wWwwq/HAww75Lh
+	 qIkfuj8NCoqagXMmnqj9sVsexqQD1rvH0JofC1fk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuntao Wang <ytcoode@gmail.com>,
+	Tianli Xiong <xiongtianli@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.6 128/163] cpu/hotplug: Fix dynstate assignment in __cpuhp_setup_state_cpuslocked()
-Date: Tue,  2 Jul 2024 19:04:02 +0200
-Message-ID: <20240702170237.895539631@linuxfoundation.org>
+Subject: [PATCH 6.6 129/163] irqchip/loongson-liointc: Set different ISRs for different cores
+Date: Tue,  2 Jul 2024 19:04:03 +0200
+Message-ID: <20240702170237.934989575@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
 References: <20240702170233.048122282@linuxfoundation.org>
@@ -50,61 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuntao Wang <ytcoode@gmail.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 932d8476399f622aa0767a4a0a9e78e5341dc0e1 upstream.
+commit a9c3ee5d0fdb069b54902300df6ac822027f3b0a upstream.
 
-Commit 4205e4786d0b ("cpu/hotplug: Provide dynamic range for prepare
-stage") added a dynamic range for the prepare states, but did not handle
-the assignment of the dynstate variable in __cpuhp_setup_state_cpuslocked().
+The liointc hardware provides separate Interrupt Status Registers (ISR) for
+each core. The current code uses always the ISR of core #0, which works
+during boot because by default all interrupts are routed to core #0.
 
-This causes the corresponding startup callback not to be invoked when
-calling __cpuhp_setup_state_cpuslocked() with the CPUHP_BP_PREPARE_DYN
-parameter, even though it should be.
+When the interrupt routing changes in the firmware configuration then this
+causes interrupts to be lost because they are not configured in the
+corresponding core.
 
-Currently, the users of __cpuhp_setup_state_cpuslocked(), for one reason or
-another, have not triggered this bug.
+Use the core index to access the correct ISR instead of a hardcoded 0.
 
-Fixes: 4205e4786d0b ("cpu/hotplug: Provide dynamic range for prepare stage")
-Signed-off-by: Yuntao Wang <ytcoode@gmail.com>
+[ tglx: Massaged changelog ]
+
+Fixes: 0858ed035a85 ("irqchip/loongson-liointc: Add ACPI init support")
+Co-developed-by: Tianli Xiong <xiongtianli@loongson.cn>
+Signed-off-by: Tianli Xiong <xiongtianli@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240515134554.427071-1-ytcoode@gmail.com
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20240622043338.1566945-1-chenhuacai@loongson.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cpu.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/irqchip/irq-loongson-liointc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/kernel/cpu.c
-+++ b/kernel/cpu.c
-@@ -2495,7 +2495,7 @@ EXPORT_SYMBOL_GPL(__cpuhp_state_add_inst
-  * The caller needs to hold cpus read locked while calling this function.
-  * Return:
-  *   On success:
-- *      Positive state number if @state is CPUHP_AP_ONLINE_DYN;
-+ *      Positive state number if @state is CPUHP_AP_ONLINE_DYN or CPUHP_BP_PREPARE_DYN;
-  *      0 for all other states
-  *   On failure: proper (negative) error code
-  */
-@@ -2518,7 +2518,7 @@ int __cpuhp_setup_state_cpuslocked(enum
- 	ret = cpuhp_store_callbacks(state, name, startup, teardown,
- 				    multi_instance);
+--- a/drivers/irqchip/irq-loongson-liointc.c
++++ b/drivers/irqchip/irq-loongson-liointc.c
+@@ -28,7 +28,7 @@
  
--	dynstate = state == CPUHP_AP_ONLINE_DYN;
-+	dynstate = state == CPUHP_AP_ONLINE_DYN || state == CPUHP_BP_PREPARE_DYN;
- 	if (ret > 0 && dynstate) {
- 		state = ret;
- 		ret = 0;
-@@ -2549,8 +2549,8 @@ int __cpuhp_setup_state_cpuslocked(enum
- out:
- 	mutex_unlock(&cpuhp_state_mutex);
- 	/*
--	 * If the requested state is CPUHP_AP_ONLINE_DYN, return the
--	 * dynamically allocated state in case of success.
-+	 * If the requested state is CPUHP_AP_ONLINE_DYN or CPUHP_BP_PREPARE_DYN,
-+	 * return the dynamically allocated state in case of success.
- 	 */
- 	if (!ret && dynstate)
- 		return state;
+ #define LIOINTC_INTC_CHIP_START	0x20
+ 
+-#define LIOINTC_REG_INTC_STATUS	(LIOINTC_INTC_CHIP_START + 0x20)
++#define LIOINTC_REG_INTC_STATUS(core)	(LIOINTC_INTC_CHIP_START + 0x20 + (core) * 8)
+ #define LIOINTC_REG_INTC_EN_STATUS	(LIOINTC_INTC_CHIP_START + 0x04)
+ #define LIOINTC_REG_INTC_ENABLE	(LIOINTC_INTC_CHIP_START + 0x08)
+ #define LIOINTC_REG_INTC_DISABLE	(LIOINTC_INTC_CHIP_START + 0x0c)
+@@ -217,7 +217,7 @@ static int liointc_init(phys_addr_t addr
+ 		goto out_free_priv;
+ 
+ 	for (i = 0; i < LIOINTC_NUM_CORES; i++)
+-		priv->core_isr[i] = base + LIOINTC_REG_INTC_STATUS;
++		priv->core_isr[i] = base + LIOINTC_REG_INTC_STATUS(i);
+ 
+ 	for (i = 0; i < LIOINTC_NUM_PARENT; i++)
+ 		priv->handler[i].parent_int_map = parent_int_map[i];
 
 
