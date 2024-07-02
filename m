@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5AAC1514DC;
-	Tue,  2 Jul 2024 17:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D86071514DC;
+	Tue,  2 Jul 2024 17:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941245; cv=none; b=pQvzdJBOyyTjWTVvI2GjA5hx0O6blhqR42DJyLCQ6dsJPe4vHHVah2miUTaF+J53apwUVyULaqPqhm2lQJAoxKKeZwy+jLb1DZi4hxxtl6wLU+zFxbOOwFjI9B6LRSQq55N+3m2T8MAQditupNb6gDkFkH/mwCvg3i/p4fWBHLY=
+	t=1719941248; cv=none; b=CxNDbvggur/ZxXK+SkYXgoEcy8lP3u1xFYf3HpDAVdKOP9diFYGO8WOyyfSdX+ilARQeEEThNgoJfZ5vmO++zETxqHGgFo+ZHD+qdTjbp9aLllrC7DP57zrja0Oai+Z+JNSyMK2+9uXOO0I2ZptDvYq88swBShHBmv9Q2ceE+B4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941245; c=relaxed/simple;
-	bh=Br+rm8p1DuuLhlXC0KU9yVkuWFxtrQFxusn9uT2TfX4=;
+	s=arc-20240116; t=1719941248; c=relaxed/simple;
+	bh=J6KN1FZdNtRaRSApPyTaHk0YxMvKzAaslr4lXvCPKDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n1p0SkzzHMfr3aa19H6DtbgQseZ9EsKZdccs4ki4E30XIeUslxqB/uf894FSllG9xkUeHiBQNTnCgp/uVcJeGUmx8UbGVhX1G2tpEqyKwKjQ2lMDMNO2qgGlVysvgJu889Vg0Vm65cKAJRGUt7GHE8+DmDMc4OwptflIzpSThq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I5GNL9Vj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jpbkg/2/vO0Y1SiWmiaLRO8wUdTejlpBped6ZySvoYQh1qH59zCIeHx/ZKr9g4agEnpiNPxQ8AsHLIoX48D4mFDspFkns5vMulChcHrHalJ5vO7ld+DX61TdZ8CE3YQ0exaoxBlUcOQRE4gFVhNXz8WJeVF9pSxcIwXWGgtl8yw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wv5iyhEV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I5GNL9Vj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02F8EC116B1;
-	Tue,  2 Jul 2024 17:27:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wv5iyhEV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B13CC116B1;
+	Tue,  2 Jul 2024 17:27:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941245;
-	bh=Br+rm8p1DuuLhlXC0KU9yVkuWFxtrQFxusn9uT2TfX4=;
+	s=korg; t=1719941248;
+	bh=J6KN1FZdNtRaRSApPyTaHk0YxMvKzAaslr4lXvCPKDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I5GNL9VjHCBOrB2bq5Py9dI0in+UIeeHjZjdX7Ixmh0ZBKe2iTFQorl2OYykZwKm8
-	 5kMuEmbJkXAnwrC/ejTKSdsd16b9e9vSo6zUwOH5SJrqbB1Q+rFIIV2jF+Fp+yh98B
-	 AZq6lD92R/TFrdtp0lSSFqpAP7D2x7CK6YLrzr9Q=
+	b=Wv5iyhEVtQkOwiI6jDg0JDHGqltWoi0zE/PpkTmiahOV+sm5nVuN4SQnFF23AVHjn
+	 4a35bV1BzR9oMtVsefBoPTci2vY99Fj8ATzULdrV3bDhH/UYsiDyGvH9xdVbmDpxg7
+	 pysjTrRKr6MNtDrwfbBOI5IdKoKLpEQWhIwjhaog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Dave Airlie <airlied@redhat.com>
-Subject: [PATCH 6.6 135/163] drm/drm_file: Fix pid refcounting race
-Date: Tue,  2 Jul 2024 19:04:09 +0200
-Message-ID: <20240702170238.163549673@linuxfoundation.org>
+	"Christian A. Ehrhardt" <lk@c--e.de>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 001/128] usb: typec: ucsi: Never send a lone connector change ack
+Date: Tue,  2 Jul 2024 19:03:22 +0200
+Message-ID: <20240702170226.290822179@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
-References: <20240702170233.048122282@linuxfoundation.org>
+In-Reply-To: <20240702170226.231899085@linuxfoundation.org>
+References: <20240702170226.231899085@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,83 +48,158 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Christian A. Ehrhardt <lk@c--e.de>
 
-commit 4f2a129b33a2054e62273edd5a051c34c08d96e9 upstream.
+[ Upstream commit de52aca4d9d56c3b2f00b638d457075914b1a227 ]
 
-<maarten.lankhorst@linux.intel.com>, Maxime Ripard
-<mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>
+Some PPM implementation do not like UCSI_ACK_CONNECTOR_CHANGE
+without UCSI_ACK_COMMAND_COMPLETE. Moreover, doing this is racy
+as it requires sending two UCSI_ACK_CC_CI commands in a row and
+the second one will be started with UCSI_CCI_ACK_COMPLETE already
+set in CCI.
 
-filp->pid is supposed to be a refcounted pointer; however, before this
-patch, drm_file_update_pid() only increments the refcount of a struct
-pid after storing a pointer to it in filp->pid and dropping the
-dev->filelist_mutex, making the following race possible:
+Bundle the UCSI_ACK_CONNECTOR_CHANGE with the UCSI_ACK_COMMAND_COMPLETE
+for the UCSI_GET_CONNECTOR_STATUS command that is sent while
+handling a connector change event.
 
-process A               process B
-=========               =========
-                        begin drm_file_update_pid
-                        mutex_lock(&dev->filelist_mutex)
-                        rcu_replace_pointer(filp->pid, <pid B>, 1)
-                        mutex_unlock(&dev->filelist_mutex)
-begin drm_file_update_pid
-mutex_lock(&dev->filelist_mutex)
-rcu_replace_pointer(filp->pid, <pid A>, 1)
-mutex_unlock(&dev->filelist_mutex)
-get_pid(<pid A>)
-synchronize_rcu()
-put_pid(<pid B>)   *** pid B reaches refcount 0 and is freed here ***
-                        get_pid(<pid B>)   *** UAF ***
-                        synchronize_rcu()
-                        put_pid(<pid A>)
-
-As far as I know, this race can only occur with CONFIG_PREEMPT_RCU=y
-because it requires RCU to detect a quiescent state in code that is not
-explicitly calling into the scheduler.
-
-This race leads to use-after-free of a "struct pid".
-It is probably somewhat hard to hit because process A has to pass
-through a synchronize_rcu() operation while process B is between
-mutex_unlock() and get_pid().
-
-Fix it by ensuring that by the time a pointer to the current task's pid
-is stored in the file, an extra reference to the pid has been taken.
-
-This fix also removes the condition for synchronize_rcu(); I think
-that optimization is unnecessary complexity, since in that case we
-would usually have bailed out on the lockless check above.
-
-Fixes: 1c7a387ffef8 ("drm: Update file owner during use")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: Dave Airlie <airlied@redhat.com>
+Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240327224554.1772525-3-lk@c--e.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 8bdf8a42bca4 ("usb: typec: ucsi: Ack also failed Get Error commands")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_file.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.c |   48 ++++++++++++++++++------------------------
+ 1 file changed, 21 insertions(+), 27 deletions(-)
 
---- a/drivers/gpu/drm/drm_file.c
-+++ b/drivers/gpu/drm/drm_file.c
-@@ -529,14 +529,12 @@ void drm_file_update_pid(struct drm_file
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -36,22 +36,16 @@
+  */
+ #define UCSI_SWAP_TIMEOUT_MS	5000
  
- 	dev = filp->minor->dev;
- 	mutex_lock(&dev->filelist_mutex);
-+	get_pid(pid);
- 	old = rcu_replace_pointer(filp->pid, pid, 1);
- 	mutex_unlock(&dev->filelist_mutex);
+-static int ucsi_acknowledge_command(struct ucsi *ucsi)
++static int ucsi_acknowledge(struct ucsi *ucsi, bool conn_ack)
+ {
+ 	u64 ctrl;
  
--	if (pid != old) {
--		get_pid(pid);
--		synchronize_rcu();
--		put_pid(old);
--	}
-+	synchronize_rcu();
-+	put_pid(old);
+ 	ctrl = UCSI_ACK_CC_CI;
+ 	ctrl |= UCSI_ACK_COMMAND_COMPLETE;
+-
+-	return ucsi->ops->sync_write(ucsi, UCSI_CONTROL, &ctrl, sizeof(ctrl));
+-}
+-
+-static int ucsi_acknowledge_connector_change(struct ucsi *ucsi)
+-{
+-	u64 ctrl;
+-
+-	ctrl = UCSI_ACK_CC_CI;
+-	ctrl |= UCSI_ACK_CONNECTOR_CHANGE;
++	if (conn_ack) {
++		clear_bit(EVENT_PENDING, &ucsi->flags);
++		ctrl |= UCSI_ACK_CONNECTOR_CHANGE;
++	}
+ 
+ 	return ucsi->ops->sync_write(ucsi, UCSI_CONTROL, &ctrl, sizeof(ctrl));
+ }
+@@ -64,7 +58,7 @@ static int ucsi_read_error(struct ucsi *
+ 	int ret;
+ 
+ 	/* Acknowledge the command that failed */
+-	ret = ucsi_acknowledge_command(ucsi);
++	ret = ucsi_acknowledge(ucsi, false);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -76,7 +70,7 @@ static int ucsi_read_error(struct ucsi *
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = ucsi_acknowledge_command(ucsi);
++	ret = ucsi_acknowledge(ucsi, false);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -139,7 +133,7 @@ static int ucsi_exec_command(struct ucsi
+ 		return -EIO;
+ 
+ 	if (cci & UCSI_CCI_NOT_SUPPORTED) {
+-		if (ucsi_acknowledge_command(ucsi) < 0)
++		if (ucsi_acknowledge(ucsi, false) < 0)
+ 			dev_err(ucsi->dev,
+ 				"ACK of unsupported command failed\n");
+ 		return -EOPNOTSUPP;
+@@ -152,15 +146,15 @@ static int ucsi_exec_command(struct ucsi
+ 	}
+ 
+ 	if (cmd == UCSI_CANCEL && cci & UCSI_CCI_CANCEL_COMPLETE) {
+-		ret = ucsi_acknowledge_command(ucsi);
++		ret = ucsi_acknowledge(ucsi, false);
+ 		return ret ? ret : -EBUSY;
+ 	}
+ 
+ 	return UCSI_CCI_LENGTH(cci);
  }
  
- /**
+-int ucsi_send_command(struct ucsi *ucsi, u64 command,
+-		      void *data, size_t size)
++static int ucsi_send_command_common(struct ucsi *ucsi, u64 command,
++				    void *data, size_t size, bool conn_ack)
+ {
+ 	u8 length;
+ 	int ret;
+@@ -179,7 +173,7 @@ int ucsi_send_command(struct ucsi *ucsi,
+ 			goto out;
+ 	}
+ 
+-	ret = ucsi_acknowledge_command(ucsi);
++	ret = ucsi_acknowledge(ucsi, conn_ack);
+ 	if (ret)
+ 		goto out;
+ 
+@@ -188,6 +182,12 @@ out:
+ 	mutex_unlock(&ucsi->ppm_lock);
+ 	return ret;
+ }
++
++int ucsi_send_command(struct ucsi *ucsi, u64 command,
++		      void *data, size_t size)
++{
++	return ucsi_send_command_common(ucsi, command, data, size, false);
++}
+ EXPORT_SYMBOL_GPL(ucsi_send_command);
+ 
+ /* -------------------------------------------------------------------------- */
+@@ -785,7 +785,9 @@ static void ucsi_handle_connector_change
+ 	mutex_lock(&con->lock);
+ 
+ 	command = UCSI_GET_CONNECTOR_STATUS | UCSI_CONNECTOR_NUMBER(con->num);
+-	ret = ucsi_send_command(ucsi, command, &con->status, sizeof(con->status));
++
++	ret = ucsi_send_command_common(ucsi, command, &con->status,
++				       sizeof(con->status), true);
+ 	if (ret < 0) {
+ 		dev_err(ucsi->dev, "%s: GET_CONNECTOR_STATUS failed (%d)\n",
+ 			__func__, ret);
+@@ -833,14 +835,6 @@ static void ucsi_handle_connector_change
+ 	if (con->status.change & UCSI_CONSTAT_CAM_CHANGE)
+ 		ucsi_partner_task(con, ucsi_check_altmodes, 1, 0);
+ 
+-	mutex_lock(&ucsi->ppm_lock);
+-	clear_bit(EVENT_PENDING, &con->ucsi->flags);
+-	ret = ucsi_acknowledge_connector_change(ucsi);
+-	mutex_unlock(&ucsi->ppm_lock);
+-
+-	if (ret)
+-		dev_err(ucsi->dev, "%s: ACK failed (%d)", __func__, ret);
+-
+ out_unlock:
+ 	mutex_unlock(&con->lock);
+ }
 
 
