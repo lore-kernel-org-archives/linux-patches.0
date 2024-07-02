@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E766A3D978;
-	Tue,  2 Jul 2024 17:31:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF8663D;
+	Tue,  2 Jul 2024 17:31:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719941461; cv=none; b=KcnDbU2jEXkXD/cSc5sR82sRl02+JrZM6yX19n0QnHudQl6kluHbUVdNCdsifZwire7iBzgoMpI3AjgPX/SLlh9lW8ubDnvwCQayjY62XbKgtxneIqkAwqIoGbgzX2yRuIy9uOm1xKM4+DuRwob60S4FmvEoKX/UxKcKyFuBrA0=
+	t=1719941464; cv=none; b=PzccDsgBFcuqhj1UBVBYbDUwn7Dn2WzPVV06hf8+tG7KafHOfyrt8eN23v6CICFoSXHYfcyw7lG7SZksqu+24AC4LCEX+4fYMDPhbyBUYX/3wFBCTzwlcBrW1gMhCgMKiOhq4diSVJRszJfmmPKq78QIwNP5wE7A1aRe/vu3DwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719941461; c=relaxed/simple;
-	bh=L0y4aiSsIyLgIQbKfQoBrXiZEcGoeeYVrK1bamg+EX8=;
+	s=arc-20240116; t=1719941464; c=relaxed/simple;
+	bh=afxChTBqLhdJm93GyRPCWhSpw5eWJ0308/7nmbozAAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BchdHN2IHZt1MPXwccNSQbkYT2OpoZoctFvoUWWR3BncHpGmWJ5eSuWM1iLby75XE7emzbGw3nfAkoRaAYAl4cGUzf+yO/yyiB2BZoAZYXQkOaa/pyP3AHa5+V9CtAp8uEaXjW96Ky4L67u+QimW5SlWJ9Q7xA+6Fd2NkTCZles=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y4uumWXJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gYAKIJWpFYcY5iIYRezdmH6D6XY/44YoUl7O9WQBQ8qHrFPvcEAPpKJqf+frE79b80d6wpWlT2BxdRvVhE2tFOKzzdnZNZHkXGNTTXWi0z6wd4UT8K2esfGdT9inCeK/Q7AlqC2Px0wMTkzxyo//pUeLrC1W46mq81i7Uq9tb38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VA7CPXu6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y4uumWXJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 584D8C116B1;
-	Tue,  2 Jul 2024 17:31:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VA7CPXu6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AE4EC116B1;
+	Tue,  2 Jul 2024 17:31:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719941460;
-	bh=L0y4aiSsIyLgIQbKfQoBrXiZEcGoeeYVrK1bamg+EX8=;
+	s=korg; t=1719941464;
+	bh=afxChTBqLhdJm93GyRPCWhSpw5eWJ0308/7nmbozAAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y4uumWXJwqLQcs0OF1ECI+n5sOA21/psZAFBIkcnZe5q2NTXl0m4luW2Q+8PYiC5+
-	 niABiIebnZmKG4QdX8zbIB8W8q1ZgJmi3nJ22IxAco75FvfJYD2DE4jx48CPIFmmTl
-	 X6hMazrD8XfWRXUmEZmjmbkArKpNuLUNtJoYD7CE=
+	b=VA7CPXu6F8n7ycKyBLvZXTXWnnqUiseAl0PwgKB5uRLh9ZkOxCI4QY0AuPsVybzbV
+	 ySAeABAqOOlvppWrvIQ52tNqWHFhdknWlBAvczDHqsnsFR3LWQ9CTTK4essR9bzXs0
+	 wMihK4cm8T0vpwdKFO6JkOBtbDl18UCVRr6sAg2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 071/128] mmc: sdhci: Do not lock spinlock around mmc_gpio_get_ro()
-Date: Tue,  2 Jul 2024 19:04:32 +0200
-Message-ID: <20240702170228.918756435@linuxfoundation.org>
+	Sean Anderson <sean.anderson@linux.dev>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 072/128] iio: xilinx-ams: Dont include ams_ctrl_channels in scan_mask
+Date: Tue,  2 Jul 2024 19:04:33 +0200
+Message-ID: <20240702170228.956053122@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702170226.231899085@linuxfoundation.org>
 References: <20240702170226.231899085@linuxfoundation.org>
@@ -50,53 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-commit ab069ce125965a5e282f7b53b86aee76ab32975c upstream.
+[ Upstream commit 89b898c627a49b978a4c323ea6856eacfc21f6ba ]
 
-sdhci_check_ro() can call mmc_gpio_get_ro() while holding the sdhci
-host->lock spinlock. That would be a problem if the GPIO access done by
-mmc_gpio_get_ro() needed to sleep.
+ams_enable_channel_sequence constructs a "scan_mask" for all the PS and
+PL channels. This works out fine, since scan_index for these channels is
+less than 64. However, it also includes the ams_ctrl_channels, where
+scan_index is greater than 64, triggering undefined behavior. Since we
+don't need these channels anyway, just exclude them.
 
-However, host->lock is not needed anyway. The mmc core ensures that host
-operations do not race with each other, and asynchronous callbacks like the
-interrupt handler, software timeouts, completion work etc, cannot affect
-sdhci_check_ro().
-
-So remove the locking.
-
-Fixes: 6d5cd068ee59 ("mmc: sdhci: use WP GPIO in sdhci_check_ro()")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240614080051.4005-3-adrian.hunter@intel.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d5c70627a794 ("iio: adc: Add Xilinx AMS driver")
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Link: https://lore.kernel.org/r/20240311162800.11074-1-sean.anderson@linux.dev
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci.c |    5 -----
- 1 file changed, 5 deletions(-)
+ drivers/iio/adc/xilinx-ams.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -2540,11 +2540,8 @@ EXPORT_SYMBOL_GPL(sdhci_get_cd_nogpio);
- static int sdhci_check_ro(struct sdhci_host *host)
- {
- 	bool allow_invert = false;
--	unsigned long flags;
- 	int is_readonly;
+diff --git a/drivers/iio/adc/xilinx-ams.c b/drivers/iio/adc/xilinx-ams.c
+index a507d2e170792..3db021b96ae9d 100644
+--- a/drivers/iio/adc/xilinx-ams.c
++++ b/drivers/iio/adc/xilinx-ams.c
+@@ -414,8 +414,12 @@ static void ams_enable_channel_sequence(struct iio_dev *indio_dev)
  
--	spin_lock_irqsave(&host->lock, flags);
--
- 	if (host->flags & SDHCI_DEVICE_DEAD) {
- 		is_readonly = 0;
- 	} else if (host->ops->get_ro) {
-@@ -2559,8 +2556,6 @@ static int sdhci_check_ro(struct sdhci_h
- 		allow_invert = true;
- 	}
+ 	/* Run calibration of PS & PL as part of the sequence */
+ 	scan_mask = BIT(0) | BIT(AMS_PS_SEQ_MAX);
+-	for (i = 0; i < indio_dev->num_channels; i++)
+-		scan_mask |= BIT_ULL(indio_dev->channels[i].scan_index);
++	for (i = 0; i < indio_dev->num_channels; i++) {
++		const struct iio_chan_spec *chan = &indio_dev->channels[i];
++
++		if (chan->scan_index < AMS_CTRL_SEQ_BASE)
++			scan_mask |= BIT_ULL(chan->scan_index);
++	}
  
--	spin_unlock_irqrestore(&host->lock, flags);
--
- 	if (is_readonly >= 0 &&
- 	    allow_invert &&
- 	    (host->quirks & SDHCI_QUIRK_INVERTED_WRITE_PROTECT))
+ 	if (ams->ps_base) {
+ 		/* put sysmon in a soft reset to change the sequence */
+-- 
+2.43.0
+
 
 
