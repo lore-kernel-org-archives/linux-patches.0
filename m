@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BCD175560;
-	Wed,  3 Jul 2024 10:49:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C575B13D61B;
+	Wed,  3 Jul 2024 10:49:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003746; cv=none; b=ArBUKwljWR+VgCFrnxQbMv3GWpHn6c6hvFsfCHbLGK2CT9zBlc/BH/NaRSqlZAUwSu9W/vmeRvPX43YDQr8U3iK2LEMwZY/EJGndvMh7Jw7ULayRw1c5Ngls+tQrcVgCnP8qqDAARAandX1psYn1wnFeZuI/rkcUZEHCXm/FeBg=
+	t=1720003749; cv=none; b=t9xOGly/Ib20yZX0HTZu0WPnEnBN3WxjjS9pCUlkyGKVO+T3CiNeF+mJLkm88VGTNvBW/XFl+Z9bjrPjWwbOCeortT2FppCtp+kEHhzDyo/xCIWA8gMbjjwM7WNnJ8xXXltPNRTLifZ1m5YHkwJlZDDLYqwhZraVZdGHH7E/Tsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003746; c=relaxed/simple;
-	bh=XKh5372wV7MXpG3LnbGcWQgMh6rIzxop5z3MpD9P0lQ=;
+	s=arc-20240116; t=1720003749; c=relaxed/simple;
+	bh=DkK9vtBLuK1sr2aG20oQRm/9ZvIj2+7curhUCq5xO7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tXf0z+qdkoUdKOL7CUmcA7pxMogSCHhSfflKLnw8hCG5RxeCEDH9pFArRyanMPe11bpvi9cP85Br7a1jS4j4I/my9Xpw4Sy6w/LaqBHAfQIu9O2gXXC3GIaMXTtuapSG/SmJCV/Yjb1j9DNNxTFq7rs90APU01a0XgI0G9UgDMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2d/lfCJx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D5TbrFgvKu6vfiLxRd2W/9W4QKJQKcTVMhFcMWUzGhv3vu1gwCCEmOnE5Kkd0KoH/7u/EM85QbniUNKKMIZfrbuktD1ZKnxCs1nlVjX6mfJE0WPq6pkyC5miJ/Nc4UHv+d1T3NTejc76hOMEPZILf6MxbbGa9JF8sGhxpj0IG4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hLPC0iI/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2d/lfCJx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12D52C2BD10;
-	Wed,  3 Jul 2024 10:49:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hLPC0iI/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 088D0C2BD10;
+	Wed,  3 Jul 2024 10:49:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003746;
-	bh=XKh5372wV7MXpG3LnbGcWQgMh6rIzxop5z3MpD9P0lQ=;
+	s=korg; t=1720003749;
+	bh=DkK9vtBLuK1sr2aG20oQRm/9ZvIj2+7curhUCq5xO7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2d/lfCJxd1SQVJKYNpk52fBezuhNFZqkUDnRoR/yAEh7/bBSAp3WDMZufX+mjlsfx
-	 40g+J2ZThdqm3MVpqqXR8tGgixBwfuMx8LQeI1VuFP/Jam1vgCzJL4OSJyOgVQNbHf
-	 xo5FOqTX0Yd7CLgG/X8at5tEAEix5qe+OUCzvc7k=
+	b=hLPC0iI/zNXvV5AANBC+r1FvvezEECOXsH1LgU7TOPjdDLxU1I/PjdOqaTaoVS4KW
+	 yNbS70ln5BhuOW8npgAoJZKV6fpkcVE9tjzVZK3HiX4XBXsMToZvlRDJip6Ip2nBfa
+	 /JIjHaPXMy0YeukKXIKHENtXydTWdKz7RaF+O5q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Escande <nico.escande@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Jason Xing <kernelxing@tencent.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 001/189] wifi: mac80211: mesh: Fix leak of mesh_preq_queue objects
-Date: Wed,  3 Jul 2024 12:37:42 +0200
-Message-ID: <20240703102841.551392375@linuxfoundation.org>
+Subject: [PATCH 5.4 010/189] tcp: count CLOSE-WAIT sockets for TCP_MIB_CURRESTAB
+Date: Wed,  3 Jul 2024 12:37:51 +0200
+Message-ID: <20240703102841.891950262@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -51,98 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Escande <nico.escande@gmail.com>
+From: Jason Xing <kernelxing@tencent.com>
 
-[ Upstream commit b7d7f11a291830fdf69d3301075dd0fb347ced84 ]
+[ Upstream commit a46d0ea5c94205f40ecf912d1bb7806a8a64704f ]
 
-The hwmp code use objects of type mesh_preq_queue, added to a list in
-ieee80211_if_mesh, to keep track of mpath we need to resolve. If the mpath
-gets deleted, ex mesh interface is removed, the entries in that list will
-never get cleaned. Fix this by flushing all corresponding items of the
-preq_queue in mesh_path_flush_pending().
+According to RFC 1213, we should also take CLOSE-WAIT sockets into
+consideration:
 
-This should take care of KASAN reports like this:
+  "tcpCurrEstab OBJECT-TYPE
+   ...
+   The number of TCP connections for which the current state
+   is either ESTABLISHED or CLOSE- WAIT."
 
-unreferenced object 0xffff00000668d800 (size 128):
-  comm "kworker/u8:4", pid 67, jiffies 4295419552 (age 1836.444s)
-  hex dump (first 32 bytes):
-    00 1f 05 09 00 00 ff ff 00 d5 68 06 00 00 ff ff  ..........h.....
-    8e 97 ea eb 3e b8 01 00 00 00 00 00 00 00 00 00  ....>...........
-  backtrace:
-    [<000000007302a0b6>] __kmem_cache_alloc_node+0x1e0/0x35c
-    [<00000000049bd418>] kmalloc_trace+0x34/0x80
-    [<0000000000d792bb>] mesh_queue_preq+0x44/0x2a8
-    [<00000000c99c3696>] mesh_nexthop_resolve+0x198/0x19c
-    [<00000000926bf598>] ieee80211_xmit+0x1d0/0x1f4
-    [<00000000fc8c2284>] __ieee80211_subif_start_xmit+0x30c/0x764
-    [<000000005926ee38>] ieee80211_subif_start_xmit+0x9c/0x7a4
-    [<000000004c86e916>] dev_hard_start_xmit+0x174/0x440
-    [<0000000023495647>] __dev_queue_xmit+0xe24/0x111c
-    [<00000000cfe9ca78>] batadv_send_skb_packet+0x180/0x1e4
-    [<000000007bacc5d5>] batadv_v_elp_periodic_work+0x2f4/0x508
-    [<00000000adc3cd94>] process_one_work+0x4b8/0xa1c
-    [<00000000b36425d1>] worker_thread+0x9c/0x634
-    [<0000000005852dd5>] kthread+0x1bc/0x1c4
-    [<000000005fccd770>] ret_from_fork+0x10/0x20
-unreferenced object 0xffff000009051f00 (size 128):
-  comm "kworker/u8:4", pid 67, jiffies 4295419553 (age 1836.440s)
-  hex dump (first 32 bytes):
-    90 d6 92 0d 00 00 ff ff 00 d8 68 06 00 00 ff ff  ..........h.....
-    36 27 92 e4 02 e0 01 00 00 58 79 06 00 00 ff ff  6'.......Xy.....
-  backtrace:
-    [<000000007302a0b6>] __kmem_cache_alloc_node+0x1e0/0x35c
-    [<00000000049bd418>] kmalloc_trace+0x34/0x80
-    [<0000000000d792bb>] mesh_queue_preq+0x44/0x2a8
-    [<00000000c99c3696>] mesh_nexthop_resolve+0x198/0x19c
-    [<00000000926bf598>] ieee80211_xmit+0x1d0/0x1f4
-    [<00000000fc8c2284>] __ieee80211_subif_start_xmit+0x30c/0x764
-    [<000000005926ee38>] ieee80211_subif_start_xmit+0x9c/0x7a4
-    [<000000004c86e916>] dev_hard_start_xmit+0x174/0x440
-    [<0000000023495647>] __dev_queue_xmit+0xe24/0x111c
-    [<00000000cfe9ca78>] batadv_send_skb_packet+0x180/0x1e4
-    [<000000007bacc5d5>] batadv_v_elp_periodic_work+0x2f4/0x508
-    [<00000000adc3cd94>] process_one_work+0x4b8/0xa1c
-    [<00000000b36425d1>] worker_thread+0x9c/0x634
-    [<0000000005852dd5>] kthread+0x1bc/0x1c4
-    [<000000005fccd770>] ret_from_fork+0x10/0x20
+After this, CurrEstab counter will display the total number of
+ESTABLISHED and CLOSE-WAIT sockets.
 
-Fixes: 050ac52cbe1f ("mac80211: code for on-demand Hybrid Wireless Mesh Protocol")
-Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
-Link: https://msgid.link/20240528142605.1060566-1-nico.escande@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+The logic of counting
+When we increment the counter?
+a) if we change the state to ESTABLISHED.
+b) if we change the state from SYN-RECEIVED to CLOSE-WAIT.
+
+When we decrement the counter?
+a) if the socket leaves ESTABLISHED and will never go into CLOSE-WAIT,
+say, on the client side, changing from ESTABLISHED to FIN-WAIT-1.
+b) if the socket leaves CLOSE-WAIT, say, on the server side, changing
+from CLOSE-WAIT to LAST-ACK.
+
+Please note: there are two chances that old state of socket can be changed
+to CLOSE-WAIT in tcp_fin(). One is SYN-RECV, the other is ESTABLISHED.
+So we have to take care of the former case.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Jason Xing <kernelxing@tencent.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mesh_pathtbl.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ net/ipv4/tcp.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/mesh_pathtbl.c b/net/mac80211/mesh_pathtbl.c
-index 7e27e5201c54c..55926927c2975 100644
---- a/net/mac80211/mesh_pathtbl.c
-+++ b/net/mac80211/mesh_pathtbl.c
-@@ -725,10 +725,23 @@ void mesh_path_discard_frame(struct ieee80211_sub_if_data *sdata,
-  */
- void mesh_path_flush_pending(struct mesh_path *mpath)
- {
-+	struct ieee80211_sub_if_data *sdata = mpath->sdata;
-+	struct ieee80211_if_mesh *ifmsh = &sdata->u.mesh;
-+	struct mesh_preq_queue *preq, *tmp;
- 	struct sk_buff *skb;
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 9a4a3f6d9cb06..a181eb7d6d438 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -2258,6 +2258,10 @@ void tcp_set_state(struct sock *sk, int state)
+ 		if (oldstate != TCP_ESTABLISHED)
+ 			TCP_INC_STATS(sock_net(sk), TCP_MIB_CURRESTAB);
+ 		break;
++	case TCP_CLOSE_WAIT:
++		if (oldstate == TCP_SYN_RECV)
++			TCP_INC_STATS(sock_net(sk), TCP_MIB_CURRESTAB);
++		break;
  
- 	while ((skb = skb_dequeue(&mpath->frame_queue)) != NULL)
- 		mesh_path_discard_frame(mpath->sdata, skb);
-+
-+	spin_lock_bh(&ifmsh->mesh_preq_queue_lock);
-+	list_for_each_entry_safe(preq, tmp, &ifmsh->preq_queue.list, list) {
-+		if (ether_addr_equal(mpath->dst, preq->dst)) {
-+			list_del(&preq->list);
-+			kfree(preq);
-+			--ifmsh->preq_queue_len;
-+		}
-+	}
-+	spin_unlock_bh(&ifmsh->mesh_preq_queue_lock);
- }
+ 	case TCP_CLOSE:
+ 		if (oldstate == TCP_CLOSE_WAIT || oldstate == TCP_ESTABLISHED)
+@@ -2269,7 +2273,7 @@ void tcp_set_state(struct sock *sk, int state)
+ 			inet_put_port(sk);
+ 		/* fall through */
+ 	default:
+-		if (oldstate == TCP_ESTABLISHED)
++		if (oldstate == TCP_ESTABLISHED || oldstate == TCP_CLOSE_WAIT)
+ 			TCP_DEC_STATS(sock_net(sk), TCP_MIB_CURRESTAB);
+ 	}
  
- /**
 -- 
 2.43.0
 
