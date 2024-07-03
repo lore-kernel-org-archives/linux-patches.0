@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E473A13DDA1;
-	Wed,  3 Jul 2024 11:14:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D934DA14;
+	Wed,  3 Jul 2024 11:14:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005263; cv=none; b=uI+JgWmmMIorNCHYtSe9YmX3HnDgLJXBXcIOE+k1dSEzFz+Vczn0F0/d9Hh57cdDv6PFK9js3UJPYIsj/+9ig4MGBc8hg1EFHTJ8cmcfU2jUvEefUk12NgckFiI7Fvjb52N/T7WZWLEsXqHoGy9/t3MgiHOCkuO9g/9oVgW0dEM=
+	t=1720005265; cv=none; b=st8D8o7n0sZLhWMXKM+bA/oZ2ErXtuxZR6P/arKMtOGLUEXHIrglCMXDygy0Kuprh5XjOEcgAyxFwFHBHQWL+2wuYM9xHMpve26Y5tXSGrPV0x0HpSaGrAOLENPizRIK2HTYWA6ThpFAeUpwB2ovbpt9D0pW/nlirgrSUUsr3Vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005263; c=relaxed/simple;
-	bh=ONiTQy5FgCCP+AFRD0yxEzyJxPRvBqw1eCmvM4svick=;
+	s=arc-20240116; t=1720005265; c=relaxed/simple;
+	bh=QAGlhRU+B67V8FB4BNdUP051kwwgmyjfCp7VqDnfUaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CfJ/TiDWjqy0mozFUZd26bCdTVCiooD5V0jl362vx9Exlq01iHuIxhDk6VFNKx819vfR4ce1Lvbs0Y9S6xZnkAEWFBoHyoX1IL9g9eb5R4JvJRd2MD/hfCYTRYGjil3dvY5JAsHEzjSFO/m/OM9VBiJGk2hTK0QNoJ60q2mUFis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IEcvlg2U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pfTLUp/1ktuawAQCt+2bBwrYH3teFPElLVn0agBzmM1WEjHbrleIyb84RyYTdy8NTBHJxef/0lREAyWAU8KDOKRhsHWXL1hFKfmhQ4CJKIPY9zowMmRw93SnjQMveoMaGL7udB2UP8hmgtm2dGMSDPx4hPG+BZVauYT4596HNPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1XB+eDf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IEcvlg2U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69623C2BD10;
-	Wed,  3 Jul 2024 11:14:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1XB+eDf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 510D7C2BD10;
+	Wed,  3 Jul 2024 11:14:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005262;
-	bh=ONiTQy5FgCCP+AFRD0yxEzyJxPRvBqw1eCmvM4svick=;
+	s=korg; t=1720005265;
+	bh=QAGlhRU+B67V8FB4BNdUP051kwwgmyjfCp7VqDnfUaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IEcvlg2U6aqBRWN9T9UAJoMIQJ45BC2S7YWzQRLLZ+I6xpcm2Y10NFRBgH39gVxjO
-	 nln8nTEJa5UgJNEYgd2Nfg++txCtC9cEs/cFa0cKJT1JVxPtBtRsU3RXtINME0iPns
-	 1Cn5aN2jygujr1xsQWHqar2bPbZG1YTRQM6hTKgU=
+	b=n1XB+eDfHoLmwOkOtBDejqxFoN6Rh7teIiaPToq6w0fg8LW+2vSC5nwVGbmC7msfd
+	 bQhmYEZcApA0hhzBhvZi1KsKzZ017rgedbxg0rs2O+SINMSRKOdhNBY8QhDn7nUimg
+	 IxPgAR6S6r5TUgnln7EFlD3exy8YHPgcmxXO/Nfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 023/356] af_unix: Annotate data-races around sk->sk_state in unix_write_space() and poll().
-Date: Wed,  3 Jul 2024 12:35:59 +0200
-Message-ID: <20240703102913.977914247@linuxfoundation.org>
+Subject: [PATCH 5.15 024/356] net: inline sock_prot_inuse_add()
+Date: Wed,  3 Jul 2024 12:36:00 +0200
+Message-ID: <20240703102914.015090221@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,125 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit eb0718fb3e97ad0d6f4529b810103451c90adf94 ]
+[ Upstream commit 2a12ae5d433df3d3c3f1a930799ec09cb2b8058f ]
 
-unix_poll() and unix_dgram_poll() read sk->sk_state locklessly and
-calls unix_writable() which also reads sk->sk_state without holding
-unix_state_lock().
+sock_prot_inuse_add() is very small, we can inline it.
 
-Let's use READ_ONCE() in unix_poll() and unix_dgram_poll() and pass
-it to unix_writable().
-
-While at it, we remove TCP_SYN_SENT check in unix_dgram_poll() as
-that state does not exist for AF_UNIX socket since the code was added.
-
-Fixes: 1586a5877db9 ("af_unix: do not report POLLOUT on listeners")
-Fixes: 3c73419c09a5 ("af_unix: fix 'poll for write'/ connected DGRAM sockets")
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: a9bf9c7dc6a5 ("af_unix: Annotate data-race of sk->sk_state in unix_stream_connect().")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 25 ++++++++++++-------------
- 1 file changed, 12 insertions(+), 13 deletions(-)
+ include/net/sock.h | 14 +++++++++++---
+ net/core/sock.c    | 11 -----------
+ 2 files changed, 11 insertions(+), 14 deletions(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 18e2dea699720..73b287b7a1154 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -455,9 +455,9 @@ static int unix_dgram_peer_wake_me(struct sock *sk, struct sock *other)
- 	return 0;
+diff --git a/include/net/sock.h b/include/net/sock.h
+index b8de579b916e8..c13c284222424 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -1460,13 +1460,21 @@ proto_memory_pressure(struct proto *prot)
+ 
+ 
+ #ifdef CONFIG_PROC_FS
++#define PROTO_INUSE_NR	64	/* should be enough for the first time */
++struct prot_inuse {
++	int val[PROTO_INUSE_NR];
++};
+ /* Called with local bh disabled */
+-void sock_prot_inuse_add(struct net *net, struct proto *prot, int inc);
++static inline void sock_prot_inuse_add(const struct net *net,
++				       const struct proto *prot, int val)
++{
++	__this_cpu_add(net->core.prot_inuse->val[prot->inuse_idx], val);
++}
+ int sock_prot_inuse_get(struct net *net, struct proto *proto);
+ int sock_inuse_get(struct net *net);
+ #else
+-static inline void sock_prot_inuse_add(struct net *net, struct proto *prot,
+-		int inc)
++static inline void sock_prot_inuse_add(const struct net *net,
++				       const struct proto *prot, int val)
+ {
+ }
+ #endif
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 62e376f09f957..e79e1c7933537 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -3497,19 +3497,8 @@ void sk_get_meminfo(const struct sock *sk, u32 *mem)
  }
  
--static int unix_writable(const struct sock *sk)
-+static int unix_writable(const struct sock *sk, unsigned char state)
+ #ifdef CONFIG_PROC_FS
+-#define PROTO_INUSE_NR	64	/* should be enough for the first time */
+-struct prot_inuse {
+-	int val[PROTO_INUSE_NR];
+-};
+-
+ static DECLARE_BITMAP(proto_inuse_idx, PROTO_INUSE_NR);
+ 
+-void sock_prot_inuse_add(struct net *net, struct proto *prot, int val)
+-{
+-	__this_cpu_add(net->core.prot_inuse->val[prot->inuse_idx], val);
+-}
+-EXPORT_SYMBOL_GPL(sock_prot_inuse_add);
+-
+ int sock_prot_inuse_get(struct net *net, struct proto *prot)
  {
--	return sk->sk_state != TCP_LISTEN &&
-+	return state != TCP_LISTEN &&
- 	       (refcount_read(&sk->sk_wmem_alloc) << 2) <= sk->sk_sndbuf;
- }
- 
-@@ -466,7 +466,7 @@ static void unix_write_space(struct sock *sk)
- 	struct socket_wq *wq;
- 
- 	rcu_read_lock();
--	if (unix_writable(sk)) {
-+	if (unix_writable(sk, READ_ONCE(sk->sk_state))) {
- 		wq = rcu_dereference(sk->sk_wq);
- 		if (skwq_has_sleeper(wq))
- 			wake_up_interruptible_sync_poll(&wq->wait,
-@@ -3069,12 +3069,14 @@ static int unix_compat_ioctl(struct socket *sock, unsigned int cmd, unsigned lon
- static __poll_t unix_poll(struct file *file, struct socket *sock, poll_table *wait)
- {
- 	struct sock *sk = sock->sk;
-+	unsigned char state;
- 	__poll_t mask;
- 	u8 shutdown;
- 
- 	sock_poll_wait(file, sock, wait);
- 	mask = 0;
- 	shutdown = READ_ONCE(sk->sk_shutdown);
-+	state = READ_ONCE(sk->sk_state);
- 
- 	/* exceptional events? */
- 	if (sk->sk_err)
-@@ -3096,14 +3098,14 @@ static __poll_t unix_poll(struct file *file, struct socket *sock, poll_table *wa
- 
- 	/* Connection-based need to check for termination and startup */
- 	if ((sk->sk_type == SOCK_STREAM || sk->sk_type == SOCK_SEQPACKET) &&
--	    sk->sk_state == TCP_CLOSE)
-+	    state == TCP_CLOSE)
- 		mask |= EPOLLHUP;
- 
- 	/*
- 	 * we set writable also when the other side has shut down the
- 	 * connection. This prevents stuck sockets.
- 	 */
--	if (unix_writable(sk))
-+	if (unix_writable(sk, state))
- 		mask |= EPOLLOUT | EPOLLWRNORM | EPOLLWRBAND;
- 
- 	return mask;
-@@ -3114,12 +3116,14 @@ static __poll_t unix_dgram_poll(struct file *file, struct socket *sock,
- {
- 	struct sock *sk = sock->sk, *other;
- 	unsigned int writable;
-+	unsigned char state;
- 	__poll_t mask;
- 	u8 shutdown;
- 
- 	sock_poll_wait(file, sock, wait);
- 	mask = 0;
- 	shutdown = READ_ONCE(sk->sk_shutdown);
-+	state = READ_ONCE(sk->sk_state);
- 
- 	/* exceptional events? */
- 	if (sk->sk_err || !skb_queue_empty_lockless(&sk->sk_error_queue))
-@@ -3138,19 +3142,14 @@ static __poll_t unix_dgram_poll(struct file *file, struct socket *sock,
- 		mask |= EPOLLIN | EPOLLRDNORM;
- 
- 	/* Connection-based need to check for termination and startup */
--	if (sk->sk_type == SOCK_SEQPACKET) {
--		if (sk->sk_state == TCP_CLOSE)
--			mask |= EPOLLHUP;
--		/* connection hasn't started yet? */
--		if (sk->sk_state == TCP_SYN_SENT)
--			return mask;
--	}
-+	if (sk->sk_type == SOCK_SEQPACKET && state == TCP_CLOSE)
-+		mask |= EPOLLHUP;
- 
- 	/* No write status requested, avoid expensive OUT tests. */
- 	if (!(poll_requested_events(wait) & (EPOLLWRBAND|EPOLLWRNORM|EPOLLOUT)))
- 		return mask;
- 
--	writable = unix_writable(sk);
-+	writable = unix_writable(sk, state);
- 	if (writable) {
- 		unix_state_lock(sk);
- 
+ 	int cpu, idx = prot->inuse_idx;
 -- 
 2.43.0
 
