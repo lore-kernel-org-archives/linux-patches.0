@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B60F1DFC7;
-	Wed,  3 Jul 2024 10:41:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5608F13A27E;
+	Wed,  3 Jul 2024 10:42:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003317; cv=none; b=G5uFx7D9hh+Z0IkwJUgus2q391fWk3S0VdCSrSmbh2YVc4OWUlb3TQMUWgXoN5G2eb68qcfbAA3BpB2yg9+ecQldlnBSyit6JrMYZF+VEcwfX0O/SwgkIgI0KuGwDxlwhHALJkh3cfQtGmzq5vL+gYqtPjQlzfbdT9HF1fcUSpg=
+	t=1720003320; cv=none; b=EG6D1cc5L/DCXsKjWzkn1D1p9O8KALS23YkY2qEjgIjI7C+LMUcWdhOCzk8zyabGXW9gRmvWWea0y6KANVjmP/0uGYTwWYYnZ9jlr0yMWmw2Z8BwULyOnGCd+KcquWQ2Zy/XZ7pbzTd6Oj6+u3Ci9W03zwVSdXTAQr56wHvejMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003317; c=relaxed/simple;
-	bh=4E7yHMT5EpFi/Q/ulMGjxl/IB4VQyCUr4sQBBzy+pV8=;
+	s=arc-20240116; t=1720003320; c=relaxed/simple;
+	bh=kRocdW16zqNHR7246yFwvh9pHA70SEpkB+sRmvkPN80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u4IlUujsv7VFjcMqLZ9HYJvXN9e0xuFX479iEcC9FDxlXq1Zo9TmqxEADWI0ItKkBSnpCBKeJmm9oFcD80mdUc+HK6pVEmEL96NRpqFC8/3SGMHI3pcjQ97JLcVTtSWBoqO1FiarAfnNvpUxCSmWl/zWVzKQxJDl+wMNEJbIV8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FRknyWmU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DpLZtAsDchF6FZLKy7gVXQzJqWpDC6A+uQheJrvjAfFmg3QQw4zTpfwmuDHqT8SGz+k2iku9YX374ujUk3o1va1KUL82tZ2Is18rwknlmxVy0l+VuFy8Hqo/tOhr28EAKcn3XBTAWeW1JeqhX+xlyRI8gA6A6V0KbLbWoR+xnaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uXG0lYiO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FRknyWmU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 898EDC2BD10;
-	Wed,  3 Jul 2024 10:41:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uXG0lYiO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E78BC2BD10;
+	Wed,  3 Jul 2024 10:41:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003316;
-	bh=4E7yHMT5EpFi/Q/ulMGjxl/IB4VQyCUr4sQBBzy+pV8=;
+	s=korg; t=1720003319;
+	bh=kRocdW16zqNHR7246yFwvh9pHA70SEpkB+sRmvkPN80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FRknyWmUgfYoDn/UPUXzrXoa5J5YC5Bl8ceym2zTOIM2xh8fRzD2z8P8xENL0175o
-	 Bz+RuikmgB1nZWJWCA3vBa1g38olfbumamGOP79v2X6fFy3y67bMtAKkgdt6H1H4Ls
-	 +g6zpnkn09BM1yOMfs/T8bOhpwy/nlALWRxgIf3Y=
+	b=uXG0lYiOQ3ssH19MSAxXOzS4lbUIgLFnMZFeaEmIWT9IDLyGHNDTvQB5wvOhZ8PBb
+	 Uf3w7DiZgS9U7WnnabQCVx9So25R1D5M6oI2uny8bx9zP20NT6UK4mNAmBOgtXNnd/
+	 6/agM3Vdq/sbXsBBkWxXr0F7zONUg0RYWkri35iM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Escande <nico.escande@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 001/139] wifi: mac80211: mesh: Fix leak of mesh_preq_queue objects
-Date: Wed,  3 Jul 2024 12:38:18 +0200
-Message-ID: <20240703102830.490307626@linuxfoundation.org>
+Subject: [PATCH 4.19 010/139] af_unix: Annotate data-races around sk->sk_state in unix_write_space() and poll().
+Date: Wed,  3 Jul 2024 12:38:27 +0200
+Message-ID: <20240703102830.827749927@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -51,98 +51,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Escande <nico.escande@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit b7d7f11a291830fdf69d3301075dd0fb347ced84 ]
+[ Upstream commit eb0718fb3e97ad0d6f4529b810103451c90adf94 ]
 
-The hwmp code use objects of type mesh_preq_queue, added to a list in
-ieee80211_if_mesh, to keep track of mpath we need to resolve. If the mpath
-gets deleted, ex mesh interface is removed, the entries in that list will
-never get cleaned. Fix this by flushing all corresponding items of the
-preq_queue in mesh_path_flush_pending().
+unix_poll() and unix_dgram_poll() read sk->sk_state locklessly and
+calls unix_writable() which also reads sk->sk_state without holding
+unix_state_lock().
 
-This should take care of KASAN reports like this:
+Let's use READ_ONCE() in unix_poll() and unix_dgram_poll() and pass
+it to unix_writable().
 
-unreferenced object 0xffff00000668d800 (size 128):
-  comm "kworker/u8:4", pid 67, jiffies 4295419552 (age 1836.444s)
-  hex dump (first 32 bytes):
-    00 1f 05 09 00 00 ff ff 00 d5 68 06 00 00 ff ff  ..........h.....
-    8e 97 ea eb 3e b8 01 00 00 00 00 00 00 00 00 00  ....>...........
-  backtrace:
-    [<000000007302a0b6>] __kmem_cache_alloc_node+0x1e0/0x35c
-    [<00000000049bd418>] kmalloc_trace+0x34/0x80
-    [<0000000000d792bb>] mesh_queue_preq+0x44/0x2a8
-    [<00000000c99c3696>] mesh_nexthop_resolve+0x198/0x19c
-    [<00000000926bf598>] ieee80211_xmit+0x1d0/0x1f4
-    [<00000000fc8c2284>] __ieee80211_subif_start_xmit+0x30c/0x764
-    [<000000005926ee38>] ieee80211_subif_start_xmit+0x9c/0x7a4
-    [<000000004c86e916>] dev_hard_start_xmit+0x174/0x440
-    [<0000000023495647>] __dev_queue_xmit+0xe24/0x111c
-    [<00000000cfe9ca78>] batadv_send_skb_packet+0x180/0x1e4
-    [<000000007bacc5d5>] batadv_v_elp_periodic_work+0x2f4/0x508
-    [<00000000adc3cd94>] process_one_work+0x4b8/0xa1c
-    [<00000000b36425d1>] worker_thread+0x9c/0x634
-    [<0000000005852dd5>] kthread+0x1bc/0x1c4
-    [<000000005fccd770>] ret_from_fork+0x10/0x20
-unreferenced object 0xffff000009051f00 (size 128):
-  comm "kworker/u8:4", pid 67, jiffies 4295419553 (age 1836.440s)
-  hex dump (first 32 bytes):
-    90 d6 92 0d 00 00 ff ff 00 d8 68 06 00 00 ff ff  ..........h.....
-    36 27 92 e4 02 e0 01 00 00 58 79 06 00 00 ff ff  6'.......Xy.....
-  backtrace:
-    [<000000007302a0b6>] __kmem_cache_alloc_node+0x1e0/0x35c
-    [<00000000049bd418>] kmalloc_trace+0x34/0x80
-    [<0000000000d792bb>] mesh_queue_preq+0x44/0x2a8
-    [<00000000c99c3696>] mesh_nexthop_resolve+0x198/0x19c
-    [<00000000926bf598>] ieee80211_xmit+0x1d0/0x1f4
-    [<00000000fc8c2284>] __ieee80211_subif_start_xmit+0x30c/0x764
-    [<000000005926ee38>] ieee80211_subif_start_xmit+0x9c/0x7a4
-    [<000000004c86e916>] dev_hard_start_xmit+0x174/0x440
-    [<0000000023495647>] __dev_queue_xmit+0xe24/0x111c
-    [<00000000cfe9ca78>] batadv_send_skb_packet+0x180/0x1e4
-    [<000000007bacc5d5>] batadv_v_elp_periodic_work+0x2f4/0x508
-    [<00000000adc3cd94>] process_one_work+0x4b8/0xa1c
-    [<00000000b36425d1>] worker_thread+0x9c/0x634
-    [<0000000005852dd5>] kthread+0x1bc/0x1c4
-    [<000000005fccd770>] ret_from_fork+0x10/0x20
+While at it, we remove TCP_SYN_SENT check in unix_dgram_poll() as
+that state does not exist for AF_UNIX socket since the code was added.
 
-Fixes: 050ac52cbe1f ("mac80211: code for on-demand Hybrid Wireless Mesh Protocol")
-Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
-Link: https://msgid.link/20240528142605.1060566-1-nico.escande@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 1586a5877db9 ("af_unix: do not report POLLOUT on listeners")
+Fixes: 3c73419c09a5 ("af_unix: fix 'poll for write'/ connected DGRAM sockets")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mesh_pathtbl.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ net/unix/af_unix.c | 25 ++++++++++++-------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
 
-diff --git a/net/mac80211/mesh_pathtbl.c b/net/mac80211/mesh_pathtbl.c
-index 8efb2bf08bf48..040f983dea417 100644
---- a/net/mac80211/mesh_pathtbl.c
-+++ b/net/mac80211/mesh_pathtbl.c
-@@ -736,10 +736,23 @@ void mesh_path_discard_frame(struct ieee80211_sub_if_data *sdata,
-  */
- void mesh_path_flush_pending(struct mesh_path *mpath)
- {
-+	struct ieee80211_sub_if_data *sdata = mpath->sdata;
-+	struct ieee80211_if_mesh *ifmsh = &sdata->u.mesh;
-+	struct mesh_preq_queue *preq, *tmp;
- 	struct sk_buff *skb;
- 
- 	while ((skb = skb_dequeue(&mpath->frame_queue)) != NULL)
- 		mesh_path_discard_frame(mpath->sdata, skb);
-+
-+	spin_lock_bh(&ifmsh->mesh_preq_queue_lock);
-+	list_for_each_entry_safe(preq, tmp, &ifmsh->preq_queue.list, list) {
-+		if (ether_addr_equal(mpath->dst, preq->dst)) {
-+			list_del(&preq->list);
-+			kfree(preq);
-+			--ifmsh->preq_queue_len;
-+		}
-+	}
-+	spin_unlock_bh(&ifmsh->mesh_preq_queue_lock);
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index d363a268f272e..5266908c65ec4 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -454,9 +454,9 @@ static int unix_dgram_peer_wake_me(struct sock *sk, struct sock *other)
+ 	return 0;
  }
  
- /**
+-static int unix_writable(const struct sock *sk)
++static int unix_writable(const struct sock *sk, unsigned char state)
+ {
+-	return sk->sk_state != TCP_LISTEN &&
++	return state != TCP_LISTEN &&
+ 	       (refcount_read(&sk->sk_wmem_alloc) << 2) <= sk->sk_sndbuf;
+ }
+ 
+@@ -465,7 +465,7 @@ static void unix_write_space(struct sock *sk)
+ 	struct socket_wq *wq;
+ 
+ 	rcu_read_lock();
+-	if (unix_writable(sk)) {
++	if (unix_writable(sk, READ_ONCE(sk->sk_state))) {
+ 		wq = rcu_dereference(sk->sk_wq);
+ 		if (skwq_has_sleeper(wq))
+ 			wake_up_interruptible_sync_poll(&wq->wait,
+@@ -2683,12 +2683,14 @@ static int unix_compat_ioctl(struct socket *sock, unsigned int cmd, unsigned lon
+ static __poll_t unix_poll(struct file *file, struct socket *sock, poll_table *wait)
+ {
+ 	struct sock *sk = sock->sk;
++	unsigned char state;
+ 	__poll_t mask;
+ 	u8 shutdown;
+ 
+ 	sock_poll_wait(file, sock, wait);
+ 	mask = 0;
+ 	shutdown = READ_ONCE(sk->sk_shutdown);
++	state = READ_ONCE(sk->sk_state);
+ 
+ 	/* exceptional events? */
+ 	if (sk->sk_err)
+@@ -2704,14 +2706,14 @@ static __poll_t unix_poll(struct file *file, struct socket *sock, poll_table *wa
+ 
+ 	/* Connection-based need to check for termination and startup */
+ 	if ((sk->sk_type == SOCK_STREAM || sk->sk_type == SOCK_SEQPACKET) &&
+-	    sk->sk_state == TCP_CLOSE)
++	    state == TCP_CLOSE)
+ 		mask |= EPOLLHUP;
+ 
+ 	/*
+ 	 * we set writable also when the other side has shut down the
+ 	 * connection. This prevents stuck sockets.
+ 	 */
+-	if (unix_writable(sk))
++	if (unix_writable(sk, state))
+ 		mask |= EPOLLOUT | EPOLLWRNORM | EPOLLWRBAND;
+ 
+ 	return mask;
+@@ -2722,12 +2724,14 @@ static __poll_t unix_dgram_poll(struct file *file, struct socket *sock,
+ {
+ 	struct sock *sk = sock->sk, *other;
+ 	unsigned int writable;
++	unsigned char state;
+ 	__poll_t mask;
+ 	u8 shutdown;
+ 
+ 	sock_poll_wait(file, sock, wait);
+ 	mask = 0;
+ 	shutdown = READ_ONCE(sk->sk_shutdown);
++	state = READ_ONCE(sk->sk_state);
+ 
+ 	/* exceptional events? */
+ 	if (sk->sk_err || !skb_queue_empty_lockless(&sk->sk_error_queue))
+@@ -2744,19 +2748,14 @@ static __poll_t unix_dgram_poll(struct file *file, struct socket *sock,
+ 		mask |= EPOLLIN | EPOLLRDNORM;
+ 
+ 	/* Connection-based need to check for termination and startup */
+-	if (sk->sk_type == SOCK_SEQPACKET) {
+-		if (sk->sk_state == TCP_CLOSE)
+-			mask |= EPOLLHUP;
+-		/* connection hasn't started yet? */
+-		if (sk->sk_state == TCP_SYN_SENT)
+-			return mask;
+-	}
++	if (sk->sk_type == SOCK_SEQPACKET && state == TCP_CLOSE)
++		mask |= EPOLLHUP;
+ 
+ 	/* No write status requested, avoid expensive OUT tests. */
+ 	if (!(poll_requested_events(wait) & (EPOLLWRBAND|EPOLLWRNORM|EPOLLOUT)))
+ 		return mask;
+ 
+-	writable = unix_writable(sk);
++	writable = unix_writable(sk, state);
+ 	if (writable) {
+ 		unix_state_lock(sk);
+ 
 -- 
 2.43.0
 
