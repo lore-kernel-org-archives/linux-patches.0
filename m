@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9BE180A8A;
-	Wed,  3 Jul 2024 11:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD30174ECD;
+	Wed,  3 Jul 2024 11:29:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006161; cv=none; b=Ojx6kR1x4OmYQOB0Zbncu9QoeeDAIfXbsxfHXTYwVAmVgZN4y7hV3W1xHP7iG1qUMN8mekbqTbmILSPcoIsxDPOrqntay4/N3sNjq00K2V4/ZIbN6pyyNmbbJ8cmT2Ys08da5INg6ZJFQU4VwIoaKo8l43L0D9lHvL70G4c3/bA=
+	t=1720006164; cv=none; b=qfYjNJaj+7B0mPI1bpbdMFpKogSjl4nsMw577okY6bDpwZO5u9qOYcu4Rn2swNyRF+ZqIY8OthO8MNcxCcWTep9Tz4EEfvHdq9XltzjoRSXwBVxJVtQ2udXlgRDdauLKSHCo14ZZ9KIOwB681lU6E9Ta+KiDbVRhXa6N+a+kiY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006161; c=relaxed/simple;
-	bh=nuK8weqUxYTo3zFg16N0p144Y3awmflVBXOXCkk8JLk=;
+	s=arc-20240116; t=1720006164; c=relaxed/simple;
+	bh=GwabHKOv2QOo69Aq5znqGpmF703tXfi2cjAbiJMJp6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jx9sjfZKN52NzmOZNzaktjxm9o76TFa8JdBo7yd0neH63+ce/9+92GCOpfRvwYI9L+B18xBajeK0fq/m+hIFbMlMcX68tJ/maCpaSGMholU6IicpYUBQnfeJ2gk2RlPFosf3ieVQUSgceTW4OeZqbYx6XSxSIsEJ6oYMOZE3308=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0MvABRRZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cx4y7Ztr5LcCpz4kngLXF2XlJ0MD9ktu+JOEM/t6grv+mjeL/qpVwmP5bk+A9b4sdJNrrFUJ4uj3dndLtVY+s9NXH3pNkTzDSl5WQFYr2L4PYWUhmuDXmgGspmDVR/UCr6d8HtZ5NQCzXFBhgKtSlVR/sih0/85ahvqi2T4+3SU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CvzLQRk8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0MvABRRZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9640FC2BD10;
-	Wed,  3 Jul 2024 11:29:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CvzLQRk8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87ED7C2BD10;
+	Wed,  3 Jul 2024 11:29:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006161;
-	bh=nuK8weqUxYTo3zFg16N0p144Y3awmflVBXOXCkk8JLk=;
+	s=korg; t=1720006163;
+	bh=GwabHKOv2QOo69Aq5znqGpmF703tXfi2cjAbiJMJp6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0MvABRRZuAipT6axMW+kJmowSFynyJM4Gc69zjJPEIk6oN/5P+zeKJ85h5oBDCrjS
-	 POUXjMMx4FQKakPOqKW0lU7WGcE2o3Luu5KXx5xr3Zq9dNac8hjfccjhdiGT13aGz0
-	 AE+3/w7qcPGSJCyQDQhvvdeeCYtzx2NhfUnOA8TU=
+	b=CvzLQRk8C160wWe3wNOS4EV8zK9n519Cjj0d1v+oucR5cm21H8iIiqOs87/V2MPzI
+	 Aj72UVesJrX7vXfHk15c8/cY32WC/iDT+G1glPDthFX5UbYAElY6SzgB6C7FZXRMeK
+	 pQlZuYlV8sL4FMLnU6xlndX2JGuMc5dDGRUZh9OE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasileios Amoiridis <vassilisamir@gmail.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 313/356] iio: chemical: bme680: Fix calibration data variable
-Date: Wed,  3 Jul 2024 12:40:49 +0200
-Message-ID: <20240703102924.956449892@linuxfoundation.org>
+	Udit Kumar <u-kumar1@ti.com>
+Subject: [PATCH 5.15 322/356] serial: 8250_omap: Implementation of Errata i2310
+Date: Wed,  3 Jul 2024 12:40:58 +0200
+Message-ID: <20240703102925.298849298@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,35 +49,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasileios Amoiridis <vassilisamir@gmail.com>
+From: Udit Kumar <u-kumar1@ti.com>
 
-commit b47c0fee73a810c4503c4a94ea34858a1d865bba upstream.
+commit 9d141c1e615795eeb93cd35501ad144ee997a826 upstream.
 
-According to the BME68x Sensor API [1], the h6 calibration
-data variable should be an unsigned integer of size 8.
+As per Errata i2310[0], Erroneous timeout can be triggered,
+if this Erroneous interrupt is not cleared then it may leads
+to storm of interrupts, therefore apply Errata i2310 solution.
 
-[1]: https://github.com/boschsensortec/BME68x_SensorAPI/blob/v4.4.8/bme68x_defs.h#L789
+[0] https://www.ti.com/lit/pdf/sprz536 page 23
 
-Fixes: 1b3bd8592780 ("iio: chemical: Add support for Bosch BME680 sensor")
-Signed-off-by: Vasileios Amoiridis <vassilisamir@gmail.com>
-Link: https://lore.kernel.org/r/20240606212313.207550-3-vassilisamir@gmail.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: b67e830d38fa ("serial: 8250: 8250_omap: Fix possible interrupt storm on K3 SoCs")
+Cc: stable@vger.kernel.org
+Signed-off-by: Udit Kumar <u-kumar1@ti.com>
+Link: https://lore.kernel.org/r/20240619105903.165434-1-u-kumar1@ti.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/chemical/bme680_core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/8250/8250_omap.c |   25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
 
---- a/drivers/iio/chemical/bme680_core.c
-+++ b/drivers/iio/chemical/bme680_core.c
-@@ -38,7 +38,7 @@ struct bme680_calib {
- 	s8  par_h3;
- 	s8  par_h4;
- 	s8  par_h5;
--	s8  par_h6;
-+	u8  par_h6;
- 	s8  par_h7;
- 	s8  par_gh1;
- 	s16 par_gh2;
+--- a/drivers/tty/serial/8250/8250_omap.c
++++ b/drivers/tty/serial/8250/8250_omap.c
+@@ -159,6 +159,10 @@ static u32 uart_read(struct omap8250_pri
+ 	return readl(priv->membase + (reg << OMAP_UART_REGSHIFT));
+ }
+ 
++/* Timeout low and High */
++#define UART_OMAP_TO_L                 0x26
++#define UART_OMAP_TO_H                 0x27
++
+ /*
+  * Called on runtime PM resume path from omap8250_restore_regs(), and
+  * omap8250_set_mctrl().
+@@ -642,13 +646,24 @@ static irqreturn_t omap8250_irq(int irq,
+ 
+ 	/*
+ 	 * On K3 SoCs, it is observed that RX TIMEOUT is signalled after
+-	 * FIFO has been drained, in which case a dummy read of RX FIFO
+-	 * is required to clear RX TIMEOUT condition.
++	 * FIFO has been drained or erroneously.
++	 * So apply solution of Errata i2310 as mentioned in
++	 * https://www.ti.com/lit/pdf/sprz536
+ 	 */
+ 	if (priv->habit & UART_RX_TIMEOUT_QUIRK &&
+-	    (iir & UART_IIR_RX_TIMEOUT) == UART_IIR_RX_TIMEOUT &&
+-	    serial_port_in(port, UART_OMAP_RX_LVL) == 0) {
+-		serial_port_in(port, UART_RX);
++		(iir & UART_IIR_RX_TIMEOUT) == UART_IIR_RX_TIMEOUT) {
++		unsigned char efr2, timeout_h, timeout_l;
++
++		efr2 = serial_in(up, UART_OMAP_EFR2);
++		timeout_h = serial_in(up, UART_OMAP_TO_H);
++		timeout_l = serial_in(up, UART_OMAP_TO_L);
++		serial_out(up, UART_OMAP_TO_H, 0xFF);
++		serial_out(up, UART_OMAP_TO_L, 0xFF);
++		serial_out(up, UART_OMAP_EFR2, UART_OMAP_EFR2_TIMEOUT_BEHAVE);
++		serial_in(up, UART_IIR);
++		serial_out(up, UART_OMAP_EFR2, efr2);
++		serial_out(up, UART_OMAP_TO_H, timeout_h);
++		serial_out(up, UART_OMAP_TO_L, timeout_l);
+ 	}
+ 
+ 	/* Stop processing interrupts on input overrun */
 
 
