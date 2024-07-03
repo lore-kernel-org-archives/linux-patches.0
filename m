@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F4E17966D;
-	Wed,  3 Jul 2024 11:15:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03A913B2B4;
+	Wed,  3 Jul 2024 11:15:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005304; cv=none; b=Us1xsbcgbgRg9cnbnJCfDBp+4EC42kaKJYYunHjORfMVO5Y/hXco1oZBVVuzfmHCNqsMoU3/OwMAsyGAJfN06oAsmEpO0DSEFrzR9wylMYTxBj9Cms5A2FW4D+0PmJgpFAuCW77miKRAvSJEuHqxBdgUk5hLHBVGbQQQErMLA6s=
+	t=1720005306; cv=none; b=XBZ89bHhwBXgspPGjVrZpK3qYjTjZeJcUZJYB0pFNOm5ttAVuWIV45d4M0qK2/uwf3P+Af/weWMkYj4nHAPzVLx0jHIh8dBdkm9od0fbI/MxQvOPmwE4WRTnWDYOvl4HlOv0bpN3GcVoin87VIB4X53OP+2UKPvH3TwWRG5uRiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005304; c=relaxed/simple;
-	bh=/UXeoxfk70HEnTUf7ydeMsR6QMhBMvgRV7r2vcNdekw=;
+	s=arc-20240116; t=1720005306; c=relaxed/simple;
+	bh=JiJN9oleZvywpL/L0zRUCZAVenzjvNNwjCTYNd+F7vo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EVlGuMs4GT8BaVlVJ7WKMaHN0kgO+ZP2fLcaJ5Vt/aVMS0rqKcb16KTsKxKxCE3NFcOT3tU/ltWhTKciINJnUNr+li1zcRVfc/KovtLY4ilyfYXyj0V0TTdiFPbu+wKGhk8zQQq7sHDF4BMvGivo6xoM77TkPoTpcYvftDorojQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MPFxR3xc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=snQIPKJb06DfOCgBM0hnlJpHEUyzxBo8mwlqYOWoY3hQs9rBxmbNw9vW76IXQXyMAWSbWdP44OpTbPODFqccySnlDGrv2KmsnKXETc45TuWLeDZtdIV2hsz9rJ/++HQbYTf9ba4HUEH2QCS393VJaEihaSl8YCegQqz6pINXXp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VMXmKtof; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MPFxR3xc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A5F8C2BD10;
-	Wed,  3 Jul 2024 11:15:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VMXmKtof"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50D17C2BD10;
+	Wed,  3 Jul 2024 11:15:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005303;
-	bh=/UXeoxfk70HEnTUf7ydeMsR6QMhBMvgRV7r2vcNdekw=;
+	s=korg; t=1720005306;
+	bh=JiJN9oleZvywpL/L0zRUCZAVenzjvNNwjCTYNd+F7vo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MPFxR3xc3A78s2JWmrVbNMOB+q3cEy1tyFqArHRtEW+DVKWhxMpxamnMZQexW055N
-	 eUiN20f7c2+tvWFdO+Hh43XstK+PDnj96qLo7oe5Bn1ItJbu9ymz9CZM4s6GXnrqT9
-	 6NW3sXiFsG8nb6NtARx5BuebMl8vlV4qfjxbvEBU=
+	b=VMXmKtofAuIN4VpUQtSeI/ptU/bPjfVsdFzolj0u5wtYvEQEZmdCbVn0FRh7gSok4
+	 tNfhjQwtOvvePqLvw7BgxT5Z28qpfaf6mYGn+ztDVwIfAMmlMYDNFe62fido49JDhW
+	 ng0c85/KcpNw9WnYcD9HCFrymu5P8ELDsHWl53Aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Martin KaFai Lau <kafai@fb.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Linyu Yuan <quic_linyyuan@quicinc.com>,
+	John Keeping <john@metanate.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 036/356] ipv6: fix possible race in __fib6_drop_pcpu_from()
-Date: Wed,  3 Jul 2024 12:36:12 +0200
-Message-ID: <20240703102914.462350703@linuxfoundation.org>
+Subject: [PATCH 5.15 037/356] usb: gadget: f_fs: use io_data->status consistently
+Date: Wed,  3 Jul 2024 12:36:13 +0200
+Message-ID: <20240703102914.499987564@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -52,128 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: John Keeping <john@metanate.com>
 
-[ Upstream commit b01e1c030770ff3b4fe37fc7cc6bca03f594133f ]
+[ Upstream commit b566d38857fcb6777f25b674b90a831eec0817a2 ]
 
-syzbot found a race in __fib6_drop_pcpu_from() [1]
+Commit fb1f16d74e26 ("usb: gadget: f_fs: change ep->status safe in
+ffs_epfile_io()") added a new ffs_io_data::status field to fix lifetime
+issues in synchronous requests.
 
-If compiler reads more than once (*ppcpu_rt),
-second read could read NULL, if another cpu clears
-the value in rt6_get_pcpu_route().
+While there are no similar lifetime issues for asynchronous requests
+(the separate ep member in ffs_io_data avoids them) using the status
+field means the USB request can be freed earlier and that there is more
+consistency between the synchronous and asynchronous I/O paths.
 
-Add a READ_ONCE() to prevent this race.
-
-Also add rcu_read_lock()/rcu_read_unlock() because
-we rely on RCU protection while dereferencing pcpu_rt.
-
-[1]
-
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000012: 0000 [#1] PREEMPT SMP KASAN PTI
-KASAN: null-ptr-deref in range [0x0000000000000090-0x0000000000000097]
-CPU: 0 PID: 7543 Comm: kworker/u8:17 Not tainted 6.10.0-rc1-syzkaller-00013-g2bfcfd584ff5 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/02/2024
-Workqueue: netns cleanup_net
- RIP: 0010:__fib6_drop_pcpu_from.part.0+0x10a/0x370 net/ipv6/ip6_fib.c:984
-Code: f8 48 c1 e8 03 80 3c 28 00 0f 85 16 02 00 00 4d 8b 3f 4d 85 ff 74 31 e8 74 a7 fa f7 49 8d bf 90 00 00 00 48 89 f8 48 c1 e8 03 <80> 3c 28 00 0f 85 1e 02 00 00 49 8b 87 90 00 00 00 48 8b 0c 24 48
-RSP: 0018:ffffc900040df070 EFLAGS: 00010206
-RAX: 0000000000000012 RBX: 0000000000000001 RCX: ffffffff89932e16
-RDX: ffff888049dd1e00 RSI: ffffffff89932d7c RDI: 0000000000000091
-RBP: dffffc0000000000 R08: 0000000000000005 R09: 0000000000000007
-R10: 0000000000000001 R11: 0000000000000006 R12: ffff88807fa080b8
-R13: fffffbfff1a9a07d R14: ffffed100ff41022 R15: 0000000000000001
-FS:  0000000000000000(0000) GS:ffff8880b9200000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000001b32c26000 CR3: 000000005d56e000 CR4: 00000000003526f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
-  __fib6_drop_pcpu_from net/ipv6/ip6_fib.c:966 [inline]
-  fib6_drop_pcpu_from net/ipv6/ip6_fib.c:1027 [inline]
-  fib6_purge_rt+0x7f2/0x9f0 net/ipv6/ip6_fib.c:1038
-  fib6_del_route net/ipv6/ip6_fib.c:1998 [inline]
-  fib6_del+0xa70/0x17b0 net/ipv6/ip6_fib.c:2043
-  fib6_clean_node+0x426/0x5b0 net/ipv6/ip6_fib.c:2205
-  fib6_walk_continue+0x44f/0x8d0 net/ipv6/ip6_fib.c:2127
-  fib6_walk+0x182/0x370 net/ipv6/ip6_fib.c:2175
-  fib6_clean_tree+0xd7/0x120 net/ipv6/ip6_fib.c:2255
-  __fib6_clean_all+0x100/0x2d0 net/ipv6/ip6_fib.c:2271
-  rt6_sync_down_dev net/ipv6/route.c:4906 [inline]
-  rt6_disable_ip+0x7ed/0xa00 net/ipv6/route.c:4911
-  addrconf_ifdown.isra.0+0x117/0x1b40 net/ipv6/addrconf.c:3855
-  addrconf_notify+0x223/0x19e0 net/ipv6/addrconf.c:3778
-  notifier_call_chain+0xb9/0x410 kernel/notifier.c:93
-  call_netdevice_notifiers_info+0xbe/0x140 net/core/dev.c:1992
-  call_netdevice_notifiers_extack net/core/dev.c:2030 [inline]
-  call_netdevice_notifiers net/core/dev.c:2044 [inline]
-  dev_close_many+0x333/0x6a0 net/core/dev.c:1585
-  unregister_netdevice_many_notify+0x46d/0x19f0 net/core/dev.c:11193
-  unregister_netdevice_many net/core/dev.c:11276 [inline]
-  default_device_exit_batch+0x85b/0xae0 net/core/dev.c:11759
-  ops_exit_list+0x128/0x180 net/core/net_namespace.c:178
-  cleanup_net+0x5b7/0xbf0 net/core/net_namespace.c:640
-  process_one_work+0x9fb/0x1b60 kernel/workqueue.c:3231
-  process_scheduled_works kernel/workqueue.c:3312 [inline]
-  worker_thread+0x6c8/0xf70 kernel/workqueue.c:3393
-  kthread+0x2c1/0x3a0 kernel/kthread.c:389
-  ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
-  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
-
-Fixes: d52d3997f843 ("ipv6: Create percpu rt6_info")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Martin KaFai Lau <kafai@fb.com>
-Link: https://lore.kernel.org/r/20240604193549.981839-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: Linyu Yuan <quic_linyyuan@quicinc.com>
+Signed-off-by: John Keeping <john@metanate.com>
+Reviewed-by: Linyu Yuan <quic_linyyuan@quicinc.com>
+Link: https://lore.kernel.org/r/20221124170430.3998755-1-john@metanate.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 24729b307eef ("usb: gadget: f_fs: Fix race between aio_cancel() and AIO request complete")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_fib.c | 6 +++++-
- net/ipv6/route.c   | 1 +
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/function/f_fs.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
-index c0ff5ee490e7b..7d09193c14445 100644
---- a/net/ipv6/ip6_fib.c
-+++ b/net/ipv6/ip6_fib.c
-@@ -961,6 +961,7 @@ static void __fib6_drop_pcpu_from(struct fib6_nh *fib6_nh,
- 	if (!fib6_nh->rt6i_pcpu)
- 		return;
+diff --git a/drivers/usb/gadget/function/f_fs.c b/drivers/usb/gadget/function/f_fs.c
+index a4367a43cdd87..37d18e27ddc64 100644
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -830,8 +830,7 @@ static void ffs_user_copy_worker(struct work_struct *work)
+ {
+ 	struct ffs_io_data *io_data = container_of(work, struct ffs_io_data,
+ 						   work);
+-	int ret = io_data->req->status ? io_data->req->status :
+-					 io_data->req->actual;
++	int ret = io_data->status;
+ 	bool kiocb_has_eventfd = io_data->kiocb->ki_flags & IOCB_EVENTFD;
  
-+	rcu_read_lock();
- 	/* release the reference to this fib entry from
- 	 * all of its cached pcpu routes
- 	 */
-@@ -969,7 +970,9 @@ static void __fib6_drop_pcpu_from(struct fib6_nh *fib6_nh,
- 		struct rt6_info *pcpu_rt;
+ 	if (io_data->read && ret > 0) {
+@@ -845,8 +844,6 @@ static void ffs_user_copy_worker(struct work_struct *work)
+ 	if (io_data->ffs->ffs_eventfd && !kiocb_has_eventfd)
+ 		eventfd_signal(io_data->ffs->ffs_eventfd, 1);
  
- 		ppcpu_rt = per_cpu_ptr(fib6_nh->rt6i_pcpu, cpu);
--		pcpu_rt = *ppcpu_rt;
+-	usb_ep_free_request(io_data->ep, io_data->req);
+-
+ 	if (io_data->read)
+ 		kfree(io_data->to_free);
+ 	ffs_free_buffer(io_data);
+@@ -861,6 +858,9 @@ static void ffs_epfile_async_io_complete(struct usb_ep *_ep,
+ 
+ 	ENTER();
+ 
++	io_data->status = req->status ? req->status : req->actual;
++	usb_ep_free_request(_ep, req);
 +
-+		/* Paired with xchg() in rt6_get_pcpu_route() */
-+		pcpu_rt = READ_ONCE(*ppcpu_rt);
- 
- 		/* only dropping the 'from' reference if the cached route
- 		 * is using 'match'. The cached pcpu_rt->from only changes
-@@ -983,6 +986,7 @@ static void __fib6_drop_pcpu_from(struct fib6_nh *fib6_nh,
- 			fib6_info_release(from);
- 		}
- 	}
-+	rcu_read_unlock();
+ 	INIT_WORK(&io_data->work, ffs_user_copy_worker);
+ 	queue_work(ffs->io_completion_wq, &io_data->work);
  }
- 
- struct fib6_nh_pcpu_arg {
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 3bc3a30363e19..2c60270c5798b 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -1398,6 +1398,7 @@ static struct rt6_info *rt6_get_pcpu_route(const struct fib6_result *res)
- 		struct rt6_info *prev, **p;
- 
- 		p = this_cpu_ptr(res->nh->rt6i_pcpu);
-+		/* Paired with READ_ONCE() in __fib6_drop_pcpu_from() */
- 		prev = xchg(p, NULL);
- 		if (prev) {
- 			dst_dev_put(&prev->dst);
 -- 
 2.43.0
 
