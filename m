@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA6671849EB;
-	Wed,  3 Jul 2024 11:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A85D0185084;
+	Wed,  3 Jul 2024 11:20:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005626; cv=none; b=rf1mlmba0W4tlf2fJf16lPGyDAEtv/iWDkQWzaBjmmDchmu+epWPgE82Z6ogXuWlYE9IoIIu9zMWXS8t7xaOkuyNevA5vRu2VSyH6S8vMoAwY5XfpyyeEYmGPWwlcAfsNhHSZijAnTT2VvtCRXr/6TUw5QJg7Qsbkmu7OiBaB/8=
+	t=1720005629; cv=none; b=daNZg8XLJyaRyKxugTs7MNr/5XeS9Di9Nir3L84VtlMOLS3UArtiVf0wUfAzGJdQrRb3FoPePKaX3K+QeEWUTlHVnDyHeoZ1f2uqFatuvcqIIoQXMb/xeorUs5x7MU0qrPlJibxx6eVUxYpYPP9+1QvfuHYUtEJ1FOQajLgNX2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005626; c=relaxed/simple;
-	bh=c0o5gd0i8m8I/XEE2a9FJClmjRGiV4wcK3K3gavON4g=;
+	s=arc-20240116; t=1720005629; c=relaxed/simple;
+	bh=psqAzXUUlSMXPmTCD01YeEynih1bCzOtk4+rDakCfCY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tqcQKVCuFK8zbv6d6WRzWLWfBEqe5iAyntonc5UkG8gT9ag4Isqc23KAK6tt+uwRuhA5Rqqv3ivBBwxGyj/Mh8IxprMhS9lBFaW38euk4Vk4VP3GMG+b3G1pIX+MoXSk1vuKFbFpnk05ZAri4dVnWcLO4zFzimiQ+wlYkcc9q2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QB6YwYOR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cvkarss8JIJjqAhSCd7J89xQef8/FG9WZPDrYQVnK8NCxUAcfJMP6cD1IfULIstpYKOlP5RRNZPWkhcOy8TcuEOmCHiMlfrdv9M6VANzGxVc6YGPNEPD/jU7DLW4vHgFNjnlQgcgEuhuL98MrZYcsE80qtEPdF+SwipW6cQ6ckU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hh5pzRKS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QB6YwYOR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 308F5C2BD10;
-	Wed,  3 Jul 2024 11:20:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hh5pzRKS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27700C2BD10;
+	Wed,  3 Jul 2024 11:20:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005626;
-	bh=c0o5gd0i8m8I/XEE2a9FJClmjRGiV4wcK3K3gavON4g=;
+	s=korg; t=1720005629;
+	bh=psqAzXUUlSMXPmTCD01YeEynih1bCzOtk4+rDakCfCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QB6YwYORx49Acx2h1Ef9PK6CyIP2N0TRdjoNx0eqxt5T/fxQQF0vae+8tJL7pufxg
-	 Y59fYXWd3lVZ8ttVrN6nSNq9+qfhGYhfmSntJkhEpM19Bzrr2nY/KIBxlufaWGMwP4
-	 Vc4EySLYhrBL9pcZD09/NaugeFE5Y5ufHxB+DWQQ=
+	b=Hh5pzRKS/J9wLCK4Rv4s4eKeKB7w2OJSApOvlrcwKLT8ZrbMd5QnwqcnV0vqRbP4D
+	 h8iGgF8dCM0fHasahDfDHbwRhd3/R0SFp8lQi4wUXtt9GKJuW5WRYi2IvBWqKkqG3U
+	 wv/AaSz7QybMA+ksyDPWRhI0ia103SFiCz91m4gA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	YonglongLi <liyonglong@chinatelecom.cn>,
-	Mat Martineau <martineau@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 141/356] mptcp: pm: update add_addr counters after connect
-Date: Wed,  3 Jul 2024 12:37:57 +0200
-Message-ID: <20240703102918.434934083@linuxfoundation.org>
+	Marc Ferland <marc.ferland@sonatest.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.15 112/356] iio: dac: ad5592r: fix temperature channel scaling value
+Date: Wed,  3 Jul 2024 12:37:28 +0200
+Message-ID: <20240703102917.335828113@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -52,110 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YonglongLi <liyonglong@chinatelecom.cn>
+From: Marc Ferland <marc.ferland@sonatest.com>
 
-commit 40eec1795cc27b076d49236649a29507c7ed8c2d upstream.
+commit 279428df888319bf68f2686934897301a250bb84 upstream.
 
-The creation of new subflows can fail for different reasons. If no
-subflow have been created using the received ADD_ADDR, the related
-counters should not be updated, otherwise they will never be decremented
-for events related to this ID later on.
+The scale value for the temperature channel is (assuming Vref=2.5 and
+the datasheet):
 
-For the moment, the number of accepted ADD_ADDR is only decremented upon
-the reception of a related RM_ADDR, and only if the remote address ID is
-currently being used by at least one subflow. In other words, if no
-subflow can be created with the received address, the counter will not
-be decremented. In this case, it is then important not to increment
-pm.add_addr_accepted counter, and not to modify pm.accept_addr bit.
+    376.7897513
 
-Note that this patch does not modify the behaviour in case of failures
-later on, e.g. if the MP Join is dropped or rejected.
+When calculating both val and val2 for the temperature scale we
+use (3767897513/25) and multiply it by Vref (here I assume 2500mV) to
+obtain:
 
-The "remove invalid addresses" MP Join subtest has been modified to
-validate this case. The broadcast IP address is added before the "valid"
-address that will be used to successfully create a subflow, and the
-limit is decreased by one: without this patch, it was not possible to
-create the last subflow, because:
+  2500 * (3767897513/25) ==> 376789751300
 
-- the broadcast address would have been accepted even if it was not
-  usable: the creation of a subflow to this address results in an error,
+Finally we divide with remainder by 10^9 to get:
 
-- the limit of 2 accepted ADD_ADDR would have then been reached.
+    val = 376
+    val2 = 789751300
 
-Fixes: 01cacb00b35c ("mptcp: add netlink-based PM")
-Cc: stable@vger.kernel.org
-Co-developed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: YonglongLi <liyonglong@chinatelecom.cn>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://lore.kernel.org/r/20240607-upstream-net-20240607-misc-fixes-v1-3-1ab9ddfa3d00@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Conflicts in pm_netlink.c because commit 12a18341b5c3 ("mptcp: send
-  ADD_ADDR echo before create subflows") is not present in this version,
-  and it changes the context, but not the block that needs to be moved.
-  Conflicts in the selftests, because many features modifying the whole
-  file have been added later, e.g. commit ae7bd9ccecc3 ("selftests:
-  mptcp: join: option to execute specific tests"). The same
-  modifications have been reported to the old code: simply moving one
-  line, and changing the limits. ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+However, we return IIO_VAL_INT_PLUS_MICRO (should have been NANO) as
+the scale type. So when converting the raw temperature value to the
+'processed' temperature value we will get (assuming raw=810,
+offset=-753):
+
+    processed = (raw + offset) * scale_val
+              = (810 + -753) * 376
+	      = 21432
+
+    processed += div((raw + offset) * scale_val2, 10^6)
+              += div((810 + -753) * 789751300, 10^6)
+	      += 45015
+    ==> 66447
+    ==> 66.4 Celcius
+
+instead of the expected 21.5 Celsius.
+
+Fix this issue by changing IIO_VAL_INT_PLUS_MICRO to
+IIO_VAL_INT_PLUS_NANO.
+
+Fixes: 56ca9db862bf ("iio: dac: Add support for the AD5592R/AD5593R ADCs/DACs")
+Signed-off-by: Marc Ferland <marc.ferland@sonatest.com>
+Link: https://lore.kernel.org/r/20240501150554.1871390-1-marc.ferland@sonatest.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c                          |   16 ++++++++++------
- tools/testing/selftests/net/mptcp/mptcp_join.sh |    4 ++--
- 2 files changed, 12 insertions(+), 8 deletions(-)
+ drivers/iio/dac/ad5592r-base.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -608,6 +608,7 @@ static void mptcp_pm_nl_add_addr_receive
- 	struct mptcp_addr_info remote;
- 	unsigned int subflows_max;
- 	bool reset_port = false;
-+	bool sf_created = false;
- 	int i, nr;
+--- a/drivers/iio/dac/ad5592r-base.c
++++ b/drivers/iio/dac/ad5592r-base.c
+@@ -411,7 +411,7 @@ static int ad5592r_read_raw(struct iio_d
+ 			s64 tmp = *val * (3767897513LL / 25LL);
+ 			*val = div_s64_rem(tmp, 1000000000LL, val2);
  
- 	add_addr_accept_max = mptcp_pm_get_add_addr_accept_max(msk);
-@@ -632,16 +633,19 @@ static void mptcp_pm_nl_add_addr_receive
- 	 */
- 	nr = fill_local_addresses_vec(msk, addrs);
+-			return IIO_VAL_INT_PLUS_MICRO;
++			return IIO_VAL_INT_PLUS_NANO;
+ 		}
  
--	msk->pm.add_addr_accepted++;
--	if (msk->pm.add_addr_accepted >= add_addr_accept_max ||
--	    msk->pm.subflows >= subflows_max)
--		WRITE_ONCE(msk->pm.accept_addr, false);
--
- 	spin_unlock_bh(&msk->pm.lock);
- 	for (i = 0; i < nr; i++)
--		__mptcp_subflow_connect(sk, &addrs[i], &remote);
-+		if (__mptcp_subflow_connect(sk, &addrs[i], &remote) == 0)
-+			sf_created = true;
- 	spin_lock_bh(&msk->pm.lock);
- 
-+	if (sf_created) {
-+		msk->pm.add_addr_accepted++;
-+		if (msk->pm.add_addr_accepted >= add_addr_accept_max ||
-+		    msk->pm.subflows >= subflows_max)
-+			WRITE_ONCE(msk->pm.accept_addr, false);
-+	}
-+
- 	/* be sure to echo exactly the received address */
- 	if (reset_port)
- 		remote.port = 0;
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -1306,10 +1306,10 @@ remove_tests()
- 	reset
- 	ip netns exec $ns1 ./pm_nl_ctl limits 3 3
- 	ip netns exec $ns1 ./pm_nl_ctl add 10.0.12.1 flags signal
--	ip netns exec $ns1 ./pm_nl_ctl add 10.0.3.1 flags signal
- 	# broadcast IP: no packet for this address will be received on ns1
- 	ip netns exec $ns1 ./pm_nl_ctl add 224.0.0.1 flags signal
--	ip netns exec $ns2 ./pm_nl_ctl limits 3 3
-+	ip netns exec $ns1 ./pm_nl_ctl add 10.0.3.1 flags signal
-+	ip netns exec $ns2 ./pm_nl_ctl limits 2 2
- 	run_tests $ns1 $ns2 10.0.1.1 0 -3 0 slow
- 	chk_join_nr "remove invalid addresses" 1 1 1
- 	chk_add_nr 3 3
+ 		mutex_lock(&st->lock);
 
 
