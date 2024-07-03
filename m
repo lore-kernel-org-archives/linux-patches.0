@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F78F1849CF;
-	Wed,  3 Jul 2024 10:45:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886E7136E2A;
+	Wed,  3 Jul 2024 10:45:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003556; cv=none; b=Cbv+CrcgT6NkUZ/MvpN51/MujmAcMJt0jbhENdpc0ne1be4fDT37esRAg63AE91AvJfJ+V0bNmJi8VMs17yJx8IUs0XSiavWF+x9Zh3yGNXLY9PLuf3sBV0Rf1bhn9L5XUv8Tb4epWM7bRJb+RWWc1kOpPBwMU0GxoXqVEhMOO4=
+	t=1720003559; cv=none; b=Tos2e82GUC/zG6mqxOukBQku5xdm4vDPOqMlukIxv7s63yCVGp/mq3H1u1oxaDgf1F5z1+PlSjVqxuJ3vv7vAfA16rOsJ1/2/lUiSiUeFnNUwWowulVosEr1DAcLgX+E/ipjeEhMs5cJgTE6kghZEvhMVxVO3x02nlRjFwpDzu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003556; c=relaxed/simple;
-	bh=SKRuPrun2IlBumS4bNYFuaul5Ou3wDhYeD7zET5xyOs=;
+	s=arc-20240116; t=1720003559; c=relaxed/simple;
+	bh=aj0vHtKKmiKLdMe6D6fTufXhB+PydcN/a0NGUBHeUvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aR89VrqRzeSUEPEFwWZNcWG4icE7dDicmajAIgIDzxIO3z6eScBVdv6mFQAaMHvIzJ3BMuU56E5TtaC9jrE3OTaRdh/l1e4mO61YmtVOkqnw6jyf5qCjwA8waSAYcYATR5aoJqU1zsvoYsZ3BO78zpmmfnHzV0WPBX2gGhKbd0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pFLTtI3B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cWo1kUHRxeUEbjPNrz0xpeKNa1xVMJEQjthT1C4izSGgsxP73yZsYRA2iQoOQa/RcPLgy8UMH29JfyQJcwiYFpsMqeeRdWcKo5z+CZJR5UJBHwvKU6W8eLMGM41/RgjIPH0sO0QtYGMvUJl8If7nRT/Pe980RsAnyentqRrZnNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=INlml/rl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pFLTtI3B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF4B2C2BD10;
-	Wed,  3 Jul 2024 10:45:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="INlml/rl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D37BBC2BD10;
+	Wed,  3 Jul 2024 10:45:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003556;
-	bh=SKRuPrun2IlBumS4bNYFuaul5Ou3wDhYeD7zET5xyOs=;
+	s=korg; t=1720003559;
+	bh=aj0vHtKKmiKLdMe6D6fTufXhB+PydcN/a0NGUBHeUvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pFLTtI3BLgtjOZ84RlvvpRdmZrT4jWQi5TczhZaB3h4yF1pf+BEIopxuhzFZ/u1p4
-	 Npfbu58p8Bg6vO721cer8CR3qLWAFvDLp3A9SpMp9Vx5rsvMLkvqSQI5czuJMxbWYe
-	 8Ev4CMK2xmI1UJd+PrtsBaBqxumyEjA9gp2bPNEY=
+	b=INlml/rlN2jexztyTe6o9lFEPOCw4qhpg8cVLlVMDOBrVRpWWaN6aSBd+M+FBa1p/
+	 6LWejgPCYms845pmkKHRxM7O+DQa2fOyHFkcfUmu8B5T/dC5e1J4FJSi48Obbm87K9
+	 2hjkBz7DFX7CV8u+7XGfsyV1eiC1DquWFQC6q29s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Haifeng Xu <haifeng.xu@shopee.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 086/139] tracing: Add MODULE_DESCRIPTION() to preemptirq_delay_test
-Date: Wed,  3 Jul 2024 12:39:43 +0200
-Message-ID: <20240703102833.688485967@linuxfoundation.org>
+Subject: [PATCH 4.19 087/139] perf/core: Fix missing wakeup when waiting for context reference
+Date: Wed,  3 Jul 2024 12:39:44 +0200
+Message-ID: <20240703102833.725608934@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -53,37 +53,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Johnson <quic_jjohnson@quicinc.com>
+From: Haifeng Xu <haifeng.xu@shopee.com>
 
-[ Upstream commit 23748e3e0fbfe471eff5ce439921629f6a427828 ]
+[ Upstream commit 74751ef5c1912ebd3e65c3b65f45587e05ce5d36 ]
 
-Fix the 'make W=1' warning:
+In our production environment, we found many hung tasks which are
+blocked for more than 18 hours. Their call traces are like this:
 
-WARNING: modpost: missing MODULE_DESCRIPTION() in kernel/trace/preemptirq_delay_test.o
+[346278.191038] __schedule+0x2d8/0x890
+[346278.191046] schedule+0x4e/0xb0
+[346278.191049] perf_event_free_task+0x220/0x270
+[346278.191056] ? init_wait_var_entry+0x50/0x50
+[346278.191060] copy_process+0x663/0x18d0
+[346278.191068] kernel_clone+0x9d/0x3d0
+[346278.191072] __do_sys_clone+0x5d/0x80
+[346278.191076] __x64_sys_clone+0x25/0x30
+[346278.191079] do_syscall_64+0x5c/0xc0
+[346278.191083] ? syscall_exit_to_user_mode+0x27/0x50
+[346278.191086] ? do_syscall_64+0x69/0xc0
+[346278.191088] ? irqentry_exit_to_user_mode+0x9/0x20
+[346278.191092] ? irqentry_exit+0x19/0x30
+[346278.191095] ? exc_page_fault+0x89/0x160
+[346278.191097] ? asm_exc_page_fault+0x8/0x30
+[346278.191102] entry_SYSCALL_64_after_hwframe+0x44/0xae
 
-Link: https://lore.kernel.org/linux-trace-kernel/20240518-md-preemptirq_delay_test-v1-1-387d11b30d85@quicinc.com
+The task was waiting for the refcount become to 1, but from the vmcore,
+we found the refcount has already been 1. It seems that the task didn't
+get woken up by perf_event_release_kernel() and got stuck forever. The
+below scenario may cause the problem.
 
+Thread A					Thread B
+...						...
+perf_event_free_task				perf_event_release_kernel
+						   ...
+						   acquire event->child_mutex
+						   ...
+						   get_ctx
+   ...						   release event->child_mutex
+   acquire ctx->mutex
+   ...
+   perf_free_event (acquire/release event->child_mutex)
+   ...
+   release ctx->mutex
+   wait_var_event
+						   acquire ctx->mutex
+						   acquire event->child_mutex
+						   # move existing events to free_list
+						   release event->child_mutex
+						   release ctx->mutex
+						   put_ctx
+...						...
+
+In this case, all events of the ctx have been freed, so we couldn't
+find the ctx in free_list and Thread A will miss the wakeup. It's thus
+necessary to add a wakeup after dropping the reference.
+
+Fixes: 1cf8dfe8a661 ("perf/core: Fix race between close() and fork()")
+Signed-off-by: Haifeng Xu <haifeng.xu@shopee.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
 Cc: stable@vger.kernel.org
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Fixes: f96e8577da10 ("lib: Add module for testing preemptoff/irqsoff latency tracers")
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://lkml.kernel.org/r/20240513103948.33570-1-haifeng.xu@shopee.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/preemptirq_delay_test.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/events/core.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/kernel/trace/preemptirq_delay_test.c b/kernel/trace/preemptirq_delay_test.c
-index d8765c952fab3..4692c87d4b69c 100644
---- a/kernel/trace/preemptirq_delay_test.c
-+++ b/kernel/trace/preemptirq_delay_test.c
-@@ -69,4 +69,5 @@ static void __exit preemptirq_delay_exit(void)
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index ef422d1326a8a..c7651c30eaabf 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -4661,6 +4661,7 @@ int perf_event_release_kernel(struct perf_event *event)
+ again:
+ 	mutex_lock(&event->child_mutex);
+ 	list_for_each_entry(child, &event->child_list, child_list) {
++		void *var = NULL;
  
- module_init(preemptirq_delay_init)
- module_exit(preemptirq_delay_exit)
-+MODULE_DESCRIPTION("Preempt / IRQ disable delay thread to test latency tracers");
- MODULE_LICENSE("GPL v2");
+ 		/*
+ 		 * Cannot change, child events are not migrated, see the
+@@ -4701,11 +4702,23 @@ int perf_event_release_kernel(struct perf_event *event)
+ 			 * this can't be the last reference.
+ 			 */
+ 			put_event(event);
++		} else {
++			var = &ctx->refcount;
+ 		}
+ 
+ 		mutex_unlock(&event->child_mutex);
+ 		mutex_unlock(&ctx->mutex);
+ 		put_ctx(ctx);
++
++		if (var) {
++			/*
++			 * If perf_event_free_task() has deleted all events from the
++			 * ctx while the child_mutex got released above, make sure to
++			 * notify about the preceding put_ctx().
++			 */
++			smp_mb(); /* pairs with wait_var_event() */
++			wake_up_var(var);
++		}
+ 		goto again;
+ 	}
+ 	mutex_unlock(&event->child_mutex);
 -- 
 2.43.0
 
