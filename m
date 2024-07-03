@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC00172798;
-	Wed,  3 Jul 2024 10:42:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D003172798;
+	Wed,  3 Jul 2024 10:42:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003364; cv=none; b=DZ7KWeNOk7W91y37/RDjdruU6KaBVY4wdhuzM120xPzDmWQ83VRQKrHSb8Ue3gawLOYW2qcKYWg6oAijj2lYz8aiNS8KMLZDFhssosuLyT/1U5q21f4HjLi2nmCUglu89ykYyFF5nN8WUCm07UNejjBxUMnhHMIkCgZG2UAXRkA=
+	t=1720003367; cv=none; b=mmhUeA1B0EYn2UxinLu2DniCMpCNEKCScVDkfmCmf+4S2vCgk5QEMHIQCe1fGwCW0sNBW7yO1OVmInzVkgdbN058QbISwVysgxjQqyhHejzpv8GGp2WXDi6ZRDVuZ8tAA7HSNLSx4lKKyvW5og/hywK513S3Th5KPbfhW+UQTm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003364; c=relaxed/simple;
-	bh=hWvNuHTn1sdQNKV1EoIG053vkxlSMFGEyk6YMYXpDQk=;
+	s=arc-20240116; t=1720003367; c=relaxed/simple;
+	bh=wKRAB4svr5YmmQSx81gGIABQ0rMiYnADKqh90TTPwlc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ksrpObdKTP3jnSbzuWWMiBITvwDeyXvEyLpSIShkaWSgnUxpLmXFDSknE+maurdZZ99oYuRbGzko87N4oFc7ZvW9OaPg42WRC5m0ajOPcaee7fxX9bHrgb0xcVnD6GHtSVQZ8Quq1LxzKiopsPoVxhd++0BdlhJ7Puzja4mE1Ko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OWCgRII8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WHR0RBOmXUuuzZF8bBKqVH/jJyNvq0No/jTC/5S9HGnmhYDpppD3zrbRJ4z1Paf6QywuLRsq5gXDkDpNHrQIsn5vHHkII0nhWS5f4HB+CUTz+D7AQmvIQTst27VIDUFFrY9NXRy4pmr0frC1Wi0noanzR3q6i3FbhEs07pJHgaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dboH5ffg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OWCgRII8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF781C2BD10;
-	Wed,  3 Jul 2024 10:42:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dboH5ffg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3ED0C2BD10;
+	Wed,  3 Jul 2024 10:42:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003364;
-	bh=hWvNuHTn1sdQNKV1EoIG053vkxlSMFGEyk6YMYXpDQk=;
+	s=korg; t=1720003367;
+	bh=wKRAB4svr5YmmQSx81gGIABQ0rMiYnADKqh90TTPwlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OWCgRII8MwwtiEXeu03FD1DevUCKw4sHqLntyLgxpDrfdX7NLA91kQ30kQ21iYD0J
-	 zi/Sp1B+I6C8CoGJx0Rr6NLoAESpQMSXSqbSHYaXJDG329v6y+9gi5ms963d06Ovmt
-	 J97GiwB3CBxiVZrnwTm1i7S2FD1ZV2iKuebBDcsU=
+	b=dboH5ffgEqe0JgpRiJslVpUU7zEq4mALt97/b9Uo8AP7KwlVrlcMBMEFQH1y3aCcz
+	 Co0v7rZhLZzs74J7/jiVV9SOS11zki3Nn7PypDGA/PIyP0ZB6tpoff5aZM2udzdNxd
+	 zX7ox+CmV1uyhAw2crGuKHIxXQgx6zPG08dAJck0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Xing <kernelxing@tencent.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Karol Kolacinski <karol.kolacinski@intel.com>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 007/139] tcp: count CLOSE-WAIT sockets for TCP_MIB_CURRESTAB
-Date: Wed,  3 Jul 2024 12:38:24 +0200
-Message-ID: <20240703102830.713841952@linuxfoundation.org>
+Subject: [PATCH 4.19 008/139] ptp: Fix error message on failed pin verification
+Date: Wed,  3 Jul 2024 12:38:25 +0200
+Message-ID: <20240703102830.751911643@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -52,67 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Xing <kernelxing@tencent.com>
+From: Karol Kolacinski <karol.kolacinski@intel.com>
 
-[ Upstream commit a46d0ea5c94205f40ecf912d1bb7806a8a64704f ]
+[ Upstream commit 323a359f9b077f382f4483023d096a4d316fd135 ]
 
-According to RFC 1213, we should also take CLOSE-WAIT sockets into
-consideration:
+On failed verification of PTP clock pin, error message prints channel
+number instead of pin index after "pin", which is incorrect.
 
-  "tcpCurrEstab OBJECT-TYPE
-   ...
-   The number of TCP connections for which the current state
-   is either ESTABLISHED or CLOSE- WAIT."
+Fix error message by adding channel number to the message and printing
+pin number instead of channel number.
 
-After this, CurrEstab counter will display the total number of
-ESTABLISHED and CLOSE-WAIT sockets.
-
-The logic of counting
-When we increment the counter?
-a) if we change the state to ESTABLISHED.
-b) if we change the state from SYN-RECEIVED to CLOSE-WAIT.
-
-When we decrement the counter?
-a) if the socket leaves ESTABLISHED and will never go into CLOSE-WAIT,
-say, on the client side, changing from ESTABLISHED to FIN-WAIT-1.
-b) if the socket leaves CLOSE-WAIT, say, on the server side, changing
-from CLOSE-WAIT to LAST-ACK.
-
-Please note: there are two chances that old state of socket can be changed
-to CLOSE-WAIT in tcp_fin(). One is SYN-RECV, the other is ESTABLISHED.
-So we have to take care of the former case.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Jason Xing <kernelxing@tencent.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 6092315dfdec ("ptp: introduce programmable pins.")
+Signed-off-by: Karol Kolacinski <karol.kolacinski@intel.com>
+Acked-by: Richard Cochran <richardcochran@gmail.com>
+Link: https://lore.kernel.org/r/20240604120555.16643-1-karol.kolacinski@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/ptp/ptp_chardev.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index e3475f833f8fe..0cbfb57de0f07 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -2242,6 +2242,10 @@ void tcp_set_state(struct sock *sk, int state)
- 		if (oldstate != TCP_ESTABLISHED)
- 			TCP_INC_STATS(sock_net(sk), TCP_MIB_CURRESTAB);
- 		break;
-+	case TCP_CLOSE_WAIT:
-+		if (oldstate == TCP_SYN_RECV)
-+			TCP_INC_STATS(sock_net(sk), TCP_MIB_CURRESTAB);
-+		break;
+diff --git a/drivers/ptp/ptp_chardev.c b/drivers/ptp/ptp_chardev.c
+index 8ff2dd5c52e64..f66ce68f42379 100644
+--- a/drivers/ptp/ptp_chardev.c
++++ b/drivers/ptp/ptp_chardev.c
+@@ -97,7 +97,8 @@ int ptp_set_pinfunc(struct ptp_clock *ptp, unsigned int pin,
+ 	}
  
- 	case TCP_CLOSE:
- 		if (oldstate == TCP_CLOSE_WAIT || oldstate == TCP_ESTABLISHED)
-@@ -2253,7 +2257,7 @@ void tcp_set_state(struct sock *sk, int state)
- 			inet_put_port(sk);
- 		/* fall through */
- 	default:
--		if (oldstate == TCP_ESTABLISHED)
-+		if (oldstate == TCP_ESTABLISHED || oldstate == TCP_CLOSE_WAIT)
- 			TCP_DEC_STATS(sock_net(sk), TCP_MIB_CURRESTAB);
+ 	if (info->verify(info, pin, func, chan)) {
+-		pr_err("driver cannot use function %u on pin %u\n", func, chan);
++		pr_err("driver cannot use function %u and channel %u on pin %u\n",
++		       func, chan, pin);
+ 		return -EOPNOTSUPP;
  	}
  
 -- 
