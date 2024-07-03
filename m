@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2737173336;
-	Wed,  3 Jul 2024 10:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9739E173336;
+	Wed,  3 Jul 2024 10:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004026; cv=none; b=nD0NuynmVLAo9pYtuNqKE7XHLFIOxaqXQt06ax4wCFkzPmA+DvI8D66GNeP1USBNHfUVW6DBgTz2+CB2NbRXnY3ZPfUmVBMefTZ4fC8wyCLTh3/dCMXRnK+X2gf/iWIOmXqHa6mqw/gZEuHx23m8dSlkR1wT15gQSVBUxscEQHw=
+	t=1720004029; cv=none; b=pt2ZkXbhZQHaQnZ2iYASWNeix62/O0lQhhON2rP9f8yK85PMIbiawE7+YB0oPXqL0Sa/dpdQLLJJurbFtxGK3J+ARZmWtE7YmkniaNudMlNHxzZLUOJ2JknGB8W7YZoqktwsNcFcxmcLKjH6v15cNntrKOKZBqpRa6XylHjxpPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004026; c=relaxed/simple;
-	bh=PIcOlf72aBk/6cYaK0eg4pgMArt5SYVOYmWADGAjAac=;
+	s=arc-20240116; t=1720004029; c=relaxed/simple;
+	bh=BbOTqd4YTSS7qFAFp3yhnuAyDh6imN04rkrXQIS8lPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O3KHEWDMXnThCR7jk0TSc6au8NdTkfIuNLoz10GzmVcGMDkAEXuSPVN7PKjPe9E2XFRSRE8vnPg54a/ZwbKucBIM0JEjIFiwq0QF7DkRT6maVf5XYimUCp6w5AnkYvMRLdLTKSvg5bdwI2zO7ukgZYKZQkTpXkBli3HofrDjcAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fPayvyMz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MXGZuyVHoX6+nRIUY3K2cvuD0nrkxRu/xMH6zvN5z8QfCIHGthIKKh2tIxPpa+SzbGNuZeyvYFbjk1VbzcJ3kz29sz4DLMpwMDGgAAHsaQ1PqsyfRUeqim6jLf+SNuSVqlIKyP0zR4yiX4TmHboDbzU0lAy/GKYzuvWEH8o+Ad0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BtNIxKNy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fPayvyMz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2726EC2BD10;
-	Wed,  3 Jul 2024 10:53:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BtNIxKNy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C00DC2BD10;
+	Wed,  3 Jul 2024 10:53:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004026;
-	bh=PIcOlf72aBk/6cYaK0eg4pgMArt5SYVOYmWADGAjAac=;
+	s=korg; t=1720004029;
+	bh=BbOTqd4YTSS7qFAFp3yhnuAyDh6imN04rkrXQIS8lPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fPayvyMzmxQkAkbLZCPQ4A4N8Xe8K0/tsD7zuqlQY4E5XN/jT6W8U7cjli2LPJVIz
-	 39sJJvuQn+NzAK7LEgZK14/74apbkWP2kASN9Hepusb8+l3r5hOwm0mp+BSOKyvCXL
-	 3XedsDR6VNcXM75L+zf9xl2cVqV+KlAtI/uGiH0c=
+	b=BtNIxKNyrbrDSLUS+Do48jGIcilFDDJYkueX3VfkNTopWXtMiUkoFcYpMphOnHxcc
+	 n7dwb5eQfWuTDBkqLt3hPzfdELx7a8Zbg7Aw3oDVz8M5YUKIqdIp+Yyw652QYihEo/
+	 0eYjw24757AZv1/3RKVp2DcHw7tcD7Y+rLL4yWz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Songyang Li <leesongyang@outlook.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 100/189] MIPS: Octeon: Add PCIe link status check
-Date: Wed,  3 Jul 2024 12:39:21 +0200
-Message-ID: <20240703102845.276292206@linuxfoundation.org>
+Subject: [PATCH 5.4 101/189] MIPS: Routerboard 532: Fix vendor retry check code
+Date: Wed,  3 Jul 2024 12:39:22 +0200
+Message-ID: <20240703102845.313518181@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -45,59 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Songyang Li <leesongyang@outlook.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 29b83a64df3b42c88c0338696feb6fdcd7f1f3b7 ]
+[ Upstream commit ae9daffd9028f2500c9ac1517e46d4f2b57efb80 ]
 
-The standard PCIe configuration read-write interface is used to
-access the configuration space of the peripheral PCIe devices
-of the mips processor after the PCIe link surprise down, it can
-generate kernel panic caused by "Data bus error". So it is
-necessary to add PCIe link status check for system protection.
-When the PCIe link is down or in training, assigning a value
-of 0 to the configuration address can prevent read-write behavior
-to the configuration space of peripheral PCIe devices, thereby
-preventing kernel panic.
+read_config_dword() contains strange condition checking ret for a
+number of values. The ret variable, however, is always zero because
+config_access() never returns anything else. Thus, the retry is always
+taken until number of tries is exceeded.
 
-Signed-off-by: Songyang Li <leesongyang@outlook.com>
+The code looks like it wants to check *val instead of ret to see if the
+read gave an error response.
+
+Fixes: 73b4390fb234 ("[MIPS] Routerboard 532: Support for base system")
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/pci/pcie-octeon.c | 6 ++++++
- 1 file changed, 6 insertions(+)
- mode change 100644 => 100755 arch/mips/pci/pcie-octeon.c
+ arch/mips/pci/ops-rc32434.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/mips/pci/pcie-octeon.c b/arch/mips/pci/pcie-octeon.c
-old mode 100644
-new mode 100755
-index d919a0d813a17..38de2a9c3cf1a
---- a/arch/mips/pci/pcie-octeon.c
-+++ b/arch/mips/pci/pcie-octeon.c
-@@ -230,12 +230,18 @@ static inline uint64_t __cvmx_pcie_build_config_addr(int pcie_port, int bus,
- {
- 	union cvmx_pcie_address pcie_addr;
- 	union cvmx_pciercx_cfg006 pciercx_cfg006;
-+	union cvmx_pciercx_cfg032 pciercx_cfg032;
- 
- 	pciercx_cfg006.u32 =
- 	    cvmx_pcie_cfgx_read(pcie_port, CVMX_PCIERCX_CFG006(pcie_port));
- 	if ((bus <= pciercx_cfg006.s.pbnum) && (dev != 0))
- 		return 0;
- 
-+	pciercx_cfg032.u32 =
-+		cvmx_pcie_cfgx_read(pcie_port, CVMX_PCIERCX_CFG032(pcie_port));
-+	if ((pciercx_cfg032.s.dlla == 0) || (pciercx_cfg032.s.lt == 1))
-+		return 0;
-+
- 	pcie_addr.u64 = 0;
- 	pcie_addr.config.upper = 2;
- 	pcie_addr.config.io = 1;
+diff --git a/arch/mips/pci/ops-rc32434.c b/arch/mips/pci/ops-rc32434.c
+index 874ed6df97683..34b9323bdabb0 100644
+--- a/arch/mips/pci/ops-rc32434.c
++++ b/arch/mips/pci/ops-rc32434.c
+@@ -112,8 +112,8 @@ static int read_config_dword(struct pci_bus *bus, unsigned int devfn,
+ 	 * gives them time to settle
+ 	 */
+ 	if (where == PCI_VENDOR_ID) {
+-		if (ret == 0xffffffff || ret == 0x00000000 ||
+-		    ret == 0x0000ffff || ret == 0xffff0000) {
++		if (*val == 0xffffffff || *val == 0x00000000 ||
++		    *val == 0x0000ffff || *val == 0xffff0000) {
+ 			if (delay > 4)
+ 				return 0;
+ 			delay *= 2;
 -- 
 2.43.0
 
