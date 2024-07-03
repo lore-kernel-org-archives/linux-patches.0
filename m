@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2907A17B503;
-	Wed,  3 Jul 2024 11:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1875D17B503;
+	Wed,  3 Jul 2024 11:26:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005995; cv=none; b=YjFryU/qd9MogjFWHgFuKLHhgloepG8zoq0/4PtKKT1r0ODJai1rs30DQtx+LRl0i02+EEPh4Db3PEAg19rYc9YbUUNxhhmpoKUEkaLmeM5tUTp8lLp6lo2mfJ+N8MLAIVk3aLt8Vv9pbvZsPhFz2t3tSQJMFgrndNXeiFiV5u0=
+	t=1720005998; cv=none; b=g4buhPmBHdxnIiUwZzGEM7E7iVoRGwJf8Jikfh1/CeqkRDp6KvPaK2E+5Sqe3uYKXuuHNJ7C9bEcLu5eYvqr0sIUCbYlq6yp3/BDci+JOXIhqp58CgA+43ivrzo+kIlO5diyzj/uuBsVuw3FipR1jDf39C4Mzsf0UMmNpYnjXDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005995; c=relaxed/simple;
-	bh=f2HZc/anAxEU2xgODzTp9yVWvJHxpbB7rUx9fJwDzUQ=;
+	s=arc-20240116; t=1720005998; c=relaxed/simple;
+	bh=1Pi66+3P9eMUOl2OamMyx5otLmKFu79OmjDS/NKTNtk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EcUYMAg5esBTgobw/ZvBp/DUULQWO9tjr5gcZsENZslWjsS2tqFSzcgvmFAusxSoKgk2pDeeUUCZODJYG79VXyIJsu+0a0j14OU1eXVSe1ygP28gMxJgCcYgYNmMcIE988dMUG1FuxsmcPVMfx3oSfupG9wY1Dja2QH2pOz7FNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ugtDy9ye; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KnY1lw9ups1sRuaw4RZB+AKj2bXzLtY2jqiH1sWFZESFctioV7xfbiAW6V+3r346XlSBA9voeo7PWQep40CmGZd/m0vHWG1qqjQGDXbuHarP3X89XCT70keb/wLsJpzpbZkaWbfAcEp1HexoZjO5u8CszHfKSo3lbwCQwlpfi6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bEEvgzwW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ugtDy9ye"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95EACC2BD10;
-	Wed,  3 Jul 2024 11:26:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bEEvgzwW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9199FC2BD10;
+	Wed,  3 Jul 2024 11:26:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005995;
-	bh=f2HZc/anAxEU2xgODzTp9yVWvJHxpbB7rUx9fJwDzUQ=;
+	s=korg; t=1720005998;
+	bh=1Pi66+3P9eMUOl2OamMyx5otLmKFu79OmjDS/NKTNtk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ugtDy9yemoP2boXI6yAP5wyMPwS0ij5uSlYlZn3OvLkWzu+PL3Mv4OwFIRcx467oa
-	 +SEIU18oOOg85GT6exU8FjoVLuoKDg6o90dA7eHl+hCFAcG4MSmWFxus5DK67FfimS
-	 g7/0sorN6m3s3HRQHIWFDkt37c7wz5iWkf+Yq7G4=
+	b=bEEvgzwWqkHrTYfDtxBvwVna9LvZEaar70GcwUfBhtMeofagj2Z8FjicoHEisdlMh
+	 plQO36jePQTD3YL6Tv3EjjIvIII6ENbApy+H+y+yuyxRlJ0u6qr5416m883YCLPcmt
+	 bOrNrsAF911M96XmDggK+pa8ajOq0jB4uJ4uTn88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Stuebner <heiko@sntech.de>,
-	Huang-Huang Bao <i@eh5.me>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 265/356] pinctrl: rockchip: fix pinmux reset in rockchip_pmx_set
-Date: Wed,  3 Jul 2024 12:40:01 +0200
-Message-ID: <20240703102923.142198585@linuxfoundation.org>
+Subject: [PATCH 5.15 266/356] cifs: fix typo in module parameter enable_gcm_256
+Date: Wed,  3 Jul 2024 12:40:02 +0200
+Message-ID: <20240703102923.180412452@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -52,40 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huang-Huang Bao <i@eh5.me>
+From: Steve French <stfrench@microsoft.com>
 
-[ Upstream commit 4ea4d4808e342ddf89ba24b93ffa2057005aaced ]
+[ Upstream commit 8bf0287528da1992c5e49d757b99ad6bbc34b522 ]
 
-rockchip_pmx_set reset all pinmuxs in group to 0 in the case of error,
-add missing bank data retrieval in that code to avoid setting mux on
-unexpected pins.
+enable_gcm_256 (which allows the server to require the strongest
+encryption) is enabled by default, but the modinfo description
+incorrectly showed it disabled by default. Fix the typo.
 
-Fixes: 14797189b35e ("pinctrl: rockchip: add return value to rockchip_set_mux")
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Signed-off-by: Huang-Huang Bao <i@eh5.me>
-Link: https://lore.kernel.org/r/20240606125755.53778-5-i@eh5.me
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Cc: stable@vger.kernel.org
+Fixes: fee742b50289 ("smb3.1.1: enable negotiating stronger encryption by default")
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-rockchip.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/cifs/cifsfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/pinctrl-rockchip.c b/drivers/pinctrl/pinctrl-rockchip.c
-index 30e1dec1e2f68..4ff70527755a3 100644
---- a/drivers/pinctrl/pinctrl-rockchip.c
-+++ b/drivers/pinctrl/pinctrl-rockchip.c
-@@ -2206,8 +2206,10 @@ static int rockchip_pmx_set(struct pinctrl_dev *pctldev, unsigned selector,
+diff --git a/fs/cifs/cifsfs.c b/fs/cifs/cifsfs.c
+index d3adcb9e70a66..c254e714f7ceb 100644
+--- a/fs/cifs/cifsfs.c
++++ b/fs/cifs/cifsfs.c
+@@ -99,7 +99,7 @@ module_param(enable_oplocks, bool, 0644);
+ MODULE_PARM_DESC(enable_oplocks, "Enable or disable oplocks. Default: y/Y/1");
  
- 	if (ret) {
- 		/* revert the already done pin settings */
--		for (cnt--; cnt >= 0; cnt--)
-+		for (cnt--; cnt >= 0; cnt--) {
-+			bank = pin_to_bank(info, pins[cnt]);
- 			rockchip_set_mux(bank, pins[cnt] - bank->pin_base, 0);
-+		}
+ module_param(enable_gcm_256, bool, 0644);
+-MODULE_PARM_DESC(enable_gcm_256, "Enable requesting strongest (256 bit) GCM encryption. Default: n/N/0");
++MODULE_PARM_DESC(enable_gcm_256, "Enable requesting strongest (256 bit) GCM encryption. Default: y/Y/0");
  
- 		return ret;
- 	}
+ module_param(require_gcm_256, bool, 0644);
+ MODULE_PARM_DESC(require_gcm_256, "Require strongest (256 bit) GCM encryption. Default: n/N/0");
 -- 
 2.43.0
 
