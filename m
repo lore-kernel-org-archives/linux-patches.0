@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32C645945;
-	Wed,  3 Jul 2024 11:21:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D203545945;
+	Wed,  3 Jul 2024 11:21:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005692; cv=none; b=CWhDmRS0ydmaG45SpRCWjrHTbFI8cjq2AxGXXS5hGc0doZqio/4WABfa11Y5Kn68Sg/wr7+IJbtXRBYn6Gr5ZaRuFDj8m+BlMf39wpC1lSpBDN5KEYGlqNAmM34XJstZ81TbOTVDW+xgx2NsGv/01FZcx/uXbB7EYelsCA0ye4M=
+	t=1720005694; cv=none; b=Ip6NkT8nCquwt8XfnGIMwsly0P6V8nkHToWQ9NysTj5wroIAeqyHmgTYFgwq/RJc+kiX7vZI1bGcmXPO/o+tOTSaDHx5dpcp0jhjprNde+X32xSsLbjNRRfyTdrEtkXULlh/5m7Z6Rj76285iqXGk+t3P80+uH5qCA2rxQqkKf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005692; c=relaxed/simple;
-	bh=KCqwNK/pGJmDSMY2Bq9BBGSlbQYtk36VZiG7V+R8xlY=;
+	s=arc-20240116; t=1720005694; c=relaxed/simple;
+	bh=DY1gtvYIZkuVKcYnbSf1cV/GG56gv/sqlDt2PRhmcrw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EP3ZiUa3FaH/bYmveoV/v/Ev6lFb4Jk4PWCVBHZ/0oXfSuaJrd3DTZNj1qq6wjPvaiXjaGBNICPnTWbX8VlXpvdiv7NVScSAnmA3TyOsmaPCvt4tIOwrSMgd/8D/oQJSk95ePH7G5zQ8s99oZV5LSIwC/Cb3m9CDP+EMyD37oag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lL3+lCZL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TwiAq92VnKKvVMrKXFMlBsT4SSaex4CbXZeKxGzF6mNg+ab4hlfyltmzYA58D0k7tLEoJM66QGlx6QUBGnQhbAZrCIkit3wVkTDPSYUklDkkzRRggMEeHsN9zLiopfj1Ds1DaRgYdZrhtW/57TqUmm4bp/YGGPP/YDttPh8X+AM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B8KRYhhx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lL3+lCZL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B17FC2BD10;
-	Wed,  3 Jul 2024 11:21:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B8KRYhhx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59C03C2BD10;
+	Wed,  3 Jul 2024 11:21:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005691;
-	bh=KCqwNK/pGJmDSMY2Bq9BBGSlbQYtk36VZiG7V+R8xlY=;
+	s=korg; t=1720005694;
+	bh=DY1gtvYIZkuVKcYnbSf1cV/GG56gv/sqlDt2PRhmcrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lL3+lCZL5itt2/qi77rPrW+fPQL2u/BoBthMp+mjHoawUw4KhVnVsZL18sQuqJhiq
-	 tcVT8LQdpbKXFKKoeAf40mlfDlKRUgSSPpeLTK8147c6y2zGarus2lgHjJi+SAaIFP
-	 evf9UuzqwI8h02P/pzm/3x6rDCp5mykN3Ns/H1GM=
+	b=B8KRYhhxpHAJ2MxoYXalM7WiXWbxNV3gjgCHAGlSbrP4DRJ7sRIZkiPtGK7vj1NC/
+	 XiHg/36AU36l2WjqjnW/QW6GZb7CNTvky6Nn+twpFYNW+GvDF7cM5y5G6zjR7GC444
+	 JsuvMac7zy8xH8NyMXRSD8ZMwu7MpSjEW6E12Rwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sean OBrien <seobrien@chromium.org>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 164/356] netpoll: Fix race condition in netpoll_owner_active
-Date: Wed,  3 Jul 2024 12:38:20 +0200
-Message-ID: <20240703102919.310126473@linuxfoundation.org>
+Subject: [PATCH 5.15 165/356] HID: Add quirk for Logitech Casa touchpad
+Date: Wed,  3 Jul 2024 12:38:21 +0200
+Message-ID: <20240703102919.348153652@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,50 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Sean O'Brien <seobrien@chromium.org>
 
-[ Upstream commit c2e6a872bde9912f1a7579639c5ca3adf1003916 ]
+[ Upstream commit dd2c345a94cfa3873cc20db87387ee509c345c1b ]
 
-KCSAN detected a race condition in netpoll:
+This device sometimes doesn't send touch release signals when moving
+from >=4 fingers to <4 fingers. Using MT_QUIRK_NOT_SEEN_MEANS_UP instead
+of MT_QUIRK_ALWAYS_VALID makes sure that no touches become stuck.
 
-	BUG: KCSAN: data-race in net_rx_action / netpoll_send_skb
-	write (marked) to 0xffff8881164168b0 of 4 bytes by interrupt on cpu 10:
-	net_rx_action (./include/linux/netpoll.h:90 net/core/dev.c:6712 net/core/dev.c:6822)
-<snip>
-	read to 0xffff8881164168b0 of 4 bytes by task 1 on cpu 2:
-	netpoll_send_skb (net/core/netpoll.c:319 net/core/netpoll.c:345 net/core/netpoll.c:393)
-	netpoll_send_udp (net/core/netpoll.c:?)
-<snip>
-	value changed: 0x0000000a -> 0xffffffff
+MT_QUIRK_FORCE_MULTI_INPUT is not necessary for this device, but does no
+harm.
 
-This happens because netpoll_owner_active() needs to check if the
-current CPU is the owner of the lock, touching napi->poll_owner
-non atomically. The ->poll_owner field contains the current CPU holding
-the lock.
-
-Use an atomic read to check if the poll owner is the current CPU.
-
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Link: https://lore.kernel.org/r/20240429100437.3487432-1-leitao@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sean O'Brien <seobrien@chromium.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/netpoll.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-ids.h        | 1 +
+ drivers/hid/hid-multitouch.c | 6 ++++++
+ 2 files changed, 7 insertions(+)
 
-diff --git a/net/core/netpoll.c b/net/core/netpoll.c
-index 47a86da6ab980..2a9d95368d5a2 100644
---- a/net/core/netpoll.c
-+++ b/net/core/netpoll.c
-@@ -316,7 +316,7 @@ static int netpoll_owner_active(struct net_device *dev)
- 	struct napi_struct *napi;
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index 7b1fdfde5b405..0504bdd465013 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -777,6 +777,7 @@
+ #define USB_DEVICE_ID_LOGITECH_AUDIOHUB 0x0a0e
+ #define USB_DEVICE_ID_LOGITECH_T651	0xb00c
+ #define USB_DEVICE_ID_LOGITECH_DINOVO_EDGE_KBD	0xb309
++#define USB_DEVICE_ID_LOGITECH_CASA_TOUCHPAD	0xbb00
+ #define USB_DEVICE_ID_LOGITECH_C007	0xc007
+ #define USB_DEVICE_ID_LOGITECH_C077	0xc077
+ #define USB_DEVICE_ID_LOGITECH_RECEIVER	0xc101
+diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
+index 2e14e3071aa69..fea27d66d91c0 100644
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -2082,6 +2082,12 @@ static const struct hid_device_id mt_devices[] = {
+ 			   USB_VENDOR_ID_LENOVO,
+ 			   USB_DEVICE_ID_LENOVO_X12_TAB) },
  
- 	list_for_each_entry_rcu(napi, &dev->napi_list, dev_list) {
--		if (napi->poll_owner == smp_processor_id())
-+		if (READ_ONCE(napi->poll_owner) == smp_processor_id())
- 			return 1;
- 	}
- 	return 0;
++	/* Logitech devices */
++	{ .driver_data = MT_CLS_NSMU,
++		HID_DEVICE(BUS_BLUETOOTH, HID_GROUP_MULTITOUCH_WIN_8,
++			USB_VENDOR_ID_LOGITECH,
++			USB_DEVICE_ID_LOGITECH_CASA_TOUCHPAD) },
++
+ 	/* MosArt panels */
+ 	{ .driver_data = MT_CLS_CONFIDENCE_MINUS_ONE,
+ 		MT_USB_DEVICE(USB_VENDOR_ID_ASUS,
 -- 
 2.43.0
 
