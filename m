@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2205317DA03;
-	Wed,  3 Jul 2024 11:28:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E184A17DA00;
+	Wed,  3 Jul 2024 11:28:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006094; cv=none; b=aJ4EQ1TEdGJ2Y+HgsSSCb1956k9NyCFmgJpKkVp39QcGILoLVoo8vz5FQ5ubYZRIlXNcP7wZ+MG0LCcqKeAYvcHtd1WcGnD8Gce8huq3TA7e4GeZvgigLHqSWONa8M0viXb6s1EYUwJtJCx2nvA1P5xbdhYP/sp2KqE+uzLXzUw=
+	t=1720006097; cv=none; b=UVwO+v0uxEUH0GtH9NoBUIEF32RYMaI2g0MlF+pUJJmcfdhJikyKJ55O03OWGuV2bGkDI480TzLQaYBBPHIsviDNpX0Gp//Cemw6DPASq/JfT2tjElfEhPILSUL3UjMcKw0Oz1o4v0ZDsjYCIspmWd7E6PsOAkavMX+XahNqeRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006094; c=relaxed/simple;
-	bh=faVeVsNsskg8mQE35LtFVG4wqooyKFdMeWr/Uh17wjQ=;
+	s=arc-20240116; t=1720006097; c=relaxed/simple;
+	bh=7Y3FwAn9RZ6+/mdQVX2VXYYZ38Q9d5xjoPB0QwXAWL8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FodYrqkiOfKBM8cRyFxGAMfe6lDaOzrpdeOgX7wuDODPJLIaYnOFfydmCyuDrJYZBoVyCYXyrhN1xyB/MietfPF0FxBFemPJAn7jBIfTHrKihjHKlfZf8IIZzXBz0xdZZ49n0u/nR1UkJ5mFJ7RfRwwOggI4B430kdhNk2WQ/Lw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fa5vhA+j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NMKVhq+/gV8zkr1vRcaOUTSXNTl4pQWrmErp0lP0OsrWKtu/gnDivdM5elL4YmFxrTBKlWBV4pa/iubQOFxx5uZrJv5jIDjGFO0aSar9sfGn+xP28NBKtzylOmrFDKxTO/2pZ0jj/b0005Rb9YJO2s9eGEijyISAQtc0PXujWc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j70kmsM9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fa5vhA+j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65964C2BD10;
-	Wed,  3 Jul 2024 11:28:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j70kmsM9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C30C32781;
+	Wed,  3 Jul 2024 11:28:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006093;
-	bh=faVeVsNsskg8mQE35LtFVG4wqooyKFdMeWr/Uh17wjQ=;
+	s=korg; t=1720006096;
+	bh=7Y3FwAn9RZ6+/mdQVX2VXYYZ38Q9d5xjoPB0QwXAWL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fa5vhA+jjhW0OpjRKm2HHea/wf3fo7rj9qDHSGV+Xu7xUBImniK/ns/HyE+cD5mlx
-	 UvXg1L+/e5sZ8if4V1KPlM3V1FOOqBPPAUuhT5QiIoRWhcvrw9XDsv2eWRcD0Du9xp
-	 L9ut90q70px7ha6Q+C/3iUplfQasWkmSMR0W2RGo=
+	b=j70kmsM9tDAJfIkD3zIN3dpJY2lCisxojjKhCofW8VdBQX2gvh2+JcdWsL+V1cFri
+	 CsGjTctvziu3pQbQ9oe8PJubw7KkNtvG9byXJweyErzdoTtmAxWSWS0v5d8Ybs39rl
+	 pVrrT/BPF4+9Te3etZtnhOh1aI3ytiv1yLemFw5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Liu Ying <victor.liu@nxp.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 298/356] nvme: fixup comment for nvme RDMA Provider Type
-Date: Wed,  3 Jul 2024 12:40:34 +0200
-Message-ID: <20240703102924.389448293@linuxfoundation.org>
+Subject: [PATCH 5.15 299/356] drm/panel: simple: Add missing display timing flags for KOE TX26D202VM0BWA
+Date: Wed,  3 Jul 2024 12:40:35 +0200
+Message-ID: <20240703102924.426764066@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -52,36 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hannes Reinecke <hare@suse.de>
+From: Liu Ying <victor.liu@nxp.com>
 
-[ Upstream commit f80a55fa90fa76d01e3fffaa5d0413e522ab9a00 ]
+[ Upstream commit 37ce99b77762256ec9fda58d58fd613230151456 ]
 
-PRTYPE is the provider type, not the QP service type.
+KOE TX26D202VM0BWA panel spec indicates the DE signal is active high in
+timing chart, so add DISPLAY_FLAGS_DE_HIGH flag in display timing flags.
+This aligns display_timing with panel_desc.
 
-Fixes: eb793e2c9286 ("nvme.h: add NVMe over Fabrics definitions")
-Signed-off-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 8a07052440c2 ("drm/panel: simple: Add support for KOE TX26D202VM0BWA panel")
+Signed-off-by: Liu Ying <victor.liu@nxp.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20240624015612.341983-1-victor.liu@nxp.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240624015612.341983-1-victor.liu@nxp.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/nvme.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/panel/panel-simple.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/linux/nvme.h b/include/linux/nvme.h
-index 461ee0ee59fe4..537cc5b7e0500 100644
---- a/include/linux/nvme.h
-+++ b/include/linux/nvme.h
-@@ -71,8 +71,8 @@ enum {
- 	NVMF_RDMA_QPTYPE_DATAGRAM	= 2, /* Reliable Datagram */
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 0dc4d891fedc2..26c99ffe787cd 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -2873,6 +2873,7 @@ static const struct display_timing koe_tx26d202vm0bwa_timing = {
+ 	.vfront_porch = { 3, 5, 10 },
+ 	.vback_porch = { 2, 5, 10 },
+ 	.vsync_len = { 5, 5, 5 },
++	.flags = DISPLAY_FLAGS_DE_HIGH,
  };
  
--/* RDMA QP Service Type codes for Discovery Log Page entry TSAS
-- * RDMA_QPTYPE field
-+/* RDMA Provider Type codes for Discovery Log Page entry TSAS
-+ * RDMA_PRTYPE field
-  */
- enum {
- 	NVMF_RDMA_PRTYPE_NOT_SPECIFIED	= 1, /* No Provider Specified */
+ static const struct panel_desc koe_tx26d202vm0bwa = {
 -- 
 2.43.0
 
