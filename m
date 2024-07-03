@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9324617625B;
-	Wed,  3 Jul 2024 10:49:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BCD175560;
+	Wed,  3 Jul 2024 10:49:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003743; cv=none; b=bkTk6hMBORwSu216HY5DKkf9jH4RseBz6Lf+VK57obi975/mruFAz46gLukikavc0gblojI9qfE6F7nro2vCKLtteeEgTkwje/U7ZIM14VxKYUt1RFHfq95PXP9fZ7MCbCxhfb15rkJJ4cG1W6qFiX5PnsU30AATelmTux1GZ5w=
+	t=1720003746; cv=none; b=ArBUKwljWR+VgCFrnxQbMv3GWpHn6c6hvFsfCHbLGK2CT9zBlc/BH/NaRSqlZAUwSu9W/vmeRvPX43YDQr8U3iK2LEMwZY/EJGndvMh7Jw7ULayRw1c5Ngls+tQrcVgCnP8qqDAARAandX1psYn1wnFeZuI/rkcUZEHCXm/FeBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003743; c=relaxed/simple;
-	bh=uJeYq4LmJr+WCZFDDKptGkxdxrBYohGQRZBiGDjqh5Y=;
+	s=arc-20240116; t=1720003746; c=relaxed/simple;
+	bh=XKh5372wV7MXpG3LnbGcWQgMh6rIzxop5z3MpD9P0lQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gKbYmqd86rFxCdfniJ+846Td+QZZ9FaGcgURid5Ck5lpOeQxcLfovEBqLgf13zk4hcVR3AVV0VZzBLkomryJIMBN9HKdVkSaYWjAKyfDujEBBRShEfwNVhFMi7MnwNg3x8K49ESgpqyC3CME3z6CulbvO5B4g7mtmweqinHDV2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHwsqePK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tXf0z+qdkoUdKOL7CUmcA7pxMogSCHhSfflKLnw8hCG5RxeCEDH9pFArRyanMPe11bpvi9cP85Br7a1jS4j4I/my9Xpw4Sy6w/LaqBHAfQIu9O2gXXC3GIaMXTtuapSG/SmJCV/Yjb1j9DNNxTFq7rs90APU01a0XgI0G9UgDMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2d/lfCJx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHwsqePK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16F73C2BD10;
-	Wed,  3 Jul 2024 10:49:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2d/lfCJx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12D52C2BD10;
+	Wed,  3 Jul 2024 10:49:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003743;
-	bh=uJeYq4LmJr+WCZFDDKptGkxdxrBYohGQRZBiGDjqh5Y=;
+	s=korg; t=1720003746;
+	bh=XKh5372wV7MXpG3LnbGcWQgMh6rIzxop5z3MpD9P0lQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NHwsqePKuNbxIu3CMv01rwmKZ1qa6UUK7x79LibrlfCYIgGauZF7J5Tj+Kk+UDqgI
-	 p9YXcISrRIDjebC9LY345MkQrWFOgdzVVBMA8wsovLFNSDO6oxNfsJXtPeumDNOPek
-	 4WZY5XIel+LbxUIJi4v7CRvoG6hih4zXcpC1xzpU=
+	b=2d/lfCJxd1SQVJKYNpk52fBezuhNFZqkUDnRoR/yAEh7/bBSAp3WDMZufX+mjlsfx
+	 40g+J2ZThdqm3MVpqqXR8tGgixBwfuMx8LQeI1VuFP/Jam1vgCzJL4OSJyOgVQNbHf
+	 xo5FOqTX0Yd7CLgG/X8at5tEAEix5qe+OUCzvc7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 4.19 123/139] net: usb: ax88179_178a: improve link status logs
-Date: Wed,  3 Jul 2024 12:40:20 +0200
-Message-ID: <20240703102835.080724528@linuxfoundation.org>
+	Nicolas Escande <nico.escande@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 001/189] wifi: mac80211: mesh: Fix leak of mesh_preq_queue objects
+Date: Wed,  3 Jul 2024 12:37:42 +0200
+Message-ID: <20240703102841.551392375@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
-References: <20240703102830.432293640@linuxfoundation.org>
+In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
+References: <20240703102841.492044697@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,61 +47,104 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-4.19-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+From: Nicolas Escande <nico.escande@gmail.com>
 
-commit 058722ee350c0bdd664e467156feb2bf5d9cc271 upstream.
+[ Upstream commit b7d7f11a291830fdf69d3301075dd0fb347ced84 ]
 
-Avoid spurious link status logs that may ultimately be wrong; for example,
-if the link is set to down with the cable plugged, then the cable is
-unplugged and after this the link is set to up, the last new log that is
-appearing is incorrectly telling that the link is up.
+The hwmp code use objects of type mesh_preq_queue, added to a list in
+ieee80211_if_mesh, to keep track of mpath we need to resolve. If the mpath
+gets deleted, ex mesh interface is removed, the entries in that list will
+never get cleaned. Fix this by flushing all corresponding items of the
+preq_queue in mesh_path_flush_pending().
 
-In order to avoid errors, show link status logs after link_reset
-processing, and in order to avoid spurious as much as possible, only show
-the link loss when some link status change is detected.
+This should take care of KASAN reports like this:
 
-cc: stable@vger.kernel.org
-Fixes: e2ca90c276e1 ("ax88179_178a: ASIX AX88179_178A USB 3.0/2.0 to gigabit ethernet adapter driver")
-Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+unreferenced object 0xffff00000668d800 (size 128):
+  comm "kworker/u8:4", pid 67, jiffies 4295419552 (age 1836.444s)
+  hex dump (first 32 bytes):
+    00 1f 05 09 00 00 ff ff 00 d5 68 06 00 00 ff ff  ..........h.....
+    8e 97 ea eb 3e b8 01 00 00 00 00 00 00 00 00 00  ....>...........
+  backtrace:
+    [<000000007302a0b6>] __kmem_cache_alloc_node+0x1e0/0x35c
+    [<00000000049bd418>] kmalloc_trace+0x34/0x80
+    [<0000000000d792bb>] mesh_queue_preq+0x44/0x2a8
+    [<00000000c99c3696>] mesh_nexthop_resolve+0x198/0x19c
+    [<00000000926bf598>] ieee80211_xmit+0x1d0/0x1f4
+    [<00000000fc8c2284>] __ieee80211_subif_start_xmit+0x30c/0x764
+    [<000000005926ee38>] ieee80211_subif_start_xmit+0x9c/0x7a4
+    [<000000004c86e916>] dev_hard_start_xmit+0x174/0x440
+    [<0000000023495647>] __dev_queue_xmit+0xe24/0x111c
+    [<00000000cfe9ca78>] batadv_send_skb_packet+0x180/0x1e4
+    [<000000007bacc5d5>] batadv_v_elp_periodic_work+0x2f4/0x508
+    [<00000000adc3cd94>] process_one_work+0x4b8/0xa1c
+    [<00000000b36425d1>] worker_thread+0x9c/0x634
+    [<0000000005852dd5>] kthread+0x1bc/0x1c4
+    [<000000005fccd770>] ret_from_fork+0x10/0x20
+unreferenced object 0xffff000009051f00 (size 128):
+  comm "kworker/u8:4", pid 67, jiffies 4295419553 (age 1836.440s)
+  hex dump (first 32 bytes):
+    90 d6 92 0d 00 00 ff ff 00 d8 68 06 00 00 ff ff  ..........h.....
+    36 27 92 e4 02 e0 01 00 00 58 79 06 00 00 ff ff  6'.......Xy.....
+  backtrace:
+    [<000000007302a0b6>] __kmem_cache_alloc_node+0x1e0/0x35c
+    [<00000000049bd418>] kmalloc_trace+0x34/0x80
+    [<0000000000d792bb>] mesh_queue_preq+0x44/0x2a8
+    [<00000000c99c3696>] mesh_nexthop_resolve+0x198/0x19c
+    [<00000000926bf598>] ieee80211_xmit+0x1d0/0x1f4
+    [<00000000fc8c2284>] __ieee80211_subif_start_xmit+0x30c/0x764
+    [<000000005926ee38>] ieee80211_subif_start_xmit+0x9c/0x7a4
+    [<000000004c86e916>] dev_hard_start_xmit+0x174/0x440
+    [<0000000023495647>] __dev_queue_xmit+0xe24/0x111c
+    [<00000000cfe9ca78>] batadv_send_skb_packet+0x180/0x1e4
+    [<000000007bacc5d5>] batadv_v_elp_periodic_work+0x2f4/0x508
+    [<00000000adc3cd94>] process_one_work+0x4b8/0xa1c
+    [<00000000b36425d1>] worker_thread+0x9c/0x634
+    [<0000000005852dd5>] kthread+0x1bc/0x1c4
+    [<000000005fccd770>] ret_from_fork+0x10/0x20
+
+Fixes: 050ac52cbe1f ("mac80211: code for on-demand Hybrid Wireless Mesh Protocol")
+Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
+Link: https://msgid.link/20240528142605.1060566-1-nico.escande@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/ax88179_178a.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/mac80211/mesh_pathtbl.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/drivers/net/usb/ax88179_178a.c
-+++ b/drivers/net/usb/ax88179_178a.c
-@@ -357,7 +357,8 @@ static void ax88179_status(struct usbnet
+diff --git a/net/mac80211/mesh_pathtbl.c b/net/mac80211/mesh_pathtbl.c
+index 7e27e5201c54c..55926927c2975 100644
+--- a/net/mac80211/mesh_pathtbl.c
++++ b/net/mac80211/mesh_pathtbl.c
+@@ -725,10 +725,23 @@ void mesh_path_discard_frame(struct ieee80211_sub_if_data *sdata,
+  */
+ void mesh_path_flush_pending(struct mesh_path *mpath)
+ {
++	struct ieee80211_sub_if_data *sdata = mpath->sdata;
++	struct ieee80211_if_mesh *ifmsh = &sdata->u.mesh;
++	struct mesh_preq_queue *preq, *tmp;
+ 	struct sk_buff *skb;
  
- 	if (netif_carrier_ok(dev->net) != link) {
- 		usbnet_link_change(dev, link, 1);
--		netdev_info(dev->net, "ax88179 - Link status is: %d\n", link);
-+		if (!link)
-+			netdev_info(dev->net, "ax88179 - Link status is: 0\n");
- 	}
- }
- 
-@@ -1548,6 +1549,7 @@ static int ax88179_link_reset(struct usb
- 			 GMII_PHY_PHYSR, 2, &tmp16);
- 
- 	if (!(tmp16 & GMII_PHY_PHYSR_LINK)) {
-+		netdev_info(dev->net, "ax88179 - Link status is: 0\n");
- 		return 0;
- 	} else if (GMII_PHY_PHYSR_GIGA == (tmp16 & GMII_PHY_PHYSR_SMASK)) {
- 		mode |= AX_MEDIUM_GIGAMODE | AX_MEDIUM_EN_125MHZ;
-@@ -1585,6 +1587,8 @@ static int ax88179_link_reset(struct usb
- 
- 	netif_carrier_on(dev->net);
- 
-+	netdev_info(dev->net, "ax88179 - Link status is: 1\n");
+ 	while ((skb = skb_dequeue(&mpath->frame_queue)) != NULL)
+ 		mesh_path_discard_frame(mpath->sdata, skb);
 +
- 	return 0;
++	spin_lock_bh(&ifmsh->mesh_preq_queue_lock);
++	list_for_each_entry_safe(preq, tmp, &ifmsh->preq_queue.list, list) {
++		if (ether_addr_equal(mpath->dst, preq->dst)) {
++			list_del(&preq->list);
++			kfree(preq);
++			--ifmsh->preq_queue_len;
++		}
++	}
++	spin_unlock_bh(&ifmsh->mesh_preq_queue_lock);
  }
  
+ /**
+-- 
+2.43.0
+
 
 
