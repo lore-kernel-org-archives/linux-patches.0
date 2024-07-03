@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67A8171095;
-	Wed,  3 Jul 2024 11:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C3931953BA;
+	Wed,  3 Jul 2024 11:25:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005927; cv=none; b=reT3pP12Vys3YJI86QfUfXj6YDdvy7Slbd43E1Rmo+Gna9tksxcIHrz9Rfd5jOUMqsRSFrO75kSwVzrwFfDv06Ek/xvgOeddeMzJqEpQruWrqU3WlnT0dpY+ux1mZ86vMuQddncfCjr+IwRMJoZGKBbAQcBFAk/SsRmqZbXcPms=
+	t=1720005930; cv=none; b=tHuWiAHhftCfRws6awDrt3PyNE6lBkFyNcGLJ7Gc4lnITaNm43i3/kizZh+lHrtGBGkjrE5RI0aoSPupwOpmhG8l2niMn7VFcttdg8X3DtE4biOyf92dVUgZLTBSP26fiCNR8ik9vWeAObWjFtZPCdVB4rq9ntBo6Yfjqol9vcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005927; c=relaxed/simple;
-	bh=9J4mZ66D5dh0eufQ+owZHqPvmj+8Y42nzivjMl4f9LA=;
+	s=arc-20240116; t=1720005930; c=relaxed/simple;
+	bh=oinZmi/8dd8P/ks9eX7N/ZxeU0OpYtyaYXKR4Qlk6FY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qo9iJb3q/LTHJEneK3hd9Ew0900vTskSo7ZJpwEomWOYcnbfJl3XvBd6xJQZRVJ2F/GOkT7qtTuBTpjeDq2V/Aziq7hMzVkgCFGqUUofjWcoI+uVjFGO4tnMPKeNDWYGv2y7y7Uf7WGBA6e//Zo2OOaQP5rpX+gBW5k3IvW8q40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PyDfdZmQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h5Rw7v5HrnnycV7TUobNGXsJ77su1GmGMZIXzw2ayJLQIsqvtCdlAa6qy8Mh5D2Yo31SG3ofdFVddta+JzWVa5wm3EJVK4wqrCP31EgnFapj8GjR5bPzDitfVc6g1onNMqTcoF56ZkhPSybuzYSsaI3aJw85XfaZLY5rFOHoejk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qsR24h8/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PyDfdZmQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0D52C2BD10;
-	Wed,  3 Jul 2024 11:25:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qsR24h8/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE0F9C2BD10;
+	Wed,  3 Jul 2024 11:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005927;
-	bh=9J4mZ66D5dh0eufQ+owZHqPvmj+8Y42nzivjMl4f9LA=;
+	s=korg; t=1720005930;
+	bh=oinZmi/8dd8P/ks9eX7N/ZxeU0OpYtyaYXKR4Qlk6FY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PyDfdZmQN06ljtKSXlm2gKpkyJRAt0w4F7S3GgicTHEn4vj1zVhd4pL6DgqLqaJ5E
-	 pNPqD2V5XRBuNFBe+fsqwIWmb4kSNCLhmDcRUMzW5x9D74zob/O7pc91G4/fEgFQrV
-	 eM6AceNeZk3t2qNOPicjZWch0Tlm6smrIscjavYE=
+	b=qsR24h8/eOt5KiSlt+joO+Y/+dNffqBLuo4we5pLReDAiliGtgad3ubPstOx9RvfX
+	 t0t5uT3jiYj69+MkLuJTV1w8dhusKDjKn4LqXco1VAT81h5WuoZMZ661pehXpxLfQN
+	 uv/WVgEsaFTv36v1jr5II/wHFe5YehTwzNsHj3W8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Tony Luck <tony.luck@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 241/356] tracing: Add MODULE_DESCRIPTION() to preemptirq_delay_test
-Date: Wed,  3 Jul 2024 12:39:37 +0200
-Message-ID: <20240703102922.231800953@linuxfoundation.org>
+Subject: [PATCH 5.15 242/356] x86/cpu/vfm: Add new macros to work with (vendor/family/model) values
+Date: Wed,  3 Jul 2024 12:39:38 +0200
+Message-ID: <20240703102922.268948038@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -53,37 +52,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Johnson <quic_jjohnson@quicinc.com>
+From: Tony Luck <tony.luck@intel.com>
 
-[ Upstream commit 23748e3e0fbfe471eff5ce439921629f6a427828 ]
+[ Upstream commit e6dfdc2e89a0adedf455814c91b977d6a584cc88 ]
 
-Fix the 'make W=1' warning:
+To avoid adding a slew of new macros for each new Intel CPU family
+switch over from providing CPU model number #defines to a new
+scheme that encodes vendor, family, and model in a single number.
 
-WARNING: modpost: missing MODULE_DESCRIPTION() in kernel/trace/preemptirq_delay_test.o
+  [ bp: s/casted/cast/g ]
 
-Link: https://lore.kernel.org/linux-trace-kernel/20240518-md-preemptirq_delay_test-v1-1-387d11b30d85@quicinc.com
-
-Cc: stable@vger.kernel.org
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Fixes: f96e8577da10 ("lib: Add module for testing preemptoff/irqsoff latency tracers")
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20240416211941.9369-3-tony.luck@intel.com
+Stable-dep-of: 93022482b294 ("x86/cpu: Fix x86_match_cpu() to match just X86_VENDOR_INTEL")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/preemptirq_delay_test.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/include/asm/cpu_device_id.h | 93 ++++++++++++++++++++++++++++
+ 1 file changed, 93 insertions(+)
 
-diff --git a/kernel/trace/preemptirq_delay_test.c b/kernel/trace/preemptirq_delay_test.c
-index 8c4ffd0761624..cb0871fbdb07f 100644
---- a/kernel/trace/preemptirq_delay_test.c
-+++ b/kernel/trace/preemptirq_delay_test.c
-@@ -215,4 +215,5 @@ static void __exit preemptirq_delay_exit(void)
+diff --git a/arch/x86/include/asm/cpu_device_id.h b/arch/x86/include/asm/cpu_device_id.h
+index eb8fcede9e3bf..dd7b9463696f5 100644
+--- a/arch/x86/include/asm/cpu_device_id.h
++++ b/arch/x86/include/asm/cpu_device_id.h
+@@ -2,6 +2,39 @@
+ #ifndef _ASM_X86_CPU_DEVICE_ID
+ #define _ASM_X86_CPU_DEVICE_ID
  
- module_init(preemptirq_delay_init)
- module_exit(preemptirq_delay_exit)
-+MODULE_DESCRIPTION("Preempt / IRQ disable delay thread to test latency tracers");
- MODULE_LICENSE("GPL v2");
++/*
++ * Can't use <linux/bitfield.h> because it generates expressions that
++ * cannot be used in structure initializers. Bitfield construction
++ * here must match the union in struct cpuinfo_86:
++ *	union {
++ *		struct {
++ *			__u8	x86_model;
++ *			__u8	x86;
++ *			__u8	x86_vendor;
++ *			__u8	x86_reserved;
++ *		};
++ *		__u32		x86_vfm;
++ *	};
++ */
++#define VFM_MODEL_BIT	0
++#define VFM_FAMILY_BIT	8
++#define VFM_VENDOR_BIT	16
++#define VFM_RSVD_BIT	24
++
++#define	VFM_MODEL_MASK	GENMASK(VFM_FAMILY_BIT - 1, VFM_MODEL_BIT)
++#define	VFM_FAMILY_MASK	GENMASK(VFM_VENDOR_BIT - 1, VFM_FAMILY_BIT)
++#define	VFM_VENDOR_MASK	GENMASK(VFM_RSVD_BIT - 1, VFM_VENDOR_BIT)
++
++#define VFM_MODEL(vfm)	(((vfm) & VFM_MODEL_MASK) >> VFM_MODEL_BIT)
++#define VFM_FAMILY(vfm)	(((vfm) & VFM_FAMILY_MASK) >> VFM_FAMILY_BIT)
++#define VFM_VENDOR(vfm)	(((vfm) & VFM_VENDOR_MASK) >> VFM_VENDOR_BIT)
++
++#define	VFM_MAKE(_vendor, _family, _model) (	\
++	((_model) << VFM_MODEL_BIT) |		\
++	((_family) << VFM_FAMILY_BIT) |		\
++	((_vendor) << VFM_VENDOR_BIT)		\
++)
++
+ /*
+  * Declare drivers belonging to specific x86 CPUs
+  * Similar in spirit to pci_device_id and related PCI functions
+@@ -49,6 +82,16 @@
+ 	.driver_data	= (unsigned long) _data				\
+ }
+ 
++#define X86_MATCH_VENDORID_FAM_MODEL_STEPPINGS_FEATURE(_vendor, _family, _model, \
++						    _steppings, _feature, _data) { \
++	.vendor		= _vendor,					\
++	.family		= _family,					\
++	.model		= _model,					\
++	.steppings	= _steppings,					\
++	.feature	= _feature,					\
++	.driver_data	= (unsigned long) _data				\
++}
++
+ /**
+  * X86_MATCH_VENDOR_FAM_MODEL_FEATURE - Macro for CPU matching
+  * @_vendor:	The vendor name, e.g. INTEL, AMD, HYGON, ..., ANY
+@@ -164,6 +207,56 @@
+ 	X86_MATCH_VENDOR_FAM_MODEL_STEPPINGS_FEATURE(INTEL, 6, INTEL_FAM6_##model, \
+ 						     steppings, X86_FEATURE_ANY, data)
+ 
++/**
++ * X86_MATCH_VFM - Match encoded vendor/family/model
++ * @vfm:	Encoded 8-bits each for vendor, family, model
++ * @data:	Driver specific data or NULL. The internal storage
++ *		format is unsigned long. The supplied value, pointer
++ *		etc. is cast to unsigned long internally.
++ *
++ * Stepping and feature are set to wildcards
++ */
++#define X86_MATCH_VFM(vfm, data)			\
++	X86_MATCH_VENDORID_FAM_MODEL_STEPPINGS_FEATURE(	\
++		VFM_VENDOR(vfm),			\
++		VFM_FAMILY(vfm),			\
++		VFM_MODEL(vfm),				\
++		X86_STEPPING_ANY, X86_FEATURE_ANY, data)
++
++/**
++ * X86_MATCH_VFM_STEPPINGS - Match encoded vendor/family/model/stepping
++ * @vfm:	Encoded 8-bits each for vendor, family, model
++ * @steppings:	Bitmask of steppings to match
++ * @data:	Driver specific data or NULL. The internal storage
++ *		format is unsigned long. The supplied value, pointer
++ *		etc. is cast to unsigned long internally.
++ *
++ * feature is set to wildcard
++ */
++#define X86_MATCH_VFM_STEPPINGS(vfm, steppings, data)	\
++	X86_MATCH_VENDORID_FAM_MODEL_STEPPINGS_FEATURE(	\
++		VFM_VENDOR(vfm),			\
++		VFM_FAMILY(vfm),			\
++		VFM_MODEL(vfm),				\
++		steppings, X86_FEATURE_ANY, data)
++
++/**
++ * X86_MATCH_VFM_FEATURE - Match encoded vendor/family/model/feature
++ * @vfm:	Encoded 8-bits each for vendor, family, model
++ * @feature:	A X86_FEATURE bit
++ * @data:	Driver specific data or NULL. The internal storage
++ *		format is unsigned long. The supplied value, pointer
++ *		etc. is cast to unsigned long internally.
++ *
++ * Steppings is set to wildcard
++ */
++#define X86_MATCH_VFM_FEATURE(vfm, feature, data)	\
++	X86_MATCH_VENDORID_FAM_MODEL_STEPPINGS_FEATURE(	\
++		VFM_VENDOR(vfm),			\
++		VFM_FAMILY(vfm),			\
++		VFM_MODEL(vfm),				\
++		X86_STEPPING_ANY, feature, data)
++
+ /*
+  * Match specific microcode revisions.
+  *
 -- 
 2.43.0
 
