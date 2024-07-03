@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2969E17E8EE;
-	Wed,  3 Jul 2024 10:53:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E313317E8EE;
+	Wed,  3 Jul 2024 10:53:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003997; cv=none; b=sQOCeYHuGe51VYrdb+TnU9cQ/xYQ+IMN8s3y0o7ZzLNwR0NBJ6u1UTSz0gVkTyeOOIyapD/46iY8FVvJ1N74kqTGxTS3EzYuUidBhbxOjaxZqCZuj/UJV9oVPsp0+V8q6w03pDrlJArHu+oYfgK/P/JG1B521C9uNzEqtZpeNWA=
+	t=1720004000; cv=none; b=H05evZzcsT+B3NfY2Ykn7uVZ63Ws+wlHjv+x3ajofClpjBqgl2HU4EUvD9/wHnQX897ugxQgo9EBLKVcBIkoyIIt3G6QfDxqz0yuMwV3JT7q14c/y0Q/QI9/dI6PxbkJyxH/v+rd5TlyLQpY+JdsUBsff8o/cU9y1VlzdvdkBPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003997; c=relaxed/simple;
-	bh=pAp+/O7PaI2omsuc56hr8IpuQagb8XJeZH3Je3gFtrU=;
+	s=arc-20240116; t=1720004000; c=relaxed/simple;
+	bh=UbLH1ncyTM02kgoSG8r9gZ+EWuTgKpE9qtM2t7KscIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u0cRJK/wXXTg/wT7R0IJdC3Wue/bUcCceX3TpD4SOima0qiGH9kpmFpEHAktUQ605SGqrweF624Rzxr3D7OEfR9EuWWX4kBR98TRQ9Bv4AGIsrmIp6ZOYalj6HYD0hr9tkRmLdyxWgoC9UiWJ4jOTCvIsfpTDAaHo3erN/4u4uM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pqr8S/AL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d1mOrFJpB/84H5x4+vuw0u6i/J0wJiD3kdxrR5+h5G1oajiKAartQf7vO850VY2djqqHbiSF2WVDdxHt3+ymGCYGgLR7hTnkXZDcuYJyatHh3FL9Sp/9Oh78DhFAXa1qYnqy+xC6QDWfhLa4Z/qLveVVMGmP03K9dmUnX1iJ+CM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pDaom17T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pqr8S/AL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CC18C2BD10;
-	Wed,  3 Jul 2024 10:53:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pDaom17T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6592FC2BD10;
+	Wed,  3 Jul 2024 10:53:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003996;
-	bh=pAp+/O7PaI2omsuc56hr8IpuQagb8XJeZH3Je3gFtrU=;
+	s=korg; t=1720003999;
+	bh=UbLH1ncyTM02kgoSG8r9gZ+EWuTgKpE9qtM2t7KscIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pqr8S/ALtY0dOZ9noKi0HgZ4uhRymAZQV1kiUmlR2obhIEmR2CO8hcwp4Tx0dIE1m
-	 BTFuRqoclEsZGszC8W1yHiZs+NsjShDchW70DRIpFZWco+rv+7iXZAe/DLu3oPwWwV
-	 PQ+Rb25kmAdVkvc2cjqfG/lJ4jWW/+Mdz1ur/HkA=
+	b=pDaom17Truxc6n2AihzEyaF/Qk3mf4NkS8QuJn+QzYzWwhPUU5he9PHWzm8TcBQlh
+	 z2OC+tfQUPfmW1adfnVE6lMydMOQHemZzp6uCNyi7YIMTcZpck35dK15ZQZJ8UgRpV
+	 DOpCnN7png3Jr7TXr7z+mcf+wCXMzCE8odR2lSBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean Delvare <jdelvare@suse.de>,
-	Juergen Fitschen <me@jue.yt>,
-	Ludovic Desroches <ludovic.desroches@microchip.com>,
-	Codrin Ciubotariu <codrin.ciubotariu@microchip.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Adam Miotk <adam.miotk@arm.com>,
+	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 088/189] i2c: at91: Fix the functionality flags of the slave-only interface
-Date: Wed,  3 Jul 2024 12:39:09 +0200
-Message-ID: <20240703102844.822953172@linuxfoundation.org>
+Subject: [PATCH 5.4 059/189] drm/bridge/panel: Fix runtime warning on panel bridge release
+Date: Wed,  3 Jul 2024 12:38:40 +0200
+Message-ID: <20240703102843.737799300@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -57,42 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean Delvare <jdelvare@suse.de>
+From: Adam Miotk <adam.miotk@arm.com>
 
-[ Upstream commit d6d5645e5fc1233a7ba950de4a72981c394a2557 ]
+[ Upstream commit ce62600c4dbee8d43b02277669dd91785a9b81d9 ]
 
-When an I2C adapter acts only as a slave, it should not claim to
-support I2C master capabilities.
+Device managed panel bridge wrappers are created by calling to
+drm_panel_bridge_add_typed() and registering a release handler for
+clean-up when the device gets unbound.
 
-Fixes: 9d3ca54b550c ("i2c: at91: added slave mode support")
-Signed-off-by: Jean Delvare <jdelvare@suse.de>
-Cc: Juergen Fitschen <me@jue.yt>
-Cc: Ludovic Desroches <ludovic.desroches@microchip.com>
-Cc: Codrin Ciubotariu <codrin.ciubotariu@microchip.com>
-Cc: Andi Shyti <andi.shyti@kernel.org>
-Cc: Nicolas Ferre <nicolas.ferre@microchip.com>
-Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Cc: Claudiu Beznea <claudiu.beznea@tuxon.dev>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Since the memory for this bridge is also managed and linked to the panel
+device, the release function should not try to free that memory.
+Moreover, the call to devm_kfree() inside drm_panel_bridge_remove() will
+fail in this case and emit a warning because the panel bridge resource
+is no longer on the device resources list (it has been removed from
+there before the call to release handlers).
+
+Fixes: 67022227ffb1 ("drm/bridge: Add a devm_ allocator for panel bridge.")
+Signed-off-by: Adam Miotk <adam.miotk@arm.com>
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240610102739.139852-1-adam.miotk@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-at91-slave.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/bridge/panel.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-at91-slave.c b/drivers/i2c/busses/i2c-at91-slave.c
-index d6eeea5166c04..131a67d9d4a68 100644
---- a/drivers/i2c/busses/i2c-at91-slave.c
-+++ b/drivers/i2c/busses/i2c-at91-slave.c
-@@ -106,8 +106,7 @@ static int at91_unreg_slave(struct i2c_client *slave)
+diff --git a/drivers/gpu/drm/bridge/panel.c b/drivers/gpu/drm/bridge/panel.c
+index b12ae3a4c5f11..695dba0f018f8 100644
+--- a/drivers/gpu/drm/bridge/panel.c
++++ b/drivers/gpu/drm/bridge/panel.c
+@@ -203,9 +203,12 @@ EXPORT_SYMBOL(drm_panel_bridge_remove);
  
- static u32 at91_twi_func(struct i2c_adapter *adapter)
+ static void devm_drm_panel_bridge_release(struct device *dev, void *res)
  {
--	return I2C_FUNC_SLAVE | I2C_FUNC_I2C | I2C_FUNC_SMBUS_EMUL
--		| I2C_FUNC_SMBUS_READ_BLOCK_DATA;
-+	return I2C_FUNC_SLAVE;
+-	struct drm_bridge **bridge = res;
++	struct drm_bridge *bridge = *(struct drm_bridge **)res;
+ 
+-	drm_panel_bridge_remove(*bridge);
++	if (!bridge)
++		return;
++
++	drm_bridge_remove(bridge);
  }
  
- static const struct i2c_algorithm at91_twi_algorithm_slave = {
+ /**
 -- 
 2.43.0
 
