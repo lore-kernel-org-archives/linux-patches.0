@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02991849D3;
-	Wed,  3 Jul 2024 11:11:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB481849D3;
+	Wed,  3 Jul 2024 11:11:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005075; cv=none; b=PGZXD/ZHWuZVL1jtmlnSp7Z7gjtFgaH0r9PUyGQtxIp7FyPTjkDX++X932kGDAe+C2tkkY9UYypRrOvclyV7Qc2RbsBPyGromkyYptfsputq1KcGDJOSPMOO2bfpkWUAYzXPqhQ0nD7OBbWjTxmh2JRcA/mPINPeUrMbhYSHqaA=
+	t=1720005078; cv=none; b=Wlhuoqo+q8GwG0kb2LJSyTqiNR/8l0+bVdN4b1/eTmv3dR7Nn0/W5UvgrjTYgIkOtgdoWqdhkWOScWy6Frcx6g4Fv3JdwSiCbhFHgw8Ez+VSskKnjGKwJudAu1mxNq+t+VgKqpUg8GUHDGPeYhxnhwBE4pFZ2ti+RxQri5dRbI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005075; c=relaxed/simple;
-	bh=GwG7LDMeRpNPYPUJEuhA/DrTTRG47+NWU36hJmAqCCA=;
+	s=arc-20240116; t=1720005078; c=relaxed/simple;
+	bh=WkyVuZwKzHvYZM0C80KWlruyWvuVUDNczsV3mUxTM30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rJDM4ePYXrEhumF09aq2ItWhR7D2P0zivVOC+0DJBpMceb2NNk3tI0/dnAjWkKSF3lWEYmLf61kwCuCMfLsCgdNLkC2UP8hc2IaLG55FLJ2Ch0TbnPvMm2jzgZA6lIZT7/9nMv+7msfVseDX9Y2NeVtlFvcoqKNRmzsamKSy9wQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cbEcHlaw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YvPg7LSWQ9DEJ6fNKoO5yUv9UXNOLDuneHhbg47HVPMwyfnjir+S2nqaIkdaBhCCBq4+3MtzoKUS2IIHHm1/bbEcbBeNJg74gsnAJdfKCJK5pwQ7r9UzN5S0AuDLle7Jbe5nLs3XIWT4pH515Rawa+0d1nmWRdfcDNt7X/ufMz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ri++oAb5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cbEcHlaw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3EA0C2BD10;
-	Wed,  3 Jul 2024 11:11:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ri++oAb5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA22DC2BD10;
+	Wed,  3 Jul 2024 11:11:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005075;
-	bh=GwG7LDMeRpNPYPUJEuhA/DrTTRG47+NWU36hJmAqCCA=;
+	s=korg; t=1720005078;
+	bh=WkyVuZwKzHvYZM0C80KWlruyWvuVUDNczsV3mUxTM30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cbEcHlawDzT7qB4aweoo2r3jjWzvcnm1/W8iGfTlMV+Z7jujbarajA/4/2KGlg2Y7
-	 qhiq+5xJdmyLSzy4hbZDewwDocvrwkocXdwybalbG4KjWHUjYR5pzRXycbiLao4ZAW
-	 N+tPj7yRTT0pw7girY7aL5akV/trqr80jb5kqQkY=
+	b=Ri++oAb5+UyXqmsdNAuOq2x2+YiXRiFMzBBeFDpMlI/X2XAg+IWLPgQJa8/GL47pd
+	 AI7bXWziQIIjVeV3yGTTG3jX0JRaBhZutw2oyqn1Qrechamm7a19LkkMEjZpnbmY9i
+	 5LlBtZrGZUQ5YJb+bq8aQMnJK11GwZEvF68AVLY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 225/290] sparc: fix compat recv/recvfrom syscalls
-Date: Wed,  3 Jul 2024 12:40:06 +0200
-Message-ID: <20240703102912.655591387@linuxfoundation.org>
+	Vasileios Amoiridis <vassilisamir@gmail.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.10 252/290] iio: chemical: bme680: Fix sensor data read operation
+Date: Wed,  3 Jul 2024 12:40:33 +0200
+Message-ID: <20240703102913.667634300@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -50,279 +51,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Vasileios Amoiridis <vassilisamir@gmail.com>
 
-[ Upstream commit d6fbd26fb872ec518d25433a12e8ce8163e20909 ]
+commit 4241665e6ea063a9c1d734de790121a71db763fc upstream.
 
-sparc has the wrong compat version of recv() and recvfrom() for both the
-direct syscalls and socketcall().
+A read operation is happening as follows:
 
-The direct syscalls just need to use the compat version. For socketcall,
-the same thing could be done, but it seems better to completely remove
-the custom assembler code for it and just use the same implementation that
-everyone else has.
+a) Set sensor to forced mode
+b) Sensor measures values and update data registers and sleeps again
+c) Read data registers
 
-Fixes: 1dacc76d0014 ("net/compat/wext: send different messages to compat tasks")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In the current implementation the read operation happens immediately
+after the sensor is set to forced mode so the sensor does not have
+the time to update properly the registers. This leads to the following
+2 problems:
+
+1) The first ever value which is read by the register is always wrong
+2) Every read operation, puts the register into forced mode and reads
+the data that were calculated in the previous conversion.
+
+This behaviour was tested in 2 ways:
+
+1) The internal meas_status_0 register was read before and after every
+read operation in order to verify that the data were ready even before
+the register was set to forced mode and also to check that after the
+forced mode was set the new data were not yet ready.
+
+2) Physically changing the temperature and measuring the temperature
+
+This commit adds the waiting time in between the set of the forced mode
+and the read of the data. The function is taken from the Bosch BME68x
+Sensor API [1].
+
+[1]: https://github.com/boschsensortec/BME68x_SensorAPI/blob/v4.4.8/bme68x.c#L490
+
+Fixes: 1b3bd8592780 ("iio: chemical: Add support for Bosch BME680 sensor")
+Signed-off-by: Vasileios Amoiridis <vassilisamir@gmail.com>
+Link: https://lore.kernel.org/r/20240606212313.207550-5-vassilisamir@gmail.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sparc/kernel/sys32.S              | 221 -------------------------
- arch/sparc/kernel/syscalls/syscall.tbl |   4 +-
- 2 files changed, 2 insertions(+), 223 deletions(-)
+ drivers/iio/chemical/bme680.h      |    2 +
+ drivers/iio/chemical/bme680_core.c |   46 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 48 insertions(+)
 
-diff --git a/arch/sparc/kernel/sys32.S b/arch/sparc/kernel/sys32.S
-index a45f0f31fe51a..a3d308f2043e5 100644
---- a/arch/sparc/kernel/sys32.S
-+++ b/arch/sparc/kernel/sys32.S
-@@ -18,224 +18,3 @@ sys32_mmap2:
- 	sethi		%hi(sys_mmap), %g1
- 	jmpl		%g1 + %lo(sys_mmap), %g0
- 	 sllx		%o5, 12, %o5
--
--	.align		32
--	.globl		sys32_socketcall
--sys32_socketcall:	/* %o0=call, %o1=args */
--	cmp		%o0, 1
--	bl,pn		%xcc, do_einval
--	 cmp		%o0, 18
--	bg,pn		%xcc, do_einval
--	 sub		%o0, 1, %o0
--	sllx		%o0, 5, %o0
--	sethi		%hi(__socketcall_table_begin), %g2
--	or		%g2, %lo(__socketcall_table_begin), %g2
--	jmpl		%g2 + %o0, %g0
--	 nop
--do_einval:
--	retl
--	 mov		-EINVAL, %o0
--
--	.align		32
--__socketcall_table_begin:
--
--	/* Each entry is exactly 32 bytes. */
--do_sys_socket: /* sys_socket(int, int, int) */
--1:	ldswa		[%o1 + 0x0] %asi, %o0
--	sethi		%hi(sys_socket), %g1
--2:	ldswa		[%o1 + 0x8] %asi, %o2
--	jmpl		%g1 + %lo(sys_socket), %g0
--3:	 ldswa		[%o1 + 0x4] %asi, %o1
--	nop
--	nop
--	nop
--do_sys_bind: /* sys_bind(int fd, struct sockaddr *, int) */
--4:	ldswa		[%o1 + 0x0] %asi, %o0
--	sethi		%hi(sys_bind), %g1
--5:	ldswa		[%o1 + 0x8] %asi, %o2
--	jmpl		%g1 + %lo(sys_bind), %g0
--6:	 lduwa		[%o1 + 0x4] %asi, %o1
--	nop
--	nop
--	nop
--do_sys_connect: /* sys_connect(int, struct sockaddr *, int) */
--7:	ldswa		[%o1 + 0x0] %asi, %o0
--	sethi		%hi(sys_connect), %g1
--8:	ldswa		[%o1 + 0x8] %asi, %o2
--	jmpl		%g1 + %lo(sys_connect), %g0
--9:	 lduwa		[%o1 + 0x4] %asi, %o1
--	nop
--	nop
--	nop
--do_sys_listen: /* sys_listen(int, int) */
--10:	ldswa		[%o1 + 0x0] %asi, %o0
--	sethi		%hi(sys_listen), %g1
--	jmpl		%g1 + %lo(sys_listen), %g0
--11:	 ldswa		[%o1 + 0x4] %asi, %o1
--	nop
--	nop
--	nop
--	nop
--do_sys_accept: /* sys_accept(int, struct sockaddr *, int *) */
--12:	ldswa		[%o1 + 0x0] %asi, %o0
--	sethi		%hi(sys_accept), %g1
--13:	lduwa		[%o1 + 0x8] %asi, %o2
--	jmpl		%g1 + %lo(sys_accept), %g0
--14:	 lduwa		[%o1 + 0x4] %asi, %o1
--	nop
--	nop
--	nop
--do_sys_getsockname: /* sys_getsockname(int, struct sockaddr *, int *) */
--15:	ldswa		[%o1 + 0x0] %asi, %o0
--	sethi		%hi(sys_getsockname), %g1
--16:	lduwa		[%o1 + 0x8] %asi, %o2
--	jmpl		%g1 + %lo(sys_getsockname), %g0
--17:	 lduwa		[%o1 + 0x4] %asi, %o1
--	nop
--	nop
--	nop
--do_sys_getpeername: /* sys_getpeername(int, struct sockaddr *, int *) */
--18:	ldswa		[%o1 + 0x0] %asi, %o0
--	sethi		%hi(sys_getpeername), %g1
--19:	lduwa		[%o1 + 0x8] %asi, %o2
--	jmpl		%g1 + %lo(sys_getpeername), %g0
--20:	 lduwa		[%o1 + 0x4] %asi, %o1
--	nop
--	nop
--	nop
--do_sys_socketpair: /* sys_socketpair(int, int, int, int *) */
--21:	ldswa		[%o1 + 0x0] %asi, %o0
--	sethi		%hi(sys_socketpair), %g1
--22:	ldswa		[%o1 + 0x8] %asi, %o2
--23:	lduwa		[%o1 + 0xc] %asi, %o3
--	jmpl		%g1 + %lo(sys_socketpair), %g0
--24:	 ldswa		[%o1 + 0x4] %asi, %o1
--	nop
--	nop
--do_sys_send: /* sys_send(int, void *, size_t, unsigned int) */
--25:	ldswa		[%o1 + 0x0] %asi, %o0
--	sethi		%hi(sys_send), %g1
--26:	lduwa		[%o1 + 0x8] %asi, %o2
--27:	lduwa		[%o1 + 0xc] %asi, %o3
--	jmpl		%g1 + %lo(sys_send), %g0
--28:	 lduwa		[%o1 + 0x4] %asi, %o1
--	nop
--	nop
--do_sys_recv: /* sys_recv(int, void *, size_t, unsigned int) */
--29:	ldswa		[%o1 + 0x0] %asi, %o0
--	sethi		%hi(sys_recv), %g1
--30:	lduwa		[%o1 + 0x8] %asi, %o2
--31:	lduwa		[%o1 + 0xc] %asi, %o3
--	jmpl		%g1 + %lo(sys_recv), %g0
--32:	 lduwa		[%o1 + 0x4] %asi, %o1
--	nop
--	nop
--do_sys_sendto: /* sys_sendto(int, u32, compat_size_t, unsigned int, u32, int) */
--33:	ldswa		[%o1 + 0x0] %asi, %o0
--	sethi		%hi(sys_sendto), %g1
--34:	lduwa		[%o1 + 0x8] %asi, %o2
--35:	lduwa		[%o1 + 0xc] %asi, %o3
--36:	lduwa		[%o1 + 0x10] %asi, %o4
--37:	ldswa		[%o1 + 0x14] %asi, %o5
--	jmpl		%g1 + %lo(sys_sendto), %g0
--38:	 lduwa		[%o1 + 0x4] %asi, %o1
--do_sys_recvfrom: /* sys_recvfrom(int, u32, compat_size_t, unsigned int, u32, u32) */
--39:	ldswa		[%o1 + 0x0] %asi, %o0
--	sethi		%hi(sys_recvfrom), %g1
--40:	lduwa		[%o1 + 0x8] %asi, %o2
--41:	lduwa		[%o1 + 0xc] %asi, %o3
--42:	lduwa		[%o1 + 0x10] %asi, %o4
--43:	lduwa		[%o1 + 0x14] %asi, %o5
--	jmpl		%g1 + %lo(sys_recvfrom), %g0
--44:	 lduwa		[%o1 + 0x4] %asi, %o1
--do_sys_shutdown: /* sys_shutdown(int, int) */
--45:	ldswa		[%o1 + 0x0] %asi, %o0
--	sethi		%hi(sys_shutdown), %g1
--	jmpl		%g1 + %lo(sys_shutdown), %g0
--46:	 ldswa		[%o1 + 0x4] %asi, %o1
--	nop
--	nop
--	nop
--	nop
--do_sys_setsockopt: /* sys_setsockopt(int, int, int, char *, int) */
--47:	ldswa		[%o1 + 0x0] %asi, %o0
--	sethi		%hi(sys_setsockopt), %g1
--48:	ldswa		[%o1 + 0x8] %asi, %o2
--49:	lduwa		[%o1 + 0xc] %asi, %o3
--50:	ldswa		[%o1 + 0x10] %asi, %o4
--	jmpl		%g1 + %lo(sys_setsockopt), %g0
--51:	 ldswa		[%o1 + 0x4] %asi, %o1
--	nop
--do_sys_getsockopt: /* sys_getsockopt(int, int, int, u32, u32) */
--52:	ldswa		[%o1 + 0x0] %asi, %o0
--	sethi		%hi(sys_getsockopt), %g1
--53:	ldswa		[%o1 + 0x8] %asi, %o2
--54:	lduwa		[%o1 + 0xc] %asi, %o3
--55:	lduwa		[%o1 + 0x10] %asi, %o4
--	jmpl		%g1 + %lo(sys_getsockopt), %g0
--56:	 ldswa		[%o1 + 0x4] %asi, %o1
--	nop
--do_sys_sendmsg: /* compat_sys_sendmsg(int, struct compat_msghdr *, unsigned int) */
--57:	ldswa		[%o1 + 0x0] %asi, %o0
--	sethi		%hi(compat_sys_sendmsg), %g1
--58:	lduwa		[%o1 + 0x8] %asi, %o2
--	jmpl		%g1 + %lo(compat_sys_sendmsg), %g0
--59:	 lduwa		[%o1 + 0x4] %asi, %o1
--	nop
--	nop
--	nop
--do_sys_recvmsg: /* compat_sys_recvmsg(int, struct compat_msghdr *, unsigned int) */
--60:	ldswa		[%o1 + 0x0] %asi, %o0
--	sethi		%hi(compat_sys_recvmsg), %g1
--61:	lduwa		[%o1 + 0x8] %asi, %o2
--	jmpl		%g1 + %lo(compat_sys_recvmsg), %g0
--62:	 lduwa		[%o1 + 0x4] %asi, %o1
--	nop
--	nop
--	nop
--do_sys_accept4: /* sys_accept4(int, struct sockaddr *, int *, int) */
--63:	ldswa		[%o1 + 0x0] %asi, %o0
--	sethi		%hi(sys_accept4), %g1
--64:	lduwa		[%o1 + 0x8] %asi, %o2
--65:	ldswa		[%o1 + 0xc] %asi, %o3
--	jmpl		%g1 + %lo(sys_accept4), %g0
--66:	 lduwa		[%o1 + 0x4] %asi, %o1
--	nop
--	nop
--
--	.section	__ex_table,"a"
--	.align		4
--	.word		1b, __retl_efault, 2b, __retl_efault
--	.word		3b, __retl_efault, 4b, __retl_efault
--	.word		5b, __retl_efault, 6b, __retl_efault
--	.word		7b, __retl_efault, 8b, __retl_efault
--	.word		9b, __retl_efault, 10b, __retl_efault
--	.word		11b, __retl_efault, 12b, __retl_efault
--	.word		13b, __retl_efault, 14b, __retl_efault
--	.word		15b, __retl_efault, 16b, __retl_efault
--	.word		17b, __retl_efault, 18b, __retl_efault
--	.word		19b, __retl_efault, 20b, __retl_efault
--	.word		21b, __retl_efault, 22b, __retl_efault
--	.word		23b, __retl_efault, 24b, __retl_efault
--	.word		25b, __retl_efault, 26b, __retl_efault
--	.word		27b, __retl_efault, 28b, __retl_efault
--	.word		29b, __retl_efault, 30b, __retl_efault
--	.word		31b, __retl_efault, 32b, __retl_efault
--	.word		33b, __retl_efault, 34b, __retl_efault
--	.word		35b, __retl_efault, 36b, __retl_efault
--	.word		37b, __retl_efault, 38b, __retl_efault
--	.word		39b, __retl_efault, 40b, __retl_efault
--	.word		41b, __retl_efault, 42b, __retl_efault
--	.word		43b, __retl_efault, 44b, __retl_efault
--	.word		45b, __retl_efault, 46b, __retl_efault
--	.word		47b, __retl_efault, 48b, __retl_efault
--	.word		49b, __retl_efault, 50b, __retl_efault
--	.word		51b, __retl_efault, 52b, __retl_efault
--	.word		53b, __retl_efault, 54b, __retl_efault
--	.word		55b, __retl_efault, 56b, __retl_efault
--	.word		57b, __retl_efault, 58b, __retl_efault
--	.word		59b, __retl_efault, 60b, __retl_efault
--	.word		61b, __retl_efault, 62b, __retl_efault
--	.word		63b, __retl_efault, 64b, __retl_efault
--	.word		65b, __retl_efault, 66b, __retl_efault
--	.previous
-diff --git a/arch/sparc/kernel/syscalls/syscall.tbl b/arch/sparc/kernel/syscalls/syscall.tbl
-index 6869c7c71ebaf..5c76ebe07e9c2 100644
---- a/arch/sparc/kernel/syscalls/syscall.tbl
-+++ b/arch/sparc/kernel/syscalls/syscall.tbl
-@@ -155,7 +155,7 @@
- 123	32	fchown			sys_fchown16
- 123	64	fchown			sys_fchown
- 124	common	fchmod			sys_fchmod
--125	common	recvfrom		sys_recvfrom
-+125	common	recvfrom		sys_recvfrom			compat_sys_recvfrom
- 126	32	setreuid		sys_setreuid16
- 126	64	setreuid		sys_setreuid
- 127	32	setregid		sys_setregid16
-@@ -247,7 +247,7 @@
- 204	32	readdir			sys_old_readdir			compat_sys_old_readdir
- 204	64	readdir			sys_nis_syscall
- 205	common	readahead		sys_readahead			compat_sys_readahead
--206	common	socketcall		sys_socketcall			sys32_socketcall
-+206	common	socketcall		sys_socketcall			compat_sys_socketcall
- 207	common	syslog			sys_syslog
- 208	common	lookup_dcookie		sys_lookup_dcookie		compat_sys_lookup_dcookie
- 209	common	fadvise64		sys_fadvise64			compat_sys_fadvise64
--- 
-2.43.0
-
+--- a/drivers/iio/chemical/bme680.h
++++ b/drivers/iio/chemical/bme680.h
+@@ -54,7 +54,9 @@
+ #define   BME680_NB_CONV_MASK			GENMASK(3, 0)
+ 
+ #define BME680_REG_MEAS_STAT_0			0x1D
++#define   BME680_NEW_DATA_BIT			BIT(7)
+ #define   BME680_GAS_MEAS_BIT			BIT(6)
++#define   BME680_MEAS_BIT			BIT(5)
+ 
+ /* Calibration Parameters */
+ #define BME680_T2_LSB_REG	0x8A
+--- a/drivers/iio/chemical/bme680_core.c
++++ b/drivers/iio/chemical/bme680_core.c
+@@ -10,6 +10,7 @@
+  */
+ #include <linux/acpi.h>
+ #include <linux/bitfield.h>
++#include <linux/delay.h>
+ #include <linux/device.h>
+ #include <linux/module.h>
+ #include <linux/log2.h>
+@@ -532,6 +533,43 @@ static u8 bme680_oversampling_to_reg(u8
+ 	return ilog2(val) + 1;
+ }
+ 
++/*
++ * Taken from Bosch BME680 API:
++ * https://github.com/boschsensortec/BME68x_SensorAPI/blob/v4.4.8/bme68x.c#L490
++ */
++static int bme680_wait_for_eoc(struct bme680_data *data)
++{
++	struct device *dev = regmap_get_device(data->regmap);
++	unsigned int check;
++	int ret;
++	/*
++	 * (Sum of oversampling ratios * time per oversampling) +
++	 * TPH measurement + gas measurement + wait transition from forced mode
++	 * + heater duration
++	 */
++	int wait_eoc_us = ((data->oversampling_temp + data->oversampling_press +
++			   data->oversampling_humid) * 1936) + (477 * 4) +
++			   (477 * 5) + 1000 + (data->heater_dur * 1000);
++
++	usleep_range(wait_eoc_us, wait_eoc_us + 100);
++
++	ret = regmap_read(data->regmap, BME680_REG_MEAS_STAT_0, &check);
++	if (ret) {
++		dev_err(dev, "failed to read measurement status register.\n");
++		return ret;
++	}
++	if (check & BME680_MEAS_BIT) {
++		dev_err(dev, "Device measurement cycle incomplete.\n");
++		return -EBUSY;
++	}
++	if (!(check & BME680_NEW_DATA_BIT)) {
++		dev_err(dev, "No new data available from the device.\n");
++		return -ENODATA;
++	}
++
++	return 0;
++}
++
+ static int bme680_chip_config(struct bme680_data *data)
+ {
+ 	struct device *dev = regmap_get_device(data->regmap);
+@@ -622,6 +660,10 @@ static int bme680_read_temp(struct bme68
+ 	if (ret < 0)
+ 		return ret;
+ 
++	ret = bme680_wait_for_eoc(data);
++	if (ret)
++		return ret;
++
+ 	ret = regmap_bulk_read(data->regmap, BME680_REG_TEMP_MSB,
+ 			       &tmp, 3);
+ 	if (ret < 0) {
+@@ -738,6 +780,10 @@ static int bme680_read_gas(struct bme680
+ 	if (ret < 0)
+ 		return ret;
+ 
++	ret = bme680_wait_for_eoc(data);
++	if (ret)
++		return ret;
++
+ 	ret = regmap_read(data->regmap, BME680_REG_MEAS_STAT_0, &check);
+ 	if (check & BME680_GAS_MEAS_BIT) {
+ 		dev_err(dev, "gas measurement incomplete\n");
 
 
