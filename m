@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9BC9136E2A;
-	Wed,  3 Jul 2024 11:08:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF0EB136E2A;
+	Wed,  3 Jul 2024 11:09:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004937; cv=none; b=QQXgdhC9SOIgsdHo2GtSl4SjyEGiYsjIim+HLCVm6wHepwgvXrMgSJ8bFb8KdhMSqQ6nznO2yZPHp9lgQDI4roQlNeipD2GLVTMgBspiNKtqnH2Atsi9XkRMpT1UfD6D/xDsMypYdZ4wQmYJHDpXJJ7sDHT+0iXeo2PhbzB6gbU=
+	t=1720004940; cv=none; b=pg9+GPpGscNRiHjBzst7qr0tIIW8Dz9ZNaMaMQq8XdIRz6xphQelf+yZnvDgqzID7kSmGdaQwQahJUCpzh7GXFbFGE20ijR/qoFfrahiMz7H6m0U2jw4ugkqSmK5SKhVCOZAp9lSCaptFucrvPuNWsrTBbdvwd78QDdvt4sCjnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004937; c=relaxed/simple;
-	bh=KoHlYjjwdKX5sKlTppeQrvijjZFxDXEUXmAIBqGbx+Q=;
+	s=arc-20240116; t=1720004940; c=relaxed/simple;
+	bh=tkAqyeX6YcaO4ExMKKa2irPPhG7/+M3qO4HvsdYbal8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WvMUILKMrmWdW3ZO2oY+/Ek5U21Ti92vHmoogLbV5EDs8Dbu8HTAg1/MP+Y3tvRWPcOUzMWlkgB+G5eyCSaIj/VjN9sjF+vj58sIwfA+g3VSf0AUwzXABWBma+w5l/smtx7k5s1+3wwV3riTRZu4k8cQeJOvUKu9iIsqv1j0jvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQ0F8LgG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ApJlkLZ/tLoGyiaWfyi1DXfraQXF2qp4djVCpGcCPUcngeej4/qeodNHukBLavZCSqQI70oV58jt/fFb21QsUR9qpFwN+v0uymQgthkC7b+1ijni0XrAI4/QlBONjEKoq2Q2cEhTrtIIWuf+ZnXk0bY07urhWucIdyL1zYljT80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uQYHXVoy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQ0F8LgG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CDA3C4AF0B;
-	Wed,  3 Jul 2024 11:08:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uQYHXVoy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 415E0C4AF0D;
+	Wed,  3 Jul 2024 11:09:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004937;
-	bh=KoHlYjjwdKX5sKlTppeQrvijjZFxDXEUXmAIBqGbx+Q=;
+	s=korg; t=1720004940;
+	bh=tkAqyeX6YcaO4ExMKKa2irPPhG7/+M3qO4HvsdYbal8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AQ0F8LgGBOyaCOVXdLpTZOwYafeLnac9iJz865jTdgKYXN8A2O4+n1jikWpBwfrJg
-	 sCFEfhhUBTvc6+zFXTV1MxEzU0agYMAjRCJqGNYiEWWBavYwfQ8dAyb82wPgWD5cjI
-	 ulrwONcl92vvpq19bzrCZqPal84eOwU3wFwt7x1E=
+	b=uQYHXVoyuFy5uiYDkpV49XOiyTHsQokbHKXT15m9LAh9OwG52Jb20Y5jqd/367mZt
+	 V7y9j4WShChfKGaGryRNtyOCU9gaNX53quBcJ7GBxEicxpG3xPc63ogsXYcZ2Gk22F
+	 dtJidJDe2hSZcfjYz6ZuEmpdK37Yb5S196QC7pcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huang-Huang Bao <i@eh5.me>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 207/290] pinctrl: rockchip: fix pinmux bits for RK3328 GPIO3-B pins
-Date: Wed,  3 Jul 2024 12:39:48 +0200
-Message-ID: <20240703102911.979997781@linuxfoundation.org>
+Subject: [PATCH 5.10 190/290] Revert "kheaders: substituting --sort in archive creation"
+Date: Wed,  3 Jul 2024 12:39:31 +0200
+Message-ID: <20240703102911.344769619@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -52,109 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huang-Huang Bao <i@eh5.me>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 5ef6914e0bf578357b4c906ffe6b26e7eedb8ccf ]
+[ Upstream commit 49c386ebbb43394ff4773ce24f726f6afc4c30c8 ]
 
-The pinmux bits for GPIO3-B1 to GPIO3-B6 pins are not explicitly
-specified in RK3328 TRM, however we can get hint from pad name and its
-correspinding IOMUX setting for pins in interface descriptions. The
-correspinding IOMIX settings for these pins can be found in the same
-row next to occurrences of following pad names in RK3328 TRM.
+This reverts commit 700dea5a0bea9f64eba89fae7cb2540326fdfdc1.
 
-GPIO3-B1:  IO_TSPd5m0_CIFdata5m0_GPIO3B1vccio6
-GPIO3-B2: IO_TSPd6m0_CIFdata6m0_GPIO3B2vccio6
-GPIO3-B3: IO_TSPd7m0_CIFdata7m0_GPIO3B3vccio6
-GPIO3-B4: IO_CARDclkm0_GPIO3B4vccio6
-GPIO3-B5: IO_CARDrstm0_GPIO3B5vccio6
-GPIO3-B6: IO_CARDdetm0_GPIO3B6vccio6
+The reason for that commit was --sort=ORDER introduced in
+tar 1.28 (2014). More than 3 years have passed since then.
 
-Add pinmux data to rk3328_mux_recalced_data as mux register offset for
-these pins does not follow rockchip convention.
+Requiring GNU tar 1.28 should be fine now because we require
+GCC 5.1 (2015).
 
-Signed-off-by: Huang-Huang Bao <i@eh5.me>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Fixes: 3818e4a7678e ("pinctrl: rockchip: Add rk3328 pinctrl support")
-Link: https://lore.kernel.org/r/20240606125755.53778-3-i@eh5.me
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
+Stable-dep-of: 3bd27a847a3a ("kheaders: explicitly define file modes for archived headers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-rockchip.c | 51 ++++++++++++++++++++++++++++++
- 1 file changed, 51 insertions(+)
+ kernel/gen_kheaders.sh | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pinctrl/pinctrl-rockchip.c b/drivers/pinctrl/pinctrl-rockchip.c
-index afa7055114370..ad51f84d5e81f 100644
---- a/drivers/pinctrl/pinctrl-rockchip.c
-+++ b/drivers/pinctrl/pinctrl-rockchip.c
-@@ -800,17 +800,68 @@ static struct rockchip_mux_recalced_data rk3308_mux_recalced_data[] = {
+diff --git a/kernel/gen_kheaders.sh b/kernel/gen_kheaders.sh
+index c1510f0ab3ea5..d7e827c6cd2d2 100755
+--- a/kernel/gen_kheaders.sh
++++ b/kernel/gen_kheaders.sh
+@@ -83,12 +83,9 @@ find $cpio_dir -type f -print0 |
+ 	xargs -0 -P8 -n1 perl -pi -e 'BEGIN {undef $/;}; s/\/\*((?!SPDX).)*?\*\///smg;'
  
- static struct rockchip_mux_recalced_data rk3328_mux_recalced_data[] = {
- 	{
-+		/* gpio2_b7_sel */
- 		.num = 2,
- 		.pin = 15,
- 		.reg = 0x28,
- 		.bit = 0,
- 		.mask = 0x7
- 	}, {
-+		/* gpio2_c7_sel */
- 		.num = 2,
- 		.pin = 23,
- 		.reg = 0x30,
- 		.bit = 14,
- 		.mask = 0x3
-+	}, {
-+		/* gpio3_b1_sel */
-+		.num = 3,
-+		.pin = 9,
-+		.reg = 0x44,
-+		.bit = 2,
-+		.mask = 0x3
-+	}, {
-+		/* gpio3_b2_sel */
-+		.num = 3,
-+		.pin = 10,
-+		.reg = 0x44,
-+		.bit = 4,
-+		.mask = 0x3
-+	}, {
-+		/* gpio3_b3_sel */
-+		.num = 3,
-+		.pin = 11,
-+		.reg = 0x44,
-+		.bit = 6,
-+		.mask = 0x3
-+	}, {
-+		/* gpio3_b4_sel */
-+		.num = 3,
-+		.pin = 12,
-+		.reg = 0x44,
-+		.bit = 8,
-+		.mask = 0x3
-+	}, {
-+		/* gpio3_b5_sel */
-+		.num = 3,
-+		.pin = 13,
-+		.reg = 0x44,
-+		.bit = 10,
-+		.mask = 0x3
-+	}, {
-+		/* gpio3_b6_sel */
-+		.num = 3,
-+		.pin = 14,
-+		.reg = 0x44,
-+		.bit = 12,
-+		.mask = 0x3
-+	}, {
-+		/* gpio3_b7_sel */
-+		.num = 3,
-+		.pin = 15,
-+		.reg = 0x44,
-+		.bit = 14,
-+		.mask = 0x3
- 	},
- };
+ # Create archive and try to normalize metadata for reproducibility.
+-# For compatibility with older versions of tar, files are fed to tar
+-# pre-sorted, as --sort=name might not be available.
+-find $cpio_dir -printf "./%P\n" | LC_ALL=C sort | \
+-    tar "${KBUILD_BUILD_TIMESTAMP:+--mtime=$KBUILD_BUILD_TIMESTAMP}" \
+-    --owner=0 --group=0 --numeric-owner --no-recursion \
+-    -I $XZ -cf $tarfile -C $cpio_dir/ -T - > /dev/null
++tar "${KBUILD_BUILD_TIMESTAMP:+--mtime=$KBUILD_BUILD_TIMESTAMP}" \
++    --owner=0 --group=0 --sort=name --numeric-owner \
++    -I $XZ -cf $tarfile -C $cpio_dir/ . > /dev/null
  
+ echo $headers_md5 > kernel/kheaders.md5
+ echo "$this_file_md5" >> kernel/kheaders.md5
 -- 
 2.43.0
 
