@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA8B17BB01;
-	Wed,  3 Jul 2024 10:51:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61CAA17BB01;
+	Wed,  3 Jul 2024 10:51:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003875; cv=none; b=bvUWtOhR4VeoqnES9ioSw82CgWHyruPTRA/p2A5fFQ6fZ7SS+B8nVYQ7Uwcz84I9E7WJWoc9j9zQy76HfZVIrSkHuplQ3S+vQvJ0VH1ft651o+8URO0fS/Q3DOgDpvDFuN58KeDwVUVpIVCyT8cdcntGqQFDvT0PPG37MNhHJwI=
+	t=1720003878; cv=none; b=ma60OJpzeTrqKtIhZMswy5nJ2TnO8lHAJwo/HqlrSxqRmNHAGdENpSr6BmzInpwk8CUUtWaJSFKHmtKZ+oiny9szpc2vzqgphnVx2udYX62FI8GfBZGjSpz+wXSQ2yi1s1wIHbVw5BiYfv8bJdfq8Fa+3+H3qzVPtXt/caANMBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003875; c=relaxed/simple;
-	bh=EO+Tv5mCplnvMZvf8L9rBr1lBSt26zrnJrKGQOJXJYY=;
+	s=arc-20240116; t=1720003878; c=relaxed/simple;
+	bh=59yqp0FZ5I1S48zAbMC7eb+Vf5z1XNRWLenyLEjsCF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z+uqB01RizVG5SakRvFvqaL4naxT+5DpVYk/jPUCBsbJqncrSBIsDqYStZA+qzFA6n5mc42snvod7daUbHGGCWNbcWGuwsif06DBZH0Y4P15H2T9ZrvVkXQV/3N5SFuR7ZG/wkadNc2Vi4ZGjcTBWlP/ozm4mzBVj/rPgHxnu0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MFjvt9es; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ExXsHrgfcCqJ7atsMJEFj33Nca4OO+3lpUTeMGt40NM+7kKzhpDykCxsZCdfwOCxr1I5kU6jJVfe8KTFIE1RWGeD5fW/wgG3Qi/lVFTGgP3JY4XM25mdoIGqWL2+WP/UVgGqasZWsFLMJiNFx4R9zaJBZN03EVejAJ605MC7+zQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ulFqnliq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MFjvt9es"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5CECC4AF0B;
-	Wed,  3 Jul 2024 10:51:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ulFqnliq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2C32C32781;
+	Wed,  3 Jul 2024 10:51:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003875;
-	bh=EO+Tv5mCplnvMZvf8L9rBr1lBSt26zrnJrKGQOJXJYY=;
+	s=korg; t=1720003878;
+	bh=59yqp0FZ5I1S48zAbMC7eb+Vf5z1XNRWLenyLEjsCF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MFjvt9eskBFnFnuVllJ0iILxA1jx+wcf6a9w8L+bMmfQagjDR4pPnkr3UwbPdIbnZ
-	 ovQjJipi29Z2wPibj0l66xFpiwBU5Ta+usO+lHwfj8Xs3aPP2AOpprieuXn9zuoE57
-	 Lktn37AWm54pJ1JVFA0gj5oLiCthYJ6IakcpNbnE=
+	b=ulFqnliq27bcDtY9pdbOJSL5GRR6NDOwRHyqNSGSYN7P+7QJ0nliBSttUpzEgJSW5
+	 DN+EYUXQwFZgLTs5vhMrl54Il/o8ZHk+Zmzjj+v8PLSFltkhpwAhz4m4SiRByzQb15
+	 hfcOoJZhn++1Svj0CwCpKjk0z3DmepHB+PkKgojA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keith Busch <kbusch@kernel.org>,
-	Breno Leitao <leitao@debian.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.4 049/189] scsi: mpt3sas: Avoid test/set_bit() operating in non-allocated memory
-Date: Wed,  3 Jul 2024 12:38:30 +0200
-Message-ID: <20240703102843.366005924@linuxfoundation.org>
+	Jason Andryuk <jandryuk@gmail.com>,
+	Peter Hutterer <peter.hutterer@who-t.net>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Jason Andryuk <jason.andryuk@amd.com>
+Subject: [PATCH 5.4 050/189] Input: try trimming too long modalias strings
+Date: Wed,  3 Jul 2024 12:38:31 +0200
+Message-ID: <20240703102843.403131729@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -51,80 +52,212 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit 4254dfeda82f20844299dca6c38cbffcfd499f41 upstream.
+commit 0774d19038c496f0c3602fb505c43e1b2d8eed85 upstream.
 
-There is a potential out-of-bounds access when using test_bit() on a single
-word. The test_bit() and set_bit() functions operate on long values, and
-when testing or setting a single word, they can exceed the word
-boundary. KASAN detects this issue and produces a dump:
+If an input device declares too many capability bits then modalias
+string for such device may become too long and not fit into uevent
+buffer, resulting in failure of sending said uevent. This, in turn,
+may prevent userspace from recognizing existence of such devices.
 
-	 BUG: KASAN: slab-out-of-bounds in _scsih_add_device.constprop.0 (./arch/x86/include/asm/bitops.h:60 ./include/asm-generic/bitops/instrumented-atomic.h:29 drivers/scsi/mpt3sas/mpt3sas_scsih.c:7331) mpt3sas
+This is typically not a concern for real hardware devices as they have
+limited number of keys, but happen with synthetic devices such as
+ones created by xen-kbdfront driver, which creates devices as being
+capable of delivering all possible keys, since it doesn't know what
+keys the backend may produce.
 
-	 Write of size 8 at addr ffff8881d26e3c60 by task kworker/u1536:2/2965
+To deal with such devices input core will attempt to trim key data,
+in the hope that the rest of modalias string will fit in the given
+buffer. When trimming key data it will indicate that it is not
+complete by placing "+," sign, resulting in conversions like this:
 
-For full log, please look at [1].
+old: k71,72,73,74,78,7A,7B,7C,7D,8E,9E,A4,AD,E0,E1,E4,F8,174,
+new: k71,72,73,74,78,7A,7B,7C,+,
 
-Make the allocation at least the size of sizeof(unsigned long) so that
-set_bit() and test_bit() have sufficient room for read/write operations
-without overwriting unallocated memory.
+This should allow existing udev rules continue to work with existing
+devices, and will also allow writing more complex rules that would
+recognize trimmed modalias and check input device characteristics by
+other means (for example by parsing KEY= data in uevent or parsing
+input device sysfs attributes).
 
-[1] Link: https://lore.kernel.org/all/ZkNcALr3W3KGYYJG@gmail.com/
+Note that the driver core may try adding more uevent environment
+variables once input core is done adding its own, so when forming
+modalias we can not use the entire available buffer, so we reduce
+it by somewhat an arbitrary amount (96 bytes).
 
-Fixes: c696f7b83ede ("scsi: mpt3sas: Implement device_remove_in_progress check in IOCTL path")
+Reported-by: Jason Andryuk <jandryuk@gmail.com>
+Reviewed-by: Peter Hutterer <peter.hutterer@who-t.net>
+Tested-by: Jason Andryuk <jandryuk@gmail.com>
+Link: https://lore.kernel.org/r/ZjAWMQCJdrxZkvkB@google.com
 Cc: stable@vger.kernel.org
-Suggested-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Link: https://lore.kernel.org/r/20240605085530.499432-1-leitao@debian.org
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
 ---
- drivers/scsi/mpt3sas/mpt3sas_base.c |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
 
---- a/drivers/scsi/mpt3sas/mpt3sas_base.c
-+++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
-@@ -7089,6 +7089,12 @@ mpt3sas_base_attach(struct MPT3SAS_ADAPT
- 	ioc->pd_handles_sz = (ioc->facts.MaxDevHandle / 8);
- 	if (ioc->facts.MaxDevHandle % 8)
- 		ioc->pd_handles_sz++;
-+	/*
-+	 * pd_handles_sz should have, at least, the minimal room for
-+	 * set_bit()/test_bit(), otherwise out-of-memory touch may occur.
-+	 */
-+	ioc->pd_handles_sz = ALIGN(ioc->pd_handles_sz, sizeof(unsigned long));
-+
- 	ioc->pd_handles = kzalloc(ioc->pd_handles_sz,
- 	    GFP_KERNEL);
- 	if (!ioc->pd_handles) {
-@@ -7106,6 +7112,13 @@ mpt3sas_base_attach(struct MPT3SAS_ADAPT
- 	ioc->pend_os_device_add_sz = (ioc->facts.MaxDevHandle / 8);
- 	if (ioc->facts.MaxDevHandle % 8)
- 		ioc->pend_os_device_add_sz++;
-+
-+	/*
-+	 * pend_os_device_add_sz should have, at least, the minimal room for
-+	 * set_bit()/test_bit(), otherwise out-of-memory may occur.
-+	 */
-+	ioc->pend_os_device_add_sz = ALIGN(ioc->pend_os_device_add_sz,
-+					   sizeof(unsigned long));
- 	ioc->pend_os_device_add = kzalloc(ioc->pend_os_device_add_sz,
- 	    GFP_KERNEL);
- 	if (!ioc->pend_os_device_add) {
-@@ -7384,6 +7397,12 @@ _base_check_ioc_facts_changes(struct MPT
- 		if (ioc->facts.MaxDevHandle % 8)
- 			pd_handles_sz++;
+---
+ drivers/input/input.c |  105 ++++++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 90 insertions(+), 15 deletions(-)
+
+--- a/drivers/input/input.c
++++ b/drivers/input/input.c
+@@ -1358,19 +1358,19 @@ static int input_print_modalias_bits(cha
+ 				     char name, unsigned long *bm,
+ 				     unsigned int min_bit, unsigned int max_bit)
+ {
+-	int len = 0, i;
++	int bit = min_bit;
++	int len = 0;
  
+ 	len += snprintf(buf, max(size, 0), "%c", name);
+-	for (i = min_bit; i < max_bit; i++)
+-		if (bm[BIT_WORD(i)] & BIT_MASK(i))
+-			len += snprintf(buf + len, max(size - len, 0), "%X,", i);
++	for_each_set_bit_from(bit, bm, max_bit)
++		len += snprintf(buf + len, max(size - len, 0), "%X,", bit);
+ 	return len;
+ }
+ 
+-static int input_print_modalias(char *buf, int size, struct input_dev *id,
+-				int add_cr)
++static int input_print_modalias_parts(char *buf, int size, int full_len,
++				      struct input_dev *id)
+ {
+-	int len;
++	int len, klen, remainder, space;
+ 
+ 	len = snprintf(buf, max(size, 0),
+ 		       "input:b%04Xv%04Xp%04Xe%04X-",
+@@ -1379,8 +1379,49 @@ static int input_print_modalias(char *bu
+ 
+ 	len += input_print_modalias_bits(buf + len, size - len,
+ 				'e', id->evbit, 0, EV_MAX);
+-	len += input_print_modalias_bits(buf + len, size - len,
++
++	/*
++	 * Calculate the remaining space in the buffer making sure we
++	 * have place for the terminating 0.
++	 */
++	space = max(size - (len + 1), 0);
++
++	klen = input_print_modalias_bits(buf + len, size - len,
+ 				'k', id->keybit, KEY_MIN_INTERESTING, KEY_MAX);
++	len += klen;
++
++	/*
++	 * If we have more data than we can fit in the buffer, check
++	 * if we can trim key data to fit in the rest. We will indicate
++	 * that key data is incomplete by adding "+" sign at the end, like
++	 * this: * "k1,2,3,45,+,".
++	 *
++	 * Note that we shortest key info (if present) is "k+," so we
++	 * can only try to trim if key data is longer than that.
++	 */
++	if (full_len && size < full_len + 1 && klen > 3) {
++		remainder = full_len - len;
 +		/*
-+		 * pd_handles should have, at least, the minimal room for
-+		 * set_bit()/test_bit(), otherwise out-of-memory touch may
-+		 * occur.
++		 * We can only trim if we have space for the remainder
++		 * and also for at least "k+," which is 3 more characters.
 +		 */
-+		pd_handles_sz = ALIGN(pd_handles_sz, sizeof(unsigned long));
- 		pd_handles = krealloc(ioc->pd_handles, pd_handles_sz,
- 		    GFP_KERNEL);
- 		if (!pd_handles) {
++		if (remainder <= space - 3) {
++			int i;
++			/*
++			 * We are guaranteed to have 'k' in the buffer, so
++			 * we need at least 3 additional bytes for storing
++			 * "+," in addition to the remainder.
++			 */
++			for (i = size - 1 - remainder - 3; i >= 0; i--) {
++				if (buf[i] == 'k' || buf[i] == ',') {
++					strcpy(buf + i + 1, "+,");
++					len = i + 3; /* Not counting '\0' */
++					break;
++				}
++			}
++		}
++	}
++
+ 	len += input_print_modalias_bits(buf + len, size - len,
+ 				'r', id->relbit, 0, REL_MAX);
+ 	len += input_print_modalias_bits(buf + len, size - len,
+@@ -1396,12 +1437,25 @@ static int input_print_modalias(char *bu
+ 	len += input_print_modalias_bits(buf + len, size - len,
+ 				'w', id->swbit, 0, SW_MAX);
+ 
+-	if (add_cr)
+-		len += snprintf(buf + len, max(size - len, 0), "\n");
+-
+ 	return len;
+ }
+ 
++static int input_print_modalias(char *buf, int size, struct input_dev *id)
++{
++	int full_len;
++
++	/*
++	 * Printing is done in 2 passes: first one figures out total length
++	 * needed for the modalias string, second one will try to trim key
++	 * data in case when buffer is too small for the entire modalias.
++	 * If the buffer is too small regardless, it will fill as much as it
++	 * can (without trimming key data) into the buffer and leave it to
++	 * the caller to figure out what to do with the result.
++	 */
++	full_len = input_print_modalias_parts(NULL, 0, 0, id);
++	return input_print_modalias_parts(buf, size, full_len, id);
++}
++
+ static ssize_t input_dev_show_modalias(struct device *dev,
+ 				       struct device_attribute *attr,
+ 				       char *buf)
+@@ -1409,7 +1463,9 @@ static ssize_t input_dev_show_modalias(s
+ 	struct input_dev *id = to_input_dev(dev);
+ 	ssize_t len;
+ 
+-	len = input_print_modalias(buf, PAGE_SIZE, id, 1);
++	len = input_print_modalias(buf, PAGE_SIZE, id);
++	if (len < PAGE_SIZE - 2)
++		len += snprintf(buf + len, PAGE_SIZE - len, "\n");
+ 
+ 	return min_t(int, len, PAGE_SIZE);
+ }
+@@ -1584,6 +1640,23 @@ static int input_add_uevent_bm_var(struc
+ 	return 0;
+ }
+ 
++/*
++ * This is a pretty gross hack. When building uevent data the driver core
++ * may try adding more environment variables to kobj_uevent_env without
++ * telling us, so we have no idea how much of the buffer we can use to
++ * avoid overflows/-ENOMEM elsewhere. To work around this let's artificially
++ * reduce amount of memory we will use for the modalias environment variable.
++ *
++ * The potential additions are:
++ *
++ * SEQNUM=18446744073709551615 - (%llu - 28 bytes)
++ * HOME=/ (6 bytes)
++ * PATH=/sbin:/bin:/usr/sbin:/usr/bin (34 bytes)
++ *
++ * 68 bytes total. Allow extra buffer - 96 bytes
++ */
++#define UEVENT_ENV_EXTRA_LEN	96
++
+ static int input_add_uevent_modalias_var(struct kobj_uevent_env *env,
+ 					 struct input_dev *dev)
+ {
+@@ -1593,9 +1666,11 @@ static int input_add_uevent_modalias_var
+ 		return -ENOMEM;
+ 
+ 	len = input_print_modalias(&env->buf[env->buflen - 1],
+-				   sizeof(env->buf) - env->buflen,
+-				   dev, 0);
+-	if (len >= (sizeof(env->buf) - env->buflen))
++				   (int)sizeof(env->buf) - env->buflen -
++					UEVENT_ENV_EXTRA_LEN,
++				   dev);
++	if (len >= ((int)sizeof(env->buf) - env->buflen -
++					UEVENT_ENV_EXTRA_LEN))
+ 		return -ENOMEM;
+ 
+ 	env->buflen += len;
 
 
