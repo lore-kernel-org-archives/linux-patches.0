@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5760A45945;
-	Wed,  3 Jul 2024 11:21:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13FF645945;
+	Wed,  3 Jul 2024 11:21:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005683; cv=none; b=MyrWyZwBtSGWzm5IG5ubaHIkyepI6wHiY+OHFt5zKSsrmqp8gWACm9EMh/cQ3CsRcQuBS4uaMt03bctT7J0JmWs5tkolTLVU0GnS1XSHTad11ISwq7SQG7IAI/1USlRNI0k96x5+DdMRoLH4vocrx5R52TTBcueWkF71C/kDCpw=
+	t=1720005686; cv=none; b=cB0aOgQ9FzhjHqclBgXbC9SedD+awjk3jPmjrjlshBEpoxHYqGeNluEt5kByFIf+89zyCBPPSmxWPA8aXUNdQvx7NsNiLAAQYpQqoiB/IPE081JEr5wzK5De6vzpWuMkDlOMEF8XvbP6qUrcEmiONAL/T+RjBS0fF2ULfLmeamo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005683; c=relaxed/simple;
-	bh=UcEf5ZU40WKG8/MgdUqhIKLUP3B1JuJcXXlO8GbbvRI=;
+	s=arc-20240116; t=1720005686; c=relaxed/simple;
+	bh=7cp5ayP4VujSMnjDIqXGOx3om1zbs3jkE3wJhZsro2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MGVFCgeJaeFHrB05jkJPeAyzftnrUCq7ygWZZkrVsCaEG1TuYAAQlhs/Ryly8ogvkVfFjm8uAF2PEKswTjrNhOVQcFbhcw6EtIymWxSFqCGejdma1d26eDBkjdNwlKPkKFHQa9mz6QU6QUa2QCuQccOV82VI83mdmzC+fVAsosY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gTTnDu1i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H+7WTgBm2/IH8QHXW/8l2Ma8/kMAMtdInY+1eAfu7wHOtvcDn9KR3jqFmrMsJKYHPKgxqULDY55P/OwgCLv4ZmnePKqLieVjqymXOes1EJW8MpBbo4ExmkH5Sb5mhoApSBF/47TvAGP07M3ou092s3nB0KqjqGrA8WdcNdLj10g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sPEIeJJ8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gTTnDu1i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96FF0C2BD10;
-	Wed,  3 Jul 2024 11:21:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sPEIeJJ8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B39CC2BD10;
+	Wed,  3 Jul 2024 11:21:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005683;
-	bh=UcEf5ZU40WKG8/MgdUqhIKLUP3B1JuJcXXlO8GbbvRI=;
+	s=korg; t=1720005685;
+	bh=7cp5ayP4VujSMnjDIqXGOx3om1zbs3jkE3wJhZsro2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gTTnDu1ibnw6UsDhnBb4DzsA54PoONru7NIqIB8xF/k3JTvFycthd1ECmUGYtIzaV
-	 ZJFvj0qfmzwY0Wt7/1I25GDf9gQ3ZEjDtqKNnMXQw1x8dlRVJ+UND4WGXEPtHp+Y+j
-	 rgI1xc0AwXF6hz4+mtD3aocxlhsHeWPxl1ZOEGBQ=
+	b=sPEIeJJ8WeQtA7lfRXPJC/DX/LT5J0n1aN8UDF8KzQdeU1ApwGIH/Q/XI5GhYi6SZ
+	 X5WjGGqDCwIGoPXUQZCiaMiL2mSYhZIL7NAC46NP/HNK0Sjkfnp2Yn8JZsdJgaNozM
+	 Ctz0Wex3j3tqD9rWXlNHeFicBZ8+AuKQ6BqT2UTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xingwei lee <xrivendell7@gmail.com>,
-	yue sun <samsun1006219@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Shichao Lai <shichaorai@gmail.com>,
+	Martin Hoyer <mhoyer@redhat.com>,
+	John Meneghini <jmeneghi@redhat.com>,
+	Manish Rangankar <mrangankar@marvell.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 144/356] usb-storage: alauda: Check whether the media is initialized
-Date: Wed,  3 Jul 2024 12:38:00 +0200
-Message-ID: <20240703102918.551328996@linuxfoundation.org>
+Subject: [PATCH 5.15 162/356] scsi: qedi: Fix crash while reading debugfs attribute
+Date: Wed,  3 Jul 2024 12:38:18 +0200
+Message-ID: <20240703102919.234324344@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -53,59 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shichao Lai <shichaorai@gmail.com>
+From: Manish Rangankar <mrangankar@marvell.com>
 
-[ Upstream commit 16637fea001ab3c8df528a8995b3211906165a30 ]
+[ Upstream commit 28027ec8e32ecbadcd67623edb290dad61e735b5 ]
 
-The member "uzonesize" of struct alauda_info will remain 0
-if alauda_init_media() fails, potentially causing divide errors
-in alauda_read_data() and alauda_write_lba().
-- Add a member "media_initialized" to struct alauda_info.
-- Change a condition in alauda_check_media() to ensure the
-  first initialization.
-- Add an error check for the return value of alauda_init_media().
+The qedi_dbg_do_not_recover_cmd_read() function invokes sprintf() directly
+on a __user pointer, which results into the crash.
 
-Fixes: e80b0fade09e ("[PATCH] USB Storage: add alauda support")
-Reported-by: xingwei lee <xrivendell7@gmail.com>
-Reported-by: yue sun <samsun1006219@gmail.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Signed-off-by: Shichao Lai <shichaorai@gmail.com>
-Link: https://lore.kernel.org/r/20240526012745.2852061-1-shichaorai@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To fix this issue, use a small local stack buffer for sprintf() and then
+call simple_read_from_buffer(), which in turns make the copy_to_user()
+call.
+
+BUG: unable to handle page fault for address: 00007f4801111000
+PGD 8000000864df6067 P4D 8000000864df6067 PUD 864df7067 PMD 846028067 PTE 0
+Oops: 0002 [#1] PREEMPT SMP PTI
+Hardware name: HPE ProLiant DL380 Gen10/ProLiant DL380 Gen10, BIOS U30 06/15/2023
+RIP: 0010:memcpy_orig+0xcd/0x130
+RSP: 0018:ffffb7a18c3ffc40 EFLAGS: 00010202
+RAX: 00007f4801111000 RBX: 00007f4801111000 RCX: 000000000000000f
+RDX: 000000000000000f RSI: ffffffffc0bfd7a0 RDI: 00007f4801111000
+RBP: ffffffffc0bfd7a0 R08: 725f746f6e5f6f64 R09: 3d7265766f636572
+R10: ffffb7a18c3ffd08 R11: 0000000000000000 R12: 00007f4881110fff
+R13: 000000007fffffff R14: ffffb7a18c3ffca0 R15: ffffffffc0bfd7af
+FS:  00007f480118a740(0000) GS:ffff98e38af00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f4801111000 CR3: 0000000864b8e001 CR4: 00000000007706e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ ? __die_body+0x1a/0x60
+ ? page_fault_oops+0x183/0x510
+ ? exc_page_fault+0x69/0x150
+ ? asm_exc_page_fault+0x22/0x30
+ ? memcpy_orig+0xcd/0x130
+ vsnprintf+0x102/0x4c0
+ sprintf+0x51/0x80
+ qedi_dbg_do_not_recover_cmd_read+0x2f/0x50 [qedi 6bcfdeeecdea037da47069eca2ba717c84a77324]
+ full_proxy_read+0x50/0x80
+ vfs_read+0xa5/0x2e0
+ ? folio_add_new_anon_rmap+0x44/0xa0
+ ? set_pte_at+0x15/0x30
+ ? do_pte_missing+0x426/0x7f0
+ ksys_read+0xa5/0xe0
+ do_syscall_64+0x58/0x80
+ ? __count_memcg_events+0x46/0x90
+ ? count_memcg_event_mm+0x3d/0x60
+ ? handle_mm_fault+0x196/0x2f0
+ ? do_user_addr_fault+0x267/0x890
+ ? exc_page_fault+0x69/0x150
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+RIP: 0033:0x7f4800f20b4d
+
+Tested-by: Martin Hoyer <mhoyer@redhat.com>
+Reviewed-by: John Meneghini <jmeneghi@redhat.com>
+Signed-off-by: Manish Rangankar <mrangankar@marvell.com>
+Link: https://lore.kernel.org/r/20240415072155.30840-1-mrangankar@marvell.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/storage/alauda.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/scsi/qedi/qedi_debugfs.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/usb/storage/alauda.c b/drivers/usb/storage/alauda.c
-index dcc4778d1ae99..17fe35083f048 100644
---- a/drivers/usb/storage/alauda.c
-+++ b/drivers/usb/storage/alauda.c
-@@ -105,6 +105,8 @@ struct alauda_info {
- 	unsigned char sense_key;
- 	unsigned long sense_asc;	/* additional sense code */
- 	unsigned long sense_ascq;	/* additional sense code qualifier */
-+
-+	bool media_initialized;
- };
- 
- #define short_pack(lsb,msb) ( ((u16)(lsb)) | ( ((u16)(msb))<<8 ) )
-@@ -476,11 +478,12 @@ static int alauda_check_media(struct us_data *us)
- 	}
- 
- 	/* Check for media change */
--	if (status[0] & 0x08) {
-+	if (status[0] & 0x08 || !info->media_initialized) {
- 		usb_stor_dbg(us, "Media change detected\n");
- 		alauda_free_maps(&MEDIA_INFO(us));
--		alauda_init_media(us);
+diff --git a/drivers/scsi/qedi/qedi_debugfs.c b/drivers/scsi/qedi/qedi_debugfs.c
+index 42f5afb60055c..6e724f47ab9e8 100644
+--- a/drivers/scsi/qedi/qedi_debugfs.c
++++ b/drivers/scsi/qedi/qedi_debugfs.c
+@@ -120,15 +120,11 @@ static ssize_t
+ qedi_dbg_do_not_recover_cmd_read(struct file *filp, char __user *buffer,
+ 				 size_t count, loff_t *ppos)
+ {
+-	size_t cnt = 0;
 -
-+		rc = alauda_init_media(us);
-+		if (rc == USB_STOR_TRANSPORT_GOOD)
-+			info->media_initialized = true;
- 		info->sense_key = UNIT_ATTENTION;
- 		info->sense_asc = 0x28;
- 		info->sense_ascq = 0x00;
+-	if (*ppos)
+-		return 0;
++	char buf[64];
++	int len;
+ 
+-	cnt = sprintf(buffer, "do_not_recover=%d\n", qedi_do_not_recover);
+-	cnt = min_t(int, count, cnt - *ppos);
+-	*ppos += cnt;
+-	return cnt;
++	len = sprintf(buf, "do_not_recover=%d\n", qedi_do_not_recover);
++	return simple_read_from_buffer(buffer, count, ppos, buf, len);
+ }
+ 
+ static int
 -- 
 2.43.0
 
