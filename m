@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E12AB6E5ED;
-	Wed,  3 Jul 2024 11:27:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74686E5ED;
+	Wed,  3 Jul 2024 11:27:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006055; cv=none; b=o83XJsQ6GKfZ59Tn6rSjMZms0V2zR6NMiNBvQW0HO9d7D711wcRZx9x9SMeCY8K2D7Q/7bKQ00DUCwSz4sZDw6IEc4tEX9B5ljyRFkC9eMvxMxLIfF+cudW99XMctqB6gBfmn/y1vezVL5OncI3eui9nHavtDRFo026IZYcVRLI=
+	t=1720006057; cv=none; b=CkE/ukTxqyldX+bcy2F/4lHsy3mfphRXGlhUTwAftBvklqwVwVHf6cBKqiyNYjGbbnrQYEKBiJ377yn4VDTf8i1RN2K0/TAzDTPZZ+m+4pGScW5QCCa85XkvTCfB/JXj/Gn7nmiodXV9+9tzlea7HCvRKZoD/xM5K81Zf/TaI9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006055; c=relaxed/simple;
-	bh=cEPMXoJFTpMTXXZa1FPcsO4fLOPeXTx2SCCK29FBI3w=;
+	s=arc-20240116; t=1720006057; c=relaxed/simple;
+	bh=VZ4oiTOL/R9TP5stN+rw8Mc2PtIeGVkWN3rOTAzOGa8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C6xmqUzN/luJYwtJBDu2FuwwW5YcVHMlRhPizNvFen5a+p/GAyy1kz4RkuOPFYKYx7rlVZhJiH5ypK/2zi8cbg7WT0oBNXJY8dGT28xPFGlGn8swPs1aMbg0irFl64EhuLAa/fsDeUdmh+hWjAZKV19mEYTs7Gp2QARf2pSATH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yA5eTdV0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uhrhXUG5A3cFFCR2fx3LjyWa6+kMOfn00ZclDwS7L9ilEaHM+bDrKqLMFa9+6s9FGFCqA2wVK5m26f6i9AMjHivpoKSl0pgH3zFMIuv8Dr/oMkoDSZF0FhsdT5C0WohmaPOUTpUfII9Z1/2JGQV0hO9ZzTYi8EH+4h4hqF8k+dE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HW09y0hL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yA5eTdV0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6629AC2BD10;
-	Wed,  3 Jul 2024 11:27:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HW09y0hL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F89CC2BD10;
+	Wed,  3 Jul 2024 11:27:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006054;
-	bh=cEPMXoJFTpMTXXZa1FPcsO4fLOPeXTx2SCCK29FBI3w=;
+	s=korg; t=1720006057;
+	bh=VZ4oiTOL/R9TP5stN+rw8Mc2PtIeGVkWN3rOTAzOGa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yA5eTdV0oKYf74Hpvw0ObxgwiSruDEN/uKr6mOB7ShZBPEYkr8HU3Z60xmPBwOuFZ
-	 kBl0im/9sbrxMV30orusMCZhnI79jzjXisWmgsBC63ivCProKi9DkKi9oYhhfYlomy
-	 fbikC/8eTDmiXkt7wOsG/LvMCuZm/yuWrI9ph+Uk=
+	b=HW09y0hLH2V3t4onPN8RB0auHm1k3YgFEIOlCQ19VW1dYPEyQIFf8sCpGAbmhzWm0
+	 DIpk/rTRudJIC59lKk/RT0f084hN7zHNmvw90ll7tcFGHznoEu0lIf4Y/2kWZ3+SyR
+	 Qnx/Pc1LHshSqb5McuYTWhcOQdV+g35OQzqbGljY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nandor Kracser <bonifaido@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Helge Deller <deller@gmx.de>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 244/356] ksmbd: ignore trailing slashes in share paths
-Date: Wed,  3 Jul 2024 12:39:40 +0200
-Message-ID: <20240703102922.345195455@linuxfoundation.org>
+Subject: [PATCH 5.15 279/356] parisc: use correct compat recv/recvfrom syscalls
+Date: Wed,  3 Jul 2024 12:40:15 +0200
+Message-ID: <20240703102923.668038024@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -52,41 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nandor Kracser <bonifaido@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 405ee4097c4bc3e70556520aed5ba52a511c2266 ]
+[ Upstream commit 20a50787349fadf66ac5c48f62e58d753878d2bb ]
 
-Trailing slashes in share paths (like: /home/me/Share/) caused permission
-issues with shares for clients on iOS and on Android TV for me,
-but otherwise they work fine with plain old Samba.
+Johannes missed parisc back when he introduced the compat version
+of these syscalls, so receiving cmsg messages that require a compat
+conversion is still broken.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Nandor Kracser <bonifaido@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Use the correct calls like the other architectures do.
+
+Fixes: 1dacc76d0014 ("net/compat/wext: send different messages to compat tasks")
+Acked-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/mgmt/share_config.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/parisc/kernel/syscalls/syscall.tbl | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ksmbd/mgmt/share_config.c b/fs/ksmbd/mgmt/share_config.c
-index a2f0a2edceb8a..e0a6b758094fc 100644
---- a/fs/ksmbd/mgmt/share_config.c
-+++ b/fs/ksmbd/mgmt/share_config.c
-@@ -165,8 +165,12 @@ static struct ksmbd_share_config *share_config_request(struct unicode_map *um,
- 
- 		share->path = kstrndup(ksmbd_share_config_path(resp), path_len,
- 				      GFP_KERNEL);
--		if (share->path)
-+		if (share->path) {
- 			share->path_sz = strlen(share->path);
-+			while (share->path_sz > 1 &&
-+			       share->path[share->path_sz - 1] == '/')
-+				share->path[--share->path_sz] = '\0';
-+		}
- 		share->create_mask = resp->create_mask;
- 		share->directory_mask = resp->directory_mask;
- 		share->force_create_mode = resp->force_create_mode;
+diff --git a/arch/parisc/kernel/syscalls/syscall.tbl b/arch/parisc/kernel/syscalls/syscall.tbl
+index 50c759f11c25d..3e7ded09e00a5 100644
+--- a/arch/parisc/kernel/syscalls/syscall.tbl
++++ b/arch/parisc/kernel/syscalls/syscall.tbl
+@@ -108,7 +108,7 @@
+ 95	common	fchown			sys_fchown
+ 96	common	getpriority		sys_getpriority
+ 97	common	setpriority		sys_setpriority
+-98	common	recv			sys_recv
++98	common	recv			sys_recv			compat_sys_recv
+ 99	common	statfs			sys_statfs			compat_sys_statfs
+ 100	common	fstatfs			sys_fstatfs			compat_sys_fstatfs
+ 101	common	stat64			sys_stat64
+@@ -135,7 +135,7 @@
+ 120	common	clone			sys_clone_wrapper
+ 121	common	setdomainname		sys_setdomainname
+ 122	common	sendfile		sys_sendfile			compat_sys_sendfile
+-123	common	recvfrom		sys_recvfrom
++123	common	recvfrom		sys_recvfrom			compat_sys_recvfrom
+ 124	32	adjtimex		sys_adjtimex_time32
+ 124	64	adjtimex		sys_adjtimex
+ 125	common	mprotect		sys_mprotect
 -- 
 2.43.0
 
