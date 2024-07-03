@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7811741C4;
-	Wed,  3 Jul 2024 11:17:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E08176AC4;
+	Wed,  3 Jul 2024 11:17:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005469; cv=none; b=TnnJ3GWJJ6M8YLjrbmdtTAKSd6iaCfuuAHV8KKJ7fmdYGULk8eXS/wC/3BN6CiEIidr/VaGUUFia07pZS0PayYHbSYN/JpthKMqtjkasVZY3ipsN1W3eK6hk7RqFTmh5pJoohzD8C7gTTSSwgYier/lLBT4hUELC48kcml1IUzg=
+	t=1720005472; cv=none; b=nBwxwTwvGJbNI9OV2z4lZW5Utn/3NNwLsq8anGmFzGsaHWQKwnGaXVEJBViLmzL/pxKzCiMqhvOhqM98YJBtpckNkhkUPpMwdMePIXKtdov3N2DjFJLgFAV8tXavBzCJhXWr96keHQcskQgebeunZtAyzk3pFl4IZ+lkep3DfBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005469; c=relaxed/simple;
-	bh=uifLeWNBfbutW/333WF7dm0yeu1M9FkyaEWP9Nci0L4=;
+	s=arc-20240116; t=1720005472; c=relaxed/simple;
+	bh=EYWLlwdBjQb+mhYrRIrEE8qahc9RDmWbXWMK/PfCmf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VfKrA30J62a98QSryDzv2kEYNkeAYGiG/9KyJD5vWdgTUGiczERu6rKlRV1YZ02wBEUvITDrguV9qtkwonFxjaXMEN1BFzH65fA8VjFP8Z3ToXQEqkvMVbrPo2vT+7cE323TaG2k7TyYYM7nLHTkPwAyAagjg8v51LhGl4L4WSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NSkQuRpV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k4VqVCoretdaM6IBP+aRzPoLMOD3fANQ6wMcBvsDIELxYg4Ux+CuzF3wgsN2gS+G6yOuMuz7TArOo4yRiGA5pR/d34/u5T6k8iZYENZqpkCZrWJAp67PR6GA/oTgb3WQNoeOrU3/v4UP2mmpBiE38IrTC7toUJhqR3IQ440l7NQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BYCB15o9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NSkQuRpV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54807C2BD10;
-	Wed,  3 Jul 2024 11:17:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BYCB15o9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48FC6C2BD10;
+	Wed,  3 Jul 2024 11:17:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005469;
-	bh=uifLeWNBfbutW/333WF7dm0yeu1M9FkyaEWP9Nci0L4=;
+	s=korg; t=1720005472;
+	bh=EYWLlwdBjQb+mhYrRIrEE8qahc9RDmWbXWMK/PfCmf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NSkQuRpV1PLRnD43yuPsJBZP3+a4MTm1BdvSEld+eFi+MVSgaSit5EB/otY1+K5KX
-	 TYhgJ09X3W27XIGLztbPdszm76cXfALLXqSk4N1c48Y+hgrSkG7zmD50NPBxd7g40i
-	 xPxyTByhSv+AX9cTT0hrYpnJDvOnfimbVRO+gLgA=
+	b=BYCB15o9YSbOlt2d3G18vsbrexW/8GtLmiCEcr0lT31AHUgO62xzMF0fDdeBQmsPl
+	 Co0hnT6GhtR1cCZwQuNL2C4SCw01SFUisT66Yjda7UsNX8KsPZQyuDDBmtHAiq6XYz
+	 V/qeanBKsoFu2LmEtel6Xc/OajG2ddnX3AVebu/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Kun(llfl)" <llfl@linux.alibaba.com>,
 	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
 	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 092/356] iommu/amd: Introduce pci segment structure
-Date: Wed,  3 Jul 2024 12:37:08 +0200
-Message-ID: <20240703102916.580785233@linuxfoundation.org>
+Subject: [PATCH 5.15 093/356] iommu/amd: Fix sysfs leak in iommu init
+Date: Wed,  3 Jul 2024 12:37:09 +0200
+Message-ID: <20240703102916.617943356@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -52,180 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasant Hegde <vasant.hegde@amd.com>
+From: Kun(llfl) <llfl@linux.alibaba.com>
 
-[ Upstream commit 404ec4e4c169fb64da6b2a38b471c13ac0897c76 ]
+[ Upstream commit a295ec52c8624883885396fde7b4df1a179627c3 ]
 
-Newer AMD systems can support multiple PCI segments, where each segment
-contains one or more IOMMU instances. However, an IOMMU instance can only
-support a single PCI segment.
+During the iommu initialization, iommu_init_pci() adds sysfs nodes.
+However, these nodes aren't remove in free_iommu_resources() subsequently.
 
-Current code assumes that system contains only one pci segment (segment 0)
-and creates global data structures such as device table, rlookup table,
-etc.
-
-Introducing per PCI segment data structure, which contains segment
-specific data structures. This will eventually replace the global
-data structures.
-
-Also update `amd_iommu->pci_seg` variable to point to PCI segment
-structure instead of PCI segment ID.
-
-Co-developed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
-Link: https://lore.kernel.org/r/20220706113825.25582-3-vasant.hegde@amd.com
+Fixes: 39ab9555c241 ("iommu: Add sysfs bindings for struct iommu_device")
+Signed-off-by: Kun(llfl) <llfl@linux.alibaba.com>
+Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Link: https://lore.kernel.org/r/c8e0d11c6ab1ee48299c288009cf9c5dae07b42d.1715215003.git.llfl@linux.alibaba.com
 Signed-off-by: Joerg Roedel <jroedel@suse.de>
-Stable-dep-of: a295ec52c862 ("iommu/amd: Fix sysfs leak in iommu init")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/amd_iommu_types.h | 24 ++++++++++++++-
- drivers/iommu/amd/init.c            | 46 ++++++++++++++++++++++++++++-
- 2 files changed, 68 insertions(+), 2 deletions(-)
+ drivers/iommu/amd/init.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/iommu/amd/amd_iommu_types.h b/drivers/iommu/amd/amd_iommu_types.h
-index 390f10060c82b..2dc025acad4ce 100644
---- a/drivers/iommu/amd/amd_iommu_types.h
-+++ b/drivers/iommu/amd/amd_iommu_types.h
-@@ -450,6 +450,11 @@ extern bool amd_iommu_irq_remap;
- /* kmem_cache to get tables with 128 byte alignement */
- extern struct kmem_cache *amd_iommu_irq_cache;
- 
-+/* Make iterating over all pci segment easier */
-+#define for_each_pci_segment(pci_seg) \
-+	list_for_each_entry((pci_seg), &amd_iommu_pci_seg_list, list)
-+#define for_each_pci_segment_safe(pci_seg, next) \
-+	list_for_each_entry_safe((pci_seg), (next), &amd_iommu_pci_seg_list, list)
- /*
-  * Make iterating over all IOMMUs easier
-  */
-@@ -524,6 +529,17 @@ struct protection_domain {
- 	unsigned dev_iommu[MAX_IOMMUS]; /* per-IOMMU reference count */
- };
- 
-+/*
-+ * This structure contains information about one PCI segment in the system.
-+ */
-+struct amd_iommu_pci_seg {
-+	/* List with all PCI segments in the system */
-+	struct list_head list;
-+
-+	/* PCI segment number */
-+	u16 id;
-+};
-+
- /*
-  * Structure where we save information about one hardware AMD IOMMU in the
-  * system.
-@@ -575,7 +591,7 @@ struct amd_iommu {
- 	u16 cap_ptr;
- 
- 	/* pci domain of this IOMMU */
--	u16 pci_seg;
-+	struct amd_iommu_pci_seg *pci_seg;
- 
- 	/* start of exclusion range of that IOMMU */
- 	u64 exclusion_start;
-@@ -703,6 +719,12 @@ extern struct list_head ioapic_map;
- extern struct list_head hpet_map;
- extern struct list_head acpihid_map;
- 
-+/*
-+ * List with all PCI segments in the system. This list is not locked because
-+ * it is only written at driver initialization time
-+ */
-+extern struct list_head amd_iommu_pci_seg_list;
-+
- /*
-  * List with all IOMMUs in the system. This list is not locked because it is
-  * only written and read at driver initialization or suspend time
 diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index ef855495c210e..724874ad0b2a8 100644
+index 724874ad0b2a8..70f3720d96c7e 100644
 --- a/drivers/iommu/amd/init.c
 +++ b/drivers/iommu/amd/init.c
-@@ -167,6 +167,7 @@ u16 amd_iommu_last_bdf;			/* largest PCI device id we have
- LIST_HEAD(amd_iommu_unity_map);		/* a list of required unity mappings
- 					   we find in ACPI */
- 
-+LIST_HEAD(amd_iommu_pci_seg_list);	/* list of all PCI segments */
- LIST_HEAD(amd_iommu_list);		/* list of all AMD IOMMUs in the
- 					   system */
- 
-@@ -1455,6 +1456,43 @@ static int __init init_iommu_from_acpi(struct amd_iommu *iommu,
- 	return 0;
+@@ -1493,8 +1493,17 @@ static void __init free_pci_segments(void)
+ 	}
  }
  
-+/* Allocate PCI segment data structure */
-+static struct amd_iommu_pci_seg *__init alloc_pci_segment(u16 id)
++static void __init free_sysfs(struct amd_iommu *iommu)
 +{
-+	struct amd_iommu_pci_seg *pci_seg;
-+
-+	pci_seg = kzalloc(sizeof(struct amd_iommu_pci_seg), GFP_KERNEL);
-+	if (pci_seg == NULL)
-+		return NULL;
-+
-+	pci_seg->id = id;
-+	list_add_tail(&pci_seg->list, &amd_iommu_pci_seg_list);
-+
-+	return pci_seg;
-+}
-+
-+static struct amd_iommu_pci_seg *__init get_pci_segment(u16 id)
-+{
-+	struct amd_iommu_pci_seg *pci_seg;
-+
-+	for_each_pci_segment(pci_seg) {
-+		if (pci_seg->id == id)
-+			return pci_seg;
-+	}
-+
-+	return alloc_pci_segment(id);
-+}
-+
-+static void __init free_pci_segments(void)
-+{
-+	struct amd_iommu_pci_seg *pci_seg, *next;
-+
-+	for_each_pci_segment_safe(pci_seg, next) {
-+		list_del(&pci_seg->list);
-+		kfree(pci_seg);
++	if (iommu->iommu.dev) {
++		iommu_device_unregister(&iommu->iommu);
++		iommu_device_sysfs_remove(&iommu->iommu);
 +	}
 +}
 +
  static void __init free_iommu_one(struct amd_iommu *iommu)
  {
++	free_sysfs(iommu);
  	free_cwwb_sem(iommu);
-@@ -1541,8 +1579,14 @@ static void amd_iommu_ats_write_check_workaround(struct amd_iommu *iommu)
-  */
- static int __init init_iommu_one(struct amd_iommu *iommu, struct ivhd_header *h)
- {
-+	struct amd_iommu_pci_seg *pci_seg;
- 	int ret;
- 
-+	pci_seg = get_pci_segment(h->pci_seg);
-+	if (pci_seg == NULL)
-+		return -ENOMEM;
-+	iommu->pci_seg = pci_seg;
-+
- 	raw_spin_lock_init(&iommu->lock);
- 	iommu->cmd_sem_val = 0;
- 
-@@ -1563,7 +1607,6 @@ static int __init init_iommu_one(struct amd_iommu *iommu, struct ivhd_header *h)
- 	 */
- 	iommu->devid   = h->devid;
- 	iommu->cap_ptr = h->cap_ptr;
--	iommu->pci_seg = h->pci_seg;
- 	iommu->mmio_phys = h->mmio_phys;
- 
- 	switch (h->type) {
-@@ -2604,6 +2647,7 @@ static void __init free_iommu_resources(void)
- 	amd_iommu_dev_table = NULL;
- 
- 	free_iommu_all();
-+	free_pci_segments();
- }
- 
- /* SB IOAPIC is always on this device in AMD systems */
+ 	free_command_buffer(iommu);
+ 	free_event_buffer(iommu);
 -- 
 2.43.0
 
