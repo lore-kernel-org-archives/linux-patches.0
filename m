@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007A01741D1;
-	Wed,  3 Jul 2024 11:07:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33CE16F8FA;
+	Wed,  3 Jul 2024 11:07:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004829; cv=none; b=Yh/6qKBGfc2EWVtWSoLxq85MJoXqRbdeYJ1sOmSQhVhyQuvl56QMtG7qjuvHGLCxDbnm5uK2lQTX9cau4GLikzR41g6x22PWwTVCTjWoRJn/dnwvS5o3QUaV4h+R2OxXtRUApFwx7rwmHc9QbfhLhYpAgJRRd6+9dJwXA1GivUM=
+	t=1720004832; cv=none; b=al7XOdG1zNidkcGTOBf0koO+DaWEUV1Y1pz4CeSLl0Mi20+rwAbn3XE4CAUz8BNh5CkN1BCX0wD04+q+KrLY9aPmkRNMc1zf+ddUvf2ZlmofKS6mGzPPCsvu5PLV2GwKAsiB4J7Uvzk+i2JtQFDQqJqg532P5KaNvT9JX+QR20c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004829; c=relaxed/simple;
-	bh=kfHotLG9ubTPcxDFBNPzdT7c1CNvqN0/hJ1NyCjh13c=;
+	s=arc-20240116; t=1720004832; c=relaxed/simple;
+	bh=InWnOERKkmb2WIVWzdj6Z5E4CAUs2u29prvjmOhc/Nk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nFMmDuNpWHS6Ni8D+tT2Uy6kNA0gZu0LX+Nic+mD+NF3h2w45nAwOADb3yUINhJhPoe8VpRFqhpnXNU3HaotBFRwXTwgG25YIhyY2EGYXxJcsYRNIk29wSy8CgwFmBgV4BXPu8yrznHsHj2E54XJ2+qMGJPJ2lMmrqULiPyNCmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJIyWBJY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GeXFkZ3xrvvT20JmzJWp764DyW1KdvXJ6RT6b22mux0BXOuHMToyFRAwUR8X8tCo1HcCR3Fgir5Q8cVkwyoofF8MYY2xYe4rEM7hMrEzK13Dkz9t5p9vc82fyou0XuqbHIPC6tx560bWcOePTRKcWR1OjR4ui1v0czrUsS/jhLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wQcrV3fQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJIyWBJY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6BDC2BD10;
-	Wed,  3 Jul 2024 11:07:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wQcrV3fQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA39C2BD10;
+	Wed,  3 Jul 2024 11:07:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004828;
-	bh=kfHotLG9ubTPcxDFBNPzdT7c1CNvqN0/hJ1NyCjh13c=;
+	s=korg; t=1720004831;
+	bh=InWnOERKkmb2WIVWzdj6Z5E4CAUs2u29prvjmOhc/Nk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lJIyWBJY0kCWduOfge5etqEYe1gLSks1rnMcGvwieBA3aiULjSKcpElT217gAnSju
-	 hi+K+dCUptnHu82qCU40MMnwu4JyZvmmgkfWmtDz8r5cR6rwItrfNP3M0wWvjrbSc3
-	 t4Q4Ho2d7ExQZpiLmkYF/+A16QbRx7cVvRzFQ6DA=
+	b=wQcrV3fQvLo53AxqEZd+3WW08Cq1Rh038M4SW4tFkjGdJt8z7VrEmCFGJtCEjKJBH
+	 lCmMs+Hw2mvcv9f5YSlofb2euJNhoZdcoKoL2hg2+ynKGcnYKtikQUIGevPQcDwxNA
+	 XnvDoOzBtvIKIYjaTixyZIdJ2r2ZJA12tnPkp+xQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 173/290] ARM: dts: samsung: smdk4412: fix keypad no-autorepeat
-Date: Wed,  3 Jul 2024 12:39:14 +0200
-Message-ID: <20240703102910.708968249@linuxfoundation.org>
+Subject: [PATCH 5.10 156/290] dmaengine: ioat: Drop redundant pci_enable_pcie_error_reporting()
+Date: Wed,  3 Jul 2024 12:38:57 +0200
+Message-ID: <20240703102910.071650339@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -50,41 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Bjorn Helgaas <bhelgaas@google.com>
 
-[ Upstream commit 4ac4c1d794e7ff454d191bbdab7585ed8dbf3758 ]
+[ Upstream commit e32622f84ae289dc7a04e9f01cd62cb914fdc5c6 ]
 
-Although the Samsung SoC keypad binding defined
-linux,keypad-no-autorepeat property, Linux driver never implemented it
-and always used linux,input-no-autorepeat.  Correct the DTS to use
-property actually implemented.
+pci_enable_pcie_error_reporting() enables the device to send ERR_*
+Messages.  Since f26e58bf6f54 ("PCI/AER: Enable error reporting when AER is
+native"), the PCI core does this for all devices during enumeration, so the
+driver doesn't need to do it itself.
 
-This also fixes dtbs_check errors like:
+Remove the redundant pci_enable_pcie_error_reporting() call from the
+driver.  Also remove the corresponding pci_disable_pcie_error_reporting()
+from the driver .remove() path.
 
-  exynos4412-smdk4412.dtb: keypad@100a0000: 'key-A', 'key-B', 'key-C', 'key-D', 'key-E', 'linux,keypad-no-autorepeat' do not match any of the regexes: '^key-[0-9a-z]+$', 'pinctrl-[0-9]+'
+Note that this only controls ERR_* Messages from the device.  An ERR_*
+Message may cause the Root Port to generate an interrupt, depending on the
+AER Root Error Command register managed by the AER service driver.
 
-Cc: <stable@vger.kernel.org>
-Fixes: c9b92dd70107 ("ARM: dts: Add keypad entries to SMDK4412")
-Link: https://lore.kernel.org/r/20240312183105.715735-3-krzysztof.kozlowski@linaro.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/r/20230307192655.874008-2-helgaas@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: 1b11b4ef6bd6 ("dmaengine: ioatdma: Fix leaking on version mismatch")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/exynos4412-smdk4412.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/ioat/init.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/arch/arm/boot/dts/exynos4412-smdk4412.dts b/arch/arm/boot/dts/exynos4412-smdk4412.dts
-index 49971203a8aa0..6e6bef907a72e 100644
---- a/arch/arm/boot/dts/exynos4412-smdk4412.dts
-+++ b/arch/arm/boot/dts/exynos4412-smdk4412.dts
-@@ -65,7 +65,7 @@ cooling_map1: map1 {
- &keypad {
- 	samsung,keypad-num-rows = <3>;
- 	samsung,keypad-num-columns = <8>;
--	linux,keypad-no-autorepeat;
-+	linux,input-no-autorepeat;
- 	wakeup-source;
- 	pinctrl-0 = <&keypad_rows &keypad_cols>;
- 	pinctrl-names = "default";
+diff --git a/drivers/dma/ioat/init.c b/drivers/dma/ioat/init.c
+index 373b8dac6c9ba..783d4e740f115 100644
+--- a/drivers/dma/ioat/init.c
++++ b/drivers/dma/ioat/init.c
+@@ -15,7 +15,6 @@
+ #include <linux/workqueue.h>
+ #include <linux/prefetch.h>
+ #include <linux/dca.h>
+-#include <linux/aer.h>
+ #include <linux/sizes.h>
+ #include "dma.h"
+ #include "registers.h"
+@@ -1382,15 +1381,11 @@ static int ioat_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 		if (is_skx_ioat(pdev))
+ 			device->version = IOAT_VER_3_2;
+ 		err = ioat3_dma_probe(device, ioat_dca_enabled);
+-
+-		if (device->version >= IOAT_VER_3_3)
+-			pci_enable_pcie_error_reporting(pdev);
+ 	} else
+ 		return -ENODEV;
+ 
+ 	if (err) {
+ 		dev_err(dev, "Intel(R) I/OAT DMA Engine init failed\n");
+-		pci_disable_pcie_error_reporting(pdev);
+ 		return -ENODEV;
+ 	}
+ 
+@@ -1413,7 +1408,6 @@ static void ioat_remove(struct pci_dev *pdev)
+ 		device->dca = NULL;
+ 	}
+ 
+-	pci_disable_pcie_error_reporting(pdev);
+ 	ioat_dma_remove(device);
+ }
+ 
 -- 
 2.43.0
 
