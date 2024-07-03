@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6994173326;
-	Wed,  3 Jul 2024 10:52:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69F417E8EE;
+	Wed,  3 Jul 2024 10:52:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003975; cv=none; b=QSPyIVvS/eg+6Dae9iZxR/DxtojZkxkxXUPV9SH5QEsUcfcMQ9L/cvKiuVy8jhN7pkDXIoJu0JTT6oQTO3Stgx2380+HMWjd+9h6Sq3rJX3faGib52lvd7y98ai89x8liNlgFMuI0C4W5P88Go1NaeOhUempEG9EyByTNINqXPM=
+	t=1720003977; cv=none; b=M8R41umqmDDrv+uQrhTytLwJ7SViwxBy4l9YjuBzbUK+rYA5PUD2TC6F8Qpe37tXOP8PTvUvPB4lRGP58QeGzlwL7k+Qvn5fr2mNtpLaowWV31YygVdti78czUB2KJuNvxu4UmBJthV8vhMoVo5WeDXtEBX/d/MhegMXHUmPrtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003975; c=relaxed/simple;
-	bh=DVeQOHjIG93Ybzmm18rRKi4Tli6FCIcHLc7dgKbAVeU=;
+	s=arc-20240116; t=1720003977; c=relaxed/simple;
+	bh=DZpTmII+pwoD4cRGBakfBs4t7K5alkVemm6BxQUvM00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J1Rnp66ioKQ626F6WUngfMRP6LWIN1cvMk88z1BNCvivMnuiC9tf1G1QSiBOdrXXe6Y4Ki4FI1+FcAqWwP3hK4avHJ4lV19VbP7tsXB2dJ2jJ2hcck7geEZqGcnWTLl7Qcq6pDCV0D2owP0sgoheBYNiGVc8tc3wuPYBbb7SQUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HnArtRCb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sGd/8evejSGg4vdCvrPWTZq1YppViz4oAnqjHWtj6NgmSQg+yRMj+BGNL6WfEJBYY72xJf8VpLz/OFtF2IuqyYTj2LYU7Z2Aq05GgrB7WCnqAPqu8q/T3J1y+sxsvc+0mVpcaaBFEhgak059z+1WWisULYLg3qS7q95009QSvWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QuRBR/Th; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HnArtRCb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6808CC2BD10;
-	Wed,  3 Jul 2024 10:52:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QuRBR/Th"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5959AC2BD10;
+	Wed,  3 Jul 2024 10:52:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003974;
-	bh=DVeQOHjIG93Ybzmm18rRKi4Tli6FCIcHLc7dgKbAVeU=;
+	s=korg; t=1720003977;
+	bh=DZpTmII+pwoD4cRGBakfBs4t7K5alkVemm6BxQUvM00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HnArtRCbpJcZ1DNsOs3Zb/vd51OCgKH+nF5pgDk7u5C02e15HKPJ96gW0ErryzcD7
-	 0V3UciltZulzAomHQ50aQ6jyu29VJQu8mwDQci69yEG+VUz+6PHT0yc9Z1O3EZ7FbL
-	 +Cpt/Qfu9yjtj+TFV4q0pa6LpffjXXFJiWxwPaFg=
+	b=QuRBR/Th/jt6lUP1fk6a7M8hGinvTNs2H8tztkT1lq2d33ztidqk5w8ZwQApQ/CyE
+	 fdGc3TShLTGGdBi6Z3EoauztOruSxHZDLqkG+8x4/AR5NydRRJSmuom92NthOBhaOr
+	 7JfEKm1Xrnm3qW/WU7bVzzylVNs/R1snYIj+l+x0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 5.4 082/189] tick/nohz_full: Dont abuse smp_call_function_single() in tick_setup_device()
-Date: Wed,  3 Jul 2024 12:39:03 +0200
-Message-ID: <20240703102844.597805260@linuxfoundation.org>
+	Vineeth Pillai <viremana@linux.microsoft.com>,
+	Michael Kelley <mikelley@microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
+	Dexuan Cui <decui@microsoft.com>
+Subject: [PATCH 5.4 083/189] hv_utils: drain the timesync packets on onchannelcallback
+Date: Wed,  3 Jul 2024 12:39:04 +0200
+Message-ID: <20240703102844.634836546@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -50,94 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: Vineeth Pillai <viremana@linux.microsoft.com>
 
-commit 07c54cc5988f19c9642fd463c2dbdac7fc52f777 upstream.
+commit b46b4a8a57c377b72a98c7930a9f6969d2d4784e upstream.
 
-After the recent commit 5097cbcb38e6 ("sched/isolation: Prevent boot crash
-when the boot CPU is nohz_full") the kernel no longer crashes, but there is
-another problem.
+There could be instances where a system stall prevents the timesync
+packets to be consumed. And this might lead to more than one packet
+pending in the ring buffer. Current code empties one packet per callback
+and it might be a stale one. So drain all the packets from ring buffer
+on each callback.
 
-In this case tick_setup_device() calls tick_take_do_timer_from_boot() to
-update tick_do_timer_cpu and this triggers the WARN_ON_ONCE(irqs_disabled)
-in smp_call_function_single().
-
-Kill tick_take_do_timer_from_boot() and just use WRITE_ONCE(), the new
-comment explains why this is safe (thanks Thomas!).
-
-Fixes: 08ae95f4fd3b ("nohz_full: Allow the boot CPU to be nohz_full")
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240528122019.GA28794@redhat.com
-Link: https://lore.kernel.org/all/20240522151742.GA10400@redhat.com
+Signed-off-by: Vineeth Pillai <viremana@linux.microsoft.com>
+Reviewed-by: Michael Kelley <mikelley@microsoft.com>
+Link: https://lore.kernel.org/r/20200821152849.99517-1-viremana@linux.microsoft.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+[ The old code in the upstream commit uses HV_HYP_PAGE_SIZE, but
+  the old code in 5.4.y sitll uses PAGE_SIZE. Fixed this manually for 5.4.y.
+  Note: 5.4.y already has the define HV_HYP_PAGE_SIZE, so the new code in
+  in the upstream commit works for 5.4.y.
+  If there are multiple messages in the host-to-guest ringbuffer of the TimeSync
+  device, 5.4.y only handles 1 message, and later the host puts new messages
+  into the ringbuffer without signaling the guest because the ringbuffer is not
+  empty, causing a "hung" ringbuffer. Backported the mainline fix for this issue.]
+Signed-off-by: Dexuan Cui <decui@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/tick-common.c |   42 ++++++++++++++----------------------------
- 1 file changed, 14 insertions(+), 28 deletions(-)
+ drivers/hv/hv_util.c |   19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
---- a/kernel/time/tick-common.c
-+++ b/kernel/time/tick-common.c
-@@ -177,26 +177,6 @@ void tick_setup_periodic(struct clock_ev
- 	}
- }
+--- a/drivers/hv/hv_util.c
++++ b/drivers/hv/hv_util.c
+@@ -283,10 +283,23 @@ static void timesync_onchannelcallback(v
+ 	struct ictimesync_ref_data *refdata;
+ 	u8 *time_txf_buf = util_timesynch.recv_buffer;
  
--#ifdef CONFIG_NO_HZ_FULL
--static void giveup_do_timer(void *info)
--{
--	int cpu = *(unsigned int *)info;
--
--	WARN_ON(tick_do_timer_cpu != smp_processor_id());
--
--	tick_do_timer_cpu = cpu;
--}
--
--static void tick_take_do_timer_from_boot(void)
--{
--	int cpu = smp_processor_id();
--	int from = tick_do_timer_boot_cpu;
--
--	if (from >= 0 && from != cpu)
--		smp_call_function_single(from, giveup_do_timer, &cpu, 1);
--}
--#endif
--
- /*
-  * Setup the tick device
-  */
-@@ -220,19 +200,25 @@ static void tick_setup_device(struct tic
- 			tick_next_period = ktime_get();
- #ifdef CONFIG_NO_HZ_FULL
- 			/*
--			 * The boot CPU may be nohz_full, in which case set
--			 * tick_do_timer_boot_cpu so the first housekeeping
--			 * secondary that comes up will take do_timer from
--			 * us.
-+			 * The boot CPU may be nohz_full, in which case the
-+			 * first housekeeping secondary will take do_timer()
-+			 * from it.
- 			 */
- 			if (tick_nohz_full_cpu(cpu))
- 				tick_do_timer_boot_cpu = cpu;
+-	vmbus_recvpacket(channel, time_txf_buf,
+-			 PAGE_SIZE, &recvlen, &requestid);
++	/*
++	 * Drain the ring buffer and use the last packet to update
++	 * host_ts
++	 */
++	while (1) {
++		int ret = vmbus_recvpacket(channel, time_txf_buf,
++					   HV_HYP_PAGE_SIZE, &recvlen,
++					   &requestid);
++		if (ret) {
++			pr_warn_once("TimeSync IC pkt recv failed (Err: %d)\n",
++				     ret);
++			break;
++		}
++
++		if (!recvlen)
++			break;
  
--		} else if (tick_do_timer_boot_cpu != -1 &&
--						!tick_nohz_full_cpu(cpu)) {
--			tick_take_do_timer_from_boot();
-+		} else if (tick_do_timer_boot_cpu != -1 && !tick_nohz_full_cpu(cpu)) {
- 			tick_do_timer_boot_cpu = -1;
--			WARN_ON(tick_do_timer_cpu != cpu);
-+			/*
-+			 * The boot CPU will stay in periodic (NOHZ disabled)
-+			 * mode until clocksource_done_booting() called after
-+			 * smp_init() selects a high resolution clocksource and
-+			 * timekeeping_notify() kicks the NOHZ stuff alive.
-+			 *
-+			 * So this WRITE_ONCE can only race with the READ_ONCE
-+			 * check in tick_periodic() but this race is harmless.
-+			 */
-+			WRITE_ONCE(tick_do_timer_cpu, cpu);
- #endif
- 		}
+-	if (recvlen > 0) {
+ 		icmsghdrp = (struct icmsg_hdr *)&time_txf_buf[
+ 				sizeof(struct vmbuspipe_hdr)];
  
 
 
