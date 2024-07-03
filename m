@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA0D17B51F;
-	Wed,  3 Jul 2024 11:26:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6E717BB14;
+	Wed,  3 Jul 2024 11:26:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006004; cv=none; b=nHi98iLOpWKxMJjeAXcwUvUMlDFTARJG95IBNph5KVtNZCMnkdse9DnKiLy4+Jrey6iPTIBSUCwoNsHUxHh02KZdm/uqFu5sFe5i/AbmgocpNlKsFOcIJp08tKEEaqHCpsStzM68k9PjlDkgqfyY+DuOns6WnaOrlKU5Dka6fe4=
+	t=1720006007; cv=none; b=kv4WKPaQdvm6xWqI/ezsr9KBV1AFpZn7dnrhvY8kOHJ4l0kksqYtc8gZkyb6T8QjgzFOQBJOJhD5ZEXyf3LFTfxprVEOq0D4o+D8KR4ccWi1DO3snBZKMEvwJRwDyrZSkp3CDuw8chCtQBV8vKUN6f/ASWx7iVKVO5NLpXmIryc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006004; c=relaxed/simple;
-	bh=r5bLIATfS70mNEf5PUJVZHNiCcAqzhy/0OJ1X5AQoNY=;
+	s=arc-20240116; t=1720006007; c=relaxed/simple;
+	bh=+LTaelwGgaK3qXUKXIGffmalOdR/q3mGUuplbHMQZcg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mwJyzEuy08sIxVOsGffzoKeO1uTAmbEEAhaaJjRPwJLlu71cEOVWsinqOOHkTzEz2rWeuwf7Sub/iCWJUmSTuTAPYwHq/5wbrvzhn4O3Tv8WUEt1dvarZrqkBjXzoKqoLptquEkw9INfc8S1mXNZnAzmRG9dJXpcp+5aVROrZX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Olz3DqUl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eYxNd3wh+fzVTEXvDs7xiZDpQU9mA7NtijMnM8nwhzq2B9trOz4LVaDdYdvsuf0J5YNgzbuzEUL7ki3SvmFIlHWkXEtacNB80hTeCoogxRVmtkljsr1HrgsIdJMaDJYHsmG2OL3ktAWyk/TCc02hSkkCXD9Z6PmHtQK8eboGxzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+ksss5i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Olz3DqUl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69409C2BD10;
-	Wed,  3 Jul 2024 11:26:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+ksss5i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2763C2BD10;
+	Wed,  3 Jul 2024 11:26:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006003;
-	bh=r5bLIATfS70mNEf5PUJVZHNiCcAqzhy/0OJ1X5AQoNY=;
+	s=korg; t=1720006007;
+	bh=+LTaelwGgaK3qXUKXIGffmalOdR/q3mGUuplbHMQZcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Olz3DqUlUKYFXG1rq/OKltuBAcX/S2EtHjJoxfbM/2fZgl3Vz937CG/xheM6GTVeK
-	 HWJpV0sMYq4VpTpfC2W0rK0ccJjf5VN4D/26pQOECYxEAGy8uFNmVsJpgWwff5+G87
-	 VwS6CzTKxFQlsjappg/Qf9BSIjV3PxTfmIcPtJ3I=
+	b=m+ksss5iOKh5HSrcdbVVcafDJ4pQotUYkNquAhIn+Ieuw8+TzYKwmnTY7If+L8xEJ
+	 UWj5bBo+gqqrjOHzPfDVyteHjeT0P07QJVVVSIvGHO4Kg3Q4omBG1HPjVRjl+4sG6x
+	 PLGITIS+UXeEFhl/LHsySrm35fBotFqBVbG1jGbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	"David S. Miller" <davem@davemloft.net>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 268/356] net: mdio: add helpers to extract clause 45 regad and devad fields
-Date: Wed,  3 Jul 2024 12:40:04 +0200
-Message-ID: <20240703102923.255373706@linuxfoundation.org>
+Subject: [PATCH 5.15 269/356] net: stmmac: Assign configured channel value to EXTTS event
+Date: Wed,  3 Jul 2024 12:40:05 +0200
+Message-ID: <20240703102923.292323432@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -53,61 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit c6af53f038aa32cec12e8a305ba07c7ef168f1b0 ]
+[ Upstream commit 8851346912a1fa33e7a5966fe51f07313b274627 ]
 
-Add a couple of helpers and definitions to extract the clause 45 regad
-and devad fields from the regnum passed into MDIO drivers.
+Assign the configured channel value to the EXTTS event in the timestamp
+interrupt handler. Without assigning the correct channel, applications
+like ts2phc will refuse to accept the event, resulting in errors such
+as:
+...
+ts2phc[656.834]: config item end1.ts2phc.pin_index is 0
+ts2phc[656.834]: config item end1.ts2phc.channel is 3
+ts2phc[656.834]: config item end1.ts2phc.extts_polarity is 2
+ts2phc[656.834]: config item end1.ts2phc.extts_correction is 0
+...
+ts2phc[656.862]: extts on unexpected channel
+ts2phc[658.141]: extts on unexpected channel
+ts2phc[659.140]: extts on unexpected channel
 
-Tested-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 8851346912a1 ("net: stmmac: Assign configured channel value to EXTTS event")
+Fixes: f4da56529da60 ("net: stmmac: Add support for external trigger timestamping")
+Cc: stable@vger.kernel.org
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Link: https://lore.kernel.org/r/20240618073821.619751-1-o.rempel@pengutronix.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/mdio.h | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/mdio.h b/include/linux/mdio.h
-index 5e6dc38f418e4..3a6ff4e7284a8 100644
---- a/include/linux/mdio.h
-+++ b/include/linux/mdio.h
-@@ -7,6 +7,7 @@
- #define __LINUX_MDIO_H__
- 
- #include <uapi/linux/mdio.h>
-+#include <linux/bitfield.h>
- #include <linux/mod_devicetable.h>
- 
- /* Or MII_ADDR_C45 into regnum for read/write on mii_bus to enable the 21 bit
-@@ -14,6 +15,7 @@
-  */
- #define MII_ADDR_C45		(1<<30)
- #define MII_DEVADDR_C45_SHIFT	16
-+#define MII_DEVADDR_C45_MASK	GENMASK(20, 16)
- #define MII_REGADDR_C45_MASK	GENMASK(15, 0)
- 
- struct gpio_desc;
-@@ -355,6 +357,16 @@ static inline u32 mdiobus_c45_addr(int devad, u16 regnum)
- 	return MII_ADDR_C45 | devad << MII_DEVADDR_C45_SHIFT | regnum;
- }
- 
-+static inline u16 mdiobus_c45_regad(u32 regnum)
-+{
-+	return FIELD_GET(MII_REGADDR_C45_MASK, regnum);
-+}
-+
-+static inline u16 mdiobus_c45_devad(u32 regnum)
-+{
-+	return FIELD_GET(MII_DEVADDR_C45_MASK, regnum);
-+}
-+
- static inline int __mdiobus_c45_read(struct mii_bus *bus, int prtad, int devad,
- 				     u16 regnum)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
+index 2c6245b2281ca..0d3d7874f0fc6 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
+@@ -176,6 +176,7 @@ static void timestamp_interrupt(struct stmmac_priv *priv)
  {
+ 	u32 num_snapshot, ts_status, tsync_int;
+ 	struct ptp_clock_event event;
++	u32 acr_value, channel;
+ 	unsigned long flags;
+ 	u64 ptp_time;
+ 	int i;
+@@ -201,12 +202,15 @@ static void timestamp_interrupt(struct stmmac_priv *priv)
+ 	num_snapshot = (ts_status & GMAC_TIMESTAMP_ATSNS_MASK) >>
+ 		       GMAC_TIMESTAMP_ATSNS_SHIFT;
+ 
++	acr_value = readl(priv->ptpaddr + PTP_ACR);
++	channel = ilog2(FIELD_GET(PTP_ACR_MASK, acr_value));
++
+ 	for (i = 0; i < num_snapshot; i++) {
+ 		spin_lock_irqsave(&priv->ptp_lock, flags);
+ 		get_ptptime(priv->ptpaddr, &ptp_time);
+ 		spin_unlock_irqrestore(&priv->ptp_lock, flags);
+ 		event.type = PTP_CLOCK_EXTTS;
+-		event.index = 0;
++		event.index = channel;
+ 		event.timestamp = ptp_time;
+ 		ptp_clock_event(priv->ptp_clock, &event);
+ 	}
 -- 
 2.43.0
 
