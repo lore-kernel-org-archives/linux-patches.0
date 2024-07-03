@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 241A313BC0B;
-	Wed,  3 Jul 2024 11:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17C3413BC0B;
+	Wed,  3 Jul 2024 11:01:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004486; cv=none; b=R9LAPCyKB7C0muYjqOjr6mcdmnDk1RFoIBIjgMWjRuqaMXCrTiUdmiQJQyzq7yhxlsmsJKRzOuKdqblxxnoJcgE092cDl0ZM3nnDDPqInbScNYHqwlBIPoEX4x6odTkBUPsmDssvE/3KKDtSB/MU3YVguTgRCVkhfei8JVd+U8Y=
+	t=1720004489; cv=none; b=NbQv2JGL6sN3DvLLJJL6nWnCp8VWYejJ3qzvcy/ATmZU314LtaxiFHJUVT9MMVM28G1QqKrU7/ZBzHGWREWTiXgZtRuPKhtov8S10XdBaKr36oHcLRIegLLjQcNjyw+mcfFkbvzECnZ1SLxJz8wLslg5n+E/z8JpmoWbeaMYfkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004486; c=relaxed/simple;
-	bh=JmE+kPtdSJLE4jP2YCzrBk9O2IQAczbPgMzFVkJHuxo=;
+	s=arc-20240116; t=1720004489; c=relaxed/simple;
+	bh=5u3hfL92p46r6mB0Pb8ZVcIPQb/mqYPCaEmoysAZjFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pfc6xK+miyRX2cZkXFF//eAXvz8y1e9W1HxTJBsTosjtIHQfiHp6dV39b7JsHQoXa7/59iM/a4tC/7R6MMmSfju35wNYdQZ/+7tMNQrNfEoeS1tEp0vT0u7MKyhEINyq6NKftVQ8bRUSF5VrLPmSAkoAB5TfU3i978xP8cpyRoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yH8Y5hrz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LI4fraU+F26usf8R8N7z04auHoHrUUcRiYaGjHJyBr8WtVwvRWaQWFDHrD3NThw8SOWN5jAPN71hLWiFxm1arP5KY/MZMDs8VGQAbfx9bygW7+6DIf3hBxtWwcFVqDum29bBMwxlOsRXjmJjQy+5mG1cqLcnbfrIJ165gPNli2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lYIyZevW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yH8Y5hrz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1484C2BD10;
-	Wed,  3 Jul 2024 11:01:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lYIyZevW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F5FCC2BD10;
+	Wed,  3 Jul 2024 11:01:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004486;
-	bh=JmE+kPtdSJLE4jP2YCzrBk9O2IQAczbPgMzFVkJHuxo=;
+	s=korg; t=1720004489;
+	bh=5u3hfL92p46r6mB0Pb8ZVcIPQb/mqYPCaEmoysAZjFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yH8Y5hrzFzO2mENqw7fHwjOE+YuWXiUewr7ML1IBc9yyhd3GVYgE+OBDEhHpi1Pbv
-	 urJ3mYGYCjBH5PXTxUErFhKXnDoiDkmfk4IRnTcYLd1WML90ew9j50AAQKwc88D84Y
-	 lLhr6x/tdEDJBBlfi11cY3OL8B7+yJGPvIiNbB7c=
+	b=lYIyZevW+3brxbXpmluZmSKw7ETGcARhKk2MFa1xiSTR9SHH0pyWX7X7IxD6+qfoW
+	 c/5kgzvh26y1fkr5nfsEv0d3h/2iJIwmzLZujmvZiE70BzIii3G+0eWPtQFAESFINo
+	 v2OQCdQMfupgD8dBZvqPXL/ea7rM3l3k8r9DXJWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 026/290] af_unix: Use skb_queue_len_lockless() in sk_diag_show_rqlen().
-Date: Wed,  3 Jul 2024 12:36:47 +0200
-Message-ID: <20240703102905.182173659@linuxfoundation.org>
+Subject: [PATCH 5.10 027/290] af_unix: Annotate data-race of sk->sk_shutdown in sk_diag_fill().
+Date: Wed,  3 Jul 2024 12:36:48 +0200
+Message-ID: <20240703102905.219871511@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -53,17 +53,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 5d915e584d8408211d4567c22685aae8820bfc55 ]
+[ Upstream commit efaf24e30ec39ebbea9112227485805a48b0ceb1 ]
 
-We can dump the socket queue length via UNIX_DIAG by specifying
-UDIAG_SHOW_RQLEN.
+While dumping sockets via UNIX_DIAG, we do not hold unix_state_lock().
 
-If sk->sk_state is TCP_LISTEN, we return the recv queue length,
-but here we do not hold recvq lock.
+Let's use READ_ONCE() to read sk->sk_shutdown.
 
-Let's use skb_queue_len_lockless() in sk_diag_show_rqlen().
-
-Fixes: c9da99e6475f ("unix_diag: Fixup RQLEN extension report")
+Fixes: e4e541a84863 ("sock-diag: Report shutdown for inet and unix sockets (v2)")
 Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
@@ -72,18 +68,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/net/unix/diag.c b/net/unix/diag.c
-index 4666fabb04933..5bc5cb83cc6e4 100644
+index 5bc5cb83cc6e4..7066a36234106 100644
 --- a/net/unix/diag.c
 +++ b/net/unix/diag.c
-@@ -103,7 +103,7 @@ static int sk_diag_show_rqlen(struct sock *sk, struct sk_buff *nlskb)
- 	struct unix_diag_rqlen rql;
+@@ -164,7 +164,7 @@ static int sk_diag_fill(struct sock *sk, struct sk_buff *skb, struct unix_diag_r
+ 	    sock_diag_put_meminfo(sk, skb, UNIX_DIAG_MEMINFO))
+ 		goto out_nlmsg_trim;
  
- 	if (READ_ONCE(sk->sk_state) == TCP_LISTEN) {
--		rql.udiag_rqueue = sk->sk_receive_queue.qlen;
-+		rql.udiag_rqueue = skb_queue_len_lockless(&sk->sk_receive_queue);
- 		rql.udiag_wqueue = sk->sk_max_ack_backlog;
- 	} else {
- 		rql.udiag_rqueue = (u32) unix_inq_len(sk);
+-	if (nla_put_u8(skb, UNIX_DIAG_SHUTDOWN, sk->sk_shutdown))
++	if (nla_put_u8(skb, UNIX_DIAG_SHUTDOWN, READ_ONCE(sk->sk_shutdown)))
+ 		goto out_nlmsg_trim;
+ 
+ 	if ((req->udiag_show & UDIAG_SHOW_UID) &&
 -- 
 2.43.0
 
