@@ -1,92 +1,71 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB10B13C3D3;
-	Wed,  3 Jul 2024 12:02:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4DC13DDD3;
+	Wed,  3 Jul 2024 12:32:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720008143; cv=none; b=GRfoVDyIj22MM06V0iGT6S/qd7AdA5duWCSS1PhMs/hXvImbH2XuJhdfuVJ55S4OJbKQK8Pr92ENZuxTiclpoIGtmp5wxhCj9DK5IzJn8omkRq97w4Ry+6V6F+Bt6/1UUaWy9JZPrwjEMhcVtXzC+WaoiCv2AyjBgr1OqaWdiTQ=
+	t=1720009962; cv=none; b=sacQPE+7B8BRlQmPdeWljEVFliTHs2NvxuoIfZDXOjr4vS4wChsHJ7mpt+kpoy+06R9UCtIU80F2CSlkqVyLnJffhLPyt7B74Tj9lXMxR6pC6ZXUMOvEmO91snMPhdkE9JMkeTxsuh80KomI9Ohes9GlRLLSgZr5tbSrtX7b+cE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720008143; c=relaxed/simple;
-	bh=Al8/JsQVoiEny9JlYrmZkCUw5uitD7yQhpfmW2ScTIA=;
+	s=arc-20240116; t=1720009962; c=relaxed/simple;
+	bh=DM2p1NLEURC4vLbJ5fwuFCXuX68Fky+XI6wY4XFaVX0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Gbhm+vnVq1iK4bxwsy3vtejSJzpSYeQPP3jLVN4LsvSogVXNz4xYg1eOzd/Dgl//6qF0G7HA9BoJztOsK7qUaZGHajYGI+S5PF1eXskw7rkmT6ePLCSuJJMOuiC68ylcl4Pafle+R/8Xb9QtgYRWLdR036XkeP/fzIoodJazSW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=duvB6pxB; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=bfMG/DFpL40QEaY54/ngWZv5xojvSEIW2L+UO6EWzF/Ot1dB3snpOSV3vKEiQR9QEObccGGI3/dQgL3uhXcBawBNhtXqkHtxGsIqdX3M2KbNxdIkUXqrOCCqw/kqiosPwbEJ2nrbN+d9cf08mLMPDelO8v3hKbtaUfU/7kWd0vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=YvkQuW3L; arc=none smtp.client-ip=90.155.50.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="duvB6pxB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C082C2BD10;
-	Wed,  3 Jul 2024 12:02:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720008143;
-	bh=Al8/JsQVoiEny9JlYrmZkCUw5uitD7yQhpfmW2ScTIA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=duvB6pxBu7z/aLGhPfQxOuDkxa6JBMQiRAX6Td1fyEQwaHEBV+qnKpmiCFuLT69aD
-	 pi9i1f0BfnSZdSuQj0ynFPeTgLykh0Ea30cWGxOAEHTiOfC9Mua8H6xTP09U35g/Dz
-	 v9m+jxX16zgzXFIuLns4GQA7Sz2WHUjFwraqUtClC4+CfnAD1Xu9AjB+18MkWWENY3
-	 ORCK4shVzdbp78FOzZK7UAbt9H48FANXtvrJaJud3i+qUMY7EpQkKZc5In2eQ5fBCq
-	 Id9Hrxb8pgaHrfY/xPPrynp5xrGdzRvc3FZPlhtIAsB180vquzcXht5sZ8jzG5y8Be
-	 A/77zOXEl/dAw==
-Date: Wed, 3 Jul 2024 13:02:18 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Ryan Roberts <ryan.roberts@arm.com>, Shuah Khan <shuah@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.15 067/356] selftests/mm: log a consistent test name
- for check_compaction
-Message-ID: <416ea8e5-f3e0-47b3-93c2-34a67c474d8f@sirena.org.uk>
-References: <20240703102913.093882413@linuxfoundation.org>
- <20240703102915.636328702@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="YvkQuW3L"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=oT5x1BRWHTtzs46y9z/r4KPl8eY01NHj5LtX0weEUsU=; b=YvkQuW3Lm0b+RSxW/Xoecnk0Qu
+	uZ3X45bqmwnp4DA0U7dVT1o3AgXZne0noNpO93taN1QZ1aMWDQPXkUtxPqVeCZvJeXvedrHuv+WZv
+	akvAS19XK68yfun94SHwJmM/053nrjWFAbnM1JcsGRhtLKUcsMT4KZeKI1L3rUzAkAmdVqvyPwpNv
+	hPKxj+cbiHXcaH8fr7/XTvLBwjeHsO0+s7WoHLyRju0ooQE6WwIzbO60a8z3FdqNX317UURQKjAxR
+	9Hshsz64HQqZec1xGS6cnWUo1nUO6UUiMfz+EZ8ZvzPhGTabB79ly4yX9Hvi2xhShGqUO9OTFvO0u
+	mh1L9b1g==;
+Received: from willy by casper.infradead.org with local (Exim 4.97.1 #2 (Red Hat Linux))
+	id 1sOzA0-00000001otM-0HqV;
+	Wed, 03 Jul 2024 12:32:32 +0000
+Date: Wed, 3 Jul 2024 13:32:31 +0100
+From: Matthew Wilcox <willy@infradead.org>
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: linux-mm@kvack.org, David Rientjes <rientjes@google.com>,
+	Christoph Lameter <cl@linux.com>,
+	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Kees Cook <keescook@chromium.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Boqun Feng <boqun.feng@gmail.com>, rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v2] slab, rust: extend kmalloc() alignment guarantees to
+ remove Rust padding
+Message-ID: <ZoVE34S2fOyUdZYg@casper.infradead.org>
+References: <20240703072520.45837-2-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="RIHx1C9vyBB2MOnu"
-Content-Disposition: inline
-In-Reply-To: <20240703102915.636328702@linuxfoundation.org>
-X-Cookie: There is a fly on your nose.
-
-
---RIHx1C9vyBB2MOnu
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20240703072520.45837-2-vbabka@suse.cz>
 
-On Wed, Jul 03, 2024 at 12:36:43PM +0200, Greg Kroah-Hartman wrote:
+On Wed, Jul 03, 2024 at 09:25:21AM +0200, Vlastimil Babka wrote:
+> -	if (is_power_of_2(size))
+> -		align = max(align, size);
+> +	if (flags & SLAB_KMALLOC)
+> +		align = max(align, 1U << (ffs(size) - 1));
 
-> Every test result report in the compaction test prints a distinct log
-> messae, and some of the reports print a name that varies at runtime.  This
-> causes problems for automation since a lot of automation software uses the
-> printed string as the name of the test, if the name varies from run to run
-> and from pass to fail then the automation software can't identify that a
-> test changed result or that the same tests are being run.
->=20
-> Refactor the logging to use a consistent name when printing the result of
-> the test, printing the existing messages as diagnostic information instead
-> so they are still available for people trying to interpret the results.
+hmm ... maybe this would be faster:
 
-I'm not convinced that this is a good stable candidate, it will change
-the output people are seeing in their test environment which might be an
-undesirable change.
+	if (flags & SLAB_KMALLOC) {
+		u32 tmp = size & (size - 1);
+		align = max(align, size - tmp);
+	}
 
---RIHx1C9vyBB2MOnu
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmaFPckACgkQJNaLcl1U
-h9AhSgf/aap702qY059NOepY37zjg/l9QiyMxcSHLyLE+vGJbnBOVHRKME3uT0nA
-t99OH/u0QM+kw5932QAU1KqE/IYxH+QVYaPBGRPR/YwmmLCYIhoFkGDzKagziMwh
-PxouO1u8VPgV2DdA00xNPIKil+MFzKa0fASfmy8PUnKIoccGB6pLMev5WJkjo4/V
-/AASkds9vc+/8lQ6umpT5NPcGmAZPuPclluH0l/vj4udCPKpSXRuqDlqEySgLwPB
-+n9i/9R6I+VuCjzOCxQOc8aXsYvIcq9BqBuikZDwDQYGr9LMnaJ6gi7mnKmsvfTk
-ZdELaY2Rx6dNdblVXeXzpkWaXKT6KA==
-=5sUY
------END PGP SIGNATURE-----
-
---RIHx1C9vyBB2MOnu--
+(if size is 2^n, tmp is 0.  otherwise, tmp is size with the lowest bit
+clear, so size-tmp is the largest POT that divides size evenly)
