@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8C81946A2;
-	Wed,  3 Jul 2024 10:58:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 337451946C1;
+	Wed,  3 Jul 2024 10:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004284; cv=none; b=uSpZPXhg3QfJj5R2Q2KTZIMoIfhf4+hhdcICFEtB1rMY9lEqxuIL58y7bMKT9Yam/IF2ylNrwGveoYzcR8t8rGoiFfSJvLiUnZyyPWTkck38bZfcPOnJrkF+z3lhVa/AeiMkUHD+yIjA2DzVins/9zzGIIwx6w+IQyPhQyeb5+w=
+	t=1720004288; cv=none; b=F8hXlef6BN2w5nn1chcyGeLHQ7FvH6lr0PgvDFkH2WICU9n3LhWIN3uIfDD5vbZkLFIlXygZVi/8tUxIMz+34diwDNinPsWkCI4odI69Ghr3wYY2vKgDODb/+BmYnw6pJYWps/2Sxp2b/hhGattnV0a96Ry4MVWu9+5pUkoAKTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004284; c=relaxed/simple;
-	bh=EncP1jqPX5EW3x5c69Yj4O4FQDBYbYLATIznxk5CtBY=;
+	s=arc-20240116; t=1720004288; c=relaxed/simple;
+	bh=KLMKqqXsfcWO+qVZL/+yvCH/oNEWTLxVDib3V6/9vXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=smtrr88fWU2kZgprHzvqtaII+H8zApxFs2I3hRoUZx6XDehOlanskoJTEwsLMUBq3FXGDdm1jAGruG1BYG23hBSYuNxBCTJ4THn752eHsDLCZt1j6yJ1HvP5rrBWcl4IWeBnyA9jaxUQIl1jmC+PW3NktoQ0Jc0T8IMaqv+wl6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOXqEYYw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jZWjDTjktAFh6tuyWZWJSQAVcwARRkihHOXjXr1jTIoMiyuFxpTnyM/hv2afyR+/quxdROpcTDH161+uXiMv2v2tWwKq5GTkZHsNQaDXhL9ajvFzU8AySSz+DQHO13FY7K0mWB1zx1/djZYMiBPJ7o2TsG6j4JZAsrXqs5/HNN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BHh2sdLn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOXqEYYw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A335C32781;
-	Wed,  3 Jul 2024 10:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BHh2sdLn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 750A5C4AF0F;
+	Wed,  3 Jul 2024 10:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004284;
-	bh=EncP1jqPX5EW3x5c69Yj4O4FQDBYbYLATIznxk5CtBY=;
+	s=korg; t=1720004288;
+	bh=KLMKqqXsfcWO+qVZL/+yvCH/oNEWTLxVDib3V6/9vXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sOXqEYYwHfqQxb+b70uvfzBv0s/XW0uZ01u5IQN0bbU2s6s15dELIDq/Csloyodvq
-	 3umlHTCA0Cd0WQDSK/lmTkHaViDQoRcmyXoAZf6Zs9T9x3uBMO39CJoXFOl05XE8bt
-	 p0XKSoyaV0rDPX7ukoyN1NOTsc6BzU1q5rOYSUro=
+	b=BHh2sdLnrzYzevyuquOzsrDrxaR7dQ8RgE8Z9fa7TfyahjhJrt/B8ZYBTPKFhkGXR
+	 hRqztLvQsMp0+H2qfi59GXwD5LUaRgysInqdX575OrSZ/13CyUZs4xXypN63BGlLaQ
+	 P+r20g35V5p976VFEhOrCbaorCyOK+AfPmjeNkhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 5.4 181/189] ftruncate: pass a signed offset
-Date: Wed,  3 Jul 2024 12:40:42 +0200
-Message-ID: <20240703102848.302557831@linuxfoundation.org>
+	Jaime Liao <jaimeliao@mxic.com.tw>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 5.4 182/189] mtd: spinand: macronix: Add support for serial NAND flash
+Date: Wed,  3 Jul 2024 12:40:43 +0200
+Message-ID: <20240703102848.339692667@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -50,72 +50,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Jaime Liao <jaimeliao@mxic.com.tw>
 
-commit 4b8e88e563b5f666446d002ad0dc1e6e8e7102b0 upstream.
+commit c374839f9b4475173e536d1eaddff45cb481dbdf upstream.
 
-The old ftruncate() syscall, using the 32-bit off_t misses a sign
-extension when called in compat mode on 64-bit architectures.  As a
-result, passing a negative length accidentally succeeds in truncating
-to file size between 2GiB and 4GiB.
+Macronix NAND Flash devices are available in different configurations
+and densities.
 
-Changing the type of the compat syscall to the signed compat_off_t
-changes the behavior so it instead returns -EINVAL.
+MX"35" means SPI NAND
+MX35"LF"/"UF" , LF means 3V and UF meands 1.8V
+MX35LF"2G" , 2G means 2Gbits
+MX35LF2G"E4"/"24"/"14",
+E4 means internal ECC and Quad I/O(x4)
+24 means 8-bit ecc requirement and Quad I/O(x4)
+14 means 4-bit ecc requirement and Quad I/O(x4)
 
-The native entry point, the truncate() syscall and the corresponding
-loff_t based variants are all correct already and do not suffer
-from this mistake.
+MX35LF2G14AC is 3V 2Gbit serial NAND flash device
+(without on-die ECC)
+https://www.mxic.com.tw/Lists/Datasheet/Attachments/7926/MX35LF2G14AC,%203V,%202Gb,%20v1.1.pdf
 
-Fixes: 3f6d078d4acc ("fix compat truncate/ftruncate")
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+MX35UF4G24AD is 1.8V 4Gbit serial NAND flash device
+(without on-die ECC)
+https://www.mxic.com.tw/Lists/Datasheet/Attachments/7980/MX35UF4G24AD,%201.8V,%204Gb,%20v0.00.pdf
+
+MX35UF4GE4AD/MX35UF2GE4AD are 1.8V 4G/2Gbit serial
+NAND flash device with 8-bit on-die ECC
+https://www.mxic.com.tw/Lists/Datasheet/Attachments/7983/MX35UF4GE4AD,%201.8V,%204Gb,%20v0.00.pdf
+
+MX35UF2GE4AC/MX35UF1GE4AC are 1.8V 2G/1Gbit serial
+NAND flash device with 8-bit on-die ECC
+https://www.mxic.com.tw/Lists/Datasheet/Attachments/7974/MX35UF2GE4AC,%201.8V,%202Gb,%20v1.0.pdf
+
+MX35UF2G14AC/MX35UF1G14AC are 1.8V 2G/1Gbit serial
+NAND flash device (without on-die ECC)
+https://www.mxic.com.tw/Lists/Datasheet/Attachments/7931/MX35UF2G14AC,%201.8V,%202Gb,%20v1.1.pdf
+
+Validated via normal(default) and QUAD mode by read, erase, read back,
+on Xilinx Zynq PicoZed FPGA board which included Macronix
+SPI Host(drivers/spi/spi-mxic.c).
+
+Signed-off-by: Jaime Liao <jaimeliao@mxic.com.tw>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/1621475108-22523-1-git-send-email-jaimeliao@mxic.com.tw
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/open.c                |    4 ++--
- include/linux/compat.h   |    2 +-
- include/linux/syscalls.h |    2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/mtd/nand/spi/macronix.c |   99 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 99 insertions(+)
 
---- a/fs/open.c
-+++ b/fs/open.c
-@@ -200,13 +200,13 @@ out:
- 	return error;
- }
+--- a/drivers/mtd/nand/spi/macronix.c
++++ b/drivers/mtd/nand/spi/macronix.c
+@@ -132,6 +132,105 @@ static const struct spinand_info macroni
+ 					      &update_cache_variants),
+ 		     SPINAND_HAS_QE_BIT,
+ 		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout, NULL)),
++	SPINAND_INFO("MX35LF2G14AC", 0x20,
++		     NAND_MEMORG(1, 2048, 64, 64, 2048, 40, 2, 1, 1),
++		     NAND_ECCREQ(4, 512),
++		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
++					      &write_cache_variants,
++					      &update_cache_variants),
++		     SPINAND_HAS_QE_BIT,
++		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
++				     mx35lf1ge4ab_ecc_get_status)),
++	SPINAND_INFO("MX35UF4G24AD", 0xb5,
++		     NAND_MEMORG(1, 4096, 256, 64, 2048, 40, 2, 1, 1),
++		     NAND_ECCREQ(8, 512),
++		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
++					      &write_cache_variants,
++					      &update_cache_variants),
++		     SPINAND_HAS_QE_BIT,
++		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
++				     mx35lf1ge4ab_ecc_get_status)),
++	SPINAND_INFO("MX35UF4GE4AD", 0xb7,
++		     NAND_MEMORG(1, 4096, 256, 64, 2048, 40, 1, 1, 1),
++		     NAND_ECCREQ(8, 512),
++		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
++					      &write_cache_variants,
++					      &update_cache_variants),
++		     SPINAND_HAS_QE_BIT,
++		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
++				     mx35lf1ge4ab_ecc_get_status)),
++	SPINAND_INFO("MX35UF2G14AC", 0xa0,
++		     NAND_MEMORG(1, 2048, 64, 64, 2048, 40, 2, 1, 1),
++		     NAND_ECCREQ(4, 512),
++		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
++					      &write_cache_variants,
++					      &update_cache_variants),
++		     SPINAND_HAS_QE_BIT,
++		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
++				     mx35lf1ge4ab_ecc_get_status)),
++	SPINAND_INFO("MX35UF2G24AD", 0xa4,
++		     NAND_MEMORG(1, 2048, 128, 64, 2048, 40, 2, 1, 1),
++		     NAND_ECCREQ(8, 512),
++		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
++					      &write_cache_variants,
++					      &update_cache_variants),
++		     SPINAND_HAS_QE_BIT,
++		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
++				     mx35lf1ge4ab_ecc_get_status)),
++	SPINAND_INFO("MX35UF2GE4AD", 0xa6,
++		     NAND_MEMORG(1, 2048, 128, 64, 2048, 40, 1, 1, 1),
++		     NAND_ECCREQ(8, 512),
++		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
++					      &write_cache_variants,
++					      &update_cache_variants),
++		     SPINAND_HAS_QE_BIT,
++		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
++				     mx35lf1ge4ab_ecc_get_status)),
++	SPINAND_INFO("MX35UF2GE4AC", 0xa2,
++		     NAND_MEMORG(1, 2048, 64, 64, 2048, 40, 1, 1, 1),
++		     NAND_ECCREQ(4, 512),
++		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
++					      &write_cache_variants,
++					      &update_cache_variants),
++		     SPINAND_HAS_QE_BIT,
++		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
++				     mx35lf1ge4ab_ecc_get_status)),
++	SPINAND_INFO("MX35UF1G14AC", 0x90,
++		     NAND_MEMORG(1, 2048, 64, 64, 1024, 20, 1, 1, 1),
++		     NAND_ECCREQ(4, 512),
++		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
++					      &write_cache_variants,
++					      &update_cache_variants),
++		     SPINAND_HAS_QE_BIT,
++		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
++				     mx35lf1ge4ab_ecc_get_status)),
++	SPINAND_INFO("MX35UF1G24AD", 0x94,
++		     NAND_MEMORG(1, 2048, 128, 64, 1024, 20, 1, 1, 1),
++		     NAND_ECCREQ(8, 512),
++		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
++					      &write_cache_variants,
++					      &update_cache_variants),
++		     SPINAND_HAS_QE_BIT,
++		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
++				     mx35lf1ge4ab_ecc_get_status)),
++	SPINAND_INFO("MX35UF1GE4AD", 0x96,
++		     NAND_MEMORG(1, 2048, 128, 64, 1024, 20, 1, 1, 1),
++		     NAND_ECCREQ(8, 512),
++		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
++					      &write_cache_variants,
++					      &update_cache_variants),
++		     SPINAND_HAS_QE_BIT,
++		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
++				     mx35lf1ge4ab_ecc_get_status)),
++	SPINAND_INFO("MX35UF1GE4AC", 0x92,
++		     NAND_MEMORG(1, 2048, 64, 64, 1024, 20, 1, 1, 1),
++		     NAND_ECCREQ(4, 512),
++		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
++					      &write_cache_variants,
++					      &update_cache_variants),
++		     SPINAND_HAS_QE_BIT,
++		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
++				     mx35lf1ge4ab_ecc_get_status)),
+ };
  
--SYSCALL_DEFINE2(ftruncate, unsigned int, fd, unsigned long, length)
-+SYSCALL_DEFINE2(ftruncate, unsigned int, fd, off_t, length)
- {
- 	return do_sys_ftruncate(fd, length, 1);
- }
- 
- #ifdef CONFIG_COMPAT
--COMPAT_SYSCALL_DEFINE2(ftruncate, unsigned int, fd, compat_ulong_t, length)
-+COMPAT_SYSCALL_DEFINE2(ftruncate, unsigned int, fd, compat_off_t, length)
- {
- 	return do_sys_ftruncate(fd, length, 1);
- }
---- a/include/linux/compat.h
-+++ b/include/linux/compat.h
-@@ -567,7 +567,7 @@ asmlinkage long compat_sys_fstatfs(unsig
- asmlinkage long compat_sys_fstatfs64(unsigned int fd, compat_size_t sz,
- 				     struct compat_statfs64 __user *buf);
- asmlinkage long compat_sys_truncate(const char __user *, compat_off_t);
--asmlinkage long compat_sys_ftruncate(unsigned int, compat_ulong_t);
-+asmlinkage long compat_sys_ftruncate(unsigned int, compat_off_t);
- /* No generic prototype for truncate64, ftruncate64, fallocate */
- asmlinkage long compat_sys_openat(int dfd, const char __user *filename,
- 				  int flags, umode_t mode);
---- a/include/linux/syscalls.h
-+++ b/include/linux/syscalls.h
-@@ -422,7 +422,7 @@ asmlinkage long sys_fstatfs(unsigned int
- asmlinkage long sys_fstatfs64(unsigned int fd, size_t sz,
- 				struct statfs64 __user *buf);
- asmlinkage long sys_truncate(const char __user *path, long length);
--asmlinkage long sys_ftruncate(unsigned int fd, unsigned long length);
-+asmlinkage long sys_ftruncate(unsigned int fd, off_t length);
- #if BITS_PER_LONG == 32
- asmlinkage long sys_truncate64(const char __user *path, loff_t length);
- asmlinkage long sys_ftruncate64(unsigned int fd, loff_t length);
+ static int macronix_spinand_detect(struct spinand_device *spinand)
 
 
