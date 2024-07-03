@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B32817B503;
-	Wed,  3 Jul 2024 11:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA0D17B51F;
+	Wed,  3 Jul 2024 11:26:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006001; cv=none; b=FEjhotAK97ZZUY03kqjQqw/59xssPFAtZAxO7KlGLmO6rk+ePBwNIMwm6JUQS6HwUaSWSW0s/ZUct9hPOCNugG7MI8mq9PleRiiEjL+qnQSwOemPw0gpr2DgV1Ey6ZLG/XxBOKyGVkFso7J1+VRrKXwxoNtT1I8do5yn+PfSh4k=
+	t=1720006004; cv=none; b=nHi98iLOpWKxMJjeAXcwUvUMlDFTARJG95IBNph5KVtNZCMnkdse9DnKiLy4+Jrey6iPTIBSUCwoNsHUxHh02KZdm/uqFu5sFe5i/AbmgocpNlKsFOcIJp08tKEEaqHCpsStzM68k9PjlDkgqfyY+DuOns6WnaOrlKU5Dka6fe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006001; c=relaxed/simple;
-	bh=xiQbJ2VgtzUmmMJ5Wau66+j7klSVQZ51qIR/x94mRbc=;
+	s=arc-20240116; t=1720006004; c=relaxed/simple;
+	bh=r5bLIATfS70mNEf5PUJVZHNiCcAqzhy/0OJ1X5AQoNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NHzjYA+Brla6IzOBS+sNeyy0y9udL8ru13W82PThAoKLJeYhZXsLcSRepZqdcS55ieGRkXyifu6Yjb/zwh1kQBmHgGvmRM7n1ZezA1gQaQMqnxRit76TgydltRTUfOfgFGxjJ9kTP4zlxd5Grq9qpJoKB3rkjgmJKDf+DysS9Bw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VRJvJwFU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mwJyzEuy08sIxVOsGffzoKeO1uTAmbEEAhaaJjRPwJLlu71cEOVWsinqOOHkTzEz2rWeuwf7Sub/iCWJUmSTuTAPYwHq/5wbrvzhn4O3Tv8WUEt1dvarZrqkBjXzoKqoLptquEkw9INfc8S1mXNZnAzmRG9dJXpcp+5aVROrZX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Olz3DqUl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VRJvJwFU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856B4C32781;
-	Wed,  3 Jul 2024 11:26:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Olz3DqUl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69409C2BD10;
+	Wed,  3 Jul 2024 11:26:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006000;
-	bh=xiQbJ2VgtzUmmMJ5Wau66+j7klSVQZ51qIR/x94mRbc=;
+	s=korg; t=1720006003;
+	bh=r5bLIATfS70mNEf5PUJVZHNiCcAqzhy/0OJ1X5AQoNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VRJvJwFU8Mjevw3BF6JVkblDIsKmTAERX4eQxZsTDCCWb9sT2pXDndEGO6UclqlGf
-	 pyB3l8QHa3sFBT3XhiIOsHczMcIzK6nB+5K4RqiLmRsqG869+aCHeq3vhkWWvj11Ol
-	 +/FQ5kn2ThU6ONDJ2qlnOB91XpJywKqR8faV2TsE=
+	b=Olz3DqUlUKYFXG1rq/OKltuBAcX/S2EtHjJoxfbM/2fZgl3Vz937CG/xheM6GTVeK
+	 HWJpV0sMYq4VpTpfC2W0rK0ccJjf5VN4D/26pQOECYxEAGy8uFNmVsJpgWwff5+G87
+	 VwS6CzTKxFQlsjappg/Qf9BSIjV3PxTfmIcPtJ3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 267/356] drm/amdgpu: fix UBSAN warning in kv_dpm.c
-Date: Wed,  3 Jul 2024 12:40:03 +0200
-Message-ID: <20240703102923.217881584@linuxfoundation.org>
+Subject: [PATCH 5.15 268/356] net: mdio: add helpers to extract clause 45 regad and devad fields
+Date: Wed,  3 Jul 2024 12:40:04 +0200
+Message-ID: <20240703102923.255373706@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,34 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-[ Upstream commit f0d576f840153392d04b2d52cf3adab8f62e8cb6 ]
+[ Upstream commit c6af53f038aa32cec12e8a305ba07c7ef168f1b0 ]
 
-Adds bounds check for sumo_vid_mapping_entry.
+Add a couple of helpers and definitions to extract the clause 45 regad
+and devad fields from the regnum passed into MDIO drivers.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3392
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Tested-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 8851346912a1 ("net: stmmac: Assign configured channel value to EXTTS event")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/kv_dpm.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/mdio.h | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/kv_dpm.c b/drivers/gpu/drm/amd/pm/powerplay/kv_dpm.c
-index b56854c03ead6..4291bf09fc7b4 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/kv_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/kv_dpm.c
-@@ -163,6 +163,8 @@ static void sumo_construct_vid_mapping_table(struct amdgpu_device *adev,
+diff --git a/include/linux/mdio.h b/include/linux/mdio.h
+index 5e6dc38f418e4..3a6ff4e7284a8 100644
+--- a/include/linux/mdio.h
++++ b/include/linux/mdio.h
+@@ -7,6 +7,7 @@
+ #define __LINUX_MDIO_H__
  
- 	for (i = 0; i < SUMO_MAX_HARDWARE_POWERLEVELS; i++) {
- 		if (table[i].ulSupportedSCLK != 0) {
-+			if (table[i].usVoltageIndex >= SUMO_MAX_NUMBER_VOLTAGES)
-+				continue;
- 			vid_mapping_table->entries[table[i].usVoltageIndex].vid_7bit =
- 				table[i].usVoltageID;
- 			vid_mapping_table->entries[table[i].usVoltageIndex].vid_2bit =
+ #include <uapi/linux/mdio.h>
++#include <linux/bitfield.h>
+ #include <linux/mod_devicetable.h>
+ 
+ /* Or MII_ADDR_C45 into regnum for read/write on mii_bus to enable the 21 bit
+@@ -14,6 +15,7 @@
+  */
+ #define MII_ADDR_C45		(1<<30)
+ #define MII_DEVADDR_C45_SHIFT	16
++#define MII_DEVADDR_C45_MASK	GENMASK(20, 16)
+ #define MII_REGADDR_C45_MASK	GENMASK(15, 0)
+ 
+ struct gpio_desc;
+@@ -355,6 +357,16 @@ static inline u32 mdiobus_c45_addr(int devad, u16 regnum)
+ 	return MII_ADDR_C45 | devad << MII_DEVADDR_C45_SHIFT | regnum;
+ }
+ 
++static inline u16 mdiobus_c45_regad(u32 regnum)
++{
++	return FIELD_GET(MII_REGADDR_C45_MASK, regnum);
++}
++
++static inline u16 mdiobus_c45_devad(u32 regnum)
++{
++	return FIELD_GET(MII_DEVADDR_C45_MASK, regnum);
++}
++
+ static inline int __mdiobus_c45_read(struct mii_bus *bus, int prtad, int devad,
+ 				     u16 regnum)
+ {
 -- 
 2.43.0
 
