@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B71136E2A;
-	Wed,  3 Jul 2024 10:45:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD691836CB;
+	Wed,  3 Jul 2024 10:45:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003544; cv=none; b=um1CG3pgHiRp0btFDp75NDsluFU2ywPlnLePoU/aXuRMHcpIQF/TnnvdWnnyMJ3tSNw9lydb4TEvtK08JUTLTlgOGBZsaokzbFpUjFmL0yfViaL5j2qjRjQ0eaKAnevXFcV3B+ivqvuN4gsNobNNN+u6UzcmNeSrVBstQ20lMsU=
+	t=1720003547; cv=none; b=ag2Ly6tpclI8rJW9jIvUb2XLtwASy66/PVu1wSJXwFh8R9EGEHl9yto8hR5xznD8Jxya4QS69twRIyvYZECtUnaaNZd/+TSoZUVeoV3mU3Hbi321eMD0wGCioovFaT+ACyzpFCpvx2DQ9Sntj3X5lZ3Uw+iTNw/8Z1ZXqla6qkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003544; c=relaxed/simple;
-	bh=+YSk+Lisn7Ycf1eBWxeq8AgGRtdqansDnf+t4xVktQo=;
+	s=arc-20240116; t=1720003547; c=relaxed/simple;
+	bh=imGZ1Na2M5Sz6Yj3PmR7AfHftcz/TiVL3Byg2KWbes4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XbnkZ8QEN/OsVV3V4cDgCZkb3ks7RfZ9VCDGFsC8LkV8/hk5T3s+pb0vpLFgKaFddlUThkQHSq/Gl3h8NuIA5xAlqoaoq6HzgWNJ/nlU8jyK5NpijKEWANE6khsQXeBP8JxhYDefIFArsWuEYwt8zjeupLu/7Q/UFZdAI+GICTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B0HY7Tcr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CWPlLB7o3dJnihd3qKvrOBc7eHEHoQz404X0Ss0rYirHy3ak8LLbXqO8y5QBh5lj0p5miJS1BbvCnF0zxqzN452uRVB5o2DI0oTqpa4EsMlJDCa5LH2oDSo/pb0H7lXjg0MZTAAeTovU+WRAGJQ46z1tBBtNYW7liOeOjq3S4Kg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/QDtNzs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B0HY7Tcr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C82BC2BD10;
-	Wed,  3 Jul 2024 10:45:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/QDtNzs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 150F9C2BD10;
+	Wed,  3 Jul 2024 10:45:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003544;
-	bh=+YSk+Lisn7Ycf1eBWxeq8AgGRtdqansDnf+t4xVktQo=;
+	s=korg; t=1720003547;
+	bh=imGZ1Na2M5Sz6Yj3PmR7AfHftcz/TiVL3Byg2KWbes4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B0HY7Tcr7fa588GkBOHuVDLn4worPrtjpxY2S7LOouvjKmRh5ITU2G0eZLUQU4Q/3
-	 RnHzVVDp0dC1UizqL+Ae3gmOyIz+22ujgtIWJLs5mK3ltVjUpT5nelOOZJTIwEKCHO
-	 CSCJJ2Rc3uCEhS/ZLrkyqp5ouEn/Vr9qN329XL38=
+	b=i/QDtNzsWsK29aCzoZ+NyMCk7VF9fTMtsZYdDuWCst0BsvY+m4QhP1Y3VxFYTvtDY
+	 0TeL9KDjUTOz01LU+xD7oUUwlhw3/Oz2v/CtKOWadziVw7Awc915VQ22QkqTmKwtJ2
+	 Afd7U1ZUIwXppsITFZmVQyPVp/P/riVEXIoaopdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 083/139] ARM: dts: samsung: exynos4412-origen: fix keypad no-autorepeat
-Date: Wed,  3 Jul 2024 12:39:40 +0200
-Message-ID: <20240703102833.576474852@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.19 057/139] nilfs2: fix potential kernel bug due to lack of writeback flag waiting
+Date: Wed,  3 Jul 2024 12:39:14 +0200
+Message-ID: <20240703102832.592271743@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -50,43 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 88208d3cd79821117fd3fb80d9bcab618467d37b ]
+commit a4ca369ca221bb7e06c725792ac107f0e48e82e7 upstream.
 
-Although the Samsung SoC keypad binding defined
-linux,keypad-no-autorepeat property, Linux driver never implemented it
-and always used linux,input-no-autorepeat.  Correct the DTS to use
-property actually implemented.
+Destructive writes to a block device on which nilfs2 is mounted can cause
+a kernel bug in the folio/page writeback start routine or writeback end
+routine (__folio_start_writeback in the log below):
 
-This also fixes dtbs_check errors like:
+ kernel BUG at mm/page-writeback.c:3070!
+ Oops: invalid opcode: 0000 [#1] PREEMPT SMP KASAN PTI
+ ...
+ RIP: 0010:__folio_start_writeback+0xbaa/0x10e0
+ Code: 25 ff 0f 00 00 0f 84 18 01 00 00 e8 40 ca c6 ff e9 17 f6 ff ff
+  e8 36 ca c6 ff 4c 89 f7 48 c7 c6 80 c0 12 84 e8 e7 b3 0f 00 90 <0f>
+  0b e8 1f ca c6 ff 4c 89 f7 48 c7 c6 a0 c6 12 84 e8 d0 b3 0f 00
+ ...
+ Call Trace:
+  <TASK>
+  nilfs_segctor_do_construct+0x4654/0x69d0 [nilfs2]
+  nilfs_segctor_construct+0x181/0x6b0 [nilfs2]
+  nilfs_segctor_thread+0x548/0x11c0 [nilfs2]
+  kthread+0x2f0/0x390
+  ret_from_fork+0x4b/0x80
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
 
-  exynos4412-origen.dtb: keypad@100a0000: 'linux,keypad-no-autorepeat' does not match any of the regexes: '^key-[0-9a-z]+$', 'pinctrl-[0-9]+'
+This is because when the log writer starts a writeback for segment summary
+blocks or a super root block that use the backing device's page cache, it
+does not wait for the ongoing folio/page writeback, resulting in an
+inconsistent writeback state.
 
+Fix this issue by waiting for ongoing writebacks when putting
+folios/pages on the backing device into writeback state.
+
+Link: https://lkml.kernel.org/r/20240530141556.4411-1-konishi.ryusuke@gmail.com
+Fixes: 9ff05123e3bf ("nilfs2: segment constructor")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Cc: <stable@vger.kernel.org>
-Fixes: bd08f6277e44 ("ARM: dts: Add keypad entries to Exynos4412 based Origen")
-Link: https://lore.kernel.org/r/20240312183105.715735-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/exynos4412-origen.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nilfs2/segment.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm/boot/dts/exynos4412-origen.dts b/arch/arm/boot/dts/exynos4412-origen.dts
-index e5bfa76185a22..d42b0711b2ceb 100644
---- a/arch/arm/boot/dts/exynos4412-origen.dts
-+++ b/arch/arm/boot/dts/exynos4412-origen.dts
-@@ -437,7 +437,7 @@ buck9_reg: BUCK9 {
- &keypad {
- 	samsung,keypad-num-rows = <3>;
- 	samsung,keypad-num-columns = <2>;
--	linux,keypad-no-autorepeat;
-+	linux,input-no-autorepeat;
- 	wakeup-source;
- 	pinctrl-0 = <&keypad_rows &keypad_cols>;
- 	pinctrl-names = "default";
--- 
-2.43.0
-
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -1692,6 +1692,7 @@ static void nilfs_segctor_prepare_write(
+ 			if (bh->b_page != bd_page) {
+ 				if (bd_page) {
+ 					lock_page(bd_page);
++					wait_on_page_writeback(bd_page);
+ 					clear_page_dirty_for_io(bd_page);
+ 					set_page_writeback(bd_page);
+ 					unlock_page(bd_page);
+@@ -1705,6 +1706,7 @@ static void nilfs_segctor_prepare_write(
+ 			if (bh == segbuf->sb_super_root) {
+ 				if (bh->b_page != bd_page) {
+ 					lock_page(bd_page);
++					wait_on_page_writeback(bd_page);
+ 					clear_page_dirty_for_io(bd_page);
+ 					set_page_writeback(bd_page);
+ 					unlock_page(bd_page);
+@@ -1721,6 +1723,7 @@ static void nilfs_segctor_prepare_write(
+ 	}
+ 	if (bd_page) {
+ 		lock_page(bd_page);
++		wait_on_page_writeback(bd_page);
+ 		clear_page_dirty_for_io(bd_page);
+ 		set_page_writeback(bd_page);
+ 		unlock_page(bd_page);
 
 
