@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED45C16C6A8;
-	Wed,  3 Jul 2024 11:06:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E29D16C6A8;
+	Wed,  3 Jul 2024 11:06:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004775; cv=none; b=mP904evl9rGKMZDHkN8FBPZ+efJ9s8y87k+fjgXpJtF9D1MJqm8kYdY2jqoOA18AJwxEwnKm+/mt4iM1a3vdDdh120YrKc4G7YxPBUdkTkXPG9xy+q357u6gQqbbL3wZyFnG7/xDnceGkx8+C2yBiwEBpsXO56WYcVvAVrrmj1Y=
+	t=1720004779; cv=none; b=A+fRGNUSAX+uAkURximIy8tQ+/urRqoQJrlZsvzl8Bb3EMzZTvMeMPR6GX3H328NG2ZriUpZvimlN0WDcl+26KFpWI3O5Ab1cTTXBphnxPvcgK90SYM2c9ZTNI/fkviAHBtljIQerfDovhop+OFEgDaSHL9YOob42uxUbBQEols=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004775; c=relaxed/simple;
-	bh=YdOGR/xkAksvrcdQi+HLBrGaasbGIzjBUhVhnbyaO2g=;
+	s=arc-20240116; t=1720004779; c=relaxed/simple;
+	bh=4EyCENxsh+I1qQXpXvsB5tOk4NjyvVXEtgm/Zanjb6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qdCB9dnIOUXtNHQLSLPCy4G/SenLk8VroFAAtTZutfyaRUhYT8ah+f37aL7szcc/gGx/Q6SSwvFqTylbeaaxFUPNnGxaojKQrq5naW8s+7cAoUl6E7+hf28U1CZul0AcCtvM58X/lgVqB6pNgEYfP3FKOuaPE7b7F3WusywjYuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W3Ok2mkE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ETGqLBriuMM10UM0YlOLNqmN9yusrR1FCnKFscCFgWdCTMx81bQRb+xd42UL5VEMWod/OkaIMJ7fHwRaV8Tt8zlyWXlQI6D5EoAnbRzzpZQ4nWkl67YM1x+oDRhyAFRyADFgLyGawi4L9Kx22z61Sg3rPwUJp5SKdoD+Q6nWTgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ht9HtG4q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W3Ok2mkE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E64BC2BD10;
-	Wed,  3 Jul 2024 11:06:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ht9HtG4q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24B3CC2BD10;
+	Wed,  3 Jul 2024 11:06:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004774;
-	bh=YdOGR/xkAksvrcdQi+HLBrGaasbGIzjBUhVhnbyaO2g=;
+	s=korg; t=1720004777;
+	bh=4EyCENxsh+I1qQXpXvsB5tOk4NjyvVXEtgm/Zanjb6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W3Ok2mkEoHktXV2bWtT1UY8dEOa5V/qKwerLm4cHQGieG2vvOTrYr+//xHzlBVita
-	 hChKLiLyn0RsrO5ZPGlo/oMRQi+RiM/RHzndt4LRS6iXVJ5Vtzs17OK/6otQEgqLlr
-	 lAk0T6PrlHmO9tnOxs+c6moltUWqPt8lysoEKbaA=
+	b=Ht9HtG4q7/UhUBwiYS6X3MvrTpNaDzrL2VFE+CfAMOTGZdTAcqYdxwUSVkTYheU+V
+	 x6kUf8tO98Un73CPm3CLOZ1Nu1e1Bv2wLSHT0LCVyQ/0WkWpxvZrEA+K+9ogp1VmNc
+	 AN9bg5K7zlqv6PWY6456/tEPro8E0pancDU+m+ko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5186630949e3c55f0799@syzkaller.appspotmail.com,
-	Oliver Neukum <oneukum@suse.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Erico Nunes <nunes.erico@gmail.com>,
+	Qiang Yu <yuq825@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 153/290] net: usb: rtl8150 fix unintiatilzed variables in rtl8150_get_link_ksettings
-Date: Wed,  3 Jul 2024 12:38:54 +0200
-Message-ID: <20240703102909.959898097@linuxfoundation.org>
+Subject: [PATCH 5.10 124/290] drm/lima: mask irqs in timeout path before hard reset
+Date: Wed,  3 Jul 2024 12:38:25 +0200
+Message-ID: <20240703102908.873195394@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -52,38 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Erico Nunes <nunes.erico@gmail.com>
 
-[ Upstream commit fba383985354e83474f95f36d7c65feb75dba19d ]
+[ Upstream commit a421cc7a6a001b70415aa4f66024fa6178885a14 ]
 
-This functions retrieves values by passing a pointer. As the function
-that retrieves them can fail before touching the pointers, the variables
-must be initialized.
+There is a race condition in which a rendering job might take just long
+enough to trigger the drm sched job timeout handler but also still
+complete before the hard reset is done by the timeout handler.
+This runs into race conditions not expected by the timeout handler.
+In some very specific cases it currently may result in a refcount
+imbalance on lima_pm_idle, with a stack dump such as:
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+5186630949e3c55f0799@syzkaller.appspotmail.com
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Link: https://lore.kernel.org/r/20240619132816.11526-1-oneukum@suse.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[10136.669170] WARNING: CPU: 0 PID: 0 at drivers/gpu/drm/lima/lima_devfreq.c:205 lima_devfreq_record_idle+0xa0/0xb0
+...
+[10136.669459] pc : lima_devfreq_record_idle+0xa0/0xb0
+...
+[10136.669628] Call trace:
+[10136.669634]  lima_devfreq_record_idle+0xa0/0xb0
+[10136.669646]  lima_sched_pipe_task_done+0x5c/0xb0
+[10136.669656]  lima_gp_irq_handler+0xa8/0x120
+[10136.669666]  __handle_irq_event_percpu+0x48/0x160
+[10136.669679]  handle_irq_event+0x4c/0xc0
+
+We can prevent that race condition entirely by masking the irqs at the
+beginning of the timeout handler, at which point we give up on waiting
+for that job entirely.
+The irqs will be enabled again at the next hard reset which is already
+done as a recovery by the timeout handler.
+
+Signed-off-by: Erico Nunes <nunes.erico@gmail.com>
+Reviewed-by: Qiang Yu <yuq825@gmail.com>
+Signed-off-by: Qiang Yu <yuq825@gmail.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240405152951.1531555-4-nunes.erico@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/rtl8150.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/lima/lima_sched.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/usb/rtl8150.c b/drivers/net/usb/rtl8150.c
-index bf8a60533f3e7..d128b4ac7c9f0 100644
---- a/drivers/net/usb/rtl8150.c
-+++ b/drivers/net/usb/rtl8150.c
-@@ -778,7 +778,8 @@ static int rtl8150_get_link_ksettings(struct net_device *netdev,
- 				      struct ethtool_link_ksettings *ecmd)
- {
- 	rtl8150_t *dev = netdev_priv(netdev);
--	short lpa, bmcr;
-+	short lpa = 0;
-+	short bmcr = 0;
- 	u32 supported;
+diff --git a/drivers/gpu/drm/lima/lima_sched.c b/drivers/gpu/drm/lima/lima_sched.c
+index f6e7a88a56f1b..290f875c28598 100644
+--- a/drivers/gpu/drm/lima/lima_sched.c
++++ b/drivers/gpu/drm/lima/lima_sched.c
+@@ -419,6 +419,13 @@ static void lima_sched_timedout_job(struct drm_sched_job *job)
+ 	struct lima_sched_task *task = to_lima_task(job);
+ 	struct lima_device *ldev = pipe->ldev;
  
- 	supported = (SUPPORTED_10baseT_Half |
++	/*
++	 * The task might still finish while this timeout handler runs.
++	 * To prevent a race condition on its completion, mask all irqs
++	 * on the running core until the next hard reset completes.
++	 */
++	pipe->task_mask_irq(pipe);
++
+ 	if (!pipe->error)
+ 		DRM_ERROR("lima job timeout\n");
+ 
 -- 
 2.43.0
 
