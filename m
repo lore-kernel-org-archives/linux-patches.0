@@ -1,96 +1,115 @@
-Received: from outpost1.zedat.fu-berlin.de (outpost1.zedat.fu-berlin.de [130.133.4.66])
+Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890701DA313;
-	Wed,  3 Jul 2024 18:42:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.133.4.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F011862A8
+	for <patches@lists.linux.dev>; Wed,  3 Jul 2024 18:59:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720032171; cv=none; b=AIfcDtKf8KSl4ndKhkTnZWDMTwio46ywqG6uDhkQPqjxIoXVg5quXqsFJfzUlwKxBv/DrYfvyPtqEs2opbmrB3Nl8q/MxDu4lg5OZMT+Am2/kl5vvNlUbcfKU+NkmBUuJfpMQfkMCJvZEU4gk4FJgI5y1i6K2wf7gsV44fuzuao=
+	t=1720033164; cv=none; b=V5rNRxjNkNQjTax6K33kRz5klYi21VE68ULBe+v2tgYGwcolDM/CCpRCR/BLUz97PuD/4M3u+3/5/TqypJNtI3/hxm/f4fjdZss14PfGnRydvTu+7n2e+MpZ7z0SxtGBJPVYA18ixHO1ctVMamAHK1n5VkzyIwfaxXL1AvSWC1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720032171; c=relaxed/simple;
-	bh=OEcfoHYg331SnTSBIr49/Lcvpui+wt3h6L8IrnhUas0=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=YIlqSB68LvMxJ7mNrrnIQQsCMWFmT8fD5rr5tokzDM49xshXpq8lZFh+pDZE4G45jC2TJeefvXIokkdtJO/MMuA+6f9fjaEs+hoxh0//faniVrMaglv1lI4Bq3lBthv46VXmuYcQraD907f2PwikDQ997hrSJFoWlKmF0kTlFi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=physik.fu-berlin.de; spf=pass smtp.mailfrom=zedat.fu-berlin.de; dkim=pass (2048-bit key) header.d=fu-berlin.de header.i=@fu-berlin.de header.b=FMY1lUHY; arc=none smtp.client-ip=130.133.4.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=physik.fu-berlin.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zedat.fu-berlin.de
+	s=arc-20240116; t=1720033164; c=relaxed/simple;
+	bh=G37uwdK2DFoSoYhvUmZ+2s694kX02sXqTLYlQrlQwfA=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=MBo7GCXoMctZAdbZCwDYkPnT0QecwJPAKu/om7T4ROQKeSFxaLPK2FnFhCTwyy+YJftRy3w0xNPKiPYCKNxrglUN+HOr96WF4y2U1/u4Mnth/PD3wPJHESPwwwMY7GG72culoa8mOw/Sj7UKzgzpzd+Hk/aIN62cP2PI+0RW8eA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=z4d5odtW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GHU5L3cj; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fu-berlin.de header.i=@fu-berlin.de header.b="FMY1lUHY"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=fu-berlin.de; s=fub01; h=MIME-Version:Content-Transfer-Encoding:
-	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=hlu2sr8vi+BtevOGugMkazgCQNpMIBu84AwosKjyodE=; t=1720032167; x=1720636967; 
-	b=FMY1lUHYO7l6EjS5UFPxqbKvnkELtNGHRRoLjzTOsLz9ssTiHrfIUZJXcuL9JvvX+/TJEDQsk6S
-	VNOoQo7Sk6hFqD1QkJu53/c4EbL9NrGSDVF80lgcXU1EicwDM8nJpIzbQgzSYoSJ/SId3uDfEYH/s
-	Y8LunTOGjSRS/IZFTJgKslWm5391mcFR3KeVQf03pe2AwRdkw6BJ3ZdlCFj+Gub09Ai79PRMFctXO
-	e8tGngaGE2y6boO5glZEF+AQTB4BKUyslodrr7j4Y/EHIbwNstSDlaSJvq16Sc6rx9U5fZb9kxlXc
-	G5QYJK8FJqvyo6aqFQGPjHJLT4Ch1MlTKC6w==;
-Received: from inpost2.zedat.fu-berlin.de ([130.133.4.69])
-          by outpost.zedat.fu-berlin.de (Exim 4.97)
-          with esmtps (TLS1.3)
-          tls TLS_AES_256_GCM_SHA384
-          (envelope-from <glaubitz@zedat.fu-berlin.de>)
-          id 1sP4wF-000000039OK-3g9K; Wed, 03 Jul 2024 20:42:43 +0200
-Received: from p5b13a475.dip0.t-ipconnect.de ([91.19.164.117] helo=suse-laptop.fritz.box)
-          by inpost2.zedat.fu-berlin.de (Exim 4.97)
-          with esmtpsa (TLS1.3)
-          tls TLS_AES_256_GCM_SHA384
-          (envelope-from <glaubitz@physik.fu-berlin.de>)
-          id 1sP4wF-0000000070P-2WuS; Wed, 03 Jul 2024 20:42:43 +0200
-Message-ID: <c497d1abee4bf37663488c3a80e042a25303c0c4.camel@physik.fu-berlin.de>
-Subject: Re: [PATCH 5.4 000/189] 5.4.279-rc1 review
-From: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-To: Arnd Bergmann <arnd@arndb.de>, Naresh Kamboju
- <naresh.kamboju@linaro.org>,  Greg Kroah-Hartman
- <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
- linux-kernel@vger.kernel.org, Linus Torvalds
- <torvalds@linux-foundation.org>,  Andrew Morton
- <akpm@linux-foundation.org>, Guenter Roeck <linux@roeck-us.net>, shuah
- <shuah@kernel.org>,  patches@kernelci.org, lkft-triage@lists.linaro.org,
- Pavel Machek <pavel@denx.de>,  Jon Hunter <jonathanh@nvidia.com>, Florian
- Fainelli <f.fainelli@gmail.com>, Sudip Mukherjee
- <sudipm.mukherjee@gmail.com>, srw@sladewatkins.net, rwarsow@gmx.de, Conor
- Dooley <conor@kernel.org>, Allen <allen.lkml@gmail.com>, Mark Brown
- <broonie@kernel.org>,  Dan Carpenter <dan.carpenter@linaro.org>, Anders
- Roxell <anders.roxell@linaro.org>, Linux-sh list
- <linux-sh@vger.kernel.org>, Rich Felker <dalias@libc.org>
-Date: Wed, 03 Jul 2024 20:42:42 +0200
-In-Reply-To: <72ddde27-e2e2-4a46-a2ab-4d20a7a9424f@app.fastmail.com>
-References: <20240703102841.492044697@linuxfoundation.org>
-	 <CA+G9fYvAkELSdWF1EYyjS=d_jvCJD0O=aPnZFHUGnhYy6c1VCg@mail.gmail.com>
-	 <72ddde27-e2e2-4a46-a2ab-4d20a7a9424f@app.fastmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.2 
+	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="z4d5odtW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GHU5L3cj"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 590131140247;
+	Wed,  3 Jul 2024 14:59:21 -0400 (EDT)
+Received: from imap51 ([10.202.2.101])
+  by compute5.internal (MEProxy); Wed, 03 Jul 2024 14:59:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1720033161; x=1720119561; bh=TQ0KUlf6qH
+	/cHbOx2W4Z3Oy9UTzvWKmD0KHkZgA7+f0=; b=z4d5odtWssXeBgGWZN+sLFhwpb
+	E+EhBg2IOEoqaARs92cH7Ai7cq/bOSLY9fthAbI0l/FD0Av+nO5+R6mvG5toNaB3
+	Ql0vbMO47hlQbT7HXLibXv3RpNKGxd0wq4O3Da/VEeFP1pyue+YNkKYDQz3AKm9r
+	C/XdsBOmsDdKptc1mSa9szx1NQx3ouKbsxkFepy4DMvaYhEpUlin9HTZ66TA4BWW
+	HgeK8pasIREtapsxNutArL0LllODV1aJb+mifFXFKvmPo9kM0Yu/sb52H3I5CTHw
+	1cbfxrQCzsrZcHZcedaV//qQnlVgGZisUxeIF1O0UQF8M+iQepAq05q12heQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1720033161; x=1720119561; bh=TQ0KUlf6qH/cHbOx2W4Z3Oy9UTzv
+	WKmD0KHkZgA7+f0=; b=GHU5L3cj2jJCZEejB9nT4VPCtgPC0Kof0reOSa30Ad1b
+	u4HP2hLLlbSHgIrM58VnKaIUvvX2JAF2pV6YZPf306uTWA1M74BsQvM143vLDwrD
+	43RYv5KSLVw4n5VFBzt3kpwQUc1UWfa6MrYXw8cY5mz9nnZqsEIoVBus4n9IWKwD
+	ydk/3LWOELhpMyrwsgb/hz+oSU6I3eJsn2JYx41SQUQrCMzFq/mfPiVaSlt62dA2
+	oX78I1IdF3T33IS+tzqzOrPEe5O9wfsc15LVMxO6tnvx3T9YgQOYg/B2LgEcCEYx
+	Dckuqy+2Ipe3RgdAmq5CaVH98/XfblfRmbipfVGE4w==
+X-ME-Sender: <xms:iJ-FZowAfMPy9TIO7P_zluHpYdtq7zKVsrje3F4NBgKfdiD-W6dLtw>
+    <xme:iJ-FZsQfUNWCnOjITYAFVd-0A2_rw1oyXRPxotQdBDuuazsbGjhGrpA2W8G-JaSka
+    oe00tyY2fAFAKXih4o>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudejgddufeduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehr
+    nhguuceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrth
+    htvghrnhepffehueegteeihfegtefhjefgtdeugfegjeelheejueethfefgeeghfektdek
+    teffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprg
+    hrnhgusegrrhhnuggsrdguvg
+X-ME-Proxy: <xmx:iJ-FZqX2twdHU14dUK5UK4qEfJpjgDMFgjdayEeiwUYl-Y7sTAMyKQ>
+    <xmx:iJ-FZmiu60tHcY0vm7iamrYkGM2AF0h3ooyvdfW1TCZSpRQcKhkYIw>
+    <xmx:iJ-FZqB2LkZdlMPI5COvr7mTSE1bC1qbwHoi7nnYPib9rWFE8a-Glg>
+    <xmx:iJ-FZnLewjzT5EhexMd9Ai4d2ZQT-4EgznJGW3HLEYOHXbMwm4odwA>
+    <xmx:iZ-FZkw96U4IIww9z2LsPSWKYrlsgw8sp4JUZoO_wS0ZGsE5BkkFp0mm>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id C38FBB6008F; Wed,  3 Jul 2024 14:59:20 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-566-g3812ddbbc-fm-20240627.001-g3812ddbb
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Original-Sender: glaubitz@physik.fu-berlin.de
-X-ZEDAT-Hint: PO
+Message-Id: <fa6eb1f8-b681-4c3f-bf5f-4ca19da78b17@app.fastmail.com>
+In-Reply-To: <20240703183115.1075219-4-Jason@zx2c4.com>
+References: <20240703183115.1075219-1-Jason@zx2c4.com>
+ <20240703183115.1075219-4-Jason@zx2c4.com>
+Date: Wed, 03 Jul 2024 20:58:59 +0200
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Jason A . Donenfeld" <Jason@zx2c4.com>, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev, "Thomas Gleixner" <tglx@linutronix.de>
+Cc: linux-crypto@vger.kernel.org, linux-api@vger.kernel.org, x86@kernel.org,
+ "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+ "Adhemerval Zanella Netto" <adhemerval.zanella@linaro.org>,
+ "Carlos O'Donell" <carlos@redhat.com>, "Florian Weimer" <fweimer@redhat.com>,
+ "Jann Horn" <jannh@google.com>, "Christian Brauner" <brauner@kernel.org>,
+ "David Hildenbrand" <dhildenb@redhat.com>,
+ "Geert Uytterhoeven" <geert@linux-m68k.org>,
+ =?UTF-8?Q?Christian_G=C3=B6ttsche?= <cgzones@googlemail.com>,
+ "Jiri Olsa" <jolsa@kernel.org>
+Subject: Re: [PATCH v20 3/5] arch: allocate vgetrandom_alloc() syscall number
+Content-Type: text/plain
 
-Hi Arnd,
+On Wed, Jul 3, 2024, at 20:31, Jason A. Donenfeld wrote:
+> Add vgetrandom_alloc() as syscall 463 (or 573 on alpha) by adding it to
+> all of the various syscall.tbl and unistd.h files.
+>
+> Acked-by: Geert Uytterhoeven <geert@linux-m68k.org>
+> Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
 
-On Wed, 2024-07-03 at 20:34 +0200, Arnd Bergmann wrote:
-> Rich and Adrian, let me know if you would submit a
-> tested backport stable@vger.kernel.org yourself, if you
-> want help backporting my patch, or if we should just
-> leave the existing state in the LTS kernels.
+I checked that the system calls are all hooked up correctly
+across all architectures:
 
-I think it's safe to keep the existing state in the old LTS kernels
-as most SH users will be on the latest kernel anyway.
+Acked-by: Arnd Bergmann <arnd@arndb.de>
 
-Thanks,
-Adrian
+Unfortunately we now have three syscalls scheduled for
+the number 463, the other ones being uretprobe (only
+for arc, arm64, csky, hexagon, loongarch, nios2, openrisc,
+riscv and x86 for some reason) and setxattrat (on
+all architectures).
 
---=20
- .''`.  John Paul Adrian Glaubitz
-: :' :  Debian Developer
-`. `'   Physicist
-  `-    GPG: 62FF 8A75 84E0 2956 9546  0006 7426 3B37 F5B5 F913
+It would be nice if you could all coordinate on this to
+pick unique numbers.
+
+       Arnd
