@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB4717BB03;
-	Wed,  3 Jul 2024 10:42:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C9117BB06;
+	Wed,  3 Jul 2024 10:42:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003345; cv=none; b=PB+9MjZH4sRvBsZFN8WB2OtaEdiNmacaj6g3LzI6TAxe65gvxtYjmkzZWp1eSKRNWn/KHQ9Hwjz6VGyCz2uOcNMhgyJ6ZLWQxOT1IiJsanxXV4RKf33YsGoYl/tdALCszIEKiM2aYG8VFeks+W6I0yncP2M1jmudwwUhobKZuXI=
+	t=1720003347; cv=none; b=Ux4dVX8LDuu535RBpQ46mi204lt89BNpXAl/ZANbVnJp2Ze5rcyXtJT3gRRZv8RS8Wy9dWninvCq4kfQaN75eYp4WC9hap635EdyGk+pyYzofHDvtNtXYM+RdYCODqfYBU/CgPoFbWnazS+7UYYbX8VeGpHvx5AIQinsd7+3y3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003345; c=relaxed/simple;
-	bh=qif630qFhRR6oW4reg6zKKg2SVHFZa2qbPGXRkXLigE=;
+	s=arc-20240116; t=1720003347; c=relaxed/simple;
+	bh=t1368XCGfD8T/I/Jjmoc0I0ALjV5Tm99iEPgnQHoqLM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Azr5IQrehqNOnAEtx+eXw+SEivQNyMH1TchoGBRSMMNoLWwg0bFDcEcMNQWp8J2e98TS/00w5ghhPKkoDA0XVpR0cPm3O+OvXJPFuud7Ccpq9kj/+ruXNnn38asPjLSwkcP2/KErdnM9Dum3VbQMowNYa85fyBNiSlobwlesAXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MBWhLqn7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lHbbMwcUyk+/Wftutih5+OuJLbLukem6z5/MGEucPyvymSbR9h9mKsyHPkb0T0hP4w+x0+nwqj4TKDYYtK2U4vCtu4tIiHVFfqrneB+/dHIbPDnNi7DuzdnSO/hzzLcwn4xE/ZMciosNZWDYyoYy7m36oLtsSKVUHwqZPG+umMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZR1ncHIs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MBWhLqn7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4301CC32781;
-	Wed,  3 Jul 2024 10:42:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZR1ncHIs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34E49C2BD10;
+	Wed,  3 Jul 2024 10:42:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003343;
-	bh=qif630qFhRR6oW4reg6zKKg2SVHFZa2qbPGXRkXLigE=;
+	s=korg; t=1720003346;
+	bh=t1368XCGfD8T/I/Jjmoc0I0ALjV5Tm99iEPgnQHoqLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MBWhLqn7CiG10++8xe88HWPGUD6VPRUiqS26iGSR6amIfddPXFxk+mpqexXogm/ZC
-	 /1mmR4rcQL+7t81j6282KrE+yykvVOQLEAMegYutkiHkIjY2ccfvulVtKwQIU+1k9N
-	 qTENEe5DSi3jBQ9fzRF6/D1x8KNrSq8jOJiNLKF4=
+	b=ZR1ncHIscEwmRFSj7hFECwnxJQ2Dbf7Ku5nftqJt/VLkkQp+Fcw5wD49BqjHAmpSB
+	 T50OGOoyrMFLJbAOLkoWT8zvTQyGp9WrEp1764jTcpo55kZ3ZApHatz51VBalNpFZU
+	 8EmHa2AEZezJ/zkvitRPTE2ihTtNj3guZqngU90M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	Anson Jacob <Anson.Jacob@amd.com>,
-	George Shen <george.shen@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 018/139] drm/amd/display: Handle Y carry-over in VCP X.Y calculation
-Date: Wed,  3 Jul 2024 12:38:35 +0200
-Message-ID: <20240703102831.128144050@linuxfoundation.org>
+Subject: [PATCH 4.19 019/139] serial: sc16is7xx: replace hardcoded divisor value with BIT() macro
+Date: Wed,  3 Jul 2024 12:38:36 +0200
+Message-ID: <20240703102831.166761528@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -54,42 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: George Shen <george.shen@amd.com>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-[ Upstream commit 3626a6aebe62ce7067cdc460c0c644e9445386bb ]
+[ Upstream commit 2e57cefc4477659527f7adab1f87cdbf60ef1ae6 ]
 
-[Why/How]
-Theoretically rare corner case where ceil(Y) results in rounding
-up to an integer. If this happens, the 1 should be carried over to
-the X value.
+To better show why the limit is what it is, since we have only 16 bits for
+the divisor.
 
-Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
-Acked-by: Anson Jacob <Anson.Jacob@amd.com>
-Signed-off-by: George Shen <george.shen@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Suggested-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://lore.kernel.org/r/20231221231823.2327894-13-hugo@hugovil.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 8492bd91aa05 ("serial: sc16is7xx: fix bug in sc16is7xx_set_baud() when using prescaler")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn10/dcn10_stream_encoder.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/tty/serial/sc16is7xx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_stream_encoder.c b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_stream_encoder.c
-index 6f9078f3c4d39..17bcf7ce4099c 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_stream_encoder.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_stream_encoder.c
-@@ -620,6 +620,12 @@ void enc1_stream_encoder_set_mst_bandwidth(
- 				x),
- 			26));
+diff --git a/drivers/tty/serial/sc16is7xx.c b/drivers/tty/serial/sc16is7xx.c
+index 800cb94e4b912..a1331225cdc21 100644
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -496,7 +496,7 @@ static int sc16is7xx_set_baud(struct uart_port *port, int baud)
+ 	u8 prescaler = 0;
+ 	unsigned long clk = port->uartclk, div = clk / 16 / baud;
  
-+	// If y rounds up to integer, carry it over to x.
-+	if (y >> 26) {
-+		x += 1;
-+		y = 0;
-+	}
-+
- 	REG_SET_2(DP_MSE_RATE_CNTL, 0,
- 		DP_MSE_RATE_X, x,
- 		DP_MSE_RATE_Y, y);
+-	if (div > 0xffff) {
++	if (div >= BIT(16)) {
+ 		prescaler = SC16IS7XX_MCR_CLKSEL_BIT;
+ 		div /= 4;
+ 	}
 -- 
 2.43.0
 
