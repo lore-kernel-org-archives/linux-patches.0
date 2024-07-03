@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15C11741FC;
-	Wed,  3 Jul 2024 10:46:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E70B174ED1;
+	Wed,  3 Jul 2024 10:46:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003610; cv=none; b=HZx1lSq7TtyTxGYMX27TlcaCg1kBnP3BtqZiDBSlLZ/Q14wauTp2Bd52HtNJSx5JY5I9VFDjEtoNFzhtMTqgPnYHrAyJ443e/Dt9B0chYJ8qBL9DDes0ybXW0FyyAE27cuoWtOrHXaV56FTlBhLJsSw0/NX9+nNaPSGhpq/HwxQ=
+	t=1720003614; cv=none; b=S/g9MgxMCNkikNNe/7knvBCp1GnFs648xJJCNRs9Mo2v5NGuFQM0UoU71CoXzAhEpgAPX35iKJ/gt3OcTkzGeK2x1izrRuYIbZvhetRTD5E7po4tUQDUKJEMN5zFXdZuV/+RkmJHsgkroHYeI5p40g8TdQE7gELc5/NllCEj1Kc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003610; c=relaxed/simple;
-	bh=L/eXae5nN6je8t1rjzvdDHbGMfInAlzfdm2lHkAKaoQ=;
+	s=arc-20240116; t=1720003614; c=relaxed/simple;
+	bh=4XfUdrJ/vkbYK+i5LWFTPDX4SlV/uA2RSVayQWbI81w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cRly4HDP09U0thF9ERK2VoWkwQIsJmzDNWUF2Li+wwMchlRgPwhXaMG7NUBQ6eUme//R81vO2iiDi9k1EVLOlh4yfnJj2OvVIF2YSNVP0r7XccsrwKrNZYtYVXNxXuDD8r5v+mLSf9CsMNw+KvFTBhoSdg8O729BaseQmjJphcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/wC+/4p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ERwaaSL3vY6V39xUKh4Aazqt9zjlhBXbWcqd6Rob6R2KzA4f4BLjJeexQX5/SVkUhD9XmlDLFzzOwP66jslBRw3UA9S487Vc0Z7Gv0CwDKKo3ZCzwZqdvgwWbD0/StsnwZr+bcUUstyD+pbgR/nF2GpvnPw4cqfu4nRtiQOzp44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eo5boKAw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/wC+/4p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5805CC2BD10;
-	Wed,  3 Jul 2024 10:46:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eo5boKAw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47909C2BD10;
+	Wed,  3 Jul 2024 10:46:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003610;
-	bh=L/eXae5nN6je8t1rjzvdDHbGMfInAlzfdm2lHkAKaoQ=;
+	s=korg; t=1720003613;
+	bh=4XfUdrJ/vkbYK+i5LWFTPDX4SlV/uA2RSVayQWbI81w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J/wC+/4pL2Iek7hfDGQmkEJ7ERbwpwV1YH3MNO6sUVCi2o+Uq+DszCW55iBrPOs5g
-	 dO7IUhKlTGtnaxSrTrVaqpa6lWZFlhAI0NlfMVSsLrKonEpx1a9ntSAbtHR7i3va8p
-	 Ihpr8KwuNizzDjT7muTd+WrSNNz5mXqtq2jA/eak=
+	b=eo5boKAws9KfhImT49k1ZBYOtW5IvZ0PevwnlSZ0G8sS7CmAmMY6YIXAMJkuQSceK
+	 ZphYiwvHLTJTRe8qPAdGV8LfpgQOy54j0SCd5iu0yS3bFK6/4Dg8iijdWBZwyXi3TD
+	 BzdyQhjsgTlY81BfmFsZxW8LPJiG40WrOGhfQwKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linuxfoundation.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 106/139] netfilter: nf_tables: fully validate NFT_DATA_VALUE on store to data registers
-Date: Wed,  3 Jul 2024 12:40:03 +0200
-Message-ID: <20240703102834.445204854@linuxfoundation.org>
+Subject: [PATCH 4.19 107/139] drm/panel: ilitek-ili9881c: Fix warning with GPIO controllers that sleep
+Date: Wed,  3 Jul 2024 12:40:04 +0200
+Message-ID: <20240703102834.483004457@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -51,89 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit 7931d32955e09d0a11b1fe0b6aac1bfa061c005c ]
+[ Upstream commit ee7860cd8b5763017f8dc785c2851fecb7a0c565 ]
 
-register store validation for NFT_DATA_VALUE is conditional, however,
-the datatype is always either NFT_DATA_VALUE or NFT_DATA_VERDICT. This
-only requires a new helper function to infer the register type from the
-set datatype so this conditional check can be removed. Otherwise,
-pointer to chain object can be leaked through the registers.
+The ilitek-ili9881c controls the reset GPIO using the non-sleeping
+gpiod_set_value() function. This complains loudly when the GPIO
+controller needs to sleep. As the caller can sleep, use
+gpiod_set_value_cansleep() to fix the issue.
 
-Fixes: 96518518cc41 ("netfilter: add nftables")
-Reported-by: Linus Torvalds <torvalds@linuxfoundation.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20240317154839.21260-1-laurent.pinchart@ideasonboard.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240317154839.21260-1-laurent.pinchart@ideasonboard.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h | 5 +++++
- net/netfilter/nf_tables_api.c     | 8 ++++----
- net/netfilter/nft_lookup.c        | 3 ++-
- 3 files changed, 11 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/panel/panel-ilitek-ili9881c.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index 9ce7837520f39..4a0f51c2b3b91 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -445,6 +445,11 @@ static inline void *nft_set_priv(const struct nft_set *set)
- 	return (void *)set->data;
+diff --git a/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c b/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
+index 3ad4a46c4e945..cc11cf41d392c 100644
+--- a/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
++++ b/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
+@@ -307,10 +307,10 @@ static int ili9881c_prepare(struct drm_panel *panel)
+ 	msleep(5);
+ 
+ 	/* And reset it */
+-	gpiod_set_value(ctx->reset, 1);
++	gpiod_set_value_cansleep(ctx->reset, 1);
+ 	msleep(20);
+ 
+-	gpiod_set_value(ctx->reset, 0);
++	gpiod_set_value_cansleep(ctx->reset, 0);
+ 	msleep(20);
+ 
+ 	for (i = 0; i < ARRAY_SIZE(ili9881c_init); i++) {
+@@ -367,7 +367,7 @@ static int ili9881c_unprepare(struct drm_panel *panel)
+ 
+ 	mipi_dsi_dcs_enter_sleep_mode(ctx->dsi);
+ 	regulator_disable(ctx->power);
+-	gpiod_set_value(ctx->reset, 1);
++	gpiod_set_value_cansleep(ctx->reset, 1);
+ 
+ 	return 0;
  }
- 
-+static inline enum nft_data_types nft_set_datatype(const struct nft_set *set)
-+{
-+	return set->dtype == NFT_DATA_VERDICT ? NFT_DATA_VERDICT : NFT_DATA_VALUE;
-+}
-+
- static inline bool nft_set_gc_is_pending(const struct nft_set *s)
- {
- 	return refcount_read(&s->refs) != 1;
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 2c31470dd61f5..f2611406af141 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -4154,8 +4154,7 @@ static int nf_tables_fill_setelem(struct sk_buff *skb,
- 
- 	if (nft_set_ext_exists(ext, NFT_SET_EXT_DATA) &&
- 	    nft_data_dump(skb, NFTA_SET_ELEM_DATA, nft_set_ext_data(ext),
--			  set->dtype == NFT_DATA_VERDICT ? NFT_DATA_VERDICT : NFT_DATA_VALUE,
--			  set->dlen) < 0)
-+			  nft_set_datatype(set), set->dlen) < 0)
- 		goto nla_put_failure;
- 
- 	if (nft_set_ext_exists(ext, NFT_SET_EXT_EXPR) &&
-@@ -7655,6 +7654,9 @@ static int nft_validate_register_store(const struct nft_ctx *ctx,
- 
- 		return 0;
- 	default:
-+		if (type != NFT_DATA_VALUE)
-+			return -EINVAL;
-+
- 		if (reg < NFT_REG_1 * NFT_REG_SIZE / NFT_REG32_SIZE)
- 			return -EINVAL;
- 		if (len == 0)
-@@ -7663,8 +7665,6 @@ static int nft_validate_register_store(const struct nft_ctx *ctx,
- 		    FIELD_SIZEOF(struct nft_regs, data))
- 			return -ERANGE;
- 
--		if (data != NULL && type != NFT_DATA_VALUE)
--			return -EINVAL;
- 		return 0;
- 	}
- }
-diff --git a/net/netfilter/nft_lookup.c b/net/netfilter/nft_lookup.c
-index 3c380fb326511..bb8bd562c1ba2 100644
---- a/net/netfilter/nft_lookup.c
-+++ b/net/netfilter/nft_lookup.c
-@@ -101,7 +101,8 @@ static int nft_lookup_init(const struct nft_ctx *ctx,
- 			return -EINVAL;
- 
- 		err = nft_parse_register_store(ctx, tb[NFTA_LOOKUP_DREG],
--					       &priv->dreg, NULL, set->dtype,
-+					       &priv->dreg, NULL,
-+					       nft_set_datatype(set),
- 					       set->dlen);
- 		if (err < 0)
- 			return err;
 -- 
 2.43.0
 
