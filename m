@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A3E1741D8;
-	Wed,  3 Jul 2024 10:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78ADB173352;
+	Wed,  3 Jul 2024 10:46:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003586; cv=none; b=VoMNjdSGsF/4MzuETAlidECguoLBBAyI96UP7PbEeDSIJmMOC0VUrEo58iLPZBbWsx9zOxPHA2bQCC+EfCT9w/Xfc5w11SaQu5Feuq/9vfO44n5lZUw8QTiHujRnDx0R9loC+8jM3Z8muN3X7awa7gkcGspxYl6Gr1YaNLPP8pQ=
+	t=1720003589; cv=none; b=pUK4EgZmLFIsrcBNONKfQMAm0kcDsFhJ7N2qyb22Ja8dsXr2FuRKkF9sc02thJaA96ceypxRVlnkbWbJLwKz5l2HG87eokmU271W40REfOKPaTVEktzCZ7tVx3VISjDiyah/9mU1E3L5f1oQGfoUWgQUQ+DWh/I/O4vrC3uxbXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003586; c=relaxed/simple;
-	bh=optgjZAkQpmcLmllpEd/GguJcV7faTXEiqbm/FvAfos=;
+	s=arc-20240116; t=1720003589; c=relaxed/simple;
+	bh=x6tmNgTs9rX2om8Loty7Uvra1t1Aw7GIrYheB/JLBr4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FusHFuyMnUahVVVn0s96ZQQPUQrgiOn+Pl0ICCZg4z49s2jJIZJP3ZOt5ipksSe7JqXNHIX+8oyHhoPvcIzl7Qswnb+u0SEpSN2w/EscSOLVLcj6BpcTs/CVw4b4lfF54YZzNofIw9Lhj+Kzc9z9JzoDwC9+irvJDah85JqEcao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UlYObcmG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VLkDWoBk2784NqR0J41MIhOtsZ59vqS+WEuue0yOQzzMc6d0dmOj6q7tilj8AVAWhYoG5ZHrkiouMAMcW3Zq6VOesX/cRzZ3eQc8bK9+JgsU7MQosb1UTBg5RdQwCi+1oc06Cd8vzatHeYANObH0tTxcH4xZPZFehxNzrl0vA6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o0eUi+RH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UlYObcmG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC717C2BD10;
-	Wed,  3 Jul 2024 10:46:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o0eUi+RH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B54C2BD10;
+	Wed,  3 Jul 2024 10:46:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003586;
-	bh=optgjZAkQpmcLmllpEd/GguJcV7faTXEiqbm/FvAfos=;
+	s=korg; t=1720003589;
+	bh=x6tmNgTs9rX2om8Loty7Uvra1t1Aw7GIrYheB/JLBr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UlYObcmGUqvj0aZBBkL1zHT4WcKj9igunl4vB/sGc5eMgVDqFWXHr4rVWJQYfMsJH
-	 tehN77ItcMo9216OWF9CViRaVZkYosqn5kJ7DotrXpqZzW0jGKPfmxpCNUGZl8xdbA
-	 7ZCIkcpM060oAVZfuUs53UG0pRWHEVcHGwAFDZAk=
+	b=o0eUi+RHvXXsQtDBgndmxVQ7WvIU3k5vdqzxAgU4kMZylQU1CAclACsB/vgZC2VbR
+	 YwRV7++ii39lZ56vWXinQDOgaSXBQTjyfD/QeE1SHpfLMwYK2SBACoB3YvRwmR6ljl
+	 yFKqj2Z3NclvwouA7OuGisP2Cpffd/Rn9MncpltE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernhard <bernhard.gebetsberger@gmx.at>,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 4.19 098/139] usb: xhci: do not perform Soft Retry for some xHCI hosts
-Date: Wed,  3 Jul 2024 12:39:55 +0200
-Message-ID: <20240703102834.141077004@linuxfoundation.org>
+	Maximilian Heyne <mheyne@amazon.de>,
+	Hagar Hemdan <hagarhem@amazon.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 099/139] pinctrl: fix deadlock in create_pinctrl() when handling -EPROBE_DEFER
+Date: Wed,  3 Jul 2024 12:39:56 +0200
+Message-ID: <20240703102834.180012410@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -51,76 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislaw Gruszka <stf_xl@wp.pl>
+From: Hagar Hemdan <hagarhem@amazon.com>
 
-commit a4a251f8c23518899d2078c320cf9ce2fa459c9f upstream.
+[ Upstream commit adec57ff8e66aee632f3dd1f93787c13d112b7a1 ]
 
-On some systems rt2800usb and mt7601u devices are unable to operate since
-commit f8f80be501aa ("xhci: Use soft retry to recover faster from
-transaction errors")
+In create_pinctrl(), pinctrl_maps_mutex is acquired before calling
+add_setting(). If add_setting() returns -EPROBE_DEFER, create_pinctrl()
+calls pinctrl_free(). However, pinctrl_free() attempts to acquire
+pinctrl_maps_mutex, which is already held by create_pinctrl(), leading to
+a potential deadlock.
 
-Seems that some xHCI controllers can not perform Soft Retry correctly,
-affecting those devices.
+This patch resolves the issue by releasing pinctrl_maps_mutex before
+calling pinctrl_free(), preventing the deadlock.
 
-To avoid the problem add xhci->quirks flag that restore pre soft retry
-xhci behaviour for affected xHCI controllers. Currently those are
-AMD_PROMONTORYA_4 and AMD_PROMONTORYA_2, since it was confirmed
-by the users: on those xHCI hosts issue happen and is gone after
-disabling Soft Retry.
+This bug was discovered and resolved using Coverity Static Analysis
+Security Testing (SAST) by Synopsys, Inc.
 
-[minor commit message rewording for checkpatch -Mathias]
-
-Fixes: f8f80be501aa ("xhci: Use soft retry to recover faster from transaction errors")
-Cc: <stable@vger.kernel.org> # 4.20+
-Reported-by: Bernhard <bernhard.gebetsberger@gmx.at>
-Tested-by: Bernhard <bernhard.gebetsberger@gmx.at>
-Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Bugzilla: https://bugzilla.kernel.org/show_bug.cgi?id=202541
-Link: https://lore.kernel.org/r/20210311115353.2137560-2-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 42fed7ba44e4 ("pinctrl: move subsystem mutex to pinctrl_dev struct")
+Suggested-by: Maximilian Heyne <mheyne@amazon.de>
+Signed-off-by: Hagar Hemdan <hagarhem@amazon.com>
+Link: https://lore.kernel.org/r/20240604085838.3344-1-hagarhem@amazon.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-pci.c  |    5 +++++
- drivers/usb/host/xhci-ring.c |    3 ++-
- drivers/usb/host/xhci.h      |    1 +
- 3 files changed, 8 insertions(+), 1 deletion(-)
+ drivers/pinctrl/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -280,6 +280,11 @@ static void xhci_pci_quirks(struct devic
- 	     pdev->device == 0x9026)
- 		xhci->quirks |= XHCI_RESET_PLL_ON_DISCONNECT;
- 
-+	if (pdev->vendor == PCI_VENDOR_ID_AMD &&
-+	    (pdev->device == PCI_DEVICE_ID_AMD_PROMONTORYA_2 ||
-+	     pdev->device == PCI_DEVICE_ID_AMD_PROMONTORYA_4))
-+		xhci->quirks |= XHCI_NO_SOFT_RETRY;
-+
- 	if (xhci->quirks & XHCI_RESET_ON_RESUME)
- 		xhci_dbg_trace(xhci, trace_xhci_dbg_quirks,
- 				"QUIRK: Resetting on resume");
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -2291,7 +2291,8 @@ static int process_bulk_intr_td(struct x
- 		td->urb->actual_length = sum_trb_lengths(xhci, ep_ring, ep_trb);
- 		goto finish_td;
- 	case COMP_USB_TRANSACTION_ERROR:
--		if ((ep_ring->err_count++ > MAX_SOFT_RETRY) ||
-+		if (xhci->quirks & XHCI_NO_SOFT_RETRY ||
-+		    (ep_ring->err_count++ > MAX_SOFT_RETRY) ||
- 		    le32_to_cpu(slot_ctx->tt_info) & TT_SLOT)
- 			break;
- 		*status = 0;
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -1880,6 +1880,7 @@ struct xhci_hcd {
- #define XHCI_RESET_PLL_ON_DISCONNECT	BIT_ULL(34)
- #define XHCI_SNPS_BROKEN_SUSPEND    BIT_ULL(35)
- #define XHCI_DISABLE_SPARSE	BIT_ULL(38)
-+#define XHCI_NO_SOFT_RETRY	BIT_ULL(40)
- 
- 	unsigned int		num_active_eps;
- 	unsigned int		limit_active_eps;
+diff --git a/drivers/pinctrl/core.c b/drivers/pinctrl/core.c
+index 052894d3a2047..97b1fa3a5e78d 100644
+--- a/drivers/pinctrl/core.c
++++ b/drivers/pinctrl/core.c
+@@ -1078,8 +1078,8 @@ static struct pinctrl *create_pinctrl(struct device *dev,
+ 		 * an -EPROBE_DEFER later, as that is the worst case.
+ 		 */
+ 		if (ret == -EPROBE_DEFER) {
+-			pinctrl_free(p, false);
+ 			mutex_unlock(&pinctrl_maps_mutex);
++			pinctrl_free(p, false);
+ 			return ERR_PTR(ret);
+ 		}
+ 	}
+-- 
+2.43.0
+
 
 
