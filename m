@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646FC17C202;
-	Wed,  3 Jul 2024 11:27:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0661E17C202;
+	Wed,  3 Jul 2024 11:27:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006028; cv=none; b=A5mSdNDaUV2AlAkUWeEJ39olQ5kxdqVAd23czMj0tt3GQ0x6EbTLf015k6bQNhtk6gpUKh7u1XyYnLYfIfIT4xtriT6FMQ7c8xlOldMGLjG3vHPhtF5skQRf4hXvrdcPx7qKPGW4Zh81aLC8clr9x1lMqWcDln/m9oLvE/oz9zA=
+	t=1720006031; cv=none; b=RU+Df5KK7GSJJyOSa4ydWIAqKM9MWWgEzU4QQ7kMyiTpyteNYgpLFL6hb6CQgQnThM+ID7l9AVDHRTSGFto1QkSV4uSrOF1zuq8CfGvkLHWENea61tcnszQmtixx+jDMha1hItILCQfoDjc5mUbE5Sw4tXGUw768B2/7jlASskY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006028; c=relaxed/simple;
-	bh=V4Thayet0nyqnoC54hNzU9fWnJ/G8ZIXsARMuHuStP4=;
+	s=arc-20240116; t=1720006031; c=relaxed/simple;
+	bh=YEk/it3T9GxU47o73iSAFKmKy46RUNpmC2tnBKfB9nQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EKsOYzCQPb+Aiz7YWjNCKSgyd6tKS2IWIyRk201LZ64ajhpHxrdCVmYHxc2zooLlup++s6jDSLEQFiRG6EcniGzsicBYBYp6AD+JBk+otlcfxRz9FpY7QYz83i1wRuW1T2lqYwzlvQ2ZtFYthJoeDkKoTXrfGE9fBTMhA7R6VVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cv0gH3Tu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l3DfzWn6yVDaPZn9a7k+jGCV9bnOycJ9+NwyWxG6RMg2wpCaKMBbfhjcki5zGdJBH2W9e7sqc8kQ6mFvh+Y44/MVIdCTMjbfyM3e+U0aLzEjvh5VmhKTPXwyHtUMM1Mlj0TQJt6uqyWYL00LOrcqDBlO5A5CNuMy5xkP0TtKITc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6UcYTQp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cv0gH3Tu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87E1DC32781;
-	Wed,  3 Jul 2024 11:27:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6UcYTQp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82EA1C2BD10;
+	Wed,  3 Jul 2024 11:27:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006027;
-	bh=V4Thayet0nyqnoC54hNzU9fWnJ/G8ZIXsARMuHuStP4=;
+	s=korg; t=1720006030;
+	bh=YEk/it3T9GxU47o73iSAFKmKy46RUNpmC2tnBKfB9nQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cv0gH3TupZHNJmb33bc80OuiFc4kGQsBvxP6JGbwLAaUya0NLd2o6fIeMK+Mxvq0u
-	 ELt0pLh0jneYaC5lrVIvi+5PagMAMWXwDJvnFNzJdlVkROLtvtXOU/RihE5WCRwjTv
-	 EqYSThUqK9ppkwEvUipTMQN9tHZdRKH/W3J7/6rw=
+	b=F6UcYTQpgfd0QoUz6wOrWCfGj1HNNoLsiXoCVs5pkhAOPKQZLmZwBJQj7bxiHaCn0
+	 ztkSxvV8CwAz9XSJNyNGaeMdvz4wdeve6y0NnKql89vsmBmvs2kf00fohzx1XblWJ+
+	 nHJfzClnwEknNHH1Z3p3wdnAh3CFwl+eEc3dUmIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akhmat Karakotov <hmukos@yandex-team.ru>,
-	Martin KaFai Lau <kafai@fb.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	luoxuanqiang <luoxuanqiang@kylinos.cn>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 275/356] tcp: Use BPF timeout setting for SYN ACK RTO
-Date: Wed,  3 Jul 2024 12:40:11 +0200
-Message-ID: <20240703102923.517310031@linuxfoundation.org>
+Subject: [PATCH 5.15 276/356] Fix race for duplicate reqsk on identical SYN
+Date: Wed,  3 Jul 2024 12:40:12 +0200
+Message-ID: <20240703102923.554745033@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -52,158 +53,193 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akhmat Karakotov <hmukos@yandex-team.ru>
+From: luoxuanqiang <luoxuanqiang@kylinos.cn>
 
-[ Upstream commit 5903123f662ed18483f05cac3f9e800a074c29ff ]
+[ Upstream commit ff46e3b4421923937b7f6e44ffcd3549a074f321 ]
 
-When setting RTO through BPF program, some SYN ACK packets were unaffected
-and continued to use TCP_TIMEOUT_INIT constant. This patch adds timeout
-option to struct request_sock. Option is initialized with TCP_TIMEOUT_INIT
-and is reassigned through BPF using tcp_timeout_init call. SYN ACK
-retransmits now use newly added timeout option.
+When bonding is configured in BOND_MODE_BROADCAST mode, if two identical
+SYN packets are received at the same time and processed on different CPUs,
+it can potentially create the same sk (sock) but two different reqsk
+(request_sock) in tcp_conn_request().
 
-Signed-off-by: Akhmat Karakotov <hmukos@yandex-team.ru>
-Acked-by: Martin KaFai Lau <kafai@fb.com>
+These two different reqsk will respond with two SYNACK packets, and since
+the generation of the seq (ISN) incorporates a timestamp, the final two
+SYNACK packets will have different seq values.
 
-v2:
-	- Add timeout option to struct request_sock. Do not call
-	  tcp_timeout_init on every syn ack retransmit.
+The consequence is that when the Client receives and replies with an ACK
+to the earlier SYNACK packet, we will reset(RST) it.
 
-v3:
-	- Use unsigned long for min. Bound tcp_timeout_init to TCP_RTO_MAX.
+========================================================================
 
-v4: - Refactor duplicate code by adding reqsk_timeout function.
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: ff46e3b44219 ("Fix race for duplicate reqsk on identical SYN")
+This behavior is consistently reproducible in my local setup,
+which comprises:
+
+                  | NETA1 ------ NETB1 |
+PC_A --- bond --- |                    | --- bond --- PC_B
+                  | NETA2 ------ NETB2 |
+
+- PC_A is the Server and has two network cards, NETA1 and NETA2. I have
+  bonded these two cards using BOND_MODE_BROADCAST mode and configured
+  them to be handled by different CPU.
+
+- PC_B is the Client, also equipped with two network cards, NETB1 and
+  NETB2, which are also bonded and configured in BOND_MODE_BROADCAST mode.
+
+If the client attempts a TCP connection to the server, it might encounter
+a failure. Capturing packets from the server side reveals:
+
+10.10.10.10.45182 > localhost: Flags [S], seq 320236027,
+10.10.10.10.45182 > localhost: Flags [S], seq 320236027,
+localhost > 10.10.10.10.45182: Flags [S.], seq 2967855116,
+localhost > 10.10.10.10.45182: Flags [S.], seq 2967855123, <==
+10.10.10.10.45182 > localhost: Flags [.], ack 4294967290,
+10.10.10.10.45182 > localhost: Flags [.], ack 4294967290,
+localhost > 10.10.10.10.45182: Flags [R], seq 2967855117, <==
+localhost > 10.10.10.10.45182: Flags [R], seq 2967855117,
+
+Two SYNACKs with different seq numbers are sent by localhost,
+resulting in an anomaly.
+
+========================================================================
+
+The attempted solution is as follows:
+Add a return value to inet_csk_reqsk_queue_hash_add() to confirm if the
+ehash insertion is successful (Up to now, the reason for unsuccessful
+insertion is that a reqsk for the same connection has already been
+inserted). If the insertion fails, release the reqsk.
+
+Due to the refcnt, Kuniyuki suggests also adding a return value check
+for the DCCP module; if ehash insertion fails, indicating a successful
+insertion of the same connection, simply release the reqsk as well.
+
+Simultaneously, In the reqsk_queue_hash_req(), the start of the
+req->rsk_timer is adjusted to be after successful insertion.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: luoxuanqiang <luoxuanqiang@kylinos.cn>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240621013929.1386815-1-luoxuanqiang@kylinos.cn
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/inet_connection_sock.h | 8 ++++++++
- include/net/request_sock.h         | 2 ++
- include/net/tcp.h                  | 2 +-
- net/ipv4/inet_connection_sock.c    | 5 +----
- net/ipv4/tcp_input.c               | 8 +++++---
- net/ipv4/tcp_minisocks.c           | 5 ++---
- 6 files changed, 19 insertions(+), 11 deletions(-)
+ include/net/inet_connection_sock.h |  2 +-
+ net/dccp/ipv4.c                    |  7 +++++--
+ net/dccp/ipv6.c                    |  7 +++++--
+ net/ipv4/inet_connection_sock.c    | 17 +++++++++++++----
+ net/ipv4/tcp_input.c               |  7 ++++++-
+ 5 files changed, 30 insertions(+), 10 deletions(-)
 
 diff --git a/include/net/inet_connection_sock.h b/include/net/inet_connection_sock.h
-index b6b7e210f9d7a..7794cf2b5ef50 100644
+index 7794cf2b5ef50..53ec06703fe4e 100644
 --- a/include/net/inet_connection_sock.h
 +++ b/include/net/inet_connection_sock.h
-@@ -284,6 +284,14 @@ static inline int inet_csk_reqsk_queue_is_full(const struct sock *sk)
- bool inet_csk_reqsk_queue_drop(struct sock *sk, struct request_sock *req);
- void inet_csk_reqsk_queue_drop_and_put(struct sock *sk, struct request_sock *req);
+@@ -260,7 +260,7 @@ struct dst_entry *inet_csk_route_child_sock(const struct sock *sk,
+ struct sock *inet_csk_reqsk_queue_add(struct sock *sk,
+ 				      struct request_sock *req,
+ 				      struct sock *child);
+-void inet_csk_reqsk_queue_hash_add(struct sock *sk, struct request_sock *req,
++bool inet_csk_reqsk_queue_hash_add(struct sock *sk, struct request_sock *req,
+ 				   unsigned long timeout);
+ struct sock *inet_csk_complete_hashdance(struct sock *sk, struct sock *child,
+ 					 struct request_sock *req,
+diff --git a/net/dccp/ipv4.c b/net/dccp/ipv4.c
+index cab82344de9be..aaef9557d9425 100644
+--- a/net/dccp/ipv4.c
++++ b/net/dccp/ipv4.c
+@@ -649,8 +649,11 @@ int dccp_v4_conn_request(struct sock *sk, struct sk_buff *skb)
+ 	if (dccp_v4_send_response(sk, req))
+ 		goto drop_and_free;
  
-+static inline unsigned long
-+reqsk_timeout(struct request_sock *req, unsigned long max_timeout)
-+{
-+	u64 timeout = (u64)req->timeout << req->num_timeout;
+-	inet_csk_reqsk_queue_hash_add(sk, req, DCCP_TIMEOUT_INIT);
+-	reqsk_put(req);
++	if (unlikely(!inet_csk_reqsk_queue_hash_add(sk, req, DCCP_TIMEOUT_INIT)))
++		reqsk_free(req);
++	else
++		reqsk_put(req);
 +
-+	return (unsigned long)min_t(u64, timeout, max_timeout);
-+}
+ 	return 0;
+ 
+ drop_and_free:
+diff --git a/net/dccp/ipv6.c b/net/dccp/ipv6.c
+index 6f05e9d0d4287..f7c88b860d5d5 100644
+--- a/net/dccp/ipv6.c
++++ b/net/dccp/ipv6.c
+@@ -397,8 +397,11 @@ static int dccp_v6_conn_request(struct sock *sk, struct sk_buff *skb)
+ 	if (dccp_v6_send_response(sk, req))
+ 		goto drop_and_free;
+ 
+-	inet_csk_reqsk_queue_hash_add(sk, req, DCCP_TIMEOUT_INIT);
+-	reqsk_put(req);
++	if (unlikely(!inet_csk_reqsk_queue_hash_add(sk, req, DCCP_TIMEOUT_INIT)))
++		reqsk_free(req);
++	else
++		reqsk_put(req);
 +
- static inline void inet_csk_prepare_for_destroy_sock(struct sock *sk)
- {
- 	/* The below has to be done to allow calling inet_csk_destroy_sock */
-diff --git a/include/net/request_sock.h b/include/net/request_sock.h
-index 29e41ff3ec933..144c39db9898a 100644
---- a/include/net/request_sock.h
-+++ b/include/net/request_sock.h
-@@ -70,6 +70,7 @@ struct request_sock {
- 	struct saved_syn		*saved_syn;
- 	u32				secid;
- 	u32				peer_secid;
-+	u32				timeout;
- };
+ 	return 0;
  
- static inline struct request_sock *inet_reqsk(const struct sock *sk)
-@@ -104,6 +105,7 @@ reqsk_alloc(const struct request_sock_ops *ops, struct sock *sk_listener,
- 	sk_node_init(&req_to_sk(req)->sk_node);
- 	sk_tx_queue_clear(req_to_sk(req));
- 	req->saved_syn = NULL;
-+	req->timeout = 0;
- 	req->num_timeout = 0;
- 	req->num_retrans = 0;
- 	req->sk = NULL;
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 08923ed4278f0..30f8111f750b5 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -2362,7 +2362,7 @@ static inline u32 tcp_timeout_init(struct sock *sk)
- 
- 	if (timeout <= 0)
- 		timeout = TCP_TIMEOUT_INIT;
--	return timeout;
-+	return min_t(int, timeout, TCP_RTO_MAX);
- }
- 
- static inline u32 tcp_rwnd_init_bpf(struct sock *sk)
+ drop_and_free:
 diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index 27975a44d1f9d..43e370f45b81d 100644
+index 43e370f45b81d..75c2f7ffe5be4 100644
 --- a/net/ipv4/inet_connection_sock.c
 +++ b/net/ipv4/inet_connection_sock.c
-@@ -889,12 +889,9 @@ static void reqsk_timer_handler(struct timer_list *t)
- 	    (!resend ||
- 	     !inet_rtx_syn_ack(sk_listener, req) ||
- 	     inet_rsk(req)->acked)) {
--		unsigned long timeo;
--
- 		if (req->num_timeout++ == 0)
- 			atomic_dec(&queue->young);
--		timeo = min(TCP_TIMEOUT_INIT << req->num_timeout, TCP_RTO_MAX);
--		mod_timer(&req->rsk_timer, jiffies + timeo);
-+		mod_timer(&req->rsk_timer, jiffies + reqsk_timeout(req, TCP_RTO_MAX));
+@@ -927,25 +927,34 @@ static void reqsk_timer_handler(struct timer_list *t)
+ 	inet_csk_reqsk_queue_drop_and_put(oreq->rsk_listener, oreq);
+ }
  
- 		if (!nreq)
- 			return;
+-static void reqsk_queue_hash_req(struct request_sock *req,
++static bool reqsk_queue_hash_req(struct request_sock *req,
+ 				 unsigned long timeout)
+ {
++	bool found_dup_sk = false;
++
++	if (!inet_ehash_insert(req_to_sk(req), NULL, &found_dup_sk))
++		return false;
++
++	/* The timer needs to be setup after a successful insertion. */
+ 	timer_setup(&req->rsk_timer, reqsk_timer_handler, TIMER_PINNED);
+ 	mod_timer(&req->rsk_timer, jiffies + timeout);
+ 
+-	inet_ehash_insert(req_to_sk(req), NULL, NULL);
+ 	/* before letting lookups find us, make sure all req fields
+ 	 * are committed to memory and refcnt initialized.
+ 	 */
+ 	smp_wmb();
+ 	refcount_set(&req->rsk_refcnt, 2 + 1);
++	return true;
+ }
+ 
+-void inet_csk_reqsk_queue_hash_add(struct sock *sk, struct request_sock *req,
++bool inet_csk_reqsk_queue_hash_add(struct sock *sk, struct request_sock *req,
+ 				   unsigned long timeout)
+ {
+-	reqsk_queue_hash_req(req, timeout);
++	if (!reqsk_queue_hash_req(req, timeout))
++		return false;
++
+ 	inet_csk_reqsk_queue_added(sk);
++	return true;
+ }
+ EXPORT_SYMBOL_GPL(inet_csk_reqsk_queue_hash_add);
+ 
 diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 5ad7e6965a645..ca72dbaa27b46 100644
+index ca72dbaa27b46..d6330c26e0e10 100644
 --- a/net/ipv4/tcp_input.c
 +++ b/net/ipv4/tcp_input.c
-@@ -6769,6 +6769,7 @@ struct request_sock *inet_reqsk_alloc(const struct request_sock_ops *ops,
- 		ireq->ireq_state = TCP_NEW_SYN_RECV;
- 		write_pnet(&ireq->ireq_net, sock_net(sk_listener));
- 		ireq->ireq_family = sk_listener->sk_family;
-+		req->timeout = TCP_TIMEOUT_INIT;
- 	}
- 
- 	return req;
-@@ -6991,9 +6992,10 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
- 		sock_put(fastopen_sk);
- 	} else {
+@@ -6994,7 +6994,12 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
  		tcp_rsk(req)->tfo_listener = false;
--		if (!want_cookie)
--			inet_csk_reqsk_queue_hash_add(sk, req,
--				tcp_timeout_init((struct sock *)req));
-+		if (!want_cookie) {
-+			req->timeout = tcp_timeout_init((struct sock *)req);
-+			inet_csk_reqsk_queue_hash_add(sk, req, req->timeout);
-+		}
+ 		if (!want_cookie) {
+ 			req->timeout = tcp_timeout_init((struct sock *)req);
+-			inet_csk_reqsk_queue_hash_add(sk, req, req->timeout);
++			if (unlikely(!inet_csk_reqsk_queue_hash_add(sk, req,
++								    req->timeout))) {
++				reqsk_free(req);
++				return 0;
++			}
++
+ 		}
  		af_ops->send_synack(sk, dst, &fl, req, &foc,
  				    !want_cookie ? TCP_SYNACK_NORMAL :
- 						   TCP_SYNACK_COOKIE,
-diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
-index 2606a5571116a..d84b71f70766b 100644
---- a/net/ipv4/tcp_minisocks.c
-+++ b/net/ipv4/tcp_minisocks.c
-@@ -593,7 +593,7 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
- 			 * it can be estimated (approximately)
- 			 * from another data.
- 			 */
--			tmp_opt.ts_recent_stamp = ktime_get_seconds() - ((TCP_TIMEOUT_INIT/HZ)<<req->num_timeout);
-+			tmp_opt.ts_recent_stamp = ktime_get_seconds() - reqsk_timeout(req, TCP_RTO_MAX) / HZ;
- 			paws_reject = tcp_paws_reject(&tmp_opt, th->rst);
- 		}
- 	}
-@@ -632,8 +632,7 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
- 		    !inet_rtx_syn_ack(sk, req)) {
- 			unsigned long expires = jiffies;
- 
--			expires += min(TCP_TIMEOUT_INIT << req->num_timeout,
--				       TCP_RTO_MAX);
-+			expires += reqsk_timeout(req, TCP_RTO_MAX);
- 			if (!fastopen)
- 				mod_timer_pending(&req->rsk_timer, expires);
- 			else
 -- 
 2.43.0
 
