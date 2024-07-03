@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7C0195395;
-	Wed,  3 Jul 2024 11:13:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351E618FDAF;
+	Wed,  3 Jul 2024 11:13:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005221; cv=none; b=XmHNU6ilc82bMrkETF5nx4CDKjeSYey7p1KFUJIDkqVfa6ymEp6JCvVt1eqzEy0X4X5eC94nOh2TGaZMVgZfCGuHHUjqr88BKpKY3M8DtuI0tDKif0U8YS8Q0Gysplo5pv3oZSSmRgte4CMg6WTEyWr9QAAMQ4YXXgllEpqh93A=
+	t=1720005224; cv=none; b=ZgTvIVRy6YLZf3lh5wo67i1pUPre291EhJcatEWyh/NguwzcGKeO70sfx15pg/xWv+qouUuZAVhZaLOj/uNYgveh9w1GqiiGB7cZ7+KcBTYc4ilebxhx/jzezqOD01sdqJhZgg1eqyej7KudVhcwy0yYu8eqkn0D4VdL+97eUsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005221; c=relaxed/simple;
-	bh=6a8dRZB/E5wzTh0Bi8oi6gTbFmPa+aBvCJNsweYG05U=;
+	s=arc-20240116; t=1720005224; c=relaxed/simple;
+	bh=0hPt0eI1sv31VzUJC5S/Q048c50qBo1pKfU3Qpl2ib8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ze5tbodVjoauXH9VqNHqlv63deiBl8v7Kwm6D2IAUWnf2+OTmMzwu40717iTmlnz39/J+OKBgmp9UDJxqgYrIhOgl378ZxUCCYrd1S2jtiXCOaF5MfhMbK54377UkN7Vw552lxOT46WeUVF60n4Z4t/2nXuIzKx0ZedXn0kaLek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=plHllKFX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hPosUGgLcOerObRDnzl45IB3RLCnfa67pcGV/wUJfLl1UqAdgekfQWWkQR08OUdeWGEmUIWdF8pWGOn7juoOqgptiwjWX8k3XygO4tzbHP8b5ju6o9meuN5tQDZw9WQ6tkQ0UuQvGLnM3b2fOcHf0OcaAgtwF9d690DpEbQYh0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1XyHzhEA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="plHllKFX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9284C2BD10;
-	Wed,  3 Jul 2024 11:13:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1XyHzhEA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1855C2BD10;
+	Wed,  3 Jul 2024 11:13:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005221;
-	bh=6a8dRZB/E5wzTh0Bi8oi6gTbFmPa+aBvCJNsweYG05U=;
+	s=korg; t=1720005224;
+	bh=0hPt0eI1sv31VzUJC5S/Q048c50qBo1pKfU3Qpl2ib8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=plHllKFXWNnSW9m0MNzgRX0/Auu9gT3yXnCGEue6fVmfe3yxguPj15Z3N7U0FTAeE
-	 UOncxiOa3nnZXuneugYRHKJV+enlDWPOV50tfa4GrraFTQDOE8t3YubQSFy+TNEuWi
-	 L3qeu2jlmWIA3b3RnWyqtQApXr9E7zzIYrrESkKI=
+	b=1XyHzhEAZYVPpKot+R3o7QrXXUPBz6+/C+DvkKujRtQ30eL86RNNuOhZTIgPgB/AP
+	 ya3KU6frIK0k59LJfbarvXThxsbeBcXb4QjmaREzp7/TFdHtBWNqYogCCtct+1l3ey
+	 u4aHc0+mhkgGNN+YSTAQJXvw6m/4zegS5qttRsRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Escande <nico.escande@gmail.com>,
+	Remi Pommarel <repk@triplefau.lt>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 001/356] wifi: mac80211: mesh: Fix leak of mesh_preq_queue objects
-Date: Wed,  3 Jul 2024 12:35:37 +0200
-Message-ID: <20240703102913.153120988@linuxfoundation.org>
+Subject: [PATCH 5.15 002/356] wifi: mac80211: Fix deadlock in ieee80211_sta_ps_deliver_wakeup()
+Date: Wed,  3 Jul 2024 12:35:38 +0200
+Message-ID: <20240703102913.191088298@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,98 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Escande <nico.escande@gmail.com>
+From: Remi Pommarel <repk@triplefau.lt>
 
-[ Upstream commit b7d7f11a291830fdf69d3301075dd0fb347ced84 ]
+[ Upstream commit 44c06bbde6443de206b30f513100b5670b23fc5e ]
 
-The hwmp code use objects of type mesh_preq_queue, added to a list in
-ieee80211_if_mesh, to keep track of mpath we need to resolve. If the mpath
-gets deleted, ex mesh interface is removed, the entries in that list will
-never get cleaned. Fix this by flushing all corresponding items of the
-preq_queue in mesh_path_flush_pending().
+The ieee80211_sta_ps_deliver_wakeup() function takes sta->ps_lock to
+synchronizes with ieee80211_tx_h_unicast_ps_buf() which is called from
+softirq context. However using only spin_lock() to get sta->ps_lock in
+ieee80211_sta_ps_deliver_wakeup() does not prevent softirq to execute
+on this same CPU, to run ieee80211_tx_h_unicast_ps_buf() and try to
+take this same lock ending in deadlock. Below is an example of rcu stall
+that arises in such situation.
 
-This should take care of KASAN reports like this:
+ rcu: INFO: rcu_sched self-detected stall on CPU
+ rcu:    2-....: (42413413 ticks this GP) idle=b154/1/0x4000000000000000 softirq=1763/1765 fqs=21206996
+ rcu:    (t=42586894 jiffies g=2057 q=362405 ncpus=4)
+ CPU: 2 PID: 719 Comm: wpa_supplicant Tainted: G        W          6.4.0-02158-g1b062f552873 #742
+ Hardware name: RPT (r1) (DT)
+ pstate: 00000005 (nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : queued_spin_lock_slowpath+0x58/0x2d0
+ lr : invoke_tx_handlers_early+0x5b4/0x5c0
+ sp : ffff00001ef64660
+ x29: ffff00001ef64660 x28: ffff000009bc1070 x27: ffff000009bc0ad8
+ x26: ffff000009bc0900 x25: ffff00001ef647a8 x24: 0000000000000000
+ x23: ffff000009bc0900 x22: ffff000009bc0900 x21: ffff00000ac0e000
+ x20: ffff00000a279e00 x19: ffff00001ef646e8 x18: 0000000000000000
+ x17: ffff800016468000 x16: ffff00001ef608c0 x15: 0010533c93f64f80
+ x14: 0010395c9faa3946 x13: 0000000000000000 x12: 00000000fa83b2da
+ x11: 000000012edeceea x10: ffff0000010fbe00 x9 : 0000000000895440
+ x8 : 000000000010533c x7 : ffff00000ad8b740 x6 : ffff00000c350880
+ x5 : 0000000000000007 x4 : 0000000000000001 x3 : 0000000000000000
+ x2 : 0000000000000000 x1 : 0000000000000001 x0 : ffff00000ac0e0e8
+ Call trace:
+  queued_spin_lock_slowpath+0x58/0x2d0
+  ieee80211_tx+0x80/0x12c
+  ieee80211_tx_pending+0x110/0x278
+  tasklet_action_common.constprop.0+0x10c/0x144
+  tasklet_action+0x20/0x28
+  _stext+0x11c/0x284
+  ____do_softirq+0xc/0x14
+  call_on_irq_stack+0x24/0x34
+  do_softirq_own_stack+0x18/0x20
+  do_softirq+0x74/0x7c
+  __local_bh_enable_ip+0xa0/0xa4
+  _ieee80211_wake_txqs+0x3b0/0x4b8
+  __ieee80211_wake_queue+0x12c/0x168
+  ieee80211_add_pending_skbs+0xec/0x138
+  ieee80211_sta_ps_deliver_wakeup+0x2a4/0x480
+  ieee80211_mps_sta_status_update.part.0+0xd8/0x11c
+  ieee80211_mps_sta_status_update+0x18/0x24
+  sta_apply_parameters+0x3bc/0x4c0
+  ieee80211_change_station+0x1b8/0x2dc
+  nl80211_set_station+0x444/0x49c
+  genl_family_rcv_msg_doit.isra.0+0xa4/0xfc
+  genl_rcv_msg+0x1b0/0x244
+  netlink_rcv_skb+0x38/0x10c
+  genl_rcv+0x34/0x48
+  netlink_unicast+0x254/0x2bc
+  netlink_sendmsg+0x190/0x3b4
+  ____sys_sendmsg+0x1e8/0x218
+  ___sys_sendmsg+0x68/0x8c
+  __sys_sendmsg+0x44/0x84
+  __arm64_sys_sendmsg+0x20/0x28
+  do_el0_svc+0x6c/0xe8
+  el0_svc+0x14/0x48
+  el0t_64_sync_handler+0xb0/0xb4
+  el0t_64_sync+0x14c/0x150
 
-unreferenced object 0xffff00000668d800 (size 128):
-  comm "kworker/u8:4", pid 67, jiffies 4295419552 (age 1836.444s)
-  hex dump (first 32 bytes):
-    00 1f 05 09 00 00 ff ff 00 d5 68 06 00 00 ff ff  ..........h.....
-    8e 97 ea eb 3e b8 01 00 00 00 00 00 00 00 00 00  ....>...........
-  backtrace:
-    [<000000007302a0b6>] __kmem_cache_alloc_node+0x1e0/0x35c
-    [<00000000049bd418>] kmalloc_trace+0x34/0x80
-    [<0000000000d792bb>] mesh_queue_preq+0x44/0x2a8
-    [<00000000c99c3696>] mesh_nexthop_resolve+0x198/0x19c
-    [<00000000926bf598>] ieee80211_xmit+0x1d0/0x1f4
-    [<00000000fc8c2284>] __ieee80211_subif_start_xmit+0x30c/0x764
-    [<000000005926ee38>] ieee80211_subif_start_xmit+0x9c/0x7a4
-    [<000000004c86e916>] dev_hard_start_xmit+0x174/0x440
-    [<0000000023495647>] __dev_queue_xmit+0xe24/0x111c
-    [<00000000cfe9ca78>] batadv_send_skb_packet+0x180/0x1e4
-    [<000000007bacc5d5>] batadv_v_elp_periodic_work+0x2f4/0x508
-    [<00000000adc3cd94>] process_one_work+0x4b8/0xa1c
-    [<00000000b36425d1>] worker_thread+0x9c/0x634
-    [<0000000005852dd5>] kthread+0x1bc/0x1c4
-    [<000000005fccd770>] ret_from_fork+0x10/0x20
-unreferenced object 0xffff000009051f00 (size 128):
-  comm "kworker/u8:4", pid 67, jiffies 4295419553 (age 1836.440s)
-  hex dump (first 32 bytes):
-    90 d6 92 0d 00 00 ff ff 00 d8 68 06 00 00 ff ff  ..........h.....
-    36 27 92 e4 02 e0 01 00 00 58 79 06 00 00 ff ff  6'.......Xy.....
-  backtrace:
-    [<000000007302a0b6>] __kmem_cache_alloc_node+0x1e0/0x35c
-    [<00000000049bd418>] kmalloc_trace+0x34/0x80
-    [<0000000000d792bb>] mesh_queue_preq+0x44/0x2a8
-    [<00000000c99c3696>] mesh_nexthop_resolve+0x198/0x19c
-    [<00000000926bf598>] ieee80211_xmit+0x1d0/0x1f4
-    [<00000000fc8c2284>] __ieee80211_subif_start_xmit+0x30c/0x764
-    [<000000005926ee38>] ieee80211_subif_start_xmit+0x9c/0x7a4
-    [<000000004c86e916>] dev_hard_start_xmit+0x174/0x440
-    [<0000000023495647>] __dev_queue_xmit+0xe24/0x111c
-    [<00000000cfe9ca78>] batadv_send_skb_packet+0x180/0x1e4
-    [<000000007bacc5d5>] batadv_v_elp_periodic_work+0x2f4/0x508
-    [<00000000adc3cd94>] process_one_work+0x4b8/0xa1c
-    [<00000000b36425d1>] worker_thread+0x9c/0x634
-    [<0000000005852dd5>] kthread+0x1bc/0x1c4
-    [<000000005fccd770>] ret_from_fork+0x10/0x20
+Using spin_lock_bh()/spin_unlock_bh() instead prevents softirq to raise
+on the same CPU that is holding the lock.
 
-Fixes: 050ac52cbe1f ("mac80211: code for on-demand Hybrid Wireless Mesh Protocol")
-Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
-Link: https://msgid.link/20240528142605.1060566-1-nico.escande@gmail.com
+Fixes: 1d147bfa6429 ("mac80211: fix AP powersave TX vs. wakeup race")
+Signed-off-by: Remi Pommarel <repk@triplefau.lt>
+Link: https://msgid.link/8e36fe07d0fbc146f89196cd47a53c8a0afe84aa.1716910344.git.repk@triplefau.lt
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mesh_pathtbl.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ net/mac80211/sta_info.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/mac80211/mesh_pathtbl.c b/net/mac80211/mesh_pathtbl.c
-index 69d5e1ec6edef..e7b9dcf30adc9 100644
---- a/net/mac80211/mesh_pathtbl.c
-+++ b/net/mac80211/mesh_pathtbl.c
-@@ -723,10 +723,23 @@ void mesh_path_discard_frame(struct ieee80211_sub_if_data *sdata,
-  */
- void mesh_path_flush_pending(struct mesh_path *mpath)
- {
-+	struct ieee80211_sub_if_data *sdata = mpath->sdata;
-+	struct ieee80211_if_mesh *ifmsh = &sdata->u.mesh;
-+	struct mesh_preq_queue *preq, *tmp;
- 	struct sk_buff *skb;
+diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
+index f4deee1926e58..6d2b42cb3ad58 100644
+--- a/net/mac80211/sta_info.c
++++ b/net/mac80211/sta_info.c
+@@ -1339,7 +1339,7 @@ void ieee80211_sta_ps_deliver_wakeup(struct sta_info *sta)
+ 	skb_queue_head_init(&pending);
  
- 	while ((skb = skb_dequeue(&mpath->frame_queue)) != NULL)
- 		mesh_path_discard_frame(mpath->sdata, skb);
-+
-+	spin_lock_bh(&ifmsh->mesh_preq_queue_lock);
-+	list_for_each_entry_safe(preq, tmp, &ifmsh->preq_queue.list, list) {
-+		if (ether_addr_equal(mpath->dst, preq->dst)) {
-+			list_del(&preq->list);
-+			kfree(preq);
-+			--ifmsh->preq_queue_len;
-+		}
-+	}
-+	spin_unlock_bh(&ifmsh->mesh_preq_queue_lock);
- }
+ 	/* sync with ieee80211_tx_h_unicast_ps_buf */
+-	spin_lock(&sta->ps_lock);
++	spin_lock_bh(&sta->ps_lock);
+ 	/* Send all buffered frames to the station */
+ 	for (ac = 0; ac < IEEE80211_NUM_ACS; ac++) {
+ 		int count = skb_queue_len(&pending), tmp;
+@@ -1368,7 +1368,7 @@ void ieee80211_sta_ps_deliver_wakeup(struct sta_info *sta)
+ 	 */
+ 	clear_sta_flag(sta, WLAN_STA_PSPOLL);
+ 	clear_sta_flag(sta, WLAN_STA_UAPSD);
+-	spin_unlock(&sta->ps_lock);
++	spin_unlock_bh(&sta->ps_lock);
  
- /**
+ 	atomic_dec(&ps->num_sta_ps);
+ 
 -- 
 2.43.0
 
