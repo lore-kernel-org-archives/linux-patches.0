@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60446191F67;
-	Wed,  3 Jul 2024 10:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50471175555;
+	Wed,  3 Jul 2024 10:48:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003716; cv=none; b=ifIL3yacoBZakNatijM7sDwhL3FSgRkz4pwBpQQuEDk+M3c1R89D0fAq5wG4LmLP9q17YipPArWzWQg4SrpVFp3fREthlFPMT+FhAWTeT1/w/AtASHuS1tzu00nDG7UPxMuaje1QasbPtNyjy9vq9AYlcsbk9sXrw0BOT3yaHk4=
+	t=1720003719; cv=none; b=qI4SvrfZcfeCSdegvAZsHhJfFMHYW3yIJoCAwm8GjW0xdWAcjHLibEpP5WRayyOa7rbk3hUoMK0SlBFKra3sN2vXqlzqHleUJcG5oSTFOUoL4TtdQLONLTxP4jsOr+xfkDXxjYjxMuk/PAr4SMGW9EZ+pQU7eA7rrvE+s8/t8kU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003716; c=relaxed/simple;
-	bh=CoKSwJvzDQ5AZ745rZsJ4UKQhPwL0O9hme30YWMyL5w=;
+	s=arc-20240116; t=1720003719; c=relaxed/simple;
+	bh=HA+nT+fZXbqImXhijAbXeRL9OHB/8w4B+BqSwVgZ2TM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fV1RPRvxYjtk1sCaydV32Ab7KzIfp74V/DOVX2jkDLrcfIJvR9ouo2yhS7qF42PpRSdH0RW/sxLAgJlk+Q0jsk9+lFfkpk342rUpDMhAPEb59FeSCbGhOFsiJwxorTGUkzVaGIre94SFnwP98e0a84RUCmwKL5DHkWhKKIFKI0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CgP2b3Cg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jz6hDFPrXZbjo2VtNf7Lm43OLsP+GZbSSmcs1gS/LDs/FEJknTC6SV1PNhwlvXjjb1Wjc8loHjwROW20MgQo8Y0tdD6/Bi67vvtO7yqtpsDZoFBy6jfi+fvLQoj+8KkGnF0pGVtemhshxNSp7Uv28rzzDoK6ebsgFj8q5QV48I4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/wzPOM9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CgP2b3Cg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D70D0C2BD10;
-	Wed,  3 Jul 2024 10:48:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/wzPOM9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9B9EC2BD10;
+	Wed,  3 Jul 2024 10:48:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003716;
-	bh=CoKSwJvzDQ5AZ745rZsJ4UKQhPwL0O9hme30YWMyL5w=;
+	s=korg; t=1720003719;
+	bh=HA+nT+fZXbqImXhijAbXeRL9OHB/8w4B+BqSwVgZ2TM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CgP2b3CgJSAZylzeA7hYGqhRHHFeo5B8MWoV0fwSoCykIYk5wKk05b9k6qgC7EcLB
-	 2mrf4gwBz2EmjTTftKIRycV4784WNbd0aQQmrh7CUmMcZ0O0ZkNsyQt2raiXt05i9C
-	 Ia2RfUvr1S5E9T0FcNS/l60KgzeWaCdfFfKAlNCA=
+	b=S/wzPOM9+QOfEHoQ5lgBf4M+67wQHhFeoZtsNIn0AHrJImBL8dzrzaKS5UP2okuqx
+	 T0QCSYFlHtLWfWKsuu/41svfAEZ+NrXKS5O0EmOiTPwoKqHC7pGAPKeB8VzAwAySLV
+	 aqQskCVx02pCkFJ+Ctmfb4oYN8bGW+Us1z00AxEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Bee <knaerzche@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 139/139] arm64: dts: rockchip: Add sound-dai-cells for RK3368
-Date: Wed,  3 Jul 2024 12:40:36 +0200
-Message-ID: <20240703102835.684070336@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>
+Subject: [PATCH 4.19 125/139] usb: musb: da8xx: fix a resource leak in probe()
+Date: Wed,  3 Jul 2024 12:40:22 +0200
+Message-ID: <20240703102835.156313093@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -51,52 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Bee <knaerzche@gmail.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 8d7ec44aa5d1eb94a30319074762a1740440cdc8 ]
+commit de644a4a86be04ed8a43ef8267d0f7d021941c5e upstream.
 
-Add the missing #sound-dai-cells for RK3368's I2S and S/PDIF controllers.
+Call usb_phy_generic_unregister() if of_platform_populate() fails.
 
-Fixes: f7d89dfe1e31 ("arm64: dts: rockchip: add i2s nodes support for RK3368 SoCs")
-Fixes: 0328d68ea76d ("arm64: dts: rockchip: add rk3368 spdif node")
-Signed-off-by: Alex Bee <knaerzche@gmail.com>
-Link: https://lore.kernel.org/r/20240623090116.670607-4-knaerzche@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: d6299b6efbf6 ("usb: musb: Add support of CPPI 4.1 DMA controller to DA8xx")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/69af1b1d-d3f4-492b-bcea-359ca5949f30@moroto.mountain
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3368.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/musb/da8xx.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3368.dtsi b/arch/arm64/boot/dts/rockchip/rk3368.dtsi
-index 9c24de1ba43c5..16aec16725c57 100644
---- a/arch/arm64/boot/dts/rockchip/rk3368.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3368.dtsi
-@@ -677,6 +677,7 @@
- 		dma-names = "tx";
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&spdif_tx>;
-+		#sound-dai-cells = <0>;
- 		status = "disabled";
- 	};
+--- a/drivers/usb/musb/da8xx.c
++++ b/drivers/usb/musb/da8xx.c
+@@ -556,7 +556,7 @@ static int da8xx_probe(struct platform_d
+ 	ret = of_platform_populate(pdev->dev.of_node, NULL,
+ 				   da8xx_auxdata_lookup, &pdev->dev);
+ 	if (ret)
+-		return ret;
++		goto err_unregister_phy;
  
-@@ -688,6 +689,7 @@
- 		clocks = <&cru SCLK_I2S_2CH>, <&cru HCLK_I2S_2CH>;
- 		dmas = <&dmac_bus 6>, <&dmac_bus 7>;
- 		dma-names = "tx", "rx";
-+		#sound-dai-cells = <0>;
- 		status = "disabled";
- 	};
+ 	memset(musb_resources, 0x00, sizeof(*musb_resources) *
+ 			ARRAY_SIZE(musb_resources));
+@@ -582,9 +582,13 @@ static int da8xx_probe(struct platform_d
+ 	ret = PTR_ERR_OR_ZERO(glue->musb);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "failed to register musb device: %d\n", ret);
+-		usb_phy_generic_unregister(glue->usb_phy);
++		goto err_unregister_phy;
+ 	}
  
-@@ -701,6 +703,7 @@
- 		dma-names = "tx", "rx";
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&i2s_8ch_bus>;
-+		#sound-dai-cells = <0>;
- 		status = "disabled";
- 	};
++	return 0;
++
++err_unregister_phy:
++	usb_phy_generic_unregister(glue->usb_phy);
+ 	return ret;
+ }
  
--- 
-2.43.0
-
 
 
