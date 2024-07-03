@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBBB4178CFA;
-	Wed,  3 Jul 2024 11:02:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAAB5178CFA;
+	Wed,  3 Jul 2024 11:02:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004572; cv=none; b=UJDsR7tyWJvyjcBDrUcwG+HM+knYsMuZvObHwl441UwQII9cvglFL7F9SVI3V0UMlWaFVZXasUrK6z3gjlL+vfirzOjCFo47EQ9MSCC6Uqkyk88yfUHtidYIBGoANLOBMV3Ga+k6J7T041CPbQR8hKM8mlKOGaRLKJ9HTksWHgo=
+	t=1720004575; cv=none; b=cKOGJ5t0IL3DzFX+WEYAVto1eRnTeZvam7DERhGd73PXI7yknCVeyXuCt4PMIslosYy01zbmG5XFwi9l5S7ZrwfpRGuk2+DZrwIDfkPAiKuZvrou1HPRvI8Urel6zZ9zsiJCfeMJxJu5kDOrAYHpSmJqBLKKziNSO2pvu1ULnOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004572; c=relaxed/simple;
-	bh=cwX9FXjtTpNlOgvtE0rIV7HmR2PIRMSgwlxAr3ih3Cg=;
+	s=arc-20240116; t=1720004575; c=relaxed/simple;
+	bh=qxsdPSMvTgYtZdaK6ziuYcmAYpnzQ5j3g/LmVRdynRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z52LW+86INP19dt1nuKUyKx/WRlgr92G0lQdDSaLJ/DsLzJFAZgdtIDsFg2jeNSLCXSUvxwVt5KX9EOcRC4RCE9AJ3sBSHGdYIQuZVnRefkle88660zQS1ki/wybZDPGUd6FdLIrxC/1efeIR8BP4VKkTI+eCqRlkYLhHgbJEec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=COKBGojV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K4ZHz3UHwDcDeaoALwdwrJnoIGrRd/2+JuBbnub+YTYWLTEUY2TVMasDMpbvk4GHAei54v/XtsgaYTxTQ1ayJQMSFDHBcpSFjqloZPMyNT20CFmpWdZDLwp/nUMPUocUJwAiFq7BGLB0BK1atEsWskcqjyQeLtp5teVnAwQCV7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n830BNKl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="COKBGojV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53C5BC4AF0B;
-	Wed,  3 Jul 2024 11:02:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n830BNKl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 355F5C2BD10;
+	Wed,  3 Jul 2024 11:02:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004572;
-	bh=cwX9FXjtTpNlOgvtE0rIV7HmR2PIRMSgwlxAr3ih3Cg=;
+	s=korg; t=1720004575;
+	bh=qxsdPSMvTgYtZdaK6ziuYcmAYpnzQ5j3g/LmVRdynRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=COKBGojVkZJ+sbqlL90OWWC1Cy8Zx73p9aTUBb7JA11ysXAp/eRQlcBuvUBFa90Df
-	 xhYPMWRBdlldA14rMQ9Gwtz5ldgSkWYQ11eICKLkFVGi9JuDKjk0UJH20YhGkwN1bL
-	 Lk9oSOG3a7YJClaf9E4faXGtHglRnKRmDiW4TFhI=
+	b=n830BNKl0pBm89SwutaisMiLw7uwmKtMpEqej7PpK9/YB47+sZ++bQ/IkfH3HvZZE
+	 O11Xl+HTsEQkB/mMy6Y036hHdQ7G8B01wsl9Q8ukzemDhbySXOJBiZ1ZmSUE0mc3pg
+	 tQgqvjMPaduiQJZfu7jABjg7PweIc332VeFdcLTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Nuno Sa <nuno.sa@analog.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.10 085/290] dmaengine: axi-dmac: fix possible race in remove()
-Date: Wed,  3 Jul 2024 12:37:46 +0200
-Message-ID: <20240703102907.405338379@linuxfoundation.org>
+	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH 5.10 056/290] gpio: tqmx86: store IRQ trigger type and unmask status separately
+Date: Wed,  3 Jul 2024 12:37:17 +0200
+Message-ID: <20240703102906.318216243@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -51,35 +50,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nuno Sa <nuno.sa@analog.com>
+From: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
 
-commit 1bc31444209c8efae98cb78818131950d9a6f4d6 upstream.
+commit 08af509efdf8dad08e972b48de0e2c2a7919ea8b upstream.
 
-We need to first free the IRQ before calling of_dma_controller_free().
-Otherwise we could get an interrupt and schedule a tasklet while
-removing the DMA controller.
+irq_set_type() should not implicitly unmask the IRQ.
 
-Fixes: 0e3b67b348b8 ("dmaengine: Add support for the Analog Devices AXI-DMAC DMA controller")
-Cc: stable@kernel.org
-Signed-off-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20240328-axi-dmac-devm-probe-v3-1-523c0176df70@analog.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+All accesses to the interrupt configuration register are moved to a new
+helper tqmx86_gpio_irq_config(). We also introduce the new rule that
+accessing irq_type must happen while locked, which will become
+significant for fixing EDGE_BOTH handling.
+
+Fixes: b868db94a6a7 ("gpio: tqmx86: Add GPIO from for this IO controller")
+Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+Link: https://lore.kernel.org/r/6aa4f207f77cb58ef64ffb947e91949b0f753ccd.1717063994.git.matthias.schiffer@ew.tq-group.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/dma-axi-dmac.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-tqmx86.c |   46 +++++++++++++++++++++++++--------------------
+ 1 file changed, 26 insertions(+), 20 deletions(-)
 
---- a/drivers/dma/dma-axi-dmac.c
-+++ b/drivers/dma/dma-axi-dmac.c
-@@ -1020,8 +1020,8 @@ static int axi_dmac_remove(struct platfo
- {
- 	struct axi_dmac *dmac = platform_get_drvdata(pdev);
+--- a/drivers/gpio/gpio-tqmx86.c
++++ b/drivers/gpio/gpio-tqmx86.c
+@@ -27,16 +27,20 @@
+ #define TQMX86_GPIIC	3	/* GPI Interrupt Configuration Register */
+ #define TQMX86_GPIIS	4	/* GPI Interrupt Status Register */
  
--	of_dma_controller_free(pdev->dev.of_node);
- 	free_irq(dmac->irq, dmac);
-+	of_dma_controller_free(pdev->dev.of_node);
- 	tasklet_kill(&dmac->chan.vchan.task);
- 	dma_async_device_unregister(&dmac->dma_dev);
- 	clk_disable_unprepare(dmac->clk);
++#define TQMX86_GPII_NONE	0
+ #define TQMX86_GPII_FALLING	BIT(0)
+ #define TQMX86_GPII_RISING	BIT(1)
+ #define TQMX86_GPII_MASK	(BIT(0) | BIT(1))
+ #define TQMX86_GPII_BITS	2
++/* Stored in irq_type with GPII bits */
++#define TQMX86_INT_UNMASKED	BIT(2)
+ 
+ struct tqmx86_gpio_data {
+ 	struct gpio_chip	chip;
+ 	struct irq_chip		irq_chip;
+ 	void __iomem		*io_base;
+ 	int			irq;
++	/* Lock must be held for accessing output and irq_type fields */
+ 	raw_spinlock_t		spinlock;
+ 	u8			irq_type[TQMX86_NGPI];
+ };
+@@ -107,20 +111,30 @@ static int tqmx86_gpio_get_direction(str
+ 	return GPIO_LINE_DIRECTION_OUT;
+ }
+ 
++static void tqmx86_gpio_irq_config(struct tqmx86_gpio_data *gpio, int offset)
++	__must_hold(&gpio->spinlock)
++{
++	u8 type = TQMX86_GPII_NONE, gpiic;
++
++	if (gpio->irq_type[offset] & TQMX86_INT_UNMASKED)
++		type = gpio->irq_type[offset] & TQMX86_GPII_MASK;
++
++	gpiic = tqmx86_gpio_read(gpio, TQMX86_GPIIC);
++	gpiic &= ~(TQMX86_GPII_MASK << (offset * TQMX86_GPII_BITS));
++	gpiic |= type << (offset * TQMX86_GPII_BITS);
++	tqmx86_gpio_write(gpio, gpiic, TQMX86_GPIIC);
++}
++
+ static void tqmx86_gpio_irq_mask(struct irq_data *data)
+ {
+ 	unsigned int offset = (data->hwirq - TQMX86_NGPO);
+ 	struct tqmx86_gpio_data *gpio = gpiochip_get_data(
+ 		irq_data_get_irq_chip_data(data));
+ 	unsigned long flags;
+-	u8 gpiic, mask;
+-
+-	mask = TQMX86_GPII_MASK << (offset * TQMX86_GPII_BITS);
+ 
+ 	raw_spin_lock_irqsave(&gpio->spinlock, flags);
+-	gpiic = tqmx86_gpio_read(gpio, TQMX86_GPIIC);
+-	gpiic &= ~mask;
+-	tqmx86_gpio_write(gpio, gpiic, TQMX86_GPIIC);
++	gpio->irq_type[offset] &= ~TQMX86_INT_UNMASKED;
++	tqmx86_gpio_irq_config(gpio, offset);
+ 	raw_spin_unlock_irqrestore(&gpio->spinlock, flags);
+ }
+ 
+@@ -130,15 +144,10 @@ static void tqmx86_gpio_irq_unmask(struc
+ 	struct tqmx86_gpio_data *gpio = gpiochip_get_data(
+ 		irq_data_get_irq_chip_data(data));
+ 	unsigned long flags;
+-	u8 gpiic, mask;
+-
+-	mask = TQMX86_GPII_MASK << (offset * TQMX86_GPII_BITS);
+ 
+ 	raw_spin_lock_irqsave(&gpio->spinlock, flags);
+-	gpiic = tqmx86_gpio_read(gpio, TQMX86_GPIIC);
+-	gpiic &= ~mask;
+-	gpiic |= gpio->irq_type[offset] << (offset * TQMX86_GPII_BITS);
+-	tqmx86_gpio_write(gpio, gpiic, TQMX86_GPIIC);
++	gpio->irq_type[offset] |= TQMX86_INT_UNMASKED;
++	tqmx86_gpio_irq_config(gpio, offset);
+ 	raw_spin_unlock_irqrestore(&gpio->spinlock, flags);
+ }
+ 
+@@ -149,7 +158,7 @@ static int tqmx86_gpio_irq_set_type(stru
+ 	unsigned int offset = (data->hwirq - TQMX86_NGPO);
+ 	unsigned int edge_type = type & IRQF_TRIGGER_MASK;
+ 	unsigned long flags;
+-	u8 new_type, gpiic;
++	u8 new_type;
+ 
+ 	switch (edge_type) {
+ 	case IRQ_TYPE_EDGE_RISING:
+@@ -165,13 +174,10 @@ static int tqmx86_gpio_irq_set_type(stru
+ 		return -EINVAL; /* not supported */
+ 	}
+ 
+-	gpio->irq_type[offset] = new_type;
+-
+ 	raw_spin_lock_irqsave(&gpio->spinlock, flags);
+-	gpiic = tqmx86_gpio_read(gpio, TQMX86_GPIIC);
+-	gpiic &= ~((TQMX86_GPII_MASK) << (offset * TQMX86_GPII_BITS));
+-	gpiic |= new_type << (offset * TQMX86_GPII_BITS);
+-	tqmx86_gpio_write(gpio, gpiic, TQMX86_GPIIC);
++	gpio->irq_type[offset] &= ~TQMX86_GPII_MASK;
++	gpio->irq_type[offset] |= new_type;
++	tqmx86_gpio_irq_config(gpio, offset);
+ 	raw_spin_unlock_irqrestore(&gpio->spinlock, flags);
+ 
+ 	return 0;
 
 
