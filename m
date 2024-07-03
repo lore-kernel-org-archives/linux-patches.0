@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4F513247D;
-	Wed,  3 Jul 2024 11:13:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F47A143879;
+	Wed,  3 Jul 2024 11:13:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005194; cv=none; b=V+Ll+mi3kFyjWKrRsi0u7HN1ga/K7iORSEPirLT1ecPewRh2k2BikiT8SYfFay87Fy8K+OXZMSjp40EJ1XnNpFyYm6mw9UI6YAbts+PXS/FfoYCFw1mQhR/yTLtOUhvGazWyG+zTeZI2oP2ilj2peJggnUHD7G7Ep7NxB4I1W/U=
+	t=1720005197; cv=none; b=NODIO+hLxeQORuvSqg+tmAJg2gznKA2qFX5PWMBUCjGOV11tydZXROAhvzN8py5JWYAIgp2i1Y147gQMjB0WhkHMyEwtOdOP6k4Q3ad20CyYVgIZYfILymKnXGz9GKIUKa4x2ghOiva7Zy7eirK5CnhovsoGUmwgCmQtVmlHEQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005194; c=relaxed/simple;
-	bh=HDxen3Ndnr7Eh8dFvEkKhSzq7OCliTiT4AE8kfBYwuI=;
+	s=arc-20240116; t=1720005197; c=relaxed/simple;
+	bh=4ZI6HhbZr4UaLZCItFFTUD9tENwmgJ+/IBFGXPgPdQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ju4FED1q97/6KmjeVbdfyM+nKOIJgtfbMMCYTVF8P5UJ/vPZRqrqBX80vmv8wNvf7eqUHiyOlGCsZRDBkWSvbbHIFRBFLLXXRn+ivPcfRz6y5/5tW/CH7LBzC4dvG8XNMpN7seye8CZIpBsUNBTxAKKWK6hvH9nuIupzYi/gbEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lf2tImcD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=CQt681uPaUl4gjKt9U2kJovVnMGzF0MOU78dKGrlYIV8fJbVV42lZk8Z48HiWwhagl+EWQgY2TCIG6WkHCheINIyxdwI5B+a5I38RBpOl7yMwkhPlwd0R0Q0v8XuzHxk2gWZCdJ8Ji8foR9PqwsvNgCz1Q5/p0oume1ZAeOmdYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eu3mbMFM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lf2tImcD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61C6C2BD10;
-	Wed,  3 Jul 2024 11:13:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eu3mbMFM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2681C2BD10;
+	Wed,  3 Jul 2024 11:13:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005194;
-	bh=HDxen3Ndnr7Eh8dFvEkKhSzq7OCliTiT4AE8kfBYwuI=;
+	s=korg; t=1720005197;
+	bh=4ZI6HhbZr4UaLZCItFFTUD9tENwmgJ+/IBFGXPgPdQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lf2tImcDLWc4P1y75o3UxE4BSj6fOOt9lBE/7KSzVgbZ3qdhmRVyDGP/uhmricitG
-	 1mz1RjVR6Cv5I5Y4LMlZsXwPzEiDr/EitryROQPdgkPrs21aL4Y+yo+fRMZ1tBDCO7
-	 yanCT0ulIUBuC8ZjUlY2PVhn78ri4Eob8a7ggF24=
+	b=Eu3mbMFM8R3NMq0dH69wWj3/6Nh2Z2ZnMzWYSSKPZPr6sefEbboIqGr75mYtU/W6Z
+	 0C2+IkmzeCvdDitG94c4d1MAmbqweUyvWckvnxxP5B8tYu9BIZAyNPoHnl0+WIA4t7
+	 tE0zl2BAycs53eFw44Vu0Iqw8BbYPdAq5u6Du7Qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Bee <knaerzche@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 289/290] arm64: dts: rockchip: Add sound-dai-cells for RK3368
-Date: Wed,  3 Jul 2024 12:41:10 +0200
-Message-ID: <20240703102915.063340172@linuxfoundation.org>
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 290/290] xdp: xdp_mem_allocator can be NULL in trace_mem_connect().
+Date: Wed,  3 Jul 2024 12:41:11 +0200
+Message-ID: <20240703102915.100475736@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -45,58 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Bee <knaerzche@gmail.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 8d7ec44aa5d1eb94a30319074762a1740440cdc8 ]
+commit e0ae713023a9d09d6e1b454bdc8e8c1dd32c586e upstream.
 
-Add the missing #sound-dai-cells for RK3368's I2S and S/PDIF controllers.
+Since the commit mentioned below __xdp_reg_mem_model() can return a NULL
+pointer. This pointer is dereferenced in trace_mem_connect() which leads
+to segfault.
 
-Fixes: f7d89dfe1e31 ("arm64: dts: rockchip: add i2s nodes support for RK3368 SoCs")
-Fixes: 0328d68ea76d ("arm64: dts: rockchip: add rk3368 spdif node")
-Signed-off-by: Alex Bee <knaerzche@gmail.com>
-Link: https://lore.kernel.org/r/20240623090116.670607-4-knaerzche@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The trace points (mem_connect + mem_disconnect) were put in place to
+pair connect/disconnect using the IDs. The ID is only assigned if
+__xdp_reg_mem_model() does not return NULL. That connect trace point is
+of no use if there is no ID.
+
+Skip that connect trace point if xdp_alloc is NULL.
+
+[ Toke Høiland-Jørgensen delivered the reasoning for skipping the trace
+  point ]
+
+Fixes: 4a48ef70b93b8 ("xdp: Allow registering memory model without rxq reference")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Acked-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Link: https://lore.kernel.org/r/YikmmXsffE+QajTB@linutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3368.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+ net/core/xdp.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3368.dtsi b/arch/arm64/boot/dts/rockchip/rk3368.dtsi
-index 3746f23dc3df4..bc4df59df3f1e 100644
---- a/arch/arm64/boot/dts/rockchip/rk3368.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3368.dtsi
-@@ -687,6 +687,7 @@
- 		dma-names = "tx";
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&spdif_tx>;
-+		#sound-dai-cells = <0>;
- 		status = "disabled";
- 	};
+--- a/net/core/xdp.c
++++ b/net/core/xdp.c
+@@ -356,7 +356,8 @@ int xdp_rxq_info_reg_mem_model(struct xd
+ 	if (IS_ERR(xdp_alloc))
+ 		return PTR_ERR(xdp_alloc);
  
-@@ -698,6 +699,7 @@
- 		clocks = <&cru SCLK_I2S_2CH>, <&cru HCLK_I2S_2CH>;
- 		dmas = <&dmac_bus 6>, <&dmac_bus 7>;
- 		dma-names = "tx", "rx";
-+		#sound-dai-cells = <0>;
- 		status = "disabled";
- 	};
+-	trace_mem_connect(xdp_alloc, xdp_rxq);
++	if (trace_mem_connect_enabled() && xdp_alloc)
++		trace_mem_connect(xdp_alloc, xdp_rxq);
+ 	return 0;
+ }
  
-@@ -711,6 +713,7 @@
- 		dma-names = "tx", "rx";
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&i2s_8ch_bus>;
-+		#sound-dai-cells = <0>;
- 		status = "disabled";
- 	};
- 
--- 
-2.43.0
-
 
 
