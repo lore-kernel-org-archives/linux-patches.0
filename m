@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91C013A27E;
-	Wed,  3 Jul 2024 11:29:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4B113A27E;
+	Wed,  3 Jul 2024 11:29:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006146; cv=none; b=O8ZNupPLYbpXkYTm38GF+Fe4IoYL9KzVa5bc0/R1x6vPh7CwQWYN0X2s6cunz7A6z40im6FjvuhUum1yw8TcwSFiEiRTmSRsTfEwdxm2WAY/Q9e4hA/HAKoIIeozuwlSeFk3RS8YjeqmVbWTRiJxzMjIltdF8W0tBQGPfOaQuoo=
+	t=1720006149; cv=none; b=nBGf9vNIQ9xI78853ij0TxrKERufmMlhpx8bRYm8VdNKhQ10nx+AocLEo22+PEWY55bOxDf/YNFVNJfcljNhcO81P7t9qga5L41qBGbARGOuTtfRib6OxBQ9QB+2gkSKTSdvu7K5GWg8pbWB75Vb6J1hbKextqkPvaaJ+AzW+88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006146; c=relaxed/simple;
-	bh=WR4GtdfhhGP1FNtGOa8k/REBSaumbPndegLcZxVlh70=;
+	s=arc-20240116; t=1720006149; c=relaxed/simple;
+	bh=cDkRzQkSa1y7gpb91KkRLX2+dSYvwUdo9gE3oH/hXAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DqkopPwEUhPMGX/BbMXLYn0DF5cqw5gB4MCWGha9t0UAyn6N5TA5R0nSFhsYx5UiWwwZh2bTUSFawOJXnPpuIGocT5FIS7EWpdQO9EDZntZF/sAp9l9cqQ/R5wh8+O4QK5FOByY7G2DUexUqskjeRvD0HmB5vF0apFzC3306nJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XaPU2GJn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GLJ+0SXfJYSBe4uSLnEJ0nSAc0YeUjhGkAEzK2HoWfKjoMwnX/CLBliBLXxOeOYc4/vc6s68kiRnZxieocQFSRl6iSJIwmn+hxtE5VQ9e85ptEJHNaAUV4esb5S7uLL+G2NJyXeh2xaPPxqZqrtsSHrIzQw6Wufqc6jHXlHi5jE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2bClSfVR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XaPU2GJn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB84EC2BD10;
-	Wed,  3 Jul 2024 11:29:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2bClSfVR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCAF6C2BD10;
+	Wed,  3 Jul 2024 11:29:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006146;
-	bh=WR4GtdfhhGP1FNtGOa8k/REBSaumbPndegLcZxVlh70=;
+	s=korg; t=1720006149;
+	bh=cDkRzQkSa1y7gpb91KkRLX2+dSYvwUdo9gE3oH/hXAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XaPU2GJnjmeZNpKJX8RG7sQe7Lbg15ztd3wBYoyMPpuEcl0iuHfSwfHnXZjPpBw9E
-	 Nt0S+EC1EyTcXT+077ulpsVsI7Vc1s7hDvoVA2qsCLZNkHHNx4kXvo9qflcXq+pIN9
-	 AvX2V86V2rlLiXpBZue68IO91+if4Nb5UsVxiahk=
+	b=2bClSfVRV9B23h+WynZ8isVrDgnZxDULoMsQzryP5nEE8JzqnMoPQeaKCFYoOHqpC
+	 jSaO82F0Pqhs009ozS0YqjnAzuRqHd/1tmUuCKA46ILE1+8lwiTipIKqVHywNccRkd
+	 vUO5KcNAM3baa8Mua+keqMf1UUWxQ5gzIvQjZmZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Jason Wang <jasowang@redhat.com>,
+	Xie Yongji <xieyongji@bytedance.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	Maxime Coquelin <maxime.coquelin@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 284/356] drm/panel: ilitek-ili9881c: Fix warning with GPIO controllers that sleep
-Date: Wed,  3 Jul 2024 12:40:20 +0200
-Message-ID: <20240703102923.859088171@linuxfoundation.org>
+Subject: [PATCH 5.15 285/356] vduse: validate block features only with block devices
+Date: Wed,  3 Jul 2024 12:40:21 +0200
+Message-ID: <20240703102923.896470164@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -45,57 +48,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+From: Maxime Coquelin <maxime.coquelin@redhat.com>
 
-[ Upstream commit ee7860cd8b5763017f8dc785c2851fecb7a0c565 ]
+[ Upstream commit a115b5716fc9a64652aa9cb332070087178ffafa ]
 
-The ilitek-ili9881c controls the reset GPIO using the non-sleeping
-gpiod_set_value() function. This complains loudly when the GPIO
-controller needs to sleep. As the caller can sleep, use
-gpiod_set_value_cansleep() to fix the issue.
+This patch is preliminary work to enable network device
+type support to VDUSE.
 
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20240317154839.21260-1-laurent.pinchart@ideasonboard.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240317154839.21260-1-laurent.pinchart@ideasonboard.com
+As VIRTIO_BLK_F_CONFIG_WCE shares the same value as
+VIRTIO_NET_F_HOST_TSO4, we need to restrict its check
+to Virtio-blk device type.
+
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Xie Yongji <xieyongji@bytedance.com>
+Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
+Signed-off-by: Maxime Coquelin <maxime.coquelin@redhat.com>
+Message-Id: <20240109111025.1320976-2-maxime.coquelin@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-ilitek-ili9881c.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/vdpa/vdpa_user/vduse_dev.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c b/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
-index 534dd7414d428..917cb322bab1a 100644
---- a/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
-+++ b/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
-@@ -506,10 +506,10 @@ static int ili9881c_prepare(struct drm_panel *panel)
- 	msleep(5);
- 
- 	/* And reset it */
--	gpiod_set_value(ctx->reset, 1);
-+	gpiod_set_value_cansleep(ctx->reset, 1);
- 	msleep(20);
- 
--	gpiod_set_value(ctx->reset, 0);
-+	gpiod_set_value_cansleep(ctx->reset, 0);
- 	msleep(20);
- 
- 	for (i = 0; i < ctx->desc->init_length; i++) {
-@@ -564,7 +564,7 @@ static int ili9881c_unprepare(struct drm_panel *panel)
- 
- 	mipi_dsi_dcs_enter_sleep_mode(ctx->dsi);
- 	regulator_disable(ctx->power);
--	gpiod_set_value(ctx->reset, 1);
-+	gpiod_set_value_cansleep(ctx->reset, 1);
- 
- 	return 0;
+diff --git a/drivers/vdpa/vdpa_user/vduse_dev.c b/drivers/vdpa/vdpa_user/vduse_dev.c
+index 564864f039d20..898ef597338a2 100644
+--- a/drivers/vdpa/vdpa_user/vduse_dev.c
++++ b/drivers/vdpa/vdpa_user/vduse_dev.c
+@@ -1227,13 +1227,14 @@ static bool device_is_allowed(u32 device_id)
+ 	return false;
  }
+ 
+-static bool features_is_valid(u64 features)
++static bool features_is_valid(struct vduse_dev_config *config)
+ {
+-	if (!(features & (1ULL << VIRTIO_F_ACCESS_PLATFORM)))
++	if (!(config->features & BIT_ULL(VIRTIO_F_ACCESS_PLATFORM)))
+ 		return false;
+ 
+ 	/* Now we only support read-only configuration space */
+-	if (features & (1ULL << VIRTIO_BLK_F_CONFIG_WCE))
++	if ((config->device_id == VIRTIO_ID_BLOCK) &&
++			(config->features & BIT_ULL(VIRTIO_BLK_F_CONFIG_WCE)))
+ 		return false;
+ 
+ 	return true;
+@@ -1260,7 +1261,7 @@ static bool vduse_validate_config(struct vduse_dev_config *config)
+ 	if (!device_is_allowed(config->device_id))
+ 		return false;
+ 
+-	if (!features_is_valid(config->features))
++	if (!features_is_valid(config))
+ 		return false;
+ 
+ 	return true;
 -- 
 2.43.0
 
