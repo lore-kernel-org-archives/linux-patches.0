@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03A913B2B4;
-	Wed,  3 Jul 2024 11:15:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BFC717A596;
+	Wed,  3 Jul 2024 11:15:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005306; cv=none; b=XBZ89bHhwBXgspPGjVrZpK3qYjTjZeJcUZJYB0pFNOm5ttAVuWIV45d4M0qK2/uwf3P+Af/weWMkYj4nHAPzVLx0jHIh8dBdkm9od0fbI/MxQvOPmwE4WRTnWDYOvl4HlOv0bpN3GcVoin87VIB4X53OP+2UKPvH3TwWRG5uRiw=
+	t=1720005310; cv=none; b=O94EjF1ElaIrz2ZYUR+jZ82L8yAneibBFDejyACFj532BqXIifyix+y4d75BBxZQOVEIv2ycHV/+mIAglgGJ/VpSSv0gJmheIw+fG/S0kXyCxH0JlfANJcJ2T3rer2mbup9BHAX6KfRdLX0rgwuPiudA2Hn5/FYOAEAncrxBEtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005306; c=relaxed/simple;
-	bh=JiJN9oleZvywpL/L0zRUCZAVenzjvNNwjCTYNd+F7vo=;
+	s=arc-20240116; t=1720005310; c=relaxed/simple;
+	bh=1ApL2WcogTN+iWoCXUZRjdW2rks7+5OVluegklEymck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=snQIPKJb06DfOCgBM0hnlJpHEUyzxBo8mwlqYOWoY3hQs9rBxmbNw9vW76IXQXyMAWSbWdP44OpTbPODFqccySnlDGrv2KmsnKXETc45TuWLeDZtdIV2hsz9rJ/++HQbYTf9ba4HUEH2QCS393VJaEihaSl8YCegQqz6pINXXp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VMXmKtof; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hp/Q6or5nRy/sJrUetccCs1csN91xVjrm8bPzGIHTACA99MsSNiSaXn5kjY6zg3HSEyO8z+fZXlsRL7Z1rnobt84fZ7SDuW1abyYA8n0l0jCgzZmspn3pAitNqdD0OF80eBn18K2EYrbQ+b0mpPg9sXNfUvOtd38z+Yvee1LZfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TzWHVs3Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VMXmKtof"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50D17C2BD10;
-	Wed,  3 Jul 2024 11:15:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TzWHVs3Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46B35C2BD10;
+	Wed,  3 Jul 2024 11:15:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005306;
-	bh=JiJN9oleZvywpL/L0zRUCZAVenzjvNNwjCTYNd+F7vo=;
+	s=korg; t=1720005309;
+	bh=1ApL2WcogTN+iWoCXUZRjdW2rks7+5OVluegklEymck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VMXmKtofAuIN4VpUQtSeI/ptU/bPjfVsdFzolj0u5wtYvEQEZmdCbVn0FRh7gSok4
-	 tNfhjQwtOvvePqLvw7BgxT5Z28qpfaf6mYGn+ztDVwIfAMmlMYDNFe62fido49JDhW
-	 ng0c85/KcpNw9WnYcD9HCFrymu5P8ELDsHWl53Aw=
+	b=TzWHVs3Y148+BuhClPbV0W8Q90yaE3VgpPANgJ+784CGBRlcEGe3IbuetHzJEQ5Ob
+	 /Tr5797FCW0ScvlET6jE3ol6onBHjvNqxqedLtpyMa3s/A+1rhvk+yUmRoMs/2mv+S
+	 F/8tkL6wFu+wT+jfRkcRBPMqMUEp+ud/+8VLjxUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linyu Yuan <quic_linyyuan@quicinc.com>,
-	John Keeping <john@metanate.com>,
+	DelphineCCChiu <delphine_cc_chiu@wiwynn.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 037/356] usb: gadget: f_fs: use io_data->status consistently
-Date: Wed,  3 Jul 2024 12:36:13 +0200
-Message-ID: <20240703102914.499987564@linuxfoundation.org>
+Subject: [PATCH 5.15 011/356] net/ncsi: Fix the multi thread manner of NCSI driver
+Date: Wed,  3 Jul 2024 12:35:47 +0200
+Message-ID: <20240703102913.527624403@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,62 +51,217 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Keeping <john@metanate.com>
+From: DelphineCCChiu <delphine_cc_chiu@wiwynn.com>
 
-[ Upstream commit b566d38857fcb6777f25b674b90a831eec0817a2 ]
+[ Upstream commit e85e271dec0270982afed84f70dc37703fcc1d52 ]
 
-Commit fb1f16d74e26 ("usb: gadget: f_fs: change ep->status safe in
-ffs_epfile_io()") added a new ffs_io_data::status field to fix lifetime
-issues in synchronous requests.
+Currently NCSI driver will send several NCSI commands back to back without
+waiting the response of previous NCSI command or timeout in some state
+when NIC have multi channel. This operation against the single thread
+manner defined by NCSI SPEC(section 6.3.2.3 in DSP0222_1.1.1)
 
-While there are no similar lifetime issues for asynchronous requests
-(the separate ep member in ffs_io_data avoids them) using the status
-field means the USB request can be freed earlier and that there is more
-consistency between the synchronous and asynchronous I/O paths.
+According to NCSI SPEC(section 6.2.13.1 in DSP0222_1.1.1), we should probe
+one channel at a time by sending NCSI commands (Clear initial state, Get
+version ID, Get capabilities...), than repeat this steps until the max
+number of channels which we got from NCSI command (Get capabilities) has
+been probed.
 
-Cc: Linyu Yuan <quic_linyyuan@quicinc.com>
-Signed-off-by: John Keeping <john@metanate.com>
-Reviewed-by: Linyu Yuan <quic_linyyuan@quicinc.com>
-Link: https://lore.kernel.org/r/20221124170430.3998755-1-john@metanate.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 24729b307eef ("usb: gadget: f_fs: Fix race between aio_cancel() and AIO request complete")
+Fixes: e6f44ed6d04d ("net/ncsi: Package and channel management")
+Signed-off-by: DelphineCCChiu <delphine_cc_chiu@wiwynn.com>
+Link: https://lore.kernel.org/r/20240529065856.825241-1-delphine_cc_chiu@wiwynn.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_fs.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/ncsi/internal.h    |  2 ++
+ net/ncsi/ncsi-manage.c | 73 +++++++++++++++++++++---------------------
+ net/ncsi/ncsi-rsp.c    |  4 ++-
+ 3 files changed, 41 insertions(+), 38 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/f_fs.c b/drivers/usb/gadget/function/f_fs.c
-index a4367a43cdd87..37d18e27ddc64 100644
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -830,8 +830,7 @@ static void ffs_user_copy_worker(struct work_struct *work)
+diff --git a/net/ncsi/internal.h b/net/ncsi/internal.h
+index 374412ed780b6..ef0f8f73826f5 100644
+--- a/net/ncsi/internal.h
++++ b/net/ncsi/internal.h
+@@ -325,6 +325,7 @@ struct ncsi_dev_priv {
+ 	spinlock_t          lock;            /* Protect the NCSI device    */
+ 	unsigned int        package_probe_id;/* Current ID during probe    */
+ 	unsigned int        package_num;     /* Number of packages         */
++	unsigned int        channel_probe_id;/* Current cahnnel ID during probe */
+ 	struct list_head    packages;        /* List of packages           */
+ 	struct ncsi_channel *hot_channel;    /* Channel was ever active    */
+ 	struct ncsi_request requests[256];   /* Request table              */
+@@ -343,6 +344,7 @@ struct ncsi_dev_priv {
+ 	bool                multi_package;   /* Enable multiple packages   */
+ 	bool                mlx_multi_host;  /* Enable multi host Mellanox */
+ 	u32                 package_whitelist; /* Packages to configure    */
++	unsigned char       channel_count;     /* Num of channels to probe   */
+ };
+ 
+ struct ncsi_cmd_arg {
+diff --git a/net/ncsi/ncsi-manage.c b/net/ncsi/ncsi-manage.c
+index 734feb2352fbc..30f5502530374 100644
+--- a/net/ncsi/ncsi-manage.c
++++ b/net/ncsi/ncsi-manage.c
+@@ -510,17 +510,19 @@ static void ncsi_suspend_channel(struct ncsi_dev_priv *ndp)
+ 
+ 		break;
+ 	case ncsi_dev_state_suspend_gls:
+-		ndp->pending_req_num = np->channel_num;
++		ndp->pending_req_num = 1;
+ 
+ 		nca.type = NCSI_PKT_CMD_GLS;
+ 		nca.package = np->id;
++		nca.channel = ndp->channel_probe_id;
++		ret = ncsi_xmit_cmd(&nca);
++		if (ret)
++			goto error;
++		ndp->channel_probe_id++;
+ 
+-		nd->state = ncsi_dev_state_suspend_dcnt;
+-		NCSI_FOR_EACH_CHANNEL(np, nc) {
+-			nca.channel = nc->id;
+-			ret = ncsi_xmit_cmd(&nca);
+-			if (ret)
+-				goto error;
++		if (ndp->channel_probe_id == ndp->channel_count) {
++			ndp->channel_probe_id = 0;
++			nd->state = ncsi_dev_state_suspend_dcnt;
+ 		}
+ 
+ 		break;
+@@ -1340,7 +1342,6 @@ static void ncsi_probe_channel(struct ncsi_dev_priv *ndp)
  {
- 	struct ffs_io_data *io_data = container_of(work, struct ffs_io_data,
- 						   work);
--	int ret = io_data->req->status ? io_data->req->status :
--					 io_data->req->actual;
-+	int ret = io_data->status;
- 	bool kiocb_has_eventfd = io_data->kiocb->ki_flags & IOCB_EVENTFD;
+ 	struct ncsi_dev *nd = &ndp->ndev;
+ 	struct ncsi_package *np;
+-	struct ncsi_channel *nc;
+ 	struct ncsi_cmd_arg nca;
+ 	unsigned char index;
+ 	int ret;
+@@ -1418,23 +1419,6 @@ static void ncsi_probe_channel(struct ncsi_dev_priv *ndp)
  
- 	if (io_data->read && ret > 0) {
-@@ -845,8 +844,6 @@ static void ffs_user_copy_worker(struct work_struct *work)
- 	if (io_data->ffs->ffs_eventfd && !kiocb_has_eventfd)
- 		eventfd_signal(io_data->ffs->ffs_eventfd, 1);
- 
--	usb_ep_free_request(io_data->ep, io_data->req);
+ 		nd->state = ncsi_dev_state_probe_cis;
+ 		break;
+-	case ncsi_dev_state_probe_cis:
+-		ndp->pending_req_num = NCSI_RESERVED_CHANNEL;
 -
- 	if (io_data->read)
- 		kfree(io_data->to_free);
- 	ffs_free_buffer(io_data);
-@@ -861,6 +858,9 @@ static void ffs_epfile_async_io_complete(struct usb_ep *_ep,
+-		/* Clear initial state */
+-		nca.type = NCSI_PKT_CMD_CIS;
+-		nca.package = ndp->active_package->id;
+-		for (index = 0; index < NCSI_RESERVED_CHANNEL; index++) {
+-			nca.channel = index;
+-			ret = ncsi_xmit_cmd(&nca);
+-			if (ret)
+-				goto error;
+-		}
+-
+-		nd->state = ncsi_dev_state_probe_gvi;
+-		if (IS_ENABLED(CONFIG_NCSI_OEM_CMD_KEEP_PHY))
+-			nd->state = ncsi_dev_state_probe_keep_phy;
+-		break;
+ 	case ncsi_dev_state_probe_keep_phy:
+ 		ndp->pending_req_num = 1;
  
- 	ENTER();
+@@ -1447,14 +1431,17 @@ static void ncsi_probe_channel(struct ncsi_dev_priv *ndp)
  
-+	io_data->status = req->status ? req->status : req->actual;
-+	usb_ep_free_request(_ep, req);
+ 		nd->state = ncsi_dev_state_probe_gvi;
+ 		break;
++	case ncsi_dev_state_probe_cis:
+ 	case ncsi_dev_state_probe_gvi:
+ 	case ncsi_dev_state_probe_gc:
+ 	case ncsi_dev_state_probe_gls:
+ 		np = ndp->active_package;
+-		ndp->pending_req_num = np->channel_num;
++		ndp->pending_req_num = 1;
+ 
+-		/* Retrieve version, capability or link status */
+-		if (nd->state == ncsi_dev_state_probe_gvi)
++		/* Clear initial state Retrieve version, capability or link status */
++		if (nd->state == ncsi_dev_state_probe_cis)
++			nca.type = NCSI_PKT_CMD_CIS;
++		else if (nd->state == ncsi_dev_state_probe_gvi)
+ 			nca.type = NCSI_PKT_CMD_GVI;
+ 		else if (nd->state == ncsi_dev_state_probe_gc)
+ 			nca.type = NCSI_PKT_CMD_GC;
+@@ -1462,19 +1449,29 @@ static void ncsi_probe_channel(struct ncsi_dev_priv *ndp)
+ 			nca.type = NCSI_PKT_CMD_GLS;
+ 
+ 		nca.package = np->id;
+-		NCSI_FOR_EACH_CHANNEL(np, nc) {
+-			nca.channel = nc->id;
+-			ret = ncsi_xmit_cmd(&nca);
+-			if (ret)
+-				goto error;
+-		}
++		nca.channel = ndp->channel_probe_id;
+ 
+-		if (nd->state == ncsi_dev_state_probe_gvi)
++		ret = ncsi_xmit_cmd(&nca);
++		if (ret)
++			goto error;
 +
- 	INIT_WORK(&io_data->work, ffs_user_copy_worker);
- 	queue_work(ffs->io_completion_wq, &io_data->work);
++		if (nd->state == ncsi_dev_state_probe_cis) {
++			nd->state = ncsi_dev_state_probe_gvi;
++			if (IS_ENABLED(CONFIG_NCSI_OEM_CMD_KEEP_PHY) && ndp->channel_probe_id == 0)
++				nd->state = ncsi_dev_state_probe_keep_phy;
++		} else if (nd->state == ncsi_dev_state_probe_gvi) {
+ 			nd->state = ncsi_dev_state_probe_gc;
+-		else if (nd->state == ncsi_dev_state_probe_gc)
++		} else if (nd->state == ncsi_dev_state_probe_gc) {
+ 			nd->state = ncsi_dev_state_probe_gls;
+-		else
++		} else {
++			nd->state = ncsi_dev_state_probe_cis;
++			ndp->channel_probe_id++;
++		}
++
++		if (ndp->channel_probe_id == ndp->channel_count) {
++			ndp->channel_probe_id = 0;
+ 			nd->state = ncsi_dev_state_probe_dp;
++		}
+ 		break;
+ 	case ncsi_dev_state_probe_dp:
+ 		ndp->pending_req_num = 1;
+@@ -1775,6 +1772,7 @@ struct ncsi_dev *ncsi_register_dev(struct net_device *dev,
+ 		ndp->requests[i].ndp = ndp;
+ 		timer_setup(&ndp->requests[i].timer, ncsi_request_timeout, 0);
+ 	}
++	ndp->channel_count = NCSI_RESERVED_CHANNEL;
+ 
+ 	spin_lock_irqsave(&ncsi_dev_lock, flags);
+ 	list_add_tail_rcu(&ndp->node, &ncsi_dev_list);
+@@ -1807,6 +1805,7 @@ int ncsi_start_dev(struct ncsi_dev *nd)
+ 
+ 	if (!(ndp->flags & NCSI_DEV_PROBED)) {
+ 		ndp->package_probe_id = 0;
++		ndp->channel_probe_id = 0;
+ 		nd->state = ncsi_dev_state_probe;
+ 		schedule_work(&ndp->work);
+ 		return 0;
+diff --git a/net/ncsi/ncsi-rsp.c b/net/ncsi/ncsi-rsp.c
+index 480e80e3c2836..f22d67cb04d37 100644
+--- a/net/ncsi/ncsi-rsp.c
++++ b/net/ncsi/ncsi-rsp.c
+@@ -795,12 +795,13 @@ static int ncsi_rsp_handler_gc(struct ncsi_request *nr)
+ 	struct ncsi_rsp_gc_pkt *rsp;
+ 	struct ncsi_dev_priv *ndp = nr->ndp;
+ 	struct ncsi_channel *nc;
++	struct ncsi_package *np;
+ 	size_t size;
+ 
+ 	/* Find the channel */
+ 	rsp = (struct ncsi_rsp_gc_pkt *)skb_network_header(nr->rsp);
+ 	ncsi_find_package_and_channel(ndp, rsp->rsp.common.channel,
+-				      NULL, &nc);
++				      &np, &nc);
+ 	if (!nc)
+ 		return -ENODEV;
+ 
+@@ -835,6 +836,7 @@ static int ncsi_rsp_handler_gc(struct ncsi_request *nr)
+ 	 */
+ 	nc->vlan_filter.bitmap = U64_MAX;
+ 	nc->vlan_filter.n_vids = rsp->vlan_cnt;
++	np->ndp->channel_count = rsp->channel_cnt;
+ 
+ 	return 0;
  }
 -- 
 2.43.0
