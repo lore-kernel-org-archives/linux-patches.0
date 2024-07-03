@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B191822CB;
-	Wed,  3 Jul 2024 10:44:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3FC8181D1A;
+	Wed,  3 Jul 2024 10:44:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003493; cv=none; b=QkbgQE6cKH+u5qhAtYaQql8u9DwG29yqPrb3wi0YowUhVLVHMruN98n6YsP4i7IffVhUsJfwVIHwQA/QHEMQRiFJhNNDHASj2FB7rwNrK6XG9ZdG/riX15muKIminvMSCXkvunSve0XRApsAfmo46fO0CYbt5LYir32R+DOY9tU=
+	t=1720003496; cv=none; b=LKN7bkiJiTiCKacg3TS6yr/eYA9pWzt2nFmnAxzCsS6OTxy3ixvhQjCBuMJKbEcI5Z94Oflh6hHwbBt0Qapr6rB9jeC0YKbBbstDpzAHzogca8nmneY5JAg9avAy0j4gB1yjdhk2pflxOXa/3wm/JQhuvfV5kqggZNWbZ2kGDFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003493; c=relaxed/simple;
-	bh=QLDY+2hNO0UtdO2lE/yUWgjAza3VZb05/bSFG2tG1Yc=;
+	s=arc-20240116; t=1720003496; c=relaxed/simple;
+	bh=NgMJlnSNeqHTbNm07CAUI/wfCRd4Vqm2wXRBfxXXwdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iR2J+zti2/c9fPh5l1dk51ip5ZRig95biqw4JyxE3hGP/qcMxm0uwgbbom7Gp8VSr7xw8gH5H2MAxTI+ENlM+UULACh7LuRM4MwY00gS/PFtq7rknikLQFDF7wFjHqBy9BR3hKoecPU4JnOcDpyZKk3TSURQniFxdJjpende+NY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lHTMPytS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hEQ0VY0rLiriOYCZvN9PH9FgAxg6AYJsj0u8/8Oufvggn0hJJAiz/iYob4XPaaBQqi2B+Hs1fktZShXUe/Vee9uaqNMyXgydyt4vmuHLT+OM5eEDK3z2q20ULEhpk3IgDIACQoXE//OXK1m/awy27GAqmWTao4b79Qi7JK1xSeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hdpu/4VK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lHTMPytS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A5CEC2BD10;
-	Wed,  3 Jul 2024 10:44:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hdpu/4VK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF54C2BD10;
+	Wed,  3 Jul 2024 10:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003493;
-	bh=QLDY+2hNO0UtdO2lE/yUWgjAza3VZb05/bSFG2tG1Yc=;
+	s=korg; t=1720003496;
+	bh=NgMJlnSNeqHTbNm07CAUI/wfCRd4Vqm2wXRBfxXXwdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lHTMPytSdVQ3GcbPeSpebPM2eK4DGP2ZAlS5mrLA1xo95xp0aIy7Unz0EcP6jeIF9
-	 rn8tFXZFAvIvZKVZc0W3CKJvprXrdZcr85f3evFvV9GvuC7InzKzDVbm0FqeefQVPA
-	 LqHMoOROdmIOJXOyoXp5pjfmnvfRdGcV1RaWsfQo=
+	b=hdpu/4VKroQ9cbMqz+hJM8nI4Gx3V+I1o8VJ6stshMe8TEnYG+6P30y3PG0BvHrCB
+	 BRJrXUjutonK6CVzSyYIPeorXvlTn67bICBxoaw/6zYwnLxllK7ysTDfo2jako0hfJ
+	 aHvQ57wRw+R8Zhv1B6GwNY0yv8eqFT1AxpmjnaoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Roman Smirnov <r.smirnov@omp.ru>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Eric Heintzmann <heintzmann.eric@free.fr>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 067/139] udf: udftime: prevent overflow in udf_disk_stamp_to_time()
-Date: Wed,  3 Jul 2024 12:39:24 +0200
-Message-ID: <20240703102832.971940468@linuxfoundation.org>
+Subject: [PATCH 4.19 068/139] PCI/PM: Avoid D3cold for HP Pavilion 17 PC/1972 PCIe Ports
+Date: Wed,  3 Jul 2024 12:39:25 +0200
+Message-ID: <20240703102833.010003320@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -52,52 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roman Smirnov <r.smirnov@omp.ru>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 3b84adf460381169c085e4bc09e7b57e9e16db0a ]
+[ Upstream commit 256df20c590bf0e4d63ac69330cf23faddac3e08 ]
 
-An overflow can occur in a situation where src.centiseconds
-takes the value of 255. This situation is unlikely, but there
-is no validation check anywere in the code.
+Hewlett-Packard HP Pavilion 17 Notebook PC/1972 is an Intel Ivy Bridge
+system with a muxless AMD Radeon dGPU.  Attempting to use the dGPU fails
+with the following sequence:
 
-Found by Linux Verification Center (linuxtesting.org) with Svace.
+  ACPI Error: Aborting method \AMD3._ON due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/psparse-529)
+  radeon 0000:01:00.0: not ready 1023ms after resume; waiting
+  radeon 0000:01:00.0: not ready 2047ms after resume; waiting
+  radeon 0000:01:00.0: not ready 4095ms after resume; waiting
+  radeon 0000:01:00.0: not ready 8191ms after resume; waiting
+  radeon 0000:01:00.0: not ready 16383ms after resume; waiting
+  radeon 0000:01:00.0: not ready 32767ms after resume; waiting
+  radeon 0000:01:00.0: not ready 65535ms after resume; giving up
+  radeon 0000:01:00.0: Unable to change power state from D3cold to D0, device inaccessible
 
-Suggested-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Roman Smirnov <r.smirnov@omp.ru>
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Message-Id: <20240327132755.13945-1-r.smirnov@omp.ru>
+The issue is that the Root Port the dGPU is connected to can't handle the
+transition from D3cold to D0 so the dGPU can't properly exit runtime PM.
+
+The existing logic in pci_bridge_d3_possible() checks for systems that are
+newer than 2015 to decide that D3 is safe.  This would nominally work for
+an Ivy Bridge system (which was discontinued in 2015), but this system
+appears to have continued to receive BIOS updates until 2017 and so this
+existing logic doesn't appropriately capture it.
+
+Add the system to bridge_d3_blacklist to prevent D3cold from being used.
+
+Link: https://lore.kernel.org/r/20240307163709.323-1-mario.limonciello@amd.com
+Reported-by: Eric Heintzmann <heintzmann.eric@free.fr>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3229
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Eric Heintzmann <heintzmann.eric@free.fr>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/udftime.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/pci/pci.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/fs/udf/udftime.c b/fs/udf/udftime.c
-index fce4ad976c8c2..26169b1f482c3 100644
---- a/fs/udf/udftime.c
-+++ b/fs/udf/udftime.c
-@@ -60,13 +60,18 @@ udf_disk_stamp_to_time(struct timespec64 *dest, struct timestamp src)
- 	dest->tv_sec = mktime64(year, src.month, src.day, src.hour, src.minute,
- 			src.second);
- 	dest->tv_sec -= offset * 60;
--	dest->tv_nsec = 1000 * (src.centiseconds * 10000 +
--			src.hundredsOfMicroseconds * 100 + src.microseconds);
-+
- 	/*
- 	 * Sanitize nanosecond field since reportedly some filesystems are
- 	 * recorded with bogus sub-second values.
- 	 */
--	dest->tv_nsec %= NSEC_PER_SEC;
-+	if (src.centiseconds < 100 && src.hundredsOfMicroseconds < 100 &&
-+	    src.microseconds < 100) {
-+		dest->tv_nsec = 1000 * (src.centiseconds * 10000 +
-+			src.hundredsOfMicroseconds * 100 + src.microseconds);
-+	} else {
-+		dest->tv_nsec = 0;
-+	}
- }
- 
- void
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index 2ac400adaee11..4f229cb5d2a9f 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -2530,6 +2530,18 @@ static const struct dmi_system_id bridge_d3_blacklist[] = {
+ 			DMI_MATCH(DMI_BOARD_VERSION, "Continental Z2"),
+ 		},
+ 	},
++	{
++		/*
++		 * Changing power state of root port dGPU is connected fails
++		 * https://gitlab.freedesktop.org/drm/amd/-/issues/3229
++		 */
++		.ident = "Hewlett-Packard HP Pavilion 17 Notebook PC/1972",
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "Hewlett-Packard"),
++			DMI_MATCH(DMI_BOARD_NAME, "1972"),
++			DMI_MATCH(DMI_BOARD_VERSION, "95.33"),
++		},
++	},
+ #endif
+ 	{ }
+ };
 -- 
 2.43.0
 
