@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A948A19B5A3;
-	Wed,  3 Jul 2024 10:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B73119CD02;
+	Wed,  3 Jul 2024 10:54:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004095; cv=none; b=jTJ3CBUdBm2WI0xxHqC6n9rAd4DTHY8/oX4NfNc5Nil4Ua3cLnyI9HWHS7dFoLwU99VnpTsFutAOssNhocgejzeaPs7uuwf7ZkgLEujnR+t8IUvFdfdXpth98bYeApblnIUeE1Aitps+LJKJy3USc8N6IKQu9yuyeYXRpwkEC5c=
+	t=1720004098; cv=none; b=Ew32iLXycyyTjL/Pmi+Jzrq9kDhhlfsDqMjtXflL6PM++/4LlEkMAdFZCASQmvhRwHg9UyaRryWPxxPnmT7UwcXb1UVUq+P5h2PERKSBUAeKZGWRJyRe8Q/aRzt/NFBJrZ5I3dnSqf9ALo6mnXa12vQ+357Zk1FKDFkHufISW4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004095; c=relaxed/simple;
-	bh=hh/OdoEMIfuwLROH5Y8FDWzNc1ucT7aBrG5WEfzTAkM=;
+	s=arc-20240116; t=1720004098; c=relaxed/simple;
+	bh=V+L7c00RCEu5spi8DBrqsysi0tpeVb98xFDQrZ3zUSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rIpwtkhN1hrLWEkhzwP8iEx5XCZLORL+8KTABCQU4zHALQVpnCkbie4dejC/LoJMd1paoiXLs5iimFwzDbrZDCG88rXUDkCGs6hWvRuyfdUR4CBakKKR0ARnC4UT0v47c7Kku+X3slLMfBBTAvlIPUN8IQK6xQgx9++O5XdaNLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rGYxhygh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t4FjiqH46zjVZ4GdaZNzm5+SM8FDzhClTy4NFougzmOkzpKPNZS6WX2NZyWGBfKb1/sHGPc+2UYRX70kmS4UZxNCsd30U1guNCHJDblZkq43lP04/kY4gYcr/ci1sQeK1MYkKm6+89NrQJ28kLC9qf6o+wpVhfcg3YhBwceKmt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EHZw4u8J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rGYxhygh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC47DC2BD10;
-	Wed,  3 Jul 2024 10:54:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EHZw4u8J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D15F2C2BD10;
+	Wed,  3 Jul 2024 10:54:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004095;
-	bh=hh/OdoEMIfuwLROH5Y8FDWzNc1ucT7aBrG5WEfzTAkM=;
+	s=korg; t=1720004098;
+	bh=V+L7c00RCEu5spi8DBrqsysi0tpeVb98xFDQrZ3zUSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rGYxhyghXNBu8WnwghJfS2EoGfZxhYK03a54MHNaSlPdV+6c6muXOVQWQMhvK6gwr
-	 YUB4WPGvbo2FvWKO8gsGAwbSsvRO7jWGG8shsRJEDPCkTNoDcE2yaK0qsiIJ4MFNep
-	 vPqYNV8ZCzJIj+RwipBx6ptEjdLakJTe82I4hJkI=
+	b=EHZw4u8J2oa32rVNZ0h6Z3UEycKwRN205FxhQW7CDbXJzSzcSkrMWXR6Z4CxeVNfG
+	 rHGXo65X0QgmTEX/PWxjtOFhWitYSfevoMgNP6DI0M4+XnW6QGWBFR2Ti6gcN/AFC3
+	 KWyQGVQM5rVyWBWeDO9BcbAUejPYtnSwMMeAJqRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Grygorii Tertychnyi <grygorii.tertychnyi@leica-geosystems.com>,
-	Peter Korsgaard <peter@korsgaard.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 5.4 119/189] i2c: ocores: set IACK bit after core is enabled
-Date: Wed,  3 Jul 2024 12:39:40 +0200
-Message-ID: <20240703102845.988985085@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 120/189] ARM: dts: samsung: smdkv310: fix keypad no-autorepeat
+Date: Wed,  3 Jul 2024 12:39:41 +0200
+Message-ID: <20240703102846.025705653@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -51,39 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Grygorii Tertychnyi <grembeter@gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 5a72477273066b5b357801ab2d315ef14949d402 upstream.
+[ Upstream commit 87d8e522d6f5a004f0aa06c0def302df65aff296 ]
 
-Setting IACK bit when core is disabled does not clear the "Interrupt Flag"
-bit in the status register, and the interrupt remains pending.
+Although the Samsung SoC keypad binding defined
+linux,keypad-no-autorepeat property, Linux driver never implemented it
+and always used linux,input-no-autorepeat.  Correct the DTS to use
+property actually implemented.
 
-Sometimes it causes failure for the very first message transfer, that is
-usually a device probe.
+This also fixes dtbs_check errors like:
 
-Hence, set IACK bit after core is enabled to clear pending interrupt.
+  exynos4210-smdkv310.dtb: keypad@100a0000: 'linux,keypad-no-autorepeat' does not match any of the regexes: '^key-[0-9a-z]+$', 'pinctrl-[0-9]+'
 
-Fixes: 18f98b1e3147 ("[PATCH] i2c: New bus driver for the OpenCores I2C controller")
-Signed-off-by: Grygorii Tertychnyi <grygorii.tertychnyi@leica-geosystems.com>
-Acked-by: Peter Korsgaard <peter@korsgaard.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: <stable@vger.kernel.org>
+Fixes: 0561ceabd0f1 ("ARM: dts: Add intial dts file for EXYNOS4210 SoC, SMDKV310 and ORIGEN")
+Link: https://lore.kernel.org/r/20240312183105.715735-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-ocores.c |    2 +-
+ arch/arm/boot/dts/exynos4210-smdkv310.dts | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-ocores.c
-+++ b/drivers/i2c/busses/i2c-ocores.c
-@@ -443,8 +443,8 @@ static int ocores_init(struct device *de
- 	oc_setreg(i2c, OCI2C_PREHIGH, prescale >> 8);
- 
- 	/* Init the device */
--	oc_setreg(i2c, OCI2C_CMD, OCI2C_CMD_IACK);
- 	oc_setreg(i2c, OCI2C_CONTROL, ctrl | OCI2C_CTRL_EN);
-+	oc_setreg(i2c, OCI2C_CMD, OCI2C_CMD_IACK);
- 
- 	return 0;
- }
+diff --git a/arch/arm/boot/dts/exynos4210-smdkv310.dts b/arch/arm/boot/dts/exynos4210-smdkv310.dts
+index 77fc11e593ad3..9297788c0c43f 100644
+--- a/arch/arm/boot/dts/exynos4210-smdkv310.dts
++++ b/arch/arm/boot/dts/exynos4210-smdkv310.dts
+@@ -64,7 +64,7 @@ eeprom@52 {
+ &keypad {
+ 	samsung,keypad-num-rows = <2>;
+ 	samsung,keypad-num-columns = <8>;
+-	linux,keypad-no-autorepeat;
++	linux,input-no-autorepeat;
+ 	wakeup-source;
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&keypad_rows &keypad_cols>;
+-- 
+2.43.0
+
 
 
