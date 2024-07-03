@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E04174EFF;
-	Wed,  3 Jul 2024 10:57:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B14C1946A1;
+	Wed,  3 Jul 2024 10:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004273; cv=none; b=fF6pWnXHHRW5sDuSjeDaCyyBcRNhRjQOLypQq++fJas83ud5b2q4zc1XGJd5LmDQu5v6VlVGG0q1ZYHFPskF0UTJYHN1pkWEfKsCLXp2EWfnWC3jZCQsbm2Ilc8SrvNfRI6ZOsChS3wWa7CDqBXsrU3N5y5Ov5PmyL8AxZfDC1o=
+	t=1720004276; cv=none; b=YUbLTM2McvnzoM6UvOzBEHWM0oIdcYCf0/mFbfckgMiywvtGbIbkENol770gbxBMt99u/W+Jqvs8jO7aooq5dSuxBJg9QKEaSD6Pg49xnVeXbxpJWcagdYogrXvk8PxKHydMf9+9o9VsKqLuiY0itpCNe5LJ2Q5rGvCTj5bd8Mo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004273; c=relaxed/simple;
-	bh=ijMBnOcDz+qcS7AC9DucLFxg9+KNZEZVoow9YQmqEcY=;
+	s=arc-20240116; t=1720004276; c=relaxed/simple;
+	bh=y0sMPJaBeYEu5CUtWQZWT2dI6FFiFnwTd/FGHcV+3D4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IjaCAwbiIn5ZgxicA84vgm7odIUDEEtk+JPhBBy/MXFjxwGUAGfVCNae1jMN2AIraf07OlEm1f2qmEJ9jlXM97o4weDNYKNrTgY3aFvRYA//zGjxLfOPTzfF2szQBmIL1E7mG6uUk1EUkBEX0gWJgea1Sxu3zo+lKY//lz9OK7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yG50d+yn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fofg/lk844qOsr/SDYe8tadpOCNh7PT9rzbY+nezkmx1dwJ0aGQ+e7/wavX5MbKWgSMNl8TWGRXM9MLZo6sHMmIgoilT3260RAipil0+RaGbbB7q1Tu/OF+jCOqqshLyz092pNZHkz+YtxkHUHK4UgjzMFZkwsa/bPe33fIzSP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZpfPQNgF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yG50d+yn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94AB9C2BD10;
-	Wed,  3 Jul 2024 10:57:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZpfPQNgF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80FF9C2BD10;
+	Wed,  3 Jul 2024 10:57:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004273;
-	bh=ijMBnOcDz+qcS7AC9DucLFxg9+KNZEZVoow9YQmqEcY=;
+	s=korg; t=1720004275;
+	bh=y0sMPJaBeYEu5CUtWQZWT2dI6FFiFnwTd/FGHcV+3D4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yG50d+ynyNP7f6+G5RKFa8CID6G8aalA8CymtV95xVGmiE9A1tw8BZWWepIoOqxZm
-	 m8YB/zm+lifSZSt/NWp3Mc2TEOvAvcTuSQWWzI12gz0ZXVcFRosRuclYXwzLbaf6Cs
-	 mwLQbwBihzIVu57dnYvhmWZsmtzEKxM23Ke/AeZg=
+	b=ZpfPQNgFDgzOiwqGYaORZ81sXDM33sLfV0CmA6P0IQer/nqMj8wP7HBkKkWFcIi7h
+	 vYyYbEOh8Lvspc9oshUNVImkOAOzLDhnyMWyqsfQ3N2+lbF5/6TJ0rJOaG6zUvk/ek
+	 QIg0LDJxmJimpq0SjY/TEvhSfeMhabNellIJDI1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Yang <hagisf@usp.br>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.4 160/189] iio: adc: ad7266: Fix variable checking bug
-Date: Wed,  3 Jul 2024 12:40:21 +0200
-Message-ID: <20240703102847.508406336@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Lyude Paul <lyude@redhat.com>
+Subject: [PATCH 5.4 178/189] drm/nouveau/dispnv04: fix null pointer dereference in nv17_tv_get_hd_modes
+Date: Wed,  3 Jul 2024 12:40:39 +0200
+Message-ID: <20240703102848.189184106@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -51,33 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Yang <hagisf@usp.br>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit a2b86132955268b2a1703082fbc2d4832fc001b8 upstream.
+commit 6d411c8ccc0137a612e0044489030a194ff5c843 upstream.
 
-The ret variable was not checked after iio_device_release_direct_mode(),
-which could possibly cause errors
+In nv17_tv_get_hd_modes(), the return value of drm_mode_duplicate() is
+assigned to mode, which will lead to a possible NULL pointer dereference
+on failure of drm_mode_duplicate(). The same applies to drm_cvt_mode().
+Add a check to avoid null pointer dereference.
 
-Fixes: c70df20e3159 ("iio: adc: ad7266: claim direct mode during sensor read")
-Signed-off-by: Fernando Yang <hagisf@usp.br>
-Link: https://lore.kernel.org/r/20240603180757.8560-1-hagisf@usp.br
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240625081029.2619437-1-make24@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad7266.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/nouveau/dispnv04/tvnv17.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/iio/adc/ad7266.c
-+++ b/drivers/iio/adc/ad7266.c
-@@ -159,6 +159,8 @@ static int ad7266_read_raw(struct iio_de
- 		ret = ad7266_read_single(st, val, chan->address);
- 		iio_device_release_direct_mode(indio_dev);
+--- a/drivers/gpu/drm/nouveau/dispnv04/tvnv17.c
++++ b/drivers/gpu/drm/nouveau/dispnv04/tvnv17.c
+@@ -259,6 +259,8 @@ static int nv17_tv_get_hd_modes(struct d
+ 		if (modes[i].hdisplay == output_mode->hdisplay &&
+ 		    modes[i].vdisplay == output_mode->vdisplay) {
+ 			mode = drm_mode_duplicate(encoder->dev, output_mode);
++			if (!mode)
++				continue;
+ 			mode->type |= DRM_MODE_TYPE_PREFERRED;
  
-+		if (ret < 0)
-+			return ret;
- 		*val = (*val >> 2) & 0xfff;
- 		if (chan->scan_type.sign == 's')
- 			*val = sign_extend32(*val, 11);
+ 		} else {
+@@ -266,6 +268,8 @@ static int nv17_tv_get_hd_modes(struct d
+ 					    modes[i].vdisplay, 60, false,
+ 					    (output_mode->flags &
+ 					     DRM_MODE_FLAG_INTERLACE), false);
++			if (!mode)
++				continue;
+ 		}
+ 
+ 		/* CVT modes are sometimes unsuitable... */
 
 
