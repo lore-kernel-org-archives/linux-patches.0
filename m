@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6799617966F;
-	Wed,  3 Jul 2024 11:08:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B05419005D;
+	Wed,  3 Jul 2024 11:08:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004888; cv=none; b=kEMql5DN2J90w9BZO28CharUjlcyGe7X6DYQC6VzDbtKHF6ON88JqzpoL+/+flyKcjg2IRg/HCqxb6cU9oXRxy5TG7TGH897sxARVPfqVSRfEyeuwQB6pw+6a9D3SxLBu/3ogTp/X/LJkkCy4RFjC6klR0pSI1M4PBJwqw9s0bM=
+	t=1720004892; cv=none; b=nt6gkIS0jIj29rsog0vJ3HzpIu5JlLrjn5HHV3kfYya4qVj2LHmLGTQ3OsM3opfO2bF4WRCAwi2va5Wqxn82IOZjL6G6BMv579g07A1VLZa2TriGYw32c2mjaJhs5nyyXYAe3dhS/8ClLCAnmiIHDkBs3jLA17A3w80kAcW415s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004888; c=relaxed/simple;
-	bh=M7O83ZF/4HVwtdeEhpmkTkTljhPpOXYImpzwO5rD7Ws=;
+	s=arc-20240116; t=1720004892; c=relaxed/simple;
+	bh=bwSEjrkYMZyfhEhZTr5YEIbAxPVVCXC/nLhrOpSBYsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ao43TC6j71b5l1HKnjFHBSxmicEAgBZcCqfUM7OLh5nERJVB295OmOAgaqoKgG2HzAKbWE2vMBp18h7mbS7WLwylHFaptb2O09lF3+KVpro9oA/L0uMPdbWa7AF9NJD0JuoiDmaTP6w/etSAwhkL/M1K0lz1TA/5qvs/fF5EVD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NiInmWIz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sf9R2nJQulfsRFI+21S90ozQfB3Sc+rkP30lfpEJZcl3QLBZ5B+IZtiqtgVSPyeDyA2L/cmRrR/irYuqmF03UeAk7/g3qtS6plWQj9W6IWorNdq/OLK8IpkzxicbakooyrNcNcyBjsd+sXICu91mHjBlrFv+amFedbgNgmsgK3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xo9qWqm6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NiInmWIz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4A5DC2BD10;
-	Wed,  3 Jul 2024 11:08:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xo9qWqm6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2005FC32781;
+	Wed,  3 Jul 2024 11:08:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004888;
-	bh=M7O83ZF/4HVwtdeEhpmkTkTljhPpOXYImpzwO5rD7Ws=;
+	s=korg; t=1720004892;
+	bh=bwSEjrkYMZyfhEhZTr5YEIbAxPVVCXC/nLhrOpSBYsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NiInmWIzPN4sRfbLfQ6TpBhwLErKsUXx3GNmgSaBaz6ZyzrG2hKPzuAKD/Jw+AIqn
-	 QpoLLwD46ptEyFsErG3BN0k3Ygtruy0vz5CirG/hC7i1pEGffj7wQjaJgsk4rdz5Bx
-	 CMYgd10gdSmbZLq2oZHOdJ/fHg4kZLR4FinMcUXk=
+	b=Xo9qWqm6zSUbX7SQerXzRAMYDQEl/7Y06/rQ1H3hWhl99xyDuKm9mK+qSim2+F+FT
+	 MjHDOcSZkTsEzYbZQ5d9aGpJZlO9LgZWKNXrByF/gn0xJSJghCL8ZV/rboKmYTTXHd
+	 AuHM1dIhk5vM81TfQFA50sVLF+yxVPwC1AkWUJyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dave Jiang <dave.jiang@intel.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 159/290] dmaengine: ioatdma: Fix error path in ioat3_dma_probe()
-Date: Wed,  3 Jul 2024 12:39:00 +0200
-Message-ID: <20240703102910.185504958@linuxfoundation.org>
+Subject: [PATCH 5.10 160/290] dmaengine: ioatdma: Fix kmemleak in ioat_pci_probe()
+Date: Wed,  3 Jul 2024 12:39:01 +0200
+Message-ID: <20240703102910.222854351@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -54,90 +54,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Nikita Shubin <n.shubin@yadro.com>
 
-[ Upstream commit f0dc9fda2e0ee9e01496c2f5aca3a831131fad79 ]
+[ Upstream commit 29b7cd255f3628e0d65be33a939d8b5bba10aa62 ]
 
-Make sure we are disabling interrupts and destroying DMA pool if
-pcie_capability_read/write_word() call failed.
+If probing fails we end up with leaking ioatdma_device and each
+allocated channel.
 
-Fixes: 511deae0261c ("dmaengine: ioatdma: disable relaxed ordering for ioatdma")
+Following kmemleak easy to reproduce by injecting an error in
+ioat_alloc_chan_resources() when doing ioat_dma_self_test().
+
+unreferenced object 0xffff888014ad5800 (size 1024): [..]
+    [<ffffffff827692ca>] kmemleak_alloc+0x4a/0x80
+    [<ffffffff81430600>] kmalloc_trace+0x270/0x2f0
+    [<ffffffffa000b7d1>] ioat_pci_probe+0xc1/0x1c0 [ioatdma]
+[..]
+
+repeated for each ioatdma channel:
+
+unreferenced object 0xffff8880148e5c00 (size 512): [..]
+    [<ffffffff827692ca>] kmemleak_alloc+0x4a/0x80
+    [<ffffffff81430600>] kmalloc_trace+0x270/0x2f0
+    [<ffffffffa0009641>] ioat_enumerate_channels+0x101/0x2d0 [ioatdma]
+    [<ffffffffa000b266>] ioat3_dma_probe+0x4d6/0x970 [ioatdma]
+    [<ffffffffa000b891>] ioat_pci_probe+0x181/0x1c0 [ioatdma]
+[..]
+
+Fixes: bf453a0a18b2 ("dmaengine: ioat: Support in-use unbind")
 Signed-off-by: Nikita Shubin <n.shubin@yadro.com>
 Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20240528-ioatdma-fixes-v2-2-a9f2fbe26ab1@yadro.com
+Link: https://lore.kernel.org/r/20240528-ioatdma-fixes-v2-3-a9f2fbe26ab1@yadro.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ioat/init.c | 33 +++++++++++++++------------------
- 1 file changed, 15 insertions(+), 18 deletions(-)
+ drivers/dma/ioat/init.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/drivers/dma/ioat/init.c b/drivers/dma/ioat/init.c
-index ed4910e3bc2ac..ceba1b4083a9d 100644
+index ceba1b4083a9d..8a115bafab6ab 100644
 --- a/drivers/dma/ioat/init.c
 +++ b/drivers/dma/ioat/init.c
-@@ -534,18 +534,6 @@ static int ioat_probe(struct ioatdma_device *ioat_dma)
- 	return err;
- }
+@@ -1346,6 +1346,7 @@ static int ioat_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	void __iomem * const *iomap;
+ 	struct device *dev = &pdev->dev;
+ 	struct ioatdma_device *device;
++	unsigned int i;
+ 	u8 version;
+ 	int err;
  
--static int ioat_register(struct ioatdma_device *ioat_dma)
--{
--	int err = dma_async_device_register(&ioat_dma->dma_dev);
--
--	if (err) {
--		ioat_disable_interrupts(ioat_dma);
--		dma_pool_destroy(ioat_dma->completion_pool);
--	}
--
--	return err;
--}
--
- static void ioat_dma_remove(struct ioatdma_device *ioat_dma)
- {
- 	struct dma_device *dma = &ioat_dma->dma_dev;
-@@ -1180,9 +1168,9 @@ static int ioat3_dma_probe(struct ioatdma_device *ioat_dma, int dca)
- 		       ioat_chan->reg_base + IOAT_DCACTRL_OFFSET);
+@@ -1385,6 +1386,9 @@ static int ioat_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 
+ 	err = ioat3_dma_probe(device, ioat_dca_enabled);
+ 	if (err) {
++		for (i = 0; i < IOAT_MAX_CHANS; i++)
++			kfree(device->idx[i]);
++		kfree(device);
+ 		dev_err(dev, "Intel(R) I/OAT DMA Engine init failed\n");
+ 		return -ENODEV;
  	}
- 
--	err = ioat_register(ioat_dma);
-+	err = dma_async_device_register(&ioat_dma->dma_dev);
- 	if (err)
--		return err;
-+		goto err_disable_interrupts;
- 
- 	ioat_kobject_add(ioat_dma, &ioat_ktype);
- 
-@@ -1191,20 +1179,29 @@ static int ioat3_dma_probe(struct ioatdma_device *ioat_dma, int dca)
- 
- 	/* disable relaxed ordering */
- 	err = pcie_capability_read_word(pdev, PCI_EXP_DEVCTL, &val16);
--	if (err)
--		return pcibios_err_to_errno(err);
-+	if (err) {
-+		err = pcibios_err_to_errno(err);
-+		goto err_disable_interrupts;
-+	}
- 
- 	/* clear relaxed ordering enable */
- 	val16 &= ~PCI_EXP_DEVCTL_RELAX_EN;
- 	err = pcie_capability_write_word(pdev, PCI_EXP_DEVCTL, val16);
--	if (err)
--		return pcibios_err_to_errno(err);
-+	if (err) {
-+		err = pcibios_err_to_errno(err);
-+		goto err_disable_interrupts;
-+	}
- 
- 	if (ioat_dma->cap & IOAT_CAP_DPS)
- 		writeb(ioat_pending_level + 1,
- 		       ioat_dma->reg_base + IOAT_PREFETCH_LIMIT_OFFSET);
- 
- 	return 0;
-+
-+err_disable_interrupts:
-+	ioat_disable_interrupts(ioat_dma);
-+	dma_pool_destroy(ioat_dma->completion_pool);
-+	return err;
- }
- 
- static void ioat_shutdown(struct pci_dev *pdev)
 -- 
 2.43.0
 
