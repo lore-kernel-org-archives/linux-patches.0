@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB7A17625D;
-	Wed,  3 Jul 2024 11:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED45C16C6A8;
+	Wed,  3 Jul 2024 11:06:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004772; cv=none; b=AlSkdDNNz0+DTBAGz1muOtrhqIXgTbEBK1plxCluV4eg0DkZO5eyYkmzN/yIAW/u4binY2szEV7V6SoF/dFqH4rQFuwCJQdh+epDRFeFbAfsmQnY/qBGi7deoicgk7lSPxVsX7Vp7uUwPrJIeGooSvpYTHpOTvJeNt/cgRufM5A=
+	t=1720004775; cv=none; b=mP904evl9rGKMZDHkN8FBPZ+efJ9s8y87k+fjgXpJtF9D1MJqm8kYdY2jqoOA18AJwxEwnKm+/mt4iM1a3vdDdh120YrKc4G7YxPBUdkTkXPG9xy+q357u6gQqbbL3wZyFnG7/xDnceGkx8+C2yBiwEBpsXO56WYcVvAVrrmj1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004772; c=relaxed/simple;
-	bh=WBb9affVVZkESIpadg4efFjj6/GzYbOA0ATVp93zHZU=;
+	s=arc-20240116; t=1720004775; c=relaxed/simple;
+	bh=YdOGR/xkAksvrcdQi+HLBrGaasbGIzjBUhVhnbyaO2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Onb/TkvYARJ3VcFUftSOzDQIuHufsulp9E8/tgUTOMciwijyNWBpD5VJUf14HJKJ40U+wC/eaO2yU1NBAluR8vW0bkIp5ATCqiLb/b1FYkgJCtX05U1XWKTW7rYF96DT6MgCevROiTPoOLcEr9GWJWgoiO/gG39iKmvXrIt96oE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVFdInAO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qdCB9dnIOUXtNHQLSLPCy4G/SenLk8VroFAAtTZutfyaRUhYT8ah+f37aL7szcc/gGx/Q6SSwvFqTylbeaaxFUPNnGxaojKQrq5naW8s+7cAoUl6E7+hf28U1CZul0AcCtvM58X/lgVqB6pNgEYfP3FKOuaPE7b7F3WusywjYuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W3Ok2mkE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVFdInAO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C565C2BD10;
-	Wed,  3 Jul 2024 11:06:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W3Ok2mkE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E64BC2BD10;
+	Wed,  3 Jul 2024 11:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004771;
-	bh=WBb9affVVZkESIpadg4efFjj6/GzYbOA0ATVp93zHZU=;
+	s=korg; t=1720004774;
+	bh=YdOGR/xkAksvrcdQi+HLBrGaasbGIzjBUhVhnbyaO2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aVFdInAOaX8jKxbglh58EQxEXSlsr7YQMTMUpskIoMoG0plhEzVgYVqpNXbrTtjSK
-	 jPLADM7YSFlWSPavlK3GOYiyscC1A3hzb2e3jjkZAM5veAxKmhKGiOGAMxfCsKUxHl
-	 npK7sNn0yJifMrea1lPApVeD6m4V8IKV+jvL88kM=
+	b=W3Ok2mkEoHktXV2bWtT1UY8dEOa5V/qKwerLm4cHQGieG2vvOTrYr+//xHzlBVita
+	 hChKLiLyn0RsrO5ZPGlo/oMRQi+RiM/RHzndt4LRS6iXVJ5Vtzs17OK/6otQEgqLlr
+	 lAk0T6PrlHmO9tnOxs+c6moltUWqPt8lysoEKbaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b62c37cdd58103293a5a@syzkaller.appspotmail.com,
-	syzbot+cfbe1da5fdfc39efc293@syzkaller.appspotmail.com,
-	kernel test robot <oliver.sang@intel.com>,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	syzbot+5186630949e3c55f0799@syzkaller.appspotmail.com,
+	Oliver Neukum <oneukum@suse.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 152/290] netfilter: ipset: Fix suspicious rcu_dereference_protected()
-Date: Wed,  3 Jul 2024 12:38:53 +0200
-Message-ID: <20240703102909.922771443@linuxfoundation.org>
+Subject: [PATCH 5.10 153/290] net: usb: rtl8150 fix unintiatilzed variables in rtl8150_get_link_ksettings
+Date: Wed,  3 Jul 2024 12:38:54 +0200
+Message-ID: <20240703102909.959898097@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -54,59 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jozsef Kadlecsik <kadlec@netfilter.org>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit 8ecd06277a7664f4ef018abae3abd3451d64e7a6 ]
+[ Upstream commit fba383985354e83474f95f36d7c65feb75dba19d ]
 
-When destroying all sets, we are either in pernet exit phase or
-are executing a "destroy all sets command" from userspace. The latter
-was taken into account in ip_set_dereference() (nfnetlink mutex is held),
-but the former was not. The patch adds the required check to
-rcu_dereference_protected() in ip_set_dereference().
+This functions retrieves values by passing a pointer. As the function
+that retrieves them can fail before touching the pointers, the variables
+must be initialized.
 
-Fixes: 4e7aaa6b82d6 ("netfilter: ipset: Fix race between namespace cleanup and gc in the list:set type")
-Reported-by: syzbot+b62c37cdd58103293a5a@syzkaller.appspotmail.com
-Reported-by: syzbot+cfbe1da5fdfc39efc293@syzkaller.appspotmail.com
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202406141556.e0b6f17e-lkp@intel.com
-Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+5186630949e3c55f0799@syzkaller.appspotmail.com
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Link: https://lore.kernel.org/r/20240619132816.11526-1-oneukum@suse.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipset/ip_set_core.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/net/usb/rtl8150.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
-index ecd693fca224f..bac92369a5436 100644
---- a/net/netfilter/ipset/ip_set_core.c
-+++ b/net/netfilter/ipset/ip_set_core.c
-@@ -53,12 +53,13 @@ MODULE_DESCRIPTION("core IP set support");
- MODULE_ALIAS_NFNL_SUBSYS(NFNL_SUBSYS_IPSET);
+diff --git a/drivers/net/usb/rtl8150.c b/drivers/net/usb/rtl8150.c
+index bf8a60533f3e7..d128b4ac7c9f0 100644
+--- a/drivers/net/usb/rtl8150.c
++++ b/drivers/net/usb/rtl8150.c
+@@ -778,7 +778,8 @@ static int rtl8150_get_link_ksettings(struct net_device *netdev,
+ 				      struct ethtool_link_ksettings *ecmd)
+ {
+ 	rtl8150_t *dev = netdev_priv(netdev);
+-	short lpa, bmcr;
++	short lpa = 0;
++	short bmcr = 0;
+ 	u32 supported;
  
- /* When the nfnl mutex or ip_set_ref_lock is held: */
--#define ip_set_dereference(p)		\
--	rcu_dereference_protected(p,	\
-+#define ip_set_dereference(inst)	\
-+	rcu_dereference_protected((inst)->ip_set_list,	\
- 		lockdep_nfnl_is_held(NFNL_SUBSYS_IPSET) || \
--		lockdep_is_held(&ip_set_ref_lock))
-+		lockdep_is_held(&ip_set_ref_lock) || \
-+		(inst)->is_deleted)
- #define ip_set(inst, id)		\
--	ip_set_dereference((inst)->ip_set_list)[id]
-+	ip_set_dereference(inst)[id]
- #define ip_set_ref_netlink(inst,id)	\
- 	rcu_dereference_raw((inst)->ip_set_list)[id]
- #define ip_set_dereference_nfnl(p)	\
-@@ -1137,7 +1138,7 @@ static int ip_set_create(struct net *net, struct sock *ctnl,
- 		if (!list)
- 			goto cleanup;
- 		/* nfnl mutex is held, both lists are valid */
--		tmp = ip_set_dereference(inst->ip_set_list);
-+		tmp = ip_set_dereference(inst);
- 		memcpy(list, tmp, sizeof(struct ip_set *) * inst->ip_set_max);
- 		rcu_assign_pointer(inst->ip_set_list, list);
- 		/* Make sure all current packets have passed through */
+ 	supported = (SUPPORTED_10baseT_Half |
 -- 
 2.43.0
 
