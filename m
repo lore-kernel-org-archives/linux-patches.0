@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD08C1822CB;
-	Wed,  3 Jul 2024 10:44:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B191822CB;
+	Wed,  3 Jul 2024 10:44:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003490; cv=none; b=QK59Ld42WQvZmJveZBj3E6RRREsgXudR8AOD1QG7ROWyCazEuz1lLRbIpvuingejs2pEyyj75sk4nCJYs1QjUQGZ7RGswx7WY7YWPqXgf/D/8U9HB4wpkBW9TpXGbYm/xcGG3fCqqVXpMMqPXnHIBP5ym16s/EtTq8Ak31BaIG4=
+	t=1720003493; cv=none; b=QkbgQE6cKH+u5qhAtYaQql8u9DwG29yqPrb3wi0YowUhVLVHMruN98n6YsP4i7IffVhUsJfwVIHwQA/QHEMQRiFJhNNDHASj2FB7rwNrK6XG9ZdG/riX15muKIminvMSCXkvunSve0XRApsAfmo46fO0CYbt5LYir32R+DOY9tU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003490; c=relaxed/simple;
-	bh=gkKzw4aKQeLR5oiWkcpGqcphP3KcQmrdfrzYwnKB1jM=;
+	s=arc-20240116; t=1720003493; c=relaxed/simple;
+	bh=QLDY+2hNO0UtdO2lE/yUWgjAza3VZb05/bSFG2tG1Yc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QLIs2YQYv0eNaD6xvBlmd3OZOjk3ijQH/1FTGKSJPqYaGEUM3/yODUfh1mBOi/8tLSxsG5X/m6D7JepbZdz6LmkD3v0kStszdgxXNUT5GFmgCzm+vA8SBOt/5hng+bYGu0oYYtw8BkMf36o30z2YTESp63CcdBbE1YQwpFOygB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D4GC/6nk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iR2J+zti2/c9fPh5l1dk51ip5ZRig95biqw4JyxE3hGP/qcMxm0uwgbbom7Gp8VSr7xw8gH5H2MAxTI+ENlM+UULACh7LuRM4MwY00gS/PFtq7rknikLQFDF7wFjHqBy9BR3hKoecPU4JnOcDpyZKk3TSURQniFxdJjpende+NY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lHTMPytS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D4GC/6nk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AED5C2BD10;
-	Wed,  3 Jul 2024 10:44:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lHTMPytS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A5CEC2BD10;
+	Wed,  3 Jul 2024 10:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003490;
-	bh=gkKzw4aKQeLR5oiWkcpGqcphP3KcQmrdfrzYwnKB1jM=;
+	s=korg; t=1720003493;
+	bh=QLDY+2hNO0UtdO2lE/yUWgjAza3VZb05/bSFG2tG1Yc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D4GC/6nkvimpsIewBD2KI8AXgqLSjyXROnOj+Kbz3UDysXQ05BcvuR24C1d2FUYrv
-	 /54spxkIEj5p3Gvm998taiz1VcqGYWkGw+4scOHkNJmYe0CQJmLQ2+ztiIdibagVlR
-	 BT3qhBqfR6exfSJOn3Y/RUFVJ5jaD4xMSacrmtGo=
+	b=lHTMPytSdVQ3GcbPeSpebPM2eK4DGP2ZAlS5mrLA1xo95xp0aIy7Unz0EcP6jeIF9
+	 rn8tFXZFAvIvZKVZc0W3CKJvprXrdZcr85f3evFvV9GvuC7InzKzDVbm0FqeefQVPA
+	 LqHMoOROdmIOJXOyoXp5pjfmnvfRdGcV1RaWsfQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Henrie <alexhenrie24@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Roman Smirnov <r.smirnov@omp.ru>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 066/139] usb: misc: uss720: check for incompatible versions of the Belkin F5U002
-Date: Wed,  3 Jul 2024 12:39:23 +0200
-Message-ID: <20240703102832.934437195@linuxfoundation.org>
+Subject: [PATCH 4.19 067/139] udf: udftime: prevent overflow in udf_disk_stamp_to_time()
+Date: Wed,  3 Jul 2024 12:39:24 +0200
+Message-ID: <20240703102832.971940468@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -50,72 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Henrie <alexhenrie24@gmail.com>
+From: Roman Smirnov <r.smirnov@omp.ru>
 
-[ Upstream commit 3295f1b866bfbcabd625511968e8a5c541f9ab32 ]
+[ Upstream commit 3b84adf460381169c085e4bc09e7b57e9e16db0a ]
 
-The incompatible device in my possession has a sticker that says
-"F5U002 Rev 2" and "P80453-B", and lsusb identifies it as
-"050d:0002 Belkin Components IEEE-1284 Controller". There is a bug
-report from 2007 from Michael Trausch who was seeing the exact same
-errors that I saw in 2024 trying to use this cable.
+An overflow can occur in a situation where src.centiseconds
+takes the value of 255. This situation is unlikely, but there
+is no validation check anywere in the code.
 
-Link: https://lore.kernel.org/all/46DE5830.9060401@trausch.us/
-Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
-Link: https://lore.kernel.org/r/20240326150723.99939-5-alexhenrie24@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Found by Linux Verification Center (linuxtesting.org) with Svace.
+
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Roman Smirnov <r.smirnov@omp.ru>
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Message-Id: <20240327132755.13945-1-r.smirnov@omp.ru>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/misc/uss720.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ fs/udf/udftime.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/misc/uss720.c b/drivers/usb/misc/uss720.c
-index 0be8efcda15d5..d972c09629397 100644
---- a/drivers/usb/misc/uss720.c
-+++ b/drivers/usb/misc/uss720.c
-@@ -677,7 +677,7 @@ static int uss720_probe(struct usb_interface *intf,
- 	struct parport_uss720_private *priv;
- 	struct parport *pp;
- 	unsigned char reg;
--	int i;
-+	int ret;
- 
- 	dev_dbg(&intf->dev, "probe: vendor id 0x%x, device id 0x%x\n",
- 		le16_to_cpu(usbdev->descriptor.idVendor),
-@@ -688,8 +688,8 @@ static int uss720_probe(struct usb_interface *intf,
- 		usb_put_dev(usbdev);
- 		return -ENODEV;
- 	}
--	i = usb_set_interface(usbdev, intf->altsetting->desc.bInterfaceNumber, 2);
--	dev_dbg(&intf->dev, "set interface result %d\n", i);
-+	ret = usb_set_interface(usbdev, intf->altsetting->desc.bInterfaceNumber, 2);
-+	dev_dbg(&intf->dev, "set interface result %d\n", ret);
- 
- 	interface = intf->cur_altsetting;
- 
-@@ -725,12 +725,18 @@ static int uss720_probe(struct usb_interface *intf,
- 	set_1284_register(pp, 7, 0x00, GFP_KERNEL);
- 	set_1284_register(pp, 6, 0x30, GFP_KERNEL);  /* PS/2 mode */
- 	set_1284_register(pp, 2, 0x0c, GFP_KERNEL);
--	/* debugging */
--	get_1284_register(pp, 0, &reg, GFP_KERNEL);
+diff --git a/fs/udf/udftime.c b/fs/udf/udftime.c
+index fce4ad976c8c2..26169b1f482c3 100644
+--- a/fs/udf/udftime.c
++++ b/fs/udf/udftime.c
+@@ -60,13 +60,18 @@ udf_disk_stamp_to_time(struct timespec64 *dest, struct timestamp src)
+ 	dest->tv_sec = mktime64(year, src.month, src.day, src.hour, src.minute,
+ 			src.second);
+ 	dest->tv_sec -= offset * 60;
+-	dest->tv_nsec = 1000 * (src.centiseconds * 10000 +
+-			src.hundredsOfMicroseconds * 100 + src.microseconds);
 +
-+	/* The Belkin F5U002 Rev 2 P80453-B USB parallel port adapter shares the
-+	 * device ID 050d:0002 with some other device that works with this
-+	 * driver, but it itself does not. Detect and handle the bad cable
-+	 * here. */
-+	ret = get_1284_register(pp, 0, &reg, GFP_KERNEL);
- 	dev_dbg(&intf->dev, "reg: %7ph\n", priv->reg);
-+	if (ret < 0)
-+		return ret;
+ 	/*
+ 	 * Sanitize nanosecond field since reportedly some filesystems are
+ 	 * recorded with bogus sub-second values.
+ 	 */
+-	dest->tv_nsec %= NSEC_PER_SEC;
++	if (src.centiseconds < 100 && src.hundredsOfMicroseconds < 100 &&
++	    src.microseconds < 100) {
++		dest->tv_nsec = 1000 * (src.centiseconds * 10000 +
++			src.hundredsOfMicroseconds * 100 + src.microseconds);
++	} else {
++		dest->tv_nsec = 0;
++	}
+ }
  
--	i = usb_find_last_int_in_endpoint(interface, &epd);
--	if (!i) {
-+	ret = usb_find_last_int_in_endpoint(interface, &epd);
-+	if (!ret) {
- 		dev_dbg(&intf->dev, "epaddr %d interval %d\n",
- 				epd->bEndpointAddress, epd->bInterval);
- 	}
+ void
 -- 
 2.43.0
 
