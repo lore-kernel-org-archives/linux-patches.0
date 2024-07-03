@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E89117E918;
-	Wed,  3 Jul 2024 10:43:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE4917E459;
+	Wed,  3 Jul 2024 10:43:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003382; cv=none; b=aDov4dq7o183MseYSyRO6PjLl8OrIocXZW376Kl7Afl+tTiDEeijBtQPMap8SjkeD1qfRNPolP0gp+jtGZxMd4ePWZ4KqhrM16rh8Joe/KwOKkTJs+4oefu9g7x4gXi8rdp4wnuUBnzAHZg9KX7YfPx2kM4mdQMcmS27C7plzwo=
+	t=1720003385; cv=none; b=dOjFbvax93RF0vF+TGSLRKIgtxbra546R6D3unW9iaIOpSCe2N3lQwYmOJcSPMAQh1bsLqjuMoMBSzurmnEq8Cb1AgJH71H5Nw9XJuv9H8erdLrMPGbJLj4j1MLgbeIUD/MgcJcRBv3sfItOZIWvw0nxxyf+T5hF754RyuLF52E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003382; c=relaxed/simple;
-	bh=8giYXFnlPUDd7KIqMP7JUgOouqhHssnyvWDvUfd9WuU=;
+	s=arc-20240116; t=1720003385; c=relaxed/simple;
+	bh=jsLZcq4zycgNPJxi2uWxVJGIP/vGidxfQfmMZoe5zp0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pmy/wszGB/SWxlgDg71UvLe2QxevX6PdhEP+G7KBYZLclkxy7WhBMT7FulK83nIC7ckBI3XDJ17IjLJ7luYI30RumiHWlENFzVzgHxn3CQdPgbhQ76WltSBLdSZENUuNzFEf33u6KvCVB7SuZL7FZn0bcQ+VjjivJhbmxoLbcrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xvIA1M/v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I//Q9TqVfTOqsXmyYHeuQ68mGrMdofiyBMOeTlweMMyQl3JLscqMOsBuTDGk2znd8GLxKO67Mm6DCqktO2xGZdu+oSRGM5V9kdXkVr7i5i1FukaKy5lyBnlNEOO6xI08BMIKL1VEwye2HLwxYI9Y+bAdeED2hCxK2Hfc8D74hNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0vjjnObO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xvIA1M/v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9D49C4AF0D;
-	Wed,  3 Jul 2024 10:43:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0vjjnObO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFF6BC2BD10;
+	Wed,  3 Jul 2024 10:43:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003382;
-	bh=8giYXFnlPUDd7KIqMP7JUgOouqhHssnyvWDvUfd9WuU=;
+	s=korg; t=1720003385;
+	bh=jsLZcq4zycgNPJxi2uWxVJGIP/vGidxfQfmMZoe5zp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xvIA1M/vMwOKf+zfPnJQmL3IxANP6YBi/hR6wlAn73IS05/NvO2WZO3G96KkFPaj2
-	 DOV6tOEkpCW41/LwOmlXUDZtcoMZbQtogTfM0bk6cSCmPPIEew+DCJK7g6Hz2eJkqv
-	 mDXWRl7fWLd8PzEQtc/GtIRzwyNe3z15co3qzmk8=
+	b=0vjjnObOgFcKR4aK3hlHnGSpA/tqQZe9BUMQZK3G3X+E8XFeVl1ZZ+4oXws+fqswV
+	 lccSNRPO+DWlJ9hBvH1yocc3PjKvqQY4FoQ9uaf87/EU9zbpa8+STBKhIMlV4hZypU
+	 K/+JzjXowVylHnJhWoWuzK8LM2trgnojCem2FM5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9dfe490c8176301c1d06@syzkaller.appspotmail.com,
-	Dave Kleikamp <shaggy@kernel.org>
-Subject: [PATCH 4.19 031/139] jfs: xattr: fix buffer overflow for invalid xattr
-Date: Wed,  3 Jul 2024 12:38:48 +0200
-Message-ID: <20240703102831.617036379@linuxfoundation.org>
+	Kuangyi Chiang <ki.chiang65@gmail.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 4.19 032/139] xhci: Apply reset resume quirk to Etron EJ188 xHCI host
+Date: Wed,  3 Jul 2024 12:38:49 +0200
+Message-ID: <20240703102831.654210016@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -50,40 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Kuangyi Chiang <ki.chiang65@gmail.com>
 
-commit 7c55b78818cfb732680c4a72ab270cc2d2ee3d0f upstream.
+commit 17bd54555c2aaecfdb38e2734149f684a73fa584 upstream.
 
-When an xattr size is not what is expected, it is printed out to the
-kernel log in hex format as a form of debugging.  But when that xattr
-size is bigger than the expected size, printing it out can cause an
-access off the end of the buffer.
+As described in commit c877b3b2ad5c ("xhci: Add reset on resume quirk for
+asrock p67 host"), EJ188 have the same issue as EJ168, where completely
+dies on resume. So apply XHCI_RESET_ON_RESUME quirk to EJ188 as well.
 
-Fix this all up by properly restricting the size of the debug hex dump
-in the kernel log.
-
-Reported-by: syzbot+9dfe490c8176301c1d06@syzkaller.appspotmail.com
-Cc: Dave Kleikamp <shaggy@kernel.org>
-Link: https://lore.kernel.org/r/2024051433-slider-cloning-98f9@gregkh
+Cc: stable@vger.kernel.org
+Signed-off-by: Kuangyi Chiang <ki.chiang65@gmail.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20240611120610.3264502-3-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jfs/xattr.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/host/xhci-pci.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/jfs/xattr.c
-+++ b/fs/jfs/xattr.c
-@@ -570,9 +570,11 @@ static int ea_get(struct inode *inode, s
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -33,6 +33,7 @@
  
-       size_check:
- 	if (EALIST_SIZE(ea_buf->xattr) != ea_size) {
-+		int size = min_t(int, EALIST_SIZE(ea_buf->xattr), ea_size);
+ #define PCI_VENDOR_ID_ETRON		0x1b6f
+ #define PCI_DEVICE_ID_EJ168		0x7023
++#define PCI_DEVICE_ID_EJ188		0x7052
+ 
+ #define PCI_DEVICE_ID_INTEL_LYNXPOINT_XHCI	0x8c31
+ #define PCI_DEVICE_ID_INTEL_LYNXPOINT_LP_XHCI	0x9c31
+@@ -223,6 +224,10 @@ static void xhci_pci_quirks(struct devic
+ 		xhci->quirks |= XHCI_TRUST_TX_LENGTH;
+ 		xhci->quirks |= XHCI_BROKEN_STREAMS;
+ 	}
++	if (pdev->vendor == PCI_VENDOR_ID_ETRON &&
++			pdev->device == PCI_DEVICE_ID_EJ188)
++		xhci->quirks |= XHCI_RESET_ON_RESUME;
 +
- 		printk(KERN_ERR "ea_get: invalid extended attribute\n");
- 		print_hex_dump(KERN_ERR, "", DUMP_PREFIX_ADDRESS, 16, 1,
--				     ea_buf->xattr, ea_size, 1);
-+				     ea_buf->xattr, size, 1);
- 		ea_release(inode, ea_buf);
- 		rc = -EIO;
- 		goto clean_up;
+ 	if (pdev->vendor == PCI_VENDOR_ID_RENESAS &&
+ 	    pdev->device == 0x0014) {
+ 		xhci->quirks |= XHCI_TRUST_TX_LENGTH;
 
 
