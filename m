@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1FC84DA14;
-	Wed,  3 Jul 2024 11:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B96A616FF2A;
+	Wed,  3 Jul 2024 11:02:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004542; cv=none; b=j0pb/gL0phOC+J1TQh23vDDWRg4gLmwnNExu3iX63kjojzgvDVrLavZzJQAaMPagaMz5tYGVMfET0fBmxb9yUKOckX07O5i1pkytCS2j5Fryx2VQjy8uNwrdbfoY6FGuxM5gweEw7MXyqNV/gKV/rlkRnFzCaRxI9L800JooDPY=
+	t=1720004545; cv=none; b=JlOUDOQl9fsbquZacF6V9pwM2MJv9ZDSsPqVi2oJgAE2NeFiM+hfZRC3qzlPP5g6I18+hv6PjyGNoXG09lL+iMkJbn89Or1wIpcdo0RF7w+HDQ8le790ruQG0T+oauMWrVBDIx9ZjTit5MTZhVNA4q1NYpNkwu4FR0VSim53HhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004542; c=relaxed/simple;
-	bh=reLPntVk8Q58aXbUtdNuMqxUD9nuGH6aJFRI+dKXSAI=;
+	s=arc-20240116; t=1720004545; c=relaxed/simple;
+	bh=uKUWR1SMiemcMwgvDVFLvJ745jeg2bUeYSr2Rp1kCuU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cwZior4PWsuJAmG3kgcceDczreYHOgpadrDqOoTbI7MrLS017pJRsOOrI5wZwLv4f0HF5kG7L3NII/BS+CGoauTCdA7DrzqGDRBAFp0beoytHplrdY0izOqUTfYuin9LRrNC33Y21mwcovOW0xP65WwnPZWjfEW+b3W1UPORVtA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IBDOPtBL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RF2qaa0ypTlVKd5PZRiiqMmRxwCl6TH4myGWjcw69TcTrxUOEGp9bqVMjvfXkCG+E5N/eQrDT8ngEIhxNP/RDQrtWRF7l7826bEQmEFYLdIgKCRmdGIxl/5PtfceDDPixHiMKRxIJd1oH79+hWVbgLRvxJ50jnknGIPvLfOslM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uc7qTkhy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IBDOPtBL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 482FAC2BD10;
-	Wed,  3 Jul 2024 11:02:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uc7qTkhy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F94C32781;
+	Wed,  3 Jul 2024 11:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004542;
-	bh=reLPntVk8Q58aXbUtdNuMqxUD9nuGH6aJFRI+dKXSAI=;
+	s=korg; t=1720004545;
+	bh=uKUWR1SMiemcMwgvDVFLvJ745jeg2bUeYSr2Rp1kCuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IBDOPtBL7AmtbACzwY10NAnn8gKrCT8+lK/qgaBRb1SbN1SO3tBwX4oHTw5C+yt7w
-	 /QzhHDyXXaA9TCs9Yfst0De51C/zQMNWxzP4UsLNArS9e4u4MiSgXa4ElGj/T3QFNw
-	 me81IdMXE8UL6mqDEkxatOKTS0q8+HyRH2euTgy4=
+	b=uc7qTkhyk9/hosfKrkoCyzB2WJuF8txqKbJsxA4fYL381kECfOLm5JwXTERiFbr9g
+	 iW+c+0AXQhw3E7gcQJTFCGiMdxS9qRTo5pBmEkC/lUaHPAmvB1CdJ2tt9yErbssWPg
+	 l+odF3uhzrMkrNi2xdqbgx8rEvt5ttsMMpqgMxSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.10 076/290] iio: imu: inv_icm42600: delete unneeded update watermark call
-Date: Wed,  3 Jul 2024 12:37:37 +0200
-Message-ID: <20240703102907.068011434@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	syzbot+ffa8143439596313a85a@syzkaller.appspotmail.com,
+	Ashish Sangwan <a.sangwan@samsung.com>,
+	Namjae Jeon <namjae.jeon@samsung.com>,
+	Dirk Behme <dirk.behme@de.bosch.com>
+Subject: [PATCH 5.10 077/290] drivers: core: synchronize really_probe() and dev_uevent()
+Date: Wed,  3 Jul 2024 12:37:38 +0200
+Message-ID: <20240703102907.104873902@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -50,49 +53,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+From: Dirk Behme <dirk.behme@de.bosch.com>
 
-commit 245f3b149e6cc3ac6ee612cdb7042263bfc9e73c upstream.
+commit c0a40097f0bc81deafc15f9195d1fb54595cd6d0 upstream.
 
-Update watermark will be done inside the hwfifo_set_watermark callback
-just after the update_scan_mode. It is useless to do it here.
+Synchronize the dev->driver usage in really_probe() and dev_uevent().
+These can run in different threads, what can result in the following
+race condition for dev->driver uninitialization:
 
-Fixes: 7f85e42a6c54 ("iio: imu: inv_icm42600: add buffer support in iio devices")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
-Link: https://lore.kernel.org/r/20240527210008.612932-1-inv.git-commit@tdk.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Thread #1:
+==========
+
+really_probe() {
+...
+probe_failed:
+...
+device_unbind_cleanup(dev) {
+    ...
+    dev->driver = NULL;   // <= Failed probe sets dev->driver to NULL
+    ...
+    }
+...
+}
+
+Thread #2:
+==========
+
+dev_uevent() {
+...
+if (dev->driver)
+      // If dev->driver is NULLed from really_probe() from here on,
+      // after above check, the system crashes
+      add_uevent_var(env, "DRIVER=%s", dev->driver->name);
+...
+}
+
+really_probe() holds the lock, already. So nothing needs to be done
+there. dev_uevent() is called with lock held, often, too. But not
+always. What implies that we can't add any locking in dev_uevent()
+itself. So fix this race by adding the lock to the non-protected
+path. This is the path where above race is observed:
+
+ dev_uevent+0x235/0x380
+ uevent_show+0x10c/0x1f0  <= Add lock here
+ dev_attr_show+0x3a/0xa0
+ sysfs_kf_seq_show+0x17c/0x250
+ kernfs_seq_show+0x7c/0x90
+ seq_read_iter+0x2d7/0x940
+ kernfs_fop_read_iter+0xc6/0x310
+ vfs_read+0x5bc/0x6b0
+ ksys_read+0xeb/0x1b0
+ __x64_sys_read+0x42/0x50
+ x64_sys_call+0x27ad/0x2d30
+ do_syscall_64+0xcd/0x1d0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Similar cases are reported by syzkaller in
+
+https://syzkaller.appspot.com/bug?extid=ffa8143439596313a85a
+
+But these are regarding the *initialization* of dev->driver
+
+dev->driver = drv;
+
+As this switches dev->driver to non-NULL these reports can be considered
+to be false-positives (which should be "fixed" by this commit, as well,
+though).
+
+The same issue was reported and tried to be fixed back in 2015 in
+
+https://lore.kernel.org/lkml/1421259054-2574-1-git-send-email-a.sangwan@samsung.com/
+
+already.
+
+Fixes: 239378f16aa1 ("Driver core: add uevent vars for devices of a class")
+Cc: stable <stable@kernel.org>
+Cc: syzbot+ffa8143439596313a85a@syzkaller.appspotmail.com
+Cc: Ashish Sangwan <a.sangwan@samsung.com>
+Cc: Namjae Jeon <namjae.jeon@samsung.com>
+Signed-off-by: Dirk Behme <dirk.behme@de.bosch.com>
+Link: https://lore.kernel.org/r/20240513050634.3964461-1-dirk.behme@de.bosch.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c |    4 ----
- drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c  |    4 ----
- 2 files changed, 8 deletions(-)
+ drivers/base/core.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
-@@ -128,10 +128,6 @@ static int inv_icm42600_accel_update_sca
- 	/* update data FIFO write */
- 	inv_icm42600_timestamp_apply_odr(ts, 0, 0, 0);
- 	ret = inv_icm42600_buffer_set_fifo_en(st, fifo_en | st->fifo.en);
--	if (ret)
--		goto out_unlock;
--
--	ret = inv_icm42600_buffer_update_watermark(st);
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -2008,8 +2008,11 @@ static ssize_t uevent_show(struct device
+ 	if (!env)
+ 		return -ENOMEM;
  
- out_unlock:
- 	mutex_unlock(&st->lock);
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
-@@ -128,10 +128,6 @@ static int inv_icm42600_gyro_update_scan
- 	/* update data FIFO write */
- 	inv_icm42600_timestamp_apply_odr(ts, 0, 0, 0);
- 	ret = inv_icm42600_buffer_set_fifo_en(st, fifo_en | st->fifo.en);
--	if (ret)
--		goto out_unlock;
--
--	ret = inv_icm42600_buffer_update_watermark(st);
++	/* Synchronize with really_probe() */
++	device_lock(dev);
+ 	/* let the kset specific function add its keys */
+ 	retval = kset->uevent_ops->uevent(kset, &dev->kobj, env);
++	device_unlock(dev);
+ 	if (retval)
+ 		goto out;
  
- out_unlock:
- 	mutex_unlock(&st->lock);
 
 
