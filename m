@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1A9A183094;
-	Wed,  3 Jul 2024 11:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA21A17966F;
+	Wed,  3 Jul 2024 11:20:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005594; cv=none; b=d9SHlg+ocouWTqUe6bm3pzXKCfcgMMonK5w7C8P6cJTHYCBelloJoYI7mBcSHngJbxKWqFMazfxr6GW58OKbn6vSRICK0HkZALEjP6xmiDnK5SV1akLFGrbyvLrinSARcjaS1Tb/JzaGJQxUizo2VDnexwmCLnRgbuOzDTmwkEI=
+	t=1720005602; cv=none; b=UDiSa1hJMqlfZd8LB4Tn+8JdW06VWL3ZSRxk2rNewgWa/tJ2infSu5emdHyf4WhymgsD7GBQixUhlrkKTo1u4z2fFdEjyBjf90gGK31RN4Zz/BXBDxeuP3ah/oJKBP/5iRRMHmav86lhKtRzplPMUI63sC1Fiyb+k+DRNBVdrtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005594; c=relaxed/simple;
-	bh=cuaHQT7EgTPLTs6D2JDC0yuTDsrwqO2onEbnv3AdsAM=;
+	s=arc-20240116; t=1720005602; c=relaxed/simple;
+	bh=tvF1vvilwRxLzu0YV71ptFq1LQLS85r0kK/G1bGaZtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mXaCx0tThBrXaThL1lA3VDws4602QFRZ+cgs5vQmByv8KxlcVscb0TMEp3c9agLLqI+JUlRszyvdg8Nw+6gt+4mwOaILGyZYk6qQcSKmW6PZhfOSYMF5ram+0zygzeZLgJuSiahERcasXojsrJaouZK6vL9xZDwdw+Y+uLkh+J0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=13vRjVN/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mvacxqmNbw//gfOWTGNxcBX7bVZ5Qibs1Eiaeip9ZC9P3x0FlLmO5bfD+dnvzSiMqSyzKxyGXCzXjNkScsKMSvda+nTsccZOTKRK9c7UE4gY+SWtasTJ+TFqzbt9kwoQ4lSmJQNTrZ94RYHhFipxhI1oyIIIGzqjZoPwBFlhq3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B8YQfO/g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="13vRjVN/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38E90C2BD10;
-	Wed,  3 Jul 2024 11:19:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B8YQfO/g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F453C2BD10;
+	Wed,  3 Jul 2024 11:20:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005594;
-	bh=cuaHQT7EgTPLTs6D2JDC0yuTDsrwqO2onEbnv3AdsAM=;
+	s=korg; t=1720005602;
+	bh=tvF1vvilwRxLzu0YV71ptFq1LQLS85r0kK/G1bGaZtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=13vRjVN/yVlx1rGmvMwa7q8J8ix6jhlaA6WDIM2D+VllvLJliSO+p+u8YiUlr3yUJ
-	 38ulPPd/oGxfnLL8KvLMWtUp5KG3Ait+/Mjm9TNe/xTZFKvrV3UnJELAQLxbRIjnIq
-	 ug3h0fQUGddMo3PLBckBUF91vECPzXVC5ydDZr64=
+	b=B8YQfO/gXsKJFy9BMKyJ0MGkqp4SMGjIM8CywWo90kokK0AMmkPFGfvFzq478q17X
+	 yzDbc0G+TDfBAn00VQAEo8pR1mUAdfJNR7XBx9Rdp/IVR52J2VxT+TX5qaS3Sojdxs
+	 nS7zMm93ATkW/XEj7RLAIl3wKvOFM+I4ZRxIz2sA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	stable@kernel.org
-Subject: [PATCH 5.15 133/356] intel_th: pci: Add Lunar Lake support
-Date: Wed,  3 Jul 2024 12:37:49 +0200
-Message-ID: <20240703102918.129760948@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 134/356] nilfs2: fix potential kernel bug due to lack of writeback flag waiting
+Date: Wed,  3 Jul 2024 12:37:50 +0200
+Message-ID: <20240703102918.167613298@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,34 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit f866b65322bfbc8fcca13c25f49e1a5c5a93ae4d upstream.
+commit a4ca369ca221bb7e06c725792ac107f0e48e82e7 upstream.
 
-Add support for the Trace Hub in Lunar Lake.
+Destructive writes to a block device on which nilfs2 is mounted can cause
+a kernel bug in the folio/page writeback start routine or writeback end
+routine (__folio_start_writeback in the log below):
 
-Signed-off-by: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: stable@kernel.org
-Link: https://lore.kernel.org/r/20240429130119.1518073-16-alexander.shishkin@linux.intel.com
+ kernel BUG at mm/page-writeback.c:3070!
+ Oops: invalid opcode: 0000 [#1] PREEMPT SMP KASAN PTI
+ ...
+ RIP: 0010:__folio_start_writeback+0xbaa/0x10e0
+ Code: 25 ff 0f 00 00 0f 84 18 01 00 00 e8 40 ca c6 ff e9 17 f6 ff ff
+  e8 36 ca c6 ff 4c 89 f7 48 c7 c6 80 c0 12 84 e8 e7 b3 0f 00 90 <0f>
+  0b e8 1f ca c6 ff 4c 89 f7 48 c7 c6 a0 c6 12 84 e8 d0 b3 0f 00
+ ...
+ Call Trace:
+  <TASK>
+  nilfs_segctor_do_construct+0x4654/0x69d0 [nilfs2]
+  nilfs_segctor_construct+0x181/0x6b0 [nilfs2]
+  nilfs_segctor_thread+0x548/0x11c0 [nilfs2]
+  kthread+0x2f0/0x390
+  ret_from_fork+0x4b/0x80
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
+
+This is because when the log writer starts a writeback for segment summary
+blocks or a super root block that use the backing device's page cache, it
+does not wait for the ongoing folio/page writeback, resulting in an
+inconsistent writeback state.
+
+Fix this issue by waiting for ongoing writebacks when putting
+folios/pages on the backing device into writeback state.
+
+Link: https://lkml.kernel.org/r/20240530141556.4411-1-konishi.ryusuke@gmail.com
+Fixes: 9ff05123e3bf ("nilfs2: segment constructor")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwtracing/intel_th/pci.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/nilfs2/segment.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/hwtracing/intel_th/pci.c
-+++ b/drivers/hwtracing/intel_th/pci.c
-@@ -325,6 +325,11 @@ static const struct pci_device_id intel_
- 		.driver_data = (kernel_ulong_t)&intel_th_2x,
- 	},
- 	{
-+		/* Lunar Lake */
-+		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0xa824),
-+		.driver_data = (kernel_ulong_t)&intel_th_2x,
-+	},
-+	{
- 		/* Alder Lake CPU */
- 		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x466f),
- 		.driver_data = (kernel_ulong_t)&intel_th_2x,
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -1692,6 +1692,7 @@ static void nilfs_segctor_prepare_write(
+ 			if (bh->b_page != bd_page) {
+ 				if (bd_page) {
+ 					lock_page(bd_page);
++					wait_on_page_writeback(bd_page);
+ 					clear_page_dirty_for_io(bd_page);
+ 					set_page_writeback(bd_page);
+ 					unlock_page(bd_page);
+@@ -1705,6 +1706,7 @@ static void nilfs_segctor_prepare_write(
+ 			if (bh == segbuf->sb_super_root) {
+ 				if (bh->b_page != bd_page) {
+ 					lock_page(bd_page);
++					wait_on_page_writeback(bd_page);
+ 					clear_page_dirty_for_io(bd_page);
+ 					set_page_writeback(bd_page);
+ 					unlock_page(bd_page);
+@@ -1721,6 +1723,7 @@ static void nilfs_segctor_prepare_write(
+ 	}
+ 	if (bd_page) {
+ 		lock_page(bd_page);
++		wait_on_page_writeback(bd_page);
+ 		clear_page_dirty_for_io(bd_page);
+ 		set_page_writeback(bd_page);
+ 		unlock_page(bd_page);
 
 
