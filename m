@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9372861FDF;
-	Wed,  3 Jul 2024 10:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1A861FDF;
+	Wed,  3 Jul 2024 10:51:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003881; cv=none; b=DSB+Oob8V9NZDvdKcWiEyWTaR7rwL2pR4K5+lfoO2HjaKEUlwmPX/nruqL5oB3oFpNupjxc1BS8Ajfiqz91LAFbfiXMxAJeSSrsVTKZ8QI1dr/4LoMKVw+81lsIPmcd++kGWgUijiX5CPjPSAZKvNsjxI3de5yEdpJRhHCyG52c=
+	t=1720003884; cv=none; b=Wq/e0dDBsFy5QKyB8AcBo+vD7yld26jQjbqPIHFKuBNUc3HcQouANBsqaFzjGM7rt1jkAZ0JvM90WdoDQq8DWTU/hqtmveySXLZ4RBDAB9AWXyFW6iuYiTh2CYlopnrz/i7fQdUkvgfwS5dgk54yKnhTmw7ewbKepvvTwpNM0Wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003881; c=relaxed/simple;
-	bh=NIAKuHO8mltuoNJb8P8dkSiqKIHkuh3EPOAU0Aw48r4=;
+	s=arc-20240116; t=1720003884; c=relaxed/simple;
+	bh=jkTWSofPyLwQr00QWXC84SRBkf2jyvf79DKTZUIde2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fEkzfC22Kvtn4hUqVu25BqtcdtsCSzQ8qj5sjKEjTnPl6qT6NHiZi+nHDyn1MiXtoIx/xk/Oy+pflYjGiRCUTeqJYFcvtX38NEr2iuTCjIavXc4JkEekO98Fr9f3+EUofUOX0iUu4yg+BGenMh5fUGMlODrkWvIgMlhK7S12Wjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9eMI+IZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jAJL/vA8QTdRd+D+cvZAc8EreaEjn6PwEWOp7g/Z4mDxq3gyB2vULwSwAciqfJE6MdPun4O54moDOXsOoJS2Nhshvk3wcHiuhQROeG6I7JQ2YnQFfQ81ZEz1trDlN727y2qwnuqDFDnJCUCRe6oqHsKreZ6aq2iwJPbsYu7PJGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LH90RQwt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9eMI+IZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9485C32781;
-	Wed,  3 Jul 2024 10:51:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LH90RQwt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D243BC2BD10;
+	Wed,  3 Jul 2024 10:51:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003881;
-	bh=NIAKuHO8mltuoNJb8P8dkSiqKIHkuh3EPOAU0Aw48r4=;
+	s=korg; t=1720003884;
+	bh=jkTWSofPyLwQr00QWXC84SRBkf2jyvf79DKTZUIde2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t9eMI+IZpbqMICq896qkJNNkQWquJ23Z5r/A/rBr6o3P8kdpvKvwGu098/jDopjPS
-	 L5IOXaliUGlGm80vmakHyQh6lIqh8CIUw6iMdqG6xyK1OW22amM/459RMTdVtTTVXF
-	 GnIFinfL95QYUVeUsPHjA4I8LmOad/4y1LIKqN+A=
+	b=LH90RQwtX+xmWvIEsYEwwtlvprT53KQhrxtM+ormzpG2J/kahcBrf8bCyuFvIlVh9
+	 sPcUPZ4uAYoQwuhkHzBsJX9Nbaun604viVAqzdwrprW6WI9uZmbqDpeymVXAbctjny
+	 yt3iCcopgs30zGFezPjstCe64x27c//bQFKAJZzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.king@canonical.com>,
-	Peter Ujfalusi <peter.ujfalusi@ti.com>,
-	Mark Brown <broonie@kernel.org>,
+	Chen Hanxiao <chenhx.fnst@fujitsu.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 024/189] ASoC: ti: davinci-mcasp: remove redundant assignment to variable ret
-Date: Wed,  3 Jul 2024 12:38:05 +0200
-Message-ID: <20240703102842.419841298@linuxfoundation.org>
+Subject: [PATCH 5.4 051/189] SUNRPC: return proper error from gss_wrap_req_priv
+Date: Wed,  3 Jul 2024 12:38:32 +0200
+Message-ID: <20240703102843.440797162@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -52,41 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colin Ian King <colin.king@canonical.com>
+From: Chen Hanxiao <chenhx.fnst@fujitsu.com>
 
-[ Upstream commit f4d95de415b286090c1bf739c20a5ea2aefda834 ]
+[ Upstream commit 33c94d7e3cb84f6d130678d6d59ba475a6c489cf ]
 
-The assignment to ret is redundant as it is not used in the error
-return path and hence can be removed.
+don't return 0 if snd_buf->len really greater than snd_buf->buflen
 
-Addresses-Coverity: ("Unused value")
-Signed-off-by: Colin Ian King <colin.king@canonical.com>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
-Link: https://lore.kernel.org/r/20200210092423.327499-1-colin.king@canonical.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: d18ca8635db2 ("ASoC: ti: davinci-mcasp: Fix race condition during probe")
+Signed-off-by: Chen Hanxiao <chenhx.fnst@fujitsu.com>
+Fixes: 0c77668ddb4e ("SUNRPC: Introduce trace points in rpc_auth_gss.ko")
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/ti/davinci-mcasp.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ net/sunrpc/auth_gss/auth_gss.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/ti/davinci-mcasp.c b/sound/soc/ti/davinci-mcasp.c
-index 0541071f454bd..76267fd4a9d88 100644
---- a/sound/soc/ti/davinci-mcasp.c
-+++ b/sound/soc/ti/davinci-mcasp.c
-@@ -1743,10 +1743,8 @@ static struct davinci_mcasp_pdata *davinci_mcasp_set_pdata_from_of(
- 	} else if (match) {
- 		pdata = devm_kmemdup(&pdev->dev, match->data, sizeof(*pdata),
- 				     GFP_KERNEL);
--		if (!pdata) {
--			ret = -ENOMEM;
--			return pdata;
--		}
-+		if (!pdata)
-+			return NULL;
- 	} else {
- 		/* control shouldn't reach here. something is wrong */
- 		ret = -EINVAL;
+diff --git a/net/sunrpc/auth_gss/auth_gss.c b/net/sunrpc/auth_gss/auth_gss.c
+index 4d3cf146f50a5..a1aa4f3d7e50e 100644
+--- a/net/sunrpc/auth_gss/auth_gss.c
++++ b/net/sunrpc/auth_gss/auth_gss.c
+@@ -1849,8 +1849,10 @@ static int gss_wrap_req_priv(struct rpc_cred *cred, struct gss_cl_ctx *ctx,
+ 	offset = (u8 *)p - (u8 *)snd_buf->head[0].iov_base;
+ 	maj_stat = gss_wrap(ctx->gc_gss_ctx, offset, snd_buf, inpages);
+ 	/* slack space should prevent this ever happening: */
+-	if (unlikely(snd_buf->len > snd_buf->buflen))
++	if (unlikely(snd_buf->len > snd_buf->buflen)) {
++		status = -EIO;
+ 		goto wrap_failed;
++	}
+ 	/* We're assuming that when GSS_S_CONTEXT_EXPIRED, the encryption was
+ 	 * done anyway, so it's safe to put the request on the wire: */
+ 	if (maj_stat == GSS_S_CONTEXT_EXPIRED)
 -- 
 2.43.0
 
