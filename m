@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01194173352;
-	Wed,  3 Jul 2024 10:46:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7E21741D8;
+	Wed,  3 Jul 2024 10:46:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003581; cv=none; b=N8iumvpAa1eOXQ3KVtrf75aBeTuXpfELLZendLALdmVVnK1vbdMxKlCSh3reCH7iokjhpjmLBLmw6pnrAS98vF9qhuTR0S4jLZ7+b/ZH0eGJ67l+V2P6sri+LsNldZ1keCgJxofT+u1vbapjj+Dv1B6JGcDBq7DD2HrJxLV5ag0=
+	t=1720003583; cv=none; b=jTkPK93T+RJICN8x+AOsctozgDm1foBz/rGEAt3OA2M3Wec4Ob2RxL+E+pkfcyAi7u4cxscPLpqGMue6nlLPSAjC1jMlgzvGMbKKh/zUx1CSFU9BN1j+Pg8UB9qmNRurLVqkoziJHt82T0VaQ9gphtKfR0VE6ukv2FYpkdWyPK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003581; c=relaxed/simple;
-	bh=04CnYoP6ixZsNryeOcKsDeSL1VvdSZJJ6EjMEBTyz+I=;
+	s=arc-20240116; t=1720003583; c=relaxed/simple;
+	bh=hO132jt60qibtyvaRIfN67KOxoqsd3uzPxhAtwFLSPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C/BI8eLRi0bF+miuy2Hb20BOlnAkd262BRqx5pi1/+5nmOIanPvA5RBO/2JE3JTn6tMS03Cgj/Ili252kdvwuiPlbpS4ClWZ/8gY6BMErQrvdmw7e1bMi+5QEAXexzGrk6e7tPPhthcApkrk9oGvQsVxHhNVvYzac5E8G2RNUBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AbqgoCZA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=URSbO2VDFl8E00rQ84atkTUAbQJ/aSjvoQxb2f+dOW5TDQ9XQcxl6hr57B5iM8foUO4cDLvcQakLt/mqRBTvG48NZkvFj19AjHAq7bpR1ArYQfwR8IDTP+zHcBbxS8kBMQvR+A6EZ/6ARvzcX/SqanC0952cX0+DFpE2kEoAN28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QIDdnOfV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AbqgoCZA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 199A4C2BD10;
-	Wed,  3 Jul 2024 10:46:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QIDdnOfV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 075E5C2BD10;
+	Wed,  3 Jul 2024 10:46:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003580;
-	bh=04CnYoP6ixZsNryeOcKsDeSL1VvdSZJJ6EjMEBTyz+I=;
+	s=korg; t=1720003583;
+	bh=hO132jt60qibtyvaRIfN67KOxoqsd3uzPxhAtwFLSPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AbqgoCZAZhQTH4oRkh9OJQTLAf1OZtBWiKbQ2AeNCVpHhw05dYQxIpt5dYbenmNo9
-	 ydYib9s7AaJEyOWorwrLVdkFs0cZVKd7yTMRyIPnQ2MA3RqkIIJJJY2tbqESXMDYD4
-	 kewRLYlBXIG1GOuXDwGQh31yT1VMSUgauiAK68qw=
+	b=QIDdnOfVUYe4vtp18/DvvcrWvk2IY0PO0mD7G4oy5aG90iOH4T1DRO6oBj8fcThb7
+	 qL3t8S1OUGejYRHfI5GaTBVX1tTl7UKh4krnFiAgMZNbBUmCpdO5EHUj5uaBF+93iE
+	 19aKImRtX39II6GFaN8u4Ex63rF0Zc/DnbLU08WM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	stable@kernel.org
-Subject: [PATCH 4.19 054/139] intel_th: pci: Add Sapphire Rapids SOC support
-Date: Wed,  3 Jul 2024 12:39:11 +0200
-Message-ID: <20240703102832.480097037@linuxfoundation.org>
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 089/139] x86/amd_nb: Check for invalid SMN reads
+Date: Wed,  3 Jul 2024 12:39:46 +0200
+Message-ID: <20240703102833.802719611@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -51,34 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+From: Yazen Ghannam <yazen.ghannam@amd.com>
 
-commit 2e1da7efabe05cb0cf0b358883b2bc89080ed0eb upstream.
+[ Upstream commit c625dabbf1c4a8e77e4734014f2fde7aa9071a1f ]
 
-Add support for the Trace Hub in Sapphire Rapids SOC.
+AMD Zen-based systems use a System Management Network (SMN) that
+provides access to implementation-specific registers.
 
-Signed-off-by: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: stable@kernel.org
-Link: https://lore.kernel.org/r/20240429130119.1518073-13-alexander.shishkin@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+SMN accesses are done indirectly through an index/data pair in PCI
+config space. The PCI config access may fail and return an error code.
+This would prevent the "read" value from being updated.
+
+However, the PCI config access may succeed, but the return value may be
+invalid. This is in similar fashion to PCI bad reads, i.e. return all
+bits set.
+
+Most systems will return 0 for SMN addresses that are not accessible.
+This is in line with AMD convention that unavailable registers are
+Read-as-Zero/Writes-Ignored.
+
+However, some systems will return a "PCI Error Response" instead. This
+value, along with an error code of 0 from the PCI config access, will
+confuse callers of the amd_smn_read() function.
+
+Check for this condition, clear the return value, and set a proper error
+code.
+
+Fixes: ddfe43cdc0da ("x86/amd_nb: Add SMN and Indirect Data Fabric access for AMD Fam17h")
+Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230403164244.471141-1-yazen.ghannam@amd.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/intel_th/pci.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ arch/x86/kernel/amd_nb.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/hwtracing/intel_th/pci.c
-+++ b/drivers/hwtracing/intel_th/pci.c
-@@ -276,6 +276,11 @@ static const struct pci_device_id intel_
- 		.driver_data = (kernel_ulong_t)&intel_th_2x,
- 	},
- 	{
-+		/* Sapphire Rapids SOC */
-+		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x3456),
-+		.driver_data = (kernel_ulong_t)&intel_th_2x,
-+	},
-+	{
- 		/* Rocket Lake CPU */
- 		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x4c19),
- 		.driver_data = (kernel_ulong_t)&intel_th_2x,
+diff --git a/arch/x86/kernel/amd_nb.c b/arch/x86/kernel/amd_nb.c
+index 923b4bac96138..ef1fa51ea98e9 100644
+--- a/arch/x86/kernel/amd_nb.c
++++ b/arch/x86/kernel/amd_nb.c
+@@ -145,7 +145,14 @@ static int __amd_smn_rw(u16 node, u32 address, u32 *value, bool write)
+ 
+ int amd_smn_read(u16 node, u32 address, u32 *value)
+ {
+-	return __amd_smn_rw(node, address, value, false);
++	int err = __amd_smn_rw(node, address, value, false);
++
++	if (PCI_POSSIBLE_ERROR(*value)) {
++		err = -ENODEV;
++		*value = 0;
++	}
++
++	return err;
+ }
+ EXPORT_SYMBOL_GPL(amd_smn_read);
+ 
+-- 
+2.43.0
+
 
 
