@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDDAA173335;
-	Wed,  3 Jul 2024 10:44:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC94173335;
+	Wed,  3 Jul 2024 10:44:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003441; cv=none; b=pL5kTDpkRra2fNz3zuDaVH/vtapqLjernvqGkkBq7unkQs/AYyfYUDxb8a6bRGiQwKJXdNNe7tEB7OsEQWFLJ2X/WBG+rhKr+lhLjRgJL4ZRmytjQrsN1IcoHB/R0cypxh4ACR1qBVCdUcNJz43aS7hO+MOQtmY4fK2uMZlOTUQ=
+	t=1720003444; cv=none; b=WlX9UygP27LgT+FlRBaFFBFsV8n3iGTwp5RpumUEqr8TnUjCVY0aAiPdAMXZyg/vwoI48Sf2zpQ8k/ex95gJL9/hsSzLalxx8eCXkhF+fiQ1KNgoB3K4i/XLixpDdhuPRH2b/ibOgqPAiLwTs+Ahs2j7T5R+oNCfNcmO9o2exZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003441; c=relaxed/simple;
-	bh=xE1PaEv+Ytt1qeNfHsITjA//rr+PFhg9+OBXt0KJHOU=;
+	s=arc-20240116; t=1720003444; c=relaxed/simple;
+	bh=TvvRUbZl5Va76HI1a6PQRiTz4QPwDceBeQSLMIHsZFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NfLVkDq2Oh4PoYCsd9YDiyHdfZKGj0jNjU9cIK9Qr3xY/w643YVhFPMRnjVPc3EWsVdkykWFK1ivgcDbF4kDu3SfhqCzokqs2phBD49QVypyGOfpIRw1ez+9NmOvAH2pj4zTWnSP1cSNBzxkwnPQe7YcEYCMqdw7pcsVAvIQj64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yXx8Le7L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=H4YdnIWIf9EEUX/s1fHwMWpIm4jad1C7bPtfOpjJxYKAgNGADlEGUWFH+9ZOBd4seGREOGJoktv6TyJ7FmKzfQdnkqoPgE/90GphPmWjVddEdOHtWcjuZqkwW6cYeffKc2sUU86DbcmHe9mg2ifl++RE6YgbB1yautheSqno6Xw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N2eIdvj8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yXx8Le7L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4823FC2BD10;
-	Wed,  3 Jul 2024 10:44:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N2eIdvj8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3593EC2BD10;
+	Wed,  3 Jul 2024 10:44:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003441;
-	bh=xE1PaEv+Ytt1qeNfHsITjA//rr+PFhg9+OBXt0KJHOU=;
+	s=korg; t=1720003444;
+	bh=TvvRUbZl5Va76HI1a6PQRiTz4QPwDceBeQSLMIHsZFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yXx8Le7LLyenD1awbHy5yWs5To/k01g5ZJBxEDHVFnWQUynEyVTx0bwAzfJQxOf++
-	 SWupAwDNO4DxVu17WnPjXYWRgjaV6kwIPMEwm6s7WyuehGXcSAWw1aVtyC2JreaaV2
-	 Rvzi+rYPmBU75zUP+jHBuvkPqfqTLjNGEaqkhORc=
+	b=N2eIdvj8Ei49b3StTdAlYdAMsrDlxZmBVKe8rGVzWvmawJ/UtdFJjDwYxgvKO61wc
+	 OylSJ3pmn5XRHtnZeA2iwCPhxC7Lb7EA0pPVrKwuxbpK8jK+a/R2f2QXoplMNPVo0x
+	 iVmosr3q9K5AqBl7CkkkP8cpAuhxwxFW/4YAkCC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 023/139] selftests/mm: conform test to TAP format output
-Date: Wed,  3 Jul 2024 12:38:40 +0200
-Message-ID: <20240703102831.315237994@linuxfoundation.org>
+	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: [PATCH 4.19 050/139] PCI: rockchip-ep: Remove wrong mask on subsys_vendor_id
+Date: Wed,  3 Jul 2024 12:39:07 +0200
+Message-ID: <20240703102832.325800924@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -46,235 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+From: Rick Wertenbroek <rick.wertenbroek@gmail.com>
 
-[ Upstream commit 9a21701edc41465de56f97914741bfb7bfc2517d ]
+commit 2dba285caba53f309d6060fca911b43d63f41697 upstream.
 
-Conform the layout, informational and status messages to TAP.  No
-functional change is intended other than the layout of output messages.
+Remove wrong mask on subsys_vendor_id. Both the Vendor ID and Subsystem
+Vendor ID are u16 variables and are written to a u32 register of the
+controller. The Subsystem Vendor ID was always 0 because the u16 value
+was masked incorrectly with GENMASK(31,16) resulting in all lower 16
+bits being set to 0 prior to the shift.
 
-Link: https://lkml.kernel.org/r/20240101083614.1076768-1-usama.anjum@collabora.com
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: d4202e66a4b1 ("selftests/mm: compaction_test: fix bogus test success on Aarch64")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Remove both masks as they are unnecessary and set the register correctly
+i.e., the lower 16-bits are the Vendor ID and the upper 16-bits are the
+Subsystem Vendor ID.
+
+This is documented in the RK3399 TRM section 17.6.7.1.17
+
+[kwilczynski: removed unnecesary newline]
+Fixes: cf590b078391 ("PCI: rockchip: Add EP driver for Rockchip PCIe controller")
+Link: https://lore.kernel.org/linux-pci/20240403144508.489835-1-rick.wertenbroek@gmail.com
+Signed-off-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/vm/compaction_test.c | 91 ++++++++++----------
- 1 file changed, 44 insertions(+), 47 deletions(-)
+ drivers/pci/controller/pcie-rockchip-ep.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/vm/compaction_test.c b/tools/testing/selftests/vm/compaction_test.c
-index cb2db2102dd26..43f5044b23c57 100644
---- a/tools/testing/selftests/vm/compaction_test.c
-+++ b/tools/testing/selftests/vm/compaction_test.c
-@@ -32,7 +32,7 @@ int read_memory_info(unsigned long *memfree, unsigned long *hugepagesize)
- 	FILE *cmdfile = popen(cmd, "r");
+--- a/drivers/pci/controller/pcie-rockchip-ep.c
++++ b/drivers/pci/controller/pcie-rockchip-ep.c
+@@ -130,10 +130,8 @@ static int rockchip_pcie_ep_write_header
  
- 	if (!(fgets(buffer, sizeof(buffer), cmdfile))) {
--		perror("Failed to read meminfo\n");
-+		ksft_print_msg("Failed to read meminfo: %s\n", strerror(errno));
- 		return -1;
- 	}
- 
-@@ -43,7 +43,7 @@ int read_memory_info(unsigned long *memfree, unsigned long *hugepagesize)
- 	cmdfile = popen(cmd, "r");
- 
- 	if (!(fgets(buffer, sizeof(buffer), cmdfile))) {
--		perror("Failed to read meminfo\n");
-+		ksft_print_msg("Failed to read meminfo: %s\n", strerror(errno));
- 		return -1;
- 	}
- 
-@@ -61,14 +61,14 @@ int prereq(void)
- 	fd = open("/proc/sys/vm/compact_unevictable_allowed",
- 		  O_RDONLY | O_NONBLOCK);
- 	if (fd < 0) {
--		perror("Failed to open\n"
--		       "/proc/sys/vm/compact_unevictable_allowed\n");
-+		ksft_print_msg("Failed to open /proc/sys/vm/compact_unevictable_allowed: %s\n",
-+			       strerror(errno));
- 		return -1;
- 	}
- 
- 	if (read(fd, &allowed, sizeof(char)) != sizeof(char)) {
--		perror("Failed to read from\n"
--		       "/proc/sys/vm/compact_unevictable_allowed\n");
-+		ksft_print_msg("Failed to read from /proc/sys/vm/compact_unevictable_allowed: %s\n",
-+			       strerror(errno));
- 		close(fd);
- 		return -1;
- 	}
-@@ -77,12 +77,13 @@ int prereq(void)
- 	if (allowed == '1')
- 		return 0;
- 
-+	ksft_print_msg("Compaction isn't allowed\n");
- 	return -1;
- }
- 
- int check_compaction(unsigned long mem_free, unsigned int hugepage_size)
- {
--	int fd;
-+	int fd, ret = -1;
- 	int compaction_index = 0;
- 	char initial_nr_hugepages[10] = {0};
- 	char nr_hugepages[10] = {0};
-@@ -93,12 +94,14 @@ int check_compaction(unsigned long mem_free, unsigned int hugepage_size)
- 
- 	fd = open("/proc/sys/vm/nr_hugepages", O_RDWR | O_NONBLOCK);
- 	if (fd < 0) {
--		perror("Failed to open /proc/sys/vm/nr_hugepages");
-+		ksft_test_result_fail("Failed to open /proc/sys/vm/nr_hugepages: %s\n",
-+				      strerror(errno));
- 		return -1;
- 	}
- 
- 	if (read(fd, initial_nr_hugepages, sizeof(initial_nr_hugepages)) <= 0) {
--		perror("Failed to read from /proc/sys/vm/nr_hugepages");
-+		ksft_test_result_fail("Failed to read from /proc/sys/vm/nr_hugepages: %s\n",
-+				      strerror(errno));
- 		goto close_fd;
- 	}
- 
-@@ -106,7 +109,8 @@ int check_compaction(unsigned long mem_free, unsigned int hugepage_size)
- 
- 	/* Start with the initial condition of 0 huge pages*/
- 	if (write(fd, "0", sizeof(char)) != sizeof(char)) {
--		perror("Failed to write 0 to /proc/sys/vm/nr_hugepages\n");
-+		ksft_test_result_fail("Failed to write 0 to /proc/sys/vm/nr_hugepages: %s\n",
-+				      strerror(errno));
- 		goto close_fd;
- 	}
- 
-@@ -115,14 +119,16 @@ int check_compaction(unsigned long mem_free, unsigned int hugepage_size)
- 	/* Request a large number of huge pages. The Kernel will allocate
- 	   as much as it can */
- 	if (write(fd, "100000", (6*sizeof(char))) != (6*sizeof(char))) {
--		perror("Failed to write 100000 to /proc/sys/vm/nr_hugepages\n");
-+		ksft_test_result_fail("Failed to write 100000 to /proc/sys/vm/nr_hugepages: %s\n",
-+				      strerror(errno));
- 		goto close_fd;
- 	}
- 
- 	lseek(fd, 0, SEEK_SET);
- 
- 	if (read(fd, nr_hugepages, sizeof(nr_hugepages)) <= 0) {
--		perror("Failed to re-read from /proc/sys/vm/nr_hugepages\n");
-+		ksft_test_result_fail("Failed to re-read from /proc/sys/vm/nr_hugepages: %s\n",
-+				      strerror(errno));
- 		goto close_fd;
- 	}
- 
-@@ -130,67 +136,58 @@ int check_compaction(unsigned long mem_free, unsigned int hugepage_size)
- 	   huge pages */
- 	compaction_index = mem_free/(atoi(nr_hugepages) * hugepage_size);
- 
--	if (compaction_index > 3) {
--		printf("No of huge pages allocated = %d\n",
--		       (atoi(nr_hugepages)));
--		fprintf(stderr, "ERROR: Less that 1/%d of memory is available\n"
--			"as huge pages\n", compaction_index);
--		goto close_fd;
--	}
+ 	/* All functions share the same vendor ID with function 0 */
+ 	if (fn == 0) {
+-		u32 vid_regs = (hdr->vendorid & GENMASK(15, 0)) |
+-			       (hdr->subsys_vendor_id & GENMASK(31, 16)) << 16;
 -
--	printf("No of huge pages allocated = %d\n",
--	       (atoi(nr_hugepages)));
--
- 	lseek(fd, 0, SEEK_SET);
- 
- 	if (write(fd, initial_nr_hugepages, strlen(initial_nr_hugepages))
- 	    != strlen(initial_nr_hugepages)) {
--		perror("Failed to write value to /proc/sys/vm/nr_hugepages\n");
-+		ksft_test_result_fail("Failed to write value to /proc/sys/vm/nr_hugepages: %s\n",
-+				      strerror(errno));
- 		goto close_fd;
+-		rockchip_pcie_write(rockchip, vid_regs,
++		rockchip_pcie_write(rockchip,
++				    hdr->vendorid | hdr->subsys_vendor_id << 16,
+ 				    PCIE_CORE_CONFIG_VENDOR);
  	}
  
--	close(fd);
--	return 0;
-+	if (compaction_index > 3) {
-+		ksft_print_msg("ERROR: Less that 1/%d of memory is available\n"
-+			       "as huge pages\n", compaction_index);
-+		ksft_test_result_fail("No of huge pages allocated = %d\n", (atoi(nr_hugepages)));
-+		goto close_fd;
-+	}
-+
-+	ksft_test_result_pass("Memory compaction succeeded. No of huge pages allocated = %d\n",
-+			      (atoi(nr_hugepages)));
-+	ret = 0;
- 
-  close_fd:
- 	close(fd);
--	printf("Not OK. Compaction test failed.");
--	return -1;
-+	return ret;
- }
- 
- 
- int main(int argc, char **argv)
- {
- 	struct rlimit lim;
--	struct map_list *list, *entry;
-+	struct map_list *list = NULL, *entry;
- 	size_t page_size, i;
- 	void *map = NULL;
- 	unsigned long mem_free = 0;
- 	unsigned long hugepage_size = 0;
- 	unsigned long mem_fragmentable = 0;
- 
--	if (prereq() != 0) {
--		printf("Either the sysctl compact_unevictable_allowed is not\n"
--		       "set to 1 or couldn't read the proc file.\n"
--		       "Skipping the test\n");
--		return KSFT_SKIP;
--	}
-+	ksft_print_header();
-+
-+	if (prereq() != 0)
-+		return ksft_exit_pass();
-+
-+	ksft_set_plan(1);
- 
- 	lim.rlim_cur = RLIM_INFINITY;
- 	lim.rlim_max = RLIM_INFINITY;
--	if (setrlimit(RLIMIT_MEMLOCK, &lim)) {
--		perror("Failed to set rlimit:\n");
--		return -1;
--	}
-+	if (setrlimit(RLIMIT_MEMLOCK, &lim))
-+		ksft_exit_fail_msg("Failed to set rlimit: %s\n", strerror(errno));
- 
- 	page_size = getpagesize();
- 
--	list = NULL;
--
--	if (read_memory_info(&mem_free, &hugepage_size) != 0) {
--		printf("ERROR: Cannot read meminfo\n");
--		return -1;
--	}
-+	if (read_memory_info(&mem_free, &hugepage_size) != 0)
-+		ksft_exit_fail_msg("Failed to get meminfo\n");
- 
- 	mem_fragmentable = mem_free * 0.8 / 1024;
- 
-@@ -226,7 +223,7 @@ int main(int argc, char **argv)
- 	}
- 
- 	if (check_compaction(mem_free, hugepage_size) == 0)
--		return 0;
-+		return ksft_exit_pass();
- 
--	return -1;
-+	return ksft_exit_fail();
- }
--- 
-2.43.0
-
 
 
