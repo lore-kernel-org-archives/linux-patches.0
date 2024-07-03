@@ -1,115 +1,109 @@
-Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F011862A8
-	for <patches@lists.linux.dev>; Wed,  3 Jul 2024 18:59:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60C018A95E
+	for <patches@lists.linux.dev>; Wed,  3 Jul 2024 19:04:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720033164; cv=none; b=V5rNRxjNkNQjTax6K33kRz5klYi21VE68ULBe+v2tgYGwcolDM/CCpRCR/BLUz97PuD/4M3u+3/5/TqypJNtI3/hxm/f4fjdZss14PfGnRydvTu+7n2e+MpZ7z0SxtGBJPVYA18ixHO1ctVMamAHK1n5VkzyIwfaxXL1AvSWC1w=
+	t=1720033487; cv=none; b=YayYk3FIOcZaaA3xWQGWA3hC2DgAY0fpXdRIlQotoz9VTPged2+YKQVu+qfZQAGA08KVgmEI2w/uudVGvGcHlSO/02j/1I2/AIDI9ppmz+CzM6qlFDm0NIB5LvfhEov9mMzHX9XKG9oW/jIWam2h38LV5EibWTStXYiWs6k/SIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720033164; c=relaxed/simple;
-	bh=G37uwdK2DFoSoYhvUmZ+2s694kX02sXqTLYlQrlQwfA=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=MBo7GCXoMctZAdbZCwDYkPnT0QecwJPAKu/om7T4ROQKeSFxaLPK2FnFhCTwyy+YJftRy3w0xNPKiPYCKNxrglUN+HOr96WF4y2U1/u4Mnth/PD3wPJHESPwwwMY7GG72culoa8mOw/Sj7UKzgzpzd+Hk/aIN62cP2PI+0RW8eA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=z4d5odtW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GHU5L3cj; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
+	s=arc-20240116; t=1720033487; c=relaxed/simple;
+	bh=Oc81FuqP3fYxQZO2NIeym9OJaFkN9S77RiMCzQDI9Yw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YfgN52x7WpD7fTmYA+aQtHQAdNMmoz3Ywl5WuoI5ViIcw00BmvOAmrvSpVR9VpSdXFT0JCvr7w6qKfBWSpvnhz6NA41dpIw7PCVO5pHBbBmD40rLRlljwYOsTahWWqzdOc2hCpMdNsQX6OOUprCern/iEClYguD+hhTSi4SclYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b=jkxC1dbc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="z4d5odtW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GHU5L3cj"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 590131140247;
-	Wed,  3 Jul 2024 14:59:21 -0400 (EDT)
-Received: from imap51 ([10.202.2.101])
-  by compute5.internal (MEProxy); Wed, 03 Jul 2024 14:59:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1720033161; x=1720119561; bh=TQ0KUlf6qH
-	/cHbOx2W4Z3Oy9UTzvWKmD0KHkZgA7+f0=; b=z4d5odtWssXeBgGWZN+sLFhwpb
-	E+EhBg2IOEoqaARs92cH7Ai7cq/bOSLY9fthAbI0l/FD0Av+nO5+R6mvG5toNaB3
-	Ql0vbMO47hlQbT7HXLibXv3RpNKGxd0wq4O3Da/VEeFP1pyue+YNkKYDQz3AKm9r
-	C/XdsBOmsDdKptc1mSa9szx1NQx3ouKbsxkFepy4DMvaYhEpUlin9HTZ66TA4BWW
-	HgeK8pasIREtapsxNutArL0LllODV1aJb+mifFXFKvmPo9kM0Yu/sb52H3I5CTHw
-	1cbfxrQCzsrZcHZcedaV//qQnlVgGZisUxeIF1O0UQF8M+iQepAq05q12heQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1720033161; x=1720119561; bh=TQ0KUlf6qH/cHbOx2W4Z3Oy9UTzv
-	WKmD0KHkZgA7+f0=; b=GHU5L3cj2jJCZEejB9nT4VPCtgPC0Kof0reOSa30Ad1b
-	u4HP2hLLlbSHgIrM58VnKaIUvvX2JAF2pV6YZPf306uTWA1M74BsQvM143vLDwrD
-	43RYv5KSLVw4n5VFBzt3kpwQUc1UWfa6MrYXw8cY5mz9nnZqsEIoVBus4n9IWKwD
-	ydk/3LWOELhpMyrwsgb/hz+oSU6I3eJsn2JYx41SQUQrCMzFq/mfPiVaSlt62dA2
-	oX78I1IdF3T33IS+tzqzOrPEe5O9wfsc15LVMxO6tnvx3T9YgQOYg/B2LgEcCEYx
-	Dckuqy+2Ipe3RgdAmq5CaVH98/XfblfRmbipfVGE4w==
-X-ME-Sender: <xms:iJ-FZowAfMPy9TIO7P_zluHpYdtq7zKVsrje3F4NBgKfdiD-W6dLtw>
-    <xme:iJ-FZsQfUNWCnOjITYAFVd-0A2_rw1oyXRPxotQdBDuuazsbGjhGrpA2W8G-JaSka
-    oe00tyY2fAFAKXih4o>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudejgddufeduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehr
-    nhguuceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrth
-    htvghrnhepffehueegteeihfegtefhjefgtdeugfegjeelheejueethfefgeeghfektdek
-    teffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprg
-    hrnhgusegrrhhnuggsrdguvg
-X-ME-Proxy: <xmx:iJ-FZqX2twdHU14dUK5UK4qEfJpjgDMFgjdayEeiwUYl-Y7sTAMyKQ>
-    <xmx:iJ-FZmiu60tHcY0vm7iamrYkGM2AF0h3ooyvdfW1TCZSpRQcKhkYIw>
-    <xmx:iJ-FZqB2LkZdlMPI5COvr7mTSE1bC1qbwHoi7nnYPib9rWFE8a-Glg>
-    <xmx:iJ-FZnLewjzT5EhexMd9Ai4d2ZQT-4EgznJGW3HLEYOHXbMwm4odwA>
-    <xmx:iZ-FZkw96U4IIww9z2LsPSWKYrlsgw8sp4JUZoO_wS0ZGsE5BkkFp0mm>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id C38FBB6008F; Wed,  3 Jul 2024 14:59:20 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-566-g3812ddbbc-fm-20240627.001-g3812ddbb
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="jkxC1dbc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E87DC4AF0A
+	for <patches@lists.linux.dev>; Wed,  3 Jul 2024 19:04:47 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="jkxC1dbc"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1720033483;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Oc81FuqP3fYxQZO2NIeym9OJaFkN9S77RiMCzQDI9Yw=;
+	b=jkxC1dbceZx7Be7QJL7a7Ic39wHGYwkBltLiS8mY+H1iZtPBT9TDTthP2QeMMSw9n3UhZu
+	ayr2cBoMf01X1+Uudntkvb8Bup8CzkZYMoIzQHr1tw3p2t5H7pSU3x8O9e5e+2pdsfOywC
+	GRP6njc2YYiqHQ8+J+a6V9ddjs5ivcY=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 75b656e8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <patches@lists.linux.dev>;
+	Wed, 3 Jul 2024 19:04:43 +0000 (UTC)
+Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-5c46c8b0defso999752eaf.1
+        for <patches@lists.linux.dev>; Wed, 03 Jul 2024 12:04:42 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCVilkxkF7DxcQiRlc+5MjiOndOyjTed8arUKKP2fbSI24dhivOfTUsbWDn2Ow7/G6NxtgH/sUip+hHWWgZ/aVUtRQcybJ5igQ==
+X-Gm-Message-State: AOJu0YymD83nX2XOY4ftHOjNd7yNse5kSnS1jLPUFaHEMfewchZaK0B4
+	sYdoNjfackkT/n0zCIju+GNIaQIbMFUg0qBLuUllCjRNqLb4nCG0QgEbrJ+R18KRJfzrrEh7LcH
+	AhONSkEnsN59qGNz4N445cpYYj1I=
+X-Google-Smtp-Source: AGHT+IF/1JsRrNHrx673Yy+3KzYSc//OID5zS/adculNKhtga+UJFUlkNMK+w1t4qZ56KmzV+zu/1jP+s2nmIVvVD0s=
+X-Received: by 2002:a05:6870:6590:b0:25e:1976:37c0 with SMTP id
+ 586e51a60fabf-25e19763d7fmr1558743fac.6.1720033481764; Wed, 03 Jul 2024
+ 12:04:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-Id: <fa6eb1f8-b681-4c3f-bf5f-4ca19da78b17@app.fastmail.com>
-In-Reply-To: <20240703183115.1075219-4-Jason@zx2c4.com>
-References: <20240703183115.1075219-1-Jason@zx2c4.com>
- <20240703183115.1075219-4-Jason@zx2c4.com>
-Date: Wed, 03 Jul 2024 20:58:59 +0200
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Jason A . Donenfeld" <Jason@zx2c4.com>, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, "Thomas Gleixner" <tglx@linutronix.de>
-Cc: linux-crypto@vger.kernel.org, linux-api@vger.kernel.org, x86@kernel.org,
- "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
- "Adhemerval Zanella Netto" <adhemerval.zanella@linaro.org>,
- "Carlos O'Donell" <carlos@redhat.com>, "Florian Weimer" <fweimer@redhat.com>,
- "Jann Horn" <jannh@google.com>, "Christian Brauner" <brauner@kernel.org>,
- "David Hildenbrand" <dhildenb@redhat.com>,
- "Geert Uytterhoeven" <geert@linux-m68k.org>,
- =?UTF-8?Q?Christian_G=C3=B6ttsche?= <cgzones@googlemail.com>,
- "Jiri Olsa" <jolsa@kernel.org>
+References: <20240703183115.1075219-1-Jason@zx2c4.com> <20240703183115.1075219-4-Jason@zx2c4.com>
+ <fa6eb1f8-b681-4c3f-bf5f-4ca19da78b17@app.fastmail.com>
+In-Reply-To: <fa6eb1f8-b681-4c3f-bf5f-4ca19da78b17@app.fastmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 3 Jul 2024 21:04:30 +0200
+X-Gmail-Original-Message-ID: <CAHmME9ouVcCt6C6XdvvKACbCBLV1DaAuv_NP8=fXFN1UMeUu_Q@mail.gmail.com>
+Message-ID: <CAHmME9ouVcCt6C6XdvvKACbCBLV1DaAuv_NP8=fXFN1UMeUu_Q@mail.gmail.com>
 Subject: Re: [PATCH v20 3/5] arch: allocate vgetrandom_alloc() syscall number
-Content-Type: text/plain
+To: Arnd Bergmann <arnd@arndb.de>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Thomas Gleixner <tglx@linutronix.de>, linux-crypto@vger.kernel.org, 
+	linux-api@vger.kernel.org, x86@kernel.org, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>, "Carlos O'Donell" <carlos@redhat.com>, 
+	Florian Weimer <fweimer@redhat.com>, Jann Horn <jannh@google.com>, 
+	Christian Brauner <brauner@kernel.org>, David Hildenbrand <dhildenb@redhat.com>, 
+	Geert Uytterhoeven <geert@linux-m68k.org>, =?UTF-8?Q?Christian_G=C3=B6ttsche?= <cgzones@googlemail.com>, 
+	Jiri Olsa <jolsa@kernel.org>, Stephen Rothwell <sfr@canb.auug.org.au>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jul 3, 2024, at 20:31, Jason A. Donenfeld wrote:
-> Add vgetrandom_alloc() as syscall 463 (or 573 on alpha) by adding it to
-> all of the various syscall.tbl and unistd.h files.
+Hi Arnd,
+
+On Wed, Jul 3, 2024 at 8:59=E2=80=AFPM Arnd Bergmann <arnd@arndb.de> wrote:
 >
-> Acked-by: Geert Uytterhoeven <geert@linux-m68k.org>
-> Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+> On Wed, Jul 3, 2024, at 20:31, Jason A. Donenfeld wrote:
+> > Add vgetrandom_alloc() as syscall 463 (or 573 on alpha) by adding it to
+> > all of the various syscall.tbl and unistd.h files.
+> >
+> > Acked-by: Geert Uytterhoeven <geert@linux-m68k.org>
+> > Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+>
+> I checked that the system calls are all hooked up correctly
+> across all architectures:
+>
+> Acked-by: Arnd Bergmann <arnd@arndb.de>
 
-I checked that the system calls are all hooked up correctly
-across all architectures:
+Thanks.
 
-Acked-by: Arnd Bergmann <arnd@arndb.de>
+> Unfortunately we now have three syscalls scheduled for
+> the number 463, the other ones being uretprobe (only
+> for arc, arm64, csky, hexagon, loongarch, nios2, openrisc,
+> riscv and x86 for some reason) and setxattrat (on
+> all architectures).
+>
+> It would be nice if you could all coordinate on this to
+> pick unique numbers.
 
-Unfortunately we now have three syscalls scheduled for
-the number 463, the other ones being uretprobe (only
-for arc, arm64, csky, hexagon, loongarch, nios2, openrisc,
-riscv and x86 for some reason) and setxattrat (on
-all architectures).
+Stephen and I were just talking about this when looking at the linux-next m=
+erge.
 
-It would be nice if you could all coordinate on this to
-pick unique numbers.
+Dibs on 463! Just kidding.
 
-       Arnd
+There's going to be merge conflicts anyway, due to the __NR_syscalls
+counter changing. So I figured this is something Linus typically just
+handles based on what order he merges things in. But I actually don't
+know. What's the best way to handle this?
+
+Jason
