@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9814817DA30;
-	Wed,  3 Jul 2024 11:28:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7787CF1F;
+	Wed,  3 Jul 2024 11:28:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006130; cv=none; b=vAwpB0V51aeQ2j++3mmIaRtLjl4sUm0+PqeAueb4auYtAi1OvN4CgKlbjhEXAD2ygAi4ZBNFpwzOugdIcPQstDAR8axguVXV9T+vOQF0J5kW9a28kjKwIP14RvRJ/DK/oU0uHI5gJIF9CbBHZgijukLN3roytapjPe9FiGMoH6c=
+	t=1720006133; cv=none; b=coxN69XWyHdHLPNuAUAx1wVukwB3/azs9ZH2dbDPHPHjJwDgl02DBT4kBT2kimMH+R/jzLcvqUYbqp1Ork/lYAr8KO8l7jCZiyWrtFy94d92CKJNfxhrhZpWlkQmu7DM4V5bwzXKIQqRZicunT5Z48LUU3JdS2d4ZGX35ZNWdZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006130; c=relaxed/simple;
-	bh=ABWaIo7/8QfZixdcuWA68C6KYhnLx7cl716w2+RRGss=;
+	s=arc-20240116; t=1720006133; c=relaxed/simple;
+	bh=fneTiy3wM0FQImOM9Co4XKb2Jt1nSPJVEapV41B3UpE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tYJu+TaNiDSB9rdMb5gektICuW+BLo8PfK4ty7q7OZ49rEH6fPdkEqYEhAUDyWZttT7j30zUQ6X5o58TO/6N9aMlOnnNlie6dbyKig2jHMws1qBj5L/ty5RpY7mStKszuvHdNAy/8B9tAHN8U9Lew4xBzPZeS90+ImVcmArTakc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1PDVMbQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FU8Bjjb13gTeJnlil52HMYlTjOIeh3tbBGR4AogYr2EkVWLsp8tcUwwwB2IDCJsShvpSt9rxK6BmosZ6lVkfXnGgtinsK6H1FCUvIdqaVR4IHao+48QUief93CgUIYoXudpgTcNjk8mBHJUyrwnphcfa1yupzif8W3JUho/FSyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IvAQdmoM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1PDVMbQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2128CC2BD10;
-	Wed,  3 Jul 2024 11:28:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IvAQdmoM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B944C32781;
+	Wed,  3 Jul 2024 11:28:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006130;
-	bh=ABWaIo7/8QfZixdcuWA68C6KYhnLx7cl716w2+RRGss=;
+	s=korg; t=1720006133;
+	bh=fneTiy3wM0FQImOM9Co4XKb2Jt1nSPJVEapV41B3UpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z1PDVMbQnY1Az2fyFu83yolpm1CDvOuNyHhF/oPvwhX1u8O9/+l4gCHZ8SHAnpVMp
-	 ozR+mPykKjfBVzbHN+Yb0IZD+CfVse+wanprHd3VNYqxaDBv3HiF+CKHJ8gtvsnnRC
-	 SzyUeBycJDrRtF6jh2/oZUHi0K0J7VhGJO4HqwRI=
+	b=IvAQdmoMWhbDh23IvXtEsXhGoeP+wWs5l3uuefo0cS5FUG79fy01tb8D6+H1UXWrj
+	 5DFf/DfWD1eM6GUsDuX1E75BLrNqS6iUKTRu3XXsZQYMRNP7U2m8GdVeGmvgeGinzo
+	 Veq9OoBuKUgAjMFVrc2tOA7/UR9EXNdTrxUtYveE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 309/356] i2c: testunit: discard write requests while old command is running
-Date: Wed,  3 Jul 2024 12:40:45 +0200
-Message-ID: <20240703102924.804169518@linuxfoundation.org>
+	Fernando Yang <hagisf@usp.br>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.15 310/356] iio: adc: ad7266: Fix variable checking bug
+Date: Wed,  3 Jul 2024 12:40:46 +0200
+Message-ID: <20240703102924.840903254@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,38 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Fernando Yang <hagisf@usp.br>
 
-[ Upstream commit c116deafd1a5cc1e9739099eb32114e90623209c ]
+commit a2b86132955268b2a1703082fbc2d4832fc001b8 upstream.
 
-When clearing registers on new write requests was added, the protection
-for currently running commands was missed leading to concurrent access
-to the testunit registers. Check the flag beforehand.
+The ret variable was not checked after iio_device_release_direct_mode(),
+which could possibly cause errors
 
-Fixes: b39ab96aa894 ("i2c: testunit: add support for block process calls")
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c70df20e3159 ("iio: adc: ad7266: claim direct mode during sensor read")
+Signed-off-by: Fernando Yang <hagisf@usp.br>
+Link: https://lore.kernel.org/r/20240603180757.8560-1-hagisf@usp.br
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-slave-testunit.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/iio/adc/ad7266.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/i2c/i2c-slave-testunit.c b/drivers/i2c/i2c-slave-testunit.c
-index 1beae30c418b8..cd0d87b089fec 100644
---- a/drivers/i2c/i2c-slave-testunit.c
-+++ b/drivers/i2c/i2c-slave-testunit.c
-@@ -121,6 +121,9 @@ static int i2c_slave_testunit_slave_cb(struct i2c_client *client,
- 		break;
+--- a/drivers/iio/adc/ad7266.c
++++ b/drivers/iio/adc/ad7266.c
+@@ -157,6 +157,8 @@ static int ad7266_read_raw(struct iio_de
+ 		ret = ad7266_read_single(st, val, chan->address);
+ 		iio_device_release_direct_mode(indio_dev);
  
- 	case I2C_SLAVE_WRITE_REQUESTED:
-+		if (test_bit(TU_FLAG_IN_PROCESS, &tu->flags))
-+			return -EBUSY;
-+
- 		memset(tu->regs, 0, TU_NUM_REGS);
- 		tu->reg_idx = 0;
- 		break;
--- 
-2.43.0
-
++		if (ret < 0)
++			return ret;
+ 		*val = (*val >> 2) & 0xfff;
+ 		if (chan->scan_type.sign == 's')
+ 			*val = sign_extend32(*val, 11);
 
 
