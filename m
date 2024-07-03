@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1AF142903;
-	Wed,  3 Jul 2024 11:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A99142903;
+	Wed,  3 Jul 2024 11:03:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004608; cv=none; b=kbRzqTSsyq+0WKpRc9dZXWAfDPLVU1xqPeIjBuZGNtBKRmW/NxGHrNhDaa3yW/0MHRAfExmWk4xCxdiHjWgP2SXwYtJAPNoiqlX0hmVTchLG3RHyDImNDjQ+iAtYOI7fFn+QzpQaBqjCp/CQXcfXiJ+qdUrmQkE5thkmKuOjL9w=
+	t=1720004611; cv=none; b=JmGbJSMp7dGFlppJyeL5dBIDucI9vUjISy63iQJZad1DESZeqhWmJAoUHTaU+ttLmvo8qNB9evYhz5mW9oiWahkVrahCS8Y1uc9REKKx5PssueOARO15yttFWkMmAHI3ErtWEkT7dl4SiM4fyzgrSlQzZxR+78JLQ3S+4HyuOzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004608; c=relaxed/simple;
-	bh=WxPTdxX3Vnoc6Omhyru6eQQ/50V1p6S88FDaHUac9/I=;
+	s=arc-20240116; t=1720004611; c=relaxed/simple;
+	bh=RuFXLrVrEpPVlbsY3OT41kbVA1W1A+VtI4eAZA8Oi8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ckEggiHTQrw3QvIwuPJtl848w69VQdOcE2Uwau7iqcyp0Oej2sBeUkEqidcb/SzpQ4g48r6EzQXBpPboKDioJeVZzja4dn65nMgIwjmuQzorP1ARIBMfXHinxrujttGfZRQ34qcDYIUyORpT8TC7U4XMZKw6rsiGlU2n4sTVi6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lxroMoME; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hjix8yD6dpTYNdpDLAx3xDWysZrNbP29WZAvU3mYDVT/zCl1EUiWeSbQoA51PKJbYY5dVl53qSsUdvDj4YwugPlRMpoBXph6s/1khhRqrwESBqC9H7+hjjfzAgfy9HZzmC7iKsJzOdUXzWBjgc7y1SAnacpj69x7RMU/rjD6Z5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ygCqMOwU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lxroMoME"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36B3C2BD10;
-	Wed,  3 Jul 2024 11:03:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ygCqMOwU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA6FCC2BD10;
+	Wed,  3 Jul 2024 11:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004608;
-	bh=WxPTdxX3Vnoc6Omhyru6eQQ/50V1p6S88FDaHUac9/I=;
+	s=korg; t=1720004611;
+	bh=RuFXLrVrEpPVlbsY3OT41kbVA1W1A+VtI4eAZA8Oi8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lxroMoMEar+S0ztI9kPdGr+HOIYsQrgbaUgsPUV2R7fIJYomxIT7FvZAgOu8SW367
-	 sESHOhfE0lWt8RMPL1YNPv+WwYpSb+IkiFV8aKuL1iOpzkqfFznvkoZQv8fpQ5RGrE
-	 /95b22lOOvuwzANOklgukq0KGp9hU+YvLYa1Mifg=
+	b=ygCqMOwUD3N0zspdtdJy/frGYm0CXR3GQMfiJtJFh84a8hmVZ1o/mvyMvdqPfcTt0
+	 m1RDDI34NBUsyk6R7f+1z5Fx2N2J84EevcUPloAgtI35hG4Txj0Co2lix4U5+cGe+q
+	 v8g7kVsmc7Uch6p3eB7Ts7t9GB+2qqSW42kD6NbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Beleswar Padhi <b-padhi@ti.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: [PATCH 5.10 099/290] remoteproc: k3-r5: Jump to error handling labels in start/stop errors
-Date: Wed,  3 Jul 2024 12:38:00 +0200
-Message-ID: <20240703102907.933084498@linuxfoundation.org>
+	Sicong Huang <congei42@163.com>,
+	Ronnie Sahlberg <rsahlberg@ciq.com>
+Subject: [PATCH 5.10 100/290] greybus: Fix use-after-free bug in gb_interface_release due to race condition.
+Date: Wed,  3 Jul 2024 12:38:01 +0200
+Message-ID: <20240703102907.970611930@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -50,47 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Beleswar Padhi <b-padhi@ti.com>
+From: Sicong Huang <congei42@163.com>
 
-commit 1dc7242f6ee0c99852cb90676d7fe201cf5de422 upstream.
+commit 5c9c5d7f26acc2c669c1dcf57d1bb43ee99220ce upstream.
 
-In case of errors during core start operation from sysfs, the driver
-directly returns with the -EPERM error code. Fix this to ensure that
-mailbox channels are freed on error before returning by jumping to the
-'put_mbox' error handling label. Similarly, jump to the 'out' error
-handling label to return with required -EPERM error code during the
-core stop operation from sysfs.
+In gb_interface_create, &intf->mode_switch_completion is bound with
+gb_interface_mode_switch_work. Then it will be started by
+gb_interface_request_mode_switch. Here is the relevant code.
+if (!queue_work(system_long_wq, &intf->mode_switch_work)) {
+	...
+}
 
-Fixes: 3c8a9066d584 ("remoteproc: k3-r5: Do not allow core1 to power up before core0 via sysfs")
-Signed-off-by: Beleswar Padhi <b-padhi@ti.com>
-Link: https://lore.kernel.org/r/20240506141849.1735679-1-b-padhi@ti.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+If we call gb_interface_release to make cleanup, there may be an
+unfinished work. This function will call kfree to free the object
+"intf". However, if gb_interface_mode_switch_work is scheduled to
+run after kfree, it may cause use-after-free error as
+gb_interface_mode_switch_work will use the object "intf".
+The possible execution flow that may lead to the issue is as follows:
+
+CPU0                            CPU1
+
+                            |   gb_interface_create
+                            |   gb_interface_request_mode_switch
+gb_interface_release        |
+kfree(intf) (free)          |
+                            |   gb_interface_mode_switch_work
+                            |   mutex_lock(&intf->mutex) (use)
+
+Fix it by canceling the work before kfree.
+
+Signed-off-by: Sicong Huang <congei42@163.com>
+Link: https://lore.kernel.org/r/20240416080313.92306-1-congei42@163.com
+Cc: Ronnie Sahlberg <rsahlberg@ciq.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/remoteproc/ti_k3_r5_remoteproc.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/greybus/interface.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/remoteproc/ti_k3_r5_remoteproc.c
-+++ b/drivers/remoteproc/ti_k3_r5_remoteproc.c
-@@ -484,7 +484,8 @@ static int k3_r5_rproc_start(struct rpro
- 		if (core != core0 && core0->rproc->state == RPROC_OFFLINE) {
- 			dev_err(dev, "%s: can not start core 1 before core 0\n",
- 				__func__);
--			return -EPERM;
-+			ret = -EPERM;
-+			goto put_mbox;
- 		}
+--- a/drivers/greybus/interface.c
++++ b/drivers/greybus/interface.c
+@@ -694,6 +694,7 @@ static void gb_interface_release(struct
  
- 		ret = k3_r5_core_run(core);
-@@ -547,7 +548,8 @@ static int k3_r5_rproc_stop(struct rproc
- 		if (core != core1 && core1->rproc->state != RPROC_OFFLINE) {
- 			dev_err(dev, "%s: can not stop core 0 before core 1\n",
- 				__func__);
--			return -EPERM;
-+			ret = -EPERM;
-+			goto out;
- 		}
+ 	trace_gb_interface_release(intf);
  
- 		ret = k3_r5_core_halt(core);
++	cancel_work_sync(&intf->mode_switch_work);
+ 	kfree(intf);
+ }
+ 
 
 
