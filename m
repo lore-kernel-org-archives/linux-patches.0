@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9758F17332B;
-	Wed,  3 Jul 2024 10:53:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E7817332B;
+	Wed,  3 Jul 2024 10:53:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003987; cv=none; b=i0IzcC69FuR7pYBKb3ejcApC8cKWzUnnMFtpMuR4OQv2EMBpYixoiZm4ecctgh3+x3xF+JIoG6d2FwLsV4bfj1YM4MMUpxs6tEkyqGeOmmLvUovWJfNwyMvAQjs+OktPgdxVkSp1hVVkR2dXx6+F7JX66tE2g6HouvxH5YW7ZwE=
+	t=1720003991; cv=none; b=dXTwULvVX/GYxpmPs3e4zexdKAolHCv4IbkHc1R9xvN4tQN1qv3f930X8FISH40cHv6FoFQF+K+jBF6XlbWqZINdo3fuNfhZNHMwqUfeUhMoeQrjc8DcFg8nuzeXK3I+8bqECtbr8syXnPuJz5EYp3+sPqhbUjRdZn+cRr/qRSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003987; c=relaxed/simple;
-	bh=oLUA3HFChwyZeEnrXFe/6zE+OCuTQwOuOaODR1ycWIg=;
+	s=arc-20240116; t=1720003991; c=relaxed/simple;
+	bh=/ARhvZ7YoMFFcQS31ymhyloRBV8inH/G5sLoknghRjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OCQTvEHG+nZekogxVjloJYmW+uzX7rKMRw9WbR2K/1Je9zAVUFhgUUDPUY0E3z2B6mT3Y/MG3NH8E2HlfjN+UChfYQuX3aAplyG2njOevtF+S2ZgTNMW3vcie/+IbMHnEgasHdN/2s4hG2hOjOt6lbFHz0Nec5XcIlz1+xR+1vw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jpc1M73/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W4yIORZCBcddy4AoyldrVFGp+J7s+UNInvncPinb9Z9H/n7DUShbu4rHDFOwh3lRnNTw+3kV21dZumHWS5KOf7Bw1frYZYNtNzxKTpVa33oIIH4qeJ0Q6ro1EUOLbdyWMq0u4DSFv8g2LQahfr9um+nkCTMtRipiyJXQHO3lBPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LSlEnJoy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jpc1M73/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18131C2BD10;
-	Wed,  3 Jul 2024 10:53:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LSlEnJoy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EFE4C2BD10;
+	Wed,  3 Jul 2024 10:53:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003987;
-	bh=oLUA3HFChwyZeEnrXFe/6zE+OCuTQwOuOaODR1ycWIg=;
+	s=korg; t=1720003990;
+	bh=/ARhvZ7YoMFFcQS31ymhyloRBV8inH/G5sLoknghRjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jpc1M73/Ykjc87CIwkmgDIS5bgZabFsbPbFiJkNZ5zbOr5XQTxUpaCfPSfBCc49r5
-	 kco/sYsUmT91Ub0YvOQVzpi0PNtt6oUoS+VPy0dqLpb/7hcOP7zzze59Pj6yEihogA
-	 d2cpkMBEjKPtAMCpZVipZuKU3UMzy4uiTWoYZWvs=
+	b=LSlEnJoyFJniswzSeCCMrFypken/rMDS7wdm69zLYQmKfjk3ssOQqtQAN07yac9nb
+	 kv0m8IOmUODKmxWs6UbPNaGWHzBmOnS7a4u3Cof9vFq/UrMYIVUA9cKS14bPpK5hgU
+	 Nk8pwX2bLOIUx5530s+SvmtdRoJcQqbkBeZ0DDrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.4 085/189] netfilter: nftables: exthdr: fix 4-byte stack OOB write
-Date: Wed,  3 Jul 2024 12:39:06 +0200
-Message-ID: <20240703102844.709345926@linuxfoundation.org>
+	Sicong Huang <congei42@163.com>,
+	Ronnie Sahlberg <rsahlberg@ciq.com>
+Subject: [PATCH 5.4 086/189] greybus: Fix use-after-free bug in gb_interface_release due to race condition.
+Date: Wed,  3 Jul 2024 12:39:07 +0200
+Message-ID: <20240703102844.746674521@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -50,80 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Sicong Huang <congei42@163.com>
 
-commit fd94d9dadee58e09b49075240fe83423eb1dcd36 upstream.
+commit 5c9c5d7f26acc2c669c1dcf57d1bb43ee99220ce upstream.
 
-If priv->len is a multiple of 4, then dst[len / 4] can write past
-the destination array which leads to stack corruption.
+In gb_interface_create, &intf->mode_switch_completion is bound with
+gb_interface_mode_switch_work. Then it will be started by
+gb_interface_request_mode_switch. Here is the relevant code.
+if (!queue_work(system_long_wq, &intf->mode_switch_work)) {
+	...
+}
 
-This construct is necessary to clean the remainder of the register
-in case ->len is NOT a multiple of the register size, so make it
-conditional just like nft_payload.c does.
+If we call gb_interface_release to make cleanup, there may be an
+unfinished work. This function will call kfree to free the object
+"intf". However, if gb_interface_mode_switch_work is scheduled to
+run after kfree, it may cause use-after-free error as
+gb_interface_mode_switch_work will use the object "intf".
+The possible execution flow that may lead to the issue is as follows:
 
-The bug was added in 4.1 cycle and then copied/inherited when
-tcp/sctp and ip option support was added.
+CPU0                            CPU1
 
-Bug reported by Zero Day Initiative project (ZDI-CAN-21950,
-ZDI-CAN-21951, ZDI-CAN-21961).
+                            |   gb_interface_create
+                            |   gb_interface_request_mode_switch
+gb_interface_release        |
+kfree(intf) (free)          |
+                            |   gb_interface_mode_switch_work
+                            |   mutex_lock(&intf->mutex) (use)
 
-Fixes: 49499c3e6e18 ("netfilter: nf_tables: switch registers to 32 bit addressing")
-Fixes: 935b7f643018 ("netfilter: nft_exthdr: add TCP option matching")
-Fixes: 133dc203d77d ("netfilter: nft_exthdr: Support SCTP chunks")
-Fixes: dbb5281a1f84 ("netfilter: nf_tables: add support for matching IPv4 options")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fix it by canceling the work before kfree.
+
+Signed-off-by: Sicong Huang <congei42@163.com>
+Link: https://lore.kernel.org/r/20240416080313.92306-1-congei42@163.com
+Cc: Ronnie Sahlberg <rsahlberg@ciq.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_exthdr.c |   17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/greybus/interface.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/netfilter/nft_exthdr.c
-+++ b/net/netfilter/nft_exthdr.c
-@@ -33,6 +33,14 @@ static unsigned int optlen(const u8 *opt
- 		return opt[offset + 1];
+--- a/drivers/greybus/interface.c
++++ b/drivers/greybus/interface.c
+@@ -694,6 +694,7 @@ static void gb_interface_release(struct
+ 
+ 	trace_gb_interface_release(intf);
+ 
++	cancel_work_sync(&intf->mode_switch_work);
+ 	kfree(intf);
  }
- 
-+static int nft_skb_copy_to_reg(const struct sk_buff *skb, int offset, u32 *dest, unsigned int len)
-+{
-+	if (len % NFT_REG32_SIZE)
-+		dest[len / NFT_REG32_SIZE] = 0;
-+
-+	return skb_copy_bits(skb, offset, dest, len);
-+}
-+
- static void nft_exthdr_ipv6_eval(const struct nft_expr *expr,
- 				 struct nft_regs *regs,
- 				 const struct nft_pktinfo *pkt)
-@@ -54,8 +62,7 @@ static void nft_exthdr_ipv6_eval(const s
- 	}
- 	offset += priv->offset;
- 
--	dest[priv->len / NFT_REG32_SIZE] = 0;
--	if (skb_copy_bits(pkt->skb, offset, dest, priv->len) < 0)
-+	if (nft_skb_copy_to_reg(pkt->skb, offset, dest, priv->len) < 0)
- 		goto err;
- 	return;
- err:
-@@ -151,8 +158,7 @@ static void nft_exthdr_ipv4_eval(const s
- 	}
- 	offset += priv->offset;
- 
--	dest[priv->len / NFT_REG32_SIZE] = 0;
--	if (skb_copy_bits(pkt->skb, offset, dest, priv->len) < 0)
-+	if (nft_skb_copy_to_reg(pkt->skb, offset, dest, priv->len) < 0)
- 		goto err;
- 	return;
- err:
-@@ -208,7 +214,8 @@ static void nft_exthdr_tcp_eval(const st
- 		if (priv->flags & NFT_EXTHDR_F_PRESENT) {
- 			*dest = 1;
- 		} else {
--			dest[priv->len / NFT_REG32_SIZE] = 0;
-+			if (priv->len % NFT_REG32_SIZE)
-+				dest[priv->len / NFT_REG32_SIZE] = 0;
- 			memcpy(dest, opt + offset, priv->len);
- 		}
  
 
 
