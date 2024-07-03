@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F9D7CF1F;
-	Wed,  3 Jul 2024 11:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB967171E67;
+	Wed,  3 Jul 2024 11:28:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006121; cv=none; b=oNIV/711dDBcA2uW+UJFg9C0w9FEREdCwJZygjkaivG2lfoeUaSipgcCW3ktiDOeZMMMuf3+dv1wICQXBOju1ePmthJGoMHkWyYHHWDxK0vPtGkKC8Dfu8i0MXLfnugp0BY9/mkeylXevXln6NLHfwdFu7w1QuxkuJHEEypkwLM=
+	t=1720006123; cv=none; b=UXv5zZFzSFQGvM3CE1cRZ+sgIiOdVhTOsbatrnPnMg6kjPFR4n3i27WC6VOSOGQr+3CcLMBlsNHvEJ0qoPALAWlzv6u7BJMi+6gzKbQYd+rZ5sLP+d0hXdC59b3Ym4V8RRPWuB0htkFJT55XVJbVwLGSNFZ8MyKUA0QSbpQp4T4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006121; c=relaxed/simple;
-	bh=WUpRz4XFDK+/M/E4XmPSlBd6uQJ4ffRaEdrg1LONO10=;
+	s=arc-20240116; t=1720006123; c=relaxed/simple;
+	bh=myoQQ4Vjb1jQ6613wFVkNwBFDKHf7Gpv3WnwyTmPkFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m0OkM7q+cLAevoNE7pUuonMNdMMwn9slnzXwF60RIxU8ZSJ/XhsVj7fWy6nI/bmNSTdE8oBmwfHvE1Top7B7gSyT1d0qfcWKxOr7ZypZ4keb47w2GDMtAmwkt1MqHrtJP3qY7CiUYOLEXwWD9vLsLk7FYyvhPH/JH2YhnurKDiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0rajjGq6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dtPzhQuvB0/jqyQRyQd1m2kAsvIMKQy0JvZqFULLXhWJb3FC2Mkw+6zHb4tvbQTBu4SPm4T2VoXxfe+f7bHU5IpCb9ttJh9PUSx4wu42ZF7B6L/HbCQpMY2wl759f3gY+GTV4Kj+DXWAUKWwnx3At/zHZF9pyYsqMCkQPUpyNwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZY5ZInOX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0rajjGq6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F874C2BD10;
-	Wed,  3 Jul 2024 11:28:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZY5ZInOX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42498C2BD10;
+	Wed,  3 Jul 2024 11:28:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006120;
-	bh=WUpRz4XFDK+/M/E4XmPSlBd6uQJ4ffRaEdrg1LONO10=;
+	s=korg; t=1720006123;
+	bh=myoQQ4Vjb1jQ6613wFVkNwBFDKHf7Gpv3WnwyTmPkFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0rajjGq64UZn5KqH/71HtvhhQdNYsVlF6+kGznLsSZDC+/lXVVz4z89AESGA0F/LP
-	 GcrJi5e6h70Zhpa81bYccndLDVTFUxXLYQUmeHMTchHuq4AwwkUh2XZC3/REOTTSHL
-	 ZILPMUrq/nO41bn4XiHUkOVcmN2HbTwj86fjspYM=
+	b=ZY5ZInOXNEz1zT9lVoQP2JlyL9skcanNxl6nqF2kfFO1c0H3SwConJ4Rw9sAB4ZnK
+	 7Y1BoaXtpHQe7oUSf53ZsR7NWlcveeK/JfKHjdkLi/VhorZvo+QuM/jgooKzZ8+WGN
+	 q3doT2T5/FDbJZWoc1j3KfCv6oiAjsTPlsZmmoe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 307/356] mmc: sdhci: Do not lock spinlock around mmc_gpio_get_ro()
-Date: Wed,  3 Jul 2024 12:40:43 +0200
-Message-ID: <20240703102924.728882866@linuxfoundation.org>
+	Linus Torvalds <torvalds@linuxfoundation.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 281/356] netfilter: nf_tables: fully validate NFT_DATA_VALUE on store to data registers
+Date: Wed,  3 Jul 2024 12:40:17 +0200
+Message-ID: <20240703102923.746704925@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -50,53 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit ab069ce125965a5e282f7b53b86aee76ab32975c upstream.
+[ Upstream commit 7931d32955e09d0a11b1fe0b6aac1bfa061c005c ]
 
-sdhci_check_ro() can call mmc_gpio_get_ro() while holding the sdhci
-host->lock spinlock. That would be a problem if the GPIO access done by
-mmc_gpio_get_ro() needed to sleep.
+register store validation for NFT_DATA_VALUE is conditional, however,
+the datatype is always either NFT_DATA_VALUE or NFT_DATA_VERDICT. This
+only requires a new helper function to infer the register type from the
+set datatype so this conditional check can be removed. Otherwise,
+pointer to chain object can be leaked through the registers.
 
-However, host->lock is not needed anyway. The mmc core ensures that host
-operations do not race with each other, and asynchronous callbacks like the
-interrupt handler, software timeouts, completion work etc, cannot affect
-sdhci_check_ro().
-
-So remove the locking.
-
-Fixes: 6d5cd068ee59 ("mmc: sdhci: use WP GPIO in sdhci_check_ro()")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240614080051.4005-3-adrian.hunter@intel.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 96518518cc41 ("netfilter: add nftables")
+Reported-by: Linus Torvalds <torvalds@linuxfoundation.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci.c |    5 -----
- 1 file changed, 5 deletions(-)
+ include/net/netfilter/nf_tables.h | 5 +++++
+ net/netfilter/nf_tables_api.c     | 8 ++++----
+ net/netfilter/nft_lookup.c        | 3 ++-
+ 3 files changed, 11 insertions(+), 5 deletions(-)
 
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -2488,11 +2488,8 @@ static int sdhci_get_cd(struct mmc_host
- static int sdhci_check_ro(struct sdhci_host *host)
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index 1e6e4af4df0ae..3ff6b3362800b 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -567,6 +567,11 @@ static inline void *nft_set_priv(const struct nft_set *set)
+ 	return (void *)set->data;
+ }
+ 
++static inline enum nft_data_types nft_set_datatype(const struct nft_set *set)
++{
++	return set->dtype == NFT_DATA_VERDICT ? NFT_DATA_VERDICT : NFT_DATA_VALUE;
++}
++
+ static inline bool nft_set_gc_is_pending(const struct nft_set *s)
  {
- 	bool allow_invert = false;
--	unsigned long flags;
- 	int is_readonly;
+ 	return refcount_read(&s->refs) != 1;
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 3999b89793fce..506dc5c4cdccb 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -5328,8 +5328,7 @@ static int nf_tables_fill_setelem(struct sk_buff *skb,
  
--	spin_lock_irqsave(&host->lock, flags);
--
- 	if (host->flags & SDHCI_DEVICE_DEAD) {
- 		is_readonly = 0;
- 	} else if (host->ops->get_ro) {
-@@ -2507,8 +2504,6 @@ static int sdhci_check_ro(struct sdhci_h
- 		allow_invert = true;
+ 	if (nft_set_ext_exists(ext, NFT_SET_EXT_DATA) &&
+ 	    nft_data_dump(skb, NFTA_SET_ELEM_DATA, nft_set_ext_data(ext),
+-			  set->dtype == NFT_DATA_VERDICT ? NFT_DATA_VERDICT : NFT_DATA_VALUE,
+-			  set->dlen) < 0)
++			  nft_set_datatype(set), set->dlen) < 0)
+ 		goto nla_put_failure;
+ 
+ 	if (nft_set_ext_exists(ext, NFT_SET_EXT_EXPRESSIONS) &&
+@@ -10249,6 +10248,9 @@ static int nft_validate_register_store(const struct nft_ctx *ctx,
+ 
+ 		return 0;
+ 	default:
++		if (type != NFT_DATA_VALUE)
++			return -EINVAL;
++
+ 		if (reg < NFT_REG_1 * NFT_REG_SIZE / NFT_REG32_SIZE)
+ 			return -EINVAL;
+ 		if (len == 0)
+@@ -10257,8 +10259,6 @@ static int nft_validate_register_store(const struct nft_ctx *ctx,
+ 		    sizeof_field(struct nft_regs, data))
+ 			return -ERANGE;
+ 
+-		if (data != NULL && type != NFT_DATA_VALUE)
+-			return -EINVAL;
+ 		return 0;
  	}
+ }
+diff --git a/net/netfilter/nft_lookup.c b/net/netfilter/nft_lookup.c
+index 9d18c5428d53c..b9df27c2718be 100644
+--- a/net/netfilter/nft_lookup.c
++++ b/net/netfilter/nft_lookup.c
+@@ -136,7 +136,8 @@ static int nft_lookup_init(const struct nft_ctx *ctx,
+ 			return -EINVAL;
  
--	spin_unlock_irqrestore(&host->lock, flags);
--
- 	if (is_readonly >= 0 &&
- 	    allow_invert &&
- 	    (host->quirks & SDHCI_QUIRK_INVERTED_WRITE_PROTECT))
+ 		err = nft_parse_register_store(ctx, tb[NFTA_LOOKUP_DREG],
+-					       &priv->dreg, NULL, set->dtype,
++					       &priv->dreg, NULL,
++					       nft_set_datatype(set),
+ 					       set->dlen);
+ 		if (err < 0)
+ 			return err;
+-- 
+2.43.0
+
 
 
