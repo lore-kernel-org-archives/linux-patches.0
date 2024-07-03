@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C00F13210B;
-	Wed,  3 Jul 2024 06:44:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2A5131BDD;
+	Wed,  3 Jul 2024 06:44:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719989044; cv=none; b=Aq92PlYOHhfu2DEwsGQoqhvLM8l0nRkqxlXmxPBWlDvr+OV2A+9TI+naVc/ch8BdTyO3mw7JyrURsEhxIgEEKvcWQChE+0V04qB2oCwfH9q0Dq9RjBmOw5V7E5CqBSR/Bh0HiMkCnYaFrfE5W8bmmREYOldCe+UZg1bsnOZ105g=
+	t=1719989077; cv=none; b=k9bv61NwfLwuVZ0Pu/r80gBvDu/6hH6d2gtmfA+pQ9xlzLle2l8v0ShLiP657K759++uGGQiiV2I3pk+14w7CLYqjY53WXKfcGTzCElOAGkkufogkZXd7xOB1qlNmp4NTlYrTj4v44wI9Bc5k4z2wvQZXeVxCSDGu6umW6T8Je0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719989044; c=relaxed/simple;
-	bh=7Km9cjoOaUd8aKsY8IVy3u92GssheRb/E4n0TVlOk/c=;
+	s=arc-20240116; t=1719989077; c=relaxed/simple;
+	bh=STUoahtwooASDtNWoOLxuNKMg1PumekS+qHF3VGu3ws=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CpB9JrFsmYRqrU/J42hqEdh/GYAkCn+TmIYi7XjfO7gwQ9a0BtkuRoQdzfDXJ5xF1b6EuLZ96Dk3+mGlrjG84hVjRJnNbmO9lcK7vtvvI64QQ0+e9jDBilUjoR5Je2TlvgRNnSSsoKpCNcSAe5/YnsJIBHXrkgeDOP6q4KXjSeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kh8Swc/i; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=SqZ9oyWOcPrOKMjIL1UBKm2JVbOPVAa4kMdcjNKhrri2M2yzGSePivlii7y7QeZzjPoeIYWcIODeZCMJez7KI6G9LnpYOpDOkwFOHjSRn93nsb5GdaHqwa8VXtD7O0wvS06JHlUzMcIpuhEv7aOL3n2npUXXe89we873JDV2t1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NhPbpJ4f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kh8Swc/i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65BB2C32781;
-	Wed,  3 Jul 2024 06:44:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NhPbpJ4f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A924C32781;
+	Wed,  3 Jul 2024 06:44:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719989044;
-	bh=7Km9cjoOaUd8aKsY8IVy3u92GssheRb/E4n0TVlOk/c=;
+	s=k20201202; t=1719989077;
+	bh=STUoahtwooASDtNWoOLxuNKMg1PumekS+qHF3VGu3ws=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=kh8Swc/i5sw8ajlVS6MBWKUSOOiFPEp2Y4rziL5D136at/E+NvT3LSXjICnTpYhuF
-	 QuoZHFX8ZQ0IIvkHxAEpUCQsKekqJtXqi86l/3uSnD+K23pHbycvSp3QR3SQgtYDys
-	 fbHVLqOQcKbx7Qep31pQQxn2dYVuIQi2rvwc69ymGDlYilQU5Zh+Dzx+LYQ9Xojp/J
-	 eezTCD5ttgUrizv1pUmAcZcbBQU26lLpjOBFRH6bqOAvJ/UENanRBBInFi6Veu5WWg
-	 Taex8bb5imVcyj8/YAbqRG9pkpTXWZt8DSoqJjTsS6+nxthN9yJfo0nMFvR7p687OF
-	 Si8U7wh7TQ8ew==
-Date: Wed, 3 Jul 2024 09:41:27 +0300
+	b=NhPbpJ4fITFGTw89apFf8SRBqug1BPnQCErXyj/66lNg9DEawNeYvgcN3OCwcYBLa
+	 OGL9sAptVhlRJlec36w3+O3tuMgqjKQIzo+UDiCpx7baQKKtFIAMTefkC0p86Gtf3U
+	 ENNWdXeLvty+pZCEqCYwLarJs+Piz1oyMNkFtUfn5WjDxSxUt6XViGAYc0gx05MF03
+	 VjpE9YNknMHkcDU9G6NtbhZ+cRl7279YOzCyKZrA9277AYfiQ0ddPI01Oc4XXUJ3UK
+	 jlVfI6P4mmGy0C4V0QYHI/Xj+jU3FLxWc9eOYPCgUICMAGspaql625NFwe8vkNEGO1
+	 1hPfA4vytTzAQ==
+Date: Wed, 3 Jul 2024 09:41:59 +0300
 From: Mike Rapoport <rppt@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -35,11 +35,11 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.6 005/163] x86/mm/numa: Use NUMA_NO_NODE when calling
+Subject: Re: [PATCH 6.1 003/128] x86/mm/numa: Use NUMA_NO_NODE when calling
  memblock_set_node()
-Message-ID: <ZoTylxj5b34_7A7C@kernel.org>
-References: <20240702170233.048122282@linuxfoundation.org>
- <20240702170233.256675286@linuxfoundation.org>
+Message-ID: <ZoTyt0EnrW6SrcSQ@kernel.org>
+References: <20240702170226.231899085@linuxfoundation.org>
+ <20240702170226.364430407@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,10 +48,10 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240702170233.256675286@linuxfoundation.org>
+In-Reply-To: <20240702170226.364430407@linuxfoundation.org>
 
-On Tue, Jul 02, 2024 at 07:01:59PM +0200, Greg Kroah-Hartman wrote:
-> 6.6-stable review patch.  If anyone has any objections, please let me know.
+On Tue, Jul 02, 2024 at 07:03:24PM +0200, Greg Kroah-Hartman wrote:
+> 6.1-stable review patch.  If anyone has any objections, please let me know.
 > 
 > ------------------
 > 
@@ -66,7 +66,7 @@ On Tue, Jul 02, 2024 at 07:01:59PM +0200, Greg Kroah-Hartman wrote:
 > for details.
 
 This commit was a fix for e0eec24e2e19, it's not needed for kernels before 6.8.
- 
+
 > Reported-by: Narasimhan V <Narasimhan.V@amd.com>
 > Signed-off-by: Jan Beulich <jbeulich@suse.com>
 > Cc: stable@vger.kernel.org
