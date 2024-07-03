@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7787CF1F;
-	Wed,  3 Jul 2024 11:28:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3E817DA3C;
+	Wed,  3 Jul 2024 11:28:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006133; cv=none; b=coxN69XWyHdHLPNuAUAx1wVukwB3/azs9ZH2dbDPHPHjJwDgl02DBT4kBT2kimMH+R/jzLcvqUYbqp1Ork/lYAr8KO8l7jCZiyWrtFy94d92CKJNfxhrhZpWlkQmu7DM4V5bwzXKIQqRZicunT5Z48LUU3JdS2d4ZGX35ZNWdZ0=
+	t=1720006136; cv=none; b=aPrE79tQ+UZ9IyRGbf5MiNFonsoozK8yqg8wY61bWNl9l9yQHba49vfUgqnR/GTf+pSSLu1QJ+vPtzJJjbYo5sykOR5b4tkKJBYU0IB2a5FmrFIDmQGzIwrHOgUYaEjkUlIPwxA0G+z2uofLZ8gFhDtryRlN+kOrU2+2CD9lKkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006133; c=relaxed/simple;
-	bh=fneTiy3wM0FQImOM9Co4XKb2Jt1nSPJVEapV41B3UpE=;
+	s=arc-20240116; t=1720006136; c=relaxed/simple;
+	bh=mkDBXsSiYVgU+Sa5fX/n7rCy9dZ2JOkINK9PlWH/RJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FU8Bjjb13gTeJnlil52HMYlTjOIeh3tbBGR4AogYr2EkVWLsp8tcUwwwB2IDCJsShvpSt9rxK6BmosZ6lVkfXnGgtinsK6H1FCUvIdqaVR4IHao+48QUief93CgUIYoXudpgTcNjk8mBHJUyrwnphcfa1yupzif8W3JUho/FSyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IvAQdmoM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lx4VYHyWHsFAXSArB5hfqINh9NB8V1m62g7wB2pJZAK8qZs7U0W02GacPCeWmCkQmokeF1ebh6H0S7Rz4LArI5ADKqJtoByRl1IzAPI2xlMmJoP0C13lDAkXCJ83K5i1SU9Fji8mdHmtFXxmVlomUD1CtnJfMoLy0gkbDC0c4To=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JtKIKoKq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IvAQdmoM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B944C32781;
-	Wed,  3 Jul 2024 11:28:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JtKIKoKq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E9EAC2BD10;
+	Wed,  3 Jul 2024 11:28:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006133;
-	bh=fneTiy3wM0FQImOM9Co4XKb2Jt1nSPJVEapV41B3UpE=;
+	s=korg; t=1720006136;
+	bh=mkDBXsSiYVgU+Sa5fX/n7rCy9dZ2JOkINK9PlWH/RJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IvAQdmoMWhbDh23IvXtEsXhGoeP+wWs5l3uuefo0cS5FUG79fy01tb8D6+H1UXWrj
-	 5DFf/DfWD1eM6GUsDuX1E75BLrNqS6iUKTRu3XXsZQYMRNP7U2m8GdVeGmvgeGinzo
-	 Veq9OoBuKUgAjMFVrc2tOA7/UR9EXNdTrxUtYveE=
+	b=JtKIKoKqu6Xb+45G/wAP2RuyDV4XRNc/h0aEk3z9M7g/K9zyFOzqoBQztBeke+pAT
+	 6zMdKmihDAoH1N2wTBUXt2Tn3F9fDN9reMHKalmW1gONOIlItYnPv7rPKt+isn6fj6
+	 9wUaLGLqIO2GcFx+C7MurzuPI3YStMtHh9kqL25E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Yang <hagisf@usp.br>,
-	Stable@vger.kernel.org,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Sean Nyekjaer <sean@geanix.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 310/356] iio: adc: ad7266: Fix variable checking bug
-Date: Wed,  3 Jul 2024 12:40:46 +0200
-Message-ID: <20240703102924.840903254@linuxfoundation.org>
+Subject: [PATCH 5.15 311/356] iio: accel: fxls8962af: select IIO_BUFFER & IIO_KFIFO_BUF
+Date: Wed,  3 Jul 2024 12:40:47 +0200
+Message-ID: <20240703102924.878380346@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,33 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Yang <hagisf@usp.br>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-commit a2b86132955268b2a1703082fbc2d4832fc001b8 upstream.
+commit a821d7111e3f7c8869961b606714a299bfe20014 upstream.
 
-The ret variable was not checked after iio_device_release_direct_mode(),
-which could possibly cause errors
+Provide missing symbols to the module:
+ERROR: modpost: iio_push_to_buffers [drivers/iio/accel/fxls8962af-core.ko] undefined!
+ERROR: modpost: devm_iio_kfifo_buffer_setup_ext [drivers/iio/accel/fxls8962af-core.ko] undefined!
 
-Fixes: c70df20e3159 ("iio: adc: ad7266: claim direct mode during sensor read")
-Signed-off-by: Fernando Yang <hagisf@usp.br>
-Link: https://lore.kernel.org/r/20240603180757.8560-1-hagisf@usp.br
-Cc: <Stable@vger.kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 79e3a5bdd9ef ("iio: accel: fxls8962af: add hw buffered sampling")
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Reviewed-by: Sean Nyekjaer <sean@geanix.com>
+Link: https://lore.kernel.org/r/20240605203810.2908980-2-alexander.sverdlin@siemens.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad7266.c |    2 ++
+ drivers/iio/accel/Kconfig |    2 ++
  1 file changed, 2 insertions(+)
 
---- a/drivers/iio/adc/ad7266.c
-+++ b/drivers/iio/adc/ad7266.c
-@@ -157,6 +157,8 @@ static int ad7266_read_raw(struct iio_de
- 		ret = ad7266_read_single(st, val, chan->address);
- 		iio_device_release_direct_mode(indio_dev);
+--- a/drivers/iio/accel/Kconfig
++++ b/drivers/iio/accel/Kconfig
+@@ -235,6 +235,8 @@ config DMARD10
+ config FXLS8962AF
+ 	tristate
+ 	depends on I2C || !I2C # cannot be built-in for modular I2C
++	select IIO_BUFFER
++	select IIO_KFIFO_BUF
  
-+		if (ret < 0)
-+			return ret;
- 		*val = (*val >> 2) & 0xfff;
- 		if (chan->scan_type.sign == 's')
- 			*val = sign_extend32(*val, 11);
+ config FXLS8962AF_I2C
+ 	tristate "NXP FXLS8962AF/FXLS8964AF Accelerometer I2C Driver"
 
 
