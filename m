@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C4017B4FF;
-	Wed,  3 Jul 2024 10:45:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F78F1849CF;
+	Wed,  3 Jul 2024 10:45:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003553; cv=none; b=Z++MTKfEHU8JarI9ap+72e/8pdjSdvSELVGM6Qe7AZXvM+vQiVN8R4xcdltW4ywVJfqN0TlyjgGhpCh1BP+ucalw/gayZm0xvwaWzB8eJHp/4WHybk84wi1jzfw1tgfWPyEye4mUG1ziA8lPjE3ovw3+HchLC8BKaDRt5ubxJOA=
+	t=1720003556; cv=none; b=Cbv+CrcgT6NkUZ/MvpN51/MujmAcMJt0jbhENdpc0ne1be4fDT37esRAg63AE91AvJfJ+V0bNmJi8VMs17yJx8IUs0XSiavWF+x9Zh3yGNXLY9PLuf3sBV0Rf1bhn9L5XUv8Tb4epWM7bRJb+RWWc1kOpPBwMU0GxoXqVEhMOO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003553; c=relaxed/simple;
-	bh=sWwCTQvoyAkGuxtdxZFjBa37WxQA/mdRzqIwjIuHwiw=;
+	s=arc-20240116; t=1720003556; c=relaxed/simple;
+	bh=SKRuPrun2IlBumS4bNYFuaul5Ou3wDhYeD7zET5xyOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l3u2PwczidFEWtxZMITL97oLnTBwwMjAeiMQCKzN0pz10To2FttBwua1qTubsH2r3ngFntuPBYr6KEyL/5yFIGDurARSbYJ22KuquAMFtHQkCRNKGq4Ulxa/7Gl5rll6RdbtG5Nw6fo9fKAGmpts3j25U40ntRw8kfFeAdRkSFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=klFmncZO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aR89VrqRzeSUEPEFwWZNcWG4icE7dDicmajAIgIDzxIO3z6eScBVdv6mFQAaMHvIzJ3BMuU56E5TtaC9jrE3OTaRdh/l1e4mO61YmtVOkqnw6jyf5qCjwA8waSAYcYATR5aoJqU1zsvoYsZ3BO78zpmmfnHzV0WPBX2gGhKbd0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pFLTtI3B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="klFmncZO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3799C4AF0A;
-	Wed,  3 Jul 2024 10:45:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pFLTtI3B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF4B2C2BD10;
+	Wed,  3 Jul 2024 10:45:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003553;
-	bh=sWwCTQvoyAkGuxtdxZFjBa37WxQA/mdRzqIwjIuHwiw=;
+	s=korg; t=1720003556;
+	bh=SKRuPrun2IlBumS4bNYFuaul5Ou3wDhYeD7zET5xyOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=klFmncZOBdlFf3SFWRWJCgtX3oD6V0PpK2fAWlL+1fvkKkw+Hj/lnVY5vEZkEI8jj
-	 nj8UVfQcNuRyhALHAUbBHyrcwIeAbga+TYJWfsEsbShGwVAC7ZHF1FCG0/oHTah8Y/
-	 5YDBtH9a9Z+HrqN9eK8YBzSmBLDkjrtc5T2MdDgk=
+	b=pFLTtI3BLgtjOZ84RlvvpRdmZrT4jWQi5TczhZaB3h4yF1pf+BEIopxuhzFZ/u1p4
+	 Npfbu58p8Bg6vO721cer8CR3qLWAFvDLp3A9SpMp9Vx5rsvMLkvqSQI5czuJMxbWYe
+	 8Ev4CMK2xmI1UJd+PrtsBaBqxumyEjA9gp2bPNEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
-	"Shuah Khan (Samsung OSG)" <shuah@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 085/139] selftests/ftrace: Fix checkbashisms errors
-Date: Wed,  3 Jul 2024 12:39:42 +0200
-Message-ID: <20240703102833.649650861@linuxfoundation.org>
+Subject: [PATCH 4.19 086/139] tracing: Add MODULE_DESCRIPTION() to preemptirq_delay_test
+Date: Wed,  3 Jul 2024 12:39:43 +0200
+Message-ID: <20240703102833.688485967@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -52,37 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu <mhiramat@kernel.org>
+From: Jeff Johnson <quic_jjohnson@quicinc.com>
 
-[ Upstream commit 72ce3daf92ba4f5bae6e91095d40e67b367c6b2f ]
+[ Upstream commit 23748e3e0fbfe471eff5ce439921629f6a427828 ]
 
-Fix a test case to make checkbashisms clean.
+Fix the 'make W=1' warning:
 
-Signed-off-by: Masami Hiramatsu <mhiramat@kernel.org>
-Acked-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
-Signed-off-by: Shuah Khan (Samsung OSG) <shuah@kernel.org>
+WARNING: modpost: missing MODULE_DESCRIPTION() in kernel/trace/preemptirq_delay_test.o
+
+Link: https://lore.kernel.org/linux-trace-kernel/20240518-md-preemptirq_delay_test-v1-1-387d11b30d85@quicinc.com
+
+Cc: stable@vger.kernel.org
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Fixes: f96e8577da10 ("lib: Add module for testing preemptoff/irqsoff latency tracers")
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ftrace/test.d/trigger/trigger-trace-marker-snapshot.tc    | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/trace/preemptirq_delay_test.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/ftrace/test.d/trigger/trigger-trace-marker-snapshot.tc b/tools/testing/selftests/ftrace/test.d/trigger/trigger-trace-marker-snapshot.tc
-index 6748e8cb42d0f..6bf7ac7f035bc 100644
---- a/tools/testing/selftests/ftrace/test.d/trigger/trigger-trace-marker-snapshot.tc
-+++ b/tools/testing/selftests/ftrace/test.d/trigger/trigger-trace-marker-snapshot.tc
-@@ -47,10 +47,10 @@ test_trace() {
- 	fi
- 	echo "testing $line for >$x<"
- 	match=`echo $line | sed -e "s/>$x<//"`
--	if [ "$line" == "$match" ]; then
-+	if [ "$line" = "$match" ]; then
- 	    fail "$line does not have >$x< in it"
- 	fi
--	let x=$x+2
-+	x=$((x+2))
-     done
- }
+diff --git a/kernel/trace/preemptirq_delay_test.c b/kernel/trace/preemptirq_delay_test.c
+index d8765c952fab3..4692c87d4b69c 100644
+--- a/kernel/trace/preemptirq_delay_test.c
++++ b/kernel/trace/preemptirq_delay_test.c
+@@ -69,4 +69,5 @@ static void __exit preemptirq_delay_exit(void)
  
+ module_init(preemptirq_delay_init)
+ module_exit(preemptirq_delay_exit)
++MODULE_DESCRIPTION("Preempt / IRQ disable delay thread to test latency tracers");
+ MODULE_LICENSE("GPL v2");
 -- 
 2.43.0
 
