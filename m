@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD7E1891DC;
-	Wed,  3 Jul 2024 11:11:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F7FE1849D3;
+	Wed,  3 Jul 2024 11:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005064; cv=none; b=jMtStDnv2xL0SochuP63ZzQmtByZbq+4zaWi5b8BUy5V3P6b3iPe6Ccr2mjBVQHB8TKuEMt4dcpweieGNJjYoB+wi7LQh4ICBh21VcFUpjqwBN8FlY7+916hFnfVdyrcvEYc6cn9qgeMajzp5n9GnVtK278HJpYN0fMUILF0BOI=
+	t=1720005067; cv=none; b=nTA/cFQzY0vs7VYb5vc9AzSTmUaAquZk2ld1BfYNhY7mwFCHKrHgaPRldpL/d0AlwSrZoI9nXWM1PkJ29Vn2n+hmkPAbfNdjmDMYLRSPLQnS1Uib0ezdx9XHNg8qqHiOxnuJMbGnlzliK7qI+XGnAMeeSDGrs4LNVCiXb+QtrZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005064; c=relaxed/simple;
-	bh=hSGzjuz4bOLAvHGQwUzEqATyWL1/H09yrIfloVKf3Bg=;
+	s=arc-20240116; t=1720005067; c=relaxed/simple;
+	bh=j7deTUEGXwiDxZ3iHvSHnA8sPnv0tYGkhzCujdRLwIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ck5xXnu1I+IIQUtNTqv33LmQGkRlDNKd098whfd2frcS79P4cIGoQ/otslzc9tm0WJaMb74iEts/DPvEPe2qvHl6QVBhwklSCOse9jKdqm9NnPSmSVtuW54/nTsfx4kKHcLjlECLCMJVjCokAYw3ai3d5CnflAzw0y0mAcFw+vU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+s5yi2T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b4ZsGxU73jp4c+e2gZPSfN5Sms8A+488h02lw5pG6330c8YDIKaOVG6nNvCNfsOlRHY222e3e88ln7A7wANfPZmL1xWjE2L7HH2mqv3qIxc5plHSnCpncDDm7PfXwaK6mAzuu5+2TS2Wv016MjL+nf5GLu+55Nx74NIyFtTwqxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vd04y0xU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+s5yi2T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4807EC2BD10;
-	Wed,  3 Jul 2024 11:11:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vd04y0xU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 455BFC2BD10;
+	Wed,  3 Jul 2024 11:11:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005063;
-	bh=hSGzjuz4bOLAvHGQwUzEqATyWL1/H09yrIfloVKf3Bg=;
+	s=korg; t=1720005066;
+	bh=j7deTUEGXwiDxZ3iHvSHnA8sPnv0tYGkhzCujdRLwIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o+s5yi2TjraxvBmjMw/KnLDwMy8x//CvQloE3Rpf+F7IUWD6i/2AMn62fnsjqfEP8
-	 VEiVu8g20wR1b33xQFPxmJ5aq2CeI+GKnkSkt6JHXqyrdJ08vIqzY2T9ekBNSfxEUz
-	 6p2zEelX95cv/qlA/7wnf7fXulxHSriqB/CIgXek=
+	b=Vd04y0xUBqY7ylXKfxEk9BxTJlPXoNyR1G4fFQxKIUgdrH9tCmL9yATCfxbqadzfY
+	 3UjhAItp8mwSSnAlv9GDsfYpm48/zCYYZ5GTyI4BslgLrQHjQnDzrV2iGW2Bn3HF3G
+	 /k+pEqrTm7k2Sg30bW8xweVhn9AqLiUMaq6c+k5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Yang <hagisf@usp.br>,
+	Vasileios Amoiridis <vassilisamir@gmail.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.10 248/290] iio: adc: ad7266: Fix variable checking bug
-Date: Wed,  3 Jul 2024 12:40:29 +0200
-Message-ID: <20240703102913.518440706@linuxfoundation.org>
+Subject: [PATCH 5.10 249/290] iio: chemical: bme680: Fix pressure value output
+Date: Wed,  3 Jul 2024 12:40:30 +0200
+Message-ID: <20240703102913.555954708@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -51,33 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Yang <hagisf@usp.br>
+From: Vasileios Amoiridis <vassilisamir@gmail.com>
 
-commit a2b86132955268b2a1703082fbc2d4832fc001b8 upstream.
+commit ae1f7b93b52095be6776d0f34957b4f35dda44d9 upstream.
 
-The ret variable was not checked after iio_device_release_direct_mode(),
-which could possibly cause errors
+The IIO standard units are measured in kPa while the driver
+is using hPa.
 
-Fixes: c70df20e3159 ("iio: adc: ad7266: claim direct mode during sensor read")
-Signed-off-by: Fernando Yang <hagisf@usp.br>
-Link: https://lore.kernel.org/r/20240603180757.8560-1-hagisf@usp.br
+Apart from checking the userspace value itself, it is mentioned also
+in the Bosch API [1] that the pressure value is in Pascal.
+
+[1]: https://github.com/boschsensortec/BME68x_SensorAPI/blob/v4.4.8/bme68x_defs.h#L742
+
+Fixes: 1b3bd8592780 ("iio: chemical: Add support for Bosch BME680 sensor")
+Signed-off-by: Vasileios Amoiridis <vassilisamir@gmail.com>
+Link: https://lore.kernel.org/r/20240606212313.207550-2-vassilisamir@gmail.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad7266.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/chemical/bme680_core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/adc/ad7266.c
-+++ b/drivers/iio/adc/ad7266.c
-@@ -157,6 +157,8 @@ static int ad7266_read_raw(struct iio_de
- 		ret = ad7266_read_single(st, val, chan->address);
- 		iio_device_release_direct_mode(indio_dev);
+--- a/drivers/iio/chemical/bme680_core.c
++++ b/drivers/iio/chemical/bme680_core.c
+@@ -678,7 +678,7 @@ static int bme680_read_press(struct bme6
+ 	}
  
-+		if (ret < 0)
-+			return ret;
- 		*val = (*val >> 2) & 0xfff;
- 		if (chan->scan_type.sign == 's')
- 			*val = sign_extend32(*val, 11);
+ 	*val = bme680_compensate_press(data, adc_press);
+-	*val2 = 100;
++	*val2 = 1000;
+ 	return IIO_VAL_FRACTIONAL;
+ }
+ 
 
 
