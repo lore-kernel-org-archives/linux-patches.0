@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BEEC173336;
-	Wed,  3 Jul 2024 10:43:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF5A173335;
+	Wed,  3 Jul 2024 10:43:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003423; cv=none; b=YEPbijRv0I7fpLiBqS7ToUL9+u2aFgKXKte7KWsKpSXGpuSx7+Xb+d/iIqpxRFMS73dAnHagWiQOSo6eSism0Q+iVVSqplDHoH49WWSiwxXdJAe7xn1w9I+xkFzKwyqIdOes4kubitJWYj1GQa9IPivr0euN86rX0IxHlcbwQr8=
+	t=1720003426; cv=none; b=IiQ5YwTs8Gha5qhmKygELjZvxxIHg3ceVUxKRQrQAf+xOaFQ77/hN5RcCkIJ5yFXXCN+R8Z9lm5h5Sb7rfJeNjKydl1U0GwTTsDIyq+8r2AHMS1n/oX3HSKp+6MbLrlEMZDhuGDnkYw8q+5A9oafuqEoVX5U08gQ+cwZ2jgbzfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003423; c=relaxed/simple;
-	bh=9TTnwpuU1Ld7JaqUarvzkeGasXHPZ0YABeeqiIVcFfM=;
+	s=arc-20240116; t=1720003426; c=relaxed/simple;
+	bh=/ZgZ23+gazvAgVM6GfrWauAWPuGTzO6E9ixpbR+6La4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z8lOsnk/9HjKQxchddN64HL3tjB6QmDh7BGgyYSpeeNJMJaP95Gy8DhedYanFuNtjvfwpKdnCUug1jk8hJCGMRx4t4OmtE/wnmjO6aYIVNZ1KxsSA6TbiqGp+karxOmDjRk5iskyqfgz6dwB3TRPZ3M3VZf/WLEwFMA/sJnV1qU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uUN+JfbV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uZ2NYHW54TWsv6zpX/utQX2jbBwJxpGeHPkSgEBotwT8nTx+YAQv4BcdtYm5KoZcic0HSPNkr1l3zmYHkuYHEete5a9ZnYv1fMbWMPwOxz9CxDQhTOpyEnOPE7t836fosxVQFdSST++30SU3Mvpa3pe5cHPL4sFqASS1/+Daf5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MGCCNrER; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uUN+JfbV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D76C2BD10;
-	Wed,  3 Jul 2024 10:43:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MGCCNrER"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12D11C32781;
+	Wed,  3 Jul 2024 10:43:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003423;
-	bh=9TTnwpuU1Ld7JaqUarvzkeGasXHPZ0YABeeqiIVcFfM=;
+	s=korg; t=1720003426;
+	bh=/ZgZ23+gazvAgVM6GfrWauAWPuGTzO6E9ixpbR+6La4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uUN+JfbV9ggbYMakcDcTdSuzWadGBr3OXze3YySUkngkRxmP1R+3JgrCTlO0zIxjM
-	 xKA7MgFIBxol3PbeDLjhJmcgVyNDeT5ixZtbnIZA+gFgc0unMRCO6Jw/klxTgEJD1c
-	 VlbCAk9I+wvqaAqhz7dmmzdO2WPINoIjeIPbN73w=
+	b=MGCCNrERPCqiHAX6KmwE1qKPq9OpE5qxHVYdUBzVCi8KvqG2ThYAL5FFlntm4fgoi
+	 dVqHlXn6bqfL+xq9aIsmUCjekIl/ufF/F6SqvuV/jSqsoKnRKD1yqZcBZXYoM9DBc4
+	 IXsAogNfsOfYO19mQg1QsaK4zg5mmHJ0E0r1HXX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	syzbot+ffa8143439596313a85a@syzkaller.appspotmail.com,
-	Ashish Sangwan <a.sangwan@samsung.com>,
-	Namjae Jeon <namjae.jeon@samsung.com>,
-	Dirk Behme <dirk.behme@de.bosch.com>
-Subject: [PATCH 4.19 044/139] drivers: core: synchronize really_probe() and dev_uevent()
-Date: Wed,  3 Jul 2024 12:39:01 +0200
-Message-ID: <20240703102832.101542524@linuxfoundation.org>
+	Jani Nikula <jani.nikula@intel.com>,
+	Inki Dae <inki.dae@samsung.com>
+Subject: [PATCH 4.19 045/139] drm/exynos/vidi: fix memory leak in .get_modes()
+Date: Wed,  3 Jul 2024 12:39:02 +0200
+Message-ID: <20240703102832.139374767@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -53,104 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dirk Behme <dirk.behme@de.bosch.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-commit c0a40097f0bc81deafc15f9195d1fb54595cd6d0 upstream.
+commit 38e3825631b1f314b21e3ade00b5a4d737eb054e upstream.
 
-Synchronize the dev->driver usage in really_probe() and dev_uevent().
-These can run in different threads, what can result in the following
-race condition for dev->driver uninitialization:
+The duplicated EDID is never freed. Fix it.
 
-Thread #1:
-==========
-
-really_probe() {
-...
-probe_failed:
-...
-device_unbind_cleanup(dev) {
-    ...
-    dev->driver = NULL;   // <= Failed probe sets dev->driver to NULL
-    ...
-    }
-...
-}
-
-Thread #2:
-==========
-
-dev_uevent() {
-...
-if (dev->driver)
-      // If dev->driver is NULLed from really_probe() from here on,
-      // after above check, the system crashes
-      add_uevent_var(env, "DRIVER=%s", dev->driver->name);
-...
-}
-
-really_probe() holds the lock, already. So nothing needs to be done
-there. dev_uevent() is called with lock held, often, too. But not
-always. What implies that we can't add any locking in dev_uevent()
-itself. So fix this race by adding the lock to the non-protected
-path. This is the path where above race is observed:
-
- dev_uevent+0x235/0x380
- uevent_show+0x10c/0x1f0  <= Add lock here
- dev_attr_show+0x3a/0xa0
- sysfs_kf_seq_show+0x17c/0x250
- kernfs_seq_show+0x7c/0x90
- seq_read_iter+0x2d7/0x940
- kernfs_fop_read_iter+0xc6/0x310
- vfs_read+0x5bc/0x6b0
- ksys_read+0xeb/0x1b0
- __x64_sys_read+0x42/0x50
- x64_sys_call+0x27ad/0x2d30
- do_syscall_64+0xcd/0x1d0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Similar cases are reported by syzkaller in
-
-https://syzkaller.appspot.com/bug?extid=ffa8143439596313a85a
-
-But these are regarding the *initialization* of dev->driver
-
-dev->driver = drv;
-
-As this switches dev->driver to non-NULL these reports can be considered
-to be false-positives (which should be "fixed" by this commit, as well,
-though).
-
-The same issue was reported and tried to be fixed back in 2015 in
-
-https://lore.kernel.org/lkml/1421259054-2574-1-git-send-email-a.sangwan@samsung.com/
-
-already.
-
-Fixes: 239378f16aa1 ("Driver core: add uevent vars for devices of a class")
-Cc: stable <stable@kernel.org>
-Cc: syzbot+ffa8143439596313a85a@syzkaller.appspotmail.com
-Cc: Ashish Sangwan <a.sangwan@samsung.com>
-Cc: Namjae Jeon <namjae.jeon@samsung.com>
-Signed-off-by: Dirk Behme <dirk.behme@de.bosch.com>
-Link: https://lore.kernel.org/r/20240513050634.3964461-1-dirk.behme@de.bosch.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/core.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/exynos/exynos_drm_vidi.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -1236,8 +1236,11 @@ static ssize_t uevent_show(struct device
- 	if (!env)
- 		return -ENOMEM;
+--- a/drivers/gpu/drm/exynos/exynos_drm_vidi.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
+@@ -302,6 +302,7 @@ static int vidi_get_modes(struct drm_con
+ 	struct vidi_context *ctx = ctx_from_connector(connector);
+ 	struct edid *edid;
+ 	int edid_len;
++	int count;
  
-+	/* Synchronize with really_probe() */
-+	device_lock(dev);
- 	/* let the kset specific function add its keys */
- 	retval = kset->uevent_ops->uevent(kset, &dev->kobj, env);
-+	device_unlock(dev);
- 	if (retval)
- 		goto out;
+ 	/*
+ 	 * the edid data comes from user side and it would be set
+@@ -321,7 +322,11 @@ static int vidi_get_modes(struct drm_con
  
+ 	drm_connector_update_edid_property(connector, edid);
+ 
+-	return drm_add_edid_modes(connector, edid);
++	count = drm_add_edid_modes(connector, edid);
++
++	kfree(edid);
++
++	return count;
+ }
+ 
+ static const struct drm_connector_helper_funcs vidi_connector_helper_funcs = {
 
 
