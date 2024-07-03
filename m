@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FEE1176ADB;
-	Wed,  3 Jul 2024 11:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426D3135414;
+	Wed,  3 Jul 2024 11:25:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005939; cv=none; b=HuYZqiZbmPjgKlAXZvomO/XmKMVvNDDdo54SiDvKZ9QKNpjM1VilFy4S3qFg1FMco6+DjVXvP+5hRrpvunpA2f0bi6ONOC6DKn33bnKpYajhzDQjvuUBXuAGqzhIFlvV9sHxDCnE0kURCsuo6tDx/kOdb+U3lTPVGvgBZDa77Iw=
+	t=1720005942; cv=none; b=BBrMem02h0tUCEZbHTfvvTlqb2HLqtuuqtV7wozOaDsc3KXQ/8c9TrwENH3MUAIoB1VjQYcCJOWq/0XZcO3HPn4Twz5o6o/4/WFAzFrXgN+XFB9MJ5mz67nmT2HIkGeRb4/iW0CMusKOnQC87/KelJBFT/GKL6hqHRvyX2LDH8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005939; c=relaxed/simple;
-	bh=jciSOBkx1zwYf0fQQEcTUuA9jhNKxUPw0ah+x6PkP3Q=;
+	s=arc-20240116; t=1720005942; c=relaxed/simple;
+	bh=yUxQE+jxl5/E5cEyn1DvVHhirBcIBSGUqX3uHngNElg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bh9GGgB2x/jEsNFQl1fe7M9kuKmXfBdi97m3Qtz4tzGFN4R3vgfGZ7Rpc2TCJwkemoSiYJi0cQlYy2cTSSInbILZmGa+EHnAxduZq1MRz4wbTUr3C44fnpNjXPaL7NZ0KxwjmkEeZV7am7S8efwpDky02eitwZEa/4UdLc71nr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=epzgsX05; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T+Bmdwl8x5Mh5MpVUpBIMMny3sJjNXq+bDFLRtlwBkQDxJLgIbWQPRn/1bfNeJGHotfgjeiWEG/91yKPq2kIkRPvK2rSDUn9t7TYBhmrVdaSyHL2ZZX4x2lyl5qWkAvIwHSfPAwINvNMrcG89icCulNu1LeAYNgKQp1755pWjFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e2q0vNdc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="epzgsX05"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC0A6C2BD10;
-	Wed,  3 Jul 2024 11:25:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e2q0vNdc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAD9CC2BD10;
+	Wed,  3 Jul 2024 11:25:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005939;
-	bh=jciSOBkx1zwYf0fQQEcTUuA9jhNKxUPw0ah+x6PkP3Q=;
+	s=korg; t=1720005942;
+	bh=yUxQE+jxl5/E5cEyn1DvVHhirBcIBSGUqX3uHngNElg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=epzgsX059tk57nFxawfx4QqyysaTuR+63KSv7q+B5raqxeyBL+jNvlSQUzDTrmKkX
-	 cbJHy1E+FdUOE9cJDQnmG1KG3FbUItepRpLHwl+zAVOkWQ5RMTCb8EBsIZJgC0VI3m
-	 fWmlxBP0EG0gJydd/fyxIi4uxljYqMc+OjZ4/JN0=
+	b=e2q0vNdcHmdj82zb4wN5442YWH/wEa8z/tDAJPIWIhNUVM8HQWJwUJ5T/2uUc/5ar
+	 leTEHOydXV/DAD90NgfmzeUIn6Ly4YF0GaobG98UClax1b3EonmXYf+pW7dkCTsoSR
+	 NewW8oHkJDGU4z/dVN1PEb+Afc9+HbAkz7yvUIHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalle Niemi <kaleposti@gmail.com>,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Sanath S <Sanath.S@amd.com>,
+	Raju Rangoju <Raju.Rangoju@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 215/356] regulator: bd71815: fix ramp values
-Date: Wed,  3 Jul 2024 12:39:11 +0200
-Message-ID: <20240703102921.246475488@linuxfoundation.org>
+Subject: [PATCH 5.15 216/356] ACPICA: Revert "ACPICA: avoid Info: mapping multiple BARs. Your kernel is fine."
+Date: Wed,  3 Jul 2024 12:39:12 +0200
+Message-ID: <20240703102921.284808646@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -52,38 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kalle Niemi <kaleposti@gmail.com>
+From: Raju Rangoju <Raju.Rangoju@amd.com>
 
-[ Upstream commit 4cac29b846f38d5f0654cdfff5c5bfc37305081c ]
+[ Upstream commit a83e1385b780d41307433ddbc86e3c528db031f0 ]
 
-Ramp values are inverted. This caused wrong values written to register
-when ramp values were defined in device tree.
+Undo the modifications made in commit d410ee5109a1 ("ACPICA: avoid
+"Info: mapping multiple BARs. Your kernel is fine.""). The initial
+purpose of this commit was to stop memory mappings for operation
+regions from overlapping page boundaries, as it can trigger warnings
+if different page attributes are present.
 
-Invert values in table to fix this.
+However, it was found that when this situation arises, mapping
+continues until the boundary's end, but there is still an attempt to
+read/write the entire length of the map, leading to a NULL pointer
+deference. For example, if a four-byte mapping request is made but
+only one byte is mapped because it hits the current page boundary's
+end, a four-byte read/write attempt is still made, resulting in a NULL
+pointer deference.
 
-Signed-off-by: Kalle Niemi <kaleposti@gmail.com>
-Fixes: 1aad39001e85 ("regulator: Support ROHM BD71815 regulators")
-Reviewed-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Link: https://lore.kernel.org/r/ZmmJXtuVJU6RgQAH@latitude5580
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Instead, map the entire length, as the ACPI specification does not
+mandate that it must be within the same page boundary. It is
+permissible for it to be mapped across different regions.
+
+Link: https://github.com/acpica/acpica/pull/954
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218849
+Fixes: d410ee5109a1 ("ACPICA: avoid "Info: mapping multiple BARs. Your kernel is fine."")
+Co-developed-by: Sanath S <Sanath.S@amd.com>
+Signed-off-by: Sanath S <Sanath.S@amd.com>
+Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/bd71815-regulator.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/acpica/exregion.c | 23 ++---------------------
+ 1 file changed, 2 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/regulator/bd71815-regulator.c b/drivers/regulator/bd71815-regulator.c
-index 16edd9062ca91..5d468303f1029 100644
---- a/drivers/regulator/bd71815-regulator.c
-+++ b/drivers/regulator/bd71815-regulator.c
-@@ -257,7 +257,7 @@ static int buck12_set_hw_dvs_levels(struct device_node *np,
-  * 10: 2.50mV/usec	10mV 4uS
-  * 11: 1.25mV/usec	10mV 8uS
-  */
--static const unsigned int bd7181x_ramp_table[] = { 1250, 2500, 5000, 10000 };
-+static const unsigned int bd7181x_ramp_table[] = { 10000, 5000, 2500, 1250 };
+diff --git a/drivers/acpi/acpica/exregion.c b/drivers/acpi/acpica/exregion.c
+index 82b713a9a1939..4b6b53bd90183 100644
+--- a/drivers/acpi/acpica/exregion.c
++++ b/drivers/acpi/acpica/exregion.c
+@@ -44,7 +44,6 @@ acpi_ex_system_memory_space_handler(u32 function,
+ 	struct acpi_mem_mapping *mm = mem_info->cur_mm;
+ 	u32 length;
+ 	acpi_size map_length;
+-	acpi_size page_boundary_map_length;
+ #ifdef ACPI_MISALIGNMENT_NOT_SUPPORTED
+ 	u32 remainder;
+ #endif
+@@ -138,26 +137,8 @@ acpi_ex_system_memory_space_handler(u32 function,
+ 		map_length = (acpi_size)
+ 		    ((mem_info->address + mem_info->length) - address);
  
- static int bd7181x_led_set_current_limit(struct regulator_dev *rdev,
- 					int min_uA, int max_uA)
+-		/*
+-		 * If mapping the entire remaining portion of the region will cross
+-		 * a page boundary, just map up to the page boundary, do not cross.
+-		 * On some systems, crossing a page boundary while mapping regions
+-		 * can cause warnings if the pages have different attributes
+-		 * due to resource management.
+-		 *
+-		 * This has the added benefit of constraining a single mapping to
+-		 * one page, which is similar to the original code that used a 4k
+-		 * maximum window.
+-		 */
+-		page_boundary_map_length = (acpi_size)
+-		    (ACPI_ROUND_UP(address, ACPI_DEFAULT_PAGE_SIZE) - address);
+-		if (page_boundary_map_length == 0) {
+-			page_boundary_map_length = ACPI_DEFAULT_PAGE_SIZE;
+-		}
+-
+-		if (map_length > page_boundary_map_length) {
+-			map_length = page_boundary_map_length;
+-		}
++		if (map_length > ACPI_DEFAULT_PAGE_SIZE)
++			map_length = ACPI_DEFAULT_PAGE_SIZE;
+ 
+ 		/* Create a new mapping starting at the address given */
+ 
 -- 
 2.43.0
 
