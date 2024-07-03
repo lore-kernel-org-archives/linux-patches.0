@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDEDC1836EE;
-	Wed,  3 Jul 2024 11:30:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5E91836F0;
+	Wed,  3 Jul 2024 11:30:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006255; cv=none; b=XMYU8fw2RbskpW+lvbG0xJAi9lmKrn6DejmnPRZtwEghOG005SpGMpBPXx1aG9AO44jHcTyUdN0ByA5UL09nJM+jU71B8IetWMaw552PmIHOTO1KwGYY7/YGy+9xqmmBy3CVQoC6R9i+fFIO/NqYcwXH2LsLp+/V3e8C1HeXI4Q=
+	t=1720006258; cv=none; b=eLCX11K9ORDKxgyqXkEqSRInmFYyzhkzsa3ayiFXWEJucljvtZQABQZYHAextMeISo7uEgxN2A3WVadYi3sn+juFA3eyLM6pGLN778Gz+TVt3/XLRJa40FdmCWZwoXp1Cb0YKoPrC5OWRrEzxSlj+XRHg+OAxuWANIFfV5Lssfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006255; c=relaxed/simple;
-	bh=4pxjgFnl+aIwtTg8e7+DvIFtZh648lVc58ReUh1RlSM=;
+	s=arc-20240116; t=1720006258; c=relaxed/simple;
+	bh=KUTeuM7mZxp/nxbAUAgit0TOL0Ha6cVCofDGWxzsMXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NZdnSLy1+MlvN092TPkZoSsRy2fkppeIbVlWvZnJkmu6FaSGgCGRmSDB+LDtd4IdWeIGqzSojyJx7Bk+zU3Cq42dF38AuR3c6NtAuqEpIQmhfduishaYD15ruRGGEFluvut6Yvhq4VtN/neZpTN2UBm5hu85nvhLLjjvoTy7ni8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RN/5x2cP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Biv7J8wln/axRTux8I9rpiTNBkzhjo3OkTPC9y+kZK9JB13poplQNtupqzCRvnGtDjznSt9NzWbK/QNMX9PWymr5yP+Rm/usUChAdkQsUh4Lt5DchvJ/+JKVUqgYz/idi8b4cK32N/8Txt/NAcH1B5MNuRx0gbNF4pVfQSP6ZQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xdfRi5wr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RN/5x2cP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E0E2C2BD10;
-	Wed,  3 Jul 2024 11:30:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xdfRi5wr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42903C32781;
+	Wed,  3 Jul 2024 11:30:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006255;
-	bh=4pxjgFnl+aIwtTg8e7+DvIFtZh648lVc58ReUh1RlSM=;
+	s=korg; t=1720006258;
+	bh=KUTeuM7mZxp/nxbAUAgit0TOL0Ha6cVCofDGWxzsMXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RN/5x2cPzpG9eJM2qobkYcraJW7IVz4r0i+5AvXjihLwe3TaTLatrVx/hpUyTSMT5
-	 PXmjVf4rGfRRTuFLL8tFbFI3D1wdIf3El/e30O2MYBrOucyh2UovoC5vLs94CXurmJ
-	 bh16augvuXEa2CGI4CuGZ6boFgGE8d16u0DHGGm0=
+	b=xdfRi5wrsPMleFiFz3OVa8QahA5NT/Y1hA5kUdzgMC2d5F0p1JQZxiHuhR8bxbmrb
+	 Hgjrgkl33EdyrzU8Y0KiKjSHn6My6Vdh2Kig9LCD7K5JPGPLh33o4WZBguHHtC16v3
+	 tOEKlu4mCbLR7/ciN/nrEWPWO3I9NJ3vG2nnYzg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Meng Li <Meng.Li@windriver.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 5.15 321/356] usb: dwc3: core: remove lock of otg mode during gadget suspend/resume to avoid deadlock
-Date: Wed,  3 Jul 2024 12:40:57 +0200
-Message-ID: <20240703102925.259894884@linuxfoundation.org>
+	Vasileios Amoiridis <vassilisamir@gmail.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.15 312/356] iio: chemical: bme680: Fix pressure value output
+Date: Wed,  3 Jul 2024 12:40:48 +0200
+Message-ID: <20240703102924.917319969@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,77 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meng Li <Meng.Li@windriver.com>
+From: Vasileios Amoiridis <vassilisamir@gmail.com>
 
-commit 7838de15bb700c2898a7d741db9b1f3cbc86c136 upstream.
+commit ae1f7b93b52095be6776d0f34957b4f35dda44d9 upstream.
 
-When config CONFIG_USB_DWC3_DUAL_ROLE is selected, and trigger system
-to enter suspend status with below command:
-echo mem > /sys/power/state
-There will be a deadlock issue occurring. Detailed invoking path as
-below:
-dwc3_suspend_common()
-    spin_lock_irqsave(&dwc->lock, flags);              <-- 1st
-    dwc3_gadget_suspend(dwc);
-        dwc3_gadget_soft_disconnect(dwc);
-            spin_lock_irqsave(&dwc->lock, flags);      <-- 2nd
-This issue is exposed by commit c7ebd8149ee5 ("usb: dwc3: gadget: Fix
-NULL pointer dereference in dwc3_gadget_suspend") that removes the code
-of checking whether dwc->gadget_driver is NULL or not. It causes the
-following code is executed and deadlock occurs when trying to get the
-spinlock. In fact, the root cause is the commit 5265397f9442("usb: dwc3:
-Remove DWC3 locking during gadget suspend/resume") that forgot to remove
-the lock of otg mode. So, remove the redundant lock of otg mode during
-gadget suspend/resume.
+The IIO standard units are measured in kPa while the driver
+is using hPa.
 
-Fixes: 5265397f9442 ("usb: dwc3: Remove DWC3 locking during gadget suspend/resume")
-Cc: Xu Yang <xu.yang_2@nxp.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Meng Li <Meng.Li@windriver.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20240618031918.2585799-1-Meng.Li@windriver.com
+Apart from checking the userspace value itself, it is mentioned also
+in the Bosch API [1] that the pressure value is in Pascal.
+
+[1]: https://github.com/boschsensortec/BME68x_SensorAPI/blob/v4.4.8/bme68x_defs.h#L742
+
+Fixes: 1b3bd8592780 ("iio: chemical: Add support for Bosch BME680 sensor")
+Signed-off-by: Vasileios Amoiridis <vassilisamir@gmail.com>
+Link: https://lore.kernel.org/r/20240606212313.207550-2-vassilisamir@gmail.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.c |    6 ------
- 1 file changed, 6 deletions(-)
+ drivers/iio/chemical/bme680_core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -1752,7 +1752,6 @@ assert_reset:
+--- a/drivers/iio/chemical/bme680_core.c
++++ b/drivers/iio/chemical/bme680_core.c
+@@ -678,7 +678,7 @@ static int bme680_read_press(struct bme6
+ 	}
  
- static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
- {
--	unsigned long	flags;
- 	u32 reg;
+ 	*val = bme680_compensate_press(data, adc_press);
+-	*val2 = 100;
++	*val2 = 1000;
+ 	return IIO_VAL_FRACTIONAL;
+ }
  
- 	switch (dwc->current_dr_role) {
-@@ -1790,9 +1789,7 @@ static int dwc3_suspend_common(struct dw
- 			break;
- 
- 		if (dwc->current_otg_role == DWC3_OTG_ROLE_DEVICE) {
--			spin_lock_irqsave(&dwc->lock, flags);
- 			dwc3_gadget_suspend(dwc);
--			spin_unlock_irqrestore(&dwc->lock, flags);
- 			synchronize_irq(dwc->irq_gadget);
- 		}
- 
-@@ -1809,7 +1806,6 @@ static int dwc3_suspend_common(struct dw
- 
- static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
- {
--	unsigned long	flags;
- 	int		ret;
- 	u32		reg;
- 
-@@ -1858,9 +1854,7 @@ static int dwc3_resume_common(struct dwc
- 		if (dwc->current_otg_role == DWC3_OTG_ROLE_HOST) {
- 			dwc3_otg_host_init(dwc);
- 		} else if (dwc->current_otg_role == DWC3_OTG_ROLE_DEVICE) {
--			spin_lock_irqsave(&dwc->lock, flags);
- 			dwc3_gadget_resume(dwc);
--			spin_unlock_irqrestore(&dwc->lock, flags);
- 		}
- 
- 		break;
 
 
