@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5C6136E2A;
-	Wed,  3 Jul 2024 10:46:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3308173352;
+	Wed,  3 Jul 2024 10:46:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003574; cv=none; b=bFgNCXdVEXMhIeBXOlVCGvwoBXZfSV4iFN9voB84/ExlT11yvsmBsyQ/Y8zwME4jnwXRDvSgI+QoPXN5EAPySYOCMVlhy/SkbplN7r1bB2TdtshIB2/ykZ5tNnWF1ihFi4fElvl2GMGLs17X97CYJsO/WAmYrm+vNdDS8G/cSAE=
+	t=1720003577; cv=none; b=Lv0MRFe1wENXAkryV8wIRsr9y7Ym1v0kvjvHfCj50URugZjYwTedQjQliR28uLRZggx1aFRnd1YCkLBrCbaPik3WMCDFtV4CytJ4AYYzDseqk4qUHGqDEx4W1/ZVrLX/1mQcakBOPEqR4aCIYxGxus8mDV+KXmt2ZTqvxe+Ygsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003574; c=relaxed/simple;
-	bh=p5W19nZBLgwkDwj16dkBBxkgsjVXXBAVxK45fpYAvVU=;
+	s=arc-20240116; t=1720003577; c=relaxed/simple;
+	bh=CM4Pr9EvmHOarbgZxQyRe/WvNX6IO1XTme16y3O2zjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KemOdO0NAzI35ad9DXZSrziOixcSR9yfg6IwJjodHFb/f1PSGEHXoxjEIY8rfYtJH2mULfwbHnXX3N/ckqJVvqn66PjfM5gg8C31m/LBWAWQQnbY4QqEBh8mPfDBp8dCL/hjjQCpc7i1o5IxX5s/T6lDuqRy9PW02rY1tIvESMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DcCfjrlf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MtuWKBEQdliKRuFth2rX+wBBRPmgvZcHTWgUI4ZObzW+tPqpsxRFplRDkJAM27JQUqefLEzJBPlp39BxKovCIPnBK8zDMV/Jpw8PgAeyjog2xnMzlAezy0H8tAhvwrW9pPCuXRGbMhNZ3FqfUn2T9GjQ5sqwFHGKPIspcIbgceM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dmnWKyHN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DcCfjrlf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34888C2BD10;
-	Wed,  3 Jul 2024 10:46:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dmnWKyHN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AFB8C2BD10;
+	Wed,  3 Jul 2024 10:46:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003574;
-	bh=p5W19nZBLgwkDwj16dkBBxkgsjVXXBAVxK45fpYAvVU=;
+	s=korg; t=1720003577;
+	bh=CM4Pr9EvmHOarbgZxQyRe/WvNX6IO1XTme16y3O2zjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DcCfjrlfMwLZjTeEqqneQVG0c0Rd3HyUpJEJ1nAfAL0veYu3DuGyzGrUa6p3i5yOC
-	 HVLt1jMhvYIioRo2htG09jy2UHOcGN0yrqHFNOWQqUyubCP7GCcTeJC3db8opfhc8H
-	 v5NozpPF3h/jQbh7/AekFSv2NMD/q26qJlUL6hLw=
+	b=dmnWKyHNL9MVOtCiiPQBW9CkdUWOuGPQiUM18ZVFH/2kv+wS7/z9nIIXsEM+94Ynl
+	 VI/XUbV0Tgyon3Vekv4rFx+wRiOb4BEzO6CUDir24k4/hJruJGbZoh+49kgwbMNjiP
+	 vYzw1KOjV7b6o/mPFUyJJqmUlh1PdKfNanppPH4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>,
+	Martin Hoyer <mhoyer@redhat.com>,
+	John Meneghini <jmeneghi@redhat.com>,
+	Manish Rangankar <mrangankar@marvell.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 062/139] batman-adv: bypass empty buckets in batadv_purge_orig_ref()
-Date: Wed,  3 Jul 2024 12:39:19 +0200
-Message-ID: <20240703102832.782045192@linuxfoundation.org>
+Subject: [PATCH 4.19 063/139] scsi: qedi: Fix crash while reading debugfs attribute
+Date: Wed,  3 Jul 2024 12:39:20 +0200
+Message-ID: <20240703102832.820112402@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -52,108 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Manish Rangankar <mrangankar@marvell.com>
 
-[ Upstream commit 40dc8ab605894acae1473e434944924a22cfaaa0 ]
+[ Upstream commit 28027ec8e32ecbadcd67623edb290dad61e735b5 ]
 
-Many syzbot reports are pointing to soft lockups in
-batadv_purge_orig_ref() [1]
+The qedi_dbg_do_not_recover_cmd_read() function invokes sprintf() directly
+on a __user pointer, which results into the crash.
 
-Root cause is unknown, but we can avoid spending too much
-time there and perhaps get more interesting reports.
+To fix this issue, use a small local stack buffer for sprintf() and then
+call simple_read_from_buffer(), which in turns make the copy_to_user()
+call.
 
-[1]
+BUG: unable to handle page fault for address: 00007f4801111000
+PGD 8000000864df6067 P4D 8000000864df6067 PUD 864df7067 PMD 846028067 PTE 0
+Oops: 0002 [#1] PREEMPT SMP PTI
+Hardware name: HPE ProLiant DL380 Gen10/ProLiant DL380 Gen10, BIOS U30 06/15/2023
+RIP: 0010:memcpy_orig+0xcd/0x130
+RSP: 0018:ffffb7a18c3ffc40 EFLAGS: 00010202
+RAX: 00007f4801111000 RBX: 00007f4801111000 RCX: 000000000000000f
+RDX: 000000000000000f RSI: ffffffffc0bfd7a0 RDI: 00007f4801111000
+RBP: ffffffffc0bfd7a0 R08: 725f746f6e5f6f64 R09: 3d7265766f636572
+R10: ffffb7a18c3ffd08 R11: 0000000000000000 R12: 00007f4881110fff
+R13: 000000007fffffff R14: ffffb7a18c3ffca0 R15: ffffffffc0bfd7af
+FS:  00007f480118a740(0000) GS:ffff98e38af00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f4801111000 CR3: 0000000864b8e001 CR4: 00000000007706e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ ? __die_body+0x1a/0x60
+ ? page_fault_oops+0x183/0x510
+ ? exc_page_fault+0x69/0x150
+ ? asm_exc_page_fault+0x22/0x30
+ ? memcpy_orig+0xcd/0x130
+ vsnprintf+0x102/0x4c0
+ sprintf+0x51/0x80
+ qedi_dbg_do_not_recover_cmd_read+0x2f/0x50 [qedi 6bcfdeeecdea037da47069eca2ba717c84a77324]
+ full_proxy_read+0x50/0x80
+ vfs_read+0xa5/0x2e0
+ ? folio_add_new_anon_rmap+0x44/0xa0
+ ? set_pte_at+0x15/0x30
+ ? do_pte_missing+0x426/0x7f0
+ ksys_read+0xa5/0xe0
+ do_syscall_64+0x58/0x80
+ ? __count_memcg_events+0x46/0x90
+ ? count_memcg_event_mm+0x3d/0x60
+ ? handle_mm_fault+0x196/0x2f0
+ ? do_user_addr_fault+0x267/0x890
+ ? exc_page_fault+0x69/0x150
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+RIP: 0033:0x7f4800f20b4d
 
-watchdog: BUG: soft lockup - CPU#0 stuck for 27s! [kworker/u4:6:621]
-Modules linked in:
-irq event stamp: 6182794
- hardirqs last  enabled at (6182793): [<ffff8000801dae10>] __local_bh_enable_ip+0x224/0x44c kernel/softirq.c:386
- hardirqs last disabled at (6182794): [<ffff80008ad66a78>] __el1_irq arch/arm64/kernel/entry-common.c:533 [inline]
- hardirqs last disabled at (6182794): [<ffff80008ad66a78>] el1_interrupt+0x24/0x68 arch/arm64/kernel/entry-common.c:551
- softirqs last  enabled at (6182792): [<ffff80008aab71c4>] spin_unlock_bh include/linux/spinlock.h:396 [inline]
- softirqs last  enabled at (6182792): [<ffff80008aab71c4>] batadv_purge_orig_ref+0x114c/0x1228 net/batman-adv/originator.c:1287
- softirqs last disabled at (6182790): [<ffff80008aab61dc>] spin_lock_bh include/linux/spinlock.h:356 [inline]
- softirqs last disabled at (6182790): [<ffff80008aab61dc>] batadv_purge_orig_ref+0x164/0x1228 net/batman-adv/originator.c:1271
-CPU: 0 PID: 621 Comm: kworker/u4:6 Not tainted 6.8.0-rc7-syzkaller-g707081b61156 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/29/2024
-Workqueue: bat_events batadv_purge_orig
-pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : should_resched arch/arm64/include/asm/preempt.h:79 [inline]
- pc : __local_bh_enable_ip+0x228/0x44c kernel/softirq.c:388
- lr : __local_bh_enable_ip+0x224/0x44c kernel/softirq.c:386
-sp : ffff800099007970
-x29: ffff800099007980 x28: 1fffe00018fce1bd x27: dfff800000000000
-x26: ffff0000d2620008 x25: ffff0000c7e70de8 x24: 0000000000000001
-x23: 1fffe00018e57781 x22: dfff800000000000 x21: ffff80008aab71c4
-x20: ffff0001b40136c0 x19: ffff0000c72bbc08 x18: 1fffe0001a817bb0
-x17: ffff800125414000 x16: ffff80008032116c x15: 0000000000000001
-x14: 1fffe0001ee9d610 x13: 0000000000000000 x12: 0000000000000003
-x11: 0000000000000000 x10: 0000000000ff0100 x9 : 0000000000000000
-x8 : 00000000005e5789 x7 : ffff80008aab61dc x6 : 0000000000000000
-x5 : 0000000000000000 x4 : 0000000000000001 x3 : 0000000000000000
-x2 : 0000000000000006 x1 : 0000000000000080 x0 : ffff800125414000
-Call trace:
-  __daif_local_irq_enable arch/arm64/include/asm/irqflags.h:27 [inline]
-  arch_local_irq_enable arch/arm64/include/asm/irqflags.h:49 [inline]
-  __local_bh_enable_ip+0x228/0x44c kernel/softirq.c:386
-  __raw_spin_unlock_bh include/linux/spinlock_api_smp.h:167 [inline]
-  _raw_spin_unlock_bh+0x3c/0x4c kernel/locking/spinlock.c:210
-  spin_unlock_bh include/linux/spinlock.h:396 [inline]
-  batadv_purge_orig_ref+0x114c/0x1228 net/batman-adv/originator.c:1287
-  batadv_purge_orig+0x20/0x70 net/batman-adv/originator.c:1300
-  process_one_work+0x694/0x1204 kernel/workqueue.c:2633
-  process_scheduled_works kernel/workqueue.c:2706 [inline]
-  worker_thread+0x938/0xef4 kernel/workqueue.c:2787
-  kthread+0x288/0x310 kernel/kthread.c:388
-  ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:860
-Sending NMI from CPU 0 to CPUs 1:
-NMI backtrace for cpu 1
-CPU: 1 PID: 0 Comm: swapper/1 Not tainted 6.8.0-rc7-syzkaller-g707081b61156 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/29/2024
-pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : arch_local_irq_enable+0x8/0xc arch/arm64/include/asm/irqflags.h:51
- lr : default_idle_call+0xf8/0x128 kernel/sched/idle.c:103
-sp : ffff800093a17d30
-x29: ffff800093a17d30 x28: dfff800000000000 x27: 1ffff00012742fb4
-x26: ffff80008ec9d000 x25: 0000000000000000 x24: 0000000000000002
-x23: 1ffff00011d93a74 x22: ffff80008ec9d3a0 x21: 0000000000000000
-x20: ffff0000c19dbc00 x19: ffff8000802d0fd8 x18: 1fffe00036804396
-x17: ffff80008ec9d000 x16: ffff8000802d089c x15: 0000000000000001
-x14: 1fffe00036805f10 x13: 0000000000000000 x12: 0000000000000003
-x11: 0000000000000001 x10: 0000000000000003 x9 : 0000000000000000
-x8 : 00000000000ce8d1 x7 : ffff8000804609e4 x6 : 0000000000000000
-x5 : 0000000000000001 x4 : 0000000000000001 x3 : ffff80008ad6aac0
-x2 : 0000000000000000 x1 : ffff80008aedea60 x0 : ffff800125436000
-Call trace:
-  __daif_local_irq_enable arch/arm64/include/asm/irqflags.h:27 [inline]
-  arch_local_irq_enable+0x8/0xc arch/arm64/include/asm/irqflags.h:49
-  cpuidle_idle_call kernel/sched/idle.c:170 [inline]
-  do_idle+0x1f0/0x4e8 kernel/sched/idle.c:312
-  cpu_startup_entry+0x5c/0x74 kernel/sched/idle.c:410
-  secondary_start_kernel+0x198/0x1c0 arch/arm64/kernel/smp.c:272
-  __secondary_switched+0xb8/0xbc arch/arm64/kernel/head.S:404
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Tested-by: Martin Hoyer <mhoyer@redhat.com>
+Reviewed-by: John Meneghini <jmeneghi@redhat.com>
+Signed-off-by: Manish Rangankar <mrangankar@marvell.com>
+Link: https://lore.kernel.org/r/20240415072155.30840-1-mrangankar@marvell.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/originator.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/qedi/qedi_debugfs.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/net/batman-adv/originator.c b/net/batman-adv/originator.c
-index 1d295da3e342b..c1ad1ae21eeac 100644
---- a/net/batman-adv/originator.c
-+++ b/net/batman-adv/originator.c
-@@ -1358,6 +1358,8 @@ void batadv_purge_orig_ref(struct batadv_priv *bat_priv)
- 	/* for all origins... */
- 	for (i = 0; i < hash->size; i++) {
- 		head = &hash->table[i];
-+		if (hlist_empty(head))
-+			continue;
- 		list_lock = &hash->list_locks[i];
+diff --git a/drivers/scsi/qedi/qedi_debugfs.c b/drivers/scsi/qedi/qedi_debugfs.c
+index fd914ca4149a8..6bb5f2b31b881 100644
+--- a/drivers/scsi/qedi/qedi_debugfs.c
++++ b/drivers/scsi/qedi/qedi_debugfs.c
+@@ -136,15 +136,11 @@ static ssize_t
+ qedi_dbg_do_not_recover_cmd_read(struct file *filp, char __user *buffer,
+ 				 size_t count, loff_t *ppos)
+ {
+-	size_t cnt = 0;
+-
+-	if (*ppos)
+-		return 0;
++	char buf[64];
++	int len;
  
- 		spin_lock_bh(list_lock);
+-	cnt = sprintf(buffer, "do_not_recover=%d\n", qedi_do_not_recover);
+-	cnt = min_t(int, count, cnt - *ppos);
+-	*ppos += cnt;
+-	return cnt;
++	len = sprintf(buf, "do_not_recover=%d\n", qedi_do_not_recover);
++	return simple_read_from_buffer(buffer, count, ppos, buf, len);
+ }
+ 
+ static int
 -- 
 2.43.0
 
