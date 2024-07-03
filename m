@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C877718FC8F;
-	Wed,  3 Jul 2024 11:24:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C4518FC8F;
+	Wed,  3 Jul 2024 11:24:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005877; cv=none; b=npRzlE0ljbJ7/8/X5qjmsURBLsRLhK8IeSFPYb3+q9GlrBQhdOBU6VGoaLLsymNwowIjmtNEEbbR0CYAtqkh+INCgpA0DxpWksQWWRYM/U0G640x+4YoSvXvuQzA2KxMHB4uGWXn92erFu2VF9OkoH1WxMUljvrPUtD333NrCGw=
+	t=1720005880; cv=none; b=deHmJfQXx36BlVgvegMVYWxdPSsguqcD+LikXU/nF0zYRLzIRmnFg0Jw7r2HblVmoBtDAD9Mu1jGHTQvv2P0mYkHuXbf1xmzhXwmz1VRu8AyZ1ceHv2T+3sXly+4e8gjriarZ1xE4AvqDKXPnhjhL6GWnnVkRjg6GP34f0LHSvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005877; c=relaxed/simple;
-	bh=g8nivP6HH+AAm6eGCRmV0Wmv+6rfpPx2sPwdPRhX4DA=;
+	s=arc-20240116; t=1720005880; c=relaxed/simple;
+	bh=SADyX61874o3SQgdW/MTBr9oQ53w2fMhFyLF8WchG5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TNOEBWrJjrBdhFuS7UFS3bpF7CXRPCjLlReNNxJDN7KsnNFQq305WjDZ81GncJrYZPnf6o75X66MAtKzqRzTQEirlIjwlgaKKkFRDy6VtQHLo+Jsasqu7HtVWltoiNyFAP7YtmnUHmJeOT/xaZr5ltwubbymrJAiwQKIZymhde0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K879pY+9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ujv0QLSdHO4ajbEa1NGaRkIOFiGjrGGqTN/CaQdkZKwweaCW+aG0p8caV/Hr7xwLN77tAhZF8ALzm872b+LA7cQDjrKlaE0qEBoTAJj7fnY//no5Qmh7gNw6ViQMZxFwQgOVXSfWxncYvQdIuNPPznO8DZ+rv1hXpMO7EzcGwi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lsMCJ3ac; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K879pY+9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45A3AC4AF0C;
-	Wed,  3 Jul 2024 11:24:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lsMCJ3ac"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C152C2BD10;
+	Wed,  3 Jul 2024 11:24:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005877;
-	bh=g8nivP6HH+AAm6eGCRmV0Wmv+6rfpPx2sPwdPRhX4DA=;
+	s=korg; t=1720005880;
+	bh=SADyX61874o3SQgdW/MTBr9oQ53w2fMhFyLF8WchG5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K879pY+9Ty6bBhYmeJ1C08iuy+yLHC/56pJiFSoNp/YqETRTVtsMRG5Oa4YcG0lNA
-	 CPlm3mBSZ/Cl0t5eW0UwjGwd9i2KHIPRQ37qppzWRMEQrUVhZQH094kJEzO09w3X1D
-	 ymgTEvuTeeOU4ctd3Nsldi6ZUPkC+Kem+PjrFMCo=
+	b=lsMCJ3acsOWyRg0eX5qw1GYXCUwzUTdwxgCiJ28ihGxqsOfAXZJ1u/O6kyaPpuc4c
+	 /iGkvwvX3w0pvWcJJW5XbhXDjSmIovypFdRXGoGx5C3fBB86iOh/BodMhoe+3M36td
+	 HKO6CAq3n+XKQB/KyuVeE7wOZuHohChifOtwRJA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neal Cardwell <ncardwell@google.com>,
-	Yuchung Cheng <ycheng@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 227/356] tcp: clear tp->retrans_stamp in tcp_rcv_fastopen_synack()
-Date: Wed,  3 Jul 2024 12:39:23 +0200
-Message-ID: <20240703102921.702005708@linuxfoundation.org>
+	Grygorii Tertychnyi <grygorii.tertychnyi@leica-geosystems.com>,
+	Peter Korsgaard <peter@korsgaard.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 5.15 228/356] i2c: ocores: set IACK bit after core is enabled
+Date: Wed,  3 Jul 2024 12:39:24 +0200
+Message-ID: <20240703102921.738941752@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -52,57 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Grygorii Tertychnyi <grembeter@gmail.com>
 
-commit 9e046bb111f13461d3f9331e24e974324245140e upstream.
+commit 5a72477273066b5b357801ab2d315ef14949d402 upstream.
 
-Some applications were reporting ETIMEDOUT errors on apparently
-good looking flows, according to packet dumps.
+Setting IACK bit when core is disabled does not clear the "Interrupt Flag"
+bit in the status register, and the interrupt remains pending.
 
-We were able to root cause the issue to an accidental setting
-of tp->retrans_stamp in the following scenario:
+Sometimes it causes failure for the very first message transfer, that is
+usually a device probe.
 
-- client sends TFO SYN with data.
-- server has TFO disabled, ACKs only SYN but not payload.
-- client receives SYNACK covering only SYN.
-- tcp_ack() eats SYN and sets tp->retrans_stamp to 0.
-- tcp_rcv_fastopen_synack() calls tcp_xmit_retransmit_queue()
-  to retransmit TFO payload w/o SYN, sets tp->retrans_stamp to "now",
-  but we are not in any loss recovery state.
-- TFO payload is ACKed.
-- we are not in any loss recovery state, and don't see any dupacks,
-  so we don't get to any code path that clears tp->retrans_stamp.
-- tp->retrans_stamp stays non-zero for the lifetime of the connection.
-- after first RTO, tcp_clamp_rto_to_user_timeout() clamps second RTO
-  to 1 jiffy due to bogus tp->retrans_stamp.
-- on clamped RTO with non-zero icsk_retransmits, retransmits_timed_out()
-  sets start_ts from tp->retrans_stamp from TFO payload retransmit
-  hours/days ago, and computes bogus long elapsed time for loss recovery,
-  and suffers ETIMEDOUT early.
+Hence, set IACK bit after core is enabled to clear pending interrupt.
 
-Fixes: a7abf3cd76e1 ("tcp: consider using standard rtx logic in tcp_rcv_fastopen_synack()")
-CC: stable@vger.kernel.org
-Co-developed-by: Neal Cardwell <ncardwell@google.com>
-Signed-off-by: Neal Cardwell <ncardwell@google.com>
-Co-developed-by: Yuchung Cheng <ycheng@google.com>
-Signed-off-by: Yuchung Cheng <ycheng@google.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240614130615.396837-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 18f98b1e3147 ("[PATCH] i2c: New bus driver for the OpenCores I2C controller")
+Signed-off-by: Grygorii Tertychnyi <grygorii.tertychnyi@leica-geosystems.com>
+Acked-by: Peter Korsgaard <peter@korsgaard.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_input.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/i2c/busses/i2c-ocores.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -6104,6 +6104,7 @@ static bool tcp_rcv_fastopen_synack(stru
- 		skb_rbtree_walk_from(data)
- 			 tcp_mark_skb_lost(sk, data);
- 		tcp_xmit_retransmit_queue(sk);
-+		tp->retrans_stamp = 0;
- 		NET_INC_STATS(sock_net(sk),
- 				LINUX_MIB_TCPFASTOPENACTIVEFAIL);
- 		return true;
+--- a/drivers/i2c/busses/i2c-ocores.c
++++ b/drivers/i2c/busses/i2c-ocores.c
+@@ -442,8 +442,8 @@ static int ocores_init(struct device *de
+ 	oc_setreg(i2c, OCI2C_PREHIGH, prescale >> 8);
+ 
+ 	/* Init the device */
+-	oc_setreg(i2c, OCI2C_CMD, OCI2C_CMD_IACK);
+ 	oc_setreg(i2c, OCI2C_CONTROL, ctrl | OCI2C_CTRL_EN);
++	oc_setreg(i2c, OCI2C_CMD, OCI2C_CMD_IACK);
+ 
+ 	return 0;
+ }
 
 
