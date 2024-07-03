@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE1617556B;
-	Wed,  3 Jul 2024 11:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D04717A5A5;
+	Wed,  3 Jul 2024 11:24:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005865; cv=none; b=RS9uyZ3kkTE/GpR9MFM2yVRKVHAcGyunhRgpntzLQfQHvND9pmxZi0LFzNzapPy43cHL6O4Tv7CzHQ3hf+KcRQX+zS2eKVENxnhl+vQ341mfULEXTGiAGYmEJrO6TmqqnMKCv7QLhCkun/UnhXhXMKfL1fD+Cxyira0ZwThwL1w=
+	t=1720005868; cv=none; b=qoXaaV89wIqnWVbOZMuQ67tXLWx4ygjZwmYMLYAPzgoeoX0I+ZV+HtUoFYoGcQ2FUwaZzT+uVjyY9fAwPGq2+b6FGUe3FJHYgKgqJYaH0YhSrMgR4foLJwmz9qFyo4hTQKNfdvhV5Uk+pNaYycCh4IcCaE6pek0U5uVAJsKJE78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005865; c=relaxed/simple;
-	bh=j/ifpxQ9TEf9eC+Bh2Zhoo/7eLj/E7EY/5u3UHj6bJ4=;
+	s=arc-20240116; t=1720005868; c=relaxed/simple;
+	bh=E5e3Li6Y4k/CY9X5zPRlwQtT1LB3mW2nkBMpF9sHdC8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=T+Exd1FeM8mlBfZijTSulgq4XIHoVJ0szKCf5Ur+sOeu9pR+DQyV6XXGf7ChMZG7QJjAosZ/oZUO9kckLDHpMXc6Q5Ir1YOGZYorP0lZiTKNB35e0u1lrbRkBjykkI4/4wGZtBrl5n1WTsdVIsojGipDl4lFRfNEnn0tO3mo2n4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=akYSNTQZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P/If8sSY2kCvTdfF0CS3fB7GzOCqK/I6gXa1a+cmqQcRh5ssdCDhk9CY7DbjuK11bv5T3/rjeIF+C+z+pGb4ueS6m8NjdWLow08u4BqMRK/AzKbXfSpqSYwQPFJMBpyaS2zhcWWHDQ+DDBnwDtrDfAepN9COLzL055Zp3t5XlD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tw6IRgpc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="akYSNTQZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 131E7C2BD10;
-	Wed,  3 Jul 2024 11:24:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tw6IRgpc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0361AC2BD10;
+	Wed,  3 Jul 2024 11:24:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005865;
-	bh=j/ifpxQ9TEf9eC+Bh2Zhoo/7eLj/E7EY/5u3UHj6bJ4=;
+	s=korg; t=1720005868;
+	bh=E5e3Li6Y4k/CY9X5zPRlwQtT1LB3mW2nkBMpF9sHdC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=akYSNTQZixhO1rJqo1Ut8GbejzNo23gctM5DiVaqHt1w9ZQYBgOQEBxTh+HzS60uT
-	 fT4s+6AFCOhAm2Wy5u/9c3jaS6fwEG8Rr4IikQPJjTJV8AtJzSgOQTIGWaC3q5u3SZ
-	 u2jPbhLZgeuCLD2kObdfhJe/gkgHexFufBXMayLA=
+	b=tw6IRgpcXg66A5AUTo38HQP49xQHLYJozvNSG0Jof8vwpKR0x1OXbxl9tTMHh5X6n
+	 2zGMsWOk5q8vHAJo1ZGOC3g8m81Gl6U5m+sboBpCzokhIY3LaOGY2QsqA5gV2eOA8O
+	 J4E3SQkt2a28+NbyO9UFdfkOc7DUrCJDIM52ZO8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ville Syrjala <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 5.15 223/356] drm/i915/mso: using joiner is not possible with eDP MSO
-Date: Wed,  3 Jul 2024 12:39:19 +0200
-Message-ID: <20240703102921.550287890@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 224/356] drm/radeon: fix UBSAN warning in kv_dpm.c
+Date: Wed,  3 Jul 2024 12:39:20 +0200
+Message-ID: <20240703102921.589772860@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -44,48 +44,36 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 49cc17967be95d64606d5684416ee51eec35e84a upstream.
+commit a498df5421fd737d11bfd152428ba6b1c8538321 upstream.
 
-It's not possible to use the joiner at the same time with eDP MSO. When
-a panel needs MSO, it's not optional, so MSO trumps joiner.
+Adds bounds check for sumo_vid_mapping_entry.
 
-v3: Only change intel_dp_has_joiner(), leave debugfs alone (Ville)
-
-Fixes: bc71194e8897 ("drm/i915/edp: enable eDP MSO during link training")
-Cc: <stable@vger.kernel.org> # v5.13+
-Cc: Ville Syrjala <ville.syrjala@linux.intel.com>
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/1668
-Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240614142311.589089-1-jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 8b5a92ca24eb96bb71e2a55e352687487d87687f)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/radeon/sumo_dpm.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/i915/display/intel_dp.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp.c
-@@ -226,6 +226,10 @@ bool intel_dp_can_bigjoiner(struct intel
- 	struct intel_encoder *encoder = &intel_dig_port->base;
- 	struct drm_i915_private *dev_priv = to_i915(encoder->base.dev);
+--- a/drivers/gpu/drm/radeon/sumo_dpm.c
++++ b/drivers/gpu/drm/radeon/sumo_dpm.c
+@@ -1621,6 +1621,8 @@ void sumo_construct_vid_mapping_table(st
  
-+	/* eDP MSO is not compatible with joiner */
-+	if (intel_dp->mso_link_count)
-+		return false;
-+
- 	return DISPLAY_VER(dev_priv) >= 12 ||
- 		(DISPLAY_VER(dev_priv) == 11 &&
- 		 encoder->port != PORT_A);
+ 	for (i = 0; i < SUMO_MAX_HARDWARE_POWERLEVELS; i++) {
+ 		if (table[i].ulSupportedSCLK != 0) {
++			if (table[i].usVoltageIndex >= SUMO_MAX_NUMBER_VOLTAGES)
++				continue;
+ 			vid_mapping_table->entries[table[i].usVoltageIndex].vid_7bit =
+ 				table[i].usVoltageID;
+ 			vid_mapping_table->entries[table[i].usVoltageIndex].vid_2bit =
 
 
