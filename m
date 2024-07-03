@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9739E173336;
-	Wed,  3 Jul 2024 10:53:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E181E173336;
+	Wed,  3 Jul 2024 10:53:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004029; cv=none; b=pt2ZkXbhZQHaQnZ2iYASWNeix62/O0lQhhON2rP9f8yK85PMIbiawE7+YB0oPXqL0Sa/dpdQLLJJurbFtxGK3J+ARZmWtE7YmkniaNudMlNHxzZLUOJ2JknGB8W7YZoqktwsNcFcxmcLKjH6v15cNntrKOKZBqpRa6XylHjxpPs=
+	t=1720004033; cv=none; b=LGQsbme2u8h1m7cBh7a3T0TwCZdlZ6TLpSNX0GoXhggxQn4JyRWggjHKIukRZTCTp+9HmDANOf571VkBhRatYtZUUj8JClXIZ7C7DoOz47BUMoRnUjO+OE5lc6fBsCxwTfwDOjLMEzeFsk1NLwqGifigMEcHB716XWkarQ7SNK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004029; c=relaxed/simple;
-	bh=BbOTqd4YTSS7qFAFp3yhnuAyDh6imN04rkrXQIS8lPQ=;
+	s=arc-20240116; t=1720004033; c=relaxed/simple;
+	bh=6tnkqEdgD1VAZeSnbQl76kIwoN3MPuT9k2PKyNWUH64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MXGZuyVHoX6+nRIUY3K2cvuD0nrkxRu/xMH6zvN5z8QfCIHGthIKKh2tIxPpa+SzbGNuZeyvYFbjk1VbzcJ3kz29sz4DLMpwMDGgAAHsaQ1PqsyfRUeqim6jLf+SNuSVqlIKyP0zR4yiX4TmHboDbzU0lAy/GKYzuvWEH8o+Ad0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BtNIxKNy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CWwKPflSSfQDX9Jd51msCrZi0HRTuv4t8QT9ueHWenLIYKmzDiTwVjCRzt9NMpLUxb4g0xzb8jFIoPHDgBO3LmnLxL1qeluOyr917huImOfIbZ/AgTi/80+3Py+CeFKTB9sBUw5BG0PgTE6pJXWjhGUmfqAw770PJj5l95TyXvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SMhEKcMI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BtNIxKNy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C00DC2BD10;
-	Wed,  3 Jul 2024 10:53:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SMhEKcMI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FB39C2BD10;
+	Wed,  3 Jul 2024 10:53:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004029;
-	bh=BbOTqd4YTSS7qFAFp3yhnuAyDh6imN04rkrXQIS8lPQ=;
+	s=korg; t=1720004032;
+	bh=6tnkqEdgD1VAZeSnbQl76kIwoN3MPuT9k2PKyNWUH64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BtNIxKNyrbrDSLUS+Do48jGIcilFDDJYkueX3VfkNTopWXtMiUkoFcYpMphOnHxcc
-	 n7dwb5eQfWuTDBkqLt3hPzfdELx7a8Zbg7Aw3oDVz8M5YUKIqdIp+Yyw652QYihEo/
-	 0eYjw24757AZv1/3RKVp2DcHw7tcD7Y+rLL4yWz4=
+	b=SMhEKcMIgMQBvuDI4acIPruEak/B+gj3fgKjowr6KiJHYHO+7DAHFf1toz9ekGCEO
+	 wB3VrcRjtnqy+VXgIMFLyjvMs1CEQwSBUVNWN+U1DLcGjr1/mwqaVa3sieqARwwkX/
+	 XSlxtwZlB5/F9ndKRmGWEgE3Xuef94jFUd+mQixM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 101/189] MIPS: Routerboard 532: Fix vendor retry check code
-Date: Wed,  3 Jul 2024 12:39:22 +0200
-Message-ID: <20240703102845.313518181@linuxfoundation.org>
+Subject: [PATCH 5.4 102/189] mips: bmips: BCM6358: make sure CBR is correctly set
+Date: Wed,  3 Jul 2024 12:39:23 +0200
+Message-ID: <20240703102845.352483446@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -45,48 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-[ Upstream commit ae9daffd9028f2500c9ac1517e46d4f2b57efb80 ]
+[ Upstream commit ce5cdd3b05216b704a704f466fb4c2dff3778caf ]
 
-read_config_dword() contains strange condition checking ret for a
-number of values. The ret variable, however, is always zero because
-config_access() never returns anything else. Thus, the retry is always
-taken until number of tries is exceeded.
+It was discovered that some device have CBR address set to 0 causing
+kernel panic when arch_sync_dma_for_cpu_all is called.
 
-The code looks like it wants to check *val instead of ret to see if the
-read gave an error response.
+This was notice in situation where the system is booted from TP1 and
+BMIPS_GET_CBR() returns 0 instead of a valid address and
+!!(read_c0_brcm_cmt_local() & (1 << 31)); not failing.
 
-Fixes: 73b4390fb234 ("[MIPS] Routerboard 532: Support for base system")
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+The current check whether RAC flush should be disabled or not are not
+enough hence lets check if CBR is a valid address or not.
+
+Fixes: ab327f8acdf8 ("mips: bmips: BCM6358: disable RAC flush for TP1")
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Acked-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/pci/ops-rc32434.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/mips/bmips/setup.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/mips/pci/ops-rc32434.c b/arch/mips/pci/ops-rc32434.c
-index 874ed6df97683..34b9323bdabb0 100644
---- a/arch/mips/pci/ops-rc32434.c
-+++ b/arch/mips/pci/ops-rc32434.c
-@@ -112,8 +112,8 @@ static int read_config_dword(struct pci_bus *bus, unsigned int devfn,
- 	 * gives them time to settle
+diff --git a/arch/mips/bmips/setup.c b/arch/mips/bmips/setup.c
+index 36fbedcbd518d..4ef8842100b30 100644
+--- a/arch/mips/bmips/setup.c
++++ b/arch/mips/bmips/setup.c
+@@ -110,7 +110,8 @@ static void bcm6358_quirks(void)
+ 	 * RAC flush causes kernel panics on BCM6358 when booting from TP1
+ 	 * because the bootloader is not initializing it properly.
  	 */
- 	if (where == PCI_VENDOR_ID) {
--		if (ret == 0xffffffff || ret == 0x00000000 ||
--		    ret == 0x0000ffff || ret == 0xffff0000) {
-+		if (*val == 0xffffffff || *val == 0x00000000 ||
-+		    *val == 0x0000ffff || *val == 0xffff0000) {
- 			if (delay > 4)
- 				return 0;
- 			delay *= 2;
+-	bmips_rac_flush_disable = !!(read_c0_brcm_cmt_local() & (1 << 31));
++	bmips_rac_flush_disable = !!(read_c0_brcm_cmt_local() & (1 << 31)) ||
++				  !!BMIPS_GET_CBR();
+ }
+ 
+ static void bcm6368_quirks(void)
 -- 
 2.43.0
 
