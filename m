@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FD531849EB;
-	Wed,  3 Jul 2024 10:55:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F254173348;
+	Wed,  3 Jul 2024 10:55:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004125; cv=none; b=MXeDEcFXqGDMc/GqkAyDA22tMs0EOqGl12ylzkkNMR4+idFXvPqUdXrUwp0Mj7WJOEzwd/77NFDOs8R1mpjbvPiCFdybHLhz2/LXnyTaAg7HR9jgtw/p1cdSLGnssmr2F9JJvjY0JbBnFuEgPtVqlO6kihVoUcP4U+RblJ9y0II=
+	t=1720004133; cv=none; b=HFfyWWrvyGRAxeJccLkVaZqtZiWsfpjOmoSR4G/N3/IJz7+OucXs59DeDdWhWZsGVx5if/ppeP9v5KwjHM/SOYjpGMnoyFu9m8CPsWL2+0cGvfGVMtkN4anak+w/6NiowEf0vGi6/HLz94xIU3rpNsG+eTMzBcBMw/L/1uv6sIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004125; c=relaxed/simple;
-	bh=uEKcYxdyflaa4naqix7LKO9RQHYORdjoaATyZ1+ep1A=;
+	s=arc-20240116; t=1720004133; c=relaxed/simple;
+	bh=iAZ+yqHMCpUevtlYvjPWysY+vGxskdyCGon7vC/ElUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pwdWADuYfmGkXQpxbRutWME9MgNryA/nx/YZ/Fmyo9X95SWHL6A76kBaaOaS43TGpbJudcFnqQkZdZKDGlTkHCGguL/cmG0xru/ilmJiSkOJRrAh+159SAwNWynxvHv69yJyLfck0ghcV4+2bNLtuMg2hxhBHrdewruBY0HQ4rA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kWBYHuf7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ijYhux5W9dxW9Kw0NjthFu2OscxwG2ux0J/kxjwgIR8Z51xbifg0Y4cQ4SV59iMEZCXPgRxeWA52Y1deA6drQRbWBElIBnu1M8THuDbaRctI65OfqpvG7BbPgYGwrsD7idcnzwjxM5mGhvBgWdd3AaX9Bv/IV5x0daxn3j/+SDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pe62kuVT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kWBYHuf7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D9BC4AF0B;
-	Wed,  3 Jul 2024 10:55:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pe62kuVT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88995C2BD10;
+	Wed,  3 Jul 2024 10:55:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004125;
-	bh=uEKcYxdyflaa4naqix7LKO9RQHYORdjoaATyZ1+ep1A=;
+	s=korg; t=1720004133;
+	bh=iAZ+yqHMCpUevtlYvjPWysY+vGxskdyCGon7vC/ElUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kWBYHuf71NKMnHzHAgcgjfzJrI1q1EDsoVHW4kZDs5gklPCES70Qi9ScCDIUt/IMi
-	 1BGaL0oC0jLoRQJiFaOC9kUMycCz1LSerpSEIudZYfDuP9zrbyM3ollx4M0NoamRtO
-	 ysBGT7VJXgjydiuRGy0m2TiipJFiVE43ELtDwWtQ=
+	b=Pe62kuVThHDlT3yVvxo5QYKnlXC6KHnR1ZDERa4CY7HMX51RONv+GBqtOqQt2Zuad
+	 gbAXd9K+ZdXsd+qTW3mnP+wmGJ226r7R38i5BFE1Co/magaEHwuw0tNpr8HraM+uy0
+	 3Ff76Q1h0Nr4vkV6OSQWFtzm6ZBIfuLg0+2VLVD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Juergen Christ <jchrist@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 089/189] rcutorture: Fix rcu_torture_one_read() pipe_count overflow comment
-Date: Wed,  3 Jul 2024 12:39:10 +0200
-Message-ID: <20240703102844.861121201@linuxfoundation.org>
+Subject: [PATCH 5.4 124/189] s390/cpacf: Make use of invalid opcode produce a link error
+Date: Wed,  3 Jul 2024 12:39:45 +0200
+Message-ID: <20240703102846.175355179@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -52,37 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Harald Freudenberger <freude@linux.ibm.com>
 
-[ Upstream commit 8b9b443fa860276822b25057cb3ff3b28734dec0 ]
+[ Upstream commit 32e8bd6423fc127d2b37bdcf804fd76af3bbec79 ]
 
-The "pipe_count > RCU_TORTURE_PIPE_LEN" check has a comment saying "Should
-not happen, but...".  This is only true when testing an RCU whose grace
-periods are always long enough.  This commit therefore fixes this comment.
+Instead of calling BUG() at runtime introduce and use a prototype for a
+non-existing function to produce a link error during compile when a not
+supported opcode is used with the __cpacf_query() or __cpacf_check_opcode()
+inline functions.
 
-Reported-by: Linus Torvalds <torvalds@linux-foundation.org>
-Closes: https://lore.kernel.org/lkml/CAHk-=wi7rJ-eGq+xaxVfzFEgbL9tdf6Kc8Z89rCpfcQOKm74Tw@mail.gmail.com/
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
+Suggested-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
+Reviewed-by: Juergen Christ <jchrist@linux.ibm.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/rcutorture.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/s390/include/asm/cpacf.h | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/rcu/rcutorture.c b/kernel/rcu/rcutorture.c
-index 3c9feca1eab17..aef4d01c4f61e 100644
---- a/kernel/rcu/rcutorture.c
-+++ b/kernel/rcu/rcutorture.c
-@@ -1291,7 +1291,8 @@ static bool rcu_torture_one_read(struct torture_random_state *trsp)
- 	preempt_disable();
- 	pipe_count = p->rtort_pipe_count;
- 	if (pipe_count > RCU_TORTURE_PIPE_LEN) {
--		/* Should not happen, but... */
-+		// Should not happen in a correct RCU implementation,
-+		// happens quite often for torture_type=busted.
- 		pipe_count = RCU_TORTURE_PIPE_LEN;
+diff --git a/arch/s390/include/asm/cpacf.h b/arch/s390/include/asm/cpacf.h
+index fa31f71cf5746..0f6ff2008a159 100644
+--- a/arch/s390/include/asm/cpacf.h
++++ b/arch/s390/include/asm/cpacf.h
+@@ -161,6 +161,13 @@
+ 
+ typedef struct { unsigned char bytes[16]; } cpacf_mask_t;
+ 
++/*
++ * Prototype for a not existing function to produce a link
++ * error if __cpacf_query() or __cpacf_check_opcode() is used
++ * with an invalid compile time const opcode.
++ */
++void __cpacf_bad_opcode(void);
++
+ static __always_inline void __cpacf_query_rre(u32 opc, u8 r1, u8 r2,
+ 					      cpacf_mask_t *mask)
+ {
+@@ -232,7 +239,7 @@ static __always_inline void __cpacf_query(unsigned int opcode,
+ 		__cpacf_query_rre(CPACF_PRNO, 2, 4, mask);
+ 		break;
+ 	default:
+-		BUG();
++		__cpacf_bad_opcode();
  	}
- 	completed = cur_ops->get_gp_seq();
+ }
+ 
+@@ -257,7 +264,8 @@ static __always_inline int __cpacf_check_opcode(unsigned int opcode)
+ 	case CPACF_KMA:
+ 		return test_facility(146);	/* check for MSA8 */
+ 	default:
+-		BUG();
++		__cpacf_bad_opcode();
++		return 0;
+ 	}
+ }
+ 
 -- 
 2.43.0
 
