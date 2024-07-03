@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A1E180A99;
-	Wed,  3 Jul 2024 11:18:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C01D180A99;
+	Wed,  3 Jul 2024 11:18:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005505; cv=none; b=mmKuTDTCavFshWjj67Om5vVz1zDqDA8M0uN/uR+3XzbUduFGR0tCVqSrMLZyaUd5bI0Tbp0wco0WepZRzovALtHzpCZ37uekHyNEgf9EdMaOtYKRLbCq/wWuIhcEzcXZhqhvCU6ftB/LjSnamlszfcYPrqBSNqrJvzwcTjzm/jI=
+	t=1720005508; cv=none; b=jBxQL2krBUbmRtTaF5G3XZn0OwqQdFGq3FsS0gn+LI8DsxNadPyylkGIrRIbYqUHScAPLOFMF+CmClEvQW6lVCAH16dN3ipxMYcheQYNgb3hS3heWfJP8huOprvjemiKWPwoUMRPW/t2IQuUh8VTEs+ct9euj0YWy4KOn4MmcYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005505; c=relaxed/simple;
-	bh=BMZXlhuxYT6Zr8qvJY1cFalk/Fe+6TtFvP4aYyWk2xE=;
+	s=arc-20240116; t=1720005508; c=relaxed/simple;
+	bh=JQcelS4OJ/9iM4MRux4ZeFVlCAHjM4sOKrv/R3fwrzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=blkOzOxnUw1WGS+qtRcSaolDZnZgILOpQ98hcimjAdEIf8Bsc8Xtc3H87H7IDVJY8mzJhcRVSl5Fza8GQnk81tNAcIr++0wGGp8lV8GkmCSPzX8tJx2hK/rEwvYnP7sEAvfDy3NtW3/cBl/tiguOXK+agqSTN+AD0TY6fwwPd4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uHauJ237; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TaeHDoNepGrHb6hdHLBR7e1IpXFC0zX+TU8y8Mdhoy/eCLeUgcMq5laqR6yw2DmC+Ge0MfNNWFVfXoAmtd3PvNGDeSJfkkzWUyhFEjNEQr6AyzBlh6uf0zfmx++KPI1Zf1fzQD9QmJxf7bnBVPog9pnzgjjd0jQZTAwVZpe1Na8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hTjuB2el; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uHauJ237"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4799C2BD10;
-	Wed,  3 Jul 2024 11:18:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hTjuB2el"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7994C2BD10;
+	Wed,  3 Jul 2024 11:18:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005505;
-	bh=BMZXlhuxYT6Zr8qvJY1cFalk/Fe+6TtFvP4aYyWk2xE=;
+	s=korg; t=1720005508;
+	bh=JQcelS4OJ/9iM4MRux4ZeFVlCAHjM4sOKrv/R3fwrzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uHauJ2377XzKxRJzoCrYvRn5LWBQwsNgtsjUuX6yxyytdnJGCKMXsNPqQhaZY26wH
-	 Z/Gyq2nb4yBnWhsKaRibT1amR/hzghB6m3Ry7hz6+N1Jpb58AMgGWjpFWZtvKR/LQt
-	 z9BBHlFtKmhreYCvFlqS7zOS3sHw2DxBvBIhB4MU=
+	b=hTjuB2elzCpmoedIhplWuUHzk7Jokk817JSSRvVvj027uh2cxwQR3Yp2Y2m/OpIPP
+	 8fAtNS0Cw0xfE5VuNlOuvktejIUmGJZpLNpZ4P3sV73ViVb2eC+eyeKtkKKme0cLB8
+	 M1gKadfBxo/tqfB7iVzMv4kxoTCRzvRdfMNWQRcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
+	Gal Pressman <gal@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 103/356] tcp: fix race in tcp_v6_syn_recv_sock()
-Date: Wed,  3 Jul 2024 12:37:19 +0200
-Message-ID: <20240703102916.997217362@linuxfoundation.org>
+Subject: [PATCH 5.15 104/356] net/mlx5e: Fix features validation check for tunneled UDP (non-VXLAN) packets
+Date: Wed,  3 Jul 2024 12:37:20 +0200
+Message-ID: <20240703102917.034258697@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -52,52 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit d37fe4255abe8e7b419b90c5847e8ec2b8debb08 ]
+[ Upstream commit 791b4089e326271424b78f2fae778b20e53d071b ]
 
-tcp_v6_syn_recv_sock() calls ip6_dst_store() before
-inet_sk(newsk)->pinet6 has been set up.
+Move the vxlan_features_check() call to after we verified the packet is
+a tunneled VXLAN packet.
 
-This means ip6_dst_store() writes over the parent (listener)
-np->dst_cookie.
+Without this, tunneled UDP non-VXLAN packets (for ex. GENENVE) might
+wrongly not get offloaded.
+In some cases, it worked by chance as GENEVE header is the same size as
+VXLAN, but it is obviously incorrect.
 
-This is racy because multiple threads could share the same
-parent and their final np->dst_cookie could be wrong.
-
-Move ip6_dst_store() call after inet_sk(newsk)->pinet6
-has been changed and after the copy of parent ipv6_pinfo.
-
-Fixes: e994b2f0fb92 ("tcp: do not lock listener to process SYN packets")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: e3cfc7e6b7bd ("net/mlx5e: TX, Add geneve tunnel stateless offload support")
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/tcp_ipv6.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index c18fdddbfa09d..c1f1fa6e33161 100644
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -1331,7 +1331,6 @@ static struct sock *tcp_v6_syn_recv_sock(const struct sock *sk, struct sk_buff *
- 	 */
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 79d687c663d54..a0870da414538 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -3989,7 +3989,7 @@ static netdev_features_t mlx5e_tunnel_features_check(struct mlx5e_priv *priv,
  
- 	newsk->sk_gso_type = SKB_GSO_TCPV6;
--	ip6_dst_store(newsk, dst, NULL, NULL);
- 	inet6_sk_rx_dst_set(newsk, skb);
+ 		/* Verify if UDP port is being offloaded by HW */
+ 		if (mlx5_vxlan_lookup_port(priv->mdev->vxlan, port))
+-			return features;
++			return vxlan_features_check(skb, features);
  
- 	inet_sk(newsk)->pinet6 = tcp_inet6_sk(newsk);
-@@ -1342,6 +1341,8 @@ static struct sock *tcp_v6_syn_recv_sock(const struct sock *sk, struct sk_buff *
+ #if IS_ENABLED(CONFIG_GENEVE)
+ 		/* Support Geneve offload for default UDP port */
+@@ -4015,7 +4015,6 @@ netdev_features_t mlx5e_features_check(struct sk_buff *skb,
+ 	struct mlx5e_priv *priv = netdev_priv(netdev);
  
- 	memcpy(newnp, np, sizeof(struct ipv6_pinfo));
+ 	features = vlan_features_check(skb, features);
+-	features = vxlan_features_check(skb, features);
  
-+	ip6_dst_store(newsk, dst, NULL, NULL);
-+
- 	newsk->sk_v6_daddr = ireq->ir_v6_rmt_addr;
- 	newnp->saddr = ireq->ir_v6_loc_addr;
- 	newsk->sk_v6_rcv_saddr = ireq->ir_v6_loc_addr;
+ 	/* Validate if the tunneled packet is being offloaded by HW */
+ 	if (skb->encapsulation &&
 -- 
 2.43.0
 
