@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5D318A95E;
-	Wed,  3 Jul 2024 10:57:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE79818C334;
+	Wed,  3 Jul 2024 10:57:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004225; cv=none; b=KhLUUk5IA4JgzZda0U9wIQBgSKOAhVdipCkukCMIRGrz/b+2CgHPmj7ue2YnKRuaZY79yAPRT0XToMmIrwKm3CJh0wEGsL3hK7qegDT8UcFCyvfdAuzBFJQ+SxNdP+AohQCpJaQ5bPcyoIqcPD6V1oe9i2/yvyFgAdCwmv4KXdI=
+	t=1720004228; cv=none; b=cuDuNF0ShVa4kXk5U1boNX7fgKVXix1L666cQXtfcpOES0KPbjJTHbNtNcUrt3bSGGjxfIcVdI/2BRurRqEEW9mkHrkFKMtXiTek/u6cil4nuEMhDZPKkccD9OcAVnBDdhKDykgX8hCA5nLFXeUI3NygVasYQVKUvYFCI0/2IeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004225; c=relaxed/simple;
-	bh=VQEBxE8Sxa/rL6+ZQOjr6Gipu0Y9L8uBO5dsRU/t1/I=;
+	s=arc-20240116; t=1720004228; c=relaxed/simple;
+	bh=wBdLyhkdtZQ3/slrCOaZeKBG/TklFZUzh6BvpCDX9Pk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tmC1H/cwwRT6CRZoWrcJGgL6eqsUWpYFBVmXfmaynopx+ktypZk8tQbmV90jM7cTrat7br0reiu/Zrx3xfZeRpVSnSzAa1dmzvyxi/AtcfLn1whB8FyFXl48lzD5v+gaYMMLDlsbLqGKJPraMiXzHQK1NxJer/gfTcBM3wqUryE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iu090SAu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MwFaqAOF0gQn/yvLWQzahtJTFyp+k2ylbvSMtBXWRjYXmc4p22JxgAa6QzE19Bd/SC6RN5kqYXpetb0xvVN/MHPg+rdCvQ/a1B5BUsK5s3/UV9VHCAWt0NGe0gEVkeh/dJvYCVeJpix5j/07/UfvUhfu7HLXctgoQCap0+uUXaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pN1amrb4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iu090SAu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA19C32781;
-	Wed,  3 Jul 2024 10:57:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pN1amrb4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB6A2C2BD10;
+	Wed,  3 Jul 2024 10:57:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004225;
-	bh=VQEBxE8Sxa/rL6+ZQOjr6Gipu0Y9L8uBO5dsRU/t1/I=;
+	s=korg; t=1720004228;
+	bh=wBdLyhkdtZQ3/slrCOaZeKBG/TklFZUzh6BvpCDX9Pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iu090SAuHDLBB9oW4zqaF8eOyJX8M3tLhvMXPsORqygs41ZRkucVaKGsKOr8coWMo
-	 AcLQdozZai77JGt7rgt5S83DNmAKa2RkaAHw6rI4lvm/qSEXFGs/Y8zyvSkUnI2vl7
-	 tNyeComy90iUs4ytAC0KfmgKDUlFao2jJ9twX/mY=
+	b=pN1amrb4eNsIJYdpvdiIp6egHhc/ElYbxrYdDvfXhXbwGKCFRxjGLG330z3UsHhTv
+	 /cvKX6QiKGnwe26IamX7bhdNyhwC3umgOd8rFeVaTW7AFDuxR1wxHKTJx7NH4jVUGy
+	 RbzHjqwC+6/g1IyPHhkUO0liR86jepz+6hixldM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Naveen Naidu <naveennaidu479@gmail.com>,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 129/189] PCI: Add PCI_ERROR_RESPONSE and related definitions
-Date: Wed,  3 Jul 2024 12:39:50 +0200
-Message-ID: <20240703102846.359094459@linuxfoundation.org>
+Subject: [PATCH 5.4 130/189] x86/amd_nb: Check for invalid SMN reads
+Date: Wed,  3 Jul 2024 12:39:51 +0200
+Message-ID: <20240703102846.395682728@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -46,58 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Naveen Naidu <naveennaidu479@gmail.com>
+From: Yazen Ghannam <yazen.ghannam@amd.com>
 
-[ Upstream commit 57bdeef4716689d9b0e3571034d65cf420f6efcd ]
+[ Upstream commit c625dabbf1c4a8e77e4734014f2fde7aa9071a1f ]
 
-A config or MMIO read from a PCI device that doesn't exist or doesn't
-respond causes a PCI error. There's no real data to return to satisfy the
-CPU read, so most hardware fabricates ~0 data.
+AMD Zen-based systems use a System Management Network (SMN) that
+provides access to implementation-specific registers.
 
-Add a PCI_ERROR_RESPONSE definition for that and use it where appropriate
-to make these checks consistent and easier to find.
+SMN accesses are done indirectly through an index/data pair in PCI
+config space. The PCI config access may fail and return an error code.
+This would prevent the "read" value from being updated.
 
-Also add helper definitions PCI_SET_ERROR_RESPONSE() and
-PCI_POSSIBLE_ERROR() to make the code more readable.
+However, the PCI config access may succeed, but the return value may be
+invalid. This is in similar fashion to PCI bad reads, i.e. return all
+bits set.
 
-Suggested-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://lore.kernel.org/r/55563bf4dfc5d3fdc96695373c659d099bf175b1.1637243717.git.naveennaidu479@gmail.com
-Signed-off-by: Naveen Naidu <naveennaidu479@gmail.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Pali Rohár <pali@kernel.org>
-Stable-dep-of: c625dabbf1c4 ("x86/amd_nb: Check for invalid SMN reads")
+Most systems will return 0 for SMN addresses that are not accessible.
+This is in line with AMD convention that unavailable registers are
+Read-as-Zero/Writes-Ignored.
+
+However, some systems will return a "PCI Error Response" instead. This
+value, along with an error code of 0 from the PCI config access, will
+confuse callers of the amd_smn_read() function.
+
+Check for this condition, clear the return value, and set a proper error
+code.
+
+Fixes: ddfe43cdc0da ("x86/amd_nb: Add SMN and Indirect Data Fabric access for AMD Fam17h")
+Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230403164244.471141-1-yazen.ghannam@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/pci.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/x86/kernel/amd_nb.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/pci.h b/include/linux/pci.h
-index 1cd5caa567cf5..7edc6de9e88c2 100644
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -129,6 +129,15 @@ enum pci_interrupt_pin {
- /* The number of legacy PCI INTx interrupts */
- #define PCI_NUM_INTX	4
+diff --git a/arch/x86/kernel/amd_nb.c b/arch/x86/kernel/amd_nb.c
+index c4bc01da820ef..e3b5de7b95988 100644
+--- a/arch/x86/kernel/amd_nb.c
++++ b/arch/x86/kernel/amd_nb.c
+@@ -166,7 +166,14 @@ static int __amd_smn_rw(u16 node, u32 address, u32 *value, bool write)
  
-+/*
-+ * Reading from a device that doesn't respond typically returns ~0.  A
-+ * successful read from a device may also return ~0, so you need additional
-+ * information to reliably identify errors.
-+ */
-+#define PCI_ERROR_RESPONSE		(~0ULL)
-+#define PCI_SET_ERROR_RESPONSE(val)	(*(val) = ((typeof(*(val))) PCI_ERROR_RESPONSE))
-+#define PCI_POSSIBLE_ERROR(val)		((val) == ((typeof(val)) PCI_ERROR_RESPONSE))
+ int amd_smn_read(u16 node, u32 address, u32 *value)
+ {
+-	return __amd_smn_rw(node, address, value, false);
++	int err = __amd_smn_rw(node, address, value, false);
 +
- /*
-  * pci_power_t values must match the bits in the Capabilities PME_Support
-  * and Control/Status PowerState fields in the Power Management capability.
++	if (PCI_POSSIBLE_ERROR(*value)) {
++		err = -ENODEV;
++		*value = 0;
++	}
++
++	return err;
+ }
+ EXPORT_SYMBOL_GPL(amd_smn_read);
+ 
 -- 
 2.43.0
 
