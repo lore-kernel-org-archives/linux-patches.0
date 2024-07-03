@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F254173348;
-	Wed,  3 Jul 2024 10:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3488F1741DD;
+	Wed,  3 Jul 2024 10:55:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004133; cv=none; b=HFfyWWrvyGRAxeJccLkVaZqtZiWsfpjOmoSR4G/N3/IJz7+OucXs59DeDdWhWZsGVx5if/ppeP9v5KwjHM/SOYjpGMnoyFu9m8CPsWL2+0cGvfGVMtkN4anak+w/6NiowEf0vGi6/HLz94xIU3rpNsG+eTMzBcBMw/L/1uv6sIc=
+	t=1720004136; cv=none; b=MLXw1stmQQlytQcIqVUyGwRH62nJ0lEzJeJqn3M6eH8PVuZ0bssFFFhPmNFLTf3rjJv+dkUEvjvFPtpG8EjpUF7c9JpYdu4dPUDfwEKv1tj9INwYwOvm6+P3yIZE6B2TSEhHRjSyhFti9zcYuhrEoe9c6xPEnaC1fQCj4edOGi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004133; c=relaxed/simple;
-	bh=iAZ+yqHMCpUevtlYvjPWysY+vGxskdyCGon7vC/ElUk=;
+	s=arc-20240116; t=1720004136; c=relaxed/simple;
+	bh=x2h4Pr+a+LjAkfRqgr7BCXsxanK5dinpBLbQMrhTBV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ijYhux5W9dxW9Kw0NjthFu2OscxwG2ux0J/kxjwgIR8Z51xbifg0Y4cQ4SV59iMEZCXPgRxeWA52Y1deA6drQRbWBElIBnu1M8THuDbaRctI65OfqpvG7BbPgYGwrsD7idcnzwjxM5mGhvBgWdd3AaX9Bv/IV5x0daxn3j/+SDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pe62kuVT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tl06VQMpZ72xfppzYVycrgG8gflxkAe12EKnPSQEyllgea2FXgRVm+e1OPxloeJf3pvNkXfYnuV6VzM3l3AZ10lnxuuQw6NC9mlYTdQsHZ9og+fFikp7i52OFjBOO6h75n6Q57sNOt/RC0GMBYO8dg5yhGqQBD2w7ytKoroMFkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nq/dsYJ+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pe62kuVT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88995C2BD10;
-	Wed,  3 Jul 2024 10:55:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nq/dsYJ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B28C4AF0D;
+	Wed,  3 Jul 2024 10:55:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004133;
-	bh=iAZ+yqHMCpUevtlYvjPWysY+vGxskdyCGon7vC/ElUk=;
+	s=korg; t=1720004136;
+	bh=x2h4Pr+a+LjAkfRqgr7BCXsxanK5dinpBLbQMrhTBV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pe62kuVThHDlT3yVvxo5QYKnlXC6KHnR1ZDERa4CY7HMX51RONv+GBqtOqQt2Zuad
-	 gbAXd9K+ZdXsd+qTW3mnP+wmGJ226r7R38i5BFE1Co/magaEHwuw0tNpr8HraM+uy0
-	 3Ff76Q1h0Nr4vkV6OSQWFtzm6ZBIfuLg0+2VLVD8=
+	b=Nq/dsYJ+VKFnD/9HQ3T909rLSCfoPrVovAYAxJ4qdvbBRwVD7zPDN4r/eFoKCcTHr
+	 Y8Z8NgP+3dX+y77LL0GKsfN+LSrShc3Q86QwehWuar9fWDcDUAzuojoBhWeNWEhf29
+	 GQEAyNXJUJgjZ0prj81lVPmoeGDsYhlnG4e7IybY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Juergen Christ <jchrist@linux.ibm.com>,
+	Marc Ferland <marc.ferland@sonatest.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 124/189] s390/cpacf: Make use of invalid opcode produce a link error
-Date: Wed,  3 Jul 2024 12:39:45 +0200
-Message-ID: <20240703102846.175355179@linuxfoundation.org>
+Subject: [PATCH 5.4 133/189] iio: dac: ad5592r: fix temperature channel scaling value
+Date: Wed,  3 Jul 2024 12:39:54 +0200
+Message-ID: <20240703102846.505655192@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -53,63 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Marc Ferland <marc.ferland@sonatest.com>
 
-[ Upstream commit 32e8bd6423fc127d2b37bdcf804fd76af3bbec79 ]
+[ Upstream commit 279428df888319bf68f2686934897301a250bb84 ]
 
-Instead of calling BUG() at runtime introduce and use a prototype for a
-non-existing function to produce a link error during compile when a not
-supported opcode is used with the __cpacf_query() or __cpacf_check_opcode()
-inline functions.
+The scale value for the temperature channel is (assuming Vref=2.5 and
+the datasheet):
 
-Suggested-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
-Reviewed-by: Juergen Christ <jchrist@linux.ibm.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+    376.7897513
+
+When calculating both val and val2 for the temperature scale we
+use (3767897513/25) and multiply it by Vref (here I assume 2500mV) to
+obtain:
+
+  2500 * (3767897513/25) ==> 376789751300
+
+Finally we divide with remainder by 10^9 to get:
+
+    val = 376
+    val2 = 789751300
+
+However, we return IIO_VAL_INT_PLUS_MICRO (should have been NANO) as
+the scale type. So when converting the raw temperature value to the
+'processed' temperature value we will get (assuming raw=810,
+offset=-753):
+
+    processed = (raw + offset) * scale_val
+              = (810 + -753) * 376
+	      = 21432
+
+    processed += div((raw + offset) * scale_val2, 10^6)
+              += div((810 + -753) * 789751300, 10^6)
+	      += 45015
+    ==> 66447
+    ==> 66.4 Celcius
+
+instead of the expected 21.5 Celsius.
+
+Fix this issue by changing IIO_VAL_INT_PLUS_MICRO to
+IIO_VAL_INT_PLUS_NANO.
+
+Fixes: 56ca9db862bf ("iio: dac: Add support for the AD5592R/AD5593R ADCs/DACs")
+Signed-off-by: Marc Ferland <marc.ferland@sonatest.com>
+Link: https://lore.kernel.org/r/20240501150554.1871390-1-marc.ferland@sonatest.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/cpacf.h | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/iio/dac/ad5592r-base.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/include/asm/cpacf.h b/arch/s390/include/asm/cpacf.h
-index fa31f71cf5746..0f6ff2008a159 100644
---- a/arch/s390/include/asm/cpacf.h
-+++ b/arch/s390/include/asm/cpacf.h
-@@ -161,6 +161,13 @@
+diff --git a/drivers/iio/dac/ad5592r-base.c b/drivers/iio/dac/ad5592r-base.c
+index 5c242479bb811..75025be02dd29 100644
+--- a/drivers/iio/dac/ad5592r-base.c
++++ b/drivers/iio/dac/ad5592r-base.c
+@@ -414,7 +414,7 @@ static int ad5592r_read_raw(struct iio_dev *iio_dev,
+ 			s64 tmp = *val * (3767897513LL / 25LL);
+ 			*val = div_s64_rem(tmp, 1000000000LL, val2);
  
- typedef struct { unsigned char bytes[16]; } cpacf_mask_t;
+-			return IIO_VAL_INT_PLUS_MICRO;
++			return IIO_VAL_INT_PLUS_NANO;
+ 		}
  
-+/*
-+ * Prototype for a not existing function to produce a link
-+ * error if __cpacf_query() or __cpacf_check_opcode() is used
-+ * with an invalid compile time const opcode.
-+ */
-+void __cpacf_bad_opcode(void);
-+
- static __always_inline void __cpacf_query_rre(u32 opc, u8 r1, u8 r2,
- 					      cpacf_mask_t *mask)
- {
-@@ -232,7 +239,7 @@ static __always_inline void __cpacf_query(unsigned int opcode,
- 		__cpacf_query_rre(CPACF_PRNO, 2, 4, mask);
- 		break;
- 	default:
--		BUG();
-+		__cpacf_bad_opcode();
- 	}
- }
- 
-@@ -257,7 +264,8 @@ static __always_inline int __cpacf_check_opcode(unsigned int opcode)
- 	case CPACF_KMA:
- 		return test_facility(146);	/* check for MSA8 */
- 	default:
--		BUG();
-+		__cpacf_bad_opcode();
-+		return 0;
- 	}
- }
- 
+ 		mutex_lock(&st->lock);
 -- 
 2.43.0
 
