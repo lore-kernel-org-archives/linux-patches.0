@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C4D17C7AB;
-	Wed,  3 Jul 2024 11:16:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0065F1741C5;
+	Wed,  3 Jul 2024 11:17:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005417; cv=none; b=GOefeL5pOnyJp/rJZHnxYCrZepZpK99C12SkwZ6pb1vhb0BcEwS/is0SQqlj/fcyoTedrW9WB2QNhBxCJ5rCv/LcYnFeObbdZEVlEfWcfbVVHWN2F2dkxh3ohXArouHYCkUDrQHfzfpEd/UhyvI99JKePNHVLKQ/VG7RgDlq+lc=
+	t=1720005421; cv=none; b=ohSMzTtLnSauppFFM9hSW+8I42LkH7NxxF8qXHl8wdrhinMBlII+zkXppKnK5V8k4/55mQ7FMB6NkX4ucK4J/6OTtC6Yd8PRhZKLvgGYb2cJaP9/VAlHCYH/w58rZCGR3Oc66IW2zxgBCzhifCF4d6dvfnP+3xvxH3UCjgTyxko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005417; c=relaxed/simple;
-	bh=unQXsFke/mh/0wh4YVFtdn1s10nuGWUnY1Av0qApqDo=;
+	s=arc-20240116; t=1720005421; c=relaxed/simple;
+	bh=zd0M0y2qAyv8cqUlFwEHaFry0wsYZyHjATSJz4y259o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sMpAa8dLByNGwdHiaO5xVRFR6KKHUWON8cvUVGbelJZOfs/edGivfjxygiasvLjtQt2ruADJZmIAOOxZon3VdxnK0bR4HePhS5iDSULlGLUzvb27pYcBfR9GBjTVIlYg1RwHkKNPvvRQJ5ikav1sqMnMgHHidu6MsKAsIBHkU20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/UbgDcu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M0iLoUqj+8NlWggd4qo9/Y3V+p8/uYgq0k5GO1rEFFqEemTobFOTkqQl/w8TaagIc15YaMSVcfFJXF/tHDw2FtiPtvkcYscKhxBEkix1JQy3l/9vdUqW+nyuJ/huhWnT9P+Zin692C7aNkkpNnyBVOLQyulnqsgOBd1XpiGmlC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H52EdSE4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/UbgDcu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49FA5C2BD10;
-	Wed,  3 Jul 2024 11:16:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H52EdSE4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B422C2BD10;
+	Wed,  3 Jul 2024 11:17:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005417;
-	bh=unQXsFke/mh/0wh4YVFtdn1s10nuGWUnY1Av0qApqDo=;
+	s=korg; t=1720005420;
+	bh=zd0M0y2qAyv8cqUlFwEHaFry0wsYZyHjATSJz4y259o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J/UbgDcu+w3kUqZv4t60Bg2oFMyEbzf0Fip5oZVNVsWpC6T9vxcp4n2VoYJieHcej
-	 resFITLIykem3Cc4t9rCeFZnBYwa+/2bvpcheZszZ9/OTOMnuejx0a+2+UrZC9tnyt
-	 XN0z0/W/IopazfwFK3mFfinHqaLbi5UfV8Jk23xU=
+	b=H52EdSE4WP6bZRaCGkMtikNHh38aUi5rkzd8Yg5Qb4SuYfvL3Vv3wDcbuW0dd9uho
+	 7VESQ8XbfHEka8Aoz4FaKdTA4pC6EsEnqaAb6wK6kMdl1ylcRsNpH8tjFJu3IvdwBl
+	 O/1E0Fw3gqopINa6oYrgNp8vLm+r8UIOyMk6fX3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+c8166c541d3971bf6c87@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 073/356] nilfs2: fix nilfs_empty_dir() misjudgment and long loop on I/O errors
-Date: Wed,  3 Jul 2024 12:36:49 +0200
-Message-ID: <20240703102915.864794134@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	syzbot+5f996b83575ef4058638@syzkaller.appspotmail.com,
+	syzbot+1b2abad17596ad03dcff@syzkaller.appspotmail.com
+Subject: [PATCH 5.15 074/356] USB: class: cdc-wdm: Fix CPU lockup caused by excessive log messages
+Date: Wed,  3 Jul 2024 12:36:50 +0200
+Message-ID: <20240703102915.902580164@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -52,51 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-[ Upstream commit 7373a51e7998b508af7136530f3a997b286ce81c ]
+commit 22f00812862564b314784167a89f27b444f82a46 upstream.
 
-The error handling in nilfs_empty_dir() when a directory folio/page read
-fails is incorrect, as in the old ext2 implementation, and if the
-folio/page cannot be read or nilfs_check_folio() fails, it will falsely
-determine the directory as empty and corrupt the file system.
+The syzbot fuzzer found that the interrupt-URB completion callback in
+the cdc-wdm driver was taking too long, and the driver's immediate
+resubmission of interrupt URBs with -EPROTO status combined with the
+dummy-hcd emulation to cause a CPU lockup:
 
-In addition, since nilfs_empty_dir() does not immediately return on a
-failed folio/page read, but continues to loop, this can cause a long loop
-with I/O if i_size of the directory's inode is also corrupted, causing the
-log writer thread to wait and hang, as reported by syzbot.
+cdc_wdm 1-1:1.0: nonzero urb status received: -71
+cdc_wdm 1-1:1.0: wdm_int_callback - 0 bytes
+watchdog: BUG: soft lockup - CPU#0 stuck for 26s! [syz-executor782:6625]
+CPU#0 Utilization every 4s during lockup:
+	#1:  98% system,	  0% softirq,	  3% hardirq,	  0% idle
+	#2:  98% system,	  0% softirq,	  3% hardirq,	  0% idle
+	#3:  98% system,	  0% softirq,	  3% hardirq,	  0% idle
+	#4:  98% system,	  0% softirq,	  3% hardirq,	  0% idle
+	#5:  98% system,	  1% softirq,	  3% hardirq,	  0% idle
+Modules linked in:
+irq event stamp: 73096
+hardirqs last  enabled at (73095): [<ffff80008037bc00>] console_emit_next_record kernel/printk/printk.c:2935 [inline]
+hardirqs last  enabled at (73095): [<ffff80008037bc00>] console_flush_all+0x650/0xb74 kernel/printk/printk.c:2994
+hardirqs last disabled at (73096): [<ffff80008af10b00>] __el1_irq arch/arm64/kernel/entry-common.c:533 [inline]
+hardirqs last disabled at (73096): [<ffff80008af10b00>] el1_interrupt+0x24/0x68 arch/arm64/kernel/entry-common.c:551
+softirqs last  enabled at (73048): [<ffff8000801ea530>] softirq_handle_end kernel/softirq.c:400 [inline]
+softirqs last  enabled at (73048): [<ffff8000801ea530>] handle_softirqs+0xa60/0xc34 kernel/softirq.c:582
+softirqs last disabled at (73043): [<ffff800080020de8>] __do_softirq+0x14/0x20 kernel/softirq.c:588
+CPU: 0 PID: 6625 Comm: syz-executor782 Tainted: G        W          6.10.0-rc2-syzkaller-g8867bbd4a056 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/02/2024
 
-Fix these issues by making nilfs_empty_dir() immediately return a false
-value (0) if it fails to get a directory folio/page.
+Testing showed that the problem did not occur if the two error
+messages -- the first two lines above -- were removed; apparently adding
+material to the kernel log takes a surprisingly large amount of time.
 
-Link: https://lkml.kernel.org/r/20240604134255.7165-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+c8166c541d3971bf6c87@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c8166c541d3971bf6c87
-Fixes: 2ba466d74ed7 ("nilfs2: directory entry operations")
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In any case, the best approach for preventing these lockups and to
+avoid spamming the log with thousands of error messages per second is
+to ratelimit the two dev_err() calls.  Therefore we replace them with
+dev_err_ratelimited().
+
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Suggested-by: Greg KH <gregkh@linuxfoundation.org>
+Reported-and-tested-by: syzbot+5f996b83575ef4058638@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-usb/00000000000073d54b061a6a1c65@google.com/
+Reported-and-tested-by: syzbot+1b2abad17596ad03dcff@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-usb/000000000000f45085061aa9b37e@google.com/
+Fixes: 9908a32e94de ("USB: remove err() macro from usb class drivers")
+Link: https://lore.kernel.org/linux-usb/40dfa45b-5f21-4eef-a8c1-51a2f320e267@rowland.harvard.edu/
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/29855215-52f5-4385-b058-91f42c2bee18@rowland.harvard.edu
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/dir.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/class/cdc-wdm.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nilfs2/dir.c b/fs/nilfs2/dir.c
-index 22f1f75a90c1a..552234ef22fe7 100644
---- a/fs/nilfs2/dir.c
-+++ b/fs/nilfs2/dir.c
-@@ -627,7 +627,7 @@ int nilfs_empty_dir(struct inode *inode)
+--- a/drivers/usb/class/cdc-wdm.c
++++ b/drivers/usb/class/cdc-wdm.c
+@@ -266,14 +266,14 @@ static void wdm_int_callback(struct urb
+ 			dev_err(&desc->intf->dev, "Stall on int endpoint\n");
+ 			goto sw; /* halt is cleared in work */
+ 		default:
+-			dev_err(&desc->intf->dev,
++			dev_err_ratelimited(&desc->intf->dev,
+ 				"nonzero urb status received: %d\n", status);
+ 			break;
+ 		}
+ 	}
  
- 		kaddr = nilfs_get_page(inode, i, &page);
- 		if (IS_ERR(kaddr))
--			continue;
-+			return 0;
- 
- 		de = (struct nilfs_dir_entry *)kaddr;
- 		kaddr += nilfs_last_byte(inode, i) - NILFS_DIR_REC_LEN(1);
--- 
-2.43.0
-
+ 	if (urb->actual_length < sizeof(struct usb_cdc_notification)) {
+-		dev_err(&desc->intf->dev, "wdm_int_callback - %d bytes\n",
++		dev_err_ratelimited(&desc->intf->dev, "wdm_int_callback - %d bytes\n",
+ 			urb->actual_length);
+ 		goto exit;
+ 	}
 
 
