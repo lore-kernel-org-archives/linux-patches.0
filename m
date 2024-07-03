@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D047618307D;
-	Wed,  3 Jul 2024 11:07:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7539183077;
+	Wed,  3 Jul 2024 11:07:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004843; cv=none; b=aPBuSy5aI2GVi9FGX88yV4TDDThAsY/tX7GJWOUxI9VY7R9qHL+Vx4bZJ5Kvz3cYg3J8LdEc8OooIKl8O9+GANQ4aw+iK7IIMgubUuM/YUojHIZCt05PmxMXUe1LIXb9OHCsc6A1lKEVlg45tbGRX0PYxEIm9pXxTa3QWhzmcgk=
+	t=1720004846; cv=none; b=uDPO8Y26miVNtXy+0BLXdukvaNnjlEa9WxoKHBHmNpKtH2Dy2Ce1Lg8Y4sIDYMqqHDGnLYGStgq0J8NmZdT5k1saauqvLXe1lF1d1bigIM9ay+ji+BTzAzQm3gkI5ZGFL5os9diqD4jyGgbjAe5YhCXEWwGzfF677TRmj6xTWWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004843; c=relaxed/simple;
-	bh=wWvhQ18stvlRO6/d52s47oiutxPubwyojDEjAfetW0M=;
+	s=arc-20240116; t=1720004846; c=relaxed/simple;
+	bh=Vumlpc+llwP+FG3a4s6mKuLHenZ/Eb3DcgNfXq9swAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nccrcv/S+h+EiAiGyCVwBZTOd83c5fQK9MdDQ6DWdy913u9KlQcEpPpffIq5IZ0Z0RoUjj7aZriGJMyC0Yw9mSD9xY+sondgCg9h10FLlCFuzNC1VFUu4hfaBu0VBdjtKDq20Lzgitn6cE2ZBaCORZMwYAVjVBokb8ig/pOe2R4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b8S1S7OA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W2bPfjYvFkbGXIJ5z+H5UySmsOgvUy7lzlff6byh0Nh/rzpzIZ1mis5gGbmB0QaEUezctHUy0EndKjTcTGEo0/0tieJ2BQFKzdiKeOmR3I3/gc5yuYiB2zPJdtscUTA2K2/t9Xq9AOInHYh8f5JS8C+NVGTXM7dRTjEfPhtkjHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kmGYt6OI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b8S1S7OA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5708EC2BD10;
-	Wed,  3 Jul 2024 11:07:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kmGYt6OI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C348C2BD10;
+	Wed,  3 Jul 2024 11:07:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004843;
-	bh=wWvhQ18stvlRO6/d52s47oiutxPubwyojDEjAfetW0M=;
+	s=korg; t=1720004846;
+	bh=Vumlpc+llwP+FG3a4s6mKuLHenZ/Eb3DcgNfXq9swAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b8S1S7OAVppbLx4elbskKFcUmJI7PvFeXTsKUtOZSxT7cwnrqnyVQTYgbu/ktcVGE
-	 s4w9Rt6kfheSxBMGTQn+T1ArO1xZwzHkTRGWLQsAg3Z+6dz1RWYvyqB3aQ9mi6Y+DC
-	 HRT37A2JSyNH5xi/qs4vo+aajL9vtlYFDzXVHVAU=
+	b=kmGYt6OIe7Qz3nvTunspXxwvJ5yB88ImLuDita4mjNHo2SLIuwWBplGEvZISYkAeG
+	 y75d+YPqvz8zq7oNFCSeCDBjqrZcKDSvVqJ4rv7Vn/QZ5JZdvcKIIxkjTNgNoi+Nbf
+	 zaJg0w+k4eYLe3ykaRDEOz3Vf+njnxdONN2KWdso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Vamshi Gajjela <vamshigajjela@google.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 177/290] knfsd: LOOKUP can return an illegal error value
-Date: Wed,  3 Jul 2024 12:39:18 +0200
-Message-ID: <20240703102910.859438986@linuxfoundation.org>
+Subject: [PATCH 5.10 178/290] spmi: hisi-spmi-controller: Do not override device identifier
+Date: Wed,  3 Jul 2024 12:39:19 +0200
+Message-ID: <20240703102910.897604714@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -51,50 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Vamshi Gajjela <vamshigajjela@google.com>
 
-[ Upstream commit e221c45da3770962418fb30c27d941bbc70d595a ]
+[ Upstream commit eda4923d78d634482227c0b189d9b7ca18824146 ]
 
-The 'NFS error' NFSERR_OPNOTSUPP is not described by any of the official
-NFS related RFCs, but appears to have snuck into some older .x files for
-NFSv2.
-Either way, it is not in RFC1094, RFC1813 or any of the NFSv4 RFCs, so
-should not be returned by the knfsd server, and particularly not by the
-"LOOKUP" operation.
+'nr' member of struct spmi_controller, which serves as an identifier
+for the controller/bus. This value is a dynamic ID assigned in
+spmi_controller_alloc, and overriding it from the driver results in an
+ida_free error "ida_free called for id=xx which is not allocated".
 
-Instead, let's return NFSERR_STALE, which is more appropriate if the
-filesystem encodes the filehandle as FILEID_INVALID.
-
+Signed-off-by: Vamshi Gajjela <vamshigajjela@google.com>
+Fixes: 70f59c90c819 ("staging: spmi: add Hikey 970 SPMI controller driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://lore.kernel.org/r/20240228185116.1269-1-vamshigajjela@google.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Link: https://lore.kernel.org/r/20240507210809.3479953-5-sboyd@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfsfh.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/staging/hikey9xx/hisi-spmi-controller.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/fs/nfsd/nfsfh.c b/fs/nfsd/nfsfh.c
-index db8d62632a5be..ae3323e0708dd 100644
---- a/fs/nfsd/nfsfh.c
-+++ b/fs/nfsd/nfsfh.c
-@@ -573,7 +573,7 @@ fh_compose(struct svc_fh *fhp, struct svc_export *exp, struct dentry *dentry,
- 		_fh_update(fhp, exp, dentry);
- 	if (fhp->fh_handle.fh_fileid_type == FILEID_INVALID) {
- 		fh_put(fhp);
--		return nfserr_opnotsupp;
-+		return nfserr_stale;
- 	}
+diff --git a/drivers/staging/hikey9xx/hisi-spmi-controller.c b/drivers/staging/hikey9xx/hisi-spmi-controller.c
+index 29f226503668d..eee3dcf96ee79 100644
+--- a/drivers/staging/hikey9xx/hisi-spmi-controller.c
++++ b/drivers/staging/hikey9xx/hisi-spmi-controller.c
+@@ -303,7 +303,6 @@ static int spmi_controller_probe(struct platform_device *pdev)
  
- 	return 0;
-@@ -599,7 +599,7 @@ fh_update(struct svc_fh *fhp)
+ 	spin_lock_init(&spmi_controller->lock);
  
- 	_fh_update(fhp, fhp->fh_export, dentry);
- 	if (fhp->fh_handle.fh_fileid_type == FILEID_INVALID)
--		return nfserr_opnotsupp;
-+		return nfserr_stale;
- 	return 0;
- out_bad:
- 	printk(KERN_ERR "fh_update: fh not verified!\n");
+-	ctrl->nr = spmi_controller->channel;
+ 	ctrl->dev.parent = pdev->dev.parent;
+ 	ctrl->dev.of_node = of_node_get(pdev->dev.of_node);
+ 
 -- 
 2.43.0
 
