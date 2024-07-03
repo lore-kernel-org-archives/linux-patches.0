@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C60118754E;
-	Wed,  3 Jul 2024 11:21:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C12C45945;
+	Wed,  3 Jul 2024 11:21:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005712; cv=none; b=U/lgpf4NxAUKkfuzrXxbubgXVDgMy0gz8tQkBDBESqMUczv+p0brGArrQL8RROB85OOf4/7xxRf680e0dlRbN8JM0deZe2BQSSdwm8rELK2LA4UkiRsAiICfg+y/BQ2NskxBsFaTkd3TtnObZlJ3l70TN8Hy8uxXJCKqWeVgYOE=
+	t=1720005715; cv=none; b=Er7ePu9D7eRNCZhHV7M+QFnX+Jjb+HKYRcOx4wwMNWykwbcdEvOnE5lRel/VcQC+fAbDgk13bm8QgzfY1XzcZMwxG4QgkcdOQs3rYn9WohD/4tm3FWpZ+AnVxL2/m+vqgDaM4EJQXk2vb0WtAxg9C/KxpAMX2o/CvGrtX9CYZtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005712; c=relaxed/simple;
-	bh=JpCXe6gH6T8rSmlxwInnGixbM+Cv7m4xoc6AYRb+VSI=;
+	s=arc-20240116; t=1720005715; c=relaxed/simple;
+	bh=21cRvdAxzQbrbsjKApOWFcBSDrBC1TN5JWXUG5HlIxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kxCYTUVQisJnWU8lw5UyZUaclBhlXBOkInubaqkd+sDKPiDgaLsYIRBm4tgc/gutF98iNjHwpp04vKTU/ZCZ7P8GdhZMO/kULSRNzS83NWRHV+2uY1rnB0W1mdd6puiH5n0sl39xcuCkfo/ymra43AVZSSdwIN0aBhvPlRPWsVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=THl15cmt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LatDEw7uq6spRg3SF51aNDf+/pVw6Gj8jvxIl1NSJDAcG5CN9ptET6CzrWklJId43985q8y2IqxI9LssND9d2BPav/vE6FO5EWIGo7Mtjv97nlQe/Y3XEryu4WvP7+49Dv3jim9Cq7oheK9Mu/odyJPQ/6ZmkT2FgV3q4rRVFKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LvpiH+Bb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="THl15cmt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C44DC2BD10;
-	Wed,  3 Jul 2024 11:21:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LvpiH+Bb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEBDCC2BD10;
+	Wed,  3 Jul 2024 11:21:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005712;
-	bh=JpCXe6gH6T8rSmlxwInnGixbM+Cv7m4xoc6AYRb+VSI=;
+	s=korg; t=1720005715;
+	bh=21cRvdAxzQbrbsjKApOWFcBSDrBC1TN5JWXUG5HlIxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=THl15cmteqpNhTrevDxd9AH56baZQn/uwk3QgO3Tmcs+DMrcfzSiXLpR852Bd4Ok3
-	 ovQrvOiAmP7AJF2mt2bxThm6vIoEOb4G2DvDoqgJcZ95vD7WVYZ6cPSKyoim8hKWxz
-	 r/zt9sT9SScsoUdWImn/jwnCD9Pwp0oN8u3rC4g0=
+	b=LvpiH+BbkUbSXC41T0RmBPGt6CWpTvcDDB/Eq1EUaK/82wKi+jvJRee8ZU+b0IDal
+	 d/4CbHrV/crn+IlGXJwWsae4A3sArCO72Shx+bNE21S2cs7is97aHE0LxvgcYYYx/m
+	 LiwJE1vsUe+gI1+RBsIjDWwWI/zBUy3TVQJZuZws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Lynch <nathanl@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Jean Delvare <jdelvare@suse.de>,
+	Juergen Fitschen <me@jue.yt>,
+	Ludovic Desroches <ludovic.desroches@microchip.com>,
+	Codrin Ciubotariu <codrin.ciubotariu@microchip.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 171/356] powerpc/pseries: Enforce hcall result buffer validity and size
-Date: Wed,  3 Jul 2024 12:38:27 +0200
-Message-ID: <20240703102919.576074926@linuxfoundation.org>
+Subject: [PATCH 5.15 145/356] i2c: at91: Fix the functionality flags of the slave-only interface
+Date: Wed,  3 Jul 2024 12:38:01 +0200
+Message-ID: <20240703102918.588444970@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,80 +57,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Lynch <nathanl@linux.ibm.com>
+From: Jean Delvare <jdelvare@suse.de>
 
-[ Upstream commit ff2e185cf73df480ec69675936c4ee75a445c3e4 ]
+[ Upstream commit d6d5645e5fc1233a7ba950de4a72981c394a2557 ]
 
-plpar_hcall(), plpar_hcall9(), and related functions expect callers to
-provide valid result buffers of certain minimum size. Currently this
-is communicated only through comments in the code and the compiler has
-no idea.
+When an I2C adapter acts only as a slave, it should not claim to
+support I2C master capabilities.
 
-For example, if I write a bug like this:
-
-  long retbuf[PLPAR_HCALL_BUFSIZE]; // should be PLPAR_HCALL9_BUFSIZE
-  plpar_hcall9(H_ALLOCATE_VAS_WINDOW, retbuf, ...);
-
-This compiles with no diagnostics emitted, but likely results in stack
-corruption at runtime when plpar_hcall9() stores results past the end
-of the array. (To be clear this is a contrived example and I have not
-found a real instance yet.)
-
-To make this class of error less likely, we can use explicitly-sized
-array parameters instead of pointers in the declarations for the hcall
-APIs. When compiled with -Warray-bounds[1], the code above now
-provokes a diagnostic like this:
-
-error: array argument is too small;
-is of size 32, callee requires at least 72 [-Werror,-Warray-bounds]
-   60 |                 plpar_hcall9(H_ALLOCATE_VAS_WINDOW, retbuf,
-      |                 ^                                   ~~~~~~
-
-[1] Enabled for LLVM builds but not GCC for now. See commit
-    0da6e5fd6c37 ("gcc: disable '-Warray-bounds' for gcc-13 too") and
-    related changes.
-
-Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240408-pseries-hvcall-retbuf-v1-1-ebc73d7253cf@linux.ibm.com
+Fixes: 9d3ca54b550c ("i2c: at91: added slave mode support")
+Signed-off-by: Jean Delvare <jdelvare@suse.de>
+Cc: Juergen Fitschen <me@jue.yt>
+Cc: Ludovic Desroches <ludovic.desroches@microchip.com>
+Cc: Codrin Ciubotariu <codrin.ciubotariu@microchip.com>
+Cc: Andi Shyti <andi.shyti@kernel.org>
+Cc: Nicolas Ferre <nicolas.ferre@microchip.com>
+Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Cc: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/hvcall.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/i2c/busses/i2c-at91-slave.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/hvcall.h b/arch/powerpc/include/asm/hvcall.h
-index c25f160bb9978..47cec207e5571 100644
---- a/arch/powerpc/include/asm/hvcall.h
-+++ b/arch/powerpc/include/asm/hvcall.h
-@@ -472,7 +472,7 @@ long plpar_hcall_norets_notrace(unsigned long opcode, ...);
-  * Used for all but the craziest of phyp interfaces (see plpar_hcall9)
-  */
- #define PLPAR_HCALL_BUFSIZE 4
--long plpar_hcall(unsigned long opcode, unsigned long *retbuf, ...);
-+long plpar_hcall(unsigned long opcode, unsigned long retbuf[static PLPAR_HCALL_BUFSIZE], ...);
+diff --git a/drivers/i2c/busses/i2c-at91-slave.c b/drivers/i2c/busses/i2c-at91-slave.c
+index d6eeea5166c04..131a67d9d4a68 100644
+--- a/drivers/i2c/busses/i2c-at91-slave.c
++++ b/drivers/i2c/busses/i2c-at91-slave.c
+@@ -106,8 +106,7 @@ static int at91_unreg_slave(struct i2c_client *slave)
  
- /**
-  * plpar_hcall_raw: - Make a hypervisor call without calculating hcall stats
-@@ -486,7 +486,7 @@ long plpar_hcall(unsigned long opcode, unsigned long *retbuf, ...);
-  * plpar_hcall, but plpar_hcall_raw works in real mode and does not
-  * calculate hypervisor call statistics.
-  */
--long plpar_hcall_raw(unsigned long opcode, unsigned long *retbuf, ...);
-+long plpar_hcall_raw(unsigned long opcode, unsigned long retbuf[static PLPAR_HCALL_BUFSIZE], ...);
+ static u32 at91_twi_func(struct i2c_adapter *adapter)
+ {
+-	return I2C_FUNC_SLAVE | I2C_FUNC_I2C | I2C_FUNC_SMBUS_EMUL
+-		| I2C_FUNC_SMBUS_READ_BLOCK_DATA;
++	return I2C_FUNC_SLAVE;
+ }
  
- /**
-  * plpar_hcall9: - Make a pseries hypervisor call with up to 9 return arguments
-@@ -497,8 +497,8 @@ long plpar_hcall_raw(unsigned long opcode, unsigned long *retbuf, ...);
-  * PLPAR_HCALL9_BUFSIZE to size the return argument buffer.
-  */
- #define PLPAR_HCALL9_BUFSIZE 9
--long plpar_hcall9(unsigned long opcode, unsigned long *retbuf, ...);
--long plpar_hcall9_raw(unsigned long opcode, unsigned long *retbuf, ...);
-+long plpar_hcall9(unsigned long opcode, unsigned long retbuf[static PLPAR_HCALL9_BUFSIZE], ...);
-+long plpar_hcall9_raw(unsigned long opcode, unsigned long retbuf[static PLPAR_HCALL9_BUFSIZE], ...);
- 
- struct hvcall_mpp_data {
- 	unsigned long entitled_mem;
+ static const struct i2c_algorithm at91_twi_algorithm_slave = {
 -- 
 2.43.0
 
