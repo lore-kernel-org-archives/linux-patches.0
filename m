@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C40F1799F;
-	Wed,  3 Jul 2024 11:02:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9EF1799F;
+	Wed,  3 Jul 2024 11:02:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004552; cv=none; b=YPMRNz8AP4tiu6MvenNRQPEDQfig0VrWQ7UCyYrCWL5NGm5qIJgLsx+UwmuZ8Oj/kUGOZPTmm3MA1pV3YmfXAuyzbagxf/9pd1R1PrxW6bIN6huGKfle1q4WpG4xe6uNZ4tThUNQVoik6iXKG8hNn8HdjolffRG4GEBL5EkEUbM=
+	t=1720004555; cv=none; b=QO00BKih/jPqkIsInk5Cm0R0VPm9aw64LxYNKOuQ4y38SFcoRsoNO52km/6cPtrdORqU0wYsPEH14vsVa/ifvIcWUhwfSR9f0Jkpf/2LCjJ5ny/juquhNoqxr++R7yRtXU9VtoM1ByT0azv6zNcnHOr52I37Qd2R0InqLXl2+lU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004552; c=relaxed/simple;
-	bh=efUm1zfZBffDVHqDMPtJqCH1YAyMvtiTyYruG//n1vg=;
+	s=arc-20240116; t=1720004555; c=relaxed/simple;
+	bh=y/xnLKxuu5fHBkadusWKJANyhcrvEt0ursHiJyWb2zg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y1wo+EskEyQ20XjXI9bV2AfoJcwGOnLwLZbV4aqXTPn0MZGQcyJhGdmoe96ahZzFiZTb5HE98RSjKtH866+w3o7/rTAwE7wWPazBeFFWcHNm/tm4vAUDrMqTBZ7bTsBzZgEzuZyQKxgBDvBwvL5uienUiTyWjWfestSmtobCSkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cbzRp97q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TO6++Za4kwf6gC/C6CV6B3tEX+dFP+1psCbk6XHN0/yMmFUaUwQ9mqKG+qZHHhs/94fx25ZvAt0LcHUaa6TelQMTjsbj/iVg35/6sDb4L2vasZYUYXzd8Bk05pSPBCajJwcCGaSPeVR+rVD/rY496vQO+OJIDMFFUOd6GrrxAh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=loQYpXyl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cbzRp97q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7811C2BD10;
-	Wed,  3 Jul 2024 11:02:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="loQYpXyl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9828C2BD10;
+	Wed,  3 Jul 2024 11:02:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004552;
-	bh=efUm1zfZBffDVHqDMPtJqCH1YAyMvtiTyYruG//n1vg=;
+	s=korg; t=1720004555;
+	bh=y/xnLKxuu5fHBkadusWKJANyhcrvEt0ursHiJyWb2zg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cbzRp97qkQpTx5rYUQaA8zWLRX0NhXdUNoSDJ4yLOmHwa/R9401XUGeeIG7F/oBua
-	 U46xMjsdC7YW8u8RKRJutn0Unh91x78paD9wLtVr305GFVQqqniCRKQWZvZ+NcZ3U2
-	 CHs51Wj5/qfy5Rw8GqfkuY7HrWd/iW3gzTZ6zKGk=
+	b=loQYpXylzIqFrdhqu6I1Zrr0BUIagnLVSzcvE/KJhANTr16JLW4Zkv8avpJav56aX
+	 25CXQzwFD6hqf2tNFTO9ulMCaSDxBNimSrck5KQ5+O3ULkCbRvSGGc/3OM0hKjVtf9
+	 DE4P0kN8wYS8DJ1K/Za2BTScgZ/BVE18eHFxvz7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Inki Dae <inki.dae@samsung.com>
-Subject: [PATCH 5.10 079/290] drm/exynos: hdmi: report safe 640x480 mode as a fallback when no EDID found
-Date: Wed,  3 Jul 2024 12:37:40 +0200
-Message-ID: <20240703102907.180696051@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Hagar Gamal Halim Hemdan <hagarhem@amazon.com>
+Subject: [PATCH 5.10 080/290] vmci: prevent speculation leaks by sanitizing event in event_deliver()
+Date: Wed,  3 Jul 2024 12:37:41 +0200
+Message-ID: <20240703102907.218527052@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -50,128 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Hagar Gamal Halim Hemdan <hagarhem@amazon.com>
 
-commit 799d4b392417ed6889030a5b2335ccb6dcf030ab upstream.
+commit 8003f00d895310d409b2bf9ef907c56b42a4e0f4 upstream.
 
-When reading EDID fails and driver reports no modes available, the DRM
-core adds an artificial 1024x786 mode to the connector. Unfortunately
-some variants of the Exynos HDMI (like the one in Exynos4 SoCs) are not
-able to drive such mode, so report a safe 640x480 mode instead of nothing
-in case of the EDID reading failure.
+Coverity spotted that event_msg is controlled by user-space,
+event_msg->event_data.event is passed to event_deliver() and used
+as an index without sanitization.
 
-This fixes the following issue observed on Trats2 board since commit
-13d5b040363c ("drm/exynos: do not return negative values from .get_modes()"):
+This change ensures that the event index is sanitized to mitigate any
+possibility of speculative information leaks.
 
-[drm] Exynos DRM: using 11c00000.fimd device for DMA mapping operations
-exynos-drm exynos-drm: bound 11c00000.fimd (ops fimd_component_ops)
-exynos-drm exynos-drm: bound 12c10000.mixer (ops mixer_component_ops)
-exynos-dsi 11c80000.dsi: [drm:samsung_dsim_host_attach] Attached s6e8aa0 device (lanes:4 bpp:24 mode-flags:0x10b)
-exynos-drm exynos-drm: bound 11c80000.dsi (ops exynos_dsi_component_ops)
-exynos-drm exynos-drm: bound 12d00000.hdmi (ops hdmi_component_ops)
-[drm] Initialized exynos 1.1.0 20180330 for exynos-drm on minor 1
-exynos-hdmi 12d00000.hdmi: [drm:hdmiphy_enable.part.0] *ERROR* PLL could not reach steady state
-panel-samsung-s6e8aa0 11c80000.dsi.0: ID: 0xa2, 0x20, 0x8c
-exynos-mixer 12c10000.mixer: timeout waiting for VSYNC
-------------[ cut here ]------------
-WARNING: CPU: 1 PID: 11 at drivers/gpu/drm/drm_atomic_helper.c:1682 drm_atomic_helper_wait_for_vblanks.part.0+0x2b0/0x2b8
-[CRTC:70:crtc-1] vblank wait timed out
-Modules linked in:
-CPU: 1 PID: 11 Comm: kworker/u16:0 Not tainted 6.9.0-rc5-next-20240424 #14913
-Hardware name: Samsung Exynos (Flattened Device Tree)
-Workqueue: events_unbound deferred_probe_work_func
-Call trace:
- unwind_backtrace from show_stack+0x10/0x14
- show_stack from dump_stack_lvl+0x68/0x88
- dump_stack_lvl from __warn+0x7c/0x1c4
- __warn from warn_slowpath_fmt+0x11c/0x1a8
- warn_slowpath_fmt from drm_atomic_helper_wait_for_vblanks.part.0+0x2b0/0x2b8
- drm_atomic_helper_wait_for_vblanks.part.0 from drm_atomic_helper_commit_tail_rpm+0x7c/0x8c
- drm_atomic_helper_commit_tail_rpm from commit_tail+0x9c/0x184
- commit_tail from drm_atomic_helper_commit+0x168/0x190
- drm_atomic_helper_commit from drm_atomic_commit+0xb4/0xe0
- drm_atomic_commit from drm_client_modeset_commit_atomic+0x23c/0x27c
- drm_client_modeset_commit_atomic from drm_client_modeset_commit_locked+0x60/0x1cc
- drm_client_modeset_commit_locked from drm_client_modeset_commit+0x24/0x40
- drm_client_modeset_commit from __drm_fb_helper_restore_fbdev_mode_unlocked+0x9c/0xc4
- __drm_fb_helper_restore_fbdev_mode_unlocked from drm_fb_helper_set_par+0x2c/0x3c
- drm_fb_helper_set_par from fbcon_init+0x3d8/0x550
- fbcon_init from visual_init+0xc0/0x108
- visual_init from do_bind_con_driver+0x1b8/0x3a4
- do_bind_con_driver from do_take_over_console+0x140/0x1ec
- do_take_over_console from do_fbcon_takeover+0x70/0xd0
- do_fbcon_takeover from fbcon_fb_registered+0x19c/0x1ac
- fbcon_fb_registered from register_framebuffer+0x190/0x21c
- register_framebuffer from __drm_fb_helper_initial_config_and_unlock+0x350/0x574
- __drm_fb_helper_initial_config_and_unlock from exynos_drm_fbdev_client_hotplug+0x6c/0xb0
- exynos_drm_fbdev_client_hotplug from drm_client_register+0x58/0x94
- drm_client_register from exynos_drm_bind+0x160/0x190
- exynos_drm_bind from try_to_bring_up_aggregate_device+0x200/0x2d8
- try_to_bring_up_aggregate_device from __component_add+0xb0/0x170
- __component_add from mixer_probe+0x74/0xcc
- mixer_probe from platform_probe+0x5c/0xb8
- platform_probe from really_probe+0xe0/0x3d8
- really_probe from __driver_probe_device+0x9c/0x1e4
- __driver_probe_device from driver_probe_device+0x30/0xc0
- driver_probe_device from __device_attach_driver+0xa8/0x120
- __device_attach_driver from bus_for_each_drv+0x80/0xcc
- bus_for_each_drv from __device_attach+0xac/0x1fc
- __device_attach from bus_probe_device+0x8c/0x90
- bus_probe_device from deferred_probe_work_func+0x98/0xe0
- deferred_probe_work_func from process_one_work+0x240/0x6d0
- process_one_work from worker_thread+0x1a0/0x3f4
- worker_thread from kthread+0x104/0x138
- kthread from ret_from_fork+0x14/0x28
-Exception stack(0xf0895fb0 to 0xf0895ff8)
-...
-irq event stamp: 82357
-hardirqs last  enabled at (82363): [<c01a96e8>] vprintk_emit+0x308/0x33c
-hardirqs last disabled at (82368): [<c01a969c>] vprintk_emit+0x2bc/0x33c
-softirqs last  enabled at (81614): [<c0101644>] __do_softirq+0x320/0x500
-softirqs last disabled at (81609): [<c012dfe0>] __irq_exit_rcu+0x130/0x184
----[ end trace 0000000000000000 ]---
-exynos-drm exynos-drm: [drm] *ERROR* flip_done timed out
-exynos-drm exynos-drm: [drm] *ERROR* [CRTC:70:crtc-1] commit wait timed out
-exynos-drm exynos-drm: [drm] *ERROR* flip_done timed out
-exynos-drm exynos-drm: [drm] *ERROR* [CONNECTOR:74:HDMI-A-1] commit wait timed out
-exynos-drm exynos-drm: [drm] *ERROR* flip_done timed out
-exynos-drm exynos-drm: [drm] *ERROR* [PLANE:56:plane-5] commit wait timed out
-exynos-mixer 12c10000.mixer: timeout waiting for VSYNC
+This bug was discovered and resolved using Coverity Static Analysis
+Security Testing (SAST) by Synopsys, Inc.
 
-Cc: stable@vger.kernel.org
-Fixes: 13d5b040363c ("drm/exynos: do not return negative values from .get_modes()")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Inki Dae <inki.dae@samsung.com>
+Only compile tested, no access to HW.
+
+Fixes: 1d990201f9bb ("VMCI: event handling implementation.")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Hagar Gamal Halim Hemdan <hagarhem@amazon.com>
+Link: https://lore.kernel.org/stable/20231127193533.46174-1-hagarhem%40amazon.com
+Link: https://lore.kernel.org/r/20240430085916.4753-1-hagarhem@amazon.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/exynos/exynos_hdmi.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/misc/vmw_vmci/vmci_event.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/exynos/exynos_hdmi.c
-+++ b/drivers/gpu/drm/exynos/exynos_hdmi.c
-@@ -878,11 +878,11 @@ static int hdmi_get_modes(struct drm_con
- 	int ret;
+--- a/drivers/misc/vmw_vmci/vmci_event.c
++++ b/drivers/misc/vmw_vmci/vmci_event.c
+@@ -9,6 +9,7 @@
+ #include <linux/vmw_vmci_api.h>
+ #include <linux/list.h>
+ #include <linux/module.h>
++#include <linux/nospec.h>
+ #include <linux/sched.h>
+ #include <linux/slab.h>
+ #include <linux/rculist.h>
+@@ -86,9 +87,12 @@ static void event_deliver(struct vmci_ev
+ {
+ 	struct vmci_subscription *cur;
+ 	struct list_head *subscriber_list;
++	u32 sanitized_event, max_vmci_event;
  
- 	if (!hdata->ddc_adpt)
--		return 0;
-+		goto no_edid;
- 
- 	edid = drm_get_edid(connector, hdata->ddc_adpt);
- 	if (!edid)
--		return 0;
-+		goto no_edid;
- 
- 	hdata->dvi_mode = !drm_detect_hdmi_monitor(edid);
- 	DRM_DEV_DEBUG_KMS(hdata->dev, "%s : width[%d] x height[%d]\n",
-@@ -897,6 +897,9 @@ static int hdmi_get_modes(struct drm_con
- 	kfree(edid);
- 
- 	return ret;
-+
-+no_edid:
-+	return drm_add_modes_noedid(connector, 640, 480);
- }
- 
- static int hdmi_find_phy_conf(struct hdmi_context *hdata, u32 pixel_clock)
+ 	rcu_read_lock();
+-	subscriber_list = &subscriber_array[event_msg->event_data.event];
++	max_vmci_event = ARRAY_SIZE(subscriber_array);
++	sanitized_event = array_index_nospec(event_msg->event_data.event, max_vmci_event);
++	subscriber_list = &subscriber_array[sanitized_event];
+ 	list_for_each_entry_rcu(cur, subscriber_list, node) {
+ 		cur->callback(cur->id, &event_msg->event_data,
+ 			      cur->callback_data);
 
 
