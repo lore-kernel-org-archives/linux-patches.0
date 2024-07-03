@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74686E5ED;
-	Wed,  3 Jul 2024 11:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8CF86E5ED;
+	Wed,  3 Jul 2024 11:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006057; cv=none; b=CkE/ukTxqyldX+bcy2F/4lHsy3mfphRXGlhUTwAftBvklqwVwVHf6cBKqiyNYjGbbnrQYEKBiJ377yn4VDTf8i1RN2K0/TAzDTPZZ+m+4pGScW5QCCa85XkvTCfB/JXj/Gn7nmiodXV9+9tzlea7HCvRKZoD/xM5K81Zf/TaI9I=
+	t=1720006060; cv=none; b=uOg69ulZgBHqMWa7lUkV2MPefNO7M2cAHqhxmUqJ8j1urPB8JLJe9antVNk9FtQUvH2mqP4wt1KNB5S3lKTACW1COhKJ1paq9AQrSDZ13Bx0ByWnybZx8lURkqRaRQFmffPE8+w7I0hMx03qReHJkDNep1rAOioFkAxTf0wgFEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006057; c=relaxed/simple;
-	bh=VZ4oiTOL/R9TP5stN+rw8Mc2PtIeGVkWN3rOTAzOGa8=;
+	s=arc-20240116; t=1720006060; c=relaxed/simple;
+	bh=NzEjiXdHHUudT0nVvS28kD1hZsPHUDQ7U9mVOQkg9+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uhrhXUG5A3cFFCR2fx3LjyWa6+kMOfn00ZclDwS7L9ilEaHM+bDrKqLMFa9+6s9FGFCqA2wVK5m26f6i9AMjHivpoKSl0pgH3zFMIuv8Dr/oMkoDSZF0FhsdT5C0WohmaPOUTpUfII9Z1/2JGQV0hO9ZzTYi8EH+4h4hqF8k+dE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HW09y0hL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ibu4l5D0QCmHX8Fc3DxYUXWc0XhvPOKQl47Jz2JlJ5W358F5rdl+C5SLsud0sIknPweZVbP3gViZZ+5Xw3oBkuTuPSG1WE5nrZErxFA9vdt2wXU+mkwKWFkKPCEWk88WS5ytg8t8TL8mGQ9txUBMQsVwM6QldAKKm+JLG0Tg33Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cEYRnZKw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HW09y0hL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F89CC2BD10;
-	Wed,  3 Jul 2024 11:27:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cEYRnZKw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4007CC2BD10;
+	Wed,  3 Jul 2024 11:27:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006057;
-	bh=VZ4oiTOL/R9TP5stN+rw8Mc2PtIeGVkWN3rOTAzOGa8=;
+	s=korg; t=1720006060;
+	bh=NzEjiXdHHUudT0nVvS28kD1hZsPHUDQ7U9mVOQkg9+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HW09y0hLH2V3t4onPN8RB0auHm1k3YgFEIOlCQ19VW1dYPEyQIFf8sCpGAbmhzWm0
-	 DIpk/rTRudJIC59lKk/RT0f084hN7zHNmvw90ll7tcFGHznoEu0lIf4Y/2kWZ3+SyR
-	 Qnx/Pc1LHshSqb5McuYTWhcOQdV+g35OQzqbGljY=
+	b=cEYRnZKwHTpBIQA7OOxH8FdAApF5n3tOxD4K0KvAsfiW3iliFU2fvOZGShQIQGe7j
+	 3iy5tS3pwjRs4v1ylZOK7ucJMWm6FDwnULBbpR5CWKacxWMRm2OE5QN2lOikSOdJv3
+	 ZTelpFbOa0ztZoNInmooz10ICWukDFHkvSQ6Ie3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Denis Arefev <arefev@swemel.ru>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 279/356] parisc: use correct compat recv/recvfrom syscalls
-Date: Wed,  3 Jul 2024 12:40:15 +0200
-Message-ID: <20240703102923.668038024@linuxfoundation.org>
+Subject: [PATCH 5.15 288/356] mtd: partitions: redboot: Added conversion of operands to a larger type
+Date: Wed,  3 Jul 2024 12:40:24 +0200
+Message-ID: <20240703102924.015446232@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,46 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Denis Arefev <arefev@swemel.ru>
 
-[ Upstream commit 20a50787349fadf66ac5c48f62e58d753878d2bb ]
+[ Upstream commit 1162bc2f8f5de7da23d18aa4b7fbd4e93c369c50 ]
 
-Johannes missed parisc back when he introduced the compat version
-of these syscalls, so receiving cmsg messages that require a compat
-conversion is still broken.
+The value of an arithmetic expression directory * master->erasesize is
+subject to overflow due to a failure to cast operands to a larger data
+type before perfroming arithmetic
 
-Use the correct calls like the other architectures do.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 1dacc76d0014 ("net/compat/wext: send different messages to compat tasks")
-Acked-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Denis Arefev <arefev@swemel.ru>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20240315093758.20790-1-arefev@swemel.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/kernel/syscalls/syscall.tbl | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mtd/parsers/redboot.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/parisc/kernel/syscalls/syscall.tbl b/arch/parisc/kernel/syscalls/syscall.tbl
-index 50c759f11c25d..3e7ded09e00a5 100644
---- a/arch/parisc/kernel/syscalls/syscall.tbl
-+++ b/arch/parisc/kernel/syscalls/syscall.tbl
-@@ -108,7 +108,7 @@
- 95	common	fchown			sys_fchown
- 96	common	getpriority		sys_getpriority
- 97	common	setpriority		sys_setpriority
--98	common	recv			sys_recv
-+98	common	recv			sys_recv			compat_sys_recv
- 99	common	statfs			sys_statfs			compat_sys_statfs
- 100	common	fstatfs			sys_fstatfs			compat_sys_fstatfs
- 101	common	stat64			sys_stat64
-@@ -135,7 +135,7 @@
- 120	common	clone			sys_clone_wrapper
- 121	common	setdomainname		sys_setdomainname
- 122	common	sendfile		sys_sendfile			compat_sys_sendfile
--123	common	recvfrom		sys_recvfrom
-+123	common	recvfrom		sys_recvfrom			compat_sys_recvfrom
- 124	32	adjtimex		sys_adjtimex_time32
- 124	64	adjtimex		sys_adjtimex
- 125	common	mprotect		sys_mprotect
+diff --git a/drivers/mtd/parsers/redboot.c b/drivers/mtd/parsers/redboot.c
+index a16b42a885816..3b55b676ca6b9 100644
+--- a/drivers/mtd/parsers/redboot.c
++++ b/drivers/mtd/parsers/redboot.c
+@@ -102,7 +102,7 @@ static int parse_redboot_partitions(struct mtd_info *master,
+ 			offset -= master->erasesize;
+ 		}
+ 	} else {
+-		offset = directory * master->erasesize;
++		offset = (unsigned long) directory * master->erasesize;
+ 		while (mtd_block_isbad(master, offset)) {
+ 			offset += master->erasesize;
+ 			if (offset == master->size)
 -- 
 2.43.0
 
