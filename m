@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C110E45945;
-	Wed,  3 Jul 2024 11:21:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD91245945;
+	Wed,  3 Jul 2024 11:21:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005700; cv=none; b=AoZrUDWmp39cNvZ2M2+fO5z1kcFuBygfuOSoB4oonjQKM5z2+CZD6J+mpwL4V/riekqZw/rouLAaOUf1jRuYfwtH5HTdp11H6kwZaoL/OvsC/qbwtEF2h+DoEkYLxYAzp/coezJLwAroLC8vbas68uVE51OuqgCU1QreIkCWKOQ=
+	t=1720005703; cv=none; b=PzvOiThvHCx4yIjneXVxnYWsbzx1IRDqpg9qu25JREQxvKvyA5jXVbYTfF6K2Ne9ZCRiPg+JZsnzzRsuL2B31UM7yCmNdi9AsJDQbJG/KzKRnWBi6n8Z2nozTm3ic5uRpX+VD+BXf6jUVLQ04HDCOhr3oTjHM5oMUIDpOfX4Zfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005700; c=relaxed/simple;
-	bh=aMKVK5hk1OJeYh3XNOLBMitaLmSRGx4jReyeCv0IacE=;
+	s=arc-20240116; t=1720005703; c=relaxed/simple;
+	bh=Xt7SnP01WmMRmZubeBfFGp2o0+qncHA+SotrobE6OSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rSulp//U8WTfPFK1xfjguKsWGo5howb1/BcWzTpMZjHTRKoSNyqBw2xtVsTAP/R3Zc2pSqpCF/c5nK2k7FSE1ILbIg3O8+zGJsgqg5gpkwSHSPDT4+iKIEnprEnyaEuZePSeonX+lKOq1cDXGfVoBs3RR22m3MvWiAL0Q+LomBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WQXuh4/t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jTKtdEi2pm6pRkq0AHw0XUAVJQv6OZwbpRbSbwi5o5h/+t9ri1+Kvd+c+sh1CPGCV8aa3R4IxUsW6OPQCIzj0HZWWmCw6H5eQASkL1cwc5wFOestXxr9BID7xBIgLiWPOSt0z3En4kTKsNyWamjNleGwNA8awX15jQlkN31M+bY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tu8EriRz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WQXuh4/t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47692C2BD10;
-	Wed,  3 Jul 2024 11:21:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tu8EriRz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36014C2BD10;
+	Wed,  3 Jul 2024 11:21:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005700;
-	bh=aMKVK5hk1OJeYh3XNOLBMitaLmSRGx4jReyeCv0IacE=;
+	s=korg; t=1720005703;
+	bh=Xt7SnP01WmMRmZubeBfFGp2o0+qncHA+SotrobE6OSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WQXuh4/txY+1uSVhyj6YoNlvkN8fEai2bfZkVGddikeRKcZXORmpr1GurxoSqRB1y
-	 Y5j5q2gC9LXFkSxGUbP39xh/3FVN116R6PLuSG5O850K8j9P6DsEiYRejNKItTwOlD
-	 AGAW4Sdty+Ec1kMeIetZW+FTI0mk/c7iUrv2Mhls=
+	b=tu8EriRzxPCtYE/rCwg28u0PH8IxCij9MP08bVkNV0oPygpBEvOCxiylLHnu3+O54
+	 eOUglp8DKcYHDrbZlzYU367bZGRy3rR7fDDaJ5jXtdoBeZAc6TCDpBmmB7rh4CVVoO
+	 z5h2p5jijcwJL241fGkNXqVBGbbdyeJuLVI9gH9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uri Arev <me@wantyapps.xyz>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Charlene Liu <charlene.liu@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 167/356] Bluetooth: ath3k: Fix multiple issues reported by checkpatch.pl
-Date: Wed,  3 Jul 2024 12:38:23 +0200
-Message-ID: <20240703102919.423068426@linuxfoundation.org>
+Subject: [PATCH 5.15 168/356] drm/amd/display: Exit idle optimizations before HDCP execution
+Date: Wed,  3 Jul 2024 12:38:24 +0200
+Message-ID: <20240703102919.460674497@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,187 +55,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uri Arev <me@wantyapps.xyz>
+From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-[ Upstream commit 68aa21054ec3a1a313af90a5f95ade16c3326d20 ]
+[ Upstream commit f30a3bea92bdab398531129d187629fb1d28f598 ]
 
-This fixes some CHECKs reported by the checkpatch script.
+[WHY]
+PSP can access DCN registers during command submission and we need
+to ensure that DCN is not in PG before doing so.
 
-Issues reported in ath3k.c:
--------
-ath3k.c
--------
-CHECK: Please don't use multiple blank lines
-+
-+
+[HOW]
+Add a callback to DM to lock and notify DC for idle optimization exit.
+It can't be DC directly because of a potential race condition with the
+link protection thread and the rest of DM operation.
 
-CHECK: Blank lines aren't necessary after an open brace '{'
-+static const struct usb_device_id ath3k_blist_tbl[] = {
-+
-
-CHECK: Alignment should match open parenthesis
-+static int ath3k_load_firmware(struct usb_device *udev,
-+                               const struct firmware *firmware)
-
-CHECK: Alignment should match open parenthesis
-+               err = usb_bulk_msg(udev, pipe, send_buf, size,
-+                                       &len, 3000);
-
-CHECK: Unnecessary parentheses around 'len != size'
-+               if (err || (len != size)) {
-
-CHECK: Alignment should match open parenthesis
-+static int ath3k_get_version(struct usb_device *udev,
-+                       struct ath3k_version *version)
-
-CHECK: Alignment should match open parenthesis
-+static int ath3k_load_fwfile(struct usb_device *udev,
-+               const struct firmware *firmware)
-
-CHECK: Alignment should match open parenthesis
-+               err = usb_bulk_msg(udev, pipe, send_buf, size,
-+                                       &len, 3000);
-
-CHECK: Unnecessary parentheses around 'len != size'
-+               if (err || (len != size)) {
-
-CHECK: Blank lines aren't necessary after an open brace '{'
-+       switch (fw_version.ref_clock) {
-+
-
-CHECK: Alignment should match open parenthesis
-+       snprintf(filename, ATH3K_NAME_LEN, "ar3k/ramps_0x%08x_%d%s",
-+               le32_to_cpu(fw_version.rom_version), clk_value, ".dfu");
-
-CHECK: Alignment should match open parenthesis
-+static int ath3k_probe(struct usb_interface *intf,
-+                       const struct usb_device_id *id)
-
-CHECK: Alignment should match open parenthesis
-+                       BT_ERR("Firmware file \"%s\" not found",
-+                                                       ATH3K_FIRMWARE);
-
-CHECK: Alignment should match open parenthesis
-+               BT_ERR("Firmware file \"%s\" request failed (err=%d)",
-+                                               ATH3K_FIRMWARE, ret);
-
-total: 0 errors, 0 warnings, 14 checks, 540 lines checked
-
-Signed-off-by: Uri Arev <me@wantyapps.xyz>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Charlene Liu <charlene.liu@amd.com>
+Acked-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/ath3k.c | 25 +++++++++++--------------
- 1 file changed, 11 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c    | 10 ++++++++++
+ drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h |  8 ++++++++
+ 2 files changed, 18 insertions(+)
 
-diff --git a/drivers/bluetooth/ath3k.c b/drivers/bluetooth/ath3k.c
-index 759d7828931d9..56ada48104f0e 100644
---- a/drivers/bluetooth/ath3k.c
-+++ b/drivers/bluetooth/ath3k.c
-@@ -3,7 +3,6 @@
-  * Copyright (c) 2008-2009 Atheros Communications Inc.
-  */
- 
--
- #include <linux/module.h>
- #include <linux/kernel.h>
- #include <linux/init.h>
-@@ -129,7 +128,6 @@ MODULE_DEVICE_TABLE(usb, ath3k_table);
-  * for AR3012
-  */
- static const struct usb_device_id ath3k_blist_tbl[] = {
--
- 	/* Atheros AR3012 with sflash firmware*/
- 	{ USB_DEVICE(0x0489, 0xe04e), .driver_info = BTUSB_ATH3012 },
- 	{ USB_DEVICE(0x0489, 0xe04d), .driver_info = BTUSB_ATH3012 },
-@@ -203,7 +201,7 @@ static inline void ath3k_log_failed_loading(int err, int len, int size,
- #define TIMEGAP_USEC_MAX	100
- 
- static int ath3k_load_firmware(struct usb_device *udev,
--				const struct firmware *firmware)
-+			       const struct firmware *firmware)
- {
- 	u8 *send_buf;
- 	int len = 0;
-@@ -238,9 +236,9 @@ static int ath3k_load_firmware(struct usb_device *udev,
- 		memcpy(send_buf, firmware->data + sent, size);
- 
- 		err = usb_bulk_msg(udev, pipe, send_buf, size,
--					&len, 3000);
-+				   &len, 3000);
- 
--		if (err || (len != size)) {
-+		if (err || len != size) {
- 			ath3k_log_failed_loading(err, len, size, count);
- 			goto error;
- 		}
-@@ -263,7 +261,7 @@ static int ath3k_get_state(struct usb_device *udev, unsigned char *state)
+diff --git a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c
+index 3e81850a7ffe3..47bb973669d85 100644
+--- a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c
++++ b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c
+@@ -88,6 +88,14 @@ static uint8_t is_cp_desired_hdcp2(struct mod_hdcp *hdcp)
+ 			!hdcp->connection.is_hdcp2_revoked;
  }
  
- static int ath3k_get_version(struct usb_device *udev,
--			struct ath3k_version *version)
-+			     struct ath3k_version *version)
- {
- 	return usb_control_msg_recv(udev, 0, ATH3K_GETVERSION,
- 				    USB_TYPE_VENDOR | USB_DIR_IN, 0, 0,
-@@ -272,7 +270,7 @@ static int ath3k_get_version(struct usb_device *udev,
- }
++static void exit_idle_optimizations(struct mod_hdcp *hdcp)
++{
++	struct mod_hdcp_dm *dm = &hdcp->config.dm;
++
++	if (dm->funcs.exit_idle_optimizations)
++		dm->funcs.exit_idle_optimizations(dm->handle);
++}
++
+ static enum mod_hdcp_status execution(struct mod_hdcp *hdcp,
+ 		struct mod_hdcp_event_context *event_ctx,
+ 		union mod_hdcp_transition_input *input)
+@@ -507,6 +515,8 @@ enum mod_hdcp_status mod_hdcp_process_event(struct mod_hdcp *hdcp,
+ 	memset(&event_ctx, 0, sizeof(struct mod_hdcp_event_context));
+ 	event_ctx.event = event;
  
- static int ath3k_load_fwfile(struct usb_device *udev,
--		const struct firmware *firmware)
-+			     const struct firmware *firmware)
- {
- 	u8 *send_buf;
- 	int len = 0;
-@@ -311,8 +309,8 @@ static int ath3k_load_fwfile(struct usb_device *udev,
- 		memcpy(send_buf, firmware->data + sent, size);
++	exit_idle_optimizations(hdcp);
++
+ 	/* execute and transition */
+ 	exec_status = execution(hdcp, &event_ctx, &hdcp->auth.trans_input);
+ 	trans_status = transition(
+diff --git a/drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h b/drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h
+index f37101f5a7777..8a620c34396c7 100644
+--- a/drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h
++++ b/drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h
+@@ -154,6 +154,13 @@ struct mod_hdcp_ddc {
+ 	} funcs;
+ };
  
- 		err = usb_bulk_msg(udev, pipe, send_buf, size,
--					&len, 3000);
--		if (err || (len != size)) {
-+				   &len, 3000);
-+		if (err || len != size) {
- 			ath3k_log_failed_loading(err, len, size, count);
- 			kfree(send_buf);
- 			return err;
-@@ -426,7 +424,6 @@ static int ath3k_load_syscfg(struct usb_device *udev)
- 	}
- 
- 	switch (fw_version.ref_clock) {
--
- 	case ATH3K_XTAL_FREQ_26M:
- 		clk_value = 26;
- 		break;
-@@ -442,7 +439,7 @@ static int ath3k_load_syscfg(struct usb_device *udev)
- 	}
- 
- 	snprintf(filename, ATH3K_NAME_LEN, "ar3k/ramps_0x%08x_%d%s",
--		le32_to_cpu(fw_version.rom_version), clk_value, ".dfu");
-+		 le32_to_cpu(fw_version.rom_version), clk_value, ".dfu");
- 
- 	ret = request_firmware(&firmware, filename, &udev->dev);
- 	if (ret < 0) {
-@@ -457,7 +454,7 @@ static int ath3k_load_syscfg(struct usb_device *udev)
- }
- 
- static int ath3k_probe(struct usb_interface *intf,
--			const struct usb_device_id *id)
-+		       const struct usb_device_id *id)
- {
- 	const struct firmware *firmware;
- 	struct usb_device *udev = interface_to_usbdev(intf);
-@@ -506,10 +503,10 @@ static int ath3k_probe(struct usb_interface *intf,
- 	if (ret < 0) {
- 		if (ret == -ENOENT)
- 			BT_ERR("Firmware file \"%s\" not found",
--							ATH3K_FIRMWARE);
-+			       ATH3K_FIRMWARE);
- 		else
- 			BT_ERR("Firmware file \"%s\" request failed (err=%d)",
--							ATH3K_FIRMWARE, ret);
-+			       ATH3K_FIRMWARE, ret);
- 		return ret;
- 	}
++struct mod_hdcp_dm {
++	void *handle;
++	struct {
++		void (*exit_idle_optimizations)(void *handle);
++	} funcs;
++};
++
+ struct mod_hdcp_psp {
+ 	void *handle;
+ 	void *funcs;
+@@ -269,6 +276,7 @@ struct mod_hdcp_display_query {
+ struct mod_hdcp_config {
+ 	struct mod_hdcp_psp psp;
+ 	struct mod_hdcp_ddc ddc;
++	struct mod_hdcp_dm dm;
+ 	uint8_t index;
+ };
  
 -- 
 2.43.0
