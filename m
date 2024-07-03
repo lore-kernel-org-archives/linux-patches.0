@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61439194A49;
-	Wed,  3 Jul 2024 11:23:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 454A2175549;
+	Wed,  3 Jul 2024 11:23:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005811; cv=none; b=kNTAU5YPClsXUxA9oav01L9k3eRcs6hSXUOtwsK0PERJmMrn8kYwHay9l0pjlGrDyin3rYHQtyeBsuL29SfitPxJqVNXrtXRq4vpGssApHIuYRjk7s93KnIzWluv6YE2I89UOl+3xSdIeqYs3qBxuHanlCgAIaX3gnjZY5zUjjY=
+	t=1720005814; cv=none; b=Cq++5H89VZdgYV7AaCHbqKesc4V8/fE52M0r/s2O7+wPXmSlxxF4nLCme1RG+9vvqmx50f0BV5GTibhoXL9Jgx9fFb9qi8aM2by2bWf92uplv9iYyvLbVU7QOyiiMyohnmgPlVpUBjeHp/6nKatb4RCgOJrITm+uJxGhKpxWriA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005811; c=relaxed/simple;
-	bh=ZaElN8XuWLTS+2iBiw8JUwxC9oB7RwP1BHbGqla2UJM=;
+	s=arc-20240116; t=1720005814; c=relaxed/simple;
+	bh=dbkUfvKcv+hhhCVmuNXd19qx/79r6gaNwYOL/xwDJNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HdNhC7D812q4HU3TuzXk8SFaTlFj0rsC/n5ZXCMX1Cq/7Y5OX8jd1BdLMjDt3+zMIU5JRD2D2zH01USDlOSoPdK5J6biYolXmpoPAIP/9Ef/4zyXV8R1vdaal9WYG5vZbJ6xHrkJagWXY0dH9D6vmVSc5Lv8VR2gv4dj86RbEYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R6g5mGlw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YcihbQjx3Ckk7ErQsHDJYLiehJgPruGndXFEvF4oUCvmStCTH/yBnVl6TUGVgFPEgSg+EPUX2Crv5G3lYfYb7+Gja/4EZDM+IgOrBV2tC8rjZvZYTrOVTwoYr1AXwr9TYisU7RxSP4KJOCIPPCoBrXPXv6kllvVrkeFuDr7Zqc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zYQB0FGU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R6g5mGlw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2BAAC2BD10;
-	Wed,  3 Jul 2024 11:23:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zYQB0FGU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1F8FC2BD10;
+	Wed,  3 Jul 2024 11:23:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005811;
-	bh=ZaElN8XuWLTS+2iBiw8JUwxC9oB7RwP1BHbGqla2UJM=;
+	s=korg; t=1720005814;
+	bh=dbkUfvKcv+hhhCVmuNXd19qx/79r6gaNwYOL/xwDJNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R6g5mGlwtp6+ilOElT9HZR3OnCPQCabP8E/HZthNa1YlLDXUheiDLPKpYnQxVRJJk
-	 yRW5zfUXRjxZriHzf62P16k9HTqdBeE/fj/vA+J61gzWwkG/UD0aKA0qWIGDR6eHWc
-	 IPfQKyVCPD6hzCM1O9exF8NjRln5e5LZj0kiHzpk=
+	b=zYQB0FGUIRJHL+/16TzQwkxGpJzkA8wXoQRz4bsWuxQIdsKg7upuPLg2Kqu31UCZl
+	 mls/MjcGVaiHXRmK0hVtmPK6oI23xi/JrINIveVWOxuXsmw48Ta2b2QFDrtE5ROT6v
+	 DizngmD7edVuHOoufYDko40e+6axnhVZcxkfWuY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Simon Horman <horms@kernel.org>,
+	syzbot+5186630949e3c55f0799@syzkaller.appspotmail.com,
+	Oliver Neukum <oneukum@suse.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 204/356] bnxt_en: Restore PTP tx_avail count in case of skb_pad() error
-Date: Wed,  3 Jul 2024 12:39:00 +0200
-Message-ID: <20240703102920.822399096@linuxfoundation.org>
+Subject: [PATCH 5.15 205/356] net: usb: rtl8150 fix unintiatilzed variables in rtl8150_get_link_ksettings
+Date: Wed,  3 Jul 2024 12:39:01 +0200
+Message-ID: <20240703102920.860576494@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -54,51 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavan Chebbi <pavan.chebbi@broadcom.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit 1e7962114c10957fe4d10a15eb714578a394e90b ]
+[ Upstream commit fba383985354e83474f95f36d7c65feb75dba19d ]
 
-The current code only restores PTP tx_avail count when we get DMA
-mapping errors.  Fix it so that the PTP tx_avail count will be
-restored for both DMA mapping errors and skb_pad() errors.
-Otherwise PTP TX timestamp will not be available after a PTP
-packet hits the skb_pad() error.
+This functions retrieves values by passing a pointer. As the function
+that retrieves them can fail before touching the pointers, the variables
+must be initialized.
 
-Fixes: 83bb623c968e ("bnxt_en: Transmit and retrieve packet timestamps")
-Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
-Signed-off-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240618215313.29631-4-michael.chan@broadcom.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+5186630949e3c55f0799@syzkaller.appspotmail.com
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Link: https://lore.kernel.org/r/20240619132816.11526-1-oneukum@suse.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/usb/rtl8150.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 3888561a5cc8f..f3c6a122a079a 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -667,9 +667,6 @@ static netdev_tx_t bnxt_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 	return NETDEV_TX_OK;
+diff --git a/drivers/net/usb/rtl8150.c b/drivers/net/usb/rtl8150.c
+index 4a1b0e0fc3a3a..17b87aba11d19 100644
+--- a/drivers/net/usb/rtl8150.c
++++ b/drivers/net/usb/rtl8150.c
+@@ -778,7 +778,8 @@ static int rtl8150_get_link_ksettings(struct net_device *netdev,
+ 				      struct ethtool_link_ksettings *ecmd)
+ {
+ 	rtl8150_t *dev = netdev_priv(netdev);
+-	short lpa, bmcr;
++	short lpa = 0;
++	short bmcr = 0;
+ 	u32 supported;
  
- tx_dma_error:
--	if (BNXT_TX_PTP_IS_SET(lflags))
--		atomic_inc(&bp->ptp_cfg->tx_avail);
--
- 	last_frag = i;
- 
- 	/* start back at beginning and unmap skb */
-@@ -691,6 +688,8 @@ static netdev_tx_t bnxt_start_xmit(struct sk_buff *skb, struct net_device *dev)
- tx_free:
- 	dev_kfree_skb_any(skb);
- tx_kick_pending:
-+	if (BNXT_TX_PTP_IS_SET(lflags))
-+		atomic_inc(&bp->ptp_cfg->tx_avail);
- 	if (txr->kick_pending)
- 		bnxt_txr_db_kick(bp, txr, txr->tx_prod);
- 	txr->tx_buf_ring[txr->tx_prod].skb = NULL;
+ 	supported = (SUPPORTED_10baseT_Half |
 -- 
 2.43.0
 
