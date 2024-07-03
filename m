@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01E817E900;
-	Wed,  3 Jul 2024 10:43:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3A117C7A0;
+	Wed,  3 Jul 2024 10:43:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003397; cv=none; b=gN8Q6dsEHdzmYThMFPh1vEPYdk0+VD3KS1rxUSqWC5mSyfE7d5QF4uFggdnVj0bJQAy8//oBBZvMx+iDUi1bHZdZHfRNIhqfgw6pPWSueXa9x3DsdBedBMJzzz+55y8iJ6MktnflU0rv1rCbVXVLOYOdUvM45S3topBlhbrJrZE=
+	t=1720003400; cv=none; b=TYAPVcNhpvMsvkTUBamI9ZqYAoU8e3ZvY/lpY1k5gZ2z03Vh9KW5P42IQnbtWl9U6h5gnrlgwxezq5ab80EL2A3KmTSsbDl2AFC9VAU2t+BYU0Iuq7+kTUiz4KD3wfsUaoNveMNSs3/Zc3k5r92Dd9jrkynxrxkQR/WxhvpkiV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003397; c=relaxed/simple;
-	bh=fhpZl4083+G9htphkezJV0c+owmypJDClEybIWZZRI0=;
+	s=arc-20240116; t=1720003400; c=relaxed/simple;
+	bh=yqpXsQfdTAhWMkU13ehkwk/wiFdNmUaBzKyh/Fd1Cus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nCipt4MhObMvcU607adHD6Jjo+AWfBL2Q3/qRL7oJHZLSiQHaLPtiIwCBdFuzVczHr9saqv0AwHTt+HLZPBQe5Zmc0PANwTcwCy7NIbzvWe+K4VvyNaH9m4HTVMhZu8bKNvw8gVjpQ+YFoFYppEdNkXGIoMHoL8bifMiAfGhXFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f5m0JCFi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TMUKAtDT9Jzbts+NN9+h3bKCS3ZmfLT8vccQp72iWT7VRhCCDo4+oP8Xo4koIAt435POaG3q/ebqQTywWlP80xNEsvAmjnakHnxzxfPolppAEBbTUD3zBwdPf4OUHPSsXl8HSGBmZa4aEW+jJTp5uAwcamPqCoFqXuxZvQ1L0BY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fTkuZw02; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f5m0JCFi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B95C2BD10;
-	Wed,  3 Jul 2024 10:43:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fTkuZw02"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7408FC32781;
+	Wed,  3 Jul 2024 10:43:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003396;
-	bh=fhpZl4083+G9htphkezJV0c+owmypJDClEybIWZZRI0=;
+	s=korg; t=1720003399;
+	bh=yqpXsQfdTAhWMkU13ehkwk/wiFdNmUaBzKyh/Fd1Cus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f5m0JCFiPGz0fK1LMa26BKGX+PeJyCkQh7eU0lDP2oP4h1KOiKCWKjwgbZsbTUpQe
-	 TpeCqKB+9Cb7SwqmHlFqJYSRViQpKmTp0owWtRxzT5xqujTmnR9eHy0/Ca0TJsdcUA
-	 IagX75uphf9oNeB00xEOG7n262DGVn71LMXZUIoM=
+	b=fTkuZw02pQYWk/m4j56BEDQ7KdHmWYdKbip6iDor0+AuGwyi1/xJkUlTMv7jKSnqa
+	 5CFfP27J0v1FZz6IHQhAeJnb0uo8n6l5RwyzfwglgCWQTPRU7mfQ4UZO3+cgQdwcS3
+	 /Ku8T3OhKR8D2Um4PdSstBXdAGaPFt9c4Qikwqm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5186630949e3c55f0799@syzkaller.appspotmail.com,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Jiri Kosina <jkosina@suse.com>,
+	"Kun(llfl)" <llfl@linux.alibaba.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 036/139] HID: core: remove unnecessary WARN_ON() in implement()
-Date: Wed,  3 Jul 2024 12:38:53 +0200
-Message-ID: <20240703102831.803783366@linuxfoundation.org>
+Subject: [PATCH 4.19 037/139] iommu/amd: Fix sysfs leak in iommu init
+Date: Wed,  3 Jul 2024 12:38:54 +0200
+Message-ID: <20240703102831.839871278@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -53,67 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Kun(llfl) <llfl@linux.alibaba.com>
 
-[ Upstream commit 4aa2dcfbad538adf7becd0034a3754e1bd01b2b5 ]
+[ Upstream commit a295ec52c8624883885396fde7b4df1a179627c3 ]
 
-Syzkaller hit a warning [1] in a call to implement() when trying
-to write a value into a field of smaller size in an output report.
+During the iommu initialization, iommu_init_pci() adds sysfs nodes.
+However, these nodes aren't remove in free_iommu_resources() subsequently.
 
-Since implement() already has a warn message printed out with the
-help of hid_warn() and value in question gets trimmed with:
-	...
-	value &= m;
-	...
-WARN_ON may be considered superfluous. Remove it to suppress future
-syzkaller triggers.
-
-[1]
-WARNING: CPU: 0 PID: 5084 at drivers/hid/hid-core.c:1451 implement drivers/hid/hid-core.c:1451 [inline]
-WARNING: CPU: 0 PID: 5084 at drivers/hid/hid-core.c:1451 hid_output_report+0x548/0x760 drivers/hid/hid-core.c:1863
-Modules linked in:
-CPU: 0 PID: 5084 Comm: syz-executor424 Not tainted 6.9.0-rc7-syzkaller-00183-gcf87f46fd34d #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/02/2024
-RIP: 0010:implement drivers/hid/hid-core.c:1451 [inline]
-RIP: 0010:hid_output_report+0x548/0x760 drivers/hid/hid-core.c:1863
-...
-Call Trace:
- <TASK>
- __usbhid_submit_report drivers/hid/usbhid/hid-core.c:591 [inline]
- usbhid_submit_report+0x43d/0x9e0 drivers/hid/usbhid/hid-core.c:636
- hiddev_ioctl+0x138b/0x1f00 drivers/hid/usbhid/hiddev.c:726
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:904 [inline]
- __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:890
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-...
-
-Fixes: 95d1c8951e5b ("HID: simplify implement() a bit")
-Reported-by: <syzbot+5186630949e3c55f0799@syzkaller.appspotmail.com>
-Suggested-by: Alan Stern <stern@rowland.harvard.edu>
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: 39ab9555c241 ("iommu: Add sysfs bindings for struct iommu_device")
+Signed-off-by: Kun(llfl) <llfl@linux.alibaba.com>
+Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Link: https://lore.kernel.org/r/c8e0d11c6ab1ee48299c288009cf9c5dae07b42d.1715215003.git.llfl@linux.alibaba.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/iommu/amd_iommu_init.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index dd1d8d0a46d12..0757097d25507 100644
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -1264,7 +1264,6 @@ static void implement(const struct hid_device *hid, u8 *report,
- 			hid_warn(hid,
- 				 "%s() called with too large value %d (n: %d)! (%s)\n",
- 				 __func__, value, n, current->comm);
--			WARN_ON(1);
- 			value &= m;
- 		}
- 	}
--- 
-2.43.0
-
+--- a/drivers/iommu/amd_iommu_init.c
++++ b/drivers/iommu/amd_iommu_init.c
+@@ -1409,8 +1409,17 @@ static int __init init_iommu_from_acpi(s
+ 	return 0;
+ }
+ 
++static void __init free_sysfs(struct amd_iommu *iommu)
++{
++	if (iommu->iommu.dev) {
++		iommu_device_unregister(&iommu->iommu);
++		iommu_device_sysfs_remove(&iommu->iommu);
++	}
++}
++
+ static void __init free_iommu_one(struct amd_iommu *iommu)
+ {
++	free_sysfs(iommu);
+ 	free_command_buffer(iommu);
+ 	free_event_buffer(iommu);
+ 	free_ppr_log(iommu);
 
 
