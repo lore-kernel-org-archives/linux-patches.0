@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036041836CB;
-	Wed,  3 Jul 2024 11:07:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EBFD17B4FF;
+	Wed,  3 Jul 2024 11:07:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004871; cv=none; b=LTaycgwiatI7/KCPk2ZF1LWcEiO2Yj35PzwTZofmVZjX4CeZ8Li3GjJj287y3OrHH4pPl0TYsLQq2+B6Rw4n8ydZELP2w5LUnv1rJV5G39Le1wvfzWzr2Wbt3h2xU0cjv5KJXuC7hOTrDdoZ2AA0ExaF/Qj/Zvu6A13ldKpcAhs=
+	t=1720004873; cv=none; b=q1ja/H8svH51LkfeiEX8oigJz7dMUAXNURKTj6UsX1f6ApUT2PKQWkdcl+UQ8l2U4IpKAthmCCUBjqU4/oFpxWWZ6KSHdw6VpZNRFRIf1SmMD1BSkM3IJ4fSJ1qjlbqrMwvucu/ZaMjCs3bfmmNLEy2gtsjW3Tsq/YsgOCmp2ns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004871; c=relaxed/simple;
-	bh=AccEMUwPELmxY7z1EBYbbwfdNhkyRUrdwgPXLRCjF58=;
+	s=arc-20240116; t=1720004873; c=relaxed/simple;
+	bh=nZinGYq71OO1im5OxhMBZiHghAYrr+PNApAKzscaRYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BuoAzdCd2+QZufSwJ+y/so+xJWyAf3qL5z8jI51Azqkn/l0vALwCkAtO+KzZWEm9kasoHdbu5TePsoOKEKFi9QUTzLqBpemJcQ0Bkct2QEg3KZ0MqDa7CfvMKx9BtSqgYJeq7tamaCe0RtkrHTXzsjq7OlpY/1F/OYVHJVh961k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ofGc0yRm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JtqcnbDa3dF+GuEivnCdzl7Lcn8hRBtryLugWkxDClDUxQJkIwkv2V3vDS4qbfi7sUSjSA72Iwu/tWU7O627WgwCe//tSdWU0wmduPsxIicoB1XfakG1mV4YI8E64oI2aSOcP4jz5YwfOBceTCFJULvGyEyRZrISY33B3ZzjSI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FDXN4hy5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ofGc0yRm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C63AC2BD10;
-	Wed,  3 Jul 2024 11:07:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FDXN4hy5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B51DC2BD10;
+	Wed,  3 Jul 2024 11:07:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004870;
-	bh=AccEMUwPELmxY7z1EBYbbwfdNhkyRUrdwgPXLRCjF58=;
+	s=korg; t=1720004873;
+	bh=nZinGYq71OO1im5OxhMBZiHghAYrr+PNApAKzscaRYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ofGc0yRm4cKSaQhd6AHIphnuVymiKuGcZa55kVDW3IUpGrIJ7a8XXXAJsBxmlQlgk
-	 Tt6lUXoxp1NTbxJN+g0Kxib5EfN/jAprm1zIwneehRBs3xUKySNfGV5sah1fzHsWO2
-	 bGdxlbHGcby3qnzv/rEOOG/cK0vn/+Wh0Fw1w1Js=
+	b=FDXN4hy5culKGc92lihzXEzoIcqzpOBYmNNwQwrc6WO85hfuVQgKHxAQBCZvEMqJ3
+	 KkCaAOo/Vbyd3hLQfwwPF8m/3viPwtZBP19btw1a44BJvLinRNy/ir0COl3+VjNqgR
+	 7GdPZgW9N+5hRH3QXxKVfCJj0aOHypHQmeEH3Jis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Shubin <n.shubin@yadro.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 157/290] dmaengine: ioatdma: Fix leaking on version mismatch
-Date: Wed,  3 Jul 2024 12:38:58 +0200
-Message-ID: <20240703102910.109774598@linuxfoundation.org>
+Subject: [PATCH 5.10 184/290] r8169: remove unneeded memory barrier in rtl_tx
+Date: Wed,  3 Jul 2024 12:39:25 +0200
+Message-ID: <20240703102911.121316346@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -52,67 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Shubin <n.shubin@yadro.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 1b11b4ef6bd68591dcaf8423c7d05e794e6aec6f ]
+[ Upstream commit 3a689e34973e8717cd57991c6fcf527dc56062b5 ]
 
-Fix leaking ioatdma_device if I/OAT version is less than IOAT_VER_3_0.
+tp->dirty_tx isn't changed outside rtl_tx(). Therefore I see no need
+to guarantee a specific order of reading tp->dirty_tx and tp->cur_tx.
+Having said that we can remove the memory barrier.
+In addition use READ_ONCE() when reading tp->cur_tx because it can
+change in parallel to rtl_tx().
 
-Fixes: bf453a0a18b2 ("dmaengine: ioat: Support in-use unbind")
-Signed-off-by: Nikita Shubin <n.shubin@yadro.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20240528-ioatdma-fixes-v2-1-a9f2fbe26ab1@yadro.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://lore.kernel.org/r/2264563a-fa9e-11b0-2c42-31bc6b8e2790@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: c71e3a5cffd5 ("r8169: Fix possible ring buffer corruption on fragmented Tx packets.")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ioat/init.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/realtek/r8169_main.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/dma/ioat/init.c b/drivers/dma/ioat/init.c
-index 783d4e740f115..6c27980a5ec8f 100644
---- a/drivers/dma/ioat/init.c
-+++ b/drivers/dma/ioat/init.c
-@@ -1349,6 +1349,7 @@ static int ioat_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	void __iomem * const *iomap;
- 	struct device *dev = &pdev->dev;
- 	struct ioatdma_device *device;
-+	u8 version;
- 	int err;
+diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
+index c29d43c5f4504..84c8362a65cd1 100644
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -4472,9 +4472,8 @@ static void rtl_tx(struct net_device *dev, struct rtl8169_private *tp,
+ 	unsigned int dirty_tx, tx_left, bytes_compl = 0, pkts_compl = 0;
  
- 	err = pcim_enable_device(pdev);
-@@ -1362,6 +1363,10 @@ static int ioat_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	if (!iomap)
- 		return -ENOMEM;
+ 	dirty_tx = tp->dirty_tx;
+-	smp_rmb();
  
-+	version = readb(iomap[IOAT_MMIO_BAR] + IOAT_VER_OFFSET);
-+	if (version < IOAT_VER_3_0)
-+		return -ENODEV;
-+
- 	err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64));
- 	if (err)
- 		err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
-@@ -1374,16 +1379,14 @@ static int ioat_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	pci_set_master(pdev);
- 	pci_set_drvdata(pdev, device);
- 
--	device->version = readb(device->reg_base + IOAT_VER_OFFSET);
-+	device->version = version;
- 	if (device->version >= IOAT_VER_3_4)
- 		ioat_dca_enabled = 0;
--	if (device->version >= IOAT_VER_3_0) {
--		if (is_skx_ioat(pdev))
--			device->version = IOAT_VER_3_2;
--		err = ioat3_dma_probe(device, ioat_dca_enabled);
--	} else
--		return -ENODEV;
- 
-+	if (is_skx_ioat(pdev))
-+		device->version = IOAT_VER_3_2;
-+
-+	err = ioat3_dma_probe(device, ioat_dca_enabled);
- 	if (err) {
- 		dev_err(dev, "Intel(R) I/OAT DMA Engine init failed\n");
- 		return -ENODEV;
+-	for (tx_left = tp->cur_tx - dirty_tx; tx_left > 0; tx_left--) {
++	for (tx_left = READ_ONCE(tp->cur_tx) - dirty_tx; tx_left; tx_left--) {
+ 		unsigned int entry = dirty_tx % NUM_TX_DESC;
+ 		struct sk_buff *skb = tp->tx_skb[entry].skb;
+ 		u32 status;
 -- 
 2.43.0
 
