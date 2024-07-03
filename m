@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E184A17DA00;
-	Wed,  3 Jul 2024 11:28:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC8417DA00;
+	Wed,  3 Jul 2024 11:28:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006097; cv=none; b=UVwO+v0uxEUH0GtH9NoBUIEF32RYMaI2g0MlF+pUJJmcfdhJikyKJ55O03OWGuV2bGkDI480TzLQaYBBPHIsviDNpX0Gp//Cemw6DPASq/JfT2tjElfEhPILSUL3UjMcKw0Oz1o4v0ZDsjYCIspmWd7E6PsOAkavMX+XahNqeRo=
+	t=1720006100; cv=none; b=AmQKFkFhRthhuzNxGWHcHQQuauo3lWPDAe2N9iFt3bh1Hulq802r2y+MTIrGruL5h8mhhb9+HTOdyZc1fp0SzE503TQokhBkkCd1Yh3i2SlqJNmf297nB+0/1EihTmJA9UAJCflU6bOfxQVXkgVqvwpMi8nRoZmqAbpKDZFxwA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006097; c=relaxed/simple;
-	bh=7Y3FwAn9RZ6+/mdQVX2VXYYZ38Q9d5xjoPB0QwXAWL8=;
+	s=arc-20240116; t=1720006100; c=relaxed/simple;
+	bh=P/qE57xplTWF/zlc54+Gq8pw9pUtxzXakf3Cr208N/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NMKVhq+/gV8zkr1vRcaOUTSXNTl4pQWrmErp0lP0OsrWKtu/gnDivdM5elL4YmFxrTBKlWBV4pa/iubQOFxx5uZrJv5jIDjGFO0aSar9sfGn+xP28NBKtzylOmrFDKxTO/2pZ0jj/b0005Rb9YJO2s9eGEijyISAQtc0PXujWc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j70kmsM9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U0UQ1J3aztgS5sFVn6UlMAnVA1kA+f2S4Wgdag+heDM4YeXCc9IEcNbu6Ja/Ckxa/qRvAMwbRtx9Ms1BWw45Q1fERkMBWVK0SRX4pICXVv2ofbBmpdCGJDlcX5phvFgwfSSgp4KYh4EW2eQ+OAN02m05C0IuQXcyjADNJvGO0NE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EMdJAST6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j70kmsM9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C30C32781;
-	Wed,  3 Jul 2024 11:28:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EMdJAST6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 632C4C2BD10;
+	Wed,  3 Jul 2024 11:28:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006096;
-	bh=7Y3FwAn9RZ6+/mdQVX2VXYYZ38Q9d5xjoPB0QwXAWL8=;
+	s=korg; t=1720006099;
+	bh=P/qE57xplTWF/zlc54+Gq8pw9pUtxzXakf3Cr208N/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j70kmsM9tDAJfIkD3zIN3dpJY2lCisxojjKhCofW8VdBQX2gvh2+JcdWsL+V1cFri
-	 CsGjTctvziu3pQbQ9oe8PJubw7KkNtvG9byXJweyErzdoTtmAxWSWS0v5d8Ybs39rl
-	 pVrrT/BPF4+9Te3etZtnhOh1aI3ytiv1yLemFw5A=
+	b=EMdJAST6ag+wYCrjhcRSC2C9Maeacd8DkY/+LxQcR2EKXwQuSJY9kVJzUoWs58ygS
+	 PwP/bZvjHU8Eavzy8/JIKaQ+F+9iHh2oNQ2CSCCmCi3GRfC9w5lJFeomepyOh4FKOC
+	 lWzDY7ieiDrOt6suLQqKQ3RfvbCqrarxQhyYAVWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Ying <victor.liu@nxp.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 299/356] drm/panel: simple: Add missing display timing flags for KOE TX26D202VM0BWA
-Date: Wed,  3 Jul 2024 12:40:35 +0200
-Message-ID: <20240703102924.426764066@linuxfoundation.org>
+Subject: [PATCH 5.15 300/356] gpio: davinci: Validate the obtained number of IRQs
+Date: Wed,  3 Jul 2024 12:40:36 +0200
+Message-ID: <20240703102924.463503262@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,37 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Ying <victor.liu@nxp.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit 37ce99b77762256ec9fda58d58fd613230151456 ]
+[ Upstream commit 7aa9b96e9a73e4ec1771492d0527bd5fc5ef9164 ]
 
-KOE TX26D202VM0BWA panel spec indicates the DE signal is active high in
-timing chart, so add DISPLAY_FLAGS_DE_HIGH flag in display timing flags.
-This aligns display_timing with panel_desc.
+Value of pdata->gpio_unbanked is taken from Device Tree. In case of broken
+DT due to any error this value can be any. Without this value validation
+there can be out of chips->irqs array boundaries access in
+davinci_gpio_probe().
 
-Fixes: 8a07052440c2 ("drm/panel: simple: Add support for KOE TX26D202VM0BWA panel")
-Signed-off-by: Liu Ying <victor.liu@nxp.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20240624015612.341983-1-victor.liu@nxp.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240624015612.341983-1-victor.liu@nxp.com
+Validate the obtained nirq value so that it won't exceed the maximum
+number of IRQs per bank.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: eb3744a2dd01 ("gpio: davinci: Do not assume continuous IRQ numbering")
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Link: https://lore.kernel.org/r/20240618144344.16943-1-amishin@t-argos.ru
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-simple.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpio/gpio-davinci.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index 0dc4d891fedc2..26c99ffe787cd 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -2873,6 +2873,7 @@ static const struct display_timing koe_tx26d202vm0bwa_timing = {
- 	.vfront_porch = { 3, 5, 10 },
- 	.vback_porch = { 2, 5, 10 },
- 	.vsync_len = { 5, 5, 5 },
-+	.flags = DISPLAY_FLAGS_DE_HIGH,
- };
+diff --git a/drivers/gpio/gpio-davinci.c b/drivers/gpio/gpio-davinci.c
+index 0214244e9f01f..d691e2ed88a08 100644
+--- a/drivers/gpio/gpio-davinci.c
++++ b/drivers/gpio/gpio-davinci.c
+@@ -227,6 +227,11 @@ static int davinci_gpio_probe(struct platform_device *pdev)
+ 	else
+ 		nirq = DIV_ROUND_UP(ngpio, 16);
  
- static const struct panel_desc koe_tx26d202vm0bwa = {
++	if (nirq > MAX_INT_PER_BANK) {
++		dev_err(dev, "Too many IRQs!\n");
++		return -EINVAL;
++	}
++
+ 	chips = devm_kzalloc(dev, sizeof(*chips), GFP_KERNEL);
+ 	if (!chips)
+ 		return -ENOMEM;
 -- 
 2.43.0
 
