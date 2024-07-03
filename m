@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D23B136E2A;
-	Wed,  3 Jul 2024 11:09:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB6B18628F;
+	Wed,  3 Jul 2024 11:09:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004956; cv=none; b=b2UnhFOX+eqvmUn8Xc3SnTYb/gWNGnMghodYtYKfxJujSWbiewQbZg2XP6A+svI4066YVw9CpO0hLhEZzrZCOZB1HI2Hs7qVUZGjlXhleovuGoggixpaFcllVAT9BoK1u5DDx1ZVBCdvskh0ksFCEPCJSiNHzNVEnNQKR5mZHFc=
+	t=1720004959; cv=none; b=QuGHMnfzm3NYh8YdH6owJoVwzqmOE22ibfsIZPSfyvg/qVwoeIg4iI1m8G1IoNEJNLm25v4lInNvP6p2ftCZf4Ly5cqZarMe/FK1uGZIbaJAShZuuxw9g+vVIH1yVtY1xy/fRY9uSvOlr2434fpWF9Fi6v85Qyvd7c1FSnoX6/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004956; c=relaxed/simple;
-	bh=GRMM4e+qv2SU1d3RKdU5eEi0yTDPjv8Oe3h8deJX0hE=;
+	s=arc-20240116; t=1720004959; c=relaxed/simple;
+	bh=T9MyIWion/8FwmppxqNJU/jFVXBDAlBtPdhghZRMslk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IoukReTeEB0u9pkm+DpXfGNIPLRG6CQCqeXHgnT2RJJc2uilrgP7N9NgMLhokJgWob1HbsARrmLcFPL20nBDJ8z7kekzcXKgU63A2jO2Miig+0KDC1aRUZ41qCkgKGs2DL2KSmk5RchcyVQ23fEFTEYnOzfY29+ADmB9VB6AwNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G9dl1/Xi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a3SGRympf3Sxxbn6dzScCALgIx5w24AnCH/X8nm9lzoLp5TcQ0gc9W0zKf6C1bDh2SrJ1yhDNeP7VF5xbHxASaqtK0M/tPWTO6l3lU0HatuOpcx3egOoiuzLGHDdaCICNFIUpTpnygT6m4nGWmTQZ+peZcTCPQpbuN8v2X+f2Ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aqu3yzF0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G9dl1/Xi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0300DC32781;
-	Wed,  3 Jul 2024 11:09:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aqu3yzF0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7CEFC2BD10;
+	Wed,  3 Jul 2024 11:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004956;
-	bh=GRMM4e+qv2SU1d3RKdU5eEi0yTDPjv8Oe3h8deJX0hE=;
+	s=korg; t=1720004959;
+	bh=T9MyIWion/8FwmppxqNJU/jFVXBDAlBtPdhghZRMslk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G9dl1/Xi5/C/w3MxPSq9eUkQ87aVdg+skf/ygBGEXk7CRP3tNAuyfAu1DFc0Tnctn
-	 egQ6EVN8XwWDReHEtDpZ53gqlhOGorA6HBaT2sRiFDb4SIGXR1ZGEPgdb61kftyZPM
-	 Q5bxuC/29yW2vVNJxmvIjLDW+Ug8vMUsDsluzCtY=
+	b=Aqu3yzF02oJV1EBmSrAb1fJnLhNrGslpwHrug6HeO4/GQ+rF1cpQty/rJOGLX+KuJ
+	 JoyuNHynkTMgbC5tfViflxNEUcBlFs7qAHdFxDd2j4zcGuQ7/v0x/72gbnd5BeFcOP
+	 fWnA/m25Ohl/SUhfg/Q9sLMNkz2vks7+Rh6Mf6vA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingyuan Mo <hdthky0@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Yunjian Wang <wangyunjian@huawei.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 212/290] netfilter: nf_tables: validate family when identifying table via handle
-Date: Wed,  3 Jul 2024 12:39:53 +0200
-Message-ID: <20240703102912.167268653@linuxfoundation.org>
+Subject: [PATCH 5.10 213/290] SUNRPC: Fix null pointer dereference in svc_rqst_free()
+Date: Wed,  3 Jul 2024 12:39:54 +0200
+Message-ID: <20240703102912.204786275@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -51,50 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Yunjian Wang <wangyunjian@huawei.com>
 
-[ Upstream commit f6e1532a2697b81da00bfb184e99d15e01e9d98c ]
+[ Upstream commit b9f83ffaa0c096b4c832a43964fe6bff3acffe10 ]
 
-Validate table family when looking up for it via NFTA_TABLE_HANDLE.
+When alloc_pages_node() returns null in svc_rqst_alloc(), the
+null rq_scratch_page pointer will be dereferenced when calling
+put_page() in svc_rqst_free(). Fix it by adding a null check.
 
-Fixes: 3ecbfd65f50e ("netfilter: nf_tables: allocate handle and delete objects via handle")
-Reported-by: Xingyuan Mo <hdthky0@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Addresses-Coverity: ("Dereference after null check")
+Fixes: 5191955d6fc6 ("SUNRPC: Prepare for xdr_stream-style decoding on the server-side")
+Signed-off-by: Yunjian Wang <wangyunjian@huawei.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/sunrpc/svc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index f3cb5c9202760..754278b857068 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -713,7 +713,7 @@ static struct nft_table *nft_table_lookup(const struct net *net,
- 
- static struct nft_table *nft_table_lookup_byhandle(const struct net *net,
- 						   const struct nlattr *nla,
--						   u8 genmask)
-+						   int family, u8 genmask)
+diff --git a/net/sunrpc/svc.c b/net/sunrpc/svc.c
+index 26d972c54a593..ac7b3a93d9920 100644
+--- a/net/sunrpc/svc.c
++++ b/net/sunrpc/svc.c
+@@ -845,7 +845,8 @@ void
+ svc_rqst_free(struct svc_rqst *rqstp)
  {
- 	struct nftables_pernet *nft_net;
- 	struct nft_table *table;
-@@ -721,6 +721,7 @@ static struct nft_table *nft_table_lookup_byhandle(const struct net *net,
- 	nft_net = net_generic(net, nf_tables_net_id);
- 	list_for_each_entry(table, &nft_net->tables, list) {
- 		if (be64_to_cpu(nla_get_be64(nla)) == table->handle &&
-+		    table->family == family &&
- 		    nft_active_genmask(table, genmask))
- 			return table;
- 	}
-@@ -1440,7 +1441,7 @@ static int nf_tables_deltable(struct net *net, struct sock *nlsk,
- 
- 	if (nla[NFTA_TABLE_HANDLE]) {
- 		attr = nla[NFTA_TABLE_HANDLE];
--		table = nft_table_lookup_byhandle(net, attr, genmask);
-+		table = nft_table_lookup_byhandle(net, attr, family, genmask);
- 	} else {
- 		attr = nla[NFTA_TABLE_NAME];
- 		table = nft_table_lookup(net, attr, family, genmask);
+ 	svc_release_buffer(rqstp);
+-	put_page(rqstp->rq_scratch_page);
++	if (rqstp->rq_scratch_page)
++		put_page(rqstp->rq_scratch_page);
+ 	kfree(rqstp->rq_resp);
+ 	kfree(rqstp->rq_argp);
+ 	kfree(rqstp->rq_auth_data);
 -- 
 2.43.0
 
