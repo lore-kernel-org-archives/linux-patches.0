@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F47A143879;
-	Wed,  3 Jul 2024 11:13:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41CC7173352;
+	Wed,  3 Jul 2024 11:13:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005197; cv=none; b=NODIO+hLxeQORuvSqg+tmAJg2gznKA2qFX5PWMBUCjGOV11tydZXROAhvzN8py5JWYAIgp2i1Y147gQMjB0WhkHMyEwtOdOP6k4Q3ad20CyYVgIZYfILymKnXGz9GKIUKa4x2ghOiva7Zy7eirK5CnhovsoGUmwgCmQtVmlHEQM=
+	t=1720005200; cv=none; b=umOZticaGEngnYAGL9VBwvxGj9P5a06A4SErf+v4dIcTjSc9/783gJjcSkbGkLyGrVoPL93w3iPEmBCmZS+KNmjqjDja2wNXY7UpHI7+RGwrdQKYyrtEPfRoPeYf9hPPfGBweu7eF43sa4jPP39jY4M5wyHOpV3l0VovC1fcaFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005197; c=relaxed/simple;
-	bh=4ZI6HhbZr4UaLZCItFFTUD9tENwmgJ+/IBFGXPgPdQA=;
+	s=arc-20240116; t=1720005200; c=relaxed/simple;
+	bh=Xsk5/7V/eIf7LARsTt0goozh+K93hSPDOEMJ/s54YW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CQt681uPaUl4gjKt9U2kJovVnMGzF0MOU78dKGrlYIV8fJbVV42lZk8Z48HiWwhagl+EWQgY2TCIG6WkHCheINIyxdwI5B+a5I38RBpOl7yMwkhPlwd0R0Q0v8XuzHxk2gWZCdJ8Ji8foR9PqwsvNgCz1Q5/p0oume1ZAeOmdYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eu3mbMFM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=unV+FaJKVUOOg+5G0FBLoMKZ1jStD5RzoV/hrhT3XviFfEAhvaeUs2W/DACSI3RlYy2MO3z0/dw/gwCvb9N0IEfqpn9SYWpEnFrh5HS0lwv1D9k8q3El6U4MXzy8ro7B1yjj7i5eMMksVRGvrFr6eNNu1F8DMMGvjQu3HgPd6/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ct66juEn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eu3mbMFM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2681C2BD10;
-	Wed,  3 Jul 2024 11:13:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ct66juEn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD7B2C2BD10;
+	Wed,  3 Jul 2024 11:13:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005197;
-	bh=4ZI6HhbZr4UaLZCItFFTUD9tENwmgJ+/IBFGXPgPdQA=;
+	s=korg; t=1720005200;
+	bh=Xsk5/7V/eIf7LARsTt0goozh+K93hSPDOEMJ/s54YW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eu3mbMFM8R3NMq0dH69wWj3/6Nh2Z2ZnMzWYSSKPZPr6sefEbboIqGr75mYtU/W6Z
-	 0C2+IkmzeCvdDitG94c4d1MAmbqweUyvWckvnxxP5B8tYu9BIZAyNPoHnl0+WIA4t7
-	 tE0zl2BAycs53eFw44Vu0Iqw8BbYPdAq5u6Du7Qw=
+	b=ct66juEnLeJ1kjh4dJNDcsFZVX9wfHeK/L0KL6drBLmTQZYA2J8WzNvPJRnBCEd3B
+	 L8/+aIurOO6yVl5xCtKnKcvjCe1bTajTfY8afh+09WAj5xbxpXDzOl5YXsfrvKYdrQ
+	 LcIhngEVtUB4/yKMnFJWglUeJPMOblweqNL8gLGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 290/290] xdp: xdp_mem_allocator can be NULL in trace_mem_connect().
-Date: Wed,  3 Jul 2024 12:41:11 +0200
-Message-ID: <20240703102915.100475736@linuxfoundation.org>
+	Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.10 260/290] tty: mcf: MCF54418 has 10 UARTS
+Date: Wed,  3 Jul 2024 12:40:41 +0200
+Message-ID: <20240703102913.965387201@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -45,52 +44,38 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
 
-commit e0ae713023a9d09d6e1b454bdc8e8c1dd32c586e upstream.
+commit 7c92a8bd53f24d50c8cf4aba53bb75505b382fed upstream.
 
-Since the commit mentioned below __xdp_reg_mem_model() can return a NULL
-pointer. This pointer is dereferenced in trace_mem_connect() which leads
-to segfault.
+Most of the colfires have up to 5 UARTs but MCF54418 has up-to 10 !
+Change the maximum value authorized.
 
-The trace points (mem_connect + mem_disconnect) were put in place to
-pair connect/disconnect using the IDs. The ID is only assigned if
-__xdp_reg_mem_model() does not return NULL. That connect trace point is
-of no use if there is no ID.
-
-Skip that connect trace point if xdp_alloc is NULL.
-
-[ Toke Høiland-Jørgensen delivered the reasoning for skipping the trace
-  point ]
-
-Fixes: 4a48ef70b93b8 ("xdp: Allow registering memory model without rxq reference")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Acked-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://lore.kernel.org/r/YikmmXsffE+QajTB@linutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
+Cc: stable <stable@kernel.org>
+Fixes: 2545cf6e94b4 ("m68knommu: allow 4 coldfire serial ports")
+Link: https://lore.kernel.org/r/20240620-upstream-uart-v1-1-a9d0d95fb19e@yoseli.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/xdp.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/tty/serial/mcf.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/core/xdp.c
-+++ b/net/core/xdp.c
-@@ -356,7 +356,8 @@ int xdp_rxq_info_reg_mem_model(struct xd
- 	if (IS_ERR(xdp_alloc))
- 		return PTR_ERR(xdp_alloc);
+--- a/drivers/tty/serial/mcf.c
++++ b/drivers/tty/serial/mcf.c
+@@ -479,7 +479,7 @@ static const struct uart_ops mcf_uart_op
+ 	.verify_port	= mcf_verify_port,
+ };
  
--	trace_mem_connect(xdp_alloc, xdp_rxq);
-+	if (trace_mem_connect_enabled() && xdp_alloc)
-+		trace_mem_connect(xdp_alloc, xdp_rxq);
- 	return 0;
- }
+-static struct mcf_uart mcf_ports[4];
++static struct mcf_uart mcf_ports[10];
+ 
+ #define	MCF_MAXPORTS	ARRAY_SIZE(mcf_ports)
  
 
 
