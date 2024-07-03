@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22B11DA327;
-	Wed,  3 Jul 2024 11:25:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7041428F8;
+	Wed,  3 Jul 2024 11:25:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005954; cv=none; b=ugCS2+HZVV96rcY0yy2gB8hMqHBlBlmAfLHyoh2I9VZbZKQ8JfbsR0/aiBM+64XFDKmpPZ7+bMi1h0wQQ2jWuZV08Odwmx+ErCSoYq7NgjAQuH5OLvSFxNj8uFakkc9DmWlBOznLNBwe8caYRpn743Tb8Oi7hXqYXCrZyFuKr/w=
+	t=1720005957; cv=none; b=Ig3vyI/R79aXOaHDc7rULf4GLpDRhXt/JDDbnnU54rHdTaeX+PwN97oZWV5Wt1skRHcrmxht1/KAScQx2c2VgffKkUSs5jf9brzM3oNds31o3Jpi0b/jd/YYYs2BT+4XcEfwukPsNOb8TK1+dh6vJ8pIMR2wnT3iMR16MpywbPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005954; c=relaxed/simple;
-	bh=7qhzSk0sCxM45ljBPT9Rtd0CggGjaJSamHgC5JPib3o=;
+	s=arc-20240116; t=1720005957; c=relaxed/simple;
+	bh=FIrxTOfiYlbexu1AG+veljIrvF72t2xIfNBGAYJ14VE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ithAp7cx25KeJX72j4fGtq+5RVoo4QJHPDnIY0B/3UqgF+k3eRE2T+4KSf2mjqwE4KOwYJiBNdfUgBBi45kZTtz4CCzLFoGxOWKpuZsfhkDgY7bSVTWnlGB04iqjxqzbedTMcSPOYjE4qdpEzjPXIGwMn75y3LBe3EZJ/Ksjsk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efQOBaub; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cixiBXhMFifhvKQBHxbu7fgEgodEcSvB8mMBryDrYj5fyz6XrHv1S6NLFlBSfasucM0jqu0kmKwRFfNQQBuCYrv2CUCcIxbXmcLyPwsNJr78X/vmurvL7Mpoo+uIIHbf5joEgNSuTCwoaZN16eTe6fxCOJirgxkVc7E/oAGKzoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YTSoUYXq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efQOBaub"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E2F9C2BD10;
-	Wed,  3 Jul 2024 11:25:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YTSoUYXq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6317FC2BD10;
+	Wed,  3 Jul 2024 11:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005953;
-	bh=7qhzSk0sCxM45ljBPT9Rtd0CggGjaJSamHgC5JPib3o=;
+	s=korg; t=1720005956;
+	bh=FIrxTOfiYlbexu1AG+veljIrvF72t2xIfNBGAYJ14VE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=efQOBaubwLw9uYjDk1AZ7l7GoN1nmghRcl6k6iUriWB8sIUdd9CxDd+hXjxQFaYLD
-	 wiRO5E0/r5eUA9dVVuTqKjwZVfGP8WyIb6fYNDTzuC30Zss6nUNA2ECD1neB8GIZV/
-	 1iRZdBPN2ZTgEN5CrZ/fAIGWEu2VeQ42PyJ+6ygk=
+	b=YTSoUYXqkSatceycIfqk0rt6IX2h20r8W/0px32AeWSOPUoyYwR/UO1otWwoKX4DM
+	 PaOu1xyUVLGP4CEW0C/AexSvG5yawOu3urfNxK8VgXCnymKh4VifkU7JH11OyuBeco
+	 77Z5ec4PcR0105oMdp5ocGTnUICP6vvvo3jOQbB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Shubin <n.shubin@yadro.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Chris Wilson <chris@chris-wilson.co.uk>,
+	Karolina Drobnik <karolina.drobnik@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 210/356] dmaengine: ioatdma: Fix leaking on version mismatch
-Date: Wed,  3 Jul 2024 12:39:06 +0200
-Message-ID: <20240703102921.053375152@linuxfoundation.org>
+Subject: [PATCH 5.15 245/356] drm/i915/gt: Only kick the signal worker if theres been an update
+Date: Wed,  3 Jul 2024 12:39:41 +0200
+Message-ID: <20240703102922.383032303@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -52,67 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Shubin <n.shubin@yadro.com>
+From: Chris Wilson <chris@chris-wilson.co.uk>
 
-[ Upstream commit 1b11b4ef6bd68591dcaf8423c7d05e794e6aec6f ]
+[ Upstream commit c877bed82e1017c102c137d432933ccbba92c119 ]
 
-Fix leaking ioatdma_device if I/OAT version is less than IOAT_VER_3_0.
+One impact of commit 047a1b877ed4 ("dma-buf & drm/amdgpu: remove
+dma_resv workaround") is that it stores many, many more fences. Whereas
+adding an exclusive fence used to remove the shared fence list, that
+list is now preserved and the write fences included into the list. Not
+just a single write fence, but now a write/read fence per context. That
+causes us to have to track more fences than before (albeit half of those
+are redundant), and we trigger more interrupts for multi-engine
+workloads.
 
-Fixes: bf453a0a18b2 ("dmaengine: ioat: Support in-use unbind")
-Signed-off-by: Nikita Shubin <n.shubin@yadro.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20240528-ioatdma-fixes-v2-1-a9f2fbe26ab1@yadro.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+As part of reducing the impact from handling more signaling, we observe
+we only need to kick the signal worker after adding a fence iff we have
+good cause to believe that there is work to be done in processing the
+fence i.e. we either need to enable the interrupt or the request is
+already complete but we don't know if we saw the interrupt and so need
+to check signaling.
+
+References: 047a1b877ed4 ("dma-buf & drm/amdgpu: remove dma_resv workaround")
+Signed-off-by: Chris Wilson <chris@chris-wilson.co.uk>
+Signed-off-by: Karolina Drobnik <karolina.drobnik@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/d7b953c7a4ba747c8196a164e2f8c5aef468d048.1657289332.git.karolina.drobnik@intel.com
+Stable-dep-of: 70cb9188ffc7 ("drm/i915/gt: Disarm breadcrumbs if engines are already idle")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ioat/init.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_breadcrumbs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/ioat/init.c b/drivers/dma/ioat/init.c
-index 783d4e740f115..6c27980a5ec8f 100644
---- a/drivers/dma/ioat/init.c
-+++ b/drivers/dma/ioat/init.c
-@@ -1349,6 +1349,7 @@ static int ioat_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	void __iomem * const *iomap;
- 	struct device *dev = &pdev->dev;
- 	struct ioatdma_device *device;
-+	u8 version;
- 	int err;
+diff --git a/drivers/gpu/drm/i915/gt/intel_breadcrumbs.c b/drivers/gpu/drm/i915/gt/intel_breadcrumbs.c
+index 209cf265bf746..e8cd7effea2b0 100644
+--- a/drivers/gpu/drm/i915/gt/intel_breadcrumbs.c
++++ b/drivers/gpu/drm/i915/gt/intel_breadcrumbs.c
+@@ -398,7 +398,8 @@ static void insert_breadcrumb(struct i915_request *rq)
+ 	 * the request as it may have completed and raised the interrupt as
+ 	 * we were attaching it into the lists.
+ 	 */
+-	irq_work_queue(&b->irq_work);
++	if (!b->irq_armed || __i915_request_is_complete(rq))
++		irq_work_queue(&b->irq_work);
+ }
  
- 	err = pcim_enable_device(pdev);
-@@ -1362,6 +1363,10 @@ static int ioat_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	if (!iomap)
- 		return -ENOMEM;
- 
-+	version = readb(iomap[IOAT_MMIO_BAR] + IOAT_VER_OFFSET);
-+	if (version < IOAT_VER_3_0)
-+		return -ENODEV;
-+
- 	err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64));
- 	if (err)
- 		err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
-@@ -1374,16 +1379,14 @@ static int ioat_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	pci_set_master(pdev);
- 	pci_set_drvdata(pdev, device);
- 
--	device->version = readb(device->reg_base + IOAT_VER_OFFSET);
-+	device->version = version;
- 	if (device->version >= IOAT_VER_3_4)
- 		ioat_dca_enabled = 0;
--	if (device->version >= IOAT_VER_3_0) {
--		if (is_skx_ioat(pdev))
--			device->version = IOAT_VER_3_2;
--		err = ioat3_dma_probe(device, ioat_dca_enabled);
--	} else
--		return -ENODEV;
- 
-+	if (is_skx_ioat(pdev))
-+		device->version = IOAT_VER_3_2;
-+
-+	err = ioat3_dma_probe(device, ioat_dca_enabled);
- 	if (err) {
- 		dev_err(dev, "Intel(R) I/OAT DMA Engine init failed\n");
- 		return -ENODEV;
+ bool i915_request_enable_breadcrumb(struct i915_request *rq)
 -- 
 2.43.0
 
