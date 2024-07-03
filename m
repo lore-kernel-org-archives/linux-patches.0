@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419F7181BAC;
-	Wed,  3 Jul 2024 11:06:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C96181BAC;
+	Wed,  3 Jul 2024 11:06:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004795; cv=none; b=lnTIbegSLmXNRZQwOWdASicwmLLZ1UWYSzeJQ7b48PaTH1B+BZX5a45MzlH8g8F9PUvYu/E/AOwvUODKFqc2CQOPTZ7Zv8ZkHSTYQ5QZmGsznqfMeeJC9ie8/LpxtjhwRnRlbpI+Nrgq6un3ny7lGr4rPwYcWX+HAHKZlzo1arQ=
+	t=1720004798; cv=none; b=psECArrlkOR0Llhqc3vgqlzGFtUlUZoLlK1MeOdTq+jqPG7X97yoE4fyEAMNqnMO0pY3aVDFQvRPdkovkJSf5pPHAJxWHSk0ZfmcgB8Jx49KpExWZBFvBDhyapM3MXmtVPvtIwhfT/7F2PPd+avVp2tckMyFUey2L9czjO+VZZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004795; c=relaxed/simple;
-	bh=L0DrZGEuB8RqBJeIotlN9aw9rl8GxwoOekSupNwnyUw=;
+	s=arc-20240116; t=1720004798; c=relaxed/simple;
+	bh=FTDiQ0v26DJto1mzqAoujB8E5ZRhVNb/TY11YE6nfWE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZbX2ZJ+G+MY2dN7iEFc1PkmxYIIj8zU5IYPoz9uwWlCgYx4o6Sqs953X1NMNt5AycMrXyohsoaMEGPoAp6vSbS1YeFkizBxpaX2rM0f0Q5dYi9AEnosB7rV+H41mpIxeIpjk2LeLq8YKm7r+iVQhSuI0+izdbYK/33dalUcWi2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bzCAuR0f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u2z2HTqDapd7mq21hvK7egCrBKgWtsG5kflT3nezhHsAWtCo9VZeS+ze1cN62uovYrGMLoJFkg6LwGQz1Vs3hdMY8Y/N1pfDMBUntCoRfHOe+PUs+GbXQWZqSvXMRL7vFyl9eJfiECu+9DoAqC+SZiL2bumJOHvJn0QeyZlsUW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L4sweUDG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bzCAuR0f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA167C2BD10;
-	Wed,  3 Jul 2024 11:06:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L4sweUDG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A21A6C2BD10;
+	Wed,  3 Jul 2024 11:06:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004795;
-	bh=L0DrZGEuB8RqBJeIotlN9aw9rl8GxwoOekSupNwnyUw=;
+	s=korg; t=1720004798;
+	bh=FTDiQ0v26DJto1mzqAoujB8E5ZRhVNb/TY11YE6nfWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bzCAuR0fCHQV9s2Vt5t9Akq2U/75/BXQ05Vgg81LKEBvVJnYhyJ1cpIBlY4VGooZV
-	 /GWvvPMbZscivYzItQO1mho+/24R1Latwy3skSaRiYe031Wc4z50JNjeQRg7Xfg/mA
-	 80DcpSNkgWngw2PcBMXbfS/3TFydL4Bi+vAblGFc=
+	b=L4sweUDGmj8loZfKP9R7CARkbUn5G6KeyBA1M1q0SGrVluiicnAJJ0KF5TsbgEBSb
+	 8FfnBqqKd/tMAglRY8Y2YLJ5gpF6e20rRnt0ITLeHQE25lR1tHiUKT+wTfFEq6916j
+	 9AzpnWx/vgMtpaWXjFLHtatFNMzbOkcDkIZUOgF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uri Arev <me@wantyapps.xyz>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Qing Wang <wangqing@vivo.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 120/290] Bluetooth: ath3k: Fix multiple issues reported by checkpatch.pl
-Date: Wed,  3 Jul 2024 12:38:21 +0200
-Message-ID: <20240703102908.723471882@linuxfoundation.org>
+Subject: [PATCH 5.10 155/290] dmaengine: ioat: switch from pci_ to dma_ API
+Date: Wed,  3 Jul 2024 12:38:56 +0200
+Message-ID: <20240703102910.034480155@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -51,187 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uri Arev <me@wantyapps.xyz>
+From: Qing Wang <wangqing@vivo.com>
 
-[ Upstream commit 68aa21054ec3a1a313af90a5f95ade16c3326d20 ]
+[ Upstream commit 0c5afef7bf1fbda7e7883dc4b93f64f90003706f ]
 
-This fixes some CHECKs reported by the checkpatch script.
+The wrappers in include/linux/pci-dma-compat.h should go away.
 
-Issues reported in ath3k.c:
--------
-ath3k.c
--------
-CHECK: Please don't use multiple blank lines
-+
-+
+pci_set_dma_mask()/pci_set_consistent_dma_mask() should be
+replaced with dma_set_mask()/dma_set_coherent_mask(),
+and use dma_set_mask_and_coherent() for both.
 
-CHECK: Blank lines aren't necessary after an open brace '{'
-+static const struct usb_device_id ath3k_blist_tbl[] = {
-+
-
-CHECK: Alignment should match open parenthesis
-+static int ath3k_load_firmware(struct usb_device *udev,
-+                               const struct firmware *firmware)
-
-CHECK: Alignment should match open parenthesis
-+               err = usb_bulk_msg(udev, pipe, send_buf, size,
-+                                       &len, 3000);
-
-CHECK: Unnecessary parentheses around 'len != size'
-+               if (err || (len != size)) {
-
-CHECK: Alignment should match open parenthesis
-+static int ath3k_get_version(struct usb_device *udev,
-+                       struct ath3k_version *version)
-
-CHECK: Alignment should match open parenthesis
-+static int ath3k_load_fwfile(struct usb_device *udev,
-+               const struct firmware *firmware)
-
-CHECK: Alignment should match open parenthesis
-+               err = usb_bulk_msg(udev, pipe, send_buf, size,
-+                                       &len, 3000);
-
-CHECK: Unnecessary parentheses around 'len != size'
-+               if (err || (len != size)) {
-
-CHECK: Blank lines aren't necessary after an open brace '{'
-+       switch (fw_version.ref_clock) {
-+
-
-CHECK: Alignment should match open parenthesis
-+       snprintf(filename, ATH3K_NAME_LEN, "ar3k/ramps_0x%08x_%d%s",
-+               le32_to_cpu(fw_version.rom_version), clk_value, ".dfu");
-
-CHECK: Alignment should match open parenthesis
-+static int ath3k_probe(struct usb_interface *intf,
-+                       const struct usb_device_id *id)
-
-CHECK: Alignment should match open parenthesis
-+                       BT_ERR("Firmware file \"%s\" not found",
-+                                                       ATH3K_FIRMWARE);
-
-CHECK: Alignment should match open parenthesis
-+               BT_ERR("Firmware file \"%s\" request failed (err=%d)",
-+                                               ATH3K_FIRMWARE, ret);
-
-total: 0 errors, 0 warnings, 14 checks, 540 lines checked
-
-Signed-off-by: Uri Arev <me@wantyapps.xyz>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Qing Wang <wangqing@vivo.com>
+Link: https://lore.kernel.org/r/1633663733-47199-3-git-send-email-wangqing@vivo.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: 1b11b4ef6bd6 ("dmaengine: ioatdma: Fix leaking on version mismatch")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/ath3k.c | 25 +++++++++++--------------
- 1 file changed, 11 insertions(+), 14 deletions(-)
+ drivers/dma/ioat/init.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/bluetooth/ath3k.c b/drivers/bluetooth/ath3k.c
-index 759d7828931d9..56ada48104f0e 100644
---- a/drivers/bluetooth/ath3k.c
-+++ b/drivers/bluetooth/ath3k.c
-@@ -3,7 +3,6 @@
-  * Copyright (c) 2008-2009 Atheros Communications Inc.
-  */
+diff --git a/drivers/dma/ioat/init.c b/drivers/dma/ioat/init.c
+index 191b592790073..373b8dac6c9ba 100644
+--- a/drivers/dma/ioat/init.c
++++ b/drivers/dma/ioat/init.c
+@@ -1363,15 +1363,9 @@ static int ioat_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	if (!iomap)
+ 		return -ENOMEM;
  
+-	err = pci_set_dma_mask(pdev, DMA_BIT_MASK(64));
++	err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64));
+ 	if (err)
+-		err = pci_set_dma_mask(pdev, DMA_BIT_MASK(32));
+-	if (err)
+-		return err;
 -
- #include <linux/module.h>
- #include <linux/kernel.h>
- #include <linux/init.h>
-@@ -129,7 +128,6 @@ MODULE_DEVICE_TABLE(usb, ath3k_table);
-  * for AR3012
-  */
- static const struct usb_device_id ath3k_blist_tbl[] = {
--
- 	/* Atheros AR3012 with sflash firmware*/
- 	{ USB_DEVICE(0x0489, 0xe04e), .driver_info = BTUSB_ATH3012 },
- 	{ USB_DEVICE(0x0489, 0xe04d), .driver_info = BTUSB_ATH3012 },
-@@ -203,7 +201,7 @@ static inline void ath3k_log_failed_loading(int err, int len, int size,
- #define TIMEGAP_USEC_MAX	100
- 
- static int ath3k_load_firmware(struct usb_device *udev,
--				const struct firmware *firmware)
-+			       const struct firmware *firmware)
- {
- 	u8 *send_buf;
- 	int len = 0;
-@@ -238,9 +236,9 @@ static int ath3k_load_firmware(struct usb_device *udev,
- 		memcpy(send_buf, firmware->data + sent, size);
- 
- 		err = usb_bulk_msg(udev, pipe, send_buf, size,
--					&len, 3000);
-+				   &len, 3000);
- 
--		if (err || (len != size)) {
-+		if (err || len != size) {
- 			ath3k_log_failed_loading(err, len, size, count);
- 			goto error;
- 		}
-@@ -263,7 +261,7 @@ static int ath3k_get_state(struct usb_device *udev, unsigned char *state)
- }
- 
- static int ath3k_get_version(struct usb_device *udev,
--			struct ath3k_version *version)
-+			     struct ath3k_version *version)
- {
- 	return usb_control_msg_recv(udev, 0, ATH3K_GETVERSION,
- 				    USB_TYPE_VENDOR | USB_DIR_IN, 0, 0,
-@@ -272,7 +270,7 @@ static int ath3k_get_version(struct usb_device *udev,
- }
- 
- static int ath3k_load_fwfile(struct usb_device *udev,
--		const struct firmware *firmware)
-+			     const struct firmware *firmware)
- {
- 	u8 *send_buf;
- 	int len = 0;
-@@ -311,8 +309,8 @@ static int ath3k_load_fwfile(struct usb_device *udev,
- 		memcpy(send_buf, firmware->data + sent, size);
- 
- 		err = usb_bulk_msg(udev, pipe, send_buf, size,
--					&len, 3000);
--		if (err || (len != size)) {
-+				   &len, 3000);
-+		if (err || len != size) {
- 			ath3k_log_failed_loading(err, len, size, count);
- 			kfree(send_buf);
- 			return err;
-@@ -426,7 +424,6 @@ static int ath3k_load_syscfg(struct usb_device *udev)
- 	}
- 
- 	switch (fw_version.ref_clock) {
--
- 	case ATH3K_XTAL_FREQ_26M:
- 		clk_value = 26;
- 		break;
-@@ -442,7 +439,7 @@ static int ath3k_load_syscfg(struct usb_device *udev)
- 	}
- 
- 	snprintf(filename, ATH3K_NAME_LEN, "ar3k/ramps_0x%08x_%d%s",
--		le32_to_cpu(fw_version.rom_version), clk_value, ".dfu");
-+		 le32_to_cpu(fw_version.rom_version), clk_value, ".dfu");
- 
- 	ret = request_firmware(&firmware, filename, &udev->dev);
- 	if (ret < 0) {
-@@ -457,7 +454,7 @@ static int ath3k_load_syscfg(struct usb_device *udev)
- }
- 
- static int ath3k_probe(struct usb_interface *intf,
--			const struct usb_device_id *id)
-+		       const struct usb_device_id *id)
- {
- 	const struct firmware *firmware;
- 	struct usb_device *udev = interface_to_usbdev(intf);
-@@ -506,10 +503,10 @@ static int ath3k_probe(struct usb_interface *intf,
- 	if (ret < 0) {
- 		if (ret == -ENOENT)
- 			BT_ERR("Firmware file \"%s\" not found",
--							ATH3K_FIRMWARE);
-+			       ATH3K_FIRMWARE);
- 		else
- 			BT_ERR("Firmware file \"%s\" request failed (err=%d)",
--							ATH3K_FIRMWARE, ret);
-+			       ATH3K_FIRMWARE, ret);
- 		return ret;
- 	}
+-	err = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(64));
+-	if (err)
+-		err = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(32));
++		err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
+ 	if (err)
+ 		return err;
  
 -- 
 2.43.0
