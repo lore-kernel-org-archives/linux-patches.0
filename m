@@ -1,74 +1,79 @@
-Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED7F18C05
-	for <patches@lists.linux.dev>; Wed,  3 Jul 2024 17:20:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=51.77.79.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D82D18412F
+	for <patches@lists.linux.dev>; Wed,  3 Jul 2024 17:28:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720027262; cv=none; b=hsv623Mr8VPZ8ABPsGewDWikCW/W6/iJDA5toXxDIwMYSu8i4gwAxsBWjWiEkTep3Qu//ofyiRa3bt1gJAnAj/lfpC5Kbupm+zfk7gHV/afdvxsRvVuNy7JIFy4Q60Zs9OuvPdAGqgVSeXRJRlcdKiM3/pPRzCkU8MZB0BCWuZw=
+	t=1720027682; cv=none; b=ZRpRIGAxH5RsTS5Z2W4rBGeQ2IR2+Ar+ns3a6hprG5lllMS6pRFdVVBdXfukfaGFk7lSzhvfRV3cnpXboh9s6MTOE41YpQgtfVzLSWckz8TOzO93tI+nDd26iBsgz5Gjz6z2eMy5OW6CkfiDwDqIBnjAJp50axynAT+EOvnWHZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720027262; c=relaxed/simple;
-	bh=PMZ8fXfFqcesgh4os0cEpNSLQicO4IEGRrW58SumQa8=;
-	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=lGoHPkm8i/ujz3lFrLInwkYC1ztMM6gsPhCSV4M/IT9hEDVQ2PMUhUXNCOre0zk+twmfCJiHU2mAclRPgi3By6wSXNaizKqo5YBS3vA/XyPsfNWVYCpuMXhL7seleELPdQzm7/3SLaf7OnH0tnJgvElnpPWjWf7rjTuPfrBg+Po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=metaspace.dk; spf=pass smtp.mailfrom=metaspace.dk; dkim=pass (2048-bit key) header.d=metaspace.dk header.i=@metaspace.dk header.b=T17HPMPY; arc=none smtp.client-ip=51.77.79.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=metaspace.dk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=metaspace.dk
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=metaspace.dk header.i=@metaspace.dk header.b="T17HPMPY"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=metaspace.dk;
-	s=protonmail; t=1720027243; x=1720286443;
-	bh=ndDGJ5uXrO4sGpkfcf5wznWFZi4Q7sy1VDuTcL5Kfro=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=T17HPMPYGDYS9yM7ZcV0UBuiTcwJVUuq7V6Juxt/NEvEJQW29YcPTdfs+oKQ6jt+2
-	 1zA7jrKPpg2Ig+P+YyRMIkexstlNFnXJ/5D95ENZhLQQOr17yKj33RTbpK2N4aTt6F
-	 q9PUCdp04UKuCcwbLurE0Q3ym1JaRlSqTAInXDaCrqHWEZzKiG63A8UIuJVlkBm9au
-	 DH7DhmvuNHbfoeZ2yCNAtuyJrEgVyLffU/4P0XDhypEm8npkFxri336xC8hV0M3B0i
-	 78Ex0hFUm8+MMEhg1CwECLvGSOFDNrd4aW+pfPqDzIpU9sT7wCKK3jctuaIRXIalza
-	 q3ZKg9uiD+pBg==
-Date: Wed, 03 Jul 2024 17:20:37 +0000
-To: Miguel Ojeda <ojeda@kernel.org>
-From: Andreas Hindborg <nmi@metaspace.dk>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Jonathan Corbet <corbet@lwn.net>, workflows@vger.kernel.org, linux-doc@vger.kernel.org
-Subject: Re: [PATCH 06/13] rust: start supporting several compiler versions
-Message-ID: <87ed8a8ka3.fsf@metaspace.dk>
-Feedback-ID: 113830118:user:proton
-X-Pm-Message-ID: cb700748314eafeccfd6719d4fa10cbf2e19f93c
+	s=arc-20240116; t=1720027682; c=relaxed/simple;
+	bh=w0K+1FBi+TtptGJh/uSJqSNwyvtYCD4pZIz13f6Rw+0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=B33A0YbGZGlMmNi+FpshjWzDeqdrcVoMz3Weg1Hl+LgW7HotfsTFUyMCrr9UHxRx0yskZJdo5Df9dRBe3k0DH4KysCNJ3D7UBRHNL1SkfzaKSMIpu7sY56L2dkEnEEQa84Rf+YyS6JyBtdXdqeGSViYz7q2lsWnyeSI4PhCjmws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id D35851C009A; Wed,  3 Jul 2024 19:27:58 +0200 (CEST)
+Date: Wed, 3 Jul 2024 19:27:58 +0200
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+Subject: Re: [PATCH 5.10 000/290] 5.10.221-rc1 review
+Message-ID: <ZoWKHiNKjAc2VreH@duo.ucw.cz>
+References: <20240703102904.170852981@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="fQnoFvq0oC+PdLbL"
+Content-Disposition: inline
+In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
+
+
+--fQnoFvq0oC+PdLbL
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Miguel Ojeda <ojeda@kernel.org> writes:
+Hi!
 
-[...]
+> This is the start of the stable review cycle for the 5.10.221 release.
+> There are 290 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-> diff --git a/scripts/rust_is_available.sh b/scripts/rust_is_available.sh
-> index 117018946b57..67cb900124cc 100755
-> --- a/scripts/rust_is_available.sh
-> +++ b/scripts/rust_is_available.sh
-> @@ -117,14 +117,6 @@ if [ "$rust_compiler_cversion" -lt "$rust_compiler_m=
-in_cversion" ]; then
->  =09echo >&2 "***"
->  =09exit 1
->  fi
-> -if [ "$rust_compiler_cversion" -gt "$rust_compiler_min_cversion" ]; then
-> -=09echo >&2 "***"
-> -=09echo >&2 "*** Rust compiler '$RUSTC' is too new. This may or may not =
-work."
-> -=09echo >&2 "***   Your version:     $rust_compiler_version"
-> -=09echo >&2 "***   Expected version: $rust_compiler_min_version"
-> -=09echo >&2 "***"
-> -=09warning=3D1
-> -fi
+CIP testing did not find any problems here:
 
-This does not set a max version. Will older versions of the kernel
-always compile with newer releases of `rustc`?
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
+5.10.y
+
+Tested-by: Pavel Machek (CIP) <pavel@denx.de>
 
 Best regards,
-Andreas
+                                                                Pavel
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
 
+--fQnoFvq0oC+PdLbL
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZoWKHgAKCRAw5/Bqldv6
+8vF4AJ4+dualZaec7FJ9QFznQIP1v49sLgCgtQATtkvptF96hdzb7MRoJJImJ+Q=
+=Q9np
+-----END PGP SIGNATURE-----
+
+--fQnoFvq0oC+PdLbL--
