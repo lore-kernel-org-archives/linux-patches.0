@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 748B614D44E;
-	Wed,  3 Jul 2024 11:13:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7815314D44E;
+	Wed,  3 Jul 2024 11:13:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005183; cv=none; b=K1KywDdQTFld6uwxdWbS1MWmCC+l3H3vFwbwvI65wZzCkJHXQBmy4N0n0w4VMbMbBi3dyIXaCbqpAGNhLV2FURllvj5amEzWAvFz60KjTYvCYwoiToeOvdAiyTMERUb7VK1QoPn0eNdmoWzgSTouFvlxPgRgqrHk4tJBL15KfM4=
+	t=1720005186; cv=none; b=AgaCH7Ci4NLGgNd0W8UgB8tQzSIG5v5QJTW+M1cj7meKmBok/AOshIr4izE25J00hOuU/SmllN/rM1WoFa08YM7L5OYJyx42z/hTCdCcWKLro32klfJkWXejhyuTiuMANU5qAB4nbZRX0PzTcFOewCrXV4ukPSHkN0p7ZyvJqz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005183; c=relaxed/simple;
-	bh=GsvO3DoNJuOyGzuScSzmPNAkhPMKbI0tMTtJrlY8OTM=;
+	s=arc-20240116; t=1720005186; c=relaxed/simple;
+	bh=EP66ACYWZ90a5+jEp12uu8bQripZW27+F7aYar++3oA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TYr+BfRY+Xa89fLOcwP4Wk6O6i0vzqg/Pa1Kegiy9OBuREcsD3Tf1GudEwgT+Pe/8hIjGGYHJEEk9sFquXfeQ7qJb4pfFcBxAYar2s1GHjrxRkPnOI5r2lADPQm0LfxDDAV+np5/r2WXVBswTMkybAYk0HON2BkWsA2kZuDrLN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c10157Ck; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XEi+Q1golvkQov48m905MrbTG1XhK/WtF7K2TtQGQ+YPLFH2EXC4Svm/9ahQQmQIp9XPq1VEEYPkly3ypotX6tv4xbAllSkGX6a2zei775iRLdZlsk9tfMmwWyxdOX76q9CV5gVCZwb+YMwHQblqPnwT0sO85Rr+cx6cMcgpipA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S37RYB3s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c10157Ck"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1B0CC2BD10;
-	Wed,  3 Jul 2024 11:13:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S37RYB3s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4499C2BD10;
+	Wed,  3 Jul 2024 11:13:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005183;
-	bh=GsvO3DoNJuOyGzuScSzmPNAkhPMKbI0tMTtJrlY8OTM=;
+	s=korg; t=1720005186;
+	bh=EP66ACYWZ90a5+jEp12uu8bQripZW27+F7aYar++3oA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c10157Ck0zZFM+V2yeS2ScFwL9f4JGjMdHJnQLZK26KIv0myImTxuf7bWCrwEHKhA
-	 X0uw/C//CuGDYbIIKpn/83H69B/Nnr254JZwk1kXQKxRowg6uy8ZDgxI8PqlugMM79
-	 /83qefbN2fHW2pwHgmP+TjSBiCWXwt/nM4kE5iVY=
+	b=S37RYB3s+eS//m6Bt30L9kBxF3vS6n1TIF+rJD/Za+WBt6UHdMZb+kvVAXVQcF2Xb
+	 EfvIMA3WHHQ+ieLieGjGZNwWYPY3YJttU3b8NGoejfP8aFBhL8FaGxTTdXN1Ke9OGB
+	 Sn0Ki9qA91zAGV8uP/pVMJhX2jJw0qZO7owmpHHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Chen <chenxiang66@hisilicon.com>,
-	Zenghui Yu <yuzenghui@huawei.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oliver.upton@linux.dev>,
-	James Gowans <jgowans@amazon.com>
-Subject: [PATCH 5.10 287/290] KVM: arm64: vgic-v4: Make the doorbell request robust w.r.t preemption
-Date: Wed,  3 Jul 2024 12:41:08 +0200
-Message-ID: <20240703102914.989706850@linuxfoundation.org>
+	Johan Jonker <jbx6244@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 288/290] ARM: dts: rockchip: rk3066a: add #sound-dai-cells to hdmi node
+Date: Wed,  3 Jul 2024 12:41:09 +0200
+Message-ID: <20240703102915.026915914@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -53,140 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Johan Jonker <jbx6244@gmail.com>
 
-commit b321c31c9b7b309dcde5e8854b741c8e6a9a05f0 upstream.
+[ Upstream commit cca46f811d0000c1522a5e18ea48c27a15e45c05 ]
 
-Xiang reports that VMs occasionally fail to boot on GICv4.1 systems when
-running a preemptible kernel, as it is possible that a vCPU is blocked
-without requesting a doorbell interrupt.
+'#sound-dai-cells' is required to properly interpret
+the list of DAI specified in the 'sound-dai' property,
+so add them to the 'hdmi' node for 'rk3066a.dtsi'.
 
-The issue is that any preemption that occurs between vgic_v4_put() and
-schedule() on the block path will mark the vPE as nonresident and *not*
-request a doorbell irq. This occurs because when the vcpu thread is
-resumed on its way to block, vcpu_load() will make the vPE resident
-again. Once the vcpu actually blocks, we don't request a doorbell
-anymore, and the vcpu won't be woken up on interrupt delivery.
-
-Fix it by tracking that we're entering WFI, and key the doorbell
-request on that flag. This allows us not to make the vPE resident
-when going through a preempt/schedule cycle, meaning we don't lose
-any state.
-
-Cc: stable@vger.kernel.org
-Fixes: 8e01d9a396e6 ("KVM: arm64: vgic-v4: Move the GICv4 residency flow to be driven by vcpu_load/put")
-Reported-by: Xiang Chen <chenxiang66@hisilicon.com>
-Suggested-by: Zenghui Yu <yuzenghui@huawei.com>
-Tested-by: Xiang Chen <chenxiang66@hisilicon.com>
-Co-developed-by: Oliver Upton <oliver.upton@linux.dev>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Acked-by: Zenghui Yu <yuzenghui@huawei.com>
-Link: https://lore.kernel.org/r/20230713070657.3873244-1-maz@kernel.org
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
-[ modified to wrangle the vCPU flags directly instead of going through
-  the flag helper macros as they have not yet been introduced. Also doing
-  the flag wranging in the kvm_arch_vcpu_{un}blocking() hooks as the
-  introduction of kvm_vcpu_wfi has not yet happened. See:
-  6109c5a6ab7f ("KVM: arm64: Move vGIC v4 handling for WFI out arch callback hook")  ]
-Signed-off-by: James Gowans <jgowans@amazon.com>
-Acked-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: fadc78062477 ("ARM: dts: rockchip: add rk3066 hdmi nodes")
+Signed-off-by: Johan Jonker <jbx6244@gmail.com>
+Link: https://lore.kernel.org/r/8b229dcc-94e4-4bbc-9efc-9d5ddd694532@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/kvm_host.h |    1 +
- arch/arm64/kvm/arm.c              |    6 ++++--
- arch/arm64/kvm/vgic/vgic-v3.c     |    2 +-
- arch/arm64/kvm/vgic/vgic-v4.c     |    8 ++++++--
- include/kvm/arm_vgic.h            |    2 +-
- 5 files changed, 13 insertions(+), 6 deletions(-)
+ arch/arm/boot/dts/rk3066a.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -410,6 +410,7 @@ struct kvm_vcpu_arch {
- #define KVM_ARM64_GUEST_HAS_SVE		(1 << 5) /* SVE exposed to guest */
- #define KVM_ARM64_VCPU_SVE_FINALIZED	(1 << 6) /* SVE config completed */
- #define KVM_ARM64_GUEST_HAS_PTRAUTH	(1 << 7) /* PTRAUTH exposed to guest */
-+#define KVM_ARM64_VCPU_IN_WFI		(1 << 8) /* WFI instruction trapped */
+diff --git a/arch/arm/boot/dts/rk3066a.dtsi b/arch/arm/boot/dts/rk3066a.dtsi
+index bbc3bff508560..75ea8e03bef0a 100644
+--- a/arch/arm/boot/dts/rk3066a.dtsi
++++ b/arch/arm/boot/dts/rk3066a.dtsi
+@@ -124,6 +124,7 @@
+ 		pinctrl-0 = <&hdmii2c_xfer>, <&hdmi_hpd>;
+ 		power-domains = <&power RK3066_PD_VIO>;
+ 		rockchip,grf = <&grf>;
++		#sound-dai-cells = <0>;
+ 		status = "disabled";
  
- #define vcpu_has_sve(vcpu) (system_supports_sve() && \
- 			    ((vcpu)->arch.flags & KVM_ARM64_GUEST_HAS_SVE))
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -332,13 +332,15 @@ void kvm_arch_vcpu_blocking(struct kvm_v
- 	 */
- 	preempt_disable();
- 	kvm_vgic_vmcr_sync(vcpu);
--	vgic_v4_put(vcpu, true);
-+	vcpu->arch.flags |= KVM_ARM64_VCPU_IN_WFI;
-+	vgic_v4_put(vcpu);
- 	preempt_enable();
- }
- 
- void kvm_arch_vcpu_unblocking(struct kvm_vcpu *vcpu)
- {
- 	preempt_disable();
-+	vcpu->arch.flags &= ~KVM_ARM64_VCPU_IN_WFI;
- 	vgic_v4_load(vcpu);
- 	preempt_enable();
- }
-@@ -649,7 +651,7 @@ static void check_vcpu_requests(struct k
- 		if (kvm_check_request(KVM_REQ_RELOAD_GICv4, vcpu)) {
- 			/* The distributor enable bits were changed */
- 			preempt_disable();
--			vgic_v4_put(vcpu, false);
-+			vgic_v4_put(vcpu);
- 			vgic_v4_load(vcpu);
- 			preempt_enable();
- 		}
---- a/arch/arm64/kvm/vgic/vgic-v3.c
-+++ b/arch/arm64/kvm/vgic/vgic-v3.c
-@@ -682,7 +682,7 @@ void vgic_v3_put(struct kvm_vcpu *vcpu)
- {
- 	struct vgic_v3_cpu_if *cpu_if = &vcpu->arch.vgic_cpu.vgic_v3;
- 
--	WARN_ON(vgic_v4_put(vcpu, false));
-+	WARN_ON(vgic_v4_put(vcpu));
- 
- 	vgic_v3_vmcr_sync(vcpu);
- 
---- a/arch/arm64/kvm/vgic/vgic-v4.c
-+++ b/arch/arm64/kvm/vgic/vgic-v4.c
-@@ -310,14 +310,15 @@ void vgic_v4_teardown(struct kvm *kvm)
- 	its_vm->vpes = NULL;
- }
- 
--int vgic_v4_put(struct kvm_vcpu *vcpu, bool need_db)
-+int vgic_v4_put(struct kvm_vcpu *vcpu)
- {
- 	struct its_vpe *vpe = &vcpu->arch.vgic_cpu.vgic_v3.its_vpe;
- 
- 	if (!vgic_supports_direct_msis(vcpu->kvm) || !vpe->resident)
- 		return 0;
- 
--	return its_make_vpe_non_resident(vpe, need_db);
-+	return its_make_vpe_non_resident(vpe,
-+			vcpu->arch.flags & KVM_ARM64_VCPU_IN_WFI);
- }
- 
- int vgic_v4_load(struct kvm_vcpu *vcpu)
-@@ -328,6 +329,9 @@ int vgic_v4_load(struct kvm_vcpu *vcpu)
- 	if (!vgic_supports_direct_msis(vcpu->kvm) || vpe->resident)
- 		return 0;
- 
-+	if (vcpu->arch.flags & KVM_ARM64_VCPU_IN_WFI)
-+		return 0;
-+
- 	/*
- 	 * Before making the VPE resident, make sure the redistributor
- 	 * corresponding to our current CPU expects us here. See the
---- a/include/kvm/arm_vgic.h
-+++ b/include/kvm/arm_vgic.h
-@@ -402,6 +402,6 @@ int kvm_vgic_v4_unset_forwarding(struct
- 				 struct kvm_kernel_irq_routing_entry *irq_entry);
- 
- int vgic_v4_load(struct kvm_vcpu *vcpu);
--int vgic_v4_put(struct kvm_vcpu *vcpu, bool need_db);
-+int vgic_v4_put(struct kvm_vcpu *vcpu);
- 
- #endif /* __KVM_ARM_VGIC_H */
+ 		ports {
+-- 
+2.43.0
+
 
 
