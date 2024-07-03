@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B077193097;
-	Wed,  3 Jul 2024 11:22:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C06191F99;
+	Wed,  3 Jul 2024 11:22:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005772; cv=none; b=FygxiWIx6cO1D4xBhrdTQZbbnobWwt123zbG9ro0SfDoFA2qE/7xHZh4WS6U44FJOoQFZNP4O1z5jxSsHv5q0r1Nls1v2ljm+x9G+lMcJhY67sUE3JydyqdQ0rZLUBtu6ZvCSxFVood783XHuWkkCf1EAkIvU2SyTNGhY3Xt+N0=
+	t=1720005775; cv=none; b=aSc9nbeYU2dDpWE4BfLnhTLe7Buzd7VfM26CRpk4sqcl/GynU4pH05D89v4ksRy2QMiynlMn70e38MZXicA2rA8gFTqfOj39jUyT/FakrLdjUX3MUewD0BTD9kgqoyMMrYhDtURy6HJ3ApY4L7YCAKQulWEIBXByJmUbH9C3vk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005772; c=relaxed/simple;
-	bh=GfwJNBnwSfJ+uWOUiUNpfM3n7ruEJdqJPwdY30+zAYc=;
+	s=arc-20240116; t=1720005775; c=relaxed/simple;
+	bh=MooeqnX4FQc59onP6Fr/+zBfaaEgXfY6BfJ39Gl9mWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ai9puup9NMShhWXIdoXlxcgV6l1K34ebZVsQghDPEEjhF9JzpiyRIZvVrOCwqUesD0RwB01zi4aXAm56qNInEMGwfeL3RQdYKs83HUva/d59S90k5nQinVEFPPjubTslJCijpp1BupAsMkvVnAKsz8SxE+ALCRGcvCGFXvvMeN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I1GpvQQa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qdRMvzjIdm8oET5xVxh0VDptkOgpwLKQ5K/V4D+RfgHN9Qe5OsErA9soup5fit2I/NrTHaG3jwyGz5ptC+k5x+/zMpqq0/wOC1EZgrsyY5iFdysQImlbP2kmQvBDWgUNcynpAeE687Hvls6m/iwUGbBhUCc/Ys5BapFBSyucYbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzwd1Zz8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I1GpvQQa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94B88C2BD10;
-	Wed,  3 Jul 2024 11:22:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzwd1Zz8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90892C32781;
+	Wed,  3 Jul 2024 11:22:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005772;
-	bh=GfwJNBnwSfJ+uWOUiUNpfM3n7ruEJdqJPwdY30+zAYc=;
+	s=korg; t=1720005775;
+	bh=MooeqnX4FQc59onP6Fr/+zBfaaEgXfY6BfJ39Gl9mWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I1GpvQQaMNebudKefJkQgVBQktLA+pZ0pi781Ak7lMPTng07IKdt6fFdeHHTWuUlW
-	 IqBiBEzA3Ot5X0zmYBcz57bsGbUuIdvxD0U0JnCd0WnfQRfXmKXyq+efTdlxj9IDlK
-	 hdFnlLY0zmBxP2iQ2hw0nzACsx1CbN4KRbJw76Bo=
+	b=tzwd1Zz8KY0HZxXBcU/NLfJ+VbqiiwsVGqr9g3lIyg58uynD3CyiuZvL46zAxdrq/
+	 21Rpdvz/J90P/F9VvDYaCnF+UVGpoal2WPh8RQInbRa/Pcwj/fgKi9jhq5NM7GqipO
+	 4VH4obISABaFSiGJ/gqbJjE1MVnPUdxNhvWe9DSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Vlad Buslov <vladbu@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 192/356] qca_spi: Make interrupt remembering atomic
-Date: Wed,  3 Jul 2024 12:38:48 +0200
-Message-ID: <20240703102920.368788475@linuxfoundation.org>
+Subject: [PATCH 5.15 193/356] net/sched: act_api: rely on rcu in tcf_idr_check_alloc
+Date: Wed,  3 Jul 2024 12:38:49 +0200
+Message-ID: <20240703102920.407062922@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,116 +53,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Pedro Tammela <pctammela@mojatatu.com>
 
-[ Upstream commit 2d7198278ece01818cd95a3beffbdf8b2a353fa0 ]
+[ Upstream commit 4b55e86736d5b492cf689125da2600f59c7d2c39 ]
 
-The whole mechanism to remember occurred SPI interrupts is not atomic,
-which could lead to unexpected behavior. So fix this by using atomic bit
-operations instead.
+Instead of relying only on the idrinfo->lock mutex for
+bind/alloc logic, rely on a combination of rcu + mutex + atomics
+to better scale the case where multiple rtnl-less filters are
+binding to the same action object.
 
-Fixes: 291ab06ecf67 ("net: qualcomm: new Ethernet over SPI driver for QCA7000")
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://lore.kernel.org/r/20240614145030.7781-1-wahrenst@gmx.net
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Action binding happens when an action index is specified explicitly and
+an action exists which such index exists. Example:
+  tc actions add action drop index 1
+  tc filter add ... matchall action drop index 1
+  tc filter add ... matchall action drop index 1
+  tc filter add ... matchall action drop index 1
+  tc filter ls ...
+     filter protocol all pref 49150 matchall chain 0 filter protocol all pref 49150 matchall chain 0 handle 0x1
+     not_in_hw
+           action order 1: gact action drop
+            random type none pass val 0
+            index 1 ref 4 bind 3
+
+   filter protocol all pref 49151 matchall chain 0 filter protocol all pref 49151 matchall chain 0 handle 0x1
+     not_in_hw
+           action order 1: gact action drop
+            random type none pass val 0
+            index 1 ref 4 bind 3
+
+   filter protocol all pref 49152 matchall chain 0 filter protocol all pref 49152 matchall chain 0 handle 0x1
+     not_in_hw
+           action order 1: gact action drop
+            random type none pass val 0
+            index 1 ref 4 bind 3
+
+When no index is specified, as before, grab the mutex and allocate
+in the idr the next available id. In this version, as opposed to before,
+it's simplified to store the -EBUSY pointer instead of the previous
+alloc + replace combination.
+
+When an index is specified, rely on rcu to find if there's an object in
+such index. If there's none, fallback to the above, serializing on the
+mutex and reserving the specified id. If there's one, it can be an -EBUSY
+pointer, in which case we just try again until it's an action, or an action.
+Given the rcu guarantees, the action found could be dead and therefore
+we need to bump the refcount if it's not 0, handling the case it's
+in fact 0.
+
+As bind and the action refcount are already atomics, these increments can
+happen without the mutex protection while many tcf_idr_check_alloc race
+to bind to the same action instance.
+
+In case binding encounters a parallel delete or add, it will return
+-EAGAIN in order to try again. Both filter and action apis already
+have the retry machinery in-place. In case it's an unlocked filter it
+retries under the rtnl lock.
+
+Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Vlad Buslov <vladbu@nvidia.com>
+Link: https://lore.kernel.org/r/20231211181807.96028-2-pctammela@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: d864319871b0 ("net/sched: act_api: fix possible infinite loop in tcf_idr_check_alloc()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qualcomm/qca_debug.c |  6 ++----
- drivers/net/ethernet/qualcomm/qca_spi.c   | 16 ++++++++--------
- drivers/net/ethernet/qualcomm/qca_spi.h   |  3 +--
- 3 files changed, 11 insertions(+), 14 deletions(-)
+ net/sched/act_api.c | 65 ++++++++++++++++++++++++++++++---------------
+ 1 file changed, 43 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/net/ethernet/qualcomm/qca_debug.c b/drivers/net/ethernet/qualcomm/qca_debug.c
-index 8b61bebd96e4b..9819a0c810f5c 100644
---- a/drivers/net/ethernet/qualcomm/qca_debug.c
-+++ b/drivers/net/ethernet/qualcomm/qca_debug.c
-@@ -111,10 +111,8 @@ qcaspi_info_show(struct seq_file *s, void *what)
+diff --git a/net/sched/act_api.c b/net/sched/act_api.c
+index d775676956bf9..c029ffd491c1a 100644
+--- a/net/sched/act_api.c
++++ b/net/sched/act_api.c
+@@ -555,6 +555,9 @@ EXPORT_SYMBOL(tcf_idr_cleanup);
+  * its reference and bind counters, and return 1. Otherwise insert temporary
+  * error pointer (to prevent concurrent users from inserting actions with same
+  * index) and return 0.
++ *
++ * May return -EAGAIN for binding actions in case of a parallel add/delete on
++ * the requested index.
+  */
  
- 	seq_printf(s, "IRQ              : %d\n",
- 		   qca->spi_dev->irq);
--	seq_printf(s, "INTR REQ         : %u\n",
--		   qca->intr_req);
--	seq_printf(s, "INTR SVC         : %u\n",
--		   qca->intr_svc);
-+	seq_printf(s, "INTR             : %lx\n",
-+		   qca->intr);
+ int tcf_idr_check_alloc(struct tc_action_net *tn, u32 *index,
+@@ -563,43 +566,61 @@ int tcf_idr_check_alloc(struct tc_action_net *tn, u32 *index,
+ 	struct tcf_idrinfo *idrinfo = tn->idrinfo;
+ 	struct tc_action *p;
+ 	int ret;
++	u32 max;
  
- 	seq_printf(s, "SPI max speed    : %lu\n",
- 		   (unsigned long)qca->spi_dev->max_speed_hz);
-diff --git a/drivers/net/ethernet/qualcomm/qca_spi.c b/drivers/net/ethernet/qualcomm/qca_spi.c
-index e02f6ac0125d1..385e4c62ca03c 100644
---- a/drivers/net/ethernet/qualcomm/qca_spi.c
-+++ b/drivers/net/ethernet/qualcomm/qca_spi.c
-@@ -49,6 +49,8 @@
- 
- #define MAX_DMA_BURST_LEN 5000
- 
-+#define SPI_INTR 0
+-again:
+-	mutex_lock(&idrinfo->lock);
+ 	if (*index) {
++again:
++		rcu_read_lock();
+ 		p = idr_find(&idrinfo->action_idr, *index);
 +
- /*   Modules parameters     */
- #define QCASPI_CLK_SPEED_MIN 1000000
- #define QCASPI_CLK_SPEED_MAX 16000000
-@@ -593,14 +595,14 @@ qcaspi_spi_thread(void *data)
- 			continue;
+ 		if (IS_ERR(p)) {
+ 			/* This means that another process allocated
+ 			 * index but did not assign the pointer yet.
+ 			 */
+-			mutex_unlock(&idrinfo->lock);
++			rcu_read_unlock();
+ 			goto again;
  		}
  
--		if ((qca->intr_req == qca->intr_svc) &&
-+		if (!test_bit(SPI_INTR, &qca->intr) &&
- 		    !qca->txr.skb[qca->txr.head])
- 			schedule();
- 
- 		set_current_state(TASK_RUNNING);
- 
--		netdev_dbg(qca->net_dev, "have work to do. int: %d, tx_skb: %p\n",
--			   qca->intr_req - qca->intr_svc,
-+		netdev_dbg(qca->net_dev, "have work to do. int: %lu, tx_skb: %p\n",
-+			   qca->intr,
- 			   qca->txr.skb[qca->txr.head]);
- 
- 		qcaspi_qca7k_sync(qca, QCASPI_EVENT_UPDATE);
-@@ -614,8 +616,7 @@ qcaspi_spi_thread(void *data)
- 			msleep(QCASPI_QCA7K_REBOOT_TIME_MS);
+-		if (p) {
+-			refcount_inc(&p->tcfa_refcnt);
+-			if (bind)
+-				atomic_inc(&p->tcfa_bindcnt);
+-			*a = p;
+-			ret = 1;
+-		} else {
+-			*a = NULL;
+-			ret = idr_alloc_u32(&idrinfo->action_idr, NULL, index,
+-					    *index, GFP_KERNEL);
+-			if (!ret)
+-				idr_replace(&idrinfo->action_idr,
+-					    ERR_PTR(-EBUSY), *index);
++		if (!p) {
++			/* Empty slot, try to allocate it */
++			max = *index;
++			rcu_read_unlock();
++			goto new;
++		}
++
++		if (!refcount_inc_not_zero(&p->tcfa_refcnt)) {
++			/* Action was deleted in parallel */
++			rcu_read_unlock();
++			return -EAGAIN;
  		}
- 
--		if (qca->intr_svc != qca->intr_req) {
--			qca->intr_svc = qca->intr_req;
-+		if (test_and_clear_bit(SPI_INTR, &qca->intr)) {
- 			start_spi_intr_handling(qca, &intr_cause);
- 
- 			if (intr_cause & SPI_INT_CPU_ON) {
-@@ -677,7 +678,7 @@ qcaspi_intr_handler(int irq, void *data)
- {
- 	struct qcaspi *qca = data;
- 
--	qca->intr_req++;
-+	set_bit(SPI_INTR, &qca->intr);
- 	if (qca->spi_thread)
- 		wake_up_process(qca->spi_thread);
- 
-@@ -693,8 +694,7 @@ qcaspi_netdev_open(struct net_device *dev)
- 	if (!qca)
- 		return -EINVAL;
- 
--	qca->intr_req = 1;
--	qca->intr_svc = 0;
-+	set_bit(SPI_INTR, &qca->intr);
- 	qca->sync = QCASPI_SYNC_UNKNOWN;
- 	qcafrm_fsm_init_spi(&qca->frm_handle);
- 
-diff --git a/drivers/net/ethernet/qualcomm/qca_spi.h b/drivers/net/ethernet/qualcomm/qca_spi.h
-index 3067356106f0b..58ad910068d4b 100644
---- a/drivers/net/ethernet/qualcomm/qca_spi.h
-+++ b/drivers/net/ethernet/qualcomm/qca_spi.h
-@@ -93,8 +93,7 @@ struct qcaspi {
- 	struct qcafrm_handle frm_handle;
- 	struct sk_buff *rx_skb;
- 
--	unsigned int intr_req;
--	unsigned int intr_svc;
-+	unsigned long intr;
- 	u16 reset_count;
- 
- #ifdef CONFIG_DEBUG_FS
++
++		if (bind)
++			atomic_inc(&p->tcfa_bindcnt);
++		*a = p;
++
++		rcu_read_unlock();
++
++		return 1;
+ 	} else {
++		/* Find a slot */
+ 		*index = 1;
+-		*a = NULL;
+-		ret = idr_alloc_u32(&idrinfo->action_idr, NULL, index,
+-				    UINT_MAX, GFP_KERNEL);
+-		if (!ret)
+-			idr_replace(&idrinfo->action_idr, ERR_PTR(-EBUSY),
+-				    *index);
++		max = UINT_MAX;
+ 	}
++
++new:
++	*a = NULL;
++
++	mutex_lock(&idrinfo->lock);
++	ret = idr_alloc_u32(&idrinfo->action_idr, ERR_PTR(-EBUSY), index, max,
++			    GFP_KERNEL);
+ 	mutex_unlock(&idrinfo->lock);
++
++	/* N binds raced for action allocation,
++	 * retry for all the ones that failed.
++	 */
++	if (ret == -ENOSPC && *index == max)
++		ret = -EAGAIN;
++
+ 	return ret;
+ }
+ EXPORT_SYMBOL(tcf_idr_check_alloc);
 -- 
 2.43.0
 
