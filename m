@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739DB17277F;
-	Wed,  3 Jul 2024 11:03:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1AF142903;
+	Wed,  3 Jul 2024 11:03:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004605; cv=none; b=laz9WDfI5lzI9n7djjzTv/qe/w4/B0BASYm4/RugUyBLerfmgxrEg4gkldGeAbYxxId5RRiC+SUOB4BwWOZ4VhcekVYH1/iNoMVaQdEwv2xWwBcBOiYVb6B4F7HNOACRxVxMYamkIVbz209U+Sb/Kv+TTeVF5nKFGN2QIAH+/0M=
+	t=1720004608; cv=none; b=kbRzqTSsyq+0WKpRc9dZXWAfDPLVU1xqPeIjBuZGNtBKRmW/NxGHrNhDaa3yW/0MHRAfExmWk4xCxdiHjWgP2SXwYtJAPNoiqlX0hmVTchLG3RHyDImNDjQ+iAtYOI7fFn+QzpQaBqjCp/CQXcfXiJ+qdUrmQkE5thkmKuOjL9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004605; c=relaxed/simple;
-	bh=N4IO3xpKbzuEHCFzVZmOJgJWJOuPUn+V6XLkrqqyRtk=;
+	s=arc-20240116; t=1720004608; c=relaxed/simple;
+	bh=WxPTdxX3Vnoc6Omhyru6eQQ/50V1p6S88FDaHUac9/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NJxZiBrp1qECZstATHWpHLwelXcC2HU6K11YUQQ0FpLUpmufxtiSvUKoxy5zoowqKxZOmIOLRKjsz9EP1TRmb1w9MHTnrv/GNN/+FL88tfRf14pdfhh/r5leLD+3nvOrLKiztkutzhPHaIQXwBZKBmG8SMAsXl11P1cstaVdTe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ojYmpnPe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ckEggiHTQrw3QvIwuPJtl848w69VQdOcE2Uwau7iqcyp0Oej2sBeUkEqidcb/SzpQ4g48r6EzQXBpPboKDioJeVZzja4dn65nMgIwjmuQzorP1ARIBMfXHinxrujttGfZRQ34qcDYIUyORpT8TC7U4XMZKw6rsiGlU2n4sTVi6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lxroMoME; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ojYmpnPe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA271C2BD10;
-	Wed,  3 Jul 2024 11:03:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lxroMoME"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36B3C2BD10;
+	Wed,  3 Jul 2024 11:03:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004605;
-	bh=N4IO3xpKbzuEHCFzVZmOJgJWJOuPUn+V6XLkrqqyRtk=;
+	s=korg; t=1720004608;
+	bh=WxPTdxX3Vnoc6Omhyru6eQQ/50V1p6S88FDaHUac9/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ojYmpnPeNIl1hboQ1akYYNOP7SL0I7ZmzqUlWmddNECfUcGtSM/25KtKTiBS/MR1f
-	 jPtQMpn4uME6KW+RvG2LbdDEyOHRT04upUUP7w8qQnTMAFTnEIFObiqEK4fO7XWgN+
-	 7I7gmfSrGqs2mrPzjpJ+Kq1r/ngg8KgTgPkDUOpw=
+	b=lxroMoMEar+S0ztI9kPdGr+HOIYsQrgbaUgsPUV2R7fIJYomxIT7FvZAgOu8SW367
+	 sESHOhfE0lWt8RMPL1YNPv+WwYpSb+IkiFV8aKuL1iOpzkqfFznvkoZQv8fpQ5RGrE
+	 /95b22lOOvuwzANOklgukq0KGp9hU+YvLYa1Mifg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	YonglongLi <liyonglong@chinatelecom.cn>,
-	Mat Martineau <martineau@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 098/290] mptcp: pm: update add_addr counters after connect
-Date: Wed,  3 Jul 2024 12:37:59 +0200
-Message-ID: <20240703102907.895371276@linuxfoundation.org>
+	Beleswar Padhi <b-padhi@ti.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 5.10 099/290] remoteproc: k3-r5: Jump to error handling labels in start/stop errors
+Date: Wed,  3 Jul 2024 12:38:00 +0200
+Message-ID: <20240703102907.933084498@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -52,95 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YonglongLi <liyonglong@chinatelecom.cn>
+From: Beleswar Padhi <b-padhi@ti.com>
 
-commit 40eec1795cc27b076d49236649a29507c7ed8c2d upstream.
+commit 1dc7242f6ee0c99852cb90676d7fe201cf5de422 upstream.
 
-The creation of new subflows can fail for different reasons. If no
-subflow have been created using the received ADD_ADDR, the related
-counters should not be updated, otherwise they will never be decremented
-for events related to this ID later on.
+In case of errors during core start operation from sysfs, the driver
+directly returns with the -EPERM error code. Fix this to ensure that
+mailbox channels are freed on error before returning by jumping to the
+'put_mbox' error handling label. Similarly, jump to the 'out' error
+handling label to return with required -EPERM error code during the
+core stop operation from sysfs.
 
-For the moment, the number of accepted ADD_ADDR is only decremented upon
-the reception of a related RM_ADDR, and only if the remote address ID is
-currently being used by at least one subflow. In other words, if no
-subflow can be created with the received address, the counter will not
-be decremented. In this case, it is then important not to increment
-pm.add_addr_accepted counter, and not to modify pm.accept_addr bit.
-
-Note that this patch does not modify the behaviour in case of failures
-later on, e.g. if the MP Join is dropped or rejected.
-
-The "remove invalid addresses" MP Join subtest has been modified to
-validate this case. The broadcast IP address is added before the "valid"
-address that will be used to successfully create a subflow, and the
-limit is decreased by one: without this patch, it was not possible to
-create the last subflow, because:
-
-- the broadcast address would have been accepted even if it was not
-  usable: the creation of a subflow to this address results in an error,
-
-- the limit of 2 accepted ADD_ADDR would have then been reached.
-
-Fixes: 01cacb00b35c ("mptcp: add netlink-based PM")
-Cc: stable@vger.kernel.org
-Co-developed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: YonglongLi <liyonglong@chinatelecom.cn>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://lore.kernel.org/r/20240607-upstream-net-20240607-misc-fixes-v1-3-1ab9ddfa3d00@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Conflicts in pm_netlink.c because commit 1a0d6136c5f0 ("mptcp: local
-  addresses fullmesh") is not present in this version (+ others changing
-  the context). To resolve the conflicts, the same block is moved later,
-  and under the condition that the call to __mptcp_subflow_connect()
-  didn't fail.
-  The selftest modification has been dropped, because the modified test
-  is not in this version. That's fine, we can test with selftests from a
-  newer version. ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Fixes: 3c8a9066d584 ("remoteproc: k3-r5: Do not allow core1 to power up before core0 via sysfs")
+Signed-off-by: Beleswar Padhi <b-padhi@ti.com>
+Link: https://lore.kernel.org/r/20240506141849.1735679-1-b-padhi@ti.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/remoteproc/ti_k3_r5_remoteproc.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -371,15 +371,12 @@ void mptcp_pm_nl_add_addr_received(struc
- 	struct sock *sk = (struct sock *)msk;
- 	struct mptcp_addr_info remote;
- 	struct mptcp_addr_info local;
-+	int err;
+--- a/drivers/remoteproc/ti_k3_r5_remoteproc.c
++++ b/drivers/remoteproc/ti_k3_r5_remoteproc.c
+@@ -484,7 +484,8 @@ static int k3_r5_rproc_start(struct rpro
+ 		if (core != core0 && core0->rproc->state == RPROC_OFFLINE) {
+ 			dev_err(dev, "%s: can not start core 1 before core 0\n",
+ 				__func__);
+-			return -EPERM;
++			ret = -EPERM;
++			goto put_mbox;
+ 		}
  
- 	pr_debug("accepted %d:%d remote family %d",
- 		 msk->pm.add_addr_accepted, msk->pm.add_addr_accept_max,
- 		 msk->pm.remote.family);
--	msk->pm.add_addr_accepted++;
- 	msk->pm.subflows++;
--	if (msk->pm.add_addr_accepted >= msk->pm.add_addr_accept_max ||
--	    msk->pm.subflows >= msk->pm.subflows_max)
--		WRITE_ONCE(msk->pm.accept_addr, false);
+ 		ret = k3_r5_core_run(core);
+@@ -547,7 +548,8 @@ static int k3_r5_rproc_stop(struct rproc
+ 		if (core != core1 && core1->rproc->state != RPROC_OFFLINE) {
+ 			dev_err(dev, "%s: can not stop core 0 before core 1\n",
+ 				__func__);
+-			return -EPERM;
++			ret = -EPERM;
++			goto out;
+ 		}
  
- 	/* connect to the specified remote address, using whatever
- 	 * local address the routing configuration will pick.
-@@ -391,9 +388,16 @@ void mptcp_pm_nl_add_addr_received(struc
- 	local.family = remote.family;
- 
- 	spin_unlock_bh(&msk->pm.lock);
--	__mptcp_subflow_connect((struct sock *)msk, &local, &remote);
-+	err = __mptcp_subflow_connect((struct sock *)msk, &local, &remote);
- 	spin_lock_bh(&msk->pm.lock);
- 
-+	if (!err) {
-+		msk->pm.add_addr_accepted++;
-+		if (msk->pm.add_addr_accepted >= msk->pm.add_addr_accept_max ||
-+		    msk->pm.subflows >= msk->pm.subflows_max)
-+			WRITE_ONCE(msk->pm.accept_addr, false);
-+	}
-+
- 	mptcp_pm_announce_addr(msk, &remote, true);
- }
- 
+ 		ret = k3_r5_core_halt(core);
 
 
