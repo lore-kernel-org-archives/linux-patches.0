@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9EF1799F;
-	Wed,  3 Jul 2024 11:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA9616DECF;
+	Wed,  3 Jul 2024 11:02:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004555; cv=none; b=QO00BKih/jPqkIsInk5Cm0R0VPm9aw64LxYNKOuQ4y38SFcoRsoNO52km/6cPtrdORqU0wYsPEH14vsVa/ifvIcWUhwfSR9f0Jkpf/2LCjJ5ny/juquhNoqxr++R7yRtXU9VtoM1ByT0azv6zNcnHOr52I37Qd2R0InqLXl2+lU=
+	t=1720004558; cv=none; b=bwj0aLYYph4G6JNUua7FkJJPXG03jczzaaDiCDy01LU2nZHjrjw/D/eMv4nBwdXQv6VhsxPvOxUzmNpNxjHB4mdspb0/0bC1XfsVXG5EqbaRwF9BWtRYjcrJoLaQw7phGfk1beNknQULQELbSx7fKsHGn4z6wXIzlkNrT7+sq7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004555; c=relaxed/simple;
-	bh=y/xnLKxuu5fHBkadusWKJANyhcrvEt0ursHiJyWb2zg=;
+	s=arc-20240116; t=1720004558; c=relaxed/simple;
+	bh=ONXEDvZaH3oHxQDR/o6j04DlR7eazmBAkLx5KWzVGgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TO6++Za4kwf6gC/C6CV6B3tEX+dFP+1psCbk6XHN0/yMmFUaUwQ9mqKG+qZHHhs/94fx25ZvAt0LcHUaa6TelQMTjsbj/iVg35/6sDb4L2vasZYUYXzd8Bk05pSPBCajJwcCGaSPeVR+rVD/rY496vQO+OJIDMFFUOd6GrrxAh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=loQYpXyl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ONhiMdHxjND+ii8kJqTuK80n6KT8CsOQs5xxQKEHCHxxN+A3Bw5GkxKtFtIHn9jzOwC3L86sNTfXHq9lVyJnWLNzTDghUSWsi5DAJ0rwuPwv3HU7/mYXauNpjVP4b0K/Foo3G1nm5Imqb9XL3Cs1nV4+H+KNBd6ZMDshqv5x9SI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e4f129fq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="loQYpXyl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9828C2BD10;
-	Wed,  3 Jul 2024 11:02:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e4f129fq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A686FC2BD10;
+	Wed,  3 Jul 2024 11:02:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004555;
-	bh=y/xnLKxuu5fHBkadusWKJANyhcrvEt0ursHiJyWb2zg=;
+	s=korg; t=1720004558;
+	bh=ONXEDvZaH3oHxQDR/o6j04DlR7eazmBAkLx5KWzVGgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=loQYpXylzIqFrdhqu6I1Zrr0BUIagnLVSzcvE/KJhANTr16JLW4Zkv8avpJav56aX
-	 25CXQzwFD6hqf2tNFTO9ulMCaSDxBNimSrck5KQ5+O3ULkCbRvSGGc/3OM0hKjVtf9
-	 DE4P0kN8wYS8DJ1K/Za2BTScgZ/BVE18eHFxvz7c=
+	b=e4f129fq5Lav9O/Itmr01Fq6N4mZ68YbHrwSenbZe1/J9kmh4OPU/RSbi9qRXHMZo
+	 c8IVOxybHVJsO0FIZeVtlVXU7/HYyv13Y9qSNebK7WIaeNT7LEjDvbDrQRaEzcntGP
+	 YO9t+l0T/SoxFUw5l5Bj/1SIZDKK3ynE5+yxSXDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Hagar Gamal Halim Hemdan <hagarhem@amazon.com>
-Subject: [PATCH 5.10 080/290] vmci: prevent speculation leaks by sanitizing event in event_deliver()
-Date: Wed,  3 Jul 2024 12:37:41 +0200
-Message-ID: <20240703102907.218527052@linuxfoundation.org>
+	Rik van Riel <riel@surriel.com>,
+	Baoquan He <bhe@redhat.com>,
+	Dave Young <dyoung@redhat.com>,
+	Vivek Goyal <vgoyal@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 081/290] fs/proc: fix softlockup in __read_vmcore
+Date: Wed,  3 Jul 2024 12:37:42 +0200
+Message-ID: <20240703102907.255758616@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -50,56 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hagar Gamal Halim Hemdan <hagarhem@amazon.com>
+From: Rik van Riel <riel@surriel.com>
 
-commit 8003f00d895310d409b2bf9ef907c56b42a4e0f4 upstream.
+commit 5cbcb62dddf5346077feb82b7b0c9254222d3445 upstream.
 
-Coverity spotted that event_msg is controlled by user-space,
-event_msg->event_data.event is passed to event_deliver() and used
-as an index without sanitization.
+While taking a kernel core dump with makedumpfile on a larger system,
+softlockup messages often appear.
 
-This change ensures that the event index is sanitized to mitigate any
-possibility of speculative information leaks.
+While softlockup warnings can be harmless, they can also interfere with
+things like RCU freeing memory, which can be problematic when the kdump
+kexec image is configured with as little memory as possible.
 
-This bug was discovered and resolved using Coverity Static Analysis
-Security Testing (SAST) by Synopsys, Inc.
+Avoid the softlockup, and give things like work items and RCU a chance to
+do their thing during __read_vmcore by adding a cond_resched.
 
-Only compile tested, no access to HW.
-
-Fixes: 1d990201f9bb ("VMCI: event handling implementation.")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Hagar Gamal Halim Hemdan <hagarhem@amazon.com>
-Link: https://lore.kernel.org/stable/20231127193533.46174-1-hagarhem%40amazon.com
-Link: https://lore.kernel.org/r/20240430085916.4753-1-hagarhem@amazon.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lkml.kernel.org/r/20240507091858.36ff767f@imladris.surriel.com
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Acked-by: Baoquan He <bhe@redhat.com>
+Cc: Dave Young <dyoung@redhat.com>
+Cc: Vivek Goyal <vgoyal@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/vmw_vmci/vmci_event.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/proc/vmcore.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/misc/vmw_vmci/vmci_event.c
-+++ b/drivers/misc/vmw_vmci/vmci_event.c
-@@ -9,6 +9,7 @@
- #include <linux/vmw_vmci_api.h>
- #include <linux/list.h>
- #include <linux/module.h>
-+#include <linux/nospec.h>
- #include <linux/sched.h>
- #include <linux/slab.h>
- #include <linux/rculist.h>
-@@ -86,9 +87,12 @@ static void event_deliver(struct vmci_ev
- {
- 	struct vmci_subscription *cur;
- 	struct list_head *subscriber_list;
-+	u32 sanitized_event, max_vmci_event;
+--- a/fs/proc/vmcore.c
++++ b/fs/proc/vmcore.c
+@@ -373,6 +373,8 @@ static ssize_t __read_vmcore(char *buffe
+ 		/* leave now if filled buffer already */
+ 		if (buflen == 0)
+ 			return acc;
++
++		cond_resched();
+ 	}
  
- 	rcu_read_lock();
--	subscriber_list = &subscriber_array[event_msg->event_data.event];
-+	max_vmci_event = ARRAY_SIZE(subscriber_array);
-+	sanitized_event = array_index_nospec(event_msg->event_data.event, max_vmci_event);
-+	subscriber_list = &subscriber_array[sanitized_event];
- 	list_for_each_entry_rcu(cur, subscriber_list, node) {
- 		cur->callback(cur->id, &event_msg->event_data,
- 			      cur->callback_data);
+ 	list_for_each_entry(m, &vmcore_list, list) {
 
 
