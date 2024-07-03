@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01208174EC9;
-	Wed,  3 Jul 2024 11:20:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E851313B2AC;
+	Wed,  3 Jul 2024 11:20:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005615; cv=none; b=YgE6AGrfgBQGiNBJWEjb9MlyqwSCoeqomZ/HSYtCX2Q601OndLXZ9wvnvyBv4ZIHldn0+AGaYASH5J/aLJUoosvm3csxTNNemvbhL/tuRRwrPyL0/hxi4T1EbjmWk/tv6CXKYaeTOmIX6aCw2Ny94/1GjGTxues3HUsvFTwrwk4=
+	t=1720005618; cv=none; b=ldy7OEb734RCT+OCOHYJljL09r2ojWKc/b5Ep6K7topbTJSi2JCQHVqIII2Ksp12aoNCkrB6NYRFcjGWECn9aThHsFjyciOIuO6MC03k2zDh+9QZKea5UC+1urmHsVzVZ9lzuBILE8iexU5i/P9gKcZ220M1/BlAZkjEwhKphyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005615; c=relaxed/simple;
-	bh=dXDG4PtQvf+CXUoOaWQ72qNXdRkXAnguWDGVv/ac2NY=;
+	s=arc-20240116; t=1720005618; c=relaxed/simple;
+	bh=OUVV2tRxT6jEq5XvwVq+rDMc0clEeHpkSk25UnvSb2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RSX5hzNmW2Ydesn0iqSHH9bXq0ZXWqth/2iCRH7pAXrUsW6LwbiBC/zeSgdwSeCaNr4J+qSFv5zlI+VzYW+kfAP/IWEnRh3w2XaZ4Q1y+R70qMPahWjIAE3Frq/hoppm+V9Inaa0qXhzhtT0vXw1dNImK/yaZ739RoHAOTY9Ri8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A2UUdTZ5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DGZH9e7jAPn35O9ISi1sLICbN/hA5BXsnR/3wcCAxamseJtC5zhVFaVPsoGR/k9wbNvMpzFTwW1cPnv97phWZqZJOpAVryX9heszkRc0zHhAoIz0PrfZcTw8MlxmZxoo0LIeErfhlcXmJhuPl5PtpXlsEKkMOB9BL3LJgQCKkIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W21KIGw0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A2UUdTZ5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78B94C2BD10;
-	Wed,  3 Jul 2024 11:20:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W21KIGw0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64998C2BD10;
+	Wed,  3 Jul 2024 11:20:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005614;
-	bh=dXDG4PtQvf+CXUoOaWQ72qNXdRkXAnguWDGVv/ac2NY=;
+	s=korg; t=1720005617;
+	bh=OUVV2tRxT6jEq5XvwVq+rDMc0clEeHpkSk25UnvSb2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A2UUdTZ5hGxwINnIwGt6yCBPXl5gKjy3eSPkBy7BcGnIKjUk41xDiQAZSgS1C6git
-	 qlflYW0CvJLXub+/culYJwJjXb/dHlygV3lUL2jIWJXt7Xom2QOMVc6ae19mVdr+Kr
-	 vpV3Xv9LWju2iAdTtlYTrEICdte7jwW3myxyfDsE=
+	b=W21KIGw03h0PI7ndIOKZ8ePHL8okQzjEmdzUHHaVOo36oDdHFhWBV9gWuKa2RoIZi
+	 M8Ezk4nABfWCQc+jyjrFjZFnNkz6EC/GJfK7xL/Jzc0DZ8jBk32LzNNIHZF3y54c4C
+	 deQcn97YL6TKz0M9mQifJ4fj/2w2YdnkQY5bkIMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 111/356] iio: adc: ad9467: fix scan type sign
-Date: Wed,  3 Jul 2024 12:37:27 +0200
-Message-ID: <20240703102917.299431946@linuxfoundation.org>
+	Doug Brown <doug@schmorgal.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.15 138/356] serial: 8250_pxa: Configure tx_loadsz to match FIFO IRQ level
+Date: Wed,  3 Jul 2024 12:37:54 +0200
+Message-ID: <20240703102918.322235889@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,41 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Doug Brown <doug@schmorgal.com>
 
-commit 8a01ef749b0a632f0e1f4ead0f08b3310d99fcb1 upstream.
+commit 5208e7ced520a813b4f4774451fbac4e517e78b2 upstream.
 
-According to the IIO documentation, the sign in the scan type should be
-lower case. The ad9467 driver was incorrectly using upper case.
+The FIFO is 64 bytes, but the FCR is configured to fire the TX interrupt
+when the FIFO is half empty (bit 3 = 0). Thus, we should only write 32
+bytes when a TX interrupt occurs.
 
-Fix by changing to lower case.
+This fixes a problem observed on the PXA168 that dropped a bunch of TX
+bytes during large transmissions.
 
-Fixes: 4606d0f4b05f ("iio: adc: ad9467: add support for AD9434 high-speed ADC")
-Fixes: ad6797120238 ("iio: adc: ad9467: add support AD9467 ADC")
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Link: https://lore.kernel.org/r/20240503-ad9467-fix-scan-type-sign-v1-1-c7a1a066ebb9@baylibre.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: ab28f51c77cd ("serial: rewrite pxa2xx-uart to use 8250_core")
+Signed-off-by: Doug Brown <doug@schmorgal.com>
+Link: https://lore.kernel.org/r/20240519191929.122202-1-doug@schmorgal.com
+Cc: stable <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad9467.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/tty/serial/8250/8250_pxa.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iio/adc/ad9467.c
-+++ b/drivers/iio/adc/ad9467.c
-@@ -223,11 +223,11 @@ static void __ad9467_get_scale(struct ad
- }
- 
- static const struct iio_chan_spec ad9434_channels[] = {
--	AD9467_CHAN(0, 0, 12, 'S'),
-+	AD9467_CHAN(0, 0, 12, 's'),
- };
- 
- static const struct iio_chan_spec ad9467_channels[] = {
--	AD9467_CHAN(0, 0, 16, 'S'),
-+	AD9467_CHAN(0, 0, 16, 's'),
- };
- 
- static const struct ad9467_chip_info ad9467_chip_tbl[] = {
+--- a/drivers/tty/serial/8250/8250_pxa.c
++++ b/drivers/tty/serial/8250/8250_pxa.c
+@@ -125,6 +125,7 @@ static int serial_pxa_probe(struct platf
+ 	uart.port.regshift = 2;
+ 	uart.port.irq = irq;
+ 	uart.port.fifosize = 64;
++	uart.tx_loadsz = 32;
+ 	uart.port.flags = UPF_IOREMAP | UPF_SKIP_TEST | UPF_FIXED_TYPE;
+ 	uart.port.dev = &pdev->dev;
+ 	uart.port.uartclk = clk_get_rate(data->clk);
 
 
