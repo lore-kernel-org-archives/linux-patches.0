@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A2118307D;
-	Wed,  3 Jul 2024 11:07:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7C4183077;
+	Wed,  3 Jul 2024 11:07:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004837; cv=none; b=BX1kNNIVKTlx99HCmxD5aeZa4/+7s6mc/y4mr9VYhLKIuJyzOrKoLybWe1fX7vJWuxB8FsCeOMHqeyjLxZudCSOfxMGHvgr/TkLyjaPtxukRAPA4cc+vyE4XkIn1zc5udCrcSk4EufZk9agUFnF3UagV00XG06P5jBARxrAaSGs=
+	t=1720004841; cv=none; b=NYkdVbIbi9DHE7fGHu1w9OXqLtIkSoxuweEqs7paqh4K60WMMa5LsLF4KynlwwBhjzB/O5JHSFvUaDd+E/FzXvuYES9BSAt8Dt3j+6f8rH/rFGGFbwpFK/Rfvg6pyKFhFH7QqLMUaegnStWzhKVncMZBjJjndCC49JPoauFw1xo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004837; c=relaxed/simple;
-	bh=InpOw+QoC6zi4C6S7rhdSO6HfQPnUfy0q+8bIgo2GFM=;
+	s=arc-20240116; t=1720004841; c=relaxed/simple;
+	bh=o5bxa3LxeEUnmpImEGIpL916PxAtfE7z/W8SUaLkZOU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pWzwTX9FC8LWTBQCp21ZbX0ZM0nQdQPoP2AM2+uf/wN5ao+/rOQPPadShvtssttnzOT1cRZ1AL+rK8zOtwPFeAwAjjA8KNVI1k2nRscQv5kKanKGv5iITriSLgMOVsctI5/ePIWrFsQn04D+1gvsk+q3BQ+q8D0EOY+60Jpmqqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sRSs7Ijp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PMihkL5SfSYz+LNC5GvDD3WvVPaWdl3XjPWRuKOdYGA7eEvmAMpTKzZQHvfYooPPYiFMxsMxy6ImXc62cd3zIlRH6cnbEKPTIJ/L8C667s3EbiLVgy9H0VHo2LySteZq6r83Kt55t5Y/7Toohgcu1Npo7SiH5YfimLaUlmmp9jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b0tIeF9R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sRSs7Ijp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DA4AC2BD10;
-	Wed,  3 Jul 2024 11:07:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b0tIeF9R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 388C4C32781;
+	Wed,  3 Jul 2024 11:07:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004837;
-	bh=InpOw+QoC6zi4C6S7rhdSO6HfQPnUfy0q+8bIgo2GFM=;
+	s=korg; t=1720004840;
+	bh=o5bxa3LxeEUnmpImEGIpL916PxAtfE7z/W8SUaLkZOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sRSs7IjpptMAVnZlx5mktkXcu+apT39naywc4IVWcleIllDY6MBg1Pn1o/75ksW/w
-	 7U7ckWlpS9bWfPMHYHKZqtLsmgbilcE6F89Nl2IotimABQVybBBMMa7/HiGclip5hE
-	 kVShueToiHjExuyZBypGp/5CwePy7Hi0VyypsPf4=
+	b=b0tIeF9RHWE1F0DxKz0I4SjsYwkgtK0A3HfbYxaE8Qll1g8t5Ye5NqaKQB6WDIjV8
+	 0Yh9SYbuY71TeYx9Z3V7oiEWOuhjRjWlIzYA32YfAJP4gT9qydnZ9XbHkX5inNcDyr
+	 MknvIagarz7gg8SMjUpeo4t7rzd7pBUeH8RccRjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 175/290] wifi: rtlwifi: rtl8192de: Fix 5 GHz TX power
-Date: Wed,  3 Jul 2024 12:39:16 +0200
-Message-ID: <20240703102910.784034594@linuxfoundation.org>
+Subject: [PATCH 5.10 176/290] pmdomain: ti-sci: Fix duplicate PD referrals
+Date: Wed,  3 Jul 2024 12:39:17 +0200
+Message-ID: <20240703102910.822148593@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -51,45 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit de4d4be4fa64ed7b4aa1c613061015bd8fa98b24 ]
+[ Upstream commit 670c900f69645db394efb38934b3344d8804171a ]
 
-Different channels have different TX power settings. rtl8192de is using
-the TX power setting from the wrong channel in the 5 GHz band because
-_rtl92c_phy_get_rightchnlplace expects an array which includes all the
-channel numbers, but it's using an array which includes only the 5 GHz
-channel numbers.
+When the dts file has multiple referrers to a single PD (e.g.
+simple-framebuffer and dss nodes both point to the DSS power-domain) the
+ti-sci driver will create two power domains, both with the same ID, and
+that will cause problems as one of the power domains will hide the other
+one.
 
-Use the array channel_all (defined in rtl8192de/phy.c) instead of
-the incorrect channel5g (defined in core.c).
+Fix this checking if a PD with the ID has already been created, and only
+create a PD for new IDs.
 
-Tested only with rtl8192du, which will use the same TX power code.
-
+Fixes: efa5c01cd7ee ("soc: ti: ti_sci_pm_domains: switch to use multiple genpds instead of one")
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://msgid.link/c7653517-cf88-4f57-b79a-8edb0a8b32f0@gmail.com
+Link: https://lore.kernel.org/r/20240415-ti-sci-pd-v1-1-a0e56b8ad897@ideasonboard.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/soc/ti/ti_sci_pm_domains.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
-index da9acebbe237a..ffe6d243c7649 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
-@@ -892,8 +892,8 @@ static u8 _rtl92c_phy_get_rightchnlplace(u8 chnl)
- 	u8 place = chnl;
+diff --git a/drivers/soc/ti/ti_sci_pm_domains.c b/drivers/soc/ti/ti_sci_pm_domains.c
+index a33ec7eaf23d1..17984a7bffba5 100644
+--- a/drivers/soc/ti/ti_sci_pm_domains.c
++++ b/drivers/soc/ti/ti_sci_pm_domains.c
+@@ -114,6 +114,18 @@ static const struct of_device_id ti_sci_pm_domain_matches[] = {
+ };
+ MODULE_DEVICE_TABLE(of, ti_sci_pm_domain_matches);
  
- 	if (chnl > 14) {
--		for (place = 14; place < ARRAY_SIZE(channel5g); place++) {
--			if (channel5g[place] == chnl) {
-+		for (place = 14; place < ARRAY_SIZE(channel_all); place++) {
-+			if (channel_all[place] == chnl) {
- 				place++;
++static bool ti_sci_pm_idx_exists(struct ti_sci_genpd_provider *pd_provider, u32 idx)
++{
++	struct ti_sci_pm_domain *pd;
++
++	list_for_each_entry(pd, &pd_provider->pd_list, node) {
++		if (pd->idx == idx)
++			return true;
++	}
++
++	return false;
++}
++
+ static int ti_sci_pm_domain_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+@@ -153,8 +165,14 @@ static int ti_sci_pm_domain_probe(struct platform_device *pdev)
  				break;
- 			}
+ 
+ 			if (args.args_count >= 1 && args.np == dev->of_node) {
+-				if (args.args[0] > max_id)
++				if (args.args[0] > max_id) {
+ 					max_id = args.args[0];
++				} else {
++					if (ti_sci_pm_idx_exists(pd_provider, args.args[0])) {
++						index++;
++						continue;
++					}
++				}
+ 
+ 				pd = devm_kzalloc(dev, sizeof(*pd), GFP_KERNEL);
+ 				if (!pd)
 -- 
 2.43.0
 
