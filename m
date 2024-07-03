@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1875D17B503;
-	Wed,  3 Jul 2024 11:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B32817B503;
+	Wed,  3 Jul 2024 11:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005998; cv=none; b=g4buhPmBHdxnIiUwZzGEM7E7iVoRGwJf8Jikfh1/CeqkRDp6KvPaK2E+5Sqe3uYKXuuHNJ7C9bEcLu5eYvqr0sIUCbYlq6yp3/BDci+JOXIhqp58CgA+43ivrzo+kIlO5diyzj/uuBsVuw3FipR1jDf39C4Mzsf0UMmNpYnjXDM=
+	t=1720006001; cv=none; b=FEjhotAK97ZZUY03kqjQqw/59xssPFAtZAxO7KlGLmO6rk+ePBwNIMwm6JUQS6HwUaSWSW0s/ZUct9hPOCNugG7MI8mq9PleRiiEjL+qnQSwOemPw0gpr2DgV1Ey6ZLG/XxBOKyGVkFso7J1+VRrKXwxoNtT1I8do5yn+PfSh4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005998; c=relaxed/simple;
-	bh=1Pi66+3P9eMUOl2OamMyx5otLmKFu79OmjDS/NKTNtk=;
+	s=arc-20240116; t=1720006001; c=relaxed/simple;
+	bh=xiQbJ2VgtzUmmMJ5Wau66+j7klSVQZ51qIR/x94mRbc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KnY1lw9ups1sRuaw4RZB+AKj2bXzLtY2jqiH1sWFZESFctioV7xfbiAW6V+3r346XlSBA9voeo7PWQep40CmGZd/m0vHWG1qqjQGDXbuHarP3X89XCT70keb/wLsJpzpbZkaWbfAcEp1HexoZjO5u8CszHfKSo3lbwCQwlpfi6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bEEvgzwW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NHzjYA+Brla6IzOBS+sNeyy0y9udL8ru13W82PThAoKLJeYhZXsLcSRepZqdcS55ieGRkXyifu6Yjb/zwh1kQBmHgGvmRM7n1ZezA1gQaQMqnxRit76TgydltRTUfOfgFGxjJ9kTP4zlxd5Grq9qpJoKB3rkjgmJKDf+DysS9Bw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VRJvJwFU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bEEvgzwW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9199FC2BD10;
-	Wed,  3 Jul 2024 11:26:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VRJvJwFU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856B4C32781;
+	Wed,  3 Jul 2024 11:26:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005998;
-	bh=1Pi66+3P9eMUOl2OamMyx5otLmKFu79OmjDS/NKTNtk=;
+	s=korg; t=1720006000;
+	bh=xiQbJ2VgtzUmmMJ5Wau66+j7klSVQZ51qIR/x94mRbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bEEvgzwWqkHrTYfDtxBvwVna9LvZEaar70GcwUfBhtMeofagj2Z8FjicoHEisdlMh
-	 plQO36jePQTD3YL6Tv3EjjIvIII6ENbApy+H+y+yuyxRlJ0u6qr5416m883YCLPcmt
-	 bOrNrsAF911M96XmDggK+pa8ajOq0jB4uJ4uTn88=
+	b=VRJvJwFU8Mjevw3BF6JVkblDIsKmTAERX4eQxZsTDCCWb9sT2pXDndEGO6UclqlGf
+	 pyB3l8QHa3sFBT3XhiIOsHczMcIzK6nB+5K4RqiLmRsqG869+aCHeq3vhkWWvj11Ol
+	 +/FQ5kn2ThU6ONDJ2qlnOB91XpJywKqR8faV2TsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <stfrench@microsoft.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 266/356] cifs: fix typo in module parameter enable_gcm_256
-Date: Wed,  3 Jul 2024 12:40:02 +0200
-Message-ID: <20240703102923.180412452@linuxfoundation.org>
+Subject: [PATCH 5.15 267/356] drm/amdgpu: fix UBSAN warning in kv_dpm.c
+Date: Wed,  3 Jul 2024 12:40:03 +0200
+Message-ID: <20240703102923.217881584@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -50,35 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 8bf0287528da1992c5e49d757b99ad6bbc34b522 ]
+[ Upstream commit f0d576f840153392d04b2d52cf3adab8f62e8cb6 ]
 
-enable_gcm_256 (which allows the server to require the strongest
-encryption) is enabled by default, but the modinfo description
-incorrectly showed it disabled by default. Fix the typo.
+Adds bounds check for sumo_vid_mapping_entry.
 
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3392
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Fixes: fee742b50289 ("smb3.1.1: enable negotiating stronger encryption by default")
-Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/cifsfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/powerplay/kv_dpm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/cifs/cifsfs.c b/fs/cifs/cifsfs.c
-index d3adcb9e70a66..c254e714f7ceb 100644
---- a/fs/cifs/cifsfs.c
-+++ b/fs/cifs/cifsfs.c
-@@ -99,7 +99,7 @@ module_param(enable_oplocks, bool, 0644);
- MODULE_PARM_DESC(enable_oplocks, "Enable or disable oplocks. Default: y/Y/1");
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/kv_dpm.c b/drivers/gpu/drm/amd/pm/powerplay/kv_dpm.c
+index b56854c03ead6..4291bf09fc7b4 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/kv_dpm.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/kv_dpm.c
+@@ -163,6 +163,8 @@ static void sumo_construct_vid_mapping_table(struct amdgpu_device *adev,
  
- module_param(enable_gcm_256, bool, 0644);
--MODULE_PARM_DESC(enable_gcm_256, "Enable requesting strongest (256 bit) GCM encryption. Default: n/N/0");
-+MODULE_PARM_DESC(enable_gcm_256, "Enable requesting strongest (256 bit) GCM encryption. Default: y/Y/0");
- 
- module_param(require_gcm_256, bool, 0644);
- MODULE_PARM_DESC(require_gcm_256, "Require strongest (256 bit) GCM encryption. Default: n/N/0");
+ 	for (i = 0; i < SUMO_MAX_HARDWARE_POWERLEVELS; i++) {
+ 		if (table[i].ulSupportedSCLK != 0) {
++			if (table[i].usVoltageIndex >= SUMO_MAX_NUMBER_VOLTAGES)
++				continue;
+ 			vid_mapping_table->entries[table[i].usVoltageIndex].vid_7bit =
+ 				table[i].usVoltageID;
+ 			vid_mapping_table->entries[table[i].usVoltageIndex].vid_2bit =
 -- 
 2.43.0
 
