@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9318173336;
-	Wed,  3 Jul 2024 10:53:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2737173336;
+	Wed,  3 Jul 2024 10:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004023; cv=none; b=Q9c4Bf54x6coZIQVZvKqGTHqjYwJ9hhbj6a0AUzX8GGRsbKWg5MH7AY+6uJK2d7DcVVMRHqyVgom5WAdPRSIlLki481OTyBVHVSGjptI/pFTsSq/A+w98qBQc69bAmdW3pe47QAImMcxK0q1oJBNbVB9+0WZUfQ9tNTq2LsvAbw=
+	t=1720004026; cv=none; b=nD0NuynmVLAo9pYtuNqKE7XHLFIOxaqXQt06ax4wCFkzPmA+DvI8D66GNeP1USBNHfUVW6DBgTz2+CB2NbRXnY3ZPfUmVBMefTZ4fC8wyCLTh3/dCMXRnK+X2gf/iWIOmXqHa6mqw/gZEuHx23m8dSlkR1wT15gQSVBUxscEQHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004023; c=relaxed/simple;
-	bh=5UwBfLj0O+DqdCxoWxxNrh1Exwiwp5Mw6sdbKmY/p90=;
+	s=arc-20240116; t=1720004026; c=relaxed/simple;
+	bh=PIcOlf72aBk/6cYaK0eg4pgMArt5SYVOYmWADGAjAac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TnjjCuiji+jV8XAa+xWv/mwxPmx8KKA0FWHEwKSWL1Tqoiv2l0Vz0KlYG4Gdogq5GOJEPPMi8nR7xlmOXwP7oOMOvW5Ck7+w6GXHT2XfYZIF/DBZmHSL+B0HwDZYSavo9hyatl5i/pJjdpOJfbMuBeVbHWZIvN7OxwQ+S47I4aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l2i5p7dE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O3KHEWDMXnThCR7jk0TSc6au8NdTkfIuNLoz10GzmVcGMDkAEXuSPVN7PKjPe9E2XFRSRE8vnPg54a/ZwbKucBIM0JEjIFiwq0QF7DkRT6maVf5XYimUCp6w5AnkYvMRLdLTKSvg5bdwI2zO7ukgZYKZQkTpXkBli3HofrDjcAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fPayvyMz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l2i5p7dE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32FB6C2BD10;
-	Wed,  3 Jul 2024 10:53:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fPayvyMz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2726EC2BD10;
+	Wed,  3 Jul 2024 10:53:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004023;
-	bh=5UwBfLj0O+DqdCxoWxxNrh1Exwiwp5Mw6sdbKmY/p90=;
+	s=korg; t=1720004026;
+	bh=PIcOlf72aBk/6cYaK0eg4pgMArt5SYVOYmWADGAjAac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l2i5p7dEpg1IODmgtPhjo1R5UcwJjN+1KLanfarY11c29TfUr0qdixFYcK2mk6hlZ
-	 QXsClGOxvKN44lZdStHRBsfAcvhyJONDi8Iv24mvCCB/VshKGrRMQNOFIOJssth0pk
-	 niW1V79n1rU4nV3w9cCExCnAFQRLDYWOr3zZdtHE=
+	b=fPayvyMzmxQkAkbLZCPQ4A4N8Xe8K0/tsD7zuqlQY4E5XN/jT6W8U7cjli2LPJVIz
+	 39sJJvuQn+NzAK7LEgZK14/74apbkWP2kASN9Hepusb8+l3r5hOwm0mp+BSOKyvCXL
+	 3XedsDR6VNcXM75L+zf9xl2cVqV+KlAtI/uGiH0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Heintzmann <heintzmann.eric@free.fr>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Songyang Li <leesongyang@outlook.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 099/189] PCI/PM: Avoid D3cold for HP Pavilion 17 PC/1972 PCIe Ports
-Date: Wed,  3 Jul 2024 12:39:20 +0200
-Message-ID: <20240703102845.239009601@linuxfoundation.org>
+Subject: [PATCH 5.4 100/189] MIPS: Octeon: Add PCIe link status check
+Date: Wed,  3 Jul 2024 12:39:21 +0200
+Message-ID: <20240703102845.276292206@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -52,69 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Songyang Li <leesongyang@outlook.com>
 
-[ Upstream commit 256df20c590bf0e4d63ac69330cf23faddac3e08 ]
+[ Upstream commit 29b83a64df3b42c88c0338696feb6fdcd7f1f3b7 ]
 
-Hewlett-Packard HP Pavilion 17 Notebook PC/1972 is an Intel Ivy Bridge
-system with a muxless AMD Radeon dGPU.  Attempting to use the dGPU fails
-with the following sequence:
+The standard PCIe configuration read-write interface is used to
+access the configuration space of the peripheral PCIe devices
+of the mips processor after the PCIe link surprise down, it can
+generate kernel panic caused by "Data bus error". So it is
+necessary to add PCIe link status check for system protection.
+When the PCIe link is down or in training, assigning a value
+of 0 to the configuration address can prevent read-write behavior
+to the configuration space of peripheral PCIe devices, thereby
+preventing kernel panic.
 
-  ACPI Error: Aborting method \AMD3._ON due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/psparse-529)
-  radeon 0000:01:00.0: not ready 1023ms after resume; waiting
-  radeon 0000:01:00.0: not ready 2047ms after resume; waiting
-  radeon 0000:01:00.0: not ready 4095ms after resume; waiting
-  radeon 0000:01:00.0: not ready 8191ms after resume; waiting
-  radeon 0000:01:00.0: not ready 16383ms after resume; waiting
-  radeon 0000:01:00.0: not ready 32767ms after resume; waiting
-  radeon 0000:01:00.0: not ready 65535ms after resume; giving up
-  radeon 0000:01:00.0: Unable to change power state from D3cold to D0, device inaccessible
-
-The issue is that the Root Port the dGPU is connected to can't handle the
-transition from D3cold to D0 so the dGPU can't properly exit runtime PM.
-
-The existing logic in pci_bridge_d3_possible() checks for systems that are
-newer than 2015 to decide that D3 is safe.  This would nominally work for
-an Ivy Bridge system (which was discontinued in 2015), but this system
-appears to have continued to receive BIOS updates until 2017 and so this
-existing logic doesn't appropriately capture it.
-
-Add the system to bridge_d3_blacklist to prevent D3cold from being used.
-
-Link: https://lore.kernel.org/r/20240307163709.323-1-mario.limonciello@amd.com
-Reported-by: Eric Heintzmann <heintzmann.eric@free.fr>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3229
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Eric Heintzmann <heintzmann.eric@free.fr>
+Signed-off-by: Songyang Li <leesongyang@outlook.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ arch/mips/pci/pcie-octeon.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+ mode change 100644 => 100755 arch/mips/pci/pcie-octeon.c
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index 64c89b23e99f7..deafd229ef8b4 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -2626,6 +2626,18 @@ static const struct dmi_system_id bridge_d3_blacklist[] = {
- 			DMI_MATCH(DMI_BOARD_VERSION, "Continental Z2"),
- 		},
- 	},
-+	{
-+		/*
-+		 * Changing power state of root port dGPU is connected fails
-+		 * https://gitlab.freedesktop.org/drm/amd/-/issues/3229
-+		 */
-+		.ident = "Hewlett-Packard HP Pavilion 17 Notebook PC/1972",
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "Hewlett-Packard"),
-+			DMI_MATCH(DMI_BOARD_NAME, "1972"),
-+			DMI_MATCH(DMI_BOARD_VERSION, "95.33"),
-+		},
-+	},
- #endif
- 	{ }
- };
+diff --git a/arch/mips/pci/pcie-octeon.c b/arch/mips/pci/pcie-octeon.c
+old mode 100644
+new mode 100755
+index d919a0d813a17..38de2a9c3cf1a
+--- a/arch/mips/pci/pcie-octeon.c
++++ b/arch/mips/pci/pcie-octeon.c
+@@ -230,12 +230,18 @@ static inline uint64_t __cvmx_pcie_build_config_addr(int pcie_port, int bus,
+ {
+ 	union cvmx_pcie_address pcie_addr;
+ 	union cvmx_pciercx_cfg006 pciercx_cfg006;
++	union cvmx_pciercx_cfg032 pciercx_cfg032;
+ 
+ 	pciercx_cfg006.u32 =
+ 	    cvmx_pcie_cfgx_read(pcie_port, CVMX_PCIERCX_CFG006(pcie_port));
+ 	if ((bus <= pciercx_cfg006.s.pbnum) && (dev != 0))
+ 		return 0;
+ 
++	pciercx_cfg032.u32 =
++		cvmx_pcie_cfgx_read(pcie_port, CVMX_PCIERCX_CFG032(pcie_port));
++	if ((pciercx_cfg032.s.dlla == 0) || (pciercx_cfg032.s.lt == 1))
++		return 0;
++
+ 	pcie_addr.u64 = 0;
+ 	pcie_addr.config.upper = 2;
+ 	pcie_addr.config.io = 1;
 -- 
 2.43.0
 
