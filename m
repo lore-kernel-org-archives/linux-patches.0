@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F15F18133B;
-	Wed,  3 Jul 2024 11:06:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB7A17625D;
+	Wed,  3 Jul 2024 11:06:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004768; cv=none; b=YFqMmXXkJTUPRyer3v0DYTJc9PDSQUpUFZfGKsQyXC/D/l2W99GesJpeRXY95A7QDWSz5H0SdYdCvYDNDx1/8lWbuT3nQQaSlOz0d9AlSs3hU6oOzh8xqFuGPM7lNL9DxJvBUvLRuUQptLPbwYnGln1zhtuAVRtzH04ojWXnAhE=
+	t=1720004772; cv=none; b=AlSkdDNNz0+DTBAGz1muOtrhqIXgTbEBK1plxCluV4eg0DkZO5eyYkmzN/yIAW/u4binY2szEV7V6SoF/dFqH4rQFuwCJQdh+epDRFeFbAfsmQnY/qBGi7deoicgk7lSPxVsX7Vp7uUwPrJIeGooSvpYTHpOTvJeNt/cgRufM5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004768; c=relaxed/simple;
-	bh=cWXTUDnIOpScoksmZWYM+AeRomocNtg1a03BNXKUO0k=;
+	s=arc-20240116; t=1720004772; c=relaxed/simple;
+	bh=WBb9affVVZkESIpadg4efFjj6/GzYbOA0ATVp93zHZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iJIQRGnBfMxbRWbDLFE++PiMiyGRDDEbf+chiiiUmdRtFnPm2X+bj8a4tNl2I6pJGKcxaYCZLxQdIgB9AUXWo+VgeVDWMdgL3ZZyKIF1T/0Ph67gKbpGDweXSG3rlbwB434Z0i1WtcqrQylPNQtuzlAoI1baruIDl8qwLuMitFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mr+fuYzF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Onb/TkvYARJ3VcFUftSOzDQIuHufsulp9E8/tgUTOMciwijyNWBpD5VJUf14HJKJ40U+wC/eaO2yU1NBAluR8vW0bkIp5ATCqiLb/b1FYkgJCtX05U1XWKTW7rYF96DT6MgCevROiTPoOLcEr9GWJWgoiO/gG39iKmvXrIt96oE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVFdInAO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mr+fuYzF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09389C2BD10;
-	Wed,  3 Jul 2024 11:06:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVFdInAO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C565C2BD10;
+	Wed,  3 Jul 2024 11:06:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004768;
-	bh=cWXTUDnIOpScoksmZWYM+AeRomocNtg1a03BNXKUO0k=;
+	s=korg; t=1720004771;
+	bh=WBb9affVVZkESIpadg4efFjj6/GzYbOA0ATVp93zHZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mr+fuYzF3yi4MwhDZBi3WgNmILoCUdVE0VKc44N1OApDEoNfxUETCkZB3n5W4b82O
-	 xQ/uuCOusl2CvTrCFkBD1iSSmSlJpQrJmDLcj+QNqsZr7JCucdML3mZo6KOU9oBOvr
-	 2dAtYznnG//uAD1Vgt46I/w/LLz5ngE48cJy5bTM=
+	b=aVFdInAOaX8jKxbglh58EQxEXSlsr7YQMTMUpskIoMoG0plhEzVgYVqpNXbrTtjSK
+	 jPLADM7YSFlWSPavlK3GOYiyscC1A3hzb2e3jjkZAM5veAxKmhKGiOGAMxfCsKUxHl
+	 npK7sNn0yJifMrea1lPApVeD6m4V8IKV+jvL88kM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heng Qi <hengqi@linux.alibaba.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	syzbot+b62c37cdd58103293a5a@syzkaller.appspotmail.com,
+	syzbot+cfbe1da5fdfc39efc293@syzkaller.appspotmail.com,
+	kernel test robot <oliver.sang@intel.com>,
+	Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 151/290] virtio_net: checksum offloading handling fix
-Date: Wed,  3 Jul 2024 12:38:52 +0200
-Message-ID: <20240703102909.885015772@linuxfoundation.org>
+Subject: [PATCH 5.10 152/290] netfilter: ipset: Fix suspicious rcu_dereference_protected()
+Date: Wed,  3 Jul 2024 12:38:53 +0200
+Message-ID: <20240703102909.922771443@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -53,62 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heng Qi <hengqi@linux.alibaba.com>
+From: Jozsef Kadlecsik <kadlec@netfilter.org>
 
-[ Upstream commit 604141c036e1b636e2a71cf6e1aa09d1e45f40c2 ]
+[ Upstream commit 8ecd06277a7664f4ef018abae3abd3451d64e7a6 ]
 
-In virtio spec 0.95, VIRTIO_NET_F_GUEST_CSUM was designed to handle
-partially checksummed packets, and the validation of fully checksummed
-packets by the device is independent of VIRTIO_NET_F_GUEST_CSUM
-negotiation. However, the specification erroneously stated:
+When destroying all sets, we are either in pernet exit phase or
+are executing a "destroy all sets command" from userspace. The latter
+was taken into account in ip_set_dereference() (nfnetlink mutex is held),
+but the former was not. The patch adds the required check to
+rcu_dereference_protected() in ip_set_dereference().
 
-  "If VIRTIO_NET_F_GUEST_CSUM is not negotiated, the device MUST set flags
-   to zero and SHOULD supply a fully checksummed packet to the driver."
-
-This statement is inaccurate because even without VIRTIO_NET_F_GUEST_CSUM
-negotiation, the device can still set the VIRTIO_NET_HDR_F_DATA_VALID flag.
-Essentially, the device can facilitate the validation of these packets'
-checksums - a process known as RX checksum offloading - removing the need
-for the driver to do so.
-
-This scenario is currently not implemented in the driver and requires
-correction. The necessary specification correction[1] has been made and
-approved in the virtio TC vote.
-[1] https://lists.oasis-open.org/archives/virtio-comment/202401/msg00011.html
-
-Fixes: 4f49129be6fa ("virtio-net: Set RXCSUM feature if GUEST_CSUM is available")
-Signed-off-by: Heng Qi <hengqi@linux.alibaba.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 4e7aaa6b82d6 ("netfilter: ipset: Fix race between namespace cleanup and gc in the list:set type")
+Reported-by: syzbot+b62c37cdd58103293a5a@syzkaller.appspotmail.com
+Reported-by: syzbot+cfbe1da5fdfc39efc293@syzkaller.appspotmail.com
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202406141556.e0b6f17e-lkp@intel.com
+Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ net/netfilter/ipset/ip_set_core.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index 4029c56dfcf0f..f7ed99561c192 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -3112,8 +3112,16 @@ static int virtnet_probe(struct virtio_device *vdev)
- 			dev->features |= dev->hw_features & NETIF_F_ALL_TSO;
- 		/* (!csum && gso) case will be fixed by register_netdev() */
- 	}
--	if (virtio_has_feature(vdev, VIRTIO_NET_F_GUEST_CSUM))
--		dev->features |= NETIF_F_RXCSUM;
-+
-+	/* 1. With VIRTIO_NET_F_GUEST_CSUM negotiation, the driver doesn't
-+	 * need to calculate checksums for partially checksummed packets,
-+	 * as they're considered valid by the upper layer.
-+	 * 2. Without VIRTIO_NET_F_GUEST_CSUM negotiation, the driver only
-+	 * receives fully checksummed packets. The device may assist in
-+	 * validating these packets' checksums, so the driver won't have to.
-+	 */
-+	dev->features |= NETIF_F_RXCSUM;
-+
- 	if (virtio_has_feature(vdev, VIRTIO_NET_F_GUEST_TSO4) ||
- 	    virtio_has_feature(vdev, VIRTIO_NET_F_GUEST_TSO6))
- 		dev->features |= NETIF_F_GRO_HW;
+diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
+index ecd693fca224f..bac92369a5436 100644
+--- a/net/netfilter/ipset/ip_set_core.c
++++ b/net/netfilter/ipset/ip_set_core.c
+@@ -53,12 +53,13 @@ MODULE_DESCRIPTION("core IP set support");
+ MODULE_ALIAS_NFNL_SUBSYS(NFNL_SUBSYS_IPSET);
+ 
+ /* When the nfnl mutex or ip_set_ref_lock is held: */
+-#define ip_set_dereference(p)		\
+-	rcu_dereference_protected(p,	\
++#define ip_set_dereference(inst)	\
++	rcu_dereference_protected((inst)->ip_set_list,	\
+ 		lockdep_nfnl_is_held(NFNL_SUBSYS_IPSET) || \
+-		lockdep_is_held(&ip_set_ref_lock))
++		lockdep_is_held(&ip_set_ref_lock) || \
++		(inst)->is_deleted)
+ #define ip_set(inst, id)		\
+-	ip_set_dereference((inst)->ip_set_list)[id]
++	ip_set_dereference(inst)[id]
+ #define ip_set_ref_netlink(inst,id)	\
+ 	rcu_dereference_raw((inst)->ip_set_list)[id]
+ #define ip_set_dereference_nfnl(p)	\
+@@ -1137,7 +1138,7 @@ static int ip_set_create(struct net *net, struct sock *ctnl,
+ 		if (!list)
+ 			goto cleanup;
+ 		/* nfnl mutex is held, both lists are valid */
+-		tmp = ip_set_dereference(inst->ip_set_list);
++		tmp = ip_set_dereference(inst);
+ 		memcpy(list, tmp, sizeof(struct ip_set *) * inst->ip_set_max);
+ 		rcu_assign_pointer(inst->ip_set_list, list);
+ 		/* Make sure all current packets have passed through */
 -- 
 2.43.0
 
