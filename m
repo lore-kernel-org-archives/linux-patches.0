@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F21CD61FDF;
-	Wed,  3 Jul 2024 10:42:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94CD9142E73;
+	Wed,  3 Jul 2024 10:42:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003350; cv=none; b=Vz1QovVERTxuP4i6IOIxiS61oyBtDZywLyY4aTO/Vv1z64ETZgBTeAzrD45U2iXcllw5hXXkCzEDUA0T70x+l2LdfEAcWuWi8m63aZNR70eb47uwQNb0qW8mfuMke99ICsgE9Jiic/acoMhI/PAzmwLVJgEgwXxC4uICz/SiOAg=
+	t=1720003352; cv=none; b=U030Z9MH4AEOBrMSQcMjgzM96SvslDcGypeRVDGMR5ypr13vccb2E6FJ6VA/Wj7Nm9tbhXqDvZ07dk66ul/m8+irMIyeNpdJ0L7je7Rvzyt1tltRAHYL4SHA60I3zDY5zM1+UfYgwCwO1jA6+suwuqZnG9wlh+4ne1YCjX6uOBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003350; c=relaxed/simple;
-	bh=UJReLNKmDMY8sN3qKrBfbd681A90TzuYjammPoSakyg=;
+	s=arc-20240116; t=1720003352; c=relaxed/simple;
+	bh=CFeWUrrLuQf24cIAt8wtjuVD5Yx/CeSyjqv6lxFmYmc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N+rUp53RLgTX1LYwmVDvI0aV0EBMfTelWmlWepk4zHwB4YyPhGvpmP6ZoP2h/GmtwTm6+WLg/yNya/hBXhMQX/0gfIJrj7DUVOtDxDXeoKcTLHb0s0hYmf4Ph5eMPDAAz8DgbHKaDoAioo/Nnm6D/OVjRsgdOC01AW6+pNeE16o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eHdfWtM0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ULFbNCADq7Kbw92S49yYKm1oWbpFI5mHylUx/J6Bibgj7Zra5BTBAoxDWnvl8yM7719kwVzwMI5gQFYRYT48nNgFhMjYvzksDx60O6M1CN081VD43krtr4GG0OVFUvbp3RBpwoe03ofs91m6wHDWlyUiYYYV4I730C8RRFMLpns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q5D5ATAc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eHdfWtM0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3056FC2BD10;
-	Wed,  3 Jul 2024 10:42:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q5D5ATAc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18E34C2BD10;
+	Wed,  3 Jul 2024 10:42:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003349;
-	bh=UJReLNKmDMY8sN3qKrBfbd681A90TzuYjammPoSakyg=;
+	s=korg; t=1720003352;
+	bh=CFeWUrrLuQf24cIAt8wtjuVD5Yx/CeSyjqv6lxFmYmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eHdfWtM0lh73qJ15SOFwXOtyQWQq89Ur1ElSTBH4yH3UN+QAMbCX7vnOtsdxDgaXm
-	 SNCgQMD+ya1YSrpaS8tcuADv5PEdZBbO6dlaBPPAvdrqTd75YOeuDTqOR82LZ2eEkd
-	 KePK+aMhRw0k24FDURI9PvgW7QYlx1Y+dhvPq3zw=
+	b=Q5D5ATAcFAS9wgeYH2v4CyZM7j7LXgd6VbINgwpqL8g+G9MfOgL8eTcVgYLzhABKU
+	 QP6Pg4/W5q6ZrNMpei0gjt7VyvCgu2pRiH8FEzaUV9uQ3lYp36Qn7bj0fFOGKPphf9
+	 Vaef4+boOMZj2ia8590l5AVmFV5WgESxQ6moChCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Remi Pommarel <repk@triplefau.lt>,
 	Johannes Berg <johannes.berg@intel.com>,
+	Liad Kaufman <liad.kaufman@intel.com>,
+	Luciano Coelho <luciano.coelho@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 002/139] wifi: mac80211: Fix deadlock in ieee80211_sta_ps_deliver_wakeup()
-Date: Wed,  3 Jul 2024 12:38:19 +0200
-Message-ID: <20240703102830.526914326@linuxfoundation.org>
+Subject: [PATCH 4.19 003/139] wifi: iwlwifi: mvm: revert gen2 TX A-MPDU size to 64
+Date: Wed,  3 Jul 2024 12:38:20 +0200
+Message-ID: <20240703102830.564905798@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -51,107 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Remi Pommarel <repk@triplefau.lt>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 44c06bbde6443de206b30f513100b5670b23fc5e ]
+[ Upstream commit 4a7aace2899711592327463c1a29ffee44fcc66e ]
 
-The ieee80211_sta_ps_deliver_wakeup() function takes sta->ps_lock to
-synchronizes with ieee80211_tx_h_unicast_ps_buf() which is called from
-softirq context. However using only spin_lock() to get sta->ps_lock in
-ieee80211_sta_ps_deliver_wakeup() does not prevent softirq to execute
-on this same CPU, to run ieee80211_tx_h_unicast_ps_buf() and try to
-take this same lock ending in deadlock. Below is an example of rcu stall
-that arises in such situation.
+We don't actually support >64 even for HE devices, so revert
+back to 64. This fixes an issue where the session is refused
+because the queue is configured differently from the actual
+session later.
 
- rcu: INFO: rcu_sched self-detected stall on CPU
- rcu:    2-....: (42413413 ticks this GP) idle=b154/1/0x4000000000000000 softirq=1763/1765 fqs=21206996
- rcu:    (t=42586894 jiffies g=2057 q=362405 ncpus=4)
- CPU: 2 PID: 719 Comm: wpa_supplicant Tainted: G        W          6.4.0-02158-g1b062f552873 #742
- Hardware name: RPT (r1) (DT)
- pstate: 00000005 (nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : queued_spin_lock_slowpath+0x58/0x2d0
- lr : invoke_tx_handlers_early+0x5b4/0x5c0
- sp : ffff00001ef64660
- x29: ffff00001ef64660 x28: ffff000009bc1070 x27: ffff000009bc0ad8
- x26: ffff000009bc0900 x25: ffff00001ef647a8 x24: 0000000000000000
- x23: ffff000009bc0900 x22: ffff000009bc0900 x21: ffff00000ac0e000
- x20: ffff00000a279e00 x19: ffff00001ef646e8 x18: 0000000000000000
- x17: ffff800016468000 x16: ffff00001ef608c0 x15: 0010533c93f64f80
- x14: 0010395c9faa3946 x13: 0000000000000000 x12: 00000000fa83b2da
- x11: 000000012edeceea x10: ffff0000010fbe00 x9 : 0000000000895440
- x8 : 000000000010533c x7 : ffff00000ad8b740 x6 : ffff00000c350880
- x5 : 0000000000000007 x4 : 0000000000000001 x3 : 0000000000000000
- x2 : 0000000000000000 x1 : 0000000000000001 x0 : ffff00000ac0e0e8
- Call trace:
-  queued_spin_lock_slowpath+0x58/0x2d0
-  ieee80211_tx+0x80/0x12c
-  ieee80211_tx_pending+0x110/0x278
-  tasklet_action_common.constprop.0+0x10c/0x144
-  tasklet_action+0x20/0x28
-  _stext+0x11c/0x284
-  ____do_softirq+0xc/0x14
-  call_on_irq_stack+0x24/0x34
-  do_softirq_own_stack+0x18/0x20
-  do_softirq+0x74/0x7c
-  __local_bh_enable_ip+0xa0/0xa4
-  _ieee80211_wake_txqs+0x3b0/0x4b8
-  __ieee80211_wake_queue+0x12c/0x168
-  ieee80211_add_pending_skbs+0xec/0x138
-  ieee80211_sta_ps_deliver_wakeup+0x2a4/0x480
-  ieee80211_mps_sta_status_update.part.0+0xd8/0x11c
-  ieee80211_mps_sta_status_update+0x18/0x24
-  sta_apply_parameters+0x3bc/0x4c0
-  ieee80211_change_station+0x1b8/0x2dc
-  nl80211_set_station+0x444/0x49c
-  genl_family_rcv_msg_doit.isra.0+0xa4/0xfc
-  genl_rcv_msg+0x1b0/0x244
-  netlink_rcv_skb+0x38/0x10c
-  genl_rcv+0x34/0x48
-  netlink_unicast+0x254/0x2bc
-  netlink_sendmsg+0x190/0x3b4
-  ____sys_sendmsg+0x1e8/0x218
-  ___sys_sendmsg+0x68/0x8c
-  __sys_sendmsg+0x44/0x84
-  __arm64_sys_sendmsg+0x20/0x28
-  do_el0_svc+0x6c/0xe8
-  el0_svc+0x14/0x48
-  el0t_64_sync_handler+0xb0/0xb4
-  el0t_64_sync+0x14c/0x150
-
-Using spin_lock_bh()/spin_unlock_bh() instead prevents softirq to raise
-on the same CPU that is holding the lock.
-
-Fixes: 1d147bfa6429 ("mac80211: fix AP powersave TX vs. wakeup race")
-Signed-off-by: Remi Pommarel <repk@triplefau.lt>
-Link: https://msgid.link/8e36fe07d0fbc146f89196cd47a53c8a0afe84aa.1716910344.git.repk@triplefau.lt
+Fixes: 514c30696fbc ("iwlwifi: add support for IEEE802.11ax")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Liad Kaufman <liad.kaufman@intel.com>
+Reviewed-by: Luciano Coelho <luciano.coelho@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240510170500.52f7b4cf83aa.If47e43adddf7fe250ed7f5571fbb35d8221c7c47@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/sta_info.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/rs.h | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
-index 714d0b01ea629..5dfbfeb8201b8 100644
---- a/net/mac80211/sta_info.c
-+++ b/net/mac80211/sta_info.c
-@@ -1275,7 +1275,7 @@ void ieee80211_sta_ps_deliver_wakeup(struct sta_info *sta)
- 	skb_queue_head_init(&pending);
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rs.h b/drivers/net/wireless/intel/iwlwifi/mvm/rs.h
+index d0f47899f2849..f76f708ea98c9 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/rs.h
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/rs.h
+@@ -144,13 +144,8 @@ enum {
  
- 	/* sync with ieee80211_tx_h_unicast_ps_buf */
--	spin_lock(&sta->ps_lock);
-+	spin_lock_bh(&sta->ps_lock);
- 	/* Send all buffered frames to the station */
- 	for (ac = 0; ac < IEEE80211_NUM_ACS; ac++) {
- 		int count = skb_queue_len(&pending), tmp;
-@@ -1304,7 +1304,7 @@ void ieee80211_sta_ps_deliver_wakeup(struct sta_info *sta)
- 	 */
- 	clear_sta_flag(sta, WLAN_STA_PSPOLL);
- 	clear_sta_flag(sta, WLAN_STA_UAPSD);
--	spin_unlock(&sta->ps_lock);
-+	spin_unlock_bh(&sta->ps_lock);
+ #define LINK_QUAL_AGG_FRAME_LIMIT_DEF	(63)
+ #define LINK_QUAL_AGG_FRAME_LIMIT_MAX	(63)
+-/*
+- * FIXME - various places in firmware API still use u8,
+- * e.g. LQ command and SCD config command.
+- * This should be 256 instead.
+- */
+-#define LINK_QUAL_AGG_FRAME_LIMIT_GEN2_DEF	(255)
+-#define LINK_QUAL_AGG_FRAME_LIMIT_GEN2_MAX	(255)
++#define LINK_QUAL_AGG_FRAME_LIMIT_GEN2_DEF	(64)
++#define LINK_QUAL_AGG_FRAME_LIMIT_GEN2_MAX	(64)
+ #define LINK_QUAL_AGG_FRAME_LIMIT_MIN	(0)
  
- 	atomic_dec(&ps->num_sta_ps);
- 
+ #define LQ_SIZE		2	/* 2 mode tables:  "Active" and "Search" */
 -- 
 2.43.0
 
