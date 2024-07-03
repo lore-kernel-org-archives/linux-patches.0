@@ -1,182 +1,169 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 228771849F4;
-	Wed,  3 Jul 2024 11:31:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0D513AA2C
+	for <patches@lists.linux.dev>; Wed,  3 Jul 2024 11:42:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006291; cv=none; b=mGoDFIhXDx0a8la0Z4YJZpJ1MdlJ1RaUbk91T5oHJV78WgDkIt/Kgnf6YGfKfJcyEx94qnoGfChUxcRX89TEjRgoDQ0WfiB5nMenWBExIZZSqpXTT1gcsosfmI6zs8jFL43who69AQLY93z/AGZJ1nEjL1t2amVrQIJS+tz4rj0=
+	t=1720006974; cv=none; b=WfxkYpNmn8xWDYIhpDr5XhustoVSgocaILL0zOIjMVFZgmluit+0fvUigpieNtZBfUnVy3x+NOTx4SQp/DZ/OQAW1yLgYOsAOdSg/TAC1HnKUvhHSrSq2bicA7GUyP9LagwMID1w/zSp/KHEYSGuqThgFaZRzEE/mZ0VwewZDmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006291; c=relaxed/simple;
-	bh=hv7KMXAO+ntzKLd7zIb9n6ziVUZFItxCGsDf6aqrl10=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jxlJf+ZbCJL/MjS4fVvIWFcJUkr0ReopAr9t7z1kRjMFTrSexydxRBMTi2tJ4Nr/YqOrM335kmT1le1qPOJQEB45UHL8MFZuV6SAz0db6rMffFTDR/Snwg/cSQUn+BEaAMmQtJ+F6Ken7F1K6YEQJc8cPvXn6o4SCOSP8JGiF+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fCF09ORR; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1720006974; c=relaxed/simple;
+	bh=K7qNNKCemwJNnX+1BcIXpnr6N/yn50dUXjm/HbTkLYU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=FiZpnN/whcYVxhAvnWof0wtPyjei8OD5DQrIJRvQ4NTN4nwtvd5NWm8W8Yx0Os5RsDUAgh6KezwwjLQ+9NXuHzvz9ejHbWh3FgjIJSG0LeQKS0RxJf9GkjvT12axQyxqWFq82l/8J+vYGIiPOq46aeaG8u9XCA5wJzbKmrGmUkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BqHOgmkE; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fCF09ORR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99955C32781;
-	Wed,  3 Jul 2024 11:31:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006291;
-	bh=hv7KMXAO+ntzKLd7zIb9n6ziVUZFItxCGsDf6aqrl10=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fCF09ORRupwrhuCKZ8vSTfYYLTfarNKLLkT06zYsb9vZSOtkL6BXqV52M5w6bPW29
-	 WOGfE/ujoFeDHl6Nvf93xax3ni5wfWHRpQ1XcYOHTL2gdj49THJjTqZ0c9jzmHm3Cb
-	 ZTRJ09Q0GJGbw0A68ow3w0ixuM79TXK6obAtVuKU=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 346/356] ipv6: Fix data races around sk->sk_prot.
-Date: Wed,  3 Jul 2024 12:41:22 +0200
-Message-ID: <20240703102926.201266031@linuxfoundation.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
-References: <20240703102913.093882413@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BqHOgmkE"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-1f480624d10so38871495ad.1
+        for <patches@lists.linux.dev>; Wed, 03 Jul 2024 04:42:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720006973; x=1720611773; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ge1wWoFHDAtDCXZQGNb/dsW5tPLZbTcFYOX+qhqBchw=;
+        b=BqHOgmkEA4stykKTFkJ0fr3L0iAyBbonFQCz77yPZWmmooQ2dlDQQFOHeaGFznGV0a
+         8xs0CtCkOwTTjnVZPkj806N1Xzgjp7DcHF5+w1mas37+pf8Ydbk9uIOxw9MqnuXE7sDn
+         e1zkTCRqXxG3JZ7IQTpXArHguwkwKjUSyzFNELqISLlAvPExC+yYj8qsNVXNb3coxXLt
+         BAX3MDGNjieL+qdpgR2CpI0yvLxZEDTXybVbDrbSg269j9mVRjsOqFQIQRwXa8S4IkXl
+         V8FmyliTNve9hBV5VVp4oEDaIi5EwYIaGb80OJCby7h56P1p6pT8FBZwI9K/obZ7RyQO
+         6TKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720006973; x=1720611773;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ge1wWoFHDAtDCXZQGNb/dsW5tPLZbTcFYOX+qhqBchw=;
+        b=dMVo8pshe6e0PYAaSydb0BV+1u/qLXpTYI7m1TDtdA+dU0af8KNmObfGN1m/HrR6EB
+         j0ZksyCN4zOrnZ+DDcnS9bxFYqhl6zBSm7vUKg5397hGjngZ76OQmJz6CIiJLU5RFeAV
+         MiYPxNwYP062KhUB7oKCgRkOYPe/5F2UjM76ZYZ3F8P2oHm75ghMWTOc1/XWTtsx7zMj
+         nN/oRpc3bRT1sKeao4THSZLDyxmrf1/CGfDD4Ebkcb2u8t0gQkJpw9GFA0KDQxkW8ro8
+         bFjRNrAZ81N1beAgW2CZuW62Va3E+Ipl+KPe5eZrT9z2nMfNaILrXY9AIEPpZc4yoPZ6
+         75uA==
+X-Gm-Message-State: AOJu0YyUEx1uoaJJEL0RNSHfeT7gG8Pr8ol047YF6lCdSBqZeBcehiNH
+	T0dCqBnBOBTWhZfLgFbA7BtaEgMLQqpwwFb65yqgiCNgezlLEl3A
+X-Google-Smtp-Source: AGHT+IFbmGqpCrPp2DHnF9f4E0obqrsea7nIt1awnOigtyr4ECVltV3vSLfaUTJvNYIpmMopU63g7A==
+X-Received: by 2002:a17:902:cf01:b0:1fa:fc13:8bbc with SMTP id d9443c01a7336-1fafc138ddcmr33072075ad.57.1720006972724;
+        Wed, 03 Jul 2024 04:42:52 -0700 (PDT)
+Received: from [10.150.96.32] ([14.34.86.36])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fad58e84d7sm88502545ad.74.2024.07.03.04.42.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Jul 2024 04:42:52 -0700 (PDT)
+Message-ID: <65a38070-cccf-45a0-af10-fd482eab64be@gmail.com>
+Date: Wed, 3 Jul 2024 20:42:48 +0900
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.10 228/290] tracing/net_sched: NULL pointer dereference
+ in perf_trace_qdisc_reset()
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, netdev@vger.kernel.org,
+ Yeoreum Yun <yeoreum.yun@arm.com>, Paolo Abeni <pabeni@redhat.com>,
+ Sasha Levin <sashal@kernel.org>
+References: <20240703102904.170852981@linuxfoundation.org>
+ <20240703102912.767573728@linuxfoundation.org>
+Content-Language: en-US
+From: Yunseong Kim <yskelg@gmail.com>
+In-Reply-To: <20240703102912.767573728@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+Hi Greg,
 
-------------------
+On 7/3/24 7:40 오후, Greg Kroah-Hartman wrote:
+> 5.10-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Yunseong Kim <yskelg@gmail.com>
+> 
+> [ Upstream commit bab4923132feb3e439ae45962979c5d9d5c7c1f1 ]
+> 
+> In the TRACE_EVENT(qdisc_reset) NULL dereference occurred from
+> 
+>  qdisc->dev_queue->dev <NULL> ->name
+> 
+> This situation simulated from bunch of veths and Bluetooth disconnection
+> and reconnection.
+> 
+> During qdisc initialization, qdisc was being set to noop_queue.
+> In veth_init_queue, the initial tx_num was reduced back to one,
+> causing the qdisc reset to be called with noop, which led to the kernel
+> panic.
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit 364f997b5cfe1db0d63a390fe7c801fa2b3115f6 upstream.
+> Fixes: 51270d573a8d ("tracing/net_sched: Fix tracepoints that save qdisc_dev() as a string")
+> Link: https://lore.kernel.org/lkml/20240229143432.273b4871@gandalf.local.home/t/
+> Cc: netdev@vger.kernel.org
+> Tested-by: Yunseong Kim <yskelg@gmail.com>
+> Signed-off-by: Yunseong Kim <yskelg@gmail.com>
+> Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
+> Link: https://lore.kernel.org/r/20240624173320.24945-4-yskelg@gmail.com
+> Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  include/trace/events/qdisc.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/include/trace/events/qdisc.h b/include/trace/events/qdisc.h
+> index a50df41634c58..f661d3d7c410a 100644
+> --- a/include/trace/events/qdisc.h
+> +++ b/include/trace/events/qdisc.h
+> @@ -53,7 +53,7 @@ TRACE_EVENT(qdisc_reset,
+>  	TP_ARGS(q),
+>  
+>  	TP_STRUCT__entry(
+> -		__string(	dev,		qdisc_dev(q)->name	)
+> +		__string(	dev,		qdisc_dev(q) ? qdisc_dev(q)->name : "(null)"	)
+>  		__string(	kind,		q->ops->id		)
+>  		__field(	u32,		parent			)
+>  		__field(	u32,		handle			)
 
-Commit 086d49058cd8 ("ipv6: annotate some data-races around sk->sk_prot")
-fixed some data-races around sk->sk_prot but it was not enough.
+Since that code changed in +v5.10.213, +v5.15.152, +v6.1.82 +v6.6.22
++v6.7.10, +v6.8, +6.9 and the stable is in an intermediate state.
 
-Some functions in inet6_(stream|dgram)_ops still access sk->sk_prot
-without lock_sock() or rtnl_lock(), so they need READ_ONCE() to avoid
-load tearing.
+commit 2c92ca849fcc ("tracing/treewide: Remove second parameter of
+__assign_str()")
+Link:
+https://lore.kernel.org/linux-trace-kernel/20240516133454.681ba6a0@rorschach.local.home/
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+
+I had to fix some other part for the stable branch backporting.
+
+
+So, I submit another patch. Please check out.
+Link:
+https://lore.kernel.org/stable/20240702180146.5126-2-yskelg@gmail.com/T/#u
+
 ---
- net/core/sock.c          |    6 ++++--
- net/ipv4/af_inet.c       |   23 ++++++++++++++++-------
- net/ipv6/ipv6_sockglue.c |    4 ++--
- 3 files changed, 22 insertions(+), 11 deletions(-)
+ include/trace/events/qdisc.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -3413,7 +3413,8 @@ int sock_common_getsockopt(struct socket
- {
- 	struct sock *sk = sock->sk;
- 
--	return sk->sk_prot->getsockopt(sk, level, optname, optval, optlen);
-+	/* IPV6_ADDRFORM can change sk->sk_prot under us. */
-+	return READ_ONCE(sk->sk_prot)->getsockopt(sk, level, optname, optval, optlen);
- }
- EXPORT_SYMBOL(sock_common_getsockopt);
- 
-@@ -3440,7 +3441,8 @@ int sock_common_setsockopt(struct socket
- {
- 	struct sock *sk = sock->sk;
- 
--	return sk->sk_prot->setsockopt(sk, level, optname, optval, optlen);
-+	/* IPV6_ADDRFORM can change sk->sk_prot under us. */
-+	return READ_ONCE(sk->sk_prot)->setsockopt(sk, level, optname, optval, optlen);
- }
- EXPORT_SYMBOL(sock_common_setsockopt);
- 
---- a/net/ipv4/af_inet.c
-+++ b/net/ipv4/af_inet.c
-@@ -565,22 +565,27 @@ int inet_dgram_connect(struct socket *so
- 		       int addr_len, int flags)
- {
- 	struct sock *sk = sock->sk;
-+	const struct proto *prot;
- 	int err;
- 
- 	if (addr_len < sizeof(uaddr->sa_family))
- 		return -EINVAL;
-+
-+	/* IPV6_ADDRFORM can change sk->sk_prot under us. */
-+	prot = READ_ONCE(sk->sk_prot);
-+
- 	if (uaddr->sa_family == AF_UNSPEC)
--		return sk->sk_prot->disconnect(sk, flags);
-+		return prot->disconnect(sk, flags);
- 
- 	if (BPF_CGROUP_PRE_CONNECT_ENABLED(sk)) {
--		err = sk->sk_prot->pre_connect(sk, uaddr, addr_len);
-+		err = prot->pre_connect(sk, uaddr, addr_len);
- 		if (err)
- 			return err;
- 	}
- 
- 	if (data_race(!inet_sk(sk)->inet_num) && inet_autobind(sk))
- 		return -EAGAIN;
--	return sk->sk_prot->connect(sk, uaddr, addr_len);
-+	return prot->connect(sk, uaddr, addr_len);
- }
- EXPORT_SYMBOL(inet_dgram_connect);
- 
-@@ -743,10 +748,11 @@ EXPORT_SYMBOL(inet_stream_connect);
- int inet_accept(struct socket *sock, struct socket *newsock, int flags,
- 		bool kern)
- {
--	struct sock *sk1 = sock->sk;
-+	struct sock *sk1 = sock->sk, *sk2;
- 	int err = -EINVAL;
--	struct sock *sk2 = sk1->sk_prot->accept(sk1, flags, &err, kern);
- 
-+	/* IPV6_ADDRFORM can change sk->sk_prot under us. */
-+	sk2 = READ_ONCE(sk1->sk_prot)->accept(sk1, flags, &err, kern);
- 	if (!sk2)
- 		goto do_err;
- 
-@@ -834,12 +840,15 @@ ssize_t inet_sendpage(struct socket *soc
- 		      size_t size, int flags)
- {
- 	struct sock *sk = sock->sk;
-+	const struct proto *prot;
- 
- 	if (unlikely(inet_send_prepare(sk)))
- 		return -EAGAIN;
- 
--	if (sk->sk_prot->sendpage)
--		return sk->sk_prot->sendpage(sk, page, offset, size, flags);
-+	/* IPV6_ADDRFORM can change sk->sk_prot under us. */
-+	prot = READ_ONCE(sk->sk_prot);
-+	if (prot->sendpage)
-+		return prot->sendpage(sk, page, offset, size, flags);
- 	return sock_no_sendpage(sock, page, offset, size, flags);
- }
- EXPORT_SYMBOL(inet_sendpage);
---- a/net/ipv6/ipv6_sockglue.c
-+++ b/net/ipv6/ipv6_sockglue.c
-@@ -475,7 +475,7 @@ static int do_ipv6_setsockopt(struct soc
- 				sock_prot_inuse_add(net, sk->sk_prot, -1);
- 				sock_prot_inuse_add(net, &tcp_prot, 1);
- 
--				/* Paired with READ_ONCE(sk->sk_prot) in net/ipv6/af_inet6.c */
-+				/* Paired with READ_ONCE(sk->sk_prot) in inet6_stream_ops */
- 				WRITE_ONCE(sk->sk_prot, &tcp_prot);
- 				icsk->icsk_af_ops = &ipv4_specific;
- 				sk->sk_socket->ops = &inet_stream_ops;
-@@ -490,7 +490,7 @@ static int do_ipv6_setsockopt(struct soc
- 				sock_prot_inuse_add(net, sk->sk_prot, -1);
- 				sock_prot_inuse_add(net, prot, 1);
- 
--				/* Paired with READ_ONCE(sk->sk_prot) in net/ipv6/af_inet6.c */
-+				/* Paired with READ_ONCE(sk->sk_prot) in inet6_dgram_ops */
- 				WRITE_ONCE(sk->sk_prot, prot);
- 				sk->sk_socket->ops = &inet_dgram_ops;
- 				sk->sk_family = PF_INET;
+diff --git a/include/trace/events/qdisc.h b/include/trace/events/qdisc.h
+index 1f4258308b96..061fd4960303 100644
+--- a/include/trace/events/qdisc.h
++++ b/include/trace/events/qdisc.h
+@@ -81,14 +81,14 @@ TRACE_EVENT(qdisc_reset,
+ 	TP_ARGS(q),
 
+ 	TP_STRUCT__entry(
+-		__string(	dev,		qdisc_dev(q)->name	)
++		__string(	dev,		qdisc_dev(q) ? qdisc_dev(q)->name : "(null)"	)
+ 		__string(	kind,		q->ops->id		)
+ 		__field(	u32,		parent			)
+ 		__field(	u32,		handle			)
+ 	),
 
+ 	TP_fast_assign(
+-		__assign_str(dev, qdisc_dev(q)->name);
++		__assign_str(dev, qdisc_dev(q) ? qdisc_dev(q)->name : "(null)");
+ 		__assign_str(kind, q->ops->id);
+ 		__entry->parent = q->parent;
+ 		__entry->handle = q->handle;
+-- 
