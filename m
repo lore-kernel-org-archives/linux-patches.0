@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF4A17335C;
-	Wed,  3 Jul 2024 11:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D23B136E2A;
+	Wed,  3 Jul 2024 11:09:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004953; cv=none; b=GRGQF+4PcseHUxKuuFySIbwPv1cauFjB/wDKnFLCK8gVe7dvTfdd5mXAfVMWasQrYGu4bxlWKBeI3RhBKTIocMZGoI2kgruqPDra31cy27wobBKemCC2ijuU2XkSX4aSX+evJ8gLq0tgE8A4Aw12ASZ5YJgFBVU9U0gixv4n3i0=
+	t=1720004956; cv=none; b=b2UnhFOX+eqvmUn8Xc3SnTYb/gWNGnMghodYtYKfxJujSWbiewQbZg2XP6A+svI4066YVw9CpO0hLhEZzrZCOZB1HI2Hs7qVUZGjlXhleovuGoggixpaFcllVAT9BoK1u5DDx1ZVBCdvskh0ksFCEPCJSiNHzNVEnNQKR5mZHFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004953; c=relaxed/simple;
-	bh=CyT0TI0z3mGwONgpRtzfYdj2zGIorbhct3c1+h/dyCY=;
+	s=arc-20240116; t=1720004956; c=relaxed/simple;
+	bh=GRMM4e+qv2SU1d3RKdU5eEi0yTDPjv8Oe3h8deJX0hE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YxPk80MLJYMWgZIpWvWJeHa5ca0EnV0WxOyLgfKNs7s/o3FmAYgNTUKQtm1gA+FSBrut1TMg0vWn1D+RDieN++SN+DPqugwlgsO3T6P/vznbkRiRJpBIReSTbB3MFWNNx9oLia9Nufojt0WDZxLt4TiaQ7ESHwKutxduibWpIHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M0h1Znbk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IoukReTeEB0u9pkm+DpXfGNIPLRG6CQCqeXHgnT2RJJc2uilrgP7N9NgMLhokJgWob1HbsARrmLcFPL20nBDJ8z7kekzcXKgU63A2jO2Miig+0KDC1aRUZ41qCkgKGs2DL2KSmk5RchcyVQ23fEFTEYnOzfY29+ADmB9VB6AwNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G9dl1/Xi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M0h1Znbk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16953C2BD10;
-	Wed,  3 Jul 2024 11:09:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G9dl1/Xi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0300DC32781;
+	Wed,  3 Jul 2024 11:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004953;
-	bh=CyT0TI0z3mGwONgpRtzfYdj2zGIorbhct3c1+h/dyCY=;
+	s=korg; t=1720004956;
+	bh=GRMM4e+qv2SU1d3RKdU5eEi0yTDPjv8Oe3h8deJX0hE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M0h1Znbkbog+mHvFrncb143UVF0Pn8h7D3eDI3J3CEfk+ioK8jr7wTeGHSpVWJb8e
-	 QgrnsMRilUGtNvfroYwGWHBuw3MjDzy/ZyjTIEID5nsNg7awlnu0+D/qImMQoSZ24O
-	 6VsBLqkp5V95D826Px09cGkkJkKqCq/2Vz1RVsNY=
+	b=G9dl1/Xi5/C/w3MxPSq9eUkQ87aVdg+skf/ygBGEXk7CRP3tNAuyfAu1DFc0Tnctn
+	 egQ6EVN8XwWDReHEtDpZ53gqlhOGorA6HBaT2sRiFDb4SIGXR1ZGEPgdb61kftyZPM
+	 Q5bxuC/29yW2vVNJxmvIjLDW+Ug8vMUsDsluzCtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Xingyuan Mo <hdthky0@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 211/290] drm/amdgpu: fix UBSAN warning in kv_dpm.c
-Date: Wed,  3 Jul 2024 12:39:52 +0200
-Message-ID: <20240703102912.130526447@linuxfoundation.org>
+Subject: [PATCH 5.10 212/290] netfilter: nf_tables: validate family when identifying table via handle
+Date: Wed,  3 Jul 2024 12:39:53 +0200
+Message-ID: <20240703102912.167268653@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -51,34 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit f0d576f840153392d04b2d52cf3adab8f62e8cb6 ]
+[ Upstream commit f6e1532a2697b81da00bfb184e99d15e01e9d98c ]
 
-Adds bounds check for sumo_vid_mapping_entry.
+Validate table family when looking up for it via NFTA_TABLE_HANDLE.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3392
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Fixes: 3ecbfd65f50e ("netfilter: nf_tables: allocate handle and delete objects via handle")
+Reported-by: Xingyuan Mo <hdthky0@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/kv_dpm.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/netfilter/nf_tables_api.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/kv_dpm.c b/drivers/gpu/drm/amd/pm/powerplay/kv_dpm.c
-index 6eb6f05c11367..56e15f5bc8225 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/kv_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/kv_dpm.c
-@@ -163,6 +163,8 @@ static void sumo_construct_vid_mapping_table(struct amdgpu_device *adev,
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index f3cb5c9202760..754278b857068 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -713,7 +713,7 @@ static struct nft_table *nft_table_lookup(const struct net *net,
  
- 	for (i = 0; i < SUMO_MAX_HARDWARE_POWERLEVELS; i++) {
- 		if (table[i].ulSupportedSCLK != 0) {
-+			if (table[i].usVoltageIndex >= SUMO_MAX_NUMBER_VOLTAGES)
-+				continue;
- 			vid_mapping_table->entries[table[i].usVoltageIndex].vid_7bit =
- 				table[i].usVoltageID;
- 			vid_mapping_table->entries[table[i].usVoltageIndex].vid_2bit =
+ static struct nft_table *nft_table_lookup_byhandle(const struct net *net,
+ 						   const struct nlattr *nla,
+-						   u8 genmask)
++						   int family, u8 genmask)
+ {
+ 	struct nftables_pernet *nft_net;
+ 	struct nft_table *table;
+@@ -721,6 +721,7 @@ static struct nft_table *nft_table_lookup_byhandle(const struct net *net,
+ 	nft_net = net_generic(net, nf_tables_net_id);
+ 	list_for_each_entry(table, &nft_net->tables, list) {
+ 		if (be64_to_cpu(nla_get_be64(nla)) == table->handle &&
++		    table->family == family &&
+ 		    nft_active_genmask(table, genmask))
+ 			return table;
+ 	}
+@@ -1440,7 +1441,7 @@ static int nf_tables_deltable(struct net *net, struct sock *nlsk,
+ 
+ 	if (nla[NFTA_TABLE_HANDLE]) {
+ 		attr = nla[NFTA_TABLE_HANDLE];
+-		table = nft_table_lookup_byhandle(net, attr, genmask);
++		table = nft_table_lookup_byhandle(net, attr, family, genmask);
+ 	} else {
+ 		attr = nla[NFTA_TABLE_NAME];
+ 		table = nft_table_lookup(net, attr, family, genmask);
 -- 
 2.43.0
 
