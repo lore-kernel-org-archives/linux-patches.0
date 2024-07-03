@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFABD1849D3;
-	Wed,  3 Jul 2024 11:11:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD7E1891DC;
+	Wed,  3 Jul 2024 11:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005060; cv=none; b=NRnCLd2ort9uopi57dh2P28jA2Ihdc26PvChE6QcFeOeRLzXYfiHgwAvpvR7vva5D7tjlVtsK8b//fC1eJnUJMgsLOyIeetf19rJAqJsEevK2xYUlK82xDdk9ioASE/4DWmXVS1WvjPNU9GdKjrKH2+vbAEf/dlCt0Ha3u3okcA=
+	t=1720005064; cv=none; b=jMtStDnv2xL0SochuP63ZzQmtByZbq+4zaWi5b8BUy5V3P6b3iPe6Ccr2mjBVQHB8TKuEMt4dcpweieGNJjYoB+wi7LQh4ICBh21VcFUpjqwBN8FlY7+916hFnfVdyrcvEYc6cn9qgeMajzp5n9GnVtK278HJpYN0fMUILF0BOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005060; c=relaxed/simple;
-	bh=EKlSH+r1eYzzKCS3oCi/dVaHJ/m95aqS5QEwexxVvOk=;
+	s=arc-20240116; t=1720005064; c=relaxed/simple;
+	bh=hSGzjuz4bOLAvHGQwUzEqATyWL1/H09yrIfloVKf3Bg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rOhqzilESyCt91hhcLxNk/fXYJkkaXjppVoQhhp7agJd1Nwat8jCooVLNIJwZ/uQa9PgdFFq+HDgv3eo0ZgJrqEENPolzJtHfYpvSoFKqkbBI+w2c2HHEeOSYgflFJQdvP7jsT/wrVQnnowBfn+METYv9SRXgzqZgAdMNaVwHNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fR82XTki; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ck5xXnu1I+IIQUtNTqv33LmQGkRlDNKd098whfd2frcS79P4cIGoQ/otslzc9tm0WJaMb74iEts/DPvEPe2qvHl6QVBhwklSCOse9jKdqm9NnPSmSVtuW54/nTsfx4kKHcLjlECLCMJVjCokAYw3ai3d5CnflAzw0y0mAcFw+vU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+s5yi2T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fR82XTki"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4479FC2BD10;
-	Wed,  3 Jul 2024 11:11:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+s5yi2T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4807EC2BD10;
+	Wed,  3 Jul 2024 11:11:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005060;
-	bh=EKlSH+r1eYzzKCS3oCi/dVaHJ/m95aqS5QEwexxVvOk=;
+	s=korg; t=1720005063;
+	bh=hSGzjuz4bOLAvHGQwUzEqATyWL1/H09yrIfloVKf3Bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fR82XTkieZkJcOLloJgOD2aH3EY72ip/mDl7BeQ00Ji+j0aGMobue3qrWNSG7c/jU
-	 L8W6Z2Gg88io0UyKi2r3Ee8lr0j/7ymtXeoeq5wPMWV+oF+ZhVlZLfD4ebhZYr1Xu8
-	 fs4jymEyDUDLC8npwKdA8pMcLtPcT3NSupyi1Rs4=
+	b=o+s5yi2TjraxvBmjMw/KnLDwMy8x//CvQloE3Rpf+F7IUWD6i/2AMn62fnsjqfEP8
+	 VEiVu8g20wR1b33xQFPxmJ5aq2CeI+GKnkSkt6JHXqyrdJ08vIqzY2T9ekBNSfxEUz
+	 6p2zEelX95cv/qlA/7wnf7fXulxHSriqB/CIgXek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Judith Mendez <jm@ti.com>,
-	David Lechner <dlechner@baylibre.com>,
-	William Breathitt Gray <wbg@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 247/290] counter: ti-eqep: enable clock at probe
-Date: Wed,  3 Jul 2024 12:40:28 +0200
-Message-ID: <20240703102913.481513901@linuxfoundation.org>
+	Fernando Yang <hagisf@usp.br>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.10 248/290] iio: adc: ad7266: Fix variable checking bug
+Date: Wed,  3 Jul 2024 12:40:29 +0200
+Message-ID: <20240703102913.518440706@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -52,59 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Fernando Yang <hagisf@usp.br>
 
-[ Upstream commit 0cf81c73e4c6a4861128a8f27861176ec312af4e ]
+commit a2b86132955268b2a1703082fbc2d4832fc001b8 upstream.
 
-The TI eQEP clock is both a functional and interface clock. Since it is
-required for the device to function, we should be enabling it at probe.
+The ret variable was not checked after iio_device_release_direct_mode(),
+which could possibly cause errors
 
-Up to now, we've just been lucky that the clock was enabled by something
-else on the system already.
-
-Fixes: f213729f6796 ("counter: new TI eQEP driver")
-Reviewed-by: Judith Mendez <jm@ti.com>
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Link: https://lore.kernel.org/r/20240621-ti-eqep-enable-clock-v2-1-edd3421b54d4@baylibre.com
-Signed-off-by: William Breathitt Gray <wbg@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c70df20e3159 ("iio: adc: ad7266: claim direct mode during sensor read")
+Signed-off-by: Fernando Yang <hagisf@usp.br>
+Link: https://lore.kernel.org/r/20240603180757.8560-1-hagisf@usp.br
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/counter/ti-eqep.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/iio/adc/ad7266.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/counter/ti-eqep.c b/drivers/counter/ti-eqep.c
-index 65df9ef5b5bc0..6343998819296 100644
---- a/drivers/counter/ti-eqep.c
-+++ b/drivers/counter/ti-eqep.c
-@@ -6,6 +6,7 @@
-  */
+--- a/drivers/iio/adc/ad7266.c
++++ b/drivers/iio/adc/ad7266.c
+@@ -157,6 +157,8 @@ static int ad7266_read_raw(struct iio_de
+ 		ret = ad7266_read_single(st, val, chan->address);
+ 		iio_device_release_direct_mode(indio_dev);
  
- #include <linux/bitops.h>
-+#include <linux/clk.h>
- #include <linux/counter.h>
- #include <linux/kernel.h>
- #include <linux/mod_devicetable.h>
-@@ -349,6 +350,7 @@ static int ti_eqep_probe(struct platform_device *pdev)
- 	struct device *dev = &pdev->dev;
- 	struct ti_eqep_cnt *priv;
- 	void __iomem *base;
-+	struct clk *clk;
- 	int err;
- 
- 	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
-@@ -388,6 +390,10 @@ static int ti_eqep_probe(struct platform_device *pdev)
- 	pm_runtime_enable(dev);
- 	pm_runtime_get_sync(dev);
- 
-+	clk = devm_clk_get_enabled(dev, NULL);
-+	if (IS_ERR(clk))
-+		return dev_err_probe(dev, PTR_ERR(clk), "failed to enable clock\n");
-+
- 	err = counter_register(&priv->counter);
- 	if (err < 0) {
- 		pm_runtime_put_sync(dev);
--- 
-2.43.0
-
++		if (ret < 0)
++			return ret;
+ 		*val = (*val >> 2) & 0xfff;
+ 		if (chan->scan_type.sign == 's')
+ 			*val = sign_extend32(*val, 11);
 
 
