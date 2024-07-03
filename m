@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C3B5186E31;
-	Wed,  3 Jul 2024 10:58:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69F67187551;
+	Wed,  3 Jul 2024 10:58:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004336; cv=none; b=OFGiE4SD9kABOlX/1r6P6M7doeykyPRZG8BeBdM1NGWmKRfn+LbpMDmgGstquS9kzoV0cLiiZQhbAiP0DHAq0ISv/irkQjY5ybgYcHadTgLpMAg+muPu/3eV6Msf4BWO7UaasqA6g69jwFGwuOs/EOSbTjN0XSEcdFAM792NAcQ=
+	t=1720004339; cv=none; b=CDmHETfK+Gvga5bnwCRugHKlZ2kboYOOXTz3XfX0j2PmvwEQA01wzHi7fSHEzW6no+eIORjs0zqfWdh5rPWN+Mk7B/SBtmMYG4lZkjQRNR2Z/FG6qsvxOt3mKW9Ma8qVm4sofEgR66x+i4Oj3ke7ZAQst6x7kXfBlakhIf8TIfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004336; c=relaxed/simple;
-	bh=q/a4CFtlv1dVdtH/gxVv37WBxuLdsqbA1k9HQ85pgmU=;
+	s=arc-20240116; t=1720004339; c=relaxed/simple;
+	bh=sFYi9Jmd2+R5QukQRqSUep+0wijS17PO5r53qmU/v4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qU3IaQN2DfWMt12JawGBFv/gO1btVD36iCjm6ZmfiCCtpX36vPgqPAewx2mqiT9KeyPQ9eJvNzIHfkKjMfS7q8NbAS8UixW5iqUULcBcE2/YDr2U9hQYD8nSTnSQDahUP7LDE7wKsmr1stxsnt8iQZpgbMhR0m5yp9nRuwSeoUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W3JcZVQC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oQrpuFJaFiD6yp934zswoZ25a8RMEh4INSuvp0+Cum3wGu7P0QWwy7tWect60Xd0vqJTHJR5EnYj1u5Y7yyQfO/lk/vuZPDJ7cN2eluy/yMjjIsgWhuOAN8GSD+1Cc7HAGhUGPOwUcJ+bMM9Jtykqw/INnG1X8N4NaTl1iazFjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oDf9R2xe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W3JcZVQC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0233FC2BD10;
-	Wed,  3 Jul 2024 10:58:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oDf9R2xe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3972C2BD10;
+	Wed,  3 Jul 2024 10:58:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004336;
-	bh=q/a4CFtlv1dVdtH/gxVv37WBxuLdsqbA1k9HQ85pgmU=;
+	s=korg; t=1720004339;
+	bh=sFYi9Jmd2+R5QukQRqSUep+0wijS17PO5r53qmU/v4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W3JcZVQCbq/mPvrSMrheutVNcukaMITgwcb1hFURzknFj4qQ+OW+nTZOO0rkWs6av
-	 U9rErObmsyYsmBwkoHKvMAOwDeRL8BjKz7ouN0oPKej71APS1j08BjbrPNTrQXLAL3
-	 6fFbTTWmhBCdWClTuIgBmacNOdeO0HJUQWrh1SuA=
+	b=oDf9R2xem/L1/h6kEvtl6/t1pc9X4xnJGm562Dv9AO+oNke5Et0FIgaXHXhcr+Cab
+	 DTL49fRrpaWLJcrfpNkjwOs/f41iefa2BcMGLWeMo2gCCfdh19w8Zf3iY7XNUlfRWR
+	 ldTtE/1pjv+avxWFFvI4FiVVJwrmiWzUeB191RYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 5.10 001/290] tracing/selftests: Fix kprobe event name test for .isra. functions
-Date: Wed,  3 Jul 2024 12:36:22 +0200
-Message-ID: <20240703102904.230012779@linuxfoundation.org>
+	Lingbo Kong <quic_lingbok@quicinc.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 010/290] wifi: mac80211: correctly parse Spatial Reuse Parameter Set element
+Date: Wed,  3 Jul 2024 12:36:31 +0200
+Message-ID: <20240703102904.574258564@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -51,50 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Lingbo Kong <quic_lingbok@quicinc.com>
 
-commit 23a4b108accc29a6125ed14de4a044689ffeda78 upstream.
+[ Upstream commit a26d8dc5227f449a54518a8b40733a54c6600a8b ]
 
-The kprobe_eventname.tc test checks if a function with .isra. can have a
-kprobe attached to it. It loops through the kallsyms file for all the
-functions that have the .isra. name, and checks if it exists in the
-available_filter_functions file, and if it does, it uses it to attach a
-kprobe to it.
+Currently, the way of parsing Spatial Reuse Parameter Set element is
+incorrect and some members of struct ieee80211_he_obss_pd are not assigned.
 
-The issue is that kprobes can not attach to functions that are listed more
-than once in available_filter_functions. With the latest kernel, the
-function that is found is: rapl_event_update.isra.0
+To address this issue, it must be parsed in the order of the elements of
+Spatial Reuse Parameter Set defined in the IEEE Std 802.11ax specification.
 
-  # grep rapl_event_update.isra.0 /sys/kernel/tracing/available_filter_functions
-  rapl_event_update.isra.0
-  rapl_event_update.isra.0
+The diagram of the Spatial Reuse Parameter Set element (IEEE Std 802.11ax
+-2021-9.4.2.252).
 
-It is listed twice. This causes the attached kprobe to it to fail which in
-turn fails the test. Instead of just picking the function function that is
-found in available_filter_functions, pick the first one that is listed
-only once in available_filter_functions.
+-------------------------------------------------------------------------
+|       |      |         |       |Non-SRG|  SRG  | SRG   | SRG  | SRG   |
+|Element|Length| Element |  SR   |OBSS PD|OBSS PD|OBSS PD| BSS  |Partial|
+|   ID  |      |   ID    |Control|  Max  |  Min  | Max   |Color | BSSID |
+|       |      |Extension|       | Offset| Offset|Offset |Bitmap|Bitmap |
+-------------------------------------------------------------------------
 
-Cc: stable@vger.kernel.org
-Fixes: 604e3548236d ("selftests/ftrace: Select an existing function in kprobe_eventname test")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1ced169cc1c2 ("mac80211: allow setting spatial reuse parameters from bss_conf")
+Signed-off-by: Lingbo Kong <quic_lingbok@quicinc.com>
+Link: https://msgid.link/20240516021854.5682-3-quic_lingbok@quicinc.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/ftrace/test.d/kprobe/kprobe_eventname.tc |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/mac80211/he.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_eventname.tc
-+++ b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_eventname.tc
-@@ -30,7 +30,8 @@ find_dot_func() {
- 	fi
+diff --git a/net/mac80211/he.c b/net/mac80211/he.c
+index cc26f239838ba..41413a4588db8 100644
+--- a/net/mac80211/he.c
++++ b/net/mac80211/he.c
+@@ -127,15 +127,21 @@ ieee80211_he_spr_ie_to_bss_conf(struct ieee80211_vif *vif,
  
- 	grep " [tT] .*\.isra\..*" /proc/kallsyms | cut -f 3 -d " " | while read f; do
--		if grep -s $f available_filter_functions; then
-+		cnt=`grep -s $f available_filter_functions | wc -l`;
-+		if [ $cnt -eq 1 ]; then
- 			echo $f
- 			break
- 		fi
+ 	if (!he_spr_ie_elem)
+ 		return;
++
++	he_obss_pd->sr_ctrl = he_spr_ie_elem->he_sr_control;
+ 	data = he_spr_ie_elem->optional;
+ 
+ 	if (he_spr_ie_elem->he_sr_control &
+ 	    IEEE80211_HE_SPR_NON_SRG_OFFSET_PRESENT)
+-		data++;
++		he_obss_pd->non_srg_max_offset = *data++;
++
+ 	if (he_spr_ie_elem->he_sr_control &
+ 	    IEEE80211_HE_SPR_SRG_INFORMATION_PRESENT) {
+-		he_obss_pd->max_offset = *data++;
+ 		he_obss_pd->min_offset = *data++;
++		he_obss_pd->max_offset = *data++;
++		memcpy(he_obss_pd->bss_color_bitmap, data, 8);
++		data += 8;
++		memcpy(he_obss_pd->partial_bssid_bitmap, data, 8);
+ 		he_obss_pd->enable = true;
+ 	}
+ }
+-- 
+2.43.0
+
 
 
