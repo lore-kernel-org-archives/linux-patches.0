@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0022B17DE09;
-	Wed,  3 Jul 2024 11:29:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91C013A27E;
+	Wed,  3 Jul 2024 11:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006143; cv=none; b=N7Ld3DS+WRQ9NS9MRwQwjF3sqgSaRKtzawVnZphQWTSTgUzweWmBOXzR+TaqcNMEzVCKx44Bp0VkO1gl1TnPCAD+lwOzbI7if+Z5EKReVeLUOz3n949XX9vIY52Q39h3inpAqgA+eqRW4720NEFN8yQDxrplMrEMW7k7WTV1K9g=
+	t=1720006146; cv=none; b=O8ZNupPLYbpXkYTm38GF+Fe4IoYL9KzVa5bc0/R1x6vPh7CwQWYN0X2s6cunz7A6z40im6FjvuhUum1yw8TcwSFiEiRTmSRsTfEwdxm2WAY/Q9e4hA/HAKoIIeozuwlSeFk3RS8YjeqmVbWTRiJxzMjIltdF8W0tBQGPfOaQuoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006143; c=relaxed/simple;
-	bh=GP3AlTYBaxDwzf6YAcfOSqeT9SVo7ipv51DtlZa0tL8=;
+	s=arc-20240116; t=1720006146; c=relaxed/simple;
+	bh=WR4GtdfhhGP1FNtGOa8k/REBSaumbPndegLcZxVlh70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f7WE6MwVyZ4IIs4ZBTxxhIiAsoim97xvu1UQtdxOL1JTFW45mfMKo0Omm+OV5mOJBwKjFlbDR7AmdUQrr0ZZAOiskvfPWA+VpdSZ2xOi8j4seEZP6mkJhvGSFVI0FfDp/BEE3Gi2FzF1RY5+wdaGhaKENOUFqgFO4gNSDbvX90Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CBQuYSx1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DqkopPwEUhPMGX/BbMXLYn0DF5cqw5gB4MCWGha9t0UAyn6N5TA5R0nSFhsYx5UiWwwZh2bTUSFawOJXnPpuIGocT5FIS7EWpdQO9EDZntZF/sAp9l9cqQ/R5wh8+O4QK5FOByY7G2DUexUqskjeRvD0HmB5vF0apFzC3306nJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XaPU2GJn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CBQuYSx1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC28C2BD10;
-	Wed,  3 Jul 2024 11:29:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XaPU2GJn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB84EC2BD10;
+	Wed,  3 Jul 2024 11:29:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006142;
-	bh=GP3AlTYBaxDwzf6YAcfOSqeT9SVo7ipv51DtlZa0tL8=;
+	s=korg; t=1720006146;
+	bh=WR4GtdfhhGP1FNtGOa8k/REBSaumbPndegLcZxVlh70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CBQuYSx10/i+z4DhoBUt+2fPKLLMZVj12VPAJHFiKcb4IRg5iBM8sUYZwVrUQH0pl
-	 RnP296MOAxscVDrD8Zv8iANAMj7b/IVhEnircnB6xtReeOLN97iv6+P1JZBWSdiN2L
-	 erbpqS/2Hh29qcmWHAovjLrGOwHkmTOgA5LMLI5w=
+	b=XaPU2GJnjmeZNpKJX8RG7sQe7Lbg15ztd3wBYoyMPpuEcl0iuHfSwfHnXZjPpBw9E
+	 Nt0S+EC1EyTcXT+077ulpsVsI7Vc1s7hDvoVA2qsCLZNkHHNx4kXvo9qflcXq+pIN9
+	 AvX2V86V2rlLiXpBZue68IO91+if4Nb5UsVxiahk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	"linux-hardening@vger.kernel.org" <linux-hardening@vger.kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 283/356] bpf: Take return from set_memory_ro() into account with bpf_prog_lock_ro()
-Date: Wed,  3 Jul 2024 12:40:19 +0200
-Message-ID: <20240703102923.821740919@linuxfoundation.org>
+Subject: [PATCH 5.15 284/356] drm/panel: ilitek-ili9881c: Fix warning with GPIO controllers that sleep
+Date: Wed,  3 Jul 2024 12:40:20 +0200
+Message-ID: <20240703102923.859088171@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -53,85 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit 7d2cc63eca0c993c99d18893214abf8f85d566d8 ]
+[ Upstream commit ee7860cd8b5763017f8dc785c2851fecb7a0c565 ]
 
-set_memory_ro() can fail, leaving memory unprotected.
+The ilitek-ili9881c controls the reset GPIO using the non-sleeping
+gpiod_set_value() function. This complains loudly when the GPIO
+controller needs to sleep. As the caller can sleep, use
+gpiod_set_value_cansleep() to fix the issue.
 
-Check its return and take it into account as an error.
-
-Link: https://github.com/KSPP/linux/issues/7
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: linux-hardening@vger.kernel.org <linux-hardening@vger.kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Message-ID: <286def78955e04382b227cb3e4b6ba272a7442e3.1709850515.git.christophe.leroy@csgroup.eu>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20240317154839.21260-1-laurent.pinchart@ideasonboard.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240317154839.21260-1-laurent.pinchart@ideasonboard.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/filter.h | 5 +++--
- kernel/bpf/core.c      | 4 +++-
- kernel/bpf/verifier.c  | 8 ++++++--
- 3 files changed, 12 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/panel/panel-ilitek-ili9881c.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/filter.h b/include/linux/filter.h
-index af0103bebb7bf..9cb3558683393 100644
---- a/include/linux/filter.h
-+++ b/include/linux/filter.h
-@@ -875,14 +875,15 @@ bpf_ctx_narrow_access_offset(u32 off, u32 size, u32 size_default)
+diff --git a/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c b/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
+index 534dd7414d428..917cb322bab1a 100644
+--- a/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
++++ b/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
+@@ -506,10 +506,10 @@ static int ili9881c_prepare(struct drm_panel *panel)
+ 	msleep(5);
  
- #define bpf_classic_proglen(fprog) (fprog->len * sizeof(fprog->filter[0]))
+ 	/* And reset it */
+-	gpiod_set_value(ctx->reset, 1);
++	gpiod_set_value_cansleep(ctx->reset, 1);
+ 	msleep(20);
  
--static inline void bpf_prog_lock_ro(struct bpf_prog *fp)
-+static inline int __must_check bpf_prog_lock_ro(struct bpf_prog *fp)
- {
- #ifndef CONFIG_BPF_JIT_ALWAYS_ON
- 	if (!fp->jited) {
- 		set_vm_flush_reset_perms(fp);
--		set_memory_ro((unsigned long)fp, fp->pages);
-+		return set_memory_ro((unsigned long)fp, fp->pages);
- 	}
- #endif
-+	return 0;
+-	gpiod_set_value(ctx->reset, 0);
++	gpiod_set_value_cansleep(ctx->reset, 0);
+ 	msleep(20);
+ 
+ 	for (i = 0; i < ctx->desc->init_length; i++) {
+@@ -564,7 +564,7 @@ static int ili9881c_unprepare(struct drm_panel *panel)
+ 
+ 	mipi_dsi_dcs_enter_sleep_mode(ctx->dsi);
+ 	regulator_disable(ctx->power);
+-	gpiod_set_value(ctx->reset, 1);
++	gpiod_set_value_cansleep(ctx->reset, 1);
+ 
+ 	return 0;
  }
- 
- static inline void bpf_jit_binary_lock_ro(struct bpf_binary_header *hdr)
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index 36c2896ee45f4..f36f7b71dc07b 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -1940,7 +1940,9 @@ struct bpf_prog *bpf_prog_select_runtime(struct bpf_prog *fp, int *err)
- 	}
- 
- finalize:
--	bpf_prog_lock_ro(fp);
-+	*err = bpf_prog_lock_ro(fp);
-+	if (*err)
-+		return fp;
- 
- 	/* The tail call compatibility check can only be done at
- 	 * this late stage as we need to determine, if we deal
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 07ca1157f97cf..b9f63c4b8598c 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -12812,10 +12812,14 @@ static int jit_subprogs(struct bpf_verifier_env *env)
- 	 * bpf_prog_load will add the kallsyms for the main program.
- 	 */
- 	for (i = 1; i < env->subprog_cnt; i++) {
--		bpf_prog_lock_ro(func[i]);
--		bpf_prog_kallsyms_add(func[i]);
-+		err = bpf_prog_lock_ro(func[i]);
-+		if (err)
-+			goto out_free;
- 	}
- 
-+	for (i = 1; i < env->subprog_cnt; i++)
-+		bpf_prog_kallsyms_add(func[i]);
-+
- 	/* Last step: make now unused interpreter insns from main
- 	 * prog consistent for later dump requests, so they can
- 	 * later look the same as if they were interpreted only.
 -- 
 2.43.0
 
