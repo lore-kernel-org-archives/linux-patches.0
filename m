@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A2816F8FA;
-	Wed,  3 Jul 2024 11:19:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7838416F8FA;
+	Wed,  3 Jul 2024 11:19:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005556; cv=none; b=YKt94wGH6A8gpW/nz9zh8R8twyTXyJ1FiUIzKpzAnjxDXnm+UNvycFzzzVwPSD1wgg5l+4tSUHGNxphO56Omu797TqcVv+ptFUf1asqjLg/tosw/spuUJAFpQ7jr4AzwcqHV8/JG/Zzz/jpYw6jnbOSwqGzoASGEtHS6bm1vmew=
+	t=1720005559; cv=none; b=XulGzVqGji67TFZRbdvNC+//qB6w0HmETU8SNrfWOpoyULMDU3N0ilg2CVv+mI5Uaistgx0R1Mzms8t/VFSDD7rTu9A3IyEszNcUocSeeU59DfjoOPqlpYiiQ/QJWdBJRN01+rDVRcUxmtlRZ0BI6hyhXqPCW4GJQWQkHeaB3xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005556; c=relaxed/simple;
-	bh=iTU6oMYQTJ4CZa+RrgNCaNFXCAm5/ij/HptE6Rssalw=;
+	s=arc-20240116; t=1720005559; c=relaxed/simple;
+	bh=zDx7H0XpdU1kZQQlWcmMqR4XiNqwxE7sH0iKeJNhCPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CYL8mWnaWn48QaS6U+R95ATvkVpb/nXr6JKk6IdKJ3rfB1at9H1mWXSEICULuhyLiD6vnPGvGaHH258UncOm60RY6CoE+s6DqRgMrqhlAZigF3NcCOh468Zk/LxxtlfM1elzy8iB5yOMY9iUe7/4+Wigyc8ZLHNXOsNEpcORoqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZS3e33Rq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s5nHE3AtVrwpamCnLGb8US0FzqznpyCePqZMmcN1r3nuci6VybEa/oItZR9gXE5mo2Evwa7dvZV34HqPbmINFfT7J6WJpb71Rffwv0B662dkdTxlPbaL4G69uqT2jDiTYLaEmjoykOXeSTlaqxgOXoi3ptSyanwDNf8BKUK0pXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AqpZlkhe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZS3e33Rq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C967C2BD10;
-	Wed,  3 Jul 2024 11:19:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AqpZlkhe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F187CC2BD10;
+	Wed,  3 Jul 2024 11:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005556;
-	bh=iTU6oMYQTJ4CZa+RrgNCaNFXCAm5/ij/HptE6Rssalw=;
+	s=korg; t=1720005559;
+	bh=zDx7H0XpdU1kZQQlWcmMqR4XiNqwxE7sH0iKeJNhCPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZS3e33RqT/sc5+jznrjSBgNjyLk0Y0cMusKYr4+7CfdXGChr+dR99tW+xPTc6XnK+
-	 lHSg1Fk3eIWJ/t9OS0wMNFiVQmJtClIMSAdqxLX/+lJr0qce1808WakWkEdbzMMrks
-	 x9mm2WOAqKGv8PGHwLdkY1KmBOTsNFVYhTq1/Jho=
+	b=AqpZlkheJL3U/uKjF9buOUhpXj1GoUc1sJ1xWytcUwLNnLobNinKknVtF/taGvBIB
+	 b5qZKfOiE9oj5ozGOidnrnlfWaJEPUp5/+iwBOkQAqNwq9w+Vv4cLDxP3wZxWu7BmE
+	 Lo/qO5pG3ZCTx2J5tmb+9PLiPbF4zNGEmSyzOFYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Hagar Gamal Halim Hemdan <hagarhem@amazon.com>
-Subject: [PATCH 5.15 121/356] vmci: prevent speculation leaks by sanitizing event in event_deliver()
-Date: Wed,  3 Jul 2024 12:37:37 +0200
-Message-ID: <20240703102917.672385787@linuxfoundation.org>
+	Vamshi Gajjela <vamshigajjela@google.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCH 5.15 122/356] spmi: hisi-spmi-controller: Do not override device identifier
+Date: Wed,  3 Jul 2024 12:37:38 +0200
+Message-ID: <20240703102917.711404171@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -50,56 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hagar Gamal Halim Hemdan <hagarhem@amazon.com>
+From: Vamshi Gajjela <vamshigajjela@google.com>
 
-commit 8003f00d895310d409b2bf9ef907c56b42a4e0f4 upstream.
+commit eda4923d78d634482227c0b189d9b7ca18824146 upstream.
 
-Coverity spotted that event_msg is controlled by user-space,
-event_msg->event_data.event is passed to event_deliver() and used
-as an index without sanitization.
+'nr' member of struct spmi_controller, which serves as an identifier
+for the controller/bus. This value is a dynamic ID assigned in
+spmi_controller_alloc, and overriding it from the driver results in an
+ida_free error "ida_free called for id=xx which is not allocated".
 
-This change ensures that the event index is sanitized to mitigate any
-possibility of speculative information leaks.
-
-This bug was discovered and resolved using Coverity Static Analysis
-Security Testing (SAST) by Synopsys, Inc.
-
-Only compile tested, no access to HW.
-
-Fixes: 1d990201f9bb ("VMCI: event handling implementation.")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Hagar Gamal Halim Hemdan <hagarhem@amazon.com>
-Link: https://lore.kernel.org/stable/20231127193533.46174-1-hagarhem%40amazon.com
-Link: https://lore.kernel.org/r/20240430085916.4753-1-hagarhem@amazon.com
+Signed-off-by: Vamshi Gajjela <vamshigajjela@google.com>
+Fixes: 70f59c90c819 ("staging: spmi: add Hikey 970 SPMI controller driver")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240228185116.1269-1-vamshigajjela@google.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Link: https://lore.kernel.org/r/20240507210809.3479953-5-sboyd@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/vmw_vmci/vmci_event.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/spmi/hisi-spmi-controller.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/misc/vmw_vmci/vmci_event.c
-+++ b/drivers/misc/vmw_vmci/vmci_event.c
-@@ -9,6 +9,7 @@
- #include <linux/vmw_vmci_api.h>
- #include <linux/list.h>
- #include <linux/module.h>
-+#include <linux/nospec.h>
- #include <linux/sched.h>
- #include <linux/slab.h>
- #include <linux/rculist.h>
-@@ -86,9 +87,12 @@ static void event_deliver(struct vmci_ev
- {
- 	struct vmci_subscription *cur;
- 	struct list_head *subscriber_list;
-+	u32 sanitized_event, max_vmci_event;
+--- a/drivers/spmi/hisi-spmi-controller.c
++++ b/drivers/spmi/hisi-spmi-controller.c
+@@ -303,7 +303,6 @@ static int spmi_controller_probe(struct
  
- 	rcu_read_lock();
--	subscriber_list = &subscriber_array[event_msg->event_data.event];
-+	max_vmci_event = ARRAY_SIZE(subscriber_array);
-+	sanitized_event = array_index_nospec(event_msg->event_data.event, max_vmci_event);
-+	subscriber_list = &subscriber_array[sanitized_event];
- 	list_for_each_entry_rcu(cur, subscriber_list, node) {
- 		cur->callback(cur->id, &event_msg->event_data,
- 			      cur->callback_data);
+ 	spin_lock_init(&spmi_controller->lock);
+ 
+-	ctrl->nr = spmi_controller->channel;
+ 	ctrl->dev.parent = pdev->dev.parent;
+ 	ctrl->dev.of_node = of_node_get(pdev->dev.of_node);
+ 
 
 
