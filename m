@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31428178384;
-	Wed,  3 Jul 2024 11:31:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 228771849F4;
+	Wed,  3 Jul 2024 11:31:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006288; cv=none; b=CKhQjKh6H4hyqBSG11E+ZY8uQ8mtcWV2XK7T1itJwCEcEHKnRnyO7f3kP9MsV1x+YRipYrxDvNbZxsCW4W2YXGnxATRKpnRwGhmQehqSoMofR0IZGBNppSE1uLRjG0xLquMyEJDfTWL4fKTZh1t1Y42sZNgvy8IpfL6zhsIpVxU=
+	t=1720006291; cv=none; b=mGoDFIhXDx0a8la0Z4YJZpJ1MdlJ1RaUbk91T5oHJV78WgDkIt/Kgnf6YGfKfJcyEx94qnoGfChUxcRX89TEjRgoDQ0WfiB5nMenWBExIZZSqpXTT1gcsosfmI6zs8jFL43who69AQLY93z/AGZJ1nEjL1t2amVrQIJS+tz4rj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006288; c=relaxed/simple;
-	bh=qTFdTXfRG5fM2ZcNwxzuNSAh7IhuMLJWLIhb1ggFndY=;
+	s=arc-20240116; t=1720006291; c=relaxed/simple;
+	bh=hv7KMXAO+ntzKLd7zIb9n6ziVUZFItxCGsDf6aqrl10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t0VXKAcuawzhkPohyinllMDQtRl6Isf7wY6R+PbbzkpOfSnD3P6x6L6c3uUtNOhN0HOAqT5/tvpA6tbffUXjfZ1d2mPzQXk9fYqvioLa3DGmeMaPUHE2gGHQsYJGZtGrL0ILnABDTFjWtXbAofR9IzhIpDlhntoODvyn9jjDLV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ABCxicgr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jxlJf+ZbCJL/MjS4fVvIWFcJUkr0ReopAr9t7z1kRjMFTrSexydxRBMTi2tJ4Nr/YqOrM335kmT1le1qPOJQEB45UHL8MFZuV6SAz0db6rMffFTDR/Snwg/cSQUn+BEaAMmQtJ+F6Ken7F1K6YEQJc8cPvXn6o4SCOSP8JGiF+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fCF09ORR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ABCxicgr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD117C2BD10;
-	Wed,  3 Jul 2024 11:31:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fCF09ORR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99955C32781;
+	Wed,  3 Jul 2024 11:31:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006288;
-	bh=qTFdTXfRG5fM2ZcNwxzuNSAh7IhuMLJWLIhb1ggFndY=;
+	s=korg; t=1720006291;
+	bh=hv7KMXAO+ntzKLd7zIb9n6ziVUZFItxCGsDf6aqrl10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ABCxicgrYYM9tTQb5TdGYz/ncKwvw9pDg3p7tmdKNr95Q1erz1PjR7RdIvwz6IsSj
-	 /5Z3c1SDM4vFbrVzbt2G2d0Chkvzk19bJHMzZ3faIHQ9SFsOieA+Mf6A+7C346QIuO
-	 VYeMQYz4Z9jN0TLdWh/5b/RGC1Khg+Gcfly02VOs=
+	b=fCF09ORRupwrhuCKZ8vSTfYYLTfarNKLLkT06zYsb9vZSOtkL6BXqV52M5w6bPW29
+	 WOGfE/ujoFeDHl6Nvf93xax3ni5wfWHRpQ1XcYOHTL2gdj49THJjTqZ0c9jzmHm3Cb
+	 ZTRJ09Q0GJGbw0A68ow3w0ixuM79TXK6obAtVuKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	FUKAUMI Naoki <naoki@radxa.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 355/356] arm64: dts: rockchip: fix PMIC interrupt pin on ROCK Pi E
-Date: Wed,  3 Jul 2024 12:41:31 +0200
-Message-ID: <20240703102926.538229767@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 346/356] ipv6: Fix data races around sk->sk_prot.
+Date: Wed,  3 Jul 2024 12:41:22 +0200
+Message-ID: <20240703102926.201266031@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,39 +50,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: FUKAUMI Naoki <naoki@radxa.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 02afd3d5b9fa4ffed284c0f7e7bec609097804fc ]
+commit 364f997b5cfe1db0d63a390fe7c801fa2b3115f6 upstream.
 
-use GPIO0_A2 as interrupt pin for PMIC. GPIO2_A6 was used for
-pre-production board.
+Commit 086d49058cd8 ("ipv6: annotate some data-races around sk->sk_prot")
+fixed some data-races around sk->sk_prot but it was not enough.
 
-Fixes: b918e81f2145 ("arm64: dts: rockchip: rk3328: Add Radxa ROCK Pi E")
-Signed-off-by: FUKAUMI Naoki <naoki@radxa.com>
-Link: https://lore.kernel.org/r/20240619050047.1217-1-naoki@radxa.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Some functions in inet6_(stream|dgram)_ops still access sk->sk_prot
+without lock_sock() or rtnl_lock(), so they need READ_ONCE() to avoid
+load tearing.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3328-rock-pi-e.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/core/sock.c          |    6 ++++--
+ net/ipv4/af_inet.c       |   23 ++++++++++++++++-------
+ net/ipv6/ipv6_sockglue.c |    4 ++--
+ 3 files changed, 22 insertions(+), 11 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3328-rock-pi-e.dts b/arch/arm64/boot/dts/rockchip/rk3328-rock-pi-e.dts
-index 018a3a5075c72..d9905a08c6ce8 100644
---- a/arch/arm64/boot/dts/rockchip/rk3328-rock-pi-e.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3328-rock-pi-e.dts
-@@ -186,8 +186,8 @@
- 	rk805: pmic@18 {
- 		compatible = "rockchip,rk805";
- 		reg = <0x18>;
--		interrupt-parent = <&gpio2>;
--		interrupts = <6 IRQ_TYPE_LEVEL_LOW>;
-+		interrupt-parent = <&gpio0>;
-+		interrupts = <2 IRQ_TYPE_LEVEL_LOW>;
- 		#clock-cells = <1>;
- 		clock-output-names = "xin32k", "rk805-clkout2";
- 		gpio-controller;
--- 
-2.43.0
-
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -3413,7 +3413,8 @@ int sock_common_getsockopt(struct socket
+ {
+ 	struct sock *sk = sock->sk;
+ 
+-	return sk->sk_prot->getsockopt(sk, level, optname, optval, optlen);
++	/* IPV6_ADDRFORM can change sk->sk_prot under us. */
++	return READ_ONCE(sk->sk_prot)->getsockopt(sk, level, optname, optval, optlen);
+ }
+ EXPORT_SYMBOL(sock_common_getsockopt);
+ 
+@@ -3440,7 +3441,8 @@ int sock_common_setsockopt(struct socket
+ {
+ 	struct sock *sk = sock->sk;
+ 
+-	return sk->sk_prot->setsockopt(sk, level, optname, optval, optlen);
++	/* IPV6_ADDRFORM can change sk->sk_prot under us. */
++	return READ_ONCE(sk->sk_prot)->setsockopt(sk, level, optname, optval, optlen);
+ }
+ EXPORT_SYMBOL(sock_common_setsockopt);
+ 
+--- a/net/ipv4/af_inet.c
++++ b/net/ipv4/af_inet.c
+@@ -565,22 +565,27 @@ int inet_dgram_connect(struct socket *so
+ 		       int addr_len, int flags)
+ {
+ 	struct sock *sk = sock->sk;
++	const struct proto *prot;
+ 	int err;
+ 
+ 	if (addr_len < sizeof(uaddr->sa_family))
+ 		return -EINVAL;
++
++	/* IPV6_ADDRFORM can change sk->sk_prot under us. */
++	prot = READ_ONCE(sk->sk_prot);
++
+ 	if (uaddr->sa_family == AF_UNSPEC)
+-		return sk->sk_prot->disconnect(sk, flags);
++		return prot->disconnect(sk, flags);
+ 
+ 	if (BPF_CGROUP_PRE_CONNECT_ENABLED(sk)) {
+-		err = sk->sk_prot->pre_connect(sk, uaddr, addr_len);
++		err = prot->pre_connect(sk, uaddr, addr_len);
+ 		if (err)
+ 			return err;
+ 	}
+ 
+ 	if (data_race(!inet_sk(sk)->inet_num) && inet_autobind(sk))
+ 		return -EAGAIN;
+-	return sk->sk_prot->connect(sk, uaddr, addr_len);
++	return prot->connect(sk, uaddr, addr_len);
+ }
+ EXPORT_SYMBOL(inet_dgram_connect);
+ 
+@@ -743,10 +748,11 @@ EXPORT_SYMBOL(inet_stream_connect);
+ int inet_accept(struct socket *sock, struct socket *newsock, int flags,
+ 		bool kern)
+ {
+-	struct sock *sk1 = sock->sk;
++	struct sock *sk1 = sock->sk, *sk2;
+ 	int err = -EINVAL;
+-	struct sock *sk2 = sk1->sk_prot->accept(sk1, flags, &err, kern);
+ 
++	/* IPV6_ADDRFORM can change sk->sk_prot under us. */
++	sk2 = READ_ONCE(sk1->sk_prot)->accept(sk1, flags, &err, kern);
+ 	if (!sk2)
+ 		goto do_err;
+ 
+@@ -834,12 +840,15 @@ ssize_t inet_sendpage(struct socket *soc
+ 		      size_t size, int flags)
+ {
+ 	struct sock *sk = sock->sk;
++	const struct proto *prot;
+ 
+ 	if (unlikely(inet_send_prepare(sk)))
+ 		return -EAGAIN;
+ 
+-	if (sk->sk_prot->sendpage)
+-		return sk->sk_prot->sendpage(sk, page, offset, size, flags);
++	/* IPV6_ADDRFORM can change sk->sk_prot under us. */
++	prot = READ_ONCE(sk->sk_prot);
++	if (prot->sendpage)
++		return prot->sendpage(sk, page, offset, size, flags);
+ 	return sock_no_sendpage(sock, page, offset, size, flags);
+ }
+ EXPORT_SYMBOL(inet_sendpage);
+--- a/net/ipv6/ipv6_sockglue.c
++++ b/net/ipv6/ipv6_sockglue.c
+@@ -475,7 +475,7 @@ static int do_ipv6_setsockopt(struct soc
+ 				sock_prot_inuse_add(net, sk->sk_prot, -1);
+ 				sock_prot_inuse_add(net, &tcp_prot, 1);
+ 
+-				/* Paired with READ_ONCE(sk->sk_prot) in net/ipv6/af_inet6.c */
++				/* Paired with READ_ONCE(sk->sk_prot) in inet6_stream_ops */
+ 				WRITE_ONCE(sk->sk_prot, &tcp_prot);
+ 				icsk->icsk_af_ops = &ipv4_specific;
+ 				sk->sk_socket->ops = &inet_stream_ops;
+@@ -490,7 +490,7 @@ static int do_ipv6_setsockopt(struct soc
+ 				sock_prot_inuse_add(net, sk->sk_prot, -1);
+ 				sock_prot_inuse_add(net, prot, 1);
+ 
+-				/* Paired with READ_ONCE(sk->sk_prot) in net/ipv6/af_inet6.c */
++				/* Paired with READ_ONCE(sk->sk_prot) in inet6_dgram_ops */
+ 				WRITE_ONCE(sk->sk_prot, prot);
+ 				sk->sk_socket->ops = &inet_dgram_ops;
+ 				sk->sk_family = PF_INET;
 
 
