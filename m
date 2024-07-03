@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06E51862BA;
-	Wed,  3 Jul 2024 11:21:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C60118754E;
+	Wed,  3 Jul 2024 11:21:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005709; cv=none; b=Etb0LzPjySDHSGFd0hgrJ8Snt3R/wYI4GMubjkfpB9mgs13gEcSiosbJnmZYhPK3GwsNfFqMBtkQV6bxEpC0PZoC6HxJcNwIW06X2WKsVk7O2CCeGdU8iPsueGI+aoMxaY4YY43RLUGDAw9EIRXs+zlmsJFm9rPZnGUTPnrRrto=
+	t=1720005712; cv=none; b=U/lgpf4NxAUKkfuzrXxbubgXVDgMy0gz8tQkBDBESqMUczv+p0brGArrQL8RROB85OOf4/7xxRf680e0dlRbN8JM0deZe2BQSSdwm8rELK2LA4UkiRsAiICfg+y/BQ2NskxBsFaTkd3TtnObZlJ3l70TN8Hy8uxXJCKqWeVgYOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005709; c=relaxed/simple;
-	bh=VGfyw2ngML5GbKDv68gGgfxGGdpasoK3/+AVBzjTQZI=;
+	s=arc-20240116; t=1720005712; c=relaxed/simple;
+	bh=JpCXe6gH6T8rSmlxwInnGixbM+Cv7m4xoc6AYRb+VSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aOJSR+4KAl3FGYNU8fuQ8IndHObfGtWXbXt0Wh5ZqAzgQCq/SUr1WOnvpVeZxd0zhXpDUVl7cMwm8EJlwqc0xuo5JpnFeKRWDpqCZBExojWkUpxxEOxakuiE6t4n/h5568xGm/S55na4AP6o4zNOXdVV76G3kSJBXKCpVrbpkYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iW1DKyzg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kxCYTUVQisJnWU8lw5UyZUaclBhlXBOkInubaqkd+sDKPiDgaLsYIRBm4tgc/gutF98iNjHwpp04vKTU/ZCZ7P8GdhZMO/kULSRNzS83NWRHV+2uY1rnB0W1mdd6puiH5n0sl39xcuCkfo/ymra43AVZSSdwIN0aBhvPlRPWsVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=THl15cmt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iW1DKyzg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21CC1C4AF0B;
-	Wed,  3 Jul 2024 11:21:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="THl15cmt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C44DC2BD10;
+	Wed,  3 Jul 2024 11:21:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005709;
-	bh=VGfyw2ngML5GbKDv68gGgfxGGdpasoK3/+AVBzjTQZI=;
+	s=korg; t=1720005712;
+	bh=JpCXe6gH6T8rSmlxwInnGixbM+Cv7m4xoc6AYRb+VSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iW1DKyzgnvGOsQpEGavNHI/+2/xxbVW+wmC94bUt/biHwVL/2zfnPPwDay0gunIzh
-	 plo+MEW52AGIOqrZqfHO8eH6N88vouzcvdBjBM8eEFcehKAR5K1ohgNMrp0WkT186C
-	 AKUO8kXdzF7nGFl7h4y8uPs2ucBwNBf9gkUtYl+Q=
+	b=THl15cmteqpNhTrevDxd9AH56baZQn/uwk3QgO3Tmcs+DMrcfzSiXLpR852Bd4Ok3
+	 ovQrvOiAmP7AJF2mt2bxThm6vIoEOb4G2DvDoqgJcZ95vD7WVYZ6cPSKyoim8hKWxz
+	 r/zt9sT9SScsoUdWImn/jwnCD9Pwp0oN8u3rC4g0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erico Nunes <nunes.erico@gmail.com>,
-	Qiang Yu <yuq825@gmail.com>,
+	Nathan Lynch <nathanl@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 170/356] drm/lima: mask irqs in timeout path before hard reset
-Date: Wed,  3 Jul 2024 12:38:26 +0200
-Message-ID: <20240703102919.537999558@linuxfoundation.org>
+Subject: [PATCH 5.15 171/356] powerpc/pseries: Enforce hcall result buffer validity and size
+Date: Wed,  3 Jul 2024 12:38:27 +0200
+Message-ID: <20240703102919.576074926@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,61 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Erico Nunes <nunes.erico@gmail.com>
+From: Nathan Lynch <nathanl@linux.ibm.com>
 
-[ Upstream commit a421cc7a6a001b70415aa4f66024fa6178885a14 ]
+[ Upstream commit ff2e185cf73df480ec69675936c4ee75a445c3e4 ]
 
-There is a race condition in which a rendering job might take just long
-enough to trigger the drm sched job timeout handler but also still
-complete before the hard reset is done by the timeout handler.
-This runs into race conditions not expected by the timeout handler.
-In some very specific cases it currently may result in a refcount
-imbalance on lima_pm_idle, with a stack dump such as:
+plpar_hcall(), plpar_hcall9(), and related functions expect callers to
+provide valid result buffers of certain minimum size. Currently this
+is communicated only through comments in the code and the compiler has
+no idea.
 
-[10136.669170] WARNING: CPU: 0 PID: 0 at drivers/gpu/drm/lima/lima_devfreq.c:205 lima_devfreq_record_idle+0xa0/0xb0
-...
-[10136.669459] pc : lima_devfreq_record_idle+0xa0/0xb0
-...
-[10136.669628] Call trace:
-[10136.669634]  lima_devfreq_record_idle+0xa0/0xb0
-[10136.669646]  lima_sched_pipe_task_done+0x5c/0xb0
-[10136.669656]  lima_gp_irq_handler+0xa8/0x120
-[10136.669666]  __handle_irq_event_percpu+0x48/0x160
-[10136.669679]  handle_irq_event+0x4c/0xc0
+For example, if I write a bug like this:
 
-We can prevent that race condition entirely by masking the irqs at the
-beginning of the timeout handler, at which point we give up on waiting
-for that job entirely.
-The irqs will be enabled again at the next hard reset which is already
-done as a recovery by the timeout handler.
+  long retbuf[PLPAR_HCALL_BUFSIZE]; // should be PLPAR_HCALL9_BUFSIZE
+  plpar_hcall9(H_ALLOCATE_VAS_WINDOW, retbuf, ...);
 
-Signed-off-by: Erico Nunes <nunes.erico@gmail.com>
-Reviewed-by: Qiang Yu <yuq825@gmail.com>
-Signed-off-by: Qiang Yu <yuq825@gmail.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240405152951.1531555-4-nunes.erico@gmail.com
+This compiles with no diagnostics emitted, but likely results in stack
+corruption at runtime when plpar_hcall9() stores results past the end
+of the array. (To be clear this is a contrived example and I have not
+found a real instance yet.)
+
+To make this class of error less likely, we can use explicitly-sized
+array parameters instead of pointers in the declarations for the hcall
+APIs. When compiled with -Warray-bounds[1], the code above now
+provokes a diagnostic like this:
+
+error: array argument is too small;
+is of size 32, callee requires at least 72 [-Werror,-Warray-bounds]
+   60 |                 plpar_hcall9(H_ALLOCATE_VAS_WINDOW, retbuf,
+      |                 ^                                   ~~~~~~
+
+[1] Enabled for LLVM builds but not GCC for now. See commit
+    0da6e5fd6c37 ("gcc: disable '-Warray-bounds' for gcc-13 too") and
+    related changes.
+
+Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240408-pseries-hvcall-retbuf-v1-1-ebc73d7253cf@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/lima/lima_sched.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/powerpc/include/asm/hvcall.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/lima/lima_sched.c b/drivers/gpu/drm/lima/lima_sched.c
-index 2e817dbdcad75..a7572123fee15 100644
---- a/drivers/gpu/drm/lima/lima_sched.c
-+++ b/drivers/gpu/drm/lima/lima_sched.c
-@@ -421,6 +421,13 @@ static enum drm_gpu_sched_stat lima_sched_timedout_job(struct drm_sched_job *job
- 	struct lima_sched_task *task = to_lima_task(job);
- 	struct lima_device *ldev = pipe->ldev;
+diff --git a/arch/powerpc/include/asm/hvcall.h b/arch/powerpc/include/asm/hvcall.h
+index c25f160bb9978..47cec207e5571 100644
+--- a/arch/powerpc/include/asm/hvcall.h
++++ b/arch/powerpc/include/asm/hvcall.h
+@@ -472,7 +472,7 @@ long plpar_hcall_norets_notrace(unsigned long opcode, ...);
+  * Used for all but the craziest of phyp interfaces (see plpar_hcall9)
+  */
+ #define PLPAR_HCALL_BUFSIZE 4
+-long plpar_hcall(unsigned long opcode, unsigned long *retbuf, ...);
++long plpar_hcall(unsigned long opcode, unsigned long retbuf[static PLPAR_HCALL_BUFSIZE], ...);
  
-+	/*
-+	 * The task might still finish while this timeout handler runs.
-+	 * To prevent a race condition on its completion, mask all irqs
-+	 * on the running core until the next hard reset completes.
-+	 */
-+	pipe->task_mask_irq(pipe);
-+
- 	if (!pipe->error)
- 		DRM_ERROR("lima job timeout\n");
+ /**
+  * plpar_hcall_raw: - Make a hypervisor call without calculating hcall stats
+@@ -486,7 +486,7 @@ long plpar_hcall(unsigned long opcode, unsigned long *retbuf, ...);
+  * plpar_hcall, but plpar_hcall_raw works in real mode and does not
+  * calculate hypervisor call statistics.
+  */
+-long plpar_hcall_raw(unsigned long opcode, unsigned long *retbuf, ...);
++long plpar_hcall_raw(unsigned long opcode, unsigned long retbuf[static PLPAR_HCALL_BUFSIZE], ...);
  
+ /**
+  * plpar_hcall9: - Make a pseries hypervisor call with up to 9 return arguments
+@@ -497,8 +497,8 @@ long plpar_hcall_raw(unsigned long opcode, unsigned long *retbuf, ...);
+  * PLPAR_HCALL9_BUFSIZE to size the return argument buffer.
+  */
+ #define PLPAR_HCALL9_BUFSIZE 9
+-long plpar_hcall9(unsigned long opcode, unsigned long *retbuf, ...);
+-long plpar_hcall9_raw(unsigned long opcode, unsigned long *retbuf, ...);
++long plpar_hcall9(unsigned long opcode, unsigned long retbuf[static PLPAR_HCALL9_BUFSIZE], ...);
++long plpar_hcall9_raw(unsigned long opcode, unsigned long retbuf[static PLPAR_HCALL9_BUFSIZE], ...);
+ 
+ struct hvcall_mpp_data {
+ 	unsigned long entitled_mem;
 -- 
 2.43.0
 
