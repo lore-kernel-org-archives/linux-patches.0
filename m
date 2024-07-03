@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B310188CDA;
-	Wed,  3 Jul 2024 11:23:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA0513BAFA;
+	Wed,  3 Jul 2024 11:23:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005784; cv=none; b=NFOA0mbUtmSZvXtZBWrxd4c0vBf7Rf6fz9EfcZdocpOCGKdeVeSIbqfqdeJEf+brF6n+/go/ch38KE3h5ZrPyWl4jAOmQtOgmtLk8GlRjqP30asXE5++mt4he1T5nY/4RXHrKFMY30hRhk2DxDggjs7w90C1noblu6XtgQ5QcrM=
+	t=1720005786; cv=none; b=c61BFJrW3GGvyU4HCi8fbVMDG4a39YsF7Faa2T6nX+ffGKDKcuv3QGXpt1SpP1+gw0MOyFm5J4QNchlUcouWWfqUhGz+Fs1/248Ng8HeFDC9kFAU75ZRzpA6iINsVCjf4ztzqI2hqiA4zDomyi9MurPQBma/eQIohmH4gcDU3To=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005784; c=relaxed/simple;
-	bh=DA4GQ90blD2u5WGhwJvhhm9Gu24Ci9uNFizwu+ErVMg=;
+	s=arc-20240116; t=1720005786; c=relaxed/simple;
+	bh=aLb/4LjILvNQyFS03flh55qZt4GrdYxoVoU33Hk5IqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tIzP4S65fb7ElGuKhxesjQr8tPjKf8GhorS8Uo+I+Z1K33VBQMKZHbOTyA2X+bHrfMS2cEwtO9X04Wff4TFZXZOa+JsEKRqdNc97qWkR5lE28zaXaxSH6Al3YS7++a/G2iUawgURJ5C3QbVLualnwKzYe1C937k4RZa4bz5kLUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EsRtxaX2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OnPUOzuuXOvVnr2ESYm2bHG2GVDQ/Pc6Z1xZwHPq+XaZYOYSqcHXLliTOJtBvGygBKnWf6T+m16odS3evrNANH+ASKqG3tXoptshiHoCewqrCoOjcg6POM4rwByGTt7Y0/Bg4bsY8dx4jsvShgp+qKbkWmBI3pXFzxAwtaBw6iY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pOpRJ05/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EsRtxaX2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FE95C2BD10;
-	Wed,  3 Jul 2024 11:23:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pOpRJ05/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42C70C2BD10;
+	Wed,  3 Jul 2024 11:23:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005783;
-	bh=DA4GQ90blD2u5WGhwJvhhm9Gu24Ci9uNFizwu+ErVMg=;
+	s=korg; t=1720005786;
+	bh=aLb/4LjILvNQyFS03flh55qZt4GrdYxoVoU33Hk5IqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EsRtxaX225PS5F7KN8hU5vNworGRMujBgujIlKjsIbwEJruO3s6NgqUBZdq+rbMU7
-	 Q4zrF8uQ4VVsK3doM1ERZpjmkh4zvNv2lEpR8SBYvLMAPz40KI6L5T4ym5BHQFlYGI
-	 7wngiikrPzzTenwaPMDMD7KaVZuYl9viXWV6W80U=
+	b=pOpRJ05/gOkTRc8XfNsD5IQFpAfsIUc1TP5lTaU8rKT+gXphRRkeL4lTQZfHMCSA4
+	 ybbVUXaT4Ic7BAhG1aQkIbvmMZHRVE6u/OX4pznvncgl1xmARLwCLO7rFW7mJk3J02
+	 q5vuDI1dUdPnJ0ML2+DZe7m6zfn3dGGw+Wutsi8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Roman Smirnov <r.smirnov@omp.ru>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Vlad Buslov <vladbu@nvidia.com>,
+	Oz Shlomo <ozsh@nvidia.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 178/356] udf: udftime: prevent overflow in udf_disk_stamp_to_time()
-Date: Wed,  3 Jul 2024 12:38:34 +0200
-Message-ID: <20240703102919.839067227@linuxfoundation.org>
+Subject: [PATCH 5.15 196/356] net/sched: act_ct: set net pointer when creating new nf_flow_table
+Date: Wed,  3 Jul 2024 12:38:52 +0200
+Message-ID: <20240703102920.518800242@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -52,52 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roman Smirnov <r.smirnov@omp.ru>
+From: Vlad Buslov <vladbu@nvidia.com>
 
-[ Upstream commit 3b84adf460381169c085e4bc09e7b57e9e16db0a ]
+[ Upstream commit fc54d9065f90dd25063883f404e6ff9a76913e73 ]
 
-An overflow can occur in a situation where src.centiseconds
-takes the value of 255. This situation is unlikely, but there
-is no validation check anywere in the code.
+Following patches in series use the pointer to access flow table offload
+debug variables.
 
-Found by Linux Verification Center (linuxtesting.org) with Svace.
-
-Suggested-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Roman Smirnov <r.smirnov@omp.ru>
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Message-Id: <20240327132755.13945-1-r.smirnov@omp.ru>
+Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
+Signed-off-by: Oz Shlomo <ozsh@nvidia.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: 88c67aeb1407 ("sched: act_ct: add netns into the key of tcf_ct_flow_table")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/udftime.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ net/sched/act_ct.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/udf/udftime.c b/fs/udf/udftime.c
-index fce4ad976c8c2..26169b1f482c3 100644
---- a/fs/udf/udftime.c
-+++ b/fs/udf/udftime.c
-@@ -60,13 +60,18 @@ udf_disk_stamp_to_time(struct timespec64 *dest, struct timestamp src)
- 	dest->tv_sec = mktime64(year, src.month, src.day, src.hour, src.minute,
- 			src.second);
- 	dest->tv_sec -= offset * 60;
--	dest->tv_nsec = 1000 * (src.centiseconds * 10000 +
--			src.hundredsOfMicroseconds * 100 + src.microseconds);
-+
- 	/*
- 	 * Sanitize nanosecond field since reportedly some filesystems are
- 	 * recorded with bogus sub-second values.
- 	 */
--	dest->tv_nsec %= NSEC_PER_SEC;
-+	if (src.centiseconds < 100 && src.hundredsOfMicroseconds < 100 &&
-+	    src.microseconds < 100) {
-+		dest->tv_nsec = 1000 * (src.centiseconds * 10000 +
-+			src.hundredsOfMicroseconds * 100 + src.microseconds);
-+	} else {
-+		dest->tv_nsec = 0;
-+	}
- }
+diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
+index b4c42b257ae7c..0307b4366db10 100644
+--- a/net/sched/act_ct.c
++++ b/net/sched/act_ct.c
+@@ -276,7 +276,7 @@ static struct nf_flowtable_type flowtable_ct = {
+ 	.owner		= THIS_MODULE,
+ };
  
- void
+-static int tcf_ct_flow_table_get(struct tcf_ct_params *params)
++static int tcf_ct_flow_table_get(struct net *net, struct tcf_ct_params *params)
+ {
+ 	struct tcf_ct_flow_table *ct_ft;
+ 	int err = -ENOMEM;
+@@ -302,6 +302,7 @@ static int tcf_ct_flow_table_get(struct tcf_ct_params *params)
+ 	err = nf_flow_table_init(&ct_ft->nf_ft);
+ 	if (err)
+ 		goto err_init;
++	write_pnet(&ct_ft->nf_ft.net, net);
+ 
+ 	__module_get(THIS_MODULE);
+ out_unlock:
+@@ -1304,7 +1305,7 @@ static int tcf_ct_init(struct net *net, struct nlattr *nla,
+ 	if (err)
+ 		goto cleanup;
+ 
+-	err = tcf_ct_flow_table_get(params);
++	err = tcf_ct_flow_table_get(net, params);
+ 	if (err)
+ 		goto cleanup_params;
+ 
 -- 
 2.43.0
 
