@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA2617E907;
-	Wed,  3 Jul 2024 11:17:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037161741C4;
+	Wed,  3 Jul 2024 11:18:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005479; cv=none; b=WZOlrPR/c52e36UvORVwwufIr+D4m5qH7sNuxEvJBzMk6LQYVR0DmKpvpd/52jPQwyKjsiVg9Nd+8K7FlznyubndRgdZxIUx21HG95B9MWi93U0ARnkzQ8aCDQEDhMI6shkwlzfcbMFAWjMcDrwU3WKNXaZ6otDkTlYpi5XzXqo=
+	t=1720005482; cv=none; b=KId1VEweCosqayEe2kaCJJb3DeaxChuPsFH03v8aIorKSsHTOJUzxhkC4XZcWpoODDvseiU6kreGZv3HjwN83S98UQIGboi8INiwAZGLdsxpsGn/dVlcf+/G4Qhfb+gesybOM0HWGXdigxSugEiWoaZYwygWqcZ4CIycq79yVas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005479; c=relaxed/simple;
-	bh=xLyQPwijlaKI/STzcc0V9uu5jFFOasKaVVrEURncdTk=;
+	s=arc-20240116; t=1720005482; c=relaxed/simple;
+	bh=v1tLD4EfvZ+OED0w8Wh15p6y5ULoyxvjQtYgI3FsdsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sIohsbBtKG8KEA7vYfHvU8QR3W1oTOvMa0xF/IaFS1TQll57/IybHb4mXFVXdJLZdjkomxM3gLqKW/dX1oIWsOgJQ/yGr2tQp0pMiGqkvV1CKXGserDUz+F3sRvPqtPMw/NpZ6l5Wfqy6I2OWbMXmGzjTibonuqqtk/zDDFE1kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XBbz5V0T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WI/lxV0opQi1xbHW5w4ONsNWJOqRhfx9w/0U3BH4EGxCvKOupL/7UM0QOlESxAzl4rEvvggIqLDdAij5OKkfC/fCJDFygR121R0nJdc3AHNrL/q7AEGzCvQCRjtrZcyWZar//RlNsb0VUllFFq75b1SdyJWHXydTY0YbbN8bB+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NcdsC2s4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XBbz5V0T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EB5DC2BD10;
-	Wed,  3 Jul 2024 11:17:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NcdsC2s4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 256B7C2BD10;
+	Wed,  3 Jul 2024 11:18:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005478;
-	bh=xLyQPwijlaKI/STzcc0V9uu5jFFOasKaVVrEURncdTk=;
+	s=korg; t=1720005481;
+	bh=v1tLD4EfvZ+OED0w8Wh15p6y5ULoyxvjQtYgI3FsdsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XBbz5V0TG4c5h5V8eDyjtMgfCpJphkWGMFS9qbeEnW1tJNCWXbHLS/w7kEslb5qaG
-	 k4ieYJuXQLIwfjMBjt+kYPzF+f+JMuLunTAYVPJSCbUo4H2BNa//J9cryAgAHUfcM9
-	 +qUNA/qND4Wgh4FYRtXN6NOOo43H6OaHzkCKnXow=
+	b=NcdsC2s4nfnw4KlMwgdCs77J/O5B9c+ZgzyTG81v6YhRIR065aQGP+tmkEi1UxUa5
+	 3u4pcEJF8E521r3sKN0FV269pUaR+HRP7QNLcMadliVGpH6sHYZPc/3pFkn1Frry2y
+	 oNne8VBG4PAOijRqW9HCLuEGIBZOudI5k0SSMDO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9dfe490c8176301c1d06@syzkaller.appspotmail.com,
-	Dave Kleikamp <shaggy@kernel.org>
-Subject: [PATCH 5.15 077/356] jfs: xattr: fix buffer overflow for invalid xattr
-Date: Wed,  3 Jul 2024 12:36:53 +0200
-Message-ID: <20240703102916.017491417@linuxfoundation.org>
+	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 095/356] HID: logitech-dj: Fix memory leak in logi_dj_recv_switch_to_dj_mode()
+Date: Wed,  3 Jul 2024 12:37:11 +0200
+Message-ID: <20240703102916.697951272@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -44,46 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: José Expósito <jose.exposito89@gmail.com>
 
-commit 7c55b78818cfb732680c4a72ab270cc2d2ee3d0f upstream.
+[ Upstream commit ce3af2ee95170b7d9e15fff6e500d67deab1e7b3 ]
 
-When an xattr size is not what is expected, it is printed out to the
-kernel log in hex format as a form of debugging.  But when that xattr
-size is bigger than the expected size, printing it out can cause an
-access off the end of the buffer.
+Fix a memory leak on logi_dj_recv_send_report() error path.
 
-Fix this all up by properly restricting the size of the debug hex dump
-in the kernel log.
-
-Reported-by: syzbot+9dfe490c8176301c1d06@syzkaller.appspotmail.com
-Cc: Dave Kleikamp <shaggy@kernel.org>
-Link: https://lore.kernel.org/r/2024051433-slider-cloning-98f9@gregkh
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6f20d3261265 ("HID: logitech-dj: Fix error handling in logi_dj_recv_switch_to_dj_mode()")
+Signed-off-by: José Expósito <jose.exposito89@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/xattr.c |    4 +++-
+ drivers/hid/hid-logitech-dj.c | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/jfs/xattr.c
-+++ b/fs/jfs/xattr.c
-@@ -557,9 +557,11 @@ static int ea_get(struct inode *inode, s
+diff --git a/drivers/hid/hid-logitech-dj.c b/drivers/hid/hid-logitech-dj.c
+index 57697605b2e24..dc7b0fe83478e 100644
+--- a/drivers/hid/hid-logitech-dj.c
++++ b/drivers/hid/hid-logitech-dj.c
+@@ -1284,8 +1284,10 @@ static int logi_dj_recv_switch_to_dj_mode(struct dj_receiver_dev *djrcv_dev,
+ 		 */
+ 		msleep(50);
  
-       size_check:
- 	if (EALIST_SIZE(ea_buf->xattr) != ea_size) {
-+		int size = min_t(int, EALIST_SIZE(ea_buf->xattr), ea_size);
-+
- 		printk(KERN_ERR "ea_get: invalid extended attribute\n");
- 		print_hex_dump(KERN_ERR, "", DUMP_PREFIX_ADDRESS, 16, 1,
--				     ea_buf->xattr, ea_size, 1);
-+				     ea_buf->xattr, size, 1);
- 		ea_release(inode, ea_buf);
- 		rc = -EIO;
- 		goto clean_up;
+-		if (retval)
++		if (retval) {
++			kfree(dj_report);
+ 			return retval;
++		}
+ 	}
+ 
+ 	/*
+-- 
+2.43.0
+
 
 
