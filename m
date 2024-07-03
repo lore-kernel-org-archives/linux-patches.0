@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34ABC13A27E;
-	Wed,  3 Jul 2024 11:14:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4BC1799F;
+	Wed,  3 Jul 2024 11:14:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005292; cv=none; b=ZP7Pjyw/KMyDM9jPR9R0QYwBVHCnsnWCArlTM7/Tp4exfdrzu4DF41tEdGjYf6i4epLfOnmAJg2Pqfjlg1yRuWY4HzWBGyTUKEuY8N99EvZm6X8kE/l/sBbl1VAZ2C0BYWYySI6d8u4Rmw3dHcNNRkuhGiYVL454S/SUrdVcWLk=
+	t=1720005295; cv=none; b=Q3ZjX24co3R+EHz78LXiTaZnRiysOK0rg8rQ0jML0Bp1Obvh9Yr62hVyuAPrl7kYfDHlRd/GHpk9k8UQ0pDjWGPn/5rzvKy9F4MI33N8DXmNUq0N9Zoto9DonMzNmMNXT1z3dtXzxiZFeVqN0AsFN9LsdAEdeL4svbMd6wl3AuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005292; c=relaxed/simple;
-	bh=b5mU3tsATx48Y0lqNGrYOEkwCL/5+GDYRYNXUtQft30=;
+	s=arc-20240116; t=1720005295; c=relaxed/simple;
+	bh=YjLh74GgS3FEobOSMYLxskdVAR3EJfxMiH9wqr2Jt6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R35gO0/wG7HFqr2uwnZ2AQnnEBfFBtoKFrW2uLmW3Z3UFwTNKQDawS4ENLa8//7bO2955j6p2Nk7hlX2PRlxw1GKVazaHfh+AsnuFxL8pBdBYrELGK3+apQE142mpvxqTfgCz/vRf1cgWH6Rp/Y/MTTIo0DWtWC0TPcRniOxCYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wFNzFxcV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UkrVf+ltMsk4OSci2Oa36PliGEh+t7TecMrBzJivrfCoeXNMOjucSkVbJl4S0rMI5ySli3QTTKA/ei8j+53hrDiEcm+MxnkiAQMQBmRgbs1ER4imDyWmOQWnGbUcIkbKuDTOf0HcK3M3CRYHRX7AahGwwLNYRmmTS0Xp9Bf74fs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xLRBFJRS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wFNzFxcV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8F77C2BD10;
-	Wed,  3 Jul 2024 11:14:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xLRBFJRS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3FADC32781;
+	Wed,  3 Jul 2024 11:14:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005292;
-	bh=b5mU3tsATx48Y0lqNGrYOEkwCL/5+GDYRYNXUtQft30=;
+	s=korg; t=1720005295;
+	bh=YjLh74GgS3FEobOSMYLxskdVAR3EJfxMiH9wqr2Jt6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wFNzFxcVPD7VOrgvbQOv+rR2eTmFnEQY+33fz8pUuQLESXpTNyBrjlnBwaYlveX+t
-	 E7T7m/apmkKYe69+VjMHJ+ktFSHUjV2OkZKpHq4jPW1RodjTWOzhJUaidYX2B/rbmF
-	 +Ph9imiecCx1XWDrB6MDfF3NSd8mLfgaRMlv8Sg4=
+	b=xLRBFJRSfRvU+sdUZOF/m+LDpKZ5j4I6KyubSH5fPSnUgDT8MB+qn8OjO1R83/y20
+	 0MmWzGhT9rbGY8uQn1gs7l4OCL7uOdlC+V0CStOcdTqdEMWexDnynTYxPL1I8o8JGv
+	 CWIY5pTIJ3iFnPioTT8K22LtH7+dQ8vXXVdr6SR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 032/356] af_unix: annotate lockless accesses to sk->sk_err
-Date: Wed,  3 Jul 2024 12:36:08 +0200
-Message-ID: <20240703102914.312891691@linuxfoundation.org>
+Subject: [PATCH 5.15 033/356] af_unix: Use skb_queue_empty_lockless() in unix_release_sock().
+Date: Wed,  3 Jul 2024 12:36:09 +0200
+Message-ID: <20240703102914.350271724@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,61 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit cc04410af7de348234ac36a5f50c4ce416efdb4b ]
+[ Upstream commit 83690b82d228b3570565ebd0b41873933238b97f ]
 
-unix_poll() and unix_dgram_poll() read sk->sk_err
-without any lock held.
+If the socket type is SOCK_STREAM or SOCK_SEQPACKET, unix_release_sock()
+checks the length of the peer socket's recvq under unix_state_lock().
 
-Add relevant READ_ONCE()/WRITE_ONCE() annotations.
+However, unix_stream_read_generic() calls skb_unlink() after releasing
+the lock.  Also, for SOCK_SEQPACKET, __skb_try_recv_datagram() unlinks
+skb without unix_state_lock().
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 83690b82d228 ("af_unix: Use skb_queue_empty_lockless() in unix_release_sock().")
+Thues, unix_state_lock() does not protect qlen.
+
+Let's use skb_queue_empty_lockless() in unix_release_sock().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ net/unix/af_unix.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/net/unix/af_unix.c
 +++ b/net/unix/af_unix.c
-@@ -485,7 +485,7 @@ static void unix_dgram_disconnected(stru
- 		 * when peer was not connected to us.
- 		 */
- 		if (!sock_flag(other, SOCK_DEAD) && unix_peer(other) == sk) {
--			other->sk_err = ECONNRESET;
-+			WRITE_ONCE(other->sk_err, ECONNRESET);
- 			sk_error_report(other);
- 		}
- 	}
-@@ -556,7 +556,7 @@ static void unix_release_sock(struct soc
+@@ -555,7 +555,7 @@ static void unix_release_sock(struct soc
+ 			unix_state_lock(skpair);
  			/* No more writes */
  			WRITE_ONCE(skpair->sk_shutdown, SHUTDOWN_MASK);
- 			if (!skb_queue_empty(&sk->sk_receive_queue) || embrion)
--				skpair->sk_err = ECONNRESET;
-+				WRITE_ONCE(skpair->sk_err, ECONNRESET);
+-			if (!skb_queue_empty(&sk->sk_receive_queue) || embrion)
++			if (!skb_queue_empty_lockless(&sk->sk_receive_queue) || embrion)
+ 				WRITE_ONCE(skpair->sk_err, ECONNRESET);
  			unix_state_unlock(skpair);
  			skpair->sk_state_change(skpair);
- 			sk_wake_async(skpair, SOCK_WAKE_WAITD, POLL_HUP);
-@@ -3066,7 +3066,7 @@ static __poll_t unix_poll(struct file *f
- 	state = READ_ONCE(sk->sk_state);
- 
- 	/* exceptional events? */
--	if (sk->sk_err)
-+	if (READ_ONCE(sk->sk_err))
- 		mask |= EPOLLERR;
- 	if (shutdown == SHUTDOWN_MASK)
- 		mask |= EPOLLHUP;
-@@ -3113,7 +3113,8 @@ static __poll_t unix_dgram_poll(struct f
- 	state = READ_ONCE(sk->sk_state);
- 
- 	/* exceptional events? */
--	if (sk->sk_err || !skb_queue_empty_lockless(&sk->sk_error_queue))
-+	if (READ_ONCE(sk->sk_err) ||
-+	    !skb_queue_empty_lockless(&sk->sk_error_queue))
- 		mask |= EPOLLERR |
- 			(sock_flag(sk, SOCK_SELECT_ERR_QUEUE) ? EPOLLPRI : 0);
- 
 
 
