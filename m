@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC03C1741DD;
-	Wed,  3 Jul 2024 11:29:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C583917E8FB;
+	Wed,  3 Jul 2024 11:29:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006182; cv=none; b=b7doLSftOh4YcyVih0YSYFX0AgLGn5kV3LJIrxzQn6qgd6jSAWG1JFwnIeD42NgF/iSObHSwG33vOqBHC9L6sk9P1FkuG+NOZLgwnls24cKHdl5UMPNUgAKIUH+sBodi/8JAl25xNIs++a4Zt3Bbo9yoRk0ZlQ0L4+kgxzZeb+0=
+	t=1720006184; cv=none; b=oLbrS9e9nzYAFEcrD/vtQUSMmd/wqH3vTfDJ02Ze1TU8GwBOXkq/nPeErz39EMkTb8s6whOrLO0c6bTR9WCU+Khn9ErVQcZmAFVZL8BHWl4UaxjEb0lZOEAj798NV1PL7Vg6M5nHKcv340uRdqj09cGJELNQ70Ejy+SpKzvSYU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006182; c=relaxed/simple;
-	bh=8wjxkTt7BznNUi7fJmmHdi/WFt/yjtOi7b0ABbHabMg=;
+	s=arc-20240116; t=1720006184; c=relaxed/simple;
+	bh=80Zd6TitCCfhjshJMPIhViA1yD7rGtpgjfWZZfKV6DA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rk+a5hmwFZ1xMclE7NLQjkCIjzN25Ec58vALsGeeTaTs/XNgJzjiSbqJP2EnlFbvQ3QlQi+35wfCulpusodgVrnR1jrP2QbI8QUN6fmtjoSJAhwDRRjQfxYrOBqOzapwzolgHhVV8brqeB/Um0M+r4IeE4UXs79n/N6a8liF9cw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AXlP4Hrl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rfsHyQg8pPKzf7sGa2g2N57t3YRc/DQHj2qdHBh3LGXSXoIks4C4fyJmlFmvrYc1NwuZEdRaolkcNoCLXW7ZIIZZ84wqUPkiH8478BkpPXvVaFWJMSe4JbfayUdT/qjVrypfbdyGqUnPeVpHya2GEbXde6dqDvBYy2/TeuS6QDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bds9FXgj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AXlP4Hrl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D039C2BD10;
-	Wed,  3 Jul 2024 11:29:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bds9FXgj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD76C2BD10;
+	Wed,  3 Jul 2024 11:29:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006181;
-	bh=8wjxkTt7BznNUi7fJmmHdi/WFt/yjtOi7b0ABbHabMg=;
+	s=korg; t=1720006184;
+	bh=80Zd6TitCCfhjshJMPIhViA1yD7rGtpgjfWZZfKV6DA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AXlP4HrlwmsoQBMewj/cqDujTt9IzbuPnqIkYe6jETU5Rc52kk1nwUzj8PKPYmYYx
-	 rI2CZ0mv19Yr0HTsnZGAbvQj6qwAHBH+p56d3guvfjZO1EJM2uW7si3h25OyalgImy
-	 5YEM6MSqjrTgdjB78U0OQWwOAq6K7YLrBGlVocT8=
+	b=bds9FXgjyJrHj1luSkXEEUbs6Ae2tu7Hu/rirwM/C0BAI6JVvLT83mID1ADWeix7u
+	 XWoliinOC4dOyqrTR0DNDPbR0ydVvwTfH5vuojSBD3VW+FB5+XXhsRK6f1rtMM8LrB
+	 3F69/x6+knfaN74x+n19NNyeF7ABwHxU+KJd/Xvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuntao Wang <ytcoode@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 5.15 328/356] cpu/hotplug: Fix dynstate assignment in __cpuhp_setup_state_cpuslocked()
-Date: Wed,  3 Jul 2024 12:41:04 +0200
-Message-ID: <20240703102925.521518629@linuxfoundation.org>
+	Diederik de Haas <didi.debian@cknow.org>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 5.15 329/356] kbuild: Install dtb files as 0644 in Makefile.dtbinst
+Date: Wed,  3 Jul 2024 12:41:05 +0200
+Message-ID: <20240703102925.559522049@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -50,61 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuntao Wang <ytcoode@gmail.com>
+From: Dragan Simic <dsimic@manjaro.org>
 
-commit 932d8476399f622aa0767a4a0a9e78e5341dc0e1 upstream.
+commit 9cc5f3bf63aa98bd7cc7ce8a8599077fde13283e upstream.
 
-Commit 4205e4786d0b ("cpu/hotplug: Provide dynamic range for prepare
-stage") added a dynamic range for the prepare states, but did not handle
-the assignment of the dynstate variable in __cpuhp_setup_state_cpuslocked().
+The compiled dtb files aren't executable, so install them with 0644 as their
+permission mode, instead of defaulting to 0755 for the permission mode and
+installing them with the executable bits set.
 
-This causes the corresponding startup callback not to be invoked when
-calling __cpuhp_setup_state_cpuslocked() with the CPUHP_BP_PREPARE_DYN
-parameter, even though it should be.
+Some Linux distributions, including Debian, [1][2][3] already include fixes
+in their kernel package build recipes to change the dtb file permissions to
+0644 in their kernel packages.  These changes, when additionally propagated
+into the long-term kernel versions, will allow such distributions to remove
+their downstream fixes.
 
-Currently, the users of __cpuhp_setup_state_cpuslocked(), for one reason or
-another, have not triggered this bug.
+[1] https://salsa.debian.org/kernel-team/linux/-/merge_requests/642
+[2] https://salsa.debian.org/kernel-team/linux/-/merge_requests/749
+[3] https://salsa.debian.org/kernel-team/linux/-/blob/debian/6.8.12-1/debian/rules.real#L193
 
-Fixes: 4205e4786d0b ("cpu/hotplug: Provide dynamic range for prepare stage")
-Signed-off-by: Yuntao Wang <ytcoode@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240515134554.427071-1-ytcoode@gmail.com
+Cc: Diederik de Haas <didi.debian@cknow.org>
+Cc: <stable@vger.kernel.org>
+Fixes: aefd80307a05 ("kbuild: refactor Makefile.dtbinst more")
+Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cpu.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ scripts/Makefile.dtbinst |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/cpu.c
-+++ b/kernel/cpu.c
-@@ -2058,7 +2058,7 @@ EXPORT_SYMBOL_GPL(__cpuhp_state_add_inst
-  * The caller needs to hold cpus read locked while calling this function.
-  * Return:
-  *   On success:
-- *      Positive state number if @state is CPUHP_AP_ONLINE_DYN;
-+ *      Positive state number if @state is CPUHP_AP_ONLINE_DYN or CPUHP_BP_PREPARE_DYN;
-  *      0 for all other states
-  *   On failure: proper (negative) error code
-  */
-@@ -2081,7 +2081,7 @@ int __cpuhp_setup_state_cpuslocked(enum
- 	ret = cpuhp_store_callbacks(state, name, startup, teardown,
- 				    multi_instance);
+--- a/scripts/Makefile.dtbinst
++++ b/scripts/Makefile.dtbinst
+@@ -24,7 +24,7 @@ __dtbs_install: $(dtbs) $(subdirs)
+ 	@:
  
--	dynstate = state == CPUHP_AP_ONLINE_DYN;
-+	dynstate = state == CPUHP_AP_ONLINE_DYN || state == CPUHP_BP_PREPARE_DYN;
- 	if (ret > 0 && dynstate) {
- 		state = ret;
- 		ret = 0;
-@@ -2112,8 +2112,8 @@ int __cpuhp_setup_state_cpuslocked(enum
- out:
- 	mutex_unlock(&cpuhp_state_mutex);
- 	/*
--	 * If the requested state is CPUHP_AP_ONLINE_DYN, return the
--	 * dynamically allocated state in case of success.
-+	 * If the requested state is CPUHP_AP_ONLINE_DYN or CPUHP_BP_PREPARE_DYN,
-+	 * return the dynamically allocated state in case of success.
- 	 */
- 	if (!ret && dynstate)
- 		return state;
+ quiet_cmd_dtb_install = INSTALL $@
+-      cmd_dtb_install = install -D $< $@
++      cmd_dtb_install = install -D -m 0644 $< $@
+ 
+ $(dst)/%.dtb: $(obj)/%.dtb
+ 	$(call cmd,dtb_install)
 
 
