@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C778178CCD;
-	Wed,  3 Jul 2024 10:49:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD8C177983;
+	Wed,  3 Jul 2024 10:49:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003767; cv=none; b=EpfY1zHe+KtfF7BAvHcEclMj/41gsGYy3kNq3Q1hS+nkf7jgBXluOQO5uE6ESRwEHuISEkfjDtAqInyy4LTi7JDxS2uO1hCp2mg8JLCWx3FBbiZ+lskPt67HkCnny6DMHVVgHxHyu1ooVzC33B1w6nZT+jJgNpyL78XskqewiFU=
+	t=1720003770; cv=none; b=UUF5VIFmdLqHh8xpLE1auR6YgkAa1DENyqgWl0LtNTggiXf8aTivUZlyR62VGbpyr6UfxlBP7ls/3Ou/ooZiF6/M/rwpkaGZqbwuAPO6w4sI6DxJeE2Tx5b99NVvR8kW3OSL3DCToryMfYvRCmaKbNHoJraN3qvvkQ0LpSFaxmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003767; c=relaxed/simple;
-	bh=D5FIhWTdfYtd4XF6XYCuVHz1tOmSqKXdrkC91DPQGkA=;
+	s=arc-20240116; t=1720003770; c=relaxed/simple;
+	bh=Vz3ZcjIxFhx/ciRpvWaHK6RG8CHC83U8M0+n3dr63oE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I7v+3cSwBbpmS/58gQGLMZa3vqFaZa1TlOcNWlpXcimOORwCOTG7mfQFOBGOjYLoL8ke8iOoz+E82fyZKdwwl2KkHF3leKByYU7sngbd3iRNG20EFfas5OVN2YgYVmb+fojPPR/3rIDJL9/0aMzEDMpARmPKnrMVmjyMjE78Ipo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KMFHnf7l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oqnX/5CiZ2BZqGMmoCgDggYKJV9vq0ajxkqT2bEZAbjncRrg2kDoI7AaJnfhnFZmN0NyykbJgTNIZwhZ6shnPxAmihV9nkwsLndiwr59XZtNZjS7Kp/eI8nRp+3eY9OIiVqThlNW1zyu/J9u470DmBtoO0Eqy0mjcBvuy5fSn3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oThibMRR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KMFHnf7l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C53BC2BD10;
-	Wed,  3 Jul 2024 10:49:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oThibMRR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 194D9C2BD10;
+	Wed,  3 Jul 2024 10:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003767;
-	bh=D5FIhWTdfYtd4XF6XYCuVHz1tOmSqKXdrkC91DPQGkA=;
+	s=korg; t=1720003770;
+	bh=Vz3ZcjIxFhx/ciRpvWaHK6RG8CHC83U8M0+n3dr63oE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KMFHnf7ltju023yfK2LU9lOUuN1hlxkYHMxTGrjZlrmSdmCQyj1VHrX/+N+5aULAt
-	 t3P/llIfq1iGvkAFXocXEkIQgVABF/p/wl3eyMq9Aqc76EnCRBR3sr2Y99jej3109p
-	 Xnr85sqcNZmJydh0mDz0ajgxOvR4K8QLoaNDB054=
+	b=oThibMRR0NJCq8iIwJ/xtqAw4gPZIFyDQa0ietQ3RrmO52tjT45G7m2sflbFIf5Eb
+	 ZwhVfRwviiEuNA/LynXaPtO6xPvIH4aEC6hsWT9pOx+clqyZOjhKEaqe/XF8m6gZRm
+	 ZVf11QQYOUM8Li3E1h4HcWsASmf38Z3ChvmILpj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 016/189] af_unix: Annotate data-races around sk->sk_state in sendmsg() and recvmsg().
-Date: Wed,  3 Jul 2024 12:37:57 +0200
-Message-ID: <20240703102842.116905355@linuxfoundation.org>
+Subject: [PATCH 5.4 017/189] af_unix: Annotate data-races around sk->sk_state in UNIX_DIAG.
+Date: Wed,  3 Jul 2024 12:37:58 +0200
+Message-ID: <20240703102842.154274129@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -53,67 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 8a34d4e8d9742a24f74998f45a6a98edd923319b ]
+[ Upstream commit 0aa3be7b3e1f8f997312cc4705f8165e02806f8f ]
 
-The following functions read sk->sk_state locklessly and proceed only if
-the state is TCP_ESTABLISHED.
-
-  * unix_stream_sendmsg
-  * unix_stream_read_generic
-  * unix_seqpacket_sendmsg
-  * unix_seqpacket_recvmsg
+While dumping AF_UNIX sockets via UNIX_DIAG, sk->sk_state is read
+locklessly.
 
 Let's use READ_ONCE() there.
 
-Fixes: a05d2ad1c1f3 ("af_unix: Only allow recv on connected seqpacket sockets.")
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Note that the result could be inconsistent if the socket is dumped
+during the state change.  This is common for other SOCK_DIAG and
+similar interfaces.
+
+Fixes: c9da99e6475f ("unix_diag: Fixup RQLEN extension report")
+Fixes: 2aac7a2cb0d9 ("unix_diag: Pending connections IDs NLA")
+Fixes: 45a96b9be6ec ("unix_diag: Dumping all sockets core")
 Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 8 ++++----
+ net/unix/diag.c | 8 ++++----
  1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 73cc992bed880..0611ff921421e 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -1881,7 +1881,7 @@ static int unix_stream_sendmsg(struct socket *sock, struct msghdr *msg,
- 		goto out_err;
+diff --git a/net/unix/diag.c b/net/unix/diag.c
+index 2975e7a061d0b..4666fabb04933 100644
+--- a/net/unix/diag.c
++++ b/net/unix/diag.c
+@@ -64,7 +64,7 @@ static int sk_diag_dump_icons(struct sock *sk, struct sk_buff *nlskb)
+ 	u32 *buf;
+ 	int i;
  
- 	if (msg->msg_namelen) {
--		err = sk->sk_state == TCP_ESTABLISHED ? -EISCONN : -EOPNOTSUPP;
-+		err = READ_ONCE(sk->sk_state) == TCP_ESTABLISHED ? -EISCONN : -EOPNOTSUPP;
- 		goto out_err;
- 	} else {
- 		err = -ENOTCONN;
-@@ -2083,7 +2083,7 @@ static int unix_seqpacket_sendmsg(struct socket *sock, struct msghdr *msg,
- 	if (err)
- 		return err;
+-	if (sk->sk_state == TCP_LISTEN) {
++	if (READ_ONCE(sk->sk_state) == TCP_LISTEN) {
+ 		spin_lock(&sk->sk_receive_queue.lock);
  
--	if (sk->sk_state != TCP_ESTABLISHED)
-+	if (READ_ONCE(sk->sk_state) != TCP_ESTABLISHED)
- 		return -ENOTCONN;
- 
- 	if (msg->msg_namelen)
-@@ -2097,7 +2097,7 @@ static int unix_seqpacket_recvmsg(struct socket *sock, struct msghdr *msg,
+ 		attr = nla_reserve(nlskb, UNIX_DIAG_ICONS,
+@@ -102,7 +102,7 @@ static int sk_diag_show_rqlen(struct sock *sk, struct sk_buff *nlskb)
  {
- 	struct sock *sk = sock->sk;
+ 	struct unix_diag_rqlen rql;
  
--	if (sk->sk_state != TCP_ESTABLISHED)
-+	if (READ_ONCE(sk->sk_state) != TCP_ESTABLISHED)
- 		return -ENOTCONN;
- 
- 	return unix_dgram_recvmsg(sock, msg, size, flags);
-@@ -2293,7 +2293,7 @@ static int unix_stream_read_generic(struct unix_stream_read_state *state,
- 	size_t size = state->size;
- 	unsigned int last_len;
- 
--	if (unlikely(sk->sk_state != TCP_ESTABLISHED)) {
-+	if (unlikely(READ_ONCE(sk->sk_state) != TCP_ESTABLISHED)) {
- 		err = -EINVAL;
- 		goto out;
- 	}
+-	if (sk->sk_state == TCP_LISTEN) {
++	if (READ_ONCE(sk->sk_state) == TCP_LISTEN) {
+ 		rql.udiag_rqueue = sk->sk_receive_queue.qlen;
+ 		rql.udiag_wqueue = sk->sk_max_ack_backlog;
+ 	} else {
+@@ -135,7 +135,7 @@ static int sk_diag_fill(struct sock *sk, struct sk_buff *skb, struct unix_diag_r
+ 	rep = nlmsg_data(nlh);
+ 	rep->udiag_family = AF_UNIX;
+ 	rep->udiag_type = sk->sk_type;
+-	rep->udiag_state = sk->sk_state;
++	rep->udiag_state = READ_ONCE(sk->sk_state);
+ 	rep->pad = 0;
+ 	rep->udiag_ino = sk_ino;
+ 	sock_diag_save_cookie(sk, rep->udiag_cookie);
+@@ -218,7 +218,7 @@ static int unix_diag_dump(struct sk_buff *skb, struct netlink_callback *cb)
+ 				continue;
+ 			if (num < s_num)
+ 				goto next;
+-			if (!(req->udiag_states & (1 << sk->sk_state)))
++			if (!(req->udiag_states & (1 << READ_ONCE(sk->sk_state))))
+ 				goto next;
+ 			if (sk_diag_dump(sk, skb, req, sk_user_ns(skb->sk),
+ 					 NETLINK_CB(cb->skb).portid,
 -- 
 2.43.0
 
