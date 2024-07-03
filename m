@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8085518734B;
-	Wed,  3 Jul 2024 11:10:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720D6174EFA;
+	Wed,  3 Jul 2024 11:10:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005010; cv=none; b=nYTEunFf67wJkmw3tVeeMLbGpi2C0aDpxLbkqeJNc7+HLXlb3AWrx8q0slYKxymTOzX7fKK2ZzJaxxvTFPsnJV65Uoh+kqr3e9mh7o3tRFW5Vl8nYXZKmoRHhwwb8cTDfv00DYv6bVoW+SMxyDPd0dj76EDR8kK5LoVWQLJDaiw=
+	t=1720005013; cv=none; b=pBwB94JKrzPFUyNT+3fI5+nx3/QQthMFM8ZuevfjPeW+exVFxPOy4Otb9yc1tfGom1/PDxwRQ5Em1lW8EDPyDz2F1MeUgvHVNh9p7FsmmP2Qpt/mo+ghT9eMjaoHKoPHQpRR7WUHdvb6zcT/YnfweScwL/piNQVfJkXhEivNnXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005010; c=relaxed/simple;
-	bh=gnzCW8ln0l+a17CW9ctEZEc6VUZoxeGhKf/1CjKoZuU=;
+	s=arc-20240116; t=1720005013; c=relaxed/simple;
+	bh=CejJ3TmyBmrtr7N3xktw5X0XPCUksKlngHHvOBM4OxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R7Utw9tp8HkslqC4tuQixMwvjP4K4Hyk4ra5WgYgVpe2YtuKbG2QaMjH+cMSgcewFA10VkL2IxRWVf8c8CXy0aqwMKKfq5qW8ixqVSFfJ1ODgpRERmpPZ+7cKETx9nD7109eVU+mKrC8aBZF6gKwfYSZ4J9479ywlFHaxm7r3TI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xfv1p+UF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qBZ0bTtIW0+ZmBRouO5t7omfzTBSFt6HQoROa04pHQyoNGZPeGfeIxbl+RBS/8SENXHFML14SRVAfW6L+Ii9PHYidler28lvOYUJZCqdMWokfxJ0+902WqmzPt+aNMBw0pri8aAerWT2cEz4QvdVFPcrKVmxqZp+Hq/5PSNHI3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LEB8Y8mN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xfv1p+UF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06385C2BD10;
-	Wed,  3 Jul 2024 11:10:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LEB8Y8mN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBBFBC2BD10;
+	Wed,  3 Jul 2024 11:10:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005010;
-	bh=gnzCW8ln0l+a17CW9ctEZEc6VUZoxeGhKf/1CjKoZuU=;
+	s=korg; t=1720005013;
+	bh=CejJ3TmyBmrtr7N3xktw5X0XPCUksKlngHHvOBM4OxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xfv1p+UF0nwuTYAipmwrQCI4RIHaQ8I+LmoBoH5SFXjKHXSEX4LYkPcSyLEoYRXWN
-	 jBcN0dy4mPcR98gpLblNt7JEhuUKaqCQNUSC1LlMUpXn+YiblIil8Ip/ckJVMPli2z
-	 WIjDPV/40GdlHGiOHocYnFNRM051kH0zijyHOBQU=
+	b=LEB8Y8mNmYqqn3MyYoA3DbFbG4S2QSmSObq23pvU7ge9KybmeYzeSc3XipZDIZbU/
+	 JoSXviatLSaZHSERTXn0fxtMZ5CPGMNASn9TXznBbLGSGICSJ+NA5ikoqP+FVJXK8r
+	 xY1jV0n31rWp+zDbQirKrszJ+Eji1u0B0CpXLD6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Dulov <d.dulov@aladdin.ru>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Dawei Li <dawei.li@shingroup.cn>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 223/290] xdp: Remove WARN() from __xdp_reg_mem_model()
-Date: Wed,  3 Jul 2024 12:40:04 +0200
-Message-ID: <20240703102912.580587183@linuxfoundation.org>
+Subject: [PATCH 5.10 232/290] net/iucv: Avoid explicit cpumask var allocation on stack
+Date: Wed,  3 Jul 2024 12:40:13 +0200
+Message-ID: <20240703102912.917007100@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -52,74 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniil Dulov <d.dulov@aladdin.ru>
+From: Dawei Li <dawei.li@shingroup.cn>
 
-[ Upstream commit 7e9f79428372c6eab92271390851be34ab26bfb4 ]
+[ Upstream commit be4e1304419c99a164b4c0e101c7c2a756b635b9 ]
 
-syzkaller reports a warning in __xdp_reg_mem_model().
+For CONFIG_CPUMASK_OFFSTACK=y kernel, explicit allocation of cpumask
+variable on stack is not recommended since it can cause potential stack
+overflow.
 
-The warning occurs only if __mem_id_init_hash_table() returns an error. It
-returns the error in two cases:
+Instead, kernel code should always use *cpumask_var API(s) to allocate
+cpumask var in config-neutral way, leaving allocation strategy to
+CONFIG_CPUMASK_OFFSTACK.
 
-  1. memory allocation fails;
-  2. rhashtable_init() fails when some fields of rhashtable_params
-     struct are not initialized properly.
+Use *cpumask_var API(s) to address it.
 
-The second case cannot happen since there is a static const rhashtable_params
-struct with valid fields. So, warning is only triggered when there is a
-problem with memory allocation.
-
-Thus, there is no sense in using WARN() to handle this error and it can be
-safely removed.
-
-WARNING: CPU: 0 PID: 5065 at net/core/xdp.c:299 __xdp_reg_mem_model+0x2d9/0x650 net/core/xdp.c:299
-
-CPU: 0 PID: 5065 Comm: syz-executor883 Not tainted 6.8.0-syzkaller-05271-gf99c5f563c17 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
-RIP: 0010:__xdp_reg_mem_model+0x2d9/0x650 net/core/xdp.c:299
-
-Call Trace:
- xdp_reg_mem_model+0x22/0x40 net/core/xdp.c:344
- xdp_test_run_setup net/bpf/test_run.c:188 [inline]
- bpf_test_run_xdp_live+0x365/0x1e90 net/bpf/test_run.c:377
- bpf_prog_test_run_xdp+0x813/0x11b0 net/bpf/test_run.c:1267
- bpf_prog_test_run+0x33a/0x3b0 kernel/bpf/syscall.c:4240
- __sys_bpf+0x48d/0x810 kernel/bpf/syscall.c:5649
- __do_sys_bpf kernel/bpf/syscall.c:5738 [inline]
- __se_sys_bpf kernel/bpf/syscall.c:5736 [inline]
- __x64_sys_bpf+0x7c/0x90 kernel/bpf/syscall.c:5736
- do_syscall_64+0xfb/0x240
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-Found by Linux Verification Center (linuxtesting.org) with syzkaller.
-
-Fixes: 8d5d88527587 ("xdp: rhashtable with allocator ID to pointer mapping")
-Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Link: https://lore.kernel.org/all/20240617162708.492159-1-d.dulov@aladdin.ru
-Link: https://lore.kernel.org/bpf/20240624080747.36858-1-d.dulov@aladdin.ru
+Signed-off-by: Dawei Li <dawei.li@shingroup.cn>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240331053441.1276826-2-dawei.li@shingroup.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/xdp.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/iucv/iucv.c | 26 ++++++++++++++++++--------
+ 1 file changed, 18 insertions(+), 8 deletions(-)
 
-diff --git a/net/core/xdp.c b/net/core/xdp.c
-index 6e6b89d5f77ed..eb5045924efaa 100644
---- a/net/core/xdp.c
-+++ b/net/core/xdp.c
-@@ -291,10 +291,8 @@ static struct xdp_mem_allocator *__xdp_reg_mem_model(struct xdp_mem_info *mem,
- 		mutex_lock(&mem_id_lock);
- 		ret = __mem_id_init_hash_table();
- 		mutex_unlock(&mem_id_lock);
--		if (ret < 0) {
--			WARN_ON(1);
-+		if (ret < 0)
- 			return ERR_PTR(ret);
--		}
- 	}
+diff --git a/net/iucv/iucv.c b/net/iucv/iucv.c
+index ed0dbdbba4d94..06770b77e5d22 100644
+--- a/net/iucv/iucv.c
++++ b/net/iucv/iucv.c
+@@ -517,7 +517,7 @@ static void iucv_setmask_mp(void)
+  */
+ static void iucv_setmask_up(void)
+ {
+-	cpumask_t cpumask;
++	static cpumask_t cpumask;
+ 	int cpu;
  
- 	xdp_alloc = kzalloc(sizeof(*xdp_alloc), gfp);
+ 	/* Disable all cpu but the first in cpu_irq_cpumask. */
+@@ -625,23 +625,33 @@ static int iucv_cpu_online(unsigned int cpu)
+ 
+ static int iucv_cpu_down_prep(unsigned int cpu)
+ {
+-	cpumask_t cpumask;
++	cpumask_var_t cpumask;
++	int ret = 0;
+ 
+ 	if (!iucv_path_table)
+ 		return 0;
+ 
+-	cpumask_copy(&cpumask, &iucv_buffer_cpumask);
+-	cpumask_clear_cpu(cpu, &cpumask);
+-	if (cpumask_empty(&cpumask))
++	if (!alloc_cpumask_var(&cpumask, GFP_KERNEL))
++		return -ENOMEM;
++
++	cpumask_copy(cpumask, &iucv_buffer_cpumask);
++	cpumask_clear_cpu(cpu, cpumask);
++	if (cpumask_empty(cpumask)) {
+ 		/* Can't offline last IUCV enabled cpu. */
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto __free_cpumask;
++	}
+ 
+ 	iucv_retrieve_cpu(NULL);
+ 	if (!cpumask_empty(&iucv_irq_cpumask))
+-		return 0;
++		goto __free_cpumask;
++
+ 	smp_call_function_single(cpumask_first(&iucv_buffer_cpumask),
+ 				 iucv_allow_cpu, NULL, 1);
+-	return 0;
++
++__free_cpumask:
++	free_cpumask_var(cpumask);
++	return ret;
+ }
+ 
+ /**
 -- 
 2.43.0
 
