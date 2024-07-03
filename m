@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97CFF171E72;
-	Wed,  3 Jul 2024 11:03:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EF24179641;
+	Wed,  3 Jul 2024 11:03:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004599; cv=none; b=JMGpN2GAHfQcpnOkD4T+poEtJPlaTFzCTvAQku8ch+gDRBG7h7+f3RVAxItOygORuG18z0nh/ceBcY1TApLbvnxCcuQT5quHok05lfGvVCK8bVgvoK9JKxZqTILKtNRudRzof8vXulljCWqcONTNrC871l+MBq/DX+YDNYASemc=
+	t=1720004602; cv=none; b=mmnZ7fjFeJQphaCZE+wjkKF+T9xEKgd05JGHItQaszCFKvFu3rnGZip7+hWYBNWjUZG54slWMf0dC5VtzGUxqLsTs3ar7+4qwAYVqemiLYRc61/PZCN2vy4cwmAOykBZiLq5IJv1+r9UiMv5AciXeoIGT57TdLapZTImyFlEWFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004599; c=relaxed/simple;
-	bh=pSDAPyYxgRZf2pTuVuFvCzIfA+zlKBbqVXVB77IO2L8=;
+	s=arc-20240116; t=1720004602; c=relaxed/simple;
+	bh=pBGeHI98N7dF+pVRhZc01tfpc69FqshjSpiECqdHqHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hpcD1uDvXJCOFKC6GPiQkjIyhUlkUjqIIfoN34n914sY8T3nkxE4gs+HlQXvsFJtNR9ck3BijelpIwJRF1mARQhKvYzKx1Kc9pKXzvzWcYasaILpvbOtsvXEf7BfJqhVxzd4UJcUMgQPxnr8dUjwCVQCe9cx328FbIXs8zX5Muc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X+Kbyo9+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ltTD8+sIzDuct0P4iN1usxJbH7CEEiCS2xevAInG5+wrURjGerd4HZweePX+BjZsYguuAxXKDBiHXO75br0btkJWSp5C/jMx36ROnRIpqdHTz5s6k0MLvHk6tdkv1+23WCySB6Nbnh1xdI1NZ5mgRU8pM4bUdf2LWnKO0UC1BLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OBOFRJYh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X+Kbyo9+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DC6BC2BD10;
-	Wed,  3 Jul 2024 11:03:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OBOFRJYh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09990C2BD10;
+	Wed,  3 Jul 2024 11:03:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004599;
-	bh=pSDAPyYxgRZf2pTuVuFvCzIfA+zlKBbqVXVB77IO2L8=;
+	s=korg; t=1720004602;
+	bh=pBGeHI98N7dF+pVRhZc01tfpc69FqshjSpiECqdHqHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X+Kbyo9+QutiXeFguThDZi29WpY1Kom0hdFefHZ1ZBmyT9pOFAqZLONOucY/IZDCZ
-	 mfwkoG06xRy1aP6sDVTI6Lgwfjq8P7iJWZ6UJ2vnUkZiuQgT+25OfIqnsSfGRC7p0H
-	 qfiVpDV1fQMyU47KEg6VVCjvk3S4j/fvFXttqrZ0=
+	b=OBOFRJYhJofBqPXNQb0d3ynsO5EkMhYkBOGtTSIKai/YzL0jUVrUcgKey0qYm3IVe
+	 g43E6ipVYBGR3vPLrdQWmIenPhbJS2NfqXXi+aKWamu4FpCq05c6mL0c0o93qsXFxw
+	 W2RKiXBnjuvwxx6kEisWpBsHHmBy+PvLz2OLND+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	Christoph Paasch <cpaasch@apple.com>,
-	Paolo Abeni <pabeni@redhat.com>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	YonglongLi <liyonglong@chinatelecom.cn>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 096/290] mptcp: ensure snd_una is properly initialized on connect
-Date: Wed,  3 Jul 2024 12:37:57 +0200
-Message-ID: <20240703102907.817618578@linuxfoundation.org>
+Subject: [PATCH 5.10 097/290] mptcp: pm: inc RmAddr MIB counter once per RM_ADDR ID
+Date: Wed,  3 Jul 2024 12:37:58 +0200
+Message-ID: <20240703102907.856223693@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -53,47 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: YonglongLi <liyonglong@chinatelecom.cn>
 
-commit 8031b58c3a9b1db3ef68b3bd749fbee2e1e1aaa3 upstream.
+commit 6a09788c1a66e3d8b04b3b3e7618cc817bb60ae9 upstream.
 
-This is strictly related to commit fb7a0d334894 ("mptcp: ensure snd_nxt
-is properly initialized on connect"). It turns out that syzkaller can
-trigger the retransmit after fallback and before processing any other
-incoming packet - so that snd_una is still left uninitialized.
+The RmAddr MIB counter is supposed to be incremented once when a valid
+RM_ADDR has been received. Before this patch, it could have been
+incremented as many times as the number of subflows connected to the
+linked address ID, so it could have been 0, 1 or more than 1.
 
-Address the issue explicitly initializing snd_una together with snd_nxt
-and write_seq.
+The "RmSubflow" is incremented after a local operation. In this case,
+it is normal to tied it with the number of subflows that have been
+actually removed.
 
-Suggested-by: Mat Martineau <martineau@kernel.org>
-Fixes: 8fd738049ac3 ("mptcp: fallback in case of simultaneous connect")
+The "remove invalid addresses" MP Join subtest has been modified to
+validate this case. A broadcast IP address is now used instead: the
+client will not be able to create a subflow to this address. The
+consequence is that when receiving the RM_ADDR with the ID attached to
+this broadcast IP address, no subflow linked to this ID will be found.
+
+Fixes: 7a7e52e38a40 ("mptcp: add RM_ADDR related mibs")
 Cc: stable@vger.kernel.org
-Reported-by: Christoph Paasch <cpaasch@apple.com>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/485
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
+Co-developed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://lore.kernel.org/r/20240607-upstream-net-20240607-misc-fixes-v1-1-1ab9ddfa3d00@kernel.org
+Signed-off-by: YonglongLi <liyonglong@chinatelecom.cn>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://lore.kernel.org/r/20240607-upstream-net-20240607-misc-fixes-v1-2-1ab9ddfa3d00@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Conflicts in protocol.c, similar to the ones from commit 99951b62bf20
-  ("mptcp: ensure snd_nxt is properly initialized on connect"), with the
-  same resolution. Note that in this version, 'snd_una' is an atomic64
-  type, so use atomic64_set() instead, as it is done everywhere else. ]
+[ Conflicts in pm_netlink.c because the commit 9f12e97bf16c ("mptcp:
+  unify RM_ADDR and RM_SUBFLOW receiving"), and commit d0b698ca9a27
+  ("mptcp: remove multi addresses in PM") are not in this version. To
+  fix the issue, the incrementation should be done outside the loop: the
+  same resolution has been applied here.
+  The selftest modification has been dropped, because the modified test
+  is not in this version. That's fine, we can test with selftests from a
+  newer version. ]
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/mptcp/pm_netlink.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2646,6 +2646,7 @@ static int mptcp_stream_connect(struct s
- 		mptcp_subflow_early_fallback(msk, subflow);
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -427,10 +427,10 @@ void mptcp_pm_nl_rm_addr_received(struct
+ 		msk->pm.subflows--;
+ 		WRITE_ONCE(msk->pm.accept_addr, true);
  
- 	WRITE_ONCE(msk->write_seq, subflow->idsn);
-+	atomic64_set(&msk->snd_una, msk->write_seq);
+-		__MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_RMADDR);
+-
+ 		break;
+ 	}
++
++	__MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_RMADDR);
+ }
  
- do_connect:
- 	err = ssock->ops->connect(ssock, uaddr, addr_len, flags);
+ void mptcp_pm_nl_rm_subflow_received(struct mptcp_sock *msk, u8 rm_id)
 
 
