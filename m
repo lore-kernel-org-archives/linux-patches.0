@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F65B191F82;
-	Wed,  3 Jul 2024 10:58:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683151946A0;
+	Wed,  3 Jul 2024 10:58:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004312; cv=none; b=nCk4znUxxnSwKO1i2t9zzEcaQlWGbNLs8NhYUzXp44+0FhHDAVZVq/WA6/EINzBWx90dOVL5y3eeSQlzcOBXwTGehBu7HfXB+zS/OD3nUUVV4SssF5s25vOorLjbQ21hBihX1/O7H4W9p1f1bAWXnMBbDJ+F5lAlfwLN8cwjMoY=
+	t=1720004315; cv=none; b=g8xNbhuYLv2ldn83jq1zzzVxYBbEBVZjfP+X11bc4R9tbbBhA9czvP/9+KTR3BTrvGaqt3wJOuXOY5vehYX3U0lOVEhVUNmCMjvuXwVFAt/fY7I1iVPs+0Q+WXWADDiaXghPAktjUXK+fWuVoP9PjNiVV3K5Rx8e634c/JVQaaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004312; c=relaxed/simple;
-	bh=IFdK4f6wcZDCIuo03u1E9Fpy4pi/13m3X8+Ixshm15s=;
+	s=arc-20240116; t=1720004315; c=relaxed/simple;
+	bh=/0S+0oFK3ndjpainvaKqONZtNwDHjQjGGkHem+le3EU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CbmmdpPJxzZnTqj+AEbfd6S7oWyO8YHQu8PYshiPtoGf2qCKDuCyg8j2HNz6KHdPp4rDabBKab0tcUJ6mKOCaEYfzQ0zmt5Ob+1xVoyMjwPGJmHN0iMopPLwrsanVKAtck4xB4fzwTMMr828cWWpSRlWWEWPmhxrl1kn4iyxzm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZG2PDkr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=joCcroS/RLWYtKuu9znVTjPK7lOenAPDHcRLujYJ5xP7QUJm7u4UXV/Acst75hWNAEyMT0hkTgGWUjW+3K0OTifhHPHUlwONQDJ88PyMQXAkJzHHBJ3fcrCYeDLOXfVPda26R7SPkWncGN8+DF4Ng6/EE5KoP2P0z8kpxTqgQhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MuUPAeMs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZG2PDkr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBB16C2BD10;
-	Wed,  3 Jul 2024 10:58:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MuUPAeMs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E04F5C32781;
+	Wed,  3 Jul 2024 10:58:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004312;
-	bh=IFdK4f6wcZDCIuo03u1E9Fpy4pi/13m3X8+Ixshm15s=;
+	s=korg; t=1720004315;
+	bh=/0S+0oFK3ndjpainvaKqONZtNwDHjQjGGkHem+le3EU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GZG2PDkrb1o9iRDGSunFd8NWaXliLihgCQhb3No4XVHaOnAa0PD2sEzP3qMRgpFJD
-	 Z9bLJXW1cr+YQFvqfEjcYakJYCAxOZAd36QvehCQQT1fzJuvkG1J70C4W+8xpXBphe
-	 AkDDp0f1MoKHHR5dEi6aRXuO92/ePx/P+VfKFzkw=
+	b=MuUPAeMspUzX+IR19yFxPgpZ2swY1czd/uBPSwYcKrZJNwCRtKM7lgtsT9UHXNDYI
+	 dXENedx7oL7rerANMX17gNu0FDLB/GxenbOBP94qPfLd1wRpYfoqXjdoly7XK9tBuP
+	 KkdWnMTZBY2h2tN/xwGdXkOtCCQbTphG/LwJIlDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Bee <knaerzche@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 189/189] arm64: dts: rockchip: Add sound-dai-cells for RK3368
-Date: Wed,  3 Jul 2024 12:40:50 +0200
-Message-ID: <20240703102848.606421867@linuxfoundation.org>
+	Vasileios Amoiridis <vassilisamir@gmail.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.4 162/189] iio: chemical: bme680: Fix calibration data variable
+Date: Wed,  3 Jul 2024 12:40:23 +0200
+Message-ID: <20240703102847.583785011@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -51,52 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Bee <knaerzche@gmail.com>
+From: Vasileios Amoiridis <vassilisamir@gmail.com>
 
-[ Upstream commit 8d7ec44aa5d1eb94a30319074762a1740440cdc8 ]
+commit b47c0fee73a810c4503c4a94ea34858a1d865bba upstream.
 
-Add the missing #sound-dai-cells for RK3368's I2S and S/PDIF controllers.
+According to the BME68x Sensor API [1], the h6 calibration
+data variable should be an unsigned integer of size 8.
 
-Fixes: f7d89dfe1e31 ("arm64: dts: rockchip: add i2s nodes support for RK3368 SoCs")
-Fixes: 0328d68ea76d ("arm64: dts: rockchip: add rk3368 spdif node")
-Signed-off-by: Alex Bee <knaerzche@gmail.com>
-Link: https://lore.kernel.org/r/20240623090116.670607-4-knaerzche@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[1]: https://github.com/boschsensortec/BME68x_SensorAPI/blob/v4.4.8/bme68x_defs.h#L789
+
+Fixes: 1b3bd8592780 ("iio: chemical: Add support for Bosch BME680 sensor")
+Signed-off-by: Vasileios Amoiridis <vassilisamir@gmail.com>
+Link: https://lore.kernel.org/r/20240606212313.207550-3-vassilisamir@gmail.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3368.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/iio/chemical/bme680_core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3368.dtsi b/arch/arm64/boot/dts/rockchip/rk3368.dtsi
-index fd86188010b29..45f40cfaca4fa 100644
---- a/arch/arm64/boot/dts/rockchip/rk3368.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3368.dtsi
-@@ -686,6 +686,7 @@
- 		dma-names = "tx";
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&spdif_tx>;
-+		#sound-dai-cells = <0>;
- 		status = "disabled";
- 	};
- 
-@@ -697,6 +698,7 @@
- 		clocks = <&cru SCLK_I2S_2CH>, <&cru HCLK_I2S_2CH>;
- 		dmas = <&dmac_bus 6>, <&dmac_bus 7>;
- 		dma-names = "tx", "rx";
-+		#sound-dai-cells = <0>;
- 		status = "disabled";
- 	};
- 
-@@ -710,6 +712,7 @@
- 		dma-names = "tx", "rx";
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&i2s_8ch_bus>;
-+		#sound-dai-cells = <0>;
- 		status = "disabled";
- 	};
- 
--- 
-2.43.0
-
+--- a/drivers/iio/chemical/bme680_core.c
++++ b/drivers/iio/chemical/bme680_core.c
+@@ -38,7 +38,7 @@ struct bme680_calib {
+ 	s8  par_h3;
+ 	s8  par_h4;
+ 	s8  par_h5;
+-	s8  par_h6;
++	u8  par_h6;
+ 	s8  par_h7;
+ 	s8  par_gh1;
+ 	s16 par_gh2;
 
 
