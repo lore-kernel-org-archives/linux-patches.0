@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA65173328;
-	Wed,  3 Jul 2024 11:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158C261FDF;
+	Wed,  3 Jul 2024 11:04:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004693; cv=none; b=YoiffnMrtPWWHz9wnD+gEt06O413PIjaKVawGAg6GZKCTb1OmKaWLCfP3InKYhc5yFBnClbAu8sgmByX1gcAiDJ9lR9AYR9Ct4Ba9ziL2SPppob/NNwTAfMfRo2oe6v8lKOFkFkxSRlfTP9LO7gXNOrY3Py3ljpXx2ep3qKCeEg=
+	t=1720004697; cv=none; b=mxHZjbfRDl26UNvQxHJabgvf24q4S39YA8QU5n2FCSMGVmr13pMWJ/z/mvoC6Kof0OHyWkM+repa4SnFmtWf8l9BIi1RDyAv26feVif+Eh8Fmnu2szB8XhvvaY29m4Ow8HrC41Gs3EolPSDnhjlKoIqj2McJ3mcN05P4AhjNqUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004693; c=relaxed/simple;
-	bh=S0OUneQuKI8vBqi7mTFrwsR15fU4+3GoL86YHBNQT+w=;
+	s=arc-20240116; t=1720004697; c=relaxed/simple;
+	bh=glfdY6aTCSnt1OWTMlMDrqUbIxFV2DlXm5Tn5Yy+RLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B6ZbrLVIk9g2zkQtozb5xHn4CitolLlsR96gQWSJmj7qyaU5OwOJSvbXO1qAHjHpvT11JedInJYu/TeB+2P7LtmIok5E4U1TOHqDXOdwzckfZDTw1K1Vy1gz56t+8AzFY6v7RB9S5ZAlgdZUYftn6mi8zpFAtyMY9yssPAVCB9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y8qHZoag; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h770rDSuuXHztlFUEhZo5vg+kLF6PsPHwnQy2WxW7eNQ1U1En8TNVzCKj1LL3brDejBLv/e5N+siRJP+XtFXY6r9IA8isEjOkyTbDwgDsk7ddnKmhDE7GXuFtLCygtNQJVVM65HnWdOsFHj4gO4DOLP7MImfKzvjecL9tKR8Ly4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sUXY6L15; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8qHZoag"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52639C2BD10;
-	Wed,  3 Jul 2024 11:04:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sUXY6L15"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B806C4AF0E;
+	Wed,  3 Jul 2024 11:04:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004693;
-	bh=S0OUneQuKI8vBqi7mTFrwsR15fU4+3GoL86YHBNQT+w=;
+	s=korg; t=1720004696;
+	bh=glfdY6aTCSnt1OWTMlMDrqUbIxFV2DlXm5Tn5Yy+RLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y8qHZoagAdaDhLXdrdFlygH7e3cxL8/0pZhatGcYa9vffnaBuyzSNcQpe4xHwkJdr
-	 ZGd0BaMNt9L726xk1/N1t3aBk0lJ0++SpUD8MThR/o4NtQFcmp8tGL8JYGAnL2nAS1
-	 xob2+d6usMAPNT3BqED44687pz9Up835znjoByCQ=
+	b=sUXY6L15T2iQpZCU7J3xMBUKkUF7hi2h+lR+uAA5uAZiRmCnYQL9tLw7b8DQufTrV
+	 wQ9921HR7PEwCZzz3WL1j3oTILoIPKEsSwprMojVWD/GDRtg8r6IkchhZj5eCZTubu
+	 DQzHC6/cW1GFK372fzoFE7MEHa97hsPUx6YKF2h4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Beleswar Padhi <b-padhi@ti.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: [PATCH 5.10 086/290] remoteproc: k3-r5: Do not allow core1 to power up before core0 via sysfs
-Date: Wed,  3 Jul 2024 12:37:47 +0200
-Message-ID: <20240703102907.442478413@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Charlene Liu <charlene.liu@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 121/290] drm/amd/display: Exit idle optimizations before HDCP execution
+Date: Wed,  3 Jul 2024 12:38:22 +0200
+Message-ID: <20240703102908.761106184@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -50,80 +55,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Beleswar Padhi <b-padhi@ti.com>
+From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-commit 3c8a9066d584f5010b6f4ba03bf6b19d28973d52 upstream.
+[ Upstream commit f30a3bea92bdab398531129d187629fb1d28f598 ]
 
-PSC controller has a limitation that it can only power-up the second
-core when the first core is in ON state. Power-state for core0 should be
-equal to or higher than core1.
+[WHY]
+PSP can access DCN registers during command submission and we need
+to ensure that DCN is not in PG before doing so.
 
-Therefore, prevent core1 from powering up before core0 during the start
-process from sysfs. Similarly, prevent core0 from shutting down before
-core1 has been shut down from sysfs.
+[HOW]
+Add a callback to DM to lock and notify DC for idle optimization exit.
+It can't be DC directly because of a potential race condition with the
+link protection thread and the rest of DM operation.
 
-Fixes: 6dedbd1d5443 ("remoteproc: k3-r5: Add a remoteproc driver for R5F subsystem")
-Signed-off-by: Beleswar Padhi <b-padhi@ti.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240430105307.1190615-3-b-padhi@ti.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Charlene Liu <charlene.liu@amd.com>
+Acked-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/ti_k3_r5_remoteproc.c |   23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c    | 10 ++++++++++
+ drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h |  8 ++++++++
+ 2 files changed, 18 insertions(+)
 
---- a/drivers/remoteproc/ti_k3_r5_remoteproc.c
-+++ b/drivers/remoteproc/ti_k3_r5_remoteproc.c
-@@ -429,7 +429,7 @@ static int k3_r5_rproc_start(struct rpro
- 	struct k3_r5_cluster *cluster = kproc->cluster;
- 	struct mbox_client *client = &kproc->client;
- 	struct device *dev = kproc->dev;
--	struct k3_r5_core *core;
-+	struct k3_r5_core *core0, *core;
- 	u32 boot_addr;
- 	int ret;
+diff --git a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c
+index fa8aeec304ef4..c39cb4b6767cf 100644
+--- a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c
++++ b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c
+@@ -86,6 +86,14 @@ static uint8_t is_cp_desired_hdcp2(struct mod_hdcp *hdcp)
+ 			!hdcp->connection.is_hdcp2_revoked;
+ }
  
-@@ -478,6 +478,15 @@ static int k3_r5_rproc_start(struct rpro
- 				goto unroll_core_run;
- 		}
- 	} else {
-+		/* do not allow core 1 to start before core 0 */
-+		core0 = list_first_entry(&cluster->cores, struct k3_r5_core,
-+					 elem);
-+		if (core != core0 && core0->rproc->state == RPROC_OFFLINE) {
-+			dev_err(dev, "%s: can not start core 1 before core 0\n",
-+				__func__);
-+			return -EPERM;
-+		}
++static void exit_idle_optimizations(struct mod_hdcp *hdcp)
++{
++	struct mod_hdcp_dm *dm = &hdcp->config.dm;
 +
- 		ret = k3_r5_core_run(core);
- 		if (ret)
- 			goto put_mbox;
-@@ -518,7 +527,8 @@ static int k3_r5_rproc_stop(struct rproc
- {
- 	struct k3_r5_rproc *kproc = rproc->priv;
- 	struct k3_r5_cluster *cluster = kproc->cluster;
--	struct k3_r5_core *core = kproc->core;
-+	struct device *dev = kproc->dev;
-+	struct k3_r5_core *core1, *core = kproc->core;
- 	int ret;
++	if (dm->funcs.exit_idle_optimizations)
++		dm->funcs.exit_idle_optimizations(dm->handle);
++}
++
+ static enum mod_hdcp_status execution(struct mod_hdcp *hdcp,
+ 		struct mod_hdcp_event_context *event_ctx,
+ 		union mod_hdcp_transition_input *input)
+@@ -448,6 +456,8 @@ enum mod_hdcp_status mod_hdcp_process_event(struct mod_hdcp *hdcp,
+ 	memset(&event_ctx, 0, sizeof(struct mod_hdcp_event_context));
+ 	event_ctx.event = event;
  
- 	/* halt all applicable cores */
-@@ -531,6 +541,15 @@ static int k3_r5_rproc_stop(struct rproc
- 			}
- 		}
- 	} else {
-+		/* do not allow core 0 to stop before core 1 */
-+		core1 = list_last_entry(&cluster->cores, struct k3_r5_core,
-+					elem);
-+		if (core != core1 && core1->rproc->state != RPROC_OFFLINE) {
-+			dev_err(dev, "%s: can not stop core 0 before core 1\n",
-+				__func__);
-+			return -EPERM;
-+		}
++	exit_idle_optimizations(hdcp);
 +
- 		ret = k3_r5_core_halt(core);
- 		if (ret)
- 			goto out;
+ 	/* execute and transition */
+ 	exec_status = execution(hdcp, &event_ctx, &hdcp->auth.trans_input);
+ 	trans_status = transition(
+diff --git a/drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h b/drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h
+index eed560eecbab4..fb195276fb704 100644
+--- a/drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h
++++ b/drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h
+@@ -143,6 +143,13 @@ struct mod_hdcp_ddc {
+ 	} funcs;
+ };
+ 
++struct mod_hdcp_dm {
++	void *handle;
++	struct {
++		void (*exit_idle_optimizations)(void *handle);
++	} funcs;
++};
++
+ struct mod_hdcp_psp {
+ 	void *handle;
+ 	void *funcs;
+@@ -252,6 +259,7 @@ struct mod_hdcp_display_query {
+ struct mod_hdcp_config {
+ 	struct mod_hdcp_psp psp;
+ 	struct mod_hdcp_ddc ddc;
++	struct mod_hdcp_dm dm;
+ 	uint8_t index;
+ };
+ 
+-- 
+2.43.0
+
 
 
