@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F6118C334;
-	Wed,  3 Jul 2024 11:22:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468031891CA;
+	Wed,  3 Jul 2024 11:22:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005736; cv=none; b=QQmzbV9gB1S8LvEaWCd02Gc+lMvPYjmrwfHRFeB3r3jh5kvXZL6WGPS79qSB+j1xiW9PouJNKn3my4y8M7ks9Wi0UDj3e9Y4aCmeerwv2SsbtzGpKS6HVDW+04D4wca/xtPGkdEKdccUEmEyDWq89CqGSHQWrajIOoEXbTKMiDA=
+	t=1720005739; cv=none; b=gmjRj1HfT9aXiCqhb3pzr7FDV0Pv1kZ4uwnxDW9hS5xDm4HtrOjkqUql/2+FBKpjIsFF+vvcZOXUjA/DsT6AP3WRmlUXafMs/M/xGQduYY4XIQnJzLnX9HzOxbLR4ijqToXnsMf/zluaHwss2k+6Zz9VH2xdjYRNG1aGMxvJG2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005736; c=relaxed/simple;
-	bh=L756DJeL4BljDFdUKNu76S+aICYz9u+Zqt8hF/TcWFk=;
+	s=arc-20240116; t=1720005739; c=relaxed/simple;
+	bh=+kgjpxKrrfu3I0wsRxSIyJ47gIp64GHhK1mMcf5Whdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HWsztv9nMPa9phDZMrjTAvKYeZ2kBxPKWyB/Y1bj7pRkQ8OI0Wf4FmDW4jGrGdzdTquxLhBHHDid3+0PNH+zATmHJuVMX3dJ7aeHsSbJUhk+GqAaZATrG8KrgTxZxTisy2IdIvjSp1/cSkwbCg1SkFxrVZBDrDzcbLWj3SQkUVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wkj4ot5J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LImJUjEdRP2gaBef4nnr5rWjk8c5RRILYlzqIsu3vo9Y0JPJNpbYrBxVqdj0QSS0kVtiidCcak0cxPiAX/bJcUtDEyeRZyWsIld+ecR3/uQ/ykkLxgv97G5DJP23NTizp3AVJuUwRfS0boKp+H5d4mggHDoGUB5niXpRZbRynA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oSSw5ZE8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wkj4ot5J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFBFBC2BD10;
-	Wed,  3 Jul 2024 11:22:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oSSw5ZE8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF42DC2BD10;
+	Wed,  3 Jul 2024 11:22:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005736;
-	bh=L756DJeL4BljDFdUKNu76S+aICYz9u+Zqt8hF/TcWFk=;
+	s=korg; t=1720005739;
+	bh=+kgjpxKrrfu3I0wsRxSIyJ47gIp64GHhK1mMcf5Whdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wkj4ot5JPSSpiSB4rLAc/+/foOvjhiPuUTr/eKq6e1lbKtBnwQsrzK50VMhbH0+6p
-	 fK5sP0Y+wNefpf1wpUqcD8P96CE2e5Zq+z6a4SX/OxqP286qjHPd60r4Ab1ZEJBLIN
-	 FUqjFzTUVTfdJSE22/jHLD9UrSHy3mD20DfxTJSQ=
+	b=oSSw5ZE8sML2NBthcQrtjS31BEDYDLoBlFiXRMHZJ8X0jp5fmfbdPmo2Xe6/FaNS+
+	 ab+IWt829vxW4FUyLg2Yb8Su05vT5U1Nf9R2XIuyD+lsdACHvMmIHnAHJGpJtxjniS
+	 NGiWW1ijFJEwL1BeB5rFuLiHr+GqAWm25ezdlphw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Tim Jiang <quic_tjiang@quicinc.com>,
 	Johan Hovold <johan+linaro@kernel.org>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.15 148/356] Bluetooth: qca: Fix error code in qca_read_fw_build_info()
-Date: Wed,  3 Jul 2024 12:38:04 +0200
-Message-ID: <20240703102918.701179155@linuxfoundation.org>
+Subject: [PATCH 5.15 149/356] Bluetooth: qca: fix info leak when fetching board id
+Date: Wed,  3 Jul 2024 12:38:05 +0200
+Message-ID: <20240703102918.738928504@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,34 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit a189f0ee6685457528db7a36ded3085e5d13ddc3 upstream.
+commit 0adcf6be1445ed50bfd4a451a7a782568f270197 upstream.
 
-Return -ENOMEM on allocation failure.  Don't return success.
+Add the missing sanity check when fetching the board id to avoid leaking
+slab data when later requesting the firmware.
 
-Fixes: cda0d6a198e2 ("Bluetooth: qca: fix info leak when fetching fw build id")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Fixes: a7f8dedb4be2 ("Bluetooth: qca: add support for QCA2066")
+Cc: stable@vger.kernel.org	# 6.7
+Cc: Tim Jiang <quic_tjiang@quicinc.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btqca.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btqca.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
 --- a/drivers/bluetooth/btqca.c
 +++ b/drivers/bluetooth/btqca.c
-@@ -147,8 +147,10 @@ static int qca_read_fw_build_info(struct
+@@ -209,6 +209,11 @@ static int qca_read_fw_board_id(struct h
+ 		goto out;
  	}
  
- 	build_label = kstrndup(&edl->data[1], build_lbl_len, GFP_KERNEL);
--	if (!build_label)
-+	if (!build_label) {
-+		err = -ENOMEM;
- 		goto out;
++	if (skb->len < 3) {
++		err = -EILSEQ;
++		goto out;
 +	}
- 
- 	hci_set_fw_info(hdev, "%s", build_label);
++
+ 	*bid = (edl->data[1] << 8) + edl->data[2];
+ 	bt_dev_dbg(hdev, "%s: bid = %x", __func__, *bid);
  
 
 
