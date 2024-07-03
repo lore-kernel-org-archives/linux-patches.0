@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B141822E5;
-	Wed,  3 Jul 2024 10:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFBF51822CD;
+	Wed,  3 Jul 2024 10:54:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004051; cv=none; b=gd3qsG3Ry6DOFXQmyI+1RzFAUdAI1n7a9HcR3QujruJtMncXTVThCdf1fqpYOB2nO3ywFcQOWyCTbPVEh3kz63GUq3Nh4rlnybjqmgXDhgBVqd69Enx52uSZwzvLNe8l0YvXObnT5+WZyARI01VQpVjY/yiKYTfw2D2e/bkHfwQ=
+	t=1720004054; cv=none; b=HHqN8VUlpUSSDzZmgw72eG2TssnyTJRqJ9Y/y3MxRlQEMps2IiSpMeQWdDAyiJeeeP5YVvcJdNqAeCd7365xLg1Q9o/+zx5wRcrC7x52S91huxTHWXnB1htbi/YQjs1rgpNb2pM6XMeu6UmVxaCknkXfR/V0q5XYfcL0tturaa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004051; c=relaxed/simple;
-	bh=PuT4gQpKriYpbDZ/LaqZlseYL74udyppOC61ASe+5YY=;
+	s=arc-20240116; t=1720004054; c=relaxed/simple;
+	bh=n0+nBvsZ0phS1LXW55s1f8+dTnL0O71pzwEStHE5ZRY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NhLgAN/W6czt0AiE/hh6sIlI5vZHul8blbKA1lBdPowIMEiw7XFXnTAQr6V755Vvaq8v4BsD/OVVuelVBu2z7gtlGhOIUhhmB5FCV3UELLXsbIBN8CWZG6f6gynPjzi7KSlYGgA36t7rRT8ioQVCQUcC0JQDhBW8EG+WjOzMGo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mPemYLSC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KOH21YknaSjxB5dScN8DMtXFkfJqFM0vVbQJfpq6lxVH/Vz5LnoAGkkush+vhygJOppQF3Pr7NvHKsg/XaQfEIOXFzgntNahTMJhhxn/NKEOVogtVabfkEg9WZzUfwNgtapNgThF6ER5vo0DOFQ2GlbBK+OxdiFIuTSP/lBQufw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cjAj+dAS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mPemYLSC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFCBDC4AF0D;
-	Wed,  3 Jul 2024 10:54:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cjAj+dAS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36FE2C32781;
+	Wed,  3 Jul 2024 10:54:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004051;
-	bh=PuT4gQpKriYpbDZ/LaqZlseYL74udyppOC61ASe+5YY=;
+	s=korg; t=1720004054;
+	bh=n0+nBvsZ0phS1LXW55s1f8+dTnL0O71pzwEStHE5ZRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mPemYLSC2929lwmNbRvP8iYVwtq0eYbXzjBnsJel2CT8fqqGmyq7h7gD+JfpBaLQR
-	 w7SHEperLt5z6YstoYrGL8M5fdt1kv+u/pXTiddrm9lKy62SagUSeOocIDUYjpmmz3
-	 1WvAQ5snAYGqcIxqfLJ5dx4pB2vzw2AB/XXl6VbU=
+	b=cjAj+dAShlYWEOr1HsEOCemP354hIocMB54U7GPP+emtsTGYiYUPUkXOMrWOkR0ki
+	 EAaCaj++wlsvO2rUidYk/qHXZd42dK1I+J268nYfMI10h4pgkH2l8pCpvrBJvSWqQn
+	 6wHgqcGkhUXPqCZzA4PMtciWh+dvhyhDA34sqP8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Haibing <yuehaibing@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 108/189] netns: Make get_net_ns() handle zero refcount net
-Date: Wed,  3 Jul 2024 12:39:29 +0200
-Message-ID: <20240703102845.577388968@linuxfoundation.org>
+Subject: [PATCH 5.4 091/189] batman-adv: bypass empty buckets in batadv_purge_orig_ref()
+Date: Wed,  3 Jul 2024 12:39:12 +0200
+Message-ID: <20240703102844.936810304@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -51,111 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yue Haibing <yuehaibing@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ff960f9d3edbe08a736b5a224d91a305ccc946b0 ]
+[ Upstream commit 40dc8ab605894acae1473e434944924a22cfaaa0 ]
 
-Syzkaller hit a warning:
-refcount_t: addition on 0; use-after-free.
-WARNING: CPU: 3 PID: 7890 at lib/refcount.c:25 refcount_warn_saturate+0xdf/0x1d0
+Many syzbot reports are pointing to soft lockups in
+batadv_purge_orig_ref() [1]
+
+Root cause is unknown, but we can avoid spending too much
+time there and perhaps get more interesting reports.
+
+[1]
+
+watchdog: BUG: soft lockup - CPU#0 stuck for 27s! [kworker/u4:6:621]
 Modules linked in:
-CPU: 3 PID: 7890 Comm: tun Not tainted 6.10.0-rc3-00100-gcaa4f9578aba-dirty #310
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-RIP: 0010:refcount_warn_saturate+0xdf/0x1d0
-Code: 41 49 04 31 ff 89 de e8 9f 1e cd fe 84 db 75 9c e8 76 26 cd fe c6 05 b6 41 49 04 01 90 48 c7 c7 b8 8e 25 86 e8 d2 05 b5 fe 90 <0f> 0b 90 90 e9 79 ff ff ff e8 53 26 cd fe 0f b6 1
-RSP: 0018:ffff8881067b7da0 EFLAGS: 00010286
-RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffffff811c72ac
-RDX: ffff8881026a2140 RSI: ffffffff811c72b5 RDI: 0000000000000001
-RBP: ffff8881067b7db0 R08: 0000000000000000 R09: 205b5d3730353139
-R10: 0000000000000000 R11: 205d303938375420 R12: ffff8881086500c4
-R13: ffff8881086500c4 R14: ffff8881086500b0 R15: ffff888108650040
-FS:  00007f5b2961a4c0(0000) GS:ffff88823bd00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000055d7ed36fd18 CR3: 00000001482f6000 CR4: 00000000000006f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- ? show_regs+0xa3/0xc0
- ? __warn+0xa5/0x1c0
- ? refcount_warn_saturate+0xdf/0x1d0
- ? report_bug+0x1fc/0x2d0
- ? refcount_warn_saturate+0xdf/0x1d0
- ? handle_bug+0xa1/0x110
- ? exc_invalid_op+0x3c/0xb0
- ? asm_exc_invalid_op+0x1f/0x30
- ? __warn_printk+0xcc/0x140
- ? __warn_printk+0xd5/0x140
- ? refcount_warn_saturate+0xdf/0x1d0
- get_net_ns+0xa4/0xc0
- ? __pfx_get_net_ns+0x10/0x10
- open_related_ns+0x5a/0x130
- __tun_chr_ioctl+0x1616/0x2370
- ? __sanitizer_cov_trace_switch+0x58/0xa0
- ? __sanitizer_cov_trace_const_cmp2+0x1c/0x30
- ? __pfx_tun_chr_ioctl+0x10/0x10
- tun_chr_ioctl+0x2f/0x40
- __x64_sys_ioctl+0x11b/0x160
- x64_sys_call+0x1211/0x20d0
- do_syscall_64+0x9e/0x1d0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f5b28f165d7
-Code: b3 66 90 48 8b 05 b1 48 2d 00 64 c7 00 26 00 00 00 48 c7 c0 ff ff ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 b8 10 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 81 48 2d 00 8
-RSP: 002b:00007ffc2b59c5e8 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f5b28f165d7
-RDX: 0000000000000000 RSI: 00000000000054e3 RDI: 0000000000000003
-RBP: 00007ffc2b59c650 R08: 00007f5b291ed8c0 R09: 00007f5b2961a4c0
-R10: 0000000029690010 R11: 0000000000000246 R12: 0000000000400730
-R13: 00007ffc2b59cf40 R14: 0000000000000000 R15: 0000000000000000
- </TASK>
-Kernel panic - not syncing: kernel: panic_on_warn set ...
+irq event stamp: 6182794
+ hardirqs last  enabled at (6182793): [<ffff8000801dae10>] __local_bh_enable_ip+0x224/0x44c kernel/softirq.c:386
+ hardirqs last disabled at (6182794): [<ffff80008ad66a78>] __el1_irq arch/arm64/kernel/entry-common.c:533 [inline]
+ hardirqs last disabled at (6182794): [<ffff80008ad66a78>] el1_interrupt+0x24/0x68 arch/arm64/kernel/entry-common.c:551
+ softirqs last  enabled at (6182792): [<ffff80008aab71c4>] spin_unlock_bh include/linux/spinlock.h:396 [inline]
+ softirqs last  enabled at (6182792): [<ffff80008aab71c4>] batadv_purge_orig_ref+0x114c/0x1228 net/batman-adv/originator.c:1287
+ softirqs last disabled at (6182790): [<ffff80008aab61dc>] spin_lock_bh include/linux/spinlock.h:356 [inline]
+ softirqs last disabled at (6182790): [<ffff80008aab61dc>] batadv_purge_orig_ref+0x164/0x1228 net/batman-adv/originator.c:1271
+CPU: 0 PID: 621 Comm: kworker/u4:6 Not tainted 6.8.0-rc7-syzkaller-g707081b61156 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/29/2024
+Workqueue: bat_events batadv_purge_orig
+pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : should_resched arch/arm64/include/asm/preempt.h:79 [inline]
+ pc : __local_bh_enable_ip+0x228/0x44c kernel/softirq.c:388
+ lr : __local_bh_enable_ip+0x224/0x44c kernel/softirq.c:386
+sp : ffff800099007970
+x29: ffff800099007980 x28: 1fffe00018fce1bd x27: dfff800000000000
+x26: ffff0000d2620008 x25: ffff0000c7e70de8 x24: 0000000000000001
+x23: 1fffe00018e57781 x22: dfff800000000000 x21: ffff80008aab71c4
+x20: ffff0001b40136c0 x19: ffff0000c72bbc08 x18: 1fffe0001a817bb0
+x17: ffff800125414000 x16: ffff80008032116c x15: 0000000000000001
+x14: 1fffe0001ee9d610 x13: 0000000000000000 x12: 0000000000000003
+x11: 0000000000000000 x10: 0000000000ff0100 x9 : 0000000000000000
+x8 : 00000000005e5789 x7 : ffff80008aab61dc x6 : 0000000000000000
+x5 : 0000000000000000 x4 : 0000000000000001 x3 : 0000000000000000
+x2 : 0000000000000006 x1 : 0000000000000080 x0 : ffff800125414000
+Call trace:
+  __daif_local_irq_enable arch/arm64/include/asm/irqflags.h:27 [inline]
+  arch_local_irq_enable arch/arm64/include/asm/irqflags.h:49 [inline]
+  __local_bh_enable_ip+0x228/0x44c kernel/softirq.c:386
+  __raw_spin_unlock_bh include/linux/spinlock_api_smp.h:167 [inline]
+  _raw_spin_unlock_bh+0x3c/0x4c kernel/locking/spinlock.c:210
+  spin_unlock_bh include/linux/spinlock.h:396 [inline]
+  batadv_purge_orig_ref+0x114c/0x1228 net/batman-adv/originator.c:1287
+  batadv_purge_orig+0x20/0x70 net/batman-adv/originator.c:1300
+  process_one_work+0x694/0x1204 kernel/workqueue.c:2633
+  process_scheduled_works kernel/workqueue.c:2706 [inline]
+  worker_thread+0x938/0xef4 kernel/workqueue.c:2787
+  kthread+0x288/0x310 kernel/kthread.c:388
+  ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:860
+Sending NMI from CPU 0 to CPUs 1:
+NMI backtrace for cpu 1
+CPU: 1 PID: 0 Comm: swapper/1 Not tainted 6.8.0-rc7-syzkaller-g707081b61156 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/29/2024
+pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : arch_local_irq_enable+0x8/0xc arch/arm64/include/asm/irqflags.h:51
+ lr : default_idle_call+0xf8/0x128 kernel/sched/idle.c:103
+sp : ffff800093a17d30
+x29: ffff800093a17d30 x28: dfff800000000000 x27: 1ffff00012742fb4
+x26: ffff80008ec9d000 x25: 0000000000000000 x24: 0000000000000002
+x23: 1ffff00011d93a74 x22: ffff80008ec9d3a0 x21: 0000000000000000
+x20: ffff0000c19dbc00 x19: ffff8000802d0fd8 x18: 1fffe00036804396
+x17: ffff80008ec9d000 x16: ffff8000802d089c x15: 0000000000000001
+x14: 1fffe00036805f10 x13: 0000000000000000 x12: 0000000000000003
+x11: 0000000000000001 x10: 0000000000000003 x9 : 0000000000000000
+x8 : 00000000000ce8d1 x7 : ffff8000804609e4 x6 : 0000000000000000
+x5 : 0000000000000001 x4 : 0000000000000001 x3 : ffff80008ad6aac0
+x2 : 0000000000000000 x1 : ffff80008aedea60 x0 : ffff800125436000
+Call trace:
+  __daif_local_irq_enable arch/arm64/include/asm/irqflags.h:27 [inline]
+  arch_local_irq_enable+0x8/0xc arch/arm64/include/asm/irqflags.h:49
+  cpuidle_idle_call kernel/sched/idle.c:170 [inline]
+  do_idle+0x1f0/0x4e8 kernel/sched/idle.c:312
+  cpu_startup_entry+0x5c/0x74 kernel/sched/idle.c:410
+  secondary_start_kernel+0x198/0x1c0 arch/arm64/kernel/smp.c:272
+  __secondary_switched+0xb8/0xbc arch/arm64/kernel/head.S:404
 
-This is trigger as below:
-          ns0                                    ns1
-tun_set_iff() //dev is tun0
-   tun->dev = dev
-//ip link set tun0 netns ns1
-                                       put_net() //ref is 0
-__tun_chr_ioctl() //TUNGETDEVNETNS
-   net = dev_net(tun->dev);
-   open_related_ns(&net->ns, get_net_ns); //ns1
-     get_net_ns()
-        get_net() //addition on 0
-
-Use maybe_get_net() in get_net_ns in case net's ref is zero to fix this
-
-Fixes: 0c3e0e3bb623 ("tun: Add ioctl() TUNGETDEVNETNS cmd to allow obtaining real net ns of tun device")
-Signed-off-by: Yue Haibing <yuehaibing@huawei.com>
-Link: https://lore.kernel.org/r/20240614131302.2698509-1-yuehaibing@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/net_namespace.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/batman-adv/originator.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/core/net_namespace.c b/net/core/net_namespace.c
-index 5827de79610b9..c94179d30d426 100644
---- a/net/core/net_namespace.c
-+++ b/net/core/net_namespace.c
-@@ -664,11 +664,16 @@ EXPORT_SYMBOL_GPL(__put_net);
-  * get_net_ns - increment the refcount of the network namespace
-  * @ns: common namespace (net)
-  *
-- * Returns the net's common namespace.
-+ * Returns the net's common namespace or ERR_PTR() if ref is zero.
-  */
- struct ns_common *get_net_ns(struct ns_common *ns)
- {
--	return &get_net(container_of(ns, struct net, ns))->ns;
-+	struct net *net;
-+
-+	net = maybe_get_net(container_of(ns, struct net, ns));
-+	if (net)
-+		return &net->ns;
-+	return ERR_PTR(-EINVAL);
- }
- EXPORT_SYMBOL_GPL(get_net_ns);
+diff --git a/net/batman-adv/originator.c b/net/batman-adv/originator.c
+index 38613487fb1b7..ba51b69ee3642 100644
+--- a/net/batman-adv/originator.c
++++ b/net/batman-adv/originator.c
+@@ -1345,6 +1345,8 @@ void batadv_purge_orig_ref(struct batadv_priv *bat_priv)
+ 	/* for all origins... */
+ 	for (i = 0; i < hash->size; i++) {
+ 		head = &hash->table[i];
++		if (hlist_empty(head))
++			continue;
+ 		list_lock = &hash->list_locks[i];
  
+ 		spin_lock_bh(list_lock);
 -- 
 2.43.0
 
