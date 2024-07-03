@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3488F1741DD;
-	Wed,  3 Jul 2024 10:55:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B3601850A8;
+	Wed,  3 Jul 2024 10:55:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004136; cv=none; b=MLXw1stmQQlytQcIqVUyGwRH62nJ0lEzJeJqn3M6eH8PVuZ0bssFFFhPmNFLTf3rjJv+dkUEvjvFPtpG8EjpUF7c9JpYdu4dPUDfwEKv1tj9INwYwOvm6+P3yIZE6B2TSEhHRjSyhFti9zcYuhrEoe9c6xPEnaC1fQCj4edOGi8=
+	t=1720004139; cv=none; b=p37WeQHqF/pKZalhLF3rTkXns8Y52Fbxx9cspdsQ8pDd7sDjVRSoOv2itjuXIBFuU2S65JQJhvIBFvjftGfN056zG2u1cULeYpKwzG3tofrKD3RCw7Vo05mK97SbVQcbQHVTfbw7ZZb/zrap/g++2H5kap9QnJ2L1a5IWc4WZGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004136; c=relaxed/simple;
-	bh=x2h4Pr+a+LjAkfRqgr7BCXsxanK5dinpBLbQMrhTBV4=;
+	s=arc-20240116; t=1720004139; c=relaxed/simple;
+	bh=PdRTEHXcamTO6gC5mMnfHI1v2T4bMaWLLR6UG9X0BYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tl06VQMpZ72xfppzYVycrgG8gflxkAe12EKnPSQEyllgea2FXgRVm+e1OPxloeJf3pvNkXfYnuV6VzM3l3AZ10lnxuuQw6NC9mlYTdQsHZ9og+fFikp7i52OFjBOO6h75n6Q57sNOt/RC0GMBYO8dg5yhGqQBD2w7ytKoroMFkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nq/dsYJ+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PjV+b6B+bwxJtA3hFqHqPhf3iJNiPWUpBtI1D2YDU+j848qHSEY3VjhzvayU3vyhFCUNXYEPgiaMi+4lRIgkZ6NsoQ6OBahv+P57sWt0+1xecCmKDU87WJ2JtQ1nJqCsnrdjB7WNwbihKp8wcAeM9kFfJsEeYLfrb5Dlmma+ndk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sdvDtdf7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nq/dsYJ+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B28C4AF0D;
-	Wed,  3 Jul 2024 10:55:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sdvDtdf7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94F23C2BD10;
+	Wed,  3 Jul 2024 10:55:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004136;
-	bh=x2h4Pr+a+LjAkfRqgr7BCXsxanK5dinpBLbQMrhTBV4=;
+	s=korg; t=1720004139;
+	bh=PdRTEHXcamTO6gC5mMnfHI1v2T4bMaWLLR6UG9X0BYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nq/dsYJ+VKFnD/9HQ3T909rLSCfoPrVovAYAxJ4qdvbBRwVD7zPDN4r/eFoKCcTHr
-	 Y8Z8NgP+3dX+y77LL0GKsfN+LSrShc3Q86QwehWuar9fWDcDUAzuojoBhWeNWEhf29
-	 GQEAyNXJUJgjZ0prj81lVPmoeGDsYhlnG4e7IybY=
+	b=sdvDtdf7RvlqjiTGpK7VCkKfw7QfW7W7rLl7dsdEpf6DeQtowEePz3gHUVgkNXIQY
+	 hr03K8GvNAwKAlua4ACAoTMWh6ogbn6k9l/aTJQDP5OWuqklYljlhgwX2dNGLoP/oU
+	 1BXNNlGaTbebTaALw8c+QD+LVKFfmJOZoRYiVB98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Ferland <marc.ferland@sonatest.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Maximilian Heyne <mheyne@amazon.de>,
+	Hagar Hemdan <hagarhem@amazon.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 133/189] iio: dac: ad5592r: fix temperature channel scaling value
-Date: Wed,  3 Jul 2024 12:39:54 +0200
-Message-ID: <20240703102846.505655192@linuxfoundation.org>
+Subject: [PATCH 5.4 134/189] pinctrl: fix deadlock in create_pinctrl() when handling -EPROBE_DEFER
+Date: Wed,  3 Jul 2024 12:39:55 +0200
+Message-ID: <20240703102846.542333481@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -52,69 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Ferland <marc.ferland@sonatest.com>
+From: Hagar Hemdan <hagarhem@amazon.com>
 
-[ Upstream commit 279428df888319bf68f2686934897301a250bb84 ]
+[ Upstream commit adec57ff8e66aee632f3dd1f93787c13d112b7a1 ]
 
-The scale value for the temperature channel is (assuming Vref=2.5 and
-the datasheet):
+In create_pinctrl(), pinctrl_maps_mutex is acquired before calling
+add_setting(). If add_setting() returns -EPROBE_DEFER, create_pinctrl()
+calls pinctrl_free(). However, pinctrl_free() attempts to acquire
+pinctrl_maps_mutex, which is already held by create_pinctrl(), leading to
+a potential deadlock.
 
-    376.7897513
+This patch resolves the issue by releasing pinctrl_maps_mutex before
+calling pinctrl_free(), preventing the deadlock.
 
-When calculating both val and val2 for the temperature scale we
-use (3767897513/25) and multiply it by Vref (here I assume 2500mV) to
-obtain:
+This bug was discovered and resolved using Coverity Static Analysis
+Security Testing (SAST) by Synopsys, Inc.
 
-  2500 * (3767897513/25) ==> 376789751300
-
-Finally we divide with remainder by 10^9 to get:
-
-    val = 376
-    val2 = 789751300
-
-However, we return IIO_VAL_INT_PLUS_MICRO (should have been NANO) as
-the scale type. So when converting the raw temperature value to the
-'processed' temperature value we will get (assuming raw=810,
-offset=-753):
-
-    processed = (raw + offset) * scale_val
-              = (810 + -753) * 376
-	      = 21432
-
-    processed += div((raw + offset) * scale_val2, 10^6)
-              += div((810 + -753) * 789751300, 10^6)
-	      += 45015
-    ==> 66447
-    ==> 66.4 Celcius
-
-instead of the expected 21.5 Celsius.
-
-Fix this issue by changing IIO_VAL_INT_PLUS_MICRO to
-IIO_VAL_INT_PLUS_NANO.
-
-Fixes: 56ca9db862bf ("iio: dac: Add support for the AD5592R/AD5593R ADCs/DACs")
-Signed-off-by: Marc Ferland <marc.ferland@sonatest.com>
-Link: https://lore.kernel.org/r/20240501150554.1871390-1-marc.ferland@sonatest.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 42fed7ba44e4 ("pinctrl: move subsystem mutex to pinctrl_dev struct")
+Suggested-by: Maximilian Heyne <mheyne@amazon.de>
+Signed-off-by: Hagar Hemdan <hagarhem@amazon.com>
+Link: https://lore.kernel.org/r/20240604085838.3344-1-hagarhem@amazon.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/dac/ad5592r-base.c | 2 +-
+ drivers/pinctrl/core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/dac/ad5592r-base.c b/drivers/iio/dac/ad5592r-base.c
-index 5c242479bb811..75025be02dd29 100644
---- a/drivers/iio/dac/ad5592r-base.c
-+++ b/drivers/iio/dac/ad5592r-base.c
-@@ -414,7 +414,7 @@ static int ad5592r_read_raw(struct iio_dev *iio_dev,
- 			s64 tmp = *val * (3767897513LL / 25LL);
- 			*val = div_s64_rem(tmp, 1000000000LL, val2);
- 
--			return IIO_VAL_INT_PLUS_MICRO;
-+			return IIO_VAL_INT_PLUS_NANO;
+diff --git a/drivers/pinctrl/core.c b/drivers/pinctrl/core.c
+index 44802e5017945..1d8324e220fcf 100644
+--- a/drivers/pinctrl/core.c
++++ b/drivers/pinctrl/core.c
+@@ -1090,8 +1090,8 @@ static struct pinctrl *create_pinctrl(struct device *dev,
+ 		 * an -EPROBE_DEFER later, as that is the worst case.
+ 		 */
+ 		if (ret == -EPROBE_DEFER) {
+-			pinctrl_free(p, false);
+ 			mutex_unlock(&pinctrl_maps_mutex);
++			pinctrl_free(p, false);
+ 			return ERR_PTR(ret);
  		}
- 
- 		mutex_lock(&st->lock);
+ 	}
 -- 
 2.43.0
 
