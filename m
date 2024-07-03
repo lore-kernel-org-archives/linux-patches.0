@@ -1,66 +1,66 @@
-Received: from mail-vs1-f53.google.com (mail-vs1-f53.google.com [209.85.217.53])
+Received: from mail-vk1-f169.google.com (mail-vk1-f169.google.com [209.85.221.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547723BBEA
-	for <patches@lists.linux.dev>; Wed,  3 Jul 2024 08:57:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA6A13BAE2
+	for <patches@lists.linux.dev>; Wed,  3 Jul 2024 09:09:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719997035; cv=none; b=Jt5NcPEUn2ADMwX05S8p//KSDUhU60QErgokfqNKscZzBGOg5I6go10nlsXoYYX/iwOLp+4aii16qBzNu20oG4GuFmdQrvkGITC+mgBNa45rcmeT03EVdcXPG0fnhO0zh3UJMoAkG9TjA2J3RXXYmQRDNluGXDcshiERiDEISZo=
+	t=1719997749; cv=none; b=DDafxC+DPyQJthPpYDK7yovosfghal/nch5QyVRsb7CaGAB8iBkq5VVi7JQosI+I1H48iy0T3KlXVXI7Y/TEdkC2TAZUDiZ1Nyp9uiGC62rkr9d1yRKuR6+C6PT8+v/DaF5pWw1GqLFV3MSXC9VwKwKomzQ7rauiNzNhTbrhFdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719997035; c=relaxed/simple;
-	bh=9P6gVWhaXfdGANh8cYupR+qgTAfXCsxjmt6x8vMHMpg=;
+	s=arc-20240116; t=1719997749; c=relaxed/simple;
+	bh=Q+dDCEE0NYhW9N7macndPjBmHx3DgdcFCWy5QsBxmbA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bKXPRhBYjuaQGy+G0w1NKzJYaO6mmwtefY2cFVhfB0AVSvg+WOVvNk5Gh2DuI1CeuSacHeDVinQh7oHQTCEmSTN9flnOUbFbXWWad2x6nKkyDz3Npf70qbpRnng6EWq8dYAoEWJkT/rp4a5Ee/DNWfy1Gj4cHt6Jc9S/ax6IlAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OLcZXYHO; arc=none smtp.client-ip=209.85.217.53
+	 To:Cc:Content-Type; b=m31s8HGxLg7ld3bWyZc2kwm9pAaAU4w/w4RBNw7XqEbkd1PT3cbv7CgMoKXAmOtGiEvdJK05hVvB8ecVvOwkzTZftFWKNPUeNwQQrxjJw/rDbiHGfGIoPGVAFO8cgMN3TmbYgRxCAtdXxD7QcjhNkoyFkNyR237GuCnutG6cIzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qdhq7h7L; arc=none smtp.client-ip=209.85.221.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OLcZXYHO"
-Received: by mail-vs1-f53.google.com with SMTP id ada2fe7eead31-48f8f568ceaso191848137.1
-        for <patches@lists.linux.dev>; Wed, 03 Jul 2024 01:57:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qdhq7h7L"
+Received: by mail-vk1-f169.google.com with SMTP id 71dfb90a1353d-4f2aa6916e2so1410761e0c.3
+        for <patches@lists.linux.dev>; Wed, 03 Jul 2024 02:09:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719997032; x=1720601832; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1719997747; x=1720602547; darn=lists.linux.dev;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=0XEWnCj/mm3W7EIrD6z86rzpuQbyYOSDTNQl49iY71I=;
-        b=OLcZXYHO6Rn+8BiT+aJ3rxVK4kN6wmLOG6TCqwF6YVDdGED/BfBERsjufbF56xZfc/
-         al2i7tH9sPel6zx8deWREPXReyCG+GhMTXEpsrboqoltBY1eLNUhOfOO68yGt1+yJvol
-         UZ/JwkCif+TjkcvfD5BOMJJGCCH1YQcyNX7eE1hAoQM/P9tqVoXJrB8IY4FGtG/WAN5y
-         +3IJSr/OtQJCSYAphSCmvd/Zu8M7vYJ9+bId9Q7EkyxaEI1VTzaC1wvKGdggspM97D8H
-         PvbdQGtIz9tPuGHW3N3pkNIIxLAIjzuleyUqlMjtiSXpfpLL2Jo6cF61Bn37C4IuaUMP
-         G5kw==
+        bh=J4/FsZ/Xgm2yNtP4JlZEMSDNR2rIdHMnZ1HyaIZt/z4=;
+        b=qdhq7h7L1NN0sO8NSTrp3oQ4nPRO6MaLHM1pWb6dPa1r6R2lmmWk3Vq8mj9b7lTYG4
+         INfxZkw2qzj57IdRa8VqrY6VB80doBxgh6yqbJzZVoy283qV/VTKIOUgf8kR/VcONbJt
+         5xsz5L1HJ1AiZHlUc/2KBVxkKvi9lxJlOv7A06XHyW1UMofuqiJG+rYFKIl4cwxJxCh/
+         9DTXWr76+SJDKqVwfyNH7NYrMPf9eJZZXxbE92pKmILWnDePkjJowh9TBoJZVAGHbQtO
+         0+DEUYKYHY9FcK+0u4VmBlufH/YBpTGgkjO/emblqvC2LLR5v0WzL0m2oeW3mbP0a66T
+         FVgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719997032; x=1720601832;
+        d=1e100.net; s=20230601; t=1719997747; x=1720602547;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=0XEWnCj/mm3W7EIrD6z86rzpuQbyYOSDTNQl49iY71I=;
-        b=kBkSoNoCMyYTOMrC+5qSURozepuGRC7OWUtgDoyxyWHGedp5+inX2ZWWKqaBtMPcxl
-         1Pbztqk+WFb4Dkca+a/fe8WykvYejw1a6IAFHL5TP5mmUgFt2Qz1xo3lNibunp6kzmAl
-         eWYqG79mbgwZJWMCfPVikCYI6e9696TWq9lTc4CMVLDsY0r8Bi6VvA2bmoMFWeooLAgj
-         Us5w0hk7Vo3vHs+ccRtJgvvVCsGLvxFzcMyAPodsxn2nId95rS+B2UXccdeKctsaj3gN
-         AE1Hwa91Yd2D2wwrodT7oHWgtvCqgNglgvVhlfHF8k9nLh9PxAOk3hBVlBtq+2ROo95o
-         QeFw==
-X-Forwarded-Encrypted: i=1; AJvYcCV2hTe2DtnlZO25rIODzC/lXx+F3Xd3UKGqdQVqaOCsLTeDKYad6Q2LJMdNSV4+4lGLFg/1tP/mLZXmygPkxZ88ikOoBwtF7g==
-X-Gm-Message-State: AOJu0Yy6srMu8ADv7c7P1DRrrtfW3du+Twk3xbVNGv2NiDBSeaHeWo/T
-	cWQX6KResBowO3PYj5QTinvSp0D97XczQEoT2V7k1hGmMEAfq8tcDPog991r5FP+XdZmNCdd89o
-	kGPy2SlXWeTmW83//1WdUaqbIfKlZf1i1mQdpqw==
-X-Google-Smtp-Source: AGHT+IHbkTRDyG2HvcG78gWTpQrxuOu/Y619sixvhYwI9yjX/IBnZ5qIyumvtHGWox7D6ggwzTkyRtApm42tixwUx2M=
-X-Received: by 2002:a67:bd07:0:b0:48f:b5c1:7269 with SMTP id
- ada2fe7eead31-48fdeb0acc6mr352839137.0.1719997032251; Wed, 03 Jul 2024
- 01:57:12 -0700 (PDT)
+        bh=J4/FsZ/Xgm2yNtP4JlZEMSDNR2rIdHMnZ1HyaIZt/z4=;
+        b=eIYmwdsbVdwOXVIJahjoZGZRVwqv9YhHYBuE+PXTYb17B1U7JeJu4FPd7JMlyeMJRf
+         XFLZ3etVGbtKkbZFfdYrGjj+FUIgtmAGTPUF0lHeqRCZM5B68PCWIep3IvYuvZct3Qaw
+         9+r4/Xd6TMgwZWdT/nwHbqwVKbJzy2rYaiw7VX8VBItliF3ULjX/tKIn/PnGh1pdwcFN
+         veG+OMicwGLBNtNp/Nxx0Su6zrd++HGWKlGdzYM/FmYHe5mtATEyy+bVKHncFrvUEtSd
+         SQS3lpKBE2qOGn7u3kmJFmD8i+FBuwlnOaWBNnYhMLKeRal5gKCFPpL++keht4ldNTHV
+         /mcg==
+X-Forwarded-Encrypted: i=1; AJvYcCXXE4JzG1g1ldwVx543gkLIBNTBkfcAsDSpjbIXa1jVrWStCa3/UwjyobOPsoHSca5+hsTlqYPQ8P/Hj7omOExvSBd8r6bGiQ==
+X-Gm-Message-State: AOJu0YyAClcZ31G3ekMlapmywtKpnw3FrJ2cfRq43dBIY5Rv7r6W8eJ4
+	7+3wLgHt38++UloOzMq9TP5+7WVReuZyLJTlmjKewTGOpUF2Lm/0jGKqBCfm26PSZUM07/a68Wl
+	MH9XYZObyp9HK0rnXX+wKW3d614cQYNI/LJXQvQ==
+X-Google-Smtp-Source: AGHT+IEvzMVTDQNBm4Nvho/bpAhQY9ss01kyvGkjiUkFUnpYA7JCZ5VK1Wb7L+EhxuFg9hFGCFIvApzy1MN/du+FGCk=
+X-Received: by 2002:a05:6122:4a84:b0:4ef:280f:96ea with SMTP id
+ 71dfb90a1353d-4f2a565fb52mr12589732e0c.4.1719997745649; Wed, 03 Jul 2024
+ 02:09:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240702170233.048122282@linuxfoundation.org>
-In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
+References: <20240702170243.963426416@linuxfoundation.org>
+In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
 From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Wed, 3 Jul 2024 14:27:00 +0530
-Message-ID: <CA+G9fYs=KkeYFMS01s3VZmeSYd1zJphinPFCk1G2AJ7LZ=+8=A@mail.gmail.com>
-Subject: Re: [PATCH 6.6 000/163] 6.6.37-rc1 review
+Date: Wed, 3 Jul 2024 14:38:54 +0530
+Message-ID: <CA+G9fYuK+dFrz3dcuUkxbP3R-5NUiSVNJ3tAcRc=Wn=Hs0C5ng@mail.gmail.com>
+Subject: Re: [PATCH 6.9 000/222] 6.9.8-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
@@ -68,14 +68,16 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
 	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
 	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
-	broonie@kernel.org
+	broonie@kernel.org, linux-block <linux-block@vger.kernel.org>, 
+	Jens Axboe <axboe@kernel.dk>, Arnd Bergmann <arnd@arndb.de>, 
+	Dan Carpenter <dan.carpenter@linaro.org>, Anders Roxell <anders.roxell@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 
-On Tue, 2 Jul 2024 at 22:48, Greg Kroah-Hartman
+On Tue, 2 Jul 2024 at 22:36, Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 6.6.37 release.
-> There are 163 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.9.8 release.
+> There are 222 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -83,55 +85,105 @@ On Tue, 2 Jul 2024 at 22:48, Greg Kroah-Hartman
 > Anything received after that time might be too late.
 >
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.37-rc1.gz
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.9.8-rc1.gz
 > or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.9.y
 > and the diffstat can be found below.
 >
 > thanks,
 >
 > greg k-h
+>
 
-The following powerpc builds failed on stable-rc 6.6.
+The following kernel warning was noticed on arm64 Qualcomm db845c device while
+booting stable-rc 6.9.8-rc1.
 
-powerpc:
- - gcc-13-defconfig
- - clang-18-defconfig
+This is not always a reproducible warning.
 
 Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-Build log:
----------
-arch/powerpc/net/bpf_jit_comp.c: In function 'bpf_int_jit_compile':
-arch/powerpc/net/bpf_jit_comp.c:208:17: error: ignoring return value
-of 'bpf_jit_binary_lock_ro' declared with attribute
-'warn_unused_result' [-Werror=unused-result]
-  208 |                 bpf_jit_binary_lock_ro(bpf_hdr);
-      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-cc1: all warnings being treated as errors
+Boot log:
+------
+[    0.000000] Linux version 6.9.8-rc1 (tuxmake@tuxmake) (Debian clang
+version 18.1.8 (++20240615103650+3b5b5c1ec4a3-1~exp1~20240615223815.136),
+Debian LLD 18.1.8) #1 SMP PREEMPT @1719942561
+[    0.000000] KASLR enabled
+[    0.000000] Machine model: Thundercomm Dragonboard 845c
+...
+[    7.097994] ------------[ cut here ]------------
+[    7.097997] WARNING: CPU: 5 PID: 418 at block/blk-mq.c:262
+blk_mq_unquiesce_tagset (/builds/linux/block/blk-mq.c:295
+/builds/linux/block/blk-mq.c:297)
+[    7.098009] Modules linked in: drm_display_helper qcom_q6v5_mss
+camcc_sdm845 i2c_qcom_geni videobuf2_memops qcom_rng bluetooth
+videobuf2_common spi_geni_qcom qrtr gpi phy_qcom_qmp_usb aux_bridge
+stm_core slim_qcom_ngd_ctrl qcrypto phy_qcom_qmp_ufs cfg80211 rfkill
+icc_osm_l3 phy_qcom_qmp_pcie lmh ufs_qcom slimbus qcom_wdt
+pdr_interface llcc_qcom qcom_q6v5_pas(+) qcom_pil_info icc_bwmon
+qcom_q6v5 display_connector qcom_sysmon qcom_common drm_kms_helper
+qcom_glink_smem mdt_loader qmi_helpers drm backlight socinfo rmtfs_mem
+[    7.098062] Hardware name: Thundercomm Dragonboard 845c (DT)
+[    7.098064] Workqueue: devfreq_wq devfreq_monitor
+[    7.098071] pstate: 604000c5 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[    7.098074] pc : blk_mq_unquiesce_tagset
+(/builds/linux/block/blk-mq.c:295 /builds/linux/block/blk-mq.c:297)
+[    7.098077] lr : blk_mq_unquiesce_tagset
+(/builds/linux/block/blk-mq.c:262 /builds/linux/block/blk-mq.c:297)
+[    7.098080] sp : ffff8000812f3b40
+[    7.098081] x29: ffff8000812f3b40 x28: 00000000000f4240 x27: 20c49ba5e353f7cf
+[    7.098086] x26: 0000000000000000 x25: 0000000000000000 x24: ffff5bbe0a2e9910
+[    7.098089] x23: ffff5bbe01f1a170 x22: ffff5bbe0a2e9220 x21: 0000000000000000
+[    7.098093] x20: ffff5bbe0a2e9620 x19: ffff5bbe01f1a0e0 x18: 0000000000000002
+[    7.098096] x17: 0000000000000400 x16: 0000000000000400 x15: 00000000a63e566e
+[    7.098099] x14: 0000000000015eb9 x13: ffff8000812f0000 x12: ffff8000812f4000
+[    7.098103] x11: 7cea885bfc7e6700 x10: ffffb0c2e5eb69ac x9 : 0000000000000000
+[    7.098106] x8 : ffff5bbe0a2e9624 x7 : ffff5bbe0c828000 x6 : 0000000000000003
+[    7.098110] x5 : 00000000000009d3 x4 : 000000000000039e x3 : ffff8000812f3af0
+[    7.098113] x2 : ffff5bbe0a2acc00 x1 : 0000000000000000 x0 : 0000000000000000
+[    7.098117] Call trace:
+[    7.098118] blk_mq_unquiesce_tagset
+(/builds/linux/block/blk-mq.c:295 /builds/linux/block/blk-mq.c:297)
+[    7.098121] ufshcd_devfreq_scale
+(/builds/linux/drivers/ufs/core/ufshcd.c:2050
+/builds/linux/drivers/ufs/core/ufshcd.c:1426
+/builds/linux/drivers/ufs/core/ufshcd.c:1472)
+[    7.098126] ufshcd_devfreq_target
+(/builds/linux/drivers/ufs/core/ufshcd.c:1581)
+[    7.098129] devfreq_set_target (/builds/linux/drivers/devfreq/devfreq.c:364)
+[    7.098132] devfreq_update_target (/builds/linux/drivers/devfreq/devfreq.c:0)
+[    7.098134] devfreq_monitor (/builds/linux/drivers/devfreq/devfreq.c:461)
+[    7.098136] process_scheduled_works
+(/builds/linux/kernel/workqueue.c:3272
+/builds/linux/kernel/workqueue.c:3348)
+[    7.098141] worker_thread (/builds/linux/include/linux/list.h:373
+/builds/linux/kernel/workqueue.c:955
+/builds/linux/kernel/workqueue.c:3430)
+[    7.098143] kthread (/builds/linux/kernel/kthread.c:390)
+[    7.098146] ret_from_fork (/builds/linux/arch/arm64/kernel/entry.S:861)
+[    7.098150] ---[ end trace 0000000000000000 ]---
 
 
-Steps to reproduce:
----
- tuxmake --runtime podman --target-arch powerpc --toolchain gcc-13
---kconfig defconfig
+Full boot log link:
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.9.y/build/v6.9.7-223-g03247eed042d/testrun/24504400/suite/log-parser-boot/test/check-kernel-exception/log
+ - https://lkft.validation.linaro.org/scheduler/job/7711345#L5312
 
+Details of build and test environment:
+ - https://tuxapi.tuxsuite.com/v1/groups/linaro/projects/lkft/tests/2ihUJNrmztabOMpKVRNzLpixoUR
 
-Build log, Build configs and build details,
--------------
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.36-164-gca32fab2f2f9/testrun/24498135/suite/build/test/gcc-13-defconfig/log
- - https://storage.tuxsuite.com/public/linaro/lkft/builds/2ihU8SlMSZyrWYYdCJrskJS7cLd/
- - https://storage.tuxsuite.com/public/linaro/lkft/builds/2ihU8SlMSZyrWYYdCJrskJS7cLd/config
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.36-164-gca32fab2f2f9/testrun/24498135/suite/build/test/gcc-13-defconfig/details/
+Build, vmlinux, System.map and Image,
+ - https://storage.tuxsuite.com/public/linaro/lkft/builds/2ihUHH774XQWba653iwCVtCnpjl/
 
 metadata:
-------
-* kernel: 6.6.37-rc1
-* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-* git commit: ca32fab2f2f9ffc305606cc41fe02e41bce06dd6
-* git describe: v6.6.36-164-gca32fab2f2f9
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.36-164-gca32fab2f2f9
+-------
+  git_describe: v6.9.7-223-g03247eed042d
+  git_repo: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+  git_sha: 03247eed042d6a770c3a2adaeed6b7b4a0f0b46c
+  kernel-config:
+https://storage.tuxsuite.com/public/linaro/lkft/builds/2ihUHH774XQWba653iwCVtCnpjl/config
+  kernel_version: 6.9.8-rc1
+  toolchain: clang-18
+  build-url: https://storage.tuxsuite.com/public/linaro/lkft/builds/2ihUHH774XQWba653iwCVtCnpjl/
+  build_name: clang-18-lkftconfig
 
 --
 Linaro LKFT
