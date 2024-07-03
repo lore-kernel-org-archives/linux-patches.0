@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FDD661FE7;
-	Wed,  3 Jul 2024 11:15:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7597C171083;
+	Wed,  3 Jul 2024 11:15:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005340; cv=none; b=MGQKakltYiI46N8gNMfRZNkkV5yy1vM1GBSLyJyAY+dQKu769L/wjfcdfotO92+488J2KojPzwkPsKckqDCqe88kA8XeqND97JsQ/ejWIUluXGITQWrTnlzYkbQBCPCJOWCLy0cZbRwPK9LSvluHJtuyA8bfdjuLt3l/R2BTkxQ=
+	t=1720005343; cv=none; b=mQgRtQxl0N2ET/8a41lWGygs0cTowzlCJa1WlYAey2n7sENl0WNc+9JI2kiQc39h1geCrkCqutqp0NB65d0vdVJVkzNI8OlkPEzqe5hyDnHL79HIjq6wxsdQPTo/Am3TDKp6yjzRJ2N2O5xu4whuJYpv0UCM8+eN4qcekeA4p0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005340; c=relaxed/simple;
-	bh=hdVDUT74xiVmt3kVvxKybpRaftUdVTWg1zFl0IiSEzI=;
+	s=arc-20240116; t=1720005343; c=relaxed/simple;
+	bh=Vk6YvqEMhaKXyjikk/6SSdJEWuWz46vRh3O1nwzY7lE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OOwJnbXTwb1JpC+gH2A6G1VYi3IT5XctyLSWdEOL9MVlV7yVcUcSeUoSj+NTBA0MBJVMCWXwXEiQTJspNcJVX4iVaD1qcxUGHph2veS2COjKfcGjkyzsZHVpU4d09L6ezzRWolE9tUGajevRTaN/FQLN5RsJBqa8tEeSLhsln5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HoY8QHgC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eoya/LaQ75hyY6h65QFG5zUg/OJZtiav6pHlqsrWoo+KcP/j5mF5fbjLq3S9QshTKPNRpmkOgr0H/tchImyUY91tJY3UQQ47Nac9b23IFdNXNXHbtl99nxbpKPAE7pxI1w0i8xWA/EaY0pBEgnG0Cfmc/DZn0jTUKixo+abSLA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cz+wFS5J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HoY8QHgC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1644C2BD10;
-	Wed,  3 Jul 2024 11:15:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cz+wFS5J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A529C2BD10;
+	Wed,  3 Jul 2024 11:15:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005340;
-	bh=hdVDUT74xiVmt3kVvxKybpRaftUdVTWg1zFl0IiSEzI=;
+	s=korg; t=1720005343;
+	bh=Vk6YvqEMhaKXyjikk/6SSdJEWuWz46vRh3O1nwzY7lE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HoY8QHgCqAUJnPd99BNHaguEuctYvbTKht4Zro2mSedZhp/TmAa+8xD4zZPENHsTp
-	 l4znsVwdkbqnMnpCi2LnS8LtdFqvvdZKGaVCcgFQ8YMqiVuSklnzfpaYOADgcMcpdI
-	 OB2McClMhB5tZ9POeV/+H/zkqbLKYA9gi+GLuNSw=
+	b=cz+wFS5JoA8K9cmbnoT+MWuFfLcHELkyLNqpargqN+Ui+4x1Kbo2I5KsqXFFqvdNX
+	 LoDVF5CI4nsvkAdq8pZIwEZFQxcYiYpZJ6Khw+XivsCSVvQhT8FDkhu8Ndw+zB5lUh
+	 bGz9cX2+36zVRBaWyN4uII3H/38+w5xvzLs2nrvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 008/356] wifi: iwlwifi: mvm: dont read past the mfuart notifcation
-Date: Wed,  3 Jul 2024 12:35:44 +0200
-Message-ID: <20240703102913.416320269@linuxfoundation.org>
+Subject: [PATCH 5.15 042/356] drm/amd/display: drop unnecessary NULL checks in debugfs
+Date: Wed,  3 Jul 2024 12:36:18 +0200
+Message-ID: <20240703102914.687838203@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -52,53 +52,233 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
 
-[ Upstream commit 4bb95f4535489ed830cf9b34b0a891e384d1aee4 ]
+[ Upstream commit f8e12e770e8049917f82387033b3cf44bc43b915 ]
 
-In case the firmware sends a notification that claims it has more data
-than it has, we will read past that was allocated for the notification.
-Remove the print of the buffer, we won't see it by default. If needed,
-we can see the content with tracing.
+pipe_ctx pointer cannot be NULL when getting the address of
+an element of the pipe_ctx array. Moreover, the MAX_PIPES is
+defined as 6, so pipe_ctx is not NULL after the loop either.
 
-This was reported by KFENCE.
+Detected using the static analysis tool - Svace.
 
-Fixes: bdccdb854f2f ("iwlwifi: mvm: support MFUART dump in case of MFUART assert")
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240513132416.ba82a01a559e.Ia91dd20f5e1ca1ad380b95e68aebf2794f553d9b@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 892b41b16f61 ("drm/amd/display: Fix incorrect DSC instance for MST")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/fw.c | 10 ----------
- 1 file changed, 10 deletions(-)
+ .../amd/display/amdgpu_dm/amdgpu_dm_debugfs.c | 72 +++++--------------
+ 1 file changed, 16 insertions(+), 56 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
-index d22a5628f9e0d..578956032e08b 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
-@@ -95,20 +95,10 @@ void iwl_mvm_mfu_assert_dump_notif(struct iwl_mvm *mvm,
- {
- 	struct iwl_rx_packet *pkt = rxb_addr(rxb);
- 	struct iwl_mfu_assert_dump_notif *mfu_dump_notif = (void *)pkt->data;
--	__le32 *dump_data = mfu_dump_notif->data;
--	int n_words = le32_to_cpu(mfu_dump_notif->data_size) / sizeof(__le32);
--	int i;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
+index fc0f6b0089ba0..939734eecf709 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
+@@ -1315,16 +1315,11 @@ static ssize_t dp_dsc_clock_en_read(struct file *f, char __user *buf,
  
- 	if (mfu_dump_notif->index_num == 0)
- 		IWL_INFO(mvm, "MFUART assert id 0x%x occurred\n",
- 			 le32_to_cpu(mfu_dump_notif->assert_id));
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+-		if (pipe_ctx && pipe_ctx->stream &&
++		if (pipe_ctx->stream &&
+ 		    pipe_ctx->stream->link == aconnector->dc_link)
+ 			break;
+ 	}
+ 
+-	if (!pipe_ctx) {
+-		kfree(rd_buf);
+-		return -ENXIO;
+-	}
 -
--	for (i = 0; i < n_words; i++)
--		IWL_DEBUG_INFO(mvm,
--			       "MFUART assert dump, dword %u: 0x%08x\n",
--			       le16_to_cpu(mfu_dump_notif->index_num) *
--			       n_words + i,
--			       le32_to_cpu(dump_data[i]));
- }
+ 	dsc = pipe_ctx->stream_res.dsc;
+ 	if (dsc)
+ 		dsc->funcs->dsc_read_state(dsc, &dsc_state);
+@@ -1421,12 +1416,12 @@ static ssize_t dp_dsc_clock_en_write(struct file *f, const char __user *buf,
  
- static bool iwl_alive_fn(struct iwl_notif_wait_data *notif_wait,
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+-		if (pipe_ctx && pipe_ctx->stream &&
++		if (pipe_ctx->stream &&
+ 		    pipe_ctx->stream->link == aconnector->dc_link)
+ 			break;
+ 	}
+ 
+-	if (!pipe_ctx || !pipe_ctx->stream)
++	if (!pipe_ctx->stream)
+ 		goto done;
+ 
+ 	// Get CRTC state
+@@ -1506,16 +1501,11 @@ static ssize_t dp_dsc_slice_width_read(struct file *f, char __user *buf,
+ 
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+-		if (pipe_ctx && pipe_ctx->stream &&
++		if (pipe_ctx->stream &&
+ 		    pipe_ctx->stream->link == aconnector->dc_link)
+ 			break;
+ 	}
+ 
+-	if (!pipe_ctx) {
+-		kfree(rd_buf);
+-		return -ENXIO;
+-	}
+-
+ 	dsc = pipe_ctx->stream_res.dsc;
+ 	if (dsc)
+ 		dsc->funcs->dsc_read_state(dsc, &dsc_state);
+@@ -1610,12 +1600,12 @@ static ssize_t dp_dsc_slice_width_write(struct file *f, const char __user *buf,
+ 
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+-		if (pipe_ctx && pipe_ctx->stream &&
++		if (pipe_ctx->stream &&
+ 		    pipe_ctx->stream->link == aconnector->dc_link)
+ 			break;
+ 	}
+ 
+-	if (!pipe_ctx || !pipe_ctx->stream)
++	if (!pipe_ctx->stream)
+ 		goto done;
+ 
+ 	// Safely get CRTC state
+@@ -1695,16 +1685,11 @@ static ssize_t dp_dsc_slice_height_read(struct file *f, char __user *buf,
+ 
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+-		if (pipe_ctx && pipe_ctx->stream &&
++		if (pipe_ctx->stream &&
+ 		    pipe_ctx->stream->link == aconnector->dc_link)
+ 			break;
+ 	}
+ 
+-	if (!pipe_ctx) {
+-		kfree(rd_buf);
+-		return -ENXIO;
+-	}
+-
+ 	dsc = pipe_ctx->stream_res.dsc;
+ 	if (dsc)
+ 		dsc->funcs->dsc_read_state(dsc, &dsc_state);
+@@ -1799,12 +1784,12 @@ static ssize_t dp_dsc_slice_height_write(struct file *f, const char __user *buf,
+ 
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+-		if (pipe_ctx && pipe_ctx->stream &&
++		if (pipe_ctx->stream &&
+ 		    pipe_ctx->stream->link == aconnector->dc_link)
+ 			break;
+ 	}
+ 
+-	if (!pipe_ctx || !pipe_ctx->stream)
++	if (!pipe_ctx->stream)
+ 		goto done;
+ 
+ 	// Get CRTC state
+@@ -1880,16 +1865,11 @@ static ssize_t dp_dsc_bits_per_pixel_read(struct file *f, char __user *buf,
+ 
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+-		if (pipe_ctx && pipe_ctx->stream &&
++		if (pipe_ctx->stream &&
+ 		    pipe_ctx->stream->link == aconnector->dc_link)
+ 			break;
+ 	}
+ 
+-	if (!pipe_ctx) {
+-		kfree(rd_buf);
+-		return -ENXIO;
+-	}
+-
+ 	dsc = pipe_ctx->stream_res.dsc;
+ 	if (dsc)
+ 		dsc->funcs->dsc_read_state(dsc, &dsc_state);
+@@ -1981,12 +1961,12 @@ static ssize_t dp_dsc_bits_per_pixel_write(struct file *f, const char __user *bu
+ 
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+-		if (pipe_ctx && pipe_ctx->stream &&
++		if (pipe_ctx->stream &&
+ 		    pipe_ctx->stream->link == aconnector->dc_link)
+ 			break;
+ 	}
+ 
+-	if (!pipe_ctx || !pipe_ctx->stream)
++	if (!pipe_ctx->stream)
+ 		goto done;
+ 
+ 	// Get CRTC state
+@@ -2060,16 +2040,11 @@ static ssize_t dp_dsc_pic_width_read(struct file *f, char __user *buf,
+ 
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+-		if (pipe_ctx && pipe_ctx->stream &&
++		if (pipe_ctx->stream &&
+ 		    pipe_ctx->stream->link == aconnector->dc_link)
+ 			break;
+ 	}
+ 
+-	if (!pipe_ctx) {
+-		kfree(rd_buf);
+-		return -ENXIO;
+-	}
+-
+ 	dsc = pipe_ctx->stream_res.dsc;
+ 	if (dsc)
+ 		dsc->funcs->dsc_read_state(dsc, &dsc_state);
+@@ -2121,16 +2096,11 @@ static ssize_t dp_dsc_pic_height_read(struct file *f, char __user *buf,
+ 
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+-		if (pipe_ctx && pipe_ctx->stream &&
++		if (pipe_ctx->stream &&
+ 		    pipe_ctx->stream->link == aconnector->dc_link)
+ 			break;
+ 	}
+ 
+-	if (!pipe_ctx) {
+-		kfree(rd_buf);
+-		return -ENXIO;
+-	}
+-
+ 	dsc = pipe_ctx->stream_res.dsc;
+ 	if (dsc)
+ 		dsc->funcs->dsc_read_state(dsc, &dsc_state);
+@@ -2197,16 +2167,11 @@ static ssize_t dp_dsc_chunk_size_read(struct file *f, char __user *buf,
+ 
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+-		if (pipe_ctx && pipe_ctx->stream &&
++		if (pipe_ctx->stream &&
+ 		    pipe_ctx->stream->link == aconnector->dc_link)
+ 			break;
+ 	}
+ 
+-	if (!pipe_ctx) {
+-		kfree(rd_buf);
+-		return -ENXIO;
+-	}
+-
+ 	dsc = pipe_ctx->stream_res.dsc;
+ 	if (dsc)
+ 		dsc->funcs->dsc_read_state(dsc, &dsc_state);
+@@ -2273,16 +2238,11 @@ static ssize_t dp_dsc_slice_bpg_offset_read(struct file *f, char __user *buf,
+ 
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+-		if (pipe_ctx && pipe_ctx->stream &&
++		if (pipe_ctx->stream &&
+ 		    pipe_ctx->stream->link == aconnector->dc_link)
+ 			break;
+ 	}
+ 
+-	if (!pipe_ctx) {
+-		kfree(rd_buf);
+-		return -ENXIO;
+-	}
+-
+ 	dsc = pipe_ctx->stream_res.dsc;
+ 	if (dsc)
+ 		dsc->funcs->dsc_read_state(dsc, &dsc_state);
 -- 
 2.43.0
 
