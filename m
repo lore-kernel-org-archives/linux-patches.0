@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1302B13247D;
-	Wed,  3 Jul 2024 11:24:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A609F13247D;
+	Wed,  3 Jul 2024 11:24:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005857; cv=none; b=lG8HeQp9BO00arVyLi4SQvVZctkdJAiJAw4wXb/NyM3qWjTtpptdLoOGErZpjweOhJyUUWW+bJcRPnoaQ9Q/6izCcW+5/kwvneB7BA78eKiKTuKwzr+DmlyIVvU23sxiSCPgsiUD9m4oEI1hhrIb7CwuSE+avlRK/yaXmfTEiJs=
+	t=1720005859; cv=none; b=btLiBgXKr2Wax4bBQCNZaNoeEE3I63KGGDSJ9O+vdrw2AkdTZ0xO02Ou1A/edBRVpOr4RPL8bd87MHFZaGe2MkRW6SYZvTxqefGg5YPuKBMUF8D8azhBkMTgXFRbttTqOj9gVqTaTNthxBtnxY5USL9PSsKbVWFzAVFMVmZTNEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005857; c=relaxed/simple;
-	bh=dgipOHXC+gVOT5SD0DWDmA2I1MRmxAMCmBt3LRV4H5c=;
+	s=arc-20240116; t=1720005859; c=relaxed/simple;
+	bh=nAvLPGrTlLRqcfLx/eCxRoeb4+dDrEPA9SQ1y8Nlunk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VOPmtut+xhoqjONTRHmZBJqdN5rVol2dkMtdtjRK5B3nXYjXtInvVUBtd+fwRdS9dCNygZt7Ss35zQ1DSQ9bG6Ux5e0vUODovHJq2LxKYfkWorDm5Oa7QAhVl7y89qyOesYSg4UNRD7kbP23jkkRA4IZBfVBGMLPPjx06YDxJSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yKtXSsyy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RkvIkEtX42etnzHtG0oKY8G4RAJNeqi+XU1yyn0ncJVtsMjFigiuRjlG+SNPXVa7PzRuCdpRXBNYHEIlxd5XOWTkXndWG2X8NopuKlMJS1VbQiS3SBhExLUxzDKncExZ0Cv/uZeHgTkml1vGl/frDYbBUvf6WS2obJpKhXxAJrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mMlir9ZK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yKtXSsyy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D971C2BD10;
-	Wed,  3 Jul 2024 11:24:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mMlir9ZK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B488C2BD10;
+	Wed,  3 Jul 2024 11:24:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005856;
-	bh=dgipOHXC+gVOT5SD0DWDmA2I1MRmxAMCmBt3LRV4H5c=;
+	s=korg; t=1720005859;
+	bh=nAvLPGrTlLRqcfLx/eCxRoeb4+dDrEPA9SQ1y8Nlunk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yKtXSsyyO4p+PO3DdNB/wDP9JibvFYGc4+hLCOYFjLrbwl2lI3KPUgFBcG5xUgVn2
-	 M6l2Hg2UD/j98pUP4p+1z1nZpCOJX/ylZIKR3AVOqSzo59oAyK3FRnKsqRvnOrYUZW
-	 ay4iYrQz5vT59rxQpw7JN83ayg8e2LZ2xtdbYfXw=
+	b=mMlir9ZK1kH20WKnI6F8Z1ZdHA4j0uGL5/2fSCofYsZJo5ja69lTelBCyEjZPHZ94
+	 /0GGDem6zyGD1dBkIr0jGQUttGZGcXrUVkXvQud+My/XJpx/u8lnjfG5LjMza1K1J/
+	 Skvuo1vtPMW8no+FUTl7KqPhU0tQhEIUX75/AbVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.15 220/356] btrfs: retry block group reclaim without infinite loop
-Date: Wed,  3 Jul 2024 12:39:16 +0200
-Message-ID: <20240703102921.435878286@linuxfoundation.org>
+	Adamos Ttofari <attofari@amazon.de>,
+	Raghavendra Rao Ananta <rananta@google.com>,
+	Jim Mattson <jmattson@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 5.15 221/356] KVM: x86: Always sync PIR to IRR prior to scanning I/O APIC routes
+Date: Wed,  3 Jul 2024 12:39:17 +0200
+Message-ID: <20240703102921.473101020@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -50,66 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 4eb4e85c4f818491efc67e9373aa16b123c3f522 upstream.
+commit f3ced000a2df53f4b12849e121769045a81a3b22 upstream.
 
-If inc_block_group_ro systematically fails (e.g. due to ETXTBUSY from
-swap) or btrfs_relocate_chunk systematically fails (from lack of
-space), then this worker becomes an infinite loop.
+Sync pending posted interrupts to the IRR prior to re-scanning I/O APIC
+routes, irrespective of whether the I/O APIC is emulated by userspace or
+by KVM.  If a level-triggered interrupt routed through the I/O APIC is
+pending or in-service for a vCPU, KVM needs to intercept EOIs on said
+vCPU even if the vCPU isn't the destination for the new routing, e.g. if
+servicing an interrupt using the old routing races with I/O APIC
+reconfiguration.
 
-At the very least, this strands the cleaner thread, but can also result
-in hung tasks/RCU stalls on PREEMPT_NONE kernels and if the
-reclaim_bgs_lock mutex is not contended.
+Commit fceb3a36c29a ("KVM: x86: ioapic: Fix level-triggered EOI and
+userspace I/OAPIC reconfigure race") fixed the common cases, but
+kvm_apic_pending_eoi() only checks if an interrupt is in the local
+APIC's IRR or ISR, i.e. misses the uncommon case where an interrupt is
+pending in the PIR.
 
-I believe the best long term fix is to manage reclaim via work queue,
-where we queue up a relocation on the triggering condition and re-queue
-on failure. In the meantime, this is an easy fix to apply to avoid the
-immediate pain.
+Failure to intercept EOI can manifest as guest hangs with Windows 11 if
+the guest uses the RTC as its timekeeping source, e.g. if the VMM doesn't
+expose a more modern form of time to the guest.
 
-Fixes: 7e2718099438 ("btrfs: reinsert BGs failed to reclaim")
-CC: stable@vger.kernel.org # 6.6+
-Signed-off-by: Boris Burkov <boris@bur.io>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Cc: Adamos Ttofari <attofari@amazon.de>
+Cc: Raghavendra Rao Ananta <rananta@google.com>
+Reviewed-by: Jim Mattson <jmattson@google.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20240611014845.82795-1-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/block-group.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ arch/x86/kvm/x86.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -1493,6 +1493,7 @@ void btrfs_reclaim_bgs_work(struct work_
- 		container_of(work, struct btrfs_fs_info, reclaim_bgs_work);
- 	struct btrfs_block_group *bg;
- 	struct btrfs_space_info *space_info;
-+	LIST_HEAD(retry_list);
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -9654,13 +9654,12 @@ static void vcpu_scan_ioapic(struct kvm_
  
- 	if (!test_bit(BTRFS_FS_OPEN, &fs_info->flags))
- 		return;
-@@ -1583,8 +1584,11 @@ void btrfs_reclaim_bgs_work(struct work_
- 		}
+ 	bitmap_zero(vcpu->arch.ioapic_handled_vectors, 256);
  
- next:
--		if (ret)
--			btrfs_mark_bg_to_reclaim(bg);
-+		if (ret) {
-+			/* Refcount held by the reclaim_bgs list after splice. */
-+			btrfs_get_block_group(bg);
-+			list_add_tail(&bg->bg_list, &retry_list);
-+		}
- 		btrfs_put_block_group(bg);
++	static_call_cond(kvm_x86_sync_pir_to_irr)(vcpu);
++
+ 	if (irqchip_split(vcpu->kvm))
+ 		kvm_scan_ioapic_routes(vcpu, vcpu->arch.ioapic_handled_vectors);
+-	else {
+-		static_call_cond(kvm_x86_sync_pir_to_irr)(vcpu);
+-		if (ioapic_in_kernel(vcpu->kvm))
+-			kvm_ioapic_scan_entry(vcpu, vcpu->arch.ioapic_handled_vectors);
+-	}
++	else if (ioapic_in_kernel(vcpu->kvm))
++		kvm_ioapic_scan_entry(vcpu, vcpu->arch.ioapic_handled_vectors);
  
- 		mutex_unlock(&fs_info->reclaim_bgs_lock);
-@@ -1604,6 +1608,9 @@ next:
- 	spin_unlock(&fs_info->unused_bgs_lock);
- 	mutex_unlock(&fs_info->reclaim_bgs_lock);
- end:
-+	spin_lock(&fs_info->unused_bgs_lock);
-+	list_splice_tail(&retry_list, &fs_info->reclaim_bgs);
-+	spin_unlock(&fs_info->unused_bgs_lock);
- 	btrfs_exclop_finish(fs_info);
- 	sb_end_write(fs_info->sb);
- }
+ 	if (is_guest_mode(vcpu))
+ 		vcpu->arch.load_eoi_exitmap_pending = true;
 
 
