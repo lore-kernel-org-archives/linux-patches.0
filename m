@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B6C0185E50;
-	Wed,  3 Jul 2024 11:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D2F171E70;
+	Wed,  3 Jul 2024 11:21:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005662; cv=none; b=YH9Dymup+aZJlymY66R7PCdOsLR9SBOy0QU2n0A2VKVxr+XWscrFijzgGGruKUAf1ddhh1XiJsssTrAeKp2kBA2db2u6r4q+rxd/5vsKJzHOsbPWlT6Vs5tV5O7hwINRX+yqd72WIMF1H229QBMYh5yVgsvp0pneXDN+FGM7ZdI=
+	t=1720005665; cv=none; b=BghKShK2eOtybRDXioT2o+zlf/i2JpQSw/pgjZz8Fdp4CsYCJCs+8bI9jr07pOr2wVkNgzteO5OHI9q+HentWPDCKKvRy8RlMi4BPXAgEVK2OXl4ntCNqRzmErPfMV3U6U8sooEg9xJ6fddoMAj43JLAvWV42e8LXCFovaqTz0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005662; c=relaxed/simple;
-	bh=SAW0qlgKsmw5En3XiypWzVNJ/zQ1nM8JPriBBBfPKDo=;
+	s=arc-20240116; t=1720005665; c=relaxed/simple;
+	bh=83Mvu25hh8G5fiWjj5M0bIWVAuNWvEIL8Otrc6zjPZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sKU14CYkGBe8+3964GwBTTU3YooBo9ICuvTfONpxJKzEWAi0i7JlxWDsK31s+ekNDWJxGHEWv55IqDDfRDd1k7MJ73alNqbyBpwk5MKsXyNviU/tGcbd9vH7Y4pHY5rcwym6MughTWCKe3koQEFE4rhNDBDwTvbA/YaU3ffWQc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U2TsNdG5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Enkps7ctNDG86QG/RSXqCVVso1gEuEtYItJATwBQXWiyI9GbULNQZwfJJ/kgjOirCg9LBfIDUjuTUcI3aOz2VBmQQobXetqYW42O8Lo8pXSAbyDkb55wcCkLirOx4SVK8COi4Q1M3t3KULz1Gr6tGLhR6gO/fPYwU11i8/veL/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l+hKXJkU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U2TsNdG5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8570BC2BD10;
-	Wed,  3 Jul 2024 11:21:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l+hKXJkU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72936C2BD10;
+	Wed,  3 Jul 2024 11:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005661;
-	bh=SAW0qlgKsmw5En3XiypWzVNJ/zQ1nM8JPriBBBfPKDo=;
+	s=korg; t=1720005664;
+	bh=83Mvu25hh8G5fiWjj5M0bIWVAuNWvEIL8Otrc6zjPZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U2TsNdG5r19PQeNn/8Nej//EL27e/jeHFZRqfyxeLsiW3LV5P+q2vLhm2dK7aGIOh
-	 H4d58zkYvvA6azbFChlVWDq6rBp4rQeqwuK8m9+sADXrxuxdny7QSeW0xdde5j3/m8
-	 Y+oFwESlteJyhnmM2xSxbH90UVxkr87TpJVQJ7A0=
+	b=l+hKXJkUb8M6HrFPy7FE0qfcvjQjEFoBc8GaYi/WZPwZgnJIteeR7QOGXjQOuUs3r
+	 Hojf8k1vLyOKdAn5flhB6oHYidB0GzqvLIrtrPQziozQOyn3fSO+GJGFiZjZeFgY7k
+	 JAmqXPlKiKXSukcsdL97ofmhoQ9mY7Qw9JLggIRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Stitt <justinstitt@google.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	"Alessandro Carminati (Red Hat)" <alessandro.carminati@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 155/356] block/ioctl: prefer different overflow check
-Date: Wed,  3 Jul 2024 12:38:11 +0200
-Message-ID: <20240703102918.966082834@linuxfoundation.org>
+Subject: [PATCH 5.15 156/356] selftests/bpf: Prevent client connect before server bind in test_tc_tunnel.sh
+Date: Wed,  3 Jul 2024 12:38:12 +0200
+Message-ID: <20240703102919.004545631@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -52,86 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Stitt <justinstitt@google.com>
+From: Alessandro Carminati (Red Hat) <alessandro.carminati@gmail.com>
 
-[ Upstream commit ccb326b5f9e623eb7f130fbbf2505ec0e2dcaff9 ]
+[ Upstream commit f803bcf9208a2540acb4c32bdc3616673169f490 ]
 
-Running syzkaller with the newly reintroduced signed integer overflow
-sanitizer shows this report:
+In some systems, the netcat server can incur in delay to start listening.
+When this happens, the test can randomly fail in various points.
+This is an example error message:
 
-[   62.982337] ------------[ cut here ]------------
-[   62.985692] cgroup: Invalid name
-[   62.986211] UBSAN: signed-integer-overflow in ../block/ioctl.c:36:46
-[   62.989370] 9pnet_fd: p9_fd_create_tcp (7343): problem connecting socket to 127.0.0.1
-[   62.992992] 9223372036854775807 + 4095 cannot be represented in type 'long long'
-[   62.997827] 9pnet_fd: p9_fd_create_tcp (7345): problem connecting socket to 127.0.0.1
-[   62.999369] random: crng reseeded on system resumption
-[   63.000634] GUP no longer grows the stack in syz-executor.2 (7353): 20002000-20003000 (20001000)
-[   63.000668] CPU: 0 PID: 7353 Comm: syz-executor.2 Not tainted 6.8.0-rc2-00035-gb3ef86b5a957 #1
-[   63.000677] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[   63.000682] Call Trace:
-[   63.000686]  <TASK>
-[   63.000731]  dump_stack_lvl+0x93/0xd0
-[   63.000919]  __get_user_pages+0x903/0xd30
-[   63.001030]  __gup_longterm_locked+0x153e/0x1ba0
-[   63.001041]  ? _raw_read_unlock_irqrestore+0x17/0x50
-[   63.001072]  ? try_get_folio+0x29c/0x2d0
-[   63.001083]  internal_get_user_pages_fast+0x1119/0x1530
-[   63.001109]  iov_iter_extract_pages+0x23b/0x580
-[   63.001206]  bio_iov_iter_get_pages+0x4de/0x1220
-[   63.001235]  iomap_dio_bio_iter+0x9b6/0x1410
-[   63.001297]  __iomap_dio_rw+0xab4/0x1810
-[   63.001316]  iomap_dio_rw+0x45/0xa0
-[   63.001328]  ext4_file_write_iter+0xdde/0x1390
-[   63.001372]  vfs_write+0x599/0xbd0
-[   63.001394]  ksys_write+0xc8/0x190
-[   63.001403]  do_syscall_64+0xd4/0x1b0
-[   63.001421]  ? arch_exit_to_user_mode_prepare+0x3a/0x60
-[   63.001479]  entry_SYSCALL_64_after_hwframe+0x6f/0x77
-[   63.001535] RIP: 0033:0x7f7fd3ebf539
-[   63.001551] Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 f1 14 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-[   63.001562] RSP: 002b:00007f7fd32570c8 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
-[   63.001584] RAX: ffffffffffffffda RBX: 00007f7fd3ff3f80 RCX: 00007f7fd3ebf539
-[   63.001590] RDX: 4db6d1e4f7e43360 RSI: 0000000020000000 RDI: 0000000000000004
-[   63.001595] RBP: 00007f7fd3f1e496 R08: 0000000000000000 R09: 0000000000000000
-[   63.001599] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-[   63.001604] R13: 0000000000000006 R14: 00007f7fd3ff3f80 R15: 00007ffd415ad2b8
-...
-[   63.018142] ---[ end trace ]---
+   # ip gre none gso
+   # encap 192.168.1.1 to 192.168.1.2, type gre, mac none len 2000
+   # test basic connectivity
+   # Ncat: Connection refused.
 
-Historically, the signed integer overflow sanitizer did not work in the
-kernel due to its interaction with `-fwrapv` but this has since been
-changed [1] in the newest version of Clang; It was re-enabled in the
-kernel with Commit 557f8c582a9ba8ab ("ubsan: Reintroduce signed overflow
-sanitizer").
+The issue stems from a race condition between the netcat client and server.
+The test author had addressed this problem by implementing a sleep, which
+I have removed in this patch.
+This patch introduces a function capable of sleeping for up to two seconds.
+However, it can terminate the waiting period early if the port is reported
+to be listening.
 
-Let's rework this overflow checking logic to not actually perform an
-overflow during the check itself, thus avoiding the UBSAN splat.
-
-[1]: https://github.com/llvm/llvm-project/pull/82432
-
-Signed-off-by: Justin Stitt <justinstitt@google.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20240507-b4-sio-block-ioctl-v3-1-ba0c2b32275e@google.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Alessandro Carminati (Red Hat) <alessandro.carminati@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20240314105911.213411-1-alessandro.carminati@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/ioctl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/bpf/test_tc_tunnel.sh | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/block/ioctl.c b/block/ioctl.c
-index 7a939c178660f..a260e39e56a48 100644
---- a/block/ioctl.c
-+++ b/block/ioctl.c
-@@ -33,7 +33,7 @@ static int blkpg_do_ioctl(struct block_device *bdev,
- 	if (op == BLKPG_DEL_PARTITION)
- 		return bdev_del_partition(disk, p.pno);
+diff --git a/tools/testing/selftests/bpf/test_tc_tunnel.sh b/tools/testing/selftests/bpf/test_tc_tunnel.sh
+index 088fcad138c98..38c6e9f16f41e 100755
+--- a/tools/testing/selftests/bpf/test_tc_tunnel.sh
++++ b/tools/testing/selftests/bpf/test_tc_tunnel.sh
+@@ -71,7 +71,6 @@ cleanup() {
+ server_listen() {
+ 	ip netns exec "${ns2}" nc "${netcat_opt}" -l "${port}" > "${outfile}" &
+ 	server_pid=$!
+-	sleep 0.2
+ }
  
--	if (p.start < 0 || p.length <= 0 || p.start + p.length < 0)
-+	if (p.start < 0 || p.length <= 0 || LLONG_MAX - p.length < p.start)
- 		return -EINVAL;
- 	/* Check that the partition is aligned to the block size */
- 	if (!IS_ALIGNED(p.start | p.length, bdev_logical_block_size(bdev)))
+ client_connect() {
+@@ -92,6 +91,16 @@ verify_data() {
+ 	fi
+ }
+ 
++wait_for_port() {
++	for i in $(seq 20); do
++		if ip netns exec "${ns2}" ss ${2:--4}OHntl | grep -q "$1"; then
++			return 0
++		fi
++		sleep 0.1
++	done
++	return 1
++}
++
+ set -e
+ 
+ # no arguments: automated test, run all
+@@ -189,6 +198,7 @@ setup
+ # basic communication works
+ echo "test basic connectivity"
+ server_listen
++wait_for_port ${port} ${netcat_opt}
+ client_connect
+ verify_data
+ 
+@@ -200,6 +210,7 @@ ip netns exec "${ns1}" tc filter add dev veth1 egress \
+ 	section "encap_${tuntype}_${mac}"
+ echo "test bpf encap without decap (expect failure)"
+ server_listen
++wait_for_port ${port} ${netcat_opt}
+ ! client_connect
+ 
+ if [[ "$tuntype" =~ "udp" ]]; then
 -- 
 2.43.0
 
