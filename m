@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E9B1DFC7;
-	Wed,  3 Jul 2024 11:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C6361FDF;
+	Wed,  3 Jul 2024 11:03:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004614; cv=none; b=kl1PBWysH/N2w3S4w8+YDxlPP8w3OGNhiFifQeQXeFno1+Hn8hrCdsKRP+GPPRlE1uW1iwAD+j9hRzsDV/ggFe4npbF4h0G/aDSRo0LwMSaFTovW7vP75WUNjJx+tjjqrYwE6lsXLXm/wumueWXGPYDrdPdzbdQ8vXul4dTD8dk=
+	t=1720004617; cv=none; b=W0wExc2npqFAtUxcxxEbeCRLhFjZk4ineBkB6QECJcoe4s2rZIYN5xzdP2H8KNrTtSJDPv3zFCEAR/vcIIGqyLF76via/UFFYuhti4kUYfUpdH4EdQ94MAO9MusKEYKuTwMaTqppjUQDC2Y76U6TwZ834mt7HAOitT5s1fJ2yXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004614; c=relaxed/simple;
-	bh=cdyQ+dz/bWN5HEdYsaQ4j+ScT3PPPLuIadCPjL5aF4c=;
+	s=arc-20240116; t=1720004617; c=relaxed/simple;
+	bh=EkRynym2FusWBYxRGMRg9aZB+lajm/r6uxPF1+dcrhk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YUmVx4Bz1J11P47M2tncLI4u4lPkUBBqU7NfGT3KdrK2Rg2qPfBx8/upjYuAeSE/BCIu4Nd/L/LzVc3rz3Fm6vycImc1Zyky9jmyK7WB5tAbNP7AFFoIgS82Gr4mlpfm1MLMQeRONLQqbglr3ypi59jIyE3QRenouYPrb9DlkbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lmMxZwMM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EONU0geuvBlQy5XiVQW+/otLHl3/+MnJ/AF0UZw6/lvp3U7UfGNJvEE8ZTki5DlhhDAr2y6/Mp7t36IJ7yPmSzQM5zIPoZCQgegZd6Wko2dgIQgPtslo4YtV42WMolB35/KagOJ0gapRLD+J8u9un80OoN6wGs2jj31CAiYDs7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gOVGEvYh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lmMxZwMM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB127C2BD10;
-	Wed,  3 Jul 2024 11:03:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gOVGEvYh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C182BC2BD10;
+	Wed,  3 Jul 2024 11:03:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004614;
-	bh=cdyQ+dz/bWN5HEdYsaQ4j+ScT3PPPLuIadCPjL5aF4c=;
+	s=korg; t=1720004617;
+	bh=EkRynym2FusWBYxRGMRg9aZB+lajm/r6uxPF1+dcrhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lmMxZwMMNjOYlTh7OYLCfqFfljHl4XQaK4t4HXIIehA8sWu19KLnORaM53dN6y3lv
-	 PJYvGWVeE/KVOuq5K1nmE4YKHptj+Hd3XB6Wd+UeMiGSVM0exD49gD1b49VuD4QTzV
-	 NtlZ3XHJWUbm0l0AJwdmpf3wO7U4FSq9gj+4Qmec=
+	b=gOVGEvYhrLuzFyvzTqDEBQ95DSP4mm+9n9aG34UzAFCLi1nhwaJOb/kpNTZJIahRA
+	 j3a3h2P5B7Hp6WoyRWd6DIIJ9N6FvNqbZqKcGZ8oUuNdzdIXswXuVBk/wJ0jtdmOws
+	 VPpKbnRq5rJDbA7jzVXTBEsAZkbwviOMQbc9rHUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xingwei lee <xrivendell7@gmail.com>,
-	yue sun <samsun1006219@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Shichao Lai <shichaorai@gmail.com>,
+	Jean Delvare <jdelvare@suse.de>,
+	Juergen Fitschen <me@jue.yt>,
+	Ludovic Desroches <ludovic.desroches@microchip.com>,
+	Codrin Ciubotariu <codrin.ciubotariu@microchip.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 101/290] usb-storage: alauda: Check whether the media is initialized
-Date: Wed,  3 Jul 2024 12:38:02 +0200
-Message-ID: <20240703102908.011837150@linuxfoundation.org>
+Subject: [PATCH 5.10 102/290] i2c: at91: Fix the functionality flags of the slave-only interface
+Date: Wed,  3 Jul 2024 12:38:03 +0200
+Message-ID: <20240703102908.049499823@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -53,59 +57,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shichao Lai <shichaorai@gmail.com>
+From: Jean Delvare <jdelvare@suse.de>
 
-[ Upstream commit 16637fea001ab3c8df528a8995b3211906165a30 ]
+[ Upstream commit d6d5645e5fc1233a7ba950de4a72981c394a2557 ]
 
-The member "uzonesize" of struct alauda_info will remain 0
-if alauda_init_media() fails, potentially causing divide errors
-in alauda_read_data() and alauda_write_lba().
-- Add a member "media_initialized" to struct alauda_info.
-- Change a condition in alauda_check_media() to ensure the
-  first initialization.
-- Add an error check for the return value of alauda_init_media().
+When an I2C adapter acts only as a slave, it should not claim to
+support I2C master capabilities.
 
-Fixes: e80b0fade09e ("[PATCH] USB Storage: add alauda support")
-Reported-by: xingwei lee <xrivendell7@gmail.com>
-Reported-by: yue sun <samsun1006219@gmail.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Signed-off-by: Shichao Lai <shichaorai@gmail.com>
-Link: https://lore.kernel.org/r/20240526012745.2852061-1-shichaorai@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9d3ca54b550c ("i2c: at91: added slave mode support")
+Signed-off-by: Jean Delvare <jdelvare@suse.de>
+Cc: Juergen Fitschen <me@jue.yt>
+Cc: Ludovic Desroches <ludovic.desroches@microchip.com>
+Cc: Codrin Ciubotariu <codrin.ciubotariu@microchip.com>
+Cc: Andi Shyti <andi.shyti@kernel.org>
+Cc: Nicolas Ferre <nicolas.ferre@microchip.com>
+Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Cc: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/storage/alauda.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/i2c/busses/i2c-at91-slave.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/usb/storage/alauda.c b/drivers/usb/storage/alauda.c
-index dcc4778d1ae99..17fe35083f048 100644
---- a/drivers/usb/storage/alauda.c
-+++ b/drivers/usb/storage/alauda.c
-@@ -105,6 +105,8 @@ struct alauda_info {
- 	unsigned char sense_key;
- 	unsigned long sense_asc;	/* additional sense code */
- 	unsigned long sense_ascq;	/* additional sense code qualifier */
-+
-+	bool media_initialized;
- };
+diff --git a/drivers/i2c/busses/i2c-at91-slave.c b/drivers/i2c/busses/i2c-at91-slave.c
+index d6eeea5166c04..131a67d9d4a68 100644
+--- a/drivers/i2c/busses/i2c-at91-slave.c
++++ b/drivers/i2c/busses/i2c-at91-slave.c
+@@ -106,8 +106,7 @@ static int at91_unreg_slave(struct i2c_client *slave)
  
- #define short_pack(lsb,msb) ( ((u16)(lsb)) | ( ((u16)(msb))<<8 ) )
-@@ -476,11 +478,12 @@ static int alauda_check_media(struct us_data *us)
- 	}
+ static u32 at91_twi_func(struct i2c_adapter *adapter)
+ {
+-	return I2C_FUNC_SLAVE | I2C_FUNC_I2C | I2C_FUNC_SMBUS_EMUL
+-		| I2C_FUNC_SMBUS_READ_BLOCK_DATA;
++	return I2C_FUNC_SLAVE;
+ }
  
- 	/* Check for media change */
--	if (status[0] & 0x08) {
-+	if (status[0] & 0x08 || !info->media_initialized) {
- 		usb_stor_dbg(us, "Media change detected\n");
- 		alauda_free_maps(&MEDIA_INFO(us));
--		alauda_init_media(us);
--
-+		rc = alauda_init_media(us);
-+		if (rc == USB_STOR_TRANSPORT_GOOD)
-+			info->media_initialized = true;
- 		info->sense_key = UNIT_ATTENTION;
- 		info->sense_asc = 0x28;
- 		info->sense_ascq = 0x00;
+ static const struct i2c_algorithm at91_twi_algorithm_slave = {
 -- 
 2.43.0
 
