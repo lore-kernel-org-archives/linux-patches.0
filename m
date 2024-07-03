@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655E9186E5E;
-	Wed,  3 Jul 2024 11:12:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C75F17DA3A;
+	Wed,  3 Jul 2024 11:12:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005135; cv=none; b=RKHLqlgJWFuvDXtiy8DRAt1mNti3BPbi0w12jFHT+8Tlvc0LjChUeR3kqO6JXk2f9Kfd37sZ85DBYVyTlmbjeRfwbJhnXqdM+7l5BGg6+2WfQ5oFPV+jMVLjkEPPt/BmIqlRRmEZJCWt8Te2ig/zvZ8IG9JQFzeFeg8uDszJ2uI=
+	t=1720005138; cv=none; b=mp0S0PsVVX985PzGRk19p4yB/OBtSxoTOqgOzJHdgTvlBYa+i4IvPbAkodEtcVEqLbidYI8tFjr2IXDsMAecY0bqvuurBPeIOjv7Yu8+rSmwbIorEW3nyc5b0fhbVSSFDijFlK5x3Fh/wtRa5G4AoU3KJWQF4mIBrcYwnD4JjcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005135; c=relaxed/simple;
-	bh=ROb5QmpEscqg0iJQUyX2t/280lAjN0aM6BJptAKpAsw=;
+	s=arc-20240116; t=1720005138; c=relaxed/simple;
+	bh=MrQQe9BBX1hRZKI/pShzIpcV5F+WRBLohGtT6s7CHts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qkOYJFONYM/A2Lbs+VLTz6b8ltsNeftg5g7AAxaWbrvQBjhyoBlm8XrCSH4bNFjiFrYrOYmMbEjOxA0QHYKMVFJ0MvSC+FSq7fhj3nCmEFFvyonMTQRjW0mOYRdrteFQz/xdTJAlPqyCjH/KhxqlZlA/wBZOxZaVzLnwfgKEaCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rBsdY/Ae; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NzOaz8ay+GPxK8PIWxFTi/2E2MzM9djnlBOfpUyiIgkGUS45/ysmCyEIXQb2c00XqkLLbBEB/EMFUs1gJrYHNwK4jUScZceCQajhek+ni9lKf2Cd7w5lrFOrpp2SswyWKAzcgt+sUate/coBHXl6aY2zKOBkbaT8jRt64Yrpf3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rRFCEqGX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rBsdY/Ae"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39A1C2BD10;
-	Wed,  3 Jul 2024 11:12:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rRFCEqGX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 987FBC2BD10;
+	Wed,  3 Jul 2024 11:12:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005135;
-	bh=ROb5QmpEscqg0iJQUyX2t/280lAjN0aM6BJptAKpAsw=;
+	s=korg; t=1720005138;
+	bh=MrQQe9BBX1hRZKI/pShzIpcV5F+WRBLohGtT6s7CHts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rBsdY/AeaAJBI+cesaZKIubjy9t0j86hAXBoQnqc3zGpU/DkpcMoQD4GRf+YsTjCZ
-	 owF3QqVN1jy62XfxhsmwAwkKdFGpnGKt0UxPW6QeRlrJup6bdifwJPAIIUgdFPOLNR
-	 YTijLQ9sA/w0p6+Ois1Ijta3Uc4/zAOIt1QfJydw=
+	b=rRFCEqGXP5jZF9mTLpUpTXQpaIxtPdsQvSV4kI+N1UhJz0VbKo2lahkhWLRtP+11b
+	 cHiYRE7e9HZ9PblEQt/895gdY7mK6L+Cryh9d3Fr+1QnmAFATa+CQil5tcBhUmOUdD
+	 uyJg7q4JI09Mtf4T09vd6/HTgjwUcTDUs2Hj6CWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 5.10 273/290] ata: libata-core: Fix double free on error
-Date: Wed,  3 Jul 2024 12:40:54 +0200
-Message-ID: <20240703102914.461764406@linuxfoundation.org>
+	Christian Brauner <brauner@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 5.10 274/290] ftruncate: pass a signed offset
+Date: Wed,  3 Jul 2024 12:40:55 +0200
+Message-ID: <20240703102914.499482567@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -51,86 +50,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit ab9e0c529eb7cafebdd31fe1644524e80a48b05d upstream.
+commit 4b8e88e563b5f666446d002ad0dc1e6e8e7102b0 upstream.
 
-If e.g. the ata_port_alloc() call in ata_host_alloc() fails, we will jump
-to the err_out label, which will call devres_release_group().
-devres_release_group() will trigger a call to ata_host_release().
-ata_host_release() calls kfree(host), so executing the kfree(host) in
-ata_host_alloc() will lead to a double free:
+The old ftruncate() syscall, using the 32-bit off_t misses a sign
+extension when called in compat mode on 64-bit architectures.  As a
+result, passing a negative length accidentally succeeds in truncating
+to file size between 2GiB and 4GiB.
 
-kernel BUG at mm/slub.c:553!
-Oops: invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
-CPU: 11 PID: 599 Comm: (udev-worker) Not tainted 6.10.0-rc5 #47
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-2.fc40 04/01/2014
-RIP: 0010:kfree+0x2cf/0x2f0
-Code: 5d 41 5e 41 5f 5d e9 80 d6 ff ff 4d 89 f1 41 b8 01 00 00 00 48 89 d9 48 89 da
-RSP: 0018:ffffc90000f377f0 EFLAGS: 00010246
-RAX: ffff888112b1f2c0 RBX: ffff888112b1f2c0 RCX: ffff888112b1f320
-RDX: 000000000000400b RSI: ffffffffc02c9de5 RDI: ffff888112b1f2c0
-RBP: ffffc90000f37830 R08: 0000000000000000 R09: 0000000000000000
-R10: ffffc90000f37610 R11: 617461203a736b6e R12: ffffea00044ac780
-R13: ffff888100046400 R14: ffffffffc02c9de5 R15: 0000000000000006
-FS:  00007f2f1cabe980(0000) GS:ffff88813b380000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f2f1c3acf75 CR3: 0000000111724000 CR4: 0000000000750ef0
-PKRU: 55555554
-Call Trace:
- <TASK>
- ? __die_body.cold+0x19/0x27
- ? die+0x2e/0x50
- ? do_trap+0xca/0x110
- ? do_error_trap+0x6a/0x90
- ? kfree+0x2cf/0x2f0
- ? exc_invalid_op+0x50/0x70
- ? kfree+0x2cf/0x2f0
- ? asm_exc_invalid_op+0x1a/0x20
- ? ata_host_alloc+0xf5/0x120 [libata]
- ? ata_host_alloc+0xf5/0x120 [libata]
- ? kfree+0x2cf/0x2f0
- ata_host_alloc+0xf5/0x120 [libata]
- ata_host_alloc_pinfo+0x14/0xa0 [libata]
- ahci_init_one+0x6c9/0xd20 [ahci]
+Changing the type of the compat syscall to the signed compat_off_t
+changes the behavior so it instead returns -EINVAL.
 
-Ensure that we will not call kfree(host) twice, by performing the kfree()
-only if the devres_open_group() call failed.
+The native entry point, the truncate() syscall and the corresponding
+loff_t based variants are all correct already and do not suffer
+from this mistake.
 
-Fixes: dafd6c496381 ("libata: ensure host is free'd on error exit paths")
+Fixes: 3f6d078d4acc ("fix compat truncate/ftruncate")
+Reviewed-by: Christian Brauner <brauner@kernel.org>
 Cc: stable@vger.kernel.org
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Link: https://lore.kernel.org/r/20240629124210.181537-9-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-core.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/open.c                |    4 ++--
+ include/linux/compat.h   |    2 +-
+ include/linux/syscalls.h |    2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -5420,8 +5420,10 @@ struct ata_host *ata_host_alloc(struct d
- 	if (!host)
- 		return NULL;
- 
--	if (!devres_open_group(dev, NULL, GFP_KERNEL))
--		goto err_free;
-+	if (!devres_open_group(dev, NULL, GFP_KERNEL)) {
-+		kfree(host);
-+		return NULL;
-+	}
- 
- 	dr = devres_alloc(ata_devres_release, 0, GFP_KERNEL);
- 	if (!dr)
-@@ -5453,8 +5455,6 @@ struct ata_host *ata_host_alloc(struct d
- 
-  err_out:
- 	devres_release_group(dev, NULL);
-- err_free:
--	kfree(host);
- 	return NULL;
+--- a/fs/open.c
++++ b/fs/open.c
+@@ -200,13 +200,13 @@ out:
+ 	return error;
  }
- EXPORT_SYMBOL_GPL(ata_host_alloc);
+ 
+-SYSCALL_DEFINE2(ftruncate, unsigned int, fd, unsigned long, length)
++SYSCALL_DEFINE2(ftruncate, unsigned int, fd, off_t, length)
+ {
+ 	return do_sys_ftruncate(fd, length, 1);
+ }
+ 
+ #ifdef CONFIG_COMPAT
+-COMPAT_SYSCALL_DEFINE2(ftruncate, unsigned int, fd, compat_ulong_t, length)
++COMPAT_SYSCALL_DEFINE2(ftruncate, unsigned int, fd, compat_off_t, length)
+ {
+ 	return do_sys_ftruncate(fd, length, 1);
+ }
+--- a/include/linux/compat.h
++++ b/include/linux/compat.h
+@@ -527,7 +527,7 @@ asmlinkage long compat_sys_fstatfs(unsig
+ asmlinkage long compat_sys_fstatfs64(unsigned int fd, compat_size_t sz,
+ 				     struct compat_statfs64 __user *buf);
+ asmlinkage long compat_sys_truncate(const char __user *, compat_off_t);
+-asmlinkage long compat_sys_ftruncate(unsigned int, compat_ulong_t);
++asmlinkage long compat_sys_ftruncate(unsigned int, compat_off_t);
+ /* No generic prototype for truncate64, ftruncate64, fallocate */
+ asmlinkage long compat_sys_openat(int dfd, const char __user *filename,
+ 				  int flags, umode_t mode);
+--- a/include/linux/syscalls.h
++++ b/include/linux/syscalls.h
+@@ -445,7 +445,7 @@ asmlinkage long sys_fstatfs(unsigned int
+ asmlinkage long sys_fstatfs64(unsigned int fd, size_t sz,
+ 				struct statfs64 __user *buf);
+ asmlinkage long sys_truncate(const char __user *path, long length);
+-asmlinkage long sys_ftruncate(unsigned int fd, unsigned long length);
++asmlinkage long sys_ftruncate(unsigned int fd, off_t length);
+ #if BITS_PER_LONG == 32
+ asmlinkage long sys_truncate64(const char __user *path, loff_t length);
+ asmlinkage long sys_ftruncate64(unsigned int fd, loff_t length);
 
 
