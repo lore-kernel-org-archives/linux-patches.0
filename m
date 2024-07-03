@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE2713E024;
-	Wed,  3 Jul 2024 11:20:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B6C0185E50;
+	Wed,  3 Jul 2024 11:21:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005659; cv=none; b=LUCodgeWaO23c8aklX1ocJD7dtaSnpwjdebP7w8+qWY5EnnrGlixl6hKfa2iL1FvP9N8Dq83GPm0xwm1CbCLp4Ex091/Vvfb6un9aFr8ib/3hfwZmceJjzlqFoutDvRbr3E8ZOCd32A0fNhxI9bdCGR9s0d/ueLVGkDS93U0Yjs=
+	t=1720005662; cv=none; b=YH9Dymup+aZJlymY66R7PCdOsLR9SBOy0QU2n0A2VKVxr+XWscrFijzgGGruKUAf1ddhh1XiJsssTrAeKp2kBA2db2u6r4q+rxd/5vsKJzHOsbPWlT6Vs5tV5O7hwINRX+yqd72WIMF1H229QBMYh5yVgsvp0pneXDN+FGM7ZdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005659; c=relaxed/simple;
-	bh=XsPH2Jj2NXH/0XmyY/LrbSr3GTAXb4IsmKRfZdz+QNM=;
+	s=arc-20240116; t=1720005662; c=relaxed/simple;
+	bh=SAW0qlgKsmw5En3XiypWzVNJ/zQ1nM8JPriBBBfPKDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NIe4gFWDf8xBUCOf2jlVAiKBT1veO23DSMPoQ8Uz47D4dfCfLuUYMEaq4iG9frfztNKKK4S2tyIS6wFjKkx8mRzvN4WwEm4uj3BzyIdESyWl9SbF502GOb++ACorJAGg1x0aAkiibBYrst2nlp6YglCPv2D46kMveELYfU08+KU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gucM85+X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sKU14CYkGBe8+3964GwBTTU3YooBo9ICuvTfONpxJKzEWAi0i7JlxWDsK31s+ekNDWJxGHEWv55IqDDfRDd1k7MJ73alNqbyBpwk5MKsXyNviU/tGcbd9vH7Y4pHY5rcwym6MughTWCKe3koQEFE4rhNDBDwTvbA/YaU3ffWQc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U2TsNdG5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gucM85+X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B7B7C2BD10;
-	Wed,  3 Jul 2024 11:20:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U2TsNdG5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8570BC2BD10;
+	Wed,  3 Jul 2024 11:21:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005659;
-	bh=XsPH2Jj2NXH/0XmyY/LrbSr3GTAXb4IsmKRfZdz+QNM=;
+	s=korg; t=1720005661;
+	bh=SAW0qlgKsmw5En3XiypWzVNJ/zQ1nM8JPriBBBfPKDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gucM85+X7evlYl1szY8Oc9p9PvEOvSbET4quHdOCEVRUeO6syr/J6yzAYkBflzwbr
-	 w5LX1vaBU/G97H0dvvQuiX5dK0hKOy1Y1cmBqk7EFIyAgRDNXkhKM0AyqfJHs4enCH
-	 Z0ZJkZtPe7Jy2FYAY9IwJbpkai9p4gBUzhzlgwTs=
+	b=U2TsNdG5r19PQeNn/8Nej//EL27e/jeHFZRqfyxeLsiW3LV5P+q2vLhm2dK7aGIOh
+	 H4d58zkYvvA6azbFChlVWDq6rBp4rQeqwuK8m9+sADXrxuxdny7QSeW0xdde5j3/m8
+	 Y+oFwESlteJyhnmM2xSxbH90UVxkr87TpJVQJ7A0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zqiang <qiang.zhang1211@gmail.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 154/356] rcutorture: Fix invalid context warning when enable srcu barrier testing
-Date: Wed,  3 Jul 2024 12:38:10 +0200
-Message-ID: <20240703102918.928597372@linuxfoundation.org>
+Subject: [PATCH 5.15 155/356] block/ioctl: prefer different overflow check
+Date: Wed,  3 Jul 2024 12:38:11 +0200
+Message-ID: <20240703102918.966082834@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -52,117 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zqiang <qiang.zhang1211@gmail.com>
+From: Justin Stitt <justinstitt@google.com>
 
-[ Upstream commit 668c0406d887467d53f8fe79261dda1d22d5b671 ]
+[ Upstream commit ccb326b5f9e623eb7f130fbbf2505ec0e2dcaff9 ]
 
-When the torture_type is set srcu or srcud and cb_barrier is
-non-zero, running the rcutorture test will trigger the
-following warning:
+Running syzkaller with the newly reintroduced signed integer overflow
+sanitizer shows this report:
 
-[  163.910989][    C1] BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
-[  163.910994][    C1] in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 0, name: swapper/1
-[  163.910999][    C1] preempt_count: 10001, expected: 0
-[  163.911002][    C1] RCU nest depth: 0, expected: 0
-[  163.911005][    C1] INFO: lockdep is turned off.
-[  163.911007][    C1] irq event stamp: 30964
-[  163.911010][    C1] hardirqs last  enabled at (30963): [<ffffffffabc7df52>] do_idle+0x362/0x500
-[  163.911018][    C1] hardirqs last disabled at (30964): [<ffffffffae616eff>] sysvec_call_function_single+0xf/0xd0
-[  163.911025][    C1] softirqs last  enabled at (0): [<ffffffffabb6475f>] copy_process+0x16ff/0x6580
-[  163.911033][    C1] softirqs last disabled at (0): [<0000000000000000>] 0x0
-[  163.911038][    C1] Preemption disabled at:
-[  163.911039][    C1] [<ffffffffacf1964b>] stack_depot_save_flags+0x24b/0x6c0
-[  163.911063][    C1] CPU: 1 PID: 0 Comm: swapper/1 Tainted: G        W          6.8.0-rc4-rt4-yocto-preempt-rt+ #3 1e39aa9a737dd024a3275c4f835a872f673a7d3a
-[  163.911071][    C1] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.2-0-gea1b7a073390-prebuilt.qemu.org 04/01/2014
-[  163.911075][    C1] Call Trace:
-[  163.911078][    C1]  <IRQ>
-[  163.911080][    C1]  dump_stack_lvl+0x88/0xd0
-[  163.911089][    C1]  dump_stack+0x10/0x20
-[  163.911095][    C1]  __might_resched+0x36f/0x530
-[  163.911105][    C1]  rt_spin_lock+0x82/0x1c0
-[  163.911112][    C1]  spin_lock_irqsave_ssp_contention+0xb8/0x100
-[  163.911121][    C1]  srcu_gp_start_if_needed+0x782/0xf00
-[  163.911128][    C1]  ? _raw_spin_unlock_irqrestore+0x46/0x70
-[  163.911136][    C1]  ? debug_object_active_state+0x336/0x470
-[  163.911148][    C1]  ? __pfx_srcu_gp_start_if_needed+0x10/0x10
-[  163.911156][    C1]  ? __pfx_lock_release+0x10/0x10
-[  163.911165][    C1]  ? __pfx_rcu_torture_barrier_cbf+0x10/0x10
-[  163.911188][    C1]  __call_srcu+0x9f/0xe0
-[  163.911196][    C1]  call_srcu+0x13/0x20
-[  163.911201][    C1]  srcu_torture_call+0x1b/0x30
-[  163.911224][    C1]  rcu_torture_barrier1cb+0x4a/0x60
-[  163.911247][    C1]  __flush_smp_call_function_queue+0x267/0xca0
-[  163.911256][    C1]  ? __pfx_rcu_torture_barrier1cb+0x10/0x10
-[  163.911281][    C1]  generic_smp_call_function_single_interrupt+0x13/0x20
-[  163.911288][    C1]  __sysvec_call_function_single+0x7d/0x280
-[  163.911295][    C1]  sysvec_call_function_single+0x93/0xd0
-[  163.911302][    C1]  </IRQ>
-[  163.911304][    C1]  <TASK>
-[  163.911308][    C1]  asm_sysvec_call_function_single+0x1b/0x20
-[  163.911313][    C1] RIP: 0010:default_idle+0x17/0x20
-[  163.911326][    C1] RSP: 0018:ffff888001997dc8 EFLAGS: 00000246
-[  163.911333][    C1] RAX: 0000000000000000 RBX: dffffc0000000000 RCX: ffffffffae618b51
-[  163.911337][    C1] RDX: 0000000000000000 RSI: ffffffffaea80920 RDI: ffffffffaec2de80
-[  163.911342][    C1] RBP: ffff888001997dc8 R08: 0000000000000001 R09: ffffed100d740cad
-[  163.911346][    C1] R10: ffffed100d740cac R11: ffff88806ba06563 R12: 0000000000000001
-[  163.911350][    C1] R13: ffffffffafe460c0 R14: ffffffffafe460c0 R15: 0000000000000000
-[  163.911358][    C1]  ? ct_kernel_exit.constprop.3+0x121/0x160
-[  163.911369][    C1]  ? lockdep_hardirqs_on+0xc4/0x150
-[  163.911376][    C1]  arch_cpu_idle+0x9/0x10
-[  163.911383][    C1]  default_idle_call+0x7a/0xb0
-[  163.911390][    C1]  do_idle+0x362/0x500
-[  163.911398][    C1]  ? __pfx_do_idle+0x10/0x10
-[  163.911404][    C1]  ? complete_with_flags+0x8b/0xb0
-[  163.911416][    C1]  cpu_startup_entry+0x58/0x70
-[  163.911423][    C1]  start_secondary+0x221/0x280
-[  163.911430][    C1]  ? __pfx_start_secondary+0x10/0x10
-[  163.911440][    C1]  secondary_startup_64_no_verify+0x17f/0x18b
-[  163.911455][    C1]  </TASK>
+[   62.982337] ------------[ cut here ]------------
+[   62.985692] cgroup: Invalid name
+[   62.986211] UBSAN: signed-integer-overflow in ../block/ioctl.c:36:46
+[   62.989370] 9pnet_fd: p9_fd_create_tcp (7343): problem connecting socket to 127.0.0.1
+[   62.992992] 9223372036854775807 + 4095 cannot be represented in type 'long long'
+[   62.997827] 9pnet_fd: p9_fd_create_tcp (7345): problem connecting socket to 127.0.0.1
+[   62.999369] random: crng reseeded on system resumption
+[   63.000634] GUP no longer grows the stack in syz-executor.2 (7353): 20002000-20003000 (20001000)
+[   63.000668] CPU: 0 PID: 7353 Comm: syz-executor.2 Not tainted 6.8.0-rc2-00035-gb3ef86b5a957 #1
+[   63.000677] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   63.000682] Call Trace:
+[   63.000686]  <TASK>
+[   63.000731]  dump_stack_lvl+0x93/0xd0
+[   63.000919]  __get_user_pages+0x903/0xd30
+[   63.001030]  __gup_longterm_locked+0x153e/0x1ba0
+[   63.001041]  ? _raw_read_unlock_irqrestore+0x17/0x50
+[   63.001072]  ? try_get_folio+0x29c/0x2d0
+[   63.001083]  internal_get_user_pages_fast+0x1119/0x1530
+[   63.001109]  iov_iter_extract_pages+0x23b/0x580
+[   63.001206]  bio_iov_iter_get_pages+0x4de/0x1220
+[   63.001235]  iomap_dio_bio_iter+0x9b6/0x1410
+[   63.001297]  __iomap_dio_rw+0xab4/0x1810
+[   63.001316]  iomap_dio_rw+0x45/0xa0
+[   63.001328]  ext4_file_write_iter+0xdde/0x1390
+[   63.001372]  vfs_write+0x599/0xbd0
+[   63.001394]  ksys_write+0xc8/0x190
+[   63.001403]  do_syscall_64+0xd4/0x1b0
+[   63.001421]  ? arch_exit_to_user_mode_prepare+0x3a/0x60
+[   63.001479]  entry_SYSCALL_64_after_hwframe+0x6f/0x77
+[   63.001535] RIP: 0033:0x7f7fd3ebf539
+[   63.001551] Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 f1 14 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
+[   63.001562] RSP: 002b:00007f7fd32570c8 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
+[   63.001584] RAX: ffffffffffffffda RBX: 00007f7fd3ff3f80 RCX: 00007f7fd3ebf539
+[   63.001590] RDX: 4db6d1e4f7e43360 RSI: 0000000020000000 RDI: 0000000000000004
+[   63.001595] RBP: 00007f7fd3f1e496 R08: 0000000000000000 R09: 0000000000000000
+[   63.001599] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+[   63.001604] R13: 0000000000000006 R14: 00007f7fd3ff3f80 R15: 00007ffd415ad2b8
+...
+[   63.018142] ---[ end trace ]---
 
-This commit therefore use smp_call_on_cpu() instead of
-smp_call_function_single(), make rcu_torture_barrier1cb() invoked
-happens on task-context.
+Historically, the signed integer overflow sanitizer did not work in the
+kernel due to its interaction with `-fwrapv` but this has since been
+changed [1] in the newest version of Clang; It was re-enabled in the
+kernel with Commit 557f8c582a9ba8ab ("ubsan: Reintroduce signed overflow
+sanitizer").
 
-Signed-off-by: Zqiang <qiang.zhang1211@gmail.com>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
+Let's rework this overflow checking logic to not actually perform an
+overflow during the check itself, thus avoiding the UBSAN splat.
+
+[1]: https://github.com/llvm/llvm-project/pull/82432
+
+Signed-off-by: Justin Stitt <justinstitt@google.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20240507-b4-sio-block-ioctl-v3-1-ba0c2b32275e@google.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/rcutorture.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ block/ioctl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/rcu/rcutorture.c b/kernel/rcu/rcutorture.c
-index e9323cc5da73b..9d8d1f233d7bd 100644
---- a/kernel/rcu/rcutorture.c
-+++ b/kernel/rcu/rcutorture.c
-@@ -2533,11 +2533,12 @@ static void rcu_torture_barrier_cbf(struct rcu_head *rcu)
- }
+diff --git a/block/ioctl.c b/block/ioctl.c
+index 7a939c178660f..a260e39e56a48 100644
+--- a/block/ioctl.c
++++ b/block/ioctl.c
+@@ -33,7 +33,7 @@ static int blkpg_do_ioctl(struct block_device *bdev,
+ 	if (op == BLKPG_DEL_PARTITION)
+ 		return bdev_del_partition(disk, p.pno);
  
- /* IPI handler to get callback posted on desired CPU, if online. */
--static void rcu_torture_barrier1cb(void *rcu_void)
-+static int rcu_torture_barrier1cb(void *rcu_void)
- {
- 	struct rcu_head *rhp = rcu_void;
- 
- 	cur_ops->call(rhp, rcu_torture_barrier_cbf);
-+	return 0;
- }
- 
- /* kthread function to register callbacks used to test RCU barriers. */
-@@ -2563,11 +2564,9 @@ static int rcu_torture_barrier_cbs(void *arg)
- 		 * The above smp_load_acquire() ensures barrier_phase load
- 		 * is ordered before the following ->call().
- 		 */
--		if (smp_call_function_single(myid, rcu_torture_barrier1cb,
--					     &rcu, 1)) {
--			// IPI failed, so use direct call from current CPU.
-+		if (smp_call_on_cpu(myid, rcu_torture_barrier1cb, &rcu, 1))
- 			cur_ops->call(&rcu, rcu_torture_barrier_cbf);
--		}
-+
- 		if (atomic_dec_and_test(&barrier_cbs_count))
- 			wake_up(&barrier_wq);
- 	} while (!torture_must_stop());
+-	if (p.start < 0 || p.length <= 0 || p.start + p.length < 0)
++	if (p.start < 0 || p.length <= 0 || LLONG_MAX - p.length < p.start)
+ 		return -EINVAL;
+ 	/* Check that the partition is aligned to the block size */
+ 	if (!IS_ALIGNED(p.start | p.length, bdev_logical_block_size(bdev)))
 -- 
 2.43.0
 
