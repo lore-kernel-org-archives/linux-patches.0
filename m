@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5E91836F0;
-	Wed,  3 Jul 2024 11:30:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15561836EE;
+	Wed,  3 Jul 2024 11:31:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006258; cv=none; b=eLCX11K9ORDKxgyqXkEqSRInmFYyzhkzsa3ayiFXWEJucljvtZQABQZYHAextMeISo7uEgxN2A3WVadYi3sn+juFA3eyLM6pGLN778Gz+TVt3/XLRJa40FdmCWZwoXp1Cb0YKoPrC5OWRrEzxSlj+XRHg+OAxuWANIFfV5Lssfs=
+	t=1720006261; cv=none; b=VO3L/RlGMDIIqhavJO55lIk7MO+MngZg82ARavXpawy47IFSY/JjiZNphQmtb6VBcvvPyyoa2NXljLt1lUkdskh+AKxrKG8Asn4TlHL8UeGn76iPFzaP6H0jwCf8dGEAaopQIvKujdEMeiFB9BL7eq7pu7rxJ7McQ+7Rm1gzJks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006258; c=relaxed/simple;
-	bh=KUTeuM7mZxp/nxbAUAgit0TOL0Ha6cVCofDGWxzsMXA=;
+	s=arc-20240116; t=1720006261; c=relaxed/simple;
+	bh=5CFuCFK4XfOn5pyIOORHB41ExYj941tD5VibrqzjaI0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Biv7J8wln/axRTux8I9rpiTNBkzhjo3OkTPC9y+kZK9JB13poplQNtupqzCRvnGtDjznSt9NzWbK/QNMX9PWymr5yP+Rm/usUChAdkQsUh4Lt5DchvJ/+JKVUqgYz/idi8b4cK32N/8Txt/NAcH1B5MNuRx0gbNF4pVfQSP6ZQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xdfRi5wr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kH54qmqyUbH5GdbqmuUxkhRcNoTsuzvsDpYshcHZfwyGRMUJfEuPcudm2Sb7uyRz+NKtpN2tgeC25LJo7kfUCOFBtsPPsQuFiL7MY8D0r/e3LxeRcoAFRvAUYOLLxeDi/3JYjWaB3ebBcbVYq/XUm9EsVLNDSymiThWx0VIeo4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9T/mA8c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xdfRi5wr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42903C32781;
-	Wed,  3 Jul 2024 11:30:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9T/mA8c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AF74C2BD10;
+	Wed,  3 Jul 2024 11:31:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006258;
-	bh=KUTeuM7mZxp/nxbAUAgit0TOL0Ha6cVCofDGWxzsMXA=;
+	s=korg; t=1720006261;
+	bh=5CFuCFK4XfOn5pyIOORHB41ExYj941tD5VibrqzjaI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xdfRi5wrsPMleFiFz3OVa8QahA5NT/Y1hA5kUdzgMC2d5F0p1JQZxiHuhR8bxbmrb
-	 Hgjrgkl33EdyrzU8Y0KiKjSHn6My6Vdh2Kig9LCD7K5JPGPLh33o4WZBguHHtC16v3
-	 tOEKlu4mCbLR7/ciN/nrEWPWO3I9NJ3vG2nnYzg0=
+	b=R9T/mA8cFBU4LuiWC2QBvzfvLb58BQgygPwuTuzrJpOS+ENsMf1wbr7YNobyq27QA
+	 XHtWzdLQnDMQc7Plmomj5ybuQI30KbPxkrgixeMs9e4Qj3m25ZMAHl+b07i7mHv5dG
+	 yXRWtqN+E54aNXSifW0lcXT+fdXaauxC57+GvZAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasileios Amoiridis <vassilisamir@gmail.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 312/356] iio: chemical: bme680: Fix pressure value output
-Date: Wed,  3 Jul 2024 12:40:48 +0200
-Message-ID: <20240703102924.917319969@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Kazunori Kobayashi <kazunori.kobayashi@miraclelinux.com>
+Subject: [PATCH 5.15 347/356] tcp: Fix data races around icsk->icsk_af_ops.
+Date: Wed,  3 Jul 2024 12:41:23 +0200
+Message-ID: <20240703102926.239363639@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,38 +53,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasileios Amoiridis <vassilisamir@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit ae1f7b93b52095be6776d0f34957b4f35dda44d9 upstream.
+commit f49cd2f4d6170d27a2c61f1fecb03d8a70c91f57 upstream.
 
-The IIO standard units are measured in kPa while the driver
-is using hPa.
+setsockopt(IPV6_ADDRFORM) and tcp_v6_connect() change icsk->icsk_af_ops
+under lock_sock(), but tcp_(get|set)sockopt() read it locklessly.  To
+avoid load/store tearing, we need to add READ_ONCE() and WRITE_ONCE()
+for the reads and writes.
 
-Apart from checking the userspace value itself, it is mentioned also
-in the Bosch API [1] that the pressure value is in Pascal.
+Thanks to Eric Dumazet for providing the syzbot report:
 
-[1]: https://github.com/boschsensortec/BME68x_SensorAPI/blob/v4.4.8/bme68x_defs.h#L742
+BUG: KCSAN: data-race in tcp_setsockopt / tcp_v6_connect
 
-Fixes: 1b3bd8592780 ("iio: chemical: Add support for Bosch BME680 sensor")
-Signed-off-by: Vasileios Amoiridis <vassilisamir@gmail.com>
-Link: https://lore.kernel.org/r/20240606212313.207550-2-vassilisamir@gmail.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+write to 0xffff88813c624518 of 8 bytes by task 23936 on cpu 0:
+tcp_v6_connect+0x5b3/0xce0 net/ipv6/tcp_ipv6.c:240
+__inet_stream_connect+0x159/0x6d0 net/ipv4/af_inet.c:660
+inet_stream_connect+0x44/0x70 net/ipv4/af_inet.c:724
+__sys_connect_file net/socket.c:1976 [inline]
+__sys_connect+0x197/0x1b0 net/socket.c:1993
+__do_sys_connect net/socket.c:2003 [inline]
+__se_sys_connect net/socket.c:2000 [inline]
+__x64_sys_connect+0x3d/0x50 net/socket.c:2000
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x2b/0x70 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+read to 0xffff88813c624518 of 8 bytes by task 23937 on cpu 1:
+tcp_setsockopt+0x147/0x1c80 net/ipv4/tcp.c:3789
+sock_common_setsockopt+0x5d/0x70 net/core/sock.c:3585
+__sys_setsockopt+0x212/0x2b0 net/socket.c:2252
+__do_sys_setsockopt net/socket.c:2263 [inline]
+__se_sys_setsockopt net/socket.c:2260 [inline]
+__x64_sys_setsockopt+0x62/0x70 net/socket.c:2260
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x2b/0x70 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+value changed: 0xffffffff8539af68 -> 0xffffffff8539aff8
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 1 PID: 23937 Comm: syz-executor.5 Not tainted
+6.0.0-rc4-syzkaller-00331-g4ed9c1e971b1-dirty #0
+
+Hardware name: Google Google Compute Engine/Google Compute Engine,
+BIOS Google 08/26/2022
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Reported-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Kazunori Kobayashi <kazunori.kobayashi@miraclelinux.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/chemical/bme680_core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/tcp.c           |   10 ++++++----
+ net/ipv6/ipv6_sockglue.c |    3 ++-
+ net/ipv6/tcp_ipv6.c      |    6 ++++--
+ 3 files changed, 12 insertions(+), 7 deletions(-)
 
---- a/drivers/iio/chemical/bme680_core.c
-+++ b/drivers/iio/chemical/bme680_core.c
-@@ -678,7 +678,7 @@ static int bme680_read_press(struct bme6
- 	}
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -3708,8 +3708,9 @@ int tcp_setsockopt(struct sock *sk, int
+ 	const struct inet_connection_sock *icsk = inet_csk(sk);
  
- 	*val = bme680_compensate_press(data, adc_press);
--	*val2 = 100;
-+	*val2 = 1000;
- 	return IIO_VAL_FRACTIONAL;
+ 	if (level != SOL_TCP)
+-		return icsk->icsk_af_ops->setsockopt(sk, level, optname,
+-						     optval, optlen);
++		/* Paired with WRITE_ONCE() in do_ipv6_setsockopt() and tcp_v6_connect() */
++		return READ_ONCE(icsk->icsk_af_ops)->setsockopt(sk, level, optname,
++								optval, optlen);
+ 	return do_tcp_setsockopt(sk, level, optname, optval, optlen);
  }
+ EXPORT_SYMBOL(tcp_setsockopt);
+@@ -4307,8 +4308,9 @@ int tcp_getsockopt(struct sock *sk, int
+ 	struct inet_connection_sock *icsk = inet_csk(sk);
  
+ 	if (level != SOL_TCP)
+-		return icsk->icsk_af_ops->getsockopt(sk, level, optname,
+-						     optval, optlen);
++		/* Paired with WRITE_ONCE() in do_ipv6_setsockopt() and tcp_v6_connect() */
++		return READ_ONCE(icsk->icsk_af_ops)->getsockopt(sk, level, optname,
++								optval, optlen);
+ 	return do_tcp_getsockopt(sk, level, optname, optval, optlen);
+ }
+ EXPORT_SYMBOL(tcp_getsockopt);
+--- a/net/ipv6/ipv6_sockglue.c
++++ b/net/ipv6/ipv6_sockglue.c
+@@ -477,7 +477,8 @@ static int do_ipv6_setsockopt(struct soc
+ 
+ 				/* Paired with READ_ONCE(sk->sk_prot) in inet6_stream_ops */
+ 				WRITE_ONCE(sk->sk_prot, &tcp_prot);
+-				icsk->icsk_af_ops = &ipv4_specific;
++				/* Paired with READ_ONCE() in tcp_(get|set)sockopt() */
++				WRITE_ONCE(icsk->icsk_af_ops, &ipv4_specific);
+ 				sk->sk_socket->ops = &inet_stream_ops;
+ 				sk->sk_family = PF_INET;
+ 				tcp_sync_mss(sk, icsk->icsk_pmtu_cookie);
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -237,7 +237,8 @@ static int tcp_v6_connect(struct sock *s
+ 		sin.sin_port = usin->sin6_port;
+ 		sin.sin_addr.s_addr = usin->sin6_addr.s6_addr32[3];
+ 
+-		icsk->icsk_af_ops = &ipv6_mapped;
++		/* Paired with READ_ONCE() in tcp_(get|set)sockopt() */
++		WRITE_ONCE(icsk->icsk_af_ops, &ipv6_mapped);
+ 		if (sk_is_mptcp(sk))
+ 			mptcpv6_handle_mapped(sk, true);
+ 		sk->sk_backlog_rcv = tcp_v4_do_rcv;
+@@ -249,7 +250,8 @@ static int tcp_v6_connect(struct sock *s
+ 
+ 		if (err) {
+ 			icsk->icsk_ext_hdr_len = exthdrlen;
+-			icsk->icsk_af_ops = &ipv6_specific;
++			/* Paired with READ_ONCE() in tcp_(get|set)sockopt() */
++			WRITE_ONCE(icsk->icsk_af_ops, &ipv6_specific);
+ 			if (sk_is_mptcp(sk))
+ 				mptcpv6_handle_mapped(sk, false);
+ 			sk->sk_backlog_rcv = tcp_v6_do_rcv;
 
 
