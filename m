@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E88013B280;
-	Wed,  3 Jul 2024 11:27:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646FC17C202;
+	Wed,  3 Jul 2024 11:27:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006025; cv=none; b=lM9xnSWUuIVAO7yXvDulw8/PvkENgs4rMtySm74qp5vXrBulyVC3dsQGPS66TuCuukKVbmHlxr07D+GktyzncE9uvh73FevABqTPTOZoUN6aOStjOMbDi1OkbYWTVEBLm+q/9W30jIsz86T99p9efwNRLoB3Zhp2kH5bHsw4vJ4=
+	t=1720006028; cv=none; b=A5mSdNDaUV2AlAkUWeEJ39olQ5kxdqVAd23czMj0tt3GQ0x6EbTLf015k6bQNhtk6gpUKh7u1XyYnLYfIfIT4xtriT6FMQ7c8xlOldMGLjG3vHPhtF5skQRf4hXvrdcPx7qKPGW4Zh81aLC8clr9x1lMqWcDln/m9oLvE/oz9zA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006025; c=relaxed/simple;
-	bh=QGCo6l8jOVSr1/1/q4aruzFWviIyeRifC5hobpLcMpc=;
+	s=arc-20240116; t=1720006028; c=relaxed/simple;
+	bh=V4Thayet0nyqnoC54hNzU9fWnJ/G8ZIXsARMuHuStP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PBpJqJGI5uuN0L6yzgRouksjkY4Uxv+lxq58Cfl506D4NHEoXm7O+7Z6/VX4Eot3datCp5iCpNiM7rVfUWmn1Lc66KBbdOj+PmFuesxMKOtFhhb9G0AAm4E4+CZ1HOt9AkATJhO2bW595fygiKtOQBiSPKeZRVc+LJRg6+rxirE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UauB5pWT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EKsOYzCQPb+Aiz7YWjNCKSgyd6tKS2IWIyRk201LZ64ajhpHxrdCVmYHxc2zooLlup++s6jDSLEQFiRG6EcniGzsicBYBYp6AD+JBk+otlcfxRz9FpY7QYz83i1wRuW1T2lqYwzlvQ2ZtFYthJoeDkKoTXrfGE9fBTMhA7R6VVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cv0gH3Tu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UauB5pWT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D641C2BD10;
-	Wed,  3 Jul 2024 11:27:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cv0gH3Tu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87E1DC32781;
+	Wed,  3 Jul 2024 11:27:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006025;
-	bh=QGCo6l8jOVSr1/1/q4aruzFWviIyeRifC5hobpLcMpc=;
+	s=korg; t=1720006027;
+	bh=V4Thayet0nyqnoC54hNzU9fWnJ/G8ZIXsARMuHuStP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UauB5pWTp+3qsOnFYrwnE919jeaRAHMW1ubtatJRJmYxsc/xDr1zhvvt6YGJS4l2G
-	 WEJLsabuslvZRPEmzQ8sCdA9KgpebKQhaf4r9vUutBNOeI+e+s6JUjP2upMfTLRjs8
-	 ygMbot+ir7DoNf5Icqw35SB7gwNZxwoVhNufq5X8=
+	b=Cv0gH3TupZHNJmb33bc80OuiFc4kGQsBvxP6JGbwLAaUya0NLd2o6fIeMK+Mxvq0u
+	 ELt0pLh0jneYaC5lrVIvi+5PagMAMWXwDJvnFNzJdlVkROLtvtXOU/RihE5WCRwjTv
+	 EqYSThUqK9ppkwEvUipTMQN9tHZdRKH/W3J7/6rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Dulov <d.dulov@aladdin.ru>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Akhmat Karakotov <hmukos@yandex-team.ru>,
+	Martin KaFai Lau <kafai@fb.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 274/356] xdp: Remove WARN() from __xdp_reg_mem_model()
-Date: Wed,  3 Jul 2024 12:40:10 +0200
-Message-ID: <20240703102923.479576211@linuxfoundation.org>
+Subject: [PATCH 5.15 275/356] tcp: Use BPF timeout setting for SYN ACK RTO
+Date: Wed,  3 Jul 2024 12:40:11 +0200
+Message-ID: <20240703102923.517310031@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -52,74 +52,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniil Dulov <d.dulov@aladdin.ru>
+From: Akhmat Karakotov <hmukos@yandex-team.ru>
 
-[ Upstream commit 7e9f79428372c6eab92271390851be34ab26bfb4 ]
+[ Upstream commit 5903123f662ed18483f05cac3f9e800a074c29ff ]
 
-syzkaller reports a warning in __xdp_reg_mem_model().
+When setting RTO through BPF program, some SYN ACK packets were unaffected
+and continued to use TCP_TIMEOUT_INIT constant. This patch adds timeout
+option to struct request_sock. Option is initialized with TCP_TIMEOUT_INIT
+and is reassigned through BPF using tcp_timeout_init call. SYN ACK
+retransmits now use newly added timeout option.
 
-The warning occurs only if __mem_id_init_hash_table() returns an error. It
-returns the error in two cases:
+Signed-off-by: Akhmat Karakotov <hmukos@yandex-team.ru>
+Acked-by: Martin KaFai Lau <kafai@fb.com>
 
-  1. memory allocation fails;
-  2. rhashtable_init() fails when some fields of rhashtable_params
-     struct are not initialized properly.
+v2:
+	- Add timeout option to struct request_sock. Do not call
+	  tcp_timeout_init on every syn ack retransmit.
 
-The second case cannot happen since there is a static const rhashtable_params
-struct with valid fields. So, warning is only triggered when there is a
-problem with memory allocation.
+v3:
+	- Use unsigned long for min. Bound tcp_timeout_init to TCP_RTO_MAX.
 
-Thus, there is no sense in using WARN() to handle this error and it can be
-safely removed.
-
-WARNING: CPU: 0 PID: 5065 at net/core/xdp.c:299 __xdp_reg_mem_model+0x2d9/0x650 net/core/xdp.c:299
-
-CPU: 0 PID: 5065 Comm: syz-executor883 Not tainted 6.8.0-syzkaller-05271-gf99c5f563c17 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
-RIP: 0010:__xdp_reg_mem_model+0x2d9/0x650 net/core/xdp.c:299
-
-Call Trace:
- xdp_reg_mem_model+0x22/0x40 net/core/xdp.c:344
- xdp_test_run_setup net/bpf/test_run.c:188 [inline]
- bpf_test_run_xdp_live+0x365/0x1e90 net/bpf/test_run.c:377
- bpf_prog_test_run_xdp+0x813/0x11b0 net/bpf/test_run.c:1267
- bpf_prog_test_run+0x33a/0x3b0 kernel/bpf/syscall.c:4240
- __sys_bpf+0x48d/0x810 kernel/bpf/syscall.c:5649
- __do_sys_bpf kernel/bpf/syscall.c:5738 [inline]
- __se_sys_bpf kernel/bpf/syscall.c:5736 [inline]
- __x64_sys_bpf+0x7c/0x90 kernel/bpf/syscall.c:5736
- do_syscall_64+0xfb/0x240
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-Found by Linux Verification Center (linuxtesting.org) with syzkaller.
-
-Fixes: 8d5d88527587 ("xdp: rhashtable with allocator ID to pointer mapping")
-Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Link: https://lore.kernel.org/all/20240617162708.492159-1-d.dulov@aladdin.ru
-Link: https://lore.kernel.org/bpf/20240624080747.36858-1-d.dulov@aladdin.ru
+v4: - Refactor duplicate code by adding reqsk_timeout function.
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: ff46e3b44219 ("Fix race for duplicate reqsk on identical SYN")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/xdp.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ include/net/inet_connection_sock.h | 8 ++++++++
+ include/net/request_sock.h         | 2 ++
+ include/net/tcp.h                  | 2 +-
+ net/ipv4/inet_connection_sock.c    | 5 +----
+ net/ipv4/tcp_input.c               | 8 +++++---
+ net/ipv4/tcp_minisocks.c           | 5 ++---
+ 6 files changed, 19 insertions(+), 11 deletions(-)
 
-diff --git a/net/core/xdp.c b/net/core/xdp.c
-index a3e3d2538a3a8..e9a9694c4fdcc 100644
---- a/net/core/xdp.c
-+++ b/net/core/xdp.c
-@@ -292,10 +292,8 @@ static struct xdp_mem_allocator *__xdp_reg_mem_model(struct xdp_mem_info *mem,
- 		mutex_lock(&mem_id_lock);
- 		ret = __mem_id_init_hash_table();
- 		mutex_unlock(&mem_id_lock);
--		if (ret < 0) {
--			WARN_ON(1);
-+		if (ret < 0)
- 			return ERR_PTR(ret);
--		}
+diff --git a/include/net/inet_connection_sock.h b/include/net/inet_connection_sock.h
+index b6b7e210f9d7a..7794cf2b5ef50 100644
+--- a/include/net/inet_connection_sock.h
++++ b/include/net/inet_connection_sock.h
+@@ -284,6 +284,14 @@ static inline int inet_csk_reqsk_queue_is_full(const struct sock *sk)
+ bool inet_csk_reqsk_queue_drop(struct sock *sk, struct request_sock *req);
+ void inet_csk_reqsk_queue_drop_and_put(struct sock *sk, struct request_sock *req);
+ 
++static inline unsigned long
++reqsk_timeout(struct request_sock *req, unsigned long max_timeout)
++{
++	u64 timeout = (u64)req->timeout << req->num_timeout;
++
++	return (unsigned long)min_t(u64, timeout, max_timeout);
++}
++
+ static inline void inet_csk_prepare_for_destroy_sock(struct sock *sk)
+ {
+ 	/* The below has to be done to allow calling inet_csk_destroy_sock */
+diff --git a/include/net/request_sock.h b/include/net/request_sock.h
+index 29e41ff3ec933..144c39db9898a 100644
+--- a/include/net/request_sock.h
++++ b/include/net/request_sock.h
+@@ -70,6 +70,7 @@ struct request_sock {
+ 	struct saved_syn		*saved_syn;
+ 	u32				secid;
+ 	u32				peer_secid;
++	u32				timeout;
+ };
+ 
+ static inline struct request_sock *inet_reqsk(const struct sock *sk)
+@@ -104,6 +105,7 @@ reqsk_alloc(const struct request_sock_ops *ops, struct sock *sk_listener,
+ 	sk_node_init(&req_to_sk(req)->sk_node);
+ 	sk_tx_queue_clear(req_to_sk(req));
+ 	req->saved_syn = NULL;
++	req->timeout = 0;
+ 	req->num_timeout = 0;
+ 	req->num_retrans = 0;
+ 	req->sk = NULL;
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index 08923ed4278f0..30f8111f750b5 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -2362,7 +2362,7 @@ static inline u32 tcp_timeout_init(struct sock *sk)
+ 
+ 	if (timeout <= 0)
+ 		timeout = TCP_TIMEOUT_INIT;
+-	return timeout;
++	return min_t(int, timeout, TCP_RTO_MAX);
+ }
+ 
+ static inline u32 tcp_rwnd_init_bpf(struct sock *sk)
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index 27975a44d1f9d..43e370f45b81d 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -889,12 +889,9 @@ static void reqsk_timer_handler(struct timer_list *t)
+ 	    (!resend ||
+ 	     !inet_rtx_syn_ack(sk_listener, req) ||
+ 	     inet_rsk(req)->acked)) {
+-		unsigned long timeo;
+-
+ 		if (req->num_timeout++ == 0)
+ 			atomic_dec(&queue->young);
+-		timeo = min(TCP_TIMEOUT_INIT << req->num_timeout, TCP_RTO_MAX);
+-		mod_timer(&req->rsk_timer, jiffies + timeo);
++		mod_timer(&req->rsk_timer, jiffies + reqsk_timeout(req, TCP_RTO_MAX));
+ 
+ 		if (!nreq)
+ 			return;
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 5ad7e6965a645..ca72dbaa27b46 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -6769,6 +6769,7 @@ struct request_sock *inet_reqsk_alloc(const struct request_sock_ops *ops,
+ 		ireq->ireq_state = TCP_NEW_SYN_RECV;
+ 		write_pnet(&ireq->ireq_net, sock_net(sk_listener));
+ 		ireq->ireq_family = sk_listener->sk_family;
++		req->timeout = TCP_TIMEOUT_INIT;
  	}
  
- 	xdp_alloc = kzalloc(sizeof(*xdp_alloc), gfp);
+ 	return req;
+@@ -6991,9 +6992,10 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
+ 		sock_put(fastopen_sk);
+ 	} else {
+ 		tcp_rsk(req)->tfo_listener = false;
+-		if (!want_cookie)
+-			inet_csk_reqsk_queue_hash_add(sk, req,
+-				tcp_timeout_init((struct sock *)req));
++		if (!want_cookie) {
++			req->timeout = tcp_timeout_init((struct sock *)req);
++			inet_csk_reqsk_queue_hash_add(sk, req, req->timeout);
++		}
+ 		af_ops->send_synack(sk, dst, &fl, req, &foc,
+ 				    !want_cookie ? TCP_SYNACK_NORMAL :
+ 						   TCP_SYNACK_COOKIE,
+diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
+index 2606a5571116a..d84b71f70766b 100644
+--- a/net/ipv4/tcp_minisocks.c
++++ b/net/ipv4/tcp_minisocks.c
+@@ -593,7 +593,7 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
+ 			 * it can be estimated (approximately)
+ 			 * from another data.
+ 			 */
+-			tmp_opt.ts_recent_stamp = ktime_get_seconds() - ((TCP_TIMEOUT_INIT/HZ)<<req->num_timeout);
++			tmp_opt.ts_recent_stamp = ktime_get_seconds() - reqsk_timeout(req, TCP_RTO_MAX) / HZ;
+ 			paws_reject = tcp_paws_reject(&tmp_opt, th->rst);
+ 		}
+ 	}
+@@ -632,8 +632,7 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
+ 		    !inet_rtx_syn_ack(sk, req)) {
+ 			unsigned long expires = jiffies;
+ 
+-			expires += min(TCP_TIMEOUT_INIT << req->num_timeout,
+-				       TCP_RTO_MAX);
++			expires += reqsk_timeout(req, TCP_RTO_MAX);
+ 			if (!fastopen)
+ 				mod_timer_pending(&req->rsk_timer, expires);
+ 			else
 -- 
 2.43.0
 
