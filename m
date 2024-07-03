@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40BCE16F8FA;
-	Wed,  3 Jul 2024 11:06:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3773216F8FA;
+	Wed,  3 Jul 2024 11:06:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004816; cv=none; b=PQdIww8HsqHIQcd5ggnF8qrZqYRW9xoVVvNktWaTcXM2PryfMK1Pk0890FqiET0aSVDi/i4lgWCecx9b61ZWFg8J25ZxgWKVl+FGNdwmALpU/0c91/vvXPy0gIHnUnzFgWlfLdRkp+Fb7cOyPZQRc1skVaVLN+To2ET7aYX1wrA=
+	t=1720004819; cv=none; b=P7KRsxQuS2dkcUd2OxfV4F7gU31GIovmlfmnu7lzCqyi9zzDFwwX3I/ilYRIr+mk124CP3qa9kB2bW5ckm0m2nFhblzegHUpIt4eahbg6F/M/eaK3ca1tYVnbp+0KyMcId8afrByT4783KPh3X/l59GR9dLny/aQezkFZ2AnVg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004816; c=relaxed/simple;
-	bh=9Ru+SI5nT6hBDkEsFb1StFcT2K0S8zvDBGb49ECGoKs=;
+	s=arc-20240116; t=1720004819; c=relaxed/simple;
+	bh=MhRk/IX6Vc9g3SozI72H+yuIXBx8ZE6uKUtb7NTr5T8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bN5PpvRP8VG5mEW4246OL5fvxEYN7YCWeVxJyQYPFnExQj/PQTDLxX2Kk/r3bPvNUBp6IlxzfvYPihcJLXNIZNV7QnLYl61UFh2C1N1HgatTZuep5I16f8jNx7oJqwgv1IKsKXQz97JXr02bxNxEnNS9APmwcHWTt39+kMDB3qc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VT9R8OB3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nNweADJFzCeakSKFsMqa8ZWlexYJVwiNhlBAj+D+CosclOA7I9MTy2glmrf+ZbxA/bSmHjDma0+2JuQ7ckiTFTefg0Tigo5uds2+5dxGgtCbFrxlYanDc0GGERdNMPpR7Bg/9qow/4jjgM4VNq4ciJgzFvoLGblt8rET5eENHh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MAbcI1qG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VT9R8OB3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD9EFC2BD10;
-	Wed,  3 Jul 2024 11:06:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MAbcI1qG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE734C2BD10;
+	Wed,  3 Jul 2024 11:06:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004816;
-	bh=9Ru+SI5nT6hBDkEsFb1StFcT2K0S8zvDBGb49ECGoKs=;
+	s=korg; t=1720004819;
+	bh=MhRk/IX6Vc9g3SozI72H+yuIXBx8ZE6uKUtb7NTr5T8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VT9R8OB35x2bUZglOE2RrvNdormWDsXqUbBfL3JipN6Wm09bTzsKL9HLkmlUCnorz
-	 pr8oNK4gdjj8aQ9YzMV7DuzIWCptaIVCPDVVhNHRgYmd3HijqEuDlSI1PRNLonuYSy
-	 w4OPldskn6TD/chPEHITUDCd2sS6bqHL8F0gzvvs=
+	b=MAbcI1qGPT5fZ4fQZPSgBsO0PGLgQ+xGUUt2euVEXLqfnNDnQaCDd+0k1PZAOFqrJ
+	 hL915PxDaMs3mZtfMf44+sJD17sd/A02SxJz6YZrA/W+athzF6r3FNS0fI4zZjrtvi
+	 jUdu1VK4Q89ClrX5NjLemyy+XRhJPOzZ2PDDlkDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 5.10 169/290] dt-bindings: i2c: google,cros-ec-i2c-tunnel: correct path to i2c-controller schema
-Date: Wed,  3 Jul 2024 12:39:10 +0200
-Message-ID: <20240703102910.559286879@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Martin Leung <martin.leung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 5.10 170/290] drm/amd/display: revert Exit idle optimizations before HDCP execution
+Date: Wed,  3 Jul 2024 12:39:11 +0200
+Message-ID: <20240703102910.596564582@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -51,33 +54,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Martin Leung <martin.leung@amd.com>
 
-commit 5c8cfd592bb7632200b4edac8f2c7ec892ed9d81 upstream.
+commit f2703a3596a279b0be6eeed4c500bdbaa8dc3ce4 upstream.
 
-The referenced i2c-controller.yaml schema is provided by dtschema
-package (outside of Linux kernel), so use full path to reference it.
+why and how:
+causes black screen on PNP on DCN 3.5
 
-Cc: stable@vger.kernel.org
-Fixes: 1acd4577a66f ("dt-bindings: i2c: convert i2c-cros-ec-tunnel to json-schema")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+This reverts commit f30a3bea92bd ("drm/amd/display: Exit idle
+optimizations before HDCP execution")
+
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Acked-by: Wayne Lin <wayne.lin@amd.com>
+Signed-off-by: Martin Leung <martin.leung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/i2c/google,cros-ec-i2c-tunnel.yaml |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c    |   10 ----------
+ drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h |    8 --------
+ 2 files changed, 18 deletions(-)
 
---- a/Documentation/devicetree/bindings/i2c/google,cros-ec-i2c-tunnel.yaml
-+++ b/Documentation/devicetree/bindings/i2c/google,cros-ec-i2c-tunnel.yaml
-@@ -22,7 +22,7 @@ description: |
-   google,cros-ec-spi or google,cros-ec-i2c.
+--- a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c
++++ b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp.c
+@@ -86,14 +86,6 @@ static uint8_t is_cp_desired_hdcp2(struc
+ 			!hdcp->connection.is_hdcp2_revoked;
+ }
  
- allOf:
--  - $ref: i2c-controller.yaml#
-+  - $ref: /schemas/i2c/i2c-controller.yaml#
+-static void exit_idle_optimizations(struct mod_hdcp *hdcp)
+-{
+-	struct mod_hdcp_dm *dm = &hdcp->config.dm;
+-
+-	if (dm->funcs.exit_idle_optimizations)
+-		dm->funcs.exit_idle_optimizations(dm->handle);
+-}
+-
+ static enum mod_hdcp_status execution(struct mod_hdcp *hdcp,
+ 		struct mod_hdcp_event_context *event_ctx,
+ 		union mod_hdcp_transition_input *input)
+@@ -456,8 +448,6 @@ enum mod_hdcp_status mod_hdcp_process_ev
+ 	memset(&event_ctx, 0, sizeof(struct mod_hdcp_event_context));
+ 	event_ctx.event = event;
  
- properties:
-   compatible:
+-	exit_idle_optimizations(hdcp);
+-
+ 	/* execute and transition */
+ 	exec_status = execution(hdcp, &event_ctx, &hdcp->auth.trans_input);
+ 	trans_status = transition(
+--- a/drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h
++++ b/drivers/gpu/drm/amd/display/modules/inc/mod_hdcp.h
+@@ -143,13 +143,6 @@ struct mod_hdcp_ddc {
+ 	} funcs;
+ };
+ 
+-struct mod_hdcp_dm {
+-	void *handle;
+-	struct {
+-		void (*exit_idle_optimizations)(void *handle);
+-	} funcs;
+-};
+-
+ struct mod_hdcp_psp {
+ 	void *handle;
+ 	void *funcs;
+@@ -259,7 +252,6 @@ struct mod_hdcp_display_query {
+ struct mod_hdcp_config {
+ 	struct mod_hdcp_psp psp;
+ 	struct mod_hdcp_ddc ddc;
+-	struct mod_hdcp_dm dm;
+ 	uint8_t index;
+ };
+ 
 
 
