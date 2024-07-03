@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5979173336;
-	Wed,  3 Jul 2024 10:53:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9318173336;
+	Wed,  3 Jul 2024 10:53:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004020; cv=none; b=VrtHln8k7nUmcCtBWSNOvX8qizC78b/vBjhY6NkvNwrt69A0JovzuaJ2M0A7Ov2Q7uoy/BZhd61T2DFKOvv2sPKltzxrmNIwFIyPCZga/ZvSN0Xn/O8Ss1lnPsqoGZAiV0SPUri/2JGG0z7ulhGpA+1r8gMBtKM8zKwUaJVUiLY=
+	t=1720004023; cv=none; b=Q9c4Bf54x6coZIQVZvKqGTHqjYwJ9hhbj6a0AUzX8GGRsbKWg5MH7AY+6uJK2d7DcVVMRHqyVgom5WAdPRSIlLki481OTyBVHVSGjptI/pFTsSq/A+w98qBQc69bAmdW3pe47QAImMcxK0q1oJBNbVB9+0WZUfQ9tNTq2LsvAbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004020; c=relaxed/simple;
-	bh=irObsscxo2AkFfAmKgQ6qMYBcDctXHZil0FoB0+zLLs=;
+	s=arc-20240116; t=1720004023; c=relaxed/simple;
+	bh=5UwBfLj0O+DqdCxoWxxNrh1Exwiwp5Mw6sdbKmY/p90=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WVHP72VGxfQvgwSP+LB4ZUQ8g+DeAMFd8YoZHNURq+3/2mQFp8YjGPq80IkSywary1dvYGhq7zZS5sw6AikXH3T4T+HegDfNUhUIXGX0b9Ai5mMrO/3b5/3TBDHCOQDDidKivyw8cxt+m7mue4fPI/2NgT0XViKCsILJtNLrplQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1M+7fm7I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TnjjCuiji+jV8XAa+xWv/mwxPmx8KKA0FWHEwKSWL1Tqoiv2l0Vz0KlYG4Gdogq5GOJEPPMi8nR7xlmOXwP7oOMOvW5Ck7+w6GXHT2XfYZIF/DBZmHSL+B0HwDZYSavo9hyatl5i/pJjdpOJfbMuBeVbHWZIvN7OxwQ+S47I4aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l2i5p7dE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1M+7fm7I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38AA0C2BD10;
-	Wed,  3 Jul 2024 10:53:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l2i5p7dE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32FB6C2BD10;
+	Wed,  3 Jul 2024 10:53:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004020;
-	bh=irObsscxo2AkFfAmKgQ6qMYBcDctXHZil0FoB0+zLLs=;
+	s=korg; t=1720004023;
+	bh=5UwBfLj0O+DqdCxoWxxNrh1Exwiwp5Mw6sdbKmY/p90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1M+7fm7IZeSp6QRv3WUFI6nKA6VN4RjzWuq6ibKo/BzyTOMJFXWn1TBCiq8N3xNuN
-	 wCFCuLmMtdKiOxJeDUb9P1hexuKaM5ga2c52HXl5FyIGbRYZiq8tNi4oCSfRylZhPn
-	 QW0es8ILiCz+O6OMJajcrOGIyfDMH+FkB9uxJ9+w=
+	b=l2i5p7dEpg1IODmgtPhjo1R5UcwJjN+1KLanfarY11c29TfUr0qdixFYcK2mk6hlZ
+	 QXsClGOxvKN44lZdStHRBsfAcvhyJONDi8Iv24mvCCB/VshKGrRMQNOFIOJssth0pk
+	 niW1V79n1rU4nV3w9cCExCnAFQRLDYWOr3zZdtHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Alessandro Carminati (Red Hat)" <alessandro.carminati@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Eric Heintzmann <heintzmann.eric@free.fr>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 090/189] selftests/bpf: Prevent client connect before server bind in test_tc_tunnel.sh
-Date: Wed,  3 Jul 2024 12:39:11 +0200
-Message-ID: <20240703102844.898388286@linuxfoundation.org>
+Subject: [PATCH 5.4 099/189] PCI/PM: Avoid D3cold for HP Pavilion 17 PC/1972 PCIe Ports
+Date: Wed,  3 Jul 2024 12:39:20 +0200
+Message-ID: <20240703102845.239009601@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -51,79 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alessandro Carminati (Red Hat) <alessandro.carminati@gmail.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit f803bcf9208a2540acb4c32bdc3616673169f490 ]
+[ Upstream commit 256df20c590bf0e4d63ac69330cf23faddac3e08 ]
 
-In some systems, the netcat server can incur in delay to start listening.
-When this happens, the test can randomly fail in various points.
-This is an example error message:
+Hewlett-Packard HP Pavilion 17 Notebook PC/1972 is an Intel Ivy Bridge
+system with a muxless AMD Radeon dGPU.  Attempting to use the dGPU fails
+with the following sequence:
 
-   # ip gre none gso
-   # encap 192.168.1.1 to 192.168.1.2, type gre, mac none len 2000
-   # test basic connectivity
-   # Ncat: Connection refused.
+  ACPI Error: Aborting method \AMD3._ON due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/psparse-529)
+  radeon 0000:01:00.0: not ready 1023ms after resume; waiting
+  radeon 0000:01:00.0: not ready 2047ms after resume; waiting
+  radeon 0000:01:00.0: not ready 4095ms after resume; waiting
+  radeon 0000:01:00.0: not ready 8191ms after resume; waiting
+  radeon 0000:01:00.0: not ready 16383ms after resume; waiting
+  radeon 0000:01:00.0: not ready 32767ms after resume; waiting
+  radeon 0000:01:00.0: not ready 65535ms after resume; giving up
+  radeon 0000:01:00.0: Unable to change power state from D3cold to D0, device inaccessible
 
-The issue stems from a race condition between the netcat client and server.
-The test author had addressed this problem by implementing a sleep, which
-I have removed in this patch.
-This patch introduces a function capable of sleeping for up to two seconds.
-However, it can terminate the waiting period early if the port is reported
-to be listening.
+The issue is that the Root Port the dGPU is connected to can't handle the
+transition from D3cold to D0 so the dGPU can't properly exit runtime PM.
 
-Signed-off-by: Alessandro Carminati (Red Hat) <alessandro.carminati@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20240314105911.213411-1-alessandro.carminati@gmail.com
+The existing logic in pci_bridge_d3_possible() checks for systems that are
+newer than 2015 to decide that D3 is safe.  This would nominally work for
+an Ivy Bridge system (which was discontinued in 2015), but this system
+appears to have continued to receive BIOS updates until 2017 and so this
+existing logic doesn't appropriately capture it.
+
+Add the system to bridge_d3_blacklist to prevent D3cold from being used.
+
+Link: https://lore.kernel.org/r/20240307163709.323-1-mario.limonciello@amd.com
+Reported-by: Eric Heintzmann <heintzmann.eric@free.fr>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3229
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Eric Heintzmann <heintzmann.eric@free.fr>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_tc_tunnel.sh | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/pci/pci.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/test_tc_tunnel.sh b/tools/testing/selftests/bpf/test_tc_tunnel.sh
-index 7c76b841b17bb..21bde60c95230 100755
---- a/tools/testing/selftests/bpf/test_tc_tunnel.sh
-+++ b/tools/testing/selftests/bpf/test_tc_tunnel.sh
-@@ -71,7 +71,6 @@ cleanup() {
- server_listen() {
- 	ip netns exec "${ns2}" nc "${netcat_opt}" -l -p "${port}" > "${outfile}" &
- 	server_pid=$!
--	sleep 0.2
- }
- 
- client_connect() {
-@@ -92,6 +91,16 @@ verify_data() {
- 	fi
- }
- 
-+wait_for_port() {
-+	for i in $(seq 20); do
-+		if ip netns exec "${ns2}" ss ${2:--4}OHntl | grep -q "$1"; then
-+			return 0
-+		fi
-+		sleep 0.1
-+	done
-+	return 1
-+}
-+
- set -e
- 
- # no arguments: automated test, run all
-@@ -183,6 +192,7 @@ setup
- # basic communication works
- echo "test basic connectivity"
- server_listen
-+wait_for_port ${port} ${netcat_opt}
- client_connect
- verify_data
- 
-@@ -194,6 +204,7 @@ ip netns exec "${ns1}" tc filter add dev veth1 egress \
- 	section "encap_${tuntype}_${mac}"
- echo "test bpf encap without decap (expect failure)"
- server_listen
-+wait_for_port ${port} ${netcat_opt}
- ! client_connect
- 
- if [[ "$tuntype" =~ "udp" ]]; then
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index 64c89b23e99f7..deafd229ef8b4 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -2626,6 +2626,18 @@ static const struct dmi_system_id bridge_d3_blacklist[] = {
+ 			DMI_MATCH(DMI_BOARD_VERSION, "Continental Z2"),
+ 		},
+ 	},
++	{
++		/*
++		 * Changing power state of root port dGPU is connected fails
++		 * https://gitlab.freedesktop.org/drm/amd/-/issues/3229
++		 */
++		.ident = "Hewlett-Packard HP Pavilion 17 Notebook PC/1972",
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "Hewlett-Packard"),
++			DMI_MATCH(DMI_BOARD_NAME, "1972"),
++			DMI_MATCH(DMI_BOARD_VERSION, "95.33"),
++		},
++	},
+ #endif
+ 	{ }
+ };
 -- 
 2.43.0
 
