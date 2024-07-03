@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA3E17C238;
-	Wed,  3 Jul 2024 10:52:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7850717C238;
+	Wed,  3 Jul 2024 10:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003947; cv=none; b=u+8/HsVZJTP5ECVMazQ5yYzpLMgbQUtpTANotbKZDtkMUsc9HYn4h2GRfS3Kuc4yu7JPFr/9NTadRG+mXkkJw71h72Xhva82NwPWa/QAJLjczZ7J58dqDAbYWaFMc6ghWttk0V386r6InyKlArbs+tqfx+g2TJ1/gqJGNC9gbro=
+	t=1720003950; cv=none; b=CUbl+IBVxyNunhsS079CclOb1hksGM2x/duNf+shvpwXP9LL4fT1u3ugHG/ddpF24PztMq6VlxbFGlVtro4w1OfEyx250DjYGCFBiSp4d9XegFa90lIjqhBtxYOmqbBz6AxElOBXtGUuTwl/JPcexGZDKk6CGYMNxXg8oM0WJhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003947; c=relaxed/simple;
-	bh=XA5+m9nEUgSCW74yVVmTlpVZIy9+dDyppK+z2jwXzFM=;
+	s=arc-20240116; t=1720003950; c=relaxed/simple;
+	bh=mJLc6JwVjbS5GTeHQPWg9VQLYIR3yyAEdkI6iq20p40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JhV41mXz96noh2vTuRDcKwUWesS6FyaeyB6XU5IgmtbbdJC0nI0oXGV1CZk9kvt4nKswcc5l2f6mAgyLYSUtVNCE4VlF3r7kQ/fpvGUVVBW+p0MEqye3DJ4GKDn0hLavep/sHlsbfxTjP20q02uv/V1gq7aws3xmClebqaLajLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hGN1vkZ4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kWXz925m4xZQG0wHED/WgNbBZSaXP6cLD5KB5IvTDgBlNTFGA0AX8ErnPLnsAZfJFdSzO0tEU4AEk1XmJtPBGpgY0+n0uO4Cq0S96wCAezB/yzxmTXrAVlhSQlcbhkJbIWco0B7rNZpwBRKhzvi84mpLXAX7bVjL9gOril6mVBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hJVgjjr9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGN1vkZ4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E51C2BD10;
-	Wed,  3 Jul 2024 10:52:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hJVgjjr9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE961C2BD10;
+	Wed,  3 Jul 2024 10:52:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003947;
-	bh=XA5+m9nEUgSCW74yVVmTlpVZIy9+dDyppK+z2jwXzFM=;
+	s=korg; t=1720003950;
+	bh=mJLc6JwVjbS5GTeHQPWg9VQLYIR3yyAEdkI6iq20p40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hGN1vkZ4NN+1R1JpvCEiyYmBCxkwEH/24jxGlaD4f1ljXkyURNad0SP8o6NwSzsGR
-	 1AEPRkA7nHZSx0/eU93FIXTKOV32tI3aC2IrXbJebeGKw8zpxbYgE3vtwNiauhFJ8n
-	 av9FzKNuZ9+S9jAeozMqEiCrOMcMvLWYH7I3j5BA=
+	b=hJVgjjr9otJ5rnUKf+5KkIFtG3ac6IOoYXcZ5FHqlXT6q3mPrmA3ihypNXZCatRQ6
+	 dGvURmNJROGyAG4SDMpqTFPX4MhV7dOlhGaNIigEpva0LJiENBT4OImo3U5vPqvkxM
+	 U6/PkQ7FzDTfyAr10wcDdchQN+wt5qUZTEg4adkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Damien Le Moal <dlemoal@kernel.org>
-Subject: [PATCH 5.4 074/189] PCI: rockchip-ep: Remove wrong mask on subsys_vendor_id
-Date: Wed,  3 Jul 2024 12:38:55 +0200
-Message-ID: <20240703102844.300569795@linuxfoundation.org>
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 057/189] liquidio: Adjust a NULL pointer handling path in lio_vf_rep_copy_packet
+Date: Wed,  3 Jul 2024 12:38:38 +0200
+Message-ID: <20240703102843.662828002@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -46,56 +46,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rick Wertenbroek <rick.wertenbroek@gmail.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-commit 2dba285caba53f309d6060fca911b43d63f41697 upstream.
+[ Upstream commit c44711b78608c98a3e6b49ce91678cd0917d5349 ]
 
-Remove wrong mask on subsys_vendor_id. Both the Vendor ID and Subsystem
-Vendor ID are u16 variables and are written to a u32 register of the
-controller. The Subsystem Vendor ID was always 0 because the u16 value
-was masked incorrectly with GENMASK(31,16) resulting in all lower 16
-bits being set to 0 prior to the shift.
+In lio_vf_rep_copy_packet() pg_info->page is compared to a NULL value,
+but then it is unconditionally passed to skb_add_rx_frag() which looks
+strange and could lead to null pointer dereference.
 
-Remove both masks as they are unnecessary and set the register correctly
-i.e., the lower 16-bits are the Vendor ID and the upper 16-bits are the
-Subsystem Vendor ID.
+lio_vf_rep_copy_packet() call trace looks like:
+	octeon_droq_process_packets
+	 octeon_droq_fast_process_packets
+	  octeon_droq_dispatch_pkt
+	   octeon_create_recv_info
+	    ...search in the dispatch_list...
+	     ->disp_fn(rdisp->rinfo, ...)
+	      lio_vf_rep_pkt_recv(struct octeon_recv_info *recv_info, ...)
+In this path there is no code which sets pg_info->page to NULL.
+So this check looks unneeded and doesn't solve potential problem.
+But I guess the author had reason to add a check and I have no such card
+and can't do real test.
+In addition, the code in the function liquidio_push_packet() in
+liquidio/lio_core.c does exactly the same.
 
-This is documented in the RK3399 TRM section 17.6.7.1.17
+Based on this, I consider the most acceptable compromise solution to
+adjust this issue by moving skb_add_rx_frag() into conditional scope.
 
-[kwilczynski: removed unnecesary newline]
-Fixes: cf590b078391 ("PCI: rockchip: Add EP driver for Rockchip PCIe controller")
-Link: https://lore.kernel.org/linux-pci/20240403144508.489835-1-rick.wertenbroek@gmail.com
-Signed-off-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 1f233f327913 ("liquidio: switchdev support for LiquidIO NIC")
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-rockchip-ep.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/cavium/liquidio/lio_vf_rep.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
---- a/drivers/pci/controller/pcie-rockchip-ep.c
-+++ b/drivers/pci/controller/pcie-rockchip-ep.c
-@@ -130,10 +130,8 @@ static int rockchip_pcie_ep_write_header
- 
- 	/* All functions share the same vendor ID with function 0 */
- 	if (fn == 0) {
--		u32 vid_regs = (hdr->vendorid & GENMASK(15, 0)) |
--			       (hdr->subsys_vendor_id & GENMASK(31, 16)) << 16;
+diff --git a/drivers/net/ethernet/cavium/liquidio/lio_vf_rep.c b/drivers/net/ethernet/cavium/liquidio/lio_vf_rep.c
+index f3f2e71431acb..07334f83ccfe3 100644
+--- a/drivers/net/ethernet/cavium/liquidio/lio_vf_rep.c
++++ b/drivers/net/ethernet/cavium/liquidio/lio_vf_rep.c
+@@ -272,13 +272,12 @@ lio_vf_rep_copy_packet(struct octeon_device *oct,
+ 				pg_info->page_offset;
+ 			memcpy(skb->data, va, MIN_SKB_SIZE);
+ 			skb_put(skb, MIN_SKB_SIZE);
++			skb_add_rx_frag(skb, skb_shinfo(skb)->nr_frags,
++					pg_info->page,
++					pg_info->page_offset + MIN_SKB_SIZE,
++					len - MIN_SKB_SIZE,
++					LIO_RXBUFFER_SZ);
+ 		}
 -
--		rockchip_pcie_write(rockchip, vid_regs,
-+		rockchip_pcie_write(rockchip,
-+				    hdr->vendorid | hdr->subsys_vendor_id << 16,
- 				    PCIE_CORE_CONFIG_VENDOR);
- 	}
- 
+-		skb_add_rx_frag(skb, skb_shinfo(skb)->nr_frags,
+-				pg_info->page,
+-				pg_info->page_offset + MIN_SKB_SIZE,
+-				len - MIN_SKB_SIZE,
+-				LIO_RXBUFFER_SZ);
+ 	} else {
+ 		struct octeon_skb_page_info *pg_info =
+ 			((struct octeon_skb_page_info *)(skb->cb));
+-- 
+2.43.0
+
 
 
