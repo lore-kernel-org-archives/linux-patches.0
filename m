@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2096143747;
-	Wed,  3 Jul 2024 11:24:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1302B13247D;
+	Wed,  3 Jul 2024 11:24:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005853; cv=none; b=t0F5id0bDtwG9PjPntdiB6jvvrST4z+eUnzuSALdVXdK0uuFxozN/X+umVTU1Cg0Oevz2RXgNf0iwwbQJN7oUYAtTn8tPP9DHLGp4O9C/ddUf0fGsKonZHGEUIbBr77kWhKfZSTZ2U9LXpb2Yzns1rUPQ1wkLUa7xmEcaCnza6Q=
+	t=1720005857; cv=none; b=lG8HeQp9BO00arVyLi4SQvVZctkdJAiJAw4wXb/NyM3qWjTtpptdLoOGErZpjweOhJyUUWW+bJcRPnoaQ9Q/6izCcW+5/kwvneB7BA78eKiKTuKwzr+DmlyIVvU23sxiSCPgsiUD9m4oEI1hhrIb7CwuSE+avlRK/yaXmfTEiJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005853; c=relaxed/simple;
-	bh=m3Iiw+eFEvRQZMDS2FLmuJXq0xYUK7Vn/hrq1GOrSGk=;
+	s=arc-20240116; t=1720005857; c=relaxed/simple;
+	bh=dgipOHXC+gVOT5SD0DWDmA2I1MRmxAMCmBt3LRV4H5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O6BCr0aDO0fiHTRx77Wi2DRBkcoJuXC5/8QP4XBdxYF245zDdfY0vmljs43CL2MZig9Bau0ikD3l9l1dF359sCFHiPDW+cSTM+OU0C8ApZzIFlW3f89s7GbUnYAS/qtli4ELx4ofSb2jSlpqNKCdmPRrz0ehQlSXPQ0U0SCzLeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JT0eyiEz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VOPmtut+xhoqjONTRHmZBJqdN5rVol2dkMtdtjRK5B3nXYjXtInvVUBtd+fwRdS9dCNygZt7Ss35zQ1DSQ9bG6Ux5e0vUODovHJq2LxKYfkWorDm5Oa7QAhVl7y89qyOesYSg4UNRD7kbP23jkkRA4IZBfVBGMLPPjx06YDxJSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yKtXSsyy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JT0eyiEz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26564C2BD10;
-	Wed,  3 Jul 2024 11:24:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yKtXSsyy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D971C2BD10;
+	Wed,  3 Jul 2024 11:24:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005853;
-	bh=m3Iiw+eFEvRQZMDS2FLmuJXq0xYUK7Vn/hrq1GOrSGk=;
+	s=korg; t=1720005856;
+	bh=dgipOHXC+gVOT5SD0DWDmA2I1MRmxAMCmBt3LRV4H5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JT0eyiEzrcyYK/n6fa4Ugucz1xK+bmaKKnVXXjp8qvNjt/3pSZGqIWOg7xMAWP8cx
-	 6uE16wa9UKgJtns/APJj1DeRI6gqt5/OL5mqx9wlqVI3h9MzB3nI5vISChmBxkMIgT
-	 227kdkTSzTFbuRkuIsG7mZcp3bU3UJAMXiiW4JvU=
+	b=yKtXSsyyO4p+PO3DdNB/wDP9JibvFYGc4+hLCOYFjLrbwl2lI3KPUgFBcG5xUgVn2
+	 M6l2Hg2UD/j98pUP4p+1z1nZpCOJX/ylZIKR3AVOqSzo59oAyK3FRnKsqRvnOrYUZW
+	 ay4iYrQz5vT59rxQpw7JN83ayg8e2LZ2xtdbYfXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 211/356] dmaengine: ioat: use PCI core macros for PCIe Capability
-Date: Wed,  3 Jul 2024 12:39:07 +0200
-Message-ID: <20240703102921.090908204@linuxfoundation.org>
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.15 220/356] btrfs: retry block group reclaim without infinite loop
+Date: Wed,  3 Jul 2024 12:39:16 +0200
+Message-ID: <20240703102921.435878286@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -52,67 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+From: Boris Burkov <boris@bur.io>
 
-[ Upstream commit 8f6707d0773be31972768abd6e0bf7b8515b5b1a ]
+commit 4eb4e85c4f818491efc67e9373aa16b123c3f522 upstream.
 
-The PCIe Capability is defined by the PCIe spec, so use the PCI_EXP_DEVCTL
-macros defined by the PCI core instead of defining copies in IOAT.  This
-makes it easier to find all uses of the PCIe Device Control register.  No
-functional change intended.
+If inc_block_group_ro systematically fails (e.g. due to ETXTBUSY from
+swap) or btrfs_relocate_chunk systematically fails (from lack of
+space), then this worker becomes an infinite loop.
 
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20230307214615.887354-1-helgaas@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: f0dc9fda2e0e ("dmaengine: ioatdma: Fix error path in ioat3_dma_probe()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+At the very least, this strands the cleaner thread, but can also result
+in hung tasks/RCU stalls on PREEMPT_NONE kernels and if the
+reclaim_bgs_lock mutex is not contended.
+
+I believe the best long term fix is to manage reclaim via work queue,
+where we queue up a relocation on the triggering condition and re-queue
+on failure. In the meantime, this is an easy fix to apply to avoid the
+immediate pain.
+
+Fixes: 7e2718099438 ("btrfs: reinsert BGs failed to reclaim")
+CC: stable@vger.kernel.org # 6.6+
+Signed-off-by: Boris Burkov <boris@bur.io>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/ioat/init.c      | 6 +++---
- drivers/dma/ioat/registers.h | 7 -------
- 2 files changed, 3 insertions(+), 10 deletions(-)
+ fs/btrfs/block-group.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/ioat/init.c b/drivers/dma/ioat/init.c
-index 6c27980a5ec8f..ed4910e3bc2ac 100644
---- a/drivers/dma/ioat/init.c
-+++ b/drivers/dma/ioat/init.c
-@@ -1190,13 +1190,13 @@ static int ioat3_dma_probe(struct ioatdma_device *ioat_dma, int dca)
- 		ioat_dma->dca = ioat_dca_init(pdev, ioat_dma->reg_base);
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -1493,6 +1493,7 @@ void btrfs_reclaim_bgs_work(struct work_
+ 		container_of(work, struct btrfs_fs_info, reclaim_bgs_work);
+ 	struct btrfs_block_group *bg;
+ 	struct btrfs_space_info *space_info;
++	LIST_HEAD(retry_list);
  
- 	/* disable relaxed ordering */
--	err = pcie_capability_read_word(pdev, IOAT_DEVCTRL_OFFSET, &val16);
-+	err = pcie_capability_read_word(pdev, PCI_EXP_DEVCTL, &val16);
- 	if (err)
- 		return pcibios_err_to_errno(err);
+ 	if (!test_bit(BTRFS_FS_OPEN, &fs_info->flags))
+ 		return;
+@@ -1583,8 +1584,11 @@ void btrfs_reclaim_bgs_work(struct work_
+ 		}
  
- 	/* clear relaxed ordering enable */
--	val16 &= ~IOAT_DEVCTRL_ROE;
--	err = pcie_capability_write_word(pdev, IOAT_DEVCTRL_OFFSET, val16);
-+	val16 &= ~PCI_EXP_DEVCTL_RELAX_EN;
-+	err = pcie_capability_write_word(pdev, PCI_EXP_DEVCTL, val16);
- 	if (err)
- 		return pcibios_err_to_errno(err);
+ next:
+-		if (ret)
+-			btrfs_mark_bg_to_reclaim(bg);
++		if (ret) {
++			/* Refcount held by the reclaim_bgs list after splice. */
++			btrfs_get_block_group(bg);
++			list_add_tail(&bg->bg_list, &retry_list);
++		}
+ 		btrfs_put_block_group(bg);
  
-diff --git a/drivers/dma/ioat/registers.h b/drivers/dma/ioat/registers.h
-index f55a5f92f1857..54cf0ad39887b 100644
---- a/drivers/dma/ioat/registers.h
-+++ b/drivers/dma/ioat/registers.h
-@@ -14,13 +14,6 @@
- #define IOAT_PCI_CHANERR_INT_OFFSET		0x180
- #define IOAT_PCI_CHANERRMASK_INT_OFFSET		0x184
- 
--/* PCIe config registers */
--
--/* EXPCAPID + N */
--#define IOAT_DEVCTRL_OFFSET			0x8
--/* relaxed ordering enable */
--#define IOAT_DEVCTRL_ROE			0x10
--
- /* MMIO Device Registers */
- #define IOAT_CHANCNT_OFFSET			0x00	/*  8-bit */
- 
--- 
-2.43.0
-
+ 		mutex_unlock(&fs_info->reclaim_bgs_lock);
+@@ -1604,6 +1608,9 @@ next:
+ 	spin_unlock(&fs_info->unused_bgs_lock);
+ 	mutex_unlock(&fs_info->reclaim_bgs_lock);
+ end:
++	spin_lock(&fs_info->unused_bgs_lock);
++	list_splice_tail(&retry_list, &fs_info->reclaim_bgs);
++	spin_unlock(&fs_info->unused_bgs_lock);
+ 	btrfs_exclop_finish(fs_info);
+ 	sb_end_write(fs_info->sb);
+ }
 
 
