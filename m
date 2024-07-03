@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84753194123;
-	Wed,  3 Jul 2024 10:57:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A71194123;
+	Wed,  3 Jul 2024 10:57:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004264; cv=none; b=FkYfaek5oEe8J6znObDWJWGwn36QWxtCnik2btlNqxKq/nJDl+c79FzmN1o3uab0ayDesMsutp+Z7v4C/nWicl8M24SWzH2SL5PyJV1iNW5T0D+7C0ytRcgmPhL6HY2kWxjM/NsffxHccndyABIETEOld/I6zC66cUZmDK0+TSs=
+	t=1720004267; cv=none; b=DITp/x7Dm5mlEJEJ//+EerQgaVFjPhevNjEvyzYEW2nc9jn0HY5KpTUH4RQ9r/WSg64jYFiyD/su62+E1FlLe6ejcPq5rCA1MjCVKK6/tdt0NreLItJDrYCWWCN/6QZ3fh/EB48x+YEHNd/6ig9XrUNT13+a7kuRRX59ivYIzlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004264; c=relaxed/simple;
-	bh=0KiQyQ0fr92bHrWmwYXuj7lcrCErBUzPXthSbbjYdAU=;
+	s=arc-20240116; t=1720004267; c=relaxed/simple;
+	bh=P5bOG7NvJwiwbrYWgkBx++g16JyqRQNxcB+DuPrFgUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A9tzYU6GrijeQtXc540HwHQJsw1SsmDhLCiOrGO2AqbmCFVf91nPfwjOL8vNOnQm2PaufAC1ffThjGaF04DHTowiOQXEfrgP/8eN0ko3GoiGYW+5xFLNoUX6mmB04xBDD7TMeaaA5/kzpTjPZzH6dG4PndwdM06GTY/FBgxQWLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a6V9L0ld; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JPgUXRiW27STIioMVX/JnsG3N37h32UDVVHBUpBXYyn1lvd6Rqp5QCuV7XbxDc1LSdlktXPtxtirT3v85oAAg8BS3bNKsSMDfJKc0Xk76q0uLve9+pmbmOIXwNm3BcTpFK/oo8DZ1/zUviFqZVKDzlLSbK/dF/udWqJFT6ffJBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VLffMWVf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a6V9L0ld"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA4BEC2BD10;
-	Wed,  3 Jul 2024 10:57:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VLffMWVf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7332C2BD10;
+	Wed,  3 Jul 2024 10:57:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004264;
-	bh=0KiQyQ0fr92bHrWmwYXuj7lcrCErBUzPXthSbbjYdAU=;
+	s=korg; t=1720004267;
+	bh=P5bOG7NvJwiwbrYWgkBx++g16JyqRQNxcB+DuPrFgUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a6V9L0ld4vTdFWSt7AB4weE8jxJgCDTiqVQ03nGSTtJh+BzTaN6N0bKZFzeH8M+il
-	 JJY3ZDITE4ezMCh4G2obrAuQbxxihEfCODjAjpPgeqFt7Ib1EaloDoBt/71bUn+9ZA
-	 gt92Yyp9dFOc9j/3VrPjAPeCPGZVisHzEFJvOr3w=
+	b=VLffMWVfeMo+Yf4ZoNuOak1j0pFK4VNpmmP+yQVLD3z9/CY3qc+UyJQcLvxWPUPcS
+	 E3f9+pO0QRH+PrWjokW2LHZ1PNbcKcfTfCOkIb9bGwUYb0uzbIk9ct5rjkVOnpOPXn
+	 Arxrn68go+A297ijNUmg1YCcT0xSVldYgEVDUo1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guo Ren <guoren@kernel.org>,
 	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 5.4 175/189] csky, hexagon: fix broken sys_sync_file_range
-Date: Wed,  3 Jul 2024 12:40:36 +0200
-Message-ID: <20240703102848.077167943@linuxfoundation.org>
+Subject: [PATCH 5.4 176/189] hexagon: fix fadvise64_64 calling conventions
+Date: Wed,  3 Jul 2024 12:40:37 +0200
+Message-ID: <20240703102848.114648007@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -52,47 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnd Bergmann <arnd@arndb.de>
 
-commit 3339b99ef6fe38dac43b534cba3a8a0e29fb2eff upstream.
+commit 896842284c6ccba25ec9d78b7b6e62cdd507c083 upstream.
 
-Both of these architectures require u64 function arguments to be
-passed in even/odd pairs of registers or stack slots, which in case of
-sync_file_range would result in a seven-argument system call that is
-not currently possible. The system call is therefore incompatible with
-all existing binaries.
+fadvise64_64() has two 64-bit arguments at the wrong alignment
+for hexagon, which turns them into a 7-argument syscall that is
+not supported by Linux.
 
-While it would be possible to implement support for seven arguments
-like on mips, it seems better to use a six-argument version, either
-with the normal argument order but misaligned as on most architectures
-or with the reordered sync_file_range2() calling conventions as on
-arm and powerpc.
+The downstream musl port for hexagon actually asks for a 6-argument
+version the same way we do it on arm, csky, powerpc, so make the
+kernel do it the same way to avoid having to change both.
 
+Link: https://github.com/quic/musl/blob/hexagon/arch/hexagon/syscall_arch.h#L78
 Cc: stable@vger.kernel.org
-Acked-by: Guo Ren <guoren@kernel.org>
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/csky/include/uapi/asm/unistd.h    |    1 +
- arch/hexagon/include/uapi/asm/unistd.h |    1 +
- 2 files changed, 2 insertions(+)
+ arch/hexagon/include/asm/syscalls.h |    6 ++++++
+ arch/hexagon/kernel/syscalltab.c    |    7 +++++++
+ 2 files changed, 13 insertions(+)
+ create mode 100644 arch/hexagon/include/asm/syscalls.h
 
---- a/arch/csky/include/uapi/asm/unistd.h
-+++ b/arch/csky/include/uapi/asm/unistd.h
-@@ -7,6 +7,7 @@
- #define __ARCH_WANT_SYS_CLONE3
- #define __ARCH_WANT_SET_GET_RLIMIT
- #define __ARCH_WANT_TIME32_SYSCALLS
-+#define __ARCH_WANT_SYNC_FILE_RANGE2
- #include <asm-generic/unistd.h>
+--- /dev/null
++++ b/arch/hexagon/include/asm/syscalls.h
+@@ -0,0 +1,6 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++
++#include <asm-generic/syscalls.h>
++
++asmlinkage long sys_hexagon_fadvise64_64(int fd, int advice,
++	                                  u32 a2, u32 a3, u32 a4, u32 a5);
+--- a/arch/hexagon/kernel/syscalltab.c
++++ b/arch/hexagon/kernel/syscalltab.c
+@@ -14,6 +14,13 @@
+ #undef __SYSCALL
+ #define __SYSCALL(nr, call) [nr] = (call),
  
- #define __NR_set_thread_area	(__NR_arch_specific_syscall + 0)
---- a/arch/hexagon/include/uapi/asm/unistd.h
-+++ b/arch/hexagon/include/uapi/asm/unistd.h
-@@ -36,5 +36,6 @@
- #define __ARCH_WANT_SYS_VFORK
- #define __ARCH_WANT_SYS_FORK
- #define __ARCH_WANT_TIME32_SYSCALLS
-+#define __ARCH_WANT_SYNC_FILE_RANGE2
- 
- #include <asm-generic/unistd.h>
++SYSCALL_DEFINE6(hexagon_fadvise64_64, int, fd, int, advice,
++		SC_ARG64(offset), SC_ARG64(len))
++{
++	return ksys_fadvise64_64(fd, SC_VAL64(loff_t, offset), SC_VAL64(loff_t, len), advice);
++}
++#define sys_fadvise64_64 sys_hexagon_fadvise64_64
++
+ void *sys_call_table[__NR_syscalls] = {
+ #include <asm/unistd.h>
+ };
 
 
