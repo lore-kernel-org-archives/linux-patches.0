@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6444194A6F;
-	Wed,  3 Jul 2024 10:58:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F65B191F82;
+	Wed,  3 Jul 2024 10:58:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004310; cv=none; b=YT9qEf7idXC7aJ1+8SJetpRiTjo9uRvLzm2W+zMZwLmTwZXRdN7OSaZTacQPZCs2SsfWSSjn/lwIHyBu3i3in+U/5yPZFmPERSfJMWDDVWLthj8TsiUx8JnYCIfyE9F43yCRHqEbT6LeFH0JHwchCsoZjWwc/92WbJG6e7kvo+s=
+	t=1720004312; cv=none; b=nCk4znUxxnSwKO1i2t9zzEcaQlWGbNLs8NhYUzXp44+0FhHDAVZVq/WA6/EINzBWx90dOVL5y3eeSQlzcOBXwTGehBu7HfXB+zS/OD3nUUVV4SssF5s25vOorLjbQ21hBihX1/O7H4W9p1f1bAWXnMBbDJ+F5lAlfwLN8cwjMoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004310; c=relaxed/simple;
-	bh=5SM6DP9uAp2JT09avHlRr8j5zYnrcCO3v7RLmpEJ+Bc=;
+	s=arc-20240116; t=1720004312; c=relaxed/simple;
+	bh=IFdK4f6wcZDCIuo03u1E9Fpy4pi/13m3X8+Ixshm15s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fcaMXGX6RM3b+goCT5kmbDrN/vZlFyxrVgqn6YVaIqro1VBHIsiwNPwIqMbXRUSI0PYQzEDF1B7HsGETBRUfQFkCyhDv90Uie047Td4fLV0NZkWA2l2fStZIIzlFb2Hf2phSXf+p041eei7Tkvm/F62be1+72ZKVPIRfkAr5Cdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ftcQDZ07; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CbmmdpPJxzZnTqj+AEbfd6S7oWyO8YHQu8PYshiPtoGf2qCKDuCyg8j2HNz6KHdPp4rDabBKab0tcUJ6mKOCaEYfzQ0zmt5Ob+1xVoyMjwPGJmHN0iMopPLwrsanVKAtck4xB4fzwTMMr828cWWpSRlWWEWPmhxrl1kn4iyxzm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZG2PDkr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ftcQDZ07"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C10AC4AF0B;
-	Wed,  3 Jul 2024 10:58:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZG2PDkr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBB16C2BD10;
+	Wed,  3 Jul 2024 10:58:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004309;
-	bh=5SM6DP9uAp2JT09avHlRr8j5zYnrcCO3v7RLmpEJ+Bc=;
+	s=korg; t=1720004312;
+	bh=IFdK4f6wcZDCIuo03u1E9Fpy4pi/13m3X8+Ixshm15s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ftcQDZ07zf+rrtyRCZTsWjBjr5vyXcdfYlsxmjVmP2ZXVjb20TRXwBW892bKMKl15
-	 /J4FOGXMcnBJnGfuDl1Xx0Tnrip9D1y81FMP2f7RsErTqdTHnA3L6aBL7XPv0odRYy
-	 v5UsNNq6ZKMFT9/VUh0gmRv/47366fgvajwoPYUs=
+	b=GZG2PDkrb1o9iRDGSunFd8NWaXliLihgCQhb3No4XVHaOnAa0PD2sEzP3qMRgpFJD
+	 Z9bLJXW1cr+YQFvqfEjcYakJYCAxOZAd36QvehCQQT1fzJuvkG1J70C4W+8xpXBphe
+	 AkDDp0f1MoKHHR5dEi6aRXuO92/ePx/P+VfKFzkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Jonker <jbx6244@gmail.com>,
+	Alex Bee <knaerzche@gmail.com>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 188/189] ARM: dts: rockchip: rk3066a: add #sound-dai-cells to hdmi node
-Date: Wed,  3 Jul 2024 12:40:49 +0200
-Message-ID: <20240703102848.569429520@linuxfoundation.org>
+Subject: [PATCH 5.4 189/189] arm64: dts: rockchip: Add sound-dai-cells for RK3368
+Date: Wed,  3 Jul 2024 12:40:50 +0200
+Message-ID: <20240703102848.606421867@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -51,35 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Jonker <jbx6244@gmail.com>
+From: Alex Bee <knaerzche@gmail.com>
 
-[ Upstream commit cca46f811d0000c1522a5e18ea48c27a15e45c05 ]
+[ Upstream commit 8d7ec44aa5d1eb94a30319074762a1740440cdc8 ]
 
-'#sound-dai-cells' is required to properly interpret
-the list of DAI specified in the 'sound-dai' property,
-so add them to the 'hdmi' node for 'rk3066a.dtsi'.
+Add the missing #sound-dai-cells for RK3368's I2S and S/PDIF controllers.
 
-Fixes: fadc78062477 ("ARM: dts: rockchip: add rk3066 hdmi nodes")
-Signed-off-by: Johan Jonker <jbx6244@gmail.com>
-Link: https://lore.kernel.org/r/8b229dcc-94e4-4bbc-9efc-9d5ddd694532@gmail.com
+Fixes: f7d89dfe1e31 ("arm64: dts: rockchip: add i2s nodes support for RK3368 SoCs")
+Fixes: 0328d68ea76d ("arm64: dts: rockchip: add rk3368 spdif node")
+Signed-off-by: Alex Bee <knaerzche@gmail.com>
+Link: https://lore.kernel.org/r/20240623090116.670607-4-knaerzche@gmail.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/rk3066a.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/rockchip/rk3368.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm/boot/dts/rk3066a.dtsi b/arch/arm/boot/dts/rk3066a.dtsi
-index 1ac9deb3bd39a..055687d3153fb 100644
---- a/arch/arm/boot/dts/rk3066a.dtsi
-+++ b/arch/arm/boot/dts/rk3066a.dtsi
-@@ -124,6 +124,7 @@
- 		pinctrl-0 = <&hdmii2c_xfer>, <&hdmi_hpd>;
- 		power-domains = <&power RK3066_PD_VIO>;
- 		rockchip,grf = <&grf>;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3368.dtsi b/arch/arm64/boot/dts/rockchip/rk3368.dtsi
+index fd86188010b29..45f40cfaca4fa 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3368.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3368.dtsi
+@@ -686,6 +686,7 @@
+ 		dma-names = "tx";
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&spdif_tx>;
 +		#sound-dai-cells = <0>;
  		status = "disabled";
+ 	};
  
- 		ports {
+@@ -697,6 +698,7 @@
+ 		clocks = <&cru SCLK_I2S_2CH>, <&cru HCLK_I2S_2CH>;
+ 		dmas = <&dmac_bus 6>, <&dmac_bus 7>;
+ 		dma-names = "tx", "rx";
++		#sound-dai-cells = <0>;
+ 		status = "disabled";
+ 	};
+ 
+@@ -710,6 +712,7 @@
+ 		dma-names = "tx", "rx";
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&i2s_8ch_bus>;
++		#sound-dai-cells = <0>;
+ 		status = "disabled";
+ 	};
+ 
 -- 
 2.43.0
 
