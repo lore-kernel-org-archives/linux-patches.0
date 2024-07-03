@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175B913776F;
-	Wed,  3 Jul 2024 11:16:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA5E17C7A2;
+	Wed,  3 Jul 2024 11:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005400; cv=none; b=bLwdYS8Zbzv2GTgyTkYewb6c67vjUYVM8D9PkpHhh3DYKaf4Z6BBXPpQ59yaOfuPFZixx5plAlBsKOyrku9YUD7Z9fm9yrvD3ZbzC0rTgJx52QhFi+xQApJjNr1DNi5KEYZpRUqjDAsrP/ao7OUceH/AqoNXt5msN+mT6ZaC/nk=
+	t=1720005403; cv=none; b=CvlxVwz+9n3lbAz1o86QmulJTdZQm+jaUI0tu9vy1FcGMQroAPoXo91H8FJoO5G1KMdkaNbLluQTtdyDGgv2w7EjdTJD+a5qFae/MXMW0NidTw34+1rCjDGfqvRKEHlJQtYzjUmACRRa0m7+hfo3RxjQIExKN0ibAKuVmapN6gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005400; c=relaxed/simple;
-	bh=0JTfbJq8svOORy/8tCTqMSRo/VqGbtEvGQPYbF2W9Sc=;
+	s=arc-20240116; t=1720005403; c=relaxed/simple;
+	bh=islndp2AaKR0P+l9DNOqk8RtEqxZJqq7DRneqxQQQhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=srvbKeICjyAq0pvG5SeROopR+y/pHfQJwARZifpK8APF78sW5atB6MelqGY2ppMke1NE1ZZe+07/yp0IWxLYD/FLyxMd47tWaRPA5tT9YSSeUAziK9m4bPHGx4GvyPJD62wifjsXqsn4tlCmYPIDV3kdOEbMItsDxnOnAy9FneE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TJWMM/4e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OTMqgsLxGgLzk0HxDBW+KqWF6hmwS6u8l3D5wHXpCTYvKf3F+Xhj9Qiq3NebhjeKNb80cm3e9jm77RS9prWuw7vO3zhXlpC1yAMmz9OGuZ8eHWhGVZwyYZia84p8I0geZIvJ1Nrw61XtTdvpSbkZWLGa/TyUlj8Wzf55KYYCfPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kGsAY2TD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TJWMM/4e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90A09C2BD10;
-	Wed,  3 Jul 2024 11:16:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kGsAY2TD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88998C2BD10;
+	Wed,  3 Jul 2024 11:16:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005400;
-	bh=0JTfbJq8svOORy/8tCTqMSRo/VqGbtEvGQPYbF2W9Sc=;
+	s=korg; t=1720005402;
+	bh=islndp2AaKR0P+l9DNOqk8RtEqxZJqq7DRneqxQQQhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TJWMM/4eioFPf2NYJEzixNz87mhvQvM/9HyV4Yq42KVuiCFCGzaCRzKOChdkf0//1
-	 nWipNDCBRUKPa8gsnWnUN3vcuEE+7DwBapAeCCAd6VJBgf/OCtBWRG7aSF1Z2/KQ+g
-	 w8oYHwViQ6sGALS4DgdSmrk8TfL0KPddgWKy25zo=
+	b=kGsAY2TDPjz/Myz3Diym7s3X8eQBd8EEFIANAgh+W0FlzVX4OGmfgGW7+/fM78Myk
+	 d/zG8wHunsGbY1mZZLRD6HW3cpnV2l2FdVd23hivgr2JFfodlzRmofNNxKLe9LGKvY
+	 7T5q4zCFuRVs5h/kXIclQ8JK7DVXUvOOfk2EHx7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dev Jain <dev.jain@arm.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Sri Jayaramappa <sjayaram@akamai.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 068/356] selftests/mm: compaction_test: fix bogus test success on Aarch64
-Date: Wed,  3 Jul 2024 12:36:44 +0200
-Message-ID: <20240703102915.673988783@linuxfoundation.org>
+Subject: [PATCH 5.15 069/356] wifi: ath10k: fix QCOM_RPROC_COMMON dependency
+Date: Wed,  3 Jul 2024 12:36:45 +0200
+Message-ID: <20240703102915.710931308@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -54,109 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dev Jain <dev.jain@arm.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit d4202e66a4b1fe6968f17f9f09bbc30d08f028a1 ]
+[ Upstream commit 21ae74e1bf18331ae5e279bd96304b3630828009 ]
 
-Patch series "Fixes for compaction_test", v2.
+If ath10k_snoc is built-in, while Qualcomm remoteprocs are built as
+modules, compilation fails with:
 
-The compaction_test memory selftest introduces fragmentation in memory
-and then tries to allocate as many hugepages as possible. This series
-addresses some problems.
+/usr/bin/aarch64-linux-gnu-ld: drivers/net/wireless/ath/ath10k/snoc.o: in function `ath10k_modem_init':
+drivers/net/wireless/ath/ath10k/snoc.c:1534: undefined reference to `qcom_register_ssr_notifier'
+/usr/bin/aarch64-linux-gnu-ld: drivers/net/wireless/ath/ath10k/snoc.o: in function `ath10k_modem_deinit':
+drivers/net/wireless/ath/ath10k/snoc.c:1551: undefined reference to `qcom_unregister_ssr_notifier'
 
-On Aarch64, if nr_hugepages == 0, then the test trivially succeeds since
-compaction_index becomes 0, which is less than 3, due to no division by
-zero exception being raised. We fix that by checking for division by
-zero.
+Add corresponding dependency to ATH10K_SNOC Kconfig entry so that it's
+built as module if QCOM_RPROC_COMMON is built as module too.
 
-Secondly, correctly set the number of hugepages to zero before trying
-to set a large number of them.
-
-Now, consider a situation in which, at the start of the test, a non-zero
-number of hugepages have been already set (while running the entire
-selftests/mm suite, or manually by the admin). The test operates on 80%
-of memory to avoid OOM-killer invocation, and because some memory is
-already blocked by hugepages, it would increase the chance of OOM-killing.
-Also, since mem_free used in check_compaction() is the value before we
-set nr_hugepages to zero, the chance that the compaction_index will
-be small is very high if the preset nr_hugepages was high, leading to a
-bogus test success.
-
-This patch (of 3):
-
-Currently, if at runtime we are not able to allocate a huge page, the test
-will trivially pass on Aarch64 due to no exception being raised on
-division by zero while computing compaction_index.  Fix that by checking
-for nr_hugepages == 0.  Anyways, in general, avoid a division by zero by
-exiting the program beforehand.  While at it, fix a typo, and handle the
-case where the number of hugepages may overflow an integer.
-
-Link: https://lkml.kernel.org/r/20240521074358.675031-1-dev.jain@arm.com
-Link: https://lkml.kernel.org/r/20240521074358.675031-2-dev.jain@arm.com
-Fixes: bd67d5c15cc1 ("Test compaction of mlocked memory")
-Signed-off-by: Dev Jain <dev.jain@arm.com>
-Cc: Anshuman Khandual <anshuman.khandual@arm.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Sri Jayaramappa <sjayaram@akamai.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 747ff7d3d742 ("ath10k: Don't always treat modem stop events as crashes")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240511-ath10k-snoc-dep-v1-1-9666e3af5c27@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/vm/compaction_test.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ drivers/net/wireless/ath/ath10k/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/vm/compaction_test.c b/tools/testing/selftests/vm/compaction_test.c
-index 6aa6460b854ea..309b3750e57e1 100644
---- a/tools/testing/selftests/vm/compaction_test.c
-+++ b/tools/testing/selftests/vm/compaction_test.c
-@@ -82,12 +82,13 @@ int prereq(void)
- 	return -1;
- }
- 
--int check_compaction(unsigned long mem_free, unsigned int hugepage_size)
-+int check_compaction(unsigned long mem_free, unsigned long hugepage_size)
- {
-+	unsigned long nr_hugepages_ul;
- 	int fd, ret = -1;
- 	int compaction_index = 0;
--	char initial_nr_hugepages[10] = {0};
--	char nr_hugepages[10] = {0};
-+	char initial_nr_hugepages[20] = {0};
-+	char nr_hugepages[20] = {0};
- 
- 	/* We want to test with 80% of available memory. Else, OOM killer comes
- 	   in to play */
-@@ -136,7 +137,12 @@ int check_compaction(unsigned long mem_free, unsigned int hugepage_size)
- 
- 	/* We should have been able to request at least 1/3 rd of the memory in
- 	   huge pages */
--	compaction_index = mem_free/(atoi(nr_hugepages) * hugepage_size);
-+	nr_hugepages_ul = strtoul(nr_hugepages, NULL, 10);
-+	if (!nr_hugepages_ul) {
-+		ksft_print_msg("ERROR: No memory is available as huge pages\n");
-+		goto close_fd;
-+	}
-+	compaction_index = mem_free/(nr_hugepages_ul * hugepage_size);
- 
- 	lseek(fd, 0, SEEK_SET);
- 
-@@ -147,11 +153,11 @@ int check_compaction(unsigned long mem_free, unsigned int hugepage_size)
- 		goto close_fd;
- 	}
- 
--	ksft_print_msg("Number of huge pages allocated = %d\n",
--		       atoi(nr_hugepages));
-+	ksft_print_msg("Number of huge pages allocated = %lu\n",
-+		       nr_hugepages_ul);
- 
- 	if (compaction_index > 3) {
--		ksft_print_msg("ERROR: Less that 1/%d of memory is available\n"
-+		ksft_print_msg("ERROR: Less than 1/%d of memory is available\n"
- 			       "as huge pages\n", compaction_index);
- 		goto close_fd;
- 	}
--- 
-2.43.0
-
+--- a/drivers/net/wireless/ath/ath10k/Kconfig
++++ b/drivers/net/wireless/ath/ath10k/Kconfig
+@@ -44,6 +44,7 @@ config ATH10K_SNOC
+ 	tristate "Qualcomm ath10k SNOC support"
+ 	depends on ATH10K
+ 	depends on ARCH_QCOM || COMPILE_TEST
++	depends on QCOM_RPROC_COMMON || QCOM_RPROC_COMMON=n
+ 	select QCOM_SCM
+ 	select QCOM_QMI_HELPERS
+ 	help
 
 
