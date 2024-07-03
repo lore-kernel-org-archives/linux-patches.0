@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A60D186E22;
-	Wed,  3 Jul 2024 10:56:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0F81741F4;
+	Wed,  3 Jul 2024 10:56:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004175; cv=none; b=JnKiYN8NqXXIEHF+DqQdgV5PLdVAIERy7ZysTxokd9W6rA8CE7Yp6BiXU1hUWXZXYClDAkEXQ0wxkZzZU7S6yYvh305e1E1YcaSJEAAmyABn7854bU8lDfdlwh+Kp1xV+eiLpDxdJkZAad4cnrR3/7gKjHAUuEA0n7LVr17sZ+g=
+	t=1720004178; cv=none; b=DNDX++rDHdn7p4SPNdKYIsq7TfIRhIX1YOBHt62sofaSSw7cDr3xIq3f19F2XNtRnq97GtkiFDBXlNqC3k0/S+xenh5LKhaadYRN0ASdpJFu8ym1Z33kft24R1msgqqP1g2kYvqtkD3iMT0AZMV2ZbYoDmBkjrih6iLhrasEeTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004175; c=relaxed/simple;
-	bh=5D3yNb16yv4oMnb5w9byOgmjWDFrtYapzjVzIhWTRME=;
+	s=arc-20240116; t=1720004178; c=relaxed/simple;
+	bh=R8gYwrHaJu4laAu+eJwIrX6XeOo7R7j4Gu/GYmC9Fgs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lrEDrKzoKDKPc4Kz6D4Z5jQ9TPmRimiYkfEhSndnwsjmf2veQYH2D19AG6JcfLu7TVHHvXqtQ5D3hp9epnLYKzSsSfyQfUc2dTpYKpfFsSVWGMMkst7+bpS2jq7UcwPG7BAOgoRO9sHdIKmSlZmOKtHQYgQ3bJuA7V81CrpqDxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LmSwwVn2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XWMoxmX17QF/IzpgYd/6LHKZGhDj9sckY+vhmJKKc/saH5s0/GyEdKsgYSJOlF8DhFrDy31Ib8OO6tvq090OIIdcPq50Uzyb8NpcxBu3OLwacPg4hWASPJ8c3+sTt+pjuXfR0/hSmeko2LpOOlJvqNwEDh38x0MQ60t5ZKW/EAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YZtDDwL4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LmSwwVn2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB92C32781;
-	Wed,  3 Jul 2024 10:56:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YZtDDwL4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F17FDC32781;
+	Wed,  3 Jul 2024 10:56:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004175;
-	bh=5D3yNb16yv4oMnb5w9byOgmjWDFrtYapzjVzIhWTRME=;
+	s=korg; t=1720004178;
+	bh=R8gYwrHaJu4laAu+eJwIrX6XeOo7R7j4Gu/GYmC9Fgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LmSwwVn2+Co38qbPbNJoIGnadYbW15uQtSIkL/9+nHKHBOB7dnn7BepNZSFiO/BDn
-	 TlBWLy41D6o9Cv+MQ+XjbQ2+TfnqKGPjwFkHJP3cQ/L4XyNOtOuGqaIYBkxfFzxM8l
-	 NqISUj7Ngpq6GHL8WEk2An8ww/nuQ/f1lFyKwRss=
+	b=YZtDDwL48+HMB3KiCMIsrEQ5tnGh671YS8vTNOvbINBBO98F/37E293fa/rluiHVA
+	 2wqaGd1+TAvkRUTXVAeKVBljz6E9UXZcODtukWACzL2+cW6foQTbDIKIIT9i4Yt5j9
+	 NYvLtYLdxT/6w+sGpXD8eMyPYKeyuMZzKB4L7k84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Linus Torvalds <torvalds@linuxfoundation.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 145/189] parisc: use correct compat recv/recvfrom syscalls
-Date: Wed,  3 Jul 2024 12:40:06 +0200
-Message-ID: <20240703102846.950429826@linuxfoundation.org>
+Subject: [PATCH 5.4 146/189] netfilter: nf_tables: fully validate NFT_DATA_VALUE on store to data registers
+Date: Wed,  3 Jul 2024 12:40:07 +0200
+Message-ID: <20240703102846.987050895@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -51,46 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 20a50787349fadf66ac5c48f62e58d753878d2bb ]
+[ Upstream commit 7931d32955e09d0a11b1fe0b6aac1bfa061c005c ]
 
-Johannes missed parisc back when he introduced the compat version
-of these syscalls, so receiving cmsg messages that require a compat
-conversion is still broken.
+register store validation for NFT_DATA_VALUE is conditional, however,
+the datatype is always either NFT_DATA_VALUE or NFT_DATA_VERDICT. This
+only requires a new helper function to infer the register type from the
+set datatype so this conditional check can be removed. Otherwise,
+pointer to chain object can be leaked through the registers.
 
-Use the correct calls like the other architectures do.
-
-Fixes: 1dacc76d0014 ("net/compat/wext: send different messages to compat tasks")
-Acked-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: 96518518cc41 ("netfilter: add nftables")
+Reported-by: Linus Torvalds <torvalds@linuxfoundation.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/kernel/syscalls/syscall.tbl | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/net/netfilter/nf_tables.h | 5 +++++
+ net/netfilter/nf_tables_api.c     | 8 ++++----
+ net/netfilter/nft_lookup.c        | 3 ++-
+ 3 files changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/arch/parisc/kernel/syscalls/syscall.tbl b/arch/parisc/kernel/syscalls/syscall.tbl
-index e016bf6fae1e6..eb84763062ee1 100644
---- a/arch/parisc/kernel/syscalls/syscall.tbl
-+++ b/arch/parisc/kernel/syscalls/syscall.tbl
-@@ -108,7 +108,7 @@
- 95	common	fchown			sys_fchown
- 96	common	getpriority		sys_getpriority
- 97	common	setpriority		sys_setpriority
--98	common	recv			sys_recv
-+98	common	recv			sys_recv			compat_sys_recv
- 99	common	statfs			sys_statfs			compat_sys_statfs
- 100	common	fstatfs			sys_fstatfs			compat_sys_fstatfs
- 101	common	stat64			sys_stat64
-@@ -135,7 +135,7 @@
- 120	common	clone			sys_clone_wrapper
- 121	common	setdomainname		sys_setdomainname
- 122	common	sendfile		sys_sendfile			compat_sys_sendfile
--123	common	recvfrom		sys_recvfrom
-+123	common	recvfrom		sys_recvfrom			compat_sys_recvfrom
- 124	32	adjtimex		sys_adjtimex_time32
- 124	64	adjtimex		sys_adjtimex
- 125	common	mprotect		sys_mprotect
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index cf314ce2fd178..4f77e2f8e1ca8 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -467,6 +467,11 @@ static inline void *nft_set_priv(const struct nft_set *set)
+ 	return (void *)set->data;
+ }
+ 
++static inline enum nft_data_types nft_set_datatype(const struct nft_set *set)
++{
++	return set->dtype == NFT_DATA_VERDICT ? NFT_DATA_VERDICT : NFT_DATA_VALUE;
++}
++
+ static inline bool nft_set_gc_is_pending(const struct nft_set *s)
+ {
+ 	return refcount_read(&s->refs) != 1;
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 44d4d97b45d13..ddbb0f4bff427 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -4301,8 +4301,7 @@ static int nf_tables_fill_setelem(struct sk_buff *skb,
+ 
+ 	if (nft_set_ext_exists(ext, NFT_SET_EXT_DATA) &&
+ 	    nft_data_dump(skb, NFTA_SET_ELEM_DATA, nft_set_ext_data(ext),
+-			  set->dtype == NFT_DATA_VERDICT ? NFT_DATA_VERDICT : NFT_DATA_VALUE,
+-			  set->dlen) < 0)
++			  nft_set_datatype(set), set->dlen) < 0)
+ 		goto nla_put_failure;
+ 
+ 	if (nft_set_ext_exists(ext, NFT_SET_EXT_EXPR) &&
+@@ -8048,6 +8047,9 @@ static int nft_validate_register_store(const struct nft_ctx *ctx,
+ 
+ 		return 0;
+ 	default:
++		if (type != NFT_DATA_VALUE)
++			return -EINVAL;
++
+ 		if (reg < NFT_REG_1 * NFT_REG_SIZE / NFT_REG32_SIZE)
+ 			return -EINVAL;
+ 		if (len == 0)
+@@ -8056,8 +8058,6 @@ static int nft_validate_register_store(const struct nft_ctx *ctx,
+ 		    FIELD_SIZEOF(struct nft_regs, data))
+ 			return -ERANGE;
+ 
+-		if (data != NULL && type != NFT_DATA_VALUE)
+-			return -EINVAL;
+ 		return 0;
+ 	}
+ }
+diff --git a/net/netfilter/nft_lookup.c b/net/netfilter/nft_lookup.c
+index e0ffd463a1320..6d49b82d598ae 100644
+--- a/net/netfilter/nft_lookup.c
++++ b/net/netfilter/nft_lookup.c
+@@ -98,7 +98,8 @@ static int nft_lookup_init(const struct nft_ctx *ctx,
+ 			return -EINVAL;
+ 
+ 		err = nft_parse_register_store(ctx, tb[NFTA_LOOKUP_DREG],
+-					       &priv->dreg, NULL, set->dtype,
++					       &priv->dreg, NULL,
++					       nft_set_datatype(set),
+ 					       set->dlen);
+ 		if (err < 0)
+ 			return err;
 -- 
 2.43.0
 
