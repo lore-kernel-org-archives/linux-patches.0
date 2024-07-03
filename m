@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22DD416F84E;
-	Wed,  3 Jul 2024 11:03:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F13E16F84E;
+	Wed,  3 Jul 2024 11:03:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004629; cv=none; b=f8sLWOtERMxUkPJddaODjkqDopSy7GyQoQQeoiq1rFTq1zmHPJWJwqg3p0SkdVI1qmamz4rDxgBmEVdsFcuwE20+nHT0ZHmyuIJmQ9S127XiRBFXRM66p7EnPJC3HEMVRopPiVDIHCfGGjup7dEXtTUVmLlDDuoXo3aUmncR06w=
+	t=1720004632; cv=none; b=OhdG6Ncb/YX0CgwWK4ZyfyL2l1OT65E0SxobD4/VvrvqwGgzAQeiG/8WnaWRibF9UGQebq7BdqaYLJiNa7HlfmUks+J/soeQtidkzP4fm7At6My9wpq4NUYG3trX61FdBTkq+rPKxooaWlix4oONMdOOS6MNqOKUujlDv4PL4h4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004629; c=relaxed/simple;
-	bh=W5sUk9gdt05Bq4Z+eWHWiivVjDMi+AItGQFYBPT2cVc=;
+	s=arc-20240116; t=1720004632; c=relaxed/simple;
+	bh=rH9gVUj8+1oBU9kqShoXHJJXKhzHaHmKtUZG3yBVQRA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LsgYBX0RwkV9eBle4J8y2qq2F3BNmoo7ewBVg2vSy9Qfi9cVrVFcUUJ/BqA5QipOK+ZM87/6QwK366KS1UPlWtylRfpLAOsasTl2wGRLCnkSnahIcA0NIn7yxe7docIkXwKxZJwsqpfd/g5i3sL261QsHggSk5CJW3DRb3oZuDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i4lTWoK9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KiD3p6orZmnmSLYyKWTewTfZKmIkPNPg0cwwgV+Pg6ySc1CXpuoGxJfjt08kSdG5PXLVwSrn3czxHuOHsnX2QNeM34KJTiti7Xn4gwmW+tdhGA06KmEGioFrldBLXqnvpqjDnO0IXJceg9PmXPoroOa96B9O3YU+lxgFphMqDK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W+8rgBBi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i4lTWoK9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EDD2C2BD10;
-	Wed,  3 Jul 2024 11:03:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W+8rgBBi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97213C4AF0C;
+	Wed,  3 Jul 2024 11:03:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004629;
-	bh=W5sUk9gdt05Bq4Z+eWHWiivVjDMi+AItGQFYBPT2cVc=;
+	s=korg; t=1720004632;
+	bh=rH9gVUj8+1oBU9kqShoXHJJXKhzHaHmKtUZG3yBVQRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i4lTWoK9OAEaJ8C/YS0F3CU1EsuFR+lw3MUK2q0T0JiYrDaS/twSmo+iriKRoZCS4
-	 H5luO6Uu2F72CvxnDsTccSZt4KK6Qak+W3zWtG5ickpiMcGNo52z/UCJRu+wLcov2m
-	 f6AoTRQMBuyh9jAWj+II2GRXHs2BDCFSAm7J3lsw=
+	b=W+8rgBBiq0KT5BM4/y75q9MRtzKSdwmoSgA2qKurK/Elq4jB22vFyrgQajW3exkNc
+	 buHO07Q/vQJjrdGQcHtpX05v+2XLzwN35NA44wQQsw79OWkdjyfZ/41knivqT5zUBq
+	 xXwob8erH/CUMlKs4wPYDwUeLZxjde4ZCLo6oynE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	stable@kernel.org
-Subject: [PATCH 5.10 088/290] intel_th: pci: Add Granite Rapids SOC support
-Date: Wed,  3 Jul 2024 12:37:49 +0200
-Message-ID: <20240703102907.516585723@linuxfoundation.org>
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 106/290] rcutorture: Fix rcu_torture_one_read() pipe_count overflow comment
+Date: Wed,  3 Jul 2024 12:38:07 +0200
+Message-ID: <20240703102908.199928190@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -51,34 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-commit 854afe461b009801a171b3a49c5f75ea43e4c04c upstream.
+[ Upstream commit 8b9b443fa860276822b25057cb3ff3b28734dec0 ]
 
-Add support for the Trace Hub in Granite Rapids SOC.
+The "pipe_count > RCU_TORTURE_PIPE_LEN" check has a comment saying "Should
+not happen, but...".  This is only true when testing an RCU whose grace
+periods are always long enough.  This commit therefore fixes this comment.
 
-Signed-off-by: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: stable@kernel.org
-Link: https://lore.kernel.org/r/20240429130119.1518073-12-alexander.shishkin@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Linus Torvalds <torvalds@linux-foundation.org>
+Closes: https://lore.kernel.org/lkml/CAHk-=wi7rJ-eGq+xaxVfzFEgbL9tdf6Kc8Z89rCpfcQOKm74Tw@mail.gmail.com/
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/intel_th/pci.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/rcu/rcutorture.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/hwtracing/intel_th/pci.c
-+++ b/drivers/hwtracing/intel_th/pci.c
-@@ -310,6 +310,11 @@ static const struct pci_device_id intel_
- 		.driver_data = (kernel_ulong_t)&intel_th_2x,
- 	},
- 	{
-+		/* Granite Rapids SOC */
-+		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x3256),
-+		.driver_data = (kernel_ulong_t)&intel_th_2x,
-+	},
-+	{
- 		/* Alder Lake CPU */
- 		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x466f),
- 		.driver_data = (kernel_ulong_t)&intel_th_2x,
+diff --git a/kernel/rcu/rcutorture.c b/kernel/rcu/rcutorture.c
+index 6c1aea48a79a1..c413eb4a95667 100644
+--- a/kernel/rcu/rcutorture.c
++++ b/kernel/rcu/rcutorture.c
+@@ -1407,7 +1407,8 @@ static bool rcu_torture_one_read(struct torture_random_state *trsp)
+ 	preempt_disable();
+ 	pipe_count = READ_ONCE(p->rtort_pipe_count);
+ 	if (pipe_count > RCU_TORTURE_PIPE_LEN) {
+-		/* Should not happen, but... */
++		// Should not happen in a correct RCU implementation,
++		// happens quite often for torture_type=busted.
+ 		pipe_count = RCU_TORTURE_PIPE_LEN;
+ 	}
+ 	completed = cur_ops->get_gp_seq();
+-- 
+2.43.0
+
 
 
