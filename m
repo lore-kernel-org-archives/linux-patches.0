@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45037CF1F;
-	Wed,  3 Jul 2024 10:45:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B060F7CF1F;
+	Wed,  3 Jul 2024 10:45:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003538; cv=none; b=W8owOuXdlx5eIQnsf+Q4a84MO/cypz55Jg4mAOzEH1SL3c4fzE/Duh1iOs1zLS4mtFAMJKEwXxsDUldnOBjJPU0zZe6yNbjhRdBVrmosuS9AdxRutaIfgAeujy+BpQO1DKrjC9balnY8KktPuQroG0vaH1YPjw19cHV/lf6n07c=
+	t=1720003541; cv=none; b=ZbNdvxF87Bc5/CPbLk1Eq1r17f6t9wsvKKjTXUdbOLNEsK4woMel7lv9exyxiCRSo0hadeBJDpeJXx5wQrIK2jipCZmipxk+qMjNzSBqjKhVxLz6vpnfVkwtgsomVsGlpxxwCEwmWiNz0ukTuVuiGm4lNTMMx23tDXwm88ClNBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003538; c=relaxed/simple;
-	bh=uGgHVPfM3dKtq0FsW7t3haBT24Z65YalC0mB/2sMYXY=;
+	s=arc-20240116; t=1720003541; c=relaxed/simple;
+	bh=wyCQkaIy7TlwLufgt83Zvg7sseH0EmjKy6qH3SP2ruc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=to91aZjWstwd5HwT5uKzX1ynsewh/4yfPEMYCnk9YEeyTUykPaxUUSignXEt7DmWEwHI8OrUABv6HsKW0MZ3RXWqkxoBp5uO8hC7dG2znDKscLV/RE0O3Sd2J4iIAv+fanIGy4FAKM5uUsIq/XcoXF1cPcGbjZAqfVuHH90wSAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=exiTi7t9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jTkhrop+CIhRkurHJ10op3UtrEdNty+lNi6FjsR91UGdkZNM6h17qyMOTcngNKuhODmAQ7JNt3Os3gZ80ohox/65jqTz8an8XgpgGGhAx6IHtYHIaF9QgUsqLJGRBOM7/6sCqBif/0YvFOZOiobntJsD+tFgjeLcC7QqR1+mvPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PD7E/MZK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="exiTi7t9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38843C2BD10;
-	Wed,  3 Jul 2024 10:45:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PD7E/MZK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CE15C2BD10;
+	Wed,  3 Jul 2024 10:45:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003538;
-	bh=uGgHVPfM3dKtq0FsW7t3haBT24Z65YalC0mB/2sMYXY=;
+	s=korg; t=1720003541;
+	bh=wyCQkaIy7TlwLufgt83Zvg7sseH0EmjKy6qH3SP2ruc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=exiTi7t9CtecSN51I5w6Rm0u6hzzYR2Id4gP+OBhkCYTWh4zwlWBMNg+BQKq8oIso
-	 S1/FFHXkG+OlJXy7TardPxeZ/CPZH1W2pYaQQZUEqGPvNWYtxEfFLfYXIFQ9zfVQxJ
-	 uKaKUWhuGKNOAjONDd/BN7xGrOJfY/c2+NhkBtFA=
+	b=PD7E/MZKajY+qKy0apsEBEKQgGAAyL2aUG6vL7jJYqoAD4GIlmSL0obM8dozPEojZ
+	 m2vfUWYrNGDZOxT/QyMSgH7zgPOP+xtcm3Q3w4p3dKdyHzeEDii1VjH2Cr3A5qAiwy
+	 A9yV4K36PX3VhR52SYcw23LPM1AA/zSIz7qA2UDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Allison Henderson <allison.henderson@oracle.com>,
-	Chuck Lever III <chuck.lever@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.19 081/139] gcov: add support for GCC 14
-Date: Wed,  3 Jul 2024 12:39:38 +0200
-Message-ID: <20240703102833.500179771@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 082/139] ARM: dts: samsung: smdkv310: fix keypad no-autorepeat
+Date: Wed,  3 Jul 2024 12:39:39 +0200
+Message-ID: <20240703102833.539085446@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -52,40 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Oberparleiter <oberpar@linux.ibm.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit c1558bc57b8e5b4da5d821537cd30e2e660861d8 upstream.
+[ Upstream commit 87d8e522d6f5a004f0aa06c0def302df65aff296 ]
 
-Using gcov on kernels compiled with GCC 14 results in truncated 16-byte
-long .gcda files with no usable data.  To fix this, update GCOV_COUNTERS
-to match the value defined by GCC 14.
+Although the Samsung SoC keypad binding defined
+linux,keypad-no-autorepeat property, Linux driver never implemented it
+and always used linux,input-no-autorepeat.  Correct the DTS to use
+property actually implemented.
 
-Tested with GCC versions 14.1.0 and 13.2.0.
+This also fixes dtbs_check errors like:
 
-Link: https://lkml.kernel.org/r/20240610092743.1609845-1-oberpar@linux.ibm.com
-Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Reported-by: Allison Henderson <allison.henderson@oracle.com>
-Reported-by: Chuck Lever III <chuck.lever@oracle.com>
-Tested-by: Chuck Lever <chuck.lever@oracle.com>
+  exynos4210-smdkv310.dtb: keypad@100a0000: 'linux,keypad-no-autorepeat' does not match any of the regexes: '^key-[0-9a-z]+$', 'pinctrl-[0-9]+'
+
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0561ceabd0f1 ("ARM: dts: Add intial dts file for EXYNOS4210 SoC, SMDKV310 and ORIGEN")
+Link: https://lore.kernel.org/r/20240312183105.715735-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/gcov/gcc_4_7.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/exynos4210-smdkv310.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/gcov/gcc_4_7.c
-+++ b/kernel/gcov/gcc_4_7.c
-@@ -19,7 +19,9 @@
- #include <linux/vmalloc.h>
- #include "gcov.h"
- 
--#if (__GNUC__ >= 10)
-+#if (__GNUC__ >= 14)
-+#define GCOV_COUNTERS			9
-+#elif (__GNUC__ >= 10)
- #define GCOV_COUNTERS			8
- #elif (__GNUC__ >= 7)
- #define GCOV_COUNTERS			9
+diff --git a/arch/arm/boot/dts/exynos4210-smdkv310.dts b/arch/arm/boot/dts/exynos4210-smdkv310.dts
+index 7a3e621ededec..b79d860abf90a 100644
+--- a/arch/arm/boot/dts/exynos4210-smdkv310.dts
++++ b/arch/arm/boot/dts/exynos4210-smdkv310.dts
+@@ -64,7 +64,7 @@ eeprom@52 {
+ &keypad {
+ 	samsung,keypad-num-rows = <2>;
+ 	samsung,keypad-num-columns = <8>;
+-	linux,keypad-no-autorepeat;
++	linux,input-no-autorepeat;
+ 	wakeup-source;
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&keypad_rows &keypad_cols>;
+-- 
+2.43.0
+
 
 
