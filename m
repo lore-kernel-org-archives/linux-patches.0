@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3766717BB03;
-	Wed,  3 Jul 2024 11:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E2113B280;
+	Wed,  3 Jul 2024 11:26:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006010; cv=none; b=snXYkfkTlZnwiyfCot9QTrpw67lCC865JKGDsfwNIyej/vDcGWrh0X57EtEb2aqINBmS77r8SPWizawFuDFJB6e3Jrev40g5ZB0MSig5U4AgKAZL2i6cjoULwFrMi+4WfTz60au91MLbeTQlHF+BbGBreQTWcIOPXPfRR9wcvHE=
+	t=1720006013; cv=none; b=AeYwJDTtLznZbsfaQXlTpYAygESb82TogK4jvHfxD7TsERys3lXLACQpS++yLUDdhKhgin4gxb5aeYby2hhQEuhR9bLacxptNGVxE8fKAa4J3Ny9STqsgkT+CoQD29MtVtrN63H6o907M0rDCP5+tMdSsO3kHMpyJ93a4G4kAQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006010; c=relaxed/simple;
-	bh=0/q2IWBbsgcZx/Xtmf3rnujB/l5bz2FhDIri+eE3Mfg=;
+	s=arc-20240116; t=1720006013; c=relaxed/simple;
+	bh=uZrcq+Ch/nbcI2raLdCPMMouU4fEH6qNxJnrBDNPoHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b8NrANJMsvkvgT7g2hhvqDsBku16E8V8W+oBHOMKGJoWtTx9jH/oABtTPOpAqVDwyZPSNPw/lSDOL762MRVVkbI3tVP/f5rIbsSwzWDHLnNZpjKA9cRW86+YJ1DujbAzPgUAhp9/ItnZERbq2arS4BbhRz3mrpLof24CTYf5fVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tPVaF2o/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=foQERtu7k01633j8E90Ww7kh4QDaas01l3B26zO5MuoBFyl5JXlhcbj33gcuu0ti4arB8G2/n+QfNFhPJ2ePK+7iJB0O4scBG66rYMvoOxmoNcyZ7Mz1aHvV4YMwiwLC1dhyzcEeuUq5tRYOalq0wUNwcwAzKSGgZ9rOr6X9SxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zAfP6tqH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tPVaF2o/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B295EC2BD10;
-	Wed,  3 Jul 2024 11:26:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zAfP6tqH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2A03C2BD10;
+	Wed,  3 Jul 2024 11:26:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006010;
-	bh=0/q2IWBbsgcZx/Xtmf3rnujB/l5bz2FhDIri+eE3Mfg=;
+	s=korg; t=1720006013;
+	bh=uZrcq+Ch/nbcI2raLdCPMMouU4fEH6qNxJnrBDNPoHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tPVaF2o/Ryc4PyT0bIYJNIWnGfiSSJ7NbtZ+6Q18WfSzpaeOQsVEHrtx8WSSWSeo0
-	 akHBXlyKq/urwWy2Ou+QWaPzZUC4dk0lA0Y4rNpzM4YwFPF9wlpniSvRRjWVaBg56H
-	 0XLjhAm+VVUYt2neEcRz3qEpduHt6xkY5QNRG5Q8=
+	b=zAfP6tqHLmMTKoRJaAR80+7LSr0jPsjpemxS0GeyicqChhXpm2WWYCQgKWbrURt65
+	 LaFC8ols/ry0lBHGV8EZN7ls2CgV/lLx71oZ4BTUViw7T6rvgndD7z3pzXVEO04LHw
+	 PndK7ZM4fQDAHQaFGQTORtNzCOaQNzo9qTZdSGMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Elinor Montmasson <elinor.montmasson@savoirfairelinux.com>,
-	Mark Brown <broonie@kernel.org>,
+	Tristram Ha <tristram.ha@microchip.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 270/356] ASoC: fsl-asoc-card: set priv->pdev before using it
-Date: Wed,  3 Jul 2024 12:40:06 +0200
-Message-ID: <20240703102923.328821818@linuxfoundation.org>
+Subject: [PATCH 5.15 271/356] net: dsa: microchip: fix initial port flush problem
+Date: Wed,  3 Jul 2024 12:40:07 +0200
+Message-ID: <20240703102923.368095040@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,54 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Elinor Montmasson <elinor.montmasson@savoirfairelinux.com>
+From: Tristram Ha <tristram.ha@microchip.com>
 
-[ Upstream commit 90f3feb24172185f1832636264943e8b5e289245 ]
+[ Upstream commit ad53f5f54f351e967128edbc431f0f26427172cf ]
 
-priv->pdev pointer was set after being used in
-fsl_asoc_card_audmux_init().
-Move this assignment at the start of the probe function, so
-sub-functions can correctly use pdev through priv.
+The very first flush in any port will flush all learned addresses in all
+ports.  This can be observed by unplugging the cable from one port while
+additional ports are connected and dumping the fdb entries.
 
-fsl_asoc_card_audmux_init() dereferences priv->pdev to get access to the
-dev struct, used with dev_err macros.
-As priv is zero-initialised, there would be a NULL pointer dereference.
-Note that if priv->dev is dereferenced before assignment but never used,
-for example if there is no error to be printed, the driver won't crash
-probably due to compiler optimisations.
+This problem is caused by the initially wrong value programmed to the
+REG_SW_LUE_CTRL_1 register.  Setting SW_FLUSH_STP_TABLE and
+SW_FLUSH_MSTP_TABLE bits does not have an immediate effect.  It is when
+ksz9477_flush_dyn_mac_table() is called then the SW_FLUSH_STP_TABLE bit
+takes effect and flushes all learned entries.  After that call both bits
+are reset and so the next port flush will not cause such problem again.
 
-Fixes: 708b4351f08c ("ASoC: fsl: Add Freescale Generic ASoC Sound Card with ASRC support")
-Signed-off-by: Elinor Montmasson <elinor.montmasson@savoirfairelinux.com>
-Link: https://patch.msgid.link/20240620132511.4291-2-elinor.montmasson@savoirfairelinux.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: b987e98e50ab ("dsa: add DSA switch driver for Microchip KSZ9477")
+Signed-off-by: Tristram Ha <tristram.ha@microchip.com>
+Link: https://patch.msgid.link/1718756202-2731-1-git-send-email-Tristram.Ha@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/fsl/fsl-asoc-card.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/dsa/microchip/ksz9477.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl-asoc-card.c b/sound/soc/fsl/fsl-asoc-card.c
-index 5000d779aade2..98a157e46637a 100644
---- a/sound/soc/fsl/fsl-asoc-card.c
-+++ b/sound/soc/fsl/fsl-asoc-card.c
-@@ -548,6 +548,8 @@ static int fsl_asoc_card_probe(struct platform_device *pdev)
- 	if (!priv)
- 		return -ENOMEM;
+--- a/drivers/net/dsa/microchip/ksz9477.c
++++ b/drivers/net/dsa/microchip/ksz9477.c
+@@ -195,7 +195,6 @@ static int ksz9477_wait_alu_sta_ready(st
  
-+	priv->pdev = pdev;
-+
- 	cpu_np = of_parse_phandle(np, "audio-cpu", 0);
- 	/* Give a chance to old DT binding */
- 	if (!cpu_np)
-@@ -742,7 +744,6 @@ static int fsl_asoc_card_probe(struct platform_device *pdev)
- 	}
+ static int ksz9477_reset_switch(struct ksz_device *dev)
+ {
+-	u8 data8;
+ 	u32 data32;
  
- 	/* Initialize sound card */
--	priv->pdev = pdev;
- 	priv->card.dev = &pdev->dev;
- 	priv->card.owner = THIS_MODULE;
- 	ret = snd_soc_of_parse_card_name(&priv->card, "model");
--- 
-2.43.0
-
+ 	/* reset switch */
+@@ -206,10 +205,8 @@ static int ksz9477_reset_switch(struct k
+ 			   SPI_AUTO_EDGE_DETECTION, 0);
+ 
+ 	/* default configuration */
+-	ksz_read8(dev, REG_SW_LUE_CTRL_1, &data8);
+-	data8 = SW_AGING_ENABLE | SW_LINK_AUTO_AGING |
+-	      SW_SRC_ADDR_FILTER | SW_FLUSH_STP_TABLE | SW_FLUSH_MSTP_TABLE;
+-	ksz_write8(dev, REG_SW_LUE_CTRL_1, data8);
++	ksz_write8(dev, REG_SW_LUE_CTRL_1,
++		   SW_AGING_ENABLE | SW_LINK_AUTO_AGING | SW_SRC_ADDR_FILTER);
+ 
+ 	/* disable interrupts */
+ 	ksz_write32(dev, REG_SW_INT_MASK__4, SWITCH_INT_MASK);
 
 
