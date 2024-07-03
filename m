@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A5BF191F6E;
-	Wed,  3 Jul 2024 11:22:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A18B1849DD;
+	Wed,  3 Jul 2024 11:22:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005748; cv=none; b=NFT3v7SXMVU932nplUhqG/dhIXc04LQid2hDI+tqrcstSLj9AAGwfFhNT8zsMgzHBeYFqCV1J/ZgyJLVCM436H7Mcl+jL6cFR2+GzZLoA2R45a6zShR41EzV/R6N+Ku0KzznqJJhK8EuwWxxWZjQH5cdfM97LhFkTAp4S4dXoYc=
+	t=1720005751; cv=none; b=b+GOwZvaL4VICYoXHvHfZSvdIX9hWYyusADAi1lyP82fthX4lR7nQ9ulEYxNknr2Eaoj5TRxvCs4RWfCRxtmj/w3jR1MQ9l3fjsGTPrlY/Wq/kgvC+gW9TGsHbWFHGW4ybo8KpwVyh/xguixwlAkV6ERTdPO3Pr/zpLwsD/Esi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005748; c=relaxed/simple;
-	bh=htz1MlGV37sN+pAVw6lVcaa/Mzi7dkmp9gyjagzebwM=;
+	s=arc-20240116; t=1720005751; c=relaxed/simple;
+	bh=8JeZz9flsRfJyLVlHgOgObtzIxH4lYhY0gzPgexdjOU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Sr7YdJf6IQzHXxJpgXa83iE1o0WDSxWnItp3dxLX80+lNtVplXz1ZQGLfX3mQOl/3AzvhxDCTPdYRO28tXjFEVUPrFa2p0ML0jIx0VI71P0gRN+7+3SqOKNJQjXdcnDsx4ZB+N4i2C3mLosUEHGqAms3Vm3Ibm0VMSaSEIuA+1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bgExqlTi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aVZ5A8CL7Yzv3sKve7g7HN7Z+pl4LijM15p4411iczMLR0Odko2VK/UE12Z+C5J5O+1ubdw+3jFItjpY2BpvFYFlsSitTR6x65wSZzSRgqU10BmuSAOGRErsL8aB0sFuJU6L/HX0XaMbu/iUD7XRCgIroa9nKXBTMT12YGqxUKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AUPB8P/o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bgExqlTi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E6B2C2BD10;
-	Wed,  3 Jul 2024 11:22:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AUPB8P/o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95631C4AF0B;
+	Wed,  3 Jul 2024 11:22:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005748;
-	bh=htz1MlGV37sN+pAVw6lVcaa/Mzi7dkmp9gyjagzebwM=;
+	s=korg; t=1720005751;
+	bh=8JeZz9flsRfJyLVlHgOgObtzIxH4lYhY0gzPgexdjOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bgExqlTi2TdUnI1dGk8umyUXBMxKDKNL+/NBcoLxZUQGnUsg+o592U7KHNK+72KMG
-	 u6ni0F4pev3gIVh4AEszMzYPvASbdMmnw4dpTRJRn0ZM6DaLRVGlnepSwuOGNg20A9
-	 +A3Xe3pfG7gDSFaTNP1xSWkpzFHq3OM73o2bTf9I=
+	b=AUPB8P/ozl6Nfme1yGzbL5MD+PIzFVhOmaVE7YT4j4UQydVbyTDtjSJ3Hufxu6ahM
+	 5MIEWihhD96/xZnq9hxYdY84aYfP6Ss0VhUOrz4Cdcd2p2d6pp8ImR14vR7AC6zz3W
+	 RybZR2JT2hlAjHN4LFNx3xdqSXtdEAJj8/DCTeyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Hong <elsk@google.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 5.15 142/356] kbuild: Remove support for Clangs ThinLTO caching
-Date: Wed,  3 Jul 2024 12:37:58 +0200
-Message-ID: <20240703102918.474583502@linuxfoundation.org>
+	Joao Pinto <jpinto@synopsys.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 177/356] Avoid hw_desc array overrun in dw-axi-dmac
+Date: Wed,  3 Jul 2024 12:38:33 +0200
+Message-ID: <20240703102919.800625080@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -46,140 +45,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Joao Pinto <Joao.Pinto@synopsys.com>
 
-commit aba091547ef6159d52471f42a3ef531b7b660ed8 upstream.
+[ Upstream commit 333e11bf47fa8d477db90e2900b1ed3c9ae9b697 ]
 
-There is an issue in clang's ThinLTO caching (enabled for the kernel via
-'--thinlto-cache-dir') with .incbin, which the kernel occasionally uses
-to include data within the kernel, such as the .config file for
-/proc/config.gz. For example, when changing the .config and rebuilding
-vmlinux, the copy of .config in vmlinux does not match the copy of
-.config in the build folder:
+I have a use case where nr_buffers = 3 and in which each descriptor is composed by 3
+segments, resulting in the DMA channel descs_allocated to be 9. Since axi_desc_put()
+handles the hw_desc considering the descs_allocated, this scenario would result in a
+kernel panic (hw_desc array will be overrun).
 
-  $ echo 'CONFIG_LTO_NONE=n
-  CONFIG_LTO_CLANG_THIN=y
-  CONFIG_IKCONFIG=y
-  CONFIG_HEADERS_INSTALL=y' >kernel/configs/repro.config
+To fix this, the proposal is to add a new member to the axi_dma_desc structure,
+where we keep the number of allocated hw_descs (axi_desc_alloc()) and use it in
+axi_desc_put() to handle the hw_desc array correctly.
 
-  $ make -skj"$(nproc)" ARCH=x86_64 LLVM=1 clean defconfig repro.config vmlinux
-  ...
+Additionally I propose to remove the axi_chan_start_first_queued() call after completing
+the transfer, since it was identified that unbalance can occur (started descriptors can
+be interrupted and transfer ignored due to DMA channel not being enabled).
 
-  $ grep CONFIG_HEADERS_INSTALL .config
-  CONFIG_HEADERS_INSTALL=y
-
-  $ scripts/extract-ikconfig vmlinux | grep CONFIG_HEADERS_INSTALL
-  CONFIG_HEADERS_INSTALL=y
-
-  $ scripts/config -d HEADERS_INSTALL
-
-  $ make -kj"$(nproc)" ARCH=x86_64 LLVM=1 vmlinux
-  ...
-    UPD     kernel/config_data
-    GZIP    kernel/config_data.gz
-    CC      kernel/configs.o
-  ...
-    LD      vmlinux
-  ...
-
-  $ grep CONFIG_HEADERS_INSTALL .config
-  # CONFIG_HEADERS_INSTALL is not set
-
-  $ scripts/extract-ikconfig vmlinux | grep CONFIG_HEADERS_INSTALL
-  CONFIG_HEADERS_INSTALL=y
-
-Without '--thinlto-cache-dir' or when using full LTO, this issue does
-not occur.
-
-Benchmarking incremental builds on a few different machines with and
-without the cache shows a 20% increase in incremental build time without
-the cache when measured by touching init/main.c and running 'make all'.
-
-ARCH=arm64 defconfig + CONFIG_LTO_CLANG_THIN=y on an arm64 host:
-
-  Benchmark 1: With ThinLTO cache
-    Time (mean ± σ):     56.347 s ±  0.163 s    [User: 83.768 s, System: 24.661 s]
-    Range (min … max):   56.109 s … 56.594 s    10 runs
-
-  Benchmark 2: Without ThinLTO cache
-    Time (mean ± σ):     67.740 s ±  0.479 s    [User: 718.458 s, System: 31.797 s]
-    Range (min … max):   67.059 s … 68.556 s    10 runs
-
-  Summary
-    With ThinLTO cache ran
-      1.20 ± 0.01 times faster than Without ThinLTO cache
-
-ARCH=x86_64 defconfig + CONFIG_LTO_CLANG_THIN=y on an x86_64 host:
-
-  Benchmark 1: With ThinLTO cache
-    Time (mean ± σ):     85.772 s ±  0.252 s    [User: 91.505 s, System: 8.408 s]
-    Range (min … max):   85.447 s … 86.244 s    10 runs
-
-  Benchmark 2: Without ThinLTO cache
-    Time (mean ± σ):     103.833 s ±  0.288 s    [User: 232.058 s, System: 8.569 s]
-    Range (min … max):   103.286 s … 104.124 s    10 runs
-
-  Summary
-    With ThinLTO cache ran
-      1.21 ± 0.00 times faster than Without ThinLTO cache
-
-While it is unfortunate to take this performance improvement off the
-table, correctness is more important. If/when this is fixed in LLVM, it
-can potentially be brought back in a conditional manner. Alternatively,
-a developer can just disable LTO if doing incremental compiles quickly
-is important, as a full compile cycle can still take over a minute even
-with the cache and it is unlikely that LTO will result in functional
-differences for a kernel change.
-
-Cc: stable@vger.kernel.org
-Fixes: dc5723b02e52 ("kbuild: add support for Clang LTO")
-Reported-by: Yifan Hong <elsk@google.com>
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2021
-Reported-by: Masami Hiramatsu <mhiramat@kernel.org>
-Closes: https://lore.kernel.org/r/20220327115526.cc4b0ff55fc53c97683c3e4d@kernel.org/
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-[nathan: Address conflict in Makefile]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Joao Pinto <jpinto@synopsys.com>
+Link: https://lore.kernel.org/r/1711536564-12919-1-git-send-email-jpinto@synopsys.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Makefile |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 6 ++----
+ drivers/dma/dw-axi-dmac/dw-axi-dmac.h          | 1 +
+ 2 files changed, 3 insertions(+), 4 deletions(-)
 
---- a/Makefile
-+++ b/Makefile
-@@ -959,7 +959,6 @@ endif
- ifdef CONFIG_LTO_CLANG
- ifdef CONFIG_LTO_CLANG_THIN
- CC_FLAGS_LTO	:= -flto=thin -fsplit-lto-unit
--KBUILD_LDFLAGS	+= --thinlto-cache-dir=$(extmod_prefix).thinlto-cache
- else
- CC_FLAGS_LTO	:= -flto
- endif
-@@ -1560,7 +1559,7 @@ endif # CONFIG_MODULES
- # Directories & files removed with 'make clean'
- CLEAN_FILES += include/ksym vmlinux.symvers modules-only.symvers \
- 	       modules.builtin modules.builtin.modinfo modules.nsdeps \
--	       compile_commands.json .thinlto-cache
-+	       compile_commands.json
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+index cfc47efcb5d93..6715ade391aa1 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -213,6 +213,7 @@ static struct axi_dma_desc *axi_desc_alloc(u32 num)
+ 		kfree(desc);
+ 		return NULL;
+ 	}
++	desc->nr_hw_descs = num;
  
- # Directories & files removed with 'make mrproper'
- MRPROPER_FILES += include/config include/generated          \
-@@ -1788,7 +1787,7 @@ PHONY += compile_commands.json
+ 	return desc;
+ }
+@@ -239,7 +240,7 @@ static struct axi_dma_lli *axi_desc_get(struct axi_dma_chan *chan,
+ static void axi_desc_put(struct axi_dma_desc *desc)
+ {
+ 	struct axi_dma_chan *chan = desc->chan;
+-	int count = atomic_read(&chan->descs_allocated);
++	int count = desc->nr_hw_descs;
+ 	struct axi_dma_hw_desc *hw_desc;
+ 	int descs_put;
  
- clean-dirs := $(KBUILD_EXTMOD)
- clean: rm-files := $(KBUILD_EXTMOD)/Module.symvers $(KBUILD_EXTMOD)/modules.nsdeps \
--	$(KBUILD_EXTMOD)/compile_commands.json $(KBUILD_EXTMOD)/.thinlto-cache
-+	$(KBUILD_EXTMOD)/compile_commands.json
+@@ -1049,9 +1050,6 @@ static void axi_chan_block_xfer_complete(struct axi_dma_chan *chan)
+ 		/* Remove the completed descriptor from issued list before completing */
+ 		list_del(&vd->node);
+ 		vchan_cookie_complete(vd);
+-
+-		/* Submit queued descriptors after processing the completed ones */
+-		axi_chan_start_first_queued(chan);
+ 	}
  
- PHONY += prepare
- # now expand this into a simple variable to reduce the cost of shell evaluations
+ out:
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
+index 380005afde160..58fc6310ee364 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
+@@ -101,6 +101,7 @@ struct axi_dma_desc {
+ 	u32				completed_blocks;
+ 	u32				length;
+ 	u32				period_len;
++	u32				nr_hw_descs;
+ };
+ 
+ static inline struct device *dchan2dev(struct dma_chan *dchan)
+-- 
+2.43.0
+
 
 
