@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709C618410F;
-	Wed,  3 Jul 2024 11:08:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6799617966F;
+	Wed,  3 Jul 2024 11:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004885; cv=none; b=FxdqIb/BfjXSKhlAbGqW0f1fogtPy6k1JSBbdSnrPi7v73Y9/yixWXdJY6mw6PsYwttXvIVbwbv6XZ2hR/YGz8C3TPKBLOVi4X9nxyvpoiZBJHv48srRDByllWFTWT/ByjIK0v4fGjuVIb1pJGAllixCzQo7zX+Kku61HTYWemI=
+	t=1720004888; cv=none; b=kEMql5DN2J90w9BZO28CharUjlcyGe7X6DYQC6VzDbtKHF6ON88JqzpoL+/+flyKcjg2IRg/HCqxb6cU9oXRxy5TG7TGH897sxARVPfqVSRfEyeuwQB6pw+6a9D3SxLBu/3ogTp/X/LJkkCy4RFjC6klR0pSI1M4PBJwqw9s0bM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004885; c=relaxed/simple;
-	bh=VwDSSdP3g0SZM1MZQk29wsrIrBen3kQ+SoSgBKyyW9g=;
+	s=arc-20240116; t=1720004888; c=relaxed/simple;
+	bh=M7O83ZF/4HVwtdeEhpmkTkTljhPpOXYImpzwO5rD7Ws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hfEbWcD9fOseJYxEkaJ79UKQXp/B5C8pzvNPqb+n3HB3cCp07WMjbpsnAbCN2fVyJbJ8pDyQTmiZwqirqT2rFcz51CnerlonnUtHSBm6xlEIInuxBY5AkUSqZczW0XGyalguy0DkemsLphSg1uQKfrvJs+UpUkUXCtOluElU3hY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C4nrJZAV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ao43TC6j71b5l1HKnjFHBSxmicEAgBZcCqfUM7OLh5nERJVB295OmOAgaqoKgG2HzAKbWE2vMBp18h7mbS7WLwylHFaptb2O09lF3+KVpro9oA/L0uMPdbWa7AF9NJD0JuoiDmaTP6w/etSAwhkL/M1K0lz1TA/5qvs/fF5EVD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NiInmWIz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C4nrJZAV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E412AC2BD10;
-	Wed,  3 Jul 2024 11:08:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NiInmWIz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4A5DC2BD10;
+	Wed,  3 Jul 2024 11:08:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004885;
-	bh=VwDSSdP3g0SZM1MZQk29wsrIrBen3kQ+SoSgBKyyW9g=;
+	s=korg; t=1720004888;
+	bh=M7O83ZF/4HVwtdeEhpmkTkTljhPpOXYImpzwO5rD7Ws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C4nrJZAV2CbcQnZ2Gg7TN8M3ySdC8XlCNmmuafh8mMCWUWhaCu/i6DNQapHl9VMn2
-	 YtmtrBVqUTAztv7y8/rStN3ezIAhSzSvfBRT0bbUdQRpfnXDaPGKZW+Zt8NlyG7tiS
-	 xuthUQUwt/yA/ZmH2hd/3ox6PQTJp4kQVMd2qROw=
+	b=NiInmWIzPN4sRfbLfQ6TpBhwLErKsUXx3GNmgSaBaz6ZyzrG2hKPzuAKD/Jw+AIqn
+	 QpoLLwD46ptEyFsErG3BN0k3Ygtruy0vz5CirG/hC7i1pEGffj7wQjaJgsk4rdz5Bx
+	 CMYgd10gdSmbZLq2oZHOdJ/fHg4kZLR4FinMcUXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Nikita Shubin <n.shubin@yadro.com>,
 	Dave Jiang <dave.jiang@intel.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 158/290] dmaengine: ioat: use PCI core macros for PCIe Capability
-Date: Wed,  3 Jul 2024 12:38:59 +0200
-Message-ID: <20240703102910.148506092@linuxfoundation.org>
+Subject: [PATCH 5.10 159/290] dmaengine: ioatdma: Fix error path in ioat3_dma_probe()
+Date: Wed,  3 Jul 2024 12:39:00 +0200
+Message-ID: <20240703102910.185504958@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -52,65 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+From: Nikita Shubin <n.shubin@yadro.com>
 
-[ Upstream commit 8f6707d0773be31972768abd6e0bf7b8515b5b1a ]
+[ Upstream commit f0dc9fda2e0ee9e01496c2f5aca3a831131fad79 ]
 
-The PCIe Capability is defined by the PCIe spec, so use the PCI_EXP_DEVCTL
-macros defined by the PCI core instead of defining copies in IOAT.  This
-makes it easier to find all uses of the PCIe Device Control register.  No
-functional change intended.
+Make sure we are disabling interrupts and destroying DMA pool if
+pcie_capability_read/write_word() call failed.
 
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20230307214615.887354-1-helgaas@kernel.org
+Fixes: 511deae0261c ("dmaengine: ioatdma: disable relaxed ordering for ioatdma")
+Signed-off-by: Nikita Shubin <n.shubin@yadro.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/r/20240528-ioatdma-fixes-v2-2-a9f2fbe26ab1@yadro.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: f0dc9fda2e0e ("dmaengine: ioatdma: Fix error path in ioat3_dma_probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ioat/init.c      | 6 +++---
- drivers/dma/ioat/registers.h | 7 -------
- 2 files changed, 3 insertions(+), 10 deletions(-)
+ drivers/dma/ioat/init.c | 33 +++++++++++++++------------------
+ 1 file changed, 15 insertions(+), 18 deletions(-)
 
 diff --git a/drivers/dma/ioat/init.c b/drivers/dma/ioat/init.c
-index 6c27980a5ec8f..ed4910e3bc2ac 100644
+index ed4910e3bc2ac..ceba1b4083a9d 100644
 --- a/drivers/dma/ioat/init.c
 +++ b/drivers/dma/ioat/init.c
-@@ -1190,13 +1190,13 @@ static int ioat3_dma_probe(struct ioatdma_device *ioat_dma, int dca)
- 		ioat_dma->dca = ioat_dca_init(pdev, ioat_dma->reg_base);
+@@ -534,18 +534,6 @@ static int ioat_probe(struct ioatdma_device *ioat_dma)
+ 	return err;
+ }
+ 
+-static int ioat_register(struct ioatdma_device *ioat_dma)
+-{
+-	int err = dma_async_device_register(&ioat_dma->dma_dev);
+-
+-	if (err) {
+-		ioat_disable_interrupts(ioat_dma);
+-		dma_pool_destroy(ioat_dma->completion_pool);
+-	}
+-
+-	return err;
+-}
+-
+ static void ioat_dma_remove(struct ioatdma_device *ioat_dma)
+ {
+ 	struct dma_device *dma = &ioat_dma->dma_dev;
+@@ -1180,9 +1168,9 @@ static int ioat3_dma_probe(struct ioatdma_device *ioat_dma, int dca)
+ 		       ioat_chan->reg_base + IOAT_DCACTRL_OFFSET);
+ 	}
+ 
+-	err = ioat_register(ioat_dma);
++	err = dma_async_device_register(&ioat_dma->dma_dev);
+ 	if (err)
+-		return err;
++		goto err_disable_interrupts;
+ 
+ 	ioat_kobject_add(ioat_dma, &ioat_ktype);
+ 
+@@ -1191,20 +1179,29 @@ static int ioat3_dma_probe(struct ioatdma_device *ioat_dma, int dca)
  
  	/* disable relaxed ordering */
--	err = pcie_capability_read_word(pdev, IOAT_DEVCTRL_OFFSET, &val16);
-+	err = pcie_capability_read_word(pdev, PCI_EXP_DEVCTL, &val16);
- 	if (err)
- 		return pcibios_err_to_errno(err);
+ 	err = pcie_capability_read_word(pdev, PCI_EXP_DEVCTL, &val16);
+-	if (err)
+-		return pcibios_err_to_errno(err);
++	if (err) {
++		err = pcibios_err_to_errno(err);
++		goto err_disable_interrupts;
++	}
  
  	/* clear relaxed ordering enable */
--	val16 &= ~IOAT_DEVCTRL_ROE;
--	err = pcie_capability_write_word(pdev, IOAT_DEVCTRL_OFFSET, val16);
-+	val16 &= ~PCI_EXP_DEVCTL_RELAX_EN;
-+	err = pcie_capability_write_word(pdev, PCI_EXP_DEVCTL, val16);
- 	if (err)
- 		return pcibios_err_to_errno(err);
+ 	val16 &= ~PCI_EXP_DEVCTL_RELAX_EN;
+ 	err = pcie_capability_write_word(pdev, PCI_EXP_DEVCTL, val16);
+-	if (err)
+-		return pcibios_err_to_errno(err);
++	if (err) {
++		err = pcibios_err_to_errno(err);
++		goto err_disable_interrupts;
++	}
  
-diff --git a/drivers/dma/ioat/registers.h b/drivers/dma/ioat/registers.h
-index f55a5f92f1857..54cf0ad39887b 100644
---- a/drivers/dma/ioat/registers.h
-+++ b/drivers/dma/ioat/registers.h
-@@ -14,13 +14,6 @@
- #define IOAT_PCI_CHANERR_INT_OFFSET		0x180
- #define IOAT_PCI_CHANERRMASK_INT_OFFSET		0x184
+ 	if (ioat_dma->cap & IOAT_CAP_DPS)
+ 		writeb(ioat_pending_level + 1,
+ 		       ioat_dma->reg_base + IOAT_PREFETCH_LIMIT_OFFSET);
  
--/* PCIe config registers */
--
--/* EXPCAPID + N */
--#define IOAT_DEVCTRL_OFFSET			0x8
--/* relaxed ordering enable */
--#define IOAT_DEVCTRL_ROE			0x10
--
- /* MMIO Device Registers */
- #define IOAT_CHANCNT_OFFSET			0x00	/*  8-bit */
+ 	return 0;
++
++err_disable_interrupts:
++	ioat_disable_interrupts(ioat_dma);
++	dma_pool_destroy(ioat_dma->completion_pool);
++	return err;
+ }
  
+ static void ioat_shutdown(struct pci_dev *pdev)
 -- 
 2.43.0
 
