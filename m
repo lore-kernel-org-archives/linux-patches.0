@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48777142E8E;
-	Wed,  3 Jul 2024 10:51:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEB3171E70;
+	Wed,  3 Jul 2024 10:51:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003908; cv=none; b=EYTj2q60qCDUp53ljiMC0RXhFBv47dSvnI7a8CD7PXPabHcWlIRkEeSOV6svwrUTUYlYLOylbMlfKfn5t4V67cCazlb7endcrp9T0bVFp7G3UfEtrLIXIgR2NPHoABNP6g1HARalIpgOEOku9stSGZUX9GFFfvSOSWtJw+bb8no=
+	t=1720003911; cv=none; b=uY1d/Bqc+OqointGpZRRLYTNwifvxnyVs8OdU/eFzcqFIGMgnHVX4xenHBYcRjVoYe7/vxBq9I6Sn57iebr+oKIE9wYGT9Ahc+ozlQ/otPCtCY10KODOemfKxRw52mQ/j7m3TCF1wv43x0lReywTLDT1BFRFCIbiyCyle+LePGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003908; c=relaxed/simple;
-	bh=ejpKI254iS63CXCCUdPEvgSzFl5KBwKaiCKziIkKYZc=;
+	s=arc-20240116; t=1720003911; c=relaxed/simple;
+	bh=5nl4B9SM9KVitWpEYL7ZIikt8zdr0ZlOCxvsjWMaO3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hAzdd5i80Zv56SPgLyWulBnbDFOrb9w1Pq8HH64t5nPeY71CunqkgQ5VZ2THSfsPJxwFDZxWV/uuV9I6PY/ajU04GA8kMIjEoSH0XKPFavVWJRvwBKbx/sKzA2j30ZBQKivZ+csTPICQTCAzabslCV6zrybyG9asqS9+K9uIVRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nXEByKiw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dar6xCBMEdT/K+OHt+4OsyG8dwcKbKkDMwAD37P60kYJeAEO3ualBI8tX3OxnZR+23dw0fP5aOr1MXyHKIxhD5YwjmpnPA4sFg/DMJUIBghfs39ycnDjkaFKqQXLm8mLxrT5IRgHCv0Btxe51hHtLof9ulbqzQstr3alID9BMZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zhiwtMuZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nXEByKiw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8974C2BD10;
-	Wed,  3 Jul 2024 10:51:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zhiwtMuZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5685C2BD10;
+	Wed,  3 Jul 2024 10:51:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003908;
-	bh=ejpKI254iS63CXCCUdPEvgSzFl5KBwKaiCKziIkKYZc=;
+	s=korg; t=1720003911;
+	bh=5nl4B9SM9KVitWpEYL7ZIikt8zdr0ZlOCxvsjWMaO3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nXEByKiw0cd3P/kWq3FarnF70jwggGcPpT2s0v8bHRqu8hC3hN+Il33LufnXd3r9V
-	 xMGC6wZI74AUUedf9KiGyLi/l2f/I8e6qBG3Uy9VgxfAJI7LR26LfebptmKIqSYhVz
-	 UMnWfhXyoOQ28gX+f4kLihtl28Ocqw51Poex+fTs=
+	b=zhiwtMuZXV7jtI6u8PW4PSXx5PoK+4wnfChM/+h2p4x9AkXLS+Uerbp5AwfIe5pW8
+	 rxRmlEIBgrG3OvAZ9Dc6ki/HTzZ2kJ797hpHlc9U/uxJOKtFBoh/97jiC5yq5aU01K
+	 Vkn08NYTArXd9nSdRlhCeJ2+7JsA5LApfZUoiq5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@ti.com>,
+	Joao Paulo Goncalves <joao.goncalves@toradex.com>,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Jai Luthra <j-luthra@ti.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 029/189] ASoC: ti: davinci-mcasp: Handle missing required DT properties
-Date: Wed,  3 Jul 2024 12:38:10 +0200
-Message-ID: <20240703102842.607094279@linuxfoundation.org>
+Subject: [PATCH 5.4 030/189] ASoC: ti: davinci-mcasp: Fix race condition during probe
+Date: Wed,  3 Jul 2024 12:38:11 +0200
+Message-ID: <20240703102842.644108326@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -51,194 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@ti.com>
+From: Joao Paulo Goncalves <joao.goncalves@toradex.com>
 
-[ Upstream commit 1b4fb70e5b28a477478417a7958e0228460ffe68 ]
+[ Upstream commit d18ca8635db2f88c17acbdf6412f26d4f6aff414 ]
 
-McASP needs three required properties to be usable for audio:
-op-mode, tdm-slots and the serial-dir array.
+When using davinci-mcasp as CPU DAI with simple-card, there are some
+conditions that cause simple-card to finish registering a sound card before
+davinci-mcasp finishes registering all sound components. This creates a
+non-working sound card from userspace with no problem indication apart
+from not being able to play/record audio on a PCM stream. The issue
+arises during simultaneous probe execution of both drivers. Specifically,
+the simple-card driver, awaiting a CPU DAI, proceeds as soon as
+davinci-mcasp registers its DAI. However, this process can lead to the
+client mutex lock (client_mutex in soc-core.c) being held or davinci-mcasp
+being preempted before PCM DMA registration on davinci-mcasp finishes.
+This situation occurs when the probes of both drivers run concurrently.
+Below is the code path for this condition. To solve the issue, defer
+davinci-mcasp CPU DAI registration to the last step in the audio part of
+it. This way, simple-card CPU DAI parsing will be deferred until all
+audio components are registered.
 
-Instead of probing the driver even without the needed information we should
-make sure that all the parameters are provided for operation.
+Fail Code Path:
 
-The fact that McASP can act as a GPIO controller for it's pins complicates
-this a bit, but as a general rule we can:
-- we fail the probe if McASP is not configured to be used as gpiochip
-- we will not register the DAI (and PCM) if gpiochip is defined
+simple-card.c: probe starts
+simple-card.c: simple_dai_link_of: simple_parse_node(..,cpu,..) returns EPROBE_DEFER, no CPU DAI yet
+davinci-mcasp.c: probe starts
+davinci-mcasp.c: devm_snd_soc_register_component() register CPU DAI
+simple-card.c: probes again, finish CPU DAI parsing and call devm_snd_soc_register_card()
+simple-card.c: finish probe
+davinci-mcasp.c: *dma_pcm_platform_register() register PCM  DMA
+davinci-mcasp.c: probe finish
 
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
-Link: https://lore.kernel.org/r/20201106072551.689-5-peter.ujfalusi@ti.com
+Cc: stable@vger.kernel.org
+Fixes: 9fbd58cf4ab0 ("ASoC: davinci-mcasp: Choose PCM driver based on configured DMA controller")
+Signed-off-by: Joao Paulo Goncalves <joao.goncalves@toradex.com>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Reviewed-by: Jai Luthra <j-luthra@ti.com>
+Link: https://lore.kernel.org/r/20240417184138.1104774-1-jpaulo.silvagoncalves@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: d18ca8635db2 ("ASoC: ti: davinci-mcasp: Fix race condition during probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/ti/davinci-mcasp.c | 77 +++++++++++++++++++++++++++---------
- 1 file changed, 58 insertions(+), 19 deletions(-)
+ sound/soc/ti/davinci-mcasp.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/sound/soc/ti/davinci-mcasp.c b/sound/soc/ti/davinci-mcasp.c
-index 637c26cad2e6e..633cd7fd3dcf3 100644
+index 633cd7fd3dcf3..dc40b5c5d501e 100644
 --- a/sound/soc/ti/davinci-mcasp.c
 +++ b/sound/soc/ti/davinci-mcasp.c
-@@ -82,6 +82,9 @@ struct davinci_mcasp {
- 	struct snd_pcm_substream *substreams[2];
- 	unsigned int dai_fmt;
+@@ -2270,12 +2270,6 @@ static int davinci_mcasp_probe(struct platform_device *pdev)
  
-+	/* Audio can not be enabled due to missing parameter(s) */
-+	bool	missing_audio_param;
-+
- 	/* McASP specific data */
- 	int	tdm_slots;
- 	u32	tdm_mask[2];
-@@ -1723,6 +1726,17 @@ static int mcasp_reparent_fck(struct platform_device *pdev)
- 	return ret;
- }
- 
-+static bool davinci_mcasp_have_gpiochip(struct davinci_mcasp *mcasp)
-+{
-+#ifdef CONFIG_OF_GPIO
-+	if (mcasp->dev->of_node &&
-+	    of_property_read_bool(mcasp->dev->of_node, "gpio-controller"))
-+		return true;
-+#endif
-+
-+	return false;
-+}
-+
- static int davinci_mcasp_get_config(struct davinci_mcasp *mcasp,
- 				    struct platform_device *pdev)
- {
-@@ -1747,8 +1761,12 @@ static int davinci_mcasp_get_config(struct davinci_mcasp *mcasp,
- 		return -EINVAL;
- 	}
- 
--	if (of_property_read_u32(np, "op-mode", &val) == 0)
-+	if (of_property_read_u32(np, "op-mode", &val) == 0) {
- 		pdata->op_mode = val;
-+	} else {
-+		mcasp->missing_audio_param = true;
-+		goto out;
-+	}
- 
- 	if (of_property_read_u32(np, "tdm-slots", &val) == 0) {
- 		if (val < 2 || val > 32) {
-@@ -1757,6 +1775,9 @@ static int davinci_mcasp_get_config(struct davinci_mcasp *mcasp,
- 		}
- 
- 		pdata->tdm_slots = val;
-+	} else if (pdata->op_mode == DAVINCI_MCASP_IIS_MODE) {
-+		mcasp->missing_audio_param = true;
-+		goto out;
- 	}
- 
- 	of_serial_dir32 = of_get_property(np, "serial-dir", &val);
-@@ -1773,6 +1794,9 @@ static int davinci_mcasp_get_config(struct davinci_mcasp *mcasp,
- 
- 		pdata->num_serializer = val;
- 		pdata->serial_dir = of_serial_dir;
-+	} else {
-+		mcasp->missing_audio_param = true;
-+		goto out;
- 	}
- 
- 	if (of_property_read_u32(np, "tx-num-evt", &val) == 0)
-@@ -1798,6 +1822,16 @@ static int davinci_mcasp_get_config(struct davinci_mcasp *mcasp,
- out:
- 	mcasp->pdata = pdata;
- 
-+	if (mcasp->missing_audio_param) {
-+		if (davinci_mcasp_have_gpiochip(mcasp)) {
-+			dev_dbg(&pdev->dev, "Missing DT parameter(s) for audio\n");
-+			return 0;
-+		}
-+
-+		dev_err(&pdev->dev, "Insufficient DT parameter(s)\n");
-+		return -ENODEV;
-+	}
-+
- 	mcasp->op_mode = pdata->op_mode;
- 	/* sanity check for tdm slots parameter */
- 	if (mcasp->op_mode == DAVINCI_MCASP_IIS_MODE) {
-@@ -2044,7 +2078,7 @@ static const struct gpio_chip davinci_mcasp_template_chip = {
- 
- static int davinci_mcasp_init_gpiochip(struct davinci_mcasp *mcasp)
- {
--	if (!of_property_read_bool(mcasp->dev->of_node, "gpio-controller"))
-+	if (!davinci_mcasp_have_gpiochip(mcasp))
- 		return 0;
- 
- 	mcasp->gpio_chip = davinci_mcasp_template_chip;
-@@ -2083,11 +2117,6 @@ static int davinci_mcasp_probe(struct platform_device *pdev)
- 	if (!mcasp)
- 		return	-ENOMEM;
- 
--	mcasp->dev = &pdev->dev;
--	ret = davinci_mcasp_get_config(mcasp, pdev);
--	if (ret)
--		return ret;
--
- 	mem = platform_get_resource_byname(pdev, IORESOURCE_MEM, "mpu");
- 	if (!mem) {
- 		dev_warn(mcasp->dev,
-@@ -2103,8 +2132,23 @@ static int davinci_mcasp_probe(struct platform_device *pdev)
- 	if (IS_ERR(mcasp->base))
- 		return PTR_ERR(mcasp->base);
- 
-+	dev_set_drvdata(&pdev->dev, mcasp);
- 	pm_runtime_enable(&pdev->dev);
- 
-+	mcasp->dev = &pdev->dev;
-+	ret = davinci_mcasp_get_config(mcasp, pdev);
-+	if (ret)
-+		goto err;
-+
-+	/* All PINS as McASP */
-+	pm_runtime_get_sync(mcasp->dev);
-+	mcasp_set_reg(mcasp, DAVINCI_MCASP_PFUNC_REG, 0x00000000);
-+	pm_runtime_put(mcasp->dev);
-+
-+	/* Skip audio related setup code if the configuration is not adequat */
-+	if (mcasp->missing_audio_param)
-+		goto no_audio;
-+
- 	irq = platform_get_irq_byname_optional(pdev, "common");
- 	if (irq > 0) {
- 		irq_name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "%s_common",
-@@ -2224,19 +2268,8 @@ static int davinci_mcasp_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto err;
- 
--	dev_set_drvdata(&pdev->dev, mcasp);
--
  	mcasp_reparent_fck(pdev);
  
--	/* All PINS as McASP */
--	pm_runtime_get_sync(mcasp->dev);
--	mcasp_set_reg(mcasp, DAVINCI_MCASP_PFUNC_REG, 0x00000000);
--	pm_runtime_put(mcasp->dev);
+-	ret = devm_snd_soc_register_component(&pdev->dev, &davinci_mcasp_component,
+-					      &davinci_mcasp_dai[mcasp->op_mode], 1);
 -
--	ret = davinci_mcasp_init_gpiochip(mcasp);
--	if (ret)
+-	if (ret != 0)
 -		goto err;
 -
- 	ret = devm_snd_soc_register_component(&pdev->dev, &davinci_mcasp_component,
- 					      &davinci_mcasp_dai[mcasp->op_mode], 1);
- 
-@@ -2263,8 +2296,14 @@ static int davinci_mcasp_probe(struct platform_device *pdev)
+ 	ret = davinci_mcasp_get_dma_type(mcasp);
+ 	switch (ret) {
+ 	case PCM_EDMA:
+@@ -2296,6 +2290,12 @@ static int davinci_mcasp_probe(struct platform_device *pdev)
  		goto err;
  	}
  
--	return 0;
-+no_audio:
-+	ret = davinci_mcasp_init_gpiochip(mcasp);
-+	if (ret) {
-+		dev_err(&pdev->dev, "gpiochip registration failed: %d\n", ret);
++	ret = devm_snd_soc_register_component(&pdev->dev, &davinci_mcasp_component,
++					      &davinci_mcasp_dai[mcasp->op_mode], 1);
++
++	if (ret != 0)
 +		goto err;
-+	}
- 
-+	return 0;
- err:
- 	pm_runtime_disable(&pdev->dev);
- 	return ret;
++
+ no_audio:
+ 	ret = davinci_mcasp_init_gpiochip(mcasp);
+ 	if (ret) {
 -- 
 2.43.0
 
