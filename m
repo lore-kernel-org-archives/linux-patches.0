@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4B417DA3A;
-	Wed,  3 Jul 2024 11:12:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA9317DA3A;
+	Wed,  3 Jul 2024 11:12:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005144; cv=none; b=aWi/RtoxXAZsq3kocFPvxzi8Zq84eQT9v+gLXX1EcU2g/OA0pPSSvwz3J4QB7JVOERGfYVj2VH3B4X/B+atiSYmPgv+36vu5CjBXA6PLhoiMTv7Fp+ieKzjsp5jqM1sgVHTc2CgvPXfZ281abvzTL7AuO34YRM9bLV6scF9FP7s=
+	t=1720005146; cv=none; b=VI/aKT2AbjUEFhSHh0mSxVs5BgzQ8HES1OA7fXvK/RqoU+dqLwDQkQ7+t1aKdRacuQXFsBs0r+VPpcpB0Fo09SGjnse/RnREzaoD1q08yspTMgT+MVByv74eAW/t0l+GA0uw0qxKfif5Ta5dOfPO61BKw4Hw1psok9mWpfakUlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005144; c=relaxed/simple;
-	bh=4eNpIL0iCS6CjnaVPXMpuWY0eUHwHm0VtIZ00tgsRNU=;
+	s=arc-20240116; t=1720005146; c=relaxed/simple;
+	bh=kf3JHf/O7e5zaV3m/NNUo0JY1S7lcLCxh/ixOprAF0U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T0Te1i1DB51cZs49FqdgeKVQP1/LCENGjQeV9qTOzB7arNdh2e4/bGHjsPMl/eCRkTXMSZvuGWINP3Mktt82zoqlLi6VZCTQmTq5EM4ApWDpaluRJr2PczWL5ReI1I+n1nkughnazhrLLrq2bNWy11A5MFsDEJdWrU9XMeDFiRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UrfSHPSX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CM8gGvBVS5hCfBhBv0TrSwintF1fVWVG479xpqAsW65/MEfYRDSedigyZYtiSsFdedQTn85IifcCrxITYa00zSGmdAaFU8mKwUsrCi4aioqrYEGJIMy5+ZSe0QNSG3wo6STBtJ74W7LnLmeRPG6D5YMJzgZbzmLxDbcFyTu6I1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E9SRWcIR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UrfSHPSX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77CF7C2BD10;
-	Wed,  3 Jul 2024 11:12:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E9SRWcIR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6150BC2BD10;
+	Wed,  3 Jul 2024 11:12:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005143;
-	bh=4eNpIL0iCS6CjnaVPXMpuWY0eUHwHm0VtIZ00tgsRNU=;
+	s=korg; t=1720005146;
+	bh=kf3JHf/O7e5zaV3m/NNUo0JY1S7lcLCxh/ixOprAF0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UrfSHPSXVJniTm+TSmAJDVBirhXjxyvjn+nE788qg8wRf8lvJNjcPEQY8iSNG0/Un
-	 /nNlpDDbVAAws/u3IktS5wdMGKAjM7I1chX5GpIP8NJQYx5KfR7lQxhw7003oqNrDy
-	 oCwQHbKFP2kWn19Iigz8LRwHAFJhhCxPZdD9Epo4=
+	b=E9SRWcIRqUMCPO4Rp+DfZXEhpPgE2GHQDRlGb7fbAHfb49lVnTVYGOIQoN0QY+J7t
+	 zJthuLWwew8i16KhKqIspfwtQTmHQXgoYsIUjYyTrM1rphzL8oNE7dOf4nIS3khr7R
+	 g7+1KSd7D8VQw3e4iptynELB6CAozwRBt8Gqsfv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Udit Kumar <u-kumar1@ti.com>
-Subject: [PATCH 5.10 258/290] serial: 8250_omap: Implementation of Errata i2310
-Date: Wed,  3 Jul 2024 12:40:39 +0200
-Message-ID: <20240703102913.891232751@linuxfoundation.org>
+	Jaime Liao <jaimeliao@mxic.com.tw>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 5.10 276/290] mtd: spinand: macronix: Add support for serial NAND flash
+Date: Wed,  3 Jul 2024 12:40:57 +0200
+Message-ID: <20240703102914.574673030@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -49,67 +50,173 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Udit Kumar <u-kumar1@ti.com>
+From: Jaime Liao <jaimeliao@mxic.com.tw>
 
-commit 9d141c1e615795eeb93cd35501ad144ee997a826 upstream.
+commit c374839f9b4475173e536d1eaddff45cb481dbdf upstream.
 
-As per Errata i2310[0], Erroneous timeout can be triggered,
-if this Erroneous interrupt is not cleared then it may leads
-to storm of interrupts, therefore apply Errata i2310 solution.
+Macronix NAND Flash devices are available in different configurations
+and densities.
 
-[0] https://www.ti.com/lit/pdf/sprz536 page 23
+MX"35" means SPI NAND
+MX35"LF"/"UF" , LF means 3V and UF meands 1.8V
+MX35LF"2G" , 2G means 2Gbits
+MX35LF2G"E4"/"24"/"14",
+E4 means internal ECC and Quad I/O(x4)
+24 means 8-bit ecc requirement and Quad I/O(x4)
+14 means 4-bit ecc requirement and Quad I/O(x4)
 
-Fixes: b67e830d38fa ("serial: 8250: 8250_omap: Fix possible interrupt storm on K3 SoCs")
-Cc: stable@vger.kernel.org
-Signed-off-by: Udit Kumar <u-kumar1@ti.com>
-Link: https://lore.kernel.org/r/20240619105903.165434-1-u-kumar1@ti.com
+MX35LF2G14AC is 3V 2Gbit serial NAND flash device
+(without on-die ECC)
+https://www.mxic.com.tw/Lists/Datasheet/Attachments/7926/MX35LF2G14AC,%203V,%202Gb,%20v1.1.pdf
+
+MX35UF4G24AD is 1.8V 4Gbit serial NAND flash device
+(without on-die ECC)
+https://www.mxic.com.tw/Lists/Datasheet/Attachments/7980/MX35UF4G24AD,%201.8V,%204Gb,%20v0.00.pdf
+
+MX35UF4GE4AD/MX35UF2GE4AD are 1.8V 4G/2Gbit serial
+NAND flash device with 8-bit on-die ECC
+https://www.mxic.com.tw/Lists/Datasheet/Attachments/7983/MX35UF4GE4AD,%201.8V,%204Gb,%20v0.00.pdf
+
+MX35UF2GE4AC/MX35UF1GE4AC are 1.8V 2G/1Gbit serial
+NAND flash device with 8-bit on-die ECC
+https://www.mxic.com.tw/Lists/Datasheet/Attachments/7974/MX35UF2GE4AC,%201.8V,%202Gb,%20v1.0.pdf
+
+MX35UF2G14AC/MX35UF1G14AC are 1.8V 2G/1Gbit serial
+NAND flash device (without on-die ECC)
+https://www.mxic.com.tw/Lists/Datasheet/Attachments/7931/MX35UF2G14AC,%201.8V,%202Gb,%20v1.1.pdf
+
+Validated via normal(default) and QUAD mode by read, erase, read back,
+on Xilinx Zynq PicoZed FPGA board which included Macronix
+SPI Host(drivers/spi/spi-mxic.c).
+
+Signed-off-by: Jaime Liao <jaimeliao@mxic.com.tw>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/1621475108-22523-1-git-send-email-jaimeliao@mxic.com.tw
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_omap.c |   25 ++++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ drivers/mtd/nand/spi/macronix.c |  112 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 112 insertions(+)
 
---- a/drivers/tty/serial/8250/8250_omap.c
-+++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -164,6 +164,10 @@ static void uart_write(struct omap8250_p
- 	writel(val, priv->membase + (reg << OMAP_UART_REGSHIFT));
- }
- 
-+/* Timeout low and High */
-+#define UART_OMAP_TO_L                 0x26
-+#define UART_OMAP_TO_H                 0x27
+--- a/drivers/mtd/nand/spi/macronix.c
++++ b/drivers/mtd/nand/spi/macronix.c
+@@ -159,6 +159,118 @@ static const struct spinand_info macroni
+ 		     0 /*SPINAND_HAS_QE_BIT*/,
+ 		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
+ 				     mx35lf1ge4ab_ecc_get_status)),
 +
- /*
-  * Called on runtime PM resume path from omap8250_restore_regs(), and
-  * omap8250_set_mctrl().
-@@ -647,13 +651,24 @@ static irqreturn_t omap8250_irq(int irq,
- 
- 	/*
- 	 * On K3 SoCs, it is observed that RX TIMEOUT is signalled after
--	 * FIFO has been drained, in which case a dummy read of RX FIFO
--	 * is required to clear RX TIMEOUT condition.
-+	 * FIFO has been drained or erroneously.
-+	 * So apply solution of Errata i2310 as mentioned in
-+	 * https://www.ti.com/lit/pdf/sprz536
- 	 */
- 	if (priv->habit & UART_RX_TIMEOUT_QUIRK &&
--	    (iir & UART_IIR_RX_TIMEOUT) == UART_IIR_RX_TIMEOUT &&
--	    serial_port_in(port, UART_OMAP_RX_LVL) == 0) {
--		serial_port_in(port, UART_RX);
-+		(iir & UART_IIR_RX_TIMEOUT) == UART_IIR_RX_TIMEOUT) {
-+		unsigned char efr2, timeout_h, timeout_l;
++	SPINAND_INFO("MX35LF2G14AC",
++		     SPINAND_ID(SPINAND_READID_METHOD_OPCODE_DUMMY, 0x20),
++		     NAND_MEMORG(1, 2048, 64, 64, 2048, 40, 2, 1, 1),
++		     NAND_ECCREQ(4, 512),
++		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
++					      &write_cache_variants,
++					      &update_cache_variants),
++		     SPINAND_HAS_QE_BIT,
++		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
++				     mx35lf1ge4ab_ecc_get_status)),
++	SPINAND_INFO("MX35UF4G24AD",
++		     SPINAND_ID(SPINAND_READID_METHOD_OPCODE_DUMMY, 0xb5),
++		     NAND_MEMORG(1, 4096, 256, 64, 2048, 40, 2, 1, 1),
++		     NAND_ECCREQ(8, 512),
++		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
++					      &write_cache_variants,
++					      &update_cache_variants),
++		     SPINAND_HAS_QE_BIT,
++		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
++				     mx35lf1ge4ab_ecc_get_status)),
++	SPINAND_INFO("MX35UF4GE4AD",
++		     SPINAND_ID(SPINAND_READID_METHOD_OPCODE_DUMMY, 0xb7),
++		     NAND_MEMORG(1, 4096, 256, 64, 2048, 40, 1, 1, 1),
++		     NAND_ECCREQ(8, 512),
++		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
++					      &write_cache_variants,
++					      &update_cache_variants),
++		     SPINAND_HAS_QE_BIT,
++		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
++				     mx35lf1ge4ab_ecc_get_status)),
++	SPINAND_INFO("MX35UF2G14AC",
++		     SPINAND_ID(SPINAND_READID_METHOD_OPCODE_DUMMY, 0xa0),
++		     NAND_MEMORG(1, 2048, 64, 64, 2048, 40, 2, 1, 1),
++		     NAND_ECCREQ(4, 512),
++		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
++					      &write_cache_variants,
++					      &update_cache_variants),
++		     SPINAND_HAS_QE_BIT,
++		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
++				     mx35lf1ge4ab_ecc_get_status)),
++	SPINAND_INFO("MX35UF2G24AD",
++		     SPINAND_ID(SPINAND_READID_METHOD_OPCODE_DUMMY, 0xa4),
++		     NAND_MEMORG(1, 2048, 128, 64, 2048, 40, 2, 1, 1),
++		     NAND_ECCREQ(8, 512),
++		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
++					      &write_cache_variants,
++					      &update_cache_variants),
++		     SPINAND_HAS_QE_BIT,
++		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
++				     mx35lf1ge4ab_ecc_get_status)),
++	SPINAND_INFO("MX35UF2GE4AD",
++		     SPINAND_ID(SPINAND_READID_METHOD_OPCODE_DUMMY, 0xa6),
++		     NAND_MEMORG(1, 2048, 128, 64, 2048, 40, 1, 1, 1),
++		     NAND_ECCREQ(8, 512),
++		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
++					      &write_cache_variants,
++					      &update_cache_variants),
++		     SPINAND_HAS_QE_BIT,
++		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
++				     mx35lf1ge4ab_ecc_get_status)),
++	SPINAND_INFO("MX35UF2GE4AC",
++		     SPINAND_ID(SPINAND_READID_METHOD_OPCODE_DUMMY, 0xa2),
++		     NAND_MEMORG(1, 2048, 64, 64, 2048, 40, 1, 1, 1),
++		     NAND_ECCREQ(4, 512),
++		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
++					      &write_cache_variants,
++					      &update_cache_variants),
++		     SPINAND_HAS_QE_BIT,
++		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
++				     mx35lf1ge4ab_ecc_get_status)),
++	SPINAND_INFO("MX35UF1G14AC",
++		     SPINAND_ID(SPINAND_READID_METHOD_OPCODE_DUMMY, 0x90),
++		     NAND_MEMORG(1, 2048, 64, 64, 1024, 20, 1, 1, 1),
++		     NAND_ECCREQ(4, 512),
++		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
++					      &write_cache_variants,
++					      &update_cache_variants),
++		     SPINAND_HAS_QE_BIT,
++		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
++				     mx35lf1ge4ab_ecc_get_status)),
++	SPINAND_INFO("MX35UF1G24AD",
++		     SPINAND_ID(SPINAND_READID_METHOD_OPCODE_DUMMY, 0x94),
++		     NAND_MEMORG(1, 2048, 128, 64, 1024, 20, 1, 1, 1),
++		     NAND_ECCREQ(8, 512),
++		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
++					      &write_cache_variants,
++					      &update_cache_variants),
++		     SPINAND_HAS_QE_BIT,
++		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
++				     mx35lf1ge4ab_ecc_get_status)),
++	SPINAND_INFO("MX35UF1GE4AD",
++		     SPINAND_ID(SPINAND_READID_METHOD_OPCODE_DUMMY, 0x96),
++		     NAND_MEMORG(1, 2048, 128, 64, 1024, 20, 1, 1, 1),
++		     NAND_ECCREQ(8, 512),
++		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
++					      &write_cache_variants,
++					      &update_cache_variants),
++		     SPINAND_HAS_QE_BIT,
++		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
++				     mx35lf1ge4ab_ecc_get_status)),
++	SPINAND_INFO("MX35UF1GE4AC",
++		     SPINAND_ID(SPINAND_READID_METHOD_OPCODE_DUMMY, 0x92),
++		     NAND_MEMORG(1, 2048, 64, 64, 1024, 20, 1, 1, 1),
++		     NAND_ECCREQ(4, 512),
++		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
++					      &write_cache_variants,
++					      &update_cache_variants),
++		     SPINAND_HAS_QE_BIT,
++		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
++				     mx35lf1ge4ab_ecc_get_status)),
 +
-+		efr2 = serial_in(up, UART_OMAP_EFR2);
-+		timeout_h = serial_in(up, UART_OMAP_TO_H);
-+		timeout_l = serial_in(up, UART_OMAP_TO_L);
-+		serial_out(up, UART_OMAP_TO_H, 0xFF);
-+		serial_out(up, UART_OMAP_TO_L, 0xFF);
-+		serial_out(up, UART_OMAP_EFR2, UART_OMAP_EFR2_TIMEOUT_BEHAVE);
-+		serial_in(up, UART_IIR);
-+		serial_out(up, UART_OMAP_EFR2, efr2);
-+		serial_out(up, UART_OMAP_TO_H, timeout_h);
-+		serial_out(up, UART_OMAP_TO_L, timeout_l);
- 	}
+ };
  
- 	/* Stop processing interrupts on input overrun */
+ static const struct spinand_manufacturer_ops macronix_spinand_manuf_ops = {
 
 
