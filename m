@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6DE176242;
-	Wed,  3 Jul 2024 10:48:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28BE17625B;
+	Wed,  3 Jul 2024 10:48:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003732; cv=none; b=Igc+mWkA9/f/XT7jt2bbARjDvKHcV6uMnuFIY+tKTeWsmDJY2YBq8ZIwJB9SARAv/w1B+3ngl/y0aMzeN6UZlum4mqBF0d3p1Eu62wH02FE9vmOI31lAI78upJSaadYzsUJ43ztZMFkgmVVHpQ0DwEVQwG+7FVHEANMP5arDFu4=
+	t=1720003735; cv=none; b=LIopyvStOfsZJe9N20JCcW2Zme1lo9HycgJjXCzxMN/nQoAakKiAQ58ZBU/kqhSbwwJRxwVdX8xwZ94tiFHb8rsOezZHloF9tIWs3xVp0TtA28As1yvAnoZ27RLaB4r3kyhlODCcsTJUZPqjtkxbIlr/6D5yWMQzKSsRsHkGwL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003732; c=relaxed/simple;
-	bh=/9TOwmFv931ym6RR3oVRGjpZM7IM9HckbgozZlYrGSY=;
+	s=arc-20240116; t=1720003735; c=relaxed/simple;
+	bh=B+2GzjjAnSePjaCZUkhiBpjWldo37cO626kN6ebRGog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cWiVh6J6W+Dqb948XwP1f5jiZPyUS34VUeJESZm73iKljqENJol3h64N+JQ//6VZsr+yL5XvYhcMXgdYe58JwTyxxygCdIoBZEI238oA7af+ux42OKFy06B/SuwE+Cod2wRfVJZMURKE1qSXfMxQ5DLmfn+VSAj8xANHNzpAxqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEJ6acgz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=otXHkmLl8eYKQrcR1S5QUrapebcx4kYG/YMZQSIUm/Fy0fZVhkohZAtfeAxZPtPpRRdW5ZNX20izDU2hOyRGi55HpSnyV1dNBiwlMNy3b1APx8QMG9EirCSmZ71a1I7eniScQw8iMrMHgJ4l1JXqcKhx+NYFiLvOKg0KJC2AXLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ou1x+Eu+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEJ6acgz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 323CCC2BD10;
-	Wed,  3 Jul 2024 10:48:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ou1x+Eu+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2865AC2BD10;
+	Wed,  3 Jul 2024 10:48:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003731;
-	bh=/9TOwmFv931ym6RR3oVRGjpZM7IM9HckbgozZlYrGSY=;
+	s=korg; t=1720003734;
+	bh=B+2GzjjAnSePjaCZUkhiBpjWldo37cO626kN6ebRGog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kEJ6acgzVP4rU/ev09bsTqGZFJC3VeU3qDhpcmGzoeXGBVIC5oy2cCbpaCbh4mpQ3
-	 fo2sRckq2TTGLf0Y1SssesXTnI+JaIWsrCNaU7IR6oiV5Moyx4ZpI7+shQgRtr3/JO
-	 tk47RxKWvZHsRne93ijxgUzNt+Ewy60UfTPkHNXU=
+	b=Ou1x+Eu+38O4eJF4w0yQEccZ7FNIsHfPwqit3dOyjjjZdGEFGK8ZQ5Yw/HeBUhJnH
+	 nEb15iE2eCPQd0fWa7LNZXxptT6/FRBBoSecw4moHHq45buyRqlGaTTITDIQL2Ypht
+	 Ma5nh+yn6bOgFbuSvAhkTLD0kxSDhtnn/WRn6sXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 4.19 129/139] hexagon: fix fadvise64_64 calling conventions
-Date: Wed,  3 Jul 2024 12:40:26 +0200
-Message-ID: <20240703102835.307134046@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Lyude Paul <lyude@redhat.com>
+Subject: [PATCH 4.19 130/139] drm/nouveau/dispnv04: fix null pointer dereference in nv17_tv_get_ld_modes
+Date: Wed,  3 Jul 2024 12:40:27 +0200
+Message-ID: <20240703102835.345639403@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -49,52 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 896842284c6ccba25ec9d78b7b6e62cdd507c083 upstream.
+commit 66edf3fb331b6c55439b10f9862987b0916b3726 upstream.
 
-fadvise64_64() has two 64-bit arguments at the wrong alignment
-for hexagon, which turns them into a 7-argument syscall that is
-not supported by Linux.
+In nv17_tv_get_ld_modes(), the return value of drm_mode_duplicate() is
+assigned to mode, which will lead to a possible NULL pointer dereference
+on failure of drm_mode_duplicate(). Add a check to avoid npd.
 
-The downstream musl port for hexagon actually asks for a 6-argument
-version the same way we do it on arm, csky, powerpc, so make the
-kernel do it the same way to avoid having to change both.
-
-Link: https://github.com/quic/musl/blob/hexagon/arch/hexagon/syscall_arch.h#L78
 Cc: stable@vger.kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240625081828.2620794-1-make24@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/hexagon/include/asm/syscalls.h |    6 ++++++
- arch/hexagon/kernel/syscalltab.c    |    7 +++++++
- 2 files changed, 13 insertions(+)
- create mode 100644 arch/hexagon/include/asm/syscalls.h
+ drivers/gpu/drm/nouveau/dispnv04/tvnv17.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- /dev/null
-+++ b/arch/hexagon/include/asm/syscalls.h
-@@ -0,0 +1,6 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+
-+#include <asm-generic/syscalls.h>
-+
-+asmlinkage long sys_hexagon_fadvise64_64(int fd, int advice,
-+	                                  u32 a2, u32 a3, u32 a4, u32 a5);
---- a/arch/hexagon/kernel/syscalltab.c
-+++ b/arch/hexagon/kernel/syscalltab.c
-@@ -27,6 +27,13 @@
- #undef __SYSCALL
- #define __SYSCALL(nr, call) [nr] = (call),
+--- a/drivers/gpu/drm/nouveau/dispnv04/tvnv17.c
++++ b/drivers/gpu/drm/nouveau/dispnv04/tvnv17.c
+@@ -208,6 +208,8 @@ static int nv17_tv_get_ld_modes(struct d
+ 		struct drm_display_mode *mode;
  
-+SYSCALL_DEFINE6(hexagon_fadvise64_64, int, fd, int, advice,
-+		SC_ARG64(offset), SC_ARG64(len))
-+{
-+	return ksys_fadvise64_64(fd, SC_VAL64(loff_t, offset), SC_VAL64(loff_t, len), advice);
-+}
-+#define sys_fadvise64_64 sys_hexagon_fadvise64_64
-+
- void *sys_call_table[__NR_syscalls] = {
- #include <asm/unistd.h>
- };
+ 		mode = drm_mode_duplicate(encoder->dev, tv_mode);
++		if (!mode)
++			continue;
+ 
+ 		mode->clock = tv_norm->tv_enc_mode.vrefresh *
+ 			mode->htotal / 1000 *
 
 
