@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6644D13B280;
-	Wed,  3 Jul 2024 11:26:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF20713B280;
+	Wed,  3 Jul 2024 11:27:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006019; cv=none; b=IS5vkLRzSXMYc1xSsdctWkJyBhq3Kbwpu+gRs8mHabLtuGb0FU75kwoWn1EERkLQgZrzLA9lots3SQQ7eA6HYVp2tCAVn2o2d3VCKpcY9kvl06jzwDr+hkCOWeg0dEEN/HLiPxCBtQ6rqJo3izDtl1DnvaG0cxZquZN07drUdUw=
+	t=1720006022; cv=none; b=YeRYAx70G7qWoQVkgjxkv3ve2p8pANMqDh70YWZUQ3f/Pme95wi/b/F8ejA93QgUuTZk0QEBwAvj3cQ506IPX8AFAq6AqSX321pZx2uO2eNKepJRK6Ejn1gl8NwUJCiro2pOScAPX7HGqTV2cT9SDxCS53fD3qbIXmITZmusISE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006019; c=relaxed/simple;
-	bh=x4rRBSgz6ay2Acrv1uQ/8W3WD2PAvA2sn/axOLi4pg4=;
+	s=arc-20240116; t=1720006022; c=relaxed/simple;
+	bh=mx+M/kBojnvjrnv/YHzWPKH5cbGl6hKSbYxqG41VEHc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hWfh8Ne2vvJqbsHz8665CQMsFjmMH2Mnh0ktCHzmZT2eXHDPI1/r2j2KVnvsPDZlOh3YOv7sQUZgWZTHiMpNR5yBfy+5I8fGPThzxHJG6XdJFuYbo2EpxZzhNyNPcD23vvUCAEJcQXGwGpSDjVIcbiUvAZeVzcz7yZjYfof7RhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oTO4bVXS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pQFbEmyZsfcMGXAdpNEbQw8W8q2fn8PyRNHFZ1yBUW2yh4jA7KvDcAH7PfI1LKl+r6DaIJ9aNBb67bDQOCgGB7yHZf7dMzku5GlwKGbUkYvC5u3/5VGVsGObi1hpKKI2OIstgas6ViiZ7mm2NkpMBKU6agIaNCVm7aOpFlX2Oc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vr99wkUo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oTO4bVXS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8200BC2BD10;
-	Wed,  3 Jul 2024 11:26:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vr99wkUo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73D42C2BD10;
+	Wed,  3 Jul 2024 11:27:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006018;
-	bh=x4rRBSgz6ay2Acrv1uQ/8W3WD2PAvA2sn/axOLi4pg4=;
+	s=korg; t=1720006021;
+	bh=mx+M/kBojnvjrnv/YHzWPKH5cbGl6hKSbYxqG41VEHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oTO4bVXSCcRqD0/JmOpwuTqsXaFmhleQ7MExE/CU3qG2keXeELLv9ew0K045MQEMc
-	 8+K9sYHPoVnrDK5KysvRhiyLuf8FnazqKT/dUDd+JDKFB9iHZbs4bwpY7UjRv785Td
-	 uSGttJiVyl9vfAsQ79N3m/y/4EO1DCSQ244XJ8bc=
+	b=Vr99wkUoN9krE2tIfeBGxoaZGS0NdzxoSa0UhrR8vy1kDqqe/8tmaKtJM1Fom85zm
+	 /taWTDjzu9KsXONJTmnVsvKg/U+BLuNFyVTU7lzs+pze6qLPIgpr+KMb7mqs+sxieM
+	 5Ye3WWjUfwND7Y2JDw30/hM7BdXqFvZ5UIzsBvW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Enguerrand de Ribaucourt <enguerrand.de-ribaucourt@savoirfairelinux.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 273/356] net: phy: micrel: add Microchip KSZ 9477 to the device table
-Date: Wed,  3 Jul 2024 12:40:09 +0200
-Message-ID: <20240703102923.442236278@linuxfoundation.org>
+Subject: [PATCH 5.15 247/356] Revert "kheaders: substituting --sort in archive creation"
+Date: Wed,  3 Jul 2024 12:39:43 +0200
+Message-ID: <20240703102922.460597152@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -52,34 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Enguerrand de Ribaucourt <enguerrand.de-ribaucourt@savoirfairelinux.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 54a4e5c16382e871c01dd82b47e930fdce30406b ]
+[ Upstream commit 49c386ebbb43394ff4773ce24f726f6afc4c30c8 ]
 
-PHY_ID_KSZ9477 was supported but not added to the device table passed to
-MODULE_DEVICE_TABLE.
+This reverts commit 700dea5a0bea9f64eba89fae7cb2540326fdfdc1.
 
-Fixes: fc3973a1fa09 ("phy: micrel: add Microchip KSZ 9477 Switch PHY support")
-Signed-off-by: Enguerrand de Ribaucourt <enguerrand.de-ribaucourt@savoirfairelinux.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+The reason for that commit was --sort=ORDER introduced in
+tar 1.28 (2014). More than 3 years have passed since then.
+
+Requiring GNU tar 1.28 should be fine now because we require
+GCC 5.1 (2015).
+
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
+Stable-dep-of: 3bd27a847a3a ("kheaders: explicitly define file modes for archived headers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/micrel.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/gen_kheaders.sh | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
-index 59d05a1672ece..f1a6cc7ccf1a3 100644
---- a/drivers/net/phy/micrel.c
-+++ b/drivers/net/phy/micrel.c
-@@ -1798,6 +1798,7 @@ static struct mdio_device_id __maybe_unused micrel_tbl[] = {
- 	{ PHY_ID_KSZ8081, MICREL_PHY_ID_MASK },
- 	{ PHY_ID_KSZ8873MLL, MICREL_PHY_ID_MASK },
- 	{ PHY_ID_KSZ886X, MICREL_PHY_ID_MASK },
-+	{ PHY_ID_KSZ9477, MICREL_PHY_ID_MASK },
- 	{ PHY_ID_LAN8814, MICREL_PHY_ID_MASK },
- 	{ }
- };
+diff --git a/kernel/gen_kheaders.sh b/kernel/gen_kheaders.sh
+index 1966a749e0d96..5ab483a3ee5a5 100755
+--- a/kernel/gen_kheaders.sh
++++ b/kernel/gen_kheaders.sh
+@@ -81,12 +81,9 @@ find $cpio_dir -type f -print0 |
+ 	xargs -0 -P8 -n1 perl -pi -e 'BEGIN {undef $/;}; s/\/\*((?!SPDX).)*?\*\///smg;'
+ 
+ # Create archive and try to normalize metadata for reproducibility.
+-# For compatibility with older versions of tar, files are fed to tar
+-# pre-sorted, as --sort=name might not be available.
+-find $cpio_dir -printf "./%P\n" | LC_ALL=C sort | \
+-    tar "${KBUILD_BUILD_TIMESTAMP:+--mtime=$KBUILD_BUILD_TIMESTAMP}" \
+-    --owner=0 --group=0 --numeric-owner --no-recursion \
+-    -I $XZ -cf $tarfile -C $cpio_dir/ -T - > /dev/null
++tar "${KBUILD_BUILD_TIMESTAMP:+--mtime=$KBUILD_BUILD_TIMESTAMP}" \
++    --owner=0 --group=0 --sort=name --numeric-owner \
++    -I $XZ -cf $tarfile -C $cpio_dir/ . > /dev/null
+ 
+ echo $headers_md5 > kernel/kheaders.md5
+ echo "$this_file_md5" >> kernel/kheaders.md5
 -- 
 2.43.0
 
