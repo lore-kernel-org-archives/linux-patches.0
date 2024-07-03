@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774DD142903;
-	Wed,  3 Jul 2024 11:15:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF3A1DFC7;
+	Wed,  3 Jul 2024 11:15:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005321; cv=none; b=OpxA9Nn52Ip/nSd2fchq17OGfRzH/S5vPy7sgxZrzKh4U57F6gOu3mKxE3Ik3wpy9YAob5lV+JyGPi+QNQ25oTbEVuMBGDAH6NcCRKKzdszIoEz1NrSteGW8dIfV1XfzbYqVN4f7gEcSTIDTLUKwszImtSlKTj1gwlHeAcKfZxU=
+	t=1720005324; cv=none; b=tcmBPM2UMICsSmAUnLtZUBJErCd5dH/KmH4uE7fnxdlJVmujF6vfj4U8LaqGP63U5kas2NhkvCs2Jv7gbLMR4JuX8Bs/S4z3u0pm768L+wMPudguqkrZCy/i/ssjIvrKlYr22m6x6pDa1whRP31JgwmiBDlfWSUZUWCufiqKBsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005321; c=relaxed/simple;
-	bh=1vYUxLgOu7AfkL8NR2IB9YJ2HTmV9yBnIrRcmwZgWCU=;
+	s=arc-20240116; t=1720005324; c=relaxed/simple;
+	bh=aX5pPlyf1LMs3s5D5VvgDhzaXCTnhWi9JBG0pYjc850=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oQ7X4KCBGETTBBOL6i3ZL83R/hnCDQApA6EW7XwYxd2bKmE4PvnYDSXVSJ6C28PrSBKLBRHy9UAJ3PfVzVYN3pR9yFyyoeFyM7UPdzcfDykF7zloPzqYm9HONIerdtcbR8w2LFM8K4LuOXwn8m9uRwAlGM/R01L/+8OvuVI9hf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wBzw6RLl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BILWXSvAGTZOP7YT3DwWp2qbkV5fupOMOuLY8UBKXHAarw5WBHBJsPd4IELVpZAfdqDHCZ9B5Na2nAu8BxvIdl4dhO3MBBMT3wr6OlO0UBhFOy9Ozt4aUnu71Qkw5AFrk3PffAjs/AUJIH7fNugQ4kDlDNaIeIPWo9r1rv8HH6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWrPho7w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wBzw6RLl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0ECAC2BD10;
-	Wed,  3 Jul 2024 11:15:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWrPho7w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1E91C2BD10;
+	Wed,  3 Jul 2024 11:15:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005321;
-	bh=1vYUxLgOu7AfkL8NR2IB9YJ2HTmV9yBnIrRcmwZgWCU=;
+	s=korg; t=1720005324;
+	bh=aX5pPlyf1LMs3s5D5VvgDhzaXCTnhWi9JBG0pYjc850=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wBzw6RLlOPSj7bs3c/LP8tuDLyixAC25Lp7jZSdKTGinVg0hfRQ2zGnNvREGsNwx2
-	 ojcbY9XUyBiN7r94C3PrijmoJd38el9TK9UnUKACvBunB8oEZOq+6f0iFshUN2bBoY
-	 pVkvJerGBsRri0V+tv6duvam9XytBo3SF+8X82tw=
+	b=dWrPho7wamMW/Qq02fhhRszHE/XRaFHZ6kbLJFDox9l5/7GzoVGmm3/+nJVdLdRV1
+	 E+o5ZFX8GmhgLBoC+F1W5RVLyri7SlwDfCBNTeOUwfZOhOSUSXEblrp4S1KS40pdvs
+	 2GdeTTgsG/eoNPVwddIll+znu9YR4BKXd+zRW8vc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Lebrun <dlebrun@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+3ab78ff125b7979e45f9@syzkaller.appspotmail.com,
+	Jiri Olsa <jolsa@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 012/356] ipv6: sr: block BH in seg6_output_core() and seg6_input_core()
-Date: Wed,  3 Jul 2024 12:35:48 +0200
-Message-ID: <20240703102913.564701668@linuxfoundation.org>
+Subject: [PATCH 5.15 013/356] bpf: Set run context for rawtp test_run callback
+Date: Wed,  3 Jul 2024 12:35:49 +0200
+Message-ID: <20240703102913.601526124@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -53,93 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit c0b98ac1cc104f48763cdb27b1e9ac25fd81fc90 ]
+[ Upstream commit d0d1df8ba18abc57f28fb3bc053b2bf319367f2c ]
 
-As explained in commit 1378817486d6 ("tipc: block BH
-before using dst_cache"), net/core/dst_cache.c
-helpers need to be called with BH disabled.
+syzbot reported crash when rawtp program executed through the
+test_run interface calls bpf_get_attach_cookie helper or any
+other helper that touches task->bpf_ctx pointer.
 
-Disabling preemption in seg6_output_core() is not good enough,
-because seg6_output_core() is called from process context,
-lwtunnel_output() only uses rcu_read_lock().
+Setting the run context (task->bpf_ctx pointer) for test_run
+callback.
 
-We might be interrupted by a softirq, re-enter seg6_output_core()
-and corrupt dst_cache data structures.
-
-Fix the race by using local_bh_disable() instead of
-preempt_disable().
-
-Apply a similar change in seg6_input_core().
-
-Fixes: fa79581ea66c ("ipv6: sr: fix several BUGs when preemption is enabled")
-Fixes: 6c8702c60b88 ("ipv6: sr: add support for SRH encapsulation and injection with lwtunnels")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: David Lebrun <dlebrun@google.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/20240531132636.2637995-4-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7adfc6c9b315 ("bpf: Add bpf_get_attach_cookie() BPF helper to access bpf_cookie value")
+Reported-by: syzbot+3ab78ff125b7979e45f9@syzkaller.appspotmail.com
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Closes: https://syzkaller.appspot.com/bug?extid=3ab78ff125b7979e45f9
+Link: https://lore.kernel.org/bpf/20240604150024.359247-1-jolsa@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/seg6_iptunnel.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ net/bpf/test_run.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/ipv6/seg6_iptunnel.c b/net/ipv6/seg6_iptunnel.c
-index f98bb719190be..135712649d25f 100644
---- a/net/ipv6/seg6_iptunnel.c
-+++ b/net/ipv6/seg6_iptunnel.c
-@@ -332,9 +332,8 @@ static int seg6_input_core(struct net *net, struct sock *sk,
+diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
+index 11d254ce3581c..a0d75c33b5d6a 100644
+--- a/net/bpf/test_run.c
++++ b/net/bpf/test_run.c
+@@ -326,10 +326,16 @@ static void
+ __bpf_prog_test_run_raw_tp(void *data)
+ {
+ 	struct bpf_raw_tp_test_run_info *info = data;
++	struct bpf_trace_run_ctx run_ctx = {};
++	struct bpf_run_ctx *old_run_ctx;
++
++	old_run_ctx = bpf_set_run_ctx(&run_ctx.run_ctx);
  
- 	slwt = seg6_lwt_lwtunnel(orig_dst->lwtstate);
+ 	rcu_read_lock();
+ 	info->retval = bpf_prog_run(info->prog, info->ctx);
+ 	rcu_read_unlock();
++
++	bpf_reset_run_ctx(old_run_ctx);
+ }
  
--	preempt_disable();
-+	local_bh_disable();
- 	dst = dst_cache_get(&slwt->cache);
--	preempt_enable();
- 
- 	skb_dst_drop(skb);
- 
-@@ -342,14 +341,13 @@ static int seg6_input_core(struct net *net, struct sock *sk,
- 		ip6_route_input(skb);
- 		dst = skb_dst(skb);
- 		if (!dst->error) {
--			preempt_disable();
- 			dst_cache_set_ip6(&slwt->cache, dst,
- 					  &ipv6_hdr(skb)->saddr);
--			preempt_enable();
- 		}
- 	} else {
- 		skb_dst_set(skb, dst);
- 	}
-+	local_bh_enable();
- 
- 	err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
- 	if (unlikely(err))
-@@ -405,9 +403,9 @@ static int seg6_output_core(struct net *net, struct sock *sk,
- 
- 	slwt = seg6_lwt_lwtunnel(orig_dst->lwtstate);
- 
--	preempt_disable();
-+	local_bh_disable();
- 	dst = dst_cache_get(&slwt->cache);
--	preempt_enable();
-+	local_bh_enable();
- 
- 	if (unlikely(!dst)) {
- 		struct ipv6hdr *hdr = ipv6_hdr(skb);
-@@ -427,9 +425,9 @@ static int seg6_output_core(struct net *net, struct sock *sk,
- 			goto drop;
- 		}
- 
--		preempt_disable();
-+		local_bh_disable();
- 		dst_cache_set_ip6(&slwt->cache, dst, &fl6.saddr);
--		preempt_enable();
-+		local_bh_enable();
- 	}
- 
- 	skb_dst_drop(skb);
+ int bpf_prog_test_run_raw_tp(struct bpf_prog *prog,
 -- 
 2.43.0
 
