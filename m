@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A56217BB11;
-	Wed,  3 Jul 2024 10:51:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55DA8142E8E;
+	Wed,  3 Jul 2024 10:51:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003896; cv=none; b=b9l4MwYG7armn+K8QTHh7YRg4DvFMCTtDK2EbhdTPAU0fLlGKr6La6xm7YVLVU5sYPM7mkqIN3saOGsddNaGZ14mnId1rYtHbSeByd41krWPDiR670x4OaxBM4c5htlNLvBBhM1e054KFjon8g+6ycI/X/JixKAl4SaLmPVSQIs=
+	t=1720003899; cv=none; b=Rd3baZzvjPch+x5g7N69vJ8KvskjTBoB+ZuavlWM2Nk54nvwv8wzGwD1lXu6ALFao+yNNYRatjpPNeBTolFC9rJH01FH9L9d78ZjryzSWNbdZQPA16P4ZThuEp80PmnH4maI7t9E+u0stPW4JruWNhpfax5DIKIrUeZpLREbA2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003896; c=relaxed/simple;
-	bh=i7m8ZTUTZM8wYDv7ban4Q8zUWw9l/OrUlunLY6p7r3E=;
+	s=arc-20240116; t=1720003899; c=relaxed/simple;
+	bh=7/rv+dD1xS8VdjnrCxxy8DBCZN3z33Np6ox65AXV2Vs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B84N5qWeJl8veKQkxezea+owf0YEfVUewaAJ++Y2PxVYykxM5tZDf1WceXSwH6WoUT7wNfYOIQQuNI0Tjk+vWIzv36+3gZPjOSk3GvfDuDgHiSbgT8cfcmburDKERN45FoImiCyLduXBCHFUo2tREGPOTdpCh14Oiv/EP95zg7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=onMl2KNv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BFuTGQ7UP+s/Ie3i0WjgTAQNIRsOdiOOGy+aDtaRt6w45UBBn1+LGDjRgBKGVz+0VSRMZ+2dXT7r0LCSZQ2ZuddnzCUzk1pR3To6bXGRWtgAXhh06g54JRSZy/5EgypEKw83izC7WtzNsph8zvqbknj7LI7S9t0LOuuQL8f93UU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RrmLGr+f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="onMl2KNv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3596C2BD10;
-	Wed,  3 Jul 2024 10:51:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RrmLGr+f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF1D3C2BD10;
+	Wed,  3 Jul 2024 10:51:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003896;
-	bh=i7m8ZTUTZM8wYDv7ban4Q8zUWw9l/OrUlunLY6p7r3E=;
+	s=korg; t=1720003899;
+	bh=7/rv+dD1xS8VdjnrCxxy8DBCZN3z33Np6ox65AXV2Vs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=onMl2KNvYUDCD3QPKP9eu4BqphyxriWvZoIAU2Wb/6DUO94BZd1utykPHmcaedk4i
-	 8NkoMSmiz2gc9Mc4+b3SU2ojxGMZYU/+aVlm8Cem8fYmyqolD0jIxs4cqs/uddfAQk
-	 1qJu+lC//OtIZKpLvw35CU0vYAlg2XI+Ct5Xh0iA=
+	b=RrmLGr+fg7olNT9z2mQKvp+wVNJSPUXBsWkmZ0jVK4cWcqLd1Ma8dfQbJL8zESbhK
+	 V66jL1mjZdaO9KNUIv3lX6L2bCzzhploqS+ht18Y3dEu9AtzzZyJJGtEvgYXQpO4DZ
+	 W+UEQgtrzHZPsIlui/VgLfmHJjef81w9QYHHqsN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Qilong <zhangqilong3@huawei.com>,
 	Peter Ujfalusi <peter.ujfalusi@ti.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 025/189] ASoC: ti: davinci-mcasp: remove always zero of davinci_mcasp_get_dt_params
-Date: Wed,  3 Jul 2024 12:38:06 +0200
-Message-ID: <20240703102842.457261703@linuxfoundation.org>
+Subject: [PATCH 5.4 026/189] ASoC: ti: davinci-mcasp: Use platform_get_irq_byname_optional
+Date: Wed,  3 Jul 2024 12:38:07 +0200
+Message-ID: <20240703102842.494412669@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -52,63 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Qilong <zhangqilong3@huawei.com>
+From: Peter Ujfalusi <peter.ujfalusi@ti.com>
 
-[ Upstream commit 19f6e424d6150b5eede2277dbc6dfd3bf42e994f ]
+[ Upstream commit 372c4bd11de1793667e11d19c29fffc80495eeca ]
 
-davinci_mcasp_get_dt_params alway return zero, and its return value
-could be ignored by the caller. So make it 'void' type to avoid the
-check its return value.
+Depending on the integration of McASP either the 'common' or the
+'rx' and 'tx' or only the 'tx' interrupt number is valid, provided.
 
-Fixes: 764958f2b5239 ("ASoC: ti: davinci-mcasp: Support for auxclk-fs-ratio")
-Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
-Link: https://lore.kernel.org/r/20201102103428.32678-1-zhangqilong3@huawei.com
+By switching to platform_get_irq_byname_optional() we can clean up the
+bootlog from messages like:
+
+davinci-mcasp 2ba0000.mcasp: IRQ common not found
+
+The irq number == 0 is not valid, fix the check at the same time.
+
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
+Link: https://lore.kernel.org/r/20201106072551.689-2-peter.ujfalusi@ti.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: d18ca8635db2 ("ASoC: ti: davinci-mcasp: Fix race condition during probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/ti/davinci-mcasp.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ sound/soc/ti/davinci-mcasp.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/sound/soc/ti/davinci-mcasp.c b/sound/soc/ti/davinci-mcasp.c
-index 76267fd4a9d88..b08948ffc61d0 100644
+index b08948ffc61d0..7860382a17a28 100644
 --- a/sound/soc/ti/davinci-mcasp.c
 +++ b/sound/soc/ti/davinci-mcasp.c
-@@ -2082,20 +2082,18 @@ static inline int davinci_mcasp_init_gpiochip(struct davinci_mcasp *mcasp)
- }
- #endif /* CONFIG_GPIOLIB */
+@@ -2174,8 +2174,8 @@ static int davinci_mcasp_probe(struct platform_device *pdev)
  
--static int davinci_mcasp_get_dt_params(struct davinci_mcasp *mcasp)
-+static void davinci_mcasp_get_dt_params(struct davinci_mcasp *mcasp)
- {
- 	struct device_node *np = mcasp->dev->of_node;
- 	int ret;
- 	u32 val;
+ 	mcasp->dev = &pdev->dev;
  
- 	if (!np)
--		return 0;
-+		return;
+-	irq = platform_get_irq_byname(pdev, "common");
+-	if (irq >= 0) {
++	irq = platform_get_irq_byname_optional(pdev, "common");
++	if (irq > 0) {
+ 		irq_name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "%s_common",
+ 					  dev_name(&pdev->dev));
+ 		if (!irq_name) {
+@@ -2195,8 +2195,8 @@ static int davinci_mcasp_probe(struct platform_device *pdev)
+ 		mcasp->irq_request[SNDRV_PCM_STREAM_CAPTURE] = ROVRN;
+ 	}
  
- 	ret = of_property_read_u32(np, "auxclk-fs-ratio", &val);
- 	if (ret >= 0)
- 		mcasp->auxclk_fs_ratio = val;
--
--	return 0;
- }
+-	irq = platform_get_irq_byname(pdev, "rx");
+-	if (irq >= 0) {
++	irq = platform_get_irq_byname_optional(pdev, "rx");
++	if (irq > 0) {
+ 		irq_name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "%s_rx",
+ 					  dev_name(&pdev->dev));
+ 		if (!irq_name) {
+@@ -2214,8 +2214,8 @@ static int davinci_mcasp_probe(struct platform_device *pdev)
+ 		mcasp->irq_request[SNDRV_PCM_STREAM_CAPTURE] = ROVRN;
+ 	}
  
- static int davinci_mcasp_probe(struct platform_device *pdev)
-@@ -2331,9 +2329,7 @@ static int davinci_mcasp_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto err;
- 
--	ret = davinci_mcasp_get_dt_params(mcasp);
--	if (ret)
--		return -EINVAL;
-+	davinci_mcasp_get_dt_params(mcasp);
- 
- 	ret = devm_snd_soc_register_component(&pdev->dev,
- 					&davinci_mcasp_component,
+-	irq = platform_get_irq_byname(pdev, "tx");
+-	if (irq >= 0) {
++	irq = platform_get_irq_byname_optional(pdev, "tx");
++	if (irq > 0) {
+ 		irq_name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "%s_tx",
+ 					  dev_name(&pdev->dev));
+ 		if (!irq_name) {
 -- 
 2.43.0
 
