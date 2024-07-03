@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E1917D349;
-	Wed,  3 Jul 2024 10:42:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF98172BCF;
+	Wed,  3 Jul 2024 10:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003376; cv=none; b=foYItuoVywZ4ltyW1Frkx9NwQ0Mp8uxgWQ78Kq805TqLHfMUSglvvD9DupQS26PQkuBAc3fwBBSC4tcQ1+lmMfogb3Wq+6vNNudGmIex6eT3nFnInWYB4MHbASjvXa6YO45a/HsMpz2OHs6UZBTDawyGK2z/23bO3my6bMm2C9A=
+	t=1720003379; cv=none; b=CNDim8E7vKGNBK9WMcbMLusOQZwnQqMBdmIyhM6wmRSg23D2T7RfW2rf8YmsyJeUqgK+nK+qUyFNU7BwKSZzKofBalpFVTGLthR5Fjy6WcoWbP+Y8Fyey9lT4W+lnDZZjBrKXKtxToIOhFAoIGGQ/RxAV4faBaUGpK2d+6HBTmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003376; c=relaxed/simple;
-	bh=p+lDYXD7orzJ43kvQTPhaZWFk+rZ8gZl5grA89Ri5WU=;
+	s=arc-20240116; t=1720003379; c=relaxed/simple;
+	bh=JeyY8yQdsW7+XOA095MVF3j0rrBaO8lPd054cnlg07g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s808gkOVbImYEwjZss0MsrXqq6+jnHN0C8Oc39M8kOYNjigu6YzwO//k+pQr31OtRaBNeIZt91YO345bOWx0TL7hNEeXrMOjNYc3ryeVj3BoKRBVnLipfBCK8L5jcrEW8O9x+UpwJhk1TD8GLn8/m9gfemXjNAX1nfBhkB9zvV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tOfpUh1o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f4tJEmHWwAG992cuhz9fxU3JbGuFFIhOUxVD5WEaRhiv7tLI/6sY1Bv3pp1cvRr4hcnoATqUMT+rwpd9162zkLkMT5Bq/Zlp7FV0RywAb7aYcRQKkQJnl9qNWUoFdu4oAi0NoUdCp7NJi9Eyo5vDwj3CMNdcJQJVctYgQRE+5pI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bs3hDqSl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tOfpUh1o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0F29C2BD10;
-	Wed,  3 Jul 2024 10:42:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bs3hDqSl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A041C4AF0E;
+	Wed,  3 Jul 2024 10:42:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003376;
-	bh=p+lDYXD7orzJ43kvQTPhaZWFk+rZ8gZl5grA89Ri5WU=;
+	s=korg; t=1720003379;
+	bh=JeyY8yQdsW7+XOA095MVF3j0rrBaO8lPd054cnlg07g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tOfpUh1oe0BFQTHMT+hdh+jaKILVcg0yKZzbJakynTaEEexHZR/9qlo2O/zgZDhpn
-	 5JyggVSG4ohMGzGROszufLvaBkR5PAifcciYgnx55HLPjT1jOIkjSCszqnYw0K5Wa8
-	 cBuR2aNerhYwk36kHVyMqFOPEkfJOURaD+YYt7Jg=
+	b=bs3hDqSlXPh4KIC6aRpumPNW2W1am6a0dPhuPh0aDPw+tFkri0fvv9PH3p6i8FZok
+	 IEVEdR9M3imXJRokmRRHZhUsi10fb+UiC4aOIHLCZf59U8sUwZXR+KC5A0pK4edE6U
+	 eaS/TwsjQb3lezufscmKGLTKhYP0sebO9i/12gFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 021/139] media: mc: mark the media devnode as registered from the, start
-Date: Wed,  3 Jul 2024 12:38:38 +0200
-Message-ID: <20240703102831.241055820@linuxfoundation.org>
+	stable@kernel.org,
+	Tomas Winkler <tomas.winkler@intel.com>
+Subject: [PATCH 4.19 030/139] mei: me: release irq in mei_me_pci_resume error path
+Date: Wed,  3 Jul 2024 12:38:47 +0200
+Message-ID: <20240703102831.579604105@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -52,53 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Tomas Winkler <tomas.winkler@intel.com>
 
-[ Upstream commit 4bc60736154bc9e0e39d3b88918f5d3762ebe5e0 ]
+commit 283cb234ef95d94c61f59e1cd070cd9499b51292 upstream.
 
-First the media device node was created, and if successful it was
-marked as 'registered'. This leaves a small race condition where
-an application can open the device node and get an error back
-because the 'registered' flag was not yet set.
+The mei_me_pci_resume doesn't release irq on the error path,
+in case mei_start() fails.
 
-Change the order: first set the 'registered' flag, then actually
-register the media device node. If that fails, then clear the flag.
-
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Fixes: cf4b9211b568 ("[media] media: Media device node support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: <stable@kernel.org>
+Fixes: 33ec08263147 ("mei: revamp mei reset state machine")
+Signed-off-by: Tomas Winkler <tomas.winkler@intel.com>
+Link: https://lore.kernel.org/r/20240604090728.1027307-1-tomas.winkler@intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/media-devnode.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/misc/mei/pci-me.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/media-devnode.c b/drivers/media/media-devnode.c
-index 6b87a721dc499..b4a62b3172e3d 100644
---- a/drivers/media/media-devnode.c
-+++ b/drivers/media/media-devnode.c
-@@ -253,15 +253,14 @@ int __must_check media_devnode_register(struct media_device *mdev,
- 	devnode->cdev.owner = owner;
- 
- 	/* Part 3: Add the media and char device */
-+	set_bit(MEDIA_FLAG_REGISTERED, &devnode->flags);
- 	ret = cdev_device_add(&devnode->cdev, &devnode->dev);
- 	if (ret < 0) {
-+		clear_bit(MEDIA_FLAG_REGISTERED, &devnode->flags);
- 		pr_err("%s: cdev_device_add failed\n", __func__);
- 		goto cdev_add_error;
+--- a/drivers/misc/mei/pci-me.c
++++ b/drivers/misc/mei/pci-me.c
+@@ -388,8 +388,10 @@ static int mei_me_pci_resume(struct devi
  	}
  
--	/* Part 4: Activate this minor. The char device can now be used. */
--	set_bit(MEDIA_FLAG_REGISTERED, &devnode->flags);
--
- 	return 0;
+ 	err = mei_restart(dev);
+-	if (err)
++	if (err) {
++		free_irq(pdev->irq, dev);
+ 		return err;
++	}
  
- cdev_add_error:
--- 
-2.43.0
-
+ 	/* Start timer if stopped in suspend */
+ 	schedule_delayed_work(&dev->timer_work, HZ);
 
 
