@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF381836F0;
-	Wed,  3 Jul 2024 11:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDEDC1836EE;
+	Wed,  3 Jul 2024 11:30:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006253; cv=none; b=fEAaIKy2ThNciNSL/ZEtw7coI9h/oBshvzS/92nDk3favert83TCsfpVLB5fFFwg+TGPJbZwHCflgLfx6Wpv2hB6fsNlRHXbi/7OOoF+sMLTBF8fq/xztBJMF8ch/vxYLCTgmxMajpZrpV4l+VxWijeSVniFiP6XWL+DZOMUN0w=
+	t=1720006255; cv=none; b=XMYU8fw2RbskpW+lvbG0xJAi9lmKrn6DejmnPRZtwEghOG005SpGMpBPXx1aG9AO44jHcTyUdN0ByA5UL09nJM+jU71B8IetWMaw552PmIHOTO1KwGYY7/YGy+9xqmmBy3CVQoC6R9i+fFIO/NqYcwXH2LsLp+/V3e8C1HeXI4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006253; c=relaxed/simple;
-	bh=AcT5+DqsVAc6kJOB57fiEEGKKyPGPKno/271FFfTJ8s=;
+	s=arc-20240116; t=1720006255; c=relaxed/simple;
+	bh=4pxjgFnl+aIwtTg8e7+DvIFtZh648lVc58ReUh1RlSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hmPOZEhcmeDmP8sLImisEJ7BX5Vi/Zeyt3XZDqjL5EQfCkR/zXx8/Z6AWmnh1x0G4rjZGDah9VzFqPFOkeb0rgqc1nY74p4PNekTWtEhdm72FJHT5/AWGpl894rG5fZOcTMyRlajUTruB3paHUZ+PJcm5cNKjyBuZ5vVwoxXz2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=phW/sipG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NZdnSLy1+MlvN092TPkZoSsRy2fkppeIbVlWvZnJkmu6FaSGgCGRmSDB+LDtd4IdWeIGqzSojyJx7Bk+zU3Cq42dF38AuR3c6NtAuqEpIQmhfduishaYD15ruRGGEFluvut6Yvhq4VtN/neZpTN2UBm5hu85nvhLLjjvoTy7ni8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RN/5x2cP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="phW/sipG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 622C7C2BD10;
-	Wed,  3 Jul 2024 11:30:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RN/5x2cP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E0E2C2BD10;
+	Wed,  3 Jul 2024 11:30:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006252;
-	bh=AcT5+DqsVAc6kJOB57fiEEGKKyPGPKno/271FFfTJ8s=;
+	s=korg; t=1720006255;
+	bh=4pxjgFnl+aIwtTg8e7+DvIFtZh648lVc58ReUh1RlSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=phW/sipGm4kWyw/Yk6+7pi03QGw0z3GD8dFOOGJMdlJgHLe/LMtUm2ifMaRpcvj/b
-	 wxXVxWxn6y27zyLFYi1Zg730LmdX+IqFuKlbSD4d0P891DSDj/P+NEbyFjbBoYpMNO
-	 /brGUO4J/xSlc0302bIlu/TFe3g/qCfcb+uGBkcY=
+	b=RN/5x2cPzpG9eJM2qobkYcraJW7IVz4r0i+5AvXjihLwe3TaTLatrVx/hpUyTSMT5
+	 PXmjVf4rGfRRTuFLL8tFbFI3D1wdIf3El/e30O2MYBrOucyh2UovoC5vLs94CXurmJ
+	 bh16augvuXEa2CGI4CuGZ6boFgGE8d16u0DHGGm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	syzbot+00c18ee8497dd3be6ade@syzkaller.appspotmail.com
-Subject: [PATCH 5.15 320/356] usb: atm: cxacru: fix endpoint checking in cxacru_bind()
-Date: Wed,  3 Jul 2024 12:40:56 +0200
-Message-ID: <20240703102925.221990944@linuxfoundation.org>
+	Xu Yang <xu.yang_2@nxp.com>,
+	Meng Li <Meng.Li@windriver.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 5.15 321/356] usb: dwc3: core: remove lock of otg mode during gadget suspend/resume to avoid deadlock
+Date: Wed,  3 Jul 2024 12:40:57 +0200
+Message-ID: <20240703102925.259894884@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,88 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Meng Li <Meng.Li@windriver.com>
 
-commit 2eabb655a968b862bc0c31629a09f0fbf3c80d51 upstream.
+commit 7838de15bb700c2898a7d741db9b1f3cbc86c136 upstream.
 
-Syzbot is still reporting quite an old issue [1] that occurs due to
-incomplete checking of present usb endpoints. As such, wrong
-endpoints types may be used at urb sumbitting stage which in turn
-triggers a warning in usb_submit_urb().
+When config CONFIG_USB_DWC3_DUAL_ROLE is selected, and trigger system
+to enter suspend status with below command:
+echo mem > /sys/power/state
+There will be a deadlock issue occurring. Detailed invoking path as
+below:
+dwc3_suspend_common()
+    spin_lock_irqsave(&dwc->lock, flags);              <-- 1st
+    dwc3_gadget_suspend(dwc);
+        dwc3_gadget_soft_disconnect(dwc);
+            spin_lock_irqsave(&dwc->lock, flags);      <-- 2nd
+This issue is exposed by commit c7ebd8149ee5 ("usb: dwc3: gadget: Fix
+NULL pointer dereference in dwc3_gadget_suspend") that removes the code
+of checking whether dwc->gadget_driver is NULL or not. It causes the
+following code is executed and deadlock occurs when trying to get the
+spinlock. In fact, the root cause is the commit 5265397f9442("usb: dwc3:
+Remove DWC3 locking during gadget suspend/resume") that forgot to remove
+the lock of otg mode. So, remove the redundant lock of otg mode during
+gadget suspend/resume.
 
-Fix the issue by verifying that required endpoint types are present
-for both in and out endpoints, taking into account cmd endpoint type.
-
-Unfortunately, this patch has not been tested on real hardware.
-
-[1] Syzbot report:
-usb 1-1: BOGUS urb xfer, pipe 1 != type 3
-WARNING: CPU: 0 PID: 8667 at drivers/usb/core/urb.c:502 usb_submit_urb+0xed2/0x18a0 drivers/usb/core/urb.c:502
-Modules linked in:
-CPU: 0 PID: 8667 Comm: kworker/0:4 Not tainted 5.14.0-rc4-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
-Workqueue: usb_hub_wq hub_event
-RIP: 0010:usb_submit_urb+0xed2/0x18a0 drivers/usb/core/urb.c:502
-...
-Call Trace:
- cxacru_cm+0x3c0/0x8e0 drivers/usb/atm/cxacru.c:649
- cxacru_card_status+0x22/0xd0 drivers/usb/atm/cxacru.c:760
- cxacru_bind+0x7ac/0x11a0 drivers/usb/atm/cxacru.c:1209
- usbatm_usb_probe+0x321/0x1ae0 drivers/usb/atm/usbatm.c:1055
- cxacru_usb_probe+0xdf/0x1e0 drivers/usb/atm/cxacru.c:1363
- usb_probe_interface+0x315/0x7f0 drivers/usb/core/driver.c:396
- call_driver_probe drivers/base/dd.c:517 [inline]
- really_probe+0x23c/0xcd0 drivers/base/dd.c:595
- __driver_probe_device+0x338/0x4d0 drivers/base/dd.c:747
- driver_probe_device+0x4c/0x1a0 drivers/base/dd.c:777
- __device_attach_driver+0x20b/0x2f0 drivers/base/dd.c:894
- bus_for_each_drv+0x15f/0x1e0 drivers/base/bus.c:427
- __device_attach+0x228/0x4a0 drivers/base/dd.c:965
- bus_probe_device+0x1e4/0x290 drivers/base/bus.c:487
- device_add+0xc2f/0x2180 drivers/base/core.c:3354
- usb_set_configuration+0x113a/0x1910 drivers/usb/core/message.c:2170
- usb_generic_driver_probe+0xba/0x100 drivers/usb/core/generic.c:238
- usb_probe_device+0xd9/0x2c0 drivers/usb/core/driver.c:293
-
-Reported-and-tested-by: syzbot+00c18ee8497dd3be6ade@syzkaller.appspotmail.com
-Fixes: 902ffc3c707c ("USB: cxacru: Use a bulk/int URB to access the command endpoint")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Link: https://lore.kernel.org/r/20240609131546.3932-1-n.zhandarovich@fintech.ru
+Fixes: 5265397f9442 ("usb: dwc3: Remove DWC3 locking during gadget suspend/resume")
+Cc: Xu Yang <xu.yang_2@nxp.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Meng Li <Meng.Li@windriver.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20240618031918.2585799-1-Meng.Li@windriver.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/atm/cxacru.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/usb/dwc3/core.c |    6 ------
+ 1 file changed, 6 deletions(-)
 
---- a/drivers/usb/atm/cxacru.c
-+++ b/drivers/usb/atm/cxacru.c
-@@ -1131,6 +1131,7 @@ static int cxacru_bind(struct usbatm_dat
- 	struct cxacru_data *instance;
- 	struct usb_device *usb_dev = interface_to_usbdev(intf);
- 	struct usb_host_endpoint *cmd_ep = usb_dev->ep_in[CXACRU_EP_CMD];
-+	struct usb_endpoint_descriptor *in, *out;
- 	int ret;
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -1752,7 +1752,6 @@ assert_reset:
  
- 	/* instance init */
-@@ -1176,6 +1177,19 @@ static int cxacru_bind(struct usbatm_dat
- 		ret = -ENODEV;
- 		goto fail;
- 	}
-+
-+	if (usb_endpoint_xfer_int(&cmd_ep->desc))
-+		ret = usb_find_common_endpoints(intf->cur_altsetting,
-+						NULL, NULL, &in, &out);
-+	else
-+		ret = usb_find_common_endpoints(intf->cur_altsetting,
-+						&in, &out, NULL, NULL);
-+
-+	if (ret) {
-+		usb_err(usbatm_instance, "cxacru_bind: interface has incorrect endpoints\n");
-+		ret = -ENODEV;
-+		goto fail;
-+	}
+ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+ {
+-	unsigned long	flags;
+ 	u32 reg;
  
- 	if ((cmd_ep->desc.bmAttributes & USB_ENDPOINT_XFERTYPE_MASK)
- 			== USB_ENDPOINT_XFER_INT) {
+ 	switch (dwc->current_dr_role) {
+@@ -1790,9 +1789,7 @@ static int dwc3_suspend_common(struct dw
+ 			break;
+ 
+ 		if (dwc->current_otg_role == DWC3_OTG_ROLE_DEVICE) {
+-			spin_lock_irqsave(&dwc->lock, flags);
+ 			dwc3_gadget_suspend(dwc);
+-			spin_unlock_irqrestore(&dwc->lock, flags);
+ 			synchronize_irq(dwc->irq_gadget);
+ 		}
+ 
+@@ -1809,7 +1806,6 @@ static int dwc3_suspend_common(struct dw
+ 
+ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
+ {
+-	unsigned long	flags;
+ 	int		ret;
+ 	u32		reg;
+ 
+@@ -1858,9 +1854,7 @@ static int dwc3_resume_common(struct dwc
+ 		if (dwc->current_otg_role == DWC3_OTG_ROLE_HOST) {
+ 			dwc3_otg_host_init(dwc);
+ 		} else if (dwc->current_otg_role == DWC3_OTG_ROLE_DEVICE) {
+-			spin_lock_irqsave(&dwc->lock, flags);
+ 			dwc3_gadget_resume(dwc);
+-			spin_unlock_irqrestore(&dwc->lock, flags);
+ 		}
+ 
+ 		break;
 
 
