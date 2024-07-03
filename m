@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7A013B280;
-	Wed,  3 Jul 2024 11:04:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2CF713B280;
+	Wed,  3 Jul 2024 11:04:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004655; cv=none; b=m4ACAhxp+isGkIYUAe2Hd1B5INDuDRVqURi/9u5qWxT4lwEeMeuMoc2rn0OVqXKrxJL1xt6ErGe9tYBUqXAzCrwgAzfZCVNzPWBRwAIIfN1SW6S8oUqHOKZUTvQ8NyF0DFWU8ewiAgV3m4eTlE4okjEO/0dLYLJmLjv13y882jQ=
+	t=1720004658; cv=none; b=V1TIKrrldxZ9YhyDSzXTqRICsOmFN72/UTsxC11L0EsyPpqJA7tPTDiKzqNODJ3KnAG3zhKxewGmMSG3k2hp1P6K/GDCc7rwLD/ADBjqDqR/1cnzrkswRYjxagUBn4I4+y2/zveHzuwtPAe9h2bWgWPpGuXVlcUp1bLG7vTUB7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004655; c=relaxed/simple;
-	bh=JnF1FYHXnWoARcKNT6/iLqxUzurVZzbt8CpMT8m/B4w=;
+	s=arc-20240116; t=1720004658; c=relaxed/simple;
+	bh=iXKHmVD3Ly2I7SJpsAcPEtzozpdMk9NXrJRiC/4zC3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e+n5Y8wcY7JsGefCq8t+jWbgqQ79mLy32S8qCkPFO6ukTLb4qRaftpMyfxNbfXc4eq9uhxp6dpuZL8hT9peIpyxpUfWlFI6HMkqFeubal1UJuoBSA3oBqp2novQDpG26mLhl6Mix3HfWFzPRcNIX0klqb/02NMVvCf7l3qZvJR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nckSEJkk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i9xzNyoEBKRJP12PZlwxAt8681UuEoU6FpsXpIXV/xBc+7ZWXdEqZTowf4xjEESUV/nwgfuKP2s/hbTeZwwTy3f3Miq+dLC6LxGQ8UmVbS1G5mhXCDu4YiEatJW+U+2SCNArPHkAO3CM35m52b238cAeBpjYE5UF0GfeblDmoI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ykQF3KLP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nckSEJkk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34B09C2BD10;
-	Wed,  3 Jul 2024 11:04:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ykQF3KLP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28617C2BD10;
+	Wed,  3 Jul 2024 11:04:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004655;
-	bh=JnF1FYHXnWoARcKNT6/iLqxUzurVZzbt8CpMT8m/B4w=;
+	s=korg; t=1720004658;
+	bh=iXKHmVD3Ly2I7SJpsAcPEtzozpdMk9NXrJRiC/4zC3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nckSEJkk9cs/d6rZ9zz60SsvAz9qY6CPyDFKAsbjMvPqr+VyKeTZpP0chH1hJWZla
-	 s4zajkpQrkwkfD6KH2tEVs1ngMHc7YqJtFfRS9zdrNrF2RHpE+sVWhZOA3GEAVjwq2
-	 S52XekDmfjLX+tFwsLJL5JAXHBsatlgT3n0GcPVg=
+	b=ykQF3KLPBffwZ2UONg+3x/xiupFHNeeituUnlYJz5/gdQOSzVoMR5UEffIGvuKFxq
+	 TYqtukrCYvh8DDbUvXLn6eeyz7ZL8h8xZbLMg8ucgtfqNUUxcTjOQzivpLrLKbbDKd
+	 Ve/DqRYI5nP/KL6Xs8kvEg8FV6Jr4SSj9CD9jI+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wander Lairson Costa <wander@redhat.com>,
-	Hu Chunyu <chuhu@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Martin Hoyer <mhoyer@redhat.com>,
+	John Meneghini <jmeneghi@redhat.com>,
+	Manish Rangankar <mrangankar@marvell.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 114/290] drop_monitor: replace spin_lock by raw_spin_lock
-Date: Wed,  3 Jul 2024 12:38:15 +0200
-Message-ID: <20240703102908.498292008@linuxfoundation.org>
+Subject: [PATCH 5.10 115/290] scsi: qedi: Fix crash while reading debugfs attribute
+Date: Wed,  3 Jul 2024 12:38:16 +0200
+Message-ID: <20240703102908.535886091@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -52,153 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wander Lairson Costa <wander@redhat.com>
+From: Manish Rangankar <mrangankar@marvell.com>
 
-[ Upstream commit f1e197a665c2148ebc25fe09c53689e60afea195 ]
+[ Upstream commit 28027ec8e32ecbadcd67623edb290dad61e735b5 ]
 
-trace_drop_common() is called with preemption disabled, and it acquires
-a spin_lock. This is problematic for RT kernels because spin_locks are
-sleeping locks in this configuration, which causes the following splat:
+The qedi_dbg_do_not_recover_cmd_read() function invokes sprintf() directly
+on a __user pointer, which results into the crash.
 
-BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
-in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 449, name: rcuc/47
-preempt_count: 1, expected: 0
-RCU nest depth: 2, expected: 2
-5 locks held by rcuc/47/449:
- #0: ff1100086ec30a60 ((softirq_ctrl.lock)){+.+.}-{2:2}, at: __local_bh_disable_ip+0x105/0x210
- #1: ffffffffb394a280 (rcu_read_lock){....}-{1:2}, at: rt_spin_lock+0xbf/0x130
- #2: ffffffffb394a280 (rcu_read_lock){....}-{1:2}, at: __local_bh_disable_ip+0x11c/0x210
- #3: ffffffffb394a160 (rcu_callback){....}-{0:0}, at: rcu_do_batch+0x360/0xc70
- #4: ff1100086ee07520 (&data->lock){+.+.}-{2:2}, at: trace_drop_common.constprop.0+0xb5/0x290
-irq event stamp: 139909
-hardirqs last  enabled at (139908): [<ffffffffb1df2b33>] _raw_spin_unlock_irqrestore+0x63/0x80
-hardirqs last disabled at (139909): [<ffffffffb19bd03d>] trace_drop_common.constprop.0+0x26d/0x290
-softirqs last  enabled at (139892): [<ffffffffb07a1083>] __local_bh_enable_ip+0x103/0x170
-softirqs last disabled at (139898): [<ffffffffb0909b33>] rcu_cpu_kthread+0x93/0x1f0
-Preemption disabled at:
-[<ffffffffb1de786b>] rt_mutex_slowunlock+0xab/0x2e0
-CPU: 47 PID: 449 Comm: rcuc/47 Not tainted 6.9.0-rc2-rt1+ #7
-Hardware name: Dell Inc. PowerEdge R650/0Y2G81, BIOS 1.6.5 04/15/2022
+To fix this issue, use a small local stack buffer for sprintf() and then
+call simple_read_from_buffer(), which in turns make the copy_to_user()
+call.
+
+BUG: unable to handle page fault for address: 00007f4801111000
+PGD 8000000864df6067 P4D 8000000864df6067 PUD 864df7067 PMD 846028067 PTE 0
+Oops: 0002 [#1] PREEMPT SMP PTI
+Hardware name: HPE ProLiant DL380 Gen10/ProLiant DL380 Gen10, BIOS U30 06/15/2023
+RIP: 0010:memcpy_orig+0xcd/0x130
+RSP: 0018:ffffb7a18c3ffc40 EFLAGS: 00010202
+RAX: 00007f4801111000 RBX: 00007f4801111000 RCX: 000000000000000f
+RDX: 000000000000000f RSI: ffffffffc0bfd7a0 RDI: 00007f4801111000
+RBP: ffffffffc0bfd7a0 R08: 725f746f6e5f6f64 R09: 3d7265766f636572
+R10: ffffb7a18c3ffd08 R11: 0000000000000000 R12: 00007f4881110fff
+R13: 000000007fffffff R14: ffffb7a18c3ffca0 R15: ffffffffc0bfd7af
+FS:  00007f480118a740(0000) GS:ffff98e38af00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f4801111000 CR3: 0000000864b8e001 CR4: 00000000007706e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+PKRU: 55555554
 Call Trace:
  <TASK>
- dump_stack_lvl+0x8c/0xd0
- dump_stack+0x14/0x20
- __might_resched+0x21e/0x2f0
- rt_spin_lock+0x5e/0x130
- ? trace_drop_common.constprop.0+0xb5/0x290
- ? skb_queue_purge_reason.part.0+0x1bf/0x230
- trace_drop_common.constprop.0+0xb5/0x290
- ? preempt_count_sub+0x1c/0xd0
- ? _raw_spin_unlock_irqrestore+0x4a/0x80
- ? __pfx_trace_drop_common.constprop.0+0x10/0x10
- ? rt_mutex_slowunlock+0x26a/0x2e0
- ? skb_queue_purge_reason.part.0+0x1bf/0x230
- ? __pfx_rt_mutex_slowunlock+0x10/0x10
- ? skb_queue_purge_reason.part.0+0x1bf/0x230
- trace_kfree_skb_hit+0x15/0x20
- trace_kfree_skb+0xe9/0x150
- kfree_skb_reason+0x7b/0x110
- skb_queue_purge_reason.part.0+0x1bf/0x230
- ? __pfx_skb_queue_purge_reason.part.0+0x10/0x10
- ? mark_lock.part.0+0x8a/0x520
-...
+ ? __die_body+0x1a/0x60
+ ? page_fault_oops+0x183/0x510
+ ? exc_page_fault+0x69/0x150
+ ? asm_exc_page_fault+0x22/0x30
+ ? memcpy_orig+0xcd/0x130
+ vsnprintf+0x102/0x4c0
+ sprintf+0x51/0x80
+ qedi_dbg_do_not_recover_cmd_read+0x2f/0x50 [qedi 6bcfdeeecdea037da47069eca2ba717c84a77324]
+ full_proxy_read+0x50/0x80
+ vfs_read+0xa5/0x2e0
+ ? folio_add_new_anon_rmap+0x44/0xa0
+ ? set_pte_at+0x15/0x30
+ ? do_pte_missing+0x426/0x7f0
+ ksys_read+0xa5/0xe0
+ do_syscall_64+0x58/0x80
+ ? __count_memcg_events+0x46/0x90
+ ? count_memcg_event_mm+0x3d/0x60
+ ? handle_mm_fault+0x196/0x2f0
+ ? do_user_addr_fault+0x267/0x890
+ ? exc_page_fault+0x69/0x150
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+RIP: 0033:0x7f4800f20b4d
 
-trace_drop_common() also disables interrupts, but this is a minor issue
-because we could easily replace it with a local_lock.
-
-Replace the spin_lock with raw_spin_lock to avoid sleeping in atomic
-context.
-
-Signed-off-by: Wander Lairson Costa <wander@redhat.com>
-Reported-by: Hu Chunyu <chuhu@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Tested-by: Martin Hoyer <mhoyer@redhat.com>
+Reviewed-by: John Meneghini <jmeneghi@redhat.com>
+Signed-off-by: Manish Rangankar <mrangankar@marvell.com>
+Link: https://lore.kernel.org/r/20240415072155.30840-1-mrangankar@marvell.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/drop_monitor.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/scsi/qedi/qedi_debugfs.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/net/core/drop_monitor.c b/net/core/drop_monitor.c
-index 7742ee689141f..009b9e22c4e75 100644
---- a/net/core/drop_monitor.c
-+++ b/net/core/drop_monitor.c
-@@ -73,7 +73,7 @@ struct net_dm_hw_entries {
- };
- 
- struct per_cpu_dm_data {
--	spinlock_t		lock;	/* Protects 'skb', 'hw_entries' and
-+	raw_spinlock_t		lock;	/* Protects 'skb', 'hw_entries' and
- 					 * 'send_timer'
- 					 */
- 	union {
-@@ -168,9 +168,9 @@ static struct sk_buff *reset_per_cpu_data(struct per_cpu_dm_data *data)
- err:
- 	mod_timer(&data->send_timer, jiffies + HZ / 10);
- out:
--	spin_lock_irqsave(&data->lock, flags);
-+	raw_spin_lock_irqsave(&data->lock, flags);
- 	swap(data->skb, skb);
--	spin_unlock_irqrestore(&data->lock, flags);
-+	raw_spin_unlock_irqrestore(&data->lock, flags);
- 
- 	if (skb) {
- 		struct nlmsghdr *nlh = (struct nlmsghdr *)skb->data;
-@@ -225,7 +225,7 @@ static void trace_drop_common(struct sk_buff *skb, void *location)
- 
- 	local_irq_save(flags);
- 	data = this_cpu_ptr(&dm_cpu_data);
--	spin_lock(&data->lock);
-+	raw_spin_lock(&data->lock);
- 	dskb = data->skb;
- 
- 	if (!dskb)
-@@ -259,7 +259,7 @@ static void trace_drop_common(struct sk_buff *skb, void *location)
- 	}
- 
- out:
--	spin_unlock_irqrestore(&data->lock, flags);
-+	raw_spin_unlock_irqrestore(&data->lock, flags);
- }
- 
- static void trace_kfree_skb_hit(void *ignore, struct sk_buff *skb, void *location)
-@@ -318,9 +318,9 @@ net_dm_hw_reset_per_cpu_data(struct per_cpu_dm_data *hw_data)
- 		mod_timer(&hw_data->send_timer, jiffies + HZ / 10);
- 	}
- 
--	spin_lock_irqsave(&hw_data->lock, flags);
-+	raw_spin_lock_irqsave(&hw_data->lock, flags);
- 	swap(hw_data->hw_entries, hw_entries);
--	spin_unlock_irqrestore(&hw_data->lock, flags);
-+	raw_spin_unlock_irqrestore(&hw_data->lock, flags);
- 
- 	return hw_entries;
- }
-@@ -452,7 +452,7 @@ net_dm_hw_trap_summary_probe(void *ignore, const struct devlink *devlink,
- 		return;
- 
- 	hw_data = this_cpu_ptr(&dm_hw_cpu_data);
--	spin_lock_irqsave(&hw_data->lock, flags);
-+	raw_spin_lock_irqsave(&hw_data->lock, flags);
- 	hw_entries = hw_data->hw_entries;
- 
- 	if (!hw_entries)
-@@ -481,7 +481,7 @@ net_dm_hw_trap_summary_probe(void *ignore, const struct devlink *devlink,
- 	}
- 
- out:
--	spin_unlock_irqrestore(&hw_data->lock, flags);
-+	raw_spin_unlock_irqrestore(&hw_data->lock, flags);
- }
- 
- static const struct net_dm_alert_ops net_dm_alert_summary_ops = {
-@@ -1669,7 +1669,7 @@ static struct notifier_block dropmon_net_notifier = {
- 
- static void __net_dm_cpu_data_init(struct per_cpu_dm_data *data)
+diff --git a/drivers/scsi/qedi/qedi_debugfs.c b/drivers/scsi/qedi/qedi_debugfs.c
+index 42f5afb60055c..6e724f47ab9e8 100644
+--- a/drivers/scsi/qedi/qedi_debugfs.c
++++ b/drivers/scsi/qedi/qedi_debugfs.c
+@@ -120,15 +120,11 @@ static ssize_t
+ qedi_dbg_do_not_recover_cmd_read(struct file *filp, char __user *buffer,
+ 				 size_t count, loff_t *ppos)
  {
--	spin_lock_init(&data->lock);
-+	raw_spin_lock_init(&data->lock);
- 	skb_queue_head_init(&data->drop_queue);
- 	u64_stats_init(&data->stats.syncp);
+-	size_t cnt = 0;
+-
+-	if (*ppos)
+-		return 0;
++	char buf[64];
++	int len;
+ 
+-	cnt = sprintf(buffer, "do_not_recover=%d\n", qedi_do_not_recover);
+-	cnt = min_t(int, count, cnt - *ppos);
+-	*ppos += cnt;
+-	return cnt;
++	len = sprintf(buf, "do_not_recover=%d\n", qedi_do_not_recover);
++	return simple_read_from_buffer(buffer, count, ppos, buf, len);
  }
+ 
+ static int
 -- 
 2.43.0
 
