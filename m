@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 995601836EE;
-	Wed,  3 Jul 2024 11:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C8518412F;
+	Wed,  3 Jul 2024 11:31:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006264; cv=none; b=mJ+AXGEaa6pFllSBbIwucGqMB6EjbFUEIhKa3Iekffc8yWeav93q+vL3XGwBZXbKfnUXrvvQfMe1/zi3g4Suf5jJYD40LjuKDOs4u1i6rcdWk8G1+UdcgbxDhzVCSpDM8COnmoJQDOboSx8rGoe6WvvxN+6bNX1t7vf1T9EncRw=
+	t=1720006267; cv=none; b=Bd8yASb7bRPz9Sk01598X8ldeTTmMExN3bScbPNAC1tOCO7Z+A4tMmcQdbtDp6nRbpAEHejJVW03lusSC0xk0/jTz+tK3lgG6T2LAlQ5DzHB7sg8VH/6Sty7ik6FGA2SckBpGvdaFGOyKwSPim20aF5bBIyl/ZRtD5jyY+fJqg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006264; c=relaxed/simple;
-	bh=XQF79araROjPDjz+6Fk+f2rjIpoaXzbpPggbuAoHJng=;
+	s=arc-20240116; t=1720006267; c=relaxed/simple;
+	bh=ZGZTABnV+CAJf44JZ7ALP/c0LGyKyvhXQ0KJR7IV2O4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l4YOYcfOwZCqF2mb386EunYB8cTkxz7JgDvGQ+bxCcatrItpB7FFS+nHXASdV7r2ISxkkQYTjcDujEVg2jCqQTEAzoEaXU5w8iNJpGNAopoYtIsx/7Cwyez5v5JEPhGROaPpgO8bvqn8ycEixp22YKR9E3WCk7ZzeL4j/GF9NFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X5by1FSH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LeozmF5wbwkwlWyThxxhj1G5rqJ2Qx6POe9tQ2ahCGbRTE2N07Nl9Ps5YurQ8CrpimxMlOF1rcda34lBAp71SOMafL1Qm6rAyWyUNmagde4JrW98hfCExETXhtH6xHznkLvc34ERdAPp91/s0jSkC4Y9ocEs2oeunyeW/Ov+kPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UFmweItY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X5by1FSH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C2BCC2BD10;
-	Wed,  3 Jul 2024 11:31:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UFmweItY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E926C2BD10;
+	Wed,  3 Jul 2024 11:31:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006264;
-	bh=XQF79araROjPDjz+6Fk+f2rjIpoaXzbpPggbuAoHJng=;
+	s=korg; t=1720006267;
+	bh=ZGZTABnV+CAJf44JZ7ALP/c0LGyKyvhXQ0KJR7IV2O4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X5by1FSHGb3DzwKIsWKdTWVO0c+aPcmP3N9BQek9KbWl9eeLRXEAsy1Lv1UU5zBAC
-	 kdXMQ26VSTR47jjomqIdiiY0nBVOSO26cqXBb7JFJsV79uKOXl0FMwOs19nZUuZ/sK
-	 JCU6rXmu5VxlNQFS9riPhIJRTq4QpRvb5BtVlL2U=
+	b=UFmweItYOIq9+4JqA9dVKN91rY1du8BKCcEMMrBZeh0/oz1PStb3SWtGSAuT+Ydlr
+	 nDJ+HJAxd+93Cm0fDvcdfQ0kcBR7Bu3a98a0wxdQ7P7jVPQxXACRHjX/W9QdvROgoS
+	 /rCEkZc58CxrlnbFGdyBPoZjLU4xfsiw0sDqOKTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Bee <knaerzche@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 356/356] arm64: dts: rockchip: Add sound-dai-cells for RK3368
-Date: Wed,  3 Jul 2024 12:41:32 +0200
-Message-ID: <20240703102926.576064417@linuxfoundation.org>
+	Zheng Zhi Yuan <kevinjone25@g.ncu.edu.tw>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 5.15 348/356] drivers: fix typo in firmware/efi/memmap.c
+Date: Wed,  3 Jul 2024 12:41:24 +0200
+Message-ID: <20240703102926.276343343@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,52 +50,30 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Bee <knaerzche@gmail.com>
+From: Zheng Zhi Yuan <kevinjone25@g.ncu.edu.tw>
 
-[ Upstream commit 8d7ec44aa5d1eb94a30319074762a1740440cdc8 ]
+[ Commit 1df4d1724baafa55e9803414ebcdf1ca702bc958 upstream ]
 
-Add the missing #sound-dai-cells for RK3368's I2S and S/PDIF controllers.
+This patch fixes the spelling error in firmware/efi/memmap.c, changing
+it to the correct word.
 
-Fixes: f7d89dfe1e31 ("arm64: dts: rockchip: add i2s nodes support for RK3368 SoCs")
-Fixes: 0328d68ea76d ("arm64: dts: rockchip: add rk3368 spdif node")
-Signed-off-by: Alex Bee <knaerzche@gmail.com>
-Link: https://lore.kernel.org/r/20240623090116.670607-4-knaerzche@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Zheng Zhi Yuan <kevinjone25@g.ncu.edu.tw>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3368.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/firmware/efi/memmap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3368.dtsi b/arch/arm64/boot/dts/rockchip/rk3368.dtsi
-index 4c64fbefb4834..ad58930d5ccec 100644
---- a/arch/arm64/boot/dts/rockchip/rk3368.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3368.dtsi
-@@ -678,6 +678,7 @@
- 		dma-names = "tx";
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&spdif_tx>;
-+		#sound-dai-cells = <0>;
- 		status = "disabled";
- 	};
- 
-@@ -689,6 +690,7 @@
- 		clocks = <&cru SCLK_I2S_2CH>, <&cru HCLK_I2S_2CH>;
- 		dmas = <&dmac_bus 6>, <&dmac_bus 7>;
- 		dma-names = "tx", "rx";
-+		#sound-dai-cells = <0>;
- 		status = "disabled";
- 	};
- 
-@@ -702,6 +704,7 @@
- 		dma-names = "tx", "rx";
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&i2s_8ch_bus>;
-+		#sound-dai-cells = <0>;
- 		status = "disabled";
- 	};
- 
--- 
-2.43.0
-
+--- a/drivers/firmware/efi/memmap.c
++++ b/drivers/firmware/efi/memmap.c
+@@ -245,7 +245,7 @@ int __init efi_memmap_install(struct efi
+  * @range: Address range (start, end) to split around
+  *
+  * Returns the number of additional EFI memmap entries required to
+- * accomodate @range.
++ * accommodate @range.
+  */
+ int __init efi_memmap_split_count(efi_memory_desc_t *md, struct range *range)
+ {
 
 
