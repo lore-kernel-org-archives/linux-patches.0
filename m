@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C08561741C4;
-	Wed,  3 Jul 2024 11:17:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA2617E907;
+	Wed,  3 Jul 2024 11:17:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005475; cv=none; b=LfyA2FiuElkf1R6cnWPsnoJnmEvD2UczXzzDoJ8BFzKkRhYmEHVSgREjyeU1hIJEtpVC7awKXnQfON7ul7EE3iTYWJ2Y8Xsf0fVWYxyQSZcTH0oxPj78q1pCrCSxi+D3BKC+73pMXVSzDdNO1b5ZIsN9r6EZ8TT5tBt9pqE472w=
+	t=1720005479; cv=none; b=WZOlrPR/c52e36UvORVwwufIr+D4m5qH7sNuxEvJBzMk6LQYVR0DmKpvpd/52jPQwyKjsiVg9Nd+8K7FlznyubndRgdZxIUx21HG95B9MWi93U0ARnkzQ8aCDQEDhMI6shkwlzfcbMFAWjMcDrwU3WKNXaZ6otDkTlYpi5XzXqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005475; c=relaxed/simple;
-	bh=blAGvcPMcc0KMPmfIA1UCuOuQ61Pxr9HSAS+Y3hvvUY=;
+	s=arc-20240116; t=1720005479; c=relaxed/simple;
+	bh=xLyQPwijlaKI/STzcc0V9uu5jFFOasKaVVrEURncdTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZDELC7jdF9dxRhm3u8dayYdGtaaHrCIuc2jsZojyCdD//FnY+WQAKQh9aLHhCII1gOZszdzTyTh4RpaJ+1EdFt1WrPoTp28UY8kugmXPnCrP0xuzgXkrWUvgbPep7dk3CNTdGXBWVNMttErdsOC/h4L7zKwNVnraLB+5h6mNc7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l9IUDYyO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sIohsbBtKG8KEA7vYfHvU8QR3W1oTOvMa0xF/IaFS1TQll57/IybHb4mXFVXdJLZdjkomxM3gLqKW/dX1oIWsOgJQ/yGr2tQp0pMiGqkvV1CKXGserDUz+F3sRvPqtPMw/NpZ6l5Wfqy6I2OWbMXmGzjTibonuqqtk/zDDFE1kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XBbz5V0T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l9IUDYyO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4635FC2BD10;
-	Wed,  3 Jul 2024 11:17:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XBbz5V0T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EB5DC2BD10;
+	Wed,  3 Jul 2024 11:17:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005475;
-	bh=blAGvcPMcc0KMPmfIA1UCuOuQ61Pxr9HSAS+Y3hvvUY=;
+	s=korg; t=1720005478;
+	bh=xLyQPwijlaKI/STzcc0V9uu5jFFOasKaVVrEURncdTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l9IUDYyOxg1wzL9v6q8EQT9jTUfrL47+7n3ZVZR+eM9UQSOxi0jDgXzXeV0KjCC5r
-	 U97J26PXjnLxbj/I7ByUvycDlYNep6oT+wC3zAhpoAn6v5VqSX1ztIemVXQ4rA3E8z
-	 M6uFxMx1FP/oZKXJfXRKJ0+F0ckkGcZ2+TNdr6zs=
+	b=XBbz5V0TG4c5h5V8eDyjtMgfCpJphkWGMFS9qbeEnW1tJNCWXbHLS/w7kEslb5qaG
+	 k4ieYJuXQLIwfjMBjt+kYPzF+f+JMuLunTAYVPJSCbUo4H2BNa//J9cryAgAHUfcM9
+	 +qUNA/qND4Wgh4FYRtXN6NOOo43H6OaHzkCKnXow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Joerg Roedel <jroedel@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 094/356] iommu: Return right value in iommu_sva_bind_device()
-Date: Wed,  3 Jul 2024 12:37:10 +0200
-Message-ID: <20240703102916.660695579@linuxfoundation.org>
+	syzbot+9dfe490c8176301c1d06@syzkaller.appspotmail.com,
+	Dave Kleikamp <shaggy@kernel.org>
+Subject: [PATCH 5.15 077/356] jfs: xattr: fix buffer overflow for invalid xattr
+Date: Wed,  3 Jul 2024 12:36:53 +0200
+Message-ID: <20240703102916.017491417@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -54,49 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 89e8a2366e3bce584b6c01549d5019c5cda1205e ]
+commit 7c55b78818cfb732680c4a72ab270cc2d2ee3d0f upstream.
 
-iommu_sva_bind_device() should return either a sva bond handle or an
-ERR_PTR value in error cases. Existing drivers (idxd and uacce) only
-check the return value with IS_ERR(). This could potentially lead to
-a kernel NULL pointer dereference issue if the function returns NULL
-instead of an error pointer.
+When an xattr size is not what is expected, it is printed out to the
+kernel log in hex format as a form of debugging.  But when that xattr
+size is bigger than the expected size, printing it out can cause an
+access off the end of the buffer.
 
-In reality, this doesn't cause any problems because iommu_sva_bind_device()
-only returns NULL when the kernel is not configured with CONFIG_IOMMU_SVA.
-In this case, iommu_dev_enable_feature(dev, IOMMU_DEV_FEAT_SVA) will
-return an error, and the device drivers won't call iommu_sva_bind_device()
-at all.
+Fix this all up by properly restricting the size of the debug hex dump
+in the kernel log.
 
-Fixes: 26b25a2b98e4 ("iommu: Bind process address spaces to devices")
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Link: https://lore.kernel.org/r/20240528042528.71396-1-baolu.lu@linux.intel.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: syzbot+9dfe490c8176301c1d06@syzkaller.appspotmail.com
+Cc: Dave Kleikamp <shaggy@kernel.org>
+Link: https://lore.kernel.org/r/2024051433-slider-cloning-98f9@gregkh
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/iommu.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/jfs/xattr.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-index d2f3435e7d176..2202a665b0927 100644
---- a/include/linux/iommu.h
-+++ b/include/linux/iommu.h
-@@ -1038,7 +1038,7 @@ iommu_aux_get_pasid(struct iommu_domain *domain, struct device *dev)
- static inline struct iommu_sva *
- iommu_sva_bind_device(struct device *dev, struct mm_struct *mm, void *drvdata)
- {
--	return NULL;
-+	return ERR_PTR(-ENODEV);
- }
+--- a/fs/jfs/xattr.c
++++ b/fs/jfs/xattr.c
+@@ -557,9 +557,11 @@ static int ea_get(struct inode *inode, s
  
- static inline void iommu_sva_unbind_device(struct iommu_sva *handle)
--- 
-2.43.0
-
+       size_check:
+ 	if (EALIST_SIZE(ea_buf->xattr) != ea_size) {
++		int size = min_t(int, EALIST_SIZE(ea_buf->xattr), ea_size);
++
+ 		printk(KERN_ERR "ea_get: invalid extended attribute\n");
+ 		print_hex_dump(KERN_ERR, "", DUMP_PREFIX_ADDRESS, 16, 1,
+-				     ea_buf->xattr, ea_size, 1);
++				     ea_buf->xattr, size, 1);
+ 		ea_release(inode, ea_buf);
+ 		rc = -EIO;
+ 		goto clean_up;
 
 
