@@ -1,118 +1,118 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9010D16EBEA
-	for <patches@lists.linux.dev>; Wed,  3 Jul 2024 12:54:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A574917334F;
+	Wed,  3 Jul 2024 12:55:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720011295; cv=none; b=BVW3BEDiOGDv83urM3l6LG7eHZL4yqsw8Lv6TpIUqLMONQ7bQt0Pe+vOYu8cv0c7fY+NjloVnUBH/YHBhy+pcGIpjSzp6O8ab6Wi/2SshlGW0hKQ1QFPsNj4uPc8bi1MjdBx/7ySIxXvdgkz47AGy2+eGEc0brP7D3kNM2x/f9w=
+	t=1720011321; cv=none; b=PJV/EwspqmObwJvdwNhPYAH/UjYrScJvVCI9LO3nmFfSaqHyckYVGPeL/w9SRhBdtqWzcrriYmFHd2o202tWzEff9UYdOIYHLLCRUcDUG6Crd4eTmibFn6u05QZqUVhqEOMwfgTMs0SOt8DrkkrkVXfCbSwhrIEcUDtK17GuYKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720011295; c=relaxed/simple;
-	bh=rS/W1TqSZ7g/nTd/PX/LNoXQ3bRZucqWJPbOkYLIWVg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QbnFlf7UGyAkp+OTN+SbgWXSecxvtCScjtRivvCN7lK9oT+wWrPzhPXuTEfpUULplBmHMKqe2OBMGlr7HzHYNkP6/nvNy0SI6FAs+12GFYhJnJm5EyegcBtdV4XUIUfYkXcjEYUJxVHnYY2bWcnMw0HkvrsX6veEY2PjWb9RfTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b=Wzi+cVO/; arc=none smtp.client-ip=209.85.216.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
+	s=arc-20240116; t=1720011321; c=relaxed/simple;
+	bh=Hp0Z62/EXOGchBsSD7w9/t04S2jWQt7MeCJXZh8ZhmQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OaMRm6X6j7UZwwHXB4m6fkg75f8rC3PC31EkdaCd4lubhFbplJdQAuZx4XpuRwvsIdVWu7v4Se8Gt4hmEXPztUb4qCQTRrlJG8nY78ymgJVNLK/+r1HFzqbq62N7SXdjGaqaadveVQjyIEn7n/1gOwmj8EwKyDeB7Woxhh3UMms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k5G0Nc2S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b="Wzi+cVO/"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-2c8517aab46so3997583a91.1
-        for <patches@lists.linux.dev>; Wed, 03 Jul 2024 05:54:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl-com.20230601.gappssmtp.com; s=20230601; t=1720011293; x=1720616093; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=855SeBJK+kQf7yXIRTBaRAUIqwJW4HXVIPFfDWbcfMY=;
-        b=Wzi+cVO/lZgjIitqPnwTzQmmd84rdZfHq/BTJZBaAuEdFQ+71uH+rbr9aMsUVhSDvG
-         ueA3LR7KZtuu5qAnT4ib2S6c2ExWPV04w5TAddU80mAk/RKOVSLYcIB2NOJmm8aG+vBX
-         X8DyXpJ07IrdE0hERrvH0sfrGOI2F4r68PSwB06hjkZg+LR7wjpl0PUr2Qq8j8KEP4Dt
-         B0bMD49Z2h6nnYIpKl3llyQUdWmiAgXt4UgX15jm8tDQwssFHyXAzInb2XhVirJlrufH
-         rfK4g4JenUR0Uwrcd0EpIH7uW8tcKvqHjU2Yk3uJraCoWcELf4k48VKYpZS3yYPAny9z
-         r3Ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720011293; x=1720616093;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=855SeBJK+kQf7yXIRTBaRAUIqwJW4HXVIPFfDWbcfMY=;
-        b=mPPs7/sGFHm7/TNSmZZ8wq4EXW5UwZPkvZ8YKogeG3v0QP9f/2HhKQe4Xnwp04u17f
-         fyfyaKanL30o/eJ7ttUXvuEOrRGH/aMxXjxH09W2y8L3k5saO2K6oX5HE6cVbqfjEkAs
-         w16rrxwF7op1VWbZXN3UMzn7ojcnGuRChJirZzp3lGVqAGHMEytq/q1ZzUDkzIsBAyYA
-         NoY3XXixkXoLzOJ9XXkFSMQDGlWZx+ANKl7sek717Pkt2YggGZp4z8RAi3tg7A30TRxq
-         xBIG0hzmmtNUUZWtLYzfJlF66AD2+ky9yZSal9fpd9t59l5KtJ9SFJB0D510LGF4sXUy
-         7Icw==
-X-Forwarded-Encrypted: i=1; AJvYcCX4wk4C5SDIVIMgQ2JwGIRdfK3C8cEdP9Jx+s5IAvo6FOxRQS+ZZtIAT9+A8PX4GUoOGYpphycpOUfK/w0hDtWD7a/qwcJvxg==
-X-Gm-Message-State: AOJu0YzkiH6GXcepw08vPsLrjPu+vNmGtGC2bzqV0pAlWS68kHrKb0WT
-	BtHASzmXJ+DcuCIwFtCqf5ccloWRLBtsOQCLRTtZ7GeWpdXQ3aK06AoSwtVp2tfUuybiA/GW8lE
-	ym+OcVYdDRYR+PUaxY3EDA8L4N+AsNHcEJ53o3Q==
-X-Google-Smtp-Source: AGHT+IFeyxBhLt9MzjsdGvcxDI6Ss8W8+j+tZYOJYbNYqfjc+caqhGP3E6bzdV7g9BE3Tqajxbf9EkaaSQfkC7aoh3c=
-X-Received: by 2002:a17:90a:8583:b0:2c8:df15:5ad7 with SMTP id
- 98e67ed59e1d1-2c93d777302mr8133982a91.45.1720011292909; Wed, 03 Jul 2024
- 05:54:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k5G0Nc2S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49656C2BD10;
+	Wed,  3 Jul 2024 12:55:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1720011321;
+	bh=Hp0Z62/EXOGchBsSD7w9/t04S2jWQt7MeCJXZh8ZhmQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=k5G0Nc2S3S4KgfeQFOAr+uTD16O28hqTdW7xi9SIAKL8pYpx1g1FOKvWmJZz9UKe0
+	 lVxkSt2RPnlxfX6yuwXuKzGTuytQuzELQOLrQBLbmlXDQ4H0VDqRJyv2TSW1+mPDh7
+	 vNKa3vvU9A+XOaUlgFL3VQWFIAn6SWgCo2E5H+AwjYPDZJ5G1EYYe5c8T4PAInoLUz
+	 nkxxO2Kwrz3HZa35CKl26imAnmVPvq1jqy+UfBn2SnkAur+/Eg+WoC0Ibd8Sff+qqo
+	 2L13QjnWuWgPrHTWVnaKu9jNN2BNSiS7iHiC0Y3DsqriKLX24A1rmM0P0BLkxmQ3Fa
+	 hpzsKS0+FxF+g==
+Date: Wed, 3 Jul 2024 15:52:45 +0300
+From: Mike Rapoport <rppt@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Narasimhan V <Narasimhan.V@amd.com>,
+	Jan Beulich <jbeulich@suse.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.10 197/290] x86/mm/numa: Use NUMA_NO_NODE when calling
+ memblock_set_node()
+Message-ID: <ZoVJnWZmqQej_Yll@kernel.org>
+References: <20240703102904.170852981@linuxfoundation.org>
+ <20240703102911.605304317@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240702170233.048122282@linuxfoundation.org>
-In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
-From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
-Date: Wed, 3 Jul 2024 21:54:42 +0900
-Message-ID: <CAKL4bV5_povtwC25oFZfBHHzjHN_=aKGb_0zE_ZJyUJ_WseeNA@mail.gmail.com>
-Subject: Re: [PATCH 6.6 000/163] 6.6.37-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
-	broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240703102911.605304317@linuxfoundation.org>
 
-Hi Greg
+On Wed, Jul 03, 2024 at 12:39:38PM +0200, Greg Kroah-Hartman wrote:
+> 5.10-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Jan Beulich <jbeulich@suse.com>
+> 
+> [ Upstream commit 3ac36aa7307363b7247ccb6f6a804e11496b2b36 ]
+> 
+> memblock_set_node() warns about using MAX_NUMNODES, see
+> 
+>   e0eec24e2e19 ("memblock: make memblock_set_node() also warn about use of MAX_NUMNODES")
+> 
+> for details.
 
-On Wed, Jul 3, 2024 at 2:19=E2=80=AFAM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.6.37 release.
-> There are 163 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 04 Jul 2024 17:01:55 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.6.37-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.6.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
+This commit was a fix for e0eec24e2e19, it's not needed for kernels before 6.8. 
 
-6.6.37-rc1 tested.
+> Reported-by: Narasimhan V <Narasimhan.V@amd.com>
+> Signed-off-by: Jan Beulich <jbeulich@suse.com>
+> Cc: stable@vger.kernel.org
+> [bp: commit message]
+> Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+> Reviewed-by: Mike Rapoport (IBM) <rppt@kernel.org>
+> Tested-by: Paul E. McKenney <paulmck@kernel.org>
+> Link: https://lore.kernel.org/r/20240603141005.23261-1-bp@kernel.org
+> Link: https://lore.kernel.org/r/abadb736-a239-49e4-ab42-ace7acdd4278@suse.com
+> Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  arch/x86/mm/numa.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/arch/x86/mm/numa.c b/arch/x86/mm/numa.c
+> index 62a119170376b..74a117cbbd3c9 100644
+> --- a/arch/x86/mm/numa.c
+> +++ b/arch/x86/mm/numa.c
+> @@ -523,7 +523,7 @@ static void __init numa_clear_kernel_node_hotplug(void)
+>  	for_each_reserved_mem_region(mb_region) {
+>  		int nid = memblock_get_region_node(mb_region);
+>  
+> -		if (nid != MAX_NUMNODES)
+> +		if (nid != NUMA_NO_NODE)
+>  			node_set(nid, reserved_nodemask);
+>  	}
+>  
+> @@ -643,9 +643,9 @@ static int __init numa_init(int (*init_func)(void))
+>  	nodes_clear(node_online_map);
+>  	memset(&numa_meminfo, 0, sizeof(numa_meminfo));
+>  	WARN_ON(memblock_set_node(0, ULLONG_MAX, &memblock.memory,
+> -				  MAX_NUMNODES));
+> +				  NUMA_NO_NODE));
+>  	WARN_ON(memblock_set_node(0, ULLONG_MAX, &memblock.reserved,
+> -				  MAX_NUMNODES));
+> +				  NUMA_NO_NODE));
+>  	/* In case that parsing SRAT failed. */
+>  	WARN_ON(memblock_clear_hotplug(0, ULLONG_MAX));
+>  	numa_reset_distance();
+> -- 
+> 2.43.0
+> 
+> 
+> 
 
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
-
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
-
-[    0.000000] Linux version 6.6.37-rc1rv
-(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 14.1.1 20240522, GNU ld (GNU
-Binutils) 2.42.0) #1 SMP PREEMPT_DYNAMIC Wed Jul  3 20:52:59 JST 2024
-
-Thanks
-
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+-- 
+Sincerely yours,
+Mike.
