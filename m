@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2C318EFE1;
-	Wed,  3 Jul 2024 11:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF76518F2E4;
+	Wed,  3 Jul 2024 11:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004428; cv=none; b=AAxDy4FSkzQHXABm6Vs0ftsjMc5BIYyVWThHP2kZ83FfnqsJNSXD0MoHzj5YUkwovGQS3dkpWkCTY5QRLqn8QZOEo2EtZNFl/s/FVR1t7tLc9xCXQcHt4YLZsLFj79f/nsnw8HrR9tnhrRV1g8MVFCJiLf8rOdRNfzGWkeeBMTs=
+	t=1720004431; cv=none; b=ism22wpR5FX7P1/EE0mo9z7556qsRuMYpgBJlmPhDm3luw09kwRD/1d5OFFfBmk27ygoqy42VDErAqei3isZ9J9pee42d99g+0XNIX8gvbI4dSP+dR4vAQ4LVKPHPFS4CEtL5PY12f5QwtoKpwUoQRw/UzcsjkXoBVtAuXviFJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004428; c=relaxed/simple;
-	bh=U5Wk3C9IFdNb6ps/n/zM2oQnMV1tNoLw1JPzhJvPaSY=;
+	s=arc-20240116; t=1720004431; c=relaxed/simple;
+	bh=SLvk6njGM6CG53nx2a/+8sLC8pgpm0D+kuwAS+Sz61U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bGy4Ryq/T4VyPCpSmqYGtzuhDm7PjmosbiQGif5lElkjHaLFDT+zroDmaAg8esmJDU/NXuM8DeKetayi/OI0jIUftwRFT7PNxNjjrT8b3/C+Ujd1cMeYb5Opmo5uAQyBYNhxl2Kg6OIRuAG1FhTcqoAUYWhI7ds+knovUhQV1kk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CGpociG4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s++u5P9Ji7mTKbTpBVi52cg37jeJ9YE6E8AjfuQHI6Q6nV54k0Xy9vwv0Sb2dI9ciVm6dYqDL8vmnaOMkGMI8ogJCbrAAZ7hB2IjVHsEOYavYCaY3SgkwJVOG1mMTzUWmDF3AFvJ7t5EcMgPJnSNIvI8BfPL6TQVcjS6GUIWlns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DkIERHht; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CGpociG4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09612C4AF0B;
-	Wed,  3 Jul 2024 11:00:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DkIERHht"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40FBC2BD10;
+	Wed,  3 Jul 2024 11:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004428;
-	bh=U5Wk3C9IFdNb6ps/n/zM2oQnMV1tNoLw1JPzhJvPaSY=;
+	s=korg; t=1720004431;
+	bh=SLvk6njGM6CG53nx2a/+8sLC8pgpm0D+kuwAS+Sz61U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CGpociG4DT3Vs2VQdobTWV2lwqemKOgDo13Q9JduuSAvFXHLDGzsYgA5QvaiA94Q2
-	 InMcbJ8WfCiFwR7/GXvYheU5PBEmlJlNSsYsBz+nXuvA+pxQxRKdvyfm6sjbBCW79q
-	 nFpZISqqlj6jvkKPbAPUzfNy+i3nuzi/guBxiqOE=
+	b=DkIERHht3FGjQYcewoSYANPaoA5da1ps08uQDSq+bLA08Z1trG3N3Khtji6jkfZds
+	 Tf/r4BPjpKnMngkS4hDDNTF8ksH+lew7F+16aYAyVOjnfNhQ2sXHvbMxtGq7eAA+C3
+	 fz2CJwfmsI4KXqRB7gBFHhaZbm+k4S2uWOs704LI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrick Steuer <patrick.steuer@de.ibm.com>,
+	Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>,
+	Juergen Christ <jchrist@linux.ibm.com>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Harald Freudenberger <freude@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 038/290] s390/cpacf: get rid of register asm
-Date: Wed,  3 Jul 2024 12:36:59 +0200
-Message-ID: <20240703102905.636975483@linuxfoundation.org>
+Subject: [PATCH 5.10 039/290] s390/cpacf: Split and rework cpacf query functions
+Date: Wed,  3 Jul 2024 12:37:00 +0200
+Message-ID: <20240703102905.674443706@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -51,373 +54,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Harald Freudenberger <freude@linux.ibm.com>
 
-[ Upstream commit b84d0c417a5ac1eb820c8114c0c7cf1fcbf6f017 ]
+[ Upstream commit 830999bd7e72f4128b9dfa37090d9fa8120ce323 ]
 
-Using register asm statements has been proven to be very error prone,
-especially when using code instrumentation where gcc may add function
-calls, which clobbers register contents in an unexpected way.
+Rework the cpacf query functions to use the correct RRE
+or RRF instruction formats and set register fields within
+instructions correctly.
 
-Therefore get rid of register asm statements in cpacf code, and make
-sure this bug class cannot happen.
-
-Reviewed-by: Patrick Steuer <patrick.steuer@de.ibm.com>
+Fixes: 1afd43e0fbba ("s390/crypto: allow to query all known cpacf functions")
+Reported-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+Suggested-by: Heiko Carstens <hca@linux.ibm.com>
+Suggested-by: Juergen Christ <jchrist@linux.ibm.com>
+Suggested-by: Holger Dengler <dengler@linux.ibm.com>
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
+Reviewed-by: Juergen Christ <jchrist@linux.ibm.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Stable-dep-of: 830999bd7e72 ("s390/cpacf: Split and rework cpacf query functions")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/cpacf.h | 208 ++++++++++++++++++----------------
- 1 file changed, 111 insertions(+), 97 deletions(-)
+ arch/s390/include/asm/cpacf.h | 101 +++++++++++++++++++++++++++-------
+ 1 file changed, 81 insertions(+), 20 deletions(-)
 
 diff --git a/arch/s390/include/asm/cpacf.h b/arch/s390/include/asm/cpacf.h
-index c0f3bfeddcbeb..646b12981f208 100644
+index 646b12981f208..fa31f71cf5746 100644
 --- a/arch/s390/include/asm/cpacf.h
 +++ b/arch/s390/include/asm/cpacf.h
-@@ -173,17 +173,16 @@ typedef struct { unsigned char bytes[16]; } cpacf_mask_t;
-  */
- static __always_inline void __cpacf_query(unsigned int opcode, cpacf_mask_t *mask)
+@@ -161,28 +161,79 @@
+ 
+ typedef struct { unsigned char bytes[16]; } cpacf_mask_t;
+ 
+-/**
+- * cpacf_query() - check if a specific CPACF function is available
+- * @opcode: the opcode of the crypto instruction
+- * @func: the function code to test for
+- *
+- * Executes the query function for the given crypto instruction @opcode
+- * and checks if @func is available
+- *
+- * Returns 1 if @func is available for @opcode, 0 otherwise
+- */
+-static __always_inline void __cpacf_query(unsigned int opcode, cpacf_mask_t *mask)
++static __always_inline void __cpacf_query_rre(u32 opc, u8 r1, u8 r2,
++					      cpacf_mask_t *mask)
  {
--	register unsigned long r0 asm("0") = 0;	/* query function */
--	register unsigned long r1 asm("1") = (unsigned long) mask;
--
  	asm volatile(
--		"	spm 0\n" /* pckmo doesn't change the cc */
-+		"	lghi	0,0\n" /* query function */
-+		"	lgr	1,%[mask]\n"
-+		"	spm	0\n" /* pckmo doesn't change the cc */
- 		/* Parameter regs are ignored, but must be nonzero and unique */
- 		"0:	.insn	rrf,%[opc] << 16,2,4,6,0\n"
- 		"	brc	1,0b\n"	/* handle partial completion */
- 		: "=m" (*mask)
--		: [fc] "d" (r0), [pba] "a" (r1), [opc] "i" (opcode)
--		: "cc");
-+		: [mask] "d" ((unsigned long)mask), [opc] "i" (opcode)
-+		: "cc", "0", "1");
+-		"	lghi	0,0\n" /* query function */
+-		"	lgr	1,%[mask]\n"
+-		"	spm	0\n" /* pckmo doesn't change the cc */
+-		/* Parameter regs are ignored, but must be nonzero and unique */
+-		"0:	.insn	rrf,%[opc] << 16,2,4,6,0\n"
+-		"	brc	1,0b\n"	/* handle partial completion */
+-		: "=m" (*mask)
+-		: [mask] "d" ((unsigned long)mask), [opc] "i" (opcode)
+-		: "cc", "0", "1");
++		"	la	%%r1,%[mask]\n"
++		"	xgr	%%r0,%%r0\n"
++		"	.insn	rre,%[opc] << 16,%[r1],%[r2]\n"
++		: [mask] "=R" (*mask)
++		: [opc] "i" (opc),
++		  [r1] "i" (r1), [r2] "i" (r2)
++		: "cc", "r0", "r1");
++}
++
++static __always_inline void __cpacf_query_rrf(u32 opc,
++					      u8 r1, u8 r2, u8 r3, u8 m4,
++					      cpacf_mask_t *mask)
++{
++	asm volatile(
++		"	la	%%r1,%[mask]\n"
++		"	xgr	%%r0,%%r0\n"
++		"	.insn	rrf,%[opc] << 16,%[r1],%[r2],%[r3],%[m4]\n"
++		: [mask] "=R" (*mask)
++		: [opc] "i" (opc), [r1] "i" (r1), [r2] "i" (r2),
++		  [r3] "i" (r3), [m4] "i" (m4)
++		: "cc", "r0", "r1");
++}
++
++static __always_inline void __cpacf_query(unsigned int opcode,
++					  cpacf_mask_t *mask)
++{
++	switch (opcode) {
++	case CPACF_KDSA:
++		__cpacf_query_rre(CPACF_KDSA, 0, 2, mask);
++		break;
++	case CPACF_KIMD:
++		__cpacf_query_rre(CPACF_KIMD, 0, 2, mask);
++		break;
++	case CPACF_KLMD:
++		__cpacf_query_rre(CPACF_KLMD, 0, 2, mask);
++		break;
++	case CPACF_KM:
++		__cpacf_query_rre(CPACF_KM, 2, 4, mask);
++		break;
++	case CPACF_KMA:
++		__cpacf_query_rrf(CPACF_KMA, 2, 4, 6, 0, mask);
++		break;
++	case CPACF_KMAC:
++		__cpacf_query_rre(CPACF_KMAC, 0, 2, mask);
++		break;
++	case CPACF_KMC:
++		__cpacf_query_rre(CPACF_KMC, 2, 4, mask);
++		break;
++	case CPACF_KMCTR:
++		__cpacf_query_rrf(CPACF_KMCTR, 2, 4, 6, 0, mask);
++		break;
++	case CPACF_KMF:
++		__cpacf_query_rre(CPACF_KMF, 2, 4, mask);
++		break;
++	case CPACF_KMO:
++		__cpacf_query_rre(CPACF_KMO, 2, 4, mask);
++		break;
++	case CPACF_PCC:
++		__cpacf_query_rre(CPACF_PCC, 0, 0, mask);
++		break;
++	case CPACF_PCKMO:
++		__cpacf_query_rre(CPACF_PCKMO, 0, 0, mask);
++		break;
++	case CPACF_PRNO:
++		__cpacf_query_rre(CPACF_PRNO, 2, 4, mask);
++		break;
++	default:
++		BUG();
++	}
  }
  
  static __always_inline int __cpacf_check_opcode(unsigned int opcode)
-@@ -249,20 +248,22 @@ static __always_inline int cpacf_query_func(unsigned int opcode, unsigned int fu
- static inline int cpacf_km(unsigned long func, void *param,
- 			   u8 *dest, const u8 *src, long src_len)
- {
--	register unsigned long r0 asm("0") = (unsigned long) func;
--	register unsigned long r1 asm("1") = (unsigned long) param;
--	register unsigned long r2 asm("2") = (unsigned long) src;
--	register unsigned long r3 asm("3") = (unsigned long) src_len;
--	register unsigned long r4 asm("4") = (unsigned long) dest;
-+	union register_pair d, s;
- 
-+	d.even = (unsigned long)dest;
-+	s.even = (unsigned long)src;
-+	s.odd  = (unsigned long)src_len;
- 	asm volatile(
-+		"	lgr	0,%[fc]\n"
-+		"	lgr	1,%[pba]\n"
- 		"0:	.insn	rre,%[opc] << 16,%[dst],%[src]\n"
- 		"	brc	1,0b\n" /* handle partial completion */
--		: [src] "+a" (r2), [len] "+d" (r3), [dst] "+a" (r4)
--		: [fc] "d" (r0), [pba] "a" (r1), [opc] "i" (CPACF_KM)
--		: "cc", "memory");
-+		: [src] "+&d" (s.pair), [dst] "+&d" (d.pair)
-+		: [fc] "d" (func), [pba] "d" ((unsigned long)param),
-+		  [opc] "i" (CPACF_KM)
-+		: "cc", "memory", "0", "1");
- 
--	return src_len - r3;
-+	return src_len - s.odd;
+@@ -210,6 +261,16 @@ static __always_inline int __cpacf_check_opcode(unsigned int opcode)
+ 	}
  }
  
- /**
-@@ -279,20 +280,22 @@ static inline int cpacf_km(unsigned long func, void *param,
- static inline int cpacf_kmc(unsigned long func, void *param,
- 			    u8 *dest, const u8 *src, long src_len)
++/**
++ * cpacf_query() - check if a specific CPACF function is available
++ * @opcode: the opcode of the crypto instruction
++ * @func: the function code to test for
++ *
++ * Executes the query function for the given crypto instruction @opcode
++ * and checks if @func is available
++ *
++ * Returns 1 if @func is available for @opcode, 0 otherwise
++ */
+ static __always_inline int cpacf_query(unsigned int opcode, cpacf_mask_t *mask)
  {
--	register unsigned long r0 asm("0") = (unsigned long) func;
--	register unsigned long r1 asm("1") = (unsigned long) param;
--	register unsigned long r2 asm("2") = (unsigned long) src;
--	register unsigned long r3 asm("3") = (unsigned long) src_len;
--	register unsigned long r4 asm("4") = (unsigned long) dest;
-+	union register_pair d, s;
- 
-+	d.even = (unsigned long)dest;
-+	s.even = (unsigned long)src;
-+	s.odd  = (unsigned long)src_len;
- 	asm volatile(
-+		"	lgr	0,%[fc]\n"
-+		"	lgr	1,%[pba]\n"
- 		"0:	.insn	rre,%[opc] << 16,%[dst],%[src]\n"
- 		"	brc	1,0b\n" /* handle partial completion */
--		: [src] "+a" (r2), [len] "+d" (r3), [dst] "+a" (r4)
--		: [fc] "d" (r0), [pba] "a" (r1), [opc] "i" (CPACF_KMC)
--		: "cc", "memory");
-+		: [src] "+&d" (s.pair), [dst] "+&d" (d.pair)
-+		: [fc] "d" (func), [pba] "d" ((unsigned long)param),
-+		  [opc] "i" (CPACF_KMC)
-+		: "cc", "memory", "0", "1");
- 
--	return src_len - r3;
-+	return src_len - s.odd;
- }
- 
- /**
-@@ -306,17 +309,19 @@ static inline int cpacf_kmc(unsigned long func, void *param,
- static inline void cpacf_kimd(unsigned long func, void *param,
- 			      const u8 *src, long src_len)
- {
--	register unsigned long r0 asm("0") = (unsigned long) func;
--	register unsigned long r1 asm("1") = (unsigned long) param;
--	register unsigned long r2 asm("2") = (unsigned long) src;
--	register unsigned long r3 asm("3") = (unsigned long) src_len;
-+	union register_pair s;
- 
-+	s.even = (unsigned long)src;
-+	s.odd  = (unsigned long)src_len;
- 	asm volatile(
-+		"	lgr	0,%[fc]\n"
-+		"	lgr	1,%[pba]\n"
- 		"0:	.insn	rre,%[opc] << 16,0,%[src]\n"
- 		"	brc	1,0b\n" /* handle partial completion */
--		: [src] "+a" (r2), [len] "+d" (r3)
--		: [fc] "d" (r0), [pba] "a" (r1), [opc] "i" (CPACF_KIMD)
--		: "cc", "memory");
-+		: [src] "+&d" (s.pair)
-+		: [fc] "d" (func), [pba] "d" ((unsigned long)(param)),
-+		  [opc] "i" (CPACF_KIMD)
-+		: "cc", "memory", "0", "1");
- }
- 
- /**
-@@ -329,17 +334,19 @@ static inline void cpacf_kimd(unsigned long func, void *param,
- static inline void cpacf_klmd(unsigned long func, void *param,
- 			      const u8 *src, long src_len)
- {
--	register unsigned long r0 asm("0") = (unsigned long) func;
--	register unsigned long r1 asm("1") = (unsigned long) param;
--	register unsigned long r2 asm("2") = (unsigned long) src;
--	register unsigned long r3 asm("3") = (unsigned long) src_len;
-+	union register_pair s;
- 
-+	s.even = (unsigned long)src;
-+	s.odd  = (unsigned long)src_len;
- 	asm volatile(
-+		"	lgr	0,%[fc]\n"
-+		"	lgr	1,%[pba]\n"
- 		"0:	.insn	rre,%[opc] << 16,0,%[src]\n"
- 		"	brc	1,0b\n" /* handle partial completion */
--		: [src] "+a" (r2), [len] "+d" (r3)
--		: [fc] "d" (r0), [pba] "a" (r1), [opc] "i" (CPACF_KLMD)
--		: "cc", "memory");
-+		: [src] "+&d" (s.pair)
-+		: [fc] "d" (func), [pba] "d" ((unsigned long)param),
-+		  [opc] "i" (CPACF_KLMD)
-+		: "cc", "memory", "0", "1");
- }
- 
- /**
-@@ -355,19 +362,21 @@ static inline void cpacf_klmd(unsigned long func, void *param,
- static inline int cpacf_kmac(unsigned long func, void *param,
- 			     const u8 *src, long src_len)
- {
--	register unsigned long r0 asm("0") = (unsigned long) func;
--	register unsigned long r1 asm("1") = (unsigned long) param;
--	register unsigned long r2 asm("2") = (unsigned long) src;
--	register unsigned long r3 asm("3") = (unsigned long) src_len;
-+	union register_pair s;
- 
-+	s.even = (unsigned long)src;
-+	s.odd  = (unsigned long)src_len;
- 	asm volatile(
-+		"	lgr	0,%[fc]\n"
-+		"	lgr	1,%[pba]\n"
- 		"0:	.insn	rre,%[opc] << 16,0,%[src]\n"
- 		"	brc	1,0b\n" /* handle partial completion */
--		: [src] "+a" (r2), [len] "+d" (r3)
--		: [fc] "d" (r0), [pba] "a" (r1), [opc] "i" (CPACF_KMAC)
--		: "cc", "memory");
-+		: [src] "+&d" (s.pair)
-+		: [fc] "d" (func), [pba] "d" ((unsigned long)param),
-+		  [opc] "i" (CPACF_KMAC)
-+		: "cc", "memory", "0", "1");
- 
--	return src_len - r3;
-+	return src_len - s.odd;
- }
- 
- /**
-@@ -385,22 +394,24 @@ static inline int cpacf_kmac(unsigned long func, void *param,
- static inline int cpacf_kmctr(unsigned long func, void *param, u8 *dest,
- 			      const u8 *src, long src_len, u8 *counter)
- {
--	register unsigned long r0 asm("0") = (unsigned long) func;
--	register unsigned long r1 asm("1") = (unsigned long) param;
--	register unsigned long r2 asm("2") = (unsigned long) src;
--	register unsigned long r3 asm("3") = (unsigned long) src_len;
--	register unsigned long r4 asm("4") = (unsigned long) dest;
--	register unsigned long r6 asm("6") = (unsigned long) counter;
-+	union register_pair d, s, c;
- 
-+	d.even = (unsigned long)dest;
-+	s.even = (unsigned long)src;
-+	s.odd  = (unsigned long)src_len;
-+	c.even = (unsigned long)counter;
- 	asm volatile(
-+		"	lgr	0,%[fc]\n"
-+		"	lgr	1,%[pba]\n"
- 		"0:	.insn	rrf,%[opc] << 16,%[dst],%[src],%[ctr],0\n"
- 		"	brc	1,0b\n" /* handle partial completion */
--		: [src] "+a" (r2), [len] "+d" (r3),
--		  [dst] "+a" (r4), [ctr] "+a" (r6)
--		: [fc] "d" (r0), [pba] "a" (r1), [opc] "i" (CPACF_KMCTR)
--		: "cc", "memory");
-+		: [src] "+&d" (s.pair), [dst] "+&d" (d.pair),
-+		  [ctr] "+&d" (c.pair)
-+		: [fc] "d" (func), [pba] "d" ((unsigned long)param),
-+		  [opc] "i" (CPACF_KMCTR)
-+		: "cc", "memory", "0", "1");
- 
--	return src_len - r3;
-+	return src_len - s.odd;
- }
- 
- /**
-@@ -417,20 +428,21 @@ static inline void cpacf_prno(unsigned long func, void *param,
- 			      u8 *dest, unsigned long dest_len,
- 			      const u8 *seed, unsigned long seed_len)
- {
--	register unsigned long r0 asm("0") = (unsigned long) func;
--	register unsigned long r1 asm("1") = (unsigned long) param;
--	register unsigned long r2 asm("2") = (unsigned long) dest;
--	register unsigned long r3 asm("3") = (unsigned long) dest_len;
--	register unsigned long r4 asm("4") = (unsigned long) seed;
--	register unsigned long r5 asm("5") = (unsigned long) seed_len;
-+	union register_pair d, s;
- 
-+	d.even = (unsigned long)dest;
-+	d.odd  = (unsigned long)dest_len;
-+	s.even = (unsigned long)seed;
-+	s.odd  = (unsigned long)seed_len;
- 	asm volatile (
-+		"	lgr	0,%[fc]\n"
-+		"	lgr	1,%[pba]\n"
- 		"0:	.insn	rre,%[opc] << 16,%[dst],%[seed]\n"
- 		"	brc	1,0b\n"	  /* handle partial completion */
--		: [dst] "+a" (r2), [dlen] "+d" (r3)
--		: [fc] "d" (r0), [pba] "a" (r1),
--		  [seed] "a" (r4), [slen] "d" (r5), [opc] "i" (CPACF_PRNO)
--		: "cc", "memory");
-+		: [dst] "+&d" (d.pair)
-+		: [fc] "d" (func), [pba] "d" ((unsigned long)param),
-+		  [seed] "d" (s.pair), [opc] "i" (CPACF_PRNO)
-+		: "cc", "memory", "0", "1");
- }
- 
- /**
-@@ -443,19 +455,19 @@ static inline void cpacf_prno(unsigned long func, void *param,
- static inline void cpacf_trng(u8 *ucbuf, unsigned long ucbuf_len,
- 			      u8 *cbuf, unsigned long cbuf_len)
- {
--	register unsigned long r0 asm("0") = (unsigned long) CPACF_PRNO_TRNG;
--	register unsigned long r2 asm("2") = (unsigned long) ucbuf;
--	register unsigned long r3 asm("3") = (unsigned long) ucbuf_len;
--	register unsigned long r4 asm("4") = (unsigned long) cbuf;
--	register unsigned long r5 asm("5") = (unsigned long) cbuf_len;
-+	union register_pair u, c;
- 
-+	u.even = (unsigned long)ucbuf;
-+	u.odd  = (unsigned long)ucbuf_len;
-+	c.even = (unsigned long)cbuf;
-+	c.odd  = (unsigned long)cbuf_len;
- 	asm volatile (
-+		"	lghi	0,%[fc]\n"
- 		"0:	.insn	rre,%[opc] << 16,%[ucbuf],%[cbuf]\n"
- 		"	brc	1,0b\n"	  /* handle partial completion */
--		: [ucbuf] "+a" (r2), [ucbuflen] "+d" (r3),
--		  [cbuf] "+a" (r4), [cbuflen] "+d" (r5)
--		: [fc] "d" (r0), [opc] "i" (CPACF_PRNO)
--		: "cc", "memory");
-+		: [ucbuf] "+&d" (u.pair), [cbuf] "+&d" (c.pair)
-+		: [fc] "K" (CPACF_PRNO_TRNG), [opc] "i" (CPACF_PRNO)
-+		: "cc", "memory", "0");
- }
- 
- /**
-@@ -466,15 +478,15 @@ static inline void cpacf_trng(u8 *ucbuf, unsigned long ucbuf_len,
-  */
- static inline void cpacf_pcc(unsigned long func, void *param)
- {
--	register unsigned long r0 asm("0") = (unsigned long) func;
--	register unsigned long r1 asm("1") = (unsigned long) param;
--
- 	asm volatile(
-+		"	lgr	0,%[fc]\n"
-+		"	lgr	1,%[pba]\n"
- 		"0:	.insn	rre,%[opc] << 16,0,0\n" /* PCC opcode */
- 		"	brc	1,0b\n" /* handle partial completion */
- 		:
--		: [fc] "d" (r0), [pba] "a" (r1), [opc] "i" (CPACF_PCC)
--		: "cc", "memory");
-+		: [fc] "d" (func), [pba] "d" ((unsigned long)param),
-+		  [opc] "i" (CPACF_PCC)
-+		: "cc", "memory", "0", "1");
- }
- 
- /**
-@@ -487,14 +499,14 @@ static inline void cpacf_pcc(unsigned long func, void *param)
-  */
- static inline void cpacf_pckmo(long func, void *param)
- {
--	register unsigned long r0 asm("0") = (unsigned long) func;
--	register unsigned long r1 asm("1") = (unsigned long) param;
--
- 	asm volatile(
-+		"	lgr	0,%[fc]\n"
-+		"	lgr	1,%[pba]\n"
- 		"       .insn   rre,%[opc] << 16,0,0\n" /* PCKMO opcode */
- 		:
--		: [fc] "d" (r0), [pba] "a" (r1), [opc] "i" (CPACF_PCKMO)
--		: "cc", "memory");
-+		: [fc] "d" (func), [pba] "d" ((unsigned long)param),
-+		  [opc] "i" (CPACF_PCKMO)
-+		: "cc", "memory", "0", "1");
- }
- 
- /**
-@@ -512,21 +524,23 @@ static inline void cpacf_kma(unsigned long func, void *param, u8 *dest,
- 			     const u8 *src, unsigned long src_len,
- 			     const u8 *aad, unsigned long aad_len)
- {
--	register unsigned long r0 asm("0") = (unsigned long) func;
--	register unsigned long r1 asm("1") = (unsigned long) param;
--	register unsigned long r2 asm("2") = (unsigned long) src;
--	register unsigned long r3 asm("3") = (unsigned long) src_len;
--	register unsigned long r4 asm("4") = (unsigned long) aad;
--	register unsigned long r5 asm("5") = (unsigned long) aad_len;
--	register unsigned long r6 asm("6") = (unsigned long) dest;
-+	union register_pair d, s, a;
- 
-+	d.even = (unsigned long)dest;
-+	s.even = (unsigned long)src;
-+	s.odd  = (unsigned long)src_len;
-+	a.even = (unsigned long)aad;
-+	a.odd  = (unsigned long)aad_len;
- 	asm volatile(
-+		"	lgr	0,%[fc]\n"
-+		"	lgr	1,%[pba]\n"
- 		"0:	.insn	rrf,%[opc] << 16,%[dst],%[src],%[aad],0\n"
- 		"	brc	1,0b\n"	/* handle partial completion */
--		: [dst] "+a" (r6), [src] "+a" (r2), [slen] "+d" (r3),
--		  [aad] "+a" (r4), [alen] "+d" (r5)
--		: [fc] "d" (r0), [pba] "a" (r1), [opc] "i" (CPACF_KMA)
--		: "cc", "memory");
-+		: [dst] "+&d" (d.pair), [src] "+&d" (s.pair),
-+		  [aad] "+&d" (a.pair)
-+		: [fc] "d" (func), [pba] "d" ((unsigned long)param),
-+		  [opc] "i" (CPACF_KMA)
-+		: "cc", "memory", "0", "1");
- }
- 
- #endif	/* _ASM_S390_CPACF_H */
+ 	if (__cpacf_check_opcode(opcode)) {
 -- 
 2.43.0
 
