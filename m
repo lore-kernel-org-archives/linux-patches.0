@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E851313B2AC;
-	Wed,  3 Jul 2024 11:20:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D66B1174EC9;
+	Wed,  3 Jul 2024 11:20:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005618; cv=none; b=ldy7OEb734RCT+OCOHYJljL09r2ojWKc/b5Ep6K7topbTJSi2JCQHVqIII2Ksp12aoNCkrB6NYRFcjGWECn9aThHsFjyciOIuO6MC03k2zDh+9QZKea5UC+1urmHsVzVZ9lzuBILE8iexU5i/P9gKcZ220M1/BlAZkjEwhKphyc=
+	t=1720005620; cv=none; b=tnk1JkCb2+qldY8dawegERTlI6m/D0h+5awrBv212jpuaIiY+F2Az0gUCLJs4EMS2lZS+XhZukHneqrhaTwZFnyTvllfugn7Hw1pjl+EnXCsdBMrr2TSzs6dvhqrSk0/ymCqkNc+iKrVpMYJ24Slr2mHRx1VXQT5pHYkkIdnEw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005618; c=relaxed/simple;
-	bh=OUVV2tRxT6jEq5XvwVq+rDMc0clEeHpkSk25UnvSb2A=;
+	s=arc-20240116; t=1720005620; c=relaxed/simple;
+	bh=cdmZaBdNdymH58mSwW7M/YobmTbD6Gp7U+XizOlFhKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DGZH9e7jAPn35O9ISi1sLICbN/hA5BXsnR/3wcCAxamseJtC5zhVFaVPsoGR/k9wbNvMpzFTwW1cPnv97phWZqZJOpAVryX9heszkRc0zHhAoIz0PrfZcTw8MlxmZxoo0LIeErfhlcXmJhuPl5PtpXlsEKkMOB9BL3LJgQCKkIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W21KIGw0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TSctyKFM7y5bj7uFKDm3geCd6iFucA5ZHmBQDps0o4NBejPrOmVefn7WzSw5todpJNN454PUt7RW5Ov83kwYO3lifJwWi7d2XUwoKw0vqnh9g2cpmTzzzQd0vPM18Yc8RjqRNLsesbs+37ZepzjdFOj/ztB5EzXVdu/8RtLweaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJsqzkkb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W21KIGw0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64998C2BD10;
-	Wed,  3 Jul 2024 11:20:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJsqzkkb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57A8AC2BD10;
+	Wed,  3 Jul 2024 11:20:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005617;
-	bh=OUVV2tRxT6jEq5XvwVq+rDMc0clEeHpkSk25UnvSb2A=;
+	s=korg; t=1720005620;
+	bh=cdmZaBdNdymH58mSwW7M/YobmTbD6Gp7U+XizOlFhKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W21KIGw03h0PI7ndIOKZ8ePHL8okQzjEmdzUHHaVOo36oDdHFhWBV9gWuKa2RoIZi
-	 M8Ezk4nABfWCQc+jyjrFjZFnNkz6EC/GJfK7xL/Jzc0DZ8jBk32LzNNIHZF3y54c4C
-	 deQcn97YL6TKz0M9mQifJ4fj/2w2YdnkQY5bkIMY=
+	b=dJsqzkkb50HZd4vnmpQCiD2kflUjGomsM+WKWWgfbUdUZ/qqGnuvBgtdlWC0LjlY7
+	 CWxL2Ksx6HoQUObVdag3NuIOKibzJinXJU+diIgP8vlIdMKXHKwldFbbonuA3kn5Y5
+	 Hn2g7Qv0wks9bBBNx5yoRovKbQ9kEpMk5GHooVKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Brown <doug@schmorgal.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.15 138/356] serial: 8250_pxa: Configure tx_loadsz to match FIFO IRQ level
-Date: Wed,  3 Jul 2024 12:37:54 +0200
-Message-ID: <20240703102918.322235889@linuxfoundation.org>
+	Matthias Goergens <matthias.goergens@gmail.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Carlos Llamas <cmllamas@google.com>
+Subject: [PATCH 5.15 139/356] hugetlb_encode.h: fix undefined behaviour (34 << 26)
+Date: Wed,  3 Jul 2024 12:37:55 +0200
+Message-ID: <20240703102918.359203703@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -50,35 +54,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doug Brown <doug@schmorgal.com>
+From: Matthias Goergens <matthias.goergens@gmail.com>
 
-commit 5208e7ced520a813b4f4774451fbac4e517e78b2 upstream.
+commit 710bb68c2e3a24512e2d2bae470960d7488e97b1 upstream.
 
-The FIFO is 64 bytes, but the FCR is configured to fire the TX interrupt
-when the FIFO is half empty (bit 3 = 0). Thus, we should only write 32
-bytes when a TX interrupt occurs.
+Left-shifting past the size of your datatype is undefined behaviour in C.
+The literal 34 gets the type `int`, and that one is not big enough to be
+left shifted by 26 bits.
 
-This fixes a problem observed on the PXA168 that dropped a bunch of TX
-bytes during large transmissions.
+An `unsigned` is long enough (on any machine that has at least 32 bits for
+their ints.)
 
-Fixes: ab28f51c77cd ("serial: rewrite pxa2xx-uart to use 8250_core")
-Signed-off-by: Doug Brown <doug@schmorgal.com>
-Link: https://lore.kernel.org/r/20240519191929.122202-1-doug@schmorgal.com
-Cc: stable <stable@kernel.org>
+For uniformity, we mark all the literals as unsigned.  But it's only
+really needed for HUGETLB_FLAG_ENCODE_16GB.
+
+Thanks to Randy Dunlap for an initial review and suggestion.
+
+Link: https://lkml.kernel.org/r/20220905031904.150925-1-matthias.goergens@gmail.com
+Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_pxa.c |    1 +
- 1 file changed, 1 insertion(+)
+ include/uapi/asm-generic/hugetlb_encode.h  |   26 +++++++++++++-------------
+ tools/include/asm-generic/hugetlb_encode.h |   26 +++++++++++++-------------
+ 2 files changed, 26 insertions(+), 26 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_pxa.c
-+++ b/drivers/tty/serial/8250/8250_pxa.c
-@@ -125,6 +125,7 @@ static int serial_pxa_probe(struct platf
- 	uart.port.regshift = 2;
- 	uart.port.irq = irq;
- 	uart.port.fifosize = 64;
-+	uart.tx_loadsz = 32;
- 	uart.port.flags = UPF_IOREMAP | UPF_SKIP_TEST | UPF_FIXED_TYPE;
- 	uart.port.dev = &pdev->dev;
- 	uart.port.uartclk = clk_get_rate(data->clk);
+--- a/include/uapi/asm-generic/hugetlb_encode.h
++++ b/include/uapi/asm-generic/hugetlb_encode.h
+@@ -20,18 +20,18 @@
+ #define HUGETLB_FLAG_ENCODE_SHIFT	26
+ #define HUGETLB_FLAG_ENCODE_MASK	0x3f
+ 
+-#define HUGETLB_FLAG_ENCODE_16KB	(14 << HUGETLB_FLAG_ENCODE_SHIFT)
+-#define HUGETLB_FLAG_ENCODE_64KB	(16 << HUGETLB_FLAG_ENCODE_SHIFT)
+-#define HUGETLB_FLAG_ENCODE_512KB	(19 << HUGETLB_FLAG_ENCODE_SHIFT)
+-#define HUGETLB_FLAG_ENCODE_1MB		(20 << HUGETLB_FLAG_ENCODE_SHIFT)
+-#define HUGETLB_FLAG_ENCODE_2MB		(21 << HUGETLB_FLAG_ENCODE_SHIFT)
+-#define HUGETLB_FLAG_ENCODE_8MB		(23 << HUGETLB_FLAG_ENCODE_SHIFT)
+-#define HUGETLB_FLAG_ENCODE_16MB	(24 << HUGETLB_FLAG_ENCODE_SHIFT)
+-#define HUGETLB_FLAG_ENCODE_32MB	(25 << HUGETLB_FLAG_ENCODE_SHIFT)
+-#define HUGETLB_FLAG_ENCODE_256MB	(28 << HUGETLB_FLAG_ENCODE_SHIFT)
+-#define HUGETLB_FLAG_ENCODE_512MB	(29 << HUGETLB_FLAG_ENCODE_SHIFT)
+-#define HUGETLB_FLAG_ENCODE_1GB		(30 << HUGETLB_FLAG_ENCODE_SHIFT)
+-#define HUGETLB_FLAG_ENCODE_2GB		(31 << HUGETLB_FLAG_ENCODE_SHIFT)
+-#define HUGETLB_FLAG_ENCODE_16GB	(34 << HUGETLB_FLAG_ENCODE_SHIFT)
++#define HUGETLB_FLAG_ENCODE_16KB	(14U << HUGETLB_FLAG_ENCODE_SHIFT)
++#define HUGETLB_FLAG_ENCODE_64KB	(16U << HUGETLB_FLAG_ENCODE_SHIFT)
++#define HUGETLB_FLAG_ENCODE_512KB	(19U << HUGETLB_FLAG_ENCODE_SHIFT)
++#define HUGETLB_FLAG_ENCODE_1MB		(20U << HUGETLB_FLAG_ENCODE_SHIFT)
++#define HUGETLB_FLAG_ENCODE_2MB		(21U << HUGETLB_FLAG_ENCODE_SHIFT)
++#define HUGETLB_FLAG_ENCODE_8MB		(23U << HUGETLB_FLAG_ENCODE_SHIFT)
++#define HUGETLB_FLAG_ENCODE_16MB	(24U << HUGETLB_FLAG_ENCODE_SHIFT)
++#define HUGETLB_FLAG_ENCODE_32MB	(25U << HUGETLB_FLAG_ENCODE_SHIFT)
++#define HUGETLB_FLAG_ENCODE_256MB	(28U << HUGETLB_FLAG_ENCODE_SHIFT)
++#define HUGETLB_FLAG_ENCODE_512MB	(29U << HUGETLB_FLAG_ENCODE_SHIFT)
++#define HUGETLB_FLAG_ENCODE_1GB		(30U << HUGETLB_FLAG_ENCODE_SHIFT)
++#define HUGETLB_FLAG_ENCODE_2GB		(31U << HUGETLB_FLAG_ENCODE_SHIFT)
++#define HUGETLB_FLAG_ENCODE_16GB	(34U << HUGETLB_FLAG_ENCODE_SHIFT)
+ 
+ #endif /* _ASM_GENERIC_HUGETLB_ENCODE_H_ */
+--- a/tools/include/asm-generic/hugetlb_encode.h
++++ b/tools/include/asm-generic/hugetlb_encode.h
+@@ -20,18 +20,18 @@
+ #define HUGETLB_FLAG_ENCODE_SHIFT	26
+ #define HUGETLB_FLAG_ENCODE_MASK	0x3f
+ 
+-#define HUGETLB_FLAG_ENCODE_16KB	(14 << HUGETLB_FLAG_ENCODE_SHIFT)
+-#define HUGETLB_FLAG_ENCODE_64KB	(16 << HUGETLB_FLAG_ENCODE_SHIFT)
+-#define HUGETLB_FLAG_ENCODE_512KB	(19 << HUGETLB_FLAG_ENCODE_SHIFT)
+-#define HUGETLB_FLAG_ENCODE_1MB		(20 << HUGETLB_FLAG_ENCODE_SHIFT)
+-#define HUGETLB_FLAG_ENCODE_2MB		(21 << HUGETLB_FLAG_ENCODE_SHIFT)
+-#define HUGETLB_FLAG_ENCODE_8MB		(23 << HUGETLB_FLAG_ENCODE_SHIFT)
+-#define HUGETLB_FLAG_ENCODE_16MB	(24 << HUGETLB_FLAG_ENCODE_SHIFT)
+-#define HUGETLB_FLAG_ENCODE_32MB	(25 << HUGETLB_FLAG_ENCODE_SHIFT)
+-#define HUGETLB_FLAG_ENCODE_256MB	(28 << HUGETLB_FLAG_ENCODE_SHIFT)
+-#define HUGETLB_FLAG_ENCODE_512MB	(29 << HUGETLB_FLAG_ENCODE_SHIFT)
+-#define HUGETLB_FLAG_ENCODE_1GB		(30 << HUGETLB_FLAG_ENCODE_SHIFT)
+-#define HUGETLB_FLAG_ENCODE_2GB		(31 << HUGETLB_FLAG_ENCODE_SHIFT)
+-#define HUGETLB_FLAG_ENCODE_16GB	(34 << HUGETLB_FLAG_ENCODE_SHIFT)
++#define HUGETLB_FLAG_ENCODE_16KB	(14U << HUGETLB_FLAG_ENCODE_SHIFT)
++#define HUGETLB_FLAG_ENCODE_64KB	(16U << HUGETLB_FLAG_ENCODE_SHIFT)
++#define HUGETLB_FLAG_ENCODE_512KB	(19U << HUGETLB_FLAG_ENCODE_SHIFT)
++#define HUGETLB_FLAG_ENCODE_1MB		(20U << HUGETLB_FLAG_ENCODE_SHIFT)
++#define HUGETLB_FLAG_ENCODE_2MB		(21U << HUGETLB_FLAG_ENCODE_SHIFT)
++#define HUGETLB_FLAG_ENCODE_8MB		(23U << HUGETLB_FLAG_ENCODE_SHIFT)
++#define HUGETLB_FLAG_ENCODE_16MB	(24U << HUGETLB_FLAG_ENCODE_SHIFT)
++#define HUGETLB_FLAG_ENCODE_32MB	(25U << HUGETLB_FLAG_ENCODE_SHIFT)
++#define HUGETLB_FLAG_ENCODE_256MB	(28U << HUGETLB_FLAG_ENCODE_SHIFT)
++#define HUGETLB_FLAG_ENCODE_512MB	(29U << HUGETLB_FLAG_ENCODE_SHIFT)
++#define HUGETLB_FLAG_ENCODE_1GB		(30U << HUGETLB_FLAG_ENCODE_SHIFT)
++#define HUGETLB_FLAG_ENCODE_2GB		(31U << HUGETLB_FLAG_ENCODE_SHIFT)
++#define HUGETLB_FLAG_ENCODE_16GB	(34U << HUGETLB_FLAG_ENCODE_SHIFT)
+ 
+ #endif /* _ASM_GENERIC_HUGETLB_ENCODE_H_ */
 
 
