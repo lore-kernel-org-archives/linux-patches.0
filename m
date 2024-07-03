@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07CB861FDF;
-	Wed,  3 Jul 2024 11:04:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F361D17C21F;
+	Wed,  3 Jul 2024 11:04:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004682; cv=none; b=I2kk1sxHFP1BfgVDTYsY+XCfUMzNU3qdQEMdbBekmXeEcqL/WbNIiUizibXofP3WOKLqDZQ13l1a0Ajmc+Piu8eF2eFUFJGUvme0ppmo1OTf45s7ImNLm4OqsiiDELQtlO+Olt3XSM9hZ11VTzMfWQdhLiDNbI10pkWM2EW/xZQ=
+	t=1720004685; cv=none; b=BLkSoMsdn1gj+96Hs08DwTpeco/McygNIHQK32nbqa0BnEb4nSWASQcYo7lRxfvvGKJKKh/gC26qcy+BzQ5i7+tomEHy4sbr3SEVC7mJxsubgK39Tw3SXmfknEIuEb1l7Nxe2fjO9w8bKFmTIe+LAUy+RxuT3x3cv1fqignmFE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004682; c=relaxed/simple;
-	bh=FWQlCJATcCRHLXyjERkuwiPy20XWvOL875rU4Wmt1eE=;
+	s=arc-20240116; t=1720004685; c=relaxed/simple;
+	bh=KyYDqRln1a8MnaimvAS/CJbr9hXSjLHXdSccG/M57qY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JlTvHR6plE9VOBJqLr9zKGMKQpmWHJQb5Tm4efym9tzc5Y61Tq9WmZLAy5vkuGjbgwCdNoFKArDDflWWF2RXUhuXWnb/wl7GG2wzlilQq+WfjKcYw75/JvwjQeBecrwx1CJlJthZN0L6vpJ+WQMtSZnfj2khg493nr/0Ad7KaAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AK4V0+Wf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hkmRPUXYv6RdoOPa59KE7VtiGY8e3DORsFlzyAmml5+CVvWB03iE9cLa6rotNMF4+Im6yoKH5xnUl6NxeZ92HkzmarYXweoTX4vrauEy80O09hlAQPR6SYuMkVjgdiycIfD5gIfHPuUQWNpGZKIi47NuxGyVqluOKlGo4O77q7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FuxN4uvp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AK4V0+Wf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83153C2BD10;
-	Wed,  3 Jul 2024 11:04:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FuxN4uvp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7798AC2BD10;
+	Wed,  3 Jul 2024 11:04:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004681;
-	bh=FWQlCJATcCRHLXyjERkuwiPy20XWvOL875rU4Wmt1eE=;
+	s=korg; t=1720004684;
+	bh=KyYDqRln1a8MnaimvAS/CJbr9hXSjLHXdSccG/M57qY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AK4V0+WfsiCjs3HA21YBC4lzAzi/Bgv5WQxYScp6N5Z1bdzVHgErh/7nGeqVJ8+9P
-	 tmp+Tx5Vm83ZTGxfXmK8y6Ste+3bkn+iO17nuHWr/PEYUo+p9znfQMLjVo2X2XaJXI
-	 vcloPslX3sJaXoGGDLgF7y/abO2B2D8WNIl9kU5E=
+	b=FuxN4uvptpzgrR7GXEy77tITVqE03WIdAhRKXBFp1OeUgU+ca+02obCECPGmartSW
+	 e6a4SHSrlccHJfF7K2qVWhtGRIyQNlYeSMEQSHk7RAIGmHSFRTEp+kZmurG5atwrxk
+	 2gDNvBqL2Fz567vuptB+WJ5Ol5/Ok6IqyL7vAkxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 092/290] nilfs2: fix potential kernel bug due to lack of writeback flag waiting
-Date: Wed,  3 Jul 2024 12:37:53 +0200
-Message-ID: <20240703102907.664922693@linuxfoundation.org>
+	Oleg Nesterov <oleg@redhat.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 5.10 093/290] tick/nohz_full: Dont abuse smp_call_function_single() in tick_setup_device()
+Date: Wed,  3 Jul 2024 12:37:54 +0200
+Message-ID: <20240703102907.702353576@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -50,76 +50,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Oleg Nesterov <oleg@redhat.com>
 
-commit a4ca369ca221bb7e06c725792ac107f0e48e82e7 upstream.
+commit 07c54cc5988f19c9642fd463c2dbdac7fc52f777 upstream.
 
-Destructive writes to a block device on which nilfs2 is mounted can cause
-a kernel bug in the folio/page writeback start routine or writeback end
-routine (__folio_start_writeback in the log below):
+After the recent commit 5097cbcb38e6 ("sched/isolation: Prevent boot crash
+when the boot CPU is nohz_full") the kernel no longer crashes, but there is
+another problem.
 
- kernel BUG at mm/page-writeback.c:3070!
- Oops: invalid opcode: 0000 [#1] PREEMPT SMP KASAN PTI
- ...
- RIP: 0010:__folio_start_writeback+0xbaa/0x10e0
- Code: 25 ff 0f 00 00 0f 84 18 01 00 00 e8 40 ca c6 ff e9 17 f6 ff ff
-  e8 36 ca c6 ff 4c 89 f7 48 c7 c6 80 c0 12 84 e8 e7 b3 0f 00 90 <0f>
-  0b e8 1f ca c6 ff 4c 89 f7 48 c7 c6 a0 c6 12 84 e8 d0 b3 0f 00
- ...
- Call Trace:
-  <TASK>
-  nilfs_segctor_do_construct+0x4654/0x69d0 [nilfs2]
-  nilfs_segctor_construct+0x181/0x6b0 [nilfs2]
-  nilfs_segctor_thread+0x548/0x11c0 [nilfs2]
-  kthread+0x2f0/0x390
-  ret_from_fork+0x4b/0x80
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
+In this case tick_setup_device() calls tick_take_do_timer_from_boot() to
+update tick_do_timer_cpu and this triggers the WARN_ON_ONCE(irqs_disabled)
+in smp_call_function_single().
 
-This is because when the log writer starts a writeback for segment summary
-blocks or a super root block that use the backing device's page cache, it
-does not wait for the ongoing folio/page writeback, resulting in an
-inconsistent writeback state.
+Kill tick_take_do_timer_from_boot() and just use WRITE_ONCE(), the new
+comment explains why this is safe (thanks Thomas!).
 
-Fix this issue by waiting for ongoing writebacks when putting
-folios/pages on the backing device into writeback state.
-
-Link: https://lkml.kernel.org/r/20240530141556.4411-1-konishi.ryusuke@gmail.com
-Fixes: 9ff05123e3bf ("nilfs2: segment constructor")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 08ae95f4fd3b ("nohz_full: Allow the boot CPU to be nohz_full")
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240528122019.GA28794@redhat.com
+Link: https://lore.kernel.org/all/20240522151742.GA10400@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/segment.c |    3 +++
- 1 file changed, 3 insertions(+)
+ kernel/time/tick-common.c |   42 ++++++++++++++----------------------------
+ 1 file changed, 14 insertions(+), 28 deletions(-)
 
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -1697,6 +1697,7 @@ static void nilfs_segctor_prepare_write(
- 			if (bh->b_page != bd_page) {
- 				if (bd_page) {
- 					lock_page(bd_page);
-+					wait_on_page_writeback(bd_page);
- 					clear_page_dirty_for_io(bd_page);
- 					set_page_writeback(bd_page);
- 					unlock_page(bd_page);
-@@ -1710,6 +1711,7 @@ static void nilfs_segctor_prepare_write(
- 			if (bh == segbuf->sb_super_root) {
- 				if (bh->b_page != bd_page) {
- 					lock_page(bd_page);
-+					wait_on_page_writeback(bd_page);
- 					clear_page_dirty_for_io(bd_page);
- 					set_page_writeback(bd_page);
- 					unlock_page(bd_page);
-@@ -1726,6 +1728,7 @@ static void nilfs_segctor_prepare_write(
+--- a/kernel/time/tick-common.c
++++ b/kernel/time/tick-common.c
+@@ -177,26 +177,6 @@ void tick_setup_periodic(struct clock_ev
  	}
- 	if (bd_page) {
- 		lock_page(bd_page);
-+		wait_on_page_writeback(bd_page);
- 		clear_page_dirty_for_io(bd_page);
- 		set_page_writeback(bd_page);
- 		unlock_page(bd_page);
+ }
+ 
+-#ifdef CONFIG_NO_HZ_FULL
+-static void giveup_do_timer(void *info)
+-{
+-	int cpu = *(unsigned int *)info;
+-
+-	WARN_ON(tick_do_timer_cpu != smp_processor_id());
+-
+-	tick_do_timer_cpu = cpu;
+-}
+-
+-static void tick_take_do_timer_from_boot(void)
+-{
+-	int cpu = smp_processor_id();
+-	int from = tick_do_timer_boot_cpu;
+-
+-	if (from >= 0 && from != cpu)
+-		smp_call_function_single(from, giveup_do_timer, &cpu, 1);
+-}
+-#endif
+-
+ /*
+  * Setup the tick device
+  */
+@@ -220,19 +200,25 @@ static void tick_setup_device(struct tic
+ 			tick_next_period = ktime_get();
+ #ifdef CONFIG_NO_HZ_FULL
+ 			/*
+-			 * The boot CPU may be nohz_full, in which case set
+-			 * tick_do_timer_boot_cpu so the first housekeeping
+-			 * secondary that comes up will take do_timer from
+-			 * us.
++			 * The boot CPU may be nohz_full, in which case the
++			 * first housekeeping secondary will take do_timer()
++			 * from it.
+ 			 */
+ 			if (tick_nohz_full_cpu(cpu))
+ 				tick_do_timer_boot_cpu = cpu;
+ 
+-		} else if (tick_do_timer_boot_cpu != -1 &&
+-						!tick_nohz_full_cpu(cpu)) {
+-			tick_take_do_timer_from_boot();
++		} else if (tick_do_timer_boot_cpu != -1 && !tick_nohz_full_cpu(cpu)) {
+ 			tick_do_timer_boot_cpu = -1;
+-			WARN_ON(tick_do_timer_cpu != cpu);
++			/*
++			 * The boot CPU will stay in periodic (NOHZ disabled)
++			 * mode until clocksource_done_booting() called after
++			 * smp_init() selects a high resolution clocksource and
++			 * timekeeping_notify() kicks the NOHZ stuff alive.
++			 *
++			 * So this WRITE_ONCE can only race with the READ_ONCE
++			 * check in tick_periodic() but this race is harmless.
++			 */
++			WRITE_ONCE(tick_do_timer_cpu, cpu);
+ #endif
+ 		}
+ 
 
 
