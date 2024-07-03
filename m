@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3A117C7A0;
-	Wed,  3 Jul 2024 10:43:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0BA5173326;
+	Wed,  3 Jul 2024 10:43:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003400; cv=none; b=TYAPVcNhpvMsvkTUBamI9ZqYAoU8e3ZvY/lpY1k5gZ2z03Vh9KW5P42IQnbtWl9U6h5gnrlgwxezq5ab80EL2A3KmTSsbDl2AFC9VAU2t+BYU0Iuq7+kTUiz4KD3wfsUaoNveMNSs3/Zc3k5r92Dd9jrkynxrxkQR/WxhvpkiV0=
+	t=1720003403; cv=none; b=NzErGO5ksA9JkvhdAVtxJnHAfPtIuWawOV8T5pDA42zE2cetCq9jMPloAw5vde9vyHhK3hcmAFo825uHXA9a+xD0dT1fXEXpKg+i7xOC/Zte/dA79AzJZxO4c7i/FW43pljVSFMpC6Sriro33wAranzmBX9GFY0ewpmnyAt0FRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003400; c=relaxed/simple;
-	bh=yqpXsQfdTAhWMkU13ehkwk/wiFdNmUaBzKyh/Fd1Cus=;
+	s=arc-20240116; t=1720003403; c=relaxed/simple;
+	bh=3m4R4KpJwSUJVsuSDqqsi56NGxooyOJ/xa5YbZVnMf8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TMUKAtDT9Jzbts+NN9+h3bKCS3ZmfLT8vccQp72iWT7VRhCCDo4+oP8Xo4koIAt435POaG3q/ebqQTywWlP80xNEsvAmjnakHnxzxfPolppAEBbTUD3zBwdPf4OUHPSsXl8HSGBmZa4aEW+jJTp5uAwcamPqCoFqXuxZvQ1L0BY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fTkuZw02; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MZ+Igivu9wEllKd/aHs4lg3O8Hgb/xM04SE3Lig4yCRPvr5jgDQr+S7Mc1YXwNStmK+fvmV70wcmfkS4PIhoHDfIWOeDxVchHyQflvgHAb0uYPAffyuFlJcT6McnQQRQ+smvrxUt730AL3hzNWSe3JID01uanNafEAsBm1jWf/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AT2tDSY4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fTkuZw02"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7408FC32781;
-	Wed,  3 Jul 2024 10:43:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AT2tDSY4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 660A9C4AF0A;
+	Wed,  3 Jul 2024 10:43:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003399;
-	bh=yqpXsQfdTAhWMkU13ehkwk/wiFdNmUaBzKyh/Fd1Cus=;
+	s=korg; t=1720003402;
+	bh=3m4R4KpJwSUJVsuSDqqsi56NGxooyOJ/xa5YbZVnMf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fTkuZw02pQYWk/m4j56BEDQ7KdHmWYdKbip6iDor0+AuGwyi1/xJkUlTMv7jKSnqa
-	 5CFfP27J0v1FZz6IHQhAeJnb0uo8n6l5RwyzfwglgCWQTPRU7mfQ4UZO3+cgQdwcS3
-	 /Ku8T3OhKR8D2Um4PdSstBXdAGaPFt9c4Qikwqm4=
+	b=AT2tDSY4wDy6hpPdeoO0RUJsbR4GkdjFfER6JnweD4nIuTsBmcRMLd/ftm5GgMb+a
+	 llveISui6VUTkk0lXdF1GkVVS0CMPkFXe2ESCQE8O72K0LkwQiJYktzIs1toM/WRf+
+	 fgCwngSjXUVVLcB24Rv4yrAKABtlUM0dISrInOK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kun(llfl)" <llfl@linux.alibaba.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 037/139] iommu/amd: Fix sysfs leak in iommu init
-Date: Wed,  3 Jul 2024 12:38:54 +0200
-Message-ID: <20240703102831.839871278@linuxfoundation.org>
+Subject: [PATCH 4.19 038/139] liquidio: Adjust a NULL pointer handling path in lio_vf_rep_copy_packet
+Date: Wed,  3 Jul 2024 12:38:55 +0200
+Message-ID: <20240703102831.876561668@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -52,42 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kun(llfl) <llfl@linux.alibaba.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit a295ec52c8624883885396fde7b4df1a179627c3 ]
+[ Upstream commit c44711b78608c98a3e6b49ce91678cd0917d5349 ]
 
-During the iommu initialization, iommu_init_pci() adds sysfs nodes.
-However, these nodes aren't remove in free_iommu_resources() subsequently.
+In lio_vf_rep_copy_packet() pg_info->page is compared to a NULL value,
+but then it is unconditionally passed to skb_add_rx_frag() which looks
+strange and could lead to null pointer dereference.
 
-Fixes: 39ab9555c241 ("iommu: Add sysfs bindings for struct iommu_device")
-Signed-off-by: Kun(llfl) <llfl@linux.alibaba.com>
-Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Link: https://lore.kernel.org/r/c8e0d11c6ab1ee48299c288009cf9c5dae07b42d.1715215003.git.llfl@linux.alibaba.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+lio_vf_rep_copy_packet() call trace looks like:
+	octeon_droq_process_packets
+	 octeon_droq_fast_process_packets
+	  octeon_droq_dispatch_pkt
+	   octeon_create_recv_info
+	    ...search in the dispatch_list...
+	     ->disp_fn(rdisp->rinfo, ...)
+	      lio_vf_rep_pkt_recv(struct octeon_recv_info *recv_info, ...)
+In this path there is no code which sets pg_info->page to NULL.
+So this check looks unneeded and doesn't solve potential problem.
+But I guess the author had reason to add a check and I have no such card
+and can't do real test.
+In addition, the code in the function liquidio_push_packet() in
+liquidio/lio_core.c does exactly the same.
+
+Based on this, I consider the most acceptable compromise solution to
+adjust this issue by moving skb_add_rx_frag() into conditional scope.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 1f233f327913 ("liquidio: switchdev support for LiquidIO NIC")
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd_iommu_init.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/ethernet/cavium/liquidio/lio_vf_rep.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
---- a/drivers/iommu/amd_iommu_init.c
-+++ b/drivers/iommu/amd_iommu_init.c
-@@ -1409,8 +1409,17 @@ static int __init init_iommu_from_acpi(s
- 	return 0;
- }
- 
-+static void __init free_sysfs(struct amd_iommu *iommu)
-+{
-+	if (iommu->iommu.dev) {
-+		iommu_device_unregister(&iommu->iommu);
-+		iommu_device_sysfs_remove(&iommu->iommu);
-+	}
-+}
-+
- static void __init free_iommu_one(struct amd_iommu *iommu)
- {
-+	free_sysfs(iommu);
- 	free_command_buffer(iommu);
- 	free_event_buffer(iommu);
- 	free_ppr_log(iommu);
+diff --git a/drivers/net/ethernet/cavium/liquidio/lio_vf_rep.c b/drivers/net/ethernet/cavium/liquidio/lio_vf_rep.c
+index a1bda1683ebfc..d90500573f5b7 100644
+--- a/drivers/net/ethernet/cavium/liquidio/lio_vf_rep.c
++++ b/drivers/net/ethernet/cavium/liquidio/lio_vf_rep.c
+@@ -289,13 +289,12 @@ lio_vf_rep_copy_packet(struct octeon_device *oct,
+ 				pg_info->page_offset;
+ 			memcpy(skb->data, va, MIN_SKB_SIZE);
+ 			skb_put(skb, MIN_SKB_SIZE);
++			skb_add_rx_frag(skb, skb_shinfo(skb)->nr_frags,
++					pg_info->page,
++					pg_info->page_offset + MIN_SKB_SIZE,
++					len - MIN_SKB_SIZE,
++					LIO_RXBUFFER_SZ);
+ 		}
+-
+-		skb_add_rx_frag(skb, skb_shinfo(skb)->nr_frags,
+-				pg_info->page,
+-				pg_info->page_offset + MIN_SKB_SIZE,
+-				len - MIN_SKB_SIZE,
+-				LIO_RXBUFFER_SZ);
+ 	} else {
+ 		struct octeon_skb_page_info *pg_info =
+ 			((struct octeon_skb_page_info *)(skb->cb));
+-- 
+2.43.0
+
 
 
