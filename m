@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468031891CA;
-	Wed,  3 Jul 2024 11:22:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 477A21891CA;
+	Wed,  3 Jul 2024 11:22:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005739; cv=none; b=gmjRj1HfT9aXiCqhb3pzr7FDV0Pv1kZ4uwnxDW9hS5xDm4HtrOjkqUql/2+FBKpjIsFF+vvcZOXUjA/DsT6AP3WRmlUXafMs/M/xGQduYY4XIQnJzLnX9HzOxbLR4ijqToXnsMf/zluaHwss2k+6Zz9VH2xdjYRNG1aGMxvJG2I=
+	t=1720005742; cv=none; b=HusVo7SgeIQIXzAuqRAbCPiGx3CmPkwdGlYztFVgAF2LR35TOPDuYTkjHU6HbZOoj/OssvMdyaMIXJjEHcBFt9JU0lTEbKC7eycrGC7yUjvNnz9n1+X3e2wvcrTASPRwUQpdaXsZ1J8xa9AfFkrKPke5YTRUv/cE/BxxHl+H4Hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005739; c=relaxed/simple;
-	bh=+kgjpxKrrfu3I0wsRxSIyJ47gIp64GHhK1mMcf5Whdk=;
+	s=arc-20240116; t=1720005742; c=relaxed/simple;
+	bh=hWs3NByF8fFDTF6ycy5/4Wx/gZxyo0kB3U0nOOYWtKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LImJUjEdRP2gaBef4nnr5rWjk8c5RRILYlzqIsu3vo9Y0JPJNpbYrBxVqdj0QSS0kVtiidCcak0cxPiAX/bJcUtDEyeRZyWsIld+ecR3/uQ/ykkLxgv97G5DJP23NTizp3AVJuUwRfS0boKp+H5d4mggHDoGUB5niXpRZbRynA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oSSw5ZE8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FmSlAdKHGq/qT3s7MVriGucFrQdq+UP3FVEbvXwlYba2ACGtZp17nmDE1pVovr1QGGWemdtyiDhTCb9bfdTlTiEbW+Kc0I6LPYo9oVnEMK5Z4IUjWOI4ZcgezQX6QB7B0+G6VaquG7nICFEKX54dwNCsTfS6iLrfJAIbGgaPltg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=waXHjNr/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oSSw5ZE8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF42DC2BD10;
-	Wed,  3 Jul 2024 11:22:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="waXHjNr/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE932C2BD10;
+	Wed,  3 Jul 2024 11:22:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005739;
-	bh=+kgjpxKrrfu3I0wsRxSIyJ47gIp64GHhK1mMcf5Whdk=;
+	s=korg; t=1720005742;
+	bh=hWs3NByF8fFDTF6ycy5/4Wx/gZxyo0kB3U0nOOYWtKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oSSw5ZE8sML2NBthcQrtjS31BEDYDLoBlFiXRMHZJ8X0jp5fmfbdPmo2Xe6/FaNS+
-	 ab+IWt829vxW4FUyLg2Yb8Su05vT5U1Nf9R2XIuyD+lsdACHvMmIHnAHJGpJtxjniS
-	 NGiWW1ijFJEwL1BeB5rFuLiHr+GqAWm25ezdlphw=
+	b=waXHjNr/9D+2AD9PDCzp+tv+/gWDyZW+xtUu+Bfia0Gy86fgUb1JIyPbaIeqKcBRs
+	 0uEyqhgjc9acbOIEsACKbpQm8aMP9qPWEJTY2XN1bpY+jfLX2/RnbnP+seBPqDhuXx
+	 rNKSDw1MiahQqQGfEGylas73P+dGob4Gl0s03wu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Jiang <quic_tjiang@quicinc.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.15 149/356] Bluetooth: qca: fix info leak when fetching board id
-Date: Wed,  3 Jul 2024 12:38:05 +0200
-Message-ID: <20240703102918.738928504@linuxfoundation.org>
+	syzbot+0cb5bb0f4bf9e79db3b3@syzkaller.appspotmail.com,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Daniel Jordan <daniel.m.jordan@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 150/356] padata: Disable BH when taking works lock on MT path
+Date: Wed,  3 Jul 2024 12:38:06 +0200
+Message-ID: <20240703102918.778003747@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,36 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit 0adcf6be1445ed50bfd4a451a7a782568f270197 upstream.
+[ Upstream commit 58329c4312031603bb1786b44265c26d5065fe72 ]
 
-Add the missing sanity check when fetching the board id to avoid leaking
-slab data when later requesting the firmware.
+As the old padata code can execute in softirq context, disable
+softirqs for the new padata_do_mutithreaded code too as otherwise
+lockdep will get antsy.
 
-Fixes: a7f8dedb4be2 ("Bluetooth: qca: add support for QCA2066")
-Cc: stable@vger.kernel.org	# 6.7
-Cc: Tim Jiang <quic_tjiang@quicinc.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+0cb5bb0f4bf9e79db3b3@syzkaller.appspotmail.com
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btqca.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/padata.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -209,6 +209,11 @@ static int qca_read_fw_board_id(struct h
- 		goto out;
+diff --git a/kernel/padata.c b/kernel/padata.c
+index 47f146f061fb1..809978bb249c2 100644
+--- a/kernel/padata.c
++++ b/kernel/padata.c
+@@ -98,7 +98,7 @@ static int __init padata_work_alloc_mt(int nworks, void *data,
+ {
+ 	int i;
+ 
+-	spin_lock(&padata_works_lock);
++	spin_lock_bh(&padata_works_lock);
+ 	/* Start at 1 because the current task participates in the job. */
+ 	for (i = 1; i < nworks; ++i) {
+ 		struct padata_work *pw = padata_work_alloc();
+@@ -108,7 +108,7 @@ static int __init padata_work_alloc_mt(int nworks, void *data,
+ 		padata_work_init(pw, padata_mt_helper, data, 0);
+ 		list_add(&pw->pw_list, head);
  	}
+-	spin_unlock(&padata_works_lock);
++	spin_unlock_bh(&padata_works_lock);
  
-+	if (skb->len < 3) {
-+		err = -EILSEQ;
-+		goto out;
-+	}
-+
- 	*bid = (edl->data[1] << 8) + edl->data[2];
- 	bt_dev_dbg(hdev, "%s: bid = %x", __func__, *bid);
+ 	return i;
+ }
+@@ -126,12 +126,12 @@ static void __init padata_works_free(struct list_head *works)
+ 	if (list_empty(works))
+ 		return;
  
+-	spin_lock(&padata_works_lock);
++	spin_lock_bh(&padata_works_lock);
+ 	list_for_each_entry_safe(cur, next, works, pw_list) {
+ 		list_del(&cur->pw_list);
+ 		padata_work_free(cur);
+ 	}
+-	spin_unlock(&padata_works_lock);
++	spin_unlock_bh(&padata_works_lock);
+ }
+ 
+ static void padata_parallel_worker(struct work_struct *parallel_work)
+-- 
+2.43.0
+
 
 
