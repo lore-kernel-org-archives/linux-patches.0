@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A85D0185084;
-	Wed,  3 Jul 2024 11:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F08143C6E;
+	Wed,  3 Jul 2024 11:20:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005629; cv=none; b=daNZg8XLJyaRyKxugTs7MNr/5XeS9Di9Nir3L84VtlMOLS3UArtiVf0wUfAzGJdQrRb3FoPePKaX3K+QeEWUTlHVnDyHeoZ1f2uqFatuvcqIIoQXMb/xeorUs5x7MU0qrPlJibxx6eVUxYpYPP9+1QvfuHYUtEJ1FOQajLgNX2Y=
+	t=1720005632; cv=none; b=M+FgadybYryUJqk9mEGLMWuj0ghryVVEhXHTay2URrYd60/t+5GrbK3oecoay6gKTW24dqAhxFpPrqdIMLha5hKvjunb1aTRsRXqT8LOVRoNazZlTcnM9cvkXvkmalCSA5o57VtkqTk6NLbcBila82QnO+5eVkHIRRNB0kW+6XY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005629; c=relaxed/simple;
-	bh=psqAzXUUlSMXPmTCD01YeEynih1bCzOtk4+rDakCfCY=;
+	s=arc-20240116; t=1720005632; c=relaxed/simple;
+	bh=DV8iUdKTOUS9t2cmkez1nV9y6hhFsaOlyvYfscComl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cvkarss8JIJjqAhSCd7J89xQef8/FG9WZPDrYQVnK8NCxUAcfJMP6cD1IfULIstpYKOlP5RRNZPWkhcOy8TcuEOmCHiMlfrdv9M6VANzGxVc6YGPNEPD/jU7DLW4vHgFNjnlQgcgEuhuL98MrZYcsE80qtEPdF+SwipW6cQ6ckU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hh5pzRKS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hIytpZNL0m/4gRmtgzhCh7JnoKmYXsG9snVVYDp6Zwiqrud1Iy/Rdzwjelinxz35oBAbmRNXZQ3Ogmszej1fVehPe8FxUXhpiPpcbToL4iS06I+NdArU8H9lkMJbnzpcZDq9O8MuCRQmgjcXZ0JzQ1CakyZ1PJt7lTrQ3JOJycY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pz3VAgld; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hh5pzRKS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27700C2BD10;
-	Wed,  3 Jul 2024 11:20:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pz3VAgld"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BFEDC2BD10;
+	Wed,  3 Jul 2024 11:20:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005629;
-	bh=psqAzXUUlSMXPmTCD01YeEynih1bCzOtk4+rDakCfCY=;
+	s=korg; t=1720005632;
+	bh=DV8iUdKTOUS9t2cmkez1nV9y6hhFsaOlyvYfscComl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hh5pzRKS/J9wLCK4Rv4s4eKeKB7w2OJSApOvlrcwKLT8ZrbMd5QnwqcnV0vqRbP4D
-	 h8iGgF8dCM0fHasahDfDHbwRhd3/R0SFp8lQi4wUXtt9GKJuW5WRYi2IvBWqKkqG3U
-	 wv/AaSz7QybMA+ksyDPWRhI0ia103SFiCz91m4gA=
+	b=pz3VAgldeXWU9nHRUN24CQZ+tkeDK+H295bDJ+WtqFEz3paf5F9wVP6Itfn/lSsYY
+	 Nxn49ltNHdeLeriEpGivlNdYBE7gmx33MyiZlO02fhsiKYQpEIMf+i0hrS5RQjOj9+
+	 S7zVjso9DMvhxG9BJUkvdH3WEa8slFB9IFgCudfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Ferland <marc.ferland@sonatest.com>,
-	Stable@vger.kernel.org,
+	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 112/356] iio: dac: ad5592r: fix temperature channel scaling value
-Date: Wed,  3 Jul 2024 12:37:28 +0200
-Message-ID: <20240703102917.335828113@linuxfoundation.org>
+Subject: [PATCH 5.15 113/356] iio: imu: inv_icm42600: delete unneeded update watermark call
+Date: Wed,  3 Jul 2024 12:37:29 +0200
+Message-ID: <20240703102917.372933247@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,66 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Ferland <marc.ferland@sonatest.com>
+From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 
-commit 279428df888319bf68f2686934897301a250bb84 upstream.
+commit 245f3b149e6cc3ac6ee612cdb7042263bfc9e73c upstream.
 
-The scale value for the temperature channel is (assuming Vref=2.5 and
-the datasheet):
+Update watermark will be done inside the hwfifo_set_watermark callback
+just after the update_scan_mode. It is useless to do it here.
 
-    376.7897513
-
-When calculating both val and val2 for the temperature scale we
-use (3767897513/25) and multiply it by Vref (here I assume 2500mV) to
-obtain:
-
-  2500 * (3767897513/25) ==> 376789751300
-
-Finally we divide with remainder by 10^9 to get:
-
-    val = 376
-    val2 = 789751300
-
-However, we return IIO_VAL_INT_PLUS_MICRO (should have been NANO) as
-the scale type. So when converting the raw temperature value to the
-'processed' temperature value we will get (assuming raw=810,
-offset=-753):
-
-    processed = (raw + offset) * scale_val
-              = (810 + -753) * 376
-	      = 21432
-
-    processed += div((raw + offset) * scale_val2, 10^6)
-              += div((810 + -753) * 789751300, 10^6)
-	      += 45015
-    ==> 66447
-    ==> 66.4 Celcius
-
-instead of the expected 21.5 Celsius.
-
-Fix this issue by changing IIO_VAL_INT_PLUS_MICRO to
-IIO_VAL_INT_PLUS_NANO.
-
-Fixes: 56ca9db862bf ("iio: dac: Add support for the AD5592R/AD5593R ADCs/DACs")
-Signed-off-by: Marc Ferland <marc.ferland@sonatest.com>
-Link: https://lore.kernel.org/r/20240501150554.1871390-1-marc.ferland@sonatest.com
-Cc: <Stable@vger.kernel.org>
+Fixes: 7f85e42a6c54 ("iio: imu: inv_icm42600: add buffer support in iio devices")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Link: https://lore.kernel.org/r/20240527210008.612932-1-inv.git-commit@tdk.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/dac/ad5592r-base.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c |    4 ----
+ drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c  |    4 ----
+ 2 files changed, 8 deletions(-)
 
---- a/drivers/iio/dac/ad5592r-base.c
-+++ b/drivers/iio/dac/ad5592r-base.c
-@@ -411,7 +411,7 @@ static int ad5592r_read_raw(struct iio_d
- 			s64 tmp = *val * (3767897513LL / 25LL);
- 			*val = div_s64_rem(tmp, 1000000000LL, val2);
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
+@@ -128,10 +128,6 @@ static int inv_icm42600_accel_update_sca
+ 	/* update data FIFO write */
+ 	inv_icm42600_timestamp_apply_odr(ts, 0, 0, 0);
+ 	ret = inv_icm42600_buffer_set_fifo_en(st, fifo_en | st->fifo.en);
+-	if (ret)
+-		goto out_unlock;
+-
+-	ret = inv_icm42600_buffer_update_watermark(st);
  
--			return IIO_VAL_INT_PLUS_MICRO;
-+			return IIO_VAL_INT_PLUS_NANO;
- 		}
+ out_unlock:
+ 	mutex_unlock(&st->lock);
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
+@@ -128,10 +128,6 @@ static int inv_icm42600_gyro_update_scan
+ 	/* update data FIFO write */
+ 	inv_icm42600_timestamp_apply_odr(ts, 0, 0, 0);
+ 	ret = inv_icm42600_buffer_set_fifo_en(st, fifo_en | st->fifo.en);
+-	if (ret)
+-		goto out_unlock;
+-
+-	ret = inv_icm42600_buffer_update_watermark(st);
  
- 		mutex_lock(&st->lock);
+ out_unlock:
+ 	mutex_unlock(&st->lock);
 
 
