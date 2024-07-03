@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401D413776F;
-	Wed,  3 Jul 2024 11:17:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 371C317DA2E;
+	Wed,  3 Jul 2024 11:17:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005449; cv=none; b=CvxD6id4lpsEA8Fxh1tBxHSQmrHNjIUMYmDF96uDbiliwCu0Kzverc0pX8+wuPDoxyIY1xFovEeWnXSh0C9sUMNShpcTRMuxxw68G0JBrSzqS16Bw8jC5VgoKv8pJIcxicjqAQLCi+s3j31tJiSbE3EsHm3Iyk7l24284vIBZ50=
+	t=1720005452; cv=none; b=Eq/ZuIE24kVO6GxvUoUu5YUMpsuSCN0ne4h4O/Gn6V15QFFOnkPuzqbkL9C0FjgdKTasFjnqhbKZdbFxRFptJQpohaONLS9JKGCBTu2Ilj+XAeu4qywUgEk3PoRa97aZvfudF1uLl3WP3po0synCVmWDPdQQHELJR6JHapPqyPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005449; c=relaxed/simple;
-	bh=fCwr3lEevsBT3kdMhDRikrtpKriz4CQ0KHfXAKmorTY=;
+	s=arc-20240116; t=1720005452; c=relaxed/simple;
+	bh=5LQ9cN4Z7qXVhhVQ9+fmxVxeAHsKb9keBnlATHqyWIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fz6fRceyVfKQJu9rCw4yxEBcmvj7+YCDbQYYUIURDLZ131RXPGPCEY/5F+XGHwuxHFbl5yEBjHpSJTPOFj8dMrPJFMjIHvp6j4ST1SMPWrJ7P7PQce/EWEYZaD/i8cF2+y2xAzVErjY1TzjMHdpV8bG8JLGN4NqYtvUi+PmGpc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E90vYuek; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hb9qzFSTKxncKwCsmVfvT5HEQW3YIQvxeWpxkYJOyFkTmGbi+mR9aDkdYXCQVvdeqs12PRdqv7XleyL7T828wfXlPwzA2vUFdRbu9aljd8pxZtrbSJCVvJd3/bq9xjN1lbkD1I8VThcIndLADN0T4uReJqzu4sk2+IMgZeZlLOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yh1BkKYg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E90vYuek"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8DBAC2BD10;
-	Wed,  3 Jul 2024 11:17:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yh1BkKYg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADD0FC2BD10;
+	Wed,  3 Jul 2024 11:17:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005449;
-	bh=fCwr3lEevsBT3kdMhDRikrtpKriz4CQ0KHfXAKmorTY=;
+	s=korg; t=1720005452;
+	bh=5LQ9cN4Z7qXVhhVQ9+fmxVxeAHsKb9keBnlATHqyWIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E90vYuekDbGH1o66rm7mq7tbI5/eGlbL+93HauziaVIrsfKjcFCqia3tvwSkykZHH
-	 y5HAx/7z/xBN8r9bSFlmuOklvaxxtr+WiFbtwlLl4rbm5PNtH+HmLM5yb0CU60KCGR
-	 ADMf5EdBp+lkAERcp1xmG/XgfzyBB5CnHGVWV6Cw=
+	b=yh1BkKYgANcvHzAEUut02+d2CiwF0j8XxW+eSNPXqw+OjCI7tCYYSbdIeztRrfQGW
+	 QiqwiA6BXOWgxVgoHG62d7hSW8o2vz06AzFxV+UXaVveQPhQ81rSPA2NPM/xuzsHXx
+	 M9Nf13GERsHuWGl0CDQslmnCBmXw0u84n1zvRZfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Russell King <linux@armlinux.org.uk>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Chen Hanxiao <chenhx.fnst@fujitsu.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 085/356] clk: sifive: Do not register clkdevs for PRCI clocks
-Date: Wed,  3 Jul 2024 12:37:01 +0200
-Message-ID: <20240703102916.319554571@linuxfoundation.org>
+Subject: [PATCH 5.15 086/356] SUNRPC: return proper error from gss_wrap_req_priv
+Date: Wed,  3 Jul 2024 12:37:02 +0200
+Message-ID: <20240703102916.356873244@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -53,60 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Holland <samuel.holland@sifive.com>
+From: Chen Hanxiao <chenhx.fnst@fujitsu.com>
 
-[ Upstream commit 2607133196c35f31892ee199ce7ffa717bea4ad1 ]
+[ Upstream commit 33c94d7e3cb84f6d130678d6d59ba475a6c489cf ]
 
-These clkdevs were unnecessary, because systems using this driver always
-look up clocks using the devicetree. And as Russell King points out[1],
-since the provided device name was truncated, lookups via clkdev would
-never match.
+don't return 0 if snd_buf->len really greater than snd_buf->buflen
 
-Recently, commit 8d532528ff6a ("clkdev: report over-sized strings when
-creating clkdev entries") caused clkdev registration to fail due to the
-truncation, and this now prevents the driver from probing. Fix the
-driver by removing the clkdev registration.
-
-Link: https://lore.kernel.org/linux-clk/ZkfYqj+OcAxd9O2t@shell.armlinux.org.uk/ [1]
-Fixes: 30b8e27e3b58 ("clk: sifive: add a driver for the SiFive FU540 PRCI IP block")
-Fixes: 8d532528ff6a ("clkdev: report over-sized strings when creating clkdev entries")
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Closes: https://lore.kernel.org/linux-clk/7eda7621-0dde-4153-89e4-172e4c095d01@roeck-us.net/
-Suggested-by: Russell King <linux@armlinux.org.uk>
-Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
-Link: https://lore.kernel.org/r/20240528001432.1200403-1-samuel.holland@sifive.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Chen Hanxiao <chenhx.fnst@fujitsu.com>
+Fixes: 0c77668ddb4e ("SUNRPC: Introduce trace points in rpc_auth_gss.ko")
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sifive/sifive-prci.c | 8 --------
- 1 file changed, 8 deletions(-)
+ net/sunrpc/auth_gss/auth_gss.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/sifive/sifive-prci.c b/drivers/clk/sifive/sifive-prci.c
-index 80a288c59e56d..8b573ff646f65 100644
---- a/drivers/clk/sifive/sifive-prci.c
-+++ b/drivers/clk/sifive/sifive-prci.c
-@@ -4,7 +4,6 @@
-  * Copyright (C) 2020 Zong Li
-  */
- 
--#include <linux/clkdev.h>
- #include <linux/delay.h>
- #include <linux/io.h>
- #include <linux/of_device.h>
-@@ -541,13 +540,6 @@ static int __prci_register_clocks(struct device *dev, struct __prci_data *pd,
- 			return r;
- 		}
- 
--		r = clk_hw_register_clkdev(&pic->hw, pic->name, dev_name(dev));
--		if (r) {
--			dev_warn(dev, "Failed to register clkdev for %s: %d\n",
--				 init.name, r);
--			return r;
--		}
--
- 		pd->hw_clks.hws[i] = &pic->hw;
- 	}
- 
+diff --git a/net/sunrpc/auth_gss/auth_gss.c b/net/sunrpc/auth_gss/auth_gss.c
+index 2ff66a6a7e54c..7ce4a6b7cfae6 100644
+--- a/net/sunrpc/auth_gss/auth_gss.c
++++ b/net/sunrpc/auth_gss/auth_gss.c
+@@ -1855,8 +1855,10 @@ gss_wrap_req_priv(struct rpc_cred *cred, struct gss_cl_ctx *ctx,
+ 	offset = (u8 *)p - (u8 *)snd_buf->head[0].iov_base;
+ 	maj_stat = gss_wrap(ctx->gc_gss_ctx, offset, snd_buf, inpages);
+ 	/* slack space should prevent this ever happening: */
+-	if (unlikely(snd_buf->len > snd_buf->buflen))
++	if (unlikely(snd_buf->len > snd_buf->buflen)) {
++		status = -EIO;
+ 		goto wrap_failed;
++	}
+ 	/* We're assuming that when GSS_S_CONTEXT_EXPIRED, the encryption was
+ 	 * done anyway, so it's safe to put the request on the wire: */
+ 	if (maj_stat == GSS_S_CONTEXT_EXPIRED)
 -- 
 2.43.0
 
