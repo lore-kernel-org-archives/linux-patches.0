@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C678188CDA;
-	Wed,  3 Jul 2024 10:57:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8091922C4;
+	Wed,  3 Jul 2024 10:57:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004246; cv=none; b=uqFexXGeu5QKPAHr69dXs1rJYjiERvpsDbiUdQ+WJYmb8ixGHgQqJQ6+LhOzloV7sTSmcb9AtsLAIWgv1Y18eSq0pajWSsSC6uukG2Hn1YnptFYBDGp31cjsYiCXGeXuSqO0tdE00tOo5wSP4OEoXZh+xE7S3fkdRNsXxv5IWwQ=
+	t=1720004249; cv=none; b=B7zehIPX3anpWQ121HdT+ZsyqswglLL865dFDy5vaSlUSfiub5agCxRMTjh1QlxSV/39czsbIZ0HA+VTjvX7iMei+eDLDf66cba3mTMbJM9zCPVgPfPZMabmq+c8kCq6CbnfZHkEtaDrfXDNed3kanPacWsBgKsPsft0l8v1nAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004246; c=relaxed/simple;
-	bh=+WVZuWQCjfL2ImJ23MNOtcdMfwOv3BqmGdbX7DkmjBY=;
+	s=arc-20240116; t=1720004249; c=relaxed/simple;
+	bh=ZqM91dZhzYCsLQmh8gE9aNmNb3kcj3P1EKlztoHF3Ng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bvhiY1HZvHdEEGoBEC/sAo17SVwzCsenvLHBiYWQcxbjxKrWm66m876GK8GZic2gxZanaiGn4UbYbUmV6hC4YYlBPIxjXB4ygO4V4RLocdWHccFFSNFxTz3xOUfRoYJU8Cx+XZrtoWvS6tm1xmbht2w9fQl6Jy7xmEAN6y+3gv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JHhYdEjI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NZsa0dvVZo5luVc/S1O9S1BX5yCElPOswq81OL9esELxVU3xhW9nf1pkfF8RAIxApcCF1hPv/jAHXTrJEDxispUuIpLds3h2nGGAPYGrSPXkdPlGlu6cU1FPp1qqcZO6V23ZCcGlwJPvyZ5piJdqd32Clha0t50px/mjBdu6afk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KIAh3uP3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JHhYdEjI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20771C2BD10;
-	Wed,  3 Jul 2024 10:57:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KIAh3uP3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11EE9C4AF0B;
+	Wed,  3 Jul 2024 10:57:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004246;
-	bh=+WVZuWQCjfL2ImJ23MNOtcdMfwOv3BqmGdbX7DkmjBY=;
+	s=korg; t=1720004249;
+	bh=ZqM91dZhzYCsLQmh8gE9aNmNb3kcj3P1EKlztoHF3Ng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JHhYdEjIrhaX3x3NwNVq0ItFVkPktBrzhy51tDvFVH0B2FUzhOGdqG4Gd7DBuq57J
-	 MBw/tRknfgt9ASzNS6SUpDbC7dx8fAgw5LjFf2sKhT3UtTktxoq+x6mk17pPtXTSJr
-	 x5OC6qaHJX4os5kFr/jjykovku4vcdJ/3p6Jd4ZY=
+	b=KIAh3uP3R3T7MktxG5slk3Exu5dt18mWzC8FnxKa+2vUEjunipFZgo+tTBV755UB7
+	 25zxGdRFD/Lx6lOCzx5RbpASLi+FmLfvOwWeaaVX8kYMILJzjYxJlkYelbeKAJDQjy
+	 S6TqYW3cvkDOSiUlrv8y2cYbMzYXv2ZBoh2an0/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Stefan Eichenberger <stefan.eichenberger@toradex.com>
-Subject: [PATCH 5.4 169/189] serial: imx: set receiver level before starting uart
-Date: Wed,  3 Jul 2024 12:40:30 +0200
-Message-ID: <20240703102847.847113870@linuxfoundation.org>
+	Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.4 170/189] tty: mcf: MCF54418 has 10 UARTS
+Date: Wed,  3 Jul 2024 12:40:31 +0200
+Message-ID: <20240703102847.884236126@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -50,37 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Eichenberger <stefan.eichenberger@toradex.com>
+From: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
 
-commit a81dbd0463eca317eee44985a66aa6cc2ce5c101 upstream.
+commit 7c92a8bd53f24d50c8cf4aba53bb75505b382fed upstream.
 
-Set the receiver level to something > 0 before calling imx_uart_start_rx
-in rs485_config. This is necessary to avoid an interrupt storm that
-might prevent the system from booting. This was seen on an i.MX7 device
-when the rs485-rts-active-low property was active in the device tree.
+Most of the colfires have up to 5 UARTs but MCF54418 has up-to 10 !
+Change the maximum value authorized.
 
-Fixes: 6d215f83e5fc ("serial: imx: warn user when using unsupported configuration")
+Signed-off-by: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
 Cc: stable <stable@kernel.org>
-Signed-off-by: Stefan Eichenberger <stefan.eichenberger@toradex.com>
-Link: https://lore.kernel.org/r/20240621153829.183780-1-eichest@gmail.com
+Fixes: 2545cf6e94b4 ("m68knommu: allow 4 coldfire serial ports")
+Link: https://lore.kernel.org/r/20240620-upstream-uart-v1-1-a9d0d95fb19e@yoseli.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/imx.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/tty/serial/mcf.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/imx.c
-+++ b/drivers/tty/serial/imx.c
-@@ -1887,8 +1887,10 @@ static int imx_uart_rs485_config(struct
+--- a/drivers/tty/serial/mcf.c
++++ b/drivers/tty/serial/mcf.c
+@@ -479,7 +479,7 @@ static const struct uart_ops mcf_uart_op
+ 	.verify_port	= mcf_verify_port,
+ };
  
- 	/* Make sure Rx is enabled in case Tx is active with Rx disabled */
- 	if (!(rs485conf->flags & SER_RS485_ENABLED) ||
--	    rs485conf->flags & SER_RS485_RX_DURING_TX)
-+	    rs485conf->flags & SER_RS485_RX_DURING_TX) {
-+		imx_uart_setup_ufcr(sport, TXTL_DEFAULT, RXTL_DEFAULT);
- 		imx_uart_start_rx(port);
-+	}
+-static struct mcf_uart mcf_ports[4];
++static struct mcf_uart mcf_ports[10];
  
- 	port->rs485 = *rs485conf;
+ #define	MCF_MAXPORTS	ARRAY_SIZE(mcf_ports)
  
 
 
