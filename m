@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C0513BC0B;
-	Wed,  3 Jul 2024 11:01:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB5D13D61B;
+	Wed,  3 Jul 2024 11:01:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004495; cv=none; b=jc6iovKLTk7LIRTPxm3yfRNtGeV4Gc2S+UspXjYBU2PCSKeI7GlJX+OOTRgPqlQwB0sqs62m8Kxuqe86WJMXKwHTTEGPnad1WlNlF1M86xkpZL4LWLoQzqV8oQz4IGeFylWVoOywPOrEUm7X11j3acoEtL1u9gVFTnXrld1H7ZI=
+	t=1720004498; cv=none; b=NOGo5iu4zWoVtdnOHJIUOV5NNbhAObL6Lr3YtTZJK6zlZyvK+mlaZufxJC8qlgv40f0SBVpFHU8mXSkUnvWQ4UA3ohA9SYwAaI4oyGU1h0lYdc/ASJ+OK4IOfhnKaBqetIdQmMgKY5OuDQvyPrE9cz7NppnAWXHGJgx4Ywaiyxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004495; c=relaxed/simple;
-	bh=dhPZcHDHtnDDAraZn6lni8OHkVAIShDSLKsp87PC3UQ=;
+	s=arc-20240116; t=1720004498; c=relaxed/simple;
+	bh=VAMgWd2OHG01JFVc9zKFWIWSXlpTNca9Hnz8WqW6cuU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IXff5CpbJa/cdt6Jh/e2GKC40KIH70/fG5+cEemm17PxviwVy7KtqPPbtbZEYaDqTYxJvklpx5Y0f+cIhtUewFl5dbhwEePiTdIAzS/YlRUENn/moc+lGVc/Mp+X9GB6w05aOzLeuebZloNSuci+EYRyllcR8Fem2jjtm3QnHOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K3j1v6d6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rZF2rIaqgSPAGkS0xuWAWYwSz95SALxkOb4z/F1yzVhqKIGXJogNir8xYxwYz6eBbOlUTMrjQdVeHCcbcFMG6u71uTHmpQOwKWIW4nhkZkrrHEhWdPJXbcyf6qpYsdvzh2166N43Y3s0S2lh74phg2IJQMv44ur7sprQL4tz774=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FsxZyelZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K3j1v6d6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72916C2BD10;
-	Wed,  3 Jul 2024 11:01:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FsxZyelZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F686C2BD10;
+	Wed,  3 Jul 2024 11:01:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004494;
-	bh=dhPZcHDHtnDDAraZn6lni8OHkVAIShDSLKsp87PC3UQ=;
+	s=korg; t=1720004497;
+	bh=VAMgWd2OHG01JFVc9zKFWIWSXlpTNca9Hnz8WqW6cuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K3j1v6d6v6mw8WXp+Dh/xonhqgg9fwgIR5cmJ/7AXb3tvuM0wyR8Cud6NfHgM/OsR
-	 8MzKdrdQb8+iNm+2oSocYEsQpP7Iy9edaw0UyZm0H4pBJ5KwJYPsw6hKhNPY+4JOc6
-	 nITou1V5iGyg1tdKn3ndLerzqo8NlOC40ZfPYacc=
+	b=FsxZyelZxZ7JD8oFrrQeOFhVhkqL9R9DD6IssY5v0jvCzco0Hip/RYaYSH/5PTXjG
+	 I8plZkVG3TNQmkHWmrqa4RRGZd3GUNaf7H91JCcfrCRC4KfQulb86Sz3jXMP2W8dNJ
+	 GSGo9IN+O0CXKmQ2mixNHjrSqdkqo1kCI/uWrExQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Hanxiao <chenhx.fnst@fujitsu.com>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	=?UTF-8?q?Cs=C3=B3k=C3=A1s,
+	=20Bence?= <csokas.bence@prolan.hu>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 053/290] SUNRPC: return proper error from gss_wrap_req_priv
-Date: Wed,  3 Jul 2024 12:37:14 +0200
-Message-ID: <20240703102906.205926005@linuxfoundation.org>
+Subject: [PATCH 5.10 062/290] net: sfp: Always call `sfp_sm_mod_remove()` on remove
+Date: Wed,  3 Jul 2024 12:37:23 +0200
+Message-ID: <20240703102906.543164058@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -47,44 +47,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Hanxiao <chenhx.fnst@fujitsu.com>
+From: Csókás, Bence <csokas.bence@prolan.hu>
 
-[ Upstream commit 33c94d7e3cb84f6d130678d6d59ba475a6c489cf ]
+[ Upstream commit e96b2933152fd87b6a41765b2f58b158fde855b6 ]
 
-don't return 0 if snd_buf->len really greater than snd_buf->buflen
+If the module is in SFP_MOD_ERROR, `sfp_sm_mod_remove()` will
+not be run. As a consequence, `sfp_hwmon_remove()` is not getting
+run either, leaving a stale `hwmon` device behind. `sfp_sm_mod_remove()`
+itself checks `sfp->sm_mod_state` anyways, so this check was not
+really needed in the first place.
 
-Signed-off-by: Chen Hanxiao <chenhx.fnst@fujitsu.com>
-Fixes: 0c77668ddb4e ("SUNRPC: Introduce trace points in rpc_auth_gss.ko")
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
-Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: d2e816c0293f ("net: sfp: handle module remove outside state machine")
+Signed-off-by: "Csókás, Bence" <csokas.bence@prolan.hu>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20240605084251.63502-1-csokas.bence@prolan.hu
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/auth_gss/auth_gss.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/phy/sfp.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/sunrpc/auth_gss/auth_gss.c b/net/sunrpc/auth_gss/auth_gss.c
-index 2ff66a6a7e54c..7ce4a6b7cfae6 100644
---- a/net/sunrpc/auth_gss/auth_gss.c
-+++ b/net/sunrpc/auth_gss/auth_gss.c
-@@ -1855,8 +1855,10 @@ gss_wrap_req_priv(struct rpc_cred *cred, struct gss_cl_ctx *ctx,
- 	offset = (u8 *)p - (u8 *)snd_buf->head[0].iov_base;
- 	maj_stat = gss_wrap(ctx->gc_gss_ctx, offset, snd_buf, inpages);
- 	/* slack space should prevent this ever happening: */
--	if (unlikely(snd_buf->len > snd_buf->buflen))
-+	if (unlikely(snd_buf->len > snd_buf->buflen)) {
-+		status = -EIO;
- 		goto wrap_failed;
-+	}
- 	/* We're assuming that when GSS_S_CONTEXT_EXPIRED, the encryption was
- 	 * done anyway, so it's safe to put the request on the wire: */
- 	if (maj_stat == GSS_S_CONTEXT_EXPIRED)
+diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
+index 6a5f40f11db3f..d08990437f3e7 100644
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -1952,8 +1952,7 @@ static void sfp_sm_module(struct sfp *sfp, unsigned int event)
+ 
+ 	/* Handle remove event globally, it resets this state machine */
+ 	if (event == SFP_E_REMOVE) {
+-		if (sfp->sm_mod_state > SFP_MOD_PROBE)
+-			sfp_sm_mod_remove(sfp);
++		sfp_sm_mod_remove(sfp);
+ 		sfp_sm_mod_next(sfp, SFP_MOD_EMPTY, 0);
+ 		return;
+ 	}
 -- 
 2.43.0
 
