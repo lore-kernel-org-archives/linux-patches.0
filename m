@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E2113B280;
-	Wed,  3 Jul 2024 11:26:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185CC17BB1F;
+	Wed,  3 Jul 2024 11:26:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006013; cv=none; b=AeYwJDTtLznZbsfaQXlTpYAygESb82TogK4jvHfxD7TsERys3lXLACQpS++yLUDdhKhgin4gxb5aeYby2hhQEuhR9bLacxptNGVxE8fKAa4J3Ny9STqsgkT+CoQD29MtVtrN63H6o907M0rDCP5+tMdSsO3kHMpyJ93a4G4kAQE=
+	t=1720006016; cv=none; b=O7ve59sjH7zRtGTFVfrCIhk0CPB8dMyI48bgBH1U3YfN1X9oA3SLVXQumDzUJh/kI6/1ciZQOk2df9CeZKbg1SAzH8cPrBEkeQ+ohv7D7xK3EfujgOgRZO9meGENZkj9Zb6Yts1GO4DeoJ5mwC0oDVJUzw8hu1Lz9UnwUF9G+Vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006013; c=relaxed/simple;
-	bh=uZrcq+Ch/nbcI2raLdCPMMouU4fEH6qNxJnrBDNPoHg=;
+	s=arc-20240116; t=1720006016; c=relaxed/simple;
+	bh=yXYXNsn67TCeySGpJKRqqqTigct9CoCM2zYGSaxhUe8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=foQERtu7k01633j8E90Ww7kh4QDaas01l3B26zO5MuoBFyl5JXlhcbj33gcuu0ti4arB8G2/n+QfNFhPJ2ePK+7iJB0O4scBG66rYMvoOxmoNcyZ7Mz1aHvV4YMwiwLC1dhyzcEeuUq5tRYOalq0wUNwcwAzKSGgZ9rOr6X9SxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zAfP6tqH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CFabFclGQUokq1IZhVfRKCdg424aAPexH+wxYREaiPyDp13+UKcba8SOAA7SsCMs8WixmUVMOLINLNRs5uNRrBNQvfGFSf4TEdwPwSYd2BlOgB0dmJvtweTydyzEDz6E/cbrASDP90ZAF+Lzj/7Oq8Y9f5T6i8IO2kcP8mte8hg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KyywgSzZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zAfP6tqH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2A03C2BD10;
-	Wed,  3 Jul 2024 11:26:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KyywgSzZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96C40C2BD10;
+	Wed,  3 Jul 2024 11:26:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006013;
-	bh=uZrcq+Ch/nbcI2raLdCPMMouU4fEH6qNxJnrBDNPoHg=;
+	s=korg; t=1720006016;
+	bh=yXYXNsn67TCeySGpJKRqqqTigct9CoCM2zYGSaxhUe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zAfP6tqHLmMTKoRJaAR80+7LSr0jPsjpemxS0GeyicqChhXpm2WWYCQgKWbrURt65
-	 LaFC8ols/ry0lBHGV8EZN7ls2CgV/lLx71oZ4BTUViw7T6rvgndD7z3pzXVEO04LHw
-	 PndK7ZM4fQDAHQaFGQTORtNzCOaQNzo9qTZdSGMM=
+	b=KyywgSzZ46VSAKHzRhjlf7bC+NIbPXYSxHyRVxinhGguwv5L5kVYksnnMWxxOVI1B
+	 QPOYCCmCvrKF1rhftg0DcwCJskhZJ4kcAf5DN+UpBUluGBcsKN7BV6naZvLe86bn9u
+	 Bv2/hmv3wN5pH8ZApDfta+rY71dSxJiQfzU3A1sk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristram Ha <tristram.ha@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nick Child <nnac123@linux.ibm.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 271/356] net: dsa: microchip: fix initial port flush problem
-Date: Wed,  3 Jul 2024 12:40:07 +0200
-Message-ID: <20240703102923.368095040@linuxfoundation.org>
+Subject: [PATCH 5.15 272/356] ibmvnic: Free any outstanding tx skbs during scrq reset
+Date: Wed,  3 Jul 2024 12:40:08 +0200
+Message-ID: <20240703102923.405314024@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,53 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristram Ha <tristram.ha@microchip.com>
+From: Nick Child <nnac123@linux.ibm.com>
 
-[ Upstream commit ad53f5f54f351e967128edbc431f0f26427172cf ]
+[ Upstream commit 49bbeb5719c2f56907d3a9623b47c6c15c2c431d ]
 
-The very first flush in any port will flush all learned addresses in all
-ports.  This can be observed by unplugging the cable from one port while
-additional ports are connected and dumping the fdb entries.
+There are 2 types of outstanding tx skb's:
+Type 1: Packets that are sitting in the drivers ind_buff that are
+waiting to be batch sent to the NIC. During a device reset, these are
+freed with a call to ibmvnic_tx_scrq_clean_buffer()
+Type 2: Packets that have been sent to the NIC and are awaiting a TX
+completion IRQ. These are free'd during a reset with a call to
+clean_tx_pools()
 
-This problem is caused by the initially wrong value programmed to the
-REG_SW_LUE_CTRL_1 register.  Setting SW_FLUSH_STP_TABLE and
-SW_FLUSH_MSTP_TABLE bits does not have an immediate effect.  It is when
-ksz9477_flush_dyn_mac_table() is called then the SW_FLUSH_STP_TABLE bit
-takes effect and flushes all learned entries.  After that call both bits
-are reset and so the next port flush will not cause such problem again.
+During any reset which requires us to free the tx irq, ensure that the
+Type 2 skb references are freed. Since the irq is released, it is
+impossible for the NIC to inform of any completions.
 
-Fixes: b987e98e50ab ("dsa: add DSA switch driver for Microchip KSZ9477")
-Signed-off-by: Tristram Ha <tristram.ha@microchip.com>
-Link: https://patch.msgid.link/1718756202-2731-1-git-send-email-Tristram.Ha@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Furthermore, later in the reset process is a call to init_tx_pools()
+which marks every entry in the tx pool as free (ie not outstanding).
+So if the driver is to make a call to init_tx_pools(), it must first
+be sure that the tx pool is empty of skb references.
+
+This issue was discovered by observing the following in the logs during
+EEH testing:
+	TX free map points to untracked skb (tso_pool 0 idx=4)
+	TX free map points to untracked skb (tso_pool 0 idx=5)
+	TX free map points to untracked skb (tso_pool 1 idx=36)
+
+Fixes: 65d6470d139a ("ibmvnic: clean pending indirect buffs during reset")
+Signed-off-by: Nick Child <nnac123@linux.ibm.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/microchip/ksz9477.c |    7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/ibm/ibmvnic.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/net/dsa/microchip/ksz9477.c
-+++ b/drivers/net/dsa/microchip/ksz9477.c
-@@ -195,7 +195,6 @@ static int ksz9477_wait_alu_sta_ready(st
+diff --git a/drivers/net/ethernet/ibm/ibmvnic.c b/drivers/net/ethernet/ibm/ibmvnic.c
+index 890e27b986e2a..7f4539a2e5517 100644
+--- a/drivers/net/ethernet/ibm/ibmvnic.c
++++ b/drivers/net/ethernet/ibm/ibmvnic.c
+@@ -3409,6 +3409,12 @@ static void release_sub_crqs(struct ibmvnic_adapter *adapter, bool do_h_free)
+ 		adapter->num_active_tx_scrqs = 0;
+ 	}
  
- static int ksz9477_reset_switch(struct ksz_device *dev)
- {
--	u8 data8;
- 	u32 data32;
- 
- 	/* reset switch */
-@@ -206,10 +205,8 @@ static int ksz9477_reset_switch(struct k
- 			   SPI_AUTO_EDGE_DETECTION, 0);
- 
- 	/* default configuration */
--	ksz_read8(dev, REG_SW_LUE_CTRL_1, &data8);
--	data8 = SW_AGING_ENABLE | SW_LINK_AUTO_AGING |
--	      SW_SRC_ADDR_FILTER | SW_FLUSH_STP_TABLE | SW_FLUSH_MSTP_TABLE;
--	ksz_write8(dev, REG_SW_LUE_CTRL_1, data8);
-+	ksz_write8(dev, REG_SW_LUE_CTRL_1,
-+		   SW_AGING_ENABLE | SW_LINK_AUTO_AGING | SW_SRC_ADDR_FILTER);
- 
- 	/* disable interrupts */
- 	ksz_write32(dev, REG_SW_INT_MASK__4, SWITCH_INT_MASK);
++	/* Clean any remaining outstanding SKBs
++	 * we freed the irq so we won't be hearing
++	 * from them
++	 */
++	clean_tx_pools(adapter);
++
+ 	if (adapter->rx_scrq) {
+ 		for (i = 0; i < adapter->num_active_rx_scrqs; i++) {
+ 			if (!adapter->rx_scrq[i])
+-- 
+2.43.0
+
 
 
