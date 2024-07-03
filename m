@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1A9175562;
-	Wed,  3 Jul 2024 10:48:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5243E175555;
+	Wed,  3 Jul 2024 10:48:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003695; cv=none; b=uugrVrV4TYAQA57aTc8tCwZyV6X051XXjeWuP5Jqy9PAfn3fff/T+D8FtzBCXB0ea3DMHaN2eWU0wjdpPN1Ede65df62s1IVMcOs0BjfHH+69Fd026jQ/EXMQvMCyAOJe6jlBFWaOA6cjvLt2qXv5emSBJoQ8E3ta3e20zRAFWM=
+	t=1720003698; cv=none; b=OJVHzOzwp75HfNQMJ1cnRYPIvVTAEBr9ZzrzSrXUFjetMKQlEI7l/dYRzAH0YjciIiGv8+oyf29c0filOFcvETMRlas6u0DHBeGrnlWmyZPD4XXWNryVazz5RbrTPyrmF8dx1Fynlq+Ge1vfr2SutNU8nSche33domVPNrSsKNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003695; c=relaxed/simple;
-	bh=qrONrSR5EUtAlyb+llc7GLvRW2OQuFQzEAkdjqv8VNo=;
+	s=arc-20240116; t=1720003698; c=relaxed/simple;
+	bh=u232e3M6800SFe793uI/+SMWFZIJhMQh/aJ1yR139tY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ovgBafWPwgKNxz0keDUfyXrB9bu9IRN0Eu8rS0l5fEAVTree9gzhZ7e6WKGG72blcceQ7M1+DPs35VPF9ETTbftFs1r6FLPiciJbcJARGIhci1BEAad/ZCOppWWEkiBrh1YgQXbTofoO12slXvdJQcsiskz5KrpcRt34MCf08Fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hL6QZVSn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=CuK67icPv0sN/NBnfj/DZ1L+EMjswY4ohdKm/VwVjdxcadFdvsmsAxpIV/il19c3AQC/X3m2Qr+QAk5fuUV/O/0Ks/wmgHex8+FpLDQNPHIAFOo3UAywWwo2ARan3nWmz7sUCIuyHw0xuD/AZOzxJYrbmI7IJiiOZJ+W3htBraQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YL94piCP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hL6QZVSn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E24DC2BD10;
-	Wed,  3 Jul 2024 10:48:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YL94piCP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 897ABC32781;
+	Wed,  3 Jul 2024 10:48:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003695;
-	bh=qrONrSR5EUtAlyb+llc7GLvRW2OQuFQzEAkdjqv8VNo=;
+	s=korg; t=1720003697;
+	bh=u232e3M6800SFe793uI/+SMWFZIJhMQh/aJ1yR139tY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hL6QZVSnyEfO1A5GUIcx0Twu01r8gp70HgWCnUUzM6uPNWfQO8HrVLrR87rR/GDvw
-	 FMobqPi/a08Q5idEs0Ml18I3I26qTzyUHaNYcjXLM1ffe9AQ1+jBUHVcIViLmU41uY
-	 0spHUYRszZ1AdnfS1gWIPKVmuLF36sSALQ+j/6CI=
+	b=YL94piCPxvap1PrQFq/NrCGZ3ZLTqFw1WPIp1LQGAbcl59ZRoRXLjgdrtZjUGIUbW
+	 7T/j3vtchHgHYj6xEMuGrnvYVenPFQ9gpkQFk7S3zRWIzhD+hE0jfjPq+S422EbQaQ
+	 YmFcy3JwtdH/WDGHpvCAjBdBx+5XB3V4OY5hepKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 4.19 134/139] ftruncate: pass a signed offset
-Date: Wed,  3 Jul 2024 12:40:31 +0200
-Message-ID: <20240703102835.494036300@linuxfoundation.org>
+	Trevor Gamblin <tgamblin@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+Subject: [PATCH 4.19 135/139] pwm: stm32: Refuse too small period requests
+Date: Wed,  3 Jul 2024 12:40:32 +0200
+Message-ID: <20240703102835.531449444@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -44,78 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-commit 4b8e88e563b5f666446d002ad0dc1e6e8e7102b0 upstream.
+commit c45fcf46ca2368dafe7e5c513a711a6f0f974308 upstream.
 
-The old ftruncate() syscall, using the 32-bit off_t misses a sign
-extension when called in compat mode on 64-bit architectures.  As a
-result, passing a negative length accidentally succeeds in truncating
-to file size between 2GiB and 4GiB.
+If period_ns is small, prd might well become 0. Catch that case because
+otherwise with
 
-Changing the type of the compat syscall to the signed compat_off_t
-changes the behavior so it instead returns -EINVAL.
+	regmap_write(priv->regmap, TIM_ARR, prd - 1);
 
-The native entry point, the truncate() syscall and the corresponding
-loff_t based variants are all correct already and do not suffer
-from this mistake.
+a few lines down quite a big period is configured.
 
-Fixes: 3f6d078d4acc ("fix compat truncate/ftruncate")
-Reviewed-by: Christian Brauner <brauner@kernel.org>
+Fixes: 7edf7369205b ("pwm: Add driver for STM32 plaftorm")
 Cc: stable@vger.kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Trevor Gamblin <tgamblin@baylibre.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://lore.kernel.org/r/b86f62f099983646f97eeb6bfc0117bb2d0c340d.1718979150.git.u.kleine-koenig@baylibre.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/open.c                |    4 ++--
- include/linux/compat.h   |    2 +-
- include/linux/syscalls.h |    2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/pwm/pwm-stm32.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/open.c
-+++ b/fs/open.c
-@@ -199,13 +199,13 @@ out:
- 	return error;
- }
+--- a/drivers/pwm/pwm-stm32.c
++++ b/drivers/pwm/pwm-stm32.c
+@@ -337,6 +337,9 @@ static int stm32_pwm_config(struct stm32
  
--SYSCALL_DEFINE2(ftruncate, unsigned int, fd, unsigned long, length)
-+SYSCALL_DEFINE2(ftruncate, unsigned int, fd, off_t, length)
- {
- 	return do_sys_ftruncate(fd, length, 1);
- }
+ 	prd = div;
  
- #ifdef CONFIG_COMPAT
--COMPAT_SYSCALL_DEFINE2(ftruncate, unsigned int, fd, compat_ulong_t, length)
-+COMPAT_SYSCALL_DEFINE2(ftruncate, unsigned int, fd, compat_off_t, length)
- {
- 	return do_sys_ftruncate(fd, length, 1);
- }
---- a/include/linux/compat.h
-+++ b/include/linux/compat.h
-@@ -598,7 +598,7 @@ asmlinkage long compat_sys_fstatfs(unsig
- asmlinkage long compat_sys_fstatfs64(unsigned int fd, compat_size_t sz,
- 				     struct compat_statfs64 __user *buf);
- asmlinkage long compat_sys_truncate(const char __user *, compat_off_t);
--asmlinkage long compat_sys_ftruncate(unsigned int, compat_ulong_t);
-+asmlinkage long compat_sys_ftruncate(unsigned int, compat_off_t);
- /* No generic prototype for truncate64, ftruncate64, fallocate */
- asmlinkage long compat_sys_openat(int dfd, const char __user *filename,
- 				  int flags, umode_t mode);
---- a/include/linux/syscalls.h
-+++ b/include/linux/syscalls.h
-@@ -404,7 +404,7 @@ asmlinkage long sys_fstatfs(unsigned int
- asmlinkage long sys_fstatfs64(unsigned int fd, size_t sz,
- 				struct statfs64 __user *buf);
- asmlinkage long sys_truncate(const char __user *path, long length);
--asmlinkage long sys_ftruncate(unsigned int fd, unsigned long length);
-+asmlinkage long sys_ftruncate(unsigned int fd, off_t length);
- #if BITS_PER_LONG == 32
- asmlinkage long sys_truncate64(const char __user *path, loff_t length);
- asmlinkage long sys_ftruncate64(unsigned int fd, loff_t length);
++	if (!prd)
++		return -EINVAL;
++
+ 	if (prescaler > MAX_TIM_PSC)
+ 		return -EINVAL;
+ 
 
 
