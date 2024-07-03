@@ -1,259 +1,182 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2085.outbound.protection.outlook.com [40.107.243.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4BEF13958C
-	for <patches@lists.linux.dev>; Wed,  3 Jul 2024 08:12:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719994345; cv=none; b=sgEUoQG6bTtNbSFlisFlhaE2iqlRp5BQsip8BepHwU2xXx8cTexHObfJLL51/3ebQcpz/pJhiqb9ikr8B2/m5SHFvlDaJ/lglB0tr5AQgXLAOd6RgPfJqQXZW51BgYOPbybKlve70PBU2jtOEXRDu91F56lornBm/dOSsXuo+j4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719994345; c=relaxed/simple;
-	bh=urfNG6+cHLdQJrrRl7mWdBtS/y3l6Djk40r2tdEqB2g=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=irApCzKN51kchGuCvHWErTS82na0VwofoXarPmp2Mf46Nrk4eoTc8EY1MhBj+kyS2frD6eDfbLm+AVUoqBmGwWdN/LYMQEuAgLc70F++maj4WLbW13lgAyo/DXopakkFgqvwmi8hwURdkiXeHIQFktuNsAJyHjSRu60Ap4UyG7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=nM+JfZGK; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103D5139CE2
+	for <patches@lists.linux.dev>; Wed,  3 Jul 2024 08:13:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.243.85
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1719994398; cv=fail; b=upYAgP4COoDHTWm01uxrwH/6g+uKrVxhuL4tTdNQl6ZEPockSipTWoF35QPbM3zFrsWYtTTCDOE8H/9a97QJbPreOHiF2WW0ngL07hgvSwjuGLPw8kuWGp/ypiAdoD7Esvqt16LvXroxnUj4lwPh7J5QHmasaPErVhJWUq0GYsw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1719994398; c=relaxed/simple;
+	bh=KAycR2OqeJo0jCUD8SN+xMAaIQ+UGCHcCbdjzGdf9eA=;
+	h=From:To:CC:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID:Date; b=lH7G3uR5sNIKeVC7uT3fgTUIxZoRAiFVsRvmNtcWAcTo+a/uuOgUywK7j2xuHxQzMvxsNRcSKLG6J+KmbLkkELFZAEVS/KHAyRy1PGM5HE6tEfvWzQ1GhPXhb/ng67ESamQ0nQ9huZ0/917ZBruEBSrOsbozkgn7x+j09XlBqVs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=iH3OWmkT; arc=fail smtp.client-ip=40.107.243.85
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="nM+JfZGK"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-36796bbf687so40533f8f.0
-        for <patches@lists.linux.dev>; Wed, 03 Jul 2024 01:12:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1719994340; x=1720599140; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EYZQ6hvzbyuQ9dkJY/vs/6RIOJzsf5Qm2425goUaxvE=;
-        b=nM+JfZGKNhYZ2T0gcpLO6KNVdXC1GGJFSR57k4WO+va0K9KevosLQHC73OsqYUQeZy
-         ioHEnjmcj2qDlvyiUhsi/Ae2j/l5JXMWt17v1k8CU+8ON1J+4SQ8I87/Z/vSoW8YfmTJ
-         rjP1hAnbMWTIVSe7KL4z5WbqGOxAd9ivA2lIxsreV5fWbBxnOltOK0yz8e/u4iGg4Ryx
-         +yMdipgQHnaTBQf2I7zr99c+gWavNAXcpGCLKgDRt/FuwYkKpQ1PJN9zV5USl9aNUWnV
-         Q0rvSpPDUSHjf9s9/oXVaNyvNuN8T6/eLwjuCzKYlYmhDw0F90LDGdtiHbVKkQbQhnjs
-         g6Tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719994340; x=1720599140;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EYZQ6hvzbyuQ9dkJY/vs/6RIOJzsf5Qm2425goUaxvE=;
-        b=RGprXLfDik1C7N9t9g+4qteLV8QmHoPHSRYLfqkIyxTQJMQJ8B86rc5rcc/UXHvxve
-         QCOVgU7twaZ6JyNBh2h/yFY/k0KQ/eHx1emt0YGyTLPl5ZZHyzDyg07lX8O9jFFYtu/Y
-         eSa9+BchDQdus09PLVkkA7ZFO/DXjgJPBPT+nKNyUiMeNtqfbX0TNTzNc99Qpb2EjWSa
-         +h99tAwGJ1k6vfJ4b3aZpKa6rQ8s54/O2TJnrVHOngXkXzHoBfOOhfGNp5PsMuaHyaWx
-         fEMxiStuJ03/brl1v3sEc1S8lhNyCyPD5V97WUxu+8f7d8I4ArHcQu38YE8nbZA57lIk
-         KYnw==
-X-Forwarded-Encrypted: i=1; AJvYcCWgGvbAbUzyHwGy+g6ZbU95U7FgrW5qnQLlOpTHCzg2KftZpOWEGRdKLokxvMLJKlKkxlmdLO/IVFYdV9wZbtn1ekRuBzjGrg==
-X-Gm-Message-State: AOJu0YzQece4XH2jLDijSX0HOBzmwst40BzAfTm7fHXwewaK0EGhuDfV
-	44Ip3xd1d2do7Qx37f4LzMLMhGHOQHHwo1XbVcgaWZ9Elgi911m1pQWe/z3pFffQ7w8ie7gRp9q
-	lLdge/jAHA/chZ57dEKpPeXj2bLgUFaW7qqrC
-X-Google-Smtp-Source: AGHT+IEICDH5BfKPspvMCdmvkvvtMFo63HbRNY8nyE4K1FX/Ysrh7tFANjRp15gsI9lcNyfLPvRWNd79Gsa/BRnUtVg=
-X-Received: by 2002:adf:f510:0:b0:35f:2366:12c5 with SMTP id
- ffacd0b85a97d-367756aade1mr7017890f8f.23.1719994339769; Wed, 03 Jul 2024
- 01:12:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="iH3OWmkT"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=fTxAaIybFISsMWIFh9a7VClLfulAtkq/1ZaHFDxjcohl4/W4er6rf6JdGGdQbMPS+Tuv2/wBcNI9Wqu7+zOfnoS89kO5sz25s8mZdnAj+Mg8BfFCa83x4UjeFR6G0ySfSnj9BEDe+WLP4GJr36zybAQEMBGHwoj+cUu0zQEcJSfY1ngxep06eImXfZiN6bGvA219k7NWBX3p+LcHNKU3PTKCMDz2T00XdM85GMs+q8adAcB5yDTAKMbL9Zzac8oMwczpQsfAl9gwUV9oryMOUTp4gasA47NcozMpyxs6eMbLND7m/mqGnYJKldtlg5gZk45nl3sfrYy+14ewaHzV6A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lmEzwkPKBVO1xYX0/cgZzhIH/t+MVQvTWkeSIj72TQA=;
+ b=Ef21lU6C0Fm9jKdggJFEHJbrKMYky23vvK7ezDpCJGNAR9nbLnKA5UvVUaF82L7sLo8ZfgySlskuyfg81nU/SzFdR4c6uiA4Ky8zVG4bNaPgtAmX9wlUfjxraxVWymUC2ZPlBo2j/405kJwc97zCR72TZkp6LsKtLFxbVfmSfAILdb3yswIEQGXWJ7atXWLxa21XH4rcHCbK+OqBYz0Vvj7ke1PpSa/U+HrHuOFpQ//yvwVKcEDh831CjzTJ+EwqHwwLpkXnadS0h9D+N2c7eh4qULNUTLuMalKIOr39gCUoT2wz/u1vbXwVN2F4qr2lgoGinwqZ7A3WirsCwaaGEA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=lmEzwkPKBVO1xYX0/cgZzhIH/t+MVQvTWkeSIj72TQA=;
+ b=iH3OWmkTKJTT4w+oug1Bis1wImxjyZqiYJ6Hao3to3r6t+oJXeCP3wLCKyO+mQIH7Y0z8KgI4SNT7EhU1sBcp1g/vQ7FJzs3NsZUZvPRzdJ/cuXr4nU0oF7tcfXCeNbtcnlZ7jWQfIekX03ndi8l/VQIZrEQDs+dXtjdDxc2ap9TLID55mWMazhQ7NJeNP/o78kVhW+IZmnnQyJfBArJLYKbKRtnGrMHKXyXPpsHq2sxN0hSRD/FhBFmLbus43xbjxin0AEf7HV3KZL0YnSc344+2oeD9wF8fyQpFJumpch33NVZpFKjvbcLnzpXFFwj2Cgv4SOgLI5ZoV/SrTjNpw==
+Received: from CH5PR04CA0014.namprd04.prod.outlook.com (2603:10b6:610:1f4::26)
+ by LV2PR12MB5725.namprd12.prod.outlook.com (2603:10b6:408:14c::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7719.29; Wed, 3 Jul
+ 2024 08:13:13 +0000
+Received: from DS2PEPF00003441.namprd04.prod.outlook.com
+ (2603:10b6:610:1f4:cafe::af) by CH5PR04CA0014.outlook.office365.com
+ (2603:10b6:610:1f4::26) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7741.25 via Frontend
+ Transport; Wed, 3 Jul 2024 08:13:12 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ DS2PEPF00003441.mail.protection.outlook.com (10.167.17.68) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7741.18 via Frontend Transport; Wed, 3 Jul 2024 08:13:12 +0000
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 3 Jul 2024
+ 01:13:01 -0700
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail202.nvidia.com
+ (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 3 Jul 2024
+ 01:13:01 -0700
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
+ Transport; Wed, 3 Jul 2024 01:13:00 -0700
+From: Jon Hunter <jonathanh@nvidia.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <conor@kernel.org>, <allen.lkml@gmail.com>,
+	<broonie@kernel.org>, <linux-tegra@vger.kernel.org>, <stable@vger.kernel.org>
+Subject: Re: [PATCH 6.1 000/128] 6.1.97-rc1 review
+In-Reply-To: <20240702170226.231899085@linuxfoundation.org>
+References: <20240702170226.231899085@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240703072520.45837-2-vbabka@suse.cz>
-In-Reply-To: <20240703072520.45837-2-vbabka@suse.cz>
-From: Alice Ryhl <aliceryhl@google.com>
-Date: Wed, 3 Jul 2024 10:12:07 +0200
-Message-ID: <CAH5fLgj9HKT2NsuR6pL6y9aARtkJ26KGkyWHQ2Rzw3baC0onDQ@mail.gmail.com>
-Subject: Re: [PATCH v2] slab, rust: extend kmalloc() alignment guarantees to
- remove Rust padding
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: linux-mm@kvack.org, David Rientjes <rientjes@google.com>, 
-	Christoph Lameter <cl@linux.com>, Hyeonggon Yoo <42.hyeyoo@gmail.com>, 
-	Roman Gushchin <roman.gushchin@linux.dev>, Kees Cook <keescook@chromium.org>, 
-	Boqun Feng <boqun.feng@gmail.com>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Message-ID: <a213a020-5907-46c7-a8b4-48f495a1bbf4@rnnvmail204.nvidia.com>
+Date: Wed, 3 Jul 2024 01:13:00 -0700
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS2PEPF00003441:EE_|LV2PR12MB5725:EE_
+X-MS-Office365-Filtering-Correlation-Id: 789a6bac-6863-4749-06e4-08dc9b37fbc3
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|7416014|1800799024|36860700013|82310400026;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?b0dqK0ltZy9tMk1xTFZyYit6SXRHYVg1OUhscEJHek51b20vcnRoYi9Ea1Ew?=
+ =?utf-8?B?cFNHRG82Rkxyall4azk1YmR6UGIyQ1dIVCtDRzdlUmkvVFpmUWlJREw2SllD?=
+ =?utf-8?B?aDRnblljbCtRYnl3SUs4ZXJNRkY4WWFKU2hORUFvdE94bnlaaFFsS2FVQ1lJ?=
+ =?utf-8?B?V29PRUtvRVRSbXpYVTZWUUk0MEtPZklCRHhINlp1RWRoa09HYlRmYVN2ZUk3?=
+ =?utf-8?B?YzlseFpDNEVuNSsxWU16cDZmV0VSQWxNTmlTYVZobWFpVmNuU1dGU09zWGo5?=
+ =?utf-8?B?bVMyR3NJZjJsZGlRZzRQcXQ3ODhZK20xdzZQQUdJVDBRZThpWjlPUXNlZGhT?=
+ =?utf-8?B?bnRpUUVhNTZ4WE02R1NFR3MyWnJXbEpvWklwSG9MTXVRM2dhaGJRV0trQjhC?=
+ =?utf-8?B?Z1ZEMWd0Sk5FTlp2T0tSSUYvRndXNnd4bFlHTXlNVHl3dmI5d3hERE5wN05n?=
+ =?utf-8?B?eFZJQnRtRHdNd0Q3NU9OcHc0VkdaVW1SSlVqRGlZZU5nZUh3akFyUFVkSkV6?=
+ =?utf-8?B?T3FqYUZHVDNVOXpnNktaRSt4YmNRVXJWN3NxWGN0QkI0djhobDl1dFM0M0Vh?=
+ =?utf-8?B?aUx2QmNQQnk1MWcrVWNkZjVCRFdWL3pjZWo3cUhmaWQ5S29ORGFhNjlVaXBp?=
+ =?utf-8?B?Q284UC8veEgwcXBRdGpCbk5INkFzY2FrQnB2MzdobXBvOUFxUk9RODhLSC9P?=
+ =?utf-8?B?SEtYNnoxbTdFMG5HWG9CcUp5SWpGaFNKQzAwUVJDUzlDTFVTUC80MFNCOHlz?=
+ =?utf-8?B?Zi9ZbWtZNlJFUTNod1Z4azQwaytjWitRTjhwcmNnMHMvY2hIb1hMUWlmK2pv?=
+ =?utf-8?B?OGl3MUpkK01qMkRnRG1kUVVuYXNXNm55V3ZGRWdPNmQ1WGJJSzEwM0ZGb3lj?=
+ =?utf-8?B?a3FtYXlPOFlaNVBkSTQ2Vk5KSTlkSG5WL2grbUprZVhsY0pHVEFoSG9KdUVo?=
+ =?utf-8?B?TEhxdDRzbnQwTFF3NHRxMzNEZnY1aGVGckNFc05LRkhtRFhPb1o1d0xqamV1?=
+ =?utf-8?B?M2J6amltOU9EdFk1eXNUQXNlVmVaZGMvUGkzdk9tWk9TSW1UdTFBM1Ywa0tz?=
+ =?utf-8?B?Z21jQ3RHV2xuUUlhbmxRZGNWODQ1bEw4SG5vTVFzektEMm4way8ya0Rjckhx?=
+ =?utf-8?B?VHNMYXBDd29UendVaG1mZGdTUUF3NFp5Z1VkcG9PcmUwbUhwd0h3RjRnUzBI?=
+ =?utf-8?B?MW8vdnJCRWhCL24rUDN2YmpvS1Uyb3JIZi9LNEMvT0ltQ2hVOFFkV0xpamVL?=
+ =?utf-8?B?SGxVT2lGdUV5OVlhSkxjWjByS1Z5amF3R09lNTNtTU0vVVRUSHVPTVFPNDdT?=
+ =?utf-8?B?OGNEb1J4OXpVaVQ2L2YxOU1uVEVLeUU0ekQ1bFZOVkN2WWZGcytlNit3bUdu?=
+ =?utf-8?B?dFdmVzdOaWZWQUxmSWh0bDFZUmFUbGs4bFBjSHNBRmNsWVYrMVN4ck9ybllh?=
+ =?utf-8?B?M2x2VGdiRXFLbi9OVndEZzhkWTVpNWdxZ2luc3NCME5WR3UyTGhvVGdNcWNh?=
+ =?utf-8?B?T24ydkczVTVBOHB2Uk41QlVYU3dLVHUxVlVtOEprN2lrSFAwb015R0xINGVt?=
+ =?utf-8?B?aEt5VVlBeUNuVkZ3eFp5NEVzTHkrdTlyRGJHVU5ZOGNlTWx4Y08zOEZDRnNC?=
+ =?utf-8?B?S1V1VCs2U2pzSXVzZjh5TFlEWm5TRDZkeDBocGZKM056MnhweC9tM1NjUnlC?=
+ =?utf-8?B?NXRlQ3p0aC9ZYThMT0JjWHpDYUVKeU1TeTJkVXNsVmhZd1VIQXNrU1lWdVhq?=
+ =?utf-8?B?WWlFenhoQkdtcVByWktENlNOR2x2RHcyOUZaeHFmVWxDaHZ4TzZpa1lTVDla?=
+ =?utf-8?B?bS9sa2RFbUVIQVRhN3hqVVhOQ0o0WmZIWGVmaGtXc0R1bExQMkgzVzFTQ3JQ?=
+ =?utf-8?B?bHYvRi90SzlCb09XbnNZZmcvbXhvUlVOckNZOGhwRVZ2clpwTDBLSXIzV3lS?=
+ =?utf-8?Q?w12bBQg+xXipz8+oURnkDoqc2sGwZ6Rs?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(36860700013)(82310400026);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jul 2024 08:13:12.7730
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 789a6bac-6863-4749-06e4-08dc9b37fbc3
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	DS2PEPF00003441.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR12MB5725
 
-On Wed, Jul 3, 2024 at 9:25=E2=80=AFAM Vlastimil Babka <vbabka@suse.cz> wro=
-te:
->
-> Slab allocators have been guaranteeing natural alignment for
-> power-of-two sizes since commit 59bb47985c1d ("mm, sl[aou]b: guarantee
-> natural alignment for kmalloc(power-of-two)"), while any other sizes are
-> guaranteed to be aligned only to ARCH_KMALLOC_MINALIGN bytes (although
-> in practice are aligned more than that in non-debug scenarios).
->
-> Rust's allocator API specifies size and alignment per allocation, which
-> have to satisfy the following rules, per Alice Ryhl [1]:
->
->   1. The alignment is a power of two.
->   2. The size is non-zero.
->   3. When you round up the size to the next multiple of the alignment,
->      then it must not overflow the signed type isize / ssize_t.
->
-> In order to map this to kmalloc()'s guarantees, some requested
-> allocation sizes have to be padded to the next power-of-two size [2].
-> For example, an allocation of size 96 and alignment of 32 will be padded
-> to an allocation of size 128, because the existing kmalloc-96 bucket
-> doesn't guarantee alignent above ARCH_KMALLOC_MINALIGN. Without slab
-> debugging active, the layout of the kmalloc-96 slabs however naturally
-> align the objects to 32 bytes, so extending the size to 128 bytes is
-> wasteful.
->
-> To improve the situation we can extend the kmalloc() alignment
-> guarantees in a way that
->
-> 1) doesn't change the current slab layout (and thus does not increase
->    internal fragmentation) when slab debugging is not active
-> 2) reduces waste in the Rust allocator use case
-> 3) is a superset of the current guarantee for power-of-two sizes.
->
-> The extended guarantee is that alignment is at least the largest
-> power-of-two divisor of the requested size. For power-of-two sizes the
-> largest divisor is the size itself, but let's keep this case documented
-> separately for clarity.
->
-> For current kmalloc size buckets, it means kmalloc-96 will guarantee
-> alignment of 32 bytes and kmalloc-196 will guarantee 64 bytes.
->
-> This covers the rules 1 and 2 above of Rust's API as long as the size is
-> a multiple of the alignment. The Rust layer should now only need to
-> round up the size to the next multiple if it isn't, while enforcing the
-> rule 3.
->
-> Implementation-wise, this changes the alignment calculation in
-> create_boot_cache(). While at it also do the calulation only for caches
-> with the SLAB_KMALLOC flag, because the function is also used to create
-> the initial kmem_cache and kmem_cache_node caches, where no alignment
-> guarantee is necessary.
->
-> In the Rust allocator's krealloc_aligned(), remove the code that padded
-> sizes to the next power of two (suggested by Alice Ryhl) as it's no
-> longer necessary with the new guarantees.
->
-> Reported-by: Alice Ryhl <aliceryhl@google.com>
-> Reported-by: Boqun Feng <boqun.feng@gmail.com>
-> Link: https://lore.kernel.org/all/CAH5fLggjrbdUuT-H-5vbQfMazjRDpp2%2Bk3%3=
-DYhPyS17ezEqxwcw@mail.gmail.com/ [1]
-> Link: https://lore.kernel.org/all/CAH5fLghsZRemYUwVvhk77o6y1foqnCeDzW4WZv=
-6ScEWna2+_jw@mail.gmail.com/ [2]
-> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-> Reviewed-by: Boqun Feng <boqun.feng@gmail.com>
-> Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
+On Tue, 02 Jul 2024 19:03:21 +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.97 release.
+> There are 128 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 04 Jul 2024 17:01:55 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.97-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+All tests passing for Tegra ...
 
-> ---
-> v2: - add Rust side change as suggested by Alice, also thanks Boqun for f=
-ixups
-> - clarify that the alignment already existed (unless debugging) but was
->   not guaranteed, so there's no extra fragmentation in slab
-> - add r-b, a-b thanks tO Boqun and Roman
->
-> If it's fine with Rust folks, I can put this in the slab.git tree.
->
->  Documentation/core-api/memory-allocation.rst |  6 ++++--
->  include/linux/slab.h                         |  3 ++-
->  mm/slab_common.c                             |  9 +++++----
->  rust/kernel/alloc/allocator.rs               | 19 ++++++-------------
->  4 files changed, 17 insertions(+), 20 deletions(-)
->
-> diff --git a/Documentation/core-api/memory-allocation.rst b/Documentation=
-/core-api/memory-allocation.rst
-> index 1c58d883b273..8b84eb4bdae7 100644
-> --- a/Documentation/core-api/memory-allocation.rst
-> +++ b/Documentation/core-api/memory-allocation.rst
-> @@ -144,8 +144,10 @@ configuration, but it is a good practice to use `kma=
-lloc` for objects
->  smaller than page size.
->
->  The address of a chunk allocated with `kmalloc` is aligned to at least
-> -ARCH_KMALLOC_MINALIGN bytes.  For sizes which are a power of two, the
-> -alignment is also guaranteed to be at least the respective size.
-> +ARCH_KMALLOC_MINALIGN bytes. For sizes which are a power of two, the
-> +alignment is also guaranteed to be at least the respective size. For oth=
-er
-> +sizes, the alignment is guaranteed to be at least the largest power-of-t=
-wo
-> +divisor of the size.
->
->  Chunks allocated with kmalloc() can be resized with krealloc(). Similarl=
-y
->  to kmalloc_array(): a helper for resizing arrays is provided in the form=
- of
-> diff --git a/include/linux/slab.h b/include/linux/slab.h
-> index ed6bee5ec2b6..640cea6e6323 100644
-> --- a/include/linux/slab.h
-> +++ b/include/linux/slab.h
-> @@ -604,7 +604,8 @@ void *__kmalloc_large_node_noprof(size_t size, gfp_t =
-flags, int node)
->   *
->   * The allocated object address is aligned to at least ARCH_KMALLOC_MINA=
-LIGN
->   * bytes. For @size of power of two bytes, the alignment is also guarant=
-eed
-> - * to be at least to the size.
-> + * to be at least to the size. For other sizes, the alignment is guarant=
-eed to
-> + * be at least the largest power-of-two divisor of @size.
->   *
->   * The @flags argument may be one of the GFP flags defined at
->   * include/linux/gfp_types.h and described at
-> diff --git a/mm/slab_common.c b/mm/slab_common.c
-> index 1560a1546bb1..7272ef7bc55f 100644
-> --- a/mm/slab_common.c
-> +++ b/mm/slab_common.c
-> @@ -617,11 +617,12 @@ void __init create_boot_cache(struct kmem_cache *s,=
- const char *name,
->         s->size =3D s->object_size =3D size;
->
->         /*
-> -        * For power of two sizes, guarantee natural alignment for kmallo=
-c
-> -        * caches, regardless of SL*B debugging options.
-> +        * kmalloc caches guarantee alignment of at least the largest
-> +        * power-of-two divisor of the size. For power-of-two sizes,
-> +        * it is the size itself.
->          */
-> -       if (is_power_of_2(size))
-> -               align =3D max(align, size);
-> +       if (flags & SLAB_KMALLOC)
-> +               align =3D max(align, 1U << (ffs(size) - 1));
->         s->align =3D calculate_alignment(flags, align, size);
->
->  #ifdef CONFIG_HARDENED_USERCOPY
-> diff --git a/rust/kernel/alloc/allocator.rs b/rust/kernel/alloc/allocator=
-.rs
-> index 229642960cd1..e6ea601f38c6 100644
-> --- a/rust/kernel/alloc/allocator.rs
-> +++ b/rust/kernel/alloc/allocator.rs
-> @@ -18,23 +18,16 @@ pub(crate) unsafe fn krealloc_aligned(ptr: *mut u8, n=
-ew_layout: Layout, flags: F
->      // Customized layouts from `Layout::from_size_align()` can have size=
- < align, so pad first.
->      let layout =3D new_layout.pad_to_align();
->
-> -    let mut size =3D layout.size();
-> -
-> -    if layout.align() > bindings::ARCH_SLAB_MINALIGN {
-> -        // The alignment requirement exceeds the slab guarantee, thus tr=
-y to enlarge the size
-> -        // to use the "power-of-two" size/alignment guarantee (see comme=
-nts in `kmalloc()` for
-> -        // more information).
-> -        //
-> -        // Note that `layout.size()` (after padding) is guaranteed to be=
- a multiple of
-> -        // `layout.align()`, so `next_power_of_two` gives enough alignme=
-nt guarantee.
-> -        size =3D size.next_power_of_two();
-> -    }
-> +    // Note that `layout.size()` (after padding) is guaranteed to be a m=
-ultiple of `layout.align()`
-> +    // which together with the slab guarantees means the `krealloc` will=
- return a properly aligned
-> +    // object (see comments in `kmalloc()` for more information).
-> +    let size =3D layout.size();
+Test results for stable-v6.1:
+    10 builds:	10 pass, 0 fail
+    26 boots:	26 pass, 0 fail
+    116 tests:	116 pass, 0 fail
 
-The size is a multiple of the alignment due to the `pad_to_align` call
-above, which rounds up the size to ensure that this is the case.
+Linux version:	6.1.97-rc1-g54f35067ea4e
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
+                tegra20-ventana, tegra210-p2371-2180,
+                tegra210-p3450-0000, tegra30-cardhu-a04
 
-Alice
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+
+Jon
