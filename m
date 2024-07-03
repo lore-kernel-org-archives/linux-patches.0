@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAA5B17B4F7;
-	Wed,  3 Jul 2024 11:04:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE1917C205;
+	Wed,  3 Jul 2024 11:04:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004664; cv=none; b=Tn4jSYEITOM9a2lvUlR/JAdQ5+ZXCig4GfU/+/PIt5aERie9atRkd72BO5tYpvcHlLj5dYeDsK6Y6aB+uvx7eRHjDpXI43D5d7aZEI/2NJlJUqes6fHNnbhEtAXfR9SHk11prh3PlSzrVNA8cZc24htaiODmdEJl/Z8sdg6Kxqg=
+	t=1720004667; cv=none; b=Vca8enmdHG1BXhjqTxKY1kR4S8jKQYByeMgRBr8Ca9VwsPmlp5Bl4xa09vIHduoYEPBfQq1IUuniVGVW+gccQJTPG5rnqlMV4JmVXzHT1UXKCCnPoiShJ+H1QLSrS4XdilevUoUgftN1I5nC0jXgB/2RYOu5dAMvLZBJbquL7E8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004664; c=relaxed/simple;
-	bh=caaNtMR1VKdbscUm/hxk/SxChqZmMnI7bVlpwXBGCVc=;
+	s=arc-20240116; t=1720004667; c=relaxed/simple;
+	bh=jFv9NqI0uHxxOaYmZLUWJ3teos0CjByMNEV7NS0rF+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=peMVND0KW0GgFBn6ivJgVLPKaIg1q3q6BClX2nViZwWp0hgAoVms7g5/bPhYDa21oEm1GvXwjWXTK1DxCSKyyD72o/ZrcB3JiI3DY5FgJgiq3GeaOkjlcLsT+cI/uWkWBBF+ikHZq3nwXr9PSM+0LvnqTBsh5LHrVPsk/bumkDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aMrKILld; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lmJlErmrUJckL9Rfyrwd5JrEDiBtNatIkEtlvpXmrQbmORleO95nq13biQNLcPWJJkMB9CW6iG+lZX6jIFGqRC/WwJpBtw/RhkXl+Juor17HWwjwJg64/jVycfB1Z6bwz20tiGy+4fI299dpHwLnpL4zOr6HoX8IdYHZ1A+n9p8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PIuxKERv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aMrKILld"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3A5C4AF0B;
-	Wed,  3 Jul 2024 11:04:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PIuxKERv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA99DC2BD10;
+	Wed,  3 Jul 2024 11:04:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004664;
-	bh=caaNtMR1VKdbscUm/hxk/SxChqZmMnI7bVlpwXBGCVc=;
+	s=korg; t=1720004667;
+	bh=jFv9NqI0uHxxOaYmZLUWJ3teos0CjByMNEV7NS0rF+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aMrKILldgaxh+bIVL757HEXn3fvD5NHezjMaIPcIX8mpvbBD0drjqytXvEHMMTvNN
-	 fI9yjKMPLrmFwQ8IhctPTPpdCHpbZ2q+5MS+dbsy1BbBt2LKlrLlzjrnkDLqFoIkaG
-	 hovqEZMrMoshBaoZsxS1zNslREWeplvvbZwdEA7I=
+	b=PIuxKERvbrra59mlGjIxnH82TzotmWfj+DIIdQDHE1LFfMo4hAu68SFVb1YMNEn5H
+	 JWsBf7S+63MkjLOzGmRKpWzR+ssYjekwTFRKH97NH+WtjtgOiG5DVOZvk31T7mOiUE
+	 r5WnSqzHyqxkOxp+9GEC4z9VA2VbpOTikeezrBIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunwu Chan <chentao@kylinos.cn>,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Will Deacon <will@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 116/290] kselftest: arm64: Add a null pointer check
-Date: Wed,  3 Jul 2024 12:38:17 +0200
-Message-ID: <20240703102908.573645022@linuxfoundation.org>
+Subject: [PATCH 5.10 117/290] netpoll: Fix race condition in netpoll_owner_active
+Date: Wed,  3 Jul 2024 12:38:18 +0200
+Message-ID: <20240703102908.611364992@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -52,46 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunwu Chan <chentao@kylinos.cn>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 80164282b3620a3cb73de6ffda5592743e448d0e ]
+[ Upstream commit c2e6a872bde9912f1a7579639c5ca3adf1003916 ]
 
-There is a 'malloc' call, which can be unsuccessful.
-This patch will add the malloc failure checking
-to avoid possible null dereference and give more information
-about test fail reasons.
+KCSAN detected a race condition in netpoll:
 
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-Reviewed-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Link: https://lore.kernel.org/r/20240423082102.2018886-1-chentao@kylinos.cn
-Signed-off-by: Will Deacon <will@kernel.org>
+	BUG: KCSAN: data-race in net_rx_action / netpoll_send_skb
+	write (marked) to 0xffff8881164168b0 of 4 bytes by interrupt on cpu 10:
+	net_rx_action (./include/linux/netpoll.h:90 net/core/dev.c:6712 net/core/dev.c:6822)
+<snip>
+	read to 0xffff8881164168b0 of 4 bytes by task 1 on cpu 2:
+	netpoll_send_skb (net/core/netpoll.c:319 net/core/netpoll.c:345 net/core/netpoll.c:393)
+	netpoll_send_udp (net/core/netpoll.c:?)
+<snip>
+	value changed: 0x0000000a -> 0xffffffff
+
+This happens because netpoll_owner_active() needs to check if the
+current CPU is the owner of the lock, touching napi->poll_owner
+non atomically. The ->poll_owner field contains the current CPU holding
+the lock.
+
+Use an atomic read to check if the poll owner is the current CPU.
+
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://lore.kernel.org/r/20240429100437.3487432-1-leitao@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/arm64/tags/tags_test.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/core/netpoll.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/arm64/tags/tags_test.c b/tools/testing/selftests/arm64/tags/tags_test.c
-index 5701163460ef7..955f87c1170d7 100644
---- a/tools/testing/selftests/arm64/tags/tags_test.c
-+++ b/tools/testing/selftests/arm64/tags/tags_test.c
-@@ -6,6 +6,7 @@
- #include <stdint.h>
- #include <sys/prctl.h>
- #include <sys/utsname.h>
-+#include "../../kselftest.h"
+diff --git a/net/core/netpoll.c b/net/core/netpoll.c
+index 2ad22511b9c6d..f76afab9fd8bd 100644
+--- a/net/core/netpoll.c
++++ b/net/core/netpoll.c
+@@ -316,7 +316,7 @@ static int netpoll_owner_active(struct net_device *dev)
+ 	struct napi_struct *napi;
  
- #define SHIFT_TAG(tag)		((uint64_t)(tag) << 56)
- #define SET_TAG(ptr, tag)	(((uint64_t)(ptr) & ~SHIFT_TAG(0xff)) | \
-@@ -21,6 +22,9 @@ int main(void)
- 	if (prctl(PR_SET_TAGGED_ADDR_CTRL, PR_TAGGED_ADDR_ENABLE, 0, 0, 0) == 0)
- 		tbi_enabled = 1;
- 	ptr = (struct utsname *)malloc(sizeof(*ptr));
-+	if (!ptr)
-+		ksft_exit_fail_msg("Failed to allocate utsname buffer\n");
-+
- 	if (tbi_enabled)
- 		tag = 0x42;
- 	ptr = (struct utsname *)SET_TAG(ptr, tag);
+ 	list_for_each_entry_rcu(napi, &dev->napi_list, dev_list) {
+-		if (napi->poll_owner == smp_processor_id())
++		if (READ_ONCE(napi->poll_owner) == smp_processor_id())
+ 			return 1;
+ 	}
+ 	return 0;
 -- 
 2.43.0
 
