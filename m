@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26D62183093;
-	Wed,  3 Jul 2024 11:07:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF9A183093;
+	Wed,  3 Jul 2024 11:07:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004853; cv=none; b=ohkXhi57mvusqa/PsfVh82Yoa5psvxQdBmySl4mId4MXk69VLj3MAKpBetVYMHtQ6Bt+0qUYoI2Dl+nRYfM+h0Q8GuVysxHtBpLA5RjCdp1eXNcJ5LfXV2q7c/5wZD0eIvG0YO27iCYWNm+JWQtZGrRe5DwvBu86wT492yeMv1U=
+	t=1720004856; cv=none; b=NZj/JDsKbReQcWURAcWrqvjNavZ3/qhLCgp7MmmlWEWWs0DtVL9EzgpFH3KuycpzJ67VShkid4m/4JqOwHqp5g12XREquY1rroaIac//pH0cjcOftO3D5puSodb1PQ0lkmwS3QPiipXcQU5RjNQIXgo6TLUteERoywNhy0tm35o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004853; c=relaxed/simple;
-	bh=1O+r/6Un7zIPqbvoU0pzm2rrtuXRO8mEvdE8RssG164=;
+	s=arc-20240116; t=1720004856; c=relaxed/simple;
+	bh=U5k6+X/VYuU6BJEWzlrzswTP3C+IZWKbryi1uFELyuk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oVliqC+/tUoRtp4JcfDWIg3j8oUkrHheUNs0d0H8cAkP+Yg73HsFhfYfzlmKS7LUdYCi0JqcQfP4Vpg33Zk8oJaDmdNg25+eFm+RdCAv4Y6/7RN8eYPBr/sGfrt6Frrjc1RgeZutU1pzrHbzoEZjeVsj3At/XufrYU2YBRWk4U8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y5g0pwZJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DiNWe8eay39iqTfqbuMY4VMPU6ypNEUOeGRusTW6fRjL4gK9TtUIvhCAfSBAAf42p5rdNxKvsrCCNKxZwdJHbx5PP6TBJTfYdxPHOurIi9GKvT5SyTFiHQbzX6NBEIECwrJyTOQ3RLq1GwRVlSflM4vkoX/9QHGadGdLp+igEHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ytOoFb7q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y5g0pwZJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E09AC2BD10;
-	Wed,  3 Jul 2024 11:07:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ytOoFb7q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9489AC4AF0B;
+	Wed,  3 Jul 2024 11:07:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004853;
-	bh=1O+r/6Un7zIPqbvoU0pzm2rrtuXRO8mEvdE8RssG164=;
+	s=korg; t=1720004856;
+	bh=U5k6+X/VYuU6BJEWzlrzswTP3C+IZWKbryi1uFELyuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y5g0pwZJmkvGRHr0LEZ5a3px+yVVVcCP4nsVoHBr2lzrNAHflrzRwJOHNUSKjeE8r
-	 lJVq2LEX/3VbGom3fzeW9OCO18iMeUnbn3g8zWaIOMti88h5JpJKm61gHZJxp3JGRv
-	 hM56gX9kfu7EfxcJ8wjwQabCEPBRCVHKBo5dMcDg=
+	b=ytOoFb7qok6P0vm5cu+G75gm+mdInFrnsmxJXMU1bTk4JQeGeOPcrkFTEJP2/SsJj
+	 D82LwqWnOLKQIPIaihK/AWhA5voRYGCnnjx/ar1sahmWU95OVdTb1SRMNpuoNzLx1q
+	 C8s7Ilio1h9HOI7JynKCbuta2qHVEq6PWJNHE620=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Juergen Christ <jchrist@linux.ibm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 180/290] s390/cpacf: Make use of invalid opcode produce a link error
-Date: Wed,  3 Jul 2024 12:39:21 +0200
-Message-ID: <20240703102910.971417907@linuxfoundation.org>
+Subject: [PATCH 5.10 181/290] tracing: Add MODULE_DESCRIPTION() to preemptirq_delay_test
+Date: Wed,  3 Jul 2024 12:39:22 +0200
+Message-ID: <20240703102911.008285073@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -53,63 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Jeff Johnson <quic_jjohnson@quicinc.com>
 
-[ Upstream commit 32e8bd6423fc127d2b37bdcf804fd76af3bbec79 ]
+[ Upstream commit 23748e3e0fbfe471eff5ce439921629f6a427828 ]
 
-Instead of calling BUG() at runtime introduce and use a prototype for a
-non-existing function to produce a link error during compile when a not
-supported opcode is used with the __cpacf_query() or __cpacf_check_opcode()
-inline functions.
+Fix the 'make W=1' warning:
 
-Suggested-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
-Reviewed-by: Juergen Christ <jchrist@linux.ibm.com>
+WARNING: modpost: missing MODULE_DESCRIPTION() in kernel/trace/preemptirq_delay_test.o
+
+Link: https://lore.kernel.org/linux-trace-kernel/20240518-md-preemptirq_delay_test-v1-1-387d11b30d85@quicinc.com
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Fixes: f96e8577da10 ("lib: Add module for testing preemptoff/irqsoff latency tracers")
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/cpacf.h | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ kernel/trace/preemptirq_delay_test.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/s390/include/asm/cpacf.h b/arch/s390/include/asm/cpacf.h
-index fa31f71cf5746..0f6ff2008a159 100644
---- a/arch/s390/include/asm/cpacf.h
-+++ b/arch/s390/include/asm/cpacf.h
-@@ -161,6 +161,13 @@
+diff --git a/kernel/trace/preemptirq_delay_test.c b/kernel/trace/preemptirq_delay_test.c
+index 312d1a0ca3b60..1a4f2f4249961 100644
+--- a/kernel/trace/preemptirq_delay_test.c
++++ b/kernel/trace/preemptirq_delay_test.c
+@@ -201,4 +201,5 @@ static void __exit preemptirq_delay_exit(void)
  
- typedef struct { unsigned char bytes[16]; } cpacf_mask_t;
- 
-+/*
-+ * Prototype for a not existing function to produce a link
-+ * error if __cpacf_query() or __cpacf_check_opcode() is used
-+ * with an invalid compile time const opcode.
-+ */
-+void __cpacf_bad_opcode(void);
-+
- static __always_inline void __cpacf_query_rre(u32 opc, u8 r1, u8 r2,
- 					      cpacf_mask_t *mask)
- {
-@@ -232,7 +239,7 @@ static __always_inline void __cpacf_query(unsigned int opcode,
- 		__cpacf_query_rre(CPACF_PRNO, 2, 4, mask);
- 		break;
- 	default:
--		BUG();
-+		__cpacf_bad_opcode();
- 	}
- }
- 
-@@ -257,7 +264,8 @@ static __always_inline int __cpacf_check_opcode(unsigned int opcode)
- 	case CPACF_KMA:
- 		return test_facility(146);	/* check for MSA8 */
- 	default:
--		BUG();
-+		__cpacf_bad_opcode();
-+		return 0;
- 	}
- }
- 
+ module_init(preemptirq_delay_init)
+ module_exit(preemptirq_delay_exit)
++MODULE_DESCRIPTION("Preempt / IRQ disable delay thread to test latency tracers");
+ MODULE_LICENSE("GPL v2");
 -- 
 2.43.0
 
