@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0065F1741C5;
-	Wed,  3 Jul 2024 11:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4A4513776F;
+	Wed,  3 Jul 2024 11:17:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005421; cv=none; b=ohSMzTtLnSauppFFM9hSW+8I42LkH7NxxF8qXHl8wdrhinMBlII+zkXppKnK5V8k4/55mQ7FMB6NkX4ucK4J/6OTtC6Yd8PRhZKLvgGYb2cJaP9/VAlHCYH/w58rZCGR3Oc66IW2zxgBCzhifCF4d6dvfnP+3xvxH3UCjgTyxko=
+	t=1720005424; cv=none; b=BSJRtxHhgitk84xmlzqzU7P3zu9duqqYDCxKAEnOO+L1WOE9vaWE/fM+8JQJsXGedLZGAnj1ITVmxth36OvFMYR/VpFZVnHiCNyuQ+xEWeRojwLgzhuXX6ifwrvFwlk0IMlA9mgG86G7I6CskBhnpy+ocndu3UBm8CWfmh4kons=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005421; c=relaxed/simple;
-	bh=zd0M0y2qAyv8cqUlFwEHaFry0wsYZyHjATSJz4y259o=;
+	s=arc-20240116; t=1720005424; c=relaxed/simple;
+	bh=6o9Hx8ckKOcm1bUTyrs9nWjqul13zHvykKC2T2ob9zg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M0iLoUqj+8NlWggd4qo9/Y3V+p8/uYgq0k5GO1rEFFqEemTobFOTkqQl/w8TaagIc15YaMSVcfFJXF/tHDw2FtiPtvkcYscKhxBEkix1JQy3l/9vdUqW+nyuJ/huhWnT9P+Zin692C7aNkkpNnyBVOLQyulnqsgOBd1XpiGmlC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H52EdSE4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KUI7oZAPTlvGxRnHYnxUDJ557yR6MuwbdDRs/hCQ88pVsI2Vl6XgIts45OGZEUcW+DGGB3dpMcYaK2NzpTWKHEulX6iqSfP2AcqhYzlvNcTE7zRwEeoiJ+ILCwc7TQIGMy5DzeTl5M0jtBQFDkfLdglQQWoYYwtRvvf9RuO+VL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tCHlZ0rm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H52EdSE4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B422C2BD10;
-	Wed,  3 Jul 2024 11:17:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tCHlZ0rm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CAD9C2BD10;
+	Wed,  3 Jul 2024 11:17:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005420;
-	bh=zd0M0y2qAyv8cqUlFwEHaFry0wsYZyHjATSJz4y259o=;
+	s=korg; t=1720005423;
+	bh=6o9Hx8ckKOcm1bUTyrs9nWjqul13zHvykKC2T2ob9zg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H52EdSE4WP6bZRaCGkMtikNHh38aUi5rkzd8Yg5Qb4SuYfvL3Vv3wDcbuW0dd9uho
-	 7VESQ8XbfHEka8Aoz4FaKdTA4pC6EsEnqaAb6wK6kMdl1ylcRsNpH8tjFJu3IvdwBl
-	 O/1E0Fw3gqopINa6oYrgNp8vLm+r8UIOyMk6fX3c=
+	b=tCHlZ0rmfqLnlvpJGE8QgVwoKqM9bj/ZCERXJrxZbUMu080ZUXOxCjQP1cTYlU3X8
+	 2FgVJvOE07o7H04WmqwAxTrNJXzgUZcp6C28QmXEFMzS5qzsWYAAMO9bQ+GyY/1QKX
+	 Qn4sFJ1JmWW/Is/JN8OhQ1mrocctP+fSvmng1Wns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	syzbot+5f996b83575ef4058638@syzkaller.appspotmail.com,
-	syzbot+1b2abad17596ad03dcff@syzkaller.appspotmail.com
-Subject: [PATCH 5.15 074/356] USB: class: cdc-wdm: Fix CPU lockup caused by excessive log messages
-Date: Wed,  3 Jul 2024 12:36:50 +0200
-Message-ID: <20240703102915.902580164@linuxfoundation.org>
+	Mihai Carabas <mihai.carabas@oracle.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 045/356] pvpanic: Indentation fixes here and there
+Date: Wed,  3 Jul 2024 12:36:21 +0200
+Message-ID: <20240703102914.801398464@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,78 +51,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit 22f00812862564b314784167a89f27b444f82a46 upstream.
+[ Upstream commit 84b0f12a953c4feff9994b1c4583ed18b441f482 ]
 
-The syzbot fuzzer found that the interrupt-URB completion callback in
-the cdc-wdm driver was taking too long, and the driver's immediate
-resubmission of interrupt URBs with -EPROTO status combined with the
-dummy-hcd emulation to cause a CPU lockup:
+1) replace double spaces with single;
+2) relax line width limitation a bit.
 
-cdc_wdm 1-1:1.0: nonzero urb status received: -71
-cdc_wdm 1-1:1.0: wdm_int_callback - 0 bytes
-watchdog: BUG: soft lockup - CPU#0 stuck for 26s! [syz-executor782:6625]
-CPU#0 Utilization every 4s during lockup:
-	#1:  98% system,	  0% softirq,	  3% hardirq,	  0% idle
-	#2:  98% system,	  0% softirq,	  3% hardirq,	  0% idle
-	#3:  98% system,	  0% softirq,	  3% hardirq,	  0% idle
-	#4:  98% system,	  0% softirq,	  3% hardirq,	  0% idle
-	#5:  98% system,	  1% softirq,	  3% hardirq,	  0% idle
-Modules linked in:
-irq event stamp: 73096
-hardirqs last  enabled at (73095): [<ffff80008037bc00>] console_emit_next_record kernel/printk/printk.c:2935 [inline]
-hardirqs last  enabled at (73095): [<ffff80008037bc00>] console_flush_all+0x650/0xb74 kernel/printk/printk.c:2994
-hardirqs last disabled at (73096): [<ffff80008af10b00>] __el1_irq arch/arm64/kernel/entry-common.c:533 [inline]
-hardirqs last disabled at (73096): [<ffff80008af10b00>] el1_interrupt+0x24/0x68 arch/arm64/kernel/entry-common.c:551
-softirqs last  enabled at (73048): [<ffff8000801ea530>] softirq_handle_end kernel/softirq.c:400 [inline]
-softirqs last  enabled at (73048): [<ffff8000801ea530>] handle_softirqs+0xa60/0xc34 kernel/softirq.c:582
-softirqs last disabled at (73043): [<ffff800080020de8>] __do_softirq+0x14/0x20 kernel/softirq.c:588
-CPU: 0 PID: 6625 Comm: syz-executor782 Tainted: G        W          6.10.0-rc2-syzkaller-g8867bbd4a056 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/02/2024
-
-Testing showed that the problem did not occur if the two error
-messages -- the first two lines above -- were removed; apparently adding
-material to the kernel log takes a surprisingly large amount of time.
-
-In any case, the best approach for preventing these lockups and to
-avoid spamming the log with thousands of error messages per second is
-to ratelimit the two dev_err() calls.  Therefore we replace them with
-dev_err_ratelimited().
-
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Suggested-by: Greg KH <gregkh@linuxfoundation.org>
-Reported-and-tested-by: syzbot+5f996b83575ef4058638@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-usb/00000000000073d54b061a6a1c65@google.com/
-Reported-and-tested-by: syzbot+1b2abad17596ad03dcff@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-usb/000000000000f45085061aa9b37e@google.com/
-Fixes: 9908a32e94de ("USB: remove err() macro from usb class drivers")
-Link: https://lore.kernel.org/linux-usb/40dfa45b-5f21-4eef-a8c1-51a2f320e267@rowland.harvard.edu/
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/29855215-52f5-4385-b058-91f42c2bee18@rowland.harvard.edu
+Reviewed-by: Mihai Carabas <mihai.carabas@oracle.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20210829124354.81653-3-andriy.shevchenko@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: ee59be35d7a8 ("misc/pvpanic-pci: register attributes via pci_driver")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/class/cdc-wdm.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/misc/pvpanic/pvpanic-mmio.c |  7 +++----
+ drivers/misc/pvpanic/pvpanic-pci.c  | 12 +++++-------
+ drivers/misc/pvpanic/pvpanic.c      | 11 ++++-------
+ 3 files changed, 12 insertions(+), 18 deletions(-)
 
---- a/drivers/usb/class/cdc-wdm.c
-+++ b/drivers/usb/class/cdc-wdm.c
-@@ -266,14 +266,14 @@ static void wdm_int_callback(struct urb
- 			dev_err(&desc->intf->dev, "Stall on int endpoint\n");
- 			goto sw; /* halt is cleared in work */
- 		default:
--			dev_err(&desc->intf->dev,
-+			dev_err_ratelimited(&desc->intf->dev,
- 				"nonzero urb status received: %d\n", status);
- 			break;
- 		}
- 	}
+diff --git a/drivers/misc/pvpanic/pvpanic-mmio.c b/drivers/misc/pvpanic/pvpanic-mmio.c
+index 61dbff5f0065c..eb97167c03fb4 100644
+--- a/drivers/misc/pvpanic/pvpanic-mmio.c
++++ b/drivers/misc/pvpanic/pvpanic-mmio.c
+@@ -24,8 +24,7 @@ MODULE_AUTHOR("Hu Tao <hutao@cn.fujitsu.com>");
+ MODULE_DESCRIPTION("pvpanic-mmio device driver");
+ MODULE_LICENSE("GPL");
  
- 	if (urb->actual_length < sizeof(struct usb_cdc_notification)) {
--		dev_err(&desc->intf->dev, "wdm_int_callback - %d bytes\n",
-+		dev_err_ratelimited(&desc->intf->dev, "wdm_int_callback - %d bytes\n",
- 			urb->actual_length);
- 		goto exit;
- 	}
+-static ssize_t capability_show(struct device *dev,
+-			       struct device_attribute *attr, char *buf)
++static ssize_t capability_show(struct device *dev, struct device_attribute *attr, char *buf)
+ {
+ 	struct pvpanic_instance *pi = dev_get_drvdata(dev);
+ 
+@@ -33,14 +32,14 @@ static ssize_t capability_show(struct device *dev,
+ }
+ static DEVICE_ATTR_RO(capability);
+ 
+-static ssize_t events_show(struct device *dev,  struct device_attribute *attr, char *buf)
++static ssize_t events_show(struct device *dev, struct device_attribute *attr, char *buf)
+ {
+ 	struct pvpanic_instance *pi = dev_get_drvdata(dev);
+ 
+ 	return sysfs_emit(buf, "%x\n", pi->events);
+ }
+ 
+-static ssize_t events_store(struct device *dev,  struct device_attribute *attr,
++static ssize_t events_store(struct device *dev, struct device_attribute *attr,
+ 			    const char *buf, size_t count)
+ {
+ 	struct pvpanic_instance *pi = dev_get_drvdata(dev);
+diff --git a/drivers/misc/pvpanic/pvpanic-pci.c b/drivers/misc/pvpanic/pvpanic-pci.c
+index 7d1220f4c95bc..07eddb5ea30fa 100644
+--- a/drivers/misc/pvpanic/pvpanic-pci.c
++++ b/drivers/misc/pvpanic/pvpanic-pci.c
+@@ -19,11 +19,10 @@
+ #define PCI_DEVICE_ID_REDHAT_PVPANIC     0x0011
+ 
+ MODULE_AUTHOR("Mihai Carabas <mihai.carabas@oracle.com>");
+-MODULE_DESCRIPTION("pvpanic device driver ");
++MODULE_DESCRIPTION("pvpanic device driver");
+ MODULE_LICENSE("GPL");
+ 
+-static ssize_t capability_show(struct device *dev,
+-			       struct device_attribute *attr, char *buf)
++static ssize_t capability_show(struct device *dev, struct device_attribute *attr, char *buf)
+ {
+ 	struct pvpanic_instance *pi = dev_get_drvdata(dev);
+ 
+@@ -31,14 +30,14 @@ static ssize_t capability_show(struct device *dev,
+ }
+ static DEVICE_ATTR_RO(capability);
+ 
+-static ssize_t events_show(struct device *dev,  struct device_attribute *attr, char *buf)
++static ssize_t events_show(struct device *dev, struct device_attribute *attr, char *buf)
+ {
+ 	struct pvpanic_instance *pi = dev_get_drvdata(dev);
+ 
+ 	return sysfs_emit(buf, "%x\n", pi->events);
+ }
+ 
+-static ssize_t events_store(struct device *dev,  struct device_attribute *attr,
++static ssize_t events_store(struct device *dev, struct device_attribute *attr,
+ 			    const char *buf, size_t count)
+ {
+ 	struct pvpanic_instance *pi = dev_get_drvdata(dev);
+@@ -65,8 +64,7 @@ static struct attribute *pvpanic_pci_dev_attrs[] = {
+ };
+ ATTRIBUTE_GROUPS(pvpanic_pci_dev);
+ 
+-static int pvpanic_pci_probe(struct pci_dev *pdev,
+-			     const struct pci_device_id *ent)
++static int pvpanic_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ {
+ 	struct pvpanic_instance *pi;
+ 	void __iomem *base;
+diff --git a/drivers/misc/pvpanic/pvpanic.c b/drivers/misc/pvpanic/pvpanic.c
+index 477bf9c6b6bc5..049a120063489 100644
+--- a/drivers/misc/pvpanic/pvpanic.c
++++ b/drivers/misc/pvpanic/pvpanic.c
+@@ -23,7 +23,7 @@
+ #include "pvpanic.h"
+ 
+ MODULE_AUTHOR("Mihai Carabas <mihai.carabas@oracle.com>");
+-MODULE_DESCRIPTION("pvpanic device driver ");
++MODULE_DESCRIPTION("pvpanic device driver");
+ MODULE_LICENSE("GPL");
+ 
+ static struct list_head pvpanic_list;
+@@ -45,8 +45,7 @@ pvpanic_send_event(unsigned int event)
+ }
+ 
+ static int
+-pvpanic_panic_notify(struct notifier_block *nb, unsigned long code,
+-		     void *unused)
++pvpanic_panic_notify(struct notifier_block *nb, unsigned long code, void *unused)
+ {
+ 	unsigned int event = PVPANIC_PANICKED;
+ 
+@@ -102,8 +101,7 @@ static int pvpanic_init(void)
+ 	INIT_LIST_HEAD(&pvpanic_list);
+ 	spin_lock_init(&pvpanic_lock);
+ 
+-	atomic_notifier_chain_register(&panic_notifier_list,
+-				       &pvpanic_panic_nb);
++	atomic_notifier_chain_register(&panic_notifier_list, &pvpanic_panic_nb);
+ 
+ 	return 0;
+ }
+@@ -111,8 +109,7 @@ module_init(pvpanic_init);
+ 
+ static void pvpanic_exit(void)
+ {
+-	atomic_notifier_chain_unregister(&panic_notifier_list,
+-					 &pvpanic_panic_nb);
++	atomic_notifier_chain_unregister(&panic_notifier_list, &pvpanic_panic_nb);
+ 
+ }
+ module_exit(pvpanic_exit);
+-- 
+2.43.0
+
 
 
