@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92C4136E2A;
-	Wed,  3 Jul 2024 11:08:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF898136E2A;
+	Wed,  3 Jul 2024 11:08:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004929; cv=none; b=K/qGXvqaqVuKdHCakTqq8qkM13CD4QDRuukgKqXj+fc+00RclaN3xrdCZk8kuXNeUHfTdu6dohR5K6Z5pqy+Zmml7jNBFeYx86w2lcJ2nQgEhci4ouv3AvzCLhTWX8rz+HDTo958EiwV3b8LoKWLJrHEO08ukn4s+ojOg2ovULw=
+	t=1720004932; cv=none; b=gKtQEPKnGzxCCTJ0leaqUufGc2Q/SGF7TtGqaboPqlsM8wYrTiVphL+sDGQqoD+XCkzLCt1Uw3k2NQP7q2Ps0NZENdvowpksJcn73tV3KzMZCPgdNVsa46SeePSsNGuKmHB27pcFFcr5ATBXZuVvVosSEa52KKGcvtndB18U72o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004929; c=relaxed/simple;
-	bh=aydpzet7+5dXrnjW7HPdxTL+UaWyQmgmKQEMdHjxhc4=;
+	s=arc-20240116; t=1720004932; c=relaxed/simple;
+	bh=p/pgbsExsB1URFbkpeY1vVLrjZPr4ShEZb9zcRCbx8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kvKYsV6HEqIz1RjFRmQDRQkvQWtm8RsWay2lf6Gvu0hOD+9e3bC87qVqA71PdG5gz7eAEQuiCSVmBK5YFlaug7sUmD45h5RO+0e7+uOhmttaEyqP1DyifMuo+lmVH1K3LRHgO/1wVtWua28I5Q6Wml4ULSHxNFyYSoAQOo4o8JM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U4rqE+5E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IHzyWcuz4lP/JiZXLpl7PCfVe8RPENJpvPR44xVEFVDdk9zjH57U3fsdx3s02G6t6Zs1cdIFv45tXMTph/vYGFkXuST8/rinP7ftq9FaVU0LDrOeg7LzLz3LJUYeh2v0/hijYGJcovvaNQkBP0+aAgnjH/tMlJnIAeIkTvHlVKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ux0fYTQt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U4rqE+5E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E73EC2BD10;
-	Wed,  3 Jul 2024 11:08:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ux0fYTQt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CB32C2BD10;
+	Wed,  3 Jul 2024 11:08:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004928;
-	bh=aydpzet7+5dXrnjW7HPdxTL+UaWyQmgmKQEMdHjxhc4=;
+	s=korg; t=1720004931;
+	bh=p/pgbsExsB1URFbkpeY1vVLrjZPr4ShEZb9zcRCbx8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U4rqE+5EYk4WRTC0fKH9PKjhisPglz4ATHiQP9ESh0cqcAKiu59WwEvRfRWHku76R
-	 lGtNuYwmjary/l3au4SYk7iY4qN/vq2qGvLKg5wbFcF1EjwlxNlCXJtR/U1f0Ndvnv
-	 ZI56roSjB3N3KWTgcm+iUDWGb629Zt/RieE3IQjA=
+	b=Ux0fYTQtwGcmshuoEWiZANA9TtZcBFCbVEv1/Ob11xrOvuAN23ePvIowiQHyq2LKa
+	 AZ4VEm/fKbBHVN5hNSxnPp32cJQQoYwHL+I9q1QAiE6ifesBxdyPiUulHv7eR/yPLf
+	 RcfnBo9r6rLby7toSfP1XMvaiu0mta2pj/PDYy+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Keeping <jkeeping@inmusicbrands.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Maximilian Heyne <mheyne@amazon.de>,
+	Hagar Hemdan <hagarhem@amazon.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 204/290] Input: ili210x - fix ili251x_read_touch_data() return value
-Date: Wed,  3 Jul 2024 12:39:45 +0200
-Message-ID: <20240703102911.868422598@linuxfoundation.org>
+Subject: [PATCH 5.10 205/290] pinctrl: fix deadlock in create_pinctrl() when handling -EPROBE_DEFER
+Date: Wed,  3 Jul 2024 12:39:46 +0200
+Message-ID: <20240703102911.905519724@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -51,39 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Keeping <jkeeping@inmusicbrands.com>
+From: Hagar Hemdan <hagarhem@amazon.com>
 
-[ Upstream commit 9f0fad0382124e7e23b3c730fa78818c22c89c0a ]
+[ Upstream commit adec57ff8e66aee632f3dd1f93787c13d112b7a1 ]
 
-The caller of this function treats all non-zero values as an error, so
-the return value of i2c_master_recv() cannot be returned directly.
+In create_pinctrl(), pinctrl_maps_mutex is acquired before calling
+add_setting(). If add_setting() returns -EPROBE_DEFER, create_pinctrl()
+calls pinctrl_free(). However, pinctrl_free() attempts to acquire
+pinctrl_maps_mutex, which is already held by create_pinctrl(), leading to
+a potential deadlock.
 
-This fixes touch reporting when there are more than 6 active touches.
+This patch resolves the issue by releasing pinctrl_maps_mutex before
+calling pinctrl_free(), preventing the deadlock.
 
-Fixes: ef536abd3afd1 ("Input: ili210x - define and use chip operations structure")
-Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
-Link: https://lore.kernel.org/r/20240523085624.2295988-1-jkeeping@inmusicbrands.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+This bug was discovered and resolved using Coverity Static Analysis
+Security Testing (SAST) by Synopsys, Inc.
+
+Fixes: 42fed7ba44e4 ("pinctrl: move subsystem mutex to pinctrl_dev struct")
+Suggested-by: Maximilian Heyne <mheyne@amazon.de>
+Signed-off-by: Hagar Hemdan <hagarhem@amazon.com>
+Link: https://lore.kernel.org/r/20240604085838.3344-1-hagarhem@amazon.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/touchscreen/ili210x.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pinctrl/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/input/touchscreen/ili210x.c b/drivers/input/touchscreen/ili210x.c
-index f437eefec94ad..9452a12ddb096 100644
---- a/drivers/input/touchscreen/ili210x.c
-+++ b/drivers/input/touchscreen/ili210x.c
-@@ -231,8 +231,8 @@ static int ili251x_read_touch_data(struct i2c_client *client, u8 *data)
- 	if (!error && data[0] == 2) {
- 		error = i2c_master_recv(client, data + ILI251X_DATA_SIZE1,
- 					ILI251X_DATA_SIZE2);
--		if (error >= 0 && error != ILI251X_DATA_SIZE2)
--			error = -EIO;
-+		if (error >= 0)
-+			error = error == ILI251X_DATA_SIZE2 ? 0 : -EIO;
+diff --git a/drivers/pinctrl/core.c b/drivers/pinctrl/core.c
+index ee99dc56c5448..3d44d6f48cc4c 100644
+--- a/drivers/pinctrl/core.c
++++ b/drivers/pinctrl/core.c
+@@ -1092,8 +1092,8 @@ static struct pinctrl *create_pinctrl(struct device *dev,
+ 		 * an -EPROBE_DEFER later, as that is the worst case.
+ 		 */
+ 		if (ret == -EPROBE_DEFER) {
+-			pinctrl_free(p, false);
+ 			mutex_unlock(&pinctrl_maps_mutex);
++			pinctrl_free(p, false);
+ 			return ERR_PTR(ret);
+ 		}
  	}
- 
- 	return error;
 -- 
 2.43.0
 
