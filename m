@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3E9173336;
-	Wed,  3 Jul 2024 10:53:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100E4173336;
+	Wed,  3 Jul 2024 10:53:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004014; cv=none; b=Ymp+MwrouV0EpWE4u+9U4U61npxHnJLM4AG5Y1tCkWTmFSNDlkc5qfYxb5qFy1tQeiiRPMKY0VxrmkWwuMjFXiV8WIP8wjM68BxwbSVJsBO/G1x2yAT9F95fjPVM0RtCyLE6Zl6Fj4sKuMP0kboSyMlbvWldUiQJJ5RP2wZR59o=
+	t=1720004018; cv=none; b=KQ9cOx/hZ6YXK3cI/j7/YnrKt6dpuYhQQU8FGJ4QtAdaoqzXX4uBh3DvhltZuhUg65dcfgMZWpvqo/mby86Zw6/tfcJgX+ZeRjU0yuXVHaWycYn5WFUgWrp5i2IwVv2RrLmi/27riMA3HlrkWi0GE/M/oiQO6HhVBoiu9YEs4mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004014; c=relaxed/simple;
-	bh=TT6/qj+gwZzg2nHSY043GNuQ56B1liCC8hESpi61oh0=;
+	s=arc-20240116; t=1720004018; c=relaxed/simple;
+	bh=FQsRUDpSFj8n+vvJdxmq971k0rlWufiQ6wgNQXBxuWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mL8pianPsGAXtzrb/5NBi5N/3QGXQeevEDRdpUx3ODl0stWNawEkdji4LkcjUWTbTsgE/MUUaA80Yr/gcuUqI7+RA2SHYhwQymZbjG3tLpT0AJ+QUoOTCqhYUlDgnj5BIqv4uO9pKTc6YpGZemvcEGD+V5j8EeR3lB46OuseUfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pkx0ZJHF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BDO1AfPCvh0MlVt/wl9zrL9jzT9wkyUnEMviYt3gJD6RNW3B8C63fHyiqPHISuE/iap3Bx+VlMgIsTyWYLiD/5AN2wqqIhXeYqb8FRrN0bGn29ZpW4sILQoYqQb+7fkHzLz8V5eKZ+sv4eiqK4HBE317X7d/j1gCKyii3ISX3i4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j7Efgxyn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pkx0ZJHF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53399C2BD10;
-	Wed,  3 Jul 2024 10:53:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j7Efgxyn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4603BC2BD10;
+	Wed,  3 Jul 2024 10:53:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004014;
-	bh=TT6/qj+gwZzg2nHSY043GNuQ56B1liCC8hESpi61oh0=;
+	s=korg; t=1720004017;
+	bh=FQsRUDpSFj8n+vvJdxmq971k0rlWufiQ6wgNQXBxuWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pkx0ZJHFVS5SO0vgog8rNcC0r6n62BVizmUlJRjUW616xotYQe4+LMuHPB2ZgpsGw
-	 R+YdZtHm8E1sC69VNA4qv1lJ4BEr3ecVxkQZeFe/JimCbC8TIssSwC1ioBArcJeg8w
-	 LwDaAZHGYgyWE6jJ71+myYRyQHNwv+QSl8e8nz+U=
+	b=j7EfgxynQ3eENh+Ug/Zrj3Vo6/bNbooYbDRjajkpUJBlWiTvN1qRQtzuK8oKsZcBD
+	 3ncRn4cBjlc6G95a23hrmbznKpsvIJb34UthEgJdF6ygOaJDuBIMmMFlwXQl6j7m1i
+	 0/d0c5T5MPrge7OezuSs3ajvetoS1Ciz9hYfo/oI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 064/189] net/ipv6: Fix the RT cache flush via sysctl using a previous delay
-Date: Wed,  3 Jul 2024 12:38:45 +0200
-Message-ID: <20240703102843.925031390@linuxfoundation.org>
+Subject: [PATCH 5.4 055/189] iommu: Return right value in iommu_sva_bind_device()
+Date: Wed,  3 Jul 2024 12:38:36 +0200
+Message-ID: <20240703102843.589811494@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -52,51 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Pavlu <petr.pavlu@suse.com>
+From: Lu Baolu <baolu.lu@linux.intel.com>
 
-[ Upstream commit 14a20e5b4ad998793c5f43b0330d9e1388446cf3 ]
+[ Upstream commit 89e8a2366e3bce584b6c01549d5019c5cda1205e ]
 
-The net.ipv6.route.flush system parameter takes a value which specifies
-a delay used during the flush operation for aging exception routes. The
-written value is however not used in the currently requested flush and
-instead utilized only in the next one.
+iommu_sva_bind_device() should return either a sva bond handle or an
+ERR_PTR value in error cases. Existing drivers (idxd and uacce) only
+check the return value with IS_ERR(). This could potentially lead to
+a kernel NULL pointer dereference issue if the function returns NULL
+instead of an error pointer.
 
-A problem is that ipv6_sysctl_rtcache_flush() first reads the old value
-of net->ipv6.sysctl.flush_delay into a local delay variable and then
-calls proc_dointvec() which actually updates the sysctl based on the
-provided input.
+In reality, this doesn't cause any problems because iommu_sva_bind_device()
+only returns NULL when the kernel is not configured with CONFIG_IOMMU_SVA.
+In this case, iommu_dev_enable_feature(dev, IOMMU_DEV_FEAT_SVA) will
+return an error, and the device drivers won't call iommu_sva_bind_device()
+at all.
 
-Fix the problem by switching the order of the two operations.
-
-Fixes: 4990509f19e8 ("[NETNS][IPV6]: Make sysctls route per namespace.")
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20240607112828.30285-1-petr.pavlu@suse.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 26b25a2b98e4 ("iommu: Bind process address spaces to devices")
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Link: https://lore.kernel.org/r/20240528042528.71396-1-baolu.lu@linux.intel.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/iommu.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 65772800d0d33..08cdb38d41d86 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -6142,12 +6142,12 @@ int ipv6_sysctl_rtcache_flush(struct ctl_table *ctl, int write,
- 	if (!write)
- 		return -EINVAL;
- 
--	net = (struct net *)ctl->extra1;
--	delay = net->ipv6.sysctl.flush_delay;
- 	ret = proc_dointvec(ctl, write, buffer, lenp, ppos);
- 	if (ret)
- 		return ret;
- 
-+	net = (struct net *)ctl->extra1;
-+	delay = net->ipv6.sysctl.flush_delay;
- 	fib6_run_gc(delay <= 0 ? 0 : (unsigned long)delay, net, delay > 0);
- 	return 0;
+diff --git a/include/linux/iommu.h b/include/linux/iommu.h
+index 6ca3fb2873d7d..9246521bd627f 100644
+--- a/include/linux/iommu.h
++++ b/include/linux/iommu.h
+@@ -1006,7 +1006,7 @@ iommu_aux_get_pasid(struct iommu_domain *domain, struct device *dev)
+ static inline struct iommu_sva *
+ iommu_sva_bind_device(struct device *dev, struct mm_struct *mm, void *drvdata)
+ {
+-	return NULL;
++	return ERR_PTR(-ENODEV);
  }
+ 
+ static inline void iommu_sva_unbind_device(struct iommu_sva *handle)
 -- 
 2.43.0
 
