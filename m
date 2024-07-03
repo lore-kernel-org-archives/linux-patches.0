@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902E0173334;
-	Wed,  3 Jul 2024 11:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5306F17C202;
+	Wed,  3 Jul 2024 11:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005373; cv=none; b=HbPszsctTSi5WfbFMZD1ilUlJ+wZo8mveoHxpHxe83vjd2fLdW70OOi33t852uPUgZ61fixC/3/l3NGQ1z8sUWJYrlv7U7aAXS3uaF5DTh8Z7EV70jBOAjO2GKd5ObXc85Oa20JXydv/VaGc7C0vbz70WvEgji4D1w2BLW7SmL8=
+	t=1720005376; cv=none; b=bcZzH+a3c4mOTEjuiNDOl1oWVh3UoVBHeh9MdIqo+Xx6SLLdsAIj8tM1rBnbnA/u1xEZqa8gs08cuOZ0+NDWJGCle+C+IAXY0BKqrxzJZ2xRLB7xQfGE40P+LjS4ep5FBdkIB43bTc90wRqmkxxHwuljhceYBnv+6zQspryKkWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005373; c=relaxed/simple;
-	bh=PAc2veNbE88avpDEVuYUQcv+/o7UQoszUeVX0tLaTnE=;
+	s=arc-20240116; t=1720005376; c=relaxed/simple;
+	bh=iUtxXvXylXZAZja85P931xCVe6sof7ruSIK7Kd0Y49I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EpZA5spxoXcOPksdxLF0gGXkmsDcMTEBeLyvz7/VVYEtyrZsxOIeJIDh6ZBGqVdPe2avHAwb/HfgVOmpLq43wT/QSTfr5u+yOe+fyndU12hBO/BwIjZ7adOJthEtLsoQuu+j9UeFXq2scY3XP/y09S34cVzeu/vNFgk445Txaq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zyCk6iHO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KUXQ0Vx/B6YF6EhtK7qIsmCrZyoVlpG1XD3/6UMnlfxyiYKt8DvZOim8m7FBSOIXviPChk6nr2ZJM8K+db2gf0EEnfKxDONzLmO99epZCZ5QxcjbF1XagLSe+lvvC4azBV5YqmSsN8g3jFJoOxgdCTD3Us3PBDQKykZGgBWBtBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NupwJvWb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zyCk6iHO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3738C2BD10;
-	Wed,  3 Jul 2024 11:16:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NupwJvWb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC45C2BD10;
+	Wed,  3 Jul 2024 11:16:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005373;
-	bh=PAc2veNbE88avpDEVuYUQcv+/o7UQoszUeVX0tLaTnE=;
+	s=korg; t=1720005376;
+	bh=iUtxXvXylXZAZja85P931xCVe6sof7ruSIK7Kd0Y49I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zyCk6iHOKwtOpA3DWkPL/Mt+Y3UZR+coCV1tLgpXaLS7bYNaNgyby9WS9/Y/CevYk
-	 kyVIAOnz+fPE3lLWGtAYCGl9gunGMQ6UKJD7+1Q5ZSfLrH8Kf4fd8p097YT4uOV9KO
-	 HW56XaXhjel1gX/IC4zbQy2aKb7EqtraTE/6a5Kk=
+	b=NupwJvWbqz2mimX4nqKudVgQvQ+jIwBjF3jjy6YTgmnprIW3o0Ty1+zIc4ozPj/3w
+	 FYEkKWZ7N0tURf1tKr3JIyfJliSqLEibDKrTHH37h9bi5MkbrtNymA0jZQKcXrC4cU
+	 3+vOz+K4y+v9andFU8T41arABlG3v7sJqBECS1+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Hersen Wu <hersenxs.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 060/356] mmc: davinci: Dont strip remove function when driver is builtin
-Date: Wed,  3 Jul 2024 12:36:36 +0200
-Message-ID: <20240703102915.365468766@linuxfoundation.org>
+Subject: [PATCH 5.15 043/356] drm/amd/display: Fix incorrect DSC instance for MST
+Date: Wed,  3 Jul 2024 12:36:19 +0200
+Message-ID: <20240703102914.725404376@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -45,60 +47,169 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Hersen Wu <hersenxs.wu@amd.com>
 
-[ Upstream commit 55c421b364482b61c4c45313a535e61ed5ae4ea3 ]
+[ Upstream commit 892b41b16f6163e6556545835abba668fcab4eea ]
 
-Using __exit for the remove function results in the remove callback being
-discarded with CONFIG_MMC_DAVINCI=y. When such a device gets unbound (e.g.
-using sysfs or hotplug), the driver is just removed without the cleanup
-being performed. This results in resource leaks. Fix it by compiling in the
-remove callback unconditionally.
+[Why] DSC debugfs, such as dp_dsc_clock_en_read,
+use aconnector->dc_link to find pipe_ctx for display.
+Displays connected to MST hub share the same dc_link.
+DSC instance is from pipe_ctx. This causes incorrect
+DSC instance for display connected to MST hub.
 
-This also fixes a W=1 modpost warning:
+[How] Add aconnector->sink check to find pipe_ctx.
 
-WARNING: modpost: drivers/mmc/host/davinci_mmc: section mismatch in
-reference: davinci_mmcsd_driver+0x10 (section: .data) ->
-davinci_mmcsd_remove (section: .exit.text)
-
-Fixes: b4cff4549b7a ("DaVinci: MMC: MMC/SD controller driver for DaVinci family")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240324114017.231936-2-u.kleine-koenig@pengutronix.de
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+CC: stable@vger.kernel.org
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Hersen Wu <hersenxs.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/davinci_mmc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../amd/display/amdgpu_dm/amdgpu_dm_debugfs.c | 48 ++++++++++++++-----
+ 1 file changed, 36 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/mmc/host/davinci_mmc.c b/drivers/mmc/host/davinci_mmc.c
-index 36c45867eb643..e0175808c3b0d 100644
---- a/drivers/mmc/host/davinci_mmc.c
-+++ b/drivers/mmc/host/davinci_mmc.c
-@@ -1347,7 +1347,7 @@ static int davinci_mmcsd_probe(struct platform_device *pdev)
- 	return ret;
- }
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
+index 939734eecf709..8ccd43ec68829 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
+@@ -1316,7 +1316,9 @@ static ssize_t dp_dsc_clock_en_read(struct file *f, char __user *buf,
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+ 		if (pipe_ctx->stream &&
+-		    pipe_ctx->stream->link == aconnector->dc_link)
++		    pipe_ctx->stream->link == aconnector->dc_link &&
++		    pipe_ctx->stream->sink &&
++		    pipe_ctx->stream->sink == aconnector->dc_sink)
+ 			break;
+ 	}
  
--static void __exit davinci_mmcsd_remove(struct platform_device *pdev)
-+static void davinci_mmcsd_remove(struct platform_device *pdev)
- {
- 	struct mmc_davinci_host *host = platform_get_drvdata(pdev);
+@@ -1417,7 +1419,9 @@ static ssize_t dp_dsc_clock_en_write(struct file *f, const char __user *buf,
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+ 		if (pipe_ctx->stream &&
+-		    pipe_ctx->stream->link == aconnector->dc_link)
++		    pipe_ctx->stream->link == aconnector->dc_link &&
++		    pipe_ctx->stream->sink &&
++		    pipe_ctx->stream->sink == aconnector->dc_sink)
+ 			break;
+ 	}
  
-@@ -1402,7 +1402,7 @@ static struct platform_driver davinci_mmcsd_driver = {
- 		.of_match_table = davinci_mmc_dt_ids,
- 	},
- 	.probe		= davinci_mmcsd_probe,
--	.remove_new	= __exit_p(davinci_mmcsd_remove),
-+	.remove_new	= davinci_mmcsd_remove,
- 	.id_table	= davinci_mmc_devtype,
- };
+@@ -1502,7 +1506,9 @@ static ssize_t dp_dsc_slice_width_read(struct file *f, char __user *buf,
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+ 		if (pipe_ctx->stream &&
+-		    pipe_ctx->stream->link == aconnector->dc_link)
++		    pipe_ctx->stream->link == aconnector->dc_link &&
++		    pipe_ctx->stream->sink &&
++		    pipe_ctx->stream->sink == aconnector->dc_sink)
+ 			break;
+ 	}
+ 
+@@ -1601,7 +1607,9 @@ static ssize_t dp_dsc_slice_width_write(struct file *f, const char __user *buf,
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+ 		if (pipe_ctx->stream &&
+-		    pipe_ctx->stream->link == aconnector->dc_link)
++		    pipe_ctx->stream->link == aconnector->dc_link &&
++		    pipe_ctx->stream->sink &&
++		    pipe_ctx->stream->sink == aconnector->dc_sink)
+ 			break;
+ 	}
+ 
+@@ -1686,7 +1694,9 @@ static ssize_t dp_dsc_slice_height_read(struct file *f, char __user *buf,
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+ 		if (pipe_ctx->stream &&
+-		    pipe_ctx->stream->link == aconnector->dc_link)
++		    pipe_ctx->stream->link == aconnector->dc_link &&
++		    pipe_ctx->stream->sink &&
++		    pipe_ctx->stream->sink == aconnector->dc_sink)
+ 			break;
+ 	}
+ 
+@@ -1785,7 +1795,9 @@ static ssize_t dp_dsc_slice_height_write(struct file *f, const char __user *buf,
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+ 		if (pipe_ctx->stream &&
+-		    pipe_ctx->stream->link == aconnector->dc_link)
++		    pipe_ctx->stream->link == aconnector->dc_link &&
++		    pipe_ctx->stream->sink &&
++		    pipe_ctx->stream->sink == aconnector->dc_sink)
+ 			break;
+ 	}
+ 
+@@ -1866,7 +1878,9 @@ static ssize_t dp_dsc_bits_per_pixel_read(struct file *f, char __user *buf,
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+ 		if (pipe_ctx->stream &&
+-		    pipe_ctx->stream->link == aconnector->dc_link)
++		    pipe_ctx->stream->link == aconnector->dc_link &&
++		    pipe_ctx->stream->sink &&
++		    pipe_ctx->stream->sink == aconnector->dc_sink)
+ 			break;
+ 	}
+ 
+@@ -1962,7 +1976,9 @@ static ssize_t dp_dsc_bits_per_pixel_write(struct file *f, const char __user *bu
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+ 		if (pipe_ctx->stream &&
+-		    pipe_ctx->stream->link == aconnector->dc_link)
++		    pipe_ctx->stream->link == aconnector->dc_link &&
++		    pipe_ctx->stream->sink &&
++		    pipe_ctx->stream->sink == aconnector->dc_sink)
+ 			break;
+ 	}
+ 
+@@ -2041,7 +2057,9 @@ static ssize_t dp_dsc_pic_width_read(struct file *f, char __user *buf,
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+ 		if (pipe_ctx->stream &&
+-		    pipe_ctx->stream->link == aconnector->dc_link)
++		    pipe_ctx->stream->link == aconnector->dc_link &&
++		    pipe_ctx->stream->sink &&
++		    pipe_ctx->stream->sink == aconnector->dc_sink)
+ 			break;
+ 	}
+ 
+@@ -2097,7 +2115,9 @@ static ssize_t dp_dsc_pic_height_read(struct file *f, char __user *buf,
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+ 		if (pipe_ctx->stream &&
+-		    pipe_ctx->stream->link == aconnector->dc_link)
++		    pipe_ctx->stream->link == aconnector->dc_link &&
++		    pipe_ctx->stream->sink &&
++		    pipe_ctx->stream->sink == aconnector->dc_sink)
+ 			break;
+ 	}
+ 
+@@ -2168,7 +2188,9 @@ static ssize_t dp_dsc_chunk_size_read(struct file *f, char __user *buf,
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+ 		if (pipe_ctx->stream &&
+-		    pipe_ctx->stream->link == aconnector->dc_link)
++		    pipe_ctx->stream->link == aconnector->dc_link &&
++		    pipe_ctx->stream->sink &&
++		    pipe_ctx->stream->sink == aconnector->dc_sink)
+ 			break;
+ 	}
+ 
+@@ -2239,7 +2261,9 @@ static ssize_t dp_dsc_slice_bpg_offset_read(struct file *f, char __user *buf,
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		pipe_ctx = &aconnector->dc_link->dc->current_state->res_ctx.pipe_ctx[i];
+ 		if (pipe_ctx->stream &&
+-		    pipe_ctx->stream->link == aconnector->dc_link)
++		    pipe_ctx->stream->link == aconnector->dc_link &&
++		    pipe_ctx->stream->sink &&
++		    pipe_ctx->stream->sink == aconnector->dc_sink)
+ 			break;
+ 	}
  
 -- 
 2.43.0
