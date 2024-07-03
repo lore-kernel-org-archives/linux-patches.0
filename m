@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A28F1139D1E;
-	Wed,  3 Jul 2024 11:15:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22A7139D1E;
+	Wed,  3 Jul 2024 11:15:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005312; cv=none; b=sWjFqKNw78jwlPxqGm5jfBe0heM9Os/1u8KJUDDnoqYLdYa2Gs0nPctKbUEa0/51p+45i9EcCV5/SjXqn9rHcGQA6PqfVpCAC5FC0m21k5cDCP0npdCxyqp2VekqtIb6eQ0QiAfJViJEM24N74x6iLp+pqCCh6D/3NIFX02EqnU=
+	t=1720005316; cv=none; b=UEzNCVGqz3BA8j+7h3lElplFIeN1SqTfk1MF2yAL1xFGe7ymTmu8IttW8lsf69IAMRLtDM+Fu4pcGzycIQwrnNq7EiH8nr58w989z8Vl3SRH0WWG7QESmmG9eE8z4/3lK7A/yAlFyf/AmGtGJsDHF4B8F7RSfulhkCOWc/yV4gM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005312; c=relaxed/simple;
-	bh=CfycqO6g8D3lLIYWI4LGF5GVDWX5f8k+tppfmwi84aY=;
+	s=arc-20240116; t=1720005316; c=relaxed/simple;
+	bh=qM6no9wIR3vDHuEBDZSSz2SACHBAv+AZqsxjjyc8jP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BbxwbOqSxIMaeA8NEqCINDJFTED2zSpJ0yfpbt/P5xb6FSMeY1yP8L3fiqUjbBq2y01vWP7X2tQi4uaK0kRXoHAyPa0/SzQeORhM03FfdutAOpc9MZdVMaHvaYtGYpwORpKVyiHeGAkhQFA7JmLlvvw2r/I+sptjKMLzmS0NZY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PcA7Yqke; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QpoG4JBokOBSRbpIV8sF3vx8yEidOkJR6CUZ1EK2+pduh6vfjt4rKsnEMpScGDUfaUPIsyA6fvbbUOHjceTJV/R9AiU0R2WV6/5Tzk+DDRBckMRSJbBLlLZXyYMqqSNNH4+Sk3bxm2ut5ILRlj4Wua2PNWUSvlBuUijvgFRvLV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kf06vQs5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PcA7Yqke"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C2B0C2BD10;
-	Wed,  3 Jul 2024 11:15:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kf06vQs5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19815C2BD10;
+	Wed,  3 Jul 2024 11:15:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005312;
-	bh=CfycqO6g8D3lLIYWI4LGF5GVDWX5f8k+tppfmwi84aY=;
+	s=korg; t=1720005315;
+	bh=qM6no9wIR3vDHuEBDZSSz2SACHBAv+AZqsxjjyc8jP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PcA7YqkefQIWW8x8Q0FAfCVnHy1rvMvguKr2bjJBpKnTElnPhSobkjpwk6j64C017
-	 yOqf4k6IFYP9Pkg/nCDiFwWisXSOya8mTra3c6yjRJt0xML3jveXCzBAWtVgS73Sj3
-	 GQ5qPqfixYs9xXD/psHB4cGW9uwxFAdFiJARMNAU=
+	b=Kf06vQs5JdJ0ubVWXded8JgOg+kWVyP/qslzWOrCPUv/9KqL94T5mePnVjmJX7Yzr
+	 Wh2RsTVtH3yYUPS/R+2exNOMBrAr1EMAWkcfdFtXy9GDC2oZXuBotxPfox7IGxRyB5
+	 2V8/HMBissXmz2hTnvCX9JCKqjN6prNWkxPJJ8sU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.15 038/356] usb: gadget: f_fs: Fix race between aio_cancel() and AIO request complete
-Date: Wed,  3 Jul 2024 12:36:14 +0200
-Message-ID: <20240703102914.537328077@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 039/356] iio: accel: mxc4005: Reset chip on probe() and resume()
+Date: Wed,  3 Jul 2024 12:36:15 +0200
+Message-ID: <20240703102914.575364536@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,92 +52,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wesley Cheng <quic_wcheng@quicinc.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 24729b307eefcd7c476065cd7351c1a018082c19 ]
+[ Upstream commit 6b8cffdc4a31e4a72f75ecd1bc13fbf0dafee390 ]
 
-FFS based applications can utilize the aio_cancel() callback to dequeue
-pending USB requests submitted to the UDC.  There is a scenario where the
-FFS application issues an AIO cancel call, while the UDC is handling a
-soft disconnect.  For a DWC3 based implementation, the callstack looks
-like the following:
+On some designs the chip is not properly reset when powered up at boot or
+after a suspend/resume cycle.
 
-    DWC3 Gadget                               FFS Application
-dwc3_gadget_soft_disconnect()              ...
-  --> dwc3_stop_active_transfers()
-    --> dwc3_gadget_giveback(-ESHUTDOWN)
-      --> ffs_epfile_async_io_complete()   ffs_aio_cancel()
-        --> usb_ep_free_request()            --> usb_ep_dequeue()
+Use the sw-reset feature to ensure that the chip is in a clean state
+after probe() / resume() and in the case of resume() restore the settings
+(scale, trigger-enabled).
 
-There is currently no locking implemented between the AIO completion
-handler and AIO cancel, so the issue occurs if the completion routine is
-running in parallel to an AIO cancel call coming from the FFS application.
-As the completion call frees the USB request (io_data->req) the FFS
-application is also referencing it for the usb_ep_dequeue() call.  This can
-lead to accessing a stale/hanging pointer.
-
-commit b566d38857fc ("usb: gadget: f_fs: use io_data->status consistently")
-relocated the usb_ep_free_request() into ffs_epfile_async_io_complete().
-However, in order to properly implement locking to mitigate this issue, the
-spinlock can't be added to ffs_epfile_async_io_complete(), as
-usb_ep_dequeue() (if successfully dequeuing a USB request) will call the
-function driver's completion handler in the same context.  Hence, leading
-into a deadlock.
-
-Fix this issue by moving the usb_ep_free_request() back to
-ffs_user_copy_worker(), and ensuring that it explicitly sets io_data->req
-to NULL after freeing it within the ffs->eps_lock.  This resolves the race
-condition above, as the ffs_aio_cancel() routine will not continue
-attempting to dequeue a request that has already been freed, or the
-ffs_user_copy_work() not freeing the USB request until the AIO cancel is
-done referencing it.
-
-This fix depends on
-  commit b566d38857fc ("usb: gadget: f_fs: use io_data->status
-  consistently")
-
-Fixes: 2e4c7553cd6f ("usb: gadget: f_fs: add aio support")
-Cc: stable <stable@kernel.org>	# b566d38857fc ("usb: gadget: f_fs: use io_data->status consistently")
-Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-Link: https://lore.kernel.org/r/20240409014059.6740-1-quic_wcheng@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218578
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240326113700.56725-3-hdegoede@redhat.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_fs.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/iio/accel/mxc4005.c | 68 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 68 insertions(+)
 
-diff --git a/drivers/usb/gadget/function/f_fs.c b/drivers/usb/gadget/function/f_fs.c
-index 37d18e27ddc64..ad858044e0bfd 100644
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -832,6 +832,7 @@ static void ffs_user_copy_worker(struct work_struct *work)
- 						   work);
- 	int ret = io_data->status;
- 	bool kiocb_has_eventfd = io_data->kiocb->ki_flags & IOCB_EVENTFD;
-+	unsigned long flags;
+diff --git a/drivers/iio/accel/mxc4005.c b/drivers/iio/accel/mxc4005.c
+index ffae30e5eb5be..8db5611134da4 100644
+--- a/drivers/iio/accel/mxc4005.c
++++ b/drivers/iio/accel/mxc4005.c
+@@ -5,6 +5,7 @@
+  * Copyright (c) 2014, Intel Corporation.
+  */
  
- 	if (io_data->read && ret > 0) {
- 		kthread_use_mm(io_data->mm);
-@@ -844,6 +845,11 @@ static void ffs_user_copy_worker(struct work_struct *work)
- 	if (io_data->ffs->ffs_eventfd && !kiocb_has_eventfd)
- 		eventfd_signal(io_data->ffs->ffs_eventfd, 1);
++#include <linux/delay.h>
+ #include <linux/module.h>
+ #include <linux/i2c.h>
+ #include <linux/iio/iio.h>
+@@ -36,6 +37,7 @@
  
-+	spin_lock_irqsave(&io_data->ffs->eps_lock, flags);
-+	usb_ep_free_request(io_data->ep, io_data->req);
-+	io_data->req = NULL;
-+	spin_unlock_irqrestore(&io_data->ffs->eps_lock, flags);
+ #define MXC4005_REG_INT_CLR1		0x01
+ #define MXC4005_REG_INT_CLR1_BIT_DRDYC	0x01
++#define MXC4005_REG_INT_CLR1_SW_RST	0x10
+ 
+ #define MXC4005_REG_CONTROL		0x0D
+ #define MXC4005_REG_CONTROL_MASK_FSR	GENMASK(6, 5)
+@@ -43,6 +45,9 @@
+ 
+ #define MXC4005_REG_DEVICE_ID		0x0E
+ 
++/* Datasheet does not specify a reset time, this is a conservative guess */
++#define MXC4005_RESET_TIME_US		2000
 +
- 	if (io_data->read)
- 		kfree(io_data->to_free);
- 	ffs_free_buffer(io_data);
-@@ -859,7 +865,6 @@ static void ffs_epfile_async_io_complete(struct usb_ep *_ep,
- 	ENTER();
+ enum mxc4005_axis {
+ 	AXIS_X,
+ 	AXIS_Y,
+@@ -66,6 +71,8 @@ struct mxc4005_data {
+ 		s64 timestamp __aligned(8);
+ 	} scan;
+ 	bool trigger_enabled;
++	unsigned int control;
++	unsigned int int_mask1;
+ };
  
- 	io_data->status = req->status ? req->status : req->actual;
--	usb_ep_free_request(_ep, req);
+ /*
+@@ -349,6 +356,7 @@ static int mxc4005_set_trigger_state(struct iio_trigger *trig,
+ 		return ret;
+ 	}
  
- 	INIT_WORK(&io_data->work, ffs_user_copy_worker);
- 	queue_work(ffs->io_completion_wq, &io_data->work);
++	data->int_mask1 = val;
+ 	data->trigger_enabled = state;
+ 	mutex_unlock(&data->mutex);
+ 
+@@ -384,6 +392,13 @@ static int mxc4005_chip_init(struct mxc4005_data *data)
+ 
+ 	dev_dbg(data->dev, "MXC4005 chip id %02x\n", reg);
+ 
++	ret = regmap_write(data->regmap, MXC4005_REG_INT_CLR1,
++			   MXC4005_REG_INT_CLR1_SW_RST);
++	if (ret < 0)
++		return dev_err_probe(data->dev, ret, "resetting chip\n");
++
++	fsleep(MXC4005_RESET_TIME_US);
++
+ 	ret = regmap_write(data->regmap, MXC4005_REG_INT_MASK0, 0);
+ 	if (ret < 0)
+ 		return dev_err_probe(data->dev, ret, "writing INT_MASK0\n");
+@@ -480,6 +495,58 @@ static int mxc4005_probe(struct i2c_client *client,
+ 	return devm_iio_device_register(&client->dev, indio_dev);
+ }
+ 
++static int mxc4005_suspend(struct device *dev)
++{
++	struct iio_dev *indio_dev = dev_get_drvdata(dev);
++	struct mxc4005_data *data = iio_priv(indio_dev);
++	int ret;
++
++	/* Save control to restore it on resume */
++	ret = regmap_read(data->regmap, MXC4005_REG_CONTROL, &data->control);
++	if (ret < 0)
++		dev_err(data->dev, "failed to read reg_control\n");
++
++	return ret;
++}
++
++static int mxc4005_resume(struct device *dev)
++{
++	struct iio_dev *indio_dev = dev_get_drvdata(dev);
++	struct mxc4005_data *data = iio_priv(indio_dev);
++	int ret;
++
++	ret = regmap_write(data->regmap, MXC4005_REG_INT_CLR1,
++			   MXC4005_REG_INT_CLR1_SW_RST);
++	if (ret) {
++		dev_err(data->dev, "failed to reset chip: %d\n", ret);
++		return ret;
++	}
++
++	fsleep(MXC4005_RESET_TIME_US);
++
++	ret = regmap_write(data->regmap, MXC4005_REG_CONTROL, data->control);
++	if (ret) {
++		dev_err(data->dev, "failed to restore control register\n");
++		return ret;
++	}
++
++	ret = regmap_write(data->regmap, MXC4005_REG_INT_MASK0, 0);
++	if (ret) {
++		dev_err(data->dev, "failed to restore interrupt 0 mask\n");
++		return ret;
++	}
++
++	ret = regmap_write(data->regmap, MXC4005_REG_INT_MASK1, data->int_mask1);
++	if (ret) {
++		dev_err(data->dev, "failed to restore interrupt 1 mask\n");
++		return ret;
++	}
++
++	return 0;
++}
++
++static DEFINE_SIMPLE_DEV_PM_OPS(mxc4005_pm_ops, mxc4005_suspend, mxc4005_resume);
++
+ static const struct acpi_device_id mxc4005_acpi_match[] = {
+ 	{"MXC4005",	0},
+ 	{"MXC6655",	0},
+@@ -498,6 +565,7 @@ static struct i2c_driver mxc4005_driver = {
+ 	.driver = {
+ 		.name = MXC4005_DRV_NAME,
+ 		.acpi_match_table = ACPI_PTR(mxc4005_acpi_match),
++		.pm = pm_sleep_ptr(&mxc4005_pm_ops),
+ 	},
+ 	.probe		= mxc4005_probe,
+ 	.id_table	= mxc4005_id,
 -- 
 2.43.0
 
