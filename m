@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46496136E2A;
-	Wed,  3 Jul 2024 10:45:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45037CF1F;
+	Wed,  3 Jul 2024 10:45:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003535; cv=none; b=fbYaO9V9XQd0UXYfns9hBtItnKXiQLhUFTIAbR1R553CHTyZizI8gFOFdtsqYv+g1z0Gy4Jyc7xFWlw1uu17rqH00SsuCGCohN9M5Dgxp8YJcLgvFY4fbp92vW6XsWokmLyDAqRmaS0JBbEXRJ1bw8lfv4EIRvlHopbRMprMB1w=
+	t=1720003538; cv=none; b=W8owOuXdlx5eIQnsf+Q4a84MO/cypz55Jg4mAOzEH1SL3c4fzE/Duh1iOs1zLS4mtFAMJKEwXxsDUldnOBjJPU0zZe6yNbjhRdBVrmosuS9AdxRutaIfgAeujy+BpQO1DKrjC9balnY8KktPuQroG0vaH1YPjw19cHV/lf6n07c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003535; c=relaxed/simple;
-	bh=/Zpc29smSb9LjcLTuKi6pLVqS9wmKvnjrRhfmc+dh5Y=;
+	s=arc-20240116; t=1720003538; c=relaxed/simple;
+	bh=uGgHVPfM3dKtq0FsW7t3haBT24Z65YalC0mB/2sMYXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XOQghAF5tLju4HeLtHlm5pvvXBlDZszepeFv3M1tScWv+pLuoXfiDACLuWFZ7F+L4cc35kpsB3Q3HkDE2fnBC52g05tWCQHuCQJBM8V+0hKt35DzgJ3fgVcJHp4D01H/8OK5KXxbgzTNIFNEpGE51AC7ItjNPyWTge/kvfOrAGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hnMdWUjD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=to91aZjWstwd5HwT5uKzX1ynsewh/4yfPEMYCnk9YEeyTUykPaxUUSignXEt7DmWEwHI8OrUABv6HsKW0MZ3RXWqkxoBp5uO8hC7dG2znDKscLV/RE0O3Sd2J4iIAv+fanIGy4FAKM5uUsIq/XcoXF1cPcGbjZAqfVuHH90wSAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=exiTi7t9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hnMdWUjD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C269EC2BD10;
-	Wed,  3 Jul 2024 10:45:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="exiTi7t9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38843C2BD10;
+	Wed,  3 Jul 2024 10:45:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003535;
-	bh=/Zpc29smSb9LjcLTuKi6pLVqS9wmKvnjrRhfmc+dh5Y=;
+	s=korg; t=1720003538;
+	bh=uGgHVPfM3dKtq0FsW7t3haBT24Z65YalC0mB/2sMYXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hnMdWUjDTV4VUxxoHCwspMRU2KOIYmbkBk4pd2Iaahv8+NVWB3z2aQoPuCYdjsM9g
-	 1yLwTdSbBg+Sa4JmMt76Re/uV04JgyVNTl5egHo6NFwhL3FK0OEwUlyZXo22wuVRIl
-	 hVd4vBXgOIMbJu858lX/C5vJkQozbitpVB3S3y04=
+	b=exiTi7t9CtecSN51I5w6Rm0u6hzzYR2Id4gP+OBhkCYTWh4zwlWBMNg+BQKq8oIso
+	 S1/FFHXkG+OlJXy7TardPxeZ/CPZH1W2pYaQQZUEqGPvNWYtxEfFLfYXIFQ9zfVQxJ
+	 uKaKUWhuGKNOAjONDd/BN7xGrOJfY/c2+NhkBtFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 4.19 080/139] drm/radeon: fix UBSAN warning in kv_dpm.c
-Date: Wed,  3 Jul 2024 12:39:37 +0200
-Message-ID: <20240703102833.462116119@linuxfoundation.org>
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Allison Henderson <allison.henderson@oracle.com>,
+	Chuck Lever III <chuck.lever@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.19 081/139] gcov: add support for GCC 14
+Date: Wed,  3 Jul 2024 12:39:38 +0200
+Message-ID: <20240703102833.500179771@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -50,30 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Peter Oberparleiter <oberpar@linux.ibm.com>
 
-commit a498df5421fd737d11bfd152428ba6b1c8538321 upstream.
+commit c1558bc57b8e5b4da5d821537cd30e2e660861d8 upstream.
 
-Adds bounds check for sumo_vid_mapping_entry.
+Using gcov on kernels compiled with GCC 14 results in truncated 16-byte
+long .gcda files with no usable data.  To fix this, update GCOV_COUNTERS
+to match the value defined by GCC 14.
 
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Tested with GCC versions 14.1.0 and 13.2.0.
+
+Link: https://lkml.kernel.org/r/20240610092743.1609845-1-oberpar@linux.ibm.com
+Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Reported-by: Allison Henderson <allison.henderson@oracle.com>
+Reported-by: Chuck Lever III <chuck.lever@oracle.com>
+Tested-by: Chuck Lever <chuck.lever@oracle.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/radeon/sumo_dpm.c |    2 ++
- 1 file changed, 2 insertions(+)
+ kernel/gcov/gcc_4_7.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/radeon/sumo_dpm.c
-+++ b/drivers/gpu/drm/radeon/sumo_dpm.c
-@@ -1622,6 +1622,8 @@ void sumo_construct_vid_mapping_table(st
+--- a/kernel/gcov/gcc_4_7.c
++++ b/kernel/gcov/gcc_4_7.c
+@@ -19,7 +19,9 @@
+ #include <linux/vmalloc.h>
+ #include "gcov.h"
  
- 	for (i = 0; i < SUMO_MAX_HARDWARE_POWERLEVELS; i++) {
- 		if (table[i].ulSupportedSCLK != 0) {
-+			if (table[i].usVoltageIndex >= SUMO_MAX_NUMBER_VOLTAGES)
-+				continue;
- 			vid_mapping_table->entries[table[i].usVoltageIndex].vid_7bit =
- 				table[i].usVoltageID;
- 			vid_mapping_table->entries[table[i].usVoltageIndex].vid_2bit =
+-#if (__GNUC__ >= 10)
++#if (__GNUC__ >= 14)
++#define GCOV_COUNTERS			9
++#elif (__GNUC__ >= 10)
+ #define GCOV_COUNTERS			8
+ #elif (__GNUC__ >= 7)
+ #define GCOV_COUNTERS			9
 
 
