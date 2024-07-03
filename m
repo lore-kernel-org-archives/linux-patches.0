@@ -1,235 +1,150 @@
-Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37703137760
-	for <patches@lists.linux.dev>; Wed,  3 Jul 2024 09:25:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B60F1DFC7;
+	Wed,  3 Jul 2024 10:41:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719998729; cv=none; b=Hz8K+72fpJQnFa+5qSmh60ZT4HXRu1vrih+sr9p0WT2OaRzmD9tuPw6FKPv5Ipm0cxtT+fjqxXQUcBpcrhPLKkuMoHDXV34nsdqbQ63R48hM4ZsAiVwTREt8GhGW0nGZ1Eps8d6NyQNac6aKmrK1AobfVqeEWa4dnbGK/KAZht4=
+	t=1720003317; cv=none; b=G5uFx7D9hh+Z0IkwJUgus2q391fWk3S0VdCSrSmbh2YVc4OWUlb3TQMUWgXoN5G2eb68qcfbAA3BpB2yg9+ecQldlnBSyit6JrMYZF+VEcwfX0O/SwgkIgI0KuGwDxlwhHALJkh3cfQtGmzq5vL+gYqtPjQlzfbdT9HF1fcUSpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719998729; c=relaxed/simple;
-	bh=aNr5LsPPRXyZ7znURdhRpNzyLMqjsxePdNEZVumFhEU=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=U6f8ndX3sPh5Wj9Wm4YxcS8BWOByrqZEWVvt9VCh6nI1gvOyMMRBJv9MlKyMlkXQ7uPJcP8+vkEeDmrwGEZ0dzA5WO2INkafAbin25k8q+zQw26mqY3bXBRZr+VU+AnLDZnhrwviNxOJW/SGrkzsa/itCz6cu1rXg+IyXfDtMT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=Sgsbf1jU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Yc3bWi7N; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
+	s=arc-20240116; t=1720003317; c=relaxed/simple;
+	bh=4E7yHMT5EpFi/Q/ulMGjxl/IB4VQyCUr4sQBBzy+pV8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=u4IlUujsv7VFjcMqLZ9HYJvXN9e0xuFX479iEcC9FDxlXq1Zo9TmqxEADWI0ItKkBSnpCBKeJmm9oFcD80mdUc+HK6pVEmEL96NRpqFC8/3SGMHI3pcjQ97JLcVTtSWBoqO1FiarAfnNvpUxCSmWl/zWVzKQxJDl+wMNEJbIV8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FRknyWmU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="Sgsbf1jU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Yc3bWi7N"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 4B1D111401BD;
-	Wed,  3 Jul 2024 05:25:26 -0400 (EDT)
-Received: from imap51 ([10.202.2.101])
-  by compute5.internal (MEProxy); Wed, 03 Jul 2024 05:25:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1719998726; x=1720085126; bh=1EJB48ZUHi
-	VP/+yG3YT6uhk4ELVB4dHK9uYd0Uk+epE=; b=Sgsbf1jUQYfka50MHVgxqd+q2D
-	kcYBPT8sp01BlFcXTSJXaO+mjt18ZKxFuWgl5h7rECS0PCPyQ+Jluvd8kWv3MPKg
-	gtdEQHO2iKBG0J6KSbxlSlPf1bK08b7yXQIU7p2Jwp5HBN9+zADk+vu9SxefqAV8
-	LsS+LurGs1s4scFaATOOVTx4exVjrqAZF28dkGT3DbkcnONXrtyk9llOFWMO7fIN
-	d0TUAkkE0MaBfBAcqw0kE1POiGbWiuNleEWw/9Ts8+RrjvDSFY7YFPohZVXvCydz
-	XrsivSi2wbuSozgCey5hEVTLTV3PmuOguorDTbqQxuPFmszmiRLwgZG7cTxA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1719998726; x=1720085126; bh=1EJB48ZUHiVP/+yG3YT6uhk4ELVB
-	4dHK9uYd0Uk+epE=; b=Yc3bWi7NdTkraAjJ8FMA5lSjqD5Z2hGaiiebRsmCpBL3
-	DeCO068ll1kVnmJjmqEEkwpvxs/uw+mVBbBh+hQGgUaKhEW7jBl6xEy34wweNkhi
-	8QR853g1O0lMyDTGGUP1lzsjxOhtNzP+79ayXhyNLQ6eYTRx+e6Pgy9V5CcKBg1C
-	6BGUbpdagRuAQCVUtxbbv/T5oUU01+icDE6AZd9T1+mlef41VP4+vBg46dbjpwT2
-	GWK5wdd3uIx+i+MKVamADA2nMWNJT02cKXRyJ27YiIfDHsp7o6kcyJYRlbOmfNzE
-	mT5fxDU/UBjFC371EtnTlnMN/m7o4JHuJ7Hx8WSWDw==
-X-ME-Sender: <xms:BRmFZhX_aF1opeOf99uk22W4aqlpGWuOato-W9EKGijR2l_Z5iJYVA>
-    <xme:BRmFZhmWM8Db_N1ZHCTgHDClFBsg1CCSjuAWlEoCDHs7r2jbgRGhyhQbNlAEFJGgi
-    Y88i_3RhXEzsnVa-BA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudejgdduiecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdetrhhn
-    ugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrghtth
-    gvrhhnpeelhfettdekkeeggffgvedvieehudeljeetkeefjedthedtjeejhfeiudetfffh
-    hfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhlihhnrghrohdrohhrghdpthhugi
-    hsuhhithgvrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
-    lhhfrhhomheprghrnhgusegrrhhnuggsrdguvg
-X-ME-Proxy: <xmx:BRmFZta2PTPYw-PEyN6Sjhs2F35CDrVqgoeUpXuzwCrmMJTIS7sNGg>
-    <xmx:BRmFZkWJtqmVjpbWcdZKqc0fOyVJDurPudSjU4d7KcsM6hfnCCdBbQ>
-    <xmx:BRmFZrk07N8bf5Xpw592SB8deAhy5doXspuNhLQVHDonsCX-2KftCw>
-    <xmx:BRmFZhdFYxhyoqFSZZUntYkIAKjM7StE0EwL0viU6M9UNPQiT8LGlA>
-    <xmx:BhmFZl3JePpItb98l70bxngIR7NomNzkfm7NC_Xct4aI7Ghhvnc90BEP>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 1AAEDB6008D; Wed,  3 Jul 2024 05:25:25 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-566-g3812ddbbc-fm-20240627.001-g3812ddbb
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FRknyWmU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 898EDC2BD10;
+	Wed,  3 Jul 2024 10:41:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1720003316;
+	bh=4E7yHMT5EpFi/Q/ulMGjxl/IB4VQyCUr4sQBBzy+pV8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=FRknyWmUgfYoDn/UPUXzrXoa5J5YC5Bl8ceym2zTOIM2xh8fRzD2z8P8xENL0175o
+	 Bz+RuikmgB1nZWJWCA3vBa1g38olfbumamGOP79v2X6fFy3y67bMtAKkgdt6H1H4Ls
+	 +g6zpnkn09BM1yOMfs/T8bOhpwy/nlALWRxgIf3Y=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Nicolas Escande <nico.escande@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 001/139] wifi: mac80211: mesh: Fix leak of mesh_preq_queue objects
+Date: Wed,  3 Jul 2024 12:38:18 +0200
+Message-ID: <20240703102830.490307626@linuxfoundation.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
+References: <20240703102830.432293640@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-Id: <c440be12-3c22-4bb6-9a10-e3fd03b87974@app.fastmail.com>
-In-Reply-To: 
- <CA+G9fYuK+dFrz3dcuUkxbP3R-5NUiSVNJ3tAcRc=Wn=Hs0C5ng@mail.gmail.com>
-References: <20240702170243.963426416@linuxfoundation.org>
- <CA+G9fYuK+dFrz3dcuUkxbP3R-5NUiSVNJ3tAcRc=Wn=Hs0C5ng@mail.gmail.com>
-Date: Wed, 03 Jul 2024 11:24:29 +0200
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Naresh Kamboju" <naresh.kamboju@linaro.org>,
- "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org,
- "Linus Torvalds" <torvalds@linux-foundation.org>,
- "Andrew Morton" <akpm@linux-foundation.org>,
- "Guenter Roeck" <linux@roeck-us.net>, shuah <shuah@kernel.org>,
- patches@kernelci.org, lkft-triage@lists.linaro.org,
- "Pavel Machek" <pavel@denx.de>, "Jon Hunter" <jonathanh@nvidia.com>,
- "Florian Fainelli" <f.fainelli@gmail.com>,
- "Sudip Mukherjee" <sudipm.mukherjee@gmail.com>, srw@sladewatkins.net,
- rwarsow@gmx.de, "Conor Dooley" <conor@kernel.org>,
- Allen <allen.lkml@gmail.com>, "Mark Brown" <broonie@kernel.org>,
- linux-block <linux-block@vger.kernel.org>, "Jens Axboe" <axboe@kernel.dk>,
- "Dan Carpenter" <dan.carpenter@linaro.org>,
- "Anders Roxell" <anders.roxell@linaro.org>,
- "Can Guo" <quic_cang@quicinc.com>, "Ziqi Chen" <quic_ziqichen@quicinc.com>,
- "Bart Van Assche" <bvanassche@acm.org>,
- "Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: Re: [PATCH 6.9 000/222] 6.9.8-rc1 review
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-On Wed, Jul 3, 2024, at 11:08, Naresh Kamboju wrote:
-> On Tue, 2 Jul 2024 at 22:36, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
->>
->> This is the start of the stable review cycle for the 6.9.8 release.
->> There are 222 patches in this series, all will be posted as a response
->> to this one.  If anyone has any issues with these being applied, please
->> let me know.
->>
->> Responses should be made by Thu, 04 Jul 2024 17:01:55 +0000.
->> Anything received after that time might be too late.
->>
->> The whole patch series can be found in one patch at:
->>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.9.8-rc1.gz
->> or in the git tree and branch at:
->>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.9.y
->> and the diffstat can be found below.
->>
->> thanks,
->>
->> greg k-h
->>
->
-> The following kernel warning was noticed on arm64 Qualcomm db845c device while
-> booting stable-rc 6.9.8-rc1.
->
-> This is not always a reproducible warning.
+4.19-stable review patch.  If anyone has any objections, please let me know.
 
-I see that commit 77691af484e2 ("scsi: ufs: core: Quiesce request
-queues before checking pending cmds") got backported, and
-this adds direct calls to the function that warns, so this
-is my first suspicion without having done a detailed analysis.
+------------------
 
-Adding everyone from that commit to Cc.
+From: Nicolas Escande <nico.escande@gmail.com>
 
-Naresh, could you try reverting that commit?
+[ Upstream commit b7d7f11a291830fdf69d3301075dd0fb347ced84 ]
 
-      Arnd
+The hwmp code use objects of type mesh_preq_queue, added to a list in
+ieee80211_if_mesh, to keep track of mpath we need to resolve. If the mpath
+gets deleted, ex mesh interface is removed, the entries in that list will
+never get cleaned. Fix this by flushing all corresponding items of the
+preq_queue in mesh_path_flush_pending().
 
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
->
-> Boot log:
-> ------
-> [    0.000000] Linux version 6.9.8-rc1 (tuxmake@tuxmake) (Debian clang
-> version 18.1.8 (++20240615103650+3b5b5c1ec4a3-1~exp1~20240615223815.136),
-> Debian LLD 18.1.8) #1 SMP PREEMPT @1719942561
-> [    0.000000] KASLR enabled
-> [    0.000000] Machine model: Thundercomm Dragonboard 845c
-> ...
-> [    7.097994] ------------[ cut here ]------------
-> [    7.097997] WARNING: CPU: 5 PID: 418 at block/blk-mq.c:262
-> blk_mq_unquiesce_tagset (/builds/linux/block/blk-mq.c:295
-> /builds/linux/block/blk-mq.c:297)
-> [    7.098009] Modules linked in: drm_display_helper qcom_q6v5_mss
-> camcc_sdm845 i2c_qcom_geni videobuf2_memops qcom_rng bluetooth
-> videobuf2_common spi_geni_qcom qrtr gpi phy_qcom_qmp_usb aux_bridge
-> stm_core slim_qcom_ngd_ctrl qcrypto phy_qcom_qmp_ufs cfg80211 rfkill
-> icc_osm_l3 phy_qcom_qmp_pcie lmh ufs_qcom slimbus qcom_wdt
-> pdr_interface llcc_qcom qcom_q6v5_pas(+) qcom_pil_info icc_bwmon
-> qcom_q6v5 display_connector qcom_sysmon qcom_common drm_kms_helper
-> qcom_glink_smem mdt_loader qmi_helpers drm backlight socinfo rmtfs_mem
-> [    7.098062] Hardware name: Thundercomm Dragonboard 845c (DT)
-> [    7.098064] Workqueue: devfreq_wq devfreq_monitor
-> [    7.098071] pstate: 604000c5 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> [    7.098074] pc : blk_mq_unquiesce_tagset
-> (/builds/linux/block/blk-mq.c:295 /builds/linux/block/blk-mq.c:297)
-> [    7.098077] lr : blk_mq_unquiesce_tagset
-> (/builds/linux/block/blk-mq.c:262 /builds/linux/block/blk-mq.c:297)
-> [    7.098080] sp : ffff8000812f3b40
-> [    7.098081] x29: ffff8000812f3b40 x28: 00000000000f4240 x27: 20c49ba5e353f7cf
-> [    7.098086] x26: 0000000000000000 x25: 0000000000000000 x24: ffff5bbe0a2e9910
-> [    7.098089] x23: ffff5bbe01f1a170 x22: ffff5bbe0a2e9220 x21: 0000000000000000
-> [    7.098093] x20: ffff5bbe0a2e9620 x19: ffff5bbe01f1a0e0 x18: 0000000000000002
-> [    7.098096] x17: 0000000000000400 x16: 0000000000000400 x15: 00000000a63e566e
-> [    7.098099] x14: 0000000000015eb9 x13: ffff8000812f0000 x12: ffff8000812f4000
-> [    7.098103] x11: 7cea885bfc7e6700 x10: ffffb0c2e5eb69ac x9 : 0000000000000000
-> [    7.098106] x8 : ffff5bbe0a2e9624 x7 : ffff5bbe0c828000 x6 : 0000000000000003
-> [    7.098110] x5 : 00000000000009d3 x4 : 000000000000039e x3 : ffff8000812f3af0
-> [    7.098113] x2 : ffff5bbe0a2acc00 x1 : 0000000000000000 x0 : 0000000000000000
-> [    7.098117] Call trace:
-> [    7.098118] blk_mq_unquiesce_tagset
-> (/builds/linux/block/blk-mq.c:295 /builds/linux/block/blk-mq.c:297)
-> [    7.098121] ufshcd_devfreq_scale
-> (/builds/linux/drivers/ufs/core/ufshcd.c:2050
-> /builds/linux/drivers/ufs/core/ufshcd.c:1426
-> /builds/linux/drivers/ufs/core/ufshcd.c:1472)
-> [    7.098126] ufshcd_devfreq_target
-> (/builds/linux/drivers/ufs/core/ufshcd.c:1581)
-> [    7.098129] devfreq_set_target (/builds/linux/drivers/devfreq/devfreq.c:364)
-> [    7.098132] devfreq_update_target (/builds/linux/drivers/devfreq/devfreq.c:0)
-> [    7.098134] devfreq_monitor (/builds/linux/drivers/devfreq/devfreq.c:461)
-> [    7.098136] process_scheduled_works
-> (/builds/linux/kernel/workqueue.c:3272
-> /builds/linux/kernel/workqueue.c:3348)
-> [    7.098141] worker_thread (/builds/linux/include/linux/list.h:373
-> /builds/linux/kernel/workqueue.c:955
-> /builds/linux/kernel/workqueue.c:3430)
-> [    7.098143] kthread (/builds/linux/kernel/kthread.c:390)
-> [    7.098146] ret_from_fork (/builds/linux/arch/arm64/kernel/entry.S:861)
-> [    7.098150] ---[ end trace 0000000000000000 ]---
->
->
-> Full boot log link:
->  - 
-> https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.9.y/build/v6.9.7-223-g03247eed042d/testrun/24504400/suite/log-parser-boot/test/check-kernel-exception/log
->  - https://lkft.validation.linaro.org/scheduler/job/7711345#L5312
->
-> Details of build and test environment:
->  - 
-> https://tuxapi.tuxsuite.com/v1/groups/linaro/projects/lkft/tests/2ihUJNrmztabOMpKVRNzLpixoUR
->
-> Build, vmlinux, System.map and Image,
->  - 
-> https://storage.tuxsuite.com/public/linaro/lkft/builds/2ihUHH774XQWba653iwCVtCnpjl/
->
-> metadata:
-> -------
->   git_describe: v6.9.7-223-g03247eed042d
->   git_repo: 
-> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
->   git_sha: 03247eed042d6a770c3a2adaeed6b7b4a0f0b46c
->   kernel-config:
-> https://storage.tuxsuite.com/public/linaro/lkft/builds/2ihUHH774XQWba653iwCVtCnpjl/config
->   kernel_version: 6.9.8-rc1
->   toolchain: clang-18
->   build-url: 
-> https://storage.tuxsuite.com/public/linaro/lkft/builds/2ihUHH774XQWba653iwCVtCnpjl/
->   build_name: clang-18-lkftconfig
->
-> --
-> Linaro LKFT
-> https://lkft.linaro.org
+This should take care of KASAN reports like this:
+
+unreferenced object 0xffff00000668d800 (size 128):
+  comm "kworker/u8:4", pid 67, jiffies 4295419552 (age 1836.444s)
+  hex dump (first 32 bytes):
+    00 1f 05 09 00 00 ff ff 00 d5 68 06 00 00 ff ff  ..........h.....
+    8e 97 ea eb 3e b8 01 00 00 00 00 00 00 00 00 00  ....>...........
+  backtrace:
+    [<000000007302a0b6>] __kmem_cache_alloc_node+0x1e0/0x35c
+    [<00000000049bd418>] kmalloc_trace+0x34/0x80
+    [<0000000000d792bb>] mesh_queue_preq+0x44/0x2a8
+    [<00000000c99c3696>] mesh_nexthop_resolve+0x198/0x19c
+    [<00000000926bf598>] ieee80211_xmit+0x1d0/0x1f4
+    [<00000000fc8c2284>] __ieee80211_subif_start_xmit+0x30c/0x764
+    [<000000005926ee38>] ieee80211_subif_start_xmit+0x9c/0x7a4
+    [<000000004c86e916>] dev_hard_start_xmit+0x174/0x440
+    [<0000000023495647>] __dev_queue_xmit+0xe24/0x111c
+    [<00000000cfe9ca78>] batadv_send_skb_packet+0x180/0x1e4
+    [<000000007bacc5d5>] batadv_v_elp_periodic_work+0x2f4/0x508
+    [<00000000adc3cd94>] process_one_work+0x4b8/0xa1c
+    [<00000000b36425d1>] worker_thread+0x9c/0x634
+    [<0000000005852dd5>] kthread+0x1bc/0x1c4
+    [<000000005fccd770>] ret_from_fork+0x10/0x20
+unreferenced object 0xffff000009051f00 (size 128):
+  comm "kworker/u8:4", pid 67, jiffies 4295419553 (age 1836.440s)
+  hex dump (first 32 bytes):
+    90 d6 92 0d 00 00 ff ff 00 d8 68 06 00 00 ff ff  ..........h.....
+    36 27 92 e4 02 e0 01 00 00 58 79 06 00 00 ff ff  6'.......Xy.....
+  backtrace:
+    [<000000007302a0b6>] __kmem_cache_alloc_node+0x1e0/0x35c
+    [<00000000049bd418>] kmalloc_trace+0x34/0x80
+    [<0000000000d792bb>] mesh_queue_preq+0x44/0x2a8
+    [<00000000c99c3696>] mesh_nexthop_resolve+0x198/0x19c
+    [<00000000926bf598>] ieee80211_xmit+0x1d0/0x1f4
+    [<00000000fc8c2284>] __ieee80211_subif_start_xmit+0x30c/0x764
+    [<000000005926ee38>] ieee80211_subif_start_xmit+0x9c/0x7a4
+    [<000000004c86e916>] dev_hard_start_xmit+0x174/0x440
+    [<0000000023495647>] __dev_queue_xmit+0xe24/0x111c
+    [<00000000cfe9ca78>] batadv_send_skb_packet+0x180/0x1e4
+    [<000000007bacc5d5>] batadv_v_elp_periodic_work+0x2f4/0x508
+    [<00000000adc3cd94>] process_one_work+0x4b8/0xa1c
+    [<00000000b36425d1>] worker_thread+0x9c/0x634
+    [<0000000005852dd5>] kthread+0x1bc/0x1c4
+    [<000000005fccd770>] ret_from_fork+0x10/0x20
+
+Fixes: 050ac52cbe1f ("mac80211: code for on-demand Hybrid Wireless Mesh Protocol")
+Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
+Link: https://msgid.link/20240528142605.1060566-1-nico.escande@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ net/mac80211/mesh_pathtbl.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/net/mac80211/mesh_pathtbl.c b/net/mac80211/mesh_pathtbl.c
+index 8efb2bf08bf48..040f983dea417 100644
+--- a/net/mac80211/mesh_pathtbl.c
++++ b/net/mac80211/mesh_pathtbl.c
+@@ -736,10 +736,23 @@ void mesh_path_discard_frame(struct ieee80211_sub_if_data *sdata,
+  */
+ void mesh_path_flush_pending(struct mesh_path *mpath)
+ {
++	struct ieee80211_sub_if_data *sdata = mpath->sdata;
++	struct ieee80211_if_mesh *ifmsh = &sdata->u.mesh;
++	struct mesh_preq_queue *preq, *tmp;
+ 	struct sk_buff *skb;
+ 
+ 	while ((skb = skb_dequeue(&mpath->frame_queue)) != NULL)
+ 		mesh_path_discard_frame(mpath->sdata, skb);
++
++	spin_lock_bh(&ifmsh->mesh_preq_queue_lock);
++	list_for_each_entry_safe(preq, tmp, &ifmsh->preq_queue.list, list) {
++		if (ether_addr_equal(mpath->dst, preq->dst)) {
++			list_del(&preq->list);
++			kfree(preq);
++			--ifmsh->preq_queue_len;
++		}
++	}
++	spin_unlock_bh(&ifmsh->mesh_preq_queue_lock);
+ }
+ 
+ /**
+-- 
+2.43.0
+
+
+
