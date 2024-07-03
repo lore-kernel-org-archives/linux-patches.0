@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B0C173334;
-	Wed,  3 Jul 2024 11:16:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BCBE173334;
+	Wed,  3 Jul 2024 11:16:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005394; cv=none; b=iI7/LQO6kF1EZ3xKZu1ZTZix94HkYStUdcxFRahGz2M9li/Afgq2OYLHlLJCS7j3fXarH2RpLrZsOnMhXTaYg/56thq5MIQiGyP+Mk1nTzPY5xiAqE5s5QUoUjr1v2ItFH4Tb3QXDaW/5OD87+JP04Q/dsJnrnQhyAtDNdAuu6M=
+	t=1720005397; cv=none; b=dzMftunNITiLkinwHTYjcDtj6q2yV5XsbiKyLsc8ZGsV51P+xKXvcC/VZX+DSq2R/VywQ2uSKDf2foGfmhnZptycy7Q/QKH9wGRTAv4xOr5sDddWl9FvYzkVPAiaiWbXskl2jXeLIEG6WNxl32UsU/I17oLa/fE3bH36mZmtCNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005394; c=relaxed/simple;
-	bh=dvSNmikJRxcA9veEUGSIa5yYvSusBNWdXjkUB7TDy/g=;
+	s=arc-20240116; t=1720005397; c=relaxed/simple;
+	bh=jVWf1/sOmnbQ8ZWxfZ0GBVkmXmmpduzKVDyG56tnbGg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hNo/eSn6qS/A7DDzGzQxkvgrFtnoMsFqWl+FpJ0EcxD8rELwFV+kHPMogaW8uRyRoD0mZRYnvo6+VqnxRoxIqgmG3TpNswWB/dMU08u226gx5Ydg4Tu4HzitKapVB6ylekAaRf8MoxJCBqdt78U2gKe5UAO5Z4AOo/DjxlRQeSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jCQ8lCyW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HeNBc0l39VB880rFgU57snKTHNbpotmCFbyoLUIiHM4ix0SCH3Gg0TRDI/6wbAFE1TW33Ph2KVvGEnkzBm2ZZ+ZZodErSSFA2S4qX8R1Bp6+lueU1fV7I9tgfe1HPPoZqa0gS5ZYsl/F8fIgS6IIzNrbkkpo0nDNG8FdmLa89ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0S7pAYAT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jCQ8lCyW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBC20C2BD10;
-	Wed,  3 Jul 2024 11:16:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0S7pAYAT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A7FC2BD10;
+	Wed,  3 Jul 2024 11:16:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005394;
-	bh=dvSNmikJRxcA9veEUGSIa5yYvSusBNWdXjkUB7TDy/g=;
+	s=korg; t=1720005397;
+	bh=jVWf1/sOmnbQ8ZWxfZ0GBVkmXmmpduzKVDyG56tnbGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jCQ8lCyWJMafwqa6Ji7jZLTF1MRIk8N4glNgPZ3HTrPhT3E95yTKnvJ6N7hvudthl
-	 KiMu/r3LI3Glv78aj2kIRBYCMqPPFmwuEBjOhcd1wrOB659itP+h+KmZFLpqBZQ/6t
-	 wPthZ8kKl7O8yeUXUjeUNCl5wXR+F9MgVrngpTRQ=
+	b=0S7pAYATDypLCS4QglkIsBGgjXZqsW/j+X80lDCHtKVAX1/K+uVdRmzife2EvWT8w
+	 g6hs79aNAWS6o42wjuO0WmLAirmAsmffri7ofHEaP3pm+1SysKRjvsBN7XImKhKYHu
+	 aEYUkIdAfqkXGvuhhWl/mWcOteuQX/Yxf0fm2kVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Mark Brown <broonie@kernel.org>,
 	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
 	Shuah Khan <shuah@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 066/356] selftests/mm: conform test to TAP format output
-Date: Wed,  3 Jul 2024 12:36:42 +0200
-Message-ID: <20240703102915.597720666@linuxfoundation.org>
+Subject: [PATCH 5.15 067/356] selftests/mm: log a consistent test name for check_compaction
+Date: Wed,  3 Jul 2024 12:36:43 +0200
+Message-ID: <20240703102915.636328702@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -52,227 +54,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 9a21701edc41465de56f97914741bfb7bfc2517d ]
+[ Upstream commit f3b7568c49420d2dcd251032c9ca1e069ec8a6c9 ]
 
-Conform the layout, informational and status messages to TAP.  No
-functional change is intended other than the layout of output messages.
+Every test result report in the compaction test prints a distinct log
+messae, and some of the reports print a name that varies at runtime.  This
+causes problems for automation since a lot of automation software uses the
+printed string as the name of the test, if the name varies from run to run
+and from pass to fail then the automation software can't identify that a
+test changed result or that the same tests are being run.
 
-Link: https://lkml.kernel.org/r/20240101083614.1076768-1-usama.anjum@collabora.com
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Refactor the logging to use a consistent name when printing the result of
+the test, printing the existing messages as diagnostic information instead
+so they are still available for people trying to interpret the results.
+
+Link: https://lkml.kernel.org/r/20240209-kselftest-mm-cleanup-v1-2-a3c0386496b5@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
 Cc: Shuah Khan <shuah@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Stable-dep-of: d4202e66a4b1 ("selftests/mm: compaction_test: fix bogus test success on Aarch64")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/vm/compaction_test.c | 91 ++++++++++----------
- 1 file changed, 44 insertions(+), 47 deletions(-)
+ tools/testing/selftests/vm/compaction_test.c | 35 +++++++++++---------
+ 1 file changed, 19 insertions(+), 16 deletions(-)
 
 diff --git a/tools/testing/selftests/vm/compaction_test.c b/tools/testing/selftests/vm/compaction_test.c
-index 55dec92e1e58c..f81931c1f8386 100644
+index f81931c1f8386..6aa6460b854ea 100644
 --- a/tools/testing/selftests/vm/compaction_test.c
 +++ b/tools/testing/selftests/vm/compaction_test.c
-@@ -33,7 +33,7 @@ int read_memory_info(unsigned long *memfree, unsigned long *hugepagesize)
- 	FILE *cmdfile = popen(cmd, "r");
- 
- 	if (!(fgets(buffer, sizeof(buffer), cmdfile))) {
--		perror("Failed to read meminfo\n");
-+		ksft_print_msg("Failed to read meminfo: %s\n", strerror(errno));
- 		return -1;
- 	}
- 
-@@ -44,7 +44,7 @@ int read_memory_info(unsigned long *memfree, unsigned long *hugepagesize)
- 	cmdfile = popen(cmd, "r");
- 
- 	if (!(fgets(buffer, sizeof(buffer), cmdfile))) {
--		perror("Failed to read meminfo\n");
-+		ksft_print_msg("Failed to read meminfo: %s\n", strerror(errno));
- 		return -1;
- 	}
- 
-@@ -62,14 +62,14 @@ int prereq(void)
- 	fd = open("/proc/sys/vm/compact_unevictable_allowed",
- 		  O_RDONLY | O_NONBLOCK);
- 	if (fd < 0) {
--		perror("Failed to open\n"
--		       "/proc/sys/vm/compact_unevictable_allowed\n");
-+		ksft_print_msg("Failed to open /proc/sys/vm/compact_unevictable_allowed: %s\n",
-+			       strerror(errno));
- 		return -1;
- 	}
- 
- 	if (read(fd, &allowed, sizeof(char)) != sizeof(char)) {
--		perror("Failed to read from\n"
--		       "/proc/sys/vm/compact_unevictable_allowed\n");
-+		ksft_print_msg("Failed to read from /proc/sys/vm/compact_unevictable_allowed: %s\n",
-+			       strerror(errno));
- 		close(fd);
- 		return -1;
- 	}
-@@ -78,12 +78,13 @@ int prereq(void)
- 	if (allowed == '1')
- 		return 0;
- 
-+	ksft_print_msg("Compaction isn't allowed\n");
- 	return -1;
- }
- 
- int check_compaction(unsigned long mem_free, unsigned int hugepage_size)
- {
--	int fd;
-+	int fd, ret = -1;
- 	int compaction_index = 0;
- 	char initial_nr_hugepages[10] = {0};
- 	char nr_hugepages[10] = {0};
-@@ -94,12 +95,14 @@ int check_compaction(unsigned long mem_free, unsigned int hugepage_size)
+@@ -95,14 +95,15 @@ int check_compaction(unsigned long mem_free, unsigned int hugepage_size)
  
  	fd = open("/proc/sys/vm/nr_hugepages", O_RDWR | O_NONBLOCK);
  	if (fd < 0) {
--		perror("Failed to open /proc/sys/vm/nr_hugepages");
-+		ksft_test_result_fail("Failed to open /proc/sys/vm/nr_hugepages: %s\n",
-+				      strerror(errno));
- 		return -1;
+-		ksft_test_result_fail("Failed to open /proc/sys/vm/nr_hugepages: %s\n",
+-				      strerror(errno));
+-		return -1;
++		ksft_print_msg("Failed to open /proc/sys/vm/nr_hugepages: %s\n",
++			       strerror(errno));
++		ret = -1;
++		goto out;
  	}
  
  	if (read(fd, initial_nr_hugepages, sizeof(initial_nr_hugepages)) <= 0) {
--		perror("Failed to read from /proc/sys/vm/nr_hugepages");
-+		ksft_test_result_fail("Failed to read from /proc/sys/vm/nr_hugepages: %s\n",
-+				      strerror(errno));
+-		ksft_test_result_fail("Failed to read from /proc/sys/vm/nr_hugepages: %s\n",
+-				      strerror(errno));
++		ksft_print_msg("Failed to read from /proc/sys/vm/nr_hugepages: %s\n",
++			       strerror(errno));
  		goto close_fd;
  	}
  
-@@ -107,7 +110,8 @@ int check_compaction(unsigned long mem_free, unsigned int hugepage_size)
+@@ -110,8 +111,8 @@ int check_compaction(unsigned long mem_free, unsigned int hugepage_size)
  
  	/* Start with the initial condition of 0 huge pages*/
  	if (write(fd, "0", sizeof(char)) != sizeof(char)) {
--		perror("Failed to write 0 to /proc/sys/vm/nr_hugepages\n");
-+		ksft_test_result_fail("Failed to write 0 to /proc/sys/vm/nr_hugepages: %s\n",
-+				      strerror(errno));
+-		ksft_test_result_fail("Failed to write 0 to /proc/sys/vm/nr_hugepages: %s\n",
+-				      strerror(errno));
++		ksft_print_msg("Failed to write 0 to /proc/sys/vm/nr_hugepages: %s\n",
++			       strerror(errno));
  		goto close_fd;
  	}
  
-@@ -116,14 +120,16 @@ int check_compaction(unsigned long mem_free, unsigned int hugepage_size)
+@@ -120,16 +121,16 @@ int check_compaction(unsigned long mem_free, unsigned int hugepage_size)
  	/* Request a large number of huge pages. The Kernel will allocate
  	   as much as it can */
  	if (write(fd, "100000", (6*sizeof(char))) != (6*sizeof(char))) {
--		perror("Failed to write 100000 to /proc/sys/vm/nr_hugepages\n");
-+		ksft_test_result_fail("Failed to write 100000 to /proc/sys/vm/nr_hugepages: %s\n",
-+				      strerror(errno));
+-		ksft_test_result_fail("Failed to write 100000 to /proc/sys/vm/nr_hugepages: %s\n",
+-				      strerror(errno));
++		ksft_print_msg("Failed to write 100000 to /proc/sys/vm/nr_hugepages: %s\n",
++			       strerror(errno));
  		goto close_fd;
  	}
  
  	lseek(fd, 0, SEEK_SET);
  
  	if (read(fd, nr_hugepages, sizeof(nr_hugepages)) <= 0) {
--		perror("Failed to re-read from /proc/sys/vm/nr_hugepages\n");
-+		ksft_test_result_fail("Failed to re-read from /proc/sys/vm/nr_hugepages: %s\n",
-+				      strerror(errno));
+-		ksft_test_result_fail("Failed to re-read from /proc/sys/vm/nr_hugepages: %s\n",
+-				      strerror(errno));
++		ksft_print_msg("Failed to re-read from /proc/sys/vm/nr_hugepages: %s\n",
++			       strerror(errno));
  		goto close_fd;
  	}
  
-@@ -131,67 +137,58 @@ int check_compaction(unsigned long mem_free, unsigned int hugepage_size)
- 	   huge pages */
- 	compaction_index = mem_free/(atoi(nr_hugepages) * hugepage_size);
- 
--	if (compaction_index > 3) {
--		printf("No of huge pages allocated = %d\n",
--		       (atoi(nr_hugepages)));
--		fprintf(stderr, "ERROR: Less that 1/%d of memory is available\n"
--			"as huge pages\n", compaction_index);
--		goto close_fd;
--	}
--
--	printf("No of huge pages allocated = %d\n",
--	       (atoi(nr_hugepages)));
--
- 	lseek(fd, 0, SEEK_SET);
+@@ -141,24 +142,26 @@ int check_compaction(unsigned long mem_free, unsigned int hugepage_size)
  
  	if (write(fd, initial_nr_hugepages, strlen(initial_nr_hugepages))
  	    != strlen(initial_nr_hugepages)) {
--		perror("Failed to write value to /proc/sys/vm/nr_hugepages\n");
-+		ksft_test_result_fail("Failed to write value to /proc/sys/vm/nr_hugepages: %s\n",
-+				      strerror(errno));
+-		ksft_test_result_fail("Failed to write value to /proc/sys/vm/nr_hugepages: %s\n",
+-				      strerror(errno));
++		ksft_print_msg("Failed to write value to /proc/sys/vm/nr_hugepages: %s\n",
++			       strerror(errno));
  		goto close_fd;
  	}
  
--	close(fd);
--	return 0;
-+	if (compaction_index > 3) {
-+		ksft_print_msg("ERROR: Less that 1/%d of memory is available\n"
-+			       "as huge pages\n", compaction_index);
-+		ksft_test_result_fail("No of huge pages allocated = %d\n", (atoi(nr_hugepages)));
-+		goto close_fd;
-+	}
++	ksft_print_msg("Number of huge pages allocated = %d\n",
++		       atoi(nr_hugepages));
 +
-+	ksft_test_result_pass("Memory compaction succeeded. No of huge pages allocated = %d\n",
-+			      (atoi(nr_hugepages)));
-+	ret = 0;
+ 	if (compaction_index > 3) {
+ 		ksft_print_msg("ERROR: Less that 1/%d of memory is available\n"
+ 			       "as huge pages\n", compaction_index);
+-		ksft_test_result_fail("No of huge pages allocated = %d\n", (atoi(nr_hugepages)));
+ 		goto close_fd;
+ 	}
+ 
+-	ksft_test_result_pass("Memory compaction succeeded. No of huge pages allocated = %d\n",
+-			      (atoi(nr_hugepages)));
+ 	ret = 0;
  
   close_fd:
  	close(fd);
--	printf("Not OK. Compaction test failed.");
--	return -1;
-+	return ret;
++ out:
++	ksft_test_result(ret == 0, "check_compaction\n");
+ 	return ret;
  }
  
- 
- int main(int argc, char **argv)
- {
- 	struct rlimit lim;
--	struct map_list *list, *entry;
-+	struct map_list *list = NULL, *entry;
- 	size_t page_size, i;
- 	void *map = NULL;
- 	unsigned long mem_free = 0;
- 	unsigned long hugepage_size = 0;
- 	long mem_fragmentable_MB = 0;
- 
--	if (prereq() != 0) {
--		printf("Either the sysctl compact_unevictable_allowed is not\n"
--		       "set to 1 or couldn't read the proc file.\n"
--		       "Skipping the test\n");
--		return KSFT_SKIP;
--	}
-+	ksft_print_header();
-+
-+	if (prereq() != 0)
-+		return ksft_exit_pass();
-+
-+	ksft_set_plan(1);
- 
- 	lim.rlim_cur = RLIM_INFINITY;
- 	lim.rlim_max = RLIM_INFINITY;
--	if (setrlimit(RLIMIT_MEMLOCK, &lim)) {
--		perror("Failed to set rlimit:\n");
--		return -1;
--	}
-+	if (setrlimit(RLIMIT_MEMLOCK, &lim))
-+		ksft_exit_fail_msg("Failed to set rlimit: %s\n", strerror(errno));
- 
- 	page_size = getpagesize();
- 
--	list = NULL;
--
--	if (read_memory_info(&mem_free, &hugepage_size) != 0) {
--		printf("ERROR: Cannot read meminfo\n");
--		return -1;
--	}
-+	if (read_memory_info(&mem_free, &hugepage_size) != 0)
-+		ksft_exit_fail_msg("Failed to get meminfo\n");
- 
- 	mem_fragmentable_MB = mem_free * 0.8 / 1024;
- 
-@@ -227,7 +224,7 @@ int main(int argc, char **argv)
- 	}
- 
- 	if (check_compaction(mem_free, hugepage_size) == 0)
--		return 0;
-+		return ksft_exit_pass();
- 
--	return -1;
-+	return ksft_exit_fail();
- }
 -- 
 2.43.0
 
