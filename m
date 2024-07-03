@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DFE916F8F5;
-	Wed,  3 Jul 2024 11:10:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D22116F8F5;
+	Wed,  3 Jul 2024 11:10:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005016; cv=none; b=Dwfqmeyn5EzkQCfxw8k/eHoQpb3imoUlcB9lOvB+qPuUG5+hCZL1Az6hre58ifwbPCdKVFOs7YCE7m8TaprF4g1XsydfurC87FiWTswOGjfXWnLoXwS1lg/+ihWtu8faz94mhsT0PvyjNMtsAJLn890c2c+04BN+kwKar0T6Ork=
+	t=1720005019; cv=none; b=XEUTeQCNxluY9QIaszdDbqHsSGxKa1h0eOIMeyIDJUI8L3LifJ3Oa+bBDs25OMdgkZvclFeQYy2vOBHSB9yG3erqw5cTGwONLuq3kftlk+cZWGtDOs2me3yB0Qdoorzzzg8dXQjP79UyfwrRLicdCWqUT/ysLoBbyxGs/Q1oJWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005016; c=relaxed/simple;
-	bh=6nMEmELLFMzylBR2wTEyxLP6wj9GCTM4T5YvoTgOd+o=;
+	s=arc-20240116; t=1720005019; c=relaxed/simple;
+	bh=vcGfLFLVAxtSD/Zuq76jI/KPoE/dVOF3x+UTUSp3IEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CKuALn6b+ET91u9hazI9KyCVXCICe5bnM/FzA88vtQBd/S5qDySbuFdzI31GUjT7e6QlQ0xU6RkrZUISjhZQDMhawnI4Q+Wpg0fWp6/BjEWxshvQfWF1/x8+gpUOaNvlhlGAZq/cOafMpJjVeJJH6/zUfvkip6wzmqYWkqMX6kM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fTNeyq1Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ntB6h9OsnE1VzyFwuXSDdhMAuBwGqnA1tp/WDyNQNrAvX0r2yB5dwUjH6P7AhxIgTTgWwN2rDqRqms92dji6Aw78/JG6+LbplNZ/iN8/fnvmH/k7C3dgdZEvQ3QX9ai0XjyrnXNJLHt9Kg1oAwndtzI2+y/Dd3aAZBVxvr+wrtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ebTd4Tfm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fTNeyq1Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF4E0C2BD10;
-	Wed,  3 Jul 2024 11:10:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ebTd4Tfm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4883C2BD10;
+	Wed,  3 Jul 2024 11:10:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005016;
-	bh=6nMEmELLFMzylBR2wTEyxLP6wj9GCTM4T5YvoTgOd+o=;
+	s=korg; t=1720005019;
+	bh=vcGfLFLVAxtSD/Zuq76jI/KPoE/dVOF3x+UTUSp3IEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fTNeyq1YdlwgNIYMbgzyiVNTK9bYjOKZXt3A7eYf0ILfqro3/x+/5x5RHuCM8WofD
-	 gg79N3Qg7XiwVseW3bS53WNDXC0k6SzKbFmePVD8vR7JioArBJq38ZzyxJPYY8yjxi
-	 Bj/M0rIZTOMNIh1J0BdV+d2y08/VORlsZ7nkisVM=
+	b=ebTd4TfmPiO+qZ+VMPfdP2SZkxze7OAsFqjefuNlyhLd+FESrfpUnilndaiaRL5hN
+	 5XQ0cMQGvAHcwRB4k8dfk2oeZn5L+v+Pp5AVvijpQ85KhQElIauQgRVOC0a28/OzKH
+	 hEO9A4GBm1p7GW2txb9C26lMxPQqEvTYCY8LCyFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dawei Li <dawei.li@shingroup.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 233/290] net/dpaa2: Avoid explicit cpumask var allocation on stack
-Date: Wed,  3 Jul 2024 12:40:14 +0200
-Message-ID: <20240703102912.954233363@linuxfoundation.org>
+Subject: [PATCH 5.10 234/290] ALSA: emux: improve patch ioctl data validation
+Date: Wed,  3 Jul 2024 12:40:15 +0200
+Message-ID: <20240703102912.991117399@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -51,70 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Li <dawei.li@shingroup.cn>
+From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 
-[ Upstream commit d33fe1714a44ff540629b149d8fab4ac6967585c ]
+[ Upstream commit 89b32ccb12ae67e630c6453d778ec30a592a212f ]
 
-For CONFIG_CPUMASK_OFFSTACK=y kernel, explicit allocation of cpumask
-variable on stack is not recommended since it can cause potential stack
-overflow.
+In load_data(), make the validation of and skipping over the main info
+block match that in load_guspatch().
 
-Instead, kernel code should always use *cpumask_var API(s) to allocate
-cpumask var in config-neutral way, leaving allocation strategy to
-CONFIG_CPUMASK_OFFSTACK.
+In load_guspatch(), add checking that the specified patch length matches
+the actually supplied data, like load_data() already did.
 
-Use *cpumask_var API(s) to address it.
-
-Signed-off-by: Dawei Li <dawei.li@shingroup.cn>
-Link: https://lore.kernel.org/r/20240331053441.1276826-3-dawei.li@shingroup.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Message-ID: <20240406064830.1029573-8-oswald.buddenhagen@gmx.de>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ sound/synth/emux/soundfont.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-index 07ba0438f9655..fa202fea537f8 100644
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-@@ -2383,11 +2383,14 @@ static int dpaa2_eth_xdp_xmit(struct net_device *net_dev, int n,
- static int update_xps(struct dpaa2_eth_priv *priv)
- {
- 	struct net_device *net_dev = priv->net_dev;
--	struct cpumask xps_mask;
--	struct dpaa2_eth_fq *fq;
- 	int i, num_queues, netdev_queues;
-+	struct dpaa2_eth_fq *fq;
-+	cpumask_var_t xps_mask;
- 	int err = 0;
+diff --git a/sound/synth/emux/soundfont.c b/sound/synth/emux/soundfont.c
+index 9ebc711afa6b5..18b2d84926563 100644
+--- a/sound/synth/emux/soundfont.c
++++ b/sound/synth/emux/soundfont.c
+@@ -697,7 +697,6 @@ load_data(struct snd_sf_list *sflist, const void __user *data, long count)
+ 	struct snd_soundfont *sf;
+ 	struct soundfont_sample_info sample_info;
+ 	struct snd_sf_sample *sp;
+-	long off;
  
-+	if (!alloc_cpumask_var(&xps_mask, GFP_KERNEL))
-+		return -ENOMEM;
-+
- 	num_queues = dpaa2_eth_queue_count(priv);
- 	netdev_queues = (net_dev->num_tc ? : 1) * num_queues;
+ 	/* patch must be opened */
+ 	if ((sf = sflist->currsf) == NULL)
+@@ -706,12 +705,16 @@ load_data(struct snd_sf_list *sflist, const void __user *data, long count)
+ 	if (is_special_type(sf->type))
+ 		return -EINVAL;
  
-@@ -2397,16 +2400,17 @@ static int update_xps(struct dpaa2_eth_priv *priv)
- 	for (i = 0; i < netdev_queues; i++) {
- 		fq = &priv->fq[i % num_queues];
++	if (count < (long)sizeof(sample_info)) {
++		return -EINVAL;
++	}
+ 	if (copy_from_user(&sample_info, data, sizeof(sample_info)))
+ 		return -EFAULT;
++	data += sizeof(sample_info);
++	count -= sizeof(sample_info);
  
--		cpumask_clear(&xps_mask);
--		cpumask_set_cpu(fq->target_cpu, &xps_mask);
-+		cpumask_clear(xps_mask);
-+		cpumask_set_cpu(fq->target_cpu, xps_mask);
+-	off = sizeof(sample_info);
+-
+-	if (sample_info.size != (count-off)/2)
++	// SoundFont uses S16LE samples.
++	if (sample_info.size * 2 != count)
+ 		return -EINVAL;
  
--		err = netif_set_xps_queue(net_dev, &xps_mask, i);
-+		err = netif_set_xps_queue(net_dev, xps_mask, i);
- 		if (err) {
- 			netdev_warn_once(net_dev, "Error setting XPS queue\n");
- 			break;
- 		}
+ 	/* Check for dup */
+@@ -738,7 +741,7 @@ load_data(struct snd_sf_list *sflist, const void __user *data, long count)
+ 		int  rc;
+ 		rc = sflist->callback.sample_new
+ 			(sflist->callback.private_data, sp, sflist->memhdr,
+-			 data + off, count - off);
++			 data, count);
+ 		if (rc < 0) {
+ 			sf_sample_delete(sflist, sf, sp);
+ 			return rc;
+@@ -951,10 +954,12 @@ load_guspatch(struct snd_sf_list *sflist, const char __user *data,
  	}
+ 	if (copy_from_user(&patch, data, sizeof(patch)))
+ 		return -EFAULT;
+-	
+ 	count -= sizeof(patch);
+ 	data += sizeof(patch);
  
-+	free_cpumask_var(xps_mask);
- 	return err;
- }
- 
++	if ((patch.len << (patch.mode & WAVE_16_BITS ? 1 : 0)) != count)
++		return -EINVAL;
++
+ 	sf = newsf(sflist, SNDRV_SFNT_PAT_TYPE_GUS|SNDRV_SFNT_PAT_SHARED, NULL);
+ 	if (sf == NULL)
+ 		return -ENOMEM;
 -- 
 2.43.0
 
