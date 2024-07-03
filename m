@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100E4173336;
-	Wed,  3 Jul 2024 10:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5979173336;
+	Wed,  3 Jul 2024 10:53:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004018; cv=none; b=KQ9cOx/hZ6YXK3cI/j7/YnrKt6dpuYhQQU8FGJ4QtAdaoqzXX4uBh3DvhltZuhUg65dcfgMZWpvqo/mby86Zw6/tfcJgX+ZeRjU0yuXVHaWycYn5WFUgWrp5i2IwVv2RrLmi/27riMA3HlrkWi0GE/M/oiQO6HhVBoiu9YEs4mc=
+	t=1720004020; cv=none; b=VrtHln8k7nUmcCtBWSNOvX8qizC78b/vBjhY6NkvNwrt69A0JovzuaJ2M0A7Ov2Q7uoy/BZhd61T2DFKOvv2sPKltzxrmNIwFIyPCZga/ZvSN0Xn/O8Ss1lnPsqoGZAiV0SPUri/2JGG0z7ulhGpA+1r8gMBtKM8zKwUaJVUiLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004018; c=relaxed/simple;
-	bh=FQsRUDpSFj8n+vvJdxmq971k0rlWufiQ6wgNQXBxuWM=;
+	s=arc-20240116; t=1720004020; c=relaxed/simple;
+	bh=irObsscxo2AkFfAmKgQ6qMYBcDctXHZil0FoB0+zLLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BDO1AfPCvh0MlVt/wl9zrL9jzT9wkyUnEMviYt3gJD6RNW3B8C63fHyiqPHISuE/iap3Bx+VlMgIsTyWYLiD/5AN2wqqIhXeYqb8FRrN0bGn29ZpW4sILQoYqQb+7fkHzLz8V5eKZ+sv4eiqK4HBE317X7d/j1gCKyii3ISX3i4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j7Efgxyn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WVHP72VGxfQvgwSP+LB4ZUQ8g+DeAMFd8YoZHNURq+3/2mQFp8YjGPq80IkSywary1dvYGhq7zZS5sw6AikXH3T4T+HegDfNUhUIXGX0b9Ai5mMrO/3b5/3TBDHCOQDDidKivyw8cxt+m7mue4fPI/2NgT0XViKCsILJtNLrplQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1M+7fm7I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j7Efgxyn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4603BC2BD10;
-	Wed,  3 Jul 2024 10:53:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1M+7fm7I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38AA0C2BD10;
+	Wed,  3 Jul 2024 10:53:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004017;
-	bh=FQsRUDpSFj8n+vvJdxmq971k0rlWufiQ6wgNQXBxuWM=;
+	s=korg; t=1720004020;
+	bh=irObsscxo2AkFfAmKgQ6qMYBcDctXHZil0FoB0+zLLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j7EfgxynQ3eENh+Ug/Zrj3Vo6/bNbooYbDRjajkpUJBlWiTvN1qRQtzuK8oKsZcBD
-	 3ncRn4cBjlc6G95a23hrmbznKpsvIJb34UthEgJdF6ygOaJDuBIMmMFlwXQl6j7m1i
-	 0/d0c5T5MPrge7OezuSs3ajvetoS1Ciz9hYfo/oI=
+	b=1M+7fm7IZeSp6QRv3WUFI6nKA6VN4RjzWuq6ibKo/BzyTOMJFXWn1TBCiq8N3xNuN
+	 wCFCuLmMtdKiOxJeDUb9P1hexuKaM5ga2c52HXl5FyIGbRYZiq8tNi4oCSfRylZhPn
+	 QW0es8ILiCz+O6OMJajcrOGIyfDMH+FkB9uxJ9+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	"Alessandro Carminati (Red Hat)" <alessandro.carminati@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 055/189] iommu: Return right value in iommu_sva_bind_device()
-Date: Wed,  3 Jul 2024 12:38:36 +0200
-Message-ID: <20240703102843.589811494@linuxfoundation.org>
+Subject: [PATCH 5.4 090/189] selftests/bpf: Prevent client connect before server bind in test_tc_tunnel.sh
+Date: Wed,  3 Jul 2024 12:39:11 +0200
+Message-ID: <20240703102844.898388286@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -54,47 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Alessandro Carminati (Red Hat) <alessandro.carminati@gmail.com>
 
-[ Upstream commit 89e8a2366e3bce584b6c01549d5019c5cda1205e ]
+[ Upstream commit f803bcf9208a2540acb4c32bdc3616673169f490 ]
 
-iommu_sva_bind_device() should return either a sva bond handle or an
-ERR_PTR value in error cases. Existing drivers (idxd and uacce) only
-check the return value with IS_ERR(). This could potentially lead to
-a kernel NULL pointer dereference issue if the function returns NULL
-instead of an error pointer.
+In some systems, the netcat server can incur in delay to start listening.
+When this happens, the test can randomly fail in various points.
+This is an example error message:
 
-In reality, this doesn't cause any problems because iommu_sva_bind_device()
-only returns NULL when the kernel is not configured with CONFIG_IOMMU_SVA.
-In this case, iommu_dev_enable_feature(dev, IOMMU_DEV_FEAT_SVA) will
-return an error, and the device drivers won't call iommu_sva_bind_device()
-at all.
+   # ip gre none gso
+   # encap 192.168.1.1 to 192.168.1.2, type gre, mac none len 2000
+   # test basic connectivity
+   # Ncat: Connection refused.
 
-Fixes: 26b25a2b98e4 ("iommu: Bind process address spaces to devices")
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Link: https://lore.kernel.org/r/20240528042528.71396-1-baolu.lu@linux.intel.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+The issue stems from a race condition between the netcat client and server.
+The test author had addressed this problem by implementing a sleep, which
+I have removed in this patch.
+This patch introduces a function capable of sleeping for up to two seconds.
+However, it can terminate the waiting period early if the port is reported
+to be listening.
+
+Signed-off-by: Alessandro Carminati (Red Hat) <alessandro.carminati@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20240314105911.213411-1-alessandro.carminati@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/iommu.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/bpf/test_tc_tunnel.sh | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-index 6ca3fb2873d7d..9246521bd627f 100644
---- a/include/linux/iommu.h
-+++ b/include/linux/iommu.h
-@@ -1006,7 +1006,7 @@ iommu_aux_get_pasid(struct iommu_domain *domain, struct device *dev)
- static inline struct iommu_sva *
- iommu_sva_bind_device(struct device *dev, struct mm_struct *mm, void *drvdata)
- {
--	return NULL;
-+	return ERR_PTR(-ENODEV);
+diff --git a/tools/testing/selftests/bpf/test_tc_tunnel.sh b/tools/testing/selftests/bpf/test_tc_tunnel.sh
+index 7c76b841b17bb..21bde60c95230 100755
+--- a/tools/testing/selftests/bpf/test_tc_tunnel.sh
++++ b/tools/testing/selftests/bpf/test_tc_tunnel.sh
+@@ -71,7 +71,6 @@ cleanup() {
+ server_listen() {
+ 	ip netns exec "${ns2}" nc "${netcat_opt}" -l -p "${port}" > "${outfile}" &
+ 	server_pid=$!
+-	sleep 0.2
  }
  
- static inline void iommu_sva_unbind_device(struct iommu_sva *handle)
+ client_connect() {
+@@ -92,6 +91,16 @@ verify_data() {
+ 	fi
+ }
+ 
++wait_for_port() {
++	for i in $(seq 20); do
++		if ip netns exec "${ns2}" ss ${2:--4}OHntl | grep -q "$1"; then
++			return 0
++		fi
++		sleep 0.1
++	done
++	return 1
++}
++
+ set -e
+ 
+ # no arguments: automated test, run all
+@@ -183,6 +192,7 @@ setup
+ # basic communication works
+ echo "test basic connectivity"
+ server_listen
++wait_for_port ${port} ${netcat_opt}
+ client_connect
+ verify_data
+ 
+@@ -194,6 +204,7 @@ ip netns exec "${ns1}" tc filter add dev veth1 egress \
+ 	section "encap_${tuntype}_${mac}"
+ echo "test bpf encap without decap (expect failure)"
+ server_listen
++wait_for_port ${port} ${netcat_opt}
+ ! client_connect
+ 
+ if [[ "$tuntype" =~ "udp" ]]; then
 -- 
 2.43.0
 
