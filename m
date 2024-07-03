@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE3716C688;
-	Wed,  3 Jul 2024 11:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B99913BC0B;
+	Wed,  3 Jul 2024 11:00:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004446; cv=none; b=bCBy17CwtY9yUM7hM6WbSepzr3Oh7zhtVG77Yxy7O7lQs6/tSSupSKuRpq+FFXxsFl7sNU14x0YtHDAk//plMX3lEvxAMeU4//PbsjqIXfGShli1sGHmgysp9VoYIPMSpLQZg1nz+IGon4dHknWLMqN3cbAnjQcOkpb6sKRAkWA=
+	t=1720004450; cv=none; b=u8h4wyXhN76QB6o7xkOea+BtmxY8/ebHlwwk6puShukfwrCYZBE2bfVaWt1HcT+wUmIsTsLYd2rMgOl/DiViJXXdYcH46aeZ7avOMBwZ/qLvlw24w0fJbtDCcwuo3nhUDa2h3vT6kad8H9n/I7aGo2GfOuW382IyBPVhShOc0zM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004446; c=relaxed/simple;
-	bh=ZJYJjL0x332yc3syo66bD8Tgdw7YU5kfxzapIAMqzhw=;
+	s=arc-20240116; t=1720004450; c=relaxed/simple;
+	bh=AR43VykcEoDxSsJlSAZO48mY140wDLZwSPvb2L5kx0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MQL2rxdjOfrA8+Lj/zOgajCjpzd0yitVPwgJrgoO3LUZw5nugUwdXgin9KwEyKjMNIHM3WVVzpaMKUMQKb6ot7dniAhiudbkJiDaP4dbLym0EZ/4Wn3XLYmwyzCWHxgR30Cqg4/nVwqXkde6dJkBEm6P/pbZrDiWh4wZ1csd108=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TxtGXX7C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W9dVZGcIQnmV+xCmwjzwzQ5VI7sYyJtxYb/3BSScalI1Qupjjp6s6v3X0lO9QTsfs+yB+RediAPYMXKSMgM7oQDR85gyJVvntD+PCcL9ldqN96ILL6Wgq+1EhHaxy9vrtxmiT9ODeJLW73e+JxEB0g1Et+fL6lWb/oFPD52LCsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bHZZvVcL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TxtGXX7C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55944C2BD10;
-	Wed,  3 Jul 2024 11:00:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bHZZvVcL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45076C2BD10;
+	Wed,  3 Jul 2024 11:00:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004446;
-	bh=ZJYJjL0x332yc3syo66bD8Tgdw7YU5kfxzapIAMqzhw=;
+	s=korg; t=1720004449;
+	bh=AR43VykcEoDxSsJlSAZO48mY140wDLZwSPvb2L5kx0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TxtGXX7C/Y8Xg+h23QJqWJrrvZ1V575j0swZ3oXzeehJMolTCxq/SwjaFzBJhasBu
-	 Q3IsMFa0PMfRfH/zFnZdJsL7O9fl2nWnKVL9TjdYit2QoiQWlRUR97WH4AgYd3LoYo
-	 KGFlWhLY6eL60JYUhKNzXgH6KgfRDKXOuZPP5+zQ=
+	b=bHZZvVcLtnoPN5NzQHnC6s3jtO714vGaXp+AGKf5xcRJdD5ztEHshFBoDZsZ3mQRQ
+	 ReZpc3hrtWMSUSd80Ig+q0m1MsMt8dJAbEMFyy0N7Lj1x/tAgGUCl0EwY859dow1mx
+	 ferBj6aOMjN01qNslsf1m/GxZmTCI+R8j+jbLMLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	syzbot+5f996b83575ef4058638@syzkaller.appspotmail.com,
-	syzbot+1b2abad17596ad03dcff@syzkaller.appspotmail.com
-Subject: [PATCH 5.10 044/290] USB: class: cdc-wdm: Fix CPU lockup caused by excessive log messages
-Date: Wed,  3 Jul 2024 12:37:05 +0200
-Message-ID: <20240703102905.865309800@linuxfoundation.org>
+	stable@kernel.org,
+	Tomas Winkler <tomas.winkler@intel.com>
+Subject: [PATCH 5.10 045/290] mei: me: release irq in mei_me_pci_resume error path
+Date: Wed,  3 Jul 2024 12:37:06 +0200
+Message-ID: <20240703102905.903348399@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -51,78 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Tomas Winkler <tomas.winkler@intel.com>
 
-commit 22f00812862564b314784167a89f27b444f82a46 upstream.
+commit 283cb234ef95d94c61f59e1cd070cd9499b51292 upstream.
 
-The syzbot fuzzer found that the interrupt-URB completion callback in
-the cdc-wdm driver was taking too long, and the driver's immediate
-resubmission of interrupt URBs with -EPROTO status combined with the
-dummy-hcd emulation to cause a CPU lockup:
+The mei_me_pci_resume doesn't release irq on the error path,
+in case mei_start() fails.
 
-cdc_wdm 1-1:1.0: nonzero urb status received: -71
-cdc_wdm 1-1:1.0: wdm_int_callback - 0 bytes
-watchdog: BUG: soft lockup - CPU#0 stuck for 26s! [syz-executor782:6625]
-CPU#0 Utilization every 4s during lockup:
-	#1:  98% system,	  0% softirq,	  3% hardirq,	  0% idle
-	#2:  98% system,	  0% softirq,	  3% hardirq,	  0% idle
-	#3:  98% system,	  0% softirq,	  3% hardirq,	  0% idle
-	#4:  98% system,	  0% softirq,	  3% hardirq,	  0% idle
-	#5:  98% system,	  1% softirq,	  3% hardirq,	  0% idle
-Modules linked in:
-irq event stamp: 73096
-hardirqs last  enabled at (73095): [<ffff80008037bc00>] console_emit_next_record kernel/printk/printk.c:2935 [inline]
-hardirqs last  enabled at (73095): [<ffff80008037bc00>] console_flush_all+0x650/0xb74 kernel/printk/printk.c:2994
-hardirqs last disabled at (73096): [<ffff80008af10b00>] __el1_irq arch/arm64/kernel/entry-common.c:533 [inline]
-hardirqs last disabled at (73096): [<ffff80008af10b00>] el1_interrupt+0x24/0x68 arch/arm64/kernel/entry-common.c:551
-softirqs last  enabled at (73048): [<ffff8000801ea530>] softirq_handle_end kernel/softirq.c:400 [inline]
-softirqs last  enabled at (73048): [<ffff8000801ea530>] handle_softirqs+0xa60/0xc34 kernel/softirq.c:582
-softirqs last disabled at (73043): [<ffff800080020de8>] __do_softirq+0x14/0x20 kernel/softirq.c:588
-CPU: 0 PID: 6625 Comm: syz-executor782 Tainted: G        W          6.10.0-rc2-syzkaller-g8867bbd4a056 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/02/2024
-
-Testing showed that the problem did not occur if the two error
-messages -- the first two lines above -- were removed; apparently adding
-material to the kernel log takes a surprisingly large amount of time.
-
-In any case, the best approach for preventing these lockups and to
-avoid spamming the log with thousands of error messages per second is
-to ratelimit the two dev_err() calls.  Therefore we replace them with
-dev_err_ratelimited().
-
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Suggested-by: Greg KH <gregkh@linuxfoundation.org>
-Reported-and-tested-by: syzbot+5f996b83575ef4058638@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-usb/00000000000073d54b061a6a1c65@google.com/
-Reported-and-tested-by: syzbot+1b2abad17596ad03dcff@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-usb/000000000000f45085061aa9b37e@google.com/
-Fixes: 9908a32e94de ("USB: remove err() macro from usb class drivers")
-Link: https://lore.kernel.org/linux-usb/40dfa45b-5f21-4eef-a8c1-51a2f320e267@rowland.harvard.edu/
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/29855215-52f5-4385-b058-91f42c2bee18@rowland.harvard.edu
+Cc: <stable@kernel.org>
+Fixes: 33ec08263147 ("mei: revamp mei reset state machine")
+Signed-off-by: Tomas Winkler <tomas.winkler@intel.com>
+Link: https://lore.kernel.org/r/20240604090728.1027307-1-tomas.winkler@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/cdc-wdm.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/misc/mei/pci-me.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/class/cdc-wdm.c
-+++ b/drivers/usb/class/cdc-wdm.c
-@@ -252,14 +252,14 @@ static void wdm_int_callback(struct urb
- 			dev_err(&desc->intf->dev, "Stall on int endpoint\n");
- 			goto sw; /* halt is cleared in work */
- 		default:
--			dev_err(&desc->intf->dev,
-+			dev_err_ratelimited(&desc->intf->dev,
- 				"nonzero urb status received: %d\n", status);
- 			break;
- 		}
+--- a/drivers/misc/mei/pci-me.c
++++ b/drivers/misc/mei/pci-me.c
+@@ -400,8 +400,10 @@ static int mei_me_pci_resume(struct devi
  	}
  
- 	if (urb->actual_length < sizeof(struct usb_cdc_notification)) {
--		dev_err(&desc->intf->dev, "wdm_int_callback - %d bytes\n",
-+		dev_err_ratelimited(&desc->intf->dev, "wdm_int_callback - %d bytes\n",
- 			urb->actual_length);
- 		goto exit;
- 	}
+ 	err = mei_restart(dev);
+-	if (err)
++	if (err) {
++		free_irq(pdev->irq, dev);
+ 		return err;
++	}
+ 
+ 	/* Start timer if stopped in suspend */
+ 	schedule_delayed_work(&dev->timer_work, HZ);
 
 
