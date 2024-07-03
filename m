@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025E9187349;
-	Wed,  3 Jul 2024 10:47:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D8A51940BC;
+	Wed,  3 Jul 2024 10:47:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003647; cv=none; b=h2SA82fEV0LXPj9PsNg3S5Pv1b8szT61xAHZRqwdzBImtMicieLzoaVvtI91RINYb0w/+e4NcC2cD+OvYK2mFFhR0c3rNEkOUwRac+OM4/p+8h3KoMIyPrFVEe0NJMOM9FkV5BSkyIomgBjTeK/uyQ0L+dKzowYOVF/Z5j4+dlc=
+	t=1720003650; cv=none; b=aUJOxXzSEp5texrWFj0GOEwQzBhx6VIcUAdkzYfQw3T9BJQEn8P07dQLeA9OpS3eYDBIGJQsjQn0HbCsTTE1CWz/pvFqsvhB2tHBlkcP35FdfNS+220Bg/gRQ0Csn2Z21qfnvVcu2bWQKUw25bcHqoeyEY9VfvfYlW9hdL+D+8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003647; c=relaxed/simple;
-	bh=nEmyQBoUvAfb2x4sEWR3QMYlf+yYn765byfLNyP7OVw=;
+	s=arc-20240116; t=1720003650; c=relaxed/simple;
+	bh=XoHhO4nqmIBjNDnlFBJ/i3Z0xK6HDqcoI8oEsfiJOBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HzV7vhtNjZX99aI6n5QwprMsFTvL2tDCg0hwKAiiPbeYOouJQTHDFs3NfcT0NRWhZ5xcPz4p20CE99FEJdg+8Zxx1Jaqno4I7a/h3X+rGeyvf9b6bZRr5F+qaR0Ep/kLWhE+vW/O1NDcgGR4HGGLopJcY/aupZP9TlRhvoc74PQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hyQ9mvI7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TdoBWmDRmjenWkvmZ/ok88wpVI04P172GjzNtgK6RlKNYf7v/71tRYu/a/ZpJett/l9UK6B6ylnlbmmOSoM3LLmlQBz4sL6XeoGNJWessoqFas24/FMo4Q6FyTqh/9FLu5MLF1+LYW0hfPxwGHetuZ6P0uTLKYpxgKyXE8hSh80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H4g9XzyP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hyQ9mvI7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F5DAC2BD10;
-	Wed,  3 Jul 2024 10:47:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H4g9XzyP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6671CC4AF0E;
+	Wed,  3 Jul 2024 10:47:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003646;
-	bh=nEmyQBoUvAfb2x4sEWR3QMYlf+yYn765byfLNyP7OVw=;
+	s=korg; t=1720003649;
+	bh=XoHhO4nqmIBjNDnlFBJ/i3Z0xK6HDqcoI8oEsfiJOBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hyQ9mvI7n2tWNL64aKyKWy6FRKkNANWGHe9IMMCYM2/TGydHGaLfpemMvuXF0dQi8
-	 5RmLGfn8z7aDfe8fyqez/KxJ32mu1pFMtajDNhiiu+L4lQkbSAiJU1Kk3ub/t7rP5+
-	 SAoLW9GQYhBjyOAra6B3OLVMzJeMPwFvDVjV9tC4=
+	b=H4g9XzyPRh1L1J7wPlF0hRqNq2/b66ouqYDK4OOtnpQX67m6R1//I92+WjLCSDR7u
+	 uuyvW4tgaR9CwUpFtA5r61bM4NsSRYEXsLOy7OR3Btsm858VhwaxkPuK+Rd8uV0fQ+
+	 R7bnFeLUFLtxnJ+dSnpX0VDyPwkKgkZib9+bE34U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 4.19 117/139] mmc: sdhci-pci: Convert PCIBIOS_* return codes to errnos
-Date: Wed,  3 Jul 2024 12:40:14 +0200
-Message-ID: <20240703102834.858246998@linuxfoundation.org>
+	Alexandru Ardelean <alexandru.ardelean@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 091/139] iio: dac: ad5592r: un-indent code-block for scale read
+Date: Wed,  3 Jul 2024 12:39:48 +0200
+Message-ID: <20240703102833.877773299@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -45,78 +45,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Alexandru Ardelean <alexandru.ardelean@analog.com>
 
-commit ebc4fc34eae8ddfbef49f2bdaced1bf4167ef80d upstream.
+[ Upstream commit b004fe33034cc64f72c20923be71cf1e6c9a624c ]
 
-jmicron_pmos() and sdhci_pci_probe() use pci_{read,write}_config_byte()
-that return PCIBIOS_* codes. The return code is then returned as is by
-jmicron_probe() and sdhci_pci_probe(). Similarly, the return code is
-also returned as is from jmicron_resume(). Both probe and resume
-functions should return normal errnos.
+The next rework may require an unindentation of a code block in
+ad5592r_read_raw(), which would make review a bit more difficult.
 
-Convert PCIBIOS_* returns code using pcibios_err_to_errno() into normal
-errno before returning them the fix these issues.
+This change unindents the code block for reading the scale of the
+non-temperature channels.
 
-Fixes: 7582041ff3d4 ("mmc: sdhci-pci: fix simple_return.cocci warnings")
-Fixes: 45211e215984 ("sdhci: toggle JMicron PMOS setting")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20240527132443.14038-1-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Alexandru Ardelean <alexandru.ardelean@analog.com>
+Link: https://lore.kernel.org/r/20200706110259.23947-2-alexandru.ardelean@analog.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 279428df8883 ("iio: dac: ad5592r: fix temperature channel scaling value")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci-pci-core.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/iio/dac/ad5592r-base.c | 26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
 
---- a/drivers/mmc/host/sdhci-pci-core.c
-+++ b/drivers/mmc/host/sdhci-pci-core.c
-@@ -1103,7 +1103,7 @@ static int jmicron_pmos(struct sdhci_pci
+diff --git a/drivers/iio/dac/ad5592r-base.c b/drivers/iio/dac/ad5592r-base.c
+index 87824c03c0124..427946be41872 100644
+--- a/drivers/iio/dac/ad5592r-base.c
++++ b/drivers/iio/dac/ad5592r-base.c
+@@ -378,7 +378,7 @@ static int ad5592r_read_raw(struct iio_dev *iio_dev,
+ {
+ 	struct ad5592r_state *st = iio_priv(iio_dev);
+ 	u16 read_val;
+-	int ret;
++	int ret, mult;
  
- 	ret = pci_read_config_byte(chip->pdev, 0xAE, &scratch);
- 	if (ret)
--		return ret;
-+		goto fail;
+ 	switch (m) {
+ 	case IIO_CHAN_INFO_RAW:
+@@ -416,23 +416,21 @@ static int ad5592r_read_raw(struct iio_dev *iio_dev,
+ 			*val = div_s64_rem(tmp, 1000000000LL, val2);
  
- 	/*
- 	 * Turn PMOS on [bit 0], set over current detection to 2.4 V
-@@ -1114,7 +1114,10 @@ static int jmicron_pmos(struct sdhci_pci
- 	else
- 		scratch &= ~0x47;
+ 			return IIO_VAL_INT_PLUS_MICRO;
+-		} else {
+-			int mult;
++		}
  
--	return pci_write_config_byte(chip->pdev, 0xAE, scratch);
-+	ret = pci_write_config_byte(chip->pdev, 0xAE, scratch);
-+
-+fail:
-+	return pcibios_err_to_errno(ret);
- }
+-			mutex_lock(&st->lock);
++		mutex_lock(&st->lock);
  
- static int jmicron_probe(struct sdhci_pci_chip *chip)
-@@ -1986,7 +1989,7 @@ static int sdhci_pci_probe(struct pci_de
+-			if (chan->output)
+-				mult = !!(st->cached_gp_ctrl &
+-					AD5592R_REG_CTRL_DAC_RANGE);
+-			else
+-				mult = !!(st->cached_gp_ctrl &
+-					AD5592R_REG_CTRL_ADC_RANGE);
++		if (chan->output)
++			mult = !!(st->cached_gp_ctrl &
++				AD5592R_REG_CTRL_DAC_RANGE);
++		else
++			mult = !!(st->cached_gp_ctrl &
++				AD5592R_REG_CTRL_ADC_RANGE);
  
- 	ret = pci_read_config_byte(pdev, PCI_SLOT_INFO, &slots);
- 	if (ret)
--		return ret;
-+		return pcibios_err_to_errno(ret);
+-			*val *= ++mult;
++		*val *= ++mult;
  
- 	slots = PCI_SLOT_INFO_SLOTS(slots) + 1;
- 	dev_dbg(&pdev->dev, "found %d slot(s)\n", slots);
-@@ -1997,7 +2000,7 @@ static int sdhci_pci_probe(struct pci_de
- 
- 	ret = pci_read_config_byte(pdev, PCI_SLOT_INFO, &first_bar);
- 	if (ret)
--		return ret;
-+		return pcibios_err_to_errno(ret);
- 
- 	first_bar &= PCI_SLOT_INFO_FIRST_BAR_MASK;
- 
+-			*val2 = chan->scan_type.realbits;
+-			ret = IIO_VAL_FRACTIONAL_LOG2;
+-		}
++		*val2 = chan->scan_type.realbits;
++		ret = IIO_VAL_FRACTIONAL_LOG2;
+ 		break;
+ 	case IIO_CHAN_INFO_OFFSET:
+ 		ret = ad5592r_get_vref(st);
+-- 
+2.43.0
+
 
 
