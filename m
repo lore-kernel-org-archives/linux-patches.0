@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7680216F8FA;
-	Wed,  3 Jul 2024 11:19:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F1616F8FA;
+	Wed,  3 Jul 2024 11:19:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005565; cv=none; b=UJx8h8yl7JZGNjSqOEGbXIG2VFHWrTHKv7m82bWZrvw9WEreWfqKd7ul3SCEHZ4quvM5jrL7pQ97IU+lXjNNAo/JT5Vv8mTRI23qe17D/Xvf8AJkLCcff9gVxGNl51lQWH4xxeW6MdJeoqVpG4l0bAjsnW9EmwaDBnvVnWqlDXo=
+	t=1720005568; cv=none; b=EHAL2dxdo/5MrwGsxUiqc8+s5ALWOccI3C0Uq86b5sSUFjoHNLaBqzTjBQ8AZVDaaXYbcPsGtYwHWRak8C4zJuiMWDsTFLVL4Wcm7qJ+GvWxY+0ZhVDEu9JiMCbuT3rpr3EcVUcCg2olNPOajiWAHtucgcDO5zsfjz3zdpo1im4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005565; c=relaxed/simple;
-	bh=6Ie7//itDiqbtXgs/4FKgqB11AeT/zgcaotSQz4w32A=;
+	s=arc-20240116; t=1720005568; c=relaxed/simple;
+	bh=KsLNKuzD/fkqg4XP1gTs83gohhdH6XBt/Nl9+Xf6SnU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BSTSpI8DxHhxV+eMjrmUJJH1CdF7UEW6Iyj8XHy0P4OO7sd9tua1K385kfFszKKwmmmmIoVLr/xo2IO5NNiaBclg1o0YVFjFeb5bBjKl5LkDZHP9E75mPPnkLwKyiI7uxYNKyQMNX0NHPCETYdZlr68yF5FCYWwZt6/BEVWaFlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Am3XUKeI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pTvYoNEUOU8nnHrXE/EIkbmC5URdRJyJbvPAd93HUPcxELw50vj7/BVaPp8TMwhtplK8FF45UcnpC+eXqAo6q1DCdbyzIgsiJUJ3a8I2WtJ8dRMRevWp+E/99MbOhYsXeR1E55dyg7nh5PwStK2lsGnlNL/fFGMGx1VJV023ODg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1XS4f38I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Am3XUKeI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7D7BC2BD10;
-	Wed,  3 Jul 2024 11:19:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1XS4f38I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD202C2BD10;
+	Wed,  3 Jul 2024 11:19:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005565;
-	bh=6Ie7//itDiqbtXgs/4FKgqB11AeT/zgcaotSQz4w32A=;
+	s=korg; t=1720005568;
+	bh=KsLNKuzD/fkqg4XP1gTs83gohhdH6XBt/Nl9+Xf6SnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Am3XUKeIlA1S+PzsjHTYtgtXR6Jbosza2VglL5VngiaAaJJhbsvWh5EAE/mP+XXqu
-	 JnjnkJ0QCZdof3O3MrL38LtBJ/3xf9KNEMosX4tx2n3aqA0FRL9C9Fj72Joe646Cxd
-	 +KGT5eNecWjOYc0LR+pqlKVXTnDXFlY1LM4G8z5c=
+	b=1XS4f38IPTYrTyGXDcBLfZPgMcDt7Q0jFhih/ope3KRaT+GcUDyzxoSKYQ1PCHx44
+	 Wupx7sYbzosaL7DWAs5xyvFO/VfBCrndnimpPaMJ4LI9ZhZzdeAXm+oevMmNTwQgCs
+	 KFBDozU6oQhRijBZ0bSg0ahUwCpERraX13TYY+vE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rik van Riel <riel@surriel.com>,
-	Baoquan He <bhe@redhat.com>,
-	Dave Young <dyoung@redhat.com>,
-	Vivek Goyal <vgoyal@redhat.com>,
+	Su Yue <glass.su@suse.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 124/356] fs/proc: fix softlockup in __read_vmcore
-Date: Wed,  3 Jul 2024 12:37:40 +0200
-Message-ID: <20240703102917.786065095@linuxfoundation.org>
+Subject: [PATCH 5.15 125/356] ocfs2: use coarse time for new created files
+Date: Wed,  3 Jul 2024 12:37:41 +0200
+Message-ID: <20240703102917.824213004@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -53,42 +57,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rik van Riel <riel@surriel.com>
+From: Su Yue <glass.su@suse.com>
 
-commit 5cbcb62dddf5346077feb82b7b0c9254222d3445 upstream.
+commit b8cb324277ee16f3eca3055b96fce4735a5a41c6 upstream.
 
-While taking a kernel core dump with makedumpfile on a larger system,
-softlockup messages often appear.
+The default atime related mount option is '-o realtime' which means file
+atime should be updated if atime <= ctime or atime <= mtime.  atime should
+be updated in the following scenario, but it is not:
+==========================================================
+$ rm /mnt/testfile;
+$ echo test > /mnt/testfile
+$ stat -c "%X %Y %Z" /mnt/testfile
+1711881646 1711881646 1711881646
+$ sleep 5
+$ cat /mnt/testfile > /dev/null
+$ stat -c "%X %Y %Z" /mnt/testfile
+1711881646 1711881646 1711881646
+==========================================================
 
-While softlockup warnings can be harmless, they can also interfere with
-things like RCU freeing memory, which can be problematic when the kdump
-kexec image is configured with as little memory as possible.
+And the reason the atime in the test is not updated is that ocfs2 calls
+ktime_get_real_ts64() in __ocfs2_mknod_locked during file creation.  Then
+inode_set_ctime_current() is called in inode_set_ctime_current() calls
+ktime_get_coarse_real_ts64() to get current time.
 
-Avoid the softlockup, and give things like work items and RCU a chance to
-do their thing during __read_vmcore by adding a cond_resched.
+ktime_get_real_ts64() is more accurate than ktime_get_coarse_real_ts64().
+In my test box, I saw ctime set by ktime_get_coarse_real_ts64() is less
+than ktime_get_real_ts64() even ctime is set later.  The ctime of the new
+inode is smaller than atime.
 
-Link: https://lkml.kernel.org/r/20240507091858.36ff767f@imladris.surriel.com
-Signed-off-by: Rik van Riel <riel@surriel.com>
-Acked-by: Baoquan He <bhe@redhat.com>
-Cc: Dave Young <dyoung@redhat.com>
-Cc: Vivek Goyal <vgoyal@redhat.com>
+The call trace is like:
+
+ocfs2_create
+  ocfs2_mknod
+    __ocfs2_mknod_locked
+    ....
+
+      ktime_get_real_ts64 <------- set atime,ctime,mtime, more accurate
+      ocfs2_populate_inode
+    ...
+    ocfs2_init_acl
+      ocfs2_acl_set_mode
+        inode_set_ctime_current
+          current_time
+            ktime_get_coarse_real_ts64 <-------less accurate
+
+ocfs2_file_read_iter
+  ocfs2_inode_lock_atime
+    ocfs2_should_update_atime
+      atime <= ctime ? <-------- false, ctime < atime due to accuracy
+
+So here call ktime_get_coarse_real_ts64 to set inode time coarser while
+creating new files.  It may lower the accuracy of file times.  But it's
+not a big deal since we already use coarse time in other places like
+ocfs2_update_inode_atime and inode_set_ctime_current.
+
+Link: https://lkml.kernel.org/r/20240408082041.20925-5-glass.su@suse.com
+Fixes: c62c38f6b91b ("ocfs2: replace CURRENT_TIME macro")
+Signed-off-by: Su Yue <glass.su@suse.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/vmcore.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/ocfs2/namei.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/proc/vmcore.c
-+++ b/fs/proc/vmcore.c
-@@ -373,6 +373,8 @@ static ssize_t __read_vmcore(char *buffe
- 		/* leave now if filled buffer already */
- 		if (buflen == 0)
- 			return acc;
-+
-+		cond_resched();
- 	}
- 
- 	list_for_each_entry(m, &vmcore_list, list) {
+--- a/fs/ocfs2/namei.c
++++ b/fs/ocfs2/namei.c
+@@ -566,7 +566,7 @@ static int __ocfs2_mknod_locked(struct i
+ 	fe->i_last_eb_blk = 0;
+ 	strcpy(fe->i_signature, OCFS2_INODE_SIGNATURE);
+ 	fe->i_flags |= cpu_to_le32(OCFS2_VALID_FL);
+-	ktime_get_real_ts64(&ts);
++	ktime_get_coarse_real_ts64(&ts);
+ 	fe->i_atime = fe->i_ctime = fe->i_mtime =
+ 		cpu_to_le64(ts.tv_sec);
+ 	fe->i_mtime_nsec = fe->i_ctime_nsec = fe->i_atime_nsec =
 
 
