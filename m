@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE3517557B;
-	Wed,  3 Jul 2024 11:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32144176AAF;
+	Wed,  3 Jul 2024 11:14:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005245; cv=none; b=VO8jmZfEfNEuFWc/pZ/Puu/12bOul7ULrYhiaHAmnhIjmrzQXVjC/haPdmVOVqjtKM5qWtkiCO12UWKnFB6Z6Qf/mLv9Tur//jyD87MCgB4ZeJo4OnJmjKMr4QUE2AjePjPoo55980tCKnOwlCm3Vx65X2FzO4tg24SBoNCCU30=
+	t=1720005248; cv=none; b=JRNtgYNPJ+nBlp9xEqOnRZDuYbItnARE1bkYGkA1HMiBhcdqJg9mq33NTBzl+SfdcHf9qRcp2rw82+Rm+UOnX82NZvoQdhUsGkpmoI23smS9wasq+P4vcD/fKBHYIjW9vUvHjoX+SRtst6zOSWoz9VACtOjzFjPeYMzVN2dU15U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005245; c=relaxed/simple;
-	bh=2BJ3p6lg3HWSdVQZsGD8iGSiSs40dHcNd7JsnSF2S4E=;
+	s=arc-20240116; t=1720005248; c=relaxed/simple;
+	bh=S7Gm3OwtFgK9f8h3UgZ0vkis5D4P7mfs/IxjbE7SFcY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t1uPzUgikYtXrxzh7Upp7nEColK+3saLU7btMSWw0wzLUKQEq040QE1cNjKsPUXNX5DmNmTSo3vAOeFAv00zcsGTMv4Fz1KmxnFWDUFXyHnvy/YVmHy2Q2jAPuxBEaZkOal1e5UIVP1dBWIozi9vHRIScYOC1zrOWi6wi2uVw5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YJNyIcVT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iX5KBsoV5x3CFBC5IZgTpIWaHztQnwxFA/JzH1rSdiYKO8nu6Lrcub4KX9NRHeyjeQSucX6fZmcCUFfeCcZVvdmAeV428H6Q5ghd0nfAYUq5RdzgenfT8i0GrBpV9f1kPwNdo4KnermdRdkMNN6Oetj40vEefFbpwBRxfZgws2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EkPfttqb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YJNyIcVT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC026C2BD10;
-	Wed,  3 Jul 2024 11:14:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EkPfttqb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA881C32781;
+	Wed,  3 Jul 2024 11:14:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005245;
-	bh=2BJ3p6lg3HWSdVQZsGD8iGSiSs40dHcNd7JsnSF2S4E=;
+	s=korg; t=1720005248;
+	bh=S7Gm3OwtFgK9f8h3UgZ0vkis5D4P7mfs/IxjbE7SFcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YJNyIcVTtCjC89x1Qbvy0HlO0Io+xprxrVg/ppF7TRB1OVBnFeNPj6Pr27wE6uQTN
-	 HRB25qG4gtERQJ3eHhfTPrFNU01hwfi9t6JjdV68urmHSl7r6X0rbN+rrJuSdz63M5
-	 x14feRjIkGRfWh/5dJOaODnRrtooeUHrjWOB6/Ck=
+	b=EkPfttqbyGI1KTpKEiBwc0pcgl4Zg8KwM8MghX+S1G8kTXFDHNhUvfCxPPL8StE/+
+	 ICxYGmEFVyxA7M+/JSm5R3FirzDOVeJA58+Y5BHtXP7gD5qk76JfzG7LTMh+1ab00T
+	 9tl6btyU/QJE2x8e40Dcete47G5qZHT6dk9ZK2qY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lingbo Kong <quic_lingbok@quicinc.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Noam Rathaus <noamr@ssd-disclosure.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 009/356] wifi: mac80211: correctly parse Spatial Reuse Parameter Set element
-Date: Wed,  3 Jul 2024 12:35:45 +0200
-Message-ID: <20240703102913.453504973@linuxfoundation.org>
+Subject: [PATCH 5.15 018/356] net/sched: taprio: always validate TCA_TAPRIO_ATTR_PRIOMAP
+Date: Wed,  3 Jul 2024 12:35:54 +0200
+Message-ID: <20240703102913.789349453@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,63 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lingbo Kong <quic_lingbok@quicinc.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit a26d8dc5227f449a54518a8b40733a54c6600a8b ]
+[ Upstream commit f921a58ae20852d188f70842431ce6519c4fdc36 ]
 
-Currently, the way of parsing Spatial Reuse Parameter Set element is
-incorrect and some members of struct ieee80211_he_obss_pd are not assigned.
+If one TCA_TAPRIO_ATTR_PRIOMAP attribute has been provided,
+taprio_parse_mqprio_opt() must validate it, or userspace
+can inject arbitrary data to the kernel, the second time
+taprio_change() is called.
 
-To address this issue, it must be parsed in the order of the elements of
-Spatial Reuse Parameter Set defined in the IEEE Std 802.11ax specification.
+First call (with valid attributes) sets dev->num_tc
+to a non zero value.
 
-The diagram of the Spatial Reuse Parameter Set element (IEEE Std 802.11ax
--2021-9.4.2.252).
+Second call (with arbitrary mqprio attributes)
+returns early from taprio_parse_mqprio_opt()
+and bad things can happen.
 
--------------------------------------------------------------------------
-|       |      |         |       |Non-SRG|  SRG  | SRG   | SRG  | SRG   |
-|Element|Length| Element |  SR   |OBSS PD|OBSS PD|OBSS PD| BSS  |Partial|
-|   ID  |      |   ID    |Control|  Max  |  Min  | Max   |Color | BSSID |
-|       |      |Extension|       | Offset| Offset|Offset |Bitmap|Bitmap |
--------------------------------------------------------------------------
-
-Fixes: 1ced169cc1c2 ("mac80211: allow setting spatial reuse parameters from bss_conf")
-Signed-off-by: Lingbo Kong <quic_lingbok@quicinc.com>
-Link: https://msgid.link/20240516021854.5682-3-quic_lingbok@quicinc.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: a3d43c0d56f1 ("taprio: Add support adding an admin schedule")
+Reported-by: Noam Rathaus <noamr@ssd-disclosure.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://lore.kernel.org/r/20240604181511.769870-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/he.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ net/sched/sch_taprio.c | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/net/mac80211/he.c b/net/mac80211/he.c
-index c05af7018f79f..c730ce5132cbc 100644
---- a/net/mac80211/he.c
-+++ b/net/mac80211/he.c
-@@ -223,15 +223,21 @@ ieee80211_he_spr_ie_to_bss_conf(struct ieee80211_vif *vif,
+diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
+index e40b4425eb6b5..4a0986843fb5d 100644
+--- a/net/sched/sch_taprio.c
++++ b/net/sched/sch_taprio.c
+@@ -947,16 +947,13 @@ static int taprio_parse_mqprio_opt(struct net_device *dev,
+ {
+ 	int i, j;
  
- 	if (!he_spr_ie_elem)
- 		return;
-+
-+	he_obss_pd->sr_ctrl = he_spr_ie_elem->he_sr_control;
- 	data = he_spr_ie_elem->optional;
+-	if (!qopt && !dev->num_tc) {
+-		NL_SET_ERR_MSG(extack, "'mqprio' configuration is necessary");
+-		return -EINVAL;
+-	}
+-
+-	/* If num_tc is already set, it means that the user already
+-	 * configured the mqprio part
+-	 */
+-	if (dev->num_tc)
++	if (!qopt) {
++		if (!dev->num_tc) {
++			NL_SET_ERR_MSG(extack, "'mqprio' configuration is necessary");
++			return -EINVAL;
++		}
+ 		return 0;
++	}
  
- 	if (he_spr_ie_elem->he_sr_control &
- 	    IEEE80211_HE_SPR_NON_SRG_OFFSET_PRESENT)
--		data++;
-+		he_obss_pd->non_srg_max_offset = *data++;
-+
- 	if (he_spr_ie_elem->he_sr_control &
- 	    IEEE80211_HE_SPR_SRG_INFORMATION_PRESENT) {
--		he_obss_pd->max_offset = *data++;
- 		he_obss_pd->min_offset = *data++;
-+		he_obss_pd->max_offset = *data++;
-+		memcpy(he_obss_pd->bss_color_bitmap, data, 8);
-+		data += 8;
-+		memcpy(he_obss_pd->partial_bssid_bitmap, data, 8);
- 		he_obss_pd->enable = true;
- 	}
- }
+ 	/* Verify num_tc is not out of max range */
+ 	if (qopt->num_tc > TC_MAX_QUEUE) {
 -- 
 2.43.0
 
