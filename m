@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1F213B280;
-	Wed,  3 Jul 2024 11:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4C813B280;
+	Wed,  3 Jul 2024 11:27:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006040; cv=none; b=gLU4KYqY2QEHGsUu8LKzx4zmc3qYm7lnG39apppI3qqRQQOaMAMxJq8BxUJSjD4DL1F+pyoRSlxxhZm4gX4G4sJAyaCuzIF1SEfIql2+KxyA6spsfoAaPlTGci8cZXg4U5GDPwtVas3ZdctB/NjV0uzzyqMhS7TQlX8SAvl19ns=
+	t=1720006042; cv=none; b=jmnzc8PWjp6eGqLvzP1de/xmJt3BuydcWkFdWQ5jXVyHBqriHfRey9OGvt0igv2SYGZ+CWFCOrmQd89gFq/VvSWUgf3ydF0BjcxAkNlcLOwO3ht9gvPfy73Ugucpuqqmh5Owmwi3YUg3X7d6SYn9VgZ2EpeHI1cgk3+M5W1wj9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006040; c=relaxed/simple;
-	bh=+4SxkPlwTxUCji3erXlCLbdP5Jvjt8UOsCG1nWcXcvI=;
+	s=arc-20240116; t=1720006042; c=relaxed/simple;
+	bh=G8tQI3Vs6PKKe+N7II8qczfimkJOX3OkBebEFFygN4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nw5UYRBqRE5dcuhWqK/McU4DFke2/ivUc4Rypj+l3/+Cn5eBaZsqHKPBzfBgkCa2REvhuOqbCHvJuxjOwWKRWB8J7SKgoTC0jeCXn2t927j0etcQWxblmRLYX6lEN+3Dn0be6C9zZQNBhvXpTYMQtyejAxHMyCfsgPvoMU+GUJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IAW3b7oy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Z08+ynfQD9kyZMpCYEE5A4F/z9+q9rO9ijiCU4QdzBwLllYxzT+hk/kzkmpHWyhnmBm6N31v89kRyPfYYVNn+yE6yYTRLXKfOkhIc2Eccs8KcMdZog5egGIkVZLTDhBzJ48dX4yO5Fj3RWM+2Xnnf+UgqegS123Uq37QX03zNZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FRMOw6Gm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IAW3b7oy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 655B4C2BD10;
-	Wed,  3 Jul 2024 11:27:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FRMOw6Gm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 520CFC2BD10;
+	Wed,  3 Jul 2024 11:27:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006039;
-	bh=+4SxkPlwTxUCji3erXlCLbdP5Jvjt8UOsCG1nWcXcvI=;
+	s=korg; t=1720006042;
+	bh=G8tQI3Vs6PKKe+N7II8qczfimkJOX3OkBebEFFygN4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IAW3b7oyhBpg+gkntf12jC9uOyy6zds/QmcQb6u15S0uwEVx+bGiAAZta8IdJacvz
-	 Zfl6JAOl6NpJlZDoXQtbnFjzA2aufGFPuzgfi0kJNdfMZKB1bFsqc3vZiPE0VECP8Y
-	 0IZT08I/iSErj9TLIIsoa9GDQ5OtQRQqg3MycQYQ=
+	b=FRMOw6Gm3Hm+Q1O06tBKjVVMt0KG6u/XsuQsB9udK2SnAIk5woICDXHoIcrBsTODr
+	 2gekf7cEebYDnCH6nWKQzWX5Jj+xSDlr98+mHcNDc16cEtGnqX+K0/b7BaxytnEB7f
+	 gXXlgVdAHRjJo3A308sx0iVgOhYn8vI2ujsJLTxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Alexandre Ghiti <alex@ghiti.fr>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	Nam Cao <namcao@linutronix.de>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
+	"Mike Rapoport (IBM)" <rppt@kernel.org>,
 	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 249/356] riscv: mm: init: try best to use IS_ENABLED(CONFIG_64BIT) instead of #ifdef
-Date: Wed,  3 Jul 2024 12:39:45 +0200
-Message-ID: <20240703102922.540113360@linuxfoundation.org>
+Subject: [PATCH 5.15 250/356] riscv: fix overlap of allocated page and PTR_ERR
+Date: Wed,  3 Jul 2024 12:39:46 +0200
+Message-ID: <20240703102922.577139484@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -46,137 +48,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jisheng Zhang <jszhang@kernel.org>
+From: Nam Cao <namcao@linutronix.de>
 
-[ Upstream commit 07aabe8fb6d1ac3163cc74c856521f2ee746270b ]
+[ Upstream commit 994af1825a2aa286f4903ff64a1c7378b52defe6 ]
 
-Try our best to replace the conditional compilation using
-"#ifdef CONFIG_64BIT" by a check for "IS_ENABLED(CONFIG_64BIT)", to
-simplify the code and to increase compile coverage.
+On riscv32, it is possible for the last page in virtual address space
+(0xfffff000) to be allocated. This page overlaps with PTR_ERR, so that
+shouldn't happen.
 
-Now we can also remove the __maybe_unused used in max_mapped_addr
-declaration.
+There is already some code to ensure memblock won't allocate the last page.
+However, buddy allocator is left unchecked.
 
-We also remove the BUG_ON check of mapping the last 4K bytes of the
-addressable memory since this is always true for every kernel actually.
+Fix this by reserving physical memory that would be mapped at virtual
+addresses greater than 0xfffff000.
 
-Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
-Reviewed-by: Alexandre Ghiti <alex@ghiti.fr>
+Reported-by: Björn Töpel <bjorn@kernel.org>
+Closes: https://lore.kernel.org/linux-riscv/878r1ibpdn.fsf@all.your.base.are.belong.to.us
+Fixes: 76d2a0493a17 ("RISC-V: Init and Halt Code")
+Signed-off-by: Nam Cao <namcao@linutronix.de>
+Cc: <stable@vger.kernel.org>
+Tested-by: Björn Töpel <bjorn@rivosinc.com>
+Reviewed-by: Björn Töpel <bjorn@rivosinc.com>
+Reviewed-by: Mike Rapoport (IBM) <rppt@kernel.org>
+Link: https://lore.kernel.org/r/20240425115201.3044202-1-namcao@linutronix.de
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Stable-dep-of: 994af1825a2a ("riscv: fix overlap of allocated page and PTR_ERR")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/mm/init.c | 43 ++++++++++++++++---------------------------
- 1 file changed, 16 insertions(+), 27 deletions(-)
+ arch/riscv/mm/init.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
 diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
-index d7115acab3501..c9d63c476d315 100644
+index c9d63c476d315..c30cc3ac93a72 100644
 --- a/arch/riscv/mm/init.c
 +++ b/arch/riscv/mm/init.c
-@@ -105,10 +105,9 @@ static void __init print_vm_layout(void)
- #endif
- 	print_mlm("lowmem", (unsigned long)PAGE_OFFSET,
- 		  (unsigned long)high_memory);
--#ifdef CONFIG_64BIT
--	print_mlm("kernel", (unsigned long)KERNEL_LINK_ADDR,
--		  (unsigned long)ADDRESS_SPACE_END);
--#endif
-+	if (IS_ENABLED(CONFIG_64BIT))
-+		print_mlm("kernel", (unsigned long)KERNEL_LINK_ADDR,
-+			  (unsigned long)ADDRESS_SPACE_END);
- }
- #else
- static void print_vm_layout(void) { }
-@@ -166,7 +165,7 @@ static void __init setup_bootmem(void)
- {
- 	phys_addr_t vmlinux_end = __pa_symbol(&_end);
- 	phys_addr_t vmlinux_start = __pa_symbol(&_start);
--	phys_addr_t __maybe_unused max_mapped_addr;
-+	phys_addr_t max_mapped_addr;
- 	phys_addr_t phys_ram_end;
- 
- #ifdef CONFIG_XIP_KERNEL
-@@ -175,17 +174,16 @@ static void __init setup_bootmem(void)
- 
- 	memblock_enforce_memory_limit(memory_limit);
- 
--	/*
--	 * Reserve from the start of the kernel to the end of the kernel
--	 */
--#if defined(CONFIG_64BIT) && defined(CONFIG_STRICT_KERNEL_RWX)
- 	/*
- 	 * Make sure we align the reservation on PMD_SIZE since we will
- 	 * map the kernel in the linear mapping as read-only: we do not want
- 	 * any allocation to happen between _end and the next pmd aligned page.
- 	 */
--	vmlinux_end = (vmlinux_end + PMD_SIZE - 1) & PMD_MASK;
--#endif
-+	if (IS_ENABLED(CONFIG_64BIT) && IS_ENABLED(CONFIG_STRICT_KERNEL_RWX))
-+		vmlinux_end = (vmlinux_end + PMD_SIZE - 1) & PMD_MASK;
-+	/*
-+	 * Reserve from the start of the kernel to the end of the kernel
-+	 */
- 	memblock_reserve(vmlinux_start, vmlinux_end - vmlinux_start);
- 
- 
-@@ -193,7 +191,6 @@ static void __init setup_bootmem(void)
- #ifndef CONFIG_XIP_KERNEL
+@@ -192,18 +192,19 @@ static void __init setup_bootmem(void)
  	phys_ram_base = memblock_start_of_DRAM();
  #endif
--#ifndef CONFIG_64BIT
  	/*
- 	 * memblock allocator is not aware of the fact that last 4K bytes of
- 	 * the addressable memory can not be mapped because of IS_ERR_VALUE
-@@ -203,10 +200,11 @@ static void __init setup_bootmem(void)
- 	 * address space is occupied by the kernel mapping then this check must
- 	 * be done as soon as the kernel mapping base address is determined.
+-	 * memblock allocator is not aware of the fact that last 4K bytes of
+-	 * the addressable memory can not be mapped because of IS_ERR_VALUE
+-	 * macro. Make sure that last 4k bytes are not usable by memblock
+-	 * if end of dram is equal to maximum addressable memory.  For 64-bit
+-	 * kernel, this problem can't happen here as the end of the virtual
+-	 * address space is occupied by the kernel mapping then this check must
+-	 * be done as soon as the kernel mapping base address is determined.
++	 * Reserve physical address space that would be mapped to virtual
++	 * addresses greater than (void *)(-PAGE_SIZE) because:
++	 *  - This memory would overlap with ERR_PTR
++	 *  - This memory belongs to high memory, which is not supported
++	 *
++	 * This is not applicable to 64-bit kernel, because virtual addresses
++	 * after (void *)(-PAGE_SIZE) are not linearly mapped: they are
++	 * occupied by kernel mapping. Also it is unrealistic for high memory
++	 * to exist on 64-bit platforms.
  	 */
--	max_mapped_addr = __pa(~(ulong)0);
--	if (max_mapped_addr == (phys_ram_end - 1))
--		memblock_set_current_limit(max_mapped_addr - 4096);
--#endif
-+	if (!IS_ENABLED(CONFIG_64BIT)) {
-+		max_mapped_addr = __pa(~(ulong)0);
-+		if (max_mapped_addr == (phys_ram_end - 1))
-+			memblock_set_current_limit(max_mapped_addr - 4096);
-+	}
- 
- 	min_low_pfn = PFN_UP(phys_ram_base);
- 	max_low_pfn = max_pfn = PFN_DOWN(phys_ram_end);
-@@ -630,14 +628,6 @@ asmlinkage void __init setup_vm(uintptr_t dtb_pa)
- 	BUG_ON((PAGE_OFFSET % PGDIR_SIZE) != 0);
- 	BUG_ON((kernel_map.phys_addr % PMD_SIZE) != 0);
- 
--#ifdef CONFIG_64BIT
--	/*
--	 * The last 4K bytes of the addressable memory can not be mapped because
--	 * of IS_ERR_VALUE macro.
--	 */
--	BUG_ON((kernel_map.virt_addr + kernel_map.size) > ADDRESS_SPACE_END - SZ_4K);
--#endif
--
- 	pt_ops.alloc_pte = alloc_pte_early;
- 	pt_ops.get_pte_virt = get_pte_virt_early;
- #ifndef __PAGETABLE_PMD_FOLDED
-@@ -760,10 +750,9 @@ static void __init setup_vm_final(void)
- 		}
+ 	if (!IS_ENABLED(CONFIG_64BIT)) {
+-		max_mapped_addr = __pa(~(ulong)0);
+-		if (max_mapped_addr == (phys_ram_end - 1))
+-			memblock_set_current_limit(max_mapped_addr - 4096);
++		max_mapped_addr = __va_to_pa_nodebug(-PAGE_SIZE);
++		memblock_reserve(max_mapped_addr, (phys_addr_t)-max_mapped_addr);
  	}
  
--#ifdef CONFIG_64BIT
- 	/* Map the kernel */
--	create_kernel_page_table(swapper_pg_dir, false);
--#endif
-+	if (IS_ENABLED(CONFIG_64BIT))
-+		create_kernel_page_table(swapper_pg_dir, false);
- 
- 	/* Clear fixmap PTE and PMD mappings */
- 	clear_fixmap(FIX_PTE);
+ 	min_low_pfn = PFN_UP(phys_ram_base);
 -- 
 2.43.0
 
