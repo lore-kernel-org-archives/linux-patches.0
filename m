@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B060F7CF1F;
-	Wed,  3 Jul 2024 10:45:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B71136E2A;
+	Wed,  3 Jul 2024 10:45:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003541; cv=none; b=ZbNdvxF87Bc5/CPbLk1Eq1r17f6t9wsvKKjTXUdbOLNEsK4woMel7lv9exyxiCRSo0hadeBJDpeJXx5wQrIK2jipCZmipxk+qMjNzSBqjKhVxLz6vpnfVkwtgsomVsGlpxxwCEwmWiNz0ukTuVuiGm4lNTMMx23tDXwm88ClNBs=
+	t=1720003544; cv=none; b=um1CG3pgHiRp0btFDp75NDsluFU2ywPlnLePoU/aXuRMHcpIQF/TnnvdWnnyMJ3tSNw9lydb4TEvtK08JUTLTlgOGBZsaokzbFpUjFmL0yfViaL5j2qjRjQ0eaKAnevXFcV3B+ivqvuN4gsNobNNN+u6UzcmNeSrVBstQ20lMsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003541; c=relaxed/simple;
-	bh=wyCQkaIy7TlwLufgt83Zvg7sseH0EmjKy6qH3SP2ruc=;
+	s=arc-20240116; t=1720003544; c=relaxed/simple;
+	bh=+YSk+Lisn7Ycf1eBWxeq8AgGRtdqansDnf+t4xVktQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jTkhrop+CIhRkurHJ10op3UtrEdNty+lNi6FjsR91UGdkZNM6h17qyMOTcngNKuhODmAQ7JNt3Os3gZ80ohox/65jqTz8an8XgpgGGhAx6IHtYHIaF9QgUsqLJGRBOM7/6sCqBif/0YvFOZOiobntJsD+tFgjeLcC7QqR1+mvPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PD7E/MZK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XbnkZ8QEN/OsVV3V4cDgCZkb3ks7RfZ9VCDGFsC8LkV8/hk5T3s+pb0vpLFgKaFddlUThkQHSq/Gl3h8NuIA5xAlqoaoq6HzgWNJ/nlU8jyK5NpijKEWANE6khsQXeBP8JxhYDefIFArsWuEYwt8zjeupLu/7Q/UFZdAI+GICTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B0HY7Tcr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PD7E/MZK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CE15C2BD10;
-	Wed,  3 Jul 2024 10:45:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B0HY7Tcr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C82BC2BD10;
+	Wed,  3 Jul 2024 10:45:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003541;
-	bh=wyCQkaIy7TlwLufgt83Zvg7sseH0EmjKy6qH3SP2ruc=;
+	s=korg; t=1720003544;
+	bh=+YSk+Lisn7Ycf1eBWxeq8AgGRtdqansDnf+t4xVktQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PD7E/MZKajY+qKy0apsEBEKQgGAAyL2aUG6vL7jJYqoAD4GIlmSL0obM8dozPEojZ
-	 m2vfUWYrNGDZOxT/QyMSgH7zgPOP+xtcm3Q3w4p3dKdyHzeEDii1VjH2Cr3A5qAiwy
-	 A9yV4K36PX3VhR52SYcw23LPM1AA/zSIz7qA2UDM=
+	b=B0HY7Tcr7fa588GkBOHuVDLn4worPrtjpxY2S7LOouvjKmRh5ITU2G0eZLUQU4Q/3
+	 RnHzVVDp0dC1UizqL+Ae3gmOyIz+22ujgtIWJLs5mK3ltVjUpT5nelOOZJTIwEKCHO
+	 CSCJJ2Rc3uCEhS/ZLrkyqp5ouEn/Vr9qN329XL38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 082/139] ARM: dts: samsung: smdkv310: fix keypad no-autorepeat
-Date: Wed,  3 Jul 2024 12:39:39 +0200
-Message-ID: <20240703102833.539085446@linuxfoundation.org>
+Subject: [PATCH 4.19 083/139] ARM: dts: samsung: exynos4412-origen: fix keypad no-autorepeat
+Date: Wed,  3 Jul 2024 12:39:40 +0200
+Message-ID: <20240703102833.576474852@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -52,7 +52,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 87d8e522d6f5a004f0aa06c0def302df65aff296 ]
+[ Upstream commit 88208d3cd79821117fd3fb80d9bcab618467d37b ]
 
 Although the Samsung SoC keypad binding defined
 linux,keypad-no-autorepeat property, Linux driver never implemented it
@@ -61,30 +61,30 @@ property actually implemented.
 
 This also fixes dtbs_check errors like:
 
-  exynos4210-smdkv310.dtb: keypad@100a0000: 'linux,keypad-no-autorepeat' does not match any of the regexes: '^key-[0-9a-z]+$', 'pinctrl-[0-9]+'
+  exynos4412-origen.dtb: keypad@100a0000: 'linux,keypad-no-autorepeat' does not match any of the regexes: '^key-[0-9a-z]+$', 'pinctrl-[0-9]+'
 
 Cc: <stable@vger.kernel.org>
-Fixes: 0561ceabd0f1 ("ARM: dts: Add intial dts file for EXYNOS4210 SoC, SMDKV310 and ORIGEN")
-Link: https://lore.kernel.org/r/20240312183105.715735-1-krzysztof.kozlowski@linaro.org
+Fixes: bd08f6277e44 ("ARM: dts: Add keypad entries to Exynos4412 based Origen")
+Link: https://lore.kernel.org/r/20240312183105.715735-2-krzysztof.kozlowski@linaro.org
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/exynos4210-smdkv310.dts | 2 +-
+ arch/arm/boot/dts/exynos4412-origen.dts | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/exynos4210-smdkv310.dts b/arch/arm/boot/dts/exynos4210-smdkv310.dts
-index 7a3e621ededec..b79d860abf90a 100644
---- a/arch/arm/boot/dts/exynos4210-smdkv310.dts
-+++ b/arch/arm/boot/dts/exynos4210-smdkv310.dts
-@@ -64,7 +64,7 @@ eeprom@52 {
+diff --git a/arch/arm/boot/dts/exynos4412-origen.dts b/arch/arm/boot/dts/exynos4412-origen.dts
+index e5bfa76185a22..d42b0711b2ceb 100644
+--- a/arch/arm/boot/dts/exynos4412-origen.dts
++++ b/arch/arm/boot/dts/exynos4412-origen.dts
+@@ -437,7 +437,7 @@ buck9_reg: BUCK9 {
  &keypad {
- 	samsung,keypad-num-rows = <2>;
- 	samsung,keypad-num-columns = <8>;
+ 	samsung,keypad-num-rows = <3>;
+ 	samsung,keypad-num-columns = <2>;
 -	linux,keypad-no-autorepeat;
 +	linux,input-no-autorepeat;
  	wakeup-source;
- 	pinctrl-names = "default";
  	pinctrl-0 = <&keypad_rows &keypad_cols>;
+ 	pinctrl-names = "default";
 -- 
 2.43.0
 
