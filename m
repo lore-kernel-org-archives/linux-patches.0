@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33C6217279B;
-	Wed,  3 Jul 2024 11:15:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FDD661FE7;
+	Wed,  3 Jul 2024 11:15:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005337; cv=none; b=jw+221lwShA9V82WYpQl6Tv4fLvqJOOvinM75lreLoL15YP6I8frCcA7jtg9P6N8l0yvkcSPTzNnADseD2KpTZl3YxuGGHo9DurUjI7dTso9qBh2nc7IyI1W4HWo1AkhBvtRdYW+lz/EMeAWBzjeE4pY8asiO58+S4UOlG/EXew=
+	t=1720005340; cv=none; b=MGQKakltYiI46N8gNMfRZNkkV5yy1vM1GBSLyJyAY+dQKu769L/wjfcdfotO92+488J2KojPzwkPsKckqDCqe88kA8XeqND97JsQ/ejWIUluXGITQWrTnlzYkbQBCPCJOWCLy0cZbRwPK9LSvluHJtuyA8bfdjuLt3l/R2BTkxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005337; c=relaxed/simple;
-	bh=OSV4yaTq8dd/OdAfzwGeM2erZkeCVVR/GyAYDSbKTMY=;
+	s=arc-20240116; t=1720005340; c=relaxed/simple;
+	bh=hdVDUT74xiVmt3kVvxKybpRaftUdVTWg1zFl0IiSEzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZU/35L5vWvpoKNG+wJE/IrTw8zMJvm4RI01lSp16ZnZXRmsoiCF8t8DYzQOUURgOyRwKKbidGoqXimTFxzYCcMZ3xkZKiOzaKDhqQHNeBSkPs2AegRGluFYCq/+EBJBWNVb3+JJJkMmj/yI48N5aNlYWw7jBtwNLcYVqBCkgFLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fCI24eAn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OOwJnbXTwb1JpC+gH2A6G1VYi3IT5XctyLSWdEOL9MVlV7yVcUcSeUoSj+NTBA0MBJVMCWXwXEiQTJspNcJVX4iVaD1qcxUGHph2veS2COjKfcGjkyzsZHVpU4d09L6ezzRWolE9tUGajevRTaN/FQLN5RsJBqa8tEeSLhsln5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HoY8QHgC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fCI24eAn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C96C2BD10;
-	Wed,  3 Jul 2024 11:15:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HoY8QHgC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1644C2BD10;
+	Wed,  3 Jul 2024 11:15:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005337;
-	bh=OSV4yaTq8dd/OdAfzwGeM2erZkeCVVR/GyAYDSbKTMY=;
+	s=korg; t=1720005340;
+	bh=hdVDUT74xiVmt3kVvxKybpRaftUdVTWg1zFl0IiSEzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fCI24eAn9tnIskEq206lX3l81bKt/88gUz/7vOTFMs/zFP1SLl7/5Hpg2cpjeYTVG
-	 NJgrx5lfeKDlnhrejLKARXUtwg0XNRL2rP6QmJbYkmiy8TI3Ueyqb336f+ZqcYEDt2
-	 zcp7wwAX955vcVzMyBpjlfMPFvbPajAFF6UisE8Y=
+	b=HoY8QHgCqAUJnPd99BNHaguEuctYvbTKht4Zro2mSedZhp/TmAa+8xD4zZPENHsTp
+	 l4znsVwdkbqnMnpCi2LnS8LtdFqvvdZKGaVCcgFQ8YMqiVuSklnzfpaYOADgcMcpdI
+	 OB2McClMhB5tZ9POeV/+H/zkqbLKYA9gi+GLuNSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Xing <kernelxing@tencent.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 017/356] tcp: count CLOSE-WAIT sockets for TCP_MIB_CURRESTAB
-Date: Wed,  3 Jul 2024 12:35:53 +0200
-Message-ID: <20240703102913.751963530@linuxfoundation.org>
+Subject: [PATCH 5.15 008/356] wifi: iwlwifi: mvm: dont read past the mfuart notifcation
+Date: Wed,  3 Jul 2024 12:35:44 +0200
+Message-ID: <20240703102913.416320269@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -52,69 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Xing <kernelxing@tencent.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit a46d0ea5c94205f40ecf912d1bb7806a8a64704f ]
+[ Upstream commit 4bb95f4535489ed830cf9b34b0a891e384d1aee4 ]
 
-According to RFC 1213, we should also take CLOSE-WAIT sockets into
-consideration:
+In case the firmware sends a notification that claims it has more data
+than it has, we will read past that was allocated for the notification.
+Remove the print of the buffer, we won't see it by default. If needed,
+we can see the content with tracing.
 
-  "tcpCurrEstab OBJECT-TYPE
-   ...
-   The number of TCP connections for which the current state
-   is either ESTABLISHED or CLOSE- WAIT."
+This was reported by KFENCE.
 
-After this, CurrEstab counter will display the total number of
-ESTABLISHED and CLOSE-WAIT sockets.
-
-The logic of counting
-When we increment the counter?
-a) if we change the state to ESTABLISHED.
-b) if we change the state from SYN-RECEIVED to CLOSE-WAIT.
-
-When we decrement the counter?
-a) if the socket leaves ESTABLISHED and will never go into CLOSE-WAIT,
-say, on the client side, changing from ESTABLISHED to FIN-WAIT-1.
-b) if the socket leaves CLOSE-WAIT, say, on the server side, changing
-from CLOSE-WAIT to LAST-ACK.
-
-Please note: there are two chances that old state of socket can be changed
-to CLOSE-WAIT in tcp_fin(). One is SYN-RECV, the other is ESTABLISHED.
-So we have to take care of the former case.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Jason Xing <kernelxing@tencent.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: bdccdb854f2f ("iwlwifi: mvm: support MFUART dump in case of MFUART assert")
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240513132416.ba82a01a559e.Ia91dd20f5e1ca1ad380b95e68aebf2794f553d9b@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/fw.c | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 9c7998377d6bd..31c572882b41f 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -2619,6 +2619,10 @@ void tcp_set_state(struct sock *sk, int state)
- 		if (oldstate != TCP_ESTABLISHED)
- 			TCP_INC_STATS(sock_net(sk), TCP_MIB_CURRESTAB);
- 		break;
-+	case TCP_CLOSE_WAIT:
-+		if (oldstate == TCP_SYN_RECV)
-+			TCP_INC_STATS(sock_net(sk), TCP_MIB_CURRESTAB);
-+		break;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
+index d22a5628f9e0d..578956032e08b 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
+@@ -95,20 +95,10 @@ void iwl_mvm_mfu_assert_dump_notif(struct iwl_mvm *mvm,
+ {
+ 	struct iwl_rx_packet *pkt = rxb_addr(rxb);
+ 	struct iwl_mfu_assert_dump_notif *mfu_dump_notif = (void *)pkt->data;
+-	__le32 *dump_data = mfu_dump_notif->data;
+-	int n_words = le32_to_cpu(mfu_dump_notif->data_size) / sizeof(__le32);
+-	int i;
  
- 	case TCP_CLOSE:
- 		if (oldstate == TCP_CLOSE_WAIT || oldstate == TCP_ESTABLISHED)
-@@ -2630,7 +2634,7 @@ void tcp_set_state(struct sock *sk, int state)
- 			inet_put_port(sk);
- 		fallthrough;
- 	default:
--		if (oldstate == TCP_ESTABLISHED)
-+		if (oldstate == TCP_ESTABLISHED || oldstate == TCP_CLOSE_WAIT)
- 			TCP_DEC_STATS(sock_net(sk), TCP_MIB_CURRESTAB);
- 	}
+ 	if (mfu_dump_notif->index_num == 0)
+ 		IWL_INFO(mvm, "MFUART assert id 0x%x occurred\n",
+ 			 le32_to_cpu(mfu_dump_notif->assert_id));
+-
+-	for (i = 0; i < n_words; i++)
+-		IWL_DEBUG_INFO(mvm,
+-			       "MFUART assert dump, dword %u: 0x%08x\n",
+-			       le16_to_cpu(mfu_dump_notif->index_num) *
+-			       n_words + i,
+-			       le32_to_cpu(dump_data[i]));
+ }
  
+ static bool iwl_alive_fn(struct iwl_notif_wait_data *notif_wait,
 -- 
 2.43.0
 
