@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38571171E70;
-	Wed,  3 Jul 2024 10:51:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285EA17279B;
+	Wed,  3 Jul 2024 10:51:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003914; cv=none; b=S/wm6Kt6kstXAycnxGCnealkaoMIPVyygdqaZn7mg6Nv80qhbdIx3B+cZET2eOT9MozKZlcOWinIgza2mM+37PZZP/dbbvAlTEcn0BHEI+e2CyJoAqrJqENx6OPuAg1j2cnjfNEXFRxovRVedIN+loUgQDhvkGYsPIv6x6OBNtE=
+	t=1720003917; cv=none; b=NlNmK/FnkZ942jh2VuY+4luxO8o1Gr4JBnDsyUseLpjzvZQZVZNRmnrOzQyamc68w5xRBW7DNwG7MTz5xKZpuDw84LwT10bFg4x3F0KL1bHB1rg7YDZrFY9WJlxY5VMwrIIwbmhinHGQ3GGS/H2wulx5zeHx6lcxPXhewxhOc8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003914; c=relaxed/simple;
-	bh=2D1MVleHWMbDJZqwQfvE3Ako3D1PU5jiV2/jzh/weTI=;
+	s=arc-20240116; t=1720003917; c=relaxed/simple;
+	bh=PqFR/4uDl8jwtr5GpxhnY8nbX/yeeqrBDDzI/hSYjwk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ru/mp2C3tmdByqz6YUCT5PMnDD73k8b2gSzsJQ4zosZqFxUK8Pz9shR9W1uKGnHxj/0YO+kiJmal5TqK1/wcGAjfeKyXHA7QpdblxU01Nyyb3JAgeKbBULseDr9NZ/CfzxAv0JBXTYXQ2HCCvzpZdUtRLxkRoKj+x5mCMP2IWm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=psnyKMyc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uzPbALguicO7kLP1yTbeCM7VTnHHTqQby+IEvT5sxBnQqMHa9DxauFKO9TbJkfccd8gRew/UUYiJOq5TXaNSGqzdhf091DBu/fJYewam2Z50m/LaAPAX8GSpmcL4cYxLTOVi8xqQlMUfNTgGQdzurPsEZabz5uh3Prva+3x5Vrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ulfr8eCl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="psnyKMyc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB0B4C2BD10;
-	Wed,  3 Jul 2024 10:51:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ulfr8eCl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0688C2BD10;
+	Wed,  3 Jul 2024 10:51:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003914;
-	bh=2D1MVleHWMbDJZqwQfvE3Ako3D1PU5jiV2/jzh/weTI=;
+	s=korg; t=1720003917;
+	bh=PqFR/4uDl8jwtr5GpxhnY8nbX/yeeqrBDDzI/hSYjwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=psnyKMyc1bGYVCQAXaVKyaqtfOilCh15Mq6XFCqG34uwD8MuLiNHRLLGh4FfLLVyg
-	 YUzrhmT0iQxWv1nj9BPuJvc5s01dhsyrvzrlEvtYVul8PHvENVMr6Sq9Ons6DjIvNb
-	 vH+9VoAO/W+BpoMfsPKb/x6aca90CU7JHTLEnPoI=
+	b=ulfr8eClU5jfR0IcE4SosUwL9j0T6ccFCfBlMcf/ntcxyh6TBhP3Ahn5P/HajIq9s
+	 SAk+F7jMN1ZDpCJCE9BSBEe7rhEAgNii6wlSPL5OwvwQgJgBTRb1glSZwcmXtvueAe
+	 Tnp4WOY0EDC2BeKzVPYGzSQSap9HfjzCZLnVzIRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 021/189] af_unix: Annotate data-race of sk->sk_shutdown in sk_diag_fill().
-Date: Wed,  3 Jul 2024 12:38:02 +0200
-Message-ID: <20240703102842.305029611@linuxfoundation.org>
+Subject: [PATCH 5.4 056/189] HID: logitech-dj: Fix memory leak in logi_dj_recv_switch_to_dj_mode()
+Date: Wed,  3 Jul 2024 12:38:37 +0200
+Message-ID: <20240703102843.625881426@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -45,41 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: José Expósito <jose.exposito89@gmail.com>
 
-[ Upstream commit efaf24e30ec39ebbea9112227485805a48b0ceb1 ]
+[ Upstream commit ce3af2ee95170b7d9e15fff6e500d67deab1e7b3 ]
 
-While dumping sockets via UNIX_DIAG, we do not hold unix_state_lock().
+Fix a memory leak on logi_dj_recv_send_report() error path.
 
-Let's use READ_ONCE() to read sk->sk_shutdown.
-
-Fixes: e4e541a84863 ("sock-diag: Report shutdown for inet and unix sockets (v2)")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 6f20d3261265 ("HID: logitech-dj: Fix error handling in logi_dj_recv_switch_to_dj_mode()")
+Signed-off-by: José Expósito <jose.exposito89@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/diag.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-logitech-dj.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/unix/diag.c b/net/unix/diag.c
-index 5bc5cb83cc6e4..7066a36234106 100644
---- a/net/unix/diag.c
-+++ b/net/unix/diag.c
-@@ -164,7 +164,7 @@ static int sk_diag_fill(struct sock *sk, struct sk_buff *skb, struct unix_diag_r
- 	    sock_diag_put_meminfo(sk, skb, UNIX_DIAG_MEMINFO))
- 		goto out_nlmsg_trim;
+diff --git a/drivers/hid/hid-logitech-dj.c b/drivers/hid/hid-logitech-dj.c
+index 0c2aa9024b878..be19f299f9ec8 100644
+--- a/drivers/hid/hid-logitech-dj.c
++++ b/drivers/hid/hid-logitech-dj.c
+@@ -1213,8 +1213,10 @@ static int logi_dj_recv_switch_to_dj_mode(struct dj_receiver_dev *djrcv_dev,
+ 		 */
+ 		msleep(50);
  
--	if (nla_put_u8(skb, UNIX_DIAG_SHUTDOWN, sk->sk_shutdown))
-+	if (nla_put_u8(skb, UNIX_DIAG_SHUTDOWN, READ_ONCE(sk->sk_shutdown)))
- 		goto out_nlmsg_trim;
+-		if (retval)
++		if (retval) {
++			kfree(dj_report);
+ 			return retval;
++		}
+ 	}
  
- 	if ((req->udiag_show & UDIAG_SHOW_UID) &&
+ 	/*
 -- 
 2.43.0
 
