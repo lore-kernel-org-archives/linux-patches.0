@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E59187551;
-	Wed,  3 Jul 2024 11:23:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBD0186E5A;
+	Wed,  3 Jul 2024 11:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005793; cv=none; b=p2ZDSPvthRS6Dc9uwHFYv1CmIgEYXnEWBlKpHXXuOHp1sg3zIBu3NY8xUs3GT0+RywfKbBI1x3ZQYHqNItdV3sx/H9U9/kwnfyHqhtick5rW48ZWyD8yx1cxqNQXeKVRy/QmLpw/VxvouiqLebpHoT/D58OSXBGXjiuIygOeg0I=
+	t=1720005796; cv=none; b=BwisX9iXScmN5cg6SUKVR6qUt0igGOOuupMD9T32uDLkDE2GirVk74iB27yjfxaLZCQZV+L8GRdDgPQ48UKsHbcO7TJ0kJEkjaQWOkUGpBFFFj5mSrQZ7nRBNj3MmZTmgG36iYRl89jItxq0C5tT5EMf+qHJScVtANXt8agd1gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005793; c=relaxed/simple;
-	bh=Va4ogR3LjV6CIHLlDit2gzbQnsjEcz5vaW8Z89pzDj8=;
+	s=arc-20240116; t=1720005796; c=relaxed/simple;
+	bh=gxRj6Zwb1XP08DoomoK6boMCTgxGLt5AiAejFTMJsHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vn7xtBSmv7jBmmfCmdZaLiEuNcBXNlks00TLRLgO2kEkYqt7/oYeZ4nn4hqQARbri+1r6tkDhheWejSM17eNgRRpdOzgjRtGE7ia51LC+F6wH/e4R3B00r91h6m23M50gDICpj1JlQFRmn8E6HmMxLh6BKRU3YPt1iqFZNxmg0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UKLPDBaD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cZtlS0SMxMFwpx7MVTAGSSy5cUZEm2yXw3ZfIFGSEaNyi4cTIFDDW8Tj92gXUG7f1BskB6lMQH5PfJ7aVVNgzX3wSo8c4KIoGtVPKp7PyGT5scmkF+QOixoxdIRmmqAL1kAp/iuYjY3klJbiV/d6SuMMI8qeB5uoFX5/UCW4IiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=doStivhd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UKLPDBaD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 655EFC2BD10;
-	Wed,  3 Jul 2024 11:23:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="doStivhd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F75C2BD10;
+	Wed,  3 Jul 2024 11:23:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005792;
-	bh=Va4ogR3LjV6CIHLlDit2gzbQnsjEcz5vaW8Z89pzDj8=;
+	s=korg; t=1720005796;
+	bh=gxRj6Zwb1XP08DoomoK6boMCTgxGLt5AiAejFTMJsHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UKLPDBaDftVYbmD9POfDp+FbPHr5FUxWR0h8N7k9geUYwScq7pOatgOh2248sqQPZ
-	 Leqp7ABlN7OZv4lXvwE0CK8R/lRqvPNWV3AADRATSzjbyU51sD9/P+ew6BHPOikHo/
-	 npN5BnxbP+mKzRCM8TmvJmDCUAxacLosSsWYA4rs=
+	b=doStivhdoN8C0WJS/TrAzt3s/P3WQ+aCaGYShs4UJcwV6uhsc1XStcse5pbShgLdp
+	 RYoY220y7p4NV5n7PwvnsPWoZZtQ3eVK9dX5HhwigG7G/7phg0u3KW1DJT9ATxdePt
+	 ZAYvhB0nOd2Cc0YEJSiWXNSimRphmqNhT/u/lcK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Heng Qi <hengqi@linux.alibaba.com>,
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 198/356] ptp: fix integer overflow in max_vclocks_store
-Date: Wed,  3 Jul 2024 12:38:54 +0200
-Message-ID: <20240703102920.595166778@linuxfoundation.org>
+Subject: [PATCH 5.15 199/356] net: stmmac: No need to calculate speed divider when offload is disabled
+Date: Wed,  3 Jul 2024 12:38:55 +0200
+Message-ID: <20240703102920.633080227@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -54,39 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-[ Upstream commit 81d23d2a24012e448f651e007fac2cfd20a45ce0 ]
+[ Upstream commit b8c43360f6e424131fa81d3ba8792ad8ff25a09e ]
 
-On 32bit systems, the "4 * max" multiply can overflow.  Use kcalloc()
-to do the allocation to prevent this.
+commit be27b8965297 ("net: stmmac: replace priv->speed with
+the portTransmitRate from the tc-cbs parameters") introduced
+a problem. When deleting, it prompts "Invalid portTransmitRate
+0 (idleSlope - sendSlope)" and exits. Add judgment on cbs.enable.
+Only when offload is enabled, speed divider needs to be calculated.
 
-Fixes: 44c494c8e30e ("ptp: track available ptp vclocks information")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Heng Qi <hengqi@linux.alibaba.com>
-Link: https://lore.kernel.org/r/ee8110ed-6619-4bd7-9024-28c1f2ac24f4@moroto.mountain
+Fixes: be27b8965297 ("net: stmmac: replace priv->speed with the portTransmitRate from the tc-cbs parameters")
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240617013922.1035854-1-xiaolei.wang@windriver.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_sysfs.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ .../net/ethernet/stmicro/stmmac/stmmac_tc.c   | 40 ++++++++++---------
+ 1 file changed, 22 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/ptp/ptp_sysfs.c b/drivers/ptp/ptp_sysfs.c
-index 0bdfdd4bb0fa2..be58d5257bcb6 100644
---- a/drivers/ptp/ptp_sysfs.c
-+++ b/drivers/ptp/ptp_sysfs.c
-@@ -280,8 +280,7 @@ static ssize_t max_vclocks_store(struct device *dev,
- 	if (max < ptp->n_vclocks)
- 		goto out;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+index a9b5f5ad1bac4..b1a5a02bef08e 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+@@ -356,24 +356,28 @@ static int tc_setup_cbs(struct stmmac_priv *priv,
  
--	size = sizeof(int) * max;
--	vclock_index = kzalloc(size, GFP_KERNEL);
-+	vclock_index = kcalloc(max, sizeof(int), GFP_KERNEL);
- 	if (!vclock_index) {
- 		err = -ENOMEM;
- 		goto out;
+ 	port_transmit_rate_kbps = qopt->idleslope - qopt->sendslope;
+ 
+-	/* Port Transmit Rate and Speed Divider */
+-	switch (div_s64(port_transmit_rate_kbps, 1000)) {
+-	case SPEED_10000:
+-	case SPEED_5000:
+-		ptr = 32;
+-		break;
+-	case SPEED_2500:
+-	case SPEED_1000:
+-		ptr = 8;
+-		break;
+-	case SPEED_100:
+-		ptr = 4;
+-		break;
+-	default:
+-		netdev_err(priv->dev,
+-			   "Invalid portTransmitRate %lld (idleSlope - sendSlope)\n",
+-			   port_transmit_rate_kbps);
+-		return -EINVAL;
++	if (qopt->enable) {
++		/* Port Transmit Rate and Speed Divider */
++		switch (div_s64(port_transmit_rate_kbps, 1000)) {
++		case SPEED_10000:
++		case SPEED_5000:
++			ptr = 32;
++			break;
++		case SPEED_2500:
++		case SPEED_1000:
++			ptr = 8;
++			break;
++		case SPEED_100:
++			ptr = 4;
++			break;
++		default:
++			netdev_err(priv->dev,
++				   "Invalid portTransmitRate %lld (idleSlope - sendSlope)\n",
++				   port_transmit_rate_kbps);
++			return -EINVAL;
++		}
++	} else {
++		ptr = 0;
+ 	}
+ 
+ 	mode_to_use = priv->plat->tx_queues_cfg[queue].mode_to_use;
 -- 
 2.43.0
 
