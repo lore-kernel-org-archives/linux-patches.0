@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9856E137910;
-	Wed,  3 Jul 2024 11:28:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85ADD137910;
+	Wed,  3 Jul 2024 11:28:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006111; cv=none; b=MnpyzTqaMHqaBJXJmOHAzN7Qn4hcGXiz8pCdoXmH1DLfSpDaeNzBivPLAXN8OM3rdf6wYRt0ZkhNzXU7saWM9YYzhs9giwncFfVftM/aSPkxKcOwKc7Q91ecs8W8ZONrMz995bmpkwmpNw93TV6vmySSws+nDkKVDrZy4eDMdCs=
+	t=1720006114; cv=none; b=Pf8ytZ/cFnXRshV5aEVqps3kfJW1PfLMT9VGjWJcX4IeYdjquhMk5I+9vNBIwk1hrpG99Ms7KzH87tDTFQUrj6PwXB5WxfEJO1WmoDsm9KymjWDwL0khpPocvTRztvrC0m3xs9OtNy8/Yo/eSCYAPdSHrEHvl3nWidCsaoPNYxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006111; c=relaxed/simple;
-	bh=OtBLmt0FwkL9+k4mNKB2ddR1h1acyz103dFTyM/1tA4=;
+	s=arc-20240116; t=1720006114; c=relaxed/simple;
+	bh=apq4u+EispFhCD6lw2lytIIeMZtXNFVBYVOQjkXHsUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gYJ0zDbh8eiwm8m3msHBN77+/ld01AdEywjtc57kdT//aQ9fFdkZy2JLGfMS5fluiZ1wZJvBP72bThcX09XAIIlZ1WWC3+m2WFsD3MUVwbaXETst/nsl0eEcBveh8wE5ZdDt7n8xrZ0nnMjdKzNLT7CpqK+XlHsiiXAFKukR9fY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jsIk4T5y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eIAxzGDdpCx5+QyAfvnZgNEJP/GjIrn2kY9pYPz3SbBl6Ck9K5VnxMxCDu88q4GEJy8I0ieSacGrTcz9lcH6ekWKukwkfsC4AG/Gh6wa/wh2LiV6hdXdcB7nRxUUaEJIxV3shBACpz2Rl8dWwEREd9UbiDc85jlre1PGDIk71Vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XI/swj1/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jsIk4T5y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CCEBC2BD10;
-	Wed,  3 Jul 2024 11:28:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XI/swj1/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC8CC2BD10;
+	Wed,  3 Jul 2024 11:28:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006111;
-	bh=OtBLmt0FwkL9+k4mNKB2ddR1h1acyz103dFTyM/1tA4=;
+	s=korg; t=1720006114;
+	bh=apq4u+EispFhCD6lw2lytIIeMZtXNFVBYVOQjkXHsUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jsIk4T5yZvW8mm0VOsojY80/jqJgrmNR9z2SJqpmgUw23Ey8hcSI+zbQ+l33FHNC4
-	 JBssKpEPuFcmPB/JDWXWRqSb7E9TpV1POc7Mwr3gcqv587lrdyVBw8oF9GcoztoIf5
-	 lYbibf3PAMpTwNpY7vVvw/kwvHkFaLHMkkRU4fnA=
+	b=XI/swj1/5h0Up8IsEGRTwMU8VA0bBQMUH7wzVapa8bhYU3AKHIXmKAiw9Bqb7cC4K
+	 wuIAzYtg46uifFpScoWDau2jlhBGUYtpq/OWTqdUZq7wf9qf/JsoWZ+8vSSTw4JDHP
+	 LuxGIBCIM8Nk+TkRDhiVVBbP8vk255BzQmjqZJmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 304/356] ocfs2: fix DIO failure due to insufficient transaction credits
-Date: Wed,  3 Jul 2024 12:40:40 +0200
-Message-ID: <20240703102924.614697261@linuxfoundation.org>
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.15 305/356] mmc: sdhci-pci: Convert PCIBIOS_* return codes to errnos
+Date: Wed,  3 Jul 2024 12:40:41 +0200
+Message-ID: <20240703102924.651921155@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -52,147 +45,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit be346c1a6eeb49d8fda827d2a9522124c2f72f36 upstream.
+commit ebc4fc34eae8ddfbef49f2bdaced1bf4167ef80d upstream.
 
-The code in ocfs2_dio_end_io_write() estimates number of necessary
-transaction credits using ocfs2_calc_extend_credits().  This however does
-not take into account that the IO could be arbitrarily large and can
-contain arbitrary number of extents.
+jmicron_pmos() and sdhci_pci_probe() use pci_{read,write}_config_byte()
+that return PCIBIOS_* codes. The return code is then returned as is by
+jmicron_probe() and sdhci_pci_probe(). Similarly, the return code is
+also returned as is from jmicron_resume(). Both probe and resume
+functions should return normal errnos.
 
-Extent tree manipulations do often extend the current transaction but not
-in all of the cases.  For example if we have only single block extents in
-the tree, ocfs2_mark_extent_written() will end up calling
-ocfs2_replace_extent_rec() all the time and we will never extend the
-current transaction and eventually exhaust all the transaction credits if
-the IO contains many single block extents.  Once that happens a
-WARN_ON(jbd2_handle_buffer_credits(handle) <= 0) is triggered in
-jbd2_journal_dirty_metadata() and subsequently OCFS2 aborts in response to
-this error.  This was actually triggered by one of our customers on a
-heavily fragmented OCFS2 filesystem.
+Convert PCIBIOS_* returns code using pcibios_err_to_errno() into normal
+errno before returning them the fix these issues.
 
-To fix the issue make sure the transaction always has enough credits for
-one extent insert before each call of ocfs2_mark_extent_written().
-
-Heming Zhao said:
-
-------
-PANIC: "Kernel panic - not syncing: OCFS2: (device dm-1): panic forced after error"
-
-PID: xxx  TASK: xxxx  CPU: 5  COMMAND: "SubmitThread-CA"
-  #0 machine_kexec at ffffffff8c069932
-  #1 __crash_kexec at ffffffff8c1338fa
-  #2 panic at ffffffff8c1d69b9
-  #3 ocfs2_handle_error at ffffffffc0c86c0c [ocfs2]
-  #4 __ocfs2_abort at ffffffffc0c88387 [ocfs2]
-  #5 ocfs2_journal_dirty at ffffffffc0c51e98 [ocfs2]
-  #6 ocfs2_split_extent at ffffffffc0c27ea3 [ocfs2]
-  #7 ocfs2_change_extent_flag at ffffffffc0c28053 [ocfs2]
-  #8 ocfs2_mark_extent_written at ffffffffc0c28347 [ocfs2]
-  #9 ocfs2_dio_end_io_write at ffffffffc0c2bef9 [ocfs2]
-#10 ocfs2_dio_end_io at ffffffffc0c2c0f5 [ocfs2]
-#11 dio_complete at ffffffff8c2b9fa7
-#12 do_blockdev_direct_IO at ffffffff8c2bc09f
-#13 ocfs2_direct_IO at ffffffffc0c2b653 [ocfs2]
-#14 generic_file_direct_write at ffffffff8c1dcf14
-#15 __generic_file_write_iter at ffffffff8c1dd07b
-#16 ocfs2_file_write_iter at ffffffffc0c49f1f [ocfs2]
-#17 aio_write at ffffffff8c2cc72e
-#18 kmem_cache_alloc at ffffffff8c248dde
-#19 do_io_submit at ffffffff8c2ccada
-#20 do_syscall_64 at ffffffff8c004984
-#21 entry_SYSCALL_64_after_hwframe at ffffffff8c8000ba
-
-Link: https://lkml.kernel.org/r/20240617095543.6971-1-jack@suse.cz
-Link: https://lkml.kernel.org/r/20240614145243.8837-1-jack@suse.cz
-Fixes: c15471f79506 ("ocfs2: fix sparse file & data ordering issue in direct io")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Heming Zhao <heming.zhao@suse.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 7582041ff3d4 ("mmc: sdhci-pci: fix simple_return.cocci warnings")
+Fixes: 45211e215984 ("sdhci: toggle JMicron PMOS setting")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20240527132443.14038-1-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/aops.c        |    5 +++++
- fs/ocfs2/journal.c     |   17 +++++++++++++++++
- fs/ocfs2/journal.h     |    2 ++
- fs/ocfs2/ocfs2_trace.h |    2 ++
- 4 files changed, 26 insertions(+)
+ drivers/mmc/host/sdhci-pci-core.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/fs/ocfs2/aops.c
-+++ b/fs/ocfs2/aops.c
-@@ -2370,6 +2370,11 @@ static int ocfs2_dio_end_io_write(struct
- 	}
+--- a/drivers/mmc/host/sdhci-pci-core.c
++++ b/drivers/mmc/host/sdhci-pci-core.c
+@@ -1399,7 +1399,7 @@ static int jmicron_pmos(struct sdhci_pci
  
- 	list_for_each_entry(ue, &dwc->dw_zero_list, ue_node) {
-+		ret = ocfs2_assure_trans_credits(handle, credits);
-+		if (ret < 0) {
-+			mlog_errno(ret);
-+			break;
-+		}
- 		ret = ocfs2_mark_extent_written(inode, &et, handle,
- 						ue->ue_cpos, 1,
- 						ue->ue_phys,
---- a/fs/ocfs2/journal.c
-+++ b/fs/ocfs2/journal.c
-@@ -448,6 +448,23 @@ bail:
+ 	ret = pci_read_config_byte(chip->pdev, 0xAE, &scratch);
+ 	if (ret)
+-		return ret;
++		goto fail;
+ 
+ 	/*
+ 	 * Turn PMOS on [bit 0], set over current detection to 2.4 V
+@@ -1410,7 +1410,10 @@ static int jmicron_pmos(struct sdhci_pci
+ 	else
+ 		scratch &= ~0x47;
+ 
+-	return pci_write_config_byte(chip->pdev, 0xAE, scratch);
++	ret = pci_write_config_byte(chip->pdev, 0xAE, scratch);
++
++fail:
++	return pcibios_err_to_errno(ret);
  }
  
- /*
-+ * Make sure handle has at least 'nblocks' credits available. If it does not
-+ * have that many credits available, we will try to extend the handle to have
-+ * enough credits. If that fails, we will restart transaction to have enough
-+ * credits. Similar notes regarding data consistency and locking implications
-+ * as for ocfs2_extend_trans() apply here.
-+ */
-+int ocfs2_assure_trans_credits(handle_t *handle, int nblocks)
-+{
-+	int old_nblks = jbd2_handle_buffer_credits(handle);
-+
-+	trace_ocfs2_assure_trans_credits(old_nblks);
-+	if (old_nblks >= nblocks)
-+		return 0;
-+	return ocfs2_extend_trans(handle, nblocks - old_nblks);
-+}
-+
-+/*
-  * If we have fewer than thresh credits, extend by OCFS2_MAX_TRANS_DATA.
-  * If that fails, restart the transaction & regain write access for the
-  * buffer head which is used for metadata modifications.
---- a/fs/ocfs2/journal.h
-+++ b/fs/ocfs2/journal.h
-@@ -242,6 +242,8 @@ handle_t		    *ocfs2_start_trans(struct
- int			     ocfs2_commit_trans(struct ocfs2_super *osb,
- 						handle_t *handle);
- int			     ocfs2_extend_trans(handle_t *handle, int nblocks);
-+int			     ocfs2_assure_trans_credits(handle_t *handle,
-+						int nblocks);
- int			     ocfs2_allocate_extend_trans(handle_t *handle,
- 						int thresh);
+ static int jmicron_probe(struct sdhci_pci_chip *chip)
+@@ -2327,7 +2330,7 @@ static int sdhci_pci_probe(struct pci_de
  
---- a/fs/ocfs2/ocfs2_trace.h
-+++ b/fs/ocfs2/ocfs2_trace.h
-@@ -2578,6 +2578,8 @@ DEFINE_OCFS2_ULL_UINT_EVENT(ocfs2_commit
+ 	ret = pci_read_config_byte(pdev, PCI_SLOT_INFO, &slots);
+ 	if (ret)
+-		return ret;
++		return pcibios_err_to_errno(ret);
  
- DEFINE_OCFS2_INT_INT_EVENT(ocfs2_extend_trans);
+ 	slots = PCI_SLOT_INFO_SLOTS(slots) + 1;
+ 	dev_dbg(&pdev->dev, "found %d slot(s)\n", slots);
+@@ -2336,7 +2339,7 @@ static int sdhci_pci_probe(struct pci_de
  
-+DEFINE_OCFS2_INT_EVENT(ocfs2_assure_trans_credits);
-+
- DEFINE_OCFS2_INT_EVENT(ocfs2_extend_trans_restart);
+ 	ret = pci_read_config_byte(pdev, PCI_SLOT_INFO, &first_bar);
+ 	if (ret)
+-		return ret;
++		return pcibios_err_to_errno(ret);
  
- DEFINE_OCFS2_INT_INT_EVENT(ocfs2_allocate_extend_trans);
+ 	first_bar &= PCI_SLOT_INFO_FIRST_BAR_MASK;
+ 
 
 
