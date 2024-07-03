@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A39621799F;
-	Wed,  3 Jul 2024 11:14:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34ABC13A27E;
+	Wed,  3 Jul 2024 11:14:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005289; cv=none; b=BnCQllHOASUUYcxeuN3UAqepQlhM3x4C3TJ2A2akFf2eWeEBtop1q6k8gD3j7BbWoXXheOIudToC5TGochUnJjEEf+963MQHKE7+OGTRAa2Hk6wn5NZgmS3UySMCfgULz2dAIJLbl98AVuKlgIh4yvw31c9ocljG21tfoYAmsI8=
+	t=1720005292; cv=none; b=ZP7Pjyw/KMyDM9jPR9R0QYwBVHCnsnWCArlTM7/Tp4exfdrzu4DF41tEdGjYf6i4epLfOnmAJg2Pqfjlg1yRuWY4HzWBGyTUKEuY8N99EvZm6X8kE/l/sBbl1VAZ2C0BYWYySI6d8u4Rmw3dHcNNRkuhGiYVL454S/SUrdVcWLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005289; c=relaxed/simple;
-	bh=6Cj2EfDIIqOvp0uObEC60ksS4Ccb5hTbhSQrHuYlSDM=;
+	s=arc-20240116; t=1720005292; c=relaxed/simple;
+	bh=b5mU3tsATx48Y0lqNGrYOEkwCL/5+GDYRYNXUtQft30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m4vxGuo9Dbfa+L6rlKNlv0SEHAGlTRQd3Cji+K/a+JiiEAv9gj38UB/3XBuLyN0NU5VkLbWTXvovYj+ZVde4IsY0a1tbvQQnY4dPzZpcouJ+bp/ZX0AvuonrH9JQYFKiYBWLhUuthdYibA2Vve7DAlr65RzzepG17lKrjKZs1W0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FbgzFVUH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R35gO0/wG7HFqr2uwnZ2AQnnEBfFBtoKFrW2uLmW3Z3UFwTNKQDawS4ENLa8//7bO2955j6p2Nk7hlX2PRlxw1GKVazaHfh+AsnuFxL8pBdBYrELGK3+apQE142mpvxqTfgCz/vRf1cgWH6Rp/Y/MTTIo0DWtWC0TPcRniOxCYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wFNzFxcV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FbgzFVUH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAE6DC2BD10;
-	Wed,  3 Jul 2024 11:14:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wFNzFxcV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8F77C2BD10;
+	Wed,  3 Jul 2024 11:14:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005289;
-	bh=6Cj2EfDIIqOvp0uObEC60ksS4Ccb5hTbhSQrHuYlSDM=;
+	s=korg; t=1720005292;
+	bh=b5mU3tsATx48Y0lqNGrYOEkwCL/5+GDYRYNXUtQft30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FbgzFVUHz6OOg79P7nmWlGG9FiXTB2MetWMmAvuA2oaQWuNsuLhpxz8M94UpQlrld
-	 rq7k9YfXVbX3y7OY10BbZItC6HNiN4LAb0jb5H5Ib1OPLxxQG0ppgJMdwr3X3z6qFi
-	 YM2EwSZzz7ISYXwu7VZzOXzBP2CqMX5/t1nDhoUA=
+	b=wFNzFxcVPD7VOrgvbQOv+rR2eTmFnEQY+33fz8pUuQLESXpTNyBrjlnBwaYlveX+t
+	 E7T7m/apmkKYe69+VjMHJ+ktFSHUjV2OkZKpHq4jPW1RodjTWOzhJUaidYX2B/rbmF
+	 +Ph9imiecCx1XWDrB6MDfF3NSd8mLfgaRMlv8Sg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 031/356] af_unix: Use unix_recvq_full_lockless() in unix_stream_connect().
-Date: Wed,  3 Jul 2024 12:36:07 +0200
-Message-ID: <20240703102914.275880846@linuxfoundation.org>
+Subject: [PATCH 5.15 032/356] af_unix: annotate lockless accesses to sk->sk_err
+Date: Wed,  3 Jul 2024 12:36:08 +0200
+Message-ID: <20240703102914.312891691@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,67 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 45d872f0e65593176d880ec148f41ad7c02e40a7 ]
+[ Upstream commit cc04410af7de348234ac36a5f50c4ce416efdb4b ]
 
-Once sk->sk_state is changed to TCP_LISTEN, it never changes.
+unix_poll() and unix_dgram_poll() read sk->sk_err
+without any lock held.
 
-unix_accept() takes advantage of this characteristics; it does not
-hold the listener's unix_state_lock() and only acquires recvq lock
-to pop one skb.
+Add relevant READ_ONCE()/WRITE_ONCE() annotations.
 
-It means unix_state_lock() does not prevent the queue length from
-changing in unix_stream_connect().
-
-Thus, we need to use unix_recvq_full_lockless() to avoid data-race.
-
-Now we remove unix_recvq_full() as no one uses it.
-
-Note that we can remove READ_ONCE() for sk->sk_max_ack_backlog in
-unix_recvq_full_lockless() because of the following reasons:
-
-  (1) For SOCK_DGRAM, it is a written-once field in unix_create1()
-
-  (2) For SOCK_STREAM and SOCK_SEQPACKET, it is changed under the
-      listener's unix_state_lock() in unix_listen(), and we hold
-      the lock in unix_stream_connect()
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 83690b82d228 ("af_unix: Use skb_queue_empty_lockless() in unix_release_sock().")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c |   10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ net/unix/af_unix.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
 --- a/net/unix/af_unix.c
 +++ b/net/unix/af_unix.c
-@@ -190,15 +190,9 @@ static inline int unix_may_send(struct s
- 	return unix_peer(osk) == NULL || unix_our_peer(sk, osk);
- }
+@@ -485,7 +485,7 @@ static void unix_dgram_disconnected(stru
+ 		 * when peer was not connected to us.
+ 		 */
+ 		if (!sock_flag(other, SOCK_DEAD) && unix_peer(other) == sk) {
+-			other->sk_err = ECONNRESET;
++			WRITE_ONCE(other->sk_err, ECONNRESET);
+ 			sk_error_report(other);
+ 		}
+ 	}
+@@ -556,7 +556,7 @@ static void unix_release_sock(struct soc
+ 			/* No more writes */
+ 			WRITE_ONCE(skpair->sk_shutdown, SHUTDOWN_MASK);
+ 			if (!skb_queue_empty(&sk->sk_receive_queue) || embrion)
+-				skpair->sk_err = ECONNRESET;
++				WRITE_ONCE(skpair->sk_err, ECONNRESET);
+ 			unix_state_unlock(skpair);
+ 			skpair->sk_state_change(skpair);
+ 			sk_wake_async(skpair, SOCK_WAKE_WAITD, POLL_HUP);
+@@ -3066,7 +3066,7 @@ static __poll_t unix_poll(struct file *f
+ 	state = READ_ONCE(sk->sk_state);
  
--static inline int unix_recvq_full(const struct sock *sk)
--{
--	return skb_queue_len(&sk->sk_receive_queue) > sk->sk_max_ack_backlog;
--}
--
- static inline int unix_recvq_full_lockless(const struct sock *sk)
- {
--	return skb_queue_len_lockless(&sk->sk_receive_queue) >
--		READ_ONCE(sk->sk_max_ack_backlog);
-+	return skb_queue_len_lockless(&sk->sk_receive_queue) > sk->sk_max_ack_backlog;
- }
+ 	/* exceptional events? */
+-	if (sk->sk_err)
++	if (READ_ONCE(sk->sk_err))
+ 		mask |= EPOLLERR;
+ 	if (shutdown == SHUTDOWN_MASK)
+ 		mask |= EPOLLHUP;
+@@ -3113,7 +3113,8 @@ static __poll_t unix_dgram_poll(struct f
+ 	state = READ_ONCE(sk->sk_state);
  
- struct sock *unix_peer_get(struct sock *s)
-@@ -1387,7 +1381,7 @@ restart:
- 	if (other->sk_shutdown & RCV_SHUTDOWN)
- 		goto out_unlock;
+ 	/* exceptional events? */
+-	if (sk->sk_err || !skb_queue_empty_lockless(&sk->sk_error_queue))
++	if (READ_ONCE(sk->sk_err) ||
++	    !skb_queue_empty_lockless(&sk->sk_error_queue))
+ 		mask |= EPOLLERR |
+ 			(sock_flag(sk, SOCK_SELECT_ERR_QUEUE) ? EPOLLPRI : 0);
  
--	if (unix_recvq_full(other)) {
-+	if (unix_recvq_full_lockless(other)) {
- 		err = -EAGAIN;
- 		if (!timeo)
- 			goto out_unlock;
 
 
