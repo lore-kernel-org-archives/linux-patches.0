@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0B845945;
-	Wed,  3 Jul 2024 11:09:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9C345945;
+	Wed,  3 Jul 2024 11:09:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004986; cv=none; b=gNF+8Gi2qNImlxZympqEQBH7jthRjIDx6e9op4CICOuKTCvyk58emhAp3QKbdIIz5C3wZXQl7Euo7sLi82w4xuToFrrzu0TJulfFEwazadCgaI96YSCr33b2E+YkO+iypJ7zqKRoZoo9ShphvZP51uNjFm0jt5zFabGdIMN0YcI=
+	t=1720004989; cv=none; b=FTNsKQ/8wRlvIfTaS4tIXPQeqzCTRUkEsYs2bHf2RAslemIcOKLWiu66sRSYOdAqSCIb4XwfDlHZ6KTENTH0jUao8+UP0HViPGM58OYzZnbhyUnJUxqteiFCAHNCvqmN0wi7pMuzJTnOBQCM+B92NKLEAqRDdtqhdurd0Cyd/Ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004986; c=relaxed/simple;
-	bh=RfhwJpzppGHaV4lVUrC55x54u5kLR7x+fyIEebCV7fg=;
+	s=arc-20240116; t=1720004989; c=relaxed/simple;
+	bh=nrI5xGGVE4l0Xjvq34yDcaVYndqwWSjLDfLVYdtxFjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cEKat3tLQvCFX+DDxcICuE6nzxgPXtseEamEj1+2gNnYwjoBtJ2UUG4qC2YFvmkuJjM5L0BmmtecnYQQn6QnZ1B3WNfkkGPDpSIiC8spPZon6PukxQVn/8R2MDKbzE3HR7fTtr33UnQrxUkO0/ZjnwJzPUBEAdo2J7Ph0ffcAhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SJKZGGyP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OWOKOa7oei3tl6gu2Gp5Gl9glSvurRo1n66S8vddUXCMhFpAPs5X0obMsUmbPh37kok1ubzQIJ7Sm41J1D1XoZQuwpFPDcq4oxEHw22a7GSDqpcqNNLW6qniaPoqY41pyQerAIrwe9AIGpTvbX8run0mxrPvA5fYsqo5p6CrQW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WS58j1eO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SJKZGGyP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20ECCC2BD10;
-	Wed,  3 Jul 2024 11:09:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WS58j1eO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A00DC2BD10;
+	Wed,  3 Jul 2024 11:09:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004986;
-	bh=RfhwJpzppGHaV4lVUrC55x54u5kLR7x+fyIEebCV7fg=;
+	s=korg; t=1720004989;
+	bh=nrI5xGGVE4l0Xjvq34yDcaVYndqwWSjLDfLVYdtxFjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SJKZGGyPklXT6rSx0bLiqKiPhViaCtgRH4Vn8LBvLSj6u6Fh+31R0K7SbvtEhflOw
-	 8xBsztevCoH1IX0lLDyll/OxidaBeWfV2gl7cF8KAgLO4WZvTCuXCnpcii1FKsXkJ0
-	 gXi83m1i5mkZpQD30D4kuCUWKITpcZS+H9MKWe4U=
+	b=WS58j1eOG01gIoDMnmGx/jjib/DjNjedfGFH6U9AYulxCriaU+Ffdu6wJoQnakgUG
+	 n15dZS39tDDnGKj4Fxvfg4VOKNCVAIMUSHvlSpQRQ4eUjdhUkWoTXCdc5Vf92RPw/u
+	 jo541tZ40A9uYSMmBKBoz7hM3pRMQMul7i4bPJGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Haifeng Xu <haifeng.xu@shopee.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 221/290] xdp: Move the rxq_info.mem clearing to unreg_mem_model()
-Date: Wed,  3 Jul 2024 12:40:02 +0200
-Message-ID: <20240703102912.506007356@linuxfoundation.org>
+Subject: [PATCH 5.10 192/290] perf/core: Fix missing wakeup when waiting for context reference
+Date: Wed,  3 Jul 2024 12:39:33 +0200
+Message-ID: <20240703102911.419496895@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -51,68 +53,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Haifeng Xu <haifeng.xu@shopee.com>
 
-[ Upstream commit a78cae2476812cecaa4a33d0086bbb53986906bc ]
+[ Upstream commit 74751ef5c1912ebd3e65c3b65f45587e05ce5d36 ]
 
-xdp_rxq_info_unreg() implicitly calls xdp_rxq_info_unreg_mem_model().
-This may well be confusing to the driver authors, and lead to double free
-if they call xdp_rxq_info_unreg_mem_model() before xdp_rxq_info_unreg()
-(when mem model type == MEM_TYPE_PAGE_POOL).
+In our production environment, we found many hung tasks which are
+blocked for more than 18 hours. Their call traces are like this:
 
-In fact error path of mvpp2_rxq_init() seems to currently do exactly that.
+[346278.191038] __schedule+0x2d8/0x890
+[346278.191046] schedule+0x4e/0xb0
+[346278.191049] perf_event_free_task+0x220/0x270
+[346278.191056] ? init_wait_var_entry+0x50/0x50
+[346278.191060] copy_process+0x663/0x18d0
+[346278.191068] kernel_clone+0x9d/0x3d0
+[346278.191072] __do_sys_clone+0x5d/0x80
+[346278.191076] __x64_sys_clone+0x25/0x30
+[346278.191079] do_syscall_64+0x5c/0xc0
+[346278.191083] ? syscall_exit_to_user_mode+0x27/0x50
+[346278.191086] ? do_syscall_64+0x69/0xc0
+[346278.191088] ? irqentry_exit_to_user_mode+0x9/0x20
+[346278.191092] ? irqentry_exit+0x19/0x30
+[346278.191095] ? exc_page_fault+0x89/0x160
+[346278.191097] ? asm_exc_page_fault+0x8/0x30
+[346278.191102] entry_SYSCALL_64_after_hwframe+0x44/0xae
 
-The double free will result in refcount underflow in page_pool_destroy().
-Make the interface a little more programmer friendly by clearing type and
-id so that xdp_rxq_info_unreg_mem_model() can be called multiple times.
+The task was waiting for the refcount become to 1, but from the vmcore,
+we found the refcount has already been 1. It seems that the task didn't
+get woken up by perf_event_release_kernel() and got stuck forever. The
+below scenario may cause the problem.
 
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20210625221612.2637086-1-kuba@kernel.org
-Stable-dep-of: 7e9f79428372 ("xdp: Remove WARN() from __xdp_reg_mem_model()")
+Thread A					Thread B
+...						...
+perf_event_free_task				perf_event_release_kernel
+						   ...
+						   acquire event->child_mutex
+						   ...
+						   get_ctx
+   ...						   release event->child_mutex
+   acquire ctx->mutex
+   ...
+   perf_free_event (acquire/release event->child_mutex)
+   ...
+   release ctx->mutex
+   wait_var_event
+						   acquire ctx->mutex
+						   acquire event->child_mutex
+						   # move existing events to free_list
+						   release event->child_mutex
+						   release ctx->mutex
+						   put_ctx
+...						...
+
+In this case, all events of the ctx have been freed, so we couldn't
+find the ctx in free_list and Thread A will miss the wakeup. It's thus
+necessary to add a wakeup after dropping the reference.
+
+Fixes: 1cf8dfe8a661 ("perf/core: Fix race between close() and fork()")
+Signed-off-by: Haifeng Xu <haifeng.xu@shopee.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Cc: stable@vger.kernel.org
+Link: https://lkml.kernel.org/r/20240513103948.33570-1-haifeng.xu@shopee.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/xdp.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ kernel/events/core.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/net/core/xdp.c b/net/core/xdp.c
-index b8d7fa47d293c..0f0b65981614b 100644
---- a/net/core/xdp.c
-+++ b/net/core/xdp.c
-@@ -113,8 +113,13 @@ static void mem_allocator_disconnect(void *allocator)
- void xdp_rxq_info_unreg_mem_model(struct xdp_rxq_info *xdp_rxq)
- {
- 	struct xdp_mem_allocator *xa;
-+	int type = xdp_rxq->mem.type;
- 	int id = xdp_rxq->mem.id;
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index e0b47bed86750..3a191bec69aca 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -5128,6 +5128,7 @@ int perf_event_release_kernel(struct perf_event *event)
+ again:
+ 	mutex_lock(&event->child_mutex);
+ 	list_for_each_entry(child, &event->child_list, child_list) {
++		void *var = NULL;
  
-+	/* Reset mem info to defaults */
-+	xdp_rxq->mem.id = 0;
-+	xdp_rxq->mem.type = 0;
+ 		/*
+ 		 * Cannot change, child events are not migrated, see the
+@@ -5168,11 +5169,23 @@ int perf_event_release_kernel(struct perf_event *event)
+ 			 * this can't be the last reference.
+ 			 */
+ 			put_event(event);
++		} else {
++			var = &ctx->refcount;
+ 		}
+ 
+ 		mutex_unlock(&event->child_mutex);
+ 		mutex_unlock(&ctx->mutex);
+ 		put_ctx(ctx);
 +
- 	if (xdp_rxq->reg_state != REG_STATE_REGISTERED) {
- 		WARN(1, "Missing register, driver bug");
- 		return;
-@@ -123,7 +128,7 @@ void xdp_rxq_info_unreg_mem_model(struct xdp_rxq_info *xdp_rxq)
- 	if (id == 0)
- 		return;
- 
--	if (xdp_rxq->mem.type == MEM_TYPE_PAGE_POOL) {
-+	if (type == MEM_TYPE_PAGE_POOL) {
- 		rcu_read_lock();
- 		xa = rhashtable_lookup(mem_id_ht, &id, mem_id_rht_params);
- 		page_pool_destroy(xa->page_pool);
-@@ -144,10 +149,6 @@ void xdp_rxq_info_unreg(struct xdp_rxq_info *xdp_rxq)
- 
- 	xdp_rxq->reg_state = REG_STATE_UNREGISTERED;
- 	xdp_rxq->dev = NULL;
--
--	/* Reset mem info to defaults */
--	xdp_rxq->mem.id = 0;
--	xdp_rxq->mem.type = 0;
- }
- EXPORT_SYMBOL_GPL(xdp_rxq_info_unreg);
- 
++		if (var) {
++			/*
++			 * If perf_event_free_task() has deleted all events from the
++			 * ctx while the child_mutex got released above, make sure to
++			 * notify about the preceding put_ctx().
++			 */
++			smp_mb(); /* pairs with wait_var_event() */
++			wake_up_var(var);
++		}
+ 		goto again;
+ 	}
+ 	mutex_unlock(&event->child_mutex);
 -- 
 2.43.0
 
