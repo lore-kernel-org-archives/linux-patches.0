@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FFB61891D3;
-	Wed,  3 Jul 2024 11:23:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E642175549;
+	Wed,  3 Jul 2024 11:23:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005826; cv=none; b=rO9p5WbrTFkjWwmGhV3AUstGgQnBnGJeI2tfmGe0HJXylmsKW8fNDn9s0QJTpIH/jwTn3AEXWNSWaFSUgdvQvaIx9gEV/mi4Znkiw1z96ZOxfYQ9GsV+57omA6pkHynVjKq2ZhrJfNzr8yU9dAuUboQapiIx0SoNT44dzTNyIM8=
+	t=1720005829; cv=none; b=Zx6A2l28kQTQ+HSbTn2XMTjDT6plUgfBcfr7OpHWwrSicTM5Nxlea3RbrlH6fAe7NPH+sGa2mIIklIlJIVQWr+cG0cF+UU7N+/X/+pktT4OR4NePwQPRWcphz14nKcrAWBwjBLaSRLUa8sprZYk+EiPdo/iNTQYnvcL4bzGj1PU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005826; c=relaxed/simple;
-	bh=AATsDLmpQocXyKr28EU40Pvy+vXNUXFFpyeqeoyjqoY=;
+	s=arc-20240116; t=1720005829; c=relaxed/simple;
+	bh=QyHuENaLevlI3geqUvQYy3p/SQ9hiV9+vgO7ey2CtHY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dnmEc9QTj4sF5hodiehkJZwJaJZJ5O46oth6LajvOLC5FXzU3AgNg60DmSBg9+uod1A33kzrEZZsMlT/R1NJ13PFx/IaI09uO06ApxRQXez7FuRMW1OSR2L8KcYdf8XRFM1FiQHSQVXLmMxFmndweLrpKTrYGOWauh1dY0cI9n4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FtDIGHpg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aYeBsHeIKU7JVRxhYR/Exh2a8nBkT4YTAIaFRx3cICy+oJ37dg9xZD1wHSGmbqqZWqb23Zb52NC+ZcmeLtaLWoADkBxYyzll4PoJEwBML12hC9IOdx26UwzDgLtIDcNFqDEsYTTkoR8pGt7kkUnzFSo/usaWcwQ3tK4+It2GrTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P7GB9h20; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FtDIGHpg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AD0DC2BD10;
-	Wed,  3 Jul 2024 11:23:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P7GB9h20"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE61BC2BD10;
+	Wed,  3 Jul 2024 11:23:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005826;
-	bh=AATsDLmpQocXyKr28EU40Pvy+vXNUXFFpyeqeoyjqoY=;
+	s=korg; t=1720005829;
+	bh=QyHuENaLevlI3geqUvQYy3p/SQ9hiV9+vgO7ey2CtHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FtDIGHpgwm3/Bd7ayQkvK6nrukLocTsRNSsjgggMAnbY35LYiMJN3B98ueCn9U2SH
-	 CCRmHitFl17rPg4AlF/dG+mHPyAO7Xb5pZ0O3RK3+0/WqekbBHI3Ql53mlushX+e2V
-	 SskWMfQ1v4R/KGJ9IAkQX553/Lpwx4BlJ6GROngs=
+	b=P7GB9h20rNX+IrPdvXQ9knVRO16OJZgyyFX/5mOVtA8Q2ocXSftYTissnQYz/P8Mq
+	 NfM8inQJgPOxA7p6tKQ7EAYOkkVEkmJta6wehdGc5FZMeRLNpucJUtBpezIoGKug5v
+	 /FNCsyd150esh8VTuLQ1e4G9hot+ZZXNGxJIYWxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qing Wang <wangqing@vivo.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 208/356] dmaengine: ioat: switch from pci_ to dma_ API
-Date: Wed,  3 Jul 2024 12:39:04 +0200
-Message-ID: <20240703102920.976632978@linuxfoundation.org>
+Subject: [PATCH 5.15 209/356] dmaengine: ioat: Drop redundant pci_enable_pcie_error_reporting()
+Date: Wed,  3 Jul 2024 12:39:05 +0200
+Message-ID: <20240703102921.013565914@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,46 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qing Wang <wangqing@vivo.com>
+From: Bjorn Helgaas <bhelgaas@google.com>
 
-[ Upstream commit 0c5afef7bf1fbda7e7883dc4b93f64f90003706f ]
+[ Upstream commit e32622f84ae289dc7a04e9f01cd62cb914fdc5c6 ]
 
-The wrappers in include/linux/pci-dma-compat.h should go away.
+pci_enable_pcie_error_reporting() enables the device to send ERR_*
+Messages.  Since f26e58bf6f54 ("PCI/AER: Enable error reporting when AER is
+native"), the PCI core does this for all devices during enumeration, so the
+driver doesn't need to do it itself.
 
-pci_set_dma_mask()/pci_set_consistent_dma_mask() should be
-replaced with dma_set_mask()/dma_set_coherent_mask(),
-and use dma_set_mask_and_coherent() for both.
+Remove the redundant pci_enable_pcie_error_reporting() call from the
+driver.  Also remove the corresponding pci_disable_pcie_error_reporting()
+from the driver .remove() path.
 
-Signed-off-by: Qing Wang <wangqing@vivo.com>
-Link: https://lore.kernel.org/r/1633663733-47199-3-git-send-email-wangqing@vivo.com
+Note that this only controls ERR_* Messages from the device.  An ERR_*
+Message may cause the Root Port to generate an interrupt, depending on the
+AER Root Error Command register managed by the AER service driver.
+
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/r/20230307192655.874008-2-helgaas@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Stable-dep-of: 1b11b4ef6bd6 ("dmaengine: ioatdma: Fix leaking on version mismatch")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ioat/init.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ drivers/dma/ioat/init.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
 diff --git a/drivers/dma/ioat/init.c b/drivers/dma/ioat/init.c
-index 191b592790073..373b8dac6c9ba 100644
+index 373b8dac6c9ba..783d4e740f115 100644
 --- a/drivers/dma/ioat/init.c
 +++ b/drivers/dma/ioat/init.c
-@@ -1363,15 +1363,9 @@ static int ioat_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	if (!iomap)
- 		return -ENOMEM;
- 
--	err = pci_set_dma_mask(pdev, DMA_BIT_MASK(64));
-+	err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64));
- 	if (err)
--		err = pci_set_dma_mask(pdev, DMA_BIT_MASK(32));
--	if (err)
--		return err;
+@@ -15,7 +15,6 @@
+ #include <linux/workqueue.h>
+ #include <linux/prefetch.h>
+ #include <linux/dca.h>
+-#include <linux/aer.h>
+ #include <linux/sizes.h>
+ #include "dma.h"
+ #include "registers.h"
+@@ -1382,15 +1381,11 @@ static int ioat_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 		if (is_skx_ioat(pdev))
+ 			device->version = IOAT_VER_3_2;
+ 		err = ioat3_dma_probe(device, ioat_dca_enabled);
 -
--	err = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(64));
--	if (err)
--		err = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(32));
-+		err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
- 	if (err)
- 		return err;
+-		if (device->version >= IOAT_VER_3_3)
+-			pci_enable_pcie_error_reporting(pdev);
+ 	} else
+ 		return -ENODEV;
+ 
+ 	if (err) {
+ 		dev_err(dev, "Intel(R) I/OAT DMA Engine init failed\n");
+-		pci_disable_pcie_error_reporting(pdev);
+ 		return -ENODEV;
+ 	}
+ 
+@@ -1413,7 +1408,6 @@ static void ioat_remove(struct pci_dev *pdev)
+ 		device->dca = NULL;
+ 	}
+ 
+-	pci_disable_pcie_error_reporting(pdev);
+ 	ioat_dma_remove(device);
+ }
  
 -- 
 2.43.0
