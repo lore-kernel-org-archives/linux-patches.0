@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FDFF13BC0B;
-	Wed,  3 Jul 2024 11:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741D913BC0B;
+	Wed,  3 Jul 2024 11:01:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004471; cv=none; b=lFU7NVSvdhJxvuj5NLMo+nqMr86zlI896+KHGNejLgC9xDd7Q/vd3+tmMiVYTk3/+pobUeRGqYcjwx+kekUMNut5jDmH5t4AzFfqrUaLOKpgaBGJQR2YEz9uNargvvDW6yTsnJHtfZl/VFl0ZnHW/LLFxUimBwReva7PeRZ5Y/k=
+	t=1720004474; cv=none; b=t8KnO0qVYLFRjgDRvJzbtY0dkK+o6waMepxLjhw/skD2uF7KTN8QsmSAjsv5TMsoJ5gaeOFexNd7tzrDUlKpFlBQSPbxAZV5wU9VULohW6ynKQ1t06Knp9w7X0GMVtEfxGdlw+8YA6ssqTPJZOZ69vEpiPIVUw5BJUQ1YzxE0pY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004471; c=relaxed/simple;
-	bh=ZQiKqOCuaXAdsFl86xdoms0vneRYWvtJSct4otIK8fs=;
+	s=arc-20240116; t=1720004474; c=relaxed/simple;
+	bh=Gky4cAErB8Q8OqWvhzoyITOpcyp7NsWNxN8HcWglb+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oLxivFzhXQTRdmaJqP3mYPxZFifT1nxlyZlopxtaxt0LWe+UMPRUzoElMBVhl29Kt5aHod0U31mjjyo8JrtYK3QPLE2YcUrWZI8NtoR4BDNwYLOSdC1nlaYFs+ztBx8gP1QV7RgRGsxnyljdTPtVo3BpXTXa0APqjl8Z4Hidacc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a+pS4eCw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LeVg1ejTE37APrzntYuRqVnNJZFmPjuI1iUmLSVDPYs71jRY9FbHWyy6h9KECsDMUNUGgJAxYTYa1ySsHpM52EiMtr56Sxp0oxBk1XH/zyb3vZ8YfB9JzWIXnkQtcoi9L59b43mc9G0Qy2//54rdnBhKNgGrCSI8UbNXSAB/0vU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FqyrLWuk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a+pS4eCw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA851C32781;
-	Wed,  3 Jul 2024 11:01:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FqyrLWuk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3FD4C2BD10;
+	Wed,  3 Jul 2024 11:01:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004471;
-	bh=ZQiKqOCuaXAdsFl86xdoms0vneRYWvtJSct4otIK8fs=;
+	s=korg; t=1720004474;
+	bh=Gky4cAErB8Q8OqWvhzoyITOpcyp7NsWNxN8HcWglb+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a+pS4eCwS5NXlLKqNM63/7BLzUwz7WR2f6D7gYg/BDTnOjudLR/u1sGe7HkKsEcia
-	 2BDlu4pjeLEnnRm1C6p0vyyQ02nYz/oWdVbJnUoMfHKUXYiCzKi/3mR6/W4YM9rTwZ
-	 NY2iBgvVncNc/lJGR5UNI9FQWffqAGzlAWppg6Ro=
+	b=FqyrLWukMDizoKkT+/DkKcpWZ7rRjqr1VoVzep+BL3DiFnmWoWD5xpAhlsEYpO1lX
+	 6HV9m3BiwKfInJt0rc3J0NqWvokPPkL+sr9RsEvwjjmrOZX2HSxkOHNrl9elWfiqcP
+	 l1qWt2ebFaiJdYi2UcNcLn1BDXmvOucDRGnILcMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kewen Lin <linkw@gcc.gnu.org>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 5.10 051/290] powerpc/uaccess: Fix build errors seen with GCC 13/14
-Date: Wed,  3 Jul 2024 12:37:12 +0200
-Message-ID: <20240703102906.129644927@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 022/290] af_unix: Annotate data-races around sk->sk_state in sendmsg() and recvmsg().
+Date: Wed,  3 Jul 2024 12:36:43 +0200
+Message-ID: <20240703102905.029422366@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -50,86 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit 2d43cc701b96f910f50915ac4c2a0cae5deb734c upstream.
+[ Upstream commit 8a34d4e8d9742a24f74998f45a6a98edd923319b ]
 
-Building ppc64le_defconfig with GCC 14 fails with assembler errors:
+The following functions read sk->sk_state locklessly and proceed only if
+the state is TCP_ESTABLISHED.
 
-    CC      fs/readdir.o
-  /tmp/ccdQn0mD.s: Assembler messages:
-  /tmp/ccdQn0mD.s:212: Error: operand out of domain (18 is not a multiple of 4)
-  /tmp/ccdQn0mD.s:226: Error: operand out of domain (18 is not a multiple of 4)
-  ... [6 lines]
-  /tmp/ccdQn0mD.s:1699: Error: operand out of domain (18 is not a multiple of 4)
+  * unix_stream_sendmsg
+  * unix_stream_read_generic
+  * unix_seqpacket_sendmsg
+  * unix_seqpacket_recvmsg
 
-A snippet of the asm shows:
+Let's use READ_ONCE() there.
 
-  # ../fs/readdir.c:210:         unsafe_copy_dirent_name(dirent->d_name, name, namlen, efault_end);
-         ld 9,0(29)       # MEM[(u64 *)name_38(D) + _88 * 1], MEM[(u64 *)name_38(D) + _88 * 1]
-  # 210 "../fs/readdir.c" 1
-         1:      std 9,18(8)     # put_user       # *__pus_addr_52, MEM[(u64 *)name_38(D) + _88 * 1]
-
-The 'std' instruction requires a 4-byte aligned displacement because
-it is a DS-form instruction, and as the assembler says, 18 is not a
-multiple of 4.
-
-A similar error is seen with GCC 13 and CONFIG_UBSAN_SIGNED_WRAP=y.
-
-The fix is to change the constraint on the memory operand to put_user(),
-from "m" which is a general memory reference to "YZ".
-
-The "Z" constraint is documented in the GCC manual PowerPC machine
-constraints, and specifies a "memory operand accessed with indexed or
-indirect addressing". "Y" is not documented in the manual but specifies
-a "memory operand for a DS-form instruction". Using both allows the
-compiler to generate a DS-form "std" or X-form "stdx" as appropriate.
-
-The change has to be conditional on CONFIG_PPC_KERNEL_PREFIXED because
-the "Y" constraint does not guarantee 4-byte alignment when prefixed
-instructions are enabled.
-
-Unfortunately clang doesn't support the "Y" constraint so that has to be
-behind an ifdef.
-
-Although the build error is only seen with GCC 13/14, that appears
-to just be luck. The constraint has been incorrect since it was first
-added.
-
-Fixes: c20beffeec3c ("powerpc/uaccess: Use flexible addressing with __put_user()/__get_user()")
-Cc: stable@vger.kernel.org # v5.10+
-Suggested-by: Kewen Lin <linkw@gcc.gnu.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240529123029.146953-1-mpe@ellerman.id.au
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a05d2ad1c1f3 ("af_unix: Only allow recv on connected seqpacket sockets.")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/uaccess.h |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ net/unix/af_unix.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/arch/powerpc/include/asm/uaccess.h
-+++ b/arch/powerpc/include/asm/uaccess.h
-@@ -186,9 +186,20 @@ do {								\
- 		:						\
- 		: label)
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 33dd6ed8de25d..2456170c9ddc4 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -1909,7 +1909,7 @@ static int unix_stream_sendmsg(struct socket *sock, struct msghdr *msg,
+ 		goto out_err;
  
-+#ifdef CONFIG_CC_IS_CLANG
-+#define DS_FORM_CONSTRAINT "Z<>"
-+#else
-+#define DS_FORM_CONSTRAINT "YZ<>"
-+#endif
-+
- #ifdef __powerpc64__
--#define __put_user_asm2_goto(x, ptr, label)			\
--	__put_user_asm_goto(x, ptr, label, "std")
-+#define __put_user_asm2_goto(x, addr, label)			\
-+	asm goto ("1: std%U1%X1 %0,%1	# put_user\n"		\
-+		EX_TABLE(1b, %l2)				\
-+		:						\
-+		: "r" (x), DS_FORM_CONSTRAINT (*addr)		\
-+		:						\
-+		: label)
- #else /* __powerpc64__ */
- #define __put_user_asm2_goto(x, addr, label)			\
- 	asm_volatile_goto(					\
+ 	if (msg->msg_namelen) {
+-		err = sk->sk_state == TCP_ESTABLISHED ? -EISCONN : -EOPNOTSUPP;
++		err = READ_ONCE(sk->sk_state) == TCP_ESTABLISHED ? -EISCONN : -EOPNOTSUPP;
+ 		goto out_err;
+ 	} else {
+ 		err = -ENOTCONN;
+@@ -2112,7 +2112,7 @@ static int unix_seqpacket_sendmsg(struct socket *sock, struct msghdr *msg,
+ 	if (err)
+ 		return err;
+ 
+-	if (sk->sk_state != TCP_ESTABLISHED)
++	if (READ_ONCE(sk->sk_state) != TCP_ESTABLISHED)
+ 		return -ENOTCONN;
+ 
+ 	if (msg->msg_namelen)
+@@ -2126,7 +2126,7 @@ static int unix_seqpacket_recvmsg(struct socket *sock, struct msghdr *msg,
+ {
+ 	struct sock *sk = sock->sk;
+ 
+-	if (sk->sk_state != TCP_ESTABLISHED)
++	if (READ_ONCE(sk->sk_state) != TCP_ESTABLISHED)
+ 		return -ENOTCONN;
+ 
+ 	return unix_dgram_recvmsg(sock, msg, size, flags);
+@@ -2326,7 +2326,7 @@ static int unix_stream_read_generic(struct unix_stream_read_state *state,
+ 	size_t size = state->size;
+ 	unsigned int last_len;
+ 
+-	if (unlikely(sk->sk_state != TCP_ESTABLISHED)) {
++	if (unlikely(READ_ONCE(sk->sk_state) != TCP_ESTABLISHED)) {
+ 		err = -EINVAL;
+ 		goto out;
+ 	}
+-- 
+2.43.0
+
 
 
