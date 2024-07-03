@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CFBF181BAE;
-	Wed,  3 Jul 2024 11:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4E3181CE6;
+	Wed,  3 Jul 2024 11:06:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004786; cv=none; b=AzvKGkvt7MFKyhmIaIg7HH73v8u0O6EvjWEj7QU5+fbv3f3llvQ+f+Dd7XNSUg5bT+Zh+I5Hdz2LOzJzPRVi/GlEKgqjDV5veCQbpJ2v3j26so6T4oxBU6gqzF6Z4Hz+WPYmopljgcquRDnTroXUFG6OlqZ4PPms6amHl/+apjY=
+	t=1720004789; cv=none; b=TB7MMfxzIy/lHWOVmrfMRWlOd4GBsctgMGL+l5oCcEfsWkDz7OcOHQAuWGOVYppsU9VM/IU5GG5Q41ZUX5GsYO0Uvl/GgD/oiwboKloeVVIEQazn29IasP8gVGpBpHCVDNRgaF5UO5srLbvfOc2YnOZqZEhhDzRZ+gvXwEuz+Pc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004786; c=relaxed/simple;
-	bh=DHNSAV+2Fs5PYlOMJhC7zectC3ggM2ZgJU5C6LGCqzY=;
+	s=arc-20240116; t=1720004789; c=relaxed/simple;
+	bh=yB7t6Kyez1TolSsLI2gltSdVPCk9d1uxVmt3Gq5Qz2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DasObj73IRUSUxGYqweM5SUP5yQCq4d4P2R8ed9Latp7YvnLnfxRxjibDs6Ta63m9bwzSqgM1eEGhmjEifkWonU/oYywwRZBXA1rFvBKkzFl/p1QvK2/UOKVXRomWqxM+YQymfcOkxQgrHUVb6/EyJdkNzGChTHFZL5H+Gblmgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ehgJD15J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LCSpQRtE6ySSqr7lb1+c1lG+T4TnUsNT/GjyGZ4CVvlYOIhfFL0mvbdOTVgoIZ9xIf8lvjbHz2i/CQmDkB/9Pj1SPD1MD/mXpRXrQKLIXzxfPlWWGiceprUjB2o8wxmOWI9qRVu2T/LL5ownYt6YsTD/57kw3ePVSzEIVusnjjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=neK+kD9N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ehgJD15J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6B09C2BD10;
-	Wed,  3 Jul 2024 11:06:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="neK+kD9N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D528EC32781;
+	Wed,  3 Jul 2024 11:06:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004786;
-	bh=DHNSAV+2Fs5PYlOMJhC7zectC3ggM2ZgJU5C6LGCqzY=;
+	s=korg; t=1720004789;
+	bh=yB7t6Kyez1TolSsLI2gltSdVPCk9d1uxVmt3Gq5Qz2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ehgJD15Jvsb6ZJccpLBVv2q/YmLx55ez7toLS7vgPuM93mwG0nY9UhoEugTOP8wnf
-	 fVI/cJ6lHvYU3RfY1tU88xbR9IZfSfTmyDONGhO7Z6er1XTgCKQQx6RBwlJe3An703
-	 YE8QeO5gFUZWwWwRGmqwMtf6TWibn7fJmXPphCFg=
+	b=neK+kD9NwKVpYyl3CSg6r/m79geGFvRa/eaQydGYKu80FUL2rZwrwHTlkoHXzs5gr
+	 wM5D0ETg4GYYa8Uhev++qZmvLuqkcIY5KxJFTlRp2tHgVUkpU08JSDgnvekhSUexfh
+	 vqZ44J5E9bU/ulEZM4M9Gd4t6+4jAGdJ1zy19skg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benson Leung <bleung@chromium.org>,
-	Prashant Malani <pmalani@chromium.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Aleksandr Aprelkov <aaprelkov@usergate.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 127/290] power: supply: cros_usbpd: provide ID table for avoiding fallback match
-Date: Wed,  3 Jul 2024 12:38:28 +0200
-Message-ID: <20240703102908.984549387@linuxfoundation.org>
+Subject: [PATCH 5.10 128/290] iommu/arm-smmu-v3: Free MSIs in case of ENOMEM
+Date: Wed,  3 Jul 2024 12:38:29 +0200
+Message-ID: <20240703102909.021653701@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -54,63 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Aleksandr Aprelkov <aaprelkov@usergate.com>
 
-[ Upstream commit 0f8678c34cbfdc63569a9b0ede1fe235ec6ec693 ]
+[ Upstream commit 80fea979dd9d48d67c5b48d2f690c5da3e543ebd ]
 
-Instead of using fallback driver name match, provide ID table[1] for the
-primary match.
+If devm_add_action() returns -ENOMEM, then MSIs are allocated but not
+not freed on teardown. Use devm_add_action_or_reset() instead to keep
+the static analyser happy.
 
-[1]: https://elixir.bootlin.com/linux/v6.8/source/drivers/base/platform.c#L1353
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Reviewed-by: Prashant Malani <pmalani@chromium.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://lore.kernel.org/r/20240401030052.2887845-4-tzungbi@kernel.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Aleksandr Aprelkov <aaprelkov@usergate.com>
+Link: https://lore.kernel.org/r/20240403053759.643164-1-aaprelkov@usergate.com
+[will: Tweak commit message, remove warning message]
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/cros_usbpd-charger.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/cros_usbpd-charger.c b/drivers/power/supply/cros_usbpd-charger.c
-index 0a4f02e4ae7ba..d7ee1eb9ca880 100644
---- a/drivers/power/supply/cros_usbpd-charger.c
-+++ b/drivers/power/supply/cros_usbpd-charger.c
-@@ -5,6 +5,7 @@
-  * Copyright (c) 2014 - 2018 Google, Inc
-  */
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index 982c42c873102..9ac7b37290eb0 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -2925,7 +2925,7 @@ static void arm_smmu_setup_msis(struct arm_smmu_device *smmu)
+ 	}
  
-+#include <linux/mod_devicetable.h>
- #include <linux/module.h>
- #include <linux/platform_data/cros_ec_commands.h>
- #include <linux/platform_data/cros_ec_proto.h>
-@@ -711,16 +712,22 @@ static int cros_usbpd_charger_resume(struct device *dev)
- static SIMPLE_DEV_PM_OPS(cros_usbpd_charger_pm_ops, NULL,
- 			 cros_usbpd_charger_resume);
+ 	/* Add callback to free MSIs on teardown */
+-	devm_add_action(dev, arm_smmu_free_msis, dev);
++	devm_add_action_or_reset(dev, arm_smmu_free_msis, dev);
+ }
  
-+static const struct platform_device_id cros_usbpd_charger_id[] = {
-+	{ DRV_NAME, 0 },
-+	{}
-+};
-+MODULE_DEVICE_TABLE(platform, cros_usbpd_charger_id);
-+
- static struct platform_driver cros_usbpd_charger_driver = {
- 	.driver = {
- 		.name = DRV_NAME,
- 		.pm = &cros_usbpd_charger_pm_ops,
- 	},
--	.probe = cros_usbpd_charger_probe
-+	.probe = cros_usbpd_charger_probe,
-+	.id_table = cros_usbpd_charger_id,
- };
- 
- module_platform_driver(cros_usbpd_charger_driver);
- 
- MODULE_LICENSE("GPL");
- MODULE_DESCRIPTION("ChromeOS EC USBPD charger");
--MODULE_ALIAS("platform:" DRV_NAME);
+ static void arm_smmu_setup_unique_irqs(struct arm_smmu_device *smmu)
 -- 
 2.43.0
 
