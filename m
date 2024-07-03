@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD5A21990C0;
-	Wed,  3 Jul 2024 10:47:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DBE318EFD6;
+	Wed,  3 Jul 2024 10:47:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003677; cv=none; b=Xkued3HVp+H4AZBqxfbbdJvXaAio8Bt5nTpw6GEnPIP8g/40ATfjyM/pvIxLcTNy1YlcB7oJ18bX3NLjr1W5/Lh6SEoGcZbJyxitL6gt8bC8u7UtjE+y1aaNcWfxX1e9CAY/52qbA6bbtqEHX7N7qN1YhAgRcTDLmEVP6R++5TU=
+	t=1720003680; cv=none; b=ZRBg0mQqi29Ymy+voNBGXN/CP9BKC7gqzZbiWTFZWVosQZ9VmPtSbn2fPjNxPQW5Uq3k+k6sTEOaAzzebEXPmL8N7dbYY2deTzM53Go/DLml+tSotAiG5XqdXs83pPpzJujh7YjoogT5vVyoM41MG9yvw1RRMYBsSwaM93pd0Bo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003677; c=relaxed/simple;
-	bh=1aRS70xYiQXbfS6bv0hST/WOaD6Q1dp6Efo+g4g3moM=;
+	s=arc-20240116; t=1720003680; c=relaxed/simple;
+	bh=fHxEcQq4okh4sLJie27rwAU0lBCEj+NKr9UVNP1xYG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=folhtHMuWBiNutsUxe4cb/wSMS7u4yrsRhGlX4VJbpVmFa8eEFAuKH/vgF3qaDViCGu9nOgWU5YUlKoskfrWmGmTugXtyU1lkaILPsDg20fWUpWQy62KMHsGjH8kVsCkY9dcDBV1yTGA7Eg66xm9tHQvDxXWsr8HjLAyTtwOytA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nj4vsIgh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qvrqxhzZEeDSix5OM0FfQ+su5XbQXQ92orj1LGJfQDwgHv/Dr1wqIkV9N42k1aN2HY4e4VRKxr8JmvTbv5mVwRuvA4EolU4yFNwXTtfjrveW8j7wNH/5wRVMA4rJ8OtlHBzL6JU2XfZf07kVKfzxXWZNfZr8DxnX8FqF+VYH6go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IRNVEKTF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nj4vsIgh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5616AC2BD10;
-	Wed,  3 Jul 2024 10:47:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IRNVEKTF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59863C2BD10;
+	Wed,  3 Jul 2024 10:47:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003676;
-	bh=1aRS70xYiQXbfS6bv0hST/WOaD6Q1dp6Efo+g4g3moM=;
+	s=korg; t=1720003679;
+	bh=fHxEcQq4okh4sLJie27rwAU0lBCEj+NKr9UVNP1xYG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nj4vsIghyHsoZHY3PVOZiBlRDV4+RS7x8mfJsKoHTKVqbB6SR2w+ytnwYOCXEZk/K
-	 109mJWfLGnyB8663rn2bAp+da/iN6eHWjgNTeOx4hXJuW+PJOhf7wVXZh0o14QPjzT
-	 JxyDT7iuikVHxVYdB0Cr51Exo3T67XHWQgUeUNxE=
+	b=IRNVEKTFjVQHPu1jEGr9shyczMf0vp7YuD890kVv+V9B44OPvUikXvMo8npnve7r8
+	 eXtTWGejuXea1SGWGMlRnPITwsIyqQxsJk7phKmlvtwv3rBtZCR3RUx4ZheFNGq7wY
+	 uyBJvv0MJOgk4cHvHzRQNuEnV8tPCublJPyPWRZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keith Busch <kbusch@kernel.org>,
-	Breno Leitao <leitao@debian.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 095/139] scsi: mpt3sas: Avoid test/set_bit() operating in non-allocated memory
-Date: Wed,  3 Jul 2024 12:39:52 +0200
-Message-ID: <20240703102834.027330689@linuxfoundation.org>
+Subject: [PATCH 4.19 096/139] xhci: Use soft retry to recover faster from transaction errors
+Date: Wed,  3 Jul 2024 12:39:53 +0200
+Message-ID: <20240703102834.065083791@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -52,83 +50,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit 4254dfeda82f20844299dca6c38cbffcfd499f41 ]
+[ Upstream commit f8f80be501aa2f10669585c3e328fad079d8cb3a ]
 
-There is a potential out-of-bounds access when using test_bit() on a single
-word. The test_bit() and set_bit() functions operate on long values, and
-when testing or setting a single word, they can exceed the word
-boundary. KASAN detects this issue and produces a dump:
+Use soft retry to recover from a USB Transaction Errors that are caused by
+temporary error conditions. The USB device is not aware that the xHC
+has halted the endpoint, and will be waiting for another retry
 
-	 BUG: KASAN: slab-out-of-bounds in _scsih_add_device.constprop.0 (./arch/x86/include/asm/bitops.h:60 ./include/asm-generic/bitops/instrumented-atomic.h:29 drivers/scsi/mpt3sas/mpt3sas_scsih.c:7331) mpt3sas
+A Soft Retry perform additional retries and recover from an error which has
+caused the xHC to halt an endpoint.
 
-	 Write of size 8 at addr ffff8881d26e3c60 by task kworker/u1536:2/2965
+Soft retry has some limitations:
+Soft Retry attempts shall not be performed on Isoch endpoints
+Soft Retry attempts shall not be performed if the device is behind a TT in
+a HS Hub
 
-For full log, please look at [1].
+Software shall limit the number of unsuccessful Soft Retry attempts to
+prevent an infinite loop.
 
-Make the allocation at least the size of sizeof(unsigned long) so that
-set_bit() and test_bit() have sufficient room for read/write operations
-without overwriting unallocated memory.
+For more details on Soft retry see xhci specs  4.6.8.1
 
-[1] Link: https://lore.kernel.org/all/ZkNcALr3W3KGYYJG@gmail.com/
-
-Fixes: c696f7b83ede ("scsi: mpt3sas: Implement device_remove_in_progress check in IOCTL path")
-Cc: stable@vger.kernel.org
-Suggested-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Link: https://lore.kernel.org/r/20240605085530.499432-1-leitao@debian.org
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: f0260589b439 ("xhci: Set correct transferred length for cancelled bulk transfers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpt3sas/mpt3sas_base.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/usb/host/xhci-ring.c | 19 +++++++++++++++++++
+ drivers/usb/host/xhci.h      |  2 ++
+ 2 files changed, 21 insertions(+)
 
-diff --git a/drivers/scsi/mpt3sas/mpt3sas_base.c b/drivers/scsi/mpt3sas/mpt3sas_base.c
-index 54faddb637c46..b4495023edb71 100644
---- a/drivers/scsi/mpt3sas/mpt3sas_base.c
-+++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
-@@ -6612,6 +6612,12 @@ mpt3sas_base_attach(struct MPT3SAS_ADAPTER *ioc)
- 	ioc->pd_handles_sz = (ioc->facts.MaxDevHandle / 8);
- 	if (ioc->facts.MaxDevHandle % 8)
- 		ioc->pd_handles_sz++;
-+	/*
-+	 * pd_handles_sz should have, at least, the minimal room for
-+	 * set_bit()/test_bit(), otherwise out-of-memory touch may occur.
-+	 */
-+	ioc->pd_handles_sz = ALIGN(ioc->pd_handles_sz, sizeof(unsigned long));
+diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
+index 8723c7f1c24fe..614fb89ddef61 100644
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -1213,6 +1213,10 @@ static void xhci_handle_cmd_reset_ep(struct xhci_hcd *xhci, int slot_id,
+ 		/* Clear our internal halted state */
+ 		ep->ep_state &= ~EP_HALTED;
+ 	}
 +
- 	ioc->pd_handles = kzalloc(ioc->pd_handles_sz,
- 	    GFP_KERNEL);
- 	if (!ioc->pd_handles) {
-@@ -6629,6 +6635,13 @@ mpt3sas_base_attach(struct MPT3SAS_ADAPTER *ioc)
- 	ioc->pend_os_device_add_sz = (ioc->facts.MaxDevHandle / 8);
- 	if (ioc->facts.MaxDevHandle % 8)
- 		ioc->pend_os_device_add_sz++;
-+
-+	/*
-+	 * pend_os_device_add_sz should have, at least, the minimal room for
-+	 * set_bit()/test_bit(), otherwise out-of-memory may occur.
-+	 */
-+	ioc->pend_os_device_add_sz = ALIGN(ioc->pend_os_device_add_sz,
-+					   sizeof(unsigned long));
- 	ioc->pend_os_device_add = kzalloc(ioc->pend_os_device_add_sz,
- 	    GFP_KERNEL);
- 	if (!ioc->pend_os_device_add) {
-@@ -6911,6 +6924,12 @@ _base_check_ioc_facts_changes(struct MPT3SAS_ADAPTER *ioc)
- 		if (ioc->facts.MaxDevHandle % 8)
- 			pd_handles_sz++;
++	/* if this was a soft reset, then restart */
++	if ((le32_to_cpu(trb->generic.field[3])) & TRB_TSP)
++		ring_doorbell_for_active_rings(xhci, slot_id, ep_index);
+ }
  
-+		/*
-+		 * pd_handles should have, at least, the minimal room for
-+		 * set_bit()/test_bit(), otherwise out-of-memory touch may
-+		 * occur.
-+		 */
-+		pd_handles_sz = ALIGN(pd_handles_sz, sizeof(unsigned long));
- 		pd_handles = krealloc(ioc->pd_handles, pd_handles_sz,
- 		    GFP_KERNEL);
- 		if (!pd_handles) {
+ static void xhci_handle_cmd_enable_slot(struct xhci_hcd *xhci, int slot_id,
+@@ -2245,10 +2249,16 @@ static int process_bulk_intr_td(struct xhci_hcd *xhci, struct xhci_td *td,
+ 	union xhci_trb *ep_trb, struct xhci_transfer_event *event,
+ 	struct xhci_virt_ep *ep, int *status)
+ {
++	struct xhci_slot_ctx *slot_ctx;
+ 	struct xhci_ring *ep_ring;
+ 	u32 trb_comp_code;
+ 	u32 remaining, requested, ep_trb_len;
++	unsigned int slot_id;
++	int ep_index;
+ 
++	slot_id = TRB_TO_SLOT_ID(le32_to_cpu(event->flags));
++	slot_ctx = xhci_get_slot_ctx(xhci, xhci->devs[slot_id]->out_ctx);
++	ep_index = TRB_TO_EP_ID(le32_to_cpu(event->flags)) - 1;
+ 	ep_ring = xhci_dma_to_transfer_ring(ep, le64_to_cpu(event->buffer));
+ 	trb_comp_code = GET_COMP_CODE(le32_to_cpu(event->transfer_len));
+ 	remaining = EVENT_TRB_LEN(le32_to_cpu(event->transfer_len));
+@@ -2257,6 +2267,7 @@ static int process_bulk_intr_td(struct xhci_hcd *xhci, struct xhci_td *td,
+ 
+ 	switch (trb_comp_code) {
+ 	case COMP_SUCCESS:
++		ep_ring->err_count = 0;
+ 		/* handle success with untransferred data as short packet */
+ 		if (ep_trb != td->last_trb || remaining) {
+ 			xhci_warn(xhci, "WARN Successful completion on short TX\n");
+@@ -2280,6 +2291,14 @@ static int process_bulk_intr_td(struct xhci_hcd *xhci, struct xhci_td *td,
+ 		ep_trb_len	= 0;
+ 		remaining	= 0;
+ 		break;
++	case COMP_USB_TRANSACTION_ERROR:
++		if ((ep_ring->err_count++ > MAX_SOFT_RETRY) ||
++		    le32_to_cpu(slot_ctx->tt_info) & TT_SLOT)
++			break;
++		*status = 0;
++		xhci_cleanup_halted_endpoint(xhci, slot_id, ep_index,
++					ep_ring->stream_id, td, EP_SOFT_RESET);
++		return 0;
+ 	default:
+ 		/* do nothing */
+ 		break;
+diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
+index f2bf3431cd6f4..cd5eb506ddd18 100644
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -1517,6 +1517,7 @@ static inline const char *xhci_trb_type_string(u8 type)
+ /* How much data is left before the 64KB boundary? */
+ #define TRB_BUFF_LEN_UP_TO_BOUNDARY(addr)	(TRB_MAX_BUFF_SIZE - \
+ 					(addr & (TRB_MAX_BUFF_SIZE - 1)))
++#define MAX_SOFT_RETRY		3
+ 
+ struct xhci_segment {
+ 	union xhci_trb		*trbs;
+@@ -1604,6 +1605,7 @@ struct xhci_ring {
+ 	 * if we own the TRB (if we are the consumer).  See section 4.9.1.
+ 	 */
+ 	u32			cycle_state;
++	unsigned int            err_count;
+ 	unsigned int		stream_id;
+ 	unsigned int		num_segs;
+ 	unsigned int		num_trbs_free;
 -- 
 2.43.0
 
