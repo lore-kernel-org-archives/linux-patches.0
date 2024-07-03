@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18536183079;
-	Wed,  3 Jul 2024 11:30:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0797418308C;
+	Wed,  3 Jul 2024 11:30:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006244; cv=none; b=pi4ivzHcdj6u7hoSRpP6tIiKSdtcB32OjINDVsrAs3TsZ60vlN+j6jgYYisliQMb2qePDvYgka8OxabY8yTWlbqZaj8pdniTIbt0rvmBc8rcZSXqVdKddb4K27hYdZSOqHWpFhzGSWoidWFRW5w2nvCOciFO2yUOCTRrrt/SyYU=
+	t=1720006247; cv=none; b=iFERctdwWk/+NDz+891lb5Zatq9acbJ2JrDzQIKAGT0ywGIkDvQyaT7EnDJ6TXHdO+K0Idq27+sikITJwaBPUTg++hxE4GE1jc186SpjpFbN3b2svYrgGcKbvTBGeyj7q0HRTnbJ8k/Go+thx1j62YwYJ93mDJpo4MfkH2poCZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006244; c=relaxed/simple;
-	bh=izql2Vlww/1/vuofIcshz4/EmlFUFh9MqT26x7Gyd48=;
+	s=arc-20240116; t=1720006247; c=relaxed/simple;
+	bh=+aQWIQftChmJdY6o6roHDIE1RweJphCDL0pUt3gEyDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j9P8ycE1VbRaDpakPAjxxxbLf+KGMgkg3+48RrZe4tT7Xp1HloVbENDvFRlee2HWeUNZNGCxctZATjXVcy5E5zcy4VFLmPrasvTf4Com9QbELKER9a8LOZJVeOs0MEcNBJpYefdyf39eIjRULPpDOLn31QBqBrUAsPSjcRuEq+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EOiSs2LE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OJvxXjZ3boZKhPj7K0LsHL/iOXMLeZOWYDTBa9QnvboKbTPkcpqCx+H4RWm21t1Hoi6wwLkxwdRvhwG1wbZn4EzLmZDSd403/wsvi5PWlirK9ADRgv1RG1+DTK7gENQ5VAg5RUzuw7pK4TLOY7xxbxSbe8mCi8plr3JdizL9ISM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=reA3tJuU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EOiSs2LE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EF34C2BD10;
-	Wed,  3 Jul 2024 11:30:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="reA3tJuU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B3AEC2BD10;
+	Wed,  3 Jul 2024 11:30:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006244;
-	bh=izql2Vlww/1/vuofIcshz4/EmlFUFh9MqT26x7Gyd48=;
+	s=korg; t=1720006246;
+	bh=+aQWIQftChmJdY6o6roHDIE1RweJphCDL0pUt3gEyDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EOiSs2LE7V6QKENvINkrqmqEsbvk5w+lVTcegUtQg26IWBsU4kb2MKtEvyPtYXPbD
-	 Tl1+cjSnMW35wMFBrAMl48PAjQTuR7woG5cGXNcXUpDxmWA78GJED7flKZkqxer33r
-	 SyNk5P4focx9cETq8ho6j8gcUviFcCqjJ4QSe1+w=
+	b=reA3tJuU9VkIvHRNUC22IlngmjCCtjr2/GbrUhRrmASiVOB+yql4MK/pd1mmKqfMa
+	 VS9n4OxWMCV6BCSI0PdfKvOxVqqKA1I+4EnFbQx2eeiBvyb+OCcwZLHShm30MWh88m
+	 lX/gy9oJ13kE0KJG+uevxM0yGsqczV2/49Frqars=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.15 317/356] usb: gadget: printer: SS+ support
-Date: Wed,  3 Jul 2024 12:40:53 +0200
-Message-ID: <20240703102925.109349170@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Oliver Neukum <oneukum@suse.com>
+Subject: [PATCH 5.15 318/356] usb: gadget: printer: fix races against disable
+Date: Wed,  3 Jul 2024 12:40:54 +0200
+Message-ID: <20240703102925.147718177@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -52,28 +52,138 @@ Content-Transfer-Encoding: 8bit
 
 From: Oliver Neukum <oneukum@suse.com>
 
-commit fd80731e5e9d1402cb2f85022a6abf9b1982ec5f upstream.
+commit e587a7633dfee8987a999cf253f7c52a8e09276c upstream.
 
-We need to treat super speed plus as super speed, not the default,
-which is full speed.
+printer_read() and printer_write() guard against the race
+against disable() by checking the dev->interface flag,
+which in turn is guarded by a spinlock.
+These functions, however, drop the lock on multiple occasions.
+This means that the test has to be redone after reacquiring
+the lock and before doing IO.
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Add the tests.
+
+This also addresses CVE-2024-25741
+
+Fixes: 7f2ca14d2f9b9 ("usb: gadget: function: printer: Interface is disabled and returns error")
 Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20240620093800.28901-1-oneukum@suse.com
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Link: https://lore.kernel.org/r/20240620114039.5767-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_printer.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/gadget/function/f_printer.c |   39 +++++++++++++++++++++++---------
+ 1 file changed, 29 insertions(+), 10 deletions(-)
 
 --- a/drivers/usb/gadget/function/f_printer.c
 +++ b/drivers/usb/gadget/function/f_printer.c
-@@ -210,6 +210,7 @@ static inline struct usb_endpoint_descri
- 					struct usb_endpoint_descriptor *ss)
- {
- 	switch (gadget->speed) {
-+	case USB_SPEED_SUPER_PLUS:
- 	case USB_SPEED_SUPER:
- 		return ss;
- 	case USB_SPEED_HIGH:
+@@ -448,11 +448,8 @@ printer_read(struct file *fd, char __use
+ 	mutex_lock(&dev->lock_printer_io);
+ 	spin_lock_irqsave(&dev->lock, flags);
+ 
+-	if (dev->interface < 0) {
+-		spin_unlock_irqrestore(&dev->lock, flags);
+-		mutex_unlock(&dev->lock_printer_io);
+-		return -ENODEV;
+-	}
++	if (dev->interface < 0)
++		goto out_disabled;
+ 
+ 	/* We will use this flag later to check if a printer reset happened
+ 	 * after we turn interrupts back on.
+@@ -460,6 +457,9 @@ printer_read(struct file *fd, char __use
+ 	dev->reset_printer = 0;
+ 
+ 	setup_rx_reqs(dev);
++	/* this dropped the lock - need to retest */
++	if (dev->interface < 0)
++		goto out_disabled;
+ 
+ 	bytes_copied = 0;
+ 	current_rx_req = dev->current_rx_req;
+@@ -493,6 +493,8 @@ printer_read(struct file *fd, char __use
+ 		wait_event_interruptible(dev->rx_wait,
+ 				(likely(!list_empty(&dev->rx_buffers))));
+ 		spin_lock_irqsave(&dev->lock, flags);
++		if (dev->interface < 0)
++			goto out_disabled;
+ 	}
+ 
+ 	/* We have data to return then copy it to the caller's buffer.*/
+@@ -536,6 +538,9 @@ printer_read(struct file *fd, char __use
+ 			return -EAGAIN;
+ 		}
+ 
++		if (dev->interface < 0)
++			goto out_disabled;
++
+ 		/* If we not returning all the data left in this RX request
+ 		 * buffer then adjust the amount of data left in the buffer.
+ 		 * Othewise if we are done with this RX request buffer then
+@@ -565,6 +570,11 @@ printer_read(struct file *fd, char __use
+ 		return bytes_copied;
+ 	else
+ 		return -EAGAIN;
++
++out_disabled:
++	spin_unlock_irqrestore(&dev->lock, flags);
++	mutex_unlock(&dev->lock_printer_io);
++	return -ENODEV;
+ }
+ 
+ static ssize_t
+@@ -585,11 +595,8 @@ printer_write(struct file *fd, const cha
+ 	mutex_lock(&dev->lock_printer_io);
+ 	spin_lock_irqsave(&dev->lock, flags);
+ 
+-	if (dev->interface < 0) {
+-		spin_unlock_irqrestore(&dev->lock, flags);
+-		mutex_unlock(&dev->lock_printer_io);
+-		return -ENODEV;
+-	}
++	if (dev->interface < 0)
++		goto out_disabled;
+ 
+ 	/* Check if a printer reset happens while we have interrupts on */
+ 	dev->reset_printer = 0;
+@@ -612,6 +619,8 @@ printer_write(struct file *fd, const cha
+ 		wait_event_interruptible(dev->tx_wait,
+ 				(likely(!list_empty(&dev->tx_reqs))));
+ 		spin_lock_irqsave(&dev->lock, flags);
++		if (dev->interface < 0)
++			goto out_disabled;
+ 	}
+ 
+ 	while (likely(!list_empty(&dev->tx_reqs)) && len) {
+@@ -661,6 +670,9 @@ printer_write(struct file *fd, const cha
+ 			return -EAGAIN;
+ 		}
+ 
++		if (dev->interface < 0)
++			goto out_disabled;
++
+ 		list_add(&req->list, &dev->tx_reqs_active);
+ 
+ 		/* here, we unlock, and only unlock, to avoid deadlock. */
+@@ -673,6 +685,8 @@ printer_write(struct file *fd, const cha
+ 			mutex_unlock(&dev->lock_printer_io);
+ 			return -EAGAIN;
+ 		}
++		if (dev->interface < 0)
++			goto out_disabled;
+ 	}
+ 
+ 	spin_unlock_irqrestore(&dev->lock, flags);
+@@ -684,6 +698,11 @@ printer_write(struct file *fd, const cha
+ 		return bytes_copied;
+ 	else
+ 		return -EAGAIN;
++
++out_disabled:
++	spin_unlock_irqrestore(&dev->lock, flags);
++	mutex_unlock(&dev->lock_printer_io);
++	return -ENODEV;
+ }
+ 
+ static int
 
 
