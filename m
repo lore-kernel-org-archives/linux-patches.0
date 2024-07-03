@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB155188CDA;
-	Wed,  3 Jul 2024 10:56:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A047A1891B6;
+	Wed,  3 Jul 2024 10:56:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004208; cv=none; b=dxsTboHm4U+x1ZNW0qc08mVR7+ZaH7JoQPwpnTMnRUZScOicIyusX8i6YiP85aJcxP69p+kUsuO50GCCgwkzsxjAuf+cTUFdmrH4Ett+4e1OVNMjng50032jVo9oMkUTg7T0FBCqYk366Qv8CbwdVauKcGlk5nal9nx7AU4BuXQ=
+	t=1720004212; cv=none; b=cL2BphI4VRLEsCLMsvDDEVYETFFU3jKC1ppgKN70NFgWANeE1yNpB+AxdgLypySqGYmyiwlx3bCWDRMTf6iOus4EmbzWKn04yuzP6XRPYYL2oFqohzyqb9qNI/2OcAi+SJO/4s5JWHrj778x7SONvCDjcl382AJfTrJZnPMMZ8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004208; c=relaxed/simple;
-	bh=cR4A/dKs8UeXWonsDHuo5zIp8GGCIuLHp+AuSJrlcDA=;
+	s=arc-20240116; t=1720004212; c=relaxed/simple;
+	bh=BT40q8tbXhOnyiwZYbj1JA38JOom66ZKpDltncle0kE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SfPCdH/h7+3jM9uMJptkVk8IAy4MNwnmOzIpWtSCgC7Iyd4RaezY0RdmRfeXKujxXSgdoCMebA4bSsc9A7CkjHELnZqYGdA43XnfplN2V9afB/hX7rP4TLJMOTSpsJIDBEaMRGHt1dJpSy1HiEB0d4BExsrvFUdj1tTrl4Y4C08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hu3X5yao; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p9gWJ1fbZEEy2z1PYIhSnh7nxOvViNRjhcKFLWEFCeuGnFqa5GXTV4CqTGYYAp3y222SVBvNl+mTNyImW9Fcz0Wh0arQU8ED9NcwUu7NFIbNaJhCTB1iirqDOXU1DxecYf8V6IFJy9ZrdXwIPWiA7GVvABawBcrgkvsriNrxvgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dIuxKgO+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hu3X5yao"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F868C2BD10;
-	Wed,  3 Jul 2024 10:56:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dIuxKgO+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27C19C2BD10;
+	Wed,  3 Jul 2024 10:56:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004208;
-	bh=cR4A/dKs8UeXWonsDHuo5zIp8GGCIuLHp+AuSJrlcDA=;
+	s=korg; t=1720004212;
+	bh=BT40q8tbXhOnyiwZYbj1JA38JOom66ZKpDltncle0kE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hu3X5yaoKhvdrBK+O0OxR1Lah6MSsjGRpXkG9O1W8ikqKkMdAa6xW1sCQg+ezX+nN
-	 0BtS5oWdKrU5mmBzwyOze6HKUSuvvlXCGGc2Tdlq3i3VvbqkEgGOL2olC9uaM2QUmr
-	 KDrJcyZvjRs0cVGqfwXWOdgayfI3Qv42Hmd2u6Yc=
+	b=dIuxKgO+uZ0obQotCF3x8Rr/ofeEpDl4xPv3jdV206S5W+En3Iyv9a/MzaTMOhK+G
+	 PaXT3Ck59RwTXKcjJuUmhs9ktQ8kWzhDzmsGHk6ARNL3aVEe/hRKqnFdC8lIGQRnRt
+	 QBloczZEgWIM6DbSSAq7mkdwdi1bXpHqi0djqwps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 155/189] gpio: davinci: Validate the obtained number of IRQs
-Date: Wed,  3 Jul 2024 12:40:16 +0200
-Message-ID: <20240703102847.321002428@linuxfoundation.org>
+Subject: [PATCH 5.4 156/189] x86: stop playing stack games in profile_pc()
+Date: Wed,  3 Jul 2024 12:40:17 +0200
+Message-ID: <20240703102847.358256022@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -51,45 +50,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 7aa9b96e9a73e4ec1771492d0527bd5fc5ef9164 ]
+[ Upstream commit 093d9603b60093a9aaae942db56107f6432a5dca ]
 
-Value of pdata->gpio_unbanked is taken from Device Tree. In case of broken
-DT due to any error this value can be any. Without this value validation
-there can be out of chips->irqs array boundaries access in
-davinci_gpio_probe().
+The 'profile_pc()' function is used for timer-based profiling, which
+isn't really all that relevant any more to begin with, but it also ends
+up making assumptions based on the stack layout that aren't necessarily
+valid.
 
-Validate the obtained nirq value so that it won't exceed the maximum
-number of IRQs per bank.
+Basically, the code tries to account the time spent in spinlocks to the
+caller rather than the spinlock, and while I support that as a concept,
+it's not worth the code complexity or the KASAN warnings when no serious
+profiling is done using timers anyway these days.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+And the code really does depend on stack layout that is only true in the
+simplest of cases.  We've lost the comment at some point (I think when
+the 32-bit and 64-bit code was unified), but it used to say:
 
-Fixes: eb3744a2dd01 ("gpio: davinci: Do not assume continuous IRQ numbering")
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Link: https://lore.kernel.org/r/20240618144344.16943-1-amishin@t-argos.ru
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+	Assume the lock function has either no stack frame or a copy
+	of eflags from PUSHF.
+
+which explains why it just blindly loads a word or two straight off the
+stack pointer and then takes a minimal look at the values to just check
+if they might be eflags or the return pc:
+
+	Eflags always has bits 22 and up cleared unlike kernel addresses
+
+but that basic stack layout assumption assumes that there isn't any lock
+debugging etc going on that would complicate the code and cause a stack
+frame.
+
+It causes KASAN unhappiness reported for years by syzkaller [1] and
+others [2].
+
+With no real practical reason for this any more, just remove the code.
+
+Just for historical interest, here's some background commits relating to
+this code from 2006:
+
+  0cb91a229364 ("i386: Account spinlocks to the caller during profiling for !FP kernels")
+  31679f38d886 ("Simplify profile_pc on x86-64")
+
+and a code unification from 2009:
+
+  ef4512882dbe ("x86: time_32/64.c unify profile_pc")
+
+but the basics of this thing actually goes back to before the git tree.
+
+Link: https://syzkaller.appspot.com/bug?extid=84fe685c02cd112a2ac3 [1]
+Link: https://lore.kernel.org/all/CAK55_s7Xyq=nh97=K=G1sxueOFrJDAvPOJAL4TPTCAYvmxO9_A@mail.gmail.com/ [2]
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-davinci.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/x86/kernel/time.c | 20 +-------------------
+ 1 file changed, 1 insertion(+), 19 deletions(-)
 
-diff --git a/drivers/gpio/gpio-davinci.c b/drivers/gpio/gpio-davinci.c
-index 576cb2d0708f6..ae5c3080ec3c1 100644
---- a/drivers/gpio/gpio-davinci.c
-+++ b/drivers/gpio/gpio-davinci.c
-@@ -227,6 +227,11 @@ static int davinci_gpio_probe(struct platform_device *pdev)
- 	else
- 		nirq = DIV_ROUND_UP(ngpio, 16);
+diff --git a/arch/x86/kernel/time.c b/arch/x86/kernel/time.c
+index 36a585b80d9e3..d4352ae0deb3b 100644
+--- a/arch/x86/kernel/time.c
++++ b/arch/x86/kernel/time.c
+@@ -27,25 +27,7 @@
  
-+	if (nirq > MAX_INT_PER_BANK) {
-+		dev_err(dev, "Too many IRQs!\n");
-+		return -EINVAL;
-+	}
-+
- 	chips = devm_kzalloc(dev, sizeof(*chips), GFP_KERNEL);
- 	if (!chips)
- 		return -ENOMEM;
+ unsigned long profile_pc(struct pt_regs *regs)
+ {
+-	unsigned long pc = instruction_pointer(regs);
+-
+-	if (!user_mode(regs) && in_lock_functions(pc)) {
+-#ifdef CONFIG_FRAME_POINTER
+-		return *(unsigned long *)(regs->bp + sizeof(long));
+-#else
+-		unsigned long *sp = (unsigned long *)regs->sp;
+-		/*
+-		 * Return address is either directly at stack pointer
+-		 * or above a saved flags. Eflags has bits 22-31 zero,
+-		 * kernel addresses don't.
+-		 */
+-		if (sp[0] >> 22)
+-			return sp[0];
+-		if (sp[1] >> 22)
+-			return sp[1];
+-#endif
+-	}
+-	return pc;
++	return instruction_pointer(regs);
+ }
+ EXPORT_SYMBOL(profile_pc);
+ 
 -- 
 2.43.0
 
