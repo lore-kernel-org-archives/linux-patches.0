@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82CA1862B6;
-	Wed,  3 Jul 2024 10:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2B2174ED0;
+	Wed,  3 Jul 2024 10:47:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003628; cv=none; b=g9c2sPImAj8ytfQ1Im3ekJ0YodSEQINZsVhKAZ+lm4fhslc2QKapmth8YDeWSfsNMRfuMfnYt85HrZpfPwycWqZeC5kkMyCInLl/gIiLSZjHjBvhijYleGFmoaJFXb264raRSMeolfzT6K8GoTlAAWZlcEZse6V33SgrPQkj2Wk=
+	t=1720003631; cv=none; b=EymxhqjBAGeItmjDyyFAqdjDG2sFBieH6PdiDCBcvBNU2KaTfvG0qKvWPBw9nfGHxaqzDKHYM+sNaQFgt1LyuyNV4ooP9IXTdQpe296gN0S2IPUefDAxrLPuGRZ8YGCUDNLRlLlJbcIsXOjETsO8qG79ObN8UdFUmd8swsWYor0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003628; c=relaxed/simple;
-	bh=PT3EIngWRlQNCk2o/CcDfqjdNM+l1oIdmOSWEroVgfg=;
+	s=arc-20240116; t=1720003631; c=relaxed/simple;
+	bh=8KyS0Bv5CCi1kx1RrFPpYgGaErrgFQstUnA4Bbs+S8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b0RZ4o4KG5iuyXLckTI60c2TYIdFRnZzpca/84KlSlfLuqv9B6HWSwrNvVhjiqgR2H+Brb03RA0HSPdbaiUCXtSdJGV5F5tVcKmGnGBfxF/ll7E0fvai4JQnv2WcjcAiFgpF3P9Rf+xK0KSy/RCnFePQT379CT3GInTaIlhfC2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x3BD9JOf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WkyZv0Vtp/pbseIp1vvmvf4BL0tSPjAbbogQiKwhLQjWNkIf/CAOO/6Nj9o1LdnLpYdcJpNRXwkoKWPVbuRmE4Wo7kD7CjdeZFAE4hTUzWOh4/8VeC1MXF1DUKtExkRtz3wnAQq/xeOzmC8FS3W3LJ6EZZP3Og/PEIyzpKWjam0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=11rRbzrl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x3BD9JOf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 560B3C2BD10;
-	Wed,  3 Jul 2024 10:47:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="11rRbzrl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44610C2BD10;
+	Wed,  3 Jul 2024 10:47:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003628;
-	bh=PT3EIngWRlQNCk2o/CcDfqjdNM+l1oIdmOSWEroVgfg=;
+	s=korg; t=1720003631;
+	bh=8KyS0Bv5CCi1kx1RrFPpYgGaErrgFQstUnA4Bbs+S8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x3BD9JOfDGPzGajKhcObW8DNoXyvs8Rfu9cYyVv3adSMCvWOJJ9CB+KPTPoSH0leH
-	 mUCWtA1bSyKxTZpEvNFk51ygv5DGxOOkNOA1PmuOQu4qP1vavlI65vwKtC1FsBd0U1
-	 5qgb4ZZqfmDAlJSsdifxT7FTDX/9cGjKOpVEa5tY=
+	b=11rRbzrlxVG52xsd5YmTLNRt2efHRrVx3p1TPUAz9DMYJfqcAEiTjkLs05UBPn3L8
+	 mBI9mKiuA+1T6JVWiC5tZyUokuPIuJUko0hcHUJJzWjCGd8aA6sqKunJipUAOf3ZZk
+	 KucVb1IVSWaEMoCFBaP3z44puKulU0Y5UzWTJHfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Davis <afd@ti.com>,
-	Nishanth Menon <nm@ti.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 111/139] soc: ti: wkup_m3_ipc: Send NULL dummy message instead of pointer message
-Date: Wed,  3 Jul 2024 12:40:08 +0200
-Message-ID: <20240703102834.632932155@linuxfoundation.org>
+Subject: [PATCH 4.19 112/139] nvme: fixup comment for nvme RDMA Provider Type
+Date: Wed,  3 Jul 2024 12:40:09 +0200
+Message-ID: <20240703102834.670296009@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -51,68 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Davis <afd@ti.com>
+From: Hannes Reinecke <hare@suse.de>
 
-[ Upstream commit ddbf3204f600a4d1f153498f618369fca352ae00 ]
+[ Upstream commit f80a55fa90fa76d01e3fffaa5d0413e522ab9a00 ]
 
-mbox_send_message() sends a u32 bit message, not a pointer to a message.
-We only convert to a pointer type as a generic type. If we want to send
-a dummy message of 0, then simply send 0 (NULL).
+PRTYPE is the provider type, not the QP service type.
 
-Signed-off-by: Andrew Davis <afd@ti.com>
-Link: https://lore.kernel.org/r/20240325165507.30323-1-afd@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Fixes: eb793e2c9286 ("nvme.h: add NVMe over Fabrics definitions")
+Signed-off-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/ti/wkup_m3_ipc.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ include/linux/nvme.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soc/ti/wkup_m3_ipc.c b/drivers/soc/ti/wkup_m3_ipc.c
-index 8358b97505db2..e3a58588547a6 100644
---- a/drivers/soc/ti/wkup_m3_ipc.c
-+++ b/drivers/soc/ti/wkup_m3_ipc.c
-@@ -22,7 +22,6 @@
- #include <linux/irq.h>
- #include <linux/module.h>
- #include <linux/of.h>
--#include <linux/omap-mailbox.h>
- #include <linux/platform_device.h>
- #include <linux/remoteproc.h>
- #include <linux/suspend.h>
-@@ -158,7 +157,6 @@ static irqreturn_t wkup_m3_txev_handler(int irq, void *ipc_data)
- static int wkup_m3_ping(struct wkup_m3_ipc *m3_ipc)
- {
- 	struct device *dev = m3_ipc->dev;
--	mbox_msg_t dummy_msg = 0;
- 	int ret;
+diff --git a/include/linux/nvme.h b/include/linux/nvme.h
+index 818dbe9331be3..d8984b0c25be4 100644
+--- a/include/linux/nvme.h
++++ b/include/linux/nvme.h
+@@ -71,8 +71,8 @@ enum {
+ 	NVMF_RDMA_QPTYPE_DATAGRAM	= 2, /* Reliable Datagram */
+ };
  
- 	if (!m3_ipc->mbox) {
-@@ -174,7 +172,7 @@ static int wkup_m3_ping(struct wkup_m3_ipc *m3_ipc)
- 	 * the RX callback to avoid multiple interrupts being received
- 	 * by the CM3.
- 	 */
--	ret = mbox_send_message(m3_ipc->mbox, &dummy_msg);
-+	ret = mbox_send_message(m3_ipc->mbox, NULL);
- 	if (ret < 0) {
- 		dev_err(dev, "%s: mbox_send_message() failed: %d\n",
- 			__func__, ret);
-@@ -196,7 +194,6 @@ static int wkup_m3_ping(struct wkup_m3_ipc *m3_ipc)
- static int wkup_m3_ping_noirq(struct wkup_m3_ipc *m3_ipc)
- {
- 	struct device *dev = m3_ipc->dev;
--	mbox_msg_t dummy_msg = 0;
- 	int ret;
- 
- 	if (!m3_ipc->mbox) {
-@@ -205,7 +202,7 @@ static int wkup_m3_ping_noirq(struct wkup_m3_ipc *m3_ipc)
- 		return -EIO;
- 	}
- 
--	ret = mbox_send_message(m3_ipc->mbox, &dummy_msg);
-+	ret = mbox_send_message(m3_ipc->mbox, NULL);
- 	if (ret < 0) {
- 		dev_err(dev, "%s: mbox_send_message() failed: %d\n",
- 			__func__, ret);
+-/* RDMA QP Service Type codes for Discovery Log Page entry TSAS
+- * RDMA_QPTYPE field
++/* RDMA Provider Type codes for Discovery Log Page entry TSAS
++ * RDMA_PRTYPE field
+  */
+ enum {
+ 	NVMF_RDMA_PRTYPE_NOT_SPECIFIED	= 1, /* No Provider Specified */
 -- 
 2.43.0
 
