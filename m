@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3DC8183090;
-	Wed,  3 Jul 2024 11:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A34183090;
+	Wed,  3 Jul 2024 11:19:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005588; cv=none; b=ihOcC8ls/t/GgKFMcAWV/faMMydf3B0ZmBRjW7WO7v3EqLPxvzmoaQudDH7Qe1gS17X/ENFRDvTEzbHkQXz13eUXgAPYWHl26RWH03Wq3jHKhQ+VTB63KwPG5a+E1R4bXLeJgy+5Y6zL1sJ9DfClZh8rtEFFe7oLHP0Kcq9QAr0=
+	t=1720005591; cv=none; b=Tg2vxXs4a4daKgmSo8d6O2Vq6DqoYUz/nXvuK0DuTfIfE4lSVEc3llMc3nPh9ZgLroFSNuhkiiwP2oUtHvtVxbza4jkmk63ehvx+RKXa3Bubu6PiEMy9mjpYr57a9Bbl53u1QTfQWxooNHBf+64PVg5bL/5f5OL8x64rvRJgl1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005588; c=relaxed/simple;
-	bh=x5cOgeGT1SaLIUP3hrFAnsmusYBVGOlwlrhcTMTevkw=;
+	s=arc-20240116; t=1720005591; c=relaxed/simple;
+	bh=b0TxMZhtmrVfiqIbCVb4ICZW8jDk83pD9aZguWWQ4Yg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bCUV3oqSNq2uLsB9TieuuosgTtsNwsTrF1jLLxSm5YD8FFtDWUfMsYffdpSicVQGTbi0xlsNubFIEm3i1DOHY+JXKZgO86T0+s5mVikVaCxByW7t2gYrMPo5Umx1+Dz0tMxb5OFpzNzCqD30UIfF60TVsR7UT23TrMl6inM50WA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NWmHkAmM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jp4AlGLhca0EtpEevSAedVzPZPa+5TNXlxv3X4p92rvgJXvI58xYwyP7cnPiEKp0snskf7LRl7ml7ycsUC2I4KMano0jjP8P8NIzScPEEviwwQ8r1ws9ViGuoszuJep+5ZqFs94C9XAo1HJB8SmrvSske/Tae+6pXcN2pls+74M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=koMw6LaC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NWmHkAmM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58A69C4AF0B;
-	Wed,  3 Jul 2024 11:19:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="koMw6LaC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C471C2BD10;
+	Wed,  3 Jul 2024 11:19:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005588;
-	bh=x5cOgeGT1SaLIUP3hrFAnsmusYBVGOlwlrhcTMTevkw=;
+	s=korg; t=1720005591;
+	bh=b0TxMZhtmrVfiqIbCVb4ICZW8jDk83pD9aZguWWQ4Yg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NWmHkAmMJxPb3ClFvINmG/KL3WQMkjdqWObdRIaI0JN6oUmZBF4mQdRy5IBvET96a
-	 1kDu0XnKxfDrrVbEpN3zxRFFdm4FnlwSwBZ8ykGivTxOQ4klQkM3dzw6LMzFBeGF+2
-	 HFanliHJmkUMPxFoiY9Lx08yMf/MeH66SyRicfj0=
+	b=koMw6LaCrzZ/nT/KJsDiMBrv8a/+T2fxRWa9PGKAXzhzRIRjClvfI83cZybnvQM4Y
+	 I2PnfYRtYsRbM6e2l4+UHPBfy6kD12NqmQBo+JofoZxUrj7okzqAS0UFJ7oJuAdCvk
+	 1SP6l54MjLIaO1MOx/AK2VfcYrTNvVf7+5YfPFGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	stable@kernel.org
-Subject: [PATCH 5.15 131/356] intel_th: pci: Add Sapphire Rapids SOC support
-Date: Wed,  3 Jul 2024 12:37:47 +0200
-Message-ID: <20240703102918.056219775@linuxfoundation.org>
+Subject: [PATCH 5.15 132/356] intel_th: pci: Add Meteor Lake-S support
+Date: Wed,  3 Jul 2024 12:37:48 +0200
+Message-ID: <20240703102918.093120811@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -53,14 +53,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Shishkin <alexander.shishkin@linux.intel.com>
 
-commit 2e1da7efabe05cb0cf0b358883b2bc89080ed0eb upstream.
+commit c4a30def564d75e84718b059d1a62cc79b137cf9 upstream.
 
-Add support for the Trace Hub in Sapphire Rapids SOC.
+Add support for the Trace Hub in Meteor Lake-S.
 
 Signed-off-by: Alexander Shishkin <alexander.shishkin@linux.intel.com>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Cc: stable@kernel.org
-Link: https://lore.kernel.org/r/20240429130119.1518073-13-alexander.shishkin@linux.intel.com
+Link: https://lore.kernel.org/r/20240429130119.1518073-14-alexander.shishkin@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
  drivers/hwtracing/intel_th/pci.c |    5 +++++
@@ -68,17 +68,17 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/hwtracing/intel_th/pci.c
 +++ b/drivers/hwtracing/intel_th/pci.c
-@@ -315,6 +315,11 @@ static const struct pci_device_id intel_
+@@ -295,6 +295,11 @@ static const struct pci_device_id intel_
  		.driver_data = (kernel_ulong_t)&intel_th_2x,
  	},
  	{
-+		/* Sapphire Rapids SOC */
-+		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x3456),
++		/* Meteor Lake-S */
++		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x7f26),
 +		.driver_data = (kernel_ulong_t)&intel_th_2x,
 +	},
 +	{
- 		/* Alder Lake CPU */
- 		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x466f),
+ 		/* Raptor Lake-S */
+ 		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x7a26),
  		.driver_data = (kernel_ulong_t)&intel_th_2x,
 
 
