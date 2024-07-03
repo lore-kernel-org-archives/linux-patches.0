@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECD5D13776F;
-	Wed,  3 Jul 2024 11:16:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B7413776F;
+	Wed,  3 Jul 2024 11:16:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005406; cv=none; b=ZfiRc9RYEOADt7y6woG5XU7WOxafHuxB+0utxKfP2uBi7uYIQY1l8RP+k6dklnIr1+Fn9bHS68ZoX5mRlP+DhkGN2HQU2rUz0ffHXCc3T5tHiU1bFX+/7BYmy1JXa1sMFQvw55Orc3kLhuRwhEwgalwnmE/LcotDGMixoKXEMbc=
+	t=1720005409; cv=none; b=fJOy9XcNUYor19U8WSUPMwRcIXRFrKcxpMwrvKFZLbNvvj2Oha2zlCKyPkmZj/Ub1j5VmNDa0plUT+PxYB0sngHSWECTUAtd9iEcEyhgZmY08epnMs4fhD/4ua5wN8+fCvvvupK96y4JG8TZIXIyjf5cF7QnVcFkpDPH9gRR8NI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005406; c=relaxed/simple;
-	bh=IoKPwwx6yCr1H6QrySVbiTmNbq7ip8YzqlCUl2nYXLM=;
+	s=arc-20240116; t=1720005409; c=relaxed/simple;
+	bh=qLWbr8MxwSi+GbIFujEvHpak02CHXX7mXmqaSPG2Jko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NdOYNx4loISN5R0yR9xWc1ivZCy1nfzAV+ngKfhd4N69OeXkoClkSwQWS7Dcxgr2HwA5RC7142fDPkSs4+0k4c/sbtNF77p+1GCOIQCTAR7WKMp2xwLh2kJUM4JeeZ1JbCzVIwGtWmV4LNzoWbMHvRVrKNRoh/O47pLOSBRGSXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UP6iyXMZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b4kFD3Bny2b+9Lggy73v0rfV9AdEx+UItRmKrTvVyvqLeAcm/NGi0nNmt+ew3pKukigmS1CyudMlF1QE8D2XNp4z/a1B5jxxqn2vUEH/KEtd0gqFlUWNA1RcalLoG5ySPnxUrqA7/2+SNnyZlIBAK7qY5pGB5X4uL2iMXJUpC08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gGbVdnLE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UP6iyXMZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74F01C32781;
-	Wed,  3 Jul 2024 11:16:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gGbVdnLE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66BBCC2BD10;
+	Wed,  3 Jul 2024 11:16:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005405;
-	bh=IoKPwwx6yCr1H6QrySVbiTmNbq7ip8YzqlCUl2nYXLM=;
+	s=korg; t=1720005408;
+	bh=qLWbr8MxwSi+GbIFujEvHpak02CHXX7mXmqaSPG2Jko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UP6iyXMZ3T0HOAkLqIqq1eEpqBIa7LHwJGRyskl+AXSAhzc3tpqJ9sxMdv/9rmssu
-	 Ld4zKlvT1HfhP1Oz7MPALr6I2pZCLqBg4TQ2IO1DYwseUaHiK+7ZzUEMNBcMDRWrqu
-	 SuRjCsOYMMzdr488F35Pivv5xtgrsufwlKyb5umI=
+	b=gGbVdnLEThxmaPF8R1DBgke1XBFJPMN7vQi88bj4SViSL7hFosPNsfT7lkT80xCbE
+	 nzaQ9SI6MDi/76gSfqPZKXKLPvoBzfVKvW8RQZWzdzab2HQQ/Ekir+IXOocqdFc0hN
+	 pzLJlOSwApTvjc7mmklcQ2S5N7Hjc5lqL25f1B60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0fecc032fa134afd49df@syzkaller.appspotmail.com,
-	Josef Bacik <josef@toxicpanda.com>,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 070/356] btrfs: fix leak of qgroup extent records after transaction abort
-Date: Wed,  3 Jul 2024 12:36:46 +0200
-Message-ID: <20240703102915.747595735@linuxfoundation.org>
+Subject: [PATCH 5.15 044/356] pvpanic: Keep single style across modules
+Date: Wed,  3 Jul 2024 12:36:20 +0200
+Message-ID: <20240703102914.763129825@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -54,64 +50,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit fb33eb2ef0d88e75564983ef057b44c5b7e4fded ]
+[ Upstream commit 33a430419456991480cde9d8889e5a27f6049df4 ]
 
-Qgroup extent records are created when delayed ref heads are created and
-then released after accounting extents at btrfs_qgroup_account_extents(),
-called during the transaction commit path.
+We have different style on where we place module_*() and MODULE_*() macros.
+Inherit the style from the original module (now pvpanic-mmio.c).
 
-If a transaction is aborted we free the qgroup records by calling
-btrfs_qgroup_destroy_extent_records() at btrfs_destroy_delayed_refs(),
-unless we don't have delayed references. We are incorrectly assuming
-that no delayed references means we don't have qgroup extents records.
-
-We can currently have no delayed references because we ran them all
-during a transaction commit and the transaction was aborted after that
-due to some error in the commit path.
-
-So fix this by ensuring we btrfs_qgroup_destroy_extent_records() at
-btrfs_destroy_delayed_refs() even if we don't have any delayed references.
-
-Reported-by: syzbot+0fecc032fa134afd49df@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-btrfs/0000000000004e7f980619f91835@google.com/
-Fixes: 81f7eb00ff5b ("btrfs: destroy qgroup extent records on transaction abort")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reviewed-by: Mihai Carabas <mihai.carabas@oracle.com
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20210829124354.81653-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: ee59be35d7a8 ("misc/pvpanic-pci: register attributes via pci_driver")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c | 10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
+ drivers/misc/pvpanic/pvpanic-pci.c | 14 ++++++--------
+ drivers/misc/pvpanic/pvpanic.c     |  3 +--
+ 2 files changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index c1dfde886b1e3..092ebed754b0c 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -4707,19 +4707,11 @@ static int btrfs_destroy_delayed_refs(struct btrfs_transaction *trans,
- 				      struct btrfs_fs_info *fs_info)
- {
- 	struct rb_node *node;
--	struct btrfs_delayed_ref_root *delayed_refs;
-+	struct btrfs_delayed_ref_root *delayed_refs = &trans->delayed_refs;
- 	struct btrfs_delayed_ref_node *ref;
- 	int ret = 0;
+diff --git a/drivers/misc/pvpanic/pvpanic-pci.c b/drivers/misc/pvpanic/pvpanic-pci.c
+index 741116b3d9958..7d1220f4c95bc 100644
+--- a/drivers/misc/pvpanic/pvpanic-pci.c
++++ b/drivers/misc/pvpanic/pvpanic-pci.c
+@@ -22,11 +22,6 @@ MODULE_AUTHOR("Mihai Carabas <mihai.carabas@oracle.com>");
+ MODULE_DESCRIPTION("pvpanic device driver ");
+ MODULE_LICENSE("GPL");
  
--	delayed_refs = &trans->delayed_refs;
+-static const struct pci_device_id pvpanic_pci_id_tbl[]  = {
+-	{ PCI_DEVICE(PCI_VENDOR_ID_REDHAT, PCI_DEVICE_ID_REDHAT_PVPANIC)},
+-	{}
+-};
 -
- 	spin_lock(&delayed_refs->lock);
--	if (atomic_read(&delayed_refs->num_entries) == 0) {
--		spin_unlock(&delayed_refs->lock);
--		btrfs_debug(fs_info, "delayed_refs has NO entry");
--		return ret;
--	}
+ static ssize_t capability_show(struct device *dev,
+ 			       struct device_attribute *attr, char *buf)
+ {
+@@ -99,6 +94,12 @@ static int pvpanic_pci_probe(struct pci_dev *pdev,
+ 	return devm_pvpanic_probe(&pdev->dev, pi);
+ }
+ 
++static const struct pci_device_id pvpanic_pci_id_tbl[]  = {
++	{ PCI_DEVICE(PCI_VENDOR_ID_REDHAT, PCI_DEVICE_ID_REDHAT_PVPANIC)},
++	{}
++};
++MODULE_DEVICE_TABLE(pci, pvpanic_pci_id_tbl);
++
+ static struct pci_driver pvpanic_pci_driver = {
+ 	.name =         "pvpanic-pci",
+ 	.id_table =     pvpanic_pci_id_tbl,
+@@ -107,7 +108,4 @@ static struct pci_driver pvpanic_pci_driver = {
+ 		.dev_groups = pvpanic_pci_dev_groups,
+ 	},
+ };
 -
- 	while ((node = rb_first_cached(&delayed_refs->href_root)) != NULL) {
- 		struct btrfs_delayed_ref_head *head;
- 		struct rb_node *n;
+-MODULE_DEVICE_TABLE(pci, pvpanic_pci_id_tbl);
+-
+ module_pci_driver(pvpanic_pci_driver);
+diff --git a/drivers/misc/pvpanic/pvpanic.c b/drivers/misc/pvpanic/pvpanic.c
+index b9e6400a574b0..477bf9c6b6bc5 100644
+--- a/drivers/misc/pvpanic/pvpanic.c
++++ b/drivers/misc/pvpanic/pvpanic.c
+@@ -107,6 +107,7 @@ static int pvpanic_init(void)
+ 
+ 	return 0;
+ }
++module_init(pvpanic_init);
+ 
+ static void pvpanic_exit(void)
+ {
+@@ -114,6 +115,4 @@ static void pvpanic_exit(void)
+ 					 &pvpanic_panic_nb);
+ 
+ }
+-
+-module_init(pvpanic_init);
+ module_exit(pvpanic_exit);
 -- 
 2.43.0
 
