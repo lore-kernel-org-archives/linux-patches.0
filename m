@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18B817DA0B;
-	Wed,  3 Jul 2024 11:28:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46D1137910;
+	Wed,  3 Jul 2024 11:28:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006102; cv=none; b=mk2W6dk/4VbKBj0UjwBBAQBm37rian0mSqGmzHJNkwW8lhcpfARAE5PpQPkBRk7VzNb54GFbo1ZKN8FrcCiIMcvcvE+jKpk0MrgBnJ7SCKkMmdpmoSl1wsf3eQ4GnZ6IKh3/9ZtNQDNicPiShPilivWmZmAVVJAUw2GtF+g111Y=
+	t=1720006105; cv=none; b=gbs/Xnrq3E0O4RhIez4+1GQBnannx+mHgXmyeGcNDz0rFLP/0tGikr1y2kntc/MjBrs3ZWZ7ihJfk6MYYeJQUYkLccEUXZVTT4uv3DuI0i6am3nhYBGLFrQg+UmPwdjDATBFdf5mfPRUhuGLl/OH89Bz6shKjjfoV5XYXMn0lQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006102; c=relaxed/simple;
-	bh=hBiJ8U49VxpCfEFjJ6tJDNGiitxJnxYrV6/80YJrid8=;
+	s=arc-20240116; t=1720006105; c=relaxed/simple;
+	bh=Wg3i8rrJYWXd0MiX6+1Ys9EE2UTGKY1ToSd+WniG8pc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o/RbvWNW+dk+lB5TWI+/O94p1TqBP32f1bzYrMlcHWHZI0pijoS1gCmGajAY+A02nAvRvRVwr/qogZGBp/kM9/Sdfdayzf0w5EYQUHsGDSHELMgQt2CmtEBhYIld2U0zu08hNqi1RecTtLeM82tye4SnyVzMJaUbQ/cK8ZZw6eM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iNkLfOAE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rm0beFO9RTGuz1+FtkuS0L5kKm4YJHV3jgtLTT2Qu/Huoj6+JYjoS9lmvuVt93NMhcI6qIkH+I7DNAsBwO+StHVuGkSsqe9DQTyPfXA9Dw6b0SEnE/ez0sUEzCwQPdZik0qUzrvEmdo5sQKOQC8K/IxtmB2sy6URGQbRSKmlu7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hbA/NjGQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iNkLfOAE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F069C2BD10;
-	Wed,  3 Jul 2024 11:28:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hbA/NjGQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D02C2BD10;
+	Wed,  3 Jul 2024 11:28:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006102;
-	bh=hBiJ8U49VxpCfEFjJ6tJDNGiitxJnxYrV6/80YJrid8=;
+	s=korg; t=1720006105;
+	bh=Wg3i8rrJYWXd0MiX6+1Ys9EE2UTGKY1ToSd+WniG8pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iNkLfOAEq/7zI+KiQUDD9XFPaEvTenvLNZucWWyguA/uyGhz/C7uCbrk0iTt+bp0K
-	 2t7aQDfHyTpPsmk/vK+yzG237oJbEjJe9BV86fD5R81bHFWhHL7QaU20F6RYa2jkPU
-	 +0do4uuHMBwfFEXya4aBv6BhGV7kLf5/xGjRn0aA=
+	b=hbA/NjGQn7lu3XdE1RSM005QaYaFZgrOkd/xSjl1TOLf27JstwGmyy2TSksFoFvkV
+	 P2tBmyLQCbquNrX2xNbvPGGonvRhaGGNHl2xYSivXIk/RJVrTa5zDxBwoqGafSsvPV
+	 HYw/3QTsElps7EC0e1p5Gm3GcUwsAYa6HTbPRxmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kent Gibson <warthog618@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 301/356] gpiolib: cdev: Disallow reconfiguration without direction (uAPI v1)
-Date: Wed,  3 Jul 2024 12:40:37 +0200
-Message-ID: <20240703102924.502777713@linuxfoundation.org>
+Subject: [PATCH 5.15 302/356] x86: stop playing stack games in profile_pc()
+Date: Wed,  3 Jul 2024 12:40:38 +0200
+Message-ID: <20240703102924.540393534@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,86 +50,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kent Gibson <warthog618@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 9919cce62f68e6ab68dc2a975b5dc670f8ca7d40 ]
+[ Upstream commit 093d9603b60093a9aaae942db56107f6432a5dca ]
 
-linehandle_set_config() behaves badly when direction is not set.
-The configuration validation is borrowed from linehandle_create(), where,
-to verify the intent of the user, the direction must be set to in order
-to effect a change to the electrical configuration of a line. But, when
-applied to reconfiguration, that validation does not allow for the unset
-direction case, making it possible to clear flags set previously without
-specifying the line direction.
+The 'profile_pc()' function is used for timer-based profiling, which
+isn't really all that relevant any more to begin with, but it also ends
+up making assumptions based on the stack layout that aren't necessarily
+valid.
 
-Adding to the inconsistency, those changes are not immediately applied by
-linehandle_set_config(), but will take effect when the line value is next
-get or set.
+Basically, the code tries to account the time spent in spinlocks to the
+caller rather than the spinlock, and while I support that as a concept,
+it's not worth the code complexity or the KASAN warnings when no serious
+profiling is done using timers anyway these days.
 
-For example, by requesting a configuration with no flags set, an output
-line with GPIOHANDLE_REQUEST_ACTIVE_LOW and GPIOHANDLE_REQUEST_OPEN_DRAIN
-requested could have those flags cleared, inverting the sense of the line
-and changing the line drive to push-pull on the next line value set.
+And the code really does depend on stack layout that is only true in the
+simplest of cases.  We've lost the comment at some point (I think when
+the 32-bit and 64-bit code was unified), but it used to say:
 
-Ensure the intent of the user by disallowing configurations which do not
-have direction set, returning an error to userspace to indicate that the
-configuration is invalid.
+	Assume the lock function has either no stack frame or a copy
+	of eflags from PUSHF.
 
-And, for clarity, use lflags, a local copy of gcnf.flags, throughout when
-dealing with the requested flags, rather than a mixture of both.
+which explains why it just blindly loads a word or two straight off the
+stack pointer and then takes a minimal look at the values to just check
+if they might be eflags or the return pc:
 
-Fixes: e588bb1eae31 ("gpio: add new SET_CONFIG ioctl() to gpio chardev")
-Signed-off-by: Kent Gibson <warthog618@gmail.com>
-Link: https://lore.kernel.org/r/20240626052925.174272-2-warthog618@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+	Eflags always has bits 22 and up cleared unlike kernel addresses
+
+but that basic stack layout assumption assumes that there isn't any lock
+debugging etc going on that would complicate the code and cause a stack
+frame.
+
+It causes KASAN unhappiness reported for years by syzkaller [1] and
+others [2].
+
+With no real practical reason for this any more, just remove the code.
+
+Just for historical interest, here's some background commits relating to
+this code from 2006:
+
+  0cb91a229364 ("i386: Account spinlocks to the caller during profiling for !FP kernels")
+  31679f38d886 ("Simplify profile_pc on x86-64")
+
+and a code unification from 2009:
+
+  ef4512882dbe ("x86: time_32/64.c unify profile_pc")
+
+but the basics of this thing actually goes back to before the git tree.
+
+Link: https://syzkaller.appspot.com/bug?extid=84fe685c02cd112a2ac3 [1]
+Link: https://lore.kernel.org/all/CAK55_s7Xyq=nh97=K=G1sxueOFrJDAvPOJAL4TPTCAYvmxO9_A@mail.gmail.com/ [2]
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-cdev.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ arch/x86/kernel/time.c | 20 +-------------------
+ 1 file changed, 1 insertion(+), 19 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
-index 1db991cb2efce..c2f9d95d1086f 100644
---- a/drivers/gpio/gpiolib-cdev.c
-+++ b/drivers/gpio/gpiolib-cdev.c
-@@ -127,6 +127,10 @@ struct linehandle_state {
- 	GPIOHANDLE_REQUEST_OPEN_DRAIN | \
- 	GPIOHANDLE_REQUEST_OPEN_SOURCE)
+diff --git a/arch/x86/kernel/time.c b/arch/x86/kernel/time.c
+index e42faa792c079..52e1f3f0b361c 100644
+--- a/arch/x86/kernel/time.c
++++ b/arch/x86/kernel/time.c
+@@ -27,25 +27,7 @@
  
-+#define GPIOHANDLE_REQUEST_DIRECTION_FLAGS \
-+	(GPIOHANDLE_REQUEST_INPUT | \
-+	 GPIOHANDLE_REQUEST_OUTPUT)
-+
- static int linehandle_validate_flags(u32 flags)
+ unsigned long profile_pc(struct pt_regs *regs)
  {
- 	/* Return an error if an unknown flag is set */
-@@ -207,21 +211,21 @@ static long linehandle_set_config(struct linehandle_state *lh,
- 	if (ret)
- 		return ret;
- 
-+	/* Lines must be reconfigured explicitly as input or output. */
-+	if (!(lflags & GPIOHANDLE_REQUEST_DIRECTION_FLAGS))
-+		return -EINVAL;
-+
- 	for (i = 0; i < lh->num_descs; i++) {
- 		desc = lh->descs[i];
--		linehandle_flags_to_desc_flags(gcnf.flags, &desc->flags);
-+		linehandle_flags_to_desc_flags(lflags, &desc->flags);
- 
+-	unsigned long pc = instruction_pointer(regs);
+-
+-	if (!user_mode(regs) && in_lock_functions(pc)) {
+-#ifdef CONFIG_FRAME_POINTER
+-		return *(unsigned long *)(regs->bp + sizeof(long));
+-#else
+-		unsigned long *sp = (unsigned long *)regs->sp;
 -		/*
--		 * Lines have to be requested explicitly for input
--		 * or output, else the line will be treated "as is".
+-		 * Return address is either directly at stack pointer
+-		 * or above a saved flags. Eflags has bits 22-31 zero,
+-		 * kernel addresses don't.
 -		 */
- 		if (lflags & GPIOHANDLE_REQUEST_OUTPUT) {
- 			int val = !!gcnf.default_values[i];
+-		if (sp[0] >> 22)
+-			return sp[0];
+-		if (sp[1] >> 22)
+-			return sp[1];
+-#endif
+-	}
+-	return pc;
++	return instruction_pointer(regs);
+ }
+ EXPORT_SYMBOL(profile_pc);
  
- 			ret = gpiod_direction_output(desc, val);
- 			if (ret)
- 				return ret;
--		} else if (lflags & GPIOHANDLE_REQUEST_INPUT) {
-+		} else {
- 			ret = gpiod_direction_input(desc);
- 			if (ret)
- 				return ret;
 -- 
 2.43.0
 
