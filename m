@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB8617B404;
-	Wed,  3 Jul 2024 11:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6FE17B404;
+	Wed,  3 Jul 2024 11:26:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005974; cv=none; b=jG0FnfPZiwO68sQcy2q0gRXrbTmE2eFMU5pSe1v4ySpBLPIF/I75JwTjxPuciSoc2W6wo/WzPyhifgoWaG3JpIhIv1y17O+lVsEmZ+IT7fWAjMI9MENZ8J8qvFrCQCUJ9V33Jj6bKam4PSgwgCUp26SoBp8Zy09G8xA+SFWjgII=
+	t=1720005977; cv=none; b=quS3MADlXm7kGW/FIXqqeQjXlaTa5W2QOQHvSTealFC5NK57R4peB5vDqfAaI810KkkWx97M+ckdrKlxysPvU8ZnE9iJDQMzJ1J7DkDd1vwq9XNDB7I8dS6VEvbEQet8MUtUbX+zhc1Ccwy6xOYxrrLdqBa5LVD5or1ZREyorCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005974; c=relaxed/simple;
-	bh=W4qNDTKHAOF140uf3BpTYvmDc9PV5KOlzkln9Tmbu0A=;
+	s=arc-20240116; t=1720005977; c=relaxed/simple;
+	bh=ZIV7o5NpZujEKKDF0MBMzK1HSU3uUxXpIv479/qu/yY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pGTrSZ71Bf6coMmioW0VKfyfsEhlkTVahuWGOmV7k/Gv/jw5ib6i2Y3tDlWWrrBxKD6Bii6+t9fuqPAV8JryxoeM4EX1G3GEpJqjWRTCbMiIGSul4KIfEKdEoI3OaY33PneCWrzEMt8Ja/Uh7N82YAvkBEV/UcE0aAXyJCBD79g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DBhI8tpY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KgRpsEovJRtdeuirp5bbGYPeg/eCnF+q+3tBWtsDCP4iN5sMPA3bX7WZNzm4lHh62DPRLHDyVoFdPZsj2xGI48qNwOzdV30VTejnKjqVh4Xs2kMHxeCTGOrK94W6mdTEIR279JPcrtapYFWVYa173zSkCKjpCR8hI27OojcEUzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J92nDyjK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DBhI8tpY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20A75C2BD10;
-	Wed,  3 Jul 2024 11:26:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J92nDyjK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16BF3C32781;
+	Wed,  3 Jul 2024 11:26:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005974;
-	bh=W4qNDTKHAOF140uf3BpTYvmDc9PV5KOlzkln9Tmbu0A=;
+	s=korg; t=1720005977;
+	bh=ZIV7o5NpZujEKKDF0MBMzK1HSU3uUxXpIv479/qu/yY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DBhI8tpY5LLBQw6YWth66K3r5LaYPS0oF3WkbDq5F7pTvuCuM8R0HCRTJc5udWi0I
-	 TmRnai3PZ8GxOxCKECSyARxT2ZVrFMiOB9sgxKaMqvR3k1+shGaD4tdVnzKV/4SYkE
-	 0en1R7p7GIgVoPhEVhHDDPvkxpcKVUQAgvHWaUsQ=
+	b=J92nDyjKnJ6+eG1m3JWc/CDBhmAKBTrcmar0WsSsEY+Hl6TaJtKt6A+ZK+eXCoS21
+	 PvoqjOkCGIzUOe0EPHbRVnPjpYlHlvEnIXbdHPNH/+leYhxzvMgP9eJ646qRF0LWTD
+	 zcVTpZUblxZjIHlWexnlFnvgK1+4puuFbFjY+KHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shailend Chand <shailend@google.com>,
-	Ziwei Xiao <ziweixiao@google.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
-	Praveen Kaligineedi <pkaligineedi@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	John Keeping <jkeeping@inmusicbrands.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 259/356] gve: Clear napi->skb before dev_kfree_skb_any()
-Date: Wed,  3 Jul 2024 12:39:55 +0200
-Message-ID: <20240703102922.915220386@linuxfoundation.org>
+Subject: [PATCH 5.15 260/356] Input: ili210x - fix ili251x_read_touch_data() return value
+Date: Wed,  3 Jul 2024 12:39:56 +0200
+Message-ID: <20240703102922.954080610@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -54,67 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ziwei Xiao <ziweixiao@google.com>
+From: John Keeping <jkeeping@inmusicbrands.com>
 
-[ Upstream commit 6f4d93b78ade0a4c2cafd587f7b429ce95abb02e ]
+[ Upstream commit 9f0fad0382124e7e23b3c730fa78818c22c89c0a ]
 
-gve_rx_free_skb incorrectly leaves napi->skb referencing an skb after it
-is freed with dev_kfree_skb_any(). This can result in a subsequent call
-to napi_get_frags returning a dangling pointer.
+The caller of this function treats all non-zero values as an error, so
+the return value of i2c_master_recv() cannot be returned directly.
 
-Fix this by clearing napi->skb before the skb is freed.
+This fixes touch reporting when there are more than 6 active touches.
 
-Fixes: 9b8dd5e5ea48 ("gve: DQO: Add RX path")
-Cc: stable@vger.kernel.org
-Reported-by: Shailend Chand <shailend@google.com>
-Signed-off-by: Ziwei Xiao <ziweixiao@google.com>
-Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Reviewed-by: Shailend Chand <shailend@google.com>
-Reviewed-by: Praveen Kaligineedi <pkaligineedi@google.com>
-Link: https://lore.kernel.org/r/20240612001654.923887-1-ziweixiao@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ef536abd3afd1 ("Input: ili210x - define and use chip operations structure")
+Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
+Link: https://lore.kernel.org/r/20240523085624.2295988-1-jkeeping@inmusicbrands.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/google/gve/gve_rx_dqo.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/input/touchscreen/ili210x.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/google/gve/gve_rx_dqo.c b/drivers/net/ethernet/google/gve/gve_rx_dqo.c
-index 630f42a3037b0..8756f9cbd631e 100644
---- a/drivers/net/ethernet/google/gve/gve_rx_dqo.c
-+++ b/drivers/net/ethernet/google/gve/gve_rx_dqo.c
-@@ -465,11 +465,13 @@ static void gve_rx_skb_hash(struct sk_buff *skb,
- 	skb_set_hash(skb, le32_to_cpu(compl_desc->hash), hash_type);
- }
+diff --git a/drivers/input/touchscreen/ili210x.c b/drivers/input/touchscreen/ili210x.c
+index f437eefec94ad..9452a12ddb096 100644
+--- a/drivers/input/touchscreen/ili210x.c
++++ b/drivers/input/touchscreen/ili210x.c
+@@ -231,8 +231,8 @@ static int ili251x_read_touch_data(struct i2c_client *client, u8 *data)
+ 	if (!error && data[0] == 2) {
+ 		error = i2c_master_recv(client, data + ILI251X_DATA_SIZE1,
+ 					ILI251X_DATA_SIZE2);
+-		if (error >= 0 && error != ILI251X_DATA_SIZE2)
+-			error = -EIO;
++		if (error >= 0)
++			error = error == ILI251X_DATA_SIZE2 ? 0 : -EIO;
+ 	}
  
--static void gve_rx_free_skb(struct gve_rx_ring *rx)
-+static void gve_rx_free_skb(struct napi_struct *napi, struct gve_rx_ring *rx)
- {
- 	if (!rx->ctx.skb_head)
- 		return;
- 
-+	if (rx->ctx.skb_head == napi->skb)
-+		napi->skb = NULL;
- 	dev_kfree_skb_any(rx->ctx.skb_head);
- 	rx->ctx.skb_head = NULL;
- 	rx->ctx.skb_tail = NULL;
-@@ -690,7 +692,7 @@ int gve_rx_poll_dqo(struct gve_notify_block *block, int budget)
- 
- 		err = gve_rx_dqo(napi, rx, compl_desc, rx->q_num);
- 		if (err < 0) {
--			gve_rx_free_skb(rx);
-+			gve_rx_free_skb(napi, rx);
- 			u64_stats_update_begin(&rx->statss);
- 			if (err == -ENOMEM)
- 				rx->rx_skb_alloc_fail++;
-@@ -733,7 +735,7 @@ int gve_rx_poll_dqo(struct gve_notify_block *block, int budget)
- 
- 		/* gve_rx_complete_skb() will consume skb if successful */
- 		if (gve_rx_complete_skb(rx, napi, compl_desc, feat) != 0) {
--			gve_rx_free_skb(rx);
-+			gve_rx_free_skb(napi, rx);
- 			u64_stats_update_begin(&rx->statss);
- 			rx->rx_desc_err_dropped_pkt++;
- 			u64_stats_update_end(&rx->statss);
+ 	return error;
 -- 
 2.43.0
 
