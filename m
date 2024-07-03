@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4E417BB11;
-	Wed,  3 Jul 2024 10:51:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A56217BB11;
+	Wed,  3 Jul 2024 10:51:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003893; cv=none; b=FSahHG00j5iz4nD0jRWv+WcC/r3vwDn/IFBeCHk+B9NGi2TBpqsQfjoJsMQ2NSY25jwTuwcAktyQu0Ob8fdW7pJecQk9l5ZpbwPP1SPN4jFQayqAufXY9MBF8jfa50HoUnXNsJkk59T2+QmDwI9SBRJhi3nexYBNLELD0fnEYRs=
+	t=1720003896; cv=none; b=b9l4MwYG7armn+K8QTHh7YRg4DvFMCTtDK2EbhdTPAU0fLlGKr6La6xm7YVLVU5sYPM7mkqIN3saOGsddNaGZ14mnId1rYtHbSeByd41krWPDiR670x4OaxBM4c5htlNLvBBhM1e054KFjon8g+6ycI/X/JixKAl4SaLmPVSQIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003893; c=relaxed/simple;
-	bh=l5hpcUq9CsakyXnyCnbtxR2WjS2tXNUzpodKnpww6ZE=;
+	s=arc-20240116; t=1720003896; c=relaxed/simple;
+	bh=i7m8ZTUTZM8wYDv7ban4Q8zUWw9l/OrUlunLY6p7r3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vDffCynQKf88cy2rzxdiVecuY8okqgesKcF3FlnxQAB3uEuiTXSBlxY6CRnwICN40UPqeLjfc2KtpJ11OsliEV5AXskEijZDBS1RrxPc4FTBUne6Vv3qshhVot+3YXi8MYWm62Ry9ACa8+mMEtUJEdNjRL0GB6kuMwWhOBscw1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KuauXKOz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B84N5qWeJl8veKQkxezea+owf0YEfVUewaAJ++Y2PxVYykxM5tZDf1WceXSwH6WoUT7wNfYOIQQuNI0Tjk+vWIzv36+3gZPjOSk3GvfDuDgHiSbgT8cfcmburDKERN45FoImiCyLduXBCHFUo2tREGPOTdpCh14Oiv/EP95zg7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=onMl2KNv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KuauXKOz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9473C2BD10;
-	Wed,  3 Jul 2024 10:51:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="onMl2KNv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3596C2BD10;
+	Wed,  3 Jul 2024 10:51:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003893;
-	bh=l5hpcUq9CsakyXnyCnbtxR2WjS2tXNUzpodKnpww6ZE=;
+	s=korg; t=1720003896;
+	bh=i7m8ZTUTZM8wYDv7ban4Q8zUWw9l/OrUlunLY6p7r3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KuauXKOzMFdY10wey2H+wcXzKxmSFs+30FLAThgUXkJJ/qmPtvXlP3bp+OhBeNQVh
-	 U5sIzrTlWWV/4t72+/ECbQlsBg7Jzj80eQOEZrLdxpcNr4NfaeB8133OflnT0DNaHr
-	 U7o75+8kLS2lQGikMuAf+6GslZYQ7eV4bXiegAcU=
+	b=onMl2KNvYUDCD3QPKP9eu4BqphyxriWvZoIAU2Wb/6DUO94BZd1utykPHmcaedk4i
+	 8NkoMSmiz2gc9Mc4+b3SU2ojxGMZYU/+aVlm8Cem8fYmyqolD0jIxs4cqs/uddfAQk
+	 1qJu+lC//OtIZKpLvw35CU0vYAlg2XI+Ct5Xh0iA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kun(llfl)" <llfl@linux.alibaba.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Zhang Qilong <zhangqilong3@huawei.com>,
+	Peter Ujfalusi <peter.ujfalusi@ti.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 054/189] iommu/amd: Fix sysfs leak in iommu init
-Date: Wed,  3 Jul 2024 12:38:35 +0200
-Message-ID: <20240703102843.552117061@linuxfoundation.org>
+Subject: [PATCH 5.4 025/189] ASoC: ti: davinci-mcasp: remove always zero of davinci_mcasp_get_dt_params
+Date: Wed,  3 Jul 2024 12:38:06 +0200
+Message-ID: <20240703102842.457261703@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -52,42 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kun(llfl) <llfl@linux.alibaba.com>
+From: Zhang Qilong <zhangqilong3@huawei.com>
 
-[ Upstream commit a295ec52c8624883885396fde7b4df1a179627c3 ]
+[ Upstream commit 19f6e424d6150b5eede2277dbc6dfd3bf42e994f ]
 
-During the iommu initialization, iommu_init_pci() adds sysfs nodes.
-However, these nodes aren't remove in free_iommu_resources() subsequently.
+davinci_mcasp_get_dt_params alway return zero, and its return value
+could be ignored by the caller. So make it 'void' type to avoid the
+check its return value.
 
-Fixes: 39ab9555c241 ("iommu: Add sysfs bindings for struct iommu_device")
-Signed-off-by: Kun(llfl) <llfl@linux.alibaba.com>
-Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Link: https://lore.kernel.org/r/c8e0d11c6ab1ee48299c288009cf9c5dae07b42d.1715215003.git.llfl@linux.alibaba.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: 764958f2b5239 ("ASoC: ti: davinci-mcasp: Support for auxclk-fs-ratio")
+Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@ti.com>
+Link: https://lore.kernel.org/r/20201102103428.32678-1-zhangqilong3@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: d18ca8635db2 ("ASoC: ti: davinci-mcasp: Fix race condition during probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd_iommu_init.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ sound/soc/ti/davinci-mcasp.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
---- a/drivers/iommu/amd_iommu_init.c
-+++ b/drivers/iommu/amd_iommu_init.c
-@@ -1410,8 +1410,17 @@ static int __init init_iommu_from_acpi(s
- 	return 0;
+diff --git a/sound/soc/ti/davinci-mcasp.c b/sound/soc/ti/davinci-mcasp.c
+index 76267fd4a9d88..b08948ffc61d0 100644
+--- a/sound/soc/ti/davinci-mcasp.c
++++ b/sound/soc/ti/davinci-mcasp.c
+@@ -2082,20 +2082,18 @@ static inline int davinci_mcasp_init_gpiochip(struct davinci_mcasp *mcasp)
+ }
+ #endif /* CONFIG_GPIOLIB */
+ 
+-static int davinci_mcasp_get_dt_params(struct davinci_mcasp *mcasp)
++static void davinci_mcasp_get_dt_params(struct davinci_mcasp *mcasp)
+ {
+ 	struct device_node *np = mcasp->dev->of_node;
+ 	int ret;
+ 	u32 val;
+ 
+ 	if (!np)
+-		return 0;
++		return;
+ 
+ 	ret = of_property_read_u32(np, "auxclk-fs-ratio", &val);
+ 	if (ret >= 0)
+ 		mcasp->auxclk_fs_ratio = val;
+-
+-	return 0;
  }
  
-+static void __init free_sysfs(struct amd_iommu *iommu)
-+{
-+	if (iommu->iommu.dev) {
-+		iommu_device_unregister(&iommu->iommu);
-+		iommu_device_sysfs_remove(&iommu->iommu);
-+	}
-+}
-+
- static void __init free_iommu_one(struct amd_iommu *iommu)
- {
-+	free_sysfs(iommu);
- 	free_command_buffer(iommu);
- 	free_event_buffer(iommu);
- 	free_ppr_log(iommu);
+ static int davinci_mcasp_probe(struct platform_device *pdev)
+@@ -2331,9 +2329,7 @@ static int davinci_mcasp_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err;
+ 
+-	ret = davinci_mcasp_get_dt_params(mcasp);
+-	if (ret)
+-		return -EINVAL;
++	davinci_mcasp_get_dt_params(mcasp);
+ 
+ 	ret = devm_snd_soc_register_component(&pdev->dev,
+ 					&davinci_mcasp_component,
+-- 
+2.43.0
+
 
 
