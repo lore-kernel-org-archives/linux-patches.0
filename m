@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17703175545;
-	Wed,  3 Jul 2024 10:47:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025E9187349;
+	Wed,  3 Jul 2024 10:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003644; cv=none; b=YczxJwueqEaPHWge+gwe9q5goGz3GppVQpjRPIiJfIccIrSjLwrNbyqcYtW+Z/McoIM3ywdF2qvw9SyJNMdw/ZgOG21WEye3xAHMcEBdIUtoVBXr6bOgUEBfwtWmvbJjUbwc+jjY6w90TxdozfVbM+K52SSx0V+9d2PSBZcHNi4=
+	t=1720003647; cv=none; b=h2SA82fEV0LXPj9PsNg3S5Pv1b8szT61xAHZRqwdzBImtMicieLzoaVvtI91RINYb0w/+e4NcC2cD+OvYK2mFFhR0c3rNEkOUwRac+OM4/p+8h3KoMIyPrFVEe0NJMOM9FkV5BSkyIomgBjTeK/uyQ0L+dKzowYOVF/Z5j4+dlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003644; c=relaxed/simple;
-	bh=0aaYNGZGZe3j2pN8mWrWWNaNMqkRh0V3S+JChQgLM24=;
+	s=arc-20240116; t=1720003647; c=relaxed/simple;
+	bh=nEmyQBoUvAfb2x4sEWR3QMYlf+yYn765byfLNyP7OVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NqNluL8Bs41CgE0ekCHgzUt+3twDmTPxVe3tBIaQAFWkMt0KVRYRuR3hAsddBvh7aDbk0c25AofH3Zwpii4FrryzJjvuRl5xR/aScMQkcILsKx8Qs1EJAKeYZjM8l0CYZRvRw8LYSbM1l+zpg6lk0IKRK3wOrOMMD//5YnMUwbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qIpo4F1U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HzV7vhtNjZX99aI6n5QwprMsFTvL2tDCg0hwKAiiPbeYOouJQTHDFs3NfcT0NRWhZ5xcPz4p20CE99FEJdg+8Zxx1Jaqno4I7a/h3X+rGeyvf9b6bZRr5F+qaR0Ep/kLWhE+vW/O1NDcgGR4HGGLopJcY/aupZP9TlRhvoc74PQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hyQ9mvI7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qIpo4F1U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AFCFC2BD10;
-	Wed,  3 Jul 2024 10:47:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hyQ9mvI7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F5DAC2BD10;
+	Wed,  3 Jul 2024 10:47:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003643;
-	bh=0aaYNGZGZe3j2pN8mWrWWNaNMqkRh0V3S+JChQgLM24=;
+	s=korg; t=1720003646;
+	bh=nEmyQBoUvAfb2x4sEWR3QMYlf+yYn765byfLNyP7OVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qIpo4F1UGoA0//UkVrQoe8FESEdLQQYGCbsM7G+pMQ/BsrDfEfGzX7GC1hswHHir2
-	 OR6taGRLMklmPJ+WLxzpYs6QvEmMKW4LJdTAw1jQvOIEvkhGoLu3d2qEA8sRmIYhKL
-	 CvXBGTsVouKTKLP8xILV/ofkRKGNu+KNi2nzTDmI=
+	b=hyQ9mvI7n2tWNL64aKyKWy6FRKkNANWGHe9IMMCYM2/TGydHGaLfpemMvuXF0dQi8
+	 5RmLGfn8z7aDfe8fyqez/KxJ32mu1pFMtajDNhiiu+L4lQkbSAiJU1Kk3ub/t7rP5+
+	 SAoLW9GQYhBjyOAra6B3OLVMzJeMPwFvDVjV9tC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 116/139] x86: stop playing stack games in profile_pc()
-Date: Wed,  3 Jul 2024 12:40:13 +0200
-Message-ID: <20240703102834.820327776@linuxfoundation.org>
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 4.19 117/139] mmc: sdhci-pci: Convert PCIBIOS_* return codes to errnos
+Date: Wed,  3 Jul 2024 12:40:14 +0200
+Message-ID: <20240703102834.858246998@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -44,102 +45,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 093d9603b60093a9aaae942db56107f6432a5dca ]
+commit ebc4fc34eae8ddfbef49f2bdaced1bf4167ef80d upstream.
 
-The 'profile_pc()' function is used for timer-based profiling, which
-isn't really all that relevant any more to begin with, but it also ends
-up making assumptions based on the stack layout that aren't necessarily
-valid.
+jmicron_pmos() and sdhci_pci_probe() use pci_{read,write}_config_byte()
+that return PCIBIOS_* codes. The return code is then returned as is by
+jmicron_probe() and sdhci_pci_probe(). Similarly, the return code is
+also returned as is from jmicron_resume(). Both probe and resume
+functions should return normal errnos.
 
-Basically, the code tries to account the time spent in spinlocks to the
-caller rather than the spinlock, and while I support that as a concept,
-it's not worth the code complexity or the KASAN warnings when no serious
-profiling is done using timers anyway these days.
+Convert PCIBIOS_* returns code using pcibios_err_to_errno() into normal
+errno before returning them the fix these issues.
 
-And the code really does depend on stack layout that is only true in the
-simplest of cases.  We've lost the comment at some point (I think when
-the 32-bit and 64-bit code was unified), but it used to say:
-
-	Assume the lock function has either no stack frame or a copy
-	of eflags from PUSHF.
-
-which explains why it just blindly loads a word or two straight off the
-stack pointer and then takes a minimal look at the values to just check
-if they might be eflags or the return pc:
-
-	Eflags always has bits 22 and up cleared unlike kernel addresses
-
-but that basic stack layout assumption assumes that there isn't any lock
-debugging etc going on that would complicate the code and cause a stack
-frame.
-
-It causes KASAN unhappiness reported for years by syzkaller [1] and
-others [2].
-
-With no real practical reason for this any more, just remove the code.
-
-Just for historical interest, here's some background commits relating to
-this code from 2006:
-
-  0cb91a229364 ("i386: Account spinlocks to the caller during profiling for !FP kernels")
-  31679f38d886 ("Simplify profile_pc on x86-64")
-
-and a code unification from 2009:
-
-  ef4512882dbe ("x86: time_32/64.c unify profile_pc")
-
-but the basics of this thing actually goes back to before the git tree.
-
-Link: https://syzkaller.appspot.com/bug?extid=84fe685c02cd112a2ac3 [1]
-Link: https://lore.kernel.org/all/CAK55_s7Xyq=nh97=K=G1sxueOFrJDAvPOJAL4TPTCAYvmxO9_A@mail.gmail.com/ [2]
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 7582041ff3d4 ("mmc: sdhci-pci: fix simple_return.cocci warnings")
+Fixes: 45211e215984 ("sdhci: toggle JMicron PMOS setting")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20240527132443.14038-1-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/time.c | 21 +--------------------
- 1 file changed, 1 insertion(+), 20 deletions(-)
+ drivers/mmc/host/sdhci-pci-core.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/kernel/time.c b/arch/x86/kernel/time.c
-index 0680a2e9e06bb..b52ba6962325c 100644
---- a/arch/x86/kernel/time.c
-+++ b/arch/x86/kernel/time.c
-@@ -26,26 +26,7 @@
+--- a/drivers/mmc/host/sdhci-pci-core.c
++++ b/drivers/mmc/host/sdhci-pci-core.c
+@@ -1103,7 +1103,7 @@ static int jmicron_pmos(struct sdhci_pci
  
- unsigned long profile_pc(struct pt_regs *regs)
- {
--	unsigned long pc = instruction_pointer(regs);
--
--	if (!user_mode(regs) && in_lock_functions(pc)) {
--#ifdef CONFIG_FRAME_POINTER
--		return *(unsigned long *)(regs->bp + sizeof(long));
--#else
--		unsigned long *sp =
--			(unsigned long *)kernel_stack_pointer(regs);
--		/*
--		 * Return address is either directly at stack pointer
--		 * or above a saved flags. Eflags has bits 22-31 zero,
--		 * kernel addresses don't.
--		 */
--		if (sp[0] >> 22)
--			return sp[0];
--		if (sp[1] >> 22)
--			return sp[1];
--#endif
--	}
--	return pc;
-+	return instruction_pointer(regs);
+ 	ret = pci_read_config_byte(chip->pdev, 0xAE, &scratch);
+ 	if (ret)
+-		return ret;
++		goto fail;
+ 
+ 	/*
+ 	 * Turn PMOS on [bit 0], set over current detection to 2.4 V
+@@ -1114,7 +1114,10 @@ static int jmicron_pmos(struct sdhci_pci
+ 	else
+ 		scratch &= ~0x47;
+ 
+-	return pci_write_config_byte(chip->pdev, 0xAE, scratch);
++	ret = pci_write_config_byte(chip->pdev, 0xAE, scratch);
++
++fail:
++	return pcibios_err_to_errno(ret);
  }
- EXPORT_SYMBOL(profile_pc);
  
--- 
-2.43.0
-
+ static int jmicron_probe(struct sdhci_pci_chip *chip)
+@@ -1986,7 +1989,7 @@ static int sdhci_pci_probe(struct pci_de
+ 
+ 	ret = pci_read_config_byte(pdev, PCI_SLOT_INFO, &slots);
+ 	if (ret)
+-		return ret;
++		return pcibios_err_to_errno(ret);
+ 
+ 	slots = PCI_SLOT_INFO_SLOTS(slots) + 1;
+ 	dev_dbg(&pdev->dev, "found %d slot(s)\n", slots);
+@@ -1997,7 +2000,7 @@ static int sdhci_pci_probe(struct pci_de
+ 
+ 	ret = pci_read_config_byte(pdev, PCI_SLOT_INFO, &first_bar);
+ 	if (ret)
+-		return ret;
++		return pcibios_err_to_errno(ret);
+ 
+ 	first_bar &= PCI_SLOT_INFO_FIRST_BAR_MASK;
+ 
 
 
