@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A10143879;
-	Wed,  3 Jul 2024 11:13:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD85143879;
+	Wed,  3 Jul 2024 11:13:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005209; cv=none; b=qxSuF5QTRN3pkIQJogeEnDy4/2qstFJFwCQHGCB9jpZXIOI5k8230Z4gRCLDdZ5wEC1WqbZuSk785FAl0RWH4oiYbvoyYA4XZAX150Ea+e3f0rKv4LU1rrneNmVeWjY0m9M0Gx1/rnBqmMZvjYAa183U3qEHbbuwMCO0I+SlTtE=
+	t=1720005212; cv=none; b=c1npG7VQwRN/zT2EZ2aVwArZsyZm1a41LFjmerk1eHNS4oGd1l+J88AchcPVc/mm8odHvGVMYRAa18LJOPqILJrAz1HKLkuNG1mI/XthLtiAQqH3P1CjXRMHSBJURGf8cc9DX8NiCAWB8y2oxTEXC7drOjg1t4M7eyha32KbY4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005209; c=relaxed/simple;
-	bh=xQghc3YpTdtudGXOEjJZJ4R6g/U2he2piomrisU/Vlo=;
+	s=arc-20240116; t=1720005212; c=relaxed/simple;
+	bh=rnfpfTcHxE/wvkQ2mhA4x4zZEu9slPsErnYM8Kr+Ug0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bFMbkoSyo0xi6psnsBttqvfDQeW7vhSSO9jn6wUVPHRlkQHhXNGcflWK1uzLLIT9jAXiSfbo7aVQUWuBaJwdL0Y/lP0MeYfEYunpaMfXh2vTD1yByZqCMnEbgy1ssxa7cpOPrJFLucLRCZDRCvTyXxsU7yvMSI4oNWeSGSfN+Rc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vR4dISVc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hqtUoaKLhJTJPAx6R46ZVZAdCV6zDgkn6IDMrfKoE9uNmVHt1eNX+qSJn66sMRLg6xQEvfkA8RgBpEi7YmxbzQJ+D82xBikjPMy+m58eil56WI9024/uBLxB05bBfj3ym2IHj8Zc1q1N+Rrxm4e+XsCcscpAUb5A1AiZ/cKdLvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CeJEo9D7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vR4dISVc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E0F0C2BD10;
-	Wed,  3 Jul 2024 11:13:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CeJEo9D7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02554C2BD10;
+	Wed,  3 Jul 2024 11:13:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005209;
-	bh=xQghc3YpTdtudGXOEjJZJ4R6g/U2he2piomrisU/Vlo=;
+	s=korg; t=1720005212;
+	bh=rnfpfTcHxE/wvkQ2mhA4x4zZEu9slPsErnYM8Kr+Ug0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vR4dISVcbs3dXrHnLdyeu+Z/SsSvLbwgSDZ6HW87VzSB0GFhLAz9paEd2XPptIKmS
-	 S+vu7px0ACxJ2iwKKAWdRvBtBFa44WqPP7ovJUmMI4WVrF6iriOiDHUnAgmoiUwxcr
-	 hXTNGDwm6kIO1/i1yyJ5Pd5+U+39IozS9N5LYPI8=
+	b=CeJEo9D7StLc2VPCIvBfrP9jzglHOpOv6UjgzXR6q6Aw1GJrtZUgdxVN2rbYI0s+e
+	 JkHgDFTSOfqGJrEeFHBeUG6dDbgcHGFpipxjSoyTZDRH6DPMvNBVXYt56JmzhkdW4k
+	 aEfuu/VupJtaKz0xk8a1pAt/Wcc6GMFQDjTFQ/Ms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+daa36413a5cedf799ae4@syzkaller.appspotmail.com,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.10 263/290] net: can: j1939: enhanced error handling for tightly received RTS messages in xtp_rx_rts_session_new
-Date: Wed,  3 Jul 2024 12:40:44 +0200
-Message-ID: <20240703102914.076932473@linuxfoundation.org>
+	Diederik de Haas <didi.debian@cknow.org>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 5.10 264/290] kbuild: Install dtb files as 0644 in Makefile.dtbinst
+Date: Wed,  3 Jul 2024 12:40:45 +0200
+Message-ID: <20240703102914.114606364@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -51,73 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Dragan Simic <dsimic@manjaro.org>
 
-commit d3e2904f71ea0fe7eaff1d68a2b0363c888ea0fb upstream.
+commit 9cc5f3bf63aa98bd7cc7ce8a8599077fde13283e upstream.
 
-This patch enhances error handling in scenarios with RTS (Request to
-Send) messages arriving closely. It replaces the less informative WARN_ON_ONCE
-backtraces with a new error handling method. This provides clearer error
-messages and allows for the early termination of problematic sessions.
-Previously, sessions were only released at the end of j1939_xtp_rx_rts().
+The compiled dtb files aren't executable, so install them with 0644 as their
+permission mode, instead of defaulting to 0755 for the permission mode and
+installing them with the executable bits set.
 
-Potentially this could be reproduced with something like:
-testj1939 -r vcan0:0x80 &
-while true; do
-	# send first RTS
-	cansend vcan0 18EC8090#1014000303002301;
-	# send second RTS
-	cansend vcan0 18EC8090#1014000303002301;
-	# send abort
-	cansend vcan0 18EC8090#ff00000000002301;
-done
+Some Linux distributions, including Debian, [1][2][3] already include fixes
+in their kernel package build recipes to change the dtb file permissions to
+0644 in their kernel packages.  These changes, when additionally propagated
+into the long-term kernel versions, will allow such distributions to remove
+their downstream fixes.
 
-Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
-Reported-by: syzbot+daa36413a5cedf799ae4@syzkaller.appspotmail.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://lore.kernel.org/all/20231117124959.961171-1-o.rempel@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+[1] https://salsa.debian.org/kernel-team/linux/-/merge_requests/642
+[2] https://salsa.debian.org/kernel-team/linux/-/merge_requests/749
+[3] https://salsa.debian.org/kernel-team/linux/-/blob/debian/6.8.12-1/debian/rules.real#L193
+
+Cc: Diederik de Haas <didi.debian@cknow.org>
+Cc: <stable@vger.kernel.org>
+Fixes: aefd80307a05 ("kbuild: refactor Makefile.dtbinst more")
+Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/j1939/transport.c |   19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ scripts/Makefile.dtbinst |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/can/j1939/transport.c
-+++ b/net/can/j1939/transport.c
-@@ -1577,8 +1577,8 @@ j1939_session *j1939_xtp_rx_rts_session_
- 	struct j1939_sk_buff_cb skcb = *j1939_skb_to_cb(skb);
- 	struct j1939_session *session;
- 	const u8 *dat;
-+	int len, ret;
- 	pgn_t pgn;
--	int len;
+--- a/scripts/Makefile.dtbinst
++++ b/scripts/Makefile.dtbinst
+@@ -24,7 +24,7 @@ __dtbs_install: $(dtbs) $(subdirs)
+ 	@:
  
- 	netdev_dbg(priv->ndev, "%s\n", __func__);
+ quiet_cmd_dtb_install = INSTALL $@
+-      cmd_dtb_install = install -D $< $@
++      cmd_dtb_install = install -D -m 0644 $< $@
  
-@@ -1634,7 +1634,22 @@ j1939_session *j1939_xtp_rx_rts_session_
- 	session->pkt.rx = 0;
- 	session->pkt.tx = 0;
- 
--	WARN_ON_ONCE(j1939_session_activate(session));
-+	ret = j1939_session_activate(session);
-+	if (ret) {
-+		/* Entering this scope indicates an issue with the J1939 bus.
-+		 * Possible scenarios include:
-+		 * - A time lapse occurred, and a new session was initiated
-+		 *   due to another packet being sent correctly. This could
-+		 *   have been caused by too long interrupt, debugger, or being
-+		 *   out-scheduled by another task.
-+		 * - The bus is receiving numerous erroneous packets, either
-+		 *   from a malfunctioning device or during a test scenario.
-+		 */
-+		netdev_alert(priv->ndev, "%s: 0x%p: concurrent session with same addr (%02x %02x) is already active.\n",
-+			     __func__, session, skcb.addr.sa, skcb.addr.da);
-+		j1939_session_put(session);
-+		return NULL;
-+	}
- 
- 	return session;
- }
+ $(dst)/%.dtb: $(obj)/%.dtb
+ 	$(call cmd,dtb_install)
 
 
