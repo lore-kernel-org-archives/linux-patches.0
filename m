@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94CD9142E73;
-	Wed,  3 Jul 2024 10:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1914142E73;
+	Wed,  3 Jul 2024 10:42:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003352; cv=none; b=U030Z9MH4AEOBrMSQcMjgzM96SvslDcGypeRVDGMR5ypr13vccb2E6FJ6VA/Wj7Nm9tbhXqDvZ07dk66ul/m8+irMIyeNpdJ0L7je7Rvzyt1tltRAHYL4SHA60I3zDY5zM1+UfYgwCwO1jA6+suwuqZnG9wlh+4ne1YCjX6uOBg=
+	t=1720003355; cv=none; b=U3LnIFtYXiGnPD7pYINUmWEXiAfamY8cZ5nMlqFR/r8T2anDObZDnUHqSIOxFc3XtSxxyUjekA4kxewI+GEbG6A8fK/wYgIgBGXgGDazDkiOY/4e248mXcbwYqTYkVhgVGn8hj2hUfgYChXxs/SKh7foXmZkgAFGy6a5uJ6TylE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003352; c=relaxed/simple;
-	bh=CFeWUrrLuQf24cIAt8wtjuVD5Yx/CeSyjqv6lxFmYmc=;
+	s=arc-20240116; t=1720003355; c=relaxed/simple;
+	bh=MYp2TcomlwbqlYZOJMGRFZyeffG9bJlbBcQP/r8L0ZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ULFbNCADq7Kbw92S49yYKm1oWbpFI5mHylUx/J6Bibgj7Zra5BTBAoxDWnvl8yM7719kwVzwMI5gQFYRYT48nNgFhMjYvzksDx60O6M1CN081VD43krtr4GG0OVFUvbp3RBpwoe03ofs91m6wHDWlyUiYYYV4I730C8RRFMLpns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q5D5ATAc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PAs7lLN7X1KcdI9N6LFxsMeM++ZCVxdMOXh/gD5nbseUjfhZcM8giLtH+32LI3ac3ThMtvrEbyc8JDy0z9et68/vGI7qBqNs8LRXf5FFbA7xlv2djrgulhR9EOiIeLqLFiszMFpthHHW3WEbvX7Y2LCMbe8OgIAVskyU/fDGJp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=INjeWDX6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q5D5ATAc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18E34C2BD10;
-	Wed,  3 Jul 2024 10:42:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="INjeWDX6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07217C2BD10;
+	Wed,  3 Jul 2024 10:42:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003352;
-	bh=CFeWUrrLuQf24cIAt8wtjuVD5Yx/CeSyjqv6lxFmYmc=;
+	s=korg; t=1720003355;
+	bh=MYp2TcomlwbqlYZOJMGRFZyeffG9bJlbBcQP/r8L0ZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q5D5ATAcFAS9wgeYH2v4CyZM7j7LXgd6VbINgwpqL8g+G9MfOgL8eTcVgYLzhABKU
-	 QP6Pg4/W5q6ZrNMpei0gjt7VyvCgu2pRiH8FEzaUV9uQ3lYp36Qn7bj0fFOGKPphf9
-	 Vaef4+boOMZj2ia8590l5AVmFV5WgESxQ6moChCw=
+	b=INjeWDX6r8Yzjd48ALaVprK1eVud0S48Jii+rHBpDrc3ugwt2+FdLN9CepgFxo/z2
+	 5a5Bs82WPPTTBXoZq/z5MRCaihP6HHhNHEk2uTlFLQKr+HDA7Je7tGX0JxlePcI8OH
+	 iWMWUSU+P/uFSdOy9bLWO8IU69eO3/Kh18B9d2os=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
-	Liad Kaufman <liad.kaufman@intel.com>,
-	Luciano Coelho <luciano.coelho@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 003/139] wifi: iwlwifi: mvm: revert gen2 TX A-MPDU size to 64
-Date: Wed,  3 Jul 2024 12:38:20 +0200
-Message-ID: <20240703102830.564905798@linuxfoundation.org>
+Subject: [PATCH 4.19 004/139] wifi: iwlwifi: mvm: dont read past the mfuart notifcation
+Date: Wed,  3 Jul 2024 12:38:21 +0200
+Message-ID: <20240703102830.601916515@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -53,47 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 4a7aace2899711592327463c1a29ffee44fcc66e ]
+[ Upstream commit 4bb95f4535489ed830cf9b34b0a891e384d1aee4 ]
 
-We don't actually support >64 even for HE devices, so revert
-back to 64. This fixes an issue where the session is refused
-because the queue is configured differently from the actual
-session later.
+In case the firmware sends a notification that claims it has more data
+than it has, we will read past that was allocated for the notification.
+Remove the print of the buffer, we won't see it by default. If needed,
+we can see the content with tracing.
 
-Fixes: 514c30696fbc ("iwlwifi: add support for IEEE802.11ax")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Reviewed-by: Liad Kaufman <liad.kaufman@intel.com>
-Reviewed-by: Luciano Coelho <luciano.coelho@intel.com>
+This was reported by KFENCE.
+
+Fixes: bdccdb854f2f ("iwlwifi: mvm: support MFUART dump in case of MFUART assert")
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240510170500.52f7b4cf83aa.If47e43adddf7fe250ed7f5571fbb35d8221c7c47@changeid
+Link: https://msgid.link/20240513132416.ba82a01a559e.Ia91dd20f5e1ca1ad380b95e68aebf2794f553d9b@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/rs.h | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/fw.c | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rs.h b/drivers/net/wireless/intel/iwlwifi/mvm/rs.h
-index d0f47899f2849..f76f708ea98c9 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/rs.h
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/rs.h
-@@ -144,13 +144,8 @@ enum {
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
+index c7e2b88cd5abb..a46c731f70780 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
+@@ -195,20 +195,10 @@ void iwl_mvm_mfu_assert_dump_notif(struct iwl_mvm *mvm,
+ {
+ 	struct iwl_rx_packet *pkt = rxb_addr(rxb);
+ 	struct iwl_mfu_assert_dump_notif *mfu_dump_notif = (void *)pkt->data;
+-	__le32 *dump_data = mfu_dump_notif->data;
+-	int n_words = le32_to_cpu(mfu_dump_notif->data_size) / sizeof(__le32);
+-	int i;
  
- #define LINK_QUAL_AGG_FRAME_LIMIT_DEF	(63)
- #define LINK_QUAL_AGG_FRAME_LIMIT_MAX	(63)
--/*
-- * FIXME - various places in firmware API still use u8,
-- * e.g. LQ command and SCD config command.
-- * This should be 256 instead.
-- */
--#define LINK_QUAL_AGG_FRAME_LIMIT_GEN2_DEF	(255)
--#define LINK_QUAL_AGG_FRAME_LIMIT_GEN2_MAX	(255)
-+#define LINK_QUAL_AGG_FRAME_LIMIT_GEN2_DEF	(64)
-+#define LINK_QUAL_AGG_FRAME_LIMIT_GEN2_MAX	(64)
- #define LINK_QUAL_AGG_FRAME_LIMIT_MIN	(0)
+ 	if (mfu_dump_notif->index_num == 0)
+ 		IWL_INFO(mvm, "MFUART assert id 0x%x occurred\n",
+ 			 le32_to_cpu(mfu_dump_notif->assert_id));
+-
+-	for (i = 0; i < n_words; i++)
+-		IWL_DEBUG_INFO(mvm,
+-			       "MFUART assert dump, dword %u: 0x%08x\n",
+-			       le16_to_cpu(mfu_dump_notif->index_num) *
+-			       n_words + i,
+-			       le32_to_cpu(dump_data[i]));
+ }
  
- #define LQ_SIZE		2	/* 2 mode tables:  "Active" and "Search" */
+ static bool iwl_alive_fn(struct iwl_notif_wait_data *notif_wait,
 -- 
 2.43.0
 
