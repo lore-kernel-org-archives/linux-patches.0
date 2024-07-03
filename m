@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214BE175549;
-	Wed,  3 Jul 2024 11:23:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E506186E5A;
+	Wed,  3 Jul 2024 11:23:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005802; cv=none; b=nxbIdkdY3Ew+qCpKJVI7gcrLGtMN940x9mLqDoE09I1ggt60DyFzqeJ6evnxDru39OsHnV6dFC4kk6kEQRqu4K5J+OZyoIX+rkR+AfALLtXk1HwTFyhQp049v22ffGrCBCQzfyAapxYdMVfhMNv1rQ3SawQPfoBKS34IG+AOeZo=
+	t=1720005805; cv=none; b=tBKpbb8XHsAiw+LXUSJUQ63Q8X+rU6p4BGoqcWx9wUSf/vaT2f+ialkZbzWUzkT4etoGy2Xi6q/4iVS9BGyYjjn8z4dFTZq/UQt/2AxhVH7x43thK2AAPpz45rI5GTiU5Wx+sSUx3/oB2Sz/til87C2YaOoqzRIN0TiN05KPHSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005802; c=relaxed/simple;
-	bh=vBPMLiFZRLIVMNxoUqpuk3TYsHFklkR8Dhg3Bt1c49Y=;
+	s=arc-20240116; t=1720005805; c=relaxed/simple;
+	bh=Qag7OV+aaVLPZbq2BAImU5W6CT795JnUqc0RTIb2PZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YLSgqBJYe/O+IgFs0S1jJZmd4jmGbBqqnyqrHF8yoZ/II1LFM/kgVaCgC9gw9vQ2gAaB6CQw6h2BE7YZ51kial3U8f66dJn4dAngksdXovEadq9SOpIrHQ/mPKrI3pccBKccjRg/ioNs/rwQhXGiVJJ6lHADQHCKSIe1IBGxoPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HQDje62C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fyfgys+GwnacnjCUYARic2OUytwnryPp41W0EDisHsOXkF4RqBbKK5y6CrtA3iPuieWuYCFKY6Z4eHnbX5Damn9g6oZRxNrWUS0pZWykTtwcFabK2AYIJRrcCRTbq+u3eIm+kEAw9KJGLakfwgSd1t+x4xUHKP2i2VakyfbYB2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EjMVrW51; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HQDje62C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB42C2BD10;
-	Wed,  3 Jul 2024 11:23:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EjMVrW51"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F4A0C2BD10;
+	Wed,  3 Jul 2024 11:23:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005802;
-	bh=vBPMLiFZRLIVMNxoUqpuk3TYsHFklkR8Dhg3Bt1c49Y=;
+	s=korg; t=1720005805;
+	bh=Qag7OV+aaVLPZbq2BAImU5W6CT795JnUqc0RTIb2PZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HQDje62CFJdNZ+64UbT+ZvkcW0pjuBb+NGMLoCiObw/fO8fEjtP+SWGEObrWFCbcO
-	 e8ftS8Hoz+yaq6QYCOxsgEvJ9ep1J1U5W7iwUpHZKQLUnMwWGLF9DYnnyTUxnPOMVr
-	 sPPKnLNUjZDTB8edQqnJiBUC/XhEyUrgp+ZmlcHk=
+	b=EjMVrW51NVfKrqt4fJHiI9wEjBmE395eXmnkOY2C1tN6J7K1J9KwROlIQpkLvKtje
+	 dYhO9LpIb3A6aTAgxhXy4oBeXsQ5ZmG/5Ix3e3A2/52VZaBl85KCHNMaXJUZtV+fYv
+	 uIaYj/RYFqjiPAuiW7idfQDhEtJpvTPEyT4R95TQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	syzbot+b62c37cdd58103293a5a@syzkaller.appspotmail.com,
+	syzbot+cfbe1da5fdfc39efc293@syzkaller.appspotmail.com,
+	kernel test robot <oliver.sang@intel.com>,
+	Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 201/356] octeontx2-pf: Add error handling to VLAN unoffload handling
-Date: Wed,  3 Jul 2024 12:38:57 +0200
-Message-ID: <20240703102920.708413739@linuxfoundation.org>
+Subject: [PATCH 5.15 202/356] netfilter: ipset: Fix suspicious rcu_dereference_protected()
+Date: Wed,  3 Jul 2024 12:38:58 +0200
+Message-ID: <20240703102920.745866861@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,48 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Jozsef Kadlecsik <kadlec@netfilter.org>
 
-[ Upstream commit b95a4afe2defd6f46891985f9436a568cd35a31c ]
+[ Upstream commit 8ecd06277a7664f4ef018abae3abd3451d64e7a6 ]
 
-otx2_sq_append_skb makes used of __vlan_hwaccel_push_inside()
-to unoffload VLANs - push them from skb meta data into skb data.
-However, it omitts a check for __vlan_hwaccel_push_inside()
-returning NULL.
+When destroying all sets, we are either in pernet exit phase or
+are executing a "destroy all sets command" from userspace. The latter
+was taken into account in ip_set_dereference() (nfnetlink mutex is held),
+but the former was not. The patch adds the required check to
+rcu_dereference_protected() in ip_set_dereference().
 
-Found by inspection based on [1] and [2].
-Compile tested only.
-
-[1] Re: [PATCH net-next v1] net: stmmac: Enable TSO on VLANs
-    https://lore.kernel.org/all/ZmrN2W8Fye450TKs@shell.armlinux.org.uk/
-[2] Re: [PATCH net-next v2] net: stmmac: Enable TSO on VLANs
-    https://lore.kernel.org/all/CANn89i+11L5=tKsa7V7Aeyxaj6nYGRwy35PAbCRYJ73G+b25sg@mail.gmail.com/
-
-Fixes: fd9d7859db6c ("octeontx2-pf: Implement ingress/egress VLAN offload")
-Signed-off-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 4e7aaa6b82d6 ("netfilter: ipset: Fix race between namespace cleanup and gc in the list:set type")
+Reported-by: syzbot+b62c37cdd58103293a5a@syzkaller.appspotmail.com
+Reported-by: syzbot+cfbe1da5fdfc39efc293@syzkaller.appspotmail.com
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202406141556.e0b6f17e-lkp@intel.com
+Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/netfilter/ipset/ip_set_core.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
-index d1e3928a24f5c..761eb8671096e 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
-@@ -933,8 +933,11 @@ bool otx2_sq_append_skb(struct net_device *netdev, struct otx2_snd_queue *sq,
+diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
+index 8819c28a0e491..f2f6b7325c706 100644
+--- a/net/netfilter/ipset/ip_set_core.c
++++ b/net/netfilter/ipset/ip_set_core.c
+@@ -53,12 +53,13 @@ MODULE_DESCRIPTION("core IP set support");
+ MODULE_ALIAS_NFNL_SUBSYS(NFNL_SUBSYS_IPSET);
  
- 	if (skb_shinfo(skb)->gso_size && !is_hw_tso_supported(pfvf, skb)) {
- 		/* Insert vlan tag before giving pkt to tso */
--		if (skb_vlan_tag_present(skb))
-+		if (skb_vlan_tag_present(skb)) {
- 			skb = __vlan_hwaccel_push_inside(skb);
-+			if (!skb)
-+				return true;
-+		}
- 		otx2_sq_append_tso(pfvf, sq, skb, qidx);
- 		return true;
- 	}
+ /* When the nfnl mutex or ip_set_ref_lock is held: */
+-#define ip_set_dereference(p)		\
+-	rcu_dereference_protected(p,	\
++#define ip_set_dereference(inst)	\
++	rcu_dereference_protected((inst)->ip_set_list,	\
+ 		lockdep_nfnl_is_held(NFNL_SUBSYS_IPSET) || \
+-		lockdep_is_held(&ip_set_ref_lock))
++		lockdep_is_held(&ip_set_ref_lock) || \
++		(inst)->is_deleted)
+ #define ip_set(inst, id)		\
+-	ip_set_dereference((inst)->ip_set_list)[id]
++	ip_set_dereference(inst)[id]
+ #define ip_set_ref_netlink(inst,id)	\
+ 	rcu_dereference_raw((inst)->ip_set_list)[id]
+ #define ip_set_dereference_nfnl(p)	\
+@@ -1135,7 +1136,7 @@ static int ip_set_create(struct sk_buff *skb, const struct nfnl_info *info,
+ 		if (!list)
+ 			goto cleanup;
+ 		/* nfnl mutex is held, both lists are valid */
+-		tmp = ip_set_dereference(inst->ip_set_list);
++		tmp = ip_set_dereference(inst);
+ 		memcpy(list, tmp, sizeof(struct ip_set *) * inst->ip_set_max);
+ 		rcu_assign_pointer(inst->ip_set_list, list);
+ 		/* Make sure all current packets have passed through */
 -- 
 2.43.0
 
