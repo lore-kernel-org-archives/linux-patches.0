@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886E7136E2A;
-	Wed,  3 Jul 2024 10:45:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A0D136E2A;
+	Wed,  3 Jul 2024 10:46:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003559; cv=none; b=Tos2e82GUC/zG6mqxOukBQku5xdm4vDPOqMlukIxv7s63yCVGp/mq3H1u1oxaDgf1F5z1+PlSjVqxuJ3vv7vAfA16rOsJ1/2/lUiSiUeFnNUwWowulVosEr1DAcLgX+E/ipjeEhMs5cJgTE6kghZEvhMVxVO3x02nlRjFwpDzu4=
+	t=1720003562; cv=none; b=aDbdHvf5mBZq7cKbQv+ydwT1qYKnNMc5CLFXjlqXG7trrbMmiHQ+nlwfGmjwAr/+xVCt1gkOT063/L96IERwk47mfjOY4JLp0GQPORSjiE+/gqnu0ZzbdZKSeJX4UvsLINo9dDmTsY2td+k4GxW12SM5FB/cVZqQl14gqGIw7W4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003559; c=relaxed/simple;
-	bh=aj0vHtKKmiKLdMe6D6fTufXhB+PydcN/a0NGUBHeUvg=;
+	s=arc-20240116; t=1720003562; c=relaxed/simple;
+	bh=aUvMGDGXGvaPm2OsIkcznIleHeWQ7/rLeBK1ZWt8TC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cWo1kUHRxeUEbjPNrz0xpeKNa1xVMJEQjthT1C4izSGgsxP73yZsYRA2iQoOQa/RcPLgy8UMH29JfyQJcwiYFpsMqeeRdWcKo5z+CZJR5UJBHwvKU6W8eLMGM41/RgjIPH0sO0QtYGMvUJl8If7nRT/Pe980RsAnyentqRrZnNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=INlml/rl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pu0KQs3tJ6+EKivEhR8jyDGcOUMrqDYG4t9U2RhYwGQA/8q6/EbQc3VH77TG8DkAYn37tMkzcZKECXB9/0tPZLNAfuU21oRiwep37WocSu24pHzumcBX35G9rVjUjnVP83yG6SORLDevBE1WaKSRyq3+UkRKrV678zs2fkhR9Pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fcfb2umJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="INlml/rl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D37BBC2BD10;
-	Wed,  3 Jul 2024 10:45:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fcfb2umJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0489DC2BD10;
+	Wed,  3 Jul 2024 10:46:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003559;
-	bh=aj0vHtKKmiKLdMe6D6fTufXhB+PydcN/a0NGUBHeUvg=;
+	s=korg; t=1720003562;
+	bh=aUvMGDGXGvaPm2OsIkcznIleHeWQ7/rLeBK1ZWt8TC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=INlml/rlN2jexztyTe6o9lFEPOCw4qhpg8cVLlVMDOBrVRpWWaN6aSBd+M+FBa1p/
-	 6LWejgPCYms845pmkKHRxM7O+DQa2fOyHFkcfUmu8B5T/dC5e1J4FJSi48Obbm87K9
-	 2hjkBz7DFX7CV8u+7XGfsyV1eiC1DquWFQC6q29s=
+	b=Fcfb2umJUPX1Fkts0j4fZtOCfE9vupLp3IB9vQCxcONBOXjD2dsaiV+7VGpZlpDN+
+	 P/BfeTy/zO7V1cLhH8BMJOBs55W+ybJSq3DhjntN+BQYaGv8GV/+mS1P0qSfeCv9V3
+	 W/dQOEKUeu2XtG3CI4oYgBSIuvXw6ez03s8imEQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haifeng Xu <haifeng.xu@shopee.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 087/139] perf/core: Fix missing wakeup when waiting for context reference
-Date: Wed,  3 Jul 2024 12:39:44 +0200
-Message-ID: <20240703102833.725608934@linuxfoundation.org>
+	Vineeth Pillai <viremana@linux.microsoft.com>,
+	Michael Kelley <mikelley@microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
+	Dexuan Cui <decui@microsoft.com>
+Subject: [PATCH 4.19 058/139] hv_utils: drain the timesync packets on onchannelcallback
+Date: Wed,  3 Jul 2024 12:39:15 +0200
+Message-ID: <20240703102832.629887036@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102830.432293640@linuxfoundation.org>
 References: <20240703102830.432293640@linuxfoundation.org>
@@ -53,111 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haifeng Xu <haifeng.xu@shopee.com>
+From: Vineeth Pillai <viremana@linux.microsoft.com>
 
-[ Upstream commit 74751ef5c1912ebd3e65c3b65f45587e05ce5d36 ]
+commit b46b4a8a57c377b72a98c7930a9f6969d2d4784e upstream.
 
-In our production environment, we found many hung tasks which are
-blocked for more than 18 hours. Their call traces are like this:
+There could be instances where a system stall prevents the timesync
+packets to be consumed. And this might lead to more than one packet
+pending in the ring buffer. Current code empties one packet per callback
+and it might be a stale one. So drain all the packets from ring buffer
+on each callback.
 
-[346278.191038] __schedule+0x2d8/0x890
-[346278.191046] schedule+0x4e/0xb0
-[346278.191049] perf_event_free_task+0x220/0x270
-[346278.191056] ? init_wait_var_entry+0x50/0x50
-[346278.191060] copy_process+0x663/0x18d0
-[346278.191068] kernel_clone+0x9d/0x3d0
-[346278.191072] __do_sys_clone+0x5d/0x80
-[346278.191076] __x64_sys_clone+0x25/0x30
-[346278.191079] do_syscall_64+0x5c/0xc0
-[346278.191083] ? syscall_exit_to_user_mode+0x27/0x50
-[346278.191086] ? do_syscall_64+0x69/0xc0
-[346278.191088] ? irqentry_exit_to_user_mode+0x9/0x20
-[346278.191092] ? irqentry_exit+0x19/0x30
-[346278.191095] ? exc_page_fault+0x89/0x160
-[346278.191097] ? asm_exc_page_fault+0x8/0x30
-[346278.191102] entry_SYSCALL_64_after_hwframe+0x44/0xae
+Signed-off-by: Vineeth Pillai <viremana@linux.microsoft.com>
+Reviewed-by: Michael Kelley <mikelley@microsoft.com>
+Link: https://lore.kernel.org/r/20200821152849.99517-1-viremana@linux.microsoft.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+[ The upstream commit uses HV_HYP_PAGE_SIZE, which is not defined in 4.19.y.
+  Fixed this manually for 4.19.y by using PAGE_SIZE instead.
 
-The task was waiting for the refcount become to 1, but from the vmcore,
-we found the refcount has already been 1. It seems that the task didn't
-get woken up by perf_event_release_kernel() and got stuck forever. The
-below scenario may cause the problem.
-
-Thread A					Thread B
-...						...
-perf_event_free_task				perf_event_release_kernel
-						   ...
-						   acquire event->child_mutex
-						   ...
-						   get_ctx
-   ...						   release event->child_mutex
-   acquire ctx->mutex
-   ...
-   perf_free_event (acquire/release event->child_mutex)
-   ...
-   release ctx->mutex
-   wait_var_event
-						   acquire ctx->mutex
-						   acquire event->child_mutex
-						   # move existing events to free_list
-						   release event->child_mutex
-						   release ctx->mutex
-						   put_ctx
-...						...
-
-In this case, all events of the ctx have been freed, so we couldn't
-find the ctx in free_list and Thread A will miss the wakeup. It's thus
-necessary to add a wakeup after dropping the reference.
-
-Fixes: 1cf8dfe8a661 ("perf/core: Fix race between close() and fork()")
-Signed-off-by: Haifeng Xu <haifeng.xu@shopee.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Cc: stable@vger.kernel.org
-Link: https://lkml.kernel.org/r/20240513103948.33570-1-haifeng.xu@shopee.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  If there are multiple messages in the host-to-guest ringbuffer of the TimeSync
+  device, 4.19.y only handles 1 message, and later the host puts new messages
+  into the ringbuffer without signaling the guest because the ringbuffer is not
+  empty, causing a "hung" ringbuffer. Backported the mainline fix for this issue. ]
+Signed-off-by: Dexuan Cui <decui@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/hv/hv_util.c |   19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index ef422d1326a8a..c7651c30eaabf 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -4661,6 +4661,7 @@ int perf_event_release_kernel(struct perf_event *event)
- again:
- 	mutex_lock(&event->child_mutex);
- 	list_for_each_entry(child, &event->child_list, child_list) {
-+		void *var = NULL;
+--- a/drivers/hv/hv_util.c
++++ b/drivers/hv/hv_util.c
+@@ -294,10 +294,23 @@ static void timesync_onchannelcallback(v
+ 	struct ictimesync_ref_data *refdata;
+ 	u8 *time_txf_buf = util_timesynch.recv_buffer;
  
- 		/*
- 		 * Cannot change, child events are not migrated, see the
-@@ -4701,11 +4702,23 @@ int perf_event_release_kernel(struct perf_event *event)
- 			 * this can't be the last reference.
- 			 */
- 			put_event(event);
-+		} else {
-+			var = &ctx->refcount;
- 		}
- 
- 		mutex_unlock(&event->child_mutex);
- 		mutex_unlock(&ctx->mutex);
- 		put_ctx(ctx);
-+
-+		if (var) {
-+			/*
-+			 * If perf_event_free_task() has deleted all events from the
-+			 * ctx while the child_mutex got released above, make sure to
-+			 * notify about the preceding put_ctx().
-+			 */
-+			smp_mb(); /* pairs with wait_var_event() */
-+			wake_up_var(var);
+-	vmbus_recvpacket(channel, time_txf_buf,
+-			 PAGE_SIZE, &recvlen, &requestid);
++	/*
++	 * Drain the ring buffer and use the last packet to update
++	 * host_ts
++	 */
++	while (1) {
++		int ret = vmbus_recvpacket(channel, time_txf_buf,
++					   PAGE_SIZE, &recvlen,
++					   &requestid);
++		if (ret) {
++			pr_warn_once("TimeSync IC pkt recv failed (Err: %d)\n",
++				     ret);
++			break;
 +		}
- 		goto again;
- 	}
- 	mutex_unlock(&event->child_mutex);
--- 
-2.43.0
-
++
++		if (!recvlen)
++			break;
+ 
+-	if (recvlen > 0) {
+ 		icmsghdrp = (struct icmsg_hdr *)&time_txf_buf[
+ 				sizeof(struct vmbuspipe_hdr)];
+ 
 
 
