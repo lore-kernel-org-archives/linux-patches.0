@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7850717C238;
-	Wed,  3 Jul 2024 10:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8503817C238;
+	Wed,  3 Jul 2024 10:52:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003950; cv=none; b=CUbl+IBVxyNunhsS079CclOb1hksGM2x/duNf+shvpwXP9LL4fT1u3ugHG/ddpF24PztMq6VlxbFGlVtro4w1OfEyx250DjYGCFBiSp4d9XegFa90lIjqhBtxYOmqbBz6AxElOBXtGUuTwl/JPcexGZDKk6CGYMNxXg8oM0WJhA=
+	t=1720003953; cv=none; b=dEa3uYc3X0YAp68azQ8S2dZTn2/1tMsa/zIuFbxwoqGC4zGP1ehx74Ledc2mQeZL++Zj7GZk9ZB7pyNnOGd0X/zqgrRHpwGytEe78W2u87KJDtgzorAEj6KliY85k1Lj/cbFoQ7Jbd63HG3lbsoY2rkDJtvrJAEmi18tBsyx8rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003950; c=relaxed/simple;
-	bh=mJLc6JwVjbS5GTeHQPWg9VQLYIR3yyAEdkI6iq20p40=;
+	s=arc-20240116; t=1720003953; c=relaxed/simple;
+	bh=bOvs7WkpEC6DI1KWgMyabWOdO8ZAPf2cfLKXLcxoY3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kWXz925m4xZQG0wHED/WgNbBZSaXP6cLD5KB5IvTDgBlNTFGA0AX8ErnPLnsAZfJFdSzO0tEU4AEk1XmJtPBGpgY0+n0uO4Cq0S96wCAezB/yzxmTXrAVlhSQlcbhkJbIWco0B7rNZpwBRKhzvi84mpLXAX7bVjL9gOril6mVBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hJVgjjr9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H/nc/nrWJQ2Pkv2JwnPD+yqmja60HwvKr9Yy1W2gsRZ3Gq5DisBEK/qrxNH38v8F9Jw1L4eCqO7HH/fN7+XWYJb9wMsTnXHGtBli99qQ5bZjgMVXEQ++h8voaeKmOhvpc8FlXW4O+xYf903bAJRsh8RPn5g06ENT/IOs8Kbib0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k9W4MIaR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hJVgjjr9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE961C2BD10;
-	Wed,  3 Jul 2024 10:52:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k9W4MIaR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E980CC2BD10;
+	Wed,  3 Jul 2024 10:52:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003950;
-	bh=mJLc6JwVjbS5GTeHQPWg9VQLYIR3yyAEdkI6iq20p40=;
+	s=korg; t=1720003953;
+	bh=bOvs7WkpEC6DI1KWgMyabWOdO8ZAPf2cfLKXLcxoY3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hJVgjjr9otJ5rnUKf+5KkIFtG3ac6IOoYXcZ5FHqlXT6q3mPrmA3ihypNXZCatRQ6
-	 dGvURmNJROGyAG4SDMpqTFPX4MhV7dOlhGaNIigEpva0LJiENBT4OImo3U5vPqvkxM
-	 U6/PkQ7FzDTfyAr10wcDdchQN+wt5qUZTEg4adkE=
+	b=k9W4MIaRcj/EAda+SmC+Q5qW7Y2L9cOQQD+Fs2Ys/+bmfpeg2u6SWHc08w9AqfQUl
+	 czWkZMM0mxAkMEdG860G64VECnJSxAGGcZ3pB0SVKGHpA04AiKWRzkd1T8XIgr1RRi
+	 W/tfl87igD3Mu3g8hsbm5o5HfHy0syUIJCeWDfSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 057/189] liquidio: Adjust a NULL pointer handling path in lio_vf_rep_copy_packet
-Date: Wed,  3 Jul 2024 12:38:38 +0200
-Message-ID: <20240703102843.662828002@linuxfoundation.org>
+	stable@kernel.org,
+	Nuno Sa <nuno.sa@analog.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.4 075/189] dmaengine: axi-dmac: fix possible race in remove()
+Date: Wed,  3 Jul 2024 12:38:56 +0200
+Message-ID: <20240703102844.337844200@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -52,68 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Nuno Sa <nuno.sa@analog.com>
 
-[ Upstream commit c44711b78608c98a3e6b49ce91678cd0917d5349 ]
+commit 1bc31444209c8efae98cb78818131950d9a6f4d6 upstream.
 
-In lio_vf_rep_copy_packet() pg_info->page is compared to a NULL value,
-but then it is unconditionally passed to skb_add_rx_frag() which looks
-strange and could lead to null pointer dereference.
+We need to first free the IRQ before calling of_dma_controller_free().
+Otherwise we could get an interrupt and schedule a tasklet while
+removing the DMA controller.
 
-lio_vf_rep_copy_packet() call trace looks like:
-	octeon_droq_process_packets
-	 octeon_droq_fast_process_packets
-	  octeon_droq_dispatch_pkt
-	   octeon_create_recv_info
-	    ...search in the dispatch_list...
-	     ->disp_fn(rdisp->rinfo, ...)
-	      lio_vf_rep_pkt_recv(struct octeon_recv_info *recv_info, ...)
-In this path there is no code which sets pg_info->page to NULL.
-So this check looks unneeded and doesn't solve potential problem.
-But I guess the author had reason to add a check and I have no such card
-and can't do real test.
-In addition, the code in the function liquidio_push_packet() in
-liquidio/lio_core.c does exactly the same.
-
-Based on this, I consider the most acceptable compromise solution to
-adjust this issue by moving skb_add_rx_frag() into conditional scope.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 1f233f327913 ("liquidio: switchdev support for LiquidIO NIC")
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 0e3b67b348b8 ("dmaengine: Add support for the Analog Devices AXI-DMAC DMA controller")
+Cc: stable@kernel.org
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20240328-axi-dmac-devm-probe-v3-1-523c0176df70@analog.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cavium/liquidio/lio_vf_rep.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/dma/dma-axi-dmac.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/cavium/liquidio/lio_vf_rep.c b/drivers/net/ethernet/cavium/liquidio/lio_vf_rep.c
-index f3f2e71431acb..07334f83ccfe3 100644
---- a/drivers/net/ethernet/cavium/liquidio/lio_vf_rep.c
-+++ b/drivers/net/ethernet/cavium/liquidio/lio_vf_rep.c
-@@ -272,13 +272,12 @@ lio_vf_rep_copy_packet(struct octeon_device *oct,
- 				pg_info->page_offset;
- 			memcpy(skb->data, va, MIN_SKB_SIZE);
- 			skb_put(skb, MIN_SKB_SIZE);
-+			skb_add_rx_frag(skb, skb_shinfo(skb)->nr_frags,
-+					pg_info->page,
-+					pg_info->page_offset + MIN_SKB_SIZE,
-+					len - MIN_SKB_SIZE,
-+					LIO_RXBUFFER_SZ);
- 		}
--
--		skb_add_rx_frag(skb, skb_shinfo(skb)->nr_frags,
--				pg_info->page,
--				pg_info->page_offset + MIN_SKB_SIZE,
--				len - MIN_SKB_SIZE,
--				LIO_RXBUFFER_SZ);
- 	} else {
- 		struct octeon_skb_page_info *pg_info =
- 			((struct octeon_skb_page_info *)(skb->cb));
--- 
-2.43.0
-
+--- a/drivers/dma/dma-axi-dmac.c
++++ b/drivers/dma/dma-axi-dmac.c
+@@ -947,8 +947,8 @@ static int axi_dmac_remove(struct platfo
+ {
+ 	struct axi_dmac *dmac = platform_get_drvdata(pdev);
+ 
+-	of_dma_controller_free(pdev->dev.of_node);
+ 	free_irq(dmac->irq, dmac);
++	of_dma_controller_free(pdev->dev.of_node);
+ 	tasklet_kill(&dmac->chan.vchan.task);
+ 	dma_async_device_unregister(&dmac->dma_dev);
+ 	clk_disable_unprepare(dmac->clk);
 
 
