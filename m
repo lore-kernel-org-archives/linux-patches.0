@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B6B6E5ED;
-	Wed,  3 Jul 2024 11:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB4F13776F;
+	Wed,  3 Jul 2024 11:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006066; cv=none; b=IT87d/fb5E1B+5bwLZMquaEHxIt1QHYKQVS813n2wEFP8HTzBTDX/w2DS6BhEa0UTZlJ2yqmuYQfRwm1yDgKNl9RfAWnuo9xMUExxal3TOz1HsmC4uVD+UpO9Jm3VwC0so0e76Tyvej8tMYqQjktya0tFUWYkQZx/0Qf27oeL4A=
+	t=1720006069; cv=none; b=tMJdGwDDF+gtobJyPlMBCQvlB9VhsGx0ZgDW68H1QamXhGhZy3a7YDOBlBxLwjm2gsIyxGgCrJFqSsIlZu14weahHKF2QWy02QMbgPF82namg36BwOGEioszlm7PfofU/LZNyItDRIJ0tcww3bA620vQ+19BEn8A6WK3WkgZLvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006066; c=relaxed/simple;
-	bh=iO3gQu/8k3epDqhKEZ2dOksj8CINph2E4wUgqOcwhNE=;
+	s=arc-20240116; t=1720006069; c=relaxed/simple;
+	bh=id3XiZryUTKLcwSNaWNboVrWnpQ/hOe6MeyYkMHAwsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EgYi0NAiMuwp9t3istLRc9jZVxlUWxFW4ucplxqBb4QMUZV50W5+fZ02NG9pu591t0C5mjOkwk990QnY1Se9cOgSnmxHPnhi3Ouvunrat9VJ5egyFjnuXd6y2bxIgqTxYw0F+xIgiLEJzw305xlT0WWSfp0L0nHI8M21RHPt/zQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zuNCMUt0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J1ifDR0I85H9YENlhGkQlHrTgrnPOGQJEbhD0klJ+iVuixcFI1B3R3t8Zxjxt5bIYproPRFlADF9oXLKqU4IQ/TqdiEbqW6qUQIKm6NrY3qKylYrkx+NoKBvpuuFkTuS6/sMtIYKc5X/LP8r1AALj6ndBh8d/L6N6rmAIe0DV4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Atko/0Ng; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zuNCMUt0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EBF6C2BD10;
-	Wed,  3 Jul 2024 11:27:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Atko/0Ng"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 516D8C2BD10;
+	Wed,  3 Jul 2024 11:27:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720006066;
-	bh=iO3gQu/8k3epDqhKEZ2dOksj8CINph2E4wUgqOcwhNE=;
+	s=korg; t=1720006069;
+	bh=id3XiZryUTKLcwSNaWNboVrWnpQ/hOe6MeyYkMHAwsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zuNCMUt0w9yEtCoQh/Sokd+akoEOZrpHBTSduEG/Ir14qT02nRUZN3xfXM8utT85d
-	 mDGS7sNfCn7KFAuyZE0VU33wu6SYHM2IVKmjH5Si6BiiadcgtUUXKk7bNG/urMLg7f
-	 tKGWkcf+8oV7PZ9hCtkmpQkm2/k9wScQ9DP/Ee3w=
+	b=Atko/0Ngc+1Gn9A0W9aQBModeezs9/N/Ee6unYEhbkqa0Wgv0/JfBNhN+CB4QhLtD
+	 vNP4/v2C+FaITitcA1WBzVvPXPETbJ3TMYdpnPIASOn0Rn48r+LOAr0KZ+JaGOpjZZ
+	 w9mmJqaKjQFsh8dQ0a/rjblN+Nlg1to2SLKwuLfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenchao Hao <haowenchao2@huawei.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Dawei Li <dawei.li@shingroup.cn>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 290/356] RDMA/restrack: Fix potential invalid address access
-Date: Wed,  3 Jul 2024 12:40:26 +0200
-Message-ID: <20240703102924.091282889@linuxfoundation.org>
+Subject: [PATCH 5.15 291/356] net/iucv: Avoid explicit cpumask var allocation on stack
+Date: Wed,  3 Jul 2024 12:40:27 +0200
+Message-ID: <20240703102924.128156995@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -51,102 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenchao Hao <haowenchao2@huawei.com>
+From: Dawei Li <dawei.li@shingroup.cn>
 
-[ Upstream commit ca537a34775c103f7b14d7bbd976403f1d1525d8 ]
+[ Upstream commit be4e1304419c99a164b4c0e101c7c2a756b635b9 ]
 
-struct rdma_restrack_entry's kern_name was set to KBUILD_MODNAME
-in ib_create_cq(), while if the module exited but forgot del this
-rdma_restrack_entry, it would cause a invalid address access in
-rdma_restrack_clean() when print the owner of this rdma_restrack_entry.
+For CONFIG_CPUMASK_OFFSTACK=y kernel, explicit allocation of cpumask
+variable on stack is not recommended since it can cause potential stack
+overflow.
 
-These code is used to help find one forgotten PD release in one of the
-ULPs. But it is not needed anymore, so delete them.
+Instead, kernel code should always use *cpumask_var API(s) to allocate
+cpumask var in config-neutral way, leaving allocation strategy to
+CONFIG_CPUMASK_OFFSTACK.
 
-Signed-off-by: Wenchao Hao <haowenchao2@huawei.com>
-Link: https://lore.kernel.org/r/20240318092320.1215235-1-haowenchao2@huawei.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Use *cpumask_var API(s) to address it.
+
+Signed-off-by: Dawei Li <dawei.li@shingroup.cn>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240331053441.1276826-2-dawei.li@shingroup.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/restrack.c | 51 +-----------------------------
- 1 file changed, 1 insertion(+), 50 deletions(-)
+ net/iucv/iucv.c | 26 ++++++++++++++++++--------
+ 1 file changed, 18 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/infiniband/core/restrack.c b/drivers/infiniband/core/restrack.c
-index 01a499a8b88db..438ed35881752 100644
---- a/drivers/infiniband/core/restrack.c
-+++ b/drivers/infiniband/core/restrack.c
-@@ -37,22 +37,6 @@ int rdma_restrack_init(struct ib_device *dev)
- 	return 0;
- }
- 
--static const char *type2str(enum rdma_restrack_type type)
--{
--	static const char * const names[RDMA_RESTRACK_MAX] = {
--		[RDMA_RESTRACK_PD] = "PD",
--		[RDMA_RESTRACK_CQ] = "CQ",
--		[RDMA_RESTRACK_QP] = "QP",
--		[RDMA_RESTRACK_CM_ID] = "CM_ID",
--		[RDMA_RESTRACK_MR] = "MR",
--		[RDMA_RESTRACK_CTX] = "CTX",
--		[RDMA_RESTRACK_COUNTER] = "COUNTER",
--		[RDMA_RESTRACK_SRQ] = "SRQ",
--	};
--
--	return names[type];
--};
--
- /**
-  * rdma_restrack_clean() - clean resource tracking
-  * @dev:  IB device
-@@ -60,47 +44,14 @@ static const char *type2str(enum rdma_restrack_type type)
- void rdma_restrack_clean(struct ib_device *dev)
+diff --git a/net/iucv/iucv.c b/net/iucv/iucv.c
+index 68edefed79f16..30fc78236050a 100644
+--- a/net/iucv/iucv.c
++++ b/net/iucv/iucv.c
+@@ -519,7 +519,7 @@ static void iucv_setmask_mp(void)
+  */
+ static void iucv_setmask_up(void)
  {
- 	struct rdma_restrack_root *rt = dev->res;
--	struct rdma_restrack_entry *e;
--	char buf[TASK_COMM_LEN];
--	bool found = false;
--	const char *owner;
- 	int i;
+-	cpumask_t cpumask;
++	static cpumask_t cpumask;
+ 	int cpu;
  
- 	for (i = 0 ; i < RDMA_RESTRACK_MAX; i++) {
- 		struct xarray *xa = &dev->res[i].xa;
+ 	/* Disable all cpu but the first in cpu_irq_cpumask. */
+@@ -627,23 +627,33 @@ static int iucv_cpu_online(unsigned int cpu)
  
--		if (!xa_empty(xa)) {
--			unsigned long index;
--
--			if (!found) {
--				pr_err("restrack: %s", CUT_HERE);
--				dev_err(&dev->dev, "BUG: RESTRACK detected leak of resources\n");
--			}
--			xa_for_each(xa, index, e) {
--				if (rdma_is_kernel_res(e)) {
--					owner = e->kern_name;
--				} else {
--					/*
--					 * There is no need to call get_task_struct here,
--					 * because we can be here only if there are more
--					 * get_task_struct() call than put_task_struct().
--					 */
--					get_task_comm(buf, e->task);
--					owner = buf;
--				}
--
--				pr_err("restrack: %s %s object allocated by %s is not freed\n",
--				       rdma_is_kernel_res(e) ? "Kernel" :
--							       "User",
--				       type2str(e->type), owner);
--			}
--			found = true;
--		}
-+		WARN_ON(!xa_empty(xa));
- 		xa_destroy(xa);
- 	}
--	if (found)
--		pr_err("restrack: %s", CUT_HERE);
--
- 	kfree(rt);
+ static int iucv_cpu_down_prep(unsigned int cpu)
+ {
+-	cpumask_t cpumask;
++	cpumask_var_t cpumask;
++	int ret = 0;
+ 
+ 	if (!iucv_path_table)
+ 		return 0;
+ 
+-	cpumask_copy(&cpumask, &iucv_buffer_cpumask);
+-	cpumask_clear_cpu(cpu, &cpumask);
+-	if (cpumask_empty(&cpumask))
++	if (!alloc_cpumask_var(&cpumask, GFP_KERNEL))
++		return -ENOMEM;
++
++	cpumask_copy(cpumask, &iucv_buffer_cpumask);
++	cpumask_clear_cpu(cpu, cpumask);
++	if (cpumask_empty(cpumask)) {
+ 		/* Can't offline last IUCV enabled cpu. */
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto __free_cpumask;
++	}
+ 
+ 	iucv_retrieve_cpu(NULL);
+ 	if (!cpumask_empty(&iucv_irq_cpumask))
+-		return 0;
++		goto __free_cpumask;
++
+ 	smp_call_function_single(cpumask_first(&iucv_buffer_cpumask),
+ 				 iucv_allow_cpu, NULL, 1);
+-	return 0;
++
++__free_cpumask:
++	free_cpumask_var(cpumask);
++	return ret;
  }
  
+ /**
 -- 
 2.43.0
 
