@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D709C139D1E;
-	Wed,  3 Jul 2024 11:15:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774DD142903;
+	Wed,  3 Jul 2024 11:15:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005318; cv=none; b=eh8iBqylbM38fTJSMwpxBBRDMoLnXNvt5Cdkk0EA+GRhZHxWrr3UmtMthyOPbcbtDEkAWBw8v/W+r+e2x45/sOh1ASy03fpodPHfuC7AtkeLwAJUhomSBCPXbWaK9lwMNtHrMb4aznEibqGy10acYm/vjWsA+ZFdN//BD0Mvv34=
+	t=1720005321; cv=none; b=OpxA9Nn52Ip/nSd2fchq17OGfRzH/S5vPy7sgxZrzKh4U57F6gOu3mKxE3Ik3wpy9YAob5lV+JyGPi+QNQ25oTbEVuMBGDAH6NcCRKKzdszIoEz1NrSteGW8dIfV1XfzbYqVN4f7gEcSTIDTLUKwszImtSlKTj1gwlHeAcKfZxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005318; c=relaxed/simple;
-	bh=+C5FoclgxYAWnFyl5MSEmwazMPulY+rCNX4X4fJDEK8=;
+	s=arc-20240116; t=1720005321; c=relaxed/simple;
+	bh=1vYUxLgOu7AfkL8NR2IB9YJ2HTmV9yBnIrRcmwZgWCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ClocyLi+BPEjD+XpDj8E2lxtwbttv6WfDGxBQiTzOpJQinBJD02ZAY8CCNOIzo0TB9P0tv4n0vbtGE02OeL7jM0QkQDiisER9EGMDFdmmHUZmwcI/YWEef2pGwAJ3xHAaKnM5w0QxmJ4jXHx7sxOaArQ6z0vSBx0woiTQyRwyhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EGWB5KZE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oQ7X4KCBGETTBBOL6i3ZL83R/hnCDQApA6EW7XwYxd2bKmE4PvnYDSXVSJ6C28PrSBKLBRHy9UAJ3PfVzVYN3pR9yFyyoeFyM7UPdzcfDykF7zloPzqYm9HONIerdtcbR8w2LFM8K4LuOXwn8m9uRwAlGM/R01L/+8OvuVI9hf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wBzw6RLl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EGWB5KZE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F35C2BD10;
-	Wed,  3 Jul 2024 11:15:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wBzw6RLl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0ECAC2BD10;
+	Wed,  3 Jul 2024 11:15:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005318;
-	bh=+C5FoclgxYAWnFyl5MSEmwazMPulY+rCNX4X4fJDEK8=;
+	s=korg; t=1720005321;
+	bh=1vYUxLgOu7AfkL8NR2IB9YJ2HTmV9yBnIrRcmwZgWCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EGWB5KZEjczBcOmpsc0vpVKJ6gyy4po+UYQo0MUipFa0RdpDjnsEwCPpmt4aFkI+P
-	 NaQYN0AZnbwgYxbDx2iamULFNECidPz5w550Qkk6SoIJkgMAFiFNU/gtkb+SXmcSDm
-	 ST0FY+vWGHHGytWY4EZgebOIq3EklkpT1gKzfgbY=
+	b=wBzw6RLlOPSj7bs3c/LP8tuDLyixAC25Lp7jZSdKTGinVg0hfRQ2zGnNvREGsNwx2
+	 ojcbY9XUyBiN7r94C3PrijmoJd38el9TK9UnUKACvBunB8oEZOq+6f0iFshUN2bBoY
+	 pVkvJerGBsRri0V+tv6duvam9XytBo3SF+8X82tw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	Anson Jacob <Anson.Jacob@amd.com>,
-	George Shen <george.shen@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Eric Dumazet <edumazet@google.com>,
+	David Lebrun <dlebrun@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 040/356] drm/amd/display: Handle Y carry-over in VCP X.Y calculation
-Date: Wed,  3 Jul 2024 12:36:16 +0200
-Message-ID: <20240703102914.612402441@linuxfoundation.org>
+Subject: [PATCH 5.15 012/356] ipv6: sr: block BH in seg6_output_core() and seg6_input_core()
+Date: Wed,  3 Jul 2024 12:35:48 +0200
+Message-ID: <20240703102913.564701668@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -54,42 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: George Shen <george.shen@amd.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 3626a6aebe62ce7067cdc460c0c644e9445386bb ]
+[ Upstream commit c0b98ac1cc104f48763cdb27b1e9ac25fd81fc90 ]
 
-[Why/How]
-Theoretically rare corner case where ceil(Y) results in rounding
-up to an integer. If this happens, the 1 should be carried over to
-the X value.
+As explained in commit 1378817486d6 ("tipc: block BH
+before using dst_cache"), net/core/dst_cache.c
+helpers need to be called with BH disabled.
 
-Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
-Acked-by: Anson Jacob <Anson.Jacob@amd.com>
-Signed-off-by: George Shen <george.shen@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Disabling preemption in seg6_output_core() is not good enough,
+because seg6_output_core() is called from process context,
+lwtunnel_output() only uses rcu_read_lock().
+
+We might be interrupted by a softirq, re-enter seg6_output_core()
+and corrupt dst_cache data structures.
+
+Fix the race by using local_bh_disable() instead of
+preempt_disable().
+
+Apply a similar change in seg6_input_core().
+
+Fixes: fa79581ea66c ("ipv6: sr: fix several BUGs when preemption is enabled")
+Fixes: 6c8702c60b88 ("ipv6: sr: add support for SRH encapsulation and injection with lwtunnels")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: David Lebrun <dlebrun@google.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/r/20240531132636.2637995-4-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn10/dcn10_stream_encoder.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/ipv6/seg6_iptunnel.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_stream_encoder.c b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_stream_encoder.c
-index cf364ae931386..d0799c426a84d 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_stream_encoder.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_stream_encoder.c
-@@ -644,6 +644,12 @@ void enc1_stream_encoder_set_throttled_vcp_size(
- 				x),
- 			26));
+diff --git a/net/ipv6/seg6_iptunnel.c b/net/ipv6/seg6_iptunnel.c
+index f98bb719190be..135712649d25f 100644
+--- a/net/ipv6/seg6_iptunnel.c
++++ b/net/ipv6/seg6_iptunnel.c
+@@ -332,9 +332,8 @@ static int seg6_input_core(struct net *net, struct sock *sk,
  
-+	// If y rounds up to integer, carry it over to x.
-+	if (y >> 26) {
-+		x += 1;
-+		y = 0;
-+	}
-+
- 	REG_SET_2(DP_MSE_RATE_CNTL, 0,
- 		DP_MSE_RATE_X, x,
- 		DP_MSE_RATE_Y, y);
+ 	slwt = seg6_lwt_lwtunnel(orig_dst->lwtstate);
+ 
+-	preempt_disable();
++	local_bh_disable();
+ 	dst = dst_cache_get(&slwt->cache);
+-	preempt_enable();
+ 
+ 	skb_dst_drop(skb);
+ 
+@@ -342,14 +341,13 @@ static int seg6_input_core(struct net *net, struct sock *sk,
+ 		ip6_route_input(skb);
+ 		dst = skb_dst(skb);
+ 		if (!dst->error) {
+-			preempt_disable();
+ 			dst_cache_set_ip6(&slwt->cache, dst,
+ 					  &ipv6_hdr(skb)->saddr);
+-			preempt_enable();
+ 		}
+ 	} else {
+ 		skb_dst_set(skb, dst);
+ 	}
++	local_bh_enable();
+ 
+ 	err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
+ 	if (unlikely(err))
+@@ -405,9 +403,9 @@ static int seg6_output_core(struct net *net, struct sock *sk,
+ 
+ 	slwt = seg6_lwt_lwtunnel(orig_dst->lwtstate);
+ 
+-	preempt_disable();
++	local_bh_disable();
+ 	dst = dst_cache_get(&slwt->cache);
+-	preempt_enable();
++	local_bh_enable();
+ 
+ 	if (unlikely(!dst)) {
+ 		struct ipv6hdr *hdr = ipv6_hdr(skb);
+@@ -427,9 +425,9 @@ static int seg6_output_core(struct net *net, struct sock *sk,
+ 			goto drop;
+ 		}
+ 
+-		preempt_disable();
++		local_bh_disable();
+ 		dst_cache_set_ip6(&slwt->cache, dst, &fl6.saddr);
+-		preempt_enable();
++		local_bh_enable();
+ 	}
+ 
+ 	skb_dst_drop(skb);
 -- 
 2.43.0
 
