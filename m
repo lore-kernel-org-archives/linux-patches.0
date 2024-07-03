@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 371C317DA2E;
-	Wed,  3 Jul 2024 11:17:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C1817DA2E;
+	Wed,  3 Jul 2024 11:17:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005452; cv=none; b=Eq/ZuIE24kVO6GxvUoUu5YUMpsuSCN0ne4h4O/Gn6V15QFFOnkPuzqbkL9C0FjgdKTasFjnqhbKZdbFxRFptJQpohaONLS9JKGCBTu2Ilj+XAeu4qywUgEk3PoRa97aZvfudF1uLl3WP3po0synCVmWDPdQQHELJR6JHapPqyPU=
+	t=1720005455; cv=none; b=Tt7VJI/kPAvswg8HQLvzTumq3p+goy+o7ZvClbzW/0k97zeHILrnDVJxizqbQCox5Mh/Fa/Vb+NdDQ95cHCpmNkn1iEfiF1WznpCKF+iMhPMYxvPgv/IgSAhBUt7G4POmRWlYeSXyuVJN+gHZmT597MZow+47RpPN7ywHlSFcek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005452; c=relaxed/simple;
-	bh=5LQ9cN4Z7qXVhhVQ9+fmxVxeAHsKb9keBnlATHqyWIs=;
+	s=arc-20240116; t=1720005455; c=relaxed/simple;
+	bh=D9FTbvAv/drAdFoY5ZLpESZsE80X8j3BZvo6AIbiW5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hb9qzFSTKxncKwCsmVfvT5HEQW3YIQvxeWpxkYJOyFkTmGbi+mR9aDkdYXCQVvdeqs12PRdqv7XleyL7T828wfXlPwzA2vUFdRbu9aljd8pxZtrbSJCVvJd3/bq9xjN1lbkD1I8VThcIndLADN0T4uReJqzu4sk2+IMgZeZlLOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yh1BkKYg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nz2Kcx+PeUNfb7Zxx7+FlhJZcAb2qPnxzg1TdvweHmbroVnC3/DB2cYXC4epQ+ueMQ3k+YLXkIvlN/BDX3Z4Ec7ZsYMJ3uta/4+WvNaooiGua58uv/auguyTqpmJxQSzKrNToaq1JflrwxR6k25f8lkwTV+HDIfQK3OWj4Cx3is=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GAwnWWp1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yh1BkKYg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADD0FC2BD10;
-	Wed,  3 Jul 2024 11:17:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GAwnWWp1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6854C32781;
+	Wed,  3 Jul 2024 11:17:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005452;
-	bh=5LQ9cN4Z7qXVhhVQ9+fmxVxeAHsKb9keBnlATHqyWIs=;
+	s=korg; t=1720005455;
+	bh=D9FTbvAv/drAdFoY5ZLpESZsE80X8j3BZvo6AIbiW5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yh1BkKYgANcvHzAEUut02+d2CiwF0j8XxW+eSNPXqw+OjCI7tCYYSbdIeztRrfQGW
-	 QiqwiA6BXOWgxVgoHG62d7hSW8o2vz06AzFxV+UXaVveQPhQ81rSPA2NPM/xuzsHXx
-	 M9Nf13GERsHuWGl0CDQslmnCBmXw0u84n1zvRZfM=
+	b=GAwnWWp1h8xw0YNX/hk3QXyoxoAfesZJril4rYi/baQUHgZB5ZLDahvfa6Eslw4xd
+	 8fNgYPQBUoiRHecbHhDoKq6VG0oV072v1oyJ1YQfj0IgwY/F6Fze6nutAZF1pdR9bz
+	 /LEb6thgVwiDevx34sUd5LgH4Oniz56LcpAmbw/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Hanxiao <chenhx.fnst@fujitsu.com>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	ye xingchen <ye.xingchen@zte.com.cn>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 086/356] SUNRPC: return proper error from gss_wrap_req_priv
-Date: Wed,  3 Jul 2024 12:37:02 +0200
-Message-ID: <20240703102916.356873244@linuxfoundation.org>
+Subject: [PATCH 5.15 087/356] platform/x86: dell-smbios-base: Use sysfs_emit()
+Date: Wed,  3 Jul 2024 12:37:03 +0200
+Message-ID: <20240703102916.393565571@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -53,38 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Hanxiao <chenhx.fnst@fujitsu.com>
+From: ye xingchen <ye.xingchen@zte.com.cn>
 
-[ Upstream commit 33c94d7e3cb84f6d130678d6d59ba475a6c489cf ]
+[ Upstream commit bbfa903b4f9a0a76719f386367fed5e64187f577 ]
 
-don't return 0 if snd_buf->len really greater than snd_buf->buflen
+Replace the open-code with sysfs_emit() to simplify the code.
 
-Signed-off-by: Chen Hanxiao <chenhx.fnst@fujitsu.com>
-Fixes: 0c77668ddb4e ("SUNRPC: Introduce trace points in rpc_auth_gss.ko")
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
-Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: ye xingchen <ye.xingchen@zte.com.cn>
+Link: https://lore.kernel.org/r/20220923063233.239091-1-ye.xingchen@zte.com.cn
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Stable-dep-of: 1981b296f858 ("platform/x86: dell-smbios: Fix wrong token data in sysfs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/auth_gss/auth_gss.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/platform/x86/dell/dell-smbios-base.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/sunrpc/auth_gss/auth_gss.c b/net/sunrpc/auth_gss/auth_gss.c
-index 2ff66a6a7e54c..7ce4a6b7cfae6 100644
---- a/net/sunrpc/auth_gss/auth_gss.c
-+++ b/net/sunrpc/auth_gss/auth_gss.c
-@@ -1855,8 +1855,10 @@ gss_wrap_req_priv(struct rpc_cred *cred, struct gss_cl_ctx *ctx,
- 	offset = (u8 *)p - (u8 *)snd_buf->head[0].iov_base;
- 	maj_stat = gss_wrap(ctx->gc_gss_ctx, offset, snd_buf, inpages);
- 	/* slack space should prevent this ever happening: */
--	if (unlikely(snd_buf->len > snd_buf->buflen))
-+	if (unlikely(snd_buf->len > snd_buf->buflen)) {
-+		status = -EIO;
- 		goto wrap_failed;
-+	}
- 	/* We're assuming that when GSS_S_CONTEXT_EXPIRED, the encryption was
- 	 * done anyway, so it's safe to put the request on the wire: */
- 	if (maj_stat == GSS_S_CONTEXT_EXPIRED)
+diff --git a/drivers/platform/x86/dell/dell-smbios-base.c b/drivers/platform/x86/dell/dell-smbios-base.c
+index fc086b66f70b3..e61bfaf8b5c48 100644
+--- a/drivers/platform/x86/dell/dell-smbios-base.c
++++ b/drivers/platform/x86/dell/dell-smbios-base.c
+@@ -441,7 +441,7 @@ static ssize_t location_show(struct device *dev,
+ 
+ 	i = match_attribute(dev, attr);
+ 	if (i > 0)
+-		return scnprintf(buf, PAGE_SIZE, "%08x", da_tokens[i].location);
++		return sysfs_emit(buf, "%08x", da_tokens[i].location);
+ 	return 0;
+ }
+ 
+@@ -455,7 +455,7 @@ static ssize_t value_show(struct device *dev,
+ 
+ 	i = match_attribute(dev, attr);
+ 	if (i > 0)
+-		return scnprintf(buf, PAGE_SIZE, "%08x", da_tokens[i].value);
++		return sysfs_emit(buf, "%08x", da_tokens[i].value);
+ 	return 0;
+ }
+ 
 -- 
 2.43.0
 
