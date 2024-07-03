@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 626321836EF;
-	Wed,  3 Jul 2024 11:08:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B4A01741D8;
+	Wed,  3 Jul 2024 11:08:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004907; cv=none; b=kZuQ171KyvO/k3BiT+Xb+K2CXJgNwgz/9b8tzHbRRgVX4MkX7zwvry0KL/yLDMQKRoVJOcvVZkWRXMr5l1FyvrKDobO6eb9AL471RSfrO2scLIQ//Qmzp2i3vcz3mS3M4Xp7FxedgKWUIZv12Uoep/pFI5B6WzpvLQJXhp5xtX4=
+	t=1720004910; cv=none; b=UD2SP9TVSMDQc35uvRBzv9gcNTRGaOb3r/W5BkXKkpGz9VihJhGzQYzfc34bUaQqKbUvcWUdj9Hpi969a1yrKi5l9n0TMsrD0rSCbl2UtIynuJCZGdHdyR8/bSnfvuI5/Pov/4yNsXH0PjbNqOPkBfrYDM2uGPB4n3wIuwWuSfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004907; c=relaxed/simple;
-	bh=ZIlNFXgCQeK+kD4lYVi2xqRTVJ1mjiO+EDzZYw+a2Rw=;
+	s=arc-20240116; t=1720004910; c=relaxed/simple;
+	bh=wvQmGPYeTvamABULpIMyV12LdH6FgQUzPRp7Ytqc+ts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=foDOvc59sg4j1J44hKHO1mh2kdC/FBZjBETagHyvGBAr7Ps2LtNrhMIDHY6sPwUSOyIK2dk6Vdf9c6be7PSHDSOGRuGN9k1z0T8P8CDcT9dfUxh9h8PTO/l+my0gMSMWb2A7WcJ4XrXJ5wwnqUW0ZgXD/qW2TErAqEhX9eD29Go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EoD06sYx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MZ9RRkBpiii2a4apLM7tvpstAjEOd989gTTs8LP0eknA3btAiKesOriOT71bMJVynGOxphLj2WmwcoelfcbsqE49YD4OB6m1Kd6PxbrTdeuj+7rF2cjg5SeU0whWaMgrI4MIGpx1VWW41HgyB2noRa6LuSrjwBi2u0urCdc687s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bSSvoyPE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EoD06sYx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCAC6C32781;
-	Wed,  3 Jul 2024 11:08:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bSSvoyPE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11C5FC4AF0B;
+	Wed,  3 Jul 2024 11:08:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004907;
-	bh=ZIlNFXgCQeK+kD4lYVi2xqRTVJ1mjiO+EDzZYw+a2Rw=;
+	s=korg; t=1720004910;
+	bh=wvQmGPYeTvamABULpIMyV12LdH6FgQUzPRp7Ytqc+ts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EoD06sYxthez1247wAi7J/7tlhPPD4jjSupeHY6OnwyYZclxLBw/X1FzpR80bebn3
-	 P4G5GFbBc5gidjflIm7DQVi8V1R8IZaCVc80L95+x2kNBVDeZRgpuPBFShNCPfjrSM
-	 wyG1fd2ghw26pdcLxfOzcvDuruQ27d+7W0mtlD08=
+	b=bSSvoyPEHGM8+E6lPxrpTCFxZDxqy+h39IUwniqbzOO4ELGGwYGbS4r3mbF5rV1Mp
+	 TFjU2IDWOu17Qh6wJohoW3NlCD8LvI+ur6iZ9N+wxWAR2zR6ETTjJAYabg/A6Z8VdG
+	 5/gG8+H/fHwG2i3z9x5GMILXvUqU5BZ010t/yKcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ken Milmore <ken.milmore@gmail.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Shyam-sundar S-k <Shyam-sundar.S-k@amd.com>,
+	Alexander Deucher <Alexander.Deucher@amd.com>,
+	Prike Liang <prike.liang@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Julian Sikorski <belegdol@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 189/290] r8169: Fix possible ring buffer corruption on fragmented Tx packets.
-Date: Wed,  3 Jul 2024 12:39:30 +0200
-Message-ID: <20240703102911.308008043@linuxfoundation.org>
+Subject: [PATCH 5.10 198/290] ACPI: Add quirks for AMD Renoir/Lucienne CPUs to force the D3 hint
+Date: Wed,  3 Jul 2024 12:39:39 +0200
+Message-ID: <20240703102911.643064967@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -52,58 +56,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ken Milmore <ken.milmore@gmail.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit c71e3a5cffd5309d7f84444df03d5b72600cc417 ]
+[ Upstream commit 6485fc18faa01e8845b1e5bb55118e633f84d1f2 ]
 
-An issue was found on the RTL8125b when transmitting small fragmented
-packets, whereby invalid entries were inserted into the transmit ring
-buffer, subsequently leading to calls to dma_unmap_single() with a null
-address.
+AMD systems from Renoir and Lucienne require that the NVME controller
+is put into D3 over a Modern Standby / suspend-to-idle
+cycle.  This is "typically" accomplished using the `StorageD3Enable`
+property in the _DSD, but this property was introduced after many
+of these systems launched and most OEM systems don't have it in
+their BIOS.
 
-This was caused by rtl8169_start_xmit() not noticing changes to nr_frags
-which may occur when small packets are padded (to work around hardware
-quirks) in rtl8169_tso_csum_v2().
+On AMD Renoir without these drives going into D3 over suspend-to-idle
+the resume will fail with the NVME controller being reset and a trace
+like this in the kernel logs:
+```
+[   83.556118] nvme nvme0: I/O 161 QID 2 timeout, aborting
+[   83.556178] nvme nvme0: I/O 162 QID 2 timeout, aborting
+[   83.556187] nvme nvme0: I/O 163 QID 2 timeout, aborting
+[   83.556196] nvme nvme0: I/O 164 QID 2 timeout, aborting
+[   95.332114] nvme nvme0: I/O 25 QID 0 timeout, reset controller
+[   95.332843] nvme nvme0: Abort status: 0x371
+[   95.332852] nvme nvme0: Abort status: 0x371
+[   95.332856] nvme nvme0: Abort status: 0x371
+[   95.332859] nvme nvme0: Abort status: 0x371
+[   95.332909] PM: dpm_run_callback(): pci_pm_resume+0x0/0xe0 returns -16
+[   95.332936] nvme 0000:03:00.0: PM: failed to resume async: error -16
+```
 
-To fix this, postpone inspecting nr_frags until after any padding has been
-applied.
+The Microsoft documentation for StorageD3Enable mentioned that Windows has
+a hardcoded allowlist for D3 support, which was used for these platforms.
+Introduce quirks to hardcode them for Linux as well.
 
-Fixes: 9020845fb5d6 ("r8169: improve rtl8169_start_xmit")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ken Milmore <ken.milmore@gmail.com>
-Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://lore.kernel.org/r/27ead18b-c23d-4f49-a020-1fc482c5ac95@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+As this property is now "standardized", OEM systems using AMD Cezanne and
+newer APU's have adopted this property, and quirks like this should not be
+necessary.
+
+CC: Shyam-sundar S-k <Shyam-sundar.S-k@amd.com>
+CC: Alexander Deucher <Alexander.Deucher@amd.com>
+CC: Prike Liang <prike.liang@amd.com>
+Link: https://docs.microsoft.com/en-us/windows-hardware/design/component-guidelines/power-management-for-storage-hardware-devices-intro
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Tested-by: Julian Sikorski <belegdol@gmail.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Stable-dep-of: e79a10652bbd ("ACPI: x86: Force StorageD3Enable on more products")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/acpi/device_pm.c |  3 +++
+ drivers/acpi/internal.h  |  9 +++++++++
+ drivers/acpi/x86/utils.c | 25 +++++++++++++++++++++++++
+ 3 files changed, 37 insertions(+)
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index dd4404efdb8d6..d24eb5ee152a5 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -4278,11 +4278,11 @@ static void rtl8169_doorbell(struct rtl8169_private *tp)
- static netdev_tx_t rtl8169_start_xmit(struct sk_buff *skb,
- 				      struct net_device *dev)
- {
--	unsigned int frags = skb_shinfo(skb)->nr_frags;
- 	struct rtl8169_private *tp = netdev_priv(dev);
- 	unsigned int entry = tp->cur_tx % NUM_TX_DESC;
- 	struct TxDesc *txd_first, *txd_last;
- 	bool stop_queue, door_bell;
-+	unsigned int frags;
- 	u32 opts[2];
+diff --git a/drivers/acpi/device_pm.c b/drivers/acpi/device_pm.c
+index 66e53df758655..4c38846fea966 100644
+--- a/drivers/acpi/device_pm.c
++++ b/drivers/acpi/device_pm.c
+@@ -1346,6 +1346,9 @@ bool acpi_storage_d3(struct device *dev)
+ 	struct acpi_device *adev = ACPI_COMPANION(dev);
+ 	u8 val;
  
- 	if (unlikely(!rtl_tx_slots_avail(tp))) {
-@@ -4305,6 +4305,7 @@ static netdev_tx_t rtl8169_start_xmit(struct sk_buff *skb,
++	if (force_storage_d3())
++		return true;
++
+ 	if (!adev)
+ 		return false;
+ 	if (fwnode_property_read_u8(acpi_fwnode_handle(adev), "StorageD3Enable",
+diff --git a/drivers/acpi/internal.h b/drivers/acpi/internal.h
+index 125e4901c9b47..f6c929787c9e6 100644
+--- a/drivers/acpi/internal.h
++++ b/drivers/acpi/internal.h
+@@ -237,6 +237,15 @@ static inline int suspend_nvs_save(void) { return 0; }
+ static inline void suspend_nvs_restore(void) {}
+ #endif
  
- 	txd_first = tp->TxDescArray + entry;
++#ifdef CONFIG_X86
++bool force_storage_d3(void);
++#else
++static inline bool force_storage_d3(void)
++{
++	return false;
++}
++#endif
++
+ /*--------------------------------------------------------------------------
+ 				Device properties
+   -------------------------------------------------------------------------- */
+diff --git a/drivers/acpi/x86/utils.c b/drivers/acpi/x86/utils.c
+index 3f9a162be84e3..b3fb428461c6f 100644
+--- a/drivers/acpi/x86/utils.c
++++ b/drivers/acpi/x86/utils.c
+@@ -177,3 +177,28 @@ bool acpi_device_override_status(struct acpi_device *adev, unsigned long long *s
  
-+	frags = skb_shinfo(skb)->nr_frags;
- 	if (frags) {
- 		if (rtl8169_xmit_frags(tp, skb, opts, entry))
- 			goto err_dma_1;
+ 	return ret;
+ }
++
++/*
++ * AMD systems from Renoir and Lucienne *require* that the NVME controller
++ * is put into D3 over a Modern Standby / suspend-to-idle cycle.
++ *
++ * This is "typically" accomplished using the `StorageD3Enable`
++ * property in the _DSD that is checked via the `acpi_storage_d3` function
++ * but this property was introduced after many of these systems launched
++ * and most OEM systems don't have it in their BIOS.
++ *
++ * The Microsoft documentation for StorageD3Enable mentioned that Windows has
++ * a hardcoded allowlist for D3 support, which was used for these platforms.
++ *
++ * This allows quirking on Linux in a similar fashion.
++ */
++static const struct x86_cpu_id storage_d3_cpu_ids[] = {
++	X86_MATCH_VENDOR_FAM_MODEL(AMD, 23, 96, NULL),	/* Renoir */
++	X86_MATCH_VENDOR_FAM_MODEL(AMD, 23, 104, NULL),	/* Lucienne */
++	{}
++};
++
++bool force_storage_d3(void)
++{
++	return x86_match_cpu(storage_d3_cpu_ids);
++}
 -- 
 2.43.0
 
