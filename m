@@ -1,40 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20E316FF2A;
-	Wed,  3 Jul 2024 11:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 778BA17C9F2;
+	Wed,  3 Jul 2024 11:16:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720005382; cv=none; b=ic0iMejVz8k+BfYW/Cv0ZVZsyn/1VlMSBfJmml4hFnIZqfi1jrQ84DzFvFQjFY3URqGQSqwL61iLhqjIdDPvAAxi2iV9/ALKWQ4U+6W3A7QP2ALDZRj+br9WrJDet68yHwRDCBxakHG0EMPcA6uBN0bxGkMr0GqVUSZHLjcpZU8=
+	t=1720005385; cv=none; b=Is4wXsuALty8GeoUon31F1pls5Gam/Sblr+iBIk7secU1p84Kma2Jlnjg+oIzAiaH3sbF8jAdhlz/EqnKoK0R9eg+8LqOSjkY2cuAz9jnfOaIIH5ZiCg5ZCca6uytK5Z9TVOwQBK+4qbwSkKy3N+oqa5Dn4GZzwXH1GQt0HaNIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720005382; c=relaxed/simple;
-	bh=3bCxVDFYSC/8k6E1zGF34g5FisC2DeZNodIRjQMKWIE=;
+	s=arc-20240116; t=1720005385; c=relaxed/simple;
+	bh=lBGAqXnOx8Z9ggVnYAzX4PKk6rrtluSmxfzUn8u79Yw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ka38vBbJNFpdJ0IhKrh+D7NhFQtcwpy6nZMWAu43LeOQXHbZX+ngrgxCqTMQN/zfm6USDboWbwWIw0E4muipA5K082DkVtHPrv5OOZxkMsDdOEr8m+ptnZR/ILt7XNVbiarW3pMPWvOM8vhzPcYAgq2kyjyeq+fGcujGmJ1lgB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJlos+H6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oxKQRNLvex8o0cN73zMFjNIgnESaqQF1idH5nK0VdhIZaxP/2k4VrCn8OZMYAKRvXtQ3QoIC5bD2b//67nE+dk7PtHQKtSTDg9QW56DcBcDxeMIc+TEhW5Kp4FX7Gs0CvQXaI1z9WqUYy/VRi/sODKTFH3g7VxkZa2JRb68EMes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=03NiEOVT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJlos+H6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF932C2BD10;
-	Wed,  3 Jul 2024 11:16:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="03NiEOVT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B70C0C2BD10;
+	Wed,  3 Jul 2024 11:16:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720005382;
-	bh=3bCxVDFYSC/8k6E1zGF34g5FisC2DeZNodIRjQMKWIE=;
+	s=korg; t=1720005385;
+	bh=lBGAqXnOx8Z9ggVnYAzX4PKk6rrtluSmxfzUn8u79Yw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lJlos+H6qJawQoKq/ekTakfn7gmrBRj/zWUPI4HOvlhyu7r7uI6eX3pDGJDTfOYeG
-	 f8gQTLLhoyEVAzZu6tYZEpW9LfKAmZwHrB9dU19/4/i3TMr++JLZbw/7r9mTcZ9znz
-	 ixLu//CYrhPh5vGSilEVrZK++YAkaz6a2lyClvJU=
+	b=03NiEOVTewCQUWAEAFmP5O0m5AAhZvG+5Kwo8+TkNMc6PVyDg7Ju/DWZKwxD6zr+5
+	 7tQp1uB7dgao5qJEMRNj7GxtCCyc7lmYem7nPrGahnAIyRG/5sLyqe4VtNNzYmD+Rs
+	 SWfEPWHr5UebQf3oVp5pq5M3lskWdi6w/03pkV7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hamish Martin <hamish.martin@alliedtelesis.co.nz>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	David Hildenbrand <david@redhat.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Rob Herring <robh@kernel.org>,
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+	Paul Mackerras <paulus@samba.org>,
+	Frank Rowand <frowand.list@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Minchan Kim <minchan@kernel.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	John Garry via iommu <iommu@lists.linux-foundation.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 062/356] i2c: acpi: Unbind mux adapters before delete
-Date: Wed,  3 Jul 2024 12:36:38 +0200
-Message-ID: <20240703102915.440835268@linuxfoundation.org>
+Subject: [PATCH 5.15 063/356] cma: factor out minimum alignment requirement
+Date: Wed,  3 Jul 2024 12:36:39 +0200
+Message-ID: <20240703102915.484016457@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102913.093882413@linuxfoundation.org>
 References: <20240703102913.093882413@linuxfoundation.org>
@@ -53,156 +66,219 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hamish Martin <hamish.martin@alliedtelesis.co.nz>
+From: David Hildenbrand <david@redhat.com>
 
-[ Upstream commit 3f858bbf04dbac934ac279aaee05d49eb9910051 ]
+[ Upstream commit e16faf26780fc0c8dd693ea9ee8420a7706cb2f5 ]
 
-There is an issue with ACPI overlay table removal specifically related
-to I2C multiplexers.
+Patch series "mm: enforce pageblock_order < MAX_ORDER".
 
-Consider an ACPI SSDT Overlay that defines a PCA9548 I2C mux on an
-existing I2C bus. When this table is loaded we see the creation of a
-device for the overall PCA9548 chip and 8 further devices - one
-i2c_adapter each for the mux channels. These are all bound to their
-ACPI equivalents via an eventual invocation of acpi_bind_one().
+Having pageblock_order >= MAX_ORDER seems to be able to happen in corner
+cases and some parts of the kernel are not prepared for it.
 
-When we unload the SSDT overlay we run into the problem. The ACPI
-devices are deleted as normal via acpi_device_del_work_fn() and the
-acpi_device_del_list.
+For example, Aneesh has shown [1] that such kernels can be compiled on
+ppc64 with 64k base pages by setting FORCE_MAX_ZONEORDER=8, which will
+run into a WARN_ON_ONCE(order >= MAX_ORDER) in comapction code right
+during boot.
 
-However, the following warning and stack trace is output as the
-deletion does not go smoothly:
-------------[ cut here ]------------
-kernfs: can not remove 'physical_node', no directory
-WARNING: CPU: 1 PID: 11 at fs/kernfs/dir.c:1674 kernfs_remove_by_name_ns+0xb9/0xc0
-Modules linked in:
-CPU: 1 PID: 11 Comm: kworker/u128:0 Not tainted 6.8.0-rc6+ #1
-Hardware name: congatec AG conga-B7E3/conga-B7E3, BIOS 5.13 05/16/2023
-Workqueue: kacpi_hotplug acpi_device_del_work_fn
-RIP: 0010:kernfs_remove_by_name_ns+0xb9/0xc0
-Code: e4 00 48 89 ef e8 07 71 db ff 5b b8 fe ff ff ff 5d 41 5c 41 5d e9 a7 55 e4 00 0f 0b eb a6 48 c7 c7 f0 38 0d 9d e8 97 0a d5 ff <0f> 0b eb dc 0f 1f 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90
-RSP: 0018:ffff9f864008fb28 EFLAGS: 00010286
-RAX: 0000000000000000 RBX: ffff8ef90a8d4940 RCX: 0000000000000000
-RDX: ffff8f000e267d10 RSI: ffff8f000e25c780 RDI: ffff8f000e25c780
-RBP: ffff8ef9186f9870 R08: 0000000000013ffb R09: 00000000ffffbfff
-R10: 00000000ffffbfff R11: ffff8f000e0a0000 R12: ffff9f864008fb50
-R13: ffff8ef90c93dd60 R14: ffff8ef9010d0958 R15: ffff8ef9186f98c8
-FS:  0000000000000000(0000) GS:ffff8f000e240000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f48f5253a08 CR3: 00000003cb82e000 CR4: 00000000003506f0
-Call Trace:
- <TASK>
- ? kernfs_remove_by_name_ns+0xb9/0xc0
- ? __warn+0x7c/0x130
- ? kernfs_remove_by_name_ns+0xb9/0xc0
- ? report_bug+0x171/0x1a0
- ? handle_bug+0x3c/0x70
- ? exc_invalid_op+0x17/0x70
- ? asm_exc_invalid_op+0x1a/0x20
- ? kernfs_remove_by_name_ns+0xb9/0xc0
- ? kernfs_remove_by_name_ns+0xb9/0xc0
- acpi_unbind_one+0x108/0x180
- device_del+0x18b/0x490
- ? srso_return_thunk+0x5/0x5f
- ? srso_return_thunk+0x5/0x5f
- device_unregister+0xd/0x30
- i2c_del_adapter.part.0+0x1bf/0x250
- i2c_mux_del_adapters+0xa1/0xe0
- i2c_device_remove+0x1e/0x80
- device_release_driver_internal+0x19a/0x200
- bus_remove_device+0xbf/0x100
- device_del+0x157/0x490
- ? __pfx_device_match_fwnode+0x10/0x10
- ? srso_return_thunk+0x5/0x5f
- device_unregister+0xd/0x30
- i2c_acpi_notify+0x10f/0x140
- notifier_call_chain+0x58/0xd0
- blocking_notifier_call_chain+0x3a/0x60
- acpi_device_del_work_fn+0x85/0x1d0
- process_one_work+0x134/0x2f0
- worker_thread+0x2f0/0x410
- ? __pfx_worker_thread+0x10/0x10
- kthread+0xe3/0x110
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x2f/0x50
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1b/0x30
- </TASK>
----[ end trace 0000000000000000 ]---
-...
-repeated 7 more times, 1 for each channel of the mux
-...
+We can get pageblock_order >= MAX_ORDER when the default hugetlb size is
+bigger than the maximum allocation granularity of the buddy, in which
+case we are no longer talking about huge pages but instead gigantic
+pages.
 
-The issue is that the binding of the ACPI devices to their peer I2C
-adapters is not correctly cleaned up. Digging deeper into the issue we
-see that the deletion order is such that the ACPI devices matching the
-mux channel i2c adapters are deleted first during the SSDT overlay
-removal. For each of the channels we see a call to i2c_acpi_notify()
-with ACPI_RECONFIG_DEVICE_REMOVE but, because these devices are not
-actually i2c_clients, nothing is done for them.
+Having pageblock_order >= MAX_ORDER can only make alloc_contig_range()
+of such gigantic pages more likely to succeed.
 
-Later on, after each of the mux channels has been dealt with, we come
-to delete the i2c_client representing the PCA9548 device. This is the
-call stack we see above, whereby the kernel cleans up the i2c_client
-including destruction of the mux and its channel adapters. At this
-point we do attempt to unbind from the ACPI peers but those peers no
-longer exist and so we hit the kernfs errors.
+Reliable use of gigantic pages either requires boot time allcoation or
+CMA, no need to overcomplicate some places in the kernel to optimize for
+corner cases that are broken in other areas of the kernel.
 
-The fix is to augment i2c_acpi_notify() to handle i2c_adapters. But,
-given that the life cycle of the adapters is linked to the i2c_client,
-instead of deleting the i2c_adapters during the i2c_acpi_notify(), we
-just trigger unbinding of the ACPI device from the adapter device, and
-allow the clean up of the adapter to continue in the way it always has.
+This patch (of 2):
 
-Signed-off-by: Hamish Martin <hamish.martin@alliedtelesis.co.nz>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Fixes: 525e6fabeae2 ("i2c / ACPI: add support for ACPI reconfigure notifications")
-Cc: <stable@vger.kernel.org> # v4.8+
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Let's enforce pageblock_order < MAX_ORDER and simplify.
+
+Especially patch #1 can be regarded a cleanup before:
+	[PATCH v5 0/6] Use pageblock_order for cma and alloc_contig_range
+	alignment. [2]
+
+[1] https://lkml.kernel.org/r/87r189a2ks.fsf@linux.ibm.com
+[2] https://lkml.kernel.org/r/20220211164135.1803616-1-zi.yan@sent.com
+
+Link: https://lkml.kernel.org/r/20220214174132.219303-2-david@redhat.com
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Acked-by: Rob Herring <robh@kernel.org>
+Cc: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Cc: Paul Mackerras <paulus@samba.org>
+Cc: Frank Rowand <frowand.list@gmail.com>
+Cc: Michael S. Tsirkin <mst@redhat.com>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Marek Szyprowski <m.szyprowski@samsung.com>
+Cc: Robin Murphy <robin.murphy@arm.com>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: John Garry via iommu <iommu@lists.linux-foundation.org>
+
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Stable-dep-of: b174f139bdc8 ("mm/cma: drop incorrect alignment check in cma_init_reserved_mem")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/i2c-core-acpi.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ arch/powerpc/include/asm/fadump-internal.h |  5 -----
+ arch/powerpc/kernel/fadump.c               |  2 +-
+ drivers/of/of_reserved_mem.c               |  9 +++------
+ include/linux/cma.h                        |  9 +++++++++
+ kernel/dma/contiguous.c                    |  4 +---
+ mm/cma.c                                   | 20 +++++---------------
+ 6 files changed, 19 insertions(+), 30 deletions(-)
 
-diff --git a/drivers/i2c/i2c-core-acpi.c b/drivers/i2c/i2c-core-acpi.c
-index 29a482abf1eed..6ce05441178a3 100644
---- a/drivers/i2c/i2c-core-acpi.c
-+++ b/drivers/i2c/i2c-core-acpi.c
-@@ -424,6 +424,11 @@ static struct i2c_client *i2c_acpi_find_client_by_adev(struct acpi_device *adev)
- 	return i2c_find_device_by_fwnode(acpi_fwnode_handle(adev));
- }
+diff --git a/arch/powerpc/include/asm/fadump-internal.h b/arch/powerpc/include/asm/fadump-internal.h
+index 8d61c8f3fec47..d06b2be645326 100644
+--- a/arch/powerpc/include/asm/fadump-internal.h
++++ b/arch/powerpc/include/asm/fadump-internal.h
+@@ -19,11 +19,6 @@
  
-+static struct i2c_adapter *i2c_acpi_find_adapter_by_adev(struct acpi_device *adev)
-+{
-+	return i2c_find_adapter_by_fwnode(acpi_fwnode_handle(adev));
-+}
+ #define memblock_num_regions(memblock_type)	(memblock.memblock_type.cnt)
+ 
+-/* Alignment per CMA requirement. */
+-#define FADUMP_CMA_ALIGNMENT	(PAGE_SIZE <<				\
+-				 max_t(unsigned long, MAX_ORDER - 1,	\
+-				 pageblock_order))
+-
+ /* FAD commands */
+ #define FADUMP_REGISTER			1
+ #define FADUMP_UNREGISTER		2
+diff --git a/arch/powerpc/kernel/fadump.c b/arch/powerpc/kernel/fadump.c
+index d496dc5151aa1..35b142ad0e40e 100644
+--- a/arch/powerpc/kernel/fadump.c
++++ b/arch/powerpc/kernel/fadump.c
+@@ -544,7 +544,7 @@ int __init fadump_reserve_mem(void)
+ 		if (!fw_dump.nocma) {
+ 			fw_dump.boot_memory_size =
+ 				ALIGN(fw_dump.boot_memory_size,
+-				      FADUMP_CMA_ALIGNMENT);
++				      CMA_MIN_ALIGNMENT_BYTES);
+ 		}
+ #endif
+ 
+diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.c
+index 9e949ddcb1464..6ec668ae2d6fa 100644
+--- a/drivers/of/of_reserved_mem.c
++++ b/drivers/of/of_reserved_mem.c
+@@ -22,6 +22,7 @@
+ #include <linux/slab.h>
+ #include <linux/memblock.h>
+ #include <linux/kmemleak.h>
++#include <linux/cma.h>
+ 
+ #include "of_private.h"
+ 
+@@ -117,12 +118,8 @@ static int __init __reserved_mem_alloc_size(unsigned long node,
+ 	if (IS_ENABLED(CONFIG_CMA)
+ 	    && of_flat_dt_is_compatible(node, "shared-dma-pool")
+ 	    && of_get_flat_dt_prop(node, "reusable", NULL)
+-	    && !nomap) {
+-		unsigned long order =
+-			max_t(unsigned long, MAX_ORDER - 1, pageblock_order);
+-
+-		align = max(align, (phys_addr_t)PAGE_SIZE << order);
+-	}
++	    && !nomap)
++		align = max_t(phys_addr_t, align, CMA_MIN_ALIGNMENT_BYTES);
+ 
+ 	prop = of_get_flat_dt_prop(node, "alloc-ranges", &len);
+ 	if (prop) {
+diff --git a/include/linux/cma.h b/include/linux/cma.h
+index 53fd8c3cdbd04..1b302e204c09b 100644
+--- a/include/linux/cma.h
++++ b/include/linux/cma.h
+@@ -20,6 +20,15 @@
+ 
+ #define CMA_MAX_NAME 64
+ 
++/*
++ * TODO: once the buddy -- especially pageblock merging and alloc_contig_range()
++ * -- can deal with only some pageblocks of a higher-order page being
++ *  MIGRATE_CMA, we can use pageblock_nr_pages.
++ */
++#define CMA_MIN_ALIGNMENT_PAGES max_t(phys_addr_t, MAX_ORDER_NR_PAGES, \
++				      pageblock_nr_pages)
++#define CMA_MIN_ALIGNMENT_BYTES (PAGE_SIZE * CMA_MIN_ALIGNMENT_PAGES)
 +
- static int i2c_acpi_notify(struct notifier_block *nb, unsigned long value,
- 			   void *arg)
+ struct cma;
+ 
+ extern unsigned long totalcma_pages;
+diff --git a/kernel/dma/contiguous.c b/kernel/dma/contiguous.c
+index 3d63d91cba5cf..6ea80ae426228 100644
+--- a/kernel/dma/contiguous.c
++++ b/kernel/dma/contiguous.c
+@@ -399,8 +399,6 @@ static const struct reserved_mem_ops rmem_cma_ops = {
+ 
+ static int __init rmem_cma_setup(struct reserved_mem *rmem)
  {
-@@ -450,11 +455,17 @@ static int i2c_acpi_notify(struct notifier_block *nb, unsigned long value,
- 			break;
+-	phys_addr_t align = PAGE_SIZE << max(MAX_ORDER - 1, pageblock_order);
+-	phys_addr_t mask = align - 1;
+ 	unsigned long node = rmem->fdt_node;
+ 	bool default_cma = of_get_flat_dt_prop(node, "linux,cma-default", NULL);
+ 	struct cma *cma;
+@@ -416,7 +414,7 @@ static int __init rmem_cma_setup(struct reserved_mem *rmem)
+ 	    of_get_flat_dt_prop(node, "no-map", NULL))
+ 		return -EINVAL;
  
- 		client = i2c_acpi_find_client_by_adev(adev);
--		if (!client)
--			break;
-+		if (client) {
-+			i2c_unregister_device(client);
-+			put_device(&client->dev);
-+		}
-+
-+		adapter = i2c_acpi_find_adapter_by_adev(adev);
-+		if (adapter) {
-+			acpi_unbind_one(&adapter->dev);
-+			put_device(&adapter->dev);
-+		}
- 
--		i2c_unregister_device(client);
--		put_device(&client->dev);
- 		break;
+-	if ((rmem->base & mask) || (rmem->size & mask)) {
++	if (!IS_ALIGNED(rmem->base | rmem->size, CMA_MIN_ALIGNMENT_BYTES)) {
+ 		pr_err("Reserved memory: incorrect alignment of CMA region\n");
+ 		return -EINVAL;
  	}
+diff --git a/mm/cma.c b/mm/cma.c
+index 26967c70e9c73..5208aee4f45ad 100644
+--- a/mm/cma.c
++++ b/mm/cma.c
+@@ -169,7 +169,6 @@ int __init cma_init_reserved_mem(phys_addr_t base, phys_addr_t size,
+ 				 struct cma **res_cma)
+ {
+ 	struct cma *cma;
+-	phys_addr_t alignment;
  
+ 	/* Sanity checks */
+ 	if (cma_area_count == ARRAY_SIZE(cma_areas)) {
+@@ -180,15 +179,12 @@ int __init cma_init_reserved_mem(phys_addr_t base, phys_addr_t size,
+ 	if (!size || !memblock_is_region_reserved(base, size))
+ 		return -EINVAL;
+ 
+-	/* ensure minimal alignment required by mm core */
+-	alignment = PAGE_SIZE <<
+-			max_t(unsigned long, MAX_ORDER - 1, pageblock_order);
+-
+ 	/* alignment should be aligned with order_per_bit */
+-	if (!IS_ALIGNED(alignment >> PAGE_SHIFT, 1 << order_per_bit))
++	if (!IS_ALIGNED(CMA_MIN_ALIGNMENT_PAGES, 1 << order_per_bit))
+ 		return -EINVAL;
+ 
+-	if (ALIGN(base, alignment) != base || ALIGN(size, alignment) != size)
++	/* ensure minimal alignment required by mm core */
++	if (!IS_ALIGNED(base | size, CMA_MIN_ALIGNMENT_BYTES))
+ 		return -EINVAL;
+ 
+ 	/*
+@@ -263,14 +259,8 @@ int __init cma_declare_contiguous_nid(phys_addr_t base,
+ 	if (alignment && !is_power_of_2(alignment))
+ 		return -EINVAL;
+ 
+-	/*
+-	 * Sanitise input arguments.
+-	 * Pages both ends in CMA area could be merged into adjacent unmovable
+-	 * migratetype page by page allocator's buddy algorithm. In the case,
+-	 * you couldn't get a contiguous memory, which is not what we want.
+-	 */
+-	alignment = max(alignment,  (phys_addr_t)PAGE_SIZE <<
+-			  max_t(unsigned long, MAX_ORDER - 1, pageblock_order));
++	/* Sanitise input arguments. */
++	alignment = max_t(phys_addr_t, alignment, CMA_MIN_ALIGNMENT_BYTES);
+ 	if (fixed && base & (alignment - 1)) {
+ 		ret = -EINVAL;
+ 		pr_err("Region at %pa must be aligned to %pa bytes\n",
 -- 
 2.43.0
 
