@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52357178CCD;
-	Wed,  3 Jul 2024 10:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C68217084B;
+	Wed,  3 Jul 2024 10:49:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720003780; cv=none; b=hQehGS2wRIXMhSZOSqJbEgwdK6MXVVazk/CqbORGNTlIT4ciKGaWXwyc+t7MTGB11tMGm3lCnMfN+eu2Eyvhqa2nP/R3QRoB6PPkz4a6xD+YfJOHUK1I5gVspy8MAOtjNjfjEMENv0soqCT5mCEJ26BNtquLlBvypPALGZsI+F0=
+	t=1720003783; cv=none; b=S711M6CRGo0gZzesROhG+c47+Z60klHSGIotwvuiRHYUQmREcLfUDfmJTlTcd18XuHv88fETnlP/yHiSIAdCAUO494Hss6ur+hCM86buIVowYx9cPPd4F9zDnwtOMWTBAxUH+F9wKbrMQx6xlWdEkYneU/SdHMgqi9flet1O2jQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720003780; c=relaxed/simple;
-	bh=Edv2xlXjCzRB/Cgjkbqg0AQ5KPBnwKlCzd5Yfy6DW50=;
+	s=arc-20240116; t=1720003783; c=relaxed/simple;
+	bh=+AGyhvmwQEhGaaYpyxKo95vrhRLlfNcUsKH4q1jDsfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QoNWZn8TS6XbKwSjqHifc/0lEda5XulWshwY5/3eo1dd+k8AgWho9ZTVeanXsyQ9pRORyLbxUFJt1P2xIqln+5yok/e6JcV8+/t8NsLU5yk9rVnJf5VQ2C65olFVNHHB8+BnVyDMsL0ib0H1zMVIBzxbRnuC6tJudWtR26Ar/rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZepFGo4F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YWdqaIcrwNoU9+fGRjClZBHlPyCUQamGJfvLC+w4HEiK3kZPWfojRQYnAAIsaX4A41mFbXojMHamp0Tlh27QdTwXk6BOkizcdeqh3dJOJtpKL9RUFZ30m5x8ICmptjUejs17lrYhP7Cm9+80o5OHwD6PlhIjgLFpJMNhKWh1Ywo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NTmxmFO8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZepFGo4F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD926C2BD10;
-	Wed,  3 Jul 2024 10:49:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NTmxmFO8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6BB7C2BD10;
+	Wed,  3 Jul 2024 10:49:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720003780;
-	bh=Edv2xlXjCzRB/Cgjkbqg0AQ5KPBnwKlCzd5Yfy6DW50=;
+	s=korg; t=1720003783;
+	bh=+AGyhvmwQEhGaaYpyxKo95vrhRLlfNcUsKH4q1jDsfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZepFGo4FoE1n5FNU2MkoWOLwpPDHT5E8BCxKwlLJB6IGn4VD3VCvbUCpAJnEGqvTE
-	 2EnMJwywRs+UeWw+R/l0776SXd05zDKO4a7f7OE3szGjc/BCaLvhlSyLgUKBE6d6hW
-	 x5JjHwGJ/2mCaI5ixTaSBRHd8TLdJVsgDehr54gs=
+	b=NTmxmFO8zIeApiApPJ7te0kGOU4I2WaKfuS7VXGteIa5mk6BduY4m30I6vr01Qy/n
+	 av1dUctx0IC5/TfE+pdpmRS2uLLgiZ7TvhzX1tBrCRk3IKC/yzu63+pkSFBH6GvKTt
+	 WLw+84UHDfMlQDZyVS7AKrbN8SPiwYWLwN/TIc0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Remi Pommarel <repk@triplefau.lt>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 002/189] wifi: mac80211: Fix deadlock in ieee80211_sta_ps_deliver_wakeup()
-Date: Wed,  3 Jul 2024 12:37:43 +0200
-Message-ID: <20240703102841.588962628@linuxfoundation.org>
+Subject: [PATCH 5.4 020/189] af_unix: Use skb_queue_len_lockless() in sk_diag_show_rqlen().
+Date: Wed,  3 Jul 2024 12:38:01 +0200
+Message-ID: <20240703102842.267638877@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -51,107 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Remi Pommarel <repk@triplefau.lt>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 44c06bbde6443de206b30f513100b5670b23fc5e ]
+[ Upstream commit 5d915e584d8408211d4567c22685aae8820bfc55 ]
 
-The ieee80211_sta_ps_deliver_wakeup() function takes sta->ps_lock to
-synchronizes with ieee80211_tx_h_unicast_ps_buf() which is called from
-softirq context. However using only spin_lock() to get sta->ps_lock in
-ieee80211_sta_ps_deliver_wakeup() does not prevent softirq to execute
-on this same CPU, to run ieee80211_tx_h_unicast_ps_buf() and try to
-take this same lock ending in deadlock. Below is an example of rcu stall
-that arises in such situation.
+We can dump the socket queue length via UNIX_DIAG by specifying
+UDIAG_SHOW_RQLEN.
 
- rcu: INFO: rcu_sched self-detected stall on CPU
- rcu:    2-....: (42413413 ticks this GP) idle=b154/1/0x4000000000000000 softirq=1763/1765 fqs=21206996
- rcu:    (t=42586894 jiffies g=2057 q=362405 ncpus=4)
- CPU: 2 PID: 719 Comm: wpa_supplicant Tainted: G        W          6.4.0-02158-g1b062f552873 #742
- Hardware name: RPT (r1) (DT)
- pstate: 00000005 (nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : queued_spin_lock_slowpath+0x58/0x2d0
- lr : invoke_tx_handlers_early+0x5b4/0x5c0
- sp : ffff00001ef64660
- x29: ffff00001ef64660 x28: ffff000009bc1070 x27: ffff000009bc0ad8
- x26: ffff000009bc0900 x25: ffff00001ef647a8 x24: 0000000000000000
- x23: ffff000009bc0900 x22: ffff000009bc0900 x21: ffff00000ac0e000
- x20: ffff00000a279e00 x19: ffff00001ef646e8 x18: 0000000000000000
- x17: ffff800016468000 x16: ffff00001ef608c0 x15: 0010533c93f64f80
- x14: 0010395c9faa3946 x13: 0000000000000000 x12: 00000000fa83b2da
- x11: 000000012edeceea x10: ffff0000010fbe00 x9 : 0000000000895440
- x8 : 000000000010533c x7 : ffff00000ad8b740 x6 : ffff00000c350880
- x5 : 0000000000000007 x4 : 0000000000000001 x3 : 0000000000000000
- x2 : 0000000000000000 x1 : 0000000000000001 x0 : ffff00000ac0e0e8
- Call trace:
-  queued_spin_lock_slowpath+0x58/0x2d0
-  ieee80211_tx+0x80/0x12c
-  ieee80211_tx_pending+0x110/0x278
-  tasklet_action_common.constprop.0+0x10c/0x144
-  tasklet_action+0x20/0x28
-  _stext+0x11c/0x284
-  ____do_softirq+0xc/0x14
-  call_on_irq_stack+0x24/0x34
-  do_softirq_own_stack+0x18/0x20
-  do_softirq+0x74/0x7c
-  __local_bh_enable_ip+0xa0/0xa4
-  _ieee80211_wake_txqs+0x3b0/0x4b8
-  __ieee80211_wake_queue+0x12c/0x168
-  ieee80211_add_pending_skbs+0xec/0x138
-  ieee80211_sta_ps_deliver_wakeup+0x2a4/0x480
-  ieee80211_mps_sta_status_update.part.0+0xd8/0x11c
-  ieee80211_mps_sta_status_update+0x18/0x24
-  sta_apply_parameters+0x3bc/0x4c0
-  ieee80211_change_station+0x1b8/0x2dc
-  nl80211_set_station+0x444/0x49c
-  genl_family_rcv_msg_doit.isra.0+0xa4/0xfc
-  genl_rcv_msg+0x1b0/0x244
-  netlink_rcv_skb+0x38/0x10c
-  genl_rcv+0x34/0x48
-  netlink_unicast+0x254/0x2bc
-  netlink_sendmsg+0x190/0x3b4
-  ____sys_sendmsg+0x1e8/0x218
-  ___sys_sendmsg+0x68/0x8c
-  __sys_sendmsg+0x44/0x84
-  __arm64_sys_sendmsg+0x20/0x28
-  do_el0_svc+0x6c/0xe8
-  el0_svc+0x14/0x48
-  el0t_64_sync_handler+0xb0/0xb4
-  el0t_64_sync+0x14c/0x150
+If sk->sk_state is TCP_LISTEN, we return the recv queue length,
+but here we do not hold recvq lock.
 
-Using spin_lock_bh()/spin_unlock_bh() instead prevents softirq to raise
-on the same CPU that is holding the lock.
+Let's use skb_queue_len_lockless() in sk_diag_show_rqlen().
 
-Fixes: 1d147bfa6429 ("mac80211: fix AP powersave TX vs. wakeup race")
-Signed-off-by: Remi Pommarel <repk@triplefau.lt>
-Link: https://msgid.link/8e36fe07d0fbc146f89196cd47a53c8a0afe84aa.1716910344.git.repk@triplefau.lt
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: c9da99e6475f ("unix_diag: Fixup RQLEN extension report")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/sta_info.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/unix/diag.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
-index e330036e02eac..67cefa2137222 100644
---- a/net/mac80211/sta_info.c
-+++ b/net/mac80211/sta_info.c
-@@ -1326,7 +1326,7 @@ void ieee80211_sta_ps_deliver_wakeup(struct sta_info *sta)
- 	skb_queue_head_init(&pending);
+diff --git a/net/unix/diag.c b/net/unix/diag.c
+index 4666fabb04933..5bc5cb83cc6e4 100644
+--- a/net/unix/diag.c
++++ b/net/unix/diag.c
+@@ -103,7 +103,7 @@ static int sk_diag_show_rqlen(struct sock *sk, struct sk_buff *nlskb)
+ 	struct unix_diag_rqlen rql;
  
- 	/* sync with ieee80211_tx_h_unicast_ps_buf */
--	spin_lock(&sta->ps_lock);
-+	spin_lock_bh(&sta->ps_lock);
- 	/* Send all buffered frames to the station */
- 	for (ac = 0; ac < IEEE80211_NUM_ACS; ac++) {
- 		int count = skb_queue_len(&pending), tmp;
-@@ -1355,7 +1355,7 @@ void ieee80211_sta_ps_deliver_wakeup(struct sta_info *sta)
- 	 */
- 	clear_sta_flag(sta, WLAN_STA_PSPOLL);
- 	clear_sta_flag(sta, WLAN_STA_UAPSD);
--	spin_unlock(&sta->ps_lock);
-+	spin_unlock_bh(&sta->ps_lock);
- 
- 	atomic_dec(&ps->num_sta_ps);
- 
+ 	if (READ_ONCE(sk->sk_state) == TCP_LISTEN) {
+-		rql.udiag_rqueue = sk->sk_receive_queue.qlen;
++		rql.udiag_rqueue = skb_queue_len_lockless(&sk->sk_receive_queue);
+ 		rql.udiag_wqueue = sk->sk_max_ack_backlog;
+ 	} else {
+ 		rql.udiag_rqueue = (u32) unix_inq_len(sk);
 -- 
 2.43.0
 
