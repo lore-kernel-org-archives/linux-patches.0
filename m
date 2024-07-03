@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5368B184133;
-	Wed,  3 Jul 2024 10:55:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B674184133;
+	Wed,  3 Jul 2024 10:55:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004107; cv=none; b=k020k2InDKwS6oFmW0KOnVEIeq4Qc+irIffWOsaCxcBd3J3RRELaSosv1yNb6dzKrvOTGUYqGoyPEjoatHKIfHGS0P3bSTvQlfvZv2jx/wpSe0g49T6hW5gNCQej6T2EdW37jz0+1SlPRVhpsFpUiE+GLrte5C7p0PAfItoQUJc=
+	t=1720004110; cv=none; b=iIUq/ZkCrnp/W1zxRfnGDZVKzren+Ot15h0gwIYVz2zjdVNOSkueTSHxwWDGm281flpH4MHSFcFWDT7eok2h3gdt58W+UGs4GNMRsMje6p6LnoPXVFx7nz4MY7uxwlbB1u9IES5f7wiqOTFyrQ5SLF9jGVEIQOqSTozt+FqxThM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004107; c=relaxed/simple;
-	bh=c16i5lMJNTCwdKG6/nkK3sW4Bb1EiL4dPjjUv3/wdC4=;
+	s=arc-20240116; t=1720004110; c=relaxed/simple;
+	bh=Hco9e2SIjEXacUukv+Ev1O63BZTTnQ31EeAl7lsK7WQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RovGZqOuLCHanUlEWed0WP9DGqrokcgdoZnJ/AMNVp0OF9Pdxps9hvKVGMkbL3e019Vkz/J7MfMs7Aue1LmR4+oICLg+R2cIxWEStjM9Zw8DBxhZvqp6v44Nm0Yf8LCF4t7GN3Ui9MLTUt90/wOTK7j5xv9eMCyMsZdYYoprY1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KovvMlOl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IPwsuec3Y2mckcBgM8ErZdUBnpAv+YE3EzsAdKVVwrQ7R9rKUG9rJOgJfCVkjJWndMuk0EkPfnzXXFLa01XXROJp0CfaQwjeV+XpnqT9i7dEXYDkKD5nge6rOnBplHznWqrpa02lymL4NboOENEU7ghK3tCdq2faaZGAl1rJJlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hnt7toQe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KovvMlOl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C57F7C2BD10;
-	Wed,  3 Jul 2024 10:55:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hnt7toQe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF8A0C2BD10;
+	Wed,  3 Jul 2024 10:55:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004107;
-	bh=c16i5lMJNTCwdKG6/nkK3sW4Bb1EiL4dPjjUv3/wdC4=;
+	s=korg; t=1720004110;
+	bh=Hco9e2SIjEXacUukv+Ev1O63BZTTnQ31EeAl7lsK7WQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KovvMlOlZwfyIS2HO+G/aHLU2orgpZq2UnGeJ//j3R6PyiMdtrmtXDiXzUYXkv58m
-	 hUOShuWRPOhAhomsMI/h6tohrc7lQmhbti7odJfQDOa5CLqPGbUHoAfpHPSZQ1eNB8
-	 KP8Igsml9VjQnPUKLcjwYIlvOV9F1Auh1cx9Eu9o=
+	b=hnt7toQeZLBRFmsqGkBRGb80lwWlmXf1WK+9c3RY/77HvkUTfvI7IsmYHt5KURI2X
+	 9SIREcLMbK1Qb4m5fmQGwEg+H9oc6cvAIS9xTUR92ULvfsRZEcJPHMoluRyxo275sQ
+	 4hIZPXFic8RDMr5WnfX8kGc7OK9rxxLYkuCR3Vp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Hoyer <mhoyer@redhat.com>,
-	John Meneghini <jmeneghi@redhat.com>,
-	Manish Rangankar <mrangankar@marvell.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Uri Arev <me@wantyapps.xyz>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 093/189] scsi: qedi: Fix crash while reading debugfs attribute
-Date: Wed,  3 Jul 2024 12:39:14 +0200
-Message-ID: <20240703102845.011900791@linuxfoundation.org>
+Subject: [PATCH 5.4 094/189] Bluetooth: ath3k: Fix multiple issues reported by checkpatch.pl
+Date: Wed,  3 Jul 2024 12:39:15 +0200
+Message-ID: <20240703102845.049768403@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102841.492044697@linuxfoundation.org>
 References: <20240703102841.492044697@linuxfoundation.org>
@@ -53,93 +51,188 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manish Rangankar <mrangankar@marvell.com>
+From: Uri Arev <me@wantyapps.xyz>
 
-[ Upstream commit 28027ec8e32ecbadcd67623edb290dad61e735b5 ]
+[ Upstream commit 68aa21054ec3a1a313af90a5f95ade16c3326d20 ]
 
-The qedi_dbg_do_not_recover_cmd_read() function invokes sprintf() directly
-on a __user pointer, which results into the crash.
+This fixes some CHECKs reported by the checkpatch script.
 
-To fix this issue, use a small local stack buffer for sprintf() and then
-call simple_read_from_buffer(), which in turns make the copy_to_user()
-call.
+Issues reported in ath3k.c:
+-------
+ath3k.c
+-------
+CHECK: Please don't use multiple blank lines
++
++
 
-BUG: unable to handle page fault for address: 00007f4801111000
-PGD 8000000864df6067 P4D 8000000864df6067 PUD 864df7067 PMD 846028067 PTE 0
-Oops: 0002 [#1] PREEMPT SMP PTI
-Hardware name: HPE ProLiant DL380 Gen10/ProLiant DL380 Gen10, BIOS U30 06/15/2023
-RIP: 0010:memcpy_orig+0xcd/0x130
-RSP: 0018:ffffb7a18c3ffc40 EFLAGS: 00010202
-RAX: 00007f4801111000 RBX: 00007f4801111000 RCX: 000000000000000f
-RDX: 000000000000000f RSI: ffffffffc0bfd7a0 RDI: 00007f4801111000
-RBP: ffffffffc0bfd7a0 R08: 725f746f6e5f6f64 R09: 3d7265766f636572
-R10: ffffb7a18c3ffd08 R11: 0000000000000000 R12: 00007f4881110fff
-R13: 000000007fffffff R14: ffffb7a18c3ffca0 R15: ffffffffc0bfd7af
-FS:  00007f480118a740(0000) GS:ffff98e38af00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f4801111000 CR3: 0000000864b8e001 CR4: 00000000007706e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Call Trace:
- <TASK>
- ? __die_body+0x1a/0x60
- ? page_fault_oops+0x183/0x510
- ? exc_page_fault+0x69/0x150
- ? asm_exc_page_fault+0x22/0x30
- ? memcpy_orig+0xcd/0x130
- vsnprintf+0x102/0x4c0
- sprintf+0x51/0x80
- qedi_dbg_do_not_recover_cmd_read+0x2f/0x50 [qedi 6bcfdeeecdea037da47069eca2ba717c84a77324]
- full_proxy_read+0x50/0x80
- vfs_read+0xa5/0x2e0
- ? folio_add_new_anon_rmap+0x44/0xa0
- ? set_pte_at+0x15/0x30
- ? do_pte_missing+0x426/0x7f0
- ksys_read+0xa5/0xe0
- do_syscall_64+0x58/0x80
- ? __count_memcg_events+0x46/0x90
- ? count_memcg_event_mm+0x3d/0x60
- ? handle_mm_fault+0x196/0x2f0
- ? do_user_addr_fault+0x267/0x890
- ? exc_page_fault+0x69/0x150
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-RIP: 0033:0x7f4800f20b4d
+CHECK: Blank lines aren't necessary after an open brace '{'
++static const struct usb_device_id ath3k_blist_tbl[] = {
++
 
-Tested-by: Martin Hoyer <mhoyer@redhat.com>
-Reviewed-by: John Meneghini <jmeneghi@redhat.com>
-Signed-off-by: Manish Rangankar <mrangankar@marvell.com>
-Link: https://lore.kernel.org/r/20240415072155.30840-1-mrangankar@marvell.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+CHECK: Alignment should match open parenthesis
++static int ath3k_load_firmware(struct usb_device *udev,
++                               const struct firmware *firmware)
+
+CHECK: Alignment should match open parenthesis
++               err = usb_bulk_msg(udev, pipe, send_buf, size,
++                                       &len, 3000);
+
+CHECK: Unnecessary parentheses around 'len != size'
++               if (err || (len != size)) {
+
+CHECK: Alignment should match open parenthesis
++static int ath3k_get_version(struct usb_device *udev,
++                       struct ath3k_version *version)
+
+CHECK: Alignment should match open parenthesis
++static int ath3k_load_fwfile(struct usb_device *udev,
++               const struct firmware *firmware)
+
+CHECK: Alignment should match open parenthesis
++               err = usb_bulk_msg(udev, pipe, send_buf, size,
++                                       &len, 3000);
+
+CHECK: Unnecessary parentheses around 'len != size'
++               if (err || (len != size)) {
+
+CHECK: Blank lines aren't necessary after an open brace '{'
++       switch (fw_version.ref_clock) {
++
+
+CHECK: Alignment should match open parenthesis
++       snprintf(filename, ATH3K_NAME_LEN, "ar3k/ramps_0x%08x_%d%s",
++               le32_to_cpu(fw_version.rom_version), clk_value, ".dfu");
+
+CHECK: Alignment should match open parenthesis
++static int ath3k_probe(struct usb_interface *intf,
++                       const struct usb_device_id *id)
+
+CHECK: Alignment should match open parenthesis
++                       BT_ERR("Firmware file \"%s\" not found",
++                                                       ATH3K_FIRMWARE);
+
+CHECK: Alignment should match open parenthesis
++               BT_ERR("Firmware file \"%s\" request failed (err=%d)",
++                                               ATH3K_FIRMWARE, ret);
+
+total: 0 errors, 0 warnings, 14 checks, 540 lines checked
+
+Signed-off-by: Uri Arev <me@wantyapps.xyz>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qedi/qedi_debugfs.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ drivers/bluetooth/ath3k.c | 25 +++++++++++--------------
+ 1 file changed, 11 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/scsi/qedi/qedi_debugfs.c b/drivers/scsi/qedi/qedi_debugfs.c
-index 42f5afb60055c..6e724f47ab9e8 100644
---- a/drivers/scsi/qedi/qedi_debugfs.c
-+++ b/drivers/scsi/qedi/qedi_debugfs.c
-@@ -120,15 +120,11 @@ static ssize_t
- qedi_dbg_do_not_recover_cmd_read(struct file *filp, char __user *buffer,
- 				 size_t count, loff_t *ppos)
- {
--	size_t cnt = 0;
--
--	if (*ppos)
--		return 0;
-+	char buf[64];
-+	int len;
+diff --git a/drivers/bluetooth/ath3k.c b/drivers/bluetooth/ath3k.c
+index 4ce2705136952..d108202d2ec19 100644
+--- a/drivers/bluetooth/ath3k.c
++++ b/drivers/bluetooth/ath3k.c
+@@ -3,7 +3,6 @@
+  * Copyright (c) 2008-2009 Atheros Communications Inc.
+  */
  
--	cnt = sprintf(buffer, "do_not_recover=%d\n", qedi_do_not_recover);
--	cnt = min_t(int, count, cnt - *ppos);
--	*ppos += cnt;
--	return cnt;
-+	len = sprintf(buf, "do_not_recover=%d\n", qedi_do_not_recover);
-+	return simple_read_from_buffer(buffer, count, ppos, buf, len);
+-
+ #include <linux/module.h>
+ #include <linux/kernel.h>
+ #include <linux/init.h>
+@@ -129,7 +128,6 @@ MODULE_DEVICE_TABLE(usb, ath3k_table);
+  * for AR3012
+  */
+ static const struct usb_device_id ath3k_blist_tbl[] = {
+-
+ 	/* Atheros AR3012 with sflash firmware*/
+ 	{ USB_DEVICE(0x0489, 0xe04e), .driver_info = BTUSB_ATH3012 },
+ 	{ USB_DEVICE(0x0489, 0xe04d), .driver_info = BTUSB_ATH3012 },
+@@ -203,7 +201,7 @@ static inline void ath3k_log_failed_loading(int err, int len, int size,
+ #define TIMEGAP_USEC_MAX	100
+ 
+ static int ath3k_load_firmware(struct usb_device *udev,
+-				const struct firmware *firmware)
++			       const struct firmware *firmware)
+ {
+ 	u8 *send_buf;
+ 	int len = 0;
+@@ -241,9 +239,9 @@ static int ath3k_load_firmware(struct usb_device *udev,
+ 		memcpy(send_buf, firmware->data + sent, size);
+ 
+ 		err = usb_bulk_msg(udev, pipe, send_buf, size,
+-					&len, 3000);
++				   &len, 3000);
+ 
+-		if (err || (len != size)) {
++		if (err || len != size) {
+ 			ath3k_log_failed_loading(err, len, size, count);
+ 			goto error;
+ 		}
+@@ -278,7 +276,7 @@ static int ath3k_get_state(struct usb_device *udev, unsigned char *state)
  }
  
- static int
+ static int ath3k_get_version(struct usb_device *udev,
+-			struct ath3k_version *version)
++			     struct ath3k_version *version)
+ {
+ 	int ret, pipe = 0;
+ 	struct ath3k_version *buf;
+@@ -300,7 +298,7 @@ static int ath3k_get_version(struct usb_device *udev,
+ }
+ 
+ static int ath3k_load_fwfile(struct usb_device *udev,
+-		const struct firmware *firmware)
++			     const struct firmware *firmware)
+ {
+ 	u8 *send_buf;
+ 	int len = 0;
+@@ -341,8 +339,8 @@ static int ath3k_load_fwfile(struct usb_device *udev,
+ 		memcpy(send_buf, firmware->data + sent, size);
+ 
+ 		err = usb_bulk_msg(udev, pipe, send_buf, size,
+-					&len, 3000);
+-		if (err || (len != size)) {
++				   &len, 3000);
++		if (err || len != size) {
+ 			ath3k_log_failed_loading(err, len, size, count);
+ 			kfree(send_buf);
+ 			return err;
+@@ -461,7 +459,6 @@ static int ath3k_load_syscfg(struct usb_device *udev)
+ 	}
+ 
+ 	switch (fw_version.ref_clock) {
+-
+ 	case ATH3K_XTAL_FREQ_26M:
+ 		clk_value = 26;
+ 		break;
+@@ -477,7 +474,7 @@ static int ath3k_load_syscfg(struct usb_device *udev)
+ 	}
+ 
+ 	snprintf(filename, ATH3K_NAME_LEN, "ar3k/ramps_0x%08x_%d%s",
+-		le32_to_cpu(fw_version.rom_version), clk_value, ".dfu");
++		 le32_to_cpu(fw_version.rom_version), clk_value, ".dfu");
+ 
+ 	ret = request_firmware(&firmware, filename, &udev->dev);
+ 	if (ret < 0) {
+@@ -492,7 +489,7 @@ static int ath3k_load_syscfg(struct usb_device *udev)
+ }
+ 
+ static int ath3k_probe(struct usb_interface *intf,
+-			const struct usb_device_id *id)
++		       const struct usb_device_id *id)
+ {
+ 	const struct firmware *firmware;
+ 	struct usb_device *udev = interface_to_usbdev(intf);
+@@ -541,10 +538,10 @@ static int ath3k_probe(struct usb_interface *intf,
+ 	if (ret < 0) {
+ 		if (ret == -ENOENT)
+ 			BT_ERR("Firmware file \"%s\" not found",
+-							ATH3K_FIRMWARE);
++			       ATH3K_FIRMWARE);
+ 		else
+ 			BT_ERR("Firmware file \"%s\" request failed (err=%d)",
+-							ATH3K_FIRMWARE, ret);
++			       ATH3K_FIRMWARE, ret);
+ 		return ret;
+ 	}
+ 
 -- 
 2.43.0
 
