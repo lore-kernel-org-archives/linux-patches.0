@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389B7175562;
-	Wed,  3 Jul 2024 11:01:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FDFF13BC0B;
+	Wed,  3 Jul 2024 11:01:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004468; cv=none; b=W++xHqdSLh+rMtQjEJUfL8DP4j/QIDpsLcMtxis5C3yasQyn6Cs0vx79Gn8IiBD0QbpccWrcmGNH4uzXaQdwkaA6OkFSQMqrITUSPDl+UBor/3UtsYs8vPi56urS3TRU76x7oKHg/odPMk9G0XMC8k9YWa4Y6H2RZbeaSnRN1kM=
+	t=1720004471; cv=none; b=lFU7NVSvdhJxvuj5NLMo+nqMr86zlI896+KHGNejLgC9xDd7Q/vd3+tmMiVYTk3/+pobUeRGqYcjwx+kekUMNut5jDmH5t4AzFfqrUaLOKpgaBGJQR2YEz9uNargvvDW6yTsnJHtfZl/VFl0ZnHW/LLFxUimBwReva7PeRZ5Y/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004468; c=relaxed/simple;
-	bh=c03AoiZZyQXZdjN8zd3nGGvs/0HibusblmeJJ1uGnl8=;
+	s=arc-20240116; t=1720004471; c=relaxed/simple;
+	bh=ZQiKqOCuaXAdsFl86xdoms0vneRYWvtJSct4otIK8fs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ne9pR980464v5kcy5+BlpV4m8/hne+VNqEDzNPf4fqPUQwzuCuHft1hiC/krwxPj3YssORkcVLwqttqHijnpcYd3ngGCtK7Rl6fcSX//VL+ruER9U814Y+DFkz5s+Zau2xJU3FXCXbGbH7bcudoLf/6T8BmBmkFQq6q+A9Z9B4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ziM9j8Ha; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oLxivFzhXQTRdmaJqP3mYPxZFifT1nxlyZlopxtaxt0LWe+UMPRUzoElMBVhl29Kt5aHod0U31mjjyo8JrtYK3QPLE2YcUrWZI8NtoR4BDNwYLOSdC1nlaYFs+ztBx8gP1QV7RgRGsxnyljdTPtVo3BpXTXa0APqjl8Z4Hidacc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a+pS4eCw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ziM9j8Ha"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B390DC32781;
-	Wed,  3 Jul 2024 11:01:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a+pS4eCw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA851C32781;
+	Wed,  3 Jul 2024 11:01:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720004468;
-	bh=c03AoiZZyQXZdjN8zd3nGGvs/0HibusblmeJJ1uGnl8=;
+	s=korg; t=1720004471;
+	bh=ZQiKqOCuaXAdsFl86xdoms0vneRYWvtJSct4otIK8fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ziM9j8Ha/SaDZVWCzO7LzKirIzHKQZ9pE2wJic+xmJoe4oglDjEtxrG/1UobbA0ph
-	 44DFpcYLZd7QJ0nedJbrKvCmEJFlWuJ4LfaFPOlMHfze1x1cEMvnUnpqqp74m45cYW
-	 DsjnUI5t3MksjFVYbsU6mab8lSrbElbRR66mJ2Ss=
+	b=a+pS4eCwS5NXlLKqNM63/7BLzUwz7WR2f6D7gYg/BDTnOjudLR/u1sGe7HkKsEcia
+	 2BDlu4pjeLEnnRm1C6p0vyyQ02nYz/oWdVbJnUoMfHKUXYiCzKi/3mR6/W4YM9rTwZ
+	 NY2iBgvVncNc/lJGR5UNI9FQWffqAGzlAWppg6Ro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keith Busch <kbusch@kernel.org>,
-	Breno Leitao <leitao@debian.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.10 050/290] scsi: mpt3sas: Avoid test/set_bit() operating in non-allocated memory
-Date: Wed,  3 Jul 2024 12:37:11 +0200
-Message-ID: <20240703102906.092564762@linuxfoundation.org>
+	Kewen Lin <linkw@gcc.gnu.org>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 5.10 051/290] powerpc/uaccess: Fix build errors seen with GCC 13/14
+Date: Wed,  3 Jul 2024 12:37:12 +0200
+Message-ID: <20240703102906.129644927@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240703102904.170852981@linuxfoundation.org>
 References: <20240703102904.170852981@linuxfoundation.org>
@@ -51,80 +50,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-commit 4254dfeda82f20844299dca6c38cbffcfd499f41 upstream.
+commit 2d43cc701b96f910f50915ac4c2a0cae5deb734c upstream.
 
-There is a potential out-of-bounds access when using test_bit() on a single
-word. The test_bit() and set_bit() functions operate on long values, and
-when testing or setting a single word, they can exceed the word
-boundary. KASAN detects this issue and produces a dump:
+Building ppc64le_defconfig with GCC 14 fails with assembler errors:
 
-	 BUG: KASAN: slab-out-of-bounds in _scsih_add_device.constprop.0 (./arch/x86/include/asm/bitops.h:60 ./include/asm-generic/bitops/instrumented-atomic.h:29 drivers/scsi/mpt3sas/mpt3sas_scsih.c:7331) mpt3sas
+    CC      fs/readdir.o
+  /tmp/ccdQn0mD.s: Assembler messages:
+  /tmp/ccdQn0mD.s:212: Error: operand out of domain (18 is not a multiple of 4)
+  /tmp/ccdQn0mD.s:226: Error: operand out of domain (18 is not a multiple of 4)
+  ... [6 lines]
+  /tmp/ccdQn0mD.s:1699: Error: operand out of domain (18 is not a multiple of 4)
 
-	 Write of size 8 at addr ffff8881d26e3c60 by task kworker/u1536:2/2965
+A snippet of the asm shows:
 
-For full log, please look at [1].
+  # ../fs/readdir.c:210:         unsafe_copy_dirent_name(dirent->d_name, name, namlen, efault_end);
+         ld 9,0(29)       # MEM[(u64 *)name_38(D) + _88 * 1], MEM[(u64 *)name_38(D) + _88 * 1]
+  # 210 "../fs/readdir.c" 1
+         1:      std 9,18(8)     # put_user       # *__pus_addr_52, MEM[(u64 *)name_38(D) + _88 * 1]
 
-Make the allocation at least the size of sizeof(unsigned long) so that
-set_bit() and test_bit() have sufficient room for read/write operations
-without overwriting unallocated memory.
+The 'std' instruction requires a 4-byte aligned displacement because
+it is a DS-form instruction, and as the assembler says, 18 is not a
+multiple of 4.
 
-[1] Link: https://lore.kernel.org/all/ZkNcALr3W3KGYYJG@gmail.com/
+A similar error is seen with GCC 13 and CONFIG_UBSAN_SIGNED_WRAP=y.
 
-Fixes: c696f7b83ede ("scsi: mpt3sas: Implement device_remove_in_progress check in IOCTL path")
-Cc: stable@vger.kernel.org
-Suggested-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Link: https://lore.kernel.org/r/20240605085530.499432-1-leitao@debian.org
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+The fix is to change the constraint on the memory operand to put_user(),
+from "m" which is a general memory reference to "YZ".
+
+The "Z" constraint is documented in the GCC manual PowerPC machine
+constraints, and specifies a "memory operand accessed with indexed or
+indirect addressing". "Y" is not documented in the manual but specifies
+a "memory operand for a DS-form instruction". Using both allows the
+compiler to generate a DS-form "std" or X-form "stdx" as appropriate.
+
+The change has to be conditional on CONFIG_PPC_KERNEL_PREFIXED because
+the "Y" constraint does not guarantee 4-byte alignment when prefixed
+instructions are enabled.
+
+Unfortunately clang doesn't support the "Y" constraint so that has to be
+behind an ifdef.
+
+Although the build error is only seen with GCC 13/14, that appears
+to just be luck. The constraint has been incorrect since it was first
+added.
+
+Fixes: c20beffeec3c ("powerpc/uaccess: Use flexible addressing with __put_user()/__get_user()")
+Cc: stable@vger.kernel.org # v5.10+
+Suggested-by: Kewen Lin <linkw@gcc.gnu.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240529123029.146953-1-mpe@ellerman.id.au
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/mpt3sas/mpt3sas_base.c |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ arch/powerpc/include/asm/uaccess.h |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/drivers/scsi/mpt3sas/mpt3sas_base.c
-+++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
-@@ -7440,6 +7440,12 @@ mpt3sas_base_attach(struct MPT3SAS_ADAPT
- 	ioc->pd_handles_sz = (ioc->facts.MaxDevHandle / 8);
- 	if (ioc->facts.MaxDevHandle % 8)
- 		ioc->pd_handles_sz++;
-+	/*
-+	 * pd_handles_sz should have, at least, the minimal room for
-+	 * set_bit()/test_bit(), otherwise out-of-memory touch may occur.
-+	 */
-+	ioc->pd_handles_sz = ALIGN(ioc->pd_handles_sz, sizeof(unsigned long));
-+
- 	ioc->pd_handles = kzalloc(ioc->pd_handles_sz,
- 	    GFP_KERNEL);
- 	if (!ioc->pd_handles) {
-@@ -7457,6 +7463,13 @@ mpt3sas_base_attach(struct MPT3SAS_ADAPT
- 	ioc->pend_os_device_add_sz = (ioc->facts.MaxDevHandle / 8);
- 	if (ioc->facts.MaxDevHandle % 8)
- 		ioc->pend_os_device_add_sz++;
-+
-+	/*
-+	 * pend_os_device_add_sz should have, at least, the minimal room for
-+	 * set_bit()/test_bit(), otherwise out-of-memory may occur.
-+	 */
-+	ioc->pend_os_device_add_sz = ALIGN(ioc->pend_os_device_add_sz,
-+					   sizeof(unsigned long));
- 	ioc->pend_os_device_add = kzalloc(ioc->pend_os_device_add_sz,
- 	    GFP_KERNEL);
- 	if (!ioc->pend_os_device_add) {
-@@ -7747,6 +7760,12 @@ _base_check_ioc_facts_changes(struct MPT
- 		if (ioc->facts.MaxDevHandle % 8)
- 			pd_handles_sz++;
+--- a/arch/powerpc/include/asm/uaccess.h
++++ b/arch/powerpc/include/asm/uaccess.h
+@@ -186,9 +186,20 @@ do {								\
+ 		:						\
+ 		: label)
  
-+		/*
-+		 * pd_handles should have, at least, the minimal room for
-+		 * set_bit()/test_bit(), otherwise out-of-memory touch may
-+		 * occur.
-+		 */
-+		pd_handles_sz = ALIGN(pd_handles_sz, sizeof(unsigned long));
- 		pd_handles = krealloc(ioc->pd_handles, pd_handles_sz,
- 		    GFP_KERNEL);
- 		if (!pd_handles) {
++#ifdef CONFIG_CC_IS_CLANG
++#define DS_FORM_CONSTRAINT "Z<>"
++#else
++#define DS_FORM_CONSTRAINT "YZ<>"
++#endif
++
+ #ifdef __powerpc64__
+-#define __put_user_asm2_goto(x, ptr, label)			\
+-	__put_user_asm_goto(x, ptr, label, "std")
++#define __put_user_asm2_goto(x, addr, label)			\
++	asm goto ("1: std%U1%X1 %0,%1	# put_user\n"		\
++		EX_TABLE(1b, %l2)				\
++		:						\
++		: "r" (x), DS_FORM_CONSTRAINT (*addr)		\
++		:						\
++		: label)
+ #else /* __powerpc64__ */
+ #define __put_user_asm2_goto(x, addr, label)			\
+ 	asm_volatile_goto(					\
 
 
