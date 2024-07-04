@@ -1,138 +1,104 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2131AE84E
-	for <patches@lists.linux.dev>; Thu,  4 Jul 2024 15:12:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9237F1A0721
+	for <patches@lists.linux.dev>; Thu,  4 Jul 2024 15:22:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720105960; cv=none; b=PYQ0zIE8AhycS51Jl2LZJgtFcBXetRTRm00VdGuJZ0i/wT9586HUHYVLUIsGeVfqRKNWgaFrN/ZMQEsfP+YpbwIPGJCclsk2E+9YguHpSp2jPm6tn9tAHSHtyEbDhIBJab6gfCQYAnluc0k4FeqwsDihvjjbaOMr9OpgiPMGM0U=
+	t=1720106566; cv=none; b=ArnN7EYX9G9y2+SCoiElkGB+GBf0wBgD0SvDYLSNGaUFW6ajboQEsLxDdy+l3AO5w+cGrenO5vF7/caSKvwLZS6ZnIbGd3STxzXjqqMIlYZPGlUuEecPLXmicJLF6KipXjn7/rj5gIa420O66j4zmJs3MxGt17M07DITufRCc/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720105960; c=relaxed/simple;
-	bh=iXLCVcKJ93rj0R+0XrMmhuGBlcFgQoki7G5H+B+wEos=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=a7tZzaUNHq0m/y9AZgyTf3OBbLYTPWPkwuMDQOMtBeBwLWM/1mC9BH26CAOMR/iqTsQ+xTY1kRHJphV9mS+MaAnCmJp0r4myrp1H1wkcotSyVC3tx0oM3ybG1E8OU0l24Z5SjM3nZM7bkgcoFGmBQnmQc21iqrxDVR4hDMXsqkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EZx4yDma; arc=none smtp.client-ip=209.85.222.169
+	s=arc-20240116; t=1720106566; c=relaxed/simple;
+	bh=wFHhVJumckKsysKCIZR45w+PkOdLpxaZi2rmHtCtQr0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=S6ZH/F59e9bPQbhDKQIporjfD5F0jPB8DWe2WiBZ47B5V2s+Iyl/XgTtTrE6XqSn7bGUveBHvqG9vMzbGpoYHBxseU8+xJ6eH3W9r1TkM/4pKLUE7vNBz00EWpzBQPJngSCUj1O5mq+k4xWkTKMqM/9Jy2bIhuBoWGN04GqHa6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N90hbI9y; arc=none smtp.client-ip=209.85.216.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EZx4yDma"
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-79c0c19ff02so55886885a.1
-        for <patches@lists.linux.dev>; Thu, 04 Jul 2024 08:12:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N90hbI9y"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-2c97ff39453so560050a91.0
+        for <patches@lists.linux.dev>; Thu, 04 Jul 2024 08:22:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720105957; x=1720710757; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=AzLZqmXXL7U3v5CC4/jZDNYk7C8VuhH+npsYCW/RVmU=;
-        b=EZx4yDmalE/SlMSOxUdXvGRTxvyggCoJvGSq9WBYRLOQGmClAcp3tEkS68qaA0oCk5
-         0s2iZ3+iakQpW0/UobepHcvaElZKdTTb4ZcXU7T2mSxvJ2ncoTwAoAV8fP5FpbsDjCzz
-         3eZOwBzcDSdb1YD8EUM0lmRcObAJZHH7COpNus8PYU+ezUPI7jprrG8Mbfxd2kgdnm3R
-         Tz0UY61yBlMpDoX6mhbIU22N9lVg6kn4tD62gjmVIWVVPLI+ROH2SA6P+b3zd3/xNkXG
-         Y6wRQEL+FJ7XqcpDFkd2XZKy/CYXP0eKSgu9SxZf4/2J+CZtxRze/Ug/f/OLqRdsiYNk
-         vlhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720105957; x=1720710757;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1720106565; x=1720711365; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AzLZqmXXL7U3v5CC4/jZDNYk7C8VuhH+npsYCW/RVmU=;
-        b=mDF9cy5I0X7I3fh95YOxqE5dv9DxVm4T60O3JW+4ioqi5QmTTexvXWk882UdoN84v4
-         gcUSBudL+BATGTciEd1+J3g0MbIJwkWG0+w5hLeBTwiNAxef3fkXIcM9iRL4xRTRkRPm
-         +hHEWU/InKyxzK7sTT5bvSR6oabtUx/oKyRWMzk5Z625qha1HyzjG803I382pc/JY8DE
-         aJe6nSRcnwLYV4MzQUyKVCzzVpMevfXyarMDgShiF3U0hibDGTXbc5iHr+mZUk19xlLM
-         BlMGqMaUDxbu2A8bBvIML0MSGHcjfwe2Zaz8e9KnFelir0jmNbFyBymdgfO5dGnVjuXx
-         +AfQ==
-X-Gm-Message-State: AOJu0YyVjAUZ67SKYQFIUTdatQPmGYC5sqcOON9yo7Mfb0EHnLGsscFg
-	rUEJ493o9I7+s0cxjEhtWQYrerIFUKgJkkwssRQwBx5N+GbcnNhf
-X-Google-Smtp-Source: AGHT+IHTYZGhvAOYOH6mWW1ynTo/jszAqJ23XjJ40VDBAO2d8lD6bwQnG0D3QIZdaTDO2bmjW5lXBQ==
-X-Received: by 2002:a05:6214:27ec:b0:6b2:d335:e914 with SMTP id 6a1803df08f44-6b5ed250ddamr21094846d6.52.1720105956794;
-        Thu, 04 Jul 2024 08:12:36 -0700 (PDT)
-Received: from [10.40.5.113] ([89.207.175.15])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6b59e5f1550sm64229406d6.84.2024.07.04.08.12.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Jul 2024 08:12:35 -0700 (PDT)
-Message-ID: <17d91006-a9f8-423d-930d-d5a1d1308995@gmail.com>
-Date: Thu, 4 Jul 2024 17:12:29 +0200
+        bh=xVFK2WSYZ965lLjkevQH4tcohQ9krtqpk0QXLUCUgcA=;
+        b=N90hbI9yldQFXghuDtgXxI6+3QFoKGO4/ifvFAOonlImEFxVtntg+tIJYzPWwOY9wa
+         gXA7odkGBAOSapvXHDF8w+mpJjZn2PhB7tT6WisuYoK8mKChp0lpDjF/ImgeO45zJdNy
+         FA8BRaMiD2TAN+QHoqPjKIaFvaT2wABSSuTM76tcsR4AhrAlyEMtjggqSB2Y2ASyKJN+
+         pHahq3seQIJlyncpxiyFyFDuSa/EDfwnk7SX0ak92grpAW/8WBXicV6wFLGkD5ZBC/R5
+         aWUdLNmXtLI4D3tFFerThSetUfi7mN/+OOTGvtf4EK2Y9sgU6NsjPVUOoEZiBWB7MM8t
+         v6RA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720106565; x=1720711365;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xVFK2WSYZ965lLjkevQH4tcohQ9krtqpk0QXLUCUgcA=;
+        b=MQVLLild1PbFSBt1IYcdR7FWHWz2HmyEkcGELAh3hkAtglKBmeocbitKbgsZfEsRZs
+         I4L96+ULlQofJs7PbSYx/DMJ6zQ7qHI9pL+7j479nKP00zYsmRvA8IjYsRo5b7EpixCW
+         laYbtb/9one6eecafFQhUYnXzKd/z/KKoXzNP9AW6mLhKSDQ+XfSxWglVpjHAhGbMtNA
+         4SnoUVXgXl6IiaT90S6Ds/IBcmbiuRjS12dBTYlXSeeYDCXULoLo0g0aodbeY5H0gcTv
+         Y6BvxAS4q2mS0amAW534VWw9BMycpPE9n3qT8UIUxvxfiv8dP4YrAVU4b2Tl/Zi/ejP9
+         DMaA==
+X-Forwarded-Encrypted: i=1; AJvYcCU6sbd9Se+IxEOdMiPklWpk12krBEVlcYzbbp2eW+r3+NJaAVLJ+TQNtFUfeVYF5/n/I3uwgMTCYMUqNU522/Ss+mwH6NyepA==
+X-Gm-Message-State: AOJu0YyHBa6PjHOGjOG220wqk7PTSCNeZW0tq3aeKgkoWADG+jcpELsz
+	5XnpGOxf88Du5sSK2kE4yGmEQn0xhnMV+d9J0YUzDp6LRu1rGVqFyd0IfgEnF9HpLEKgrOI4Qgo
+	PwHLJlDw1Z56J8I9T3Ph8P8OqzcU=
+X-Google-Smtp-Source: AGHT+IFfBoeinZVknPJ2qB+zv1AA45Y+rwAXZJ2EypvSPSD3MCuzlu8qe3Z/aXwaSOKHiC9JvGHvi//0bilEXU7z030=
+X-Received: by 2002:a17:90a:f2cc:b0:2c9:8f97:d2e7 with SMTP id
+ 98e67ed59e1d1-2c99c6b91d2mr1536223a91.37.1720106564696; Thu, 04 Jul 2024
+ 08:22:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 000/163] 6.6.37-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-References: <20240702170233.048122282@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-Autocrypt: addr=f.fainelli@gmail.com; keydata=
- xsDiBEjPuBIRBACW9MxSJU9fvEOCTnRNqG/13rAGsj+vJqontvoDSNxRgmafP8d3nesnqPyR
- xGlkaOSDuu09rxuW+69Y2f1TzjFuGpBk4ysWOR85O2Nx8AJ6fYGCoeTbovrNlGT1M9obSFGQ
- X3IzRnWoqlfudjTO5TKoqkbOgpYqIo5n1QbEjCCwCwCg3DOH/4ug2AUUlcIT9/l3pGvoRJ0E
- AICDzi3l7pmC5IWn2n1mvP5247urtHFs/uusE827DDj3K8Upn2vYiOFMBhGsxAk6YKV6IP0d
- ZdWX6fqkJJlu9cSDvWtO1hXeHIfQIE/xcqvlRH783KrihLcsmnBqOiS6rJDO2x1eAgC8meAX
- SAgsrBhcgGl2Rl5gh/jkeA5ykwbxA/9u1eEuL70Qzt5APJmqVXR+kWvrqdBVPoUNy/tQ8mYc
- nzJJ63ng3tHhnwHXZOu8hL4nqwlYHRa9eeglXYhBqja4ZvIvCEqSmEukfivk+DlIgVoOAJbh
- qIWgvr3SIEuR6ayY3f5j0f2ejUMYlYYnKdiHXFlF9uXm1ELrb0YX4GMHz80nRmxvcmlhbiBG
- YWluZWxsaSA8Zi5mYWluZWxsaUBnbWFpbC5jb20+wmYEExECACYCGyMGCwkIBwMCBBUCCAME
- FgIDAQIeAQIXgAUCVF/S8QUJHlwd3wAKCRBhV5kVtWN2DvCVAJ4u4/bPF4P3jxb4qEY8I2gS
- 6hG0gACffNWlqJ2T4wSSn+3o7CCZNd7SLSDOw00ESM+4EhAQAL/o09boR9D3Vk1Tt7+gpYr3
- WQ6hgYVON905q2ndEoA2J0dQxJNRw3snabHDDzQBAcqOvdi7YidfBVdKi0wxHhSuRBfuOppu
- pdXkb7zxuPQuSveCLqqZWRQ+Cc2QgF7SBqgznbe6Ngout5qXY5Dcagk9LqFNGhJQzUGHAsIs
- hap1f0B1PoUyUNeEInV98D8Xd/edM3mhO9nRpUXRK9Bvt4iEZUXGuVtZLT52nK6Wv2EZ1TiT
- OiqZlf1P+vxYLBx9eKmabPdm3yjalhY8yr1S1vL0gSA/C6W1o/TowdieF1rWN/MYHlkpyj9c
- Rpc281gAO0AP3V1G00YzBEdYyi0gaJbCEQnq8Vz1vDXFxHzyhgGz7umBsVKmYwZgA8DrrB0M
- oaP35wuGR3RJcaG30AnJpEDkBYHznI2apxdcuTPOHZyEilIRrBGzDwGtAhldzlBoBwE3Z3MY
- 31TOpACu1ZpNOMysZ6xiE35pWkwc0KYm4hJA5GFfmWSN6DniimW3pmdDIiw4Ifcx8b3mFrRO
- BbDIW13E51j9RjbO/nAaK9ndZ5LRO1B/8Fwat7bLzmsCiEXOJY7NNpIEpkoNoEUfCcZwmLrU
- +eOTPzaF6drw6ayewEi5yzPg3TAT6FV3oBsNg3xlwU0gPK3v6gYPX5w9+ovPZ1/qqNfOrbsE
- FRuiSVsZQ5s3AAMFD/9XjlnnVDh9GX/r/6hjmr4U9tEsM+VQXaVXqZuHKaSmojOLUCP/YVQo
- 7IiYaNssCS4FCPe4yrL4FJJfJAsbeyDykMN7wAnBcOkbZ9BPJPNCbqU6dowLOiy8AuTYQ48m
- vIyQ4Ijnb6GTrtxIUDQeOBNuQC/gyyx3nbL/lVlHbxr4tb6YkhkO6shjXhQh7nQb33FjGO4P
- WU11Nr9i/qoV8QCo12MQEo244RRA6VMud06y/E449rWZFSTwGqb0FS0seTcYNvxt8PB2izX+
- HZA8SL54j479ubxhfuoTu5nXdtFYFj5Lj5x34LKPx7MpgAmj0H7SDhpFWF2FzcC1bjiW9mjW
- HaKaX23Awt97AqQZXegbfkJwX2Y53ufq8Np3e1542lh3/mpiGSilCsaTahEGrHK+lIusl6mz
- Joil+u3k01ofvJMK0ZdzGUZ/aPMZ16LofjFA+MNxWrZFrkYmiGdv+LG45zSlZyIvzSiG2lKy
- kuVag+IijCIom78P9jRtB1q1Q5lwZp2TLAJlz92DmFwBg1hyFzwDADjZ2nrDxKUiybXIgZp9
- aU2d++ptEGCVJOfEW4qpWCCLPbOT7XBr+g/4H3qWbs3j/cDDq7LuVYIe+wchy/iXEJaQVeTC
- y5arMQorqTFWlEOgRA8OP47L9knl9i4xuR0euV6DChDrguup2aJVU8JPBBgRAgAPAhsMBQJU
- X9LxBQkeXB3fAAoJEGFXmRW1Y3YOj4UAn3nrFLPZekMeqX5aD/aq/dsbXSfyAKC45Go0YyxV
- HGuUuzv+GKZ6nsysJw==
-In-Reply-To: <20240702170233.048122282@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <87ed8a8ka3.fsf@metaspace.dk>
+In-Reply-To: <87ed8a8ka3.fsf@metaspace.dk>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Thu, 4 Jul 2024 17:22:32 +0200
+Message-ID: <CANiq72n=dF4Zzpoq9zpQ_Baapy_MXYJh3OHkuDRAySCThCh6Pw@mail.gmail.com>
+Subject: Re: [PATCH 06/13] rust: start supporting several compiler versions
+To: Andreas Hindborg <nmi@metaspace.dk>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Jonathan Corbet <corbet@lwn.net>, workflows@vger.kernel.org, linux-doc@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Wed, Jul 3, 2024 at 7:20=E2=80=AFPM Andreas Hindborg <nmi@metaspace.dk> =
+wrote:
+>
+> This does not set a max version. Will older versions of the kernel
+> always compile with newer releases of `rustc`?
 
+That depends on how many changes Rust introduces around the remaining
+unstable features (as well as plain bugs in new versions, like for any
+other tool). With the kernel being tested in the Rust pre-merge CI,
+hopefully we will reduce those to a minimum.
 
-On 7/2/2024 6:01 PM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.37 release.
-> There are 163 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 04 Jul 2024 17:01:55 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.37-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+It is also why we need to keep reducing the unstable features and get
+into stable Rust as soon as possible. The Rust project is starting to
+support us more here, and they are setting up a project goal for
+2024h2 on their side to resolve the biggest blockers for the kernel:
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+    https://rust-lang.github.io/rust-project-goals/2024h2/rfl_stable.html
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+Meanwhile, on our side, we can do our best to backport any workarounds
+for new versions into supported kernels, i.e. stable and LTSs.
+
+But, at least, this series should already help kernel developers (they
+will be able to compile the kernel with Rust enabled using their
+distribution) and Linux distributions (they will have more freedom to
+pick a Rust toolchain version and avoid having to package another
+version just for the kernel).
+
+Cheers,
+Miguel
