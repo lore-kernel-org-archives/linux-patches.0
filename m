@@ -1,138 +1,164 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71AFD142624
-	for <patches@lists.linux.dev>; Thu,  4 Jul 2024 19:52:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E918F13D2B8
+	for <patches@lists.linux.dev>; Thu,  4 Jul 2024 21:23:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720122748; cv=none; b=QFH+DoTh9hG8LpJfp6sQXn+Q6Yg1Tm6bxh8kAtpTi94R2rN9tOoAnb8r3sa5h6WLKFKPFWfSSq7rWHKZQiy1RDK32owAQqdlQlX6UzFLSFd9LMreVNlIzOSyVStiI/2APsMYdO9q9co1G2DIg4kTku/XB0bZJqA+7oKK/ThzyPc=
+	t=1720128242; cv=none; b=VJ1bRMJGVOdf0ls/APXiVSvnFEibtnehVYpFgNj1DCk8GTZJuyTV9mSLeOZtU3IiPuJwshQn+9421oVjXvkNUY09V4QWQC+DjnOkCCskCU76Th00e6MtAqWa/XX4944Kq58C6ej+DtOfIFOd5bSIOnrWOiYr3uQrEXTs4vqggaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720122748; c=relaxed/simple;
-	bh=gsTCTuy/sdihKmRHuICnr5wPvi5jJdf7vcg2Zk5HYXM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KAfK4X83kb2fZNqGUrPxDVhWYc8WfNKK6Q2yxKs+a3QMUeahy/T2/rqAKFu9KtYF4jz97TSaPyTm8cg2aBjpXAv8W8RfQfZ8cxUhR1x5oPiglOmsxa9A1k2131UZRf2oSA1eosMFQiOy/CArvF/KdF+t4lwXGxMrrr/MH4YW6/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CY1K/OBl; arc=none smtp.client-ip=209.85.216.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1720128242; c=relaxed/simple;
+	bh=WkQita1UbMfMen1gzqw2QW7P3OKiOs39bLWHgZY5IA4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=U6kl3sahEZHHuYzAunK4bG8qHRFYdFJ+igRdwCTQTzFXfOCqeb8mtL/LBC5ikivBVyl/Ma737E0FmNOT0fzb/d85FJkrOXgBrrBdYmKcDLouv1rr4tHChrLyPdf3RybyVNJrsssLL0GocElGAyaIfh4wr5j1aFFxYr+RQ4z98ys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ZnxBY7QL; arc=none smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CY1K/OBl"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-2c8517aab46so726079a91.1
-        for <patches@lists.linux.dev>; Thu, 04 Jul 2024 12:52:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ZnxBY7QL"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-58ce966a1d3so12862a12.1
+        for <patches@lists.linux.dev>; Thu, 04 Jul 2024 14:23:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720122746; x=1720727546; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=4PuM66DHBtj2I6talhzCFy4eXTe0q/p2dt6nbXaUnk0=;
-        b=CY1K/OBl4XUROKXbHTuSyzrVvcv0rKT2i2vACaPtyNLBZJNbhAf94uce4KYs+FHQ1E
-         8EQ9HxokvYR763VHymLzt3LBbfACrnDVbqsftJyC66P6+mc5UupU8nx1tV3XQGKrJL8I
-         o2yPiOBjS+HA0SUiMOIk5r+A6ctQUSDUJLz4dW+ULg+MkLYHZvh/piMc8vtUCO3Zejek
-         F47DoTrby7adGIt/JYuZ80suYnpsU3DJTnVdETycR59D9CoEFl1z7ZTQ/xIOTP+ZO+0r
-         bcyRmc7XG0nfRtcAaJpH7sVa8vapJ7RBSHoWSxU0zgl3I+nKzpXFYmBZWHObG/8J38Ao
-         zNEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720122746; x=1720727546;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+        d=google.com; s=20230601; t=1720128238; x=1720733038; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4PuM66DHBtj2I6talhzCFy4eXTe0q/p2dt6nbXaUnk0=;
-        b=a4XYguCVjC0YckuDt/B32LRlu7eIg5K6sE2doM+i0GC0k0qs889wzraHhlxFPaYCh4
-         EhDvdb003QNeCP2N9M2CgvOc3EDO//pO0uru0/+9nAyoXKLdr73TpauJ+hUm+TJU77T4
-         p58/LI4v5oudjtYMh00tAL19+AbvV+hNVeES08vER9zSh1r9MRnqZNewqAxo6B5gR8Fw
-         lazd9kE6+xX7ZqO45iQ6oxdv3Faw5asrRc0ulZ00yarFbteRoMJIRL3xOekY4oX4ZXtq
-         e8nyiqni7GdjKWIRnC9FtaX9cMBU1IolIpcosQeSuU3QWuix99obwgJqJkzBkxiLrpuN
-         KsyQ==
-X-Gm-Message-State: AOJu0YwS/8pRT6Qe01WV2rjC4X8Sk9r4DOxyfwCZ/1nRN7dj+wFWbkJM
-	YU515PjoRyiw1Nj27cB1XOZZC/JzgIxv/ryMGrlnMTMOI4LqMUJ1
-X-Google-Smtp-Source: AGHT+IEgW4veSVYAi/aEHre5Kd/STdlNiA1wilqCGqDqbbubCfAosfUFNnQ0iEuXxfaGDzLOaxSSwA==
-X-Received: by 2002:a17:90a:b88d:b0:2c9:81ab:237d with SMTP id 98e67ed59e1d1-2c99c5042c3mr1988111a91.7.1720122745578;
-        Thu, 04 Jul 2024 12:52:25 -0700 (PDT)
-Received: from [192.168.42.133] ([37.175.111.251])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2c99a986eaasm1929594a91.24.2024.07.04.12.52.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Jul 2024 12:52:25 -0700 (PDT)
-Message-ID: <804e371f-5ffc-4e5f-b5e3-caff65498ecc@gmail.com>
-Date: Thu, 4 Jul 2024 20:52:19 +0100
+        bh=XZUXkSX9WN+AQbdLcHROy2ZT3v7SVR09OPnTWoMgUyo=;
+        b=ZnxBY7QLH4MrH7CuR2BD2YqY1omtejlNVc/0zKIFatieTmPoQQXNDKAjW+Md/rWORa
+         V7m5brc5/EzFDtVSJjtD7+tURGoJ+jaTd3oXXGc6GS8SERrafN0ZMIzEJOJad/Kkn4Zg
+         hHE/SXTPgZ1K/WdppT3OY9cIcKVkf9ZyI7nuT560ZoYWnTsqRJrEzdo5qBWEJw5GnO1z
+         MR4LU4YleJ38XbRrAvuweWWPjNCmlaq0h+ckbnlyCqkFPAgd4SQpZ0LuGQFMLHNhG9BD
+         V8S8emWQ+Z2Ha8/KHFEHunBDNWI5kbyWgJBAlaDBr6t8GxLyRuwu/FbuxCEaeXf5nywz
+         9Zsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720128238; x=1720733038;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XZUXkSX9WN+AQbdLcHROy2ZT3v7SVR09OPnTWoMgUyo=;
+        b=oDkthLu1EOjcwEkd6pnQB1qijDfO1h1DbnuucYCkTjRoBKI2xl9Vx58SYp4n91W7lm
+         Rpdgnj5YKXEjrX4MIDMT/7UNCa0cH2wuQAOMIVBnuxolJkIWjZG4h6tY8QHf8RQu17qd
+         qZ/9dDCg348PV0KjBD1x0JkvZ18mvEHE7eDms3+rkp5PXyOcvETBWReXmXocTttgd677
+         zvlURnUIGiVvL7+Gmij8ueWiuW2Ra/LALXxziu+yzUHxTEk0GGQwOsQfkOaQPbiiGoXv
+         goLlM3rT1c/kOTFybD/QbdkVYY/EUiFcBxI4OP0zw504UUNiUyllbvvdsy9ocLQ7iFVl
+         9/NQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUpwLIOMJikKv/bK44bkLtDqzBFhdCoBeltAzk9BnGKKhnH3XJOSzm/6p6jRjK4DdXhTuZmcqaUmNLNrqqOOsLX15mDb5A1ag==
+X-Gm-Message-State: AOJu0YxOxkKhVKa/WzPOHFjOD5TU5HGemo5NYathMSHKEHk+UWB9LLyx
+	FxQIlyYNpZxpTXRKmgyuZWYSFJ0pbkp7nfh5tzuP8YxAvdxe8/3LL6646sgTtEdGgwZc1hx70Tt
+	N3Q+l9eGP0wgGshtFRgQELG3NY8KQTBvEfmdi
+X-Google-Smtp-Source: AGHT+IFNiC12ACDfwoCP+FCXjiKRvFZtf6R72oNOV5+4tIR6dsRZUTSkQftvcnrUomvX2XqiYI70nEOpdD0FSz54nrc=
+X-Received: by 2002:a50:9fa1:0:b0:57c:b712:47b5 with SMTP id
+ 4fb4d7f45d1cf-58e02735e86mr205813a12.4.1720128237990; Thu, 04 Jul 2024
+ 14:23:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.9 000/222] 6.9.8-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-References: <20240702170243.963426416@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-Autocrypt: addr=f.fainelli@gmail.com; keydata=
- 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
- HGuUuzv+GKZ6nsysJw==
-In-Reply-To: <20240702170243.963426416@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20240704-update-ld-version-for-new-lld-ver-str-v1-1-91bccc020a93@kernel.org>
+In-Reply-To: <20240704-update-ld-version-for-new-lld-ver-str-v1-1-91bccc020a93@kernel.org>
+From: Fangrui Song <maskray@google.com>
+Date: Thu, 4 Jul 2024 14:23:46 -0700
+Message-ID: <CAFP8O3JUgH-tBJtqO-QS0HmO4mrFBE6Dz+tnrBcse=gw_Q_4vQ@mail.gmail.com>
+Subject: Re: [PATCH] kbuild: Update ld-version.sh for change in LLD version output
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Masahiro Yamada <masahiroy@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, 
+	Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, linux-kbuild@vger.kernel.org, 
+	llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, Jul 4, 2024 at 9:19=E2=80=AFAM Nathan Chancellor <nathan@kernel.org=
+> wrote:
+>
+> After [1] in upstream LLVM, ld.lld's version output is slightly
+> different when the cmake configuration option LLVM_APPEND_VC_REV is
+> disabled.
+>
+> Before:
+>
+>   Debian LLD 19.0.0 (compatible with GNU linkers)
+>
+> After:
+>
+>   Debian LLD 19.0.0, compatible with GNU linkers
+>
+> This results in ld-version.sh failing with
+>
+>   scripts/ld-version.sh: 19: arithmetic expression: expecting EOF: "10000=
+ * 19 + 100 * 0 + 0,"
+>
+> because the trailing comma is included in the patch level part of the
+> expression. Remove the trailing comma when assigning the version
+> variable in the LLD block to resolve the error, resulting in the proper
+> output:
+>
+>   LLD 190000
+>
+> With LLVM_APPEND_VC_REV enabled, there is no issue with the new output
+> because it is treated the same as the prior LLVM_APPEND_VC_REV=3DOFF
+> version string was.
+>
+>   ClangBuiltLinux LLD 19.0.0 (https://github.com/llvm/llvm-project a3c5c8=
+3273358a85a4e02f5f76379b1a276e7714), compatible with GNU linkers
+>
+> Cc: stable@vger.kernel.org
+> Fixes: 02aff8592204 ("kbuild: check the minimum linker version in Kconfig=
+")
+> Link: https://github.com/llvm/llvm-project/commit/0f9fbbb63cfcd2069441aa2=
+ebef622c9716f8dbb [1]
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+>  scripts/ld-version.sh | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/scripts/ld-version.sh b/scripts/ld-version.sh
+> index a78b804b680c..f2f425322524 100755
+> --- a/scripts/ld-version.sh
+> +++ b/scripts/ld-version.sh
+> @@ -47,7 +47,9 @@ else
+>         done
+>
+>         if [ "$1" =3D LLD ]; then
+> -               version=3D$2
+> +               # LLD after https://github.com/llvm/llvm-project/commit/0=
+f9fbbb63cfcd2069441aa2ebef622c9716f8dbb
+> +               # may have a trailing comma on the patch version with LLV=
+M_APPEND_VC_REV=3Doff.
+> +               version=3D${2%,}
+>                 min_version=3D$($min_tool_version llvm)
+>                 name=3DLLD
+>                 disp_name=3DLLD
+>
+> ---
+> base-commit: 22a40d14b572deb80c0648557f4bd502d7e83826
+> change-id: 20240704-update-ld-version-for-new-lld-ver-str-b7a4afbbd5f1
+>
+> Best regards,
+> --
+> Nathan Chancellor <nathan@kernel.org>
+>
+
+Thanks for catching the issue.
+If we want to minimize the number of special cases, perhaps we can
+adjust `version=3D${version%-*}` below to
+
+version=3D${version%%[^0-9.]*}
+
+(POSIX shell doc:
+https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#:=
+~:text=3DRemove%20Largest)
+
+${version%%[^0-9.]*} is a simpler form than what glibc uses:
+
+  "LLD"*)
+  # Accept LLD 13.0.0 or higher
+    AC_CHECK_PROG_VER(LD, $LD, --version,
+                    [LLD.* \([0-9][0-9]*\.[0-9.]*\)],
+                    [1[3-9].*|[2-9][0-9].*],
 
 
 
-On 7/2/2024 6:00 PM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.9.8 release.
-> There are 222 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 04 Jul 2024 17:01:55 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.9.8-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.9.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
-
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+--=20
+=E5=AE=8B=E6=96=B9=E7=9D=BF
