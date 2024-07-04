@@ -1,96 +1,119 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05CA43AB3
-	for <patches@lists.linux.dev>; Thu,  4 Jul 2024 15:26:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB2B1AEFFF;
+	Thu,  4 Jul 2024 16:19:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720106809; cv=none; b=rLNMUhrvu0m0dTCALwlO0DsagyWvubecIi8P1DXqynn2kzLNrdRbaJiSgN/NkoJkuwfGcXgFaI9vmhTlWbF+UFXejRkJGv5UxUjEDyQeyOIZCmqOYIZGHPXiIH/dIar+3c+hGV7HpVQ3mO0e/JQYVf74Zuem/5ExIAVN7Zzcuik=
+	t=1720109944; cv=none; b=De5wOfZY88xG7YQXzuDslJs6NbwT+S8HLiFS9uizdT/KIYMiirMmFwsFvMGuTd0QVVEp33v6Acw9ma8kmOGCftnVyhpXJbumcSHax9VfAxkEFlfp8iHerck3TSoYN00/lmC008ciWaYU+YPpXlVbiOK1aPLexpWevdID//o/V7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720106809; c=relaxed/simple;
-	bh=MSME/Bhyf+gYGe96NNTB+BN2oAnq+gcEg2DaDsIkQ6k=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BXjziM+b13K7VLP73QayZ245b/UO0CdiPHgoo4B1PHOtQNi0GO9eilWTMuQGXdnCfV5EeBcree0fl87rT3iNUx8jXRSkALIuQT2opGpJa1c8Ohfpb6yI6bMGsk2n04YXGpPWq1Bnj01DvEZ3WzsrpXYXCKmKQPYsFUpOHPj1eQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VXhnNgqB; arc=none smtp.client-ip=209.85.216.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1720109944; c=relaxed/simple;
+	bh=FK7xagcryPXQhWjVE09ZqleC0sW1mp/6aeRQYGumgKc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=nBo3/dnpo4F1IW6xWXq/ggg5yH8+xMlkHq9jD1I13p4/J0dp0IckjVXfBqOVjnqtohV9TRsbdXEJ15ezWYOU0uTmtD4cftYJ7x9bwjMl7F8vk75HkdMcTfphfF/AWgenfGzROVv/DUadRKRRuwuWDIt3fBpSsItx6kkOc//4sA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pc1loxFy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VXhnNgqB"
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-2c927152b4bso550561a91.2
-        for <patches@lists.linux.dev>; Thu, 04 Jul 2024 08:26:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720106807; x=1720711607; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MSME/Bhyf+gYGe96NNTB+BN2oAnq+gcEg2DaDsIkQ6k=;
-        b=VXhnNgqBMy4OeCEDLoKmhiMbj0Hd1bjb4MMRfEVbtW1cjKwlr/E+kUtV7VXYVGLGwE
-         JzQx6vIlDHGrkPvb+hO6VHjruxu6hcUOSZqqkwpP3oIxeDWFHQrlhsHhf7E54LA+iVCE
-         Ao+7K9qXTvkX14ub/wYxJKxIVI3Ybt1BLJRA9PfanvUPl0giCXoPkJcdhhiskMta6HGT
-         BMmIqsMNHObUbWL1cacdPLfHOR7MOzL/Yxz1EMWeKSkpiUvX7xn2Rl68NB5PKiHXdK/K
-         x4Xv7z2QkuW9TT1OjtkJM4i+Zk05K5/5lAicL8H+pXz8OVdqYoRDAyNQoVG6ORvBwB5W
-         AMRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720106807; x=1720711607;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MSME/Bhyf+gYGe96NNTB+BN2oAnq+gcEg2DaDsIkQ6k=;
-        b=IDvXTOCT+Vs/La5Ina8VH2JEceWOqo4DphessB+rLIXE/vVnhGrs7M1pQwEw7wA+Fi
-         MMmV40cPk8YtXgarRV0BfkpN1Kvm4ssNUDPwk27sdgvNSjH2jWouRExoNKAOuY4kZmBa
-         xYcaT2eC1ejH+i79GMqPnK8lmUzg+bzf9w7rbYwcrAJ/xP+xChoa0B5OEClQfGXdG7fk
-         U+OLENZO3loXWpjZoVTJAiQfkg2Q12jBwNlBu4DDkX2/V1njNA9X4w95BVH/Wf7jD/bc
-         1rsVaKenzPM7I0eGaQWsuQFFbvDLRf32swmxK+GFTc8um55b1X926Agy+GgfPLDXupKf
-         KORw==
-X-Forwarded-Encrypted: i=1; AJvYcCUhSMTp36VeZMk7rx8jcLU1StqMg8g+XOelqyW4R8ef+y7RvWVG9KuOWMN8PoDmIJsFNw00wOdLZGi6stkNQRqxCyHnTV/cgA==
-X-Gm-Message-State: AOJu0YwlxbyoTH7aOMeBhz+9km/M1BzWyL3vb2/q7zeKv6O6s2IqunV/
-	LUR88PTXbfQzd4QVL5nlKyFw6SuhBSvZK8vJTozcbupqm8YQwYQW63OGXUJlX9kPQQE+MaET1Md
-	CKRvM7biTJsYrjvKa0nW5DayBwwQ=
-X-Google-Smtp-Source: AGHT+IEkUFA3sOH4ngyuIImRoRx17p6zqMQ7VBlnOblzn2dve9nvHTgy9+zJPLllYLzX1QFWuCt41+GDCTfChLoPZSQ=
-X-Received: by 2002:a17:90a:b88d:b0:2c9:98c2:f6d7 with SMTP id
- 98e67ed59e1d1-2c99c502d4dmr1502962a91.5.1720106807206; Thu, 04 Jul 2024
- 08:26:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pc1loxFy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A719C3277B;
+	Thu,  4 Jul 2024 16:19:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1720109943;
+	bh=FK7xagcryPXQhWjVE09ZqleC0sW1mp/6aeRQYGumgKc=;
+	h=From:Date:Subject:To:Cc:From;
+	b=pc1loxFy2lAtGe0Tq1t9A3ew7QLklxg3n7Pia68N/7imKeB/FHQaJ5tRa3yXi0KlH
+	 HAdfND9Fa7ATHQH1O9N2vZvD6vll8Vd2wOxXKPH7QJJoch0KUDd90jhMlTY2mMV590
+	 3DCtOVQiPY6x/zNZ4Ywt2PaSthNmvCLujhOULv/P/EiKMxir4FEvS5NmA1D79KbECh
+	 YsdJltEvoDuirGmoOXKNa5ICC8PMGneMpaP/YQ/qRbCRRjqcsiCXoiuDmtJ+2GTSxG
+	 eBvsNCKYN1w/IxZI+BwvtwI07HfyYD5zWskwYuce2k5rwkfcdhzayro+y6HCVc51Ax
+	 1eGp+WWp7xyog==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 04 Jul 2024 09:18:56 -0700
+Subject: [PATCH] kbuild: Update ld-version.sh for change in LLD version
+ output
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240701183625.665574-1-ojeda@kernel.org> <20240701183625.665574-7-ojeda@kernel.org>
- <70F3F3DD-AAE6-445A-AC16-C71A06C4EA06@kloenk.dev>
-In-Reply-To: <70F3F3DD-AAE6-445A-AC16-C71A06C4EA06@kloenk.dev>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Thu, 4 Jul 2024 17:26:34 +0200
-Message-ID: <CANiq72m4Js+ym4Tuq2sNfVGyxPqx=pZ4VK455dfocd8OuuZUxA@mail.gmail.com>
-Subject: Re: [PATCH 06/13] rust: start supporting several compiler versions
-To: Finn Behrens <me@kloenk.dev>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	Jonathan Corbet <corbet@lwn.net>, workflows@vger.kernel.org, linux-doc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240704-update-ld-version-for-new-lld-ver-str-v1-1-91bccc020a93@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAG/LhmYC/yWN0QqDMBAEf0XuuQtRIkJ/RXxIzKU9kCgXq4L47
+ 03t4yzDzkmZVTjTszpJeZMscypQPyoa3y69GBIKU2Maazpj8VmCWxlTwMb6sxFnReId039DXhW
+ +c9ZF70Mbaypfi3KU4+70w3V9AT/38BZ3AAAA
+To: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Nicolas Schier <nicolas@fjasle.eu>, Fangrui Song <maskray@google.com>, 
+ Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
+ linux-kbuild@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
+ stable@vger.kernel.org, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2008; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=FK7xagcryPXQhWjVE09ZqleC0sW1mp/6aeRQYGumgKc=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGltp8sYuePmmG9RvdRlsUIySsakbYOxwdumk9bbnA5fX
+ ntg3pRzHaUsDGJcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAiKZcZ/qc8WfdJ1n6+g+Xi
+ h3t379y3Za/9NqGQp3Fvt0VdV5R+eIuR4a9EmcnrGHH7T95vvud8bNq9T0qXyYu11VVu690bFZz
+ PJ7ADAA==
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Thu, Jul 4, 2024 at 4:45=E2=80=AFPM Finn Behrens <me@kloenk.dev> wrote:
->
-> One idea below, but fine with or without it.
->
-> Reviewed-by: Finn Behrens <me@kloenk.dev>
+After [1] in upstream LLVM, ld.lld's version output is slightly
+different when the cmake configuration option LLVM_APPEND_VC_REV is
+disabled.
 
-Thanks Finn!
+Before:
 
-> Would it make sense to not advise the min version but the =E2=80=9Cmax=E2=
-=80=9D or just latest stable version? Min version should work as well lates=
-t could potentially be a bit more optimised if both work either way?
+  Debian LLD 19.0.0 (compatible with GNU linkers)
 
-Yeah, that is a good idea -- we could just say `stable` there.
+After:
 
-In fact, it makes more sense, because this is using `rustup`, i.e. the
-Rust-provided binaries, and the Rust project only supports the latest
-version (so far -- there are proposals about LTSs there).
+  Debian LLD 19.0.0, compatible with GNU linkers
 
-Cheers,
-Miguel
+This results in ld-version.sh failing with
+
+  scripts/ld-version.sh: 19: arithmetic expression: expecting EOF: "10000 * 19 + 100 * 0 + 0,"
+
+because the trailing comma is included in the patch level part of the
+expression. Remove the trailing comma when assigning the version
+variable in the LLD block to resolve the error, resulting in the proper
+output:
+
+  LLD 190000
+
+With LLVM_APPEND_VC_REV enabled, there is no issue with the new output
+because it is treated the same as the prior LLVM_APPEND_VC_REV=OFF
+version string was.
+
+  ClangBuiltLinux LLD 19.0.0 (https://github.com/llvm/llvm-project a3c5c83273358a85a4e02f5f76379b1a276e7714), compatible with GNU linkers
+
+Cc: stable@vger.kernel.org
+Fixes: 02aff8592204 ("kbuild: check the minimum linker version in Kconfig")
+Link: https://github.com/llvm/llvm-project/commit/0f9fbbb63cfcd2069441aa2ebef622c9716f8dbb [1]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ scripts/ld-version.sh | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/scripts/ld-version.sh b/scripts/ld-version.sh
+index a78b804b680c..f2f425322524 100755
+--- a/scripts/ld-version.sh
++++ b/scripts/ld-version.sh
+@@ -47,7 +47,9 @@ else
+ 	done
+ 
+ 	if [ "$1" = LLD ]; then
+-		version=$2
++		# LLD after https://github.com/llvm/llvm-project/commit/0f9fbbb63cfcd2069441aa2ebef622c9716f8dbb
++		# may have a trailing comma on the patch version with LLVM_APPEND_VC_REV=off.
++		version=${2%,}
+ 		min_version=$($min_tool_version llvm)
+ 		name=LLD
+ 		disp_name=LLD
+
+---
+base-commit: 22a40d14b572deb80c0648557f4bd502d7e83826
+change-id: 20240704-update-ld-version-for-new-lld-ver-str-b7a4afbbd5f1
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
