@@ -1,182 +1,113 @@
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2072.outbound.protection.outlook.com [40.107.220.72])
+Received: from gimli.kloenk.de (gimli.kloenk.de [49.12.72.200])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3101ABC25
-	for <patches@lists.linux.dev>; Thu,  4 Jul 2024 14:11:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.220.72
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720102289; cv=fail; b=WMuZ8LYC/ynRykkjpuPZpco/Z8yWWfUqYyZ2NR4B3L3cvujeik4ENNhrJ3PYUxAk642aKuYrIvuc7xKZfypv5bxyFhVm1E9z+FS1xyeMxOid/MwM12WPD8hpLU5Pn1pWfIoC67Ztrmcu3luHOVdzwUmj6YLalX/+wMxgPPt0b8g=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720102289; c=relaxed/simple;
-	bh=7U4rxJiKq7qqu2qCYbEEhmq4BEIU4RhLZ3k63m/lLG4=;
-	h=From:To:CC:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID:Date; b=lLHDmhIgYYaZRn8VIZV1oA1YGOBTs12wxuwKDGqMBvZCrN5yM+l7L5sdGaYvjYNfnxVbnDevWKzF/boycDnmU3APBsshHdDKwMZk1RL//2/5MNC/IcnEjF3uQiVhF46+f3HwBBtoHWupm3HJnEyabcghvnaEV/Ex53pdjP5ehNA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=W/BKqZ57; arc=fail smtp.client-ip=40.107.220.72
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A20C1AEFE7
+	for <patches@lists.linux.dev>; Thu,  4 Jul 2024 14:26:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=49.12.72.200
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1720103172; cv=none; b=Ivra6ZQwl5LVFADNNWDZ0ydS+tO3SLaR9hPpkgz16zvPwaFqkSMQhNxtqsBIys9F3x5TAlemxX0Iyyo4PlogHfCgtc7WRoNH+JgEBKcdwCKLULpitaOn/BClIqWR02mDrNVhu6yOAqncLOxAhE3vX00+7VBWZVuLjXGjV+YN8U4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1720103172; c=relaxed/simple;
+	bh=uWs+KI/NnNRYahU8cZs7MxLdZZhTS8AEn/oPUiUEj8E=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=LFCNLKiaBDK2ZseokGf/Wv+8i68aSg6K6lQ7ayvo8y2HAkKQVzwcuCoNsegKCcoAswQdmOtdSNeGZSKv2XtanynZqlvVnQx2zU8qfkV5DPxIQMP2FWcE5cVnYjJ4SxC3L4Z2hCzcz9fay6yjeV2TDWE2kdWzzys6qx0gDNgEBos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kloenk.dev; spf=pass smtp.mailfrom=kloenk.dev; dkim=pass (1024-bit key) header.d=kloenk.dev header.i=@kloenk.dev header.b=Wvpig7nN; arc=none smtp.client-ip=49.12.72.200
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kloenk.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kloenk.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="W/BKqZ57"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=gc168jydrARTVQ4k+L9vGI9XALuWIyEfxwAxgsDpFSK1PyUc80g4mkkcMZ2iWqQd/Vn+lBmmzIzNIXB8ZMxISUK3fM/TEwxW4AeNtjVCKt+RwIMhGE32kMMFpbWp9+CjueTE8mBuVfZWUFw79/VEJYHPR/4yl/FfmqBr4RBRhOo6kIiFuUv6TSlgmKLdyipbY73HM/lfj7zfhmlKfHHPIAmnza1RmaLzqzFDdEGPGJOuh7AkAEQlzixy1n2d+94yMSmJvr3Qu5aBuJUD1mtqGG1ieiQYWzWtZ7uOUztlpqJ9VYVvybVZoPfNtgYps8w6MFGZKC/FoylqEfteZZEv1Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Zzgam0ZqLdd2IYu3tFgqnhKYlHEBZRkX7j6fl5frNpA=;
- b=M48TGanfM6314BjO8NoZrLxvQE2qMadTsu8HOjpES6MiOoXMS42BQizjVs9SOS+NuDgMfWCe5a0ibQGn+0Yo3oALpLYqNW0I1Z69rz0FyTCUBcyvdoyzHPsEPSnWfmBM9Bfq/yGvHjk1dh7b275snp46vwdatnnUoaaohSdSccaago11iYoM3mGD6mzJa/vlhOwjisu8swpW1ugYkC+Y6qLXgmlvHNwnMvBEWQdoBYdptefqeyrrA9UFeZBnbd+1PjmxGUunUzStbNACoLJMM3h/laetm0unmHMFXwIwl+GVGubMqJbvs9diUU3x/gaQ6tsoytGjUGrZvE39plbO/Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.233) smtp.rcpttodomain=linuxfoundation.org
- smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=nvidia.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Zzgam0ZqLdd2IYu3tFgqnhKYlHEBZRkX7j6fl5frNpA=;
- b=W/BKqZ577x2No5JpwB9wycAklu5LJ4hkYE03C8aKAZNU+d8fV0ltOYRY5Tn8FIQJNvLinOZMW9snr13LPww0FfM4+Pt8tUK3a/S5RCi/1zZOFiDgz8w5bxGF4LmcInopnTnfzEHvsXPxp8cQ5u6kRHhuTCze65ps9JjYn1O2tAAerr8plm4NbOe8nDeeHkc0YpZPEUP1yi62lSfxEDyXulun//fJzaYIfNJHVV8riwEE2lJTl4sPX1xtP+ybm+smmdbq/QwRFdnDGBzZIc2hohFbs3yGaOA3eIjR9JUs242pPWM5ljMdefqWRN/y4KWYJ50eb0PqaGIDWluZ+gxp7Q==
-Received: from BN9PR03CA0777.namprd03.prod.outlook.com (2603:10b6:408:13a::32)
- by LV8PR12MB9232.namprd12.prod.outlook.com (2603:10b6:408:182::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7741.23; Thu, 4 Jul
- 2024 14:11:23 +0000
-Received: from BN2PEPF00004FC0.namprd04.prod.outlook.com
- (2603:10b6:408:13a:cafe::df) by BN9PR03CA0777.outlook.office365.com
- (2603:10b6:408:13a::32) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7741.30 via Frontend
- Transport; Thu, 4 Jul 2024 14:11:23 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.233) by
- BN2PEPF00004FC0.mail.protection.outlook.com (10.167.243.186) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7741.18 via Frontend Transport; Thu, 4 Jul 2024 14:11:23 +0000
-Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
- (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 4 Jul 2024
- 07:11:17 -0700
-Received: from drhqmail202.nvidia.com (10.126.190.181) by
- drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Thu, 4 Jul 2024 07:11:17 -0700
-Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
- (10.126.190.181) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
- Transport; Thu, 4 Jul 2024 07:11:17 -0700
-From: Jon Hunter <jonathanh@nvidia.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
-	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
-	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
-	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
-	<rwarsow@gmx.de>, <conor@kernel.org>, <allen.lkml@gmail.com>,
-	<broonie@kernel.org>, <linux-tegra@vger.kernel.org>, <stable@vger.kernel.org>
-Subject: Re: [PATCH 5.10 000/284] 5.10.221-rc2 review
-In-Reply-To: <20240704094505.095988824@linuxfoundation.org>
-References: <20240704094505.095988824@linuxfoundation.org>
-X-NVConfidentiality: public
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+	dkim=pass (1024-bit key) header.d=kloenk.dev header.i=@kloenk.dev header.b="Wvpig7nN"
+From: Finn Behrens <me@kloenk.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kloenk.dev; s=mail;
+	t=1720103160; bh=klEyNORmTUCopsPqwvQ4SusCT6WUx2UKJes8fXdkRVM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=Wvpig7nN4lrs7VsYh/M3O45Lg3AnmUcPuxZQYexSIJck67xx6x0BQcdxk8qs6WGav
+	 1s6gBDc5m3Go3ZRPEMuQ7zT5gVdMu16xsruZyW5X9ndKUxnn0BVE4gZcLYZxK7XFLY
+	 5/Gh4axfm8Wnm3dfBkZY2zORWBqxFN6ifcOhbDRQ=
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
+ Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
+ Gary Guo <gary@garyguo.net>,
+ =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
+ Benno Lossin <benno.lossin@proton.me>,
+ Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl <aliceryhl@google.com>,
+ rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev
+Subject: Re: [PATCH 01/13] rust: macros: indent list item in `paste!`'s docs
+Date: Thu, 04 Jul 2024 16:25:58 +0200
+Message-ID: <E3504594-6CD3-4D12-B0DA-92B032CD73AA@kloenk.dev>
+In-Reply-To: <20240701183625.665574-2-ojeda@kernel.org>
+References: <20240701183625.665574-1-ojeda@kernel.org>
+ <20240701183625.665574-2-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <52c52c9b-3f4d-40a5-a808-99424d9975dd@drhqmail202.nvidia.com>
-Date: Thu, 4 Jul 2024 07:11:17 -0700
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN2PEPF00004FC0:EE_|LV8PR12MB9232:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6afed6fe-262e-4e39-9de5-08dc9c332fb9
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700013|376014|7416014|82310400026|1800799024;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?SHUyTEtwbDhRZGkvZGRueHBjMGIzdGlGdWVyejJBQ3JpRTBXOHQ0bzJVTGd2?=
- =?utf-8?B?Y3JCYTMxMVlOUzJ1VFdtaGQxd2RGSjYwR0FNV09Wb3lsL20wWmNadVFmcDNz?=
- =?utf-8?B?UzlUOEtock1RcXVtNXVFUGlseTQzeUNxanlTSFNEeHZBWnkreFVDVEdNRkRy?=
- =?utf-8?B?WVhiUzZ6alExNXBQUG1rSFdBendMdmRpRlVwZEFVRzZZa1FwdWM4c1h4bGJa?=
- =?utf-8?B?dzFQWThaRHdUTU1YVUhtYkFvUklJRlRjUkJRd2hzU0hTK3dhUmh2dThzRGJF?=
- =?utf-8?B?VmxiWEd3RUhhaXRKcjRqejBDNE80S3F2UG1KMS9CRHdVTWh1STM1ZFlZNXpM?=
- =?utf-8?B?bFhJc2k2dVNuMk1WaitUL0ZDYitKbW03ZWFwanQzYkY3L3BqTUl5c1h4eU1S?=
- =?utf-8?B?cHBmSTdNMXdoWEVBSXJSbG0rNG9qU2daL0paN0tvQkVwMzNCOEIxaTV5L21W?=
- =?utf-8?B?RVEvOGo0bzl6a2N3ZmgydFFlNWxaaEcxem5MQm9NMVFWRUxBenRrQ3g3eFYx?=
- =?utf-8?B?dWMzOStyM2tZYnBmT2Q1RFZTRlU4ZkFsbkRGZ0RYdzZCZ2lyZHZxR2dERENJ?=
- =?utf-8?B?V0hzQmJnKy95NGdKQkdybEtHN0ZKVkxRL3huanBnVVRHcGpPdktaamY0TjFM?=
- =?utf-8?B?N1h4MXEyNk50aVc5Nm03NlRuQ1NJS0E3RXRmU3dOOHRTSTdPTkVZM3BML0FU?=
- =?utf-8?B?THp4TmJzT0ZMQW4xK3pQQzNsbGRIbExDMXhtV1RvTzhTdkt4c2Z4K1BDVzFw?=
- =?utf-8?B?ZnZHZ0hsd2xSTHBKSGJtUnREMityL0tYMGcvRjZITUdDTXMzM2k5VFYwd0hI?=
- =?utf-8?B?aXZoQWNMeW5neVJtb003SHI5YW9sb0lGSGFsV1ZrMmluSnhaTzhOanpGZmlP?=
- =?utf-8?B?RHFmTjloUmd6U1JCSTdKdFZCWGc0UW1RWm9VY0hBT0lLUDMxbEZsMkVFYkNt?=
- =?utf-8?B?SThadHVValFlemduSmFGei91UlpHd3pBK2ZvZnRLYUtSZVc1TkNTeDdIOHdx?=
- =?utf-8?B?anVWSEYzaFVKQ1lWdWhPRE1SSG84T3AxcHFCVjZabkFmcDRBcUhVWkpmYU01?=
- =?utf-8?B?d1YzTmwzN0Fnb21TZ3g0MFZjMzBQQU1vTCtFanJGd0o3ckNsY2ZSV3ZLbnZo?=
- =?utf-8?B?SUZxUDJrU042WEptcDRuUTdiUnRsTm40eWFpVE5wUVRPVUN4TFhETW5BOFpO?=
- =?utf-8?B?QmtkTzZVb1MybUM1S041RU9taDJ2dVJET1pBREF1MndmSUcvcGdWTmZvOVB2?=
- =?utf-8?B?OXAxREhVdGgzUWNGZHVKWFBDN3FzVTBWVTBUemp4K2FWL2xKYW9mT0MrN2V0?=
- =?utf-8?B?MDE5L0FLcEliaSs5bm9vejBtdENlSTNBNUQ4dmIyZklQbCsySFQ3d2tHZ3NV?=
- =?utf-8?B?UWtmVExCRmtNbnNjQ2V1Y2VkejJWYlRPdkhIczM5RDhBNjdwQWxCZmVZb05j?=
- =?utf-8?B?Q3JBN3U1N1poa1pycENha0hqNEs3R1dISTFjS2xURjlaUWFzSWhKNVRBdDhh?=
- =?utf-8?B?Y3NMZWFLNExDd3hHcUc0cWlaVmYwd1JKbkZvblJNNVVUYm84bEhrSkRHSnZl?=
- =?utf-8?B?NmZjMXhLZVlmRkNzNlFrY1JZREcrYmV6YXBrVnJ4Q0NpV0hXcE04WDNSVVVM?=
- =?utf-8?B?K3h2bGpOeGl1YU5VbnZlQytJZUFHZytaOW1aUHNGcmduZi9weVBoSlB5YWcx?=
- =?utf-8?B?b3Y2U0FxZ1ZNdkhPZFEwdFJ2S1VzSGFhZGQ1aHNjT2NxNVhnYzFwTHNjK21P?=
- =?utf-8?B?MkhUZW1UMGdmWE1udmdSY201NExFdmo5NkxYVXV3VGwxa3FDMHZlcWs0UTZ0?=
- =?utf-8?B?QWhWVTArT2pPSURUblg3dUZBemljdE5SbmdXMGQ2MGU5NTFEWG83eGVONHpY?=
- =?utf-8?B?emtHcjNZSWM1T3dyR2VMQmdwUWJBemc2YmczeGVlZ242L0pPekkwNUdEL2pa?=
- =?utf-8?Q?p3ol8XQS4zaBcZwuPuwTCgoTnaixnN8z?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.118.233;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge2.nvidia.com;CAT:NONE;SFS:(13230040)(36860700013)(376014)(7416014)(82310400026)(1800799024);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jul 2024 14:11:23.5695
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6afed6fe-262e-4e39-9de5-08dc9c332fb9
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.233];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BN2PEPF00004FC0.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9232
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, 04 Jul 2024 11:48:18 +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.221 release.
-> There are 284 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sat, 06 Jul 2024 09:44:13 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.221-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
 
-All tests passing for Tegra ...
 
-Test results for stable-v5.10:
-    10 builds:	10 pass, 0 fail
-    26 boots:	26 pass, 0 fail
-    68 tests:	68 pass, 0 fail
+On 1 Jul 2024, at 20:36, Miguel Ojeda wrote:
 
-Linux version:	5.10.221-rc2-g6db6c4ec363b
-Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
-                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
-                tegra20-ventana, tegra210-p2371-2180,
-                tegra210-p3450-0000, tegra30-cardhu-a04
+> A new style lint, `doc_lazy_continuation` [1], has been introduced in t=
+he
+> upcoming Rust 1.80 (currently in beta), which detects missing indentati=
+on
+> in code documentation.
+>
+> We have one such case:
+>
+>     error: doc list item missing indentation
+>     --> rust/macros/lib.rs:315:5
+>         |
+>     315 | /// default the span of the `[< >]` group is used.
+>         |     ^
+>         |
+>         =3D help: if this is supposed to be its own paragraph, add a bl=
+ank line
+>         =3D help: for further information visit https://rust-lang.githu=
+b.io/rust-clippy/master/index.html#doc_lazy_continuation
+>         =3D note: `-D clippy::doc-lazy-continuation` implied by `-D cli=
+ppy::style`
+>         =3D help: to override `-D clippy::style` add `#[allow(clippy::d=
+oc_lazy_continuation)]`
+>     help: indent this line
+>         |
+>     315 | ///   default the span of the `[< >]` group is used.
+>         |     ++
+>
+> While the rendering of the docs by `rustdoc` is not affected, we apply
+> this kind of indentation elsewhere since it looks better.
+>
+> Thus clean it up.
+>
+> Link: https://rust-lang.github.io/rust-clippy/master/index.html#/doc_la=
+zy_continuation [1]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Reviewed-by: Finn Behrens <me@kloenk.dev>
 
-Jon
+> ---
+>  rust/macros/lib.rs | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/rust/macros/lib.rs b/rust/macros/lib.rs
+> index 520eae5fd792..05d976b3c09a 100644
+> --- a/rust/macros/lib.rs
+> +++ b/rust/macros/lib.rs
+> @@ -312,7 +312,7 @@ pub fn pinned_drop(args: TokenStream, input: TokenS=
+tream) -> TokenStream {
+>  ///
+>  /// Currently supported modifiers are:
+>  /// * `span`: change the span of concatenated identifier to the span o=
+f the specified token. By
+> -/// default the span of the `[< >]` group is used.
+> +///   default the span of the `[< >]` group is used.
+>  /// * `lower`: change the identifier to lower case.
+>  /// * `upper`: change the identifier to upper case.
+>  ///
+> -- =
+
+> 2.45.2
