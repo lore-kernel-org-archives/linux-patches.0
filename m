@@ -1,28 +1,28 @@
 Received: from gimli.kloenk.de (gimli.kloenk.de [49.12.72.200])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E8951B1424
-	for <patches@lists.linux.dev>; Thu,  4 Jul 2024 14:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9A9B1B1413
+	for <patches@lists.linux.dev>; Thu,  4 Jul 2024 14:51:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=49.12.72.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720104463; cv=none; b=J3spJNc3SOpzmQtHeQEhyuGTtXo5/iQsh07OI4aYZDc9KNy9Akz24Liz0OQgDkd8ensNHNWq4o1zBDcDPGjeDciCVWDu9EpEv5nv3PJ29plxba4vXsxhksyx/EAMGLSIZGlIzCKlUhAW23eQvLSyk0CBiI7LMzCeBvWHfIimDnQ=
+	t=1720104682; cv=none; b=oPzJs6xnsP0w16x9KUCyEgoHzQ2Vt6ZKKKEj8VV/68uKx3sXUiYE+dBeKhulZa/PT7h2nMWBmN1whaDEI6noMztCM+qSfM6DNBrNBGTxNzHq3TleWiInaLyUmfnhnMx4gpe9/pzcCBQNSqvtH5tIF8055gqFA4Ys/jj0Csw3cd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720104463; c=relaxed/simple;
-	bh=/x8J24Gd7MAb2ei7OJV0iflNkUAoN6f9qXBif0ICwgw=;
+	s=arc-20240116; t=1720104682; c=relaxed/simple;
+	bh=2WqPkYgcVOcJUdXrWzG9JEthQgFD3JbhnjuLk3fLfxs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a1JOVEt6EiTGwue63R11m6Z5hKf4dpvxUoeFaGsWIHbo5K4lKCTO+LDjb4ICdjqkTVksL4zZGIdKwiO4jv1DT6Nc4V9ouU991wSzWCfdEwve2ctJ6HgVy++QpxI2MGOBIa9Owvr/cJQlDmEyRfI/hCz5h+AdR2g65MBbrWQQ7Cs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kloenk.dev; spf=pass smtp.mailfrom=kloenk.dev; dkim=pass (1024-bit key) header.d=kloenk.dev header.i=@kloenk.dev header.b=nwu2Twgx; arc=none smtp.client-ip=49.12.72.200
+	 MIME-Version:Content-Type; b=dJzO6cy3RyOQMXH69lq1k1xFU9nMkFt5o/Zs1kUjz+stkB83wtlMWp8T/NRe3bah9uzP1TnMUHJ1ELBgNa2FWXeVZLQwrQsF0wddhloi2qnuyNy1gWKwHjMh7d4lBZch3OTkB4s4DuchgSi/o34KHFUTc+q3R65uu5dBKN7t1Zs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kloenk.dev; spf=pass smtp.mailfrom=kloenk.dev; dkim=pass (1024-bit key) header.d=kloenk.dev header.i=@kloenk.dev header.b=e4L7QNOl; arc=none smtp.client-ip=49.12.72.200
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kloenk.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kloenk.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=kloenk.dev header.i=@kloenk.dev header.b="nwu2Twgx"
+	dkim=pass (1024-bit key) header.d=kloenk.dev header.i=@kloenk.dev header.b="e4L7QNOl"
 From: Finn Behrens <me@kloenk.dev>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kloenk.dev; s=mail;
-	t=1720104458; bh=Rkh9Gxrbd+RcHt6HdDYebnkryyNZqEZzX12Z6Dir7BU=;
+	t=1720104678; bh=t4JaQy2kQjDTbqKgYKRhRdtwRxztZ6aV2QZFu9HiWgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nwu2Twgxxr13nOBVdrqqZ86A8fiU1W3t8C49bdSUsb7GjkIMsPyE8ruf/Gm+MCRKv
-	 /3eSC47VSuz3T/FUSMGQ54hcLwiz21mEauOcmiaRSA0uEqMQ1tSSfuDBMmd1dBTqaI
-	 OHO7XcRQ2+KC28gaRgwHTXPq3NH1gF4J/21a3w+o=
+	b=e4L7QNOlDf/MoEMzF61XrdYId+yPePTPGMsJdcs/xao5aluG+Hn/AcIYQLXNhSTWy
+	 /473IiL4L0oA8bfdXQsQH3g7NNThQCLj5YdjhBZZgGQB30ALWXr2S6TwR0qLgZELIe
+	 sjxWClV2odnwlyRi+oOuowL+d6xG+IcM59Z74634=
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
  Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
@@ -32,13 +32,12 @@ Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
  Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl <aliceryhl@google.com>,
  rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
  patches@lists.linux.dev
-Subject: Re: [PATCH 07/13] rust: warn about `bindgen` versions 0.66.0 and
- 0.66.1
-Date: Thu, 04 Jul 2024 16:47:37 +0200
-Message-ID: <68C4DE68-D996-43FA-BC16-06F13557E494@kloenk.dev>
-In-Reply-To: <20240701183625.665574-8-ojeda@kernel.org>
+Subject: Re: [PATCH 08/13] rust: work around `bindgen` 0.69.0 issue
+Date: Thu, 04 Jul 2024 16:51:17 +0200
+Message-ID: <D672AA56-460F-44C5-A73C-E99D36F86078@kloenk.dev>
+In-Reply-To: <20240701183625.665574-9-ojeda@kernel.org>
 References: <20240701183625.665574-1-ojeda@kernel.org>
- <20240701183625.665574-8-ojeda@kernel.org>
+ <20240701183625.665574-9-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,87 +51,73 @@ Content-Transfer-Encoding: quoted-printable
 
 On 1 Jul 2024, at 20:36, Miguel Ojeda wrote:
 
-> `bindgen` versions 0.66.0 and 0.66.1 panic due to C string literals wit=
-h
-> NUL characters [1]:
+> `bindgen` 0.69.0 contains a bug: `--version` does not work without
+> providing a header [1]:
 >
->     panicked at .cargo/registry/src/index.crates.io-6f17d22bba15001f/bi=
-ndgen-0.66.0/codegen/mod.rs:717:71:
->     called `Result::unwrap()` on an `Err` value: FromBytesWithNulError =
-{ kind: InteriorNul(4) }
+>     error: the following required arguments were not provided:
+>       <HEADER>
 >
-> Thus, in preparation for supporting several `bindgen` versions, add a
-> version check to warn the user about it.
+>     Usage: bindgen <FLAGS> <OPTIONS> <HEADER> -- <CLANG_ARGS>...
 >
-> We could make it an error, but 1) it is going to fail anyway later in t=
-he
-> build, 2) we would disable `RUST` automatically, which is also painful,=
-
-> 3) someone could be using a patched `bindgen` at that version, 4) the
-> interior NUL may go away in the headers (however unlikely). Thus just
-> warn about it so that users know why it is failing.
+> Thus, in preparation for supporting several `bindgen` versions, work
+> around the issue by passing a dummy argument.
 >
-> In addition, add a test for the new case.
+> Include a comment so that we can remove the workaround in the future.
 >
-> Link: https://github.com/rust-lang/rust-bindgen/pull/2567 [1]
+> Link: https://github.com/rust-lang/rust-bindgen/pull/2678 [1]
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
 Reviewed-by: Finn Behrens <me@kloenk.dev>
 
 > ---
->  scripts/rust_is_available.sh      | 8 ++++++++
->  scripts/rust_is_available_test.py | 7 +++++++
->  2 files changed, 15 insertions(+)
+>  init/Kconfig                 | 5 ++++-
+>  scripts/rust_is_available.sh | 6 +++++-
+>  2 files changed, 9 insertions(+), 2 deletions(-)
 >
+> diff --git a/init/Kconfig b/init/Kconfig
+> index febdea2afc3b..94e20d3b99d4 100644
+> --- a/init/Kconfig
+> +++ b/init/Kconfig
+> @@ -1928,7 +1928,10 @@ config RUSTC_VERSION_TEXT
+>  config BINDGEN_VERSION_TEXT
+>  	string
+>  	depends on RUST
+> -	default $(shell,command -v $(BINDGEN) >/dev/null 2>&1 && $(BINDGEN) -=
+-version || echo n)
+> +	# The dummy parameter `workaround-for-0.69.0` is required to support =
+0.69.0
+> +	# (https://github.com/rust-lang/rust-bindgen/pull/2678). It can be re=
+moved when
+> +	# the minimum version is upgraded past that (0.69.1 already fixed the=
+ issue).
+> +	default $(shell,command -v $(BINDGEN) >/dev/null 2>&1 && $(BINDGEN) -=
+-version workaround-for-0.69.0 || echo n)
+>
+>  #
+>  # Place an empty function call at each tracepoint site. Can be
 > diff --git a/scripts/rust_is_available.sh b/scripts/rust_is_available.s=
 h
-> index 67cb900124cc..33bbd01ffe51 100755
+> index 33bbd01ffe51..cfda8157dce9 100755
 > --- a/scripts/rust_is_available.sh
 > +++ b/scripts/rust_is_available.sh
-> @@ -165,6 +165,14 @@ if [ "$rust_bindings_generator_cversion" -gt "$rus=
-t_bindings_generator_min_cvers
->  	echo >&2 "***"
->  	warning=3D1
->  fi
-> +if [ "$rust_bindings_generator_cversion" -eq 6600 ] || [ "$rust_bindin=
-gs_generator_cversion" -eq 6601 ]; then
-> +	echo >&2 "***"
-> +	echo >&2 "*** Rust bindings generator '$BINDGEN' versions 0.66.0 and =
-0.66.1 may not"
-> +	echo >&2 "*** work due to a bug (https://github.com/rust-lang/rust-bi=
-ndgen/pull/2567)."
-> +	echo >&2 "***   Your version:     $rust_bindings_generator_version"
-> +	echo >&2 "***"
-> +	warning=3D1
-> +fi
->
->  # Check that the `libclang` used by the Rust bindings generator is sui=
-table.
+> @@ -121,8 +121,12 @@ fi
+>  # Check that the Rust bindings generator is suitable.
 >  #
-> diff --git a/scripts/rust_is_available_test.py b/scripts/rust_is_availa=
-ble_test.py
-> index a255f79aafc2..2b887098c19d 100755
-> --- a/scripts/rust_is_available_test.py
-> +++ b/scripts/rust_is_available_test.py
-> @@ -226,6 +226,13 @@ else:
->          result =3D self.run_script(self.Expected.SUCCESS_WITH_WARNINGS=
-, { "BINDGEN": bindgen })
->          self.assertIn(f"Rust bindings generator '{bindgen}' is too new=
-=2E This may or may not work.", result.stderr)
->
-> +    def test_bindgen_bad_version_0_66_0_and_0_66_1(self):
-> +        for version in ("0.66.0", "0.66.1"):
-> +            with self.subTest(version=3Dversion):
-> +                bindgen =3D self.generate_bindgen_version(f"bindgen {v=
-ersion}")
-> +                result =3D self.run_script(self.Expected.SUCCESS_WITH_=
-WARNINGS, { "BINDGEN": bindgen })
-> +                self.assertIn(f"Rust bindings generator '{bindgen}' ve=
-rsions 0.66.0 and 0.66.1 may not", result.stderr)
-> +
->      def test_bindgen_libclang_failure(self):
->          for env in (
->              { "LLVM_CONFIG_PATH": self.missing },
+>  # Non-stable and distributions' versions may have a version suffix, e.=
+g. `-dev`.
+> +#
+> +# The dummy parameter `workaround-for-0.69.0` is required to support 0=
+=2E69.0
+> +# (https://github.com/rust-lang/rust-bindgen/pull/2678). It can be rem=
+oved when
+> +# the minimum version is upgraded past that (0.69.1 already fixed the =
+issue).
+>  rust_bindings_generator_output=3D$( \
+> -	LC_ALL=3DC "$BINDGEN" --version 2>/dev/null
+> +	LC_ALL=3DC "$BINDGEN" --version workaround-for-0.69.0 2>/dev/null
+>  ) || rust_bindings_generator_code=3D$?
+>  if [ -n "$rust_bindings_generator_code" ]; then
+>  	echo >&2 "***"
 > -- =
 
 > 2.45.2
