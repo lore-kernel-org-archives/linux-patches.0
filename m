@@ -1,28 +1,28 @@
 Received: from gimli.kloenk.de (gimli.kloenk.de [49.12.72.200])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4EE1AE87B
-	for <patches@lists.linux.dev>; Thu,  4 Jul 2024 14:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B5201AEFD6
+	for <patches@lists.linux.dev>; Thu,  4 Jul 2024 14:34:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=49.12.72.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720103449; cv=none; b=VQ+CVrnKhFJmyiaWGpPaMFYSe1yRba24KDy1452H+XP+hqlbA3AwAzpi/Wdrr/5U1idFRk6meY8cYK83Pk8fq53Z0Y5Z/+LmzHqHGupwTc38xRMDfA5qnSu8ImzYqyH3jXycPG5TkT9JL50OExOMcCaM+EyL1VNj8jdiT3gngC0=
+	t=1720103685; cv=none; b=KhNtDlib8CDwmkXCB5nr9jo/p/ID5jZxBtfxrdDMfgGMp/nBq6cok4JZ4VWL7+hcendSHG0TmvfhGZpcuPoQ15Msmg4TH1Soir2Wy38iqN21kyrNus/z/5tGfZdiy7H7t48dCX7dOxEVTtSu6Pjt6CjovvdvE8tWbseXk/hOwnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720103449; c=relaxed/simple;
-	bh=/YfCTdnQGm2e8OteT+w3ZReS3qKp7v0iVq6bSYgaw8Y=;
+	s=arc-20240116; t=1720103685; c=relaxed/simple;
+	bh=R0Q6zdlmxDR45Ivw4NB26oWMIWWUcsNPRZNtLqdZrSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BAMd+Nk6W7BFe/F8zAtUgnGZwJEey6EhObs3Mm3YAoFPDurpQbUYB6eR9vJucEwDGqxpgPYm/Lp1UtuAxBF3ko24f+6GQPKeJvxs30KK9YxELzFVSoNww6aec4fg0Fy8Te55gwIcoaptG18xGYBTWnkfN83wOnQ62X6j6GXAEVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kloenk.dev; spf=pass smtp.mailfrom=kloenk.dev; dkim=pass (1024-bit key) header.d=kloenk.dev header.i=@kloenk.dev header.b=RESvNLgk; arc=none smtp.client-ip=49.12.72.200
+	 MIME-Version:Content-Type; b=P//tLT1ceURCzWf8qyri5rhOEk9wbsS/n18kFER8oBMhQQZL5XC3azqGjJx2bIaiyQG4ynYUXsQOnWT80b0OEqjUofCrtV8sQTlS0PKSoVTwOq4K7wIQ8NZsrr5YLelJxOW3pTJ6p4CiCMrA9g5kX+mq4mrt7z1XlVQfAUNk60g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kloenk.dev; spf=pass smtp.mailfrom=kloenk.dev; dkim=pass (1024-bit key) header.d=kloenk.dev header.i=@kloenk.dev header.b=liZVLx5M; arc=none smtp.client-ip=49.12.72.200
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kloenk.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kloenk.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=kloenk.dev header.i=@kloenk.dev header.b="RESvNLgk"
+	dkim=pass (1024-bit key) header.d=kloenk.dev header.i=@kloenk.dev header.b="liZVLx5M"
 From: Finn Behrens <me@kloenk.dev>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kloenk.dev; s=mail;
-	t=1720103444; bh=K5wwMCMBuM9kqaDI2K/jUVHFm330IHcLZCFjZvDmBOw=;
+	t=1720103681; bh=qthsm8N8HCDjpX99KA0BIXEcfX2ziMFLPNgaK3RprEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RESvNLgkzNEYWo0uOI7+z0PK3dxr+TJM5aPbh52iMnWb3y9EWWePhSC67u0MN5iDV
-	 o7hkNVkdGYfaL6guLXM8S6j0FW4ijvF2NV8afoS9VsuOA2PKMAWMWIkSjDUsB4nYEB
-	 ncFgKDYVdfYz8jAViMHzeu9zMcb7PRQ7GMDCg7UE=
+	b=liZVLx5MgjM6acXMyKBcN3RfD995PDZlnAxDfHwin+LOHIlWd6iiEkmqEv02ZgvEO
+	 wcO/zilJ4e2mxcmFCpsJ92d56FzBMwd/8Lw/Xd5/dMwdyqZ7O8axESJdMCTjFH9wgP
+	 chUYMT4aVZjmcq+5DE7kcRUd96gS+VuF/8FGL76Y=
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
  Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
@@ -31,14 +31,15 @@ Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
  Benno Lossin <benno.lossin@proton.me>,
  Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl <aliceryhl@google.com>,
  rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-Subject: Re: [PATCH 03/13] rust: allow `dead_code` for never constructed
- bindings
-Date: Thu, 04 Jul 2024 16:30:43 +0200
-Message-ID: <B8FF33D5-07E4-433A-AB35-EAE83265595B@kloenk.dev>
-In-Reply-To: <20240701183625.665574-4-ojeda@kernel.org>
+ patches@lists.linux.dev, Masahiro Yamada <masahiroy@kernel.org>,
+ Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>,
+ linux-kbuild@vger.kernel.org
+Subject: Re: [PATCH 04/13] rust: relax most deny-level lints to warnings
+Date: Thu, 04 Jul 2024 16:34:39 +0200
+Message-ID: <E76F0B90-F437-4425-9186-AEFFAC2A3304@kloenk.dev>
+In-Reply-To: <20240701183625.665574-5-ojeda@kernel.org>
 References: <20240701183625.665574-1-ojeda@kernel.org>
- <20240701183625.665574-4-ojeda@kernel.org>
+ <20240701183625.665574-5-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -46,71 +47,116 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
 
 
 On 1 Jul 2024, at 20:36, Miguel Ojeda wrote:
 
-> Starting with the upcoming Rust 1.80.0 (since upstream commit 35130d7233e9
-> ("Detect pub structs never constructed and unused associated constants
-> in traits")), the `dead_code` pass detects more cases, which triggers
-> in the `bindings` crate:
+> Since we are starting to support several Rust toolchains, lints (includ=
+ing
+> Clippy ones) now may behave differently and lint groups may include
+> new lints.
 >
->     warning: struct `boot_params` is never constructed
->         --> rust/bindings/bindings_generated.rs:10684:12
->         |
->     10684 | pub struct boot_params {
->         |            ^^^^^^^^^^^
->         |
->         = note: `#[warn(dead_code)]` on by default
+> Therefore, to maximize the chances a given version works, relax some
+> deny-level lints to warnings. It may also make our lives a bit easier
+> while developing new code or refactoring.
 >
-> As well as in the `uapi` one:
+> To be clear, the requirements for in-tree code are still the same, sinc=
+e
+> Rust code still needs to be warning-free (patches should be clean under=
+
+> `WERROR=3Dy`) and the set of lints is not changed.
 >
->     warning: struct `boot_params` is never constructed
->         --> rust/uapi/uapi_generated.rs:10392:12
->         |
->     10392 | pub struct boot_params {
->         |            ^^^^^^^^^^^
->         |
->         = note: `#[warn(dead_code)]` on by default
+> `unsafe_op_in_unsafe_fn` is left unmodified, i.e. as an error, since
+> 1) it is simple enough that it should not have false positives (unlike
+> e.g. `rust_2018_idioms`'s `explicit_outlives_requirements`) and 2) it i=
+s
+> becoming the default in the language (warn-by-default in Rust 2024 [1] =
+and
+> ideally an error later on) and thus it should also be very well tested.=
+
 >
-> These are all expected, since we do not use all the structs in the
-> bindings that `bindgen` generates from the C headers.
->
-> Therefore, allow them.
->
+> Link: https://github.com/rust-lang/rust/pull/112038 [1]
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+
+Also in favour of disallowing non ASCII idents. Either way
 
 Reviewed-by: Finn Behrens <me@kloenk.dev>
 
 > ---
->  rust/bindings/lib.rs | 1 +
->  rust/uapi/lib.rs     | 1 +
->  2 files changed, 2 insertions(+)
+>  Makefile      | 22 +++++++++++-----------
+>  rust/Makefile |  4 ++--
+>  2 files changed, 13 insertions(+), 13 deletions(-)
 >
-> diff --git a/rust/bindings/lib.rs b/rust/bindings/lib.rs
-> index 40ddaee50d8b..93a1a3fc97bc 100644
-> --- a/rust/bindings/lib.rs
-> +++ b/rust/bindings/lib.rs
-> @@ -24,6 +24,7 @@
->      unsafe_op_in_unsafe_fn
->  )]
+> diff --git a/Makefile b/Makefile
+> index 4d36f943b3b1..056176a55d63 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -461,17 +461,17 @@ KBUILD_USERLDFLAGS :=3D $(USERLDFLAGS)
+>  # host programs.
+>  export rust_common_flags :=3D --edition=3D2021 \
+>  			    -Zbinary_dep_depinfo=3Dy \
+> -			    -Dunsafe_op_in_unsafe_fn -Drust_2018_idioms \
+> -			    -Dunreachable_pub -Dnon_ascii_idents \
+> +			    -Dunsafe_op_in_unsafe_fn -Wrust_2018_idioms \
+> +			    -Wunreachable_pub -Wnon_ascii_idents \
+>  			    -Wmissing_docs \
+> -			    -Drustdoc::missing_crate_level_docs \
+> -			    -Dclippy::correctness -Dclippy::style \
+> -			    -Dclippy::suspicious -Dclippy::complexity \
+> -			    -Dclippy::perf \
+> -			    -Dclippy::let_unit_value -Dclippy::mut_mut \
+> -			    -Dclippy::needless_bitwise_bool \
+> -			    -Dclippy::needless_continue \
+> -			    -Dclippy::no_mangle_with_rust_abi \
+> +			    -Wrustdoc::missing_crate_level_docs \
+> +			    -Wclippy::correctness -Wclippy::style \
+> +			    -Wclippy::suspicious -Wclippy::complexity \
+> +			    -Wclippy::perf \
+> +			    -Wclippy::let_unit_value -Wclippy::mut_mut \
+> +			    -Wclippy::needless_bitwise_bool \
+> +			    -Wclippy::needless_continue \
+> +			    -Wclippy::no_mangle_with_rust_abi \
+>  			    -Wclippy::dbg_macro
 >
-> +#[allow(dead_code)]
->  mod bindings_raw {
->      // Use glob import here to expose all helpers.
->      // Symbols defined within the module will take precedence to the glob import.
-> diff --git a/rust/uapi/lib.rs b/rust/uapi/lib.rs
-> index 0caad902ba40..80a00260e3e7 100644
-> --- a/rust/uapi/lib.rs
-> +++ b/rust/uapi/lib.rs
-> @@ -14,6 +14,7 @@
->  #![cfg_attr(test, allow(unsafe_op_in_unsafe_fn))]
->  #![allow(
->      clippy::all,
-> +    dead_code,
->      missing_docs,
->      non_camel_case_types,
->      non_upper_case_globals,
-> -- 
+>  KBUILD_HOSTCFLAGS   :=3D $(KBUILD_USERHOSTCFLAGS) $(HOST_LFS_CFLAGS) $=
+(HOSTCFLAGS)
+> @@ -573,7 +573,7 @@ KBUILD_RUSTFLAGS :=3D $(rust_common_flags) \
+>  		    -Csymbol-mangling-version=3Dv0 \
+>  		    -Crelocation-model=3Dstatic \
+>  		    -Zfunction-sections=3Dn \
+> -		    -Dclippy::float_arithmetic
+> +		    -Wclippy::float_arithmetic
+>
+>  KBUILD_AFLAGS_KERNEL :=3D
+>  KBUILD_CFLAGS_KERNEL :=3D
+> diff --git a/rust/Makefile b/rust/Makefile
+> index f70d5e244fee..4c03e53d3084 100644
+> --- a/rust/Makefile
+> +++ b/rust/Makefile
+> @@ -421,7 +421,7 @@ ifneq ($(or $(CONFIG_ARM64),$(and $(CONFIG_RISCV),$=
+(CONFIG_64BIT))),)
+>  endif
+>
+>  $(obj)/core.o: private skip_clippy =3D 1
+> -$(obj)/core.o: private skip_flags =3D -Dunreachable_pub
+> +$(obj)/core.o: private skip_flags =3D -Wunreachable_pub
+>  $(obj)/core.o: private rustc_objcopy =3D $(foreach sym,$(redirect-intr=
+insics),--redefine-sym $(sym)=3D__rust$(sym))
+>  $(obj)/core.o: private rustc_target_flags =3D $(core-cfgs)
+>  $(obj)/core.o: $(RUST_LIB_SRC)/core/src/lib.rs FORCE
+> @@ -435,7 +435,7 @@ $(obj)/compiler_builtins.o: $(src)/compiler_builtin=
+s.rs $(obj)/core.o FORCE
+>  	+$(call if_changed_dep,rustc_library)
+>
+>  $(obj)/alloc.o: private skip_clippy =3D 1
+> -$(obj)/alloc.o: private skip_flags =3D -Dunreachable_pub
+> +$(obj)/alloc.o: private skip_flags =3D -Wunreachable_pub
+>  $(obj)/alloc.o: private rustc_target_flags =3D $(alloc-cfgs)
+>  $(obj)/alloc.o: $(RUST_LIB_SRC)/alloc/src/lib.rs $(obj)/compiler_built=
+ins.o FORCE
+>  	+$(call if_changed_dep,rustc_library)
+> -- =
+
 > 2.45.2
