@@ -1,138 +1,116 @@
-Received: from mail-il1-f176.google.com (mail-il1-f176.google.com [209.85.166.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from gimli.kloenk.de (gimli.kloenk.de [49.12.72.200])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F35861AEFEB
-	for <patches@lists.linux.dev>; Thu,  4 Jul 2024 14:28:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4EE1AE87B
+	for <patches@lists.linux.dev>; Thu,  4 Jul 2024 14:30:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=49.12.72.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720103304; cv=none; b=qqjSCxmufummD2hGcXhUINsdPVizjW1WDAOLl+pZio1JkIU31SwLKzZ+gSC8cHbM59XhfeEHxgEff3ReVqZJTp8Fi9w4ZQFSpqji4s+xZJ5G4NT0VvVM3X8FjjAHty00b30BXaF9kv5/iKGBP+ztfJBBIYVK0C/f7eXa0Op2gps=
+	t=1720103449; cv=none; b=VQ+CVrnKhFJmyiaWGpPaMFYSe1yRba24KDy1452H+XP+hqlbA3AwAzpi/Wdrr/5U1idFRk6meY8cYK83Pk8fq53Z0Y5Z/+LmzHqHGupwTc38xRMDfA5qnSu8ImzYqyH3jXycPG5TkT9JL50OExOMcCaM+EyL1VNj8jdiT3gngC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720103304; c=relaxed/simple;
-	bh=c9JA6QpyoPEqXQUjSyhDXJwRTlAvumB0L/bnxzBVzis=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LeH6OBLnh5jfniaU81qXIo/qhLwJJTmTk+dT4b9pPuQpo08kQPEdW/OOXQX4UvuUFUvwTyens4FVPjv1Mg5e/z71eIbMsFqgJdrVQ9x23BcM1rMI54SkNOf/TGR2guapywdAhOBUrJFS9jbKku2BD9D/aJankNQz5tvm1D00ABQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vf9RkVCA; arc=none smtp.client-ip=209.85.166.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1720103449; c=relaxed/simple;
+	bh=/YfCTdnQGm2e8OteT+w3ZReS3qKp7v0iVq6bSYgaw8Y=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=BAMd+Nk6W7BFe/F8zAtUgnGZwJEey6EhObs3Mm3YAoFPDurpQbUYB6eR9vJucEwDGqxpgPYm/Lp1UtuAxBF3ko24f+6GQPKeJvxs30KK9YxELzFVSoNww6aec4fg0Fy8Te55gwIcoaptG18xGYBTWnkfN83wOnQ62X6j6GXAEVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kloenk.dev; spf=pass smtp.mailfrom=kloenk.dev; dkim=pass (1024-bit key) header.d=kloenk.dev header.i=@kloenk.dev header.b=RESvNLgk; arc=none smtp.client-ip=49.12.72.200
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kloenk.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kloenk.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vf9RkVCA"
-Received: by mail-il1-f176.google.com with SMTP id e9e14a558f8ab-38257b4283dso3281605ab.2
-        for <patches@lists.linux.dev>; Thu, 04 Jul 2024 07:28:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720103302; x=1720708102; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=u1P2tU+i5F9P2SJDg48T2CuVXkPsH0OuQcZT4TeqTEk=;
-        b=Vf9RkVCAF/FLnxS81zTr63gXu1WR1xZ/qbj/GQa/qt4AaXEvsv2jBsVK1YogPhx3Z9
-         +6pXTMqiB9geURJsv+eBU6vR+kjYZuyb8S3ExdudWM8qu5BLWQhmL8/b6rTYf8J4pOgu
-         2sSjnFoK6Q9m8wOj+p2SLhNcVXtSuruD4phR6nBiaI7iZIzPIwV6/+onCOP99+wcNoFr
-         HVzRlkF8WQO8EHBrdIhhY6Et3YTLmtXCLDJPKk632QDp9k/2QKjuO1pSkCMPNe6So4lz
-         NPLUAo1STXyFK/D5rg5aZKTIVzijyuE/Z5DxrTf47Xq6nxQvq5o72ZlrsOI4nxNkwFoT
-         pddw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720103302; x=1720708102;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=u1P2tU+i5F9P2SJDg48T2CuVXkPsH0OuQcZT4TeqTEk=;
-        b=L7fMICzO20NDNmfHD1hUm2Kmopy2nwTrq6Sk88qHXO5u3snu8ewMukF1SsyBY/CRmT
-         W6ziBGSyGh3AgETGed3qvcH2sd76616OzZWsVQwtJmRX+dK18++JmWkyqBWW7tAkkl+/
-         M6RqY5GzfIfc+nDFDUMUcasBipBClPa30419cL2AqVxgXtiMkWVph7tkKPlv/QiNhrXL
-         XoejJbO2lojwsHHucJsUdajFRxMBFpXPOmEpWyj2AHuEACLGkY6/Uh0FZSTpkR/qVEMv
-         Kp4EcaPAFT2VoVw5/aY9wzOD7TkxnSn41s6PdDBbyni3gXUokcS+jn8gzqpNtVuQzh2W
-         XyHQ==
-X-Gm-Message-State: AOJu0Yym/MvASPAVlr9KeDcrB7PRk4u2uv8SZHbcQ01SQ0D3I/CSnLT+
-	WP0xbtNHofCOnxZrzBAao8LRd8cCG2RUT5nyMY0//7hZtKT4vk51
-X-Google-Smtp-Source: AGHT+IEP2PxrKnMLt/hzyxRggDMb1MM2IWt/nSAYfZzNGKZalwagUqGJbdUrbomCP//+BU6RlVad2A==
-X-Received: by 2002:a05:6e02:218d:b0:376:4049:69e5 with SMTP id e9e14a558f8ab-3839aad2353mr21391125ab.23.1720103301924;
-        Thu, 04 Jul 2024 07:28:21 -0700 (PDT)
-Received: from [10.40.5.113] ([89.207.175.15])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70af4bb1be5sm2436639b3a.138.2024.07.04.07.28.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Jul 2024 07:28:21 -0700 (PDT)
-Message-ID: <152ba724-55d7-49a5-9819-25911c4995d1@gmail.com>
-Date: Thu, 4 Jul 2024 15:28:12 +0100
+	dkim=pass (1024-bit key) header.d=kloenk.dev header.i=@kloenk.dev header.b="RESvNLgk"
+From: Finn Behrens <me@kloenk.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kloenk.dev; s=mail;
+	t=1720103444; bh=K5wwMCMBuM9kqaDI2K/jUVHFm330IHcLZCFjZvDmBOw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=RESvNLgkzNEYWo0uOI7+z0PK3dxr+TJM5aPbh52iMnWb3y9EWWePhSC67u0MN5iDV
+	 o7hkNVkdGYfaL6guLXM8S6j0FW4ijvF2NV8afoS9VsuOA2PKMAWMWIkSjDUsB4nYEB
+	 ncFgKDYVdfYz8jAViMHzeu9zMcb7PRQ7GMDCg7UE=
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
+ Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
+ Gary Guo <gary@garyguo.net>,
+ =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
+ Benno Lossin <benno.lossin@proton.me>,
+ Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl <aliceryhl@google.com>,
+ rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev
+Subject: Re: [PATCH 03/13] rust: allow `dead_code` for never constructed
+ bindings
+Date: Thu, 04 Jul 2024 16:30:43 +0200
+Message-ID: <B8FF33D5-07E4-433A-AB35-EAE83265595B@kloenk.dev>
+In-Reply-To: <20240701183625.665574-4-ojeda@kernel.org>
+References: <20240701183625.665574-1-ojeda@kernel.org>
+ <20240701183625.665574-4-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.10 000/284] 5.10.221-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-References: <20240704094505.095988824@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-Autocrypt: addr=f.fainelli@gmail.com; keydata=
- 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
- HGuUuzv+GKZ6nsysJw==
-In-Reply-To: <20240704094505.095988824@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
 
 
-On 7/4/2024 10:48 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.221 release.
-> There are 284 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sat, 06 Jul 2024 09:44:13 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.221-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On 1 Jul 2024, at 20:36, Miguel Ojeda wrote:
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+> Starting with the upcoming Rust 1.80.0 (since upstream commit 35130d7233e9
+> ("Detect pub structs never constructed and unused associated constants
+> in traits")), the `dead_code` pass detects more cases, which triggers
+> in the `bindings` crate:
+>
+>     warning: struct `boot_params` is never constructed
+>         --> rust/bindings/bindings_generated.rs:10684:12
+>         |
+>     10684 | pub struct boot_params {
+>         |            ^^^^^^^^^^^
+>         |
+>         = note: `#[warn(dead_code)]` on by default
+>
+> As well as in the `uapi` one:
+>
+>     warning: struct `boot_params` is never constructed
+>         --> rust/uapi/uapi_generated.rs:10392:12
+>         |
+>     10392 | pub struct boot_params {
+>         |            ^^^^^^^^^^^
+>         |
+>         = note: `#[warn(dead_code)]` on by default
+>
+> These are all expected, since we do not use all the structs in the
+> bindings that `bindgen` generates from the C headers.
+>
+> Therefore, allow them.
+>
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+Reviewed-by: Finn Behrens <me@kloenk.dev>
+
+> ---
+>  rust/bindings/lib.rs | 1 +
+>  rust/uapi/lib.rs     | 1 +
+>  2 files changed, 2 insertions(+)
+>
+> diff --git a/rust/bindings/lib.rs b/rust/bindings/lib.rs
+> index 40ddaee50d8b..93a1a3fc97bc 100644
+> --- a/rust/bindings/lib.rs
+> +++ b/rust/bindings/lib.rs
+> @@ -24,6 +24,7 @@
+>      unsafe_op_in_unsafe_fn
+>  )]
+>
+> +#[allow(dead_code)]
+>  mod bindings_raw {
+>      // Use glob import here to expose all helpers.
+>      // Symbols defined within the module will take precedence to the glob import.
+> diff --git a/rust/uapi/lib.rs b/rust/uapi/lib.rs
+> index 0caad902ba40..80a00260e3e7 100644
+> --- a/rust/uapi/lib.rs
+> +++ b/rust/uapi/lib.rs
+> @@ -14,6 +14,7 @@
+>  #![cfg_attr(test, allow(unsafe_op_in_unsafe_fn))]
+>  #![allow(
+>      clippy::all,
+> +    dead_code,
+>      missing_docs,
+>      non_camel_case_types,
+>      non_upper_case_globals,
+> -- 
+> 2.45.2
