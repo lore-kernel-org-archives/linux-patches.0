@@ -1,45 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1440C1AAE30;
-	Thu,  4 Jul 2024 09:28:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C541AAE30;
+	Thu,  4 Jul 2024 09:28:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720085329; cv=none; b=fMyPJfZX5zxuMdYc0RRbVPj4EKoTj1fVrFy3qqPS5CoCj6qBpHS23NCugLigT+3lWE9c9Ap2onJAwqB6D9khagzOHhGoxJw3pFzKqdioHC61vNX0L3LqzqNdrs4UVxHSc2dh0N0UNghja86PFN5qRKa85BRW1hBIwS3eh5mBCZc=
+	t=1720085339; cv=none; b=HzNbUJkeUTjT34SCzbneZZpCKbqU38OQxKQO+IdSkk1tITtTKQ1mvMM/h1A2l4TLcagzrDNRhrcgNQwH1FkImeebBGw3jVZ6Cu9MbG3kB38pvkJ1bhsaql4oitr4A2/MrvVr1rB7IAUKaa98zIDVZJJqohR/PBxg+vByQY7fbnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720085329; c=relaxed/simple;
-	bh=oS+6t3Gsu4be78gBFOPE2qryAV76MpPYFZGZKkhajYU=;
+	s=arc-20240116; t=1720085339; c=relaxed/simple;
+	bh=RAU682pllQ3Qwzdcw44X5tDRqFgQveq+4ErPH8vDthE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XnjsUMxGfEANDu48S1ol+kYZBgQs2qt+T5v3mrMKtdkLfaAMK1Vcl3bl/6TXGBL/1ObqWsa/LKKcXgpoxl5/1q0DRqgS4DmAia9XxSRDcaVTtjzYKeAJyZKxKVBkc9SAwXJUmqj2HW0W/+tOLV07T9n/X7DMG8Al9WpcCnJ2O4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1cxZnEGH; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=JzglVGb6OM4KvQOw5Tdbz7k7EYSXEOumpLDeMhmdCJaiWCW8OGp10CJ1wqGz78D9glGGdc3/IRWFitmFNtb+V5TXvaxgBP2VJa6Cj6hOC/ZGdaZsCZUVe3ZH69skIoBzCZujMFW1XoLcbq7zzX24wtUseiXW8agRs4BxZIivJoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WsErD0F2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1cxZnEGH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B5FCC3277B;
-	Thu,  4 Jul 2024 09:28:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WsErD0F2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1619AC3277B;
+	Thu,  4 Jul 2024 09:28:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720085328;
-	bh=oS+6t3Gsu4be78gBFOPE2qryAV76MpPYFZGZKkhajYU=;
+	s=korg; t=1720085338;
+	bh=RAU682pllQ3Qwzdcw44X5tDRqFgQveq+4ErPH8vDthE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=1cxZnEGHbBMMYAiEy4pBFI8juo+Eim1Z4WLyS+N8B+uNO49MKbpLMtKjaJEz97SKn
-	 6zuFfPgmP9NWfp5TIyezxFz/VAZebEiObvabqdGiPJ971GCjIPa34Tkw4C98DRspFg
-	 ZQq2QktXSyt+kweSK4xK92TwZGobzwmrOIwcsGsU=
-Date: Thu, 4 Jul 2024 11:19:12 +0200
+	b=WsErD0F2Dnok9dLeG96r/JEVtpzxttD4/6V0yWRtJlXN+DW3lv4/CDub/JMnjSsxS
+	 U4QAbF7C09QoJ7fdWOiToWRxwNJutAKNs8HMCcOPtHOuBg8kTMBQBXZ1xGjk41HOWf
+	 Qu7HKyyDH7uPS4ncn1pSruXHz/LMPMp5RHtE+eSY=
+Date: Thu, 4 Jul 2024 11:25:11 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Ryan Roberts <ryan.roberts@arm.com>, Shuah Khan <shuah@kernel.org>,
+To: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.15 067/356] selftests/mm: log a consistent test name
- for check_compaction
-Message-ID: <2024070405-tackiness-spiffy-9c18@gregkh>
-References: <20240703102913.093882413@linuxfoundation.org>
- <20240703102915.636328702@linuxfoundation.org>
- <416ea8e5-f3e0-47b3-93c2-34a67c474d8f@sirena.org.uk>
- <2024070349-convent-quiver-dc57@gregkh>
- <2a39df32-73ea-43fe-84ba-e840ba3dc835@sirena.org.uk>
- <2024070406-reformer-panning-20f2@gregkh>
+	Guenter Roeck <linux@roeck-us.net>, shuah <shuah@kernel.org>,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	Pavel Machek <pavel@denx.de>, Jon Hunter <jonathanh@nvidia.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Sudip Mukherjee <sudipm.mukherjee@gmail.com>, srw@sladewatkins.net,
+	rwarsow@gmx.de, Conor Dooley <conor@kernel.org>,
+	Allen <allen.lkml@gmail.com>, Mark Brown <broonie@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Anders Roxell <anders.roxell@linaro.org>,
+	Linux-sh list <linux-sh@vger.kernel.org>,
+	Rich Felker <dalias@libc.org>
+Subject: Re: [PATCH 5.4 000/189] 5.4.279-rc1 review
+Message-ID: <2024070402-gallows-schematic-ce53@gregkh>
+References: <20240703102841.492044697@linuxfoundation.org>
+ <CA+G9fYvAkELSdWF1EYyjS=d_jvCJD0O=aPnZFHUGnhYy6c1VCg@mail.gmail.com>
+ <72ddde27-e2e2-4a46-a2ab-4d20a7a9424f@app.fastmail.com>
+ <c497d1abee4bf37663488c3a80e042a25303c0c4.camel@physik.fu-berlin.de>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,36 +56,20 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2024070406-reformer-panning-20f2@gregkh>
+In-Reply-To: <c497d1abee4bf37663488c3a80e042a25303c0c4.camel@physik.fu-berlin.de>
 
-On Thu, Jul 04, 2024 at 11:15:34AM +0200, Greg Kroah-Hartman wrote:
-> On Wed, Jul 03, 2024 at 02:36:56PM +0100, Mark Brown wrote:
-> > On Wed, Jul 03, 2024 at 02:52:14PM +0200, Greg Kroah-Hartman wrote:
-> > > On Wed, Jul 03, 2024 at 01:02:18PM +0100, Mark Brown wrote:
-> > > > On Wed, Jul 03, 2024 at 12:36:43PM +0200, Greg Kroah-Hartman wrote:
-> > 
-> > > > > Refactor the logging to use a consistent name when printing the result of
-> > > > > the test, printing the existing messages as diagnostic information instead
-> > > > > so they are still available for people trying to interpret the results.
-> > 
-> > > > I'm not convinced that this is a good stable candidate, it will change
-> > > > the output people are seeing in their test environment which might be an
-> > > > undesirable change.
-> > 
-> > > Did it change the output in a breaking way in the other stable trees and
-> > > normal releases that happened with this commit in it?
-> > 
-> > Yes, it'd affect other releases - I didn't notice it going into other
-> > stables (I tend to review the AUTOSEL stuff a lot more carefully than
-> > things you send out since you normally only pick things that are Cc
-> > stable but AUTOSEL has some wild stuff).  The output tended to be stable
-> > for a given test setup so it's likely that if you're just looking for
-> > the same test results in a stable release you'd see these tests getting
-> > renamed on you.
+On Wed, Jul 03, 2024 at 08:42:42PM +0200, John Paul Adrian Glaubitz wrote:
+> Hi Arnd,
 > 
-> This is here as a dependency of another change, let me see if I can
-> remove it and get the dependant patch still working...
+> On Wed, 2024-07-03 at 20:34 +0200, Arnd Bergmann wrote:
+> > Rich and Adrian, let me know if you would submit a
+> > tested backport stable@vger.kernel.org yourself, if you
+> > want help backporting my patch, or if we should just
+> > leave the existing state in the LTS kernels.
+> 
+> I think it's safe to keep the existing state in the old LTS kernels
+> as most SH users will be on the latest kernel anyway.
 
-Got it working, now dropped, thanks.
+Thanks, I'll drop it from these older kernels now.
 
 greg k-h
