@@ -1,204 +1,182 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89C1DDDA1
-	for <patches@lists.linux.dev>; Sat,  6 Jul 2024 03:24:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE81C1BC41;
+	Sat,  6 Jul 2024 04:54:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720236253; cv=none; b=Db30mSY7tLlyRyI0DDRjWp25wcWmTEKrcYRcWV1HdGwcPlsIuDZ0u9Lq4yP1O3PhZjvG/W2QI3IEUsCabLJqCZ11anoE9HygsocdOriPDioA1SD7/lrrtui4cdUNCh90A0ysy2NeiDINj3y4aaUgt9YZ1wioVeXrlhdWwJne1sQ=
+	t=1720241696; cv=none; b=CuNBh6OFYg7gjshnpChFJ/it7pxKBDRnvbt0MFVFSjjRrFuKKP+H8uErN/lfNneUi5jsDXsxPNX4KzDW0/6c6ubEw9v47bxplfQ0NXMjlspanXx5nM2mcTws4LFv0ADrsXvfBqxkT0/KoaWH55IYZULIYEpvH3xEqP1XdNn0N28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720236253; c=relaxed/simple;
-	bh=Zf7fegEOz88S+uefNQgGk7kN64iUyK0nqei1SbhANDY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Lic2oFRjqX4fUJvTmQAXDLIwCZwPuHcf/BDtWIro6kM3YuFqXDXJUFCFstskyz1XGwJrTDfu8/BPlTSYR/z2fFwMl5Nc4kmQmzUYXhOLMZ73SnqtWjormIgBE5MkJUkdJHkv6HAvietAf+nZkD2/JeqU743MBU45slNweEeJPHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=d6Y1lQdj; arc=none smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1720241696; c=relaxed/simple;
+	bh=8vksGDq15/DNxHKtUvp7xV+9TldcuzeVPL/jcUozy3A=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=F5wSfKHcFvHgA4oFfTUybCpMzIBGMMF8RJYiDH1ADw1vm5xVZ7kjGZIONXWFwhM+m2Ibec8zefdRO0C/+07VmevuZ8MUFSNshu2nR7Tfe4gqpCaEBD/yP4gGDvxI45QO7cvwqI0+FS//z4fQDehylkcHoOUGgbWPpZMuEGknGag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S3lhWV0y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="d6Y1lQdj"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-58ce966a1d3so23895a12.1
-        for <patches@lists.linux.dev>; Fri, 05 Jul 2024 20:24:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1720236250; x=1720841050; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EeOWn8Dcpi/0Zne7XKezGHMzmpPhwxsGnD8ugnUza50=;
-        b=d6Y1lQdji4URgM8MjhuFPxZ6ifzhfxNbYSeFW6GzHLrxT3FdfGu69ue5B3WC5SpSG3
-         spHOg2Ws722VPFsm7IlFoHAVKG/VSmhLu6rjvuMYx9jDR6vxLPbrzluYh8BTcPjwbJud
-         4iNKzN3+T2TVbN0Ky2JpASaWADhLrhWqcdvRyKJTQXofXyJmEcCLCq2f2zVxnE5qXUq6
-         e+mYYP6lZ3zZg+yj/NbW5NZejckOyEuMHPYapVl+ojFZozVLaQ0eiWRb7ouoP7OufHTs
-         ZA5oRydZ4TW4zlxD06AeSaCWaTu0BWk8gxl+xRKvh6FLnWtBMAnwkSVZLDuak2Sx/yDs
-         ntFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720236250; x=1720841050;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EeOWn8Dcpi/0Zne7XKezGHMzmpPhwxsGnD8ugnUza50=;
-        b=seu/2lP07sC69BqloZ1nWkXPh7wrmx30Px8qHAwGHFUbt0byW797Hky7z8Xpx+jw7O
-         TfzbEW7SPAbCdIhT074XV6FMwfopvjjVBd/5oYxWD47n8SjsOUVInmcI7Syq+UT1c4nX
-         kUEbOdTOS9UJgZEKpREmot1KUPKYl1G6q8hyW5B9ZesU9mHYVxXwgC2HypAMjeUrw6d2
-         D+niK8NMQifjNEA5t+tGsis/yNcu4pgQ6lHZlA735iXImOwO1t/fOEhlHVEVTlXH/YcS
-         o720Wb2ruvIL2eSRHNRmMcGLw7IcwL4fBsIy9IMQrpf0J4W+LjXB5qtpnzqCt89AngHJ
-         r/rA==
-X-Forwarded-Encrypted: i=1; AJvYcCXqOJgm7KWPa6P2IKbK0IU5ANJp8DIrbXhBIzr2++WeeMlEOmTW1fwI2JNLjsmJUBCPjm2W3+CXX4AqwRbOdrYZ/N/QCPCPcQ==
-X-Gm-Message-State: AOJu0Yw/6obYLDN1Hyx2W4Q5N/OVqNo0/OhtLDJc6ZwtDrXyNHspeO2z
-	0XLSurctgHy30fjRpZimINpXEDa+2qXxlGwK6UDg9JpwSzaGMrTypZf4etKmDlTza7ye+OKqv7/
-	z5md700X1j1iHwJeESAlPyOVz8Nj3DNT/E9N1
-X-Google-Smtp-Source: AGHT+IExJJ+2hSaxJtRHZGJ4Ox4OzW4oFndkiki9VhxYJFTQsxkQqN4Vpb3uXzUPWyQhWCVip8yKpWFGS+CMtG1GfTA=
-X-Received: by 2002:a50:8ad3:0:b0:57c:bb0d:5e48 with SMTP id
- 4fb4d7f45d1cf-58e00933a13mr316161a12.2.1720236249500; Fri, 05 Jul 2024
- 20:24:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S3lhWV0y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55F90C2BD10;
+	Sat,  6 Jul 2024 04:54:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1720241696;
+	bh=8vksGDq15/DNxHKtUvp7xV+9TldcuzeVPL/jcUozy3A=;
+	h=From:To:Cc:Subject:Date:From;
+	b=S3lhWV0y+tjs9ydq01PYIdr4TDuHD+DYMG8rfCOIZxyyrGyOxSkunL6iKSRQ8zWNM
+	 9SUnpYbnyKmuUZcZejKEIMMmeuQjB3oGdtvlKPodihnQhYlJJ+UAO2/XXqx91wg8nI
+	 D/4weedgYGjcJsNWaZxKhnJf2khN6YcFG6bL+7C3076rSDf6ZLt3KVqz23VaVVwnAF
+	 DmcRpLO/yPGRKb+ara+msjfYZhVixqt9+caNHKYgSnszKpx9AderZG3OqkUPAz8Oa1
+	 uSxzfP2Jy71sV6uO1CeMKxHIk+tOrtv2pcRIc9sC+kMRTw2sE2fwjcfy5u/6cIGrt6
+	 rehVcTfwbJAaA==
+From: Stephen Boyd <sboyd@kernel.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	patches@lists.linux.dev,
+	kunit-dev@googlegroups.com,
+	linux-kselftest@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
+	Rae Moar <rmoar@google.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Rafael J . Wysocki" <rafael@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Saravana Kannan <saravanak@google.com>,
+	Daniel Latypov <dlatypov@google.com>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Maxime Ripard <maxime@cerno.tech>
+Subject: [PATCH v6 0/8] clk: Add kunit tests for fixed rate and parent data
+Date: Fri,  5 Jul 2024 21:54:45 -0700
+Message-ID: <20240706045454.215701-1-sboyd@kernel.org>
+X-Mailer: git-send-email 2.45.2.803.g4e1b14247a-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240704-update-ld-version-for-new-lld-ver-str-v1-1-91bccc020a93@kernel.org>
- <CAFP8O3JUgH-tBJtqO-QS0HmO4mrFBE6Dz+tnrBcse=gw_Q_4vQ@mail.gmail.com> <20240705160007.GA875035@thelio-3990X>
-In-Reply-To: <20240705160007.GA875035@thelio-3990X>
-From: Fangrui Song <maskray@google.com>
-Date: Fri, 5 Jul 2024 20:23:58 -0700
-Message-ID: <CAFP8O3+X4iT1OPoMdTTa_Y1WKjK4f6ownE0tBYZD_a-ngSNufg@mail.gmail.com>
-Subject: Re: [PATCH] kbuild: Update ld-version.sh for change in LLD version output
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Masahiro Yamada <masahiroy@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, 
-	Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, linux-kbuild@vger.kernel.org, 
-	llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Fri, Jul 5, 2024 at 9:00=E2=80=AFAM Nathan Chancellor <nathan@kernel.org=
-> wrote:
->
-> On Thu, Jul 04, 2024 at 02:23:46PM -0700, Fangrui Song wrote:
-> > On Thu, Jul 4, 2024 at 9:19=E2=80=AFAM Nathan Chancellor <nathan@kernel=
-.org> wrote:
-> > >
-> > > After [1] in upstream LLVM, ld.lld's version output is slightly
-> > > different when the cmake configuration option LLVM_APPEND_VC_REV is
-> > > disabled.
-> > >
-> > > Before:
-> > >
-> > >   Debian LLD 19.0.0 (compatible with GNU linkers)
-> > >
-> > > After:
-> > >
-> > >   Debian LLD 19.0.0, compatible with GNU linkers
-> > >
-> > > This results in ld-version.sh failing with
-> > >
-> > >   scripts/ld-version.sh: 19: arithmetic expression: expecting EOF: "1=
-0000 * 19 + 100 * 0 + 0,"
-> > >
-> > > because the trailing comma is included in the patch level part of the
-> > > expression. Remove the trailing comma when assigning the version
-> > > variable in the LLD block to resolve the error, resulting in the prop=
-er
-> > > output:
-> > >
-> > >   LLD 190000
-> > >
-> > > With LLVM_APPEND_VC_REV enabled, there is no issue with the new outpu=
-t
-> > > because it is treated the same as the prior LLVM_APPEND_VC_REV=3DOFF
-> > > version string was.
-> > >
-> > >   ClangBuiltLinux LLD 19.0.0 (https://github.com/llvm/llvm-project a3=
-c5c83273358a85a4e02f5f76379b1a276e7714), compatible with GNU linkers
-> > >
-> > > Cc: stable@vger.kernel.org
-> > > Fixes: 02aff8592204 ("kbuild: check the minimum linker version in Kco=
-nfig")
-> > > Link: https://github.com/llvm/llvm-project/commit/0f9fbbb63cfcd206944=
-1aa2ebef622c9716f8dbb [1]
-> > > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> > > ---
-> > >  scripts/ld-version.sh | 4 +++-
-> > >  1 file changed, 3 insertions(+), 1 deletion(-)
-> > >
-> > > diff --git a/scripts/ld-version.sh b/scripts/ld-version.sh
-> > > index a78b804b680c..f2f425322524 100755
-> > > --- a/scripts/ld-version.sh
-> > > +++ b/scripts/ld-version.sh
-> > > @@ -47,7 +47,9 @@ else
-> > >         done
-> > >
-> > >         if [ "$1" =3D LLD ]; then
-> > > -               version=3D$2
-> > > +               # LLD after https://github.com/llvm/llvm-project/comm=
-it/0f9fbbb63cfcd2069441aa2ebef622c9716f8dbb
-> > > +               # may have a trailing comma on the patch version with=
- LLVM_APPEND_VC_REV=3Doff.
-> > > +               version=3D${2%,}
-> > >                 min_version=3D$($min_tool_version llvm)
-> > >                 name=3DLLD
-> > >                 disp_name=3DLLD
-> > >
-> > > ---
-> > > base-commit: 22a40d14b572deb80c0648557f4bd502d7e83826
-> > > change-id: 20240704-update-ld-version-for-new-lld-ver-str-b7a4afbbd5f=
-1
-> > >
-> > > Best regards,
-> > > --
-> > > Nathan Chancellor <nathan@kernel.org>
-> > >
-> >
-> > Thanks for catching the issue.
-> > If we want to minimize the number of special cases, perhaps we can
-> > adjust `version=3D${version%-*}` below to
-> >
-> > version=3D${version%%[^0-9.]*}
->
-> Thanks for the suggestion! I think this wants to be
->
->   version=3D${version%%[!0-9.]*}
->
-> because of "If an open bracket introduces a bracket expression as in XBD
-> RE Bracket Expression, except that the <exclamation-mark> character
-> ('!') shall replace the <circumflex> character ('^') in its role in a
-> non-matching list in the regular expression notation, it shall introduce
-> a pattern bracket expression." from the link that you have below.
+This patch series adds unit tests for the clk fixed rate basic type and
+the clk registration functions that use struct clk_parent_data. To get
+there, we add support for loading device tree overlays onto the live DTB
+along with probing platform drivers to bind to device nodes in the
+overlays. With this series, we're able to exercise some of the code in
+the common clk framework that uses devicetree lookups to find parents
+and the fixed rate clk code that scans device tree directly and creates
+clks. Please review.
 
-Yes! ! should be used instead.
+I Cced everyone to all the patches so they get the full context. I'm
+hoping I can take the whole pile through the clk tree as they all build
+upon each other. Or the DT part can be merged through the DT tree to
+reduce the dependencies.
 
-> That does work for me with all the different linker versions that I can
-> easily access (Arch, Debian, Fedora) along with my own self built
-> toolchains, so it seems like it should be pretty robust.
->
-> Masahiro, would you be okay with me sending a v2 with that change or do
-> you foresee any issues where it would not be sufficient? I would
-> probably change the comment to:
->
->   # There may be something after the version, such as a distribution's
->   # package release number (2.34-4.fc32) or a comma (like LLD adds
->   # before the "compatible with GNU linkers" string), so remove anything
->   # that is not a number or a period.
+Changes from v5: https://lore.kernel.org/r/20240603223811.3815762-1-sboyd@kernel.org
+ * Pick up reviewed-by tags
+ * Drop test vendor prefix bindings as dtschema allows anything now
+ * Use of_node_put_kunit() more to plug some reference leaks
+ * Select DTC config to avoid compile fails because of missing dtc
+ * Don't skip for OF_OVERLAY in overlay tests because they depend on it
 
-The v2 change LGTM :)
+Changes from v4: https://lore.kernel.org/r/20240422232404.213174-1-sboyd@kernel.org
+ * Picked up reviewed-by tags
+ * Check for non-NULL device pointers before calling put_device()
+ * Fix CFI issues with kunit actions
+ * Introduce platform_device_prepare_wait_for_probe() helper to wait for
+   a platform device to probe
+ * Move platform code to lib/kunit and rename functions to have kunit
+   prefix
+ * Fix issue with platform wrappers messing up reference counting
+   because they used kunit actions
+ * New patch to populate overlay devices on root node for powerpc
+ * Make fixed-rate binding generic single clk consumer binding
 
-Reviewed-by: Fangrui Song <maskray@google.com>
+Changes from v3: https://lore.kernel.org/r/20230327222159.3509818-1-sboyd@kernel.org
+ * No longer depend on Frank's series[1] because it was merged upstream[2]
+ * Use kunit_add_action_or_reset() to shorten code
+ * Skip tests properly when CONFIG_OF_OVERLAY isn't set
 
-> > (POSIX shell doc:
-> > https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.ht=
-ml#:~:text=3DRemove%20Largest)
-> >
-> > ${version%%[^0-9.]*} is a simpler form than what glibc uses:
-> >
-> >   "LLD"*)
-> >   # Accept LLD 13.0.0 or higher
-> >     AC_CHECK_PROG_VER(LD, $LD, --version,
-> >                     [LLD.* \([0-9][0-9]*\.[0-9.]*\)],
-> >                     [1[3-9].*|[2-9][0-9].*],
->
-> Cheers,
-> Nathan
->
+Changes from v2: https://lore.kernel.org/r/20230315183729.2376178-1-sboyd@kernel.org
+ * Overlays don't depend on __symbols__ node
+ * Depend on Frank's always create root node if CONFIG_OF series[1]
+ * Added kernel-doc to KUnit API doc
+ * Fixed some kernel-doc on functions
+ * More test cases for fixed rate clk
+
+Changes from v1: https://lore.kernel.org/r/20230302013822.1808711-1-sboyd@kernel.org
+ * Don't depend on UML, use unittest data approach to attach nodes
+ * Introduce overlay loading API for KUnit
+ * Move platform_device KUnit code to drivers/base/test
+ * Use #define macros for constants shared between unit tests and
+   overlays
+ * Settle on "test" as a vendor prefix
+ * Make KUnit wrappers have "_kunit" postfix
+
+[1] https://lore.kernel.org/r/20230317053415.2254616-1-frowand.list@gmail.com
+[2] https://lore.kernel.org/r/20240308195737.GA1174908-robh@kernel.org
+
+Stephen Boyd (8):
+  of/platform: Allow overlays to create platform devices from the root
+    node
+  of: Add test managed wrappers for of_overlay_apply()/of_node_put()
+  dt-bindings: vendor-prefixes: Add "test" vendor for KUnit and friends
+  of: Add a KUnit test for overlays and test managed APIs
+  platform: Add test managed platform_device/driver APIs
+  clk: Add test managed clk provider/consumer APIs
+  clk: Add KUnit tests for clk fixed rate basic type
+  clk: Add KUnit tests for clks registered with struct clk_parent_data
+
+ Documentation/dev-tools/kunit/api/clk.rst     |  10 +
+ Documentation/dev-tools/kunit/api/index.rst   |  21 +
+ Documentation/dev-tools/kunit/api/of.rst      |  13 +
+ .../dev-tools/kunit/api/platformdevice.rst    |  10 +
+ .../devicetree/bindings/vendor-prefixes.yaml  |   2 +
+ drivers/clk/.kunitconfig                      |   2 +
+ drivers/clk/Kconfig                           |  11 +
+ drivers/clk/Makefile                          |   9 +-
+ drivers/clk/clk-fixed-rate_test.c             | 379 +++++++++++++++
+ drivers/clk/clk-fixed-rate_test.h             |   8 +
+ drivers/clk/clk_kunit_helpers.c               | 204 ++++++++
+ drivers/clk/clk_parent_data_test.h            |  10 +
+ drivers/clk/clk_test.c                        | 453 +++++++++++++++++-
+ drivers/clk/kunit_clk_fixed_rate_test.dtso    |  19 +
+ drivers/clk/kunit_clk_parent_data_test.dtso   |  28 ++
+ drivers/of/.kunitconfig                       |   1 +
+ drivers/of/Kconfig                            |  10 +
+ drivers/of/Makefile                           |   2 +
+ drivers/of/kunit_overlay_test.dtso            |   9 +
+ drivers/of/of_kunit_helpers.c                 |  74 +++
+ drivers/of/overlay_test.c                     | 114 +++++
+ drivers/of/platform.c                         |   9 +-
+ include/kunit/clk.h                           |  28 ++
+ include/kunit/of.h                            | 115 +++++
+ include/kunit/platform_device.h               |  20 +
+ lib/kunit/Makefile                            |   4 +-
+ lib/kunit/platform-test.c                     | 223 +++++++++
+ lib/kunit/platform.c                          | 302 ++++++++++++
+ 28 files changed, 2084 insertions(+), 6 deletions(-)
+ create mode 100644 Documentation/dev-tools/kunit/api/clk.rst
+ create mode 100644 Documentation/dev-tools/kunit/api/of.rst
+ create mode 100644 Documentation/dev-tools/kunit/api/platformdevice.rst
+ create mode 100644 drivers/clk/clk-fixed-rate_test.c
+ create mode 100644 drivers/clk/clk-fixed-rate_test.h
+ create mode 100644 drivers/clk/clk_kunit_helpers.c
+ create mode 100644 drivers/clk/clk_parent_data_test.h
+ create mode 100644 drivers/clk/kunit_clk_fixed_rate_test.dtso
+ create mode 100644 drivers/clk/kunit_clk_parent_data_test.dtso
+ create mode 100644 drivers/of/kunit_overlay_test.dtso
+ create mode 100644 drivers/of/of_kunit_helpers.c
+ create mode 100644 drivers/of/overlay_test.c
+ create mode 100644 include/kunit/clk.h
+ create mode 100644 include/kunit/of.h
+ create mode 100644 include/kunit/platform_device.h
+ create mode 100644 lib/kunit/platform-test.c
+ create mode 100644 lib/kunit/platform.c
 
 
---=20
-=E5=AE=8B=E6=96=B9=E7=9D=BF
+base-commit: 1613e604df0cd359cf2a7fbd9be7a0bcfacfabd0
+-- 
+https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
+https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
+
