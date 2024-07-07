@@ -1,81 +1,71 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA311B94F
-	for <patches@lists.linux.dev>; Sun,  7 Jul 2024 10:43:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB0675381A;
+	Sun,  7 Jul 2024 18:02:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720349028; cv=none; b=AmXZq9cK6E6A1RZPapVsAI8iCUeOkMYYcI3uA65oD2GUEvXgO6OlLDZlyvskEmBzsdRUdFFveFPRYu0rcZBg2cnGQNvayOpEQnfiHtRkVzxSCI16P+kXF9KtOcY2yQmOSeKVshX4ePr3S1pE5G8h8Yq7BIfsIOMYVxLvGnf6F4Y=
+	t=1720375329; cv=none; b=tg/6V4J00B3LLP9dz7rb4lqra8s2wd5oiWocM5u+QAGvkB2gyeiEAea3YI0s8lQFuN0QHnJI21yHEG+xmrWQW5fCTuX+aqFIFYvtCxWqV5qA6gli9pZ9RZu9O5W0FRtvkcczfZCZ2R69e/ikBjS4tj44Ek25Sk/dO/EWNYCpbSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720349028; c=relaxed/simple;
-	bh=gQlWRk3EBY6Wjjj/SEcCdYnBUlKaI5FVlZIyvLNcidk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GEVoKy/rggN1VKd8kMX53O0Fwtu2++8gWo9/3KMpUC3Gs8dVssrJAO/72D9xfsEDsHx7QIofzqRtSRO+W6jgKtKlD61iXDXwkN7Gn+O5LogSuJmp/ng5u6CeWBn61RTbmzxy/F4ZkMmgaGIi7VjPV9jsUlRH9mqWf5wLjlceqHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 259571C0099; Sun,  7 Jul 2024 12:35:03 +0200 (CEST)
-Date: Sun, 7 Jul 2024 12:35:02 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 5.10 000/284] 5.10.221-rc2 review
-Message-ID: <ZopvVtp/+w/bhEEm@duo.ucw.cz>
-References: <20240704094505.095988824@linuxfoundation.org>
+	s=arc-20240116; t=1720375329; c=relaxed/simple;
+	bh=YoijC6Vk1pkQnDOd+ZxBUq+s9vUL35PJZT2W3dIs6TA=;
+	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
+	 Subject:From:Cc:To:Date; b=mEmRPkGlslxr/x1Kg3/LswCbwpWvpOwNXqwtXaSxV8V3fLGmcCAubxS24+oG07PK0+rY/HkypDA8k65T9NU6EcS+mnOktgzt22KCFnVrk+y+W61/u3dUhJGEKJBhWA5fb5NMuLmE2WmigvshjBtZNGE82/R5qpvWAqVoztQqBJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BaIrVkzn; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BaIrVkzn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 618E6C3277B;
+	Sun,  7 Jul 2024 18:02:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1720375328;
+	bh=YoijC6Vk1pkQnDOd+ZxBUq+s9vUL35PJZT2W3dIs6TA=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=BaIrVkznuAXWqaVhAwxoyitCyyTIFU0/EtMQ2KPWxx2UAggoTQdiTstpBZZ2Fk0XA
+	 WjTH5jP27RDRdggBD9J+hkVKEfuUW6JUwqHnoxJi/sici6oNNQj/wu4Dr+okHsL/wZ
+	 Tsh7Hnjd3xcw4Z8NTHsr362ZA+N2YvTGa76UEcQ/QELXkaZn5V9gCq48faMDPTDAsF
+	 Uzx1oZh5TXOg/wjsdDODlCGeELVt30SRq6Q8ekj6zsWqbQomDimVZDbZ4JqwY13Lis
+	 p/LD4F4Ofx9O8j7Uxfjo+E8y39eoadVeM1k4s3DEMJE5VzhRNQxeI2sSscImXlTFRv
+	 iHdSa847br+KQ==
+Message-ID: <34d38e79a2008ed6e4303e6911b1cf08.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="rHnuE5AZSvg7teSi"
-Content-Disposition: inline
-In-Reply-To: <20240704094505.095988824@linuxfoundation.org>
-
-
---rHnuE5AZSvg7teSi
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CABVgOSk93mNY4diXppGWJZgWJhrHpGqECBXNROWkRCaZjFi2tw@mail.gmail.com>
+References: <20240706045454.215701-1-sboyd@kernel.org> <20240706045454.215701-6-sboyd@kernel.org> <CABVgOSk93mNY4diXppGWJZgWJhrHpGqECBXNROWkRCaZjFi2tw@mail.gmail.com>
+Subject: Re: [PATCH v6 5/8] platform: Add test managed platform_device/driver APIs
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org, Brendan Higgins <brendan.higgins@linux.dev>, Rae Moar <rmoar@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rafael J . Wysocki <rafael@kernel.org>, Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>, Daniel Latypov <dlatypov@google.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Maxime Ripard <maxime@cerno.tech>
+To: David Gow <davidgow@google.com>
+Date: Sun, 07 Jul 2024 11:02:06 -0700
+User-Agent: alot/0.10
 
-Hi!
+Quoting David Gow (2024-07-06 01:04:25)
+> On Sat, 6 Jul 2024 at 12:55, Stephen Boyd <sboyd@kernel.org> wrote:
+> >
+> > Introduce KUnit resource wrappers around platform_driver_register(),
+> > platform_device_alloc(), and platform_device_add() so that test authors
+> > can register platform drivers/devices from their tests and have the
+> > drivers/devices automatically be unregistered when the test is done.
+> >
+> > This makes test setup code simpler when a platform driver or platform
+> > device is needed. Add a few test cases at the same time to make sure the
+> > APIs work as intended.
+> >
+> > Cc: Brendan Higgins <brendan.higgins@linux.dev>
+> > Reviewed-by: David Gow <davidgow@google.com>
+> > Cc: Rae Moar <rmoar@google.com>
+> > Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+> > Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+> > ---
+>=20
+> Hmm... this is failing under KASAN for me. I'll take a closer look
+> next week, but in case there's anything super-obvious, here's the
+> report:
 
-> This is the start of the stable review cycle for the 5.10.221 release.
-> There are 284 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-CIP testing did not find any problems here:
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-5.10.y
-
-5.4.279 seems to test ok, too.
-
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
-
-Best regards,
-                                                                Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---rHnuE5AZSvg7teSi
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZopvVgAKCRAw5/Bqldv6
-8nSSAJ9UbrxiYXpSFwDAmAbvbbyFfmd+uACgqUxD5LjYZf0hgQ66XcXs5DOiPUU=
-=cyc8
------END PGP SIGNATURE-----
-
---rHnuE5AZSvg7teSi--
+Thanks. I reproduced with your commandline and I'll take a look.
