@@ -1,105 +1,137 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 096D779C2;
-	Mon,  8 Jul 2024 01:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD198F5A;
+	Mon,  8 Jul 2024 05:07:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720403993; cv=none; b=LBCdyXLf1IrIwlPv1WK5yyNfv63NzhfYV7HJV+6fGcjBeYZhPjweNrKNRcG/D+P6AiAtbKTZwsW8GH8QrBJvenjHGKBlG7SLIDubSl8acaRz5jFS2klm5wTbhghWnynQuNcZN0FM76HufS2CX2OEa5dbow1lDfVQzaWNdtlRTW4=
+	t=1720415222; cv=none; b=dX4bZs46d2ZEDpS8UiY1Ms9lbyMYRyQrrI8358Cl69Y9HH6dVRIpvt3nP33jY7oqobgGV95XWjbphA+2HtpQNeVmkTpUfXNIEinYJLydKaZDuoyuiKMIGHHTAgwkhmb2KhL1Zg7BG8h3nsn66tOrbd0AhRaNB0aMXyKIfZpjbOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720403993; c=relaxed/simple;
-	bh=j2FbQMEigcuhU0tDg3vutUj4NnCjRD7ylO94TNaIcNs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=q+ke1BrjjO0J17BdWFui2xon2vdpjikbYPXwCg0i9K3CWmmg4dRG3iPHA0IypmMtbag4rWIqnnXD4oJqHgQDvEgTStFXGXikceq+LqrTU6olfjPhHgebdeMKcpTAqIvr5eOOqi9FHAg5FMSLupDmSPtA6bz9FjV8JHhjxGQvXvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b=M54NpJDR; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1720415222; c=relaxed/simple;
+	bh=28P5DxuZtpcNeH3XINse8v/z7lEZTB6poCC+rDFkGhc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=lZh8ymdsC3F7/lXTaQJrS6OZgDxQZCDPp0EyCHjZQl+xlGQIy6EAjOv83/b5CKenIyCSwQBYudT5ZkGnZmr+B1on7oTE1DuN/iPj6sZrCWbzWBHlWZpbyMwmwwzRddO4pAIOw8AvOYx68fJCmoSYLx62I0uQPDN7ietnwCqzGv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mfg95EPd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="M54NpJDR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 090D3C3277B;
-	Mon,  8 Jul 2024 01:59:50 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="M54NpJDR"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1720403989;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=n4cCQuWztdSIfQ492l8tJFqxNnyuIv8Y+chaiokzYoA=;
-	b=M54NpJDR8YpmMAE0NIzO6pSjJl2GHnspS2wmlAMkCkFYGRuEM2dCuP8ZaJ/lApAUjoHcqp
-	pp4OL+s9vycmz0NNLn/LuMMNJ1Dwn5+CF1j2EuVasciiWTB2jHTkUGXpdtkfqp/7jEQq7X
-	SfBAwl7CJD0+pqrAIANMGiWYoLN1I10=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 9f6d4916 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 8 Jul 2024 01:59:49 +0000 (UTC)
-Date: Mon, 8 Jul 2024 03:59:46 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: David Hildenbrand <david@redhat.com>, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, tglx@linutronix.de,
-	linux-crypto@vger.kernel.org, linux-api@vger.kernel.org,
-	x86@kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>,
-	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
-	Jann Horn <jannh@google.com>,
-	Christian Brauner <brauner@kernel.org>,
-	David Hildenbrand <dhildenb@redhat.com>, linux-mm@kvack.org
-Subject: Re: [PATCH v21 1/4] mm: add VM_DROPPABLE for designating always
- lazily freeable mappings
-Message-ID: <ZotIEhO86_RRNOgy@zx2c4.com>
-References: <20240707002658.1917440-1-Jason@zx2c4.com>
- <20240707002658.1917440-2-Jason@zx2c4.com>
- <1583c837-a4d5-4a8a-9c1d-2c64548cd199@redhat.com>
- <CAHk-=wjs-9DVeoc430BDOv+dkpDkdVvkEsSJxNVZ+sO51H1dJA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mfg95EPd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17685C116B1;
+	Mon,  8 Jul 2024 05:07:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1720415221;
+	bh=28P5DxuZtpcNeH3XINse8v/z7lEZTB6poCC+rDFkGhc=;
+	h=From:Date:Subject:To:Cc:From;
+	b=mfg95EPdmWmSWzRNDZbtUgQ9lHfE5G8Evj1XCNPLOC6QUJOkAHu+281M5wpeMnEnP
+	 rVSZG3IMWBOeRPmxSLnHC27Y15w/8pu4ZG0pUGD/D/EUGz6g8TzK6+lOVTIXvE1am3
+	 rO3wPkqw95XFDb1JBAsXGHCqhjAjDELSf7ew8rO/bV0i8v+aCTmcF4dBO7BKMoMtbv
+	 QLfyx2KhFijKPtdFCZb5UoCsgKNlADQDLI5QLYv4wjR0Uasc/HW1KVjTWnzIJTs8dh
+	 6aRwfJxU2Mo2LajMm1zq4mAX8wfNZ8mUxrdValka2H5PjFxY8EEO6vzV+d5o+7K5eV
+	 +3ll5nFxY0upQ==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Sun, 07 Jul 2024 22:06:47 -0700
+Subject: [PATCH v2] kbuild: Make ld-version.sh more robust against version
+ string changes
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAHk-=wjs-9DVeoc430BDOv+dkpDkdVvkEsSJxNVZ+sO51H1dJA@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240707-update-ld-version-for-new-lld-ver-str-v2-1-8f24421198c0@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAOZzi2YC/5WNSw6CMBRFt0I69pm2YgiO3Adh0M8rNJKWvGLVE
+ PZuwRU4PCc396wsIXlM7FatjDD75GMoIE8VM6MKA4K3hZnksuYNr+E5W7UgTBYy0r4GFwkCvmD
+ 6OUgLgW5UrZzW9uoEK18zofPvo9P1hUeflkifI5vFbv8tZAECWqGNMVxy1V7uD6SA0znSwPpt2
+ 7523XIW2wAAAA==
+To: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Nicolas Schier <nicolas@fjasle.eu>, Fangrui Song <maskray@google.com>, 
+ Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
+ linux-kbuild@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3291; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=28P5DxuZtpcNeH3XINse8v/z7lEZTB6poCC+rDFkGhc=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGndxV/kvlmIHLn2TOz1r+kBoXEfb+67lewWP32nHU+v3
+ /8HGnwrO0pZGMS4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBErJ8yMhy6/UH40t19dyd2
+ 6Gv4aO83CX9uPlsyuYRBKlbi2WGD4k8M/6sXhCZpHfj0fNvaxFcH92XM1WvsYdjj9PBTM//tQj5
+ ZIW4A
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Hi Linus,
+After [1] in upstream LLVM, ld.lld's version output became slightly
+different when the cmake configuration option LLVM_APPEND_VC_REV is
+disabled.
 
-On Sun, Jul 07, 2024 at 11:19:46AM -0700, Linus Torvalds wrote:
->  (c) we could actually use the PROT_xyz bits, which we have a ton of
+Before:
 
-As I just wrote to David, I'll move this to PROT_xyz.
+  Debian LLD 19.0.0 (compatible with GNU linkers)
 
-By the way, in addition to the PROT_SEM historical artifact, there's
-also architecture specific ones like PROT_ADI on SPARC, PROT_SAO on
-PowerPC, and PROT_BTI and PROT_MTE on arm64. So the MAP_ vs PROT_
-distinction seems kind of blurred anyway.
+After:
 
-> And we actually have had the "get signal on access" before: that's
-> what VM_DONTCOPY is.
-> 
-> And it was the *less* useful model, which is why we added
-> VM_WIPEONCOPY, because that's the semantics people actually wanted.
-> 
-> So I think the "signal on thrown out data access" is interesting, but
-> not necessarily the *more* interesting case.
+  Debian LLD 19.0.0, compatible with GNU linkers
 
-FYI, I looked into using VM_DONTCOPY/MADV_DONTFORK for my purposes,
-because it could possibly make another problem easier, but I couldn't
-figure out how to make it smoothly work.
+This results in ld-version.sh failing with
 
-Specifically, a program has a bunch of threads, and some of them have a
-vgetrandom state in use, carved out of the same page. One of the threads
-forks. In the VM_WIPEONFORK case, the fork child has to reclaim the
-states that were in use by other threads at the time of the fork and
-return them to the pool of available slices. In the VM_DONTCOPY case,
-that's not necessary, which is kind of nice. But if the program forked
-in the signal handler and then returned to an in progress vgetrandom
-operation, now there's a signal that needs to be handled internally,
-identified as belonging to the internal state areas, and not bubbled up
-to other code. This seems difficult and fraught. It's far easier to just
-have the memory be zeroed and have the code unconditionally check for
-that at the same time it's doing other consistency checks.
+  scripts/ld-version.sh: 18: arithmetic expression: expecting EOF: "10000 * 19 + 100 * 0 + 0,"
 
-So yea it just seems a lot more desirable to have the behavior be
-zeroing rather than an asynchronous signal, because code can
-straightforwardly deal with that inline.
+because the trailing comma is included in the patch level part of the
+expression. While [1] has been partially reverted in [2] to avoid this
+breakage (as it impacts the configuration stage and it is present in all
+LTS branches), it would be good to make ld-version.sh more robust
+against such miniscule changes like this one.
 
-Jason
+Use POSIX shell parameter expansion [3] to remove the largest suffix
+after just numbers and periods, replacing of the current removal of
+everything after a hyphen. ld-version.sh continues to work for a number
+of distributions (Arch Linux, Debian, and Fedora) and the kernel.org
+toolchains and no longer errors on a version of ld.lld with [1].
+
+Fixes: 02aff8592204 ("kbuild: check the minimum linker version in Kconfig")
+Link: https://github.com/llvm/llvm-project/commit/0f9fbbb63cfcd2069441aa2ebef622c9716f8dbb [1]
+Link: https://github.com/llvm/llvm-project/commit/649cdfc4b6781a350dfc87d9b2a4b5a4c3395909 [2]
+Link: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html [3]
+Suggested-by: Fangrui Song <maskray@google.com>
+Reviewed-by: Fangrui Song <maskray@google.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+Changes in v2:
+- Move to a pattern matching notation with remove largest suffix to
+  remove everything after just numbers and periods.
+- The LLVM change that prompted this has been partially reverted to
+  avoid this problem, so reword commit message to reflect this is being
+  done defensively. As such, remove 'Cc: stable@vger.kernel.org'. If it
+  is needed there at some point, it can just be manually backported (or
+  it will just get AUTOSEL'd).
+- Add tags for Fangrui's suggestion and review on v1.
+- Link to v1: https://lore.kernel.org/r/20240704-update-ld-version-for-new-lld-ver-str-v1-1-91bccc020a93@kernel.org
+---
+ scripts/ld-version.sh | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/scripts/ld-version.sh b/scripts/ld-version.sh
+index a78b804b680c..b9513d224476 100755
+--- a/scripts/ld-version.sh
++++ b/scripts/ld-version.sh
+@@ -57,9 +57,11 @@ else
+ 	fi
+ fi
+ 
+-# Some distributions append a package release number, as in 2.34-4.fc32
+-# Trim the hyphen and any characters that follow.
+-version=${version%-*}
++# There may be something after the version, such as a distribution's package
++# release number (like Fedora's "2.34-4.fc32") or punctuation (like LLD briefly
++# added before the "compatible with GNU linkers" string), so remove everything
++# after just numbers and periods.
++version=${version%%[!0-9.]*}
+ 
+ cversion=$(get_canonical_version $version)
+ min_cversion=$(get_canonical_version $min_version)
+
+---
+base-commit: 22a40d14b572deb80c0648557f4bd502d7e83826
+change-id: 20240704-update-ld-version-for-new-lld-ver-str-b7a4afbbd5f1
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
