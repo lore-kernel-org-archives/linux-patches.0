@@ -1,86 +1,51 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560DD3FB1B
-	for <patches@lists.linux.dev>; Mon,  8 Jul 2024 08:23:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D89E713A3FF;
+	Mon,  8 Jul 2024 13:51:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720427001; cv=none; b=sXwGkgYMlFtEgj22MT7MiBK2tmkUtSJj6xpge5jsZVIr8AFkETUIz/LsgWCccuTbr+40WbldEQQvwGi/Nh3mteTF1hiAB2T1MpYAY2/FxpoXSw6L/yY4kEkXdxxk+11izY+YcC8alW8KKTM6wozlraFrdNEN061abJ0Amt2PdhM=
+	t=1720446686; cv=none; b=jG4O44GrUUS1Ikh0T2QVDv+caRwUueWWV+lCw3IB3ivwOUOXx47b6W7SvtWS60T5d6TKMxbzEVwqNsZuvHHcWzeZp4PyEvdGqwVWO3y4gcgsYVyFZ4aLkb2JcIIXhkovpKb4F0X+NxaeuM9L7l3flpcIr9LdCX69HmjmbZWDhYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720427001; c=relaxed/simple;
-	bh=u9mN5ZVUNKs/SnqYF+TXngxMJE/RrZZ3YGgiYU4pUlc=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=ct3C8HevdjqPe/717v5XYDUSt/HrefG2bE4pSiF4GkPRIOyZUgOX1fOx4QwCrC4Gt9Kf9auJnXNUPMF5iiEuKTP676x6qPzX38GtWJGjWk6C/uoKEYCHClIVZ+FHYBYcfKlByYrcz7OzSwJTeuO4UsY3rC7xwXwZSwFPvWUIFoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=OdwUleTs; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1720446686; c=relaxed/simple;
+	bh=G87kDnZnqvGSMs4uyhWZ60F6IU9JHQtUsJOPR1HoP5Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bQUf8Q8Jikni7d9Cd5X0vyA/QEyszSbAXYksJVf8+hbuNZpaTMWwURpkdNPR5+TY62L1j9JbD/RTKZ4ZPAZwUSnskUiVDpsrSF3KQ/oUn+JMX+YO37AxP6wkjw+o/kq3hMb8zS4LTUpxjQA3BzTHnwBpb6oEmoxdn4+FYHcDQ4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b=Ltc/kfe5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="OdwUleTs"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1720426999;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="Ltc/kfe5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D134FC116B1;
+	Mon,  8 Jul 2024 13:51:23 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="Ltc/kfe5"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1720446682;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=MFZguN8EVoK7OymJmQKuCA2IoYCB5NF4rjLMBNd7sSM=;
-	b=OdwUleTsMN+lgcnYznmcQ6M5fIDSVyaD38AcDcapcaBcdUBmrobNaBEiJqMY3MvY+3WjJf
-	QicZO0NX3C/8xFocazAtjLhuJrR3Hryfgi8GQ2O3rYuXDTpI10kmIIMb6EX9QulWy6NSC5
-	qHZLR2y7fDL6gBa1uXS2mRLgv3AWGlQ=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-287-xoxUBPLLMFq0cXdxlfZomg-1; Mon, 08 Jul 2024 04:23:15 -0400
-X-MC-Unique: xoxUBPLLMFq0cXdxlfZomg-1
-Received: by mail-ed1-f70.google.com with SMTP id 4fb4d7f45d1cf-58bb70e381bso2954801a12.2
-        for <patches@lists.linux.dev>; Mon, 08 Jul 2024 01:23:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720426994; x=1721031794;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:from:subject:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=MFZguN8EVoK7OymJmQKuCA2IoYCB5NF4rjLMBNd7sSM=;
-        b=EYzUrU3pYjB50sb1uSFV1RsQh03Y+EZqGpYgDoMOR7GfSjfilNmIlVZcYZAxIoFT1P
-         itfjJ//SFMOK7fl94jrNJa7MZtR+Z0s4K/Tz7Omcs9FikpJ6pvNyNkmBrSc7d2366cc8
-         9PJyAlhVDmAoWMgyIXWR9XW7rHAKQojVgAHNFwdk8jj4DigiZbYqfVVjDMR5Am2DKHIu
-         k+nlytwyg9pV+LI2kp8CgkoJg0LqOQ8AXOkEBSmamjYgWJ/yX/I6zLtGu0KlSBgm5zMK
-         E1aQsBHsNktNX739sWbFHkGU/JYeTA+pIAWuSl+SFLwzp3NeVvdt7g8q1IPZ45iw+c18
-         aHGQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWebR56mkYfkeBiA8prGNULuilUhSq6HRy88pCmzItZH2kcgRCcbz2x1hIA1gwoHoBO368FPqgSPTRppeIFAaBtL72BR9xvJQ==
-X-Gm-Message-State: AOJu0Yzz75wlDeEc8T218WiHK/sWGdNvY/M6xkNpM284kGmo9vWvk8Jj
-	e3d1xNxMnt4KMngpaiXk7a1WhMNx6uvkTkAL+0UUTtVTOZYutFxwFNr1oOPv+eNMK8XLkBgXZVN
-	DZAPtrp8r7E7E+mBf+mnJDoT3gI5OS2K0aOtpI/o4SFUU9rtMV3yr+R8=
-X-Received: by 2002:a05:6402:1ed4:b0:57d:466a:246 with SMTP id 4fb4d7f45d1cf-58e5a8e8d16mr7877322a12.8.1720426994412;
-        Mon, 08 Jul 2024 01:23:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEI7JB2DQx/fSTi7SMHizXA4YiB8BrliEg6vtno1cAdZYwZNeZhUcg0gPX1yenfeB1h1VEyFg==
-X-Received: by 2002:a05:6402:1ed4:b0:57d:466a:246 with SMTP id 4fb4d7f45d1cf-58e5a8e8d16mr7877294a12.8.1720426993994;
-        Mon, 08 Jul 2024 01:23:13 -0700 (PDT)
-Received: from [100.81.188.195] ([178.24.249.36])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-58fe866155esm3527497a12.20.2024.07.08.01.23.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Jul 2024 01:23:13 -0700 (PDT)
-Message-ID: <8bf64731-9e5c-4c8c-b46b-5b18ae3110a1@redhat.com>
-Date: Mon, 8 Jul 2024 10:23:10 +0200
-Precedence: bulk
-X-Mailing-List: patches@lists.linux.dev
-List-Id: <patches.lists.linux.dev>
-List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
-List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+	 in-reply-to:in-reply-to:references:references;
+	bh=wmWJs2g1W7bIdx4gchsYMHASAqH5Nl1Wal5e/OBuZ4E=;
+	b=Ltc/kfe55weFCdOPd0v5+eIU/rru8g1L280RLc2zXVS6Gdi2G5cohudgE4+0timl4c4NpZ
+	Sk6U7XWXuosGL3CAcmi9GVlppDikr4+SBsuWnFkL8ljOP1yXMGhK/dY+nnIxyUlybiKT1s
+	sJy1/yE9zue6HOFfwY78jZt9CLz7nyE=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 173f7d39 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 8 Jul 2024 13:51:20 +0000 (UTC)
+Date: Mon, 8 Jul 2024 15:50:57 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: David Hildenbrand <david@redhat.com>, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, tglx@linutronix.de,
+	linux-crypto@vger.kernel.org, linux-api@vger.kernel.org,
+	x86@kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+	Carlos O'Donell <carlos@redhat.com>,
+	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
+	Jann Horn <jannh@google.com>,
+	Christian Brauner <brauner@kernel.org>,
+	David Hildenbrand <dhildenb@redhat.com>, linux-mm@kvack.org
 Subject: Re: [PATCH v21 1/4] mm: add VM_DROPPABLE for designating always
  lazily freeable mappings
-From: David Hildenbrand <david@redhat.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, tglx@linutronix.de, linux-crypto@vger.kernel.org,
- linux-api@vger.kernel.org, x86@kernel.org,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
- Carlos O'Donell <carlos@redhat.com>, Florian Weimer <fweimer@redhat.com>,
- Arnd Bergmann <arnd@arndb.de>, Jann Horn <jannh@google.com>,
- Christian Brauner <brauner@kernel.org>,
- David Hildenbrand <dhildenb@redhat.com>, linux-mm@kvack.org
+Message-ID: <Zovuwesu_RaSixe6@zx2c4.com>
 References: <20240707002658.1917440-1-Jason@zx2c4.com>
  <20240707002658.1917440-2-Jason@zx2c4.com>
  <1583c837-a4d5-4a8a-9c1d-2c64548cd199@redhat.com>
@@ -89,85 +54,29 @@ References: <20240707002658.1917440-1-Jason@zx2c4.com>
  <CAHk-=wibRRHVH5D4XvX1maQDCT-o4JLkANXHMoZoWdn=tN0TLA@mail.gmail.com>
  <6705c6c8-8b6a-4d03-ae0f-aa83442ec0ab@redhat.com>
  <CAHk-=wi=XvCZ9r897LjEb4ZarLzLtKN1p+Fyig+F2fmQDF8GSA@mail.gmail.com>
- <7439da2e-4a60-4643-9804-17e99ce6e312@redhat.com>
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <7439da2e-4a60-4643-9804-17e99ce6e312@redhat.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Precedence: bulk
+X-Mailing-List: patches@lists.linux.dev
+List-Id: <patches.lists.linux.dev>
+List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
+List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAHk-=wi=XvCZ9r897LjEb4ZarLzLtKN1p+Fyig+F2fmQDF8GSA@mail.gmail.com>
 
-> As a side note, I'll raise that I am not a particular fan of the
-> "droppable" terminology, at least with the "read 0s" approach.
-> 
->   From a user perspective, the memory might suddenly lose its state and
-> read as 0s just like volatile memory when it loses power. "dropping
-> pages" sounds more like an implementation detail.
+Hi Linus,
 
-Just to raise why I consider "dropping" an implementation detail: in 
-combination with a previous idea I had of exposing "nonvolatile" memory 
-to VMs, the following might be interesting:
+On Sun, Jul 07, 2024 at 05:08:29PM -0700, Linus Torvalds wrote:
+>    +                    vm_flags |= VM_DROPPABLE;
+>    +                    vm_flags |= VM_WIPEONFORK | VM_DONTDUMP;
+> which looks rather simple.
 
-A hypervisor could expose special "nonvolatile memory" as separate guest 
-physical memory region to a VM.
+That is nice, though I would add that if we're implying things that are
+sensible to imply, it really also needs to add VM_NORESERVE too.
+DROPPABLE doesn't make sense semantically without it.
 
-We could use that special memory to back these MAP_XXX regions in our 
-guest, in addition to trying to make use of them in the guest kernel, 
-for example for something similar to cleancache.
+Anyway, rather than adding PROT_xyz for v+1, I'll try adding this
+MAP_DROPPABLE (or a different name for David) with the implications as
+you've suggested.
 
-Long story short: it's the hypervisor that could be effectively 
-dropping/zeroing out that memory, not the guest VM. "NONVOLATILE" might 
-be clearer than "DROPPABLE".
-
-But again, naming is hard ... :)
-
--- 
-Cheers,
-
-David / dhildenb
-
+Jason
