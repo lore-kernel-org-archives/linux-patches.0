@@ -1,92 +1,122 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB1B3D967
-	for <patches@lists.linux.dev>; Tue,  9 Jul 2024 17:26:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F361B86D8;
+	Tue,  9 Jul 2024 18:41:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720546018; cv=none; b=BoXnUCF6gPNEjHjbQx4jAZjKPV2urzH2KnKgImhXwXm3mAPFrW3N0a5Qk+3Fd913Q9LbBDLRVSS3xUKA92h0jiqDA/CuIcme3ppnHtjKbmPqNiTxtsbHmEcykpGkjxcpm2LKh5jZ9VnIE5HY5NqaIm8eDPBg8aZ8HD1UL4NQtqw=
+	t=1720550489; cv=none; b=RgK7GM1jsUKBfVlQsrvHNCFOV1yvsV00zMjASdlrMxL+/MODyauVphxeWQCH2vAL1T14N1nCTlcASTLGJzpBIkVK7IhMcAcorz3PIlF8yrN/sjoYs3R+05U+pwnCOIYoeDmdjVX0zJmGfORDibc1GVMwzcu2fPiewKM6iMaWGKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720546018; c=relaxed/simple;
-	bh=xEGa7zkjzsiIbiqcbCacwWsNu1ijTpLI6cSiJFBTmDM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ShkPZJdcKIUtSX88zpy0+gkEKFWImP5clVdYHRnQjy5barDbZDraqngfR3DDleC6bNI+LrHV1r+kSuCjX5GRYpWvbQb1ZAs5kbb/6sLaiytv+gV7UC6P6d+D0C3tfO49Idh0C3FCjBpskq2t4Jp/xIfyDuik4Y7CCOYkMy7UEgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RUwSY7PK; arc=none smtp.client-ip=209.85.210.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1720550489; c=relaxed/simple;
+	bh=8Ey1es78R1JXJmlxmcEvZ9ryqUGX/0PE4tOhxo3U4BI=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=QQYBW/sDpCFyulJek5KJ5x/azvj8IDTs3PSIMj9Iv2f7YZQZOjnEeQZRPgjpsS0MVNw1BLBV1OZ9zVJ7+MSKvamjNW0zEVoAt/HNWSiiYm5Og4eh2ZzbZ/5+c999Wb6I+4MiwGaIo3K3ZVT83t+Uue4nads0IRw8kIMFkThaM2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KLU/oT9t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RUwSY7PK"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-70b0ebd1ef9so2696414b3a.2
-        for <patches@lists.linux.dev>; Tue, 09 Jul 2024 10:26:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720546017; x=1721150817; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xEGa7zkjzsiIbiqcbCacwWsNu1ijTpLI6cSiJFBTmDM=;
-        b=RUwSY7PK1R6VnlO7JyCEBuFMCcv807SHcAONc+Mjik+r7oBIPuhYwt+VXnz3R1D7Wt
-         78fApipbDXrrAarzJdYM0g4Y28FYH37NbmtYydSCU/xy4r7Ex1wbEoBdCFEFi/v4TgZA
-         QgcMvm1uQxCDk0VL7xjcEbH1ddIQcMqjifMiZsCIz+xBMDWPkiG5jtPpuWJXHuDoNFrl
-         Nw9yTNcYRqPWAC0fUKFzv7V5VS607JFkpxgklI2qkTwVyAHlbBYHlwY36smBbdhxZQCX
-         8UQ/pfgnzSgtNvmPUeQKWLQzrK/29NZBFa879RtreTS479xeCIbyPrvRI/5rdlnzehMj
-         HHiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720546017; x=1721150817;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xEGa7zkjzsiIbiqcbCacwWsNu1ijTpLI6cSiJFBTmDM=;
-        b=Z7C4XFxmdhwK1O+Hj6NIk5ZB8e5R/kUsE1qMe7sgh8o9xtTRDexnlrehshOaiSg79I
-         lbwg6oi6S/HXFu2Gi5kAVVqsXbIjj374sGfEH6EUTdoOj/3rI0HeO0LAbNQBmaIGE/df
-         0ShnLvEjW2ahd5ymWaaapeNuBmProNw3V6YTXGw65YMJ+24y1tfY0YirQV75jkGufyJO
-         qMlJjaDQuUJMjVoSaJaUMYu2FHaKCRhw2aEkfEE4Stbh1e6TWrwHi65pf7Gd8KF+dN+I
-         LunCzlaiIOotxJb+jfDZDv/YDEP9zJIyDGDXQs/ePIsvaxbnkwsQTF4+8P9Kw3aC61Lr
-         PPpw==
-X-Forwarded-Encrypted: i=1; AJvYcCUMGKAFW9mDXCJYX0vHxsf/M2iiilDwFrnPkBZ51lwcfeAXFzqEmv1OMghfBy6aVyeaREJ55FWQiaTKwDuM4VQu+H+4aUXUug==
-X-Gm-Message-State: AOJu0YwcmtK9De1H9vtqdNhatQeTqNyF1aXdFGql/E/roc9aBIkqKOZ0
-	HCgYnD3oWbKtEY+eegbTfasaI1jcbb1IXw0qdhru2QQrTwXRNgH3bfO6Fy09srV6eAZOVpE4yfw
-	f5JVkYP9OX9R1FkJ6/aOxXfZbwu4=
-X-Google-Smtp-Source: AGHT+IFD/VyEdp6BX4ESg9u5UEPG6dtbbRDyeOinfTVoM+xlvEchxrjSSX7hROo3qyMmwbS5fz9U9VEDbFyQRuqBE/k=
-X-Received: by 2002:a05:6a21:194:b0:1c2:9d88:f2a7 with SMTP id
- adf61e73a8af0-1c29d88f3f1mr2016849637.52.1720546016963; Tue, 09 Jul 2024
- 10:26:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KLU/oT9t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA0F4C3277B;
+	Tue,  9 Jul 2024 18:41:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1720550489;
+	bh=8Ey1es78R1JXJmlxmcEvZ9ryqUGX/0PE4tOhxo3U4BI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=KLU/oT9tAy7oXBsJpQQtFVRd1oTr2fUJiW+lZcGGLdZC4yj4a3oAUmzT/IZ0nYFdm
+	 aiHgb2JsjESujGlFsQ5TYOC0iwsvMq6YeEWJSDjPhflSYsogz/ZIMJ5BeWNC8tPXtQ
+	 PCHCU5CsArxcPZluEOEfyuM4pS+nNAEwUpHkDWOP9QLQkL6+yPDBpSyFu/5K97YM7W
+	 2TnD9+MfMPHsLaOQzk7RxJD+bVc/vR/ajw+4/ZfOYR6D6XmcJANFw0JMCCF/f4GadA
+	 RSBkO4nbMjAYBIGHRoIDeBqL1JVknNqOFba/JsTwOWuIU2yJtVMftYysjEUgs+De8x
+	 OdQjjqYghVFTw==
+From: SeongJae Park <sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	broonie@kernel.org,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 6.1 000/102] 6.1.98-rc1 review
+Date: Tue,  9 Jul 2024 11:41:24 -0700
+Message-Id: <20240709184124.702289-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240709110651.353707001@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240709160615.998336-1-ojeda@kernel.org> <20240709160615.998336-12-ojeda@kernel.org>
-In-Reply-To: <20240709160615.998336-12-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Tue, 9 Jul 2024 19:26:45 +0200
-Message-ID: <CANiq72=kCJB-g03s6fHtSYBWTG_MT3yMW0YvehnAhHP_edHPcw@mail.gmail.com>
-Subject: Re: [PATCH v2 11/13] kbuild: rust: add `rustc-version` support
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	Finn Behrens <me@kloenk.dev>, Masahiro Yamada <masahiroy@kernel.org>, 
-	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jul 9, 2024 at 6:07=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wrot=
-e:
->
-> +$(error-if,$(success,test -z "$(rustc-info)"),Sorry$(comma) this Rust co=
-mpiler is not supported.)
+Hello,
 
-Bah, this is broken, I just noticed in my CI that I didn't handle the
-"Rust not installed" case.
+On Tue,  9 Jul 2024 13:09:23 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-Anyway, this patch (and the next one) are not important for the
-series, I will just drop them and send them independently next cycle
-to Kbuild instead. I should have done that anyway, even if they were
-correct.
+> This is the start of the stable review cycle for the 6.1.98 release.
+> There are 102 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 11 Jul 2024 11:06:25 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.98-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
 
-Cheers,
-Miguel
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
+
+Tested-by: SeongJae Park <sj@kernel.org>
+
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] b10d15fc3848 ("Linux 6.1.98-rc1")
+
+Thanks,
+SJ
+
+[...]
+
+---
+
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 2 selftests: damon: debugfs_schemes.sh
+ok 3 selftests: damon: debugfs_target_ids.sh
+ok 4 selftests: damon: debugfs_empty_targets.sh
+ok 5 selftests: damon: debugfs_huge_count_read_write.sh
+ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 7 selftests: damon: sysfs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_m68k.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
