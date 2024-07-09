@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8779827713;
-	Tue,  9 Jul 2024 11:27:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8926927713;
+	Tue,  9 Jul 2024 11:27:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524433; cv=none; b=MJWB/CAfvRQLHqVIs6jpbkAzTCfKEpJEGEilMX5+YLgW64wFjQ+LgWLpaNaE6pXsiRELzxgJhssCzvzNJhJ2kgMiEXvk5lm0ou1GVNqBY8gT0p6+L6Zf0R+tba3UTaqI58VoZYpgC8ptCmaX4kk9wkL427EJ5zdPqizOXV/EkAg=
+	t=1720524436; cv=none; b=bsiTivCUjz3W5Yf+pyi+YwxGZHM6IE6wQK4TABGKg/LyT39Ed6tJLZjoEuHing8i3pFSk479SnjTQBof1YyGTv1onWQPr4Fype99OGbsNleTShl1kGJgtwejl/fQlBpb34oeoqfzaWsRmJDIpYlg2zG99Nb0xAIg9+RR81ZTWvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524433; c=relaxed/simple;
-	bh=ichJDMOej0X5RkzCGgrbbyxpOqRvMAEaxOWTxOTtqtc=;
+	s=arc-20240116; t=1720524436; c=relaxed/simple;
+	bh=Fh6ZiXksQwOTzX6ruQZQBQgp3xm6aT9XJu68/EM/Gd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GzDoCUs7USpElsAZUjPnm4oyhlncDs3OydfcX7hwLO/i6+EIt5cJ5UCpjHqN2YBib7zOTetT1BkNUK7Ml5Ew1I1fj6zcpRFvIvGTWQNj7DNzH7RmZz30iZYCmKbzZGQzpLN2jAdc3b1LqdbuaBIzEKah/b7CLiPWomGXhbQ0W6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wyHkMNZ1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OGsgvJ9LGiIpZJgQtQ1x2vlqk9AXwpCL9C78IJqxIK6omIAM4ac9gE6fResF54TdmynapbZUXyZyOGSfMCFpH8WNPGb7raCPEnr6brPwmF+l2q6DwEegM9PRYAaMKRvRgRjTYgdpAG/2e0pgRXI2t631098lOqDNVLbfObtqG34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wtnyGnlD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wyHkMNZ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE75C3277B;
-	Tue,  9 Jul 2024 11:27:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wtnyGnlD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04503C3277B;
+	Tue,  9 Jul 2024 11:27:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524433;
-	bh=ichJDMOej0X5RkzCGgrbbyxpOqRvMAEaxOWTxOTtqtc=;
+	s=korg; t=1720524436;
+	bh=Fh6ZiXksQwOTzX6ruQZQBQgp3xm6aT9XJu68/EM/Gd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wyHkMNZ1z/sHt6iPlBg73r+finNmw9LNrFvuS4g4c1GTbcYH33lNl6KniA5XXl4zY
-	 jJeWnguDHpJFtdafneHBNepBwjuHM+X2/yQztBF1q6XBE/c3IekxySjnecclWvgZPH
-	 WRZKRqSEX5PhbeIQ6B5ke0OKYcDyeHu3YSoLfo5M=
+	b=wtnyGnlDBGSQi6qklLlM+mYfURLPIZo9WWoTHMggvo9B6ENegMzxFO6J1v+4b9tu/
+	 YjzuqOZ3/wQbV5+luRNNUf3HxxRyYsZ3ITplp3mvIcAkMBfFOSIwF1V/pnTNJmTTFI
+	 UiYryCaoTREIlMqK937j+sjQCMJxKwKx2XSBrcSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Val Packett <val@packett.cool>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.9 163/197] mtd: rawnand: rockchip: ensure NVDDR timings are rejected
-Date: Tue,  9 Jul 2024 13:10:17 +0200
-Message-ID: <20240709110715.260855678@linuxfoundation.org>
+	Matt Jan <zoo868e@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.9 181/197] connector: Fix invalid conversion in cn_proc.h
+Date: Tue,  9 Jul 2024 13:10:35 +0200
+Message-ID: <20240709110715.948539202@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -50,42 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Val Packett <val@packett.cool>
+From: Matt Jan <zoo868e@gmail.com>
 
-commit b27d8946b5edd9827ee3c2f9ea1dd30022fb1ebe upstream.
+[ Upstream commit 06e785aeb9ea8a43d0a3967c1ba6e69d758e82d4 ]
 
-.setup_interface first gets called with a "target" value of
-NAND_DATA_IFACE_CHECK_ONLY, in which case an error is expected
-if the controller driver does not support the timing mode (NVDDR).
+The implicit conversion from unsigned int to enum
+proc_cn_event is invalid, so explicitly cast it
+for compilation in a C++ compiler.
+/usr/include/linux/cn_proc.h: In function 'proc_cn_event valid_event(proc_cn_event)':
+/usr/include/linux/cn_proc.h:72:17: error: invalid conversion from 'unsigned int' to 'proc_cn_event' [-fpermissive]
+   72 |         ev_type &= PROC_EVENT_ALL;
+      |                 ^
+      |                 |
+      |                 unsigned int
 
-Fixes: a9ecc8c814e9 ("mtd: rawnand: Choose the best timings, NV-DDR included")
-Signed-off-by: Val Packett <val@packett.cool>
-Cc: stable@vger.kernel.org
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20240519031409.26464-1-val@packett.cool
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Matt Jan <zoo868e@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/rockchip-nand-controller.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/uapi/linux/cn_proc.h | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/mtd/nand/raw/rockchip-nand-controller.c
-+++ b/drivers/mtd/nand/raw/rockchip-nand-controller.c
-@@ -420,13 +420,13 @@ static int rk_nfc_setup_interface(struct
- 	u32 rate, tc2rw, trwpw, trw2c;
- 	u32 temp;
+diff --git a/include/uapi/linux/cn_proc.h b/include/uapi/linux/cn_proc.h
+index f2afb7cc4926c..18e3745b86cd4 100644
+--- a/include/uapi/linux/cn_proc.h
++++ b/include/uapi/linux/cn_proc.h
+@@ -69,8 +69,7 @@ struct proc_input {
  
--	if (target < 0)
--		return 0;
--
- 	timings = nand_get_sdr_timings(conf);
- 	if (IS_ERR(timings))
- 		return -EOPNOTSUPP;
+ static inline enum proc_cn_event valid_event(enum proc_cn_event ev_type)
+ {
+-	ev_type &= PROC_EVENT_ALL;
+-	return ev_type;
++	return (enum proc_cn_event)(ev_type & PROC_EVENT_ALL);
+ }
  
-+	if (target < 0)
-+		return 0;
-+
- 	if (IS_ERR(nfc->nfc_clk))
- 		rate = clk_get_rate(nfc->ahb_clk);
- 	else
+ /*
+-- 
+2.43.0
+
 
 
