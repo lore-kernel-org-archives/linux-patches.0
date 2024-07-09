@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179DD158201;
-	Tue,  9 Jul 2024 11:28:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48CB315749F;
+	Tue,  9 Jul 2024 11:29:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524539; cv=none; b=fzJBF2+PERkPs1mMxI7kQGmGNeyPXJPa34O+QwIFfGyIuIjPbjmWCf9PtTbxk/tAXGYXHR84nhfHsNqnpyPxY/ARLmRNirq0bdfD1QdUxlo1avvbcZgwSwO/Hh17dFsA6okvHDHMsOnbHn2xISr4XMY0oFgNnfyIcnC0jCfG1Ug=
+	t=1720524542; cv=none; b=AE0cuaBP5oStUfV2hZelATTifeW0f1+Z+0FvWck5FZCaJPQDJ4w+KcdkTmaa61clcmZjNG/oDM2isqrzV36OBO34wO2VZFolYGcAtQl880Q/Djn1jBRTodp2tYYetm4JjvtbOvF0Mi1g5+/WPen8518V0EMZk+ryowHA+j/V7yA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524539; c=relaxed/simple;
-	bh=EJiGuGyJ4aRzoiFhAqPKq2PO+cz1NQp7DFSY3BMTlBY=;
+	s=arc-20240116; t=1720524542; c=relaxed/simple;
+	bh=+9PFez0zBIwXqNOXGp6d1xKG4hfzDoPo2+YCRSioQPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=entdhNsegpmGkNUxu3Kpc2/G14kSmFTbdbT9Q2R2lDdZA8Ja9BRT2sVnwlASluvdzYmEQ4fGYUcFYfANH4pWsGVdy7Yo70d/bLzRTy9O4ActOnJpv6vCnMvMED7uL9kf8esAyeipfixwiHLKOzCO3OwDgBdOzJ2Foi/nz4imkaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jqnzuogg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZEmNkMj2G0okcqQrdiuIlnuvyPl7WOp+WfGfnNNXSu1iTWc7k0fcYZ9N5MoKTAzQVdFKkV9Dm2yVyz0OC6YxhjClAgOlqS5AePrl+ZSe23qmhA+ZXrZqEQ5AKlJQdweVw3Sf4pqhKstnFTiROzKJ66s17uhTRdd20dLzvIXHmuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n09CmkeY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jqnzuogg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A18CC3277B;
-	Tue,  9 Jul 2024 11:28:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n09CmkeY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79E09C3277B;
+	Tue,  9 Jul 2024 11:29:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524538;
-	bh=EJiGuGyJ4aRzoiFhAqPKq2PO+cz1NQp7DFSY3BMTlBY=;
+	s=korg; t=1720524541;
+	bh=+9PFez0zBIwXqNOXGp6d1xKG4hfzDoPo2+YCRSioQPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jqnzuogg2WRX2ES9rgTTgDTsmw7at4fhufwIbt77TV11qyGlrPOfpf2rFOsj70ibR
-	 bLcPgGRKs5Iff8yXKokkUbwzJyHW4pvRaWWTk/2liiAnP0Ndlxa4U3HYD65c2Vv+IV
-	 BR22STg8s82IDtI+RzrUQteCEtzmLuerO6wArJA0=
+	b=n09CmkeY77jfIGgkWAxHEDI9cLNDmTmXD2n1BQJzqLW+vhqS8dvtsXaEBwIA8b6hJ
+	 dlStpAUO+z3yuVJQBllBr2wy/1SMPw8DI9vWTP+jeEGP636e/OTWRLvIBp5aPOFktT
+	 SSLDGgMLcx4nwzAa6HSQ0cnM2WvOca6SXOfyG3TY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bunk <micha@freedict.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Chenghai Huang <huangchenghai2@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 017/102] media: dw2102: Dont translate i2c read into write
-Date: Tue,  9 Jul 2024 13:09:40 +0200
-Message-ID: <20240709110652.040462012@linuxfoundation.org>
+Subject: [PATCH 6.1 002/102] crypto: hisilicon/debugfs - Fix debugfs uninit process issue
+Date: Tue,  9 Jul 2024 13:09:25 +0200
+Message-ID: <20240709110651.453922745@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110651.353707001@linuxfoundation.org>
 References: <20240709110651.353707001@linuxfoundation.org>
@@ -51,195 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bunk <micha@freedict.org>
+From: Chenghai Huang <huangchenghai2@huawei.com>
 
-[ Upstream commit 0e148a522b8453115038193e19ec7bea71403e4a ]
+[ Upstream commit 8be0913389718e8d27c4f1d4537b5e1b99ed7739 ]
 
-The code ignored the I2C_M_RD flag on I2C messages.  Instead it assumed
-an i2c transaction with a single message must be a write operation and a
-transaction with two messages would be a read operation.
+During the zip probe process, the debugfs failure does not stop
+the probe. When debugfs initialization fails, jumping to the
+error branch will also release regs, in addition to its own
+rollback operation.
 
-Though this works for the driver code, it leads to problems once the i2c
-device is exposed to code not knowing this convention.  For example,
-I did "insmod i2c-dev" and issued read requests from userspace, which
-were translated into write requests and destroyed the EEPROM of my
-device.
+As a result, it may be released repeatedly during the regs
+uninit process. Therefore, the null check needs to be added to
+the regs uninit process.
 
-So, just check and respect the I2C_M_READ flag, which indicates a read
-when set on a message.  If it is absent, it is a write message.
-
-Incidentally, changing from the case statement to a while loop allows
-the code to lift the limitation to two i2c messages per transaction.
-
-There are 4 more *_i2c_transfer functions affected by the same behaviour
-and limitation that should be fixed in the same way.
-
-Link: https://lore.kernel.org/linux-media/20220116112238.74171-2-micha@freedict.org
-Signed-off-by: Michael Bunk <micha@freedict.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb/dw2102.c | 120 ++++++++++++++++++-----------
- 1 file changed, 73 insertions(+), 47 deletions(-)
+ drivers/crypto/hisilicon/debugfs.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/usb/dvb-usb/dw2102.c b/drivers/media/usb/dvb-usb/dw2102.c
-index 356fc728d59a8..0da3e83389d7a 100644
---- a/drivers/media/usb/dvb-usb/dw2102.c
-+++ b/drivers/media/usb/dvb-usb/dw2102.c
-@@ -716,6 +716,7 @@ static int su3000_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
+diff --git a/drivers/crypto/hisilicon/debugfs.c b/drivers/crypto/hisilicon/debugfs.c
+index 13bec8b2d7237..a1d41ee39816b 100644
+--- a/drivers/crypto/hisilicon/debugfs.c
++++ b/drivers/crypto/hisilicon/debugfs.c
+@@ -744,8 +744,14 @@ static void dfx_regs_uninit(struct hisi_qm *qm,
  {
- 	struct dvb_usb_device *d = i2c_get_adapdata(adap);
- 	struct dw2102_state *state;
-+	int j;
+ 	int i;
  
- 	if (!d)
- 		return -ENODEV;
-@@ -729,11 +730,11 @@ static int su3000_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
- 		return -EAGAIN;
++	if (!dregs)
++		return;
++
+ 	/* Setting the pointer is NULL to prevent double free */
+ 	for (i = 0; i < reg_len; i++) {
++		if (!dregs[i].regs)
++			continue;
++
+ 		kfree(dregs[i].regs);
+ 		dregs[i].regs = NULL;
+ 	}
+@@ -795,14 +801,21 @@ static struct dfx_diff_registers *dfx_regs_init(struct hisi_qm *qm,
+ static int qm_diff_regs_init(struct hisi_qm *qm,
+ 		struct dfx_diff_registers *dregs, u32 reg_len)
+ {
++	int ret;
++
+ 	qm->debug.qm_diff_regs = dfx_regs_init(qm, qm_diff_regs, ARRAY_SIZE(qm_diff_regs));
+-	if (IS_ERR(qm->debug.qm_diff_regs))
+-		return PTR_ERR(qm->debug.qm_diff_regs);
++	if (IS_ERR(qm->debug.qm_diff_regs)) {
++		ret = PTR_ERR(qm->debug.qm_diff_regs);
++		qm->debug.qm_diff_regs = NULL;
++		return ret;
++	}
+ 
+ 	qm->debug.acc_diff_regs = dfx_regs_init(qm, dregs, reg_len);
+ 	if (IS_ERR(qm->debug.acc_diff_regs)) {
+ 		dfx_regs_uninit(qm, qm->debug.qm_diff_regs, ARRAY_SIZE(qm_diff_regs));
+-		return PTR_ERR(qm->debug.acc_diff_regs);
++		ret = PTR_ERR(qm->debug.acc_diff_regs);
++		qm->debug.acc_diff_regs = NULL;
++		return ret;
  	}
  
--	switch (num) {
--	case 1:
--		switch (msg[0].addr) {
-+	j = 0;
-+	while (j < num) {
-+		switch (msg[j].addr) {
- 		case SU3000_STREAM_CTRL:
--			state->data[0] = msg[0].buf[0] + 0x36;
-+			state->data[0] = msg[j].buf[0] + 0x36;
- 			state->data[1] = 3;
- 			state->data[2] = 0;
- 			if (dvb_usb_generic_rw(d, state->data, 3,
-@@ -745,61 +746,86 @@ static int su3000_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
- 			if (dvb_usb_generic_rw(d, state->data, 1,
- 					state->data, 2, 0) < 0)
- 				err("i2c transfer failed.");
--			msg[0].buf[1] = state->data[0];
--			msg[0].buf[0] = state->data[1];
-+			msg[j].buf[1] = state->data[0];
-+			msg[j].buf[0] = state->data[1];
- 			break;
- 		default:
--			if (3 + msg[0].len > sizeof(state->data)) {
--				warn("i2c wr: len=%d is too big!\n",
--				     msg[0].len);
-+			/* if the current write msg is followed by a another
-+			 * read msg to/from the same address
-+			 */
-+			if ((j+1 < num) && (msg[j+1].flags & I2C_M_RD) &&
-+			    (msg[j].addr == msg[j+1].addr)) {
-+				/* join both i2c msgs to one usb read command */
-+				if (4 + msg[j].len > sizeof(state->data)) {
-+					warn("i2c combined wr/rd: write len=%d is too big!\n",
-+					    msg[j].len);
-+					num = -EOPNOTSUPP;
-+					break;
-+				}
-+				if (1 + msg[j+1].len > sizeof(state->data)) {
-+					warn("i2c combined wr/rd: read len=%d is too big!\n",
-+					    msg[j+1].len);
-+					num = -EOPNOTSUPP;
-+					break;
-+				}
-+
-+				state->data[0] = 0x09;
-+				state->data[1] = msg[j].len;
-+				state->data[2] = msg[j+1].len;
-+				state->data[3] = msg[j].addr;
-+				memcpy(&state->data[4], msg[j].buf, msg[j].len);
-+
-+				if (dvb_usb_generic_rw(d, state->data, msg[j].len + 4,
-+					state->data, msg[j+1].len + 1, 0) < 0)
-+					err("i2c transfer failed.");
-+
-+				memcpy(msg[j+1].buf, &state->data[1], msg[j+1].len);
-+				j++;
-+				break;
-+			}
-+
-+			if (msg[j].flags & I2C_M_RD) {
-+				/* single read */
-+				if (1 + msg[j].len > sizeof(state->data)) {
-+					warn("i2c rd: len=%d is too big!\n", msg[j].len);
-+					num = -EOPNOTSUPP;
-+					break;
-+				}
-+
-+				state->data[0] = 0x09;
-+				state->data[1] = 0;
-+				state->data[2] = msg[j].len;
-+				state->data[3] = msg[j].addr;
-+				memcpy(&state->data[4], msg[j].buf, msg[j].len);
-+
-+				if (dvb_usb_generic_rw(d, state->data, 4,
-+					state->data, msg[j].len + 1, 0) < 0)
-+					err("i2c transfer failed.");
-+
-+				memcpy(msg[j].buf, &state->data[1], msg[j].len);
-+				break;
-+			}
-+
-+			/* single write */
-+			if (3 + msg[j].len > sizeof(state->data)) {
-+				warn("i2c wr: len=%d is too big!\n", msg[j].len);
- 				num = -EOPNOTSUPP;
- 				break;
- 			}
+ 	return 0;
+@@ -843,7 +856,9 @@ static int qm_last_regs_init(struct hisi_qm *qm)
+ static void qm_diff_regs_uninit(struct hisi_qm *qm, u32 reg_len)
+ {
+ 	dfx_regs_uninit(qm, qm->debug.acc_diff_regs, reg_len);
++	qm->debug.acc_diff_regs = NULL;
+ 	dfx_regs_uninit(qm, qm->debug.qm_diff_regs, ARRAY_SIZE(qm_diff_regs));
++	qm->debug.qm_diff_regs = NULL;
+ }
  
--			/* always i2c write*/
- 			state->data[0] = 0x08;
--			state->data[1] = msg[0].addr;
--			state->data[2] = msg[0].len;
-+			state->data[1] = msg[j].addr;
-+			state->data[2] = msg[j].len;
- 
--			memcpy(&state->data[3], msg[0].buf, msg[0].len);
-+			memcpy(&state->data[3], msg[j].buf, msg[j].len);
- 
--			if (dvb_usb_generic_rw(d, state->data, msg[0].len + 3,
-+			if (dvb_usb_generic_rw(d, state->data, msg[j].len + 3,
- 						state->data, 1, 0) < 0)
- 				err("i2c transfer failed.");
-+		} // switch
-+		j++;
- 
--		}
--		break;
--	case 2:
--		/* always i2c read */
--		if (4 + msg[0].len > sizeof(state->data)) {
--			warn("i2c rd: len=%d is too big!\n",
--			     msg[0].len);
--			num = -EOPNOTSUPP;
--			break;
--		}
--		if (1 + msg[1].len > sizeof(state->data)) {
--			warn("i2c rd: len=%d is too big!\n",
--			     msg[1].len);
--			num = -EOPNOTSUPP;
--			break;
--		}
--
--		state->data[0] = 0x09;
--		state->data[1] = msg[0].len;
--		state->data[2] = msg[1].len;
--		state->data[3] = msg[0].addr;
--		memcpy(&state->data[4], msg[0].buf, msg[0].len);
--
--		if (dvb_usb_generic_rw(d, state->data, msg[0].len + 4,
--					state->data, msg[1].len + 1, 0) < 0)
--			err("i2c transfer failed.");
--
--		memcpy(msg[1].buf, &state->data[1], msg[1].len);
--		break;
--	default:
--		warn("more than 2 i2c messages at a time is not handled yet.");
--		break;
--	}
-+	} // while
- 	mutex_unlock(&d->data_mutex);
- 	mutex_unlock(&d->i2c_mutex);
- 	return num;
+ /**
 -- 
 2.43.0
 
