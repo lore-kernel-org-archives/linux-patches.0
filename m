@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B1513A25F;
-	Tue,  9 Jul 2024 11:18:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B73146D53;
+	Tue,  9 Jul 2024 11:18:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720523933; cv=none; b=K2Se5iIPnZZTCKzIFwGrTkrrtL17wH0IOyRAhIfuF/DcM7eA0sdWw5TPZEM/kOKZoox+Pmp3et+kc36eSSurQp2RFCnlmvS4MMeOVMxrGlzmuQEp7JuzEUqZmHdBp6mCqF92KR8GtJL/QctLVLMvnqAvmYOdcauHmeRgfGMvY/w=
+	t=1720523936; cv=none; b=MoTayCDX8DRX+8q3kT8blZ1/g1k8JcnPJc4zBaXXdVKaKMTY02rXBCn5Y9jZHH3OUYQiWypzJmN/IFu3IeQj3DyOrFF3K6RPpeci62//JUgC9XANQDHebip+YGQvO7NlGffk0SVrTfo7XXA1hijNjuz/JwtCDyo3wmv2kh/EiKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720523933; c=relaxed/simple;
-	bh=YWWowoIoG7XoujikJMrxgiM9lpcIK6bVr6ucyelKBIY=;
+	s=arc-20240116; t=1720523936; c=relaxed/simple;
+	bh=44TeUcXGyr+4rSETt5Lr1tsnGwBjvU9C6sYyyiqXCo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UafzooqcQ71t1Mtu6llCeotywwPQwAlx2VMj3i5PGazWxzk4d22YxJNwxm8j9JiUiY/IRaqxGcKY92K873TJnbxNHLs8nfv9aYS51xLjzpin2Mvw6yQJiLWAFIn+DNBlkqa0bWlQ+PhSChETTDRtkld8XxVWBZsh4CbD9sIuQzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oz4b24Nu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PGLmqy95eQRfDq9BM8giB1Bt+mhtvNYcv9UhAqQmOAPmn93TT8lcU59kXn6tVvuGLwDy2lIdzv+Gz8Ztl9gc6ej6NYfSIQbd1bbTPQInApuUdD9wmYj0XbYk/Cogy2vUTmOJSN/pgblN58IsQ+nxQmGfEewlU+SPRjT7fIOEhGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMJVGfmh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oz4b24Nu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85FE6C3277B;
-	Tue,  9 Jul 2024 11:18:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMJVGfmh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A53C32786;
+	Tue,  9 Jul 2024 11:18:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720523932;
-	bh=YWWowoIoG7XoujikJMrxgiM9lpcIK6bVr6ucyelKBIY=;
+	s=korg; t=1720523935;
+	bh=44TeUcXGyr+4rSETt5Lr1tsnGwBjvU9C6sYyyiqXCo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oz4b24Nud7Kjsxvd0Lz+yhVHN/SLC6atZ1fVpjpHGGb8nT1k22ECMpNH8jGCRGW2o
-	 v6XGIywBon4Xnz25irTV8I+trf+4gVeAk7EmhX9y7L3AHJnlH9OyAa+gujkwigtJzk
-	 5zZPPYeH7rQB4L3zq2bOe2C9PYBBB8hbwxAm1W8M=
+	b=bMJVGfmhtBYDpDtSjznklzG1mYpNySry8qnWisdB+tiqXwTFKWIEEVqVkSREIDCy9
+	 3o53AB4IezcGT7/dh+mOWViHG9T9S0Ag73G5pjzQVxE0wXW2nFXgT7NBSj/YmK5Cln
+	 tNlmxMDiu7OPUaAf477hwkgx8LzOeJuKD89iWqWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jose E. Marchesi" <jemarch@gnu.org>,
 	Eduard Zingerman <eddyz87@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 017/197] selftests/bpf: adjust dummy_st_ops_success to detect additional error
-Date: Tue,  9 Jul 2024 13:07:51 +0200
-Message-ID: <20240709110709.581256549@linuxfoundation.org>
+Subject: [PATCH 6.9 018/197] selftests/bpf: do not pass NULL for non-nullable params in dummy_st_ops
+Date: Tue,  9 Jul 2024 13:07:52 +0200
+Message-ID: <20240709110709.619544782@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -54,85 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit 3b3b84aacb4420226576c9732e7b539ca7b79633 ]
+[ Upstream commit f612210d456a0b969a0adca91e68dbea0e0ea301 ]
 
-As reported by Jose E. Marchesi in off-list discussion, GCC and LLVM
-generate slightly different code for dummy_st_ops_success/test_1():
+dummy_st_ops.test_2 and dummy_st_ops.test_sleepable do not have their
+'state' parameter marked as nullable. Update dummy_st_ops.c to avoid
+passing NULL for such parameters, as the next patch would allow kernel
+to enforce this restriction.
 
-  SEC("struct_ops/test_1")
-  int BPF_PROG(test_1, struct bpf_dummy_ops_state *state)
-  {
-  	int ret;
-
-  	if (!state)
-  		return 0xf2f3f4f5;
-
-  	ret = state->val;
-  	state->val = 0x5a;
-  	return ret;
-  }
-
-  GCC-generated                  LLVM-generated
-  ----------------------------   ---------------------------
-  0: r1 = *(u64 *)(r1 + 0x0)     0: w0 = -0xd0c0b0b
-  1: if r1 == 0x0 goto 5f        1: r1 = *(u64 *)(r1 + 0x0)
-  2: r0 = *(s32 *)(r1 + 0x0)     2: if r1 == 0x0 goto 6f
-  3: *(u32 *)(r1 + 0x0) = 0x5a   3: r0 = *(u32 *)(r1 + 0x0)
-  4: exit                        4: w2 = 0x5a
-  5: r0 = -0xd0c0b0b             5: *(u32 *)(r1 + 0x0) = r2
-  6: exit                        6: exit
-
-If the 'state' argument is not marked as nullable in
-net/bpf/bpf_dummy_struct_ops.c, the verifier would assume that
-'r1 == 0x0' is never true:
-- for the GCC version, this means that instructions #5-6 would be
-  marked as dead and removed;
-- for the LLVM version, all instructions would be marked as live.
-
-The test dummy_st_ops/dummy_init_ret_value actually sets the 'state'
-parameter to NULL.
-
-Therefore, when the 'state' argument is not marked as nullable,
-the GCC-generated version of the code would trigger a NULL pointer
-dereference at instruction #3.
-
-This patch updates the test_1() test case to always follow a shape
-similar to the GCC-generated version above, in order to verify whether
-the 'state' nullability is marked correctly.
-
-Reported-by: Jose E. Marchesi <jemarch@gnu.org>
 Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20240424012821.595216-3-eddyz87@gmail.com
+Link: https://lore.kernel.org/r/20240424012821.595216-4-eddyz87@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/bpf/progs/dummy_st_ops_success.c      | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/dummy_st_ops.c    | 7 +++++--
+ tools/testing/selftests/bpf/progs/dummy_st_ops_success.c | 2 +-
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
+diff --git a/tools/testing/selftests/bpf/prog_tests/dummy_st_ops.c b/tools/testing/selftests/bpf/prog_tests/dummy_st_ops.c
+index f43fcb13d2c46..dd926c00f4146 100644
+--- a/tools/testing/selftests/bpf/prog_tests/dummy_st_ops.c
++++ b/tools/testing/selftests/bpf/prog_tests/dummy_st_ops.c
+@@ -98,7 +98,8 @@ static void test_dummy_init_ptr_arg(void)
+ 
+ static void test_dummy_multiple_args(void)
+ {
+-	__u64 args[5] = {0, -100, 0x8a5f, 'c', 0x1234567887654321ULL};
++	struct bpf_dummy_ops_state st = { 7 };
++	__u64 args[5] = {(__u64)&st, -100, 0x8a5f, 'c', 0x1234567887654321ULL};
+ 	LIBBPF_OPTS(bpf_test_run_opts, attr,
+ 		.ctx_in = args,
+ 		.ctx_size_in = sizeof(args),
+@@ -115,6 +116,7 @@ static void test_dummy_multiple_args(void)
+ 	fd = bpf_program__fd(skel->progs.test_2);
+ 	err = bpf_prog_test_run_opts(fd, &attr);
+ 	ASSERT_OK(err, "test_run");
++	args[0] = 7;
+ 	for (i = 0; i < ARRAY_SIZE(args); i++) {
+ 		snprintf(name, sizeof(name), "arg %zu", i);
+ 		ASSERT_EQ(skel->bss->test_2_args[i], args[i], name);
+@@ -125,7 +127,8 @@ static void test_dummy_multiple_args(void)
+ 
+ static void test_dummy_sleepable(void)
+ {
+-	__u64 args[1] = {0};
++	struct bpf_dummy_ops_state st;
++	__u64 args[1] = {(__u64)&st};
+ 	LIBBPF_OPTS(bpf_test_run_opts, attr,
+ 		.ctx_in = args,
+ 		.ctx_size_in = sizeof(args),
 diff --git a/tools/testing/selftests/bpf/progs/dummy_st_ops_success.c b/tools/testing/selftests/bpf/progs/dummy_st_ops_success.c
-index 1efa746c25dc7..cc7b69b001aae 100644
+index cc7b69b001aae..ec0c595d47af8 100644
 --- a/tools/testing/selftests/bpf/progs/dummy_st_ops_success.c
 +++ b/tools/testing/selftests/bpf/progs/dummy_st_ops_success.c
-@@ -11,8 +11,17 @@ int BPF_PROG(test_1, struct bpf_dummy_ops_state *state)
+@@ -34,7 +34,7 @@ SEC("struct_ops/test_2")
+ int BPF_PROG(test_2, struct bpf_dummy_ops_state *state, int a1, unsigned short a2,
+ 	     char a3, unsigned long a4)
  {
- 	int ret;
- 
--	if (!state)
--		return 0xf2f3f4f5;
-+	/* Check that 'state' nullable status is detected correctly.
-+	 * If 'state' argument would be assumed non-null by verifier
-+	 * the code below would be deleted as dead (which it shouldn't).
-+	 * Hide it from the compiler behind 'asm' block to avoid
-+	 * unnecessary optimizations.
-+	 */
-+	asm volatile (
-+		"if %[state] != 0 goto +2;"
-+		"r0 = 0xf2f3f4f5;"
-+		"exit;"
-+	::[state]"p"(state));
- 
- 	ret = state->val;
- 	state->val = 0x5a;
+-	test_2_args[0] = (unsigned long)state;
++	test_2_args[0] = state->val;
+ 	test_2_args[1] = a1;
+ 	test_2_args[2] = a2;
+ 	test_2_args[3] = a3;
 -- 
 2.43.0
 
