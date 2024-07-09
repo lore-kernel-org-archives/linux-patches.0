@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314D8158876;
-	Tue,  9 Jul 2024 11:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A6B158D84;
+	Tue,  9 Jul 2024 11:15:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720523716; cv=none; b=o9zFC0O3vY9SpYeA7GvbZQQWV3C8gsRjOmsPkd4ogdoZiuRg65CKqbK9OyNb3JWbed9TMWYd/5FFnwmBu96U3r0sl8hrJ3WIOm879+HMQIiUf/sbo1bXyTKEz4NQLI5HlPk/AN9VGNMC4Zr3duDnjgUJ1O37f1PK19wz7jVxbVg=
+	t=1720523719; cv=none; b=c3RO8XKKI5cL7DMf1kmmjkJCJ5gb6eGYv3MygYZ+y9ay53R6MD0malBhk4mFwzUq1TNlbXg5cXPZKKz+8iJCGDA2VmjpOeA0ta/g2PvCk3G4gTY/c0hLm5spKlyos5AYUhh5yBRrksqc3ncwjqtRpDbqin7Ou1lNhFLckAuXRcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720523716; c=relaxed/simple;
-	bh=jS9Hd6Zloh0rwzp4Qlbr6WV3KqDmmMCR8Ll6UDiUIqo=;
+	s=arc-20240116; t=1720523719; c=relaxed/simple;
+	bh=0+qO+fK7VwkUAfVZlen99svfGgpK5otXdSRCw74Ndh0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LW2NGvYs5Tq2C3vh54J0JgH0LARBQ2Maol1pLU25izjqB3S31D/aNBl6/eAoe3W8xzfSAyrRuaSA35/ujOqHOdYJT6pkm8/6DZgZVoFwxiTI2AgS1iYnp7PL6Pd2kM6FfkJ9P1wHUIGhzB/xV+Byvbc/aoqBBqxrxcSgutC/Qjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OW12hqvb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mFTCuj8PVr53FtXkqC0XtyeFADNiLjdo8RUvRQzZWmCFMYO/vj2gyv8+v7jm06TwC2HmhHm2Da5jD1kAwUJSWmZ0PCQgpX4d11ioYvFGvVACpSvQeBovFwNwy4rMMHKajHotML5vQ/IPAlsc+W2skfEhWaqT+/HIkfzY/sn1K7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n8jfPeXk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OW12hqvb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75B64C4AF0A;
-	Tue,  9 Jul 2024 11:15:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8jfPeXk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 694E3C4AF14;
+	Tue,  9 Jul 2024 11:15:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720523715;
-	bh=jS9Hd6Zloh0rwzp4Qlbr6WV3KqDmmMCR8Ll6UDiUIqo=;
+	s=korg; t=1720523718;
+	bh=0+qO+fK7VwkUAfVZlen99svfGgpK5otXdSRCw74Ndh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OW12hqvbdcW5I5/gr4iRyz0DhSc5wmifxuWPTYLeayBGQoL5CHAziLo5L8BtzZycV
-	 l/LkMk0C47VG5HY5EbvjJpQGqviQZ4kkTOH7xyLgJdh7cFalh+WpTssMbv336MKCI4
-	 RSgsfNwfp8HF7wWrHqTDrtJUo5eI6u59KW5tT0UE=
+	b=n8jfPeXkvjrHQAr+Qx3Bqth5+zL8P5lwwDdIPB2GK6Z+steSwMxVSeEMFpY4a3drL
+	 BItbKcNmiOeAohxTVSe9BXz8CZqMrIPHlsq7pbEze+/PrAQhQ9dmFHEH1KvMDEFLnp
+	 W5X1Y0XdO8cFp37yKI+SP+q6QS/yANuWN02RDHVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Heiko Carstens <hca@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Ingo Franzki <ifranzki@linux.ibm.com>,
+	Holger Dengler <dengler@linux.ibm.com>,
 	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 053/139] s390: Mark psw in __load_psw_mask() as __unitialized
-Date: Tue,  9 Jul 2024 13:09:13 +0200
-Message-ID: <20240709110700.219787792@linuxfoundation.org>
+Subject: [PATCH 6.6 054/139] s390/pkey: Wipe sensitive data on failure
+Date: Tue,  9 Jul 2024 13:09:14 +0200
+Message-ID: <20240709110700.258731812@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110658.146853929@linuxfoundation.org>
 References: <20240709110658.146853929@linuxfoundation.org>
@@ -52,45 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Schnelle <svens@linux.ibm.com>
+From: Holger Dengler <dengler@linux.ibm.com>
 
-[ Upstream commit 7278a8fb8d032dfdc03d9b5d17e0bc451cdc1492 ]
+[ Upstream commit 1d8c270de5eb74245d72325d285894a577a945d9 ]
 
-Without __unitialized, the following code is generated when
-INIT_STACK_ALL_ZERO is enabled:
+Wipe sensitive data from stack also if the copy_to_user() fails.
 
-86: d7 0f f0 a0 f0 a0     xc      160(16,%r15), 160(%r15)
-8c: e3 40 f0 a0 00 24     stg     %r4, 160(%r15)
-92: c0 10 00 00 00 08     larl    %r1, 0xa2
-98: e3 10 f0 a8 00 24     stg     %r1, 168(%r15)
-9e: b2 b2 f0 a0           lpswe   160(%r15)
-
-The xc is not adding any security because psw is fully initialized
-with the following instructions. Add __unitialized to the psw
-definitiation to avoid the superfluous clearing of psw.
-
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
+Suggested-by: Heiko Carstens <hca@linux.ibm.com>
+Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
+Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
+Acked-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
 Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/processor.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/s390/crypto/pkey_api.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/s390/include/asm/processor.h b/arch/s390/include/asm/processor.h
-index dc17896a001a9..e7338ed540d8f 100644
---- a/arch/s390/include/asm/processor.h
-+++ b/arch/s390/include/asm/processor.h
-@@ -308,8 +308,8 @@ static inline void __load_psw(psw_t psw)
-  */
- static __always_inline void __load_psw_mask(unsigned long mask)
- {
-+	psw_t psw __uninitialized;
- 	unsigned long addr;
--	psw_t psw;
- 
- 	psw.mask = mask;
- 
+diff --git a/drivers/s390/crypto/pkey_api.c b/drivers/s390/crypto/pkey_api.c
+index 6cfb6b2340c99..d2ffdf2491da0 100644
+--- a/drivers/s390/crypto/pkey_api.c
++++ b/drivers/s390/crypto/pkey_api.c
+@@ -1369,7 +1369,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 		if (rc)
+ 			break;
+ 		if (copy_to_user(ucs, &kcs, sizeof(kcs)))
+-			return -EFAULT;
++			rc = -EFAULT;
+ 		memzero_explicit(&kcs, sizeof(kcs));
+ 		break;
+ 	}
+@@ -1404,7 +1404,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 		if (rc)
+ 			break;
+ 		if (copy_to_user(ucp, &kcp, sizeof(kcp)))
+-			return -EFAULT;
++			rc = -EFAULT;
+ 		memzero_explicit(&kcp, sizeof(kcp));
+ 		break;
+ 	}
 -- 
 2.43.0
 
