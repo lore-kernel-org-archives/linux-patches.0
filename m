@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 307A6158201;
-	Tue,  9 Jul 2024 11:25:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E2B14E2F4;
+	Tue,  9 Jul 2024 11:26:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524359; cv=none; b=ck5R2iOyG4C09D5J52qkFFSNTyjM9x/tMNRWYqx+/jHviPaz21Hd3lN10jAS/SyuSfOXbt6+Kz8GVmtLa8AY1Me7Z9RNDZeq7VNimngm6uFaFg0nr9GpYmFI5wbp7NqN7ZYrCONXq+CIb3Rf7sarwbIu0TN5XnAgWAT7u9UYWG0=
+	t=1720524362; cv=none; b=Hk5ItxmR6h0sBjxNF7ijYIoNZ5G0OqgvwJoG7gF5RSQSNsPVssQ+h1Ca6U8XOPOam96B+OcoVHKdhCgY0JNd+/SABQ8NygZcgyF2i9rePZojlO8IOi13YORNjFEQJKcFNaAtYX6glL/LJrQ7qQbez6MY7x7dDBlmhTpliVFf7lM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524359; c=relaxed/simple;
-	bh=U+pkPwxcS7ZyeAYZzp2R4S4ESlF9P3715ZsUH+UmfIw=;
+	s=arc-20240116; t=1720524362; c=relaxed/simple;
+	bh=qt6f49ttRxXXRz2VAWKHQMzA9ovz1NJs6gZUOjvZuvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RcglgeJ4dKsUMa9STW+YxnLvFof5/t2GuGfyuyf7VAm8lzDY3nPeKKXOcELSzrX/r9g5/A/3xxqg/OTfQEw30VnmRWcaNY4cMKj1xjLzkiS2PxuNE2GvpPEjit4MTkgVbWQmkbRIAty5KU9sm9nEnDbGejSWbFU7flQepsYYZso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l1k/Hk48; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RJX4huRnP+1n4MgSUOSjtqU5fWSXAwCFRcsXfVJlKkAMPom7Bm8qjcSUQpdrY1EE7aJcbLmzKnFAMeAyiNlwZ2i+uZ3y+yA6P0/v4XlCPVm7aRKkQm+ZDTe1BAAksfODq7+bdgDjIUidpwslAZdNVPCrQ5n5iThpH5oS8tESqIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pP/J+qgh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l1k/Hk48"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A992FC32786;
-	Tue,  9 Jul 2024 11:25:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pP/J+qgh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A246FC3277B;
+	Tue,  9 Jul 2024 11:26:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524359;
-	bh=U+pkPwxcS7ZyeAYZzp2R4S4ESlF9P3715ZsUH+UmfIw=;
+	s=korg; t=1720524362;
+	bh=qt6f49ttRxXXRz2VAWKHQMzA9ovz1NJs6gZUOjvZuvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l1k/Hk48NcV5sw2tWs1mJuBLvWqyd3rrfelqtwzvmuEPehHCYzU5X+4jUKt3y7FVB
-	 4nG9wi2dIf8dAvoydh4JjvuqUoFb25bZ6pX5ZByCRitsZqza31tyYtu7VAPGZUhJAA
-	 OXdQQvXSCBhVdwktjABnzixBefuEmAElnQwiykMo=
+	b=pP/J+qghi3A3VvPegAG5p/xXauSHstdz9yF4g8gp+j/w2FIMiS7aW4mbFJ0tlbRII
+	 vrhjAVmO7cys63960N8w7C658ihxibDJ/rUNKjfwenM4lLKF2TqN9zEIMocf1M4iZ9
+	 awEEBE+nowEEZ5rkxVXIEon/FDBxIU+oil4d2elE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Robert J. Pafford" <pafford.9@buckeyemail.osu.edu>,
-	Frank Oltmanns <frank@oltmanns.dev>,
-	Chen-Yu Tsai <wens@csie.org>
-Subject: [PATCH 6.9 155/197] clk: sunxi-ng: common: Dont call hw_to_ccu_common on hw without common
-Date: Tue,  9 Jul 2024 13:10:09 +0200
-Message-ID: <20240709110714.951673155@linuxfoundation.org>
+	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Gautam Menghani <gautam@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 6.9 156/197] powerpc/pseries: Fix scv instruction crash with kexec
+Date: Tue,  9 Jul 2024 13:10:10 +0200
+Message-ID: <20240709110714.989490022@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -51,67 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Oltmanns <frank@oltmanns.dev>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-commit ea977d742507e534d9fe4f4d74256f6b7f589338 upstream.
+commit 21a741eb75f80397e5f7d3739e24d7d75e619011 upstream.
 
-In order to set the rate range of a hw sunxi_ccu_probe calls
-hw_to_ccu_common() assuming all entries in desc->ccu_clks are contained
-in a ccu_common struct. This assumption is incorrect and, in
-consequence, causes invalid pointer de-references.
+kexec on pseries disables AIL (reloc_on_exc), required for scv
+instruction support, before other CPUs have been shut down. This means
+they can execute scv instructions after AIL is disabled, which causes an
+interrupt at an unexpected entry location that crashes the kernel.
 
-Remove the faulty call. Instead, add one more loop that iterates over
-the ccu_clks and sets the rate range, if required.
+Change the kexec sequence to disable AIL after other CPUs have been
+brought down.
 
-Fixes: b914ec33b391 ("clk: sunxi-ng: common: Support minimum and maximum rate")
-Reported-by: Robert J. Pafford <pafford.9@buckeyemail.osu.edu>
-Closes: https://lore.kernel.org/lkml/DM6PR01MB58047C810DDD5D0AE397CADFF7C22@DM6PR01MB5804.prod.exchangelabs.com/
-Cc: stable@vger.kernel.org
-Signed-off-by: Frank Oltmanns <frank@oltmanns.dev>
-Tested-by: Robert J. Pafford <pafford.9@buckeyemail.osu.edu>
-Link: https://lore.kernel.org/r/20240623-sunxi-ng_fix_common_probe-v1-1-7c97e32824a1@oltmanns.dev
-Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+As a refresher, the real-mode scv interrupt vector is 0x17000, and the
+fixed-location head code probably couldn't easily deal with implementing
+such high addresses so it was just decided not to support that interrupt
+at all.
+
+Fixes: 7fa95f9adaee ("powerpc/64s: system call support for scv/rfscv instructions")
+Cc: stable@vger.kernel.org # v5.9+
+Reported-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Closes: https://lore.kernel.org/3b4b2943-49ad-4619-b195-bc416f1d1409@linux.ibm.com
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Tested-by: Gautam Menghani <gautam@linux.ibm.com>
+Tested-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Link: https://msgid.link/20240625134047.298759-1-npiggin@gmail.com
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/sunxi-ng/ccu_common.c |   18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ arch/powerpc/kexec/core_64.c             |   11 +++++++++++
+ arch/powerpc/platforms/pseries/kexec.c   |    8 --------
+ arch/powerpc/platforms/pseries/pseries.h |    1 -
+ arch/powerpc/platforms/pseries/setup.c   |    1 -
+ 4 files changed, 11 insertions(+), 10 deletions(-)
 
---- a/drivers/clk/sunxi-ng/ccu_common.c
-+++ b/drivers/clk/sunxi-ng/ccu_common.c
-@@ -132,7 +132,6 @@ static int sunxi_ccu_probe(struct sunxi_
+--- a/arch/powerpc/kexec/core_64.c
++++ b/arch/powerpc/kexec/core_64.c
+@@ -26,6 +26,7 @@
+ #include <asm/paca.h>
+ #include <asm/mmu.h>
+ #include <asm/sections.h>	/* _end */
++#include <asm/setup.h>
+ #include <asm/smp.h>
+ #include <asm/hw_breakpoint.h>
+ #include <asm/svm.h>
+@@ -315,6 +316,16 @@ void default_machine_kexec(struct kimage
+ 	if (!kdump_in_progress())
+ 		kexec_prepare_cpus();
  
- 	for (i = 0; i < desc->hw_clks->num ; i++) {
- 		struct clk_hw *hw = desc->hw_clks->hws[i];
--		struct ccu_common *common = hw_to_ccu_common(hw);
- 		const char *name;
- 
- 		if (!hw)
-@@ -147,14 +146,21 @@ static int sunxi_ccu_probe(struct sunxi_
- 			pr_err("Couldn't register clock %d - %s\n", i, name);
- 			goto err_clk_unreg;
- 		}
-+	}
++#ifdef CONFIG_PPC_PSERIES
++	/*
++	 * This must be done after other CPUs have shut down, otherwise they
++	 * could execute the 'scv' instruction, which is not supported with
++	 * reloc disabled (see configure_exceptions()).
++	 */
++	if (firmware_has_feature(FW_FEATURE_SET_MODE))
++		pseries_disable_reloc_on_exc();
++#endif
 +
-+	for (i = 0; i < desc->num_ccu_clks; i++) {
-+		struct ccu_common *cclk = desc->ccu_clks[i];
-+
-+		if (!cclk)
-+			continue;
+ 	printk("kexec: Starting switchover sequence.\n");
  
--		if (common->max_rate)
--			clk_hw_set_rate_range(hw, common->min_rate,
--					      common->max_rate);
-+		if (cclk->max_rate)
-+			clk_hw_set_rate_range(&cclk->hw, cclk->min_rate,
-+					      cclk->max_rate);
- 		else
--			WARN(common->min_rate,
-+			WARN(cclk->min_rate,
- 			     "No max_rate, ignoring min_rate of clock %d - %s\n",
--			     i, name);
-+			     i, clk_hw_get_name(&cclk->hw));
- 	}
+ 	/* switch to a staticly allocated stack.  Based on irq stack code.
+--- a/arch/powerpc/platforms/pseries/kexec.c
++++ b/arch/powerpc/platforms/pseries/kexec.c
+@@ -61,11 +61,3 @@ void pseries_kexec_cpu_down(int crash_sh
+ 	} else
+ 		xics_kexec_teardown_cpu(secondary);
+ }
+-
+-void pseries_machine_kexec(struct kimage *image)
+-{
+-	if (firmware_has_feature(FW_FEATURE_SET_MODE))
+-		pseries_disable_reloc_on_exc();
+-
+-	default_machine_kexec(image);
+-}
+--- a/arch/powerpc/platforms/pseries/pseries.h
++++ b/arch/powerpc/platforms/pseries/pseries.h
+@@ -38,7 +38,6 @@ static inline void smp_init_pseries(void
+ #endif
  
- 	ret = of_clk_add_hw_provider(node, of_clk_hw_onecell_get,
+ extern void pseries_kexec_cpu_down(int crash_shutdown, int secondary);
+-void pseries_machine_kexec(struct kimage *image);
+ 
+ extern void pSeries_final_fixup(void);
+ 
+--- a/arch/powerpc/platforms/pseries/setup.c
++++ b/arch/powerpc/platforms/pseries/setup.c
+@@ -1159,7 +1159,6 @@ define_machine(pseries) {
+ 	.machine_check_exception = pSeries_machine_check_exception,
+ 	.machine_check_log_err	= pSeries_machine_check_log_err,
+ #ifdef CONFIG_KEXEC_CORE
+-	.machine_kexec          = pseries_machine_kexec,
+ 	.kexec_cpu_down         = pseries_kexec_cpu_down,
+ #endif
+ #ifdef CONFIG_MEMORY_HOTPLUG
 
 
