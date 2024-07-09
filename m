@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D2513A25F;
-	Tue,  9 Jul 2024 11:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA44113A25F;
+	Tue,  9 Jul 2024 11:22:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524161; cv=none; b=DbP6f4cWVGYyNlsct7subFxdDzj0r1ujTI9dtgrgFtJ3Swt55QtFC38aN1a0Hk81SVoHvMIBBPYeJbw5E1GTyAs9avpWa2NrL7pIlxFBqah+cDFhGoOMhm8jWGR0SApm/zapbDAEO8Z62VWkwwqgIaa6lpUcS6vux1lXLhEWmBI=
+	t=1720524163; cv=none; b=uWkfZzcwDNiCO0NEujQnLz/TVGJPlL8KKzaYbAx7Ji51Q8ZR3S9rmAauSSKDi7rUXwhUrHfB5ygZxy6v+HHlLxwZB2C8QU6KRS43CAzrdtpCBKkwFeQ2qpbLhB8uart2twlVjBeq+0VCptlOLnktKq66dweJkhQZYIZ7x8ZeQig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524161; c=relaxed/simple;
-	bh=m/JoKjLYfhtDSbIj2YPoP1UWC+jGJXT9AydqhH8psrE=;
+	s=arc-20240116; t=1720524163; c=relaxed/simple;
+	bh=FeBCMPBAl6jnTtTJAyJ+t5iAtb2iMcLYPo9UPpibQ/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MGeBUbaH8p2l19H7+5tdYo/Z7/FwKVnZYBlWVADTySxFvnHttX9pd/dQS/fS/ZSEEbt61c7Ihz6w5x4pFw5VbEMG6WsYHOwDCV/LAGojjLg2ARi/v2wm96dR6B5/xMOWQqqgJXQB0dBoR0kQhc4tDdPKjLCm9qyib8zUbW89txY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gbxt1qgi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FjRIFnWkAmNSjnIg26Ggmdk3cexZVq2z9k2Ak+7ysuBPLNyt9JvKkVFcL27OcpPe+1+CYS3l4J29MW4FKD/puBalEVXpcEE1hO9u3usPu1Pk4tEQyb9Pt+VVtTrErg1IliDMTrCNCnTkDL4b+/293s70/QJ8JqZETB6lPoYgKIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oJ5LzkVc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gbxt1qgi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60649C3277B;
-	Tue,  9 Jul 2024 11:22:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oJ5LzkVc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 505B2C3277B;
+	Tue,  9 Jul 2024 11:22:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524160;
-	bh=m/JoKjLYfhtDSbIj2YPoP1UWC+jGJXT9AydqhH8psrE=;
+	s=korg; t=1720524163;
+	bh=FeBCMPBAl6jnTtTJAyJ+t5iAtb2iMcLYPo9UPpibQ/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gbxt1qgipHmh7CkGsBcYwZm8hWJG/qRrxF6+3NFR01jJUiITpC4pjkLgUDkyP0KTT
-	 xOHg5rdxf2W9N3G/CRatd6pc8yf2o0krar0Yil3gw9qmQPQv/LX2UhVFCzWBIDvGIL
-	 ER9GmokOiMOdhITVqBSRBBAa+F89vOWOUR5s4C4o=
+	b=oJ5LzkVcolqWQKWWi38iCyOcTe0D/2A28N9TnyMVUtTxYRfbOouY1bsosHrW4VxD8
+	 6T7xygm2csAiJrfizrf+RPJJl6hHQTPK10L0A+pytEvOCgG7/y47zOYeSXkrhjfLtM
+	 NKw5Ud6h5DYDIu9qvXMBtV/3r0XSdV1iDiSyDiwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mi <cmi@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Greg Kurz <groug@kaod.org>,
+	=?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 090/197] net/mlx5: E-switch, Create ingress ACL when needed
-Date: Tue,  9 Jul 2024 13:09:04 +0200
-Message-ID: <20240709110712.448239509@linuxfoundation.org>
+Subject: [PATCH 6.9 064/197] powerpc/xmon: Check cpu id in commands "c#", "dp#" and "dx#"
+Date: Tue,  9 Jul 2024 13:08:38 +0200
+Message-ID: <20240709110711.439884302@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -46,126 +46,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chris Mi <cmi@nvidia.com>
+From: Greg Kurz <groug@kaod.org>
 
-[ Upstream commit b20c2fb45470d0c7a603613c9cfa5d45720e17f2 ]
+[ Upstream commit 8873aab8646194a4446117bb617cc71bddda2dee ]
 
-Currently, ingress acl is used for three features. It is created only
-when vport metadata match and prio tag are enabled. But active-backup
-lag mode also uses it. It is independent of vport metadata match and
-prio tag. And vport metadata match can be disabled using the
-following devlink command:
+All these commands end up peeking into the PACA using the user
+originated cpu id as an index. Check the cpu id is valid in order
+to prevent xmon to crash. Instead of printing an error, this follows
+the same behavior as the "lp s #" command : ignore the buggy cpu id
+parameter and fall back to the #-less version of the command.
 
- # devlink dev param set pci/0000:08:00.0 name esw_port_metadata \
-	value false cmode runtime
-
-If ingress acl is not created, will hit panic when creating drop rule
-for active-backup lag mode. If always create it, there will be about
-5% performance degradation.
-
-Fix it by creating ingress acl when needed. If esw_port_metadata is
-true, ingress acl exists, then create drop rule using existing
-ingress acl. If esw_port_metadata is false, create ingress acl and
-then create drop rule.
-
-Fixes: 1749c4c51c16 ("net/mlx5: E-switch, add drop rule support to ingress ACL")
-Signed-off-by: Chris Mi <cmi@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kurz <groug@kaod.org>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/161531347060.252863.10490063933688958044.stgit@bahia.lan
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/esw/acl/ingress_ofld.c | 37 +++++++++++++++----
- 1 file changed, 29 insertions(+), 8 deletions(-)
+ arch/powerpc/xmon/xmon.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_ofld.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_ofld.c
-index 50d2ea3239798..a436ce895e45a 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_ofld.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_ofld.c
-@@ -6,6 +6,9 @@
- #include "helper.h"
- #include "ofld.h"
- 
-+static int
-+acl_ingress_ofld_setup(struct mlx5_eswitch *esw, struct mlx5_vport *vport);
-+
- static bool
- esw_acl_ingress_prio_tag_enabled(struct mlx5_eswitch *esw,
- 				 const struct mlx5_vport *vport)
-@@ -123,18 +126,31 @@ static int esw_acl_ingress_src_port_drop_create(struct mlx5_eswitch *esw,
- {
- 	struct mlx5_flow_act flow_act = {};
- 	struct mlx5_flow_handle *flow_rule;
-+	bool created = false;
- 	int err = 0;
- 
-+	if (!vport->ingress.acl) {
-+		err = acl_ingress_ofld_setup(esw, vport);
-+		if (err)
-+			return err;
-+		created = true;
-+	}
-+
- 	flow_act.action = MLX5_FLOW_CONTEXT_ACTION_DROP;
- 	flow_act.fg = vport->ingress.offloads.drop_grp;
- 	flow_rule = mlx5_add_flow_rules(vport->ingress.acl, NULL, &flow_act, NULL, 0);
- 	if (IS_ERR(flow_rule)) {
- 		err = PTR_ERR(flow_rule);
--		goto out;
-+		goto err_out;
+diff --git a/arch/powerpc/xmon/xmon.c b/arch/powerpc/xmon/xmon.c
+index d79d6633f3336..bd4813bad317e 100644
+--- a/arch/powerpc/xmon/xmon.c
++++ b/arch/powerpc/xmon/xmon.c
+@@ -1350,7 +1350,7 @@ static int cpu_cmd(void)
  	}
+ 	termch = cpu;
  
- 	vport->ingress.offloads.drop_rule = flow_rule;
--out:
-+
-+	return 0;
-+err_out:
-+	/* Only destroy ingress acl created in this function. */
-+	if (created)
-+		esw_acl_ingress_ofld_cleanup(esw, vport);
- 	return err;
- }
+-	if (!scanhex(&cpu)) {
++	if (!scanhex(&cpu) || cpu >= num_possible_cpus()) {
+ 		/* print cpus waiting or in xmon */
+ 		printf("cpus stopped:");
+ 		last_cpu = first_cpu = NR_CPUS;
+@@ -2772,7 +2772,7 @@ static void dump_pacas(void)
  
-@@ -299,16 +315,12 @@ static void esw_acl_ingress_ofld_groups_destroy(struct mlx5_vport *vport)
- 	}
- }
+ 	termch = c;	/* Put c back, it wasn't 'a' */
  
--int esw_acl_ingress_ofld_setup(struct mlx5_eswitch *esw,
--			       struct mlx5_vport *vport)
-+static int
-+acl_ingress_ofld_setup(struct mlx5_eswitch *esw, struct mlx5_vport *vport)
- {
- 	int num_ftes = 0;
- 	int err;
+-	if (scanhex(&num))
++	if (scanhex(&num) && num < num_possible_cpus())
+ 		dump_one_paca(num);
+ 	else
+ 		dump_one_paca(xmon_owner);
+@@ -2845,7 +2845,7 @@ static void dump_xives(void)
  
--	if (!mlx5_eswitch_vport_match_metadata_enabled(esw) &&
--	    !esw_acl_ingress_prio_tag_enabled(esw, vport))
--		return 0;
--
- 	esw_acl_ingress_allow_rule_destroy(vport);
+ 	termch = c;	/* Put c back, it wasn't 'a' */
  
- 	if (mlx5_eswitch_vport_match_metadata_enabled(esw))
-@@ -347,6 +359,15 @@ int esw_acl_ingress_ofld_setup(struct mlx5_eswitch *esw,
- 	return err;
- }
- 
-+int esw_acl_ingress_ofld_setup(struct mlx5_eswitch *esw, struct mlx5_vport *vport)
-+{
-+	if (!mlx5_eswitch_vport_match_metadata_enabled(esw) &&
-+	    !esw_acl_ingress_prio_tag_enabled(esw, vport))
-+		return 0;
-+
-+	return acl_ingress_ofld_setup(esw, vport);
-+}
-+
- void esw_acl_ingress_ofld_cleanup(struct mlx5_eswitch *esw,
- 				  struct mlx5_vport *vport)
- {
+-	if (scanhex(&num))
++	if (scanhex(&num) && num < num_possible_cpus())
+ 		dump_one_xive(num);
+ 	else
+ 		dump_one_xive(xmon_owner);
 -- 
 2.43.0
 
