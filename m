@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 530DF13A25F;
-	Tue,  9 Jul 2024 11:18:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D6013A25F;
+	Tue,  9 Jul 2024 11:18:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720523918; cv=none; b=IbiLkJKguCpuKBGBjYCDyC763IQ1LDOhF9wjtUpevB/2Rjq6wbgVguOzpb80cJCjXZ7Val20Yy7w5lmYeDSBMy6MW6U4wQ4fbMvIOqmvhWPTB9zpJylFWuo3mAlIFNOoDBkvZ8rFp2UMzvyQMSg0wre5acheuZa9rlAYpyNnWbU=
+	t=1720523921; cv=none; b=dHEoqGhTNhoyjuV3tk/pSelXMSy2amO23icPqNtH7RVk4+AGpNtH0B9rN2WGDgERvxqWQ1MtIL31IxQj3nvps/gZThFk1izLqI0piXPmP//8xZoYcV9AA7fHrmHFenLONeBPP9RO1TdwDDMTGtHTio9Ai6W4s/zDLxHuWwi9N4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720523918; c=relaxed/simple;
-	bh=adq/m4tZFOOTiMTw7DkiVlVEGj6PknCHBoZ3W6itZ1E=;
+	s=arc-20240116; t=1720523921; c=relaxed/simple;
+	bh=RIcAlNxvvr3GJllWqV6vwQjuxLL7VHnHTAByt9LuHf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ym3ToIrNIMbwYvjB1waxWIA4g+gSIcg2/4//um6SCxKgGV0qqLJdPqgZwjZ462PcAF/6rYaEdeOeZ2I/GA1vxHjMvrFmAsmQQGMrg9gKbaWIlwjJ8lS0QC+EGj+r7Uu+IEQLjl8rZEHyYY6suyD07PqITBJ5Pq4vx9yczt9A4Sk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xL9uo0UI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LrJFgcpKbHdyN9IKq2dONfJacKHYXSVgdXqYo/Qx6vEgFsaoRTLZUCmdR/tVUdj8ph4bXx+cRmaJlH07/5oC4wQdPbErRuN8za9d0TjeGQ2Z3BDOBwMwU0LSfG22jyNdhetCBWjf1f+ZFU8Zp7Sht0Ia+Zq8tFyVdrlxdSpSwxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IqX1vOST; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xL9uo0UI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEFBBC3277B;
-	Tue,  9 Jul 2024 11:18:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IqX1vOST"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C48CFC32786;
+	Tue,  9 Jul 2024 11:18:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720523918;
-	bh=adq/m4tZFOOTiMTw7DkiVlVEGj6PknCHBoZ3W6itZ1E=;
+	s=korg; t=1720523921;
+	bh=RIcAlNxvvr3GJllWqV6vwQjuxLL7VHnHTAByt9LuHf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xL9uo0UIWV96Z/VKkJShOqrfTXY6pWGa9b/ZZUh5Lr+F8THOVvMiF/p7i5HO8OhN3
-	 lozNT6P+YmqBLuM8VdAieOfhC1tkiNQId0QVOuHYsyM7q4+UJ4ati5zozGC08WOubl
-	 L/g0dPpKP/W/bNbIOZnL137mKRWf1dbGESK0+Who=
+	b=IqX1vOSTq6gheohLoCZy/wDeBxN8iqU900Sqi4X3OOW6/kiqfor03qZregZbqmCZz
+	 6xCOnIgwsgOGyk8J7IIG9oVinOmuaMKzzcAwGYJ9VUNZOgtyokox85iXgBxlo3QaUx
+	 G4kg2hmgUmPhOXbBV9vfCoj5+RzaadRoz1AAumW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	Francois Dugast <francois.dugast@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Mark Zhang <markzhang@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 012/197] drm/xe: Add outer runtime_pm protection to xe_live_ktest@xe_dma_buf
-Date: Tue,  9 Jul 2024 13:07:46 +0200
-Message-ID: <20240709110709.387849632@linuxfoundation.org>
+Subject: [PATCH 6.9 013/197] IB/core: Implement a limit on UMAD receive List
+Date: Tue,  9 Jul 2024 13:07:47 +0200
+Message-ID: <20240709110709.427182068@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -53,60 +52,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rodrigo Vivi <rodrigo.vivi@intel.com>
+From: Michael Guralnik <michaelgur@nvidia.com>
 
-[ Upstream commit f9116f658a6217b101e3b4e89f845775b6fb05d9 ]
+[ Upstream commit ca0b44e20a6f3032224599f02e7c8fb49525c894 ]
 
-Any kunit doing any memory access should get their own runtime_pm
-outer references since they don't use the standard driver API
-entries. In special this dma_buf from the same driver.
+The existing behavior of ib_umad, which maintains received MAD
+packets in an unbounded list, poses a risk of uncontrolled growth.
+As user-space applications extract packets from this list, the rate
+of extraction may not match the rate of incoming packets, leading
+to potential list overflow.
 
-Found by pre-merge CI on adding WARN calls for unprotected
-inner callers:
+To address this, we introduce a limit to the size of the list. After
+considering typical scenarios, such as OpenSM processing, which can
+handle approximately 100k packets per second, and the 1-second retry
+timeout for most packets, we set the list size limit to 200k. Packets
+received beyond this limit are dropped, assuming they are likely timed
+out by the time they are handled by user-space.
 
-<6> [318.639739]     # xe_dma_buf_kunit: running xe_test_dmabuf_import_same_driver
-<4> [318.639957] ------------[ cut here ]------------
-<4> [318.639967] xe 0000:4d:00.0: Missing outer runtime PM protection
-<4> [318.640049] WARNING: CPU: 117 PID: 3832 at drivers/gpu/drm/xe/xe_pm.c:533 xe_pm_runtime_get_noresume+0x48/0x60 [xe]
+Notably, packets queued on the receive list due to reasons like
+timed-out sends are preserved even when the list is full.
 
-Cc: Matthew Auld <matthew.auld@intel.com>
-Cc: Francois Dugast <francois.dugast@intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240417203952.25503-10-rodrigo.vivi@intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
+Reviewed-by: Mark Zhang <markzhang@nvidia.com>
+Link: https://lore.kernel.org/r/7197cb58a7d9e78399008f25036205ceab07fbd5.1713268818.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/tests/xe_dma_buf.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/infiniband/core/user_mad.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/tests/xe_dma_buf.c b/drivers/gpu/drm/xe/tests/xe_dma_buf.c
-index 9f6d571d7fa9c..a3d2dd42adf96 100644
---- a/drivers/gpu/drm/xe/tests/xe_dma_buf.c
-+++ b/drivers/gpu/drm/xe/tests/xe_dma_buf.c
-@@ -12,6 +12,7 @@
- #include "tests/xe_pci_test.h"
+diff --git a/drivers/infiniband/core/user_mad.c b/drivers/infiniband/core/user_mad.c
+index f5feca7fa9b9c..2ed749f50a29f 100644
+--- a/drivers/infiniband/core/user_mad.c
++++ b/drivers/infiniband/core/user_mad.c
+@@ -63,6 +63,8 @@ MODULE_AUTHOR("Roland Dreier");
+ MODULE_DESCRIPTION("InfiniBand userspace MAD packet access");
+ MODULE_LICENSE("Dual BSD/GPL");
  
- #include "xe_pci.h"
-+#include "xe_pm.h"
++#define MAX_UMAD_RECV_LIST_SIZE 200000
++
+ enum {
+ 	IB_UMAD_MAX_PORTS  = RDMA_MAX_PORTS,
+ 	IB_UMAD_MAX_AGENTS = 32,
+@@ -113,6 +115,7 @@ struct ib_umad_file {
+ 	struct mutex		mutex;
+ 	struct ib_umad_port    *port;
+ 	struct list_head	recv_list;
++	atomic_t		recv_list_size;
+ 	struct list_head	send_list;
+ 	struct list_head	port_list;
+ 	spinlock_t		send_lock;
+@@ -180,24 +183,28 @@ static struct ib_mad_agent *__get_agent(struct ib_umad_file *file, int id)
+ 	return file->agents_dead ? NULL : file->agent[id];
+ }
  
- static bool p2p_enabled(struct dma_buf_test_params *params)
+-static int queue_packet(struct ib_umad_file *file,
+-			struct ib_mad_agent *agent,
+-			struct ib_umad_packet *packet)
++static int queue_packet(struct ib_umad_file *file, struct ib_mad_agent *agent,
++			struct ib_umad_packet *packet, bool is_recv_mad)
  {
-@@ -259,6 +260,7 @@ static int dma_buf_run_device(struct xe_device *xe)
- 	const struct dma_buf_test_params *params;
- 	struct kunit *test = xe_cur_kunit();
+ 	int ret = 1;
  
-+	xe_pm_runtime_get(xe);
- 	for (params = test_params; params->mem_mask; ++params) {
- 		struct dma_buf_test_params p = *params;
+ 	mutex_lock(&file->mutex);
  
-@@ -266,6 +268,7 @@ static int dma_buf_run_device(struct xe_device *xe)
- 		test->priv = &p;
- 		xe_test_dmabuf_import_same_driver(xe);
++	if (is_recv_mad &&
++	    atomic_read(&file->recv_list_size) > MAX_UMAD_RECV_LIST_SIZE)
++		goto unlock;
++
+ 	for (packet->mad.hdr.id = 0;
+ 	     packet->mad.hdr.id < IB_UMAD_MAX_AGENTS;
+ 	     packet->mad.hdr.id++)
+ 		if (agent == __get_agent(file, packet->mad.hdr.id)) {
+ 			list_add_tail(&packet->list, &file->recv_list);
++			atomic_inc(&file->recv_list_size);
+ 			wake_up_interruptible(&file->recv_wait);
+ 			ret = 0;
+ 			break;
+ 		}
+-
++unlock:
+ 	mutex_unlock(&file->mutex);
+ 
+ 	return ret;
+@@ -224,7 +231,7 @@ static void send_handler(struct ib_mad_agent *agent,
+ 	if (send_wc->status == IB_WC_RESP_TIMEOUT_ERR) {
+ 		packet->length = IB_MGMT_MAD_HDR;
+ 		packet->mad.hdr.status = ETIMEDOUT;
+-		if (!queue_packet(file, agent, packet))
++		if (!queue_packet(file, agent, packet, false))
+ 			return;
  	}
-+	xe_pm_runtime_put(xe);
+ 	kfree(packet);
+@@ -284,7 +291,7 @@ static void recv_handler(struct ib_mad_agent *agent,
+ 		rdma_destroy_ah_attr(&ah_attr);
+ 	}
  
- 	/* A non-zero return would halt iteration over driver devices */
- 	return 0;
+-	if (queue_packet(file, agent, packet))
++	if (queue_packet(file, agent, packet, true))
+ 		goto err2;
+ 	return;
+ 
+@@ -409,6 +416,7 @@ static ssize_t ib_umad_read(struct file *filp, char __user *buf,
+ 
+ 	packet = list_entry(file->recv_list.next, struct ib_umad_packet, list);
+ 	list_del(&packet->list);
++	atomic_dec(&file->recv_list_size);
+ 
+ 	mutex_unlock(&file->mutex);
+ 
+@@ -421,6 +429,7 @@ static ssize_t ib_umad_read(struct file *filp, char __user *buf,
+ 		/* Requeue packet */
+ 		mutex_lock(&file->mutex);
+ 		list_add(&packet->list, &file->recv_list);
++		atomic_inc(&file->recv_list_size);
+ 		mutex_unlock(&file->mutex);
+ 	} else {
+ 		if (packet->recv_wc)
 -- 
 2.43.0
 
