@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E018149C79;
-	Tue,  9 Jul 2024 11:25:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DBAE13A25F;
+	Tue,  9 Jul 2024 11:25:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524333; cv=none; b=I7oOPUXicyvO/l9chek11QIUvleTCtEIMnseV3vD3+qbzifsjYWZxWFTrebBa37X7N3YJ5qt34BOCqDutnIxVcj/KmLPBBTsUA9e5A6MPyBHhJx45DdE3uqIByCrpOdmqvFVYNSqpsFmlnzrhQ8J8hNv5O/2OApiDQxqQS50PKY=
+	t=1720524336; cv=none; b=uY8vMX+fhCSYI29ObMBAfYDpd+1Snbg1co/LdOrUuzhfIhoMXGqq6VY6Tjp+MHsTPXuXZqFuKq60LFng4I5HIxeRnICwDK2DKPlNQMJjpzD0txFnDDpMOCgGATAM9xdc2e3tu2uFTDcnath82YumC6RuzuJiw9FpB5D5ZTvBri4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524333; c=relaxed/simple;
-	bh=/HKTNklQPd9+F1J0GI1X16DgU1UdInKOmFD+IguFwLw=;
+	s=arc-20240116; t=1720524336; c=relaxed/simple;
+	bh=LONeglKDTXK4n2p3rhAUT4p9066IK/w+0h0X5iyS/HI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K3JoOM5nfH58cEGEjMrZ/yiUqSs/M9WvgzBgXZ6rgIFQMkZRZt6vkqWZqrY/auv2y52YE1pVrkRzse9iRZXTEEiMUZLc0ET4dNHaLy+E+TXapxX3rf/Rivwl3fuSGLiW4MucT256AkOIQPeQM1UR/9wmlcXnjPZ1RkmJoLwQl8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QmIdkRzL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Db1g5a+UHPEPm+NFwnuH1+E3Fq1RxydeyTWPW6q/eF6caBRMB8xwn2BX8/hbzfzqxxLtZ8IylXZ9HdzF2E6Tqlni0Rt4JADXqdlWCBmhfNPmo+SEDg/PtlK5LAu8NFKSb/N5kYxuwZWf2rEeAAP7gzbHGd6aUcpDsmV+XQrPisc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1nbYTpj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QmIdkRzL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E47C3C3277B;
-	Tue,  9 Jul 2024 11:25:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1nbYTpj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB099C3277B;
+	Tue,  9 Jul 2024 11:25:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524333;
-	bh=/HKTNklQPd9+F1J0GI1X16DgU1UdInKOmFD+IguFwLw=;
+	s=korg; t=1720524336;
+	bh=LONeglKDTXK4n2p3rhAUT4p9066IK/w+0h0X5iyS/HI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QmIdkRzLd08MCHlSy3oxNWdbkuRZRhzwf+p88oX0BZqWjGBTLa3OfvbjkOvpNgdgc
-	 mgdagySpeeipdIZ9rCXVvW8GBKwrmqNepqAZeJlNf1enjLwo81EecUFWwBZ00wrBjh
-	 ELjRiB5+Wb/dE8yni04yTl8BkUTV+W05fucFH+EM=
+	b=U1nbYTpjNKjYt3Z+gQhzwh29HzvfyW7Meo8HCvKbL8DwjCBif2Ue/FIlSvP/l2KZr
+	 n4uanjR6rHMjoJt500j0Ac6rOwN7gLegGh/4acz6oHli0WGfkB0QLei5GWsl9msq/p
+	 gwKy95RSXktzoBPHoTyTUJD8q5fU+e5tSmJ6IZZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Zach OKeefe <zokeefe@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.9 148/197] Revert "mm/writeback: fix possible divide-by-zero in wb_dirty_limits(), again"
-Date: Tue,  9 Jul 2024 13:10:02 +0200
-Message-ID: <20240709110714.676658825@linuxfoundation.org>
+	Matthew Auld <matthew.auld@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Matthew Brost <matthew.brost@intel.com>
+Subject: [PATCH 6.9 149/197] drm/xe: fix error handling in xe_migrate_update_pgtables
+Date: Tue,  9 Jul 2024 13:10:03 +0200
+Message-ID: <20240709110714.714957798@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -45,59 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Matthew Auld <matthew.auld@intel.com>
 
-commit 30139c702048f1097342a31302cbd3d478f50c63 upstream.
+commit fc932f51926698488f874ddf7d8f18483ca10271 upstream.
 
-Patch series "mm: Avoid possible overflows in dirty throttling".
+Don't call drm_suballoc_free with sa_bo pointing to PTR_ERR.
 
-Dirty throttling logic assumes dirty limits in page units fit into
-32-bits.  This patch series makes sure this is true (see patch 2/2 for
-more details).
-
-
-This patch (of 2):
-
-This reverts commit 9319b647902cbd5cc884ac08a8a6d54ce111fc78.
-
-The commit is broken in several ways.  Firstly, the removed (u64) cast
-from the multiplication will introduce a multiplication overflow on 32-bit
-archs if wb_thresh * bg_thresh >= 1<<32 (which is actually common - the
-default settings with 4GB of RAM will trigger this).  Secondly, the
-div64_u64() is unnecessarily expensive on 32-bit archs.  We have
-div64_ul() in case we want to be safe & cheap.  Thirdly, if dirty
-thresholds are larger than 1<<32 pages, then dirty balancing is going to
-blow up in many other spectacular ways anyway so trying to fix one
-possible overflow is just moot.
-
-Link: https://lkml.kernel.org/r/20240621144017.30993-1-jack@suse.cz
-Link: https://lkml.kernel.org/r/20240621144246.11148-1-jack@suse.cz
-Fixes: 9319b647902c ("mm/writeback: fix possible divide-by-zero in wb_dirty_limits(), again")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reviewed-By: Zach O'Keefe <zokeefe@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+References: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/2120
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: <stable@vger.kernel.org> # v6.8+
+Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240620102025.127699-2-matthew.auld@intel.com
+(cherry picked from commit ce6b63336f79ec5f3996de65f452330e395f99ae)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page-writeback.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_migrate.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/mm/page-writeback.c
-+++ b/mm/page-writeback.c
-@@ -1660,7 +1660,7 @@ static inline void wb_dirty_limits(struc
- 	 */
- 	dtc->wb_thresh = __wb_calc_thresh(dtc);
- 	dtc->wb_bg_thresh = dtc->thresh ?
--		div64_u64(dtc->wb_thresh * dtc->bg_thresh, dtc->thresh) : 0;
-+		div_u64((u64)dtc->wb_thresh * dtc->bg_thresh, dtc->thresh) : 0;
+--- a/drivers/gpu/drm/xe/xe_migrate.c
++++ b/drivers/gpu/drm/xe/xe_migrate.c
+@@ -1336,7 +1336,7 @@ xe_migrate_update_pgtables(struct xe_mig
+ 						 GFP_KERNEL, true, 0);
+ 			if (IS_ERR(sa_bo)) {
+ 				err = PTR_ERR(sa_bo);
+-				goto err;
++				goto err_bb;
+ 			}
  
- 	/*
- 	 * In order to avoid the stacked BDI deadlock we need
+ 			ppgtt_ofs = NUM_KERNEL_PDE +
+@@ -1387,7 +1387,7 @@ xe_migrate_update_pgtables(struct xe_mig
+ 					 update_idx);
+ 	if (IS_ERR(job)) {
+ 		err = PTR_ERR(job);
+-		goto err_bb;
++		goto err_sa;
+ 	}
+ 
+ 	/* Wait on BO move */
+@@ -1436,12 +1436,12 @@ xe_migrate_update_pgtables(struct xe_mig
+ 
+ err_job:
+ 	xe_sched_job_put(job);
++err_sa:
++	drm_suballoc_free(sa_bo, NULL);
+ err_bb:
+ 	if (!q)
+ 		mutex_unlock(&m->job_mutex);
+ 	xe_bb_free(bb, NULL);
+-err:
+-	drm_suballoc_free(sa_bo, NULL);
+ 	return ERR_PTR(err);
+ }
+ 
 
 
