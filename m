@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62C0413E41D;
-	Tue,  9 Jul 2024 11:30:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0412E12CDB6;
+	Tue,  9 Jul 2024 11:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524630; cv=none; b=ETCaGuesrBjtBeFQ4YRKQZixLR7Y8OhNs60Nh0i45Va+IH0dS4rTkKGAwLkAetobM01L3p4G31eSWoCbSA8x79LRnc/i0P5hEupagFaP3R348SnQrzq0rCb1QpGmHBe4N53AeVOGvh7zdUy0mKB/gXK/yIA4Kwtq9VPT3H6yCa4=
+	t=1720524633; cv=none; b=TiKpZgbdN1Ns8DSvY7Z0D6HINypWbQxGT97u+SsCePcUPA72nOGruoXs+M55PzU6H9TQbzoXQQoLkwfdZKqMeeyqn/jCis4aFwomOKeCgZrDUKwlPpXObRCsGk5IUnW+On2e2Nv5o7tDejlGE8yoYpkJgOO3LZByy1bjukBirwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524630; c=relaxed/simple;
-	bh=BvrAb5TW2xodL2mvO+0Rkul0GK63OqkqJG7Tz1kH/p0=;
+	s=arc-20240116; t=1720524633; c=relaxed/simple;
+	bh=R2d6HXoFuV08rVaKRP3L1f7XAxjsgqoXrIdGvk3e9oU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y/8lCGCOY2jXb6OyyZQrkIN0YvLZgYRdqJ3HOyyUiw/9rsfdkZX3wuXnZsbBWyNNY6atp0Rw7UVq7rOSRG/sbTtw+zZQwKJF/4AXOa5QNoLeL8oIpg06G3x2013umJqOCZ7Ws8UK2fgZANIO8bMRnM5LAeUx1C1wc3wfBmoN4N0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bCeLea4H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XoLRlthOL3zvKqMHJGkzLtkbViZ7qsw7z2xxbjoqJMC5TGMrQ+hD5TR30xMN4rnszBcBQ/byA4Ks3W7hge0CCbvmeNwIyxX+uM9WZ/Kc8GKlhUO5W9fe+0nn6p5KatjeqctXGPDKS1rXfetofn0jTitx/GGalZWMMOkANU/8sU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d3eFmMxE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bCeLea4H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98467C3277B;
-	Tue,  9 Jul 2024 11:30:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d3eFmMxE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80B2DC3277B;
+	Tue,  9 Jul 2024 11:30:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524630;
-	bh=BvrAb5TW2xodL2mvO+0Rkul0GK63OqkqJG7Tz1kH/p0=;
+	s=korg; t=1720524632;
+	bh=R2d6HXoFuV08rVaKRP3L1f7XAxjsgqoXrIdGvk3e9oU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bCeLea4H1FO7EWFbrsb2qUHK6l8v3sUI/Z1c4lqGjM+n3+vvtoK2wDFc1eRdfpvX2
-	 lUoPvezVQl8TBVAFQq371lbxF6BLaXkAMzVWFWWCtCyuhbocKyDwI2kUi9/4PKd+xd
-	 8DdPTKWEHtHDCYTjJd/utL7dAjPQUTuXyj1pNAVI=
+	b=d3eFmMxEjF041B7Mzg9qebY6Wev8yePuuUi76kCaA/Lsibi25uVXoCtIN/5wd/8qG
+	 /YEA8uA5vAwOkd7oiImGWMz5X3wrbfvS3SNTi+/nV80uM+CwDZHPifY6TLGOcc3teD
+	 8U9J1mLmOOBzYmfBuTEt6gYeketdejzuB44hFPRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Niklas Neronin <niklas.neronin@linux.intel.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 047/102] net/mlx5e: Add mqprio_rl cleanup and free in mlx5e_priv_cleanup()
-Date: Tue,  9 Jul 2024 13:10:10 +0200
-Message-ID: <20240709110653.202961196@linuxfoundation.org>
+Subject: [PATCH 6.1 021/102] usb: xhci: prevent potential failure in handle_tx_event() for Transfer events without TRB
+Date: Tue,  9 Jul 2024 13:09:44 +0200
+Message-ID: <20240709110652.194662100@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110651.353707001@linuxfoundation.org>
 References: <20240709110651.353707001@linuxfoundation.org>
@@ -53,41 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianbo Liu <jianbol@nvidia.com>
+From: Niklas Neronin <niklas.neronin@linux.intel.com>
 
-[ Upstream commit 1da839eab6dbc26b95bfcd1ed1a4d1aaa5c144a3 ]
+[ Upstream commit 66cb618bf0bb82859875b00eeffaf223557cb416 ]
 
-In the cited commit, mqprio_rl cleanup and free are mistakenly removed
-in mlx5e_priv_cleanup(), and it causes the leakage of host memory and
-firmware SCHEDULING_ELEMENT objects while changing eswitch mode. So,
-add them back.
+Some transfer events don't always point to a TRB, and consequently don't
+have a endpoint ring. In these cases, function handle_tx_event() should
+not proceed, because if 'ep->skip' is set, the pointer to the endpoint
+ring is used.
 
-Fixes: 0bb7228f7096 ("net/mlx5e: Fix mqprio_rl handling on devlink reload")
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+To prevent a potential failure and make the code logical, return after
+checking the completion code for a Transfer event without TRBs.
+
+Signed-off-by: Niklas Neronin <niklas.neronin@linux.intel.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20240429140245.3955523-11-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/host/xhci-ring.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index 4c0eac83546de..385904502a6be 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -5584,6 +5584,11 @@ void mlx5e_priv_cleanup(struct mlx5e_priv *priv)
- 		kfree(priv->htb_qos_sq_stats[i]);
- 	kvfree(priv->htb_qos_sq_stats);
+diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
+index 7549c430c4f01..be5b0ff2966fe 100644
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -2631,16 +2631,17 @@ static int handle_tx_event(struct xhci_hcd *xhci,
+ 			else
+ 				xhci_handle_halted_endpoint(xhci, ep, 0, NULL,
+ 							    EP_SOFT_RESET);
+-			goto cleanup;
++			break;
+ 		case COMP_RING_UNDERRUN:
+ 		case COMP_RING_OVERRUN:
+ 		case COMP_STOPPED_LENGTH_INVALID:
+-			goto cleanup;
++			break;
+ 		default:
+ 			xhci_err(xhci, "ERROR Transfer event for unknown stream ring slot %u ep %u\n",
+ 				 slot_id, ep_index);
+ 			goto err_out;
+ 		}
++		return 0;
+ 	}
  
-+	if (priv->mqprio_rl) {
-+		mlx5e_mqprio_rl_cleanup(priv->mqprio_rl);
-+		mlx5e_mqprio_rl_free(priv->mqprio_rl);
-+	}
-+
- 	memset(priv, 0, sizeof(*priv));
- }
- 
+ 	/* Count current td numbers if ep->skip is set */
 -- 
 2.43.0
 
