@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F52158872;
-	Tue,  9 Jul 2024 11:23:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BC6155A25;
+	Tue,  9 Jul 2024 11:23:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524190; cv=none; b=d9/gHdGHq0ExhgzLPpth3ZxRJ6gRxuvGqGFsTujC2BZ2Cq3EoJVogKtOuiKFjiMPVgggWLCi6YjBHdv2mXNvrxlyKMxv4J0csPIr3h2a3pEsYgBqvstJy8AxZuNy6pnnZW2SE/HHpA8TBghI9OO4RE3DoiFIfpzfdSvFUcoOUxs=
+	t=1720524193; cv=none; b=dT94U8MZCOJtvI/LXyY/9cNMRYvvllRDeLAWLlMadQNpvn5M33fqeCe+yOebyIXEdzuVNaw3JDipqvHoaPFsxrDCkIAq7QUoCadIbbXi+yZzHIfAzJo+o+wF2anzwTuzBRSd/PieJtcbpXS2FjJHtIXzvXrJSsETi1A8Gm4wib4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524190; c=relaxed/simple;
-	bh=ULrp4yKLmoBKep5NOLDz79kQln+ztT3hmuA/0fE9/x4=;
+	s=arc-20240116; t=1720524193; c=relaxed/simple;
+	bh=IEiheSfi6u2yE3zNRL3Q0BQDdFj1yHw5HPmENJMrxTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d0EFXsS18UdLwL7kbox05Om3i13/rE40Ua0DNZpcqc2W9Z1Q2sG70M6qZzUjrS7SJ+6CP/JF/PT+h4BISIMWu4hWT1X4uowDG36ujrebwTLl/+Kop8voUFnTHN86yN171j3AY+i2Unh/URK0O1bX/4axGhR4xNrzVPJRciFcbfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8le6l8r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CwBRwf2sEz7IS44ILiAAhaLiRRwZr9XIFAVxwjhrrFKRQGrZLdmyHkNpnzwR0Yhq9IBPYn0BUB0JAv4SFyTKGMVv8JQ+53pHgeXEVIvDSS0y5c9wzYlz0xEiwxF9flJP2PqSozKgOv3LPz1ezMvaPxjmpFz4HZhekBAgNG0KiJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=arDgZDqP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8le6l8r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2B5BC3277B;
-	Tue,  9 Jul 2024 11:23:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="arDgZDqP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFEEAC3277B;
+	Tue,  9 Jul 2024 11:23:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524190;
-	bh=ULrp4yKLmoBKep5NOLDz79kQln+ztT3hmuA/0fE9/x4=;
+	s=korg; t=1720524193;
+	bh=IEiheSfi6u2yE3zNRL3Q0BQDdFj1yHw5HPmENJMrxTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H8le6l8ryrtAbejvNA/4H1a6Cl3E+JO0Mpw5Y9ltwI9XBbSpFxmxS55ITsIxZ9q5z
-	 PcASpkLZ+z69EKe/mVMzEiskhNB2arxCkEbNqi2xBnaIx0thd7ER1i71fwISwSXiUi
-	 dbOLvLTXrA0/VogCudyIvcKf4+3xnd1IZksWYb2c=
+	b=arDgZDqPKQdkwMinhQjxqaHyTGrLqbQ7c/SeWGvSXBjCVrCgsgEZ1V3md4X574+1I
+	 bI+oMP2ffnJdSAVc1CgBic+1nyizapmpFopRLgHkucgYDafUjGf1dGg3KReZQ0Efp6
+	 6jDJz8LhRVk162MV4eGAv1jW0Lh6jmWcBm2mkIAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomas Henzl <thenzl@redhat.com>,
-	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Michael Krummsdorf <michael.krummsdorf@tq-group.com>,
+	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 069/197] scsi: mpi3mr: Sanitise num_phys
-Date: Tue,  9 Jul 2024 13:08:43 +0200
-Message-ID: <20240709110711.632333195@linuxfoundation.org>
+Subject: [PATCH 6.9 070/197] serial: imx: Raise TX trigger level to 8
+Date: Tue,  9 Jul 2024 13:08:44 +0200
+Message-ID: <20240709110711.672300087@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -52,48 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomas Henzl <thenzl@redhat.com>
+From: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
 
-[ Upstream commit 3668651def2c1622904e58b0280ee93121f2b10b ]
+[ Upstream commit a3d8728ab079951741efa11360df43dbfacba7ab ]
 
-Information is stored in mr_sas_port->phy_mask, values larger then size of
-this field shouldn't be allowed.
+At the default TX trigger level of 2 in non-DMA mode (meaning that an
+interrupt is generated when less than 2 characters are left in the
+FIFO), we have observed frequent buffer underruns at 115200 Baud on an
+i.MX8M Nano. This can cause communication issues if the receiving side
+expects a continuous transfer.
 
-Signed-off-by: Tomas Henzl <thenzl@redhat.com>
-Link: https://lore.kernel.org/r/20240226151013.8653-1-thenzl@redhat.com
-Acked-by: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Increasing the level to 8 makes the UART trigger an interrupt earlier,
+giving the kernel enough time to refill the FIFO, at the cost of
+triggering one interrupt per ~24 instead of ~30 bytes of transmitted
+data (as the i.MX UART has a 32 byte FIFO).
+
+Signed-off-by: Michael Krummsdorf <michael.krummsdorf@tq-group.com>
+Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+Link: https://lore.kernel.org/r/20240508133744.35858-1-matthias.schiffer@ew.tq-group.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_transport.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/tty/serial/imx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_transport.c b/drivers/scsi/mpi3mr/mpi3mr_transport.c
-index d32ad46318cb0..7ca9a7c2709cf 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_transport.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_transport.c
-@@ -1355,11 +1355,21 @@ static struct mpi3mr_sas_port *mpi3mr_sas_port_add(struct mpi3mr_ioc *mrioc,
- 	mpi3mr_sas_port_sanity_check(mrioc, mr_sas_node,
- 	    mr_sas_port->remote_identify.sas_address, hba_port);
+diff --git a/drivers/tty/serial/imx.c b/drivers/tty/serial/imx.c
+index 9552228d21614..f63cdd6794419 100644
+--- a/drivers/tty/serial/imx.c
++++ b/drivers/tty/serial/imx.c
+@@ -1314,7 +1314,7 @@ static void imx_uart_clear_rx_errors(struct imx_port *sport)
  
-+	if (mr_sas_node->num_phys > sizeof(mr_sas_port->phy_mask) * 8)
-+		ioc_info(mrioc, "max port count %u could be too high\n",
-+		    mr_sas_node->num_phys);
-+
- 	for (i = 0; i < mr_sas_node->num_phys; i++) {
- 		if ((mr_sas_node->phy[i].remote_identify.sas_address !=
- 		    mr_sas_port->remote_identify.sas_address) ||
- 		    (mr_sas_node->phy[i].hba_port != hba_port))
- 			continue;
-+
-+		if (i > sizeof(mr_sas_port->phy_mask) * 8) {
-+			ioc_warn(mrioc, "skipping port %u, max allowed value is %lu\n",
-+			    i, sizeof(mr_sas_port->phy_mask) * 8);
-+			goto out_fail;
-+		}
- 		list_add_tail(&mr_sas_node->phy[i].port_siblings,
- 		    &mr_sas_port->phy_list);
- 		mr_sas_port->num_phys++;
+ }
+ 
+-#define TXTL_DEFAULT 2 /* reset default */
++#define TXTL_DEFAULT 8
+ #define RXTL_DEFAULT 8 /* 8 characters or aging timer */
+ #define TXTL_DMA 8 /* DMA burst setting */
+ #define RXTL_DMA 9 /* DMA burst setting */
 -- 
 2.43.0
 
