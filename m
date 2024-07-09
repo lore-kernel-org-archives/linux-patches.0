@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E045C27713;
-	Tue,  9 Jul 2024 11:29:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC41E27713;
+	Tue,  9 Jul 2024 11:30:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524598; cv=none; b=Ec7+FUsrcBICZTX8qT+w+vlNJwPa9F/Q2441WP3qth0dBS5bha+4tl3uZEAPwxGT7n28qOSArq70QUboV2afyKF5dSLQ+NPeYdAZXikGBUZ3ptLTsOYdilZplaZB7zgr27aMvuKZaza8OmuoL0UCBrNb+fzqcxzff6KWYplQWBw=
+	t=1720524600; cv=none; b=Y6C/Vbocd8Vaf5T2JOgW0ZgQTRvXC/Ml29kK8IHKWzm5YC766q7YvWiTk3xMH0wI/2svSYCZ55+rxNIorgFUhf1LHmS+NtA7adicgoy3IOt82qvW+Uv8TIkLFjyolZWCZybTMTu7trnrejBIwKaGXNZaPw5pSfQHbYMgC7OF2M0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524598; c=relaxed/simple;
-	bh=zl9POF/y+KnZMRlFcQdjGVilot7LTgqV541w5StbgTw=;
+	s=arc-20240116; t=1720524600; c=relaxed/simple;
+	bh=Jfjd11geDnq97iEs6Mrtf3jspV1zpVbO//Cy4Zul2GU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QEAxJwWyrAME9FLu/5odRH4VUUUPCEM8VDEfMlzh5KXqrywOh2g7eG5ieb5n1oq/z+ldvWFbzUbhGPfqPD6Mr4WgT6xmVsD3Uko6kKiYaRvonVgQZTzbjo8oWa6SWCnVs5eeSps8bQw53Sq0Qco/P0c9hVhk99lzkLqtUfrkbQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eErUk1az; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gbUwFVskW+8QX9mXztzeNuftlbG2xYivSwEOAuPk9eHYz8rs8PXsHAaWWpCStovNLTpbVxfgCFz2IwaUENOHL2q98ZagKS2IWhBXJY1JqCN7LsC7SY3dFwKBWpCXDrJ1Zm+AuYW7cq08UizEshVa3VYcacs6jqguyKzO/q56dhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UPezPdaK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eErUk1az"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6985AC3277B;
-	Tue,  9 Jul 2024 11:29:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UPezPdaK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57C23C3277B;
+	Tue,  9 Jul 2024 11:30:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524597;
-	bh=zl9POF/y+KnZMRlFcQdjGVilot7LTgqV541w5StbgTw=;
+	s=korg; t=1720524600;
+	bh=Jfjd11geDnq97iEs6Mrtf3jspV1zpVbO//Cy4Zul2GU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eErUk1azGG+OPkreD/OkZn9+u2w9t9taoLmbIXYzc1S66Ldndp+Qo25U+9F2rZz07
-	 KpUL9uNXyhEeDCZ4ZN67nhzi6e6wZKtGNRqvF+Req5W+301Qnkt8Wggtdntjzwirgh
-	 eI7FwnSCqn6aeoRP0G7kznTz7/5xjJSgk4cUKNpo=
+	b=UPezPdaKgR92ifMc+DnIkOwFVlqFU4nMIkS9vC0VXY8oKOU0GFbCNM0eVswU6QpJx
+	 UUvek/hsWMsbiQhn1mfVZUmxutQiBFtwznp9uMhySrGorMfH9+5PCHrnhdxMbweUM9
+	 UuQpktpx0L8bNuzZhDuIUQD4OoWaafp/SrYEY/Ik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Krummsdorf <michael.krummsdorf@tq-group.com>,
-	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
+	Erick Archer <erick.archer@outlook.com>,
+	Kees Cook <keescook@chromium.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 037/102] serial: imx: Raise TX trigger level to 8
-Date: Tue,  9 Jul 2024 13:10:00 +0200
-Message-ID: <20240709110652.816142083@linuxfoundation.org>
+Subject: [PATCH 6.1 020/102] Input: ff-core - prefer struct_size over open coded arithmetic
+Date: Tue,  9 Jul 2024 13:09:43 +0200
+Message-ID: <20240709110652.156186018@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110651.353707001@linuxfoundation.org>
 References: <20240709110651.353707001@linuxfoundation.org>
@@ -51,43 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+From: Erick Archer <erick.archer@outlook.com>
 
-[ Upstream commit a3d8728ab079951741efa11360df43dbfacba7ab ]
+[ Upstream commit a08b8f8557ad88ffdff8905e5da972afe52e3307 ]
 
-At the default TX trigger level of 2 in non-DMA mode (meaning that an
-interrupt is generated when less than 2 characters are left in the
-FIFO), we have observed frequent buffer underruns at 115200 Baud on an
-i.MX8M Nano. This can cause communication issues if the receiving side
-expects a continuous transfer.
+This is an effort to get rid of all multiplications from allocation
+functions in order to prevent integer overflows [1][2].
 
-Increasing the level to 8 makes the UART trigger an interrupt earlier,
-giving the kernel enough time to refill the FIFO, at the cost of
-triggering one interrupt per ~24 instead of ~30 bytes of transmitted
-data (as the i.MX UART has a 32 byte FIFO).
+As the "ff" variable is a pointer to "struct ff_device" and this
+structure ends in a flexible array:
 
-Signed-off-by: Michael Krummsdorf <michael.krummsdorf@tq-group.com>
-Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
-Link: https://lore.kernel.org/r/20240508133744.35858-1-matthias.schiffer@ew.tq-group.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+struct ff_device {
+	[...]
+	struct file *effect_owners[] __counted_by(max_effects);
+};
+
+the preferred way in the kernel is to use the struct_size() helper to
+do the arithmetic instead of the calculation "size + count * size" in
+the kzalloc() function.
+
+The struct_size() helper returns SIZE_MAX on overflow. So, refactor
+the comparison to take advantage of this.
+
+This way, the code is more readable and safer.
+
+This code was detected with the help of Coccinelle, and audited and
+modified manually.
+
+Link: https://www.kernel.org/doc/html/latest/process/deprecated.html#open-coded-arithmetic-in-allocator-arguments [1]
+Link: https://github.com/KSPP/linux/issues/160 [2]
+Signed-off-by: Erick Archer <erick.archer@outlook.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/AS8PR02MB72371E646714BAE2E51A6A378B152@AS8PR02MB7237.eurprd02.prod.outlook.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/imx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/ff-core.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/tty/serial/imx.c b/drivers/tty/serial/imx.c
-index 40e59e72d5e9e..5acbab0512b82 100644
---- a/drivers/tty/serial/imx.c
-+++ b/drivers/tty/serial/imx.c
-@@ -1303,7 +1303,7 @@ static void imx_uart_clear_rx_errors(struct imx_port *sport)
+diff --git a/drivers/input/ff-core.c b/drivers/input/ff-core.c
+index 16231fe080b00..609a5f01761bd 100644
+--- a/drivers/input/ff-core.c
++++ b/drivers/input/ff-core.c
+@@ -9,8 +9,10 @@
+ /* #define DEBUG */
  
- }
+ #include <linux/input.h>
++#include <linux/limits.h>
+ #include <linux/module.h>
+ #include <linux/mutex.h>
++#include <linux/overflow.h>
+ #include <linux/sched.h>
+ #include <linux/slab.h>
  
--#define TXTL_DEFAULT 2 /* reset default */
-+#define TXTL_DEFAULT 8
- #define RXTL_DEFAULT 8 /* 8 characters or aging timer */
- #define TXTL_DMA 8 /* DMA burst setting */
- #define RXTL_DMA 9 /* DMA burst setting */
+@@ -315,9 +317,8 @@ int input_ff_create(struct input_dev *dev, unsigned int max_effects)
+ 		return -EINVAL;
+ 	}
+ 
+-	ff_dev_size = sizeof(struct ff_device) +
+-				max_effects * sizeof(struct file *);
+-	if (ff_dev_size < max_effects) /* overflow */
++	ff_dev_size = struct_size(ff, effect_owners, max_effects);
++	if (ff_dev_size == SIZE_MAX) /* overflow */
+ 		return -EINVAL;
+ 
+ 	ff = kzalloc(ff_dev_size, GFP_KERNEL);
 -- 
 2.43.0
 
