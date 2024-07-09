@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50FC158A04;
-	Tue,  9 Jul 2024 11:22:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D02915A4B0;
+	Tue,  9 Jul 2024 11:22:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524131; cv=none; b=lkXK+AHBenMOcP5NovF38pkZAMbggKer1koTCFQR6jXmXIRwcsHtbV3dCCDo9258W+MgpUJZJy+Q46bhHfg1RALSijyL0igeq7Yf96uL8qfTsTSokhvv1d/4ch3ESVBkpYRJhfatZzRzWtOCwEepvaHO3mjCddtaRaN0KVHRilc=
+	t=1720524134; cv=none; b=mTzEfeoVOjMzbPCnoCnttoyCP2DyDdtRsZkPwq2BUcpP2hHjjYSSztGWMz1DoE9JS84t4iMzNMUwQ9ZER91ZZam/ppSWR6BinM6pERhsbffEEr33uw3dX9tKiSMfVdVvxpRv7VToerSsL5Qj2d2MfeViq2GTDDlf3Id6EBWtKMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524131; c=relaxed/simple;
-	bh=e9QTve1Y8l3L1Nr2sFuUUx+ftKrXf31mZDhtcnzaGfc=;
+	s=arc-20240116; t=1720524134; c=relaxed/simple;
+	bh=HiLZ3CtVdIHwL7mWdj7CTqSeCGK1/nx3cdLQcc7em44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mCzEoADNf1ZPgdQGN4s4GIlkyVq0p089Bc+J2/W8K37GWmP5oGDsHXKKe0p1Vi+lZ6zAQNBLQnEtA4yhqpDp7MCq0cWo/KjDDY3Z+/rWSZfk3gYnVQQ0EkixjM0ejhPhoDwFaNTAE0OKonSbM611kaVtJ2f4UmMCjIbYokU2jjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aORWWBFU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FCG0l54vpSSzQ3+X+UuT2/XT6tnDrahNPJtPLB64/7wWucdqnpcz44aIwpTDIcM0XjimZWz9ZO0z3y59KNa+sskdl6EGt4/mSZJGJVyTpgss58sGfcAjhwUpwabGz8XtUTitUFV4M9UkgPsqIhgXwGnEa3D4/G/UcBhnbWH6m9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a5RTmKwZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aORWWBFU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 012A9C32786;
-	Tue,  9 Jul 2024 11:22:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a5RTmKwZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59C7C32786;
+	Tue,  9 Jul 2024 11:22:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524131;
-	bh=e9QTve1Y8l3L1Nr2sFuUUx+ftKrXf31mZDhtcnzaGfc=;
+	s=korg; t=1720524134;
+	bh=HiLZ3CtVdIHwL7mWdj7CTqSeCGK1/nx3cdLQcc7em44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aORWWBFUA4Qmw+3DU7bXVSc7juEGCz+36t0dGmZnRPMMz7M4x1aI5zagWa5DoGNZI
-	 s+P+V9BLMWUtB/FAUt8ziFkJPtZRaSnTaFa2hzoKS8vwlA//ztLEuaS+IftYC5FX+H
-	 5iMgipHGCHDGufDrKzA75BBwNL61e3uwF1ghOopE=
+	b=a5RTmKwZx88itzky/UKsl4rLszFPErSENccpde//uYuORTEjoq35ljyyfRsNYvFYC
+	 TNeNtmHhxf4KGynwz6u1HWzhYr41Fws1Fl0+aVFl+tCO7voNg644rWH3p+1pdRGsVC
+	 JyiPebG0TKxLUn8l3BS4j5NWxAQq8tw5PcX7x21M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brendan Higgins <brendanhiggins@google.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Kees Cook <keescook@chromium.org>,
-	David Gow <davidgow@google.com>,
-	Rae Moar <rmoar@google.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 063/197] kunit: Handle test faults
-Date: Tue,  9 Jul 2024 13:08:37 +0200
-Message-ID: <20240709110711.400342317@linuxfoundation.org>
+Subject: [PATCH 6.9 081/197] vhost: Use virtqueue mutex for swapping worker
+Date: Tue,  9 Jul 2024 13:08:55 +0200
+Message-ID: <20240709110712.104170679@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -50,154 +45,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mickaël Salaün <mic@digikod.net>
+From: Mike Christie <michael.christie@oracle.com>
 
-[ Upstream commit 3a35c13007dea132a65f07de05c26b87837fadc2 ]
+[ Upstream commit 34cf9ba5f00a222dddd9fc71de7c68fdaac7fb97 ]
 
-Previously, when a kernel test thread crashed (e.g. NULL pointer
-dereference, general protection fault), the KUnit test hanged for 30
-seconds and exited with a timeout error.
+__vhost_vq_attach_worker uses the vhost_dev mutex to serialize the
+swapping of a virtqueue's worker. This was done for simplicity because
+we are already holding that mutex.
 
-Fix this issue by waiting on task_struct->vfork_done instead of the
-custom kunit_try_catch.try_completion, and track the execution state by
-initially setting try_result with -EINTR and only setting it to 0 if
-the test passed.
+In the next patches where the worker can be killed while in use, we need
+finer grained locking because some drivers will hold the vhost_dev mutex
+while flushing. However in the SIGKILL handler in the next patches, we
+will need to be able to swap workers (set current one to NULL), kill
+queued works and stop new flushes while flushes are in progress.
 
-Fix kunit_generic_run_threadfn_adapter() signature by returning 0
-instead of calling kthread_complete_and_exit().  Because thread's exit
-code is never checked, always set it to 0 to make it clear.  To make
-this explicit, export kthread_exit() for KUnit tests built as module.
+To prepare us, this has us use the virtqueue mutex for swapping workers
+instead of the vhost_dev one.
 
-Fix the -EINTR error message, which couldn't be reached until now.
-
-This is tested with a following patch.
-
-Cc: Brendan Higgins <brendanhiggins@google.com>
-Cc: Eric W. Biederman <ebiederm@xmission.com>
-Cc: Shuah Khan <skhan@linuxfoundation.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: David Gow <davidgow@google.com>
-Tested-by: Rae Moar <rmoar@google.com>
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
-Link: https://lore.kernel.org/r/20240408074625.65017-5-mic@digikod.net
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Message-Id: <20240316004707.45557-7-michael.christie@oracle.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Stable-dep-of: db5247d9bf5c ("vhost_task: Handle SIGKILL by flushing work and exiting")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/kunit/try-catch.h |  3 ---
- kernel/kthread.c          |  1 +
- lib/kunit/try-catch.c     | 19 ++++++++++++-------
- 3 files changed, 13 insertions(+), 10 deletions(-)
+ drivers/vhost/vhost.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/include/kunit/try-catch.h b/include/kunit/try-catch.h
-index c507dd43119d5..7c966a1adbd30 100644
---- a/include/kunit/try-catch.h
-+++ b/include/kunit/try-catch.h
-@@ -14,13 +14,11 @@
- 
- typedef void (*kunit_try_catch_func_t)(void *);
- 
--struct completion;
- struct kunit;
- 
- /**
-  * struct kunit_try_catch - provides a generic way to run code which might fail.
-  * @test: The test case that is currently being executed.
-- * @try_completion: Completion that the control thread waits on while test runs.
-  * @try_result: Contains any errno obtained while running test case.
-  * @try: The function, the test case, to attempt to run.
-  * @catch: The function called if @try bails out.
-@@ -46,7 +44,6 @@ struct kunit;
- struct kunit_try_catch {
- 	/* private: internal use only. */
- 	struct kunit *test;
--	struct completion *try_completion;
- 	int try_result;
- 	kunit_try_catch_func_t try;
- 	kunit_try_catch_func_t catch;
-diff --git a/kernel/kthread.c b/kernel/kthread.c
-index c5e40830c1f2d..f7be976ff88af 100644
---- a/kernel/kthread.c
-+++ b/kernel/kthread.c
-@@ -315,6 +315,7 @@ void __noreturn kthread_exit(long result)
- 	kthread->result = result;
- 	do_exit(0);
- }
-+EXPORT_SYMBOL(kthread_exit);
- 
- /**
-  * kthread_complete_and_exit - Exit the current kthread.
-diff --git a/lib/kunit/try-catch.c b/lib/kunit/try-catch.c
-index 9c9e4dcf06d96..34d30a6f23054 100644
---- a/lib/kunit/try-catch.c
-+++ b/lib/kunit/try-catch.c
-@@ -18,7 +18,7 @@
- void __noreturn kunit_try_catch_throw(struct kunit_try_catch *try_catch)
+diff --git a/drivers/vhost/vhost.c b/drivers/vhost/vhost.c
+index 8995730ce0bfc..113b6a42719b7 100644
+--- a/drivers/vhost/vhost.c
++++ b/drivers/vhost/vhost.c
+@@ -664,16 +664,22 @@ static void __vhost_vq_attach_worker(struct vhost_virtqueue *vq,
  {
- 	try_catch->try_result = -EFAULT;
--	kthread_complete_and_exit(try_catch->try_completion, -EFAULT);
-+	kthread_exit(0);
- }
- EXPORT_SYMBOL_GPL(kunit_try_catch_throw);
+ 	struct vhost_worker *old_worker;
  
-@@ -26,9 +26,12 @@ static int kunit_generic_run_threadfn_adapter(void *data)
- {
- 	struct kunit_try_catch *try_catch = data;
- 
-+	try_catch->try_result = -EINTR;
- 	try_catch->try(try_catch->context);
-+	if (try_catch->try_result == -EINTR)
-+		try_catch->try_result = 0;
- 
--	kthread_complete_and_exit(try_catch->try_completion, 0);
-+	return 0;
- }
- 
- static unsigned long kunit_test_timeout(void)
-@@ -58,13 +61,11 @@ static unsigned long kunit_test_timeout(void)
- 
- void kunit_try_catch_run(struct kunit_try_catch *try_catch, void *context)
- {
--	DECLARE_COMPLETION_ONSTACK(try_completion);
- 	struct kunit *test = try_catch->test;
- 	struct task_struct *task_struct;
- 	int exit_code, time_remaining;
- 
- 	try_catch->context = context;
--	try_catch->try_completion = &try_completion;
- 	try_catch->try_result = 0;
- 	task_struct = kthread_create(kunit_generic_run_threadfn_adapter,
- 				     try_catch, "kunit_try_catch_thread");
-@@ -74,8 +75,12 @@ void kunit_try_catch_run(struct kunit_try_catch *try_catch, void *context)
- 	}
- 	get_task_struct(task_struct);
- 	wake_up_process(task_struct);
+-	old_worker = rcu_dereference_check(vq->worker,
+-					   lockdep_is_held(&vq->dev->mutex));
 -
--	time_remaining = wait_for_completion_timeout(&try_completion,
-+	/*
-+	 * As for a vfork(2), task_struct->vfork_done (pointing to the
-+	 * underlying kthread->exited) can be used to wait for the end of a
-+	 * kernel thread.
-+	 */
-+	time_remaining = wait_for_completion_timeout(task_struct->vfork_done,
- 						     kunit_test_timeout());
- 	if (time_remaining == 0) {
- 		try_catch->try_result = -ETIMEDOUT;
-@@ -91,7 +96,7 @@ void kunit_try_catch_run(struct kunit_try_catch *try_catch, void *context)
- 	if (exit_code == -EFAULT)
- 		try_catch->try_result = 0;
- 	else if (exit_code == -EINTR)
--		kunit_err(test, "wake_up_process() was never called\n");
-+		kunit_err(test, "try faulted\n");
- 	else if (exit_code == -ETIMEDOUT)
- 		kunit_err(test, "try timed out\n");
- 	else if (exit_code)
+ 	mutex_lock(&worker->mutex);
+-	worker->attachment_cnt++;
+-	mutex_unlock(&worker->mutex);
++	mutex_lock(&vq->mutex);
++
++	old_worker = rcu_dereference_check(vq->worker,
++					   lockdep_is_held(&vq->mutex));
+ 	rcu_assign_pointer(vq->worker, worker);
++	worker->attachment_cnt++;
+ 
+-	if (!old_worker)
++	if (!old_worker) {
++		mutex_unlock(&vq->mutex);
++		mutex_unlock(&worker->mutex);
+ 		return;
++	}
++	mutex_unlock(&vq->mutex);
++	mutex_unlock(&worker->mutex);
++
+ 	/*
+ 	 * Take the worker mutex to make sure we see the work queued from
+ 	 * device wide flushes which doesn't use RCU for execution.
 -- 
 2.43.0
 
