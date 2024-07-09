@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F56B153812;
-	Tue,  9 Jul 2024 11:18:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A2E14EC4D;
+	Tue,  9 Jul 2024 11:18:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720523909; cv=none; b=dGrRG9Hrw6h9L3l4CKSrIuUluSam6XYxxe5WYDbAfIIyHBDx1dDUWSJ9fVE4q2z5Ezen8sGqK6gLvqAUMjMtowN+GYismQkSXw3BBqPfQVVFHML2+TzL0ZPJxO6n6a5Exf02DzPhUG3wwPWTi9YgL1jHukiWdB9elRA3lPpOeQI=
+	t=1720523912; cv=none; b=Jc/UqlPVstUnWfGV5QJBdwFScE3LJuuEgSZMEKtwMjHtj0VN00woe5ZXtUvA52lylGUeRq3WlCD1wZnpCIIyIu77Cy4ReSxtZ8EIwYGaYeecBfaxm7cR9t2Y/xn+39BmWJP8LhSvGqVcgbkDZSy+/jj+E39M/E1xvgvF3Rb/7pg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720523909; c=relaxed/simple;
-	bh=GBciLlRC+Hl9z2NMJPyojgbi4+7z/dKS2UxxumBj4ws=;
+	s=arc-20240116; t=1720523912; c=relaxed/simple;
+	bh=YsaLGY1SfL5Xk5gc/O8yRhvKEioymerrU6eoJqZ/CKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=T8wOK4C4fdzVrpM3TMw0ocMq0LwJKjSKxYVazyEmd7iGc9odknYmvhH6TRF5Ri/aA0iKDwIPEsqJDiQBFiM2X4T6eDnKcYKVf9DbB07P0xVmII0iqFVU4tbDJY9A1wj1lLHai5XEOEdtVS0QoZMsgKUQ8FtXSKfc37N+GdVWwpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jxKwLKZD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ffzfYHhHdt/TlMmjTzI+plUCAHNSvhUNue17x8mW9wW2nClFDgTFF1XM9i1ukM2ysGH5kN4g6ABpBBcY90sJIBcbMLBOUxjgusWe/oodlbkx2h4mvmTTOJoi8KbpXoqUDFcwQcBf1qSK1gsgAtz2v0byMYkpJJ+qz+gBAW/pMK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K283UuJZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jxKwLKZD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA04EC3277B;
-	Tue,  9 Jul 2024 11:18:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K283UuJZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E409CC3277B;
+	Tue,  9 Jul 2024 11:18:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720523909;
-	bh=GBciLlRC+Hl9z2NMJPyojgbi4+7z/dKS2UxxumBj4ws=;
+	s=korg; t=1720523912;
+	bh=YsaLGY1SfL5Xk5gc/O8yRhvKEioymerrU6eoJqZ/CKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jxKwLKZDEe5Kf0r/sQk1wLI1u0EnQxOuFH8Rs6/FWrh/37onha9vPFA942xPPSWuq
-	 qAsQkRyrpdoGzFfMlWcpYMUJoGMp+YqEg0Hp/JslWll3iiomOBy2r2oCmbIUrgTuWX
-	 Pv2gzE81rtR4gyVNmWnDW0yyEDiLjgh3nTYC4L+c=
+	b=K283UuJZGy6PVq3fMdkG9WbnkumXWxBjFVrILXd9/ggrDXsX4RXZjA/Arn56G3xPa
+	 QWFAZ+jZZHsp70BTwviyaxAyeNwDGQi+pMtEoz5lXCQx4z8I13ii80bJDFUdx87aPf
+	 hcmMba/5EROr1TbBfELE6S742OinruK+hFOlu07I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Babu Moger <babu.moger@amd.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Breno Leitao <leitao@debian.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 001/197] selftests/resctrl: Fix non-contiguous CBM for AMD
-Date: Tue,  9 Jul 2024 13:07:35 +0200
-Message-ID: <20240709110708.962223037@linuxfoundation.org>
+Subject: [PATCH 6.9 010/197] net: dql: Avoid calling BUG() when WARN() is enough
+Date: Tue,  9 Jul 2024 13:07:44 +0200
+Message-ID: <20240709110709.310913746@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -47,91 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Babu Moger <babu.moger@amd.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 48236960c06d32370bfa6f2cc408e786873262c8 ]
+[ Upstream commit 4854b463c4b27c94a7de86d16ad84f235f4c1a72 ]
 
-The non-contiguous CBM test fails on AMD with:
-Starting L3_NONCONT_CAT test ...
-Mounting resctrl to "/sys/fs/resctrl"
-CPUID output doesn't match 'sparse_masks' file content!
-not ok 5 L3_NONCONT_CAT: test
+If the dql_queued() function receives an invalid argument, WARN about it
+and continue, instead of crashing the kernel.
 
-AMD always supports non-contiguous CBM but does not report it via CPUID.
+This was raised by checkpatch, when I am refactoring this code (see
+following patch/commit)
 
-Fix the non-contiguous CBM test to use CPUID to discover non-contiguous
-CBM support only on Intel.
+	WARNING: Do not crash the kernel unless it is absolutely unavoidable--use WARN_ON_ONCE() plus recovery code (if feasible) instead of BUG() or variants
 
-Fixes: ae638551ab64 ("selftests/resctrl: Add non-contiguous CBMs CAT test")
-Signed-off-by: Babu Moger <babu.moger@amd.com>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://lore.kernel.org/r/20240411192241.2498631-2-leitao@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/resctrl/cat_test.c | 32 +++++++++++++++-------
- 1 file changed, 22 insertions(+), 10 deletions(-)
+ include/linux/dynamic_queue_limits.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/resctrl/cat_test.c b/tools/testing/selftests/resctrl/cat_test.c
-index 4cb991be8e31b..178a41d4bb1be 100644
---- a/tools/testing/selftests/resctrl/cat_test.c
-+++ b/tools/testing/selftests/resctrl/cat_test.c
-@@ -294,11 +294,30 @@ static int cat_run_test(const struct resctrl_test *test, const struct user_param
- 	return ret;
- }
- 
-+static bool arch_supports_noncont_cat(const struct resctrl_test *test)
-+{
-+	unsigned int eax, ebx, ecx, edx;
-+
-+	/* AMD always supports non-contiguous CBM. */
-+	if (get_vendor() == ARCH_AMD)
-+		return true;
-+
-+	/* Intel support for non-contiguous CBM needs to be discovered. */
-+	if (!strcmp(test->resource, "L3"))
-+		__cpuid_count(0x10, 1, eax, ebx, ecx, edx);
-+	else if (!strcmp(test->resource, "L2"))
-+		__cpuid_count(0x10, 2, eax, ebx, ecx, edx);
-+	else
-+		return false;
-+
-+	return ((ecx >> 3) & 1);
-+}
-+
- static int noncont_cat_run_test(const struct resctrl_test *test,
- 				const struct user_params *uparams)
+diff --git a/include/linux/dynamic_queue_limits.h b/include/linux/dynamic_queue_limits.h
+index 5693a4be0d9a9..ff9c65841ae8d 100644
+--- a/include/linux/dynamic_queue_limits.h
++++ b/include/linux/dynamic_queue_limits.h
+@@ -91,7 +91,8 @@ static inline void dql_queued(struct dql *dql, unsigned int count)
  {
- 	unsigned long full_cache_mask, cont_mask, noncont_mask;
--	unsigned int eax, ebx, ecx, edx, sparse_masks;
-+	unsigned int sparse_masks;
- 	int bit_center, ret;
- 	char schemata[64];
+ 	unsigned long map, now, now_hi, i;
  
-@@ -307,15 +326,8 @@ static int noncont_cat_run_test(const struct resctrl_test *test,
- 	if (ret)
- 		return ret;
+-	BUG_ON(count > DQL_MAX_OBJECT);
++	if (WARN_ON_ONCE(count > DQL_MAX_OBJECT))
++		return;
  
--	if (!strcmp(test->resource, "L3"))
--		__cpuid_count(0x10, 1, eax, ebx, ecx, edx);
--	else if (!strcmp(test->resource, "L2"))
--		__cpuid_count(0x10, 2, eax, ebx, ecx, edx);
--	else
--		return -EINVAL;
--
--	if (sparse_masks != ((ecx >> 3) & 1)) {
--		ksft_print_msg("CPUID output doesn't match 'sparse_masks' file content!\n");
-+	if (arch_supports_noncont_cat(test) != sparse_masks) {
-+		ksft_print_msg("Hardware and kernel differ on non-contiguous CBM support!\n");
- 		return 1;
- 	}
+ 	dql->last_obj_cnt = count;
  
 -- 
 2.43.0
