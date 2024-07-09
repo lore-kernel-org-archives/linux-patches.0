@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D4B55E4C;
-	Tue,  9 Jul 2024 11:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DE614038F;
+	Tue,  9 Jul 2024 11:30:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524650; cv=none; b=H3pf7zyVdm9FZEI6+w7FhdD53XKgh54NA+1m9kGG0z/Vq0DaP5/ZaTvi07n6hphcK3laPpDfcgwojXinJv35Xsfw8R8nULViwW88jzWYSs8D7JIrtQBZv5kz3M9X49hbKLAJHBODfDZfewHGw0WO37IlAqn7b090sWEPKxSwWBI=
+	t=1720524653; cv=none; b=N7gmVyNxTIEB+bu8IiQxNuaRylcqCHdgHdu8lZ/F//l4KLUHeBk/iziEc7yswQlWPI5spMaer8iz7P8+SymHggvTxQFYLT0yxVNtezCV/YS6XhvDWQMirm+7BuH1rqTfbnIAR6dgSuGbGpKy0O1169suVA4maPMPtekpUWP+6oU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524650; c=relaxed/simple;
-	bh=N//z5jEvCwjK7TndLZ7FcGAPjChK7ShvwDaRihrS4SY=;
+	s=arc-20240116; t=1720524653; c=relaxed/simple;
+	bh=kpdOb2dtvd+EviojUPW6FqevT1abPYoOf5VEZjtrKII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tg63cq2lMJ1vMqEpudjzdiea0s9EO8ZcC15zDnXOjNoA7c1FfB0Mh64ITbrIRMXOIRzEyFqk6wvLv2peX+Kg5eYujeubXMfy3K1hiIv8p4k+lI+H1eK4HVlovWEvuhBIcHboyLAAW0pVbYlJ0QbANu4070fKoSp7n2/cvGeF8LQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dijB4dET; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bwvhxOdxyetp/aOD3Q6FrmAsNmX9EOMLT25Eh36IO8nSVNEYskzpJ8BvP5lWbUix9/NmQJOcYdWJzxX2Ex/whbvbVwvyp/SV3zyiZ78O85eNHRQd/YmxQnEIoWlTETlkJCj/HjRgfGXdiBXmt7urCCbWZZyU1tBTgpvqK7WLvD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rSdgoq48; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dijB4dET"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29FD3C3277B;
-	Tue,  9 Jul 2024 11:30:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rSdgoq48"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18F42C3277B;
+	Tue,  9 Jul 2024 11:30:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524650;
-	bh=N//z5jEvCwjK7TndLZ7FcGAPjChK7ShvwDaRihrS4SY=;
+	s=korg; t=1720524653;
+	bh=kpdOb2dtvd+EviojUPW6FqevT1abPYoOf5VEZjtrKII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dijB4dETldCW7lg8Nydmku1rSfZhboEBnqTMP8GslO2NSindyDSHwZKpuVOwewVGw
-	 NXSLlPiwRFrCjBzquZq2wdqmr4TLTbD1AbZGaGCKHOLf8iykcHKs1BW02QUXsd4nHE
-	 STBPcm/+PEcdpWrtZTPJkYGPIcK3BxDlpDoMxnjA=
+	b=rSdgoq48HJGydYJj5+mVJB6PPko55Iq8jYoho6V2POw76l+CB+eIbl+7IqPRk0le5
+	 gZCcHOUFnWUTJ6vrCJheQBnNf3h6r0lre1XU2x7GE8JaLZTtr+/8kTxrQRYerkHSgO
+	 cSDRojnh4mNATliJ0XPFzNVvWWoj1lrlx08A9mkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 023/102] net: dsa: mv88e6xxx: Correct check for empty list
-Date: Tue,  9 Jul 2024 13:09:46 +0200
-Message-ID: <20240709110652.271794014@linuxfoundation.org>
+Subject: [PATCH 6.1 024/102] media: dvb-frontends: tda18271c2dd: Remove casting during div
+Date: Tue,  9 Jul 2024 13:09:47 +0200
+Message-ID: <20240709110652.310321418@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110651.353707001@linuxfoundation.org>
 References: <20240709110651.353707001@linuxfoundation.org>
@@ -52,48 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 4c7f3950a9fd53a62b156c0fe7c3a2c43b0ba19b ]
+[ Upstream commit e9a844632630e18ed0671a7e3467431bd719952e ]
 
-Since commit a3c53be55c95 ("net: dsa: mv88e6xxx: Support multiple MDIO
-busses") mv88e6xxx_default_mdio_bus() has checked that the
-return value of list_first_entry() is non-NULL.
+do_div() divides 64 bits by 32. We were adding a casting to the divider
+to 64 bits, for a number that fits perfectly in 32 bits. Remove it.
 
-This appears to be intended to guard against the list chip->mdios being
-empty.  However, it is not the correct check as the implementation of
-list_first_entry is not designed to return NULL for empty lists.
+Found by cocci:
+drivers/media/dvb-frontends/tda18271c2dd.c:355:1-7: WARNING: do_div() does a 64-by-32 division, please consider using div64_u64 instead.
+drivers/media/dvb-frontends/tda18271c2dd.c:331:1-7: WARNING: do_div() does a 64-by-32 division, please consider using div64_u64 instead.
 
-Instead, use list_first_entry_or_null() which does return NULL if the
-list is empty.
-
-Flagged by Smatch.
-Compile tested only.
-
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240430-mv88e6xx-list_empty-v3-1-c35c69d88d2e@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/linux-media/20240429-fix-cocci-v3-8-3c4865f5a4b0@chromium.org
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 4 ++--
+ drivers/media/dvb-frontends/tda18271c2dd.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index dc4ff8a6d0bf5..4938550a67c02 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -131,8 +131,8 @@ struct mii_bus *mv88e6xxx_default_mdio_bus(struct mv88e6xxx_chip *chip)
- {
- 	struct mv88e6xxx_mdio_bus *mdio_bus;
+diff --git a/drivers/media/dvb-frontends/tda18271c2dd.c b/drivers/media/dvb-frontends/tda18271c2dd.c
+index a348344879433..fd928787207ed 100644
+--- a/drivers/media/dvb-frontends/tda18271c2dd.c
++++ b/drivers/media/dvb-frontends/tda18271c2dd.c
+@@ -328,7 +328,7 @@ static int CalcMainPLL(struct tda_state *state, u32 freq)
  
--	mdio_bus = list_first_entry(&chip->mdios, struct mv88e6xxx_mdio_bus,
--				    list);
-+	mdio_bus = list_first_entry_or_null(&chip->mdios,
-+					    struct mv88e6xxx_mdio_bus, list);
- 	if (!mdio_bus)
- 		return NULL;
+ 	OscFreq = (u64) freq * (u64) Div;
+ 	OscFreq *= (u64) 16384;
+-	do_div(OscFreq, (u64)16000000);
++	do_div(OscFreq, 16000000);
+ 	MainDiv = OscFreq;
  
+ 	state->m_Regs[MPD] = PostDiv & 0x77;
+@@ -352,7 +352,7 @@ static int CalcCalPLL(struct tda_state *state, u32 freq)
+ 	OscFreq = (u64)freq * (u64)Div;
+ 	/* CalDiv = u32( OscFreq * 16384 / 16000000 ); */
+ 	OscFreq *= (u64)16384;
+-	do_div(OscFreq, (u64)16000000);
++	do_div(OscFreq, 16000000);
+ 	CalDiv = OscFreq;
+ 
+ 	state->m_Regs[CPD] = PostDiv;
 -- 
 2.43.0
 
