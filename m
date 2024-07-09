@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD06655E4C;
-	Tue,  9 Jul 2024 11:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D437255E4C;
+	Tue,  9 Jul 2024 11:31:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524715; cv=none; b=ttUT3CkI+nlpwjGL9JQN2YVdwBMRq8p62UXpFVHwTBL40wRH6odYA/QLZnQzVi1R3JyJeN1kCJW/Wl6zVU8/8L+EmnhCMYN+3H1pXaD1wIgMCdTKrQaOM/sreenpKo+3eqTnqtjyW6TC/VgLBPkS4Ojqozt2T1tx3iRYzeqiZfg=
+	t=1720524717; cv=none; b=Gy8RVUsY1V7QSVHrbxPcdrJ8SjqWPucMuX6EycPXo7Zid3CbpWEZUa9qmc1TAw1FK4W5EA0y3ZkiRxbE4BQCPwZnrnQznz+n9swpE1hbgTe8CEDxzweM1NdeOi0TQBP7uD25JPxKVKBpzyl2XxXGaAb1EagQ4rYYVj3T2wjW7p0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524715; c=relaxed/simple;
-	bh=g+eTw1sspSCrVQkNpH/CoJiq9Rsc8y9dYtyCpNL3cfM=;
+	s=arc-20240116; t=1720524717; c=relaxed/simple;
+	bh=fBtAdzhR5atlCME4y0EvPVKnbCsJSFa3t8NzPWXfUyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JlzJBdrMU0Vv3oLMRr7ra8M4GtaYpIBxx+iuvASQqf71ABkg3Cl4oeEMkuZYtiGPgSQ7VCJkP3gK7wc+XSFPiDWUwmFYoLamKFumiZfWKc7tPHfzfYvqOK4c63oHlCR6CvLVsmqk9v9aFFt/e/NhEY0L8t+vsQFM0Gq5uQoeRU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MCvcfQUr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hVDtE6xoani7dxF2P3l0rcsy+Mn/0Y507JJr32J1wbDX9ZPKtaZe5x0lih+lvEEyBEtlKTjhbfjxKWRzQ653Tph6PMDdWdy3FzrBLCYEuLYUlAUaboJ5dGOGOFxiDdx9J7VY31pwYjjg09toFXeO+WXPbcZljelVbDeTSjk9wx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NCLpiQwz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MCvcfQUr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64F13C3277B;
-	Tue,  9 Jul 2024 11:31:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NCLpiQwz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57AACC3277B;
+	Tue,  9 Jul 2024 11:31:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524714;
-	bh=g+eTw1sspSCrVQkNpH/CoJiq9Rsc8y9dYtyCpNL3cfM=;
+	s=korg; t=1720524717;
+	bh=fBtAdzhR5atlCME4y0EvPVKnbCsJSFa3t8NzPWXfUyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MCvcfQUryDAfTdBxW5NOX4LB1obJteexJPSyJTHf13VBFKuMoODMaSR4AXic24M3z
-	 +Z2D87haxhNIB5O+Rf/eoM8we0AnEOMM458zRQAIDjg/KGu1zKWorWc7VXHglItECv
-	 3iVaFdP5szVKEzjmVAJfGs4sSUe8IrnYWoK4snMg=
+	b=NCLpiQwzfDPEy8SM/Kz8gG6Jegg9bcbIsUHxtQUB12GT5ITZLKjyFT+b7Ol1aotB+
+	 nfaaFf87xZUNvi04OOZSmBjxpIHJGHIgX9lVuadrhaiaiOy6kn2skP/0mMITe9aFPM
+	 sen6VuRcysK3eQijBbduDgVQSwFVqv3x3GSMsD5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Schoenick <johns@valvesoftware.com>,
-	Matthew Schwartz <mattschwartz@gwu.edu>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>
-Subject: [PATCH 6.1 076/102] drm: panel-orientation-quirks: Add quirk for Valve Galileo
-Date: Tue,  9 Jul 2024 13:10:39 +0200
-Message-ID: <20240709110654.330410686@linuxfoundation.org>
+	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Gautam Menghani <gautam@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 6.1 077/102] powerpc/pseries: Fix scv instruction crash with kexec
+Date: Tue,  9 Jul 2024 13:10:40 +0200
+Message-ID: <20240709110654.371905508@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110651.353707001@linuxfoundation.org>
 References: <20240709110651.353707001@linuxfoundation.org>
@@ -51,37 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Schoenick <johns@valvesoftware.com>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-commit 26746ed40bb0e4ebe2b2bd61c04eaaa54e263c14 upstream.
+commit 21a741eb75f80397e5f7d3739e24d7d75e619011 upstream.
 
-Valve's Steam Deck Galileo revision has a 800x1280 OLED panel
+kexec on pseries disables AIL (reloc_on_exc), required for scv
+instruction support, before other CPUs have been shut down. This means
+they can execute scv instructions after AIL is disabled, which causes an
+interrupt at an unexpected entry location that crashes the kernel.
 
-Cc: stable@vger.kernel.org # 6.1+
-Signed-off-by: John Schoenick <johns@valvesoftware.com>
-Signed-off-by: Matthew Schwartz <mattschwartz@gwu.edu>
-Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240628205822.348402-2-mattschwartz@gwu.edu
+Change the kexec sequence to disable AIL after other CPUs have been
+brought down.
+
+As a refresher, the real-mode scv interrupt vector is 0x17000, and the
+fixed-location head code probably couldn't easily deal with implementing
+such high addresses so it was just decided not to support that interrupt
+at all.
+
+Fixes: 7fa95f9adaee ("powerpc/64s: system call support for scv/rfscv instructions")
+Cc: stable@vger.kernel.org # v5.9+
+Reported-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Closes: https://lore.kernel.org/3b4b2943-49ad-4619-b195-bc416f1d1409@linux.ibm.com
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Tested-by: Gautam Menghani <gautam@linux.ibm.com>
+Tested-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Link: https://msgid.link/20240625134047.298759-1-npiggin@gmail.com
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_panel_orientation_quirks.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/powerpc/kexec/core_64.c             |   11 +++++++++++
+ arch/powerpc/platforms/pseries/kexec.c   |    8 --------
+ arch/powerpc/platforms/pseries/pseries.h |    1 -
+ arch/powerpc/platforms/pseries/setup.c   |    1 -
+ 4 files changed, 11 insertions(+), 10 deletions(-)
 
---- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
-+++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-@@ -421,6 +421,13 @@ static const struct dmi_system_id orient
- 		  DMI_EXACT_MATCH(DMI_PRODUCT_VERSION, "1"),
- 		},
- 		.driver_data = (void *)&lcd800x1280_rightside_up,
-+	}, {	/* Valve Steam Deck */
-+		.matches = {
-+		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Valve"),
-+		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "Galileo"),
-+		  DMI_EXACT_MATCH(DMI_PRODUCT_VERSION, "1"),
-+		},
-+		.driver_data = (void *)&lcd800x1280_rightside_up,
- 	}, {	/* VIOS LTH17 */
- 		.matches = {
- 		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "VIOS"),
+--- a/arch/powerpc/kexec/core_64.c
++++ b/arch/powerpc/kexec/core_64.c
+@@ -26,6 +26,7 @@
+ #include <asm/paca.h>
+ #include <asm/mmu.h>
+ #include <asm/sections.h>	/* _end */
++#include <asm/setup.h>
+ #include <asm/smp.h>
+ #include <asm/hw_breakpoint.h>
+ #include <asm/svm.h>
+@@ -316,6 +317,16 @@ void default_machine_kexec(struct kimage
+ 	if (!kdump_in_progress())
+ 		kexec_prepare_cpus();
+ 
++#ifdef CONFIG_PPC_PSERIES
++	/*
++	 * This must be done after other CPUs have shut down, otherwise they
++	 * could execute the 'scv' instruction, which is not supported with
++	 * reloc disabled (see configure_exceptions()).
++	 */
++	if (firmware_has_feature(FW_FEATURE_SET_MODE))
++		pseries_disable_reloc_on_exc();
++#endif
++
+ 	printk("kexec: Starting switchover sequence.\n");
+ 
+ 	/* switch to a staticly allocated stack.  Based on irq stack code.
+--- a/arch/powerpc/platforms/pseries/kexec.c
++++ b/arch/powerpc/platforms/pseries/kexec.c
+@@ -61,11 +61,3 @@ void pseries_kexec_cpu_down(int crash_sh
+ 	} else
+ 		xics_kexec_teardown_cpu(secondary);
+ }
+-
+-void pseries_machine_kexec(struct kimage *image)
+-{
+-	if (firmware_has_feature(FW_FEATURE_SET_MODE))
+-		pseries_disable_reloc_on_exc();
+-
+-	default_machine_kexec(image);
+-}
+--- a/arch/powerpc/platforms/pseries/pseries.h
++++ b/arch/powerpc/platforms/pseries/pseries.h
+@@ -38,7 +38,6 @@ static inline void smp_init_pseries(void
+ #endif
+ 
+ extern void pseries_kexec_cpu_down(int crash_shutdown, int secondary);
+-void pseries_machine_kexec(struct kimage *image);
+ 
+ extern void pSeries_final_fixup(void);
+ 
+--- a/arch/powerpc/platforms/pseries/setup.c
++++ b/arch/powerpc/platforms/pseries/setup.c
+@@ -1149,7 +1149,6 @@ define_machine(pseries) {
+ 	.machine_check_exception = pSeries_machine_check_exception,
+ 	.machine_check_log_err	= pSeries_machine_check_log_err,
+ #ifdef CONFIG_KEXEC_CORE
+-	.machine_kexec          = pseries_machine_kexec,
+ 	.kexec_cpu_down         = pseries_kexec_cpu_down,
+ #endif
+ #ifdef CONFIG_MEMORY_HOTPLUG
 
 
