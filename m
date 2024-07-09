@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42E94158208;
-	Tue,  9 Jul 2024 11:24:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4273C1581E4;
+	Tue,  9 Jul 2024 11:24:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524252; cv=none; b=hOE+S9fTHaYXMmMMIvHHEeH63G/7wHf4BibsW/VZqhrCm2XNkBMmFqptb6kcAnL8+16okQIUqnAkhhTV4kwWf64KfGhaJWqdnNkzxBOI15GQVL+e45FQJzKaKDQnQ4k7J0/WLdBg2TyHMbs34746jlhrJRs3+KyiIKGRugGMyCM=
+	t=1720524255; cv=none; b=GlDbZTKkEF3QpeHpj4IhtLMlUsuZ5vgCvlBiLVQO0hfBgyAFR0LFgbYt0FnBNY//QkYkbaQYtNse0OLF7qQ1XB6VKFVThNp+pEavqICitmM5Yh0FcHDAw7izRInQkv0AKEpdNQsfio1OGzpf1ABjzGGIXZUR8JU6e7c25a1Vc1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524252; c=relaxed/simple;
-	bh=yH7oMxNJKe93tgbgGsqZ/sVAAmEKfwnUZN+8DSGDXnk=;
+	s=arc-20240116; t=1720524255; c=relaxed/simple;
+	bh=t8cGxOOArMbe5H2kIYdUZZwYwbbndiNRHLrq3mc52PY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cxyyv78NwF919384JlWdXzsPwAxSmeEwae1tOSJhJlsj0Az7Fvp1vxDOsT+186D+2obi6ATWS+cJDl3i5MOLSUZh7WVkC3HG/hE/c3ZHeqi3Ldh5qYSO4Hh30H4Wa7a8a39PJQH1gkrZ/+3H/3dT+HVj5hIyWdjFgSHq0pv+BLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AduzAIoI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HQPMkAUaj8tzvKNJssMX/OM+3uZnNGGBrpqQdR6bpTxscJE0RVQT9/OnZlDnr+Tr5H87oAhMI78s/D9lAPxZVb1QoTtO9GTp3ir++uPqPIvbdtNhAr5egyMpqDRROpb/XOiIXgKg8gmJbl8IqQ0C1bAXCX6AmJm9y/Nq3NRM4T4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CPCBtAPP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AduzAIoI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8010BC3277B;
-	Tue,  9 Jul 2024 11:24:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CPCBtAPP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72C3CC4AF0C;
+	Tue,  9 Jul 2024 11:24:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524251;
-	bh=yH7oMxNJKe93tgbgGsqZ/sVAAmEKfwnUZN+8DSGDXnk=;
+	s=korg; t=1720524254;
+	bh=t8cGxOOArMbe5H2kIYdUZZwYwbbndiNRHLrq3mc52PY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AduzAIoI8loiPuOao+0ayNqJGxdZYB7FWMrp2/AsP5ywjcd0ZHNqqZFdiQH/DYIAo
-	 URKdyCUHq/3qUdTyv2ocm7f8FEUtwdJx/G33XfYwt4wdsmhfZbyLwem86geDPfr+QR
-	 v24+N3o1j7WqPFQqKX4NQkh4k6GPbdWm1Re07oaM=
+	b=CPCBtAPPl1XQcbsg1NZ7RRtOR5Sb8seHgVKNN+LZjVocoA8svHhrjuGaIAWFlQXQR
+	 5LeD2YsvDCPluf6yY4jZrJI738FmuBQe1ajgBaNpaOu1Wo9FnvaIVC/YfefXq007WU
+	 AqGQiIpWP3pCqy7hmuUnm6Y0x9P8cIMSaKrz8ZsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Karol Kolacinski <karol.kolacinski@intel.com>,
-	Simon Horman <horms@kernel.org>,
+	Ivan Vecera <ivecera@redhat.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Petr Oros <poros@redhat.com>,
+	Jiri Pirko <jiri@nvidia.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
 	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.9 121/197] ice: Reject pin requests with unsupported flags
-Date: Tue,  9 Jul 2024 13:09:35 +0200
-Message-ID: <20240709110713.635305196@linuxfoundation.org>
+Subject: [PATCH 6.9 122/197] ice: use proper macro for testing bit
+Date: Tue,  9 Jul 2024 13:09:36 +0200
+Message-ID: <20240709110713.674762062@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -56,179 +56,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Keller <jacob.e.keller@intel.com>
+From: Petr Oros <poros@redhat.com>
 
-[ Upstream commit be2a9d12e6dad894b27361c06ea3752d67a45b49 ]
+[ Upstream commit 7829ee78490ddb29993cc7893384a04b8cc7436c ]
 
-The driver receives requests for configuring pins via the .enable
-callback of the PTP clock object. These requests come into the driver
-with flags which modify the requested behavior from userspace. Current
-implementation in ice does not reject flags that it doesn't support.
-This causes the driver to incorrectly apply requests with such flags as
-PTP_PEROUT_DUTY_CYCLE, or any future flags added by the kernel which it
-is not yet aware of.
+Do not use _test_bit() macro for testing bit. The proper macro for this
+is one without underline.
 
-Fix this by properly validating flags in both ice_ptp_cfg_perout and
-ice_ptp_cfg_extts. Ensure that we check by bit-wise negating supported
-flags rather than just checking and rejecting known un-supported flags.
-This is preferable, as it ensures better compatibility with future
-kernels.
+_test_bit() is what test_bit() was prior to const-optimization. It
+directly calls arch_test_bit(), i.e. the arch-specific implementation
+(or the generic one). It's strictly _internal_ and shouldn't be used
+anywhere outside the actual test_bit() macro.
 
-Fixes: 172db5f91d5f ("ice: add support for auxiliary input/output pins")
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Karol Kolacinski <karol.kolacinski@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
+test_bit() is a wrapper which checks whether the bitmap and the bit
+number are compile-time constants and if so, it calls the optimized
+function which evaluates this call to a compile-time constant as well.
+If either of them is not a compile-time constant, it just calls _test_bit().
+test_bit() is the actual function to use anywhere in the kernel.
+
+IOW, calling _test_bit() avoids potential compile-time optimizations.
+
+The sensors is not a compile-time constant, thus most probably there
+are no object code changes before and after the patch.
+But anyway, we shouldn't call internal wrappers instead of
+the actual API.
+
+Fixes: 4da71a77fc3b ("ice: read internal temperature sensor")
+Acked-by: Ivan Vecera <ivecera@redhat.com>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Signed-off-by: Petr Oros <poros@redhat.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
 Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20240702171459.2606611-4-anthony.l.nguyen@intel.com
+Link: https://patch.msgid.link/20240702171459.2606611-5-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ptp.c | 38 ++++++++++++++----------
- drivers/net/ethernet/intel/ice/ice_ptp.h |  1 +
- 2 files changed, 23 insertions(+), 16 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_hwmon.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
-index e983e56b342b7..f46d879c62d26 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
-@@ -1612,14 +1612,23 @@ void ice_ptp_extts_event(struct ice_pf *pf)
-  * @store: If set to true, the values will be stored
-  *
-  * Configure an external timestamp event on the requested channel.
-+ *
-+ * Return: 0 on success, -EOPNOTUSPP on unsupported flags
-  */
--static void ice_ptp_cfg_extts(struct ice_pf *pf, unsigned int chan,
--			      struct ice_extts_channel *config, bool store)
-+static int ice_ptp_cfg_extts(struct ice_pf *pf, unsigned int chan,
-+			     struct ice_extts_channel *config, bool store)
- {
- 	u32 func, aux_reg, gpio_reg, irq_reg;
- 	struct ice_hw *hw = &pf->hw;
- 	u8 tmr_idx;
+diff --git a/drivers/net/ethernet/intel/ice/ice_hwmon.c b/drivers/net/ethernet/intel/ice/ice_hwmon.c
+index e4c2c1bff6c08..b7aa6812510a4 100644
+--- a/drivers/net/ethernet/intel/ice/ice_hwmon.c
++++ b/drivers/net/ethernet/intel/ice/ice_hwmon.c
+@@ -96,7 +96,7 @@ static bool ice_is_internal_reading_supported(struct ice_pf *pf)
  
-+	/* Reject requests with unsupported flags */
-+	if (config->flags & ~(PTP_ENABLE_FEATURE |
-+			      PTP_RISING_EDGE |
-+			      PTP_FALLING_EDGE |
-+			      PTP_STRICT_FLAGS))
-+		return -EOPNOTSUPP;
-+
- 	tmr_idx = hw->func_caps.ts_func_info.tmr_index_owned;
+ 	unsigned long sensors = pf->hw.dev_caps.supported_sensors;
  
- 	irq_reg = rd32(hw, PFINT_OICR_ENA);
-@@ -1660,6 +1669,8 @@ static void ice_ptp_cfg_extts(struct ice_pf *pf, unsigned int chan,
- 
- 	if (store)
- 		memcpy(&pf->ptp.extts_channels[chan], config, sizeof(*config));
-+
-+	return 0;
- }
- 
- /**
-@@ -1717,6 +1728,9 @@ static int ice_ptp_cfg_clkout(struct ice_pf *pf, unsigned int chan,
- 	u32 func, val, gpio_pin;
- 	u8 tmr_idx;
- 
-+	if (config && config->flags & ~PTP_PEROUT_PHASE)
-+		return -EOPNOTSUPP;
-+
- 	tmr_idx = hw->func_caps.ts_func_info.tmr_index_owned;
- 
- 	/* 0. Reset mode & out_en in AUX_OUT */
-@@ -1856,7 +1870,6 @@ ice_ptp_gpio_enable_e810(struct ptp_clock_info *info,
- 	bool sma_pres = false;
- 	unsigned int chan;
- 	u32 gpio_pin;
--	int err;
- 
- 	if (ice_is_feature_supported(pf, ICE_F_SMA_CTRL))
- 		sma_pres = true;
-@@ -1885,14 +1898,14 @@ ice_ptp_gpio_enable_e810(struct ptp_clock_info *info,
- 			clk_cfg.gpio_pin = chan;
- 		}
- 
-+		clk_cfg.flags = rq->perout.flags;
- 		clk_cfg.period = ((rq->perout.period.sec * NSEC_PER_SEC) +
- 				   rq->perout.period.nsec);
- 		clk_cfg.start_time = ((rq->perout.start.sec * NSEC_PER_SEC) +
- 				       rq->perout.start.nsec);
- 		clk_cfg.ena = !!on;
- 
--		err = ice_ptp_cfg_clkout(pf, chan, &clk_cfg, true);
--		break;
-+		return ice_ptp_cfg_clkout(pf, chan, &clk_cfg, true);
- 	}
- 	case PTP_CLK_REQ_EXTTS:
- 	{
-@@ -1917,14 +1930,11 @@ ice_ptp_gpio_enable_e810(struct ptp_clock_info *info,
- 		extts_cfg.gpio_pin = gpio_pin;
- 		extts_cfg.ena = !!on;
- 
--		ice_ptp_cfg_extts(pf, chan, &extts_cfg, true);
--		return 0;
-+		return ice_ptp_cfg_extts(pf, chan, &extts_cfg, true);
- 	}
- 	default:
- 		return -EOPNOTSUPP;
- 	}
--
--	return err;
- }
- 
- /**
-@@ -1937,19 +1947,18 @@ static int ice_ptp_gpio_enable_e823(struct ptp_clock_info *info,
- 				    struct ptp_clock_request *rq, int on)
- {
- 	struct ice_pf *pf = ptp_info_to_pf(info);
--	int err;
- 
- 	switch (rq->type) {
- 	case PTP_CLK_REQ_PPS:
- 	{
- 		struct ice_perout_channel clk_cfg = {};
- 
-+		clk_cfg.flags = rq->perout.flags;
- 		clk_cfg.gpio_pin = PPS_PIN_INDEX;
- 		clk_cfg.period = NSEC_PER_SEC;
- 		clk_cfg.ena = !!on;
- 
--		err = ice_ptp_cfg_clkout(pf, PPS_CLK_GEN_CHAN, &clk_cfg, true);
--		break;
-+		return ice_ptp_cfg_clkout(pf, PPS_CLK_GEN_CHAN, &clk_cfg, true);
- 	}
- 	case PTP_CLK_REQ_EXTTS:
- 	{
-@@ -1959,14 +1968,11 @@ static int ice_ptp_gpio_enable_e823(struct ptp_clock_info *info,
- 		extts_cfg.gpio_pin = TIME_SYNC_PIN_INDEX;
- 		extts_cfg.ena = !!on;
- 
--		ice_ptp_cfg_extts(pf, rq->extts.index, &extts_cfg, true);
--		return 0;
-+		return ice_ptp_cfg_extts(pf, rq->extts.index, &extts_cfg, true);
- 	}
- 	default:
- 		return -EOPNOTSUPP;
- 	}
--
--	return err;
- }
- 
- /**
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.h b/drivers/net/ethernet/intel/ice/ice_ptp.h
-index f1171cdd93c86..e2af9749061ca 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp.h
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp.h
-@@ -29,6 +29,7 @@ enum ice_ptp_pin_e810t {
- struct ice_perout_channel {
- 	bool ena;
- 	u32 gpio_pin;
-+	u32 flags;
- 	u64 period;
- 	u64 start_time;
+-	return _test_bit(ICE_SENSOR_SUPPORT_E810_INT_TEMP_BIT, &sensors);
++	return test_bit(ICE_SENSOR_SUPPORT_E810_INT_TEMP_BIT, &sensors);
  };
+ 
+ void ice_hwmon_init(struct ice_pf *pf)
 -- 
 2.43.0
 
