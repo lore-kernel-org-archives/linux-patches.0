@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B751027713;
-	Tue,  9 Jul 2024 11:28:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE7B27713;
+	Tue,  9 Jul 2024 11:28:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524500; cv=none; b=SC3ZJn4rd4ELnSS1JGAAzJAD+sSYjln+aROBYwPFHkBLqEEIEnN7ohM4MEPmXnPGElSO5KbIAKpogJkAHZL7ce9IN4T89nGRG3N45ArAOPb06d4MtbmHcHWh7T95p52QsVN9U5TSEyfahmI8xQ/i1+zgEclBYxs9To4PVBm4z4c=
+	t=1720524503; cv=none; b=L8rxV3jxHGEfD5I9axzRLuoG0mwoBDl+fjvk56/ls7Gen120W1hKOKoEi1EDRfBYoLPuLf8a9cbFiJ0zVPDEGWzV0GuWvzQqYL1d0ZVe5JnnkgsDS92OAsA4uAuYkILxgWVnr9k8huJoq60m732poIdeXQYuS9egwzFKdqccaLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524500; c=relaxed/simple;
-	bh=i5ijGDugEBIE7eeswogQeplX3McKbm1WfK9FF+PcGdw=;
+	s=arc-20240116; t=1720524503; c=relaxed/simple;
+	bh=tlHEAKgZLNSyceB9gMP4kFAX+QYxvaNeOT7Cwk7QEEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AYNg8YXiOm/blyAy6o1BXAYFTOPFTtgY5zWqq8V/hPZCEXIaOTMd6+7P+6jmbcub/+BgvQHBzxhqYLa2suGA0DO2Yio18GE78UgZoI0BwmOoLDrZQWR6h5kq4Mk8MXHUQKPsVSN9kkUPdx2wOIGBz2Z5dlEbFKLi2WOTdDjkzvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C0ASm3pa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NGDzPV7bpElm89k3vU6ZWGUuDLBDsHj4IezTK3f82rPvq7udoATBgaZ0gy2A6EdUVS9RwBum5Ft8wbkKZcVzA4HbNDKmM2A4ijf220oqy61IINwGvFNRR2fkwBoDB0gMwFg7A5ng3pXidHQlePNbn91HLxcgwkbZnhMEvDhPFQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PL1pOjjt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C0ASm3pa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 334B4C3277B;
-	Tue,  9 Jul 2024 11:28:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PL1pOjjt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2970EC3277B;
+	Tue,  9 Jul 2024 11:28:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524500;
-	bh=i5ijGDugEBIE7eeswogQeplX3McKbm1WfK9FF+PcGdw=;
+	s=korg; t=1720524503;
+	bh=tlHEAKgZLNSyceB9gMP4kFAX+QYxvaNeOT7Cwk7QEEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C0ASm3pa4tU+YtNmfERIwlq3tBZ15PDWg6/PI3P9dEHFikwA8/Xs1dWUHdv2zeDXC
-	 KdloKfazuKApaFZMU3At80yctRxtYcCc9VoSmVx1yHEbee7hLtdIUxZ8eLp8JXrTLL
-	 YtkeQQ+D6KvpYeG3OKQq7QB4HSg64q7igLsrqdRM=
+	b=PL1pOjjtPTfifkWdUmAKOV7/WUcCTUO5zlNQ5J9bB9cJyk9FLqeFZW6++xVagxnla
+	 JVTFrVh/kgbsUQ9HInF2Up8bZN6x/BPZ3R1rNGV/Z2P9QGw+RGswD0+Ff14yuUtWJZ
+	 cVm/je7AE7pUv0baqB0ytd2D13BpY9mHW3wLcJZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 170/197] clk: qcom: gcc-sm6350: Fix gpll6* & gpll7 parents
-Date: Tue,  9 Jul 2024 13:10:24 +0200
-Message-ID: <20240709110715.527634435@linuxfoundation.org>
+	Alexander Dahl <ada@thorsis.com>,
+	Steven Seeger <steven.seeger@flightsystems.net>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.9 161/197] mtd: rawnand: Fix the nand_read_data_op() early check
+Date: Tue,  9 Jul 2024 13:10:15 +0200
+Message-ID: <20240709110715.185126814@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -51,77 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 3414f41a13eb41db15c558fbc695466203dca4fa ]
+commit 5da39530d19946f6241de84d1db69da2f5c61da7 upstream.
 
-Both gpll6 and gpll7 are parented to CXO at 19.2 MHz and not to GPLL0
-which runs at 600 MHz. Also gpll6_out_even should have the parent gpll6
-and not gpll0.
+The nand_read_data_op() operation, which only consists in DATA_IN
+cycles, is sadly not supported by all controllers despite being very
+basic. The core, for some time, supposed all drivers would support
+it. An improvement to this situation for supporting more constrained
+controller added a check to verify if the operation was supported before
+attempting it by running the function with the check_only boolean set
+first, and then possibly falling back to another (possibly slightly less
+optimized) alternative.
 
-Adjust the parents of these clocks to make Linux report the correct rate
-and not absurd numbers like gpll7 at ~25 GHz or gpll6 at 24 GHz.
+An even newer addition moved that check very early and probe time, in
+order to perform the check only once. The content of the operation was
+not so important, as long as the controller driver would tell whether
+such operation on the NAND bus would be possible or not. In practice, no
+buffer was provided (no fake buffer or whatever) as it is anyway not
+relevant for the "check_only" condition. Unfortunately, early in the
+function, there is an if statement verifying that the input parameters
+are right for normal use, making the early check always unsuccessful.
 
-Corrected rates are the following:
-
-  gpll7              807999902 Hz
-  gpll6              768000000 Hz
-     gpll6_out_even  384000000 Hz
-  gpll0              600000000 Hz
-     gpll0_out_odd   200000000 Hz
-     gpll0_out_even  300000000 Hz
-
-And because gpll6 is the parent of gcc_sdcc2_apps_clk_src (at 202 MHz)
-that clock also reports the correct rate now and avoids this warning:
-
-  [    5.984062] mmc0: Card appears overclocked; req 202000000 Hz, actual 6312499237 Hz
-
-Fixes: 131abae905df ("clk: qcom: Add SM6350 GCC driver")
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Link: https://lore.kernel.org/r/20240508-sm6350-gpll-fix-v1-1-e4ea34284a6d@fairphone.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 9f820fc0651c ("mtd: rawnand: Check the data only read pattern only once")
+Cc: stable@vger.kernel.org
+Reported-by: Alexander Dahl <ada@thorsis.com>
+Closes: https://lore.kernel.org/linux-mtd/20240306-shaky-bunion-d28b65ea97d7@thorsis.com/
+Reported-by: Steven Seeger <steven.seeger@flightsystems.net>
+Closes: https://lore.kernel.org/linux-mtd/DM6PR05MB4506554457CF95191A670BDEF7062@DM6PR05MB4506.namprd05.prod.outlook.com/
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Alexander Dahl <ada@thorsis.com>
+Link: https://lore.kernel.org/linux-mtd/20240516131320.579822-2-miquel.raynal@bootlin.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/gcc-sm6350.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/mtd/nand/raw/nand_base.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gcc-sm6350.c b/drivers/clk/qcom/gcc-sm6350.c
-index cf4a7b6e0b23a..0559a33faf00e 100644
---- a/drivers/clk/qcom/gcc-sm6350.c
-+++ b/drivers/clk/qcom/gcc-sm6350.c
-@@ -100,8 +100,8 @@ static struct clk_alpha_pll gpll6 = {
- 		.enable_mask = BIT(6),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gpll6",
--			.parent_hws = (const struct clk_hw*[]){
--				&gpll0.clkr.hw,
-+			.parent_data = &(const struct clk_parent_data){
-+				.fw_name = "bi_tcxo",
- 			},
- 			.num_parents = 1,
- 			.ops = &clk_alpha_pll_fixed_fabia_ops,
-@@ -124,7 +124,7 @@ static struct clk_alpha_pll_postdiv gpll6_out_even = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "gpll6_out_even",
- 		.parent_hws = (const struct clk_hw*[]){
--			&gpll0.clkr.hw,
-+			&gpll6.clkr.hw,
- 		},
- 		.num_parents = 1,
- 		.ops = &clk_alpha_pll_postdiv_fabia_ops,
-@@ -139,8 +139,8 @@ static struct clk_alpha_pll gpll7 = {
- 		.enable_mask = BIT(7),
- 		.hw.init = &(struct clk_init_data){
- 			.name = "gpll7",
--			.parent_hws = (const struct clk_hw*[]){
--				&gpll0.clkr.hw,
-+			.parent_data = &(const struct clk_parent_data){
-+				.fw_name = "bi_tcxo",
- 			},
- 			.num_parents = 1,
- 			.ops = &clk_alpha_pll_fixed_fabia_ops,
--- 
-2.43.0
-
+--- a/drivers/mtd/nand/raw/nand_base.c
++++ b/drivers/mtd/nand/raw/nand_base.c
+@@ -2173,7 +2173,7 @@ EXPORT_SYMBOL_GPL(nand_reset_op);
+ int nand_read_data_op(struct nand_chip *chip, void *buf, unsigned int len,
+ 		      bool force_8bit, bool check_only)
+ {
+-	if (!len || !buf)
++	if (!len || (!check_only && !buf))
+ 		return -EINVAL;
+ 
+ 	if (nand_has_exec_op(chip)) {
 
 
