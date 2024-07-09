@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6152627713;
-	Tue,  9 Jul 2024 11:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB2BB27713;
+	Tue,  9 Jul 2024 11:28:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524483; cv=none; b=qIhGq1bzNU6RKrl/1oJmRkX2MxyJhMjVIUqsacc1quHwxz/ex1BolLHnpL95giWdGyCTjA2bjLe5d9/kZJhAZEZXQnuJBpaPdU9cvJiqxAmn52rmc1L2u8Xs6dqGxUYUf5FQeq1uatgMq2+C7wnUYyt1mylctLfV/2zJZq8a0dQ=
+	t=1720524485; cv=none; b=AMmF2J3zF+gXEg/ZqLyrU1BTNeWjAbJ5x4Ttw0pSWWrZ/HEMH7HjfPoLx/SW/BA/roT05c8zkIOxsmo9cbnjZxZBafQiPrFecICv23UkTREOg1+leCjBXZaQOx9M1YOM13rRlkMzoHMwf+0xwD9Ag0a+lekzZIgs0wzR8mqb9+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524483; c=relaxed/simple;
-	bh=huiE9Otl7kiGmnGs2/fieiVAI67bX8hzvS1TMxw71fA=;
+	s=arc-20240116; t=1720524485; c=relaxed/simple;
+	bh=wdThse/X7ANx0CJgBxmMMA/lX9wAJzjhmQ0KBr7iD6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QnsObBW4Ergd81JkVU7n5rVumMAoEgPZWqjZPinrvUGiHmVIKGYQ5s3hsXuvT5DKhf1GXRjklOSy+00jiUyF/DQ8cw8XMXPhd6wcL/OFHdDfpBesx4d+0KH2zQymYB1LlFy1pUvj56EH+yi/tsAjCCe4WFzbvYUcZAOARAv44vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NGIW8Dxy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NUEEkO6pORNYsvEYidkiUCQJVC81unxU73Vmx1sJDPs9q2/CCC4J2dl2NrE8yKSbxkB4ejULxgEhh+kD7kqsy3W5cFAx7ZzgKS3LfSfwBNCINbs3JeGvzyt71nzQY8fNUlTnTxabSlWsOE1pxbKS074wr7QHSDZ3+px+d/gWqGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VQL+sqXx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NGIW8Dxy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F30C3277B;
-	Tue,  9 Jul 2024 11:28:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VQL+sqXx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 637D5C4AF0A;
+	Tue,  9 Jul 2024 11:28:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524482;
-	bh=huiE9Otl7kiGmnGs2/fieiVAI67bX8hzvS1TMxw71fA=;
+	s=korg; t=1720524485;
+	bh=wdThse/X7ANx0CJgBxmMMA/lX9wAJzjhmQ0KBr7iD6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NGIW8DxySZZx5s87EWgBJEEGz6p/0V+NGya4y5683xgq7ALy1XViNq0gWBkEca0AF
-	 4Ksh8wFfzc5qHCtki1gm0bNRYyrgaThqpylpeB7do1oqLzlNwIh1w/5eYhFSli53yU
-	 T1uEwGKrIe9lYGjbKzFp2l2rwLYoFAXxvfbJg1e0=
+	b=VQL+sqXxW5VlSQci0Om4fTZiQ9EKX4fv2zBawJwM3IsGVLZsdw1FLznv3tvukatQf
+	 s5UPnE5bQHk49DYnPPZYv43batR5JGviMg7gPaEgJ/ebD7WLXPtDU1lv7WVazMz5/x
+	 ibsQVVgLdBypZ+rSWvPXU22TBbm/WpD4BQQHE53w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 194/197] drm/amdgpu: silence UBSAN warning
-Date: Tue,  9 Jul 2024 13:10:48 +0200
-Message-ID: <20240709110716.448019163@linuxfoundation.org>
+	Yijie Yang <quic_yijiyang@quicinc.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.9 165/197] net: stmmac: dwmac-qcom-ethqos: fix error array size
+Date: Tue,  9 Jul 2024 13:10:19 +0200
+Message-ID: <20240709110715.337471056@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -45,41 +45,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Yijie Yang <quic_yijiyang@quicinc.com>
 
-[ Upstream commit 05d9e24ddb15160164ba6e917a88c00907dc2434 ]
+commit b698ab56837bc9e666b7e7e12e9c28fe1d6a763c upstream.
 
-Convert a variable sized array from [1] to [].
+Correct member @num_por with size of right array @emac_v4_0_0_por for
+struct ethqos_emac_driver_data @emac_v4_0_0_data.
 
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 8c4d92e82d50 ("net: stmmac: dwmac-qcom-ethqos: add support for emac4 on sa8775p platforms")
+Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Link: https://patch.msgid.link/20240701014720.2547856-1-quic_yijiyang@quicinc.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/include/atomfirmware.h | 2 +-
+ drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/include/atomfirmware.h b/drivers/gpu/drm/amd/include/atomfirmware.h
-index a34f064df336b..09cbc3afd6d89 100644
---- a/drivers/gpu/drm/amd/include/atomfirmware.h
-+++ b/drivers/gpu/drm/amd/include/atomfirmware.h
-@@ -3583,7 +3583,7 @@ struct atom_gpio_voltage_object_v4
-    uint8_t  phase_delay_us;                      // phase delay in unit of micro second
-    uint8_t  reserved;   
-    uint32_t gpio_mask_val;                         // GPIO Mask value
--   struct atom_voltage_gpio_map_lut voltage_gpio_lut[1];
-+   struct atom_voltage_gpio_map_lut voltage_gpio_lut[] __counted_by(gpio_entry_num);
- };
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+@@ -272,7 +272,7 @@ static const struct ethqos_emac_por emac
  
- struct  atom_svid2_voltage_object_v4
--- 
-2.43.0
-
+ static const struct ethqos_emac_driver_data emac_v4_0_0_data = {
+ 	.por = emac_v4_0_0_por,
+-	.num_por = ARRAY_SIZE(emac_v3_0_0_por),
++	.num_por = ARRAY_SIZE(emac_v4_0_0_por),
+ 	.rgmii_config_loopback_en = false,
+ 	.has_emac_ge_3 = true,
+ 	.link_clk_name = "phyaux",
 
 
