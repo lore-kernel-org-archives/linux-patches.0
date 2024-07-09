@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0DED149C79;
-	Tue,  9 Jul 2024 11:24:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8710627713;
+	Tue,  9 Jul 2024 11:24:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524272; cv=none; b=RDjjr0Iox90qo3XkHsgXcwTgqvagZDe+S8hvygwpmkiMWeD0YoNb5xu7fmDZCa028gWK2tunBqcQat+oG7Limt4zjfWKgQYDA+ztYyQaQLMjzIcxM6U9R3GsJXryQBZWLf4rssUJ9uJP1Bd+ueqvp2AjrGt0jKbqi9qD+Imn+S4=
+	t=1720524275; cv=none; b=rbJOwNASmTo2KspzRgx0Suao3ugtDwSa5RFXW+YX5AdzQ4aNvg6AeriswQSrqT6jTUcShpISLJv2DG5Bd95qREw7xNAEHJJ+xJX08csmxIT36Mohu7Jyr+GxOT8iaL7Ywt9EMeVaiE27pBp4+9YGbwnA8qfjVTnLaI6ePKbjjJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524272; c=relaxed/simple;
-	bh=z92gxD4Aku8jMawbvea7JKWbDCYMk9i3zBly/lukeEY=;
+	s=arc-20240116; t=1720524275; c=relaxed/simple;
+	bh=THk6NrVeSmNnEQAZZnYwS5YGxcMbfmpCJX1PbCeh3pY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U01y/nN8wO3hai8sSDo1q9YN0tJkNVpwVKH6gHWo14IirinL0vTDHrffFQiCq4Tv6tcuOnhB0p/UVixGRFXsWPgWpMej8o2W/kgk2FOhQWshk5AjOcVZa7fM3MO4rOeTHik/asrqe60qt/NtNn/wl4lPocAP3h0w4cBdH4jhXNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kQgRbzDJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZvBj4Qn9iUcaYx1/IsprrG3x0uhGLldBMZTfZ+XceIaVXqZVvZ4fqopB/cQ8CH7VrGVb4qWFbbwtgG4iGp58uvFpOrsJngWLVCHHHYpHsYFIcPWWhoLfgXxoPb975WYnF073EfASD78LMQdzvoV0qpyk0EYX5IaGKkHa+kpFTuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PaKStcfK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kQgRbzDJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C8C5C3277B;
-	Tue,  9 Jul 2024 11:24:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PaKStcfK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C3E7C32786;
+	Tue,  9 Jul 2024 11:24:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524272;
-	bh=z92gxD4Aku8jMawbvea7JKWbDCYMk9i3zBly/lukeEY=;
+	s=korg; t=1720524275;
+	bh=THk6NrVeSmNnEQAZZnYwS5YGxcMbfmpCJX1PbCeh3pY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kQgRbzDJBfEiyEhZTSOXfVWI3hjqOE2xIDkuMGqFsuGbJMjZzgiZRvB2n8zJSb6VW
-	 HtPQ5kWLpogS7GxrTsD3e/gO1GZhX0mzyLIgoMpy0ziyJbuxv9EET2rsPWswQd242d
-	 LxV3wTKy/NnAprFHlAKWbvpYaGbWM0bZOGLZU+a8=
+	b=PaKStcfK/togPspoi+vrbvT77OFAX5Lt8cv6g29z06yFMownpqD92iBZstSppOumT
+	 ht75JozacJOyFNCpTuE0Cab/pOGGPC5gSU6Do9H29eayYLkFIurDkjmVea1Mf1o2/9
+	 QdlRFpaI4Zw+jrUxp2boCfoPVrdyY7Q7DyLlDeco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Marc Hartmayer <mhartmay@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 127/197] inet_diag: Initialize pad field in struct inet_diag_req_v2
-Date: Tue,  9 Jul 2024 13:09:41 +0200
-Message-ID: <20240709110713.869196032@linuxfoundation.org>
+Subject: [PATCH 6.9 099/197] KVM: s390: fix LPSWEY handling
+Date: Tue,  9 Jul 2024 13:09:13 +0200
+Message-ID: <20240709110712.792237440@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -53,115 +53,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
 
-[ Upstream commit 61cf1c739f08190a4cbf047b9fbb192a94d87e3f ]
+[ Upstream commit 4c6abb7f7b349f00c0f7ed5045bf67759c012892 ]
 
-KMSAN reported uninit-value access in raw_lookup() [1]. Diag for raw
-sockets uses the pad field in struct inet_diag_req_v2 for the
-underlying protocol. This field corresponds to the sdiag_raw_protocol
-field in struct inet_diag_req_raw.
+in rare cases, e.g. for injecting a machine check we do intercept all
+load PSW instructions via ICTL_LPSW. With facility 193 a new variant
+LPSWEY was added. KVM needs to handle that as well.
 
-inet_diag_get_exact_compat() converts inet_diag_req to
-inet_diag_req_v2, but leaves the pad field uninitialized. So the issue
-occurs when raw_lookup() accesses the sdiag_raw_protocol field.
-
-Fix this by initializing the pad field in
-inet_diag_get_exact_compat(). Also, do the same fix in
-inet_diag_dump_compat() to avoid the similar issue in the future.
-
-[1]
-BUG: KMSAN: uninit-value in raw_lookup net/ipv4/raw_diag.c:49 [inline]
-BUG: KMSAN: uninit-value in raw_sock_get+0x657/0x800 net/ipv4/raw_diag.c:71
- raw_lookup net/ipv4/raw_diag.c:49 [inline]
- raw_sock_get+0x657/0x800 net/ipv4/raw_diag.c:71
- raw_diag_dump_one+0xa1/0x660 net/ipv4/raw_diag.c:99
- inet_diag_cmd_exact+0x7d9/0x980
- inet_diag_get_exact_compat net/ipv4/inet_diag.c:1404 [inline]
- inet_diag_rcv_msg_compat+0x469/0x530 net/ipv4/inet_diag.c:1426
- sock_diag_rcv_msg+0x23d/0x740 net/core/sock_diag.c:282
- netlink_rcv_skb+0x537/0x670 net/netlink/af_netlink.c:2564
- sock_diag_rcv+0x35/0x40 net/core/sock_diag.c:297
- netlink_unicast_kernel net/netlink/af_netlink.c:1335 [inline]
- netlink_unicast+0xe74/0x1240 net/netlink/af_netlink.c:1361
- netlink_sendmsg+0x10c6/0x1260 net/netlink/af_netlink.c:1905
- sock_sendmsg_nosec net/socket.c:730 [inline]
- __sock_sendmsg+0x332/0x3d0 net/socket.c:745
- ____sys_sendmsg+0x7f0/0xb70 net/socket.c:2585
- ___sys_sendmsg+0x271/0x3b0 net/socket.c:2639
- __sys_sendmsg net/socket.c:2668 [inline]
- __do_sys_sendmsg net/socket.c:2677 [inline]
- __se_sys_sendmsg net/socket.c:2675 [inline]
- __x64_sys_sendmsg+0x27e/0x4a0 net/socket.c:2675
- x64_sys_call+0x135e/0x3ce0 arch/x86/include/generated/asm/syscalls_64.h:47
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xd9/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Uninit was stored to memory at:
- raw_sock_get+0x650/0x800 net/ipv4/raw_diag.c:71
- raw_diag_dump_one+0xa1/0x660 net/ipv4/raw_diag.c:99
- inet_diag_cmd_exact+0x7d9/0x980
- inet_diag_get_exact_compat net/ipv4/inet_diag.c:1404 [inline]
- inet_diag_rcv_msg_compat+0x469/0x530 net/ipv4/inet_diag.c:1426
- sock_diag_rcv_msg+0x23d/0x740 net/core/sock_diag.c:282
- netlink_rcv_skb+0x537/0x670 net/netlink/af_netlink.c:2564
- sock_diag_rcv+0x35/0x40 net/core/sock_diag.c:297
- netlink_unicast_kernel net/netlink/af_netlink.c:1335 [inline]
- netlink_unicast+0xe74/0x1240 net/netlink/af_netlink.c:1361
- netlink_sendmsg+0x10c6/0x1260 net/netlink/af_netlink.c:1905
- sock_sendmsg_nosec net/socket.c:730 [inline]
- __sock_sendmsg+0x332/0x3d0 net/socket.c:745
- ____sys_sendmsg+0x7f0/0xb70 net/socket.c:2585
- ___sys_sendmsg+0x271/0x3b0 net/socket.c:2639
- __sys_sendmsg net/socket.c:2668 [inline]
- __do_sys_sendmsg net/socket.c:2677 [inline]
- __se_sys_sendmsg net/socket.c:2675 [inline]
- __x64_sys_sendmsg+0x27e/0x4a0 net/socket.c:2675
- x64_sys_call+0x135e/0x3ce0 arch/x86/include/generated/asm/syscalls_64.h:47
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xd9/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Local variable req.i created at:
- inet_diag_get_exact_compat net/ipv4/inet_diag.c:1396 [inline]
- inet_diag_rcv_msg_compat+0x2a6/0x530 net/ipv4/inet_diag.c:1426
- sock_diag_rcv_msg+0x23d/0x740 net/core/sock_diag.c:282
-
-CPU: 1 PID: 8888 Comm: syz-executor.6 Not tainted 6.10.0-rc4-00217-g35bb670d65fc #32
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-2.fc40 04/01/2014
-
-Fixes: 432490f9d455 ("net: ip, diag -- Add diag interface for raw sockets")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20240703091649.111773-1-syoshida@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: a3efa8429266 ("KVM: s390: gen_facilities: allow facilities 165, 193, 194 and 196")
+Reported-by: Marc Hartmayer <mhartmay@linux.ibm.com>
+Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Message-ID: <20240628163547.2314-1-borntraeger@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inet_diag.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/s390/include/asm/kvm_host.h |  1 +
+ arch/s390/kvm/kvm-s390.c         |  1 +
+ arch/s390/kvm/kvm-s390.h         | 15 +++++++++++++++
+ arch/s390/kvm/priv.c             | 32 ++++++++++++++++++++++++++++++++
+ 4 files changed, 49 insertions(+)
 
-diff --git a/net/ipv4/inet_diag.c b/net/ipv4/inet_diag.c
-index 7adace541fe29..9712cdb8087c2 100644
---- a/net/ipv4/inet_diag.c
-+++ b/net/ipv4/inet_diag.c
-@@ -1383,6 +1383,7 @@ static int inet_diag_dump_compat(struct sk_buff *skb,
- 	req.sdiag_family = AF_UNSPEC; /* compatibility */
- 	req.sdiag_protocol = inet_diag_type2proto(cb->nlh->nlmsg_type);
- 	req.idiag_ext = rc->idiag_ext;
-+	req.pad = 0;
- 	req.idiag_states = rc->idiag_states;
- 	req.id = rc->id;
+diff --git a/arch/s390/include/asm/kvm_host.h b/arch/s390/include/asm/kvm_host.h
+index 95990461888fc..9281063636a73 100644
+--- a/arch/s390/include/asm/kvm_host.h
++++ b/arch/s390/include/asm/kvm_host.h
+@@ -427,6 +427,7 @@ struct kvm_vcpu_stat {
+ 	u64 instruction_io_other;
+ 	u64 instruction_lpsw;
+ 	u64 instruction_lpswe;
++	u64 instruction_lpswey;
+ 	u64 instruction_pfmf;
+ 	u64 instruction_ptff;
+ 	u64 instruction_sck;
+diff --git a/arch/s390/kvm/kvm-s390.c b/arch/s390/kvm/kvm-s390.c
+index 82e9631cd9efb..54b5b2565df8d 100644
+--- a/arch/s390/kvm/kvm-s390.c
++++ b/arch/s390/kvm/kvm-s390.c
+@@ -132,6 +132,7 @@ const struct _kvm_stats_desc kvm_vcpu_stats_desc[] = {
+ 	STATS_DESC_COUNTER(VCPU, instruction_io_other),
+ 	STATS_DESC_COUNTER(VCPU, instruction_lpsw),
+ 	STATS_DESC_COUNTER(VCPU, instruction_lpswe),
++	STATS_DESC_COUNTER(VCPU, instruction_lpswey),
+ 	STATS_DESC_COUNTER(VCPU, instruction_pfmf),
+ 	STATS_DESC_COUNTER(VCPU, instruction_ptff),
+ 	STATS_DESC_COUNTER(VCPU, instruction_sck),
+diff --git a/arch/s390/kvm/kvm-s390.h b/arch/s390/kvm/kvm-s390.h
+index 111eb5c747840..bf8534218af3d 100644
+--- a/arch/s390/kvm/kvm-s390.h
++++ b/arch/s390/kvm/kvm-s390.h
+@@ -138,6 +138,21 @@ static inline u64 kvm_s390_get_base_disp_s(struct kvm_vcpu *vcpu, u8 *ar)
+ 	return (base2 ? vcpu->run->s.regs.gprs[base2] : 0) + disp2;
+ }
  
-@@ -1398,6 +1399,7 @@ static int inet_diag_get_exact_compat(struct sk_buff *in_skb,
- 	req.sdiag_family = rc->idiag_family;
- 	req.sdiag_protocol = inet_diag_type2proto(nlh->nlmsg_type);
- 	req.idiag_ext = rc->idiag_ext;
-+	req.pad = 0;
- 	req.idiag_states = rc->idiag_states;
- 	req.id = rc->id;
++static inline u64 kvm_s390_get_base_disp_siy(struct kvm_vcpu *vcpu, u8 *ar)
++{
++	u32 base1 = vcpu->arch.sie_block->ipb >> 28;
++	s64 disp1;
++
++	/* The displacement is a 20bit _SIGNED_ value */
++	disp1 = sign_extend64(((vcpu->arch.sie_block->ipb & 0x0fff0000) >> 16) +
++			      ((vcpu->arch.sie_block->ipb & 0xff00) << 4), 19);
++
++	if (ar)
++		*ar = base1;
++
++	return (base1 ? vcpu->run->s.regs.gprs[base1] : 0) + disp1;
++}
++
+ static inline void kvm_s390_get_base_disp_sse(struct kvm_vcpu *vcpu,
+ 					      u64 *address1, u64 *address2,
+ 					      u8 *ar_b1, u8 *ar_b2)
+diff --git a/arch/s390/kvm/priv.c b/arch/s390/kvm/priv.c
+index 1be19cc9d73c1..1a49b89706f86 100644
+--- a/arch/s390/kvm/priv.c
++++ b/arch/s390/kvm/priv.c
+@@ -797,6 +797,36 @@ static int handle_lpswe(struct kvm_vcpu *vcpu)
+ 	return 0;
+ }
  
++static int handle_lpswey(struct kvm_vcpu *vcpu)
++{
++	psw_t new_psw;
++	u64 addr;
++	int rc;
++	u8 ar;
++
++	vcpu->stat.instruction_lpswey++;
++
++	if (!test_kvm_facility(vcpu->kvm, 193))
++		return kvm_s390_inject_program_int(vcpu, PGM_OPERATION);
++
++	if (vcpu->arch.sie_block->gpsw.mask & PSW_MASK_PSTATE)
++		return kvm_s390_inject_program_int(vcpu, PGM_PRIVILEGED_OP);
++
++	addr = kvm_s390_get_base_disp_siy(vcpu, &ar);
++	if (addr & 7)
++		return kvm_s390_inject_program_int(vcpu, PGM_SPECIFICATION);
++
++	rc = read_guest(vcpu, addr, ar, &new_psw, sizeof(new_psw));
++	if (rc)
++		return kvm_s390_inject_prog_cond(vcpu, rc);
++
++	vcpu->arch.sie_block->gpsw = new_psw;
++	if (!is_valid_psw(&vcpu->arch.sie_block->gpsw))
++		return kvm_s390_inject_program_int(vcpu, PGM_SPECIFICATION);
++
++	return 0;
++}
++
+ static int handle_stidp(struct kvm_vcpu *vcpu)
+ {
+ 	u64 stidp_data = vcpu->kvm->arch.model.cpuid;
+@@ -1462,6 +1492,8 @@ int kvm_s390_handle_eb(struct kvm_vcpu *vcpu)
+ 	case 0x61:
+ 	case 0x62:
+ 		return handle_ri(vcpu);
++	case 0x71:
++		return handle_lpswey(vcpu);
+ 	default:
+ 		return -EOPNOTSUPP;
+ 	}
 -- 
 2.43.0
 
