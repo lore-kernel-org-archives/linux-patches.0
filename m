@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F09155A25;
-	Tue,  9 Jul 2024 11:24:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6744157E61;
+	Tue,  9 Jul 2024 11:24:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524260; cv=none; b=Z6u5AFEhGcgZP72dGNGpRg7vI9lwYl43X6TWDiBDF35XN9z1N9snLVxquH8Z/AmasPFMityWKd1/uud+voln3nj1tUIlSmDr5pm70gctyAyY7eVWWkXXrGLhHxnIyzzdfUru12kXKJcAnDdEhVRdqldtmfyzQrKgIodzwynXcdw=
+	t=1720524263; cv=none; b=rLiy6pwsE9c1/d/eZoowpID5O0M9lM9Y5P2yQs4sR/w4Jd1XMn/8k6Hvfj375bRcuhHPmna2u22poMktR6bUgjiCzSvYHPJp3DuIzFxhCP6Fzr6d0dOUUx5gIt9AWSrwhA5fCJT9B+dObO5MpOXbei5WHQWdghK2RdOoLCx1gys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524260; c=relaxed/simple;
-	bh=zJpVP8E5L3jCLhdy6tYzdskHgP8Ls4RugBVvPkC/XUE=;
+	s=arc-20240116; t=1720524263; c=relaxed/simple;
+	bh=Gq2rUioRrEycQHJrezxwHdaA1RzLh/TtiaWGssh+bR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q1BINS2Uf/G1NZCH3F4ea74D8jLvEtWL1Lynph4uc1Fx2GBkoCkCZ4v2bCuPUIIEh/ZeYrdoxlKdpdLJTO65QHAxAXkXwkqKLHXwq8Y147wlZQ8Ad34HX8NYEX05kZTl4DJfMDxDFAhNV+Lfygg/xD/J0DrbWHmcz8IQqGlFqgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CAkZ09P9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lpd8LEmTghlUHP66ty6eN+IdE8raYUDHczyQ4PtUYEH5cBTpsJH5CqWapnQR6uihjN5ZHnYYwLmnjXwLM+XyuFxGPugGpJVLffiGHZSiAQJjWtsFQrDmTUIRK/scRYF2hB2d851WiQAWJ2QybSjfI4EzaTyyr427FkvKmgzS46I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOcYVjM1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CAkZ09P9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C590C3277B;
-	Tue,  9 Jul 2024 11:24:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOcYVjM1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DA07C3277B;
+	Tue,  9 Jul 2024 11:24:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524260;
-	bh=zJpVP8E5L3jCLhdy6tYzdskHgP8Ls4RugBVvPkC/XUE=;
+	s=korg; t=1720524263;
+	bh=Gq2rUioRrEycQHJrezxwHdaA1RzLh/TtiaWGssh+bR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CAkZ09P90GrdFhpZXloRKWPj9RfZFJSn8LJhdo9AMhIpr3XPm4jz3nPDrFeqsmamV
-	 seTO5D5hog+Jyg3n8ZPhgHH3YzgMzXcB04zEEzPuYP/QkeK9a23oddI+3JIO9Y0geh
-	 KadJIxE+Uek8GzvIRsYLXwWCLVoE4BJiuDl5/fEA=
+	b=sOcYVjM1FJ96V81jy0JSQnb7NbK6+cE7rm49hZNT2fZ5Ib1P33NyJ9LuklzKH9U9V
+	 zVifQpnQl0YJUN8DIPU05bLMuXWG+xj2CLBq26gJtG0UDTXssDsr28mWYCGNVAmR3P
+	 PxhNDwwZMYuzlpx7Vo7jPmm0Rmc7Gt1mb18j1Q0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijian Zhang <zijianzhang@bytedance.com>,
-	Xiaochun Lu <xiaochun.lu@bytedance.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 124/197] selftests: make order checking verbose in msg_zerocopy selftest
-Date: Tue,  9 Jul 2024 13:09:38 +0200
-Message-ID: <20240709110713.751709747@linuxfoundation.org>
+Subject: [PATCH 6.9 098/197] tcp_metrics: validate source addr length
+Date: Tue,  9 Jul 2024 13:09:12 +0200
+Message-ID: <20240709110712.753295321@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -53,38 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijian Zhang <zijianzhang@bytedance.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 7d6d8f0c8b700c9493f2839abccb6d29028b4219 ]
+[ Upstream commit 66be40e622e177316ae81717aa30057ba9e61dff ]
 
-We find that when lock debugging is on, notifications may not come in
-order. Thus, we have order checking outputs managed by cfg_verbose, to
-avoid too many outputs in this case.
+I don't see anything checking that TCP_METRICS_ATTR_SADDR_IPV4
+is at least 4 bytes long, and the policy doesn't have an entry
+for this attribute at all (neither does it for IPv6 but v6 is
+manually validated).
 
-Fixes: 07b65c5b31ce ("test: add msg_zerocopy test")
-Signed-off-by: Zijian Zhang <zijianzhang@bytedance.com>
-Signed-off-by: Xiaochun Lu <xiaochun.lu@bytedance.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20240701225349.3395580-3-zijianzhang@bytedance.com
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Fixes: 3e7013ddf55a ("tcp: metrics: Allow selective get/del of tcp-metrics based on src IP")
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/msg_zerocopy.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/tcp_metrics.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/net/msg_zerocopy.c b/tools/testing/selftests/net/msg_zerocopy.c
-index 926556febc83c..7ea5fb28c93db 100644
---- a/tools/testing/selftests/net/msg_zerocopy.c
-+++ b/tools/testing/selftests/net/msg_zerocopy.c
-@@ -438,7 +438,7 @@ static bool do_recv_completion(int fd, int domain)
- 	/* Detect notification gaps. These should not happen often, if at all.
- 	 * Gaps can occur due to drops, reordering and retransmissions.
+diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
+index c2a925538542b..e0883ba709b0b 100644
+--- a/net/ipv4/tcp_metrics.c
++++ b/net/ipv4/tcp_metrics.c
+@@ -619,6 +619,7 @@ static const struct nla_policy tcp_metrics_nl_policy[TCP_METRICS_ATTR_MAX + 1] =
+ 	[TCP_METRICS_ATTR_ADDR_IPV4]	= { .type = NLA_U32, },
+ 	[TCP_METRICS_ATTR_ADDR_IPV6]	= { .type = NLA_BINARY,
+ 					    .len = sizeof(struct in6_addr), },
++	[TCP_METRICS_ATTR_SADDR_IPV4]	= { .type = NLA_U32, },
+ 	/* Following attributes are not received for GET/DEL,
+ 	 * we keep them for reference
  	 */
--	if (lo != next_completion)
-+	if (cfg_verbose && lo != next_completion)
- 		fprintf(stderr, "gap: %u..%u does not append to %u\n",
- 			lo, hi, next_completion);
- 	next_completion = hi + 1;
 -- 
 2.43.0
 
