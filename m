@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1261158876;
-	Tue,  9 Jul 2024 11:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DD45158858;
+	Tue,  9 Jul 2024 11:29:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524571; cv=none; b=QMgkR9lWSudmWf3g/A56frvgeFYeJkhsKZMydHIRkZ+VSNXtHFsWSj+9ZGieyAo81xiERdg3P66xJTPH72zTL7IKOYAN0nYcphyfwTio+IT6nH/7PACsIlWNuJW3zsYnWEadHjOHRaRgJbcjdEIIUyFNtOPRF/Og07ZkuvXEaPo=
+	t=1720524574; cv=none; b=UJSg+2wFUf//ucQsXe8k8HxCgvceg8AVxD20crKrGi/YYuxUMGHB3ZjsrfZRSRwj+TE0yGkzn0uT/kxoH/khioInmxqNc1DgBdkjpV0Uij3h2Y7ahy1rAAdZmn4SPicxXnveEeQjz48Ek90Fq/AyiFSNhaZGqc2sdzmNOiakomE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524571; c=relaxed/simple;
-	bh=uG3xYDbkAfr/X5yoWGy+vyJ5ITGNZ08C42/bcsw/fb0=;
+	s=arc-20240116; t=1720524574; c=relaxed/simple;
+	bh=PVe8iGc+bTwL46Z9+gixqumflAsVO3F4Dbp/2+rqZg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hrnUdXdMXO3hUZPtwztTevD94UefqBIY+OKbLUfJ9r0rJy0ieKnJ4XOERPtFMG5cfgZPw3NshZM8Ps6zci6fKlr3X36RS8oqSEXwoOiOXCINo65irSBpQVFHnITJsuMOjBzouL59Jywh6eiVW3q8PoQUf5Vkc+zoutub8hDEeeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lPFHaelb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YtzLTCxKR/QmtTYoItojbtsQEeOhirO7mDGIqF5vUnaCxZxYbbnZeuqjAUuKEYC/5CMiJeiylQJr62a7rNPbXkK9RyTpIozrBw/MIGPbKDHwdQwngUhRBRVuVIsPvuLw/nmoaxP0fepMHgAxwBaQGfphWiFCnDKkwSu58iKWQTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aRzkFfnY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lPFHaelb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3409C4AF0A;
-	Tue,  9 Jul 2024 11:29:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aRzkFfnY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5E16C3277B;
+	Tue,  9 Jul 2024 11:29:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524571;
-	bh=uG3xYDbkAfr/X5yoWGy+vyJ5ITGNZ08C42/bcsw/fb0=;
+	s=korg; t=1720524574;
+	bh=PVe8iGc+bTwL46Z9+gixqumflAsVO3F4Dbp/2+rqZg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lPFHaelbKRtho+5DmGJQkpj7BUcwjBjGnF51ys6ifdAfquYYQvpD9PbObm/5X0X2C
-	 5sC4FumV4TH7UaCaRzBU/lL3ARvHPBjwaX0vBN4QjNETnagKXlHnIjznIpFI7K4Q7c
-	 JUadkn73Rg7LPBx5fUjBsfgwNY0GsBbwD1nTqKyc=
+	b=aRzkFfnYmkd32l/r/ZWrNQGeCTCvHM47BsYyhfon4OAEYxktIbG9gIyegl/gNrvnb
+	 fVozJAtsg4T/WltLdLkDyYDuDmhjqPgGT+EeZdDYzdbjG3M9wUIj1g1jod+VAN+M04
+	 NYE7tMyhbhtlWxIeoK6hDj0do0CMse6iLzGg3ZpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Mike Marshall <hubcap@omnibond.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 028/102] powerpc/64: Set _IO_BASE to POISON_POINTER_DELTA not 0 for CONFIG_PCI=n
-Date: Tue,  9 Jul 2024 13:09:51 +0200
-Message-ID: <20240709110652.463396303@linuxfoundation.org>
+Subject: [PATCH 6.1 029/102] orangefs: fix out-of-bounds fsid access
+Date: Tue,  9 Jul 2024 13:09:52 +0200
+Message-ID: <20240709110652.504127691@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110651.353707001@linuxfoundation.org>
 References: <20240709110651.353707001@linuxfoundation.org>
@@ -50,46 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Mike Marshall <hubcap@omnibond.com>
 
-[ Upstream commit be140f1732b523947425aaafbe2e37b41b622d96 ]
+[ Upstream commit 53e4efa470d5fc6a96662d2d3322cfc925818517 ]
 
-There is code that builds with calls to IO accessors even when
-CONFIG_PCI=n, but the actual calls are guarded by runtime checks.
+Arnd Bergmann sent a patch to fsdevel, he says:
 
-If not those calls would be faulting, because the page at virtual
-address zero is (usually) not mapped into the kernel. As Arnd pointed
-out, it is possible a large port value could cause the address to be
-above mmap_min_addr which would then access userspace, which would be
-a bug.
+"orangefs_statfs() copies two consecutive fields of the superblock into
+the statfs structure, which triggers a warning from the string fortification
+helpers"
 
-To avoid any such issues, set _IO_BASE to POISON_POINTER_DELTA. That
-is a value chosen to point into unmapped space between the kernel and
-userspace, so any access will always fault.
+Jan Kara suggested an alternate way to do the patch to make it more readable.
 
-Note that on 32-bit POISON_POINTER_DELTA is 0, so the patch only has an
-effect on 64-bit.
+I ran both ideas through xfstests and both seem fine. This patch
+is based on Jan Kara's suggestion.
 
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240503075619.394467-2-mpe@ellerman.id.au
+Signed-off-by: Mike Marshall <hubcap@omnibond.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/io.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/orangefs/super.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/include/asm/io.h b/arch/powerpc/include/asm/io.h
-index 0e1745e5125b0..6d3ce049babdf 100644
---- a/arch/powerpc/include/asm/io.h
-+++ b/arch/powerpc/include/asm/io.h
-@@ -42,7 +42,7 @@ extern struct pci_dev *isa_bridge_pcidev;
-  * define properly based on the platform
-  */
- #ifndef CONFIG_PCI
--#define _IO_BASE	0
-+#define _IO_BASE	POISON_POINTER_DELTA
- #define _ISA_MEM_BASE	0
- #define PCI_DRAM_OFFSET 0
- #elif defined(CONFIG_PPC32)
+diff --git a/fs/orangefs/super.c b/fs/orangefs/super.c
+index 4ca8ed410c3cf..24e028c119c1b 100644
+--- a/fs/orangefs/super.c
++++ b/fs/orangefs/super.c
+@@ -201,7 +201,8 @@ static int orangefs_statfs(struct dentry *dentry, struct kstatfs *buf)
+ 		     (long)new_op->downcall.resp.statfs.files_avail);
+ 
+ 	buf->f_type = sb->s_magic;
+-	memcpy(&buf->f_fsid, &ORANGEFS_SB(sb)->fs_id, sizeof(buf->f_fsid));
++	buf->f_fsid.val[0] = ORANGEFS_SB(sb)->fs_id;
++	buf->f_fsid.val[1] = ORANGEFS_SB(sb)->id;
+ 	buf->f_bsize = new_op->downcall.resp.statfs.block_size;
+ 	buf->f_namelen = ORANGEFS_NAME_MAX;
+ 
 -- 
 2.43.0
 
