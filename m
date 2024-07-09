@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B782015886A;
-	Tue,  9 Jul 2024 11:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2CCE15821E;
+	Tue,  9 Jul 2024 11:12:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720523537; cv=none; b=MErEP4x9XD+jK+tvgttQa4OCw+5C7jlWPFKTRLWteQzuJKncFNT/z9A9MfyHnUGQKzeB8qFdH5FDAP33/bUz2uFbp2+XGeyo9ZcP3xwj+ale3Bj+MY7JKMoePyJD6DOjmmyPTPBVjKaADwEyYNQXRtKwRnMSuj2M4M1W0/lqxCU=
+	t=1720523540; cv=none; b=VQ8yp25V4SgakNepPM7AlqfIuvJ8IaCNy6R69kRK/A93D7lyeNUjJzfHV/A/aAukR5rjOBul6+Etl1K4qXb5h5afUXM8zXrfVrGeiIpi9SZsTi7cw24bTVX1q8Z3zasPYvmonRrNH6kPaAFPweFP9MTJv7uGrhVuXnQTZ5jjjNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720523537; c=relaxed/simple;
-	bh=zsGcIEgjS5Uuw72Uii4dAyQXLMJ9osSgUz+JMIvq+JQ=;
+	s=arc-20240116; t=1720523540; c=relaxed/simple;
+	bh=lvF7/Cs4OieKK7oUunrKwHDgy4mK+p/cvppfYQrEfWw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eZRC0PqZqiRST9rPXMqhWneAGsgCz8VkR0LLHXVfrPh2GpWhd0Y0XcDLDH5m1V9UdjolecpihfzhuacGvw/VRS1zpKT0SmUdVNfm8ykdKlwvRNbNB0MgC/UdBHN5TESlHrFY4Z1kmZ3671Mn8m4WLteunid43zcH/D6q/sKXL1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UEgnN5eV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A+Sg0yAqp0k2k5g9nKx9oa+0wqp1+X31YwALA/I0Hc2v0Yl7wd5FgoyTHNn+sJxR2uxxrh+XhWsBrxiVdNqcoWQ+PH/FTRtPegq1m8WWZ8PEqKfPRSxOuDi85LELO/vJdpAyEsW0e4KCOP16v/ih7Vngy4x3+VMSJikK0aReGgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q+uTdZTT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UEgnN5eV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E157C3277B;
-	Tue,  9 Jul 2024 11:12:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q+uTdZTT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 385B6C3277B;
+	Tue,  9 Jul 2024 11:12:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720523537;
-	bh=zsGcIEgjS5Uuw72Uii4dAyQXLMJ9osSgUz+JMIvq+JQ=;
+	s=korg; t=1720523540;
+	bh=lvF7/Cs4OieKK7oUunrKwHDgy4mK+p/cvppfYQrEfWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UEgnN5eVVOl3nN4Vg9o2IwMEp86SYc5a3gWOh2PGBaKPuNn7QugZIHxA3+mqai6EQ
-	 NXCzMLJq+/DOBlqBgVPZWVeyprS+clTZVtfAhFEaQ0x1Dlc4u8QH39CfjeR1S12f1B
-	 AKR7Il8VkyawoRI0QND9iTK5ZeINEt2kSBfECIGc=
+	b=Q+uTdZTTdOuEh+d9c1A0TzSt/M0imQHamZ20+NPXN6waEUA4wP/e8+gjoDeqOjtSn
+	 PzSfgjusQutfqrtws8hD1Om8PXyt09tsnoJ6WtQdoOVD5A51MGNkljMbLZNF7Bla0o
+	 35v9S9ik3o2qYYE3l+6ZnqE8wTuRbn96xo0gqVyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bunk <micha@freedict.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 026/139] media: dw2102: Dont translate i2c read into write
-Date: Tue,  9 Jul 2024 13:08:46 +0200
-Message-ID: <20240709110659.175818103@linuxfoundation.org>
+Subject: [PATCH 6.6 027/139] riscv: Apply SiFive CIP-1200 workaround to single-ASID sfence.vma
+Date: Tue,  9 Jul 2024 13:08:47 +0200
+Message-ID: <20240709110659.214129287@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110658.146853929@linuxfoundation.org>
 References: <20240709110658.146853929@linuxfoundation.org>
@@ -51,195 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bunk <micha@freedict.org>
+From: Samuel Holland <samuel.holland@sifive.com>
 
-[ Upstream commit 0e148a522b8453115038193e19ec7bea71403e4a ]
+[ Upstream commit 20e03d702e00a3e0269a1d6f9549c2e370492054 ]
 
-The code ignored the I2C_M_RD flag on I2C messages.  Instead it assumed
-an i2c transaction with a single message must be a write operation and a
-transaction with two messages would be a read operation.
+commit 3f1e782998cd ("riscv: add ASID-based tlbflushing methods") added
+calls to the sfence.vma instruction with rs2 != x0. These single-ASID
+instruction variants are also affected by SiFive errata CIP-1200.
 
-Though this works for the driver code, it leads to problems once the i2c
-device is exposed to code not knowing this convention.  For example,
-I did "insmod i2c-dev" and issued read requests from userspace, which
-were translated into write requests and destroyed the EEPROM of my
-device.
+Until now, the errata workaround was not needed for the single-ASID
+sfence.vma variants, because they were only used when the ASID allocator
+was enabled, and the affected SiFive platforms do not support multiple
+ASIDs. However, we are going to start using those sfence.vma variants
+regardless of ASID support, so now we need alternatives covering them.
 
-So, just check and respect the I2C_M_READ flag, which indicates a read
-when set on a message.  If it is absent, it is a write message.
-
-Incidentally, changing from the case statement to a while loop allows
-the code to lift the limitation to two i2c messages per transaction.
-
-There are 4 more *_i2c_transfer functions affected by the same behaviour
-and limitation that should be fixed in the same way.
-
-Link: https://lore.kernel.org/linux-media/20220116112238.74171-2-micha@freedict.org
-Signed-off-by: Michael Bunk <micha@freedict.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
+Link: https://lore.kernel.org/r/20240327045035.368512-8-samuel.holland@sifive.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb/dw2102.c | 120 ++++++++++++++++++-----------
- 1 file changed, 73 insertions(+), 47 deletions(-)
+ arch/riscv/include/asm/errata_list.h | 12 +++++++++++-
+ arch/riscv/include/asm/tlbflush.h    | 19 ++++++++++++++++++-
+ arch/riscv/mm/tlbflush.c             | 23 -----------------------
+ 3 files changed, 29 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/media/usb/dvb-usb/dw2102.c b/drivers/media/usb/dvb-usb/dw2102.c
-index b3bb1805829ad..10351308b0d02 100644
---- a/drivers/media/usb/dvb-usb/dw2102.c
-+++ b/drivers/media/usb/dvb-usb/dw2102.c
-@@ -716,6 +716,7 @@ static int su3000_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
+diff --git a/arch/riscv/include/asm/errata_list.h b/arch/riscv/include/asm/errata_list.h
+index b55b434f00591..d3f3c237adad7 100644
+--- a/arch/riscv/include/asm/errata_list.h
++++ b/arch/riscv/include/asm/errata_list.h
+@@ -44,11 +44,21 @@ ALTERNATIVE(__stringify(RISCV_PTR do_page_fault),			\
+ 	    CONFIG_ERRATA_SIFIVE_CIP_453)
+ #else /* !__ASSEMBLY__ */
+ 
+-#define ALT_FLUSH_TLB_PAGE(x)						\
++#define ALT_SFENCE_VMA_ASID(asid)					\
++asm(ALTERNATIVE("sfence.vma x0, %0", "sfence.vma", SIFIVE_VENDOR_ID,	\
++		ERRATA_SIFIVE_CIP_1200, CONFIG_ERRATA_SIFIVE_CIP_1200)	\
++		: : "r" (asid) : "memory")
++
++#define ALT_SFENCE_VMA_ADDR(addr)					\
+ asm(ALTERNATIVE("sfence.vma %0", "sfence.vma", SIFIVE_VENDOR_ID,	\
+ 		ERRATA_SIFIVE_CIP_1200, CONFIG_ERRATA_SIFIVE_CIP_1200)	\
+ 		: : "r" (addr) : "memory")
+ 
++#define ALT_SFENCE_VMA_ADDR_ASID(addr, asid)				\
++asm(ALTERNATIVE("sfence.vma %0, %1", "sfence.vma", SIFIVE_VENDOR_ID,	\
++		ERRATA_SIFIVE_CIP_1200, CONFIG_ERRATA_SIFIVE_CIP_1200)	\
++		: : "r" (addr), "r" (asid) : "memory")
++
+ /*
+  * _val is marked as "will be overwritten", so need to set it to 0
+  * in the default case.
+diff --git a/arch/riscv/include/asm/tlbflush.h b/arch/riscv/include/asm/tlbflush.h
+index 51664ae4852e7..97711d5bd8ef9 100644
+--- a/arch/riscv/include/asm/tlbflush.h
++++ b/arch/riscv/include/asm/tlbflush.h
+@@ -22,10 +22,27 @@ static inline void local_flush_tlb_all(void)
+ 	__asm__ __volatile__ ("sfence.vma" : : : "memory");
+ }
+ 
++static inline void local_flush_tlb_all_asid(unsigned long asid)
++{
++	if (asid != FLUSH_TLB_NO_ASID)
++		ALT_SFENCE_VMA_ASID(asid);
++	else
++		local_flush_tlb_all();
++}
++
+ /* Flush one page from local TLB */
+ static inline void local_flush_tlb_page(unsigned long addr)
  {
- 	struct dvb_usb_device *d = i2c_get_adapdata(adap);
- 	struct dw2102_state *state;
-+	int j;
+-	ALT_FLUSH_TLB_PAGE(__asm__ __volatile__ ("sfence.vma %0" : : "r" (addr) : "memory"));
++	ALT_SFENCE_VMA_ADDR(addr);
++}
++
++static inline void local_flush_tlb_page_asid(unsigned long addr,
++					     unsigned long asid)
++{
++	if (asid != FLUSH_TLB_NO_ASID)
++		ALT_SFENCE_VMA_ADDR_ASID(addr, asid);
++	else
++		local_flush_tlb_page(addr);
+ }
+ #else /* CONFIG_MMU */
+ #define local_flush_tlb_all()			do { } while (0)
+diff --git a/arch/riscv/mm/tlbflush.c b/arch/riscv/mm/tlbflush.c
+index bdee5de918e06..324e8cd9b5022 100644
+--- a/arch/riscv/mm/tlbflush.c
++++ b/arch/riscv/mm/tlbflush.c
+@@ -6,29 +6,6 @@
+ #include <asm/sbi.h>
+ #include <asm/mmu_context.h>
  
- 	if (!d)
- 		return -ENODEV;
-@@ -729,11 +730,11 @@ static int su3000_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
- 		return -EAGAIN;
- 	}
- 
--	switch (num) {
--	case 1:
--		switch (msg[0].addr) {
-+	j = 0;
-+	while (j < num) {
-+		switch (msg[j].addr) {
- 		case SU3000_STREAM_CTRL:
--			state->data[0] = msg[0].buf[0] + 0x36;
-+			state->data[0] = msg[j].buf[0] + 0x36;
- 			state->data[1] = 3;
- 			state->data[2] = 0;
- 			if (dvb_usb_generic_rw(d, state->data, 3,
-@@ -745,61 +746,86 @@ static int su3000_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
- 			if (dvb_usb_generic_rw(d, state->data, 1,
- 					state->data, 2, 0) < 0)
- 				err("i2c transfer failed.");
--			msg[0].buf[1] = state->data[0];
--			msg[0].buf[0] = state->data[1];
-+			msg[j].buf[1] = state->data[0];
-+			msg[j].buf[0] = state->data[1];
- 			break;
- 		default:
--			if (3 + msg[0].len > sizeof(state->data)) {
--				warn("i2c wr: len=%d is too big!\n",
--				     msg[0].len);
-+			/* if the current write msg is followed by a another
-+			 * read msg to/from the same address
-+			 */
-+			if ((j+1 < num) && (msg[j+1].flags & I2C_M_RD) &&
-+			    (msg[j].addr == msg[j+1].addr)) {
-+				/* join both i2c msgs to one usb read command */
-+				if (4 + msg[j].len > sizeof(state->data)) {
-+					warn("i2c combined wr/rd: write len=%d is too big!\n",
-+					    msg[j].len);
-+					num = -EOPNOTSUPP;
-+					break;
-+				}
-+				if (1 + msg[j+1].len > sizeof(state->data)) {
-+					warn("i2c combined wr/rd: read len=%d is too big!\n",
-+					    msg[j+1].len);
-+					num = -EOPNOTSUPP;
-+					break;
-+				}
-+
-+				state->data[0] = 0x09;
-+				state->data[1] = msg[j].len;
-+				state->data[2] = msg[j+1].len;
-+				state->data[3] = msg[j].addr;
-+				memcpy(&state->data[4], msg[j].buf, msg[j].len);
-+
-+				if (dvb_usb_generic_rw(d, state->data, msg[j].len + 4,
-+					state->data, msg[j+1].len + 1, 0) < 0)
-+					err("i2c transfer failed.");
-+
-+				memcpy(msg[j+1].buf, &state->data[1], msg[j+1].len);
-+				j++;
-+				break;
-+			}
-+
-+			if (msg[j].flags & I2C_M_RD) {
-+				/* single read */
-+				if (1 + msg[j].len > sizeof(state->data)) {
-+					warn("i2c rd: len=%d is too big!\n", msg[j].len);
-+					num = -EOPNOTSUPP;
-+					break;
-+				}
-+
-+				state->data[0] = 0x09;
-+				state->data[1] = 0;
-+				state->data[2] = msg[j].len;
-+				state->data[3] = msg[j].addr;
-+				memcpy(&state->data[4], msg[j].buf, msg[j].len);
-+
-+				if (dvb_usb_generic_rw(d, state->data, 4,
-+					state->data, msg[j].len + 1, 0) < 0)
-+					err("i2c transfer failed.");
-+
-+				memcpy(msg[j].buf, &state->data[1], msg[j].len);
-+				break;
-+			}
-+
-+			/* single write */
-+			if (3 + msg[j].len > sizeof(state->data)) {
-+				warn("i2c wr: len=%d is too big!\n", msg[j].len);
- 				num = -EOPNOTSUPP;
- 				break;
- 			}
- 
--			/* always i2c write*/
- 			state->data[0] = 0x08;
--			state->data[1] = msg[0].addr;
--			state->data[2] = msg[0].len;
-+			state->data[1] = msg[j].addr;
-+			state->data[2] = msg[j].len;
- 
--			memcpy(&state->data[3], msg[0].buf, msg[0].len);
-+			memcpy(&state->data[3], msg[j].buf, msg[j].len);
- 
--			if (dvb_usb_generic_rw(d, state->data, msg[0].len + 3,
-+			if (dvb_usb_generic_rw(d, state->data, msg[j].len + 3,
- 						state->data, 1, 0) < 0)
- 				err("i2c transfer failed.");
-+		} // switch
-+		j++;
- 
--		}
--		break;
--	case 2:
--		/* always i2c read */
--		if (4 + msg[0].len > sizeof(state->data)) {
--			warn("i2c rd: len=%d is too big!\n",
--			     msg[0].len);
--			num = -EOPNOTSUPP;
--			break;
--		}
--		if (1 + msg[1].len > sizeof(state->data)) {
--			warn("i2c rd: len=%d is too big!\n",
--			     msg[1].len);
--			num = -EOPNOTSUPP;
--			break;
--		}
+-static inline void local_flush_tlb_all_asid(unsigned long asid)
+-{
+-	if (asid != FLUSH_TLB_NO_ASID)
+-		__asm__ __volatile__ ("sfence.vma x0, %0"
+-				:
+-				: "r" (asid)
+-				: "memory");
+-	else
+-		local_flush_tlb_all();
+-}
 -
--		state->data[0] = 0x09;
--		state->data[1] = msg[0].len;
--		state->data[2] = msg[1].len;
--		state->data[3] = msg[0].addr;
--		memcpy(&state->data[4], msg[0].buf, msg[0].len);
+-static inline void local_flush_tlb_page_asid(unsigned long addr,
+-		unsigned long asid)
+-{
+-	if (asid != FLUSH_TLB_NO_ASID)
+-		__asm__ __volatile__ ("sfence.vma %0, %1"
+-				:
+-				: "r" (addr), "r" (asid)
+-				: "memory");
+-	else
+-		local_flush_tlb_page(addr);
+-}
 -
--		if (dvb_usb_generic_rw(d, state->data, msg[0].len + 4,
--					state->data, msg[1].len + 1, 0) < 0)
--			err("i2c transfer failed.");
--
--		memcpy(msg[1].buf, &state->data[1], msg[1].len);
--		break;
--	default:
--		warn("more than 2 i2c messages at a time is not handled yet.");
--		break;
--	}
-+	} // while
- 	mutex_unlock(&d->data_mutex);
- 	mutex_unlock(&d->i2c_mutex);
- 	return num;
+ /*
+  * Flush entire TLB if number of entries to be flushed is greater
+  * than the threshold below.
 -- 
 2.43.0
 
