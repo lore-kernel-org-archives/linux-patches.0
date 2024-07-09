@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982AE27713;
-	Tue,  9 Jul 2024 11:26:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CAC27713;
+	Tue,  9 Jul 2024 11:26:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524397; cv=none; b=OMkOifosU+StYgVXkpyda2YzqhoNBZnRGuMAA+2L7O+Pbhe/E5UAiGpGbBtH6YlvsVhq7TyBFkYDpxhvUsDTjuOM3+xBIysHcAtUvcSRQ5R2UE5QglndYsh4h41UmB3AJaicGXf2UoSHTynEoDwvWq4BALtlWlfH7SgjcF0TsKs=
+	t=1720524400; cv=none; b=s0LOtXhnAUKscQSIjfZVQk/pgyx6IBwvKFqJjev8sADfHWplYKaRO5h1R9udh6pBRC0uv9vdlpBqzhMPP2caHsIJmM/Y8Z35sfjVWbedy8fFoQlwehgYRaLycoyW5s4SQi9nqHAf5dzwVIgTDvqDbqmZ8Dbmhyaww3n8LD16AUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524397; c=relaxed/simple;
-	bh=u9Xfj/Ajk58n06i206iEB1LpaIm1VEeMirtaFV18L/4=;
+	s=arc-20240116; t=1720524400; c=relaxed/simple;
+	bh=e3MLiYlGVYUt1dEs/fjcjAxF9+/vDf+jTBL8rc9hwwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VkOM/uaBLl7iYoku1wT9DwNZiu1ZlYfLJoUr9gZNjYpa75Wp+admYt9/c5+5DZiDVHvg5FymUjjWPwLHg1RCm6F/o8M7TfGQZHEtUM7NTIe9nC6Ki681JSbvq0tWy1+H6OxKNZXwrg6aA0UG/mZgbRQ3QthoAx/4DmuePSeaFKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qOIzaBnr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SqIrbzFQbwTME5LDh9kSsVgGXPjP4V65XtXHSL9jTiTeJiFpb3iihFRFcGqUsOen13q/alLVdGxjr1WmxRI/EKx7cAxMRQIRin0nLCFfy9lq+lC/1TgL5pfCfbO1JwPfwk7txAApCvdzsQn7tB4QO4YAxmo1foVIXI4tRa1i1m4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XXat8klv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qOIzaBnr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D36FC32786;
-	Tue,  9 Jul 2024 11:26:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XXat8klv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11F90C3277B;
+	Tue,  9 Jul 2024 11:26:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524397;
-	bh=u9Xfj/Ajk58n06i206iEB1LpaIm1VEeMirtaFV18L/4=;
+	s=korg; t=1720524400;
+	bh=e3MLiYlGVYUt1dEs/fjcjAxF9+/vDf+jTBL8rc9hwwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qOIzaBnrWTHbhCbpkqRK75RMd+RWOxfGAVjJ7nSRJFyPwcX8Z7+du0JB/CTr5QvH3
-	 5ipOxv61wehjFHFsXM98VhYD4wDXnjgQ36vSlmU4o5B1puDeRSl+MFpKTmxlhFjik7
-	 mcirLRl09b5gVotaco42NrNjTTRLFoG2hiMvZ9Jk=
+	b=XXat8klvET4Iod2PnLzDsmB+9hEt46W+P/jDIE3+6bIquGlNo3h6HjVrIAvKKJ1yT
+	 HSmP2imXNkLqJp51GCgRwFbmJWDU1sATHjSd50+vLRtgRGGu0qzusu8OFqfsc0reKb
+	 Avft2T1GfulOmvw6BSt1D/u3c5zhnEYOxZrgZjIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 128/197] mlxsw: core_linecards: Fix double memory deallocation in case of invalid INI file
-Date: Tue,  9 Jul 2024 13:09:42 +0200
-Message-ID: <20240709110713.907207217@linuxfoundation.org>
+	Alexander Dahl <ada@thorsis.com>,
+	Steven Seeger <steven.seeger@flightsystems.net>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>
+Subject: [PATCH 6.9 162/197] mtd: rawnand: Bypass a couple of sanity checks during NAND identification
+Date: Tue,  9 Jul 2024 13:10:16 +0200
+Message-ID: <20240709110715.222768772@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -54,45 +52,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 8ce34dccbe8fa7d2ef86f2d8e7db2a9b67cabfc3 ]
+commit 8754d9835683e8fab9a8305acdb38a3aeb9d20bd upstream.
 
-In case of invalid INI file mlxsw_linecard_types_init() deallocates memory
-but doesn't reset pointer to NULL and returns 0. In case of any error
-occurred after mlxsw_linecard_types_init() call, mlxsw_linecards_init()
-calls mlxsw_linecard_types_fini() which performs memory deallocation again.
+Early during NAND identification, mtd_info fields have not yet been
+initialized (namely, writesize and oobsize) and thus cannot be used for
+sanity checks yet. Of course if there is a misuse of
+nand_change_read_column_op() so early we won't be warned, but there is
+anyway no actual check to perform at this stage as we do not yet know
+the NAND geometry.
 
-Add pointer reset to NULL.
+So, if the fields are empty, especially mtd->writesize which is *always*
+set quite rapidly after identification, let's skip the sanity checks.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+nand_change_read_column_op() is subject to be used early for ONFI/JEDEC
+identification in the very unlikely case of:
+- bitflips appearing in the parameter page,
+- the controller driver not supporting simple DATA_IN cycles.
 
-Fixes: b217127e5e4e ("mlxsw: core_linecards: Add line card objects and implement provisioning")
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Link: https://patch.msgid.link/20240703203251.8871-1-amishin@t-argos.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+As nand_change_read_column_op() uses nand_fill_column_cycles() the logic
+explaind above also applies in this secondary helper.
+
+Fixes: c27842e7e11f ("mtd: rawnand: onfi: Adapt the parameter page read to constraint controllers")
+Fixes: daca31765e8b ("mtd: rawnand: jedec: Adapt the parameter page read to constraint controllers")
+Cc: stable@vger.kernel.org
+Reported-by: Alexander Dahl <ada@thorsis.com>
+Closes: https://lore.kernel.org/linux-mtd/20240306-shaky-bunion-d28b65ea97d7@thorsis.com/
+Reported-by: Steven Seeger <steven.seeger@flightsystems.net>
+Closes: https://lore.kernel.org/linux-mtd/DM6PR05MB4506554457CF95191A670BDEF7062@DM6PR05MB4506.namprd05.prod.outlook.com/
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Tested-by: Sascha Hauer <s.hauer@pengutronix.de>
+Link: https://lore.kernel.org/linux-mtd/20240516131320.579822-3-miquel.raynal@bootlin.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/core_linecards.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mtd/nand/raw/nand_base.c |   57 +++++++++++++++++++++------------------
+ 1 file changed, 32 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/core_linecards.c b/drivers/net/ethernet/mellanox/mlxsw/core_linecards.c
-index 025e0db983feb..b032d5a4b3b84 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/core_linecards.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/core_linecards.c
-@@ -1484,6 +1484,7 @@ static int mlxsw_linecard_types_init(struct mlxsw_core *mlxsw_core,
- 	vfree(types_info->data);
- err_data_alloc:
- 	kfree(types_info);
-+	linecards->types_info = NULL;
- 	return err;
- }
+--- a/drivers/mtd/nand/raw/nand_base.c
++++ b/drivers/mtd/nand/raw/nand_base.c
+@@ -1093,28 +1093,32 @@ static int nand_fill_column_cycles(struc
+ 				   unsigned int offset_in_page)
+ {
+ 	struct mtd_info *mtd = nand_to_mtd(chip);
++	bool ident_stage = !mtd->writesize;
  
--- 
-2.43.0
-
+-	/* Make sure the offset is less than the actual page size. */
+-	if (offset_in_page > mtd->writesize + mtd->oobsize)
+-		return -EINVAL;
+-
+-	/*
+-	 * On small page NANDs, there's a dedicated command to access the OOB
+-	 * area, and the column address is relative to the start of the OOB
+-	 * area, not the start of the page. Asjust the address accordingly.
+-	 */
+-	if (mtd->writesize <= 512 && offset_in_page >= mtd->writesize)
+-		offset_in_page -= mtd->writesize;
+-
+-	/*
+-	 * The offset in page is expressed in bytes, if the NAND bus is 16-bit
+-	 * wide, then it must be divided by 2.
+-	 */
+-	if (chip->options & NAND_BUSWIDTH_16) {
+-		if (WARN_ON(offset_in_page % 2))
++	/* Bypass all checks during NAND identification */
++	if (likely(!ident_stage)) {
++		/* Make sure the offset is less than the actual page size. */
++		if (offset_in_page > mtd->writesize + mtd->oobsize)
+ 			return -EINVAL;
+ 
+-		offset_in_page /= 2;
++		/*
++		 * On small page NANDs, there's a dedicated command to access the OOB
++		 * area, and the column address is relative to the start of the OOB
++		 * area, not the start of the page. Asjust the address accordingly.
++		 */
++		if (mtd->writesize <= 512 && offset_in_page >= mtd->writesize)
++			offset_in_page -= mtd->writesize;
++
++		/*
++		 * The offset in page is expressed in bytes, if the NAND bus is 16-bit
++		 * wide, then it must be divided by 2.
++		 */
++		if (chip->options & NAND_BUSWIDTH_16) {
++			if (WARN_ON(offset_in_page % 2))
++				return -EINVAL;
++
++			offset_in_page /= 2;
++		}
+ 	}
+ 
+ 	addrs[0] = offset_in_page;
+@@ -1123,7 +1127,7 @@ static int nand_fill_column_cycles(struc
+ 	 * Small page NANDs use 1 cycle for the columns, while large page NANDs
+ 	 * need 2
+ 	 */
+-	if (mtd->writesize <= 512)
++	if (!ident_stage && mtd->writesize <= 512)
+ 		return 1;
+ 
+ 	addrs[1] = offset_in_page >> 8;
+@@ -1436,16 +1440,19 @@ int nand_change_read_column_op(struct na
+ 			       unsigned int len, bool force_8bit)
+ {
+ 	struct mtd_info *mtd = nand_to_mtd(chip);
++	bool ident_stage = !mtd->writesize;
+ 
+ 	if (len && !buf)
+ 		return -EINVAL;
+ 
+-	if (offset_in_page + len > mtd->writesize + mtd->oobsize)
+-		return -EINVAL;
++	if (!ident_stage) {
++		if (offset_in_page + len > mtd->writesize + mtd->oobsize)
++			return -EINVAL;
+ 
+-	/* Small page NANDs do not support column change. */
+-	if (mtd->writesize <= 512)
+-		return -ENOTSUPP;
++		/* Small page NANDs do not support column change. */
++		if (mtd->writesize <= 512)
++			return -ENOTSUPP;
++	}
+ 
+ 	if (nand_has_exec_op(chip)) {
+ 		const struct nand_interface_config *conf =
 
 
