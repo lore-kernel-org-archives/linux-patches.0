@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95119156F45;
-	Tue,  9 Jul 2024 11:12:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8853C1581E4;
+	Tue,  9 Jul 2024 11:12:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720523546; cv=none; b=E8O96azDdtbiqWAIVq3rBKpbQ6YwcuSX+nLkTnADAK0avY//ojlWxZXPI+D3jGR3SR722csUc/qtNYdkgfhAggT7I6SpcKK3OSNT42SUpaRyKTP9ftZ0nokz7ZCZGlppFLjKLvqUNeFK+DZ62xDncwX7FUgFkRQ7EphKYsH6RAE=
+	t=1720523549; cv=none; b=HNTLrUbj/rwnPWn/bPgrpEm4dIgYFu1K+doV+mcu1jsYbe/1qVIHJqM+P9CKiqh6Hh3ARvG1Dv53A+rHfCgJgTf1hj/XgSRUmUfasbygcaGEAKhG0v4QiPXGo4Z8E6SJIvQVtb+dDyaLgpYDaXjFVHlJr118srGK1wa5V9SjNqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720523546; c=relaxed/simple;
-	bh=l0Y1qG9SmVpcziil998k3Ofr6K9AQn+Voj9HuQqAFKg=;
+	s=arc-20240116; t=1720523549; c=relaxed/simple;
+	bh=ioOGVCxnVksbPmjvFPH0xh9DSjQpXB6w1Tq8F1VSG+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pkl8q8rWShKrTtCueWZniAzRxrAbZhZvQWn+bJC2tjEYv+wHhZDpPFwpUtupt3hcZNA8HM2dA2XgU2o4Wf8yXEifubb91yNDtF5+LqkuppZaRG1+VXUw6efd0bYCCnpoujza1aDk84F1RGXyh+qMd5E+z2Cyl6LDnotn7qEmZnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KugCHdcx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dyOCzXxg+/TgD6CLqrfVmWKlrObIWQi9kTktrQEV7IXmfp9luCC7pf+OEFELYemS6+2qE4MKNCdHnZzN7SL+yF0vO9fyQgARcJgCfEBX7eieigA0k5LOZTkckJQQSSjiOdw3djUVUbWlfHY86kXXsxWYMymUaRabNS674b+rZNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AbPmonqu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KugCHdcx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CC91C3277B;
-	Tue,  9 Jul 2024 11:12:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AbPmonqu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EEB1C3277B;
+	Tue,  9 Jul 2024 11:12:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720523546;
-	bh=l0Y1qG9SmVpcziil998k3Ofr6K9AQn+Voj9HuQqAFKg=;
+	s=korg; t=1720523549;
+	bh=ioOGVCxnVksbPmjvFPH0xh9DSjQpXB6w1Tq8F1VSG+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KugCHdcxyZh9FdlrNzJs9DHW5NzKAeCv1k9xa3yBPsmKifm3wapLUHDYj10ld7a7o
-	 7rZTrkub4gysOAveyWWBvTtan0nr/mSmXpcAyagxzxwcJyT0a9TWpK7lZDXQaLDCeW
-	 yBUkp4v99etH/Ond6/E9kqM4O8bfZ/UkDOQG8KwM=
+	b=AbPmonquMxR/XNXId9xzfMc07yx0MJgtl9yLlfdu9QqnR/a1PoY31PlrvjlpZ9Cxx
+	 32T9mmAqMz/DkSMTjsFHwrFaxCCGKn2yTSEGgcgbNwIzDnW89mhp31+PQAEYTKI9h4
+	 7bH9VDpRlTVDiRZ/VPXeZJF6OyUj2ULfXdG1SxZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean Delvare <jdelvare@suse.de>,
-	Michael Kelley <mhklinux@outlook.com>,
+	Erick Archer <erick.archer@outlook.com>,
+	Kees Cook <keescook@chromium.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 029/139] firmware: dmi: Stop decoding on broken entry
-Date: Tue,  9 Jul 2024 13:08:49 +0200
-Message-ID: <20240709110659.290193039@linuxfoundation.org>
+Subject: [PATCH 6.6 030/139] Input: ff-core - prefer struct_size over open coded arithmetic
+Date: Tue,  9 Jul 2024 13:08:50 +0200
+Message-ID: <20240709110659.329223207@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110658.146853929@linuxfoundation.org>
 References: <20240709110658.146853929@linuxfoundation.org>
@@ -51,44 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean Delvare <jdelvare@suse.de>
+From: Erick Archer <erick.archer@outlook.com>
 
-[ Upstream commit 0ef11f604503b1862a21597436283f158114d77e ]
+[ Upstream commit a08b8f8557ad88ffdff8905e5da972afe52e3307 ]
 
-If a DMI table entry is shorter than 4 bytes, it is invalid. Due to
-how DMI table parsing works, it is impossible to safely recover from
-such an error, so we have to stop decoding the table.
+This is an effort to get rid of all multiplications from allocation
+functions in order to prevent integer overflows [1][2].
 
-Signed-off-by: Jean Delvare <jdelvare@suse.de>
-Link: https://lore.kernel.org/linux-kernel/Zh2K3-HLXOesT_vZ@liuwe-devbox-debian-v2/T/
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+As the "ff" variable is a pointer to "struct ff_device" and this
+structure ends in a flexible array:
+
+struct ff_device {
+	[...]
+	struct file *effect_owners[] __counted_by(max_effects);
+};
+
+the preferred way in the kernel is to use the struct_size() helper to
+do the arithmetic instead of the calculation "size + count * size" in
+the kzalloc() function.
+
+The struct_size() helper returns SIZE_MAX on overflow. So, refactor
+the comparison to take advantage of this.
+
+This way, the code is more readable and safer.
+
+This code was detected with the help of Coccinelle, and audited and
+modified manually.
+
+Link: https://www.kernel.org/doc/html/latest/process/deprecated.html#open-coded-arithmetic-in-allocator-arguments [1]
+Link: https://github.com/KSPP/linux/issues/160 [2]
+Signed-off-by: Erick Archer <erick.archer@outlook.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/AS8PR02MB72371E646714BAE2E51A6A378B152@AS8PR02MB7237.eurprd02.prod.outlook.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/dmi_scan.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/input/ff-core.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/firmware/dmi_scan.c b/drivers/firmware/dmi_scan.c
-index 015c95a825d31..ac2a5d2d47463 100644
---- a/drivers/firmware/dmi_scan.c
-+++ b/drivers/firmware/dmi_scan.c
-@@ -101,6 +101,17 @@ static void dmi_decode_table(u8 *buf,
- 	       (data - buf + sizeof(struct dmi_header)) <= dmi_len) {
- 		const struct dmi_header *dm = (const struct dmi_header *)data;
+diff --git a/drivers/input/ff-core.c b/drivers/input/ff-core.c
+index 16231fe080b00..609a5f01761bd 100644
+--- a/drivers/input/ff-core.c
++++ b/drivers/input/ff-core.c
+@@ -9,8 +9,10 @@
+ /* #define DEBUG */
  
-+		/*
-+		 * If a short entry is found (less than 4 bytes), not only it
-+		 * is invalid, but we cannot reliably locate the next entry.
-+		 */
-+		if (dm->length < sizeof(struct dmi_header)) {
-+			pr_warn(FW_BUG
-+				"Corrupted DMI table, offset %zd (only %d entries processed)\n",
-+				data - buf, i);
-+			break;
-+		}
-+
- 		/*
- 		 *  We want to know the total length (formatted area and
- 		 *  strings) before decoding to make sure we won't run off the
+ #include <linux/input.h>
++#include <linux/limits.h>
+ #include <linux/module.h>
+ #include <linux/mutex.h>
++#include <linux/overflow.h>
+ #include <linux/sched.h>
+ #include <linux/slab.h>
+ 
+@@ -315,9 +317,8 @@ int input_ff_create(struct input_dev *dev, unsigned int max_effects)
+ 		return -EINVAL;
+ 	}
+ 
+-	ff_dev_size = sizeof(struct ff_device) +
+-				max_effects * sizeof(struct file *);
+-	if (ff_dev_size < max_effects) /* overflow */
++	ff_dev_size = struct_size(ff, effect_owners, max_effects);
++	if (ff_dev_size == SIZE_MAX) /* overflow */
+ 		return -EINVAL;
+ 
+ 	ff = kzalloc(ff_dev_size, GFP_KERNEL);
 -- 
 2.43.0
 
