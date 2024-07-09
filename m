@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6761D13A25F;
-	Tue,  9 Jul 2024 11:24:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EAF314F138;
+	Tue,  9 Jul 2024 11:24:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524281; cv=none; b=kWl0Af7Mcf6lFLrOX1y225tyX49yP7dqoJqJiO6QQLQiQbaylZJDanRIVK2GIwcLxQy0uj8KIXDtMq37PHS4DmKcqY7J44nSeDVk2iObZgVv+cNUB99J6JiNQem1DqTXiqrrZzjnMonqOukCl6/YgZXCu4kYEs4LGjKcS2mbJ08=
+	t=1720524284; cv=none; b=ZgQk6RZ5XIfmYklW77HEEgjDIjV8UU3ogWsLPwLaQv0sPeqRjtrMMG8TMeNn8ina4OkK1FCdGtH+TLrpQSqle+T+3gUdb5asN21UOqGuEMa+zXjq6bS874SiBMy/kSTfIO2/ATM0e/jqd2AaOjtwqGjaa0lqzjzWkn9CLrztX9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524281; c=relaxed/simple;
-	bh=PUnMPZIvY5aVc8yrwG0SrJ7buAek+aHM0wGSI+pf5C4=;
+	s=arc-20240116; t=1720524284; c=relaxed/simple;
+	bh=54V43o+bxg8gc96H0D8h9eh+Kzwrf0I1zer0qEtSYbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PVDUR75qlEi0cXTh+BV8nyYZjdtYvM/myu8Yl02v1NHA3fcAc7kpzHq7cymOPYpExySL4msQvRWIKZzJNOzcGHq2eEvt54X01Q1XV+y4Y1FDqtpdTbHWCUt5ucJcG5x69q7qoXCwDUNYQ5+DjwO/6f3N1PrIskl8kqIEh9U9Qkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pMpqE+hY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jXf0uDR+tkApaQm0CZlxh8iENjR7Vi5jrAJERqfZ/bZC2oW9h2q1Apv+BDl2nPk7U7Shd7syMR5l9OZk2SZFRlD/dZ95PaNqaqmkw/BbFy88zxBpiOMMxLc9VnYAk9jtyCC8OUoJrpZj8FplaMjsfWXH9fOtuC8Iua6AnQbBrmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xLSSMrkQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pMpqE+hY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E191CC3277B;
-	Tue,  9 Jul 2024 11:24:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xLSSMrkQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D39BFC3277B;
+	Tue,  9 Jul 2024 11:24:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524281;
-	bh=PUnMPZIvY5aVc8yrwG0SrJ7buAek+aHM0wGSI+pf5C4=;
+	s=korg; t=1720524284;
+	bh=54V43o+bxg8gc96H0D8h9eh+Kzwrf0I1zer0qEtSYbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pMpqE+hYeu6hQucclSMEMk/P1Lzwfm2OqHr253msWnXZOJOTx2eXwACiofoW//Npo
-	 f2RBKr1gZSINuSw5w8qcDD0Eb3xNXfHihpFcdXKp0Di5RnDd2wrltt4FzXnPAKu6sr
-	 0BQNFRb17xvjW1d4pDjOprlEVcS0XuOGWcq0LgG4=
+	b=xLSSMrkQuYMnT6ADTOADqBpIgLrXUSYuL7i/N9wgr+JlL17Yo18fe5mCwLTFCILuJ
+	 lPf5fzrPdH8le8ntowvZfEb/bygG7VRHO7k4azhdWYZv7C6g1IGuhK4iltgN4HgX0y
+	 wkSLbYUNAh73uUQ3iC2D+cBSHeqoHJya2oa3Kr5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Schiller <ms@dev.tdt.de>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	kernel test robot <oliver.sang@intel.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 101/197] gpiolib: of: fix lookup quirk for MIPS Lantiq
-Date: Tue,  9 Jul 2024 13:09:15 +0200
-Message-ID: <20240709110712.868401481@linuxfoundation.org>
+Subject: [PATCH 6.9 102/197] net: allow skb_datagram_iter to be called from any context
+Date: Tue,  9 Jul 2024 13:09:16 +0200
+Message-ID: <20240709110712.905963511@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -52,68 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Sagi Grimberg <sagi@grimberg.me>
 
-[ Upstream commit 3645ffaf2b334abaf5f53e5ca0f47465d91e69d2 ]
+[ Upstream commit d2d30a376d9cc94c6fb730c58b3e5b7426ecb6de ]
 
-As it turns out, there is a large number of out-of-tree DTSes (in
-OpenWrt project) that used to specify incorrect (active high) polarity
-for the Lantiq reset GPIO, so to keep compatibility while they are
-being updated a quirk for force the polarity low is needed. Luckily
-these old DTSes used nonstandard name for the property ("gpio-reset" vs
-"reset-gpios") so the quirk will not hurt if there are any new devices
-that need inverted polarity as they can specify the right polarity in
-their DTS when using the standard "reset-gpios" property.
+We only use the mapping in a single context, so kmap_local is sufficient
+and cheaper. Make sure to use skb_frag_foreach_page as skb frags may
+contain compound pages and we need to map page by page.
 
-Additionally the condition to enable the transition from standard to
-non-standard reset GPIO property name was inverted and the replacement
-name for the property was not correct. Fix this as well.
-
-Fixes: fbbbcd177a27 ("gpiolib: of: add quirk for locating reset lines with legacy bindings")
-Fixes: 90c2d2eb7ab5 ("MIPS: pci: lantiq: switch to using gpiod API")
-Reported-by: Martin Schiller <ms@dev.tdt.de>
-Acked-by: Martin Schiller <ms@dev.tdt.de>
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Link: https://lore.kernel.org/r/ZoLpqv1PN08xHioh@google.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202406161539.b5ff7b20-oliver.sang@intel.com
+Fixes: 950fcaecd5cc ("datagram: consolidate datagram copy to iter helpers")
+Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
+Link: https://patch.msgid.link/20240626100008.831849-1-sagi@grimberg.me
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-of.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ net/core/datagram.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib-of.c b/drivers/gpio/gpiolib-of.c
-index cb0cefaec37e8..7db35cbde8e92 100644
---- a/drivers/gpio/gpiolib-of.c
-+++ b/drivers/gpio/gpiolib-of.c
-@@ -202,6 +202,16 @@ static void of_gpio_try_fixup_polarity(const struct device_node *np,
- 		 * helper, and be consistent with what other drivers do.
- 		 */
- 		{ "qi,lb60",		"rb-gpios",	true },
-+#endif
-+#if IS_ENABLED(CONFIG_PCI_LANTIQ)
-+		/*
-+		 * According to the PCI specification, the RST# pin is an
-+		 * active-low signal. However, most of the device trees that
-+		 * have been widely used for a long time incorrectly describe
-+		 * reset GPIO as active-high, and were also using wrong name
-+		 * for the property.
-+		 */
-+		{ "lantiq,pci-xway",	"gpio-reset",	false },
- #endif
- 	};
- 	unsigned int i;
-@@ -504,9 +514,9 @@ static struct gpio_desc *of_find_gpio_rename(struct device_node *np,
- 		{ "reset",	"reset-n-io",	"marvell,nfc-uart" },
- 		{ "reset",	"reset-n-io",	"mrvl,nfc-uart" },
- #endif
--#if !IS_ENABLED(CONFIG_PCI_LANTIQ)
-+#if IS_ENABLED(CONFIG_PCI_LANTIQ)
- 		/* MIPS Lantiq PCI */
--		{ "reset",	"gpios-reset",	"lantiq,pci-xway" },
-+		{ "reset",	"gpio-reset",	"lantiq,pci-xway" },
- #endif
+diff --git a/net/core/datagram.c b/net/core/datagram.c
+index a8b625abe242c..cb72923acc21c 100644
+--- a/net/core/datagram.c
++++ b/net/core/datagram.c
+@@ -435,15 +435,22 @@ static int __skb_datagram_iter(const struct sk_buff *skb, int offset,
  
- 		/*
+ 		end = start + skb_frag_size(frag);
+ 		if ((copy = end - offset) > 0) {
+-			struct page *page = skb_frag_page(frag);
+-			u8 *vaddr = kmap(page);
++			u32 p_off, p_len, copied;
++			struct page *p;
++			u8 *vaddr;
+ 
+ 			if (copy > len)
+ 				copy = len;
+-			n = INDIRECT_CALL_1(cb, simple_copy_to_iter,
+-					vaddr + skb_frag_off(frag) + offset - start,
+-					copy, data, to);
+-			kunmap(page);
++
++			skb_frag_foreach_page(frag,
++					      skb_frag_off(frag) + offset - start,
++					      copy, p, p_off, p_len, copied) {
++				vaddr = kmap_local_page(p);
++				n = INDIRECT_CALL_1(cb, simple_copy_to_iter,
++					vaddr + p_off, p_len, data, to);
++				kunmap_local(vaddr);
++			}
++
+ 			offset += n;
+ 			if (n != copy)
+ 				goto short_copy;
 -- 
 2.43.0
 
