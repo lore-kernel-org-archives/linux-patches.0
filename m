@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E64F514038F;
-	Tue,  9 Jul 2024 11:33:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A917C55E4C;
+	Tue,  9 Jul 2024 11:33:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524807; cv=none; b=t3fWKOoalowPcbLHih0FdQ//KeNKfzmoVF34pqRS134J1pWy/ckr7u8oWUwPXn9U20lo3yXxOndhzaOXip4kZtMMktUE0HIut9awjkPpl2CmsCyC+s6cVWOnkIizgwVWJgXA35wt7xZbJ1yD2Hm5WVgT6aPyp8kNL0/W46Xt8AA=
+	t=1720524809; cv=none; b=BOUMitpqQhc28nLKEREACfths4y6FyjqTg3e/Bv/b/UKmcDV+i+YZTvZ31TPaoQwMvYt539yP7llOU4ayOEOc/LLr35/x9ENHdAL3ycXjM3gLIaR8+DNc1mlxbHsDcBrcq5T4LzQMkwglDbNJv+jbl2a3qfjisBDq041oYJixV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524807; c=relaxed/simple;
-	bh=xxP8H5I9wgzNpUZ2BstBy3ZSRKv2Y5QMJGfbTv0iRyo=;
+	s=arc-20240116; t=1720524809; c=relaxed/simple;
+	bh=QaKA4ZCn4UT2AWIoX07pZuegDQEXy3EtYzc8unO7tq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vBeKRDnAqe/4aaakKfx4WAgEm4rHeIpe0nW8rO2XNbmqz3eN9a4b+CIp47caUNd03RgkCZGiy1uQ3C2QnmLftIeGDQqhWWtxn8iqDyDy9mU27Qs1/ZR3NXBYJd4UwMeGZVx+vo0N6nVc1AIVJjeTqebIahlTpv9fuKcuUsMlaxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O5kFEToz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G59I6+yP4GABlUi8oEndRq38Jj1v+AXDDcXvXGBL4Di6ZFQs6Z7j4sOT6A6AZj0ZxIuM1yKrsHC3ddI+AX0xvwG0uS0lXA1UM2g0+noviuZxiXxK4AkEnkl+MNLLCPqAy6r6vSyW/6XdzAPA0wokbtTbQ0eMWylgolizFvatBdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cLgcpVwc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O5kFEToz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E9D5C3277B;
-	Tue,  9 Jul 2024 11:33:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cLgcpVwc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B57C4AF0B;
+	Tue,  9 Jul 2024 11:33:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524806;
-	bh=xxP8H5I9wgzNpUZ2BstBy3ZSRKv2Y5QMJGfbTv0iRyo=;
+	s=korg; t=1720524809;
+	bh=QaKA4ZCn4UT2AWIoX07pZuegDQEXy3EtYzc8unO7tq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O5kFETozf07yTFBMUJDCw4SDo+4LxWVs5jhOwZceZvoFAqazhrI2vB0M1s/qiLTnA
-	 QrOT6eJ1kBDdIGKwWlCLD4BniKhbKw17xgf8Ye6wjcE2SwytZ+9kzhYZbH3q+EfRqh
-	 Ozz5V+z6RAPxNvS59a8i9GMmftf4Ft2RHqJpo/PI=
+	b=cLgcpVwcyvqs7zAz7OVqdNHNTl05lRdYc+aPXw1VEmaK224wrzzdVc3Wu3VYVM4P6
+	 obLb043C07JeOyuGKtfiNFIE2q2uwca3hHLkRZ040tWNxyUyHhFJq60ryW7CkCBk2q
+	 Ofs0uBYkjBTRnOozFIeHJP0rhjqJD28YMt0vGDNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Barry Song <21cnbao@gmail.com>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Robin Murphy <robin.murphy@arm.com>,
 	Christoph Hellwig <hch@lst.de>,
+	Kundan Kumar <kundan.kumar@samsung.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 092/102] dma-mapping: benchmark: avoid needless copy_to_user if benchmark fails
-Date: Tue,  9 Jul 2024 13:10:55 +0200
-Message-ID: <20240709110654.948704662@linuxfoundation.org>
+Subject: [PATCH 6.1 093/102] nvme: adjust multiples of NVME_CTRL_PAGE_SIZE in offset
+Date: Tue,  9 Jul 2024 13:10:56 +0200
+Message-ID: <20240709110654.986986426@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110651.353707001@linuxfoundation.org>
 References: <20240709110651.353707001@linuxfoundation.org>
@@ -53,36 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Kundan Kumar <kundan.kumar@samsung.com>
 
-[ Upstream commit f7c9ccaadffd13066353332c13d7e9bf73b8f92d ]
+[ Upstream commit 1bd293fcf3af84674e82ed022c049491f3768840 ]
 
-If do_map_benchmark() has failed, there is nothing useful to copy back
-to userspace.
+bio_vec start offset may be relatively large particularly when large
+folio gets added to the bio. A bigger offset will result in avoiding the
+single-segment mapping optimization and end up using expensive
+mempool_alloc further.
 
-Suggested-by: Barry Song <21cnbao@gmail.com>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Robin Murphy <robin.murphy@arm.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Rather than using absolute value, adjust bv_offset by
+NVME_CTRL_PAGE_SIZE while checking if segment can be fitted into one/two
+PRP entries.
+
+Suggested-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Kundan Kumar <kundan.kumar@samsung.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/map_benchmark.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/nvme/host/pci.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/dma/map_benchmark.c b/kernel/dma/map_benchmark.c
-index af661734e8f90..dafdc47ae5fcc 100644
---- a/kernel/dma/map_benchmark.c
-+++ b/kernel/dma/map_benchmark.c
-@@ -252,6 +252,9 @@ static long map_benchmark_ioctl(struct file *file, unsigned int cmd,
- 		 * dma_mask changed by benchmark
- 		 */
- 		dma_set_mask(map->dev, old_dma_mask);
-+
-+		if (ret)
-+			return ret;
- 		break;
- 	default:
- 		return -EINVAL;
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 5ff09f2cacab7..32e89ea853a47 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -824,7 +824,8 @@ static blk_status_t nvme_map_data(struct nvme_dev *dev, struct request *req,
+ 		struct bio_vec bv = req_bvec(req);
+ 
+ 		if (!is_pci_p2pdma_page(bv.bv_page)) {
+-			if (bv.bv_offset + bv.bv_len <= NVME_CTRL_PAGE_SIZE * 2)
++			if ((bv.bv_offset & (NVME_CTRL_PAGE_SIZE - 1)) +
++			     bv.bv_len <= NVME_CTRL_PAGE_SIZE * 2)
+ 				return nvme_setup_prp_simple(dev, req,
+ 							     &cmnd->rw, &bv);
+ 
 -- 
 2.43.0
 
