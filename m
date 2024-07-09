@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFDDC158A19;
-	Tue,  9 Jul 2024 11:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72F21586C7;
+	Tue,  9 Jul 2024 11:23:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524214; cv=none; b=BhvBA7NiVb/X+vil0lQOpIoJB6cs58G9gGDmK8jGWMFHPOdFSaiHADK+I3s5JTrVXM4j9plICwuvbVNWQ12uinp1nlWCBYrFZKPcGtsHHBqLQksflNKf1Vai3+13JTJ/OBJDRAP5OctC05UDf0t+rchp2pN9OpHYEnySqE+Pkcw=
+	t=1720524216; cv=none; b=estW7LJE9BNa+CJUGbNOmMlt+aMJIl7YqXv900OvIFUJRbJ63w6hTwkzrAtU3bFv87RUTl8m8za86saqaxDfuOQWjcRyLji0NByymEcxSAqyghpkCVnYl6OFDujmHXAUnDoKU53aMg0WhBRAH1z2zhiumVAXyDFuMy8XZe3uVMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524214; c=relaxed/simple;
-	bh=8eigaKplGpomEuSOCYnDCXK9sv0azvJK2UCgCM5jMa0=;
+	s=arc-20240116; t=1720524216; c=relaxed/simple;
+	bh=d7fLHmZWaRChp06HBNkntC8FM2Ps6Jhb0TVWzbdyPsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NSPWIdaLNEMX3Yx7xdds4VrflzkGknE2Wp9zI1bzOhdLEB61iAUMuQjjUX7hFKN5k/lyG+swq4d2G5W2KHdtOYWHvupChYToIEhVc7nlDc8ZoCNIT4e8z1KSzxCvzvflNwwyl9FoyZQmilgoNaMubzSwTUFe9kr6f/qdBafoKCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eoHWeDpa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O4k8d2QZ7ucukEb9uWgnhbpIwqlYBktOrUMw6L/14Qop1/OEzXqeuJuHHlqlyfFv4ICr7eses8+DKqLo/93gLVJ2PfwZ0N9Tp04zN6WVdaJzuL8a4jLcP+2uT5kuRlBIq+wy7v7LpKIqvuC+G+9WS+em1dxl59lsrPil7TG1noQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PefptlMj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eoHWeDpa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E7C7C3277B;
-	Tue,  9 Jul 2024 11:23:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PefptlMj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BC83C3277B;
+	Tue,  9 Jul 2024 11:23:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524213;
-	bh=8eigaKplGpomEuSOCYnDCXK9sv0azvJK2UCgCM5jMa0=;
+	s=korg; t=1720524216;
+	bh=d7fLHmZWaRChp06HBNkntC8FM2Ps6Jhb0TVWzbdyPsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eoHWeDpar2inYgqz+0dT2gtXzsCzORUwqhDfTnxBic9SfM+Z0meZVToaaaJIRHxum
-	 O7N+/X3aeQGgSO7ZnjlZGmJI/or3a1awSDA8DsoRDsVahzwRfR19TT6vwMp87V1QqG
-	 f0P1lpi/chWr1A2E0ubCE7e++R7iDburi3Hc0oKw=
+	b=PefptlMjbAfBPEUVtRtK6h5c+teQ1rX/bE7Z8dqftaL8DI/8EWtrz4HCFfBdI+UkW
+	 8LB8K7E/AZch1O7U7oLjZDQ/5AtGhZl6nZmbybDpxpIfey8xvMuh9BU5t67jS465QB
+	 DTkIpXpTgcYhkgvi7+c3D2JD51WoAU42Y+hTUlxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerry Dai <jerry.dai@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Thomas Huth <thuth@redhat.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 109/197] net: ntb_netdev: Move ntb_netdev_rx_handler() to call netif_rx() from __netif_rx()
-Date: Tue,  9 Jul 2024 13:09:23 +0200
-Message-ID: <20240709110713.175433789@linuxfoundation.org>
+Subject: [PATCH 6.9 110/197] drm/fbdev-generic: Fix framebuffer on big endian devices
+Date: Tue,  9 Jul 2024 13:09:24 +0200
+Message-ID: <20240709110713.213943752@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -52,76 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Jiang <dave.jiang@intel.com>
+From: Thomas Huth <thuth@redhat.com>
 
-[ Upstream commit e15a5d821e5192a3769d846079bc9aa380139baf ]
+[ Upstream commit 740b8dad05bee39e1e3b926f05bb4a8274b8ba49 ]
 
-The following is emitted when using idxd (DSA) dmanegine as the data
-mover for ntb_transport that ntb_netdev uses.
+Starting with kernel 6.7, the framebuffer text console is not working
+anymore with the virtio-gpu device on s390x hosts. Such big endian fb
+devices are usinga different pixel ordering than little endian devices,
+e.g. DRM_FORMAT_BGRX8888 instead of DRM_FORMAT_XRGB8888.
 
-[74412.546922] BUG: using smp_processor_id() in preemptible [00000000] code: irq/52-idxd-por/14526
-[74412.556784] caller is netif_rx_internal+0x42/0x130
-[74412.562282] CPU: 6 PID: 14526 Comm: irq/52-idxd-por Not tainted 6.9.5 #5
-[74412.569870] Hardware name: Intel Corporation ArcherCity/ArcherCity, BIOS EGSDCRB1.E9I.1752.P05.2402080856 02/08/2024
-[74412.581699] Call Trace:
-[74412.584514]  <TASK>
-[74412.586933]  dump_stack_lvl+0x55/0x70
-[74412.591129]  check_preemption_disabled+0xc8/0xf0
-[74412.596374]  netif_rx_internal+0x42/0x130
-[74412.600957]  __netif_rx+0x20/0xd0
-[74412.604743]  ntb_netdev_rx_handler+0x66/0x150 [ntb_netdev]
-[74412.610985]  ntb_complete_rxc+0xed/0x140 [ntb_transport]
-[74412.617010]  ntb_rx_copy_callback+0x53/0x80 [ntb_transport]
-[74412.623332]  idxd_dma_complete_txd+0xe3/0x160 [idxd]
-[74412.628963]  idxd_wq_thread+0x1a6/0x2b0 [idxd]
-[74412.634046]  irq_thread_fn+0x21/0x60
-[74412.638134]  ? irq_thread+0xa8/0x290
-[74412.642218]  irq_thread+0x1a0/0x290
-[74412.646212]  ? __pfx_irq_thread_fn+0x10/0x10
-[74412.651071]  ? __pfx_irq_thread_dtor+0x10/0x10
-[74412.656117]  ? __pfx_irq_thread+0x10/0x10
-[74412.660686]  kthread+0x100/0x130
-[74412.664384]  ? __pfx_kthread+0x10/0x10
-[74412.668639]  ret_from_fork+0x31/0x50
-[74412.672716]  ? __pfx_kthread+0x10/0x10
-[74412.676978]  ret_from_fork_asm+0x1a/0x30
-[74412.681457]  </TASK>
+This used to work fine as long as drm_client_buffer_addfb() was still
+calling drm_mode_addfb() which called drm_driver_legacy_fb_format()
+internally to get the right format. But drm_client_buffer_addfb() has
+recently been reworked to call drm_mode_addfb2() instead with the
+format value that has been passed to it as a parameter (see commit
+6ae2ff23aa43 ("drm/client: Convert drm_client_buffer_addfb() to drm_mode_addfb2()").
 
-The cause is due to the idxd driver interrupt completion handler uses
-threaded interrupt and the threaded handler is not hard or soft interrupt
-context. However __netif_rx() can only be called from interrupt context.
-Change the call to netif_rx() in order to allow completion via normal
-context for dmaengine drivers that utilize threaded irq handling.
+That format parameter is determined in drm_fbdev_generic_helper_fb_probe()
+via the drm_mode_legacy_fb_format() function - which only generates
+formats suitable for little endian devices. So to fix this issue
+switch to drm_driver_legacy_fb_format() here instead to take the
+device endianness into consideration.
 
-While the following commit changed from netif_rx() to __netif_rx(),
-baebdf48c360 ("net: dev: Makes sure netif_rx() can be invoked in any context."),
-the change should've been a noop instead. However, the code precedes this
-fix should've been using netif_rx_ni() or netif_rx_any_context().
-
-Fixes: 548c237c0a99 ("net: Add support for NTB virtual ethernet device")
-Reported-by: Jerry Dai <jerry.dai@intel.com>
-Tested-by: Jerry Dai <jerry.dai@intel.com>
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20240701181538.3799546-1-dave.jiang@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 6ae2ff23aa43 ("drm/client: Convert drm_client_buffer_addfb() to drm_mode_addfb2()")
+Closes: https://issues.redhat.com/browse/RHEL-45158
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Tested-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240627173530.460615-1-thuth@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ntb_netdev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/drm_fbdev_generic.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ntb_netdev.c b/drivers/net/ntb_netdev.c
-index 536bd6564f8b8..dade51cf599c6 100644
---- a/drivers/net/ntb_netdev.c
-+++ b/drivers/net/ntb_netdev.c
-@@ -119,7 +119,7 @@ static void ntb_netdev_rx_handler(struct ntb_transport_qp *qp, void *qp_data,
- 	skb->protocol = eth_type_trans(skb, ndev);
- 	skb->ip_summed = CHECKSUM_NONE;
+diff --git a/drivers/gpu/drm/drm_fbdev_generic.c b/drivers/gpu/drm/drm_fbdev_generic.c
+index b4659cd6285ab..cbb7418b789f8 100644
+--- a/drivers/gpu/drm/drm_fbdev_generic.c
++++ b/drivers/gpu/drm/drm_fbdev_generic.c
+@@ -84,7 +84,8 @@ static int drm_fbdev_generic_helper_fb_probe(struct drm_fb_helper *fb_helper,
+ 		    sizes->surface_width, sizes->surface_height,
+ 		    sizes->surface_bpp);
  
--	if (__netif_rx(skb) == NET_RX_DROP) {
-+	if (netif_rx(skb) == NET_RX_DROP) {
- 		ndev->stats.rx_errors++;
- 		ndev->stats.rx_dropped++;
- 	} else {
+-	format = drm_mode_legacy_fb_format(sizes->surface_bpp, sizes->surface_depth);
++	format = drm_driver_legacy_fb_format(dev, sizes->surface_bpp,
++					     sizes->surface_depth);
+ 	buffer = drm_client_framebuffer_create(client, sizes->surface_width,
+ 					       sizes->surface_height, format);
+ 	if (IS_ERR(buffer))
 -- 
 2.43.0
 
