@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5628A158202;
-	Tue,  9 Jul 2024 11:15:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A66153812;
+	Tue,  9 Jul 2024 11:15:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720523740; cv=none; b=u44MlSEq/JgFlBt6V1QqLfQ59ItRLYkIYUPzUVs4MS9++OE8PmukJAnslC2hsno8usjNSdCAFTU3QcY15lUM4bJwgrkQNJInQoBx2J95Pj/sP4NOfsk5eWeZ+8LtOasQv2Pe8imn8Ke4Hs4ETz4I34B5ndDDjxtFhYK5ad6Tosc=
+	t=1720523743; cv=none; b=ixbPF6jq8vt6DBu3J7pLHOjXkiGEp9a9HjInL85zv8vu2mojhP6rqGGP0XTWC8hPngrgdhYrUZGsd5vBIYPq1F1Yqu9g8RBaXHBj/d/EXD73lTvn2rt/V9NR6VfbWbmnXuFbMG+/XkBlENrDu85YPVemesDTtv3n19vVd0butg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720523740; c=relaxed/simple;
-	bh=GOuqQnorU6ZDkxNj1n8BdG/2+Ut/1NSMvcRoEK1ijB4=;
+	s=arc-20240116; t=1720523743; c=relaxed/simple;
+	bh=Ew5ZV+5JCD9YxDkFRak3i0yEKni74c1uHLEMF26o3tY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gu6+fetzuG14i//FZ39btuBc0JE+8dueouN9u0SgP/CI3PiTGUHFNsP4n6Qe0LSiU5Ytb4besXosulzQTe2YzTno2F/06esiakf+YClQN8w1OasJM8U4/bzFn7wS3iyuiKJuX4DURbTkhKDxbjGMLg0HsH95G72BMBgyDcMnM8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tezVZWXC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BfWIigsnFkwQed/H2jSyDhjg5Ag4WQ55DUotaNncD3i21cs326WzZ4OGuzDDmzW8bTiDrtSwuKlqvSwGV/b0YL/Cgx4LFghz8L+S7xuaQFgzkTQMAWahjovj+J7x3Dfs8EPcxsI1HkPoMDQm1t3LxazcCmNMJKFIGnsznm8KaF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ehOn5puV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tezVZWXC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E6F7C3277B;
-	Tue,  9 Jul 2024 11:15:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ehOn5puV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B697C3277B;
+	Tue,  9 Jul 2024 11:15:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720523739;
-	bh=GOuqQnorU6ZDkxNj1n8BdG/2+Ut/1NSMvcRoEK1ijB4=;
+	s=korg; t=1720523743;
+	bh=Ew5ZV+5JCD9YxDkFRak3i0yEKni74c1uHLEMF26o3tY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tezVZWXCEEYskW6WC1fGFEvWzUBnWfrflVo7ck3jxcxoiCp40oP+gNa4Txd1W+wwQ
-	 jrL814FVBL8p974bv0DTDVDyaw3yX6wruj1vMoSjC4nrW4EJwJuQ4YspabJlvp9PfL
-	 XYcxHFzXN1xEnc8/c8oFIzWVoZYNBNRqt5z3R3JI=
+	b=ehOn5puV6lRczgTS06JFaulvvjQPj7TyPBY0giIR2LW3DtxAdfCBE47P9GHXQs35d
+	 39GQYhPP2nYJPnI/q/0SxIy26CafG6XdYbPPT3g9X1Kp2YDeTwG/BonZ7RIWbS5aRR
+	 DZPxPIuCkEtD2KYS8efVOqHzPwWm7xgFxyBM3FTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Zach OKeefe <zokeefe@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 093/139] mm: avoid overflows in dirty throttling logic
-Date: Tue,  9 Jul 2024 13:09:53 +0200
-Message-ID: <20240709110701.775559208@linuxfoundation.org>
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Johannes Thumshirn <Johannes.Thumshirn@wdc.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.6 094/139] btrfs: fix adding block group to a reclaim list and the unused list during reclaim
+Date: Tue,  9 Jul 2024 13:09:54 +0200
+Message-ID: <20240709110701.813567943@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110658.146853929@linuxfoundation.org>
 References: <20240709110658.146853929@linuxfoundation.org>
@@ -51,103 +55,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Naohiro Aota <naohiro.aota@wdc.com>
 
-commit 385d838df280eba6c8680f9777bfa0d0bfe7e8b2 upstream.
+commit 48f091fd50b2eb33ae5eaea9ed3c4f81603acf38 upstream.
 
-The dirty throttling logic is interspersed with assumptions that dirty
-limits in PAGE_SIZE units fit into 32-bit (so that various multiplications
-fit into 64-bits).  If limits end up being larger, we will hit overflows,
-possible divisions by 0 etc.  Fix these problems by never allowing so
-large dirty limits as they have dubious practical value anyway.  For
-dirty_bytes / dirty_background_bytes interfaces we can just refuse to set
-so large limits.  For dirty_ratio / dirty_background_ratio it isn't so
-simple as the dirty limit is computed from the amount of available memory
-which can change due to memory hotplug etc.  So when converting dirty
-limits from ratios to numbers of pages, we just don't allow the result to
-exceed UINT_MAX.
+There is a potential parallel list adding for retrying in
+btrfs_reclaim_bgs_work and adding to the unused list. Since the block
+group is removed from the reclaim list and it is on a relocation work,
+it can be added into the unused list in parallel. When that happens,
+adding it to the reclaim list will corrupt the list head and trigger
+list corruption like below.
 
-This is root-only triggerable problem which occurs when the operator
-sets dirty limits to >16 TB.
+Fix it by taking fs_info->unused_bgs_lock.
 
-Link: https://lkml.kernel.org/r/20240621144246.11148-2-jack@suse.cz
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reported-by: Zach O'Keefe <zokeefe@google.com>
-Reviewed-By: Zach O'Keefe <zokeefe@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+  [177.504][T2585409] BTRFS error (device nullb1): error relocating ch= unk 2415919104
+  [177.514][T2585409] list_del corruption. next->prev should be ff1100= 0344b119c0, but was ff11000377e87c70. (next=3Dff110002390cd9c0)
+  [177.529][T2585409] ------------[ cut here ]------------
+  [177.537][T2585409] kernel BUG at lib/list_debug.c:65!
+  [177.545][T2585409] Oops: invalid opcode: 0000 [#1] PREEMPT SMP KASAN NOPTI
+  [177.555][T2585409] CPU: 9 PID: 2585409 Comm: kworker/u128:2 Tainted: G        W          6.10.0-rc5-kts #1
+  [177.568][T2585409] Hardware name: Supermicro SYS-520P-WTR/X12SPW-TF, BIOS 1.2 02/14/2022
+  [177.579][T2585409] Workqueue: events_unbound btrfs_reclaim_bgs_work[btrfs]
+  [177.589][T2585409] RIP: 0010:__list_del_entry_valid_or_report.cold+0x70/0x72
+  [177.624][T2585409] RSP: 0018:ff11000377e87a70 EFLAGS: 00010286
+  [177.633][T2585409] RAX: 000000000000006d RBX: ff11000344b119c0 RCX:0000000000000000
+  [177.644][T2585409] RDX: 000000000000006d RSI: 0000000000000008 RDI:ffe21c006efd0f40
+  [177.655][T2585409] RBP: ff110002e0509f78 R08: 0000000000000001 R09:ffe21c006efd0f08
+  [177.665][T2585409] R10: ff11000377e87847 R11: 0000000000000000 R12:ff110002390cd9c0
+  [177.676][T2585409] R13: ff11000344b119c0 R14: ff110002e0508000 R15:dffffc0000000000
+  [177.687][T2585409] FS:  0000000000000000(0000) GS:ff11000fec880000(0000) knlGS:0000000000000000
+  [177.700][T2585409] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  [177.709][T2585409] CR2: 00007f06bc7b1978 CR3: 0000001021e86005 CR4:0000000000771ef0
+  [177.720][T2585409] DR0: 0000000000000000 DR1: 0000000000000000 DR2:0000000000000000
+  [177.731][T2585409] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7:0000000000000400
+  [177.742][T2585409] PKRU: 55555554
+  [177.748][T2585409] Call Trace:
+  [177.753][T2585409]  <TASK>
+  [177.759][T2585409]  ? __die_body.cold+0x19/0x27
+  [177.766][T2585409]  ? die+0x2e/0x50
+  [177.772][T2585409]  ? do_trap+0x1ea/0x2d0
+  [177.779][T2585409]  ? __list_del_entry_valid_or_report.cold+0x70/0x72
+  [177.788][T2585409]  ? do_error_trap+0xa3/0x160
+  [177.795][T2585409]  ? __list_del_entry_valid_or_report.cold+0x70/0x72
+  [177.805][T2585409]  ? handle_invalid_op+0x2c/0x40
+  [177.812][T2585409]  ? __list_del_entry_valid_or_report.cold+0x70/0x72
+  [177.820][T2585409]  ? exc_invalid_op+0x2d/0x40
+  [177.827][T2585409]  ? asm_exc_invalid_op+0x1a/0x20
+  [177.834][T2585409]  ? __list_del_entry_valid_or_report.cold+0x70/0x72
+  [177.843][T2585409]  btrfs_delete_unused_bgs+0x3d9/0x14c0 [btrfs]
+
+There is a similar retry_list code in btrfs_delete_unused_bgs(), but it is
+safe, AFAICS. Since the block group was in the unused list, the used bytes
+should be 0 when it was added to the unused list. Then, it checks
+block_group->{used,reserved,pinned} are still 0 under the
+block_group->lock. So, they should be still eligible for the unused list,
+not the reclaim list.
+
+The reason it is safe there it's because because we're holding
+space_info->groups_sem in write mode.
+
+That means no other task can allocate from the block group, so while we
+are at deleted_unused_bgs() it's not possible for other tasks to
+allocate and deallocate extents from the block group, so it can't be
+added to the unused list or the reclaim list by anyone else.
+
+The bug can be reproduced by btrfs/166 after a few rounds. In practice
+this can be hit when relocation cannot find more chunk space and ends
+with ENOSPC.
+
+Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Suggested-by: Johannes Thumshirn <Johannes.Thumshirn@wdc.com>
+Fixes: 4eb4e85c4f81 ("btrfs: retry block group reclaim without infinite loop")
+CC: stable@vger.kernel.org # 5.15+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page-writeback.c |   30 ++++++++++++++++++++++++++----
- 1 file changed, 26 insertions(+), 4 deletions(-)
+ fs/btrfs/block-group.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/mm/page-writeback.c
-+++ b/mm/page-writeback.c
-@@ -415,13 +415,20 @@ static void domain_dirty_limits(struct d
- 	else
- 		bg_thresh = (bg_ratio * available_memory) / PAGE_SIZE;
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -1927,8 +1927,17 @@ void btrfs_reclaim_bgs_work(struct work_
+ next:
+ 		if (ret) {
+ 			/* Refcount held by the reclaim_bgs list after splice. */
+-			btrfs_get_block_group(bg);
+-			list_add_tail(&bg->bg_list, &retry_list);
++			spin_lock(&fs_info->unused_bgs_lock);
++			/*
++			 * This block group might be added to the unused list
++			 * during the above process. Move it back to the
++			 * reclaim list otherwise.
++			 */
++			if (list_empty(&bg->bg_list)) {
++				btrfs_get_block_group(bg);
++				list_add_tail(&bg->bg_list, &retry_list);
++			}
++			spin_unlock(&fs_info->unused_bgs_lock);
+ 		}
+ 		btrfs_put_block_group(bg);
  
--	if (bg_thresh >= thresh)
--		bg_thresh = thresh / 2;
- 	tsk = current;
- 	if (rt_task(tsk)) {
- 		bg_thresh += bg_thresh / 4 + global_wb_domain.dirty_limit / 32;
- 		thresh += thresh / 4 + global_wb_domain.dirty_limit / 32;
- 	}
-+	/*
-+	 * Dirty throttling logic assumes the limits in page units fit into
-+	 * 32-bits. This gives 16TB dirty limits max which is hopefully enough.
-+	 */
-+	if (thresh > UINT_MAX)
-+		thresh = UINT_MAX;
-+	/* This makes sure bg_thresh is within 32-bits as well */
-+	if (bg_thresh >= thresh)
-+		bg_thresh = thresh / 2;
- 	dtc->thresh = thresh;
- 	dtc->bg_thresh = bg_thresh;
- 
-@@ -471,7 +478,11 @@ static unsigned long node_dirty_limit(st
- 	if (rt_task(tsk))
- 		dirty += dirty / 4;
- 
--	return dirty;
-+	/*
-+	 * Dirty throttling logic assumes the limits in page units fit into
-+	 * 32-bits. This gives 16TB dirty limits max which is hopefully enough.
-+	 */
-+	return min_t(unsigned long, dirty, UINT_MAX);
- }
- 
- /**
-@@ -508,10 +519,17 @@ static int dirty_background_bytes_handle
- 		void *buffer, size_t *lenp, loff_t *ppos)
- {
- 	int ret;
-+	unsigned long old_bytes = dirty_background_bytes;
- 
- 	ret = proc_doulongvec_minmax(table, write, buffer, lenp, ppos);
--	if (ret == 0 && write)
-+	if (ret == 0 && write) {
-+		if (DIV_ROUND_UP(dirty_background_bytes, PAGE_SIZE) >
-+								UINT_MAX) {
-+			dirty_background_bytes = old_bytes;
-+			return -ERANGE;
-+		}
- 		dirty_background_ratio = 0;
-+	}
- 	return ret;
- }
- 
-@@ -537,6 +555,10 @@ static int dirty_bytes_handler(struct ct
- 
- 	ret = proc_doulongvec_minmax(table, write, buffer, lenp, ppos);
- 	if (ret == 0 && write && vm_dirty_bytes != old_bytes) {
-+		if (DIV_ROUND_UP(vm_dirty_bytes, PAGE_SIZE) > UINT_MAX) {
-+			vm_dirty_bytes = old_bytes;
-+			return -ERANGE;
-+		}
- 		writeback_set_ratelimit();
- 		vm_dirty_ratio = 0;
- 	}
 
 
