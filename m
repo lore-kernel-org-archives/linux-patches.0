@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D33727713;
-	Tue,  9 Jul 2024 11:27:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3721527713;
+	Tue,  9 Jul 2024 11:27:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524459; cv=none; b=tUN3tJfCvgA0Wncnn/wEGNUTYhe4omqj2Pzmb90xT92+a9g1Bl2R/IkK0JYcseelAhTOtjHYqSLam4O2vIfCMectzYc8DJ3NYVME+1GSCjU+mRFzEOM5pucg+6lBhcwdaAsKyas25LIQFfz3KaMZoFEoNnGAidqsP6CvdYc0fAQ=
+	t=1720524462; cv=none; b=LgQ+FSxFiNNPWMcqn7fD40g+pbLWUfSqmCgo/14krUBFz0YAeQJPrvZIVmxM+DfhoIz+B1nCi4ZaxqCvSQS4lNtl+EvzMs8mkFK6DWVWcZ2sOHiSb9brtFNQ19b/ru325V918h0+QrUF+Snp9q1MtZh0lU6ZpvREXE3k6gPGu74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524459; c=relaxed/simple;
-	bh=qnxVVMORsyZx0Q/TZTWxqRJKRIR3/oOWigI1+vdNHB8=;
+	s=arc-20240116; t=1720524462; c=relaxed/simple;
+	bh=44Kmv6LCS4eyGNmAzc9xvVNYhV4tlgz71bLTFO5rSMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sl1Zj5jEzOplJ5yEfyhPy4ZLbt87It3V2jCI1/29ex97T8vMZYP8xk1sIrhPD4VKhxg1g42CB7G4pJzS/PwaWfZuG8MX8IvkRwkkWv8YC6A9lHzN0cBkLcmvBrisXJ7GtAq5krqhnOwg+Vx7cfQtq4DjMez6o7qWVRAXjB/Kil0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c2y8iYr7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aAHaWTgcQ2KlY0FUYh0vRMp1xJD+kW13Oub7TwVmNHwdW5OmkEdLqPmhxJ+2+ECZW2rrB2rwjsB5dsD9W1bSzQxtke42WT/cIhVSPfH3lYaRx0iLfe10z11mXNCvK6KGYg29GpXwpDDgN3XQ4XBfPGv1uZgQuqV1GQ/i7LtOP3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOdbTAKC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c2y8iYr7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE20AC3277B;
-	Tue,  9 Jul 2024 11:27:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOdbTAKC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B22A0C3277B;
+	Tue,  9 Jul 2024 11:27:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524459;
-	bh=qnxVVMORsyZx0Q/TZTWxqRJKRIR3/oOWigI1+vdNHB8=;
+	s=korg; t=1720524462;
+	bh=44Kmv6LCS4eyGNmAzc9xvVNYhV4tlgz71bLTFO5rSMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c2y8iYr7nfDYvjwsdfSBa9PSqUGhJMEfOkljhCzSv3tA7r9Jmbi9eGW3mFjK4RgD7
-	 7f30S4j/vhFG5lk1mZnfss38UZ44gYYRD7KCFaETZ2fBhP3EJO/YEyIRk/Y35+fNgD
-	 4pKKADtswaKpuJ9Q/qov9NEMqTuXsrqU2NgvcykQ=
+	b=sOdbTAKCQA59CpvMppzudEqyBfVcGsrQPbmOulq/1Z6AiBAkC3ooY6sfPAew+S8pc
+	 fg6YwfjFO5BRcmj4wtq0YbFXmw3EWzKeQh1lv7w7Z1c7Yx9X8sKW9tfoht0A71elT0
+	 PhXBVujeYvCVI47frN5QCvDGRDNVoDzN4GfMVrBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	hmtheboy154 <buingoc67@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	John Garry <john.g.garry@oracle.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 187/197] platform/x86: touchscreen_dmi: Add info for the EZpad 6s Pro
-Date: Tue,  9 Jul 2024 13:10:41 +0200
-Message-ID: <20240709110716.178209507@linuxfoundation.org>
+Subject: [PATCH 6.9 188/197] block: check for max_hw_sectors underflow
+Date: Tue,  9 Jul 2024 13:10:42 +0200
+Message-ID: <20240709110716.217458565@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -51,44 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: hmtheboy154 <buingoc67@gmail.com>
+From: Hannes Reinecke <hare@kernel.org>
 
-[ Upstream commit 3050052613790e75b5e4a8536930426b0a8b0774 ]
+[ Upstream commit e993db2d6e5207f1ae061c2ac554ab1f714c741d ]
 
-The "EZpad 6s Pro" uses the same touchscreen as the "EZpad 6 Pro B",
-unlike the "Ezpad 6 Pro" which has its own touchscreen.
+The logical block size need to be smaller than the max_hw_sector
+setting, otherwise we can't even transfer a single LBA.
 
-Signed-off-by: hmtheboy154 <buingoc67@gmail.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240527091447.248849-3-hdegoede@redhat.com
+Signed-off-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/touchscreen_dmi.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ block/blk-settings.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
-index 88bd117f0bf56..89e1be0815b52 100644
---- a/drivers/platform/x86/touchscreen_dmi.c
-+++ b/drivers/platform/x86/touchscreen_dmi.c
-@@ -1401,6 +1401,17 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
- 			DMI_MATCH(DMI_BIOS_DATE, "04/24/2018"),
- 		},
- 	},
-+	{
-+		/* Jumper EZpad 6s Pro */
-+		.driver_data = (void *)&jumper_ezpad_6_pro_b_data,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Jumper"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Ezpad"),
-+			/* Above matches are too generic, add bios match */
-+			DMI_MATCH(DMI_BIOS_VERSION, "E.WSA116_8.E1.042.bin"),
-+			DMI_MATCH(DMI_BIOS_DATE, "01/08/2020"),
-+		},
-+	},
- 	{
- 		/* Jumper EZpad 6 m4 */
- 		.driver_data = (void *)&jumper_ezpad_6_m4_data,
+diff --git a/block/blk-settings.c b/block/blk-settings.c
+index 15319b217bf3f..4bd7cbab4c241 100644
+--- a/block/blk-settings.c
++++ b/block/blk-settings.c
+@@ -104,6 +104,7 @@ static int blk_validate_zoned_limits(struct queue_limits *lim)
+ static int blk_validate_limits(struct queue_limits *lim)
+ {
+ 	unsigned int max_hw_sectors;
++	unsigned int logical_block_sectors;
+ 
+ 	/*
+ 	 * Unless otherwise specified, default to 512 byte logical blocks and a
+@@ -134,8 +135,11 @@ static int blk_validate_limits(struct queue_limits *lim)
+ 		lim->max_hw_sectors = BLK_SAFE_MAX_SECTORS;
+ 	if (WARN_ON_ONCE(lim->max_hw_sectors < PAGE_SECTORS))
+ 		return -EINVAL;
++	logical_block_sectors = lim->logical_block_size >> SECTOR_SHIFT;
++	if (WARN_ON_ONCE(logical_block_sectors > lim->max_hw_sectors))
++		return -EINVAL;
+ 	lim->max_hw_sectors = round_down(lim->max_hw_sectors,
+-			lim->logical_block_size >> SECTOR_SHIFT);
++			logical_block_sectors);
+ 
+ 	/*
+ 	 * The actual max_sectors value is a complex beast and also takes the
+@@ -153,7 +157,7 @@ static int blk_validate_limits(struct queue_limits *lim)
+ 		lim->max_sectors = min(max_hw_sectors, BLK_DEF_MAX_SECTORS_CAP);
+ 	}
+ 	lim->max_sectors = round_down(lim->max_sectors,
+-			lim->logical_block_size >> SECTOR_SHIFT);
++			logical_block_sectors);
+ 
+ 	/*
+ 	 * Random default for the maximum number of segments.  Driver should not
 -- 
 2.43.0
 
