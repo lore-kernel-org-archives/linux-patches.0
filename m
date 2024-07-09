@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62EB638382;
-	Tue,  9 Jul 2024 11:11:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BBB91586C3;
+	Tue,  9 Jul 2024 11:11:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720523494; cv=none; b=F+zXUponQmzsMlJcqjh9rk2kp7LvT4sbHwaNL4IlX/3OJTEp0Rg5UpbVphRUXu5v82GMW5nRe43bElPagT/7IYv1Iq6xgJ6UWkXKI/hryXtrFhI7MwvjW5wfd8CZjT+mB6GLzds5EJBbPyNxvfDEb6FWcVUTP3iZALNvKDZmqCg=
+	t=1720523497; cv=none; b=Oq/gsOO46EM1tHMH1gRfVsGB++G7s5/zvNtI8IhEebaigwcg4GU98e23SMUleBLSL2BTDsBb4Ad8TkcgbiYYlIyyxajv6A1YaQtHrT3bD7CASxLB52yA73plygtQnHjVuMTxTS9sJEU8aFqPuWWGlB3rUFQyYackFQ1LeER4g30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720523494; c=relaxed/simple;
-	bh=szNkF71DO3VER4rsXK4AWP70rOl2WqIch7XmNjmSdWI=;
+	s=arc-20240116; t=1720523497; c=relaxed/simple;
+	bh=KrW/jko8x2zpz3WoHaN1r/2sgvVjPt8pWZFKBHEgZ4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sMpGUeBYXqclxt56qi8pdhkdfzEk6XtO3m/LHoU54czQ64aadt3nA49TdYNBrCSspttWoa1L4WUWx71mHVjz69D6PT6yAv2u9uMP4D2iAEvCLFBmGtjqnYeOKx6Kmf/arZPBdcQ/HMKJ3za6rXg7lm2cp9KvIop6odAsp+nqBxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SEG8X93C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NZhmV7W/AYvywUXFHMzgcub8WYEf3/xtyJRs04OMVCZVZL1mRdyScGwNvOKyG4717H49ZP0MkbJKSBVQx/Y7o8zqzCEbT9jhyCji9gjt2/ExMWrI0Dqu1gktdqSrwQxtXkg0OCe1nmOF8ytXrC9z75OGUBDw/cW2ZJspPg59YU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JI3R19P1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SEG8X93C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE86EC32786;
-	Tue,  9 Jul 2024 11:11:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JI3R19P1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C216EC32786;
+	Tue,  9 Jul 2024 11:11:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720523494;
-	bh=szNkF71DO3VER4rsXK4AWP70rOl2WqIch7XmNjmSdWI=;
+	s=korg; t=1720523497;
+	bh=KrW/jko8x2zpz3WoHaN1r/2sgvVjPt8pWZFKBHEgZ4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SEG8X93CHfDEtsdHS5Zv/znZuG4fpjK7S38JG8u27SlHu1KOoyhcg5bPhrtA6iCvv
-	 FVuJS9Yuc3+PnIGrLckEF+ETpPdafCSrUH9bNw6i1rxP2GYaibQVy/pbB/fY120rxc
-	 Skj/XjXY1kzsMNUd31VUTECuTmefnrFa+8QvXl0o=
+	b=JI3R19P1AJQRkYTIIzNtG5oXdbTPEpesbJiOA/rN8K+sp5EwWI1YQbj5mFgFy30Jd
+	 PD4LW2M/+I9Lwy6k1BujnLw1wq36fCO9pjVefRzMtOrow2FxfdnOLH9N0w7WbVLtVI
+	 gIHj0JzDGUxMsp4k+QcM3KqV/C5edk0z+XyodzmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenghai Huang <huangchenghai2@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Erico Nunes <nunes.erico@gmail.com>,
+	Qiang Yu <yuq825@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 003/139] crypto: hisilicon/debugfs - Fix debugfs uninit process issue
-Date: Tue,  9 Jul 2024 13:08:23 +0200
-Message-ID: <20240709110658.282351098@linuxfoundation.org>
+Subject: [PATCH 6.6 004/139] drm/lima: fix shared irq handling on driver remove
+Date: Tue,  9 Jul 2024 13:08:24 +0200
+Message-ID: <20240709110658.320447134@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110658.146853929@linuxfoundation.org>
 References: <20240709110658.146853929@linuxfoundation.org>
@@ -51,80 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenghai Huang <huangchenghai2@huawei.com>
+From: Erico Nunes <nunes.erico@gmail.com>
 
-[ Upstream commit 8be0913389718e8d27c4f1d4537b5e1b99ed7739 ]
+[ Upstream commit a6683c690bbfd1f371510cb051e8fa49507f3f5e ]
 
-During the zip probe process, the debugfs failure does not stop
-the probe. When debugfs initialization fails, jumping to the
-error branch will also release regs, in addition to its own
-rollback operation.
+lima uses a shared interrupt, so the interrupt handlers must be prepared
+to be called at any time. At driver removal time, the clocks are
+disabled early and the interrupts stay registered until the very end of
+the remove process due to the devm usage.
+This is potentially a bug as the interrupts access device registers
+which assumes clocks are enabled. A crash can be triggered by removing
+the driver in a kernel with CONFIG_DEBUG_SHIRQ enabled.
+This patch frees the interrupts at each lima device finishing callback
+so that the handlers are already unregistered by the time we fully
+disable clocks.
 
-As a result, it may be released repeatedly during the regs
-uninit process. Therefore, the null check needs to be added to
-the regs uninit process.
-
-Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Erico Nunes <nunes.erico@gmail.com>
+Signed-off-by: Qiang Yu <yuq825@gmail.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240401224329.1228468-2-nunes.erico@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/debugfs.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/lima/lima_gp.c  | 2 ++
+ drivers/gpu/drm/lima/lima_mmu.c | 5 +++++
+ drivers/gpu/drm/lima/lima_pp.c  | 4 ++++
+ 3 files changed, 11 insertions(+)
 
-diff --git a/drivers/crypto/hisilicon/debugfs.c b/drivers/crypto/hisilicon/debugfs.c
-index 2cc1591949db7..bd205f1f2279e 100644
---- a/drivers/crypto/hisilicon/debugfs.c
-+++ b/drivers/crypto/hisilicon/debugfs.c
-@@ -794,8 +794,14 @@ static void dfx_regs_uninit(struct hisi_qm *qm,
- {
- 	int i;
+diff --git a/drivers/gpu/drm/lima/lima_gp.c b/drivers/gpu/drm/lima/lima_gp.c
+index 6cf46b653e810..ca3842f719842 100644
+--- a/drivers/gpu/drm/lima/lima_gp.c
++++ b/drivers/gpu/drm/lima/lima_gp.c
+@@ -324,7 +324,9 @@ int lima_gp_init(struct lima_ip *ip)
  
-+	if (!dregs)
-+		return;
-+
- 	/* Setting the pointer is NULL to prevent double free */
- 	for (i = 0; i < reg_len; i++) {
-+		if (!dregs[i].regs)
-+			continue;
-+
- 		kfree(dregs[i].regs);
- 		dregs[i].regs = NULL;
- 	}
-@@ -845,14 +851,21 @@ static struct dfx_diff_registers *dfx_regs_init(struct hisi_qm *qm,
- static int qm_diff_regs_init(struct hisi_qm *qm,
- 		struct dfx_diff_registers *dregs, u32 reg_len)
+ void lima_gp_fini(struct lima_ip *ip)
  {
-+	int ret;
-+
- 	qm->debug.qm_diff_regs = dfx_regs_init(qm, qm_diff_regs, ARRAY_SIZE(qm_diff_regs));
--	if (IS_ERR(qm->debug.qm_diff_regs))
--		return PTR_ERR(qm->debug.qm_diff_regs);
-+	if (IS_ERR(qm->debug.qm_diff_regs)) {
-+		ret = PTR_ERR(qm->debug.qm_diff_regs);
-+		qm->debug.qm_diff_regs = NULL;
-+		return ret;
-+	}
++	struct lima_device *dev = ip->dev;
  
- 	qm->debug.acc_diff_regs = dfx_regs_init(qm, dregs, reg_len);
- 	if (IS_ERR(qm->debug.acc_diff_regs)) {
- 		dfx_regs_uninit(qm, qm->debug.qm_diff_regs, ARRAY_SIZE(qm_diff_regs));
--		return PTR_ERR(qm->debug.acc_diff_regs);
-+		ret = PTR_ERR(qm->debug.acc_diff_regs);
-+		qm->debug.acc_diff_regs = NULL;
-+		return ret;
- 	}
- 
- 	return 0;
-@@ -893,7 +906,9 @@ static int qm_last_regs_init(struct hisi_qm *qm)
- static void qm_diff_regs_uninit(struct hisi_qm *qm, u32 reg_len)
- {
- 	dfx_regs_uninit(qm, qm->debug.acc_diff_regs, reg_len);
-+	qm->debug.acc_diff_regs = NULL;
- 	dfx_regs_uninit(qm, qm->debug.qm_diff_regs, ARRAY_SIZE(qm_diff_regs));
-+	qm->debug.qm_diff_regs = NULL;
++	devm_free_irq(dev->dev, ip->irq, ip);
  }
  
- /**
+ int lima_gp_pipe_init(struct lima_device *dev)
+diff --git a/drivers/gpu/drm/lima/lima_mmu.c b/drivers/gpu/drm/lima/lima_mmu.c
+index a1ae6c252dc2b..8ca7047adbaca 100644
+--- a/drivers/gpu/drm/lima/lima_mmu.c
++++ b/drivers/gpu/drm/lima/lima_mmu.c
+@@ -118,7 +118,12 @@ int lima_mmu_init(struct lima_ip *ip)
+ 
+ void lima_mmu_fini(struct lima_ip *ip)
+ {
++	struct lima_device *dev = ip->dev;
++
++	if (ip->id == lima_ip_ppmmu_bcast)
++		return;
+ 
++	devm_free_irq(dev->dev, ip->irq, ip);
+ }
+ 
+ void lima_mmu_flush_tlb(struct lima_ip *ip)
+diff --git a/drivers/gpu/drm/lima/lima_pp.c b/drivers/gpu/drm/lima/lima_pp.c
+index 54b208a4a768e..d34c9e8840f45 100644
+--- a/drivers/gpu/drm/lima/lima_pp.c
++++ b/drivers/gpu/drm/lima/lima_pp.c
+@@ -266,7 +266,9 @@ int lima_pp_init(struct lima_ip *ip)
+ 
+ void lima_pp_fini(struct lima_ip *ip)
+ {
++	struct lima_device *dev = ip->dev;
+ 
++	devm_free_irq(dev->dev, ip->irq, ip);
+ }
+ 
+ int lima_pp_bcast_resume(struct lima_ip *ip)
+@@ -299,7 +301,9 @@ int lima_pp_bcast_init(struct lima_ip *ip)
+ 
+ void lima_pp_bcast_fini(struct lima_ip *ip)
+ {
++	struct lima_device *dev = ip->dev;
+ 
++	devm_free_irq(dev->dev, ip->irq, ip);
+ }
+ 
+ static int lima_pp_task_validate(struct lima_sched_pipe *pipe,
 -- 
 2.43.0
 
