@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE3715886A;
-	Tue,  9 Jul 2024 11:20:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B35514EC4D;
+	Tue,  9 Jul 2024 11:20:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524035; cv=none; b=u4HKnsfPuqglGNmeFeqHAaUZrbhi9jr+kMohAZc8kO0ll1QIq26Ylua0CHMVoV7X8h0TSJ0QcGi5NIWlj5Cj0N+/9Ea5n581aTHmSDUasGF2+Udk0/txpJy9PE5sNXl4u7TgEInOv3ygHl7b4PwqqzEboClVN7Yy882FWrX8Muk=
+	t=1720524038; cv=none; b=T89AAmU19oMtrwhTeRLUqeUuOZJY2lCCVvy0c2t8eie7v5dx0szZ2VXdHpR4gpyzT1IGS+qmNqhnmv/IkA/sXJZF4AtP5kuiLljylFUDKBkxlvm07YM5Q+jeQHwxLlf+ssY3R3Kl2x5ZFoTYtbYZ5ntjKPKJwZFzGS5e5po7PYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524035; c=relaxed/simple;
-	bh=Pqrtx7cJ36F32RxIlvOSFzp1SKx4u22xoVAbV5h6LCI=;
+	s=arc-20240116; t=1720524038; c=relaxed/simple;
+	bh=UrgoYUCkpPBHIbvQwVspY0AoYiUUjLe02dNbej72kq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Syw7QRWDR15pkC7UppNfug2zuxaeWlXOjY2Hn2Aq0BDm2O6RRSuywxVWvCnsJt5NaR9xCH1gzxEpz+7V9UZGYa9k7S0niMKoi/XoZmh3foKvVRicpOb0p7NwYtaNI1BoZ2dMvwnotYRionWjzdl4qYfF1C8wqGcxBLf63N/+yDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FdIvYV4o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d6WlJh4NVr7WFxBYmO59ehA74GWVSf2oAhvRgwihoex2cmRtBfTbjyBfDiNvREmXWz5B0qaXUxvZbXAtfk9hIPeb+5SCeKnJQ8d+G1/Jhy4mQAXk2kspTxWKTU2CQnDym3HypiZIwDULqpGXtM+2GsOaLPyhGU2kGBI13kWz4Hk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mPQ1ybR4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FdIvYV4o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95863C3277B;
-	Tue,  9 Jul 2024 11:20:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mPQ1ybR4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 831B7C3277B;
+	Tue,  9 Jul 2024 11:20:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524035;
-	bh=Pqrtx7cJ36F32RxIlvOSFzp1SKx4u22xoVAbV5h6LCI=;
+	s=korg; t=1720524037;
+	bh=UrgoYUCkpPBHIbvQwVspY0AoYiUUjLe02dNbej72kq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FdIvYV4ouhndiBdv8E0M7EkVzHvMIJMrz+eGs0K2ocDHUHWaCa1o2HpCaSryIs8J2
-	 L1b7BjZ+SeTCFo/Rda0JBeG6pwCtX4ZabWldi464XAB7eRkkWSHIHx+WPA6TWTJZdf
-	 fwzaMjoM2hN42S9DdcnegudHwQkGlVftl3MFnQnE=
+	b=mPQ1ybR40HeRZHAQXe1/BwPaHJ3tuAMpTWj4gI2/ZkFn3bAQ8kzfdFqtUTtgEcrkK
+	 pYUzAH97yh2DdIF2ZYAKQvL21Q13dTZQx8k3F5kMT2lyiGQW/+W6Okh4C1+HL+3JJE
+	 9KyAPII50S3rRUIRx4e5GhPi2F/S8aTL2U2FhnWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julien Panis <jpanis@baylibre.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 049/197] thermal/drivers/mediatek/lvts_thermal: Check NULL ptr on lvts_data
-Date: Tue,  9 Jul 2024 13:08:23 +0200
-Message-ID: <20240709110710.861758056@linuxfoundation.org>
+Subject: [PATCH 6.9 050/197] net: dsa: mv88e6xxx: Correct check for empty list
+Date: Tue,  9 Jul 2024 13:08:24 +0200
+Message-ID: <20240709110710.900461698@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -51,33 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julien Panis <jpanis@baylibre.com>
+From: Simon Horman <horms@kernel.org>
 
-[ Upstream commit a1191a77351e25ddf091bb1a231cae12ee598b5d ]
+[ Upstream commit 4c7f3950a9fd53a62b156c0fe7c3a2c43b0ba19b ]
 
-Verify that lvts_data is not NULL before using it.
+Since commit a3c53be55c95 ("net: dsa: mv88e6xxx: Support multiple MDIO
+busses") mv88e6xxx_default_mdio_bus() has checked that the
+return value of list_first_entry() is non-NULL.
 
-Signed-off-by: Julien Panis <jpanis@baylibre.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20240502-mtk-thermal-lvts-data-v1-1-65f1b0bfad37@baylibre.com
+This appears to be intended to guard against the list chip->mdios being
+empty.  However, it is not the correct check as the implementation of
+list_first_entry is not designed to return NULL for empty lists.
+
+Instead, use list_first_entry_or_null() which does return NULL if the
+list is empty.
+
+Flagged by Smatch.
+Compile tested only.
+
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240430-mv88e6xx-list_empty-v3-1-c35c69d88d2e@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/mediatek/lvts_thermal.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/dsa/mv88e6xxx/chip.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/thermal/mediatek/lvts_thermal.c b/drivers/thermal/mediatek/lvts_thermal.c
-index 6b9422bd8795d..25f836c00e226 100644
---- a/drivers/thermal/mediatek/lvts_thermal.c
-+++ b/drivers/thermal/mediatek/lvts_thermal.c
-@@ -1250,6 +1250,8 @@ static int lvts_probe(struct platform_device *pdev)
- 		return -ENOMEM;
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index 5a202edfec371..80741e506f422 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -131,8 +131,8 @@ struct mii_bus *mv88e6xxx_default_mdio_bus(struct mv88e6xxx_chip *chip)
+ {
+ 	struct mv88e6xxx_mdio_bus *mdio_bus;
  
- 	lvts_data = of_device_get_match_data(dev);
-+	if (!lvts_data)
-+		return -ENODEV;
+-	mdio_bus = list_first_entry(&chip->mdios, struct mv88e6xxx_mdio_bus,
+-				    list);
++	mdio_bus = list_first_entry_or_null(&chip->mdios,
++					    struct mv88e6xxx_mdio_bus, list);
+ 	if (!mdio_bus)
+ 		return NULL;
  
- 	lvts_td->clk = devm_clk_get_enabled(dev, NULL);
- 	if (IS_ERR(lvts_td->clk))
 -- 
 2.43.0
 
