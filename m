@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4558B155389;
-	Tue,  9 Jul 2024 11:14:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA6A155389;
+	Tue,  9 Jul 2024 11:14:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720523643; cv=none; b=jK75I1XnHvav9OQMJ7y5cJwrCrVrvnxn1fuZ4vBfvCsDwZv/X5cSeOxAtl7CRZDQT+mF2XalDgK+95y0pVNleCFokEU9nmJ5zte8s1fg6b6w2CPP84WybZRwWl+5V0V6wnp5idvcS7ZlfTa7bsRNnp7YGNNbSZv5LfUhv+2Qq28=
+	t=1720523646; cv=none; b=rR5F8HHEytUph8XTA1fycOyFg/Ank8YypJzI/P1Pv7xMN9o+qGAXSfRwEKwqWoqieDpbR+dIut+/NsZPJo0kTXNWcJWoMd+At+F5181n5KHENiWO+fKG8AV1CpsIXP/hDVCytliiDk973rPsBE5ayUNqZSjxu/OdPowwLcALzsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720523643; c=relaxed/simple;
-	bh=RpnUPNKQzRW6npbyWhtGKLW4h/2DxLWwsJQoe4LxLrg=;
+	s=arc-20240116; t=1720523646; c=relaxed/simple;
+	bh=q7WcrVNrR/r0Q4s7ZJUDpyjObahELfgmTWsqWL9bqz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VzS40fOEoeoHcrfUTJGhpQdkywUJIdkssA5i/R1n45TIRCzJk2t3E+QAmOkvHsQEH6CTUPdkmf9taAplXKt8WP1pY7Lj1eTDO3RYredF2fHDvfRaP6NQ8S0wqrPB6Ob3w2bXJ8l4XnrGuToGm/AP7AbO9DxPio4xfxbyR892La4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJlc8Fsp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r00i7rjsZFm6wEgMupvHtst5xz/TMrslcJ1vWv4hstxcghDRkipV864cK1B7+E3BNxUZZBaA/wGHU9890VQLEGIFAhJ6JMpPdd2vdjD4u/5yBQ1FrwOEO5kEMzo0YXZloCZENL+qRHGGL4ZoYRxvrULqRhyDtawGnYzmUZdZo/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ObXNzqVe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJlc8Fsp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE503C3277B;
-	Tue,  9 Jul 2024 11:14:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ObXNzqVe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8184C3277B;
+	Tue,  9 Jul 2024 11:14:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720523643;
-	bh=RpnUPNKQzRW6npbyWhtGKLW4h/2DxLWwsJQoe4LxLrg=;
+	s=korg; t=1720523646;
+	bh=q7WcrVNrR/r0Q4s7ZJUDpyjObahELfgmTWsqWL9bqz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iJlc8FspQEwR9lBcEacJ6WCMNHPAPaVkNsop/omOy0GZexSu9VDUfu2eupV5jAYJI
-	 lnXuQSE+rHnAximvhM7Ls05TySMJ6BqQVp9ArWHEMaTVNPcWSJdbu9EItFactHTjMR
-	 n1595vaTq2lWeVFk86W1RlIl4LM798yA1I3DXCtM=
+	b=ObXNzqVeVlAeijzh8ANm8U//xOUcXRtby0+gyCQ5kZ3l6uynRe213ZEdDzOgcsEDZ
+	 nSs7HNb+HFRrHFj9IPx7i1q6Ahkt/J9UWNPxIXTp7dCWPNGZ1lr81bQHf1TPrf9mX0
+	 7GbYHoLYS/2vL9nExUzJFvOq0qJuz30axzHKSeCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Neal Cardwell <ncardwell@google.com>,
+	Yuchung Cheng <ycheng@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 062/139] net: phy: phy_device: Fix PHY LED blinking code comment
-Date: Tue,  9 Jul 2024 13:09:22 +0200
-Message-ID: <20240709110700.567216960@linuxfoundation.org>
+Subject: [PATCH 6.6 063/139] UPSTREAM: tcp: fix DSACK undo in fast recovery to call tcp_try_to_open()
+Date: Tue,  9 Jul 2024 13:09:23 +0200
+Message-ID: <20240709110700.611123705@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110658.146853929@linuxfoundation.org>
 References: <20240709110658.146853929@linuxfoundation.org>
@@ -52,38 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Neal Cardwell <ncardwell@google.com>
 
-[ Upstream commit d3dcb084c70727be4a2f61bd94796e66147cfa35 ]
+[ Upstream commit a6458ab7fd4f427d4f6f54380453ad255b7fde83 ]
 
-Fix copy-paste error in the code comment. The code refers to
-LED blinking configuration, not brightness configuration. It
-was likely copied from comment above this one which does
-refer to brightness configuration.
+In some production workloads we noticed that connections could
+sometimes close extremely prematurely with ETIMEDOUT after
+transmitting only 1 TLP and RTO retransmission (when we would normally
+expect roughly tcp_retries2 = TCP_RETR2 = 15 RTOs before a connection
+closes with ETIMEDOUT).
 
-Fixes: 4e901018432e ("net: phy: phy_device: Call into the PHY driver to set LED blinking")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20240626030638.512069-1-marex@denx.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+>From tracing we determined that these workloads can suffer from a
+scenario where in fast recovery, after some retransmits, a DSACK undo
+can happen at a point where the scoreboard is totally clear (we have
+retrans_out == sacked_out == lost_out == 0). In such cases, calling
+tcp_try_keep_open() means that we do not execute any code path that
+clears tp->retrans_stamp to 0. That means that tp->retrans_stamp can
+remain erroneously set to the start time of the undone fast recovery,
+even after the fast recovery is undone. If minutes or hours elapse,
+and then a TLP/RTO/RTO sequence occurs, then the start_ts value in
+retransmits_timed_out() (which is from tp->retrans_stamp) will be
+erroneously ancient (left over from the fast recovery undone via
+DSACKs). Thus this ancient tp->retrans_stamp value can cause the
+connection to die very prematurely with ETIMEDOUT via
+tcp_write_err().
+
+The fix: we change DSACK undo in fast recovery (TCP_CA_Recovery) to
+call tcp_try_to_open() instead of tcp_try_keep_open(). This ensures
+that if no retransmits are in flight at the time of DSACK undo in fast
+recovery then we properly zero retrans_stamp. Note that calling
+tcp_try_to_open() is more consistent with other loss recovery
+behavior, since normal fast recovery (CA_Recovery) and RTO recovery
+(CA_Loss) both normally end when tp->snd_una meets or exceeds
+tp->high_seq and then in tcp_fastretrans_alert() the "default" switch
+case executes tcp_try_to_open(). Also note that by inspection this
+change to call tcp_try_to_open() implies at least one other nice bug
+fix, where now an ECE-marked DSACK that causes an undo will properly
+invoke tcp_enter_cwr() rather than ignoring the ECE mark.
+
+Fixes: c7d9d6a185a7 ("tcp: undo on DSACK during recovery")
+Signed-off-by: Neal Cardwell <ncardwell@google.com>
+Signed-off-by: Yuchung Cheng <ycheng@google.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/phy.h | 2 +-
+ net/ipv4/tcp_input.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/phy.h b/include/linux/phy.h
-index 1351b802ffcff..5aa30ee998104 100644
---- a/include/linux/phy.h
-+++ b/include/linux/phy.h
-@@ -1099,7 +1099,7 @@ struct phy_driver {
- 				  u8 index, enum led_brightness value);
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 6743b6bfbc9c5..2621c262f182a 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -3046,7 +3046,7 @@ static void tcp_fastretrans_alert(struct sock *sk, const u32 prior_snd_una,
+ 			return;
  
- 	/**
--	 * @led_blink_set: Set a PHY LED brightness.  Index indicates
-+	 * @led_blink_set: Set a PHY LED blinking.  Index indicates
- 	 * which of the PHYs led should be configured to blink. Delays
- 	 * are in milliseconds and if both are zero then a sensible
- 	 * default should be chosen.  The call should adjust the
+ 		if (tcp_try_undo_dsack(sk))
+-			tcp_try_keep_open(sk);
++			tcp_try_to_open(sk, flag);
+ 
+ 		tcp_identify_packet_loss(sk, ack_flag);
+ 		if (icsk->icsk_ca_state != TCP_CA_Recovery) {
 -- 
 2.43.0
 
