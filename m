@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAEDC13A25F;
-	Tue,  9 Jul 2024 11:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BAE813A25F;
+	Tue,  9 Jul 2024 11:23:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524222; cv=none; b=hFAITS/lm8D73O4/dUiqXQwKC51Tb9N/3qMVcYMjNPnzf8udS2JTiLrLEobNt2T4pumxaN7LLmkjHM6L11m12cLb/TtaLKv9qJM5VswRXuOGNgTca533Q1tD545/gEjYUZckGzPnoiH9q0mSIEW7uybqA9E9NXO6puWwuEGlFrA=
+	t=1720524225; cv=none; b=qs4rzy/dNp7GSJXhAA2e5juAIajF5GrjnECGfBNEhR7OmzPh4ynCa1HkbtMwD2UG5nEH5kBNxq5RqEImwXvUeWbH1WDuNIHaOnuacViBLyVnZ3QkhgMN+4M6MTJobIjcOY4JMiADvcc5pGxLc1Dmnj+FqsKEhLX8hJWe4ra7YgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524222; c=relaxed/simple;
-	bh=rg1lSn5NSUpKyWk5dc8wa71xHbZ0HCyKe8FkFY7NGhE=;
+	s=arc-20240116; t=1720524225; c=relaxed/simple;
+	bh=e1B/bZxmn45IfRzYmvUGn4tIdbUgQy4711g9WJ1B81k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FKARU8vpPiTwmhV2LFgOZhphDRcsHjk254QXt6dgyGMRAKh85VuzvqxPpWEXnJXvfrp8vrftDFJ0/T7M4AVRAe0FPCxMu2Jt0N+Zal2H+z+M5ZP/bafjdjiqkVwRUNiMnWmWIX7av1BBtYGaQi1Mfsvd5QhORdUjsFYDZVlw5eI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVqYVN+8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZFUaowSb8ZddUD5/BHzaWtZ6YBWcJ25o76M9zUn39tyWZBC3FuA3T7lQU6Olxr0Una3pv2Pq3mEIaOdM/7zB0khQ/BWxN3cqhwzBYGuVClwAI9CKYi1b13QBHhyZAGcN24OSz+e232DlsolF/X80Lv9hj4r8YjsY/R/xgyYpERg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nEgY8zyB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVqYVN+8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32CAFC3277B;
-	Tue,  9 Jul 2024 11:23:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nEgY8zyB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 201ABC3277B;
+	Tue,  9 Jul 2024 11:23:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524222;
-	bh=rg1lSn5NSUpKyWk5dc8wa71xHbZ0HCyKe8FkFY7NGhE=;
+	s=korg; t=1720524225;
+	bh=e1B/bZxmn45IfRzYmvUGn4tIdbUgQy4711g9WJ1B81k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yVqYVN+8SvMGnmOxX/UOw6sp22m8QKDdEcLYftjY96E6TeEtMDncGxfdN63mVWv8Y
-	 N9znub14CZUsxAINCYb15VhYG/NLj6zZxNRzXNW1dTzZV0HrcasYLEXxHnG8kXR/2h
-	 FPkuUQt7uQLT2zofVAjK9NE26fKm+Z5YeWsHB6Yc=
+	b=nEgY8zyBNan1x0MggrltmWlW72BcOfObMQsT7tNRQBW2qn1GWHP1tvzjijpMO15TV
+	 XSZZ0ge/ytO6KPH9H9TGZfkMAFQOGFL4b7E+qhzDx79HG9EnbhqIwt36H1S8xLrlkl
+	 8k/liQg90sm8BS372TXJo3qNAGRYMlc4gURvwa8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Farman <farman@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Mark Mentovai <mark@mentovai.com>,
+	Shiji Yang <yangshiji66@outlook.com>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	=?UTF-8?q?L=C3=B3r=C3=A1nd=20Horv=C3=A1th?= <lorand.horvath82@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 112/197] s390/vfio_ccw: Fix target addresses of TIC CCWs
-Date: Tue,  9 Jul 2024 13:09:26 +0200
-Message-ID: <20240709110713.290446111@linuxfoundation.org>
+Subject: [PATCH 6.9 113/197] gpio: mmio: do not calculate bgpio_bits via "ngpios"
+Date: Tue,  9 Jul 2024 13:09:27 +0200
+Message-ID: <20240709110713.328292228@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -46,94 +49,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Farman <farman@linux.ibm.com>
+From: Shiji Yang <yangshiji66@outlook.com>
 
-[ Upstream commit 2ae157ec497d93c639a60e730e21ec9c66fa9a6e ]
+[ Upstream commit f07798d7bb9c46d17d80103fb772fd2c75d47919 ]
 
-The processing of a Transfer-In-Channel (TIC) CCW requires locating
-the target of the CCW in the channel program, and updating the
-address to reflect what will actually be sent to hardware.
+bgpio_bits must be aligned with the data bus width. For example, on a
+32 bit big endian system and we only have 16 GPIOs. If we only assume
+bgpio_bits=16 we can never control the GPIO because the base address
+is the lowest address.
 
-An error exists where the 64-bit virtual address is truncated to
-32-bits (variable "cda") when performing this math. Since s390
-addresses of that size are 31-bits, this leaves that additional
-bit enabled such that the resulting I/O triggers a channel
-program check. This shows up occasionally when booting a KVM
-guest from a passthrough DASD device:
+low address                          high address
+-------------------------------------------------
+|   byte3   |   byte2   |   byte1   |   byte0   |
+-------------------------------------------------
+|    NaN    |    NaN    |  gpio8-15 |  gpio0-7  |
+-------------------------------------------------
 
-  ..snip...
-  Interrupt Response Block Data:
-  : 0x0000000000003990
-      Function Ctrl : [Start]
-      Activity Ctrl :
-      Status Ctrl : [Alert] [Primary] [Secondary] [Status-Pending]
-      Device Status :
-      Channel Status : [Program-Check]
-      cpa=: 0x00000000008d0018
-      prev_ccw=: 0x0000000000000000
-      this_ccw=: 0x0000000000000000
-  ...snip...
-  dasd-ipl: Failed to run IPL1 channel program
-
-The channel program address of "0x008d0018" in the IRB doesn't
-look wrong, but tracing the CCWs shows the offending bit enabled:
-
-  ccw=0x0000012e808d0000 cda=00a0b030
-  ccw=0x0000012e808d0008 cda=00a0b038
-  ccw=0x0000012e808d0010 cda=808d0008
-  ccw=0x0000012e808d0018 cda=00a0b040
-
-Fix the calculation of the TIC CCW's data address such that it points
-to a valid 31-bit address regardless of the input address.
-
-Fixes: bd36cfbbb9e1 ("s390/vfio_ccw_cp: use new address translation helpers")
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Link: https://lore.kernel.org/r/20240628163738.3643513-1-farman@linux.ibm.com
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: 55b2395e4e92 ("gpio: mmio: handle "ngpios" properly in bgpio_init()")
+Fixes: https://github.com/openwrt/openwrt/issues/15739
+Reported-by: Mark Mentovai <mark@mentovai.com>
+Signed-off-by: Shiji Yang <yangshiji66@outlook.com>
+Suggested-By: Mark Mentovai <mark@mentovai.com>
+Reviewed-by: Jonas Gorski <jonas.gorski@gmail.com>
+Tested-by: Lóránd Horváth <lorand.horvath82@gmail.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/TYCP286MB089577B47D70F0AB25ABA6F5BCD52@TYCP286MB0895.JPNP286.PROD.OUTLOOK.COM
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/cio/vfio_ccw_cp.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/gpio/gpio-mmio.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/s390/cio/vfio_ccw_cp.c b/drivers/s390/cio/vfio_ccw_cp.c
-index 6e5c508b1e07c..5f6e102256276 100644
---- a/drivers/s390/cio/vfio_ccw_cp.c
-+++ b/drivers/s390/cio/vfio_ccw_cp.c
-@@ -490,13 +490,14 @@ static int ccwchain_fetch_tic(struct ccw1 *ccw,
- 			      struct channel_program *cp)
- {
- 	struct ccwchain *iter;
--	u32 cda, ccw_head;
-+	u32 offset, ccw_head;
+diff --git a/drivers/gpio/gpio-mmio.c b/drivers/gpio/gpio-mmio.c
+index 71e1af7c21847..d89e78f0ead31 100644
+--- a/drivers/gpio/gpio-mmio.c
++++ b/drivers/gpio/gpio-mmio.c
+@@ -619,8 +619,6 @@ int bgpio_init(struct gpio_chip *gc, struct device *dev,
+ 	ret = gpiochip_get_ngpios(gc, dev);
+ 	if (ret)
+ 		gc->ngpio = gc->bgpio_bits;
+-	else
+-		gc->bgpio_bits = roundup_pow_of_two(round_up(gc->ngpio, 8));
  
- 	list_for_each_entry(iter, &cp->ccwchain_list, next) {
- 		ccw_head = iter->ch_iova;
- 		if (is_cpa_within_range(ccw->cda, ccw_head, iter->ch_len)) {
--			cda = (u64)iter->ch_ccw + dma32_to_u32(ccw->cda) - ccw_head;
--			ccw->cda = u32_to_dma32(cda);
-+			/* Calculate offset of TIC target */
-+			offset = dma32_to_u32(ccw->cda) - ccw_head;
-+			ccw->cda = virt_to_dma32((void *)iter->ch_ccw + offset);
- 			return 0;
- 		}
- 	}
-@@ -914,7 +915,7 @@ void cp_update_scsw(struct channel_program *cp, union scsw *scsw)
- 	 * in the ioctl directly. Path status changes etc.
- 	 */
- 	list_for_each_entry(chain, &cp->ccwchain_list, next) {
--		ccw_head = (u32)(u64)chain->ch_ccw;
-+		ccw_head = dma32_to_u32(virt_to_dma32(chain->ch_ccw));
- 		/*
- 		 * On successful execution, cpa points just beyond the end
- 		 * of the chain.
+ 	ret = bgpio_setup_io(gc, dat, set, clr, flags);
+ 	if (ret)
 -- 
 2.43.0
 
