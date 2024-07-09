@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2214019D88D;
-	Tue,  9 Jul 2024 16:06:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085C219D88D;
+	Tue,  9 Jul 2024 16:06:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720541186; cv=none; b=LIB4qbXXVejexJCPKFjRAPPfEiNNCDWbNCjwCO14L6IlVPrYaKAd0ZaVCpwHfHD1wPgCq4miEmlCqREj0p48D7dP5hH+/aGHBE9PV9197wKC97J3O8/9K+rZW5zN6FECl/LFH0FFZaoucqVO+Bxw2Z96iUxDerZxoG66uNX2SBs=
+	t=1720541190; cv=none; b=s8cshr6IhYpM9furjvdBDVwvEZXgGSVjnUJawwgAj0nXVvCv3mE7xPUbEh0aCDY03vRqEtzivHEdQhLp+4XRHOAX47opmWgF2bTQEo6NEMTvn+1qjPTINg506IlNSXxJcxVcEdIJf2gMG2oVgKpXl4RdTq1tK77R8JpsfE4CLog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720541186; c=relaxed/simple;
-	bh=XomL6XkiSGmqijLHAImjPAoDH/hg/wLBpt7YmP/PttY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=nfCuM9EQ3+ECEZutb9HsSr3FjokApEocYTlCH6XHrYfl93VUP92o7D/5WoE87SEizfhf2FZbmB7en4AsQPBIJ3EJSPYZUB5zNQlMTErOkZu9aaWIv75mYRVAsPbdGwyzmetdATgbjPJKJYcnIKgv1/10/8D/j90o7uekVl8613Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CTGk//5R; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1720541190; c=relaxed/simple;
+	bh=9mVsfzjap65UG7inNi/6ALDZA7jm3b4WyDRibLyQG7c=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=NbvBgI6y9zRNUunxRuE36UnhDVBq6VPXDnobT1hMVkfTxEJ//e1/XSeGkld1xi0SShIu9ov8GPkqsnvYyeIxKgR73i3+yj05OOaCj4Olefik3eLOglHH+6W7wak5Ho5xfMIjGiNtjmuOaStjWo2hVVRVsLkqktJHAPJKCvb3kD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YuvNZQUQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CTGk//5R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA6DCC32782;
-	Tue,  9 Jul 2024 16:06:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YuvNZQUQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57026C3277B;
+	Tue,  9 Jul 2024 16:06:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720541185;
-	bh=XomL6XkiSGmqijLHAImjPAoDH/hg/wLBpt7YmP/PttY=;
-	h=From:To:Cc:Subject:Date:From;
-	b=CTGk//5RF6DJT5bk3YTgB1qKHHjc10H9GL67lrqHcLTsII4VOeQQBTovAh/j/GDZr
-	 HV4i92Fgz6IahKNJgoA9wOqfWKdwkM4DLLuTFtwZ0IMmitYdno8Yc/DgRo6B3zNxmB
-	 dj5HAvJDX0V3+Bzt2CgG1BQAigETQ80NQzforE8IkFYQDtDvm+7AuLjfwoSzvxqaNA
-	 VEu4iPwFgNl5lBwvldo/Ug1sY2FZyS0bNV8FAbr237qAjphQR8ftD2n/SxhQ3Y7aOr
-	 DrYtu4oYy/CJyEN8MV7zcDU/fnc6ArRjyRsoA3oUCjawBBki8X3fIMyLDiaRptfrwf
-	 ZJLR2mU02zZLw==
+	s=k20201202; t=1720541189;
+	bh=9mVsfzjap65UG7inNi/6ALDZA7jm3b4WyDRibLyQG7c=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=YuvNZQUQtQlMa5Rb3Bqqto2Q3ViuHBwi/rzZYVVeYlhFqn9t0RXD1QB25yqFYQSl9
+	 1fQcO/jkoIepLZ5QnhE7SwKFTXLL9Ln3miLlyQqNOj78G99fT8xvJVEYfFJULJPtfL
+	 loQl2tM0LIPPi2lnijHx5SJNNaeSgFInVy0xlygSQjh/cEWP2VQLJUIIIerYs/cMsx
+	 Pm7OXIegDwPy04xeZXvD+VaAUNZuz0Z3N2H3dFgjs5uEIcYjCEM0um8L5V8Xd5g05G
+	 g0+YIT8wwmp6XYvrIt0cmZ6ofOe+ThpY5MyyklVw1kblq9qCOTOe40yKCwmGs5z0pW
+	 MEQLkR8RJTgRQ==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>,
 	Wedson Almeida Filho <wedsonaf@gmail.com>,
@@ -38,12 +39,12 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	linux-doc@vger.kernel.org,
-	linux-kbuild@vger.kernel.org,
-	workflows@vger.kernel.org
-Subject: [PATCH v2 00/13] Support several Rust toolchain versions
-Date: Tue,  9 Jul 2024 18:05:55 +0200
-Message-ID: <20240709160615.998336-1-ojeda@kernel.org>
+	Finn Behrens <me@kloenk.dev>
+Subject: [PATCH v2 01/13] rust: macros: indent list item in `paste!`'s docs
+Date: Tue,  9 Jul 2024 18:05:56 +0200
+Message-ID: <20240709160615.998336-2-ojeda@kernel.org>
+In-Reply-To: <20240709160615.998336-1-ojeda@kernel.org>
+References: <20240709160615.998336-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -53,65 +54,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hi all,
+A new style lint, `doc_lazy_continuation` [1], has been introduced in the
+upcoming Rust 1.80 (currently in beta), which detects missing indentation
+in code documentation.
 
-A few things improved here and there, and rebased on top of `rust-next`.
+We have one such case:
 
-The changelog is attached to each patch.
+    error: doc list item missing indentation
+    --> rust/macros/lib.rs:315:5
+        |
+    315 | /// default the span of the `[< >]` group is used.
+        |     ^
+        |
+        = help: if this is supposed to be its own paragraph, add a blank line
+        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#doc_lazy_continuation
+        = note: `-D clippy::doc-lazy-continuation` implied by `-D clippy::style`
+        = help: to override `-D clippy::style` add `#[allow(clippy::doc_lazy_continuation)]`
+    help: indent this line
+        |
+    315 | ///   default the span of the `[< >]` group is used.
+        |     ++
 
-I kept the `Tested-by`s since most of the changes are on documentation
-or comments, though I did remove them on the patch that changed the most
-just in case (even for that one, I think Benno's and Andreas' setup
-would not have made a difference).
+While the rendering of the docs by `rustdoc` is not affected, we apply
+this kind of indentation elsewhere since it looks better.
 
-I plan to put this series into `rust-next` very soon so that it goes
-into the merge window.
+Thus clean it up.
 
-Previous cover letter:
+Link: https://rust-lang.github.io/rust-clippy/master/index.html#/doc_lazy_continuation [1]
+Reviewed-by: Björn Roy Baron <bjorn3_gh@protonmail.com>
+Reviewed-by: Finn Behrens <me@kloenk.dev>
+Tested-by: Benno Lossin <benno.lossin@proton.me>
+Tested-by: Andreas Hindborg <a.hindborg@samsung.com>
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+ rust/macros/lib.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-  v1: https://lore.kernel.org/rust-for-linux/20240701183625.665574-1-ojeda@kernel.org/
-
-Thanks!
-
-Cheers,
-Miguel
-
-Miguel Ojeda (13):
-  rust: macros: indent list item in `paste!`'s docs
-  rust: init: simplify from `map_err` to `inspect_err`
-  rust: allow `dead_code` for never constructed bindings
-  rust: relax most deny-level lints to warnings
-  rust: simplify Clippy warning flags set
-  rust: start supporting several compiler versions
-  rust: avoid assuming a particular `bindgen` build
-  rust: work around `bindgen` 0.69.0 issue
-  rust: start supporting several `bindgen` versions
-  rust: warn about `bindgen` versions 0.66.0 and 0.66.1
-  kbuild: rust: add `rustc-version` support
-  rust: support the new `-Zub-checks` flag
-  docs: rust: quick-start: add section on Linux distributions
-
- Documentation/process/changes.rst        |   9 +-
- Documentation/rust/quick-start.rst       | 136 +++++++++++++++++------
- Makefile                                 |  31 +++---
- init/Kconfig                             |  11 +-
- lib/Kconfig.debug                        |  18 +++
- rust/Makefile                            |   4 +-
- rust/bindings/lib.rs                     |   1 +
- rust/kernel/init.rs                      |  13 +--
- rust/macros/lib.rs                       |   2 +-
- rust/uapi/lib.rs                         |   1 +
- scripts/Kconfig.include                  |   6 +
- scripts/Makefile.compiler                |   4 +
- scripts/rust_is_available.sh             |  33 +++---
- scripts/rust_is_available_bindgen_0_66.h |   2 +
- scripts/rust_is_available_test.py        |  59 ++++++----
- scripts/rustc-version.sh                 |  52 +++++++++
- 16 files changed, 274 insertions(+), 108 deletions(-)
- create mode 100644 scripts/rust_is_available_bindgen_0_66.h
- create mode 100755 scripts/rustc-version.sh
-
-
-base-commit: fc6e66f4696b63b8a2645a2bcea407cb04bd0666
---
+diff --git a/rust/macros/lib.rs b/rust/macros/lib.rs
+index 6dcc72aff111..159e75292970 100644
+--- a/rust/macros/lib.rs
++++ b/rust/macros/lib.rs
+@@ -345,7 +345,7 @@ pub fn pinned_drop(args: TokenStream, input: TokenStream) -> TokenStream {
+ ///
+ /// Currently supported modifiers are:
+ /// * `span`: change the span of concatenated identifier to the span of the specified token. By
+-/// default the span of the `[< >]` group is used.
++///   default the span of the `[< >]` group is used.
+ /// * `lower`: change the identifier to lower case.
+ /// * `upper`: change the identifier to upper case.
+ ///
+-- 
 2.45.2
+
