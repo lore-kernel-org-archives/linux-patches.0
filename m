@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C4014EC4D;
-	Tue,  9 Jul 2024 11:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E39314EC4D;
+	Tue,  9 Jul 2024 11:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720523834; cv=none; b=RiuplumSsL4MPc9pDNMp6fBTDHRrW9PfocfYk+AOqaGfNrW4sMNnikqgMWiQNxtxxym4ExTaj3VQQKzJSaKgCJy8dVU4FPN6OoRmfp/h61k9a1Jl1u3wKV9vZXdxqA4c02unjzWrRmMYx49OdzSsFEMcFSoAxkOXJUUV2dSAgMg=
+	t=1720523837; cv=none; b=W4oYll59BG7SHfl2bZEqaJSpBCMkY8B/gLVqg63u7gFClo1Ar9/ESrjPFi0S/gmbuIBjesqnfGEA2DEzJK/7kAOaW9MIyL7e7gajmdAqHLbHbn+hxl+qU8PrNSw10jgvVslhEkHzKPgsFkR5iD2BT8oPOECYS6Ti49nDpv8sgDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720523834; c=relaxed/simple;
-	bh=uw8bkSAmonsu9uTYCKpzgaNnHn6iqy1jEdjdu+ti4WY=;
+	s=arc-20240116; t=1720523837; c=relaxed/simple;
+	bh=vb2HVLmwdV8txT9t19skYVj+IKr11ZpvoeDpKdiGofQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lneAPMIwrLrPF/8hjolb+wPpiFNT7uMacIsLLc4QIA2QS5hEUUg5NFBM5wIaTU8KdAmXcyVNbuoR1YsnBWFXQ7muFAZ8J52UaMzg17iJWi8bk6dzayGuknlQFHpnuQe/KWCVwXuEw4B8IDXwLfZEd/HLhixGH8cDu3FdNIG+dJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2pqaDCU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BOFCnQYthCqG+XEpxYlR1b0Ldqvi+kw9HfE2hUWjGOYim1B6m1oXxKcgWyk7X1/GN0fMyaok00dy3PHUVGak4tk1QWLXVCNRsXUOCOVnH+uziIScTpRmrLpz8BTau1UU1Mo6mXHRUmLZwhO/dD+BAZEvdebN1qoSh4PmMip4+p8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wEJVEV0S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2pqaDCU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABA52C3277B;
-	Tue,  9 Jul 2024 11:17:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wEJVEV0S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A13B0C3277B;
+	Tue,  9 Jul 2024 11:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720523834;
-	bh=uw8bkSAmonsu9uTYCKpzgaNnHn6iqy1jEdjdu+ti4WY=;
+	s=korg; t=1720523837;
+	bh=vb2HVLmwdV8txT9t19skYVj+IKr11ZpvoeDpKdiGofQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r2pqaDCUqKpvapZFo6Oz1Q/TKS1UIWpSc7SdRafGsXGXB2iZRw46EJ3Lv0u9R2eaK
-	 FjW4d1Eb9Nf0bzVeDbY44g7Rkmk4/E1kA5yVmhVYk5QUw4tx3GT7YRhHcoQaNYNNml
-	 XdlRy6dL5fSuzvdpD00o1dpKnb4lOSHOID70H/h0=
+	b=wEJVEV0S78PgIS/hzvtNnZri7R5qXhHoKilLuiFWx++O88htr2vWuW86kyH0l2Fbw
+	 bGlcT+wjk9PdE4ukTp+4tyWKwiuFmyNnL5F39Wby2rsv8l6SvHk00k8iDqVoMCRaWr
+	 Ibm83RvegA3NLjY8CWSXU56dkedAx4I84bqajGNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nilay Shroff <nilay@linux.ibm.com>,
+	Barry Song <21cnbao@gmail.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Robin Murphy <robin.murphy@arm.com>,
 	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 125/139] nvme-multipath: find NUMA path only for online numa-node
-Date: Tue,  9 Jul 2024 13:10:25 +0200
-Message-ID: <20240709110703.002084059@linuxfoundation.org>
+Subject: [PATCH 6.6 126/139] dma-mapping: benchmark: avoid needless copy_to_user if benchmark fails
+Date: Tue,  9 Jul 2024 13:10:26 +0200
+Message-ID: <20240709110703.039659518@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110658.146853929@linuxfoundation.org>
 References: <20240709110658.146853929@linuxfoundation.org>
@@ -52,52 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilay Shroff <nilay@linux.ibm.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit d3a043733f25d743f3aa617c7f82dbcb5ee2211a ]
+[ Upstream commit f7c9ccaadffd13066353332c13d7e9bf73b8f92d ]
 
-In current native multipath design when a shared namespace is created,
-we loop through each possible numa-node, calculate the NUMA distance of
-that node from each nvme controller and then cache the optimal IO path
-for future reference while sending IO. The issue with this design is that
-we may refer to the NUMA distance table for an offline node which may not
-be populated at the time and so we may inadvertently end up finding and
-caching a non-optimal path for IO. Then latter when the corresponding
-numa-node becomes online and hence the NUMA distance table entry for that
-node is created, ideally we should re-calculate the multipath node distance
-for the newly added node however that doesn't happen unless we rescan/reset
-the controller. So essentially, we may keep using non-optimal IO path for a
-node which is made online after namespace is created.
-This patch helps fix this issue ensuring that when a shared namespace is
-created, we calculate the multipath node distance for each online numa-node
-instead of each possible numa-node. Then latter when a node becomes online
-and we receive any IO on that newly added node, we would calculate the
-multipath node distance for newly added node but this time NUMA distance
-table would have been already populated for newly added node. Hence we
-would be able to correctly calculate the multipath node distance and choose
-the optimal path for the IO.
+If do_map_benchmark() has failed, there is nothing useful to copy back
+to userspace.
 
-Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Suggested-by: Barry Song <21cnbao@gmail.com>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Acked-by: Robin Murphy <robin.murphy@arm.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/multipath.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/dma/map_benchmark.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/nvme/host/multipath.c b/drivers/nvme/host/multipath.c
-index 3ac0cc22207dc..6515fa537ee53 100644
---- a/drivers/nvme/host/multipath.c
-+++ b/drivers/nvme/host/multipath.c
-@@ -594,7 +594,7 @@ static void nvme_mpath_set_live(struct nvme_ns *ns)
- 		int node, srcu_idx;
- 
- 		srcu_idx = srcu_read_lock(&head->srcu);
--		for_each_node(node)
-+		for_each_online_node(node)
- 			__nvme_find_path(head, node);
- 		srcu_read_unlock(&head->srcu, srcu_idx);
- 	}
+diff --git a/kernel/dma/map_benchmark.c b/kernel/dma/map_benchmark.c
+index f7f3d14fa69a7..4950e0b622b1f 100644
+--- a/kernel/dma/map_benchmark.c
++++ b/kernel/dma/map_benchmark.c
+@@ -256,6 +256,9 @@ static long map_benchmark_ioctl(struct file *file, unsigned int cmd,
+ 		 * dma_mask changed by benchmark
+ 		 */
+ 		dma_set_mask(map->dev, old_dma_mask);
++
++		if (ret)
++			return ret;
+ 		break;
+ 	default:
+ 		return -EINVAL;
 -- 
 2.43.0
 
