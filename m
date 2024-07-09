@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC33B55E4C;
-	Tue,  9 Jul 2024 11:31:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B75355E4C;
+	Tue,  9 Jul 2024 11:31:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524688; cv=none; b=furWu7WpEukGLW549uXafqorYG4XbyPDKFqROPMwSa5IEknMcusokJ0bx4SCClnfRO7eKOpPQZ76oQ2zs8TSwG2ceNHhpJbmXPGQwPDMhBuL4wY5tjnxE7WZEzDK6yeJ2w/pcrbHizQoxGdOsolyikYz629YK1yuz3uS+gH6VIw=
+	t=1720524691; cv=none; b=HZWn88qpp5g3QalD6HQ4+otbpz+DLn+bQF0JnL7WKp5th3jQVQe+iNrhQIoiaRBEScyjMBw1O4Y3oauUa5wpXwDngGn4lyYVofEhen141iEvi4tSPGnLy0jPSudzafT3yl5IP9TIVYg5Jme761uvEsOCSjjS5YqGtR4JIQlNQNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524688; c=relaxed/simple;
-	bh=CK1Z9dFboG0U/GsGwB82KGPylkF2cqMUDFfg2//Iy2k=;
+	s=arc-20240116; t=1720524691; c=relaxed/simple;
+	bh=/Z40NyeZ5Bujt6d5e314cYWAsrtXZerhzOlgnkoRhq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GyvF4oMRxCI4PPcpnvpgakykxWPUuj7wf3I6JiMABz6/VfVFaVduLn2i/sAikhj9d4XCtVDdbaF/0efDMmNcVVAVBbsu9mvr7b2vWPuTrBj6GbfBbLd+YnWS9V2kHS3PJVORma170n/Ar64oQ8rQoDkSL58Z733x0FlelLWrSNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SF3Zx2aW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n3TnbbmQ/9Y49wwPxMTA9OljwLvbLGOmBOjyA+2AFO2g53fhsS5t2DHglIX7uGrDpk5Oa29HvNK3qwL1rZs7MKP4a+Gt+NNvLS+2pm/lp2Z8QHPqmmbwjN5UZ1WexPvv1enWXjvEDdQQQGEmvvZubZbt70rjX/S7yYuirMe+GYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V680gYl1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SF3Zx2aW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F54C3277B;
-	Tue,  9 Jul 2024 11:31:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V680gYl1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B249C3277B;
+	Tue,  9 Jul 2024 11:31:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524688;
-	bh=CK1Z9dFboG0U/GsGwB82KGPylkF2cqMUDFfg2//Iy2k=;
+	s=korg; t=1720524691;
+	bh=/Z40NyeZ5Bujt6d5e314cYWAsrtXZerhzOlgnkoRhq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SF3Zx2aWblypo9Mrtglx3jJHdBGpBPsM/Iz60LC27SRAQ0bczbeGSKtNda6AdJwMW
-	 aRYrqHmkkhQ7gIajld+RWVvC+OoeI0Y2iM9G0ECocz9pvbeQ08CTPUMuXTmcic7gQZ
-	 c6MUx0louoefNfsX0f4hjsr8my2l3F1ANBJDjoE4=
+	b=V680gYl1TtjQ3zgEXVISmFTryZkdrxOMGa2KWqN0720Tiwxn0S3kKtB/UBk3Neppq
+	 ia78gR5yumr6JZ0EyVhxh+3bgoXSrxwWoEPWNBvQuA4+C7O43hBGeURL/frjonILNn
+	 ve3LVIFf49zFBj2lHh+Jz4P35bqkYoAJ2nKOL8g4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Nathan Chancellor <nathan@kernel.org>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.1 068/102] f2fs: Add inline to f2fs_build_fault_attr() stub
-Date: Tue,  9 Jul 2024 13:10:31 +0200
-Message-ID: <20240709110654.027294102@linuxfoundation.org>
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 069/102] scsi: mpi3mr: Use proper format specifier in mpi3mr_sas_port_add()
+Date: Tue,  9 Jul 2024 13:10:32 +0200
+Message-ID: <20240709110654.066443379@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110651.353707001@linuxfoundation.org>
 References: <20240709110651.353707001@linuxfoundation.org>
@@ -53,41 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Nathan Chancellor <nathan@kernel.org>
 
-commit 0d8968287a1cf7b03d07387dc871de3861b9f6b9 upstream.
+commit 9f365cb8bbd0162963d6852651d7c9e30adcb7b5 upstream.
 
-When building without CONFIG_F2FS_FAULT_INJECTION, there is a warning
-from each file that includes f2fs.h because the stub for
-f2fs_build_fault_attr() is missing inline:
+When building for a 32-bit platform such as ARM or i386, for which size_t
+is unsigned int, there is a warning due to using an unsigned long format
+specifier:
 
-  In file included from fs/f2fs/segment.c:21:
-  fs/f2fs/f2fs.h:4605:12: warning: 'f2fs_build_fault_attr' defined but not used [-Wunused-function]
-   4605 | static int f2fs_build_fault_attr(struct f2fs_sb_info *sbi, unsigned long rate,
-        |            ^~~~~~~~~~~~~~~~~~~~~
+  drivers/scsi/mpi3mr/mpi3mr_transport.c:1370:11: error: format specifies type 'unsigned long' but the argument has type 'unsigned int' [-Werror,-Wformat]
+   1369 |                         ioc_warn(mrioc, "skipping port %u, max allowed value is %lu\n",
+        |                                                                                 ~~~
+        |                                                                                 %u
+   1370 |                             i, sizeof(mr_sas_port->phy_mask) * 8);
+        |                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Add the missing inline to resolve all of the warnings for this
-configuration.
+Use the proper format specifier for size_t, %zu, to resolve the warning for
+all platforms.
 
-Fixes: 4ed886b187f4 ("f2fs: check validation of fault attrs in f2fs_build_fault_attr()")
+Fixes: 3668651def2c ("scsi: mpi3mr: Sanitise num_phys")
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Link: https://lore.kernel.org/r/20240514-mpi3mr-fix-wformat-v1-1-f1ad49217e5e@kernel.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/f2fs.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_transport.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -4533,8 +4533,8 @@ static inline bool f2fs_need_verity(cons
- extern int f2fs_build_fault_attr(struct f2fs_sb_info *sbi, unsigned long rate,
- 							unsigned long type);
- #else
--static int f2fs_build_fault_attr(struct f2fs_sb_info *sbi, unsigned long rate,
--							unsigned long type)
-+static inline int f2fs_build_fault_attr(struct f2fs_sb_info *sbi,
-+					unsigned long rate, unsigned long type)
- {
- 	return 0;
- }
+--- a/drivers/scsi/mpi3mr/mpi3mr_transport.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_transport.c
+@@ -1366,7 +1366,7 @@ static struct mpi3mr_sas_port *mpi3mr_sa
+ 			continue;
+ 
+ 		if (i > sizeof(mr_sas_port->phy_mask) * 8) {
+-			ioc_warn(mrioc, "skipping port %u, max allowed value is %lu\n",
++			ioc_warn(mrioc, "skipping port %u, max allowed value is %zu\n",
+ 			    i, sizeof(mr_sas_port->phy_mask) * 8);
+ 			goto out_fail;
+ 		}
 
 
