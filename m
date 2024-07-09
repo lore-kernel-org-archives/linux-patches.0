@@ -1,245 +1,84 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB3B514B959
-	for <patches@lists.linux.dev>; Mon,  8 Jul 2024 20:26:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5612C1AC;
+	Tue,  9 Jul 2024 02:18:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720470390; cv=none; b=pBk2aNZ0ZonF7INGLD1lmbPxVKC8yoTz71GY4TMrS7bRFlCjDArr8iJHVIK98pXlArZtmkzBRfR7ugrb9j0Rntnyt0YfXiVk3jmejKW6OBLyERne2mGxDx8gZA6Ww2i6b5CjPsOWXjQ+f9zkAim+zKssvyj78MDNSkk3VdqeaJc=
+	t=1720491487; cv=none; b=cDxhICgKPMuA9KRMPiTSww0LbukDvG3C84TyvbE/p5HINmJKAhLsbRyI3S1XlB6whAvg1pXbGFaC9HoZZIjsC3eSHAnmdy6Q2yDH1rkuhzwhejEW+/dWFDqs8wZt/lp4VQkxgwbfdKKtzJLI97njoeWrZ81wifZhlNCHNFWkD0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720470390; c=relaxed/simple;
-	bh=5V6IYhUe6otq5OC2GxRILyVlsLk6NROneiWtR7NjlIc=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=OSR8avUBMHVawWGshm3NwQ1BQnfGvoOx0bcWZNQkAgXXBCVaD/oiSl7Z94YANBlIoWywc3iNtB2NzliHzK9ZIJziVkv2Y1FgmOURp1NTfpS6t8RuYCO+fa2xOaJZcwcpnKxWHzFkTSLn6Q+0IjZzI9lgHAnmAZiwL9wsWg2LbAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=FNOv9xVu; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1720491487; c=relaxed/simple;
+	bh=sQpw2n0NaOOsrwQoFWy5PaDNmaERqzAgtz/ScLWKs7A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MEHSbOTSVMf7RvPF7+jeSqHGweQtgNSREh12ZLsUHxKjkEN1bZSQGsixzZXRZVH/vFRE5ohsshAEgAQgQ/sf3OE0+IpaC84LVvAG7srVTTKRmtbUJdiikld0inqZC/lYarxnbiUFka6xkStMTu0FpT5yb+HUb80AANQCDUwvR9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b=KN/jvw/U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="FNOv9xVu"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1720470387;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="KN/jvw/U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C6D6C116B1;
+	Tue,  9 Jul 2024 02:18:05 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="KN/jvw/U"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1720491483;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=mVMG4RVloX1DfGSanxoh3xfYdOdQv6AUQ/gWHyAHjGs=;
-	b=FNOv9xVunoNU0nHZejHfTl4M1V3Yb+N2FvCWN1FjWB7Y6mEgvATi9cWPDC4hjv7ayXtPCP
-	n9djuqXGJcJ39+lM1uOTo3Q4cOXg728SXExZWyoKmpjrQO0BGH/DMXkTJoTdh5Bn/eadHy
-	oNxxMndy3npNFAQDRIFuqTcx+cwpqRQ=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-591-M0Hwz4ZrPDi3-g_EwAfcSA-1; Mon, 08 Jul 2024 16:26:25 -0400
-X-MC-Unique: M0Hwz4ZrPDi3-g_EwAfcSA-1
-Received: by mail-wr1-f72.google.com with SMTP id ffacd0b85a97d-367962f0cb0so3039439f8f.1
-        for <patches@lists.linux.dev>; Mon, 08 Jul 2024 13:26:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720470384; x=1721075184;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:from:subject:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=mVMG4RVloX1DfGSanxoh3xfYdOdQv6AUQ/gWHyAHjGs=;
-        b=WgyvvoSEcSAs8LpywUWkbqg5C9p/UpQ0mLf5YHAqFvlUe84L6z/6DmbQCidMZUeb5k
-         7PDZU2qDgT2lwI0I9EcaS+Fv3a0lySe8AsMj4ikEwnmbz50vXO4UBU8A3BDgaLTTogIA
-         4+qtkp6RHiXhZGE6kSEErHQSiLiCrpq4POjQeUgd8pz1o5CaS6xzs2AKLFxPHNHWCg7G
-         g58H0LsMZqHkfgNI1QpMkotIuZyWyebCyalqdY6icd6CBq1k2dFg+QMfChi+VwIFkiFq
-         hI5VCcr/jnGASqOBvcw//ihoTZg4CZKTgT6/j/yHU+bsFAFk7UKTP5610Ri+84/fKvZf
-         ljAA==
-X-Forwarded-Encrypted: i=1; AJvYcCXKr5h3Vi0IgnCatoP2c6+ISYE8sU6f8oDffJ4qnrybWhkRTv8qxsvpDyTzYg0Kp9uQ+4AHObhiiKktjMUt4g8LZX/BofYIXw==
-X-Gm-Message-State: AOJu0Yx08RITLwClZohAn6avg1y8d/kAzYpDWOqADvyCU81MqT9SlbUf
-	iUM+0v4itObQXbGUGfwj18sB3ou5/x7nP5LCOrQYEpMfRKh8SuwQXXboC3TdgyGMrT1KcYuHUlq
-	o7BKoGcrZn/5hgRQytEFNxUOkUex3BCxUFiCTzaCR58lPbc6InEyXe6c=
-X-Received: by 2002:a05:6000:1564:b0:366:ddc2:a14a with SMTP id ffacd0b85a97d-367cea964f7mr432605f8f.40.1720470384144;
-        Mon, 08 Jul 2024 13:26:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFtC7PX61wT1RNLMUAy6Dpe+mwu9S4XRQy3FYYepcl5EH3nIFv6WEb7mDkQBcFjeZ5hQnO1nQ==
-X-Received: by 2002:a05:6000:1564:b0:366:ddc2:a14a with SMTP id ffacd0b85a97d-367cea964f7mr432573f8f.40.1720470383644;
-        Mon, 08 Jul 2024 13:26:23 -0700 (PDT)
-Received: from ?IPV6:2003:cb:c744:2200:bad7:95bd:e25e:a9e? (p200300cbc7442200bad795bde25e0a9e.dip0.t-ipconnect.de. [2003:cb:c744:2200:bad7:95bd:e25e:a9e])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-367cde8491dsm642729f8f.45.2024.07.08.13.26.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Jul 2024 13:26:23 -0700 (PDT)
-Message-ID: <f14e5df9-5805-426a-bcbe-d19b038fcf30@redhat.com>
-Date: Mon, 8 Jul 2024 22:26:21 +0200
-Precedence: bulk
-X-Mailing-List: patches@lists.linux.dev
-List-Id: <patches.lists.linux.dev>
-List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
-List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+	 in-reply-to:in-reply-to:references:references;
+	bh=SG/nhRJ5sb1lI6oh+MAWi0fczWmHK6PqjjxjYpcpOV4=;
+	b=KN/jvw/Uc89zg8Kt77Xfog7E285Xcl2tdf9W0YRz3BOiCS3+imXctZmnwPAmIUpCSBfK6e
+	n6mdgXUPFPORrbaOWCG/Hcm8MvCU+4PyDTyIZ80b4goZ00TRfM4l+fBEvYkg6/BiYID8rE
+	ad8gUp/6uXjU8SeH0RZVPZgBm3p2y6o=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2946a661 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 9 Jul 2024 02:18:03 +0000 (UTC)
+Date: Tue, 9 Jul 2024 04:17:56 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	tglx@linutronix.de, linux-crypto@vger.kernel.org,
+	linux-api@vger.kernel.org, x86@kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+	Carlos O'Donell <carlos@redhat.com>,
+	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
+	Jann Horn <jannh@google.com>,
+	Christian Brauner <brauner@kernel.org>,
+	David Hildenbrand <dhildenb@redhat.com>, linux-mm@kvack.org
 Subject: Re: [PATCH v21 1/4] mm: add VM_DROPPABLE for designating always
  lazily freeable mappings
-From: David Hildenbrand <david@redhat.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev, tglx@linutronix.de,
- linux-crypto@vger.kernel.org, linux-api@vger.kernel.org, x86@kernel.org,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
- Carlos O'Donell <carlos@redhat.com>, Florian Weimer <fweimer@redhat.com>,
- Arnd Bergmann <arnd@arndb.de>, Jann Horn <jannh@google.com>,
- Christian Brauner <brauner@kernel.org>,
- David Hildenbrand <dhildenb@redhat.com>, linux-mm@kvack.org
-References: <20240707002658.1917440-1-Jason@zx2c4.com>
- <20240707002658.1917440-2-Jason@zx2c4.com>
- <1583c837-a4d5-4a8a-9c1d-2c64548cd199@redhat.com>
+Message-ID: <Zoyd1DYuD7cmJbgx@zx2c4.com>
+References: <1583c837-a4d5-4a8a-9c1d-2c64548cd199@redhat.com>
  <CAHk-=wjs-9DVeoc430BDOv+dkpDkdVvkEsSJxNVZ+sO51H1dJA@mail.gmail.com>
  <e2f104ac-b6d9-4583-b999-8f975c60d469@redhat.com>
  <CAHk-=wibRRHVH5D4XvX1maQDCT-o4JLkANXHMoZoWdn=tN0TLA@mail.gmail.com>
  <6705c6c8-8b6a-4d03-ae0f-aa83442ec0ab@redhat.com>
  <CAHk-=wi=XvCZ9r897LjEb4ZarLzLtKN1p+Fyig+F2fmQDF8GSA@mail.gmail.com>
  <7439da2e-4a60-4643-9804-17e99ce6e312@redhat.com>
- <Zovv4lzM38EHtnms@zx2c4.com> <Zov6SZZCKrqmigua@zx2c4.com>
+ <Zovv4lzM38EHtnms@zx2c4.com>
+ <Zov6SZZCKrqmigua@zx2c4.com>
  <75d6c45d-deea-464d-b0fd-b36e5d73b898@redhat.com>
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
+Precedence: bulk
+X-Mailing-List: patches@lists.linux.dev
+List-Id: <patches.lists.linux.dev>
+List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
+List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 In-Reply-To: <75d6c45d-deea-464d-b0fd-b36e5d73b898@redhat.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 
-On 08.07.24 22:21, David Hildenbrand wrote:
-> On 08.07.24 16:40, Jason A. Donenfeld wrote:
->> Hi David, Linus,
->>
->> Below is what I understand the suggestions about the UX to be. The full
->> commit is in https://git.zx2c4.com/linux-rng/log/ but here's the part
->> we've been discussing. I've held off on David's suggestion changing
->> "DROPPABLE" to "VOLATILE" to give Linus some time to wake up on the west
->> coast and voice his preference for "DROPPABLE". But the rest is in
->> place.
->>
->> Jason
->>
->> diff --git a/include/uapi/linux/mman.h b/include/uapi/linux/mman.h
->> index a246e11988d5..e89d00528f2f 100644
->> --- a/include/uapi/linux/mman.h
->> +++ b/include/uapi/linux/mman.h
->> @@ -17,6 +17,7 @@
->>    #define MAP_SHARED	0x01		/* Share changes */
->>    #define MAP_PRIVATE	0x02		/* Changes are private */
->>    #define MAP_SHARED_VALIDATE 0x03	/* share + validate extension flags */
->> +#define MAP_DROPPABLE	0x08		/* Zero memory under memory pressure. */
->>    
->>    /*
->>     * Huge page size encoding when MAP_HUGETLB is specified, and a huge page
->> diff --git a/mm/madvise.c b/mm/madvise.c
->> index a77893462b92..cba5bc652fc4 100644
->> --- a/mm/madvise.c
->> +++ b/mm/madvise.c
->> @@ -1068,13 +1068,16 @@ static int madvise_vma_behavior(struct vm_area_struct *vma,
->>    		new_flags |= VM_WIPEONFORK;
->>    		break;
->>    	case MADV_KEEPONFORK:
->> +		if (vma->vm_flags & VM_DROPPABLE)
->> +			return -EINVAL;
->>    		new_flags &= ~VM_WIPEONFORK;
->>    		break;
->>    	case MADV_DONTDUMP:
->>    		new_flags |= VM_DONTDUMP;
->>    		break;
->>    	case MADV_DODUMP:
->> -		if (!is_vm_hugetlb_page(vma) && new_flags & VM_SPECIAL)
->> +		if ((!is_vm_hugetlb_page(vma) && new_flags & VM_SPECIAL) ||
->> +		    (vma->vm_flags & VM_DROPPABLE))
->>    			return -EINVAL;
->>    		new_flags &= ~VM_DONTDUMP;
->>    		break;
->> diff --git a/mm/mlock.c b/mm/mlock.c
->> index 30b51cdea89d..b87b3d8cc9cc 100644
->> --- a/mm/mlock.c
->> +++ b/mm/mlock.c
->> @@ -485,7 +485,7 @@ static int mlock_fixup(struct vma_iterator *vmi, struct vm_area_struct *vma,
->>    
->>    	if (newflags == oldflags || (oldflags & VM_SPECIAL) ||
->>    	    is_vm_hugetlb_page(vma) || vma == get_gate_vma(current->mm) ||
->> -	    vma_is_dax(vma) || vma_is_secretmem(vma))
->> +	    vma_is_dax(vma) || vma_is_secretmem(vma) || (oldflags & VM_DROPPABLE))
->>    		/* don't set VM_LOCKED or VM_LOCKONFAULT and don't count */
->>    		goto out;
->>    
->> diff --git a/mm/mmap.c b/mm/mmap.c
->> index 83b4682ec85c..b3d38179dd42 100644
->> --- a/mm/mmap.c
->> +++ b/mm/mmap.c
->> @@ -1369,6 +1369,34 @@ unsigned long do_mmap(struct file *file, unsigned long addr,
->>    			pgoff = 0;
->>    			vm_flags |= VM_SHARED | VM_MAYSHARE;
->>    			break;
->> +		case MAP_DROPPABLE:
->> +			/*
->> +			 * A locked or stack area makes no sense to be droppable.
->> +			 *
->> +			 * Also, since droppable pages can just go away at any time
->> +			 * it makes no sense to copy them on fork or dump them.
->> +			 *
->> +			 * And don't attempt to combine with hugetlb for now.
->> +			 */
->> +			if (flags & (MAP_LOCKED | MAP_HUGETLB))
->> +			        return -EINVAL;
->> +			if (vm_flags & (VM_GROWSDOWN | VM_GROWSUP))
->> +			        return -EINVAL;
->> +
->> +			vm_flags |= VM_DROPPABLE;
->> +
->> +			/*
->> +			 * If the pages can be dropped, then it doesn't make
->> +			 * sense to reserve them.
->> +			 */
->> +			vm_flags |= VM_NORESERVE;
+Hi David,
+
+On Mon, Jul 08, 2024 at 10:21:09PM +0200, David Hildenbrand wrote:
+> BTW, I was just trying to understand how MADV_FREE + MAP_DROPPABLE would 
+> behave without any swap space around.
 > 
-> That is certainly interesting. Nothing that we might not be able to
+> Did you experiment with that?
 
-"Nothing" -> "I'll note that" :)
+You mean on a system without any swap configured? That's actually my
+primary test environment for this. It behaves as expected: when ram
+fills up and the scanner is trying to reclaim what it can,
+folio_test_swapbacked(folio) is false, and the memory gets freed. After,
+reads fault in a zero page. So it's working as expected.
 
--- 
-Cheers,
-
-David / dhildenb
-
+Jason
