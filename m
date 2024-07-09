@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F6215A843;
-	Tue,  9 Jul 2024 11:22:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0CB15A86D;
+	Tue,  9 Jul 2024 11:22:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524149; cv=none; b=h1Uyy0Q7BF992Xitaq+DRzBzZDTfjhQpATCdIb52wG+DeHGa3niSkciWyUR8gKoXxwKoI5g03uqtroo2xcy4BMR2JhBicjESjC6T+UEua6+CSSwvIBEtB09BrpiMyqqHDtDTt8UzgS2iU9KcyrjQNbmo7ONgT5Dyj7yG1NRUCR8=
+	t=1720524152; cv=none; b=iMO8iBd9ppg4w9kV6jyTG+1U++Zk6pdsGF8KejZWZjnZZPCwGIKl4o3y07qeznmKx3YLQxw6tnlT2tuUbILFEzAGLnjdnrpypRBDBlqqwkysq7VTPzYFoQzDmTLG9boVrhpHGr6ggNLObiJIk2PVTeZSUkrpDU2Cmta4p03dbkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524149; c=relaxed/simple;
-	bh=7xewcyJMgbSKMqH4Ied4k0A4sLwg2fBkxwyfxInkyTA=;
+	s=arc-20240116; t=1720524152; c=relaxed/simple;
+	bh=1sd2CEIYZSTGeH+RZ7G/MirHynE22cyPvAaIeDWJCHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RdPEsCNH03yKsbOctG49TOL+33hfKmhpSXzDF9Cuv76AvI7kNj1P0jH85/hncUh3MmC3NcZvxqX8wFZSd2caEX1Hdlmg72euLPIA8VMb9Pk9K/Tv0e/+gVcnHyQ2fTOX8x4n1vvSuU8h7r4cNL6gExjBTYkgcX5VK0QCbVYLHmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aMlxCMRR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lRm3/3tr3MWHrIacwMg3uc/1EnCXDVLnmjxWAAtWlByK0Acz+i46OMYjSM9/QqaKsndYWDkBRnpEi4Yz3AAXZQOO59Y4clEMemNkrH1nSHnr17RzyVJ3CeE60l9aH4QZ0roa/uSILpxOTu3H5SVKDkA42bF7/5o+K2c9N5XYczY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o2i4oObY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aMlxCMRR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DCE6C3277B;
-	Tue,  9 Jul 2024 11:22:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o2i4oObY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C6A1C3277B;
+	Tue,  9 Jul 2024 11:22:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524148;
-	bh=7xewcyJMgbSKMqH4Ied4k0A4sLwg2fBkxwyfxInkyTA=;
+	s=korg; t=1720524152;
+	bh=1sd2CEIYZSTGeH+RZ7G/MirHynE22cyPvAaIeDWJCHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aMlxCMRR89UtrgEqqvFSOqdPRUp/N3a7D9ZkZ8qVLgH7nvL1/4q+mByBr3fUJ+zIM
-	 UyXpLOuNCssj1rFtmVWeZPNkiwjxIpqph9Q3LtpawsSXNN+BJkySWKmDbj2jCUoN+P
-	 xxFwQis6eDUIhbJvnfzumj5NQdyRLh8wk3OWtxMg=
+	b=o2i4oObYSeITkqpO6Uud0Jt78gasS8u12ZksWmkUvtIaNfkVphCmSwOPnLgWNvZRR
+	 aGiIsacekhcf/8jQoTGOgVfxbcvOJj7EQWAXNTyOmm1rwGCmv4p1uVYoytppu36bKu
+	 j6Kj3DIXAuJkihAVrW/TgC3P26NVJKRTmwzJd6vw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Marek Vasut <marex@denx.de>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 086/197] wifi: cfg80211: restrict NL80211_ATTR_TXQ_QUANTUM values
-Date: Tue,  9 Jul 2024 13:09:00 +0200
-Message-ID: <20240709110712.293861491@linuxfoundation.org>
+Subject: [PATCH 6.9 087/197] net: phy: phy_device: Fix PHY LED blinking code comment
+Date: Tue,  9 Jul 2024 13:09:01 +0200
+Message-ID: <20240709110712.332093296@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -51,121 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit d1cba2ea8121e7fdbe1328cea782876b1dd80993 ]
+[ Upstream commit d3dcb084c70727be4a2f61bd94796e66147cfa35 ]
 
-syzbot is able to trigger softlockups, setting NL80211_ATTR_TXQ_QUANTUM
-to 2^31.
+Fix copy-paste error in the code comment. The code refers to
+LED blinking configuration, not brightness configuration. It
+was likely copied from comment above this one which does
+refer to brightness configuration.
 
-We had a similar issue in sch_fq, fixed with commit
-d9e15a273306 ("pkt_sched: fq: do not accept silly TCA_FQ_QUANTUM")
-
-watchdog: BUG: soft lockup - CPU#1 stuck for 26s! [kworker/1:0:24]
-Modules linked in:
-irq event stamp: 131135
- hardirqs last  enabled at (131134): [<ffff80008ae8778c>] __exit_to_kernel_mode arch/arm64/kernel/entry-common.c:85 [inline]
- hardirqs last  enabled at (131134): [<ffff80008ae8778c>] exit_to_kernel_mode+0xdc/0x10c arch/arm64/kernel/entry-common.c:95
- hardirqs last disabled at (131135): [<ffff80008ae85378>] __el1_irq arch/arm64/kernel/entry-common.c:533 [inline]
- hardirqs last disabled at (131135): [<ffff80008ae85378>] el1_interrupt+0x24/0x68 arch/arm64/kernel/entry-common.c:551
- softirqs last  enabled at (125892): [<ffff80008907e82c>] neigh_hh_init net/core/neighbour.c:1538 [inline]
- softirqs last  enabled at (125892): [<ffff80008907e82c>] neigh_resolve_output+0x268/0x658 net/core/neighbour.c:1553
- softirqs last disabled at (125896): [<ffff80008904166c>] local_bh_disable+0x10/0x34 include/linux/bottom_half.h:19
-CPU: 1 PID: 24 Comm: kworker/1:0 Not tainted 6.9.0-rc7-syzkaller-gfda5695d692c #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
-Workqueue: mld mld_ifc_work
-pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : __list_del include/linux/list.h:195 [inline]
- pc : __list_del_entry include/linux/list.h:218 [inline]
- pc : list_move_tail include/linux/list.h:310 [inline]
- pc : fq_tin_dequeue include/net/fq_impl.h:112 [inline]
- pc : ieee80211_tx_dequeue+0x6b8/0x3b4c net/mac80211/tx.c:3854
- lr : __list_del_entry include/linux/list.h:218 [inline]
- lr : list_move_tail include/linux/list.h:310 [inline]
- lr : fq_tin_dequeue include/net/fq_impl.h:112 [inline]
- lr : ieee80211_tx_dequeue+0x67c/0x3b4c net/mac80211/tx.c:3854
-sp : ffff800093d36700
-x29: ffff800093d36a60 x28: ffff800093d36960 x27: dfff800000000000
-x26: ffff0000d800ad50 x25: ffff0000d800abe0 x24: ffff0000d800abf0
-x23: ffff0000e0032468 x22: ffff0000e00324d4 x21: ffff0000d800abf0
-x20: ffff0000d800abf8 x19: ffff0000d800abf0 x18: ffff800093d363c0
-x17: 000000000000d476 x16: ffff8000805519dc x15: ffff7000127a6cc8
-x14: 1ffff000127a6cc8 x13: 0000000000000004 x12: ffffffffffffffff
-x11: ffff7000127a6cc8 x10: 0000000000ff0100 x9 : 0000000000000000
-x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0000000000000000
-x5 : ffff80009287aa08 x4 : 0000000000000008 x3 : ffff80008034c7fc
-x2 : ffff0000e0032468 x1 : 00000000da0e46b8 x0 : ffff0000e0032470
-Call trace:
-  __list_del include/linux/list.h:195 [inline]
-  __list_del_entry include/linux/list.h:218 [inline]
-  list_move_tail include/linux/list.h:310 [inline]
-  fq_tin_dequeue include/net/fq_impl.h:112 [inline]
-  ieee80211_tx_dequeue+0x6b8/0x3b4c net/mac80211/tx.c:3854
-  wake_tx_push_queue net/mac80211/util.c:294 [inline]
-  ieee80211_handle_wake_tx_queue+0x118/0x274 net/mac80211/util.c:315
-  drv_wake_tx_queue net/mac80211/driver-ops.h:1350 [inline]
-  schedule_and_wake_txq net/mac80211/driver-ops.h:1357 [inline]
-  ieee80211_queue_skb+0x18e8/0x2244 net/mac80211/tx.c:1664
-  ieee80211_tx+0x260/0x400 net/mac80211/tx.c:1966
-  ieee80211_xmit+0x278/0x354 net/mac80211/tx.c:2062
-  __ieee80211_subif_start_xmit+0xab8/0x122c net/mac80211/tx.c:4338
-  ieee80211_subif_start_xmit+0xe0/0x438 net/mac80211/tx.c:4532
-  __netdev_start_xmit include/linux/netdevice.h:4903 [inline]
-  netdev_start_xmit include/linux/netdevice.h:4917 [inline]
-  xmit_one net/core/dev.c:3531 [inline]
-  dev_hard_start_xmit+0x27c/0x938 net/core/dev.c:3547
-  __dev_queue_xmit+0x1678/0x33fc net/core/dev.c:4341
-  dev_queue_xmit include/linux/netdevice.h:3091 [inline]
-  neigh_resolve_output+0x558/0x658 net/core/neighbour.c:1563
-  neigh_output include/net/neighbour.h:542 [inline]
-  ip6_finish_output2+0x104c/0x1ee8 net/ipv6/ip6_output.c:137
-  ip6_finish_output+0x428/0x7a0 net/ipv6/ip6_output.c:222
-  NF_HOOK_COND include/linux/netfilter.h:303 [inline]
-  ip6_output+0x270/0x594 net/ipv6/ip6_output.c:243
-  dst_output include/net/dst.h:450 [inline]
-  NF_HOOK+0x160/0x4f0 include/linux/netfilter.h:314
-  mld_sendpack+0x7b4/0x10f4 net/ipv6/mcast.c:1818
-  mld_send_cr net/ipv6/mcast.c:2119 [inline]
-  mld_ifc_work+0x840/0xd0c net/ipv6/mcast.c:2650
-  process_one_work+0x7b8/0x15d4 kernel/workqueue.c:3267
-  process_scheduled_works kernel/workqueue.c:3348 [inline]
-  worker_thread+0x938/0xef4 kernel/workqueue.c:3429
-  kthread+0x288/0x310 kernel/kthread.c:388
-  ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:860
-
-Fixes: 52539ca89f36 ("cfg80211: Expose TXQ stats and parameters to userspace")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20240615160800.250667-1-edumazet@google.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 4e901018432e ("net: phy: phy_device: Call into the PHY driver to set LED blinking")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20240626030638.512069-1-marex@denx.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ include/linux/phy.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index 65c416e8d25eb..c9866db2ea468 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -468,6 +468,10 @@ static const struct netlink_range_validation nl80211_punct_bitmap_range = {
- 	.max = 0xffff,
- };
+diff --git a/include/linux/phy.h b/include/linux/phy.h
+index 3f68b8239bb11..a62d86bce1b63 100644
+--- a/include/linux/phy.h
++++ b/include/linux/phy.h
+@@ -1121,7 +1121,7 @@ struct phy_driver {
+ 				  u8 index, enum led_brightness value);
  
-+static const struct netlink_range_validation q_range = {
-+	.max = INT_MAX,
-+};
-+
- static const struct nla_policy nl80211_policy[NUM_NL80211_ATTR] = {
- 	[0] = { .strict_start_type = NL80211_ATTR_HE_OBSS_PD },
- 	[NL80211_ATTR_WIPHY] = { .type = NLA_U32 },
-@@ -754,7 +758,7 @@ static const struct nla_policy nl80211_policy[NUM_NL80211_ATTR] = {
- 
- 	[NL80211_ATTR_TXQ_LIMIT] = { .type = NLA_U32 },
- 	[NL80211_ATTR_TXQ_MEMORY_LIMIT] = { .type = NLA_U32 },
--	[NL80211_ATTR_TXQ_QUANTUM] = { .type = NLA_U32 },
-+	[NL80211_ATTR_TXQ_QUANTUM] = NLA_POLICY_FULL_RANGE(NLA_U32, &q_range),
- 	[NL80211_ATTR_HE_CAPABILITY] =
- 		NLA_POLICY_VALIDATE_FN(NLA_BINARY, validate_he_capa,
- 				       NL80211_HE_MAX_CAPABILITY_LEN),
+ 	/**
+-	 * @led_blink_set: Set a PHY LED brightness.  Index indicates
++	 * @led_blink_set: Set a PHY LED blinking.  Index indicates
+ 	 * which of the PHYs led should be configured to blink. Delays
+ 	 * are in milliseconds and if both are zero then a sensible
+ 	 * default should be chosen.  The call should adjust the
 -- 
 2.43.0
 
