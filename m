@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93465158A29;
-	Tue,  9 Jul 2024 11:22:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50FC158A04;
+	Tue,  9 Jul 2024 11:22:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524128; cv=none; b=sYVjvGFL6rYJa3D6W8ppssbSgf7iy5T66JqLn+qO22S4Nvp5nU23n8oahVN6dWDxUW1NXv63nXjNp10BFnGr41kAb4DSKW5L0wrSjxXraJuF+//ACRAltNAM9VPR+3fgjQRA/2Dnr4HFTZggi1WmD1HD98T1IalybHZ2NSDc8Ik=
+	t=1720524131; cv=none; b=lkXK+AHBenMOcP5NovF38pkZAMbggKer1koTCFQR6jXmXIRwcsHtbV3dCCDo9258W+MgpUJZJy+Q46bhHfg1RALSijyL0igeq7Yf96uL8qfTsTSokhvv1d/4ch3ESVBkpYRJhfatZzRzWtOCwEepvaHO3mjCddtaRaN0KVHRilc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524128; c=relaxed/simple;
-	bh=zPsOZJ2aKSGb71pwbPwBT+HB8iueNflTrDUm18nQbrQ=;
+	s=arc-20240116; t=1720524131; c=relaxed/simple;
+	bh=e9QTve1Y8l3L1Nr2sFuUUx+ftKrXf31mZDhtcnzaGfc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rTaukVz/i29eKzn90SA9XzcSuQ+mEc7gcjptDs+q+48sac4ww4ne1sbiwyD6STRO4Nrpp6go8dGUjXAQVVfu6aMKWB9eKcDFPk95thP4pbdH6C6EikS0Zn0BSfiY4v1/1HXVlLE/3cG8pxPWiT0AD6FfsOglQqwN3geio/EIuZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GFY6GMIB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mCzEoADNf1ZPgdQGN4s4GIlkyVq0p089Bc+J2/W8K37GWmP5oGDsHXKKe0p1Vi+lZ6zAQNBLQnEtA4yhqpDp7MCq0cWo/KjDDY3Z+/rWSZfk3gYnVQQ0EkixjM0ejhPhoDwFaNTAE0OKonSbM611kaVtJ2f4UmMCjIbYokU2jjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aORWWBFU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GFY6GMIB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B089C3277B;
-	Tue,  9 Jul 2024 11:22:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aORWWBFU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 012A9C32786;
+	Tue,  9 Jul 2024 11:22:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524128;
-	bh=zPsOZJ2aKSGb71pwbPwBT+HB8iueNflTrDUm18nQbrQ=;
+	s=korg; t=1720524131;
+	bh=e9QTve1Y8l3L1Nr2sFuUUx+ftKrXf31mZDhtcnzaGfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GFY6GMIBj8qk+Lr2/j7PY+t6j4lT74SghEwZElBkFKDpdmcJyl/wVyo4s0yAwCKA8
-	 IhsKniwpNgA6Y/S6cY2uBM8GOvQbdn4svWDhvPpaH3m3x3kQCKX+EDei7XTzXszReN
-	 NpzdOYvXCYm1QVnAz6oyKTgJYuY10thXkfIcm0is=
+	b=aORWWBFUA4Qmw+3DU7bXVSc7juEGCz+36t0dGmZnRPMMz7M4x1aI5zagWa5DoGNZI
+	 s+P+V9BLMWUtB/FAUt8ziFkJPtZRaSnTaFa2hzoKS8vwlA//ztLEuaS+IftYC5FX+H
+	 5iMgipHGCHDGufDrKzA75BBwNL61e3uwF1ghOopE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patryk Wlazlyn <patryk.wlazlyn@linux.intel.com>,
-	Len Brown <len.brown@intel.com>,
+	Brendan Higgins <brendanhiggins@google.com>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Kees Cook <keescook@chromium.org>,
+	David Gow <davidgow@google.com>,
+	Rae Moar <rmoar@google.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 080/197] tools/power turbostat: Avoid possible memory corruption due to sparse topology IDs
-Date: Tue,  9 Jul 2024 13:08:54 +0200
-Message-ID: <20240709110712.065083819@linuxfoundation.org>
+Subject: [PATCH 6.9 063/197] kunit: Handle test faults
+Date: Tue,  9 Jul 2024 13:08:37 +0200
+Message-ID: <20240709110711.400342317@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -45,139 +50,154 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Patryk Wlazlyn <patryk.wlazlyn@linux.intel.com>
+From: Mickaël Salaün <mic@digikod.net>
 
-[ Upstream commit 3559ea813ad3a9627934325c68ad05b18008a077 ]
+[ Upstream commit 3a35c13007dea132a65f07de05c26b87837fadc2 ]
 
-Save the highest core and package id when parsing topology to
-allocate enough memory when get_rapl_counters() is called with a core or
-a package id as a domain.
+Previously, when a kernel test thread crashed (e.g. NULL pointer
+dereference, general protection fault), the KUnit test hanged for 30
+seconds and exited with a timeout error.
 
-Note that RAPL domains are per-package on Intel, but per-core on AMD.
-Thus, the RAPL code effectively runs in different modes on those two
-product lines.
+Fix this issue by waiting on task_struct->vfork_done instead of the
+custom kunit_try_catch.try_completion, and track the execution state by
+initially setting try_result with -EINTR and only setting it to 0 if
+the test passed.
 
-Signed-off-by: Patryk Wlazlyn <patryk.wlazlyn@linux.intel.com>
-Signed-off-by: Len Brown <len.brown@intel.com>
+Fix kunit_generic_run_threadfn_adapter() signature by returning 0
+instead of calling kthread_complete_and_exit().  Because thread's exit
+code is never checked, always set it to 0 to make it clear.  To make
+this explicit, export kthread_exit() for KUnit tests built as module.
+
+Fix the -EINTR error message, which couldn't be reached until now.
+
+This is tested with a following patch.
+
+Cc: Brendan Higgins <brendanhiggins@google.com>
+Cc: Eric W. Biederman <ebiederm@xmission.com>
+Cc: Shuah Khan <skhan@linuxfoundation.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: David Gow <davidgow@google.com>
+Tested-by: Rae Moar <rmoar@google.com>
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Link: https://lore.kernel.org/r/20240408074625.65017-5-mic@digikod.net
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/x86/turbostat/turbostat.c | 25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ include/kunit/try-catch.h |  3 ---
+ kernel/kthread.c          |  1 +
+ lib/kunit/try-catch.c     | 19 ++++++++++++-------
+ 3 files changed, 13 insertions(+), 10 deletions(-)
 
-diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
-index 25417c3a47ab6..5d80d193e5bee 100644
---- a/tools/power/x86/turbostat/turbostat.c
-+++ b/tools/power/x86/turbostat/turbostat.c
-@@ -1022,6 +1022,7 @@ struct rapl_counter_info_t {
+diff --git a/include/kunit/try-catch.h b/include/kunit/try-catch.h
+index c507dd43119d5..7c966a1adbd30 100644
+--- a/include/kunit/try-catch.h
++++ b/include/kunit/try-catch.h
+@@ -14,13 +14,11 @@
  
- /* struct rapl_counter_info_t for each RAPL domain */
- struct rapl_counter_info_t *rapl_counter_info_perdomain;
-+unsigned int rapl_counter_info_perdomain_size;
+ typedef void (*kunit_try_catch_func_t)(void *);
  
- #define RAPL_COUNTER_FLAG_USE_MSR_SUM (1u << 1)
+-struct completion;
+ struct kunit;
  
-@@ -1415,6 +1416,8 @@ struct topo_params {
- 	int allowed_cpus;
- 	int allowed_cores;
- 	int max_cpu_num;
-+	int max_core_id;
-+	int max_package_id;
- 	int max_die_id;
- 	int max_node_num;
- 	int nodes_per_pkg;
-@@ -3369,15 +3372,18 @@ void write_rapl_counter(struct rapl_counter *rc, struct rapl_counter_info_t *rci
- 	rc->scale = rci->scale[idx];
+ /**
+  * struct kunit_try_catch - provides a generic way to run code which might fail.
+  * @test: The test case that is currently being executed.
+- * @try_completion: Completion that the control thread waits on while test runs.
+  * @try_result: Contains any errno obtained while running test case.
+  * @try: The function, the test case, to attempt to run.
+  * @catch: The function called if @try bails out.
+@@ -46,7 +44,6 @@ struct kunit;
+ struct kunit_try_catch {
+ 	/* private: internal use only. */
+ 	struct kunit *test;
+-	struct completion *try_completion;
+ 	int try_result;
+ 	kunit_try_catch_func_t try;
+ 	kunit_try_catch_func_t catch;
+diff --git a/kernel/kthread.c b/kernel/kthread.c
+index c5e40830c1f2d..f7be976ff88af 100644
+--- a/kernel/kthread.c
++++ b/kernel/kthread.c
+@@ -315,6 +315,7 @@ void __noreturn kthread_exit(long result)
+ 	kthread->result = result;
+ 	do_exit(0);
+ }
++EXPORT_SYMBOL(kthread_exit);
+ 
+ /**
+  * kthread_complete_and_exit - Exit the current kthread.
+diff --git a/lib/kunit/try-catch.c b/lib/kunit/try-catch.c
+index 9c9e4dcf06d96..34d30a6f23054 100644
+--- a/lib/kunit/try-catch.c
++++ b/lib/kunit/try-catch.c
+@@ -18,7 +18,7 @@
+ void __noreturn kunit_try_catch_throw(struct kunit_try_catch *try_catch)
+ {
+ 	try_catch->try_result = -EFAULT;
+-	kthread_complete_and_exit(try_catch->try_completion, -EFAULT);
++	kthread_exit(0);
+ }
+ EXPORT_SYMBOL_GPL(kunit_try_catch_throw);
+ 
+@@ -26,9 +26,12 @@ static int kunit_generic_run_threadfn_adapter(void *data)
+ {
+ 	struct kunit_try_catch *try_catch = data;
+ 
++	try_catch->try_result = -EINTR;
+ 	try_catch->try(try_catch->context);
++	if (try_catch->try_result == -EINTR)
++		try_catch->try_result = 0;
+ 
+-	kthread_complete_and_exit(try_catch->try_completion, 0);
++	return 0;
  }
  
--int get_rapl_counters(int cpu, int domain, struct core_data *c, struct pkg_data *p)
-+int get_rapl_counters(int cpu, unsigned int domain, struct core_data *c, struct pkg_data *p)
+ static unsigned long kunit_test_timeout(void)
+@@ -58,13 +61,11 @@ static unsigned long kunit_test_timeout(void)
+ 
+ void kunit_try_catch_run(struct kunit_try_catch *try_catch, void *context)
  {
- 	unsigned long long perf_data[NUM_RAPL_COUNTERS + 1];
--	struct rapl_counter_info_t *rci = &rapl_counter_info_perdomain[domain];
-+	struct rapl_counter_info_t *rci;
+-	DECLARE_COMPLETION_ONSTACK(try_completion);
+ 	struct kunit *test = try_catch->test;
+ 	struct task_struct *task_struct;
+ 	int exit_code, time_remaining;
  
- 	if (debug)
- 		fprintf(stderr, "%s: cpu%d domain%d\n", __func__, cpu, domain);
- 
- 	assert(rapl_counter_info_perdomain);
-+	assert(domain < rapl_counter_info_perdomain_size);
-+
-+	rci = &rapl_counter_info_perdomain[domain];
- 
- 	/*
- 	 * If we have any perf counters to read, read them all now, in bulk
-@@ -4181,7 +4187,7 @@ void free_fd_rapl_percpu(void)
- 	if (!rapl_counter_info_perdomain)
- 		return;
- 
--	const int num_domains = platform->has_per_core_rapl ? topo.num_cores : topo.num_packages;
-+	const int num_domains = rapl_counter_info_perdomain_size;
- 
- 	for (int domain_id = 0; domain_id < num_domains; ++domain_id) {
- 		if (rapl_counter_info_perdomain[domain_id].fd_perf != -1)
-@@ -4189,6 +4195,8 @@ void free_fd_rapl_percpu(void)
+ 	try_catch->context = context;
+-	try_catch->try_completion = &try_completion;
+ 	try_catch->try_result = 0;
+ 	task_struct = kthread_create(kunit_generic_run_threadfn_adapter,
+ 				     try_catch, "kunit_try_catch_thread");
+@@ -74,8 +75,12 @@ void kunit_try_catch_run(struct kunit_try_catch *try_catch, void *context)
  	}
- 
- 	free(rapl_counter_info_perdomain);
-+	rapl_counter_info_perdomain = NULL;
-+	rapl_counter_info_perdomain_size = 0;
- }
- 
- void free_all_buffers(void)
-@@ -6479,17 +6487,18 @@ void linux_perf_init(void)
- 
- void rapl_perf_init(void)
- {
--	const int num_domains = platform->has_per_core_rapl ? topo.num_cores : topo.num_packages;
-+	const unsigned int num_domains = (platform->has_per_core_rapl ? topo.max_core_id : topo.max_package_id) + 1;
- 	bool *domain_visited = calloc(num_domains, sizeof(bool));
- 
- 	rapl_counter_info_perdomain = calloc(num_domains, sizeof(*rapl_counter_info_perdomain));
- 	if (rapl_counter_info_perdomain == NULL)
- 		err(-1, "calloc rapl_counter_info_percpu");
-+	rapl_counter_info_perdomain_size = num_domains;
- 
- 	/*
- 	 * Initialize rapl_counter_info_percpu
- 	 */
--	for (int domain_id = 0; domain_id < num_domains; ++domain_id) {
-+	for (unsigned int domain_id = 0; domain_id < num_domains; ++domain_id) {
- 		struct rapl_counter_info_t *rci = &rapl_counter_info_perdomain[domain_id];
- 
- 		rci->fd_perf = -1;
-@@ -6509,7 +6518,7 @@ void rapl_perf_init(void)
- 		bool has_counter = 0;
- 		double scale;
- 		enum rapl_unit unit;
--		int next_domain;
-+		unsigned int next_domain;
- 
- 		memset(domain_visited, 0, num_domains * sizeof(*domain_visited));
- 
-@@ -6522,6 +6531,8 @@ void rapl_perf_init(void)
- 			next_domain =
- 			    platform->has_per_core_rapl ? cpus[cpu].physical_core_id : cpus[cpu].physical_package_id;
- 
-+			assert(next_domain < num_domains);
-+
- 			if (domain_visited[next_domain])
- 				continue;
- 
-@@ -7104,6 +7115,8 @@ void topology_probe(bool startup)
- 		if (cpus[i].thread_id == 0)
- 			topo.num_cores++;
- 	}
-+	topo.max_core_id = max_core_id;
-+	topo.max_package_id = max_package_id;
- 
- 	topo.cores_per_node = max_core_id + 1;
- 	if (debug > 1)
+ 	get_task_struct(task_struct);
+ 	wake_up_process(task_struct);
+-
+-	time_remaining = wait_for_completion_timeout(&try_completion,
++	/*
++	 * As for a vfork(2), task_struct->vfork_done (pointing to the
++	 * underlying kthread->exited) can be used to wait for the end of a
++	 * kernel thread.
++	 */
++	time_remaining = wait_for_completion_timeout(task_struct->vfork_done,
+ 						     kunit_test_timeout());
+ 	if (time_remaining == 0) {
+ 		try_catch->try_result = -ETIMEDOUT;
+@@ -91,7 +96,7 @@ void kunit_try_catch_run(struct kunit_try_catch *try_catch, void *context)
+ 	if (exit_code == -EFAULT)
+ 		try_catch->try_result = 0;
+ 	else if (exit_code == -EINTR)
+-		kunit_err(test, "wake_up_process() was never called\n");
++		kunit_err(test, "try faulted\n");
+ 	else if (exit_code == -ETIMEDOUT)
+ 		kunit_err(test, "try timed out\n");
+ 	else if (exit_code)
 -- 
 2.43.0
 
