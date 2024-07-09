@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C0F158208;
-	Tue,  9 Jul 2024 11:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D2513A25F;
+	Tue,  9 Jul 2024 11:22:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524158; cv=none; b=lmo9oKgUjsMMe/Ul9qbsqnL6nifvE8o5uE1gDMa2PjptqbZ7X7pWGp60vqDDnqN52iddJ5qWX3wIX1Tl/y7o3wCF2eWkD3VCjBVQ++ni7HjvEx2VSaIiUzI/RuXsAoh4VTr08rOx92PzNzajZ0KTeLedLDr5KAjav9QNKoTQ6sQ=
+	t=1720524161; cv=none; b=DbP6f4cWVGYyNlsct7subFxdDzj0r1ujTI9dtgrgFtJ3Swt55QtFC38aN1a0Hk81SVoHvMIBBPYeJbw5E1GTyAs9avpWa2NrL7pIlxFBqah+cDFhGoOMhm8jWGR0SApm/zapbDAEO8Z62VWkwwqgIaa6lpUcS6vux1lXLhEWmBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524158; c=relaxed/simple;
-	bh=+xo/bblR2R2ENm7tnv9TnLZSknSbhaSO8ocEbv43WEk=;
+	s=arc-20240116; t=1720524161; c=relaxed/simple;
+	bh=m/JoKjLYfhtDSbIj2YPoP1UWC+jGJXT9AydqhH8psrE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mFFDBsMqDk300Ul2od4KTAH5NWS7UrpHbNeP5DbRmWEV41talpr/LDz5AOYlh+HJTma4kZuwjqgBqR2fvRbtltVu6PqjVCADGXkO9U4kA23UWDXlC9AwciPI4ZveIav+5XBb7J9CYiElEpeC9UDoopi355EOt4SNKZ+ZVLdcXFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ztXuimAE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MGeBUbaH8p2l19H7+5tdYo/Z7/FwKVnZYBlWVADTySxFvnHttX9pd/dQS/fS/ZSEEbt61c7Ihz6w5x4pFw5VbEMG6WsYHOwDCV/LAGojjLg2ARi/v2wm96dR6B5/xMOWQqqgJXQB0dBoR0kQhc4tDdPKjLCm9qyib8zUbW89txY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gbxt1qgi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ztXuimAE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75538C3277B;
-	Tue,  9 Jul 2024 11:22:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gbxt1qgi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60649C3277B;
+	Tue,  9 Jul 2024 11:22:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524157;
-	bh=+xo/bblR2R2ENm7tnv9TnLZSknSbhaSO8ocEbv43WEk=;
+	s=korg; t=1720524160;
+	bh=m/JoKjLYfhtDSbIj2YPoP1UWC+jGJXT9AydqhH8psrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ztXuimAETekU9wWG4VqaMOtl9V6SUXRJ5Jl80PqSxgNdiRvZxe0cqQFEddd+cyCNI
-	 vpe/eu2KyPer21wI4WN1oJDjrifTbtN78VahvDaUGPRfwttawz6qEAK3yqlEbWJxpe
-	 gKaFYdilUhfc+16GfzxE5BMPuFIk37gyaiwm7WNU=
+	b=Gbxt1qgipHmh7CkGsBcYwZm8hWJG/qRrxF6+3NFR01jJUiITpC4pjkLgUDkyP0KTT
+	 xOHg5rdxf2W9N3G/CRatd6pc8yf2o0krar0Yil3gw9qmQPQv/LX2UhVFCzWBIDvGIL
+	 ER9GmokOiMOdhITVqBSRBBAa+F89vOWOUR5s4C4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neal Cardwell <ncardwell@google.com>,
-	Yuchung Cheng <ycheng@google.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Chris Mi <cmi@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 089/197] UPSTREAM: tcp: fix DSACK undo in fast recovery to call tcp_try_to_open()
-Date: Tue,  9 Jul 2024 13:09:03 +0200
-Message-ID: <20240709110712.410069115@linuxfoundation.org>
+Subject: [PATCH 6.9 090/197] net/mlx5: E-switch, Create ingress ACL when needed
+Date: Tue,  9 Jul 2024 13:09:04 +0200
+Message-ID: <20240709110712.448239509@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -53,67 +52,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neal Cardwell <ncardwell@google.com>
+From: Chris Mi <cmi@nvidia.com>
 
-[ Upstream commit a6458ab7fd4f427d4f6f54380453ad255b7fde83 ]
+[ Upstream commit b20c2fb45470d0c7a603613c9cfa5d45720e17f2 ]
 
-In some production workloads we noticed that connections could
-sometimes close extremely prematurely with ETIMEDOUT after
-transmitting only 1 TLP and RTO retransmission (when we would normally
-expect roughly tcp_retries2 = TCP_RETR2 = 15 RTOs before a connection
-closes with ETIMEDOUT).
+Currently, ingress acl is used for three features. It is created only
+when vport metadata match and prio tag are enabled. But active-backup
+lag mode also uses it. It is independent of vport metadata match and
+prio tag. And vport metadata match can be disabled using the
+following devlink command:
 
->From tracing we determined that these workloads can suffer from a
-scenario where in fast recovery, after some retransmits, a DSACK undo
-can happen at a point where the scoreboard is totally clear (we have
-retrans_out == sacked_out == lost_out == 0). In such cases, calling
-tcp_try_keep_open() means that we do not execute any code path that
-clears tp->retrans_stamp to 0. That means that tp->retrans_stamp can
-remain erroneously set to the start time of the undone fast recovery,
-even after the fast recovery is undone. If minutes or hours elapse,
-and then a TLP/RTO/RTO sequence occurs, then the start_ts value in
-retransmits_timed_out() (which is from tp->retrans_stamp) will be
-erroneously ancient (left over from the fast recovery undone via
-DSACKs). Thus this ancient tp->retrans_stamp value can cause the
-connection to die very prematurely with ETIMEDOUT via
-tcp_write_err().
+ # devlink dev param set pci/0000:08:00.0 name esw_port_metadata \
+	value false cmode runtime
 
-The fix: we change DSACK undo in fast recovery (TCP_CA_Recovery) to
-call tcp_try_to_open() instead of tcp_try_keep_open(). This ensures
-that if no retransmits are in flight at the time of DSACK undo in fast
-recovery then we properly zero retrans_stamp. Note that calling
-tcp_try_to_open() is more consistent with other loss recovery
-behavior, since normal fast recovery (CA_Recovery) and RTO recovery
-(CA_Loss) both normally end when tp->snd_una meets or exceeds
-tp->high_seq and then in tcp_fastretrans_alert() the "default" switch
-case executes tcp_try_to_open(). Also note that by inspection this
-change to call tcp_try_to_open() implies at least one other nice bug
-fix, where now an ECE-marked DSACK that causes an undo will properly
-invoke tcp_enter_cwr() rather than ignoring the ECE mark.
+If ingress acl is not created, will hit panic when creating drop rule
+for active-backup lag mode. If always create it, there will be about
+5% performance degradation.
 
-Fixes: c7d9d6a185a7 ("tcp: undo on DSACK during recovery")
-Signed-off-by: Neal Cardwell <ncardwell@google.com>
-Signed-off-by: Yuchung Cheng <ycheng@google.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
+Fix it by creating ingress acl when needed. If esw_port_metadata is
+true, ingress acl exists, then create drop rule using existing
+ingress acl. If esw_port_metadata is false, create ingress acl and
+then create drop rule.
+
+Fixes: 1749c4c51c16 ("net/mlx5: E-switch, add drop rule support to ingress ACL")
+Signed-off-by: Chris Mi <cmi@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../mellanox/mlx5/core/esw/acl/ingress_ofld.c | 37 +++++++++++++++----
+ 1 file changed, 29 insertions(+), 8 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 0953c915bb4de..77109976fe836 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -3074,7 +3074,7 @@ static void tcp_fastretrans_alert(struct sock *sk, const u32 prior_snd_una,
- 			return;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_ofld.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_ofld.c
+index 50d2ea3239798..a436ce895e45a 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_ofld.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_ofld.c
+@@ -6,6 +6,9 @@
+ #include "helper.h"
+ #include "ofld.h"
  
- 		if (tcp_try_undo_dsack(sk))
--			tcp_try_keep_open(sk);
-+			tcp_try_to_open(sk, flag);
++static int
++acl_ingress_ofld_setup(struct mlx5_eswitch *esw, struct mlx5_vport *vport);
++
+ static bool
+ esw_acl_ingress_prio_tag_enabled(struct mlx5_eswitch *esw,
+ 				 const struct mlx5_vport *vport)
+@@ -123,18 +126,31 @@ static int esw_acl_ingress_src_port_drop_create(struct mlx5_eswitch *esw,
+ {
+ 	struct mlx5_flow_act flow_act = {};
+ 	struct mlx5_flow_handle *flow_rule;
++	bool created = false;
+ 	int err = 0;
  
- 		tcp_identify_packet_loss(sk, ack_flag);
- 		if (icsk->icsk_ca_state != TCP_CA_Recovery) {
++	if (!vport->ingress.acl) {
++		err = acl_ingress_ofld_setup(esw, vport);
++		if (err)
++			return err;
++		created = true;
++	}
++
+ 	flow_act.action = MLX5_FLOW_CONTEXT_ACTION_DROP;
+ 	flow_act.fg = vport->ingress.offloads.drop_grp;
+ 	flow_rule = mlx5_add_flow_rules(vport->ingress.acl, NULL, &flow_act, NULL, 0);
+ 	if (IS_ERR(flow_rule)) {
+ 		err = PTR_ERR(flow_rule);
+-		goto out;
++		goto err_out;
+ 	}
+ 
+ 	vport->ingress.offloads.drop_rule = flow_rule;
+-out:
++
++	return 0;
++err_out:
++	/* Only destroy ingress acl created in this function. */
++	if (created)
++		esw_acl_ingress_ofld_cleanup(esw, vport);
+ 	return err;
+ }
+ 
+@@ -299,16 +315,12 @@ static void esw_acl_ingress_ofld_groups_destroy(struct mlx5_vport *vport)
+ 	}
+ }
+ 
+-int esw_acl_ingress_ofld_setup(struct mlx5_eswitch *esw,
+-			       struct mlx5_vport *vport)
++static int
++acl_ingress_ofld_setup(struct mlx5_eswitch *esw, struct mlx5_vport *vport)
+ {
+ 	int num_ftes = 0;
+ 	int err;
+ 
+-	if (!mlx5_eswitch_vport_match_metadata_enabled(esw) &&
+-	    !esw_acl_ingress_prio_tag_enabled(esw, vport))
+-		return 0;
+-
+ 	esw_acl_ingress_allow_rule_destroy(vport);
+ 
+ 	if (mlx5_eswitch_vport_match_metadata_enabled(esw))
+@@ -347,6 +359,15 @@ int esw_acl_ingress_ofld_setup(struct mlx5_eswitch *esw,
+ 	return err;
+ }
+ 
++int esw_acl_ingress_ofld_setup(struct mlx5_eswitch *esw, struct mlx5_vport *vport)
++{
++	if (!mlx5_eswitch_vport_match_metadata_enabled(esw) &&
++	    !esw_acl_ingress_prio_tag_enabled(esw, vport))
++		return 0;
++
++	return acl_ingress_ofld_setup(esw, vport);
++}
++
+ void esw_acl_ingress_ofld_cleanup(struct mlx5_eswitch *esw,
+ 				  struct mlx5_vport *vport)
+ {
 -- 
 2.43.0
 
