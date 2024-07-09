@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF05158201;
-	Tue,  9 Jul 2024 11:21:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFDCF15821A;
+	Tue,  9 Jul 2024 11:21:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524082; cv=none; b=GK5QH+iDjksl1uBngPhWaOiJX/afcvpSomKpBkUKL9mppE0X6WnTYaVHmsxXrgU3ZG+3Dgw5ImBwNNV9H6HrrgK9QRMfEZGTy7Z3HlJfXMAhIYKPHN12ROFYXBiZBrUtIPdpEdJnY2cyf4NoKvSq5+lb5u+Ed0tjm5AieOsAinw=
+	t=1720524089; cv=none; b=Ve/CQMUtgOOyyr8CbgLngY1cU1GuhRkQfTkUOSuxydsxuI6OmBlpcAkq8i/UpeHT7ThPmHwHZRfvrVv4Z/m9aTZ4TsXHky9iM8fi5rtHRhzglUgHT0XY6Z7hF7QIy3DBuohs2+RnQqh0hYNyKfcWoKqtGKMUaHi9VCInXKBLCn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524082; c=relaxed/simple;
-	bh=3b8X9k3qACtLYwdXSwgU7Q4kaNIlqHXj2N6cw7k5fGk=;
+	s=arc-20240116; t=1720524089; c=relaxed/simple;
+	bh=p4Y7Ifqy6cG+LtPrJdPMgq+RdFQlkfmXwWmNgsV/D5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VwezM1MAkC9LswMbQ1PpNRfVlbxHEotMcyAyreAK+CSJkOlN0FDcdzFwr1WynSUn3Wa0RyPbn/npIW5Ns97Wz3ZCTuMXcv0WTUUJIVLYFHHorVL2PxnrqrvhiLdA2RQJdwYCR6otNDEHw0UjDR7hy7N+ZxO//l/u9W6lR721tC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fmPpM3eE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hQ8YoULrvajmSJcC8nBd8EZQRE+msESKkfLyQjkeJmR2jgjPVxIc3H5gZfDZhDxR4FS+WOFOqvudJq3UPUhqM2bQYHYtIizGmPCBIl9eoM45k87bnxRVIfQRAEX2J64qwVN8Vr1feT65Ic6MD6vEZMvWd9+SIPZLQ/Jczc3zki4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v0FxJYhx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fmPpM3eE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61ED7C3277B;
-	Tue,  9 Jul 2024 11:21:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v0FxJYhx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5739FC32786;
+	Tue,  9 Jul 2024 11:21:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524081;
-	bh=3b8X9k3qACtLYwdXSwgU7Q4kaNIlqHXj2N6cw7k5fGk=;
+	s=korg; t=1720524089;
+	bh=p4Y7Ifqy6cG+LtPrJdPMgq+RdFQlkfmXwWmNgsV/D5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fmPpM3eEHjD4f9Hb7JTVwelLe78THf8vYa79kFjly16M1AmpSxgqWNzxj1m41rbjA
-	 qNb8RaiRvWyPYBb66E1T+ZFDx8p0gPdR4+U5VEIGmln6If4PP6PGE8NraPT39a7otl
-	 CI1HXVfd9B7U2NvzHew5biN5WR/3CrtgHKpOMGsE=
+	b=v0FxJYhxWV17nAmjeEtR+ZXi7oaq7p6N3HA28geF3r0DYCGaUs5zXcCrWcxusFh/4
+	 d+1d3budsOcdBJMOQW9h0tHDuVGd0wqRjS/1VSEPrinXQCtzP11lHch69czYApCmyR
+	 gClvtpIrqdz24N3cBSHD+Vil0+tZwbxrcp1BfRpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alex Hung <alex.hung@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 034/197] drm/amd/display: Do not return negative stream id for array
-Date: Tue,  9 Jul 2024 13:08:08 +0200
-Message-ID: <20240709110710.240252882@linuxfoundation.org>
+Subject: [PATCH 6.9 035/197] drm/amd/display: ASSERT when failing to find index by plane/stream id
+Date: Tue,  9 Jul 2024 13:08:09 +0200
+Message-ID: <20240709110710.278617366@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -55,16 +55,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 3ac31c9a707dd1c7c890b95333182f955e9dcb57 ]
+[ Upstream commit 01eb50e53c1ce505bf449348d433181310288765 ]
 
 [WHY]
-resource_stream_to_stream_idx returns an array index and it return -1
-when not found; however, -1 is not a valid array index number.
+find_disp_cfg_idx_by_plane_id and find_disp_cfg_idx_by_stream_id returns
+an array index and they return -1 when not found; however, -1 is not a
+valid index number.
 
 [HOW]
-When this happens, call ASSERT(), and return a zero instead.
+When this happens, call ASSERT(), and return a positive number (which is
+fewer than callers' array size) instead.
 
-This fixes an OVERRUN and an NEGATIVE_RETURNS issues reported by Coverity.
+This fixes 4 OVERRUN and 2 NEGATIVE_RETURNS issues reported by Coverity.
 
 Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
 Acked-by: Wayne Lin <wayne.lin@amd.com>
@@ -72,27 +74,33 @@ Signed-off-by: Alex Hung <alex.hung@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_resource.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dml2/dml2_dc_resource_mgmt.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-index d0bdfdf270ac9..ab598e1f088cf 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-@@ -2216,6 +2216,13 @@ static int resource_stream_to_stream_idx(struct dc_state *state,
- 			stream_idx = i;
- 			break;
- 		}
-+
-+	/* never return negative array index */
-+	if (stream_idx == -1) {
-+		ASSERT(0);
-+		return 0;
-+	}
-+
- 	return stream_idx;
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml2_dc_resource_mgmt.c b/drivers/gpu/drm/amd/display/dc/dml2/dml2_dc_resource_mgmt.c
+index a52c594e1ba4b..e1f1b5dd13203 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2/dml2_dc_resource_mgmt.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2/dml2_dc_resource_mgmt.c
+@@ -88,7 +88,8 @@ static int find_disp_cfg_idx_by_plane_id(struct dml2_dml_to_dc_pipe_mapping *map
+ 			return  i;
+ 	}
+ 
+-	return -1;
++	ASSERT(false);
++	return __DML2_WRAPPER_MAX_STREAMS_PLANES__;
  }
  
+ static int find_disp_cfg_idx_by_stream_id(struct dml2_dml_to_dc_pipe_mapping *mapping, unsigned int stream_id)
+@@ -100,7 +101,8 @@ static int find_disp_cfg_idx_by_stream_id(struct dml2_dml_to_dc_pipe_mapping *ma
+ 			return  i;
+ 	}
+ 
+-	return -1;
++	ASSERT(false);
++	return __DML2_WRAPPER_MAX_STREAMS_PLANES__;
+ }
+ 
+ // The master pipe of a stream is defined as the top pipe in odm slice 0
 -- 
 2.43.0
 
