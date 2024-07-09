@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DBAE13A25F;
-	Tue,  9 Jul 2024 11:25:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC4B27713;
+	Tue,  9 Jul 2024 11:25:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524336; cv=none; b=uY8vMX+fhCSYI29ObMBAfYDpd+1Snbg1co/LdOrUuzhfIhoMXGqq6VY6Tjp+MHsTPXuXZqFuKq60LFng4I5HIxeRnICwDK2DKPlNQMJjpzD0txFnDDpMOCgGATAM9xdc2e3tu2uFTDcnath82YumC6RuzuJiw9FpB5D5ZTvBri4=
+	t=1720524339; cv=none; b=DH1qN5ASif1/S92jOI8+1JTVj8mDTc63J1Bbem2Mj7/iMQJB1LOYJutOuvrGUA15vuu83O5TQ4ha9z5J111b2yT+J2y2M3xY+y3Jgud1uRvOAlFs/dCb2qMGfhRgy0Lt3ePvuQYfSgSabyHE9oYzkgzECE2zRzYrJuNxETebaYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524336; c=relaxed/simple;
-	bh=LONeglKDTXK4n2p3rhAUT4p9066IK/w+0h0X5iyS/HI=;
+	s=arc-20240116; t=1720524339; c=relaxed/simple;
+	bh=Dl0xbv5ZAT77xf5kbHrIojbbcUGP1dMW2OLQVXazj7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Db1g5a+UHPEPm+NFwnuH1+E3Fq1RxydeyTWPW6q/eF6caBRMB8xwn2BX8/hbzfzqxxLtZ8IylXZ9HdzF2E6Tqlni0Rt4JADXqdlWCBmhfNPmo+SEDg/PtlK5LAu8NFKSb/N5kYxuwZWf2rEeAAP7gzbHGd6aUcpDsmV+XQrPisc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1nbYTpj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=f3G62YCy15qe80vb19ZCRL/hn/IQ38emCO/3odZ/cJ+DigdqfUcl0Bum5PCpKDKl4nlMtT08J9fNpRz0/rxShYnKyh55eB/Y4GEP76chSt6OtKaW3Z+hPXUXKM1q9hYuG8+oApLmqLpxNQTM4s68iByUGSa+iXS/d/eAmu3h+PE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X2/PLrLP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1nbYTpj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB099C3277B;
-	Tue,  9 Jul 2024 11:25:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X2/PLrLP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7C7EC3277B;
+	Tue,  9 Jul 2024 11:25:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524336;
-	bh=LONeglKDTXK4n2p3rhAUT4p9066IK/w+0h0X5iyS/HI=;
+	s=korg; t=1720524339;
+	bh=Dl0xbv5ZAT77xf5kbHrIojbbcUGP1dMW2OLQVXazj7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U1nbYTpjNKjYt3Z+gQhzwh29HzvfyW7Meo8HCvKbL8DwjCBif2Ue/FIlSvP/l2KZr
-	 n4uanjR6rHMjoJt500j0Ac6rOwN7gLegGh/4acz6oHli0WGfkB0QLei5GWsl9msq/p
-	 gwKy95RSXktzoBPHoTyTUJD8q5fU+e5tSmJ6IZZw=
+	b=X2/PLrLP/SxfWFn/LBumUB80xeXIXGa8m5rD7xqZHOlIOLiVjpDPtCq0Faru0NSVF
+	 8Xt397RHRUp/mqy5TybVOwEYthsqcPPM7/hl6CJ6BJWqBBrdUFfX2n+XTLNOA2xbXp
+	 btvzf7LwA4gOft7UsJc3S/Spw31GoQnbjkt8GGgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	dri-devel@lists.freedesktop.org,
+	intel-xe@lists.freedesktop.org,
 	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Matthew Brost <matthew.brost@intel.com>
-Subject: [PATCH 6.9 149/197] drm/xe: fix error handling in xe_migrate_update_pgtables
-Date: Tue,  9 Jul 2024 13:10:03 +0200
-Message-ID: <20240709110714.714957798@linuxfoundation.org>
+	Matthew Brost <matthew.brost@intel.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>
+Subject: [PATCH 6.9 150/197] drm/ttm: Always take the bo delayed cleanup path for imported bos
+Date: Tue,  9 Jul 2024 13:10:04 +0200
+Message-ID: <20240709110714.754790442@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -52,61 +56,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Auld <matthew.auld@intel.com>
+From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 
-commit fc932f51926698488f874ddf7d8f18483ca10271 upstream.
+commit d99fbd9aab624fc030934e21655389ab1765dc94 upstream.
 
-Don't call drm_suballoc_free with sa_bo pointing to PTR_ERR.
+Bos can be put with multiple unrelated dma-resv locks held. But
+imported bos attempt to grab the bo dma-resv during dma-buf detach
+that typically happens during cleanup. That leads to lockde splats
+similar to the below and a potential ABBA deadlock.
 
-References: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/2120
+Fix this by always taking the delayed workqueue cleanup path for
+imported bos.
+
+Requesting stable fixes from when the Xe driver was introduced,
+since its usage of drm_exec and wide vm dma_resvs appear to be
+the first reliable trigger of this.
+
+[22982.116427] ============================================
+[22982.116428] WARNING: possible recursive locking detected
+[22982.116429] 6.10.0-rc2+ #10 Tainted: G     U  W
+[22982.116430] --------------------------------------------
+[22982.116430] glxgears:sh0/5785 is trying to acquire lock:
+[22982.116431] ffff8c2bafa539a8 (reservation_ww_class_mutex){+.+.}-{3:3}, at: dma_buf_detach+0x3b/0xf0
+[22982.116438]
+               but task is already holding lock:
+[22982.116438] ffff8c2d9aba6da8 (reservation_ww_class_mutex){+.+.}-{3:3}, at: drm_exec_lock_obj+0x49/0x2b0 [drm_exec]
+[22982.116442]
+               other info that might help us debug this:
+[22982.116442]  Possible unsafe locking scenario:
+
+[22982.116443]        CPU0
+[22982.116444]        ----
+[22982.116444]   lock(reservation_ww_class_mutex);
+[22982.116445]   lock(reservation_ww_class_mutex);
+[22982.116447]
+                *** DEADLOCK ***
+
+[22982.116447]  May be due to missing lock nesting notation
+
+[22982.116448] 5 locks held by glxgears:sh0/5785:
+[22982.116449]  #0: ffff8c2d9aba58c8 (&xef->vm.lock){+.+.}-{3:3}, at: xe_file_close+0xde/0x1c0 [xe]
+[22982.116507]  #1: ffff8c2e28cc8480 (&vm->lock){++++}-{3:3}, at: xe_vm_close_and_put+0x161/0x9b0 [xe]
+[22982.116578]  #2: ffff8c2e31982970 (&val->lock){.+.+}-{3:3}, at: xe_validation_ctx_init+0x6d/0x70 [xe]
+[22982.116647]  #3: ffffacdc469478a8 (reservation_ww_class_acquire){+.+.}-{0:0}, at: xe_vma_destroy_unlocked+0x7f/0xe0 [xe]
+[22982.116716]  #4: ffff8c2d9aba6da8 (reservation_ww_class_mutex){+.+.}-{3:3}, at: drm_exec_lock_obj+0x49/0x2b0 [drm_exec]
+[22982.116719]
+               stack backtrace:
+[22982.116720] CPU: 8 PID: 5785 Comm: glxgears:sh0 Tainted: G     U  W          6.10.0-rc2+ #10
+[22982.116721] Hardware name: ASUS System Product Name/PRIME B560M-A AC, BIOS 2001 02/01/2023
+[22982.116723] Call Trace:
+[22982.116724]  <TASK>
+[22982.116725]  dump_stack_lvl+0x77/0xb0
+[22982.116727]  __lock_acquire+0x1232/0x2160
+[22982.116730]  lock_acquire+0xcb/0x2d0
+[22982.116732]  ? dma_buf_detach+0x3b/0xf0
+[22982.116734]  ? __lock_acquire+0x417/0x2160
+[22982.116736]  __ww_mutex_lock.constprop.0+0xd0/0x13b0
+[22982.116738]  ? dma_buf_detach+0x3b/0xf0
+[22982.116741]  ? dma_buf_detach+0x3b/0xf0
+[22982.116743]  ? ww_mutex_lock+0x2b/0x90
+[22982.116745]  ww_mutex_lock+0x2b/0x90
+[22982.116747]  dma_buf_detach+0x3b/0xf0
+[22982.116749]  drm_prime_gem_destroy+0x2f/0x40 [drm]
+[22982.116775]  xe_ttm_bo_destroy+0x32/0x220 [xe]
+[22982.116818]  ? __mutex_unlock_slowpath+0x3a/0x290
+[22982.116821]  drm_exec_unlock_all+0xa1/0xd0 [drm_exec]
+[22982.116823]  drm_exec_fini+0x12/0xb0 [drm_exec]
+[22982.116824]  xe_validation_ctx_fini+0x15/0x40 [xe]
+[22982.116892]  xe_vma_destroy_unlocked+0xb1/0xe0 [xe]
+[22982.116959]  xe_vm_close_and_put+0x41a/0x9b0 [xe]
+[22982.117025]  ? xa_find+0xe3/0x1e0
+[22982.117028]  xe_file_close+0x10a/0x1c0 [xe]
+[22982.117074]  drm_file_free+0x22a/0x280 [drm]
+[22982.117099]  drm_release_noglobal+0x22/0x70 [drm]
+[22982.117119]  __fput+0xf1/0x2d0
+[22982.117122]  task_work_run+0x59/0x90
+[22982.117125]  do_exit+0x330/0xb40
+[22982.117127]  do_group_exit+0x36/0xa0
+[22982.117129]  get_signal+0xbd2/0xbe0
+[22982.117131]  arch_do_signal_or_restart+0x3e/0x240
+[22982.117134]  syscall_exit_to_user_mode+0x1e7/0x290
+[22982.117137]  do_syscall_64+0xa1/0x180
+[22982.117139]  ? lock_acquire+0xcb/0x2d0
+[22982.117140]  ? __set_task_comm+0x28/0x1e0
+[22982.117141]  ? find_held_lock+0x2b/0x80
+[22982.117144]  ? __set_task_comm+0xe1/0x1e0
+[22982.117145]  ? lock_release+0xca/0x290
+[22982.117147]  ? __do_sys_prctl+0x245/0xab0
+[22982.117149]  ? lockdep_hardirqs_on_prepare+0xde/0x190
+[22982.117150]  ? syscall_exit_to_user_mode+0xb0/0x290
+[22982.117152]  ? do_syscall_64+0xa1/0x180
+[22982.117154]  ? __lock_acquire+0x417/0x2160
+[22982.117155]  ? reacquire_held_locks+0xd1/0x1f0
+[22982.117156]  ? do_user_addr_fault+0x30c/0x790
+[22982.117158]  ? lock_acquire+0xcb/0x2d0
+[22982.117160]  ? find_held_lock+0x2b/0x80
+[22982.117162]  ? do_user_addr_fault+0x357/0x790
+[22982.117163]  ? lock_release+0xca/0x290
+[22982.117164]  ? do_user_addr_fault+0x361/0x790
+[22982.117166]  ? trace_hardirqs_off+0x4b/0xc0
+[22982.117168]  ? clear_bhb_loop+0x45/0xa0
+[22982.117170]  ? clear_bhb_loop+0x45/0xa0
+[22982.117172]  ? clear_bhb_loop+0x45/0xa0
+[22982.117174]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[22982.117176] RIP: 0033:0x7f943d267169
+[22982.117192] Code: Unable to access opcode bytes at 0x7f943d26713f.
+[22982.117193] RSP: 002b:00007f9430bffc80 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+[22982.117195] RAX: fffffffffffffe00 RBX: 0000000000000000 RCX: 00007f943d267169
+[22982.117196] RDX: 0000000000000000 RSI: 0000000000000189 RDI: 00005622f89579d0
+[22982.117197] RBP: 00007f9430bffcb0 R08: 0000000000000000 R09: 00000000ffffffff
+[22982.117198] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+[22982.117199] R13: 0000000000000000 R14: 0000000000000000 R15: 00005622f89579d0
+[22982.117202]  </TASK>
+
 Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: dri-devel@lists.freedesktop.org
+Cc: intel-xe@lists.freedesktop.org
 Cc: <stable@vger.kernel.org> # v6.8+
-Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240620102025.127699-2-matthew.auld@intel.com
-(cherry picked from commit ce6b63336f79ec5f3996de65f452330e395f99ae)
 Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240628153848.4989-1-thomas.hellstrom@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_migrate.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/ttm/ttm_bo.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/xe/xe_migrate.c
-+++ b/drivers/gpu/drm/xe/xe_migrate.c
-@@ -1336,7 +1336,7 @@ xe_migrate_update_pgtables(struct xe_mig
- 						 GFP_KERNEL, true, 0);
- 			if (IS_ERR(sa_bo)) {
- 				err = PTR_ERR(sa_bo);
--				goto err;
-+				goto err_bb;
- 			}
- 
- 			ppgtt_ofs = NUM_KERNEL_PDE +
-@@ -1387,7 +1387,7 @@ xe_migrate_update_pgtables(struct xe_mig
- 					 update_idx);
- 	if (IS_ERR(job)) {
- 		err = PTR_ERR(job);
--		goto err_bb;
-+		goto err_sa;
- 	}
- 
- 	/* Wait on BO move */
-@@ -1436,12 +1436,12 @@ xe_migrate_update_pgtables(struct xe_mig
- 
- err_job:
- 	xe_sched_job_put(job);
-+err_sa:
-+	drm_suballoc_free(sa_bo, NULL);
- err_bb:
- 	if (!q)
- 		mutex_unlock(&m->job_mutex);
- 	xe_bb_free(bb, NULL);
--err:
--	drm_suballoc_free(sa_bo, NULL);
- 	return ERR_PTR(err);
- }
- 
+diff --git a/drivers/gpu/drm/ttm/ttm_bo.c b/drivers/gpu/drm/ttm/ttm_bo.c
+index 6396dece0db1..2427be8bc97f 100644
+--- a/drivers/gpu/drm/ttm/ttm_bo.c
++++ b/drivers/gpu/drm/ttm/ttm_bo.c
+@@ -346,6 +346,7 @@ static void ttm_bo_release(struct kref *kref)
+ 		if (!dma_resv_test_signaled(bo->base.resv,
+ 					    DMA_RESV_USAGE_BOOKKEEP) ||
+ 		    (want_init_on_free() && (bo->ttm != NULL)) ||
++		    bo->type == ttm_bo_type_sg ||
+ 		    !dma_resv_trylock(bo->base.resv)) {
+ 			/* The BO is not idle, resurrect it for delayed destroy */
+ 			ttm_bo_flush_all_fences(bo);
+-- 
+2.45.2
+
 
 
