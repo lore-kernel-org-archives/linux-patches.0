@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2FD655E4C;
-	Tue,  9 Jul 2024 11:31:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD06655E4C;
+	Tue,  9 Jul 2024 11:31:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524712; cv=none; b=B0DtmVW8JXVKbCSMqUuSfxlcca1Z1WfgN4JjQ8ZNL9Bn3ZqSwKuNQiQ1Sm9LEFffyOEufM4TLJpeaG9Gl7wI+/otHM5zRxMsW0TmVyHnYZCSgBtI48b4AcZMoVS0UD8HcT4ljMYOa30luIRfRXpFMZKf+6QwYfOcn5H5C9FREi0=
+	t=1720524715; cv=none; b=ttUT3CkI+nlpwjGL9JQN2YVdwBMRq8p62UXpFVHwTBL40wRH6odYA/QLZnQzVi1R3JyJeN1kCJW/Wl6zVU8/8L+EmnhCMYN+3H1pXaD1wIgMCdTKrQaOM/sreenpKo+3eqTnqtjyW6TC/VgLBPkS4Ojqozt2T1tx3iRYzeqiZfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524712; c=relaxed/simple;
-	bh=CtWSSFhJtHpJT6Nd5AFILYPEXCLhUKb0J1jObw8DTD0=;
+	s=arc-20240116; t=1720524715; c=relaxed/simple;
+	bh=g+eTw1sspSCrVQkNpH/CoJiq9Rsc8y9dYtyCpNL3cfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZE+RsrCsxVOPCnXzN3/p0vXKv561Xd30V9UCsX0KQ+kqfxijM67p/aEE/v8bECmKD8jUDUvlYctPGTEma15Ui84zueKiPzFpJc/EwoA3ngj9bvYPg951+WXCLVfVOIHAlHv/IQmsRAvPyVNwAdKkbGB3Y0gKXeBC835+jIxznSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GdFXcWJn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JlzJBdrMU0Vv3oLMRr7ra8M4GtaYpIBxx+iuvASQqf71ABkg3Cl4oeEMkuZYtiGPgSQ7VCJkP3gK7wc+XSFPiDWUwmFYoLamKFumiZfWKc7tPHfzfYvqOK4c63oHlCR6CvLVsmqk9v9aFFt/e/NhEY0L8t+vsQFM0Gq5uQoeRU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MCvcfQUr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GdFXcWJn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79CB7C3277B;
-	Tue,  9 Jul 2024 11:31:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MCvcfQUr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64F13C3277B;
+	Tue,  9 Jul 2024 11:31:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524711;
-	bh=CtWSSFhJtHpJT6Nd5AFILYPEXCLhUKb0J1jObw8DTD0=;
+	s=korg; t=1720524714;
+	bh=g+eTw1sspSCrVQkNpH/CoJiq9Rsc8y9dYtyCpNL3cfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GdFXcWJn9KL+d/X0QTl0BduHSu5aK3WMHS5Z2dWrR7JylAgoqHtnLuM2JnhfG/gPW
-	 NT+s6f0iUPyTcVomTF7HQE0KQz66hCn1ZAi2oJcms0iGJEbgsS6HmFN/3HTYBNFYW3
-	 yJMbYaKDudfEVGTcEc+usKJQsnSPDj7SLdL0t1LI=
+	b=MCvcfQUryDAfTdBxW5NOX4LB1obJteexJPSyJTHf13VBFKuMoODMaSR4AXic24M3z
+	 +Z2D87haxhNIB5O+Rf/eoM8we0AnEOMM458zRQAIDjg/KGu1zKWorWc7VXHglItECv
+	 3iVaFdP5szVKEzjmVAJfGs4sSUe8IrnYWoK4snMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 075/102] drm/amdgpu/atomfirmware: silence UBSAN warning
-Date: Tue,  9 Jul 2024 13:10:38 +0200
-Message-ID: <20240709110654.293303164@linuxfoundation.org>
+	John Schoenick <johns@valvesoftware.com>,
+	Matthew Schwartz <mattschwartz@gwu.edu>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>
+Subject: [PATCH 6.1 076/102] drm: panel-orientation-quirks: Add quirk for Valve Galileo
+Date: Tue,  9 Jul 2024 13:10:39 +0200
+Message-ID: <20240709110654.330410686@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110651.353707001@linuxfoundation.org>
 References: <20240709110651.353707001@linuxfoundation.org>
@@ -50,31 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: John Schoenick <johns@valvesoftware.com>
 
-commit d0417264437a8fa05f894cabba5a26715b32d78e upstream.
+commit 26746ed40bb0e4ebe2b2bd61c04eaaa54e263c14 upstream.
 
-This is a variable sized array.
+Valve's Steam Deck Galileo revision has a 800x1280 OLED panel
 
-Link: https://lists.freedesktop.org/archives/amd-gfx/2024-June/110420.html
-Tested-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Cc: stable@vger.kernel.org # 6.1+
+Signed-off-by: John Schoenick <johns@valvesoftware.com>
+Signed-off-by: Matthew Schwartz <mattschwartz@gwu.edu>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240628205822.348402-2-mattschwartz@gwu.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/include/atomfirmware.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/drm_panel_orientation_quirks.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/gpu/drm/amd/include/atomfirmware.h
-+++ b/drivers/gpu/drm/amd/include/atomfirmware.h
-@@ -701,7 +701,7 @@ struct atom_gpio_pin_lut_v2_1
- {
-   struct  atom_common_table_header  table_header;
-   /*the real number of this included in the structure is calcualted by using the (whole structure size - the header size)/size of atom_gpio_pin_lut  */
--  struct  atom_gpio_pin_assignment  gpio_pin[8];
-+  struct  atom_gpio_pin_assignment  gpio_pin[];
- };
- 
- 
+--- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
++++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+@@ -421,6 +421,13 @@ static const struct dmi_system_id orient
+ 		  DMI_EXACT_MATCH(DMI_PRODUCT_VERSION, "1"),
+ 		},
+ 		.driver_data = (void *)&lcd800x1280_rightside_up,
++	}, {	/* Valve Steam Deck */
++		.matches = {
++		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Valve"),
++		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "Galileo"),
++		  DMI_EXACT_MATCH(DMI_PRODUCT_VERSION, "1"),
++		},
++		.driver_data = (void *)&lcd800x1280_rightside_up,
+ 	}, {	/* VIOS LTH17 */
+ 		.matches = {
+ 		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "VIOS"),
 
 
