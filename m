@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D8781586C4;
-	Tue,  9 Jul 2024 11:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A142155389;
+	Tue,  9 Jul 2024 11:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720523500; cv=none; b=TLswEZEv0uKWUgepAjWPnhTIU9QQmNEc/V5XTvYA7OujfVwpNg5F/lp8BLRe+Q/wD4rMrkodAb1MNPA/7sJc8QB5oTItnOS1mqcnqkcm3qPpGSNIdbU7uRgAQEwDhwS7ijUuIuIvkfnIotUnGolrToD+eLtN5S/cgqU2q4sLMLs=
+	t=1720523503; cv=none; b=Zf5ZDtlydZ9pW5p7ndn4c+arAzW2I9ViJqrRwwFwwBRbUbII5TRJgVixZ12iYflUOiz7jypLpku78faSUShBKYrV3/LPmDU1FtVXUv97G/eX5gtWa8wrhdS8sKraElvNW9Te9zPJzNdd+sBvakYcNn0VfQjA1SDPPuzf4C9lO9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720523500; c=relaxed/simple;
-	bh=1n44hClz/kTgxupMUtD2N6zurMw1ECAmqvSiP9oTBCo=;
+	s=arc-20240116; t=1720523503; c=relaxed/simple;
+	bh=3n5AkLKhaTM5BpHQLepN2HojnhyrlZ/jExBcKRJ1hIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GgIkOdGSGrrMgwn0+0pyljUo7gKIQ8uzdvhYc6JZ2XVgaGaKydd4lKpryeFA3RxGS/2TmHSzemjsfBjcABCgm/3eZ6xTacpNJGzROsohCpTQ/kDCNgacfYu3hLvBzLp2cK6a9bQpAK6aqhooZuQ7Yp9Oh5scdgv/IiamuSXV5no=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=azqYeqE6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PuLiLpJB1SE/UhQ3XmaFP6HElgC0d63pba4iiBdSByiwoHNlvwkiKs5qiiCUM/5eL3ycGSj6bkB4oob47+xhCvJtr1F10B0wduRq/9EvJyyapCcTVWw/ui0SaayVrnnHfqoF9LA5YxD1At5irRGDjB6l6lL3EY+FpkGbJ66eJn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wsyE07iO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="azqYeqE6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1A30C4AF0C;
-	Tue,  9 Jul 2024 11:11:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wsyE07iO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F01BC4AF0A;
+	Tue,  9 Jul 2024 11:11:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720523500;
-	bh=1n44hClz/kTgxupMUtD2N6zurMw1ECAmqvSiP9oTBCo=;
+	s=korg; t=1720523503;
+	bh=3n5AkLKhaTM5BpHQLepN2HojnhyrlZ/jExBcKRJ1hIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=azqYeqE6KQroIQ73/ftqFUktAB6dZxgh7hBmTPDVzOCMZSa516vLIYXgPNJ3CTsjb
-	 PYxO8htd0iLXLL75a49cDDN3+xNzF0Knbkv4G3TcMMflTV7hiIIMA6N1/29E7xUZrK
-	 edYsNbGApHJXqmZZ4Oo12naXNBCipUYfTGkn2qMw=
+	b=wsyE07iOnXi3LjkIPUofvOD3wncf4CskuBzB4RsIWJL/JNDrCnQ/XK5WifT8ZG7Xg
+	 TBV3/oCpvUncqdwlSldmFvifGjR7uq/2M2LvSX9VCB+22Cnn+6aPfWYm/owC8z++4N
+	 pl+INeGrFY4Un+veDHMs8Av1Iv35Ctj27rD9SYF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Shirisha Ganta <shirisha@linux.ibm.com>,
-	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 005/139] powerpc: Avoid nmi_enter/nmi_exit in real mode interrupt.
-Date: Tue,  9 Jul 2024 13:08:25 +0200
-Message-ID: <20240709110658.358671508@linuxfoundation.org>
+Subject: [PATCH 6.6 006/139] media: dvb: as102-fe: Fix as10x_register_addr packing
+Date: Tue,  9 Jul 2024 13:08:26 +0200
+Message-ID: <20240709110658.397334600@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110658.146853929@linuxfoundation.org>
 References: <20240709110658.146853929@linuxfoundation.org>
@@ -53,114 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mahesh Salgaonkar <mahesh@linux.ibm.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 0db880fc865ffb522141ced4bfa66c12ab1fbb70 ]
+[ Upstream commit 309422d280748c74f57f471559980268ac27732a ]
 
-nmi_enter()/nmi_exit() touches per cpu variables which can lead to kernel
-crash when invoked during real mode interrupt handling (e.g. early HMI/MCE
-interrupt handler) if percpu allocation comes from vmalloc area.
+This structure is embedded in multiple other structures that are packed,
+which conflicts with it being aligned.
 
-Early HMI/MCE handlers are called through DEFINE_INTERRUPT_HANDLER_NMI()
-wrapper which invokes nmi_enter/nmi_exit calls. We don't see any issue when
-percpu allocation is from the embedded first chunk. However with
-CONFIG_NEED_PER_CPU_PAGE_FIRST_CHUNK enabled there are chances where percpu
-allocation can come from the vmalloc area.
+drivers/media/usb/as102/as10x_cmd.h:379:30: warning: field reg_addr within 'struct as10x_dump_memory::(unnamed at drivers/media/usb/as102/as10x_cmd.h:373:2)' is less aligned than 'struct as10x_register_addr' and is usually due to 'struct as10x_dump_memory::(unnamed at drivers/media/usb/as102/as10x_cmd.h:373:2)' being packed, which can lead to unaligned accesses [-Wunaligned-access]
 
-With kernel command line "percpu_alloc=page" we can force percpu allocation
-to come from vmalloc area and can see kernel crash in machine_check_early:
+Mark it as being packed.
 
-[    1.215714] NIP [c000000000e49eb4] rcu_nmi_enter+0x24/0x110
-[    1.215717] LR [c0000000000461a0] machine_check_early+0xf0/0x2c0
-[    1.215719] --- interrupt: 200
-[    1.215720] [c000000fffd73180] [0000000000000000] 0x0 (unreliable)
-[    1.215722] [c000000fffd731b0] [0000000000000000] 0x0
-[    1.215724] [c000000fffd73210] [c000000000008364] machine_check_early_common+0x134/0x1f8
+Marking the inner struct as 'packed' does not change the layout, since the
+whole struct is already packed, it just silences the clang warning. See
+also this llvm discussion:
 
-Fix this by avoiding use of nmi_enter()/nmi_exit() in real mode if percpu
-first chunk is not embedded.
+https://github.com/llvm/llvm-project/issues/55520
 
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Tested-by: Shirisha Ganta <shirisha@linux.ibm.com>
-Signed-off-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240410043006.81577-1-mahesh@linux.ibm.com
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/interrupt.h | 10 ++++++++++
- arch/powerpc/include/asm/percpu.h    | 10 ++++++++++
- arch/powerpc/kernel/setup_64.c       |  2 ++
- 3 files changed, 22 insertions(+)
+ drivers/media/dvb-frontends/as102_fe_types.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/include/asm/interrupt.h b/arch/powerpc/include/asm/interrupt.h
-index a4196ab1d0167..5f9d61b2159cc 100644
---- a/arch/powerpc/include/asm/interrupt.h
-+++ b/arch/powerpc/include/asm/interrupt.h
-@@ -336,6 +336,14 @@ static inline void interrupt_nmi_enter_prepare(struct pt_regs *regs, struct inte
- 	if (IS_ENABLED(CONFIG_KASAN))
- 		return;
+diff --git a/drivers/media/dvb-frontends/as102_fe_types.h b/drivers/media/dvb-frontends/as102_fe_types.h
+index 297f9520ebf9d..8a4e392c88965 100644
+--- a/drivers/media/dvb-frontends/as102_fe_types.h
++++ b/drivers/media/dvb-frontends/as102_fe_types.h
+@@ -174,6 +174,6 @@ struct as10x_register_addr {
+ 	uint32_t addr;
+ 	/* register mode access */
+ 	uint8_t mode;
+-};
++} __packed;
  
-+	/*
-+	 * Likewise, do not use it in real mode if percpu first chunk is not
-+	 * embedded. With CONFIG_NEED_PER_CPU_PAGE_FIRST_CHUNK enabled there
-+	 * are chances where percpu allocation can come from vmalloc area.
-+	 */
-+	if (percpu_first_chunk_is_paged)
-+		return;
-+
- 	/* Otherwise, it should be safe to call it */
- 	nmi_enter();
- }
-@@ -351,6 +359,8 @@ static inline void interrupt_nmi_exit_prepare(struct pt_regs *regs, struct inter
- 		// no nmi_exit for a pseries hash guest taking a real mode exception
- 	} else if (IS_ENABLED(CONFIG_KASAN)) {
- 		// no nmi_exit for KASAN in real mode
-+	} else if (percpu_first_chunk_is_paged) {
-+		// no nmi_exit if percpu first chunk is not embedded
- 	} else {
- 		nmi_exit();
- 	}
-diff --git a/arch/powerpc/include/asm/percpu.h b/arch/powerpc/include/asm/percpu.h
-index 8e5b7d0b851c6..634970ce13c6b 100644
---- a/arch/powerpc/include/asm/percpu.h
-+++ b/arch/powerpc/include/asm/percpu.h
-@@ -15,6 +15,16 @@
- #endif /* CONFIG_SMP */
- #endif /* __powerpc64__ */
- 
-+#if defined(CONFIG_NEED_PER_CPU_PAGE_FIRST_CHUNK) && defined(CONFIG_SMP)
-+#include <linux/jump_label.h>
-+DECLARE_STATIC_KEY_FALSE(__percpu_first_chunk_is_paged);
-+
-+#define percpu_first_chunk_is_paged	\
-+		(static_key_enabled(&__percpu_first_chunk_is_paged.key))
-+#else
-+#define percpu_first_chunk_is_paged	false
-+#endif /* CONFIG_PPC64 && CONFIG_SMP */
-+
- #include <asm-generic/percpu.h>
- 
- #include <asm/paca.h>
-diff --git a/arch/powerpc/kernel/setup_64.c b/arch/powerpc/kernel/setup_64.c
-index 246201d0d879e..394f209536cee 100644
---- a/arch/powerpc/kernel/setup_64.c
-+++ b/arch/powerpc/kernel/setup_64.c
-@@ -834,6 +834,7 @@ static __init int pcpu_cpu_to_node(int cpu)
- 
- unsigned long __per_cpu_offset[NR_CPUS] __read_mostly;
- EXPORT_SYMBOL(__per_cpu_offset);
-+DEFINE_STATIC_KEY_FALSE(__percpu_first_chunk_is_paged);
- 
- void __init setup_per_cpu_areas(void)
- {
-@@ -876,6 +877,7 @@ void __init setup_per_cpu_areas(void)
- 	if (rc < 0)
- 		panic("cannot initialize percpu area (err=%d)", rc);
- 
-+	static_key_enable(&__percpu_first_chunk_is_paged.key);
- 	delta = (unsigned long)pcpu_base_addr - (unsigned long)__per_cpu_start;
- 	for_each_possible_cpu(cpu) {
-                 __per_cpu_offset[cpu] = delta + pcpu_unit_offsets[cpu];
+ #endif
 -- 
 2.43.0
 
