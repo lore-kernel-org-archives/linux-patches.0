@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C260B27713;
-	Tue,  9 Jul 2024 11:28:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B751027713;
+	Tue,  9 Jul 2024 11:28:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524497; cv=none; b=DErrGyZ1IEZP4eMU/JdlCXu2i3CWkTe+X8+kUV5XrAMjn5xo6AEkVLII9ZHDcfIIlPOnTOE6v4AXd69YTCIt4pWyr1fFixKEUNkYFOOIMf0GZuu9S217vrRbI4W/jHH7bEwJ+z7yylCjHEVUGNtPKyJ24hSDO05yGkGKLr7s520=
+	t=1720524500; cv=none; b=SC3ZJn4rd4ELnSS1JGAAzJAD+sSYjln+aROBYwPFHkBLqEEIEnN7ohM4MEPmXnPGElSO5KbIAKpogJkAHZL7ce9IN4T89nGRG3N45ArAOPb06d4MtbmHcHWh7T95p52QsVN9U5TSEyfahmI8xQ/i1+zgEclBYxs9To4PVBm4z4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524497; c=relaxed/simple;
-	bh=YN8V5GQbAJ7kA8yY8LSv6ThzuVgDYogXvriX4d7OGU0=;
+	s=arc-20240116; t=1720524500; c=relaxed/simple;
+	bh=i5ijGDugEBIE7eeswogQeplX3McKbm1WfK9FF+PcGdw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L4ITtJ+z1A9K69gL/xYPWHB+Ma+Tj3Q+mcWemSY7yvDORxALUetrqo2Glkv12S1z9h7u5YcPJjQ7UJraxgITNCrgWbOmbVOP/1kkYGJPF3Arh096GLOt8NX0riy6ucJgP5x9SOzdaxM3DVEKKmnSOTdOFMaBJeRId2tJi2ilLAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AgZKxT7W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AYNg8YXiOm/blyAy6o1BXAYFTOPFTtgY5zWqq8V/hPZCEXIaOTMd6+7P+6jmbcub/+BgvQHBzxhqYLa2suGA0DO2Yio18GE78UgZoI0BwmOoLDrZQWR6h5kq4Mk8MXHUQKPsVSN9kkUPdx2wOIGBz2Z5dlEbFKLi2WOTdDjkzvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C0ASm3pa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AgZKxT7W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45F30C3277B;
-	Tue,  9 Jul 2024 11:28:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C0ASm3pa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 334B4C3277B;
+	Tue,  9 Jul 2024 11:28:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524497;
-	bh=YN8V5GQbAJ7kA8yY8LSv6ThzuVgDYogXvriX4d7OGU0=;
+	s=korg; t=1720524500;
+	bh=i5ijGDugEBIE7eeswogQeplX3McKbm1WfK9FF+PcGdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AgZKxT7WO+6xmabCgs6TuKFaGB85hSlMl0Ia537hi0V7XHYf9LPk8WiNgUX77U9lr
-	 Xw1s+lB6jsuLysEDugs++C5It/LVrJ0DaQ0LLTMwInxEGtD5H9zEj1Rb5WuQQ4OA9f
-	 bZE0TEWcSjO5Qbfgo5wG+EOJOKvJY2SCXqQFyFAc=
+	b=C0ASm3pa4tU+YtNmfERIwlq3tBZ15PDWg6/PI3P9dEHFikwA8/Xs1dWUHdv2zeDXC
+	 KdloKfazuKApaFZMU3At80yctRxtYcCc9VoSmVx1yHEbee7hLtdIUxZ8eLp8JXrTLL
+	 YtkeQQ+D6KvpYeG3OKQq7QB4HSg64q7igLsrqdRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diederik de Haas <didi.debian@cknow.org>,
-	Dragan Simic <dsimic@manjaro.org>,
-	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 6.9 169/197] arm64: dts: rockchip: Fix the DCDC_REG2 minimum voltage on Quartz64 Model B
-Date: Tue,  9 Jul 2024 13:10:23 +0200
-Message-ID: <20240709110715.488534326@linuxfoundation.org>
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.9 170/197] clk: qcom: gcc-sm6350: Fix gpll6* & gpll7 parents
+Date: Tue,  9 Jul 2024 13:10:24 +0200
+Message-ID: <20240709110715.527634435@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -51,56 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dragan Simic <dsimic@manjaro.org>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-commit d201c92bff90f3d3d0b079fc955378c15c0483cc upstream.
+[ Upstream commit 3414f41a13eb41db15c558fbc695466203dca4fa ]
 
-Correct the specified regulator-min-microvolt value for the buck DCDC_REG2
-regulator, which is part of the Rockchip RK809 PMIC, in the Pine64 Quartz64
-Model B board dts.  According to the RK809 datasheet, version 1.01, this
-regulator is capable of producing voltages as low as 0.5 V on its output,
-instead of going down to 0.9 V only, which is additionally confirmed by the
-regulator-min-microvolt values found in the board dts files for the other
-supported boards that use the same RK809 PMIC.
+Both gpll6 and gpll7 are parented to CXO at 19.2 MHz and not to GPLL0
+which runs at 600 MHz. Also gpll6_out_even should have the parent gpll6
+and not gpll0.
 
-This allows the DVFS to clock the GPU on the Quartz64 Model B below 700 MHz,
-all the way down to 200 MHz, which saves some power and reduces the amount of
-generated heat a bit, improving the thermal headroom and possibly improving
-the bursty CPU and GPU performance on this board.
+Adjust the parents of these clocks to make Linux report the correct rate
+and not absurd numbers like gpll7 at ~25 GHz or gpll6 at 24 GHz.
 
-This also eliminates the following warnings in the kernel log:
+Corrected rates are the following:
 
-  core: _opp_supported_by_regulators: OPP minuV: 825000 maxuV: 825000, not supported by regulator
-  panfrost fde60000.gpu: _opp_add: OPP not supported by regulators (200000000)
-  core: _opp_supported_by_regulators: OPP minuV: 825000 maxuV: 825000, not supported by regulator
-  panfrost fde60000.gpu: _opp_add: OPP not supported by regulators (300000000)
-  core: _opp_supported_by_regulators: OPP minuV: 825000 maxuV: 825000, not supported by regulator
-  panfrost fde60000.gpu: _opp_add: OPP not supported by regulators (400000000)
-  core: _opp_supported_by_regulators: OPP minuV: 825000 maxuV: 825000, not supported by regulator
-  panfrost fde60000.gpu: _opp_add: OPP not supported by regulators (600000000)
+  gpll7              807999902 Hz
+  gpll6              768000000 Hz
+     gpll6_out_even  384000000 Hz
+  gpll0              600000000 Hz
+     gpll0_out_odd   200000000 Hz
+     gpll0_out_even  300000000 Hz
 
-Fixes: dcc8c66bef79 ("arm64: dts: rockchip: add Pine64 Quartz64-B device tree")
-Cc: stable@vger.kernel.org
-Reported-By: Diederik de Haas <didi.debian@cknow.org>
-Signed-off-by: Dragan Simic <dsimic@manjaro.org>
-Tested-by: Diederik de Haas <didi.debian@cknow.org>
-Link: https://lore.kernel.org/r/e70742ea2df432bf57b3f7de542d81ca22b0da2f.1716225483.git.dsimic@manjaro.org
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+And because gpll6 is the parent of gcc_sdcc2_apps_clk_src (at 202 MHz)
+that clock also reports the correct rate now and avoids this warning:
+
+  [    5.984062] mmc0: Card appears overclocked; req 202000000 Hz, actual 6312499237 Hz
+
+Fixes: 131abae905df ("clk: qcom: Add SM6350 GCC driver")
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Link: https://lore.kernel.org/r/20240508-sm6350-gpll-fix-v1-1-e4ea34284a6d@fairphone.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3566-quartz64-b.dts |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/gcc-sm6350.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/arch/arm64/boot/dts/rockchip/rk3566-quartz64-b.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3566-quartz64-b.dts
-@@ -289,7 +289,7 @@
- 				regulator-name = "vdd_gpu";
- 				regulator-always-on;
- 				regulator-boot-on;
--				regulator-min-microvolt = <900000>;
-+				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <1350000>;
- 				regulator-ramp-delay = <6001>;
- 
+diff --git a/drivers/clk/qcom/gcc-sm6350.c b/drivers/clk/qcom/gcc-sm6350.c
+index cf4a7b6e0b23a..0559a33faf00e 100644
+--- a/drivers/clk/qcom/gcc-sm6350.c
++++ b/drivers/clk/qcom/gcc-sm6350.c
+@@ -100,8 +100,8 @@ static struct clk_alpha_pll gpll6 = {
+ 		.enable_mask = BIT(6),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gpll6",
+-			.parent_hws = (const struct clk_hw*[]){
+-				&gpll0.clkr.hw,
++			.parent_data = &(const struct clk_parent_data){
++				.fw_name = "bi_tcxo",
+ 			},
+ 			.num_parents = 1,
+ 			.ops = &clk_alpha_pll_fixed_fabia_ops,
+@@ -124,7 +124,7 @@ static struct clk_alpha_pll_postdiv gpll6_out_even = {
+ 	.clkr.hw.init = &(struct clk_init_data){
+ 		.name = "gpll6_out_even",
+ 		.parent_hws = (const struct clk_hw*[]){
+-			&gpll0.clkr.hw,
++			&gpll6.clkr.hw,
+ 		},
+ 		.num_parents = 1,
+ 		.ops = &clk_alpha_pll_postdiv_fabia_ops,
+@@ -139,8 +139,8 @@ static struct clk_alpha_pll gpll7 = {
+ 		.enable_mask = BIT(7),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gpll7",
+-			.parent_hws = (const struct clk_hw*[]){
+-				&gpll0.clkr.hw,
++			.parent_data = &(const struct clk_parent_data){
++				.fw_name = "bi_tcxo",
+ 			},
+ 			.num_parents = 1,
+ 			.ops = &clk_alpha_pll_fixed_fabia_ops,
+-- 
+2.43.0
+
 
 
