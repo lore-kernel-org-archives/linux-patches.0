@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A15C14E2F4;
-	Tue,  9 Jul 2024 11:23:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A30F158A19;
+	Tue,  9 Jul 2024 11:23:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524202; cv=none; b=lW1NQFNgkFbyDUZzYhvHhu5yuLlgXR7U+h0fI35crQDHFSoWhS0iOd2Jy8kQYsVi+ufrIaCFaDiyxJ7yMTvgETA7CgrwgV0Dugy8xwsCu2+nw4LzodtMZx8g95lvP98qVQrWfCDHazWwEANdvp1/3oZOBHDdciVjP0LjeQaFx34=
+	t=1720524205; cv=none; b=lhojZQxVnOLTt8u1gEGTvDNLcKFUFdU4k7m329idMjZZZI4cyQZrcSRzswhcLogKkKwzb2Ges39QbcCz1YYXIK4NaZkkZCWN6xx+0DuA74Km3mgx6Z1U4ONgwn/+i49GLqhuYxkBKIM9fVnQRRCw/KUH8Pm/ua6m+tddqt1oSDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524202; c=relaxed/simple;
-	bh=6eViaCiX1MnGOsTAxw9PySMg7LmlAqdyuG/XwCjaxdE=;
+	s=arc-20240116; t=1720524205; c=relaxed/simple;
+	bh=TXYKLTsnpZ5xx5j45eLSMNAi3uket0Wv9EF+BxTtIEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GFUYfKP4K80Yb2kVaH2cjohW+4qbMR8wBiwAFeDHRuC8HTtb/h3WOL/kvyclGk4ByeEdKViXkNL/RWyZ5Nd2WoF3cEyKj+9tcXavwhP9Wa1CR2H3iVSu7A8qB0Dxbp2I560ImNzIzuxWKpR7ixo8Kk/z6u9sdlFWOtBV4KAsgEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BgJqOt2P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D71hYXtfB9oyovH0bNU3gC7grP4t7CTjr/OSDjtpgvb5NJ427QieCRL4WShC/TROnwg5XrUPDxs7900pefr1mriuGqSLEZ7SabA9B1W1arkH+iRG3XqwmSH3EV4V0vzzk5hjkbwCc6c6AfAUVIWi5cRM6VV1iGCFdIy8ai7tGmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/0XBNO1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BgJqOt2P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87110C3277B;
-	Tue,  9 Jul 2024 11:23:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/0XBNO1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E690C3277B;
+	Tue,  9 Jul 2024 11:23:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524201;
-	bh=6eViaCiX1MnGOsTAxw9PySMg7LmlAqdyuG/XwCjaxdE=;
+	s=korg; t=1720524204;
+	bh=TXYKLTsnpZ5xx5j45eLSMNAi3uket0Wv9EF+BxTtIEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BgJqOt2P4oEOsuyn3DZJGT9BQ7p80sd9l6UDjMR5ivdTR1RZdzskvIRNeIehJI9pT
-	 s9KokfCk6Y0UT0BZQoSlaBpay719/W7yV28kdT67zRBf0/JpQ2YRAB4maeZDTJk2RJ
-	 uKle0CZg+khdt6uDfrJJI1yyo2TSjrz1nVE0EfKM=
+	b=i/0XBNO1TOQElUK8fDkCg9mqosFzvPTW5Umy6EpGJgSKevp8Z4YxkbyGoUxf2kGxq
+	 1EBH8U1sX0zQRQ447RpYzQCOLUMOXMnH8Ha4V9lse6hC6v1Qbza4Wd27W+q+R0+vu9
+	 qWceovY63NMG5RfOPHT+WDXkFVmFRh7+1NDEnI3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jiawen Wu <jiawenwu@trustnetic.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 105/197] net: txgbe: add extra handle for MSI/INTx into thread irq handle
-Date: Tue,  9 Jul 2024 13:09:19 +0200
-Message-ID: <20240709110713.023365375@linuxfoundation.org>
+Subject: [PATCH 6.9 106/197] net: txgbe: free isb resources at the right time
+Date: Tue,  9 Jul 2024 13:09:20 +0200
+Message-ID: <20240709110713.061160063@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -53,92 +53,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiawen Wu <jiawenwu@trustnetic.com>
 
-[ Upstream commit 1e1fa1723eb3a293d7d0b1c1a9ad8774c1ef0aa0 ]
+[ Upstream commit 935124dd5883b5de68dc5a94f582480a10643dc9 ]
 
-Rename original txgbe_misc_irq_handle() to txgbe_misc_irq_thread_fn()
-since it is the handle thread to wake up. And add the primary handler
-to deal the case of MSI/INTx, because there is a schedule NAPI poll.
+When using MSI/INTx interrupt, the shared interrupts are still being
+handled in the device remove routine, before free IRQs. So isb memory
+is still read after it is freed. Thus move wx_free_isb_resources()
+from txgbe_close() to txgbe_remove(). And fix the improper isb free
+action in txgbe_open() error handling path.
 
 Fixes: aefd013624a1 ("net: txgbe: use irq_domain for interrupt controller")
 Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/wangxun/txgbe/txgbe_irq.c    | 44 ++++++++++++++++---
- 1 file changed, 39 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/wangxun/libwx/wx_lib.c     | 4 +++-
+ drivers/net/ethernet/wangxun/ngbe/ngbe_main.c   | 2 ++
+ drivers/net/ethernet/wangxun/txgbe/txgbe_main.c | 7 ++++---
+ 3 files changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/wangxun/txgbe/txgbe_irq.c b/drivers/net/ethernet/wangxun/txgbe/txgbe_irq.c
-index 1490fd6ddbdf9..a4cf682dca650 100644
---- a/drivers/net/ethernet/wangxun/txgbe/txgbe_irq.c
-+++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_irq.c
-@@ -111,6 +111,36 @@ static const struct irq_domain_ops txgbe_misc_irq_domain_ops = {
- };
- 
- static irqreturn_t txgbe_misc_irq_handle(int irq, void *data)
-+{
-+	struct wx_q_vector *q_vector;
-+	struct txgbe *txgbe = data;
-+	struct wx *wx = txgbe->wx;
-+	u32 eicr;
-+
-+	if (wx->pdev->msix_enabled)
-+		return IRQ_WAKE_THREAD;
-+
-+	eicr = wx_misc_isb(wx, WX_ISB_VEC0);
-+	if (!eicr) {
-+		/* shared interrupt alert!
-+		 * the interrupt that we masked before the ICR read.
-+		 */
-+		if (netif_running(wx->netdev))
-+			txgbe_irq_enable(wx, true);
-+		return IRQ_NONE;        /* Not our interrupt */
-+	}
-+	wx->isb_mem[WX_ISB_VEC0] = 0;
-+	if (!(wx->pdev->msi_enabled))
-+		wr32(wx, WX_PX_INTA, 1);
-+
-+	/* would disable interrupts here but it is auto disabled */
-+	q_vector = wx->q_vector[0];
-+	napi_schedule_irqoff(&q_vector->napi);
-+
-+	return IRQ_WAKE_THREAD;
-+}
-+
-+static irqreturn_t txgbe_misc_irq_thread_fn(int irq, void *data)
+diff --git a/drivers/net/ethernet/wangxun/libwx/wx_lib.c b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
+index bf02bd0f08407..88e5e390770b5 100644
+--- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
++++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
+@@ -2028,6 +2028,9 @@ int wx_setup_isb_resources(struct wx *wx)
  {
- 	struct txgbe *txgbe = data;
- 	struct wx *wx = txgbe->wx;
-@@ -157,6 +187,7 @@ void txgbe_free_misc_irq(struct txgbe *txgbe)
+ 	struct pci_dev *pdev = wx->pdev;
  
- int txgbe_setup_misc_irq(struct txgbe *txgbe)
++	if (wx->isb_mem)
++		return 0;
++
+ 	wx->isb_mem = dma_alloc_coherent(&pdev->dev,
+ 					 sizeof(u32) * 4,
+ 					 &wx->isb_dma,
+@@ -2387,7 +2390,6 @@ static void wx_free_all_tx_resources(struct wx *wx)
+ 
+ void wx_free_resources(struct wx *wx)
  {
-+	unsigned long flags = IRQF_ONESHOT;
- 	struct wx *wx = txgbe->wx;
- 	int hwirq, err;
+-	wx_free_isb_resources(wx);
+ 	wx_free_all_rx_resources(wx);
+ 	wx_free_all_tx_resources(wx);
+ }
+diff --git a/drivers/net/ethernet/wangxun/ngbe/ngbe_main.c b/drivers/net/ethernet/wangxun/ngbe/ngbe_main.c
+index e894e01d030d1..af30ca0312b81 100644
+--- a/drivers/net/ethernet/wangxun/ngbe/ngbe_main.c
++++ b/drivers/net/ethernet/wangxun/ngbe/ngbe_main.c
+@@ -387,6 +387,7 @@ static int ngbe_open(struct net_device *netdev)
+ err_free_irq:
+ 	wx_free_irq(wx);
+ err_free_resources:
++	wx_free_isb_resources(wx);
+ 	wx_free_resources(wx);
+ 	return err;
+ }
+@@ -408,6 +409,7 @@ static int ngbe_close(struct net_device *netdev)
  
-@@ -170,14 +201,17 @@ int txgbe_setup_misc_irq(struct txgbe *txgbe)
- 		irq_create_mapping(txgbe->misc.domain, hwirq);
+ 	ngbe_down(wx);
+ 	wx_free_irq(wx);
++	wx_free_isb_resources(wx);
+ 	wx_free_resources(wx);
+ 	phylink_disconnect_phy(wx->phylink);
+ 	wx_control_hw(wx, false);
+diff --git a/drivers/net/ethernet/wangxun/txgbe/txgbe_main.c b/drivers/net/ethernet/wangxun/txgbe/txgbe_main.c
+index 76b5672c0a177..ca74d9422065a 100644
+--- a/drivers/net/ethernet/wangxun/txgbe/txgbe_main.c
++++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_main.c
+@@ -296,7 +296,7 @@ static int txgbe_open(struct net_device *netdev)
  
- 	txgbe->misc.chip = txgbe_irq_chip;
--	if (wx->pdev->msix_enabled)
-+	if (wx->pdev->msix_enabled) {
- 		txgbe->misc.irq = wx->msix_entry->vector;
--	else
-+	} else {
- 		txgbe->misc.irq = wx->pdev->irq;
-+		if (!wx->pdev->msi_enabled)
-+			flags |= IRQF_SHARED;
-+	}
- 
--	err = request_threaded_irq(txgbe->misc.irq, NULL,
--				   txgbe_misc_irq_handle,
--				   IRQF_ONESHOT,
-+	err = request_threaded_irq(txgbe->misc.irq, txgbe_misc_irq_handle,
-+				   txgbe_misc_irq_thread_fn,
-+				   flags,
- 				   wx->netdev->name, txgbe);
+ 	err = txgbe_request_queue_irqs(wx);
  	if (err)
- 		goto del_misc_irq;
+-		goto err_free_isb;
++		goto err_free_resources;
+ 
+ 	/* Notify the stack of the actual queue counts. */
+ 	err = netif_set_real_num_tx_queues(netdev, wx->num_tx_queues);
+@@ -313,8 +313,8 @@ static int txgbe_open(struct net_device *netdev)
+ 
+ err_free_irq:
+ 	wx_free_irq(wx);
+-err_free_isb:
+-	wx_free_isb_resources(wx);
++err_free_resources:
++	wx_free_resources(wx);
+ err_reset:
+ 	txgbe_reset(wx);
+ 
+@@ -729,6 +729,7 @@ static void txgbe_remove(struct pci_dev *pdev)
+ 
+ 	txgbe_remove_phy(txgbe);
+ 	txgbe_free_misc_irq(txgbe);
++	wx_free_isb_resources(wx);
+ 
+ 	pci_release_selected_regions(pdev,
+ 				     pci_select_bars(pdev, IORESOURCE_MEM));
 -- 
 2.43.0
 
