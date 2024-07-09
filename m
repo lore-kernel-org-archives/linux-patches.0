@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54103158208;
-	Tue,  9 Jul 2024 11:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C0F158208;
+	Tue,  9 Jul 2024 11:22:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524155; cv=none; b=Hs9DSjNM/AEar2AYHoalHGtKdDvXM40ZJtagC/Ap9YmnVdeUWxO2w2qCWQxmyAPZYP49e3ZB+3MMD5qOgBKred1cndDQUTg2R3fOD7PAAwLmBEhFKcEcFM/5XPkKe5WdxMopBwcZ/vLbNPUIDpQc9n6yNsikotpEiODxh766o4I=
+	t=1720524158; cv=none; b=lmo9oKgUjsMMe/Ul9qbsqnL6nifvE8o5uE1gDMa2PjptqbZ7X7pWGp60vqDDnqN52iddJ5qWX3wIX1Tl/y7o3wCF2eWkD3VCjBVQ++ni7HjvEx2VSaIiUzI/RuXsAoh4VTr08rOx92PzNzajZ0KTeLedLDr5KAjav9QNKoTQ6sQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524155; c=relaxed/simple;
-	bh=TBnevPvt/pGRMxaTXgi+BOwYzytxAvgjZsY3UMWX5rc=;
+	s=arc-20240116; t=1720524158; c=relaxed/simple;
+	bh=+xo/bblR2R2ENm7tnv9TnLZSknSbhaSO8ocEbv43WEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dCs2RadrHN02M8mA9cF23/edWBAVa7+c2rP9M2nf7kpjpJ+z/hEArLXENTWplolwBR4cKSjFJJdTesSD496h8/WOGP/7exzDz4937a4ZT/57RDogjyTuQCnR6Kg5K8HzI1qlBNSR4M75GgYPf3UZQRWP+88BDVUrjUZhzwRKl8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tDpp6uVK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mFFDBsMqDk300Ul2od4KTAH5NWS7UrpHbNeP5DbRmWEV41talpr/LDz5AOYlh+HJTma4kZuwjqgBqR2fvRbtltVu6PqjVCADGXkO9U4kA23UWDXlC9AwciPI4ZveIav+5XBb7J9CYiElEpeC9UDoopi355EOt4SNKZ+ZVLdcXFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ztXuimAE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tDpp6uVK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 887D5C3277B;
-	Tue,  9 Jul 2024 11:22:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ztXuimAE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75538C3277B;
+	Tue,  9 Jul 2024 11:22:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524154;
-	bh=TBnevPvt/pGRMxaTXgi+BOwYzytxAvgjZsY3UMWX5rc=;
+	s=korg; t=1720524157;
+	bh=+xo/bblR2R2ENm7tnv9TnLZSknSbhaSO8ocEbv43WEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tDpp6uVKDzx/Ta0FOJGPHchTAPvqUU7+xhjf6mhyVbtcSB9gwm51ktY3QLu4gneRI
-	 wZ+2XzRk1DA/K+ZPjdFnMs7HGu2bhJaKLuRrNR8DTDFEYFy/HJJz2A9tpAMH2jRLXj
-	 GOeJP6AN1YufbVbZPnyPaZ8iU0LeLqxHMaQvSgcQ=
+	b=ztXuimAETekU9wWG4VqaMOtl9V6SUXRJ5Jl80PqSxgNdiRvZxe0cqQFEddd+cyCNI
+	 vpe/eu2KyPer21wI4WN1oJDjrifTbtN78VahvDaUGPRfwttawz6qEAK3yqlEbWJxpe
+	 gKaFYdilUhfc+16GfzxE5BMPuFIk37gyaiwm7WNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Yuchung Cheng <ycheng@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 088/197] wifi: mac80211: fix BSS_CHANGED_UNSOL_BCAST_PROBE_RESP
-Date: Tue,  9 Jul 2024 13:09:02 +0200
-Message-ID: <20240709110712.370387629@linuxfoundation.org>
+Subject: [PATCH 6.9 089/197] UPSTREAM: tcp: fix DSACK undo in fast recovery to call tcp_try_to_open()
+Date: Tue,  9 Jul 2024 13:09:03 +0200
+Message-ID: <20240709110712.410069115@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -51,42 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Neal Cardwell <ncardwell@google.com>
 
-[ Upstream commit 816c6bec09ed5b90a58a1e12d5a606c5b6e23f47 ]
+[ Upstream commit a6458ab7fd4f427d4f6f54380453ad255b7fde83 ]
 
-Fix the definition of BSS_CHANGED_UNSOL_BCAST_PROBE_RESP so that
-not all higher bits get set, 1<<31 is a signed variable, so when
-we do
+In some production workloads we noticed that connections could
+sometimes close extremely prematurely with ETIMEDOUT after
+transmitting only 1 TLP and RTO retransmission (when we would normally
+expect roughly tcp_retries2 = TCP_RETR2 = 15 RTOs before a connection
+closes with ETIMEDOUT).
 
-  u64 changed = BSS_CHANGED_UNSOL_BCAST_PROBE_RESP;
+>From tracing we determined that these workloads can suffer from a
+scenario where in fast recovery, after some retransmits, a DSACK undo
+can happen at a point where the scoreboard is totally clear (we have
+retrans_out == sacked_out == lost_out == 0). In such cases, calling
+tcp_try_keep_open() means that we do not execute any code path that
+clears tp->retrans_stamp to 0. That means that tp->retrans_stamp can
+remain erroneously set to the start time of the undone fast recovery,
+even after the fast recovery is undone. If minutes or hours elapse,
+and then a TLP/RTO/RTO sequence occurs, then the start_ts value in
+retransmits_timed_out() (which is from tp->retrans_stamp) will be
+erroneously ancient (left over from the fast recovery undone via
+DSACKs). Thus this ancient tp->retrans_stamp value can cause the
+connection to die very prematurely with ETIMEDOUT via
+tcp_write_err().
 
-we get sign expansion, so the value is 0xffff'ffff'8000'0000 and
-that's clearly not desired. Use BIT_ULL() to make it unsigned as
-well as the right type for the change flags.
+The fix: we change DSACK undo in fast recovery (TCP_CA_Recovery) to
+call tcp_try_to_open() instead of tcp_try_keep_open(). This ensures
+that if no retransmits are in flight at the time of DSACK undo in fast
+recovery then we properly zero retrans_stamp. Note that calling
+tcp_try_to_open() is more consistent with other loss recovery
+behavior, since normal fast recovery (CA_Recovery) and RTO recovery
+(CA_Loss) both normally end when tp->snd_una meets or exceeds
+tp->high_seq and then in tcp_fastretrans_alert() the "default" switch
+case executes tcp_try_to_open(). Also note that by inspection this
+change to call tcp_try_to_open() implies at least one other nice bug
+fix, where now an ECE-marked DSACK that causes an undo will properly
+invoke tcp_enter_cwr() rather than ignoring the ECE mark.
 
-Fixes: 178e9d6adc43 ("wifi: mac80211: fix unsolicited broadcast probe config")
-Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20240627104257.06174d291db2.Iba0d642916eb78a61f8ab2cc5ca9280783d9c1db@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: c7d9d6a185a7 ("tcp: undo on DSACK during recovery")
+Signed-off-by: Neal Cardwell <ncardwell@google.com>
+Signed-off-by: Yuchung Cheng <ycheng@google.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/mac80211.h | 2 +-
+ net/ipv4/tcp_input.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/mac80211.h b/include/net/mac80211.h
-index 2d7f87bc5324b..baaff7bc09119 100644
---- a/include/net/mac80211.h
-+++ b/include/net/mac80211.h
-@@ -395,7 +395,7 @@ enum ieee80211_bss_change {
- 	BSS_CHANGED_HE_OBSS_PD		= 1<<28,
- 	BSS_CHANGED_HE_BSS_COLOR	= 1<<29,
- 	BSS_CHANGED_FILS_DISCOVERY      = 1<<30,
--	BSS_CHANGED_UNSOL_BCAST_PROBE_RESP = 1<<31,
-+	BSS_CHANGED_UNSOL_BCAST_PROBE_RESP = BIT_ULL(31),
- 	BSS_CHANGED_MLD_VALID_LINKS	= BIT_ULL(33),
- 	BSS_CHANGED_MLD_TTLM		= BIT_ULL(34),
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 0953c915bb4de..77109976fe836 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -3074,7 +3074,7 @@ static void tcp_fastretrans_alert(struct sock *sk, const u32 prior_snd_una,
+ 			return;
  
+ 		if (tcp_try_undo_dsack(sk))
+-			tcp_try_keep_open(sk);
++			tcp_try_to_open(sk, flag);
+ 
+ 		tcp_identify_packet_loss(sk, ack_flag);
+ 		if (icsk->icsk_ca_state != TCP_CA_Recovery) {
 -- 
 2.43.0
 
