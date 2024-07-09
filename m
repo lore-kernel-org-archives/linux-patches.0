@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAAE5157A48;
-	Tue,  9 Jul 2024 11:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4E0155389;
+	Tue,  9 Jul 2024 11:13:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720523584; cv=none; b=QNxWNxvZbGXXLuFK+MHUdI1NZh+jIrX3eLgIE3CGTJjyQCNCBFZ5r2PQpUteO6QNTtNKwvx9qQmSABo2pNCxJ5jge7VD0ApPLlbH0g02MXwDKjcQdmCFa1/MwXZFlqscaAoyf65E7dr71NlbJCWtF7TXGPxc4AYLoMEvfyaJfQM=
+	t=1720523587; cv=none; b=P1eE4iRz/sHSf7hOOFZMtze+LOHwDdXv9e4mVpILMnvSNiJihHlcWzTNU7K6JB6pBsfbaITfPCu0XSAbwpuqJJDw2I0hYjlknkGYG1LRVmEnJS3ch65CIPQGsH6DaI/gMTIvCbTqIIi6Y3EksZ4G698IYYDutz5hunXzIdHxoyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720523584; c=relaxed/simple;
-	bh=S3P+J5nlmT/5dnAc0xokEpxilX5ItcHiO4dXv+Mxclk=;
+	s=arc-20240116; t=1720523587; c=relaxed/simple;
+	bh=20bRCnxHG2XHA99mrA3m3WN4AEU2pmUKCqnZjawqzT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l6OVaDhbrRR7Yq6dksJL3TjRbZiPfxnMyeGuJVnetE0aoFS1eaziXfGhD4r5ie6fqXD/wuQ+W8gefDPV9K2TPEWuNkifjy1Lbqy9YTTDtGFy6EP3KBjmKx3lDLxkAXTQ4eBexsM2jFaIVwROm8hOcDBcmkec+hXHl1fMawEgVT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qZnsAkhG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tUHbnQQ0noSRZTs0lsWhgxO3lrBS479IeHGLTdNpBlURpOqwZzmfjOSZUFCI5ULOfq8jAqWzhexRpyyjuBhbqZbiimHPVrrmv6kH25lzsPPrzD+mDLJGjwOpI3E4zLhGrwwFppkAl7rABHLLWRqPM8G3sGZSTZI21dory77tb0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SsjbSfj4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qZnsAkhG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32AA8C3277B;
-	Tue,  9 Jul 2024 11:13:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SsjbSfj4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25778C3277B;
+	Tue,  9 Jul 2024 11:13:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720523584;
-	bh=S3P+J5nlmT/5dnAc0xokEpxilX5ItcHiO4dXv+Mxclk=;
+	s=korg; t=1720523587;
+	bh=20bRCnxHG2XHA99mrA3m3WN4AEU2pmUKCqnZjawqzT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qZnsAkhGzTP1oAJ71tmYHiDmvFy8DHtnclAmLhkn0XRBYoNb+vQmt7jExbNZXx5QU
-	 K6mIYIqYI/I6XnPlnVBLvediyaZ5qmmT7LYiLhNnFCecUntUTFZ5f4XM6uuNrk9N5s
-	 erwevRxxwmZ0O4v1ezaIV2J74CxY5XQxp8RH+uco=
+	b=SsjbSfj4lh4FgLfrBA92RtELfUnbMe8qX47e8iiRtXJB3BOnIS3DZMXDGg0bi+lgQ
+	 1JnsWJ1DFQPqdCM8MbVZFdbf356aGFIgkI0MNSTJROqD7/9mWn5Kcovxdq84qJujhA
+	 J+qN2OOc3/LlkWnkKiur6mMbFdqy6nOFyfr+Xtjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Hailey Mothershead <hailmo@amazon.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 041/139] powerpc/64: Set _IO_BASE to POISON_POINTER_DELTA not 0 for CONFIG_PCI=n
-Date: Tue,  9 Jul 2024 13:09:01 +0200
-Message-ID: <20240709110659.752143470@linuxfoundation.org>
+Subject: [PATCH 6.6 015/139] crypto: aead,cipher - zeroize key buffer after use
+Date: Tue,  9 Jul 2024 13:08:35 +0200
+Message-ID: <20240709110658.749551333@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110658.146853929@linuxfoundation.org>
 References: <20240709110658.146853929@linuxfoundation.org>
@@ -50,46 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Hailey Mothershead <hailmo@amazon.com>
 
-[ Upstream commit be140f1732b523947425aaafbe2e37b41b622d96 ]
+[ Upstream commit 23e4099bdc3c8381992f9eb975c79196d6755210 ]
 
-There is code that builds with calls to IO accessors even when
-CONFIG_PCI=n, but the actual calls are guarded by runtime checks.
+I.G 9.7.B for FIPS 140-3 specifies that variables temporarily holding
+cryptographic information should be zeroized once they are no longer
+needed. Accomplish this by using kfree_sensitive for buffers that
+previously held the private key.
 
-If not those calls would be faulting, because the page at virtual
-address zero is (usually) not mapped into the kernel. As Arnd pointed
-out, it is possible a large port value could cause the address to be
-above mmap_min_addr which would then access userspace, which would be
-a bug.
-
-To avoid any such issues, set _IO_BASE to POISON_POINTER_DELTA. That
-is a value chosen to point into unmapped space between the kernel and
-userspace, so any access will always fault.
-
-Note that on 32-bit POISON_POINTER_DELTA is 0, so the patch only has an
-effect on 64-bit.
-
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240503075619.394467-2-mpe@ellerman.id.au
+Signed-off-by: Hailey Mothershead <hailmo@amazon.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/io.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ crypto/aead.c   | 3 +--
+ crypto/cipher.c | 3 +--
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/io.h b/arch/powerpc/include/asm/io.h
-index 59cc25cb4578e..99419e87f5556 100644
---- a/arch/powerpc/include/asm/io.h
-+++ b/arch/powerpc/include/asm/io.h
-@@ -37,7 +37,7 @@ extern struct pci_dev *isa_bridge_pcidev;
-  * define properly based on the platform
-  */
- #ifndef CONFIG_PCI
--#define _IO_BASE	0
-+#define _IO_BASE	POISON_POINTER_DELTA
- #define _ISA_MEM_BASE	0
- #define PCI_DRAM_OFFSET 0
- #elif defined(CONFIG_PPC32)
+diff --git a/crypto/aead.c b/crypto/aead.c
+index d5ba204ebdbfa..ecab683016b7d 100644
+--- a/crypto/aead.c
++++ b/crypto/aead.c
+@@ -45,8 +45,7 @@ static int setkey_unaligned(struct crypto_aead *tfm, const u8 *key,
+ 	alignbuffer = (u8 *)ALIGN((unsigned long)buffer, alignmask + 1);
+ 	memcpy(alignbuffer, key, keylen);
+ 	ret = crypto_aead_alg(tfm)->setkey(tfm, alignbuffer, keylen);
+-	memset(alignbuffer, 0, keylen);
+-	kfree(buffer);
++	kfree_sensitive(buffer);
+ 	return ret;
+ }
+ 
+diff --git a/crypto/cipher.c b/crypto/cipher.c
+index 47c77a3e59783..40cae908788ec 100644
+--- a/crypto/cipher.c
++++ b/crypto/cipher.c
+@@ -34,8 +34,7 @@ static int setkey_unaligned(struct crypto_cipher *tfm, const u8 *key,
+ 	alignbuffer = (u8 *)ALIGN((unsigned long)buffer, alignmask + 1);
+ 	memcpy(alignbuffer, key, keylen);
+ 	ret = cia->cia_setkey(crypto_cipher_tfm(tfm), alignbuffer, keylen);
+-	memset(alignbuffer, 0, keylen);
+-	kfree(buffer);
++	kfree_sensitive(buffer);
+ 	return ret;
+ 
+ }
 -- 
 2.43.0
 
