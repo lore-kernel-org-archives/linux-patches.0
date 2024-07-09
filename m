@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5622B156F45;
-	Tue,  9 Jul 2024 11:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4558B155389;
+	Tue,  9 Jul 2024 11:14:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720523640; cv=none; b=CAxVokOLiK39+susrHbBf6bQD5jl+xaEAVb3WWt48LQnxYUbnZy5jqKtNimxZvXBdsgVhSefi/Az6r4St3APw7b6BnadhPXD9yShQTqGMLEXuRyXd1YUR6rKcew8ayXlDLYUXgr7Q4PJ1Hy/BS50lEY50DbaGu88y/qUozd+Q9E=
+	t=1720523643; cv=none; b=jK75I1XnHvav9OQMJ7y5cJwrCrVrvnxn1fuZ4vBfvCsDwZv/X5cSeOxAtl7CRZDQT+mF2XalDgK+95y0pVNleCFokEU9nmJ5zte8s1fg6b6w2CPP84WybZRwWl+5V0V6wnp5idvcS7ZlfTa7bsRNnp7YGNNbSZv5LfUhv+2Qq28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720523640; c=relaxed/simple;
-	bh=nqlWonKP6mNK6+kDqF+A/RYjFI0qdvrjNNUAQNzoqsk=;
+	s=arc-20240116; t=1720523643; c=relaxed/simple;
+	bh=RpnUPNKQzRW6npbyWhtGKLW4h/2DxLWwsJQoe4LxLrg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QpQGSkgQty40g1y5YVVCIJvmy4WokH8jErCqt5syYezUJFR4I7gZXau3QNbsFV16Ilz4xsv+cKiHT3k5juUCVLtY6Eg0W6/Tqd3eKgjS5j7f4LJ7gJIZCk5lW9X/caOzEMuFsYfFazAkiA1v5toCP/AV6Ns8cMEp1NbLfZ+3M3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W/DRK5aY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VzS40fOEoeoHcrfUTJGhpQdkywUJIdkssA5i/R1n45TIRCzJk2t3E+QAmOkvHsQEH6CTUPdkmf9taAplXKt8WP1pY7Lj1eTDO3RYredF2fHDvfRaP6NQ8S0wqrPB6Ob3w2bXJ8l4XnrGuToGm/AP7AbO9DxPio4xfxbyR892La4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJlc8Fsp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/DRK5aY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFBFBC3277B;
-	Tue,  9 Jul 2024 11:13:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJlc8Fsp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE503C3277B;
+	Tue,  9 Jul 2024 11:14:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720523640;
-	bh=nqlWonKP6mNK6+kDqF+A/RYjFI0qdvrjNNUAQNzoqsk=;
+	s=korg; t=1720523643;
+	bh=RpnUPNKQzRW6npbyWhtGKLW4h/2DxLWwsJQoe4LxLrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W/DRK5aYKqwf60A0nxCE5v01ClFjqb9H3mkFxSi8Zx5oCDHLnWt++gSUNVUcbVZst
-	 gGNOMUkWIWd4stYEhaV7xIrbciiBlC5AGQ/o2AA/5ln6SEIghR+hSMRCuFMvkt4HdX
-	 +HSJYTT/qWWbClmVpVtqbCEoYf5AQ3gL2L+7+Hc4=
+	b=iJlc8FspQEwR9lBcEacJ6WCMNHPAPaVkNsop/omOy0GZexSu9VDUfu2eupV5jAYJI
+	 lnXuQSE+rHnAximvhM7Ls05TySMJ6BqQVp9ArWHEMaTVNPcWSJdbu9EItFactHTjMR
+	 n1595vaTq2lWeVFk86W1RlIl4LM798yA1I3DXCtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>,
+	Marek Vasut <marex@denx.de>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 061/139] mac802154: fix time calculation in ieee802154_configure_durations()
-Date: Tue,  9 Jul 2024 13:09:21 +0200
-Message-ID: <20240709110700.528263370@linuxfoundation.org>
+Subject: [PATCH 6.6 062/139] net: phy: phy_device: Fix PHY LED blinking code comment
+Date: Tue,  9 Jul 2024 13:09:22 +0200
+Message-ID: <20240709110700.567216960@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110658.146853929@linuxfoundation.org>
 References: <20240709110658.146853929@linuxfoundation.org>
@@ -52,60 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 07aa33988ad92fef79056f5ec30b9a0e4364b616 ]
+[ Upstream commit d3dcb084c70727be4a2f61bd94796e66147cfa35 ]
 
-Since 'symbol_duration' of 'struct wpan_phy' is in nanoseconds but
-'lifs_period' and 'sifs_period' are both in microseconds, fix time
-calculation in 'ieee802154_configure_durations()' and use convenient
-'NSEC_PER_USEC' in 'ieee802154_setup_wpan_phy_pib()' as well.
-Compile tested only.
+Fix copy-paste error in the code comment. The code refers to
+LED blinking configuration, not brightness configuration. It
+was likely copied from comment above this one which does
+refer to brightness configuration.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 781830c800dd ("net: mac802154: Set durations automatically")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Acked-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Message-ID: <20240508114010.219527-1-dmantipov@yandex.ru>
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+Fixes: 4e901018432e ("net: phy: phy_device: Call into the PHY driver to set LED blinking")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20240626030638.512069-1-marex@denx.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac802154/main.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ include/linux/phy.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac802154/main.c b/net/mac802154/main.c
-index 357ece67432b1..3054da2aa9580 100644
---- a/net/mac802154/main.c
-+++ b/net/mac802154/main.c
-@@ -159,8 +159,10 @@ void ieee802154_configure_durations(struct wpan_phy *phy,
- 	}
+diff --git a/include/linux/phy.h b/include/linux/phy.h
+index 1351b802ffcff..5aa30ee998104 100644
+--- a/include/linux/phy.h
++++ b/include/linux/phy.h
+@@ -1099,7 +1099,7 @@ struct phy_driver {
+ 				  u8 index, enum led_brightness value);
  
- 	phy->symbol_duration = duration;
--	phy->lifs_period = (IEEE802154_LIFS_PERIOD * phy->symbol_duration) / NSEC_PER_SEC;
--	phy->sifs_period = (IEEE802154_SIFS_PERIOD * phy->symbol_duration) / NSEC_PER_SEC;
-+	phy->lifs_period =
-+		(IEEE802154_LIFS_PERIOD * phy->symbol_duration) / NSEC_PER_USEC;
-+	phy->sifs_period =
-+		(IEEE802154_SIFS_PERIOD * phy->symbol_duration) / NSEC_PER_USEC;
- }
- EXPORT_SYMBOL(ieee802154_configure_durations);
- 
-@@ -182,10 +184,10 @@ static void ieee802154_setup_wpan_phy_pib(struct wpan_phy *wpan_phy)
- 	 * Should be done when all drivers sets this value.
- 	 */
- 
--	wpan_phy->lifs_period =
--		(IEEE802154_LIFS_PERIOD * wpan_phy->symbol_duration) / 1000;
--	wpan_phy->sifs_period =
--		(IEEE802154_SIFS_PERIOD * wpan_phy->symbol_duration) / 1000;
-+	wpan_phy->lifs_period =	(IEEE802154_LIFS_PERIOD *
-+				 wpan_phy->symbol_duration) / NSEC_PER_USEC;
-+	wpan_phy->sifs_period =	(IEEE802154_SIFS_PERIOD *
-+				 wpan_phy->symbol_duration) / NSEC_PER_USEC;
- }
- 
- int ieee802154_register_hw(struct ieee802154_hw *hw)
+ 	/**
+-	 * @led_blink_set: Set a PHY LED brightness.  Index indicates
++	 * @led_blink_set: Set a PHY LED blinking.  Index indicates
+ 	 * which of the PHYs led should be configured to blink. Delays
+ 	 * are in milliseconds and if both are zero then a sensible
+ 	 * default should be chosen.  The call should adjust the
 -- 
 2.43.0
 
