@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB5C27713;
-	Tue,  9 Jul 2024 11:28:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D3627713;
+	Tue,  9 Jul 2024 11:28:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524506; cv=none; b=D+MzHLlnrRFNu7gYZiz+d4eMyzCw3wWV90742VC/39jpPG6Z9jQCPDfl7OOHmp3Y7m2kloJa8/8dMbvz3HGGQBgOuTf9gDPWx2jNAgeNMbDudQ9aAZhLeRMUuQ1yuh1XCAAflW6epgPSYKGkvKIQG07yd2rfa+bumZ40IdOPUWs=
+	t=1720524509; cv=none; b=BlMNSwpWrtjE7oZ8VpTOzjpwl2q9lOLtXTv/V08ZUl1xTIxua+AXLhxw32lhQu6YtwgKSrvCOyDKkn4gaJFsHBLK+IbwjZsgy80GLnBPna7V2I7QbIAulPxT1uQszI0zPF3Jz4U48axDsXSbFaK4EbbfXbdYf81VvHNYAYFp/Lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524506; c=relaxed/simple;
-	bh=u2ijWq7ASD5+el7QgL7WH6AwR2Ha+DWslgZ45vpSiM8=;
+	s=arc-20240116; t=1720524509; c=relaxed/simple;
+	bh=q8fJ/ZND6o5ztUgvDzzTXW50C5jUzrCOTD8XhskQEKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UH0BkhYGvBSphsT9FNR9eU14CRd5LAT4f0CZNca9w4E6ELqfRkePv4P4d9t718qyJ+Gtbwq02GOzy1fmWJLkRWRlOAUVFQDKQabFUI/hY1pFPmTuD7rlJaoxnZBGggJHaKrWoELVOyMQZUG5nP9AKcH3adjBHuTQ51o2PdkYZzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m8WYgsiA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ztap9H3/oaZrbU+GTlghShueTjaEaZ2xwvIz1nMJI2Ntd33Dn/K1HdaNC+N+I1Su8b6/XOzEr2TaEiv/HoagN8W10ao5nBsunGt4boVqIZZvTJhbyYuC+7wi0xml9HYJ/pTAn/B1j8WuaI+DnR4A/jk0KM1T4NnsdKEzHkFigcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j71V6b0T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m8WYgsiA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AB4FC3277B;
-	Tue,  9 Jul 2024 11:28:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j71V6b0T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A07C3277B;
+	Tue,  9 Jul 2024 11:28:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524506;
-	bh=u2ijWq7ASD5+el7QgL7WH6AwR2Ha+DWslgZ45vpSiM8=;
+	s=korg; t=1720524509;
+	bh=q8fJ/ZND6o5ztUgvDzzTXW50C5jUzrCOTD8XhskQEKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m8WYgsiAmjWTW1aJjS7G0B6Fa7ZBTb2/cCs/SU2G49ohrkWnObJXX+FO9NVOUckID
-	 HZ7fMLZtPm0rq3I6kcN9RizHwAu1qjHqmiBH/XWWl6eBRfQhZEw8cOBLqFHXJVQMDS
-	 7ukiOF/zQDpbNCMzsRwGV9D3Zd5d0X0V7Esl4b4U=
+	b=j71V6b0TgO7GnXv/mHT7wh2mJk0tmKulo4FoKTkciwO0LtwcMH1B8KnAHvdA4HGjL
+	 JHCEVmUbBuV5UBJtg0fFbNBmk39bSNIJbKIfBnDu3L/jW9a2MuSyBMkfsZPwAkqLJ+
+	 cbA5Xy/ktTFY2AhkXa5YXRTpf744EDtXLKwzUyYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 196/197] null_blk: Do not allow runt zone with zone capacity smaller then zone size
-Date: Tue,  9 Jul 2024 13:10:50 +0200
-Message-ID: <20240709110716.523560839@linuxfoundation.org>
+	Andrii Nakryiko <andrii@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.9 197/197] libbpf: dont close(-1) in multi-uprobe feature detector
+Date: Tue,  9 Jul 2024 13:10:51 +0200
+Message-ID: <20240709110716.562123892@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -53,55 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit b164316808ec5de391c3e7b0148ec937d32d280d ]
+commit 7d0b3953f6d832daec10a0d76e2d4db405768a8b upstream.
 
-A zoned device with a smaller last zone together with a zone capacity
-smaller than the zone size does make any sense as that does not
-correspond to any possible setup for a real device:
-1) For ZNS and zoned UFS devices, all zones are always the same size.
-2) For SMR HDDs, all zones always have the same capacity.
-In other words, if we have a smaller last runt zone, then this zone
-capacity should always be equal to the zone size.
+Guard close(link_fd) with extra link_fd >= 0 check to prevent close(-1).
 
-Add a check in null_init_zoned_dev() to prevent a configuration to have
-both a smaller zone size and a zone capacity smaller than the zone size.
+Detected by Coverity static analysis.
 
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20240530054035.491497-2-dlemoal@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 04d939a2ab22 ("libbpf: detect broken PID filtering logic for multi-uprobe")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20240529231212.768828-1-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/null_blk/zoned.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ tools/lib/bpf/features.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/null_blk/zoned.c b/drivers/block/null_blk/zoned.c
-index 27928deccc643..74d0418ddac78 100644
---- a/drivers/block/null_blk/zoned.c
-+++ b/drivers/block/null_blk/zoned.c
-@@ -84,6 +84,17 @@ int null_init_zoned_dev(struct nullb_device *dev,
- 		return -EINVAL;
- 	}
+--- a/tools/lib/bpf/features.c
++++ b/tools/lib/bpf/features.c
+@@ -393,7 +393,8 @@ static int probe_uprobe_multi_link(int t
+ 	err = -errno; /* close() can clobber errno */
  
-+	/*
-+	 * If a smaller zone capacity was requested, do not allow a smaller last
-+	 * zone at the same time as such zone configuration does not correspond
-+	 * to any real zoned device.
-+	 */
-+	if (dev->zone_capacity != dev->zone_size &&
-+	    dev->size & (dev->zone_size - 1)) {
-+		pr_err("A smaller last zone is not allowed with zone capacity smaller than zone size.\n");
-+		return -EINVAL;
-+	}
-+
- 	zone_capacity_sects = mb_to_sects(dev->zone_capacity);
- 	dev_capacity_sects = mb_to_sects(dev->size);
- 	dev->zone_size_sects = mb_to_sects(dev->zone_size);
--- 
-2.43.0
-
+ 	if (link_fd >= 0 || err != -EBADF) {
+-		close(link_fd);
++		if (link_fd >= 0)
++			close(link_fd);
+ 		close(prog_fd);
+ 		return 0;
+ 	}
 
 
