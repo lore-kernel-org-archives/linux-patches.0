@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02BB8158A30;
-	Tue,  9 Jul 2024 11:29:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B61815886B;
+	Tue,  9 Jul 2024 11:29:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524554; cv=none; b=Ah7ka3Q+7MjVi+40auYmfktIK/nDtqNYnzAhb+7+n64WAAcmNqvmuZea7/Yuic/l/whPauxBqnqIcWm9HFENvMQ1wjMjEg1vEKL6rkElltM6IoOKmsrive4FHGKnL0lL0WoHV3u9+aUmtb4QTNMSiYNtOiYQqDQAdcbkMWtESAk=
+	t=1720524556; cv=none; b=PXoXbyNRqDkKhTsynp0lvS5ibtsdhYinrsmVqACjsG8sszcMQN29Q8PwoB25qlXSM+ErMC7k0WXrNIg5a+ElsTCXFy1DmL2TRL+lk7aNMhBYkNp87cTyQAt7H+U0UfK1te9/2FbBwN3clj2j5NP119vcvU8f7hfq+XZivIh5dNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524554; c=relaxed/simple;
-	bh=Jt9LubcBPiIPygBhUooiClsaJPBIuIKRZkTh6TjBrQY=;
+	s=arc-20240116; t=1720524556; c=relaxed/simple;
+	bh=fM2tv+Xor7B+KAGosbiugOOjnK3hB56XJrK2JqGDKJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VjMwZGPdlf8tzzptyXX8uhiRJPj34K44PTbDrdKLBAUC5gkiP3yQifITdjXno6tYWPUWL6zwZ59/0oi2DWAsDgjggXjVPRXf19TxhbMyQ1WNfBA8pRLL4tTqKQuY02bR3UJYN1EX8wnkJoc0HWPcbNctzkuVAunvrdpw9ugoEYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=orkS4jqM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nuS7W8kHuQDbM2hIOlQGBgywSprZz7edEJz7yHEWEyRk1zapiXgHyIFkWuw0t7wFYdyA3+HQlEx08onrVAcpvhXu46E7jp4CC67ns+1FxniZOmapAbvnSlYjdiaIVVS2/ehW7s/rTZYfFdAYmmufMJOglIsDtAbiO7KNnVwCsIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g+NyyJmw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="orkS4jqM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 305AAC3277B;
-	Tue,  9 Jul 2024 11:29:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g+NyyJmw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20974C32786;
+	Tue,  9 Jul 2024 11:29:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524553;
-	bh=Jt9LubcBPiIPygBhUooiClsaJPBIuIKRZkTh6TjBrQY=;
+	s=korg; t=1720524556;
+	bh=fM2tv+Xor7B+KAGosbiugOOjnK3hB56XJrK2JqGDKJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=orkS4jqMOo6rD5Y70rmEuNFcZaLQ5YBT7IrM/7u/31dPGZbCEmMqrmUZt/AZzoWVE
-	 O5Gt5O4FXwC2qk7FjD8HliznWV86lBFYVz6p6WiPNMEEq005wBWHnf6mb80L7WUM0K
-	 H/REMIRGtmUC0kE7fGa6hE+XWfSgH951cklJNquc=
+	b=g+NyyJmwThJXtntyimGBD+ZR85OtVrEgFFjfNHvWcMDvViqnCTvJxcBJ5GvUfrVue
+	 ivcv/O5hlfMKb4RN0zEJUybgykAUkbiPILZGcMnHxhum2SCZXCmDbdQoOXdeq5/ry/
+	 0mzphpb6+iuREEisvK701B+DYOhaYGzXiWmREsAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Mark Zhang <markzhang@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 006/102] media: dvb-usb: dib0700_devices: Add missing release_firmware()
-Date: Tue,  9 Jul 2024 13:09:29 +0200
-Message-ID: <20240709110651.606793613@linuxfoundation.org>
+Subject: [PATCH 6.1 007/102] IB/core: Implement a limit on UMAD receive List
+Date: Tue,  9 Jul 2024 13:09:30 +0200
+Message-ID: <20240709110651.644594031@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110651.353707001@linuxfoundation.org>
 References: <20240709110651.353707001@linuxfoundation.org>
@@ -51,66 +52,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Michael Guralnik <michaelgur@nvidia.com>
 
-[ Upstream commit 4b267c23ee064bd24c6933df0588ad1b6e111145 ]
+[ Upstream commit ca0b44e20a6f3032224599f02e7c8fb49525c894 ]
 
-Add missing release_firmware on the error paths.
+The existing behavior of ib_umad, which maintains received MAD
+packets in an unbounded list, poses a risk of uncontrolled growth.
+As user-space applications extract packets from this list, the rate
+of extraction may not match the rate of incoming packets, leading
+to potential list overflow.
 
-drivers/media/usb/dvb-usb/dib0700_devices.c:2415 stk9090m_frontend_attach() warn: 'state->frontend_firmware' from request_firmware() not released on lines: 2415.
-drivers/media/usb/dvb-usb/dib0700_devices.c:2497 nim9090md_frontend_attach() warn: 'state->frontend_firmware' from request_firmware() not released on lines: 2489,2497.
+To address this, we introduce a limit to the size of the list. After
+considering typical scenarios, such as OpenSM processing, which can
+handle approximately 100k packets per second, and the 1-second retry
+timeout for most packets, we set the list size limit to 200k. Packets
+received beyond this limit are dropped, assuming they are likely timed
+out by the time they are handled by user-space.
 
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Notably, packets queued on the receive list due to reasons like
+timed-out sends are preserved even when the list is full.
+
+Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
+Reviewed-by: Mark Zhang <markzhang@nvidia.com>
+Link: https://lore.kernel.org/r/7197cb58a7d9e78399008f25036205ceab07fbd5.1713268818.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb/dib0700_devices.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/infiniband/core/user_mad.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/usb/dvb-usb/dib0700_devices.c b/drivers/media/usb/dvb-usb/dib0700_devices.c
-index 7f8bebfa3e8e9..3d14aba7a0dea 100644
---- a/drivers/media/usb/dvb-usb/dib0700_devices.c
-+++ b/drivers/media/usb/dvb-usb/dib0700_devices.c
-@@ -2419,7 +2419,12 @@ static int stk9090m_frontend_attach(struct dvb_usb_adapter *adap)
+diff --git a/drivers/infiniband/core/user_mad.c b/drivers/infiniband/core/user_mad.c
+index 5c284dfbe6923..66a0c5a73b832 100644
+--- a/drivers/infiniband/core/user_mad.c
++++ b/drivers/infiniband/core/user_mad.c
+@@ -63,6 +63,8 @@ MODULE_AUTHOR("Roland Dreier");
+ MODULE_DESCRIPTION("InfiniBand userspace MAD packet access");
+ MODULE_LICENSE("Dual BSD/GPL");
  
- 	adap->fe_adap[0].fe = dvb_attach(dib9000_attach, &adap->dev->i2c_adap, 0x80, &stk9090m_config);
- 
--	return adap->fe_adap[0].fe == NULL ?  -ENODEV : 0;
-+	if (!adap->fe_adap[0].fe) {
-+		release_firmware(state->frontend_firmware);
-+		return -ENODEV;
-+	}
++#define MAX_UMAD_RECV_LIST_SIZE 200000
 +
-+	return 0;
+ enum {
+ 	IB_UMAD_MAX_PORTS  = RDMA_MAX_PORTS,
+ 	IB_UMAD_MAX_AGENTS = 32,
+@@ -113,6 +115,7 @@ struct ib_umad_file {
+ 	struct mutex		mutex;
+ 	struct ib_umad_port    *port;
+ 	struct list_head	recv_list;
++	atomic_t		recv_list_size;
+ 	struct list_head	send_list;
+ 	struct list_head	port_list;
+ 	spinlock_t		send_lock;
+@@ -180,24 +183,28 @@ static struct ib_mad_agent *__get_agent(struct ib_umad_file *file, int id)
+ 	return file->agents_dead ? NULL : file->agent[id];
  }
  
- static int dib9090_tuner_attach(struct dvb_usb_adapter *adap)
-@@ -2492,8 +2497,10 @@ static int nim9090md_frontend_attach(struct dvb_usb_adapter *adap)
- 	dib9000_i2c_enumeration(&adap->dev->i2c_adap, 1, 0x20, 0x80);
- 	adap->fe_adap[0].fe = dvb_attach(dib9000_attach, &adap->dev->i2c_adap, 0x80, &nim9090md_config[0]);
+-static int queue_packet(struct ib_umad_file *file,
+-			struct ib_mad_agent *agent,
+-			struct ib_umad_packet *packet)
++static int queue_packet(struct ib_umad_file *file, struct ib_mad_agent *agent,
++			struct ib_umad_packet *packet, bool is_recv_mad)
+ {
+ 	int ret = 1;
  
--	if (adap->fe_adap[0].fe == NULL)
-+	if (!adap->fe_adap[0].fe) {
-+		release_firmware(state->frontend_firmware);
- 		return -ENODEV;
-+	}
+ 	mutex_lock(&file->mutex);
  
- 	i2c = dib9000_get_i2c_master(adap->fe_adap[0].fe, DIBX000_I2C_INTERFACE_GPIO_3_4, 0);
- 	dib9000_i2c_enumeration(i2c, 1, 0x12, 0x82);
-@@ -2501,7 +2508,12 @@ static int nim9090md_frontend_attach(struct dvb_usb_adapter *adap)
- 	fe_slave = dvb_attach(dib9000_attach, i2c, 0x82, &nim9090md_config[1]);
- 	dib9000_set_slave_frontend(adap->fe_adap[0].fe, fe_slave);
- 
--	return fe_slave == NULL ?  -ENODEV : 0;
-+	if (!fe_slave) {
-+		release_firmware(state->frontend_firmware);
-+		return -ENODEV;
-+	}
++	if (is_recv_mad &&
++	    atomic_read(&file->recv_list_size) > MAX_UMAD_RECV_LIST_SIZE)
++		goto unlock;
 +
-+	return 0;
- }
+ 	for (packet->mad.hdr.id = 0;
+ 	     packet->mad.hdr.id < IB_UMAD_MAX_AGENTS;
+ 	     packet->mad.hdr.id++)
+ 		if (agent == __get_agent(file, packet->mad.hdr.id)) {
+ 			list_add_tail(&packet->list, &file->recv_list);
++			atomic_inc(&file->recv_list_size);
+ 			wake_up_interruptible(&file->recv_wait);
+ 			ret = 0;
+ 			break;
+ 		}
+-
++unlock:
+ 	mutex_unlock(&file->mutex);
  
- static int nim9090md_tuner_attach(struct dvb_usb_adapter *adap)
+ 	return ret;
+@@ -224,7 +231,7 @@ static void send_handler(struct ib_mad_agent *agent,
+ 	if (send_wc->status == IB_WC_RESP_TIMEOUT_ERR) {
+ 		packet->length = IB_MGMT_MAD_HDR;
+ 		packet->mad.hdr.status = ETIMEDOUT;
+-		if (!queue_packet(file, agent, packet))
++		if (!queue_packet(file, agent, packet, false))
+ 			return;
+ 	}
+ 	kfree(packet);
+@@ -284,7 +291,7 @@ static void recv_handler(struct ib_mad_agent *agent,
+ 		rdma_destroy_ah_attr(&ah_attr);
+ 	}
+ 
+-	if (queue_packet(file, agent, packet))
++	if (queue_packet(file, agent, packet, true))
+ 		goto err2;
+ 	return;
+ 
+@@ -409,6 +416,7 @@ static ssize_t ib_umad_read(struct file *filp, char __user *buf,
+ 
+ 	packet = list_entry(file->recv_list.next, struct ib_umad_packet, list);
+ 	list_del(&packet->list);
++	atomic_dec(&file->recv_list_size);
+ 
+ 	mutex_unlock(&file->mutex);
+ 
+@@ -421,6 +429,7 @@ static ssize_t ib_umad_read(struct file *filp, char __user *buf,
+ 		/* Requeue packet */
+ 		mutex_lock(&file->mutex);
+ 		list_add(&packet->list, &file->recv_list);
++		atomic_inc(&file->recv_list_size);
+ 		mutex_unlock(&file->mutex);
+ 	} else {
+ 		if (packet->recv_wc)
 -- 
 2.43.0
 
