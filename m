@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBABF155A26;
-	Tue,  9 Jul 2024 11:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC17D1586C4;
+	Tue,  9 Jul 2024 11:19:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720523944; cv=none; b=dMmApoCVejTmfyyeIYDeDuBHuJAwxDi9uI3HkxG3VqYFTnT8GaOWwxRFsADmRymSc4X1n8ZAt4Uj6TtoDPkcbcqBO1++W8A0fWPXHOyEzpK0ZEdgUYFJmLCR0UYYgtznuvW+ynPOvMnHQy/Uus5IOdEfgoUxtr7OXXFctmLqRlU=
+	t=1720523947; cv=none; b=e2Vj8n0hdrMgwQB/j50M2N9Gkf7ZL3sL/8Cr3MlrTGdIUZk3GmDhttQhy0mfgwgWfVYvetZHY6b8c/TL7ER2zUQweK3Bc4zK3hAxbETbRuOzkqo8VKAVzx+eG1rp2erqKN9CkPv/LkzMeYp67NxVEQtfq1IkSmXb9tEvUr2kX/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720523944; c=relaxed/simple;
-	bh=K5ALkmwy3ILMvY5WRAKM80CzVYqkN5LXWD3KnjBVEdg=;
+	s=arc-20240116; t=1720523947; c=relaxed/simple;
+	bh=8rg1sB3aJ4DMHhQ6YFfhQRQLYvMxxa0Ch3HfL4YLW2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lbuBEwaRCiWlNW9dCIzrGKlu3eHF5pffgsK5LGl5WMcAsoHJS9CUQfnqGyJe77pckoOCLFTe0yEN9bzeMwXrGFlNLTGpLICIabpJMa3deO82I+bbceB8ui6yk8H/sm0EaLZyRFB9dERq1fr3x/f4d7qLS6RSo7t8qYxxIfMNDyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q0065oTD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qfLpAiq6rtuZa0k16IoLFaOxpx9HCMb/fYqEECRXGUBcey0SzDEe00YGVn8e9CVp/MlSadxbbpI3oCF149FBSk708PFCtPjLE+l/mgTyhRx66FATBDvoVRY4YU6GWUv3ElwNkHnq5NOqXWcuc98+Z7+GKByKv73PbMO4dMvaYLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cLRXjq5c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q0065oTD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D04C3277B;
-	Tue,  9 Jul 2024 11:19:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cLRXjq5c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E20BC3277B;
+	Tue,  9 Jul 2024 11:19:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720523944;
-	bh=K5ALkmwy3ILMvY5WRAKM80CzVYqkN5LXWD3KnjBVEdg=;
+	s=korg; t=1720523947;
+	bh=8rg1sB3aJ4DMHhQ6YFfhQRQLYvMxxa0Ch3HfL4YLW2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q0065oTD0PlczsU4upNOY1X4urQdzPfeEsB6K7XuoGS/nqF/5LnuVbtP0imP0yjL6
-	 FNjNQkAsaTSOqPbYUpCEnBFObXXF9hxqfrmqD4s6hLGeszxg8/LA0TeZpY2i0iPxGr
-	 xre+U3KmL7jOPMYhGpudoVZiBJrpDG2PF9dDsDQo=
+	b=cLRXjq5cviN2ENRYkXRrqWR+D40TSFVR7Svl/MwTGkAgpJHTQeLtWtk16ymu7FsZQ
+	 gEdTxPMy/JbcF2dHImqpsnGoiP+3O/ZuxKq+zSOY2xACiOXOIhFnwzA1TsV/aDKzL9
+	 bFYQLnQ23g1fg80Ei//cRB9cl4vDjVQIhtahIk9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Andrew Jones <ajones@ventanamicro.com>,
+	Atish Patra <atishp@rivosinc.com>,
+	Anup Patel <anup@brainfault.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 020/197] selftests/bpf: dummy_st_ops should reject 0 for non-nullable params
-Date: Tue,  9 Jul 2024 13:07:54 +0200
-Message-ID: <20240709110709.698785532@linuxfoundation.org>
+Subject: [PATCH 6.9 021/197] RISC-V: KVM: Fix the initial sample period value
+Date: Tue,  9 Jul 2024 13:07:55 +0200
+Message-ID: <20240709110709.737218036@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -51,66 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Atish Patra <atishp@rivosinc.com>
 
-[ Upstream commit 6a2d30d3c5bf9f088dcfd5f3746b04d84f2fab83 ]
+[ Upstream commit 57990ab90ce31aadac0d5a6293f5582e24ff7521 ]
 
-Check if BPF_PROG_TEST_RUN for bpf_dummy_struct_ops programs
-rejects execution if NULL is passed for non-nullable parameter.
+The initial sample period value when counter value is not assigned
+should be set to maximum value supported by the counter width.
+Otherwise, it may result in spurious interrupts.
 
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20240424012821.595216-6-eddyz87@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Signed-off-by: Atish Patra <atishp@rivosinc.com>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Link: https://lore.kernel.org/r/20240420151741.962500-11-atishp@rivosinc.com
+Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/bpf/prog_tests/dummy_st_ops.c   | 27 +++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ arch/riscv/kvm/vcpu_pmu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/dummy_st_ops.c b/tools/testing/selftests/bpf/prog_tests/dummy_st_ops.c
-index dd926c00f4146..d3d94596ab79c 100644
---- a/tools/testing/selftests/bpf/prog_tests/dummy_st_ops.c
-+++ b/tools/testing/selftests/bpf/prog_tests/dummy_st_ops.c
-@@ -147,6 +147,31 @@ static void test_dummy_sleepable(void)
- 	dummy_st_ops_success__destroy(skel);
- }
+diff --git a/arch/riscv/kvm/vcpu_pmu.c b/arch/riscv/kvm/vcpu_pmu.c
+index 86391a5061dda..cee1b9ca4ec48 100644
+--- a/arch/riscv/kvm/vcpu_pmu.c
++++ b/arch/riscv/kvm/vcpu_pmu.c
+@@ -39,7 +39,7 @@ static u64 kvm_pmu_get_sample_period(struct kvm_pmc *pmc)
+ 	u64 sample_period;
  
-+/* dummy_st_ops.test_sleepable() parameter is not marked as nullable,
-+ * thus bpf_prog_test_run_opts() below should be rejected as it tries
-+ * to pass NULL for this parameter.
-+ */
-+static void test_dummy_sleepable_reject_null(void)
-+{
-+	__u64 args[1] = {0};
-+	LIBBPF_OPTS(bpf_test_run_opts, attr,
-+		.ctx_in = args,
-+		.ctx_size_in = sizeof(args),
-+	);
-+	struct dummy_st_ops_success *skel;
-+	int fd, err;
-+
-+	skel = dummy_st_ops_success__open_and_load();
-+	if (!ASSERT_OK_PTR(skel, "dummy_st_ops_load"))
-+		return;
-+
-+	fd = bpf_program__fd(skel->progs.test_sleepable);
-+	err = bpf_prog_test_run_opts(fd, &attr);
-+	ASSERT_EQ(err, -EINVAL, "test_run");
-+
-+	dummy_st_ops_success__destroy(skel);
-+}
-+
- void test_dummy_st_ops(void)
- {
- 	if (test__start_subtest("dummy_st_ops_attach"))
-@@ -159,6 +184,8 @@ void test_dummy_st_ops(void)
- 		test_dummy_multiple_args();
- 	if (test__start_subtest("dummy_sleepable"))
- 		test_dummy_sleepable();
-+	if (test__start_subtest("dummy_sleepable_reject_null"))
-+		test_dummy_sleepable_reject_null();
+ 	if (!pmc->counter_val)
+-		sample_period = counter_val_mask + 1;
++		sample_period = counter_val_mask;
+ 	else
+ 		sample_period = (-pmc->counter_val) & counter_val_mask;
  
- 	RUN_TESTS(dummy_st_ops_fail);
- }
 -- 
 2.43.0
 
