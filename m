@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA1E27713;
-	Tue,  9 Jul 2024 11:28:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B45B27713;
+	Tue,  9 Jul 2024 11:28:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524521; cv=none; b=tNNrF00rRt1/RU077sP4CQk1PZ+g6W6OWAEiYOVzJv70/WT2o/8ywDzK+fxwr4qF1QTWkDKtyPMtyoEOoUj1Lp99eMVDrb2aMY+VrGN/Egqa9DFhA9XmeYNt50ccLvF1Gfxep077vUD6en+xSK1sZ9zALMzJfSuY0/HMfdbXh+s=
+	t=1720524524; cv=none; b=BB/sjPFmHrwUoIIXCm0IIYnKml+mMXAGc8bQVVkLXbDUbNtdsA0lvloxFYemfm/lIh4kywiHyCbLd/9LLgtJXGc77Qnu3DUnj9n9R3OKxCC4mxVzPzmLnsEHYeqqvCD1xqv5YCDeHRcv00/NFL4Y2RvfdorfyU7g79SCS+EwDAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524521; c=relaxed/simple;
-	bh=bfL5Tjnm1VYfIgKrOOlbTvgtGGY2or1/3aR5bSZy+OU=;
+	s=arc-20240116; t=1720524524; c=relaxed/simple;
+	bh=AQyR/z6qOoMtcXu+bOq60n8KZ4C8Yq3CdFY9sKY+T8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tQ3h2TgDkqcfF2oeaBaj4MuaxWk9FSug58vYw6tGs8HdLA9GxMvYun6YUNnsD2gP57EDfT+C2BJQmNt0IeTPskN859mqsCKeNIf5HIU01Ai4erh4LxYJW5CHj4Gwnzj0OAIjbCesGXXcRA3SAjWuBAZTcC53VtA6CcEC/59Dhms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g//F3v4j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SoVswR1HFNIu7MaoFbmK11dAhoxqM4+LK677TCJrY+BIK5m63rdw5UfsyhR84K9lFbzNo8kUXC/qZvsCEaRjvfyznuTkSiXx2fNezSarrRXEom9bCru/FhjLhRHew0RHAGsTfAWB6IGFpnfuxaeg8jiTtn/HV7mfZgJvj3QtIm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l9yg5dba; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g//F3v4j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB815C3277B;
-	Tue,  9 Jul 2024 11:28:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l9yg5dba"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2122C32786;
+	Tue,  9 Jul 2024 11:28:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524521;
-	bh=bfL5Tjnm1VYfIgKrOOlbTvgtGGY2or1/3aR5bSZy+OU=;
+	s=korg; t=1720524524;
+	bh=AQyR/z6qOoMtcXu+bOq60n8KZ4C8Yq3CdFY9sKY+T8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g//F3v4jqJL0GYIzo2OZ0qOQhmCmuy1RLUojEN8ybusC0lH39/RIZepsEQRw5iKJA
-	 oBCyHjxE8kyqd4XMtoY6RvDMdKVkmGC5ao6bzYxd4HUqf1y80awH+X1F0sEcN/2NYT
-	 QvA3n/VZ0K/ewVx1W0NbrcFTvKtv+IyYaUowTNpU=
+	b=l9yg5dba87n6UbvX1ideXt5N5QXEJrz4mTo8tggNGuz6/Payn2k+Lpz/8zWk66gEn
+	 ws4VI532SGm5gI0yzuv3e4EHiXhKZIqYvGnMZoWK0Axfs14Jd8W6jN41gxRVRFrJCY
+	 /DbcawbEVIEB0V3WfjTIRreUPNE2UyHNMAirQBwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 011/102] drm/amdgpu: Fix uninitialized variable warnings
-Date: Tue,  9 Jul 2024 13:09:34 +0200
-Message-ID: <20240709110651.803765276@linuxfoundation.org>
+Subject: [PATCH 6.1 012/102] drm/amdgpu: Initialize timestamp for some legacy SOCs
+Date: Tue,  9 Jul 2024 13:09:35 +0200
+Message-ID: <20240709110651.844051176@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110651.353707001@linuxfoundation.org>
 References: <20240709110651.353707001@linuxfoundation.org>
@@ -55,45 +55,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Ma Jun <Jun.Ma2@amd.com>
 
-[ Upstream commit 60c448439f3b5db9431e13f7f361b4074d0e8594 ]
+[ Upstream commit 2e55bcf3d742a4946d862b86e39e75a95cc6f1c0 ]
 
-return 0 to avoid returning an uninitialized variable r
+Initialize the interrupt timestamp for some legacy SOCs
+to fix the coverity issue "Uninitialized scalar variable"
 
 Signed-off-by: Ma Jun <Jun.Ma2@amd.com>
-Acked-by: Christian König <christian.koenig@amd.com>
+Suggested-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/aldebaran.c      | 2 +-
- drivers/gpu/drm/amd/amdgpu/sienna_cichlid.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/aldebaran.c b/drivers/gpu/drm/amd/amdgpu/aldebaran.c
-index fa6193535d485..7fea4f0f495a3 100644
---- a/drivers/gpu/drm/amd/amdgpu/aldebaran.c
-+++ b/drivers/gpu/drm/amd/amdgpu/aldebaran.c
-@@ -100,7 +100,7 @@ static int aldebaran_mode2_suspend_ip(struct amdgpu_device *adev)
- 		adev->ip_blocks[i].status.hw = false;
- 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c
+index 9efbc0f7c6bdf..c3da333f09de4 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c
+@@ -480,6 +480,14 @@ void amdgpu_irq_dispatch(struct amdgpu_device *adev,
  
--	return r;
-+	return 0;
- }
+ 	entry.ih = ih;
+ 	entry.iv_entry = (const uint32_t *)&ih->ring[ring_index];
++
++	/*
++	 * timestamp is not supported on some legacy SOCs (cik, cz, iceland,
++	 * si and tonga), so initialize timestamp and timestamp_src to 0
++	 */
++	entry.timestamp = 0;
++	entry.timestamp_src = 0;
++
+ 	amdgpu_ih_decode_iv(adev, &entry);
  
- static int
-diff --git a/drivers/gpu/drm/amd/amdgpu/sienna_cichlid.c b/drivers/gpu/drm/amd/amdgpu/sienna_cichlid.c
-index 81a6d5b94987f..1311e72486fdc 100644
---- a/drivers/gpu/drm/amd/amdgpu/sienna_cichlid.c
-+++ b/drivers/gpu/drm/amd/amdgpu/sienna_cichlid.c
-@@ -93,7 +93,7 @@ static int sienna_cichlid_mode2_suspend_ip(struct amdgpu_device *adev)
- 		adev->ip_blocks[i].status.hw = false;
- 	}
- 
--	return r;
-+	return 0;
- }
- 
- static int
+ 	trace_amdgpu_iv(ih - &adev->irq.ih, &entry);
 -- 
 2.43.0
 
