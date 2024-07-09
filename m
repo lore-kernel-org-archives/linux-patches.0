@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C2C154C07;
-	Tue,  9 Jul 2024 11:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D4B55E4C;
+	Tue,  9 Jul 2024 11:30:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524647; cv=none; b=M/Fa0xM1B3uS+uOUew+O0IFJ+xN5Y/gSG1hV7XN+k3nThjOrkmW/ukXFLDcBn04LRmkeqUmaHDA3s7fdyYEEDhf2cPCDhP4nkgunHq/WBthpHgETeBJMPNsz1GGuVloq+e2st7EU5OHUcGy1wa37i1r3qogPAyIVC6FvNwpPciE=
+	t=1720524650; cv=none; b=H3pf7zyVdm9FZEI6+w7FhdD53XKgh54NA+1m9kGG0z/Vq0DaP5/ZaTvi07n6hphcK3laPpDfcgwojXinJv35Xsfw8R8nULViwW88jzWYSs8D7JIrtQBZv5kz3M9X49hbKLAJHBODfDZfewHGw0WO37IlAqn7b090sWEPKxSwWBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524647; c=relaxed/simple;
-	bh=XvUjI7XSikJLWGjkf76Bio8a2XIM72BJWj6bAaboJnw=;
+	s=arc-20240116; t=1720524650; c=relaxed/simple;
+	bh=N//z5jEvCwjK7TndLZ7FcGAPjChK7ShvwDaRihrS4SY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mcDW4H7ypGt4iulYkiXi8BV3T0UxbS5xWs1fgZpP8pgvMGpDXY26SgXKyaTiDTpvXmbmw9KKgR4Esn9uE15FXzO9VR8IYGQNVCHd9AEtnLZHLu08+PGKh4HcaFugfbDfrI8vq34MyXxuCLGVo20GBeOjHBBjHiJHfbSJx9kgTBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RcjcgnWO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tg63cq2lMJ1vMqEpudjzdiea0s9EO8ZcC15zDnXOjNoA7c1FfB0Mh64ITbrIRMXOIRzEyFqk6wvLv2peX+Kg5eYujeubXMfy3K1hiIv8p4k+lI+H1eK4HVlovWEvuhBIcHboyLAAW0pVbYlJ0QbANu4070fKoSp7n2/cvGeF8LQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dijB4dET; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RcjcgnWO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3595BC3277B;
-	Tue,  9 Jul 2024 11:30:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dijB4dET"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29FD3C3277B;
+	Tue,  9 Jul 2024 11:30:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524647;
-	bh=XvUjI7XSikJLWGjkf76Bio8a2XIM72BJWj6bAaboJnw=;
+	s=korg; t=1720524650;
+	bh=N//z5jEvCwjK7TndLZ7FcGAPjChK7ShvwDaRihrS4SY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RcjcgnWOgCAbGjMckdZdFgqC0yTr1vnv3TC0NHy9mu1FlZrsYwRgeSfkvV1kMB26y
-	 n9T3kZFUAzIkUOpF82eAFoSuIcTzIvDja8ne1DbmbNu4TtVpWbj5ODR/dvhq+2VB2x
-	 l7g3rmAq6TwppgQSj1jUI03wKfFJi1Co0DKT/EaY=
+	b=dijB4dETldCW7lg8Nydmku1rSfZhboEBnqTMP8GslO2NSindyDSHwZKpuVOwewVGw
+	 NXSLlPiwRFrCjBzquZq2wdqmr4TLTbD1AbZGaGCKHOLf8iykcHKs1BW02QUXsd4nHE
+	 STBPcm/+PEcdpWrtZTPJkYGPIcK3BxDlpDoMxnjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 022/102] wifi: mt76: replace skb_put with skb_put_zero
-Date: Tue,  9 Jul 2024 13:09:45 +0200
-Message-ID: <20240709110652.232740476@linuxfoundation.org>
+Subject: [PATCH 6.1 023/102] net: dsa: mv88e6xxx: Correct check for empty list
+Date: Tue,  9 Jul 2024 13:09:46 +0200
+Message-ID: <20240709110652.271794014@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110651.353707001@linuxfoundation.org>
 References: <20240709110651.353707001@linuxfoundation.org>
@@ -50,81 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Simon Horman <horms@kernel.org>
 
-[ Upstream commit 7f819a2f4fbc510e088b49c79addcf1734503578 ]
+[ Upstream commit 4c7f3950a9fd53a62b156c0fe7c3a2c43b0ba19b ]
 
-Avoid potentially reusing uninitialized data
+Since commit a3c53be55c95 ("net: dsa: mv88e6xxx: Support multiple MDIO
+busses") mv88e6xxx_default_mdio_bus() has checked that the
+return value of list_first_entry() is non-NULL.
 
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+This appears to be intended to guard against the list chip->mdios being
+empty.  However, it is not the correct check as the implementation of
+list_first_entry is not designed to return NULL for empty lists.
+
+Instead, use list_first_entry_or_null() which does return NULL if the
+list is empty.
+
+Flagged by Smatch.
+Compile tested only.
+
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240430-mv88e6xx-list_empty-v3-1-c35c69d88d2e@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c | 10 +++++-----
- drivers/net/wireless/mediatek/mt76/mt7915/mcu.c      |  2 +-
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/dsa/mv88e6xxx/chip.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-index 546cbe21aab31..6b5bfdbec8b11 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-@@ -254,7 +254,7 @@ mt76_connac_mcu_add_nested_tlv(struct sk_buff *skb, int tag, int len,
- 	};
- 	u16 ntlv;
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index dc4ff8a6d0bf5..4938550a67c02 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -131,8 +131,8 @@ struct mii_bus *mv88e6xxx_default_mdio_bus(struct mv88e6xxx_chip *chip)
+ {
+ 	struct mv88e6xxx_mdio_bus *mdio_bus;
  
--	ptlv = skb_put(skb, len);
-+	ptlv = skb_put_zero(skb, len);
- 	memcpy(ptlv, &tlv, sizeof(tlv));
+-	mdio_bus = list_first_entry(&chip->mdios, struct mv88e6xxx_mdio_bus,
+-				    list);
++	mdio_bus = list_first_entry_or_null(&chip->mdios,
++					    struct mv88e6xxx_mdio_bus, list);
+ 	if (!mdio_bus)
+ 		return NULL;
  
- 	ntlv = le16_to_cpu(ntlv_hdr->tlv_num);
-@@ -1532,7 +1532,7 @@ int mt76_connac_mcu_hw_scan(struct mt76_phy *phy, struct ieee80211_vif *vif,
- 	set_bit(MT76_HW_SCANNING, &phy->state);
- 	mvif->scan_seq_num = (mvif->scan_seq_num + 1) & 0x7f;
- 
--	req = (struct mt76_connac_hw_scan_req *)skb_put(skb, sizeof(*req));
-+	req = (struct mt76_connac_hw_scan_req *)skb_put_zero(skb, sizeof(*req));
- 
- 	req->seq_num = mvif->scan_seq_num | mvif->band_idx << 7;
- 	req->bss_idx = mvif->idx;
-@@ -1660,7 +1660,7 @@ int mt76_connac_mcu_sched_scan_req(struct mt76_phy *phy,
- 
- 	mvif->scan_seq_num = (mvif->scan_seq_num + 1) & 0x7f;
- 
--	req = (struct mt76_connac_sched_scan_req *)skb_put(skb, sizeof(*req));
-+	req = (struct mt76_connac_sched_scan_req *)skb_put_zero(skb, sizeof(*req));
- 	req->version = 1;
- 	req->seq_num = mvif->scan_seq_num | mvif->band_idx << 7;
- 
-@@ -2294,7 +2294,7 @@ int mt76_connac_mcu_update_gtk_rekey(struct ieee80211_hw *hw,
- 		return -ENOMEM;
- 
- 	skb_put_data(skb, &hdr, sizeof(hdr));
--	gtk_tlv = (struct mt76_connac_gtk_rekey_tlv *)skb_put(skb,
-+	gtk_tlv = (struct mt76_connac_gtk_rekey_tlv *)skb_put_zero(skb,
- 							 sizeof(*gtk_tlv));
- 	gtk_tlv->tag = cpu_to_le16(UNI_OFFLOAD_OFFLOAD_GTK_REKEY);
- 	gtk_tlv->len = cpu_to_le16(sizeof(*gtk_tlv));
-@@ -2417,7 +2417,7 @@ mt76_connac_mcu_set_wow_pattern(struct mt76_dev *dev,
- 		return -ENOMEM;
- 
- 	skb_put_data(skb, &hdr, sizeof(hdr));
--	ptlv = (struct mt76_connac_wow_pattern_tlv *)skb_put(skb, sizeof(*ptlv));
-+	ptlv = (struct mt76_connac_wow_pattern_tlv *)skb_put_zero(skb, sizeof(*ptlv));
- 	ptlv->tag = cpu_to_le16(UNI_SUSPEND_WOW_PATTERN);
- 	ptlv->len = cpu_to_le16(sizeof(*ptlv));
- 	ptlv->data_len = pattern->pattern_len;
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-index b2ea539f697f7..65f07cc2acdd4 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-@@ -395,7 +395,7 @@ mt7915_mcu_add_nested_subtlv(struct sk_buff *skb, int sub_tag, int sub_len,
- 		.len = cpu_to_le16(sub_len),
- 	};
- 
--	ptlv = skb_put(skb, sub_len);
-+	ptlv = skb_put_zero(skb, sub_len);
- 	memcpy(ptlv, &tlv, sizeof(tlv));
- 
- 	le16_add_cpu(sub_ntlv, 1);
 -- 
 2.43.0
 
