@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E891581E4;
-	Tue,  9 Jul 2024 11:24:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6761D13A25F;
+	Tue,  9 Jul 2024 11:24:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524278; cv=none; b=Ma3Y/xc/7UlrRiDiDQOL+49AKMc/SXGsryDIlItlSZ6s72W1UB19gRDiRu13TzSxy+iS8NIlSKelrrTIQUNWo0Dm4r/xPo2KUz86Ml7ZAByNsmfFVF+VYVixwP+grhDEG9pCzpyrZyh+XXZO4ScQ8eU18ceCYEkruvRcpHucs8Q=
+	t=1720524281; cv=none; b=kWl0Af7Mcf6lFLrOX1y225tyX49yP7dqoJqJiO6QQLQiQbaylZJDanRIVK2GIwcLxQy0uj8KIXDtMq37PHS4DmKcqY7J44nSeDVk2iObZgVv+cNUB99J6JiNQem1DqTXiqrrZzjnMonqOukCl6/YgZXCu4kYEs4LGjKcS2mbJ08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524278; c=relaxed/simple;
-	bh=5rEYKv0AtavkpUff6dM4bl+NJVi0eZnihfjP3dkFryc=;
+	s=arc-20240116; t=1720524281; c=relaxed/simple;
+	bh=PUnMPZIvY5aVc8yrwG0SrJ7buAek+aHM0wGSI+pf5C4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N6O9DWPihwObVYibgKLXvAESlrnNmLephTuddYyk/gOtoWMwp5F7Rj5rZEKGaYpdaaYANiSVHeBvxJOL/srEu+hZn4pYmsdar6lblGcgmWmTL77lwtjRfnU5iMbQ+uOd3NpFizshYio0lQOea2gEUXkyDszePndUcmZjNwuGq70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A6Zg/rNW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PVDUR75qlEi0cXTh+BV8nyYZjdtYvM/myu8Yl02v1NHA3fcAc7kpzHq7cymOPYpExySL4msQvRWIKZzJNOzcGHq2eEvt54X01Q1XV+y4Y1FDqtpdTbHWCUt5ucJcG5x69q7qoXCwDUNYQ5+DjwO/6f3N1PrIskl8kqIEh9U9Qkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pMpqE+hY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A6Zg/rNW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02951C3277B;
-	Tue,  9 Jul 2024 11:24:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pMpqE+hY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E191CC3277B;
+	Tue,  9 Jul 2024 11:24:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524278;
-	bh=5rEYKv0AtavkpUff6dM4bl+NJVi0eZnihfjP3dkFryc=;
+	s=korg; t=1720524281;
+	bh=PUnMPZIvY5aVc8yrwG0SrJ7buAek+aHM0wGSI+pf5C4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A6Zg/rNWPh8tHWlpf0TvcO7irJf10h3ge91GQHmXVBqNTdgdybiYBtoBshsnH8Vev
-	 Sigimi54GVBq5EP/FjWOgN+JnWA/pTCtX44voRzclEcy7XsRFtrxFTTfAEys6q0j3u
-	 +ps3JVRerqCcanxE5WedZhFwBU0FIOsEvV4faXpY=
+	b=pMpqE+hYeu6hQucclSMEMk/P1Lzwfm2OqHr253msWnXZOJOTx2eXwACiofoW//Npo
+	 f2RBKr1gZSINuSw5w8qcDD0Eb3xNXfHihpFcdXKp0Di5RnDd2wrltt4FzXnPAKu6sr
+	 0BQNFRb17xvjW1d4pDjOprlEVcS0XuOGWcq0LgG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dima Ruinskiy <dima.ruinskiy@intel.com>,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Martin Schiller <ms@dev.tdt.de>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 100/197] e1000e: Fix S0ix residency on corporate systems
-Date: Tue,  9 Jul 2024 13:09:14 +0200
-Message-ID: <20240709110712.829987248@linuxfoundation.org>
+Subject: [PATCH 6.9 101/197] gpiolib: of: fix lookup quirk for MIPS Lantiq
+Date: Tue,  9 Jul 2024 13:09:15 +0200
+Message-ID: <20240709110712.868401481@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -54,209 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dima Ruinskiy <dima.ruinskiy@intel.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit c93a6f62cb1bd097aef2e4588648a420d175eee2 ]
+[ Upstream commit 3645ffaf2b334abaf5f53e5ca0f47465d91e69d2 ]
 
-On vPro systems, the configuration of the I219-LM to achieve power
-gating and S0ix residency is split between the driver and the CSME FW.
-It was discovered that in some scenarios, where the network cable is
-connected and then disconnected, S0ix residency is not always reached.
-This was root-caused to a subset of I219-LM register writes that are not
-performed by the CSME FW. Therefore, the driver should perform these
-register writes on corporate setups, regardless of the CSME FW state.
+As it turns out, there is a large number of out-of-tree DTSes (in
+OpenWrt project) that used to specify incorrect (active high) polarity
+for the Lantiq reset GPIO, so to keep compatibility while they are
+being updated a quirk for force the polarity low is needed. Luckily
+these old DTSes used nonstandard name for the property ("gpio-reset" vs
+"reset-gpios") so the quirk will not hurt if there are any new devices
+that need inverted polarity as they can specify the right polarity in
+their DTS when using the standard "reset-gpios" property.
 
-This was discovered on Meteor Lake systems; however it is likely to
-appear on other platforms as well.
+Additionally the condition to enable the transition from standard to
+non-standard reset GPIO property name was inverted and the replacement
+name for the property was not correct. Fix this as well.
 
-Fixes: cc23f4f0b6b9 ("e1000e: Add support for Meteor Lake")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218589
-Signed-off-by: Dima Ruinskiy <dima.ruinskiy@intel.com>
-Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20240628201754.2744221-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: fbbbcd177a27 ("gpiolib: of: add quirk for locating reset lines with legacy bindings")
+Fixes: 90c2d2eb7ab5 ("MIPS: pci: lantiq: switch to using gpiod API")
+Reported-by: Martin Schiller <ms@dev.tdt.de>
+Acked-by: Martin Schiller <ms@dev.tdt.de>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://lore.kernel.org/r/ZoLpqv1PN08xHioh@google.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/e1000e/netdev.c | 132 ++++++++++-----------
- 1 file changed, 66 insertions(+), 66 deletions(-)
+ drivers/gpio/gpiolib-of.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
-index 3692fce201959..334f652c60601 100644
---- a/drivers/net/ethernet/intel/e1000e/netdev.c
-+++ b/drivers/net/ethernet/intel/e1000e/netdev.c
-@@ -6363,49 +6363,49 @@ static void e1000e_s0ix_entry_flow(struct e1000_adapter *adapter)
- 		mac_data |= E1000_EXTCNF_CTRL_GATE_PHY_CFG;
- 		ew32(EXTCNF_CTRL, mac_data);
- 
--		/* Enable the Dynamic Power Gating in the MAC */
--		mac_data = er32(FEXTNVM7);
--		mac_data |= BIT(22);
--		ew32(FEXTNVM7, mac_data);
--
- 		/* Disable disconnected cable conditioning for Power Gating */
- 		mac_data = er32(DPGFR);
- 		mac_data |= BIT(2);
- 		ew32(DPGFR, mac_data);
- 
--		/* Don't wake from dynamic Power Gating with clock request */
--		mac_data = er32(FEXTNVM12);
--		mac_data |= BIT(12);
--		ew32(FEXTNVM12, mac_data);
--
--		/* Ungate PGCB clock */
--		mac_data = er32(FEXTNVM9);
--		mac_data &= ~BIT(28);
--		ew32(FEXTNVM9, mac_data);
--
--		/* Enable K1 off to enable mPHY Power Gating */
--		mac_data = er32(FEXTNVM6);
--		mac_data |= BIT(31);
--		ew32(FEXTNVM6, mac_data);
--
--		/* Enable mPHY power gating for any link and speed */
--		mac_data = er32(FEXTNVM8);
--		mac_data |= BIT(9);
--		ew32(FEXTNVM8, mac_data);
--
- 		/* Enable the Dynamic Clock Gating in the DMA and MAC */
- 		mac_data = er32(CTRL_EXT);
- 		mac_data |= E1000_CTRL_EXT_DMA_DYN_CLK_EN;
- 		ew32(CTRL_EXT, mac_data);
--
--		/* No MAC DPG gating SLP_S0 in modern standby
--		 * Switch the logic of the lanphypc to use PMC counter
--		 */
--		mac_data = er32(FEXTNVM5);
--		mac_data |= BIT(7);
--		ew32(FEXTNVM5, mac_data);
- 	}
- 
-+	/* Enable the Dynamic Power Gating in the MAC */
-+	mac_data = er32(FEXTNVM7);
-+	mac_data |= BIT(22);
-+	ew32(FEXTNVM7, mac_data);
-+
-+	/* Don't wake from dynamic Power Gating with clock request */
-+	mac_data = er32(FEXTNVM12);
-+	mac_data |= BIT(12);
-+	ew32(FEXTNVM12, mac_data);
-+
-+	/* Ungate PGCB clock */
-+	mac_data = er32(FEXTNVM9);
-+	mac_data &= ~BIT(28);
-+	ew32(FEXTNVM9, mac_data);
-+
-+	/* Enable K1 off to enable mPHY Power Gating */
-+	mac_data = er32(FEXTNVM6);
-+	mac_data |= BIT(31);
-+	ew32(FEXTNVM6, mac_data);
-+
-+	/* Enable mPHY power gating for any link and speed */
-+	mac_data = er32(FEXTNVM8);
-+	mac_data |= BIT(9);
-+	ew32(FEXTNVM8, mac_data);
-+
-+	/* No MAC DPG gating SLP_S0 in modern standby
-+	 * Switch the logic of the lanphypc to use PMC counter
-+	 */
-+	mac_data = er32(FEXTNVM5);
-+	mac_data |= BIT(7);
-+	ew32(FEXTNVM5, mac_data);
-+
- 	/* Disable the time synchronization clock */
- 	mac_data = er32(FEXTNVM7);
- 	mac_data |= BIT(31);
-@@ -6498,33 +6498,6 @@ static void e1000e_s0ix_exit_flow(struct e1000_adapter *adapter)
- 	} else {
- 		/* Request driver unconfigure the device from S0ix */
- 
--		/* Disable the Dynamic Power Gating in the MAC */
--		mac_data = er32(FEXTNVM7);
--		mac_data &= 0xFFBFFFFF;
--		ew32(FEXTNVM7, mac_data);
--
--		/* Disable mPHY power gating for any link and speed */
--		mac_data = er32(FEXTNVM8);
--		mac_data &= ~BIT(9);
--		ew32(FEXTNVM8, mac_data);
--
--		/* Disable K1 off */
--		mac_data = er32(FEXTNVM6);
--		mac_data &= ~BIT(31);
--		ew32(FEXTNVM6, mac_data);
--
--		/* Disable Ungate PGCB clock */
--		mac_data = er32(FEXTNVM9);
--		mac_data |= BIT(28);
--		ew32(FEXTNVM9, mac_data);
--
--		/* Cancel not waking from dynamic
--		 * Power Gating with clock request
--		 */
--		mac_data = er32(FEXTNVM12);
--		mac_data &= ~BIT(12);
--		ew32(FEXTNVM12, mac_data);
--
- 		/* Cancel disable disconnected cable conditioning
- 		 * for Power Gating
+diff --git a/drivers/gpio/gpiolib-of.c b/drivers/gpio/gpiolib-of.c
+index cb0cefaec37e8..7db35cbde8e92 100644
+--- a/drivers/gpio/gpiolib-of.c
++++ b/drivers/gpio/gpiolib-of.c
+@@ -202,6 +202,16 @@ static void of_gpio_try_fixup_polarity(const struct device_node *np,
+ 		 * helper, and be consistent with what other drivers do.
  		 */
-@@ -6537,13 +6510,6 @@ static void e1000e_s0ix_exit_flow(struct e1000_adapter *adapter)
- 		mac_data &= 0xFFF7FFFF;
- 		ew32(CTRL_EXT, mac_data);
+ 		{ "qi,lb60",		"rb-gpios",	true },
++#endif
++#if IS_ENABLED(CONFIG_PCI_LANTIQ)
++		/*
++		 * According to the PCI specification, the RST# pin is an
++		 * active-low signal. However, most of the device trees that
++		 * have been widely used for a long time incorrectly describe
++		 * reset GPIO as active-high, and were also using wrong name
++		 * for the property.
++		 */
++		{ "lantiq,pci-xway",	"gpio-reset",	false },
+ #endif
+ 	};
+ 	unsigned int i;
+@@ -504,9 +514,9 @@ static struct gpio_desc *of_find_gpio_rename(struct device_node *np,
+ 		{ "reset",	"reset-n-io",	"marvell,nfc-uart" },
+ 		{ "reset",	"reset-n-io",	"mrvl,nfc-uart" },
+ #endif
+-#if !IS_ENABLED(CONFIG_PCI_LANTIQ)
++#if IS_ENABLED(CONFIG_PCI_LANTIQ)
+ 		/* MIPS Lantiq PCI */
+-		{ "reset",	"gpios-reset",	"lantiq,pci-xway" },
++		{ "reset",	"gpio-reset",	"lantiq,pci-xway" },
+ #endif
  
--		/* Revert the lanphypc logic to use the internal Gbe counter
--		 * and not the PMC counter
--		 */
--		mac_data = er32(FEXTNVM5);
--		mac_data &= 0xFFFFFF7F;
--		ew32(FEXTNVM5, mac_data);
--
- 		/* Enable the periodic inband message,
- 		 * Request PCIe clock in K1 page770_17[10:9] =01b
- 		 */
-@@ -6581,6 +6547,40 @@ static void e1000e_s0ix_exit_flow(struct e1000_adapter *adapter)
- 	mac_data &= ~BIT(31);
- 	mac_data |= BIT(0);
- 	ew32(FEXTNVM7, mac_data);
-+
-+	/* Disable the Dynamic Power Gating in the MAC */
-+	mac_data = er32(FEXTNVM7);
-+	mac_data &= 0xFFBFFFFF;
-+	ew32(FEXTNVM7, mac_data);
-+
-+	/* Disable mPHY power gating for any link and speed */
-+	mac_data = er32(FEXTNVM8);
-+	mac_data &= ~BIT(9);
-+	ew32(FEXTNVM8, mac_data);
-+
-+	/* Disable K1 off */
-+	mac_data = er32(FEXTNVM6);
-+	mac_data &= ~BIT(31);
-+	ew32(FEXTNVM6, mac_data);
-+
-+	/* Disable Ungate PGCB clock */
-+	mac_data = er32(FEXTNVM9);
-+	mac_data |= BIT(28);
-+	ew32(FEXTNVM9, mac_data);
-+
-+	/* Cancel not waking from dynamic
-+	 * Power Gating with clock request
-+	 */
-+	mac_data = er32(FEXTNVM12);
-+	mac_data &= ~BIT(12);
-+	ew32(FEXTNVM12, mac_data);
-+
-+	/* Revert the lanphypc logic to use the internal Gbe counter
-+	 * and not the PMC counter
-+	 */
-+	mac_data = er32(FEXTNVM5);
-+	mac_data &= 0xFFFFFF7F;
-+	ew32(FEXTNVM5, mac_data);
- }
- 
- static int e1000e_pm_freeze(struct device *dev)
+ 		/*
 -- 
 2.43.0
 
