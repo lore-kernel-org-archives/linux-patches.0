@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60B3E146D53;
-	Tue,  9 Jul 2024 11:29:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127041586C3;
+	Tue,  9 Jul 2024 11:29:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524586; cv=none; b=CFNbpnlmTTwD6WHVW4IhGmTBbqWnccLWZ15B22zHS+eC6BqNkPOHwBs49TtgZ+is23QN7SKgKlhk4DMQxtZAtluaTJrTDxoRu4fPWrDZ191MZuyi6VT4sHJ0mxpzJpb4vkzdLv8qRnMKqJIT+gwlVLvBZo50LDZp26q+7Labn9A=
+	t=1720524589; cv=none; b=B1Edyjrt0ZPw+FK+toAv5bWngK2jnoJZmAtG2P45aWEDDyaXMHnrBwZjYzQjzwv4xPX4WCFYUvSidLHC5fLL7XKQMR8eyXli7r+oLKsBYibiDJjQXmlccFmwzHuyuVY8etOMvB+VCw0Ui/iWL/pVGBF0z2DpeiiFf14cY1PuH0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524586; c=relaxed/simple;
-	bh=FzLStpewQBBtVPFtvNHL/2U7xuLql4Q74ac2tambPpo=;
+	s=arc-20240116; t=1720524589; c=relaxed/simple;
+	bh=BRy/Sqwe+5kQjm80cKdZKjqSDlZGP/naLJKgJLhmvgU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XlHm1pPirV6GxsIY3fXpvr4dnKpTBMwLJ3vSzDTd5a7/7Ih6wrDtmA+iMkQi5R+lgqrPRN2hdFqsdk/BmZ3FL7UV9AmtbhlZZh+ELq/BD7twcKFuvVM24+XdUZ8PMUet8idfV26wwJdpgunDnB5cQGNYjL5qnXaQ1OpdqR11Z9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AK82/yqq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u3doEoCxRCocS8bNV/ov5sQJfnvfktvQI12Y43Vig3qh/EL3w1BQ/d09gOPYmIGRIofBiWgEpkFXYs99u+iutuuajBX0BgpJrY/BAT/xNEHbJtmZLyNV3MhFHDo1tXgv3Vxy5yoD/HZkk8b9Miiu120BmAAluAvWyLsxb3uLnJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PpWcpNVK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AK82/yqq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 981DCC3277B;
-	Tue,  9 Jul 2024 11:29:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PpWcpNVK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D5B3C3277B;
+	Tue,  9 Jul 2024 11:29:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524586;
-	bh=FzLStpewQBBtVPFtvNHL/2U7xuLql4Q74ac2tambPpo=;
+	s=korg; t=1720524589;
+	bh=BRy/Sqwe+5kQjm80cKdZKjqSDlZGP/naLJKgJLhmvgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AK82/yqqwsBLmB54YT00aWqclygOTGi6xNRw8apdrrWYYYahetAOccq8t5nDM4S2C
-	 C21dzvR+idaI39oy6bi6eeRycVuv6yhwnI1kKIQG6pP6DwKfpoRMu1jj5+3nFxyq1G
-	 V+h6V8w1l81bJ4G9pz4YHpNIXq0jNElXcMwd3fVE=
+	b=PpWcpNVK6qdqQDPmENmBMV86VJTX3QmN1otRuGIS/w8HorBt0hAMy4d971UaUNd5k
+	 QPlp0Gbl6wTY8Pjb0xyahfHw/lHKm5UoiWDwgvZ+wWfkvlwQWiINBbkjM4IG61yNoS
+	 zLhu8yS2L0uznSvPYE4c1KjUgsMIqK3NL0UbcpRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Corinna Vinschen <vinschen@redhat.com>,
-	Hariprasad Kelam <hkelam@marvell.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	"Jose E. Marchesi" <jose.marchesi@oracle.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 033/102] igc: fix a log entry using uninitialized netdev
-Date: Tue,  9 Jul 2024 13:09:56 +0200
-Message-ID: <20240709110652.659941168@linuxfoundation.org>
+Subject: [PATCH 6.1 034/102] bpf: Avoid uninitialized value in BPF_CORE_READ_BITFIELD
+Date: Tue,  9 Jul 2024 13:09:57 +0200
+Message-ID: <20240709110652.699952430@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110651.353707001@linuxfoundation.org>
 References: <20240709110651.353707001@linuxfoundation.org>
@@ -54,59 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Corinna Vinschen <vinschen@redhat.com>
+From: Jose E. Marchesi <jose.marchesi@oracle.com>
 
-[ Upstream commit 86167183a17e03ec77198897975e9fdfbd53cb0b ]
+[ Upstream commit 009367099eb61a4fc2af44d4eb06b6b4de7de6db ]
 
-During successful probe, igc logs this:
+[Changes from V1:
+ - Use a default branch in the switch statement to initialize `val'.]
 
-[    5.133667] igc 0000:01:00.0 (unnamed net_device) (uninitialized): PHC added
-                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The reason is that igc_ptp_init() is called very early, even before
-register_netdev() has been called. So the netdev_info() call works
-on a partially uninitialized netdev.
+GCC warns that `val' may be used uninitialized in the
+BPF_CRE_READ_BITFIELD macro, defined in bpf_core_read.h as:
 
-Fix this by calling igc_ptp_init() after register_netdev(), right
-after the media autosense check, just as in igb.  Add a comment,
-just as in igb.
+	[...]
+	unsigned long long val;						      \
+	[...]								      \
+	switch (__CORE_RELO(s, field, BYTE_SIZE)) {			      \
+	case 1: val = *(const unsigned char *)p; break;			      \
+	case 2: val = *(const unsigned short *)p; break;		      \
+	case 4: val = *(const unsigned int *)p; break;			      \
+	case 8: val = *(const unsigned long long *)p; break;		      \
+        }       							      \
+	[...]
+	val;								      \
+	}								      \
 
-Now the log message is fine:
+This patch adds a default entry in the switch statement that sets
+`val' to zero in order to avoid the warning, and random values to be
+used in case __builtin_preserve_field_info returns unexpected values
+for BPF_FIELD_BYTE_SIZE.
 
-[    5.200987] igc 0000:01:00.0 eth0: PHC added
+Tested in bpf-next master.
+No regressions.
 
-Signed-off-by: Corinna Vinschen <vinschen@redhat.com>
-Reviewed-by: Hariprasad Kelam <hkelam@marvell.com>
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Jose E. Marchesi <jose.marchesi@oracle.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20240508101313.16662-1-jose.marchesi@oracle.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_main.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tools/lib/bpf/bpf_core_read.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index e052f49cc08d7..d8e9eef195c84 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -6679,8 +6679,6 @@ static int igc_probe(struct pci_dev *pdev,
- 	device_set_wakeup_enable(&adapter->pdev->dev,
- 				 adapter->flags & IGC_FLAG_WOL_SUPPORTED);
- 
--	igc_ptp_init(adapter);
--
- 	igc_tsn_clear_schedule(adapter);
- 
- 	/* reset the hardware with the new settings */
-@@ -6702,6 +6700,9 @@ static int igc_probe(struct pci_dev *pdev,
- 	/* Check if Media Autosense is enabled */
- 	adapter->ei = *ei;
- 
-+	/* do hw tstamp init after resetting */
-+	igc_ptp_init(adapter);
-+
- 	/* print pcie link status and MAC address */
- 	pcie_print_link_status(pdev);
- 	netdev_info(netdev, "MAC: %pM\n", netdev->dev_addr);
+diff --git a/tools/lib/bpf/bpf_core_read.h b/tools/lib/bpf/bpf_core_read.h
+index 496e6a8ee0dc9..41740ae8aad73 100644
+--- a/tools/lib/bpf/bpf_core_read.h
++++ b/tools/lib/bpf/bpf_core_read.h
+@@ -102,6 +102,7 @@ enum bpf_enum_value_kind {
+ 	case 2: val = *(const unsigned short *)p; break;		      \
+ 	case 4: val = *(const unsigned int *)p; break;			      \
+ 	case 8: val = *(const unsigned long long *)p; break;		      \
++	default: val = 0; break;					      \
+ 	}								      \
+ 	val <<= __CORE_RELO(s, field, LSHIFT_U64);			      \
+ 	if (__CORE_RELO(s, field, SIGNED))				      \
 -- 
 2.43.0
 
