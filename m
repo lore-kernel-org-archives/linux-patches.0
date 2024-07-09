@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2057534545;
-	Tue,  9 Jul 2024 11:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62C0413E41D;
+	Tue,  9 Jul 2024 11:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524627; cv=none; b=ZVZEv+NrD2z2TZSOZPXLSoV/m+afab1pXLnaKvyVxxzdonzt2u+I98VgCIyIn9dle0yPVhICSlQYxLrOJqwMQZ0X92dxORZSJKJ7nw7iI2A+C6t+GjkZHta7ZCxD/FHPHiBGeaxYhFdR7Y5A9lEtagj6jtcc7Kv2E2IecofJH6g=
+	t=1720524630; cv=none; b=ETCaGuesrBjtBeFQ4YRKQZixLR7Y8OhNs60Nh0i45Va+IH0dS4rTkKGAwLkAetobM01L3p4G31eSWoCbSA8x79LRnc/i0P5hEupagFaP3R348SnQrzq0rCb1QpGmHBe4N53AeVOGvh7zdUy0mKB/gXK/yIA4Kwtq9VPT3H6yCa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524627; c=relaxed/simple;
-	bh=qWHI8ueSCAJtrqeMphAT/1qMNaaWM8JA6DVPEKxRuZo=;
+	s=arc-20240116; t=1720524630; c=relaxed/simple;
+	bh=BvrAb5TW2xodL2mvO+0Rkul0GK63OqkqJG7Tz1kH/p0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YH8aCDzkfejpUSBp09YHxbDPFjmswYy4u7hooBnC2voqiuVcXi1Jy+3bUB+He4Ar/iYw1x+2Xd38fKHqWu2A6PxhP2NPgX6M0/0SJt6uKqYxxyLhhvr1B3eLcbjwQ4RjjTdjNMjDYAgoZ9MQ62bPpeEKsD9urGfTBM6Z1QM8Abg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zpihh1Iu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y/8lCGCOY2jXb6OyyZQrkIN0YvLZgYRdqJ3HOyyUiw/9rsfdkZX3wuXnZsbBWyNNY6atp0Rw7UVq7rOSRG/sbTtw+zZQwKJF/4AXOa5QNoLeL8oIpg06G3x2013umJqOCZ7Ws8UK2fgZANIO8bMRnM5LAeUx1C1wc3wfBmoN4N0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bCeLea4H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zpihh1Iu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99F51C3277B;
-	Tue,  9 Jul 2024 11:30:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bCeLea4H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98467C3277B;
+	Tue,  9 Jul 2024 11:30:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524627;
-	bh=qWHI8ueSCAJtrqeMphAT/1qMNaaWM8JA6DVPEKxRuZo=;
+	s=korg; t=1720524630;
+	bh=BvrAb5TW2xodL2mvO+0Rkul0GK63OqkqJG7Tz1kH/p0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zpihh1IuxWPIdyOXcEL453ryBZwttIYyXjrXdPmpESZ9ijTfMKd09j2wRP0irwHRF
-	 x+5z7UkkFYyJ63CYIpD79/SX5lEm3G6vrZo/eboTWUCE3RBHvEmWbSqSSM3PEUDJx5
-	 gsvvXeyYknsavEcSPk3IJGUPl9UeTV2Gpze3Dn3Q=
+	b=bCeLea4H1FO7EWFbrsb2qUHK6l8v3sUI/Z1c4lqGjM+n3+vvtoK2wDFc1eRdfpvX2
+	 lUoPvezVQl8TBVAFQq371lbxF6BLaXkAMzVWFWWCtCyuhbocKyDwI2kUi9/4PKd+xd
+	 8DdPTKWEHtHDCYTjJd/utL7dAjPQUTuXyj1pNAVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mi <cmi@nvidia.com>,
+	Jianbo Liu <jianbol@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 046/102] net/mlx5: E-switch, Create ingress ACL when needed
-Date: Tue,  9 Jul 2024 13:10:09 +0200
-Message-ID: <20240709110653.163840328@linuxfoundation.org>
+Subject: [PATCH 6.1 047/102] net/mlx5e: Add mqprio_rl cleanup and free in mlx5e_priv_cleanup()
+Date: Tue,  9 Jul 2024 13:10:10 +0200
+Message-ID: <20240709110653.202961196@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110651.353707001@linuxfoundation.org>
 References: <20240709110651.353707001@linuxfoundation.org>
@@ -52,120 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mi <cmi@nvidia.com>
+From: Jianbo Liu <jianbol@nvidia.com>
 
-[ Upstream commit b20c2fb45470d0c7a603613c9cfa5d45720e17f2 ]
+[ Upstream commit 1da839eab6dbc26b95bfcd1ed1a4d1aaa5c144a3 ]
 
-Currently, ingress acl is used for three features. It is created only
-when vport metadata match and prio tag are enabled. But active-backup
-lag mode also uses it. It is independent of vport metadata match and
-prio tag. And vport metadata match can be disabled using the
-following devlink command:
+In the cited commit, mqprio_rl cleanup and free are mistakenly removed
+in mlx5e_priv_cleanup(), and it causes the leakage of host memory and
+firmware SCHEDULING_ELEMENT objects while changing eswitch mode. So,
+add them back.
 
- # devlink dev param set pci/0000:08:00.0 name esw_port_metadata \
-	value false cmode runtime
-
-If ingress acl is not created, will hit panic when creating drop rule
-for active-backup lag mode. If always create it, there will be about
-5% performance degradation.
-
-Fix it by creating ingress acl when needed. If esw_port_metadata is
-true, ingress acl exists, then create drop rule using existing
-ingress acl. If esw_port_metadata is false, create ingress acl and
-then create drop rule.
-
-Fixes: 1749c4c51c16 ("net/mlx5: E-switch, add drop rule support to ingress ACL")
-Signed-off-by: Chris Mi <cmi@nvidia.com>
+Fixes: 0bb7228f7096 ("net/mlx5e: Fix mqprio_rl handling on devlink reload")
+Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/esw/acl/ingress_ofld.c | 37 +++++++++++++++----
- 1 file changed, 29 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_ofld.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_ofld.c
-index db578a7e7008a..59fb31201c35e 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_ofld.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_ofld.c
-@@ -6,6 +6,9 @@
- #include "helper.h"
- #include "ofld.h"
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 4c0eac83546de..385904502a6be 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -5584,6 +5584,11 @@ void mlx5e_priv_cleanup(struct mlx5e_priv *priv)
+ 		kfree(priv->htb_qos_sq_stats[i]);
+ 	kvfree(priv->htb_qos_sq_stats);
  
-+static int
-+acl_ingress_ofld_setup(struct mlx5_eswitch *esw, struct mlx5_vport *vport);
-+
- static bool
- esw_acl_ingress_prio_tag_enabled(struct mlx5_eswitch *esw,
- 				 const struct mlx5_vport *vport)
-@@ -123,18 +126,31 @@ static int esw_acl_ingress_src_port_drop_create(struct mlx5_eswitch *esw,
- {
- 	struct mlx5_flow_act flow_act = {};
- 	struct mlx5_flow_handle *flow_rule;
-+	bool created = false;
- 	int err = 0;
- 
-+	if (!vport->ingress.acl) {
-+		err = acl_ingress_ofld_setup(esw, vport);
-+		if (err)
-+			return err;
-+		created = true;
++	if (priv->mqprio_rl) {
++		mlx5e_mqprio_rl_cleanup(priv->mqprio_rl);
++		mlx5e_mqprio_rl_free(priv->mqprio_rl);
 +	}
 +
- 	flow_act.action = MLX5_FLOW_CONTEXT_ACTION_DROP;
- 	flow_act.fg = vport->ingress.offloads.drop_grp;
- 	flow_rule = mlx5_add_flow_rules(vport->ingress.acl, NULL, &flow_act, NULL, 0);
- 	if (IS_ERR(flow_rule)) {
- 		err = PTR_ERR(flow_rule);
--		goto out;
-+		goto err_out;
- 	}
- 
- 	vport->ingress.offloads.drop_rule = flow_rule;
--out:
-+
-+	return 0;
-+err_out:
-+	/* Only destroy ingress acl created in this function. */
-+	if (created)
-+		esw_acl_ingress_ofld_cleanup(esw, vport);
- 	return err;
+ 	memset(priv, 0, sizeof(*priv));
  }
  
-@@ -299,16 +315,12 @@ static void esw_acl_ingress_ofld_groups_destroy(struct mlx5_vport *vport)
- 	}
- }
- 
--int esw_acl_ingress_ofld_setup(struct mlx5_eswitch *esw,
--			       struct mlx5_vport *vport)
-+static int
-+acl_ingress_ofld_setup(struct mlx5_eswitch *esw, struct mlx5_vport *vport)
- {
- 	int num_ftes = 0;
- 	int err;
- 
--	if (!mlx5_eswitch_vport_match_metadata_enabled(esw) &&
--	    !esw_acl_ingress_prio_tag_enabled(esw, vport))
--		return 0;
--
- 	esw_acl_ingress_allow_rule_destroy(vport);
- 
- 	if (mlx5_eswitch_vport_match_metadata_enabled(esw))
-@@ -347,6 +359,15 @@ int esw_acl_ingress_ofld_setup(struct mlx5_eswitch *esw,
- 	return err;
- }
- 
-+int esw_acl_ingress_ofld_setup(struct mlx5_eswitch *esw, struct mlx5_vport *vport)
-+{
-+	if (!mlx5_eswitch_vport_match_metadata_enabled(esw) &&
-+	    !esw_acl_ingress_prio_tag_enabled(esw, vport))
-+		return 0;
-+
-+	return acl_ingress_ofld_setup(esw, vport);
-+}
-+
- void esw_acl_ingress_ofld_cleanup(struct mlx5_eswitch *esw,
- 				  struct mlx5_vport *vport)
- {
 -- 
 2.43.0
 
