@@ -1,115 +1,117 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEDC61E864;
-	Tue,  9 Jul 2024 14:49:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2214019D88D;
+	Tue,  9 Jul 2024 16:06:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720536599; cv=none; b=BvAON9oVAGDp6p9U1srZFJN2llws3uyvw4sU4NTAoyjY+MCBP57t0Et+Gv+MPvlJcRKG3cTJu4ZAhBXTCNEoV+uy3UThf2NBO1FaS9PzhUZhQtex99HgSg0IWVErxAdGdrC/fHi3KTBVJ7hAl5OBs9cAS4xZ9oYsSxDAyzn9ylM=
+	t=1720541186; cv=none; b=LIB4qbXXVejexJCPKFjRAPPfEiNNCDWbNCjwCO14L6IlVPrYaKAd0ZaVCpwHfHD1wPgCq4miEmlCqREj0p48D7dP5hH+/aGHBE9PV9197wKC97J3O8/9K+rZW5zN6FECl/LFH0FFZaoucqVO+Bxw2Z96iUxDerZxoG66uNX2SBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720536599; c=relaxed/simple;
-	bh=eUc+cFJM93ToUxIeXBBcTJX5lkcVp3Njq6FM8ite3AA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=IaeHde/PXKlwt+4JeLJ1bqcfY9kaUS3bnmnq8TaIfdRBwjuPsypeJEG+LYEBabTpSl+mh9eBKGer4PXzp5OHuonP1oBug7CUpfM2n83MAV0PKariSy5JsJwIDdsFZU0eZLDsMvP7/OkRIJrz3+HonbReSwN/LgLq9dZ/Ym3TKuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LyGZp5l/; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+	s=arc-20240116; t=1720541186; c=relaxed/simple;
+	bh=XomL6XkiSGmqijLHAImjPAoDH/hg/wLBpt7YmP/PttY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=nfCuM9EQ3+ECEZutb9HsSr3FjokApEocYTlCH6XHrYfl93VUP92o7D/5WoE87SEizfhf2FZbmB7en4AsQPBIJ3EJSPYZUB5zNQlMTErOkZu9aaWIv75mYRVAsPbdGwyzmetdATgbjPJKJYcnIKgv1/10/8D/j90o7uekVl8613Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CTGk//5R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LyGZp5l/"
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 469AS6md013357;
-	Tue, 9 Jul 2024 14:49:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	OBm02fxuS7z1vUEhqNdVoOYXznK1XRbcSRWqIJsv2XQ=; b=LyGZp5l/1Scu4Dfv
-	aZOcPyX9nbvWaP3MMjCtE9I15eIaRsWpwnX163dRdu8TRGOAFDxLaDUFeZCT+ydJ
-	RQ9aVMOvvi3ukoiL1xibMCwJpU1wvTpq7fF8iEXXOA3koUrmXcSAbF/koNUEBFgT
-	Givr1Dt7m2RGfXTIpkHmtiyySX1wjIHFDT0kllAlwTXS6BFlxT9Unj8RbXB4J0Ix
-	3MUqk2NzUACL8ZzEV7S5AGWwL2CAEitcB5QzDG4cqtPrKEHxaFnTDXjLQwV/Mh8S
-	KkqjaLBFTcybUm5jtI6bVPsX9GrfOdr78fZ/aA6X+dAlObTDmVBTxKrneKcpT6hJ
-	bZS9zA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 406x0t702b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 09 Jul 2024 14:49:43 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 469Enfqg015379
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 9 Jul 2024 14:49:41 GMT
-Received: from [10.81.24.74] (10.49.16.6) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 9 Jul 2024
- 07:49:41 -0700
-Message-ID: <dd7278f5-8da9-46c5-8db2-6d3882f7d674@quicinc.com>
-Date: Tue, 9 Jul 2024 07:49:40 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CTGk//5R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA6DCC32782;
+	Tue,  9 Jul 2024 16:06:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1720541185;
+	bh=XomL6XkiSGmqijLHAImjPAoDH/hg/wLBpt7YmP/PttY=;
+	h=From:To:Cc:Subject:Date:From;
+	b=CTGk//5RF6DJT5bk3YTgB1qKHHjc10H9GL67lrqHcLTsII4VOeQQBTovAh/j/GDZr
+	 HV4i92Fgz6IahKNJgoA9wOqfWKdwkM4DLLuTFtwZ0IMmitYdno8Yc/DgRo6B3zNxmB
+	 dj5HAvJDX0V3+Bzt2CgG1BQAigETQ80NQzforE8IkFYQDtDvm+7AuLjfwoSzvxqaNA
+	 VEu4iPwFgNl5lBwvldo/Ug1sY2FZyS0bNV8FAbr237qAjphQR8ftD2n/SxhQ3Y7aOr
+	 DrYtu4oYy/CJyEN8MV7zcDU/fnc6ArRjyRsoA3oUCjawBBki8X3fIMyLDiaRptfrwf
+	 ZJLR2mU02zZLw==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-doc@vger.kernel.org,
+	linux-kbuild@vger.kernel.org,
+	workflows@vger.kernel.org
+Subject: [PATCH v2 00/13] Support several Rust toolchain versions
+Date: Tue,  9 Jul 2024 18:05:55 +0200
+Message-ID: <20240709160615.998336-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 4/8] of: Add a KUnit test for overlays and test managed
- APIs
-To: Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>
-CC: <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <patches@lists.linux.dev>, <kunit-dev@googlegroups.com>,
-        <linux-kselftest@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Brendan
- Higgins <brendan.higgins@linux.dev>,
-        David Gow <davidgow@google.com>, Rae
- Moar <rmoar@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>,
-        Daniel Latypov <dlatypov@google.com>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, Maxime Ripard <maxime@cerno.tech>
-References: <20240706045454.215701-1-sboyd@kernel.org>
- <20240706045454.215701-5-sboyd@kernel.org>
-Content-Language: en-US
-From: Jeff Johnson <quic_jjohnson@quicinc.com>
-In-Reply-To: <20240706045454.215701-5-sboyd@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: sVmcQBlxh3ZJarXvw8zoA9zj2IvZgBlK
-X-Proofpoint-ORIG-GUID: sVmcQBlxh3ZJarXvw8zoA9zj2IvZgBlK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-09_04,2024-07-09_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 bulkscore=0
- lowpriorityscore=0 impostorscore=0 adultscore=0 suspectscore=0
- phishscore=0 mlxlogscore=999 priorityscore=1501 malwarescore=0 spamscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2407090096
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 7/5/24 21:54, Stephen Boyd wrote:
-> Test the KUnit test managed overlay APIs. Confirm that platform devices
-> are created and destroyed properly. This provides us confidence that the
-> test managed APIs work correctly and can be relied upon to provide tests
-> with fake platform devices and device nodes via overlays compiled into
-> the kernel image.
+Hi all,
 
-...
+A few things improved here and there, and rebased on top of `rust-next`.
 
-> +kunit_test_suites(
-> +	&of_overlay_apply_kunit_suite,
-> +);
-> +MODULE_LICENSE("GPL");
+The changelog is attached to each patch.
 
-Multiple patches in this series introduce new instances of 
-MODULE_LICENSE() without an accompanying MODULE_DESCRIPTION().
+I kept the `Tested-by`s since most of the changes are on documentation
+or comments, though I did remove them on the patch that changed the most
+just in case (even for that one, I think Benno's and Andreas' setup
+would not have made a difference).
 
-Building a module without a MODULE_DESCRIPTION() will result in a 
-warning when building with make W=1.
+I plan to put this series into `rust-next` very soon so that it goes
+into the merge window.
 
-/jeff
+Previous cover letter:
+
+  v1: https://lore.kernel.org/rust-for-linux/20240701183625.665574-1-ojeda@kernel.org/
+
+Thanks!
+
+Cheers,
+Miguel
+
+Miguel Ojeda (13):
+  rust: macros: indent list item in `paste!`'s docs
+  rust: init: simplify from `map_err` to `inspect_err`
+  rust: allow `dead_code` for never constructed bindings
+  rust: relax most deny-level lints to warnings
+  rust: simplify Clippy warning flags set
+  rust: start supporting several compiler versions
+  rust: avoid assuming a particular `bindgen` build
+  rust: work around `bindgen` 0.69.0 issue
+  rust: start supporting several `bindgen` versions
+  rust: warn about `bindgen` versions 0.66.0 and 0.66.1
+  kbuild: rust: add `rustc-version` support
+  rust: support the new `-Zub-checks` flag
+  docs: rust: quick-start: add section on Linux distributions
+
+ Documentation/process/changes.rst        |   9 +-
+ Documentation/rust/quick-start.rst       | 136 +++++++++++++++++------
+ Makefile                                 |  31 +++---
+ init/Kconfig                             |  11 +-
+ lib/Kconfig.debug                        |  18 +++
+ rust/Makefile                            |   4 +-
+ rust/bindings/lib.rs                     |   1 +
+ rust/kernel/init.rs                      |  13 +--
+ rust/macros/lib.rs                       |   2 +-
+ rust/uapi/lib.rs                         |   1 +
+ scripts/Kconfig.include                  |   6 +
+ scripts/Makefile.compiler                |   4 +
+ scripts/rust_is_available.sh             |  33 +++---
+ scripts/rust_is_available_bindgen_0_66.h |   2 +
+ scripts/rust_is_available_test.py        |  59 ++++++----
+ scripts/rustc-version.sh                 |  52 +++++++++
+ 16 files changed, 274 insertions(+), 108 deletions(-)
+ create mode 100644 scripts/rust_is_available_bindgen_0_66.h
+ create mode 100755 scripts/rustc-version.sh
+
+
+base-commit: fc6e66f4696b63b8a2645a2bcea407cb04bd0666
+--
+2.45.2
