@@ -1,84 +1,95 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5612C1AC;
-	Tue,  9 Jul 2024 02:18:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9A927713;
+	Tue,  9 Jul 2024 07:33:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720491487; cv=none; b=cDxhICgKPMuA9KRMPiTSww0LbukDvG3C84TyvbE/p5HINmJKAhLsbRyI3S1XlB6whAvg1pXbGFaC9HoZZIjsC3eSHAnmdy6Q2yDH1rkuhzwhejEW+/dWFDqs8wZt/lp4VQkxgwbfdKKtzJLI97njoeWrZ81wifZhlNCHNFWkD0w=
+	t=1720510421; cv=none; b=Pi6/NQWEqiSwENfEMZIFTs1wCbp51GIB1SfgAwftfy/HNvTvIHqZD5Ce/bQJ3rVLTRGAj9zaA8d7ZcspnT91HCIiTRK1WnlGKF+rqU86KtRvHiUYgB3AQ9nEDlaI1Awazw0qoHgpHExBBRFULWyCgUMAaVB72srucbATX2xDf64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720491487; c=relaxed/simple;
-	bh=sQpw2n0NaOOsrwQoFWy5PaDNmaERqzAgtz/ScLWKs7A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MEHSbOTSVMf7RvPF7+jeSqHGweQtgNSREh12ZLsUHxKjkEN1bZSQGsixzZXRZVH/vFRE5ohsshAEgAQgQ/sf3OE0+IpaC84LVvAG7srVTTKRmtbUJdiikld0inqZC/lYarxnbiUFka6xkStMTu0FpT5yb+HUb80AANQCDUwvR9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b=KN/jvw/U; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1720510421; c=relaxed/simple;
+	bh=klDpcD1FMiSPwckMUv/XYdW7oQQyHXH58rQmFc+F2uc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dLhEwgIJqG/xDueC/Je1GGe6nsMX05O+HeokW3azkTBeH/U7PHcRDjwXmULeM9BhBykJ1FXhzOkEM61Gy8dFnvQpARRBkZBSbuYwEvDAxI3YMd56xXdZSI+A5GczHuET9dezBVEuBr48mKhoDklWkVZP8Wkuet68ddQfyKP3iJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NvMgviXF; arc=none smtp.client-ip=209.85.216.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="KN/jvw/U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C6D6C116B1;
-	Tue,  9 Jul 2024 02:18:05 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="KN/jvw/U"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1720491483;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=SG/nhRJ5sb1lI6oh+MAWi0fczWmHK6PqjjxjYpcpOV4=;
-	b=KN/jvw/Uc89zg8Kt77Xfog7E285Xcl2tdf9W0YRz3BOiCS3+imXctZmnwPAmIUpCSBfK6e
-	n6mdgXUPFPORrbaOWCG/Hcm8MvCU+4PyDTyIZ80b4goZ00TRfM4l+fBEvYkg6/BiYID8rE
-	ad8gUp/6uXjU8SeH0RZVPZgBm3p2y6o=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2946a661 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 9 Jul 2024 02:18:03 +0000 (UTC)
-Date: Tue, 9 Jul 2024 04:17:56 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: David Hildenbrand <david@redhat.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	tglx@linutronix.de, linux-crypto@vger.kernel.org,
-	linux-api@vger.kernel.org, x86@kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>,
-	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
-	Jann Horn <jannh@google.com>,
-	Christian Brauner <brauner@kernel.org>,
-	David Hildenbrand <dhildenb@redhat.com>, linux-mm@kvack.org
-Subject: Re: [PATCH v21 1/4] mm: add VM_DROPPABLE for designating always
- lazily freeable mappings
-Message-ID: <Zoyd1DYuD7cmJbgx@zx2c4.com>
-References: <1583c837-a4d5-4a8a-9c1d-2c64548cd199@redhat.com>
- <CAHk-=wjs-9DVeoc430BDOv+dkpDkdVvkEsSJxNVZ+sO51H1dJA@mail.gmail.com>
- <e2f104ac-b6d9-4583-b999-8f975c60d469@redhat.com>
- <CAHk-=wibRRHVH5D4XvX1maQDCT-o4JLkANXHMoZoWdn=tN0TLA@mail.gmail.com>
- <6705c6c8-8b6a-4d03-ae0f-aa83442ec0ab@redhat.com>
- <CAHk-=wi=XvCZ9r897LjEb4ZarLzLtKN1p+Fyig+F2fmQDF8GSA@mail.gmail.com>
- <7439da2e-4a60-4643-9804-17e99ce6e312@redhat.com>
- <Zovv4lzM38EHtnms@zx2c4.com>
- <Zov6SZZCKrqmigua@zx2c4.com>
- <75d6c45d-deea-464d-b0fd-b36e5d73b898@redhat.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NvMgviXF"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-2c95ca60719so2836210a91.3;
+        Tue, 09 Jul 2024 00:33:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720510419; x=1721115219; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=klDpcD1FMiSPwckMUv/XYdW7oQQyHXH58rQmFc+F2uc=;
+        b=NvMgviXFBHQ+Y++YO7GysEqcscG+O6As1lhd/MrxU6BQAiCWIsSxuH/WmFmFYtvDEW
+         KJKQUmSr18Gz1NTKh8fA0iV5ZGVjzCHxwlaNNNdPuoxU/kkXYBJnvYplFYz4sbuJzSeW
+         7zIBF0w5qtNeQCg7wkz9MQkCjRVEBtfqSBNpQelzDIpcm5AZLK/xe59b/WewdvrLOn5L
+         gnVxmEWI57z6u7lXjUT/0+5YJ9ewIEdz1MsWPlYFHAh9GyW6MZJXz8Hi+muHw9pR/5GB
+         +n0vrEPo7sGexegNEHkBbJM5T/V8iGPXk1r1hauM9x8EcDHN4tI860f06e+82/9tCdVS
+         V4Fw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720510419; x=1721115219;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=klDpcD1FMiSPwckMUv/XYdW7oQQyHXH58rQmFc+F2uc=;
+        b=TJ5aMKEa0kHU28DJXe0XK4EzoU6t0Pv92tbykrVnp1BhrsrNRa1tXxjvenV6tWjiTP
+         UvI+cJc9uwUZ6fOUtrZkl595qMswWVsL6Ou2zP/uXL/g02owwIL+EEXgyYasEz4tEDx2
+         w6bHb1oJKT4Wu11mW8LSSp8pa3cEaYqKOOGRV1C7441Gtsqa7UjBP0Sok+aYPqd6EOQE
+         inBH3fuFKH7irQvIKT5+wcUdNq2U7roG21YNlCB4i81949i74vbI/fXZ4a0jqAtSZrT7
+         K0OVdLuC3xk3ae2ODMwr+PS2b/gYQlJ32e+vZTL/S2CZmo+WCDLSz1q4BuR2Z7JJ6bhf
+         tfrw==
+X-Forwarded-Encrypted: i=1; AJvYcCUfLATD9vozaQds7581zCAQzQG8FzOWVk1rHPnjafaIWi+Mc1MspfTkQhi3qrodAzJ5ksGnx12WnR4LLYsYvT5sbdjy03PPHXwuoCut7ze5uLyfx0Rk2m1adMGmR5E=
+X-Gm-Message-State: AOJu0YwcTtALgaFVkiH+SclLcp2KgBsEUTs7+5QtVDC+9Scu5GPGyYxX
+	f2AAzl72sxrvNoOAYAPy1JAgtwqMTf5l06h6PbbCJGoJYa2hX/WAz1NuptxN53A8/6bfErNh/vL
+	6FXI9yfXkQCx381SC1uTkUj5/nss=
+X-Google-Smtp-Source: AGHT+IG6TEMVsFcPVSqBsELWwJyFpRuf/hY2SNbScRZLiS80tCn6X3wHejySkfVx75KATLP9w2HFi1CxI+Ms7haSFkU=
+X-Received: by 2002:a17:90b:3ccd:b0:2c9:887e:46de with SMTP id
+ 98e67ed59e1d1-2ca35c310f2mr1323804a91.12.1720510419506; Tue, 09 Jul 2024
+ 00:33:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <75d6c45d-deea-464d-b0fd-b36e5d73b898@redhat.com>
+References: <20240517170615.377786-1-ojeda@kernel.org>
+In-Reply-To: <20240517170615.377786-1-ojeda@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Tue, 9 Jul 2024 09:33:27 +0200
+Message-ID: <CANiq72kS3f0QA+p6dpkA79G3h57tDVS_oNiO9hm9xY-aJ+9jyg@mail.gmail.com>
+Subject: Re: [PATCH] docs: rust: introduce the new kernel.org LLVM+Rust toolchains
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Nathan Chancellor <nathan@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Nick Desaulniers <ndesaulniers@google.com>, 
+	Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	Alice Ryhl <aliceryhl@google.com>, llvm@lists.linux.dev, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Jonathan Corbet <corbet@lwn.net>, linux-doc@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi David,
+On Fri, May 17, 2024 at 7:06=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
+> From: Nathan Chancellor <nathan@kernel.org>
+>
+> These combined LLVM+Rust toolchains are now available, thanks to Nathan
+> Chancellor (ClangBuiltLinux).
+>
+> Thus introduce them in the Rust Quick Start guide.
+>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> Co-developed-by: Miguel Ojeda <ojeda@kernel.org>
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-On Mon, Jul 08, 2024 at 10:21:09PM +0200, David Hildenbrand wrote:
-> BTW, I was just trying to understand how MADV_FREE + MAP_DROPPABLE would 
-> behave without any swap space around.
-> 
-> Did you experiment with that?
+Applied to `rust-next` -- thanks!
 
-You mean on a system without any swap configured? That's actually my
-primary test environment for this. It behaves as expected: when ram
-fills up and the scanner is trying to reclaim what it can,
-folio_test_swapbacked(folio) is false, and the memory gets freed. After,
-reads fault in a zero page. So it's working as expected.
-
-Jason
+Cheers,
+Miguel
