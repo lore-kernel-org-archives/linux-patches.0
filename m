@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACD855E4C;
-	Tue,  9 Jul 2024 11:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA41055E4C;
+	Tue,  9 Jul 2024 11:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720523856; cv=none; b=eUGUVHOPlNlG9bJsAs/gWxRgTKcQHum2h59b0YIpbAdglH4odd206TJtWvJGYzZDLxMXwk2rKjSckEPf/tkyYLjy1nA/Aa9zw9+3kA7xV5LZR240/hcFrr2bcl7dPBJGXmwm8DYdZVZCCa0uwEx8OkOCyKXD2QfwP9e85JC119E=
+	t=1720523859; cv=none; b=T89nCiH23y2V4q5+ouBMtJWnkVRM441Eg3wsZ9rABcN149+TyHW7UhEVO76KEXB1oXOd4Ppt1dcS1qIwQBRHg31l1VBDc5uoRgZ1wmaUBRsGBsLiIpiz5jwL5WEa2uvBJOUhUgKFQdMbCC2r+g6Z1Zg1ux+A0NEWNbn8UbaYL40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720523856; c=relaxed/simple;
-	bh=03kUArBLKD8UzWESyydux9LCOq4qFIgQ81HLZLPvghU=;
+	s=arc-20240116; t=1720523859; c=relaxed/simple;
+	bh=MRErbJMFPpE9QpMMl9bdzlu8xKFItoFFhuuxaDP7aFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fxMge8iS+DsHC4XgFYxIgNS9eV1INkuulghDovZUAQaL2foRbSvKZBjnNTBJkpkjE62XcAKmc3ysULA2qVwYw/xwHi9Lp+STMEBB+Fv12Eia3ZwOsTIgih1Rc/E5Myg8LuIBpH6AXnyq7g0v0mqTMmXt05bwPPvZ8CmNthpexmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r5CKhw3L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=shJM0QH/kdWhpF75XdcSNmv9wmVfnExqZGYb24KJb7wV1OVMESab4MDbnk9ssSq+q9p1H2o+cUcimpPb0iWvTxMleDKIXR1C2m1w9oMLfF/kfRIMuF4/ethkiXYjdcpCh0p63dWymuwuvmYpxuX1VbTTTUMX6p7RbH8TCGxprc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=naEEiC6t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r5CKhw3L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 617EBC3277B;
-	Tue,  9 Jul 2024 11:17:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="naEEiC6t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5010AC3277B;
+	Tue,  9 Jul 2024 11:17:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720523856;
-	bh=03kUArBLKD8UzWESyydux9LCOq4qFIgQ81HLZLPvghU=;
+	s=korg; t=1720523859;
+	bh=MRErbJMFPpE9QpMMl9bdzlu8xKFItoFFhuuxaDP7aFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r5CKhw3LB6BF1VhG1MqVt31+pcXe7UeAz+1DJZ0oVBVJbyV4BmZsb4uCvfLmk4NkF
-	 H8MBE7eyGL3kPzX+GRun4Gp2uLki91xU9A6QvMk9Et84nLioplTmb2cDCDw4al7wIl
-	 MXSMgCzMVlXLgADBTtcEnU+m2mwveJ91Bs8DY6vo=
+	b=naEEiC6tDuW5i3PGUqhw2gV8fV+j/kIfhG97NtXvBPYgmpm1GdnaWFNgwtqFe8zIS
+	 9i5QXQlZ9fw6R5G1cU/eYBQJil1P43a12J/PW/G5XbUvLN1S++HoYs2it7kRr3bITN
+	 MstZCUg54LvB3Fx5NchRQfm+oGhbP4VJ6DHnfpAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	hmtheboy154 <buingoc67@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 131/139] platform/x86: touchscreen_dmi: Add info for the EZpad 6s Pro
-Date: Tue,  9 Jul 2024 13:10:31 +0200
-Message-ID: <20240709110703.229549109@linuxfoundation.org>
+	Ghadi Elie Rahme <ghadi.rahme@canonical.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 114/139] bnx2x: Fix multiple UBSAN array-index-out-of-bounds
+Date: Tue,  9 Jul 2024 13:10:14 +0200
+Message-ID: <20240709110702.579026257@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110658.146853929@linuxfoundation.org>
 References: <20240709110658.146853929@linuxfoundation.org>
@@ -51,46 +50,185 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: hmtheboy154 <buingoc67@gmail.com>
+From: Ghadi Elie Rahme <ghadi.rahme@canonical.com>
 
-[ Upstream commit 3050052613790e75b5e4a8536930426b0a8b0774 ]
+commit 134061163ee5ca4759de5c24ca3bd71608891ba7 upstream.
 
-The "EZpad 6s Pro" uses the same touchscreen as the "EZpad 6 Pro B",
-unlike the "Ezpad 6 Pro" which has its own touchscreen.
+Fix UBSAN warnings that occur when using a system with 32 physical
+cpu cores or more, or when the user defines a number of Ethernet
+queues greater than or equal to FP_SB_MAX_E1x using the num_queues
+module parameter.
 
-Signed-off-by: hmtheboy154 <buingoc67@gmail.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240527091447.248849-3-hdegoede@redhat.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Currently there is a read/write out of bounds that occurs on the array
+"struct stats_query_entry query" present inside the "bnx2x_fw_stats_req"
+struct in "drivers/net/ethernet/broadcom/bnx2x/bnx2x.h".
+Looking at the definition of the "struct stats_query_entry query" array:
+
+struct stats_query_entry query[FP_SB_MAX_E1x+
+         BNX2X_FIRST_QUEUE_QUERY_IDX];
+
+FP_SB_MAX_E1x is defined as the maximum number of fast path interrupts and
+has a value of 16, while BNX2X_FIRST_QUEUE_QUERY_IDX has a value of 3
+meaning the array has a total size of 19.
+Since accesses to "struct stats_query_entry query" are offset-ted by
+BNX2X_FIRST_QUEUE_QUERY_IDX, that means that the total number of Ethernet
+queues should not exceed FP_SB_MAX_E1x (16). However one of these queues
+is reserved for FCOE and thus the number of Ethernet queues should be set
+to [FP_SB_MAX_E1x -1] (15) if FCOE is enabled or [FP_SB_MAX_E1x] (16) if
+it is not.
+
+This is also described in a comment in the source code in
+drivers/net/ethernet/broadcom/bnx2x/bnx2x.h just above the Macro definition
+of FP_SB_MAX_E1x. Below is the part of this explanation that it important
+for this patch
+
+/*
+  * The total number of L2 queues, MSIX vectors and HW contexts (CIDs) is
+  * control by the number of fast-path status blocks supported by the
+  * device (HW/FW). Each fast-path status block (FP-SB) aka non-default
+  * status block represents an independent interrupts context that can
+  * serve a regular L2 networking queue. However special L2 queues such
+  * as the FCoE queue do not require a FP-SB and other components like
+  * the CNIC may consume FP-SB reducing the number of possible L2 queues
+  *
+  * If the maximum number of FP-SB available is X then:
+  * a. If CNIC is supported it consumes 1 FP-SB thus the max number of
+  *    regular L2 queues is Y=X-1
+  * b. In MF mode the actual number of L2 queues is Y= (X-1/MF_factor)
+  * c. If the FCoE L2 queue is supported the actual number of L2 queues
+  *    is Y+1
+  * d. The number of irqs (MSIX vectors) is either Y+1 (one extra for
+  *    slow-path interrupts) or Y+2 if CNIC is supported (one additional
+  *    FP interrupt context for the CNIC).
+  * e. The number of HW context (CID count) is always X or X+1 if FCoE
+  *    L2 queue is supported. The cid for the FCoE L2 queue is always X.
+  */
+
+However this driver also supports NICs that use the E2 controller which can
+handle more queues due to having more FP-SB represented by FP_SB_MAX_E2.
+Looking at the commits when the E2 support was added, it was originally
+using the E1x parameters: commit f2e0899f0f27 ("bnx2x: Add 57712 support").
+Back then FP_SB_MAX_E2 was set to 16 the same as E1x. However the driver
+was later updated to take full advantage of the E2 instead of having it be
+limited to the capabilities of the E1x. But as far as we can tell, the
+array "stats_query_entry query" was still limited to using the FP-SB
+available to the E1x cards as part of an oversignt when the driver was
+updated to take full advantage of the E2, and now with the driver being
+aware of the greater queue size supported by E2 NICs, it causes the UBSAN
+warnings seen in the stack traces below.
+
+This patch increases the size of the "stats_query_entry query" array by
+replacing FP_SB_MAX_E1x with FP_SB_MAX_E2 to be large enough to handle
+both types of NICs.
+
+Stack traces:
+
+UBSAN: array-index-out-of-bounds in
+       drivers/net/ethernet/broadcom/bnx2x/bnx2x_stats.c:1529:11
+index 20 is out of range for type 'stats_query_entry [19]'
+CPU: 12 PID: 858 Comm: systemd-network Not tainted 6.9.0-060900rc7-generic
+	     #202405052133
+Hardware name: HP ProLiant DL360 Gen9/ProLiant DL360 Gen9,
+	       BIOS P89 10/21/2019
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x76/0xa0
+ dump_stack+0x10/0x20
+ __ubsan_handle_out_of_bounds+0xcb/0x110
+ bnx2x_prep_fw_stats_req+0x2e1/0x310 [bnx2x]
+ bnx2x_stats_init+0x156/0x320 [bnx2x]
+ bnx2x_post_irq_nic_init+0x81/0x1a0 [bnx2x]
+ bnx2x_nic_load+0x8e8/0x19e0 [bnx2x]
+ bnx2x_open+0x16b/0x290 [bnx2x]
+ __dev_open+0x10e/0x1d0
+RIP: 0033:0x736223927a0a
+Code: d8 64 89 02 48 c7 c0 ff ff ff ff eb b8 0f 1f 00 f3 0f 1e fa 41 89 ca
+      64 8b 04 25 18 00 00 00 85 c0 75 15 b8 2c 00 00 00 0f 05 <48> 3d 00
+      f0 ff ff 77 7e c3 0f 1f 44 00 00 41 54 48 83 ec 30 44 89
+RSP: 002b:00007ffc0bb2ada8 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
+RAX: ffffffffffffffda RBX: 0000583df50f9c78 RCX: 0000736223927a0a
+RDX: 0000000000000020 RSI: 0000583df50ee510 RDI: 0000000000000003
+RBP: 0000583df50d4940 R08: 00007ffc0bb2adb0 R09: 0000000000000080
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000583df5103ae0
+R13: 000000000000035a R14: 0000583df50f9c30 R15: 0000583ddddddf00
+</TASK>
+---[ end trace ]---
+------------[ cut here ]------------
+UBSAN: array-index-out-of-bounds in
+       drivers/net/ethernet/broadcom/bnx2x/bnx2x_stats.c:1546:11
+index 28 is out of range for type 'stats_query_entry [19]'
+CPU: 12 PID: 858 Comm: systemd-network Not tainted 6.9.0-060900rc7-generic
+	     #202405052133
+Hardware name: HP ProLiant DL360 Gen9/ProLiant DL360 Gen9,
+	       BIOS P89 10/21/2019
+Call Trace:
+<TASK>
+dump_stack_lvl+0x76/0xa0
+dump_stack+0x10/0x20
+__ubsan_handle_out_of_bounds+0xcb/0x110
+bnx2x_prep_fw_stats_req+0x2fd/0x310 [bnx2x]
+bnx2x_stats_init+0x156/0x320 [bnx2x]
+bnx2x_post_irq_nic_init+0x81/0x1a0 [bnx2x]
+bnx2x_nic_load+0x8e8/0x19e0 [bnx2x]
+bnx2x_open+0x16b/0x290 [bnx2x]
+__dev_open+0x10e/0x1d0
+RIP: 0033:0x736223927a0a
+Code: d8 64 89 02 48 c7 c0 ff ff ff ff eb b8 0f 1f 00 f3 0f 1e fa 41 89 ca
+      64 8b 04 25 18 00 00 00 85 c0 75 15 b8 2c 00 00 00 0f 05 <48> 3d 00
+      f0 ff ff 77 7e c3 0f 1f 44 00 00 41 54 48 83 ec 30 44 89
+RSP: 002b:00007ffc0bb2ada8 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
+RAX: ffffffffffffffda RBX: 0000583df50f9c78 RCX: 0000736223927a0a
+RDX: 0000000000000020 RSI: 0000583df50ee510 RDI: 0000000000000003
+RBP: 0000583df50d4940 R08: 00007ffc0bb2adb0 R09: 0000000000000080
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000583df5103ae0
+R13: 000000000000035a R14: 0000583df50f9c30 R15: 0000583ddddddf00
+ </TASK>
+---[ end trace ]---
+------------[ cut here ]------------
+UBSAN: array-index-out-of-bounds in
+       drivers/net/ethernet/broadcom/bnx2x/bnx2x_sriov.c:1895:8
+index 29 is out of range for type 'stats_query_entry [19]'
+CPU: 13 PID: 163 Comm: kworker/u96:1 Not tainted 6.9.0-060900rc7-generic
+	     #202405052133
+Hardware name: HP ProLiant DL360 Gen9/ProLiant DL360 Gen9,
+	       BIOS P89 10/21/2019
+Workqueue: bnx2x bnx2x_sp_task [bnx2x]
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x76/0xa0
+ dump_stack+0x10/0x20
+ __ubsan_handle_out_of_bounds+0xcb/0x110
+ bnx2x_iov_adjust_stats_req+0x3c4/0x3d0 [bnx2x]
+ bnx2x_storm_stats_post.part.0+0x4a/0x330 [bnx2x]
+ ? bnx2x_hw_stats_post+0x231/0x250 [bnx2x]
+ bnx2x_stats_start+0x44/0x70 [bnx2x]
+ bnx2x_stats_handle+0x149/0x350 [bnx2x]
+ bnx2x_attn_int_asserted+0x998/0x9b0 [bnx2x]
+ bnx2x_sp_task+0x491/0x5c0 [bnx2x]
+ process_one_work+0x18d/0x3f0
+ </TASK>
+---[ end trace ]---
+
+Fixes: 50f0a562f8cc ("bnx2x: add fcoe statistics")
+Signed-off-by: Ghadi Elie Rahme <ghadi.rahme@canonical.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20240627111405.1037812-1-ghadi.rahme@canonical.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/touchscreen_dmi.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/net/ethernet/broadcom/bnx2x/bnx2x.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
-index bb1df9d03bbcd..06ebab520f271 100644
---- a/drivers/platform/x86/touchscreen_dmi.c
-+++ b/drivers/platform/x86/touchscreen_dmi.c
-@@ -1406,6 +1406,17 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
- 			DMI_MATCH(DMI_BIOS_DATE, "04/24/2018"),
- 		},
- 	},
-+	{
-+		/* Jumper EZpad 6s Pro */
-+		.driver_data = (void *)&jumper_ezpad_6_pro_b_data,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Jumper"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Ezpad"),
-+			/* Above matches are too generic, add bios match */
-+			DMI_MATCH(DMI_BIOS_VERSION, "E.WSA116_8.E1.042.bin"),
-+			DMI_MATCH(DMI_BIOS_DATE, "01/08/2020"),
-+		},
-+	},
- 	{
- 		/* Jumper EZpad 6 m4 */
- 		.driver_data = (void *)&jumper_ezpad_6_m4_data,
--- 
-2.43.0
-
+--- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x.h
++++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x.h
+@@ -1262,7 +1262,7 @@ enum {
+ 
+ struct bnx2x_fw_stats_req {
+ 	struct stats_query_header hdr;
+-	struct stats_query_entry query[FP_SB_MAX_E1x+
++	struct stats_query_entry query[FP_SB_MAX_E2 +
+ 		BNX2X_FIRST_QUEUE_QUERY_IDX];
+ };
+ 
 
 
