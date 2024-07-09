@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52F5514EC4D;
-	Tue,  9 Jul 2024 11:16:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4C61586C7;
+	Tue,  9 Jul 2024 11:16:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720523816; cv=none; b=jFB8ebBPI9b6qGIeayeeNlWy9Ry8zdKtFhZ2IeuQFGwsoozC8X6jpadpf+MU2z0d+rluLNOU2kqOZHbBivypD2jcI0v5RrosESDNrZS7rOj2mwvwnnXjBnWTCg4Rj0I788wtUWFSGMG90B0mIWR56jVNX+rAhH+PWi75eOgQCKo=
+	t=1720523819; cv=none; b=rZL+750MY77z1W/SKiQdVUcRdBsr4NSRtmTA5svBvvtRuP66O5od8KkZM9KdFtAP2jJUA6H6FvbfT7zQAryVovTUEh+eLO0FHWQSzF9koUbDx7BV+OwCx9w/B2EdDSQsHQGJC2gexoNnq9IlLlQtvp6Tcd9Kp84lOc0EePdQypE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720523816; c=relaxed/simple;
-	bh=jgBklmfswPS+iTvQUAjaDIutwJ7IKrrsZailLd6RWqg=;
+	s=arc-20240116; t=1720523819; c=relaxed/simple;
+	bh=4gu2F6Ja3ruc6OJvkDOTAxMYCOBjx8jYDGsr28f0M+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jka6JKM4x5aooUl35J2uTNL/4d6pNuSjm4LmdL4d4QeM9OPVBiVEZSDHDZKFfxKPqaT7yz2A83mnq0BnTNi8owHdG2HviECOsv21Hodr29cVJv+XvkgF8qRf70dgOlPLjOZIMhEUW5kXwdw50oaI1ter88R80Ivj+vVYy1dngQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MvoLToOj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gB4qK13anyitVSb+b23qnv9NEaSO5c4kz7Bu4BqfZQmtslHbqCLuiwvvQ9tkn4v3qmiag/v3Fwv6IdlwMsLkuHwXyUZ/TymbHHWjycEjzeHJo12LHbPT9e3T592rincxbW6peCFHy9bbg+7ye7WrxJPMjZvq0v5w5z7gNQyYtU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rEABaKCZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MvoLToOj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDDD5C3277B;
-	Tue,  9 Jul 2024 11:16:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rEABaKCZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11C68C3277B;
+	Tue,  9 Jul 2024 11:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720523816;
-	bh=jgBklmfswPS+iTvQUAjaDIutwJ7IKrrsZailLd6RWqg=;
+	s=korg; t=1720523819;
+	bh=4gu2F6Ja3ruc6OJvkDOTAxMYCOBjx8jYDGsr28f0M+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MvoLToOjMbcwycmwKzsrrRPiYyIUq1xWl9uQf/Xj8RcW5ni+hdf5Vz1U9Bw3SuT2K
-	 JAvvLsJFhagjAEwlDsmEfNHTfcxFVV79gEVToSikZCb+MaLlNX3SOGUI7dKagsfM/g
-	 kTHrxSLcHikDfK27QQrxHe4qozdVUNqrsb18bPAI=
+	b=rEABaKCZQXyXxJ2POKvyH3ukoQRWYkyeWVw+sr1PX+GCZlblBxmjToutijhrNKSui
+	 r9DVnpN8XHeXUsjYZ8ny1ZcClwSdawb7PoG4Bc2WQLq4iPaCdn7y2jQbHNlXk4EQFN
+	 DYFJezXXeerVVDrdcH7uwmhVZVs+S57cNDx5jiZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kemal <kmal@cock.li>,
-	Armin Wolf <W_Armin@gmx.de>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.6 088/139] platform/x86: toshiba_acpi: Fix quickstart quirk handling
-Date: Tue,  9 Jul 2024 13:09:48 +0200
-Message-ID: <20240709110701.578157868@linuxfoundation.org>
+	Song Shuai <songshuaishuai@tinylab.org>,
+	Ryo Takakura <takakura@valinux.co.jp>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 079/139] riscv: kexec: Avoid deadlock in kexec crash path
+Date: Tue,  9 Jul 2024 13:09:39 +0200
+Message-ID: <20240709110701.230427743@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110658.146853929@linuxfoundation.org>
 References: <20240709110658.146853929@linuxfoundation.org>
@@ -45,105 +46,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Song Shuai <songshuaishuai@tinylab.org>
 
-commit e527a6127223b644e0a27b44f4b16e16eb6c7f0a upstream.
+[ Upstream commit c562ba719df570c986caf0941fea2449150bcbc4 ]
 
-The global hci_hotkey_quickstart quirk flag is tested in
-toshiba_acpi_enable_hotkeys() before the quirk flag is properly
-initialized based on SMBIOS data. This causes the quirk to be
-applied to all models, some of which behave erratically as a
-result.
+If the kexec crash code is called in the interrupt context, the
+machine_kexec_mask_interrupts() function will trigger a deadlock while
+trying to acquire the irqdesc spinlock and then deactivate irqchip in
+irq_set_irqchip_state() function.
 
-Fix this by initializing the global quirk flags during module
-initialization before registering the ACPI driver. This also
-allows us to mark toshiba_dmi_quirks[] as __initconst.
+Unlike arm64, riscv only requires irq_eoi handler to complete EOI and
+keeping irq_set_irqchip_state() will only leave this possible deadlock
+without any use. So we simply remove it.
 
-Fixes: 23f1d8b47d12 ("platform/x86: toshiba_acpi: Add quirk for buttons on Z830")
-Reported-by: kemal <kmal@cock.li>
-Closes: https://lore.kernel.org/platform-driver-x86/R4CYFS.TWB8QUU2SHWI1@cock.li/
-Tested-by: kemal <kmal@cock.li>
-Cc: stable@vger.kernel.org
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20240701194539.348937-1-W_Armin@gmx.de
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/linux-riscv/20231208111015.173237-1-songshuaishuai@tinylab.org/
+Fixes: b17d19a5314a ("riscv: kexec: Fixup irq controller broken in kexec crash path")
+Signed-off-by: Song Shuai <songshuaishuai@tinylab.org>
+Reviewed-by: Ryo Takakura <takakura@valinux.co.jp>
+Link: https://lore.kernel.org/r/20240626023316.539971-1-songshuaishuai@tinylab.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/toshiba_acpi.c |   31 ++++++++++++++++++-------------
- 1 file changed, 18 insertions(+), 13 deletions(-)
+ arch/riscv/kernel/machine_kexec.c | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
---- a/drivers/platform/x86/toshiba_acpi.c
-+++ b/drivers/platform/x86/toshiba_acpi.c
-@@ -3275,7 +3275,7 @@ static const char *find_hci_method(acpi_
-  */
- #define QUIRK_HCI_HOTKEY_QUICKSTART		BIT(1)
+diff --git a/arch/riscv/kernel/machine_kexec.c b/arch/riscv/kernel/machine_kexec.c
+index 2d139b724bc84..ccb0c5d5c63c4 100644
+--- a/arch/riscv/kernel/machine_kexec.c
++++ b/arch/riscv/kernel/machine_kexec.c
+@@ -147,20 +147,12 @@ static void machine_kexec_mask_interrupts(void)
  
--static const struct dmi_system_id toshiba_dmi_quirks[] = {
-+static const struct dmi_system_id toshiba_dmi_quirks[] __initconst = {
- 	{
- 	 /* Toshiba Portégé R700 */
- 	 /* https://bugzilla.kernel.org/show_bug.cgi?id=21012 */
-@@ -3310,8 +3310,6 @@ static int toshiba_acpi_add(struct acpi_
- 	struct toshiba_acpi_dev *dev;
- 	const char *hci_method;
- 	u32 dummy;
--	const struct dmi_system_id *dmi_id;
--	long quirks = 0;
- 	int ret = 0;
+ 	for_each_irq_desc(i, desc) {
+ 		struct irq_chip *chip;
+-		int ret;
  
- 	if (toshiba_acpi)
-@@ -3464,16 +3462,6 @@ iio_error:
- 	}
- #endif
+ 		chip = irq_desc_get_chip(desc);
+ 		if (!chip)
+ 			continue;
  
--	dmi_id = dmi_first_match(toshiba_dmi_quirks);
--	if (dmi_id)
--		quirks = (long)dmi_id->driver_data;
+-		/*
+-		 * First try to remove the active state. If this
+-		 * fails, try to EOI the interrupt.
+-		 */
+-		ret = irq_set_irqchip_state(i, IRQCHIP_STATE_ACTIVE, false);
 -
--	if (turn_on_panel_on_resume == -1)
--		turn_on_panel_on_resume = !!(quirks & QUIRK_TURN_ON_PANEL_ON_RESUME);
--
--	if (hci_hotkey_quickstart == -1)
--		hci_hotkey_quickstart = !!(quirks & QUIRK_HCI_HOTKEY_QUICKSTART);
--
- 	toshiba_wwan_available(dev);
- 	if (dev->wwan_supported)
- 		toshiba_acpi_setup_wwan_rfkill(dev);
-@@ -3622,10 +3610,27 @@ static struct acpi_driver toshiba_acpi_d
- 	.drv.pm	= &toshiba_acpi_pm,
- };
+-		if (ret && irqd_irq_inprogress(&desc->irq_data) &&
+-		    chip->irq_eoi)
++		if (chip->irq_eoi && irqd_irq_inprogress(&desc->irq_data))
+ 			chip->irq_eoi(&desc->irq_data);
  
-+static void __init toshiba_dmi_init(void)
-+{
-+	const struct dmi_system_id *dmi_id;
-+	long quirks = 0;
-+
-+	dmi_id = dmi_first_match(toshiba_dmi_quirks);
-+	if (dmi_id)
-+		quirks = (long)dmi_id->driver_data;
-+
-+	if (turn_on_panel_on_resume == -1)
-+		turn_on_panel_on_resume = !!(quirks & QUIRK_TURN_ON_PANEL_ON_RESUME);
-+
-+	if (hci_hotkey_quickstart == -1)
-+		hci_hotkey_quickstart = !!(quirks & QUIRK_HCI_HOTKEY_QUICKSTART);
-+}
-+
- static int __init toshiba_acpi_init(void)
- {
- 	int ret;
- 
-+	toshiba_dmi_init();
- 	toshiba_proc_dir = proc_mkdir(PROC_TOSHIBA, acpi_root_dir);
- 	if (!toshiba_proc_dir) {
- 		pr_err("Unable to create proc dir " PROC_TOSHIBA "\n");
+ 		if (chip->irq_mask)
+-- 
+2.43.0
+
 
 
