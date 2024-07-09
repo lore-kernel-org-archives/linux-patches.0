@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F23D27713;
-	Tue,  9 Jul 2024 11:28:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DFD015749B;
+	Tue,  9 Jul 2024 11:28:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524530; cv=none; b=CUej05KFDWW9g6uKrwVnRQvpM+v0s3Uofepc8vRVZFFiISDwo4jaG61Gl68yWmqh+vRX62n8dZCwaD1hTJRxd6aQnKjfPTNenxmnFrI/qVC+nwNMwmjORVD1WJyfrZRFMLwzdlcDOJLx6gdgvJ9GowS/uLyLdgtRIs6LhVeA3aI=
+	t=1720524533; cv=none; b=U/HyLz7vquKtVBjTBhzSYAKmOooMmDGmWmuwkszi65etQ4AneqsyoKwbiAReDB+efst/unrKU/xZHMXyo4qUTuifA/uoUUFtT+1qHmhqjkd4dRc2P8y3FPxU3gq17v4N/CXwanTjrvXrk1P0jJ3m6A9W1enELCIZxh0XiYHf0e8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524530; c=relaxed/simple;
-	bh=iLMgO2Ekka3C0lWIyrhqUYUkVVcolbONhYfjJRkA9hU=;
+	s=arc-20240116; t=1720524533; c=relaxed/simple;
+	bh=kyOzykdjX/qUTl64Xn5t0ksSvRiSMPT+n0a1T55tEqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kz4m7ICQYiLSCh7LyinGAELJzKfPRDo8V3RkXOhsuv2IpPIZZWWOa75CJHidF95PJeZTfV1AxQ6+BN0uwwf9QepwocH3MI3dfwoZ2bUuP/tlogQSNT2M+t2fuaOjjt2xSqLZighJhp9AtKHT7vY7PGsYg2W/bxlxgOdjMqEERxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GniwqUo0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NibkY3LLQzWnyviXn2uDgt8vvXRRIo4xQbhyA7ws5Ks9bICJisr8rDkNF78xtGWuqJu/47R1FS43eq3huNr+BXiZe9zoUxf9wFr/H2oKTTm4NE57gWhSDDgJEq7q3ulYlDlxsnDWmJ9IOOdgFHX1j1EUrD7Ge4hVry2fMp+7hL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ujA0g9VK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GniwqUo0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95307C3277B;
-	Tue,  9 Jul 2024 11:28:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ujA0g9VK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91BE0C3277B;
+	Tue,  9 Jul 2024 11:28:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524530;
-	bh=iLMgO2Ekka3C0lWIyrhqUYUkVVcolbONhYfjJRkA9hU=;
+	s=korg; t=1720524533;
+	bh=kyOzykdjX/qUTl64Xn5t0ksSvRiSMPT+n0a1T55tEqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GniwqUo0jS8A31aUi9DX2H8gqBKKC6jRAHraCthkXyF2270/UsaaYtoKWtbS356Zt
-	 l/yNx9I52WsRWfseQavhDloYbCXU+VKCBaMjxwINEmouh5UWeWyasobYSkAtko+tSr
-	 4MkZZKsAQXJ0fDB9sOowSC2Weos00uChI8MfoJ2Y=
+	b=ujA0g9VKFk5pLW69pK7BExmq2xkIKEU5/SAQHBQSxzOih/5GI8FtnvR/F1G4v3s3W
+	 jDtVnv5q24ymi0yA5TlLa5fWSrRbFhDtavOp4J3AINiww1VDSvm5NZKbBiQLUdg7Fm
+	 9ngcmThy0R+omInzK3bbCNWbA4WD++jVqNl4+NbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alex Hung <alex.hung@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 014/102] drm/amd/display: Check pipe offset before setting vblank
-Date: Tue,  9 Jul 2024 13:09:37 +0200
-Message-ID: <20240709110651.923065796@linuxfoundation.org>
+Subject: [PATCH 6.1 015/102] drm/amd/display: Skip finding free audio for unknown engine_id
+Date: Tue,  9 Jul 2024 13:09:38 +0200
+Message-ID: <20240709110651.962623132@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110651.353707001@linuxfoundation.org>
 References: <20240709110651.353707001@linuxfoundation.org>
@@ -55,12 +55,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 5396a70e8cf462ec5ccf2dc8de103c79de9489e6 ]
+[ Upstream commit 1357b2165d9ad94faa4c4a20d5e2ce29c2ff29c3 ]
 
-pipe_ctx has a size of MAX_PIPES so checking its index before accessing
-the array.
+[WHY]
+ENGINE_ID_UNKNOWN = -1 and can not be used as an array index. Plus, it
+also means it is uninitialized and does not need free audio.
 
-This fixes an OVERRUN issue reported by Coverity.
+[HOW]
+Skip and return NULL.
+
+This fixes 2 OVERRUN issues reported by Coverity.
 
 Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
 Acked-by: Wayne Lin <wayne.lin@amd.com>
@@ -68,28 +72,23 @@ Signed-off-by: Alex Hung <alex.hung@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/dc/irq/dce110/irq_service_dce110.c    | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc_resource.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/irq/dce110/irq_service_dce110.c b/drivers/gpu/drm/amd/display/dc/irq/dce110/irq_service_dce110.c
-index 44649db5f3e32..5646b7788f02e 100644
---- a/drivers/gpu/drm/amd/display/dc/irq/dce110/irq_service_dce110.c
-+++ b/drivers/gpu/drm/amd/display/dc/irq/dce110/irq_service_dce110.c
-@@ -211,8 +211,12 @@ bool dce110_vblank_set(struct irq_service *irq_service,
- 						   info->ext_id);
- 	uint8_t pipe_offset = dal_irq_src - IRQ_TYPE_VBLANK;
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
+index e2f80cd0ca8cb..83898e46bcadf 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
+@@ -2146,6 +2146,9 @@ static struct audio *find_first_free_audio(
+ {
+ 	int i, available_audio_count;
  
--	struct timing_generator *tg =
--			dc->current_state->res_ctx.pipe_ctx[pipe_offset].stream_res.tg;
-+	struct timing_generator *tg;
++	if (id == ENGINE_ID_UNKNOWN)
++		return NULL;
 +
-+	if (pipe_offset >= MAX_PIPES)
-+		return false;
-+
-+	tg = dc->current_state->res_ctx.pipe_ctx[pipe_offset].stream_res.tg;
+ 	available_audio_count = pool->audio_count;
  
- 	if (enable) {
- 		if (!tg || !tg->funcs->arm_vert_intr(tg, 2)) {
+ 	for (i = 0; i < available_audio_count; i++) {
 -- 
 2.43.0
 
