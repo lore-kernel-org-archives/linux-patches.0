@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3721527713;
-	Tue,  9 Jul 2024 11:27:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC1127713;
+	Tue,  9 Jul 2024 11:27:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524462; cv=none; b=LgQ+FSxFiNNPWMcqn7fD40g+pbLWUfSqmCgo/14krUBFz0YAeQJPrvZIVmxM+DfhoIz+B1nCi4ZaxqCvSQS4lNtl+EvzMs8mkFK6DWVWcZ2sOHiSb9brtFNQ19b/ru325V918h0+QrUF+Snp9q1MtZh0lU6ZpvREXE3k6gPGu74=
+	t=1720524465; cv=none; b=WLnfYJHcf3JMKrh6uPtgL1Gez2Q8Wn6epdM1DjPl+AqRFUvAy4/ULb6Kt+GD7v/FQhlfKnfoyewhmynos6pFKDXb65vtUelbUKHEkeOdPkaX9SAngSypKmjEsTqWfO9RxlGgHYD+yYezb8Fgc3LXXgKf+NFa/JPk/TVh+i+ENSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524462; c=relaxed/simple;
-	bh=44Kmv6LCS4eyGNmAzc9xvVNYhV4tlgz71bLTFO5rSMY=;
+	s=arc-20240116; t=1720524465; c=relaxed/simple;
+	bh=1guzRbirP0YfTdD3mWl16A+UZmCBerCw7h9/Eh3xmgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aAHaWTgcQ2KlY0FUYh0vRMp1xJD+kW13Oub7TwVmNHwdW5OmkEdLqPmhxJ+2+ECZW2rrB2rwjsB5dsD9W1bSzQxtke42WT/cIhVSPfH3lYaRx0iLfe10z11mXNCvK6KGYg29GpXwpDDgN3XQ4XBfPGv1uZgQuqV1GQ/i7LtOP3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOdbTAKC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lzTMeHaAZ6InTlgSeZVQfYfYYYe90WYAwK0DvAqgg4XXi1m9IyYEu22It1ix8qTanB4ejZMdUb6NLEo+oOEwNMnvzcz4TQhePYiXQuk9042EyC1hzrfPgk1WTwyJqiiLzkfbIeBR7GRRSwxMI/DIsBW0vZWrhODRVc38QbgY/Mk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pH4n7ILx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOdbTAKC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B22A0C3277B;
-	Tue,  9 Jul 2024 11:27:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pH4n7ILx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC1D5C3277B;
+	Tue,  9 Jul 2024 11:27:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524462;
-	bh=44Kmv6LCS4eyGNmAzc9xvVNYhV4tlgz71bLTFO5rSMY=;
+	s=korg; t=1720524465;
+	bh=1guzRbirP0YfTdD3mWl16A+UZmCBerCw7h9/Eh3xmgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sOdbTAKCQA59CpvMppzudEqyBfVcGsrQPbmOulq/1Z6AiBAkC3ooY6sfPAew+S8pc
-	 fg6YwfjFO5BRcmj4wtq0YbFXmw3EWzKeQh1lv7w7Z1c7Yx9X8sKW9tfoht0A71elT0
-	 PhXBVujeYvCVI47frN5QCvDGRDNVoDzN4GfMVrBA=
+	b=pH4n7ILxzntx3n7sEdgvEBKYiAUe3x52BssD8QmTLPKDyYrBCOwIpZkS8+7cM7tDN
+	 TZbC5Pg/oHJUxdVWZd1MEcoBpm291v8nCoZJkLPC51NepxGGvv3jCATHdLhQ11/3p/
+	 4CQpmXcuow8LlOI27zD5D12iHZ+t6aj1k0nujt/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
+	Alex Turin <alex@vastdata.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
 	Christoph Hellwig <hch@lst.de>,
-	John Garry <john.g.garry@oracle.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 188/197] block: check for max_hw_sectors underflow
-Date: Tue,  9 Jul 2024 13:10:42 +0200
-Message-ID: <20240709110716.217458565@linuxfoundation.org>
+Subject: [PATCH 6.9 189/197] nvmet: fix a possible leak when destroy a ctrl during qp establishment
+Date: Tue,  9 Jul 2024 13:10:43 +0200
+Message-ID: <20240709110716.255187933@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -53,56 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hannes Reinecke <hare@kernel.org>
+From: Sagi Grimberg <sagi@grimberg.me>
 
-[ Upstream commit e993db2d6e5207f1ae061c2ac554ab1f714c741d ]
+[ Upstream commit c758b77d4a0a0ed3a1292b3fd7a2aeccd1a169a4 ]
 
-The logical block size need to be smaller than the max_hw_sector
-setting, otherwise we can't even transfer a single LBA.
+In nvmet_sq_destroy we capture sq->ctrl early and if it is non-NULL we
+know that a ctrl was allocated (in the admin connect request handler)
+and we need to release pending AERs, clear ctrl->sqs and sq->ctrl
+(for nvme-loop primarily), and drop the final reference on the ctrl.
 
-Signed-off-by: Hannes Reinecke <hare@kernel.org>
+However, a small window is possible where nvmet_sq_destroy starts (as
+a result of the client giving up and disconnecting) concurrently with
+the nvme admin connect cmd (which may be in an early stage). But *before*
+kill_and_confirm of sq->ref (i.e. the admin connect managed to get an sq
+live reference). In this case, sq->ctrl was allocated however after it was
+captured in a local variable in nvmet_sq_destroy.
+This prevented the final reference drop on the ctrl.
+
+Solve this by re-capturing the sq->ctrl after all inflight request has
+completed, where for sure sq->ctrl reference is final, and move forward
+based on that.
+
+This issue was observed in an environment with many hosts connecting
+multiple ctrls simoutanuosly, creating a delay in allocating a ctrl
+leading up to this race window.
+
+Reported-by: Alex Turin <alex@vastdata.com>
+Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-settings.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/nvme/target/core.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/block/blk-settings.c b/block/blk-settings.c
-index 15319b217bf3f..4bd7cbab4c241 100644
---- a/block/blk-settings.c
-+++ b/block/blk-settings.c
-@@ -104,6 +104,7 @@ static int blk_validate_zoned_limits(struct queue_limits *lim)
- static int blk_validate_limits(struct queue_limits *lim)
- {
- 	unsigned int max_hw_sectors;
-+	unsigned int logical_block_sectors;
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index 2fde22323622e..06f0c587f3437 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -818,6 +818,15 @@ void nvmet_sq_destroy(struct nvmet_sq *sq)
+ 	percpu_ref_exit(&sq->ref);
+ 	nvmet_auth_sq_free(sq);
  
- 	/*
- 	 * Unless otherwise specified, default to 512 byte logical blocks and a
-@@ -134,8 +135,11 @@ static int blk_validate_limits(struct queue_limits *lim)
- 		lim->max_hw_sectors = BLK_SAFE_MAX_SECTORS;
- 	if (WARN_ON_ONCE(lim->max_hw_sectors < PAGE_SECTORS))
- 		return -EINVAL;
-+	logical_block_sectors = lim->logical_block_size >> SECTOR_SHIFT;
-+	if (WARN_ON_ONCE(logical_block_sectors > lim->max_hw_sectors))
-+		return -EINVAL;
- 	lim->max_hw_sectors = round_down(lim->max_hw_sectors,
--			lim->logical_block_size >> SECTOR_SHIFT);
-+			logical_block_sectors);
- 
- 	/*
- 	 * The actual max_sectors value is a complex beast and also takes the
-@@ -153,7 +157,7 @@ static int blk_validate_limits(struct queue_limits *lim)
- 		lim->max_sectors = min(max_hw_sectors, BLK_DEF_MAX_SECTORS_CAP);
- 	}
- 	lim->max_sectors = round_down(lim->max_sectors,
--			lim->logical_block_size >> SECTOR_SHIFT);
-+			logical_block_sectors);
- 
- 	/*
- 	 * Random default for the maximum number of segments.  Driver should not
++	/*
++	 * we must reference the ctrl again after waiting for inflight IO
++	 * to complete. Because admin connect may have sneaked in after we
++	 * store sq->ctrl locally, but before we killed the percpu_ref. the
++	 * admin connect allocates and assigns sq->ctrl, which now needs a
++	 * final ref put, as this ctrl is going away.
++	 */
++	ctrl = sq->ctrl;
++
+ 	if (ctrl) {
+ 		/*
+ 		 * The teardown flow may take some time, and the host may not
 -- 
 2.43.0
 
