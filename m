@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8470D14EC4D;
-	Tue,  9 Jul 2024 11:16:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A7E4153812;
+	Tue,  9 Jul 2024 11:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720523810; cv=none; b=DhW3tU/dVFDNuLkVMNdsZyoddm53TN7eQWAa1aaNYcfK1+xpisnkq0eSxRyhS/xkNuLf34msUPXD3KHa+QQiPwbOZGJGEMMC9jcLl1XTanyDPWx8YWq04nV/KCzOw+dpL3dtmk0zGMTS1LWjS5zIfvt7cXeZBOV/63OUGOpEX6o=
+	t=1720523813; cv=none; b=RI2c0vpPkW83u2fSj2S5hLa4TrBtxodqg9GmOUbCVagfhumY2Z0OVhP2JWEmcGoZ120MMTLwgjbJbYFCEYI6CLO/opluTIvw7oR+Ydswn2lEdwWSY4BpiW++Kopczo1QIeC+YHHtGBYiiqVEB2rZ4JCUtnKbyxihl5c0wWbXv4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720523810; c=relaxed/simple;
-	bh=mCPOnKdeh5ks4qPP5wm/N8HRj2TOZafTo5eMXhxgJTE=;
+	s=arc-20240116; t=1720523813; c=relaxed/simple;
+	bh=iWb9zfHmY5qQH9s+m/AdsKnxivCUUpZo8m+/DM3j1M4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BIDWBbj3/MU7mBEPK4KSFpXEXvYnyf4snOMHPV8b0cpEUH+iq0V91/nb0/v5jDGsJNXvwq0uQurwDcpJBBfnHQOTrhDU9HJKMaWQmhQCgVIVKn7X96H3+EBBIeLI7nx6rIQwK0oEcHd6Q46GSjgnA5S5kSMd/2YwVYnkPlxvx7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TRph+Zmg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ihXiNc+T1EH5t0T/6ZgVzt46DTE+91OXL9uyfMRKYhCVzvNz4jNAwiKwc+QQDUzEyflcpoF5uHqliYYXPyL7R5fnRpwWTncBpovf6xqKy7jUiuP8Mx/NjyMogxStuyt5OJsGdHRIkVXrGPxSDUVddiwBciN6y9yY+k55kVA8xBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AAIrCq4f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TRph+Zmg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07758C3277B;
-	Tue,  9 Jul 2024 11:16:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AAIrCq4f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2CDCC3277B;
+	Tue,  9 Jul 2024 11:16:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720523810;
-	bh=mCPOnKdeh5ks4qPP5wm/N8HRj2TOZafTo5eMXhxgJTE=;
+	s=korg; t=1720523813;
+	bh=iWb9zfHmY5qQH9s+m/AdsKnxivCUUpZo8m+/DM3j1M4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TRph+ZmgSGSMUEVan30oSsPasWojqQ+nUJ8fgCvx6awIOrDke2TgEfUXeSrVBcBQr
-	 iGB3IC5vmYvVL8/gXWkOSXtIw7AMJGYsb9sCEGPBJ1SfIsi61YVIebmmjZjFui/bau
-	 dFlas478o5gk/HpaaUkISdTCcMMwdSVfJhQrbkLY=
+	b=AAIrCq4fJhV+wQBssy7Vp9g5I15Lmml0kPIPWllTWB5rQtfG0bN2NER4hbNTAHPZD
+	 0BAivAUDdBgUtigVnkOzsR+fon+GCkXmfXFcze2VicAALuL68OYAEjms4wGnYfv0Sj
+	 WFYOJeBwjmxbAlWKGZZfpeZLh+/wpU4PCcGfMFtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 086/139] gpiolib: of: add polarity quirk for TSC2005
-Date: Tue,  9 Jul 2024 13:09:46 +0200
-Message-ID: <20240709110701.500109950@linuxfoundation.org>
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.6 087/139] cpu: Fix broken cmdline "nosmp" and "maxcpus=0"
+Date: Tue,  9 Jul 2024 13:09:47 +0200
+Message-ID: <20240709110701.537530900@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110658.146853929@linuxfoundation.org>
 References: <20240709110658.146853929@linuxfoundation.org>
@@ -52,46 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit f8d76c2c313c56d5cb894a243dff4550f048278d ]
+commit 6ef8eb5125722c241fd60d7b0c872d5c2e5dd4ca upstream.
 
-DTS for Nokia N900 incorrectly specifies "active high" polarity for
-the reset line, while the chip documentation actually specifies it as
-"active low".  In the past the driver fudged gpiod API and inverted
-the logic internally, but it was changed in d0d89493bff8.
+After the rework of "Parallel CPU bringup", the cmdline "nosmp" and
+"maxcpus=0" parameters are not working anymore. These parameters set
+setup_max_cpus to zero and that's handed to bringup_nonboot_cpus().
 
-Fixes: d0d89493bff8 ("Input: tsc2004/5 - switch to using generic device properties")
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Acked-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/ZoWXwYtwgJIxi-hD@google.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The code there does a decrement before checking for zero, which brings it
+into the negative space and brings up all CPUs.
+
+Add a zero check at the beginning of the function to prevent this.
+
+[ tglx: Massaged change log ]
+
+Fixes: 18415f33e2ac4ab382 ("cpu/hotplug: Allow "parallel" bringup up to CPUHP_BP_KICK_AP_STATE")
+Fixes: 06c6796e0304234da6 ("cpu/hotplug: Fix off by one in cpuhp_bringup_mask()")
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240618081336.3996825-1-chenhuacai@loongson.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib-of.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ kernel/cpu.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpio/gpiolib-of.c b/drivers/gpio/gpiolib-of.c
-index 133d2a4c31a6d..cec9e8f29bbdf 100644
---- a/drivers/gpio/gpiolib-of.c
-+++ b/drivers/gpio/gpiolib-of.c
-@@ -202,6 +202,14 @@ static void of_gpio_try_fixup_polarity(const struct device_node *np,
- 		 * for the property.
- 		 */
- 		{ "lantiq,pci-xway",	"gpio-reset",	false },
-+#endif
-+#if IS_ENABLED(CONFIG_TOUCHSCREEN_TSC2005)
-+		/*
-+		 * DTS for Nokia N900 incorrectly specified "active high"
-+		 * polarity for the reset line, while the chip actually
-+		 * treats it as "active low".
-+		 */
-+		{ "ti,tsc2005",		"reset-gpios",	false },
- #endif
- 	};
- 	unsigned int i;
--- 
-2.43.0
-
+--- a/kernel/cpu.c
++++ b/kernel/cpu.c
+@@ -1907,6 +1907,9 @@ static inline bool cpuhp_bringup_cpus_pa
+ 
+ void __init bringup_nonboot_cpus(unsigned int setup_max_cpus)
+ {
++	if (!setup_max_cpus)
++		return;
++
+ 	/* Try parallel bringup optimization if enabled */
+ 	if (cpuhp_bringup_cpus_parallel(setup_max_cpus))
+ 		return;
 
 
