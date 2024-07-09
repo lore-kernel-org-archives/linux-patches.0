@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF79C155389;
-	Tue,  9 Jul 2024 11:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F15155389;
+	Tue,  9 Jul 2024 11:14:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720523661; cv=none; b=n8MeWR+AKNTipe9pu2f3Ht0L6/qECGyTKWyFG/AVkKS991lgqd5KQxyVAop96yqDvsAxXqxRdlsiOEYOxVnCH6FiApajTT8PgSktjCruWQ0WEvSlTUDLymEA9UQ+O4zf6j3555xGShSZMhqu2E3UuDJY4bPeD+kT3618UfxxD9I=
+	t=1720523664; cv=none; b=PE3wb3kVfscL5iAld03ojunjZwvS3fJj4WShcKjF1fSAJAUtUITUgY9ff3oii/pyYqV9Pv3Xq2AcCoJSCwS9R4awfUY6ZpctjHLe03K2+TvoJhYtnhMC/qpoc/37VkgatQ7grFl38U0aR5cthDpZ5be/wXEu/RNBLqspO8QjC/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720523661; c=relaxed/simple;
-	bh=wsy0oC3C4yj87ANf0f+B0WB+U6Yqk4O/iH3ES/XfHNg=;
+	s=arc-20240116; t=1720523664; c=relaxed/simple;
+	bh=pLrvoDP0D016b+ITP0kuDMmdE6f0ywLPhqBjZb/WO+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J/vuXYuq5Ye98m5XT8GWoddUSVOkTv2Wbkj4QMOHkMtKYAkJZuWBYLa3jd51vpddUjTKz4p+zeBC/3BJ6lGUdyEnBQKOB9PZ/abf+V6oga3Y59+dnrRzhf6f5NHbUpoMvPoZZ22dFOv5rDlUrmNinhvEitNG8noPVZDFOwHcyjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qGQUeNGq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R5TQyVm/mzU01mMueSmLWeXpAlYsF731Bsg5V76oUG5s1jbJ/Wj1h0AD0PxmrwUbF7gWty0VCoBkHz0MHcVFhyrW3L6YnrN5cJydoxC+dXr+PwHWIcFEG19zsgGjZSi5zGJdJsnopIVl+xVjRGw0XBp+rsR9+2DLFHHzeoTqQhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0LAFi0vI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qGQUeNGq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79324C3277B;
-	Tue,  9 Jul 2024 11:14:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0LAFi0vI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FBA7C3277B;
+	Tue,  9 Jul 2024 11:14:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720523660;
-	bh=wsy0oC3C4yj87ANf0f+B0WB+U6Yqk4O/iH3ES/XfHNg=;
+	s=korg; t=1720523663;
+	bh=pLrvoDP0D016b+ITP0kuDMmdE6f0ywLPhqBjZb/WO+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qGQUeNGqPl4aPsA0nhSSnT0sxp0e127YE3Z3lM2D9ezijh7tj5CHpLYLNjQK45a9d
-	 1xZ5cLhyX07GnjEctYx9bvGXZk+idrLKFOCyx4hUetD3Q4rwCBKkWELZn6jScDcd7e
-	 ucBA7u/u3FjaAzZMXl00IZRKvnbuSdlmMjXbvtpw=
+	b=0LAFi0vIzQkH9ZVRvZQZZNJoAwRPG00w1kP4TMQxw+e2U+fdW7LTqoEdtxnsNm6Kx
+	 c3EgtioGx6Id2eVzZAnrlG4K4yp7QldG/l8QYlwhOjlqV6CNwW4U0ImrBF/KWCxRMh
+	 +rV27wViEabbH0fIzThPEMVmP0jJBFd55jcCeDv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b2545b087a01a7319474@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
+	Iulia Tanasescu <iulia.tanasescu@nxp.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 067/139] Bluetooth: Ignore too large handle values in BIG
-Date: Tue,  9 Jul 2024 13:09:27 +0200
-Message-ID: <20240709110700.765547152@linuxfoundation.org>
+Subject: [PATCH 6.6 068/139] Bluetooth: ISO: Check socket flag instead of hcon
+Date: Tue,  9 Jul 2024 13:09:28 +0200
+Message-ID: <20240709110700.806079150@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110658.146853929@linuxfoundation.org>
 References: <20240709110658.146853929@linuxfoundation.org>
@@ -52,39 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Iulia Tanasescu <iulia.tanasescu@nxp.com>
 
-[ Upstream commit 015d79c96d62cd8a4a359fcf5be40d58088c936b ]
+[ Upstream commit 596b6f081336e77764ca35cfeab66d0fcdbe544e ]
 
-hci_le_big_sync_established_evt is necessary to filter out cases where the
-handle value is belonging to ida id range, otherwise ida will be erroneously
-released in hci_conn_cleanup.
+This fixes the following Smatch static checker warning:
 
-Fixes: 181a42edddf5 ("Bluetooth: Make handle of hci_conn be unique")
-Reported-by: syzbot+b2545b087a01a7319474@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b2545b087a01a7319474
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+net/bluetooth/iso.c:1364 iso_sock_recvmsg()
+error: we previously assumed 'pi->conn->hcon' could be null (line 1359)
+
+net/bluetooth/iso.c
+1347 static int iso_sock_recvmsg(struct socket *sock, struct msghdr *msg,
+1348                             size_t len, int flags)
+1349 {
+1350         struct sock *sk = sock->sk;
+1351         struct iso_pinfo *pi = iso_pi(sk);
+1352
+1353         BT_DBG("sk %p", sk);
+1354
+1355         if (test_and_clear_bit(BT_SK_DEFER_SETUP,
+                                      &bt_sk(sk)->flags)) {
+1356                 lock_sock(sk);
+1357                 switch (sk->sk_state) {
+1358                 case BT_CONNECT2:
+1359                         if (pi->conn->hcon &&
+                                     ^^^^^^^^^^^^^^ If ->hcon is NULL
+
+1360                             test_bit(HCI_CONN_PA_SYNC,
+                                         &pi->conn->hcon->flags)) {
+1361                                 iso_conn_big_sync(sk);
+1362                                 sk->sk_state = BT_LISTEN;
+1363                         } else {
+--> 1364                         iso_conn_defer_accept(pi->conn->hcon);
+                                                       ^^^^^^^^^^^^^^
+                                                       then we're toast
+
+1365                                 sk->sk_state = BT_CONFIG;
+1366                         }
+1367                         release_sock(sk);
+1368                         return 0;
+1369                 case BT_CONNECTED:
+1370                         if (test_bit(BT_SK_PA_SYNC,
+
+Fixes: fbdc4bc47268 ("Bluetooth: ISO: Use defer setup to separate PA sync and BIG sync")
+Signed-off-by: Iulia Tanasescu <iulia.tanasescu@nxp.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_event.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/bluetooth/iso.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index ffb7d43597a2d..727f040b65297 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -6905,6 +6905,10 @@ static void hci_le_big_sync_established_evt(struct hci_dev *hdev, void *data,
- 
- 		bis = hci_conn_hash_lookup_handle(hdev, handle);
- 		if (!bis) {
-+			if (handle > HCI_CONN_HANDLE_MAX) {
-+				bt_dev_dbg(hdev, "ignore too large handle %u", handle);
-+				continue;
-+			}
- 			bis = hci_conn_add(hdev, ISO_LINK, BDADDR_ANY,
- 					   HCI_ROLE_SLAVE, handle);
- 			if (IS_ERR(bis))
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 05b9edb480f09..3ccba592f7349 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -1233,8 +1233,7 @@ static int iso_sock_recvmsg(struct socket *sock, struct msghdr *msg,
+ 		lock_sock(sk);
+ 		switch (sk->sk_state) {
+ 		case BT_CONNECT2:
+-			if (pi->conn->hcon &&
+-			    test_bit(HCI_CONN_PA_SYNC, &pi->conn->hcon->flags)) {
++			if (test_bit(BT_SK_PA_SYNC, &pi->flags)) {
+ 				iso_conn_big_sync(sk);
+ 				sk->sk_state = BT_LISTEN;
+ 			} else {
 -- 
 2.43.0
 
