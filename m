@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E2B14E2F4;
-	Tue,  9 Jul 2024 11:26:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2484A27713;
+	Tue,  9 Jul 2024 11:26:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524362; cv=none; b=Hk5ItxmR6h0sBjxNF7ijYIoNZ5G0OqgvwJoG7gF5RSQSNsPVssQ+h1Ca6U8XOPOam96B+OcoVHKdhCgY0JNd+/SABQ8NygZcgyF2i9rePZojlO8IOi13YORNjFEQJKcFNaAtYX6glL/LJrQ7qQbez6MY7x7dDBlmhTpliVFf7lM=
+	t=1720524365; cv=none; b=ZFIcWTE1ouHM9fPNT7/bE0TIPoQzK0VEHvXId1T3Yeqft/sTRr6uJTv7f02wcKAAMDm+QDW8wOO3GCcSEhbfJ9clGL7nDbdtHQKu5Tn3p/bDH203aOHOf1J+wQULWN8KNq39jHjLQ8xdt87KZr2OluVZqFQ74pDu/P5WiZiYixo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524362; c=relaxed/simple;
-	bh=qt6f49ttRxXXRz2VAWKHQMzA9ovz1NJs6gZUOjvZuvc=;
+	s=arc-20240116; t=1720524365; c=relaxed/simple;
+	bh=8JNg55OD6DQHQJx5lk0hdpvKqZbR1+Mz2lQBPHybNO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RJX4huRnP+1n4MgSUOSjtqU5fWSXAwCFRcsXfVJlKkAMPom7Bm8qjcSUQpdrY1EE7aJcbLmzKnFAMeAyiNlwZ2i+uZ3y+yA6P0/v4XlCPVm7aRKkQm+ZDTe1BAAksfODq7+bdgDjIUidpwslAZdNVPCrQ5n5iThpH5oS8tESqIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pP/J+qgh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NAc3U8MVR04Sg2kVmiUJeDwBVeg48uYN7JfYr8uiTIa6lpdH7hfePtsKn2KjzPBLeVJEvEcnDnlfF2xI6zl+yZxoIasF+RQv+UJR5HJTRIAMid0+BCBI8V1RVmdm/F7c+CbdQHMl9j3kzEkjPfGGxDatvrYiQCsZ7bj3ms5+JDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NJ2NFIHH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pP/J+qgh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A246FC3277B;
-	Tue,  9 Jul 2024 11:26:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NJ2NFIHH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EC0DC3277B;
+	Tue,  9 Jul 2024 11:26:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524362;
-	bh=qt6f49ttRxXXRz2VAWKHQMzA9ovz1NJs6gZUOjvZuvc=;
+	s=korg; t=1720524365;
+	bh=8JNg55OD6DQHQJx5lk0hdpvKqZbR1+Mz2lQBPHybNO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pP/J+qghi3A3VvPegAG5p/xXauSHstdz9yF4g8gp+j/w2FIMiS7aW4mbFJ0tlbRII
-	 vrhjAVmO7cys63960N8w7C658ihxibDJ/rUNKjfwenM4lLKF2TqN9zEIMocf1M4iZ9
-	 awEEBE+nowEEZ5rkxVXIEon/FDBxIU+oil4d2elE=
+	b=NJ2NFIHH8d/duIgJOqQoeVuhCJaL/NOrmSYt2N2vEAQtMflh9A9cQuROXtFgrmam9
+	 y/l8b9gtKSjF0laTQRy19+lq7uFE0JGqTEUhsR+wCiHwLWwetawAhmrRm0UFnNOlhd
+	 UqOVHa6L+sVxGDwFnOvIj7se/tdgPX1NsOp7CJiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sourabh Jain <sourabhjain@linux.ibm.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Gautam Menghani <gautam@linux.ibm.com>,
+	Jinglin Wen <jinglin.wen@shingroup.cn>,
 	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.9 156/197] powerpc/pseries: Fix scv instruction crash with kexec
-Date: Tue,  9 Jul 2024 13:10:10 +0200
-Message-ID: <20240709110714.989490022@linuxfoundation.org>
+Subject: [PATCH 6.9 157/197] powerpc/64s: Fix unnecessary copy to 0 when kernel is booted at address 0
+Date: Tue,  9 Jul 2024 13:10:11 +0200
+Message-ID: <20240709110715.029539964@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -52,100 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Jinglin Wen <jinglin.wen@shingroup.cn>
 
-commit 21a741eb75f80397e5f7d3739e24d7d75e619011 upstream.
+commit 13fc6c175924eaa953cf597ce28ffa4edc4554a6 upstream.
 
-kexec on pseries disables AIL (reloc_on_exc), required for scv
-instruction support, before other CPUs have been shut down. This means
-they can execute scv instructions after AIL is disabled, which causes an
-interrupt at an unexpected entry location that crashes the kernel.
+According to the code logic, when the kernel is loaded at address 0, no
+copying operation should be performed, but it is currently being done.
 
-Change the kexec sequence to disable AIL after other CPUs have been
-brought down.
+This patch fixes the issue where the kernel code was incorrectly
+duplicated to address 0 when booting from address 0.
 
-As a refresher, the real-mode scv interrupt vector is 0x17000, and the
-fixed-location head code probably couldn't easily deal with implementing
-such high addresses so it was just decided not to support that interrupt
-at all.
-
-Fixes: 7fa95f9adaee ("powerpc/64s: system call support for scv/rfscv instructions")
-Cc: stable@vger.kernel.org # v5.9+
-Reported-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Closes: https://lore.kernel.org/3b4b2943-49ad-4619-b195-bc416f1d1409@linux.ibm.com
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Tested-by: Gautam Menghani <gautam@linux.ibm.com>
-Tested-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Link: https://msgid.link/20240625134047.298759-1-npiggin@gmail.com
+Fixes: b270bebd34e3 ("powerpc/64s: Run at the kernel virtual address earlier in boot")
+Cc: stable@vger.kernel.org # v6.4+
+Signed-off-by: Jinglin Wen <jinglin.wen@shingroup.cn>
+Suggested-by: Michael Ellerman <mpe@ellerman.id.au>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240620024150.14857-1-jinglin.wen@shingroup.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kexec/core_64.c             |   11 +++++++++++
- arch/powerpc/platforms/pseries/kexec.c   |    8 --------
- arch/powerpc/platforms/pseries/pseries.h |    1 -
- arch/powerpc/platforms/pseries/setup.c   |    1 -
- 4 files changed, 11 insertions(+), 10 deletions(-)
+ arch/powerpc/kernel/head_64.S |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/arch/powerpc/kexec/core_64.c
-+++ b/arch/powerpc/kexec/core_64.c
-@@ -26,6 +26,7 @@
- #include <asm/paca.h>
- #include <asm/mmu.h>
- #include <asm/sections.h>	/* _end */
-+#include <asm/setup.h>
- #include <asm/smp.h>
- #include <asm/hw_breakpoint.h>
- #include <asm/svm.h>
-@@ -315,6 +316,16 @@ void default_machine_kexec(struct kimage
- 	if (!kdump_in_progress())
- 		kexec_prepare_cpus();
+--- a/arch/powerpc/kernel/head_64.S
++++ b/arch/powerpc/kernel/head_64.S
+@@ -647,8 +647,9 @@ __after_prom_start:
+  * Note: This process overwrites the OF exception vectors.
+  */
+ 	LOAD_REG_IMMEDIATE(r3, PAGE_OFFSET)
+-	mr.	r4,r26			/* In some cases the loader may  */
+-	beq	9f			/* have already put us at zero */
++	mr	r4,r26			/* Load the virtual source address into r4 */
++	cmpld	r3,r4			/* Check if source == dest */
++	beq	9f			/* If so skip the copy  */
+ 	li	r6,0x100		/* Start offset, the first 0x100 */
+ 					/* bytes were copied earlier.	 */
  
-+#ifdef CONFIG_PPC_PSERIES
-+	/*
-+	 * This must be done after other CPUs have shut down, otherwise they
-+	 * could execute the 'scv' instruction, which is not supported with
-+	 * reloc disabled (see configure_exceptions()).
-+	 */
-+	if (firmware_has_feature(FW_FEATURE_SET_MODE))
-+		pseries_disable_reloc_on_exc();
-+#endif
-+
- 	printk("kexec: Starting switchover sequence.\n");
- 
- 	/* switch to a staticly allocated stack.  Based on irq stack code.
---- a/arch/powerpc/platforms/pseries/kexec.c
-+++ b/arch/powerpc/platforms/pseries/kexec.c
-@@ -61,11 +61,3 @@ void pseries_kexec_cpu_down(int crash_sh
- 	} else
- 		xics_kexec_teardown_cpu(secondary);
- }
--
--void pseries_machine_kexec(struct kimage *image)
--{
--	if (firmware_has_feature(FW_FEATURE_SET_MODE))
--		pseries_disable_reloc_on_exc();
--
--	default_machine_kexec(image);
--}
---- a/arch/powerpc/platforms/pseries/pseries.h
-+++ b/arch/powerpc/platforms/pseries/pseries.h
-@@ -38,7 +38,6 @@ static inline void smp_init_pseries(void
- #endif
- 
- extern void pseries_kexec_cpu_down(int crash_shutdown, int secondary);
--void pseries_machine_kexec(struct kimage *image);
- 
- extern void pSeries_final_fixup(void);
- 
---- a/arch/powerpc/platforms/pseries/setup.c
-+++ b/arch/powerpc/platforms/pseries/setup.c
-@@ -1159,7 +1159,6 @@ define_machine(pseries) {
- 	.machine_check_exception = pSeries_machine_check_exception,
- 	.machine_check_log_err	= pSeries_machine_check_log_err,
- #ifdef CONFIG_KEXEC_CORE
--	.machine_kexec          = pseries_machine_kexec,
- 	.kexec_cpu_down         = pseries_kexec_cpu_down,
- #endif
- #ifdef CONFIG_MEMORY_HOTPLUG
 
 
