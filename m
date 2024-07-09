@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383AD155389;
-	Tue,  9 Jul 2024 11:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE81815747F;
+	Tue,  9 Jul 2024 11:12:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720523532; cv=none; b=niPPDh9mtA97rRIlkkxw+E367Kv62ulHdPmSoFSWVoB6HHZpjcUy6dAFYj2tDCRBwB/XMGkS+EW8tkHN9Vp3iitxnyf1279XoPKslYc88gdLDwLaCrbHIllyAaTAZIetbvrugMMgJSig40ZS8DC/yW0qY2nb/JPE1dHCvd8rfE0=
+	t=1720523534; cv=none; b=J1qnqSW2n6LNEZnSdzKiEBoUEa/gLZNuYPhN5ch41QbLZilKnbW7hdeA+2xnU2uhRXwplMG2CeIFHIwBzB0y1WPpSFi4RcmqsVKvtR42tRRDJ4eO34mGaaktdH5TMGapJlb7PQdLEkRWHncBeScSj4y/QKNzJPqyMzuar7ZN2d4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720523532; c=relaxed/simple;
-	bh=YTSQAcZNL0vlRgvFO1VFNmfN6RG7q512WPncganV/B4=;
+	s=arc-20240116; t=1720523534; c=relaxed/simple;
+	bh=KzO0tahxYmQAsVsoCcLnJyAUJ+kSkyXvRR1IV4fhE7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=V92rgUUle8YZJqbV5LYWe6lzMuuLHRjZWq+do3PwWEBGsXE7eak7UKjlmL/U9XbBSdMyY3XSc+X0MFWPPml8/gPFmMsYk34ZNIVbAxhGOSPOVXSf7EEsN1SoCvHQmJdbuf0g7c5It+thhNzsQbUdo1tDBlAuOmAWc5IR0WMYHho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uCY6O03T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JjttM7kIXZKAN7eHd6051qg95l31uXAQZUMK/K/9yR2nu1Miq3gyYcE7Iyx05tMoJcRZAzvLiL42b+9CBziVeiMmUFbRuq4716hKNYTF8JuvX8MCFFOh+MPKmiMxCMNPNOXsG3/vnzf/zgXJl9snJx9mefqT09zRnFWZULTVTlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h6tTVx7m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uCY6O03T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A4CBC3277B;
-	Tue,  9 Jul 2024 11:12:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h6tTVx7m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44258C3277B;
+	Tue,  9 Jul 2024 11:12:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720523531;
-	bh=YTSQAcZNL0vlRgvFO1VFNmfN6RG7q512WPncganV/B4=;
+	s=korg; t=1720523534;
+	bh=KzO0tahxYmQAsVsoCcLnJyAUJ+kSkyXvRR1IV4fhE7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uCY6O03T4fuFecMlCii7R20ZTAmAtcns36klJNQXE6hiufcosJplTI7XTODa/lXjZ
-	 ZBfEJeLL3VwP/zk/Z4RYzUbED42e76GW/Ja34f9Wxjma3Yf1AtXxKcD0xEOoV5SLMd
-	 7XHTX0PAQ7NBWqY0uhBEPHxT/ugaOfeUHvQbTyQw=
+	b=h6tTVx7mPC9Qne0wlpkrdwpPYAGOW+cAiHW3dnmeO1d25fMwDUTWjCFqvbMZjJBfk
+	 LVZsLsg/DrQ0vNO8EpduDAPhbQxn8TfH6MfQEbXQiJc/snyzbG2rsJpDQ+hRKDiSjj
+	 XQGARuMX9A2IA03WwcWAmXniA2rfKRAYLLes9OUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Huang <Tim.Huang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Jesse Zhang <jesse.zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 024/139] drm/amdgpu: fix uninitialized scalar variable warning
-Date: Tue,  9 Jul 2024 13:08:44 +0200
-Message-ID: <20240709110659.099263724@linuxfoundation.org>
+Subject: [PATCH 6.6 025/139] drm/amdgpu: fix the warning about the expression (int)size - len
+Date: Tue,  9 Jul 2024 13:08:45 +0200
+Message-ID: <20240709110659.137515039@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110658.146853929@linuxfoundation.org>
 References: <20240709110658.146853929@linuxfoundation.org>
@@ -46,41 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tim Huang <Tim.Huang@amd.com>
+From: Jesse Zhang <jesse.zhang@amd.com>
 
-[ Upstream commit 9a5f15d2a29d06ce5bd50919da7221cda92afb69 ]
+[ Upstream commit ea686fef5489ef7a2450a9fdbcc732b837fb46a8 ]
 
-Clear warning that uses uninitialized value fw_size.
+Converting size from size_t to int may overflow.
+v2: keep reverse xmas tree order (Christian)
 
-Signed-off-by: Tim Huang <Tim.Huang@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Jesse Zhang <jesse.zhang@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
-index 053983e9f4aef..0ca51df46cc0d 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
-@@ -1184,7 +1184,8 @@ void amdgpu_gfx_cp_init_microcode(struct amdgpu_device *adev,
- 		fw_size = le32_to_cpu(cp_hdr_v2_0->data_size_bytes);
- 		break;
- 	default:
--		break;
-+		dev_err(adev->dev, "Invalid ucode id %u\n", ucode_id);
-+		return;
- 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+index 418ff7cd662da..1c2c9ff9d39df 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+@@ -2052,12 +2052,13 @@ static ssize_t amdgpu_reset_dump_register_list_write(struct file *f,
+ 	struct amdgpu_device *adev = (struct amdgpu_device *)file_inode(f)->i_private;
+ 	char reg_offset[11];
+ 	uint32_t *new = NULL, *tmp = NULL;
+-	int ret, i = 0, len = 0;
++	unsigned int len = 0;
++	int ret, i = 0;
  
- 	if (adev->firmware.load_type == AMDGPU_FW_LOAD_PSP) {
+ 	do {
+ 		memset(reg_offset, 0, 11);
+ 		if (copy_from_user(reg_offset, buf + len,
+-					min(10, ((int)size-len)))) {
++					min(10, (size-len)))) {
+ 			ret = -EFAULT;
+ 			goto error_free;
+ 		}
 -- 
 2.43.0
 
