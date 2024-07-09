@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF04158202;
-	Tue,  9 Jul 2024 11:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C2F1586D0;
+	Tue,  9 Jul 2024 11:12:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720523523; cv=none; b=axbnG7pRsxv9UrCjdLGz/8DgZiLa/OYLZvNrQsQbc3oL7Zl9QVg41ty8s44GdlU8OfkTnM1tN9L4vYsOzWPqea7So+vG7CsAc46VzTMrcISmVtzgDMQPxzHG+gAFTz9AJYieFGBbg9GrwaZzwVwyzCoHddSS52qHdqUvvwsaHjY=
+	t=1720523526; cv=none; b=nhT/io0gwA6HhQUd5d8jP9+S8wCE6zp8VNPgFu54eVynFjr+R8iRAREYyZ151Lg8RkdPsn2lUDF+BiOGgv7mYGE4jYBI6rz4Pk5k7z9RXV91U1E62uIxUkIDa0ZN55JSZce3AR9X89IJJfge/KVCBcvv0rIxREhBN1w4uZNGDX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720523523; c=relaxed/simple;
-	bh=6yiptGZng3J0opL28yFxxmxTuBYwbfKDxLbaarUlBMU=;
+	s=arc-20240116; t=1720523526; c=relaxed/simple;
+	bh=CDuboVZXoYGYxlzQIcIN/w7qtoNKDkmxT/qi/2Ot5fw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lm6geQI533LHKHNuWoigKg124QWADDYiy5vB7slS1TZHkEA0wlmLedK121KsseS+7zrPu4t5MItH8/PJFU5oA4pnYjKBKO95C5+a8J/KY0mRdGf6VcvMz6Cml6QQ5fZPWcEnQe9GWV2RdWP+kqLvt+xya5lXp7iwnPDpRCnncnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kpS6yh5s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MCjlfOsgbKjN7f6hVGGOAk6ir7oIagGCXSMnCEIEzBONREnfu5tavofYLn7Efd1HZwP0XaNhaqh5GMH0hi6AvTfvfBw/tsoNdW7lTaJ/xzr7hZ7M9EUGSMeDya0dxO6h5H3bFd/xscNfV/lQ5mv59x48Vyn3A8+PDpeyL0K1PVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YrR4ZoCZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kpS6yh5s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C582C3277B;
-	Tue,  9 Jul 2024 11:12:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YrR4ZoCZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 791DBC32786;
+	Tue,  9 Jul 2024 11:12:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720523522;
-	bh=6yiptGZng3J0opL28yFxxmxTuBYwbfKDxLbaarUlBMU=;
+	s=korg; t=1720523525;
+	bh=CDuboVZXoYGYxlzQIcIN/w7qtoNKDkmxT/qi/2Ot5fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kpS6yh5sUMleEtaYQANdV6t5WLl4dyPvU9AkBTWdGXhA7w1QxmN8emYKzelhwOZAQ
-	 aac49Zad4GMn1NaMCyC9PuS555/M9617jmDDGaf5p/5HAOWA+SAaCRIB5HyOihhMCC
-	 bqr96Cgh6hqOs5qHTAfhuxai6lPgI/XpwgYgd7cY=
+	b=YrR4ZoCZ4GQw10ihM3bViT+Sf/B6AnKV8jXbicQZ62c5jzYenX6Qyp2z9FIuhaqP7
+	 QDcFdiNEiZQJXczHBTTyZTgOvhgUK58JkqOYNkyscXjFXcxfJdURFtptd6h5bCg9ha
+	 V/C/ChxY4gi8M2pHmJTLEE45oGON/Z4NnfGNGqik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 013/139] selftests/bpf: dummy_st_ops should reject 0 for non-nullable params
-Date: Tue,  9 Jul 2024 13:08:33 +0200
-Message-ID: <20240709110658.669580608@linuxfoundation.org>
+Subject: [PATCH 6.6 022/139] drm/amd/display: Skip finding free audio for unknown engine_id
+Date: Tue,  9 Jul 2024 13:08:42 +0200
+Message-ID: <20240709110659.021597064@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110658.146853929@linuxfoundation.org>
 References: <20240709110658.146853929@linuxfoundation.org>
@@ -51,66 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 6a2d30d3c5bf9f088dcfd5f3746b04d84f2fab83 ]
+[ Upstream commit 1357b2165d9ad94faa4c4a20d5e2ce29c2ff29c3 ]
 
-Check if BPF_PROG_TEST_RUN for bpf_dummy_struct_ops programs
-rejects execution if NULL is passed for non-nullable parameter.
+[WHY]
+ENGINE_ID_UNKNOWN = -1 and can not be used as an array index. Plus, it
+also means it is uninitialized and does not need free audio.
 
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20240424012821.595216-6-eddyz87@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+[HOW]
+Skip and return NULL.
+
+This fixes 2 OVERRUN issues reported by Coverity.
+
+Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Acked-by: Wayne Lin <wayne.lin@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/bpf/prog_tests/dummy_st_ops.c   | 27 +++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/gpu/drm/amd/display/dc/core/dc_resource.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/dummy_st_ops.c b/tools/testing/selftests/bpf/prog_tests/dummy_st_ops.c
-index dd926c00f4146..d3d94596ab79c 100644
---- a/tools/testing/selftests/bpf/prog_tests/dummy_st_ops.c
-+++ b/tools/testing/selftests/bpf/prog_tests/dummy_st_ops.c
-@@ -147,6 +147,31 @@ static void test_dummy_sleepable(void)
- 	dummy_st_ops_success__destroy(skel);
- }
- 
-+/* dummy_st_ops.test_sleepable() parameter is not marked as nullable,
-+ * thus bpf_prog_test_run_opts() below should be rejected as it tries
-+ * to pass NULL for this parameter.
-+ */
-+static void test_dummy_sleepable_reject_null(void)
-+{
-+	__u64 args[1] = {0};
-+	LIBBPF_OPTS(bpf_test_run_opts, attr,
-+		.ctx_in = args,
-+		.ctx_size_in = sizeof(args),
-+	);
-+	struct dummy_st_ops_success *skel;
-+	int fd, err;
-+
-+	skel = dummy_st_ops_success__open_and_load();
-+	if (!ASSERT_OK_PTR(skel, "dummy_st_ops_load"))
-+		return;
-+
-+	fd = bpf_program__fd(skel->progs.test_sleepable);
-+	err = bpf_prog_test_run_opts(fd, &attr);
-+	ASSERT_EQ(err, -EINVAL, "test_run");
-+
-+	dummy_st_ops_success__destroy(skel);
-+}
-+
- void test_dummy_st_ops(void)
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
+index 8873acfe309c8..84923c5400d32 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
+@@ -2385,6 +2385,9 @@ static struct audio *find_first_free_audio(
  {
- 	if (test__start_subtest("dummy_st_ops_attach"))
-@@ -159,6 +184,8 @@ void test_dummy_st_ops(void)
- 		test_dummy_multiple_args();
- 	if (test__start_subtest("dummy_sleepable"))
- 		test_dummy_sleepable();
-+	if (test__start_subtest("dummy_sleepable_reject_null"))
-+		test_dummy_sleepable_reject_null();
+ 	int i, available_audio_count;
  
- 	RUN_TESTS(dummy_st_ops_fail);
- }
++	if (id == ENGINE_ID_UNKNOWN)
++		return NULL;
++
+ 	available_audio_count = pool->audio_count;
+ 
+ 	for (i = 0; i < available_audio_count; i++) {
 -- 
 2.43.0
 
