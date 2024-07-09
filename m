@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C40158DD0;
-	Tue,  9 Jul 2024 11:20:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB746158201;
+	Tue,  9 Jul 2024 11:20:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524047; cv=none; b=V/BiVg6Meb6qa9rjO4hOfZh+txZDptb+oqHVyGW6+kaGePf3lBF8csn3JflMeswqg9sH7UDzd8++BNJYvPilBiIiF+Og2EFNVV54QHd4z5+h0x6RzeaRmO92Dok2/qUDYJJy0ArTrJQ3Q6pG0WxRmhMIN0dO9suzJOKVsYiQ2YI=
+	t=1720524049; cv=none; b=nHHqBH4Y+89SGT6kL7zt7YyEb6DM6+I2CAfU2LG8gpwJAC9y47WR8Ede7cEgr1s3HnSN+knKaVFTvZ2Kd4wDebwJR4PcXCvy3ysDw5Db05nYpaqCf8YNH4X5nS8DJ9LAJJanRQOdR9xw1v19Boqft7+HVpIWXw99Bbvf/Y95hC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524047; c=relaxed/simple;
-	bh=BHMbCkerHxJ4WM0VUyzjRIzK+x4yf/obbcStvLf4pS0=;
+	s=arc-20240116; t=1720524049; c=relaxed/simple;
+	bh=54w5iC/QLWtXsJrbXC8Ggw+jH6dn43s9ne5OFqODNuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jnfHLznXMV+R7NSBTfqMSyqZvBaJqP0Yg2+YSsueL/DWkOG6s8BG1W/JBirMvVRPVYutp2Z9a/qrLKDggEMdlqXs7sIsE57VufPAtDVoxl/69mvsJyLUQjJTfZthMb1iu3idJNSR3mC5VISnY9g8+obt3c3NKguwyHt8tWULuIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tkxv7AMW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sJFnPZee3wQjhqz/ZtmUeWmm1WIuMuI+TKtAr7LfSuimzmfb6Yp7wsKflbVJZC+W1cpVtchpGLRX9roihHFhYbY529Kca16Lt+43EYvg3rdPwiQxkhrKjqAFyghRV6SNXGHXnRC75yOcstns/u3iaUFJLWjPO/Qf51XpAIn28Gs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bcTg+7cG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tkxv7AMW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46979C32786;
-	Tue,  9 Jul 2024 11:20:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bcTg+7cG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31BF9C3277B;
+	Tue,  9 Jul 2024 11:20:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524046;
-	bh=BHMbCkerHxJ4WM0VUyzjRIzK+x4yf/obbcStvLf4pS0=;
+	s=korg; t=1720524049;
+	bh=54w5iC/QLWtXsJrbXC8Ggw+jH6dn43s9ne5OFqODNuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tkxv7AMWN5r/5S6+KjurXN7eNt36yOhjh3el5cvT/Kb6J6vbfTa+bYJR7wLKNTO3q
-	 2UkQ29R24Yxd5aEkaLnOmEP5lMtfX6jp7JTXTOo7Zj0FweVPhFsouGTdAZDzf8gYbS
-	 6sKK1V/K/t9q+1DVfsRnmBdgXc299as9nDWCKLNM=
+	b=bcTg+7cGUTYM+0r1+poq69uB0OiClTmoL0kx1771k++69rcVYim/GjKJoKmBWe87b
+	 537H2da8z2P2RdPdhzFMoV5BNx/EafrDLWkUDRet2Fv4NF8Ylc1MRv5iQEzUwo8XNs
+	 2MBWenxT9HH2uBJQuEJMEHJnFf/j+kNXWTTVSZ20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Mugnier <benjamin.mugnier@foss.st.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Ricardo Ribalda <ribalda@chromium.org>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 053/197] media: i2c: st-mipid02: Use the correct div function
-Date: Tue,  9 Jul 2024 13:08:27 +0200
-Message-ID: <20240709110711.015524638@linuxfoundation.org>
+Subject: [PATCH 6.9 054/197] media: tc358746: Use the correct div_ function
+Date: Tue,  9 Jul 2024 13:08:28 +0200
+Message-ID: <20240709110711.054524867@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -55,36 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 22dccf029e4a67ad5aa62537c47ece9f24c8f970 ]
+[ Upstream commit d77731382f57b9c18664a13c7e197285060ebf93 ]
 
-link_freq does not fit in 32 bits.
+fin does not fit in 32 bits in some arches.
 
 Found by cocci:
-drivers/media/i2c/st-mipid02.c:329:1-7: WARNING: do_div() does a 64-by-32 division, please consider using div64_s64 instead.
+drivers/media/i2c/tc358746.c:847:2-8: WARNING: do_div() does a 64-by-32 division, please consider using div64_ul instead.
 
-Link: https://lore.kernel.org/linux-media/20240429-fix-cocci-v3-21-3c4865f5a4b0@chromium.org
-Reviewed-by: Benjamin Mugnier <benjamin.mugnier@foss.st.com>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Link: https://lore.kernel.org/linux-media/20240429-fix-cocci-v3-22-3c4865f5a4b0@chromium.org
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/st-mipid02.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/i2c/tc358746.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/media/i2c/st-mipid02.c b/drivers/media/i2c/st-mipid02.c
-index f250640729ca4..b947a55281f0e 100644
---- a/drivers/media/i2c/st-mipid02.c
-+++ b/drivers/media/i2c/st-mipid02.c
-@@ -326,7 +326,7 @@ static int mipid02_configure_from_rx_speed(struct mipid02_dev *bridge,
- 	}
+diff --git a/drivers/media/i2c/tc358746.c b/drivers/media/i2c/tc358746.c
+index d676adc4401bb..edf79107adc51 100644
+--- a/drivers/media/i2c/tc358746.c
++++ b/drivers/media/i2c/tc358746.c
+@@ -844,8 +844,7 @@ static unsigned long tc358746_find_pll_settings(struct tc358746 *tc358746,
+ 			continue;
  
- 	dev_dbg(&client->dev, "detect link_freq = %lld Hz", link_freq);
--	do_div(ui_4, link_freq);
-+	ui_4 = div64_u64(ui_4, link_freq);
- 	bridge->r.clk_lane_reg1 |= ui_4 << 2;
+ 		tmp = fout * postdiv;
+-		do_div(tmp, fin);
+-		mul = tmp;
++		mul = div64_ul(tmp, fin);
+ 		if (mul > 511)
+ 			continue;
  
- 	return 0;
 -- 
 2.43.0
 
