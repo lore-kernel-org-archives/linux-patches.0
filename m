@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45A0519DF8C;
-	Tue,  9 Jul 2024 16:07:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E37A19DF90;
+	Tue,  9 Jul 2024 16:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720541220; cv=none; b=CL1pN3JbD8c72COI1dqawd+teq4hg9BNYutyDOrgX0dJx86jkYL/rY7fPxndfTlXKlK72B/ejUqWelMqIW1KsfkYoN6MUo4elBmTc+nTabmCgrmIy0Up4/0hgAO8vNBT6wxs7tMgAccfzK9mvS2IkGyam+r9lBkaJ4PMn/Yu91s=
+	t=1720541224; cv=none; b=Jqv+54y72RG6Kg5kaSnfzm5QQcIzNiSO1D0ZR7q9lBbDkBG1fYU2/OeJhCyqOi0tnP2m+P1vSVAai7pjZ10vGsAXphCmWDUN0JpR3FqhXoS+By9jrsItEzW9X/Rk3dk4NrJrwg9LnvzKvfOFJ+IvdUch0sn3sEJMBnX5KSbNnUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720541220; c=relaxed/simple;
-	bh=HQHUmdnOkscprt/iBjeV6ZSvrG1OA8cuTru0fUXpeso=;
+	s=arc-20240116; t=1720541224; c=relaxed/simple;
+	bh=iiJUOVDVh31Jzvb1F9EYN95d7LmQfKBU9rUWA5eyDZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YQmw3SCPp6uhgfHKVpcTbkmeohX6chQcv0wEuzlb7vQ3VR74okHTiu4Dmnn2B90jU/+B0YU8Daz6ISPil0rEsO72zAp+s6UOtP5OBu6jhhJkK7mwgYmVXRu3w/XevI1W10UOM+Gi1ceAKuB5mofCbwG4Lsg6JrQp0XE0bXvfHIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DhJp0cc3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kohf8RExCWg1SQH6x1OPoePHLd0+XA0pGPByufz6ItWG/uaScVgKc8NTDLnlKTMhM14W7RQ8cGBCXSZDU1PZNCY1vkwA6gewxJkPuKU+r6Jq+l+eY1ec/nA3hI8aznE6HCp2D291iW+c4NRPXtpHtLPL2ACTaJerVX5H47eG5x4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IHXkKwez; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DhJp0cc3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEC69C3277B;
-	Tue,  9 Jul 2024 16:06:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IHXkKwez"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD273C32782;
+	Tue,  9 Jul 2024 16:07:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720541220;
-	bh=HQHUmdnOkscprt/iBjeV6ZSvrG1OA8cuTru0fUXpeso=;
+	s=k20201202; t=1720541224;
+	bh=iiJUOVDVh31Jzvb1F9EYN95d7LmQfKBU9rUWA5eyDZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DhJp0cc3RSAngRKtvICldpzZuCaQTdwzeVw3UcvwygHBmFsHireRnsMjAYyAnGcUA
-	 ulMIXHqW7buyyl/04F0obX1dItNezOxSzgNP+MBL63KW1i/yWErF15yE/DiC4hXs2M
-	 /vj4kuBK1dEx+IcLhL9Se8xti6UfABMUgR16kIkLkyCmv/zY32dKweHKzTKRVwKJHL
-	 kHItIaNm9VCyhm+C6QIvLNobuVwIdJ225xiooHWw2Hc08kOv/Ik1BMp4yql7wtFxE5
-	 CMhDXdqxJVIra7FXpmSSjzyF+3ao6bDcyAcC3SdPTGKw6qikv5HYwXotoDAG9Plf+C
-	 5gyPGnf4Tzwkg==
+	b=IHXkKwezlEcs9yOy6p9FyQ8CMS2Xu6M+ImNWI3xg9n1Q+mCjvlGDXMJmT9DfrzlTH
+	 r63H6FkF6P+q5q2mfoASvz/ekmvYzDF2C4L+Q5hrORFQTFZXLQINwLVsH0vrkvH4nG
+	 A/7hTHNXFj/dutJtMeKqujW8j1VkELbZG9LkmTmrr/RkyEY3rONtXma+okaeWl6I/g
+	 7mt2MHCa1RzuDO1Dw/fjmthtD5AQtbJsHyNLokEHEqB4Djm629ojGGQoml8nqy4yUy
+	 x0+P6BWc6K/LimRJxeZ32EjWcIzzigratd5370r7foNvCp4826XmnHFhIwB8ZG+6hl
+	 AGK7Qi7u27vOw==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>,
 	Wedson Almeida Filho <wedsonaf@gmail.com>,
@@ -39,10 +39,11 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	Finn Behrens <me@kloenk.dev>
-Subject: [PATCH v2 08/13] rust: work around `bindgen` 0.69.0 issue
-Date: Tue,  9 Jul 2024 18:06:03 +0200
-Message-ID: <20240709160615.998336-9-ojeda@kernel.org>
+	Jonathan Corbet <corbet@lwn.net>,
+	linux-doc@vger.kernel.org
+Subject: [PATCH v2 09/13] rust: start supporting several `bindgen` versions
+Date: Tue,  9 Jul 2024 18:06:04 +0200
+Message-ID: <20240709160615.998336-10-ojeda@kernel.org>
 In-Reply-To: <20240709160615.998336-1-ojeda@kernel.org>
 References: <20240709160615.998336-1-ojeda@kernel.org>
 Precedence: bulk
@@ -53,63 +54,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-`bindgen` 0.69.0 contains a bug: `--version` does not work without
-providing a header [1]:
+With both the workaround for `bindgen` 0.69.0 and the warning about
+0.66.0 and 0.66.1 in place, start supporting several `bindgen` versions,
+like it was done for the Rust compiler in a previous patch.
 
-    error: the following required arguments were not provided:
-      <HEADER>
+All other versions, including the latest 0.69.4, build without errors.
 
-    Usage: bindgen <FLAGS> <OPTIONS> <HEADER> -- <CLANG_ARGS>...
+The `bindgen` project, like Rust, has also agreed to have the kernel
+in their CI [1] -- thanks! This should help both projects: `bindgen`
+will be able to detect early issues like those mentioned above, and the
+kernel will be very likely build with new releases (at least for the
+basic configuration being tested).
 
-Thus, in preparation for supporting several `bindgen` versions, work
-around the issue by passing a dummy argument.
-
-Include a comment so that we can remove the workaround in the future.
-
-Link: https://github.com/rust-lang/rust-bindgen/pull/2678 [1]
-Reviewed-by: Finn Behrens <me@kloenk.dev>
+Link: https://github.com/rust-lang/rust-bindgen/pull/2851 [1]
 Tested-by: Benno Lossin <benno.lossin@proton.me>
 Tested-by: Andreas Hindborg <a.hindborg@samsung.com>
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- init/Kconfig                 | 5 ++++-
- scripts/rust_is_available.sh | 6 +++++-
- 2 files changed, 9 insertions(+), 2 deletions(-)
+v2:
+  - Update suggested `cargo` command to just install the latest, i.e.
+    removing the `--version` flag, following the same pattern as Finn's
+    suggestion to use `stable `for the `rustup` command.
 
-diff --git a/init/Kconfig b/init/Kconfig
-index febdea2afc3b..94e20d3b99d4 100644
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -1928,7 +1928,10 @@ config RUSTC_VERSION_TEXT
- config BINDGEN_VERSION_TEXT
- 	string
- 	depends on RUST
--	default $(shell,command -v $(BINDGEN) >/dev/null 2>&1 && $(BINDGEN) --version || echo n)
-+	# The dummy parameter `workaround-for-0.69.0` is required to support 0.69.0
-+	# (https://github.com/rust-lang/rust-bindgen/pull/2678). It can be removed when
-+	# the minimum version is upgraded past that (0.69.1 already fixed the issue).
-+	default $(shell,command -v $(BINDGEN) >/dev/null 2>&1 && $(BINDGEN) --version workaround-for-0.69.0 || echo n)
- 
- #
- # Place an empty function call at each tracepoint site. Can be
+ Documentation/rust/quick-start.rst | 7 ++++---
+ scripts/rust_is_available.sh       | 8 --------
+ scripts/rust_is_available_test.py  | 5 -----
+ 3 files changed, 4 insertions(+), 16 deletions(-)
+
+diff --git a/Documentation/rust/quick-start.rst b/Documentation/rust/quick-start.rst
+index 5ea8c8914942..66cefbab8f9a 100644
+--- a/Documentation/rust/quick-start.rst
++++ b/Documentation/rust/quick-start.rst
+@@ -107,11 +107,12 @@ bindgen
+ *******
+
+ The bindings to the C side of the kernel are generated at build time using
+-the ``bindgen`` tool. A particular version is required.
++the ``bindgen`` tool.
+
+-Install it via (note that this will download and build the tool from source)::
++Install it, for instance, via (note that this will download and build the tool
++from source)::
+
+-	cargo install --locked --version $(scripts/min-tool-version.sh bindgen) bindgen-cli
++	cargo install --locked bindgen-cli
+
+ ``bindgen`` uses the ``clang-sys`` crate to find a suitable ``libclang`` (which
+ may be linked statically, dynamically or loaded at runtime). By default, the
 diff --git a/scripts/rust_is_available.sh b/scripts/rust_is_available.sh
-index 67cb900124cc..1881e8f2a2b9 100755
+index 1881e8f2a2b9..4531f9dd19d3 100755
 --- a/scripts/rust_is_available.sh
 +++ b/scripts/rust_is_available.sh
-@@ -121,8 +121,12 @@ fi
- # Check that the Rust bindings generator is suitable.
- #
- # Non-stable and distributions' versions may have a version suffix, e.g. `-dev`.
-+#
-+# The dummy parameter `workaround-for-0.69.0` is required to support 0.69.0
-+# (https://github.com/rust-lang/rust-bindgen/pull/2678). It can be removed when
-+# the minimum version is upgraded past that (0.69.1 already fixed the issue).
- rust_bindings_generator_output=$( \
--	LC_ALL=C "$BINDGEN" --version 2>/dev/null
-+	LC_ALL=C "$BINDGEN" --version workaround-for-0.69.0 2>/dev/null
- ) || rust_bindings_generator_code=$?
- if [ -n "$rust_bindings_generator_code" ]; then
+@@ -161,14 +161,6 @@ if [ "$rust_bindings_generator_cversion" -lt "$rust_bindings_generator_min_cvers
  	echo >&2 "***"
--- 
-2.45.2
+ 	exit 1
+ fi
+-if [ "$rust_bindings_generator_cversion" -gt "$rust_bindings_generator_min_cversion" ]; then
+-	echo >&2 "***"
+-	echo >&2 "*** Rust bindings generator '$BINDGEN' is too new. This may or may not work."
+-	echo >&2 "***   Your version:     $rust_bindings_generator_version"
+-	echo >&2 "***   Expected version: $rust_bindings_generator_min_version"
+-	echo >&2 "***"
+-	warning=1
+-fi
 
+ # Check that the `libclang` used by the Rust bindings generator is suitable.
+ #
+diff --git a/scripts/rust_is_available_test.py b/scripts/rust_is_available_test.py
+index 0481aab862ec..d6d54b7ea42a 100755
+--- a/scripts/rust_is_available_test.py
++++ b/scripts/rust_is_available_test.py
+@@ -231,11 +231,6 @@ else:
+         result = self.run_script(self.Expected.FAILURE, { "BINDGEN": bindgen })
+         self.assertIn(f"Rust bindings generator '{bindgen}' is too old.", result.stderr)
+
+-    def test_bindgen_new_version(self):
+-        bindgen = self.generate_bindgen_version("bindgen 0.999.0")
+-        result = self.run_script(self.Expected.SUCCESS_WITH_WARNINGS, { "BINDGEN": bindgen })
+-        self.assertIn(f"Rust bindings generator '{bindgen}' is too new. This may or may not work.", result.stderr)
+-
+     def test_bindgen_libclang_failure(self):
+         bindgen = self.generate_bindgen_libclang_failure()
+         result = self.run_script(self.Expected.FAILURE, { "BINDGEN": bindgen })
+--
+2.45.2
