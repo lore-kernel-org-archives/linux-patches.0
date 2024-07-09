@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D6013A25F;
-	Tue,  9 Jul 2024 11:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D6101586C6;
+	Tue,  9 Jul 2024 11:18:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720523921; cv=none; b=dHEoqGhTNhoyjuV3tk/pSelXMSy2amO23icPqNtH7RVk4+AGpNtH0B9rN2WGDgERvxqWQ1MtIL31IxQj3nvps/gZThFk1izLqI0piXPmP//8xZoYcV9AA7fHrmHFenLONeBPP9RO1TdwDDMTGtHTio9Ai6W4s/zDLxHuWwi9N4w=
+	t=1720523924; cv=none; b=N/+ya8tG1zZ4b8DxkMxbwYzLINtKCw2IgXsUlX3pv+oPsxiwQP8wGXv9bUUPkMU2PZbsW5llu9qBmHfDj8W6+/tRtqHusWyuWZtYX93ImKhB/FJNb5bU/Usl9nilfh6tpeEqAASUqkM5UOIr7mTU0jFbYGrAwlTWtTJBvkYEAyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720523921; c=relaxed/simple;
-	bh=RIcAlNxvvr3GJllWqV6vwQjuxLL7VHnHTAByt9LuHf4=;
+	s=arc-20240116; t=1720523924; c=relaxed/simple;
+	bh=hedHnNLBWWQXJr0VmUvp/5/hYQGkJgCwXRycRRsTV2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LrJFgcpKbHdyN9IKq2dONfJacKHYXSVgdXqYo/Qx6vEgFsaoRTLZUCmdR/tVUdj8ph4bXx+cRmaJlH07/5oC4wQdPbErRuN8za9d0TjeGQ2Z3BDOBwMwU0LSfG22jyNdhetCBWjf1f+ZFU8Zp7Sht0Ia+Zq8tFyVdrlxdSpSwxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IqX1vOST; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QUEpaUJtE2N9Wn8BjLZM8fDS7gUDnl5/7JmKqfbsH6qG/Qeyub+ORohHzwN4tM6/um7gO3r5SYNe+XKSEQ8y2AzvTt01qCOIW0HVg+2g3dyXbpmHFSlcxZiDZe5sK1i/Hv8ShgLOvDC1FoHLYba+6XydLvZj6o9lU+2GwRiBK3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bxvvsD/Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IqX1vOST"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C48CFC32786;
-	Tue,  9 Jul 2024 11:18:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bxvvsD/Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2DA7C3277B;
+	Tue,  9 Jul 2024 11:18:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720523921;
-	bh=RIcAlNxvvr3GJllWqV6vwQjuxLL7VHnHTAByt9LuHf4=;
+	s=korg; t=1720523924;
+	bh=hedHnNLBWWQXJr0VmUvp/5/hYQGkJgCwXRycRRsTV2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IqX1vOSTq6gheohLoCZy/wDeBxN8iqU900Sqi4X3OOW6/kiqfor03qZregZbqmCZz
-	 6xCOnIgwsgOGyk8J7IIG9oVinOmuaMKzzcAwGYJ9VUNZOgtyokox85iXgBxlo3QaUx
-	 G4kg2hmgUmPhOXbBV9vfCoj5+RzaadRoz1AAumW8=
+	b=bxvvsD/YQv7OdqKDbYQSNbQaG4E6B3eEVoMGq27VPcHaFRFTlpzzau0Is6fjoAsAe
+	 oF+j9ktmv9bK6XOVuz/l7OZATpI4UpGEQoNILNph64MToL6lKfKTAU0wWWiQXLhrh5
+	 lOLHFIbVnkx7urmXTzq9DETs35EethNvwxRc0lbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Guralnik <michaelgur@nvidia.com>,
-	Mark Zhang <markzhang@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Guangwu Zhang <guazhang@redhat.com>,
+	Saurav Kashyap <skashyap@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	John Meneghini <jmeneghi@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 013/197] IB/core: Implement a limit on UMAD receive List
-Date: Tue,  9 Jul 2024 13:07:47 +0200
-Message-ID: <20240709110709.427182068@linuxfoundation.org>
+Subject: [PATCH 6.9 014/197] scsi: qedf: Make qedf_execute_tmf() non-preemptible
+Date: Tue,  9 Jul 2024 13:07:48 +0200
+Message-ID: <20240709110709.465597402@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -52,123 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Guralnik <michaelgur@nvidia.com>
+From: John Meneghini <jmeneghi@redhat.com>
 
-[ Upstream commit ca0b44e20a6f3032224599f02e7c8fb49525c894 ]
+[ Upstream commit 0d8b637c9c5eeaa1a4e3dfb336f3ff918eb64fec ]
 
-The existing behavior of ib_umad, which maintains received MAD
-packets in an unbounded list, poses a risk of uncontrolled growth.
-As user-space applications extract packets from this list, the rate
-of extraction may not match the rate of incoming packets, leading
-to potential list overflow.
+Stop calling smp_processor_id() from preemptible code in
+qedf_execute_tmf90.  This results in BUG_ON() when running an RT kernel.
 
-To address this, we introduce a limit to the size of the list. After
-considering typical scenarios, such as OpenSM processing, which can
-handle approximately 100k packets per second, and the 1-second retry
-timeout for most packets, we set the list size limit to 200k. Packets
-received beyond this limit are dropped, assuming they are likely timed
-out by the time they are handled by user-space.
+[ 659.343280] BUG: using smp_processor_id() in preemptible [00000000] code: sg_reset/3646
+[ 659.343282] caller is qedf_execute_tmf+0x8b/0x360 [qedf]
 
-Notably, packets queued on the receive list due to reasons like
-timed-out sends are preserved even when the list is full.
-
-Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
-Reviewed-by: Mark Zhang <markzhang@nvidia.com>
-Link: https://lore.kernel.org/r/7197cb58a7d9e78399008f25036205ceab07fbd5.1713268818.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Tested-by: Guangwu Zhang <guazhang@redhat.com>
+Cc: Saurav Kashyap <skashyap@marvell.com>
+Cc: Nilesh Javali <njavali@marvell.com>
+Signed-off-by: John Meneghini <jmeneghi@redhat.com>
+Link: https://lore.kernel.org/r/20240403150155.412954-1-jmeneghi@redhat.com
+Acked-by: Saurav Kashyap <skashyap@marvell.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/user_mad.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ drivers/scsi/qedf/qedf_io.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/core/user_mad.c b/drivers/infiniband/core/user_mad.c
-index f5feca7fa9b9c..2ed749f50a29f 100644
---- a/drivers/infiniband/core/user_mad.c
-+++ b/drivers/infiniband/core/user_mad.c
-@@ -63,6 +63,8 @@ MODULE_AUTHOR("Roland Dreier");
- MODULE_DESCRIPTION("InfiniBand userspace MAD packet access");
- MODULE_LICENSE("Dual BSD/GPL");
+diff --git a/drivers/scsi/qedf/qedf_io.c b/drivers/scsi/qedf/qedf_io.c
+index bf921caaf6aea..054a51713d556 100644
+--- a/drivers/scsi/qedf/qedf_io.c
++++ b/drivers/scsi/qedf/qedf_io.c
+@@ -2324,9 +2324,6 @@ static int qedf_execute_tmf(struct qedf_rport *fcport, u64 tm_lun,
+ 	io_req->fcport = fcport;
+ 	io_req->cmd_type = QEDF_TASK_MGMT_CMD;
  
-+#define MAX_UMAD_RECV_LIST_SIZE 200000
-+
- enum {
- 	IB_UMAD_MAX_PORTS  = RDMA_MAX_PORTS,
- 	IB_UMAD_MAX_AGENTS = 32,
-@@ -113,6 +115,7 @@ struct ib_umad_file {
- 	struct mutex		mutex;
- 	struct ib_umad_port    *port;
- 	struct list_head	recv_list;
-+	atomic_t		recv_list_size;
- 	struct list_head	send_list;
- 	struct list_head	port_list;
- 	spinlock_t		send_lock;
-@@ -180,24 +183,28 @@ static struct ib_mad_agent *__get_agent(struct ib_umad_file *file, int id)
- 	return file->agents_dead ? NULL : file->agent[id];
- }
- 
--static int queue_packet(struct ib_umad_file *file,
--			struct ib_mad_agent *agent,
--			struct ib_umad_packet *packet)
-+static int queue_packet(struct ib_umad_file *file, struct ib_mad_agent *agent,
-+			struct ib_umad_packet *packet, bool is_recv_mad)
- {
- 	int ret = 1;
- 
- 	mutex_lock(&file->mutex);
- 
-+	if (is_recv_mad &&
-+	    atomic_read(&file->recv_list_size) > MAX_UMAD_RECV_LIST_SIZE)
-+		goto unlock;
-+
- 	for (packet->mad.hdr.id = 0;
- 	     packet->mad.hdr.id < IB_UMAD_MAX_AGENTS;
- 	     packet->mad.hdr.id++)
- 		if (agent == __get_agent(file, packet->mad.hdr.id)) {
- 			list_add_tail(&packet->list, &file->recv_list);
-+			atomic_inc(&file->recv_list_size);
- 			wake_up_interruptible(&file->recv_wait);
- 			ret = 0;
- 			break;
- 		}
+-	/* Record which cpu this request is associated with */
+-	io_req->cpu = smp_processor_id();
 -
-+unlock:
- 	mutex_unlock(&file->mutex);
+ 	/* Set TM flags */
+ 	io_req->io_req_flags = QEDF_READ;
+ 	io_req->data_xfer_len = 0;
+@@ -2349,6 +2346,9 @@ static int qedf_execute_tmf(struct qedf_rport *fcport, u64 tm_lun,
  
- 	return ret;
-@@ -224,7 +231,7 @@ static void send_handler(struct ib_mad_agent *agent,
- 	if (send_wc->status == IB_WC_RESP_TIMEOUT_ERR) {
- 		packet->length = IB_MGMT_MAD_HDR;
- 		packet->mad.hdr.status = ETIMEDOUT;
--		if (!queue_packet(file, agent, packet))
-+		if (!queue_packet(file, agent, packet, false))
- 			return;
- 	}
- 	kfree(packet);
-@@ -284,7 +291,7 @@ static void recv_handler(struct ib_mad_agent *agent,
- 		rdma_destroy_ah_attr(&ah_attr);
- 	}
+ 	spin_lock_irqsave(&fcport->rport_lock, flags);
  
--	if (queue_packet(file, agent, packet))
-+	if (queue_packet(file, agent, packet, true))
- 		goto err2;
- 	return;
- 
-@@ -409,6 +416,7 @@ static ssize_t ib_umad_read(struct file *filp, char __user *buf,
- 
- 	packet = list_entry(file->recv_list.next, struct ib_umad_packet, list);
- 	list_del(&packet->list);
-+	atomic_dec(&file->recv_list_size);
- 
- 	mutex_unlock(&file->mutex);
- 
-@@ -421,6 +429,7 @@ static ssize_t ib_umad_read(struct file *filp, char __user *buf,
- 		/* Requeue packet */
- 		mutex_lock(&file->mutex);
- 		list_add(&packet->list, &file->recv_list);
-+		atomic_inc(&file->recv_list_size);
- 		mutex_unlock(&file->mutex);
- 	} else {
- 		if (packet->recv_wc)
++	/* Record which cpu this request is associated with */
++	io_req->cpu = smp_processor_id();
++
+ 	sqe_idx = qedf_get_sqe_idx(fcport);
+ 	sqe = &fcport->sq[sqe_idx];
+ 	memset(sqe, 0, sizeof(struct fcoe_wqe));
 -- 
 2.43.0
 
