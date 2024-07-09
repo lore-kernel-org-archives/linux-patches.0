@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E28055E4C;
-	Tue,  9 Jul 2024 11:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4841E55E4C;
+	Tue,  9 Jul 2024 11:33:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524777; cv=none; b=PKYZZhZ5cbAw9jlo3qpUnC/T7+m99lSY6U5O+rTKCDKBris19sPEOyxah4sFjzQT8h9nPzbGQUl5VJKmYMNBzrQCDAYKx+BSqh//39E6dviNY17TXUdHs+ldDWvH/fPg78+n86DCKAfbrS4sFAqSQCxoB8iKLePV35+TB7dLFac=
+	t=1720524780; cv=none; b=UVMMXfHrjlOdBgFQJpGSDMDe+8UlaobV+GSBLEdPYCOl9bRuXPfeKlhfVNn5WlInQGHzA6xovJDqJJV0CoN7LWRGB3hjzc/i6Q2GJKaEBrivYD/eVVb9t3sHIx/LMpsN4qyna3FISM6HfVvzwhBfPLIDNMesb2vcK54/6QVzxKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524777; c=relaxed/simple;
-	bh=WX7li5YqdQizlgW0ZSTCuAaUFN2H68l7/0pN7m4MlJE=;
+	s=arc-20240116; t=1720524780; c=relaxed/simple;
+	bh=g3jW3wyhuwealZ+7FJNLyVgeoaRe0PRBdK7Vs0sBCQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HX61OA9CKPmi6FMG9sc/iVvh1/N7ecb0eODTCu37vpGSFqHvznPQaDqKrFjmvmoe7fPt5zN3A64k/02aJwkzFFOgqbvyx/C0d5Sd8+3SKlAfs5T6clYbmzlLokd+aGO16JwwiQBYy/gQO7Mn5h1a5LuPUnZMGHh9urgmUTLdf+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pa/6DduR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tCrFixF/GwTmobTZ9jza1XUyRGpfOl7PWxETpRiukhdiZ4At+9Lyo6fGHGiveB2t7cTJLeS2JzAPckCKiteIxxGCW30mavlC+rd3dtIrQzPQ9Z9HnUbyrEQ7PLQg3BOt1cj1J99q/htE96+drjjFF0qzoKS010JwPQq0w1PQrgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kQ5ciSWB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pa/6DduR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA961C3277B;
-	Tue,  9 Jul 2024 11:32:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kQ5ciSWB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0985C3277B;
+	Tue,  9 Jul 2024 11:32:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524777;
-	bh=WX7li5YqdQizlgW0ZSTCuAaUFN2H68l7/0pN7m4MlJE=;
+	s=korg; t=1720524780;
+	bh=g3jW3wyhuwealZ+7FJNLyVgeoaRe0PRBdK7Vs0sBCQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pa/6DduRqGPV4YRueQHV5esWJSJf0iagDbS+MBsvSZ9H8DqseyfyCaUdOXgI0IVUW
-	 NKL2l06F6EwqAcOycVEJNf7S4DZNYPWfrzT+9is1NYFgebYFDz9yv8DnCaY2zy6tIY
-	 SKaqs3dbrBmIHW/Jq4Dd6GV+Rab20nRcwdbluirw=
+	b=kQ5ciSWB6iBjjlzflLtnfIpdWR25L+5YnBQNVkhe+kyhDpAYF4TqdkVy99A+wupi7
+	 hwNjKSi/PJ3Iq/YWZ69GDWaR1ucR3RrPJ4VcZHvciGpQdoriBCGRgYUkUViN+vYFQk
+	 mPeV41XrTr7PR02xGcrqnfLuLpzdsK9ViEvwWpS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 098/102] kbuild: fix short log for AS in link-vmlinux.sh
-Date: Tue,  9 Jul 2024 13:11:01 +0200
-Message-ID: <20240709110655.178632445@linuxfoundation.org>
+	Edward Adam Davis <eadavis@qq.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+71bfed2b2bcea46c98f2@syzkaller.appspotmail.com
+Subject: [PATCH 6.1 099/102] nfc/nci: Add the inconsistency check between the input data length and count
+Date: Tue,  9 Jul 2024 13:11:02 +0200
+Message-ID: <20240709110655.216764340@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110651.353707001@linuxfoundation.org>
 References: <20240709110651.353707001@linuxfoundation.org>
@@ -50,57 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 3430f65d6130ccbc86f0ff45642eeb9e2032a600 ]
+[ Upstream commit 068648aab72c9ba7b0597354ef4d81ffaac7b979 ]
 
-In convention, short logs print the output file, not the input file.
+write$nci(r0, &(0x7f0000000740)=ANY=[@ANYBLOB="610501"], 0xf)
 
-Let's change the suffix for 'AS' since it assembles *.S into *.o.
+Syzbot constructed a write() call with a data length of 3 bytes but a count value
+of 15, which passed too little data to meet the basic requirements of the function
+nci_rf_intf_activated_ntf_packet().
 
-[Before]
+Therefore, increasing the comparison between data length and count value to avoid
+problems caused by inconsistent data length and count.
 
-  LD      .tmp_vmlinux.kallsyms1
-  NM      .tmp_vmlinux.kallsyms1.syms
-  KSYMS   .tmp_vmlinux.kallsyms1.S
-  AS      .tmp_vmlinux.kallsyms1.S
-  LD      .tmp_vmlinux.kallsyms2
-  NM      .tmp_vmlinux.kallsyms2.syms
-  KSYMS   .tmp_vmlinux.kallsyms2.S
-  AS      .tmp_vmlinux.kallsyms2.S
-  LD      vmlinux
-
-[After]
-
-  LD      .tmp_vmlinux.kallsyms1
-  NM      .tmp_vmlinux.kallsyms1.syms
-  KSYMS   .tmp_vmlinux.kallsyms1.S
-  AS      .tmp_vmlinux.kallsyms1.o
-  LD      .tmp_vmlinux.kallsyms2
-  NM      .tmp_vmlinux.kallsyms2.syms
-  KSYMS   .tmp_vmlinux.kallsyms2.S
-  AS      .tmp_vmlinux.kallsyms2.o
-  LD      vmlinux
-
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Reported-and-tested-by: syzbot+71bfed2b2bcea46c98f2@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/link-vmlinux.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nfc/virtual_ncidev.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/scripts/link-vmlinux.sh b/scripts/link-vmlinux.sh
-index 458b2948b580d..019560548ac98 100755
---- a/scripts/link-vmlinux.sh
-+++ b/scripts/link-vmlinux.sh
-@@ -182,7 +182,7 @@ kallsyms_step()
- 	mksysmap ${kallsyms_vmlinux} ${kallsyms_vmlinux}.syms
- 	kallsyms ${kallsyms_vmlinux}.syms ${kallsyms_S}
+diff --git a/drivers/nfc/virtual_ncidev.c b/drivers/nfc/virtual_ncidev.c
+index 85c06dbb2c449..9fffd4421ad5b 100644
+--- a/drivers/nfc/virtual_ncidev.c
++++ b/drivers/nfc/virtual_ncidev.c
+@@ -121,6 +121,10 @@ static ssize_t virtual_ncidev_write(struct file *file,
+ 		kfree_skb(skb);
+ 		return -EFAULT;
+ 	}
++	if (strnlen(skb->data, count) != count) {
++		kfree_skb(skb);
++		return -EINVAL;
++	}
  
--	info AS ${kallsyms_S}
-+	info AS ${kallsymso}
- 	${CC} ${NOSTDINC_FLAGS} ${LINUXINCLUDE} ${KBUILD_CPPFLAGS} \
- 	      ${KBUILD_AFLAGS} ${KBUILD_AFLAGS_KERNEL} \
- 	      -c -o ${kallsymso} ${kallsyms_S}
+ 	nci_recv_frame(ndev, skb);
+ 	return count;
 -- 
 2.43.0
 
