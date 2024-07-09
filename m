@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BC6155A25;
-	Tue,  9 Jul 2024 11:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C8214E2F4;
+	Tue,  9 Jul 2024 11:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524193; cv=none; b=dT94U8MZCOJtvI/LXyY/9cNMRYvvllRDeLAWLlMadQNpvn5M33fqeCe+yOebyIXEdzuVNaw3JDipqvHoaPFsxrDCkIAq7QUoCadIbbXi+yZzHIfAzJo+o+wF2anzwTuzBRSd/PieJtcbpXS2FjJHtIXzvXrJSsETi1A8Gm4wib4=
+	t=1720524196; cv=none; b=DT4PaA5cE6fedztKzEga6LrBcAWewy98X0TXYK3fY+IILiXm5ngEi3pMxhhZIobPKJG+XSruyQlfqOblZ1Qg4YUdwwnqcihh1fTdCsyM78IvfvX4jFrQTX4d41SD7AlHjn6u4daYV+7C81OIokF5qJ5imgpU5BKMsl1FaXsxeJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524193; c=relaxed/simple;
-	bh=IEiheSfi6u2yE3zNRL3Q0BQDdFj1yHw5HPmENJMrxTo=;
+	s=arc-20240116; t=1720524196; c=relaxed/simple;
+	bh=4cciCGoRCw4XkUwugSU6yZYbrTvCCj3SKupLjKDEKZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CwBRwf2sEz7IS44ILiAAhaLiRRwZr9XIFAVxwjhrrFKRQGrZLdmyHkNpnzwR0Yhq9IBPYn0BUB0JAv4SFyTKGMVv8JQ+53pHgeXEVIvDSS0y5c9wzYlz0xEiwxF9flJP2PqSozKgOv3LPz1ezMvaPxjmpFz4HZhekBAgNG0KiJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=arDgZDqP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lxfd/OBiHzM7eVFdf0yz5azum92yzhAaoCZ6/LX8TOlVhIMngz3VPdgFtoGK2kD4EcupPc91zEiZWKKbcNLgM+R2R2MYsU3HmTQkM17BVKZdkg8f4erGNA6H4laFUFBqZjLGoefBelfOPjnLWuvYztjyDWZL/fIOuIpWC8My7cw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V0jtxjHw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="arDgZDqP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFEEAC3277B;
-	Tue,  9 Jul 2024 11:23:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V0jtxjHw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1147C3277B;
+	Tue,  9 Jul 2024 11:23:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524193;
-	bh=IEiheSfi6u2yE3zNRL3Q0BQDdFj1yHw5HPmENJMrxTo=;
+	s=korg; t=1720524196;
+	bh=4cciCGoRCw4XkUwugSU6yZYbrTvCCj3SKupLjKDEKZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=arDgZDqPKQdkwMinhQjxqaHyTGrLqbQ7c/SeWGvSXBjCVrCgsgEZ1V3md4X574+1I
-	 bI+oMP2ffnJdSAVc1CgBic+1nyizapmpFopRLgHkucgYDafUjGf1dGg3KReZQ0Efp6
-	 6jDJz8LhRVk162MV4eGAv1jW0Lh6jmWcBm2mkIAs=
+	b=V0jtxjHw57wwhgW0ZqIY57MoA1CBnS5rIhb4lLu91Afn6ijblYLvkin1d9rJTJf0A
+	 yd1q0iJhz2ogE/LVvY9rZG7fARhYalPp9YBNk7WKSawXbZr1d8FnfpAAXqeJCW5Kt/
+	 8BzbutlVRyfkD2dozLjNtwJdv4lowpXbo5xUagpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Krummsdorf <michael.krummsdorf@tq-group.com>,
-	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
+	Mike Marshall <hubcap@omnibond.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 070/197] serial: imx: Raise TX trigger level to 8
-Date: Tue,  9 Jul 2024 13:08:44 +0200
-Message-ID: <20240709110711.672300087@linuxfoundation.org>
+Subject: [PATCH 6.9 061/197] orangefs: fix out-of-bounds fsid access
+Date: Tue,  9 Jul 2024 13:08:35 +0200
+Message-ID: <20240709110711.323916687@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -51,43 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+From: Mike Marshall <hubcap@omnibond.com>
 
-[ Upstream commit a3d8728ab079951741efa11360df43dbfacba7ab ]
+[ Upstream commit 53e4efa470d5fc6a96662d2d3322cfc925818517 ]
 
-At the default TX trigger level of 2 in non-DMA mode (meaning that an
-interrupt is generated when less than 2 characters are left in the
-FIFO), we have observed frequent buffer underruns at 115200 Baud on an
-i.MX8M Nano. This can cause communication issues if the receiving side
-expects a continuous transfer.
+Arnd Bergmann sent a patch to fsdevel, he says:
 
-Increasing the level to 8 makes the UART trigger an interrupt earlier,
-giving the kernel enough time to refill the FIFO, at the cost of
-triggering one interrupt per ~24 instead of ~30 bytes of transmitted
-data (as the i.MX UART has a 32 byte FIFO).
+"orangefs_statfs() copies two consecutive fields of the superblock into
+the statfs structure, which triggers a warning from the string fortification
+helpers"
 
-Signed-off-by: Michael Krummsdorf <michael.krummsdorf@tq-group.com>
-Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
-Link: https://lore.kernel.org/r/20240508133744.35858-1-matthias.schiffer@ew.tq-group.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Jan Kara suggested an alternate way to do the patch to make it more readable.
+
+I ran both ideas through xfstests and both seem fine. This patch
+is based on Jan Kara's suggestion.
+
+Signed-off-by: Mike Marshall <hubcap@omnibond.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/imx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/orangefs/super.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/imx.c b/drivers/tty/serial/imx.c
-index 9552228d21614..f63cdd6794419 100644
---- a/drivers/tty/serial/imx.c
-+++ b/drivers/tty/serial/imx.c
-@@ -1314,7 +1314,7 @@ static void imx_uart_clear_rx_errors(struct imx_port *sport)
+diff --git a/fs/orangefs/super.c b/fs/orangefs/super.c
+index 34849b4a3243c..907765673765c 100644
+--- a/fs/orangefs/super.c
++++ b/fs/orangefs/super.c
+@@ -201,7 +201,8 @@ static int orangefs_statfs(struct dentry *dentry, struct kstatfs *buf)
+ 		     (long)new_op->downcall.resp.statfs.files_avail);
  
- }
+ 	buf->f_type = sb->s_magic;
+-	memcpy(&buf->f_fsid, &ORANGEFS_SB(sb)->fs_id, sizeof(buf->f_fsid));
++	buf->f_fsid.val[0] = ORANGEFS_SB(sb)->fs_id;
++	buf->f_fsid.val[1] = ORANGEFS_SB(sb)->id;
+ 	buf->f_bsize = new_op->downcall.resp.statfs.block_size;
+ 	buf->f_namelen = ORANGEFS_NAME_MAX;
  
--#define TXTL_DEFAULT 2 /* reset default */
-+#define TXTL_DEFAULT 8
- #define RXTL_DEFAULT 8 /* 8 characters or aging timer */
- #define TXTL_DMA 8 /* DMA burst setting */
- #define RXTL_DMA 9 /* DMA burst setting */
 -- 
 2.43.0
 
