@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C4A314E2F4;
-	Tue,  9 Jul 2024 11:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A15C14E2F4;
+	Tue,  9 Jul 2024 11:23:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524199; cv=none; b=BXve0diYa1qRZbYfTIl9WSAM7u70uOleNinQ+4IojscBxpk1AXp3lhVN5bdXtsIf+myrSfU991R6yMhszHSTvk60BH40uG30U1HtduTFurAPgYbRfxrLARwlvf9AbSD9Ymmi49FL/l/z9HSbdGs11Y5u8KHKdkrVbMV6uIwi6WM=
+	t=1720524202; cv=none; b=lW1NQFNgkFbyDUZzYhvHhu5yuLlgXR7U+h0fI35crQDHFSoWhS0iOd2Jy8kQYsVi+ufrIaCFaDiyxJ7yMTvgETA7CgrwgV0Dugy8xwsCu2+nw4LzodtMZx8g95lvP98qVQrWfCDHazWwEANdvp1/3oZOBHDdciVjP0LjeQaFx34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524199; c=relaxed/simple;
-	bh=oxiK5rpCxSQkfnGcnpdyjJRyGQ8NH/6SDwrGP0nc2Ms=;
+	s=arc-20240116; t=1720524202; c=relaxed/simple;
+	bh=6eViaCiX1MnGOsTAxw9PySMg7LmlAqdyuG/XwCjaxdE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=no4nHLOKfvN9nxrlGWPFcKW8s9OVl2W4Ke7sYW8x7JJzA40QkDXdO3rQSnONyEy5dVxlACV2ePWEWBY3WOVb8phbu/dq62iQFqUU9f82enPxYDBVulKuPjYVNZPWCFu2CuCstNIyrVODUjiJWWZ8fnzydeb6vRFjsIOkZo8BAVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ExV+B/wM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GFUYfKP4K80Yb2kVaH2cjohW+4qbMR8wBiwAFeDHRuC8HTtb/h3WOL/kvyclGk4ByeEdKViXkNL/RWyZ5Nd2WoF3cEyKj+9tcXavwhP9Wa1CR2H3iVSu7A8qB0Dxbp2I560ImNzIzuxWKpR7ixo8Kk/z6u9sdlFWOtBV4KAsgEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BgJqOt2P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ExV+B/wM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94BB7C3277B;
-	Tue,  9 Jul 2024 11:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BgJqOt2P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87110C3277B;
+	Tue,  9 Jul 2024 11:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524199;
-	bh=oxiK5rpCxSQkfnGcnpdyjJRyGQ8NH/6SDwrGP0nc2Ms=;
+	s=korg; t=1720524201;
+	bh=6eViaCiX1MnGOsTAxw9PySMg7LmlAqdyuG/XwCjaxdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ExV+B/wMww4Ff/2kYklmwy5WLNS3c5P0JsE+XhKGBweKqqTGdX3zdDEewNNFpQ/yv
-	 ylEUbuqQ1RpHJ9zJTSjK6ZO8w7xZpQI0dvPXFkdwAP0URw4UbzhiiSZlBmS1utCorH
-	 Y1PT6RBFeviR46BQsUIPd5qTepKm8EOKuJROF3bo=
+	b=BgJqOt2P4oEOsuyn3DZJGT9BQ7p80sd9l6UDjMR5ivdTR1RZdzskvIRNeIehJI9pT
+	 s9KokfCk6Y0UT0BZQoSlaBpay719/W7yV28kdT67zRBf0/JpQ2YRAB4maeZDTJk2RJ
+	 uKle0CZg+khdt6uDfrJJI1yyo2TSjrz1nVE0EfKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iulia Tanasescu <iulia.tanasescu@nxp.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 096/197] Bluetooth: ISO: Check socket flag instead of hcon
-Date: Tue,  9 Jul 2024 13:09:10 +0200
-Message-ID: <20240709110712.678393151@linuxfoundation.org>
+Subject: [PATCH 6.9 105/197] net: txgbe: add extra handle for MSI/INTx into thread irq handle
+Date: Tue,  9 Jul 2024 13:09:19 +0200
+Message-ID: <20240709110713.023365375@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -51,70 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Iulia Tanasescu <iulia.tanasescu@nxp.com>
+From: Jiawen Wu <jiawenwu@trustnetic.com>
 
-[ Upstream commit 596b6f081336e77764ca35cfeab66d0fcdbe544e ]
+[ Upstream commit 1e1fa1723eb3a293d7d0b1c1a9ad8774c1ef0aa0 ]
 
-This fixes the following Smatch static checker warning:
+Rename original txgbe_misc_irq_handle() to txgbe_misc_irq_thread_fn()
+since it is the handle thread to wake up. And add the primary handler
+to deal the case of MSI/INTx, because there is a schedule NAPI poll.
 
-net/bluetooth/iso.c:1364 iso_sock_recvmsg()
-error: we previously assumed 'pi->conn->hcon' could be null (line 1359)
-
-net/bluetooth/iso.c
-1347 static int iso_sock_recvmsg(struct socket *sock, struct msghdr *msg,
-1348                             size_t len, int flags)
-1349 {
-1350         struct sock *sk = sock->sk;
-1351         struct iso_pinfo *pi = iso_pi(sk);
-1352
-1353         BT_DBG("sk %p", sk);
-1354
-1355         if (test_and_clear_bit(BT_SK_DEFER_SETUP,
-                                      &bt_sk(sk)->flags)) {
-1356                 lock_sock(sk);
-1357                 switch (sk->sk_state) {
-1358                 case BT_CONNECT2:
-1359                         if (pi->conn->hcon &&
-                                     ^^^^^^^^^^^^^^ If ->hcon is NULL
-
-1360                             test_bit(HCI_CONN_PA_SYNC,
-                                         &pi->conn->hcon->flags)) {
-1361                                 iso_conn_big_sync(sk);
-1362                                 sk->sk_state = BT_LISTEN;
-1363                         } else {
---> 1364                         iso_conn_defer_accept(pi->conn->hcon);
-                                                       ^^^^^^^^^^^^^^
-                                                       then we're toast
-
-1365                                 sk->sk_state = BT_CONFIG;
-1366                         }
-1367                         release_sock(sk);
-1368                         return 0;
-1369                 case BT_CONNECTED:
-1370                         if (test_bit(BT_SK_PA_SYNC,
-
-Fixes: fbdc4bc47268 ("Bluetooth: ISO: Use defer setup to separate PA sync and BIG sync")
-Signed-off-by: Iulia Tanasescu <iulia.tanasescu@nxp.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: aefd013624a1 ("net: txgbe: use irq_domain for interrupt controller")
+Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ .../net/ethernet/wangxun/txgbe/txgbe_irq.c    | 44 ++++++++++++++++---
+ 1 file changed, 39 insertions(+), 5 deletions(-)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 00c0d8413c638..dd33400c21822 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -1356,8 +1356,7 @@ static int iso_sock_recvmsg(struct socket *sock, struct msghdr *msg,
- 		lock_sock(sk);
- 		switch (sk->sk_state) {
- 		case BT_CONNECT2:
--			if (pi->conn->hcon &&
--			    test_bit(HCI_CONN_PA_SYNC, &pi->conn->hcon->flags)) {
-+			if (test_bit(BT_SK_PA_SYNC, &pi->flags)) {
- 				iso_conn_big_sync(sk);
- 				sk->sk_state = BT_LISTEN;
- 			} else {
+diff --git a/drivers/net/ethernet/wangxun/txgbe/txgbe_irq.c b/drivers/net/ethernet/wangxun/txgbe/txgbe_irq.c
+index 1490fd6ddbdf9..a4cf682dca650 100644
+--- a/drivers/net/ethernet/wangxun/txgbe/txgbe_irq.c
++++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_irq.c
+@@ -111,6 +111,36 @@ static const struct irq_domain_ops txgbe_misc_irq_domain_ops = {
+ };
+ 
+ static irqreturn_t txgbe_misc_irq_handle(int irq, void *data)
++{
++	struct wx_q_vector *q_vector;
++	struct txgbe *txgbe = data;
++	struct wx *wx = txgbe->wx;
++	u32 eicr;
++
++	if (wx->pdev->msix_enabled)
++		return IRQ_WAKE_THREAD;
++
++	eicr = wx_misc_isb(wx, WX_ISB_VEC0);
++	if (!eicr) {
++		/* shared interrupt alert!
++		 * the interrupt that we masked before the ICR read.
++		 */
++		if (netif_running(wx->netdev))
++			txgbe_irq_enable(wx, true);
++		return IRQ_NONE;        /* Not our interrupt */
++	}
++	wx->isb_mem[WX_ISB_VEC0] = 0;
++	if (!(wx->pdev->msi_enabled))
++		wr32(wx, WX_PX_INTA, 1);
++
++	/* would disable interrupts here but it is auto disabled */
++	q_vector = wx->q_vector[0];
++	napi_schedule_irqoff(&q_vector->napi);
++
++	return IRQ_WAKE_THREAD;
++}
++
++static irqreturn_t txgbe_misc_irq_thread_fn(int irq, void *data)
+ {
+ 	struct txgbe *txgbe = data;
+ 	struct wx *wx = txgbe->wx;
+@@ -157,6 +187,7 @@ void txgbe_free_misc_irq(struct txgbe *txgbe)
+ 
+ int txgbe_setup_misc_irq(struct txgbe *txgbe)
+ {
++	unsigned long flags = IRQF_ONESHOT;
+ 	struct wx *wx = txgbe->wx;
+ 	int hwirq, err;
+ 
+@@ -170,14 +201,17 @@ int txgbe_setup_misc_irq(struct txgbe *txgbe)
+ 		irq_create_mapping(txgbe->misc.domain, hwirq);
+ 
+ 	txgbe->misc.chip = txgbe_irq_chip;
+-	if (wx->pdev->msix_enabled)
++	if (wx->pdev->msix_enabled) {
+ 		txgbe->misc.irq = wx->msix_entry->vector;
+-	else
++	} else {
+ 		txgbe->misc.irq = wx->pdev->irq;
++		if (!wx->pdev->msi_enabled)
++			flags |= IRQF_SHARED;
++	}
+ 
+-	err = request_threaded_irq(txgbe->misc.irq, NULL,
+-				   txgbe_misc_irq_handle,
+-				   IRQF_ONESHOT,
++	err = request_threaded_irq(txgbe->misc.irq, txgbe_misc_irq_handle,
++				   txgbe_misc_irq_thread_fn,
++				   flags,
+ 				   wx->netdev->name, txgbe);
+ 	if (err)
+ 		goto del_misc_irq;
 -- 
 2.43.0
 
