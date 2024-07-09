@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF3955E4C;
-	Tue,  9 Jul 2024 11:33:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD8755E4C;
+	Tue,  9 Jul 2024 11:33:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524812; cv=none; b=gjm/rycOJWVi2LS0QUvWsDnhh4HcuFX/RLNSzplsAeJ2b1jo3dYfjBSjAsJN2k2RJkqYgoiOXn7scrAYGJ+YMkoSEaToYCFWhPuOssYibTlnB1xlEJTtrnZhmFX2OA9N+TQ7LryTOiUIRExrHiE6cErxb8o9k72SwuENX1CTbkA=
+	t=1720524815; cv=none; b=pCgJt2tdhPZ6jvSzwBJu/PRJy8Pd0WCUNHMfoSs9NjHzl4EAlir2pEr5DZpiqh4RyiJpDlER49dx13tV7MQd5fivGnh49Z7i26FEkeW5c8QbpRPXic3G9nxVSY6LYzgQFRwbDZBb1amnbP6Fl1Vs3bwuUoLgz4aD2YeRC2wSsjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524812; c=relaxed/simple;
-	bh=FWeAXlbMoSp7HdkTdexExInX99XPyfiswYGILHpLZH4=;
+	s=arc-20240116; t=1720524815; c=relaxed/simple;
+	bh=lTU6DrrlVGKn3RzRivBSmdJVS8BMMbo2/jzeXjzt/IM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aiUyfkJFcaT2Aw2Cu4xdyGW5fjzIF36siG9fJKzSxNnIm48H1SOohjIjBKO76UAY0AhxXnK9wI1f+BHNi294u4f1yJDYwQfnpub8FjAB7zIV8AF85Tw8w2EoEM5+Py2eLDu8WivX4clUPrFHoiXypDXabuRajMFsp71h2I1W3Jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gEAdurCV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mu04F/VVx9uZZLVeHNyEAufsxjZNcxD8Gucfd4pGm4EmwE3Hoyq+X0HLJr3ex6TMmFbPql6VUpa8PpDBcQ2bT8gBd56QxpcH1ERGZ8O87WhANxEEi/ZzVudJcd0VSxWhnoaeLrzIDob54AozQOA7B2QBIEjgqioR9o2P6XC+ZSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bc31MJeu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gEAdurCV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10AD2C32786;
-	Tue,  9 Jul 2024 11:33:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bc31MJeu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3A57C3277B;
+	Tue,  9 Jul 2024 11:33:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524812;
-	bh=FWeAXlbMoSp7HdkTdexExInX99XPyfiswYGILHpLZH4=;
+	s=korg; t=1720524815;
+	bh=lTU6DrrlVGKn3RzRivBSmdJVS8BMMbo2/jzeXjzt/IM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gEAdurCVhMdt+F+LKnvTdZAByVwu8QC4P6HLzf36vGd0Rdd8BGNZDVKTsPRrqiF2O
-	 vNPPOqvlMJGX0vlt8cvDqOwnamzos6zYQXhf3ik4WdaL6DYU6WTBOtBKrGt8VznNeR
-	 bDrbKBPFWi62W9Hz80l7h0oTZkfbfkPGLZJR3Q1I=
+	b=Bc31MJeur34hqnwVag+PJGCZISnQVsds/UevNv02H9Fp6WJWSlh49JKHrTnnz9HBr
+	 Zn5f1gGSj4m811GLHeJcG0uInrkLzVm2xwHfONgm/xjDI+ADbNkgq6u8xCIUjW0Nvt
+	 FWqMHxim5QmTDQMQKy8Hxq270pIDGZWtOSKlCTWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Wylder <jwylder@google.com>,
-	Mark Brown <broonie@kernel.org>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 094/102] regmap-i2c: Subtract reg size from max_write
-Date: Tue,  9 Jul 2024 13:10:57 +0200
-Message-ID: <20240709110655.026053675@linuxfoundation.org>
+Subject: [PATCH 6.1 085/102] clk: qcom: gcc-sm6350: Fix gpll6* & gpll7 parents
+Date: Tue,  9 Jul 2024 13:10:48 +0200
+Message-ID: <20240709110654.681951064@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110651.353707001@linuxfoundation.org>
 References: <20240709110651.353707001@linuxfoundation.org>
@@ -51,44 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jim Wylder <jwylder@google.com>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit 611b7eb19d0a305d4de00280e4a71a1b15c507fc ]
+[ Upstream commit 3414f41a13eb41db15c558fbc695466203dca4fa ]
 
-Currently, when an adapter defines a max_write_len quirk,
-the data will be chunked into data sizes equal to the
-max_write_len quirk value.  But the payload will be increased by
-the size of the register address before transmission.  The
-resulting value always ends up larger than the limit set
-by the quirk.
+Both gpll6 and gpll7 are parented to CXO at 19.2 MHz and not to GPLL0
+which runs at 600 MHz. Also gpll6_out_even should have the parent gpll6
+and not gpll0.
 
-Avoid this error by setting regmap's max_write to the quirk's
-max_write_len minus the number of bytes for the register and
-padding.  This allows the chunking to work correctly for this
-limited case without impacting other use-cases.
+Adjust the parents of these clocks to make Linux report the correct rate
+and not absurd numbers like gpll7 at ~25 GHz or gpll6 at 24 GHz.
 
-Signed-off-by: Jim Wylder <jwylder@google.com>
-Link: https://msgid.link/r/20240523211437.2839942-1-jwylder@google.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Corrected rates are the following:
+
+  gpll7              807999902 Hz
+  gpll6              768000000 Hz
+     gpll6_out_even  384000000 Hz
+  gpll0              600000000 Hz
+     gpll0_out_odd   200000000 Hz
+     gpll0_out_even  300000000 Hz
+
+And because gpll6 is the parent of gcc_sdcc2_apps_clk_src (at 202 MHz)
+that clock also reports the correct rate now and avoids this warning:
+
+  [    5.984062] mmc0: Card appears overclocked; req 202000000 Hz, actual 6312499237 Hz
+
+Fixes: 131abae905df ("clk: qcom: Add SM6350 GCC driver")
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Link: https://lore.kernel.org/r/20240508-sm6350-gpll-fix-v1-1-e4ea34284a6d@fairphone.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regmap-i2c.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/gcc-sm6350.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/base/regmap/regmap-i2c.c b/drivers/base/regmap/regmap-i2c.c
-index 3ec611dc0c09f..a905e955bbfc7 100644
---- a/drivers/base/regmap/regmap-i2c.c
-+++ b/drivers/base/regmap/regmap-i2c.c
-@@ -350,7 +350,8 @@ static const struct regmap_bus *regmap_get_i2c_bus(struct i2c_client *i2c,
- 
- 		if (quirks->max_write_len &&
- 		    (bus->max_raw_write == 0 || bus->max_raw_write > quirks->max_write_len))
--			max_write = quirks->max_write_len;
-+			max_write = quirks->max_write_len -
-+				(config->reg_bits + config->pad_bits) / BITS_PER_BYTE;
- 
- 		if (max_read || max_write) {
- 			ret_bus = kmemdup(bus, sizeof(*bus), GFP_KERNEL);
+diff --git a/drivers/clk/qcom/gcc-sm6350.c b/drivers/clk/qcom/gcc-sm6350.c
+index cf4a7b6e0b23a..0559a33faf00e 100644
+--- a/drivers/clk/qcom/gcc-sm6350.c
++++ b/drivers/clk/qcom/gcc-sm6350.c
+@@ -100,8 +100,8 @@ static struct clk_alpha_pll gpll6 = {
+ 		.enable_mask = BIT(6),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gpll6",
+-			.parent_hws = (const struct clk_hw*[]){
+-				&gpll0.clkr.hw,
++			.parent_data = &(const struct clk_parent_data){
++				.fw_name = "bi_tcxo",
+ 			},
+ 			.num_parents = 1,
+ 			.ops = &clk_alpha_pll_fixed_fabia_ops,
+@@ -124,7 +124,7 @@ static struct clk_alpha_pll_postdiv gpll6_out_even = {
+ 	.clkr.hw.init = &(struct clk_init_data){
+ 		.name = "gpll6_out_even",
+ 		.parent_hws = (const struct clk_hw*[]){
+-			&gpll0.clkr.hw,
++			&gpll6.clkr.hw,
+ 		},
+ 		.num_parents = 1,
+ 		.ops = &clk_alpha_pll_postdiv_fabia_ops,
+@@ -139,8 +139,8 @@ static struct clk_alpha_pll gpll7 = {
+ 		.enable_mask = BIT(7),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gpll7",
+-			.parent_hws = (const struct clk_hw*[]){
+-				&gpll0.clkr.hw,
++			.parent_data = &(const struct clk_parent_data){
++				.fw_name = "bi_tcxo",
+ 			},
+ 			.num_parents = 1,
+ 			.ops = &clk_alpha_pll_fixed_fabia_ops,
 -- 
 2.43.0
 
