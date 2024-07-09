@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56DE8157A72;
-	Tue,  9 Jul 2024 11:12:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B5BC157E61;
+	Tue,  9 Jul 2024 11:12:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720523558; cv=none; b=U0kCb8He10zfCgug5Ii9tjluDAbo9nqldEoTQ5TOdzvgvJpMP+YT4V6R4ZPCCfu/YfgNCgNPIeaFU/TkGloWW/BiR6c7OFw56+kYcvO96HWQvFs6/4Udh9rOiUsJ7QS9YaPZptrdSo7qE9G/CkO3b/RlNXTLUffCBykyumdkumc=
+	t=1720523561; cv=none; b=JL8y/Zd8kGco1NrZFl0nZCDU2PuNArR4SQa6vSJzLcP2Yklh59dia6JyYVLIES8if519IkPjNVvvZ+47i6x3ns/bh7P62Y6uz4P2YqI0uRhTu5CegkFk5nlBy+PY8MAsSo22QIkg4Z8zFEBsJjdLjntgVqt3FGhU67m0p8MWSoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720523558; c=relaxed/simple;
-	bh=mUvJkvWxbFfT0KIlnGdVbqgtgTTdNcMERqOlyu6cEyU=;
+	s=arc-20240116; t=1720523561; c=relaxed/simple;
+	bh=3a8/ybVDGA+sdlJH04V6lo0dXA32Xkk8QrJdiVle5DQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q+oGxHI4PJxQ/pn6cceodfsvMifiSAT67DdkDUCbZ7lWeY3ld114JmWWJHM1cFAdl9fv8NgJGd7d9DyIvIEKnxi3pQxh3I8iOT8a7wG3E9vQC4ESCOzwr9cxHaluN+eBNH4iFRiscdpLurxG3PrFwpjs+blCeqOY0q78gDxMrYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gB7WfNlo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r1icP83pKKbldT6XInRz/qaBMoH7xB2sfVZyR5I+iM4V7Hrcyarnxw/tflX9Xq8t58jdke3RwVBJJ/FZxcjDcNUydKZBcz+zhRVIemhVv5q4dKSrD3K9bJrHZAkapvdBjoZe6qmAmrwnsDFCo60T8/cPnk5lt1DAgrNyoaTDrAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HO0iA6yT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gB7WfNlo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D25BEC3277B;
-	Tue,  9 Jul 2024 11:12:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HO0iA6yT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C69E1C3277B;
+	Tue,  9 Jul 2024 11:12:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720523558;
-	bh=mUvJkvWxbFfT0KIlnGdVbqgtgTTdNcMERqOlyu6cEyU=;
+	s=korg; t=1720523561;
+	bh=3a8/ybVDGA+sdlJH04V6lo0dXA32Xkk8QrJdiVle5DQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gB7WfNloC41fHoybT+oYT+3uiwLguWeAlwX5EQuh/IZ9RDybhFX2hGb+sXHV82ZLR
-	 ajN1ay4RdjT5poQs38LLphllrVydjMqA7mUuGO1YbFLGZ4cvH9ZcZD7NlAe8o2TChF
-	 NQFkU0cOYIXNAx+cxMJwMdF4dLdq1xdqF1p4+77M=
+	b=HO0iA6yTdXmW8pGGch12nddJKJY7W+caktjmQZyp+tr4eIxoUWqxJshehvESdwLUk
+	 gkLCFNW3QTQIdbziHBAgf8EJSC692CgI/gpYte2uwXlJF44j8CC5KxxHKzytAihjok
+	 c17c3a2Kv9NSw7FkRUplT4WIwGXAjCnzo8b/O8uo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	StanleyYP Wang <StanleyYP.Wang@mediatek.com>,
+	Shayne Chen <shayne.chen@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 032/139] wifi: mt76: replace skb_put with skb_put_zero
-Date: Tue,  9 Jul 2024 13:08:52 +0200
-Message-ID: <20240709110659.407119146@linuxfoundation.org>
+Subject: [PATCH 6.6 033/139] wifi: mt76: mt7996: add sanity checks for background radar trigger
+Date: Tue,  9 Jul 2024 13:08:53 +0200
+Message-ID: <20240709110659.445091273@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110658.146853929@linuxfoundation.org>
 References: <20240709110658.146853929@linuxfoundation.org>
@@ -50,81 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
 
-[ Upstream commit 7f819a2f4fbc510e088b49c79addcf1734503578 ]
+[ Upstream commit ec55d8e7dfea92daff87f5c01689633f8c4e6a62 ]
 
-Avoid potentially reusing uninitialized data
+Check if background radar is enabled or not before manually triggering it,
+and also add more checks in radar detected event.
 
+Signed-off-by: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c | 10 +++++-----
- drivers/net/wireless/mediatek/mt76/mt7915/mcu.c      |  2 +-
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/debugfs.c | 5 +++++
+ drivers/net/wireless/mediatek/mt76/mt7996/mcu.c     | 5 ++++-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-index dc4fbab1e1b75..998cfd73764a9 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-@@ -255,7 +255,7 @@ mt76_connac_mcu_add_nested_tlv(struct sk_buff *skb, int tag, int len,
- 	};
- 	u16 ntlv;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/debugfs.c b/drivers/net/wireless/mediatek/mt76/mt7996/debugfs.c
+index 4d40ec7ff57f5..630520c21a47f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/debugfs.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/debugfs.c
+@@ -225,6 +225,11 @@ mt7996_radar_trigger(void *data, u64 val)
+ 	if (val > MT_RX_SEL2)
+ 		return -EINVAL;
  
--	ptlv = skb_put(skb, len);
-+	ptlv = skb_put_zero(skb, len);
- 	memcpy(ptlv, &tlv, sizeof(tlv));
++	if (val == MT_RX_SEL2 && !dev->rdd2_phy) {
++		dev_err(dev->mt76.dev, "Background radar is not enabled\n");
++		return -EINVAL;
++	}
++
+ 	return mt7996_mcu_rdd_cmd(dev, RDD_RADAR_EMULATE,
+ 				  val, 0, 0);
+ }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+index b4ea7d0a7f5a0..b66f712e1b17b 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+@@ -339,7 +339,10 @@ mt7996_mcu_rx_radar_detected(struct mt7996_dev *dev, struct sk_buff *skb)
+ 	if (r->band_idx >= ARRAY_SIZE(dev->mt76.phys))
+ 		return;
  
- 	ntlv = le16_to_cpu(ntlv_hdr->tlv_num);
-@@ -1654,7 +1654,7 @@ int mt76_connac_mcu_hw_scan(struct mt76_phy *phy, struct ieee80211_vif *vif,
- 	set_bit(MT76_HW_SCANNING, &phy->state);
- 	mvif->scan_seq_num = (mvif->scan_seq_num + 1) & 0x7f;
- 
--	req = (struct mt76_connac_hw_scan_req *)skb_put(skb, sizeof(*req));
-+	req = (struct mt76_connac_hw_scan_req *)skb_put_zero(skb, sizeof(*req));
- 
- 	req->seq_num = mvif->scan_seq_num | mvif->band_idx << 7;
- 	req->bss_idx = mvif->idx;
-@@ -1782,7 +1782,7 @@ int mt76_connac_mcu_sched_scan_req(struct mt76_phy *phy,
- 
- 	mvif->scan_seq_num = (mvif->scan_seq_num + 1) & 0x7f;
- 
--	req = (struct mt76_connac_sched_scan_req *)skb_put(skb, sizeof(*req));
-+	req = (struct mt76_connac_sched_scan_req *)skb_put_zero(skb, sizeof(*req));
- 	req->version = 1;
- 	req->seq_num = mvif->scan_seq_num | mvif->band_idx << 7;
- 
-@@ -2416,7 +2416,7 @@ int mt76_connac_mcu_update_gtk_rekey(struct ieee80211_hw *hw,
- 		return -ENOMEM;
- 
- 	skb_put_data(skb, &hdr, sizeof(hdr));
--	gtk_tlv = (struct mt76_connac_gtk_rekey_tlv *)skb_put(skb,
-+	gtk_tlv = (struct mt76_connac_gtk_rekey_tlv *)skb_put_zero(skb,
- 							 sizeof(*gtk_tlv));
- 	gtk_tlv->tag = cpu_to_le16(UNI_OFFLOAD_OFFLOAD_GTK_REKEY);
- 	gtk_tlv->len = cpu_to_le16(sizeof(*gtk_tlv));
-@@ -2539,7 +2539,7 @@ mt76_connac_mcu_set_wow_pattern(struct mt76_dev *dev,
- 		return -ENOMEM;
- 
- 	skb_put_data(skb, &hdr, sizeof(hdr));
--	ptlv = (struct mt76_connac_wow_pattern_tlv *)skb_put(skb, sizeof(*ptlv));
-+	ptlv = (struct mt76_connac_wow_pattern_tlv *)skb_put_zero(skb, sizeof(*ptlv));
- 	ptlv->tag = cpu_to_le16(UNI_SUSPEND_WOW_PATTERN);
- 	ptlv->len = cpu_to_le16(sizeof(*ptlv));
- 	ptlv->data_len = pattern->pattern_len;
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-index 5d8e985cd7d45..272e55ef8e2d2 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
-@@ -422,7 +422,7 @@ mt7915_mcu_add_nested_subtlv(struct sk_buff *skb, int sub_tag, int sub_len,
- 		.len = cpu_to_le16(sub_len),
- 	};
- 
--	ptlv = skb_put(skb, sub_len);
-+	ptlv = skb_put_zero(skb, sub_len);
- 	memcpy(ptlv, &tlv, sizeof(tlv));
- 
- 	le16_add_cpu(sub_ntlv, 1);
+-	if (dev->rdd2_phy && r->band_idx == MT_RX_SEL2)
++	if (r->band_idx == MT_RX_SEL2 && !dev->rdd2_phy)
++		return;
++
++	if (r->band_idx == MT_RX_SEL2)
+ 		mphy = dev->rdd2_phy->mt76;
+ 	else
+ 		mphy = dev->mt76.phys[r->band_idx];
 -- 
 2.43.0
 
