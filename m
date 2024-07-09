@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4273C1581E4;
-	Tue,  9 Jul 2024 11:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E421215749B;
+	Tue,  9 Jul 2024 11:24:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524255; cv=none; b=GlDbZTKkEF3QpeHpj4IhtLMlUsuZ5vgCvlBiLVQO0hfBgyAFR0LFgbYt0FnBNY//QkYkbaQYtNse0OLF7qQ1XB6VKFVThNp+pEavqICitmM5Yh0FcHDAw7izRInQkv0AKEpdNQsfio1OGzpf1ABjzGGIXZUR8JU6e7c25a1Vc1A=
+	t=1720524258; cv=none; b=Bp32ODX67JNsoaebU+LRWSxYptFmUo65vRL4F2eUjolH2zrnFkDzHOxoT8+w0g1kgjeZ5sVuJr6rN6LNNNJoFQKjlB2JhOB33gNKxZwUWGu/gBWL0TBpkUZY34KCNs2nteh5ytZ4lxC1z/BCEOavAcNuVIo8cKQfk2b6cpD9w+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524255; c=relaxed/simple;
-	bh=t8cGxOOArMbe5H2kIYdUZZwYwbbndiNRHLrq3mc52PY=;
+	s=arc-20240116; t=1720524258; c=relaxed/simple;
+	bh=41ypEUqHq0KxDkuzdX3mRNrmishe96wEyLfDfIMS4So=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HQPMkAUaj8tzvKNJssMX/OM+3uZnNGGBrpqQdR6bpTxscJE0RVQT9/OnZlDnr+Tr5H87oAhMI78s/D9lAPxZVb1QoTtO9GTp3ir++uPqPIvbdtNhAr5egyMpqDRROpb/XOiIXgKg8gmJbl8IqQ0C1bAXCX6AmJm9y/Nq3NRM4T4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CPCBtAPP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eizjiB3eFsHTmacFlzbgZm34voTtsL5zx385ixTWEnZcQbgqHKxOhMhZEltM9/uiqpiMXvpLmv5HcC6F4jPz3usSeOkgwvBxrBe7Civ/K9UtmAUFA41zLwRlkzQFxjpa5EsSKq1EYH7M2XxJUt/pzGyd8TwLCJcoc/fj64LjV3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Qg7Xusv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CPCBtAPP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72C3CC4AF0C;
-	Tue,  9 Jul 2024 11:24:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Qg7Xusv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C1A5C32786;
+	Tue,  9 Jul 2024 11:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524254;
-	bh=t8cGxOOArMbe5H2kIYdUZZwYwbbndiNRHLrq3mc52PY=;
+	s=korg; t=1720524257;
+	bh=41ypEUqHq0KxDkuzdX3mRNrmishe96wEyLfDfIMS4So=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CPCBtAPPl1XQcbsg1NZ7RRtOR5Sb8seHgVKNN+LZjVocoA8svHhrjuGaIAWFlQXQR
-	 5LeD2YsvDCPluf6yY4jZrJI738FmuBQe1ajgBaNpaOu1Wo9FnvaIVC/YfefXq007WU
-	 AqGQiIpWP3pCqy7hmuUnm6Y0x9P8cIMSaKrz8ZsQ=
+	b=1Qg7Xusvv9LoEaLNoGdpRT90jkh6zIY99QsXNyAhJCwYhHbGWb0p255dF8WnpTcof
+	 DqNc2khkQI+xv/HG5XsIgQsMvgk+EXnbmGxA/WZkp2QxYYASwVKDi80VDP8FLRiMFO
+	 cRarHXsALthj9mesvKU6Wv04zCFmmtXkZinq1VYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Vecera <ivecera@redhat.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Petr Oros <poros@redhat.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Zijian Zhang <zijianzhang@bytedance.com>,
+	Xiaochun Lu <xiaochun.lu@bytedance.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.9 122/197] ice: use proper macro for testing bit
-Date: Tue,  9 Jul 2024 13:09:36 +0200
-Message-ID: <20240709110713.674762062@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.9 123/197] selftests: fix OOM in msg_zerocopy selftest
+Date: Tue,  9 Jul 2024 13:09:37 +0200
+Message-ID: <20240709110713.714479766@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -56,58 +53,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Oros <poros@redhat.com>
+From: Zijian Zhang <zijianzhang@bytedance.com>
 
-[ Upstream commit 7829ee78490ddb29993cc7893384a04b8cc7436c ]
+[ Upstream commit af2b7e5b741aaae9ffbba2c660def434e07aa241 ]
 
-Do not use _test_bit() macro for testing bit. The proper macro for this
-is one without underline.
+In selftests/net/msg_zerocopy.c, it has a while loop keeps calling sendmsg
+on a socket with MSG_ZEROCOPY flag, and it will recv the notifications
+until the socket is not writable. Typically, it will start the receiving
+process after around 30+ sendmsgs. However, as the introduction of commit
+dfa2f0483360 ("tcp: get rid of sysctl_tcp_adv_win_scale"), the sender is
+always writable and does not get any chance to run recv notifications.
+The selftest always exits with OUT_OF_MEMORY because the memory used by
+opt_skb exceeds the net.core.optmem_max. Meanwhile, it could be set to a
+different value to trigger OOM on older kernels too.
 
-_test_bit() is what test_bit() was prior to const-optimization. It
-directly calls arch_test_bit(), i.e. the arch-specific implementation
-(or the generic one). It's strictly _internal_ and shouldn't be used
-anywhere outside the actual test_bit() macro.
+Thus, we introduce "cfg_notification_limit" to force sender to receive
+notifications after some number of sendmsgs.
 
-test_bit() is a wrapper which checks whether the bitmap and the bit
-number are compile-time constants and if so, it calls the optimized
-function which evaluates this call to a compile-time constant as well.
-If either of them is not a compile-time constant, it just calls _test_bit().
-test_bit() is the actual function to use anywhere in the kernel.
-
-IOW, calling _test_bit() avoids potential compile-time optimizations.
-
-The sensors is not a compile-time constant, thus most probably there
-are no object code changes before and after the patch.
-But anyway, we shouldn't call internal wrappers instead of
-the actual API.
-
-Fixes: 4da71a77fc3b ("ice: read internal temperature sensor")
-Acked-by: Ivan Vecera <ivecera@redhat.com>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Signed-off-by: Petr Oros <poros@redhat.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20240702171459.2606611-5-anthony.l.nguyen@intel.com
+Fixes: 07b65c5b31ce ("test: add msg_zerocopy test")
+Signed-off-by: Zijian Zhang <zijianzhang@bytedance.com>
+Signed-off-by: Xiaochun Lu <xiaochun.lu@bytedance.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20240701225349.3395580-2-zijianzhang@bytedance.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_hwmon.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/net/msg_zerocopy.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_hwmon.c b/drivers/net/ethernet/intel/ice/ice_hwmon.c
-index e4c2c1bff6c08..b7aa6812510a4 100644
---- a/drivers/net/ethernet/intel/ice/ice_hwmon.c
-+++ b/drivers/net/ethernet/intel/ice/ice_hwmon.c
-@@ -96,7 +96,7 @@ static bool ice_is_internal_reading_supported(struct ice_pf *pf)
+diff --git a/tools/testing/selftests/net/msg_zerocopy.c b/tools/testing/selftests/net/msg_zerocopy.c
+index bdc03a2097e85..926556febc83c 100644
+--- a/tools/testing/selftests/net/msg_zerocopy.c
++++ b/tools/testing/selftests/net/msg_zerocopy.c
+@@ -85,6 +85,7 @@ static bool cfg_rx;
+ static int  cfg_runtime_ms	= 4200;
+ static int  cfg_verbose;
+ static int  cfg_waittime_ms	= 500;
++static int  cfg_notification_limit = 32;
+ static bool cfg_zerocopy;
  
- 	unsigned long sensors = pf->hw.dev_caps.supported_sensors;
+ static socklen_t cfg_alen;
+@@ -95,6 +96,7 @@ static char payload[IP_MAXPACKET];
+ static long packets, bytes, completions, expected_completions;
+ static int  zerocopied = -1;
+ static uint32_t next_completion;
++static uint32_t sends_since_notify;
  
--	return _test_bit(ICE_SENSOR_SUPPORT_E810_INT_TEMP_BIT, &sensors);
-+	return test_bit(ICE_SENSOR_SUPPORT_E810_INT_TEMP_BIT, &sensors);
- };
+ static unsigned long gettimeofday_ms(void)
+ {
+@@ -208,6 +210,7 @@ static bool do_sendmsg(int fd, struct msghdr *msg, bool do_zerocopy, int domain)
+ 		error(1, errno, "send");
+ 	if (cfg_verbose && ret != len)
+ 		fprintf(stderr, "send: ret=%u != %u\n", ret, len);
++	sends_since_notify++;
  
- void ice_hwmon_init(struct ice_pf *pf)
+ 	if (len) {
+ 		packets++;
+@@ -460,6 +463,7 @@ static bool do_recv_completion(int fd, int domain)
+ static void do_recv_completions(int fd, int domain)
+ {
+ 	while (do_recv_completion(fd, domain)) {}
++	sends_since_notify = 0;
+ }
+ 
+ /* Wait for all remaining completions on the errqueue */
+@@ -549,6 +553,9 @@ static void do_tx(int domain, int type, int protocol)
+ 		else
+ 			do_sendmsg(fd, &msg, cfg_zerocopy, domain);
+ 
++		if (cfg_zerocopy && sends_since_notify >= cfg_notification_limit)
++			do_recv_completions(fd, domain);
++
+ 		while (!do_poll(fd, POLLOUT)) {
+ 			if (cfg_zerocopy)
+ 				do_recv_completions(fd, domain);
+@@ -708,7 +715,7 @@ static void parse_opts(int argc, char **argv)
+ 
+ 	cfg_payload_len = max_payload_len;
+ 
+-	while ((c = getopt(argc, argv, "46c:C:D:i:mp:rs:S:t:vz")) != -1) {
++	while ((c = getopt(argc, argv, "46c:C:D:i:l:mp:rs:S:t:vz")) != -1) {
+ 		switch (c) {
+ 		case '4':
+ 			if (cfg_family != PF_UNSPEC)
+@@ -736,6 +743,9 @@ static void parse_opts(int argc, char **argv)
+ 			if (cfg_ifindex == 0)
+ 				error(1, errno, "invalid iface: %s", optarg);
+ 			break;
++		case 'l':
++			cfg_notification_limit = strtoul(optarg, NULL, 0);
++			break;
+ 		case 'm':
+ 			cfg_cork_mixed = true;
+ 			break;
 -- 
 2.43.0
 
