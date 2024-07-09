@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66523156F45;
-	Tue,  9 Jul 2024 11:13:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5622B156F45;
+	Tue,  9 Jul 2024 11:14:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720523637; cv=none; b=mzoYCbQABwZKzGY3rSn9wh5x85LvIEhzF4YbCcMqSm/oYme06q8EJeT3tQaqJ43A54B43Xo3ZU9vkx80IUgKD0fauKyEpgGuFauzB0xw9RyNVGYrCCfiTA+3PmFGULfIGjuvQLIDOvlOfJSsUpNlBOzUhctCF1D77wiB/RgNTZ8=
+	t=1720523640; cv=none; b=CAxVokOLiK39+susrHbBf6bQD5jl+xaEAVb3WWt48LQnxYUbnZy5jqKtNimxZvXBdsgVhSefi/Az6r4St3APw7b6BnadhPXD9yShQTqGMLEXuRyXd1YUR6rKcew8ayXlDLYUXgr7Q4PJ1Hy/BS50lEY50DbaGu88y/qUozd+Q9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720523637; c=relaxed/simple;
-	bh=vWesh5TkEFp091bU7WRrPj8oL63fB6UxStAO31hmEFo=;
+	s=arc-20240116; t=1720523640; c=relaxed/simple;
+	bh=nqlWonKP6mNK6+kDqF+A/RYjFI0qdvrjNNUAQNzoqsk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ub3WLIBCOC1wnzaqwVJa4hsZDcPsZGpw0nlxOs0vflHS7Q3TN3lYH9r6OENqPzGCHdbp8EvrtqYazzYgFrbQ/GPfi3qqg5HxE389EOnbKbd/BJ6S1+WDhWx265c7/5DVzrb0lhduikb6bh4NDd7xy0RjtxDbACDaor+Qi/q7U00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ClpkaueS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QpQGSkgQty40g1y5YVVCIJvmy4WokH8jErCqt5syYezUJFR4I7gZXau3QNbsFV16Ilz4xsv+cKiHT3k5juUCVLtY6Eg0W6/Tqd3eKgjS5j7f4LJ7gJIZCk5lW9X/caOzEMuFsYfFazAkiA1v5toCP/AV6Ns8cMEp1NbLfZ+3M3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W/DRK5aY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ClpkaueS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1FE4C3277B;
-	Tue,  9 Jul 2024 11:13:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/DRK5aY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFBFBC3277B;
+	Tue,  9 Jul 2024 11:13:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720523637;
-	bh=vWesh5TkEFp091bU7WRrPj8oL63fB6UxStAO31hmEFo=;
+	s=korg; t=1720523640;
+	bh=nqlWonKP6mNK6+kDqF+A/RYjFI0qdvrjNNUAQNzoqsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ClpkaueSx2EKjqhh0Sl3+DqrFkF+1CE/VYFQ0oHVhNjBci14AdQ4K/enGLr1e08CA
-	 bU3biDjvNXSeWv7r7V1/7eDZt/o1GbjnWR587k2bl757o3djeSTUnPTrSD5F6QOzeN
-	 rRQy9NqzENBtCxaSLzSg+4EsF+uKc43pTRYsvw/o=
+	b=W/DRK5aYKqwf60A0nxCE5v01ClFjqb9H3mkFxSi8Zx5oCDHLnWt++gSUNVUcbVZst
+	 gGNOMUkWIWd4stYEhaV7xIrbciiBlC5AGQ/o2AA/5ln6SEIghR+hSMRCuFMvkt4HdX
+	 +HSJYTT/qWWbClmVpVtqbCEoYf5AQ3gL2L+7+Hc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+98edc2df894917b3431f@syzkaller.appspotmail.com
-Subject: [PATCH 6.6 060/139] vhost_task: Handle SIGKILL by flushing work and exiting
-Date: Tue,  9 Jul 2024 13:09:20 +0200
-Message-ID: <20240709110700.490966339@linuxfoundation.org>
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 061/139] mac802154: fix time calculation in ieee802154_configure_durations()
+Date: Tue,  9 Jul 2024 13:09:21 +0200
+Message-ID: <20240709110700.528263370@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110658.146853929@linuxfoundation.org>
 References: <20240709110658.146853929@linuxfoundation.org>
@@ -53,296 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Christie <michael.christie@oracle.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit db5247d9bf5c6ade9fd70b4e4897441e0269b233 ]
+[ Upstream commit 07aa33988ad92fef79056f5ec30b9a0e4364b616 ]
 
-Instead of lingering until the device is closed, this has us handle
-SIGKILL by:
+Since 'symbol_duration' of 'struct wpan_phy' is in nanoseconds but
+'lifs_period' and 'sifs_period' are both in microseconds, fix time
+calculation in 'ieee802154_configure_durations()' and use convenient
+'NSEC_PER_USEC' in 'ieee802154_setup_wpan_phy_pib()' as well.
+Compile tested only.
 
-1. marking the worker as killed so we no longer try to use it with
-   new virtqueues and new flush operations.
-2. setting the virtqueue to worker mapping so no new works are queued.
-3. running all the exiting works.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Suggested-by: Edward Adam Davis <eadavis@qq.com>
-Reported-and-tested-by: syzbot+98edc2df894917b3431f@syzkaller.appspotmail.com
-Message-Id: <tencent_546DA49414E876EEBECF2C78D26D242EE50A@qq.com>
-Signed-off-by: Mike Christie <michael.christie@oracle.com>
-Message-Id: <20240316004707.45557-9-michael.christie@oracle.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: 781830c800dd ("net: mac802154: Set durations automatically")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Acked-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Message-ID: <20240508114010.219527-1-dmantipov@yandex.ru>
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vhost.c            | 54 +++++++++++++++++++++++++++++---
- drivers/vhost/vhost.h            |  2 ++
- include/linux/sched/vhost_task.h |  3 +-
- kernel/vhost_task.c              | 53 ++++++++++++++++++++-----------
- 4 files changed, 88 insertions(+), 24 deletions(-)
+ net/mac802154/main.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/vhost/vhost.c b/drivers/vhost/vhost.c
-index 069c8a23bff9e..d0238bd741b08 100644
---- a/drivers/vhost/vhost.c
-+++ b/drivers/vhost/vhost.c
-@@ -285,7 +285,7 @@ static void __vhost_worker_flush(struct vhost_worker *worker)
- {
- 	struct vhost_flush_struct flush;
+diff --git a/net/mac802154/main.c b/net/mac802154/main.c
+index 357ece67432b1..3054da2aa9580 100644
+--- a/net/mac802154/main.c
++++ b/net/mac802154/main.c
+@@ -159,8 +159,10 @@ void ieee802154_configure_durations(struct wpan_phy *phy,
+ 	}
  
--	if (!worker->attachment_cnt)
-+	if (!worker->attachment_cnt || worker->killed)
- 		return;
- 
- 	init_completion(&flush.wait_event);
-@@ -400,7 +400,7 @@ static void vhost_vq_reset(struct vhost_dev *dev,
- 	__vhost_vq_meta_reset(vq);
+ 	phy->symbol_duration = duration;
+-	phy->lifs_period = (IEEE802154_LIFS_PERIOD * phy->symbol_duration) / NSEC_PER_SEC;
+-	phy->sifs_period = (IEEE802154_SIFS_PERIOD * phy->symbol_duration) / NSEC_PER_SEC;
++	phy->lifs_period =
++		(IEEE802154_LIFS_PERIOD * phy->symbol_duration) / NSEC_PER_USEC;
++	phy->sifs_period =
++		(IEEE802154_SIFS_PERIOD * phy->symbol_duration) / NSEC_PER_USEC;
  }
+ EXPORT_SYMBOL(ieee802154_configure_durations);
  
--static bool vhost_worker(void *data)
-+static bool vhost_run_work_list(void *data)
- {
- 	struct vhost_worker *worker = data;
- 	struct vhost_work *work, *work_next;
-@@ -425,6 +425,40 @@ static bool vhost_worker(void *data)
- 	return !!node;
- }
- 
-+static void vhost_worker_killed(void *data)
-+{
-+	struct vhost_worker *worker = data;
-+	struct vhost_dev *dev = worker->dev;
-+	struct vhost_virtqueue *vq;
-+	int i, attach_cnt = 0;
-+
-+	mutex_lock(&worker->mutex);
-+	worker->killed = true;
-+
-+	for (i = 0; i < dev->nvqs; i++) {
-+		vq = dev->vqs[i];
-+
-+		mutex_lock(&vq->mutex);
-+		if (worker ==
-+		    rcu_dereference_check(vq->worker,
-+					  lockdep_is_held(&vq->mutex))) {
-+			rcu_assign_pointer(vq->worker, NULL);
-+			attach_cnt++;
-+		}
-+		mutex_unlock(&vq->mutex);
-+	}
-+
-+	worker->attachment_cnt -= attach_cnt;
-+	if (attach_cnt)
-+		synchronize_rcu();
-+	/*
-+	 * Finish vhost_worker_flush calls and any other works that snuck in
-+	 * before the synchronize_rcu.
-+	 */
-+	vhost_run_work_list(worker);
-+	mutex_unlock(&worker->mutex);
-+}
-+
- static void vhost_vq_free_iovecs(struct vhost_virtqueue *vq)
- {
- 	kfree(vq->indirect);
-@@ -639,9 +673,11 @@ static struct vhost_worker *vhost_worker_create(struct vhost_dev *dev)
- 	if (!worker)
- 		return NULL;
- 
-+	worker->dev = dev;
- 	snprintf(name, sizeof(name), "vhost-%d", current->pid);
- 
--	vtsk = vhost_task_create(vhost_worker, worker, name);
-+	vtsk = vhost_task_create(vhost_run_work_list, vhost_worker_killed,
-+				 worker, name);
- 	if (!vtsk)
- 		goto free_worker;
- 
-@@ -673,6 +709,11 @@ static void __vhost_vq_attach_worker(struct vhost_virtqueue *vq,
- 	struct vhost_worker *old_worker;
- 
- 	mutex_lock(&worker->mutex);
-+	if (worker->killed) {
-+		mutex_unlock(&worker->mutex);
-+		return;
-+	}
-+
- 	mutex_lock(&vq->mutex);
- 
- 	old_worker = rcu_dereference_check(vq->worker,
-@@ -693,6 +734,11 @@ static void __vhost_vq_attach_worker(struct vhost_virtqueue *vq,
- 	 * device wide flushes which doesn't use RCU for execution.
+@@ -182,10 +184,10 @@ static void ieee802154_setup_wpan_phy_pib(struct wpan_phy *wpan_phy)
+ 	 * Should be done when all drivers sets this value.
  	 */
- 	mutex_lock(&old_worker->mutex);
-+	if (old_worker->killed) {
-+		mutex_unlock(&old_worker->mutex);
-+		return;
-+	}
-+
- 	/*
- 	 * We don't want to call synchronize_rcu for every vq during setup
- 	 * because it will slow down VM startup. If we haven't done
-@@ -770,7 +816,7 @@ static int vhost_free_worker(struct vhost_dev *dev,
- 		return -ENODEV;
  
- 	mutex_lock(&worker->mutex);
--	if (worker->attachment_cnt) {
-+	if (worker->attachment_cnt || worker->killed) {
- 		mutex_unlock(&worker->mutex);
- 		return -EBUSY;
- 	}
-diff --git a/drivers/vhost/vhost.h b/drivers/vhost/vhost.h
-index f60d5f7bef944..8014d2b359503 100644
---- a/drivers/vhost/vhost.h
-+++ b/drivers/vhost/vhost.h
-@@ -28,12 +28,14 @@ struct vhost_work {
- 
- struct vhost_worker {
- 	struct vhost_task	*vtsk;
-+	struct vhost_dev	*dev;
- 	/* Used to serialize device wide flushing with worker swapping. */
- 	struct mutex		mutex;
- 	struct llist_head	work_list;
- 	u64			kcov_handle;
- 	u32			id;
- 	int			attachment_cnt;
-+	bool			killed;
- };
- 
- /* Poll a file (eventfd or socket) */
-diff --git a/include/linux/sched/vhost_task.h b/include/linux/sched/vhost_task.h
-index 837a23624a66a..3612de6ea1c5d 100644
---- a/include/linux/sched/vhost_task.h
-+++ b/include/linux/sched/vhost_task.h
-@@ -5,7 +5,8 @@
- 
- struct vhost_task;
- 
--struct vhost_task *vhost_task_create(bool (*fn)(void *), void *arg,
-+struct vhost_task *vhost_task_create(bool (*fn)(void *),
-+				     void (*handle_kill)(void *), void *arg,
- 				     const char *name);
- void vhost_task_start(struct vhost_task *vtsk);
- void vhost_task_stop(struct vhost_task *vtsk);
-diff --git a/kernel/vhost_task.c b/kernel/vhost_task.c
-index da35e5b7f0473..8800f5acc0071 100644
---- a/kernel/vhost_task.c
-+++ b/kernel/vhost_task.c
-@@ -10,38 +10,32 @@
- 
- enum vhost_task_flags {
- 	VHOST_TASK_FLAGS_STOP,
-+	VHOST_TASK_FLAGS_KILLED,
- };
- 
- struct vhost_task {
- 	bool (*fn)(void *data);
-+	void (*handle_sigkill)(void *data);
- 	void *data;
- 	struct completion exited;
- 	unsigned long flags;
- 	struct task_struct *task;
-+	/* serialize SIGKILL and vhost_task_stop calls */
-+	struct mutex exit_mutex;
- };
- 
- static int vhost_task_fn(void *data)
- {
- 	struct vhost_task *vtsk = data;
--	bool dead = false;
- 
- 	for (;;) {
- 		bool did_work;
- 
--		if (!dead && signal_pending(current)) {
-+		if (signal_pending(current)) {
- 			struct ksignal ksig;
--			/*
--			 * Calling get_signal will block in SIGSTOP,
--			 * or clear fatal_signal_pending, but remember
--			 * what was set.
--			 *
--			 * This thread won't actually exit until all
--			 * of the file descriptors are closed, and
--			 * the release function is called.
--			 */
--			dead = get_signal(&ksig);
--			if (dead)
--				clear_thread_flag(TIF_SIGPENDING);
-+
-+			if (get_signal(&ksig))
-+				break;
- 		}
- 
- 		/* mb paired w/ vhost_task_stop */
-@@ -57,7 +51,19 @@ static int vhost_task_fn(void *data)
- 			schedule();
- 	}
- 
-+	mutex_lock(&vtsk->exit_mutex);
-+	/*
-+	 * If a vhost_task_stop and SIGKILL race, we can ignore the SIGKILL.
-+	 * When the vhost layer has called vhost_task_stop it's already stopped
-+	 * new work and flushed.
-+	 */
-+	if (!test_bit(VHOST_TASK_FLAGS_STOP, &vtsk->flags)) {
-+		set_bit(VHOST_TASK_FLAGS_KILLED, &vtsk->flags);
-+		vtsk->handle_sigkill(vtsk->data);
-+	}
-+	mutex_unlock(&vtsk->exit_mutex);
- 	complete(&vtsk->exited);
-+
- 	do_exit(0);
+-	wpan_phy->lifs_period =
+-		(IEEE802154_LIFS_PERIOD * wpan_phy->symbol_duration) / 1000;
+-	wpan_phy->sifs_period =
+-		(IEEE802154_SIFS_PERIOD * wpan_phy->symbol_duration) / 1000;
++	wpan_phy->lifs_period =	(IEEE802154_LIFS_PERIOD *
++				 wpan_phy->symbol_duration) / NSEC_PER_USEC;
++	wpan_phy->sifs_period =	(IEEE802154_SIFS_PERIOD *
++				 wpan_phy->symbol_duration) / NSEC_PER_USEC;
  }
  
-@@ -78,12 +84,17 @@ EXPORT_SYMBOL_GPL(vhost_task_wake);
-  * @vtsk: vhost_task to stop
-  *
-  * vhost_task_fn ensures the worker thread exits after
-- * VHOST_TASK_FLAGS_SOP becomes true.
-+ * VHOST_TASK_FLAGS_STOP becomes true.
-  */
- void vhost_task_stop(struct vhost_task *vtsk)
- {
--	set_bit(VHOST_TASK_FLAGS_STOP, &vtsk->flags);
--	vhost_task_wake(vtsk);
-+	mutex_lock(&vtsk->exit_mutex);
-+	if (!test_bit(VHOST_TASK_FLAGS_KILLED, &vtsk->flags)) {
-+		set_bit(VHOST_TASK_FLAGS_STOP, &vtsk->flags);
-+		vhost_task_wake(vtsk);
-+	}
-+	mutex_unlock(&vtsk->exit_mutex);
-+
- 	/*
- 	 * Make sure vhost_task_fn is no longer accessing the vhost_task before
- 	 * freeing it below.
-@@ -96,14 +107,16 @@ EXPORT_SYMBOL_GPL(vhost_task_stop);
- /**
-  * vhost_task_create - create a copy of a task to be used by the kernel
-  * @fn: vhost worker function
-- * @arg: data to be passed to fn
-+ * @handle_sigkill: vhost function to handle when we are killed
-+ * @arg: data to be passed to fn and handled_kill
-  * @name: the thread's name
-  *
-  * This returns a specialized task for use by the vhost layer or NULL on
-  * failure. The returned task is inactive, and the caller must fire it up
-  * through vhost_task_start().
-  */
--struct vhost_task *vhost_task_create(bool (*fn)(void *), void *arg,
-+struct vhost_task *vhost_task_create(bool (*fn)(void *),
-+				     void (*handle_sigkill)(void *), void *arg,
- 				     const char *name)
- {
- 	struct kernel_clone_args args = {
-@@ -122,8 +135,10 @@ struct vhost_task *vhost_task_create(bool (*fn)(void *), void *arg,
- 	if (!vtsk)
- 		return NULL;
- 	init_completion(&vtsk->exited);
-+	mutex_init(&vtsk->exit_mutex);
- 	vtsk->data = arg;
- 	vtsk->fn = fn;
-+	vtsk->handle_sigkill = handle_sigkill;
- 
- 	args.fn_arg = vtsk;
- 
+ int ieee802154_register_hw(struct ieee802154_hw *hw)
 -- 
 2.43.0
 
