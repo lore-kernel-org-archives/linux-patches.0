@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231A227713;
-	Tue,  9 Jul 2024 11:28:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6152627713;
+	Tue,  9 Jul 2024 11:28:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524480; cv=none; b=ayp+WjMXNz9OI3rtY08wunj2rJQZYWxJlLnusCaiuRhwpdAwVq6+07E1qxwF1sCXWLOGqvMPLW1CayZAVxxvG4TuFe2QVDHrB7rAfXCh4s0q72/NP4mkioUUZIu9WuQnzcxI3Ns1FFM7U3wxsaRHqlPIdoMM/rOd9zjqR1l9j3w=
+	t=1720524483; cv=none; b=qIhGq1bzNU6RKrl/1oJmRkX2MxyJhMjVIUqsacc1quHwxz/ex1BolLHnpL95giWdGyCTjA2bjLe5d9/kZJhAZEZXQnuJBpaPdU9cvJiqxAmn52rmc1L2u8Xs6dqGxUYUf5FQeq1uatgMq2+C7wnUYyt1mylctLfV/2zJZq8a0dQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524480; c=relaxed/simple;
-	bh=zsfGS9v2gs476EexJLYQntRDk/tojo5gjzThHtPdusY=;
+	s=arc-20240116; t=1720524483; c=relaxed/simple;
+	bh=huiE9Otl7kiGmnGs2/fieiVAI67bX8hzvS1TMxw71fA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DNulVWJdHGj4M2xmHt843phOZ6K4FXhRnEdL2bb+wfovrtM2tDZgxoIiWwmjf6z8qzf5NN4C4nmd7JjuP4NeuIAR/i7FDIkNgAhH1EfxaWumGTs6kuTEa6N9q1B34MrwOAfpgVPA2/i2wxumXSH6MxfWy3lYih7WjL2dJaKg9ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z0mTRzEx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QnsObBW4Ergd81JkVU7n5rVumMAoEgPZWqjZPinrvUGiHmVIKGYQ5s3hsXuvT5DKhf1GXRjklOSy+00jiUyF/DQ8cw8XMXPhd6wcL/OFHdDfpBesx4d+0KH2zQymYB1LlFy1pUvj56EH+yi/tsAjCCe4WFzbvYUcZAOARAv44vk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NGIW8Dxy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z0mTRzEx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94618C3277B;
-	Tue,  9 Jul 2024 11:27:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NGIW8Dxy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F30C3277B;
+	Tue,  9 Jul 2024 11:28:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524480;
-	bh=zsfGS9v2gs476EexJLYQntRDk/tojo5gjzThHtPdusY=;
+	s=korg; t=1720524482;
+	bh=huiE9Otl7kiGmnGs2/fieiVAI67bX8hzvS1TMxw71fA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z0mTRzExy+hesE/blRvXTTYb7OQMqAf/qJ+0r/JGbxJxqOLm3/mojkpGmTfjBNZdc
-	 tBLZBg/arqo4bsLVZDKCAL/417hFcG3THL0+BkhvcSjdt76sLWztqo6x6VrTlHcY10
-	 f4qnindqO4bBFZmcSZ1nwJXuuBMRP4jjRFv8xrkE=
+	b=NGIW8DxySZZx5s87EWgBJEEGz6p/0V+NGya4y5683xgq7ALy1XViNq0gWBkEca0AF
+	 4Ksh8wFfzc5qHCtki1gm0bNRYyrgaThqpylpeB7do1oqLzlNwIh1w/5eYhFSli53yU
+	 T1uEwGKrIe9lYGjbKzFp2l2rwLYoFAXxvfbJg1e0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 193/197] ALSA: ump: Set default protocol when not given explicitly
-Date: Tue,  9 Jul 2024 13:10:47 +0200
-Message-ID: <20240709110716.409871809@linuxfoundation.org>
+Subject: [PATCH 6.9 194/197] drm/amdgpu: silence UBSAN warning
+Date: Tue,  9 Jul 2024 13:10:48 +0200
+Message-ID: <20240709110716.448019163@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -44,51 +45,39 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit bc42ca002d5d211f9c57334b9b4c25ddb0b4ec35 ]
+[ Upstream commit 05d9e24ddb15160164ba6e917a88c00907dc2434 ]
 
-When an inquiry of the current protocol via UMP Stream Configuration
-message fails by some reason, we may leave the current protocol
-undefined, which may lead to unexpected behavior.  Better to assume a
-valid protocol found in the protocol capability bits instead.
+Convert a variable sized array from [1] to [].
 
-For a device that doesn't support the UMP v1.2 feature, it won't reach
-to this code path, and USB MIDI GTB descriptor would be used for
-determining the protocol, instead.
-
-Link: https://lore.kernel.org/r/20240529164723.18309-2-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/ump.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/amd/include/atomfirmware.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/core/ump.c b/sound/core/ump.c
-index 117c7ecc48563..3f61220c23b4e 100644
---- a/sound/core/ump.c
-+++ b/sound/core/ump.c
-@@ -967,6 +967,14 @@ int snd_ump_parse_endpoint(struct snd_ump_endpoint *ump)
- 	if (err < 0)
- 		ump_dbg(ump, "Unable to get UMP EP stream config\n");
+diff --git a/drivers/gpu/drm/amd/include/atomfirmware.h b/drivers/gpu/drm/amd/include/atomfirmware.h
+index a34f064df336b..09cbc3afd6d89 100644
+--- a/drivers/gpu/drm/amd/include/atomfirmware.h
++++ b/drivers/gpu/drm/amd/include/atomfirmware.h
+@@ -3583,7 +3583,7 @@ struct atom_gpio_voltage_object_v4
+    uint8_t  phase_delay_us;                      // phase delay in unit of micro second
+    uint8_t  reserved;   
+    uint32_t gpio_mask_val;                         // GPIO Mask value
+-   struct atom_voltage_gpio_map_lut voltage_gpio_lut[1];
++   struct atom_voltage_gpio_map_lut voltage_gpio_lut[] __counted_by(gpio_entry_num);
+ };
  
-+	/* If no protocol is set by some reason, assume the valid one */
-+	if (!(ump->info.protocol & SNDRV_UMP_EP_INFO_PROTO_MIDI_MASK)) {
-+		if (ump->info.protocol_caps & SNDRV_UMP_EP_INFO_PROTO_MIDI2)
-+			ump->info.protocol |= SNDRV_UMP_EP_INFO_PROTO_MIDI2;
-+		else if (ump->info.protocol_caps & SNDRV_UMP_EP_INFO_PROTO_MIDI1)
-+			ump->info.protocol |= SNDRV_UMP_EP_INFO_PROTO_MIDI1;
-+	}
-+
- 	/* Query and create blocks from Function Blocks */
- 	for (blk = 0; blk < ump->info.num_blocks; blk++) {
- 		err = create_block_from_fb_info(ump, blk);
+ struct  atom_svid2_voltage_object_v4
 -- 
 2.43.0
 
