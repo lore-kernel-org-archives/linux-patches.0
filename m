@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8710627713;
-	Tue,  9 Jul 2024 11:24:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E891581E4;
+	Tue,  9 Jul 2024 11:24:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524275; cv=none; b=rbJOwNASmTo2KspzRgx0Suao3ugtDwSa5RFXW+YX5AdzQ4aNvg6AeriswQSrqT6jTUcShpISLJv2DG5Bd95qREw7xNAEHJJ+xJX08csmxIT36Mohu7Jyr+GxOT8iaL7Ywt9EMeVaiE27pBp4+9YGbwnA8qfjVTnLaI6ePKbjjJY=
+	t=1720524278; cv=none; b=Ma3Y/xc/7UlrRiDiDQOL+49AKMc/SXGsryDIlItlSZ6s72W1UB19gRDiRu13TzSxy+iS8NIlSKelrrTIQUNWo0Dm4r/xPo2KUz86Ml7ZAByNsmfFVF+VYVixwP+grhDEG9pCzpyrZyh+XXZO4ScQ8eU18ceCYEkruvRcpHucs8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524275; c=relaxed/simple;
-	bh=THk6NrVeSmNnEQAZZnYwS5YGxcMbfmpCJX1PbCeh3pY=;
+	s=arc-20240116; t=1720524278; c=relaxed/simple;
+	bh=5rEYKv0AtavkpUff6dM4bl+NJVi0eZnihfjP3dkFryc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZvBj4Qn9iUcaYx1/IsprrG3x0uhGLldBMZTfZ+XceIaVXqZVvZ4fqopB/cQ8CH7VrGVb4qWFbbwtgG4iGp58uvFpOrsJngWLVCHHHYpHsYFIcPWWhoLfgXxoPb975WYnF073EfASD78LMQdzvoV0qpyk0EYX5IaGKkHa+kpFTuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PaKStcfK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N6O9DWPihwObVYibgKLXvAESlrnNmLephTuddYyk/gOtoWMwp5F7Rj5rZEKGaYpdaaYANiSVHeBvxJOL/srEu+hZn4pYmsdar6lblGcgmWmTL77lwtjRfnU5iMbQ+uOd3NpFizshYio0lQOea2gEUXkyDszePndUcmZjNwuGq70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A6Zg/rNW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PaKStcfK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C3E7C32786;
-	Tue,  9 Jul 2024 11:24:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A6Zg/rNW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02951C3277B;
+	Tue,  9 Jul 2024 11:24:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524275;
-	bh=THk6NrVeSmNnEQAZZnYwS5YGxcMbfmpCJX1PbCeh3pY=;
+	s=korg; t=1720524278;
+	bh=5rEYKv0AtavkpUff6dM4bl+NJVi0eZnihfjP3dkFryc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PaKStcfK/togPspoi+vrbvT77OFAX5Lt8cv6g29z06yFMownpqD92iBZstSppOumT
-	 ht75JozacJOyFNCpTuE0Cab/pOGGPC5gSU6Do9H29eayYLkFIurDkjmVea1Mf1o2/9
-	 QdlRFpaI4Zw+jrUxp2boCfoPVrdyY7Q7DyLlDeco=
+	b=A6Zg/rNWPh8tHWlpf0TvcO7irJf10h3ge91GQHmXVBqNTdgdybiYBtoBshsnH8Vev
+	 Sigimi54GVBq5EP/FjWOgN+JnWA/pTCtX44voRzclEcy7XsRFtrxFTTfAEys6q0j3u
+	 +ps3JVRerqCcanxE5WedZhFwBU0FIOsEvV4faXpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Hartmayer <mhartmay@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Dima Ruinskiy <dima.ruinskiy@intel.com>,
+	Vitaly Lifshits <vitaly.lifshits@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 099/197] KVM: s390: fix LPSWEY handling
-Date: Tue,  9 Jul 2024 13:09:13 +0200
-Message-ID: <20240709110712.792237440@linuxfoundation.org>
+Subject: [PATCH 6.9 100/197] e1000e: Fix S0ix residency on corporate systems
+Date: Tue,  9 Jul 2024 13:09:14 +0200
+Message-ID: <20240709110712.829987248@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -53,128 +54,209 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
+From: Dima Ruinskiy <dima.ruinskiy@intel.com>
 
-[ Upstream commit 4c6abb7f7b349f00c0f7ed5045bf67759c012892 ]
+[ Upstream commit c93a6f62cb1bd097aef2e4588648a420d175eee2 ]
 
-in rare cases, e.g. for injecting a machine check we do intercept all
-load PSW instructions via ICTL_LPSW. With facility 193 a new variant
-LPSWEY was added. KVM needs to handle that as well.
+On vPro systems, the configuration of the I219-LM to achieve power
+gating and S0ix residency is split between the driver and the CSME FW.
+It was discovered that in some scenarios, where the network cable is
+connected and then disconnected, S0ix residency is not always reached.
+This was root-caused to a subset of I219-LM register writes that are not
+performed by the CSME FW. Therefore, the driver should perform these
+register writes on corporate setups, regardless of the CSME FW state.
 
-Fixes: a3efa8429266 ("KVM: s390: gen_facilities: allow facilities 165, 193, 194 and 196")
-Reported-by: Marc Hartmayer <mhartmay@linux.ibm.com>
-Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Message-ID: <20240628163547.2314-1-borntraeger@linux.ibm.com>
+This was discovered on Meteor Lake systems; however it is likely to
+appear on other platforms as well.
+
+Fixes: cc23f4f0b6b9 ("e1000e: Add support for Meteor Lake")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=218589
+Signed-off-by: Dima Ruinskiy <dima.ruinskiy@intel.com>
+Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20240628201754.2744221-1-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/kvm_host.h |  1 +
- arch/s390/kvm/kvm-s390.c         |  1 +
- arch/s390/kvm/kvm-s390.h         | 15 +++++++++++++++
- arch/s390/kvm/priv.c             | 32 ++++++++++++++++++++++++++++++++
- 4 files changed, 49 insertions(+)
+ drivers/net/ethernet/intel/e1000e/netdev.c | 132 ++++++++++-----------
+ 1 file changed, 66 insertions(+), 66 deletions(-)
 
-diff --git a/arch/s390/include/asm/kvm_host.h b/arch/s390/include/asm/kvm_host.h
-index 95990461888fc..9281063636a73 100644
---- a/arch/s390/include/asm/kvm_host.h
-+++ b/arch/s390/include/asm/kvm_host.h
-@@ -427,6 +427,7 @@ struct kvm_vcpu_stat {
- 	u64 instruction_io_other;
- 	u64 instruction_lpsw;
- 	u64 instruction_lpswe;
-+	u64 instruction_lpswey;
- 	u64 instruction_pfmf;
- 	u64 instruction_ptff;
- 	u64 instruction_sck;
-diff --git a/arch/s390/kvm/kvm-s390.c b/arch/s390/kvm/kvm-s390.c
-index 82e9631cd9efb..54b5b2565df8d 100644
---- a/arch/s390/kvm/kvm-s390.c
-+++ b/arch/s390/kvm/kvm-s390.c
-@@ -132,6 +132,7 @@ const struct _kvm_stats_desc kvm_vcpu_stats_desc[] = {
- 	STATS_DESC_COUNTER(VCPU, instruction_io_other),
- 	STATS_DESC_COUNTER(VCPU, instruction_lpsw),
- 	STATS_DESC_COUNTER(VCPU, instruction_lpswe),
-+	STATS_DESC_COUNTER(VCPU, instruction_lpswey),
- 	STATS_DESC_COUNTER(VCPU, instruction_pfmf),
- 	STATS_DESC_COUNTER(VCPU, instruction_ptff),
- 	STATS_DESC_COUNTER(VCPU, instruction_sck),
-diff --git a/arch/s390/kvm/kvm-s390.h b/arch/s390/kvm/kvm-s390.h
-index 111eb5c747840..bf8534218af3d 100644
---- a/arch/s390/kvm/kvm-s390.h
-+++ b/arch/s390/kvm/kvm-s390.h
-@@ -138,6 +138,21 @@ static inline u64 kvm_s390_get_base_disp_s(struct kvm_vcpu *vcpu, u8 *ar)
- 	return (base2 ? vcpu->run->s.regs.gprs[base2] : 0) + disp2;
- }
+diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
+index 3692fce201959..334f652c60601 100644
+--- a/drivers/net/ethernet/intel/e1000e/netdev.c
++++ b/drivers/net/ethernet/intel/e1000e/netdev.c
+@@ -6363,49 +6363,49 @@ static void e1000e_s0ix_entry_flow(struct e1000_adapter *adapter)
+ 		mac_data |= E1000_EXTCNF_CTRL_GATE_PHY_CFG;
+ 		ew32(EXTCNF_CTRL, mac_data);
  
-+static inline u64 kvm_s390_get_base_disp_siy(struct kvm_vcpu *vcpu, u8 *ar)
-+{
-+	u32 base1 = vcpu->arch.sie_block->ipb >> 28;
-+	s64 disp1;
-+
-+	/* The displacement is a 20bit _SIGNED_ value */
-+	disp1 = sign_extend64(((vcpu->arch.sie_block->ipb & 0x0fff0000) >> 16) +
-+			      ((vcpu->arch.sie_block->ipb & 0xff00) << 4), 19);
-+
-+	if (ar)
-+		*ar = base1;
-+
-+	return (base1 ? vcpu->run->s.regs.gprs[base1] : 0) + disp1;
-+}
-+
- static inline void kvm_s390_get_base_disp_sse(struct kvm_vcpu *vcpu,
- 					      u64 *address1, u64 *address2,
- 					      u8 *ar_b1, u8 *ar_b2)
-diff --git a/arch/s390/kvm/priv.c b/arch/s390/kvm/priv.c
-index 1be19cc9d73c1..1a49b89706f86 100644
---- a/arch/s390/kvm/priv.c
-+++ b/arch/s390/kvm/priv.c
-@@ -797,6 +797,36 @@ static int handle_lpswe(struct kvm_vcpu *vcpu)
- 	return 0;
- }
+-		/* Enable the Dynamic Power Gating in the MAC */
+-		mac_data = er32(FEXTNVM7);
+-		mac_data |= BIT(22);
+-		ew32(FEXTNVM7, mac_data);
+-
+ 		/* Disable disconnected cable conditioning for Power Gating */
+ 		mac_data = er32(DPGFR);
+ 		mac_data |= BIT(2);
+ 		ew32(DPGFR, mac_data);
  
-+static int handle_lpswey(struct kvm_vcpu *vcpu)
-+{
-+	psw_t new_psw;
-+	u64 addr;
-+	int rc;
-+	u8 ar;
-+
-+	vcpu->stat.instruction_lpswey++;
-+
-+	if (!test_kvm_facility(vcpu->kvm, 193))
-+		return kvm_s390_inject_program_int(vcpu, PGM_OPERATION);
-+
-+	if (vcpu->arch.sie_block->gpsw.mask & PSW_MASK_PSTATE)
-+		return kvm_s390_inject_program_int(vcpu, PGM_PRIVILEGED_OP);
-+
-+	addr = kvm_s390_get_base_disp_siy(vcpu, &ar);
-+	if (addr & 7)
-+		return kvm_s390_inject_program_int(vcpu, PGM_SPECIFICATION);
-+
-+	rc = read_guest(vcpu, addr, ar, &new_psw, sizeof(new_psw));
-+	if (rc)
-+		return kvm_s390_inject_prog_cond(vcpu, rc);
-+
-+	vcpu->arch.sie_block->gpsw = new_psw;
-+	if (!is_valid_psw(&vcpu->arch.sie_block->gpsw))
-+		return kvm_s390_inject_program_int(vcpu, PGM_SPECIFICATION);
-+
-+	return 0;
-+}
-+
- static int handle_stidp(struct kvm_vcpu *vcpu)
- {
- 	u64 stidp_data = vcpu->kvm->arch.model.cpuid;
-@@ -1462,6 +1492,8 @@ int kvm_s390_handle_eb(struct kvm_vcpu *vcpu)
- 	case 0x61:
- 	case 0x62:
- 		return handle_ri(vcpu);
-+	case 0x71:
-+		return handle_lpswey(vcpu);
- 	default:
- 		return -EOPNOTSUPP;
+-		/* Don't wake from dynamic Power Gating with clock request */
+-		mac_data = er32(FEXTNVM12);
+-		mac_data |= BIT(12);
+-		ew32(FEXTNVM12, mac_data);
+-
+-		/* Ungate PGCB clock */
+-		mac_data = er32(FEXTNVM9);
+-		mac_data &= ~BIT(28);
+-		ew32(FEXTNVM9, mac_data);
+-
+-		/* Enable K1 off to enable mPHY Power Gating */
+-		mac_data = er32(FEXTNVM6);
+-		mac_data |= BIT(31);
+-		ew32(FEXTNVM6, mac_data);
+-
+-		/* Enable mPHY power gating for any link and speed */
+-		mac_data = er32(FEXTNVM8);
+-		mac_data |= BIT(9);
+-		ew32(FEXTNVM8, mac_data);
+-
+ 		/* Enable the Dynamic Clock Gating in the DMA and MAC */
+ 		mac_data = er32(CTRL_EXT);
+ 		mac_data |= E1000_CTRL_EXT_DMA_DYN_CLK_EN;
+ 		ew32(CTRL_EXT, mac_data);
+-
+-		/* No MAC DPG gating SLP_S0 in modern standby
+-		 * Switch the logic of the lanphypc to use PMC counter
+-		 */
+-		mac_data = er32(FEXTNVM5);
+-		mac_data |= BIT(7);
+-		ew32(FEXTNVM5, mac_data);
  	}
+ 
++	/* Enable the Dynamic Power Gating in the MAC */
++	mac_data = er32(FEXTNVM7);
++	mac_data |= BIT(22);
++	ew32(FEXTNVM7, mac_data);
++
++	/* Don't wake from dynamic Power Gating with clock request */
++	mac_data = er32(FEXTNVM12);
++	mac_data |= BIT(12);
++	ew32(FEXTNVM12, mac_data);
++
++	/* Ungate PGCB clock */
++	mac_data = er32(FEXTNVM9);
++	mac_data &= ~BIT(28);
++	ew32(FEXTNVM9, mac_data);
++
++	/* Enable K1 off to enable mPHY Power Gating */
++	mac_data = er32(FEXTNVM6);
++	mac_data |= BIT(31);
++	ew32(FEXTNVM6, mac_data);
++
++	/* Enable mPHY power gating for any link and speed */
++	mac_data = er32(FEXTNVM8);
++	mac_data |= BIT(9);
++	ew32(FEXTNVM8, mac_data);
++
++	/* No MAC DPG gating SLP_S0 in modern standby
++	 * Switch the logic of the lanphypc to use PMC counter
++	 */
++	mac_data = er32(FEXTNVM5);
++	mac_data |= BIT(7);
++	ew32(FEXTNVM5, mac_data);
++
+ 	/* Disable the time synchronization clock */
+ 	mac_data = er32(FEXTNVM7);
+ 	mac_data |= BIT(31);
+@@ -6498,33 +6498,6 @@ static void e1000e_s0ix_exit_flow(struct e1000_adapter *adapter)
+ 	} else {
+ 		/* Request driver unconfigure the device from S0ix */
+ 
+-		/* Disable the Dynamic Power Gating in the MAC */
+-		mac_data = er32(FEXTNVM7);
+-		mac_data &= 0xFFBFFFFF;
+-		ew32(FEXTNVM7, mac_data);
+-
+-		/* Disable mPHY power gating for any link and speed */
+-		mac_data = er32(FEXTNVM8);
+-		mac_data &= ~BIT(9);
+-		ew32(FEXTNVM8, mac_data);
+-
+-		/* Disable K1 off */
+-		mac_data = er32(FEXTNVM6);
+-		mac_data &= ~BIT(31);
+-		ew32(FEXTNVM6, mac_data);
+-
+-		/* Disable Ungate PGCB clock */
+-		mac_data = er32(FEXTNVM9);
+-		mac_data |= BIT(28);
+-		ew32(FEXTNVM9, mac_data);
+-
+-		/* Cancel not waking from dynamic
+-		 * Power Gating with clock request
+-		 */
+-		mac_data = er32(FEXTNVM12);
+-		mac_data &= ~BIT(12);
+-		ew32(FEXTNVM12, mac_data);
+-
+ 		/* Cancel disable disconnected cable conditioning
+ 		 * for Power Gating
+ 		 */
+@@ -6537,13 +6510,6 @@ static void e1000e_s0ix_exit_flow(struct e1000_adapter *adapter)
+ 		mac_data &= 0xFFF7FFFF;
+ 		ew32(CTRL_EXT, mac_data);
+ 
+-		/* Revert the lanphypc logic to use the internal Gbe counter
+-		 * and not the PMC counter
+-		 */
+-		mac_data = er32(FEXTNVM5);
+-		mac_data &= 0xFFFFFF7F;
+-		ew32(FEXTNVM5, mac_data);
+-
+ 		/* Enable the periodic inband message,
+ 		 * Request PCIe clock in K1 page770_17[10:9] =01b
+ 		 */
+@@ -6581,6 +6547,40 @@ static void e1000e_s0ix_exit_flow(struct e1000_adapter *adapter)
+ 	mac_data &= ~BIT(31);
+ 	mac_data |= BIT(0);
+ 	ew32(FEXTNVM7, mac_data);
++
++	/* Disable the Dynamic Power Gating in the MAC */
++	mac_data = er32(FEXTNVM7);
++	mac_data &= 0xFFBFFFFF;
++	ew32(FEXTNVM7, mac_data);
++
++	/* Disable mPHY power gating for any link and speed */
++	mac_data = er32(FEXTNVM8);
++	mac_data &= ~BIT(9);
++	ew32(FEXTNVM8, mac_data);
++
++	/* Disable K1 off */
++	mac_data = er32(FEXTNVM6);
++	mac_data &= ~BIT(31);
++	ew32(FEXTNVM6, mac_data);
++
++	/* Disable Ungate PGCB clock */
++	mac_data = er32(FEXTNVM9);
++	mac_data |= BIT(28);
++	ew32(FEXTNVM9, mac_data);
++
++	/* Cancel not waking from dynamic
++	 * Power Gating with clock request
++	 */
++	mac_data = er32(FEXTNVM12);
++	mac_data &= ~BIT(12);
++	ew32(FEXTNVM12, mac_data);
++
++	/* Revert the lanphypc logic to use the internal Gbe counter
++	 * and not the PMC counter
++	 */
++	mac_data = er32(FEXTNVM5);
++	mac_data &= 0xFFFFFF7F;
++	ew32(FEXTNVM5, mac_data);
+ }
+ 
+ static int e1000e_pm_freeze(struct device *dev)
 -- 
 2.43.0
 
