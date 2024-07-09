@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF1527713;
-	Tue,  9 Jul 2024 11:26:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D54D27713;
+	Tue,  9 Jul 2024 11:26:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524406; cv=none; b=WFtAdae2B/D4MSYS0T9hA6BtHzgbg5Ng2+ZL69IKIhmKnVCqUFywyA9KbeRqMtI9AF42dcAS6nWiy55VIJlueZZ8WfRhHWtxO1KAT81+lnJZoeTHpBVb2CeeX46WNf0tiWkt3xyKbIAL79W6GqgiYbie1Z5d5EJ6OJaEBylHPN8=
+	t=1720524409; cv=none; b=Rs5J8Ih4eUCLYkLL6SmPwCAQ83nZs/BzGpYxySvZAvSCTy9g8sz0ntGzOieDFviKXA53kqoz9P6dssZ7NXJspK45kl5gwAtDWLxD5oHwlh+20zCaWcXHRasoD/4jBVKX7uOYM/S95HBe3nwpLJFNnlItEKbeLkdoTyOdJwEf+3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524406; c=relaxed/simple;
-	bh=Y0NlZwA69R4Mnrn3yTAdXJ9/sHKK544sgjAF6SF8Q30=;
+	s=arc-20240116; t=1720524409; c=relaxed/simple;
+	bh=kaBJ0du7fqgvt2qumAV48M5Lb4ANFNA7iQOM1Uq66UI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sXBTrKGPaBEHf+WTTVwRP/LGL4NhIjKXJK1pqKsVRoXuv/3G7KMaIu4StJ9xTaOohsHbVIt8NtfWby79TPPy+E+UD/XcSSnD50H/GVGaX7ZgTdpl34cLSLIYysJrxQdF94SA3ZxQQ1CxdFs9suZNcH4Mp+HPcf40RScidXWE7Nw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1BUA63qw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GXYXDnbagcLriDcpb0ED72IGz+b/IcsU8UNWgPhfA52mU0QS01uKesVOTiVVbBPadKXm607ubyT6JsZJ2hHg15EhiWG0QX1adoUVbnEibq0JFrsCvlXXTJtMcxHA8VTr4iJsjdMaZr89QtoY2vPaIfBufG/PiLC3u4rnPoPlAdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FTz32lhs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1BUA63qw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC1EC3277B;
-	Tue,  9 Jul 2024 11:26:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FTz32lhs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED53BC3277B;
+	Tue,  9 Jul 2024 11:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524406;
-	bh=Y0NlZwA69R4Mnrn3yTAdXJ9/sHKK544sgjAF6SF8Q30=;
+	s=korg; t=1720524409;
+	bh=kaBJ0du7fqgvt2qumAV48M5Lb4ANFNA7iQOM1Uq66UI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1BUA63qwm4gW5RyNULxkxBiNs098A0TYlOCei5MmUlAG3TjXzQUZg4PlB7VYtTHI6
-	 B8MYYKAdEcqkcx9H/6GpiBwwlgDy44PuTMM9s5XFAV4aTxHZqatJ4kcXiZ8SOkfnuK
-	 omwgxYT6MVjGs2i79W3XpyOKc9eg3vJX9EM2Jk9M=
+	b=FTz32lhs+ZZZV3RdED3tKIKetaIQ7mTy3VzXkso4D/csgS4g1KWEONZjnYNPScfjc
+	 dVXJX67QQdsH4pwPq2Nnmy2Vt8Dv8IAkeIq2FcCzIKHbvByMpzTdLjr34OwrHRmEqO
+	 uBJrC0tMaAvs7fbcHdh8Pm7IKhYoff2FOgbuk4WY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pin-yen Lin <treapking@chromium.org>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 172/197] clk: mediatek: mt8183: Only enable runtime PM on mt8183-mfgcfg
-Date: Tue,  9 Jul 2024 13:10:26 +0200
-Message-ID: <20240709110715.605987641@linuxfoundation.org>
+Subject: [PATCH 6.9 173/197] i2c: pnx: Fix potential deadlock warning from del_timer_sync() call in isr
+Date: Tue,  9 Jul 2024 13:10:27 +0200
+Message-ID: <20240709110715.644050617@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -51,111 +51,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pin-yen Lin <treapking@chromium.org>
+From: Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>
 
-[ Upstream commit 878e845d8db04df9ff3bbbaac09d335b24153704 ]
+[ Upstream commit f63b94be6942ba82c55343e196bd09b53227618e ]
 
-Commit 2f7b1d8b5505 ("clk: mediatek: Do a runtime PM get on controllers
-during probe") enabled runtime PM for all mediatek clock controllers,
-but this introduced an issue on the resume path.
+When del_timer_sync() is called in an interrupt context it throws a warning
+because of potential deadlock. The timer is used only to exit from
+wait_for_completion() after a timeout so replacing the call with
+wait_for_completion_timeout() allows to remove the problematic timer and
+its related functions altogether.
 
-If a device resumes earlier than the clock controller and calls
-clk_prepare() when runtime PM is enabled on the controller, it will end
-up calling clk_pm_runtime_get(). But the subsequent
-pm_runtime_resume_and_get() call will fail because the runtime PM is
-temporarily disabled during suspend.
-
-To workaround this, introduce a need_runtime_pm flag and only enable it
-on mt8183-mfgcfg, which is the driver that observed deadlock previously.
-Hopefully mt8183-cfgcfg won't run into the issue at the resume stage
-because the GPU should have stopped rendering before the system calls
-suspend.
-
-Fixes: 2f7b1d8b5505 ("clk: mediatek: Do a runtime PM get on controllers during probe")
-Signed-off-by: Pin-yen Lin <treapking@chromium.org>
-Link: https://lore.kernel.org/r/20240613120357.1043342-1-treapking@chromium.org
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: 41561f28e76a ("i2c: New Philips PNX bus driver")
+Signed-off-by: Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-mt8183-mfgcfg.c |  1 +
- drivers/clk/mediatek/clk-mtk.c           | 24 ++++++++++++++----------
- drivers/clk/mediatek/clk-mtk.h           |  2 ++
- 3 files changed, 17 insertions(+), 10 deletions(-)
+ drivers/i2c/busses/i2c-pnx.c | 48 ++++++++----------------------------
+ 1 file changed, 10 insertions(+), 38 deletions(-)
 
-diff --git a/drivers/clk/mediatek/clk-mt8183-mfgcfg.c b/drivers/clk/mediatek/clk-mt8183-mfgcfg.c
-index ba504e19d4203..62d876e150e11 100644
---- a/drivers/clk/mediatek/clk-mt8183-mfgcfg.c
-+++ b/drivers/clk/mediatek/clk-mt8183-mfgcfg.c
-@@ -29,6 +29,7 @@ static const struct mtk_gate mfg_clks[] = {
- static const struct mtk_clk_desc mfg_desc = {
- 	.clks = mfg_clks,
- 	.num_clks = ARRAY_SIZE(mfg_clks),
-+	.need_runtime_pm = true,
- };
- 
- static const struct of_device_id of_match_clk_mt8183_mfg[] = {
-diff --git a/drivers/clk/mediatek/clk-mtk.c b/drivers/clk/mediatek/clk-mtk.c
-index bd37ab4d1a9bb..ba1d1c495bc2b 100644
---- a/drivers/clk/mediatek/clk-mtk.c
-+++ b/drivers/clk/mediatek/clk-mtk.c
-@@ -496,14 +496,16 @@ static int __mtk_clk_simple_probe(struct platform_device *pdev,
- 	}
- 
- 
--	devm_pm_runtime_enable(&pdev->dev);
--	/*
--	 * Do a pm_runtime_resume_and_get() to workaround a possible
--	 * deadlock between clk_register() and the genpd framework.
--	 */
--	r = pm_runtime_resume_and_get(&pdev->dev);
--	if (r)
--		return r;
-+	if (mcd->need_runtime_pm) {
-+		devm_pm_runtime_enable(&pdev->dev);
-+		/*
-+		 * Do a pm_runtime_resume_and_get() to workaround a possible
-+		 * deadlock between clk_register() and the genpd framework.
-+		 */
-+		r = pm_runtime_resume_and_get(&pdev->dev);
-+		if (r)
-+			return r;
-+	}
- 
- 	/* Calculate how many clk_hw_onecell_data entries to allocate */
- 	num_clks = mcd->num_clks + mcd->num_composite_clks;
-@@ -585,7 +587,8 @@ static int __mtk_clk_simple_probe(struct platform_device *pdev,
- 			goto unregister_clks;
- 	}
- 
--	pm_runtime_put(&pdev->dev);
-+	if (mcd->need_runtime_pm)
-+		pm_runtime_put(&pdev->dev);
- 
- 	return r;
- 
-@@ -618,7 +621,8 @@ static int __mtk_clk_simple_probe(struct platform_device *pdev,
- 	if (mcd->shared_io && base)
- 		iounmap(base);
- 
--	pm_runtime_put(&pdev->dev);
-+	if (mcd->need_runtime_pm)
-+		pm_runtime_put(&pdev->dev);
- 	return r;
+diff --git a/drivers/i2c/busses/i2c-pnx.c b/drivers/i2c/busses/i2c-pnx.c
+index a12525b3186bc..f448505d54682 100644
+--- a/drivers/i2c/busses/i2c-pnx.c
++++ b/drivers/i2c/busses/i2c-pnx.c
+@@ -15,7 +15,6 @@
+ #include <linux/ioport.h>
+ #include <linux/delay.h>
+ #include <linux/i2c.h>
+-#include <linux/timer.h>
+ #include <linux/completion.h>
+ #include <linux/platform_device.h>
+ #include <linux/io.h>
+@@ -32,7 +31,6 @@ struct i2c_pnx_mif {
+ 	int			ret;		/* Return value */
+ 	int			mode;		/* Interface mode */
+ 	struct completion	complete;	/* I/O completion */
+-	struct timer_list	timer;		/* Timeout */
+ 	u8 *			buf;		/* Data buffer */
+ 	int			len;		/* Length of data buffer */
+ 	int			order;		/* RX Bytes to order via TX */
+@@ -117,24 +115,6 @@ static inline int wait_reset(struct i2c_pnx_algo_data *data)
+ 	return (timeout <= 0);
  }
  
-diff --git a/drivers/clk/mediatek/clk-mtk.h b/drivers/clk/mediatek/clk-mtk.h
-index 22096501a60a7..c17fe1c2d732d 100644
---- a/drivers/clk/mediatek/clk-mtk.h
-+++ b/drivers/clk/mediatek/clk-mtk.h
-@@ -237,6 +237,8 @@ struct mtk_clk_desc {
+-static inline void i2c_pnx_arm_timer(struct i2c_pnx_algo_data *alg_data)
+-{
+-	struct timer_list *timer = &alg_data->mif.timer;
+-	unsigned long expires = msecs_to_jiffies(alg_data->timeout);
+-
+-	if (expires <= 1)
+-		expires = 2;
+-
+-	del_timer_sync(timer);
+-
+-	dev_dbg(&alg_data->adapter.dev, "Timer armed at %lu plus %lu jiffies.\n",
+-		jiffies, expires);
+-
+-	timer->expires = jiffies + expires;
+-
+-	add_timer(timer);
+-}
+-
+ /**
+  * i2c_pnx_start - start a device
+  * @slave_addr:		slave address
+@@ -259,8 +239,6 @@ static int i2c_pnx_master_xmit(struct i2c_pnx_algo_data *alg_data)
+ 				~(mcntrl_afie | mcntrl_naie | mcntrl_drmie),
+ 				  I2C_REG_CTL(alg_data));
  
- 	int (*clk_notifier_func)(struct device *dev, struct clk *clk);
- 	unsigned int mfg_clk_idx;
+-			del_timer_sync(&alg_data->mif.timer);
+-
+ 			dev_dbg(&alg_data->adapter.dev,
+ 				"%s(): Waking up xfer routine.\n",
+ 				__func__);
+@@ -276,8 +254,6 @@ static int i2c_pnx_master_xmit(struct i2c_pnx_algo_data *alg_data)
+ 			~(mcntrl_afie | mcntrl_naie | mcntrl_drmie),
+ 			  I2C_REG_CTL(alg_data));
+ 
+-		/* Stop timer. */
+-		del_timer_sync(&alg_data->mif.timer);
+ 		dev_dbg(&alg_data->adapter.dev,
+ 			"%s(): Waking up xfer routine after zero-xfer.\n",
+ 			__func__);
+@@ -364,8 +340,6 @@ static int i2c_pnx_master_rcv(struct i2c_pnx_algo_data *alg_data)
+ 				 mcntrl_drmie | mcntrl_daie);
+ 			iowrite32(ctl, I2C_REG_CTL(alg_data));
+ 
+-			/* Kill timer. */
+-			del_timer_sync(&alg_data->mif.timer);
+ 			complete(&alg_data->mif.complete);
+ 		}
+ 	}
+@@ -400,8 +374,6 @@ static irqreturn_t i2c_pnx_interrupt(int irq, void *dev_id)
+ 			 mcntrl_drmie);
+ 		iowrite32(ctl, I2C_REG_CTL(alg_data));
+ 
+-		/* Stop timer, to prevent timeout. */
+-		del_timer_sync(&alg_data->mif.timer);
+ 		complete(&alg_data->mif.complete);
+ 	} else if (stat & mstatus_nai) {
+ 		/* Slave did not acknowledge, generate a STOP */
+@@ -419,8 +391,6 @@ static irqreturn_t i2c_pnx_interrupt(int irq, void *dev_id)
+ 		/* Our return value. */
+ 		alg_data->mif.ret = -EIO;
+ 
+-		/* Stop timer, to prevent timeout. */
+-		del_timer_sync(&alg_data->mif.timer);
+ 		complete(&alg_data->mif.complete);
+ 	} else {
+ 		/*
+@@ -453,9 +423,8 @@ static irqreturn_t i2c_pnx_interrupt(int irq, void *dev_id)
+ 	return IRQ_HANDLED;
+ }
+ 
+-static void i2c_pnx_timeout(struct timer_list *t)
++static void i2c_pnx_timeout(struct i2c_pnx_algo_data *alg_data)
+ {
+-	struct i2c_pnx_algo_data *alg_data = from_timer(alg_data, t, mif.timer);
+ 	u32 ctl;
+ 
+ 	dev_err(&alg_data->adapter.dev,
+@@ -472,7 +441,6 @@ static void i2c_pnx_timeout(struct timer_list *t)
+ 	iowrite32(ctl, I2C_REG_CTL(alg_data));
+ 	wait_reset(alg_data);
+ 	alg_data->mif.ret = -EIO;
+-	complete(&alg_data->mif.complete);
+ }
+ 
+ static inline void bus_reset_if_active(struct i2c_pnx_algo_data *alg_data)
+@@ -514,6 +482,7 @@ i2c_pnx_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
+ 	struct i2c_msg *pmsg;
+ 	int rc = 0, completed = 0, i;
+ 	struct i2c_pnx_algo_data *alg_data = adap->algo_data;
++	unsigned long time_left;
+ 	u32 stat;
+ 
+ 	dev_dbg(&alg_data->adapter.dev,
+@@ -548,7 +517,6 @@ i2c_pnx_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
+ 		dev_dbg(&alg_data->adapter.dev, "%s(): mode %d, %d bytes\n",
+ 			__func__, alg_data->mif.mode, alg_data->mif.len);
+ 
+-		i2c_pnx_arm_timer(alg_data);
+ 
+ 		/* initialize the completion var */
+ 		init_completion(&alg_data->mif.complete);
+@@ -564,7 +532,10 @@ i2c_pnx_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
+ 			break;
+ 
+ 		/* Wait for completion */
+-		wait_for_completion(&alg_data->mif.complete);
++		time_left = wait_for_completion_timeout(&alg_data->mif.complete,
++							alg_data->timeout);
++		if (time_left == 0)
++			i2c_pnx_timeout(alg_data);
+ 
+ 		if (!(rc = alg_data->mif.ret))
+ 			completed++;
+@@ -653,7 +624,10 @@ static int i2c_pnx_probe(struct platform_device *pdev)
+ 	alg_data->adapter.algo_data = alg_data;
+ 	alg_data->adapter.nr = pdev->id;
+ 
+-	alg_data->timeout = I2C_PNX_TIMEOUT_DEFAULT;
++	alg_data->timeout = msecs_to_jiffies(I2C_PNX_TIMEOUT_DEFAULT);
++	if (alg_data->timeout <= 1)
++		alg_data->timeout = 2;
 +
-+	bool need_runtime_pm;
- };
+ #ifdef CONFIG_OF
+ 	alg_data->adapter.dev.of_node = of_node_get(pdev->dev.of_node);
+ 	if (pdev->dev.of_node) {
+@@ -673,8 +647,6 @@ static int i2c_pnx_probe(struct platform_device *pdev)
+ 	if (IS_ERR(alg_data->clk))
+ 		return PTR_ERR(alg_data->clk);
  
- int mtk_clk_pdev_probe(struct platform_device *pdev);
+-	timer_setup(&alg_data->mif.timer, i2c_pnx_timeout, 0);
+-
+ 	snprintf(alg_data->adapter.name, sizeof(alg_data->adapter.name),
+ 		 "%s", pdev->name);
+ 
 -- 
 2.43.0
 
