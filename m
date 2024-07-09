@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085C219D88D;
-	Tue,  9 Jul 2024 16:06:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A57EC19E7C8;
+	Tue,  9 Jul 2024 16:06:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720541190; cv=none; b=s8cshr6IhYpM9furjvdBDVwvEZXgGSVjnUJawwgAj0nXVvCv3mE7xPUbEh0aCDY03vRqEtzivHEdQhLp+4XRHOAX47opmWgF2bTQEo6NEMTvn+1qjPTINg506IlNSXxJcxVcEdIJf2gMG2oVgKpXl4RdTq1tK77R8JpsfE4CLog=
+	t=1720541193; cv=none; b=VvbrMxDmpXCHjlGSwemNLUBqFetd9fDBYMTYEiSDfHeWeCCJ67CZOly/iNKWRD47xy/3Ge6nP2wHWAAxmLsdFmXYEEZlVOhgM635xflYG5u6+aiWeNV7s7wd2cCbph7yUJV91uN66cQHfGGj27wkQQEjl12dxGtMVR4rQj0qyy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720541190; c=relaxed/simple;
-	bh=9mVsfzjap65UG7inNi/6ALDZA7jm3b4WyDRibLyQG7c=;
+	s=arc-20240116; t=1720541193; c=relaxed/simple;
+	bh=ou4VeEjvDRaTQ69nADfEa6rEkq7aBSGnOgksPl4kF8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NbvBgI6y9zRNUunxRuE36UnhDVBq6VPXDnobT1hMVkfTxEJ//e1/XSeGkld1xi0SShIu9ov8GPkqsnvYyeIxKgR73i3+yj05OOaCj4Olefik3eLOglHH+6W7wak5Ho5xfMIjGiNtjmuOaStjWo2hVVRVsLkqktJHAPJKCvb3kD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YuvNZQUQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=DDSgbqhQ2nmxEGkHZHMoQ0rYJHL/n8ZgBj01C8yXmgwYcyOAZhPb7OlZqiHV3wgD/Im5B5s6HrHH34Zp8uLe4bxrQX7oPuPHfi4jNi8iv5YbLbnInr4wcsR5El0/pvkON6ZL7E+cM/ppKqTVapeXFmEaI9oN4AoQFUwk6KjxcMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hSs7rzS9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YuvNZQUQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57026C3277B;
-	Tue,  9 Jul 2024 16:06:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hSs7rzS9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 444C1C32782;
+	Tue,  9 Jul 2024 16:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720541189;
-	bh=9mVsfzjap65UG7inNi/6ALDZA7jm3b4WyDRibLyQG7c=;
+	s=k20201202; t=1720541193;
+	bh=ou4VeEjvDRaTQ69nADfEa6rEkq7aBSGnOgksPl4kF8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YuvNZQUQtQlMa5Rb3Bqqto2Q3ViuHBwi/rzZYVVeYlhFqn9t0RXD1QB25yqFYQSl9
-	 1fQcO/jkoIepLZ5QnhE7SwKFTXLL9Ln3miLlyQqNOj78G99fT8xvJVEYfFJULJPtfL
-	 loQl2tM0LIPPi2lnijHx5SJNNaeSgFInVy0xlygSQjh/cEWP2VQLJUIIIerYs/cMsx
-	 Pm7OXIegDwPy04xeZXvD+VaAUNZuz0Z3N2H3dFgjs5uEIcYjCEM0um8L5V8Xd5g05G
-	 g0+YIT8wwmp6XYvrIt0cmZ6ofOe+ThpY5MyyklVw1kblq9qCOTOe40yKCwmGs5z0pW
-	 MEQLkR8RJTgRQ==
+	b=hSs7rzS9iG5h1vNyQaQ99nsBkU7Q1+MJ8beHF59omw0nERSXALN71w7rb2d0t1nKZ
+	 lBcbb3L4b0ozzeOiNqzLiFDbgofJ0i715UAWLX5bza5TTPeW343TRZHSm/FC7WIusL
+	 TV7BD+CftUG/8rsMIIgY8yo/SbJL2TVEI3bL8SyDET3jVrK5G6oRFa33B+bVPIJEZs
+	 WHH4JLw6c+fuaSQv48WtD+xCjSMGm+3lXpzm3bCpyNm2vXxb1GC/QAAcxKXGx8qPn8
+	 zpSl4IvwOU4nlt0BaK94jkZmz/8VmXZ/tCOdy4t/gLJbs1IheFOOAVUY6bD7aqYpfm
+	 IlovjQ5PJuvgA==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>,
 	Wedson Almeida Filho <wedsonaf@gmail.com>,
@@ -38,11 +38,10 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	Alice Ryhl <aliceryhl@google.com>,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Finn Behrens <me@kloenk.dev>
-Subject: [PATCH v2 01/13] rust: macros: indent list item in `paste!`'s docs
-Date: Tue,  9 Jul 2024 18:05:56 +0200
-Message-ID: <20240709160615.998336-2-ojeda@kernel.org>
+	patches@lists.linux.dev
+Subject: [PATCH v2 02/13] rust: init: simplify from `map_err` to `inspect_err`
+Date: Tue,  9 Jul 2024 18:05:57 +0200
+Message-ID: <20240709160615.998336-3-ojeda@kernel.org>
 In-Reply-To: <20240709160615.998336-1-ojeda@kernel.org>
 References: <20240709160615.998336-1-ojeda@kernel.org>
 Precedence: bulk
@@ -54,55 +53,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-A new style lint, `doc_lazy_continuation` [1], has been introduced in the
-upcoming Rust 1.80 (currently in beta), which detects missing indentation
-in code documentation.
+A new complexity lint, `manual_inspect` [1], has been introduced in
+the upcoming Rust 1.81 (currently in nightly), which checks for uses of
+`map*` which return the original item:
 
-We have one such case:
-
-    error: doc list item missing indentation
-    --> rust/macros/lib.rs:315:5
+    error:
+    --> rust/kernel/init.rs:846:23
         |
-    315 | /// default the span of the `[< >]` group is used.
-        |     ^
+    846 |         (self.1)(val).map_err(|e| {
+        |                       ^^^^^^^
         |
-        = help: if this is supposed to be its own paragraph, add a blank line
-        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#doc_lazy_continuation
-        = note: `-D clippy::doc-lazy-continuation` implied by `-D clippy::style`
-        = help: to override `-D clippy::style` add `#[allow(clippy::doc_lazy_continuation)]`
-    help: indent this line
+        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#manual_inspect
+        = note: `-D clippy::manual-inspect` implied by `-D warnings`
+        = help: to override `-D warnings` add `#[allow(clippy::manual_inspect)]`
+    help: try
         |
-    315 | ///   default the span of the `[< >]` group is used.
-        |     ++
+    846 ~         (self.1)(val).inspect_err(|e| {
+    847 |             // SAFETY: `slot` was initialized above.
+    848 ~             unsafe { core::ptr::drop_in_place(slot) };
+        |
 
-While the rendering of the docs by `rustdoc` is not affected, we apply
-this kind of indentation elsewhere since it looks better.
+Thus clean them up.
 
-Thus clean it up.
-
-Link: https://rust-lang.github.io/rust-clippy/master/index.html#/doc_lazy_continuation [1]
-Reviewed-by: Björn Roy Baron <bjorn3_gh@protonmail.com>
-Reviewed-by: Finn Behrens <me@kloenk.dev>
+Link: https://rust-lang.github.io/rust-clippy/master/index.html#/manual_inspect [1]
 Tested-by: Benno Lossin <benno.lossin@proton.me>
 Tested-by: Andreas Hindborg <a.hindborg@samsung.com>
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- rust/macros/lib.rs | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+v2:
+  - Moved `SAFETY` comment out of the closure, in one of the instances
+    only. In the other, it would mean putting two `SAFETY` comments in
+    a row, which is even more confusing. Open coding it may be clearer,
+    though -- happy to get a patch for that later on (with some docs
+    about guidelines for using or avoiding `inspect_*`). (Björn, Benno,
+    Alice)
 
-diff --git a/rust/macros/lib.rs b/rust/macros/lib.rs
-index 6dcc72aff111..159e75292970 100644
---- a/rust/macros/lib.rs
-+++ b/rust/macros/lib.rs
-@@ -345,7 +345,7 @@ pub fn pinned_drop(args: TokenStream, input: TokenStream) -> TokenStream {
- ///
- /// Currently supported modifiers are:
- /// * `span`: change the span of concatenated identifier to the span of the specified token. By
--/// default the span of the `[< >]` group is used.
-+///   default the span of the `[< >]` group is used.
- /// * `lower`: change the identifier to lower case.
- /// * `upper`: change the identifier to upper case.
- ///
--- 
+ rust/kernel/init.rs | 13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
+
+diff --git a/rust/kernel/init.rs b/rust/kernel/init.rs
+index 68605b633e73..495c09ebe3a3 100644
+--- a/rust/kernel/init.rs
++++ b/rust/kernel/init.rs
+@@ -843,11 +843,8 @@ unsafe fn __pinned_init(self, slot: *mut T) -> Result<(), E> {
+         let val = unsafe { &mut *slot };
+         // SAFETY: `slot` is considered pinned.
+         let val = unsafe { Pin::new_unchecked(val) };
+-        (self.1)(val).map_err(|e| {
+-            // SAFETY: `slot` was initialized above.
+-            unsafe { core::ptr::drop_in_place(slot) };
+-            e
+-        })
++        // SAFETY: `slot` was initialized above.
++        (self.1)(val).inspect_err(|_| unsafe { core::ptr::drop_in_place(slot) })
+     }
+ }
+
+@@ -941,11 +938,9 @@ unsafe fn __init(self, slot: *mut T) -> Result<(), E> {
+         // SAFETY: All requirements fulfilled since this function is `__init`.
+         unsafe { self.0.__pinned_init(slot)? };
+         // SAFETY: The above call initialized `slot` and we still have unique access.
+-        (self.1)(unsafe { &mut *slot }).map_err(|e| {
++        (self.1)(unsafe { &mut *slot }).inspect_err(|_|
+             // SAFETY: `slot` was initialized above.
+-            unsafe { core::ptr::drop_in_place(slot) };
+-            e
+-        })
++            unsafe { core::ptr::drop_in_place(slot) })
+     }
+ }
+
+--
 2.45.2
-
