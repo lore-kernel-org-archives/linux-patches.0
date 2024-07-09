@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00E413A25F;
-	Tue,  9 Jul 2024 11:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 850A313A25F;
+	Tue,  9 Jul 2024 11:19:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720523950; cv=none; b=t7SqZW1XBla/bUMcq3fBTf6AsKjGbAFuOtSBbweXCzLvX2rNuH0ku6/L7Qkm1hpWMpAI6lkHXvVmS6CH+R9hhF2YmH9Je7zPEF3fI24bE/l4AhkuCh2vp62UqOk0bajvBKXKsRkElWCLMhWL1c3SJvXZhOfiLy2ebiONyWQJCag=
+	t=1720523953; cv=none; b=eWlRaSu0vEgm+Ub1aRQpcVuqEokqDlMOTVqSIQ7bNKcK0TVENqWNmd66e7P0KO5avsiEcKZo46wy942Z7NXMbeSp5P+KtaObwKjE9UMWITyyYNy/+hLSEHOodksCGDJNfmuXgel05GCybwqC5lPKdVRuiweIiMOIhRRb3gYbA+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720523950; c=relaxed/simple;
-	bh=Y7tpYwG//2G6kJlFIdWXPKSzCEyvMP+LRWH367b8yVU=;
+	s=arc-20240116; t=1720523953; c=relaxed/simple;
+	bh=o4VXzIwxUoBF+pQoQg//WdULplXyGy1E3Ibs32rHBME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iWFusBcNIAUq/x+KldeiIci/Pdu+Tct3ifBocxvHNqh3tLAZCEOvZ8PJqbegGk/ItVgryGWPvwFMjDilcf4EL9Jort35jDgNC0P0oMc8Xaz5bd8MFLV2K0BOlTEeSPHdsJ1sYV4oc+CpUYqIJxMMqI+3MBGvzfevw94VEz4FdSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ohXZZ2QQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CK0LCQXtMk2cl9RldMKilGhDr8yGbfhmhz2M9KuYq67HtGhB+jQfYqcQ7y5F8Du+uNHv3QHjTXje2M9fiA8xbInMdwq6sbhrC4V7OoQaAiEEoehR32TCbesrzxYulrRi7AkBTxuoWUUGO1HOh865sMgzai63/bs0sKBSSmcvGjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RQOu4+4g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ohXZZ2QQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C89CC3277B;
-	Tue,  9 Jul 2024 11:19:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RQOu4+4g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C3EBC3277B;
+	Tue,  9 Jul 2024 11:19:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720523950;
-	bh=Y7tpYwG//2G6kJlFIdWXPKSzCEyvMP+LRWH367b8yVU=;
+	s=korg; t=1720523953;
+	bh=o4VXzIwxUoBF+pQoQg//WdULplXyGy1E3Ibs32rHBME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ohXZZ2QQvnI2uIYQOe0Wpm7FXklv0rJXeozyS4dfvxLapUOk/RyWSCki/iWzBmLqL
-	 35/Jms3erBGdWW1HiHgOiErW4YInMwFEh/f/6jOyK6ucVv+nLUX6+M/FLJgwIJI8Tw
-	 x5k7trzMUq9XMPG0KOSgFtJSNhBheNMSoihZ63Oc=
+	b=RQOu4+4gdC/Sob+zKnskyij2b04FUexKOrfovS4j/vrRTFYtwfNvajkmFNGksImmH
+	 RpkZv/4AIVILtT6Nh7xTHB2Y8l/gu2IJ9AI/y1xJ+xFecKpT/ybVClHZtXswrqSKkQ
+	 rauM1DiYxtndB9zSuKdOkJz1HVlpYaFZq/r3Z+GQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hailey Mothershead <hailmo@amazon.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Fei Shao <fshao@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
+	Sebastian Fricke <sebastian.fricke@collabora.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 022/197] crypto: aead,cipher - zeroize key buffer after use
-Date: Tue,  9 Jul 2024 13:07:56 +0200
-Message-ID: <20240709110709.774636435@linuxfoundation.org>
+Subject: [PATCH 6.9 023/197] media: mediatek: vcodec: Only free buffer VA that is not NULL
+Date: Tue,  9 Jul 2024 13:07:57 +0200
+Message-ID: <20240709110709.813501146@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -51,51 +54,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hailey Mothershead <hailmo@amazon.com>
+From: Fei Shao <fshao@chromium.org>
 
-[ Upstream commit 23e4099bdc3c8381992f9eb975c79196d6755210 ]
+[ Upstream commit eb005c801ec70ff4307727bd3bd6e8280169ef32 ]
 
-I.G 9.7.B for FIPS 140-3 specifies that variables temporarily holding
-cryptographic information should be zeroized once they are no longer
-needed. Accomplish this by using kfree_sensitive for buffers that
-previously held the private key.
+In the MediaTek vcodec driver, while mtk_vcodec_mem_free() is mostly
+called only when the buffer to free exists, there are some instances
+that didn't do the check and triggered warnings in practice.
 
-Signed-off-by: Hailey Mothershead <hailmo@amazon.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+We believe those checks were forgotten unintentionally. Add the checks
+back to fix the warnings.
+
+Signed-off-by: Fei Shao <fshao@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/aead.c   | 3 +--
- crypto/cipher.c | 3 +--
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ .../vcodec/decoder/vdec/vdec_av1_req_lat_if.c | 22 +++++++++++++------
+ .../vcodec/encoder/venc/venc_h264_if.c        |  5 +++--
+ 2 files changed, 18 insertions(+), 9 deletions(-)
 
-diff --git a/crypto/aead.c b/crypto/aead.c
-index 54906633566a2..5f3c1954d8e5d 100644
---- a/crypto/aead.c
-+++ b/crypto/aead.c
-@@ -45,8 +45,7 @@ static int setkey_unaligned(struct crypto_aead *tfm, const u8 *key,
- 	alignbuffer = (u8 *)ALIGN((unsigned long)buffer, alignmask + 1);
- 	memcpy(alignbuffer, key, keylen);
- 	ret = crypto_aead_alg(tfm)->setkey(tfm, alignbuffer, keylen);
--	memset(alignbuffer, 0, keylen);
--	kfree(buffer);
-+	kfree_sensitive(buffer);
- 	return ret;
+diff --git a/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_av1_req_lat_if.c b/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_av1_req_lat_if.c
+index 2b6a5adbc4199..b0e2e59f61b5d 100644
+--- a/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_av1_req_lat_if.c
++++ b/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_av1_req_lat_if.c
+@@ -1023,18 +1023,26 @@ static void vdec_av1_slice_free_working_buffer(struct vdec_av1_slice_instance *i
+ 	int i;
+ 
+ 	for (i = 0; i < ARRAY_SIZE(instance->mv); i++)
+-		mtk_vcodec_mem_free(ctx, &instance->mv[i]);
++		if (instance->mv[i].va)
++			mtk_vcodec_mem_free(ctx, &instance->mv[i]);
+ 
+ 	for (i = 0; i < ARRAY_SIZE(instance->seg); i++)
+-		mtk_vcodec_mem_free(ctx, &instance->seg[i]);
++		if (instance->seg[i].va)
++			mtk_vcodec_mem_free(ctx, &instance->seg[i]);
+ 
+ 	for (i = 0; i < ARRAY_SIZE(instance->cdf); i++)
+-		mtk_vcodec_mem_free(ctx, &instance->cdf[i]);
++		if (instance->cdf[i].va)
++			mtk_vcodec_mem_free(ctx, &instance->cdf[i]);
++
+ 
+-	mtk_vcodec_mem_free(ctx, &instance->tile);
+-	mtk_vcodec_mem_free(ctx, &instance->cdf_temp);
+-	mtk_vcodec_mem_free(ctx, &instance->cdf_table);
+-	mtk_vcodec_mem_free(ctx, &instance->iq_table);
++	if (instance->tile.va)
++		mtk_vcodec_mem_free(ctx, &instance->tile);
++	if (instance->cdf_temp.va)
++		mtk_vcodec_mem_free(ctx, &instance->cdf_temp);
++	if (instance->cdf_table.va)
++		mtk_vcodec_mem_free(ctx, &instance->cdf_table);
++	if (instance->iq_table.va)
++		mtk_vcodec_mem_free(ctx, &instance->iq_table);
+ 
+ 	instance->level = AV1_RES_NONE;
+ }
+diff --git a/drivers/media/platform/mediatek/vcodec/encoder/venc/venc_h264_if.c b/drivers/media/platform/mediatek/vcodec/encoder/venc/venc_h264_if.c
+index a68dac72c4e42..f8145998fcaf7 100644
+--- a/drivers/media/platform/mediatek/vcodec/encoder/venc/venc_h264_if.c
++++ b/drivers/media/platform/mediatek/vcodec/encoder/venc/venc_h264_if.c
+@@ -301,11 +301,12 @@ static void h264_enc_free_work_buf(struct venc_h264_inst *inst)
+ 	 * other buffers need to be freed by AP.
+ 	 */
+ 	for (i = 0; i < VENC_H264_VPU_WORK_BUF_MAX; i++) {
+-		if (i != VENC_H264_VPU_WORK_BUF_SKIP_FRAME)
++		if (i != VENC_H264_VPU_WORK_BUF_SKIP_FRAME && inst->work_bufs[i].va)
+ 			mtk_vcodec_mem_free(inst->ctx, &inst->work_bufs[i]);
+ 	}
+ 
+-	mtk_vcodec_mem_free(inst->ctx, &inst->pps_buf);
++	if (inst->pps_buf.va)
++		mtk_vcodec_mem_free(inst->ctx, &inst->pps_buf);
  }
  
-diff --git a/crypto/cipher.c b/crypto/cipher.c
-index 47c77a3e59783..40cae908788ec 100644
---- a/crypto/cipher.c
-+++ b/crypto/cipher.c
-@@ -34,8 +34,7 @@ static int setkey_unaligned(struct crypto_cipher *tfm, const u8 *key,
- 	alignbuffer = (u8 *)ALIGN((unsigned long)buffer, alignmask + 1);
- 	memcpy(alignbuffer, key, keylen);
- 	ret = cia->cia_setkey(crypto_cipher_tfm(tfm), alignbuffer, keylen);
--	memset(alignbuffer, 0, keylen);
--	kfree(buffer);
-+	kfree_sensitive(buffer);
- 	return ret;
- 
- }
+ static int h264_enc_alloc_work_buf(struct venc_h264_inst *inst, bool is_34bit)
 -- 
 2.43.0
 
