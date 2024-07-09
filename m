@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220AF55E4C;
-	Tue,  9 Jul 2024 11:33:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B8BE12CDB6;
+	Tue,  9 Jul 2024 11:33:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524789; cv=none; b=CDTmfZeneLkPCE6u4M/GmDT5F+AZEtcXivVJSKt2BbiQP7ZCC0hUI8fEZYULEXp4/i5IbjW6LjHc3TctMWNP/0iTN1KXb7Ssq8FqQR3+ZeIW0tCetmGt4I9be/iD+7x7OW5UUl0py1lh7mN+nnsCX/ax67h72J6hfxWOJ58NAqs=
+	t=1720524792; cv=none; b=qij5lTGpfrtIzEGsLyfckrrtlBzxyRe9afZaJlgCU4EGaQvEfkZDT+s+xqfuriWm3dQO3C26uvwR0BWUnh0ePrYdpL/uhi5YMiYcvTeyar/BpY8OUV5tU+L9t95Fmadbl5aHa+Hp3MXfyb7jIaUoukjqnz/mR5RL1HnwJ5kTlcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524789; c=relaxed/simple;
-	bh=68V84yVTfmii6TLJY8XDU847/LX+x7W/+TgaCybPqOE=;
+	s=arc-20240116; t=1720524792; c=relaxed/simple;
+	bh=3vbQml/qHuQxs+L/zU4umPLpXkoolgHQhNZfp/DzX7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bi90dkU0ZAUa87oh6/3ibAm1EUVm8V1UcIwsZRYvyS8NI7dNgzLR+n/bqj1aKKzRFvivqs9EKVZz7s405vbORHcFGDGQnltDiFEK3b6Ene1iRD33uUa/ENr65X/wsXFioWXysXdRfTnhMMrkXACbO1zjXPGJktk55xJ1DjXSLQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o9bNZVe/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f32yjno2dOhV7dMsC+6S4RZG4d/d6ModiUchzOoUH8hDgyggkou3gFR2MBbWSV9XtfXL5Cnu1Rj3eeSqm5OlB1fgHhD0WB5c1Ja+zifavJzsThwqjsN4DrTQVmZWRiXqWqo8hLuVEw7WlM0VD8BZUlbqblFnyDPr6aQooWLHoKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lU7lA5t4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o9bNZVe/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B562C3277B;
-	Tue,  9 Jul 2024 11:33:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lU7lA5t4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9677BC3277B;
+	Tue,  9 Jul 2024 11:33:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524789;
-	bh=68V84yVTfmii6TLJY8XDU847/LX+x7W/+TgaCybPqOE=;
+	s=korg; t=1720524792;
+	bh=3vbQml/qHuQxs+L/zU4umPLpXkoolgHQhNZfp/DzX7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o9bNZVe/W+lRR0/wOCPBIs7LbQaImLlMhyKWRkSx1R7DfJkPOJPcV2tNGWAEg2kWU
-	 3ffKCoC+Kgg1q1bADl9T+w2zSgVS83C7pvTkJpN7f+vpSvjLJ9f7OWWkLhl7O7Kien
-	 yT5VgNl7W31JZ7D+3xnv9WhhugzvXPXrkXDAc85I=
+	b=lU7lA5t4zH0lN4U+R8R4nHAPHOuXVrer2XXO6Ka7XyPbAlQVhhgb98gSNADgs/Rkz
+	 TWYUsMoVDv0r45JWZZ87gUPcvNeqegAJGfx5IvhAG3FAKyPuK0V/s6FrgyI2OAS06m
+	 e6is3EkIJ3kn2FktO9IuT6rHWs6NQzBll6dmRHCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Hillf Danton <hdanton@sina.com>,
-	Jan Kara <jack@suse.cz>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 102/102] nilfs2: fix incorrect inode allocation from reserved inodes
-Date: Tue,  9 Jul 2024 13:11:05 +0200
-Message-ID: <20240709110655.331313844@linuxfoundation.org>
+	Pin-yen Lin <treapking@chromium.org>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 087/102] clk: mediatek: mt8183: Only enable runtime PM on mt8183-mfgcfg
+Date: Tue,  9 Jul 2024 13:10:50 +0200
+Message-ID: <20240709110654.757847507@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110651.353707001@linuxfoundation.org>
 References: <20240709110651.353707001@linuxfoundation.org>
@@ -53,148 +51,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Pin-yen Lin <treapking@chromium.org>
 
-commit 93aef9eda1cea9e84ab2453fcceb8addad0e46f1 upstream.
+[ Upstream commit 878e845d8db04df9ff3bbbaac09d335b24153704 ]
 
-If the bitmap block that manages the inode allocation status is corrupted,
-nilfs_ifile_create_inode() may allocate a new inode from the reserved
-inode area where it should not be allocated.
+Commit 2f7b1d8b5505 ("clk: mediatek: Do a runtime PM get on controllers
+during probe") enabled runtime PM for all mediatek clock controllers,
+but this introduced an issue on the resume path.
 
-Previous fix commit d325dc6eb763 ("nilfs2: fix use-after-free bug of
-struct nilfs_root"), fixed the problem that reserved inodes with inode
-numbers less than NILFS_USER_INO (=11) were incorrectly reallocated due to
-bitmap corruption, but since the start number of non-reserved inodes is
-read from the super block and may change, in which case inode allocation
-may occur from the extended reserved inode area.
+If a device resumes earlier than the clock controller and calls
+clk_prepare() when runtime PM is enabled on the controller, it will end
+up calling clk_pm_runtime_get(). But the subsequent
+pm_runtime_resume_and_get() call will fail because the runtime PM is
+temporarily disabled during suspend.
 
-If that happens, access to that inode will cause an IO error, causing the
-file system to degrade to an error state.
+To workaround this, introduce a need_runtime_pm flag and only enable it
+on mt8183-mfgcfg, which is the driver that observed deadlock previously.
+Hopefully mt8183-cfgcfg won't run into the issue at the resume stage
+because the GPU should have stopped rendering before the system calls
+suspend.
 
-Fix this potential issue by adding a wraparound option to the common
-metadata object allocation routine and by modifying
-nilfs_ifile_create_inode() to disable the option so that it only allocates
-inodes with inode numbers greater than or equal to the inode number read
-in "nilfs->ns_first_ino", regardless of the bitmap status of reserved
-inodes.
-
-Link: https://lkml.kernel.org/r/20240623051135.4180-4-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: Hillf Danton <hdanton@sina.com>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2f7b1d8b5505 ("clk: mediatek: Do a runtime PM get on controllers during probe")
+Signed-off-by: Pin-yen Lin <treapking@chromium.org>
+Link: https://lore.kernel.org/r/20240613120357.1043342-1-treapking@chromium.org
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/alloc.c |   18 ++++++++++++++----
- fs/nilfs2/alloc.h |    4 ++--
- fs/nilfs2/dat.c   |    2 +-
- fs/nilfs2/ifile.c |    7 ++-----
- 4 files changed, 19 insertions(+), 12 deletions(-)
+ drivers/clk/mediatek/clk-mt8183-mfgcfg.c |  1 +
+ drivers/clk/mediatek/clk-mtk.c           | 24 ++++++++++++++----------
+ drivers/clk/mediatek/clk-mtk.h           |  2 ++
+ 3 files changed, 17 insertions(+), 10 deletions(-)
 
---- a/fs/nilfs2/alloc.c
-+++ b/fs/nilfs2/alloc.c
-@@ -377,11 +377,12 @@ void *nilfs_palloc_block_get_entry(const
-  * @target: offset number of an entry in the group (start point)
-  * @bsize: size in bits
-  * @lock: spin lock protecting @bitmap
-+ * @wrap: whether to wrap around
-  */
- static int nilfs_palloc_find_available_slot(unsigned char *bitmap,
- 					    unsigned long target,
- 					    unsigned int bsize,
--					    spinlock_t *lock)
-+					    spinlock_t *lock, bool wrap)
- {
- 	int pos, end = bsize;
- 
-@@ -397,6 +398,8 @@ static int nilfs_palloc_find_available_s
- 
- 		end = target;
- 	}
-+	if (!wrap)
-+		return -ENOSPC;
- 
- 	/* wrap around */
- 	for (pos = 0; pos < end; pos++) {
-@@ -495,9 +498,10 @@ int nilfs_palloc_count_max_entries(struc
-  * nilfs_palloc_prepare_alloc_entry - prepare to allocate a persistent object
-  * @inode: inode of metadata file using this allocator
-  * @req: nilfs_palloc_req structure exchanged for the allocation
-+ * @wrap: whether to wrap around
-  */
- int nilfs_palloc_prepare_alloc_entry(struct inode *inode,
--				     struct nilfs_palloc_req *req)
-+				     struct nilfs_palloc_req *req, bool wrap)
- {
- 	struct buffer_head *desc_bh, *bitmap_bh;
- 	struct nilfs_palloc_group_desc *desc;
-@@ -516,7 +520,7 @@ int nilfs_palloc_prepare_alloc_entry(str
- 	entries_per_group = nilfs_palloc_entries_per_group(inode);
- 
- 	for (i = 0; i < ngroups; i += n) {
--		if (group >= ngroups) {
-+		if (group >= ngroups && wrap) {
- 			/* wrap around */
- 			group = 0;
- 			maxgroup = nilfs_palloc_group(inode, req->pr_entry_nr,
-@@ -541,7 +545,13 @@ int nilfs_palloc_prepare_alloc_entry(str
- 				bitmap = bitmap_kaddr + bh_offset(bitmap_bh);
- 				pos = nilfs_palloc_find_available_slot(
- 					bitmap, group_offset,
--					entries_per_group, lock);
-+					entries_per_group, lock, wrap);
-+				/*
-+				 * Since the search for a free slot in the
-+				 * second and subsequent bitmap blocks always
-+				 * starts from the beginning, the wrap flag
-+				 * only has an effect on the first search.
-+				 */
- 				if (pos >= 0) {
- 					/* found a free entry */
- 					nilfs_palloc_group_desc_add_entries(
---- a/fs/nilfs2/alloc.h
-+++ b/fs/nilfs2/alloc.h
-@@ -50,8 +50,8 @@ struct nilfs_palloc_req {
- 	struct buffer_head *pr_entry_bh;
+diff --git a/drivers/clk/mediatek/clk-mt8183-mfgcfg.c b/drivers/clk/mediatek/clk-mt8183-mfgcfg.c
+index 730c9ae5ea124..50ccd59794464 100644
+--- a/drivers/clk/mediatek/clk-mt8183-mfgcfg.c
++++ b/drivers/clk/mediatek/clk-mt8183-mfgcfg.c
+@@ -29,6 +29,7 @@ static const struct mtk_gate mfg_clks[] = {
+ static const struct mtk_clk_desc mfg_desc = {
+ 	.clks = mfg_clks,
+ 	.num_clks = ARRAY_SIZE(mfg_clks),
++	.need_runtime_pm = true,
  };
  
--int nilfs_palloc_prepare_alloc_entry(struct inode *,
--				     struct nilfs_palloc_req *);
-+int nilfs_palloc_prepare_alloc_entry(struct inode *inode,
-+				     struct nilfs_palloc_req *req, bool wrap);
- void nilfs_palloc_commit_alloc_entry(struct inode *,
- 				     struct nilfs_palloc_req *);
- void nilfs_palloc_abort_alloc_entry(struct inode *, struct nilfs_palloc_req *);
---- a/fs/nilfs2/dat.c
-+++ b/fs/nilfs2/dat.c
-@@ -75,7 +75,7 @@ int nilfs_dat_prepare_alloc(struct inode
- {
- 	int ret;
+ static const struct of_device_id of_match_clk_mt8183_mfg[] = {
+diff --git a/drivers/clk/mediatek/clk-mtk.c b/drivers/clk/mediatek/clk-mtk.c
+index 42ae5c0d56467..9dbfc11d5c591 100644
+--- a/drivers/clk/mediatek/clk-mtk.c
++++ b/drivers/clk/mediatek/clk-mtk.c
+@@ -472,14 +472,16 @@ int mtk_clk_simple_probe(struct platform_device *pdev)
+ 	}
  
--	ret = nilfs_palloc_prepare_alloc_entry(dat, req);
-+	ret = nilfs_palloc_prepare_alloc_entry(dat, req, true);
- 	if (ret < 0)
- 		return ret;
  
---- a/fs/nilfs2/ifile.c
-+++ b/fs/nilfs2/ifile.c
-@@ -55,13 +55,10 @@ int nilfs_ifile_create_inode(struct inod
- 	struct nilfs_palloc_req req;
- 	int ret;
+-	devm_pm_runtime_enable(&pdev->dev);
+-	/*
+-	 * Do a pm_runtime_resume_and_get() to workaround a possible
+-	 * deadlock between clk_register() and the genpd framework.
+-	 */
+-	r = pm_runtime_resume_and_get(&pdev->dev);
+-	if (r)
+-		return r;
++	if (mcd->need_runtime_pm) {
++		devm_pm_runtime_enable(&pdev->dev);
++		/*
++		 * Do a pm_runtime_resume_and_get() to workaround a possible
++		 * deadlock between clk_register() and the genpd framework.
++		 */
++		r = pm_runtime_resume_and_get(&pdev->dev);
++		if (r)
++			return r;
++	}
  
--	req.pr_entry_nr = 0;  /*
--			       * 0 says find free inode from beginning
--			       * of a group. dull code!!
--			       */
-+	req.pr_entry_nr = NILFS_FIRST_INO(ifile->i_sb);
- 	req.pr_entry_bh = NULL;
+ 	/* Calculate how many clk_hw_onecell_data entries to allocate */
+ 	num_clks = mcd->num_clks + mcd->num_composite_clks;
+@@ -550,7 +552,8 @@ int mtk_clk_simple_probe(struct platform_device *pdev)
+ 			goto unregister_clks;
+ 	}
  
--	ret = nilfs_palloc_prepare_alloc_entry(ifile, &req);
-+	ret = nilfs_palloc_prepare_alloc_entry(ifile, &req, false);
- 	if (!ret) {
- 		ret = nilfs_palloc_get_entry_block(ifile, req.pr_entry_nr, 1,
- 						   &req.pr_entry_bh);
+-	pm_runtime_put(&pdev->dev);
++	if (mcd->need_runtime_pm)
++		pm_runtime_put(&pdev->dev);
+ 
+ 	return r;
+ 
+@@ -578,7 +581,8 @@ int mtk_clk_simple_probe(struct platform_device *pdev)
+ 	if (mcd->shared_io && base)
+ 		iounmap(base);
+ 
+-	pm_runtime_put(&pdev->dev);
++	if (mcd->need_runtime_pm)
++		pm_runtime_put(&pdev->dev);
+ 	return r;
+ }
+ EXPORT_SYMBOL_GPL(mtk_clk_simple_probe);
+diff --git a/drivers/clk/mediatek/clk-mtk.h b/drivers/clk/mediatek/clk-mtk.h
+index 361de8078df01..65c24ab6c9470 100644
+--- a/drivers/clk/mediatek/clk-mtk.h
++++ b/drivers/clk/mediatek/clk-mtk.h
+@@ -210,6 +210,8 @@ struct mtk_clk_desc {
+ 
+ 	int (*clk_notifier_func)(struct device *dev, struct clk *clk);
+ 	unsigned int mfg_clk_idx;
++
++	bool need_runtime_pm;
+ };
+ 
+ int mtk_clk_simple_probe(struct platform_device *pdev);
+-- 
+2.43.0
+
 
 
