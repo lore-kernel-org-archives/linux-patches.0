@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CAC27713;
-	Tue,  9 Jul 2024 11:26:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D9A627713;
+	Tue,  9 Jul 2024 11:26:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720524400; cv=none; b=s0LOtXhnAUKscQSIjfZVQk/pgyx6IBwvKFqJjev8sADfHWplYKaRO5h1R9udh6pBRC0uv9vdlpBqzhMPP2caHsIJmM/Y8Z35sfjVWbedy8fFoQlwehgYRaLycoyW5s4SQi9nqHAf5dzwVIgTDvqDbqmZ8Dbmhyaww3n8LD16AUk=
+	t=1720524403; cv=none; b=fmfXwsg1DxYevIuIoboHENWV1BscystTnQftFF6S4r7Mp5uuTgqzM8R6d3pNt32axTaiRx46FugbqelmAMKvjFem6sOaSQ3GI1HtasmuXEKu74Degs+xF9SCRAkJYILkPj6kFpa79exlL1XBdPbVVZjT37MI/10ULT26v8OPpJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720524400; c=relaxed/simple;
-	bh=e3MLiYlGVYUt1dEs/fjcjAxF9+/vDf+jTBL8rc9hwwQ=;
+	s=arc-20240116; t=1720524403; c=relaxed/simple;
+	bh=FJADvsO/qheMq8ZV7tdyRTzXaZhkpR+hmEmir2LXwDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SqIrbzFQbwTME5LDh9kSsVgGXPjP4V65XtXHSL9jTiTeJiFpb3iihFRFcGqUsOen13q/alLVdGxjr1WmxRI/EKx7cAxMRQIRin0nLCFfy9lq+lC/1TgL5pfCfbO1JwPfwk7txAApCvdzsQn7tB4QO4YAxmo1foVIXI4tRa1i1m4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XXat8klv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sRrxhOucT/gs97MsIvSh7940TIuIAYaZ9uLq3vyPR7y8ky/dtvA1Nus8LkhsM69fzznVvLda3EIC2wFKudKy8v5k+N7aeDuKFKcd8YndgA+GvfzXlfH2eD/vNdf2Y3/QKzYGm09yN/RW4OZ069DvxYGEQjAlzMHnfGdFq3OvgHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ufZjCz1U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XXat8klv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11F90C3277B;
-	Tue,  9 Jul 2024 11:26:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ufZjCz1U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12318C3277B;
+	Tue,  9 Jul 2024 11:26:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720524400;
-	bh=e3MLiYlGVYUt1dEs/fjcjAxF9+/vDf+jTBL8rc9hwwQ=;
+	s=korg; t=1720524403;
+	bh=FJADvsO/qheMq8ZV7tdyRTzXaZhkpR+hmEmir2LXwDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XXat8klvET4Iod2PnLzDsmB+9hEt46W+P/jDIE3+6bIquGlNo3h6HjVrIAvKKJ1yT
-	 HSmP2imXNkLqJp51GCgRwFbmJWDU1sATHjSd50+vLRtgRGGu0qzusu8OFqfsc0reKb
-	 Avft2T1GfulOmvw6BSt1D/u3c5zhnEYOxZrgZjIY=
+	b=ufZjCz1UT5MfYOGFcXdgZRKBTtoYidgfvWY7jVyfzguzs6A3nRxrVZsU5fXwy80CQ
+	 96xmya10q9ReygC8PrPhqspk+VYrv1CKahoH8tKbRhwRr1rnLM/oltPPgbLwCf04Up
+	 2TcXCKNwQpPMpK0OnSgruFxEdodRRO/0bvQJ1O1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Dahl <ada@thorsis.com>,
-	Steven Seeger <steven.seeger@flightsystems.net>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>
-Subject: [PATCH 6.9 162/197] mtd: rawnand: Bypass a couple of sanity checks during NAND identification
-Date: Tue,  9 Jul 2024 13:10:16 +0200
-Message-ID: <20240709110715.222768772@linuxfoundation.org>
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.9 171/197] clk: qcom: clk-alpha-pll: set ALPHA_EN bit for Stromer Plus PLLs
+Date: Tue,  9 Jul 2024 13:10:25 +0200
+Message-ID: <20240709110715.568561061@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -52,130 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-commit 8754d9835683e8fab9a8305acdb38a3aeb9d20bd upstream.
+[ Upstream commit 5a33a64524e6381c399e5e42571d9363ffc0bed4 ]
 
-Early during NAND identification, mtd_info fields have not yet been
-initialized (namely, writesize and oobsize) and thus cannot be used for
-sanity checks yet. Of course if there is a misuse of
-nand_change_read_column_op() so early we won't be warned, but there is
-anyway no actual check to perform at this stage as we do not yet know
-the NAND geometry.
+The clk_alpha_pll_stromer_plus_set_rate() function does not
+sets the ALPHA_EN bit in the USER_CTL register, so setting
+rates which requires using alpha mode works only if the bit
+gets set already prior calling the function.
 
-So, if the fields are empty, especially mtd->writesize which is *always*
-set quite rapidly after identification, let's skip the sanity checks.
+Extend the function to set the ALPHA_EN bit in order to allow
+using fractional rates regardless whether the bit gets set
+previously or not.
 
-nand_change_read_column_op() is subject to be used early for ONFI/JEDEC
-identification in the very unlikely case of:
-- bitflips appearing in the parameter page,
-- the controller driver not supporting simple DATA_IN cycles.
-
-As nand_change_read_column_op() uses nand_fill_column_cycles() the logic
-explaind above also applies in this secondary helper.
-
-Fixes: c27842e7e11f ("mtd: rawnand: onfi: Adapt the parameter page read to constraint controllers")
-Fixes: daca31765e8b ("mtd: rawnand: jedec: Adapt the parameter page read to constraint controllers")
-Cc: stable@vger.kernel.org
-Reported-by: Alexander Dahl <ada@thorsis.com>
-Closes: https://lore.kernel.org/linux-mtd/20240306-shaky-bunion-d28b65ea97d7@thorsis.com/
-Reported-by: Steven Seeger <steven.seeger@flightsystems.net>
-Closes: https://lore.kernel.org/linux-mtd/DM6PR05MB4506554457CF95191A670BDEF7062@DM6PR05MB4506.namprd05.prod.outlook.com/
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Tested-by: Sascha Hauer <s.hauer@pengutronix.de>
-Link: https://lore.kernel.org/linux-mtd/20240516131320.579822-3-miquel.raynal@bootlin.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 84da48921a97 ("clk: qcom: clk-alpha-pll: introduce stromer plus ops")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Link: https://lore.kernel.org/r/20240508-stromer-plus-alpha-en-v1-1-6639ce01ca5b@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/nand_base.c |   57 +++++++++++++++++++++------------------
- 1 file changed, 32 insertions(+), 25 deletions(-)
+ drivers/clk/qcom/clk-alpha-pll.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/mtd/nand/raw/nand_base.c
-+++ b/drivers/mtd/nand/raw/nand_base.c
-@@ -1093,28 +1093,32 @@ static int nand_fill_column_cycles(struc
- 				   unsigned int offset_in_page)
- {
- 	struct mtd_info *mtd = nand_to_mtd(chip);
-+	bool ident_stage = !mtd->writesize;
+diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+index be18ff983d35c..003308a288968 100644
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -2555,6 +2555,9 @@ static int clk_alpha_pll_stromer_plus_set_rate(struct clk_hw *hw,
+ 	regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL_U(pll),
+ 					a >> ALPHA_BITWIDTH);
  
--	/* Make sure the offset is less than the actual page size. */
--	if (offset_in_page > mtd->writesize + mtd->oobsize)
--		return -EINVAL;
--
--	/*
--	 * On small page NANDs, there's a dedicated command to access the OOB
--	 * area, and the column address is relative to the start of the OOB
--	 * area, not the start of the page. Asjust the address accordingly.
--	 */
--	if (mtd->writesize <= 512 && offset_in_page >= mtd->writesize)
--		offset_in_page -= mtd->writesize;
--
--	/*
--	 * The offset in page is expressed in bytes, if the NAND bus is 16-bit
--	 * wide, then it must be divided by 2.
--	 */
--	if (chip->options & NAND_BUSWIDTH_16) {
--		if (WARN_ON(offset_in_page % 2))
-+	/* Bypass all checks during NAND identification */
-+	if (likely(!ident_stage)) {
-+		/* Make sure the offset is less than the actual page size. */
-+		if (offset_in_page > mtd->writesize + mtd->oobsize)
- 			return -EINVAL;
- 
--		offset_in_page /= 2;
-+		/*
-+		 * On small page NANDs, there's a dedicated command to access the OOB
-+		 * area, and the column address is relative to the start of the OOB
-+		 * area, not the start of the page. Asjust the address accordingly.
-+		 */
-+		if (mtd->writesize <= 512 && offset_in_page >= mtd->writesize)
-+			offset_in_page -= mtd->writesize;
++	regmap_update_bits(pll->clkr.regmap, PLL_USER_CTL(pll),
++			   PLL_ALPHA_EN, PLL_ALPHA_EN);
 +
-+		/*
-+		 * The offset in page is expressed in bytes, if the NAND bus is 16-bit
-+		 * wide, then it must be divided by 2.
-+		 */
-+		if (chip->options & NAND_BUSWIDTH_16) {
-+			if (WARN_ON(offset_in_page % 2))
-+				return -EINVAL;
-+
-+			offset_in_page /= 2;
-+		}
- 	}
+ 	regmap_write(pll->clkr.regmap, PLL_MODE(pll), PLL_BYPASSNL);
  
- 	addrs[0] = offset_in_page;
-@@ -1123,7 +1127,7 @@ static int nand_fill_column_cycles(struc
- 	 * Small page NANDs use 1 cycle for the columns, while large page NANDs
- 	 * need 2
- 	 */
--	if (mtd->writesize <= 512)
-+	if (!ident_stage && mtd->writesize <= 512)
- 		return 1;
- 
- 	addrs[1] = offset_in_page >> 8;
-@@ -1436,16 +1440,19 @@ int nand_change_read_column_op(struct na
- 			       unsigned int len, bool force_8bit)
- {
- 	struct mtd_info *mtd = nand_to_mtd(chip);
-+	bool ident_stage = !mtd->writesize;
- 
- 	if (len && !buf)
- 		return -EINVAL;
- 
--	if (offset_in_page + len > mtd->writesize + mtd->oobsize)
--		return -EINVAL;
-+	if (!ident_stage) {
-+		if (offset_in_page + len > mtd->writesize + mtd->oobsize)
-+			return -EINVAL;
- 
--	/* Small page NANDs do not support column change. */
--	if (mtd->writesize <= 512)
--		return -ENOTSUPP;
-+		/* Small page NANDs do not support column change. */
-+		if (mtd->writesize <= 512)
-+			return -ENOTSUPP;
-+	}
- 
- 	if (nand_has_exec_op(chip)) {
- 		const struct nand_interface_config *conf =
+ 	/* Wait five micro seconds or more */
+-- 
+2.43.0
+
 
 
