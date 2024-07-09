@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ECF719DF77;
-	Tue,  9 Jul 2024 16:06:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45A0519DF8C;
+	Tue,  9 Jul 2024 16:07:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720541216; cv=none; b=HyqnCwmaXlbFMThlEzyO0Iz+uQNI8JM/2MtTQdtO0M92yj4QrdIb4F4gSe6v4Vs895RpeO4DbHRzWkwKey0dxwmPrKXKvhaO75vOyWeE0/craBJ3iNZU95kfGUCePftZ4aNLBm0s73WBdJID7/jk19yQriuJwYkYcXMfLxE+g64=
+	t=1720541220; cv=none; b=CL1pN3JbD8c72COI1dqawd+teq4hg9BNYutyDOrgX0dJx86jkYL/rY7fPxndfTlXKlK72B/ejUqWelMqIW1KsfkYoN6MUo4elBmTc+nTabmCgrmIy0Up4/0hgAO8vNBT6wxs7tMgAccfzK9mvS2IkGyam+r9lBkaJ4PMn/Yu91s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720541216; c=relaxed/simple;
-	bh=pi7YG3fAnZQi7Cj4nC9+KKBDACso0SQUfDm0WVNC4lg=;
+	s=arc-20240116; t=1720541220; c=relaxed/simple;
+	bh=HQHUmdnOkscprt/iBjeV6ZSvrG1OA8cuTru0fUXpeso=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cf5l0xT1gGaCwlLk1rgVMQzjmeVIqXrPHGPnD0e/a88QC/iktQHJOxZkNtYr9D9K9gcO7M4SEG1n57ONWe96BgR4lDDhO3/MPvZjSqpv4O5xXAIR8hJxmtNPvLXi8EYzrWQ4OJ+4YL4dVk1hkyMQQlolcE9NDAn5IhEyWJiHc5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M6KcHHda; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YQmw3SCPp6uhgfHKVpcTbkmeohX6chQcv0wEuzlb7vQ3VR74okHTiu4Dmnn2B90jU/+B0YU8Daz6ISPil0rEsO72zAp+s6UOtP5OBu6jhhJkK7mwgYmVXRu3w/XevI1W10UOM+Gi1ceAKuB5mofCbwG4Lsg6JrQp0XE0bXvfHIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DhJp0cc3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M6KcHHda"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE934C4AF10;
-	Tue,  9 Jul 2024 16:06:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DhJp0cc3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEC69C3277B;
+	Tue,  9 Jul 2024 16:06:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720541216;
-	bh=pi7YG3fAnZQi7Cj4nC9+KKBDACso0SQUfDm0WVNC4lg=;
+	s=k20201202; t=1720541220;
+	bh=HQHUmdnOkscprt/iBjeV6ZSvrG1OA8cuTru0fUXpeso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M6KcHHda0G4jh/UDSWd547/uiSjcMEnTaif1WeQPVLDB+grIlEvKIvEAAXo4wfbpn
-	 wphL/KF5VewyoN9zphp5baEcg9Id/jtlg4plRGGdA0ZaEhyRCL75ZsJeLg4eHTnSeB
-	 9QxsbkNe2ySKhQk1cbgB7owipztAKTxk/xzzu0/cSlzlcvLjzYwtr26UKTSx2nXm4Q
-	 p1VgZeov0TdrcRdOyrkewszfEGsYs8Oo01BNCU041OJjMyiRf+XelsZn0fy/X8jMVG
-	 BSoQc80ZTX00pqTlSwgvIeH2WCpOItNoQLZSPkKorANdRsSl8FGTu8lPji2Z7YvxvP
-	 vJnZAi1DdkV1w==
+	b=DhJp0cc3RSAngRKtvICldpzZuCaQTdwzeVw3UcvwygHBmFsHireRnsMjAYyAnGcUA
+	 ulMIXHqW7buyyl/04F0obX1dItNezOxSzgNP+MBL63KW1i/yWErF15yE/DiC4hXs2M
+	 /vj4kuBK1dEx+IcLhL9Se8xti6UfABMUgR16kIkLkyCmv/zY32dKweHKzTKRVwKJHL
+	 kHItIaNm9VCyhm+C6QIvLNobuVwIdJ225xiooHWw2Hc08kOv/Ik1BMp4yql7wtFxE5
+	 CMhDXdqxJVIra7FXpmSSjzyF+3ao6bDcyAcC3SdPTGKw6qikv5HYwXotoDAG9Plf+C
+	 5gyPGnf4Tzwkg==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>,
 	Wedson Almeida Filho <wedsonaf@gmail.com>,
@@ -39,11 +39,10 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	Jonathan Corbet <corbet@lwn.net>,
-	linux-doc@vger.kernel.org
-Subject: [PATCH v2 07/13] rust: avoid assuming a particular `bindgen` build
-Date: Tue,  9 Jul 2024 18:06:02 +0200
-Message-ID: <20240709160615.998336-8-ojeda@kernel.org>
+	Finn Behrens <me@kloenk.dev>
+Subject: [PATCH v2 08/13] rust: work around `bindgen` 0.69.0 issue
+Date: Tue,  9 Jul 2024 18:06:03 +0200
+Message-ID: <20240709160615.998336-9-ojeda@kernel.org>
 In-Reply-To: <20240709160615.998336-1-ojeda@kernel.org>
 References: <20240709160615.998336-1-ojeda@kernel.org>
 Precedence: bulk
@@ -54,123 +53,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-`bindgen`'s logic to find `libclang` (via `clang-sys`) may change over
-time, and depends on how it was built (e.g. Linux distributions may decide
-to build it differently, and we are going to provide documentation on
-installing it via distributions later in this series).
+`bindgen` 0.69.0 contains a bug: `--version` does not work without
+providing a header [1]:
 
-Therefore, clarify that `bindgen` may be built in several ways and
-simplify the documentation by only mentioning the most prominent
-environment variable (`LIBCLANG_PATH`) as an example on how to tweak the
-search of the library at runtime (i.e. when `bindgen` is built as our
-documentation explains). This also avoids duplicating the documentation,
-like `bindgen` itself does (i.e. it refers to `clang-sys`).
+    error: the following required arguments were not provided:
+      <HEADER>
 
-Similarly, replace the test we had for this (which used the real program)
-with a mocked one, to avoid depending on the particular build as well.
+    Usage: bindgen <FLAGS> <OPTIONS> <HEADER> -- <CLANG_ARGS>...
 
+Thus, in preparation for supporting several `bindgen` versions, work
+around the issue by passing a dummy argument.
+
+Include a comment so that we can remove the workaround in the future.
+
+Link: https://github.com/rust-lang/rust-bindgen/pull/2678 [1]
+Reviewed-by: Finn Behrens <me@kloenk.dev>
 Tested-by: Benno Lossin <benno.lossin@proton.me>
 Tested-by: Andreas Hindborg <a.hindborg@samsung.com>
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- Documentation/rust/quick-start.rst | 23 +++++++++--------------
- scripts/rust_is_available_test.py  | 25 +++++++++++++++----------
- 2 files changed, 24 insertions(+), 24 deletions(-)
+ init/Kconfig                 | 5 ++++-
+ scripts/rust_is_available.sh | 6 +++++-
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/rust/quick-start.rst b/Documentation/rust/quick-start.rst
-index 89bbfde8c96c..5ea8c8914942 100644
---- a/Documentation/rust/quick-start.rst
-+++ b/Documentation/rust/quick-start.rst
-@@ -113,20 +113,15 @@ Install it via (note that this will download and build the tool from source)::
+diff --git a/init/Kconfig b/init/Kconfig
+index febdea2afc3b..94e20d3b99d4 100644
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -1928,7 +1928,10 @@ config RUSTC_VERSION_TEXT
+ config BINDGEN_VERSION_TEXT
+ 	string
+ 	depends on RUST
+-	default $(shell,command -v $(BINDGEN) >/dev/null 2>&1 && $(BINDGEN) --version || echo n)
++	# The dummy parameter `workaround-for-0.69.0` is required to support 0.69.0
++	# (https://github.com/rust-lang/rust-bindgen/pull/2678). It can be removed when
++	# the minimum version is upgraded past that (0.69.1 already fixed the issue).
++	default $(shell,command -v $(BINDGEN) >/dev/null 2>&1 && $(BINDGEN) --version workaround-for-0.69.0 || echo n)
  
- 	cargo install --locked --version $(scripts/min-tool-version.sh bindgen) bindgen-cli
- 
--``bindgen`` needs to find a suitable ``libclang`` in order to work. If it is
--not found (or a different ``libclang`` than the one found should be used),
--the process can be tweaked using the environment variables understood by
--``clang-sys`` (the Rust bindings crate that ``bindgen`` uses to access
--``libclang``):
--
--* ``LLVM_CONFIG_PATH`` can be pointed to an ``llvm-config`` executable.
--
--* Or ``LIBCLANG_PATH`` can be pointed to a ``libclang`` shared library
--  or to the directory containing it.
--
--* Or ``CLANG_PATH`` can be pointed to a ``clang`` executable.
--
--For details, please see ``clang-sys``'s documentation at:
-+``bindgen`` uses the ``clang-sys`` crate to find a suitable ``libclang`` (which
-+may be linked statically, dynamically or loaded at runtime). By default, the
-+``cargo`` command above will produce a ``bindgen`` binary that will load
-+``libclang`` at runtime. If it is not found (or a different ``libclang`` than
-+the one found should be used), the process can be tweaked, e.g. by using the
-+``LIBCLANG_PATH`` environment variable. For details, please see ``clang-sys``'s
-+documentation at:
-+
-+	https://github.com/KyleMayes/clang-sys#linking
- 
- 	https://github.com/KyleMayes/clang-sys#environment-variables
- 
-diff --git a/scripts/rust_is_available_test.py b/scripts/rust_is_available_test.py
-index a255f79aafc2..0481aab862ec 100755
---- a/scripts/rust_is_available_test.py
-+++ b/scripts/rust_is_available_test.py
-@@ -55,10 +55,15 @@ else:
- 
-     @classmethod
-     def generate_bindgen(cls, version_stdout, libclang_stderr):
-+        if libclang_stderr is None:
-+            libclang_case = f"raise SystemExit({cls.bindgen_default_bindgen_libclang_failure_exit_code})"
-+        else:
-+            libclang_case = f"print({repr(libclang_stderr)}, file=sys.stderr)"
-+
-         return cls.generate_executable(f"""#!/usr/bin/env python3
- import sys
- if "rust_is_available_bindgen_libclang.h" in " ".join(sys.argv):
--    print({repr(libclang_stderr)}, file=sys.stderr)
-+    {libclang_case}
- else:
-     print({repr(version_stdout)})
- """)
-@@ -67,6 +72,10 @@ else:
-     def generate_bindgen_version(cls, stdout):
-         return cls.generate_bindgen(stdout, cls.bindgen_default_bindgen_libclang_stderr)
- 
-+    @classmethod
-+    def generate_bindgen_libclang_failure(cls):
-+        return cls.generate_bindgen(cls.bindgen_default_bindgen_version_stdout, None)
-+
-     @classmethod
-     def generate_bindgen_libclang(cls, stderr):
-         return cls.generate_bindgen(cls.bindgen_default_bindgen_version_stdout, stderr)
-@@ -89,6 +98,7 @@ else:
-         cls.rust_default_sysroot = subprocess.check_output(("rustc", "--print", "sysroot")).decode().strip()
- 
-         cls.bindgen_default_bindgen_version_stdout = f"bindgen {cls.bindgen_default_version}"
-+        cls.bindgen_default_bindgen_libclang_failure_exit_code = 42
-         cls.bindgen_default_bindgen_libclang_stderr = f"scripts/rust_is_available_bindgen_libclang.h:2:9: warning: clang version {cls.llvm_default_version} [-W#pragma-messages], err: false"
- 
-         cls.default_rustc = cls.generate_rustc(f"rustc {cls.rustc_default_version}")
-@@ -227,15 +237,10 @@ else:
-         self.assertIn(f"Rust bindings generator '{bindgen}' is too new. This may or may not work.", result.stderr)
- 
-     def test_bindgen_libclang_failure(self):
--        for env in (
--            { "LLVM_CONFIG_PATH": self.missing },
--            { "LIBCLANG_PATH": self.missing },
--            { "CLANG_PATH": self.missing },
--        ):
--            with self.subTest(env=env):
--                result = self.run_script(self.Expected.FAILURE, env | { "PATH": os.environ["PATH"], "BINDGEN": "bindgen" })
--                self.assertIn("Running 'bindgen' to check the libclang version (used by the Rust", result.stderr)
--                self.assertIn("bindings generator) failed with code ", result.stderr)
-+        bindgen = self.generate_bindgen_libclang_failure()
-+        result = self.run_script(self.Expected.FAILURE, { "BINDGEN": bindgen })
-+        self.assertIn(f"Running '{bindgen}' to check the libclang version (used by the Rust", result.stderr)
-+        self.assertIn(f"bindings generator) failed with code {self.bindgen_default_bindgen_libclang_failure_exit_code}. This may be caused by", result.stderr)
- 
-     def test_bindgen_libclang_unexpected_version(self):
-         bindgen = self.generate_bindgen_libclang("scripts/rust_is_available_bindgen_libclang.h:2:9: warning: clang version unexpected [-W#pragma-messages], err: false")
+ #
+ # Place an empty function call at each tracepoint site. Can be
+diff --git a/scripts/rust_is_available.sh b/scripts/rust_is_available.sh
+index 67cb900124cc..1881e8f2a2b9 100755
+--- a/scripts/rust_is_available.sh
++++ b/scripts/rust_is_available.sh
+@@ -121,8 +121,12 @@ fi
+ # Check that the Rust bindings generator is suitable.
+ #
+ # Non-stable and distributions' versions may have a version suffix, e.g. `-dev`.
++#
++# The dummy parameter `workaround-for-0.69.0` is required to support 0.69.0
++# (https://github.com/rust-lang/rust-bindgen/pull/2678). It can be removed when
++# the minimum version is upgraded past that (0.69.1 already fixed the issue).
+ rust_bindings_generator_output=$( \
+-	LC_ALL=C "$BINDGEN" --version 2>/dev/null
++	LC_ALL=C "$BINDGEN" --version workaround-for-0.69.0 2>/dev/null
+ ) || rust_bindings_generator_code=$?
+ if [ -n "$rust_bindings_generator_code" ]; then
+ 	echo >&2 "***"
 -- 
 2.45.2
 
