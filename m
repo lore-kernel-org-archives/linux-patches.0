@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3024A155A26;
-	Tue,  9 Jul 2024 11:18:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C88D55E4C;
+	Tue,  9 Jul 2024 11:18:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720523927; cv=none; b=Uy/yQ7HxFkgryUn6KokgMDb469xGQ+biTgBaCfHl+bjLBfCwyxy4TvVqy/f1kBYiZUC2WRJQC2DQVz+vQNqSuG3U7YPwvPpHIxMai0uIWFQydnMKMh4yWgP34T3tfyFXp+9AUkKqDFuwRVsVfFwgIk2x0k64p7AEqu3kARECOok=
+	t=1720523930; cv=none; b=NxRdtpJedmuBIuNrlx97/vxjg7M6D/M9Owi614yF1W8FYEQT9fWy+6bbKEOTaslcNJS4h3hQxZ3VltT7LhCXnqWWUwVVlBbWovLSReCSc2UK1b7YFZAkQZQ/+gzajl2RqSBQ5owGdh17KKZmyNKlDKHVEwFpHaXbh/Sy0AOWa10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720523927; c=relaxed/simple;
-	bh=VpK5Ho2qPWGqLEI7g1qA0+GzEu4kBSljFkroJq5xT5Y=;
+	s=arc-20240116; t=1720523930; c=relaxed/simple;
+	bh=8csrSV7qULwGMcyno5auIuWdIXPRLH1gASc6fKYOxzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WWpHGzC+oE50+P+2tQYL3yzXqoLKuQM7iTErt442BoISaA4+6RCou3HWs/o/AZKEkC7XkATtD6+h0a3H8FNGLmlVUVCKxcMc90V5KpK8x5ToXzOXmLkOJmOBK/bEbrGIKoCpiRz+G1OuyegP3yj6ErQS4RsuJUOcd/X93GcuZy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=05C3FfZQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mq9WoRiZmsFlkmcyQ92SUr6coiIY7G6eLbG29jvnvEhURyYA36aHhffx2stb0ZH2w1RPbGqYRf7fy+ncw22mI3NOAow8t6KIiY/3vr7WK+OGT29J/c8PNhgw3GoaCfqGgplxxeom/KPBDmm+LNbgFwzWRCeWtVO6o6Jn9dYtcOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z1EewR8h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="05C3FfZQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB4EFC3277B;
-	Tue,  9 Jul 2024 11:18:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z1EewR8h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99042C3277B;
+	Tue,  9 Jul 2024 11:18:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1720523927;
-	bh=VpK5Ho2qPWGqLEI7g1qA0+GzEu4kBSljFkroJq5xT5Y=;
+	s=korg; t=1720523930;
+	bh=8csrSV7qULwGMcyno5auIuWdIXPRLH1gASc6fKYOxzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=05C3FfZQhMNlSoRB9MCz8CioQJg5zE3E7SkxG00sQ71U6u6zfrfs4Scit1pLG5aFd
-	 iDOaIqqDEQ4GHrNyE2dxmZxr+Pd9cJ/irObAn0ZwzVBgyPEYwRWOV8P32zW54sK0jT
-	 dwBBNywhxA5kQXWuMJICEFjfGowCeJd0QBmZstkI=
+	b=z1EewR8h3N1Y45FgTu+cKUubHO3k/cTvZOcLvRphf1a68wnDlbm9xbOAFvsbX03rw
+	 F/IguFQLTkvAmO6orQiOYaKtF6c71l/Dm1IOqXfsITs7Hx4zG6Q0tPno6cUlNoP9jg
+	 JCpDDrkfrErnyUZyqfhvNSdKQZwa8ATHTyQU87rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanrui Huang <guanrui.huang@linux.alibaba.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Zenghui Yu <yuzenghui@huawei.com>,
-	Marc Zyngier <maz@kernel.org>,
+	"Jose E. Marchesi" <jemarch@gnu.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 015/197] irqchip/gic-v3-its: Remove BUG_ON in its_vpe_irq_domain_alloc
-Date: Tue,  9 Jul 2024 13:07:49 +0200
-Message-ID: <20240709110709.504762690@linuxfoundation.org>
+Subject: [PATCH 6.9 016/197] bpf: mark bpf_dummy_struct_ops.test_1 parameter as nullable
+Date: Tue,  9 Jul 2024 13:07:50 +0200
+Message-ID: <20240709110709.542779305@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
 References: <20240709110708.903245467@linuxfoundation.org>
@@ -53,39 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanrui Huang <guanrui.huang@linux.alibaba.com>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit 382d2ffe86efb1e2fa803d2cf17e5bfc34e574f3 ]
+[ Upstream commit 1479eaff1f16983d8fda7c5a08a586c21891087d ]
 
-This BUG_ON() is useless, because the same effect will be obtained
-by letting the code run its course and vm being dereferenced,
-triggering an exception.
+Test case dummy_st_ops/dummy_init_ret_value passes NULL as the first
+parameter of the test_1() function. Mark this parameter as nullable to
+make verifier aware of such possibility.
+Otherwise, NULL check in the test_1() code:
 
-So just remove this check.
+      SEC("struct_ops/test_1")
+      int BPF_PROG(test_1, struct bpf_dummy_ops_state *state)
+      {
+            if (!state)
+                    return ...;
 
-Signed-off-by: Guanrui Huang <guanrui.huang@linux.alibaba.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Zenghui Yu <yuzenghui@huawei.com>
-Acked-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20240418061053.96803-3-guanrui.huang@linux.alibaba.com
+            ... access state ...
+      }
+
+Might be removed by verifier, thus triggering NULL pointer dereference
+under certain conditions.
+
+Reported-by: Jose E. Marchesi <jemarch@gnu.org>
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20240424012821.595216-2-eddyz87@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 2 --
- 1 file changed, 2 deletions(-)
+ net/bpf/bpf_dummy_struct_ops.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index 6dbac6ec778ee..33fa6b7f41c93 100644
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -4507,8 +4507,6 @@ static int its_vpe_irq_domain_alloc(struct irq_domain *domain, unsigned int virq
- 	struct page *vprop_page;
- 	int base, nr_ids, i, err = 0;
+diff --git a/net/bpf/bpf_dummy_struct_ops.c b/net/bpf/bpf_dummy_struct_ops.c
+index de33dc1b0daad..fdbe30ad8db2f 100644
+--- a/net/bpf/bpf_dummy_struct_ops.c
++++ b/net/bpf/bpf_dummy_struct_ops.c
+@@ -230,7 +230,7 @@ static void bpf_dummy_unreg(void *kdata)
+ {
+ }
  
--	BUG_ON(!vm);
--
- 	bitmap = its_lpi_alloc(roundup_pow_of_two(nr_irqs), &base, &nr_ids);
- 	if (!bitmap)
- 		return -ENOMEM;
+-static int bpf_dummy_test_1(struct bpf_dummy_ops_state *cb)
++static int bpf_dummy_ops__test_1(struct bpf_dummy_ops_state *cb__nullable)
+ {
+ 	return 0;
+ }
+@@ -247,7 +247,7 @@ static int bpf_dummy_test_sleepable(struct bpf_dummy_ops_state *cb)
+ }
+ 
+ static struct bpf_dummy_ops __bpf_bpf_dummy_ops = {
+-	.test_1 = bpf_dummy_test_1,
++	.test_1 = bpf_dummy_ops__test_1,
+ 	.test_2 = bpf_dummy_test_2,
+ 	.test_sleepable = bpf_dummy_test_sleepable,
+ };
 -- 
 2.43.0
 
