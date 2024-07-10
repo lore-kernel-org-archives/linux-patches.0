@@ -1,95 +1,111 @@
-Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906F216DEDE
-	for <patches@lists.linux.dev>; Wed, 10 Jul 2024 09:04:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20A517BB20;
+	Wed, 10 Jul 2024 09:08:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720602293; cv=none; b=qN+UeIOFGqI5E654yhtU4sEutC3k7IEBJDnakQwKIe+bG0ENAktKhsVKwUi6i5GURkgnHjSQGcJXeRdwmXMCv6AP+rVHfQZmd/rFOzrwlnk/dgiGFEl6tP9idfouRFNmenHMOGhcC451RiX3/U3iLgNizc7QMoWKj9juoW+vxPE=
+	t=1720602491; cv=none; b=jZ/PmMt3o8bjKe6yYx9l4SuXkiM8qTuCYxpxYUJYacFf6rb/2tFQ4UCFd+B7V9Ik69hKii0kpz45tEbKg28wavrEseGV0oTR21vnJ/tqUh2/G1Hdjqwn80mxzanWosVWKV9Nqg+5j/Ia4rY440IPWuXXN53uQ9i/u863MbRwIsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720602293; c=relaxed/simple;
-	bh=DLL1xT0k5HfjitQkuRMZipxTQ7kPrbtJ5x/exRvIFJE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Yz+GS3Q1rw1yBwba2EkK2pN6jBy+Svc/HiEQ/ghWSg26TNkdcD2k2tBWoPHfLtHdNAQoRhhQTxakdZpyevYBMh/lNn5LOaMNWm17/EpbwFHDzUzFann5DDXT23tZfOU8pWCV3kS1dLRs5RhtMARp9otxgAHBBm5nmb+EO6XQ4BU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FJEKAuAs; arc=none smtp.client-ip=209.85.215.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1720602491; c=relaxed/simple;
+	bh=OwXkbQR+5KO3sIQFguLEwnm3xencoPLxOiyIzddz444=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=M27FspTn+ypFhTig/bNw+CbSwtBVoZShDPDJz4qQbQpkDuARdNveWFJBAIZNmpHi0p3DVoVvH4GexXYMfMuQCaSsY2JOtFwzz/QrTuM/l/urdckN4CFPUE3+IX2PfqVcysvJ2C/D7ojx45SWzQs1JHI+NWMFFdustri1Xi/MzEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu; spf=pass smtp.mailfrom=heusel.eu; dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b=zEYHOl8V; arc=none smtp.client-ip=212.227.126.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=heusel.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FJEKAuAs"
-Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-75cda3719efso3083866a12.3
-        for <patches@lists.linux.dev>; Wed, 10 Jul 2024 02:04:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720602292; x=1721207092; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DLL1xT0k5HfjitQkuRMZipxTQ7kPrbtJ5x/exRvIFJE=;
-        b=FJEKAuAsixsXcEQoghW4RoBP+q/NWaffYFc9BshNH11/Luy1+87hm+Mq2EDsT1MHqC
-         26FbPx+ZOlpTQdjiuDLhE4BbHyfGgog6vZYaFB8ICfOgfX3rpaYPeGthLptj8PMatBU0
-         SAMYqZgu8gMF04lj8XK/oJruXXbdVd4fIAfoAwyzOZz9CtIOmWuviKhhoF24gTz7x6ZG
-         KUMjmip4UGx61J4oKckwOTVd/5udt3Ks7roWWr8JB602XNctiL1QIZ4U5CTs7L7HR6/W
-         36scY5uMD9Dzr+pDrXWN5bKTaxqVAOvbhNsRVYTkEPXTfyGuWFzOwYO+393O4CKzA1PT
-         7Rqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720602292; x=1721207092;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DLL1xT0k5HfjitQkuRMZipxTQ7kPrbtJ5x/exRvIFJE=;
-        b=lh72ta/TeFo3I+DU0eT8r89ifZEJC3tnYWlu4XDVT3NOkeO76qNR4MPCYwwgl9W+Uk
-         OJGC895nRGPgSuxa3f/8ZmtBofNagYkRS6/bdP8n6ysTvfbODJQ9tVH1jMRQAERMpikU
-         2YoY15VPJb38wmB2bHz2TBlVxy7X2Zd8NvQpW0u0fiMzGT+IX4weamgA2vcxXgpPo0I/
-         R3/S6n8bnKERBmYSEwWTiIP8OuV3id/YGfo4NZzLZ6q59ZaxTNkUbqd88+WUknt3DIPt
-         /64R+D7DMVM6rIIChak1wndQo1ViE/SrbjNP3429izBvTu8jxZIy/RDb0G3q06a8k3pR
-         UZMA==
-X-Forwarded-Encrypted: i=1; AJvYcCWKRhnSCgTr0d6qsq/kxez6Ee3yZ2iAogrtB8V91LiKqEiDfrD82dzwyWtZWkctHjIXqM5fzTLZK9vYfN5/BwRF77wI07xJQQ==
-X-Gm-Message-State: AOJu0Yz1Ih0uPujyKH+rlfYHIPb8dLHmlU9CaYkX64bWey0D8aypPu38
-	tjAV5egIEsO/oozIWO++bdyi5h+/mLEshowtyvA7EZW9LqodJ/wyH+VYN/VVgdus07a/n9orssQ
-	KnSsV/TJgJufBz/Byt+fzLJts0sM=
-X-Google-Smtp-Source: AGHT+IGd/ocnQeH814AHjmzEOnDp2IpB57VMlUlLakN67CAmTn7bF++fqYN7Y9GbomXoia+gsVx4qX4rLya4UThHdk0=
-X-Received: by 2002:a05:6a21:3285:b0:1be:cea:d381 with SMTP id
- adf61e73a8af0-1c298226c3amr5645713637.18.1720602291779; Wed, 10 Jul 2024
- 02:04:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b="zEYHOl8V"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=heusel.eu;
+	s=s1-ionos; t=1720602449; x=1721207249; i=christian@heusel.eu;
+	bh=5PIwsLcrFIdPwJQZDhPgaBW9K4bw6t/Q6QH8AE4deKA=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:In-Reply-To:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=zEYHOl8V6eECJnc9e7nBDpsuQp5KmmckZm7oy4bNXqNO6me7OpCqeWnKVERg58sU
+	 0MRThqLXO1SUUjvjylxtTYZ1DTd1WKmqqLtoeY5QGyiQKsjHmcWTj7PJ2WSCOs74C
+	 1W1Sx6vVdcw1SmGkeeleeU16sqKob/Q7zNByaHKCX8eUHE7iOAcqv0BzkI3YfaWv0
+	 lfcPST4DuArldIzfruS8dkVuhAHrGlGpEU3wySimy30pKa8UBObZElGx5IQBOEhY7
+	 nRNG0b3zTvvSjHkMaY/3x6HfcHXny8Gqcrz7e6+d55tH0HVTpMDOvUT0LkZBve5cp
+	 PnKrjD/8xdJWboPWVQ==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from localhost ([78.42.228.106]) by mrelayeu.kundenserver.de
+ (mreue012 [212.227.15.167]) with ESMTPSA (Nemesis) id
+ 1MXGSU-1ssO583pNu-00Wevz; Wed, 10 Jul 2024 11:07:29 +0200
+Date: Wed, 10 Jul 2024 11:07:22 +0200
+From: Christian Heusel <christian@heusel.eu>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
+	allen.lkml@gmail.com, broonie@kernel.org
+Subject: Re: [PATCH 6.9 000/197] 6.9.9-rc1 review
+Message-ID: <c5e979e5-5ce2-43a4-ad86-6ed779d54ba3@heusel.eu>
+References: <20240709110708.903245467@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240709160615.998336-1-ojeda@kernel.org>
-In-Reply-To: <20240709160615.998336-1-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Wed, 10 Jul 2024 11:04:39 +0200
-Message-ID: <CANiq72k9C2NY4nYyRQ_KKPbNsDvdaSG7vPQ-fzo+2J1x_-prLg@mail.gmail.com>
-Subject: Re: [PATCH v2 00/13] Support several Rust toolchain versions
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	linux-doc@vger.kernel.org, linux-kbuild@vger.kernel.org, 
-	workflows@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="jxwcuumspbzxvdfq"
+Content-Disposition: inline
+In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
+X-Provags-ID: V03:K1:ww2f4s8MdUQNw9cGPyRTkxacyq3HXWtMuuDsmaA0sLh4VXHxSMI
+ UUS4SAz6tEIMNllJmbc1+IlE9AUbDf6CQ3ekzNxMPcay+7vxxIhhzpp1PIv3J9mFp0iimhD
+ EQQBhFlOVzy6K7obuchzil0RLyPn7MyxTt9H7fNGYytlNdcCItIrefKLSHVM5oSDiCtWIuF
+ K8WQRneBTfZ4PkfpCbbwg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:8SQpYoMcCi0=;yhDVnOh0dGbq7JjeAYgaLedvq1N
+ 54YxbfzyZ6QOBZaQBhK606kYub/PiiPljIKWjF24+iM3FDFIJy0ULMHjaKZCC7X/rGgQdrL4+
+ uWMkslXeq5Xusrvuaba7F0oqu/LWno2ffyrTwKOfl/jXivZp+IOWsV/zLZPgY9UkBVRl/j+2+
+ CMThwy5Bv6UiYCnBwHPCTB7t+bHu3lbWhnOGTKoNYAd9pB58WtYqh4/3OPP4TW3XhiiTJLQkQ
+ DVN1pshiPvH8CwZEodnA8i3S2n/IyFxwyeY3j92A9H3i5F79cvUNRX3AxX1lcN08r60B7lO+j
+ izVkGfb7iVjRRmUBPDom49YWSDqFxomRsT31oYvwnljwIjBTgx9mAu5rDUiK2nYgV9MaEqwSt
+ aRCZgJipD5PqypadVTHv8JcKTNvFgqM4l6x6GzXk82HI57ErUHa3Pj2nmLpE7fDp0jn0i9iFb
+ zHxQpnRhKmju8i4bVdVS9lelq+V7zAe+1/S6EKDfl1b/w+SjvMK6RJ34DoUDkE+6xS/Pbvnrz
+ KJXPoFoTOT+cotXomyjHwGZJCJP2KKturQ9QnLHUlWwR2qd0Wy/n/mjiQHVSb1be2VK9Yzjtq
+ oPRd71TbYoUIb425/pyCy0laWMA6aBx7lgRFLrN8PGxEJ668PlbWyX7VnoIhpMO3Up0y5Crvz
+ NFCbf8rk1cIwYM+O9DGiexPTUyXlxihms1OIORQW3er3mKRTORCSwrvyZF9qaNrJ0Y7SUhrg7
+ NDsOGpvSAGyFs+VA+Q3NqFqxjPCy1uOik1i0cUiEE5F/BCvuUmu8P0=
 
-On Tue, Jul 9, 2024 at 6:06=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wrot=
-e:
->
-> A few things improved here and there, and rebased on top of `rust-next`.
->
-> The changelog is attached to each patch.
->
-> I kept the `Tested-by`s since most of the changes are on documentation
-> or comments, though I did remove them on the patch that changed the most
-> just in case (even for that one, I think Benno's and Andreas' setup
-> would not have made a difference).
->
-> I plan to put this series into `rust-next` very soon so that it goes
-> into the merge window.
 
-Applied into `rust-next` -- thanks everyone!
+--jxwcuumspbzxvdfq
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Cheers,
-Miguel
+On 24/07/09 01:07PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.9.9 release.
+> There are 197 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+
+Tested-by: Christian Heusel <christian@heusel.eu>
+
+Tested on a ThinkPad E14 Gen 3 with a AMD Ryzen 5 5500U CPU
+
+--jxwcuumspbzxvdfq
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEb3ea3iR6a4oPcswTwEfU8yi1JYUFAmaOT0oACgkQwEfU8yi1
+JYXKdg//Z6AdxMj1uOO3F9jbk434AeEZGvxIGnuTMFdA3oW3TXnNWEevz4E/om3X
+IZFuI7Pgj8vaPpo+QfgY28rTpAzSdK2Vmq8TkVj3cNWMegl8dKefHcgabPVDV3kD
+il6Af/YhWQqhvLLe5tHoruRTnHU9pIIxXGQ5fCsPlBKN/RicbbmkvoUIvHnRmO3F
+1defbp9WajPuGt3XvHKa8ruA9Xc+cczx1Ul9Guy5DSX0j7v0lGH4NKz0kmKm9pHD
+1qMO/Afb2k1BnNgWHhQYs6ujPI2BJlNGtYoh3HzLpeaNupZGRSrWojZ7/eKB9IUq
+jISOPwuYwzYwPZDwttMLvtLXbCvbhqsfa0SDFddGn/ZieUWr1KItB80z0TTnjN9T
+hrBjhotnZrhcPlcU/SPNO6RN5urkjaolT5RGCsIbfcgoqvmCXN5pS6N1R/0ePXAw
+SxwmyyIgxhLSq/5jCy+WU3z5Ybmgm0lBiD1IRtzSo6GX4VhT2nfuPm8Mnn3wn7gP
+dOeQTnLOUuJsgaamKz24gvfZEcmdZjklfBVmmsfsCESFz6YJ5xVqZFfWe6rrbSIE
+oTztzSE862tRxpfi5NM+OEwZ8j/0k/MsdwEMM0oIl807W5YwmlJ6yg6b+4PuSJtU
+Yww5AxPrE2ROwuJzM1XO8tPk5bfDNeP0Ygz3a5UA+dqo43X2hBQ=
+=7186
+-----END PGP SIGNATURE-----
+
+--jxwcuumspbzxvdfq--
