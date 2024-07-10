@@ -1,218 +1,181 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2053.outbound.protection.outlook.com [40.107.220.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97BF24AEE5
-	for <patches@lists.linux.dev>; Wed, 10 Jul 2024 04:05:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720584344; cv=none; b=JXWPSTdI27MG4vLSp3fnCM32aEC/8bdZ5NFWZ+75iqS1f0MBHYdqPUI3igf4Gy4VTGI5zj5FzZuaHxmDdOLkbrBeeQbY1J8uZwC+2BMFVMymxkj44WiBXSgIKtpZO8Wz4LQ6omFWqBX2YqvpVuF7v5iDFFF6zQfXjPln09VJX/c=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720584344; c=relaxed/simple;
-	bh=N1DLSASEZAN3kKjigTdMNNTl81NLknNxhrYdWutM44Q=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=iqiInrloGQ6RAzDKXXcgFhrbnHohsOmpavSiTbJOcRM8uxbDbjQgpmq8/om8n/xf70wDT/tebMca765+jkq2T9ZL6gQmeP9dKF3C7PI9g/7Mqk6zTml5vgE5jNbQ4QhWNFJp9S/klKeeqTqynwIxh/056yHYvcp/4RVes9IElWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=SEp9Y60L; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEAA68120F
+	for <patches@lists.linux.dev>; Wed, 10 Jul 2024 08:34:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.220.53
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1720600494; cv=fail; b=XIWc7BVdMpuedSOMRZ+MJ2bsZ3CawElAhlt4hvUmlq1hUIiIPsfe86+r/U6ebLE5l2xZtIThLPbR6pNtazCkwkPTYRzzh+GqVa3Ey9lnswJRXgGGxLLxDRTG23CDGlOuiRtN3dctk503Ur0H98DW4/0kGoVHCIllHxyqDG104xU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1720600494; c=relaxed/simple;
+	bh=4f6qaiU90VkP+AtGUs+fgQOwB/Ayn6ZugbtV3jReHPk=;
+	h=From:To:CC:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID:Date; b=BufKWmrycoreSFUjwy+EykHanioaYbH9JH2KyjNIto1KOZyynn5qA7gy+KG+egHYjeF7BSPipdVE68WWRllXEKnY8CdVX1tNIN6HcVRJQByXuRY9ze0NxdWAwkm8lR8Fi8C4XcbSPilwRsnpG+waNGgrW2C4Mhtl7FW1GHwsyj8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=GlvpgmAY; arc=fail smtp.client-ip=40.107.220.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="SEp9Y60L"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1720584341;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=DmsPM2YP83ayw/MNMYnl2BCj1FnEks7yViZlukNd1Wc=;
-	b=SEp9Y60LQYrv8vSenSPHDb96jWNsjBM1AvUp2zPJd/c+zdDznf/sMQRRtSTWBRhdFcnY2e
-	0p4ZRhI1c+InAkiSXGP3DuX7Ap8jCV/Nk4r6sO+KOtvDDY7TkvWqloGQnBuNl8IV1IM+1w
-	5ClR8eIuvLuf9Tjaiwlt1VpMsQq84nw=
-Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
- [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-637-5dbmFb6aO66S2OhSqV89Dg-1; Wed, 10 Jul 2024 00:05:40 -0400
-X-MC-Unique: 5dbmFb6aO66S2OhSqV89Dg-1
-Received: by mail-oi1-f199.google.com with SMTP id 5614622812f47-3d9381a0eccso2014789b6e.3
-        for <patches@lists.linux.dev>; Tue, 09 Jul 2024 21:05:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720584339; x=1721189139;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:from:subject:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=DmsPM2YP83ayw/MNMYnl2BCj1FnEks7yViZlukNd1Wc=;
-        b=IcFjhj1f9XHFS7o/KVWnTiavE1kGQYpwEo9RJ3SjUMCq51vQDclCs6mbmdrHdNH7Fk
-         7D2AZu5wI++mWrQA+iDdOfqhAQ21s9xxsejzEqqO3h3EiEaMbeVFKFjnjvVilysU5aNZ
-         I8+w7ncV7tPZyaybPKFRHLCh4ZP1J2GwXUi2ZxIisr2z2CXm5vv+op0RskqsfM8RXYPn
-         VyFitaPaWLPU9DUqgK8xQKMYoRspizfltx4LkvAg6BBbB0Bx43ULLpnJQWYKwhZ+mEb3
-         8WGXgn30ldPmfdTWcGblns5TYyDQ6t1Gd5dHRZnISsnBeyVNragq17jzw7DhyrLQRq2g
-         rrmQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUxGs454c4lqrk0SaZZa27SHeYxjLJOLItXGLjNJmxnGD6mWkj5/Ez8SLgSybhyuGVTg5XJX6hzg8Jqza21sodq9XuuBajbUg==
-X-Gm-Message-State: AOJu0YxMeWbaZbrZ5/kxzhmb9uEzjh3VAp8nTnlbboXLh/IXwTCPBiv6
-	+euIT/t+xfYdQydx8fjOFTzjsPH4uvybC2UwrDJnae4tD1IgffLc7bY90r23uhsYB2YUzpPw/Gu
-	a30QgzVKkAKaKQo/apG36Zot3gyfdk9t4AXBZD6eTndc5RImEUseTqMU=
-X-Received: by 2002:a05:6808:14c5:b0:3d6:32be:a8a5 with SMTP id 5614622812f47-3d93bee56ddmr5526565b6e.4.1720584339223;
-        Tue, 09 Jul 2024 21:05:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEgdLnkHjsM7KRqdvsvUHsf1OJloSf5RcHmhVmwnIt7ECNqQrB5n6pEpzefYp+WqCn1g6D/tg==
-X-Received: by 2002:a05:6808:14c5:b0:3d6:32be:a8a5 with SMTP id 5614622812f47-3d93bee56ddmr5526539b6e.4.1720584338879;
-        Tue, 09 Jul 2024 21:05:38 -0700 (PDT)
-Received: from [172.20.2.228] ([4.28.11.157])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70b4396740asm2662984b3a.105.2024.07.09.21.05.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Jul 2024 21:05:36 -0700 (PDT)
-Message-ID: <9b400450-46bc-41c7-9e89-825993851101@redhat.com>
-Date: Wed, 10 Jul 2024 06:05:34 +0200
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="GlvpgmAY"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=UfnQgqIsfosz1fDWQq5mIjFV26//dE5zdaxKYYWx//44/l4/oxYGZNFG3CVB0yi+pZEh+9xBCaK+HPSxr8si5ppYgdkTdCt8d2k+66FmTtN3zBVOrlI1TgDMiWHh/hrxAkTI0BP8uDgVv2XiB1ZmQwWDSEooCDV5hhVBUzCFiPn5lNxX1jVIlOCqOPyqBZC5gKfiv43tezxdQV2wd313BXmwAy3SXBltHqG+EYvrg1ZvMAeuZCYVe2FkmmerOLpqimDextjNiDjpCf7zMIOfhnwaVvCq5y291qPHfjIaDNqtXJ7WGQZDxut7DaHqSqZtqA9QXUblB6tMgTi5tFtWbQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=yLa1fvw3Qp9Znp7KUugDDlIp9gXuUTASSV+rXHfT4bc=;
+ b=V2tbRNodW+UwtIQEVcrKnmpcgONyF4c5OxzdSwNFRbrIERn75SXQyisFX91XkZXT9JOeo9ydvb6ArdIK2L8oVwSzdUL+60CqhVY9FkfVWXjpeZUmt0qHN1SJhZGTQi6CB6+6pnA3FDT7TBGtVPCjfd7vdaAxjlapS/uLSy4mXBTeKUHhvA2tx1N3T5gOiPj8mOtpreiIZcgGBQpKAgbYyMNuRpdNmSmY5I0ehowws+KAxWrQT+hr0+nRg3vs0K3mm/26FeBBkS3+y8rlcyuJefIXzxRo4d8sa0lDB6EiHlqgSuMON18WXRTAGWPrEZkz1K1FM1opzIYnaFu6GNUl3w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.233) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=yLa1fvw3Qp9Znp7KUugDDlIp9gXuUTASSV+rXHfT4bc=;
+ b=GlvpgmAYlMu9qndJJSoL5M98fLMs7J81WGuK4rfSr0Bgd59xvJ8B0Kc7Uzwz1E4UpesJemPRU1CSTMGz2h5nvnnba+94jONWt5C3vD+Da0RQYvv6q0SwHmkoYoMai82NoHGIB8ejAnKFWE8EwcDSDY8dPll6WUMmJoql2CZB1SWiXqcNQgMu3PZaXruXO74np1HsKzd6uh/TeXVL3H24MztV/NBT9bfIGn2e6MNoIxJCfhbOSRgq4UdS2gBK+45c4bVJE0V+ZC5xP0WihhR9dqCI1mxT+hpBY4/MGJ7CzN2GAS0EyhkzeAHAJ291+8M82etjhtX6MY2c6H8RRg8+iA==
+Received: from BYAPR07CA0059.namprd07.prod.outlook.com (2603:10b6:a03:60::36)
+ by DS7PR12MB6023.namprd12.prod.outlook.com (2603:10b6:8:85::7) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7741.35; Wed, 10 Jul 2024 08:34:48 +0000
+Received: from CO1PEPF000042AC.namprd03.prod.outlook.com
+ (2603:10b6:a03:60:cafe::bf) by BYAPR07CA0059.outlook.office365.com
+ (2603:10b6:a03:60::36) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7762.19 via Frontend
+ Transport; Wed, 10 Jul 2024 08:34:48 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ CO1PEPF000042AC.mail.protection.outlook.com (10.167.243.41) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7762.17 via Frontend Transport; Wed, 10 Jul 2024 08:34:48 +0000
+Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 10 Jul
+ 2024 01:34:43 -0700
+Received: from drhqmail203.nvidia.com (10.126.190.182) by
+ drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.4; Wed, 10 Jul 2024 01:34:43 -0700
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.126.190.182) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
+ Transport; Wed, 10 Jul 2024 01:34:43 -0700
+From: Jon Hunter <jonathanh@nvidia.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <conor@kernel.org>, <allen.lkml@gmail.com>,
+	<broonie@kernel.org>, <linux-tegra@vger.kernel.org>, <stable@vger.kernel.org>
+Subject: Re: [PATCH 6.6 000/139] 6.6.39-rc1 review
+In-Reply-To: <20240709110658.146853929@linuxfoundation.org>
+References: <20240709110658.146853929@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v22 1/4] mm: add MAP_DROPPABLE for designating always
- lazily freeable mappings
-From: David Hildenbrand <david@redhat.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, tglx@linutronix.de
-Cc: linux-crypto@vger.kernel.org, linux-api@vger.kernel.org, x86@kernel.org,
- Linus Torvalds <torvalds@linux-foundation.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
- Carlos O'Donell <carlos@redhat.com>, Florian Weimer <fweimer@redhat.com>,
- Arnd Bergmann <arnd@arndb.de>, Jann Horn <jannh@google.com>,
- Christian Brauner <brauner@kernel.org>,
- David Hildenbrand <dhildenb@redhat.com>, linux-mm@kvack.org
-References: <20240709130513.98102-1-Jason@zx2c4.com>
- <20240709130513.98102-2-Jason@zx2c4.com>
- <378f23cb-362e-413a-b221-09a5352e79f2@redhat.com>
-Autocrypt: addr=david@redhat.com; keydata=
- xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
- dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
- QZLQMzNE74ap+GDK0wnacPQFpcG1AE9RMq3aeErY5tujekBS32jfC/7AnH7I0v1v1TbbK3Gp
- XNeiN4QroO+5qaSr0ID2sz5jtBLRb15RMre27E1ImpaIv2Jw8NJgW0k/D1RyKCwaTsgRdwuK
- Kx/Y91XuSBdz0uOyU/S8kM1+ag0wvsGlpBVxRR/xw/E8M7TEwuCZQArqqTCmkG6HGcXFT0V9
- PXFNNgV5jXMQRwU0O/ztJIQqsE5LsUomE//bLwzj9IVsaQpKDqW6TAPjcdBDPLHvriq7kGjt
- WhVhdl0qEYB8lkBEU7V2Yb+SYhmhpDrti9Fq1EsmhiHSkxJcGREoMK/63r9WLZYI3+4W2rAc
- UucZa4OT27U5ZISjNg3Ev0rxU5UH2/pT4wJCfxwocmqaRr6UYmrtZmND89X0KigoFD/XSeVv
- jwBRNjPAubK9/k5NoRrYqztM9W6sJqrH8+UWZ1Idd/DdmogJh0gNC0+N42Za9yBRURfIdKSb
- B3JfpUqcWwE7vUaYrHG1nw54pLUoPG6sAA7Mehl3nd4pZUALHwARAQABzSREYXZpZCBIaWxk
- ZW5icmFuZCA8ZGF2aWRAcmVkaGF0LmNvbT7CwZgEEwEIAEICGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAhkBFiEEG9nKrXNcTDpGDfzKTd4Q9wD/g1oFAl8Ox4kFCRKpKXgACgkQTd4Q
- 9wD/g1oHcA//a6Tj7SBNjFNM1iNhWUo1lxAja0lpSodSnB2g4FCZ4R61SBR4l/psBL73xktp
- rDHrx4aSpwkRP6Epu6mLvhlfjmkRG4OynJ5HG1gfv7RJJfnUdUM1z5kdS8JBrOhMJS2c/gPf
- wv1TGRq2XdMPnfY2o0CxRqpcLkx4vBODvJGl2mQyJF/gPepdDfcT8/PY9BJ7FL6Hrq1gnAo4
- 3Iv9qV0JiT2wmZciNyYQhmA1V6dyTRiQ4YAc31zOo2IM+xisPzeSHgw3ONY/XhYvfZ9r7W1l
- pNQdc2G+o4Di9NPFHQQhDw3YTRR1opJaTlRDzxYxzU6ZnUUBghxt9cwUWTpfCktkMZiPSDGd
- KgQBjnweV2jw9UOTxjb4LXqDjmSNkjDdQUOU69jGMUXgihvo4zhYcMX8F5gWdRtMR7DzW/YE
- BgVcyxNkMIXoY1aYj6npHYiNQesQlqjU6azjbH70/SXKM5tNRplgW8TNprMDuntdvV9wNkFs
- 9TyM02V5aWxFfI42+aivc4KEw69SE9KXwC7FSf5wXzuTot97N9Phj/Z3+jx443jo2NR34XgF
- 89cct7wJMjOF7bBefo0fPPZQuIma0Zym71cP61OP/i11ahNye6HGKfxGCOcs5wW9kRQEk8P9
- M/k2wt3mt/fCQnuP/mWutNPt95w9wSsUyATLmtNrwccz63XOwU0EVcufkQEQAOfX3n0g0fZz
- Bgm/S2zF/kxQKCEKP8ID+Vz8sy2GpDvveBq4H2Y34XWsT1zLJdvqPI4af4ZSMxuerWjXbVWb
- T6d4odQIG0fKx4F8NccDqbgHeZRNajXeeJ3R7gAzvWvQNLz4piHrO/B4tf8svmRBL0ZB5P5A
- 2uhdwLU3NZuK22zpNn4is87BPWF8HhY0L5fafgDMOqnf4guJVJPYNPhUFzXUbPqOKOkL8ojk
- CXxkOFHAbjstSK5Ca3fKquY3rdX3DNo+EL7FvAiw1mUtS+5GeYE+RMnDCsVFm/C7kY8c2d0G
- NWkB9pJM5+mnIoFNxy7YBcldYATVeOHoY4LyaUWNnAvFYWp08dHWfZo9WCiJMuTfgtH9tc75
- 7QanMVdPt6fDK8UUXIBLQ2TWr/sQKE9xtFuEmoQGlE1l6bGaDnnMLcYu+Asp3kDT0w4zYGsx
- 5r6XQVRH4+5N6eHZiaeYtFOujp5n+pjBaQK7wUUjDilPQ5QMzIuCL4YjVoylWiBNknvQWBXS
- lQCWmavOT9sttGQXdPCC5ynI+1ymZC1ORZKANLnRAb0NH/UCzcsstw2TAkFnMEbo9Zu9w7Kv
- AxBQXWeXhJI9XQssfrf4Gusdqx8nPEpfOqCtbbwJMATbHyqLt7/oz/5deGuwxgb65pWIzufa
- N7eop7uh+6bezi+rugUI+w6DABEBAAHCwXwEGAEIACYCGwwWIQQb2cqtc1xMOkYN/MpN3hD3
- AP+DWgUCXw7HsgUJEqkpoQAKCRBN3hD3AP+DWrrpD/4qS3dyVRxDcDHIlmguXjC1Q5tZTwNB
- boaBTPHSy/Nksu0eY7x6HfQJ3xajVH32Ms6t1trDQmPx2iP5+7iDsb7OKAb5eOS8h+BEBDeq
- 3ecsQDv0fFJOA9ag5O3LLNk+3x3q7e0uo06XMaY7UHS341ozXUUI7wC7iKfoUTv03iO9El5f
- XpNMx/YrIMduZ2+nd9Di7o5+KIwlb2mAB9sTNHdMrXesX8eBL6T9b+MZJk+mZuPxKNVfEQMQ
- a5SxUEADIPQTPNvBewdeI80yeOCrN+Zzwy/Mrx9EPeu59Y5vSJOx/z6OUImD/GhX7Xvkt3kq
- Er5KTrJz3++B6SH9pum9PuoE/k+nntJkNMmQpR4MCBaV/J9gIOPGodDKnjdng+mXliF3Ptu6
- 3oxc2RCyGzTlxyMwuc2U5Q7KtUNTdDe8T0uE+9b8BLMVQDDfJjqY0VVqSUwImzTDLX9S4g/8
- kC4HRcclk8hpyhY2jKGluZO0awwTIMgVEzmTyBphDg/Gx7dZU1Xf8HFuE+UZ5UDHDTnwgv7E
- th6RC9+WrhDNspZ9fJjKWRbveQgUFCpe1sa77LAw+XFrKmBHXp9ZVIe90RMe2tRL06BGiRZr
- jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <378f23cb-362e-413a-b221-09a5352e79f2@redhat.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Message-ID: <83ef8ba5-935e-4b76-a511-2a9950ab330c@drhqmail203.nvidia.com>
+Date: Wed, 10 Jul 2024 01:34:43 -0700
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PEPF000042AC:EE_|DS7PR12MB6023:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1ffbc7fc-f32d-4fdc-3cbe-08dca0bb28c2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|376014|36860700013|7416014|82310400026;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?VU9vanVrREVxZTIwQmVkRnBhZGxIZXFLU0l0U1UrbERDMHRzVzBOQ2UwbDda?=
+ =?utf-8?B?L09aV0J6SXBsNnM2WE5CMFJIMDBCSlI4SnJnYkh2cEtPSFVGRUlTckp5Y21l?=
+ =?utf-8?B?NVBJdU1Ub2ViNDRoT2pacDZ3SFNWc3VPUzdHTVdZZ3Vmc2pUYTZKWit5Rnh2?=
+ =?utf-8?B?eXFIUlBRRkNaMVpIeWVNUnhhNmtmN21aai85Z2I0aHJGdFJKeG9xaXlpNFJl?=
+ =?utf-8?B?cnI5SXA4cVd6SUluMFBDcmVCTWYwSlhhUjBlbDdDUnFiVytvN1hZQ1BLK0xG?=
+ =?utf-8?B?akZjSUplUm0rMDBDdWs4MUl2WEwvU0NwZndtTnpOTUJ5QkFya2hTR3JndjF0?=
+ =?utf-8?B?c3BxOWZnSmpzcEViNHo5MDlMNXZwT0c3dEJEWUFYbG1nM3hDQ3d4blk3bnJF?=
+ =?utf-8?B?aVRaSEdUQ1UrQ0I4UmJibGR0SUlNMXJLbUdCRXZsRk13cVZWTnZOM01JN0lx?=
+ =?utf-8?B?WFJ5SWdHd3pxV1BBc0Q0dThrb3Y0d0xNc0piRzZla29GODNHSmdab3lRdFgv?=
+ =?utf-8?B?NTlTTm1Na3MxMXQzcFVZQm1yeVkxZWNhcGNZNnQ2RlkxUnpOaG4zelQrdy9F?=
+ =?utf-8?B?VXQwVVRjZTM0UjNaelNKVWNZbkFjZXRva3VaUjJEaVQ3OUQ4YS9FMnZnOUtH?=
+ =?utf-8?B?TDhoOUFESmlnUlNqV3JoMmFGMmZSOVQyb1MyenF6ZHU4bmUwd0FhZUpZSTZ5?=
+ =?utf-8?B?K0MxenpjbEdFYkczWEN2RkVmSEhkNEFFeEU3SytIRkswd3Z6WmsrQ1BENzZ4?=
+ =?utf-8?B?Y2JMWUJia01nL0hPdkxCYUpWK1MvdFZYRG81YklQVWtvS1RzcUFqRXNCa21x?=
+ =?utf-8?B?bEVQbnk0WnJkdUd1Qi84SGFGT1lGSitaOGU5aG44S0NEUlpQYjFGbHl5VzdQ?=
+ =?utf-8?B?aGZzQW1ISThmOEhWR2w0U1BSSUZhS3dES3J4RUpMWDFodkpVbjdvMFg1RTE3?=
+ =?utf-8?B?MG5SY3FvUXM0enRLM1VsQVFWY3RCb2NqWUZhdUxOamdMVXErZXFEQm1obmJl?=
+ =?utf-8?B?OUIwbmVVSXBiN0hUT3ZNNlRPQytqdmdQS3BiVDdYSXZhNjJ3dzU5OHM4c011?=
+ =?utf-8?B?K1pOSHVkb3drU1pkSGlyaktldnJSZHZHWEpCSDFBcUxvaCtzMm8vRmQzMTVM?=
+ =?utf-8?B?N2YrRUk2akRnTzYxdm5raU9EMkk4ZlV1WHgwUXVFOW1rMTVDa1pOakRVVnNW?=
+ =?utf-8?B?WHd5MndXWnE3UEh0cmZoeEZvUzVhZDZOaGJ2VkRKcWVyZ1l2cFlHTWxFd25K?=
+ =?utf-8?B?Vkk5cG5nT0xTVzVUbzgrSWFtekFkcTgyOVJRR1ZMd2kxSG1XcWg5VkxvRk5N?=
+ =?utf-8?B?RTV4K1ltczN2bDRqZ0hDWDVlYnA3T3J5akVTVCtESStuVVU3dGJUVWpwM045?=
+ =?utf-8?B?TGM1RWoreWtxQ1dYb1BtQ3ZUeGlsWEI0eHhRSWxpUFR4QlQrWVdjM21JRnZn?=
+ =?utf-8?B?N3QrT1pId01jSG9VdTQ1bEJNS2xwNUVJNE5DVkdsRzdaZHpIUFA0aFZCZWZW?=
+ =?utf-8?B?ZVlSSHdSV3h1NWVTWGJsdXNWaG5XMTlnTWtMbWdSc1VLYitqK2orNnYvajMw?=
+ =?utf-8?B?ZFJ0YkI2dHZMS0U3Nm1KQldockx3bm5IQmJYMG9XVXFKRG5vZ3lBT3BmL3dr?=
+ =?utf-8?B?TjdLVnhZRW8ybHpvNnVNc2ZES3YwSm9iNEMyWW9OVkJhSGFPcC9lMUx6Kzdi?=
+ =?utf-8?B?NjkwZUZmdjNYeVdUTFpDNFhHTEszSjd4MFp0aENoMkJ5azJ5U2RKb0tLQStl?=
+ =?utf-8?B?NEozZ3hVMnk1THcwRHl3S0s0bXA0YmFIMU5pc1RxbEd1bDlLU1JySk5EdG5K?=
+ =?utf-8?B?cHpvUmUxSS94NTZ6TmE0N3R1cUI3UWFydXBqWWUwQVhPQnYxZitNZ0RSZjRE?=
+ =?utf-8?B?VHZrRWRrTndYM0ZDeERya0U1UU9PcnpTK1VCcDNBNm1vQzM4N1lLLytzWGdD?=
+ =?utf-8?Q?K+dyHZ2kzaYid1B3DGIQzO7ZluUTpqCw?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.118.233;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge2.nvidia.com;CAT:NONE;SFS:(13230040)(1800799024)(376014)(36860700013)(7416014)(82310400026);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jul 2024 08:34:48.1976
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1ffbc7fc-f32d-4fdc-3cbe-08dca0bb28c2
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.233];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CO1PEPF000042AC.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB6023
 
-On 10.07.24 05:27, David Hildenbrand wrote:
-> On 09.07.24 15:05, Jason A. Donenfeld wrote:
->> The vDSO getrandom() implementation works with a buffer allocated with a
->> new system call that has certain requirements:
->>
->> - It shouldn't be written to core dumps.
->>     * Easy: VM_DONTDUMP.
->> - It should be zeroed on fork.
->>     * Easy: VM_WIPEONFORK.
->>
->> - It shouldn't be written to swap.
->>     * Uh-oh: mlock is rlimited.
->>     * Uh-oh: mlock isn't inherited by forks.
->>
->> It turns out that the vDSO getrandom() function has three really nice
->> characteristics that we can exploit to solve this problem:
->>
->> 1) Due to being wiped during fork(), the vDSO code is already robust to
->>      having the contents of the pages it reads zeroed out midway through
->>      the function's execution.
->>
->> 2) In the absolute worst case of whatever contingency we're coding for,
->>      we have the option to fallback to the getrandom() syscall, and
->>      everything is fine.
->>
->> 3) The buffers the function uses are only ever useful for a maximum of
->>      60 seconds -- a sort of cache, rather than a long term allocation.
->>
->> These characteristics mean that we can introduce VM_DROPPABLE, which
->> has the following semantics:
->>
->> a) It never is written out to swap.
->> b) Under memory pressure, mm can just drop the pages (so that they're
->>      zero when read back again).
->> c) It is inherited by fork.
->> d) It doesn't count against the mlock budget, since nothing is locked.
->>
->> This is fairly simple to implement, with the one snag that we have to
->> use 64-bit VM_* flags, but this shouldn't be a problem, since the only
->> consumers will probably be 64-bit anyway.
->>
->> This way, allocations used by vDSO getrandom() can use:
->>
->>       VM_DROPPABLE | VM_DONTDUMP | VM_WIPEONFORK | VM_NORESERVE
->>
->> And there will be no problem with using memory when not in use, not
->> wiping on fork(), coredumps, or writing out to swap.
->>
->> In order to let vDSO getrandom() use this, expose these via mmap(2) as
->> MAP_DROPPABLE.
->>
->> Finally, the provided self test ensures that this is working as desired.
+On Tue, 09 Jul 2024 13:08:20 +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.39 release.
+> There are 139 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Acked-by: David Hildenbrand <david@redhat.com>
+> Responses should be made by Thu, 11 Jul 2024 11:06:25 +0000.
+> Anything received after that time might be too late.
 > 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.39-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
 > 
-> I'll try to think of some corner cases we might be missing.
+> thanks,
+> 
+> greg k-h
 
-BTW, do we have to handle the folio_set_swapbacked() in sort_folio() as well?
+All tests passing for Tegra ...
 
+Test results for stable-v6.6:
+    10 builds:	10 pass, 0 fail
+    26 boots:	26 pass, 0 fail
+    116 tests:	116 pass, 0 fail
 
-	/* dirty lazyfree */
-	if (type == LRU_GEN_FILE && folio_test_anon(folio) && folio_test_dirty(folio)) {
-		success = lru_gen_del_folio(lruvec, folio, true);
-		VM_WARN_ON_ONCE_FOLIO(!success, folio);
-		folio_set_swapbacked(folio);
-		lruvec_add_folio_tail(lruvec, folio);
-		return true;
-	}
+Linux version:	6.6.39-rc1-g3be0ca2a17a0
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
+                tegra20-ventana, tegra210-p2371-2180,
+                tegra210-p3450-0000, tegra30-cardhu-a04
 
-Maybe more difficult because we don't have a VMA here ... hmm
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
 
-IIUC, we have to make sure that no folio_set_swapbacked() would ever get
-performed on these folios, correct?
-
--- 
-Cheers,
-
-David / dhildenb
-
+Jon
