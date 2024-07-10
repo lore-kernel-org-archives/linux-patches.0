@@ -1,199 +1,187 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29718195383;
-	Wed, 10 Jul 2024 17:56:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51DAD19538B;
+	Wed, 10 Jul 2024 20:12:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720634189; cv=none; b=ZKilLImttBSbKky8wpxI1mnX/ELoPQ6GWeQ8g+ePQd10vZSg08hxpyy6YnETOniMYHxfrsCRP5mt1/lRe+TgAgtKHtpxkdxCd0t1PiGqQ2hKgEiJNiPhKETTLRpcUSMs9KJrAZ2KP93HIJdVXmMvhOuQpyZPTNO3D1RvjFYSWjQ=
+	t=1720642368; cv=none; b=BSppBAcDUdalnodmT+YkkFrNgT04Fjy1s5f5DIP2NOCjNdBiCcrShYGBcqiO9oHONPgizA+RnjRqnPhTu65iuNwXRmxEZ86yajQnK47Ea9k+cTi8WFcEFigE+q8iU9hMG299Z7e44DSe/lUJq64uRWOV1YnDx8oWgyJ8S8uKkB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720634189; c=relaxed/simple;
-	bh=7Jdv/o1WI3up53D1I++jLFbC2bwz21I4CvTE533R1mE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=RlV12a+weTxpfEDPrmvatKlyrb1UHbYL2KIH0EtPimJLP6a1GAvSLoKrlG+UoCux1hatrbdF3TbBKP+6wyQAT2cHsR0dK9T4Blz/o04qWfPe3UMzQBoSluJ4fpGftoEPIGwBaCIFaiyy8NboSg+tRdsjFquK4xrC9J0BnUm05+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dXJ70nQ7; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1720642368; c=relaxed/simple;
+	bh=MaieDaoyrxvy7cXpRNH8iNTTBi8f16Pt3VoIMf3+AD8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=krMbi21fWGJEoATKRkmvH3XXc9I7EuAFfnJIl57VWIwbQX0tEd/9S5jjGJg0TZ3OEPkWNl3uB7SRwJq+w04sOsf3ROkrIsWRgz19ahl37G+h0i3AoEFAuc9x4SKe/iZBhtrUftjAPLBf15ynjUrVgpbQ6aLcXuCGWCx9714Gpas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bhVt+GOZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dXJ70nQ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A1DC32781;
-	Wed, 10 Jul 2024 17:56:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bhVt+GOZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03960C32781;
+	Wed, 10 Jul 2024 20:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720634188;
-	bh=7Jdv/o1WI3up53D1I++jLFbC2bwz21I4CvTE533R1mE=;
-	h=From:Date:Subject:To:Cc:From;
-	b=dXJ70nQ71BDLThSgun7DBnJxUFXKAJ5jZZbFnNz+H/uTYP1qEPZsGa4/R04vNpNts
-	 kOfgtaOClX/RibAThmAqSWH3gSBlGqpjSqUZYL610X0NCN0wGAI5b3UUqqsKCxmKya
-	 8A2VMf1e3KX+MyYWtOekNU+Rl3OKKYH+ZXfB4rNupV/+Owfoyka4igtH7PITNN6ZRk
-	 uqmAYN9LaDjezmmootCZ4calGk5QgypH3ao1EDCyA4imkv8EKB74e2teWukvaUQzjM
-	 8IoFC1ozM7IU2A3zTUVKtDR3RO5CLEKjtjvBjK0rDrMdf/TP8LI7dcXVzb3bA3kK8s
-	 LzEIldCVY5PDA==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 10 Jul 2024 10:56:24 -0700
-Subject: [PATCH bluetooth-next] Bluetooth: btmtk: Mark all stub functions
- as inline
+	s=k20201202; t=1720642367;
+	bh=MaieDaoyrxvy7cXpRNH8iNTTBi8f16Pt3VoIMf3+AD8=;
+	h=From:To:Cc:Subject:Date:From;
+	b=bhVt+GOZRbYzhbNw12thhS2FGR4B1SIDcrdOVkDmTOfTr1IQ1VzT9/wrocq2FiPJt
+	 pNPlLCbL6sduys1sXSFRv30k+jPGqAARz+dGP7lHIGgBKl7LO7B1VOYTTPFg4I5uxw
+	 q0cofD9RlUIWgcnHrzGPx9NlFE87OAxV70Dc9F/36YIq6oB9fNYirWoXOoXCKaPmZ0
+	 gVB82T4U4ePEeraKprA+6uUn+hKDN+EQ7qJM3JFEtgJCAdt60YH79QLYzsJSLWRROK
+	 HSo5vTgupnW0J3Fk9fHhZwyFp1ZA5y2AYTiSkg0g0SG2ymQqgm/AHvfxE0kVrrdtfv
+	 Ncy+IhALmzq7Q==
+From: Stephen Boyd <sboyd@kernel.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	patches@lists.linux.dev,
+	kunit-dev@googlegroups.com,
+	linux-kselftest@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
+	Rae Moar <rmoar@google.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Rafael J . Wysocki" <rafael@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Saravana Kannan <saravanak@google.com>,
+	Daniel Latypov <dlatypov@google.com>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Maxime Ripard <maxime@cerno.tech>
+Subject: [PATCH v7 0/8] clk: Add kunit tests for fixed rate and parent data
+Date: Wed, 10 Jul 2024 13:12:36 -0700
+Message-ID: <20240710201246.1802189-1-sboyd@kernel.org>
+X-Mailer: git-send-email 2.45.2.803.g4e1b14247a-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240710-btmtk-add-missing-inline-to-stubs-v1-1-ba33143ee148@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAEfLjmYC/x3NwQqDMAyA4VeRnBeoOirsVcYOrY0apulo4hDEd
- 1/Z8bv8/wlKhUnh0ZxQ6MvKWSraWwPjEmQm5FQNnevubmgdRtvsjSEl3FiVZUaWlYXQMqrtUXH
- qfe/jmIIfCGrnU2ji4/94Qlx3spxtQaHD4HVdP+4a1uyDAAAA
-To: Marcel Holtmann <marcel@holtmann.org>, 
- Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: Sean Wang <sean.wang@mediatek.com>, Chris Lu <chris.lu@mediatek.com>, 
- Matthias Brugger <matthias.bgg@gmail.com>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- linux-bluetooth@vger.kernel.org, linux-mediatek@lists.infradead.org, 
- patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5192; i=nathan@kernel.org;
- h=from:subject:message-id; bh=7Jdv/o1WI3up53D1I++jLFbC2bwz21I4CvTE533R1mE=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDGl9p32evL7lJLjSgvnK9dJfq3dMlFw/yWzTnzcc4usV8
- 5SfuL3b0VHKwiDGxSArpshS/Vj1uKHhnLOMN05NgpnDygQyhIGLUwAm0ifB8L/0usWCMCXB+cyi
- 9+8Jakx5u6/X6szpczZHlR+k+25TXnyOkaGda7Pu3E/z3/za8OXG+YhTGV8dygwND+5MDLskwrB
- 1SzADAA==
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Transfer-Encoding: 8bit
 
-Several recent patches added static stubs to btmtk.h without the inline
-keyword, which causes instances of -Wunused-function when those stubs
-are not used anywhere in a file that includes the header:
+This patch series adds unit tests for the clk fixed rate basic type and
+the clk registration functions that use struct clk_parent_data. To get
+there, we add support for loading device tree overlays onto the live DTB
+along with probing platform drivers to bind to device nodes in the
+overlays. With this series, we're able to exercise some of the code in
+the common clk framework that uses devicetree lookups to find parents
+and the fixed rate clk code that scans device tree directly and creates
+clks. Please review.
 
-  In file included from drivers/bluetooth/btusb.c:28:
-  drivers/bluetooth/btmtk.h:254:13: warning: 'btmtk_fw_get_filename' defined but not used [-Wunused-function]
-    254 | static void btmtk_fw_get_filename(char *buf, size_t size, u32 dev_id,
-        |             ^~~~~~~~~~~~~~~~~~~~~
-  drivers/bluetooth/btmtk.h:249:12: warning: 'btmtk_process_coredump' defined but not used [-Wunused-function]
-    249 | static int btmtk_process_coredump(struct hci_dev *hdev, struct sk_buff *skb)
-        |            ^~~~~~~~~~~~~~~~~~~~~~
-  drivers/bluetooth/btmtk.h:243:12: warning: 'btmtk_register_coredump' defined but not used [-Wunused-function]
-    243 | static int btmtk_register_coredump(struct hci_dev *hdev, const char *name,
-        |            ^~~~~~~~~~~~~~~~~~~~~~~
-  drivers/bluetooth/btmtk.h:233:12: warning: 'btmtk_setup_firmware' defined but not used [-Wunused-function]
-    233 | static int btmtk_setup_firmware(struct hci_dev *hdev, const char *fwname,
-        |            ^~~~~~~~~~~~~~~~~~~~
-  drivers/bluetooth/btmtk.h:227:12: warning: 'btmtk_setup_firmware_79xx' defined but not used [-Wunused-function]
-    227 | static int btmtk_setup_firmware_79xx(struct hci_dev *hdev, const char *fwname,
-        |            ^~~~~~~~~~~~~~~~~~~~~~~~~
+I Cced everyone to all the patches so they get the full context. I'm
+hoping I can take the whole pile through the clk tree as they all build
+upon each other. Or the DT part can be merged through the DT tree to
+reduce the dependencies.
 
-Add inline to all the stubs in btmtk.h (even ones that do not currently
-have any warnings associated with them) to ensure there are never unused
-function warnings from these stubs, as is customary for the kernel.
+Changes from v6: https://lore.kernel.org/r/20240706045454.215701-1-sboyd@kernel.org
+ * Fix kasan error in platform test by fixing the condition to check for
+   correct free callback
+ * Add module descriptions to new modules
 
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
-I omitted a fixes tag because it seems like this was done over several
-changes and I think breaking this up is not really necessary but I am
-happy to do so if so desired.
----
- drivers/bluetooth/btmtk.h | 39 +++++++++++++++++++++------------------
- 1 file changed, 21 insertions(+), 18 deletions(-)
+Changes from v5: https://lore.kernel.org/r/20240603223811.3815762-1-sboyd@kernel.org
+ * Pick up reviewed-by tags
+ * Drop test vendor prefix bindings as dtschema allows anything now
+ * Use of_node_put_kunit() more to plug some reference leaks
+ * Select DTC config to avoid compile fails because of missing dtc
+ * Don't skip for OF_OVERLAY in overlay tests because they depend on it
 
-diff --git a/drivers/bluetooth/btmtk.h b/drivers/bluetooth/btmtk.h
-index 453ed5131a37..5df7c3296624 100644
---- a/drivers/bluetooth/btmtk.h
-+++ b/drivers/bluetooth/btmtk.h
-@@ -224,70 +224,73 @@ static inline int btmtk_set_bdaddr(struct hci_dev *hdev,
- 	return -EOPNOTSUPP;
- }
- 
--static int btmtk_setup_firmware_79xx(struct hci_dev *hdev, const char *fwname,
--				     wmt_cmd_sync_func_t wmt_cmd_sync)
-+static inline int btmtk_setup_firmware_79xx(struct hci_dev *hdev,
-+					    const char *fwname,
-+					    wmt_cmd_sync_func_t wmt_cmd_sync)
- {
- 	return -EOPNOTSUPP;
- }
- 
--static int btmtk_setup_firmware(struct hci_dev *hdev, const char *fwname,
--				wmt_cmd_sync_func_t wmt_cmd_sync)
-+static inline int btmtk_setup_firmware(struct hci_dev *hdev, const char *fwname,
-+				       wmt_cmd_sync_func_t wmt_cmd_sync)
- {
- 	return -EOPNOTSUPP;
- }
- 
--static void btmtk_reset_sync(struct hci_dev *hdev)
-+static inline void btmtk_reset_sync(struct hci_dev *hdev)
- {
- }
- 
--static int btmtk_register_coredump(struct hci_dev *hdev, const char *name,
--				   u32 fw_version)
-+static inline int btmtk_register_coredump(struct hci_dev *hdev,
-+					  const char *name, u32 fw_version)
- {
- 	return -EOPNOTSUPP;
- }
- 
--static int btmtk_process_coredump(struct hci_dev *hdev, struct sk_buff *skb)
-+static inline int btmtk_process_coredump(struct hci_dev *hdev,
-+					 struct sk_buff *skb)
- {
- 	return -EOPNOTSUPP;
- }
- 
--static void btmtk_fw_get_filename(char *buf, size_t size, u32 dev_id,
--				  u32 fw_ver, u32 fw_flavor)
-+static inline void btmtk_fw_get_filename(char *buf, size_t size, u32 dev_id,
-+					 u32 fw_ver, u32 fw_flavor)
- {
- }
- 
--static int btmtk_usb_subsys_reset(struct hci_dev *hdev, u32 dev_id)
-+static inline int btmtk_usb_subsys_reset(struct hci_dev *hdev, u32 dev_id)
- {
- 	return -EOPNOTSUPP;
- }
- 
--static int btmtk_usb_recv_acl(struct hci_dev *hdev, struct sk_buff *skb)
-+static inline int btmtk_usb_recv_acl(struct hci_dev *hdev, struct sk_buff *skb)
- {
- 	return -EOPNOTSUPP;
- }
- 
--static struct urb *alloc_mtk_intr_urb(struct hci_dev *hdev, struct sk_buff *skb,
--				      usb_complete_t tx_complete)
-+static inline struct urb *alloc_mtk_intr_urb(struct hci_dev *hdev,
-+					     struct sk_buff *skb,
-+					     usb_complete_t tx_complete)
- {
- 	return ERR_PTR(-EOPNOTSUPP);
- }
- 
--static int btmtk_usb_resume(struct hci_dev *hdev)
-+static inline int btmtk_usb_resume(struct hci_dev *hdev)
- {
- 	return -EOPNOTSUPP;
- }
- 
--static int btmtk_usb_suspend(struct hci_dev *hdev)
-+static inline int btmtk_usb_suspend(struct hci_dev *hdev)
- {
- 	return -EOPNOTSUPP;
- }
- 
--static int btmtk_usb_setup(struct hci_dev *hdev)
-+static inline int btmtk_usb_setup(struct hci_dev *hdev)
- {
- 	return -EOPNOTSUPP;
- }
- 
--static int btmtk_usb_shutdown(struct hci_dev *hdev)
-+static inline int btmtk_usb_shutdown(struct hci_dev *hdev)
- {
- 	return -EOPNOTSUPP;
- }
+Changes from v4: https://lore.kernel.org/r/20240422232404.213174-1-sboyd@kernel.org
+ * Picked up reviewed-by tags
+ * Check for non-NULL device pointers before calling put_device()
+ * Fix CFI issues with kunit actions
+ * Introduce platform_device_prepare_wait_for_probe() helper to wait for
+   a platform device to probe
+ * Move platform code to lib/kunit and rename functions to have kunit
+   prefix
+ * Fix issue with platform wrappers messing up reference counting
+   because they used kunit actions
+ * New patch to populate overlay devices on root node for powerpc
+ * Make fixed-rate binding generic single clk consumer binding
 
----
-base-commit: c60d1a6e1dae1623169d0d97bfd3e50003072eae
-change-id: 20240710-btmtk-add-missing-inline-to-stubs-f3636bcda67e
+Changes from v3: https://lore.kernel.org/r/20230327222159.3509818-1-sboyd@kernel.org
+ * No longer depend on Frank's series[1] because it was merged upstream[2]
+ * Use kunit_add_action_or_reset() to shorten code
+ * Skip tests properly when CONFIG_OF_OVERLAY isn't set
 
-Best regards,
+Changes from v2: https://lore.kernel.org/r/20230315183729.2376178-1-sboyd@kernel.org
+ * Overlays don't depend on __symbols__ node
+ * Depend on Frank's always create root node if CONFIG_OF series[1]
+ * Added kernel-doc to KUnit API doc
+ * Fixed some kernel-doc on functions
+ * More test cases for fixed rate clk
+
+Changes from v1: https://lore.kernel.org/r/20230302013822.1808711-1-sboyd@kernel.org
+ * Don't depend on UML, use unittest data approach to attach nodes
+ * Introduce overlay loading API for KUnit
+ * Move platform_device KUnit code to drivers/base/test
+ * Use #define macros for constants shared between unit tests and
+   overlays
+ * Settle on "test" as a vendor prefix
+ * Make KUnit wrappers have "_kunit" postfix
+
+[1] https://lore.kernel.org/r/20230317053415.2254616-1-frowand.list@gmail.com
+[2] https://lore.kernel.org/r/20240308195737.GA1174908-robh@kernel.org
+
+Stephen Boyd (8):
+  of/platform: Allow overlays to create platform devices from the root
+    node
+  of: Add test managed wrappers for of_overlay_apply()/of_node_put()
+  dt-bindings: vendor-prefixes: Add "test" vendor for KUnit and friends
+  of: Add a KUnit test for overlays and test managed APIs
+  platform: Add test managed platform_device/driver APIs
+  clk: Add test managed clk provider/consumer APIs
+  clk: Add KUnit tests for clk fixed rate basic type
+  clk: Add KUnit tests for clks registered with struct clk_parent_data
+
+ Documentation/dev-tools/kunit/api/clk.rst     |  10 +
+ Documentation/dev-tools/kunit/api/index.rst   |  21 +
+ Documentation/dev-tools/kunit/api/of.rst      |  13 +
+ .../dev-tools/kunit/api/platformdevice.rst    |  10 +
+ .../devicetree/bindings/vendor-prefixes.yaml  |   2 +
+ drivers/clk/.kunitconfig                      |   2 +
+ drivers/clk/Kconfig                           |  11 +
+ drivers/clk/Makefile                          |   9 +-
+ drivers/clk/clk-fixed-rate_test.c             | 380 +++++++++++++++
+ drivers/clk/clk-fixed-rate_test.h             |   8 +
+ drivers/clk/clk_kunit_helpers.c               | 204 ++++++++
+ drivers/clk/clk_parent_data_test.h            |  10 +
+ drivers/clk/clk_test.c                        | 453 +++++++++++++++++-
+ drivers/clk/kunit_clk_fixed_rate_test.dtso    |  19 +
+ drivers/clk/kunit_clk_parent_data_test.dtso   |  28 ++
+ drivers/of/.kunitconfig                       |   1 +
+ drivers/of/Kconfig                            |  10 +
+ drivers/of/Makefile                           |   2 +
+ drivers/of/kunit_overlay_test.dtso            |   9 +
+ drivers/of/of_kunit_helpers.c                 |  74 +++
+ drivers/of/overlay_test.c                     | 115 +++++
+ drivers/of/platform.c                         |   9 +-
+ include/kunit/clk.h                           |  28 ++
+ include/kunit/of.h                            | 115 +++++
+ include/kunit/platform_device.h               |  20 +
+ lib/kunit/Makefile                            |   4 +-
+ lib/kunit/platform-test.c                     | 224 +++++++++
+ lib/kunit/platform.c                          | 302 ++++++++++++
+ 28 files changed, 2087 insertions(+), 6 deletions(-)
+ create mode 100644 Documentation/dev-tools/kunit/api/clk.rst
+ create mode 100644 Documentation/dev-tools/kunit/api/of.rst
+ create mode 100644 Documentation/dev-tools/kunit/api/platformdevice.rst
+ create mode 100644 drivers/clk/clk-fixed-rate_test.c
+ create mode 100644 drivers/clk/clk-fixed-rate_test.h
+ create mode 100644 drivers/clk/clk_kunit_helpers.c
+ create mode 100644 drivers/clk/clk_parent_data_test.h
+ create mode 100644 drivers/clk/kunit_clk_fixed_rate_test.dtso
+ create mode 100644 drivers/clk/kunit_clk_parent_data_test.dtso
+ create mode 100644 drivers/of/kunit_overlay_test.dtso
+ create mode 100644 drivers/of/of_kunit_helpers.c
+ create mode 100644 drivers/of/overlay_test.c
+ create mode 100644 include/kunit/clk.h
+ create mode 100644 include/kunit/of.h
+ create mode 100644 include/kunit/platform_device.h
+ create mode 100644 lib/kunit/platform-test.c
+ create mode 100644 lib/kunit/platform.c
+
+
+base-commit: 1613e604df0cd359cf2a7fbd9be7a0bcfacfabd0
 -- 
-Nathan Chancellor <nathan@kernel.org>
+https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
+https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
 
