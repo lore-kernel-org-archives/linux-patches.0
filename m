@@ -1,156 +1,96 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BDE234545;
-	Wed, 10 Jul 2024 17:08:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1884A19580F;
+	Wed, 10 Jul 2024 17:20:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720631282; cv=none; b=Z+bsYBBxvPyKua4CtSL9YxI9ROIa3UrdGnLj6ORioyTUf9cZoJV2T/viCiGN8bvyU3ERAd0hXlo3g+rHCwZTUzXLaaQIeYKtzZj3VgeDYGzu43n82V54+3rBONn8/zkFeTxb8VkfsqbFMG8gkkqWapWYlX3lfOa8QXNnrMEHHYg=
+	t=1720632053; cv=none; b=I3BGKNhZBooYdfcr5+PkgPllRssgtSn+Px8BB0S5l7r1+TIY2dRlMFvGFyY+tjnwoodECkRWW7JIpwJGRV91vQG1UpHZqbC9+eHTbtE881rhdiiUcdcXoyAUCo01VS/r6VQrPT5NUxQtbCK2+eePyl3rvC9gRt3WG2nCReeiI0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720631282; c=relaxed/simple;
-	bh=yCXjZ5t+wLkF4jfSXS3RJ3beU8mDIWCl3YtDGYE1JFE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=A5CTS+kkzd+pBwvOCkNIWcQppjhlrZa0zki8p3mnWB8uy/x34RvY/Jhb9nfOTjRgBJprPZEbLvu+L4+LCQoAn/06TNCLHoaaZJ6BxjgVfMaEJ3WMn4NgRBZPSh/F5SVC2Ppp3Abt9AzilH/ScCvlYEa1AOT6/tahXvudYfG0TkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pvtu1C3u; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1720632053; c=relaxed/simple;
+	bh=rb42RhIoXqeY6d3mu58OrK8GMi/G3ObjVhuM25pbjwc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ekb5n1wnIsz1hVjOJO8T5QD6SvsxtIT91gRyIZ4KlutMya1WkCig34WIOlheEgEBtxhsUV1sg07DryWjkjqVeYCmU5wqkmGDZkMZQcbsFMRQ9y1v74y9G9reKFF7EryS9VeQzipvp46NLnXNXQgYe6ap2IMMtJTxaP08xsn81CM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lY0pkjCZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pvtu1C3u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54F82C32781;
-	Wed, 10 Jul 2024 17:08:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lY0pkjCZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06834C32786;
+	Wed, 10 Jul 2024 17:20:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720631281;
-	bh=yCXjZ5t+wLkF4jfSXS3RJ3beU8mDIWCl3YtDGYE1JFE=;
-	h=From:Date:Subject:To:Cc:From;
-	b=Pvtu1C3uJ3zW+aleaBmVsAoqDNxbnudCCx4mHaoLN67zWJ04g6jPaGZkiY5k8Du9h
-	 In+XFS1ZtKi9OScZ8FLX2XEme/1Xj2M0BwZ8VkGVLDaHHlsXxbtS12i0WD6tfP/Qct
-	 Fm3QqoyWMWCo1dsStEvYtArhv/3GWWzMBXIYmt6YrGIQ3q+iIX3DqO3i31X/3tDEC3
-	 szdMDBwbUplm5mUnPvp6oF9NXKaAHdQuIbDi77Tz5gcBzC6gbyV4iZjPZsrtkCIyW5
-	 rCuHlC6NxZwwIbo2vvE0d81M2Z0qgGxLFPh/89t6ATWuDOxe6h7S13WGOdqv5u0EsP
-	 8EtTb/iayD6yA==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 10 Jul 2024 10:07:52 -0700
-Subject: [PATCH] clk: sophgo: Avoid -Wsometimes-uninitialized in
- sg2042_clk_pll_set_rate()
+	s=k20201202; t=1720632052;
+	bh=rb42RhIoXqeY6d3mu58OrK8GMi/G3ObjVhuM25pbjwc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=lY0pkjCZ6m8F0TnvvKWK+LWxgFP5683shIa5FV6Z50MhKwl2d6fQmp7CFYpsZ4Uhc
+	 CVXXnN2oDsXFD9gR/JSnzmzzPlStrr026ogVwfX9lqDRbPbHPJD8XafYObDSTipI2H
+	 VoIQAy2cq9q7N6bCK1X8k4bgPG1PKX2xzO1QPn/6iodn7bfPS1zWyA64KA7O++6B1I
+	 U0G10G49x84TDKDBcwD/CpXc8zyQ1I68hLcnwczqNurs2WTWlpNfPumOaEi5iC971L
+	 IujjN3532RYTVhHsEufw58gdJ5LiunqyOBp6QolKxXHW9qR5qZ37j49ez2PffCgKmt
+	 zfP5oAAvfG/sQ==
+Date: Wed, 10 Jul 2024 18:20:49 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com,
+	=?iso-8859-1?Q?Micka=EBl_Sala=FCn?= <mic@digikod.net>
+Subject: Re: [PATCH 6.9 000/197] 6.9.9-rc1 review
+Message-ID: <Zo7C8W97URxXYXd-@finisterre.sirena.org.uk>
+References: <20240709110708.903245467@linuxfoundation.org>
+ <Zo6G9C-AzU2jBrOt@finisterre.sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240710-clk-sg2042-fix-sometimes-uninitialized-pll_set_rate-v1-1-538fa82dd539@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAOe/jmYC/x2NwQrCMBAFf6Xs2YU0VCz+ikiJyWtdTNOSTUUs/
- XeDxznMzE6KLFC6NjtlvEVlSRXaU0P+6dIEllCZrLGdubSGfXyxTtZ0lkf5sC4zisxQ3pIkKeK
- ifBF4jXFQlCG7Au4D0PnxYXp/plpeM6r7v97ux/EDxS5tB4UAAAA=
-To: Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, 
- Inochi Amaoto <inochiama@outlook.com>
-Cc: linux-clk@vger.kernel.org, llvm@lists.linux.dev, 
- patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3702; i=nathan@kernel.org;
- h=from:subject:message-id; bh=yCXjZ5t+wLkF4jfSXS3RJ3beU8mDIWCl3YtDGYE1JFE=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDGl9+z9m6Gm2tbv/F1C5xVNt/Vp88pFe642RWRqbRRiEO
- 54lX/zTUcrCIMbFICumyFL9WPW4oeGcs4w3Tk2CmcPKBDKEgYtTACYiI8TIMDvMTnGhJIvuLqms
- P48a5A/XipQY3ehvqF5unP3b+tcCWYb/QTFhH1uiDgTZ7VH/7zdhJ49t+dadtw+8eb3i4vfoX/9
- F+AA=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Q8Zrf79JJXTQqdty"
+Content-Disposition: inline
+In-Reply-To: <Zo6G9C-AzU2jBrOt@finisterre.sirena.org.uk>
+X-Cookie: Your love life will be... interesting.
 
-Clang warns (or errors with CONFIG_WERROR=y):
 
-  drivers/clk/sophgo/clk-sg2042-pll.c:396:6: error: variable 'ret' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
-    396 |         if (sg2042_pll_enable(pll, 0)) {
-        |             ^~~~~~~~~~~~~~~~~~~~~~~~~
-  drivers/clk/sophgo/clk-sg2042-pll.c:418:9: note: uninitialized use occurs here
-    418 |         return ret;
-        |                ^~~
-  drivers/clk/sophgo/clk-sg2042-pll.c:396:2: note: remove the 'if' if its condition is always false
-    396 |         if (sg2042_pll_enable(pll, 0)) {
-        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    397 |                 pr_warn("Can't disable pll(%s), status error\n", pll->hw.init->name);
-        |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    398 |                 goto out;
-        |                 ~~~~~~~~~
-    399 |         }
-        |         ~
-  drivers/clk/sophgo/clk-sg2042-pll.c:393:9: note: initialize the variable 'ret' to silence this warning
-    393 |         int ret;
-        |                ^
-        |                 = 0
-  1 error generated.
+--Q8Zrf79JJXTQqdty
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-sg2042_pll_enable() only ever returns zero, so this situation cannot
-happen, but clang does not perform interprocedural analysis, so it
-cannot know this to avoid the warning. Make it clearer to the compiler
-by making sg2042_pll_enable() void and eliminate the error handling in
-sg2042_clk_pll_set_rate(), which clears up the warning, as ret will
-always be initialized.
+On Wed, Jul 10, 2024 at 02:04:55PM +0100, Mark Brown wrote:
 
-Fixes: 48cf7e01386e ("clk: sophgo: Add SG2042 clock driver")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/clk/sophgo/clk-sg2042-pll.c | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+> # #  RUN           rtc.date_read_loop ...
+> # # rtctest.c:95:date_read_loop:Continuously reading RTC time for 30s (with 11ms breaks after every read).
+> # # rtctest.c:122:date_read_loop:Performed 2954 RTC time reads.
+> # #            OK  rtc.date_read_loop
 
-diff --git a/drivers/clk/sophgo/clk-sg2042-pll.c b/drivers/clk/sophgo/clk-sg2042-pll.c
-index aa142897aa5e..9695e64fc23b 100644
---- a/drivers/clk/sophgo/clk-sg2042-pll.c
-+++ b/drivers/clk/sophgo/clk-sg2042-pll.c
-@@ -103,7 +103,7 @@ static inline void sg2042_pll_ctrl_decode(unsigned int reg_value,
- 	ctrl->postdiv2 = FIELD_GET(PLLCTRL_POSTDIV2_MASK, reg_value);
- }
- 
--static inline int sg2042_pll_enable(struct sg2042_pll_clock *pll, bool en)
-+static inline void sg2042_pll_enable(struct sg2042_pll_clock *pll, bool en)
- {
- 	u32 value;
- 
-@@ -132,8 +132,6 @@ static inline int sg2042_pll_enable(struct sg2042_pll_clock *pll, bool en)
- 		value = readl(pll->base + R_PLL_CLKEN_CONTROL);
- 		writel(value & (~(1 << pll->shift_enable)), pll->base + R_PLL_CLKEN_CONTROL);
- 	}
--
--	return 0;
- }
- 
- /**
-@@ -393,14 +391,13 @@ static int sg2042_clk_pll_set_rate(struct clk_hw *hw,
- 	int ret;
- 
- 	spin_lock_irqsave(pll->lock, flags);
--	if (sg2042_pll_enable(pll, 0)) {
--		pr_warn("Can't disable pll(%s), status error\n", pll->hw.init->name);
--		goto out;
--	}
-+
-+	sg2042_pll_enable(pll, 0);
-+
- 	ret = sg2042_get_pll_ctl_setting(&pctrl_table, rate, parent_rate);
- 	if (ret) {
- 		pr_warn("%s: Can't find a proper pll setting\n", pll->hw.init->name);
--		goto out2;
-+		goto out;
- 	}
- 
- 	value = sg2042_pll_ctrl_encode(&pctrl_table);
-@@ -408,9 +405,9 @@ static int sg2042_clk_pll_set_rate(struct clk_hw *hw,
- 	/* write the value to top register */
- 	writel(value, pll->base + pll->offset_ctrl);
- 
--out2:
--	sg2042_pll_enable(pll, 1);
- out:
-+	sg2042_pll_enable(pll, 1);
-+
- 	spin_unlock_irqrestore(pll->lock, flags);
- 
- 	pr_debug("--> %s: pll_set_rate: val = 0x%x\n",
+> Bisection points to "selftests/harness: Fix tests timeout and race
+> condition" but this looks like a test bug, the timeout for tests is 30s
+> and the test tries to run for 30s which obviously doesn't add up.
+> Previously the test would pass because the bug the patch is fixing is
+> that timeout had no effect.  I'm also running the test on other
+> platforms without it triggering new timeouts, it's just this one
+> specific platform that triggered which is a bit worrying.
 
----
-base-commit: 54cb3bb483379b0c070528974843e06aecbc9390
-change-id: 20240710-clk-sg2042-fix-sometimes-uninitialized-pll_set_rate-8dee4cfb08c5
+> I'll send a patch for the test.
 
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
+Sorry, spoke too soon on that - the test is explicitly overriding the
+timeout to be longer so there's something else going on here.
 
+--Q8Zrf79JJXTQqdty
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmaOwvAACgkQJNaLcl1U
+h9BNKQf+MAQs/CgxWnTvh3OsE4hobSoPByQlOu7/LGEq7ocdGNLJh7Njdoe3j4iC
+4LilAWZK92NhF6NCl5ND5h+2nx7ME9Gjd/Mgfi6VhHKZ367LOmBT9O7lT1jX7vnO
+snCOxmB6zZtL1Vo3VgUZTyYH2Qjs+i6LZEi1OxAwTFqAEwugImmUe+i/U1FQEFEK
+AvYKzIEPx54o90TVWJ4o0xtJ290ypMMjLmKUOCcAqOEqvrDL528COGgqT1lSXVct
+0AF6njZxW6MqNIfhW4ARtGR7gd2N53ssm143DLIeNv7wZgVJ4MzG8MIUnl7BGauL
+QvUeLZJJcIHKTp4qNPiqBpL76u3hUQ==
+=KSPE
+-----END PGP SIGNATURE-----
+
+--Q8Zrf79JJXTQqdty--
