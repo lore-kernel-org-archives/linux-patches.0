@@ -1,96 +1,199 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1884A19580F;
-	Wed, 10 Jul 2024 17:20:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29718195383;
+	Wed, 10 Jul 2024 17:56:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720632053; cv=none; b=I3BGKNhZBooYdfcr5+PkgPllRssgtSn+Px8BB0S5l7r1+TIY2dRlMFvGFyY+tjnwoodECkRWW7JIpwJGRV91vQG1UpHZqbC9+eHTbtE881rhdiiUcdcXoyAUCo01VS/r6VQrPT5NUxQtbCK2+eePyl3rvC9gRt3WG2nCReeiI0s=
+	t=1720634189; cv=none; b=ZKilLImttBSbKky8wpxI1mnX/ELoPQ6GWeQ8g+ePQd10vZSg08hxpyy6YnETOniMYHxfrsCRP5mt1/lRe+TgAgtKHtpxkdxCd0t1PiGqQ2hKgEiJNiPhKETTLRpcUSMs9KJrAZ2KP93HIJdVXmMvhOuQpyZPTNO3D1RvjFYSWjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720632053; c=relaxed/simple;
-	bh=rb42RhIoXqeY6d3mu58OrK8GMi/G3ObjVhuM25pbjwc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ekb5n1wnIsz1hVjOJO8T5QD6SvsxtIT91gRyIZ4KlutMya1WkCig34WIOlheEgEBtxhsUV1sg07DryWjkjqVeYCmU5wqkmGDZkMZQcbsFMRQ9y1v74y9G9reKFF7EryS9VeQzipvp46NLnXNXQgYe6ap2IMMtJTxaP08xsn81CM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lY0pkjCZ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1720634189; c=relaxed/simple;
+	bh=7Jdv/o1WI3up53D1I++jLFbC2bwz21I4CvTE533R1mE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=RlV12a+weTxpfEDPrmvatKlyrb1UHbYL2KIH0EtPimJLP6a1GAvSLoKrlG+UoCux1hatrbdF3TbBKP+6wyQAT2cHsR0dK9T4Blz/o04qWfPe3UMzQBoSluJ4fpGftoEPIGwBaCIFaiyy8NboSg+tRdsjFquK4xrC9J0BnUm05+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dXJ70nQ7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lY0pkjCZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06834C32786;
-	Wed, 10 Jul 2024 17:20:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dXJ70nQ7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A1DC32781;
+	Wed, 10 Jul 2024 17:56:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720632052;
-	bh=rb42RhIoXqeY6d3mu58OrK8GMi/G3ObjVhuM25pbjwc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=lY0pkjCZ6m8F0TnvvKWK+LWxgFP5683shIa5FV6Z50MhKwl2d6fQmp7CFYpsZ4Uhc
-	 CVXXnN2oDsXFD9gR/JSnzmzzPlStrr026ogVwfX9lqDRbPbHPJD8XafYObDSTipI2H
-	 VoIQAy2cq9q7N6bCK1X8k4bgPG1PKX2xzO1QPn/6iodn7bfPS1zWyA64KA7O++6B1I
-	 U0G10G49x84TDKDBcwD/CpXc8zyQ1I68hLcnwczqNurs2WTWlpNfPumOaEi5iC971L
-	 IujjN3532RYTVhHsEufw58gdJ5LiunqyOBp6QolKxXHW9qR5qZ37j49ez2PffCgKmt
-	 zfP5oAAvfG/sQ==
-Date: Wed, 10 Jul 2024 18:20:49 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com,
-	=?iso-8859-1?Q?Micka=EBl_Sala=FCn?= <mic@digikod.net>
-Subject: Re: [PATCH 6.9 000/197] 6.9.9-rc1 review
-Message-ID: <Zo7C8W97URxXYXd-@finisterre.sirena.org.uk>
-References: <20240709110708.903245467@linuxfoundation.org>
- <Zo6G9C-AzU2jBrOt@finisterre.sirena.org.uk>
+	s=k20201202; t=1720634188;
+	bh=7Jdv/o1WI3up53D1I++jLFbC2bwz21I4CvTE533R1mE=;
+	h=From:Date:Subject:To:Cc:From;
+	b=dXJ70nQ71BDLThSgun7DBnJxUFXKAJ5jZZbFnNz+H/uTYP1qEPZsGa4/R04vNpNts
+	 kOfgtaOClX/RibAThmAqSWH3gSBlGqpjSqUZYL610X0NCN0wGAI5b3UUqqsKCxmKya
+	 8A2VMf1e3KX+MyYWtOekNU+Rl3OKKYH+ZXfB4rNupV/+Owfoyka4igtH7PITNN6ZRk
+	 uqmAYN9LaDjezmmootCZ4calGk5QgypH3ao1EDCyA4imkv8EKB74e2teWukvaUQzjM
+	 8IoFC1ozM7IU2A3zTUVKtDR3RO5CLEKjtjvBjK0rDrMdf/TP8LI7dcXVzb3bA3kK8s
+	 LzEIldCVY5PDA==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 10 Jul 2024 10:56:24 -0700
+Subject: [PATCH bluetooth-next] Bluetooth: btmtk: Mark all stub functions
+ as inline
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Q8Zrf79JJXTQqdty"
-Content-Disposition: inline
-In-Reply-To: <Zo6G9C-AzU2jBrOt@finisterre.sirena.org.uk>
-X-Cookie: Your love life will be... interesting.
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240710-btmtk-add-missing-inline-to-stubs-v1-1-ba33143ee148@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAEfLjmYC/x3NwQqDMAyA4VeRnBeoOirsVcYOrY0apulo4hDEd
+ 1/Z8bv8/wlKhUnh0ZxQ6MvKWSraWwPjEmQm5FQNnevubmgdRtvsjSEl3FiVZUaWlYXQMqrtUXH
+ qfe/jmIIfCGrnU2ji4/94Qlx3spxtQaHD4HVdP+4a1uyDAAAA
+To: Marcel Holtmann <marcel@holtmann.org>, 
+ Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: Sean Wang <sean.wang@mediatek.com>, Chris Lu <chris.lu@mediatek.com>, 
+ Matthias Brugger <matthias.bgg@gmail.com>, 
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+ linux-bluetooth@vger.kernel.org, linux-mediatek@lists.infradead.org, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5192; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=7Jdv/o1WI3up53D1I++jLFbC2bwz21I4CvTE533R1mE=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGl9p32evL7lJLjSgvnK9dJfq3dMlFw/yWzTnzcc4usV8
+ 5SfuL3b0VHKwiDGxSArpshS/Vj1uKHhnLOMN05NgpnDygQyhIGLUwAm0ifB8L/0usWCMCXB+cyi
+ 9+8Jakx5u6/X6szpczZHlR+k+25TXnyOkaGda7Pu3E/z3/za8OXG+YhTGV8dygwND+5MDLskwrB
+ 1SzADAA==
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
+Several recent patches added static stubs to btmtk.h without the inline
+keyword, which causes instances of -Wunused-function when those stubs
+are not used anywhere in a file that includes the header:
 
---Q8Zrf79JJXTQqdty
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+  In file included from drivers/bluetooth/btusb.c:28:
+  drivers/bluetooth/btmtk.h:254:13: warning: 'btmtk_fw_get_filename' defined but not used [-Wunused-function]
+    254 | static void btmtk_fw_get_filename(char *buf, size_t size, u32 dev_id,
+        |             ^~~~~~~~~~~~~~~~~~~~~
+  drivers/bluetooth/btmtk.h:249:12: warning: 'btmtk_process_coredump' defined but not used [-Wunused-function]
+    249 | static int btmtk_process_coredump(struct hci_dev *hdev, struct sk_buff *skb)
+        |            ^~~~~~~~~~~~~~~~~~~~~~
+  drivers/bluetooth/btmtk.h:243:12: warning: 'btmtk_register_coredump' defined but not used [-Wunused-function]
+    243 | static int btmtk_register_coredump(struct hci_dev *hdev, const char *name,
+        |            ^~~~~~~~~~~~~~~~~~~~~~~
+  drivers/bluetooth/btmtk.h:233:12: warning: 'btmtk_setup_firmware' defined but not used [-Wunused-function]
+    233 | static int btmtk_setup_firmware(struct hci_dev *hdev, const char *fwname,
+        |            ^~~~~~~~~~~~~~~~~~~~
+  drivers/bluetooth/btmtk.h:227:12: warning: 'btmtk_setup_firmware_79xx' defined but not used [-Wunused-function]
+    227 | static int btmtk_setup_firmware_79xx(struct hci_dev *hdev, const char *fwname,
+        |            ^~~~~~~~~~~~~~~~~~~~~~~~~
 
-On Wed, Jul 10, 2024 at 02:04:55PM +0100, Mark Brown wrote:
+Add inline to all the stubs in btmtk.h (even ones that do not currently
+have any warnings associated with them) to ensure there are never unused
+function warnings from these stubs, as is customary for the kernel.
 
-> # #  RUN           rtc.date_read_loop ...
-> # # rtctest.c:95:date_read_loop:Continuously reading RTC time for 30s (with 11ms breaks after every read).
-> # # rtctest.c:122:date_read_loop:Performed 2954 RTC time reads.
-> # #            OK  rtc.date_read_loop
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+I omitted a fixes tag because it seems like this was done over several
+changes and I think breaking this up is not really necessary but I am
+happy to do so if so desired.
+---
+ drivers/bluetooth/btmtk.h | 39 +++++++++++++++++++++------------------
+ 1 file changed, 21 insertions(+), 18 deletions(-)
 
-> Bisection points to "selftests/harness: Fix tests timeout and race
-> condition" but this looks like a test bug, the timeout for tests is 30s
-> and the test tries to run for 30s which obviously doesn't add up.
-> Previously the test would pass because the bug the patch is fixing is
-> that timeout had no effect.  I'm also running the test on other
-> platforms without it triggering new timeouts, it's just this one
-> specific platform that triggered which is a bit worrying.
+diff --git a/drivers/bluetooth/btmtk.h b/drivers/bluetooth/btmtk.h
+index 453ed5131a37..5df7c3296624 100644
+--- a/drivers/bluetooth/btmtk.h
++++ b/drivers/bluetooth/btmtk.h
+@@ -224,70 +224,73 @@ static inline int btmtk_set_bdaddr(struct hci_dev *hdev,
+ 	return -EOPNOTSUPP;
+ }
+ 
+-static int btmtk_setup_firmware_79xx(struct hci_dev *hdev, const char *fwname,
+-				     wmt_cmd_sync_func_t wmt_cmd_sync)
++static inline int btmtk_setup_firmware_79xx(struct hci_dev *hdev,
++					    const char *fwname,
++					    wmt_cmd_sync_func_t wmt_cmd_sync)
+ {
+ 	return -EOPNOTSUPP;
+ }
+ 
+-static int btmtk_setup_firmware(struct hci_dev *hdev, const char *fwname,
+-				wmt_cmd_sync_func_t wmt_cmd_sync)
++static inline int btmtk_setup_firmware(struct hci_dev *hdev, const char *fwname,
++				       wmt_cmd_sync_func_t wmt_cmd_sync)
+ {
+ 	return -EOPNOTSUPP;
+ }
+ 
+-static void btmtk_reset_sync(struct hci_dev *hdev)
++static inline void btmtk_reset_sync(struct hci_dev *hdev)
+ {
+ }
+ 
+-static int btmtk_register_coredump(struct hci_dev *hdev, const char *name,
+-				   u32 fw_version)
++static inline int btmtk_register_coredump(struct hci_dev *hdev,
++					  const char *name, u32 fw_version)
+ {
+ 	return -EOPNOTSUPP;
+ }
+ 
+-static int btmtk_process_coredump(struct hci_dev *hdev, struct sk_buff *skb)
++static inline int btmtk_process_coredump(struct hci_dev *hdev,
++					 struct sk_buff *skb)
+ {
+ 	return -EOPNOTSUPP;
+ }
+ 
+-static void btmtk_fw_get_filename(char *buf, size_t size, u32 dev_id,
+-				  u32 fw_ver, u32 fw_flavor)
++static inline void btmtk_fw_get_filename(char *buf, size_t size, u32 dev_id,
++					 u32 fw_ver, u32 fw_flavor)
+ {
+ }
+ 
+-static int btmtk_usb_subsys_reset(struct hci_dev *hdev, u32 dev_id)
++static inline int btmtk_usb_subsys_reset(struct hci_dev *hdev, u32 dev_id)
+ {
+ 	return -EOPNOTSUPP;
+ }
+ 
+-static int btmtk_usb_recv_acl(struct hci_dev *hdev, struct sk_buff *skb)
++static inline int btmtk_usb_recv_acl(struct hci_dev *hdev, struct sk_buff *skb)
+ {
+ 	return -EOPNOTSUPP;
+ }
+ 
+-static struct urb *alloc_mtk_intr_urb(struct hci_dev *hdev, struct sk_buff *skb,
+-				      usb_complete_t tx_complete)
++static inline struct urb *alloc_mtk_intr_urb(struct hci_dev *hdev,
++					     struct sk_buff *skb,
++					     usb_complete_t tx_complete)
+ {
+ 	return ERR_PTR(-EOPNOTSUPP);
+ }
+ 
+-static int btmtk_usb_resume(struct hci_dev *hdev)
++static inline int btmtk_usb_resume(struct hci_dev *hdev)
+ {
+ 	return -EOPNOTSUPP;
+ }
+ 
+-static int btmtk_usb_suspend(struct hci_dev *hdev)
++static inline int btmtk_usb_suspend(struct hci_dev *hdev)
+ {
+ 	return -EOPNOTSUPP;
+ }
+ 
+-static int btmtk_usb_setup(struct hci_dev *hdev)
++static inline int btmtk_usb_setup(struct hci_dev *hdev)
+ {
+ 	return -EOPNOTSUPP;
+ }
+ 
+-static int btmtk_usb_shutdown(struct hci_dev *hdev)
++static inline int btmtk_usb_shutdown(struct hci_dev *hdev)
+ {
+ 	return -EOPNOTSUPP;
+ }
 
-> I'll send a patch for the test.
+---
+base-commit: c60d1a6e1dae1623169d0d97bfd3e50003072eae
+change-id: 20240710-btmtk-add-missing-inline-to-stubs-f3636bcda67e
 
-Sorry, spoke too soon on that - the test is explicitly overriding the
-timeout to be longer so there's something else going on here.
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
 
---Q8Zrf79JJXTQqdty
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmaOwvAACgkQJNaLcl1U
-h9BNKQf+MAQs/CgxWnTvh3OsE4hobSoPByQlOu7/LGEq7ocdGNLJh7Njdoe3j4iC
-4LilAWZK92NhF6NCl5ND5h+2nx7ME9Gjd/Mgfi6VhHKZ367LOmBT9O7lT1jX7vnO
-snCOxmB6zZtL1Vo3VgUZTyYH2Qjs+i6LZEi1OxAwTFqAEwugImmUe+i/U1FQEFEK
-AvYKzIEPx54o90TVWJ4o0xtJ290ypMMjLmKUOCcAqOEqvrDL528COGgqT1lSXVct
-0AF6njZxW6MqNIfhW4ARtGR7gd2N53ssm143DLIeNv7wZgVJ4MzG8MIUnl7BGauL
-QvUeLZJJcIHKTp4qNPiqBpL76u3hUQ==
-=KSPE
------END PGP SIGNATURE-----
-
---Q8Zrf79JJXTQqdty--
