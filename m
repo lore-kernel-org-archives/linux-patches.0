@@ -1,89 +1,104 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FCA08120F;
-	Wed, 10 Jul 2024 21:17:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 345E4D50F;
+	Thu, 11 Jul 2024 00:44:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720646226; cv=none; b=RZhov+Lr3/fGY2ciYBKhHPPJLxuXoozmbv1Kr6MQGDXp3182NfG5kbDH5nqvVTDU2PxCdkahkicSgRkkNOGsbHvIuutsrp1aEIH62Q+kN5zgR40EkiW35E6OpN1eZ3kNQaai4u0/Jr2bAHARgN0aPYJPWMzA3NknsgN0zvi4SJQ=
+	t=1720658678; cv=none; b=s0DVLyncPpkNfY0ZJ+k+FOYwvtxwV+U5DSY5CNb6mrNDo1r9sEpcaW2Z9NdJDboVK+kqJvU4S8ohddnKlNkUH7CCZjWfHTckJ3kvKAYvBVz8oWdHG1MxS6jBu7rqFbfqLqG7PZ0VwHHHCMQzcGivR9BsLi6maau51lohzbfzz2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720646226; c=relaxed/simple;
-	bh=d9NIoNvAmXJAYWmjVWiD/n/PtWG7Ev/HfH7ECteYYgc=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=V6Sgfn100y8T+SpHZTLRpUeJMDoM3j2LQdPLYcHHZg+r8rZdv/XJp/tIMdz0h7K5sSOnK6rW92jYedEUQnAWrazBIqSyxOe10T9lx6bTAUEQsXjx9WnfPhjj8snntB3Oc3lmoLJIgKF1sEDX/s1nmPWAygvcDICk4o+x9f7G2bM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VFnwj8fr; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1720658678; c=relaxed/simple;
+	bh=GIZPiUQln2wXE2St0t7kbSMk1OgDtc8MEfd3ocTmFDE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hCQXPYcZlNa8un/L3IzpIRQVZnYj1e/GTSqabnVw8yL/5tKh1q4oPY1zYnnxquAag5430I6Rb8T6UaZ+SEtAi8YHSRfYvCMRmcENoR0sv7ONw6UWC0kljNFxRgbKHJseZmeLtHCHpSXQjzUGwX1SCon8r4DV6c6diGeis12aP+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b=I/hoIoKX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VFnwj8fr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5108CC4AF07;
-	Wed, 10 Jul 2024 21:17:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720646226;
-	bh=d9NIoNvAmXJAYWmjVWiD/n/PtWG7Ev/HfH7ECteYYgc=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=VFnwj8fr/kUfeYy6M2uXEDgC4wbdVbrCGBf24UiA0AGu753EMuQNsjOOWV0u9uUSD
-	 KM6i1JILZFnF+cxLKS2b60M31Eh1+S7VYuZyCfUfwYCzTbY075tcHDKRZ7Dbrx2byX
-	 GqXM/IivdRXA2+wJraUTI5lcxDudsB+VaFaGZGBDv51AATzCBEJ15MRpPri/Af/9KR
-	 LXNO+GeFZvEf3mxuUH2I4SWjcVyk+Q2fBNBh3uiedtny/R0IZLxQ5n33xSqNpCpmso
-	 7w/qCvgx5N4n8MT0MQxaDjFj90/M2lQ9Qx+QJ62TXotUrypIgHHYa6pdq47zBRIt1D
-	 CCfeY1TDuhR3A==
-Message-ID: <c9fe1a32e0e362a8b7732ea554625c55.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="I/hoIoKX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4082BC32781;
+	Thu, 11 Jul 2024 00:44:36 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="I/hoIoKX"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1720658674;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=kuZ1HiO9Y8r/sLpAoJXiKvAt2rOz6kI6hysFfLehduw=;
+	b=I/hoIoKXpOqAebd3Q6dksAur7IWQreJQrmqOgPBMkC41LbV+Gs3qlm8HJ0RI+AFTxwd953
+	viC6VBVudlnaoF2hIZUN2etOR/EiC0Xh3yyaw7xLtvuCCWqidFzW3T36Y5ndCbsFbEXgTF
+	tv3YxeXL9aOyryZYPrRJhqe4InMV1jc=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 78ba0ae2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 11 Jul 2024 00:44:33 +0000 (UTC)
+Date: Thu, 11 Jul 2024 02:44:29 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	tglx@linutronix.de, linux-crypto@vger.kernel.org,
+	linux-api@vger.kernel.org, x86@kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+	Carlos O'Donell <carlos@redhat.com>,
+	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
+	Jann Horn <jannh@google.com>,
+	Christian Brauner <brauner@kernel.org>,
+	David Hildenbrand <dhildenb@redhat.com>, linux-mm@kvack.org
+Subject: Re: [PATCH v22 1/4] mm: add MAP_DROPPABLE for designating always
+ lazily freeable mappings
+Message-ID: <Zo8q7ePlOearG481@zx2c4.com>
+References: <20240709130513.98102-1-Jason@zx2c4.com>
+ <20240709130513.98102-2-Jason@zx2c4.com>
+ <378f23cb-362e-413a-b221-09a5352e79f2@redhat.com>
+ <9b400450-46bc-41c7-9e89-825993851101@redhat.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20240710-clk-sg2042-fix-sometimes-uninitialized-pll_set_rate-v1-1-538fa82dd539@kernel.org>
-References: <20240710-clk-sg2042-fix-sometimes-uninitialized-pll_set_rate-v1-1-538fa82dd539@kernel.org>
-Subject: Re: [PATCH] clk: sophgo: Avoid -Wsometimes-uninitialized in sg2042_clk_pll_set_rate()
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-clk@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-To: Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@outlook.com>, Michael Turquette <mturquette@baylibre.com>, Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 10 Jul 2024 14:17:04 -0700
-User-Agent: alot/0.10
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <9b400450-46bc-41c7-9e89-825993851101@redhat.com>
 
-Quoting Nathan Chancellor (2024-07-10 10:07:52)
-> Clang warns (or errors with CONFIG_WERROR=3Dy):
->=20
->   drivers/clk/sophgo/clk-sg2042-pll.c:396:6: error: variable 'ret' is use=
-d uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninit=
-ialized]
->     396 |         if (sg2042_pll_enable(pll, 0)) {
->         |             ^~~~~~~~~~~~~~~~~~~~~~~~~
->   drivers/clk/sophgo/clk-sg2042-pll.c:418:9: note: uninitialized use occu=
-rs here
->     418 |         return ret;
->         |                ^~~
->   drivers/clk/sophgo/clk-sg2042-pll.c:396:2: note: remove the 'if' if its=
- condition is always false
->     396 |         if (sg2042_pll_enable(pll, 0)) {
->         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->     397 |                 pr_warn("Can't disable pll(%s), status error\n"=
-, pll->hw.init->name);
->         |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~~~~~~~~~~~~~~~~~~
->     398 |                 goto out;
->         |                 ~~~~~~~~~
->     399 |         }
->         |         ~
->   drivers/clk/sophgo/clk-sg2042-pll.c:393:9: note: initialize the variabl=
-e 'ret' to silence this warning
->     393 |         int ret;
->         |                ^
->         |                 =3D 0
->   1 error generated.
->=20
-> sg2042_pll_enable() only ever returns zero, so this situation cannot
-> happen, but clang does not perform interprocedural analysis, so it
-> cannot know this to avoid the warning. Make it clearer to the compiler
-> by making sg2042_pll_enable() void and eliminate the error handling in
-> sg2042_clk_pll_set_rate(), which clears up the warning, as ret will
-> always be initialized.
->=20
-> Fixes: 48cf7e01386e ("clk: sophgo: Add SG2042 clock driver")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
+Hi David,
 
-Applied to clk-next
+On Wed, Jul 10, 2024 at 06:05:34AM +0200, David Hildenbrand wrote:
+> BTW, do we have to handle the folio_set_swapbacked() in sort_folio() as well?
+> 
+> 
+> 	/* dirty lazyfree */
+> 	if (type == LRU_GEN_FILE && folio_test_anon(folio) && folio_test_dirty(folio)) {
+> 		success = lru_gen_del_folio(lruvec, folio, true);
+> 		VM_WARN_ON_ONCE_FOLIO(!success, folio);
+> 		folio_set_swapbacked(folio);
+> 		lruvec_add_folio_tail(lruvec, folio);
+> 		return true;
+> 	}
+> 
+> Maybe more difficult because we don't have a VMA here ... hmm
+> 
+> IIUC, we have to make sure that no folio_set_swapbacked() would ever get
+> performed on these folios, correct?
+
+Hmmm, I'm trying to figure out what to do here, and if we have to do
+something. All three conditions in that if statement will be true for a
+folio in a droppable mapping. That's supposed to match MADV_FREE
+mappings.
+
+What is the context of this, though? It's scanning pages for good ones
+to evict into swap, right? So if it encounters one that's an MADV_FREE
+page, it actually just wants to delete it, rather than sending it to
+swap. So it looks like it does just that, and then sets the swapbacked
+bit back to true, in case the folio is used for something differnet
+later?
+
+If that's correct, then I don't think we need to do anything for this
+one.
+
+If that's not correct, then we'll need to propagate the droppableness
+to the folio level. But hopefully we don't need to do that.
+
+What's your analysis of this like?
+
+Jason
