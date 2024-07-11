@@ -1,199 +1,250 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E17E19EED7
-	for <patches@lists.linux.dev>; Thu, 11 Jul 2024 21:18:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F181A01AD
+	for <patches@lists.linux.dev>; Thu, 11 Jul 2024 22:29:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720732727; cv=none; b=jbb/2c9XzG+M7cPg0Y0m/r6Y8NdwHjmDUAnxK5errOQxMLfcBtJyaPPeSziBL29UaW6ILuTFQj77q//k9dFiU71DGf+MG2OFU0aNaA710avH3z4eAKjsf4V63TLB+5NfzEgHJsfuntRSe9m7u8XtKarXgPGioPnFB/3YcE7V3W4=
+	t=1720736965; cv=none; b=SYSI1nJ2/ZqODCk6oebamyK2oE7SsaY86rkgLZgftTc/+qaydnyZpvu6OxDZgMKpD1I4nNSo+Vuzv26rxUYbfmK9KKqjRDOfqdctMg/LaiMfG3BgaOcKu6uD9yovVHdLdAVthYREcarY7fSvQbW5CEwq9vooYbskJYxpgHKaFzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720732727; c=relaxed/simple;
-	bh=sV9UkDpgdJI5nO8J8h6KzE9TPuuDtH2Js+kWDGsoqiA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=T5I05AZN3jPP8HX/qark2ETO9bgAvHKZ0JjbE35bFjMDmaEYXnp1Bb9Oq6Z0qfLvkWD4FXMaRXWewHK68vPrdELcyy+bVDldv2wfdM7TLEisoFwhX98rF25coTUSM5Kfx2NtnlqA9lcZLLThjbBDd829ejCz3YnaKFQYjhmxn1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cloudflare.com; spf=pass smtp.mailfrom=cloudflare.com; dkim=pass (2048-bit key) header.d=cloudflare.com header.i=@cloudflare.com header.b=DfOcPfJn; arc=none smtp.client-ip=209.85.216.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cloudflare.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cloudflare.com
+	s=arc-20240116; t=1720736965; c=relaxed/simple;
+	bh=WWkBDQdzh3njbJuzudzTlTiHwd4ekS0EVCYXKrvOnJQ=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=OjoV7lBk+Ky9uStzm0fVKHuPCLBeALD3ixOC4c3HaeI8fAmjlNp+z33pIBxHiQLXd6Y0KOag9wIoD872gMtxBe6IIvpae71RZfD//6GU7yw1sxVB+sWyP2DREVzXA9RPHXjKs+xO4i/z4ydw6lFFKuKnXDVjsMXLzngZ4lbYcHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=DrdWg0/U; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cloudflare.com header.i=@cloudflare.com header.b="DfOcPfJn"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-2c961b5f215so1065629a91.0
-        for <patches@lists.linux.dev>; Thu, 11 Jul 2024 14:18:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cloudflare.com; s=google09082023; t=1720732725; x=1721337525; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=j9e6a5/Mi00lPqSFUCY2ruWznGIW0bflPYVcqQ/6g94=;
-        b=DfOcPfJn14VWqUZxqUwtb/rcs2EI0RTd+VL5dryONwpOJvFm9OKuRXQDzupCe6EMIO
-         zLU8hRidcxe2rznrwu012YM/3Ic7bRz5XL5aho1EkHHaesbyAd3EoKgLN7adG22S/UNp
-         2z5gCrgmK8tMPx4YRJ5I5dncApw5XQ9wkVdx24x1bErhx05IQXAhZ2yWvrnsgfN30h77
-         CiW+Tzv7gpsAXKPMRauK5vibu18gMo1CMSdAdiEcXZsgmSa1dbArtEc6hr6NrOCtaBca
-         0F6aEMn9oOWOx0uM2MvsiKzAX823TApHAvTE5CZ+8Io3o64edS1xVb5flMUjuXxnPOkn
-         OE/A==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="DrdWg0/U"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1720736962;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=8suwGbZaDEfaEhHxk+SPcUQE6Zt9W0rGkYpluhSm8MY=;
+	b=DrdWg0/U4ZStQqd/g66Jp8WMutS4F30KBl4UOf6nal999oRjmPiMls/vL0w1k6LOMVR8BQ
+	Gi1rQoTY5/O93M5etSslUX8+ZPWTOVzqrfH/KdAInSnK3CPwpXBpnMXDYarVKj3EEgrtoS
+	ZTi3IT+EkSlbSTBaGbk9RFKB24Rj/Ck=
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
+ [209.85.210.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-83-86CoJpsMPgeG2FYgoZ7DXA-1; Thu, 11 Jul 2024 18:29:21 -0400
+X-MC-Unique: 86CoJpsMPgeG2FYgoZ7DXA-1
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-70b0a02f2d1so1208902b3a.0
+        for <patches@lists.linux.dev>; Thu, 11 Jul 2024 15:29:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720732725; x=1721337525;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=j9e6a5/Mi00lPqSFUCY2ruWznGIW0bflPYVcqQ/6g94=;
-        b=QTRS5twjqB0KqVXuUxVG7uH8fEzXOr1LURpokAL5A1VnRWpKhJ17u5MC0V8KYKOrjO
-         G7ETLp1NXnZH/JX7ygYapPkV8VpY6vaGFnSkaaGLQS7TRxBUqWPlGnE5mQhDnvg/NW2m
-         2OtMTn89wZ+PtB0wwUAp2EAjxX2ESrajEk4mlX7gqt3mLNmiKV6CjoTJm/0JNIJe85Bs
-         ihq6kwi9kbIxYBcd4QrGXLOgp0aMPcz/mq70LTCM1VYP3BRUhWgT5IlUALXOuFtc17Lz
-         DL1/7uSZIxrx2NTWhJJfLKS/SkmoOh6yjR4L/2FLHhr32sG9LQUDzBkbXcn0mfkMHfow
-         4LOw==
-X-Forwarded-Encrypted: i=1; AJvYcCUdVbmPJJv5/rtf7E4CXk2hOXKB6RpgSnghLk4fK2xzQ52nRTD5QF9yMuUXxdJQnyjFEvZUuco10xNAWn4HS4wHcMzHIVmHow==
-X-Gm-Message-State: AOJu0YyTJ59FwkKjA1oIq2HL/YTEWfnKSjlYfoVMrKdOxAPnygwKppLs
-	yCTCFsCCya4XsOGRC2CjBmbuR1x/g3wDneZUDb+CBKeu1mO5TIpNIAjHUCbJCI8pBIXu360dNPx
-	U+z3NtATvDD9rnXZgRCsszwMV2mslMB9Kxcp9TA==
-X-Google-Smtp-Source: AGHT+IGiV5enzDmTVIOm2s/WT/YwkVXtCf2KBIl6kclbmBVx+zOZ2q3ti8a3fIkoikgcfxRFEME+6X63EW0yPUphrO8=
-X-Received: by 2002:a17:90b:1049:b0:2c9:8d58:1d31 with SMTP id
- 98e67ed59e1d1-2ca35bdc26emr7540332a91.1.1720732725432; Thu, 11 Jul 2024
- 14:18:45 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1720736960; x=1721341760;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:from:subject:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=8suwGbZaDEfaEhHxk+SPcUQE6Zt9W0rGkYpluhSm8MY=;
+        b=TeQH4klNVRzk81vnYGWf/p6o+mWFFGGCPmG/JznSK9eDyKjw5Fg4n44Ho/dfI2jC+9
+         3qcnhIAZwuCbnMXfbrn/E4XFkzFX2eq71Fg2VbtVE/O0ihyQ/K6CnDygl6VfhynS2jrf
+         Do+dOrJ1hsd6OEwnc9Tun6ewSn4zAV2ugJN1X9p9H/KYEfLPKDvy3Vx8rjpSkVX4XDuE
+         DQvc+Sar+q78lKPZbDg3yzIHciKQYNlR+R9z5g/TwMktfDP9Mbt18l9q49ZkHazUqxca
+         9uXh3MYZIgunbij2dXdT4jeR7at7kQh6gnEql+1uddUyM2YGSLLpnvaFyjDmUBKV79Wj
+         rUjg==
+X-Forwarded-Encrypted: i=1; AJvYcCVjO72Sq5+gu66+t2MQgh8vE7YIxvErvlEG6Q8Qm7Ov3s7JqVhY++MhHszdpey/anPXc1kVb4DdHHt9pUFjrV0L/+q+dOjnMQ==
+X-Gm-Message-State: AOJu0YykbF/D2aKio+hmcCnF08XuH00r8Wm34wxU+0+KpkXEQuGceO03
+	Ek+QHY3XOGXdEJ2i5yQWTIj9RRRln3Z9p40qTZpGnyL9cVibbmDgPEwAbdtgqytKAqPixBR7F5D
+	JsbZTSs//5206szWrFF0XMG6ZZlosqVdSzk3AOZpflJM8tlF1w2b6reI=
+X-Received: by 2002:a05:6a00:1387:b0:705:a600:31da with SMTP id d2e1a72fcca58-70b435f628bmr11966951b3a.23.1720736960240;
+        Thu, 11 Jul 2024 15:29:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEgxrcFMxU09Qc3/IvccbRFptfU3EUxrhjacGDTiDAHwqY4HWSq/pqfbnxMnMrO7ubxDKoWlw==
+X-Received: by 2002:a05:6a00:1387:b0:705:a600:31da with SMTP id d2e1a72fcca58-70b435f628bmr11966921b3a.23.1720736959751;
+        Thu, 11 Jul 2024 15:29:19 -0700 (PDT)
+Received: from [172.20.2.228] ([4.28.11.157])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70b438ed892sm6365205b3a.96.2024.07.11.15.29.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 11 Jul 2024 15:29:19 -0700 (PDT)
+Message-ID: <5a875a3a-2243-4eab-856f-bc53ccfec3ea@redhat.com>
+Date: Fri, 12 Jul 2024 00:29:17 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240709110658.146853929@linuxfoundation.org> <20240709110659.948165869@linuxfoundation.org>
- <8B1717DB-8C4A-47EE-B28C-170B630C4639@cloudflare.com> <dfe78e1b-eaf9-41e6-8513-59efc02633fd@nvidia.com>
-In-Reply-To: <dfe78e1b-eaf9-41e6-8513-59efc02633fd@nvidia.com>
-From: Ignat Korchagin <ignat@cloudflare.com>
-Date: Thu, 11 Jul 2024 22:18:34 +0100
-Message-ID: <CALrw=nHVvVNA5M7=jAspdcOnmDFz=zL6axC6vv6j=t1HbsaO9Q@mail.gmail.com>
-Subject: Re: [PATCH 6.6 046/139] selftests/net: fix uninitialized variables
-To: John Hubbard <jhubbard@nvidia.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
-	patches@lists.linux.dev, Willem de Bruijn <willemb@google.com>, 
-	Mat Martineau <martineau@kernel.org>, Jakub Kicinski <kuba@kernel.org>, Sasha Levin <sashal@kernel.org>, 
-	kernel-team@cloudflare.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v22 1/4] mm: add MAP_DROPPABLE for designating always
+ lazily freeable mappings
+From: David Hildenbrand <david@redhat.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev, tglx@linutronix.de
+Cc: linux-crypto@vger.kernel.org, linux-api@vger.kernel.org, x86@kernel.org,
+ Linus Torvalds <torvalds@linux-foundation.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+ Carlos O'Donell <carlos@redhat.com>, Florian Weimer <fweimer@redhat.com>,
+ Arnd Bergmann <arnd@arndb.de>, Jann Horn <jannh@google.com>,
+ Christian Brauner <brauner@kernel.org>,
+ David Hildenbrand <dhildenb@redhat.com>, linux-mm@kvack.org
+References: <20240709130513.98102-1-Jason@zx2c4.com>
+ <20240709130513.98102-2-Jason@zx2c4.com>
+ <378f23cb-362e-413a-b221-09a5352e79f2@redhat.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <378f23cb-362e-413a-b221-09a5352e79f2@redhat.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jul 11, 2024 at 8:16=E2=80=AFPM John Hubbard <jhubbard@nvidia.com> =
-wrote:
->
->
-> On 7/11/24 8:31 AM, Ignat Korchagin wrote:
-> > Hi,
-> >> On 9 Jul 2024, at 12:09, Greg Kroah-Hartman <gregkh@linuxfoundation.or=
-g> wrote:
-> >>
-> >> 6.6-stable review patch.  If anyone has any objections, please let me =
-know.
-> >>
-> >> ------------------
-> >>
-> >> From: John Hubbard <jhubbard@nvidia.com>
-> >>
-> >> [ Upstream commit eb709b5f6536636dfb87b85ded0b2af9bb6cd9e6 ]
-> >>
-> >> When building with clang, via:
-> >>
-> >>     make LLVM=3D1 -C tools/testing/selftest
-> >>
-> >> ...clang warns about three variables that are not initialized in all
-> >> cases:
-> >>
-> >> 1) The opt_ipproto_off variable is used uninitialized if "testname" is
-> >> not "ip". Willem de Bruijn pointed out that this is an actual bug, and
-> >> suggested the fix that I'm using here (thanks!).
-> >>
-> >> 2) The addr_len is used uninitialized, but only in the assert case,
-> >>    which bails out, so this is harmless.
-> >>
-> >> 3) The family variable in add_listener() is only used uninitialized in
-> >>    the error case (neither IPv4 nor IPv6 is specified), so it's also
-> >>    harmless.
-> >>
-> >> Fix by initializing each variable.
-> >>
-> >> Signed-off-by: John Hubbard <jhubbard@nvidia.com>
-> >> Reviewed-by: Willem de Bruijn <willemb@google.com>
-> >> Acked-by: Mat Martineau <martineau@kernel.org>
-> >> Link: https://lore.kernel.org/r/20240506190204.28497-1-jhubbard@nvidia=
-.com
-> >> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-> >> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> >> ---
-> >> tools/testing/selftests/net/gro.c                 | 3 +++
-> >> tools/testing/selftests/net/ip_local_port_range.c | 2 +-
-> >> tools/testing/selftests/net/mptcp/pm_nl_ctl.c     | 2 +-
-> >> 3 files changed, 5 insertions(+), 2 deletions(-)
-> >>
-> >> diff --git a/tools/testing/selftests/net/gro.c b/tools/testing/selftes=
-ts/net/gro.c
-> >> index 30024d0ed3739..b204df4f33322 100644
-> >> --- a/tools/testing/selftests/net/gro.c
-> >> +++ b/tools/testing/selftests/net/gro.c
-> >> @@ -113,6 +113,9 @@ static void setup_sock_filter(int fd)
-> >> next_off =3D offsetof(struct ipv6hdr, nexthdr);
-> >> ipproto_off =3D ETH_HLEN + next_off;
-> >>
-> >> + /* Overridden later if exthdrs are used: */
-> >> + opt_ipproto_off =3D ipproto_off;
-> >> +
-> >
-> > This breaks selftest compilation on 6.6, because opt_ipproto_off is not
-> > defined in the first place in 6.6
->
-> Let's just drop this patch for 6.6, then. Thanks for noticing and analyzi=
-ng,
-> Ignat!
+On 10.07.24 05:27, David Hildenbrand wrote:
+> On 09.07.24 15:05, Jason A. Donenfeld wrote:
+>> The vDSO getrandom() implementation works with a buffer allocated with a
+>> new system call that has certain requirements:
+>>
+>> - It shouldn't be written to core dumps.
+>>     * Easy: VM_DONTDUMP.
+>> - It should be zeroed on fork.
+>>     * Easy: VM_WIPEONFORK.
+>>
+>> - It shouldn't be written to swap.
+>>     * Uh-oh: mlock is rlimited.
+>>     * Uh-oh: mlock isn't inherited by forks.
+>>
+>> It turns out that the vDSO getrandom() function has three really nice
+>> characteristics that we can exploit to solve this problem:
+>>
+>> 1) Due to being wiped during fork(), the vDSO code is already robust to
+>>      having the contents of the pages it reads zeroed out midway through
+>>      the function's execution.
+>>
+>> 2) In the absolute worst case of whatever contingency we're coding for,
+>>      we have the option to fallback to the getrandom() syscall, and
+>>      everything is fine.
+>>
+>> 3) The buffers the function uses are only ever useful for a maximum of
+>>      60 seconds -- a sort of cache, rather than a long term allocation.
+>>
+>> These characteristics mean that we can introduce VM_DROPPABLE, which
+>> has the following semantics:
+>>
+>> a) It never is written out to swap.
+>> b) Under memory pressure, mm can just drop the pages (so that they're
+>>      zero when read back again).
+>> c) It is inherited by fork.
+>> d) It doesn't count against the mlock budget, since nothing is locked.
+>>
+>> This is fairly simple to implement, with the one snag that we have to
+>> use 64-bit VM_* flags, but this shouldn't be a problem, since the only
+>> consumers will probably be 64-bit anyway.
+>>
+>> This way, allocations used by vDSO getrandom() can use:
+>>
+>>       VM_DROPPABLE | VM_DONTDUMP | VM_WIPEONFORK | VM_NORESERVE
+>>
+>> And there will be no problem with using memory when not in use, not
+>> wiping on fork(), coredumps, or writing out to swap.
+>>
+>> In order to let vDSO getrandom() use this, expose these via mmap(2) as
+>> MAP_DROPPABLE.
+>>
+>> Finally, the provided self test ensures that this is working as desired.
+> 
+> Acked-by: David Hildenbrand <david@redhat.com>
+> 
+> 
+> I'll try to think of some corner cases we might be missing.
 
-We noticed on 6.6 because we run some selftests for this stable branch, but
-by the looks of it the patch needs
-4e321d590cec ("selftests/net: fix GRO coalesce test and add ext header
-coalesce tests")
-so it will be broken for every stable release below 6.8
+Sorry that I keep coming up with corner cases :) But these should be easy to handle:
 
-Ignat
+1) We should disallow KSM.
 
->
-> thanks,
-> --
-> John Hubbard
-> NVIDIA
->
->
-> >
-> >> if (strcmp(testname, "ip") =3D=3D 0) {
-> >> if (proto =3D=3D PF_INET)
-> >> optlen =3D sizeof(struct ip_timestamp);
-> >> diff --git a/tools/testing/selftests/net/ip_local_port_range.c b/tools=
-/testing/selftests/net/ip_local_port_range.c
-> >> index 75e3fdacdf735..2465ff5bb3a8e 100644
-> >> --- a/tools/testing/selftests/net/ip_local_port_range.c
-> >> +++ b/tools/testing/selftests/net/ip_local_port_range.c
-> >> @@ -343,7 +343,7 @@ TEST_F(ip_local_port_range, late_bind)
-> >> struct sockaddr_in v4;
-> >> struct sockaddr_in6 v6;
-> >> } addr;
-> >> - socklen_t addr_len;
-> >> + socklen_t addr_len =3D 0;
-> >> const int one =3D 1;
-> >> int fd, err;
-> >> __u32 range;
-> >> diff --git a/tools/testing/selftests/net/mptcp/pm_nl_ctl.c b/tools/tes=
-ting/selftests/net/mptcp/pm_nl_ctl.c
-> >> index 49369c4a5f261..763402dd17742 100644
-> >> --- a/tools/testing/selftests/net/mptcp/pm_nl_ctl.c
-> >> +++ b/tools/testing/selftests/net/mptcp/pm_nl_ctl.c
-> >> @@ -1239,7 +1239,7 @@ int add_listener(int argc, char *argv[])
-> >> struct sockaddr_storage addr;
-> >> struct sockaddr_in6 *a6;
-> >> struct sockaddr_in *a4;
-> >> - u_int16_t family;
-> >> + u_int16_t family =3D AF_UNSPEC;
-> >> int enable =3D 1;
-> >> int sock;
-> >> int err;
-> >> --
-> >> 2.43.0
-> >>
-> >
-> > Ignat
-> >
->
->
+diff --git a/mm/ksm.c b/mm/ksm.c
+index df6bae3a5a2c..d6744183ba41 100644
+--- a/mm/ksm.c
++++ b/mm/ksm.c
+@@ -713,7 +713,7 @@ static bool vma_ksm_compatible(struct vm_area_struct *vma)
+  {
+         if (vma->vm_flags & (VM_SHARED  | VM_MAYSHARE   | VM_PFNMAP  |
+                              VM_IO      | VM_DONTEXPAND | VM_HUGETLB |
+-                            VM_MIXEDMAP))
++                            VM_MIXEDMAP | VM_DROPPABLE))
+                 return false;           /* just ignore the advice */
+  
+         if (vma_is_dax(vma))
+
+
+We don't want to suddenly get pages that are swapbacked.
+
+
+2) We should disable userfaultfd
+
+diff --git a/include/linux/userfaultfd_k.h b/include/linux/userfaultfd_k.h
+index 05d59f74fc88..a12bcf042551 100644
+--- a/include/linux/userfaultfd_k.h
++++ b/include/linux/userfaultfd_k.h
+@@ -218,6 +218,9 @@ static inline bool vma_can_userfault(struct vm_area_struct *vma,
+  {
+         vm_flags &= __VM_UFFD_FLAGS;
+  
++       if (vm_flags & VM_DROPPABLE)
++               return false;
++
+         if ((vm_flags & VM_UFFD_MINOR) &&
+             (!is_vm_hugetlb_page(vma) && !vma_is_shmem(vma)))
+                 return false;
+
+
+Otherwise someone could place swapbacked pages in there (using UFFDIO_MOVE)
+I think. But conceptually, I don't think userfaultfd might not make sense at
+all with uffd. And if there are good reasons for it in the future, we could
+enable the parts that make sense.
+
+
+I think other places like khugepaged should handle it correctly (not set
+swapbacked) due to your changes to folio_add_new_anon_rmap().
+
+-- 
+Cheers,
+
+David / dhildenb
+
