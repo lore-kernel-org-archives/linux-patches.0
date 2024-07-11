@@ -1,66 +1,66 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8956B1EA85
-	for <patches@lists.linux.dev>; Thu, 11 Jul 2024 19:18:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D888C12FF7B
+	for <patches@lists.linux.dev>; Thu, 11 Jul 2024 19:20:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720725492; cv=none; b=mHYK09BIo+Jbd3OQAxANt1RtCelHBKT2vQXiKkHKhP8E2ku5EsssJ1a5lbGCj9y33Hpb1EFWdHKI2wsXcBpP7NKuQuKu1zayQHC1TFI70Qb68Bfpr//+YtBiNsHFUORbps91I6EPaoe3O5GAG2pyVbNyLdfUwSKVxeiVJHnAJtA=
+	t=1720725657; cv=none; b=NG9+2MXyzL1wm5KYoLdmEU/bCDQ0gkjXmtMG4D9IUgqjHxIeASGu4i5y0RJ2VnrDEiSumR3qJ/c5iJZu2BNEaxsQ+X+msQwilOnJOABaPiR0GlFp1kc4mpuqA/sbPyknA9trjcdQb9XzQdC2cRhZDBtYJDPILNx5PW/IQe9lSG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720725492; c=relaxed/simple;
-	bh=LD5F8waAmDcJ+gfEOAlGZEOJ5gl2yhVpWvogsEeiWJQ=;
+	s=arc-20240116; t=1720725657; c=relaxed/simple;
+	bh=48yw6T8nm8w1YXdZ9mvo5NEqQbm48YPBppi/Hjk0h3s=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=LTMWzEIxSJ5ZD14QX7PuMaX9IdAzibc0cRp5zuFU50+TVpp4CUu/s6tGWQ35z8dPwjtNmBUscySpsDn/Jp9HODKYeWYBkjsKkU9zdqwCdXvYFlM8LnGXfcXWqSY0lkLtLPigKYXv+nFfvpqmEQ+p0Db9GA9fTCoEorb5aDjxjPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=U1OHyLzM; arc=none smtp.client-ip=170.10.133.124
+	 In-Reply-To:Content-Type; b=cXVNXNykwlQKr5xL2BmLsI24IAmtBnG6Wy9f/kjvlJjZS8n/Xwux5FTGTWvmSGfR943tw/aewj7iFDOzfPJmFBxXAbLyZX06NQqPevIByWPHoYNmnAr/bCkTWGNG1CoIY4Dy1Xy1HoFvq8ncZ+jLq41GnHQs2x3G4FDcbORjWpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=hOViFmgA; arc=none smtp.client-ip=170.10.129.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="U1OHyLzM"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="hOViFmgA"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1720725489;
+	s=mimecast20190719; t=1720725654;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=BsFK6AFfUoEsMQwEYVBX+EezO+YNFPKdzylcEdBJ5wQ=;
-	b=U1OHyLzMTqqt+YYLF0hpMVBtQPp9L7D5aKyQI8PGGKw6Ms+qPJcWxM2+s529Dz/UDXJhIb
-	/epUJDObBo84gDCVEfmlYzZd764lDeFa98G5dOV6M8cuK59mzR7NCSyykytLXt/HNH3ICO
-	xKtejpL4RAr0m/fdawqeYmHAh56xlPY=
+	bh=7N+tm8RAmvVoK/4zFvMkE00hvcBw8YJQoI04ZpFePNc=;
+	b=hOViFmgARriFatCHKqwX9WUDidznb1tMhMzsKonsYKwIMaULHjlxDUvN0ckWe4DiPvhmMO
+	jf7g6kx91BMlZRapESBuNcd+nBI8iqhkoNiX3vm+OWmRSBJB9O5Ny02VkhwsGDzDmb60W/
+	PagYIDsgIWhNmKBBBcKzlpOxt7bPxuo=
 Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
  [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-472-XDdZh8rjPz-fTVpCl9wdgw-1; Thu, 11 Jul 2024 15:18:07 -0400
-X-MC-Unique: XDdZh8rjPz-fTVpCl9wdgw-1
-Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-767c010fe18so1231925a12.2
-        for <patches@lists.linux.dev>; Thu, 11 Jul 2024 12:18:06 -0700 (PDT)
+ us-mta-483-RmIg3IPBNiG5133uoa538Q-1; Thu, 11 Jul 2024 15:20:52 -0400
+X-MC-Unique: RmIg3IPBNiG5133uoa538Q-1
+Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-7876e1a04faso879652a12.3
+        for <patches@lists.linux.dev>; Thu, 11 Jul 2024 12:20:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720725486; x=1721330286;
+        d=1e100.net; s=20230601; t=1720725651; x=1721330451;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:from:subject:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=BsFK6AFfUoEsMQwEYVBX+EezO+YNFPKdzylcEdBJ5wQ=;
-        b=tW5di58LD1edpm0oT6UntNYk7XXXFAK1tMFmUawez33Y3gmG15a7w8+JBxBD53gDC6
-         9qHBzMMXRVekrbzynwAxj0jD1E7TwIUuk2nmrh1vDDGpONuMTJgQmRo4M1TPpYw3y3AD
-         l3/dyLMRiGob7uy9FuC0878mCHrI6sHV5hCPdupeWcno3QL+IvEd3lxeTEClDqJcaB98
-         CC4DZz47HKpdZuw3aAzf48gH0FNUwuN0Sjl260CxvWvc+HTkDSAHYDmd97OHH8hTqcD7
-         ffMHRpbXrGc4k9JaDwqKrb2F78JdHl3q1dnB9ncBGC9UPbSMK8Y7/tFk+uw2NRRjvE78
-         SOSQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV+nGPKNCjb2w9wY/fDYZncX/FmMzTwqkvHUwS3MDNGI0QCOTEE34R0CJFzpqdLxr1+RaUzsPYEt3ZVUKWaYu6rNJRhBdnhUg==
-X-Gm-Message-State: AOJu0YxLn6gQPKFQblnP22v2cFrtpDR4B0llzBEcjOOyKM+i1aUOMdMv
-	cawOJOrfWjiNipomies64CAnQge7wP6wjcz8Gczff9cYZ8fztVoEtZTRLAU3MbYLOy84GeTSmHI
-	cQy/dyhDQqXwON+2jSEFUTdBb4cBR1qps0KDTXyElQBLPQTr5F9PK2l4=
-X-Received: by 2002:a05:6a20:db0c:b0:1c0:f1a8:d9da with SMTP id adf61e73a8af0-1c29822d487mr8813939637.21.1720725486030;
-        Thu, 11 Jul 2024 12:18:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGD/IxMxt6B0he3UDBu2rDg+SCwJWefFoWRmvGoNS9xSPNAQ/jnj1cb5nQDtVXdO8li+MEN0Q==
-X-Received: by 2002:a05:6a20:db0c:b0:1c0:f1a8:d9da with SMTP id adf61e73a8af0-1c29822d487mr8813922637.21.1720725485558;
-        Thu, 11 Jul 2024 12:18:05 -0700 (PDT)
-Received: from [10.35.209.243] ([208.115.86.75])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70b438eb4eesm6213417b3a.93.2024.07.11.12.18.04
+        bh=7N+tm8RAmvVoK/4zFvMkE00hvcBw8YJQoI04ZpFePNc=;
+        b=KgBmUlw6lPNuLPVUjMNq9mHE38kffnMUIYJ7/jfsIaOSEQ8yszaKDnEa2e1sH4luYx
+         DndYfyxnwo10j+77rUzcMp2tOITr2Dx9yLvxZqYdIAcfvn2M8RBm2zUer0fWegOpHqH4
+         dq3wFsF55ayNT9PB9LvDpPOlUheVft24ddnpABhgG4U3/gUqJoaXm0cs/mEwJ9l+0u4w
+         GaH8c0BKe4kN2Oa+Z+dEFa4gOrpyDauf8pZZ+u3gHQJHqfbd22zX2NNBdgoK637XA3wc
+         sUq7bxBdjhRL5uVW00fgYsLKtjOSh0bsICemGtD0FogCvWjqpeJUaY7iTThQeNg2RIrF
+         SkiA==
+X-Forwarded-Encrypted: i=1; AJvYcCVvOjbtJ4CX/kTNRZPW/aaYUsI9Sxi9hO3xAc0witz2tt+XzEriYt/saUrNIEOGqc6B2XHh3Fz98eHr0swZWQzX2k0kgjv8mQ==
+X-Gm-Message-State: AOJu0YzzKa323v8x16UyBlJDbIqJqi0aC08ZpE7tNAQGlL3uRlakaKpg
+	jFIVOqsdBka8+BPCi36dqUsr9jkQLW+Do+GAKiSm/iIU1plzdkEYM7bYzn1k2AFf7ZE07yONhXD
+	YtiZE99EK1s33E9x3Oomz284Mh2gVxELZ/ytPSWNHbALL7LveWDMSgP0=
+X-Received: by 2002:a17:90a:66c5:b0:2c9:b72:7a1f with SMTP id 98e67ed59e1d1-2ca35c72dbcmr7135112a91.28.1720725651054;
+        Thu, 11 Jul 2024 12:20:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGI0uMgSW1u3GFAz0lYiKmF1ks96H89oy9S4U/cwkivkF8t14iRSKoIcA541WBK+7eLWOipKw==
+X-Received: by 2002:a17:90a:66c5:b0:2c9:b72:7a1f with SMTP id 98e67ed59e1d1-2ca35c72dbcmr7135094a91.28.1720725650605;
+        Thu, 11 Jul 2024 12:20:50 -0700 (PDT)
+Received: from [10.35.209.243] ([208.115.86.77])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2c99a97c196sm14214633a91.26.2024.07.11.12.20.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Jul 2024 12:18:05 -0700 (PDT)
-Message-ID: <1c8632b4-06a5-49da-be0c-6fc7ac2b3257@redhat.com>
-Date: Thu, 11 Jul 2024 21:18:03 +0200
+        Thu, 11 Jul 2024 12:20:50 -0700 (PDT)
+Message-ID: <2c464271-1c61-4cd8-bd4e-4bd8aa01fa00@redhat.com>
+Date: Thu, 11 Jul 2024 21:20:48 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -92,6 +92,7 @@ References: <bf51a483-8725-4222-937f-3d6c66876d34@redhat.com>
  <8586b19c-2e14-4164-888f-8c3b86f3f963@redhat.com>
  <ZpAqbh3TnB9hIRRh@zx2c4.com>
  <443146f4-9db8-4a19-91f1-b6822fad8ce8@redhat.com>
+ <1c8632b4-06a5-49da-be0c-6fc7ac2b3257@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
  dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
@@ -137,67 +138,70 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <443146f4-9db8-4a19-91f1-b6822fad8ce8@redhat.com>
+In-Reply-To: <1c8632b4-06a5-49da-be0c-6fc7ac2b3257@redhat.com>
 X-Mimecast-Spam-Score: 0
 X-Mimecast-Originator: redhat.com
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 11.07.24 20:56, David Hildenbrand wrote:
-> On 11.07.24 20:54, Jason A. Donenfeld wrote:
->> On Thu, Jul 11, 2024 at 08:24:07PM +0200, David Hildenbrand wrote:
->>>> And PG_large_rmappable seems to only be used for hugetlb branches.
+On 11.07.24 21:18, David Hildenbrand wrote:
+> On 11.07.24 20:56, David Hildenbrand wrote:
+>> On 11.07.24 20:54, Jason A. Donenfeld wrote:
+>>> On Thu, Jul 11, 2024 at 08:24:07PM +0200, David Hildenbrand wrote:
+>>>>> And PG_large_rmappable seems to only be used for hugetlb branches.
+>>>>
+>>>> It should be set for THP/large folios.
 >>>
->>> It should be set for THP/large folios.
+>>> And it's tested too, apparently.
+>>>
+>>> Okay, well, how disappointing is this below? Because I'm running out of
+>>> tricks for flag reuse.
+>>>
+>>> diff --git a/include/linux/page-flags.h b/include/linux/page-flags.h
+>>> index b9e914e1face..c1ea49a7f198 100644
+>>> --- a/include/linux/page-flags.h
+>>> +++ b/include/linux/page-flags.h
+>>> @@ -110,6 +110,7 @@ enum pageflags {
+>>>     	PG_workingset,
+>>>     	PG_error,
+>>>     	PG_owner_priv_1,	/* Owner use. If pagecache, fs may use*/
+>>> +	PG_owner_priv_2,
 >>
->> And it's tested too, apparently.
+>> Oh no, no new page flags please :)
 >>
->> Okay, well, how disappointing is this below? Because I'm running out of
->> tricks for flag reuse.
->>
->> diff --git a/include/linux/page-flags.h b/include/linux/page-flags.h
->> index b9e914e1face..c1ea49a7f198 100644
->> --- a/include/linux/page-flags.h
->> +++ b/include/linux/page-flags.h
->> @@ -110,6 +110,7 @@ enum pageflags {
->>    	PG_workingset,
->>    	PG_error,
->>    	PG_owner_priv_1,	/* Owner use. If pagecache, fs may use*/
->> +	PG_owner_priv_2,
+>> Maybe just follow what Linux suggested: pass vma to pte_dirty() and
+>> always return false for these special VMAs.
 > 
-> Oh no, no new page flags please :)
+> ... or look into removing that one case that gives us headake.
 > 
-> Maybe just follow what Linux suggested: pass vma to pte_dirty() and
-> always return false for these special VMAs.
+> No idea what would happen if we do the following:
+> 
+> CCing Yu Zhao.
+> 
+> diff --git a/mm/vmscan.c b/mm/vmscan.c
+> index 0761f91b407f..d1dfbd4fd38d 100644
+> --- a/mm/vmscan.c
+> +++ b/mm/vmscan.c
+> @@ -4280,14 +4280,9 @@ static bool sort_folio(struct lruvec *lruvec, struct folio *folio, struct scan_c
+>                   return true;
+>           }
+>    
+> -       /* dirty lazyfree */
+> -       if (type == LRU_GEN_FILE && folio_test_anon(folio) && folio_test_dirty(folio)) {
+> -               success = lru_gen_del_folio(lruvec, folio, true);
+> -               VM_WARN_ON_ONCE_FOLIO(!success, folio);
+> -               folio_set_swapbacked(folio);
+> -               lruvec_add_folio_tail(lruvec, folio);
+> -               return true;
+> -       }
+> +       /* lazyfree: we may not be allowed to set swapbacked: MAP_DROPPABLE */
+> +       if (type == LRU_GEN_FILE && folio_test_anon(folio) && folio_test_dirty(folio))
+> +               return false;
 
-... or look into removing that one case that gives us headake.
-
-No idea what would happen if we do the following:
-
-CCing Yu Zhao.
-
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 0761f91b407f..d1dfbd4fd38d 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -4280,14 +4280,9 @@ static bool sort_folio(struct lruvec *lruvec, struct folio *folio, struct scan_c
-                 return true;
-         }
-  
--       /* dirty lazyfree */
--       if (type == LRU_GEN_FILE && folio_test_anon(folio) && folio_test_dirty(folio)) {
--               success = lru_gen_del_folio(lruvec, folio, true);
--               VM_WARN_ON_ONCE_FOLIO(!success, folio);
--               folio_set_swapbacked(folio);
--               lruvec_add_folio_tail(lruvec, folio);
--               return true;
--       }
-+       /* lazyfree: we may not be allowed to set swapbacked: MAP_DROPPABLE */
-+       if (type == LRU_GEN_FILE && folio_test_anon(folio) && folio_test_dirty(folio))
-+               return false;
-  
-
+Note that something is unclear to me: are we maybe running into that 
+code also if folio_set_swapbacked() is already set and we are not in the 
+lazyfree path (in contrast to what is documented)?
 
 -- 
 Cheers,
