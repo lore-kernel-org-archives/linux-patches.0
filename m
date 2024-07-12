@@ -1,41 +1,58 @@
-Received: from mout.web.de (mout.web.de [212.227.15.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC4B5171641;
-	Fri, 12 Jul 2024 14:20:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613FD176AA1
+	for <patches@lists.linux.dev>; Fri, 12 Jul 2024 17:06:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720794028; cv=none; b=fso1hS9Nrs21ITWfiwecp7+C1SqfgDpuNooKJw7Yz8ukScFF/Y0UVsSt5/sImmF8n1wBMaKfQoXLYHQB/Iu91KZREdfd5l37tHepYSeF7qkpr1mE9YGElqm3MAPNWzb5XR6Vz/Trh/bdC5byUH38PI39D/ln5CyOZmoZxfVn04o=
+	t=1720803981; cv=none; b=DKVXAQ+DOcNOYTznKahmzp81ubuLn4Dd/a5q22+fLK6SJw/ZGxJQT48rZ4QRnJy8PK0b9N1OrVGAqDhbBDF3ciiPR39IRUbQ0kQ8QmdiU0Y3CwCf4Hm2LFJwS+MybE12XXRXdWi/Dh11gfqLdf1hJJcMFrYwyFazF9iavZK+d4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720794028; c=relaxed/simple;
-	bh=cS5f9Lj8zBxQ16npRLhSgU1/vGtRs8rLFaOzpHaWCec=;
+	s=arc-20240116; t=1720803981; c=relaxed/simple;
+	bh=g4HosscmGTGzLql1pINXl2ryFOeiOcS0JD/J8utFiG8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VaqHnuefJqn7RXeeluwWo2gh7SLABJg0P3hpRRaEv2o5/wAKRHFwZyYERcUgiCDAin3JkBcZBpGo5xZQiQIhAwxYhRaWQP03TmvH8jOHjp2wZkQ4ZB1Ih/wxU/yYqbd6EK4po+6VbbXov2Uqn5q7J/agj/zyDJwlU7o4qP8B0PQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=frank.scheiner@web.de header.b=vNJgNKl+; arc=none smtp.client-ip=212.227.15.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	 In-Reply-To:Content-Type; b=uATsTtzTnWCHWJuB5zYdICJNGmqDy1Axjx6dotDaxAxcgZ3k7sNEpUkAaU6JE/Nq7LEU4xNMHWFAfXzDCr+8b5PNqatN6KvASOND3DG8+WP+6MB7qmkex4ZHsuM/WK/3gTvsR5Pn7TqDEomesgaU1s8gfF/rBrlsZm7M+52PGGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NgxQWoLh; arc=none smtp.client-ip=209.85.210.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=frank.scheiner@web.de header.b="vNJgNKl+"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1720793982; x=1721398782; i=frank.scheiner@web.de;
-	bh=cS5f9Lj8zBxQ16npRLhSgU1/vGtRs8rLFaOzpHaWCec=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=vNJgNKl+q33X4KbsvOZXMsOvk0/hofdk+Wpo138isp8hoWv9B/iU6yIcAIGXen1C
-	 OrkYV59Y+Y196hBg8kA8xGa0og+ku8SEUotcmdbrMYJDNrM+ZL+i5J/kYzKooh1Cu
-	 pZqUsPv788vz013wfgwOt8SdEpjWAPnHa7BScDWkWGPoiLaWYzTThaK5L8atZ6xBT
-	 er38pBMJWHTDjIa7jkL9DPuJ3epyr5BGZa18huLa9rQp3GLAB0ennuHwYMFbanR0U
-	 Ir86aEk8vp/eXhHq0tR87oY3OsYtDZJMADWxk+hNSI/pdJQZWEMweKQrl5eZOuFGe
-	 Ld+VVWZlWNFDHUfSow==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.30] ([217.247.34.12]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1M9Zdw-1sOxjO1x4u-001VWu; Fri, 12
- Jul 2024 16:19:42 +0200
-Message-ID: <07a7bc4b-9b71-486f-8666-d3b3593d682c@web.de>
-Date: Fri, 12 Jul 2024 16:19:39 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NgxQWoLh"
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-70b1207bc22so1969853b3a.3
+        for <patches@lists.linux.dev>; Fri, 12 Jul 2024 10:06:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720803978; x=1721408778; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RXBbNRNVh7Jf3s8Zs2bOIxvS1kfw/H6qMUrvf21hgkM=;
+        b=NgxQWoLhNOA6FGggy/m3HELGH4L7iUXKnSV619uNrn/VhEtF9n48TE8hb/PEdlVmI/
+         KXrfHluhgkjRaev9/+LQ2+AazPexoMir0X6aH5rTDasx52ZwPE30xyqwHuO86by+3H7w
+         c+yFWJryDV80PZFpDcx8FchokMln6TH5kmYa2y5xnxZRz5A3BMgw4SoYoVc94YtKAerk
+         decb4HYmXdOwC9gtlWaHJMy4HQcXPYgmQQFZohnwG7YREK6bTqe4+dGYf5MSF/OOk06h
+         e8gotthenXstNRa3Gwd5QyX/+ghDno5fC0cQAfvabQdZZdjy8B9e9Q5EvavED2Kq7Oa9
+         kU/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720803978; x=1721408778;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RXBbNRNVh7Jf3s8Zs2bOIxvS1kfw/H6qMUrvf21hgkM=;
+        b=a2E6G4RQerFegRSnsiDuml7snBNi78l44IA2+2B1B7hn/YRmLEXZ9A+LY53O54q/47
+         zJcyzUfQwmSvySZbGKARuCaQoX2Vcl6I9Ry6ST1WYJ6AHFTiDAkz/R3qiy/eZuwIUmpp
+         FxefYcuVdf+9hUqwvuwhgu+ZozlgMYGyn2QjPDbG233DRa60k7nNFem97wZfKcXb7NdD
+         TPrR/Gi0J//pEMx8isbsbJ/O+O02MtZxZA0T62IbLWloEG0Hw6yVM+VEedmd4dPaGtYA
+         sXaznZAsLtsFeu/M02Hm4LeryG3cdxI/1Q868ond/TUl7Edz8F/W1AL9BgCcuqC413li
+         +Mig==
+X-Gm-Message-State: AOJu0YxR6V+DnNZ4ZEObXCSsUE3c+6nZWnGANvKDfXEwEmM7x7zel958
+	g5w5ToToMFHcGD6EaXBH2O5D0n09kmH8DBxFrsK6TJXyGCNh6yon
+X-Google-Smtp-Source: AGHT+IHnbDShKr97eQTu93Ri/R0ihvF9+DxpM+vu/Mjzng4jauBBUJJj1nBUn1qCkVTWy4PIz+SS9A==
+X-Received: by 2002:a05:6a00:3e21:b0:70a:f40e:f2c7 with SMTP id d2e1a72fcca58-70b435e7aa4mr14970162b3a.24.1720803977591;
+        Fri, 12 Jul 2024 10:06:17 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id d2e1a72fcca58-70b4398039csm7720181b3a.154.2024.07.12.10.06.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 12 Jul 2024 10:06:16 -0700 (PDT)
+Message-ID: <6f42557f-9c13-4c31-978d-3a7385456e02@gmail.com>
+Date: Fri, 12 Jul 2024 10:05:52 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -43,87 +60,44 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.10 000/284] 5.10.221-rc2 review
-To: Greg KH <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, akpm@linux-foundation.org, allen.lkml@gmail.com,
- broonie@kernel.org, conor@kernel.org, f.fainelli@gmail.com,
- jonathanh@nvidia.com, linux-kernel@vger.kernel.org, linux@roeck-us.net,
- lkft-triage@lists.linaro.org, patches@kernelci.org, patches@lists.linux.dev,
- pavel@denx.de, rwarsow@gmx.de, shuah@kernel.org, srw@sladewatkins.net,
- sudipm.mukherjee@gmail.com, torvalds@linux-foundation.org,
- =?UTF-8?B?VG9tw6HFoSBHbG96YXI=?= <tglozar@gmail.com>
-References: <20240704094505.095988824@linuxfoundation.org>
- <76458f11-0ca4-4d3b-a9bc-916399f76b54@web.de>
- <2024071237-hypnotize-lethargic-98f2@gregkh>
+Subject: Re: [PATCH 6.1 000/102] 6.1.98-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240709110651.353707001@linuxfoundation.org>
 Content-Language: en-US
-From: Frank Scheiner <frank.scheiner@web.de>
-In-Reply-To: <2024071237-hypnotize-lethargic-98f2@gregkh>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20240709110651.353707001@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:6U+O4I/AFDR73G+CviYFhi4NjdFi9e/ZJ2vjQu6dslp5gQGruFd
- kIC2O2REqB/X4Zk1kJJrCYTT5heZNdY/AZ7Y9dW5P9FbS0qLEJZw456T4+HogsHu9dSvwBU
- TiWTRqKEr1y9NNHtkGjfcXWxi7/2RDOegbID5UALVvvHrj3VX6qFvbfhvRKZczdfASmLtX7
- U3zvCN1C8pm4cWHVnS7FQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:cuxzBxk0N8c=;oR18Rmj5r6I7ejRvaJONqFM/B/y
- fUiz0a83J3iQlM6mp75UGFtqJw/klWWY4T5npuNCzKCMmoowMI2UnuNjlELG5z0tlE0e0+tm0
- 3XRFL6/s+ADvc5VO6ei6y9YQ8Lx/8njEH/WWi2EWSyq/XAxiPUY78i7mc/bRK2+h8Pvpfg9Bf
- RZyV0Gf7ncRZgndptUWT60rp9UuCk4icKiaV42YEq/edoiLmxb4X8ABhw7lQ2BH2VC86htwYa
- 9RDc3lUp2wsSKc0RTBUY18CWqleA7IkbRwklbgyxIjaP3p9H4k4aikhSRa701wzCk3WJtpS/k
- G46rq0aXCN0v6X4Zo0I3AfwH1gcM8EsOFszUTAIXntjdA2ol0KMlHrpnb4CVp5sgPavsGI3ja
- GqGW5KBFVtl0bK6TlGeQEHXf48NNTjYlr2UMrtn0/2XW4NY80inzaeesyW4EcQjKT0A9MJuGy
- E0LrblMYRY0aZEThPYcSqx7Plqo2xW9d4Z/lOJpqDZklxECfPc+Ptf904SQkKK49bfStDBbYR
- 4MkESz18RY+S0Qgy86Mz6EJ04Bouc5mq7MQKUDCg517B6xm0YDmZbJmqRTuwaqS+w0Nm+q5hj
- owtWyZf7pr8phmrXS5wwAoE5fIpVWxauAhAN4jvuQM7Goqw838GqmY9Hg/k0VHrmnhsr858ts
- 5Mj0e5zhkJFlLKe0IOYvjaamNdxezcR1ZgGdMo5s7hPZkMs67nrJswoVN1awc6gh62Pp70sok
- CBTc3c928VrKzIIUhu3UByIw70v1cf9ZRDF2cNGdLjAwHfX3OrmPLOhHtPxj8E3ZMgq6R+L+Y
- XDpvzqFjUi7ALMjn5LQUqeQtTqansVg2ACoJvzNdR3BDAkFThbKosv3dGGFE3FWbaiCjyCnP4
- nxBeCWSWNP6mOwQ==
+Content-Transfer-Encoding: 7bit
 
-On 12.07.24 15:32, Greg KH wrote:
-> I'm confused, which commit should we add, or should we just revert what
-> we have now?
+On 7/9/24 04:09, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.98 release.
+> There are 102 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 11 Jul 2024 11:06:25 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.98-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Sorry for the confusion. Let me try again:
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-1. efi: memmap: Move manipulation routines into x86 arch tree
-
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git=
-/commit/?h=3Dlinux-5.10.y&id=3D31e0721aeabde29371f624f56ce2f403508527a5
-
-...breaks the build for ia64, because it requires a header that does not
-exist before 8ff059b8531f3b98e14f0461859fc7cdd95823e4 for ia64.
-
-2. efi: ia64: move IA64-only declarations to new asm/efi.h header
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/=
-?id=3D8ff059b8531f3b98e14f0461859fc7cdd95823e4
-
-adds this header and fixes the ia64 build, see for example [1].
-
-[1]:
-https://github.com/linux-ia64/linux-stable-rc/actions/runs/9871144965#summ=
-ary-27258970494
-
- From my understanding 31e0721aeabde29371f624f56ce2f403508527a5 should
-not be merged w/o 8ff059b8531f3b98e14f0461859fc7cdd95823e4, which also
-seems to be the case for all other stable kernels from linux-5.12.y up.
-
-So 8ff059b8531f3b98e14f0461859fc7cdd95823e4 should be added, too, if
-31e0721aeabde29371f624f56ce2f403508527a5 stays in.
-
-> And I thought that ia64 was dead?
-
-No, actually it's alive and well - just currently outside of mainline -
-but still in the stable kernels up to linux-6.6.y and for newer kernels
-patched back in. If you want to check on our CI ([2]), all current
-stable kernels build fine for ia64 and run in Ski - but linux-5.10.y
-currently only because I manually added
-8ff059b8531f3b98e14f0461859fc7cdd95823e4 to the list of patches applied
-by the CI.
-
-[2]: https://github.com/linux-ia64/linux-stable-rc/actions/runs/9901808825
-
-Cheers,
-Frank
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
 
