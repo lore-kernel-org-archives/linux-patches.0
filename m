@@ -1,103 +1,105 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755D7176AC4
-	for <patches@lists.linux.dev>; Fri, 12 Jul 2024 17:38:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66F43BB23;
+	Sun, 14 Jul 2024 18:09:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720805937; cv=none; b=usfoIEz5nmiQP1ZWG0IbtaOXJF78lLgYg5TwM32xBLBVlJjl7CXq8A+b80OybislgoVfn8uPlyDscnv1Z3xHesSxRBy+FXDW6mufkeoAk2bMySDbWmpUYMupqbkLEYN91m8rbCB2oyfBfpn4vDcaCN1fVvc3dJz+l/zVtNZNeEw=
+	t=1720980596; cv=none; b=JbAYS4ZZeXdGQsShMrajsiLvx9LE9qqHDsRPdiVlnqnZBKX5AHyi+HgJisACBfdW+URz4CmVWehI3/TJdKEDd8EZMs6ZTpii6TVkHqJsrkmrB58VQzwV4ibTDjKUwTZVMMqgGhTmnti8eWlUqG6EGFp0wXhcaVa/28wmc5Jyjv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720805937; c=relaxed/simple;
-	bh=1V/ENdQTei7MNCNaneHTy5T1yttqICLHC3xv6bU0BGc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=h9rWo1q+rnRuesywa+AvxuSZh23d6VL6fA73MlZUCWoKTKynwmAdlkxKSnXKH57Vhv5//I0Wco5uJdAynFiiuCQBPm2i+U7/Cp7WS6OTotTQxy7QXABK9mQ3yUZRytJWtfozrkhgboG3z87q1nOJUP5U6tE2dnHJLs+GihMhHzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bA1ndtcA; arc=none smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1720980596; c=relaxed/simple;
+	bh=Dl5jmsuCn3rUPbU1p56YwE5+B5i/ZUzLYhvRRqPoSSY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EL7JF9EfrnILuKFfWAEZzayhwe4FGsunWpn/6REsqKgnokp4FLzJcd+PGEGP+m9aCrubtBlrNbBKKuX+xRAXQlHHrgZbYYp+7R/eP3nF5fEAUNJ6le8AXTVy2swvD5d6mNrrd4PaqIQToeEPKArVGOakDvhYwKzULolMtA3/mag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y7xkjT45; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bA1ndtcA"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-70af0684c2bso1809734b3a.0
-        for <patches@lists.linux.dev>; Fri, 12 Jul 2024 10:38:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720805934; x=1721410734; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=L9FqVr/rhZyzwfnucHeAewr1d8dwEYOh9P/Sief1hgk=;
-        b=bA1ndtcAGx+6ydSSddg0vhtRMbI6ONDdN6U19+L+Qu7llE4G3bMfwrCxqUXG5t8Nlm
-         g3hsU4VHWkzi6MQ+G6SVbVMr0BeAgP014JwOFxhfi9yVkRM7LlTb6/iIWOkh2dgYZyky
-         OpWJjsQvKwd8NToqsI30yxlL/QKbub83P+wQjvBEAzvK1EjnNWMi6/bKtTq7Bc9ixsz5
-         j/nCzVkGAAs+IGxPlMkqnJPqIMldxEPCKmYkgKeDVT+p7ygIoo2C2+kfI0+9BN3juFgD
-         s8eEhBeNM1lYzoLgBE3dZ2h5vkQxbI3uZydDLYLCcRkJLbTqvGjnd2SjibHmStU9+76c
-         0NUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720805934; x=1721410734;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=L9FqVr/rhZyzwfnucHeAewr1d8dwEYOh9P/Sief1hgk=;
-        b=PenkfFKcM7kNHYE3LJ0zQnGQH4diCfrD+BdtYjLweL5kmA/P1Z5nLo+z2ST15VZ1x2
-         DTlO7iVEM0yiD9li+El1nLq80zQrqmT91kZvmSBPOpLWniYoqqoel5HYHyUwaHV0N3Lt
-         OIjKECHIG9LK/Yyt5MrppFROHqkpMj2/81CTiMAoEeOWYrIvHBjICqRlDTLwAUVmDBCC
-         thLdfjzeFvielN3a9xXwIPyp+uSx01VFtn68OdmnKIR+r3xe78i+JrEUCn+HYF0DZTPJ
-         3ceCfLLhZ8dqOjZxru++Jma/kQJyDJtP02h+58TIvmLV27Eb9qU8eEFceo+L2JGlaIp+
-         JPzQ==
-X-Gm-Message-State: AOJu0Yx7wPH/7Aapsx/fvZkgR3T27NOkusnAkBDdR3+f3p2n8xsCBAvq
-	/hyQBsY/bzpxhd1YrjJ6a73W1TPOvh5d1wq5r7k3a5kWMzC2KLpH
-X-Google-Smtp-Source: AGHT+IHdX+ao63nA1fTMZfLSJG7Xybt0fUskH7EuIH0b1VguS4qarFsUTpYI3p+dG3HrORxzZF31lg==
-X-Received: by 2002:a05:6a21:3394:b0:1be:dd1c:a6e3 with SMTP id adf61e73a8af0-1c2984e11d9mr13338042637.54.1720805933399;
-        Fri, 12 Jul 2024 10:38:53 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-1fbb6a3ca56sm69551665ad.118.2024.07.12.10.38.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Jul 2024 10:38:51 -0700 (PDT)
-Message-ID: <191d8761-0784-44f6-9b8e-5d3c1c15c5ad@gmail.com>
-Date: Fri, 12 Jul 2024 10:38:48 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y7xkjT45"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 789DCC116B1;
+	Sun, 14 Jul 2024 18:09:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1720980596;
+	bh=Dl5jmsuCn3rUPbU1p56YwE5+B5i/ZUzLYhvRRqPoSSY=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=Y7xkjT45wa5JM5Q1pBPemg7tNyhms3PYmQmofKI8NRB+9pvrv5Zpy8VmzSj2SiF+M
+	 DxmcLeIB6z7Cr8wH+DQDipZwgYw/LoxEMu9gBH27sWcESrLsOs1G4TCah9cIGrTAUc
+	 svUukny6l1pQazjjUFwyJn3hXdKz5VCONzc1+feHpPsnb2UbTp2KB8MoDyLQh3d/KW
+	 PgMi8blPlqhR1FQv7ypMS86zDxNl6nuWXls5MdJVWx6VYkiJD04knZFX6cnRsOSqfw
+	 dRECU9fh8l/uBpzLSBdHmWCfJAej1+J/92l25G7vNVaDKc4hlLSkQPU9XoPgrpxjOH
+	 3pvHDBjMWLCfw==
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-52ea79e6979so4019485e87.2;
+        Sun, 14 Jul 2024 11:09:56 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCXAlRyh69SuAhQ2+uNOxE66hYj2SeUnQp5OYKnM0YvXG/3axYVFpWeBzqlsKj4ZLw1ZMmKzIf1567m+5+sce9/SeR8Ivus1jb4xL3c2eIpmVI7yPTw4FoiZqsifBgo=
+X-Gm-Message-State: AOJu0YwP4ZnUhRqoudQ+oo4yk2mCtI85Ca7nq6v5zE1lxQDYpQb3nWzj
+	mVtEeDiNq96/etDfoVHIbD88mXMto7wEImw0Vju8mFDmrDl7j3A3Ngjm7WZIrz7udMcausdz/Og
+	7V1qFNL68P7WxmjDo4q7T1+seJQ8=
+X-Google-Smtp-Source: AGHT+IGeZcuJVP7EOm/o8e0bQMno/dlmDA75/UxNbxs4oEk8XH/LCKLSxfQC707gOisym50e3n5ioj3JvDZCo9S0tps=
+X-Received: by 2002:a05:6512:3d8a:b0:52c:8aa6:4e9d with SMTP id
+ 2adb3069b0e04-52eb99a2b76mr12559665e87.29.1720980595209; Sun, 14 Jul 2024
+ 11:09:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.9 000/197] 6.9.9-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-References: <20240709110708.903245467@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20240709110708.903245467@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20240707-update-ld-version-for-new-lld-ver-str-v2-1-8f24421198c0@kernel.org>
+In-Reply-To: <20240707-update-ld-version-for-new-lld-ver-str-v2-1-8f24421198c0@kernel.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
+Date: Mon, 15 Jul 2024 03:09:19 +0900
+X-Gmail-Original-Message-ID: <CAK7LNARmV0BxgpOc29=-b0uPNtn2CPRW+ODvOKim=YmiO63b-g@mail.gmail.com>
+Message-ID: <CAK7LNARmV0BxgpOc29=-b0uPNtn2CPRW+ODvOKim=YmiO63b-g@mail.gmail.com>
+Subject: Re: [PATCH v2] kbuild: Make ld-version.sh more robust against version
+ string changes
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Nicolas Schier <nicolas@fjasle.eu>, Fangrui Song <maskray@google.com>, 
+	Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, linux-kbuild@vger.kernel.org, 
+	llvm@lists.linux.dev, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 7/9/24 04:07, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.9.9 release.
-> There are 197 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 11 Jul 2024 11:06:25 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.9.9-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.9.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On Mon, Jul 8, 2024 at 2:07=E2=80=AFPM Nathan Chancellor <nathan@kernel.org=
+> wrote:
+>
+> After [1] in upstream LLVM, ld.lld's version output became slightly
+> different when the cmake configuration option LLVM_APPEND_VC_REV is
+> disabled.
+>
+> Before:
+>
+>   Debian LLD 19.0.0 (compatible with GNU linkers)
+>
+> After:
+>
+>   Debian LLD 19.0.0, compatible with GNU linkers
+>
+> This results in ld-version.sh failing with
+>
+>   scripts/ld-version.sh: 18: arithmetic expression: expecting EOF: "10000=
+ * 19 + 100 * 0 + 0,"
+>
+> because the trailing comma is included in the patch level part of the
+> expression. While [1] has been partially reverted in [2] to avoid this
+> breakage (as it impacts the configuration stage and it is present in all
+> LTS branches), it would be good to make ld-version.sh more robust
+> against such miniscule changes like this one.
+>
+> Use POSIX shell parameter expansion [3] to remove the largest suffix
+> after just numbers and periods, replacing of the current removal of
+> everything after a hyphen. ld-version.sh continues to work for a number
+> of distributions (Arch Linux, Debian, and Fedora) and the kernel.org
+> toolchains and no longer errors on a version of ld.lld with [1].
+>
+> Fixes: 02aff8592204 ("kbuild: check the minimum linker version in Kconfig=
+")
+> Link: https://github.com/llvm/llvm-project/commit/0f9fbbb63cfcd2069441aa2=
+ebef622c9716f8dbb [1]
+> Link: https://github.com/llvm/llvm-project/commit/649cdfc4b6781a350dfc87d=
+9b2a4b5a4c3395909 [2]
+> Link: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap0=
+2.html [3]
+> Suggested-by: Fangrui Song <maskray@google.com>
+> Reviewed-by: Fangrui Song <maskray@google.com>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
-
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
-
+Applied to linux-kbuild.
+THanks!
