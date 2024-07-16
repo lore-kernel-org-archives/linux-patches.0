@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B6D927733;
-	Tue, 16 Jul 2024 15:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75BA17A93F;
+	Tue, 16 Jul 2024 15:53:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145197; cv=none; b=BwkX0MXmQ3qVtJUKITs+AzyCL0r3JKrMesyhsw74JK/yhilIAm/o7ql+Lz2pyvLfHVUKbRVQn7UjWv+siSVwcCOMYkp5ZlJv+VBX8s32MTGjPmfl1l9+VCO1rxzfnNrHrRNFZRbEHnHd7Pu6lkxOx6KqdsgviI1HzLS3BznsigA=
+	t=1721145200; cv=none; b=hqOE4DIU+s4RPtR8UT5gIoJ3lR5nIlNV+y6iRLEN1u1g8iZuesXQzIAVhXDBd31bk38J4kkTbIM4EqxxkaCuiAQSL4DnTHkznLmdLYyYcqER6zPi9LBY0RJwZ/8lN2wElqPn4g/swAQT+eCCHvNsFe+w32I153S0HLsxYSOqtnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145197; c=relaxed/simple;
-	bh=1GCyO49mTsCTPDrBfnddHFkyYKpDSn3RYzEbywqr6i0=;
+	s=arc-20240116; t=1721145200; c=relaxed/simple;
+	bh=bQLndeYued1xskF7RURbiVo0SRWXA9UMXUpAjXVSO6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T/yDtZXfGrGzFfRpgSovq+si1zVkp9cjCLG6NzXyqduCx+rj459qDPfIIMW6j0Xnu8LwNrPDmmdDv+lRYeLbXp+CI//qAOFbvS/8X+j11tidRwFd5hzroDteUH4MsmKYeLLJY4jLN+pyRl5pxkJ0L2m+X0L2dMCrPuyyghXViqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XYyPF5DN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U4neoCGiLySSrtOYeULwnbRaNMm1Zq+pJ+PdF5W3eZlEU2MsZGtYJ8iskVlYGFYrPRK995w+I5wGU3Q4+eKIKn2lABIfyWUhH0Uipe+rwImjsWQwvh6TpOb/HM4Bn77a+S+OwnudBoa6s4cGUFnLvXwcMrO7JTdfUCMMOeIWcNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/dpUIMF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XYyPF5DN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E016BC4AF0E;
-	Tue, 16 Jul 2024 15:53:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/dpUIMF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE721C116B1;
+	Tue, 16 Jul 2024 15:53:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145197;
-	bh=1GCyO49mTsCTPDrBfnddHFkyYKpDSn3RYzEbywqr6i0=;
+	s=korg; t=1721145200;
+	bh=bQLndeYued1xskF7RURbiVo0SRWXA9UMXUpAjXVSO6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XYyPF5DNR8OvXfKGUDc6828uuLfTgmdLTXzx6gSY9qxAozQnJpGigLwUro635Y5mu
-	 TqhLy+VWQjCmkhF7cEFn9j6w82IHf5Pn8gWx1HUWxN8RqA3ggJC16bCJJMVDz2Bc0x
-	 fyMaPfYucQWJqNRUsUD32UHxUym5u+Nlu0XULStM=
+	b=L/dpUIMFt7nG3M96bBfGpSRzMKjUU/l7G4L0XLaUUJnuWn1BKMphryZh/oYk5LZ+M
+	 UYtvTZ7/bcteFMANmoPQ5p2jsQRVPaQrui+oRm/Y4NCnAORDg2pUJDXx/AdVkf9tZ5
+	 UyKKcKTa7bFrCkSqpQSZ8J8KfqAsuN6+TWha65bo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.9 098/143] arm64: dts: qcom: x1e80100-crd: fix DAI used for headset recording
-Date: Tue, 16 Jul 2024 17:31:34 +0200
-Message-ID: <20240716152759.748627242@linuxfoundation.org>
+	Joy Chakraborty <joychakr@google.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 6.9 099/143] nvmem: rmem: Fix return value of rmem_read()
+Date: Tue, 16 Jul 2024 17:31:35 +0200
+Message-ID: <20240716152759.787024666@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -51,44 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Joy Chakraborty <joychakr@google.com>
 
-commit 74de2ecf1c418c96d2bffa7770953b8991425dd2 upstream.
+commit 28b008751aa295612318a0fbb2f22dd4f6a83139 upstream.
 
-The SWR2 Soundwire instance has 1 output and 4 input ports, so for the
-headset recording (via the WCD9385 codec and the TX macro codec) we want
-to use the next DAI, not the first one (see qcom,dout-ports and
-qcom,din-ports for soundwire@6d30000 node).
+reg_read() callback registered with nvmem core expects 0 on success and
+a negative value on error but rmem_read() returns the number of bytes
+read which is treated as an error at the nvmem core.
 
-Original code was copied from other devices like SM8450 and SM8550.  On
-the SM8450 this was a correct setting, however on the SM8550 this worked
-probably only by coincidence, because the DTS defined no output ports on
-SWR2 Soundwire.
+This does not break when rmem is accessed using sysfs via
+bin_attr_nvmem_read()/write() but causes an error when accessed from
+places like nvmem_access_with_keepouts(), etc.
 
-This is a necessary fix for proper audio recording via analogue
-microphones connected to WCD9385 codec (e.g. headset AMIC2).
+Change to return 0 on success and error in case
+memory_read_from_buffer() returns an error or -EIO if bytes read do not
+match what was requested.
 
-Fixes: 4442a67eedc1 ("arm64: dts: qcom: x1e80100-crd: add sound card")
+Fixes: 5a3fa75a4d9c ("nvmem: Add driver to expose reserved memory as nvmem")
 Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240611142555.994675-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Joy Chakraborty <joychakr@google.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20240628113704.13742-2-srinivas.kandagatla@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100-crd.dts |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvmem/rmem.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-@@ -101,7 +101,7 @@
- 			};
+--- a/drivers/nvmem/rmem.c
++++ b/drivers/nvmem/rmem.c
+@@ -46,7 +46,10 @@ static int rmem_read(void *context, unsi
  
- 			codec {
--				sound-dai = <&wcd938x 1>, <&swr2 0>, <&lpass_txmacro 0>;
-+				sound-dai = <&wcd938x 1>, <&swr2 1>, <&lpass_txmacro 0>;
- 			};
+ 	memunmap(addr);
  
- 			platform {
+-	return count;
++	if (count < 0)
++		return count;
++
++	return count == bytes ? 0 : -EIO;
+ }
+ 
+ static int rmem_probe(struct platform_device *pdev)
 
 
