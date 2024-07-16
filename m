@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED29BCA40;
-	Tue, 16 Jul 2024 15:36:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D899EE541;
+	Tue, 16 Jul 2024 15:36:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144172; cv=none; b=k2qgalU6ZGB2btqPOJeUNrYuZhaydpTf4SjXF5HMSQ8AOMvvx85xCeutI2Aloog1+cv+pOQYA3fwWhOb7QBdj7FWqdMoe5yt5xlrbkB1BchbvGGDPmoL5UdXFl5XGzRufab6KaXIOFf4m/r2lyGxoAdpcLQbI80+TqqKiwPhjl0=
+	t=1721144174; cv=none; b=IqzomgtVjevd9t3jrfF19039wG63QYc3mOQNomf0Zuo9tzjGRnXza1QkgOHfm0H5/rK+3sQh9nIL379no5B910cJOAyoPMGwJW9JNFy6Qh4m8ezFjJe8N1H+6k/ETrpC9Rbdu94zyf3Hw+KoFOo17Q3/1HxPb1++xpP1EIVKQW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144172; c=relaxed/simple;
-	bh=vVg3K6dmkluoDCRG04APAsv1lG3XbD4E5UvTQMSvZgc=;
+	s=arc-20240116; t=1721144174; c=relaxed/simple;
+	bh=yMKYKQ9wHDEuvyRusNKGBaYk1t6P1KXs0aQdLXldrJM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rYkYFOeaw1zT0FK5gWv9q0acUslbJGqQRMRcGUuKm6H5QNSzLmWyKrjobFpx6oOD+DSsOs7Awg5VSdL8bJp6xZNifMkhRf25gVGh//U/G5Nf4as59FF/oqCXwQiNLLQhtmZsZmKTgrlszK9bRU2WM1E/XzJD9f6Fl0JGy7NRr1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EDCVsLwz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j95trapXvpIt+QJL18liJpx6Too2/A6G76UTK/fk6McFI7X8/cISOe6D2FkpiRxgc9nf7TMBPgr8955NmgT0pUm04mXZ8+Qx7l+By/fUhvYsG6VIJ+rNZwrlMxADdST6mmh3/v6ZUs1yFrJ1JC/Shy9MrQTzTiQ4PDJ1r2uhTEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ati+igK+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EDCVsLwz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF9FC116B1;
-	Tue, 16 Jul 2024 15:36:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ati+igK+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F813C116B1;
+	Tue, 16 Jul 2024 15:36:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144171;
-	bh=vVg3K6dmkluoDCRG04APAsv1lG3XbD4E5UvTQMSvZgc=;
+	s=korg; t=1721144174;
+	bh=yMKYKQ9wHDEuvyRusNKGBaYk1t6P1KXs0aQdLXldrJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EDCVsLwz1eL8hMrgPxs1/ahqxsA5zyfUbfPlVn/sSyNAEtpywR03a8g7iW9Ujq4jN
-	 3XdJgf0DIuPPoA1OFHag9jC6rFAsqbcwvKqCsqP51lBsM5u3EL1H+o4DG76UZHLSd9
-	 TQs5X4FP0rcEsDwVlNS7hXqQslKGttWovW+1Hxtw=
+	b=Ati+igK+Yi75cKDcv8GqKjXdaXUH8xMcmO8hjZWUN610lPlewNMdfcKrLT9nOe3YQ
+	 nWnROMsNs6nL94bAGrfaVnXe6NAD2jj9Va1tfhBxP3wR8shOGnFTHr3akYVsEYlpnx
+	 rERKj4eIIga3cr6wAFpX9TMCw8vKifP6EqYp09XI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yousuk Seung <ysseung@google.com>,
+	mingkun bian <bianmingkun@gmail.com>,
 	Yuchung Cheng <ycheng@google.com>,
-	Eric Dumazet <edumazet@google.com>,
 	Neal Cardwell <ncardwell@google.com>,
-	Soheil Hassas Yeganeh <soheil@google.com>,
+	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 21/66] tcp: add ece_ack flag to reno sack functions
-Date: Tue, 16 Jul 2024 17:30:56 +0200
-Message-ID: <20240716152738.972563975@linuxfoundation.org>
+Subject: [PATCH 4.19 22/66] net: tcp better handling of reordering then loss cases
+Date: Tue, 16 Jul 2024 17:30:57 +0200
+Message-ID: <20240716152739.011062849@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152738.161055634@linuxfoundation.org>
 References: <20240716152738.161055634@linuxfoundation.org>
@@ -55,129 +54,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousuk Seung <ysseung@google.com>
+From: Yuchung Cheng <ycheng@google.com>
 
-[ Upstream commit c634e34f6ebfb75259e6ce467523fd3adf30d3d2 ]
+[ Upstream commit a29cb6914681a55667436a9eb7a42e28da8cf387 ]
 
-Pass a boolean flag that tells the ECE state of the current ack to reno
-sack functions. This is pure refactor for future patches to improve
-tracking delivered counts.
+This patch aims to improve the situation when reordering and loss are
+ocurring in the same flight of packets.
 
-Signed-off-by: Yousuk Seung <ysseung@google.com>
+Previously the reordering would first induce a spurious recovery, then
+the subsequent ACK may undo the cwnd (based on the timestamps e.g.).
+However the current loss recovery does not proceed to invoke
+RACK to install a reordering timer. If some packets are also lost, this
+may lead to a long RTO-based recovery. An example is
+https://groups.google.com/g/bbr-dev/c/OFHADvJbTEI
+
+The solution is to after reverting the recovery, always invoke RACK
+to either mount the RACK timer to fast retransmit after the reordering
+window, or restarts the recovery if new loss is identified. Hence
+it is possible the sender may go from Recovery to Disorder/Open to
+Recovery again in one ACK.
+
+Reported-by: mingkun bian <bianmingkun@gmail.com>
 Signed-off-by: Yuchung Cheng <ycheng@google.com>
-Acked-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Neal Cardwell <ncardwell@google.com>
-Acked-by: Soheil Hassas Yeganeh <soheil@google.com>
+Signed-off-by: Neal Cardwell <ncardwell@google.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: a6458ab7fd4f ("UPSTREAM: tcp: fix DSACK undo in fast recovery to call tcp_try_to_open()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ net/ipv4/tcp_input.c | 45 +++++++++++++++++++++++++-------------------
+ 1 file changed, 26 insertions(+), 19 deletions(-)
 
 diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index e51aa5a149c0f..88216b87c986f 100644
+index 88216b87c986f..5503f130cc6dd 100644
 --- a/net/ipv4/tcp_input.c
 +++ b/net/ipv4/tcp_input.c
-@@ -1897,7 +1897,7 @@ static void tcp_check_reno_reordering(struct sock *sk, const int addend)
+@@ -2727,8 +2727,17 @@ static void tcp_process_loss(struct sock *sk, int flag, int num_dupack,
+ 	*rexmit = REXMIT_LOST;
+ }
  
- /* Emulate SACKs for SACKless connection: account for a new dupack. */
- 
--static void tcp_add_reno_sack(struct sock *sk, int num_dupack)
-+static void tcp_add_reno_sack(struct sock *sk, int num_dupack, bool ece_ack)
- {
- 	if (num_dupack) {
- 		struct tcp_sock *tp = tcp_sk(sk);
-@@ -1915,7 +1915,7 @@ static void tcp_add_reno_sack(struct sock *sk, int num_dupack)
- 
- /* Account for ACK, ACKing some data in Reno Recovery phase. */
- 
--static void tcp_remove_reno_sacks(struct sock *sk, int acked)
-+static void tcp_remove_reno_sacks(struct sock *sk, int acked, bool ece_ack)
++static bool tcp_force_fast_retransmit(struct sock *sk)
++{
++	struct tcp_sock *tp = tcp_sk(sk);
++
++	return after(tcp_highest_sack_seq(tp),
++		     tp->snd_una + tp->reordering * tp->mss_cache);
++}
++
+ /* Undo during fast recovery after partial ACK. */
+-static bool tcp_try_undo_partial(struct sock *sk, u32 prior_snd_una)
++static bool tcp_try_undo_partial(struct sock *sk, u32 prior_snd_una,
++				 bool *do_lost)
  {
  	struct tcp_sock *tp = tcp_sk(sk);
  
-@@ -2720,7 +2720,7 @@ static void tcp_process_loss(struct sock *sk, int flag, int num_dupack,
- 		 * delivered. Lower inflight to clock out (re)tranmissions.
- 		 */
- 		if (after(tp->snd_nxt, tp->high_seq) && num_dupack)
--			tcp_add_reno_sack(sk, num_dupack);
-+			tcp_add_reno_sack(sk, num_dupack, flag & FLAG_ECE);
- 		else if (flag & FLAG_SND_UNA_ADVANCED)
- 			tcp_reset_reno_sack(tp);
+@@ -2753,7 +2762,9 @@ static bool tcp_try_undo_partial(struct sock *sk, u32 prior_snd_una)
+ 		tcp_undo_cwnd_reduction(sk, true);
+ 		NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPPARTIALUNDO);
+ 		tcp_try_keep_open(sk);
+-		return true;
++	} else {
++		/* Partial ACK arrived. Force fast retransmit. */
++		*do_lost = tcp_force_fast_retransmit(sk);
  	}
-@@ -2803,6 +2803,7 @@ static void tcp_fastretrans_alert(struct sock *sk, const u32 prior_snd_una,
- 	struct inet_connection_sock *icsk = inet_csk(sk);
- 	struct tcp_sock *tp = tcp_sk(sk);
- 	int fast_rexmit = 0, flag = *ack_flag;
-+	bool ece_ack = flag & FLAG_ECE;
- 	bool do_lost = num_dupack || ((flag & FLAG_DATA_SACKED) &&
- 				      tcp_force_fast_retransmit(sk));
+ 	return false;
+ }
+@@ -2777,14 +2788,6 @@ static void tcp_identify_packet_loss(struct sock *sk, int *ack_flag)
+ 	}
+ }
  
-@@ -2811,7 +2812,7 @@ static void tcp_fastretrans_alert(struct sock *sk, const u32 prior_snd_una,
- 
- 	/* Now state machine starts.
- 	 * A. ECE, hence prohibit cwnd undoing, the reduction is required. */
--	if (flag & FLAG_ECE)
-+	if (ece_ack)
- 		tp->prior_ssthresh = 0;
- 
- 	/* B. In all the states check for reneging SACKs. */
-@@ -2852,7 +2853,7 @@ static void tcp_fastretrans_alert(struct sock *sk, const u32 prior_snd_una,
- 	case TCP_CA_Recovery:
+-static bool tcp_force_fast_retransmit(struct sock *sk)
+-{
+-	struct tcp_sock *tp = tcp_sk(sk);
+-
+-	return after(tcp_highest_sack_seq(tp),
+-		     tp->snd_una + tp->reordering * tp->mss_cache);
+-}
+-
+ /* Process an event, which can update packets-in-flight not trivially.
+  * Main goal of this function is to calculate new estimate for left_out,
+  * taking into account both packets sitting in receiver's buffer and
+@@ -2854,17 +2857,21 @@ static void tcp_fastretrans_alert(struct sock *sk, const u32 prior_snd_una,
  		if (!(flag & FLAG_SND_UNA_ADVANCED)) {
  			if (tcp_is_reno(tp))
--				tcp_add_reno_sack(sk, num_dupack);
-+				tcp_add_reno_sack(sk, num_dupack, ece_ack);
- 		} else {
- 			if (tcp_try_undo_partial(sk, prior_snd_una))
- 				return;
-@@ -2877,7 +2878,7 @@ static void tcp_fastretrans_alert(struct sock *sk, const u32 prior_snd_una,
- 		if (tcp_is_reno(tp)) {
- 			if (flag & FLAG_SND_UNA_ADVANCED)
- 				tcp_reset_reno_sack(tp);
--			tcp_add_reno_sack(sk, num_dupack);
-+			tcp_add_reno_sack(sk, num_dupack, ece_ack);
- 		}
- 
- 		if (icsk->icsk_ca_state <= TCP_CA_Disorder)
-@@ -2901,7 +2902,7 @@ static void tcp_fastretrans_alert(struct sock *sk, const u32 prior_snd_una,
- 		}
- 
- 		/* Otherwise enter Recovery state */
--		tcp_enter_recovery(sk, (flag & FLAG_ECE));
-+		tcp_enter_recovery(sk, ece_ack);
- 		fast_rexmit = 1;
- 	}
- 
-@@ -3077,7 +3078,7 @@ static void tcp_ack_tstamp(struct sock *sk, struct sk_buff *skb,
-  */
- static int tcp_clean_rtx_queue(struct sock *sk, u32 prior_fack,
- 			       u32 prior_snd_una,
--			       struct tcp_sacktag_state *sack)
-+			       struct tcp_sacktag_state *sack, bool ece_ack)
- {
- 	const struct inet_connection_sock *icsk = inet_csk(sk);
- 	u64 first_ackt, last_ackt;
-@@ -3215,7 +3216,7 @@ static int tcp_clean_rtx_queue(struct sock *sk, u32 prior_fack,
- 		}
- 
- 		if (tcp_is_reno(tp)) {
--			tcp_remove_reno_sacks(sk, pkts_acked);
-+			tcp_remove_reno_sacks(sk, pkts_acked, ece_ack);
- 
- 			/* If any of the cumulatively ACKed segments was
- 			 * retransmitted, non-SACK case cannot confirm that
-@@ -3720,7 +3721,8 @@ static int tcp_ack(struct sock *sk, const struct sk_buff *skb, int flag)
- 		goto no_queue;
- 
- 	/* See if we can take anything off of the retransmit queue. */
--	flag |= tcp_clean_rtx_queue(sk, prior_fack, prior_snd_una, &sack_state);
-+	flag |= tcp_clean_rtx_queue(sk, prior_fack, prior_snd_una, &sack_state,
-+				    flag & FLAG_ECE);
- 
- 	tcp_rack_update_reo_wnd(sk, &rs);
- 
+ 				tcp_add_reno_sack(sk, num_dupack, ece_ack);
+-		} else {
+-			if (tcp_try_undo_partial(sk, prior_snd_una))
+-				return;
+-			/* Partial ACK arrived. Force fast retransmit. */
+-			do_lost = tcp_force_fast_retransmit(sk);
+-		}
+-		if (tcp_try_undo_dsack(sk)) {
+-			tcp_try_keep_open(sk);
++		} else if (tcp_try_undo_partial(sk, prior_snd_una, &do_lost))
+ 			return;
+-		}
++
++		if (tcp_try_undo_dsack(sk))
++			tcp_try_keep_open(sk);
++
+ 		tcp_identify_packet_loss(sk, ack_flag);
++		if (icsk->icsk_ca_state != TCP_CA_Recovery) {
++			if (!tcp_time_to_recover(sk, flag))
++				return;
++			/* Undo reverts the recovery state. If loss is evident,
++			 * starts a new recovery (e.g. reordering then loss);
++			 */
++			tcp_enter_recovery(sk, ece_ack);
++		}
+ 		break;
+ 	case TCP_CA_Loss:
+ 		tcp_process_loss(sk, flag, num_dupack, rexmit);
 -- 
 2.43.0
 
