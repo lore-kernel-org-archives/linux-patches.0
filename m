@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F231DDCE;
-	Tue, 16 Jul 2024 16:04:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74EFE1DDCE;
+	Tue, 16 Jul 2024 16:04:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145866; cv=none; b=IAuEb2QAJ/GhRiof0lRnmN4aVcna3eTw/VI6p2oCocLjjDI62TIfA9SImsStSM7rsjKycMpeUQkMz+3AlKs1Kka3IurkGP1mqz/PC7wDRhD3mXSu5yrKdFQYp1oU/Yy8o7ESoE3dze+kPvPRgzj8zjS1IlTTrGqOZGYtkyBQFAo=
+	t=1721145869; cv=none; b=uom63veU/PdEeZ2s7tQqd2P117/ShKpYzREzIGiiHpBJJwxV70Fgg8peS405b+wpSO/MWJThvV8crG9/tx0C53XzcjF4AvJtdE/RKZFpqhx8xAu6rO7rvkTjs+5sEOmtL8IvgZ0WShnk0Fp1krknvYpSKQgCTEXwC9g09PLb/VA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145866; c=relaxed/simple;
-	bh=zV7t0evD25CEDuClJkNYC9MtYcNqXVG3rNzM5mHdCbk=;
+	s=arc-20240116; t=1721145869; c=relaxed/simple;
+	bh=HqunnTlxpl4FVsCLt6qosG42QhRaXPx9t2wX7zRs4gE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qr93Q4dyvqoN0jflKGxzIfRBjS7on4DZyINaebSMJFBJ+uYsSY++MZ9NbbkyCtgaK1g9U5/KeSMDpXl4khf8FbFwnMmRbiKxa9riQtd877byTTbP6tKYWUYd/essA5O6yLlb8f/aYAj2yyqGmCx0CkXsGIwtYT0Jht3qcIFa7cA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DhMzaH7w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PtAWJB+FjGI8VIGiuxiuJMxh2JvTiJwt05vo2OINzx1ca0+BsSQcUrQ+r5a8kG+hNzHPLOAYY15ZK38hVmvyXI3jSSJhEWq71qo/6ZX2vslON036TQt+pjlmrVIhmGaCjgW+ab8C+bH2If7i46iJ5+W0EARCp66WYbwkH7VBhws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wap43cdQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DhMzaH7w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1881C116B1;
-	Tue, 16 Jul 2024 16:04:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wap43cdQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF7ADC116B1;
+	Tue, 16 Jul 2024 16:04:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145866;
-	bh=zV7t0evD25CEDuClJkNYC9MtYcNqXVG3rNzM5mHdCbk=;
+	s=korg; t=1721145869;
+	bh=HqunnTlxpl4FVsCLt6qosG42QhRaXPx9t2wX7zRs4gE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DhMzaH7wRf+0APHOUHnzJiDMrdtWdcyyL8YkH0F8zWOQFB8HS+ufFMSaeErGHKJbC
-	 0NP4Hz2MlfdbZZF2lri1ndieQn6DMu2gfkTNB+16/Rv8cAqMPMc+CrPZEYRSJzA5Jv
-	 aeNBoll2lQ9ZLUbXMY5HU+GN/bSoENPlpi+Owmik=
+	b=wap43cdQzMXPbTrALBoK9CdZtva8Wk0wyQJj5i3u4uU0zoDNGj134h5GTF98sVHUr
+	 vzTs4KpceXZSF4Sbdq5l7FUX4778vlLGVuqUwYY7QNJeCp5pWbzNEQtzruZJO5LO62
+	 fiAm3Zne9N8s/zuumgVYsNgODSLQNISAngJsxq+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <andersson@kernel.org>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 088/121] pmdomain: qcom: rpmhpd: Skip retention level for Power Domains
-Date: Tue, 16 Jul 2024 17:32:30 +0200
-Message-ID: <20240716152754.712375816@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+d3abed1ad3d367fa2627@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 106/121] nilfs2: fix kernel bug on rename operation of broken directory
+Date: Tue, 16 Jul 2024 17:32:48 +0200
+Message-ID: <20240716152755.409372039@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152751.312512071@linuxfoundation.org>
 References: <20240716152751.312512071@linuxfoundation.org>
@@ -51,79 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taniya Das <quic_tdas@quicinc.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit ddab91f4b2de5c5b46e312a90107d9353087d8ea upstream.
+commit a9e1ddc09ca55746079cc479aa3eb6411f0d99d4 upstream.
 
-In the cases where the power domain connected to logics is allowed to
-transition from a level(L)-->power collapse(0)-->retention(1) or
-vice versa retention(1)-->power collapse(0)-->level(L)  will cause the
-logic to lose the configurations. The ARC does not support retention
-to collapse transition on MxC rails.
+Syzbot reported that in rename directory operation on broken directory on
+nilfs2, __block_write_begin_int() called to prepare block write may fail
+BUG_ON check for access exceeding the folio/page size.
 
-The targets from SM8450 onwards the PLL logics of clock controllers are
-connected to MxC rails and the recommended configurations are carried
-out during the clock controller probes. The MxC transition as mentioned
-above should be skipped to ensure the PLL settings are intact across
-clock controller power on & off.
+This is because nilfs_dotdot(), which gets parent directory reference
+entry ("..") of the directory to be moved or renamed, does not check
+consistency enough, and may return location exceeding folio/page size for
+broken directories.
 
-On older targets that do not split MX into MxA and MxC does not collapse
-the logic and it is parked always at RETENTION, thus this issue is never
-observed on those targets.
+Fix this issue by checking required directory entries ("." and "..") in
+the first chunk of the directory in nilfs_dotdot().
 
-Cc: stable@vger.kernel.org # v5.17
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-Link: https://lore.kernel.org/r/20240625-avoid_mxc_retention-v2-1-af9c2f549a5f@quicinc.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://lkml.kernel.org/r/20240628165107.9006-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+d3abed1ad3d367fa2627@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d3abed1ad3d367fa2627
+Fixes: 2ba466d74ed7 ("nilfs2: directory entry operations")
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/qcom/rpmhpd.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/nilfs2/dir.c |   32 ++++++++++++++++++++++++++++++--
+ 1 file changed, 30 insertions(+), 2 deletions(-)
 
---- a/drivers/pmdomain/qcom/rpmhpd.c
-+++ b/drivers/pmdomain/qcom/rpmhpd.c
-@@ -40,6 +40,7 @@
-  * @addr:		Resource address as looped up using resource name from
-  *			cmd-db
-  * @state_synced:	Indicator that sync_state has been invoked for the rpmhpd resource
-+ * @skip_retention_level: Indicate that retention level should not be used for the power domain
-  */
- struct rpmhpd {
- 	struct device	*dev;
-@@ -56,6 +57,7 @@ struct rpmhpd {
- 	const char	*res_name;
- 	u32		addr;
- 	bool		state_synced;
-+	bool            skip_retention_level;
- };
+--- a/fs/nilfs2/dir.c
++++ b/fs/nilfs2/dir.c
+@@ -396,11 +396,39 @@ found:
  
- struct rpmhpd_desc {
-@@ -173,6 +175,7 @@ static struct rpmhpd mxc = {
- 	.pd = { .name = "mxc", },
- 	.peer = &mxc_ao,
- 	.res_name = "mxc.lvl",
-+	.skip_retention_level = true,
- };
+ struct nilfs_dir_entry *nilfs_dotdot(struct inode *dir, struct page **p)
+ {
+-	struct nilfs_dir_entry *de = nilfs_get_page(dir, 0, p);
++	struct page *page;
++	struct nilfs_dir_entry *de, *next_de;
++	size_t limit;
++	char *msg;
  
- static struct rpmhpd mxc_ao = {
-@@ -180,6 +183,7 @@ static struct rpmhpd mxc_ao = {
- 	.active_only = true,
- 	.peer = &mxc,
- 	.res_name = "mxc.lvl",
-+	.skip_retention_level = true,
- };
- 
- static struct rpmhpd nsp = {
-@@ -749,6 +753,9 @@ static int rpmhpd_update_level_mapping(s
- 		return -EINVAL;
- 
- 	for (i = 0; i < rpmhpd->level_count; i++) {
-+		if (rpmhpd->skip_retention_level && buf[i] == RPMH_REGULATOR_LEVEL_RETENTION)
-+			continue;
++	de = nilfs_get_page(dir, 0, &page);
+ 	if (IS_ERR(de))
+ 		return NULL;
+-	return nilfs_next_entry(de);
 +
- 		rpmhpd->level[i] = buf[i];
++	limit = nilfs_last_byte(dir, 0);  /* is a multiple of chunk size */
++	if (unlikely(!limit || le64_to_cpu(de->inode) != dir->i_ino ||
++		     !nilfs_match(1, ".", de))) {
++		msg = "missing '.'";
++		goto fail;
++	}
++
++	next_de = nilfs_next_entry(de);
++	/*
++	 * If "next_de" has not reached the end of the chunk, there is
++	 * at least one more record.  Check whether it matches "..".
++	 */
++	if (unlikely((char *)next_de == (char *)de + nilfs_chunk_size(dir) ||
++		     !nilfs_match(2, "..", next_de))) {
++		msg = "missing '..'";
++		goto fail;
++	}
++	*p = page;
++	return next_de;
++
++fail:
++	nilfs_error(dir->i_sb, "directory #%lu %s", dir->i_ino, msg);
++	nilfs_put_page(page);
++	return NULL;
+ }
  
- 		/* Remember the first corner with non-zero level */
+ ino_t nilfs_inode_by_name(struct inode *dir, const struct qstr *qstr)
 
 
