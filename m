@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F10A19E7E3;
-	Tue, 16 Jul 2024 15:57:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7CD19DFBF;
+	Tue, 16 Jul 2024 15:57:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145425; cv=none; b=X/lgnUFWVcPKC7ULKY0wxmylvhGIZrq1c2ITvSA9QPDepnNtIBCFD15fTMTq11igH0tz+hAy86bkMDgKJ+Ju1DQpZGkRfSbXLoUcwpRn9cdQnuxCwSm6hLv8leMTfg2QDrJhUonVPMyD7t7cZUlsX8EfkqquV/MTyghwE7OiTQw=
+	t=1721145428; cv=none; b=bsul/YNm6fWUTjXUVeoVr79GC5T4Frn+r4rxCwjE4BdhNA3ilhzpgGDNf8/ZDR8lofr1N0oqx2KWHKZwDtG3n4JIfb+puVEzI2nMR/Px+E6rlXEspS/V2CEDtUfc3X/+xhcPe4JKPaI9Ggu3P2xf/uxISmJOE9FYmzIO3+g3rrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145425; c=relaxed/simple;
-	bh=u2egr0Y59qKoGhneddsu++ZIHdbvLSgq+ln3XJgJLhc=;
+	s=arc-20240116; t=1721145428; c=relaxed/simple;
+	bh=YrYdpVuw+wZlcRl5lxABZahsHz2al8L78b1H2xnZ+X0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P2EwJnlmK6Y5/iDWj5qNg1FuptkLE/KnkzGdpx4q7QFBKY3G8mlvmCm8nszU7rktUgMUNuenjrJvL9KzXlH+UAmYBm/k0eYUMivYF1Xx3d3vg4bTfJ/7bD9qhrR0PUN0vjvqypJO8C0M20qdghaj/ZUdlJZO/LxKnaZh46Si018=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bRvHgEKP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OjTuwJ3RJEAmA7AY4i6QJlKJdcOE3Ao6LuNiSWdrdPK+qcJkbDphlJ/Ky0ojJLceWbvMTLCAg/Troznj1psRy1LBS0sO/M4FJx0wdPdiud/TpoOqTYmysZrv61VvD85CZpXkehT5c68zelvpWQnDKP0mMT9wqLsf3YwbIqRu2Q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=juSLPK6Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bRvHgEKP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8D2C116B1;
-	Tue, 16 Jul 2024 15:57:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="juSLPK6Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C79DBC116B1;
+	Tue, 16 Jul 2024 15:57:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145425;
-	bh=u2egr0Y59qKoGhneddsu++ZIHdbvLSgq+ln3XJgJLhc=;
+	s=korg; t=1721145428;
+	bh=YrYdpVuw+wZlcRl5lxABZahsHz2al8L78b1H2xnZ+X0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bRvHgEKPT+w2zYDeJQOeCOEcCgHc4aNnyyP+65PdDMMn+qjWwgUF/El6ZjTbrDcNY
-	 uKHfLc4oMGeTyDdRvazi+MaJ1KcTOcRj4ryJblRs0QAAvwMrO+Ai+YjKti8xe+X6if
-	 7dZj2DKCuQY6EHKwMEwE4T4uC2ogg+FgyaTlMFsk=
+	b=juSLPK6Yml4ihgwk/VRIVofVWfbVoVij6BrFvlg1X4OkxTiArCdblva0VZeoUJFDP
+	 6D/H71GtkIu1mBi7KpqN6fQ78j2VvtS4zXO8KejySlTZ0JTNvOE4URG0EOo+/Y9dyO
+	 8pIyttmC8pNP8Kj6hHgzlYyqZa7DPk7u/22Cqyek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	He Zhe <zhe.he@windriver.com>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 6.1 60/96] hpet: Support 32-bit userspace
-Date: Tue, 16 Jul 2024 17:32:11 +0200
-Message-ID: <20240716152748.814786413@linuxfoundation.org>
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 34/96] firmware: cs_dsp: Prevent buffer overrun when processing V2 alg headers
+Date: Tue, 16 Jul 2024 17:31:45 +0200
+Message-ID: <20240716152747.826552259@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152746.516194097@linuxfoundation.org>
 References: <20240716152746.516194097@linuxfoundation.org>
@@ -50,113 +51,264 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: He Zhe <zhe.he@windriver.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-commit 4e60131d0d36af65ab9c9144f4f163fe97ae36e8 upstream.
+[ Upstream commit 2163aff6bebbb752edf73f79700f5e2095f3559e ]
 
-hpet_compat_ioctl and read file operations failed to handle parameters from
-32-bit userspace and thus samples/timers/hpet_example.c fails as below.
+Check that all fields of a V2 algorithm header fit into the available
+firmware data buffer.
 
-root@intel-x86-64:~# ./hpet_example-32.out poll /dev/hpet 1 2
--hpet: executing poll
-hpet_poll: HPET_IRQFREQ failed
+The wmfw V2 format introduced variable-length strings in the algorithm
+block header. This means the overall header length is variable, and the
+position of most fields varies depending on the length of the string
+fields. Each field must be checked to ensure that it does not overflow
+the firmware data buffer.
 
-This patch fixes cmd and arg handling in hpet_compat_ioctl and adds compat
-handling for 32-bit userspace in hpet_read.
+As this ia bugfix patch, the fixes avoid making any significant change to
+the existing code. This makes it easier to review and less likely to
+introduce new bugs.
 
-hpet_example now shows that it works for both 64-bit and 32-bit.
-
-root@intel-x86-64:~# ./hpet_example-32.out poll /dev/hpet 1 2
--hpet: executing poll
-hpet_poll: info.hi_flags 0x0
-hpet_poll: expired time = 0xf4298
-hpet_poll: revents = 0x1
-hpet_poll: data 0x1
-hpet_poll: expired time = 0xf4235
-hpet_poll: revents = 0x1
-hpet_poll: data 0x1
-root@intel-x86-64:~# ./hpet_example-64.out poll /dev/hpet 1 2
--hpet: executing poll
-hpet_poll: info.hi_flags 0x0
-hpet_poll: expired time = 0xf42a1
-hpet_poll: revents = 0x1
-hpet_poll: data 0x1
-hpet_poll: expired time = 0xf4232
-hpet_poll: revents = 0x1
-hpet_poll: data 0x1
-
-Cc: stable@vger.kernel.org
-Signed-off-by: He Zhe <zhe.he@windriver.com>
-Fixes: 54066a57c584 ("hpet: kill BKL, add compat_ioctl")
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20240606123908.738733-1-zhe.he@windriver.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: f6bc909e7673 ("firmware: cs_dsp: add driver to support firmware loading on Cirrus Logic DSPs")
+Link: https://patch.msgid.link/20240627141432.93056-5-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hpet.c |   34 +++++++++++++++++++++++++++++-----
- 1 file changed, 29 insertions(+), 5 deletions(-)
+ drivers/firmware/cirrus/cs_dsp.c | 144 ++++++++++++++++++++++++-------
+ 1 file changed, 113 insertions(+), 31 deletions(-)
 
---- a/drivers/char/hpet.c
-+++ b/drivers/char/hpet.c
-@@ -289,8 +289,13 @@ hpet_read(struct file *file, char __user
- 	if (!devp->hd_ireqfreq)
- 		return -EIO;
- 
--	if (count < sizeof(unsigned long))
--		return -EINVAL;
-+	if (in_compat_syscall()) {
-+		if (count < sizeof(compat_ulong_t))
-+			return -EINVAL;
-+	} else {
-+		if (count < sizeof(unsigned long))
-+			return -EINVAL;
-+	}
- 
- 	add_wait_queue(&devp->hd_waitqueue, &wait);
- 
-@@ -314,9 +319,16 @@ hpet_read(struct file *file, char __user
- 		schedule();
- 	}
- 
--	retval = put_user(data, (unsigned long __user *)buf);
--	if (!retval)
--		retval = sizeof(unsigned long);
-+	if (in_compat_syscall()) {
-+		retval = put_user(data, (compat_ulong_t __user *)buf);
-+		if (!retval)
-+			retval = sizeof(compat_ulong_t);
-+	} else {
-+		retval = put_user(data, (unsigned long __user *)buf);
-+		if (!retval)
-+			retval = sizeof(unsigned long);
-+	}
-+
- out:
- 	__set_current_state(TASK_RUNNING);
- 	remove_wait_queue(&devp->hd_waitqueue, &wait);
-@@ -671,12 +683,24 @@ struct compat_hpet_info {
- 	unsigned short hi_timer;
+diff --git a/drivers/firmware/cirrus/cs_dsp.c b/drivers/firmware/cirrus/cs_dsp.c
+index 7882f3a5f8556..eb6caeba6cdc3 100644
+--- a/drivers/firmware/cirrus/cs_dsp.c
++++ b/drivers/firmware/cirrus/cs_dsp.c
+@@ -1014,9 +1014,16 @@ struct cs_dsp_coeff_parsed_coeff {
+ 	int len;
  };
  
-+/* 32-bit types would lead to different command codes which should be
-+ * translated into 64-bit ones before passed to hpet_ioctl_common
-+ */
-+#define COMPAT_HPET_INFO       _IOR('h', 0x03, struct compat_hpet_info)
-+#define COMPAT_HPET_IRQFREQ    _IOW('h', 0x6, compat_ulong_t)
-+
- static long
- hpet_compat_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+-static int cs_dsp_coeff_parse_string(int bytes, const u8 **pos, const u8 **str)
++static int cs_dsp_coeff_parse_string(int bytes, const u8 **pos, unsigned int avail,
++				     const u8 **str)
  {
- 	struct hpet_info info;
- 	int err;
+-	int length;
++	int length, total_field_len;
++
++	/* String fields are at least one __le32 */
++	if (sizeof(__le32) > avail) {
++		*pos = NULL;
++		return 0;
++	}
  
-+	if (cmd == COMPAT_HPET_INFO)
-+		cmd = HPET_INFO;
+ 	switch (bytes) {
+ 	case 1:
+@@ -1029,10 +1036,16 @@ static int cs_dsp_coeff_parse_string(int bytes, const u8 **pos, const u8 **str)
+ 		return 0;
+ 	}
+ 
++	total_field_len = ((length + bytes) + 3) & ~0x03;
++	if ((unsigned int)total_field_len > avail) {
++		*pos = NULL;
++		return 0;
++	}
 +
-+	if (cmd == COMPAT_HPET_IRQFREQ)
-+		cmd = HPET_IRQFREQ;
+ 	if (str)
+ 		*str = *pos + bytes;
+ 
+-	*pos += ((length + bytes) + 3) & ~0x03;
++	*pos += total_field_len;
+ 
+ 	return length;
+ }
+@@ -1057,51 +1070,100 @@ static int cs_dsp_coeff_parse_int(int bytes, const u8 **pos)
+ 	return val;
+ }
+ 
+-static inline void cs_dsp_coeff_parse_alg(struct cs_dsp *dsp, const u8 **data,
+-					  struct cs_dsp_coeff_parsed_alg *blk)
++static int cs_dsp_coeff_parse_alg(struct cs_dsp *dsp,
++				  const struct wmfw_region *region,
++				  struct cs_dsp_coeff_parsed_alg *blk)
+ {
+ 	const struct wmfw_adsp_alg_data *raw;
++	unsigned int data_len = le32_to_cpu(region->len);
++	unsigned int pos;
++	const u8 *tmp;
 +
- 	mutex_lock(&hpet_mutex);
- 	err = hpet_ioctl_common(file->private_data, cmd, arg, &info);
- 	mutex_unlock(&hpet_mutex);
++	raw = (const struct wmfw_adsp_alg_data *)region->data;
+ 
+ 	switch (dsp->fw_ver) {
+ 	case 0:
+ 	case 1:
+-		raw = (const struct wmfw_adsp_alg_data *)*data;
+-		*data = raw->data;
++		if (sizeof(*raw) > data_len)
++			return -EOVERFLOW;
+ 
+ 		blk->id = le32_to_cpu(raw->id);
+ 		blk->name = raw->name;
+ 		blk->name_len = strlen(raw->name);
+ 		blk->ncoeff = le32_to_cpu(raw->ncoeff);
++
++		pos = sizeof(*raw);
+ 		break;
+ 	default:
+-		blk->id = cs_dsp_coeff_parse_int(sizeof(raw->id), data);
+-		blk->name_len = cs_dsp_coeff_parse_string(sizeof(u8), data,
++		if (sizeof(raw->id) > data_len)
++			return -EOVERFLOW;
++
++		tmp = region->data;
++		blk->id = cs_dsp_coeff_parse_int(sizeof(raw->id), &tmp);
++		pos = tmp - region->data;
++
++		tmp = &region->data[pos];
++		blk->name_len = cs_dsp_coeff_parse_string(sizeof(u8), &tmp, data_len - pos,
+ 							  &blk->name);
+-		cs_dsp_coeff_parse_string(sizeof(u16), data, NULL);
+-		blk->ncoeff = cs_dsp_coeff_parse_int(sizeof(raw->ncoeff), data);
++		if (!tmp)
++			return -EOVERFLOW;
++
++		pos = tmp - region->data;
++		cs_dsp_coeff_parse_string(sizeof(u16), &tmp, data_len - pos, NULL);
++		if (!tmp)
++			return -EOVERFLOW;
++
++		pos = tmp - region->data;
++		if (sizeof(raw->ncoeff) > (data_len - pos))
++			return -EOVERFLOW;
++
++		blk->ncoeff = cs_dsp_coeff_parse_int(sizeof(raw->ncoeff), &tmp);
++		pos += sizeof(raw->ncoeff);
+ 		break;
+ 	}
+ 
++	if ((int)blk->ncoeff < 0)
++		return -EOVERFLOW;
++
+ 	cs_dsp_dbg(dsp, "Algorithm ID: %#x\n", blk->id);
+ 	cs_dsp_dbg(dsp, "Algorithm name: %.*s\n", blk->name_len, blk->name);
+ 	cs_dsp_dbg(dsp, "# of coefficient descriptors: %#x\n", blk->ncoeff);
++
++	return pos;
+ }
+ 
+-static inline void cs_dsp_coeff_parse_coeff(struct cs_dsp *dsp, const u8 **data,
+-					    struct cs_dsp_coeff_parsed_coeff *blk)
++static int cs_dsp_coeff_parse_coeff(struct cs_dsp *dsp,
++				    const struct wmfw_region *region,
++				    unsigned int pos,
++				    struct cs_dsp_coeff_parsed_coeff *blk)
+ {
+ 	const struct wmfw_adsp_coeff_data *raw;
++	unsigned int data_len = le32_to_cpu(region->len);
++	unsigned int blk_len, blk_end_pos;
+ 	const u8 *tmp;
+-	int length;
++
++	raw = (const struct wmfw_adsp_coeff_data *)&region->data[pos];
++	if (sizeof(raw->hdr) > (data_len - pos))
++		return -EOVERFLOW;
++
++	blk_len = le32_to_cpu(raw->hdr.size);
++	if (blk_len > S32_MAX)
++		return -EOVERFLOW;
++
++	if (blk_len > (data_len - pos - sizeof(raw->hdr)))
++		return -EOVERFLOW;
++
++	blk_end_pos = pos + sizeof(raw->hdr) + blk_len;
++
++	blk->offset = le16_to_cpu(raw->hdr.offset);
++	blk->mem_type = le16_to_cpu(raw->hdr.type);
+ 
+ 	switch (dsp->fw_ver) {
+ 	case 0:
+ 	case 1:
+-		raw = (const struct wmfw_adsp_coeff_data *)*data;
+-		*data = *data + sizeof(raw->hdr) + le32_to_cpu(raw->hdr.size);
++		if (sizeof(*raw) > (data_len - pos))
++			return -EOVERFLOW;
+ 
+-		blk->offset = le16_to_cpu(raw->hdr.offset);
+-		blk->mem_type = le16_to_cpu(raw->hdr.type);
+ 		blk->name = raw->name;
+ 		blk->name_len = strlen(raw->name);
+ 		blk->ctl_type = le16_to_cpu(raw->ctl_type);
+@@ -1109,19 +1171,33 @@ static inline void cs_dsp_coeff_parse_coeff(struct cs_dsp *dsp, const u8 **data,
+ 		blk->len = le32_to_cpu(raw->len);
+ 		break;
+ 	default:
+-		tmp = *data;
+-		blk->offset = cs_dsp_coeff_parse_int(sizeof(raw->hdr.offset), &tmp);
+-		blk->mem_type = cs_dsp_coeff_parse_int(sizeof(raw->hdr.type), &tmp);
+-		length = cs_dsp_coeff_parse_int(sizeof(raw->hdr.size), &tmp);
+-		blk->name_len = cs_dsp_coeff_parse_string(sizeof(u8), &tmp,
++		pos += sizeof(raw->hdr);
++		tmp = &region->data[pos];
++		blk->name_len = cs_dsp_coeff_parse_string(sizeof(u8), &tmp, data_len - pos,
+ 							  &blk->name);
+-		cs_dsp_coeff_parse_string(sizeof(u8), &tmp, NULL);
+-		cs_dsp_coeff_parse_string(sizeof(u16), &tmp, NULL);
++		if (!tmp)
++			return -EOVERFLOW;
++
++		pos = tmp - region->data;
++		cs_dsp_coeff_parse_string(sizeof(u8), &tmp, data_len - pos, NULL);
++		if (!tmp)
++			return -EOVERFLOW;
++
++		pos = tmp - region->data;
++		cs_dsp_coeff_parse_string(sizeof(u16), &tmp, data_len - pos, NULL);
++		if (!tmp)
++			return -EOVERFLOW;
++
++		pos = tmp - region->data;
++		if (sizeof(raw->ctl_type) + sizeof(raw->flags) + sizeof(raw->len) >
++		    (data_len - pos))
++			return -EOVERFLOW;
++
+ 		blk->ctl_type = cs_dsp_coeff_parse_int(sizeof(raw->ctl_type), &tmp);
++		pos += sizeof(raw->ctl_type);
+ 		blk->flags = cs_dsp_coeff_parse_int(sizeof(raw->flags), &tmp);
++		pos += sizeof(raw->flags);
+ 		blk->len = cs_dsp_coeff_parse_int(sizeof(raw->len), &tmp);
+-
+-		*data = *data + sizeof(raw->hdr) + length;
+ 		break;
+ 	}
+ 
+@@ -1131,6 +1207,8 @@ static inline void cs_dsp_coeff_parse_coeff(struct cs_dsp *dsp, const u8 **data,
+ 	cs_dsp_dbg(dsp, "\tCoefficient flags: %#x\n", blk->flags);
+ 	cs_dsp_dbg(dsp, "\tALSA control type: %#x\n", blk->ctl_type);
+ 	cs_dsp_dbg(dsp, "\tALSA control len: %#x\n", blk->len);
++
++	return blk_end_pos;
+ }
+ 
+ static int cs_dsp_check_coeff_flags(struct cs_dsp *dsp,
+@@ -1154,12 +1232,16 @@ static int cs_dsp_parse_coeff(struct cs_dsp *dsp,
+ 	struct cs_dsp_alg_region alg_region = {};
+ 	struct cs_dsp_coeff_parsed_alg alg_blk;
+ 	struct cs_dsp_coeff_parsed_coeff coeff_blk;
+-	const u8 *data = region->data;
+-	int i, ret;
++	int i, pos, ret;
++
++	pos = cs_dsp_coeff_parse_alg(dsp, region, &alg_blk);
++	if (pos < 0)
++		return pos;
+ 
+-	cs_dsp_coeff_parse_alg(dsp, &data, &alg_blk);
+ 	for (i = 0; i < alg_blk.ncoeff; i++) {
+-		cs_dsp_coeff_parse_coeff(dsp, &data, &coeff_blk);
++		pos = cs_dsp_coeff_parse_coeff(dsp, region, pos, &coeff_blk);
++		if (pos < 0)
++			return pos;
+ 
+ 		switch (coeff_blk.ctl_type) {
+ 		case WMFW_CTL_TYPE_BYTES:
+-- 
+2.43.0
+
 
 
