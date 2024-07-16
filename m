@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D144F9E8;
-	Tue, 16 Jul 2024 15:44:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A4FF9E8;
+	Tue, 16 Jul 2024 15:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144681; cv=none; b=ZwzXmAMMBRKlJmwx9yenb12ie7J5bUr+PiCwmdl70dygptrSj2lBy0BTCEGT3kzTPo5+00H27LymG6TMnqIlAvs+/n7Xl+X0WW/3Cz9XbBre1eG3RvYwmqSTE4x92u/o3H7EPU85CxEYM0JRZQ7qvrWLGsQmI1PFW438IVBXGKg=
+	t=1721144684; cv=none; b=BOuo7cdb5uBO/KYQlkUQNk8//hZchHfLhe0jyObaMO/tScZMgc68e/Si9whhezgHvvTn2qN8789hKWDz3ZcsMr2O/oro2ujwjyh1Dj5OPu7gf7QwjzJZd4OKnhtcRP7YbeJqFwAYvA0KSaUoYKGVxJgWYcsamsuyH0P/thQpJCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144681; c=relaxed/simple;
-	bh=toIeQT6h9U/g3dxCpV0ZDPVjoOnRbxfjDXLu3GetbJw=;
+	s=arc-20240116; t=1721144684; c=relaxed/simple;
+	bh=nPzp8PL+BJ+lwlIqJbRueOhL3HMOnVbnXtupuOOVroA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iq5vKjxp7C30n+5AYuh2SZYn375TEg/4A/5oZETFrQnDD9o8evU9ck0jGDuhNbPMrYacjZPN0GUH6KByXnEg1+D0YN41k2HvMuIsBVA9/LXr/3yXRpy3FmLPdtsCbG+lq7Cl/a+y47S3B8W0vUhNgR0XJfqhWC28Q6dUoQsDdJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EEXWRrm0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T3gM5LmfWmzepzmjIEYRW6XHqc7BhjJDpicHW6uOx7+5c6uJawRm+KWMAY2F+2A4HgW7nQT2XtGG7R8+BLmLVhJldERXC7jj4iPdIsimnuqrJj2jtr2XdP5pmZ4VDIse3APVbsX9cH+W/0YE8eTLew4KaINFEGfhqR0aD6gt5ls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TxoX4jxL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EEXWRrm0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BF68C4AF0E;
-	Tue, 16 Jul 2024 15:44:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TxoX4jxL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FA7FC4AF0B;
+	Tue, 16 Jul 2024 15:44:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144681;
-	bh=toIeQT6h9U/g3dxCpV0ZDPVjoOnRbxfjDXLu3GetbJw=;
+	s=korg; t=1721144684;
+	bh=nPzp8PL+BJ+lwlIqJbRueOhL3HMOnVbnXtupuOOVroA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EEXWRrm0RaOWfAYIoi2RaQtsF8AhzKee+1GHe4TTndrz3xFIIUHwrrDROkrSlLUSq
-	 vBcx4aQcRr2UdLxeqiEsG2SidZXl9T6wSbprV1IYq7MGSyVtJo7jPV9ViuhmE3S/Y2
-	 28nPxRj4r/e8eIakYd2tY5uByTCNqEU8/t9Z2YIU=
+	b=TxoX4jxLNAbQGRVVdF1bDbsAA1CqYR02JIrNP9F60hw7F/BQ7bKDD2oeXVngwH6P8
+	 oCkRP8qn6XAiFlfMrIyLZqVXCryD9uM+CwvjytnJi11TtHpVQgS3l86tfyVnfsdAgm
+	 GXKSgrd3XXgL8cIN4oIXs8JmBzigT9+9ZbHXDQk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksander Jan Bajkowski <olek2@wp.pl>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 064/108] net: lantiq_etop: add blank line after declaration
-Date: Tue, 16 Jul 2024 17:31:19 +0200
-Message-ID: <20240716152748.439709014@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Menglong Dong <imagedong@tencent.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 073/108] tcp: use signed arithmetic in tcp_rtx_probe0_timed_out()
+Date: Tue, 16 Jul 2024 17:31:28 +0200
+Message-ID: <20240716152748.784336228@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152745.988603303@linuxfoundation.org>
 References: <20240716152745.988603303@linuxfoundation.org>
@@ -51,40 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksander Jan Bajkowski <olek2@wp.pl>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 4c46625bb586a741b8d0e6bdbddbcb2549fa1d36 ]
+commit 36534d3c54537bf098224a32dc31397793d4594d upstream.
 
-This patch adds a missing line after the declaration and
-fixes the checkpatch warning:
+Due to timer wheel implementation, a timer will usually fire
+after its schedule.
 
-WARNING: Missing a blank line after declarations
-+		int desc;
-+		for (desc = 0; desc < LTQ_DESC_NUM; desc++)
+For instance, for HZ=1000, a timeout between 512ms and 4s
+has a granularity of 64ms.
+For this range of values, the extra delay could be up to 63ms.
 
-Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
-Link: https://lore.kernel.org/r/20211228220031.71576-1-olek2@wp.pl
+For TCP, this means that tp->rcv_tstamp may be after
+inet_csk(sk)->icsk_timeout whenever the timer interrupt
+finally triggers, if one packet came during the extra delay.
+
+We need to make sure tcp_rtx_probe0_timed_out() handles this case.
+
+Fixes: e89688e3e978 ("net: tcp: fix unexcepted socket die when snd_wnd is 0")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Menglong Dong <imagedong@tencent.com>
+Acked-by: Neal Cardwell <ncardwell@google.com>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Link: https://lore.kernel.org/r/20240607125652.1472540-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: e1533b6319ab ("net: ethernet: lantiq_etop: fix double free in detach")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/lantiq_etop.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/ipv4/tcp_timer.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/lantiq_etop.c b/drivers/net/ethernet/lantiq_etop.c
-index 5ea626b1e5783..62300d46d9186 100644
---- a/drivers/net/ethernet/lantiq_etop.c
-+++ b/drivers/net/ethernet/lantiq_etop.c
-@@ -214,6 +214,7 @@ ltq_etop_free_channel(struct net_device *dev, struct ltq_etop_chan *ch)
- 		free_irq(ch->dma.irq, priv);
- 	if (IS_RX(ch->idx)) {
- 		int desc;
-+
- 		for (desc = 0; desc < LTQ_DESC_NUM; desc++)
- 			dev_kfree_skb_any(ch->skb[ch->dma.desc]);
- 	}
--- 
-2.43.0
-
+--- a/net/ipv4/tcp_timer.c
++++ b/net/ipv4/tcp_timer.c
+@@ -459,8 +459,13 @@ static bool tcp_rtx_probe0_timed_out(con
+ {
+ 	const struct tcp_sock *tp = tcp_sk(sk);
+ 	const int timeout = TCP_RTO_MAX * 2;
+-	u32 rcv_delta, rtx_delta;
++	u32 rtx_delta;
++	s32 rcv_delta;
+ 
++	/* Note: timer interrupt might have been delayed by at least one jiffy,
++	 * and tp->rcv_tstamp might very well have been written recently.
++	 * rcv_delta can thus be negative.
++	 */
+ 	rcv_delta = inet_csk(sk)->icsk_timeout - tp->rcv_tstamp;
+ 	if (rcv_delta <= timeout)
+ 		return false;
 
 
