@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C91D6CA40;
-	Tue, 16 Jul 2024 15:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F264E54C;
+	Tue, 16 Jul 2024 15:35:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144115; cv=none; b=bTs4Z5MzplUUM1GojTqQZ+HHW/vpp9zQD6cCpvccAXYp6FgDYgNCwIo/PysbKcUlEStao3F9N1fSr8cHjedJ/RFbNzaKJSRDQGpEibz0zEMImlJGmHtbyji+N5OICDVdd0DQQ2mi8mtByiJQIgtG9t5UHLjdHNK5Ey1f2c8Pxco=
+	t=1721144119; cv=none; b=dI+p7mzOtPvEg+2IFiS20zugmLoNjbORisnGUKT8qkLeITtHaLhGwM7BKhKU0bemRnswLwD/aWK+IiMEow7Uk11Zno/wS5h880SbX7Rqnzy5ekd+LAe1MOCOViNodXNBVB2LF9uO3+WuHaAthebeSFKk0E3gU3QnpvbQBtXt8o0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144115; c=relaxed/simple;
-	bh=jq6qnmLq8xvCZqtO6nhl7H+fWp1zl0pGhnVyo7oWi3U=;
+	s=arc-20240116; t=1721144119; c=relaxed/simple;
+	bh=gBAaErAyb8GSdWcpjpqfpelI4AoMKvlUyk5Pl60fZTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sjEO7Gu6zN0DK1LRozgPYOVhfhcKwOo06VcwqKh+EHXjk1wPJZ3EnPZ/TdwoRL0DgnMuWG2ZFGaStHlJuobqNIbE0lI1VkPxE9JzcN1g7hQcdVbJSmQrhE1yuJIzKMoDznVaT8eaek/sB/OU7gjak7PyhusSxXXKXDPVpHAXgnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=idhRoRKw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dRCG2XlNpx0SGcsb2FOXiX4x455BHZPoJW+4+01lPfBGIwEmq1+kzm47nbyQUEA0tF1QKj1OHWdGz42TiCiD+zOCxM05Il6ykYXPVvlZ2W/UMBvilE8ytCcjcgxSuR+YXKDsfDkRY6wywmIWxZPbPHvryOasco8eY7EZRxox2n8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j1bPwCIo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="idhRoRKw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 427A8C116B1;
-	Tue, 16 Jul 2024 15:35:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j1bPwCIo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EB73C116B1;
+	Tue, 16 Jul 2024 15:35:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144115;
-	bh=jq6qnmLq8xvCZqtO6nhl7H+fWp1zl0pGhnVyo7oWi3U=;
+	s=korg; t=1721144118;
+	bh=gBAaErAyb8GSdWcpjpqfpelI4AoMKvlUyk5Pl60fZTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=idhRoRKwcBuHWuWQCRtMdLmyTpraRA5T0UMTU+5vjKhLMopPVFUjpFcnTooaqUWoC
-	 oyCm2dP/YmfRbYfaE7YUzaIObez1UmqoO+Jw5H2dwwRSVC9YNCNB+M5hMCxtJBbOFq
-	 2DycK+KtKcqDRBdzq7LB4T3mahs/DMY+kH2lddKs=
+	b=j1bPwCIoYDPYbcDCJkrQjOS0AeLmETBbxKn/Dl+3ajAL7U+vkgwSiCRbSCjNjl0VO
+	 CLMDHja7B53J13AcQOg38WPFl5djd880NY5RADRjkDLNoPA+1mi4EBzp7bPNRKdIiS
+	 zectr7cZZkFcjLUUoKR3zF3VCgCcnFJ7a3ZfJH0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jimmy Assarsson <extja@kvaser.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 4.19 33/66] can: kvaser_usb: Explicitly initialize family in leafimx driver_info struct
-Date: Tue, 16 Jul 2024 17:31:08 +0200
-Message-ID: <20240716152739.432485753@linuxfoundation.org>
+	Greg Kurz <groug@kaod.org>,
+	=?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 16/66] powerpc/xmon: Check cpu id in commands "c#", "dp#" and "dx#"
+Date: Tue, 16 Jul 2024 17:30:51 +0200
+Message-ID: <20240716152738.782602270@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152738.161055634@linuxfoundation.org>
 References: <20240716152738.161055634@linuxfoundation.org>
@@ -44,39 +46,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jimmy Assarsson <extja@kvaser.com>
+From: Greg Kurz <groug@kaod.org>
 
-commit 19d5b2698c35b2132a355c67b4d429053804f8cc upstream.
+[ Upstream commit 8873aab8646194a4446117bb617cc71bddda2dee ]
 
-Explicitly set the 'family' driver_info struct member for leafimx.
-Previously, the correct operation relied on KVASER_LEAF being the first
-defined value in enum kvaser_usb_leaf_family.
+All these commands end up peeking into the PACA using the user
+originated cpu id as an index. Check the cpu id is valid in order
+to prevent xmon to crash. Instead of printing an error, this follows
+the same behavior as the "lp s #" command : ignore the buggy cpu id
+parameter and fall back to the #-less version of the command.
 
-Fixes: e6c80e601053 ("can: kvaser_usb: kvaser_usb_leaf: fix CAN clock frequency regression")
-Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
-Link: https://lore.kernel.org/all/20240628194529.312968-1-extja@kvaser.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kurz <groug@kaod.org>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/161531347060.252863.10490063933688958044.stgit@bahia.lan
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/powerpc/xmon/xmon.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
-@@ -114,6 +114,7 @@ static const struct kvaser_usb_driver_in
+diff --git a/arch/powerpc/xmon/xmon.c b/arch/powerpc/xmon/xmon.c
+index 3291e5fb94bcc..cd6df90dc6720 100644
+--- a/arch/powerpc/xmon/xmon.c
++++ b/arch/powerpc/xmon/xmon.c
+@@ -1154,7 +1154,7 @@ static int cpu_cmd(void)
+ 	unsigned long cpu, first_cpu, last_cpu;
+ 	int timeout;
  
- static const struct kvaser_usb_driver_info kvaser_usb_driver_info_leafimx = {
- 	.quirks = 0,
-+	.family = KVASER_LEAF,
- 	.ops = &kvaser_usb_leaf_dev_ops,
- };
+-	if (!scanhex(&cpu)) {
++	if (!scanhex(&cpu) || cpu >= num_possible_cpus()) {
+ 		/* print cpus waiting or in xmon */
+ 		printf("cpus stopped:");
+ 		last_cpu = first_cpu = NR_CPUS;
+@@ -2485,7 +2485,7 @@ static void dump_pacas(void)
  
+ 	termch = c;	/* Put c back, it wasn't 'a' */
+ 
+-	if (scanhex(&num))
++	if (scanhex(&num) && num < num_possible_cpus())
+ 		dump_one_paca(num);
+ 	else
+ 		dump_one_paca(xmon_owner);
+@@ -2568,7 +2568,7 @@ static void dump_xives(void)
+ 
+ 	termch = c;	/* Put c back, it wasn't 'a' */
+ 
+-	if (scanhex(&num))
++	if (scanhex(&num) && num < num_possible_cpus())
+ 		dump_one_xive(num);
+ 	else
+ 		dump_one_xive(xmon_owner);
+-- 
+2.43.0
+
 
 
