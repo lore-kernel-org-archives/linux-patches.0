@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C119E19B59C;
-	Tue, 16 Jul 2024 16:03:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BA6F1DDCE;
+	Tue, 16 Jul 2024 16:03:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145820; cv=none; b=HZeVqglC3aG4QHIopMb++YCftEdwgpUmHZpmG7tgcSif0UOrGuVbGBtlT/IaCTMeoDjxWBkSfXP92OfUy0wIaGEAXCTvpmQbP6npZaGkkZhJQsd9aKd7bsLB5MRXC6N4/N4h9HgfELrahYl8dEWg+9e4W1JNciNQwjj5w3A7vR4=
+	t=1721145823; cv=none; b=Y9MpNvcbgtPuQSEX0of23q3JW0TjzZ3SgpEvbTV9yTRctF+yFhg/f+4S9FL61+8IvA2533KEnjCv8W8AtRmCImbKhotmu8U0wT/rLTgZx9TJEETNCgAYIwJf9AIrN2qp3B10PyETY84IuCZYKiU7qD8TF8lGdBjlUT0Z22g77Kg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145820; c=relaxed/simple;
-	bh=GL6TNVmMZhk052JNlIqTcRSdeYI0Lp12/NZhSzATjEo=;
+	s=arc-20240116; t=1721145823; c=relaxed/simple;
+	bh=ml7Cxp7vpRpSbGieJ2e6CO1+30UJTm2rJxBmmmcK/NY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mOSa2pOpw2hkS+zag++sYi2Dasbp7EqrEGWrRaM+oV0NxiwT46khndxO3BGCXj5nmuDza6mds90EVHSn/fxN7GcgzF5EyQrL361Wie05m86K3gI7SCMpsMR79h4cgXbu/LcLwmQSc0Uz4gvW8T5iXyl7lxewJj+mC94P9eKEQis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I9GoHiH1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RRKdCAHi85LP57241EvgUHGDp6+lu6Kdkl/4HqBAG/3QoVxlDPHTU9JJ0eUmzlUFBO3k+MwDwa76lF3gBZujjKy+PTIK5KbrZdfgOFD6Ce/dYwZpjhWoRarqGdnyWl24YjXEF01ERcmwABVG37WCqIDbT4/PpMFsaEVm6ensh8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bE9kw8uT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I9GoHiH1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0A26C116B1;
-	Tue, 16 Jul 2024 16:03:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bE9kw8uT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C50F5C116B1;
+	Tue, 16 Jul 2024 16:03:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145820;
-	bh=GL6TNVmMZhk052JNlIqTcRSdeYI0Lp12/NZhSzATjEo=;
+	s=korg; t=1721145823;
+	bh=ml7Cxp7vpRpSbGieJ2e6CO1+30UJTm2rJxBmmmcK/NY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I9GoHiH1HtzB9iNbICjLUIQ4WH35X+27yEMnUOc6owEw/c2gGX/v0sWtZ5PLz4s+R
-	 l1P163XijJGHmFcd0tYaeKwPaYdGhv4XTU6UPZG/rVqqcCzG5U4PurtxLqdqKiCcfV
-	 SkAiOlr73MKvk+ppeqJwu6rlUsEc/bpzGqT6/8cg=
+	b=bE9kw8uTuP6AJp1ct5onqRl6VlTraztEYJj4122pO5a28ExRxhBxP93qj1rZzHPlv
+	 5xF1fadjwWTYNWEBgQ63eXFcT1lwk5736kmJsDmk/2Xx3nQID0A0gI/Y70QGY6hATn
+	 ImsxR0sigZ4sFmou1yEBMOXUyoToyBVPw+kDv6aI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 096/121] wireguard: send: annotate intentional data race in checking empty queue
-Date: Tue, 16 Jul 2024 17:32:38 +0200
-Message-ID: <20240716152755.022202290@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ekansh Gupta <quic_ekangupt@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 6.6 097/121] misc: fastrpc: Fix DSP capabilities request
+Date: Tue, 16 Jul 2024 17:32:39 +0200
+Message-ID: <20240716152755.060917682@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152751.312512071@linuxfoundation.org>
 References: <20240716152751.312512071@linuxfoundation.org>
@@ -50,82 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
 
-commit 381a7d453fa2ac5f854a154d3c9b1bbb90c4f94f upstream.
+commit 4cb7915f0a35e2fcc4be60b912c4be35cd830957 upstream.
 
-KCSAN reports a race in wg_packet_send_keepalive, which is intentional:
+The DSP capability request call expects 2 arguments. First is the
+information about the total number of attributes to be copied from
+DSP and second is the information about the buffer where the DSP
+needs to copy the information. The current design is passing the
+information about the size to be copied from DSP which would be
+considered as a bad argument to the call by DSP causing a failure
+suggesting the same. The second argument carries the information
+about the buffer where the DSP needs to copy the capability
+information and the size to be copied. As the first entry of
+capability attribute is getting skipped, same should also be
+considered while sending the information to DSP. Add changes to
+pass proper arguments to DSP.
 
-    BUG: KCSAN: data-race in wg_packet_send_keepalive / wg_packet_send_staged_packets
-
-    write to 0xffff88814cd91280 of 8 bytes by task 3194 on cpu 0:
-     __skb_queue_head_init include/linux/skbuff.h:2162 [inline]
-     skb_queue_splice_init include/linux/skbuff.h:2248 [inline]
-     wg_packet_send_staged_packets+0xe5/0xad0 drivers/net/wireguard/send.c:351
-     wg_xmit+0x5b8/0x660 drivers/net/wireguard/device.c:218
-     __netdev_start_xmit include/linux/netdevice.h:4940 [inline]
-     netdev_start_xmit include/linux/netdevice.h:4954 [inline]
-     xmit_one net/core/dev.c:3548 [inline]
-     dev_hard_start_xmit+0x11b/0x3f0 net/core/dev.c:3564
-     __dev_queue_xmit+0xeff/0x1d80 net/core/dev.c:4349
-     dev_queue_xmit include/linux/netdevice.h:3134 [inline]
-     neigh_connected_output+0x231/0x2a0 net/core/neighbour.c:1592
-     neigh_output include/net/neighbour.h:542 [inline]
-     ip6_finish_output2+0xa66/0xce0 net/ipv6/ip6_output.c:137
-     ip6_finish_output+0x1a5/0x490 net/ipv6/ip6_output.c:222
-     NF_HOOK_COND include/linux/netfilter.h:303 [inline]
-     ip6_output+0xeb/0x220 net/ipv6/ip6_output.c:243
-     dst_output include/net/dst.h:451 [inline]
-     NF_HOOK include/linux/netfilter.h:314 [inline]
-     ndisc_send_skb+0x4a2/0x670 net/ipv6/ndisc.c:509
-     ndisc_send_rs+0x3ab/0x3e0 net/ipv6/ndisc.c:719
-     addrconf_dad_completed+0x640/0x8e0 net/ipv6/addrconf.c:4295
-     addrconf_dad_work+0x891/0xbc0
-     process_one_work kernel/workqueue.c:2633 [inline]
-     process_scheduled_works+0x5b8/0xa30 kernel/workqueue.c:2706
-     worker_thread+0x525/0x730 kernel/workqueue.c:2787
-     kthread+0x1d7/0x210 kernel/kthread.c:388
-     ret_from_fork+0x48/0x60 arch/x86/kernel/process.c:147
-     ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:242
-
-    read to 0xffff88814cd91280 of 8 bytes by task 3202 on cpu 1:
-     skb_queue_empty include/linux/skbuff.h:1798 [inline]
-     wg_packet_send_keepalive+0x20/0x100 drivers/net/wireguard/send.c:225
-     wg_receive_handshake_packet drivers/net/wireguard/receive.c:186 [inline]
-     wg_packet_handshake_receive_worker+0x445/0x5e0 drivers/net/wireguard/receive.c:213
-     process_one_work kernel/workqueue.c:2633 [inline]
-     process_scheduled_works+0x5b8/0xa30 kernel/workqueue.c:2706
-     worker_thread+0x525/0x730 kernel/workqueue.c:2787
-     kthread+0x1d7/0x210 kernel/kthread.c:388
-     ret_from_fork+0x48/0x60 arch/x86/kernel/process.c:147
-     ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:242
-
-    value changed: 0xffff888148fef200 -> 0xffff88814cd91280
-
-Mark this race as intentional by using the skb_queue_empty_lockless()
-function rather than skb_queue_empty(), which uses READ_ONCE()
-internally to annotate the race.
-
-Cc: stable@vger.kernel.org
-Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Link: https://patch.msgid.link/20240704154517.1572127-5-Jason@zx2c4.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 6c16fd8bdd40 ("misc: fastrpc: Add support to get DSP capabilities")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20240628114501.14310-2-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireguard/send.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/misc/fastrpc.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/net/wireguard/send.c
-+++ b/drivers/net/wireguard/send.c
-@@ -222,7 +222,7 @@ void wg_packet_send_keepalive(struct wg_
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -1693,14 +1693,19 @@ static int fastrpc_get_info_from_dsp(str
  {
- 	struct sk_buff *skb;
+ 	struct fastrpc_invoke_args args[2] = { 0 };
  
--	if (skb_queue_empty(&peer->staged_packet_queue)) {
-+	if (skb_queue_empty_lockless(&peer->staged_packet_queue)) {
- 		skb = alloc_skb(DATA_PACKET_HEAD_ROOM + MESSAGE_MINIMUM_LENGTH,
- 				GFP_ATOMIC);
- 		if (unlikely(!skb))
+-	/* Capability filled in userspace */
++	/*
++	 * Capability filled in userspace. This carries the information
++	 * about the remoteproc support which is fetched from the remoteproc
++	 * sysfs node by userspace.
++	 */
+ 	dsp_attr_buf[0] = 0;
++	dsp_attr_buf_len -= 1;
+ 
+ 	args[0].ptr = (u64)(uintptr_t)&dsp_attr_buf_len;
+ 	args[0].length = sizeof(dsp_attr_buf_len);
+ 	args[0].fd = -1;
+ 	args[1].ptr = (u64)(uintptr_t)&dsp_attr_buf[1];
+-	args[1].length = dsp_attr_buf_len;
++	args[1].length = dsp_attr_buf_len * sizeof(u32);
+ 	args[1].fd = -1;
+ 	fl->pd = USER_PD;
+ 
+@@ -1730,7 +1735,7 @@ static int fastrpc_get_info_from_kernel(
+ 	if (!dsp_attributes)
+ 		return -ENOMEM;
+ 
+-	err = fastrpc_get_info_from_dsp(fl, dsp_attributes, FASTRPC_MAX_DSP_ATTRIBUTES_LEN);
++	err = fastrpc_get_info_from_dsp(fl, dsp_attributes, FASTRPC_MAX_DSP_ATTRIBUTES);
+ 	if (err == DSP_UNSUPPORTED_API) {
+ 		dev_info(&cctx->rpdev->dev,
+ 			 "Warning: DSP capabilities not supported on domain: %d\n", domain);
 
 
