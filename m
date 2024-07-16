@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27AD119DFBF;
-	Tue, 16 Jul 2024 15:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 919EC19AD59;
+	Tue, 16 Jul 2024 15:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145440; cv=none; b=U4YrZ/3ylRz1VClocGlkkNcobH/C4Zogtqw5im3fwiDbntkoIavqLCxghiqpISzRtdtfvvAN16mbkZf9cpq/r3EHAH1sXS8w7a76zvA91CD9BeeHC9YGKIl175O09n52CeN+KhrYhTZ2MwssVtk5e3Nwdm60X4uip/dWMZEHzJ0=
+	t=1721145443; cv=none; b=SCW8kyt67QxdSBs+7QIeQBcmVxfe2ECHoiQ0uRdVO4bBjUp7/DWKj54UuHCCvfhH1FLSekUnuHLzpYubPIaNp4IDkgeLcXtSg7nQTJn0jd8huhq5STAk3baB3aaqvD5Rnk9MYXP6tA7GOID460KoqMIMwklAwi2tUec9FFHjLkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145440; c=relaxed/simple;
-	bh=Y1X8tafjm46fgUxSfNH3KHnDMo8RFz+JFhJmhWjTk1U=;
+	s=arc-20240116; t=1721145443; c=relaxed/simple;
+	bh=BH7o3pCorBeF61N8QPkys9VHOMBHL8wS3fjVp6Y29oU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oI7aZMOoObIoozSMMMzMs2W86JHCDMm7l9nIM6XKDzhzVYX34GnLRINyuZTiyWrzaD/itQHLpx54ltsesWbf9lh2x5TSMtgtZL7fKg4XJGQmcN1dhFU63hwiybSn0eLEE5i6LjjkR+1yO2ZYo7zQvA7u1dp+utSonH2UrbxC9Yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e223QyNn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cCW8ejzN9yw0C4Q9Ur6AMi3BUSch/HROLABYzp67xKlFWSB55+4/V5PbGjJ9nmAYE9gB4Tu3JXV+KRXwnvZ8TEi1K50hM4zftYc97CtNkytuzZsmflvhIc7+35AHrv7gM8rjPREPDy6LIXloCnB+HF6no2Cy/hyf3/GuQHuzHI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ek6nt4sm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e223QyNn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E67C116B1;
-	Tue, 16 Jul 2024 15:57:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ek6nt4sm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A10DC116B1;
+	Tue, 16 Jul 2024 15:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145440;
-	bh=Y1X8tafjm46fgUxSfNH3KHnDMo8RFz+JFhJmhWjTk1U=;
+	s=korg; t=1721145443;
+	bh=BH7o3pCorBeF61N8QPkys9VHOMBHL8wS3fjVp6Y29oU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e223QyNnXxBj1HogM088bOdHooJw0A4S28QavPCTzrLxgbUMup8jKttVofEY7Pc1+
-	 hMtHBi4SC/+YCWvIWNrr0butavzRnmXGsi3y+kOAE8vTzYvt7NyUe74U2+dCHigvnw
-	 jSeyqdIjWVUQUnjlJrdVDwvfplhf6is6Jzj/5/tU=
+	b=Ek6nt4smAjFrLRnjqAEhlaxzUHSp6ZrFHruhijRJsntIvn+NakdowTF+x8wT2MLrJ
+	 HYXurON9xTp+yR+NFu9UB+O1OIk++Tx6kBNoIx3k/qTBSAWIWv7y2tdEifSEuLAxji
+	 zIADxz3JQUcTs9/I4O8vcS/1R6uESdza9cMegrG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joy Chakraborty <joychakr@google.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 6.1 64/96] nvmem: meson-efuse: Fix return value of nvmem callbacks
-Date: Tue, 16 Jul 2024 17:32:15 +0200
-Message-ID: <20240716152748.969216985@linuxfoundation.org>
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 35/96] firmware: cs_dsp: Use strnlen() on name fields in V1 wmfw files
+Date: Tue, 16 Jul 2024 17:31:46 +0200
+Message-ID: <20240716152747.863005446@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152746.516194097@linuxfoundation.org>
 References: <20240716152746.516194097@linuxfoundation.org>
@@ -52,63 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joy Chakraborty <joychakr@google.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-commit 7a0a6d0a7c805f9380381f4deedffdf87b93f408 upstream.
+[ Upstream commit 680e126ec0400f6daecf0510c5bb97a55779ff03 ]
 
-Read/write callbacks registered with nvmem core expect 0 to be returned
-on success and a negative value to be returned on failure.
+Use strnlen() instead of strlen() on the algorithm and coefficient name
+string arrays in V1 wmfw files.
 
-meson_efuse_read() and meson_efuse_write() call into
-meson_sm_call_read() and meson_sm_call_write() respectively which return
-the number of bytes read or written on success as per their api
-description.
+In V1 wmfw files the name is a NUL-terminated string in a fixed-size
+array. cs_dsp should protect against overrunning the array if the NUL
+terminator is missing.
 
-Fix to return error if meson_sm_call_read()/meson_sm_call_write()
-returns an error else return 0.
-
-Fixes: a29a63bdaf6f ("nvmem: meson-efuse: simplify read callback")
-Cc: stable@vger.kernel.org
-Signed-off-by: Joy Chakraborty <joychakr@google.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20240628113704.13742-3-srinivas.kandagatla@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: f6bc909e7673 ("firmware: cs_dsp: add driver to support firmware loading on Cirrus Logic DSPs")
+Link: https://patch.msgid.link/20240708144855.385332-1-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvmem/meson-efuse.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/firmware/cirrus/cs_dsp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/nvmem/meson-efuse.c
-+++ b/drivers/nvmem/meson-efuse.c
-@@ -18,18 +18,24 @@ static int meson_efuse_read(void *contex
- 			    void *val, size_t bytes)
- {
- 	struct meson_sm_firmware *fw = context;
-+	int ret;
+diff --git a/drivers/firmware/cirrus/cs_dsp.c b/drivers/firmware/cirrus/cs_dsp.c
+index eb6caeba6cdc3..ee4c32669607f 100644
+--- a/drivers/firmware/cirrus/cs_dsp.c
++++ b/drivers/firmware/cirrus/cs_dsp.c
+@@ -1089,7 +1089,7 @@ static int cs_dsp_coeff_parse_alg(struct cs_dsp *dsp,
  
--	return meson_sm_call_read(fw, (u8 *)val, bytes, SM_EFUSE_READ, offset,
--				  bytes, 0, 0, 0);
-+	ret = meson_sm_call_read(fw, (u8 *)val, bytes, SM_EFUSE_READ, offset,
-+				 bytes, 0, 0, 0);
-+
-+	return ret < 0 ? ret : 0;
- }
+ 		blk->id = le32_to_cpu(raw->id);
+ 		blk->name = raw->name;
+-		blk->name_len = strlen(raw->name);
++		blk->name_len = strnlen(raw->name, ARRAY_SIZE(raw->name));
+ 		blk->ncoeff = le32_to_cpu(raw->ncoeff);
  
- static int meson_efuse_write(void *context, unsigned int offset,
- 			     void *val, size_t bytes)
- {
- 	struct meson_sm_firmware *fw = context;
-+	int ret;
-+
-+	ret = meson_sm_call_write(fw, (u8 *)val, bytes, SM_EFUSE_WRITE, offset,
-+				  bytes, 0, 0, 0);
+ 		pos = sizeof(*raw);
+@@ -1165,7 +1165,7 @@ static int cs_dsp_coeff_parse_coeff(struct cs_dsp *dsp,
+ 			return -EOVERFLOW;
  
--	return meson_sm_call_write(fw, (u8 *)val, bytes, SM_EFUSE_WRITE, offset,
--				   bytes, 0, 0, 0);
-+	return ret < 0 ? ret : 0;
- }
- 
- static const struct of_device_id meson_efuse_match[] = {
+ 		blk->name = raw->name;
+-		blk->name_len = strlen(raw->name);
++		blk->name_len = strnlen(raw->name, ARRAY_SIZE(raw->name));
+ 		blk->ctl_type = le16_to_cpu(raw->ctl_type);
+ 		blk->flags = le16_to_cpu(raw->flags);
+ 		blk->len = le32_to_cpu(raw->len);
+-- 
+2.43.0
+
 
 
