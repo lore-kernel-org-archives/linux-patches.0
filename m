@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC61E19DF71;
-	Tue, 16 Jul 2024 15:55:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8598417A93F;
+	Tue, 16 Jul 2024 15:55:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145348; cv=none; b=ge3ux3CGxNJ7FEqlNNTZFKnD8UJ2TY8jvqGoD9yeCS90LBkGIh13dha/3TMIbaRbDCuGjYpxwOXOdtz+cVKwfXmJfAEoqcUHFoK8vg8GVkYH+VwdCRVEcchYLHNtpte1BxpMpBlPru/fkcYjR6b5D5ukdlfG3lHAnHXk92Xgl0E=
+	t=1721145351; cv=none; b=SWrSUjy2/Pqy4cVUIVjwYk8O935Be+vfP5L2kGQn6Aix59EYEcUye+4UwlXyi/a6Rpf3k8sKXqWM11kk0rUrzKlZex8I3us7IZ3yusMh2ZHoi03XMXxKvqzWU3HHNKT+3lzIMh1Ur8Zr3ZyewJZq5mw+nZbAJh65EE/f5Tljr6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145348; c=relaxed/simple;
-	bh=+CP1Nkp1R9UJCS96faFpx3NU+PgbJLruAKx6MFXR7Fg=;
+	s=arc-20240116; t=1721145351; c=relaxed/simple;
+	bh=v39x/fwQAmG4AFlPFbJD1bm5u9op7F8mVdsH0oqAke0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VxNKdi/i//UTZIOclD8Hr4W8wMfsdL0VtxvHxgtmabRMUYKwQSux9mmS4WR9S/bFHxX1G1CEGXJMZg7+JaXjbFQ3FlxWkjLfhgzMY/0tO2a9VcdGSptmJKA5YWIjiDJEIWPBWDIednHuv4gGjQy9Ah/LmdLmD8fqkEmUAfjJov0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Tr0RDuG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oHY+2DPp8bD4FwncL2+pK5nTNHBZdHlB8bbWOiW2PVbVRNQ8cOZgZGfIj6lymsyrbUoePwqsm4Ky0cQQugukpt5UNBnwFfv3PnQyIRLb5fGRS3E/duZopDfZ6JN3bW1et5ARA7xCeigKUYpajqedUc5iLr+MsvyL2hkqjfjDi54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NypBuW4a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Tr0RDuG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1521C4AF0B;
-	Tue, 16 Jul 2024 15:55:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NypBuW4a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C7EEC116B1;
+	Tue, 16 Jul 2024 15:55:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145348;
-	bh=+CP1Nkp1R9UJCS96faFpx3NU+PgbJLruAKx6MFXR7Fg=;
+	s=korg; t=1721145351;
+	bh=v39x/fwQAmG4AFlPFbJD1bm5u9op7F8mVdsH0oqAke0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Tr0RDuGBRSys5XREcm1HmP8GkpwJ3CW/0SJPjllw5f8CCrqRA+MlNt0GbjyShqfI
-	 Ly2FLSpSQg4Gdxm35xtMoa+RJJ1H4y+jjnJEcHuEs/yGUKKj+qV4Uccb71Q7SItTt5
-	 Z/caiQJn56e8xMSRx8eGXGA9QmDNgtZTI5bzO2c8=
+	b=NypBuW4aVzuU670KET0NYvzqPsm/AG1dgHeHj6ILu5PiD9DbFXT/xnOZfpwMb6awx
+	 VOOVhPdxLSn4y4QKwhXTWK2Rd4upCKGFw6Qa23XZ5kiKVfoUx8dIm7m6eQ0EZosTvO
+	 VCvWtrcmOs2M4E2QQcaJrgQJnx7Y/qqlDq+hk7RE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jingbo Xu <jefflexu@linux.alibaba.com>,
-	Baokun Li <libaokun1@huawei.com>,
+	=?UTF-8?q?Light=20Hsieh=20 ?= <Light.Hsieh@mediatek.com>,
 	Jeff Layton <jlayton@kernel.org>,
-	Jia Zhu <zhujia.zj@bytedance.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Alexander Aring <aahringo@redhat.com>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 08/96] cachefiles: add missing lock protection when polling
-Date: Tue, 16 Jul 2024 17:31:19 +0200
-Message-ID: <20240716152746.840275932@linuxfoundation.org>
+Subject: [PATCH 6.1 09/96] filelock: fix potential use-after-free in posix_lock_inode
+Date: Tue, 16 Jul 2024 17:31:20 +0200
+Message-ID: <20240716152746.876907938@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152746.516194097@linuxfoundation.org>
 References: <20240716152746.516194097@linuxfoundation.org>
@@ -49,60 +47,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jingbo Xu <jefflexu@linux.alibaba.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit cf5bb09e742a9cf6349127e868329a8f69b7a014 ]
+[ Upstream commit 1b3ec4f7c03d4b07bad70697d7e2f4088d2cfe92 ]
 
-Add missing lock protection in poll routine when iterating xarray,
-otherwise:
+Light Hsieh reported a KASAN UAF warning in trace_posix_lock_inode().
+The request pointer had been changed earlier to point to a lock entry
+that was added to the inode's list. However, before the tracepoint could
+fire, another task raced in and freed that lock.
 
-Even with RCU read lock held, only the slot of the radix tree is
-ensured to be pinned there, while the data structure (e.g. struct
-cachefiles_req) stored in the slot has no such guarantee.  The poll
-routine will iterate the radix tree and dereference cachefiles_req
-accordingly.  Thus RCU read lock is not adequate in this case and
-spinlock is needed here.
+Fix this by moving the tracepoint inside the spinlock, which should
+ensure that this doesn't happen.
 
-Fixes: b817e22b2e91 ("cachefiles: narrow the scope of triggering EPOLLIN events in ondemand mode")
-Signed-off-by: Jingbo Xu <jefflexu@linux.alibaba.com>
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Link: https://lore.kernel.org/r/20240628062930.2467993-10-libaokun@huaweicloud.com
-Acked-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Jia Zhu <zhujia.zj@bytedance.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Fixes: 74f6f5912693 ("locks: fix KASAN: use-after-free in trace_event_raw_event_filelock_lock")
+Link: https://lore.kernel.org/linux-fsdevel/724ffb0a2962e912ea62bb0515deadf39c325112.camel@kernel.org/
+Reported-by: Light Hsieh (謝明燈) <Light.Hsieh@mediatek.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://lore.kernel.org/r/20240702-filelock-6-10-v1-1-96e766aadc98@kernel.org
+Reviewed-by: Alexander Aring <aahringo@redhat.com>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cachefiles/daemon.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/locks.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/cachefiles/daemon.c b/fs/cachefiles/daemon.c
-index 06cdf1a8a16f6..89b11336a8369 100644
---- a/fs/cachefiles/daemon.c
-+++ b/fs/cachefiles/daemon.c
-@@ -366,14 +366,14 @@ static __poll_t cachefiles_daemon_poll(struct file *file,
- 
- 	if (cachefiles_in_ondemand_mode(cache)) {
- 		if (!xa_empty(&cache->reqs)) {
--			rcu_read_lock();
-+			xas_lock(&xas);
- 			xas_for_each_marked(&xas, req, ULONG_MAX, CACHEFILES_REQ_NEW) {
- 				if (!cachefiles_ondemand_is_reopening_read(req)) {
- 					mask |= EPOLLIN;
- 					break;
- 				}
- 			}
--			rcu_read_unlock();
-+			xas_unlock(&xas);
- 		}
- 	} else {
- 		if (test_bit(CACHEFILES_STATE_CHANGED, &cache->flags))
+diff --git a/fs/locks.c b/fs/locks.c
+index 7d0918b8fe5d6..c23bcfe9b0fdd 100644
+--- a/fs/locks.c
++++ b/fs/locks.c
+@@ -1298,9 +1298,9 @@ static int posix_lock_inode(struct inode *inode, struct file_lock *request,
+ 		locks_wake_up_blocks(left);
+ 	}
+  out:
++	trace_posix_lock_inode(inode, request, error);
+ 	spin_unlock(&ctx->flc_lock);
+ 	percpu_up_read(&file_rwsem);
+-	trace_posix_lock_inode(inode, request, error);
+ 	/*
+ 	 * Free any unused locks.
+ 	 */
 -- 
 2.43.0
 
