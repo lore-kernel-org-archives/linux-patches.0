@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3A0E541;
-	Tue, 16 Jul 2024 15:37:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8BECA40;
+	Tue, 16 Jul 2024 15:37:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144248; cv=none; b=OC+EZMCFMzPEcvrxQhCbZwuDwuMsAHz0S1R6E87fcyWOphTW0tLdT/Kkfz7Xsre25DJ6vlEE5WvzCFlFqn7EwM8pR2DrKijnSjlKG7jo7sV1T/EcH+Ub8LZp9GkRGAAVZkLbUdOV+0gkZGma+vVVmmAdN5WXZjZTyXHwJhlvR+Y=
+	t=1721144251; cv=none; b=CfH3p2Nh7Gutg+XkiRJEF6yUcGrZWJFs3a6bniNpUp2R6x7LSP4SmCqDTCIemSQM2WNxvdZVjssW6i0lhVvCyqOtWlkITsOZxnUabIEVC/+TSH5E/A0LxtgvpTZ3gC6jLTeqU6GkfDjqznEWLozyUj5Xf3yXUkzbZ0yWeXzXpeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144248; c=relaxed/simple;
-	bh=eLtU7gArPbwEBjwiGiyLoqgOR/vFBSog1DeHonOAspY=;
+	s=arc-20240116; t=1721144251; c=relaxed/simple;
+	bh=Qlcqy8uMCuay0AuwUCJ/WRwM6tFcIwNXPToXJDUkcBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BEtvBGfqJz2ax1H6KBLlojQMkVXX7bzNdBbybwp5ZngkN7yAzN0Mih2Q/bt+5yP9WJnvuEeJGGIHs0pckVN+dhnXclF2tmD8lEYMBe54zykbpc6x/oQaew9Z2fO0s3DYiAnKdSiTP9PZjWt4z+LnLLTYsBPd4/qBmB/bKqYtF78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hJzJG/SQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r091jFRcwUV0T7/TuHgHBXoqAtnnOVDR8aI5+wx/55MmRGtI2oPXd4jcybdgwM023ylO6VamGtxRc6KzIhqslSk1C4GdzgILTQwtIzGgTVNHGTsqS/H+pXFVXt/LxjRO5hDqOnb6FQ6bOXu3T5qqH18mNNVSt+bjmTqATcjAtTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zYJhIdku; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hJzJG/SQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 837A9C116B1;
-	Tue, 16 Jul 2024 15:37:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zYJhIdku"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D653C116B1;
+	Tue, 16 Jul 2024 15:37:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144247;
-	bh=eLtU7gArPbwEBjwiGiyLoqgOR/vFBSog1DeHonOAspY=;
+	s=korg; t=1721144250;
+	bh=Qlcqy8uMCuay0AuwUCJ/WRwM6tFcIwNXPToXJDUkcBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hJzJG/SQyHBAV8Inyu+3JppCHQbwp/zNUI0o7kwQU4VPL+htBfymP1llFMy0UDJG6
-	 BOmXsFy8zzlywC+TV9kraiecmIUBscZ+3k3TgI0AXd5HsDbgs0+fJeaQaYhaVALbLe
-	 MflPh37hEW6uQaJI6Ur0wd2bfNMlAkYuCRyCIn9w=
+	b=zYJhIdkuum5fHNFVVNPVziV0J7+TubqsXhqvaG/xfQSeOJoOWYAmRziFPo6s2s0fE
+	 A7Aw/U0Pj4kTBiKy7YtaocV9Pb5WtdoXz2/bVU92KeQL6SsVC9nSF34mbXsPBaTZcb
+	 R2kOH0SoC7euJFg7ujhOnLol+tC9dxqMS4Iy23Jc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erico Nunes <nunes.erico@gmail.com>,
-	Qiang Yu <yuq825@gmail.com>,
+	Jean Delvare <jdelvare@suse.de>,
+	Michael Kelley <mhklinux@outlook.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 01/78] drm/lima: fix shared irq handling on driver remove
-Date: Tue, 16 Jul 2024 17:30:33 +0200
-Message-ID: <20240716152740.685623220@linuxfoundation.org>
+Subject: [PATCH 5.4 10/78] firmware: dmi: Stop decoding on broken entry
+Date: Tue, 16 Jul 2024 17:30:42 +0200
+Message-ID: <20240716152741.025105779@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152740.626160410@linuxfoundation.org>
 References: <20240716152740.626160410@linuxfoundation.org>
@@ -51,86 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Erico Nunes <nunes.erico@gmail.com>
+From: Jean Delvare <jdelvare@suse.de>
 
-[ Upstream commit a6683c690bbfd1f371510cb051e8fa49507f3f5e ]
+[ Upstream commit 0ef11f604503b1862a21597436283f158114d77e ]
 
-lima uses a shared interrupt, so the interrupt handlers must be prepared
-to be called at any time. At driver removal time, the clocks are
-disabled early and the interrupts stay registered until the very end of
-the remove process due to the devm usage.
-This is potentially a bug as the interrupts access device registers
-which assumes clocks are enabled. A crash can be triggered by removing
-the driver in a kernel with CONFIG_DEBUG_SHIRQ enabled.
-This patch frees the interrupts at each lima device finishing callback
-so that the handlers are already unregistered by the time we fully
-disable clocks.
+If a DMI table entry is shorter than 4 bytes, it is invalid. Due to
+how DMI table parsing works, it is impossible to safely recover from
+such an error, so we have to stop decoding the table.
 
-Signed-off-by: Erico Nunes <nunes.erico@gmail.com>
-Signed-off-by: Qiang Yu <yuq825@gmail.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240401224329.1228468-2-nunes.erico@gmail.com
+Signed-off-by: Jean Delvare <jdelvare@suse.de>
+Link: https://lore.kernel.org/linux-kernel/Zh2K3-HLXOesT_vZ@liuwe-devbox-debian-v2/T/
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/lima/lima_gp.c  | 2 ++
- drivers/gpu/drm/lima/lima_mmu.c | 5 +++++
- drivers/gpu/drm/lima/lima_pp.c  | 4 ++++
- 3 files changed, 11 insertions(+)
+ drivers/firmware/dmi_scan.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/gpu/drm/lima/lima_gp.c b/drivers/gpu/drm/lima/lima_gp.c
-index ccf49faedebf8..3fca560087c97 100644
---- a/drivers/gpu/drm/lima/lima_gp.c
-+++ b/drivers/gpu/drm/lima/lima_gp.c
-@@ -244,7 +244,9 @@ int lima_gp_init(struct lima_ip *ip)
+diff --git a/drivers/firmware/dmi_scan.c b/drivers/firmware/dmi_scan.c
+index 1e21fc3e9851a..537c104652f71 100644
+--- a/drivers/firmware/dmi_scan.c
++++ b/drivers/firmware/dmi_scan.c
+@@ -96,6 +96,17 @@ static void dmi_decode_table(u8 *buf,
+ 	       (data - buf + sizeof(struct dmi_header)) <= dmi_len) {
+ 		const struct dmi_header *dm = (const struct dmi_header *)data;
  
- void lima_gp_fini(struct lima_ip *ip)
- {
-+	struct lima_device *dev = ip->dev;
- 
-+	devm_free_irq(dev->dev, ip->irq, ip);
- }
- 
- int lima_gp_pipe_init(struct lima_device *dev)
-diff --git a/drivers/gpu/drm/lima/lima_mmu.c b/drivers/gpu/drm/lima/lima_mmu.c
-index 8e1651d6a61fa..04e6090cce595 100644
---- a/drivers/gpu/drm/lima/lima_mmu.c
-+++ b/drivers/gpu/drm/lima/lima_mmu.c
-@@ -97,7 +97,12 @@ int lima_mmu_init(struct lima_ip *ip)
- 
- void lima_mmu_fini(struct lima_ip *ip)
- {
-+	struct lima_device *dev = ip->dev;
++		/*
++		 * If a short entry is found (less than 4 bytes), not only it
++		 * is invalid, but we cannot reliably locate the next entry.
++		 */
++		if (dm->length < sizeof(struct dmi_header)) {
++			pr_warn(FW_BUG
++				"Corrupted DMI table, offset %zd (only %d entries processed)\n",
++				data - buf, i);
++			break;
++		}
 +
-+	if (ip->id == lima_ip_ppmmu_bcast)
-+		return;
- 
-+	devm_free_irq(dev->dev, ip->irq, ip);
- }
- 
- void lima_mmu_switch_vm(struct lima_ip *ip, struct lima_vm *vm)
-diff --git a/drivers/gpu/drm/lima/lima_pp.c b/drivers/gpu/drm/lima/lima_pp.c
-index 8fef224b93c85..1dacca8bffe1a 100644
---- a/drivers/gpu/drm/lima/lima_pp.c
-+++ b/drivers/gpu/drm/lima/lima_pp.c
-@@ -251,7 +251,9 @@ int lima_pp_init(struct lima_ip *ip)
- 
- void lima_pp_fini(struct lima_ip *ip)
- {
-+	struct lima_device *dev = ip->dev;
- 
-+	devm_free_irq(dev->dev, ip->irq, ip);
- }
- 
- int lima_pp_bcast_init(struct lima_ip *ip)
-@@ -272,7 +274,9 @@ int lima_pp_bcast_init(struct lima_ip *ip)
- 
- void lima_pp_bcast_fini(struct lima_ip *ip)
- {
-+	struct lima_device *dev = ip->dev;
- 
-+	devm_free_irq(dev->dev, ip->irq, ip);
- }
- 
- static int lima_pp_task_validate(struct lima_sched_pipe *pipe,
+ 		/*
+ 		 *  We want to know the total length (formatted area and
+ 		 *  strings) before decoding to make sure we won't run off the
 -- 
 2.43.0
 
