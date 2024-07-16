@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DD527733;
-	Tue, 16 Jul 2024 15:50:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B4627733;
+	Tue, 16 Jul 2024 15:50:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145007; cv=none; b=FizQajWXDeZovJyKvte8Lyg1uSrHytqt13dhIzNJf5oaw2oRmLoX8Wc7ZlO343AejOn0eqWtHtsKDwJ5R/FEnoQHPaO6vUi9SfGua4bJxqHTiI1EIA/hoz5QU+vroEtdG7gl9rrkilGWcKisP8bN1NNm3xiyb1dgoUrwiLT7Mug=
+	t=1721145010; cv=none; b=lq1VSqxD1FQhaR3OdztKvncyjJW537BNqVxzPRuE+aJBf5I7PsZNflbHENPeCZr+KBg1Cl5RyFIfcbcXtk0tiFITH4p1US1GMQ7Gb84mLUHtaP8sAh7ALPcSe+zs8RDxFzhvhffA6mOcGRU16I0hUE4suJhPRwts8hGaNFLLNIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145007; c=relaxed/simple;
-	bh=njuW7f0YnixF7X0+N2TvmOmUd7VHAjjlw2aw7RYGRcs=;
+	s=arc-20240116; t=1721145010; c=relaxed/simple;
+	bh=h75ehIqoW2aWoQ4pq0SXyaGw8dgivVcY9sUIF/FB4t8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bt0yextngFV4Oe955S/cvmSbnIly5lgACOaDt14+ZDHvJ1KpkNr6kL5lCmUjkUhzOf7PHxmU/5JPuswF7+7OOdajKHQJ/2JMaA7MYdUgy0lBM0JJUhjz1JnWoqrRfkhelArBSYHiRwA7zXsmITXQpMP/lXlMacITKOAkG/xLJv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BECP8C33; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TRhoBYahVU8JCi7p2l+ikaNpGYUPWkhS4ZWS239Cwe5zuvjPmGChxw4DOHu+6/rsRSrp/B135vl7rJ341WJNji7Ld49K38Z/vJ8JkZSN1SyFkHTI967UUIJu3FwH3/f0Tf0YI29e+nwliSwkowO5ntgJUo9ae69eVH1ZLuUQqlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CgRA6V2S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BECP8C33"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E76C116B1;
-	Tue, 16 Jul 2024 15:50:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CgRA6V2S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9232BC116B1;
+	Tue, 16 Jul 2024 15:50:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145007;
-	bh=njuW7f0YnixF7X0+N2TvmOmUd7VHAjjlw2aw7RYGRcs=;
+	s=korg; t=1721145010;
+	bh=h75ehIqoW2aWoQ4pq0SXyaGw8dgivVcY9sUIF/FB4t8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BECP8C33F5uhwK56MA0M3/raXk1sMAMrBEP2aKaHgxR3BuNVPRqbY5Uzebp4eY4OH
-	 nbR8P0uMVCU3NIiu/5SWqpNRX/PYXzz99g2teVn7dCxdOd+EGJNAK6ADeZ8n0vf/el
-	 gJ8j/pihV5U73EKfxQ57IuMmdu14AjWgT121chjg=
+	b=CgRA6V2SAv0GMx8PvrJ5D6dPMgGlrmoKP37p7VPoGnAXogHkEbWF5XR5CKYvRXm+B
+	 2CIBZp32EhpcS7aJSlFsvD1lczsZUIhIyC75m++im3dT4gDJOuRQT+q2Q1QrbEvU3m
+	 KSnWoJgamTiY7K0sGpDBoz99+/lJO+4rGs9DCZOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	netdev@vger.kernel.org,
-	Ronald Wahl <ronald.wahl@raritan.com>,
-	Jacob Keller <jacob.e.keller@intel.com>
-Subject: [PATCH 6.9 068/143] net: ks8851: Fix potential TX stall after interface reopen
-Date: Tue, 16 Jul 2024 17:31:04 +0200
-Message-ID: <20240716152758.594309082@linuxfoundation.org>
+	Daniele Palmas <dnlplm@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.9 069/143] USB: serial: option: add Telit generic core-dump composition
+Date: Tue, 16 Jul 2024 17:31:05 +0200
+Message-ID: <20240716152758.633162033@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -56,61 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ronald Wahl <ronald.wahl@raritan.com>
+From: Daniele Palmas <dnlplm@gmail.com>
 
-commit 7a99afef17af66c276c1d6e6f4dbcac223eaf6ac upstream.
+commit 4298e400dbdbf259549d69c349e060652ad53611 upstream.
 
-The amount of TX space in the hardware buffer is tracked in the tx_space
-variable. The initial value is currently only set during driver probing.
+Add the following core-dump composition, used in different Telit modems:
 
-After closing the interface and reopening it the tx_space variable has
-the last value it had before close. If it is smaller than the size of
-the first send packet after reopeing the interface the queue will be
-stopped. The queue is woken up after receiving a TX interrupt but this
-will never happen since we did not send anything.
+0x9000: tty (sahara)
+T:  Bus=03 Lev=01 Prnt=03 Port=07 Cnt=01 Dev#= 41 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=9000 Rev=00.00
+S:  Manufacturer=Telit Cinterion
+S:  Product=FN990-dump
+S:  SerialNumber=e815bdde
+C:  #Ifs= 1 Cfg#= 1 Atr=a0 MxPwr=2mA
+I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=10 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-This commit moves the initialization of the tx_space variable to the
-ks8851_net_open function right before starting the TX queue. Also query
-the value from the hardware instead of using a hard coded value.
-
-Only the SPI chip variant is affected by this issue because only this
-driver variant actually depends on the tx_space variable in the xmit
-function.
-
-Fixes: 3dc5d4454545 ("net: ks8851: Fix TX stall caused by TX buffer overrun")
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Simon Horman <horms@kernel.org>
-Cc: netdev@vger.kernel.org
-Cc: stable@vger.kernel.org # 5.10+
-Signed-off-by: Ronald Wahl <ronald.wahl@raritan.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20240709195845.9089-1-rwahl@gmx.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/micrel/ks8851_common.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/option.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/ethernet/micrel/ks8851_common.c
-+++ b/drivers/net/ethernet/micrel/ks8851_common.c
-@@ -482,6 +482,7 @@ static int ks8851_net_open(struct net_de
- 	ks8851_wrreg16(ks, KS_IER, ks->rc_ier);
- 
- 	ks->queued_len = 0;
-+	ks->tx_space = ks8851_rdreg16(ks, KS_TXMIR);
- 	netif_start_queue(ks->netdev);
- 
- 	netif_dbg(ks, ifup, ks->netdev, "network device up\n");
-@@ -1101,7 +1102,6 @@ int ks8851_probe_common(struct net_devic
- 	int ret;
- 
- 	ks->netdev = netdev;
--	ks->tx_space = 6144;
- 
- 	ks->gpio = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_HIGH);
- 	ret = PTR_ERR_OR_ZERO(ks->gpio);
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -1433,6 +1433,8 @@ static const struct usb_device_id option
+ 	  .driver_info = NCTRL(2) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x701b, 0xff),	/* Telit LE910R1 (ECM) */
+ 	  .driver_info = NCTRL(2) },
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x9000, 0xff),	/* Telit generic core-dump device */
++	  .driver_info = NCTRL(0) },
+ 	{ USB_DEVICE(TELIT_VENDOR_ID, 0x9010),				/* Telit SBL FN980 flashing device */
+ 	  .driver_info = NCTRL(0) | ZLP },
+ 	{ USB_DEVICE(TELIT_VENDOR_ID, 0x9200),				/* Telit LE910S1 flashing device */
 
 
