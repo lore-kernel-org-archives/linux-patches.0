@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3601117A93F;
-	Tue, 16 Jul 2024 15:54:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B0491DDCE;
+	Tue, 16 Jul 2024 15:55:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145298; cv=none; b=PE+lGN6nSab5gi9jmPxA2NTh6BixkeMqhKrI/tpggOI8K+ibbXaN1kMOGPOVJmiE1PEYH3R5hsvJymyDn2We1KEKhVO4d/XU7CbNamGQjZ9zWL7N2/MP/UkGvRE9jpNhEycnSR/eyxni4gWC1Fcm80+xVKlE0GvEvzdFOWD5+s4=
+	t=1721145301; cv=none; b=o4F5BfDkwkX/9SoijFmXxrVKKt9ewmiAKMZLj1kMJEzD01R+TsfH1CgxvltdandIcBIOl8SujagjcU6PaElsZrY9rYVdc/O8HPn1kN4sh3JoF8hmf4tTLl1OK2k2BEizQdgV/qpT1BMAA4fzzVMNBFo83bj3cxmO7RVrU6nTJ/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145298; c=relaxed/simple;
-	bh=x6w91sC4lEfC4CW+MWQCrMGSO5ZZDxzAlBLBUs5SU8Q=;
+	s=arc-20240116; t=1721145301; c=relaxed/simple;
+	bh=B/EExZtQCbl7s2eGdBrSgzhN+PPJJEdzqdW3eiGHL4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uErOq/xOaM2nTeFQkMaGRzBABkXxkAkrr5s1o/TBbJ0gw7yQycToouvr6boEfUwsb1fMGWhFrMiaxMoFrAmGgsEteQosEL9DQv1vk7sYOJuL+6QwoJKzHYSOG4YhcoO6DZkCs+6CkEjbOjzkF1U4Z8od3oFN36foTCi1p1S7CgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Na9Cgjtz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YvWX85b1hTAodBxavA8zqx4/qUS3eCCONHNYe61PiRRg1RMwJiNgfWR/hRap1arpT1vPCbrdWHfZxIx/JE3sm7C8u4Aq4BSIe0wMRakM0IQALuzA82UC3p7IOp2ySH73mNTWd3ZAQH+NOYjlpX+5UcN/8bZt8YQp/8MI8bLKOAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KyH/a+tj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Na9Cgjtz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF2EAC116B1;
-	Tue, 16 Jul 2024 15:54:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KyH/a+tj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1BA3C116B1;
+	Tue, 16 Jul 2024 15:55:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145298;
-	bh=x6w91sC4lEfC4CW+MWQCrMGSO5ZZDxzAlBLBUs5SU8Q=;
+	s=korg; t=1721145301;
+	bh=B/EExZtQCbl7s2eGdBrSgzhN+PPJJEdzqdW3eiGHL4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Na9Cgjtzx69hMMNWFLsTop6DJmrrMh/cYt2Otgz9ENpR2esXcsBBFuPCP13HoaMzp
-	 zRhuZ1ftaAG0xD9XbaFDs7ymPnHt6DKjnXkxamPsc+fUskR9/Ftw2xzemsypGnjkkm
-	 fO6+Ctpf+Z8Yb8gKOQ9jdN43+rtiheLg6W0yPAv4=
+	b=KyH/a+tj/LgwhKEcaj7T9pJC841D9gIYdP1Eu5vMMtNbEtbAyWGlUAu+sPI0a7QD4
+	 oS+1hRkUSR49JkMGM7FFR571z7FUAwNUhbySZXR9zQqOim++XdEwLOA46aOH8T5ycB
+	 dnsMirdXErX0+dxLDG/B/QxSyrb6cKDwEsUqxln8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Yonghong Song <yhs@fb.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 02/96] cachefiles: propagate errors from vfs_getxattr() to avoid infinite loop
-Date: Tue, 16 Jul 2024 17:31:13 +0200
-Message-ID: <20240716152746.612752318@linuxfoundation.org>
+Subject: [PATCH 6.1 20/96] bpf: Reduce smap->elem_size
+Date: Tue, 16 Jul 2024 17:31:31 +0200
+Message-ID: <20240716152747.293221643@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152746.516194097@linuxfoundation.org>
 References: <20240716152746.516194097@linuxfoundation.org>
@@ -52,67 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Martin KaFai Lau <martin.lau@kernel.org>
 
-[ Upstream commit 0ece614a52bc9d219b839a6a29282b30d10e0c48 ]
+[ Upstream commit 552d42a356ebf78df9d2f4b73e077d2459966fac ]
 
-In cachefiles_check_volume_xattr(), the error returned by vfs_getxattr()
-is not passed to ret, so it ends up returning -ESTALE, which leads to an
-endless loop as follows:
+'struct bpf_local_storage_elem' has an unused 56 byte padding at the
+end due to struct's cache-line alignment requirement. This padding
+space is overlapped by storage value contents, so if we use sizeof()
+to calculate the total size, we overinflate it by 56 bytes. Use
+offsetof() instead to calculate more exact memory use.
 
-cachefiles_acquire_volume
-retry:
-  ret = cachefiles_check_volume_xattr
-    ret = -ESTALE
-    xlen = vfs_getxattr // return -EIO
-    // The ret is not updated when xlen < 0, so -ESTALE is returned.
-    return ret
-  // Supposed to jump out of the loop at this judgement.
-  if (ret != -ESTALE)
-      goto error_dir;
-  cachefiles_bury_object
-    //  EIO causes rename failure
-  goto retry;
-
-Hence propagate the error returned by vfs_getxattr() to avoid the above
-issue. Do the same in cachefiles_check_auxdata().
-
-Fixes: 32e150037dce ("fscache, cachefiles: Store the volume coherency data")
-Fixes: 72b957856b0c ("cachefiles: Implement metadata/coherency data storage in xattrs")
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Link: https://lore.kernel.org/r/20240628062930.2467993-5-libaokun@huaweicloud.com
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Yonghong Song <yhs@fb.com>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20221221013036.3427431-1-martin.lau@linux.dev
+Stable-dep-of: af253aef183a ("bpf: fix order of args in call to bpf_map_kvcalloc")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cachefiles/xattr.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ kernel/bpf/bpf_local_storage.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/cachefiles/xattr.c b/fs/cachefiles/xattr.c
-index 00b087c14995a..0ecfc9065047c 100644
---- a/fs/cachefiles/xattr.c
-+++ b/fs/cachefiles/xattr.c
-@@ -110,9 +110,11 @@ int cachefiles_check_auxdata(struct cachefiles_object *object, struct file *file
- 	if (xlen == 0)
- 		xlen = vfs_getxattr(&init_user_ns, dentry, cachefiles_xattr_cache, buf, tlen);
- 	if (xlen != tlen) {
--		if (xlen < 0)
-+		if (xlen < 0) {
-+			ret = xlen;
- 			trace_cachefiles_vfs_error(object, file_inode(file), xlen,
- 						   cachefiles_trace_getxattr_error);
-+		}
- 		if (xlen == -EIO)
- 			cachefiles_io_error_obj(
- 				object,
-@@ -252,6 +254,7 @@ int cachefiles_check_volume_xattr(struct cachefiles_volume *volume)
- 		xlen = vfs_getxattr(&init_user_ns, dentry, cachefiles_xattr_cache, buf, len);
- 	if (xlen != len) {
- 		if (xlen < 0) {
-+			ret = xlen;
- 			trace_cachefiles_vfs_error(NULL, d_inode(dentry), xlen,
- 						   cachefiles_trace_getxattr_error);
- 			if (xlen == -EIO)
+diff --git a/kernel/bpf/bpf_local_storage.c b/kernel/bpf/bpf_local_storage.c
+index b1090a2b02b34..f8dd7c516e320 100644
+--- a/kernel/bpf/bpf_local_storage.c
++++ b/kernel/bpf/bpf_local_storage.c
+@@ -580,8 +580,8 @@ static struct bpf_local_storage_map *__bpf_local_storage_map_alloc(union bpf_att
+ 		raw_spin_lock_init(&smap->buckets[i].lock);
+ 	}
+ 
+-	smap->elem_size =
+-		sizeof(struct bpf_local_storage_elem) + attr->value_size;
++	smap->elem_size = offsetof(struct bpf_local_storage_elem,
++				   sdata.data[attr->value_size]);
+ 
+ 	return smap;
+ }
 -- 
 2.43.0
 
