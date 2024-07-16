@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8FCCA40;
-	Tue, 16 Jul 2024 15:36:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B805CA40;
+	Tue, 16 Jul 2024 15:36:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144195; cv=none; b=TPHJQrVgr8PMC26HQgqzCz/x65RWcW4yxBs3POJaDxJICbPq2BTuxe7naf2ZeNrp9Sd4fWohhh7XbCOlV13QF9w/oU+6yu490aslM8K88898IhEdtXjKzykataPQ5ZLUi1uPMqb9OdbtgeH03XjXUpOnUpw/IB8NutJQqLjfVk4=
+	t=1721144198; cv=none; b=KlxbiEFaBC569oa8KV8Fbby4y431i3M1acQqnRoYpGnxdqneHSbB4fcOf/g/WIalhawK+LpcJtuCoIMIT2rXIt2Fs9LZsx9HqdM+yZQ/kp8GqlREEURpFck8Vo8mFMZnUTtHZixDbIdGO5JW0XV9llDbUjBxONnUf0YNBQaiK+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144195; c=relaxed/simple;
-	bh=SrDPNaoU0aQYiWy5UJbwj19a5kNUGoPeSiKEyguVSE4=;
+	s=arc-20240116; t=1721144198; c=relaxed/simple;
+	bh=RUti4fjVeJ84CcEQuFxC6AqZbNkTmINzgel98cs4LQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cqPxeCiQysrzC3PF/J1DUysqFuzy9uGYKBBvKbUZjacc5MhsVAVW8y0hguu16NMVYZknKQgoaS3/Ny5NIq2MAfW5RkT9GnlmCtXBWP90DMCzxYitIFBAx4p1wyyBTT3fxbN/LguMo9RUe6B7M3MzzOsUQrx2/TzLmGzqQXbar8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PBguoPeO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RJU6Sf0BEjPyVE+65xMp7unq3aRd5sT+y2Em4oMehVMdZ2GmaFLF8lBoQNlO0nuUOyqf2JxGB4YHDXAXrClrx7fDBFqiZWLg8N/yKkg4tD5kN8KN3JAQAXEHiZnZpm6/yqSfRLI4RvxwT1/+DVmKPdTKBe95DWE8wI5XfpyuwD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iMoQqnGj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PBguoPeO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 034E5C116B1;
-	Tue, 16 Jul 2024 15:36:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iMoQqnGj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3F58C116B1;
+	Tue, 16 Jul 2024 15:36:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144195;
-	bh=SrDPNaoU0aQYiWy5UJbwj19a5kNUGoPeSiKEyguVSE4=;
+	s=korg; t=1721144198;
+	bh=RUti4fjVeJ84CcEQuFxC6AqZbNkTmINzgel98cs4LQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PBguoPeOOPRhXpdu4/ZeEGlJJl8wvaR8YMhW1klTVz2s/g0w1eJ3MjLgpvQ72c4J4
-	 48aW1SKmJSsUdTtt8aaa5/ZPF8XK+cJwOeLrEyOZuhEf0XHB1IghIpdw9qxuqcIvW3
-	 ozZ6cjHD7itGdpEpTQB3rTadqYcbFUn/G2nqgQUg=
+	b=iMoQqnGjQ+E3l0Kb5noAfUo9g/LMHzZQahAnjLJl+BJb8Zegiga260PriN7cQnMlN
+	 JZIa82761j0IxukO9V/FYbSS+/8I97+Jl7iz4JnRx367bOahGkKVu2WpM70tz/fuGX
+	 LNX4pDaVRSTop/6SZhFKwmAEnmBc2Q/WVBdwODYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Menglong Dong <imagedong@tencent.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Soheil Hassas Yeganeh <soheil@google.com>,
 	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 4.19 60/66] tcp: refactor tcp_retransmit_timer()
-Date: Tue, 16 Jul 2024 17:31:35 +0200
-Message-ID: <20240716152740.450356174@linuxfoundation.org>
+Subject: [PATCH 4.19 61/66] net: tcp: fix unexcepted socket die when snd_wnd is 0
+Date: Tue, 16 Jul 2024 17:31:36 +0200
+Message-ID: <20240716152740.489875072@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152738.161055634@linuxfoundation.org>
 References: <20240716152738.161055634@linuxfoundation.org>
@@ -52,60 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Menglong Dong <imagedong@tencent.com>
 
-commit 0d580fbd2db084a5c96ee9c00492236a279d5e0f upstream.
+commit e89688e3e97868451a5d05b38a9d2633d6785cd4 upstream.
 
-It appears linux-4.14 stable needs a backport of commit
-88f8598d0a30 ("tcp: exit if nothing to retransmit on RTO timeout")
+In tcp_retransmit_timer(), a window shrunk connection will be regarded
+as timeout if 'tcp_jiffies32 - tp->rcv_tstamp > TCP_RTO_MAX'. This is not
+right all the time.
 
-Since tcp_rtx_queue_empty() is not in pre 4.15 kernels,
-let's refactor tcp_retransmit_timer() to only use tcp_rtx_queue_head()
+The retransmits will become zero-window probes in tcp_retransmit_timer()
+if the 'snd_wnd==0'. Therefore, the icsk->icsk_rto will come up to
+TCP_RTO_MAX sooner or later.
 
-I will provide to stable teams the squashed patches.
+However, the timer can be delayed and be triggered after 122877ms, not
+TCP_RTO_MAX, as I tested.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Willem de Bruijn <willemb@google.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Acked-by: Soheil Hassas Yeganeh <soheil@google.com>
+Therefore, 'tcp_jiffies32 - tp->rcv_tstamp > TCP_RTO_MAX' is always true
+once the RTO come up to TCP_RTO_MAX, and the socket will die.
+
+Fix this by replacing the 'tcp_jiffies32' with '(u32)icsk->icsk_timeout',
+which is exact the timestamp of the timeout.
+
+However, "tp->rcv_tstamp" can restart from idle, then tp->rcv_tstamp
+could already be a long time (minutes or hours) in the past even on the
+first RTO. So we double check the timeout with the duration of the
+retransmission.
+
+Meanwhile, making "2 * TCP_RTO_MAX" as the timeout to avoid the socket
+dying too soon.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://lore.kernel.org/netdev/CADxym3YyMiO+zMD4zj03YPM3FBi-1LHi6gSD2XT8pyAMM096pg@mail.gmail.com/
+Signed-off-by: Menglong Dong <imagedong@tencent.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_timer.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ net/ipv4/tcp_timer.c |   18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
 --- a/net/ipv4/tcp_timer.c
 +++ b/net/ipv4/tcp_timer.c
-@@ -428,6 +428,7 @@ void tcp_retransmit_timer(struct sock *s
- 	struct tcp_sock *tp = tcp_sk(sk);
- 	struct net *net = sock_net(sk);
- 	struct inet_connection_sock *icsk = inet_csk(sk);
-+	struct sk_buff *skb;
+@@ -411,6 +411,22 @@ static void tcp_fastopen_synack_timer(st
+ 			  TCP_TIMEOUT_INIT << req->num_timeout, TCP_RTO_MAX);
+ }
  
- 	if (tp->fastopen_rsk) {
- 		WARN_ON_ONCE(sk->sk_state != TCP_SYN_RECV &&
-@@ -438,7 +439,12 @@ void tcp_retransmit_timer(struct sock *s
- 		 */
- 		return;
- 	}
--	if (!tp->packets_out || WARN_ON_ONCE(tcp_rtx_queue_empty(sk)))
++static bool tcp_rtx_probe0_timed_out(const struct sock *sk,
++				     const struct sk_buff *skb)
++{
++	const struct tcp_sock *tp = tcp_sk(sk);
++	const int timeout = TCP_RTO_MAX * 2;
++	u32 rcv_delta, rtx_delta;
 +
-+	if (!tp->packets_out)
-+		return;
++	rcv_delta = inet_csk(sk)->icsk_timeout - tp->rcv_tstamp;
++	if (rcv_delta <= timeout)
++		return false;
 +
-+	skb = tcp_rtx_queue_head(sk);
-+	if (WARN_ON_ONCE(!skb))
- 		return;
++	rtx_delta = (u32)msecs_to_jiffies(tcp_time_stamp(tp) -
++			(tp->retrans_stamp ?: tcp_skb_timestamp(skb)));
++
++	return rtx_delta > timeout;
++}
  
- 	if (!tp->snd_wnd && !sock_flag(sk, SOCK_DEAD) &&
-@@ -470,7 +476,7 @@ void tcp_retransmit_timer(struct sock *s
+ /**
+  *  tcp_retransmit_timer() - The TCP retransmit timeout handler
+@@ -471,7 +487,7 @@ void tcp_retransmit_timer(struct sock *s
+ 					    tp->snd_una, tp->snd_nxt);
+ 		}
+ #endif
+-		if (tcp_jiffies32 - tp->rcv_tstamp > TCP_RTO_MAX) {
++		if (tcp_rtx_probe0_timed_out(sk, skb)) {
+ 			tcp_write_err(sk);
  			goto out;
  		}
- 		tcp_enter_loss(sk);
--		tcp_retransmit_skb(sk, tcp_rtx_queue_head(sk), 1);
-+		tcp_retransmit_skb(sk, skb, 1);
- 		__sk_dst_reset(sk);
- 		goto out_reset_timer;
- 	}
 
 
