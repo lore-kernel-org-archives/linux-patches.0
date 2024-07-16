@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526B619E7FE;
-	Tue, 16 Jul 2024 15:52:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF3317A93F;
+	Tue, 16 Jul 2024 15:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145147; cv=none; b=jyl5A1WFpx9b7tdkoyDsiUfoWSFavirTNhixAaf2B1dvxdHS7SftmSS1bXzO43oDW9JZ+kPXeIJdd2Jvj4j+ui/DtaC8785f7lYDWJ4iXl9VCndrxW14PAw316uMB7ankawLMKmoy4jJpss2kOfMpoEZfSLAT/m7H8mJ04DnKkk=
+	t=1721145151; cv=none; b=Org/AGoPUsh19q1zKLjfAyeGgBLI0pYMF63ehpubnQ7jwlIFAlfKodpVQhyH180cBg8FfEVyacAQFNGSLI8is624txNxSmpsP8i3mfqyJj1Bw0FpRKJUzFfrWOiX45JwPCQ6x+t8HLImr81fCmLEwedImzVQFCdPAcqBzCWsC08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145147; c=relaxed/simple;
-	bh=ZlMlOePAREFVrODLeoaax3yEt7lQh4Di8vyo/IVSaKE=;
+	s=arc-20240116; t=1721145151; c=relaxed/simple;
+	bh=QTe64/+/HuPCuDrBD8TWI1zbnoc/jf6tYcdWkgZ+ayw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ATS7U1iuljG1yTIMmCMtxNFIfUKxerLeR1JIVcepxgR5cKukKXBVjC8Y5lTv1K5InZWEBXLxo0QY1430NGWjrjP3ly6bemYMVIOpcUKxfzR5YW/f/8e+BYr9kFoab7MU9oQSV2uM5+tB1Qh71wo88/Dp6Vyg5NYirABWtqLe95U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2r6gfFyO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B+dAhy+uDB6yeozlFhKLUGgAbHgFYfUb1GbxygVVswyOEy+zG2cHL7oE3cLpOBSd+s4KeE+zRAZTn78TWVlFSvJMdYsMvETpZopk2XVIO6taS9A3EtWW3I3NA58+BehtMhHJ5t5xEXesE6xvSjXEm0KiplgNOmMZfl6XqHGHu9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kuBuu+zU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2r6gfFyO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD084C4AF0B;
-	Tue, 16 Jul 2024 15:52:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kuBuu+zU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED36C116B1;
+	Tue, 16 Jul 2024 15:52:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145147;
-	bh=ZlMlOePAREFVrODLeoaax3yEt7lQh4Di8vyo/IVSaKE=;
+	s=korg; t=1721145150;
+	bh=QTe64/+/HuPCuDrBD8TWI1zbnoc/jf6tYcdWkgZ+ayw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2r6gfFyODPcFhPeVzTs4pneg9o05wdkQZQojFjusHYP1xLT0R3USJNhwDKdEbTtbK
-	 6VKqYjykrC4T1j0mx1MwUFL5a8y6DEyXdLGDubJxSALTlxOSRReyGfnjRBUAcS/j1y
-	 aFV2RIQRU/Dw33+mC14ISMX/SonH+Yw6dNH25Txo=
+	b=kuBuu+zUibDAKv2ibCbxR7Ha5RiiOOZzQau+VPHrSSnEcjMfLDVJehLUrqeZL3nZ6
+	 tNJYlqxENwapkIkIEvWfLfql7zPVWQk2UxC0i4rGkXaONIptKCu7IV6nGSgNC2MMYD
+	 pTNUx0h/NDv2vYunIS969vBImv6SS1T0mgLI2z9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bastien Curutchet <bastien.curutchet@bootlin.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Taniya Das <quic_tdas@quicinc.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.9 114/143] mmc: davinci_mmc: Prevent transmitted data size from exceeding sgms length
-Date: Tue, 16 Jul 2024 17:31:50 +0200
-Message-ID: <20240716152800.362672407@linuxfoundation.org>
+Subject: [PATCH 6.9 115/143] pmdomain: qcom: rpmhpd: Skip retention level for Power Domains
+Date: Tue, 16 Jul 2024 17:31:51 +0200
+Message-ID: <20240716152800.402050494@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -50,41 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bastien Curutchet <bastien.curutchet@bootlin.com>
+From: Taniya Das <quic_tdas@quicinc.com>
 
-commit 16198eef11c1929374381d7f6271b4bf6aa44615 upstream.
+commit ddab91f4b2de5c5b46e312a90107d9353087d8ea upstream.
 
-No check is done on the size of the data to be transmiited. This causes
-a kernel panic when this size exceeds the sg_miter's length.
+In the cases where the power domain connected to logics is allowed to
+transition from a level(L)-->power collapse(0)-->retention(1) or
+vice versa retention(1)-->power collapse(0)-->level(L)  will cause the
+logic to lose the configurations. The ARC does not support retention
+to collapse transition on MxC rails.
 
-Limit the number of transmitted bytes to sgm->length.
+The targets from SM8450 onwards the PLL logics of clock controllers are
+connected to MxC rails and the recommended configurations are carried
+out during the clock controller probes. The MxC transition as mentioned
+above should be skipped to ensure the PLL settings are intact across
+clock controller power on & off.
 
-Cc: stable@vger.kernel.org
-Fixes: ed01d210fd91 ("mmc: davinci_mmc: Use sg_miter for PIO")
-Signed-off-by: Bastien Curutchet <bastien.curutchet@bootlin.com>
-Link: https://lore.kernel.org/r/20240711081838.47256-2-bastien.curutchet@bootlin.com
+On older targets that do not split MX into MxA and MxC does not collapse
+the logic and it is parked always at RETENTION, thus this issue is never
+observed on those targets.
+
+Cc: stable@vger.kernel.org # v5.17
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+Link: https://lore.kernel.org/r/20240625-avoid_mxc_retention-v2-1-af9c2f549a5f@quicinc.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/davinci_mmc.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pmdomain/qcom/rpmhpd.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/mmc/host/davinci_mmc.c b/drivers/mmc/host/davinci_mmc.c
-index d7427894e0bc..c302eb380e42 100644
---- a/drivers/mmc/host/davinci_mmc.c
-+++ b/drivers/mmc/host/davinci_mmc.c
-@@ -224,6 +224,9 @@ static void davinci_fifo_data_trans(struct mmc_davinci_host *host,
- 	}
- 	p = sgm->addr;
+--- a/drivers/pmdomain/qcom/rpmhpd.c
++++ b/drivers/pmdomain/qcom/rpmhpd.c
+@@ -40,6 +40,7 @@
+  * @addr:		Resource address as looped up using resource name from
+  *			cmd-db
+  * @state_synced:	Indicator that sync_state has been invoked for the rpmhpd resource
++ * @skip_retention_level: Indicate that retention level should not be used for the power domain
+  */
+ struct rpmhpd {
+ 	struct device	*dev;
+@@ -56,6 +57,7 @@ struct rpmhpd {
+ 	const char	*res_name;
+ 	u32		addr;
+ 	bool		state_synced;
++	bool            skip_retention_level;
+ };
  
-+	if (n > sgm->length)
-+		n = sgm->length;
+ struct rpmhpd_desc {
+@@ -173,6 +175,7 @@ static struct rpmhpd mxc = {
+ 	.pd = { .name = "mxc", },
+ 	.peer = &mxc_ao,
+ 	.res_name = "mxc.lvl",
++	.skip_retention_level = true,
+ };
+ 
+ static struct rpmhpd mxc_ao = {
+@@ -180,6 +183,7 @@ static struct rpmhpd mxc_ao = {
+ 	.active_only = true,
+ 	.peer = &mxc,
+ 	.res_name = "mxc.lvl",
++	.skip_retention_level = true,
+ };
+ 
+ static struct rpmhpd nsp = {
+@@ -819,6 +823,9 @@ static int rpmhpd_update_level_mapping(s
+ 		return -EINVAL;
+ 
+ 	for (i = 0; i < rpmhpd->level_count; i++) {
++		if (rpmhpd->skip_retention_level && buf[i] == RPMH_REGULATOR_LEVEL_RETENTION)
++			continue;
 +
- 	/* NOTE:  we never transfer more than rw_threshold bytes
- 	 * to/from the fifo here; there's no I/O overlap.
- 	 * This also assumes that access width( i.e. ACCWD) is 4 bytes
--- 
-2.45.2
-
+ 		rpmhpd->level[i] = buf[i];
+ 
+ 		/* Remember the first corner with non-zero level */
 
 
