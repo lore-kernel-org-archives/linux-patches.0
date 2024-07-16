@@ -1,103 +1,167 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D701C6B7
-	for <patches@lists.linux.dev>; Tue, 16 Jul 2024 18:55:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FCC01A01B4
+	for <patches@lists.linux.dev>; Tue, 16 Jul 2024 19:01:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721156134; cv=none; b=gIZFz4DQsjqyMdhAryLh/W/0Yz3YAbEtzTgJJHYxtouXRc4JjaKWsVt0x5Vj4CHtljq5B1142Daf1leJmwNbiIFSkVaAkfGY6qFJaO5ckN86pjftzFJmXSmBX4tNNIxAfAd9OaSAAphZWKf+Xpmf+uy9qkL2v5brcv5flxatODY=
+	t=1721156513; cv=none; b=R1NYgdepf0U+yAYIRl0AXGuvi2U3mxXxXoE8USHGFWcuay/mYhN6GepVxvA8XOhn6mxkm6QcCvNX9kHH1vNttCmEK8PZA3uUHupIBRac66QuVdLIVm3NYqF3eZ2Hn3Z6O13kr2C24PqEQa06ubv2UVJS0zmTtA7ZbVsZPZQrhWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721156134; c=relaxed/simple;
-	bh=LErKYFC2hR7Vmj8YbOE9TRx2x0fegmkk1AQHDXh0PLw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=G7AyEMqye2tB1I23Mo3/HbWz3so7sgfWmpwWUEWtKHzHtI2k5ZMSW7msJs7Y7p4NzRCfTi5lpXD+KYxB4ydnFiowCQbBWkVsX1kdqU5cyqXzjl1gh3XELhJRCFX/HimECayb7D4OX7hyuHk80uw9sTtybwpcXWahy9E7BaBUcYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JSHmIRCm; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JSHmIRCm"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2c97ff39453so4409765a91.0
-        for <patches@lists.linux.dev>; Tue, 16 Jul 2024 11:55:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721156132; x=1721760932; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=p3Xxw7BDEuKyJmTDIMc9lI8Wfvk7nIJjN6wyfUy+yy0=;
-        b=JSHmIRCmh2IqsOI2qT0amTM2qH9sQKxbomNJXeUpgK79l4c48DDWeW3CaFBvI902nX
-         zvbnVK/NN44BhntxkgdJhEYBA0mTYFv1ulA3uhb7LKyIfEZvRrYYjtNP7dlo4DHDzkE3
-         BCHVOqCiYyMdO5ZVgz19s29M4XQBkEEZkz/Co7mRLOFuhAhWDP0DxwIT+pDyY711Loqy
-         K4GLw6SUuKyBYk5erCXiDimaUSpnR2BztjbDMY7zYlnJkj405DSoQUo/xAxXUGylMSqI
-         8ai28sgV0WI/qLS9zx0wH8eGVs1KbDvJP3ouKuzcF17XVF9TdOH5RApbpNcrmgRoVETI
-         sqoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721156132; x=1721760932;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=p3Xxw7BDEuKyJmTDIMc9lI8Wfvk7nIJjN6wyfUy+yy0=;
-        b=iQnnfD6wkNiCYKbIolON8JWGxjt36vdfbOc1cd2pMWe8/4VKojYfCmuhpvSlZZkDjF
-         ltP+jX8zC7pMINmn/cd0uGFdGO/tXqDIiKX6zcRC2Y+VSVNoU+w/vZG0B2Tkene+vBYc
-         iLNSDytNHUummL277uIe/6d4SO8iTU29M5CPhGkHqNYL2/9zkPvCXyXQXRkbfnG62zya
-         NbwkMvOZFLqdpJZmBV7X5fIDSiWT7LYcz31ZbqRkUwJgfqJ9bZTVmcijTVWoLajK9+tX
-         7rZujBrIZsbpUWjOKXW7Xgqy0xu74y+eJXJnkxs39o+E6f0TV2I9ta6x0PyBUlUvOqMF
-         N7PA==
-X-Gm-Message-State: AOJu0YzLHkvlNKK225JFENxjrWMFcHW7h9xZX9O11eogIB1N4TBvhhFs
-	M6M3Elf2v/az9AuOQETop6yiqoSqc5L207ltvB2If8ukM87zC1kh
-X-Google-Smtp-Source: AGHT+IFnjnaa0UTdqD4xiKsAh4o5FvvGWp4g3Zm+rHPDutZFCM82EBdc1F0virkcSrS/hgz2K5/Yiw==
-X-Received: by 2002:a17:90a:46cf:b0:2ca:8577:bc87 with SMTP id 98e67ed59e1d1-2cb374921afmr2361057a91.34.1721156132037;
-        Tue, 16 Jul 2024 11:55:32 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id 98e67ed59e1d1-2caedc92c3esm6643327a91.42.2024.07.16.11.55.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Jul 2024 11:55:31 -0700 (PDT)
-Message-ID: <caaf5079-11e9-4dcc-a62b-132acbc2c6ec@gmail.com>
-Date: Tue, 16 Jul 2024 11:55:29 -0700
+	s=arc-20240116; t=1721156513; c=relaxed/simple;
+	bh=qbPqSw7XIaWV92RDB+Ej8DeyFRoH84eG7k5j3NO6WIw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TELa4h/CgPMMuUlLlxbiRjvZEOHvuFQ64w5fmNY7gF2WDRQeR936upfKbRDF5CgBCYyctqqe0t6k7g21vcvap4lKUS1dhkR3OqXnZKIKObc3wC54n3JHimOA3RIiyfgX1sRiL1/UxgVlysKPlig6RodwwJyXkI+7ti8CXVIT6NE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 0468C1C009C; Tue, 16 Jul 2024 21:01:44 +0200 (CEST)
+Date: Tue, 16 Jul 2024 21:01:43 +0200
+From: Pavel Machek <pavel@denx.de>
+To: Florian Fainelli <f.fainelli@gmail.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+	Paulo Alcantara <pc@manguebit.com>, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com, broonie@kernel.org
+Subject: Re: [PATCH 6.1 00/96] 6.1.100-rc1 review
+Message-ID: <ZpbDlwpfBwViDonu@duo.ucw.cz>
+References: <20240716152746.516194097@linuxfoundation.org>
+ <aaccd8cc-2bfe-4b2e-b690-be50540f9965@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 000/121] 6.6.41-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-References: <20240716152751.312512071@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20240716152751.312512071@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="EcuUTjkQxgP/gNb4"
+Content-Disposition: inline
+In-Reply-To: <aaccd8cc-2bfe-4b2e-b690-be50540f9965@gmail.com>
 
-On 7/16/24 08:31, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.41 release.
-> There are 121 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 18 Jul 2024 15:27:21 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.41-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+--EcuUTjkQxgP/gNb4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+On Tue 2024-07-16 11:42:39, Florian Fainelli wrote:
+> On 7/16/24 08:31, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.1.100 release.
+> > There are 96 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >=20
+> > Responses should be made by Thu, 18 Jul 2024 15:27:21 +0000.
+> > Anything received after that time might be too late.
+> >=20
+> > The whole patch series can be found in one patch at:
+> > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.1=
+00-rc1.gz
+> > or in the git tree and branch at:
+> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.g=
+it linux-6.1.y
+> > and the diffstat can be found below.
 
+> Commit acbfb53f772f96fdffb3fba2fa16eed4ad7ba0d2 ("cifs: avoid dup prefix
+> path in dfs_get_automount_devname()") causes the following build failure =
+on
+> bmips_stb_defconfig:
+>=20
+> In file included from ./include/linux/build_bug.h:5,
+>                  from ./include/linux/container_of.h:5,
+>                  from ./include/linux/list.h:5,
+>                  from ./include/linux/module.h:12,
+>                  from fs/smb/client/cifsfs.c:13:
+> fs/smb/client/cifsproto.h: In function 'dfs_get_automount_devname':
+> fs/smb/client/cifsproto.h:74:22: error: 'struct TCP_Server_Info' has no
+> member named 'origin_fullpath'
+>   if (unlikely(!server->origin_fullpath))
+
+
+We see same problem.
+
+  CC [M]  sound/soc/soc-ops.o
+3131
+In file included from ./include/linux/build_bug.h:5,
+3132
+                 from ./include/linux/container_of.h:5,
+3133
+                 from ./include/linux/list.h:5,
+3134
+                 from ./include/linux/module.h:12,
+3135
+                 from fs/smb/client/cifsfs.c:13:
+3136
+fs/smb/client/cifsproto.h: In function 'dfs_get_automount_devname':
+3137
+fs/smb/client/cifsproto.h:74:29: error: 'struct TCP_Server_Info' has no mem=
+ber named 'origin_fullpath'
+3138
+   74 |         if (unlikely(!server->origin_fullpath))
+3139
+      |                             ^~
+3140
+=2E/include/linux/compiler.h:78:45: note: in definition of macro 'unlikely'
+3141
+   78 | # define unlikely(x)    __builtin_expect(!!(x), 0)
+3142
+      |                                             ^
+3143
+In file included from fs/smb/client/cifsfs.c:35:
+3144
+fs/smb/client/cifsproto.h:78:63: error: 'struct TCP_Server_Info' has no mem=
+ber named 'origin_fullpath'
+3145
+   78 |                                                         server->ori=
+gin_fullpath,
+3146
+      |                                                               ^~
+3147
+fs/smb/client/cifsproto.h:79:70: error: 'struct TCP_Server_Info' has no mem=
+ber named 'origin_fullpath'
+3148
+   79 |                                                         strlen(serv=
+er->origin_fullpath),
+3149
+      |                                                                    =
+  ^~
+3150
+fs/smb/client/cifsproto.h:88:28: error: 'struct TCP_Server_Info' has no mem=
+ber named 'origin_fullpath'
+3151
+   88 |         len =3D strlen(server->origin_fullpath);
+3152
+      |                            ^~
+3153
+fs/smb/client/cifsproto.h:93:25: error: 'struct TCP_Server_Info' has no mem=
+ber named 'origin_fullpath'
+3154
+   93 |         memcpy(s, server->origin_fullpath, len);
+3155
+      |                         ^~
+3156
+  CC [M]  net/netfilter/nf_conntrack_standalone.o
+3157
+  CC [M]  net/netfilter/nf_conntrack_expect.o
+
+Best regards,
+								Pavel
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--EcuUTjkQxgP/gNb4
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZpbDlwAKCRAw5/Bqldv6
+8o90AJ9pfWKazKzyQ9Zf8xtjMMMi9+9+iwCbBZREk52w82fzRyy6hMkeuT5au1Q=
+=qL/n
+-----END PGP SIGNATURE-----
+
+--EcuUTjkQxgP/gNb4--
