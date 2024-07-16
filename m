@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC121DDCE;
-	Tue, 16 Jul 2024 16:05:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA5419B59C;
+	Tue, 16 Jul 2024 16:05:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145941; cv=none; b=Xqw68K1fqvY7WI/x10tmJ2DwrW6knc26kPtWyj8SsrOfBEe7NwfZeFfgb66K1dR0yXSjuNqcM7MUvLNardSD3RWtRQc+X+POtSbo/4690CuPSDsH54mFvocxzJkAupdCSWifR4rMTx3XXes+hB8Jb3JJ12B8jGLcN8OIO2byu2Q=
+	t=1721145944; cv=none; b=DclWEedXN5u3Z2rTgC1VwJpVIfcYHB0Kycb6YErlNAxDTdXjjNa5MtUB3M5yM3Rz9Hcv0fgjmO7mPbmorEpS3jI7ePpvYpBtlRN1hanr1wm3T1//F3kEtSdnWSoIRJhQJKV9mYNICn1hXIKXeDKNJec91OvPmTEGl+w2rYVxSWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145941; c=relaxed/simple;
-	bh=Vb9rAUnRZli70ypUMaY7gfvJ+WGY5tNc0o50ADVua6o=;
+	s=arc-20240116; t=1721145944; c=relaxed/simple;
+	bh=CExSc/qwkYlvlm4XQup32LNl6JZzBCz0u7crYzy4uBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kxg8lM139vjUtB47Y9pY2dK9E4EAZRBLgfRMmSZUofm9BJzISyMuxhHQNhwrOYGxk08fuHf6ztN/lxECrAghSgGsyw/SUeBGuKBruVUYhXP0F+GsnHfFIw+ip7aqXsfmNCNY7V2AuNjvAUy+dERcr2d9Kdwond4U+vOa6ZV6Bs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pn/6XhrA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aRf6+bURuhpfb9xBR6dRJTVKiAQQts+WCV+TmS0FYTg2z2Qh6eiKCmY60QuUkdlKYSD/DcCDczHSw7H1D0f+l/hssjqLw1oDauH8IcCFZ3tdcDobQaY3a/Fr2QlAdJKVQJ3qd6+7tFZDNHyyfqAUyFclaj65/8NUypCryewx5Pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rN817ONt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pn/6XhrA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41796C116B1;
-	Tue, 16 Jul 2024 16:05:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rN817ONt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3358CC116B1;
+	Tue, 16 Jul 2024 16:05:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145941;
-	bh=Vb9rAUnRZli70ypUMaY7gfvJ+WGY5tNc0o50ADVua6o=;
+	s=korg; t=1721145944;
+	bh=CExSc/qwkYlvlm4XQup32LNl6JZzBCz0u7crYzy4uBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pn/6XhrAQrgjMZ9MziKKX94CaSguacwO8BS3qo1snIJ3w8vrukReYeWLDZvhBWo5B
-	 U+HkzXDCZ0JcT0iXqmTvgfiV9BDqDDlh3O7wWba8JZeG8JYMKKuqB0J2KWGPFy6oBn
-	 XRIWOaz9uMtcdg5D0bKgzveAc8yxI9gKj3ztrKaA=
+	b=rN817ONt+0Fz3tmLJ86+T1fvgZ4luoMLsvALoiLqpp3NMX4QGl8jtf9oXsvQmqpHa
+	 kJYs1wjUIwvint3CSBhi9ZcTud10x630DsjUcqpkhq7inF1ayhZaNFuN4b1qYUI66A
+	 emYrp9IlfJd/qulK+2UlMm7QzEEcHMYHt3PoY7sU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suman Maity <suman.m.maity@oracle.com>,
-	Alexandre Chartre <alexandre.chartre@oracle.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	George Stark <gnstark@salutedevices.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Waiman Long <longman@redhat.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 119/121] x86/bhi: Avoid warning in #DB handler due to BHI mitigation
-Date: Tue, 16 Jul 2024 17:33:01 +0200
-Message-ID: <20240716152755.905753679@linuxfoundation.org>
+Subject: [PATCH 5.15 001/144] locking/mutex: Introduce devm_mutex_init()
+Date: Tue, 16 Jul 2024 17:31:10 +0200
+Message-ID: <20240716152752.583490101@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240716152751.312512071@linuxfoundation.org>
-References: <20240716152751.312512071@linuxfoundation.org>
+In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
+References: <20240716152752.524497140@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,110 +49,115 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandre Chartre <alexandre.chartre@oracle.com>
+From: George Stark <gnstark@salutedevices.com>
 
-[ Upstream commit ac8b270b61d48fcc61f052097777e3b5e11591e0 ]
+[ Upstream commit 4cd47222e435dec8e3787614924174f53fcfb5ae ]
 
-When BHI mitigation is enabled, if SYSENTER is invoked with the TF flag set
-then entry_SYSENTER_compat() uses CLEAR_BRANCH_HISTORY and calls the
-clear_bhb_loop() before the TF flag is cleared. This causes the #DB handler
-(exc_debug_kernel()) to issue a warning because single-step is used outside the
-entry_SYSENTER_compat() function.
+Using of devm API leads to a certain order of releasing resources.
+So all dependent resources which are not devm-wrapped should be deleted
+with respect to devm-release order. Mutex is one of such objects that
+often is bound to other resources and has no own devm wrapping.
+Since mutex_destroy() actually does nothing in non-debug builds
+frequently calling mutex_destroy() is just ignored which is safe for now
+but wrong formally and can lead to a problem if mutex_destroy() will be
+extended so introduce devm_mutex_init().
 
-To address this issue, entry_SYSENTER_compat() should use CLEAR_BRANCH_HISTORY
-after making sure the TF flag is cleared.
-
-The problem can be reproduced with the following sequence:
-
-  $ cat sysenter_step.c
-  int main()
-  { asm("pushf; pop %ax; bts $8,%ax; push %ax; popf; sysenter"); }
-
-  $ gcc -o sysenter_step sysenter_step.c
-
-  $ ./sysenter_step
-  Segmentation fault (core dumped)
-
-The program is expected to crash, and the #DB handler will issue a warning.
-
-Kernel log:
-
-  WARNING: CPU: 27 PID: 7000 at arch/x86/kernel/traps.c:1009 exc_debug_kernel+0xd2/0x160
-  ...
-  RIP: 0010:exc_debug_kernel+0xd2/0x160
-  ...
-  Call Trace:
-  <#DB>
-   ? show_regs+0x68/0x80
-   ? __warn+0x8c/0x140
-   ? exc_debug_kernel+0xd2/0x160
-   ? report_bug+0x175/0x1a0
-   ? handle_bug+0x44/0x90
-   ? exc_invalid_op+0x1c/0x70
-   ? asm_exc_invalid_op+0x1f/0x30
-   ? exc_debug_kernel+0xd2/0x160
-   exc_debug+0x43/0x50
-   asm_exc_debug+0x1e/0x40
-  RIP: 0010:clear_bhb_loop+0x0/0xb0
-  ...
-  </#DB>
-  <TASK>
-   ? entry_SYSENTER_compat_after_hwframe+0x6e/0x8d
-  </TASK>
-
-  [ bp: Massage commit message. ]
-
-Fixes: 7390db8aea0d ("x86/bhi: Add support for clearing branch history at syscall entry")
-Reported-by: Suman Maity <suman.m.maity@oracle.com>
-Signed-off-by: Alexandre Chartre <alexandre.chartre@oracle.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Reviewed-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Reviewed-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Link: https://lore.kernel.org/r/20240524070459.3674025-1-alexandre.chartre@oracle.com
+Suggested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: George Stark <gnstark@salutedevices.com>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Reviewed-by: Marek Behún <kabel@kernel.org>
+Acked-by: Waiman Long <longman@redhat.com>
+Link: https://lore.kernel.org/r/20240411161032.609544-2-gnstark@salutedevices.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/entry/entry_64_compat.S | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ include/linux/mutex.h        | 27 +++++++++++++++++++++++++++
+ kernel/locking/mutex-debug.c | 12 ++++++++++++
+ 2 files changed, 39 insertions(+)
 
-diff --git a/arch/x86/entry/entry_64_compat.S b/arch/x86/entry/entry_64_compat.S
-index 4c1dfc51c56e4..ebfccadf918cb 100644
---- a/arch/x86/entry/entry_64_compat.S
-+++ b/arch/x86/entry/entry_64_compat.S
-@@ -90,10 +90,6 @@ SYM_INNER_LABEL(entry_SYSENTER_compat_after_hwframe, SYM_L_GLOBAL)
+diff --git a/include/linux/mutex.h b/include/linux/mutex.h
+index 8f226d460f51c..9ef01b9d24563 100644
+--- a/include/linux/mutex.h
++++ b/include/linux/mutex.h
+@@ -20,6 +20,8 @@
+ #include <linux/osq_lock.h>
+ #include <linux/debug_locks.h>
  
- 	cld
- 
--	IBRS_ENTER
--	UNTRAIN_RET
--	CLEAR_BRANCH_HISTORY
--
- 	/*
- 	 * SYSENTER doesn't filter flags, so we need to clear NT and AC
- 	 * ourselves.  To save a few cycles, we can check whether
-@@ -117,6 +113,16 @@ SYM_INNER_LABEL(entry_SYSENTER_compat_after_hwframe, SYM_L_GLOBAL)
- 	jnz	.Lsysenter_fix_flags
- .Lsysenter_flags_fixed:
- 
-+	/*
-+	 * CPU bugs mitigations mechanisms can call other functions. They
-+	 * should be invoked after making sure TF is cleared because
-+	 * single-step is ignored only for instructions inside the
-+	 * entry_SYSENTER_compat function.
-+	 */
-+	IBRS_ENTER
-+	UNTRAIN_RET
-+	CLEAR_BRANCH_HISTORY
++struct device;
 +
- 	movq	%rsp, %rdi
- 	call	do_SYSENTER_32
- 	/* XEN PV guests always use IRET path */
+ #ifdef CONFIG_DEBUG_LOCK_ALLOC
+ # define __DEP_MAP_MUTEX_INITIALIZER(lockname)			\
+ 		, .dep_map = {					\
+@@ -170,6 +172,31 @@ do {							\
+ } while (0)
+ #endif /* CONFIG_PREEMPT_RT */
+ 
++#ifdef CONFIG_DEBUG_MUTEXES
++
++int __devm_mutex_init(struct device *dev, struct mutex *lock);
++
++#else
++
++static inline int __devm_mutex_init(struct device *dev, struct mutex *lock)
++{
++	/*
++	 * When CONFIG_DEBUG_MUTEXES is off mutex_destroy() is just a nop so
++	 * no really need to register it in the devm subsystem.
++	 */
++	return 0;
++}
++
++#endif
++
++#define devm_mutex_init(dev, mutex)			\
++({							\
++	typeof(mutex) mutex_ = (mutex);			\
++							\
++	mutex_init(mutex_);				\
++	__devm_mutex_init(dev, mutex_);			\
++})
++
+ /*
+  * See kernel/locking/mutex.c for detailed documentation of these APIs.
+  * Also see Documentation/locking/mutex-design.rst.
+diff --git a/kernel/locking/mutex-debug.c b/kernel/locking/mutex-debug.c
+index bc8abb8549d20..6e6f6071cfa27 100644
+--- a/kernel/locking/mutex-debug.c
++++ b/kernel/locking/mutex-debug.c
+@@ -12,6 +12,7 @@
+  */
+ #include <linux/mutex.h>
+ #include <linux/delay.h>
++#include <linux/device.h>
+ #include <linux/export.h>
+ #include <linux/poison.h>
+ #include <linux/sched.h>
+@@ -89,6 +90,17 @@ void debug_mutex_init(struct mutex *lock, const char *name,
+ 	lock->magic = lock;
+ }
+ 
++static void devm_mutex_release(void *res)
++{
++	mutex_destroy(res);
++}
++
++int __devm_mutex_init(struct device *dev, struct mutex *lock)
++{
++	return devm_add_action_or_reset(dev, devm_mutex_release, lock);
++}
++EXPORT_SYMBOL_GPL(__devm_mutex_init);
++
+ /***
+  * mutex_destroy - mark a mutex unusable
+  * @lock: the mutex to be destroyed
 -- 
 2.43.0
 
