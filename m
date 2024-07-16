@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D6F1DDCE;
-	Tue, 16 Jul 2024 16:10:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13311DDCE;
+	Tue, 16 Jul 2024 16:10:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721146241; cv=none; b=oXOGmljV6AkxR1tOd8P3lDOKjzhqlJqXPFVwsSS1azpHojE15S0aR8oGBo+gHhaZMEOJ32bZBA4z06C70o3Vvx52z/V+QmaZXce5Yj4WDypqbgwQ15S/qI6dGKcCYCGmX4pUALliPxWKN2Z8cbWTYgiqB1OqXmIVEGoPEjhv7L4=
+	t=1721146244; cv=none; b=BoabzXzaN7bCSdv4mRcTfAz2RCFSyoE75yH/BWAUohiAhxUJYtGNXZkp0FvrRsZ0TCLWKZ7kHAsxW3GU8E+J/lmIWk9q0eTfKhoxT304GGdbW7u5FUlPBmUD+RA5sjANEO4oixwaEK/H5Urgh3Wc1FdPouunZBOydkN3RmECxBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721146241; c=relaxed/simple;
-	bh=/xvSyp00qd5BCaR/VqqjeB2V0DF7tg7bG+8j9uyvBHo=;
+	s=arc-20240116; t=1721146244; c=relaxed/simple;
+	bh=ezdZfYe5wHO7cGViZushqArqT8KkbCGR7piU9PEDt38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Juc1O6haqZ+eNOZPOD4ynU11sXA6mdHA/trJcisRkGKP09BZ2tzyVdx8raoK2TDvm16TMNVekMUwkKovN1Z0qBhumcainFG2TAespNlpBGnxdM8MreSJB4O6uEsW91HfW8hIdhBQsecAb09F9FBfN/F8k9RWgUjxcBojphz/blY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WUHFWogv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dDEeKYKt0M7Qvljy22E55CfF1ty6O6xzlUQL6xqRUl05/qC9oPtq19nf/JQISh0x/xSvoNT7S9upR2ShOJd7f1aEkNpKMWbJpdyUPKhnZSnEWFjqXCLTpH3fobqO2sVf93ArpeDKCONER9ciKibPVwAETG2zCCcy5MDa/vL8MZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o1UgmmLp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUHFWogv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9C80C116B1;
-	Tue, 16 Jul 2024 16:10:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1UgmmLp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCC25C116B1;
+	Tue, 16 Jul 2024 16:10:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721146241;
-	bh=/xvSyp00qd5BCaR/VqqjeB2V0DF7tg7bG+8j9uyvBHo=;
+	s=korg; t=1721146244;
+	bh=ezdZfYe5wHO7cGViZushqArqT8KkbCGR7piU9PEDt38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WUHFWogvhybckBKGF7s2vkt+6lorXtJjyWAxyQyttL+oXV3j01SCuzqmn8kPU2btT
-	 PNgmedEwbrDhW6uLPDWG5pgsJhZ4Zoqrc+87ti0qcH7XsaVUVZD8MxKKI9zOrKB3Wg
-	 avVfzK1ppUsK6wPrUWylf+iGt3yG875YOA+EhAqI=
+	b=o1UgmmLpgymvUVPEK47vFzekq+HqHWJs2O1nxHdpa7qx/+cEVix01E22SwBIALB8y
+	 lS/0mfTRtrx+yKZOgT8jVo/4gRcbvoOqD8ISQaj3axsZYNT5e/RNNPedfU53Fd5u+K
+	 WalePUA++b4rpaxbH34ZwazirfawU0YfiU8wvnD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Satheesh Paul <psatheesh@marvell.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 103/144] octeontx2-af: fix issue with IPv4 match for RSS
-Date: Tue, 16 Jul 2024 17:32:52 +0200
-Message-ID: <20240716152756.493358825@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Menglong Dong <imagedong@tencent.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 104/144] tcp: use signed arithmetic in tcp_rtx_probe0_timed_out()
+Date: Tue, 16 Jul 2024 17:32:53 +0200
+Message-ID: <20240716152756.531193782@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
 References: <20240716152752.524497140@linuxfoundation.org>
@@ -52,57 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Satheesh Paul <psatheesh@marvell.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 60795bbf047654c9f8ae88d34483233a56033578 ]
+commit 36534d3c54537bf098224a32dc31397793d4594d upstream.
 
-While performing RSS based on IPv4, packets with
-IPv4 options are not being considered. Adding changes
-to match both plain IPv4 and IPv4 with option header.
+Due to timer wheel implementation, a timer will usually fire
+after its schedule.
 
-Fixes: 41a7aa7b800d ("octeontx2-af: NIX Rx flowkey configuration for RSS")
-Signed-off-by: Satheesh Paul <psatheesh@marvell.com>
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+For instance, for HZ=1000, a timeout between 512ms and 4s
+has a granularity of 64ms.
+For this range of values, the extra delay could be up to 63ms.
+
+For TCP, this means that tp->rcv_tstamp may be after
+inet_csk(sk)->icsk_timeout whenever the timer interrupt
+finally triggers, if one packet came during the extra delay.
+
+We need to make sure tcp_rtx_probe0_timed_out() handles this case.
+
+Fixes: e89688e3e978 ("net: tcp: fix unexcepted socket die when snd_wnd is 0")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Menglong Dong <imagedong@tencent.com>
+Acked-by: Neal Cardwell <ncardwell@google.com>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Link: https://lore.kernel.org/r/20240607125652.1472540-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/ipv4/tcp_timer.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-index 279d93bb74a0e..641f1d969bb75 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-@@ -3309,6 +3309,8 @@ static int get_flowkey_alg_idx(struct nix_hw *nix_hw, u32 flow_cfg)
- 
- /* Mask to match ipv6(NPC_LT_LC_IP6) and ipv6 ext(NPC_LT_LC_IP6_EXT) */
- #define NPC_LT_LC_IP6_MATCH_MSK ((~(NPC_LT_LC_IP6 ^ NPC_LT_LC_IP6_EXT)) & 0xf)
-+/* Mask to match both ipv4(NPC_LT_LC_IP) and ipv4 ext(NPC_LT_LC_IP_OPT) */
-+#define NPC_LT_LC_IP_MATCH_MSK  ((~(NPC_LT_LC_IP ^ NPC_LT_LC_IP_OPT)) & 0xf)
- 
- static int set_flowkey_fields(struct nix_rx_flowkey_alg *alg, u32 flow_cfg)
+--- a/net/ipv4/tcp_timer.c
++++ b/net/ipv4/tcp_timer.c
+@@ -442,8 +442,13 @@ static bool tcp_rtx_probe0_timed_out(con
  {
-@@ -3379,7 +3381,7 @@ static int set_flowkey_fields(struct nix_rx_flowkey_alg *alg, u32 flow_cfg)
- 			field->hdr_offset = 9; /* offset */
- 			field->bytesm1 = 0; /* 1 byte */
- 			field->ltype_match = NPC_LT_LC_IP;
--			field->ltype_mask = 0xF;
-+			field->ltype_mask = NPC_LT_LC_IP_MATCH_MSK;
- 			break;
- 		case NIX_FLOW_KEY_TYPE_IPV4:
- 		case NIX_FLOW_KEY_TYPE_INNR_IPV4:
-@@ -3406,8 +3408,7 @@ static int set_flowkey_fields(struct nix_rx_flowkey_alg *alg, u32 flow_cfg)
- 					field->bytesm1 = 3; /* DIP, 4 bytes */
- 				}
- 			}
--
--			field->ltype_mask = 0xF; /* Match only IPv4 */
-+			field->ltype_mask = NPC_LT_LC_IP_MATCH_MSK;
- 			keyoff_marker = false;
- 			break;
- 		case NIX_FLOW_KEY_TYPE_IPV6:
--- 
-2.43.0
-
+ 	const struct tcp_sock *tp = tcp_sk(sk);
+ 	const int timeout = TCP_RTO_MAX * 2;
+-	u32 rcv_delta, rtx_delta;
++	u32 rtx_delta;
++	s32 rcv_delta;
+ 
++	/* Note: timer interrupt might have been delayed by at least one jiffy,
++	 * and tp->rcv_tstamp might very well have been written recently.
++	 * rcv_delta can thus be negative.
++	 */
+ 	rcv_delta = inet_csk(sk)->icsk_timeout - tp->rcv_tstamp;
+ 	if (rcv_delta <= timeout)
+ 		return false;
 
 
