@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C96617CA0E;
-	Tue, 16 Jul 2024 16:10:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9ED1DDCE;
+	Tue, 16 Jul 2024 16:10:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721146203; cv=none; b=CFZJTbciWTxPebhPeopFxQuqUfozZdK+o4ThypbQmn+z8Km6JaLXhfQFjelWJrJNwecLw/BM329+SiUzdSFrew0uPLa2UxymBYQvqHtW5OHuEOVQP1Il8DW7CoIklToOAhIuDu/ewl7D3uQy7LqPkfCK4XVsrsUh+t/Ypld0r5o=
+	t=1721146206; cv=none; b=XRCEOfidOBqLTBDm8xClmjiun37GvHasnG4ZuCSlwUBCYgB3wyc0VFBYCgOmDYH2Ffb+AXmgOZ7ECgRDVnPwhAkCu8BGbtoCGzVtwBUXoG9xPdJH3fVp1Fs+aKKsh8RU4uyZ2BHeVFbsJaYPmQT/Lcko4VuuJ+yvP17r0I+UmH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721146203; c=relaxed/simple;
-	bh=8nMQ+MWcHVHB6oSTourBRzAGC5sHl8a9kih/Q+dHNzw=;
+	s=arc-20240116; t=1721146206; c=relaxed/simple;
+	bh=7pZP5nVweRrZhD6PKX73ar33On7SheMNVs4tzNQCQ/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kjBgYEhJSjjv7VlOkCuX9LZcg3gJCVV3KFn0ftTZVkF7uwU40rYX5LdUuK4+pO3PufAMbVfLdzvCsChvV+auGHyvVeP22CA0nHSMqePNTPlS9vkhExZInIi4vevgoTjGIhnWsniuud8XIGxJ21dHFeagIkkMOdYJ9qolHEEMp3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KKlvdXod; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A2xYkmMGzN5CWoBDEnMvfFJ10cTj7YzE8CLGFwTu3fQzs/92yymUqPtGBa+IN2qbv0WjZdWHW3zqdQAHmV5MDswxQPCnbExL2GbQbhU0zhNw8kHt+krdjoOXXrrmn6+s5ru9BL3pCaLYCiqPqx0dsl3Hni1ZFKxTuTxYnhgdVi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1t7Wg1he; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KKlvdXod"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96027C116B1;
-	Tue, 16 Jul 2024 16:10:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1t7Wg1he"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D675C116B1;
+	Tue, 16 Jul 2024 16:10:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721146203;
-	bh=8nMQ+MWcHVHB6oSTourBRzAGC5sHl8a9kih/Q+dHNzw=;
+	s=korg; t=1721146206;
+	bh=7pZP5nVweRrZhD6PKX73ar33On7SheMNVs4tzNQCQ/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KKlvdXod7UshGtBIafkIawvWVc73jB4cyvwlpZQ070P33urGP5jX9YHB0H5Dzsf4V
-	 jt5y8bWYNy590WwH4Wcj/e9HYDAvz9GSHW9iIzi1V2gL1L1oIgu0pmUhEr/40FO7Aq
-	 PI/zunFSMG35+YNBlo7Ca6PqIMlMrSpO9mC7GjqA=
+	b=1t7Wg1heTWSegUlcbYzRmLs37ZgTPUqYHr/CNEiQuQpbo64xl/si7Ipth4ktiIiPx
+	 SqhkgBkyNKoBLu0Wrhq0ieae13FxU+XP/yhno4BBUPlnG3PQ0zJSNRUl4/AlDLCFHe
+	 AgdWLT4n/cj+OAXYqkt3dA/3JpRdheoaAnJ2wOnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Joe Perches <joe@perches.com>,
 	Aleksander Jan Bajkowski <olek2@wp.pl>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 088/144] net: lantiq_etop: add blank line after declaration
-Date: Tue, 16 Jul 2024 17:32:37 +0200
-Message-ID: <20240716152755.925231394@linuxfoundation.org>
+Subject: [PATCH 5.15 089/144] net: ethernet: lantiq_etop: fix double free in detach
+Date: Tue, 16 Jul 2024 17:32:38 +0200
+Message-ID: <20240716152755.963379160@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
 References: <20240716152752.524497140@linuxfoundation.org>
@@ -53,36 +55,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Aleksander Jan Bajkowski <olek2@wp.pl>
 
-[ Upstream commit 4c46625bb586a741b8d0e6bdbddbcb2549fa1d36 ]
+[ Upstream commit e1533b6319ab9c3a97dad314dd88b3783bc41b69 ]
 
-This patch adds a missing line after the declaration and
-fixes the checkpatch warning:
+The number of the currently released descriptor is never incremented
+which results in the same skb being released multiple times.
 
-WARNING: Missing a blank line after declarations
-+		int desc;
-+		for (desc = 0; desc < LTQ_DESC_NUM; desc++)
-
+Fixes: 504d4721ee8e ("MIPS: Lantiq: Add ethernet driver")
+Reported-by: Joe Perches <joe@perches.com>
+Closes: https://lore.kernel.org/all/fc1bf93d92bb5b2f99c6c62745507cc22f3a7b2d.camel@perches.com/
 Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
-Link: https://lore.kernel.org/r/20211228220031.71576-1-olek2@wp.pl
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20240708205826.5176-1-olek2@wp.pl
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: e1533b6319ab ("net: ethernet: lantiq_etop: fix double free in detach")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/lantiq_etop.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/lantiq_etop.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/ethernet/lantiq_etop.c b/drivers/net/ethernet/lantiq_etop.c
-index 057d655d17692..d9911b3b9172d 100644
+index d9911b3b9172d..c5faeda30c0b4 100644
 --- a/drivers/net/ethernet/lantiq_etop.c
 +++ b/drivers/net/ethernet/lantiq_etop.c
-@@ -214,6 +214,7 @@ ltq_etop_free_channel(struct net_device *dev, struct ltq_etop_chan *ch)
+@@ -213,9 +213,9 @@ ltq_etop_free_channel(struct net_device *dev, struct ltq_etop_chan *ch)
+ 	if (ch->dma.irq)
  		free_irq(ch->dma.irq, priv);
  	if (IS_RX(ch->idx)) {
- 		int desc;
-+
- 		for (desc = 0; desc < LTQ_DESC_NUM; desc++)
+-		int desc;
++		struct ltq_dma_channel *dma = &ch->dma;
+ 
+-		for (desc = 0; desc < LTQ_DESC_NUM; desc++)
++		for (dma->desc = 0; dma->desc < LTQ_DESC_NUM; dma->desc++)
  			dev_kfree_skb_any(ch->skb[ch->dma.desc]);
  	}
+ }
 -- 
 2.43.0
 
