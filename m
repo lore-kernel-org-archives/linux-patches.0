@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF241E894;
-	Tue, 16 Jul 2024 15:38:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD34B641;
+	Tue, 16 Jul 2024 15:38:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144328; cv=none; b=FCgeIj7pF6taewdDNGJ4LcsNGTbZpIGcwMxXPh3vItBBceMT/hPwoeC/feNTc3G+eJViLZaZ10xGcQMzstN7KiHghLXc1etu8rFqUT1SXmmpnBIZ1FtZfCtQqWMZPVM2d37PNiB4tUgVP4IAtTxttGt1XG4axgbZr1adkeKJRiI=
+	t=1721144331; cv=none; b=BrGBDdEmI3ZHNPcFbOotB7y+78f0RZk1VWqD3EveZ3UPn1efEcQtBjZmLHAo7cyL+F//WDnXlzcCTUTAe6Gv4pHIGKceX7qeRZ+432nXSpDg2F7gUi6j8XmsbdplqzkDTH5OsonUIMieuvna19k6wSc9hmq1kxtPFZy2cp5vMXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144328; c=relaxed/simple;
-	bh=HI1VK5KuIjhbjHMRxsuqTjoZNZjz1WHKywWH5Zcs/80=;
+	s=arc-20240116; t=1721144331; c=relaxed/simple;
+	bh=lfM+6k/rouzS4RL0B95zjf0hPFXBuMa922+uqAO7ye0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UpN1GHNjAWWtTJGodBQC7xb0WWSTVBlILkGs7RZ4FXXz7CqH4gIgEKzqTKSdzE+aLmAecNd6amImBmxVcZ9bemCEZRUl1IS3laCZxyxFQy3D5PJ9WH9anaK0LCUJ4CUxDI3NcsuLMgAlRJaR7TMs2I/sUuQIz6VlwWvejKfW8PA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NcRW2EjU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=I5MTbif4MZ6qbUcCQFTvScqz6U1/gbyyWd9w55kkq5qRix9CydSGlj9V033jZTLIWaPzJv66ANXOWvyOCUULVJfELm0q0mjurzsc0jvAFlFqgtWl2w+/EfPNjVbMv7D5LoRor5QqT7IwisT7Om+tHB6UO3M7rGW6I62mfvtnuZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UTKZ2+Mt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NcRW2EjU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BEC3C4AF0B;
-	Tue, 16 Jul 2024 15:38:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UTKZ2+Mt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 760E5C116B1;
+	Tue, 16 Jul 2024 15:38:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144327;
-	bh=HI1VK5KuIjhbjHMRxsuqTjoZNZjz1WHKywWH5Zcs/80=;
+	s=korg; t=1721144330;
+	bh=lfM+6k/rouzS4RL0B95zjf0hPFXBuMa922+uqAO7ye0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NcRW2EjUKVl3P0svhGUjyXjjjbhoRjG3dySFT2rK6J2xbaa8kTwgxGLhzsEvCTZmV
-	 8K5waXo0lJG+tefUKbTq/XbKjl6VDHboysLNIvZxsdPGo+++Uc+AcTi3xNKM84AKzs
-	 GeiD42g8p+sz9qdDBWEHRrnWI6mTWxrjoj3cfwSc=
+	b=UTKZ2+MtwiyUAS94/8UmsOcHos0wRSWQv9zreeZa7iVkcKw5HKUn60IDbEBmsatLu
+	 ihRE5U8pAw0fu0GqioLH0pyzdBlaqX1zt7O98J6cZVFOd+iWnP2J2nwmiJeFVBJ9jF
+	 82pIQX/hOv4CyAkcsw1NqGVfdcSIi+0kXGUcYHp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.4 36/78] fsnotify: Do not generate events for O_PATH file descriptors
-Date: Tue, 16 Jul 2024 17:31:08 +0200
-Message-ID: <20240716152742.035084628@linuxfoundation.org>
+	Greg Kurz <groug@kaod.org>,
+	=?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 19/78] powerpc/xmon: Check cpu id in commands "c#", "dp#" and "dx#"
+Date: Tue, 16 Jul 2024 17:30:51 +0200
+Message-ID: <20240716152741.372730135@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152740.626160410@linuxfoundation.org>
 References: <20240716152740.626160410@linuxfoundation.org>
@@ -45,50 +46,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Greg Kurz <groug@kaod.org>
 
-commit 702eb71fd6501b3566283f8c96d7ccc6ddd662e9 upstream.
+[ Upstream commit 8873aab8646194a4446117bb617cc71bddda2dee ]
 
-Currently we will not generate FS_OPEN events for O_PATH file
-descriptors but we will generate FS_CLOSE events for them. This is
-asymmetry is confusing. Arguably no fsnotify events should be generated
-for O_PATH file descriptors as they cannot be used to access or modify
-file content, they are just convenient handles to file objects like
-paths. So fix the asymmetry by stopping to generate FS_CLOSE for O_PATH
-file descriptors.
+All these commands end up peeking into the PACA using the user
+originated cpu id as an index. Check the cpu id is valid in order
+to prevent xmon to crash. Instead of printing an error, this follows
+the same behavior as the "lp s #" command : ignore the buggy cpu id
+parameter and fall back to the #-less version of the command.
 
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20240617162303.1596-1-jack@suse.cz
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kurz <groug@kaod.org>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/161531347060.252863.10490063933688958044.stgit@bahia.lan
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/fsnotify.h |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ arch/powerpc/xmon/xmon.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/include/linux/fsnotify.h
-+++ b/include/linux/fsnotify.h
-@@ -62,7 +62,13 @@ static inline int fsnotify_perm(struct f
- 	struct inode *inode = file_inode(file);
- 	__u32 fsnotify_mask = 0;
+diff --git a/arch/powerpc/xmon/xmon.c b/arch/powerpc/xmon/xmon.c
+index 6d130c89fbd85..5991fd06b6525 100644
+--- a/arch/powerpc/xmon/xmon.c
++++ b/arch/powerpc/xmon/xmon.c
+@@ -1214,7 +1214,7 @@ static int cpu_cmd(void)
+ 	unsigned long cpu, first_cpu, last_cpu;
+ 	int timeout;
  
--	if (file->f_mode & FMODE_NONOTIFY)
-+	/*
-+	 * FMODE_NONOTIFY are fds generated by fanotify itself which should not
-+	 * generate new events. We also don't want to generate events for
-+	 * FMODE_PATH fds (involves open & close events) as they are just
-+	 * handle creation / destruction events and not "real" file events.
-+	 */
-+	if (file->f_mode & (FMODE_NONOTIFY | FMODE_PATH))
- 		return 0;
- 	if (!(mask & (MAY_READ | MAY_OPEN)))
- 		return 0;
+-	if (!scanhex(&cpu)) {
++	if (!scanhex(&cpu) || cpu >= num_possible_cpus()) {
+ 		/* print cpus waiting or in xmon */
+ 		printf("cpus stopped:");
+ 		last_cpu = first_cpu = NR_CPUS;
+@@ -2571,7 +2571,7 @@ static void dump_pacas(void)
+ 
+ 	termch = c;	/* Put c back, it wasn't 'a' */
+ 
+-	if (scanhex(&num))
++	if (scanhex(&num) && num < num_possible_cpus())
+ 		dump_one_paca(num);
+ 	else
+ 		dump_one_paca(xmon_owner);
+@@ -2668,7 +2668,7 @@ static void dump_xives(void)
+ 
+ 	termch = c;	/* Put c back, it wasn't 'a' */
+ 
+-	if (scanhex(&num))
++	if (scanhex(&num) && num < num_possible_cpus())
+ 		dump_one_xive(num);
+ 	else
+ 		dump_one_xive(xmon_owner);
+-- 
+2.43.0
+
 
 
