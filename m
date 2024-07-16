@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3619D17A93F;
-	Tue, 16 Jul 2024 15:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2855217A93F;
+	Tue, 16 Jul 2024 15:47:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144860; cv=none; b=RX1EYpaS/uf/O3MfwAJdcWa1qfs+zy1pNeRQfVxoH+EGwDpFDM+VtFdVAAn6UznBnQ9eb2VXV1T3UaCcQryxIbe1vIQ3Eb2M/unXgxVeMk8Mc6cSx1jeB4x4qbrfSIwncNF4wFdVWRGaqyDat+9ObtJpb4SQT73pjOlWK9+Tp44=
+	t=1721144863; cv=none; b=lVQ4jjLW1fLIGs+GweXV63oZ5f4Fjwk9wIds9OLQEo1ZEoYJkBKuiEqEasKAe0a2tQr3xffIttrWyCXZeWXKSyQ/Kua2hPCHTFY7MXv4HnGe7n+t/T/dAA6u2JLrJ5QSdWgKPP4sVQchz7ZsmBRag+U+Jcn7o3LPpsyA84Qt1vI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144860; c=relaxed/simple;
-	bh=+UVTaIea7ZJqPVYoaMmYPGQtbjWqTSGzH2JreIDS0Fw=;
+	s=arc-20240116; t=1721144863; c=relaxed/simple;
+	bh=vq3gCPQ/cu7xy4UJDaCvDO/YoEx5QEwzpKxwf3Ai7fU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C/88AUAqik8umHFKv8OcMi4ad7xVoUGY7s8IGzFhbfWe45hqXp1N+fID9s/VGlGFg1NvIwDaNxVx1qAbHy+3oJV6ZWkT6jeYV3MIxkk5eWuT4hqjJQxeBtZkdwQ788QK8i+tm8m1ekIMqYpl2NuKbgFfbRI4Buz0alji/oCn+Wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N2+p/sKO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N8o4oB512/gPNtTA3xjbmurqU/PbKQk8wMrDckEPsbATsW0Fnx4dlKtMkq8v7yAvWNjK3GWKpEfMqaH6GzgCyr4ONzYWEcZeW7yyfYx1xo3wWsQlh8BGW1ASABuZJ+LrHTmdS8Jg/VlevZHWajGpfjYPD1X5r+25fGSjtuECt30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IxLnAh9a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N2+p/sKO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC985C4AF0B;
-	Tue, 16 Jul 2024 15:47:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IxLnAh9a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2622C4AF0B;
+	Tue, 16 Jul 2024 15:47:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144860;
-	bh=+UVTaIea7ZJqPVYoaMmYPGQtbjWqTSGzH2JreIDS0Fw=;
+	s=korg; t=1721144863;
+	bh=vq3gCPQ/cu7xy4UJDaCvDO/YoEx5QEwzpKxwf3Ai7fU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N2+p/sKOddLy0O38JgYov2UjkuHggw1fAxCIq4T+B5ctEBe1s146ltSDtQdI0rvZN
-	 5SUSyNLnyraCS3EDDWiUIrsktfrmO/SToAWuifoOlqnFvUyz42k0HrzBxsurS2/0Fh
-	 UpJakOa22l4lG5pWEK/Y9L7JvuDLtsEDPZA146MQ=
+	b=IxLnAh9arvn1qMGdk7wMIOaNbpo25096r6606EQpvQLqnA1osutKM7paUDBp6X9pm
+	 o9XfvXSzjJfm+EvR9fJN6+FuQi/Obgd/6w78UKTP/dh2F8Ndn93jg/bdUNTnav2mZr
+	 E53+p0ytCUS+LIPJZcnRSCCro6qeYpLGMk5gaGq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Peter Wang <peter.wang@mediatek.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Yuchung Cheng <ycheng@google.com>,
+	Kevin Yang <yyd@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 002/143] scsi: ufs: core: Fix ufshcd_clear_cmd racing issue
-Date: Tue, 16 Jul 2024 17:29:58 +0200
-Message-ID: <20240716152756.078005426@linuxfoundation.org>
+Subject: [PATCH 6.9 020/143] tcp: fix incorrect undo caused by DSACK of TLP retransmit
+Date: Tue, 16 Jul 2024 17:30:16 +0200
+Message-ID: <20240716152756.767741107@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -52,112 +54,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Wang <peter.wang@mediatek.com>
+From: Neal Cardwell <ncardwell@google.com>
 
-[ Upstream commit 9307a998cb9846a2557fdca286997430bee36a2a ]
+[ Upstream commit 0ec986ed7bab6801faed1440e8839dcc710331ff ]
 
-When ufshcd_clear_cmd is racing with the completion ISR, the completed tag
-of the request's mq_hctx pointer will be set to NULL by the ISR.  And
-ufshcd_clear_cmd's call to ufshcd_mcq_req_to_hwq will get NULL pointer KE.
-Return success when the request is completed by ISR because sq does not
-need cleanup.
+Loss recovery undo_retrans bookkeeping had a long-standing bug where a
+DSACK from a spurious TLP retransmit packet could cause an erroneous
+undo of a fast recovery or RTO recovery that repaired a single
+really-lost packet (in a sequence range outside that of the TLP
+retransmit). Basically, because the loss recovery state machine didn't
+account for the fact that it sent a TLP retransmit, the DSACK for the
+TLP retransmit could erroneously be implicitly be interpreted as
+corresponding to the normal fast recovery or RTO recovery retransmit
+that plugged a real hole, thus resulting in an improper undo.
 
-The racing flow is:
+For example, consider the following buggy scenario where there is a
+real packet loss but the congestion control response is improperly
+undone because of this bug:
 
-Thread A
-ufshcd_err_handler					step 1
-	ufshcd_try_to_abort_task
-		ufshcd_cmd_inflight(true)		step 3
-		ufshcd_clear_cmd
-			...
-			ufshcd_mcq_req_to_hwq
-			blk_mq_unique_tag
-				rq->mq_hctx->queue_num	step 5
++ send packets P1, P2, P3, P4
++ P1 is really lost
++ send TLP retransmit of P4
++ receive SACK for original P2, P3, P4
++ enter fast recovery, fast-retransmit P1, increment undo_retrans to 1
++ receive DSACK for TLP P4, decrement undo_retrans to 0, undo (bug!)
++ receive cumulative ACK for P1-P4 (fast retransmit plugged real hole)
 
-Thread B
-ufs_mtk_mcq_intr(cq complete ISR)			step 2
-	scsi_done
-		...
-		__blk_mq_free_request
-			rq->mq_hctx = NULL;		step 4
+The fix: when we initialize undo machinery in tcp_init_undo(), if
+there is a TLP retransmit in flight, then increment tp->undo_retrans
+so that we make sure that we receive a DSACK corresponding to the TLP
+retransmit, as well as DSACKs for all later normal retransmits, before
+triggering a loss recovery undo. Note that we also have to move the
+line that clears tp->tlp_high_seq for RTO recovery, so that upon RTO
+we remember the tp->tlp_high_seq value until tcp_init_undo() and clear
+it only afterward.
 
-Below is KE back trace:
+Also note that the bug dates back to the original 2013 TLP
+implementation, commit 6ba8a3b19e76 ("tcp: Tail loss probe (TLP)").
 
-  ufshcd_try_to_abort_task: cmd pending in the device. tag = 6
-  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000194
-   pc : [0xffffffd589679bf8] blk_mq_unique_tag+0x8/0x14
-   lr : [0xffffffd5862f95b4] ufshcd_mcq_sq_cleanup+0x6c/0x1cc [ufs_mediatek_mod_ise]
-   Workqueue: ufs_eh_wq_0 ufshcd_err_handler [ufs_mediatek_mod_ise]
-   Call trace:
-    dump_backtrace+0xf8/0x148
-    show_stack+0x18/0x24
-    dump_stack_lvl+0x60/0x7c
-    dump_stack+0x18/0x3c
-    mrdump_common_die+0x24c/0x398 [mrdump]
-    ipanic_die+0x20/0x34 [mrdump]
-    notify_die+0x80/0xd8
-    die+0x94/0x2b8
-    __do_kernel_fault+0x264/0x298
-    do_page_fault+0xa4/0x4b8
-    do_translation_fault+0x38/0x54
-    do_mem_abort+0x58/0x118
-    el1_abort+0x3c/0x5c
-    el1h_64_sync_handler+0x54/0x90
-    el1h_64_sync+0x68/0x6c
-    blk_mq_unique_tag+0x8/0x14
-    ufshcd_clear_cmd+0x34/0x118 [ufs_mediatek_mod_ise]
-    ufshcd_try_to_abort_task+0x2c8/0x5b4 [ufs_mediatek_mod_ise]
-    ufshcd_err_handler+0xa7c/0xfa8 [ufs_mediatek_mod_ise]
-    process_one_work+0x208/0x4fc
-    worker_thread+0x228/0x438
-    kthread+0x104/0x1d4
-    ret_from_fork+0x10/0x20
+However, this patch will only compile and work correctly with kernels
+that have tp->tlp_retrans, which was added only in v5.8 in 2020 in
+commit 76be93fc0702 ("tcp: allow at most one TLP probe per flight").
+So we associate this fix with that later commit.
 
-Fixes: 8d7290348992 ("scsi: ufs: mcq: Add supporting functions for MCQ abort")
-Suggested-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Link: https://lore.kernel.org/r/20240628070030.30929-2-peter.wang@mediatek.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 76be93fc0702 ("tcp: allow at most one TLP probe per flight")
+Signed-off-by: Neal Cardwell <ncardwell@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Cc: Yuchung Cheng <ycheng@google.com>
+Cc: Kevin Yang <yyd@google.com>
+Link: https://patch.msgid.link/20240703171246.1739561-1-ncardwell.sw@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufs-mcq.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ net/ipv4/tcp_input.c | 11 ++++++++++-
+ net/ipv4/tcp_timer.c |  2 --
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/ufs/core/ufs-mcq.c b/drivers/ufs/core/ufs-mcq.c
-index 8944548c30fa1..c532416aec229 100644
---- a/drivers/ufs/core/ufs-mcq.c
-+++ b/drivers/ufs/core/ufs-mcq.c
-@@ -105,16 +105,15 @@ EXPORT_SYMBOL_GPL(ufshcd_mcq_config_mac);
-  * @hba: per adapter instance
-  * @req: pointer to the request to be issued
-  *
-- * Return: the hardware queue instance on which the request would
-- * be queued.
-+ * Return: the hardware queue instance on which the request will be or has
-+ * been queued. %NULL if the request has already been freed.
-  */
- struct ufs_hw_queue *ufshcd_mcq_req_to_hwq(struct ufs_hba *hba,
- 					 struct request *req)
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 7b692bcb61d4a..c765d479869dc 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -2126,8 +2126,16 @@ void tcp_clear_retrans(struct tcp_sock *tp)
+ static inline void tcp_init_undo(struct tcp_sock *tp)
  {
--	u32 utag = blk_mq_unique_tag(req);
--	u32 hwq = blk_mq_unique_tag_to_hwq(utag);
-+	struct blk_mq_hw_ctx *hctx = READ_ONCE(req->mq_hctx);
- 
--	return &hba->uhq[hwq];
-+	return hctx ? &hba->uhq[hctx->queue_num] : NULL;
+ 	tp->undo_marker = tp->snd_una;
++
+ 	/* Retransmission still in flight may cause DSACKs later. */
+-	tp->undo_retrans = tp->retrans_out ? : -1;
++	/* First, account for regular retransmits in flight: */
++	tp->undo_retrans = tp->retrans_out;
++	/* Next, account for TLP retransmits in flight: */
++	if (tp->tlp_high_seq && tp->tlp_retrans)
++		tp->undo_retrans++;
++	/* Finally, avoid 0, because undo_retrans==0 means "can undo now": */
++	if (!tp->undo_retrans)
++		tp->undo_retrans = -1;
  }
  
- /**
-@@ -515,6 +514,8 @@ int ufshcd_mcq_sq_cleanup(struct ufs_hba *hba, int task_tag)
- 		if (!cmd)
- 			return -EINVAL;
- 		hwq = ufshcd_mcq_req_to_hwq(hba, scsi_cmd_to_rq(cmd));
-+		if (!hwq)
-+			return 0;
- 	} else {
- 		hwq = hba->dev_cmd_queue;
- 	}
+ static bool tcp_is_rack(const struct sock *sk)
+@@ -2206,6 +2214,7 @@ void tcp_enter_loss(struct sock *sk)
+ 
+ 	tcp_set_ca_state(sk, TCP_CA_Loss);
+ 	tp->high_seq = tp->snd_nxt;
++	tp->tlp_high_seq = 0;
+ 	tcp_ecn_queue_cwr(tp);
+ 
+ 	/* F-RTO RFC5682 sec 3.1 step 1: retransmit SND.UNA if no previous
+diff --git a/net/ipv4/tcp_timer.c b/net/ipv4/tcp_timer.c
+index f96f68cf7961c..22d25f63858b9 100644
+--- a/net/ipv4/tcp_timer.c
++++ b/net/ipv4/tcp_timer.c
+@@ -534,8 +534,6 @@ void tcp_retransmit_timer(struct sock *sk)
+ 	if (WARN_ON_ONCE(!skb))
+ 		return;
+ 
+-	tp->tlp_high_seq = 0;
+-
+ 	if (!tp->snd_wnd && !sock_flag(sk, SOCK_DEAD) &&
+ 	    !((1 << sk->sk_state) & (TCPF_SYN_SENT | TCPF_SYN_RECV))) {
+ 		/* Receiver dastardly shrinks window. Our retransmits
 -- 
 2.43.0
 
