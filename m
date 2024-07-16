@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187FBF9E8;
-	Tue, 16 Jul 2024 15:38:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1FE1DDCE;
+	Tue, 16 Jul 2024 15:38:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144313; cv=none; b=C+dODFk7Vg2JMXn1XqwEooELhKxBWU++NGxx3uaQ0HM4zy+Sj1ASrDBXuOts7NwSBLUz1B2lZv/JY4HvV68W/TMSOMX2ibXiCRcp1syjkbDuRRzCJh92NwPCxrA9qfwNE/jrhS3UEAXhUm5ZywoOtE+IlB5NYDAhwV9ZabLADfM=
+	t=1721144316; cv=none; b=IKZyYOYmsTDjMqEry3ZmwEnD0VXXUti7zS0DKGfvFTPJ3k7bQ/sGneLpc3UDg2LK8gU8TXXqckKAJ9xSlIgpOsWR/4hmMeK6TlcR45j+RmPi0RwKlvngOv8n7Ox6OqJJtMTJ1rcRLTpilvmz9SiNFAi6Og9/JtpgUGszaKmFNjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144313; c=relaxed/simple;
-	bh=TAg3qWVsS72s+dAthxikN6zhKqwNC8Ny3KZfB7havJQ=;
+	s=arc-20240116; t=1721144316; c=relaxed/simple;
+	bh=K1lwG8vF5dQun+AwjkCsNll0zUATjGMo5cDJYuHoyv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RwinKX9JlsPW583eSSvlNhAZ8Br8p/7Pyom5pmVdeWxBZoUhTcDLjOZOYon7HJsVKOq9j/loQNOpQ4QoPYH/UvaE0TkBzsbd158mAqEMOV5Nev8Pj7ZRLz/+WUPD5iIQwq0w8poT3/cN/hLTt1c2VznBTQyGtFwcQVoYEIkz3Qo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FTJkpVPg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N+RdQZlASjmTomQaEF4MX8O2GvUB4dsCkGY91Gl0jGXDAhszhA01rj/z0CAQtaztkHQRvVKA5Qru3KFxRE1fJ30oL7fPtjc7TYxH75pM02sEU7/BhwKWW8xlBv8ECiE07cwFQVBDcAj4JJ9ao7hS57Uhh75mU/u9acf6AabMMI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KJv7Hsrf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FTJkpVPg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88624C116B1;
-	Tue, 16 Jul 2024 15:38:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJv7Hsrf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F76AC116B1;
+	Tue, 16 Jul 2024 15:38:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144312;
-	bh=TAg3qWVsS72s+dAthxikN6zhKqwNC8Ny3KZfB7havJQ=;
+	s=korg; t=1721144315;
+	bh=K1lwG8vF5dQun+AwjkCsNll0zUATjGMo5cDJYuHoyv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FTJkpVPgh8oaVS+riO8XbRFMwHmAhjlYWRXovP0L1fiePMG8quZPRfNHsi7qdhLcs
-	 9gKedGP/NaoSTYd1nd3oBGnW66My+zDQoqUFI/Qc/2Af1rsAIZNTJtd+f+9UObEwKK
-	 HlOr1ipoNExFPryJpamrPvvPmucM9H4zVROcTMgM=
+	b=KJv7HsrfysmLjLeFfR12/jB1VHZH8TK/dWn5+LxaoDm1jo/tnpEqhix98OfhGJPB9
+	 +hBgwqX6GmzNF9uk3Orjxirav3vuKKAXjoPi1r3e334jLeOJBaUN56aFT5HCMok6cO
+	 cba8+6zCc0lX4rfK2/r/YflIdA784KY6ZdkJaCLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 31/78] inet_diag: Initialize pad field in struct inet_diag_req_v2
-Date: Tue, 16 Jul 2024 17:31:03 +0200
-Message-ID: <20240716152741.842301812@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Hillf Danton <hdanton@sina.com>,
+	Jan Kara <jack@suse.cz>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 32/78] nilfs2: fix inode number range checks
+Date: Tue, 16 Jul 2024 17:31:04 +0200
+Message-ID: <20240716152741.880106519@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152740.626160410@linuxfoundation.org>
 References: <20240716152740.626160410@linuxfoundation.org>
@@ -53,117 +53,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 61cf1c739f08190a4cbf047b9fbb192a94d87e3f ]
+commit e2fec219a36e0993642844be0f345513507031f4 upstream.
 
-KMSAN reported uninit-value access in raw_lookup() [1]. Diag for raw
-sockets uses the pad field in struct inet_diag_req_v2 for the
-underlying protocol. This field corresponds to the sdiag_raw_protocol
-field in struct inet_diag_req_raw.
+Patch series "nilfs2: fix potential issues related to reserved inodes".
 
-inet_diag_get_exact_compat() converts inet_diag_req to
-inet_diag_req_v2, but leaves the pad field uninitialized. So the issue
-occurs when raw_lookup() accesses the sdiag_raw_protocol field.
+This series fixes one use-after-free issue reported by syzbot, caused by
+nilfs2's internal inode being exposed in the namespace on a corrupted
+filesystem, and a couple of flaws that cause problems if the starting
+number of non-reserved inodes written in the on-disk super block is
+intentionally (or corruptly) changed from its default value.
 
-Fix this by initializing the pad field in
-inet_diag_get_exact_compat(). Also, do the same fix in
-inet_diag_dump_compat() to avoid the similar issue in the future.
 
-[1]
-BUG: KMSAN: uninit-value in raw_lookup net/ipv4/raw_diag.c:49 [inline]
-BUG: KMSAN: uninit-value in raw_sock_get+0x657/0x800 net/ipv4/raw_diag.c:71
- raw_lookup net/ipv4/raw_diag.c:49 [inline]
- raw_sock_get+0x657/0x800 net/ipv4/raw_diag.c:71
- raw_diag_dump_one+0xa1/0x660 net/ipv4/raw_diag.c:99
- inet_diag_cmd_exact+0x7d9/0x980
- inet_diag_get_exact_compat net/ipv4/inet_diag.c:1404 [inline]
- inet_diag_rcv_msg_compat+0x469/0x530 net/ipv4/inet_diag.c:1426
- sock_diag_rcv_msg+0x23d/0x740 net/core/sock_diag.c:282
- netlink_rcv_skb+0x537/0x670 net/netlink/af_netlink.c:2564
- sock_diag_rcv+0x35/0x40 net/core/sock_diag.c:297
- netlink_unicast_kernel net/netlink/af_netlink.c:1335 [inline]
- netlink_unicast+0xe74/0x1240 net/netlink/af_netlink.c:1361
- netlink_sendmsg+0x10c6/0x1260 net/netlink/af_netlink.c:1905
- sock_sendmsg_nosec net/socket.c:730 [inline]
- __sock_sendmsg+0x332/0x3d0 net/socket.c:745
- ____sys_sendmsg+0x7f0/0xb70 net/socket.c:2585
- ___sys_sendmsg+0x271/0x3b0 net/socket.c:2639
- __sys_sendmsg net/socket.c:2668 [inline]
- __do_sys_sendmsg net/socket.c:2677 [inline]
- __se_sys_sendmsg net/socket.c:2675 [inline]
- __x64_sys_sendmsg+0x27e/0x4a0 net/socket.c:2675
- x64_sys_call+0x135e/0x3ce0 arch/x86/include/generated/asm/syscalls_64.h:47
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xd9/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+This patch (of 3):
 
-Uninit was stored to memory at:
- raw_sock_get+0x650/0x800 net/ipv4/raw_diag.c:71
- raw_diag_dump_one+0xa1/0x660 net/ipv4/raw_diag.c:99
- inet_diag_cmd_exact+0x7d9/0x980
- inet_diag_get_exact_compat net/ipv4/inet_diag.c:1404 [inline]
- inet_diag_rcv_msg_compat+0x469/0x530 net/ipv4/inet_diag.c:1426
- sock_diag_rcv_msg+0x23d/0x740 net/core/sock_diag.c:282
- netlink_rcv_skb+0x537/0x670 net/netlink/af_netlink.c:2564
- sock_diag_rcv+0x35/0x40 net/core/sock_diag.c:297
- netlink_unicast_kernel net/netlink/af_netlink.c:1335 [inline]
- netlink_unicast+0xe74/0x1240 net/netlink/af_netlink.c:1361
- netlink_sendmsg+0x10c6/0x1260 net/netlink/af_netlink.c:1905
- sock_sendmsg_nosec net/socket.c:730 [inline]
- __sock_sendmsg+0x332/0x3d0 net/socket.c:745
- ____sys_sendmsg+0x7f0/0xb70 net/socket.c:2585
- ___sys_sendmsg+0x271/0x3b0 net/socket.c:2639
- __sys_sendmsg net/socket.c:2668 [inline]
- __do_sys_sendmsg net/socket.c:2677 [inline]
- __se_sys_sendmsg net/socket.c:2675 [inline]
- __x64_sys_sendmsg+0x27e/0x4a0 net/socket.c:2675
- x64_sys_call+0x135e/0x3ce0 arch/x86/include/generated/asm/syscalls_64.h:47
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xd9/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+In the current implementation of nilfs2, "nilfs->ns_first_ino", which
+gives the first non-reserved inode number, is read from the superblock,
+but its lower limit is not checked.
 
-Local variable req.i created at:
- inet_diag_get_exact_compat net/ipv4/inet_diag.c:1396 [inline]
- inet_diag_rcv_msg_compat+0x2a6/0x530 net/ipv4/inet_diag.c:1426
- sock_diag_rcv_msg+0x23d/0x740 net/core/sock_diag.c:282
+As a result, if a number that overlaps with the inode number range of
+reserved inodes such as the root directory or metadata files is set in the
+super block parameter, the inode number test macros (NILFS_MDT_INODE and
+NILFS_VALID_INODE) will not function properly.
 
-CPU: 1 PID: 8888 Comm: syz-executor.6 Not tainted 6.10.0-rc4-00217-g35bb670d65fc #32
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-2.fc40 04/01/2014
+In addition, these test macros use left bit-shift calculations using with
+the inode number as the shift count via the BIT macro, but the result of a
+shift calculation that exceeds the bit width of an integer is undefined in
+the C specification, so if "ns_first_ino" is set to a large value other
+than the default value NILFS_USER_INO (=11), the macros may potentially
+malfunction depending on the environment.
 
-Fixes: 432490f9d455 ("net: ip, diag -- Add diag interface for raw sockets")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20240703091649.111773-1-syoshida@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix these issues by checking the lower bound of "nilfs->ns_first_ino" and
+by preventing bit shifts equal to or greater than the NILFS_USER_INO
+constant in the inode number test macros.
+
+Also, change the type of "ns_first_ino" from signed integer to unsigned
+integer to avoid the need for type casting in comparisons such as the
+lower bound check introduced this time.
+
+Link: https://lkml.kernel.org/r/20240623051135.4180-1-konishi.ryusuke@gmail.com
+Link: https://lkml.kernel.org/r/20240623051135.4180-2-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: Hillf Danton <hdanton@sina.com>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_diag.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/nilfs2/nilfs.h     |    5 +++--
+ fs/nilfs2/the_nilfs.c |    6 ++++++
+ fs/nilfs2/the_nilfs.h |    2 +-
+ 3 files changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv4/inet_diag.c b/net/ipv4/inet_diag.c
-index f8f79672cc5f3..1de42888e14a2 100644
---- a/net/ipv4/inet_diag.c
-+++ b/net/ipv4/inet_diag.c
-@@ -1088,6 +1088,7 @@ static int inet_diag_dump_compat(struct sk_buff *skb,
- 	req.sdiag_family = AF_UNSPEC; /* compatibility */
- 	req.sdiag_protocol = inet_diag_type2proto(cb->nlh->nlmsg_type);
- 	req.idiag_ext = rc->idiag_ext;
-+	req.pad = 0;
- 	req.idiag_states = rc->idiag_states;
- 	req.id = rc->id;
+--- a/fs/nilfs2/nilfs.h
++++ b/fs/nilfs2/nilfs.h
+@@ -116,9 +116,10 @@ enum {
+ #define NILFS_FIRST_INO(sb) (((struct the_nilfs *)sb->s_fs_info)->ns_first_ino)
  
-@@ -1106,6 +1107,7 @@ static int inet_diag_get_exact_compat(struct sk_buff *in_skb,
- 	req.sdiag_family = rc->idiag_family;
- 	req.sdiag_protocol = inet_diag_type2proto(nlh->nlmsg_type);
- 	req.idiag_ext = rc->idiag_ext;
-+	req.pad = 0;
- 	req.idiag_states = rc->idiag_states;
- 	req.id = rc->id;
+ #define NILFS_MDT_INODE(sb, ino) \
+-	((ino) < NILFS_FIRST_INO(sb) && (NILFS_MDT_INO_BITS & BIT(ino)))
++	((ino) < NILFS_USER_INO && (NILFS_MDT_INO_BITS & BIT(ino)))
+ #define NILFS_VALID_INODE(sb, ino) \
+-	((ino) >= NILFS_FIRST_INO(sb) || (NILFS_SYS_INO_BITS & BIT(ino)))
++	((ino) >= NILFS_FIRST_INO(sb) ||				\
++	 ((ino) < NILFS_USER_INO && (NILFS_SYS_INO_BITS & BIT(ino))))
  
--- 
-2.43.0
-
+ /**
+  * struct nilfs_transaction_info: context information for synchronization
+--- a/fs/nilfs2/the_nilfs.c
++++ b/fs/nilfs2/the_nilfs.c
+@@ -420,6 +420,12 @@ static int nilfs_store_disk_layout(struc
+ 	}
+ 
+ 	nilfs->ns_first_ino = le32_to_cpu(sbp->s_first_ino);
++	if (nilfs->ns_first_ino < NILFS_USER_INO) {
++		nilfs_err(nilfs->ns_sb,
++			  "too small lower limit for non-reserved inode numbers: %u",
++			  nilfs->ns_first_ino);
++		return -EINVAL;
++	}
+ 
+ 	nilfs->ns_blocks_per_segment = le32_to_cpu(sbp->s_blocks_per_segment);
+ 	if (nilfs->ns_blocks_per_segment < NILFS_SEG_MIN_BLOCKS) {
+--- a/fs/nilfs2/the_nilfs.h
++++ b/fs/nilfs2/the_nilfs.h
+@@ -182,7 +182,7 @@ struct the_nilfs {
+ 	unsigned long		ns_nrsvsegs;
+ 	unsigned long		ns_first_data_block;
+ 	int			ns_inode_size;
+-	int			ns_first_ino;
++	unsigned int		ns_first_ino;
+ 	u32			ns_crc_seed;
+ 
+ 	/* /sys/fs/<nilfs>/<device> */
 
 
