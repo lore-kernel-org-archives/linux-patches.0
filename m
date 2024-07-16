@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8E991DDCE;
-	Tue, 16 Jul 2024 16:07:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C370A1DDCE;
+	Tue, 16 Jul 2024 16:07:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721146063; cv=none; b=uAheVRhWDvEhSi7/CpnQ9pTBohnbtn3R2iHHf3QoEWkgpyZGKGo/s/u5NKDdoqkBo+2DdSTbWSa4jU9Pl1Fwro+BuqrJhUPHcuHywUo3/EM+I+rd0zGzUzq69yLHGsHijaWczYRhFCvYn99pIlz2N0bODVxrtAwCPyWOjhbErd0=
+	t=1721146066; cv=none; b=HOmtCYxaZGwWRVYUwj+P9qoRt9qlO6OVY2DK+H5m2fGwp+14Yv2KWG/Fm1SxPd4DVFbboQsARObHGxuBTAPH9Oj7wY8M/FFlGuBTiPqJHt6es8mqxcAP6KxbPWns1MJagnuAaCV1GsabYjti4QYEkOw0/Z+0NYdS5UiOTm8QwrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721146063; c=relaxed/simple;
-	bh=mS0cFjTjiL+VTLkyJlHOPGt2jp3i25uxrBRQQpnVWsU=;
+	s=arc-20240116; t=1721146066; c=relaxed/simple;
+	bh=2Q/aoh2my2NaiNuTe08cnWOxNa8qrffSvB9VIj+/s3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iw87BIcgJTkRixKbmhlLc+uLBoP7T1bvyNl0my1lUqk/BiCdTzjOt/0MYui9iwMkUneW6VXUIa884j9+vNGVbMknpRDdLSfcJANqC3+Ps78U+jcXeabw8Nnv4ZnJ0zXd9oN6xkzL3m1TqIgfBThiYctPDtmZvz+Xp1dgaS9VFzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=caZvITrw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UCNl7Xj0xFWec5/5JY3coICu2LkXlZFjeDKyhfV7Wt26GyAmWSQPCyk2PkKbPbIjAga/3T7fFV/slXJP9i3HsZG7DYU2302lTFAIVkEkPlE+C2o7CBgR5YSK+rXDwP6HYuqtZVk8cHv6rplgbASKIIae+gwFHO63qaye81wctzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SP8AxvYm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="caZvITrw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5518DC116B1;
-	Tue, 16 Jul 2024 16:07:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SP8AxvYm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49D4EC116B1;
+	Tue, 16 Jul 2024 16:07:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721146063;
-	bh=mS0cFjTjiL+VTLkyJlHOPGt2jp3i25uxrBRQQpnVWsU=;
+	s=korg; t=1721146066;
+	bh=2Q/aoh2my2NaiNuTe08cnWOxNa8qrffSvB9VIj+/s3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=caZvITrwwWfO54qoMwzR6XmRiBEMPKv/mywrpF6qVGXsHjiH7/b+ainB7xqTOdUri
-	 QCt+yryAAZSuu9XweTcmWpEAx57cP3UxO8KLUvGNAXaUCTKSqxs3c5Ob2BFmHW3X73
-	 WB6CpcyUdXfLjGIgMP41nvjUkICN/LcXQlLOmbog=
+	b=SP8AxvYmFQbklZL0xUYL2MNNluvs5kon0UiLgX0HbK1dmPwQg3M39WnqdA4iXWXnP
+	 eH2CKXPeuVDC0XoayjJtTzATwMT4RtyzVrtfyj9OmEMRn05QAJ7anOpIKEgViGmpQW
+	 MfrsS/4nqfKp+4wWpDHOT1KiWqrf4Rz3Q0+634bw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 045/144] gpiolib: of: add polarity quirk for TSC2005
-Date: Tue, 16 Jul 2024 17:31:54 +0200
-Message-ID: <20240716152754.277916668@linuxfoundation.org>
+	Sasha Neftin <sasha.neftin@intel.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 046/144] Revert "igc: fix a log entry using uninitialized netdev"
+Date: Tue, 16 Jul 2024 17:31:55 +0200
+Message-ID: <20240716152754.316210253@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
 References: <20240716152752.524497140@linuxfoundation.org>
@@ -52,46 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Sasha Neftin <sasha.neftin@intel.com>
 
-[ Upstream commit f8d76c2c313c56d5cb894a243dff4550f048278d ]
+commit 8eef5c3cea65f248c99cd9dcb3f84c6509b78162 upstream.
 
-DTS for Nokia N900 incorrectly specifies "active high" polarity for
-the reset line, while the chip documentation actually specifies it as
-"active low".  In the past the driver fudged gpiod API and inverted
-the logic internally, but it was changed in d0d89493bff8.
+This reverts commit 86167183a17e03ec77198897975e9fdfbd53cb0b.
 
-Fixes: d0d89493bff8 ("Input: tsc2004/5 - switch to using generic device properties")
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Acked-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/ZoWXwYtwgJIxi-hD@google.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+igc_ptp_init() needs to be called before igc_reset(), otherwise kernel
+crash could be observed. Following the corresponding discussion [1] and
+[2] revert this commit.
+
+Link: https://lore.kernel.org/all/8fb634f8-7330-4cf4-a8ce-485af9c0a61a@intel.com/ [1]
+Link: https://lore.kernel.org/all/87o78rmkhu.fsf@intel.com/ [2]
+Fixes: 86167183a17e ("igc: fix a log entry using uninitialized netdev")
+Signed-off-by: Sasha Neftin <sasha.neftin@intel.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://lore.kernel.org/r/20240611162456.961631-1-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib-of.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/ethernet/intel/igc/igc_main.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib-of.c b/drivers/gpio/gpiolib-of.c
-index 7a77d9cd9c774..608526ce7bab0 100644
---- a/drivers/gpio/gpiolib-of.c
-+++ b/drivers/gpio/gpiolib-of.c
-@@ -173,6 +173,14 @@ static void of_gpio_try_fixup_polarity(const struct device_node *np,
- 		 */
- 		{ "himax,hx8357",	"gpios-reset",	false },
- 		{ "himax,hx8369",	"gpios-reset",	false },
-+#endif
-+#if IS_ENABLED(CONFIG_TOUCHSCREEN_TSC2005)
-+		/*
-+		 * DTS for Nokia N900 incorrectly specified "active high"
-+		 * polarity for the reset line, while the chip actually
-+		 * treats it as "active low".
-+		 */
-+		{ "ti,tsc2005",		"reset-gpios",	false },
- #endif
- 	};
- 	unsigned int i;
--- 
-2.43.0
-
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -6673,6 +6673,8 @@ static int igc_probe(struct pci_dev *pde
+ 	device_set_wakeup_enable(&adapter->pdev->dev,
+ 				 adapter->flags & IGC_FLAG_WOL_SUPPORTED);
+ 
++	igc_ptp_init(adapter);
++
+ 	igc_tsn_clear_schedule(adapter);
+ 
+ 	/* reset the hardware with the new settings */
+@@ -6694,9 +6696,6 @@ static int igc_probe(struct pci_dev *pde
+ 	/* Check if Media Autosense is enabled */
+ 	adapter->ei = *ei;
+ 
+-	/* do hw tstamp init after resetting */
+-	igc_ptp_init(adapter);
+-
+ 	/* print pcie link status and MAC address */
+ 	pcie_print_link_status(pdev);
+ 	netdev_info(netdev, "MAC: %pM\n", netdev->dev_addr);
 
 
