@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597DFF9E8;
-	Tue, 16 Jul 2024 15:41:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4121BF9E8;
+	Tue, 16 Jul 2024 15:41:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144488; cv=none; b=q17e4O+OaEJh1l5iEXX2YXEepiNSMc/HVyDTasYohPFCBF0D5YDP2je3meXpD2Ih4uRAQ8S/Pk1B85M6T2qWPkBtNq+fCzRHVCeN+La7ZwTjXBrgjljVclh3Hq6ky+iMZ2CavhetTNvWwryaX0cYK659k6fIGu3U6B1qFFmzmZA=
+	t=1721144491; cv=none; b=Pq/nkNu4tmfiT6qTZA8eBwvpVjGQLysqja0/CdKQGGmpBcBuuX5uabRF2yn1h+VXjt6R5B8k5RYo3poiyndWnGIh32MUwZlu+YDIkakmUVcwOqXIVnAGIo1kTDhn5bEEHNgJPzSu9a8bZ46bBgzLbtOXU4L23g8A1pEWnwzedHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144488; c=relaxed/simple;
-	bh=m2a8+2GJ0L/1/sTQC5zoJAHZHlMQTx8+tjWoCvBvpZI=;
+	s=arc-20240116; t=1721144491; c=relaxed/simple;
+	bh=/OqcDrAxxrOJrZPFavO0OxRvjCqMWsEWeey+kTx6bdE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fT8MnVv8G/FsPXuwHrB0/IkYpItXoYzYyGFhvt09707UiaURwgPdcn7X7S0nckie1HZnGmEKZnCLkabxtyxWWz4qfEWbOEdZKrIKwjLLKoCix5tfw8Kkuj90wIujXkcrJbYxI+qGNq7TL+zlv62+ed4kTtxxSVO4olyK3gKkfTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YR+FNn5o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fZ5G8xCjWHg7cNhWqYBVczXtNIBzMRBxpKKo40dpqUKuqKpIfJ124WS6hasij84OgRpgM7vn7iHZOjIlA0OWmOWMqkJ4JRC5bzMF5uIZXJTPUR93JqwYQQSrXDGMvE07y+DKBJu4yL2UU841gL8su6rZoG+sPUDrfww90fqbgPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aITEuGZS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YR+FNn5o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3D6AC116B1;
-	Tue, 16 Jul 2024 15:41:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aITEuGZS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBC91C116B1;
+	Tue, 16 Jul 2024 15:41:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144488;
-	bh=m2a8+2GJ0L/1/sTQC5zoJAHZHlMQTx8+tjWoCvBvpZI=;
+	s=korg; t=1721144491;
+	bh=/OqcDrAxxrOJrZPFavO0OxRvjCqMWsEWeey+kTx6bdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YR+FNn5oQl0t4yoOiF1wWzsy8OwL16Kg+DuGmcxv5/zFzFRuOipkeO1VTVsMnLmXd
-	 3yi8rqg0fzWIGQ1lNvhK30CzspEImvAzVJxbn8AEChtN7FWZ75fMgZ2GJExNjEH7sX
-	 xOp99y1OdJ2dpy1FwZRmK9JnBKOtpaJIf4CpvscI=
+	b=aITEuGZSqbEVq+f4H/3J7W0nQLnqw1FNYeDZNXbh3jg6eNJ9Nx7yYtpbavCRcLwOM
+	 sPrm7l3qRyg3acFMJBl6QT01eMu1glLK8yrqqPsE8X6xScKSdtCYw4t6lnLsAInqJc
+	 ahPZDylRiJHCPcmniczGi7UBekdFyDF1pEfuMMwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Michael Bunk <micha@freedict.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 010/108] drm/amd/display: Skip finding free audio for unknown engine_id
-Date: Tue, 16 Jul 2024 17:30:25 +0200
-Message-ID: <20240716152746.393644181@linuxfoundation.org>
+Subject: [PATCH 5.10 011/108] media: dw2102: Dont translate i2c read into write
+Date: Tue, 16 Jul 2024 17:30:26 +0200
+Message-ID: <20240716152746.432517582@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152745.988603303@linuxfoundation.org>
 References: <20240716152745.988603303@linuxfoundation.org>
@@ -53,42 +51,195 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Michael Bunk <micha@freedict.org>
 
-[ Upstream commit 1357b2165d9ad94faa4c4a20d5e2ce29c2ff29c3 ]
+[ Upstream commit 0e148a522b8453115038193e19ec7bea71403e4a ]
 
-[WHY]
-ENGINE_ID_UNKNOWN = -1 and can not be used as an array index. Plus, it
-also means it is uninitialized and does not need free audio.
+The code ignored the I2C_M_RD flag on I2C messages.  Instead it assumed
+an i2c transaction with a single message must be a write operation and a
+transaction with two messages would be a read operation.
 
-[HOW]
-Skip and return NULL.
+Though this works for the driver code, it leads to problems once the i2c
+device is exposed to code not knowing this convention.  For example,
+I did "insmod i2c-dev" and issued read requests from userspace, which
+were translated into write requests and destroyed the EEPROM of my
+device.
 
-This fixes 2 OVERRUN issues reported by Coverity.
+So, just check and respect the I2C_M_READ flag, which indicates a read
+when set on a message.  If it is absent, it is a write message.
 
-Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Acked-by: Wayne Lin <wayne.lin@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Incidentally, changing from the case statement to a while loop allows
+the code to lift the limitation to two i2c messages per transaction.
+
+There are 4 more *_i2c_transfer functions affected by the same behaviour
+and limitation that should be fixed in the same way.
+
+Link: https://lore.kernel.org/linux-media/20220116112238.74171-2-micha@freedict.org
+Signed-off-by: Michael Bunk <micha@freedict.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_resource.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/usb/dvb-usb/dw2102.c | 120 ++++++++++++++++++-----------
+ 1 file changed, 73 insertions(+), 47 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-index f1eda1a6496d4..0a13c06eea447 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-@@ -1802,6 +1802,9 @@ static struct audio *find_first_free_audio(
+diff --git a/drivers/media/usb/dvb-usb/dw2102.c b/drivers/media/usb/dvb-usb/dw2102.c
+index 2290f132a82c8..5b51d0a8bec45 100644
+--- a/drivers/media/usb/dvb-usb/dw2102.c
++++ b/drivers/media/usb/dvb-usb/dw2102.c
+@@ -716,6 +716,7 @@ static int su3000_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
  {
- 	int i, available_audio_count;
+ 	struct dvb_usb_device *d = i2c_get_adapdata(adap);
+ 	struct dw2102_state *state;
++	int j;
  
-+	if (id == ENGINE_ID_UNKNOWN)
-+		return NULL;
+ 	if (!d)
+ 		return -ENODEV;
+@@ -729,11 +730,11 @@ static int su3000_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
+ 		return -EAGAIN;
+ 	}
+ 
+-	switch (num) {
+-	case 1:
+-		switch (msg[0].addr) {
++	j = 0;
++	while (j < num) {
++		switch (msg[j].addr) {
+ 		case SU3000_STREAM_CTRL:
+-			state->data[0] = msg[0].buf[0] + 0x36;
++			state->data[0] = msg[j].buf[0] + 0x36;
+ 			state->data[1] = 3;
+ 			state->data[2] = 0;
+ 			if (dvb_usb_generic_rw(d, state->data, 3,
+@@ -745,61 +746,86 @@ static int su3000_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
+ 			if (dvb_usb_generic_rw(d, state->data, 1,
+ 					state->data, 2, 0) < 0)
+ 				err("i2c transfer failed.");
+-			msg[0].buf[1] = state->data[0];
+-			msg[0].buf[0] = state->data[1];
++			msg[j].buf[1] = state->data[0];
++			msg[j].buf[0] = state->data[1];
+ 			break;
+ 		default:
+-			if (3 + msg[0].len > sizeof(state->data)) {
+-				warn("i2c wr: len=%d is too big!\n",
+-				     msg[0].len);
++			/* if the current write msg is followed by a another
++			 * read msg to/from the same address
++			 */
++			if ((j+1 < num) && (msg[j+1].flags & I2C_M_RD) &&
++			    (msg[j].addr == msg[j+1].addr)) {
++				/* join both i2c msgs to one usb read command */
++				if (4 + msg[j].len > sizeof(state->data)) {
++					warn("i2c combined wr/rd: write len=%d is too big!\n",
++					    msg[j].len);
++					num = -EOPNOTSUPP;
++					break;
++				}
++				if (1 + msg[j+1].len > sizeof(state->data)) {
++					warn("i2c combined wr/rd: read len=%d is too big!\n",
++					    msg[j+1].len);
++					num = -EOPNOTSUPP;
++					break;
++				}
 +
- 	available_audio_count = pool->audio_count;
++				state->data[0] = 0x09;
++				state->data[1] = msg[j].len;
++				state->data[2] = msg[j+1].len;
++				state->data[3] = msg[j].addr;
++				memcpy(&state->data[4], msg[j].buf, msg[j].len);
++
++				if (dvb_usb_generic_rw(d, state->data, msg[j].len + 4,
++					state->data, msg[j+1].len + 1, 0) < 0)
++					err("i2c transfer failed.");
++
++				memcpy(msg[j+1].buf, &state->data[1], msg[j+1].len);
++				j++;
++				break;
++			}
++
++			if (msg[j].flags & I2C_M_RD) {
++				/* single read */
++				if (1 + msg[j].len > sizeof(state->data)) {
++					warn("i2c rd: len=%d is too big!\n", msg[j].len);
++					num = -EOPNOTSUPP;
++					break;
++				}
++
++				state->data[0] = 0x09;
++				state->data[1] = 0;
++				state->data[2] = msg[j].len;
++				state->data[3] = msg[j].addr;
++				memcpy(&state->data[4], msg[j].buf, msg[j].len);
++
++				if (dvb_usb_generic_rw(d, state->data, 4,
++					state->data, msg[j].len + 1, 0) < 0)
++					err("i2c transfer failed.");
++
++				memcpy(msg[j].buf, &state->data[1], msg[j].len);
++				break;
++			}
++
++			/* single write */
++			if (3 + msg[j].len > sizeof(state->data)) {
++				warn("i2c wr: len=%d is too big!\n", msg[j].len);
+ 				num = -EOPNOTSUPP;
+ 				break;
+ 			}
  
- 	for (i = 0; i < available_audio_count; i++) {
+-			/* always i2c write*/
+ 			state->data[0] = 0x08;
+-			state->data[1] = msg[0].addr;
+-			state->data[2] = msg[0].len;
++			state->data[1] = msg[j].addr;
++			state->data[2] = msg[j].len;
+ 
+-			memcpy(&state->data[3], msg[0].buf, msg[0].len);
++			memcpy(&state->data[3], msg[j].buf, msg[j].len);
+ 
+-			if (dvb_usb_generic_rw(d, state->data, msg[0].len + 3,
++			if (dvb_usb_generic_rw(d, state->data, msg[j].len + 3,
+ 						state->data, 1, 0) < 0)
+ 				err("i2c transfer failed.");
++		} // switch
++		j++;
+ 
+-		}
+-		break;
+-	case 2:
+-		/* always i2c read */
+-		if (4 + msg[0].len > sizeof(state->data)) {
+-			warn("i2c rd: len=%d is too big!\n",
+-			     msg[0].len);
+-			num = -EOPNOTSUPP;
+-			break;
+-		}
+-		if (1 + msg[1].len > sizeof(state->data)) {
+-			warn("i2c rd: len=%d is too big!\n",
+-			     msg[1].len);
+-			num = -EOPNOTSUPP;
+-			break;
+-		}
+-
+-		state->data[0] = 0x09;
+-		state->data[1] = msg[0].len;
+-		state->data[2] = msg[1].len;
+-		state->data[3] = msg[0].addr;
+-		memcpy(&state->data[4], msg[0].buf, msg[0].len);
+-
+-		if (dvb_usb_generic_rw(d, state->data, msg[0].len + 4,
+-					state->data, msg[1].len + 1, 0) < 0)
+-			err("i2c transfer failed.");
+-
+-		memcpy(msg[1].buf, &state->data[1], msg[1].len);
+-		break;
+-	default:
+-		warn("more than 2 i2c messages at a time is not handled yet.");
+-		break;
+-	}
++	} // while
+ 	mutex_unlock(&d->data_mutex);
+ 	mutex_unlock(&d->i2c_mutex);
+ 	return num;
 -- 
 2.43.0
 
