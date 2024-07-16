@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26BE6B641;
-	Tue, 16 Jul 2024 15:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A220B641;
+	Tue, 16 Jul 2024 15:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144450; cv=none; b=CdlOMslcfHkfjOVoK7ycWW6QKxESsarMZ58vwV93Yl44ENp1SCerVxT1m7xeyT01p4swHsjf9Y4yQ5Z0BElFLujifBZyrjbYgfvbxwPBExMJVAMW9iw21Oztpb7e/hjAda49qgFqUevul/M2Hvlbj+knVIi1yNvrP6/WB0iLVuY=
+	t=1721144453; cv=none; b=uPkZEeCV24JiPlWmPvvPivSgtVYiooK2IvlKLA/TAFlOe4R6/nWUmCmdE/iP3y6kN3CCc53EUo2wrSuxWTdXe3yTeag2WqrB6GYcYWAHHjETa9MrJMeZ3Vo9KXge7ml8cfuPjXoFXjKk4vUVh6g8PGPgrU9HQW7jotLXZ8E7sd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144450; c=relaxed/simple;
-	bh=5L5hG9q3k+qOgID5fqKICmXF9n5hQpBo/7LKKiOWC+I=;
+	s=arc-20240116; t=1721144453; c=relaxed/simple;
+	bh=1AMTbCA4LVtUGtyhjtqulmnNfcqyzxOZDWFsZijm7i8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IMlNpIqTXrW2RxBAjeLyiBpNA1piKc0cy7bW9WAyBkVtogN/btkmG3qXcB4qQFgnkPXODEDJM7/cJzT4MGdmcUYgdPGydCwq5j/8o/NSh1KiFtL16eti5Wsdg9J65cGPzXigu0s+cmdQQTN4TWly8vdOLEVqSF1tLYEaIqw/pZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s+XQ/+G1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t1ssG2mTkzj6/OLuXGcM5SlxyX2LFfPp60NNZOcmQe2CGCxSnOyFs6DtYe4SEPx7AFcv9ES603sTd2azYPC52/PIhUo111B4+CLzEWQBR4pbmtxczcjFuxDmyH0fERcIbLm6lVf5/ukZxbnlC4zznh/KTkhC35bKntekXKaUmFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LoWhSEOh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s+XQ/+G1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A331DC116B1;
-	Tue, 16 Jul 2024 15:40:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LoWhSEOh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A24F3C116B1;
+	Tue, 16 Jul 2024 15:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144450;
-	bh=5L5hG9q3k+qOgID5fqKICmXF9n5hQpBo/7LKKiOWC+I=;
+	s=korg; t=1721144453;
+	bh=1AMTbCA4LVtUGtyhjtqulmnNfcqyzxOZDWFsZijm7i8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s+XQ/+G1EMIW6hhJPsMgL2z/e14aWK1kwJI3iKGEmqwIoH/1vZ82FgZTYWk2DHbFt
-	 IGQU+qRJZz8f+YmhmEjpi1qmf0eQnxtRTIdROKTH/jCiDFd1QuMdkB0rF+dBYxBkLa
-	 /KVwClgL41OqMbri2AMYDhQOL3QgdFJwGgBzm4cY=
+	b=LoWhSEOhp5KHru5DzQKm0fR4kHO3RmMxadN2wGX1AJowfQoIv+MteopbGmyrXcnCi
+	 S0jlAVBnMJGGyjRWUUKP3crlaikmKhTM3mb7crXMgtMSGe7l9eEiDqx98YIo2LmT6H
+	 WmHgbYo3JDB/AM9VFSDHUArjFpOg9BJPIUsYoXkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Neal Cardwell <ncardwell@google.com>,
-	Jason Xing <kerneljasonxing@gmail.com>,
-	Jon Maxwell <jmaxwell37@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 76/78] tcp: avoid too many retransmit packets
-Date: Tue, 16 Jul 2024 17:31:48 +0200
-Message-ID: <20240716152743.581264286@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+d3abed1ad3d367fa2627@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 77/78] nilfs2: fix kernel bug on rename operation of broken directory
+Date: Tue, 16 Jul 2024 17:31:49 +0200
+Message-ID: <20240716152743.620245428@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152740.626160410@linuxfoundation.org>
 References: <20240716152740.626160410@linuxfoundation.org>
@@ -54,80 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 97a9063518f198ec0adb2ecb89789de342bb8283 upstream.
+commit a9e1ddc09ca55746079cc479aa3eb6411f0d99d4 upstream.
 
-If a TCP socket is using TCP_USER_TIMEOUT, and the other peer
-retracted its window to zero, tcp_retransmit_timer() can
-retransmit a packet every two jiffies (2 ms for HZ=1000),
-for about 4 minutes after TCP_USER_TIMEOUT has 'expired'.
+Syzbot reported that in rename directory operation on broken directory on
+nilfs2, __block_write_begin_int() called to prepare block write may fail
+BUG_ON check for access exceeding the folio/page size.
 
-The fix is to make sure tcp_rtx_probe0_timed_out() takes
-icsk->icsk_user_timeout into account.
+This is because nilfs_dotdot(), which gets parent directory reference
+entry ("..") of the directory to be moved or renamed, does not check
+consistency enough, and may return location exceeding folio/page size for
+broken directories.
 
-Before blamed commit, the socket would not timeout after
-icsk->icsk_user_timeout, but would use standard exponential
-backoff for the retransmits.
+Fix this issue by checking required directory entries ("." and "..") in
+the first chunk of the directory in nilfs_dotdot().
 
-Also worth noting that before commit e89688e3e978 ("net: tcp:
-fix unexcepted socket die when snd_wnd is 0"), the issue
-would last 2 minutes instead of 4.
-
-Fixes: b701a99e431d ("tcp: Add tcp_clamp_rto_to_user_timeout() helper to improve accuracy")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Neal Cardwell <ncardwell@google.com>
-Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
-Reviewed-by: Jon Maxwell <jmaxwell37@gmail.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20240710001402.2758273-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lkml.kernel.org/r/20240628165107.9006-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+d3abed1ad3d367fa2627@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d3abed1ad3d367fa2627
+Fixes: 2ba466d74ed7 ("nilfs2: directory entry operations")
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_timer.c |   22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ fs/nilfs2/dir.c |   32 ++++++++++++++++++++++++++++++--
+ 1 file changed, 30 insertions(+), 2 deletions(-)
 
---- a/net/ipv4/tcp_timer.c
-+++ b/net/ipv4/tcp_timer.c
-@@ -437,22 +437,34 @@ static void tcp_fastopen_synack_timer(st
- static bool tcp_rtx_probe0_timed_out(const struct sock *sk,
- 				     const struct sk_buff *skb)
- {
-+	const struct inet_connection_sock *icsk = inet_csk(sk);
-+	u32 user_timeout = READ_ONCE(icsk->icsk_user_timeout);
- 	const struct tcp_sock *tp = tcp_sk(sk);
--	const int timeout = TCP_RTO_MAX * 2;
-+	int timeout = TCP_RTO_MAX * 2;
- 	u32 rtx_delta;
- 	s32 rcv_delta;
+--- a/fs/nilfs2/dir.c
++++ b/fs/nilfs2/dir.c
+@@ -396,11 +396,39 @@ found:
  
-+	rtx_delta = (u32)msecs_to_jiffies(tcp_time_stamp(tp) -
-+			(tp->retrans_stamp ?: tcp_skb_timestamp(skb)));
+ struct nilfs_dir_entry *nilfs_dotdot(struct inode *dir, struct page **p)
+ {
+-	struct nilfs_dir_entry *de = nilfs_get_page(dir, 0, p);
++	struct page *page;
++	struct nilfs_dir_entry *de, *next_de;
++	size_t limit;
++	char *msg;
+ 
++	de = nilfs_get_page(dir, 0, &page);
+ 	if (IS_ERR(de))
+ 		return NULL;
+-	return nilfs_next_entry(de);
 +
-+	if (user_timeout) {
-+		/* If user application specified a TCP_USER_TIMEOUT,
-+		 * it does not want win 0 packets to 'reset the timer'
-+		 * while retransmits are not making progress.
-+		 */
-+		if (rtx_delta > user_timeout)
-+			return true;
-+		timeout = min_t(u32, timeout, msecs_to_jiffies(user_timeout));
++	limit = nilfs_last_byte(dir, 0);  /* is a multiple of chunk size */
++	if (unlikely(!limit || le64_to_cpu(de->inode) != dir->i_ino ||
++		     !nilfs_match(1, ".", de))) {
++		msg = "missing '.'";
++		goto fail;
 +	}
 +
- 	/* Note: timer interrupt might have been delayed by at least one jiffy,
- 	 * and tp->rcv_tstamp might very well have been written recently.
- 	 * rcv_delta can thus be negative.
- 	 */
--	rcv_delta = inet_csk(sk)->icsk_timeout - tp->rcv_tstamp;
-+	rcv_delta = icsk->icsk_timeout - tp->rcv_tstamp;
- 	if (rcv_delta <= timeout)
- 		return false;
- 
--	rtx_delta = (u32)msecs_to_jiffies(tcp_time_stamp(tp) -
--			(tp->retrans_stamp ?: tcp_skb_timestamp(skb)));
--
- 	return rtx_delta > timeout;
++	next_de = nilfs_next_entry(de);
++	/*
++	 * If "next_de" has not reached the end of the chunk, there is
++	 * at least one more record.  Check whether it matches "..".
++	 */
++	if (unlikely((char *)next_de == (char *)de + nilfs_chunk_size(dir) ||
++		     !nilfs_match(2, "..", next_de))) {
++		msg = "missing '..'";
++		goto fail;
++	}
++	*p = page;
++	return next_de;
++
++fail:
++	nilfs_error(dir->i_sb, "directory #%lu %s", dir->i_ino, msg);
++	nilfs_put_page(page);
++	return NULL;
  }
  
+ ino_t nilfs_inode_by_name(struct inode *dir, const struct qstr *qstr)
 
 
