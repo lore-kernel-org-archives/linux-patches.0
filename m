@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EB3517A93F;
-	Tue, 16 Jul 2024 15:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D3517A93F;
+	Tue, 16 Jul 2024 15:51:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145109; cv=none; b=XWQonMM7g++V104nKACUPBZ2TuhC0WKO6lKrXdhf3yb5JOjnbLGjKhhBLJmktFHU3Y0BxzumxHNh5QfJgbt6j79D59p2FugGuKV4s8ouyEeDPPY/UFBGDwMJVHBbiNwIKMiT+7n4LKSSwvjnzuarS9PCqPoh2CKx4rn+71mCeKM=
+	t=1721145112; cv=none; b=qrkEI8MoB6Oh1hwLlAsZe0/AUqdQeCIL2639/LwZ/rm77uq04KSX+S95hYpzAZ4RNYRfvg1ZFjMUANRXOHa9f63D0+7YLkUEWY3BSi3nbw9a68lepxe0gVDXMprAN1vgzsU4QppowbBq530uODITAYD7c6NfYLuFw9Lx23jCBNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145109; c=relaxed/simple;
-	bh=v6QHiDWQl86+a3lWqOuKi1mG6k9c5v2JPXaRsZfxLLc=;
+	s=arc-20240116; t=1721145112; c=relaxed/simple;
+	bh=aJFHNT03quOwq09DolWro+OFmW+M9+vO6Gtms200VxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YzmMjhJuNRuDwaoJYP4rm2CTDU4h6MaCTAzmgXnDW3dszbSb4pLb8r7FPyqLdW0FayR0sIyGbE/ZHXMYlVsIqwcFJx0LCVaMTy5KxXUC9NPhldOMHi7sro9MeWwmQ05+ND5jpkKjxMH0LtD18TpioZBcu2+U7vOygMmbobPkWzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2MoVbymU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qr0ZW9804Oa/UCLGEtJ8OvxeNRbn9Umi9lVx/SGOGH9b5PNyCvVQ6U9ARRQ6k0B3mP0AeSrHFYlx3/Mvjf85bjo9k6lFVpvasqGI4LWFCw3+eqlQAjWE1EfMYDMoyQtdX6iLauY//CnodOChHroj0WukWBVbXMKczsmF9ZWoNWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BP1565cH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2MoVbymU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B981DC116B1;
-	Tue, 16 Jul 2024 15:51:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BP1565cH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A500CC4AF0B;
+	Tue, 16 Jul 2024 15:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145109;
-	bh=v6QHiDWQl86+a3lWqOuKi1mG6k9c5v2JPXaRsZfxLLc=;
+	s=korg; t=1721145112;
+	bh=aJFHNT03quOwq09DolWro+OFmW+M9+vO6Gtms200VxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2MoVbymUQY1qkfJAOJTI0sAdqHklH+T+O/acsDvZKC+hrNAOokCu0O6t9zIX3CyTB
-	 7eA5yYhKfnYiXee7L5AlGxHIlkkzN4bgDSziworlt5kMlU25SPYKXMZP2xTeVew8xk
-	 uDRd04/6d5dj86bDj7pp9BbVOUgHNudaoOzcebKs=
+	b=BP1565cH1bMRGT+5naoLrJ3RWBkAWtzVdG6ROu+x7ho9yazbffhInISATF0mghd20
+	 Knm9IRVdXshrq+GQaM1G8SH7y4rthGcCP9YlIpyAs4v5/l225Mir0JLU2fL6kOo6X4
+	 zHdGsBAXc6GwYzoRj2Yew596l6uMGQCdT39qTbyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 6.9 102/143] nvmem: core: limit cell sysfs permissions to main attribute ones
-Date: Tue, 16 Jul 2024 17:31:38 +0200
-Message-ID: <20240716152759.903475840@linuxfoundation.org>
+	kernel test robot <oliver.sang@intel.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 6.9 103/143] platform/x86: toshiba_acpi: Fix array out-of-bounds access
+Date: Tue, 16 Jul 2024 17:31:39 +0200
+Message-ID: <20240716152759.941476757@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -44,44 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Armin Wolf <W_Armin@gmx.de>
 
-commit 6bef98bafd82903a8d461463f9594f19f1fd6a85 upstream.
+commit b6e02c6b0377d4339986e07aeb696c632cd392aa upstream.
 
-The cell sysfs attribute should not provide more access to the nvmem
-data than the main attribute itself.
-For example if nvme_config::root_only was set, the cell attribute
-would still provide read access to everybody.
+In order to use toshiba_dmi_quirks[] together with the standard DMI
+matching functions, it must be terminated by a empty entry.
 
-Mask out permissions not available on the main attribute.
+Since this entry is missing, an array out-of-bounds access occurs
+every time the quirk list is processed.
 
-Fixes: 0331c611949f ("nvmem: core: Expose cells through sysfs")
+Fix this by adding the terminating empty entry.
+
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202407091536.8b116b3d-lkp@intel.com
+Fixes: 3cb1f40dfdc3 ("drivers/platform: toshiba_acpi: Call HCI_PANEL_POWER_ON on resume on some models")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20240628113704.13742-5-srinivas.kandagatla@linaro.org
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://lore.kernel.org/r/20240709143851.10097-1-W_Armin@gmx.de
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvmem/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/toshiba_acpi.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/nvmem/core.c
-+++ b/drivers/nvmem/core.c
-@@ -462,7 +462,7 @@ static int nvmem_populate_sysfs_cells(st
- 						    "%s@%x,%x", entry->name,
- 						    entry->offset,
- 						    entry->bit_offset);
--		attrs[i].attr.mode = 0444;
-+		attrs[i].attr.mode = 0444 & nvmem_bin_attr_get_umode(nvmem);
- 		attrs[i].size = entry->bytes;
- 		attrs[i].read = &nvmem_cell_attr_read;
- 		attrs[i].private = entry;
+--- a/drivers/platform/x86/toshiba_acpi.c
++++ b/drivers/platform/x86/toshiba_acpi.c
+@@ -3304,6 +3304,7 @@ static const struct dmi_system_id toshib
+ 		},
+ 	 .driver_data = (void *)(QUIRK_TURN_ON_PANEL_ON_RESUME | QUIRK_HCI_HOTKEY_QUICKSTART),
+ 	},
++	{ }
+ };
+ 
+ static int toshiba_acpi_add(struct acpi_device *acpi_dev)
 
 
