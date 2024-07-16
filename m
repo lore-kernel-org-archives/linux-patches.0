@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C61B641;
-	Tue, 16 Jul 2024 15:39:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5DA619B3D3;
+	Tue, 16 Jul 2024 15:39:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144352; cv=none; b=erZCYdfVrYvoF2JEeBLtnyVmIQnUZM+wAi2pnkNQENOpfaoRhWsh084xuJkQ0q54q+gI19iEvlNrL203k43p7vkyHr4TR4cHG1h9YTZFcf2ivKBu/kOxCtrXlKr1JMnih2plOUu2jc6xHKnBnnW20nymHysbLwwmQ6yUt0ZTrFA=
+	t=1721144354; cv=none; b=jWurNN6jO7bVrTNWqjSXzuV6i0fCszuqH4uZwmNw3bBEHcvbkemieVJN+TMMUzQ2SNKHtDUhw4N5HVBBjEBHJ1WoR9zq9qkOjE8+YrSE69lIpRheCkc2vnNHo5N/b+bTPbfWMfkWhhAjQIO/RbCfX2yLkOCvY33otErULphsv30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144352; c=relaxed/simple;
-	bh=DFd90lUEnmHnAaxLU73gTQaEwTgrlakKuJzcvC/eR2U=;
+	s=arc-20240116; t=1721144354; c=relaxed/simple;
+	bh=MHxW7qHYqLWMSeYHOL9a9xqnzg+OPTzaAqb2jhE8AFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JzGqtJVUSzJrQOyUZj39H4EpRFoO1HpyAt75g7cC8cJ80szCFFyGe9pTJzS68/GAwXIcGfR3C2floiEpexAThLd+TO6ABH3JqgPmT+zWoJ1U1zWXuEIz3/nKlQLrymWFRL6SqCb6QJPaRKWcEJhUIWL+WDMm7c41CYW+XDFPdec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TwajEb3/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gnvhXoqpTTvC/+T0letR2Hhai85Wt/sbS4maox/75wYSxvQtBkeKlfgVpqGBoN8d5Z1lHYTm+SYScnHUZO11U1k07AUeELem8iPIvrkdAe4IKqIdK9O4RcuzHOJc0SDhGJTgtJA4uWsnVR5ydzVNxWQiLqBLr3bHLh6tss2SeTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lsmZwq6m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TwajEb3/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 690D2C4AF0D;
-	Tue, 16 Jul 2024 15:39:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lsmZwq6m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55039C116B1;
+	Tue, 16 Jul 2024 15:39:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144351;
-	bh=DFd90lUEnmHnAaxLU73gTQaEwTgrlakKuJzcvC/eR2U=;
+	s=korg; t=1721144354;
+	bh=MHxW7qHYqLWMSeYHOL9a9xqnzg+OPTzaAqb2jhE8AFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TwajEb3/MiX5+xW85URcnOU8tR04RhLG9H5Omm76TCLlN+s185lB5UIzXFweIPXtc
-	 ITWDrAQdiINWL/eNcR8fD39I64sClSEBAPzAzCQGCMWkqtXWJEuFGiR/eq7tiTe3HH
-	 VSaTQj4Utd0DEHGvb5jUunSBW16SMxxsTmZswOVQ=
+	b=lsmZwq6mz3aHkA3c0iK0KmRaNcai9ETS6TG5n4BjUkmAX7Su9M+SztKoJpA+Db6g/
+	 NNXknR7E3GZdolflTtzxYwiQBgIJbHk39uyAnWTMJhuODQAYuYFd8ezMhBdwvq6+Hk
+	 il4u5MrQzhq1Xr1671GV5XnDveLYZ1popdeR/fEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian-Hong Pan <jhp@endlessos.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 43/78] ALSA: hda/realtek: Enable headset mic of JP-IK LEAP W502 with ALC897
-Date: Tue, 16 Jul 2024 17:31:15 +0200
-Message-ID: <20240716152742.304489615@linuxfoundation.org>
+Subject: [PATCH 5.4 44/78] nvme-multipath: find NUMA path only for online numa-node
+Date: Tue, 16 Jul 2024 17:31:16 +0200
+Message-ID: <20240716152742.344742857@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152740.626160410@linuxfoundation.org>
 References: <20240716152740.626160410@linuxfoundation.org>
@@ -51,69 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jian-Hong Pan <jhp@endlessos.org>
+From: Nilay Shroff <nilay@linux.ibm.com>
 
-[ Upstream commit 45e37f9ce28d248470bab4376df2687a215d1b22 ]
+[ Upstream commit d3a043733f25d743f3aa617c7f82dbcb5ee2211a ]
 
-JP-IK LEAP W502 laptop's headset mic is not enabled until
-ALC897_FIXUP_HEADSET_MIC_PIN3 quirk is applied.
+In current native multipath design when a shared namespace is created,
+we loop through each possible numa-node, calculate the NUMA distance of
+that node from each nvme controller and then cache the optimal IO path
+for future reference while sending IO. The issue with this design is that
+we may refer to the NUMA distance table for an offline node which may not
+be populated at the time and so we may inadvertently end up finding and
+caching a non-optimal path for IO. Then latter when the corresponding
+numa-node becomes online and hence the NUMA distance table entry for that
+node is created, ideally we should re-calculate the multipath node distance
+for the newly added node however that doesn't happen unless we rescan/reset
+the controller. So essentially, we may keep using non-optimal IO path for a
+node which is made online after namespace is created.
+This patch helps fix this issue ensuring that when a shared namespace is
+created, we calculate the multipath node distance for each online numa-node
+instead of each possible numa-node. Then latter when a node becomes online
+and we receive any IO on that newly added node, we would calculate the
+multipath node distance for newly added node but this time NUMA distance
+table would have been already populated for newly added node. Hence we
+would be able to correctly calculate the multipath node distance and choose
+the optimal path for the IO.
 
-Here is the original pin node values:
-
-0x11 0x40000000
-0x12 0xb7a60130
-0x14 0x90170110
-0x15 0x411111f0
-0x16 0x411111f0
-0x17 0x411111f0
-0x18 0x411111f0
-0x19 0x411111f0
-0x1a 0x411111f0
-0x1b 0x03211020
-0x1c 0x411111f0
-0x1d 0x4026892d
-0x1e 0x411111f0
-0x1f 0x411111f0
-
-Signed-off-by: Jian-Hong Pan <jhp@endlessos.org>
-Link: https://lore.kernel.org/r/20240520055008.7083-2-jhp@endlessos.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/nvme/host/multipath.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index bf9a4d5f8555d..2c0bfdfcf6410 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9909,6 +9909,7 @@ enum {
- 	ALC897_FIXUP_LENOVO_HEADSET_MODE,
- 	ALC897_FIXUP_HEADSET_MIC_PIN2,
- 	ALC897_FIXUP_UNIS_H3C_X500S,
-+	ALC897_FIXUP_HEADSET_MIC_PIN3,
- };
+diff --git a/drivers/nvme/host/multipath.c b/drivers/nvme/host/multipath.c
+index 4f3220aef7c47..36d63da71b2f9 100644
+--- a/drivers/nvme/host/multipath.c
++++ b/drivers/nvme/host/multipath.c
+@@ -437,7 +437,7 @@ static void nvme_mpath_set_live(struct nvme_ns *ns)
+ 		int node, srcu_idx;
  
- static const struct hda_fixup alc662_fixups[] = {
-@@ -10355,10 +10356,18 @@ static const struct hda_fixup alc662_fixups[] = {
- 			{}
- 		},
- 	},
-+	[ALC897_FIXUP_HEADSET_MIC_PIN3] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = (const struct hda_pintbl[]) {
-+			{ 0x19, 0x03a11050 }, /* use as headset mic */
-+			{ }
-+		},
-+	},
- };
- 
- static const struct snd_pci_quirk alc662_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1019, 0x9087, "ECS", ALC662_FIXUP_ASUS_MODE2),
-+	SND_PCI_QUIRK(0x1019, 0x9859, "JP-IK LEAP W502", ALC897_FIXUP_HEADSET_MIC_PIN3),
- 	SND_PCI_QUIRK(0x1025, 0x022f, "Acer Aspire One", ALC662_FIXUP_INV_DMIC),
- 	SND_PCI_QUIRK(0x1025, 0x0241, "Packard Bell DOTS", ALC662_FIXUP_INV_DMIC),
- 	SND_PCI_QUIRK(0x1025, 0x0308, "Acer Aspire 8942G", ALC662_FIXUP_ASPIRE),
+ 		srcu_idx = srcu_read_lock(&head->srcu);
+-		for_each_node(node)
++		for_each_online_node(node)
+ 			__nvme_find_path(head, node);
+ 		srcu_read_unlock(&head->srcu, srcu_idx);
+ 	}
 -- 
 2.43.0
 
