@@ -1,159 +1,140 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E427249F5
-	for <patches@lists.linux.dev>; Tue, 16 Jul 2024 20:29:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186581DDD1
+	for <patches@lists.linux.dev>; Tue, 16 Jul 2024 20:45:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721161777; cv=none; b=R6bZAWkb2ElXQfXSEGoD2z8jXPRmwav/7rmgXGKydulLSJRrhs4b7e/yrB4Tja2riHinTOe/0USCyg7qlNWePyAhMT4uQBAfXNWWZlz4TydjfLodQuY11u+9bWF3Vr1zOLYfVQLbxpgZyBpQTNmNlYB9jVtBDI6NnLajK/eD3KA=
+	t=1721162739; cv=none; b=dqE303Is/vV9N4f63KUjektm+ue9ypI/Jv90gXe1XgcEOdk0mxwpOmay7j46Sswe+eDR5kUOujFTIseqqK1Kphj+gLBhO1iZNd/KAhATwwhHHjVGlJC8cp/ryZfxINGwUf2AgzVGCx9BhLXTY++GqnU0JBFVI3XUZ+LVlVA4I2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721161777; c=relaxed/simple;
-	bh=Yhuhmc5ref3VmS6JXOcfK0IohaRteaXk3J4z1O4kN40=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Tpp05UnHXmhhZIPpRDf7pbma0/v0kgpdX/PQxz/8LadpgktO7/5iMoFoGUdBYelewzEjPzzu6f55hL9UxKzBmm6DIVLJBS94DNMcEJIhsDmdyFJFJU7muV0WKBZIzv7sGq73ekFpRTUocpea2u0HbDHdU60eLDMvNGDVK1I2D7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=O1peAxTK; arc=none smtp.client-ip=209.85.208.51
+	s=arc-20240116; t=1721162739; c=relaxed/simple;
+	bh=iW0FGJyWPUMoCTPJ87BeXQntpaZoDXyTNW9HRfL2Gm0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qsFhxOEopQVbRzvko1zPBhkTBUorJSZ2Ovt7+Og5dJ21HvMYQBjXePmEMjquB1o+8C/1FR4GxnKBxqyIrVJtnk6eMo2fFSEqU5Q7zWR1wl0LiDGeZMsPU7+LS8CXGG4SX+HKxQKjpaHzwzLfZzlrRHxXZf+7jeY5MZGC7SzeMwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=v66bNudV; arc=none smtp.client-ip=209.85.161.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="O1peAxTK"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-58b447c513aso6467099a12.2
-        for <patches@lists.linux.dev>; Tue, 16 Jul 2024 13:29:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="v66bNudV"
+Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-5c9fea3b566so83897eaf.0
+        for <patches@lists.linux.dev>; Tue, 16 Jul 2024 13:45:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721161773; x=1721766573; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=bbPj/PZFGIDhT7c0ujDQ6E8Mz16O/2FBR9KQusTsgDg=;
-        b=O1peAxTKOJJTV8tHfyJW+o2NewWrEzJBx0DZZ/2jHYxnVz2WNY5DxSDP01R9qW2Qny
-         j1h80lzW/H+SXrZS7VLgjR6gX/efmx0gcQRTf2i2Wynkx51cac3SoESGtpvEvs0Q9q1O
-         NFWOvOgv5SEVrxK9gxt1EsjWMMtlpUrdg/9RUpu0mFPv6WrKUsuHYv5nKof9ap9g4V8T
-         2etqHw2SiU69QGQEamsA7mxDDhIG8ZJXyQ4P83bzNGsuFVbG2BSOciryyOA23EfAjbhd
-         Rkcni5f/uAvx8mc5RUjUUBWiPra8qfHt51rIZlLRMk1uJY2h+dmt2BRninTFoiSxFhlr
-         G8pw==
+        d=linaro.org; s=google; t=1721162736; x=1721767536; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=JacPEkGGGsxMEwr6rUWgBfgGlLH9sSrjcqgHkLxEgWA=;
+        b=v66bNudVLq7rJ2SYEQ36PKXK+zJS24gJLXzAYxnb/cR3wa9Eken7fSrWi+D+vgiMgX
+         jSQeTkf3HuLs8AXM9+ow3yviozdXPVlrwN8go0FUVEg+41c+IHuznI0IKYxzfwGmBgRq
+         otzxQAeYzfFCAHunylOlrW6cedloe76hiyRzOt0+FsCXYCeV3xwJk9xZt6d0ZqFleoW8
+         I1CKtLqZbIy06LG1ThFromZ7TPO2U/yqx4kpIFSS/STirIxK85jgVJZkJOeVMezgakpD
+         IDNqXU8KjkmBq47WdwlXbRJDUbukBSGm1ojh9+VEAmsaloeIbpSM5HdVwLxV84yoFxjn
+         Pb1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721161773; x=1721766573;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bbPj/PZFGIDhT7c0ujDQ6E8Mz16O/2FBR9KQusTsgDg=;
-        b=WQk27FpxN1Pkc49HtO7KGCMbdTrVhyIkV82LqndbnsaZ9ETFx0en13uRc3wTkwjEv9
-         iwcg88P4k/hcQfdHcdYq3f2DPzeZwq8nprZ2/F1z0oW/26jKkyWQwztn1KMJwlVfa+UH
-         HDgY7Yd1k/MFoqpnAqhFCw2MM46cMH4RQPGR3H8yRXD3u0bjkOpw/MIW0LLxhH7hR0PL
-         Mrl/ZXAMndLxSB9GAxIoNNUqgtts+YqEX1BUFJ7CNDwGOq1OY4FSFFumgTE19gFTnii/
-         j09kfY1kr03lq6nnZSBSww09ymSvyEX/dyqwKFNasjR3e+ikNpZpIbEFWyP3cBHBJ9vb
-         lANQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWnXgx9r8xwEsaz6M4Pw+t0VxC5/vllW0d1pkuULZF/XC4akR0/Va5twVaV0gtv31P1F0qLFTjiU2MHP7pBsGMm5QwiphCdaQ==
-X-Gm-Message-State: AOJu0YzLYllBMyj2HtZr7+XpkketdonKg9f/ose7JMyuZF3W7XfWpyjK
-	ETRQ0izt2/Z2+9/7JqnqNDwdvtL57QVaLe3V7uiS0CVd6etjHkpJX3wb1bJV9P/XTvihxCqe0PS
-	GC1POkzfIi14IzXi+8sGz1iclPrkQzB33YL7OJw==
-X-Google-Smtp-Source: AGHT+IF+ga++87qZIL9GesqchqNJ7nMQoknpRRE8QlgGw72R1Ft17dXna2B9Rqo1YtNOnhci3c7g/FHe4x02at6YBzY=
-X-Received: by 2002:a50:a696:0:b0:58d:b529:7dc3 with SMTP id
- 4fb4d7f45d1cf-59eef45b5e4mr1989963a12.19.1721161773520; Tue, 16 Jul 2024
- 13:29:33 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1721162736; x=1721767536;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JacPEkGGGsxMEwr6rUWgBfgGlLH9sSrjcqgHkLxEgWA=;
+        b=MWahxYdnU32WHHr+9R8kx8FV+JK3w+AHyTZzR36GAvqU4CvqLas22tflskfnzb8HbB
+         RSZ6MHHdxNTpTnRLcSGUbjDJ5dFHm01zypBVoFP00WksNW29dOHlQ9VTZLgj3maFJ3ij
+         LtJCLEwjiP/GY0BE67/t4LRZ/JVkugEHPuK8ACHHJs1/ku5/1/7S5OVNVZpBryOlkcgp
+         OcP4+zW4WPsjZ1ndhrEB+bsWqC5X1krOwc8SoMQseUNc4i1Mdf2PdGkZN4qPyxxFRy68
+         8lqi7RRyx2pZ8TrkdBlPmGR8vxZl7igFd03gzV/rWt2u945PLU2Cdl5KLYfAQ+KTUX6b
+         BbWg==
+X-Forwarded-Encrypted: i=1; AJvYcCVXjXG92Om8hnjbRMtEMYiGocQUKnKsJ3QX/asQPKq54OQJG4BSpNJ3KviJEjV/LTdV/63sraMWBFSZePlSXH/s6kD7oh3uZw==
+X-Gm-Message-State: AOJu0YznV0CbxAHQUl8xUjyQLw5RhH9pIOBsNeIRBBAFmIdQw9bpQLlw
+	3RToT/a03rev7P7trzfB/QPiVqm3T/3E/vSMm42wybhi1oFt70gcy+yQdbqnzwc=
+X-Google-Smtp-Source: AGHT+IHCjy42xDuBC5UQWJtltJ9p82Idts+EMBtihlCpniaKr5WerzVsRCSCFN3IA2e0wGXoOszWmQ==
+X-Received: by 2002:a05:6871:5c03:b0:25e:2b75:1f89 with SMTP id 586e51a60fabf-260bf549d30mr1278907fac.22.1721162735984;
+        Tue, 16 Jul 2024 13:45:35 -0700 (PDT)
+Received: from localhost ([2603:8080:b800:f700:b5d2:9b28:de1e:aebb])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-708c0d1f628sm1424013a34.67.2024.07.16.13.45.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Jul 2024 13:45:35 -0700 (PDT)
+Date: Tue, 16 Jul 2024 15:45:33 -0500
+From: Dan Carpenter <dan.carpenter@linaro.org>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com, broonie@kernel.org,
+	Arnd Bergmann <arnd@arndb.de>,
+	Anders Roxell <anders.roxell@linaro.org>
+Subject: Re: [PATCH 5.15 000/144] 5.15.163-rc1 review
+Message-ID: <c7beb899-91dc-4fcd-816e-fa7ba6f956e4@suswa.mountain>
+References: <20240716152752.524497140@linuxfoundation.org>
+ <CA+G9fYvVaSX9Ot2vekBOkLjUqCx=SbQqW4vWhypCnGwwBmX4xg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240716152746.516194097@linuxfoundation.org> <aaccd8cc-2bfe-4b2e-b690-be50540f9965@gmail.com>
- <ZpbDlwpfBwViDonu@duo.ucw.cz>
-In-Reply-To: <ZpbDlwpfBwViDonu@duo.ucw.cz>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Wed, 17 Jul 2024 01:59:21 +0530
-Message-ID: <CA+G9fYtosFR2O3A+bgYKV4q+13dWdfqGFqmB+NVu3Qfdfa3Ghg@mail.gmail.com>
-Subject: Re: [PATCH 6.1 00/96] 6.1.100-rc1 review
-To: Pavel Machek <pavel@denx.de>
-Cc: Florian Fainelli <f.fainelli@gmail.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	stable@vger.kernel.org, Paulo Alcantara <pc@manguebit.com>, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, jonathanh@nvidia.com, 
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CA+G9fYvVaSX9Ot2vekBOkLjUqCx=SbQqW4vWhypCnGwwBmX4xg@mail.gmail.com>
 
-On Wed, 17 Jul 2024 at 00:31, Pavel Machek <pavel@denx.de> wrote:
->
-> On Tue 2024-07-16 11:42:39, Florian Fainelli wrote:
-> > On 7/16/24 08:31, Greg Kroah-Hartman wrote:
-> > > This is the start of the stable review cycle for the 6.1.100 release.
-> > > There are 96 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, please
-> > > let me know.
-> > >
-> > > Responses should be made by Thu, 18 Jul 2024 15:27:21 +0000.
-> > > Anything received after that time might be too late.
-> > >
-> > > The whole patch series can be found in one patch at:
-> > >     https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.100-rc1.gz
-> > > or in the git tree and branch at:
-> > >     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> > > and the diffstat can be found below.
->
-> > Commit acbfb53f772f96fdffb3fba2fa16eed4ad7ba0d2 ("cifs: avoid dup prefix
-> > path in dfs_get_automount_devname()") causes the following build failure on
-> > bmips_stb_defconfig:
+On Wed, Jul 17, 2024 at 01:49:12AM +0530, Naresh Kamboju wrote:
+> On Tue, 16 Jul 2024 at 21:37, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
 > >
-> > In file included from ./include/linux/build_bug.h:5,
-> >                  from ./include/linux/container_of.h:5,
-> >                  from ./include/linux/list.h:5,
-> >                  from ./include/linux/module.h:12,
-> >                  from fs/smb/client/cifsfs.c:13:
-> > fs/smb/client/cifsproto.h: In function 'dfs_get_automount_devname':
-> > fs/smb/client/cifsproto.h:74:22: error: 'struct TCP_Server_Info' has no
-> > member named 'origin_fullpath'
-> >   if (unlikely(!server->origin_fullpath))
->
->
-> We see same problem.
+> > This is the start of the stable review cycle for the 5.15.163 release.
+> > There are 144 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Thu, 18 Jul 2024 15:27:21 +0000.
+> > Anything received after that time might be too late.
+> >
+> > The whole patch series can be found in one patch at:
+> >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.163-rc1.gz
+> > or in the git tree and branch at:
+> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> > and the diffstat can be found below.
+> >
+> > thanks,
+> >
+> > greg k-h
+> 
+> The s390 builds failed on stable-rc 5.15.163-rc1 review due to following build
+> warnings / errors.
+> 
+> First time seen on stable-rc 5.15 branch.
+> 
+>   GOOD: ba1631e1a5cc ("Linux 5.15.162-rc1")
+>   BAD:  b9a293390e62 ("Linux 5.15.163-rc1")
+> 
+> * s390, build
+>   - clang-18-allnoconfig
+>   - clang-18-defconfig
+>   - clang-18-tinyconfig
+>   - clang-nightly-allnoconfig
+>   - clang-nightly-defconfig
+>   - clang-nightly-tinyconfig
+>   - gcc-12-allnoconfig
+>   - gcc-12-defconfig
+>   - gcc-12-tinyconfig
+>   - gcc-8-allnoconfig
+>   - gcc-8-defconfig-fe40093d
+>   - gcc-8-tinyconfig
+> 
+> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> 
+> Build regressions:
+> --------
+> arch/s390/include/asm/processor.h:253:11: error: expected ';' at end
+> of declaration
+>   253 |         psw_t psw __uninitialized;
+>       |                  ^
+>       |                  ;
+> 1 error generated.
 
-Same problem as others have already reported on the
-arm, parisc and powerpc.
-+
-The old s390 build failures which were reported from
-the previous stable-rc 6.1 release.
+Need to cherry-pick commit fd7eea27a3ae ("Compiler Attributes: Add __uninitialized macro")
 
-* arm, build
-  - clang-18-nhk8815_defconfig
-  - clang-18-s3c2410_defconfig
-  - clang-nightly-nhk8815_defconfig
-  - clang-nightly-s3c2410_defconfig
-  - gcc-13-nhk8815_defconfig
-  - gcc-13-s3c2410_defconfig
-  - gcc-8-nhk8815_defconfig
+regards,
+dan carpenter
 
-* parisc, build
-  - gcc-11-defconfig
-
-* powerpc, build
-  - clang-18-defconfig
-  - clang-18-ppc64e_defconfig
-  - clang-nightly-defconfig
-  - clang-nightly-ppc64e_defconfig
-  - gcc-13-defconfig
-  - gcc-13-ppc64e_defconfig
-  - gcc-8-defconfig
-  - gcc-8-ppc64e_defconfig
-
-and
-
-* s390, build
-  - clang-18-allnoconfig
-  - clang-18-defconfig
-  - clang-18-tinyconfig
-  - clang-nightly-allnoconfig
-  - clang-nightly-defconfig
-  - clang-nightly-tinyconfig
-  - gcc-13-allnoconfig
-  - gcc-13-defconfig
-  - gcc-13-tinyconfig
-  - gcc-8-allnoconfig
-  - gcc-8-defconfig-fe40093d
-  - gcc-8-tinyconfig
-
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-
---
-Linaro LKFT
-https://lkft.linaro.org
