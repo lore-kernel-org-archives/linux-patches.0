@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A8D1DDCE;
-	Tue, 16 Jul 2024 15:50:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E6451DDCE;
+	Tue, 16 Jul 2024 15:50:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145056; cv=none; b=T06qu4dQh+KgPb6MWK9B1p8uGQ+iW3JIwa57jfRZhSpBs7bVZv+2W/Ib0o4oXZ9ImTmzPZF3+NKDZ1zGMgT3GBg30FjMNCqiOnS7ueO5zmXuVrRbnkhnz9W+VPfKS+anptY/GMKpgpniNIyXIkjYGoZ8m4XDIegU212AVI3cGWM=
+	t=1721145059; cv=none; b=FlPzaD7mgxa0y5IE+YvwlZrW79W65a3mmGog1WOWmyaoOQGfviAsg6DD10iv5IToKRjQC9+DOB9dMmU31ip27pAnpSgPN7Z5CSQck78E2oxmtB7bfGEmDQBg4+FYKwEzYwoYzR7Ceow+Q5SsLpiG3Pt6q+SrupGJP+TXRTFPLq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145056; c=relaxed/simple;
-	bh=OtJxmrrCFkT+K7K7W6vA2YoyqZrSfvN7s872bpv0/UE=;
+	s=arc-20240116; t=1721145059; c=relaxed/simple;
+	bh=GRm/TN8vnbFZ1fwMxx8KrUkSIg4s1Nhe/Dj0L4QMyjc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dZLcklTJBxyvr1lTopWHf7Fj1RAsEx3GWssxjuCp6s08rOdSJCGE7vbI19DzAWIgAbOzbeJ5IdVkQ1gosgx68JS/PIztd4PhEGB2VtmDKZ0MzJEaT7D0k9ezoLoUWp9qje7y7EdZBNm8HpwBuCL1wUtB5KSShHEr+i70ExunQDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cIUNOKI4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NjrcEE/8sZop0ilKGXvDme6RKMfZozbivnqo/nIgOjvDnMtlSGIDN8yJ4dqTECkO3uXUfVu9JcduFPBp2iANPv+wZ2gXZi/voTHo2Nyec1EUqhL0dhZDWDqkUY9riZM61vLR+CdfaLeNK2vmrnYGNUJDaD4EOASQQjJOqQZGHfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xqPBZ2tv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cIUNOKI4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C91E7C116B1;
-	Tue, 16 Jul 2024 15:50:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xqPBZ2tv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5676C116B1;
+	Tue, 16 Jul 2024 15:50:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145056;
-	bh=OtJxmrrCFkT+K7K7W6vA2YoyqZrSfvN7s872bpv0/UE=;
+	s=korg; t=1721145059;
+	bh=GRm/TN8vnbFZ1fwMxx8KrUkSIg4s1Nhe/Dj0L4QMyjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cIUNOKI4COAj7rmyAA0+0co+UuEtjwm14PptXsRVaJhHWm6Ute1k7zH8rXc4S473B
-	 K3YNUeih7621cDH/IMA+sgp8cNzJa1AWeRG/oGRCRdZ1wnOV9k6EH1aRiCFVnmoahO
-	 944pkUyafVjc23A1TsOWVzmKU5m7X8NeRBtLsMjE=
+	b=xqPBZ2tvlUaJtI6Hrhco2Z34uAWtqL/VmiCpSaw+o5ChP+d0/wpWmx5YWNYLpLsdJ
+	 +q/6YWTSGCytuWmN/kJoC/4jWciQk2flOtn3fS9va5E6kIMWguWsK1ce8o4CmK7EWx
+	 A/OzPmEe4t2fJR184k3kJgZ1rMHL3kITF6bf3mRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Remi Pommarel <repk@triplefau.lt>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.9 083/143] xhci: always resume roothubs if xHC was reset during resume
-Date: Tue, 16 Jul 2024 17:31:19 +0200
-Message-ID: <20240716152759.168873859@linuxfoundation.org>
+	Yunseong Kim <yskelg@gmail.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	stable@kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.9 084/143] s390/mm: Add NULL pointer check to crst_table_free() base_crst_free()
+Date: Tue, 16 Jul 2024 17:31:20 +0200
+Message-ID: <20240716152759.206872946@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -50,78 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit 79989bd4ab86404743953fa382af0a22900050cf upstream.
+commit b5efb63acf7bddaf20eacfcac654c25c446eabe8 upstream.
 
-Usb device connect may not be detected after runtime resume if
-xHC is reset during resume.
+crst_table_free() used to work with NULL pointers before the conversion
+to ptdescs.  Since crst_table_free() can be called with a NULL pointer
+(error handling in crst_table_upgrade() add an explicit check.
 
-In runtime resume cases xhci_resume() will only resume roothubs if there
-are pending port events. If the xHC host is reset during runtime resume
-due to a Save/Restore Error (SRE) then these pending port events won't be
-detected as PORTSC change bits are not immediately set by host after reset.
+Also add the same check to base_crst_free() for consistency reasons.
 
-Unconditionally resume roothubs if xHC is reset during resume to ensure
-device connections are detected.
+In real life this should not happen, since order two GFP_KERNEL
+allocations will not fail, unless FAIL_PAGE_ALLOC is enabled and used.
 
-Also return early with error code if starting xHC fails after reset.
-
-Issue was debugged and a similar solution suggested by Remi Pommarel.
-Using this instead as it simplifies future refactoring.
-
-Reported-by: Remi Pommarel <repk@triplefau.lt>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218987
-Suggested-by: Remi Pommarel <repk@triplefau.lt>
-Tested-by: Remi Pommarel <repk@triplefau.lt>
-Cc: stable@vger.kernel.org
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20240627145523.1453155-2-mathias.nyman@linux.intel.com
+Reported-by: Yunseong Kim <yskelg@gmail.com>
+Fixes: 6326c26c1514 ("s390: convert various pgalloc functions to use ptdescs")
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Acked-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: stable@kernel.org
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci.c |   16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ arch/s390/mm/pgalloc.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -1125,10 +1125,20 @@ int xhci_resume(struct xhci_hcd *xhci, p
- 			xhci_dbg(xhci, "Start the secondary HCD\n");
- 			retval = xhci_run(xhci->shared_hcd);
- 		}
--
-+		if (retval)
-+			return retval;
-+		/*
-+		 * Resume roothubs unconditionally as PORTSC change bits are not
-+		 * immediately visible after xHC reset
-+		 */
- 		hcd->state = HC_STATE_SUSPENDED;
--		if (xhci->shared_hcd)
-+
-+		if (xhci->shared_hcd) {
- 			xhci->shared_hcd->state = HC_STATE_SUSPENDED;
-+			usb_hcd_resume_root_hub(xhci->shared_hcd);
-+		}
-+		usb_hcd_resume_root_hub(hcd);
-+
- 		goto done;
- 	}
+--- a/arch/s390/mm/pgalloc.c
++++ b/arch/s390/mm/pgalloc.c
+@@ -55,6 +55,8 @@ unsigned long *crst_table_alloc(struct m
  
-@@ -1152,7 +1162,6 @@ int xhci_resume(struct xhci_hcd *xhci, p
+ void crst_table_free(struct mm_struct *mm, unsigned long *table)
+ {
++	if (!table)
++		return;
+ 	pagetable_free(virt_to_ptdesc(table));
+ }
  
- 	xhci_dbc_resume(xhci);
+@@ -262,6 +264,8 @@ static unsigned long *base_crst_alloc(un
  
-- done:
- 	if (retval == 0) {
- 		/*
- 		 * Resume roothubs only if there are pending events.
-@@ -1178,6 +1187,7 @@ int xhci_resume(struct xhci_hcd *xhci, p
- 			usb_hcd_resume_root_hub(hcd);
- 		}
- 	}
-+done:
- 	/*
- 	 * If system is subject to the Quirk, Compliance Mode Timer needs to
- 	 * be re-initialized Always after a system resume. Ports are subject
+ static void base_crst_free(unsigned long *table)
+ {
++	if (!table)
++		return;
+ 	pagetable_free(virt_to_ptdesc(table));
+ }
+ 
 
 
