@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9784919DF71;
-	Tue, 16 Jul 2024 15:42:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A2919EEB1;
+	Tue, 16 Jul 2024 15:42:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144523; cv=none; b=awmBCYV080M0UGaYgLtMc3jmsE/S0RysB4DjFkvvvV1W/NV/njxcQaF9QwrGgXZz9IJVWC9zSXYjIKNS7Pvx+uMRPvpohVkARmdHH7y/gVryw2Dvbq1vge1xxBYj+CQ8H6gTN6RCU1Z2relMIyHCay5ybpFTtGazpElp9Ygzc1E=
+	t=1721144526; cv=none; b=MzN35R+7ZnQ49WxobmTKXrK7gIPybJUxkEvrMSg9aeqBi0sUCxQzjI9ckO4OJdSGa8H0f999IZRYweBD6ldRev9tSlmRPXJXiphKPZKSptxcwSh6m4aUccDQbkMsh3AGl/OGHYh+/NtBo09+ZrHUmRkdkqvAKcQtL8mMZdfc46U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144523; c=relaxed/simple;
-	bh=RhVVIoquaSwzP6jnc+dTDIX5BVqbLUrJERBSExmbLR0=;
+	s=arc-20240116; t=1721144526; c=relaxed/simple;
+	bh=vROyVmyUCogV5zhs9vReVc5GlGkFo6uVvfQN0lefpFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iqrrr0tWkR3gjpUlztWTA/B8f0T0rjEJNQOelPvHFH/BNJKe1IRAepK2ZShvjpmro6MQSo7qF/D1oE/JZtzlAn7PnQIkaz5JocTXpj19crMpxTNt1BTJnz0Yj2CCODIs49tSdBt19gBA307PZyoy5v0sHVdFhY2AH9ONvB64Y/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZydshtRB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QQRtOgppDwwSPXbjbnh8oxQiaVHaT8bMtIbsxaVq1nzcjyfxltdqFldH6Gih6f7mUQm/eYcL03aiGprhUV+wwNSe8dxnS8bpV5DtXoUV/wpaTjVYRA+MwzU+gSOchSwrwBEZ3GUTyO3vOlbaxKN8ThnPeHyPHVP4LEtySnhasU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z5w2QHHN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZydshtRB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C814C4AF0F;
-	Tue, 16 Jul 2024 15:42:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z5w2QHHN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E64BC4AF0B;
+	Tue, 16 Jul 2024 15:42:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144523;
-	bh=RhVVIoquaSwzP6jnc+dTDIX5BVqbLUrJERBSExmbLR0=;
+	s=korg; t=1721144526;
+	bh=vROyVmyUCogV5zhs9vReVc5GlGkFo6uVvfQN0lefpFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZydshtRBe+HAOggNVlJkhWZMGFFeDBm7spvcw020eaXdSReWSGcF1jrxQ+IH2nIrK
-	 X62aSJyrpyamQ2j0Nq2JbtC6ZuGievFNWo+1nZbaV4xN7QrpvTW3RtMI7iGTWoBubI
-	 oQAtefFiEhOINOO6N9KAnhLi82YSVfbSUAbuXin0=
+	b=z5w2QHHN8XpNNoECsbKJkeoVywqn7m6Hxvku6RFErpxRoLGYp3B5K/uyiys3rWSMn
+	 X++Yhf6n5azCnMnSNpPWJXDzcEds6kHhMe+9646hJ5A5Kj66sY+iQXqAdk7YSxvAiv
+	 kLXBTqEqfQUsCqO7Tota/dFazglLKTWIKmH9C0as=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Marshall <hubcap@omnibond.com>,
+	Brendan Higgins <brendanhiggins@google.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Kees Cook <keescook@chromium.org>,
+	David Gow <davidgow@google.com>,
+	Rae Moar <rmoar@google.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 021/108] orangefs: fix out-of-bounds fsid access
-Date: Tue, 16 Jul 2024 17:30:36 +0200
-Message-ID: <20240716152746.814983545@linuxfoundation.org>
+Subject: [PATCH 5.10 022/108] kunit: Fix timeout message
+Date: Tue, 16 Jul 2024 17:30:37 +0200
+Message-ID: <20240716152746.854244413@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152745.988603303@linuxfoundation.org>
 References: <20240716152745.988603303@linuxfoundation.org>
@@ -44,46 +49,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mike Marshall <hubcap@omnibond.com>
+From: Mickaël Salaün <mic@digikod.net>
 
-[ Upstream commit 53e4efa470d5fc6a96662d2d3322cfc925818517 ]
+[ Upstream commit 53026ff63bb07c04a0e962a74723eb10ff6f9dc7 ]
 
-Arnd Bergmann sent a patch to fsdevel, he says:
+The exit code is always checked, so let's properly handle the -ETIMEDOUT
+error code.
 
-"orangefs_statfs() copies two consecutive fields of the superblock into
-the statfs structure, which triggers a warning from the string fortification
-helpers"
-
-Jan Kara suggested an alternate way to do the patch to make it more readable.
-
-I ran both ideas through xfstests and both seem fine. This patch
-is based on Jan Kara's suggestion.
-
-Signed-off-by: Mike Marshall <hubcap@omnibond.com>
+Cc: Brendan Higgins <brendanhiggins@google.com>
+Cc: Shuah Khan <skhan@linuxfoundation.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: David Gow <davidgow@google.com>
+Reviewed-by: Rae Moar <rmoar@google.com>
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Link: https://lore.kernel.org/r/20240408074625.65017-4-mic@digikod.net
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/orangefs/super.c | 3 ++-
+ lib/kunit/try-catch.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/orangefs/super.c b/fs/orangefs/super.c
-index 2f2e430461b21..b48aef43b51d5 100644
---- a/fs/orangefs/super.c
-+++ b/fs/orangefs/super.c
-@@ -200,7 +200,8 @@ static int orangefs_statfs(struct dentry *dentry, struct kstatfs *buf)
- 		     (long)new_op->downcall.resp.statfs.files_avail);
+diff --git a/lib/kunit/try-catch.c b/lib/kunit/try-catch.c
+index 71e5c58530996..d18da926b2cd7 100644
+--- a/lib/kunit/try-catch.c
++++ b/lib/kunit/try-catch.c
+@@ -76,7 +76,6 @@ void kunit_try_catch_run(struct kunit_try_catch *try_catch, void *context)
+ 	time_remaining = wait_for_completion_timeout(&try_completion,
+ 						     kunit_test_timeout());
+ 	if (time_remaining == 0) {
+-		kunit_err(test, "try timed out\n");
+ 		try_catch->try_result = -ETIMEDOUT;
+ 	}
  
- 	buf->f_type = sb->s_magic;
--	memcpy(&buf->f_fsid, &ORANGEFS_SB(sb)->fs_id, sizeof(buf->f_fsid));
-+	buf->f_fsid.val[0] = ORANGEFS_SB(sb)->fs_id;
-+	buf->f_fsid.val[1] = ORANGEFS_SB(sb)->id;
- 	buf->f_bsize = new_op->downcall.resp.statfs.block_size;
- 	buf->f_namelen = ORANGEFS_NAME_MAX;
+@@ -89,6 +88,8 @@ void kunit_try_catch_run(struct kunit_try_catch *try_catch, void *context)
+ 		try_catch->try_result = 0;
+ 	else if (exit_code == -EINTR)
+ 		kunit_err(test, "wake_up_process() was never called\n");
++	else if (exit_code == -ETIMEDOUT)
++		kunit_err(test, "try timed out\n");
+ 	else if (exit_code)
+ 		kunit_err(test, "Unknown error: %d\n", exit_code);
  
 -- 
 2.43.0
