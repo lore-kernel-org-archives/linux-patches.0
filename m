@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B33C1EA73;
-	Tue, 16 Jul 2024 15:45:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 281BE1EA73;
+	Tue, 16 Jul 2024 15:45:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144742; cv=none; b=aBIoYWybcPhe7VFxqwsFXPQNQpQ/gjzpa7QQenZeLtBEFs4id+W40y9QiJZkLp6HnWI/W8d47bYd/CIOdyWTszBR74HNE4CeoGAKg+y5/KtGcl1QsxCXs9hPI/H2BB56PdEZrAJSd4sLEQOdentW3kMCB/FfzJDDdZEpasBj7zo=
+	t=1721144745; cv=none; b=QMCwX6E0wYbig1W4lN8V73hR479p6tDETAsMxeCeUoKSCUrvVUm3417/QvyW4H6q8onS80I3y87xm8iXYRDk1fYreIvHfrREdUPNLy9i1hgnn7qTgauSb5QMGV8moeuQQ3nEL8gC2vYjagbVcz2pY9pqs9zxvQUespkv2ySkMU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144742; c=relaxed/simple;
-	bh=RwmVDr6ENg2F+8JhsaAjZAI4tybL9xrrnhtK7ZXnJJY=;
+	s=arc-20240116; t=1721144745; c=relaxed/simple;
+	bh=wC5y0Meiq4i+V1iWacAnbCi3vAHN1Ka5uniCFeqF+eM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tFeEt7H8zvb8qYrkRI8KQ1RdoSpRdozWWyePrVouOhkOq8BqiHO4dyKl+evM/Vfe7X+0Yk/qgZUlVEQ89zoyOBDaLzB0Mbz/xWJ/OdbzI5kFt9sLorVhsKoNp21507MYhMYWnTTP9O++siWgii8asIrXEiw6gHrDjlljOYbzcOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OLONveOZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ga/EeLlLrTkOwwk8v6twdc8klTUASLG5vvaePnmErkxw2YJjPT9xYXrQ1huXBJYycaP7W+1Xd/Il8jCL75aUf2aJSxAmbnE3idSIT4xkzXIt0UUDzfG1Cx01X3L40GvYaKVfaPokSUoLG3jzmyl9wiEkpH7Oy1/gdPPCGS06J3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UI83XV5y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OLONveOZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6306C116B1;
-	Tue, 16 Jul 2024 15:45:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UI83XV5y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FE46C4AF0D;
+	Tue, 16 Jul 2024 15:45:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144742;
-	bh=RwmVDr6ENg2F+8JhsaAjZAI4tybL9xrrnhtK7ZXnJJY=;
+	s=korg; t=1721144745;
+	bh=wC5y0Meiq4i+V1iWacAnbCi3vAHN1Ka5uniCFeqF+eM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OLONveOZAoYBqHA2sJCXscTeFTuTZrD6Sx2RgQmxqC8/A4tX+RbJF3VP6vsOwF7zb
-	 UMpm+nlEt8dkzJfiWJq4Fm7+X38AIFZs2tBA5oOdB2uipVbcSWcFgkIyFip3JsOvFD
-	 P6pmBDqgDOhyyvcZwxnwkkvOO5T2d9mpcLMlsjWw=
+	b=UI83XV5y+Xue3Uhku+zPbm3MreeWvVQH5qNlUBBOlzAq5WmV2b+MXGsi6FVm0q/lI
+	 dGj7bNx9OtlXN4cA9qSHmDehXxOVZjY9jmypYCb/CONIpmPUElIJl6YCU5mcRB9/CB
+	 SpiT9eRacTxsxPx84YK6EfnoNijlxWhINr65T1ak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Xiubo Li <xiubli@redhat.com>
-Subject: [PATCH 5.10 090/108] libceph: fix race between delayed_work() and ceph_monc_stop()
-Date: Tue, 16 Jul 2024 17:31:45 +0200
-Message-ID: <20240716152749.444061714@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 091/108] wireguard: allowedips: avoid unaligned 64-bit memory accesses
+Date: Tue, 16 Jul 2024 17:31:46 +0200
+Message-ID: <20240716152749.483525901@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152745.988603303@linuxfoundation.org>
 References: <20240716152745.988603303@linuxfoundation.org>
@@ -50,86 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Helge Deller <deller@kernel.org>
 
-commit 69c7b2fe4c9cc1d3b1186d1c5606627ecf0de883 upstream.
+commit 948f991c62a4018fb81d85804eeab3029c6209f8 upstream.
 
-The way the delayed work is handled in ceph_monc_stop() is prone to
-races with mon_fault() and possibly also finish_hunting().  Both of
-these can requeue the delayed work which wouldn't be canceled by any of
-the following code in case that happens after cancel_delayed_work_sync()
-runs -- __close_session() doesn't mess with the delayed work in order
-to avoid interfering with the hunting interval logic.  This part was
-missed in commit b5d91704f53e ("libceph: behave in mon_fault() if
-cur_mon < 0") and use-after-free can still ensue on monc and objects
-that hang off of it, with monc->auth and monc->monmap being
-particularly susceptible to quickly being reused.
+On the parisc platform, the kernel issues kernel warnings because
+swap_endian() tries to load a 128-bit IPv6 address from an unaligned
+memory location:
 
-To fix this:
+ Kernel: unaligned access to 0x55f4688c in wg_allowedips_insert_v6+0x2c/0x80 [wireguard] (iir 0xf3010df)
+ Kernel: unaligned access to 0x55f46884 in wg_allowedips_insert_v6+0x38/0x80 [wireguard] (iir 0xf2010dc)
 
-- clear monc->cur_mon and monc->hunting as part of closing the session
-  in ceph_monc_stop()
-- bail from delayed_work() if monc->cur_mon is cleared, similar to how
-  it's done in mon_fault() and finish_hunting() (based on monc->hunting)
-- call cancel_delayed_work_sync() after the session is closed
+Avoid such unaligned memory accesses by instead using the
+get_unaligned_be64() helper macro.
 
+Signed-off-by: Helge Deller <deller@gmx.de>
+[Jason: replace src[8] in original patch with src+8]
 Cc: stable@vger.kernel.org
-Link: https://tracker.ceph.com/issues/66857
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Xiubo Li <xiubli@redhat.com>
+Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Link: https://patch.msgid.link/20240704154517.1572127-3-Jason@zx2c4.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/mon_client.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/net/wireguard/allowedips.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/ceph/mon_client.c
-+++ b/net/ceph/mon_client.c
-@@ -1014,13 +1014,19 @@ static void delayed_work(struct work_str
- 	struct ceph_mon_client *monc =
- 		container_of(work, struct ceph_mon_client, delayed_work.work);
- 
--	dout("monc delayed_work\n");
- 	mutex_lock(&monc->mutex);
-+	dout("%s mon%d\n", __func__, monc->cur_mon);
-+	if (monc->cur_mon < 0) {
-+		goto out;
-+	}
-+
- 	if (monc->hunting) {
- 		dout("%s continuing hunt\n", __func__);
- 		reopen_session(monc);
- 	} else {
- 		int is_auth = ceph_auth_is_authenticated(monc->auth);
-+
-+		dout("%s is_authed %d\n", __func__, is_auth);
- 		if (ceph_con_keepalive_expired(&monc->con,
- 					       CEPH_MONC_PING_TIMEOUT)) {
- 			dout("monc keepalive timeout\n");
-@@ -1045,6 +1051,8 @@ static void delayed_work(struct work_str
- 		}
+--- a/drivers/net/wireguard/allowedips.c
++++ b/drivers/net/wireguard/allowedips.c
+@@ -15,8 +15,8 @@ static void swap_endian(u8 *dst, const u
+ 	if (bits == 32) {
+ 		*(u32 *)dst = be32_to_cpu(*(const __be32 *)src);
+ 	} else if (bits == 128) {
+-		((u64 *)dst)[0] = be64_to_cpu(((const __be64 *)src)[0]);
+-		((u64 *)dst)[1] = be64_to_cpu(((const __be64 *)src)[1]);
++		((u64 *)dst)[0] = get_unaligned_be64(src);
++		((u64 *)dst)[1] = get_unaligned_be64(src + 8);
  	}
- 	__schedule_delayed(monc);
-+
-+out:
- 	mutex_unlock(&monc->mutex);
  }
  
-@@ -1157,13 +1165,15 @@ EXPORT_SYMBOL(ceph_monc_init);
- void ceph_monc_stop(struct ceph_mon_client *monc)
- {
- 	dout("stop\n");
--	cancel_delayed_work_sync(&monc->delayed_work);
- 
- 	mutex_lock(&monc->mutex);
- 	__close_session(monc);
-+	monc->hunting = false;
- 	monc->cur_mon = -1;
- 	mutex_unlock(&monc->mutex);
- 
-+	cancel_delayed_work_sync(&monc->delayed_work);
-+
- 	/*
- 	 * flush msgr queue before we destroy ourselves to ensure that:
- 	 *  - any work that references our embedded con is finished.
 
 
