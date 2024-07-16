@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C474219DFB3;
-	Tue, 16 Jul 2024 15:52:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45C219AD46;
+	Tue, 16 Jul 2024 15:52:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145129; cv=none; b=s+u370TWJHF0OG2HJG0hVMoBG2miBm1XQxFAdEVDUMbEDAA+qk3/PgDrse8ApK+r/1bgrdjlPdQXq00hF2NfTIvxZ44JWX68VLFhQBgH7cPyYhsWqDA1rDOL9bVheXakbhbtSeRc5kYznGRVrn2QxXmfsJOv7CEX4kLBcRJazlY=
+	t=1721145132; cv=none; b=aDcljTJ62BoMSv8s0mOE22Tj50VJ74pS/WPk1TfDsOsH4X02fqT3uH+7/UFltuvkNDX5/EW+J4cUqXKx+zeL2HM9CdUxBuWCt8ywzYPoUdSNAgM/I0cXUJB+bcLdcbNqWETaJoF4CNIfMBotflILtFAF1vtTIAQDieCS4XQkaZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145129; c=relaxed/simple;
-	bh=Vtv4IHljGmjVtlqyIfJaXsR55DQnr2fokV5UC0jJpoA=;
+	s=arc-20240116; t=1721145132; c=relaxed/simple;
+	bh=D9MmMUgNZXfbMm+IwaBP3VOl/vRNpdbP86qvzraulto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oz3rJ8/rDy9FG++7z5QwsYYVey5SGhfullg3coMgJf9ArSgbmn/CEeqZ1aRGOJp2Y+5YvexgyDWhgwFgAJO2K6QrpMCJQSa6g658cFeUOqlnPfKM6FbHjb4E/yNe6CmmYGhWdlDwbEocvv4NK/SCGrSeUuq4JcUWDIv6fkKC8YU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMuDgd85; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K3aOLznhTSeVSYsCmvFBUx9FG71CTHPHqvvMQRz0rCTkSHPXmNM+ETiEWw6J4HC0rep8QcTt4suoeXbEyj9LReUYWarkPSUDboNBipQimEP/MWQJl3U9ZZzbC8l8gBx8wV2jEy0zL8Fb/7Yuluu+yx5qu1Wvx101b4n4C2bF+8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aS6Tqnz3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMuDgd85"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49120C116B1;
-	Tue, 16 Jul 2024 15:52:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aS6Tqnz3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 408C8C116B1;
+	Tue, 16 Jul 2024 15:52:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145129;
-	bh=Vtv4IHljGmjVtlqyIfJaXsR55DQnr2fokV5UC0jJpoA=;
+	s=korg; t=1721145132;
+	bh=D9MmMUgNZXfbMm+IwaBP3VOl/vRNpdbP86qvzraulto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hMuDgd85qaC9XjYVd9wfJaxQruflQhmijBuzEo30j0Jp6yoF1LyEMS/74GwmdmZjz
-	 91xBN17rSG/FpTLydMOXTgAZ0pG2eJYoB3Zhuylm4qK88YqCx4qAED17CH1uC+4k9J
-	 AKsiwlI0D00UOUJlXwiMewgnXRXDsCcC+whcF34Y=
+	b=aS6Tqnz37wYcAtGtPTu7z68HfHF6zzaMqi8DFHVmo+QWIBmiRGmh3ItP1adV0aPas
+	 +7McBKrb3ioDV2whCfMPAqnVv7CXqDkrB30+WXKM0mEgeS1mO3jR2FouLuz9FCuRS5
+	 JP8uD5bFP3En+cDSKQcWXvS+0cLkz/OM/3naBM10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentong Wu <wentong.wu@intel.com>,
-	Jason Chen <jason.z.chen@intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 6.9 109/143] mei: vsc: Enhance IVSC chipset stability during warm reboot
-Date: Tue, 16 Jul 2024 17:31:45 +0200
-Message-ID: <20240716152800.169491115@linuxfoundation.org>
+	Yoonho Shin <yoonho.shin@samsung.com>,
+	Hobin Woo <hobin.woo@samsung.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.9 092/143] ksmbd: discard write access to the directory open
+Date: Tue, 16 Jul 2024 17:31:28 +0200
+Message-ID: <20240716152759.515830155@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -51,59 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentong Wu <wentong.wu@intel.com>
+From: Hobin Woo <hobin.woo@samsung.com>
 
-commit 07de60a46ae9c0583df1c644bae6d3b22d1d903d upstream.
+commit e2e33caa5dc2eae7bddf88b22ce11ec3d760e5cd upstream.
 
-During system shutdown, incorporate reset logic to ensure the IVSC
-chipset remains in a valid state. This adjustment guarantees that
-the IVSC chipset operates in a known state following a warm reboot.
+may_open() does not allow a directory to be opened with the write access.
+However, some writing flags set by client result in adding write access
+on server, making ksmbd incompatible with FUSE file system. Simply, let's
+discard the write access when opening a directory.
 
-Fixes: 566f5ca97680 ("mei: Add transport driver for IVSC device")
-Cc: stable@vger.kernel.org # for 6.8+
-Signed-off-by: Wentong Wu <wentong.wu@intel.com>
-Tested-by: Jason Chen <jason.z.chen@intel.com>
-Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240625081047.4178494-2-wentong.wu@intel.com
+list_add corruption. next is NULL.
+------------[ cut here ]------------
+kernel BUG at lib/list_debug.c:26!
+pc : __list_add_valid+0x88/0xbc
+lr : __list_add_valid+0x88/0xbc
+Call trace:
+__list_add_valid+0x88/0xbc
+fuse_finish_open+0x11c/0x170
+fuse_open_common+0x284/0x5e8
+fuse_dir_open+0x14/0x24
+do_dentry_open+0x2a4/0x4e0
+dentry_open+0x50/0x80
+smb2_open+0xbe4/0x15a4
+handle_ksmbd_work+0x478/0x5ec
+process_one_work+0x1b4/0x448
+worker_thread+0x25c/0x430
+kthread+0x104/0x1d4
+ret_from_fork+0x10/0x20
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Yoonho Shin <yoonho.shin@samsung.com>
+Signed-off-by: Hobin Woo <hobin.woo@samsung.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/vsc-tp.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ fs/smb/server/smb2pdu.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/misc/mei/vsc-tp.c b/drivers/misc/mei/vsc-tp.c
-index e6a98dba8a73..5f3195636e53 100644
---- a/drivers/misc/mei/vsc-tp.c
-+++ b/drivers/misc/mei/vsc-tp.c
-@@ -568,6 +568,19 @@ static void vsc_tp_remove(struct spi_device *spi)
- 	free_irq(spi->irq, tp);
- }
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2051,15 +2051,22 @@ out_err1:
+  * @access:		file access flags
+  * @disposition:	file disposition flags
+  * @may_flags:		set with MAY_ flags
++ * @is_dir:		is creating open flags for directory
+  *
+  * Return:      file open flags
+  */
+ static int smb2_create_open_flags(bool file_present, __le32 access,
+ 				  __le32 disposition,
+-				  int *may_flags)
++				  int *may_flags,
++				  bool is_dir)
+ {
+ 	int oflags = O_NONBLOCK | O_LARGEFILE;
  
-+static void vsc_tp_shutdown(struct spi_device *spi)
-+{
-+	struct vsc_tp *tp = spi_get_drvdata(spi);
++	if (is_dir) {
++		access &= ~FILE_WRITE_DESIRE_ACCESS_LE;
++		ksmbd_debug(SMB, "Discard write access to a directory\n");
++	}
 +
-+	platform_device_unregister(tp->pdev);
-+
-+	mutex_destroy(&tp->mutex);
-+
-+	vsc_tp_reset(tp);
-+
-+	free_irq(spi->irq, tp);
-+}
-+
- static const struct acpi_device_id vsc_tp_acpi_ids[] = {
- 	{ "INTC1009" }, /* Raptor Lake */
- 	{ "INTC1058" }, /* Tiger Lake */
-@@ -580,6 +593,7 @@ MODULE_DEVICE_TABLE(acpi, vsc_tp_acpi_ids);
- static struct spi_driver vsc_tp_driver = {
- 	.probe = vsc_tp_probe,
- 	.remove = vsc_tp_remove,
-+	.shutdown = vsc_tp_shutdown,
- 	.driver = {
- 		.name = "vsc-tp",
- 		.acpi_match_table = vsc_tp_acpi_ids,
--- 
-2.45.2
-
+ 	if (access & FILE_READ_DESIRED_ACCESS_LE &&
+ 	    access & FILE_WRITE_DESIRE_ACCESS_LE) {
+ 		oflags |= O_RDWR;
+@@ -3167,7 +3174,9 @@ int smb2_open(struct ksmbd_work *work)
+ 
+ 	open_flags = smb2_create_open_flags(file_present, daccess,
+ 					    req->CreateDisposition,
+-					    &may_flags);
++					    &may_flags,
++		req->CreateOptions & FILE_DIRECTORY_FILE_LE ||
++		(file_present && S_ISDIR(d_inode(path.dentry)->i_mode)));
+ 
+ 	if (!test_tree_conn_flag(tcon, KSMBD_TREE_CONN_FLAG_WRITABLE)) {
+ 		if (open_flags & (O_CREAT | O_TRUNC)) {
 
 
