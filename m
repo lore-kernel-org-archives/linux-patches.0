@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C01517C9E9;
-	Tue, 16 Jul 2024 15:47:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1562312B72;
+	Tue, 16 Jul 2024 15:47:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144872; cv=none; b=sD8Lb3obnYicgL5iW0ZOp504nw+sSdYYp+hfp1fECAJTpWBomI1OiX+aOwzQ5fnRGyFQPNxAhBvSToa81hAks+aVlR4eYBXztRkOrQOLYX5noA2CqjzVUjuSTDsLrACa5Kid/+rZuwmOFXbzKlIEUCJmqm9fLD0T1UjaSZPWorM=
+	t=1721144875; cv=none; b=riHKEJCRekTj0nfwXSpiLEV/Pu5POYK3SNuzKDoQm3Pl/g+jAWK/80Haq9Yf2XcPGij4Ls9XlrB9iYLNw/WVKHBSIz03IXbcBrY3tbIcYXj5dAMh6YA7L4qEM5za/xlNFiMHodEQq0NjHvV1h9f9fPvcNSK9gnq/UFdT1qN1bbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144872; c=relaxed/simple;
-	bh=WcDaocmPi/2XOHAX8eHNM4yepNLbCE8lWmEa+WXJ7hY=;
+	s=arc-20240116; t=1721144875; c=relaxed/simple;
+	bh=o1uvc4Conqyp2PogYX9QGdN6t52uNX2ai2nxceuMYTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NKGI81sZmkFuRYaQWuGj4tI96IzbsRr0TcJxWEJ5nQGaKhFuWqo0iy+dEwByEypZB1vvYpKQCKyW/Kn5izCyPzRezPM4CCIr0uIo8J0DKu0rEH395EEJAGyrveowOjQEr2gKbG3xRiI4iEqjHSQosW184s45jR28y6bWHZRkj4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fM0AGwps; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uYWguEasNcvPMMGvoNr3yE9+oq3hQL1iihPfiwDDXTOFLBrFAIEM0eD6gO+/vGRC0RSUAy5LOFxAkTuA6x3Uq1K8TQ+Egu0cIx0ZRJT1ne/LKnn1kFlfyuDnqjbbas2sIldbwW0D53BC0SiVIOa2VXEQQcpiQLakEnivgEI2tuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K3EV45Nv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fM0AGwps"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97F03C116B1;
-	Tue, 16 Jul 2024 15:47:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K3EV45Nv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88D09C116B1;
+	Tue, 16 Jul 2024 15:47:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144872;
-	bh=WcDaocmPi/2XOHAX8eHNM4yepNLbCE8lWmEa+WXJ7hY=;
+	s=korg; t=1721144875;
+	bh=o1uvc4Conqyp2PogYX9QGdN6t52uNX2ai2nxceuMYTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fM0AGwpsdbGGMENVRWQ/oq0kjwETYIq9LJdofsg0UEBPHib+bZEPXV7llo/JkU03b
-	 IaM/JFDO0gnYvyKY+ueo9i/VK/fSSJy06WsLpQDE9UnAbGJUlE7vk3gT+riZyTED7c
-	 hJ3uHtw57y88/bWcnRfdbS0YmrrEj3PVS8IsPFuE=
+	b=K3EV45NvihiycTdc/yokOkG1i1L6KKUuxBV+2xfzAVNLhbvBUzzAN56melEQjnFr2
+	 kD1Af9caWmjAksU0ogkNnlFHc28c2gwmrfPztmnu+XNjYWW33ueyT8WuiBibpgReOp
+	 +DR4mSise/r1x24JaMDni6kkVH4vmRpkasWCf2hI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Fastabend <john.fastabend@gmail.com>,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Peter Wang <peter.wang@mediatek.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 023/143] skmsg: Skip zero length skb in sk_msg_recvmsg
-Date: Tue, 16 Jul 2024 17:30:19 +0200
-Message-ID: <20240716152756.880541584@linuxfoundation.org>
+Subject: [PATCH 6.9 003/143] scsi: ufs: core: Fix ufshcd_abort_one racing issue
+Date: Tue, 16 Jul 2024 17:29:59 +0200
+Message-ID: <20240716152756.116214451@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -52,103 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Peter Wang <peter.wang@mediatek.com>
 
-[ Upstream commit f0c18025693707ec344a70b6887f7450bf4c826b ]
+[ Upstream commit 74736103fb4123c71bf11fb7a6abe7c884c5269e ]
 
-When running BPF selftests (./test_progs -t sockmap_basic) on a Loongarch
-platform, the following kernel panic occurs:
+When ufshcd_abort_one is racing with the completion ISR, the completed tag
+of the request's mq_hctx pointer will be set to NULL by ISR.  Return
+success when request is completed by ISR because ufshcd_abort_one does not
+need to do anything.
 
-  [...]
-  Oops[#1]:
-  CPU: 22 PID: 2824 Comm: test_progs Tainted: G           OE  6.10.0-rc2+ #18
-  Hardware name: LOONGSON Dabieshan/Loongson-TC542F0, BIOS Loongson-UDK2018
-     ... ...
-     ra: 90000000048bf6c0 sk_msg_recvmsg+0x120/0x560
-    ERA: 9000000004162774 copy_page_to_iter+0x74/0x1c0
-   CRMD: 000000b0 (PLV0 -IE -DA +PG DACF=CC DACM=CC -WE)
-   PRMD: 0000000c (PPLV0 +PIE +PWE)
-   EUEN: 00000007 (+FPE +SXE +ASXE -BTE)
-   ECFG: 00071c1d (LIE=0,2-4,10-12 VS=7)
-  ESTAT: 00010000 [PIL] (IS= ECode=1 EsubCode=0)
-   BADV: 0000000000000040
-   PRID: 0014c011 (Loongson-64bit, Loongson-3C5000)
-  Modules linked in: bpf_testmod(OE) xt_CHECKSUM xt_MASQUERADE xt_conntrack
-  Process test_progs (pid: 2824, threadinfo=0000000000863a31, task=...)
-  Stack : ...
-  Call Trace:
-  [<9000000004162774>] copy_page_to_iter+0x74/0x1c0
-  [<90000000048bf6c0>] sk_msg_recvmsg+0x120/0x560
-  [<90000000049f2b90>] tcp_bpf_recvmsg_parser+0x170/0x4e0
-  [<90000000049aae34>] inet_recvmsg+0x54/0x100
-  [<900000000481ad5c>] sock_recvmsg+0x7c/0xe0
-  [<900000000481e1a8>] __sys_recvfrom+0x108/0x1c0
-  [<900000000481e27c>] sys_recvfrom+0x1c/0x40
-  [<9000000004c076ec>] do_syscall+0x8c/0xc0
-  [<9000000003731da4>] handle_syscall+0xc4/0x160
-  Code: ...
-  ---[ end trace 0000000000000000 ]---
-  Kernel panic - not syncing: Fatal exception
-  Kernel relocated by 0x3510000
-   .text @ 0x9000000003710000
-   .data @ 0x9000000004d70000
-   .bss  @ 0x9000000006469400
-  ---[ end Kernel panic - not syncing: Fatal exception ]---
-  [...]
+The racing flow is:
 
-This crash happens every time when running sockmap_skb_verdict_shutdown
-subtest in sockmap_basic.
+Thread A
+ufshcd_err_handler					step 1
+	...
+	ufshcd_abort_one
+		ufshcd_try_to_abort_task
+			ufshcd_cmd_inflight(true)	step 3
+		ufshcd_mcq_req_to_hwq
+			blk_mq_unique_tag
+				rq->mq_hctx->queue_num	step 5
 
-This crash is because a NULL pointer is passed to page_address() in the
-sk_msg_recvmsg(). Due to the different implementations depending on the
-architecture, page_address(NULL) will trigger a panic on Loongarch
-platform but not on x86 platform. So this bug was hidden on x86 platform
-for a while, but now it is exposed on Loongarch platform. The root cause
-is that a zero length skb (skb->len == 0) was put on the queue.
+Thread B
+ufs_mtk_mcq_intr(cq complete ISR)			step 2
+	scsi_done
+		...
+		__blk_mq_free_request
+			rq->mq_hctx = NULL;		step 4
 
-This zero length skb is a TCP FIN packet, which was sent by shutdown(),
-invoked in test_sockmap_skb_verdict_shutdown():
+Below is KE back trace.
+  ufshcd_try_to_abort_task: cmd at tag 41 not pending in the device.
+  ufshcd_try_to_abort_task: cmd at tag=41 is cleared.
+  Aborting tag 41 / CDB 0x28 succeeded
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000194
+  pc : [0xffffffddd7a79bf8] blk_mq_unique_tag+0x8/0x14
+  lr : [0xffffffddd6155b84] ufshcd_mcq_req_to_hwq+0x1c/0x40 [ufs_mediatek_mod_ise]
+   do_mem_abort+0x58/0x118
+   el1_abort+0x3c/0x5c
+   el1h_64_sync_handler+0x54/0x90
+   el1h_64_sync+0x68/0x6c
+   blk_mq_unique_tag+0x8/0x14
+   ufshcd_err_handler+0xae4/0xfa8 [ufs_mediatek_mod_ise]
+   process_one_work+0x208/0x4fc
+   worker_thread+0x228/0x438
+   kthread+0x104/0x1d4
+   ret_from_fork+0x10/0x20
 
-	shutdown(p1, SHUT_WR);
-
-In this case, in sk_psock_skb_ingress_enqueue(), num_sge is zero, and no
-page is put to this sge (see sg_set_page in sg_set_page), but this empty
-sge is queued into ingress_msg list.
-
-And in sk_msg_recvmsg(), this empty sge is used, and a NULL page is got by
-sg_page(sge). Pass this NULL page to copy_page_to_iter(), which passes it
-to kmap_local_page() and to page_address(), then kernel panics.
-
-To solve this, we should skip this zero length skb. So in sk_msg_recvmsg(),
-if copy is zero, that means it's a zero length skb, skip invoking
-copy_page_to_iter(). We are using the EFAULT return triggered by
-copy_page_to_iter to check for is_fin in tcp_bpf.c.
-
-Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
-Suggested-by: John Fastabend <john.fastabend@gmail.com>
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/e3a16eacdc6740658ee02a33489b1b9d4912f378.1719992715.git.tanggeliang@kylinos.cn
+Fixes: 93e6c0e19d5b ("scsi: ufs: core: Clear cmd if abort succeeds in MCQ mode")
+Suggested-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
+Link: https://lore.kernel.org/r/20240628070030.30929-3-peter.wang@mediatek.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skmsg.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/ufs/core/ufshcd.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index fd20aae30be23..bbf40b9997138 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -434,7 +434,8 @@ int sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg,
- 			page = sg_page(sge);
- 			if (copied + copy > len)
- 				copy = len - copied;
--			copy = copy_page_to_iter(page, sge->offset, copy, iter);
-+			if (copy)
-+				copy = copy_page_to_iter(page, sge->offset, copy, iter);
- 			if (!copy) {
- 				copied = copied ? copied : -EFAULT;
- 				goto out;
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index f7d04f7c0017d..ad192b74536a2 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -6506,6 +6506,8 @@ static bool ufshcd_abort_one(struct request *rq, void *priv)
+ 	/* Release cmd in MCQ mode if abort succeeds */
+ 	if (is_mcq_enabled(hba) && (*ret == 0)) {
+ 		hwq = ufshcd_mcq_req_to_hwq(hba, scsi_cmd_to_rq(lrbp->cmd));
++		if (!hwq)
++			return 0;
+ 		spin_lock_irqsave(&hwq->cq_lock, flags);
+ 		if (ufshcd_cmd_inflight(lrbp->cmd))
+ 			ufshcd_release_scsi_cmd(hba, lrbp);
 -- 
 2.43.0
 
