@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA81419E809;
-	Tue, 16 Jul 2024 15:55:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC9B19FA72;
+	Tue, 16 Jul 2024 15:55:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145313; cv=none; b=BUJ+exsZefU8TdDxRCl+++Y6FEqDn8N/Floh+lVhnh9t5+k0yr4LV5WyvHsSuEI8DjF7LQjuUKZ64DMzQfooLfk74dnt+aqMi2Cn4aE4PMXnckQD4Lsyjx8eviSvtfXiHY1sKS8Xvdj1L4gq6oEcfvT37U4hcclnabwl9tGpogg=
+	t=1721145315; cv=none; b=UiAqaLRZrQWuMq7C0TLZHmMN//r9uy+5/5v/16G4bgi6dKxYNrTjmsGrRZR0XvJkeGNcWPbCvh5kHMhSF8DxSBApWZFOpaBeWTygGcYT/4KDjuIBgOihYmV72JJa1kykGO7I3neAwoqnAVKlswHKlIrbwUpSNJjK6wl+xtpFuV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145313; c=relaxed/simple;
-	bh=Xx2CmBkOEShO1IHg+Hrohe1D0YE4pqzvEB/847ABjRU=;
+	s=arc-20240116; t=1721145315; c=relaxed/simple;
+	bh=THcpGiaRv6ktTvH/+mDoqlrRqSlkajQu1wJUV2qpvZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aryMI6shiFdzU2SSqZ87Cr85veHqSxDRmHOYyf7Z8U972C7wKGDpYxRKYYarfqr1TUYB9zdavI+4dFdQG8/HeRTg+Iz3c/VK1L5qQ1M+sXuFFWmQrn3SAbX4JRGoMNTrmS9AZxJDpj2hLovENc8aGymlVYqJbHhydLg6pbcqHqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ul/8pEVu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BalmeQTJomAE+YpoTqFJ32nkSKtOrkA/OgJv1WFljt8Qn+X3qtRvfymcl53DjQmFlQkB6nhyyfaVcJ970WXnIkQkhg8Qs2ci5xbSn99ZFnr+7zN47wPYbhsXb7LH6/iPgf4KwW0I/MwZsLpAoKgTYS6mr0RNtGEn+CVyxyGzD4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WFiiSDuQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ul/8pEVu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D3B1C4AF0B;
-	Tue, 16 Jul 2024 15:55:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WFiiSDuQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D3A9C4AF0B;
+	Tue, 16 Jul 2024 15:55:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145312;
-	bh=Xx2CmBkOEShO1IHg+Hrohe1D0YE4pqzvEB/847ABjRU=;
+	s=korg; t=1721145315;
+	bh=THcpGiaRv6ktTvH/+mDoqlrRqSlkajQu1wJUV2qpvZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ul/8pEVuQ4XnX9rO6rtNytDYBNAqhyYX3Mbq1RiR2E/65dd8Cx4NHM1g4kyPmgcUL
-	 MkR4bypn/86BzE9UQu2s+71cjIm40KO6gK4EreOm/ufK1u23fKIuY1EiMCRYxb2yi0
-	 YbJkaCfDWjoVZ/tKVddyPvVOT9+mnQyeSGQtOMY0=
+	b=WFiiSDuQj+2nAG4HLJbgHpMdCcCe7uBmLeLH9kONIm8aFa7IjZuVvFakP+Nd0GGEQ
+	 JoVR5bz56Pk0j7KY+2lS8p/mps7KdpAHT6rg1noQpsTMoK2vZ7zxHj1CcexhRoH06T
+	 1V+2Kf/YjKdFHr3AzgtcV/i2/awCXqfeTvKUOoTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Hui Lee <jianhui.lee@canonical.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	syzbot+ec0723ba9605678b14bf@syzkaller.appspotmail.com,
+	Dmitry Antipov <dmantipov@yandex.ru>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 24/96] net: ethernet: mtk-star-emac: set mac_managed_pm when probing
-Date: Tue, 16 Jul 2024 17:31:35 +0200
-Message-ID: <20240716152747.445256689@linuxfoundation.org>
+Subject: [PATCH 6.1 25/96] ppp: reject claimed-as-LCP but actually malformed packets
+Date: Tue, 16 Jul 2024 17:31:36 +0200
+Message-ID: <20240716152747.484010221@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152746.516194097@linuxfoundation.org>
 References: <20240716152746.516194097@linuxfoundation.org>
@@ -52,53 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jian Hui Lee <jianhui.lee@canonical.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 8c6790b5c25dfac11b589cc37346bcf9e23ad468 ]
+[ Upstream commit f2aeb7306a898e1cbd03963d376f4b6656ca2b55 ]
 
-The below commit introduced a warning message when phy state is not in
-the states: PHY_HALTED, PHY_READY, and PHY_UP.
-commit 744d23c71af3 ("net: phy: Warn about incorrect mdio_bus_phy_resume() state")
+Since 'ppp_async_encode()' assumes valid LCP packets (with code
+from 1 to 7 inclusive), add 'ppp_check_packet()' to ensure that
+LCP packet has an actual body beyond PPP_LCP header bytes, and
+reject claimed-as-LCP but actually malformed data otherwise.
 
-mtk-star-emac doesn't need mdiobus suspend/resume. To fix the warning
-message during resume, indicate the phy resume/suspend is managed by the
-mac when probing.
-
-Fixes: 744d23c71af3 ("net: phy: Warn about incorrect mdio_bus_phy_resume() state")
-Signed-off-by: Jian Hui Lee <jianhui.lee@canonical.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20240708065210.4178980-1-jianhui.lee@canonical.com
+Reported-by: syzbot+ec0723ba9605678b14bf@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ec0723ba9605678b14bf
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_star_emac.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/ppp/ppp_generic.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_star_emac.c b/drivers/net/ethernet/mediatek/mtk_star_emac.c
-index 7050351250b7a..ad27749c0931c 100644
---- a/drivers/net/ethernet/mediatek/mtk_star_emac.c
-+++ b/drivers/net/ethernet/mediatek/mtk_star_emac.c
-@@ -1531,6 +1531,7 @@ static int mtk_star_probe(struct platform_device *pdev)
- {
- 	struct device_node *of_node;
- 	struct mtk_star_priv *priv;
-+	struct phy_device *phydev;
- 	struct net_device *ndev;
- 	struct device *dev;
- 	void __iomem *base;
-@@ -1656,6 +1657,12 @@ static int mtk_star_probe(struct platform_device *pdev)
- 	netif_napi_add(ndev, &priv->rx_napi, mtk_star_rx_poll);
- 	netif_napi_add_tx(ndev, &priv->tx_napi, mtk_star_tx_poll);
+diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
+index 1d71f5276241c..5a6fa566e722f 100644
+--- a/drivers/net/ppp/ppp_generic.c
++++ b/drivers/net/ppp/ppp_generic.c
+@@ -70,6 +70,7 @@
+ #define MPHDRLEN_SSN	4	/* ditto with short sequence numbers */
  
-+	phydev = of_phy_find_device(priv->phy_node);
-+	if (phydev) {
-+		phydev->mac_managed_pm = true;
-+		put_device(&phydev->mdio.dev);
-+	}
-+
- 	return devm_register_netdev(dev, ndev);
+ #define PPP_PROTO_LEN	2
++#define PPP_LCP_HDRLEN	4
+ 
+ /*
+  * An instance of /dev/ppp can be associated with either a ppp
+@@ -491,6 +492,15 @@ static ssize_t ppp_read(struct file *file, char __user *buf,
+ 	return ret;
  }
  
++static bool ppp_check_packet(struct sk_buff *skb, size_t count)
++{
++	/* LCP packets must include LCP header which 4 bytes long:
++	 * 1-byte code, 1-byte identifier, and 2-byte length.
++	 */
++	return get_unaligned_be16(skb->data) != PPP_LCP ||
++		count >= PPP_PROTO_LEN + PPP_LCP_HDRLEN;
++}
++
+ static ssize_t ppp_write(struct file *file, const char __user *buf,
+ 			 size_t count, loff_t *ppos)
+ {
+@@ -513,6 +523,11 @@ static ssize_t ppp_write(struct file *file, const char __user *buf,
+ 		kfree_skb(skb);
+ 		goto out;
+ 	}
++	ret = -EINVAL;
++	if (unlikely(!ppp_check_packet(skb, count))) {
++		kfree_skb(skb);
++		goto out;
++	}
+ 
+ 	switch (pf->kind) {
+ 	case INTERFACE:
 -- 
 2.43.0
 
