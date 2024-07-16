@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773C019AD72;
-	Tue, 16 Jul 2024 15:56:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE1619AD72;
+	Tue, 16 Jul 2024 15:56:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145393; cv=none; b=JBm63PNoKvEPA7/VloghV/d4c0RMyYEEoffvJ61l058+Ku8/2TaSWHj9hYUBUknk/6Iz2DyxnFoIXHxpMS2vfJwJu+OUHlRjV7jB36KLzBHT9vCDz/HBcdEo1rvssQZcbDKJZEanct/D3C2/uwQSTSzgVTnFbeTXxTJI55nPTUI=
+	t=1721145396; cv=none; b=DRQRfmeG+So4a3X+f+0q4QdFnanS19ZfiFVdCpiTeBA5OpejZRaSll2FKMJyWDn/DNaSb0lsyXrIQDPPImyOshDfYlCIPFNpcfq2kaOho778+RBLyBvdet4/SIQyvYPZsXjqInsJU2eKaO8DeAzfgLWEpV1InVpyE3eoB3jkPhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145393; c=relaxed/simple;
-	bh=VGWnFG2fx6inF7IM+FlrdiDqZpRlhHzhir400ACICNg=;
+	s=arc-20240116; t=1721145396; c=relaxed/simple;
+	bh=rqaCzP0/IdjPDGVTrQ5O8WeY06dZgb81/5sXiOeKJvk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UpO8l9ZCekYLkNpNOv/pB4PekuhwOr5IJGHQRD+g+Dju1ldYvicC61+TskGverDP/Q9mC6QSh9KVNQiWc6ewVhTu3sg9MCeYLGHULhATPvTmhKsW4QIqiHeR1uD4c41+FHZUawbazaFG8c8ZXKj4g+iKGf6fmCmpqBR6dVm0cFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qqzRaywZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jsNpzARKtBBXSKACMzL6T9i+iyPaCWFvZ4YlzIkcYdz7lhY1OZ30MvS2lTE1rhEEzcnk7RzkkZD/5fDt+m1oxytThoy2Naf3cXLQuVc4gAMldY9GerZbESp/75o6iXgZVdYZGUv9izp2QF5iUuojVQausROR+M7txDGeooUDA10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hrNKHar6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qqzRaywZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2227C4AF0E;
-	Tue, 16 Jul 2024 15:56:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hrNKHar6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F87C116B1;
+	Tue, 16 Jul 2024 15:56:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145393;
-	bh=VGWnFG2fx6inF7IM+FlrdiDqZpRlhHzhir400ACICNg=;
+	s=korg; t=1721145396;
+	bh=rqaCzP0/IdjPDGVTrQ5O8WeY06dZgb81/5sXiOeKJvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qqzRaywZdIZnX3worTIoiff1ZmO0sv+JNlsUWeRgjGVpAHIFdPZCSrQ36+csCJwnf
-	 qUDUooz/N1wje0YUjNC7G29zjjWxHluPlT2qQOLdI1I4mrUUOuzlFbEBHNAlo2iEpJ
-	 9aP1QPbfTA2JrB/id93mBU2Igv9TBsOoSEUBODhk=
+	b=hrNKHar6yVXw8Xg9pQnHkFSBSjjfUlnzw0JJR+7L8+1gynG63pfDXuBwr5fRNFgZW
+	 JZavTN3OGpkrLMbBqBd7C7jMf8PQa9DZw8NwoCmbICPrPXbRTrmDESn/+pJVc3cSYZ
+	 6xeGsNAqhlrPnexOhf68eQQwLDBKZWw9zcCRXCLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Palmas <dnlplm@gmail.com>,
+	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.1 51/96] USB: serial: option: add Telit FN912 rmnet compositions
-Date: Tue, 16 Jul 2024 17:32:02 +0200
-Message-ID: <20240716152748.468866688@linuxfoundation.org>
+Subject: [PATCH 6.1 52/96] USB: serial: option: add Fibocom FM350-GL
+Date: Tue, 16 Jul 2024 17:32:03 +0200
+Message-ID: <20240716152748.506792315@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152746.516194097@linuxfoundation.org>
 References: <20240716152746.516194097@linuxfoundation.org>
@@ -44,69 +44,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniele Palmas <dnlplm@gmail.com>
+From: Bjørn Mork <bjorn@mork.no>
 
-commit 9a590ff283421b71560deded2110dbdcbe1f7d1d upstream.
+commit 2604e08ff251dba330e16b65e80074c9c540aad7 upstream.
 
-Add the following Telit FN912 compositions:
+FM350-GL is 5G Sub-6 WWAN module which uses M.2 form factor interface.
+It is based on Mediatek's MTK T700 CPU. The module supports PCIe Gen3
+x1 and USB 2.0 and 3.0 interfaces.
 
-0x3000: rmnet + tty (AT/NMEA) + tty (AT) + tty (diag)
-T:  Bus=03 Lev=01 Prnt=03 Port=07 Cnt=01 Dev#=  8 Spd=480  MxCh= 0
-D:  Ver= 2.01 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=3000 Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FN912
-S:  SerialNumber=92c4c4d8
-C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+The manufacturer states that USB is "for debug" but it has been
+confirmed to be fully functional, except for modem-control requests on
+some of the interfaces.
+
+USB device composition is controlled by AT+GTUSBMODE=<mode> command.
+Two values are currently supported for the <mode>:
+
+40: RNDIS+AT+AP(GNSS)+META+DEBUG+NPT+ADB
+41: RNDIS+AT+AP(GNSS)+META+DEBUG+NPT+ADB+AP(LOG)+AP(META) (default value)
+
+[ Note that the functions above are not ordered by interface number. ]
+
+Mode 40 corresponds to:
+
+T:  Bus=03 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#= 22 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0e8d ProdID=7126 Rev= 0.01
+S:  Manufacturer=Fibocom Wireless Inc.
+S:  Product=FM350-GL
+C:* #Ifs= 8 Cfg#= 1 Atr=a0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=e0(wlcon) Sub=01 Prot=03
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=02 Prot=ff Driver=rndis_host
+E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
 E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
 E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
 E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
 E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-0x3001: rmnet + tty (AT) + tty (diag) + DPL (data packet logging) + adb
-T:  Bus=03 Lev=01 Prnt=03 Port=07 Cnt=01 Dev#=  7 Spd=480  MxCh= 0
-D:  Ver= 2.01 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=3001 Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FN912
-S:  SerialNumber=92c4c4d8
-C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
 E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
 E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 7 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
+Mode 41 corresponds to:
+
+T:  Bus=03 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#=  7 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0e8d ProdID=7127 Rev= 0.01
+S:  Manufacturer=Fibocom Wireless Inc.
+S:  Product=FM350-GL
+C:* #Ifs=10 Cfg#= 1 Atr=a0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=e0(wlcon) Sub=01 Prot=03
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=02 Prot=ff Driver=rndis_host
+E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 7 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 8 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=08(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 9 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=8a(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=09(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
 Cc: stable@vger.kernel.org
+Signed-off-by: Bjørn Mork <bjorn@mork.no>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -115,16 +153,16 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/usb/serial/option.c
 +++ b/drivers/usb/serial/option.c
-@@ -1425,6 +1425,10 @@ static const struct usb_device_id option
- 	  .driver_info = NCTRL(0) | RSVD(1) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1901, 0xff),	/* Telit LN940 (MBIM) */
- 	  .driver_info = NCTRL(0) },
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x3000, 0xff),	/* Telit FN912 */
-+	  .driver_info = RSVD(0) | NCTRL(3) },
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x3001, 0xff),	/* Telit FN912 */
-+	  .driver_info = RSVD(0) | NCTRL(2) | RSVD(3) | RSVD(4) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x7010, 0xff),	/* Telit LE910-S1 (RNDIS) */
- 	  .driver_info = NCTRL(2) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x7011, 0xff),	/* Telit LE910-S1 (ECM) */
+@@ -2230,6 +2230,10 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(MEDIATEK_VENDOR_ID, MEDIATEK_PRODUCT_7106_2COM, 0x02, 0x02, 0x01) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(MEDIATEK_VENDOR_ID, MEDIATEK_PRODUCT_DC_4COM2, 0xff, 0x02, 0x01) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(MEDIATEK_VENDOR_ID, MEDIATEK_PRODUCT_DC_4COM2, 0xff, 0x00, 0x00) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(MEDIATEK_VENDOR_ID, 0x7126, 0xff, 0x00, 0x00),
++	  .driver_info = NCTRL(2) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(MEDIATEK_VENDOR_ID, 0x7127, 0xff, 0x00, 0x00),
++	  .driver_info = NCTRL(2) | NCTRL(3) | NCTRL(4) },
+ 	{ USB_DEVICE(CELLIENT_VENDOR_ID, CELLIENT_PRODUCT_MEN200) },
+ 	{ USB_DEVICE(CELLIENT_VENDOR_ID, CELLIENT_PRODUCT_MPL200),
+ 	  .driver_info = RSVD(1) | RSVD(4) },
 
 
