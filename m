@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AFE11DDCE;
-	Tue, 16 Jul 2024 16:11:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E01D1DDCE;
+	Tue, 16 Jul 2024 16:11:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721146308; cv=none; b=s4u+eHtkoy8iCtiQEEIxOaWhLdxnfJF2ZSmUZyblyGEuSZ37jT25XOrsm90o9LPNhcXzl8vsy5AFxM3MDpogo9S3SUz24+19s8zd+GuICzQ92qFDaOruCVzjPB9inFR3GDIBIQREKTIO1UtAtLOQCDgHPp79TbBmyi86sqpIUgI=
+	t=1721146311; cv=none; b=rcko56HeeYj/+GwwF1JXB/7CKqcq0jy6eNn91tHLEZf2qTKwedZuEQfA3O0Wvhbi18TuxzneBdLT9g63HPx5fiDRvbhxQ3sVUrIQzhBfy6TzADnatanLH8JI8uXKP0Az2+KVTrGlzh4p1Iu0788XqcXtOqPb5pj5XpjHM5Uinmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721146308; c=relaxed/simple;
-	bh=FQ2lwE2VdUcdXyXIgRjpEpQJ1WrkUoDanRdGb13sqe4=;
+	s=arc-20240116; t=1721146311; c=relaxed/simple;
+	bh=cGHFKCFBUUA19ovWeuOHkfuNwtvtvA4E1haepmfTAkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q5RwlaQDUzS5iKaIqJTlWWS7Yhq+btrAalUvau1eg7Lix8iW+B14Jqr5HGv4YtcUEzYNvAydGw/bJn8vYaE0FJyG9UERZKKaSuwj8pn6N38OBDDPGLxmR/NpGc5ssSHJaGieDmJLiDL2ql5m72n6eqeD846By7PYrzUcHIyJ+qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j7cDTN+J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BXFu47BK7kO6R72XQPQ2ZrXv6UieL/ozU74Xs3cFKUmWNhUWgLz51hXuhx7XGtwC907ozTj+qiukafrdnHANxFq8O3KNqXvm2AyyAfyZogCTWQdALwnq0otsil/uLb8XuX55NM4QPs5UBqy7RZzRpaFBjWNa0JNrUA23K2+j30U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X5lvy6lx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j7cDTN+J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B56D8C116B1;
-	Tue, 16 Jul 2024 16:11:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X5lvy6lx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A867FC116B1;
+	Tue, 16 Jul 2024 16:11:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721146308;
-	bh=FQ2lwE2VdUcdXyXIgRjpEpQJ1WrkUoDanRdGb13sqe4=;
+	s=korg; t=1721146311;
+	bh=cGHFKCFBUUA19ovWeuOHkfuNwtvtvA4E1haepmfTAkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j7cDTN+JzsHikkLSdB+oEUrtpGbDvkFXC8C9m719aoOI6K3vQhP6nDTMWLWbyLLYl
-	 6sP4J46PUB2vsXmWsRM4I98sgoPozspcnmpkFuu8qZLSxV2W/lro12RI0cmcHEOMnv
-	 +VBLk490A2KsgbLm6g7PGjZ7gIBlDOd1BfgQ3dV8=
+	b=X5lvy6lxPccNr0jbT4124LLrevqTY6qp3HzoYwbsImJoDijHjFjxhxnkCslJjLT/G
+	 AP92rbyn+8c2R54fMqpo21kBxlt4terNbcsRq8sg1FVTWiqBO13zYGtvOJpLM1pY7d
+	 txaiTSAmgEwhn3pikRDgZ4nHpYOTvxG+DrWt2Zrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nazar Bilinskyi <nbilinskyi@gmail.com>,
+	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 122/144] ALSA: hda/realtek: Enable Mute LED on HP 250 G7
-Date: Tue, 16 Jul 2024 17:33:11 +0200
-Message-ID: <20240716152757.212603246@linuxfoundation.org>
+Subject: [PATCH 5.15 123/144] ALSA: hda/realtek: Limit mic boost on VAIO PRO PX
+Date: Tue, 16 Jul 2024 17:33:12 +0200
+Message-ID: <20240716152757.250182945@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
 References: <20240716152752.524497140@linuxfoundation.org>
@@ -50,31 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nazar Bilinskyi <nbilinskyi@gmail.com>
+From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
 
-commit b46953029c52bd3a3306ff79f631418b75384656 upstream.
+commit 6db03b1929e207d2c6e84e75a9cd78124b3d6c6d upstream.
 
-HP 250 G7 has a mute LED that can be made to work using quirk
-ALC269_FIXUP_HP_LINE1_MIC1_LED. Enable already existing quirk.
+The internal mic boost on the VAIO models VJFE-CL and VJFE-IL is too high.
+Fix this by applying the ALC269_FIXUP_LIMIT_INT_MIC_BOOST fixup to the machine
+to limit the gain.
 
-Signed-off-by: Nazar Bilinskyi <nbilinskyi@gmail.com>
+Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
 Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240709080546.18344-1-nbilinskyi@gmail.com
+Link: https://patch.msgid.link/20240705141012.5368-1-edson.drosdeck@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/pci/hda/patch_realtek.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -9122,6 +9122,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x83b9, "HP Spectre x360", ALC269_FIXUP_HP_MUTE_LED_MIC3),
- 	SND_PCI_QUIRK(0x103c, 0x841c, "HP Pavilion 15-CK0xx", ALC269_FIXUP_HP_MUTE_LED_MIC3),
- 	SND_PCI_QUIRK(0x103c, 0x8497, "HP Envy x360", ALC269_FIXUP_HP_MUTE_LED_MIC3),
-+	SND_PCI_QUIRK(0x103c, 0x84a6, "HP 250 G7 Notebook PC", ALC269_FIXUP_HP_LINE1_MIC1_LED),
- 	SND_PCI_QUIRK(0x103c, 0x84ae, "HP 15-db0403ng", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x84da, "HP OMEN dc0019-ur", ALC295_FIXUP_HP_OMEN),
- 	SND_PCI_QUIRK(0x103c, 0x84e7, "HP Pavilion 15", ALC269_FIXUP_HP_MUTE_LED_MIC3),
+@@ -9268,6 +9268,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x10cf, 0x1845, "Lifebook U904", ALC269_FIXUP_LIFEBOOK_EXTMIC),
+ 	SND_PCI_QUIRK(0x10ec, 0x10f2, "Intel Reference board", ALC700_FIXUP_INTEL_REFERENCE),
+ 	SND_PCI_QUIRK(0x10ec, 0x118c, "Medion EE4254 MD62100", ALC256_FIXUP_MEDION_HEADSET_NO_PRESENCE),
++	SND_PCI_QUIRK(0x10ec, 0x11bc, "VAIO VJFE-IL", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x10ec, 0x1230, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
+ 	SND_PCI_QUIRK(0x10ec, 0x124c, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
+ 	SND_PCI_QUIRK(0x10ec, 0x1252, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
+@@ -9481,6 +9482,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1d72, 0x1901, "RedmiBook 14", ALC256_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1945, "Redmi G", ALC256_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1947, "RedmiBook Air", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
++	SND_PCI_QUIRK(0x2782, 0x0214, "VAIO VJFE-CL", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
+ 	SND_PCI_QUIRK(0x2782, 0x1707, "Vaio VJFE-ADL", ALC298_FIXUP_SPK_VOLUME),
+ 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
 
 
