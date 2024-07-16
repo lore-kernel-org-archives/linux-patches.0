@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1904117A93F;
-	Tue, 16 Jul 2024 15:49:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E2F017C9E9;
+	Tue, 16 Jul 2024 15:49:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144949; cv=none; b=WU+tL8yqTuBNO01U4vpPQ4sktdKhgwjTIIoVVXPDUzd0gWzQwyY9psdeElo8LtBpHYUIcrZsaOGRfacY9J8FT+0GvjgseNMuLz0bYy/mQu5f9aOSi/yf2gYjoYoRtuOoFbOTcsxQqBAb9HudHA2s88dLf2Z+o9+Lz2fRDHWSCE0=
+	t=1721144957; cv=none; b=NIZRK7vLgcuT6xwmYEdeHpEcVBqnYs9+GPZyQekr+i9+KH+yAYVG6phItRDpgDGWDhmCDwN0KK+JWDmZIB1QalAiVnZoU6hVAHjhaY8roK8IgpHegeIyaZKMawOohEN1JNgd7gsVeliYAPPL/xB67A43ltipHvqgw94xh2rypUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144949; c=relaxed/simple;
-	bh=fJ1KWpDBOKFDnDv++7pqIwTTk1TB/dy4vR3jZnJqt1E=;
+	s=arc-20240116; t=1721144957; c=relaxed/simple;
+	bh=d25bFW1HqRPIsrILpxoTcsG+Z0s8JAUkkPYsr2MVrkQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Py64oneveHVCiif84gOAHN5q8L2lBoH3mnW1XiJ/2eOhQJPLjpouOasLjocybPm+T4KKKfy17uvyrwpeC/gbYU/Xewn3VfkQVEJt5h7gef/qDYV3kxyFCwrrvuNEdaJUt6bs8zdCvD7LnOSOOG1l0gP98DDwFMdfV86qaUAKskM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VLW0YjeV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mWtOqsqoGS0RgFUtbiAXtPZ0eAQWU0C9wfnkMyuGFkGXUxBgwfK8lWPg9QqGDYSQj9ppC4TsQmObLpQiWguyTiUU8QSU44+LNotEYEhkZZN1Xn3+X50pmZ33w43DOu0Os7hCufVeK5hLtMRfXqXkgwzYYN93v4r1COMTREN75qI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2twzC5AJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VLW0YjeV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 932CFC4AF0B;
-	Tue, 16 Jul 2024 15:49:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2twzC5AJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 891D7C116B1;
+	Tue, 16 Jul 2024 15:49:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144949;
-	bh=fJ1KWpDBOKFDnDv++7pqIwTTk1TB/dy4vR3jZnJqt1E=;
+	s=korg; t=1721144956;
+	bh=d25bFW1HqRPIsrILpxoTcsG+Z0s8JAUkkPYsr2MVrkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VLW0YjeVt2MRQ0dKkdkclNosisA8G+qeAxGbqydl+6BhYhfS2cn8DPse1aj96CbyU
-	 KQQNML24W5KSccvPoejziOBdEchi8Z9BqDeiJlFv3A+k+jJI2UZHWcLWdo5H30BtfZ
-	 9jUi+SS24U3gQkpphqVnxBY9cxsvZypUaOXF/mpQ=
+	b=2twzC5AJX93Ws6rIr0eDyhCKDIko1qVuofUpUdqn9coEU/PgVIrfArrKcehmJKSfx
+	 Epz/YRIu1uM9E62FtuWP8aoQlMie08Y4I+sLAW2vUKgAC8LZBO6ysG0WxuvuznVU2V
+	 DotvmmEC91a4uQ+R+m448T+vj3Rt4nL8zm1phgQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caleb Connolly <caleb.connolly@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Komal Bajaj <quic_kbajaj@quicinc.com>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 049/143] arm64: dts: qcom: sm6115: add iommu for sdhc_1
-Date: Tue, 16 Jul 2024 17:30:45 +0200
-Message-ID: <20240716152757.872905904@linuxfoundation.org>
+Subject: [PATCH 6.9 050/143] arm64: dts: qcom: qdu1000: Fix LLCC reg property
+Date: Tue, 16 Jul 2024 17:30:46 +0200
+Message-ID: <20240716152757.910543353@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -52,39 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Caleb Connolly <caleb.connolly@linaro.org>
+From: Komal Bajaj <quic_kbajaj@quicinc.com>
 
-[ Upstream commit 94ea124aeefe1ef271263f176634034e22c49311 ]
+[ Upstream commit af355e799b3dc3dd0ed8bf2143641af05d8cd3d4 ]
 
-The first SDHC can do DMA like most other peripherals, add the missing
-iommus entry which is required to set this up.
+The LLCC binding and driver was corrected to handle the stride
+varying between platforms. Switch to the new format to ensure
+accesses are done in the right place.
 
-This may have been working on Linux before since the bootloader
-configures it and it may not be full torn down. But other software like
-U-Boot needs this to initialize the eMMC properly.
-
-Fixes: 97e563bf5ba1 ("arm64: dts: qcom: sm6115: Add basic soc dtsi")
-Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20240619-rb2-fixes-v1-1-1d2b1d711969@linaro.org
+Fixes: b0e0290bc47d ("arm64: dts: qcom: qdu1000: correct LLCC reg entries")
+Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240619061641.5261-2-quic_kbajaj@quicinc.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm6115.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/qdu1000.dtsi | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-index aca0a87092e45..9ed062150aaf2 100644
---- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-@@ -1090,6 +1090,7 @@
+diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+index 832f472c4b7a5..ceed9c4e8fcd6 100644
+--- a/arch/arm64/boot/dts/qcom/qdu1000.dtsi
++++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+@@ -1459,9 +1459,23 @@
  
- 			power-domains = <&rpmpd SM6115_VDDCX>;
- 			operating-points-v2 = <&sdhc1_opp_table>;
-+			iommus = <&apps_smmu 0x00c0 0x0>;
- 			interconnects = <&system_noc MASTER_SDCC_1 RPM_ALWAYS_TAG
- 					 &bimc SLAVE_EBI_CH0 RPM_ALWAYS_TAG>,
- 					<&bimc MASTER_AMPSS_M0 RPM_ALWAYS_TAG
+ 		system-cache-controller@19200000 {
+ 			compatible = "qcom,qdu1000-llcc";
+-			reg = <0 0x19200000 0 0xd80000>,
++			reg = <0 0x19200000 0 0x80000>,
++			      <0 0x19300000 0 0x80000>,
++			      <0 0x19600000 0 0x80000>,
++			      <0 0x19700000 0 0x80000>,
++			      <0 0x19a00000 0 0x80000>,
++			      <0 0x19b00000 0 0x80000>,
++			      <0 0x19e00000 0 0x80000>,
++			      <0 0x19f00000 0 0x80000>,
+ 			      <0 0x1a200000 0 0x80000>;
+ 			reg-names = "llcc0_base",
++				    "llcc1_base",
++				    "llcc2_base",
++				    "llcc3_base",
++				    "llcc4_base",
++				    "llcc5_base",
++				    "llcc6_base",
++				    "llcc7_base",
+ 				    "llcc_broadcast_base";
+ 			interrupts = <GIC_SPI 266 IRQ_TYPE_LEVEL_HIGH>;
+ 		};
 -- 
 2.43.0
 
