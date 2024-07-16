@@ -1,46 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86361DDCE;
-	Tue, 16 Jul 2024 16:03:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C119E19B59C;
+	Tue, 16 Jul 2024 16:03:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145817; cv=none; b=sj9oJBfTB/90qv1a2w4C/juTFD5WM0Z2ix6J43WpgNeB/aK1nZeoLVZ1fo4JShPTgKZQvnkZnsiHfVepyV8v0dQf5saBZr0X0gppSYRwEQ3CqlKGm1U462XEYqy/Z6+glhqzTgiy2SbYVJ308WRXSgeq5kJOH1/I0o+qf9iOO+o=
+	t=1721145820; cv=none; b=HZeVqglC3aG4QHIopMb++YCftEdwgpUmHZpmG7tgcSif0UOrGuVbGBtlT/IaCTMeoDjxWBkSfXP92OfUy0wIaGEAXCTvpmQbP6npZaGkkZhJQsd9aKd7bsLB5MRXC6N4/N4h9HgfELrahYl8dEWg+9e4W1JNciNQwjj5w3A7vR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145817; c=relaxed/simple;
-	bh=Esz6IPIZ/coz5SCNHGUR/3/OsH0yH/p6z/ncCfC0nGg=;
+	s=arc-20240116; t=1721145820; c=relaxed/simple;
+	bh=GL6TNVmMZhk052JNlIqTcRSdeYI0Lp12/NZhSzATjEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BuGtY8jQm6lmQX0tc2mU5RZa+QFSGsFi/vkqowgIrCt9NhDz+2VXP8XwI83lcRPKh5PAY9NrQOeMl1x0BiuoKC9kH0S3XOsAYw9afjnuhcAS+mxfgZh74XdRzw7XuqE/WhxzYrbRfR6ngVTqe3oXuOHlDTxPb9+Jor6OiXvnV+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nO1gSG4y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mOSa2pOpw2hkS+zag++sYi2Dasbp7EqrEGWrRaM+oV0NxiwT46khndxO3BGCXj5nmuDza6mds90EVHSn/fxN7GcgzF5EyQrL361Wie05m86K3gI7SCMpsMR79h4cgXbu/LcLwmQSc0Uz4gvW8T5iXyl7lxewJj+mC94P9eKEQis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I9GoHiH1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nO1gSG4y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B16D2C116B1;
-	Tue, 16 Jul 2024 16:03:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I9GoHiH1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0A26C116B1;
+	Tue, 16 Jul 2024 16:03:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145817;
-	bh=Esz6IPIZ/coz5SCNHGUR/3/OsH0yH/p6z/ncCfC0nGg=;
+	s=korg; t=1721145820;
+	bh=GL6TNVmMZhk052JNlIqTcRSdeYI0Lp12/NZhSzATjEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nO1gSG4ynV7NAx4Rk/PMYisDCVKJE/WgwUo15jjFtBgUdfRaGSnm58U4a8hIrOHy8
-	 6N1z5eb2UHKInUnHeN9Wj51QGkxonM6PSc82h8oTke2LLgndIXuCmSp0oCIOERxjLX
-	 RYG0nieMJJFZQipq71l8Iw8oo1tzbiPdxFhBs3g4=
+	b=I9GoHiH1HtzB9iNbICjLUIQ4WH35X+27yEMnUOc6owEw/c2gGX/v0sWtZ5PLz4s+R
+	 l1P163XijJGHmFcd0tYaeKwPaYdGhv4XTU6UPZG/rVqqcCzG5U4PurtxLqdqKiCcfV
+	 SkAiOlr73MKvk+ppeqJwu6rlUsEc/bpzGqT6/8cg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Audra Mitchell <audra@redhat.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Andrea Arcangeli <aarcange@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Mike Rapoport <rppt@linux.vnet.ibm.com>,
-	Peter Xu <peterx@redhat.com>,
-	Rafael Aquini <raquini@redhat.com>,
-	Shaohua Li <shli@fb.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 087/121] Fix userfaultfd_api to return EINVAL as expected
-Date: Tue, 16 Jul 2024 17:32:29 +0200
-Message-ID: <20240716152754.674526437@linuxfoundation.org>
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 096/121] wireguard: send: annotate intentional data race in checking empty queue
+Date: Tue, 16 Jul 2024 17:32:38 +0200
+Message-ID: <20240716152755.022202290@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152751.312512071@linuxfoundation.org>
 References: <20240716152751.312512071@linuxfoundation.org>
@@ -59,65 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Audra Mitchell <audra@redhat.com>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-commit 1723f04caacb32cadc4e063725d836a0c4450694 upstream.
+commit 381a7d453fa2ac5f854a154d3c9b1bbb90c4f94f upstream.
 
-Currently if we request a feature that is not set in the Kernel config we
-fail silently and return all the available features.  However, the man
-page indicates we should return an EINVAL.
+KCSAN reports a race in wg_packet_send_keepalive, which is intentional:
 
-We need to fix this issue since we can end up with a Kernel warning should
-a program request the feature UFFD_FEATURE_WP_UNPOPULATED on a kernel with
-the config not set with this feature.
+    BUG: KCSAN: data-race in wg_packet_send_keepalive / wg_packet_send_staged_packets
 
- [  200.812896] WARNING: CPU: 91 PID: 13634 at mm/memory.c:1660 zap_pte_range+0x43d/0x660
- [  200.820738] Modules linked in:
- [  200.869387] CPU: 91 PID: 13634 Comm: userfaultfd Kdump: loaded Not tainted 6.9.0-rc5+ #8
- [  200.877477] Hardware name: Dell Inc. PowerEdge R6525/0N7YGH, BIOS 2.7.3 03/30/2022
- [  200.885052] RIP: 0010:zap_pte_range+0x43d/0x660
+    write to 0xffff88814cd91280 of 8 bytes by task 3194 on cpu 0:
+     __skb_queue_head_init include/linux/skbuff.h:2162 [inline]
+     skb_queue_splice_init include/linux/skbuff.h:2248 [inline]
+     wg_packet_send_staged_packets+0xe5/0xad0 drivers/net/wireguard/send.c:351
+     wg_xmit+0x5b8/0x660 drivers/net/wireguard/device.c:218
+     __netdev_start_xmit include/linux/netdevice.h:4940 [inline]
+     netdev_start_xmit include/linux/netdevice.h:4954 [inline]
+     xmit_one net/core/dev.c:3548 [inline]
+     dev_hard_start_xmit+0x11b/0x3f0 net/core/dev.c:3564
+     __dev_queue_xmit+0xeff/0x1d80 net/core/dev.c:4349
+     dev_queue_xmit include/linux/netdevice.h:3134 [inline]
+     neigh_connected_output+0x231/0x2a0 net/core/neighbour.c:1592
+     neigh_output include/net/neighbour.h:542 [inline]
+     ip6_finish_output2+0xa66/0xce0 net/ipv6/ip6_output.c:137
+     ip6_finish_output+0x1a5/0x490 net/ipv6/ip6_output.c:222
+     NF_HOOK_COND include/linux/netfilter.h:303 [inline]
+     ip6_output+0xeb/0x220 net/ipv6/ip6_output.c:243
+     dst_output include/net/dst.h:451 [inline]
+     NF_HOOK include/linux/netfilter.h:314 [inline]
+     ndisc_send_skb+0x4a2/0x670 net/ipv6/ndisc.c:509
+     ndisc_send_rs+0x3ab/0x3e0 net/ipv6/ndisc.c:719
+     addrconf_dad_completed+0x640/0x8e0 net/ipv6/addrconf.c:4295
+     addrconf_dad_work+0x891/0xbc0
+     process_one_work kernel/workqueue.c:2633 [inline]
+     process_scheduled_works+0x5b8/0xa30 kernel/workqueue.c:2706
+     worker_thread+0x525/0x730 kernel/workqueue.c:2787
+     kthread+0x1d7/0x210 kernel/kthread.c:388
+     ret_from_fork+0x48/0x60 arch/x86/kernel/process.c:147
+     ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:242
 
-Link: https://lkml.kernel.org/r/20240626130513.120193-1-audra@redhat.com
-Fixes: e06f1e1dd499 ("userfaultfd: wp: enabled write protection in userfaultfd API")
-Signed-off-by: Audra Mitchell <audra@redhat.com>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Mike Rapoport <rppt@linux.vnet.ibm.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Rafael Aquini <raquini@redhat.com>
-Cc: Shaohua Li <shli@fb.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+    read to 0xffff88814cd91280 of 8 bytes by task 3202 on cpu 1:
+     skb_queue_empty include/linux/skbuff.h:1798 [inline]
+     wg_packet_send_keepalive+0x20/0x100 drivers/net/wireguard/send.c:225
+     wg_receive_handshake_packet drivers/net/wireguard/receive.c:186 [inline]
+     wg_packet_handshake_receive_worker+0x445/0x5e0 drivers/net/wireguard/receive.c:213
+     process_one_work kernel/workqueue.c:2633 [inline]
+     process_scheduled_works+0x5b8/0xa30 kernel/workqueue.c:2706
+     worker_thread+0x525/0x730 kernel/workqueue.c:2787
+     kthread+0x1d7/0x210 kernel/kthread.c:388
+     ret_from_fork+0x48/0x60 arch/x86/kernel/process.c:147
+     ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:242
+
+    value changed: 0xffff888148fef200 -> 0xffff88814cd91280
+
+Mark this race as intentional by using the skb_queue_empty_lockless()
+function rather than skb_queue_empty(), which uses READ_ONCE()
+internally to annotate the race.
+
+Cc: stable@vger.kernel.org
+Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Link: https://patch.msgid.link/20240704154517.1572127-5-Jason@zx2c4.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/userfaultfd.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/wireguard/send.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/userfaultfd.c
-+++ b/fs/userfaultfd.c
-@@ -2050,7 +2050,7 @@ static int userfaultfd_api(struct userfa
- 		goto out;
- 	features = uffdio_api.features;
- 	ret = -EINVAL;
--	if (uffdio_api.api != UFFD_API || (features & ~UFFD_API_FEATURES))
-+	if (uffdio_api.api != UFFD_API)
- 		goto err_out;
- 	ret = -EPERM;
- 	if ((features & UFFD_FEATURE_EVENT_FORK) && !capable(CAP_SYS_PTRACE))
-@@ -2068,6 +2068,11 @@ static int userfaultfd_api(struct userfa
- 	uffdio_api.features &= ~UFFD_FEATURE_WP_HUGETLBFS_SHMEM;
- 	uffdio_api.features &= ~UFFD_FEATURE_WP_UNPOPULATED;
- #endif
-+
-+	ret = -EINVAL;
-+	if (features & ~uffdio_api.features)
-+		goto err_out;
-+
- 	uffdio_api.ioctls = UFFD_API_IOCTLS;
- 	ret = -EFAULT;
- 	if (copy_to_user(buf, &uffdio_api, sizeof(uffdio_api)))
+--- a/drivers/net/wireguard/send.c
++++ b/drivers/net/wireguard/send.c
+@@ -222,7 +222,7 @@ void wg_packet_send_keepalive(struct wg_
+ {
+ 	struct sk_buff *skb;
+ 
+-	if (skb_queue_empty(&peer->staged_packet_queue)) {
++	if (skb_queue_empty_lockless(&peer->staged_packet_queue)) {
+ 		skb = alloc_skb(DATA_PACKET_HEAD_ROOM + MESSAGE_MINIMUM_LENGTH,
+ 				GFP_ATOMIC);
+ 		if (unlikely(!skb))
 
 
