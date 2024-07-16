@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D5E8F9E8;
-	Tue, 16 Jul 2024 15:44:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F7A19B3DD;
+	Tue, 16 Jul 2024 15:44:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144666; cv=none; b=pZzq59dr8/8TSbk1WKlYRmYglD7HaeaSliB/fcFb6CTfc9eg4NUN5zFbJvtiOUZmTmGKuHmHMnzfUMR2KljZiMwX6uplY7mxiCT1L09OHgDx2kaKUyxKAK0wtFndc90sSMlmCnRTXPk4FudRGzccOHYzhxkxOKcF5G4JqrQPltk=
+	t=1721144669; cv=none; b=ijWycfWfPhIK9kPTSeGlZgYYduRo1d3vS/YeHQMZ2mJdmSat1XJM94uHVKYpGNVZhlpge+tlKyYIxR8qvw58rjDrYjI4S6iWASjTap04NC3Ypj+pKoj1MYAmhtEKvroqKsYF9JeglNtLbMyIpcDOcvF/4nusVBkSq034nbmboGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144666; c=relaxed/simple;
-	bh=dgrXM2wsE2547ZoLxOvFB3qJBv0kHRuqC9Oy2oPaJdM=;
+	s=arc-20240116; t=1721144669; c=relaxed/simple;
+	bh=RIdiEtPqB0lr2Wbd4MG8bXWQfdzF8FPsPvBEmUnCsnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rc/vTpP2txh3XzDTmPM9NYEFRRK0mg3BbGaShEBKPrEuQ2vB1sRvaMgRAV4muVd3yqRl2ukNMbsrrCr+LyPCZkNLLdrdz72NmnFpqu73XkbDiZhQKg1cHcf4LY6tZFGvflWmOsousYQnxQ9ZgkwIdl6NB4bf0gZM/rSW64zkyJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2coeF7A1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jV40TTGkA2VFOvZMMgD0ptqDKU+/5Z8AuF2nwq0njV5HDQfrIAoTCeNyOyl1Z55ZiCrBMW/c7T04mrFvtNU+Eicgnwhb69t8MfVjRJ5nDvKGJSXhcGzBCVaj2jd8+MJl25ropWiSToBviWP2L1sZWX/dYjkUEfhKN+oHnFwqQT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ykv1GTNQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2coeF7A1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E64C116B1;
-	Tue, 16 Jul 2024 15:44:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ykv1GTNQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A01C116B1;
+	Tue, 16 Jul 2024 15:44:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144666;
-	bh=dgrXM2wsE2547ZoLxOvFB3qJBv0kHRuqC9Oy2oPaJdM=;
+	s=korg; t=1721144669;
+	bh=RIdiEtPqB0lr2Wbd4MG8bXWQfdzF8FPsPvBEmUnCsnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2coeF7A1R8xvH0gAEhZaSqWF7yWIpV1/CZlYEGdfK4m93m1Ht8Aoz5qmu5/BaPBd8
-	 m+dm9C3WBzGDJvEDbUl24e8pXIldVMDE4JFkpGp9+JBZ5fmyYP54Z1nEa1GBhB+moc
-	 w0O4AvlV8XlsKehm4OidZaVmd31p4xpDiPxRU9dA=
+	b=ykv1GTNQ4mHKntHRFvURswTPKEf9E+zSQb+5PkYkVRCYuYXqyeeuMXvFMHMXiGSA/
+	 qQbcSnUfxalDE9OSHEE+zkdzReHMfJXOEB6wKiWjGrFDWFpV4LyVeBoYqth5kUzPPK
+	 sDtUoSW9RIbhN8QBRFEzjCug9nf/30Y7yG2x/YGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+d79afb004be235636ee8@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>,
-	Hillf Danton <hdanton@sina.com>,
+	Jinliang Zheng <alexjlzheng@tencent.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Mateusz Guzik <mjguzik@gmail.com>,
 	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Tycho Andersen <tandersen@netflix.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 035/108] nilfs2: add missing check for inode numbers on directory entries
-Date: Tue, 16 Jul 2024 17:30:50 +0200
-Message-ID: <20240716152747.346127994@linuxfoundation.org>
+Subject: [PATCH 5.10 036/108] mm: optimize the redundant loop of mm_update_owner_next()
+Date: Tue, 16 Jul 2024 17:30:51 +0200
+Message-ID: <20240716152747.384147491@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152745.988603303@linuxfoundation.org>
 References: <20240716152745.988603303@linuxfoundation.org>
@@ -54,80 +57,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Jinliang Zheng <alexjlzheng@tencent.com>
 
-commit bb76c6c274683c8570ad788f79d4b875bde0e458 upstream.
+commit cf3f9a593dab87a032d2b6a6fb205e7f3de4f0a1 upstream.
 
-Syzbot reported that mounting and unmounting a specific pattern of
-corrupted nilfs2 filesystem images causes a use-after-free of metadata
-file inodes, which triggers a kernel bug in lru_add_fn().
+When mm_update_owner_next() is racing with swapoff (try_to_unuse()) or
+/proc or ptrace or page migration (get_task_mm()), it is impossible to
+find an appropriate task_struct in the loop whose mm_struct is the same as
+the target mm_struct.
 
-As Jan Kara pointed out, this is because the link count of a metadata file
-gets corrupted to 0, and nilfs_evict_inode(), which is called from iput(),
-tries to delete that inode (ifile inode in this case).
+If the above race condition is combined with the stress-ng-zombie and
+stress-ng-dup tests, such a long loop can easily cause a Hard Lockup in
+write_lock_irq() for tasklist_lock.
 
-The inconsistency occurs because directories containing the inode numbers
-of these metadata files that should not be visible in the namespace are
-read without checking.
+Recognize this situation in advance and exit early.
 
-Fix this issue by treating the inode numbers of these internal files as
-errors in the sanity check helper when reading directory folios/pages.
-
-Also thanks to Hillf Danton and Matthew Wilcox for their initial mm-layer
-analysis.
-
-Link: https://lkml.kernel.org/r/20240623051135.4180-3-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+d79afb004be235636ee8@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=d79afb004be235636ee8
-Reported-by: Jan Kara <jack@suse.cz>
-Closes: https://lkml.kernel.org/r/20240617075758.wewhukbrjod5fp5o@quack3
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: Hillf Danton <hdanton@sina.com>
+Link: https://lkml.kernel.org/r/20240620122123.3877432-1-alexjlzheng@tencent.com
+Signed-off-by: Jinliang Zheng <alexjlzheng@tencent.com>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Mateusz Guzik <mjguzik@gmail.com>
 Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Oleg Nesterov <oleg@redhat.com>
+Cc: Tycho Andersen <tandersen@netflix.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/dir.c   |    6 ++++++
- fs/nilfs2/nilfs.h |    5 +++++
- 2 files changed, 11 insertions(+)
+ kernel/exit.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/nilfs2/dir.c
-+++ b/fs/nilfs2/dir.c
-@@ -143,6 +143,9 @@ static bool nilfs_check_page(struct page
- 			goto Enamelen;
- 		if (((offs + rec_len - 1) ^ offs) & ~(chunk_size-1))
- 			goto Espan;
-+		if (unlikely(p->inode &&
-+			     NILFS_PRIVATE_INODE(le64_to_cpu(p->inode))))
-+			goto Einumber;
- 	}
- 	if (offs != limit)
- 		goto Eend;
-@@ -168,6 +171,9 @@ Enamelen:
- 	goto bad_entry;
- Espan:
- 	error = "directory entry across blocks";
-+	goto bad_entry;
-+Einumber:
-+	error = "disallowed inode number";
- bad_entry:
- 	nilfs_error(sb,
- 		    "bad entry in directory #%lu: %s - offset=%lu, inode=%lu, rec_len=%d, name_len=%d",
---- a/fs/nilfs2/nilfs.h
-+++ b/fs/nilfs2/nilfs.h
-@@ -121,6 +121,11 @@ enum {
- 	((ino) >= NILFS_FIRST_INO(sb) ||				\
- 	 ((ino) < NILFS_USER_INO && (NILFS_SYS_INO_BITS & BIT(ino))))
- 
-+#define NILFS_PRIVATE_INODE(ino) ({					\
-+	ino_t __ino = (ino);						\
-+	((__ino) < NILFS_USER_INO && (__ino) != NILFS_ROOT_INO &&	\
-+	 (__ino) != NILFS_SKETCH_INO); })
-+
- /**
-  * struct nilfs_transaction_info: context information for synchronization
-  * @ti_magic: Magic number
+--- a/kernel/exit.c
++++ b/kernel/exit.c
+@@ -432,6 +432,8 @@ retry:
+ 	 * Search through everything else, we should not get here often.
+ 	 */
+ 	for_each_process(g) {
++		if (atomic_read(&mm->mm_users) <= 1)
++			break;
+ 		if (g->flags & PF_KTHREAD)
+ 			continue;
+ 		for_each_thread(g, c) {
 
 
