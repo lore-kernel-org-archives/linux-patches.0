@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269C0E541;
-	Tue, 16 Jul 2024 15:38:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462ACE541;
+	Tue, 16 Jul 2024 15:38:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144307; cv=none; b=VUXrNe4WjUe+/MjadLXKXjAK1Up9KZo7n1yBwDOSkL92USZbmjAXTEayEvst4sespMPJjeTUQS7VfwN5+eEm3cdN+bPCfH5ilCJOwc1box9ws1xL120o6tRL/tZqrSCW4RLVC4op90wO3BHS80NT+mhea2GPJ7dY+KYl0qaK4hA=
+	t=1721144310; cv=none; b=ABgpe9Joqr45UHpLS3JDg3ueooDV+pFcMaDqlyO0NUnEWy0wAQEWwP6B6vZlwmsTW1zgVMgT4T9c1lBpD3FpD5glFKC+RnB8+YRiK5uV3MAmfUkP2qngOxM1WlSnNtlVqbGTKsYioZqFuFVQhkwbwYJcBsrwXfoI86lExCBLhTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144307; c=relaxed/simple;
-	bh=a89tCmfPKZOBOFbz+wHqiBhJb1M/iTgEi8s9qNhC01I=;
+	s=arc-20240116; t=1721144310; c=relaxed/simple;
+	bh=IfYtF3jndenVUOzjCXh1+pw5puSTrABOOCrEhW2apFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ruMPf2M3/qKf7SHxLX8GfuZorLO4u/UVtl1qWFnhzrKgU2nQ8Yyi77XFlO40Xdp5napUir/V9dCwjEw37f9PCxhwk6cFFrvOloVyDJ/EdRuO+qLgwf5JsCIVNaXRubG7AUSebqYu4hVw8qBByLt+/xT7NGbAj3RoUHJ93uGM+6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dwnn5yX2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UoCPpUvrUmheimRbNlDTL8Su2pYQ5KJ8vGNxON5nw0sbYTI4Yz18nF2hWytWZzDhoviGBQoLQ+yqaROmNe9sPfoSSareywdqmwyZvmz8jBO7HHBtIiio5h75Nf66dqDairdEH8on3YpNn5eWpsANUtiVnAmkzfX5Fdsl18vhSLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UY76xxe1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dwnn5yX2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E6E2C116B1;
-	Tue, 16 Jul 2024 15:38:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UY76xxe1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DF67C116B1;
+	Tue, 16 Jul 2024 15:38:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144307;
-	bh=a89tCmfPKZOBOFbz+wHqiBhJb1M/iTgEi8s9qNhC01I=;
+	s=korg; t=1721144310;
+	bh=IfYtF3jndenVUOzjCXh1+pw5puSTrABOOCrEhW2apFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dwnn5yX29dS1nxhaddav+FSwVlOHicL/UuQT3zszrWk+2nkKwy3ujrEv0hzCHUxfh
-	 ZC2kzR07ywWW4VDw5nQMP35o2iuX4ivXwAkU27NHenX3E69g0mIKKzs1cT3Na8Ypsz
-	 +x0z0OTxoVxH+Efd4OKttyhxo1HZ/kAKM/MgU95o=
+	b=UY76xxe1feZTyJW1bTomEOGqkEG9lZLbHI8SnHYR5R6Ej4O6EHIB8EEbtaiUd7hrD
+	 iaEhf8/G8CTlkTUycnE+lLpYJ0FGDuu2vB5hX9NKOskhInstlYHHtFv0sYeqCFSsWl
+	 H16PixKsWwEZvVezsQXrP313o1rQWOriJV45O+kw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 29/78] selftests: fix OOM in msg_zerocopy selftest
-Date: Tue, 16 Jul 2024 17:31:01 +0200
-Message-ID: <20240716152741.763663364@linuxfoundation.org>
+Subject: [PATCH 5.4 30/78] selftests: make order checking verbose in msg_zerocopy selftest
+Date: Tue, 16 Jul 2024 17:31:02 +0200
+Message-ID: <20240716152741.803529010@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152740.626160410@linuxfoundation.org>
 References: <20240716152740.626160410@linuxfoundation.org>
@@ -55,97 +55,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Zijian Zhang <zijianzhang@bytedance.com>
 
-[ Upstream commit af2b7e5b741aaae9ffbba2c660def434e07aa241 ]
+[ Upstream commit 7d6d8f0c8b700c9493f2839abccb6d29028b4219 ]
 
-In selftests/net/msg_zerocopy.c, it has a while loop keeps calling sendmsg
-on a socket with MSG_ZEROCOPY flag, and it will recv the notifications
-until the socket is not writable. Typically, it will start the receiving
-process after around 30+ sendmsgs. However, as the introduction of commit
-dfa2f0483360 ("tcp: get rid of sysctl_tcp_adv_win_scale"), the sender is
-always writable and does not get any chance to run recv notifications.
-The selftest always exits with OUT_OF_MEMORY because the memory used by
-opt_skb exceeds the net.core.optmem_max. Meanwhile, it could be set to a
-different value to trigger OOM on older kernels too.
-
-Thus, we introduce "cfg_notification_limit" to force sender to receive
-notifications after some number of sendmsgs.
+We find that when lock debugging is on, notifications may not come in
+order. Thus, we have order checking outputs managed by cfg_verbose, to
+avoid too many outputs in this case.
 
 Fixes: 07b65c5b31ce ("test: add msg_zerocopy test")
 Signed-off-by: Zijian Zhang <zijianzhang@bytedance.com>
 Signed-off-by: Xiaochun Lu <xiaochun.lu@bytedance.com>
 Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20240701225349.3395580-2-zijianzhang@bytedance.com
+Link: https://patch.msgid.link/20240701225349.3395580-3-zijianzhang@bytedance.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/msg_zerocopy.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/msg_zerocopy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/tools/testing/selftests/net/msg_zerocopy.c b/tools/testing/selftests/net/msg_zerocopy.c
-index bdc03a2097e85..926556febc83c 100644
+index 926556febc83c..7ea5fb28c93db 100644
 --- a/tools/testing/selftests/net/msg_zerocopy.c
 +++ b/tools/testing/selftests/net/msg_zerocopy.c
-@@ -85,6 +85,7 @@ static bool cfg_rx;
- static int  cfg_runtime_ms	= 4200;
- static int  cfg_verbose;
- static int  cfg_waittime_ms	= 500;
-+static int  cfg_notification_limit = 32;
- static bool cfg_zerocopy;
- 
- static socklen_t cfg_alen;
-@@ -95,6 +96,7 @@ static char payload[IP_MAXPACKET];
- static long packets, bytes, completions, expected_completions;
- static int  zerocopied = -1;
- static uint32_t next_completion;
-+static uint32_t sends_since_notify;
- 
- static unsigned long gettimeofday_ms(void)
- {
-@@ -208,6 +210,7 @@ static bool do_sendmsg(int fd, struct msghdr *msg, bool do_zerocopy, int domain)
- 		error(1, errno, "send");
- 	if (cfg_verbose && ret != len)
- 		fprintf(stderr, "send: ret=%u != %u\n", ret, len);
-+	sends_since_notify++;
- 
- 	if (len) {
- 		packets++;
-@@ -460,6 +463,7 @@ static bool do_recv_completion(int fd, int domain)
- static void do_recv_completions(int fd, int domain)
- {
- 	while (do_recv_completion(fd, domain)) {}
-+	sends_since_notify = 0;
- }
- 
- /* Wait for all remaining completions on the errqueue */
-@@ -549,6 +553,9 @@ static void do_tx(int domain, int type, int protocol)
- 		else
- 			do_sendmsg(fd, &msg, cfg_zerocopy, domain);
- 
-+		if (cfg_zerocopy && sends_since_notify >= cfg_notification_limit)
-+			do_recv_completions(fd, domain);
-+
- 		while (!do_poll(fd, POLLOUT)) {
- 			if (cfg_zerocopy)
- 				do_recv_completions(fd, domain);
-@@ -708,7 +715,7 @@ static void parse_opts(int argc, char **argv)
- 
- 	cfg_payload_len = max_payload_len;
- 
--	while ((c = getopt(argc, argv, "46c:C:D:i:mp:rs:S:t:vz")) != -1) {
-+	while ((c = getopt(argc, argv, "46c:C:D:i:l:mp:rs:S:t:vz")) != -1) {
- 		switch (c) {
- 		case '4':
- 			if (cfg_family != PF_UNSPEC)
-@@ -736,6 +743,9 @@ static void parse_opts(int argc, char **argv)
- 			if (cfg_ifindex == 0)
- 				error(1, errno, "invalid iface: %s", optarg);
- 			break;
-+		case 'l':
-+			cfg_notification_limit = strtoul(optarg, NULL, 0);
-+			break;
- 		case 'm':
- 			cfg_cork_mixed = true;
- 			break;
+@@ -438,7 +438,7 @@ static bool do_recv_completion(int fd, int domain)
+ 	/* Detect notification gaps. These should not happen often, if at all.
+ 	 * Gaps can occur due to drops, reordering and retransmissions.
+ 	 */
+-	if (lo != next_completion)
++	if (cfg_verbose && lo != next_completion)
+ 		fprintf(stderr, "gap: %u..%u does not append to %u\n",
+ 			lo, hi, next_completion);
+ 	next_completion = hi + 1;
 -- 
 2.43.0
 
