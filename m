@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58D41DDCE;
-	Tue, 16 Jul 2024 16:08:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59B72B9BC;
+	Tue, 16 Jul 2024 16:08:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721146113; cv=none; b=gM1UqEcVWYVM6FuiUwjoz5QoWpsRV8YcryeDL+OVz10H+D+1T5hHabj8GiiETSGTfB1a5HkA2ilDqnvrB/Gkhybm/0Jg47CF7s8ung0VGLo+2TcH7Kk1Q044eH6EwhmVfjwjdQPk5Q/0V9FfmWlJ2JnEHprXILWWtSbl7GomReU=
+	t=1721146116; cv=none; b=NIRUlbawvittwxtmAgCkIA+dE/jzDPlXoAW8e937CSjsc3BQn4zRMoc5PtM3f5mH8p4XZtEATbgJH0WKb5X4zzX5BkELmkvtmwYgMN/WbU6TlkJQbQndQlyHOnU+c3QpiJhOQaXUmItumVtV6wDewiC44prtmIBS60PLNvjPQEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721146113; c=relaxed/simple;
-	bh=300OMV05tXxKBbmZTDAigMTc2MTl1GOPTB7FjWU8cAI=;
+	s=arc-20240116; t=1721146116; c=relaxed/simple;
+	bh=fW+Vlw3Gh7+Osgbbj0sMa/GW5+0CHl/MSc5KwXKHQcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dkyVpW8ObUqXQZBFa+n3waZrNvEURVy4kJ6K6AMIHvYPPSiTWCt5eaPpRtOG14Hczq3vi4jGkakr+9D3ULNFqsaeWjusS29S3YUZbh7UqEjc8+P3ejzIAg/hImjLpadCgQK66yf+Lh3VxeGLyLg/OFbxy5InHTkIwLe4205uZwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K47HAWQR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=obAtGaUjJUaBb1goHaN1IwjkOjRntHim9Dp2JTvH9zLMnLOdPbwpvJ3G3l9qCZJwhgkz/Zt2CyYFOCOrEUQVUAnfuyKIjIAypKWdQVkQgBmhS9TIletlQrgALOlKVusrc/8VZD82nOtl0iEodSk5qzkgCCfvSpUctc3pdgkWfw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n56OuOh3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K47HAWQR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68E49C116B1;
-	Tue, 16 Jul 2024 16:08:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n56OuOh3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 642BCC4AF0D;
+	Tue, 16 Jul 2024 16:08:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721146112;
-	bh=300OMV05tXxKBbmZTDAigMTc2MTl1GOPTB7FjWU8cAI=;
+	s=korg; t=1721146115;
+	bh=fW+Vlw3Gh7+Osgbbj0sMa/GW5+0CHl/MSc5KwXKHQcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K47HAWQRzvLlvV0CEJoJd1PvGSOWwhtvk6ZR56Yr+RzjY8nBmOg9wxRNbaY0p9qwz
-	 cxYIsl/V8mphcDuSj1BedI3+2qJLJS7URghyKtwlAKVBl1YiQT4nlaBEt6jVVCNXO2
-	 oJJ1bSVyEfPh4MWwg2BXXQi/N3RFUCgq8Qo58oVc=
+	b=n56OuOh3d4Xyk0c3nRMAbGShy6H11gjHqEdmp3c1Z7KouNYUf/VwAb3PmRaOIkeq2
+	 hBElcEzFLWVsSxLVHeABGCmQ07nMfOSzSG8pAFP1H4yTmuYy50xqbzSqU+En9zA7Cc
+	 fJWO2cJMD0DdcLf777lmxb/WFQMKn/DXGxny0CbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Len Brown <len.brown@intel.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Yuchung Cheng <ycheng@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 030/144] tools/power turbostat: Remember global max_die_id
-Date: Tue, 16 Jul 2024 17:31:39 +0200
-Message-ID: <20240716152753.699394605@linuxfoundation.org>
+Subject: [PATCH 5.15 031/144] UPSTREAM: tcp: fix DSACK undo in fast recovery to call tcp_try_to_open()
+Date: Tue, 16 Jul 2024 17:31:40 +0200
+Message-ID: <20240716152753.737825128@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
 References: <20240716152752.524497140@linuxfoundation.org>
@@ -50,63 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Len Brown <len.brown@intel.com>
+From: Neal Cardwell <ncardwell@google.com>
 
-[ Upstream commit cda203388687aa075db6f8996c3c4549fa518ea8 ]
+[ Upstream commit a6458ab7fd4f427d4f6f54380453ad255b7fde83 ]
 
-This is necessary to gracefully handle sparse die_id's.
+In some production workloads we noticed that connections could
+sometimes close extremely prematurely with ETIMEDOUT after
+transmitting only 1 TLP and RTO retransmission (when we would normally
+expect roughly tcp_retries2 = TCP_RETR2 = 15 RTOs before a connection
+closes with ETIMEDOUT).
 
-no functional change
+>From tracing we determined that these workloads can suffer from a
+scenario where in fast recovery, after some retransmits, a DSACK undo
+can happen at a point where the scoreboard is totally clear (we have
+retrans_out == sacked_out == lost_out == 0). In such cases, calling
+tcp_try_keep_open() means that we do not execute any code path that
+clears tp->retrans_stamp to 0. That means that tp->retrans_stamp can
+remain erroneously set to the start time of the undone fast recovery,
+even after the fast recovery is undone. If minutes or hours elapse,
+and then a TLP/RTO/RTO sequence occurs, then the start_ts value in
+retransmits_timed_out() (which is from tp->retrans_stamp) will be
+erroneously ancient (left over from the fast recovery undone via
+DSACKs). Thus this ancient tp->retrans_stamp value can cause the
+connection to die very prematurely with ETIMEDOUT via
+tcp_write_err().
 
-Signed-off-by: Len Brown <len.brown@intel.com>
+The fix: we change DSACK undo in fast recovery (TCP_CA_Recovery) to
+call tcp_try_to_open() instead of tcp_try_keep_open(). This ensures
+that if no retransmits are in flight at the time of DSACK undo in fast
+recovery then we properly zero retrans_stamp. Note that calling
+tcp_try_to_open() is more consistent with other loss recovery
+behavior, since normal fast recovery (CA_Recovery) and RTO recovery
+(CA_Loss) both normally end when tp->snd_una meets or exceeds
+tp->high_seq and then in tcp_fastretrans_alert() the "default" switch
+case executes tcp_try_to_open(). Also note that by inspection this
+change to call tcp_try_to_open() implies at least one other nice bug
+fix, where now an ECE-marked DSACK that causes an undo will properly
+invoke tcp_enter_cwr() rather than ignoring the ECE mark.
+
+Fixes: c7d9d6a185a7 ("tcp: undo on DSACK during recovery")
+Signed-off-by: Neal Cardwell <ncardwell@google.com>
+Signed-off-by: Yuchung Cheng <ycheng@google.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/x86/turbostat/turbostat.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/ipv4/tcp_input.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
-index 0822e7dc0fd8b..5a9fc659e8930 100644
---- a/tools/power/x86/turbostat/turbostat.c
-+++ b/tools/power/x86/turbostat/turbostat.c
-@@ -417,6 +417,7 @@ struct topo_params {
- 	int num_cpus;
- 	int num_cores;
- 	int max_cpu_num;
-+	int max_die_id;
- 	int max_node_num;
- 	int nodes_per_pkg;
- 	int cores_per_node;
-@@ -5614,7 +5615,6 @@ void topology_probe()
- 	int i;
- 	int max_core_id = 0;
- 	int max_package_id = 0;
--	int max_die_id = 0;
- 	int max_siblings = 0;
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index eaa66f51c6a84..f37b39350e816 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -3034,7 +3034,7 @@ static void tcp_fastretrans_alert(struct sock *sk, const u32 prior_snd_una,
+ 			return;
  
- 	/* Initialize num_cpus, max_cpu_num */
-@@ -5683,8 +5683,8 @@ void topology_probe()
+ 		if (tcp_try_undo_dsack(sk))
+-			tcp_try_keep_open(sk);
++			tcp_try_to_open(sk, flag);
  
- 		/* get die information */
- 		cpus[i].die_id = get_die_id(i);
--		if (cpus[i].die_id > max_die_id)
--			max_die_id = cpus[i].die_id;
-+		if (cpus[i].die_id > topo.max_die_id)
-+			topo.max_die_id = cpus[i].die_id;
- 
- 		/* get numa node information */
- 		cpus[i].physical_node_id = get_physical_node_id(&cpus[i]);
-@@ -5710,9 +5710,9 @@ void topology_probe()
- 	if (!summary_only && topo.cores_per_node > 1)
- 		BIC_PRESENT(BIC_Core);
- 
--	topo.num_die = max_die_id + 1;
-+	topo.num_die = topo.max_die_id + 1;
- 	if (debug > 1)
--		fprintf(outf, "max_die_id %d, sizing for %d die\n", max_die_id, topo.num_die);
-+		fprintf(outf, "max_die_id %d, sizing for %d die\n", topo.max_die_id, topo.num_die);
- 	if (!summary_only && topo.num_die > 1)
- 		BIC_PRESENT(BIC_Die);
- 
+ 		tcp_identify_packet_loss(sk, ack_flag);
+ 		if (icsk->icsk_ca_state != TCP_CA_Recovery) {
 -- 
 2.43.0
 
