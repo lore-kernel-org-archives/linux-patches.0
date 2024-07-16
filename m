@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335251DDF5;
-	Tue, 16 Jul 2024 15:43:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10EC71DDF5;
+	Tue, 16 Jul 2024 15:43:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144637; cv=none; b=RblZTBVp0dLJykM4aQBJBXTsWBjlLHPDKXHx6OHUCXFwq+q75owrYXVDU5PeA3fHHHQBHx43FHzAqRacMIkDaYmLUIUgSs31vJR2er2q2AvkEXXs9szwVfAu7a9jZXBi6V1Z90z34+NRIx1nDdEdPio6fdFtbmGJLAerEBsPAdw=
+	t=1721144640; cv=none; b=Fei0wjI64vYh/H95jSt3LcsHMjpLvE6X1+uO4qMQO/XXnw9FQE2L1cULKDWF8dYA0w2BjleU/p9e/DXOybqtL6dtdlMZV2SFrfmUNnuOWo6lQITB2ps+pbwIAd9zOtHxSGM/FJRFAcvGbWUqiBAViA89tXW+/QxD8mpbX4w6bZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144637; c=relaxed/simple;
-	bh=Vh4HTRfSNh9uEHb7xF6j47FpxSslNLvOe8l8TpHt8l8=;
+	s=arc-20240116; t=1721144640; c=relaxed/simple;
+	bh=IhVZ08qq/67jTEwaFYd8tjMTZM6c0YJupWHY5JYFh90=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=myIPXgI3WwGYh1LMdtNlPuzzNcz0G3LFs+VeXHfsqa8JGmEepvoODeByUcMTEXSB56GMMhzzNOFess/wjxPgYr0aXzXlj9VqbElVVx4qRoZjVieqcRict8zAyfsqyL2BH1optn0jmwllgK39eAs8jHypGm9/OdlqG5OICA2ogMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hE1yuYN8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IV1Z/7ybP8RxMln3mJjPCLev42ukMF1Z8dqjhkohtpV+9fuxKHiulEn6itE44JKIBzqk1oTkS8L7gm5fIbFOzczJd+TDPoZoHYwF1uRlfTW/7xcTlDBj7Ruka+vT9irVlpTxbojPU1bO+Y4PuU4h41vuEawfEEhMGxPuKeuQGZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S4mF/nSX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hE1yuYN8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68AD3C4AF0B;
-	Tue, 16 Jul 2024 15:43:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S4mF/nSX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EB09C116B1;
+	Tue, 16 Jul 2024 15:43:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144636;
-	bh=Vh4HTRfSNh9uEHb7xF6j47FpxSslNLvOe8l8TpHt8l8=;
+	s=korg; t=1721144639;
+	bh=IhVZ08qq/67jTEwaFYd8tjMTZM6c0YJupWHY5JYFh90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hE1yuYN867/lfcOS7stQOTgdYzE2shbb58GN6t4NAKHFNS+WKvQxRJjwIMVp9Z3ih
-	 lBopty2w44iPv+dUcgn1F/o1lJuZeryaPPa/nIwYrYCxco0LO46z5d83nI1nGWDQg+
-	 rz/2EzGbHgpfELLqzoazCS8JYjAMHZMVNl4XZUuY=
+	b=S4mF/nSXo/cn0fVT0Y5TR2ijtZfezLKdZ+fcApyyEz037aYvBlU1F/t8YALRyM92v
+	 P4s5ceWCGytWMCBrkhRN7ad/QpIyPwpyg7bK2Kx81a3X3mduL2gl2CJEVuJO5GrFmA
+	 klyJ79jjuc2vN0q5DPVJC0UIDCQqyRJ09225Q10A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 056/108] kbuild: fix short log for AS in link-vmlinux.sh
-Date: Tue, 16 Jul 2024 17:31:11 +0200
-Message-ID: <20240716152748.137404969@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Hillf Danton <hdanton@sina.com>,
+	Jan Kara <jack@suse.cz>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 057/108] nilfs2: fix incorrect inode allocation from reserved inodes
+Date: Tue, 16 Jul 2024 17:31:12 +0200
+Message-ID: <20240716152748.176249571@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152745.988603303@linuxfoundation.org>
 References: <20240716152745.988603303@linuxfoundation.org>
@@ -50,59 +53,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 3430f65d6130ccbc86f0ff45642eeb9e2032a600 ]
+commit 93aef9eda1cea9e84ab2453fcceb8addad0e46f1 upstream.
 
-In convention, short logs print the output file, not the input file.
+If the bitmap block that manages the inode allocation status is corrupted,
+nilfs_ifile_create_inode() may allocate a new inode from the reserved
+inode area where it should not be allocated.
 
-Let's change the suffix for 'AS' since it assembles *.S into *.o.
+Previous fix commit d325dc6eb763 ("nilfs2: fix use-after-free bug of
+struct nilfs_root"), fixed the problem that reserved inodes with inode
+numbers less than NILFS_USER_INO (=11) were incorrectly reallocated due to
+bitmap corruption, but since the start number of non-reserved inodes is
+read from the super block and may change, in which case inode allocation
+may occur from the extended reserved inode area.
 
-[Before]
+If that happens, access to that inode will cause an IO error, causing the
+file system to degrade to an error state.
 
-  LD      .tmp_vmlinux.kallsyms1
-  NM      .tmp_vmlinux.kallsyms1.syms
-  KSYMS   .tmp_vmlinux.kallsyms1.S
-  AS      .tmp_vmlinux.kallsyms1.S
-  LD      .tmp_vmlinux.kallsyms2
-  NM      .tmp_vmlinux.kallsyms2.syms
-  KSYMS   .tmp_vmlinux.kallsyms2.S
-  AS      .tmp_vmlinux.kallsyms2.S
-  LD      vmlinux
+Fix this potential issue by adding a wraparound option to the common
+metadata object allocation routine and by modifying
+nilfs_ifile_create_inode() to disable the option so that it only allocates
+inodes with inode numbers greater than or equal to the inode number read
+in "nilfs->ns_first_ino", regardless of the bitmap status of reserved
+inodes.
 
-[After]
-
-  LD      .tmp_vmlinux.kallsyms1
-  NM      .tmp_vmlinux.kallsyms1.syms
-  KSYMS   .tmp_vmlinux.kallsyms1.S
-  AS      .tmp_vmlinux.kallsyms1.o
-  LD      .tmp_vmlinux.kallsyms2
-  NM      .tmp_vmlinux.kallsyms2.syms
-  KSYMS   .tmp_vmlinux.kallsyms2.S
-  AS      .tmp_vmlinux.kallsyms2.o
-  LD      vmlinux
-
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20240623051135.4180-4-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: Hillf Danton <hdanton@sina.com>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/link-vmlinux.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nilfs2/alloc.c |   18 ++++++++++++++----
+ fs/nilfs2/alloc.h |    4 ++--
+ fs/nilfs2/dat.c   |    2 +-
+ fs/nilfs2/ifile.c |    7 ++-----
+ 4 files changed, 19 insertions(+), 12 deletions(-)
 
-diff --git a/scripts/link-vmlinux.sh b/scripts/link-vmlinux.sh
-index 3a1ffd84eac28..bf534a323fddc 100755
---- a/scripts/link-vmlinux.sh
-+++ b/scripts/link-vmlinux.sh
-@@ -213,7 +213,7 @@ kallsyms_step()
- 	vmlinux_link ${kallsyms_vmlinux} "${kallsymso_prev}" ${btf_vmlinux_bin_o}
- 	kallsyms ${kallsyms_vmlinux} ${kallsyms_S}
+--- a/fs/nilfs2/alloc.c
++++ b/fs/nilfs2/alloc.c
+@@ -377,11 +377,12 @@ void *nilfs_palloc_block_get_entry(const
+  * @target: offset number of an entry in the group (start point)
+  * @bsize: size in bits
+  * @lock: spin lock protecting @bitmap
++ * @wrap: whether to wrap around
+  */
+ static int nilfs_palloc_find_available_slot(unsigned char *bitmap,
+ 					    unsigned long target,
+ 					    unsigned int bsize,
+-					    spinlock_t *lock)
++					    spinlock_t *lock, bool wrap)
+ {
+ 	int pos, end = bsize;
  
--	info AS ${kallsyms_S}
-+	info AS ${kallsymso}
- 	${CC} ${NOSTDINC_FLAGS} ${LINUXINCLUDE} ${KBUILD_CPPFLAGS} \
- 	      ${KBUILD_AFLAGS} ${KBUILD_AFLAGS_KERNEL} \
- 	      -c -o ${kallsymso} ${kallsyms_S}
--- 
-2.43.0
-
+@@ -397,6 +398,8 @@ static int nilfs_palloc_find_available_s
+ 
+ 		end = target;
+ 	}
++	if (!wrap)
++		return -ENOSPC;
+ 
+ 	/* wrap around */
+ 	for (pos = 0; pos < end; pos++) {
+@@ -495,9 +498,10 @@ int nilfs_palloc_count_max_entries(struc
+  * nilfs_palloc_prepare_alloc_entry - prepare to allocate a persistent object
+  * @inode: inode of metadata file using this allocator
+  * @req: nilfs_palloc_req structure exchanged for the allocation
++ * @wrap: whether to wrap around
+  */
+ int nilfs_palloc_prepare_alloc_entry(struct inode *inode,
+-				     struct nilfs_palloc_req *req)
++				     struct nilfs_palloc_req *req, bool wrap)
+ {
+ 	struct buffer_head *desc_bh, *bitmap_bh;
+ 	struct nilfs_palloc_group_desc *desc;
+@@ -516,7 +520,7 @@ int nilfs_palloc_prepare_alloc_entry(str
+ 	entries_per_group = nilfs_palloc_entries_per_group(inode);
+ 
+ 	for (i = 0; i < ngroups; i += n) {
+-		if (group >= ngroups) {
++		if (group >= ngroups && wrap) {
+ 			/* wrap around */
+ 			group = 0;
+ 			maxgroup = nilfs_palloc_group(inode, req->pr_entry_nr,
+@@ -541,7 +545,13 @@ int nilfs_palloc_prepare_alloc_entry(str
+ 				bitmap = bitmap_kaddr + bh_offset(bitmap_bh);
+ 				pos = nilfs_palloc_find_available_slot(
+ 					bitmap, group_offset,
+-					entries_per_group, lock);
++					entries_per_group, lock, wrap);
++				/*
++				 * Since the search for a free slot in the
++				 * second and subsequent bitmap blocks always
++				 * starts from the beginning, the wrap flag
++				 * only has an effect on the first search.
++				 */
+ 				if (pos >= 0) {
+ 					/* found a free entry */
+ 					nilfs_palloc_group_desc_add_entries(
+--- a/fs/nilfs2/alloc.h
++++ b/fs/nilfs2/alloc.h
+@@ -50,8 +50,8 @@ struct nilfs_palloc_req {
+ 	struct buffer_head *pr_entry_bh;
+ };
+ 
+-int nilfs_palloc_prepare_alloc_entry(struct inode *,
+-				     struct nilfs_palloc_req *);
++int nilfs_palloc_prepare_alloc_entry(struct inode *inode,
++				     struct nilfs_palloc_req *req, bool wrap);
+ void nilfs_palloc_commit_alloc_entry(struct inode *,
+ 				     struct nilfs_palloc_req *);
+ void nilfs_palloc_abort_alloc_entry(struct inode *, struct nilfs_palloc_req *);
+--- a/fs/nilfs2/dat.c
++++ b/fs/nilfs2/dat.c
+@@ -75,7 +75,7 @@ int nilfs_dat_prepare_alloc(struct inode
+ {
+ 	int ret;
+ 
+-	ret = nilfs_palloc_prepare_alloc_entry(dat, req);
++	ret = nilfs_palloc_prepare_alloc_entry(dat, req, true);
+ 	if (ret < 0)
+ 		return ret;
+ 
+--- a/fs/nilfs2/ifile.c
++++ b/fs/nilfs2/ifile.c
+@@ -55,13 +55,10 @@ int nilfs_ifile_create_inode(struct inod
+ 	struct nilfs_palloc_req req;
+ 	int ret;
+ 
+-	req.pr_entry_nr = 0;  /*
+-			       * 0 says find free inode from beginning
+-			       * of a group. dull code!!
+-			       */
++	req.pr_entry_nr = NILFS_FIRST_INO(ifile->i_sb);
+ 	req.pr_entry_bh = NULL;
+ 
+-	ret = nilfs_palloc_prepare_alloc_entry(ifile, &req);
++	ret = nilfs_palloc_prepare_alloc_entry(ifile, &req, false);
+ 	if (!ret) {
+ 		ret = nilfs_palloc_get_entry_block(ifile, req.pr_entry_nr, 1,
+ 						   &req.pr_entry_bh);
 
 
