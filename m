@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF3317A93F;
-	Tue, 16 Jul 2024 15:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B87817A93F;
+	Tue, 16 Jul 2024 15:52:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145151; cv=none; b=Org/AGoPUsh19q1zKLjfAyeGgBLI0pYMF63ehpubnQ7jwlIFAlfKodpVQhyH180cBg8FfEVyacAQFNGSLI8is624txNxSmpsP8i3mfqyJj1Bw0FpRKJUzFfrWOiX45JwPCQ6x+t8HLImr81fCmLEwedImzVQFCdPAcqBzCWsC08=
+	t=1721145153; cv=none; b=XYLHM3pBWtyDXJlDbXOtBpjaz8+0VZhuwNLdIW+LJZwGAZcx1WQvJqunBsXpE1Bvchg5jpghf4McmcEx585Edi7tejHIIFTOK/d7d8vjh94DhXH0kqZbWqFbk0hI/KzLpszqZNCNVTcywM0wf2niwUuyy5PhAuT2S+OsK5oe4EA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145151; c=relaxed/simple;
-	bh=QTe64/+/HuPCuDrBD8TWI1zbnoc/jf6tYcdWkgZ+ayw=;
+	s=arc-20240116; t=1721145153; c=relaxed/simple;
+	bh=tk+9Bg3QfQCH35igkL9hRfAJZpSR7ER3roRe5Af49jQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B+dAhy+uDB6yeozlFhKLUGgAbHgFYfUb1GbxygVVswyOEy+zG2cHL7oE3cLpOBSd+s4KeE+zRAZTn78TWVlFSvJMdYsMvETpZopk2XVIO6taS9A3EtWW3I3NA58+BehtMhHJ5t5xEXesE6xvSjXEm0KiplgNOmMZfl6XqHGHu9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kuBuu+zU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vEKv11Kye2ZWJ6NM64hcfqXdpJRboPGTuSEZJYKBFKpJgm5OavE4DolsPBuxvoVflJ3K8E9qeUDuZ0z4MDh7UiqlXUBXoHhGMNWC5jsamYB56PkGvhI8LtLPF26L98h3KqbSAxybUC/rk8wYN2HLRileqMckc17CpjbCn6K57i8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H+S3uQXB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kuBuu+zU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED36C116B1;
-	Tue, 16 Jul 2024 15:52:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H+S3uQXB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B66C1C4AF0B;
+	Tue, 16 Jul 2024 15:52:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145150;
-	bh=QTe64/+/HuPCuDrBD8TWI1zbnoc/jf6tYcdWkgZ+ayw=;
+	s=korg; t=1721145153;
+	bh=tk+9Bg3QfQCH35igkL9hRfAJZpSR7ER3roRe5Af49jQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kuBuu+zUibDAKv2ibCbxR7Ha5RiiOOZzQau+VPHrSSnEcjMfLDVJehLUrqeZL3nZ6
-	 tNJYlqxENwapkIkIEvWfLfql7zPVWQk2UxC0i4rGkXaONIptKCu7IV6nGSgNC2MMYD
-	 pTNUx0h/NDv2vYunIS969vBImv6SS1T0mgLI2z9k=
+	b=H+S3uQXBzXMmqTLtGZanrvu/iBkPKcyiAUrNfAYFdGQVk2sUp9uvPvWYLYKY2ax5R
+	 bakVpmCJfMQfrQaiEptXDeEkMMpPr3PM9ROqXqXPwBLnNfsOeCflj+6y+FM1xst1cX
+	 G5Zkgw32HzDqpFxT8MdzM6M3ytdKm2tfRBZHbZF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <andersson@kernel.org>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.9 115/143] pmdomain: qcom: rpmhpd: Skip retention level for Power Domains
-Date: Tue, 16 Jul 2024 17:31:51 +0200
-Message-ID: <20240716152800.402050494@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Xiubo Li <xiubli@redhat.com>
+Subject: [PATCH 6.9 116/143] libceph: fix race between delayed_work() and ceph_monc_stop()
+Date: Tue, 16 Jul 2024 17:31:52 +0200
+Message-ID: <20240716152800.441353793@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -51,79 +50,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taniya Das <quic_tdas@quicinc.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit ddab91f4b2de5c5b46e312a90107d9353087d8ea upstream.
+commit 69c7b2fe4c9cc1d3b1186d1c5606627ecf0de883 upstream.
 
-In the cases where the power domain connected to logics is allowed to
-transition from a level(L)-->power collapse(0)-->retention(1) or
-vice versa retention(1)-->power collapse(0)-->level(L)  will cause the
-logic to lose the configurations. The ARC does not support retention
-to collapse transition on MxC rails.
+The way the delayed work is handled in ceph_monc_stop() is prone to
+races with mon_fault() and possibly also finish_hunting().  Both of
+these can requeue the delayed work which wouldn't be canceled by any of
+the following code in case that happens after cancel_delayed_work_sync()
+runs -- __close_session() doesn't mess with the delayed work in order
+to avoid interfering with the hunting interval logic.  This part was
+missed in commit b5d91704f53e ("libceph: behave in mon_fault() if
+cur_mon < 0") and use-after-free can still ensue on monc and objects
+that hang off of it, with monc->auth and monc->monmap being
+particularly susceptible to quickly being reused.
 
-The targets from SM8450 onwards the PLL logics of clock controllers are
-connected to MxC rails and the recommended configurations are carried
-out during the clock controller probes. The MxC transition as mentioned
-above should be skipped to ensure the PLL settings are intact across
-clock controller power on & off.
+To fix this:
 
-On older targets that do not split MX into MxA and MxC does not collapse
-the logic and it is parked always at RETENTION, thus this issue is never
-observed on those targets.
+- clear monc->cur_mon and monc->hunting as part of closing the session
+  in ceph_monc_stop()
+- bail from delayed_work() if monc->cur_mon is cleared, similar to how
+  it's done in mon_fault() and finish_hunting() (based on monc->hunting)
+- call cancel_delayed_work_sync() after the session is closed
 
-Cc: stable@vger.kernel.org # v5.17
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-Link: https://lore.kernel.org/r/20240625-avoid_mxc_retention-v2-1-af9c2f549a5f@quicinc.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: stable@vger.kernel.org
+Link: https://tracker.ceph.com/issues/66857
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Xiubo Li <xiubli@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/qcom/rpmhpd.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ net/ceph/mon_client.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/drivers/pmdomain/qcom/rpmhpd.c
-+++ b/drivers/pmdomain/qcom/rpmhpd.c
-@@ -40,6 +40,7 @@
-  * @addr:		Resource address as looped up using resource name from
-  *			cmd-db
-  * @state_synced:	Indicator that sync_state has been invoked for the rpmhpd resource
-+ * @skip_retention_level: Indicate that retention level should not be used for the power domain
-  */
- struct rpmhpd {
- 	struct device	*dev;
-@@ -56,6 +57,7 @@ struct rpmhpd {
- 	const char	*res_name;
- 	u32		addr;
- 	bool		state_synced;
-+	bool            skip_retention_level;
- };
+--- a/net/ceph/mon_client.c
++++ b/net/ceph/mon_client.c
+@@ -1085,13 +1085,19 @@ static void delayed_work(struct work_str
+ 	struct ceph_mon_client *monc =
+ 		container_of(work, struct ceph_mon_client, delayed_work.work);
  
- struct rpmhpd_desc {
-@@ -173,6 +175,7 @@ static struct rpmhpd mxc = {
- 	.pd = { .name = "mxc", },
- 	.peer = &mxc_ao,
- 	.res_name = "mxc.lvl",
-+	.skip_retention_level = true,
- };
- 
- static struct rpmhpd mxc_ao = {
-@@ -180,6 +183,7 @@ static struct rpmhpd mxc_ao = {
- 	.active_only = true,
- 	.peer = &mxc,
- 	.res_name = "mxc.lvl",
-+	.skip_retention_level = true,
- };
- 
- static struct rpmhpd nsp = {
-@@ -819,6 +823,9 @@ static int rpmhpd_update_level_mapping(s
- 		return -EINVAL;
- 
- 	for (i = 0; i < rpmhpd->level_count; i++) {
-+		if (rpmhpd->skip_retention_level && buf[i] == RPMH_REGULATOR_LEVEL_RETENTION)
-+			continue;
+-	dout("monc delayed_work\n");
+ 	mutex_lock(&monc->mutex);
++	dout("%s mon%d\n", __func__, monc->cur_mon);
++	if (monc->cur_mon < 0) {
++		goto out;
++	}
 +
- 		rpmhpd->level[i] = buf[i];
+ 	if (monc->hunting) {
+ 		dout("%s continuing hunt\n", __func__);
+ 		reopen_session(monc);
+ 	} else {
+ 		int is_auth = ceph_auth_is_authenticated(monc->auth);
++
++		dout("%s is_authed %d\n", __func__, is_auth);
+ 		if (ceph_con_keepalive_expired(&monc->con,
+ 					       CEPH_MONC_PING_TIMEOUT)) {
+ 			dout("monc keepalive timeout\n");
+@@ -1116,6 +1122,8 @@ static void delayed_work(struct work_str
+ 		}
+ 	}
+ 	__schedule_delayed(monc);
++
++out:
+ 	mutex_unlock(&monc->mutex);
+ }
  
- 		/* Remember the first corner with non-zero level */
+@@ -1232,13 +1240,15 @@ EXPORT_SYMBOL(ceph_monc_init);
+ void ceph_monc_stop(struct ceph_mon_client *monc)
+ {
+ 	dout("stop\n");
+-	cancel_delayed_work_sync(&monc->delayed_work);
+ 
+ 	mutex_lock(&monc->mutex);
+ 	__close_session(monc);
++	monc->hunting = false;
+ 	monc->cur_mon = -1;
+ 	mutex_unlock(&monc->mutex);
+ 
++	cancel_delayed_work_sync(&monc->delayed_work);
++
+ 	/*
+ 	 * flush msgr queue before we destroy ourselves to ensure that:
+ 	 *  - any work that references our embedded con is finished.
 
 
