@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2330619DFB9;
-	Tue, 16 Jul 2024 15:49:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9B019E7C6;
+	Tue, 16 Jul 2024 15:49:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144943; cv=none; b=swscR7vh0ZZLAtUIsDmpedFgGGbn2BXRrfGhmN9+/g/amKDiWWftnBa2ybW9D0apfVhBvOH1mVw9p3uSSELR6ZbF9BqWk7ObXvj52TqcqZIBzmu28Tv9MbUwsX6PRu6qVwQoPoPvjEFakGEu5WOtTPm+qf7GfsG/g8nm2IOInUM=
+	t=1721144946; cv=none; b=pW091gkkAZd3mIJ33JYiD6nLy2GhOIz4dCqgdVz6U7pb0Wa6qlM3ngUj8ZlJhiS/GMbg9S77zDNyBSbAfXS+YabrTU+O+3/8j9Y5FagnMQc2r1iMPtsk4CBC/x81DTftnmKlsns6TpslEcHz1ERB7nU+aFJgSX3x3O17OWedobM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144943; c=relaxed/simple;
-	bh=SVbAu19sQ0gmDo5VyEEKK5OO7W/boYX0ulK+rodl1ms=;
+	s=arc-20240116; t=1721144946; c=relaxed/simple;
+	bh=Uf6HwnpM7fW92u9IffeKmi4t9f5jeE3+Al/+DOtuC54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jwR9joWjCYlDb2fxZsGQIazD3bTjt2WMwX4J9DjmuvnNZUx2Nb4xL/VA3xYOgW4/m8nfaR4bO0JzHk+Rnr+DRuvY5D+owdJtWvvMDAFWOsa/le5OMIndz6anuTk3PTRaB0M6tW+obFg9wTQrJsNwfqpdWLphQgeIXITlmeqY6M4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jEwcdQFB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h6aYEQ5K5eed7VgLe33CiDcBabEoMeeOb5HPlNSYp35P8xUwomGQEA2OxVSDMQqjeohzyCrcKghQT6gQYnuAHSirNDJAUyO1zgWWgTYTlFmsiztMOT5Bq5VeNDcM6uEI7cP73XJreLKy6rRJSVG7spOCW5XAYATuFLywTI38T08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fidfcqhw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jEwcdQFB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1826C116B1;
-	Tue, 16 Jul 2024 15:49:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fidfcqhw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98309C116B1;
+	Tue, 16 Jul 2024 15:49:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144943;
-	bh=SVbAu19sQ0gmDo5VyEEKK5OO7W/boYX0ulK+rodl1ms=;
+	s=korg; t=1721144946;
+	bh=Uf6HwnpM7fW92u9IffeKmi4t9f5jeE3+Al/+DOtuC54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jEwcdQFBrEl6YWqD4xtbztVUszT9F+82pmECH72sHbJxH3cKPTnqb++uq7QXIWP/r
-	 t22Z5nROh0oXhISSuIZyw9ryyLtXlo+3E/SmkmVerhZIgG+thXxAbYkP2nsojyYmqg
-	 xQ1jJFtzinvSzfM3YA8ngzSmvg1Tb+NxmrY2CyzY=
+	b=fidfcqhwKpXDZwKC6ARKyrxO7di/ah16RSYWKm4oyAlkKffkKBNgZeSxZZN3rqDu4
+	 G2cyE0VqzME8k80m+Hqdbc6bPp5blVCTcQWp9csMQq+BB8U6rbssab0aOSHoIx+ter
+	 6PEQTbexQFwPgDXcedzOBBW0M3fJbX43a17Nj8Ek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andre Przywara <andre.przywara@arm.com>,
-	Chen-Yu Tsai <wens@csie.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 047/143] arm64: dts: allwinner: Fix PMIC interrupt number
-Date: Tue, 16 Jul 2024 17:30:43 +0200
-Message-ID: <20240716152757.797480918@linuxfoundation.org>
+Subject: [PATCH 6.9 048/143] arm64: dts: qcom: x1e80100: Fix PCIe 6a reg offsets and add MHI
+Date: Tue, 16 Jul 2024 17:30:44 +0200
+Message-ID: <20240716152757.834737519@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -51,40 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andre Przywara <andre.przywara@arm.com>
+From: Abel Vesa <abel.vesa@linaro.org>
 
-[ Upstream commit 5b36166e599b5c1332a1147271d2130cece4bb24 ]
+[ Upstream commit 8e99e770f7eab8f8127098df7824373c4b4e8b5c ]
 
-The "r_intc" interrupt controller on the A64 uses a mapping scheme, so
-the first (and only) NMI interrupt #0 appears as interrupt number 32
-(cf. the top comment in drivers/irqchip/irq-sun6i-r.c).
+The actual size of the DBI region is 0xf20 and the start of the
+ELBI region is 0xf40, according to the documentation. So fix them.
+While at it, add the MHI region as well.
 
-Fix that number in the interrupts property to properly forward PMIC
-interrupts to the CPU.
-
-Signed-off-by: Andre Przywara <andre.przywara@arm.com>
-Fixes: 4d39a8eb07eb ("arm64: dts: allwinner: Add Jide Remix Mini PC support")
-Reviewed-by: Chen-Yu Tsai <wens@csie.org>
-Link: https://lore.kernel.org/r/20240515234852.26929-1-andre.przywara@arm.com
-Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Fixes: 5eb83fc10289 ("arm64: dts: qcom: x1e80100: Add PCIe nodes")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20240604-x1e80100-dts-fixes-pcie6a-v2-1-0b4d8c6256e5@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/allwinner/sun50i-h64-remix-mini-pc.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h64-remix-mini-pc.dts b/arch/arm64/boot/dts/allwinner/sun50i-h64-remix-mini-pc.dts
-index b6e3c169797f0..0dba413963776 100644
---- a/arch/arm64/boot/dts/allwinner/sun50i-h64-remix-mini-pc.dts
-+++ b/arch/arm64/boot/dts/allwinner/sun50i-h64-remix-mini-pc.dts
-@@ -191,7 +191,7 @@
- 		compatible = "x-powers,axp803";
- 		reg = <0x3a3>;
- 		interrupt-parent = <&r_intc>;
--		interrupts = <GIC_SPI 0 IRQ_TYPE_LEVEL_LOW>;
-+		interrupts = <GIC_SPI 32 IRQ_TYPE_LEVEL_LOW>;
- 		x-powers,drive-vbus-en;
- 
- 		vin1-supply = <&reg_vcc5v>;
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+index 6b40082bac68c..ee78185ca5387 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -2737,15 +2737,17 @@
+ 			device_type = "pci";
+ 			compatible = "qcom,pcie-x1e80100";
+ 			reg = <0 0x01bf8000 0 0x3000>,
+-			      <0 0x70000000 0 0xf1d>,
+-			      <0 0x70000f20 0 0xa8>,
++			      <0 0x70000000 0 0xf20>,
++			      <0 0x70000f40 0 0xa8>,
+ 			      <0 0x70001000 0 0x1000>,
+-			      <0 0x70100000 0 0x100000>;
++			      <0 0x70100000 0 0x100000>,
++			      <0 0x01bfb000 0 0x1000>;
+ 			reg-names = "parf",
+ 				    "dbi",
+ 				    "elbi",
+ 				    "atu",
+-				    "config";
++				    "config",
++				    "mhi";
+ 			#address-cells = <3>;
+ 			#size-cells = <2>;
+ 			ranges = <0x01000000 0 0x00000000 0 0x70200000 0 0x100000>,
 -- 
 2.43.0
 
