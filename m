@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19321DDCE;
-	Tue, 16 Jul 2024 16:09:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 939181DDCE;
+	Tue, 16 Jul 2024 16:09:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721146173; cv=none; b=mQO2KDDLnsNTr/lj9VMRh4CoEAKue4ZWjGx8/ecZ+F9GtorlygE8EX9E3tSy29sJyQGF18cixsMYYToooRcjPrQ5flY9JcrtW9ZVxxHAA0EOq0NJyVk2vMfwmqYzG5yugFRgJbMqjnAdszd4WV3Q8RJRsUyefSIJNSSOVp8tk5M=
+	t=1721146176; cv=none; b=RjVSPacCuWwoD4gK83RwoKa5GqYkYIrtfzu2JfuqYGEFJPWD09KO2FECjEnF3E04EbzNOz3JTXBiK4om11vx+eeI+LJvjpJKhLStDOsIDt/w6LEw6IA9o04U2s9t/Nw7f3qPP0rcbiIQcW6iVD1x15SMjzxA5gqfCKyfT1fxgDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721146173; c=relaxed/simple;
-	bh=wRB/aDqFYSt49MwV9QDHdMqj5viDe3GawQTUX91KQHI=;
+	s=arc-20240116; t=1721146176; c=relaxed/simple;
+	bh=ORGxcIEd9BD9b31DFO9mcaXW0cBu2unQjgibYfIzlf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uPAgh+8TpoqBx9hAIxTeN7eXNlPfC8XeT8rSaW2uFfN0GokApEdTe19DXnCg6YPZDip+21GTtLVEtduCDQIF3ZOhBEqxQY2pFBfLw6TkSUfleoRDvwvkOH0gCxaSrFY0jXF7Dvp5dW/KLRSgh6MzBlsNQR+dl92yCiESOc5b6Us=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kUlnlNsS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rfgxJuB5ATHJTJQ38HXJ3TX/GVrgHGExtJZKAvzxi64wr/e0+hJmjTMZZbmzDeiBoN1a3cP3OreMkmLy2vvT/yravbSsAFiPQ3zPlFVqk1VJo/rdXYWRcw25BOneRIlDmVLuNW8P4t8tbzrA4wMIKI81nR4uE0Tf7JrRIN/oXdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OgtS6/TG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kUlnlNsS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A8BC116B1;
-	Tue, 16 Jul 2024 16:09:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OgtS6/TG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB91C116B1;
+	Tue, 16 Jul 2024 16:09:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721146173;
-	bh=wRB/aDqFYSt49MwV9QDHdMqj5viDe3GawQTUX91KQHI=;
+	s=korg; t=1721146176;
+	bh=ORGxcIEd9BD9b31DFO9mcaXW0cBu2unQjgibYfIzlf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kUlnlNsSFC+nZbhOKhEF+rd7Q4i0FpvfhiQhd3wgLrVMCoxRkAF9CnPKt9fdIjDoS
-	 0kdKpKTM9RIhZur/Mybp2fvUnvRB+fLO0odK/Le2ev1gEqeC6lkzXlimKNXTdwiVQR
-	 Lo7dwXKJtKQCF6N4VzzIb6mVoXFOhionE9KXKJgQ=
+	b=OgtS6/TG3sn0pdkD5urfa1uR/vjy9NfLqNpoOBx6Pu4vAiL9TQRIXoO/mzU6DPN17
+	 7J7Y1mJyUKKMkUAHWcsklucN8OQJAvb0wcWqXt3L3mp2JNnOECuo3FmzBztPGSMCMj
+	 H8YZrlMedySyNFex9vtQ/LYcC28FiW8Eqm5mWvOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Charan Teja Kalla <quic_charante@quicinc.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	=?UTF-8?q?Light=20Hsieh=20 ?= <Light.Hsieh@mediatek.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Alexander Aring <aahringo@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 079/144] mm: prevent derefencing NULL ptr in pfn_section_valid()
-Date: Tue, 16 Jul 2024 17:32:28 +0200
-Message-ID: <20240716152755.580925530@linuxfoundation.org>
+Subject: [PATCH 5.15 080/144] filelock: fix potential use-after-free in posix_lock_inode
+Date: Tue, 16 Jul 2024 17:32:29 +0200
+Message-ID: <20240716152755.618917897@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
 References: <20240716152752.524497140@linuxfoundation.org>
@@ -46,48 +47,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 82f0b6f041fad768c28b4ad05a683065412c226e ]
+[ Upstream commit 1b3ec4f7c03d4b07bad70697d7e2f4088d2cfe92 ]
 
-Commit 5ec8e8ea8b77 ("mm/sparsemem: fix race in accessing
-memory_section->usage") changed pfn_section_valid() to add a READ_ONCE()
-call around "ms->usage" to fix a race with section_deactivate() where
-ms->usage can be cleared.  The READ_ONCE() call, by itself, is not enough
-to prevent NULL pointer dereference.  We need to check its value before
-dereferencing it.
+Light Hsieh reported a KASAN UAF warning in trace_posix_lock_inode().
+The request pointer had been changed earlier to point to a lock entry
+that was added to the inode's list. However, before the tracepoint could
+fire, another task raced in and freed that lock.
 
-Link: https://lkml.kernel.org/r/20240626001639.1350646-1-longman@redhat.com
-Fixes: 5ec8e8ea8b77 ("mm/sparsemem: fix race in accessing memory_section->usage")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Cc: Charan Teja Kalla <quic_charante@quicinc.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fix this by moving the tracepoint inside the spinlock, which should
+ensure that this doesn't happen.
+
+Fixes: 74f6f5912693 ("locks: fix KASAN: use-after-free in trace_event_raw_event_filelock_lock")
+Link: https://lore.kernel.org/linux-fsdevel/724ffb0a2962e912ea62bb0515deadf39c325112.camel@kernel.org/
+Reported-by: Light Hsieh (謝明燈) <Light.Hsieh@mediatek.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://lore.kernel.org/r/20240702-filelock-6-10-v1-1-96e766aadc98@kernel.org
+Reviewed-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/mmzone.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/locks.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
-index 8b8349ffa1cd9..998f10249f136 100644
---- a/include/linux/mmzone.h
-+++ b/include/linux/mmzone.h
-@@ -1457,8 +1457,9 @@ static inline int subsection_map_index(unsigned long pfn)
- static inline int pfn_section_valid(struct mem_section *ms, unsigned long pfn)
- {
- 	int idx = subsection_map_index(pfn);
-+	struct mem_section_usage *usage = READ_ONCE(ms->usage);
- 
--	return test_bit(idx, READ_ONCE(ms->usage)->subsection_map);
-+	return usage ? test_bit(idx, usage->subsection_map) : 0;
- }
- #else
- static inline int pfn_section_valid(struct mem_section *ms, unsigned long pfn)
+diff --git a/fs/locks.c b/fs/locks.c
+index 77781b71bcaab..360c348ae6c8f 100644
+--- a/fs/locks.c
++++ b/fs/locks.c
+@@ -1392,9 +1392,9 @@ static int posix_lock_inode(struct inode *inode, struct file_lock *request,
+ 		locks_wake_up_blocks(left);
+ 	}
+  out:
++	trace_posix_lock_inode(inode, request, error);
+ 	spin_unlock(&ctx->flc_lock);
+ 	percpu_up_read(&file_rwsem);
+-	trace_posix_lock_inode(inode, request, error);
+ 	/*
+ 	 * Free any unused locks.
+ 	 */
 -- 
 2.43.0
 
