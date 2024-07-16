@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D3E19AD91;
-	Tue, 16 Jul 2024 13:29:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 120AB19AD91;
+	Tue, 16 Jul 2024 13:31:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721136592; cv=none; b=rNVvnGYZPeDSq1lbv3IlqYikSmgAtCpQDKQzeuwV4/qtQlucMfcPi4gC4RIzfIqXvEgZYmyBSYSKwS/E4/09rTlKkvPHJ/xiQI7PUzSnUAtZ4cN0wWrSGJzsTWqhnyWkQ9NLH0tOMrzTZbfogu8ZcbtAZ7/KPLluOh84DhHnFvE=
+	t=1721136662; cv=none; b=FAwCfKY21XLENj3UUlzi9eYKUC3xpy+WCFKVTJMP5pQ8esKrear2pCFfAA62TSl+falWXqXclcUHKwSWNHUA8HujzolfUIfDeZPjrnOg6X2ypPCdzfqMfD7HEf+swRRJJ+VWN0scxjokCxWXoMYkHHGMZ/I5KUDde88YmtgpVVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721136592; c=relaxed/simple;
-	bh=syEoVGqRv/IPR/xAhh5W41iFKJBgO7QaOxMuxUpV0i4=;
+	s=arc-20240116; t=1721136662; c=relaxed/simple;
+	bh=jxMLLsvZvs+zGRMbSM8orLqBBdj2uU/7aDxUYGo0VuI=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=Be/fTgiioM90cl8IOSWTKgMm6bbXT0G+ziV852CMdPcc4trL8+6ZHPCkHplGsp0V5nO8oWdFKNKlf6iz/76IOGQmr2dnAfypTn1RwEx8rDtfnkn3OcupQsIQ6gDTIBGfa7fUxZV6eISGtAMc2uhY/4bujNZobNtvQxSU7jIfaMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JRdFZrPp; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=IzxRODR8C3MkbJ1OoMMFUMK5Wn9XXb2LLTbrYUdak3cLmQ+cNoOhCsHFyRQwo6rBUtkiY5ltSfMWd8Z5GwgSHQkb3JYTsRxn1paEnaccWx7g8p4KRptvcu9nuJrH/9Alt8ZoY0CBc12K2pKOAlQsedhe0xeHkuvcqTUBj6xHiA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bolaiR3/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JRdFZrPp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0340DC4AF0C;
-	Tue, 16 Jul 2024 13:29:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bolaiR3/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ECF7C4AF0D;
+	Tue, 16 Jul 2024 13:31:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721136592;
-	bh=syEoVGqRv/IPR/xAhh5W41iFKJBgO7QaOxMuxUpV0i4=;
+	s=korg; t=1721136661;
+	bh=jxMLLsvZvs+zGRMbSM8orLqBBdj2uU/7aDxUYGo0VuI=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=JRdFZrPppfQ/0kmRKOCE1QM5m5vndcjgh8DOS1zymien9PVn9Q43ezEzgu2WsyP2b
-	 kbQL+g5Mu/2yjParqOnhNPdxfveWxYVurFsZ/VROfU0169tBpdKQqj0WsduZy7h1Xh
-	 WLpr22yC9U1JLu2SAo7HEXXXhZMhFL20bChrD2Uk=
-Subject: Patch "ext4: avoid ptr null pointer dereference" has been added to the 5.4-stable tree
+	b=bolaiR3/l/Bn5E6xDjNgdLE8dQEE5fOQ7qPrwIEvl1IzqXjJzdLXgRdOmygn0HebA
+	 DGImXmlnGuyPNWZyDcSr0m3YJZuK79gNDnDI8AHrH9NWEEpBluJIcihvCwvTqmr9Ww
+	 LiHIWiO72kt1GADNitKvZdfOcuMOGKCu2Wf0KSEY=
+Subject: Patch "ext4: avoid ptr null pointer dereference" has been added to the 6.6-stable tree
 To: gregkh@linuxfoundation.org,jack@suse.cz,libaokun1@huawei.com,libaokun@huaweicloud.com,patches@lists.linux.dev,sashal@kernel.org,tytso@mit.edu,yangerkun@huawei.com,yi.zhang@huawei.com
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
-Date: Tue, 16 Jul 2024 15:29:49 +0200
+Date: Tue, 16 Jul 2024 15:30:58 +0200
 In-Reply-To: <20240716092929.864207-1-libaokun@huaweicloud.com>
-Message-ID: <2024071648-mumbo-trapper-8a49@gregkh>
+Message-ID: <2024071658-retrace-ascension-b374@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -46,12 +46,12 @@ This is a note to let you know that I've just added the patch titled
 
     ext4: avoid ptr null pointer dereference
 
-to the 5.4-stable tree which can be found at:
+to the 6.6-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
      ext4-avoid-ptr-null-pointer-dereference.patch
-and it can be found in the queue-5.4 subdirectory.
+and it can be found in the queue-6.6 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
@@ -74,17 +74,16 @@ uniformly determines if the ptr is null is not merged in, so it needs to
 be judged whether ptr is null or not in each case of the switch, otherwise
 null pointer dereferencing may occur.
 
+Fixes: 677ff4589f15 ("ext4: fix slab-out-of-bounds in ext4_mb_find_good_group_avg_frag_lists()")
 Signed-off-by: Baokun Li <libaokun1@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/sysfs.c | 2 ++
+ fs/ext4/sysfs.c |    2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/fs/ext4/sysfs.c b/fs/ext4/sysfs.c
-index 63cbda3700ea..d65dccb44ed5 100644
 --- a/fs/ext4/sysfs.c
 +++ b/fs/ext4/sysfs.c
-@@ -473,6 +473,8 @@ static ssize_t ext4_attr_store(struct kobject *kobj,
+@@ -473,6 +473,8 @@ static ssize_t ext4_attr_store(struct ko
  			*((unsigned int *) ptr) = t;
  		return len;
  	case attr_clusters_in_group:
@@ -93,11 +92,14 @@ index 63cbda3700ea..d65dccb44ed5 100644
  		ret = kstrtouint(skip_spaces(buf), 0, &t);
  		if (ret)
  			return ret;
--- 
-2.39.2
-
 
 
 Patches currently in stable-queue which might be from libaokun@huaweicloud.com are
 
-queue-5.4/ext4-avoid-ptr-null-pointer-dereference.patch
+queue-6.6/cachefiles-propagate-errors-from-vfs_getxattr-to-avo.patch
+queue-6.6/cachefiles-cancel-all-requests-for-the-object-that-i.patch
+queue-6.6/cachefiles-add-missing-lock-protection-when-polling.patch
+queue-6.6/cachefiles-cyclic-allocation-of-msg_id-to-avoid-reus.patch
+queue-6.6/cachefiles-stop-sending-new-request-when-dropping-ob.patch
+queue-6.6/ext4-avoid-ptr-null-pointer-dereference.patch
+queue-6.6/cachefiles-wait-for-ondemand_object_worker-to-finish.patch
