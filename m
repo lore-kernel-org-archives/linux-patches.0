@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFBF619E7F7;
-	Tue, 16 Jul 2024 15:55:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F3519E7CF;
+	Tue, 16 Jul 2024 15:55:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145343; cv=none; b=i3tG7pApqcvy3acHrtzDlN/aO3ckcEaHzzGJu6A8h/IyLq43tRfimCXUgiHGlUEgedS1odaJh8kaEavtrfZ68+cnZtZxF400DWSQ74L9h2zXyQO+g/LZGZMCL85VX+GeshKpH8krIhOs+pd0d1wsn/rgs9OtiXtMgjnbDoo8cZ0=
+	t=1721145345; cv=none; b=J33netDaQH61MboxvCoDpg1hqHNGYRYB2r7i5C98rlp7pvpuwgu6U0q0A/hHcVyG7uF8xHHp+FzwE1oZVGhW0SEKU1f8iLRQMzmjrnwtK524NPNCV1QXzKQmadnwUj70DroBlGr6tfUoJQFPNX44ctcqspozReRI2z2BapIXMz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145343; c=relaxed/simple;
-	bh=2EakMh8Nuw7SrAEOqj9IRXVWdeRROUdrCEvPUNttsM4=;
+	s=arc-20240116; t=1721145345; c=relaxed/simple;
+	bh=GXZ4ueDFkkQahpnbUZjB4f+F3hT5L/wFoOl9wncYsjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lsh+8mQmywrkv4hMWYCkjkxLmJVK0n6pKkBc6HNNMnA8cfaoyRBJHkJWuNpZgIklJe0jS/OdloHOphiDq+prJR2AuBMe+eFFB8Z5mjZna4R96giMYcOrRJrKeNoeJQ69izFMDizpdK2DWV6QNmR7lGR5f/07VIHnrh3t8t1QH2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cQd4mjeS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kIoF00Jlwwp24cgvuLu6/2jvzXL0e0tgGlxYTDB5xqAU2Lo52ni2puxJD/gVkquTRAqSEKBKqhASsNj9/sgr2WylWI44M7AM8HHltJ8TwRNa0Kx8EsFOgXvJpoNcS4C3QTHSXf/koagpJB1W/j8DkZ/iTZQA/NcU+L+8D+1FoTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=imaosdxf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cQd4mjeS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113F9C116B1;
-	Tue, 16 Jul 2024 15:55:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imaosdxf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09DF8C116B1;
+	Tue, 16 Jul 2024 15:55:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145342;
-	bh=2EakMh8Nuw7SrAEOqj9IRXVWdeRROUdrCEvPUNttsM4=;
+	s=korg; t=1721145345;
+	bh=GXZ4ueDFkkQahpnbUZjB4f+F3hT5L/wFoOl9wncYsjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cQd4mjeSARNsqszaButexUzoLyRrQF18aCDFIn8faBg1UZe9LBHNAAqu1PsemtJ0T
-	 I8lHP0bpLA0jgTGXKg58x3FhOWn9zrzna61SA9kyJTy3ZSNIK0VtORpXWcD9uW/w6c
-	 EBsPxU/M7D+4/1W9GBn+/M9WxqRZq6S8P4PV3W0o=
+	b=imaosdxf6yngxk6CiBeTgVbbYxUtXDomiE7oXM13sUpyj09aZtgB81tF3ofhO5qaN
+	 qRlDVYdVU8QTkZhJkgMfLz1AeNa6F3ZT5rGt9Uf2nixOkID901xa+720KVSRLVyHss
+	 ZExhd8IL1CBoT5wqZ7zIe9V0ArqUVUkYEiDz0IS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
 	Baokun Li <libaokun1@huawei.com>,
 	Jeff Layton <jlayton@kernel.org>,
-	Jia Zhu <zhujia.zj@bytedance.com>,
 	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Jia Zhu <zhujia.zj@bytedance.com>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 06/96] cachefiles: wait for ondemand_object_worker to finish when dropping object
-Date: Tue, 16 Jul 2024 17:31:17 +0200
-Message-ID: <20240716152746.764350098@linuxfoundation.org>
+Subject: [PATCH 6.1 07/96] cachefiles: cyclic allocation of msg_id to avoid reuse
+Date: Tue, 16 Jul 2024 17:31:18 +0200
+Message-ID: <20240716152746.802655343@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152746.516194097@linuxfoundation.org>
 References: <20240716152746.516194097@linuxfoundation.org>
@@ -55,75 +54,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 12e009d60852f7bce0afc373ca0b320f14150418 ]
+[ Upstream commit 19f4f399091478c95947f6bd7ad61622300c30d9 ]
 
-When queuing ondemand_object_worker() to re-open the object,
-cachefiles_object is not pinned. The cachefiles_object may be freed when
-the pending read request is completed intentionally and the related
-erofs is umounted. If ondemand_object_worker() runs after the object is
-freed, it will incur use-after-free problem as shown below.
+Reusing the msg_id after a maliciously completed reopen request may cause
+a read request to remain unprocessed and result in a hung, as shown below:
 
-process A  processs B  process C  process D
+       t1       |      t2       |      t3
+-------------------------------------------------
+cachefiles_ondemand_select_req
+ cachefiles_ondemand_object_is_close(A)
+ cachefiles_ondemand_set_object_reopening(A)
+ queue_work(fscache_object_wq, &info->work)
+                ondemand_object_worker
+                 cachefiles_ondemand_init_object(A)
+                  cachefiles_ondemand_send_req(OPEN)
+                    // get msg_id 6
+                    wait_for_completion(&req_A->done)
+cachefiles_ondemand_daemon_read
+ // read msg_id 6 req_A
+ cachefiles_ondemand_get_fd
+ copy_to_user
+                                // Malicious completion msg_id 6
+                                copen 6,-1
+                                cachefiles_ondemand_copen
+                                 complete(&req_A->done)
+                                 // will not set the object to close
+                                 // because ondemand_id && fd is valid.
 
-cachefiles_ondemand_send_req()
-// send a read req X
-// wait for its completion
+                // ondemand_object_worker() is done
+                // but the object is still reopening.
 
-           // close ondemand fd
-           cachefiles_ondemand_fd_release()
-           // set object as CLOSE
+                                // new open req_B
+                                cachefiles_ondemand_init_object(B)
+                                 cachefiles_ondemand_send_req(OPEN)
+                                 // reuse msg_id 6
+process_open_req
+ copen 6,A.size
+ // The expected failed copen was executed successfully
 
-                       cachefiles_ondemand_daemon_read()
-                       // set object as REOPENING
-                       queue_work(fscache_wq, &info->ondemand_work)
+Expect copen to fail, and when it does, it closes fd, which sets the
+object to close, and then close triggers reopen again. However, due to
+msg_id reuse resulting in a successful copen, the anonymous fd is not
+closed until the daemon exits. Therefore read requests waiting for reopen
+to complete may trigger hung task.
 
-                                // close /dev/cachefiles
-                                cachefiles_daemon_release
-                                cachefiles_flush_reqs
-                                complete(&req->done)
+To avoid this issue, allocate the msg_id cyclically to avoid reusing the
+msg_id for a very short duration of time.
 
-// read req X is completed
-// umount the erofs fs
-cachefiles_put_object()
-// object will be freed
-cachefiles_ondemand_deinit_obj_info()
-kmem_cache_free(object)
-                       // both info and object are freed
-                       ondemand_object_worker()
-
-When dropping an object, it is no longer necessary to reopen the object,
-so use cancel_work_sync() to cancel or wait for ondemand_object_worker()
-to finish.
-
-Fixes: 0a7e54c1959c ("cachefiles: resend an open request if the read request's object is closed")
-Signed-off-by: Hou Tao <houtao1@huawei.com>
+Fixes: c8383054506c ("cachefiles: notify the user daemon when looking up cookie")
 Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Link: https://lore.kernel.org/r/20240628062930.2467993-8-libaokun@huaweicloud.com
+Link: https://lore.kernel.org/r/20240628062930.2467993-9-libaokun@huaweicloud.com
 Acked-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Jia Zhu <zhujia.zj@bytedance.com>
 Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Reviewed-by: Jia Zhu <zhujia.zj@bytedance.com>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cachefiles/ondemand.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/cachefiles/internal.h |  1 +
+ fs/cachefiles/ondemand.c | 20 ++++++++++++++++----
+ 2 files changed, 17 insertions(+), 4 deletions(-)
 
+diff --git a/fs/cachefiles/internal.h b/fs/cachefiles/internal.h
+index 94f59123726ca..111ad6ecd4baf 100644
+--- a/fs/cachefiles/internal.h
++++ b/fs/cachefiles/internal.h
+@@ -129,6 +129,7 @@ struct cachefiles_cache {
+ 	unsigned long			req_id_next;
+ 	struct xarray			ondemand_ids;	/* xarray for ondemand_id allocation */
+ 	u32				ondemand_id_next;
++	u32				msg_id_next;
+ };
+ 
+ static inline bool cachefiles_in_ondemand_mode(struct cachefiles_cache *cache)
 diff --git a/fs/cachefiles/ondemand.c b/fs/cachefiles/ondemand.c
-index acaecfce8aaa9..1f6561814e702 100644
+index 1f6561814e702..51173ab6dbd84 100644
 --- a/fs/cachefiles/ondemand.c
 +++ b/fs/cachefiles/ondemand.c
-@@ -661,6 +661,9 @@ void cachefiles_ondemand_clean_object(struct cachefiles_object *object)
- 		}
- 	}
- 	xa_unlock(&cache->reqs);
-+
-+	/* Wait for ondemand_object_worker() to finish to avoid UAF. */
-+	cancel_work_sync(&object->ondemand->ondemand_work);
- }
+@@ -505,20 +505,32 @@ static int cachefiles_ondemand_send_req(struct cachefiles_object *object,
+ 		smp_mb();
  
- int cachefiles_ondemand_init_obj_info(struct cachefiles_object *object,
+ 		if (opcode == CACHEFILES_OP_CLOSE &&
+-			!cachefiles_ondemand_object_is_open(object)) {
++		    !cachefiles_ondemand_object_is_open(object)) {
+ 			WARN_ON_ONCE(object->ondemand->ondemand_id == 0);
+ 			xas_unlock(&xas);
+ 			ret = -EIO;
+ 			goto out;
+ 		}
+ 
+-		xas.xa_index = 0;
++		/*
++		 * Cyclically find a free xas to avoid msg_id reuse that would
++		 * cause the daemon to successfully copen a stale msg_id.
++		 */
++		xas.xa_index = cache->msg_id_next;
+ 		xas_find_marked(&xas, UINT_MAX, XA_FREE_MARK);
++		if (xas.xa_node == XAS_RESTART) {
++			xas.xa_index = 0;
++			xas_find_marked(&xas, cache->msg_id_next - 1, XA_FREE_MARK);
++		}
+ 		if (xas.xa_node == XAS_RESTART)
+ 			xas_set_err(&xas, -EBUSY);
++
+ 		xas_store(&xas, req);
+-		xas_clear_mark(&xas, XA_FREE_MARK);
+-		xas_set_mark(&xas, CACHEFILES_REQ_NEW);
++		if (xas_valid(&xas)) {
++			cache->msg_id_next = xas.xa_index + 1;
++			xas_clear_mark(&xas, XA_FREE_MARK);
++			xas_set_mark(&xas, CACHEFILES_REQ_NEW);
++		}
+ 		xas_unlock(&xas);
+ 	} while (xas_nomem(&xas, GFP_KERNEL));
+ 
 -- 
 2.43.0
 
