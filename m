@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E601178370;
-	Tue, 16 Jul 2024 16:00:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E571DDCE;
+	Tue, 16 Jul 2024 16:00:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145643; cv=none; b=b7VzFt/N3GTlxn0NTqdm7B5mIQ2VJVOwIgaLZYwIbdKEGWjdnWX7W997apaPtTDUw8Fb28nJD0HplZZrnbnJJV3g6tRLkaUHg6WqyutahsrDGcjFsIcSpKKZN9ZfSsqX5/+NveElS9eByIPW9kd6RGIet+JcvyKQYHR3EB04IHw=
+	t=1721145646; cv=none; b=oOzKAdVVgO2zwo8TlsqWi/Lf1curl4xaJzNBufr1a9iQBNbLg7KVjlNfjLHf8Nq93zb+9JDEMIeAD2TdJDeMXTRBCd9skCa2yA1UONLfd6akBZhJg+o9bQHInjHSX4ai69Wz/+C2c6nq5/NOlc7wb9imhiamdV3oNwTjIC0JB3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145643; c=relaxed/simple;
-	bh=jS9Hd6Zloh0rwzp4Qlbr6WV3KqDmmMCR8Ll6UDiUIqo=;
+	s=arc-20240116; t=1721145646; c=relaxed/simple;
+	bh=S87oRf6/Jm2mQr7rXW1dNEoc8U2v+zRDpZ8IuZ4XOZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g1FGaTVeR7Q6S4/tzGHYePMKjjb2f19GKu1UmmJkwM9hZTHputgu3kYcmyW/+NmJg9t4+1QPT8cW9977isFYpgcgZoF1tlqwV+jnvft7w4+wN2By8/0bLqmuAMqkU7pBBC+hmcYfEZoeBRPANqdt/FMam5CLAwws2TUFDektqfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K5tUuINq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NbbkFigKUVRXG/stYc71LOKZoN/w/eNoFA7l03y3XvYA+bt3+0XEm/iZboHJHBe0S6NJAtSeAipoXRvYvzh1jUy8q3pO/Nf3/VawNwwq16e2svdOs7XMtzX0Ko/PkWk+f/b4v1BEtReCT/gGcboIOouAD92lDhYzioN76AXrHW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7Nn1dq3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K5tUuINq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA071C116B1;
-	Tue, 16 Jul 2024 16:00:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7Nn1dq3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA30EC116B1;
+	Tue, 16 Jul 2024 16:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145643;
-	bh=jS9Hd6Zloh0rwzp4Qlbr6WV3KqDmmMCR8Ll6UDiUIqo=;
+	s=korg; t=1721145646;
+	bh=S87oRf6/Jm2mQr7rXW1dNEoc8U2v+zRDpZ8IuZ4XOZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K5tUuINq9BAWaSoQ587y3iBbJkasnZ77C+JNul+zKemzYC903knqCvk0/QMpEuL0e
-	 3j2YcpbR6sphmNeIXFrsMwyQPti6DhZYpOWro6bQD2mh1MyEsCT+oy1OcjAqKYxkD2
-	 edIu7rELd2jyFJOg3VtJ8/i7up7n57cIev/qyavs=
+	b=r7Nn1dq3gvB4xXIXScvplnbmE37aiMiRet/w6++INfOEkbJKKLDtlrWUriT7jr6Cm
+	 PUonoDfLJpe5TjU4EB7ojLI20YMSd/v5dblU1PI0cjEQNbAYZo45W7IWhr19Q+clg8
+	 gCJ2f+ME7zXWuIJwjITv00Q5HRPGmsntwYKaeGlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 036/121] s390: Mark psw in __load_psw_mask() as __unitialized
-Date: Tue, 16 Jul 2024 17:31:38 +0200
-Message-ID: <20240716152752.712646284@linuxfoundation.org>
+Subject: [PATCH 6.6 037/121] arm64: dts: qcom: sc8180x: Fix LLCC reg property again
+Date: Tue, 16 Jul 2024 17:31:39 +0200
+Message-ID: <20240716152752.750553041@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152751.312512071@linuxfoundation.org>
 References: <20240716152751.312512071@linuxfoundation.org>
@@ -52,44 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Schnelle <svens@linux.ibm.com>
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-[ Upstream commit 7278a8fb8d032dfdc03d9b5d17e0bc451cdc1492 ]
+[ Upstream commit 3df1627d8370a9c420b49743976b3eeba32afbbc ]
 
-Without __unitialized, the following code is generated when
-INIT_STACK_ALL_ZERO is enabled:
+Commit '74cf6675c35e ("arm64: dts: qcom: sc8180x: Fix LLCC reg
+property")' transitioned the SC8180X LLCC node to describe each memory
+region individually, but did not include all the regions.
 
-86: d7 0f f0 a0 f0 a0     xc      160(16,%r15), 160(%r15)
-8c: e3 40 f0 a0 00 24     stg     %r4, 160(%r15)
-92: c0 10 00 00 00 08     larl    %r1, 0xa2
-98: e3 10 f0 a8 00 24     stg     %r1, 168(%r15)
-9e: b2 b2 f0 a0           lpswe   160(%r15)
+The result is that Linux fails to find the last regions, so extend the
+definition to cover all the blocks.
 
-The xc is not adding any security because psw is fully initialized
-with the following instructions. Add __unitialized to the psw
-definitiation to avoid the superfluous clearing of psw.
+This also corrects the related DeviceTree validation error.
 
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Fixes: 74cf6675c35e ("arm64: dts: qcom: sc8180x: Fix LLCC reg property")
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240525-sc8180x-llcc-reg-fixup-v1-1-0c13d4ea94f2@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/processor.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sc8180x.dtsi | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/arch/s390/include/asm/processor.h b/arch/s390/include/asm/processor.h
-index dc17896a001a9..e7338ed540d8f 100644
---- a/arch/s390/include/asm/processor.h
-+++ b/arch/s390/include/asm/processor.h
-@@ -308,8 +308,8 @@ static inline void __load_psw(psw_t psw)
-  */
- static __always_inline void __load_psw_mask(unsigned long mask)
- {
-+	psw_t psw __uninitialized;
- 	unsigned long addr;
--	psw_t psw;
+diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
+index fbb9bf09078a0..dd207eb81360a 100644
+--- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
+@@ -2551,11 +2551,14 @@
  
- 	psw.mask = mask;
+ 		system-cache-controller@9200000 {
+ 			compatible = "qcom,sc8180x-llcc";
+-			reg = <0 0x09200000 0 0x50000>, <0 0x09280000 0 0x50000>,
+-			      <0 0x09300000 0 0x50000>, <0 0x09380000 0 0x50000>,
+-			      <0 0x09600000 0 0x50000>;
++			reg = <0 0x09200000 0 0x58000>, <0 0x09280000 0 0x58000>,
++			      <0 0x09300000 0 0x58000>, <0 0x09380000 0 0x58000>,
++			      <0 0x09400000 0 0x58000>, <0 0x09480000 0 0x58000>,
++			      <0 0x09500000 0 0x58000>, <0 0x09580000 0 0x58000>,
++			      <0 0x09600000 0 0x58000>;
+ 			reg-names = "llcc0_base", "llcc1_base", "llcc2_base",
+-				    "llcc3_base", "llcc_broadcast_base";
++				    "llcc3_base", "llcc4_base", "llcc5_base",
++				    "llcc6_base", "llcc7_base",  "llcc_broadcast_base";
+ 			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
+ 		};
  
 -- 
 2.43.0
