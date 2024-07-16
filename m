@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E05195B27;
-	Tue, 16 Jul 2024 15:46:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB0E41DA4D;
+	Tue, 16 Jul 2024 15:46:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144763; cv=none; b=DyQIeM8dJ59ZC0DP1K0301VyIXwj321cp1hqkgjbm+52OkggfGMz48Nnq9FY8/v2nnhGEBV9CPphUY89cRjbRCQDcd25ZahnuySr2Ij0cKf2nxl4Vcyo2U6qXOXTenH2XujbgcMMa9rvZX78Sc6irQxxc6l0J5hC2+EekzOjhJ8=
+	t=1721144765; cv=none; b=gX64K+6hbrO92GOOEAol7YsnCuXtMCo7OnwAj2keUobVUj9973Agv3wIciGDTv2iu6Z7kPgOmp99RXY0TCb2z1CSjexF/+0Vy3BD60NXw7YhJAWiO5+V0q4Y3vSFuyOUkZxYQqKjajpja9hFCEyac+sZKNAUY57SCzeR8SYQ4BU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144763; c=relaxed/simple;
-	bh=qhXY+6yPEqPBfZW27k4mD0WT6UpprRY3MWMu4jC1jHE=;
+	s=arc-20240116; t=1721144765; c=relaxed/simple;
+	bh=IuXNq6F4LDIPB0McbdqGNzi4KbXxjJJAfgqsWcihC8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=noD/9Chs4N4rL+1UH/l/kKdawXSMHOwl7eNh1txf3uH3m66dxi4W0wz27N8u16S3J0UE1ENzpvxHK5s5wt0kEPSVDfzYbFXJUtznc16UpIxUS4PosjvQDFFT5Q80cEoHLgZn7vJLo77Jq0m0d+QY+x1f+KDEWkwPWXx8gWBGgoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Lxw0ikK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BAXg960VIKVsrFatFcGyabWaa2U3dXgRUUEPXlRALkp3R/PCuSkkTBZ+hC3mxSt4AxvKnjDBedxEpyizqCAB9iVvUDDWFkQ2W0lbV42KO7Gn6Dz9GY+Q3nPuW4iWtq8WJ8fu4M6m9aOKJB7RRTohiKz69eWSq9gc5HP2SJjLHG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UMBV3KLa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Lxw0ikK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CEE0C116B1;
-	Tue, 16 Jul 2024 15:46:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UMBV3KLa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50D30C116B1;
+	Tue, 16 Jul 2024 15:46:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144762;
-	bh=qhXY+6yPEqPBfZW27k4mD0WT6UpprRY3MWMu4jC1jHE=;
+	s=korg; t=1721144765;
+	bh=IuXNq6F4LDIPB0McbdqGNzi4KbXxjJJAfgqsWcihC8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Lxw0ikK4QBXN4nYbrLioP2dkSgAXvDHG+X0uEqb0S2M4tSggVW+0JOC+4nI9CIaz
-	 XBZ8yjbCXeY7cpLg9XapUSXg5YsSyuh1SmXiK5spHMdIPhx3KmsYkjD1yLBauJvhB8
-	 Bc93MYbsqKjfijlvV8M4WwQyM0qg/c/WrvfJci4Q=
+	b=UMBV3KLa49sXmLyIhoQX+N3xbOfLyT4tm5bEEWJVEt34S6rqJavp7chQVjH6yL0XT
+	 Rtatu5Ar2XXtgO7NCDBJI5WkGp4z2K525UV7j8POiC7mbgniRzAwbU4dWkbU4aZ5PA
+	 jBeBP+pMIoh4di8aQRqEl7HEFm+jOcstwwhWmQY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Woojung Huh <woojung.huh@microchip.com>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 067/108] ethtool: netlink: do not return SQI value if link is down
-Date: Tue, 16 Jul 2024 17:31:22 +0200
-Message-ID: <20240716152748.554117362@linuxfoundation.org>
+Subject: [PATCH 5.10 068/108] udp: Set SOCK_RCU_FREE earlier in udp_lib_get_port().
+Date: Tue, 16 Jul 2024 17:31:23 +0200
+Message-ID: <20240716152748.592466977@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152745.988603303@linuxfoundation.org>
 References: <20240716152745.988603303@linuxfoundation.org>
@@ -53,120 +53,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit c184cf94e73b04ff7048d045f5413899bc664788 ]
+[ Upstream commit 5c0b485a8c6116516f33925b9ce5b6104a6eadfd ]
 
-Do not attach SQI value if link is down. "SQI values are only valid if
-link-up condition is present" per OpenAlliance specification of
-100Base-T1 Interoperability Test suite [1]. The same rule would apply
-for other link types.
+syzkaller triggered the warning [0] in udp_v4_early_demux().
 
-[1] https://opensig.org/automotive-ethernet-specifications/#
+In udp_v[46]_early_demux() and sk_lookup(), we do not touch the refcount
+of the looked-up sk and use sock_pfree() as skb->destructor, so we check
+SOCK_RCU_FREE to ensure that the sk is safe to access during the RCU grace
+period.
 
-Fixes: 806602191592 ("ethtool: provide UAPI for PHY Signal Quality Index (SQI)")
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Woojung Huh <woojung.huh@microchip.com>
-Link: https://patch.msgid.link/20240709061943.729381-1-o.rempel@pengutronix.de
+Currently, SOCK_RCU_FREE is flagged for a bound socket after being put
+into the hash table.  Moreover, the SOCK_RCU_FREE check is done too early
+in udp_v[46]_early_demux() and sk_lookup(), so there could be a small race
+window:
+
+  CPU1                                 CPU2
+  ----                                 ----
+  udp_v4_early_demux()                 udp_lib_get_port()
+  |                                    |- hlist_add_head_rcu()
+  |- sk = __udp4_lib_demux_lookup()    |
+  |- DEBUG_NET_WARN_ON_ONCE(sk_is_refcounted(sk));
+                                       `- sock_set_flag(sk, SOCK_RCU_FREE)
+
+We had the same bug in TCP and fixed it in commit 871019b22d1b ("net:
+set SOCK_RCU_FREE before inserting socket into hashtable").
+
+Let's apply the same fix for UDP.
+
+[0]:
+WARNING: CPU: 0 PID: 11198 at net/ipv4/udp.c:2599 udp_v4_early_demux+0x481/0xb70 net/ipv4/udp.c:2599
+Modules linked in:
+CPU: 0 PID: 11198 Comm: syz-executor.1 Not tainted 6.9.0-g93bda33046e7 #13
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+RIP: 0010:udp_v4_early_demux+0x481/0xb70 net/ipv4/udp.c:2599
+Code: c5 7a 15 fe bb 01 00 00 00 44 89 e9 31 ff d3 e3 81 e3 bf ef ff ff 89 de e8 2c 74 15 fe 85 db 0f 85 02 06 00 00 e8 9f 7a 15 fe <0f> 0b e8 98 7a 15 fe 49 8d 7e 60 e8 4f 39 2f fe 49 c7 46 60 20 52
+RSP: 0018:ffffc9000ce3fa58 EFLAGS: 00010293
+RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffffff8318c92c
+RDX: ffff888036ccde00 RSI: ffffffff8318c2f1 RDI: 0000000000000001
+RBP: ffff88805a2dd6e0 R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000000000000 R11: 0001ffffffffffff R12: ffff88805a2dd680
+R13: 0000000000000007 R14: ffff88800923f900 R15: ffff88805456004e
+FS:  00007fc449127640(0000) GS:ffff88807dc00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fc449126e38 CR3: 000000003de4b002 CR4: 0000000000770ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000600
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ ip_rcv_finish_core.constprop.0+0xbdd/0xd20 net/ipv4/ip_input.c:349
+ ip_rcv_finish+0xda/0x150 net/ipv4/ip_input.c:447
+ NF_HOOK include/linux/netfilter.h:314 [inline]
+ NF_HOOK include/linux/netfilter.h:308 [inline]
+ ip_rcv+0x16c/0x180 net/ipv4/ip_input.c:569
+ __netif_receive_skb_one_core+0xb3/0xe0 net/core/dev.c:5624
+ __netif_receive_skb+0x21/0xd0 net/core/dev.c:5738
+ netif_receive_skb_internal net/core/dev.c:5824 [inline]
+ netif_receive_skb+0x271/0x300 net/core/dev.c:5884
+ tun_rx_batched drivers/net/tun.c:1549 [inline]
+ tun_get_user+0x24db/0x2c50 drivers/net/tun.c:2002
+ tun_chr_write_iter+0x107/0x1a0 drivers/net/tun.c:2048
+ new_sync_write fs/read_write.c:497 [inline]
+ vfs_write+0x76f/0x8d0 fs/read_write.c:590
+ ksys_write+0xbf/0x190 fs/read_write.c:643
+ __do_sys_write fs/read_write.c:655 [inline]
+ __se_sys_write fs/read_write.c:652 [inline]
+ __x64_sys_write+0x41/0x50 fs/read_write.c:652
+ x64_sys_call+0xe66/0x1990 arch/x86/include/generated/asm/syscalls_64.h:2
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0x4b/0x110 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
+RIP: 0033:0x7fc44a68bc1f
+Code: 89 54 24 18 48 89 74 24 10 89 7c 24 08 e8 e9 cf f5 ff 48 8b 54 24 18 48 8b 74 24 10 41 89 c0 8b 7c 24 08 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 31 44 89 c7 48 89 44 24 08 e8 3c d0 f5 ff 48
+RSP: 002b:00007fc449126c90 EFLAGS: 00000293 ORIG_RAX: 0000000000000001
+RAX: ffffffffffffffda RBX: 00000000004bc050 RCX: 00007fc44a68bc1f
+RDX: 0000000000000032 RSI: 00000000200000c0 RDI: 00000000000000c8
+RBP: 00000000004bc050 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000032 R11: 0000000000000293 R12: 0000000000000000
+R13: 000000000000000b R14: 00007fc44a5ec530 R15: 0000000000000000
+ </TASK>
+
+Fixes: 6acc9b432e67 ("bpf: Add helper to retrieve socket in BPF")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20240709191356.24010-1-kuniyu@amazon.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/linkstate.c | 41 ++++++++++++++++++++++++++++-------------
- 1 file changed, 28 insertions(+), 13 deletions(-)
+ net/ipv4/udp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/ethtool/linkstate.c b/net/ethtool/linkstate.c
-index fb676f349455a..470582a70ccbe 100644
---- a/net/ethtool/linkstate.c
-+++ b/net/ethtool/linkstate.c
-@@ -36,6 +36,8 @@ static int linkstate_get_sqi(struct net_device *dev)
- 	mutex_lock(&phydev->lock);
- 	if (!phydev->drv || !phydev->drv->get_sqi)
- 		ret = -EOPNOTSUPP;
-+	else if (!phydev->link)
-+		ret = -ENETDOWN;
- 	else
- 		ret = phydev->drv->get_sqi(phydev);
- 	mutex_unlock(&phydev->lock);
-@@ -54,6 +56,8 @@ static int linkstate_get_sqi_max(struct net_device *dev)
- 	mutex_lock(&phydev->lock);
- 	if (!phydev->drv || !phydev->drv->get_sqi_max)
- 		ret = -EOPNOTSUPP;
-+	else if (!phydev->link)
-+		ret = -ENETDOWN;
- 	else
- 		ret = phydev->drv->get_sqi_max(phydev);
- 	mutex_unlock(&phydev->lock);
-@@ -61,6 +65,17 @@ static int linkstate_get_sqi_max(struct net_device *dev)
- 	return ret;
- };
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index da9015efb45e4..6ad25dc9710c1 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -317,6 +317,8 @@ int udp_lib_get_port(struct sock *sk, unsigned short snum,
+ 			goto fail_unlock;
+ 		}
  
-+static bool linkstate_sqi_critical_error(int sqi)
-+{
-+	return sqi < 0 && sqi != -EOPNOTSUPP && sqi != -ENETDOWN;
-+}
++		sock_set_flag(sk, SOCK_RCU_FREE);
 +
-+static bool linkstate_sqi_valid(struct linkstate_reply_data *data)
-+{
-+	return data->sqi >= 0 && data->sqi_max >= 0 &&
-+	       data->sqi <= data->sqi_max;
-+}
+ 		sk_add_node_rcu(sk, &hslot->head);
+ 		hslot->count++;
+ 		sock_prot_inuse_add(sock_net(sk), sk->sk_prot, 1);
+@@ -333,7 +335,7 @@ int udp_lib_get_port(struct sock *sk, unsigned short snum,
+ 		hslot2->count++;
+ 		spin_unlock(&hslot2->lock);
+ 	}
+-	sock_set_flag(sk, SOCK_RCU_FREE);
 +
- static int linkstate_get_link_ext_state(struct net_device *dev,
- 					struct linkstate_reply_data *data)
- {
-@@ -92,12 +107,12 @@ static int linkstate_prepare_data(const struct ethnl_req_info *req_base,
- 	data->link = __ethtool_get_link(dev);
- 
- 	ret = linkstate_get_sqi(dev);
--	if (ret < 0 && ret != -EOPNOTSUPP)
-+	if (linkstate_sqi_critical_error(ret))
- 		goto out;
- 	data->sqi = ret;
- 
- 	ret = linkstate_get_sqi_max(dev);
--	if (ret < 0 && ret != -EOPNOTSUPP)
-+	if (linkstate_sqi_critical_error(ret))
- 		goto out;
- 	data->sqi_max = ret;
- 
-@@ -122,11 +137,10 @@ static int linkstate_reply_size(const struct ethnl_req_info *req_base,
- 	len = nla_total_size(sizeof(u8)) /* LINKSTATE_LINK */
- 		+ 0;
- 
--	if (data->sqi != -EOPNOTSUPP)
--		len += nla_total_size(sizeof(u32));
--
--	if (data->sqi_max != -EOPNOTSUPP)
--		len += nla_total_size(sizeof(u32));
-+	if (linkstate_sqi_valid(data)) {
-+		len += nla_total_size(sizeof(u32)); /* LINKSTATE_SQI */
-+		len += nla_total_size(sizeof(u32)); /* LINKSTATE_SQI_MAX */
-+	}
- 
- 	if (data->link_ext_state_provided)
- 		len += nla_total_size(sizeof(u8)); /* LINKSTATE_EXT_STATE */
-@@ -147,13 +161,14 @@ static int linkstate_fill_reply(struct sk_buff *skb,
- 	    nla_put_u8(skb, ETHTOOL_A_LINKSTATE_LINK, !!data->link))
- 		return -EMSGSIZE;
- 
--	if (data->sqi != -EOPNOTSUPP &&
--	    nla_put_u32(skb, ETHTOOL_A_LINKSTATE_SQI, data->sqi))
--		return -EMSGSIZE;
-+	if (linkstate_sqi_valid(data)) {
-+		if (nla_put_u32(skb, ETHTOOL_A_LINKSTATE_SQI, data->sqi))
-+			return -EMSGSIZE;
- 
--	if (data->sqi_max != -EOPNOTSUPP &&
--	    nla_put_u32(skb, ETHTOOL_A_LINKSTATE_SQI_MAX, data->sqi_max))
--		return -EMSGSIZE;
-+		if (nla_put_u32(skb, ETHTOOL_A_LINKSTATE_SQI_MAX,
-+				data->sqi_max))
-+			return -EMSGSIZE;
-+	}
- 
- 	if (data->link_ext_state_provided) {
- 		if (nla_put_u8(skb, ETHTOOL_A_LINKSTATE_EXT_STATE,
+ 	error = 0;
+ fail_unlock:
+ 	spin_unlock_bh(&hslot->lock);
 -- 
 2.43.0
 
