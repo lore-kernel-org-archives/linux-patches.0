@@ -1,123 +1,103 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F1F19DF71;
-	Tue, 16 Jul 2024 16:13:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FDC19DF8D
+	for <patches@lists.linux.dev>; Tue, 16 Jul 2024 17:49:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721146393; cv=none; b=Hg0inhDJObEw/sWH4DVin7RPkCo1BxnfkPa1cDaD8kbcnsYSiOBkTfCfApV8+bz/cAsr7grjms3070Q9VgbNRsUOuF13Z78FSPM2MHgUrHjslWmDOAEwgGFLA8xOUW1WR2XmZrvNafezc1r8G12ybH/LcitvnBmM8j49JwM71/E=
+	t=1721152192; cv=none; b=Q/AF/r2nBOoc5cIIdL3bUmoiySSBYYjstyo2YNVZMxNqChk9XP4G/AWf0xOAkHW69g7rcKjYRCQSeZdI5AFcoFpcdr2DLPi6whnpz3Xax6XKzmzN5HRCTdheCv745miWpvUwI0SopAbWtRRB9jcpaIK0PsBGi8z8sfgzrj5AkQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721146393; c=relaxed/simple;
-	bh=9CDQsYfLsrsEWfaB2FJ7eLOcKRm2DOg2aZp17IsNPIU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I3dWqESnobXpAoTvGdqr5oapSbU0yak2QTi7EKlg8f6ezuREEzjL7mI7jiCnl+BJR6L3pPcyasKBGRYyvofsnmuoNGThraGuQvNxjEmq/ninWpVuXdJoi9lT39+6WGoIx60QCeEGvazylSSHM5AqNPfBjZCTt1WFOt75/gqMqO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V9jOlRql; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1721152192; c=relaxed/simple;
+	bh=2YgWT/VTHM8vCLSpVHJrwCbPuHut7t6GyCnV+GRWJbM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fKfTgFPvsuQADpqVc636eqgHaCOBVmyF1emVPYLt2BFK5RCVOboM3qmdzQpwy8+oiOUYt0mqVEXhSX4VmORg7VgSmN3DfbZegG18xoRc/v5Ltpm5FQ/2pI4fLC3zBsgVriXUUJYWoiiy5OQuPjuAG/yZcm3LHy+VnYjg5MvASfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O/YP9USL; arc=none smtp.client-ip=209.85.215.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V9jOlRql"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF66FC116B1;
-	Tue, 16 Jul 2024 16:13:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721146393;
-	bh=9CDQsYfLsrsEWfaB2FJ7eLOcKRm2DOg2aZp17IsNPIU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V9jOlRqloiSGt0Hxqm7jyag9vMHzbgMf3whcnRt+fl94j1E3moytIPwiPabJS2qE7
-	 XlyCF/+QeAMb/thXCusYGHgzv6fr4DWQIdHcVgzZHyvSgVgBFyecDjf4UucLGaL4ax
-	 fcc7tk2oRrQoEj1HGUdJ1v7m7QZDJO8X/4cuaPwY=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Audra Mitchell <audra@redhat.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Andrea Arcangeli <aarcange@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Mike Rapoport <rppt@linux.vnet.ibm.com>,
-	Peter Xu <peterx@redhat.com>,
-	Rafael Aquini <raquini@redhat.com>,
-	Shaohua Li <shli@fb.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 124/144] Fix userfaultfd_api to return EINVAL as expected
-Date: Tue, 16 Jul 2024 17:33:13 +0200
-Message-ID: <20240716152757.287526195@linuxfoundation.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
-References: <20240716152752.524497140@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O/YP9USL"
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-6c5bcb8e8edso4735583a12.2
+        for <patches@lists.linux.dev>; Tue, 16 Jul 2024 10:49:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721152190; x=1721756990; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fw21HKKLStYNAT8K9Zm5OQcaI1CIyT02HeyhGHNjbwc=;
+        b=O/YP9USLLw8Bq+LhitwwqajoUwpcBJb/G2WjztC7QNQiTzf9G/5rTFLQhxdHZ/pWV4
+         ZX31bX/LZU2EeHw+InAqkEXhIE3/EvKh7wdMHii0arrhskGoV+LLs5QRH4aX2XSniIPg
+         1xoGR4vGh/RZLCS7tGvppEpuSz3xGPi4lw++hUiP03jT2PjVcaVr0/1CtnENHHdeD6O4
+         lqfvhK2eSq3fYnA09Y7XIQKrYqJjV1u7/LgZQGLL9BnK7S8/f6gSlpofT+akC2UTyNhP
+         3E71ZSgDuCtKvjgvurFENwMH958nCBDn5Ys4QVCA03ch/4XowXrfVUEBKpv4FsUGSvx0
+         /Nnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721152190; x=1721756990;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fw21HKKLStYNAT8K9Zm5OQcaI1CIyT02HeyhGHNjbwc=;
+        b=bhhNhAefEikyyBM50ZL+hzP3iAwE2mnJDZAAVw+YwNpiU63DHTZlMlG0roiP/dg894
+         1P1yQmFZvp4Hk/kAjsBSTo6dRenFtrJERZ7PzWiOXTStuHaKGkpmuRYF4MI91Y+VYzOc
+         JrYCduS3uMOdsi+AacaXv6vMoFYTCuXf6aK9/azVV8fp6xN3MOk3JzuB4TBdAR8/7a6C
+         GghjkeCUX3CJdNu4U3IpO3h/mO36MdvB0bapw96Djw110kkhYknAZjXa9buTFWkPghiz
+         lubq6Zy18f3avSj1+KYa7jOwXx47o77IAmrIsT+Q5A9PaQ3dFz2dYl/O5P8qSmmv+Owv
+         UDyQ==
+X-Gm-Message-State: AOJu0YyrmwHWeq27WJCB701LdisInsMePQTvCiEu+BIF5dhHB1Al33NI
+	oxN9lmQj9WjQ9y8StSVgANP4MSD2Xn1cDcog6qTiGk8BK5ve2Gks
+X-Google-Smtp-Source: AGHT+IHEUJk0xLd08fCWUkUT6q7L5dyqKFpNyi0iCdDU+61xVknKryfkyO5HXzgACjh2WUmNoM02+A==
+X-Received: by 2002:a05:6a20:c781:b0:1c3:a446:160 with SMTP id adf61e73a8af0-1c3f12d1da4mr2342066637.56.1721152190245;
+        Tue, 16 Jul 2024 10:49:50 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-1fc0bc274dasm62983165ad.166.2024.07.16.10.49.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Jul 2024 10:49:49 -0700 (PDT)
+Message-ID: <64f66282-451c-454f-a437-d8baad186868@gmail.com>
+Date: Tue, 16 Jul 2024 10:49:47 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.4 00/78] 5.4.280-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240716152740.626160410@linuxfoundation.org>
+Content-Language: en-US
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20240716152740.626160410@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+On 7/16/24 08:30, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.4.280 release.
+> There are 78 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 18 Jul 2024 15:27:21 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.280-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-------------------
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-From: Audra Mitchell <audra@redhat.com>
-
-commit 1723f04caacb32cadc4e063725d836a0c4450694 upstream.
-
-Currently if we request a feature that is not set in the Kernel config we
-fail silently and return all the available features.  However, the man
-page indicates we should return an EINVAL.
-
-We need to fix this issue since we can end up with a Kernel warning should
-a program request the feature UFFD_FEATURE_WP_UNPOPULATED on a kernel with
-the config not set with this feature.
-
- [  200.812896] WARNING: CPU: 91 PID: 13634 at mm/memory.c:1660 zap_pte_range+0x43d/0x660
- [  200.820738] Modules linked in:
- [  200.869387] CPU: 91 PID: 13634 Comm: userfaultfd Kdump: loaded Not tainted 6.9.0-rc5+ #8
- [  200.877477] Hardware name: Dell Inc. PowerEdge R6525/0N7YGH, BIOS 2.7.3 03/30/2022
- [  200.885052] RIP: 0010:zap_pte_range+0x43d/0x660
-
-Link: https://lkml.kernel.org/r/20240626130513.120193-1-audra@redhat.com
-Fixes: e06f1e1dd499 ("userfaultfd: wp: enabled write protection in userfaultfd API")
-Signed-off-by: Audra Mitchell <audra@redhat.com>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Mike Rapoport <rppt@linux.vnet.ibm.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Rafael Aquini <raquini@redhat.com>
-Cc: Shaohua Li <shli@fb.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- fs/userfaultfd.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
-
---- a/fs/userfaultfd.c
-+++ b/fs/userfaultfd.c
-@@ -1935,7 +1935,7 @@ static int userfaultfd_api(struct userfa
- 		goto out;
- 	features = uffdio_api.features;
- 	ret = -EINVAL;
--	if (uffdio_api.api != UFFD_API || (features & ~UFFD_API_FEATURES))
-+	if (uffdio_api.api != UFFD_API)
- 		goto err_out;
- 	ret = -EPERM;
- 	if ((features & UFFD_FEATURE_EVENT_FORK) && !capable(CAP_SYS_PTRACE))
-@@ -1949,6 +1949,11 @@ static int userfaultfd_api(struct userfa
- #ifndef CONFIG_HAVE_ARCH_USERFAULTFD_WP
- 	uffdio_api.features &= ~UFFD_FEATURE_PAGEFAULT_FLAG_WP;
- #endif
-+
-+	ret = -EINVAL;
-+	if (features & ~uffdio_api.features)
-+		goto err_out;
-+
- 	uffdio_api.ioctls = UFFD_API_IOCTLS;
- 	ret = -EFAULT;
- 	if (copy_to_user(buf, &uffdio_api, sizeof(uffdio_api)))
-
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
 
