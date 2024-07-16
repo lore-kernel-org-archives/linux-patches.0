@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 504FF1DDCE;
-	Tue, 16 Jul 2024 16:10:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382171DDCE;
+	Tue, 16 Jul 2024 16:10:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721146247; cv=none; b=kzw0nHjq+iNU1fc09Zg240kjT1VA3Vp8uwpXyrzs/Xt7N6o4/afxj4s0QmBCtCHHmQgo3jjAJ4c8t4sg3I04aUEKhUu8crnR0JBz0JoeSS11Q5qShxUAhA8LSXxzX4wXP6n5nFn9Cgo2lGCH8aHmlq3jf1OrHkC4StDQ6Ib5654=
+	t=1721146250; cv=none; b=Ps6AR0AkkMlQFJjVatcTFKp/u4E3zhdSxzQaUK1wgPMfxscV385bmfy7C+QxFVP71S+kH4lqIhRNBOCF9/6SOHqxqGNLLvp7jJr2rHN+AKj2KpCwfObUYGb/4W/FyVwOVbKI+SvLwsVlbto6g/jkTavWUWONi9AxZH/1fpF7wMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721146247; c=relaxed/simple;
-	bh=Ng9c34KjcVlSi5qswdHWXF1Lq11xX/6yRh3xZIkXIoU=;
+	s=arc-20240116; t=1721146250; c=relaxed/simple;
+	bh=CLOjNLCy/35CEXGr1XyBdr1OLU32FsA7ckNzQEfBaYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sb0+fwWnajCewr1TMNuulVwQmowotUUmJMkvfvzFODjkUyyOMTKYjRG0477rTW0G4N5huNnpkPCyESAFWVx6ToGuQlfKgImmPw0ne8ot3vqgzaTTIIHgHeECyEr0p1YzUnH2Ulu2tiywgdN87UiUl7W0cXLvZxab2aSRbXej3oY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVbB9cqp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UoN3TAX6iTFeOCCZKVHR9U5eT/XLfd7rfgKBPA5SwYddx+Efd6P1TvQ3IUO3kXyi6cyc8F+tF+dzAEybA8cmRzs3QCjWXsp+fANJTyUXKjQQB1OtGxxpIzWwd4s+qmfggr43bw19gwUDBM5QVUgmZ5/umJ1UJoogwFzr7unt9vY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iQ4qdtHp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVbB9cqp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB78BC116B1;
-	Tue, 16 Jul 2024 16:10:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iQ4qdtHp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B488CC116B1;
+	Tue, 16 Jul 2024 16:10:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721146247;
-	bh=Ng9c34KjcVlSi5qswdHWXF1Lq11xX/6yRh3xZIkXIoU=;
+	s=korg; t=1721146250;
+	bh=CLOjNLCy/35CEXGr1XyBdr1OLU32FsA7ckNzQEfBaYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aVbB9cqp6tt7zTDgXcMCnwwmerKt5qje23ln2toxDFVOi9N3pZqoPPlxDRdwIPAXc
-	 kqlvNy+MwD8NdPcRpp2K+Ncpa6IqDRLuimBpqHS4vYjSkaiCh7pJlk0T/t/xHmWw/5
-	 e9e7BM0ovcK0n/ocPoma4Wy2MdfESzIVjT5/MWAQ=
+	b=iQ4qdtHpGOGRz3wRsxnjkytGmSCW9FYoCBDjzFhJBgkdc1f0YRO9abMsj1AE4QVig
+	 HvzpeLYguNAZB4hvwZelSpd+wKZCK5l89vtRDbtQYBrRDWqQhSW/rZcqic+gnZs/bD
+	 dYnoYPWiX+rXXCV66o09NZjjxqlRWqXcjrzufsb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"David S. Miller" <davem@davemloft.net>,
 	Eric Dumazet <edumazet@google.com>,
-	Neal Cardwell <ncardwell@google.com>,
-	Jason Xing <kerneljasonxing@gmail.com>,
-	Jon Maxwell <jmaxwell37@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 105/144] tcp: avoid too many retransmit packets
-Date: Tue, 16 Jul 2024 17:32:54 +0200
-Message-ID: <20240716152756.568986260@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	netdev@vger.kernel.org,
+	Ronald Wahl <ronald.wahl@raritan.com>,
+	Jacob Keller <jacob.e.keller@intel.com>
+Subject: [PATCH 5.15 106/144] net: ks8851: Fix potential TX stall after interface reopen
+Date: Tue, 16 Jul 2024 17:32:55 +0200
+Message-ID: <20240716152756.607200675@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
 References: <20240716152752.524497140@linuxfoundation.org>
@@ -54,80 +56,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ronald Wahl <ronald.wahl@raritan.com>
 
-commit 97a9063518f198ec0adb2ecb89789de342bb8283 upstream.
+commit 7a99afef17af66c276c1d6e6f4dbcac223eaf6ac upstream.
 
-If a TCP socket is using TCP_USER_TIMEOUT, and the other peer
-retracted its window to zero, tcp_retransmit_timer() can
-retransmit a packet every two jiffies (2 ms for HZ=1000),
-for about 4 minutes after TCP_USER_TIMEOUT has 'expired'.
+The amount of TX space in the hardware buffer is tracked in the tx_space
+variable. The initial value is currently only set during driver probing.
 
-The fix is to make sure tcp_rtx_probe0_timed_out() takes
-icsk->icsk_user_timeout into account.
+After closing the interface and reopening it the tx_space variable has
+the last value it had before close. If it is smaller than the size of
+the first send packet after reopeing the interface the queue will be
+stopped. The queue is woken up after receiving a TX interrupt but this
+will never happen since we did not send anything.
 
-Before blamed commit, the socket would not timeout after
-icsk->icsk_user_timeout, but would use standard exponential
-backoff for the retransmits.
+This commit moves the initialization of the tx_space variable to the
+ks8851_net_open function right before starting the TX queue. Also query
+the value from the hardware instead of using a hard coded value.
 
-Also worth noting that before commit e89688e3e978 ("net: tcp:
-fix unexcepted socket die when snd_wnd is 0"), the issue
-would last 2 minutes instead of 4.
+Only the SPI chip variant is affected by this issue because only this
+driver variant actually depends on the tx_space variable in the xmit
+function.
 
-Fixes: b701a99e431d ("tcp: Add tcp_clamp_rto_to_user_timeout() helper to improve accuracy")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Neal Cardwell <ncardwell@google.com>
-Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
-Reviewed-by: Jon Maxwell <jmaxwell37@gmail.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20240710001402.2758273-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 3dc5d4454545 ("net: ks8851: Fix TX stall caused by TX buffer overrun")
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Simon Horman <horms@kernel.org>
+Cc: netdev@vger.kernel.org
+Cc: stable@vger.kernel.org # 5.10+
+Signed-off-by: Ronald Wahl <ronald.wahl@raritan.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20240709195845.9089-1-rwahl@gmx.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_timer.c |   22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/micrel/ks8851_common.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv4/tcp_timer.c
-+++ b/net/ipv4/tcp_timer.c
-@@ -440,22 +440,34 @@ static void tcp_fastopen_synack_timer(st
- static bool tcp_rtx_probe0_timed_out(const struct sock *sk,
- 				     const struct sk_buff *skb)
- {
-+	const struct inet_connection_sock *icsk = inet_csk(sk);
-+	u32 user_timeout = READ_ONCE(icsk->icsk_user_timeout);
- 	const struct tcp_sock *tp = tcp_sk(sk);
--	const int timeout = TCP_RTO_MAX * 2;
-+	int timeout = TCP_RTO_MAX * 2;
- 	u32 rtx_delta;
- 	s32 rcv_delta;
+--- a/drivers/net/ethernet/micrel/ks8851_common.c
++++ b/drivers/net/ethernet/micrel/ks8851_common.c
+@@ -499,6 +499,7 @@ static int ks8851_net_open(struct net_de
+ 	ks8851_wrreg16(ks, KS_IER, ks->rc_ier);
  
-+	rtx_delta = (u32)msecs_to_jiffies(tcp_time_stamp(tp) -
-+			(tp->retrans_stamp ?: tcp_skb_timestamp(skb)));
-+
-+	if (user_timeout) {
-+		/* If user application specified a TCP_USER_TIMEOUT,
-+		 * it does not want win 0 packets to 'reset the timer'
-+		 * while retransmits are not making progress.
-+		 */
-+		if (rtx_delta > user_timeout)
-+			return true;
-+		timeout = min_t(u32, timeout, msecs_to_jiffies(user_timeout));
-+	}
-+
- 	/* Note: timer interrupt might have been delayed by at least one jiffy,
- 	 * and tp->rcv_tstamp might very well have been written recently.
- 	 * rcv_delta can thus be negative.
- 	 */
--	rcv_delta = inet_csk(sk)->icsk_timeout - tp->rcv_tstamp;
-+	rcv_delta = icsk->icsk_timeout - tp->rcv_tstamp;
- 	if (rcv_delta <= timeout)
- 		return false;
+ 	ks->queued_len = 0;
++	ks->tx_space = ks8851_rdreg16(ks, KS_TXMIR);
+ 	netif_start_queue(ks->netdev);
  
--	rtx_delta = (u32)msecs_to_jiffies(tcp_time_stamp(tp) -
--			(tp->retrans_stamp ?: tcp_skb_timestamp(skb)));
--
- 	return rtx_delta > timeout;
- }
+ 	netif_dbg(ks, ifup, ks->netdev, "network device up\n");
+@@ -1119,7 +1120,6 @@ int ks8851_probe_common(struct net_devic
+ 	int ret;
  
+ 	ks->netdev = netdev;
+-	ks->tx_space = 6144;
+ 
+ 	gpio = of_get_named_gpio_flags(dev->of_node, "reset-gpios", 0, NULL);
+ 	if (gpio == -EPROBE_DEFER)
 
 
