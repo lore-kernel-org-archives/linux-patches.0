@@ -1,83 +1,73 @@
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D221C6B7
-	for <patches@lists.linux.dev>; Tue, 16 Jul 2024 18:23:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28ED1A01D8;
+	Tue, 16 Jul 2024 18:36:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721154213; cv=none; b=IYf0nRwKeEDp8tgDC6fE4B+gTRqMy2fxG0Quojtip5Nhyok3tDrCJ59Y6sYYxgm/dYcekluDiZFRlQ6Wo7ov+jrwdPfnlVLBoIlB8gQ0QEzqv90gF0xfiSud5mOizrRaYUItI5hIKgjmIvjfpNnVMjTq2CRhH6jPBYBdw3bihTI=
+	t=1721154997; cv=none; b=d/qFweHqad7q5EJx1XXiRYZ7aDDPoZ2fsu4C44Cv+mqwbfnwuMHV024klQcfRss/fy9kk/to54hZUFJxJ4dvhS/HOizaD1eLBblwYmJyfRdxxYwU/9n0P+aLJot2KXwl/G/l7+yaQ60+kEPp62rFGrwGTeBXf7BT2GFFHKmWuPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721154213; c=relaxed/simple;
-	bh=BKt5xsXhkdBcvCqqnMHb4pGJ9FJn/IlmyieTO4qcx4I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HFH/13oS+Ne6OqXNJg95YGEZJMEnx9yO6Za33y0hh/HY51+JhstltFwUEbefgqIG7RKB54oZQkeYK1Vaabt3p4w0LytbhZDi7+kytaRGbkLktD1QFtNmSZPzbUrs874cw4bLI9ZW3IDt3v8+TU0pjE1IUPRG2wpwlqDfiZ45Ew0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iK8V+/Dd; arc=none smtp.client-ip=209.85.215.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1721154997; c=relaxed/simple;
+	bh=PEgX+s2wCIQwmugnXsdYi8h7r0p2U6wPhH5bHLJ+V8s=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=K68YhT2eZ7ojkMlVFncjF1LjxcIDVclMbTTXKcwPRzOBhdFoeXuEukLA+a3hhjnR0z2JMqxd1IGwdUL0zAxUmZwiejEND6vXE94z9HRIKTOf5DP/wIO5r8STwwIhS56QmCvipFpqYqBA57YSYeib7JqShzxdRyTlSYGC2Dsg1OI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ETHwRA+m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iK8V+/Dd"
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-75ee39f1ffbso4052430a12.2
-        for <patches@lists.linux.dev>; Tue, 16 Jul 2024 11:23:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721154210; x=1721759010; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hU2WUxOdEYMWjHVCKzeUA8Qq59FBn2+v28YS9SBj8kI=;
-        b=iK8V+/DdJ2vyBXDAO6wORqoGyYIfvZx07nSKch2SVvZQ0N07RcOFRGaIj40AaeXMz1
-         6pDkiyP0alYnHcbH2MDACFPb2F4EiBgHyCNtw0M7Dxk6sMipy1xekzqGOZ6zRZlNGDhG
-         OxDYLlbqgHTdbpsZAe/SQJIQLArmi6Ix109scReT1aN2A6E2upcTp/O7hyF9TRlfLfwb
-         zJa3i/7LnKbLM1j2KuLMhgl+9UuMMBYaG97+PP16bgUvkMEtNVvP5+z82MTB+nZhgUyd
-         OCKN34b7Ao/kthRLEDV6TGqUkFou6+Zmh8fxDWzIPP/M2MzS78sqkiSZN2SWZh+sE1Va
-         O0uQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721154210; x=1721759010;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hU2WUxOdEYMWjHVCKzeUA8Qq59FBn2+v28YS9SBj8kI=;
-        b=DJU965E+oJl0qX3Xxr90vafFAzFzv+H3BuONWy0vWASoWT5DC0KfJXiwX4uNWUUBbD
-         ju1sVNyzizfgn2aqaZNWkMSqzQYao0Y6MJSaQaZh5fCerqt/1blFL5cUaZtevAViyYzk
-         Po/z/AIDjyZF/kJ3S+jDPlJ1IfNDKm7e3+13NQ9/CQB7qqe1Wn4njBs4J06lVDkndSep
-         Pq5BX/7iPwHIMg0IUKapVheqJB6mrQ1ntl4V2s7pysof/Lp11NMdRj3vvZXgf2DUNH8r
-         XRtsfU0FDpdeuFN+zwc5Kjka2P42N8y0AsbY0dkAi/2e65bnIVvII4ToSdKWgcAGG3gR
-         Akvg==
-X-Gm-Message-State: AOJu0YwM9IWAX9SGZVDHcpCbcFV48sgF4ctPqH2AooAequp6ia4jeS2k
-	cAlW1LA8YS9RytB5LhJgy16zaDWCYUV8RBmBDK1Uptc1IfgbPMV/
-X-Google-Smtp-Source: AGHT+IH64YZd43c5HM2OovaMMEJBUEGZWYmx6/asMW62Jc2JJR2BQvxJy2tdoJu5j83Asvb1gdgZGg==
-X-Received: by 2002:a05:6a21:9985:b0:1c0:dd3d:ef3a with SMTP id adf61e73a8af0-1c3f123ea4amr3987370637.29.1721154210077;
-        Tue, 16 Jul 2024 11:23:30 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id d2e1a72fcca58-70b7eca7545sm6651358b3a.153.2024.07.16.11.23.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Jul 2024 11:23:29 -0700 (PDT)
-Message-ID: <231354c7-2480-4503-857a-12946366c1df@gmail.com>
-Date: Tue, 16 Jul 2024 11:23:27 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ETHwRA+m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F20FC4AF0B;
+	Tue, 16 Jul 2024 18:36:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1721154996;
+	bh=PEgX+s2wCIQwmugnXsdYi8h7r0p2U6wPhH5bHLJ+V8s=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ETHwRA+mIes3EuoLLE804w4SdoouIxVWLRJa9APnZEaGvYVAuO1nrcvu3ikPlzxjG
+	 2cr1Dd3yUc6dWDvQVcm2N9vtpvZjJqc6SOBWp+I9ntHoSxvbLi1vdgjFqtJz0rk8g7
+	 nCl4NutLkPbXiuvyNCccz9rV21PrF3hZPvEZa0uCrbP/jeOedL5Mz48Jm8060DH2/g
+	 rotH6NS3BzIODOTwIruH7IlBXs4aa+y23mY+FEnKld/w2CEgal3xZh+P7JKrrdTlIw
+	 1LFvlC9Qrj4QB0hZyp0CXxABq1PDTW8e++m6YKOEDuZWYzxIn1OVeipZeZz8gYRGod
+	 bIJ5QrrKk0YQA==
+From: SeongJae Park <sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	broonie@kernel.org,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 6.9 000/143] 6.9.10-rc1 review
+Date: Tue, 16 Jul 2024 11:36:32 -0700
+Message-Id: <20240716183632.138572-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 000/144] 5.15.163-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-References: <20240716152752.524497140@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 7/16/24 08:31, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.163 release.
-> There are 144 patches in this series, all will be posted as a response
+Hello,
+
+On Tue, 16 Jul 2024 17:29:56 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+
+> This is the start of the stable review cycle for the 6.9.10 release.
+> There are 143 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -85,19 +75,53 @@ On 7/16/24 08:31, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.163-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.9.10-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.9.y
 > and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+Tested-by: SeongJae Park <sj@kernel.org>
 
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] 52a42d4138a1 ("Linux 6.9.10-rc1")
+
+Thanks,
+SJ
+
+[...]
+
+---
+
+ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 7 selftests: damon: debugfs_rm_non_contexts.sh
+ok 8 selftests: damon: debugfs_target_ids_read_before_terminate_race.sh
+ok 9 selftests: damon: debugfs_target_ids_pid_leak.sh
+ok 10 selftests: damon: sysfs.sh
+ok 11 selftests: damon: sysfs_update_removed_scheme_dir.sh
+ok 12 selftests: damon: sysfs_update_schemes_tried_regions_hang.py
+ok 13 selftests: damon: sysfs_update_schemes_tried_regions_wss_estimation.py
+ok 14 selftests: damon: damos_quota.py
+ok 15 selftests: damon: damos_apply_interval.py
+ok 16 selftests: damon: reclaim.sh
+ok 17 selftests: damon: lru_sort.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_m68k.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
