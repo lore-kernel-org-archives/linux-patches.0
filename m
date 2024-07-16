@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976D219E7CF;
-	Tue, 16 Jul 2024 15:47:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3619D17A93F;
+	Tue, 16 Jul 2024 15:47:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144857; cv=none; b=ti11/shE9neaatsp9N9+nrHxET+4ZB0p+xEhXtsX/+fYBWPO2u4QI5Vka5zCxeLN6Ak7XX3UKnadtZfWJ3KSW5T01i9iD3jaYMBGUYq+inbMCeEIygwZS6SV9F5H8qbkSphgu6Rhsc0a8j0Gg/2M9LhCtaK3GtOzqrDRUFIOemc=
+	t=1721144860; cv=none; b=RX1EYpaS/uf/O3MfwAJdcWa1qfs+zy1pNeRQfVxoH+EGwDpFDM+VtFdVAAn6UznBnQ9eb2VXV1T3UaCcQryxIbe1vIQ3Eb2M/unXgxVeMk8Mc6cSx1jeB4x4qbrfSIwncNF4wFdVWRGaqyDat+9ObtJpb4SQT73pjOlWK9+Tp44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144857; c=relaxed/simple;
-	bh=1oQzoklkDo9LzhTIePB8MBLVS9RLFcuNPY670ej2UMs=;
+	s=arc-20240116; t=1721144860; c=relaxed/simple;
+	bh=+UVTaIea7ZJqPVYoaMmYPGQtbjWqTSGzH2JreIDS0Fw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dVV6iUJvAuEc43ZaPqer9rK3ZRQ8sq8KcUvs66tev5oMBaE+3Q8kvvstk4KZgc7sA0/7s8SSVE0ZVD9WIEqgTUfAsjG+lxmalvaOAS9PzMbZ4VOvqw2cXQxD8l0UKnhpfVWUhBxc8EZlZ36GOoBzFmJRhO/tzIvTBaFlwSWKqpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wNCUQvFz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C/88AUAqik8umHFKv8OcMi4ad7xVoUGY7s8IGzFhbfWe45hqXp1N+fID9s/VGlGFg1NvIwDaNxVx1qAbHy+3oJV6ZWkT6jeYV3MIxkk5eWuT4hqjJQxeBtZkdwQ788QK8i+tm8m1ekIMqYpl2NuKbgFfbRI4Buz0alji/oCn+Wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N2+p/sKO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wNCUQvFz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38A2C116B1;
-	Tue, 16 Jul 2024 15:47:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N2+p/sKO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC985C4AF0B;
+	Tue, 16 Jul 2024 15:47:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144857;
-	bh=1oQzoklkDo9LzhTIePB8MBLVS9RLFcuNPY670ej2UMs=;
+	s=korg; t=1721144860;
+	bh=+UVTaIea7ZJqPVYoaMmYPGQtbjWqTSGzH2JreIDS0Fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wNCUQvFziYY3WsBtaSRCiXtkTVGhCADdCtrVYqfRg04yyi4qSpsLG4gZZI0yAHpS0
-	 s50Q96/FP7HEOWDrZrEOWsKo8FA6Xr9QKuvE4bVX+AOWoovu64JgSTjLpk6vCyoKWe
-	 ACjK7WyihRlEY7IxmZPcgKmOWjyzWpWKZpIcdk1c=
+	b=N2+p/sKOddLy0O38JgYov2UjkuHggw1fAxCIq4T+B5ctEBe1s146ltSDtQdI0rvZN
+	 5SUSyNLnyraCS3EDDWiUIrsktfrmO/SToAWuifoOlqnFvUyz42k0HrzBxsurS2/0Fh
+	 UpJakOa22l4lG5pWEK/Y9L7JvuDLtsEDPZA146MQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Justin Chen <justin.chen@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Peter Wang <peter.wang@mediatek.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 019/143] net: bcmasp: Fix error code in probe()
-Date: Tue, 16 Jul 2024 17:30:15 +0200
-Message-ID: <20240716152756.729739770@linuxfoundation.org>
+Subject: [PATCH 6.9 002/143] scsi: ufs: core: Fix ufshcd_clear_cmd racing issue
+Date: Tue, 16 Jul 2024 17:29:58 +0200
+Message-ID: <20240716152756.078005426@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -53,36 +52,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Peter Wang <peter.wang@mediatek.com>
 
-[ Upstream commit 0c754d9d86ffdf2f86b4272b25d759843fb62fd8 ]
+[ Upstream commit 9307a998cb9846a2557fdca286997430bee36a2a ]
 
-Return an error code if bcmasp_interface_create() fails.  Don't return
-success.
+When ufshcd_clear_cmd is racing with the completion ISR, the completed tag
+of the request's mq_hctx pointer will be set to NULL by the ISR.  And
+ufshcd_clear_cmd's call to ufshcd_mcq_req_to_hwq will get NULL pointer KE.
+Return success when the request is completed by ISR because sq does not
+need cleanup.
 
-Fixes: 490cb412007d ("net: bcmasp: Add support for ASP2.0 Ethernet controller")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Reviewed-by: Justin Chen <justin.chen@broadcom.com>
-Link: https://patch.msgid.link/ZoWKBkHH9D1fqV4r@stanley.mountain
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The racing flow is:
+
+Thread A
+ufshcd_err_handler					step 1
+	ufshcd_try_to_abort_task
+		ufshcd_cmd_inflight(true)		step 3
+		ufshcd_clear_cmd
+			...
+			ufshcd_mcq_req_to_hwq
+			blk_mq_unique_tag
+				rq->mq_hctx->queue_num	step 5
+
+Thread B
+ufs_mtk_mcq_intr(cq complete ISR)			step 2
+	scsi_done
+		...
+		__blk_mq_free_request
+			rq->mq_hctx = NULL;		step 4
+
+Below is KE back trace:
+
+  ufshcd_try_to_abort_task: cmd pending in the device. tag = 6
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000194
+   pc : [0xffffffd589679bf8] blk_mq_unique_tag+0x8/0x14
+   lr : [0xffffffd5862f95b4] ufshcd_mcq_sq_cleanup+0x6c/0x1cc [ufs_mediatek_mod_ise]
+   Workqueue: ufs_eh_wq_0 ufshcd_err_handler [ufs_mediatek_mod_ise]
+   Call trace:
+    dump_backtrace+0xf8/0x148
+    show_stack+0x18/0x24
+    dump_stack_lvl+0x60/0x7c
+    dump_stack+0x18/0x3c
+    mrdump_common_die+0x24c/0x398 [mrdump]
+    ipanic_die+0x20/0x34 [mrdump]
+    notify_die+0x80/0xd8
+    die+0x94/0x2b8
+    __do_kernel_fault+0x264/0x298
+    do_page_fault+0xa4/0x4b8
+    do_translation_fault+0x38/0x54
+    do_mem_abort+0x58/0x118
+    el1_abort+0x3c/0x5c
+    el1h_64_sync_handler+0x54/0x90
+    el1h_64_sync+0x68/0x6c
+    blk_mq_unique_tag+0x8/0x14
+    ufshcd_clear_cmd+0x34/0x118 [ufs_mediatek_mod_ise]
+    ufshcd_try_to_abort_task+0x2c8/0x5b4 [ufs_mediatek_mod_ise]
+    ufshcd_err_handler+0xa7c/0xfa8 [ufs_mediatek_mod_ise]
+    process_one_work+0x208/0x4fc
+    worker_thread+0x228/0x438
+    kthread+0x104/0x1d4
+    ret_from_fork+0x10/0x20
+
+Fixes: 8d7290348992 ("scsi: ufs: mcq: Add supporting functions for MCQ abort")
+Suggested-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
+Link: https://lore.kernel.org/r/20240628070030.30929-2-peter.wang@mediatek.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/asp2/bcmasp.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/ufs/core/ufs-mcq.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp.c b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-index a806dadc41965..20c6529ec1350 100644
---- a/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-+++ b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-@@ -1380,6 +1380,7 @@ static int bcmasp_probe(struct platform_device *pdev)
- 			dev_err(dev, "Cannot create eth interface %d\n", i);
- 			bcmasp_remove_intfs(priv);
- 			of_node_put(intf_node);
-+			ret = -ENOMEM;
- 			goto of_put_exit;
- 		}
- 		list_add_tail(&intf->list, &priv->intfs);
+diff --git a/drivers/ufs/core/ufs-mcq.c b/drivers/ufs/core/ufs-mcq.c
+index 8944548c30fa1..c532416aec229 100644
+--- a/drivers/ufs/core/ufs-mcq.c
++++ b/drivers/ufs/core/ufs-mcq.c
+@@ -105,16 +105,15 @@ EXPORT_SYMBOL_GPL(ufshcd_mcq_config_mac);
+  * @hba: per adapter instance
+  * @req: pointer to the request to be issued
+  *
+- * Return: the hardware queue instance on which the request would
+- * be queued.
++ * Return: the hardware queue instance on which the request will be or has
++ * been queued. %NULL if the request has already been freed.
+  */
+ struct ufs_hw_queue *ufshcd_mcq_req_to_hwq(struct ufs_hba *hba,
+ 					 struct request *req)
+ {
+-	u32 utag = blk_mq_unique_tag(req);
+-	u32 hwq = blk_mq_unique_tag_to_hwq(utag);
++	struct blk_mq_hw_ctx *hctx = READ_ONCE(req->mq_hctx);
+ 
+-	return &hba->uhq[hwq];
++	return hctx ? &hba->uhq[hctx->queue_num] : NULL;
+ }
+ 
+ /**
+@@ -515,6 +514,8 @@ int ufshcd_mcq_sq_cleanup(struct ufs_hba *hba, int task_tag)
+ 		if (!cmd)
+ 			return -EINVAL;
+ 		hwq = ufshcd_mcq_req_to_hwq(hba, scsi_cmd_to_rq(cmd));
++		if (!hwq)
++			return 0;
+ 	} else {
+ 		hwq = hba->dev_cmd_queue;
+ 	}
 -- 
 2.43.0
 
