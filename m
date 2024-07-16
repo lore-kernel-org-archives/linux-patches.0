@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52F1F1DDCE;
-	Tue, 16 Jul 2024 16:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4639D1DDCE;
+	Tue, 16 Jul 2024 16:02:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145758; cv=none; b=AwzMFh3kzSx/kkXtPR/grd+ZkSnFECycVpQEmTmFxPYISi4pwVZieGl27p1FglPpFH2Erzy65jbpTfknGnVfjtsLhcKEZb6tMzI0EHKa3XC9RMIZDgP1MrIsrG3FLFuvmtmnNLMeA7e6aGMNd+DWqIBAcBf9Bus8fuQc7YKwKuQ=
+	t=1721145761; cv=none; b=FVVWBT9GL60bllntIySSgjIUqskr+8vWQnlW+C9Icq6gw1/we9mRmmEajXBzctAUaUmpxNUv/kwT6AHgT3qw9KuENvd30VMOHQo7huxqd3BZ/h2BkbY1gwEoipxScapbX+WT2UCBoZOfUyjYmSx22+WcQzNK0tnIzzDFYTM5vhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145758; c=relaxed/simple;
-	bh=ioZUTmD+ZbIPfSvTYGRNjwhIBR2Ra0WBiGxRJeiL3z4=;
+	s=arc-20240116; t=1721145761; c=relaxed/simple;
+	bh=LygWz2b44bUoQ13FxDO1S+nOGopmHNEaGmzV/5H0oDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jVDBhqGiyHjRPMls3AkypIQErHHrR4ZPIXtJx0CWRGdQD3cvrhNgQXaSM6boCYVUiBMzCqouqHJhZYL4qk1zAqpuKpT8FZqrW+1ciwNEfhALlYjLGVawM6vK9pq8Es1+crtP/DmlEqC01CnHgh3BI4l6BXGwYuUbQyhA92nhyGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hzyttq5t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZBKrnsWzr/TbRbAUxV1J7c64ltabaeF0m6lhYksrvlNsUStnnu6bcFpIh066mQek+VSyO8XtQj9r2hWMqei3D2Dy9cx8BbkByCu3NxgQRYMv9dncRTBr2iHxmpYfIELIjo7V58RpZ5Fj4RPvftcGbjX1UFjKoAifz3ljUzGq0e8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0aeZLl8k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hzyttq5t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F742C116B1;
-	Tue, 16 Jul 2024 16:02:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0aeZLl8k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C031DC116B1;
+	Tue, 16 Jul 2024 16:02:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145758;
-	bh=ioZUTmD+ZbIPfSvTYGRNjwhIBR2Ra0WBiGxRJeiL3z4=;
+	s=korg; t=1721145761;
+	bh=LygWz2b44bUoQ13FxDO1S+nOGopmHNEaGmzV/5H0oDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hzyttq5tqDEKjRBTBnanFfMKgxQV7VJrVFYUsZgdzOGG8Ksj0/Xx4npTFoIJGoQrb
-	 ykeTyQ2bNYKDYxdqQJVQ/afjxtp1CcuRbr4xiV1JvN1Em0echte9b5VPKdkmKGu/O6
-	 Mg6JYjtoPrK60zFScR5JKQp3Ip8uGuDo+Y9ixD1A=
+	b=0aeZLl8k1t62mH2kSO6CH7hBAHXNaYYoIx6Ip54vv2QsDM5iLEGVa3Avfmb85e3r9
+	 KS0QyTWJtjI/zZ+rAOiHQQwxWsdF2GLrk7WdLDvkhyt32GHPKHdPx7mopCR+x4ERWo
+	 pvt+r80MjXjLxaecE9kGUZdpPaVRInwUASNt1wYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gavin Shan <gshan@redhat.com>,
-	David Hildenbrand <david@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Don Dutile <ddutile@redhat.com>,
-	Hugh Dickins <hughd@google.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	William Kucharski <william.kucharski@oracle.com>,
-	Zhenyu Zhang <zhenyzha@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 074/121] mm/filemap: make MAX_PAGECACHE_ORDER acceptable to xarray
-Date: Tue, 16 Jul 2024 17:32:16 +0200
-Message-ID: <20240716152754.175653443@linuxfoundation.org>
+	Yoonho Shin <yoonho.shin@samsung.com>,
+	Hobin Woo <hobin.woo@samsung.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 075/121] ksmbd: discard write access to the directory open
+Date: Tue, 16 Jul 2024 17:32:17 +0200
+Message-ID: <20240716152754.214684943@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152751.312512071@linuxfoundation.org>
 References: <20240716152751.312512071@linuxfoundation.org>
@@ -59,261 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gavin Shan <gshan@redhat.com>
+From: Hobin Woo <hobin.woo@samsung.com>
 
-commit 099d90642a711caae377f53309abfe27e8724a8b upstream.
+commit e2e33caa5dc2eae7bddf88b22ce11ec3d760e5cd upstream.
 
-Patch series "mm/filemap: Limit page cache size to that supported by
-xarray", v2.
+may_open() does not allow a directory to be opened with the write access.
+However, some writing flags set by client result in adding write access
+on server, making ksmbd incompatible with FUSE file system. Simply, let's
+discard the write access when opening a directory.
 
-Currently, xarray can't support arbitrary page cache size.  More details
-can be found from the WARN_ON() statement in xas_split_alloc().  In our
-test whose code is attached below, we hit the WARN_ON() on ARM64 system
-where the base page size is 64KB and huge page size is 512MB.  The issue
-was reported long time ago and some discussions on it can be found here
-[1].
-
-[1] https://www.spinics.net/lists/linux-xfs/msg75404.html
-
-In order to fix the issue, we need to adjust MAX_PAGECACHE_ORDER to one
-supported by xarray and avoid PMD-sized page cache if needed.  The code
-changes are suggested by David Hildenbrand.
-
-PATCH[1] adjusts MAX_PAGECACHE_ORDER to that supported by xarray
-PATCH[2-3] avoids PMD-sized page cache in the synchronous readahead path
-PATCH[4] avoids PMD-sized page cache for shmem files if needed
-
-Test program
-============
-# cat test.c
-#define _GNU_SOURCE
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <sys/syscall.h>
-#include <sys/mman.h>
-
-#define TEST_XFS_FILENAME	"/tmp/data"
-#define TEST_SHMEM_FILENAME	"/dev/shm/data"
-#define TEST_MEM_SIZE		0x20000000
-
-int main(int argc, char **argv)
-{
-	const char *filename;
-	int fd = 0;
-	void *buf = (void *)-1, *p;
-	int pgsize = getpagesize();
-	int ret;
-
-	if (pgsize != 0x10000) {
-		fprintf(stderr, "64KB base page size is required\n");
-		return -EPERM;
-	}
-
-	system("echo force > /sys/kernel/mm/transparent_hugepage/shmem_enabled");
-	system("rm -fr /tmp/data");
-	system("rm -fr /dev/shm/data");
-	system("echo 1 > /proc/sys/vm/drop_caches");
-
-	/* Open xfs or shmem file */
-	filename = TEST_XFS_FILENAME;
-	if (argc > 1 && !strcmp(argv[1], "shmem"))
-		filename = TEST_SHMEM_FILENAME;
-
-	fd = open(filename, O_CREAT | O_RDWR | O_TRUNC);
-	if (fd < 0) {
-		fprintf(stderr, "Unable to open <%s>\n", filename);
-		return -EIO;
-	}
-
-	/* Extend file size */
-	ret = ftruncate(fd, TEST_MEM_SIZE);
-	if (ret) {
-		fprintf(stderr, "Error %d to ftruncate()\n", ret);
-		goto cleanup;
-	}
-
-	/* Create VMA */
-	buf = mmap(NULL, TEST_MEM_SIZE,
-		   PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-	if (buf == (void *)-1) {
-		fprintf(stderr, "Unable to mmap <%s>\n", filename);
-		goto cleanup;
-	}
-
-	fprintf(stdout, "mapped buffer at 0x%p\n", buf);
-	ret = madvise(buf, TEST_MEM_SIZE, MADV_HUGEPAGE);
-        if (ret) {
-		fprintf(stderr, "Unable to madvise(MADV_HUGEPAGE)\n");
-		goto cleanup;
-	}
-
-	/* Populate VMA */
-	ret = madvise(buf, TEST_MEM_SIZE, MADV_POPULATE_WRITE);
-	if (ret) {
-		fprintf(stderr, "Error %d to madvise(MADV_POPULATE_WRITE)\n", ret);
-		goto cleanup;
-	}
-
-	/* Punch the file to enforce xarray split */
-	ret = fallocate(fd, FALLOC_FL_KEEP_SIZE | FALLOC_FL_PUNCH_HOLE,
-        		TEST_MEM_SIZE - pgsize, pgsize);
-	if (ret)
-		fprintf(stderr, "Error %d to fallocate()\n", ret);
-
-cleanup:
-	if (buf != (void *)-1)
-		munmap(buf, TEST_MEM_SIZE);
-	if (fd > 0)
-		close(fd);
-
-	return 0;
-}
-
-# gcc test.c -o test
-# cat /proc/1/smaps | grep KernelPageSize | head -n 1
-KernelPageSize:       64 kB
-# ./test shmem
-   :
+list_add corruption. next is NULL.
 ------------[ cut here ]------------
-WARNING: CPU: 17 PID: 5253 at lib/xarray.c:1025 xas_split_alloc+0xf8/0x128
-Modules linked in: nft_fib_inet nft_fib_ipv4 nft_fib_ipv6 nft_fib  \
-nft_reject_inet nf_reject_ipv4 nf_reject_ipv6 nft_reject nft_ct    \
-nft_chain_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4    \
-ip_set nf_tables rfkill nfnetlink vfat fat virtio_balloon          \
-drm fuse xfs libcrc32c crct10dif_ce ghash_ce sha2_ce sha256_arm64  \
-virtio_net sha1_ce net_failover failover virtio_console virtio_blk \
-dimlib virtio_mmio
-CPU: 17 PID: 5253 Comm: test Kdump: loaded Tainted: G W 6.10.0-rc5-gavin+ #12
-Hardware name: QEMU KVM Virtual Machine, BIOS edk2-20240524-1.el9 05/24/2024
-pstate: 83400005 (Nzcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
-pc : xas_split_alloc+0xf8/0x128
-lr : split_huge_page_to_list_to_order+0x1c4/0x720
-sp : ffff80008a92f5b0
-x29: ffff80008a92f5b0 x28: ffff80008a92f610 x27: ffff80008a92f728
-x26: 0000000000000cc0 x25: 000000000000000d x24: ffff0000cf00c858
-x23: ffff80008a92f610 x22: ffffffdfc0600000 x21: 0000000000000000
-x20: 0000000000000000 x19: ffffffdfc0600000 x18: 0000000000000000
-x17: 0000000000000000 x16: 0000018000000000 x15: 3374004000000000
-x14: 0000e00000000000 x13: 0000000000002000 x12: 0000000000000020
-x11: 3374000000000000 x10: 3374e1c0ffff6000 x9 : ffffb463a84c681c
-x8 : 0000000000000003 x7 : 0000000000000000 x6 : ffff00011c976ce0
-x5 : ffffb463aa47e378 x4 : 0000000000000000 x3 : 0000000000000cc0
-x2 : 000000000000000d x1 : 000000000000000c x0 : 0000000000000000
+kernel BUG at lib/list_debug.c:26!
+pc : __list_add_valid+0x88/0xbc
+lr : __list_add_valid+0x88/0xbc
 Call trace:
- xas_split_alloc+0xf8/0x128
- split_huge_page_to_list_to_order+0x1c4/0x720
- truncate_inode_partial_folio+0xdc/0x160
- shmem_undo_range+0x2bc/0x6a8
- shmem_fallocate+0x134/0x430
- vfs_fallocate+0x124/0x2e8
- ksys_fallocate+0x4c/0xa0
- __arm64_sys_fallocate+0x24/0x38
- invoke_syscall.constprop.0+0x7c/0xd8
- do_el0_svc+0xb4/0xd0
- el0_svc+0x44/0x1d8
- el0t_64_sync_handler+0x134/0x150
- el0t_64_sync+0x17c/0x180
+__list_add_valid+0x88/0xbc
+fuse_finish_open+0x11c/0x170
+fuse_open_common+0x284/0x5e8
+fuse_dir_open+0x14/0x24
+do_dentry_open+0x2a4/0x4e0
+dentry_open+0x50/0x80
+smb2_open+0xbe4/0x15a4
+handle_ksmbd_work+0x478/0x5ec
+process_one_work+0x1b4/0x448
+worker_thread+0x25c/0x430
+kthread+0x104/0x1d4
+ret_from_fork+0x10/0x20
 
-
-This patch (of 4):
-
-The largest page cache order can be HPAGE_PMD_ORDER (13) on ARM64 with
-64KB base page size.  The xarray entry with this order can't be split as
-the following error messages indicate.
-
-------------[ cut here ]------------
-WARNING: CPU: 35 PID: 7484 at lib/xarray.c:1025 xas_split_alloc+0xf8/0x128
-Modules linked in: nft_fib_inet nft_fib_ipv4 nft_fib_ipv6 nft_fib  \
-nft_reject_inet nf_reject_ipv4 nf_reject_ipv6 nft_reject nft_ct    \
-nft_chain_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4    \
-ip_set rfkill nf_tables nfnetlink vfat fat virtio_balloon drm      \
-fuse xfs libcrc32c crct10dif_ce ghash_ce sha2_ce sha256_arm64      \
-sha1_ce virtio_net net_failover virtio_console virtio_blk failover \
-dimlib virtio_mmio
-CPU: 35 PID: 7484 Comm: test Kdump: loaded Tainted: G W 6.10.0-rc5-gavin+ #9
-Hardware name: QEMU KVM Virtual Machine, BIOS edk2-20240524-1.el9 05/24/2024
-pstate: 83400005 (Nzcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
-pc : xas_split_alloc+0xf8/0x128
-lr : split_huge_page_to_list_to_order+0x1c4/0x720
-sp : ffff800087a4f6c0
-x29: ffff800087a4f6c0 x28: ffff800087a4f720 x27: 000000001fffffff
-x26: 0000000000000c40 x25: 000000000000000d x24: ffff00010625b858
-x23: ffff800087a4f720 x22: ffffffdfc0780000 x21: 0000000000000000
-x20: 0000000000000000 x19: ffffffdfc0780000 x18: 000000001ff40000
-x17: 00000000ffffffff x16: 0000018000000000 x15: 51ec004000000000
-x14: 0000e00000000000 x13: 0000000000002000 x12: 0000000000000020
-x11: 51ec000000000000 x10: 51ece1c0ffff8000 x9 : ffffbeb961a44d28
-x8 : 0000000000000003 x7 : ffffffdfc0456420 x6 : ffff0000e1aa6eb8
-x5 : 20bf08b4fe778fca x4 : ffffffdfc0456420 x3 : 0000000000000c40
-x2 : 000000000000000d x1 : 000000000000000c x0 : 0000000000000000
-Call trace:
- xas_split_alloc+0xf8/0x128
- split_huge_page_to_list_to_order+0x1c4/0x720
- truncate_inode_partial_folio+0xdc/0x160
- truncate_inode_pages_range+0x1b4/0x4a8
- truncate_pagecache_range+0x84/0xa0
- xfs_flush_unmap_range+0x70/0x90 [xfs]
- xfs_file_fallocate+0xfc/0x4d8 [xfs]
- vfs_fallocate+0x124/0x2e8
- ksys_fallocate+0x4c/0xa0
- __arm64_sys_fallocate+0x24/0x38
- invoke_syscall.constprop.0+0x7c/0xd8
- do_el0_svc+0xb4/0xd0
- el0_svc+0x44/0x1d8
- el0t_64_sync_handler+0x134/0x150
- el0t_64_sync+0x17c/0x180
-
-Fix it by decreasing MAX_PAGECACHE_ORDER to the largest supported order
-by xarray. For this specific case, MAX_PAGECACHE_ORDER is dropped from
-13 to 11 when CONFIG_BASE_SMALL is disabled.
-
-Link: https://lkml.kernel.org/r/20240627003953.1262512-1-gshan@redhat.com
-Link: https://lkml.kernel.org/r/20240627003953.1262512-2-gshan@redhat.com
-Fixes: 793917d997df ("mm/readahead: Add large folio readahead")
-Signed-off-by: Gavin Shan <gshan@redhat.com>
-Suggested-by: David Hildenbrand <david@redhat.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Darrick J. Wong <djwong@kernel.org>
-Cc: Don Dutile <ddutile@redhat.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: William Kucharski <william.kucharski@oracle.com>
-Cc: Zhenyu Zhang <zhenyzha@redhat.com>
-Cc: <stable@vger.kernel.org>	[5.18+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Yoonho Shin <yoonho.shin@samsung.com>
+Signed-off-by: Hobin Woo <hobin.woo@samsung.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/pagemap.h |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/smb/server/smb2pdu.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/include/linux/pagemap.h
-+++ b/include/linux/pagemap.h
-@@ -335,11 +335,18 @@ static inline void mapping_set_gfp_mask(
-  * a good order (that's 1MB if you're using 4kB pages)
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2051,15 +2051,22 @@ out_err1:
+  * @access:		file access flags
+  * @disposition:	file disposition flags
+  * @may_flags:		set with MAY_ flags
++ * @is_dir:		is creating open flags for directory
+  *
+  * Return:      file open flags
   */
- #ifdef CONFIG_TRANSPARENT_HUGEPAGE
--#define MAX_PAGECACHE_ORDER	HPAGE_PMD_ORDER
-+#define PREFERRED_MAX_PAGECACHE_ORDER	HPAGE_PMD_ORDER
- #else
--#define MAX_PAGECACHE_ORDER	8
-+#define PREFERRED_MAX_PAGECACHE_ORDER	8
- #endif
+ static int smb2_create_open_flags(bool file_present, __le32 access,
+ 				  __le32 disposition,
+-				  int *may_flags)
++				  int *may_flags,
++				  bool is_dir)
+ {
+ 	int oflags = O_NONBLOCK | O_LARGEFILE;
  
-+/*
-+ * xas_split_alloc() does not support arbitrary orders. This implies no
-+ * 512MB THP on ARM64 with 64KB base page size.
-+ */
-+#define MAX_XAS_ORDER		(XA_CHUNK_SHIFT * 2 - 1)
-+#define MAX_PAGECACHE_ORDER	min(MAX_XAS_ORDER, PREFERRED_MAX_PAGECACHE_ORDER)
++	if (is_dir) {
++		access &= ~FILE_WRITE_DESIRE_ACCESS_LE;
++		ksmbd_debug(SMB, "Discard write access to a directory\n");
++	}
 +
- /**
-  * mapping_set_large_folios() - Indicate the file supports large folios.
-  * @mapping: The file.
+ 	if (access & FILE_READ_DESIRED_ACCESS_LE &&
+ 	    access & FILE_WRITE_DESIRE_ACCESS_LE) {
+ 		oflags |= O_RDWR;
+@@ -3167,7 +3174,9 @@ int smb2_open(struct ksmbd_work *work)
+ 
+ 	open_flags = smb2_create_open_flags(file_present, daccess,
+ 					    req->CreateDisposition,
+-					    &may_flags);
++					    &may_flags,
++		req->CreateOptions & FILE_DIRECTORY_FILE_LE ||
++		(file_present && S_ISDIR(d_inode(path.dentry)->i_mode)));
+ 
+ 	if (!test_tree_conn_flag(tcon, KSMBD_TREE_CONN_FLAG_WRITABLE)) {
+ 		if (open_flags & (O_CREAT | O_TRUNC)) {
 
 
