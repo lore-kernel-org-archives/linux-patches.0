@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B183CD53B;
-	Tue, 16 Jul 2024 15:35:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CCA3D53B;
+	Tue, 16 Jul 2024 15:35:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144121; cv=none; b=Y3QMKvvatvkn3SdmOJhfiAr/wUIeEQYTcgHBwsfrtrYiWTxHPG1HPlhIyUvgnZfcH+dzZk32yVfLBxZ0B+KdJt+0+Mx1ioxoZJJSj9fd/AiT1KXtxQ7o9owIh62zDwHILJ/LyHQzaAbK5z+iC/gjlZ7jO6ep1fi8J+QliLCP3pI=
+	t=1721144124; cv=none; b=iZjRiZWz3UbgE10F8yJrjV4kWu0ws2sVn9P/4duYhKQq/CGH34AQUyPSK7ED0gFhvjMyuip8rnAi68pycDb2XjBg/OzURkkR8DV09NZL9g85MCoTKOMYIK/O78Tlgh2ub7vlCXx53oFHBUy+4B21ieMxAfhm380ZB+Ka6JHva8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144121; c=relaxed/simple;
-	bh=CGRdCNdYWrBZDKEQthtaKPzVdshCAlWJo29KmEZcwj8=;
+	s=arc-20240116; t=1721144124; c=relaxed/simple;
+	bh=OFnpiupZ5X/iTswAnGvBybMmRJjQz1ac4Xv8ntbSieI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZhF/Ujs8gNAJKwnCYiIHaVMhG5GosIKAeeFvJhRtDUuDJmkA5UIPWSmIN9cIfH6/AA3654J/QYFw7hqJH4hddY0Q8taYpTOfllAIoEuClN4AjBXLSGh7Qos5IOwX3UlRpLW4BTO2BaAQEc34kHuT+YPYIp1zB34Fi/mckXvmsNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xo7kon82; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dl97I7waa7zT6pA1pzS6vt3OECbDsH6dJVN7FHEb24tvpES0DN8GY54S76JFz1RSfw8XHpUkayPN+LE0ISSQHoAYYPHlKeUvXOK0skWh/Qb8LnFC6nbvYjDNytBxaF7LsE8tEvF2B6MgGheNljr7OjZIa8JbBOtsz5DaNHIIoDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2aS3Sk8b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xo7kon82"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E257C116B1;
-	Tue, 16 Jul 2024 15:35:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2aS3Sk8b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D19C116B1;
+	Tue, 16 Jul 2024 15:35:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144121;
-	bh=CGRdCNdYWrBZDKEQthtaKPzVdshCAlWJo29KmEZcwj8=;
+	s=korg; t=1721144124;
+	bh=OFnpiupZ5X/iTswAnGvBybMmRJjQz1ac4Xv8ntbSieI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xo7kon82x31UQaAz9AlPSzKwC8TRTDy99ig0q3CVxM8sYiF7FBgTEFh6ILfjBg3T9
-	 dVuEsN09zSiiFHEzTniNeAEyK/xNddMRkUVab3dlF+BHxyLfcYZlEtdC2/+HGpuVPE
-	 IAUsvOUqb6I5Y0klayQanoRamR/PY1E408EUhTX4=
+	b=2aS3Sk8bss0y6iReF+aJ6N4eYf0Kqr20yKJZ+gJMc0VdxeXrlILGalLb+s49qY0P/
+	 7vaIAPCsLfpXvkk+2w2XLjATeHx9rGnTPo67EJcEGVv+P2XPZ9ngrBaogS3xwtHH2P
+	 8RhG2QjI6E3wR3hLuV0U7r4pWjZ1yzu7jTjTWnF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jan Kara <jack@suse.cz>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 4.19 34/66] fsnotify: Do not generate events for O_PATH file descriptors
-Date: Tue, 16 Jul 2024 17:31:09 +0200
-Message-ID: <20240716152739.469038370@linuxfoundation.org>
+	Zach OKeefe <zokeefe@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.19 35/66] Revert "mm/writeback: fix possible divide-by-zero in wb_dirty_limits(), again"
+Date: Tue, 16 Jul 2024 17:31:10 +0200
+Message-ID: <20240716152739.507012217@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152738.161055634@linuxfoundation.org>
 References: <20240716152738.161055634@linuxfoundation.org>
@@ -53,42 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Jan Kara <jack@suse.cz>
 
-commit 702eb71fd6501b3566283f8c96d7ccc6ddd662e9 upstream.
+commit 30139c702048f1097342a31302cbd3d478f50c63 upstream.
 
-Currently we will not generate FS_OPEN events for O_PATH file
-descriptors but we will generate FS_CLOSE events for them. This is
-asymmetry is confusing. Arguably no fsnotify events should be generated
-for O_PATH file descriptors as they cannot be used to access or modify
-file content, they are just convenient handles to file objects like
-paths. So fix the asymmetry by stopping to generate FS_CLOSE for O_PATH
-file descriptors.
+Patch series "mm: Avoid possible overflows in dirty throttling".
 
-Cc: <stable@vger.kernel.org>
+Dirty throttling logic assumes dirty limits in page units fit into
+32-bits.  This patch series makes sure this is true (see patch 2/2 for
+more details).
+
+
+This patch (of 2):
+
+This reverts commit 9319b647902cbd5cc884ac08a8a6d54ce111fc78.
+
+The commit is broken in several ways.  Firstly, the removed (u64) cast
+from the multiplication will introduce a multiplication overflow on 32-bit
+archs if wb_thresh * bg_thresh >= 1<<32 (which is actually common - the
+default settings with 4GB of RAM will trigger this).  Secondly, the
+div64_u64() is unnecessarily expensive on 32-bit archs.  We have
+div64_ul() in case we want to be safe & cheap.  Thirdly, if dirty
+thresholds are larger than 1<<32 pages, then dirty balancing is going to
+blow up in many other spectacular ways anyway so trying to fix one
+possible overflow is just moot.
+
+Link: https://lkml.kernel.org/r/20240621144017.30993-1-jack@suse.cz
+Link: https://lkml.kernel.org/r/20240621144246.11148-1-jack@suse.cz
+Fixes: 9319b647902c ("mm/writeback: fix possible divide-by-zero in wb_dirty_limits(), again")
 Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20240617162303.1596-1-jack@suse.cz
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Reviewed-By: Zach O'Keefe <zokeefe@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/fsnotify.h |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ mm/page-writeback.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/fsnotify.h
-+++ b/include/linux/fsnotify.h
-@@ -34,7 +34,13 @@ static inline int fsnotify_perm(struct f
- 	__u32 fsnotify_mask = 0;
- 	int ret;
+--- a/mm/page-writeback.c
++++ b/mm/page-writeback.c
+@@ -1529,7 +1529,7 @@ static inline void wb_dirty_limits(struc
+ 	 */
+ 	dtc->wb_thresh = __wb_calc_thresh(dtc);
+ 	dtc->wb_bg_thresh = dtc->thresh ?
+-		div64_u64(dtc->wb_thresh * dtc->bg_thresh, dtc->thresh) : 0;
++		div_u64((u64)dtc->wb_thresh * dtc->bg_thresh, dtc->thresh) : 0;
  
--	if (file->f_mode & FMODE_NONOTIFY)
-+	/*
-+	 * FMODE_NONOTIFY are fds generated by fanotify itself which should not
-+	 * generate new events. We also don't want to generate events for
-+	 * FMODE_PATH fds (involves open & close events) as they are just
-+	 * handle creation / destruction events and not "real" file events.
-+	 */
-+	if (file->f_mode & (FMODE_NONOTIFY | FMODE_PATH))
- 		return 0;
- 	if (!(mask & (MAY_READ | MAY_OPEN)))
- 		return 0;
+ 	/*
+ 	 * In order to avoid the stacked BDI deadlock we need
 
 
