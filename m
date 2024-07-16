@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F4E1DA4D;
-	Tue, 16 Jul 2024 15:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 320D11DA4D;
+	Tue, 16 Jul 2024 15:59:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145585; cv=none; b=SsJQ1lDqegUJROM9CNGDRotVNX6FvdUNno3waueK0uN5gdEUAoILh2pd+upGzgyxzrcSCfFQlfekk8mMHUH+VJmtpggLoHw3+4i+mQsgBbM2qLIoDWd9t5zTxyXyjxwaMW56gPwq3JMqC0UWzlhNOXXvEwUp0nO8PUyUPefefpk=
+	t=1721145588; cv=none; b=rQEA9Ikt4oSxi6AKWZHi+UTOJpnSCc3tlOt1G4l3/lVthVH5oEBKc+K6RE5oJJy7AIPqzDQAtm53nRgKg4g9c4TPFE7rlwfNlu5p8i76q4+0/CikyuH0mG+4UPsqmtsS0N/pOWgGku9y+sZ5HdV/ECeCfrsG+pbH6MwCsm4oQgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145585; c=relaxed/simple;
-	bh=CvfoAx5QJxQ1U221SEUG9wMaYqcmE0w4nGuwPJtdJEo=;
+	s=arc-20240116; t=1721145588; c=relaxed/simple;
+	bh=8+w+Resj0h/jsaFtV7o68LtcF4xxU5Llk7IU/Qr8GVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AbrSF+6O+aJuNd1MB3Udb0eGLoG5fSX1f4otaRXWLcVwhNwdiJRbo8sxLVgDEPWriLqcu7LMU6F9DEmxTrRuWUTg/S4bHMTznHq84M6e1YuvcLky2XhUhVE6ZH3W7/4zsVqzp2AWTO7P7Ac1XOZ2E9JyVUAlqFjqU4WHY2j2yYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jL8y5naj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TTmpTD6W21bLEd1/3dF5hEa1aklrox9tn3gHslVtJ5pyPmAupSQ30kTTxrZllVCLUKkuFcN/6vSwKHcrCwvsNFeAsL4PkMITuQC4rMqKAnOA0ZDf7YgcXO73CUFXj22wKfNcn+rXGEjiuA7//YV77uJFmRQfsNJzkM3UYLU2fAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgevCifX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jL8y5naj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B13D1C116B1;
-	Tue, 16 Jul 2024 15:59:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgevCifX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A33D4C4AF0D;
+	Tue, 16 Jul 2024 15:59:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145585;
-	bh=CvfoAx5QJxQ1U221SEUG9wMaYqcmE0w4nGuwPJtdJEo=;
+	s=korg; t=1721145588;
+	bh=8+w+Resj0h/jsaFtV7o68LtcF4xxU5Llk7IU/Qr8GVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jL8y5najUkohtqdbP5+UAR3Hndl4DC+0XVDdQ/ZK60891xd7Iy8IzdeMF6SFOuVyS
-	 RPQEPWx80VlsMqBYWn3mMTug4U45xt8L2GUcDqfXot5Sf7dciWaQQlcY+ViqTAd+1U
-	 NI9G1Vlj06URHKUU8t8Ud2qJcgMX/qzYOB6986Fs=
+	b=tgevCifXZO7bOUjNbqOafrpcJBk2LXZ5Ll3OGkJmzDGiiYjJoMenz8DGoyWf5nv4t
+	 fgEyu7KF8WZQWybdot7Dp02/bVygu6Mqg4FX6aXCGbbdIHIfsTBAZ/lOSiTXSBftlL
+	 glYp5U14/gUO/GTOGedOX5Z/Ql7PkpLBSFiqqbus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neal Cardwell <ncardwell@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Yuchung Cheng <ycheng@google.com>,
-	Kevin Yang <yyd@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pedro Pinto <xten@osec.io>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Hyunwoo Kim <v4bel@theori.io>,
+	Wongi Lee <qwerty@theori.io>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 018/121] tcp: fix incorrect undo caused by DSACK of TLP retransmit
-Date: Tue, 16 Jul 2024 17:31:20 +0200
-Message-ID: <20240716152752.021891068@linuxfoundation.org>
+Subject: [PATCH 6.6 019/121] bpf: Fix too early release of tcx_entry
+Date: Tue, 16 Jul 2024 17:31:21 +0200
+Message-ID: <20240716152752.059767166@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152751.312512071@linuxfoundation.org>
 References: <20240716152751.312512071@linuxfoundation.org>
@@ -54,105 +54,179 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neal Cardwell <ncardwell@google.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 0ec986ed7bab6801faed1440e8839dcc710331ff ]
+[ Upstream commit 1cb6f0bae50441f4b4b32a28315853b279c7404e ]
 
-Loss recovery undo_retrans bookkeeping had a long-standing bug where a
-DSACK from a spurious TLP retransmit packet could cause an erroneous
-undo of a fast recovery or RTO recovery that repaired a single
-really-lost packet (in a sequence range outside that of the TLP
-retransmit). Basically, because the loss recovery state machine didn't
-account for the fact that it sent a TLP retransmit, the DSACK for the
-TLP retransmit could erroneously be implicitly be interpreted as
-corresponding to the normal fast recovery or RTO recovery retransmit
-that plugged a real hole, thus resulting in an improper undo.
+Pedro Pinto and later independently also Hyunwoo Kim and Wongi Lee reported
+an issue that the tcx_entry can be released too early leading to a use
+after free (UAF) when an active old-style ingress or clsact qdisc with a
+shared tc block is later replaced by another ingress or clsact instance.
 
-For example, consider the following buggy scenario where there is a
-real packet loss but the congestion control response is improperly
-undone because of this bug:
+Essentially, the sequence to trigger the UAF (one example) can be as follows:
 
-+ send packets P1, P2, P3, P4
-+ P1 is really lost
-+ send TLP retransmit of P4
-+ receive SACK for original P2, P3, P4
-+ enter fast recovery, fast-retransmit P1, increment undo_retrans to 1
-+ receive DSACK for TLP P4, decrement undo_retrans to 0, undo (bug!)
-+ receive cumulative ACK for P1-P4 (fast retransmit plugged real hole)
+  1. A network namespace is created
+  2. An ingress qdisc is created. This allocates a tcx_entry, and
+     &tcx_entry->miniq is stored in the qdisc's miniqp->p_miniq. At the
+     same time, a tcf block with index 1 is created.
+  3. chain0 is attached to the tcf block. chain0 must be connected to
+     the block linked to the ingress qdisc to later reach the function
+     tcf_chain0_head_change_cb_del() which triggers the UAF.
+  4. Create and graft a clsact qdisc. This causes the ingress qdisc
+     created in step 1 to be removed, thus freeing the previously linked
+     tcx_entry:
 
-The fix: when we initialize undo machinery in tcp_init_undo(), if
-there is a TLP retransmit in flight, then increment tp->undo_retrans
-so that we make sure that we receive a DSACK corresponding to the TLP
-retransmit, as well as DSACKs for all later normal retransmits, before
-triggering a loss recovery undo. Note that we also have to move the
-line that clears tp->tlp_high_seq for RTO recovery, so that upon RTO
-we remember the tp->tlp_high_seq value until tcp_init_undo() and clear
-it only afterward.
+     rtnetlink_rcv_msg()
+       => tc_modify_qdisc()
+         => qdisc_create()
+           => clsact_init() [a]
+         => qdisc_graft()
+           => qdisc_destroy()
+             => __qdisc_destroy()
+               => ingress_destroy() [b]
+                 => tcx_entry_free()
+                   => kfree_rcu() // tcx_entry freed
 
-Also note that the bug dates back to the original 2013 TLP
-implementation, commit 6ba8a3b19e76 ("tcp: Tail loss probe (TLP)").
+  5. Finally, the network namespace is closed. This registers the
+     cleanup_net worker, and during the process of releasing the
+     remaining clsact qdisc, it accesses the tcx_entry that was
+     already freed in step 4, causing the UAF to occur:
 
-However, this patch will only compile and work correctly with kernels
-that have tp->tlp_retrans, which was added only in v5.8 in 2020 in
-commit 76be93fc0702 ("tcp: allow at most one TLP probe per flight").
-So we associate this fix with that later commit.
+     cleanup_net()
+       => ops_exit_list()
+         => default_device_exit_batch()
+           => unregister_netdevice_many()
+             => unregister_netdevice_many_notify()
+               => dev_shutdown()
+                 => qdisc_put()
+                   => clsact_destroy() [c]
+                     => tcf_block_put_ext()
+                       => tcf_chain0_head_change_cb_del()
+                         => tcf_chain_head_change_item()
+                           => clsact_chain_head_change()
+                             => mini_qdisc_pair_swap() // UAF
 
-Fixes: 76be93fc0702 ("tcp: allow at most one TLP probe per flight")
-Signed-off-by: Neal Cardwell <ncardwell@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Cc: Yuchung Cheng <ycheng@google.com>
-Cc: Kevin Yang <yyd@google.com>
-Link: https://patch.msgid.link/20240703171246.1739561-1-ncardwell.sw@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+There are also other variants, the gist is to add an ingress (or clsact)
+qdisc with a specific shared block, then to replace that qdisc, waiting
+for the tcx_entry kfree_rcu() to be executed and subsequently accessing
+the current active qdisc's miniq one way or another.
+
+The correct fix is to turn the miniq_active boolean into a counter. What
+can be observed, at step 2 above, the counter transitions from 0->1, at
+step [a] from 1->2 (in order for the miniq object to remain active during
+the replacement), then in [b] from 2->1 and finally [c] 1->0 with the
+eventual release. The reference counter in general ranges from [0,2] and
+it does not need to be atomic since all access to the counter is protected
+by the rtnl mutex. With this in place, there is no longer a UAF happening
+and the tcx_entry is freed at the correct time.
+
+Fixes: e420bed02507 ("bpf: Add fd-based tcx multi-prog infra with link support")
+Reported-by: Pedro Pinto <xten@osec.io>
+Co-developed-by: Pedro Pinto <xten@osec.io>
+Signed-off-by: Pedro Pinto <xten@osec.io>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Hyunwoo Kim <v4bel@theori.io>
+Cc: Wongi Lee <qwerty@theori.io>
+Cc: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://lore.kernel.org/r/20240708133130.11609-1-daniel@iogearbox.net
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 11 ++++++++++-
- net/ipv4/tcp_timer.c |  2 --
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ include/net/tcx.h       | 13 +++++++++----
+ net/sched/sch_ingress.c | 12 ++++++------
+ 2 files changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 2621c262f182a..b9133c0972d38 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -2106,8 +2106,16 @@ void tcp_clear_retrans(struct tcp_sock *tp)
- static inline void tcp_init_undo(struct tcp_sock *tp)
- {
- 	tp->undo_marker = tp->snd_una;
-+
- 	/* Retransmission still in flight may cause DSACKs later. */
--	tp->undo_retrans = tp->retrans_out ? : -1;
-+	/* First, account for regular retransmits in flight: */
-+	tp->undo_retrans = tp->retrans_out;
-+	/* Next, account for TLP retransmits in flight: */
-+	if (tp->tlp_high_seq && tp->tlp_retrans)
-+		tp->undo_retrans++;
-+	/* Finally, avoid 0, because undo_retrans==0 means "can undo now": */
-+	if (!tp->undo_retrans)
-+		tp->undo_retrans = -1;
+diff --git a/include/net/tcx.h b/include/net/tcx.h
+index 264f147953bae..a0f78fd5cb287 100644
+--- a/include/net/tcx.h
++++ b/include/net/tcx.h
+@@ -13,7 +13,7 @@ struct mini_Qdisc;
+ struct tcx_entry {
+ 	struct mini_Qdisc __rcu *miniq;
+ 	struct bpf_mprog_bundle bundle;
+-	bool miniq_active;
++	u32 miniq_active;
+ 	struct rcu_head rcu;
+ };
+ 
+@@ -129,11 +129,16 @@ static inline void tcx_skeys_dec(bool ingress)
+ 	tcx_dec();
  }
  
- static bool tcp_is_rack(const struct sock *sk)
-@@ -2186,6 +2194,7 @@ void tcp_enter_loss(struct sock *sk)
+-static inline void tcx_miniq_set_active(struct bpf_mprog_entry *entry,
+-					const bool active)
++static inline void tcx_miniq_inc(struct bpf_mprog_entry *entry)
+ {
+ 	ASSERT_RTNL();
+-	tcx_entry(entry)->miniq_active = active;
++	tcx_entry(entry)->miniq_active++;
++}
++
++static inline void tcx_miniq_dec(struct bpf_mprog_entry *entry)
++{
++	ASSERT_RTNL();
++	tcx_entry(entry)->miniq_active--;
+ }
  
- 	tcp_set_ca_state(sk, TCP_CA_Loss);
- 	tp->high_seq = tp->snd_nxt;
-+	tp->tlp_high_seq = 0;
- 	tcp_ecn_queue_cwr(tp);
+ static inline bool tcx_entry_is_active(struct bpf_mprog_entry *entry)
+diff --git a/net/sched/sch_ingress.c b/net/sched/sch_ingress.c
+index a463a63192c3c..8dde3548dc11c 100644
+--- a/net/sched/sch_ingress.c
++++ b/net/sched/sch_ingress.c
+@@ -91,7 +91,7 @@ static int ingress_init(struct Qdisc *sch, struct nlattr *opt,
+ 	entry = tcx_entry_fetch_or_create(dev, true, &created);
+ 	if (!entry)
+ 		return -ENOMEM;
+-	tcx_miniq_set_active(entry, true);
++	tcx_miniq_inc(entry);
+ 	mini_qdisc_pair_init(&q->miniqp, sch, &tcx_entry(entry)->miniq);
+ 	if (created)
+ 		tcx_entry_update(dev, entry, true);
+@@ -121,7 +121,7 @@ static void ingress_destroy(struct Qdisc *sch)
+ 	tcf_block_put_ext(q->block, sch, &q->block_info);
  
- 	/* F-RTO RFC5682 sec 3.1 step 1: retransmit SND.UNA if no previous
-diff --git a/net/ipv4/tcp_timer.c b/net/ipv4/tcp_timer.c
-index 984ab4a0421ed..185a73a2dde2e 100644
---- a/net/ipv4/tcp_timer.c
-+++ b/net/ipv4/tcp_timer.c
-@@ -509,8 +509,6 @@ void tcp_retransmit_timer(struct sock *sk)
- 	if (WARN_ON_ONCE(!skb))
- 		return;
+ 	if (entry) {
+-		tcx_miniq_set_active(entry, false);
++		tcx_miniq_dec(entry);
+ 		if (!tcx_entry_is_active(entry)) {
+ 			tcx_entry_update(dev, NULL, true);
+ 			tcx_entry_free(entry);
+@@ -256,7 +256,7 @@ static int clsact_init(struct Qdisc *sch, struct nlattr *opt,
+ 	entry = tcx_entry_fetch_or_create(dev, true, &created);
+ 	if (!entry)
+ 		return -ENOMEM;
+-	tcx_miniq_set_active(entry, true);
++	tcx_miniq_inc(entry);
+ 	mini_qdisc_pair_init(&q->miniqp_ingress, sch, &tcx_entry(entry)->miniq);
+ 	if (created)
+ 		tcx_entry_update(dev, entry, true);
+@@ -275,7 +275,7 @@ static int clsact_init(struct Qdisc *sch, struct nlattr *opt,
+ 	entry = tcx_entry_fetch_or_create(dev, false, &created);
+ 	if (!entry)
+ 		return -ENOMEM;
+-	tcx_miniq_set_active(entry, true);
++	tcx_miniq_inc(entry);
+ 	mini_qdisc_pair_init(&q->miniqp_egress, sch, &tcx_entry(entry)->miniq);
+ 	if (created)
+ 		tcx_entry_update(dev, entry, false);
+@@ -301,7 +301,7 @@ static void clsact_destroy(struct Qdisc *sch)
+ 	tcf_block_put_ext(q->egress_block, sch, &q->egress_block_info);
  
--	tp->tlp_high_seq = 0;
--
- 	if (!tp->snd_wnd && !sock_flag(sk, SOCK_DEAD) &&
- 	    !((1 << sk->sk_state) & (TCPF_SYN_SENT | TCPF_SYN_RECV))) {
- 		/* Receiver dastardly shrinks window. Our retransmits
+ 	if (ingress_entry) {
+-		tcx_miniq_set_active(ingress_entry, false);
++		tcx_miniq_dec(ingress_entry);
+ 		if (!tcx_entry_is_active(ingress_entry)) {
+ 			tcx_entry_update(dev, NULL, true);
+ 			tcx_entry_free(ingress_entry);
+@@ -309,7 +309,7 @@ static void clsact_destroy(struct Qdisc *sch)
+ 	}
+ 
+ 	if (egress_entry) {
+-		tcx_miniq_set_active(egress_entry, false);
++		tcx_miniq_dec(egress_entry);
+ 		if (!tcx_entry_is_active(egress_entry)) {
+ 			tcx_entry_update(dev, NULL, false);
+ 			tcx_entry_free(egress_entry);
 -- 
 2.43.0
 
