@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EE1C136643;
-	Tue, 16 Jul 2024 16:00:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E601178370;
+	Tue, 16 Jul 2024 16:00:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145640; cv=none; b=bzR4gReaWkhxSigACa2SlOPbtr7X0ZC4LGBCWmTrxsea7R2h7Agb2G5E7z/tsf1kYONjnwhyiogHSfuDxHCPcer29dX5VlfF8/3P3rkdeiNhYIVYi4whs5KroScMIk24lmK8VpRgx1hXRzh8s/u9N9L4fCm0vKeCEjqeonnoSec=
+	t=1721145643; cv=none; b=b7VzFt/N3GTlxn0NTqdm7B5mIQ2VJVOwIgaLZYwIbdKEGWjdnWX7W997apaPtTDUw8Fb28nJD0HplZZrnbnJJV3g6tRLkaUHg6WqyutahsrDGcjFsIcSpKKZN9ZfSsqX5/+NveElS9eByIPW9kd6RGIet+JcvyKQYHR3EB04IHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145640; c=relaxed/simple;
-	bh=B+NAmw4U3P59hYCSt38T1zVf9YadZUbK1jS6VrKabe4=;
+	s=arc-20240116; t=1721145643; c=relaxed/simple;
+	bh=jS9Hd6Zloh0rwzp4Qlbr6WV3KqDmmMCR8Ll6UDiUIqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qu6/uOMEXAxjZWYEukCpVbtnE94OlJ5jEPte1urVofQUVrflAen5m7IFBS9mRsOPBBHX7Zl8Yb7CEbFavuvFNKOefLBbZWVQeBqdCgs1iSlfBQ/12b3semaYQX4Fh1qvljqUG/gta4JUsuSkANEHsdqIBEOqtJMEwGkQ4Z4FzDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V/vCjK5s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g1FGaTVeR7Q6S4/tzGHYePMKjjb2f19GKu1UmmJkwM9hZTHputgu3kYcmyW/+NmJg9t4+1QPT8cW9977isFYpgcgZoF1tlqwV+jnvft7w4+wN2By8/0bLqmuAMqkU7pBBC+hmcYfEZoeBRPANqdt/FMam5CLAwws2TUFDektqfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K5tUuINq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V/vCjK5s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C25C4AF0B;
-	Tue, 16 Jul 2024 16:00:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K5tUuINq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA071C116B1;
+	Tue, 16 Jul 2024 16:00:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145640;
-	bh=B+NAmw4U3P59hYCSt38T1zVf9YadZUbK1jS6VrKabe4=;
+	s=korg; t=1721145643;
+	bh=jS9Hd6Zloh0rwzp4Qlbr6WV3KqDmmMCR8Ll6UDiUIqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V/vCjK5sZQ/2ULV0BoBeYwjalE5CMJereomeaYAph+Ax7gMjR28BFirsAX1IUVA/R
-	 3iZoUioQ3S9P/98D6Jp62sn7HBUli6pJ5SGPTCmxdyKH9bVbc1FJnewqVvKTqLrfpx
-	 7G+Kwvw78KHsEzXEx4HLdMOmE1DjYtOEGqI9IKMM=
+	b=K5tUuINq9BAWaSoQ587y3iBbJkasnZ77C+JNul+zKemzYC903knqCvk0/QMpEuL0e
+	 3j2YcpbR6sphmNeIXFrsMwyQPti6DhZYpOWro6bQD2mh1MyEsCT+oy1OcjAqKYxkD2
+	 edIu7rELd2jyFJOg3VtJ8/i7up7n57cIev/qyavs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lex Siegel <usiegl00@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Neil Brown <neilb@suse.de>,
-	Trond Myklebust <trondmy@kernel.org>,
-	Anna Schumaker <anna@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 035/121] net, sunrpc: Remap EPERM in case of connection failure in xs_tcp_setup_socket
-Date: Tue, 16 Jul 2024 17:31:37 +0200
-Message-ID: <20240716152752.673761373@linuxfoundation.org>
+Subject: [PATCH 6.6 036/121] s390: Mark psw in __load_psw_mask() as __unitialized
+Date: Tue, 16 Jul 2024 17:31:38 +0200
+Message-ID: <20240716152752.712646284@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152751.312512071@linuxfoundation.org>
 References: <20240716152751.312512071@linuxfoundation.org>
@@ -55,61 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Sven Schnelle <svens@linux.ibm.com>
 
-[ Upstream commit 626dfed5fa3bfb41e0dffd796032b555b69f9cde ]
+[ Upstream commit 7278a8fb8d032dfdc03d9b5d17e0bc451cdc1492 ]
 
-When using a BPF program on kernel_connect(), the call can return -EPERM. This
-causes xs_tcp_setup_socket() to loop forever, filling up the syslog and causing
-the kernel to potentially freeze up.
+Without __unitialized, the following code is generated when
+INIT_STACK_ALL_ZERO is enabled:
 
-Neil suggested:
+86: d7 0f f0 a0 f0 a0     xc      160(16,%r15), 160(%r15)
+8c: e3 40 f0 a0 00 24     stg     %r4, 160(%r15)
+92: c0 10 00 00 00 08     larl    %r1, 0xa2
+98: e3 10 f0 a8 00 24     stg     %r1, 168(%r15)
+9e: b2 b2 f0 a0           lpswe   160(%r15)
 
-  This will propagate -EPERM up into other layers which might not be ready
-  to handle it. It might be safer to map EPERM to an error we would be more
-  likely to expect from the network system - such as ECONNREFUSED or ENETDOWN.
+The xc is not adding any security because psw is fully initialized
+with the following instructions. Add __unitialized to the psw
+definitiation to avoid the superfluous clearing of psw.
 
-ECONNREFUSED as error seems reasonable. For programs setting a different error
-can be out of reach (see handling in 4fbac77d2d09) in particular on kernels
-which do not have f10d05966196 ("bpf: Make BPF_PROG_RUN_ARRAY return -err
-instead of allow boolean"), thus given that it is better to simply remap for
-consistent behavior. UDP does handle EPERM in xs_udp_send_request().
-
-Fixes: d74bad4e74ee ("bpf: Hooks for sys_connect")
-Fixes: 4fbac77d2d09 ("bpf: Hooks for sys_bind")
-Co-developed-by: Lex Siegel <usiegl00@gmail.com>
-Signed-off-by: Lex Siegel <usiegl00@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Neil Brown <neilb@suse.de>
-Cc: Trond Myklebust <trondmy@kernel.org>
-Cc: Anna Schumaker <anna@kernel.org>
-Link: https://github.com/cilium/cilium/issues/33395
-Link: https://lore.kernel.org/bpf/171374175513.12877.8993642908082014881@noble.neil.brown.name
-Link: https://patch.msgid.link/9069ec1d59e4b2129fc23433349fd5580ad43921.1720075070.git.daniel@iogearbox.net
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtsock.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/s390/include/asm/processor.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
-index c3007f3e16f8c..c1fe2a6ea7976 100644
---- a/net/sunrpc/xprtsock.c
-+++ b/net/sunrpc/xprtsock.c
-@@ -2422,6 +2422,13 @@ static void xs_tcp_setup_socket(struct work_struct *work)
- 		transport->srcport = 0;
- 		status = -EAGAIN;
- 		break;
-+	case -EPERM:
-+		/* Happens, for instance, if a BPF program is preventing
-+		 * the connect. Remap the error so upper layers can better
-+		 * deal with it.
-+		 */
-+		status = -ECONNREFUSED;
-+		fallthrough;
- 	case -EINVAL:
- 		/* Happens, for instance, if the user specified a link
- 		 * local IPv6 address without a scope-id.
+diff --git a/arch/s390/include/asm/processor.h b/arch/s390/include/asm/processor.h
+index dc17896a001a9..e7338ed540d8f 100644
+--- a/arch/s390/include/asm/processor.h
++++ b/arch/s390/include/asm/processor.h
+@@ -308,8 +308,8 @@ static inline void __load_psw(psw_t psw)
+  */
+ static __always_inline void __load_psw_mask(unsigned long mask)
+ {
++	psw_t psw __uninitialized;
+ 	unsigned long addr;
+-	psw_t psw;
+ 
+ 	psw.mask = mask;
+ 
 -- 
 2.43.0
 
