@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9ED1DDCE;
-	Tue, 16 Jul 2024 16:10:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E391DDCE;
+	Tue, 16 Jul 2024 16:10:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721146206; cv=none; b=XRCEOfidOBqLTBDm8xClmjiun37GvHasnG4ZuCSlwUBCYgB3wyc0VFBYCgOmDYH2Ffb+AXmgOZ7ECgRDVnPwhAkCu8BGbtoCGzVtwBUXoG9xPdJH3fVp1Fs+aKKsh8RU4uyZ2BHeVFbsJaYPmQT/Lcko4VuuJ+yvP17r0I+UmH4=
+	t=1721146209; cv=none; b=bX+w3/SfrX5mtoBuKCNbjk/iNgtV7R1mQqZUqh6e/I9FKX0tvRuay2l8iWTH4zORkNDttsf9piJLkIHlxIHRDX/t2YjPLILf6BordduzkoAzX8ow4Gxc8HP6wxzK0MjCnH+W9nbS+uCKUaA3WTcce0Ji8uvWoCaHAYybEP5w/WI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721146206; c=relaxed/simple;
-	bh=7pZP5nVweRrZhD6PKX73ar33On7SheMNVs4tzNQCQ/M=;
+	s=arc-20240116; t=1721146209; c=relaxed/simple;
+	bh=482s+RPCh22koZ0kXhVJ3nDa+mQPw3WvwoDB7zheM70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A2xYkmMGzN5CWoBDEnMvfFJ10cTj7YzE8CLGFwTu3fQzs/92yymUqPtGBa+IN2qbv0WjZdWHW3zqdQAHmV5MDswxQPCnbExL2GbQbhU0zhNw8kHt+krdjoOXXrrmn6+s5ru9BL3pCaLYCiqPqx0dsl3Hni1ZFKxTuTxYnhgdVi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1t7Wg1he; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UwPthF3PUTkzi0JATxjpNxYdzobnhXCJ6dh5VVFBnFNNCtGrzmCZVMhc54SVIh1BDkQTF8Wlzrl3SoNBbB6ShK+6Mhdqc+uFVKdFpSclj1X/qh0gR+DYBgObsaYlIe1sEVDyT70JngFHd0svMkAz8Taq9dN7peUoeCbsYWiOe4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U405r0qn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1t7Wg1he"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D675C116B1;
-	Tue, 16 Jul 2024 16:10:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U405r0qn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5545C116B1;
+	Tue, 16 Jul 2024 16:10:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721146206;
-	bh=7pZP5nVweRrZhD6PKX73ar33On7SheMNVs4tzNQCQ/M=;
+	s=korg; t=1721146209;
+	bh=482s+RPCh22koZ0kXhVJ3nDa+mQPw3WvwoDB7zheM70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1t7Wg1heTWSegUlcbYzRmLs37ZgTPUqYHr/CNEiQuQpbo64xl/si7Ipth4ktiIiPx
-	 SqhkgBkyNKoBLu0Wrhq0ieae13FxU+XP/yhno4BBUPlnG3PQ0zJSNRUl4/AlDLCFHe
-	 AgdWLT4n/cj+OAXYqkt3dA/3JpRdheoaAnJ2wOnM=
+	b=U405r0qnQtvW31SxfTaefBkyi+1FIrQk6daVts6A8df3gEyptzqMH/y4QFSLHJPUK
+	 MwtCc5abC5fVhSm/aSgtr4uZ5AkZOYTyEFibwJPPLafQwwus1Xum9H3cGuD3aqGtK8
+	 z3V5h3jAUqzUCynGC1CbkzqgpVdrut5fPpu3K9Qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Perches <joe@perches.com>,
-	Aleksander Jan Bajkowski <olek2@wp.pl>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jian Hui Lee <jianhui.lee@canonical.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 089/144] net: ethernet: lantiq_etop: fix double free in detach
-Date: Tue, 16 Jul 2024 17:32:38 +0200
-Message-ID: <20240716152755.963379160@linuxfoundation.org>
+Subject: [PATCH 5.15 090/144] net: ethernet: mtk-star-emac: set mac_managed_pm when probing
+Date: Tue, 16 Jul 2024 17:32:39 +0200
+Message-ID: <20240716152756.001623345@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
 References: <20240716152752.524497140@linuxfoundation.org>
@@ -53,41 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksander Jan Bajkowski <olek2@wp.pl>
+From: Jian Hui Lee <jianhui.lee@canonical.com>
 
-[ Upstream commit e1533b6319ab9c3a97dad314dd88b3783bc41b69 ]
+[ Upstream commit 8c6790b5c25dfac11b589cc37346bcf9e23ad468 ]
 
-The number of the currently released descriptor is never incremented
-which results in the same skb being released multiple times.
+The below commit introduced a warning message when phy state is not in
+the states: PHY_HALTED, PHY_READY, and PHY_UP.
+commit 744d23c71af3 ("net: phy: Warn about incorrect mdio_bus_phy_resume() state")
 
-Fixes: 504d4721ee8e ("MIPS: Lantiq: Add ethernet driver")
-Reported-by: Joe Perches <joe@perches.com>
-Closes: https://lore.kernel.org/all/fc1bf93d92bb5b2f99c6c62745507cc22f3a7b2d.camel@perches.com/
-Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20240708205826.5176-1-olek2@wp.pl
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+mtk-star-emac doesn't need mdiobus suspend/resume. To fix the warning
+message during resume, indicate the phy resume/suspend is managed by the
+mac when probing.
+
+Fixes: 744d23c71af3 ("net: phy: Warn about incorrect mdio_bus_phy_resume() state")
+Signed-off-by: Jian Hui Lee <jianhui.lee@canonical.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20240708065210.4178980-1-jianhui.lee@canonical.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/lantiq_etop.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_star_emac.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/ethernet/lantiq_etop.c b/drivers/net/ethernet/lantiq_etop.c
-index d9911b3b9172d..c5faeda30c0b4 100644
---- a/drivers/net/ethernet/lantiq_etop.c
-+++ b/drivers/net/ethernet/lantiq_etop.c
-@@ -213,9 +213,9 @@ ltq_etop_free_channel(struct net_device *dev, struct ltq_etop_chan *ch)
- 	if (ch->dma.irq)
- 		free_irq(ch->dma.irq, priv);
- 	if (IS_RX(ch->idx)) {
--		int desc;
-+		struct ltq_dma_channel *dma = &ch->dma;
+diff --git a/drivers/net/ethernet/mediatek/mtk_star_emac.c b/drivers/net/ethernet/mediatek/mtk_star_emac.c
+index 67f9e4415ae92..392648246d8f4 100644
+--- a/drivers/net/ethernet/mediatek/mtk_star_emac.c
++++ b/drivers/net/ethernet/mediatek/mtk_star_emac.c
+@@ -1446,6 +1446,7 @@ static int mtk_star_probe(struct platform_device *pdev)
+ {
+ 	struct device_node *of_node;
+ 	struct mtk_star_priv *priv;
++	struct phy_device *phydev;
+ 	struct net_device *ndev;
+ 	struct device *dev;
+ 	void __iomem *base;
+@@ -1552,6 +1553,12 @@ static int mtk_star_probe(struct platform_device *pdev)
  
--		for (desc = 0; desc < LTQ_DESC_NUM; desc++)
-+		for (dma->desc = 0; dma->desc < LTQ_DESC_NUM; dma->desc++)
- 			dev_kfree_skb_any(ch->skb[ch->dma.desc]);
- 	}
+ 	netif_napi_add(ndev, &priv->napi, mtk_star_poll, NAPI_POLL_WEIGHT);
+ 
++	phydev = of_phy_find_device(priv->phy_node);
++	if (phydev) {
++		phydev->mac_managed_pm = true;
++		put_device(&phydev->mdio.dev);
++	}
++
+ 	return devm_register_netdev(dev, ndev);
  }
+ 
 -- 
 2.43.0
 
