@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AFD21DDCE;
-	Tue, 16 Jul 2024 16:11:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85B001DDCE;
+	Tue, 16 Jul 2024 16:11:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721146293; cv=none; b=lTaabYcD5w0CazI9UyOOpyOUCNU9PMxNy1aVuZOYyelTNtgcMFkR5n66G/63n+s5WhCtDxQX3pBE0XLxlcR/UK6BN1qwwPsmjGKcLbfyKyEIzemwF3Silz3XIj/EYMNRRCslKPezdSdwC5oIgZGdmMo2Jc/UGL82y4T5Aga2KaE=
+	t=1721146296; cv=none; b=JXvcbkiuSa7NDFbvw15tsZwgniHe8Sit1FwO3a2mm8PKpbQ1fAHFLD/M3o2lRwDFeXUAtEYlFHcyJBF2pzKynX1hRWj9QgJ9UW12hnafQaqGAP1mKo7u8i6hCqr79vPZi0U1cWi0zxcQoqQa2lvOvIZ0SlmY+KjF+5ZWNJzcBus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721146293; c=relaxed/simple;
-	bh=If/QUJ+O9+wKutdIa8YeNSBjD50Ss8wmhecYzS093CI=;
+	s=arc-20240116; t=1721146296; c=relaxed/simple;
+	bh=EwRVU2qeSRoTz1ZZCVa2Jv8n2WZYLxFwkARYSWFHG3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X3s6tW1ulJS4Y7t4FWL79gEZfE1VIT57x5gEOInOSgMOMuuQD/cQsGVG5+A9HglFwqD1oiGxuSmcawrZgkpUqmp2MJbHeZXbhjAMf+14IBqqq0gclU1h3AjFR/Zp9wt77YIgKejlTzgA3AANLVpW9ZdL9UrmcRLfAzK3BiIcrc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BluJLdQo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iXjyv6Xuk221TIKHg8XJHk+mm4+mC3myaA3vETgPrprcX9meVtxpKNYyyKFWA2aldSZIqz0Dgp4HYHErgA/CmfO0NXsJfUc1pVZHHeDde9YpoIXiuJuu+62Kl48zlkwCul7fUKjvYdSFdc0j0ZyjlD1K9PTYwVBcqOc/9QINR0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ZqOTQdi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BluJLdQo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EF5CC116B1;
-	Tue, 16 Jul 2024 16:11:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ZqOTQdi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3B24C116B1;
+	Tue, 16 Jul 2024 16:11:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721146293;
-	bh=If/QUJ+O9+wKutdIa8YeNSBjD50Ss8wmhecYzS093CI=;
+	s=korg; t=1721146296;
+	bh=EwRVU2qeSRoTz1ZZCVa2Jv8n2WZYLxFwkARYSWFHG3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BluJLdQoG2nHHBDZNPK6ZstG7eXxS7pjyC0DybGGxRTqEx4E0Ub2WZH/Teqto2pDx
-	 X4Zw8QjTnbpP7vfeLEnRy0+DhYkp80c0/QNlG6g9/9iMatvVhqP5m4lui3e5yLIDQQ
-	 qj7vNBEJxo8oeV5/4QF5/I6offfZQzEtHExxWIT4=
+	b=2ZqOTQdixio6cG/XmO2QKaauhHRJI2aAz4puYQMFuEpBmZPOhD27T0Z0w/YR1NWTZ
+	 lwfVqZptf9VE6Iq8BnWfugCTENehcngUP7UzERhpJc+ZkY+Z43jGYrk5NRjVWpDlwf
+	 PjtyXfXzY22N9vJjiJhvAgv1Sy2ApcMeUMGxmg+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Joy Chakraborty <joychakr@google.com>,
 	Dan Carpenter <dan.carpenter@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 5.15 118/144] nvmem: rmem: Fix return value of rmem_read()
-Date: Tue, 16 Jul 2024 17:33:07 +0200
-Message-ID: <20240716152757.062093041@linuxfoundation.org>
+Subject: [PATCH 5.15 119/144] nvmem: meson-efuse: Fix return value of nvmem callbacks
+Date: Tue, 16 Jul 2024 17:33:08 +0200
+Message-ID: <20240716152757.099797279@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
 References: <20240716152752.524497140@linuxfoundation.org>
@@ -53,45 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Joy Chakraborty <joychakr@google.com>
 
-commit 28b008751aa295612318a0fbb2f22dd4f6a83139 upstream.
+commit 7a0a6d0a7c805f9380381f4deedffdf87b93f408 upstream.
 
-reg_read() callback registered with nvmem core expects 0 on success and
-a negative value on error but rmem_read() returns the number of bytes
-read which is treated as an error at the nvmem core.
+Read/write callbacks registered with nvmem core expect 0 to be returned
+on success and a negative value to be returned on failure.
 
-This does not break when rmem is accessed using sysfs via
-bin_attr_nvmem_read()/write() but causes an error when accessed from
-places like nvmem_access_with_keepouts(), etc.
+meson_efuse_read() and meson_efuse_write() call into
+meson_sm_call_read() and meson_sm_call_write() respectively which return
+the number of bytes read or written on success as per their api
+description.
 
-Change to return 0 on success and error in case
-memory_read_from_buffer() returns an error or -EIO if bytes read do not
-match what was requested.
+Fix to return error if meson_sm_call_read()/meson_sm_call_write()
+returns an error else return 0.
 
-Fixes: 5a3fa75a4d9c ("nvmem: Add driver to expose reserved memory as nvmem")
+Fixes: a29a63bdaf6f ("nvmem: meson-efuse: simplify read callback")
 Cc: stable@vger.kernel.org
 Signed-off-by: Joy Chakraborty <joychakr@google.com>
 Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20240628113704.13742-2-srinivas.kandagatla@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20240628113704.13742-3-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvmem/rmem.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/nvmem/meson-efuse.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/drivers/nvmem/rmem.c
-+++ b/drivers/nvmem/rmem.c
-@@ -46,7 +46,10 @@ static int rmem_read(void *context, unsi
+--- a/drivers/nvmem/meson-efuse.c
++++ b/drivers/nvmem/meson-efuse.c
+@@ -18,18 +18,24 @@ static int meson_efuse_read(void *contex
+ 			    void *val, size_t bytes)
+ {
+ 	struct meson_sm_firmware *fw = context;
++	int ret;
  
- 	memunmap(addr);
- 
--	return count;
-+	if (count < 0)
-+		return count;
+-	return meson_sm_call_read(fw, (u8 *)val, bytes, SM_EFUSE_READ, offset,
+-				  bytes, 0, 0, 0);
++	ret = meson_sm_call_read(fw, (u8 *)val, bytes, SM_EFUSE_READ, offset,
++				 bytes, 0, 0, 0);
 +
-+	return count == bytes ? 0 : -EIO;
++	return ret < 0 ? ret : 0;
  }
  
- static int rmem_probe(struct platform_device *pdev)
+ static int meson_efuse_write(void *context, unsigned int offset,
+ 			     void *val, size_t bytes)
+ {
+ 	struct meson_sm_firmware *fw = context;
++	int ret;
++
++	ret = meson_sm_call_write(fw, (u8 *)val, bytes, SM_EFUSE_WRITE, offset,
++				  bytes, 0, 0, 0);
+ 
+-	return meson_sm_call_write(fw, (u8 *)val, bytes, SM_EFUSE_WRITE, offset,
+-				   bytes, 0, 0, 0);
++	return ret < 0 ? ret : 0;
+ }
+ 
+ static const struct of_device_id meson_efuse_match[] = {
 
 
