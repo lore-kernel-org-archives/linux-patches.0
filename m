@@ -1,46 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0687219E7F7;
-	Tue, 16 Jul 2024 15:59:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE75E19AD93;
+	Tue, 16 Jul 2024 15:59:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145541; cv=none; b=FL3c2dvcVtThkRBOVM7PaJbY4ovClg+e65IIHRj2fXnL43UTjR24YVEBfeBNMVaJpx9YVCI4oMJ4w6r5BUrFOVvAkw+sNY+rJbJYHuNis9vAWL4mbzs79OLGR/ubo6ye6YheQ0Pbmc5/Pq3Wdgy/h/7v2r6Eq0XkhSwSMUyIQ50=
+	t=1721145544; cv=none; b=ahQwBZB3n50zatndoBQeSR3dTJlmxym+lrvK9KrJE2Lyo94WCjDy2fmNuSW3mnxZz5lPAkk9f3n8krlq5uTmpjyW7FpGQYo3D2Yw4wvQT9q8y7SnxUP19W/ZFp/2EHQOnRnqFz64iuFiBy1XozL0GObPU5754d8nYCPazagWyLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145541; c=relaxed/simple;
-	bh=AchLjkH3AjXhb1/OLsdnbY6EInidjnH9uq8j8lkYp1k=;
+	s=arc-20240116; t=1721145544; c=relaxed/simple;
+	bh=MBWrmQlftKxNkSqhe0VJOOIIaT6MKdU56lRTQLt0O/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=owRD7LhxhCEFwmD+IYGoP8MQGORgBYkaUsaD4cKB5VGSyw3o2wKlN9zGrFt4YowRqxrMKShwP/0O1fbbRG4ibSjlkgs8LN3kJSOZJFqY6wSguEH9DMELR6YDe9NbKKOyXJ8XKUrCyHoq/Fq1Di4rJUpGJ2JFaw83Lo0i9GaIqHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WUE1JKLb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oWrQwhas/7oG7USBjMmr7aFD8bcTDwAUC4lCUXimvsKH0GSBjoh0ZStMmYgTWLdIz4AUEs+QhRo9jyn1q9GddPCRhb/s4Z2EuaCo3zhGgARl9l7ADuDHf8Rjuolbl0K5MK/JnZEFSkCd28RrtpyPnwTveSq+Nw8F5SllGd8L7Os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x7kQDT02; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUE1JKLb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53009C116B1;
-	Tue, 16 Jul 2024 15:59:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x7kQDT02"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73C7FC116B1;
+	Tue, 16 Jul 2024 15:59:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145540;
-	bh=AchLjkH3AjXhb1/OLsdnbY6EInidjnH9uq8j8lkYp1k=;
+	s=korg; t=1721145543;
+	bh=MBWrmQlftKxNkSqhe0VJOOIIaT6MKdU56lRTQLt0O/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WUE1JKLbVnBS7PHqcvGdyInq71X3zb3EffTrjBomAeBVb22v4a+qPgtZRg+/CSp+V
-	 NN7C9fwOpRa+F7n7r6Udv+tTqryKmD+cxvAiWU+0mhehAxhOJqLQeKxslUfvJl8P/n
-	 0IF3SawwrC8uZnK4Sya0tcOlmb9YH69K8jB40xb8=
+	b=x7kQDT02S2dWfidSmYJSieiOPngOZHPOWcSZHcqJ695f4xicm94FCNVYaUZC/JiCe
+	 G7YK8rD9Mi10Xe0xgqK2wtOISgrYZB682Q/1CnPzn2+N90tMrIY5KVZ4YEt0NN3Bii
+	 x97idmU4Ndk6Ulo4XtM7SmeqUl+b2o60R6pSDI30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Audra Mitchell <audra@redhat.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Andrea Arcangeli <aarcange@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Mike Rapoport <rppt@linux.vnet.ibm.com>,
-	Peter Xu <peterx@redhat.com>,
-	Rafael Aquini <raquini@redhat.com>,
-	Shaohua Li <shli@fb.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 70/96] Fix userfaultfd_api to return EINVAL as expected
-Date: Tue, 16 Jul 2024 17:32:21 +0200
-Message-ID: <20240716152749.203115887@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Xiubo Li <xiubli@redhat.com>
+Subject: [PATCH 6.1 71/96] libceph: fix race between delayed_work() and ceph_monc_stop()
+Date: Tue, 16 Jul 2024 17:32:22 +0200
+Message-ID: <20240716152749.242132107@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152746.516194097@linuxfoundation.org>
 References: <20240716152746.516194097@linuxfoundation.org>
@@ -59,65 +50,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Audra Mitchell <audra@redhat.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit 1723f04caacb32cadc4e063725d836a0c4450694 upstream.
+commit 69c7b2fe4c9cc1d3b1186d1c5606627ecf0de883 upstream.
 
-Currently if we request a feature that is not set in the Kernel config we
-fail silently and return all the available features.  However, the man
-page indicates we should return an EINVAL.
+The way the delayed work is handled in ceph_monc_stop() is prone to
+races with mon_fault() and possibly also finish_hunting().  Both of
+these can requeue the delayed work which wouldn't be canceled by any of
+the following code in case that happens after cancel_delayed_work_sync()
+runs -- __close_session() doesn't mess with the delayed work in order
+to avoid interfering with the hunting interval logic.  This part was
+missed in commit b5d91704f53e ("libceph: behave in mon_fault() if
+cur_mon < 0") and use-after-free can still ensue on monc and objects
+that hang off of it, with monc->auth and monc->monmap being
+particularly susceptible to quickly being reused.
 
-We need to fix this issue since we can end up with a Kernel warning should
-a program request the feature UFFD_FEATURE_WP_UNPOPULATED on a kernel with
-the config not set with this feature.
+To fix this:
 
- [  200.812896] WARNING: CPU: 91 PID: 13634 at mm/memory.c:1660 zap_pte_range+0x43d/0x660
- [  200.820738] Modules linked in:
- [  200.869387] CPU: 91 PID: 13634 Comm: userfaultfd Kdump: loaded Not tainted 6.9.0-rc5+ #8
- [  200.877477] Hardware name: Dell Inc. PowerEdge R6525/0N7YGH, BIOS 2.7.3 03/30/2022
- [  200.885052] RIP: 0010:zap_pte_range+0x43d/0x660
+- clear monc->cur_mon and monc->hunting as part of closing the session
+  in ceph_monc_stop()
+- bail from delayed_work() if monc->cur_mon is cleared, similar to how
+  it's done in mon_fault() and finish_hunting() (based on monc->hunting)
+- call cancel_delayed_work_sync() after the session is closed
 
-Link: https://lkml.kernel.org/r/20240626130513.120193-1-audra@redhat.com
-Fixes: e06f1e1dd499 ("userfaultfd: wp: enabled write protection in userfaultfd API")
-Signed-off-by: Audra Mitchell <audra@redhat.com>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Mike Rapoport <rppt@linux.vnet.ibm.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Rafael Aquini <raquini@redhat.com>
-Cc: Shaohua Li <shli@fb.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Link: https://tracker.ceph.com/issues/66857
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Xiubo Li <xiubli@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/userfaultfd.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/ceph/mon_client.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/fs/userfaultfd.c
-+++ b/fs/userfaultfd.c
-@@ -1968,7 +1968,7 @@ static int userfaultfd_api(struct userfa
- 		goto out;
- 	features = uffdio_api.features;
- 	ret = -EINVAL;
--	if (uffdio_api.api != UFFD_API || (features & ~UFFD_API_FEATURES))
-+	if (uffdio_api.api != UFFD_API)
- 		goto err_out;
- 	ret = -EPERM;
- 	if ((features & UFFD_FEATURE_EVENT_FORK) && !capable(CAP_SYS_PTRACE))
-@@ -1985,6 +1985,11 @@ static int userfaultfd_api(struct userfa
- #ifndef CONFIG_PTE_MARKER_UFFD_WP
- 	uffdio_api.features &= ~UFFD_FEATURE_WP_HUGETLBFS_SHMEM;
- #endif
+--- a/net/ceph/mon_client.c
++++ b/net/ceph/mon_client.c
+@@ -1085,13 +1085,19 @@ static void delayed_work(struct work_str
+ 	struct ceph_mon_client *monc =
+ 		container_of(work, struct ceph_mon_client, delayed_work.work);
+ 
+-	dout("monc delayed_work\n");
+ 	mutex_lock(&monc->mutex);
++	dout("%s mon%d\n", __func__, monc->cur_mon);
++	if (monc->cur_mon < 0) {
++		goto out;
++	}
 +
-+	ret = -EINVAL;
-+	if (features & ~uffdio_api.features)
-+		goto err_out;
+ 	if (monc->hunting) {
+ 		dout("%s continuing hunt\n", __func__);
+ 		reopen_session(monc);
+ 	} else {
+ 		int is_auth = ceph_auth_is_authenticated(monc->auth);
 +
- 	uffdio_api.ioctls = UFFD_API_IOCTLS;
- 	ret = -EFAULT;
- 	if (copy_to_user(buf, &uffdio_api, sizeof(uffdio_api)))
++		dout("%s is_authed %d\n", __func__, is_auth);
+ 		if (ceph_con_keepalive_expired(&monc->con,
+ 					       CEPH_MONC_PING_TIMEOUT)) {
+ 			dout("monc keepalive timeout\n");
+@@ -1116,6 +1122,8 @@ static void delayed_work(struct work_str
+ 		}
+ 	}
+ 	__schedule_delayed(monc);
++
++out:
+ 	mutex_unlock(&monc->mutex);
+ }
+ 
+@@ -1232,13 +1240,15 @@ EXPORT_SYMBOL(ceph_monc_init);
+ void ceph_monc_stop(struct ceph_mon_client *monc)
+ {
+ 	dout("stop\n");
+-	cancel_delayed_work_sync(&monc->delayed_work);
+ 
+ 	mutex_lock(&monc->mutex);
+ 	__close_session(monc);
++	monc->hunting = false;
+ 	monc->cur_mon = -1;
+ 	mutex_unlock(&monc->mutex);
+ 
++	cancel_delayed_work_sync(&monc->delayed_work);
++
+ 	/*
+ 	 * flush msgr queue before we destroy ourselves to ensure that:
+ 	 *  - any work that references our embedded con is finished.
 
 
