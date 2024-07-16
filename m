@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265D619E7D0;
-	Tue, 16 Jul 2024 15:53:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119E219DF53;
+	Tue, 16 Jul 2024 15:54:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145239; cv=none; b=GRb0jqL9YrXU7iBmOUZmfudY00UUar7TRkOJGYvEwTcfJhp5T5ULotBV4DwMcbnhTvLxH0PjXeZmH1MECXwXraW+TfjD8j88NTAEdAfwy/e4OMoeiJ27YQQWAbwO+QIRO7ntcfkMCF+AzVmvyBbBLqamDx+bXf6Ft8N9ef22EKg=
+	t=1721145242; cv=none; b=FG6mbeFt+A47/dgeBnNtcteWDzVFUrrFJj+nTVU4LYzfkCMotjnaZS5rDAmQu1nekLSJYjB07g7S385o6dhey4UzbUZe5iZp06aSCLPmS0/IQ1UATGu6IpT5wiFT7hrNAQTMY1CR6vyu9SJ6YxTnR2IJuhmrfoo8dWkXYMXSX24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145239; c=relaxed/simple;
-	bh=JdyKmYJYzXkL/utsWyIuY/QV/x2cs6LhDc2EIQxpupo=;
+	s=arc-20240116; t=1721145242; c=relaxed/simple;
+	bh=f50AAW8lo9EK7f5MDU89hrn6DFhj4DmK/RfmRqNWh+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e4qkuKsB93mjZ4NG7fSmpFm9s3dQB1hUXGqu55JB0Jt0rYCK/KcusgfjJbxY0SccgbvDo+gJQeXo4PKUqTnM5aQiq8UNKBaHxAegNnVj7qhivO4DDAKlrm6zdlwcXIJJOrRGeaq3JMa+TiuzaFMMyJqNPFj1yj1mXzDFAddbdD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zLcBu0Ra; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=COb4glVl4pEI4/QJOawECGlyVxQxLoyyACr6RZDaaUOegbwbiyIvoLiL8AZNJUwoOncgTKhsElbSr1W1QnJ9EjjtvrYV1PhQ9HZ6PORBcJ3ZQrlmzOtQUMCtxaLtqD9wW521iLsyZBulVweJoKtYFFBhNiPaq974B+fr5PnZsGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lzVhD4b7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zLcBu0Ra"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FF29C116B1;
-	Tue, 16 Jul 2024 15:53:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lzVhD4b7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A0C7C4AF11;
+	Tue, 16 Jul 2024 15:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145239;
-	bh=JdyKmYJYzXkL/utsWyIuY/QV/x2cs6LhDc2EIQxpupo=;
+	s=korg; t=1721145241;
+	bh=f50AAW8lo9EK7f5MDU89hrn6DFhj4DmK/RfmRqNWh+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zLcBu0RaOxzYdixof+UX9G35Jia4ercHQ3T8qlZyMSsfB8XzZpDL3YLlePnNsghqK
-	 gfbgXpFkIMkDLMwmTfpbT86sWNQWntXlU9eR9OmsojLy0JYj6apZQu/aJimacGg0fn
-	 w5e4IH/5PXbX+u2xGv528es9J/N1FNBbC2eolUxg=
+	b=lzVhD4b71sSrrH05ZTxcuX5uvd6TqvfbWQ2KEPH2v8pgI7LKRTSTWv5eqPJavmzu/
+	 EJYA1Gjn1yOnhtNPjZ9JWf/MR2u5z+aaBV4Gcni+gWDsquL9373k8qJl94w/9c+3hQ
+	 4v6EwY1w3IFkS2NkgerNxygW6O7oQ/9i/8IvDnZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,11 +30,10 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable <stable@kernel.org>,
 	Ekansh Gupta <quic_ekangupt@quicinc.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Caleb Connolly <caleb.connolly@linaro.org>,
 	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 6.9 126/143] misc: fastrpc: Copy the complete capability structure to user
-Date: Tue, 16 Jul 2024 17:32:02 +0200
-Message-ID: <20240716152800.833556128@linuxfoundation.org>
+Subject: [PATCH 6.9 127/143] misc: fastrpc: Fix memory leak in audio daemon attach operation
+Date: Tue, 16 Jul 2024 17:32:03 +0200
+Message-ID: <20240716152800.872729057@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -55,39 +54,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Ekansh Gupta <quic_ekangupt@quicinc.com>
 
-commit e7f0be3f09c6e955dc8009129862b562d8b64513 upstream.
+commit ad0bd973a033003ca578c42a760d1dc77aeea15e upstream.
 
-User is passing capability ioctl structure(argp) to get DSP
-capabilities. This argp is copied to a local structure to get domain
-and attribute_id information. After getting the capability, only
-capability value is getting copied to user argp which will not be
-useful if the use is trying to get the capability by checking the
-capability member of fastrpc_ioctl_capability structure. Copy the
-complete capability structure so that user can get the capability
-value from the expected member of the structure.
+Audio PD daemon send the name as part of the init IOCTL call. This
+name needs to be copied to kernel for which memory is allocated.
+This memory is never freed which might result in memory leak. Free
+the memory when it is not needed.
 
-Fixes: 6c16fd8bdd40 ("misc: fastrpc: Add support to get DSP capabilities")
+Fixes: 0871561055e6 ("misc: fastrpc: Add support for audiopd")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20240628114501.14310-3-srinivas.kandagatla@linaro.org
+Link: https://lore.kernel.org/r/20240628114501.14310-5-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/misc/fastrpc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/drivers/misc/fastrpc.c
 +++ b/drivers/misc/fastrpc.c
-@@ -1787,7 +1787,7 @@ static int fastrpc_get_dsp_info(struct f
- 	if (err)
- 		return err;
+@@ -1320,6 +1320,7 @@ static int fastrpc_init_create_static_pr
+ 		goto err_invoke;
  
--	if (copy_to_user(argp, &cap.capability, sizeof(cap.capability)))
-+	if (copy_to_user(argp, &cap, sizeof(cap)))
- 		return -EFAULT;
+ 	kfree(args);
++	kfree(name);
  
  	return 0;
+ err_invoke:
 
 
