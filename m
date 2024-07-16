@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2F519F46C;
-	Tue, 16 Jul 2024 15:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5107717A93F;
+	Tue, 16 Jul 2024 15:51:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145103; cv=none; b=PQO7abO94uxxoYK8uuqJKEJd/38r9FQ0M8gwabrTEXWAiDXv+aowaWih7eL5bCZ/UXSk1hRPLvJpCsTB0+u+itdD1EOsnDvlyG2zAoq1Xzwsjwxq9OlK1JBZi9QVxFRas40McIQOLFQWZGAfnLEIOZUfMc2BzyIrTXGVdgItM+o=
+	t=1721145106; cv=none; b=gaq9HqEh42fxRTHntRxneIPUddcpST/ZQD9XSZNX4fpl2M5WADw7ynxsw0qaYUd3ePte8dnKMdYgyL3SsMHXz8xRto0d2hOJbbXGJ7u2OYzzC8GKUnjU80Ze5I5JQMSgasSfkwWkQ1lY3rm63uk5LVjVfbrzHhFBCjHR38cEx/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145103; c=relaxed/simple;
-	bh=zsWObvqZoPupaU+wSgjR8EZ4yPA6D5zwj7zXGP5D6DI=;
+	s=arc-20240116; t=1721145106; c=relaxed/simple;
+	bh=FzMdAoUN0grSqFg2BedME6W4cL9Q0n/j1kU32WLWsi4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ICycegoJAOG8WH/SvKyLBQgpAY/qcHs/jIVZl6QJAUva/ySCA1EFbAcIYHFoaG6+rHsjwdEc0VhgyWe0kaEinTYfv3EF96yxvKweP7XnIJD7mQiP2KPhcuTklaFxcyoXgu0hjQa7jBWsVgNKo2ASSyTh0t7BC7xAVS0riQfwHmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y8z83H2D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=c+dzZWlkJoksAbBAShGYj2RYG6ooLOigRBned4fropeS3IrkGL5KR/OSphOthEc0z7aCgJhXTLvL2vv6iIO6Dn9kG6r0jlwSVLWH+vRTFKGoTH8obSaywCHvKgcuKmEWDfvBFJFSQ7JJsB+MkJ1BF24Rn6PrFGxELEfEJNI3ZsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pZgNmyVu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8z83H2D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5BFCC116B1;
-	Tue, 16 Jul 2024 15:51:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pZgNmyVu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB0E9C4AF0D;
+	Tue, 16 Jul 2024 15:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145103;
-	bh=zsWObvqZoPupaU+wSgjR8EZ4yPA6D5zwj7zXGP5D6DI=;
+	s=korg; t=1721145106;
+	bh=FzMdAoUN0grSqFg2BedME6W4cL9Q0n/j1kU32WLWsi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y8z83H2DbBbLYDTxhoF+44V249P7da5Axoz83ZeWw2fLCBfN179PW0+D5/ivtMyiP
-	 1N5AWDl6gXjnEUM1xcL7o8ho+swzsiqRVRYhljCm8oAiTA0SXJa+L5eI8HieNPdJMK
-	 xYWvYTcK1BruHWRbDL2xrLtkOwaDJpZRbzgxt28E=
+	b=pZgNmyVuMPIMjbs/xF8cN7WJTZdFanB4F1VzXCC9C7w8NOm9HtC/nkyf3BN1AdM62
+	 geXPf58IXzVUOSfI3gi3sJxxe0nt8cS1XaRbwmyhcM8hAdn/08PsVu3fl5J9hUmbv9
+	 Pa0y2HbQEbtqJmS3DMXEiz5/0hVaJ854DDva9Lyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joy Chakraborty <joychakr@google.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 6.9 100/143] nvmem: meson-efuse: Fix return value of nvmem callbacks
-Date: Tue, 16 Jul 2024 17:31:36 +0200
-Message-ID: <20240716152759.824679105@linuxfoundation.org>
+Subject: [PATCH 6.9 101/143] nvmem: core: only change name to fram for current attribute
+Date: Tue, 16 Jul 2024 17:31:37 +0200
+Message-ID: <20240716152759.864969637@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -46,69 +44,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joy Chakraborty <joychakr@google.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-commit 7a0a6d0a7c805f9380381f4deedffdf87b93f408 upstream.
+commit 0ba424c934fd43dccf0d597e1ae8851f07cb2edf upstream.
 
-Read/write callbacks registered with nvmem core expect 0 to be returned
-on success and a negative value to be returned on failure.
+bin_attr_nvmem_eeprom_compat is the template from which all future
+compat attributes are created.
+Changing it means to change all subsquent compat attributes, too.
 
-meson_efuse_read() and meson_efuse_write() call into
-meson_sm_call_read() and meson_sm_call_write() respectively which return
-the number of bytes read or written on success as per their api
-description.
+Instead only use the "fram" name for the currently registered attribute.
 
-Fix to return error if meson_sm_call_read()/meson_sm_call_write()
-returns an error else return 0.
-
-Fixes: a29a63bdaf6f ("nvmem: meson-efuse: simplify read callback")
+Fixes: fd307a4ad332 ("nvmem: prepare basics for FRAM support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Joy Chakraborty <joychakr@google.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20240628113704.13742-3-srinivas.kandagatla@linaro.org
+Link: https://lore.kernel.org/r/20240628113704.13742-4-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvmem/meson-efuse.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/nvmem/core.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/nvmem/meson-efuse.c
-+++ b/drivers/nvmem/meson-efuse.c
-@@ -18,18 +18,24 @@ static int meson_efuse_read(void *contex
- 			    void *val, size_t bytes)
- {
- 	struct meson_sm_firmware *fw = context;
-+	int ret;
+--- a/drivers/nvmem/core.c
++++ b/drivers/nvmem/core.c
+@@ -396,10 +396,9 @@ static int nvmem_sysfs_setup_compat(stru
+ 	if (!config->base_dev)
+ 		return -EINVAL;
  
--	return meson_sm_call_read(fw, (u8 *)val, bytes, SM_EFUSE_READ, offset,
--				  bytes, 0, 0, 0);
-+	ret = meson_sm_call_read(fw, (u8 *)val, bytes, SM_EFUSE_READ, offset,
-+				 bytes, 0, 0, 0);
-+
-+	return ret < 0 ? ret : 0;
- }
- 
- static int meson_efuse_write(void *context, unsigned int offset,
- 			     void *val, size_t bytes)
- {
- 	struct meson_sm_firmware *fw = context;
-+	int ret;
-+
-+	ret = meson_sm_call_write(fw, (u8 *)val, bytes, SM_EFUSE_WRITE, offset,
-+				  bytes, 0, 0, 0);
- 
--	return meson_sm_call_write(fw, (u8 *)val, bytes, SM_EFUSE_WRITE, offset,
--				   bytes, 0, 0, 0);
-+	return ret < 0 ? ret : 0;
- }
- 
- static const struct of_device_id meson_efuse_match[] = {
+-	if (config->type == NVMEM_TYPE_FRAM)
+-		bin_attr_nvmem_eeprom_compat.attr.name = "fram";
+-
+ 	nvmem->eeprom = bin_attr_nvmem_eeprom_compat;
++	if (config->type == NVMEM_TYPE_FRAM)
++		nvmem->eeprom.attr.name = "fram";
+ 	nvmem->eeprom.attr.mode = nvmem_bin_attr_get_umode(nvmem);
+ 	nvmem->eeprom.size = nvmem->size;
+ #ifdef CONFIG_DEBUG_LOCK_ALLOC
 
 
