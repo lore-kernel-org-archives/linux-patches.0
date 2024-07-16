@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 452C219E7CF;
-	Tue, 16 Jul 2024 15:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84ECC27733;
+	Tue, 16 Jul 2024 15:50:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145001; cv=none; b=cpCyb5g5o7lBee05taMqfmJpat51xKuIXUl2fUx4fqRgGzZQU53xj1ToWGKosxTJtNVVNoFC3MUAlBrsOHEEi65WLAUORiXSenbwYMJU3mSUx8lR9sTv3EH9MZ8uAHrTB64tanYOCgFe1NM79oZ8KBNeM6ZH7ai3R2porYU/j3k=
+	t=1721145004; cv=none; b=fvNisg9UXp/1D7ZwZZ3JFRkyi4WVQV9UG5FrejB8KCUQvXbXrZx2HK2ncYdU/3VMk4tsT5IjNhj1DZPERnW8dPuUhGUDnYktcf/TiATI/JQQpU75WgWoY2fkAoUo7osqQkQUjJhSnRMevfa7Y2840AnO8x4P15+cQDTtPCqpPt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145001; c=relaxed/simple;
-	bh=idtORb1cdWbMpllf6Sb/z3RYg+3q5YiIdorbZW/ImxQ=;
+	s=arc-20240116; t=1721145004; c=relaxed/simple;
+	bh=qu6Tru9SuDoh9yo86wiyiz3SH1FA7rHVsXgEUqY2S/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tpyDZeni27xZodmzvttGBCwZyW/k1glGdGYjt08HRk1AJ67Gm/pE9aSMqSvu7ODEco9XyPQSKumpAJZFk8TMQz7rgI7uIizWULvuV6iUZ2+pBXFxOI9wTBVbFBzdEa5whb7JvCKRc1vDullm90tPjwLPCpMpnVkEtoTHtl/4Xkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K47Eoh3I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VtSm1QA/QMzX2RbSY47rdNDKYc8nA2j29Brh6gQdlumpsIdlDyOoULMDiDiq4n3C478ocGPkp+JkuuBASkrCBsFmBgOn7mfy+kpzUrQKQM9oPlHECc154KZ2d5HQo0MVFsqnxJdEUKdYD/liQozVqlKn4Q9hvOei8aa9NeIskic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CArUp3BJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K47Eoh3I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6BCC4AF0B;
-	Tue, 16 Jul 2024 15:50:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CArUp3BJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC8AFC116B1;
+	Tue, 16 Jul 2024 15:50:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145001;
-	bh=idtORb1cdWbMpllf6Sb/z3RYg+3q5YiIdorbZW/ImxQ=;
+	s=korg; t=1721145004;
+	bh=qu6Tru9SuDoh9yo86wiyiz3SH1FA7rHVsXgEUqY2S/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K47Eoh3IjPtLhIYDFMtUVqvyy2sMz3P1cgngaHzykN+JvbT5vr0w1nw9iHrgVJi42
-	 HihLMlfyXvMjUPSGTaiBJ5Qm3airX5gkDEQZAGcKqh2OauMqU6UH79GMBuKdGLN2mH
-	 9xcfxF1owamTMGF2VxwItusTkXmNgWZZyDXIsDiI=
+	b=CArUp3BJYugRaNGhj6fMKmXI9D422Ny+aNtcGAd/UeR5bekDu/wu57kLT48YbHYCo
+	 HeMdDjNqxtpcgCDTTl1PU6st8Y2bNdsT/wBfq4a8l1o2KmwinaBIu9w5byQT0nwViQ
+	 PjKQIWSbrJvS1ohVGHwoXWH8HPHMEGGVgntKcwAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Ahmed Zaki <ahmed.zaki@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 058/143] net: ethtool: Fix RSS setting
-Date: Tue, 16 Jul 2024 17:30:54 +0200
-Message-ID: <20240716152758.211489124@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	netdev@vger.kernel.org,
+	Ronald Wahl <ronald.wahl@raritan.com>
+Subject: [PATCH 6.9 067/143] net: ks8851: Fix deadlock with the SPI chip variant
+Date: Tue, 16 Jul 2024 17:31:03 +0200
+Message-ID: <20240716152758.555282172@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -52,53 +55,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saeed Mahameed <saeedm@nvidia.com>
+From: Ronald Wahl <ronald.wahl@raritan.com>
 
-[ Upstream commit 503757c809281a24d50ac2538401d3b1302b301c ]
+commit 0913ec336a6c0c4a2b296bd9f74f8e41c4c83c8c upstream.
 
-When user submits a rxfh set command without touching XFRM_SYM_XOR,
-rxfh.input_xfrm is set to RXH_XFRM_NO_CHANGE, which is equal to 0xff.
+When SMP is enabled and spinlocks are actually functional then there is
+a deadlock with the 'statelock' spinlock between ks8851_start_xmit_spi
+and ks8851_irq:
 
-Testing if (rxfh.input_xfrm & RXH_XFRM_SYM_XOR &&
-	    !ops->cap_rss_sym_xor_supported)
-		return -EOPNOTSUPP;
+    watchdog: BUG: soft lockup - CPU#0 stuck for 27s!
+    call trace:
+      queued_spin_lock_slowpath+0x100/0x284
+      do_raw_spin_lock+0x34/0x44
+      ks8851_start_xmit_spi+0x30/0xb8
+      ks8851_start_xmit+0x14/0x20
+      netdev_start_xmit+0x40/0x6c
+      dev_hard_start_xmit+0x6c/0xbc
+      sch_direct_xmit+0xa4/0x22c
+      __qdisc_run+0x138/0x3fc
+      qdisc_run+0x24/0x3c
+      net_tx_action+0xf8/0x130
+      handle_softirqs+0x1ac/0x1f0
+      __do_softirq+0x14/0x20
+      ____do_softirq+0x10/0x1c
+      call_on_irq_stack+0x3c/0x58
+      do_softirq_own_stack+0x1c/0x28
+      __irq_exit_rcu+0x54/0x9c
+      irq_exit_rcu+0x10/0x1c
+      el1_interrupt+0x38/0x50
+      el1h_64_irq_handler+0x18/0x24
+      el1h_64_irq+0x64/0x68
+      __netif_schedule+0x6c/0x80
+      netif_tx_wake_queue+0x38/0x48
+      ks8851_irq+0xb8/0x2c8
+      irq_thread_fn+0x2c/0x74
+      irq_thread+0x10c/0x1b0
+      kthread+0xc8/0xd8
+      ret_from_fork+0x10/0x20
 
-Will always be true on devices that don't set cap_rss_sym_xor_supported,
-since rxfh.input_xfrm & RXH_XFRM_SYM_XOR is always true, if input_xfrm
-was not set, i.e RXH_XFRM_NO_CHANGE=0xff, which will result in failure
-of any command that doesn't require any change of XFRM, e.g RSS context
-or hash function changes.
+This issue has not been identified earlier because tests were done on
+a device with SMP disabled and so spinlocks were actually NOPs.
 
-To avoid this breakage, test if rxfh.input_xfrm != RXH_XFRM_NO_CHANGE
-before testing other conditions. Note that the problem will only trigger
-with XFRM-aware userspace, old ethtool CLI would continue to work.
+Now use spin_(un)lock_bh for TX queue related locking to avoid execution
+of softirq work synchronously that would lead to a deadlock.
 
-Fixes: 0dd415d15505 ("net: ethtool: add a NO_CHANGE uAPI for new RXFH's input_xfrm")
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Reviewed-by: Ahmed Zaki <ahmed.zaki@intel.com>
-Link: https://patch.msgid.link/20240710225538.43368-1-saeed@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3dc5d4454545 ("net: ks8851: Fix TX stall caused by TX buffer overrun")
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Simon Horman <horms@kernel.org>
+Cc: netdev@vger.kernel.org
+Cc: stable@vger.kernel.org # 5.10+
+Signed-off-by: Ronald Wahl <ronald.wahl@raritan.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20240706101337.854474-1-rwahl@gmx.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ethtool/ioctl.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/micrel/ks8851_common.c |    8 ++++----
+ drivers/net/ethernet/micrel/ks8851_spi.c    |    4 ++--
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/net/ethtool/ioctl.c b/net/ethtool/ioctl.c
-index e645d751a5e89..223dcd25d88a2 100644
---- a/net/ethtool/ioctl.c
-+++ b/net/ethtool/ioctl.c
-@@ -1306,7 +1306,8 @@ static noinline_for_stack int ethtool_set_rxfh(struct net_device *dev,
- 	if (rxfh.input_xfrm && rxfh.input_xfrm != RXH_XFRM_SYM_XOR &&
- 	    rxfh.input_xfrm != RXH_XFRM_NO_CHANGE)
- 		return -EINVAL;
--	if ((rxfh.input_xfrm & RXH_XFRM_SYM_XOR) &&
-+	if (rxfh.input_xfrm != RXH_XFRM_NO_CHANGE &&
-+	    (rxfh.input_xfrm & RXH_XFRM_SYM_XOR) &&
- 	    !ops->cap_rss_sym_xor_supported)
- 		return -EOPNOTSUPP;
+--- a/drivers/net/ethernet/micrel/ks8851_common.c
++++ b/drivers/net/ethernet/micrel/ks8851_common.c
+@@ -352,11 +352,11 @@ static irqreturn_t ks8851_irq(int irq, v
+ 		netif_dbg(ks, intr, ks->netdev,
+ 			  "%s: txspace %d\n", __func__, tx_space);
  
--- 
-2.43.0
-
+-		spin_lock(&ks->statelock);
++		spin_lock_bh(&ks->statelock);
+ 		ks->tx_space = tx_space;
+ 		if (netif_queue_stopped(ks->netdev))
+ 			netif_wake_queue(ks->netdev);
+-		spin_unlock(&ks->statelock);
++		spin_unlock_bh(&ks->statelock);
+ 	}
+ 
+ 	if (status & IRQ_SPIBEI) {
+@@ -635,14 +635,14 @@ static void ks8851_set_rx_mode(struct ne
+ 
+ 	/* schedule work to do the actual set of the data if needed */
+ 
+-	spin_lock(&ks->statelock);
++	spin_lock_bh(&ks->statelock);
+ 
+ 	if (memcmp(&rxctrl, &ks->rxctrl, sizeof(rxctrl)) != 0) {
+ 		memcpy(&ks->rxctrl, &rxctrl, sizeof(ks->rxctrl));
+ 		schedule_work(&ks->rxctrl_work);
+ 	}
+ 
+-	spin_unlock(&ks->statelock);
++	spin_unlock_bh(&ks->statelock);
+ }
+ 
+ static int ks8851_set_mac_address(struct net_device *dev, void *addr)
+--- a/drivers/net/ethernet/micrel/ks8851_spi.c
++++ b/drivers/net/ethernet/micrel/ks8851_spi.c
+@@ -340,10 +340,10 @@ static void ks8851_tx_work(struct work_s
+ 
+ 	tx_space = ks8851_rdreg16_spi(ks, KS_TXMIR);
+ 
+-	spin_lock(&ks->statelock);
++	spin_lock_bh(&ks->statelock);
+ 	ks->queued_len -= dequeued_len;
+ 	ks->tx_space = tx_space;
+-	spin_unlock(&ks->statelock);
++	spin_unlock_bh(&ks->statelock);
+ 
+ 	ks8851_unlock_spi(ks, &flags);
+ }
 
 
