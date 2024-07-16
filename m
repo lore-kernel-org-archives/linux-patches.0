@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6DF12B72;
-	Tue, 16 Jul 2024 15:48:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577C312B72;
+	Tue, 16 Jul 2024 15:48:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144928; cv=none; b=b7wcsOk/+7JBAvmPpaJ3RDsJdG762/XamwmyXS72p6LQDolftiOWakidJxbbAJox+TCvUJEPVrLO6DeNpFwYjejZRzZSecKYosl6/kTAcTShxS9ynEJPylXpx1JqfrdMldL+gZ5t9NxsbFdyyYpYOZw9x36Kjj3VrRwkMjTVeAo=
+	t=1721144931; cv=none; b=f3R20aWQO3VlR6lp9mvKxX4hUv7rvHCO3hMa7giSnmLGtOHUYjLM4JfcajuKM8AVNmaZs8TqHDryoJbBq7ujfYBdpAYhQXdULcatuKbnPFvO6f092zY6Nc+mwiAIr99f8bSSvBnvJOb++JlIUoh5dhNIX/sN2a612EVMtkd2GcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144928; c=relaxed/simple;
-	bh=7adI8O+peV0Zx4VW9pzkT9ERLgCJMnxlSFUWyewvbys=;
+	s=arc-20240116; t=1721144931; c=relaxed/simple;
+	bh=N5yyPMZAJ8A/xapwlQcb1II3ixTC5pOXcTtLE/rcuRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A3qKqYT1/MTDF6HuE7ygVWQuQi3cQqH2XColu/LT30sNbguVPd2/BL3EG/y4WKeQF+IFVknHbXj2hmNOGPoZhxwasRWksc4DwTRblkT4O3wDeheBRyl5QyOAiFsrQFPdIECAMsdnVTB0mf1yR6Ihs8RgQgzoUVZri/BxnNtCdRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V45sd8GX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BdIkAn8ilCz6dS4K7Wy/XZq/+JXD+yf+dKJK0a2H1/9m1xgRmwDgHgAXDwgsO5bQ8H/rKzunEuJRHECs0ilopr6dIaVq5t4XyqpHxU/fG+MdRujdFnJTJjfbFYemXrGWPyyEuBNkkTbXE+KwZSIJFCxPn7PQh7IbvS2dVg5EuzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lcop3L9i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V45sd8GX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1CBBC4AF0D;
-	Tue, 16 Jul 2024 15:48:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lcop3L9i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B81C4AF0D;
+	Tue, 16 Jul 2024 15:48:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144928;
-	bh=7adI8O+peV0Zx4VW9pzkT9ERLgCJMnxlSFUWyewvbys=;
+	s=korg; t=1721144931;
+	bh=N5yyPMZAJ8A/xapwlQcb1II3ixTC5pOXcTtLE/rcuRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V45sd8GX/d77WoimEyFOfPcKOnL4iwUJFZquE7KNFd5A1H0vkUzeijSL/cR+PIxV0
-	 Cd1F7wFg1f+bEUBfCMcvOH0nyGRpRVFGkNVeZaoWES5c1fr41kuhR/+bDjcf8Lv2sI
-	 3qOUTnGwlc93KMLK3JabDqAwoUrYsTrtNtlxV86I=
+	b=Lcop3L9iCh1iCvTr8RvXrub6OukLQFQOeluJq9kzLuhk4eT4tvB2gAzEU7Htb87VB
+	 GQjYwBIt7YGg76asfBYZ2AF4aM8IRYet/bIX1RmCpI9hQkgPhiOkaOodYWSH4kGWke
+	 L3QuODrphEaGYfOrTaoJaZakGUxEL3gmOfyY9u+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerald Yang <gerald.yang@canonical.com>,
-	Chengen Du <chengen.du@canonical.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	David Lechner <dlechner@baylibre.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 043/143] net/sched: Fix UAF when resolving a clash
-Date: Tue, 16 Jul 2024 17:30:39 +0200
-Message-ID: <20240716152757.645576432@linuxfoundation.org>
+Subject: [PATCH 6.9 026/143] spi: add defer_optimize_message controller flag
+Date: Tue, 16 Jul 2024 17:30:22 +0200
+Message-ID: <20240716152756.994428054@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -52,129 +53,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengen Du <chengen.du@canonical.com>
+From: David Lechner <dlechner@baylibre.com>
 
-[ Upstream commit 26488172b0292bed837b95a006a3f3431d1898c3 ]
+[ Upstream commit ca52aa4c60f76566601b42e935b8a78f0fb4f8eb ]
 
-KASAN reports the following UAF:
+Adding spi_optimize_message() broke the spi-mux driver because it
+calls spi_async() from it's transfer_one_message() callback. This
+resulted in passing an incorrectly optimized message to the controller.
+For example, if the underlying controller has an optimize_message()
+callback, this would have not been called and can cause a crash when
+the underlying controller driver tries to transfer the message.
 
- BUG: KASAN: slab-use-after-free in tcf_ct_flow_table_process_conn+0x12b/0x380 [act_ct]
- Read of size 1 at addr ffff888c07603600 by task handler130/6469
+Also, since the spi-mux driver swaps out the controller pointer by
+replacing msg->spi, __spi_unoptimize_message() was being called with a
+different controller than the one used in __spi_optimize_message(). This
+could cause a crash when attempting to free the message resources when
+__spi_unoptimize_message() is called in spi_finalize_current_message()
+since it is being called with a controller that did not allocate the
+resources.
 
- Call Trace:
-  <IRQ>
-  dump_stack_lvl+0x48/0x70
-  print_address_description.constprop.0+0x33/0x3d0
-  print_report+0xc0/0x2b0
-  kasan_report+0xd0/0x120
-  __asan_load1+0x6c/0x80
-  tcf_ct_flow_table_process_conn+0x12b/0x380 [act_ct]
-  tcf_ct_act+0x886/0x1350 [act_ct]
-  tcf_action_exec+0xf8/0x1f0
-  fl_classify+0x355/0x360 [cls_flower]
-  __tcf_classify+0x1fd/0x330
-  tcf_classify+0x21c/0x3c0
-  sch_handle_ingress.constprop.0+0x2c5/0x500
-  __netif_receive_skb_core.constprop.0+0xb25/0x1510
-  __netif_receive_skb_list_core+0x220/0x4c0
-  netif_receive_skb_list_internal+0x446/0x620
-  napi_complete_done+0x157/0x3d0
-  gro_cell_poll+0xcf/0x100
-  __napi_poll+0x65/0x310
-  net_rx_action+0x30c/0x5c0
-  __do_softirq+0x14f/0x491
-  __irq_exit_rcu+0x82/0xc0
-  irq_exit_rcu+0xe/0x20
-  common_interrupt+0xa1/0xb0
-  </IRQ>
-  <TASK>
-  asm_common_interrupt+0x27/0x40
+This is fixed by adding a defer_optimize_message flag for controllers.
+This flag causes all of the spi_[maybe_][un]optimize_message() calls to
+be a no-op (other than attaching a pointer to the spi device to the
+message).
 
- Allocated by task 6469:
-  kasan_save_stack+0x38/0x70
-  kasan_set_track+0x25/0x40
-  kasan_save_alloc_info+0x1e/0x40
-  __kasan_krealloc+0x133/0x190
-  krealloc+0xaa/0x130
-  nf_ct_ext_add+0xed/0x230 [nf_conntrack]
-  tcf_ct_act+0x1095/0x1350 [act_ct]
-  tcf_action_exec+0xf8/0x1f0
-  fl_classify+0x355/0x360 [cls_flower]
-  __tcf_classify+0x1fd/0x330
-  tcf_classify+0x21c/0x3c0
-  sch_handle_ingress.constprop.0+0x2c5/0x500
-  __netif_receive_skb_core.constprop.0+0xb25/0x1510
-  __netif_receive_skb_list_core+0x220/0x4c0
-  netif_receive_skb_list_internal+0x446/0x620
-  napi_complete_done+0x157/0x3d0
-  gro_cell_poll+0xcf/0x100
-  __napi_poll+0x65/0x310
-  net_rx_action+0x30c/0x5c0
-  __do_softirq+0x14f/0x491
+This allows the spi-mux driver to pass an unmodified message to
+spi_async() in spi_mux_transfer_one_message() after the spi device has
+been swapped out. This causes __spi_optimize_message() and
+__spi_unoptimize_message() to be called only once per message and with
+the correct/same controller in each case.
 
- Freed by task 6469:
-  kasan_save_stack+0x38/0x70
-  kasan_set_track+0x25/0x40
-  kasan_save_free_info+0x2b/0x60
-  ____kasan_slab_free+0x180/0x1f0
-  __kasan_slab_free+0x12/0x30
-  slab_free_freelist_hook+0xd2/0x1a0
-  __kmem_cache_free+0x1a2/0x2f0
-  kfree+0x78/0x120
-  nf_conntrack_free+0x74/0x130 [nf_conntrack]
-  nf_ct_destroy+0xb2/0x140 [nf_conntrack]
-  __nf_ct_resolve_clash+0x529/0x5d0 [nf_conntrack]
-  nf_ct_resolve_clash+0xf6/0x490 [nf_conntrack]
-  __nf_conntrack_confirm+0x2c6/0x770 [nf_conntrack]
-  tcf_ct_act+0x12ad/0x1350 [act_ct]
-  tcf_action_exec+0xf8/0x1f0
-  fl_classify+0x355/0x360 [cls_flower]
-  __tcf_classify+0x1fd/0x330
-  tcf_classify+0x21c/0x3c0
-  sch_handle_ingress.constprop.0+0x2c5/0x500
-  __netif_receive_skb_core.constprop.0+0xb25/0x1510
-  __netif_receive_skb_list_core+0x220/0x4c0
-  netif_receive_skb_list_internal+0x446/0x620
-  napi_complete_done+0x157/0x3d0
-  gro_cell_poll+0xcf/0x100
-  __napi_poll+0x65/0x310
-  net_rx_action+0x30c/0x5c0
-  __do_softirq+0x14f/0x491
-
-The ct may be dropped if a clash has been resolved but is still passed to
-the tcf_ct_flow_table_process_conn function for further usage. This issue
-can be fixed by retrieving ct from skb again after confirming conntrack.
-
-Fixes: 0cc254e5aa37 ("net/sched: act_ct: Offload connections with commit action")
-Co-developed-by: Gerald Yang <gerald.yang@canonical.com>
-Signed-off-by: Gerald Yang <gerald.yang@canonical.com>
-Signed-off-by: Chengen Du <chengen.du@canonical.com>
-Link: https://patch.msgid.link/20240710053747.13223-1-chengen.du@canonical.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Closes: https://lore.kernel.org/linux-spi/Zn6HMrYG2b7epUxT@pengutronix.de/
+Reported-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Closes: https://lore.kernel.org/linux-spi/20240628-awesome-discerning-bear-1621f9-mkl@pengutronix.de/
+Fixes: 7b1d87af14d9 ("spi: add spi_optimize_message() APIs")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Link: https://patch.msgid.link/20240708-spi-mux-fix-v1-2-6c8845193128@baylibre.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_ct.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/spi/spi-mux.c   |  1 +
+ drivers/spi/spi.c       | 18 +++++++++++++++++-
+ include/linux/spi/spi.h |  4 ++++
+ 3 files changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
-index 2a96d9c1db65b..6fa3cca87d346 100644
---- a/net/sched/act_ct.c
-+++ b/net/sched/act_ct.c
-@@ -1077,6 +1077,14 @@ TC_INDIRECT_SCOPE int tcf_ct_act(struct sk_buff *skb, const struct tc_action *a,
- 		 */
- 		if (nf_conntrack_confirm(skb) != NF_ACCEPT)
- 			goto drop;
-+
-+		/* The ct may be dropped if a clash has been resolved,
-+		 * so it's necessary to retrieve it from skb again to
-+		 * prevent UAF.
-+		 */
-+		ct = nf_ct_get(skb, &ctinfo);
-+		if (!ct)
-+			skip_add = true;
- 	}
+diff --git a/drivers/spi/spi-mux.c b/drivers/spi/spi-mux.c
+index bd988f53753e2..031b5795d1060 100644
+--- a/drivers/spi/spi-mux.c
++++ b/drivers/spi/spi-mux.c
+@@ -162,6 +162,7 @@ static int spi_mux_probe(struct spi_device *spi)
+ 	ctlr->bus_num = -1;
+ 	ctlr->dev.of_node = spi->dev.of_node;
+ 	ctlr->must_async = true;
++	ctlr->defer_optimize_message = true;
  
- 	if (!skip_add)
+ 	ret = devm_spi_register_controller(&spi->dev, ctlr);
+ 	if (ret)
+diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
+index a1958e86f75c8..9304fd03bf764 100644
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -2137,7 +2137,8 @@ static void __spi_unoptimize_message(struct spi_message *msg)
+  */
+ static void spi_maybe_unoptimize_message(struct spi_message *msg)
+ {
+-	if (!msg->pre_optimized && msg->optimized)
++	if (!msg->pre_optimized && msg->optimized &&
++	    !msg->spi->controller->defer_optimize_message)
+ 		__spi_unoptimize_message(msg);
+ }
+ 
+@@ -4285,6 +4286,11 @@ static int __spi_optimize_message(struct spi_device *spi,
+ static int spi_maybe_optimize_message(struct spi_device *spi,
+ 				      struct spi_message *msg)
+ {
++	if (spi->controller->defer_optimize_message) {
++		msg->spi = spi;
++		return 0;
++	}
++
+ 	if (msg->pre_optimized)
+ 		return 0;
+ 
+@@ -4315,6 +4321,13 @@ int spi_optimize_message(struct spi_device *spi, struct spi_message *msg)
+ {
+ 	int ret;
+ 
++	/*
++	 * Pre-optimization is not supported and optimization is deferred e.g.
++	 * when using spi-mux.
++	 */
++	if (spi->controller->defer_optimize_message)
++		return 0;
++
+ 	ret = __spi_optimize_message(spi, msg);
+ 	if (ret)
+ 		return ret;
+@@ -4341,6 +4354,9 @@ EXPORT_SYMBOL_GPL(spi_optimize_message);
+  */
+ void spi_unoptimize_message(struct spi_message *msg)
+ {
++	if (msg->spi->controller->defer_optimize_message)
++		return;
++
+ 	__spi_unoptimize_message(msg);
+ 	msg->pre_optimized = false;
+ }
+diff --git a/include/linux/spi/spi.h b/include/linux/spi/spi.h
+index c459809efee4f..64a4deb18dd00 100644
+--- a/include/linux/spi/spi.h
++++ b/include/linux/spi/spi.h
+@@ -532,6 +532,9 @@ extern struct spi_device *spi_new_ancillary_device(struct spi_device *spi, u8 ch
+  * @queue_empty: signal green light for opportunistically skipping the queue
+  *	for spi_sync transfers.
+  * @must_async: disable all fast paths in the core
++ * @defer_optimize_message: set to true if controller cannot pre-optimize messages
++ *	and needs to defer the optimization step until the message is actually
++ *	being transferred
+  *
+  * Each SPI controller can communicate with one or more @spi_device
+  * children.  These make a small bus, sharing MOSI, MISO and SCK signals
+@@ -775,6 +778,7 @@ struct spi_controller {
+ 	/* Flag for enabling opportunistic skipping of the queue in spi_sync */
+ 	bool			queue_empty;
+ 	bool			must_async;
++	bool			defer_optimize_message;
+ };
+ 
+ static inline void *spi_controller_get_devdata(struct spi_controller *ctlr)
 -- 
 2.43.0
 
