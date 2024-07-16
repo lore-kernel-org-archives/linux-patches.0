@@ -1,45 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181E719DFB3;
-	Tue, 16 Jul 2024 15:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F32CA19B59C;
+	Tue, 16 Jul 2024 15:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145074; cv=none; b=go/bfzWTR07QPrBDqDHWDcs0eW33Rl+6cn6UUdj2enTNHSqNgRle6qpzBpR68HjP//mJ5c4cy6uTD0suxe1BBW0PYYjAmid8g+C0pC5gz3FFIGF8zH2q1PCXDyUbUaHa+bgYBnazHtAqYVRtGc08b4bxVQWQ5EBM7W2OzTJNGd8=
+	t=1721145077; cv=none; b=sa7zqsFFl9dWXO0QH/hsrj+y8oUGTCgTOQ/pYSIoKO8C+sglO80jY2J1GKVuXZ44YKZrmdYcbr00id+KeSfoy3QDwO5kfBjicG4IPkrr3ZEwo9FFa0pzaEt/lDC0tgQx+GbdafyMdHYDuWt7hHhxvgff8pSrH8X68GGbWoMamnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145074; c=relaxed/simple;
-	bh=P8yUMUdYJo5yQzSVmJJyj0B29X2igIf6xMOifHR9P4o=;
+	s=arc-20240116; t=1721145077; c=relaxed/simple;
+	bh=oKoESEPueEbvELRrBcBtYNAdZzVJT/ecMNG9UWTQ7pY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qeom1IeEDnuFcX7bKOu8c5qZoos/GN3lNQ1ypjmiJCdKqFu5SeuZ5gyawCtQ1Gsp+v34BNp8pGsSwFbgfoqO45RasDSSIUBnpko8BYXzhwfkmuEVJJiiKJOOsvvBNLWZfUiTq640TjB/H7F1G/9gSeDxWtIO8FFrERDjflJBivM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fghS3DVh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uW9BR5NWahq0gWEeXwYjn66hiJxMLeKHzkheLjBi/IDxnbaksacgcYy6iOdPV1FxenILqpI2KwhB6KlmtYChy0pA6xuyvCCW3GqJUQIRTxIKglsu9LT9QIPFPl0j/6oR71XvomMieCkUMQChLFn05IHzB0Q4tAU7InzvI7j1Uds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TjXbqVnK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fghS3DVh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64DFDC4AF0D;
-	Tue, 16 Jul 2024 15:51:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TjXbqVnK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E338C116B1;
+	Tue, 16 Jul 2024 15:51:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145074;
-	bh=P8yUMUdYJo5yQzSVmJJyj0B29X2igIf6xMOifHR9P4o=;
+	s=korg; t=1721145076;
+	bh=oKoESEPueEbvELRrBcBtYNAdZzVJT/ecMNG9UWTQ7pY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fghS3DVhmZ7ETg9it9vyZEraAvM7jznKIe/OAGtvlP/2YIxHa0YRlTh0UbsbJy1t1
-	 NziY44xjQEC4tyRI+sdEZAPZyoxbwr5dK29soElsotRincEmJ9zxgLlQhRB2DIPakc
-	 bhWLP1FlWGNYjIROaxTu23VvEzyW7zUBbNtFNMps=
+	b=TjXbqVnKDP3zZyvE+GzPbRb+BnWXh0JfasmDG8zfNKhdcceUdz8I3c8HnVWNbvb+T
+	 oBQV45vYMGYRhiWXpjhMASRXqwOnMyEKUlQ4BwhyLrT8NXqicWL3TnAvz/SWz92c+R
+	 SRzSgkwkggAdpwGPceFqJ6RV5CKujHYhyhoTxyX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugh Dickins <hughd@google.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
+	ZhangPeng <zhangpeng362@huawei.com>,
 	David Hildenbrand <david@redhat.com>,
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	"Huang, Ying" <ying.huang@intel.com>,
+	Hugh Dickins <hughd@google.com>,
 	Kefeng Wang <wangkefeng.wang@huawei.com>,
 	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Nhat Pham <nphamcs@gmail.com>,
+	Nanyong Sun <sunnanyong@huawei.com>,
 	Yang Shi <shy828301@gmail.com>,
-	Zi Yan <ziy@nvidia.com>,
+	Yin Fengwei <fengwei.yin@intel.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.9 088/143] mm: fix crashes from deferred split racing folio migration
-Date: Tue, 16 Jul 2024 17:31:24 +0200
-Message-ID: <20240716152759.360945987@linuxfoundation.org>
+Subject: [PATCH 6.9 089/143] filemap: replace pte_offset_map() with pte_offset_map_nolock()
+Date: Tue, 16 Jul 2024 17:31:25 +0200
+Message-ID: <20240716152759.398852434@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -58,99 +59,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugh Dickins <hughd@google.com>
+From: ZhangPeng <zhangpeng362@huawei.com>
 
-commit be9581ea8c058d81154251cb0695987098996cad upstream.
+commit 24be02a42181f0707be0498045c4c4b13273b16d upstream.
 
-Even on 6.10-rc6, I've been seeing elusive "Bad page state"s (often on
-flags when freeing, yet the flags shown are not bad: PG_locked had been
-set and cleared??), and VM_BUG_ON_PAGE(page_ref_count(page) == 0)s from
-deferred_split_scan()'s folio_put(), and a variety of other BUG and WARN
-symptoms implying double free by deferred split and large folio migration.
+The vmf->ptl in filemap_fault_recheck_pte_none() is still set from
+handle_pte_fault().  But at the same time, we did a pte_unmap(vmf->pte).
+After a pte_unmap(vmf->pte) unmap and rcu_read_unlock(), the page table
+may be racily changed and vmf->ptl maybe fails to protect the actual page
+table.  Fix this by replacing pte_offset_map() with
+pte_offset_map_nolock().
 
-6.7 commit 9bcef5973e31 ("mm: memcg: fix split queue list crash when large
-folio migration") was right to fix the memcg-dependent locking broken in
-85ce2c517ade ("memcontrol: only transfer the memcg data for migration"),
-but missed a subtlety of deferred_split_scan(): it moves folios to its own
-local list to work on them without split_queue_lock, during which time
-folio->_deferred_list is not empty, but even the "right" lock does nothing
-to secure the folio and the list it is on.
+As David said, the PTL pointer might be stale so if we continue to use
+it infilemap_fault_recheck_pte_none(), it might trigger UAF.  Also, if
+the PTL fails, the issue fixed by commit 58f327f2ce80 ("filemap: avoid
+unnecessary major faults in filemap_fault()") might reappear.
 
-Fortunately, deferred_split_scan() is careful to use folio_try_get(): so
-folio_migrate_mapping() can avoid the race by folio_undo_large_rmappable()
-while the old folio's reference count is temporarily frozen to 0 - adding
-such a freeze in the !mapping case too (originally, folio lock and
-unmapping and no swap cache left an anon folio unreachable, so no freezing
-was needed there: but the deferred split queue offers a way to reach it).
-
-Link: https://lkml.kernel.org/r/29c83d1a-11ca-b6c9-f92e-6ccb322af510@google.com
-Fixes: 9bcef5973e31 ("mm: memcg: fix split queue list crash when large folio migration")
-Signed-off-by: Hugh Dickins <hughd@google.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: David Hildenbrand <david@redhat.com>
+Link: https://lkml.kernel.org/r/20240313012913.2395414-1-zhangpeng362@huawei.com
+Fixes: 58f327f2ce80 ("filemap: avoid unnecessary major faults in filemap_fault()")
+Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
+Suggested-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Cc: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
+Cc: "Huang, Ying" <ying.huang@intel.com>
 Cc: Hugh Dickins <hughd@google.com>
 Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
 Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: Nanyong Sun <sunnanyong@huawei.com>
 Cc: Yang Shi <shy828301@gmail.com>
-Cc: Zi Yan <ziy@nvidia.com>
+Cc: Yin Fengwei <fengwei.yin@intel.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memcontrol.c |   11 -----------
- mm/migrate.c    |   13 +++++++++++++
- 2 files changed, 13 insertions(+), 11 deletions(-)
+ mm/filemap.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -7609,17 +7609,6 @@ void mem_cgroup_migrate(struct folio *ol
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -3207,7 +3207,8 @@ static vm_fault_t filemap_fault_recheck_
+ 	if (!(vmf->flags & FAULT_FLAG_ORIG_PTE_VALID))
+ 		return 0;
  
- 	/* Transfer the charge and the css ref */
- 	commit_charge(new, memcg);
--	/*
--	 * If the old folio is a large folio and is in the split queue, it needs
--	 * to be removed from the split queue now, in case getting an incorrect
--	 * split queue in destroy_large_folio() after the memcg of the old folio
--	 * is cleared.
--	 *
--	 * In addition, the old folio is about to be freed after migration, so
--	 * removing from the split queue a bit earlier seems reasonable.
--	 */
--	if (folio_test_large(old) && folio_test_large_rmappable(old))
--		folio_undo_large_rmappable(old);
- 	old->memcg_data = 0;
- }
+-	ptep = pte_offset_map(vmf->pmd, vmf->address);
++	ptep = pte_offset_map_nolock(vma->vm_mm, vmf->pmd, vmf->address,
++				     &vmf->ptl);
+ 	if (unlikely(!ptep))
+ 		return VM_FAULT_NOPAGE;
  
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -415,6 +415,15 @@ int folio_migrate_mapping(struct address
- 		if (folio_ref_count(folio) != expected_count)
- 			return -EAGAIN;
- 
-+		/* Take off deferred split queue while frozen and memcg set */
-+		if (folio_test_large(folio) &&
-+		    folio_test_large_rmappable(folio)) {
-+			if (!folio_ref_freeze(folio, expected_count))
-+				return -EAGAIN;
-+			folio_undo_large_rmappable(folio);
-+			folio_ref_unfreeze(folio, expected_count);
-+		}
-+
- 		/* No turning back from here */
- 		newfolio->index = folio->index;
- 		newfolio->mapping = folio->mapping;
-@@ -433,6 +442,10 @@ int folio_migrate_mapping(struct address
- 		return -EAGAIN;
- 	}
- 
-+	/* Take off deferred split queue while frozen and memcg set */
-+	if (folio_test_large(folio) && folio_test_large_rmappable(folio))
-+		folio_undo_large_rmappable(folio);
-+
- 	/*
- 	 * Now we know that no one else is looking at the folio:
- 	 * no turning back from here.
 
 
