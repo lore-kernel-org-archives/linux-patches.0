@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AD391DDCE;
-	Tue, 16 Jul 2024 16:02:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C70A1DDCE;
+	Tue, 16 Jul 2024 16:02:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145749; cv=none; b=k9AxikrBDQESkLINAJKVnioixs/CPLs/Ei03Pqs28OCxJ9i1yLbQ46vL2xAs/SQslJYM8Cj32HGRfIrRTYxBgQYuTMLFbg9ICIbvJvHZREiAnDE4Rj/0NGB4CIz5vZsPIegfyQ39EOjaygDNVIoSs8+qwKdemW3Zh+N/y8xCa4s=
+	t=1721145752; cv=none; b=nSn5UVAUT5TbCo21Z9b6jH3lFnil7eMF1DPWLMgUit6CFlKcuk0nnneM0LJvHFkAxJWWMmFBHfuJKKD022uGgoHuzqk17BaB6PVQT+UQGBDGPqn/5/NOFH4zbZSNK68nmT6Go0aGk0o4SOna1J1M2i3UtNK0waP7zvAPY2k74cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145749; c=relaxed/simple;
-	bh=zVaguHFacRmXlTuG5VwXvQ1PkiXTMu4F6upLtqgFShU=;
+	s=arc-20240116; t=1721145752; c=relaxed/simple;
+	bh=whA5mQS/SHpyIAmH2+hitP/l+uYAK+m3QaGL7HaBtZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L/Nd+MJ6eV0bK7i5SQgpXUvxuUoPTSXJpBCMKNSwph1ddnA1OGV9RDkmaYTcVCHamE+QPdf5zzgaQO/XvBLfwzDjRlojj3WrRbqmWkVp42/3E+BSa05btWLvXm4UV/lTGwFciGCGA5W8+07lWTvlEgXYl8mBdIhWY4jUZrmTY9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dm0HazmL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NiNMKZSSQmqmq0/jdBaNwolA3cc/rN4Ot6A/380PV21le31gFU/e9+Jx6agH7uRG+EIf0V2aKVV0/dcgeArjQSPiOX7HfLrcLyn0HmhN2vxgNlR5ZEmHtVPt1x9cCxm4h8FsjwzP9UFqB6c49rln4/VvbMbdKtHUO+GH4SGq/V4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vHJ7YqpX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dm0HazmL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D481EC116B1;
-	Tue, 16 Jul 2024 16:02:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHJ7YqpX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5146C116B1;
+	Tue, 16 Jul 2024 16:02:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145749;
-	bh=zVaguHFacRmXlTuG5VwXvQ1PkiXTMu4F6upLtqgFShU=;
+	s=korg; t=1721145752;
+	bh=whA5mQS/SHpyIAmH2+hitP/l+uYAK+m3QaGL7HaBtZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dm0HazmLaEMuoz7XKOwxPwI6mSo79pGFQPI20fg9Bp9rX4YUWEKIgJHrxQnteN5Jq
-	 PuDrj0aIv3mxEUYecioR4bzATpMq5S1JWQ+F7lisoutF3h/IjXRvu+Xt9lKvn95ob6
-	 H7ogLXYOxFtHuiCAVFLCTZqkabonOLxOo/lwhCPE=
+	b=vHJ7YqpXhG7YyNj0cMY+BId6PcZ/SaLsXG2HuEdsW3kYcdJp1Rqkr4H+9Af6GAMPK
+	 4reCOlcRnIWt7Yy8VNMgyuOo0hImFbu8NzXbMi9bbptt5ljwBizSPrN4Fi+nnS0PV6
+	 1uMddWk51WcoQLfUm1INwL2P+WqmAwSfnRyTgHqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Bowler <nbowler@draconx.ca>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
-	Baoquan He <bhe@redhat.com>,
-	Christoph Hellwig <hch@infradead.org>,
-	"Hailong.Liu" <hailong.liu@oppo.com>,
-	Oleksiy Avramchenko <oleksiy.avramchenko@sony.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 072/121] mm: vmalloc: check if a hash-index is in cpu_possible_mask
-Date: Tue, 16 Jul 2024 17:32:14 +0200
-Message-ID: <20240716152754.098241529@linuxfoundation.org>
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	netdev@vger.kernel.org,
+	Ronald Wahl <ronald.wahl@raritan.com>
+Subject: [PATCH 6.6 055/121] net: ks8851: Fix deadlock with the SPI chip variant
+Date: Tue, 16 Jul 2024 17:31:57 +0200
+Message-ID: <20240716152753.439385530@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152751.312512071@linuxfoundation.org>
 References: <20240716152751.312512071@linuxfoundation.org>
@@ -55,53 +55,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uladzislau Rezki (Sony) <urezki@gmail.com>
+From: Ronald Wahl <ronald.wahl@raritan.com>
 
-commit a34acf30b19bc4ee3ba2f1082756ea2604c19138 upstream.
+commit 0913ec336a6c0c4a2b296bd9f74f8e41c4c83c8c upstream.
 
-The problem is that there are systems where cpu_possible_mask has gaps
-between set CPUs, for example SPARC.  In this scenario addr_to_vb_xa()
-hash function can return an index which accesses to not-possible and not
-setup CPU area using per_cpu() macro.  This results in an oops on SPARC.
+When SMP is enabled and spinlocks are actually functional then there is
+a deadlock with the 'statelock' spinlock between ks8851_start_xmit_spi
+and ks8851_irq:
 
-A per-cpu vmap_block_queue is also used as hash table, incorrectly
-assuming the cpu_possible_mask has no gaps.  Fix it by adjusting an index
-to a next possible CPU.
+    watchdog: BUG: soft lockup - CPU#0 stuck for 27s!
+    call trace:
+      queued_spin_lock_slowpath+0x100/0x284
+      do_raw_spin_lock+0x34/0x44
+      ks8851_start_xmit_spi+0x30/0xb8
+      ks8851_start_xmit+0x14/0x20
+      netdev_start_xmit+0x40/0x6c
+      dev_hard_start_xmit+0x6c/0xbc
+      sch_direct_xmit+0xa4/0x22c
+      __qdisc_run+0x138/0x3fc
+      qdisc_run+0x24/0x3c
+      net_tx_action+0xf8/0x130
+      handle_softirqs+0x1ac/0x1f0
+      __do_softirq+0x14/0x20
+      ____do_softirq+0x10/0x1c
+      call_on_irq_stack+0x3c/0x58
+      do_softirq_own_stack+0x1c/0x28
+      __irq_exit_rcu+0x54/0x9c
+      irq_exit_rcu+0x10/0x1c
+      el1_interrupt+0x38/0x50
+      el1h_64_irq_handler+0x18/0x24
+      el1h_64_irq+0x64/0x68
+      __netif_schedule+0x6c/0x80
+      netif_tx_wake_queue+0x38/0x48
+      ks8851_irq+0xb8/0x2c8
+      irq_thread_fn+0x2c/0x74
+      irq_thread+0x10c/0x1b0
+      kthread+0xc8/0xd8
+      ret_from_fork+0x10/0x20
 
-Link: https://lkml.kernel.org/r/20240626140330.89836-1-urezki@gmail.com
-Fixes: 062eacf57ad9 ("mm: vmalloc: remove a global vmap_blocks xarray")
-Reported-by: Nick Bowler <nbowler@draconx.ca>
-Closes: https://lore.kernel.org/linux-kernel/ZntjIE6msJbF8zTa@MiWiFi-R3L-srv/T/
-Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
-Reviewed-by: Baoquan He <bhe@redhat.com>
-Cc: Christoph Hellwig <hch@infradead.org>
-Cc: Hailong.Liu <hailong.liu@oppo.com>
-Cc: Oleksiy Avramchenko <oleksiy.avramchenko@sony.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+This issue has not been identified earlier because tests were done on
+a device with SMP disabled and so spinlocks were actually NOPs.
+
+Now use spin_(un)lock_bh for TX queue related locking to avoid execution
+of softirq work synchronously that would lead to a deadlock.
+
+Fixes: 3dc5d4454545 ("net: ks8851: Fix TX stall caused by TX buffer overrun")
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Simon Horman <horms@kernel.org>
+Cc: netdev@vger.kernel.org
+Cc: stable@vger.kernel.org # 5.10+
+Signed-off-by: Ronald Wahl <ronald.wahl@raritan.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20240706101337.854474-1-rwahl@gmx.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmalloc.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/micrel/ks8851_common.c |    8 ++++----
+ drivers/net/ethernet/micrel/ks8851_spi.c    |    4 ++--
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
---- a/mm/vmalloc.c
-+++ b/mm/vmalloc.c
-@@ -1984,7 +1984,15 @@ static DEFINE_PER_CPU(struct vmap_block_
- static struct xarray *
- addr_to_vb_xa(unsigned long addr)
- {
--	int index = (addr / VMAP_BLOCK_SIZE) % num_possible_cpus();
-+	int index = (addr / VMAP_BLOCK_SIZE) % nr_cpu_ids;
-+
-+	/*
-+	 * Please note, nr_cpu_ids points on a highest set
-+	 * possible bit, i.e. we never invoke cpumask_next()
-+	 * if an index points on it which is nr_cpu_ids - 1.
-+	 */
-+	if (!cpu_possible(index))
-+		index = cpumask_next(index, cpu_possible_mask);
+--- a/drivers/net/ethernet/micrel/ks8851_common.c
++++ b/drivers/net/ethernet/micrel/ks8851_common.c
+@@ -352,11 +352,11 @@ static irqreturn_t ks8851_irq(int irq, v
+ 		netif_dbg(ks, intr, ks->netdev,
+ 			  "%s: txspace %d\n", __func__, tx_space);
  
- 	return &per_cpu(vmap_block_queue, index).vmap_blocks;
+-		spin_lock(&ks->statelock);
++		spin_lock_bh(&ks->statelock);
+ 		ks->tx_space = tx_space;
+ 		if (netif_queue_stopped(ks->netdev))
+ 			netif_wake_queue(ks->netdev);
+-		spin_unlock(&ks->statelock);
++		spin_unlock_bh(&ks->statelock);
+ 	}
+ 
+ 	if (status & IRQ_SPIBEI) {
+@@ -635,14 +635,14 @@ static void ks8851_set_rx_mode(struct ne
+ 
+ 	/* schedule work to do the actual set of the data if needed */
+ 
+-	spin_lock(&ks->statelock);
++	spin_lock_bh(&ks->statelock);
+ 
+ 	if (memcmp(&rxctrl, &ks->rxctrl, sizeof(rxctrl)) != 0) {
+ 		memcpy(&ks->rxctrl, &rxctrl, sizeof(ks->rxctrl));
+ 		schedule_work(&ks->rxctrl_work);
+ 	}
+ 
+-	spin_unlock(&ks->statelock);
++	spin_unlock_bh(&ks->statelock);
+ }
+ 
+ static int ks8851_set_mac_address(struct net_device *dev, void *addr)
+--- a/drivers/net/ethernet/micrel/ks8851_spi.c
++++ b/drivers/net/ethernet/micrel/ks8851_spi.c
+@@ -340,10 +340,10 @@ static void ks8851_tx_work(struct work_s
+ 
+ 	tx_space = ks8851_rdreg16_spi(ks, KS_TXMIR);
+ 
+-	spin_lock(&ks->statelock);
++	spin_lock_bh(&ks->statelock);
+ 	ks->queued_len -= dequeued_len;
+ 	ks->tx_space = tx_space;
+-	spin_unlock(&ks->statelock);
++	spin_unlock_bh(&ks->statelock);
+ 
+ 	ks8851_unlock_spi(ks, &flags);
  }
 
 
