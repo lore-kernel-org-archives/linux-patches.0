@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A2919EEB1;
-	Tue, 16 Jul 2024 15:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 782F8136643;
+	Tue, 16 Jul 2024 15:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144526; cv=none; b=MzN35R+7ZnQ49WxobmTKXrK7gIPybJUxkEvrMSg9aeqBi0sUCxQzjI9ckO4OJdSGa8H0f999IZRYweBD6ldRev9tSlmRPXJXiphKPZKSptxcwSh6m4aUccDQbkMsh3AGl/OGHYh+/NtBo09+ZrHUmRkdkqvAKcQtL8mMZdfc46U=
+	t=1721144529; cv=none; b=oEqIBi3RHSQ08QxC7Eweo2LMPVvmNVTt3A3vWYI8gSGv+8QT+JFYdmY2SiSkZg2oaXchVahk4ojo7zEY9n/HNW/Ff36V51gB57YDbzSUHpGP8Qx7SSoDAY4nu9aFyglezhxLkO5KbNK0UFqSCraEEFVCLeL6EwNLZdII0BYJtQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144526; c=relaxed/simple;
-	bh=vROyVmyUCogV5zhs9vReVc5GlGkFo6uVvfQN0lefpFs=;
+	s=arc-20240116; t=1721144529; c=relaxed/simple;
+	bh=K/Z78X4M7EqzFQtjqbBC8c9n+JrdZLs6ECdQJipKuFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QQRtOgppDwwSPXbjbnh8oxQiaVHaT8bMtIbsxaVq1nzcjyfxltdqFldH6Gih6f7mUQm/eYcL03aiGprhUV+wwNSe8dxnS8bpV5DtXoUV/wpaTjVYRA+MwzU+gSOchSwrwBEZ3GUTyO3vOlbaxKN8ThnPeHyPHVP4LEtySnhasU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z5w2QHHN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BygEaKEIi7NywFDPDC1qjflzKxL62nEnC13Og4JT34mrk2Pd4yQeMCCjRSM8md7ltG9nGuGmmdwK9332mH3c9p+XedeIu/3Aw3M5T3HTICZx59yE0po1H1FS7aQ/gdKtDSNh7+nO2gBsppiVnq7ztnoXR8oE1zd513XnJuKY0VM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UYJnvZN+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z5w2QHHN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E64BC4AF0B;
-	Tue, 16 Jul 2024 15:42:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UYJnvZN+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3A19C4AF0B;
+	Tue, 16 Jul 2024 15:42:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144526;
-	bh=vROyVmyUCogV5zhs9vReVc5GlGkFo6uVvfQN0lefpFs=;
+	s=korg; t=1721144529;
+	bh=K/Z78X4M7EqzFQtjqbBC8c9n+JrdZLs6ECdQJipKuFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z5w2QHHN8XpNNoECsbKJkeoVywqn7m6Hxvku6RFErpxRoLGYp3B5K/uyiys3rWSMn
-	 X++Yhf6n5azCnMnSNpPWJXDzcEds6kHhMe+9646hJ5A5Kj66sY+iQXqAdk7YSxvAiv
-	 kLXBTqEqfQUsCqO7Tota/dFazglLKTWIKmH9C0as=
+	b=UYJnvZN+2Dr1XdqDSR0aPG+3rNkOtK9kgOCWAsTEydbxE39OTGA2ZRW6wnFEGd3rO
+	 4Xtg1U6ebPh5t2WH6NOaSob/NcOTQVP52nLHNHuK/OEMQiUYhv7Ga7nUEsqO+npLnu
+	 IbmvQPyJ/hyOZDE3o5T+wRNwoZZ07bM0mU+PWhpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brendan Higgins <brendanhiggins@google.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Kees Cook <keescook@chromium.org>,
-	David Gow <davidgow@google.com>,
-	Rae Moar <rmoar@google.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Greg Kurz <groug@kaod.org>,
+	=?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 022/108] kunit: Fix timeout message
-Date: Tue, 16 Jul 2024 17:30:37 +0200
-Message-ID: <20240716152746.854244413@linuxfoundation.org>
+Subject: [PATCH 5.10 023/108] powerpc/xmon: Check cpu id in commands "c#", "dp#" and "dx#"
+Date: Tue, 16 Jul 2024 17:30:38 +0200
+Message-ID: <20240716152746.891824852@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152745.988603303@linuxfoundation.org>
 References: <20240716152745.988603303@linuxfoundation.org>
@@ -56,47 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mickaël Salaün <mic@digikod.net>
+From: Greg Kurz <groug@kaod.org>
 
-[ Upstream commit 53026ff63bb07c04a0e962a74723eb10ff6f9dc7 ]
+[ Upstream commit 8873aab8646194a4446117bb617cc71bddda2dee ]
 
-The exit code is always checked, so let's properly handle the -ETIMEDOUT
-error code.
+All these commands end up peeking into the PACA using the user
+originated cpu id as an index. Check the cpu id is valid in order
+to prevent xmon to crash. Instead of printing an error, this follows
+the same behavior as the "lp s #" command : ignore the buggy cpu id
+parameter and fall back to the #-less version of the command.
 
-Cc: Brendan Higgins <brendanhiggins@google.com>
-Cc: Shuah Khan <skhan@linuxfoundation.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: David Gow <davidgow@google.com>
-Reviewed-by: Rae Moar <rmoar@google.com>
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
-Link: https://lore.kernel.org/r/20240408074625.65017-4-mic@digikod.net
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Greg Kurz <groug@kaod.org>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/161531347060.252863.10490063933688958044.stgit@bahia.lan
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/kunit/try-catch.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/powerpc/xmon/xmon.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/lib/kunit/try-catch.c b/lib/kunit/try-catch.c
-index 71e5c58530996..d18da926b2cd7 100644
---- a/lib/kunit/try-catch.c
-+++ b/lib/kunit/try-catch.c
-@@ -76,7 +76,6 @@ void kunit_try_catch_run(struct kunit_try_catch *try_catch, void *context)
- 	time_remaining = wait_for_completion_timeout(&try_completion,
- 						     kunit_test_timeout());
- 	if (time_remaining == 0) {
--		kunit_err(test, "try timed out\n");
- 		try_catch->try_result = -ETIMEDOUT;
- 	}
+diff --git a/arch/powerpc/xmon/xmon.c b/arch/powerpc/xmon/xmon.c
+index 3de2adc0a8074..a2883360d07c9 100644
+--- a/arch/powerpc/xmon/xmon.c
++++ b/arch/powerpc/xmon/xmon.c
+@@ -1249,7 +1249,7 @@ static int cpu_cmd(void)
+ 	unsigned long cpu, first_cpu, last_cpu;
+ 	int timeout;
  
-@@ -89,6 +88,8 @@ void kunit_try_catch_run(struct kunit_try_catch *try_catch, void *context)
- 		try_catch->try_result = 0;
- 	else if (exit_code == -EINTR)
- 		kunit_err(test, "wake_up_process() was never called\n");
-+	else if (exit_code == -ETIMEDOUT)
-+		kunit_err(test, "try timed out\n");
- 	else if (exit_code)
- 		kunit_err(test, "Unknown error: %d\n", exit_code);
+-	if (!scanhex(&cpu)) {
++	if (!scanhex(&cpu) || cpu >= num_possible_cpus()) {
+ 		/* print cpus waiting or in xmon */
+ 		printf("cpus stopped:");
+ 		last_cpu = first_cpu = NR_CPUS;
+@@ -2680,7 +2680,7 @@ static void dump_pacas(void)
  
+ 	termch = c;	/* Put c back, it wasn't 'a' */
+ 
+-	if (scanhex(&num))
++	if (scanhex(&num) && num < num_possible_cpus())
+ 		dump_one_paca(num);
+ 	else
+ 		dump_one_paca(xmon_owner);
+@@ -2777,7 +2777,7 @@ static void dump_xives(void)
+ 
+ 	termch = c;	/* Put c back, it wasn't 'a' */
+ 
+-	if (scanhex(&num))
++	if (scanhex(&num) && num < num_possible_cpus())
+ 		dump_one_xive(num);
+ 	else
+ 		dump_one_xive(xmon_owner);
 -- 
 2.43.0
 
