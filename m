@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2B119FA6A;
-	Tue, 16 Jul 2024 15:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E074F9E8;
+	Tue, 16 Jul 2024 15:43:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144579; cv=none; b=HabAj3xodRKkVAKlsMNaS6wEqbwqn5REVRejf6JW6f0f6RBTS0Zc/Onmzr2mNUMGfWRM4bAAaeaBb0uN5eTCx1s1fH9MzrbgAczVpZnbPmOFoKduWADleAKZLsbMAZ5+02OQw2M6IH/LytroSn4YSdwmOLrGVERLG2rRLuCWf8Q=
+	t=1721144581; cv=none; b=cz/BzPwpQwDxK2XBcOscA8luvfpJ/V8pOullJ4H6PPranut+g+VEXKEunjFWFqp+ZTslFMtyzGkSKoIljJBzxyyjkXKcSzuFaeolNSlXOidr3zdzCkIZjvdd1IhskyNUnhhZyU9XBkYYcLhTUI201fiNVsGkgA4dvCV7qvnnn1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144579; c=relaxed/simple;
-	bh=jJzleNTJY38zCS6V9r+lKKex1WbyR5ZLkcVZENOW7yY=;
+	s=arc-20240116; t=1721144581; c=relaxed/simple;
+	bh=DnELbNB/We1pvCQLLAyYuPZJl5zAFrq/IUsmh/9lvLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HZoDXy5cj0ciCeYA55ZCXT+FpiW+HOCaY2Hm+eh9llci8q+NWPzxjFHkm7Fu2qGDbZ05teY67aX6oc5iYu9/eFxNcwxwM9dfECB805pupRrRybgoOctGq+HqY1VF83HrD5Liq1GoEJnVj54ZEWmqBq/PH+vmZiDRlf0H6FNizB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wUY8p5db; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CPdcY5Dl1Z4CZkSI8w0junmHDO/HY3Cf5UZWBwsrdj2nBQOcczGYShjoKLkec1E8r3+EDS5H+d0S+EL8+M9cgyX6wkzcs+5ByrbdTKD1DVxPX5eNUcM5EUQqcFu0uHZXzKKmakzetKTxyg5S8eje3aY9wjLn1ZBHZspihsflnWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fjnFDt6m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wUY8p5db"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37651C4AF0F;
-	Tue, 16 Jul 2024 15:42:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fjnFDt6m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2723BC116B1;
+	Tue, 16 Jul 2024 15:43:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144578;
-	bh=jJzleNTJY38zCS6V9r+lKKex1WbyR5ZLkcVZENOW7yY=;
+	s=korg; t=1721144581;
+	bh=DnELbNB/We1pvCQLLAyYuPZJl5zAFrq/IUsmh/9lvLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wUY8p5db4DnXg3zcCW+/fWYn/G/4AB6gLpuUUiCevpINESt/kG5muByKtKHToyfwH
-	 yGWmQW2OvuSyykAxaKj8Ll6ovn1mEQKu+9zOUUx6ubWujhl50/iWSuL0DSk+tOezLr
-	 ApIcka7wzu/XXgHUNK2bwTC8PcL3FnjRUXI3Uwo4=
+	b=fjnFDt6msxKxRcHWAd8FuG8Ce42eUbPoIjIUN/csCkqg4kdb43+C87w8t92iu9MBH
+	 4ZX1jmjA6HbFnqVj9qH/dve0JU3MuhduBg5i7hftb/ka7B1wxVmTL8cC7EFDY15kBY
+	 epqg7dLbwFXxatj9jUn2deSuxIQsUNk1ypkhAF2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jimmy Assarsson <extja@kvaser.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.10 039/108] can: kvaser_usb: Explicitly initialize family in leafimx driver_info struct
-Date: Tue, 16 Jul 2024 17:30:54 +0200
-Message-ID: <20240716152747.496869070@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 5.10 040/108] fsnotify: Do not generate events for O_PATH file descriptors
+Date: Tue, 16 Jul 2024 17:30:55 +0200
+Message-ID: <20240716152747.534434839@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152745.988603303@linuxfoundation.org>
 References: <20240716152745.988603303@linuxfoundation.org>
@@ -50,33 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jimmy Assarsson <extja@kvaser.com>
+From: Jan Kara <jack@suse.cz>
 
-commit 19d5b2698c35b2132a355c67b4d429053804f8cc upstream.
+commit 702eb71fd6501b3566283f8c96d7ccc6ddd662e9 upstream.
 
-Explicitly set the 'family' driver_info struct member for leafimx.
-Previously, the correct operation relied on KVASER_LEAF being the first
-defined value in enum kvaser_usb_leaf_family.
+Currently we will not generate FS_OPEN events for O_PATH file
+descriptors but we will generate FS_CLOSE events for them. This is
+asymmetry is confusing. Arguably no fsnotify events should be generated
+for O_PATH file descriptors as they cannot be used to access or modify
+file content, they are just convenient handles to file objects like
+paths. So fix the asymmetry by stopping to generate FS_CLOSE for O_PATH
+file descriptors.
 
-Fixes: e6c80e601053 ("can: kvaser_usb: kvaser_usb_leaf: fix CAN clock frequency regression")
-Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
-Link: https://lore.kernel.org/all/20240628194529.312968-1-extja@kvaser.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20240617162303.1596-1-jack@suse.cz
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c |    1 +
- 1 file changed, 1 insertion(+)
+ include/linux/fsnotify.h |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
-@@ -114,6 +114,7 @@ static const struct kvaser_usb_driver_in
+--- a/include/linux/fsnotify.h
++++ b/include/linux/fsnotify.h
+@@ -93,7 +93,13 @@ static inline int fsnotify_file(struct f
+ {
+ 	const struct path *path = &file->f_path;
  
- static const struct kvaser_usb_driver_info kvaser_usb_driver_info_leafimx = {
- 	.quirks = 0,
-+	.family = KVASER_LEAF,
- 	.ops = &kvaser_usb_leaf_dev_ops,
- };
+-	if (file->f_mode & FMODE_NONOTIFY)
++	/*
++	 * FMODE_NONOTIFY are fds generated by fanotify itself which should not
++	 * generate new events. We also don't want to generate events for
++	 * FMODE_PATH fds (involves open & close events) as they are just
++	 * handle creation / destruction events and not "real" file events.
++	 */
++	if (file->f_mode & (FMODE_NONOTIFY | FMODE_PATH))
+ 		return 0;
  
+ 	return fsnotify_parent(path->dentry, mask, path, FSNOTIFY_EVENT_PATH);
 
 
