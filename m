@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942961448ED;
-	Tue, 16 Jul 2024 15:34:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E95F9E8;
+	Tue, 16 Jul 2024 15:34:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144056; cv=none; b=qMm0ZlY8uNt5+LeiCvqEsLlUdA6DVbf/Rdi/ostr/tSQSfATjFzS2epksPcj9A5SStJHeBhQlu57GNt3wh6Xj+oNDMavhlhuA5Diu4m0lU3RbUvd48yBWYHyruUXkA1Vguqn5j9Rq5hAfNRpAN0ptQeJFZ+AuhihbBzywdVkoFM=
+	t=1721144059; cv=none; b=KxSP3kPmmflMmLQSBWafnlCEhBvlnkcm1DHwhmxItiYkbhl0AWey0XIu9EQGEnk2DM80avUpGANwHBGxGZCTCbqFlAsfvLlWhqY+dmWyrmEBTvPOymLDxKJMcN/MU3nyDMGxsqShRL2OsTBaErY2TVDWpk7OkthAyuKq8ILyj7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144056; c=relaxed/simple;
-	bh=omEYgwGydIeQxTS4FGz/Ne7aLOelFc7mb44q6ObFbtA=;
+	s=arc-20240116; t=1721144059; c=relaxed/simple;
+	bh=zEBmncYbM5h71XFsDCU0kGxQiUTjcHe/OPp3KpLtreA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GyzxTSUuyEhmHR40RLS4ipH3UyZx+pcE3cjxJz6yxUKcszUiUMH1E8g8GgdWof3+IKkNnKo7O9/+z/6Rlf+ogz7/VauOVceQv+Q+RvZU1nw38UMM8azF9TUK+RaT2XPukPnUOnCZrRAscEVF4LrQ5pV3gnm36jSHuNRiVZSzBhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dL4lTPzu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZXElU7ZOoh9qUH0/DvH0YG6FG+KD7gsCMOvuYDS3s0KPSIEb1suDjDNU+Nm44tOYsPt7HrlciZI4hKjCPXsECdepJqO0hP+M8yvhj6Or4DvEjZgDeIKzNnUMkab3pJ5JZfDwuMKPNX6EhKvfNESYyfjPDJd11rO+hjBKDRbuwyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LhC5MFdw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dL4lTPzu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3268C116B1;
-	Tue, 16 Jul 2024 15:34:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LhC5MFdw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F3DC116B1;
+	Tue, 16 Jul 2024 15:34:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144056;
-	bh=omEYgwGydIeQxTS4FGz/Ne7aLOelFc7mb44q6ObFbtA=;
+	s=korg; t=1721144059;
+	bh=zEBmncYbM5h71XFsDCU0kGxQiUTjcHe/OPp3KpLtreA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dL4lTPzuT+ZbB7/iFnoTIZa3P17cL+8VpTILIvlqScRqbdUjBvjmcONwcbngMf5LE
-	 0vmC3VvYW3zNBlXJ9EwEIWBbqoBA2QGbCHJdhni12IAI+AdWu/33NTCeSupOAwUlu1
-	 08SErWwvCGc461Zv1sLGX+ZVsESddumfsCQwArZc=
+	b=LhC5MFdw01imsX7ugPqFOykAs/30s4dI35dQqcUMp+/U/wTJudSQLk3E8E/+0e9VB
+	 e4BD3rWiA6Yv5eKKZD/lvZt2Dkhq2u8mxYXeWCPYliB+XDtiLG95Q7Kt2n7x5KgJuU
+	 FsDHCSgyNuyP6rRKGtkGGRwlPRkpq0H+Z6QDQgsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 13/66] i2c: i801: Annotate apanel_addr as __ro_after_init
-Date: Tue, 16 Jul 2024 17:30:48 +0200
-Message-ID: <20240716152738.669651202@linuxfoundation.org>
+Subject: [PATCH 4.19 02/66] media: dvb-usb: dib0700_devices: Add missing release_firmware()
+Date: Tue, 16 Jul 2024 17:30:37 +0200
+Message-ID: <20240716152738.260387099@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152738.161055634@linuxfoundation.org>
 References: <20240716152738.161055634@linuxfoundation.org>
@@ -51,33 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 355b1513b1e97b6cef84b786c6480325dfd3753d ]
+[ Upstream commit 4b267c23ee064bd24c6933df0588ad1b6e111145 ]
 
-Annotate this variable as __ro_after_init to protect it from being
-overwritten later.
+Add missing release_firmware on the error paths.
 
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+drivers/media/usb/dvb-usb/dib0700_devices.c:2415 stk9090m_frontend_attach() warn: 'state->frontend_firmware' from request_firmware() not released on lines: 2415.
+drivers/media/usb/dvb-usb/dib0700_devices.c:2497 nim9090md_frontend_attach() warn: 'state->frontend_firmware' from request_firmware() not released on lines: 2489,2497.
+
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-i801.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/dvb-usb/dib0700_devices.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-i801.c b/drivers/i2c/busses/i2c-i801.c
-index c18b899e510ec..c1e2539b79502 100644
---- a/drivers/i2c/busses/i2c-i801.c
-+++ b/drivers/i2c/busses/i2c-i801.c
-@@ -1039,7 +1039,7 @@ static const struct pci_device_id i801_ids[] = {
- MODULE_DEVICE_TABLE(pci, i801_ids);
+diff --git a/drivers/media/usb/dvb-usb/dib0700_devices.c b/drivers/media/usb/dvb-usb/dib0700_devices.c
+index c8d79502827b7..e2ac9eec34d7c 100644
+--- a/drivers/media/usb/dvb-usb/dib0700_devices.c
++++ b/drivers/media/usb/dvb-usb/dib0700_devices.c
+@@ -2427,7 +2427,12 @@ static int stk9090m_frontend_attach(struct dvb_usb_adapter *adap)
  
- #if defined CONFIG_X86 && defined CONFIG_DMI
--static unsigned char apanel_addr;
-+static unsigned char apanel_addr __ro_after_init;
+ 	adap->fe_adap[0].fe = dvb_attach(dib9000_attach, &adap->dev->i2c_adap, 0x80, &stk9090m_config);
  
- /* Scan the system ROM for the signature "FJKEYINF" */
- static __init const void __iomem *bios_signature(const void __iomem *bios)
+-	return adap->fe_adap[0].fe == NULL ?  -ENODEV : 0;
++	if (!adap->fe_adap[0].fe) {
++		release_firmware(state->frontend_firmware);
++		return -ENODEV;
++	}
++
++	return 0;
+ }
+ 
+ static int dib9090_tuner_attach(struct dvb_usb_adapter *adap)
+@@ -2500,8 +2505,10 @@ static int nim9090md_frontend_attach(struct dvb_usb_adapter *adap)
+ 	dib9000_i2c_enumeration(&adap->dev->i2c_adap, 1, 0x20, 0x80);
+ 	adap->fe_adap[0].fe = dvb_attach(dib9000_attach, &adap->dev->i2c_adap, 0x80, &nim9090md_config[0]);
+ 
+-	if (adap->fe_adap[0].fe == NULL)
++	if (!adap->fe_adap[0].fe) {
++		release_firmware(state->frontend_firmware);
+ 		return -ENODEV;
++	}
+ 
+ 	i2c = dib9000_get_i2c_master(adap->fe_adap[0].fe, DIBX000_I2C_INTERFACE_GPIO_3_4, 0);
+ 	dib9000_i2c_enumeration(i2c, 1, 0x12, 0x82);
+@@ -2509,7 +2516,12 @@ static int nim9090md_frontend_attach(struct dvb_usb_adapter *adap)
+ 	fe_slave = dvb_attach(dib9000_attach, i2c, 0x82, &nim9090md_config[1]);
+ 	dib9000_set_slave_frontend(adap->fe_adap[0].fe, fe_slave);
+ 
+-	return fe_slave == NULL ?  -ENODEV : 0;
++	if (!fe_slave) {
++		release_firmware(state->frontend_firmware);
++		return -ENODEV;
++	}
++
++	return 0;
+ }
+ 
+ static int nim9090md_tuner_attach(struct dvb_usb_adapter *adap)
 -- 
 2.43.0
 
