@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01514B641;
-	Tue, 16 Jul 2024 15:40:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26BE6B641;
+	Tue, 16 Jul 2024 15:40:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144447; cv=none; b=rkzL1yyCt1h2nlH7g2nPf1Snn9n/hykYkUlb5lMZ1haGWSB+nI6gHMMHkPRAzDGq4RmPvt4wCGDs1EvSrJG1mV61qwTalpiJTtRrV7Bgkss3/weyU+0n8VJfSNYSac5D/ab3QUBKMwOIGsNboj3xTRB7NtFIlPP9nlDeqtMH2E0=
+	t=1721144450; cv=none; b=CdlOMslcfHkfjOVoK7ycWW6QKxESsarMZ58vwV93Yl44ENp1SCerVxT1m7xeyT01p4swHsjf9Y4yQ5Z0BElFLujifBZyrjbYgfvbxwPBExMJVAMW9iw21Oztpb7e/hjAda49qgFqUevul/M2Hvlbj+knVIi1yNvrP6/WB0iLVuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144447; c=relaxed/simple;
-	bh=vHNFAvV9yiz9yYLeTdKYKcCxAngw9b5sgD8bnuzrGcQ=;
+	s=arc-20240116; t=1721144450; c=relaxed/simple;
+	bh=5L5hG9q3k+qOgID5fqKICmXF9n5hQpBo/7LKKiOWC+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FS4vCmDw9A8iq5ZiBn7kNAN51qvFRD5fKOZkSoMxk0lH9lz5pIPBSbx0KVBhk1ETPyJhDRSFUuhpxh/1c+feFdLrbG711ZmrRstwrONYWX53Od9fwz1YjIkhk4L8Bi+ZAK05wpmdhYqaHf3RJ9iquaeswXpifSmVMD2N3EVktvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dvv7Ea2/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IMlNpIqTXrW2RxBAjeLyiBpNA1piKc0cy7bW9WAyBkVtogN/btkmG3qXcB4qQFgnkPXODEDJM7/cJzT4MGdmcUYgdPGydCwq5j/8o/NSh1KiFtL16eti5Wsdg9J65cGPzXigu0s+cmdQQTN4TWly8vdOLEVqSF1tLYEaIqw/pZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s+XQ/+G1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dvv7Ea2/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6B5C116B1;
-	Tue, 16 Jul 2024 15:40:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s+XQ/+G1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A331DC116B1;
+	Tue, 16 Jul 2024 15:40:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144446;
-	bh=vHNFAvV9yiz9yYLeTdKYKcCxAngw9b5sgD8bnuzrGcQ=;
+	s=korg; t=1721144450;
+	bh=5L5hG9q3k+qOgID5fqKICmXF9n5hQpBo/7LKKiOWC+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dvv7Ea2/+m+CZjQ39vuQxr8PRFWXZGR9JDaVSKRTegGJPa8pkdJRx0McqbudKnRhY
-	 Kr6Nyo6nDpSTelkAHfu/oXD5TOWZkffj0uPvaeuk7k9aF63Bo47vGvmlGQYbdna3zg
-	 uGqHUpOx3gp13ZjWYigP3kqGZwPd0HEGJ4Wt0FRM=
+	b=s+XQ/+G1EMIW6hhJPsMgL2z/e14aWK1kwJI3iKGEmqwIoH/1vZ82FgZTYWk2DHbFt
+	 IGQU+qRJZz8f+YmhmEjpi1qmf0eQnxtRTIdROKTH/jCiDFd1QuMdkB0rF+dBYxBkLa
+	 /KVwClgL41OqMbri2AMYDhQOL3QgdFJwGgBzm4cY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
-	Menglong Dong <imagedong@tencent.com>,
 	Neal Cardwell <ncardwell@google.com>,
 	Jason Xing <kerneljasonxing@gmail.com>,
+	Jon Maxwell <jmaxwell37@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 75/78] tcp: use signed arithmetic in tcp_rtx_probe0_timed_out()
-Date: Tue, 16 Jul 2024 17:31:47 +0200
-Message-ID: <20240716152743.540850005@linuxfoundation.org>
+Subject: [PATCH 5.4 76/78] tcp: avoid too many retransmit packets
+Date: Tue, 16 Jul 2024 17:31:48 +0200
+Message-ID: <20240716152743.581264286@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152740.626160410@linuxfoundation.org>
 References: <20240716152740.626160410@linuxfoundation.org>
@@ -55,49 +56,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-commit 36534d3c54537bf098224a32dc31397793d4594d upstream.
+commit 97a9063518f198ec0adb2ecb89789de342bb8283 upstream.
 
-Due to timer wheel implementation, a timer will usually fire
-after its schedule.
+If a TCP socket is using TCP_USER_TIMEOUT, and the other peer
+retracted its window to zero, tcp_retransmit_timer() can
+retransmit a packet every two jiffies (2 ms for HZ=1000),
+for about 4 minutes after TCP_USER_TIMEOUT has 'expired'.
 
-For instance, for HZ=1000, a timeout between 512ms and 4s
-has a granularity of 64ms.
-For this range of values, the extra delay could be up to 63ms.
+The fix is to make sure tcp_rtx_probe0_timed_out() takes
+icsk->icsk_user_timeout into account.
 
-For TCP, this means that tp->rcv_tstamp may be after
-inet_csk(sk)->icsk_timeout whenever the timer interrupt
-finally triggers, if one packet came during the extra delay.
+Before blamed commit, the socket would not timeout after
+icsk->icsk_user_timeout, but would use standard exponential
+backoff for the retransmits.
 
-We need to make sure tcp_rtx_probe0_timed_out() handles this case.
+Also worth noting that before commit e89688e3e978 ("net: tcp:
+fix unexcepted socket die when snd_wnd is 0"), the issue
+would last 2 minutes instead of 4.
 
-Fixes: e89688e3e978 ("net: tcp: fix unexcepted socket die when snd_wnd is 0")
+Fixes: b701a99e431d ("tcp: Add tcp_clamp_rto_to_user_timeout() helper to improve accuracy")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Menglong Dong <imagedong@tencent.com>
-Acked-by: Neal Cardwell <ncardwell@google.com>
+Cc: Neal Cardwell <ncardwell@google.com>
 Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
-Link: https://lore.kernel.org/r/20240607125652.1472540-1-edumazet@google.com
+Reviewed-by: Jon Maxwell <jmaxwell37@gmail.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20240710001402.2758273-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_timer.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/ipv4/tcp_timer.c |   22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
 --- a/net/ipv4/tcp_timer.c
 +++ b/net/ipv4/tcp_timer.c
-@@ -439,8 +439,13 @@ static bool tcp_rtx_probe0_timed_out(con
+@@ -437,22 +437,34 @@ static void tcp_fastopen_synack_timer(st
+ static bool tcp_rtx_probe0_timed_out(const struct sock *sk,
+ 				     const struct sk_buff *skb)
  {
++	const struct inet_connection_sock *icsk = inet_csk(sk);
++	u32 user_timeout = READ_ONCE(icsk->icsk_user_timeout);
  	const struct tcp_sock *tp = tcp_sk(sk);
- 	const int timeout = TCP_RTO_MAX * 2;
--	u32 rcv_delta, rtx_delta;
-+	u32 rtx_delta;
-+	s32 rcv_delta;
+-	const int timeout = TCP_RTO_MAX * 2;
++	int timeout = TCP_RTO_MAX * 2;
+ 	u32 rtx_delta;
+ 	s32 rcv_delta;
  
-+	/* Note: timer interrupt might have been delayed by at least one jiffy,
-+	 * and tp->rcv_tstamp might very well have been written recently.
-+	 * rcv_delta can thus be negative.
-+	 */
- 	rcv_delta = inet_csk(sk)->icsk_timeout - tp->rcv_tstamp;
++	rtx_delta = (u32)msecs_to_jiffies(tcp_time_stamp(tp) -
++			(tp->retrans_stamp ?: tcp_skb_timestamp(skb)));
++
++	if (user_timeout) {
++		/* If user application specified a TCP_USER_TIMEOUT,
++		 * it does not want win 0 packets to 'reset the timer'
++		 * while retransmits are not making progress.
++		 */
++		if (rtx_delta > user_timeout)
++			return true;
++		timeout = min_t(u32, timeout, msecs_to_jiffies(user_timeout));
++	}
++
+ 	/* Note: timer interrupt might have been delayed by at least one jiffy,
+ 	 * and tp->rcv_tstamp might very well have been written recently.
+ 	 * rcv_delta can thus be negative.
+ 	 */
+-	rcv_delta = inet_csk(sk)->icsk_timeout - tp->rcv_tstamp;
++	rcv_delta = icsk->icsk_timeout - tp->rcv_tstamp;
  	if (rcv_delta <= timeout)
  		return false;
+ 
+-	rtx_delta = (u32)msecs_to_jiffies(tcp_time_stamp(tp) -
+-			(tp->retrans_stamp ?: tcp_skb_timestamp(skb)));
+-
+ 	return rtx_delta > timeout;
+ }
+ 
 
 
