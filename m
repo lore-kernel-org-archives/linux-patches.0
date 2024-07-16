@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6FE1DDE9;
-	Tue, 16 Jul 2024 16:01:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 111371DDCE;
+	Tue, 16 Jul 2024 16:01:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145667; cv=none; b=DRtAGwEr8rWX4fx7wHs+IWCU8/okdbmKrAseN1jU6AyKhQDOy5eS0xI3mrbzKEe/9Z8oYN+XUksQDNb92ODMYJIZ0zd+0rmBKWIRsn/xi0nG8D7SQykTdOXcg3WmrJaqkcvk0kAtXTw6IO3zHpVPgGeKjNkMs3dXQhwPTezKfMc=
+	t=1721145670; cv=none; b=k/2ATLEn8qmZCTH/gTnYSO1DnPN0jaeu7lE80fwR3s30GaG76LDuHSUrRGyv7vMBNSrwCfF4xVXJh0dm1o1on6sTZMImGIbEFGd1LjaZAy9GnjTa73Ftl6TTvZyddg08f7SlNhfibwPKS8JCCcpnhfNI8Ees+EpqIciilQKdvGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145667; c=relaxed/simple;
-	bh=2hfRZ8sCa0urjZUnLNmerxS2cNFR+ffLRXl9g9nIKn0=;
+	s=arc-20240116; t=1721145670; c=relaxed/simple;
+	bh=tJrs9q8wfKY+KwkdRymiYpsroCB+FcNstDf6b+CXNxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lsrdVkAfdwAuxM09cSrzH+94fhOjctOXddj6K49uXu3NjSIhZkQsb+tjZcfmLPEA99oQRwRssGzFu9OEkI0bFyOaA8dzJHZtQkndw8Lb49iad/v0O1TcehRrYej5SiAN54nwJF6xv3mUZyF9wAbYgyk6+HkLQZUOLPPFmFimzaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wxt0OjXx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AYx/y0X+nGBtfrlLtfa0UIDzMfZ3EqogCJ+2WPooL86ryimJZGMbpoeLWXy8+RdZMqybLHBCVOPLo9dkOH4vaqzsCyzvrNV/bu+K+e035t365gXGwPdFuxRTaMhMTqOIWxnD2XCodtmLmjxJeu7O1zfzl5px8sYXD1RFdpaB+Ws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mB9h0fMl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wxt0OjXx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85932C116B1;
-	Tue, 16 Jul 2024 16:01:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mB9h0fMl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82383C116B1;
+	Tue, 16 Jul 2024 16:01:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145666;
-	bh=2hfRZ8sCa0urjZUnLNmerxS2cNFR+ffLRXl9g9nIKn0=;
+	s=korg; t=1721145669;
+	bh=tJrs9q8wfKY+KwkdRymiYpsroCB+FcNstDf6b+CXNxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wxt0OjXxMTGKyT9z7HqoNJYxO4Agu1jvxq4laJ6e0qi05x/B48AlKOPClFql+1X9z
-	 V19iUY/8qZFLsCIoU4cbdGZRXKNj+DGhPIepTEPJWUfSb0xtmOWFTHyVgU47qiHRdq
-	 gEqu9vp/M+mLKnLKKPrsnyWzYjyw49v+eBjWEcxw=
+	b=mB9h0fMl2DOgx60IizOj3+s2tMCJ8lArYY/zCUywjvUylcbs6P8tJoQZK/wuXKAHu
+	 +d/eK01rjju4nujY9pGDPbyXeYvXMmsZckqzlHqpcnK7r6QibxVRjJarQU0R9SSlRn
+	 zrbHRg4LnhugJUjnG9xBaG371YBO5ph8JnTZ6Fhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 043/121] firmware: cs_dsp: Use strnlen() on name fields in V1 wmfw files
-Date: Tue, 16 Jul 2024 17:31:45 +0200
-Message-ID: <20240716152752.981348273@linuxfoundation.org>
+Subject: [PATCH 6.6 044/121] ARM: davinci: Convert comma to semicolon
+Date: Tue, 16 Jul 2024 17:31:46 +0200
+Message-ID: <20240716152753.020335054@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152751.312512071@linuxfoundation.org>
 References: <20240716152751.312512071@linuxfoundation.org>
@@ -51,48 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 680e126ec0400f6daecf0510c5bb97a55779ff03 ]
+[ Upstream commit acc3815db1a02d654fbc19726ceaadca0d7dd81c ]
 
-Use strnlen() instead of strlen() on the algorithm and coefficient name
-string arrays in V1 wmfw files.
+Replace a comma between expression statements by a semicolon.
 
-In V1 wmfw files the name is a NUL-terminated string in a fixed-size
-array. cs_dsp should protect against overrunning the array if the NUL
-terminator is missing.
-
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Fixes: f6bc909e7673 ("firmware: cs_dsp: add driver to support firmware loading on Cirrus Logic DSPs")
-Link: https://patch.msgid.link/20240708144855.385332-1-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: efc1bb8a6fd5 ("davinci: add power management support")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/cirrus/cs_dsp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/mach-davinci/pm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/cirrus/cs_dsp.c b/drivers/firmware/cirrus/cs_dsp.c
-index 5eba9e913f7c3..bd1651e709365 100644
---- a/drivers/firmware/cirrus/cs_dsp.c
-+++ b/drivers/firmware/cirrus/cs_dsp.c
-@@ -1128,7 +1128,7 @@ static int cs_dsp_coeff_parse_alg(struct cs_dsp *dsp,
+diff --git a/arch/arm/mach-davinci/pm.c b/arch/arm/mach-davinci/pm.c
+index 8aa39db095d76..2c5155bd376ba 100644
+--- a/arch/arm/mach-davinci/pm.c
++++ b/arch/arm/mach-davinci/pm.c
+@@ -61,7 +61,7 @@ static void davinci_pm_suspend(void)
  
- 		blk->id = le32_to_cpu(raw->id);
- 		blk->name = raw->name;
--		blk->name_len = strlen(raw->name);
-+		blk->name_len = strnlen(raw->name, ARRAY_SIZE(raw->name));
- 		blk->ncoeff = le32_to_cpu(raw->ncoeff);
+ 	/* Configure sleep count in deep sleep register */
+ 	val = __raw_readl(pm_config.deepsleep_reg);
+-	val &= ~DEEPSLEEP_SLEEPCOUNT_MASK,
++	val &= ~DEEPSLEEP_SLEEPCOUNT_MASK;
+ 	val |= pm_config.sleepcount;
+ 	__raw_writel(val, pm_config.deepsleep_reg);
  
- 		pos = sizeof(*raw);
-@@ -1204,7 +1204,7 @@ static int cs_dsp_coeff_parse_coeff(struct cs_dsp *dsp,
- 			return -EOVERFLOW;
- 
- 		blk->name = raw->name;
--		blk->name_len = strlen(raw->name);
-+		blk->name_len = strnlen(raw->name, ARRAY_SIZE(raw->name));
- 		blk->ctl_type = le16_to_cpu(raw->ctl_type);
- 		blk->flags = le16_to_cpu(raw->flags);
- 		blk->len = le32_to_cpu(raw->len);
 -- 
 2.43.0
 
