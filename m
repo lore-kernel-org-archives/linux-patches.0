@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F5B1DDCE;
-	Tue, 16 Jul 2024 15:52:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE5217A93F;
+	Tue, 16 Jul 2024 15:52:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145165; cv=none; b=c2P+jdwR9s1EVJpxUJeNzmZN9LtsPaIAnIDsWdan7rJuzdG3RRQNAzA8QJTUzDfSg5WC6Zd9dVFvonkZbXhsm39IZZ4VIPTeYlg44wEU/4sj12wlY3SboDEwnC78F67OENN+IrnTu9/PUkv8YQ2WzkpxVu1gTlxcQ2R19bAyol0=
+	t=1721145168; cv=none; b=BuUVTfd11ttJK+j+vEQ8NekIT1hehn7Z/jlRM3qh7PZ9jcOE38Z13mvr4JSlslPdYyAru2QCZ/jxKntbBKFwUZFWke1TZw4t+ayKGCjjcwiHRPNv28g4GwBtlW+C6NnrxMyALnbK5lMCRcBjxX+uAdlx1st2tAyYqHdQgkLzc/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145165; c=relaxed/simple;
-	bh=+eYoPk/MwCSCBT2nMaLlJYrbDbPAIskh5Vw2TrNrmYA=;
+	s=arc-20240116; t=1721145168; c=relaxed/simple;
+	bh=jSs8+24+wsWiog2gy3u9O/QYrRA2WEahyy48Ry3/bzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qP1ryebo8jkoyqc/UIziL8+Ei11vgSxOJhCot/ZAT1iTPo9w3ZTiJRPmIllyP0VCmK8zAobDJMGEifTukxdsZELSv0VBeN9zBp/+AdZC/NbTGIFEJULN17Am24Z7kKR0d5j8CXVvcq1t0Wc6Xf5gcHKOnTRPeHx4PG3r8Gs4dS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QTKymMzE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lba6913PwtaFy2CDtyZkBg3TJX0mn/amN9OuAN9uWl8gLiT941wSd4hl58qaaVLk/nOXylt1QEchVfjE7SM5XJlyBfg+VI+zFvcTYqcdP2eSelCB6z6Kh9A9bXcoyWQJNBoGg7l0fCEJVegUyCLkWBWHKSz+rM2xZ6wFBY7h8a4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ror1fgM7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTKymMzE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9103AC116B1;
-	Tue, 16 Jul 2024 15:52:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ror1fgM7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E07C116B1;
+	Tue, 16 Jul 2024 15:52:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145165;
-	bh=+eYoPk/MwCSCBT2nMaLlJYrbDbPAIskh5Vw2TrNrmYA=;
+	s=korg; t=1721145168;
+	bh=jSs8+24+wsWiog2gy3u9O/QYrRA2WEahyy48Ry3/bzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QTKymMzEKatVHBMSYVTX9Ew6tTO2obXaPH/Y3o6lTCyUSO/hjGyK/tTHXFmxC+LhD
-	 choE16hYCxPSlyLM/6+W7mRa8jmEXmApVNwgfVGRUEjimcOworiTq8SPR4+H2vfe9g
-	 ca2CIp25PUXU+CJVzinsuMBDh+LaY6Kr9ZCy3C/k=
+	b=ror1fgM7YPSfThHvx6UsqfZUYY2t6JUwMMtlRD9Dfpi9SNmGtRNjgay7tMEVsotMR
+	 J5l/GM1qe6i4ctxbPEyUqHzXdtGTjOsdhL6JDUd/PUASV1xNryfMyFLB6n8+951Dv+
+	 gjP50/VijsgG5K7ddjBBvcsxmrlZbIvBZJcAtVF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	John Garry <john.g.garry@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.9 093/143] scsi: sd: Do not repeat the starting disk message
-Date: Tue, 16 Jul 2024 17:31:29 +0200
-Message-ID: <20240716152759.554308808@linuxfoundation.org>
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.9 120/143] wireguard: selftests: use acpi=off instead of -no-acpi for recent QEMU
+Date: Tue, 16 Jul 2024 17:31:56 +0200
+Message-ID: <20240716152800.597048864@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -52,69 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-commit 7a6bbc2829d4ab592c7e440a6f6f5deb3cd95db4 upstream.
+commit 2cb489eb8dfc291060516df313ff31f4f9f3d794 upstream.
 
-The SCSI disk message "Starting disk" to signal resuming of a suspended
-disk is printed in both sd_resume() and sd_resume_common() which results
-in this message being printed twice when resuming from e.g. autosuspend:
+QEMU 9.0 removed -no-acpi, in favor of machine properties, so update the
+Makefile to use the correct QEMU invocation.
 
-$ echo 5000 > /sys/block/sda/device/power/autosuspend_delay_ms
-$ echo auto > /sys/block/sda/device/power/control
-
-[ 4962.438293] sd 0:0:0:0: [sda] Synchronizing SCSI cache
-[ 4962.501121] sd 0:0:0:0: [sda] Stopping disk
-
-$ echo on > /sys/block/sda/device/power/control
-
-[ 4972.805851] sd 0:0:0:0: [sda] Starting disk
-[ 4980.558806] sd 0:0:0:0: [sda] Starting disk
-
-Fix this double print by removing the call to sd_printk() from sd_resume()
-and moving the call to sd_printk() in sd_resume_common() earlier in the
-function, before the check using sd_do_start_stop().  Doing so, the message
-is printed once regardless if sd_resume_common() actually executes
-sd_start_stop_device() (i.e. SCSI device case) or not (libsas and libata
-managed ATA devices case).
-
-Fixes: 0c76106cb975 ("scsi: sd: Fix TCG OPAL unlock on system resume")
 Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20240701215326.128067-1-dlemoal@kernel.org
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: b83fdcd9fb8a ("wireguard: selftests: use microvm on x86")
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Link: https://patch.msgid.link/20240704154517.1572127-2-Jason@zx2c4.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/sd.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ tools/testing/selftests/wireguard/qemu/Makefile |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -4127,8 +4127,6 @@ static int sd_resume(struct device *dev)
- {
- 	struct scsi_disk *sdkp = dev_get_drvdata(dev);
- 
--	sd_printk(KERN_NOTICE, sdkp, "Starting disk\n");
--
- 	if (opal_unlock_from_suspend(sdkp->opal_dev)) {
- 		sd_printk(KERN_NOTICE, sdkp, "OPAL unlock failed\n");
- 		return -EIO;
-@@ -4145,12 +4143,13 @@ static int sd_resume_common(struct devic
- 	if (!sdkp)	/* E.g.: runtime resume at the start of sd_probe() */
- 		return 0;
- 
-+	sd_printk(KERN_NOTICE, sdkp, "Starting disk\n");
-+
- 	if (!sd_do_start_stop(sdkp->device, runtime)) {
- 		sdkp->suspended = false;
- 		return 0;
- 	}
- 
--	sd_printk(KERN_NOTICE, sdkp, "Starting disk\n");
- 	ret = sd_start_stop_device(sdkp, 1);
- 	if (!ret) {
- 		sd_resume(dev);
+--- a/tools/testing/selftests/wireguard/qemu/Makefile
++++ b/tools/testing/selftests/wireguard/qemu/Makefile
+@@ -109,9 +109,9 @@ KERNEL_ARCH := x86_64
+ KERNEL_BZIMAGE := $(KERNEL_BUILD_PATH)/arch/x86/boot/bzImage
+ QEMU_VPORT_RESULT := virtio-serial-device
+ ifeq ($(HOST_ARCH),$(ARCH))
+-QEMU_MACHINE := -cpu host -machine microvm,accel=kvm,pit=off,pic=off,rtc=off -no-acpi
++QEMU_MACHINE := -cpu host -machine microvm,accel=kvm,pit=off,pic=off,rtc=off,acpi=off
+ else
+-QEMU_MACHINE := -cpu max -machine microvm -no-acpi
++QEMU_MACHINE := -cpu max -machine microvm,acpi=off
+ endif
+ else ifeq ($(ARCH),i686)
+ CHOST := i686-linux-musl
+@@ -120,9 +120,9 @@ KERNEL_ARCH := x86
+ KERNEL_BZIMAGE := $(KERNEL_BUILD_PATH)/arch/x86/boot/bzImage
+ QEMU_VPORT_RESULT := virtio-serial-device
+ ifeq ($(subst x86_64,i686,$(HOST_ARCH)),$(ARCH))
+-QEMU_MACHINE := -cpu host -machine microvm,accel=kvm,pit=off,pic=off,rtc=off -no-acpi
++QEMU_MACHINE := -cpu host -machine microvm,accel=kvm,pit=off,pic=off,rtc=off,acpi=off
+ else
+-QEMU_MACHINE := -cpu coreduo -machine microvm -no-acpi
++QEMU_MACHINE := -cpu coreduo -machine microvm,acpi=off
+ endif
+ else ifeq ($(ARCH),mips64)
+ CHOST := mips64-linux-musl
 
 
