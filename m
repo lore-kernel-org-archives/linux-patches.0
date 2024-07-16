@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7ECF9E8;
-	Tue, 16 Jul 2024 15:41:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A20CF9E8;
+	Tue, 16 Jul 2024 15:41:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144476; cv=none; b=PwJFZsbxpFryjn8drTYvk8FC43T+iQC9DHiFb7jYv2btMHgTMYuVlrntmKvotqabHD57IIrL92ltFFFPi0hlTyS/FkOvRI0EdtQmYY1QUCc7mqqawsC9lfSrkhxc68u/yfsjMoPNouBF4oFpQ/N4mUeX06fbKrGnlCOGM55F0xQ=
+	t=1721144479; cv=none; b=rF+ol4VBff0ZopebswfmvAOntAE2HMhkHqU7BozBN2tI1gmDotPGzBq671xy+lK3hJE075VE5GmiPEUmjxcAIBMQymuaqwqBC4DggCJiiqNHwcjpWfBFLWdPpEV0z9oZLcLR5olKd5V/PbFrULTTtSkeVNF3JD4ZuYBOPGDZZq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144476; c=relaxed/simple;
-	bh=abwGrbh/0o2GxIukyPO7V7iItAu9dd7e7YwYiJNO+sw=;
+	s=arc-20240116; t=1721144479; c=relaxed/simple;
+	bh=YTi/IUXhZfUlz59bj+AtzplOzi5yRKXc40nssl7LnUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C4TNcupZ9GA9C81SRRTM5rRXUDD4QHdI8+U7+TCA0L5BOmZNqA8E3N7mZmF4q1L7N9QkDABv9W5bgOX+rgf2g5pvHQxtjS7gUhYfJQO8l+/RINtGJB6lD3+3Jf5+ze/mpgkdpgw9uYCfNjTLkL3Xo7wxauoY9IvCrWuGcoimh34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t7jPilCr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tXVAGkBngaEWMynOmP+aCYDcD2aS2lW8Pb2fz1hFBjMM/U0FuzLhNKWNspmbKUjF/pTFZ79Kh/Gxd+JYILtHfS9qSHY5hfP48Jy0LpS67HwJnoRzzIOZOEcWqvHwm1Ds7b/TzoEwYlLViCV+gsqZYFk1p/Y/1N2dYlrbTMXvo9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mUu3nRI9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t7jPilCr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C64C116B1;
-	Tue, 16 Jul 2024 15:41:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mUu3nRI9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3CDFC116B1;
+	Tue, 16 Jul 2024 15:41:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144476;
-	bh=abwGrbh/0o2GxIukyPO7V7iItAu9dd7e7YwYiJNO+sw=;
+	s=korg; t=1721144479;
+	bh=YTi/IUXhZfUlz59bj+AtzplOzi5yRKXc40nssl7LnUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t7jPilCr6phm4AygBeVevkwejq7Kv4Xo3xDJ1sR00TP+20uJSQAdcGEsnHxFROcog
-	 suQahLMEjK1UaMOLiDVUINsUGb2fjIxV+SeLujZdpURujN8ItbUXR79rLIOStGlqr/
-	 xfsfrV0tYD4oqsjzt6OxY0V6VxgrMM4wHXXjSoIc=
+	b=mUu3nRI92wGDvqmuexhpV7+QdYjer0YP1ltwZZexXMTaLa2niApFP6DBXHl8T/ptL
+	 4LLbc3mLE8aJhunKzQXVxa+XxvEMqI+D04akFyh40HIPLZCyKKo4uGDGhjNigEy3Ic
+	 akuE8csT8C53kc4AGs2xxdq2+bWIFQa/2diha0H0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Mazur <mmazur2@marvell.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 58/78] octeontx2-af: fix detection of IP layer
-Date: Tue, 16 Jul 2024 17:31:30 +0200
-Message-ID: <20240716152742.888487029@linuxfoundation.org>
+	Daniele Palmas <dnlplm@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.4 59/78] USB: serial: option: add Telit generic core-dump composition
+Date: Tue, 16 Jul 2024 17:31:31 +0200
+Message-ID: <20240716152742.926565135@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152740.626160410@linuxfoundation.org>
 References: <20240716152740.626160410@linuxfoundation.org>
@@ -51,50 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Mazur <mmazur2@marvell.com>
+From: Daniele Palmas <dnlplm@gmail.com>
 
-[ Upstream commit 404dc0fd6fb0bb942b18008c6f8c0320b80aca20 ]
+commit 4298e400dbdbf259549d69c349e060652ad53611 upstream.
 
-Checksum and length checks are not enabled for IPv4 header with
-options and IPv6 with extension headers.
-To fix this a change in enum npc_kpu_lc_ltype is required which will
-allow adjustment of LTYPE_MASK to detect all types of IP headers.
+Add the following core-dump composition, used in different Telit modems:
 
-Fixes: 21e6699e5cd6 ("octeontx2-af: Add NPC KPU profile")
-Signed-off-by: Michal Mazur <mmazur2@marvell.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+0x9000: tty (sahara)
+T:  Bus=03 Lev=01 Prnt=03 Port=07 Cnt=01 Dev#= 41 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=9000 Rev=00.00
+S:  Manufacturer=Telit Cinterion
+S:  Product=FN990-dump
+S:  SerialNumber=e815bdde
+C:  #Ifs= 1 Cfg#= 1 Atr=a0 MxPwr=2mA
+I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=10 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/npc.h | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/usb/serial/option.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/npc.h b/drivers/net/ethernet/marvell/octeontx2/af/npc.h
-index 5d4df315a0e19..86d5bda2c0bff 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/npc.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/npc.h
-@@ -38,14 +38,18 @@ enum npc_kpu_lb_ltype {
- 	NPC_LT_LB_ITAG,
- };
- 
-+/* Don't modify ltypes up to IP6_EXT, otherwise length and checksum of IP
-+ * headers may not be checked correctly. IPv4 ltypes and IPv6 ltypes must
-+ * differ only at bit 0 so mask 0xE can be used to detect extended headers.
-+ */
- enum npc_kpu_lc_ltype {
--	NPC_LT_LC_IP = 1,
-+	NPC_LT_LC_PTP = 1,
-+	NPC_LT_LC_IP,
- 	NPC_LT_LC_IP6,
- 	NPC_LT_LC_ARP,
- 	NPC_LT_LC_RARP,
- 	NPC_LT_LC_MPLS,
- 	NPC_LT_LC_NSH,
--	NPC_LT_LC_PTP,
- 	NPC_LT_LC_FCOE,
- };
- 
--- 
-2.43.0
-
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -1433,6 +1433,8 @@ static const struct usb_device_id option
+ 	  .driver_info = NCTRL(2) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x701b, 0xff),	/* Telit LE910R1 (ECM) */
+ 	  .driver_info = NCTRL(2) },
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x9000, 0xff),	/* Telit generic core-dump device */
++	  .driver_info = NCTRL(0) },
+ 	{ USB_DEVICE(TELIT_VENDOR_ID, 0x9010),				/* Telit SBL FN980 flashing device */
+ 	  .driver_info = NCTRL(0) | ZLP },
+ 	{ USB_DEVICE(TELIT_VENDOR_ID, 0x9200),				/* Telit LE910S1 flashing device */
 
 
