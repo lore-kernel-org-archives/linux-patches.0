@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F401DDCE;
-	Tue, 16 Jul 2024 16:01:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99FF51DDCE;
+	Tue, 16 Jul 2024 16:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145687; cv=none; b=tIoPle0pnWCgnh9WnZ3AT+UQUIPtXcRbthOPI/JDobnWGaPVxfedCkgvP9T8MdQyr07Nemd3muvrmNiUSFI8IIv23ohrlGVQVajazqzkSvgnk5a5xsTdoLzQlKDBX7YCL80/50lHlAoOd20z0WCTMRufAI6EfFEnf0T15wcOTGM=
+	t=1721145690; cv=none; b=Pj9IZILHEHsoCdIm6OqqqJqxJbSMMYwlC6A7hUZT2tWs909aX33E/XISp0X3relyXDfssHdsXmmzyUWyKxuIiVu6fmGGTC4lv1RSOYBe8z+bv66qgFBusJXBMjTfNj0RAVAo3jfcg7Fk6E6qVmsJKOSwQJsuiylCwS1aFZOuV/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145687; c=relaxed/simple;
-	bh=dbltCaQKgTysJQDe1/JGNiNh2Wfzn7aZaGxE6ln0VzY=;
+	s=arc-20240116; t=1721145690; c=relaxed/simple;
+	bh=xPyGzfbrXsMzATJqG/4dlspoE/L+Z/DXW7ZMCr39ELw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=efAiYc5FcfwIzE/HADhKyvZA4iIIuVIXS2V7rR4M7/XKAmL/3QUtCgOpCSnl23zAMjZTVDLaVesRpLT4uaUXiF733lJ/ogURJjizDDe571/gaTnwAeo7CGcvr3J1leJI43p5uD8S1t8/pmxEKC0KHsDuGHa7EaIQq6tixe8D7QQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yqKv1+fJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rR9n18SNPUEcKf14SDYUXwdaiK46Ek8HQBnkTG73jMiKYHeII09gTnjePTCr9Xc+hPKDqvS4KNcisP1jlrzyH8B65uhAhP+aFcXKV1uocQxJjuSGT5ckCMOlUfvQ5od9IdMuo71BkZLQAhaRDPdM6Y+kQRgdZ2UQWuw4MqMeIkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S3aBh2Se; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yqKv1+fJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 341CBC116B1;
-	Tue, 16 Jul 2024 16:01:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S3aBh2Se"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20B3EC116B1;
+	Tue, 16 Jul 2024 16:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145687;
-	bh=dbltCaQKgTysJQDe1/JGNiNh2Wfzn7aZaGxE6ln0VzY=;
+	s=korg; t=1721145690;
+	bh=xPyGzfbrXsMzATJqG/4dlspoE/L+Z/DXW7ZMCr39ELw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yqKv1+fJMXUfJgFDcvt1UaeGFqN/xjo0OTlTa6DeruOvy9G75zPPKdd5iEGH8Cz5c
-	 4KtL+wQL8fw4NFJRh940035BWTGcoPiM43FnYATorzsMUbxD0+f/aE2ZQDqnelLidU
-	 /57LRDQpp9d/tXp0/5pRzpnZIsrtHJUDrlgng4j0=
+	b=S3aBh2Seu0Rthz+erk82bE1EOJdkPAT1accxlSyn8z6Y2vRUDskZhGx4m02XKogQW
+	 eikeR30emNRHJSx2+kCpMcqpDF39Djn31yeSUFtOTxqzf2s8vdtz6moE94WwLFOwxt
+	 dAw9THMkVuYb+mZe5ABOSkc2hkcDz6NaVgewI1ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugh Dickins <hughd@google.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Satheesh Paul <psatheesh@marvell.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 023/121] net: fix rc7s __skb_datagram_iter()
-Date: Tue, 16 Jul 2024 17:31:25 +0200
-Message-ID: <20240716152752.214473024@linuxfoundation.org>
+Subject: [PATCH 6.6 050/121] octeontx2-af: fix issue with IPv4 match for RSS
+Date: Tue, 16 Jul 2024 17:31:52 +0200
+Message-ID: <20240716152753.249820154@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152751.312512071@linuxfoundation.org>
 References: <20240716152751.312512071@linuxfoundation.org>
@@ -52,43 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugh Dickins <hughd@google.com>
+From: Satheesh Paul <psatheesh@marvell.com>
 
-[ Upstream commit f153831097b4435f963e385304cc0f1acba1c657 ]
+[ Upstream commit 60795bbf047654c9f8ae88d34483233a56033578 ]
 
-X would not start in my old 32-bit partition (and the "n"-handling looks
-just as wrong on 64-bit, but for whatever reason did not show up there):
-"n" must be accumulated over all pages before it's added to "offset" and
-compared with "copy", immediately after the skb_frag_foreach_page() loop.
+While performing RSS based on IPv4, packets with
+IPv4 options are not being considered. Adding changes
+to match both plain IPv4 and IPv4 with option header.
 
-Fixes: d2d30a376d9c ("net: allow skb_datagram_iter to be called from any context")
-Signed-off-by: Hugh Dickins <hughd@google.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Link: https://patch.msgid.link/fef352e8-b89a-da51-f8ce-04bc39ee6481@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 41a7aa7b800d ("octeontx2-af: NIX Rx flowkey configuration for RSS")
+Signed-off-by: Satheesh Paul <psatheesh@marvell.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/datagram.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/datagram.c b/net/core/datagram.c
-index e49aaf2d48b80..ef4e9e423d393 100644
---- a/net/core/datagram.c
-+++ b/net/core/datagram.c
-@@ -441,11 +441,12 @@ static int __skb_datagram_iter(const struct sk_buff *skb, int offset,
- 			if (copy > len)
- 				copy = len;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+index e7ef07f1f0bb9..a07e5c8786c4b 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+@@ -3519,6 +3519,8 @@ static int get_flowkey_alg_idx(struct nix_hw *nix_hw, u32 flow_cfg)
  
-+			n = 0;
- 			skb_frag_foreach_page(frag,
- 					      skb_frag_off(frag) + offset - start,
- 					      copy, p, p_off, p_len, copied) {
- 				vaddr = kmap_local_page(p);
--				n = INDIRECT_CALL_1(cb, simple_copy_to_iter,
-+				n += INDIRECT_CALL_1(cb, simple_copy_to_iter,
- 					vaddr + p_off, p_len, data, to);
- 				kunmap_local(vaddr);
+ /* Mask to match ipv6(NPC_LT_LC_IP6) and ipv6 ext(NPC_LT_LC_IP6_EXT) */
+ #define NPC_LT_LC_IP6_MATCH_MSK ((~(NPC_LT_LC_IP6 ^ NPC_LT_LC_IP6_EXT)) & 0xf)
++/* Mask to match both ipv4(NPC_LT_LC_IP) and ipv4 ext(NPC_LT_LC_IP_OPT) */
++#define NPC_LT_LC_IP_MATCH_MSK  ((~(NPC_LT_LC_IP ^ NPC_LT_LC_IP_OPT)) & 0xf)
+ 
+ static int set_flowkey_fields(struct nix_rx_flowkey_alg *alg, u32 flow_cfg)
+ {
+@@ -3589,7 +3591,7 @@ static int set_flowkey_fields(struct nix_rx_flowkey_alg *alg, u32 flow_cfg)
+ 			field->hdr_offset = 9; /* offset */
+ 			field->bytesm1 = 0; /* 1 byte */
+ 			field->ltype_match = NPC_LT_LC_IP;
+-			field->ltype_mask = 0xF;
++			field->ltype_mask = NPC_LT_LC_IP_MATCH_MSK;
+ 			break;
+ 		case NIX_FLOW_KEY_TYPE_IPV4:
+ 		case NIX_FLOW_KEY_TYPE_INNR_IPV4:
+@@ -3616,8 +3618,7 @@ static int set_flowkey_fields(struct nix_rx_flowkey_alg *alg, u32 flow_cfg)
+ 					field->bytesm1 = 3; /* DIP, 4 bytes */
+ 				}
  			}
+-
+-			field->ltype_mask = 0xF; /* Match only IPv4 */
++			field->ltype_mask = NPC_LT_LC_IP_MATCH_MSK;
+ 			keyoff_marker = false;
+ 			break;
+ 		case NIX_FLOW_KEY_TYPE_IPV6:
 -- 
 2.43.0
 
