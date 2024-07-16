@@ -1,47 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4B417A93F;
-	Tue, 16 Jul 2024 15:51:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA7E19B3EC;
+	Tue, 16 Jul 2024 15:51:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145065; cv=none; b=qQXmtq2gAl+LGXBXhfshYEPZdHG8T9an6Dq0mznn4ZsMSRllHIKF9mcWVz4EDvP00OrLTEeLFqBnIoPvxW2xPwSd2HaNnI951B4YYA9QPlmd73jDpbKQRS384Ke9vXHGxxHo837iLaGuhG6MmqPlkBGFmxqWN0MjnxCrSuk0+kI=
+	t=1721145068; cv=none; b=dbwXNzJQjwymfm25tMRfD30UekWSPYTaUS70QQt3Gshpn1P+2EsJs5UkumYqicNY4m8cd/35RKuIwq7uBU3H2xSSD2jMMXGbDB90hwgi85sZc2r+7o2lWgjkW9mDP3BB9uBCqSoEbJkZDZwF2mCS9piVxGLMofy67lb6or2L1EY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145065; c=relaxed/simple;
-	bh=dPGYHwRyTV075muJGCkO2C6LngU86bwdWlRSx5JzmiE=;
+	s=arc-20240116; t=1721145068; c=relaxed/simple;
+	bh=Inq+bGdkJPUTdRlFj4x0aHcsHvqz+4w4NgnTMVpxXpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qks2SBWVKnY4LFxiCfyXUQReNQO9nIcAt8arj+YcPgWj7ypzusHQ8jeJpbhtzrbpFIJ5ve6eH6MX1uthi3kwb1wLMeFMG/zzubGie1DJ8114dpJiYCpWCyDfpWt4v4UixPMz3q6faiGQ6jhiwnWS0ZR9/7CrD38M5b0iwRQdy2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LV3ayjDY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iSC2ajj2dt06Ok5SsP5RuNeOaZ5C3C82KCDKE983gXawUEtSVMZqdafp01PRYvFMC+y+vZU2Wi6QbXSOYWw5cTNV/hu2CjAFcq/QLq6NjllxEG/flzxvKhFLbt2AEUHqgoe49i+f9o/bfOluJm5zz0ZTgUXoKNUXbSa5w2OlvbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9kp5Ijx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LV3ayjDY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A874C116B1;
-	Tue, 16 Jul 2024 15:51:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9kp5Ijx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 977D7C4AF0B;
+	Tue, 16 Jul 2024 15:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145065;
-	bh=dPGYHwRyTV075muJGCkO2C6LngU86bwdWlRSx5JzmiE=;
+	s=korg; t=1721145068;
+	bh=Inq+bGdkJPUTdRlFj4x0aHcsHvqz+4w4NgnTMVpxXpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LV3ayjDYNw/SbozYr64KqWdtJUpqQuAAgRgBznyMby124lPAjnChU+eqcyoUyxrl7
-	 oPIyHqbphOREbXCyTRkuk3GFVThP7sBqgxV0C+l01wqpvxf/O72VLPW1COlRdrinsh
-	 XsuQHOaqrxEmCAlylwtSkWnF+0qKiMlay/joYe7w=
+	b=H9kp5IjxyT4loj/irsmhkIN+9tJ51wfRprKrCkY3GoySCwK+tmxhXP8cXXx0B5UEj
+	 74MpcMAQm46Pg0tBW98yQpElDD7PtIsD+/uODtH5QB3voeL521is3hfQDcZWWdsNl8
+	 2qsVotthG4n161+7iBH2YzZ8cvNvC8YP6mm7wc9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nhat Pham <nphamcs@gmail.com>,
-	syzbot+b7f13b2d0cc156edf61a@syzkaller.appspotmail.com,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	David Hildenbrand <david@redhat.com>,
-	"Huang, Ying" <ying.huang@intel.com>,
-	Kairui Song <kasong@tencent.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Yosry Ahmed <yosryahmed@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.9 086/143] cachestat: do not flush stats in recency check
-Date: Tue, 16 Jul 2024 17:31:22 +0200
-Message-ID: <20240716152759.281987724@linuxfoundation.org>
+	Nithin Dabilpuram <ndabilpuram@marvell.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.9 060/143] octeontx2-af: replace cpt slot with lf id on reg write
+Date: Tue, 16 Jul 2024 17:30:56 +0200
+Message-ID: <20240716152758.287982964@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -60,119 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nhat Pham <nphamcs@gmail.com>
+From: Nithin Dabilpuram <ndabilpuram@marvell.com>
 
-commit 5a4d8944d6b1e1aaaa83ea42c116b520b4ed0394 upstream.
+[ Upstream commit bc35e28af7890085dcbe5cc32373647dfb4d9af9 ]
 
-syzbot detects that cachestat() is flushing stats, which can sleep, in its
-RCU read section (see [1]).  This is done in the workingset_test_recent()
-step (which checks if the folio's eviction is recent).
+Replace slot id with global CPT lf id on reg read/write as
+CPTPF/VF driver would send slot number instead of global
+lf id in the reg offset. And also update the mailbox response
+with the global lf's register offset.
 
-Move the stat flushing step to before the RCU read section of cachestat,
-and skip stat flushing during the recency check.
-
-[1]: https://lore.kernel.org/cgroups/000000000000f71227061bdf97e0@google.com/
-
-Link: https://lkml.kernel.org/r/20240627201737.3506959-1-nphamcs@gmail.com
-Fixes: b00684722262 ("mm: workingset: move the stats flush into workingset_test_recent()")
-Signed-off-by: Nhat Pham <nphamcs@gmail.com>
-Reported-by: syzbot+b7f13b2d0cc156edf61a@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/cgroups/000000000000f71227061bdf97e0@google.com/
-Debugged-by: Johannes Weiner <hannes@cmpxchg.org>
-Suggested-by: Johannes Weiner <hannes@cmpxchg.org>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: "Huang, Ying" <ying.huang@intel.com>
-Cc: Kairui Song <kasong@tencent.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Yosry Ahmed <yosryahmed@google.com>
-Cc: <stable@vger.kernel.org>	[6.8+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ae454086e3c2 ("octeontx2-af: add mailbox interface for CPT")
+Signed-off-by: Nithin Dabilpuram <ndabilpuram@marvell.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/swap.h |    3 ++-
- mm/filemap.c         |    5 ++++-
- mm/workingset.c      |   14 +++++++++++---
- 3 files changed, 17 insertions(+), 5 deletions(-)
+ .../ethernet/marvell/octeontx2/af/rvu_cpt.c   | 23 +++++++++++++------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
---- a/include/linux/swap.h
-+++ b/include/linux/swap.h
-@@ -344,7 +344,8 @@ static inline swp_entry_t page_swap_entr
- }
- 
- /* linux/mm/workingset.c */
--bool workingset_test_recent(void *shadow, bool file, bool *workingset);
-+bool workingset_test_recent(void *shadow, bool file, bool *workingset,
-+				bool flush);
- void workingset_age_nonresident(struct lruvec *lruvec, unsigned long nr_pages);
- void *workingset_eviction(struct folio *folio, struct mem_cgroup *target_memcg);
- void workingset_refault(struct folio *folio, void *shadow);
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -4153,6 +4153,9 @@ static void filemap_cachestat(struct add
- 	XA_STATE(xas, &mapping->i_pages, first_index);
- 	struct folio *folio;
- 
-+	/* Flush stats (and potentially sleep) outside the RCU read section. */
-+	mem_cgroup_flush_stats_ratelimited(NULL);
-+
- 	rcu_read_lock();
- 	xas_for_each(&xas, folio, last_index) {
- 		int order;
-@@ -4216,7 +4219,7 @@ static void filemap_cachestat(struct add
- 					goto resched;
- 			}
- #endif
--			if (workingset_test_recent(shadow, true, &workingset))
-+			if (workingset_test_recent(shadow, true, &workingset, false))
- 				cs->nr_recently_evicted += nr_pages;
- 
- 			goto resched;
---- a/mm/workingset.c
-+++ b/mm/workingset.c
-@@ -412,10 +412,12 @@ void *workingset_eviction(struct folio *
-  * @file: whether the corresponding folio is from the file lru.
-  * @workingset: where the workingset value unpacked from shadow should
-  * be stored.
-+ * @flush: whether to flush cgroup rstat.
-  *
-  * Return: true if the shadow is for a recently evicted folio; false otherwise.
-  */
--bool workingset_test_recent(void *shadow, bool file, bool *workingset)
-+bool workingset_test_recent(void *shadow, bool file, bool *workingset,
-+				bool flush)
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cpt.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cpt.c
+index f047185f38e0f..3e09d22858147 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cpt.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cpt.c
+@@ -696,7 +696,8 @@ int rvu_mbox_handler_cpt_rd_wr_register(struct rvu *rvu,
+ 					struct cpt_rd_wr_reg_msg *req,
+ 					struct cpt_rd_wr_reg_msg *rsp)
  {
- 	struct mem_cgroup *eviction_memcg;
- 	struct lruvec *eviction_lruvec;
-@@ -467,10 +469,16 @@ bool workingset_test_recent(void *shadow
+-	int blkaddr;
++	u64 offset = req->reg_offset;
++	int blkaddr, lf;
  
- 	/*
- 	 * Flush stats (and potentially sleep) outside the RCU read section.
-+	 *
-+	 * Note that workingset_test_recent() itself might be called in RCU read
-+	 * section (for e.g, in cachestat) - these callers need to skip flushing
-+	 * stats (via the flush argument).
-+	 *
- 	 * XXX: With per-memcg flushing and thresholding, is ratelimiting
- 	 * still needed here?
- 	 */
--	mem_cgroup_flush_stats_ratelimited(eviction_memcg);
-+	if (flush)
-+		mem_cgroup_flush_stats_ratelimited(eviction_memcg);
+ 	blkaddr = validate_and_get_cpt_blkaddr(req->blkaddr);
+ 	if (blkaddr < 0)
+@@ -707,17 +708,25 @@ int rvu_mbox_handler_cpt_rd_wr_register(struct rvu *rvu,
+ 	    !is_cpt_vf(rvu, req->hdr.pcifunc))
+ 		return CPT_AF_ERR_ACCESS_DENIED;
  
- 	eviction_lruvec = mem_cgroup_lruvec(eviction_memcg, pgdat);
- 	refault = atomic_long_read(&eviction_lruvec->nonresident_age);
-@@ -558,7 +566,7 @@ void workingset_refault(struct folio *fo
+-	rsp->reg_offset = req->reg_offset;
+-	rsp->ret_val = req->ret_val;
+-	rsp->is_write = req->is_write;
+-
+ 	if (!is_valid_offset(rvu, req))
+ 		return CPT_AF_ERR_ACCESS_DENIED;
  
- 	mod_lruvec_state(lruvec, WORKINGSET_REFAULT_BASE + file, nr);
++	/* Translate local LF used by VFs to global CPT LF */
++	lf = rvu_get_lf(rvu, &rvu->hw->block[blkaddr], req->hdr.pcifunc,
++			(offset & 0xFFF) >> 3);
++
++	/* Translate local LF's offset to global CPT LF's offset */
++	offset &= 0xFF000;
++	offset += lf << 3;
++
++	rsp->reg_offset = offset;
++	rsp->ret_val = req->ret_val;
++	rsp->is_write = req->is_write;
++
+ 	if (req->is_write)
+-		rvu_write64(rvu, blkaddr, req->reg_offset, req->val);
++		rvu_write64(rvu, blkaddr, offset, req->val);
+ 	else
+-		rsp->val = rvu_read64(rvu, blkaddr, req->reg_offset);
++		rsp->val = rvu_read64(rvu, blkaddr, offset);
  
--	if (!workingset_test_recent(shadow, file, &workingset))
-+	if (!workingset_test_recent(shadow, file, &workingset, true))
- 		return;
- 
- 	folio_set_active(folio);
+ 	return 0;
+ }
+-- 
+2.43.0
+
 
 
