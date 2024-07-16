@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E2A17623C;
-	Tue, 16 Jul 2024 16:01:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0690D1DDCE;
+	Tue, 16 Jul 2024 16:01:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145678; cv=none; b=BN4U34/Lva6liZtaKadE1NjnD/+i8Nqn1L+QanS7NW9S8UypcSoEKX+fqoVuBb5UCoY5UiGIY8ZT/iKlkTxsfpRKino1ffzu/G8w7FVb4AzO993HM46OjAxmupJvZKhZ3kGfS/Q3KveI74m8KAaZTwITkVwXG41xa+PCPlvLwJk=
+	t=1721145682; cv=none; b=CntK7w53/x5WQwQUrSbkXy7H95O+QQ+6q/BEYpnP9K68Hku0MTxDGAmUuMlP3U5/IUQd3rL4R/p+z9TWz1MeHvzcV9FxpAcICFbT5HCpdtrIyxcfI6g0mQsR5S/oiZ2Z1+/LCTjMAa7RFLCDWvmVhuFL01uR0KO6L6w9+3rgKoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145678; c=relaxed/simple;
-	bh=bHvQiK5zy4tCOTK2bdmY7Ispw/obNwcaeWOkAJBk8ng=;
+	s=arc-20240116; t=1721145682; c=relaxed/simple;
+	bh=9sdX51Fv823cxUqNIUZWuLwyhLyDGHVVFhJYp18Hkec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uc8NsQkmvlJTKIU8S21S3zpe4RkV0a+AeSqV9btoOcGJtCDd1ndlJ2hbUsyDFY2TpLhgskeotwLXd73p2ni3ns52IcvKalH8hV6ysmvgMqZ1JCPX1gUImounajC4t6Q2XxSkrb6RHO18oSePrLOqTA3Kgenqhv0VTWy889EGXtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=06QGm95/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sihzQ2stOOLWpRE6i0+I68i14nc5DEADplthtWdxoddd3BEDiBWP2wdDA7FbZYXl4L1phHWn2GROiWffwqp6x1FDhanMc6gDACaUWg0q1tr8MVfWm8bGtyZL1TX2ZiK2XebfYbyl8Z/uJm4pLkpB29bz2Xkvi/XjPDmNLWl4zTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vLnGhHic; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="06QGm95/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58951C116B1;
-	Tue, 16 Jul 2024 16:01:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vLnGhHic"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 455DAC4AF0B;
+	Tue, 16 Jul 2024 16:01:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145678;
-	bh=bHvQiK5zy4tCOTK2bdmY7Ispw/obNwcaeWOkAJBk8ng=;
+	s=korg; t=1721145681;
+	bh=9sdX51Fv823cxUqNIUZWuLwyhLyDGHVVFhJYp18Hkec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=06QGm95/zYxM5PW3DMqgVLS31221Au+t5ygbGNapxwY0PGYcM+/lF78Rzov5YRIgE
-	 lCa7nsJkfm39hwvhKfLpGN9qdmOGlytLn9zLyY1zeB/0OF6MGBmsBdS4nIrtQdEroK
-	 XX3lVvb8DDpV9yBsnG+JIrmswYo9+CV618bzf0Kg=
+	b=vLnGhHic0aR7UL4D+Q8/mICj5JI1w8YB4IKkNesCstqTfPvfE/91cWUixKFprUJXQ
+	 GnNr+qpYTPFmFXY/ZaRUd5RwaS/SzZSmMjOwPj+sq+bORtZilg/7vDV09Z21uRCXkQ
+	 x69L2mC2C+T1do+MXYz9XWKf4wQgMDNQC7A5mpVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srujana Challa <schalla@marvell.com>,
+	Michal Mazur <mmazur2@marvell.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 047/121] octeontx2-af: fix a issue with cpt_lf_alloc mailbox
-Date: Tue, 16 Jul 2024 17:31:49 +0200
-Message-ID: <20240716152753.135524206@linuxfoundation.org>
+Subject: [PATCH 6.6 048/121] octeontx2-af: fix detection of IP layer
+Date: Tue, 16 Jul 2024 17:31:50 +0200
+Message-ID: <20240716152753.173456573@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152751.312512071@linuxfoundation.org>
 References: <20240716152751.312512071@linuxfoundation.org>
@@ -51,35 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srujana Challa <schalla@marvell.com>
+From: Michal Mazur <mmazur2@marvell.com>
 
-[ Upstream commit 845fe19139ab5a1ee303a3bee327e3191c3938af ]
+[ Upstream commit 404dc0fd6fb0bb942b18008c6f8c0320b80aca20 ]
 
-This patch fixes CPT_LF_ALLOC mailbox error due to
-incompatible mailbox message format. Specifically, it
-corrects the `blkaddr` field type from `int` to `u8`.
+Checksum and length checks are not enabled for IPv4 header with
+options and IPv6 with extension headers.
+To fix this a change in enum npc_kpu_lc_ltype is required which will
+allow adjustment of LTYPE_MASK to detect all types of IP headers.
 
-Fixes: de2854c87c64 ("octeontx2-af: Mailbox changes for 98xx CPT block")
-Signed-off-by: Srujana Challa <schalla@marvell.com>
+Fixes: 21e6699e5cd6 ("octeontx2-af: Add NPC KPU profile")
+Signed-off-by: Michal Mazur <mmazur2@marvell.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/mbox.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/octeontx2/af/npc.h | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mbox.h b/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
-index 4c73575fba7be..e883c0929b1a9 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
-@@ -1661,7 +1661,7 @@ struct cpt_lf_alloc_req_msg {
- 	u16 nix_pf_func;
- 	u16 sso_pf_func;
- 	u16 eng_grpmsk;
--	int blkaddr;
-+	u8 blkaddr;
- 	u8 ctx_ilen_valid : 1;
- 	u8 ctx_ilen : 7;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/npc.h b/drivers/net/ethernet/marvell/octeontx2/af/npc.h
+index c92c3f4631d54..2c028a81bbc51 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/npc.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/npc.h
+@@ -63,8 +63,13 @@ enum npc_kpu_lb_ltype {
+ 	NPC_LT_LB_CUSTOM1 = 0xF,
  };
+ 
++/* Don't modify ltypes up to IP6_EXT, otherwise length and checksum of IP
++ * headers may not be checked correctly. IPv4 ltypes and IPv6 ltypes must
++ * differ only at bit 0 so mask 0xE can be used to detect extended headers.
++ */
+ enum npc_kpu_lc_ltype {
+-	NPC_LT_LC_IP = 1,
++	NPC_LT_LC_PTP = 1,
++	NPC_LT_LC_IP,
+ 	NPC_LT_LC_IP_OPT,
+ 	NPC_LT_LC_IP6,
+ 	NPC_LT_LC_IP6_EXT,
+@@ -72,7 +77,6 @@ enum npc_kpu_lc_ltype {
+ 	NPC_LT_LC_RARP,
+ 	NPC_LT_LC_MPLS,
+ 	NPC_LT_LC_NSH,
+-	NPC_LT_LC_PTP,
+ 	NPC_LT_LC_FCOE,
+ 	NPC_LT_LC_NGIO,
+ 	NPC_LT_LC_CUSTOM0 = 0xE,
 -- 
 2.43.0
 
