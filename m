@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D1CD1DDCE;
-	Tue, 16 Jul 2024 15:57:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25F31DDCE;
+	Tue, 16 Jul 2024 15:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145475; cv=none; b=O4ypssB8Ls3QSDwGaU4+Mes0CsAUGp7+ScXrvrDuxRpTl+8j7daqxAQTTWPy0fgnXZ7A/UsXx4yvhfD5fog4/dJO1MXkR5Yst7m+vErOJzzaiQ5UEv2d/B+pu76o7/Ae1hZCZyqFUUfWCooqrlgtcfQGi5/EENgA/EjpcpgYvdU=
+	t=1721145478; cv=none; b=Bcxbvfp0kN9PqeBljn6jQySBL9K1eVZjly9WukyfHVH/UvMSJvOzNMxNCRGddob/bMhhgFSTXz3oRKRI1wsMknuhnZDgz/0De8A8WblinD9AKZjr07kEOgVUna2bd0oHlu6Eot4MnNeqoEleQv+s90uDvocxep3unDfLzNaoG9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145475; c=relaxed/simple;
-	bh=r4FSGGKzwq2CGoF+sD5KETeyLdAsMukBd83wy0GaYXY=;
+	s=arc-20240116; t=1721145478; c=relaxed/simple;
+	bh=bZlItLHhCmbpaEhx0R0geBZh6v7pSnGoQSlEj2UxELI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=knv2JMhcsRqWaTvCZT/uAaWh5XnKwvFB8tW0HObuTgStSC+QJ7A0SE/K0n2r1NAkl95q5kQYAmB9uZHhL9MvG9RSTPAAOz2WMx79k72QMeiCl5eJRm8sIZKhc/wdKrf7WsjS2TLI9yPpcLwQsuu/1xShvxKJotF4+JukfDaGkss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=spIYpR80; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oobWEE9caE4bhCNbcWO3Ej95TblpoaTVoy1JyEeXDMDPRhWhus/Rb2sK3BdpQa1eXQptLQseKbDVgDMaKuhNwt7dpqhFhLVVGoLlEr/huOPkCGmCh5qg0wS47spZxrKOLoQCDAPAV+1fConYkJ1rshvaOJZvxH8+yVqgyeXi7dM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1bIgRpZ9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="spIYpR80"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2333DC116B1;
-	Tue, 16 Jul 2024 15:57:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1bIgRpZ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12EBFC116B1;
+	Tue, 16 Jul 2024 15:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145475;
-	bh=r4FSGGKzwq2CGoF+sD5KETeyLdAsMukBd83wy0GaYXY=;
+	s=korg; t=1721145478;
+	bh=bZlItLHhCmbpaEhx0R0geBZh6v7pSnGoQSlEj2UxELI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=spIYpR80wdaHAFQYwrjKtgtX1ieCWavpCtE7oC+3moBmgXIpFQmWquqJhv7pgZVXb
-	 nPWEU4+iV5Mvyw7Ul/zxvB0e4d6doYyu72gkvw58W2gFUArsYJXkjq8/eMSjJ7LJzh
-	 O+y1TrFeDEJvDR74/YuAooFTfFNGDFCC/3x8+ZHs=
+	b=1bIgRpZ9JyNA9dwOm9iB4kTFUL4NdXWgOzFcE7pt+m4qmBbAP4fatQF6BJlw4MTTX
+	 3APgLKzsmgx10k6nKqT9s896bL2aHFr2QzHkaqIPa3DDKRqqsEaLzxct7tgcjHpKu9
+	 KLOKS87L5M/YP2CNslFuLkpKIFV2Sij5GObsU2l4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
 	Ekansh Gupta <quic_ekangupt@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Caleb Connolly <caleb.connolly@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH 6.1 78/96] misc: fastrpc: Avoid updating PD type for capability request
-Date: Tue, 16 Jul 2024 17:32:29 +0200
-Message-ID: <20240716152749.511248994@linuxfoundation.org>
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 6.1 79/96] misc: fastrpc: Copy the complete capability structure to user
+Date: Tue, 16 Jul 2024 17:32:30 +0200
+Message-ID: <20240716152749.550944790@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152746.516194097@linuxfoundation.org>
 References: <20240716152746.516194097@linuxfoundation.org>
@@ -55,37 +55,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Ekansh Gupta <quic_ekangupt@quicinc.com>
 
-commit bfb6b07d2a30ffe98864d8cfc31fc00470063025 upstream.
+commit e7f0be3f09c6e955dc8009129862b562d8b64513 upstream.
 
-When user is requesting for DSP capability, the process pd type is
-getting updated to USER_PD which is incorrect as DSP will assume the
-process which is making the request is a user PD and this will never
-get updated back to the original value. The actual PD type should not
-be updated for capability request and it should be serviced by the
-respective PD on DSP side. Don't change process's PD type for DSP
-capability request.
+User is passing capability ioctl structure(argp) to get DSP
+capabilities. This argp is copied to a local structure to get domain
+and attribute_id information. After getting the capability, only
+capability value is getting copied to user argp which will not be
+useful if the use is trying to get the capability by checking the
+capability member of fastrpc_ioctl_capability structure. Copy the
+complete capability structure so that user can get the capability
+value from the expected member of the structure.
 
 Fixes: 6c16fd8bdd40 ("misc: fastrpc: Add support to get DSP capabilities")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20240628114501.14310-4-srinivas.kandagatla@linaro.org
+Link: https://lore.kernel.org/r/20240628114501.14310-3-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/misc/fastrpc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/misc/fastrpc.c
 +++ b/drivers/misc/fastrpc.c
-@@ -1523,7 +1523,6 @@ static int fastrpc_get_info_from_dsp(str
- 	args[1].ptr = (u64)(uintptr_t)&dsp_attr_buf[1];
- 	args[1].length = dsp_attr_buf_len * sizeof(u32);
- 	args[1].fd = -1;
--	fl->pd = USER_PD;
+@@ -1603,7 +1603,7 @@ static int fastrpc_get_dsp_info(struct f
+ 	if (err)
+ 		return err;
  
- 	return fastrpc_internal_invoke(fl, true, FASTRPC_DSP_UTILITIES_HANDLE,
- 				       FASTRPC_SCALARS(0, 1, 1), args);
+-	if (copy_to_user(argp, &cap.capability, sizeof(cap.capability)))
++	if (copy_to_user(argp, &cap, sizeof(cap)))
+ 		return -EFAULT;
+ 
+ 	return 0;
 
 
