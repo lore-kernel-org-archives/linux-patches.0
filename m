@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E001DDCE;
-	Tue, 16 Jul 2024 16:09:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E701DDCE;
+	Tue, 16 Jul 2024 16:09:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721146185; cv=none; b=BBbwsp6CdsPcHgp0st7ze0AsAKJPPVymYOWnhpH1R2BrsvYYwmgIRoIOAVh56mYSIFzsHLkNu5RaapcdecTTRelTpIhKj0poJZHn1+m2POutfo6iAmJzYzuvL2uUlY/ftqRYhQH+womQuFiktpZgsufalJYMeb34TNuOy7xIMv0=
+	t=1721146188; cv=none; b=hVPx+0ZL+t17K8w3W1zjBjK/5i5b/PpjoHLMsB/7smCIEFS1bC7XMWH5TDJoT22BccYwO3ApkhuwCmaeB/a6F4GX9GoPJ4U7tSJYvoyN2qG0eBDMHWiYJyqknEoJlJR07W/mJgm1n5Jy/Rv5pYTOMGafTt1Ad2X/pUptP4BKICs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721146185; c=relaxed/simple;
-	bh=9V7QH2aAzJVtHnmETT05FJX/cKwv1mez/cq2b8Ik68w=;
+	s=arc-20240116; t=1721146188; c=relaxed/simple;
+	bh=f0u+gmIvfJpm776shrMwlGPuV9/7noZHjfWNHxKClZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OMF86ITLhhHZauXM7cBtRC64AvSw6Kinxq426aPoe/qtoJQ7Hhw675cXrlryaqhXxAsEyw38mOz1IXOT+XBra6JcuW20EoC9R3eSTJKrMxQCw5IQbClTgdCdtPao2qcYbG8ZpDMo57ADpA1aWpl7YtLmgGaovTDyMQmcVdS7z3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=suwQ2QYe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W6N15HqS8OjKMGKhYmhES1oU3hR2PSnHdcYqUDtOq3hzWuIcMyjNXNDD0HPrj+TPulia5PadPmLmQu4MuiFGzg9U1saykbw5in1AFMsFIZKl20N9zCgbqelUzPpLtPoUh5Qib63LMr8fRNOxwy/JEBkPUmzwTBd7bE/3KDd/0lY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXraQsp6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="suwQ2QYe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC80C116B1;
-	Tue, 16 Jul 2024 16:09:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXraQsp6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1DAC116B1;
+	Tue, 16 Jul 2024 16:09:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721146185;
-	bh=9V7QH2aAzJVtHnmETT05FJX/cKwv1mez/cq2b8Ik68w=;
+	s=korg; t=1721146188;
+	bh=f0u+gmIvfJpm776shrMwlGPuV9/7noZHjfWNHxKClZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=suwQ2QYef3P3iAY57+VWb+dU8YAMTxqaUYWX5Nm3SeuUQUtl7Ef+mhnKuQSWbGQr0
-	 OOquFFf8iVtbJDZ3UqFa7tE+XPMpNTj+3so5tvpSxJKQh5L4v0fWPq4INuWtIPXr/+
-	 rZHU6TXKTlUBUkNfIlK8IJa+C56jRWsE9w6L9A6s=
+	b=UXraQsp61sNUO1MtaZfuegmBG8sDMn4uvxkWzfwph2zYOF44M3Whgk268tFTOe4jN
+	 8Pem+lb9yVVF6vpD2kKzet4VkMdjFx04vbgksD3aCQUlqPNW1xUDaoswZRSF69QFlW
+	 FELWZUQUkYlQ1qFUuokLakEGlDcsMOmAdW2SK/R0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neal Cardwell <ncardwell@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Yuchung Cheng <ycheng@google.com>,
-	Kevin Yang <yyd@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 083/144] tcp: fix incorrect undo caused by DSACK of TLP retransmit
-Date: Tue, 16 Jul 2024 17:32:32 +0200
-Message-ID: <20240716152755.733409233@linuxfoundation.org>
+Subject: [PATCH 5.15 084/144] skmsg: Skip zero length skb in sk_msg_recvmsg
+Date: Tue, 16 Jul 2024 17:32:33 +0200
+Message-ID: <20240716152755.771777197@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
 References: <20240716152752.524497140@linuxfoundation.org>
@@ -54,105 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neal Cardwell <ncardwell@google.com>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit 0ec986ed7bab6801faed1440e8839dcc710331ff ]
+[ Upstream commit f0c18025693707ec344a70b6887f7450bf4c826b ]
 
-Loss recovery undo_retrans bookkeeping had a long-standing bug where a
-DSACK from a spurious TLP retransmit packet could cause an erroneous
-undo of a fast recovery or RTO recovery that repaired a single
-really-lost packet (in a sequence range outside that of the TLP
-retransmit). Basically, because the loss recovery state machine didn't
-account for the fact that it sent a TLP retransmit, the DSACK for the
-TLP retransmit could erroneously be implicitly be interpreted as
-corresponding to the normal fast recovery or RTO recovery retransmit
-that plugged a real hole, thus resulting in an improper undo.
+When running BPF selftests (./test_progs -t sockmap_basic) on a Loongarch
+platform, the following kernel panic occurs:
 
-For example, consider the following buggy scenario where there is a
-real packet loss but the congestion control response is improperly
-undone because of this bug:
+  [...]
+  Oops[#1]:
+  CPU: 22 PID: 2824 Comm: test_progs Tainted: G           OE  6.10.0-rc2+ #18
+  Hardware name: LOONGSON Dabieshan/Loongson-TC542F0, BIOS Loongson-UDK2018
+     ... ...
+     ra: 90000000048bf6c0 sk_msg_recvmsg+0x120/0x560
+    ERA: 9000000004162774 copy_page_to_iter+0x74/0x1c0
+   CRMD: 000000b0 (PLV0 -IE -DA +PG DACF=CC DACM=CC -WE)
+   PRMD: 0000000c (PPLV0 +PIE +PWE)
+   EUEN: 00000007 (+FPE +SXE +ASXE -BTE)
+   ECFG: 00071c1d (LIE=0,2-4,10-12 VS=7)
+  ESTAT: 00010000 [PIL] (IS= ECode=1 EsubCode=0)
+   BADV: 0000000000000040
+   PRID: 0014c011 (Loongson-64bit, Loongson-3C5000)
+  Modules linked in: bpf_testmod(OE) xt_CHECKSUM xt_MASQUERADE xt_conntrack
+  Process test_progs (pid: 2824, threadinfo=0000000000863a31, task=...)
+  Stack : ...
+  Call Trace:
+  [<9000000004162774>] copy_page_to_iter+0x74/0x1c0
+  [<90000000048bf6c0>] sk_msg_recvmsg+0x120/0x560
+  [<90000000049f2b90>] tcp_bpf_recvmsg_parser+0x170/0x4e0
+  [<90000000049aae34>] inet_recvmsg+0x54/0x100
+  [<900000000481ad5c>] sock_recvmsg+0x7c/0xe0
+  [<900000000481e1a8>] __sys_recvfrom+0x108/0x1c0
+  [<900000000481e27c>] sys_recvfrom+0x1c/0x40
+  [<9000000004c076ec>] do_syscall+0x8c/0xc0
+  [<9000000003731da4>] handle_syscall+0xc4/0x160
+  Code: ...
+  ---[ end trace 0000000000000000 ]---
+  Kernel panic - not syncing: Fatal exception
+  Kernel relocated by 0x3510000
+   .text @ 0x9000000003710000
+   .data @ 0x9000000004d70000
+   .bss  @ 0x9000000006469400
+  ---[ end Kernel panic - not syncing: Fatal exception ]---
+  [...]
 
-+ send packets P1, P2, P3, P4
-+ P1 is really lost
-+ send TLP retransmit of P4
-+ receive SACK for original P2, P3, P4
-+ enter fast recovery, fast-retransmit P1, increment undo_retrans to 1
-+ receive DSACK for TLP P4, decrement undo_retrans to 0, undo (bug!)
-+ receive cumulative ACK for P1-P4 (fast retransmit plugged real hole)
+This crash happens every time when running sockmap_skb_verdict_shutdown
+subtest in sockmap_basic.
 
-The fix: when we initialize undo machinery in tcp_init_undo(), if
-there is a TLP retransmit in flight, then increment tp->undo_retrans
-so that we make sure that we receive a DSACK corresponding to the TLP
-retransmit, as well as DSACKs for all later normal retransmits, before
-triggering a loss recovery undo. Note that we also have to move the
-line that clears tp->tlp_high_seq for RTO recovery, so that upon RTO
-we remember the tp->tlp_high_seq value until tcp_init_undo() and clear
-it only afterward.
+This crash is because a NULL pointer is passed to page_address() in the
+sk_msg_recvmsg(). Due to the different implementations depending on the
+architecture, page_address(NULL) will trigger a panic on Loongarch
+platform but not on x86 platform. So this bug was hidden on x86 platform
+for a while, but now it is exposed on Loongarch platform. The root cause
+is that a zero length skb (skb->len == 0) was put on the queue.
 
-Also note that the bug dates back to the original 2013 TLP
-implementation, commit 6ba8a3b19e76 ("tcp: Tail loss probe (TLP)").
+This zero length skb is a TCP FIN packet, which was sent by shutdown(),
+invoked in test_sockmap_skb_verdict_shutdown():
 
-However, this patch will only compile and work correctly with kernels
-that have tp->tlp_retrans, which was added only in v5.8 in 2020 in
-commit 76be93fc0702 ("tcp: allow at most one TLP probe per flight").
-So we associate this fix with that later commit.
+	shutdown(p1, SHUT_WR);
 
-Fixes: 76be93fc0702 ("tcp: allow at most one TLP probe per flight")
-Signed-off-by: Neal Cardwell <ncardwell@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Cc: Yuchung Cheng <ycheng@google.com>
-Cc: Kevin Yang <yyd@google.com>
-Link: https://patch.msgid.link/20240703171246.1739561-1-ncardwell.sw@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+In this case, in sk_psock_skb_ingress_enqueue(), num_sge is zero, and no
+page is put to this sge (see sg_set_page in sg_set_page), but this empty
+sge is queued into ingress_msg list.
+
+And in sk_msg_recvmsg(), this empty sge is used, and a NULL page is got by
+sg_page(sge). Pass this NULL page to copy_page_to_iter(), which passes it
+to kmap_local_page() and to page_address(), then kernel panics.
+
+To solve this, we should skip this zero length skb. So in sk_msg_recvmsg(),
+if copy is zero, that means it's a zero length skb, skip invoking
+copy_page_to_iter(). We are using the EFAULT return triggered by
+copy_page_to_iter to check for is_fin in tcp_bpf.c.
+
+Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
+Suggested-by: John Fastabend <john.fastabend@gmail.com>
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/bpf/e3a16eacdc6740658ee02a33489b1b9d4912f378.1719992715.git.tanggeliang@kylinos.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 11 ++++++++++-
- net/ipv4/tcp_timer.c |  2 --
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ net/core/skmsg.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index f37b39350e816..48d45022dedaf 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -2094,8 +2094,16 @@ void tcp_clear_retrans(struct tcp_sock *tp)
- static inline void tcp_init_undo(struct tcp_sock *tp)
- {
- 	tp->undo_marker = tp->snd_una;
-+
- 	/* Retransmission still in flight may cause DSACKs later. */
--	tp->undo_retrans = tp->retrans_out ? : -1;
-+	/* First, account for regular retransmits in flight: */
-+	tp->undo_retrans = tp->retrans_out;
-+	/* Next, account for TLP retransmits in flight: */
-+	if (tp->tlp_high_seq && tp->tlp_retrans)
-+		tp->undo_retrans++;
-+	/* Finally, avoid 0, because undo_retrans==0 means "can undo now": */
-+	if (!tp->undo_retrans)
-+		tp->undo_retrans = -1;
- }
- 
- static bool tcp_is_rack(const struct sock *sk)
-@@ -2174,6 +2182,7 @@ void tcp_enter_loss(struct sock *sk)
- 
- 	tcp_set_ca_state(sk, TCP_CA_Loss);
- 	tp->high_seq = tp->snd_nxt;
-+	tp->tlp_high_seq = 0;
- 	tcp_ecn_queue_cwr(tp);
- 
- 	/* F-RTO RFC5682 sec 3.1 step 1: retransmit SND.UNA if no previous
-diff --git a/net/ipv4/tcp_timer.c b/net/ipv4/tcp_timer.c
-index 40a354dcfec5a..756466816f303 100644
---- a/net/ipv4/tcp_timer.c
-+++ b/net/ipv4/tcp_timer.c
-@@ -492,8 +492,6 @@ void tcp_retransmit_timer(struct sock *sk)
- 	if (WARN_ON_ONCE(!skb))
- 		return;
- 
--	tp->tlp_high_seq = 0;
--
- 	if (!tp->snd_wnd && !sock_flag(sk, SOCK_DEAD) &&
- 	    !((1 << sk->sk_state) & (TCPF_SYN_SENT | TCPF_SYN_RECV))) {
- 		/* Receiver dastardly shrinks window. Our retransmits
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index ec8671eccae0c..84824f715a2d1 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -434,7 +434,8 @@ int sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg,
+ 			page = sg_page(sge);
+ 			if (copied + copy > len)
+ 				copy = len - copied;
+-			copy = copy_page_to_iter(page, sge->offset, copy, iter);
++			if (copy)
++				copy = copy_page_to_iter(page, sge->offset, copy, iter);
+ 			if (!copy) {
+ 				copied = copied ? copied : -EFAULT;
+ 				goto out;
 -- 
 2.43.0
 
