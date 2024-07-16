@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10371DDCE;
-	Tue, 16 Jul 2024 15:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C812F1DDCE;
+	Tue, 16 Jul 2024 15:54:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145256; cv=none; b=KM6EUZy3bRNNIQZkhWKP+3BSmxGX9Brb+bNdDZYyRGBBiSawN38dlBJRetk1vg6L/RABmAqdxKLhdbM39lgIXmK9XhaM2HnjynH7DwpQLdsAEFR0I0o+n+ifovLkFxn7lhxa8gEOnjE5UsOe6xfd7XUdI1tj5A7bpgwfEeQyg0Q=
+	t=1721145259; cv=none; b=NmAqBeGYBQeYPspfRUV0LySC1IVhE5XPxrHtnjSDSJjlPnSWvMj6pcXcbIyNCMXaYbSBxkk4VHgtdmyouF2HzMBC2yY5o5+/35m9Wxa3TBTgLDYjRZfbsveYthrDvLN20lwgwGt46c8V6G5t32mCFheokGPnlKHNYLkKJkFlfDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145256; c=relaxed/simple;
-	bh=jcecMMV2KSOUelF/ZAlgOk9RczeeosVnn2TjQyHtPOA=;
+	s=arc-20240116; t=1721145259; c=relaxed/simple;
+	bh=TuNS8Frcuw6KV79fdNjs9r9Mp0z22Ueg4ZoDmvrcBy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PFSzaCwpJJTBxpyPOYBCF6mmsn/hZQVcK0qQmB0Zn36W7NSWeMZmBLmxtzGdH6KOR3vsBM7NQdJmJgsc0UX4UeiabtIu+cTxFWciXEjqu9yaWWeUeHeA2JLfrztJ/O9OaRh7W13bd4zbKLzg7IAjQJkooUHnYz1XQW5GpHwVfb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CTJoO+qE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W50E94pvISUtQcGmu+SJOpM9ua2p2P8knmpVWAB4n/BkKqUM0oW4wt6Ev1j7dEkTiW1hWmh5k/RG6Rm5CI6tNt+Uwk9PuIXkuSQm1x9Z5HTOMOPaq0SbPMj4Ura49bz/87z+YMtc49Qw9VemZipyzKaeqbqwhEdO0+7NaGYujCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t6ohuJTm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CTJoO+qE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5977EC116B1;
-	Tue, 16 Jul 2024 15:54:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t6ohuJTm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CAFBC116B1;
+	Tue, 16 Jul 2024 15:54:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145256;
-	bh=jcecMMV2KSOUelF/ZAlgOk9RczeeosVnn2TjQyHtPOA=;
+	s=korg; t=1721145259;
+	bh=TuNS8Frcuw6KV79fdNjs9r9Mp0z22Ueg4ZoDmvrcBy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CTJoO+qEJUDdshuLiVGMx0Efbd73e8WYfbu8Q7GLowVQDMA0iPh0pC+cbzlUAe/vd
-	 CAjANoSSpbtmbPeCGvDJDQ2OsegeAdEWV4/TUyOfgwdzo2YothROiLwC2iJG2oNYJq
-	 rz+7ld0iEomnh6jdZwILHEOB4m//+sP3sst+rzXw=
+	b=t6ohuJTmCP+SlYfQ0pgo7xzWYmaNiGEhR+pECi6kFl9s6XmCWcoMpnevn5HEnN4A7
+	 KTJyp53WqBotSg/bR6DAvBG3UksOrMzBFEJdLSI5sVnC86lqIxfAxTc1P36DcpLf7W
+	 xAgGeCAnUhlEnMzxXuUxWS2oF8NkAuoKwtjEp2ng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.9 132/143] mm/damon/core: merge regions aggressively when max_nr_regions is unmet
-Date: Tue, 16 Jul 2024 17:32:08 +0200
-Message-ID: <20240716152801.068704820@linuxfoundation.org>
+	Komal Bajaj <quic_kbajaj@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.9 133/143] Revert "dt-bindings: cache: qcom,llcc: correct QDU1000 reg entries"
+Date: Tue, 16 Jul 2024 17:32:09 +0200
+Message-ID: <20240716152801.109108201@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -50,74 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Komal Bajaj <quic_kbajaj@quicinc.com>
 
-commit 310d6c15e9104c99d5d9d0ff8e5383a79da7d5e6 upstream.
+commit e227c11179dfb6970360c95a8d7b007eb3b223d6 upstream.
 
-DAMON keeps the number of regions under max_nr_regions by skipping regions
-split operations when doing so can make the number higher than the limit.
-It works well for preventing violation of the limit.  But, if somehow the
-violation happens, it cannot recovery well depending on the situation.  In
-detail, if the real number of regions having different access pattern is
-higher than the limit, the mechanism cannot reduce the number below the
-limit.  In such a case, the system could suffer from high monitoring
-overhead of DAMON.
+This reverts commit f0f99f371822c48847e02e56d6e7de507e18f186.
 
-The violation can actually happen.  For an example, the user could reduce
-max_nr_regions while DAMON is running, to be lower than the current number
-of regions.  Fix the problem by repeating the merge operations with
-increasing aggressiveness in kdamond_merge_regions() for the case, until
-the limit is met.
+QDU1000 has 7 register regions. The earlier commit 8e2506d01231
+("dt-bindings: cache: qcom,llcc: Add LLCC compatible for QDU1000/QRU1000")
+to add llcc compatible was reflecting the same, but dtsi change for
+QDU1000 was not aligning with its binding. Later, commit f0f99f371822
+("dt-bindings: cache: qcom,llcc: correct QDU1000 reg entries") was merged
+intended to fix this misalignment.
 
-[sj@kernel.org: increase regions merge aggressiveness while respecting min_nr_regions]
-  Link: https://lkml.kernel.org/r/20240626164753.46270-1-sj@kernel.org
-[sj@kernel.org: ensure max threshold attempt for max_nr_regions violation]
-  Link: https://lkml.kernel.org/r/20240627163153.75969-1-sj@kernel.org
-Link: https://lkml.kernel.org/r/20240624175814.89611-1-sj@kernel.org
-Fixes: b9a6ac4e4ede ("mm/damon: adaptively adjust regions")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org>	[5.15+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+After the LLCC driver refactor, each LLCC bank/channel need to be
+represented as one register space to avoid mapping to the region where
+access is not there. Hence, revert the commit f0f99f371822 ("dt-bindings:
+cache: qcom,llcc: correct QDU1000 reg entries") to align QDU1000 llcc
+binding with its dtsi node.
+
+Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240619061641.5261-3-quic_kbajaj@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core.c |   21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ Documentation/devicetree/bindings/cache/qcom,llcc.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1357,14 +1357,31 @@ static void damon_merge_regions_of(struc
-  * access frequencies are similar.  This is for minimizing the monitoring
-  * overhead under the dynamically changeable access pattern.  If a merge was
-  * unnecessarily made, later 'kdamond_split_regions()' will revert it.
-+ *
-+ * The total number of regions could be higher than the user-defined limit,
-+ * max_nr_regions for some cases.  For example, the user can update
-+ * max_nr_regions to a number that lower than the current number of regions
-+ * while DAMON is running.  For such a case, repeat merging until the limit is
-+ * met while increasing @threshold up to possible maximum level.
-  */
- static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
- 				  unsigned long sz_limit)
- {
- 	struct damon_target *t;
-+	unsigned int nr_regions;
-+	unsigned int max_thres;
- 
--	damon_for_each_target(t, c)
--		damon_merge_regions_of(t, threshold, sz_limit);
-+	max_thres = c->attrs.aggr_interval /
-+		(c->attrs.sample_interval ?  c->attrs.sample_interval : 1);
-+	do {
-+		nr_regions = 0;
-+		damon_for_each_target(t, c) {
-+			damon_merge_regions_of(t, threshold, sz_limit);
-+			nr_regions += damon_nr_regions(t);
-+		}
-+		threshold = max(1, threshold * 2);
-+	} while (nr_regions > c->attrs.max_nr_regions &&
-+			threshold / 2 < max_thres);
- }
- 
- /*
+diff --git a/Documentation/devicetree/bindings/cache/qcom,llcc.yaml b/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
+index 07ccbda4a0ab..b9a9f2cf32a1 100644
+--- a/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
++++ b/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
+@@ -66,7 +66,6 @@ allOf:
+         compatible:
+           contains:
+             enum:
+-              - qcom,qdu1000-llcc
+               - qcom,sc7180-llcc
+               - qcom,sm6350-llcc
+     then:
+@@ -104,6 +103,7 @@ allOf:
+         compatible:
+           contains:
+             enum:
++              - qcom,qdu1000-llcc
+               - qcom,sc8180x-llcc
+               - qcom,sc8280xp-llcc
+               - qcom,x1e80100-llcc
+-- 
+2.45.2
+
 
 
