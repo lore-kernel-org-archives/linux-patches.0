@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826291DDF5;
-	Tue, 16 Jul 2024 15:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7084EF9E8;
+	Tue, 16 Jul 2024 15:44:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144657; cv=none; b=hCYeTWSibR+WGiLJ27dxwgF7CMd7SVGcY2y9A0uggyNmT1gWUkVxkRDscItXXR/02jTPa4L0EAh9ax63qcaqL/JMZFqHKfM+8ukq9TmLNrZKMbLCvB0gcuEg6GnVfdaO/l2t4IOIpQHTHiQ3je7IjFf6kTH14094YBnz0ESKbyk=
+	t=1721144660; cv=none; b=h7dkSY6rruXrmjWlOdbWdhnaAa1kw1xyxnUUco6ef/66fH372blNlM+dygguqXCfxzFikc8PpxKqfqaEK00b78mQ4nlgNMxt7dDT6TTtOh+lXTzMJoxJdp8umpNNN6cu9CcS70TBYyr7kUAz8qZnDvKoN+N4cXZ5QuQ90AdDllY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144657; c=relaxed/simple;
-	bh=MkEA8Qg1lEJgiyky0kkIQdICw6wXPsRFe4cQplGd7xo=;
+	s=arc-20240116; t=1721144660; c=relaxed/simple;
+	bh=iSx5v3y5KdYIu6/yUoG7Sjlj9VS2Xov6THbtAT6SZj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JaX4UQYxGCQNj4+hqKJP2dL1YKcfhDR6K2KvLRp9AqI8iEWOe3G3QPmoygMuYciGGP3fus2mvpWYx5HCU6Yv4fTS88f9ayFpIZmQKl12Wow1/dbfsrAUbxVyAtNUx9UhT2+A2crmAP2QhHwyWyhD023I7OzFEo+sepUxs7IuWog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZLdL95z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rsg+zDxI5gFCX0i2Ar/XnMvDBN6nmI36SAXKdQnWNyRTZOwEY+8Ap64EvAkz1d683b2KdBrF3gJ2RILBW6eATIvkiUMAmq0yTr4vLawbc0kHrkWzLOaZVXSAhzod8ddc/Baz2HRhFaEeto5VuMxVidzbUbJmWw2ONTads66R+JI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QwCxsbTW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZLdL95z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C66C116B1;
-	Tue, 16 Jul 2024 15:44:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QwCxsbTW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E23E3C116B1;
+	Tue, 16 Jul 2024 15:44:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144657;
-	bh=MkEA8Qg1lEJgiyky0kkIQdICw6wXPsRFe4cQplGd7xo=;
+	s=korg; t=1721144660;
+	bh=iSx5v3y5KdYIu6/yUoG7Sjlj9VS2Xov6THbtAT6SZj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jZLdL95zkV3pIx4mRDcxoVZYNtFFaE684SHe3F0c+KaN4emzT1a1w6B3V6F8rwJ+o
-	 iXZLgspHf8IesJKwJSeEKzUlaX8btlSqOdgKZCBjUzvedvQq4h+65vH40wlBnySBQv
-	 8oUVRpEOtJOU08ZDMZdSKYgZ91xNXLASQxzyA5u4=
+	b=QwCxsbTWxkmnGIhhoFtFgL+cJl5FBj3JxFNDo7pv2+0VytiLwLQ/i8gL5ou4ZGxE/
+	 ODFq8v7D2ulqIi3JIyWhaxLm4UVqLOwcjJZ+/41t8gwGjTKRcq4VbrPTAEn1I8XIQE
+	 H6i/mL1nPxy6OES5zTjkhmOp019U71IgJ12a1rf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neal Cardwell <ncardwell@google.com>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Shigeru Yoshida <syoshida@redhat.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Yuchung Cheng <ycheng@google.com>,
-	Kevin Yang <yyd@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 062/108] tcp: fix incorrect undo caused by DSACK of TLP retransmit
-Date: Tue, 16 Jul 2024 17:31:17 +0200
-Message-ID: <20240716152748.363715021@linuxfoundation.org>
+Subject: [PATCH 5.10 033/108] inet_diag: Initialize pad field in struct inet_diag_req_v2
+Date: Tue, 16 Jul 2024 17:30:48 +0200
+Message-ID: <20240716152747.269892603@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152745.988603303@linuxfoundation.org>
 References: <20240716152745.988603303@linuxfoundation.org>
@@ -54,105 +53,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neal Cardwell <ncardwell@google.com>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-[ Upstream commit 0ec986ed7bab6801faed1440e8839dcc710331ff ]
+[ Upstream commit 61cf1c739f08190a4cbf047b9fbb192a94d87e3f ]
 
-Loss recovery undo_retrans bookkeeping had a long-standing bug where a
-DSACK from a spurious TLP retransmit packet could cause an erroneous
-undo of a fast recovery or RTO recovery that repaired a single
-really-lost packet (in a sequence range outside that of the TLP
-retransmit). Basically, because the loss recovery state machine didn't
-account for the fact that it sent a TLP retransmit, the DSACK for the
-TLP retransmit could erroneously be implicitly be interpreted as
-corresponding to the normal fast recovery or RTO recovery retransmit
-that plugged a real hole, thus resulting in an improper undo.
+KMSAN reported uninit-value access in raw_lookup() [1]. Diag for raw
+sockets uses the pad field in struct inet_diag_req_v2 for the
+underlying protocol. This field corresponds to the sdiag_raw_protocol
+field in struct inet_diag_req_raw.
 
-For example, consider the following buggy scenario where there is a
-real packet loss but the congestion control response is improperly
-undone because of this bug:
+inet_diag_get_exact_compat() converts inet_diag_req to
+inet_diag_req_v2, but leaves the pad field uninitialized. So the issue
+occurs when raw_lookup() accesses the sdiag_raw_protocol field.
 
-+ send packets P1, P2, P3, P4
-+ P1 is really lost
-+ send TLP retransmit of P4
-+ receive SACK for original P2, P3, P4
-+ enter fast recovery, fast-retransmit P1, increment undo_retrans to 1
-+ receive DSACK for TLP P4, decrement undo_retrans to 0, undo (bug!)
-+ receive cumulative ACK for P1-P4 (fast retransmit plugged real hole)
+Fix this by initializing the pad field in
+inet_diag_get_exact_compat(). Also, do the same fix in
+inet_diag_dump_compat() to avoid the similar issue in the future.
 
-The fix: when we initialize undo machinery in tcp_init_undo(), if
-there is a TLP retransmit in flight, then increment tp->undo_retrans
-so that we make sure that we receive a DSACK corresponding to the TLP
-retransmit, as well as DSACKs for all later normal retransmits, before
-triggering a loss recovery undo. Note that we also have to move the
-line that clears tp->tlp_high_seq for RTO recovery, so that upon RTO
-we remember the tp->tlp_high_seq value until tcp_init_undo() and clear
-it only afterward.
+[1]
+BUG: KMSAN: uninit-value in raw_lookup net/ipv4/raw_diag.c:49 [inline]
+BUG: KMSAN: uninit-value in raw_sock_get+0x657/0x800 net/ipv4/raw_diag.c:71
+ raw_lookup net/ipv4/raw_diag.c:49 [inline]
+ raw_sock_get+0x657/0x800 net/ipv4/raw_diag.c:71
+ raw_diag_dump_one+0xa1/0x660 net/ipv4/raw_diag.c:99
+ inet_diag_cmd_exact+0x7d9/0x980
+ inet_diag_get_exact_compat net/ipv4/inet_diag.c:1404 [inline]
+ inet_diag_rcv_msg_compat+0x469/0x530 net/ipv4/inet_diag.c:1426
+ sock_diag_rcv_msg+0x23d/0x740 net/core/sock_diag.c:282
+ netlink_rcv_skb+0x537/0x670 net/netlink/af_netlink.c:2564
+ sock_diag_rcv+0x35/0x40 net/core/sock_diag.c:297
+ netlink_unicast_kernel net/netlink/af_netlink.c:1335 [inline]
+ netlink_unicast+0xe74/0x1240 net/netlink/af_netlink.c:1361
+ netlink_sendmsg+0x10c6/0x1260 net/netlink/af_netlink.c:1905
+ sock_sendmsg_nosec net/socket.c:730 [inline]
+ __sock_sendmsg+0x332/0x3d0 net/socket.c:745
+ ____sys_sendmsg+0x7f0/0xb70 net/socket.c:2585
+ ___sys_sendmsg+0x271/0x3b0 net/socket.c:2639
+ __sys_sendmsg net/socket.c:2668 [inline]
+ __do_sys_sendmsg net/socket.c:2677 [inline]
+ __se_sys_sendmsg net/socket.c:2675 [inline]
+ __x64_sys_sendmsg+0x27e/0x4a0 net/socket.c:2675
+ x64_sys_call+0x135e/0x3ce0 arch/x86/include/generated/asm/syscalls_64.h:47
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xd9/0x1e0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Also note that the bug dates back to the original 2013 TLP
-implementation, commit 6ba8a3b19e76 ("tcp: Tail loss probe (TLP)").
+Uninit was stored to memory at:
+ raw_sock_get+0x650/0x800 net/ipv4/raw_diag.c:71
+ raw_diag_dump_one+0xa1/0x660 net/ipv4/raw_diag.c:99
+ inet_diag_cmd_exact+0x7d9/0x980
+ inet_diag_get_exact_compat net/ipv4/inet_diag.c:1404 [inline]
+ inet_diag_rcv_msg_compat+0x469/0x530 net/ipv4/inet_diag.c:1426
+ sock_diag_rcv_msg+0x23d/0x740 net/core/sock_diag.c:282
+ netlink_rcv_skb+0x537/0x670 net/netlink/af_netlink.c:2564
+ sock_diag_rcv+0x35/0x40 net/core/sock_diag.c:297
+ netlink_unicast_kernel net/netlink/af_netlink.c:1335 [inline]
+ netlink_unicast+0xe74/0x1240 net/netlink/af_netlink.c:1361
+ netlink_sendmsg+0x10c6/0x1260 net/netlink/af_netlink.c:1905
+ sock_sendmsg_nosec net/socket.c:730 [inline]
+ __sock_sendmsg+0x332/0x3d0 net/socket.c:745
+ ____sys_sendmsg+0x7f0/0xb70 net/socket.c:2585
+ ___sys_sendmsg+0x271/0x3b0 net/socket.c:2639
+ __sys_sendmsg net/socket.c:2668 [inline]
+ __do_sys_sendmsg net/socket.c:2677 [inline]
+ __se_sys_sendmsg net/socket.c:2675 [inline]
+ __x64_sys_sendmsg+0x27e/0x4a0 net/socket.c:2675
+ x64_sys_call+0x135e/0x3ce0 arch/x86/include/generated/asm/syscalls_64.h:47
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xd9/0x1e0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-However, this patch will only compile and work correctly with kernels
-that have tp->tlp_retrans, which was added only in v5.8 in 2020 in
-commit 76be93fc0702 ("tcp: allow at most one TLP probe per flight").
-So we associate this fix with that later commit.
+Local variable req.i created at:
+ inet_diag_get_exact_compat net/ipv4/inet_diag.c:1396 [inline]
+ inet_diag_rcv_msg_compat+0x2a6/0x530 net/ipv4/inet_diag.c:1426
+ sock_diag_rcv_msg+0x23d/0x740 net/core/sock_diag.c:282
 
-Fixes: 76be93fc0702 ("tcp: allow at most one TLP probe per flight")
-Signed-off-by: Neal Cardwell <ncardwell@google.com>
+CPU: 1 PID: 8888 Comm: syz-executor.6 Not tainted 6.10.0-rc4-00217-g35bb670d65fc #32
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-2.fc40 04/01/2014
+
+Fixes: 432490f9d455 ("net: ip, diag -- Add diag interface for raw sockets")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
-Cc: Yuchung Cheng <ycheng@google.com>
-Cc: Kevin Yang <yyd@google.com>
-Link: https://patch.msgid.link/20240703171246.1739561-1-ncardwell.sw@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20240703091649.111773-1-syoshida@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 11 ++++++++++-
- net/ipv4/tcp_timer.c |  2 --
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ net/ipv4/inet_diag.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 604ff1b04c3ef..06c03b21500fb 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -2084,8 +2084,16 @@ void tcp_clear_retrans(struct tcp_sock *tp)
- static inline void tcp_init_undo(struct tcp_sock *tp)
- {
- 	tp->undo_marker = tp->snd_una;
-+
- 	/* Retransmission still in flight may cause DSACKs later. */
--	tp->undo_retrans = tp->retrans_out ? : -1;
-+	/* First, account for regular retransmits in flight: */
-+	tp->undo_retrans = tp->retrans_out;
-+	/* Next, account for TLP retransmits in flight: */
-+	if (tp->tlp_high_seq && tp->tlp_retrans)
-+		tp->undo_retrans++;
-+	/* Finally, avoid 0, because undo_retrans==0 means "can undo now": */
-+	if (!tp->undo_retrans)
-+		tp->undo_retrans = -1;
- }
+diff --git a/net/ipv4/inet_diag.c b/net/ipv4/inet_diag.c
+index 27a5a7d66d184..b9df76f6571cd 100644
+--- a/net/ipv4/inet_diag.c
++++ b/net/ipv4/inet_diag.c
+@@ -1275,6 +1275,7 @@ static int inet_diag_dump_compat(struct sk_buff *skb,
+ 	req.sdiag_family = AF_UNSPEC; /* compatibility */
+ 	req.sdiag_protocol = inet_diag_type2proto(cb->nlh->nlmsg_type);
+ 	req.idiag_ext = rc->idiag_ext;
++	req.pad = 0;
+ 	req.idiag_states = rc->idiag_states;
+ 	req.id = rc->id;
  
- static bool tcp_is_rack(const struct sock *sk)
-@@ -2164,6 +2172,7 @@ void tcp_enter_loss(struct sock *sk)
+@@ -1290,6 +1291,7 @@ static int inet_diag_get_exact_compat(struct sk_buff *in_skb,
+ 	req.sdiag_family = rc->idiag_family;
+ 	req.sdiag_protocol = inet_diag_type2proto(nlh->nlmsg_type);
+ 	req.idiag_ext = rc->idiag_ext;
++	req.pad = 0;
+ 	req.idiag_states = rc->idiag_states;
+ 	req.id = rc->id;
  
- 	tcp_set_ca_state(sk, TCP_CA_Loss);
- 	tp->high_seq = tp->snd_nxt;
-+	tp->tlp_high_seq = 0;
- 	tcp_ecn_queue_cwr(tp);
- 
- 	/* F-RTO RFC5682 sec 3.1 step 1: retransmit SND.UNA if no previous
-diff --git a/net/ipv4/tcp_timer.c b/net/ipv4/tcp_timer.c
-index 5c7e10939dd90..2925b985e11cb 100644
---- a/net/ipv4/tcp_timer.c
-+++ b/net/ipv4/tcp_timer.c
-@@ -492,8 +492,6 @@ void tcp_retransmit_timer(struct sock *sk)
- 	if (WARN_ON_ONCE(!skb))
- 		return;
- 
--	tp->tlp_high_seq = 0;
--
- 	if (!tp->snd_wnd && !sock_flag(sk, SOCK_DEAD) &&
- 	    !((1 << sk->sk_state) & (TCPF_SYN_SENT | TCPF_SYN_RECV))) {
- 		/* Receiver dastardly shrinks window. Our retransmits
 -- 
 2.43.0
 
