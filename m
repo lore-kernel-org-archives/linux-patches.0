@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 027AD19A86F;
-	Tue, 16 Jul 2024 15:42:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB38719E7F7;
+	Tue, 16 Jul 2024 15:42:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144561; cv=none; b=beekVdlFDvV6e4olir5SDcfL6UXs8/0BaN0soeN1FDMh2PwU3eN0cAkgY+soqWaGxJ5pqpXE6u7dKHCALV9Yw2tZ6rbIJ/ZrN5ISufM7T838GvrvbF893EUlnYDOkdxp91oNo/AJlnBpu16l7AndQ1zf3ZsIFaRDlAlmGXZ/rj4=
+	t=1721144563; cv=none; b=RArzBcjl3UpuuEnFCV+btoRDhHMaxNg8WorY7pKv/xbGupl5xiBCrTwyHEL+s+l+EUzysrOk7klsRQ+0bkCHK+8IcsCuKVmVhfx7RSMa4sogiRgQHzvFhv2/lK6aeqVMC8s2gaHs7tEk/22hU3SdidNm0BQSjdkapKkoUayxQD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144561; c=relaxed/simple;
-	bh=6V42mseGbtkhSCD3/KF4i+NUjAFT8jVL2Nes9KyYUBA=;
+	s=arc-20240116; t=1721144563; c=relaxed/simple;
+	bh=25ZxkvNoUJ3m+CJ5jCTFXHyc+tNdK+nBQXy09YZXcr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uNDF52vA5JgoHkBQg0qmoRZtjWfpLW/VBKiIq8lYhC+GKXCK1xtEadNB5uFrtVAyMm9y8kEpbZWLSTa1GJcfz25XDOwcsgs8IT7YpzY/unzdt9YGSRXND6h3+C0AChJEmKiR9SY6gzd7laOB6yq12vfRFroSXaopEJv+L5+CBd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mhfgYg+N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hys3VfwbcFo7UgtPg2f0gbXsw00KAlhy4zT7cjceF+97teja0FkcVkRgXMaLttjcCHrgqSg83D0kU5Js+bjjkglTcYQic800Yd1GPzpENfmcnvPOwj+kxVn/rgnwarg9WNDSlOq538Awno1ognM5hhqy2fcBbk0GuGYDbiiNlWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cd1WrYN6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mhfgYg+N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70096C116B1;
-	Tue, 16 Jul 2024 15:42:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cd1WrYN6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62862C116B1;
+	Tue, 16 Jul 2024 15:42:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144560;
-	bh=6V42mseGbtkhSCD3/KF4i+NUjAFT8jVL2Nes9KyYUBA=;
+	s=korg; t=1721144563;
+	bh=25ZxkvNoUJ3m+CJ5jCTFXHyc+tNdK+nBQXy09YZXcr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mhfgYg+NLzKuVrYfLc10gYyDz7ghQTv/lEnLB9Ud/53hzx63Inh3UDrr0DY1TTq4q
-	 9ovYlIG0YbdT/LnfmhyiCaMbkS2+MxEAW3xG2lDLVkG+aOhf5RxCoy+Uu5+e3bB9cJ
-	 OEO0qu/DbjGyH6Hb9XTk1fE8bNOv9+w1axOtw++0=
+	b=cd1WrYN6ZhAugt1RFdICv+c3IJAWHLKhYMhL+INoyyveqafJteBCy6VBtOlfHVVf0
+	 tpKFTllOjnt1rb7DpfCK8ygRBeVWP5rm6/Ey5jE8ji9nAmSlbs8RcyRXQSBNRxQq99
+	 DOjFhiwln87F3rM5BVaPm2tBE6n/S+37kII2YmVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hailey Mothershead <hailmo@amazon.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Ma Jun <Jun.Ma2@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 006/108] crypto: aead,cipher - zeroize key buffer after use
-Date: Tue, 16 Jul 2024 17:30:21 +0200
-Message-ID: <20240716152746.240710039@linuxfoundation.org>
+Subject: [PATCH 5.10 007/108] drm/amdgpu: Initialize timestamp for some legacy SOCs
+Date: Tue, 16 Jul 2024 17:30:22 +0200
+Message-ID: <20240716152746.278935745@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152745.988603303@linuxfoundation.org>
 References: <20240716152745.988603303@linuxfoundation.org>
@@ -45,57 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hailey Mothershead <hailmo@amazon.com>
+From: Ma Jun <Jun.Ma2@amd.com>
 
-[ Upstream commit 23e4099bdc3c8381992f9eb975c79196d6755210 ]
+[ Upstream commit 2e55bcf3d742a4946d862b86e39e75a95cc6f1c0 ]
 
-I.G 9.7.B for FIPS 140-3 specifies that variables temporarily holding
-cryptographic information should be zeroized once they are no longer
-needed. Accomplish this by using kfree_sensitive for buffers that
-previously held the private key.
+Initialize the interrupt timestamp for some legacy SOCs
+to fix the coverity issue "Uninitialized scalar variable"
 
-Signed-off-by: Hailey Mothershead <hailmo@amazon.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Ma Jun <Jun.Ma2@amd.com>
+Suggested-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/aead.c   | 3 +--
- crypto/cipher.c | 3 +--
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/crypto/aead.c b/crypto/aead.c
-index 16991095270d2..c4ece86c45bc4 100644
---- a/crypto/aead.c
-+++ b/crypto/aead.c
-@@ -35,8 +35,7 @@ static int setkey_unaligned(struct crypto_aead *tfm, const u8 *key,
- 	alignbuffer = (u8 *)ALIGN((unsigned long)buffer, alignmask + 1);
- 	memcpy(alignbuffer, key, keylen);
- 	ret = crypto_aead_alg(tfm)->setkey(tfm, alignbuffer, keylen);
--	memset(alignbuffer, 0, keylen);
--	kfree(buffer);
-+	kfree_sensitive(buffer);
- 	return ret;
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c
+index 582055136cdbf..87dcbaf540e8c 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c
+@@ -413,6 +413,14 @@ void amdgpu_irq_dispatch(struct amdgpu_device *adev,
+ 	int r;
  
-diff --git a/crypto/cipher.c b/crypto/cipher.c
-index fd78150deb1c1..72c5606cc7f81 100644
---- a/crypto/cipher.c
-+++ b/crypto/cipher.c
-@@ -33,8 +33,7 @@ static int setkey_unaligned(struct crypto_cipher *tfm, const u8 *key,
- 	alignbuffer = (u8 *)ALIGN((unsigned long)buffer, alignmask + 1);
- 	memcpy(alignbuffer, key, keylen);
- 	ret = cia->cia_setkey(crypto_cipher_tfm(tfm), alignbuffer, keylen);
--	memset(alignbuffer, 0, keylen);
--	kfree(buffer);
-+	kfree_sensitive(buffer);
- 	return ret;
+ 	entry.iv_entry = (const uint32_t *)&ih->ring[ring_index];
++
++	/*
++	 * timestamp is not supported on some legacy SOCs (cik, cz, iceland,
++	 * si and tonga), so initialize timestamp and timestamp_src to 0
++	 */
++	entry.timestamp = 0;
++	entry.timestamp_src = 0;
++
+ 	amdgpu_ih_decode_iv(adev, &entry);
  
- }
+ 	trace_amdgpu_iv(ih - &adev->irq.ih, &entry);
 -- 
 2.43.0
 
