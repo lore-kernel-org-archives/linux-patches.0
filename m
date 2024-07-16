@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC9819DF71;
-	Tue, 16 Jul 2024 15:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07366199EA3;
+	Tue, 16 Jul 2024 15:59:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145594; cv=none; b=CtXR8cVnpOsoqB0rp/iqY68R+aTHnG/3ITGYHbyU1iHckY9cM0wDenR9Hc1sWzljUd2jsImG8jMYWSnfUnS2brHhGWYunhlKn7h0yskQB3I3laN/4sjdlQwgszWwAZbwRfPGnqc4eTP5qISq8jhPtQL3H76oB/abA4dAm02VWck=
+	t=1721145597; cv=none; b=grtd64aP16zbkn52h53Xnbi3tVfJwSlwhRjvPQ+RjAcj674q96P9T2ffgzX4T8mI5JBVvAowofvLdYWAE3QyKN+77M/v3j5+8XLaqCckt9rrQkEeAvXLuAPXJBLgkNLBWTJfgvCJWPpSzYU89yQOO0G/Bm5BebGPRXuCcfTnt6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145594; c=relaxed/simple;
-	bh=Hs+bqfNp0X3S3lBOvNgtlywFg8308KvMAn96Af1Vwng=;
+	s=arc-20240116; t=1721145597; c=relaxed/simple;
+	bh=8j6mowoEtZ79Jh1GvYSdcRZYjTpd7o3yvPrD3EydE/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D185vHxMsBY9howIT2yb6af9haiwzM00B16BG4iJnM4dO53lH0W+vsx+nV/ChQrsiGbLTLL7TR7wp+Re+T73PMEbM5ovcGESBg+tQ3mhFzSj2Ypowqgs9xsWZ00TlkK2Eh0IHHF9xIWw9qKf2mmwmFgKdLqyj5XOfhV0S3Jh/WY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZE8exvQj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GlfDkYTMe3xF4GK3u65Tg/uF8JpGmEEGSi3ToMvSvyOVZDlxNaJHDjTJ1ChAFQuTme1n2Zt2hxkOC5aewWg8f579CUyKEPPfM4IY0MX4pNLKPITYadP+tIUiO3a20NejSwE9l1hC+DhylU9Rkxw/cPbilUSt7JhjR9bmdepgFsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=af7mABvn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZE8exvQj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D35CC116B1;
-	Tue, 16 Jul 2024 15:59:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="af7mABvn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD7BC4AF0D;
+	Tue, 16 Jul 2024 15:59:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145594;
-	bh=Hs+bqfNp0X3S3lBOvNgtlywFg8308KvMAn96Af1Vwng=;
+	s=korg; t=1721145596;
+	bh=8j6mowoEtZ79Jh1GvYSdcRZYjTpd7o3yvPrD3EydE/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZE8exvQjxNQwwQT1IXnJ7Rv4ekwSlizVRdBSgvTqpvOiJuJ+Qzf7IV1vaKnxALyLH
-	 xfQD+O4fBQRF3PPCBdrcDvYvIi5HeiHpC4AyIUZFHAOms+eZC0et55lL5bif3+eLFG
-	 +KHkA0kBn8g4Yk1XvGP8W6r2ux0cBNfjReoXrBtM=
+	b=af7mABvnPp9S2GymLCH1b8/5Dh9TDGAqYfqgTMzNE9kDvoyWuHceAz+xdREsRsXzO
+	 QYM0UDuDSoJ1Hir520LMndg8M2C2lVy1056D/8eRXR+828NUG8M9bpYINbi3QGY9zE
+	 +/7UcabM7RopAZhrbxyqZSDfnoPgIEdf2VZ65LtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Peter Wang <peter.wang@mediatek.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	=?UTF-8?q?=C5=BDilvinas=20=C5=BDaltiena?= <zaltys@natrix.lt>,
+	Beld Zhang <beldzhang@gmail.com>,
+	Yi Liu <yi.l.liu@intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 003/121] scsi: ufs: core: Fix ufshcd_abort_one racing issue
-Date: Tue, 16 Jul 2024 17:31:05 +0200
-Message-ID: <20240716152751.448632100@linuxfoundation.org>
+Subject: [PATCH 6.6 004/121] vfio/pci: Init the count variable in collecting hot-reset devices
+Date: Tue, 16 Jul 2024 17:31:06 +0200
+Message-ID: <20240716152751.486707566@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152751.312512071@linuxfoundation.org>
 References: <20240716152751.312512071@linuxfoundation.org>
@@ -46,82 +49,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Wang <peter.wang@mediatek.com>
+From: Yi Liu <yi.l.liu@intel.com>
 
-[ Upstream commit 74736103fb4123c71bf11fb7a6abe7c884c5269e ]
+[ Upstream commit 5a88a3f67e37e39f933b38ebb4985ba5822e9eca ]
 
-When ufshcd_abort_one is racing with the completion ISR, the completed tag
-of the request's mq_hctx pointer will be set to NULL by ISR.  Return
-success when request is completed by ISR because ufshcd_abort_one does not
-need to do anything.
+The count variable is used without initialization, it results in mistakes
+in the device counting and crashes the userspace if the get hot reset info
+path is triggered.
 
-The racing flow is:
-
-Thread A
-ufshcd_err_handler					step 1
-	...
-	ufshcd_abort_one
-		ufshcd_try_to_abort_task
-			ufshcd_cmd_inflight(true)	step 3
-		ufshcd_mcq_req_to_hwq
-			blk_mq_unique_tag
-				rq->mq_hctx->queue_num	step 5
-
-Thread B
-ufs_mtk_mcq_intr(cq complete ISR)			step 2
-	scsi_done
-		...
-		__blk_mq_free_request
-			rq->mq_hctx = NULL;		step 4
-
-Below is KE back trace.
-  ufshcd_try_to_abort_task: cmd at tag 41 not pending in the device.
-  ufshcd_try_to_abort_task: cmd at tag=41 is cleared.
-  Aborting tag 41 / CDB 0x28 succeeded
-  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000194
-  pc : [0xffffffddd7a79bf8] blk_mq_unique_tag+0x8/0x14
-  lr : [0xffffffddd6155b84] ufshcd_mcq_req_to_hwq+0x1c/0x40 [ufs_mediatek_mod_ise]
-   do_mem_abort+0x58/0x118
-   el1_abort+0x3c/0x5c
-   el1h_64_sync_handler+0x54/0x90
-   el1h_64_sync+0x68/0x6c
-   blk_mq_unique_tag+0x8/0x14
-   ufshcd_err_handler+0xae4/0xfa8 [ufs_mediatek_mod_ise]
-   process_one_work+0x208/0x4fc
-   worker_thread+0x228/0x438
-   kthread+0x104/0x1d4
-   ret_from_fork+0x10/0x20
-
-Fixes: 93e6c0e19d5b ("scsi: ufs: core: Clear cmd if abort succeeds in MCQ mode")
-Suggested-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Link: https://lore.kernel.org/r/20240628070030.30929-3-peter.wang@mediatek.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: f6944d4a0b87 ("vfio/pci: Collect hot-reset devices to local buffer")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219010
+Reported-by: Žilvinas Žaltiena <zaltys@natrix.lt>
+Cc: Beld Zhang <beldzhang@gmail.com>
+Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/20240710004150.319105-1-yi.l.liu@intel.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/vfio/pci/vfio_pci_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 7bb820bfd7437..808979a093505 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -6363,6 +6363,8 @@ static bool ufshcd_abort_one(struct request *rq, void *priv)
- 	/* Release cmd in MCQ mode if abort succeeds */
- 	if (is_mcq_enabled(hba) && (*ret == 0)) {
- 		hwq = ufshcd_mcq_req_to_hwq(hba, scsi_cmd_to_rq(lrbp->cmd));
-+		if (!hwq)
-+			return 0;
- 		spin_lock_irqsave(&hwq->cq_lock, flags);
- 		if (ufshcd_cmd_inflight(lrbp->cmd))
- 			ufshcd_release_scsi_cmd(hba, lrbp);
+diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
+index a3c545dd174ee..a8f259bc2f4d0 100644
+--- a/drivers/vfio/pci/vfio_pci_core.c
++++ b/drivers/vfio/pci/vfio_pci_core.c
+@@ -1260,7 +1260,7 @@ static int vfio_pci_ioctl_get_pci_hot_reset_info(
+ 	struct vfio_pci_hot_reset_info hdr;
+ 	struct vfio_pci_fill_info fill = {};
+ 	bool slot = false;
+-	int ret, count;
++	int ret, count = 0;
+ 
+ 	if (copy_from_user(&hdr, arg, minsz))
+ 		return -EFAULT;
 -- 
 2.43.0
 
