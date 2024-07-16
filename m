@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D46419F498;
-	Tue, 16 Jul 2024 16:03:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EE4019AD59;
+	Tue, 16 Jul 2024 16:03:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145788; cv=none; b=PDW4JHPEwDxy/X7D/s62/lUjEs72P7spd3Fy7axzBLlrb3Ah9QTh3OaCFKPpqsfVGfLYe7ZLFZs+lYBTQRoPMslqgYZrnxTdJX6e7jCHbOLPgfWybs7DT+kuxZoXo/4p5Ue7ghsjX229tGycV5WP78CWGzf3JEvXkQuEJpjZOl4=
+	t=1721145791; cv=none; b=QhJflwcDPmy4Ls3hkDhW2YrMP9aFxZKiG4hRJ/5k0aJQfejIzTB9jS9m40uo/MvJ3bRpg3i0H6rLiUZafqqIpDFFU/fddfz1Rt9NPg61Lmn+w8qBwzdklbdlnJYc+kkneUGGV8JwZfoAQgKzSMFECLohr3b2Q2lg6yA5SI/ncqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145788; c=relaxed/simple;
-	bh=FmNAgN9w1XoAc+DZi5bgUJt23EOlWEvkeRlpOZE/rSg=;
+	s=arc-20240116; t=1721145791; c=relaxed/simple;
+	bh=Fzy700Mzo0dA09UzHVRlW978PUPkF+sJDkF6N2Dtuz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c6y0FZL+ngsKtkigQhkd4ihfje66opYb7ERzVMuw5VBVg3Orecl4/H3OsXaWZjoGZmQCVZeycdjslpjAo2XKX0+2/2MfSH2+H+aqOlNAxoetp2AYdE6O+K5qP1R77UHuUfKLs69UmxKyWEsiYre3PG5brxlbgN4xE2yrjxELbsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kNMEdJW8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sIEcE4H6Jc91Zw98O16SOFMXIOJ5Wz0q0aNBhsQqiI6AXpiQjt9DwJYX2EZSQVuJCqmu2jT4O7xOTrbC0Cxj1LrfLiwyQXV3/zRlB/K9YiPZlGhS8yIUwOYZhvJEfO9mCOB5imGkVFD7wjp2SfSmJKK+poffSO2rvmZspjg+aV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bkpbV2E2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kNMEdJW8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87951C4AF0B;
-	Tue, 16 Jul 2024 16:03:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bkpbV2E2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D990C116B1;
+	Tue, 16 Jul 2024 16:03:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145787;
-	bh=FmNAgN9w1XoAc+DZi5bgUJt23EOlWEvkeRlpOZE/rSg=;
+	s=korg; t=1721145790;
+	bh=Fzy700Mzo0dA09UzHVRlW978PUPkF+sJDkF6N2Dtuz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kNMEdJW8DhHzodys2Ch4OmGYbC/U15LG7CNUFJJcn3ezEbkUBqRCHbNVDCleii29F
-	 U+k8bu1nR80plqLfRo0aYofYrevDcqQT4rjgL5+CZ4a1VDw1LnB+WBh6vPi/kuOwku
-	 IaNpCjYRzuy6hvVtRhb3OKH4XdDWp/SW1WHH10KU=
+	b=bkpbV2E2OIPhXwBitIm3gcLdTmVkeClydfwloQCsjoLr7V6EzaEN+htJY/o4snhn4
+	 1UrPdxiOGG4VsvoKzP1edQDQTlvDkGw95bSlC0oPWAboC/elGS5y+rpMYm0J3/1vIk
+	 8RkeNKute7XLjFAY7YuwnG6JHvDEME8yif0d7dVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Jacky Huang <ychuang3@nuvoton.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.6 083/121] tty: serial: ma35d1: Add a NULL check for of_node
-Date: Tue, 16 Jul 2024 17:32:25 +0200
-Message-ID: <20240716152754.521430138@linuxfoundation.org>
+	=?UTF-8?q?Micha=C5=82=20Kope=C4=87?= <michal.kopec@3mdeb.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 084/121] ALSA: hda/realtek: add quirk for Clevo V5[46]0TU
+Date: Tue, 16 Jul 2024 17:32:26 +0200
+Message-ID: <20240716152754.559289875@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152751.312512071@linuxfoundation.org>
 References: <20240716152751.312512071@linuxfoundation.org>
@@ -45,57 +44,37 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jacky Huang <ychuang3@nuvoton.com>
+From: Michał Kopeć <michal.kopec@3mdeb.com>
 
-commit acd09ac253b5de8fd79fc61a482ee19154914c7a upstream.
+commit e1c6db864599be341cd3bcc041540383215ce05e upstream.
 
-The pdev->dev.of_node can be NULL if the "serial" node is absent.
-Add a NULL check to return an error in such cases.
+Apply quirk to fix combo jack detection on a new Clevo model: V5[46]0TU
 
-Fixes: 930cbf92db01 ("tty: serial: Add Nuvoton ma35d1 serial driver support")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/all/8df7ce45-fd58-4235-88f7-43fe7cd67e8f@moroto.mountain/
-Signed-off-by: Jacky Huang <ychuang3@nuvoton.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20240625064128.127-1-ychuang570808@gmail.com
+Signed-off-by: Michał Kopeć <michal.kopec@3mdeb.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20240701111010.1496569-1-michal.kopec@3mdeb.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/ma35d1_serial.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/tty/serial/ma35d1_serial.c b/drivers/tty/serial/ma35d1_serial.c
-index 19f0a305cc43..3b4206e815fe 100644
---- a/drivers/tty/serial/ma35d1_serial.c
-+++ b/drivers/tty/serial/ma35d1_serial.c
-@@ -688,12 +688,13 @@ static int ma35d1serial_probe(struct platform_device *pdev)
- 	struct uart_ma35d1_port *up;
- 	int ret = 0;
- 
--	if (pdev->dev.of_node) {
--		ret = of_alias_get_id(pdev->dev.of_node, "serial");
--		if (ret < 0) {
--			dev_err(&pdev->dev, "failed to get alias/pdev id, errno %d\n", ret);
--			return ret;
--		}
-+	if (!pdev->dev.of_node)
-+		return -ENODEV;
-+
-+	ret = of_alias_get_id(pdev->dev.of_node, "serial");
-+	if (ret < 0) {
-+		dev_err(&pdev->dev, "failed to get alias/pdev id, errno %d\n", ret);
-+		return ret;
- 	}
- 	up = &ma35d1serial_ports[ret];
- 	up->port.line = ret;
--- 
-2.45.2
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10182,6 +10182,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1558, 0xa600, "Clevo NL50NU", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xa650, "Clevo NP[567]0SN[CD]", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xa671, "Clevo NP70SN[CDE]", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0x1558, 0xa763, "Clevo V54x_6x_TU", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xb018, "Clevo NP50D[BE]", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xb019, "Clevo NH77D[BE]Q", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xb022, "Clevo NH77D[DC][QW]", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
 
 
