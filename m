@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A220B641;
-	Tue, 16 Jul 2024 15:40:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22003B641;
+	Tue, 16 Jul 2024 15:40:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144453; cv=none; b=uPkZEeCV24JiPlWmPvvPivSgtVYiooK2IvlKLA/TAFlOe4R6/nWUmCmdE/iP3y6kN3CCc53EUo2wrSuxWTdXe3yTeag2WqrB6GYcYWAHHjETa9MrJMeZ3Vo9KXge7ml8cfuPjXoFXjKk4vUVh6g8PGPgrU9HQW7jotLXZ8E7sd4=
+	t=1721144456; cv=none; b=FNcqTzt6JGL4joRapKoQqpAo8L2WCoHD5lCXSDcfEqU/ljh3iMVDhDNqGTlTSKq19/bV5uwKqZ8mNxjBFU/PXgeJHP0Bq4C8ldj/5ZIl3p5XZigsvLuxFlHtPRX7rduwjze57r6vR4BE+zmdkQfmghV15mOuPk5UjI8wQ8FBNqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144453; c=relaxed/simple;
-	bh=1AMTbCA4LVtUGtyhjtqulmnNfcqyzxOZDWFsZijm7i8=;
+	s=arc-20240116; t=1721144456; c=relaxed/simple;
+	bh=6cOGXXeICmr4F/t3XQKGMfyymWyHNdIA818gghA7pLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t1ssG2mTkzj6/OLuXGcM5SlxyX2LFfPp60NNZOcmQe2CGCxSnOyFs6DtYe4SEPx7AFcv9ES603sTd2azYPC52/PIhUo111B4+CLzEWQBR4pbmtxczcjFuxDmyH0fERcIbLm6lVf5/ukZxbnlC4zznh/KTkhC35bKntekXKaUmFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LoWhSEOh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VoPjAtdKllTBeZKALh60XLw4aLWGD4IMXMo5iN2Gl7eNvk6e+L5VuSbzI+e8PpDDZm59p5rCJMnXftknVZATomPUYVv/pcZjMFMs3uwODi4CJX7NgO/KK9IagIExYRLsNpEgyHme80j5PpHYwux0lGDB/Wi/kZxK5SInQk0QxqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s9O4e7yc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LoWhSEOh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A24F3C116B1;
-	Tue, 16 Jul 2024 15:40:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s9O4e7yc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9946AC116B1;
+	Tue, 16 Jul 2024 15:40:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144453;
-	bh=1AMTbCA4LVtUGtyhjtqulmnNfcqyzxOZDWFsZijm7i8=;
+	s=korg; t=1721144456;
+	bh=6cOGXXeICmr4F/t3XQKGMfyymWyHNdIA818gghA7pLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LoWhSEOhp5KHru5DzQKm0fR4kHO3RmMxadN2wGX1AJowfQoIv+MteopbGmyrXcnCi
-	 S0jlAVBnMJGGyjRWUUKP3crlaikmKhTM3mb7crXMgtMSGe7l9eEiDqx98YIo2LmT6H
-	 WmHgbYo3JDB/AM9VFSDHUArjFpOg9BJPIUsYoXkI=
+	b=s9O4e7yc8zWCNIwQetcmd0YQ3maRm2BYEs/p2kVVbEJbrgLgE0endib6YeWYRqwNN
+	 GJNIU+f9VKUBoamzkAw6hiKI0o0UurZUlRa3bOQCdH6+SdcL6AaIfFPZrYt7NpAK3u
+	 hZQZn/GOY/wLUQHYUyExteb/ZMR36W63K7B4rqd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+d3abed1ad3d367fa2627@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 77/78] nilfs2: fix kernel bug on rename operation of broken directory
-Date: Tue, 16 Jul 2024 17:31:49 +0200
-Message-ID: <20240716152743.620245428@linuxfoundation.org>
+	Dirk Behme <dirk.behme@de.bosch.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 78/78] i2c: rcar: bring hardware to known state when probing
+Date: Tue, 16 Jul 2024 17:31:50 +0200
+Message-ID: <20240716152743.659406897@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152740.626160410@linuxfoundation.org>
 References: <20240716152740.626160410@linuxfoundation.org>
@@ -51,78 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-commit a9e1ddc09ca55746079cc479aa3eb6411f0d99d4 upstream.
+[ Upstream commit 4e36c0f20cb1c74c7bd7ea31ba432c1c4a989031 ]
 
-Syzbot reported that in rename directory operation on broken directory on
-nilfs2, __block_write_begin_int() called to prepare block write may fail
-BUG_ON check for access exceeding the folio/page size.
+When probing, the hardware is not brought into a known state. This may
+be a problem when a hypervisor restarts Linux without resetting the
+hardware, leaving an old state running. Make sure the hardware gets
+initialized, especially interrupts should be cleared and disabled.
 
-This is because nilfs_dotdot(), which gets parent directory reference
-entry ("..") of the directory to be moved or renamed, does not check
-consistency enough, and may return location exceeding folio/page size for
-broken directories.
-
-Fix this issue by checking required directory entries ("." and "..") in
-the first chunk of the directory in nilfs_dotdot().
-
-Link: https://lkml.kernel.org/r/20240628165107.9006-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+d3abed1ad3d367fa2627@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=d3abed1ad3d367fa2627
-Fixes: 2ba466d74ed7 ("nilfs2: directory entry operations")
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Dirk Behme <dirk.behme@de.bosch.com>
+Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Closes: https://lore.kernel.org/r/20240702045535.2000393-1-dirk.behme@de.bosch.com
+Fixes: 6ccbe607132b ("i2c: add Renesas R-Car I2C driver")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/dir.c |   32 ++++++++++++++++++++++++++++++--
- 1 file changed, 30 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-rcar.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
---- a/fs/nilfs2/dir.c
-+++ b/fs/nilfs2/dir.c
-@@ -396,11 +396,39 @@ found:
+diff --git a/drivers/i2c/busses/i2c-rcar.c b/drivers/i2c/busses/i2c-rcar.c
+index d0c4b3019e41e..1327f29f1e93b 100644
+--- a/drivers/i2c/busses/i2c-rcar.c
++++ b/drivers/i2c/busses/i2c-rcar.c
+@@ -218,6 +218,14 @@ static void rcar_i2c_init(struct rcar_i2c_priv *priv)
  
- struct nilfs_dir_entry *nilfs_dotdot(struct inode *dir, struct page **p)
- {
--	struct nilfs_dir_entry *de = nilfs_get_page(dir, 0, p);
-+	struct page *page;
-+	struct nilfs_dir_entry *de, *next_de;
-+	size_t limit;
-+	char *msg;
- 
-+	de = nilfs_get_page(dir, 0, &page);
- 	if (IS_ERR(de))
- 		return NULL;
--	return nilfs_next_entry(de);
-+
-+	limit = nilfs_last_byte(dir, 0);  /* is a multiple of chunk size */
-+	if (unlikely(!limit || le64_to_cpu(de->inode) != dir->i_ino ||
-+		     !nilfs_match(1, ".", de))) {
-+		msg = "missing '.'";
-+		goto fail;
-+	}
-+
-+	next_de = nilfs_next_entry(de);
-+	/*
-+	 * If "next_de" has not reached the end of the chunk, there is
-+	 * at least one more record.  Check whether it matches "..".
-+	 */
-+	if (unlikely((char *)next_de == (char *)de + nilfs_chunk_size(dir) ||
-+		     !nilfs_match(2, "..", next_de))) {
-+		msg = "missing '..'";
-+		goto fail;
-+	}
-+	*p = page;
-+	return next_de;
-+
-+fail:
-+	nilfs_error(dir->i_sb, "directory #%lu %s", dir->i_ino, msg);
-+	nilfs_put_page(page);
-+	return NULL;
  }
  
- ino_t nilfs_inode_by_name(struct inode *dir, const struct qstr *qstr)
++static void rcar_i2c_reset_slave(struct rcar_i2c_priv *priv)
++{
++	rcar_i2c_write(priv, ICSIER, 0);
++	rcar_i2c_write(priv, ICSSR, 0);
++	rcar_i2c_write(priv, ICSCR, SDBS);
++	rcar_i2c_write(priv, ICSAR, 0); /* Gen2: must be 0 if not using slave */
++}
++
+ static int rcar_i2c_bus_barrier(struct rcar_i2c_priv *priv)
+ {
+ 	int i;
+@@ -863,11 +871,8 @@ static int rcar_unreg_slave(struct i2c_client *slave)
+ 
+ 	/* ensure no irq is running before clearing ptr */
+ 	disable_irq(priv->irq);
+-	rcar_i2c_write(priv, ICSIER, 0);
+-	rcar_i2c_write(priv, ICSSR, 0);
++	rcar_i2c_reset_slave(priv);
+ 	enable_irq(priv->irq);
+-	rcar_i2c_write(priv, ICSCR, SDBS);
+-	rcar_i2c_write(priv, ICSAR, 0); /* Gen2: must be 0 if not using slave */
+ 
+ 	priv->slave = NULL;
+ 
+@@ -973,7 +978,9 @@ static int rcar_i2c_probe(struct platform_device *pdev)
+ 	if (ret < 0)
+ 		goto out_pm_put;
+ 
+-	rcar_i2c_write(priv, ICSAR, 0); /* Gen2: must be 0 if not using slave */
++	/* Bring hardware to known state */
++	rcar_i2c_init(priv);
++	rcar_i2c_reset_slave(priv);
+ 
+ 	if (priv->devtype == I2C_RCAR_GEN3) {
+ 		priv->rstc = devm_reset_control_get_exclusive(&pdev->dev, NULL);
+-- 
+2.43.0
+
 
 
