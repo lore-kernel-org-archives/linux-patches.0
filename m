@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A59CA40;
-	Tue, 16 Jul 2024 15:35:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84CC7CA40;
+	Tue, 16 Jul 2024 15:35:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144142; cv=none; b=LfkdhDPE93Tu/fKkBH5HrsNVTczOqz4JHfVn13ZMTEMgYTFQ/M0e1abC+AZpZR9uvnHqZFFQasrfIxRtjf9osCtTLsYZGzAPqSHfwcsPB5Ua3zbSm2Ct8oYV9YncrPEaY+GPi9iUtM/qeGwxQvNE2RD3Wq2PYxDMKI8XKhqoluM=
+	t=1721144145; cv=none; b=Tg19d2QHk4KBgvIk9t9ZUNJwpBiGbwfl4/ZGH8K3v/ijWKwCPlLkcS+GEA5oQebIfCADjiOzf7ysSCwtbPS3ZsXwALKId4Oanj78XV+yS37sEJW3Fq7YnW6m2b/VtpqA/pusfiD6rh2FcxE0EmilCavPp7VKcTQtIcI+vxqMe1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144142; c=relaxed/simple;
-	bh=Q56/X0z++qOcVsURtDeK57WUW3T1PVMR21JZqNsJpBQ=;
+	s=arc-20240116; t=1721144145; c=relaxed/simple;
+	bh=z+gNaf4voSBCb3ZaG2lsuTvA0eyQjGgWHmLDs5jHHtM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PjDxXWJ0Zx9AIRzxHGmeLqqUD+iQ7+tJDYKYoksTyfh93Y6iqS2hnommnDjFMJ7jY8HZNp6S5zBIin38b2fv9bHsrdEgzLJ1PSREvNMWrJS3ylRuUgL7L5ioaUofAxO0Ssxi20QC3yF2FIWevP2At1mtEPcPq+yvGisCEBHstNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NsbqSl07; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l82hvcnjcrvU7G4KwZPB5NVWZGC+UqYwDDJaf1B1VZOgzmxabLMRuVj5VssaezDWgNdffESQEaXVJ8PrVXedErc4eqD0lYihMtY1uYPHmqYMkmnJ+fiqjNCLB4/HSSwLcyqNhTesbEcbamfK9LACyQvyzsZ5gCEw7LwmBBHAaHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EW8K2Eh3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NsbqSl07"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C082CC116B1;
-	Tue, 16 Jul 2024 15:35:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EW8K2Eh3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B15CAC116B1;
+	Tue, 16 Jul 2024 15:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144142;
-	bh=Q56/X0z++qOcVsURtDeK57WUW3T1PVMR21JZqNsJpBQ=;
+	s=korg; t=1721144145;
+	bh=z+gNaf4voSBCb3ZaG2lsuTvA0eyQjGgWHmLDs5jHHtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NsbqSl07wqqOerBWosr4YkVA45avBZV0t9FXfqCwrUYr1rSBvSE0wJgUy1NPu1n7B
-	 NCn4e+hftvkltBaLe2w33JDUvaIPBAxMhS0kucZnDFz2PaHDq6Gqwp007SEBCjFKOx
-	 bKqRmwHiYOzCqxRNbCXb5Nc0pUGKKYRjtmDZUZJE=
+	b=EW8K2Eh36oXYMhoNjJzNpAVXyi/hDsdBbB2qsGPOt06UNXPL7UqPB14p5Gt2oqOWm
+	 o60zclm3JY3e6ogDEktDgMKv/btjFkul7kLM4+SSk9O7L0aTCLTmKcnmwI+WP+cGYD
+	 GinTn1zl/eRc4+KCBsf7wpr0Ci8/5PNTCI2/Bs4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Hillf Danton <hdanton@sina.com>,
-	Jan Kara <jack@suse.cz>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.19 41/66] nilfs2: fix incorrect inode allocation from reserved inodes
-Date: Tue, 16 Jul 2024 17:31:16 +0200
-Message-ID: <20240716152739.735173828@linuxfoundation.org>
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Paulo Zanoni <paulo.r.zanoni@intel.com>,
+	Chris Wilson <chris@chris-wilson.co.uk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 42/66] drm/i915: make find_fw_domain work on intel_uncore
+Date: Tue, 16 Jul 2024 17:31:17 +0200
+Message-ID: <20240716152739.774712015@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152738.161055634@linuxfoundation.org>
 References: <20240716152738.161055634@linuxfoundation.org>
@@ -53,148 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
 
-commit 93aef9eda1cea9e84ab2453fcceb8addad0e46f1 upstream.
+[ Upstream commit cb7ee69015aaba5e1091af94e73bc72483c08e37 ]
 
-If the bitmap block that manages the inode allocation status is corrupted,
-nilfs_ifile_create_inode() may allocate a new inode from the reserved
-inode area where it should not be allocated.
+Remove unneeded usage of dev_priv from 1 extra function.
 
-Previous fix commit d325dc6eb763 ("nilfs2: fix use-after-free bug of
-struct nilfs_root"), fixed the problem that reserved inodes with inode
-numbers less than NILFS_USER_INO (=11) were incorrectly reallocated due to
-bitmap corruption, but since the start number of non-reserved inodes is
-read from the super block and may change, in which case inode allocation
-may occur from the extended reserved inode area.
-
-If that happens, access to that inode will cause an IO error, causing the
-file system to degrade to an error state.
-
-Fix this potential issue by adding a wraparound option to the common
-metadata object allocation routine and by modifying
-nilfs_ifile_create_inode() to disable the option so that it only allocates
-inodes with inode numbers greater than or equal to the inode number read
-in "nilfs->ns_first_ino", regardless of the bitmap status of reserved
-inodes.
-
-Link: https://lkml.kernel.org/r/20240623051135.4180-4-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: Hillf Danton <hdanton@sina.com>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Cc: Paulo Zanoni <paulo.r.zanoni@intel.com>
+Reviewed-by: Paulo Zanoni <paulo.r.zanoni@intel.com>
+Signed-off-by: Chris Wilson <chris@chris-wilson.co.uk>
+Link: https://patchwork.freedesktop.org/patch/msgid/20190319183543.13679-6-daniele.ceraolospurio@intel.com
+Stable-dep-of: 0ec986ed7bab ("tcp: fix incorrect undo caused by DSACK of TLP retransmit")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/alloc.c |   18 ++++++++++++++----
- fs/nilfs2/alloc.h |    4 ++--
- fs/nilfs2/dat.c   |    2 +-
- fs/nilfs2/ifile.c |    7 ++-----
- 4 files changed, 19 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/i915/intel_uncore.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
---- a/fs/nilfs2/alloc.c
-+++ b/fs/nilfs2/alloc.c
-@@ -377,11 +377,12 @@ void *nilfs_palloc_block_get_entry(const
-  * @target: offset number of an entry in the group (start point)
-  * @bsize: size in bits
-  * @lock: spin lock protecting @bitmap
-+ * @wrap: whether to wrap around
-  */
- static int nilfs_palloc_find_available_slot(unsigned char *bitmap,
- 					    unsigned long target,
- 					    unsigned int bsize,
--					    spinlock_t *lock)
-+					    spinlock_t *lock, bool wrap)
+diff --git a/drivers/gpu/drm/i915/intel_uncore.c b/drivers/gpu/drm/i915/intel_uncore.c
+index 50b39aa4ffb88..c6cd52b8e4e27 100644
+--- a/drivers/gpu/drm/i915/intel_uncore.c
++++ b/drivers/gpu/drm/i915/intel_uncore.c
+@@ -836,13 +836,13 @@ static int fw_range_cmp(u32 offset, const struct intel_forcewake_range *entry)
+ })
+ 
+ static enum forcewake_domains
+-find_fw_domain(struct drm_i915_private *dev_priv, u32 offset)
++find_fw_domain(struct intel_uncore *uncore, u32 offset)
  {
- 	int pos, end = bsize;
+ 	const struct intel_forcewake_range *entry;
  
-@@ -397,6 +398,8 @@ static int nilfs_palloc_find_available_s
+ 	entry = BSEARCH(offset,
+-			dev_priv->uncore.fw_domains_table,
+-			dev_priv->uncore.fw_domains_table_entries,
++			uncore->fw_domains_table,
++			uncore->fw_domains_table_entries,
+ 			fw_range_cmp);
  
- 		end = target;
- 	}
-+	if (!wrap)
-+		return -ENOSPC;
+ 	if (!entry)
+@@ -854,11 +854,11 @@ find_fw_domain(struct drm_i915_private *dev_priv, u32 offset)
+ 	 * translate it here to the list of available domains.
+ 	 */
+ 	if (entry->domains == FORCEWAKE_ALL)
+-		return dev_priv->uncore.fw_domains;
++		return uncore->fw_domains;
  
- 	/* wrap around */
- 	for (pos = 0; pos < end; pos++) {
-@@ -495,9 +498,10 @@ int nilfs_palloc_count_max_entries(struc
-  * nilfs_palloc_prepare_alloc_entry - prepare to allocate a persistent object
-  * @inode: inode of metadata file using this allocator
-  * @req: nilfs_palloc_req structure exchanged for the allocation
-+ * @wrap: whether to wrap around
-  */
- int nilfs_palloc_prepare_alloc_entry(struct inode *inode,
--				     struct nilfs_palloc_req *req)
-+				     struct nilfs_palloc_req *req, bool wrap)
- {
- 	struct buffer_head *desc_bh, *bitmap_bh;
- 	struct nilfs_palloc_group_desc *desc;
-@@ -516,7 +520,7 @@ int nilfs_palloc_prepare_alloc_entry(str
- 	entries_per_group = nilfs_palloc_entries_per_group(inode);
+-	WARN(entry->domains & ~dev_priv->uncore.fw_domains,
++	WARN(entry->domains & ~uncore->fw_domains,
+ 	     "Uninitialized forcewake domain(s) 0x%x accessed at 0x%x\n",
+-	     entry->domains & ~dev_priv->uncore.fw_domains, offset);
++	     entry->domains & ~uncore->fw_domains, offset);
  
- 	for (i = 0; i < ngroups; i += n) {
--		if (group >= ngroups) {
-+		if (group >= ngroups && wrap) {
- 			/* wrap around */
- 			group = 0;
- 			maxgroup = nilfs_palloc_group(inode, req->pr_entry_nr,
-@@ -541,7 +545,13 @@ int nilfs_palloc_prepare_alloc_entry(str
- 				bitmap = bitmap_kaddr + bh_offset(bitmap_bh);
- 				pos = nilfs_palloc_find_available_slot(
- 					bitmap, group_offset,
--					entries_per_group, lock);
-+					entries_per_group, lock, wrap);
-+				/*
-+				 * Since the search for a free slot in the
-+				 * second and subsequent bitmap blocks always
-+				 * starts from the beginning, the wrap flag
-+				 * only has an effect on the first search.
-+				 */
- 				if (pos >= 0) {
- 					/* found a free entry */
- 					nilfs_palloc_group_desc_add_entries(
---- a/fs/nilfs2/alloc.h
-+++ b/fs/nilfs2/alloc.h
-@@ -50,8 +50,8 @@ struct nilfs_palloc_req {
- 	struct buffer_head *pr_entry_bh;
- };
+ 	return entry->domains;
+ }
+@@ -886,7 +886,7 @@ static const struct intel_forcewake_range __vlv_fw_ranges[] = {
+ ({ \
+ 	enum forcewake_domains __fwd = 0; \
+ 	if (NEEDS_FORCE_WAKE((offset))) \
+-		__fwd = find_fw_domain(dev_priv, offset); \
++		__fwd = find_fw_domain(&dev_priv->uncore, offset); \
+ 	__fwd; \
+ })
  
--int nilfs_palloc_prepare_alloc_entry(struct inode *,
--				     struct nilfs_palloc_req *);
-+int nilfs_palloc_prepare_alloc_entry(struct inode *inode,
-+				     struct nilfs_palloc_req *req, bool wrap);
- void nilfs_palloc_commit_alloc_entry(struct inode *,
- 				     struct nilfs_palloc_req *);
- void nilfs_palloc_abort_alloc_entry(struct inode *, struct nilfs_palloc_req *);
---- a/fs/nilfs2/dat.c
-+++ b/fs/nilfs2/dat.c
-@@ -75,7 +75,7 @@ int nilfs_dat_prepare_alloc(struct inode
- {
- 	int ret;
+@@ -894,7 +894,7 @@ static const struct intel_forcewake_range __vlv_fw_ranges[] = {
+ ({ \
+ 	enum forcewake_domains __fwd = 0; \
+ 	if (GEN11_NEEDS_FORCE_WAKE((offset))) \
+-		__fwd = find_fw_domain(dev_priv, offset); \
++		__fwd = find_fw_domain(&dev_priv->uncore, offset); \
+ 	__fwd; \
+ })
  
--	ret = nilfs_palloc_prepare_alloc_entry(dat, req);
-+	ret = nilfs_palloc_prepare_alloc_entry(dat, req, true);
- 	if (ret < 0)
- 		return ret;
+@@ -980,7 +980,7 @@ static const struct intel_forcewake_range __chv_fw_ranges[] = {
+ ({ \
+ 	enum forcewake_domains __fwd = 0; \
+ 	if (NEEDS_FORCE_WAKE((offset)) && !is_gen8_shadowed(offset)) \
+-		__fwd = find_fw_domain(dev_priv, offset); \
++		__fwd = find_fw_domain(&dev_priv->uncore, offset); \
+ 	__fwd; \
+ })
  
---- a/fs/nilfs2/ifile.c
-+++ b/fs/nilfs2/ifile.c
-@@ -55,13 +55,10 @@ int nilfs_ifile_create_inode(struct inod
- 	struct nilfs_palloc_req req;
- 	int ret;
+@@ -988,7 +988,7 @@ static const struct intel_forcewake_range __chv_fw_ranges[] = {
+ ({ \
+ 	enum forcewake_domains __fwd = 0; \
+ 	if (GEN11_NEEDS_FORCE_WAKE((offset)) && !is_gen11_shadowed(offset)) \
+-		__fwd = find_fw_domain(dev_priv, offset); \
++		__fwd = find_fw_domain(&dev_priv->uncore, offset); \
+ 	__fwd; \
+ })
  
--	req.pr_entry_nr = 0;  /*
--			       * 0 says find free inode from beginning
--			       * of a group. dull code!!
--			       */
-+	req.pr_entry_nr = NILFS_FIRST_INO(ifile->i_sb);
- 	req.pr_entry_bh = NULL;
- 
--	ret = nilfs_palloc_prepare_alloc_entry(ifile, &req);
-+	ret = nilfs_palloc_prepare_alloc_entry(ifile, &req, false);
- 	if (!ret) {
- 		ret = nilfs_palloc_get_entry_block(ifile, req.pr_entry_nr, 1,
- 						   &req.pr_entry_bh);
+-- 
+2.43.0
+
 
 
