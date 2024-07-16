@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 919C919E832;
-	Tue, 16 Jul 2024 15:51:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7AC319EEA5;
+	Tue, 16 Jul 2024 15:51:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145094; cv=none; b=plohkqM0zhmS1B7h2YoUdSblsLQjPRxQcMnJYFBIq9BxN6O2O+BMVr2YDHXQT9sGCW5Oq5cGgevfwqf93lbvvh6ov8W/rsoKr4ydPIBIvIClWJAZycz8F+ZWljCq1iiI+sNbDiaIr2mzL8KqVaP5W8L1SKkWItUhkxsZcyX96v0=
+	t=1721145097; cv=none; b=tPtIwhNfSw/xnggRiFsjOlZR88nkiWMp37vcMLFONwEHlPYNNg3OBA2dM7E6GpGyXZI3YhDhWbjA9m/7XzEXIA7Tmz/3QMqKIAKCsf6V4jXldrDaIJMNCugxWqVVyXBFEOWa12hybeaB4ZXzxfvuDqugd0xQOemqALZ3P7s8I1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145094; c=relaxed/simple;
-	bh=1+256Ra1SscQhJBusI4HhWm5/gpCwilF4rDw2cgXeKk=;
+	s=arc-20240116; t=1721145097; c=relaxed/simple;
+	bh=mIkIbkx7B1Iw39+r/HcRvbBRoicyj9X9M+KS+A76akQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QAl19Cv0WobjHPDMK47HoEtw7gABLE+JlXURX5s61/W3i5D7D/7AbFzpszkncLq4XuNre0qCAcaHA9poespf7DyL8olFQYUU5KgS52I/KL3lDLlqpO5iO8XCQ8fcV47nHgToHb52lplfaFGOjiecyA/NgByzqxl0x+HYhDgXNV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pjkf/tfx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pHDE0H6CZCs76PboHD6+MzRyCNzhyYP3bsSzx2MG47yf3jjDH5eszqUZnEw8kwsxjqgUn0b1pRLbbkngC6mgIPz2G9JCMSixcX+KAstOwI7oNzdOLHBabWPeDr8kYEu4lOQfNDkYCxH6O00s6Zv777c5GuH9htsdbebUBfLoX20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0u83J0OT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pjkf/tfx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DF4CC4AF0B;
-	Tue, 16 Jul 2024 15:51:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0u83J0OT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE6ABC116B1;
+	Tue, 16 Jul 2024 15:51:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145094;
-	bh=1+256Ra1SscQhJBusI4HhWm5/gpCwilF4rDw2cgXeKk=;
+	s=korg; t=1721145097;
+	bh=mIkIbkx7B1Iw39+r/HcRvbBRoicyj9X9M+KS+A76akQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pjkf/tfx+96cvwHrfWLzbaZkEA8RyUwWFApoML7AfW6b88LmCsCVl+SRaVY2mZHkI
-	 Tz+DLfCgoP35Gpx5Q70Zjt86IWzgWZzupcTmDaqtk6SxPxWfx69tnNk9e6EqVEWUr+
-	 tREfGNRfES4/goei4rJqdEkECPtJaJOk/4y+iTx0=
+	b=0u83J0OTL8oa1TTNhJKrxx3kaCSVrJDxBfzl0zQp2smhw4HHs8ts9Z5dDPSu055Vo
+	 iYNj72rYdIzhGe1uNP61/b/zT9ZxL6apDXuuqoEL782GHkj+dXvJtMX7bw5u53QJ6M
+	 /BgbOeat12rJGLadIeFXxlVaNhZLWmBWyAak9Ibk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Don <joshdon@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>
-Subject: [PATCH 6.9 066/143] Revert "sched/fair: Make sure to try to detach at least one movable task"
-Date: Tue, 16 Jul 2024 17:31:02 +0200
-Message-ID: <20240716152758.517163096@linuxfoundation.org>
+	Chen Ni <nichen@iscas.ac.cn>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.9 057/143] ARM: davinci: Convert comma to semicolon
+Date: Tue, 16 Jul 2024 17:30:53 +0200
+Message-ID: <20240716152758.173467308@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -51,65 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Don <joshdon@google.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-commit 2feab2492deb2f14f9675dd6388e9e2bf669c27a upstream.
+[ Upstream commit acc3815db1a02d654fbc19726ceaadca0d7dd81c ]
 
-This reverts commit b0defa7ae03ecf91b8bfd10ede430cff12fcbd06.
+Replace a comma between expression statements by a semicolon.
 
-b0defa7ae03ec changed the load balancing logic to ignore env.max_loop if
-all tasks examined to that point were pinned. The goal of the patch was
-to make it more likely to be able to detach a task buried in a long list
-of pinned tasks. However, this has the unfortunate side effect of
-creating an O(n) iteration in detach_tasks(), as we now must fully
-iterate every task on a cpu if all or most are pinned. Since this load
-balance code is done with rq lock held, and often in softirq context, it
-is very easy to trigger hard lockups. We observed such hard lockups with
-a user who affined O(10k) threads to a single cpu.
-
-When I discussed this with Vincent he initially suggested that we keep
-the limit on the number of tasks to detach, but increase the number of
-tasks we can search. However, after some back and forth on the mailing
-list, he recommended we instead revert the original patch, as it seems
-likely no one was actually getting hit by the original issue.
-
-Fixes: b0defa7ae03e ("sched/fair: Make sure to try to detach at least one movable task")
-Signed-off-by: Josh Don <joshdon@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Link: https://lore.kernel.org/r/20240620214450.316280-1-joshdon@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: efc1bb8a6fd5 ("davinci: add power management support")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c |   12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ arch/arm/mach-davinci/pm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -9106,12 +9106,8 @@ static int detach_tasks(struct lb_env *e
- 			break;
+diff --git a/arch/arm/mach-davinci/pm.c b/arch/arm/mach-davinci/pm.c
+index 8aa39db095d76..2c5155bd376ba 100644
+--- a/arch/arm/mach-davinci/pm.c
++++ b/arch/arm/mach-davinci/pm.c
+@@ -61,7 +61,7 @@ static void davinci_pm_suspend(void)
  
- 		env->loop++;
--		/*
--		 * We've more or less seen every task there is, call it quits
--		 * unless we haven't found any movable task yet.
--		 */
--		if (env->loop > env->loop_max &&
--		    !(env->flags & LBF_ALL_PINNED))
-+		/* We've more or less seen every task there is, call it quits */
-+		if (env->loop > env->loop_max)
- 			break;
+ 	/* Configure sleep count in deep sleep register */
+ 	val = __raw_readl(pm_config.deepsleep_reg);
+-	val &= ~DEEPSLEEP_SLEEPCOUNT_MASK,
++	val &= ~DEEPSLEEP_SLEEPCOUNT_MASK;
+ 	val |= pm_config.sleepcount;
+ 	__raw_writel(val, pm_config.deepsleep_reg);
  
- 		/* take a breather every nr_migrate tasks */
-@@ -11363,9 +11359,7 @@ more_balance:
- 
- 		if (env.flags & LBF_NEED_BREAK) {
- 			env.flags &= ~LBF_NEED_BREAK;
--			/* Stop if we tried all running tasks */
--			if (env.loop < busiest->nr_running)
--				goto more_balance;
-+			goto more_balance;
- 		}
- 
- 		/*
+-- 
+2.43.0
+
 
 
