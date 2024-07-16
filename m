@@ -1,82 +1,77 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from 008.lax.mailroute.net (008.lax.mailroute.net [199.89.1.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA3D1195B27;
-	Tue, 16 Jul 2024 19:43:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A1FE3D0D5
+	for <patches@lists.linux.dev>; Tue, 16 Jul 2024 19:55:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.1.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721159005; cv=none; b=KJ8pwEGIqMmLp3L5OudKF0SwA9ZfzZBss8FkrUlfeexmNq5eFIfChCM0KnlETy+YUNKRgLnsGIzSczGYGeGLN8o4lO3rE8EFKzTtFpg5mtK+7ped2U7pqAQBsX7pdvDm64XydUS9U0XYbkfL3Y/jI38jDOo114Y4d4Ff5vAbwFo=
+	t=1721159745; cv=none; b=W5+0RvtOCnmo2gatBjN2hteAk2v9+VZm7rgwruY0inJKks9euvA3ReHNF5TqPsA1Z6bONu/t+nb0G+ZNEutzPtdzekzuC0pLXXeCLFLGz7BIGZkf21/HetDidwUia+XGMJaxi1Xn8jLak+fJ5adUPWdFPd3zcH5gEyw0N/wd4M0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721159005; c=relaxed/simple;
-	bh=N1DLYAjNSkmL3ZlMpnusTmfnT3+8W7vAgxCZebBFTDE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Lw4Thc4o42lR3DiJnTEXGY3gsnYHGhc4o9lKL0/UN0QSiw+HIakKBUsdIbaMuSTyzQeQbyRa2zlgsN/4C0Hxu+dh2V9mH+72BjNzkW1ifZsghWHxX668lNaaXvinH4cRsQu6qbjISWnIFjUVbbRvV2I9tzFTLi53GU6XJ21gjJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BkxEFtyA; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1721159745; c=relaxed/simple;
+	bh=y/eDmyrhbNINw2A3HOSpVgr82ZNiUMJiNBLPDBLAJKc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Sv9VRUJrJLGnZlNanyqcQURGncABJF32ki6c2Cd+Zv4kvLIyVnF67NvJZ7kL2c7blOSRDcchzzA29N5wsBy+9fdueB7/j2Ss86PLVjyO8TxcH5zi0VzPt19hul8wbJ1WouFT7VPcIB7z5rZVL2NqykzVgOqDBEzBsJCHHJNFHDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=J6eFzM1J; arc=none smtp.client-ip=199.89.1.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BkxEFtyA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D49BEC4AF0D;
-	Tue, 16 Jul 2024 19:43:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721159004;
-	bh=N1DLYAjNSkmL3ZlMpnusTmfnT3+8W7vAgxCZebBFTDE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=BkxEFtyAZ8N+WCAMR6qPMljdwiWsTbBUBGVVZq/WBBZvCuncCxVTCDhBNR++sNsOu
-	 wE76zNzZlZ1AtI7qXYcbyj4JRZk0e+1SWw7qVSJrFTSXTEfaD/X5H6xSmm9M5KxWYO
-	 /U8h892PAahvz85D57OIdQFmSa8spfZ1w8I8OJvNKIMJvG9T6LVSp28KbY5qfSKawN
-	 hgAWNdlTSksy3Q7KqYPaUhpzHf8BsQMfGMBMpVjY0a4T6THoSmPD5VlO6vUJWBl0Ue
-	 kKcZZOC63Axlw+uOpe2xVSx3VMKoGbd5t72EX9Kfxyu/b8sRlNWZ4UVnC4xvXB+Cvy
-	 0bL5g9bXhjXJg==
-Date: Tue, 16 Jul 2024 20:43:17 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com
-Subject: Re: [PATCH 5.15 000/144] 5.15.163-rc1 review
-Message-ID: <78475039-0f5d-4bd3-bb57-4047370374c0@sirena.org.uk>
-References: <20240716152752.524497140@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="J6eFzM1J"
+Received: from localhost (localhost [127.0.0.1])
+	by 008.lax.mailroute.net (Postfix) with ESMTP id 4WNqYk13nNz6CmM6Q;
+	Tue, 16 Jul 2024 19:55:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
+	content-transfer-encoding:content-type:content-type:in-reply-to
+	:from:from:content-language:references:subject:subject
+	:user-agent:mime-version:date:date:message-id:received:received;
+	 s=mr01; t=1721159736; x=1723751737; bh=Ufp9ItpaEVwHwjubiXcf2wxm
+	vGVRYOAT/dEARkYgx8M=; b=J6eFzM1JfympXrhn+hxsm/g/OH0FWAI6VCapkURS
+	CUOwrItylH6SBtEUC0MgfKglZF9HKotPegTLVGejzNSfrRmvmJFSKpgo8DRcP1vb
+	oZyUibV46RIW4A+39bsODzLSPVNZqBwirRFeg1cYlz70RxFVuCQFHLpWUBxVoM9l
+	2fGl8FpQC+0k2QEzZQR01KZjAupcctDahtOKiUHrHODTGOPuLIYqVn0LQScKfXy+
+	5h91+LcAH6jWZUqfjGkFibW1rDlXukmHqqcAeJ8Hv3yoJAa50CQacxnDA7mHXXTW
+	ncSq543UHApjyoSZ0dTktWMTcTmNSriYOhVyXswDRr67lA==
+X-Virus-Scanned: by MailRoute
+Received: from 008.lax.mailroute.net ([127.0.0.1])
+ by localhost (008.lax [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
+ id xetiVkziKFpJ; Tue, 16 Jul 2024 19:55:36 +0000 (UTC)
+Received: from [100.66.154.22] (unknown [104.135.204.82])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: bvanassche@acm.org)
+	by 008.lax.mailroute.net (Postfix) with ESMTPSA id 4WNqYf66Hdz6CmR43;
+	Tue, 16 Jul 2024 19:55:34 +0000 (UTC)
+Message-ID: <3908f81b-0500-44fa-907a-111efeefcdc0@acm.org>
+Date: Tue, 16 Jul 2024 12:55:32 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="086BrWzPyQrKK0j7"
-Content-Disposition: inline
-In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
-X-Cookie: Think honk if you're a telepath.
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.9 093/143] scsi: sd: Do not repeat the starting disk
+ message
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Damien Le Moal <dlemoal@kernel.org>,
+ John Garry <john.g.garry@oracle.com>,
+ "Martin K. Petersen" <martin.petersen@oracle.com>
+References: <20240716152755.980289992@linuxfoundation.org>
+ <20240716152759.554308808@linuxfoundation.org>
+Content-Language: en-US
+From: Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <20240716152759.554308808@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+On 7/16/24 8:31 AM, Greg Kroah-Hartman wrote:
+> 6.9-stable review patch.  If anyone has any objections, please let me know.
 
---086BrWzPyQrKK0j7
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Please wait with applying this patch until this conversation has
+concluded: [PATCH] Revert "scsi: sd: Do not repeat the starting disk
+message" 
+(https://lore.kernel.org/linux-scsi/20240716161101.30692-1-johan+linaro@kernel.org/T/#u).
 
-On Tue, Jul 16, 2024 at 05:31:09PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.163 release.
-> There are 144 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Thanks,
 
-Tested-by: Mark Brown <broonie@kernel.org>
-
---086BrWzPyQrKK0j7
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmaWzVUACgkQJNaLcl1U
-h9C8igf/cRoQrDOxCOI8fD62tQSa6VHzKv9NKO2yRDiGn/Z+kRorzKzGHAgjr67/
-aqGkW4EgwvK60ABKf32HhnJI1+QN1acr3EXke+4VZ6uxqvvxEB47LugxsPQ9suqO
-Ii+hiutbkMcu/Now9I5/J9u94rXxT/qKoETo8Ktin1GhmrQ2QrD+OTNxEfPFMkYI
-aF3OncetVhbv4cUGksvarSnM6YJZzM76H5FmToNHlNkZUvWQ7j/FksotLNK4p+8c
-A22v8HYYlkCVwJs6cPmLvEjIe5zerXu+l9Rrs7Nl5Lie2CcT1i2LnMv1/E2kGJaL
-GD5vjSnc3ygkb2lRqklmz11vjFIRRA==
-=vn+8
------END PGP SIGNATURE-----
-
---086BrWzPyQrKK0j7--
+Bart.
