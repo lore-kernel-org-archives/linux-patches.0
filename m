@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A7417A93F;
-	Tue, 16 Jul 2024 15:49:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D641DA4D;
+	Tue, 16 Jul 2024 15:49:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144986; cv=none; b=HMYY5/rxm1tg2Ku6F0fs5yeisHFSs81PTPSmvAKm3mOGtJp2yoIwI2lOsnRMVfWDe8LBwkOUBqtxY5M1AnLFxN7xcYGMTmcpre5Vjit+/xrKGULtadSUF/Zi/ItdRIFOOgEAtomhVE3pw7KpO8UVcmyX1QXYqjUgF0xF6hoGfFs=
+	t=1721144989; cv=none; b=PGCzPYPsB7onE7I6f6e3jqwq6BaasptYxASFzOfA9naj86Ww/X0uk7v+irSnmfuCeOQFd6/cGaQNK/hBvCSo+9AfREIM+XNBYh3o6GGuy0AxXETLlfn8zFQZXHAiePp0uLetL1KRg02qgXp1KtpcP9TVPd1M6RtUCYi99f1oWXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144986; c=relaxed/simple;
-	bh=p1YOKKeJtI1MPqRb7JDE11ZytjHTbbvIP7/ar16VsR8=;
+	s=arc-20240116; t=1721144989; c=relaxed/simple;
+	bh=U7nVy2GH5cnxzosTboZo7Dg3hT1wTjlKnvHbeMCq0ks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xex6zUnBLM0dQdt8erjQNNkS9J5qeZxGsJQn8cKZSKEaz6+uIHlqVS38n7njD4+TRklOnskoD51TYMNGd6AK+SlPU2EqlL3f1WRbA8h6hRk8L3qlugKBH8+QpWCQMzSClPQd4FPuaJsRDZjM9AJCwb4yGUtcUY+FzMLNeFmVpq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AjNY8Sns; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LpWU+Is4CN1YzRo4wHlBBKNyy8rvWtEsLjUfyzO6b7d/2cURmgBij7vNsv+D11A6CuHExpKNCIUGo+urMQWLcczcPHQnwy6J+SonQK2ZgbYcSUDqP1PjlpbygBaABMLdDnMGo5wndKbe47B9itWQBFsCMAXZaGQ/Z/O9AfLdgOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bRplEUok; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AjNY8Sns"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08577C4AF0D;
-	Tue, 16 Jul 2024 15:49:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bRplEUok"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB8E2C116B1;
+	Tue, 16 Jul 2024 15:49:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144986;
-	bh=p1YOKKeJtI1MPqRb7JDE11ZytjHTbbvIP7/ar16VsR8=;
+	s=korg; t=1721144989;
+	bh=U7nVy2GH5cnxzosTboZo7Dg3hT1wTjlKnvHbeMCq0ks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AjNY8SnsymeEtREQs2gsetbpoNB1ElfYUOU+U+NEWn3Mp9exRf9eE6Upwiid5/rOE
-	 Vx+vjXC5jQByoVg51T+GLhfD6B0fOpNEc7EwoPmbjniyM1FNZ+xBLhfNY+PWPc5+Nh
-	 4iNiZv9w+FvZho+hcmM+3Gk0D1V5rTihQ6INpRUA=
+	b=bRplEUok69SCkWdITrvX7xJskAhJNzx91IEWeKmLYf9ZHPI6kd2FE+7IKziHFqrDP
+	 bklSaC4nVGgViksKiZgHMJjrb/d+z92dLhjaIOjt2K1esWsHcGB9yI+bwTJrbHdQRh
+	 N8d9axgzbeOv7w9rxzrr7kYxmc7aA6aC3BQW8/lk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Christian Brauner <brauner@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Christian Kujau <lists@nerdbynature.de>,
+	Mohammad Shehar Yaar Tausif <sheharyaar48@gmail.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 030/143] minixfs: Fix minixfs_rename with HIGHMEM
-Date: Tue, 16 Jul 2024 17:30:26 +0200
-Message-ID: <20240716152757.151980295@linuxfoundation.org>
+Subject: [PATCH 6.9 031/143] bpf: fix order of args in call to bpf_map_kvcalloc
+Date: Tue, 16 Jul 2024 17:30:27 +0200
+Message-ID: <20240716152757.189946972@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -51,36 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Mohammad Shehar Yaar Tausif <sheharyaar48@gmail.com>
 
-[ Upstream commit 3d1bec293378700dddc087d4d862306702276c23 ]
+[ Upstream commit af253aef183a31ce62d2e39fc520b0ebfb562bb9 ]
 
-minixfs now uses kmap_local_page(), so we can't call kunmap() to
-undo it.  This one call was missed as part of the commit this fixes.
+The original function call passed size of smap->bucket before the number of
+buckets which raises the error 'calloc-transposed-args' on compilation.
 
-Fixes: 6628f69ee66a (minixfs: Use dir_put_page() in minix_unlink() and minix_rename())
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Link: https://lore.kernel.org/r/20240709195841.1986374-1-willy@infradead.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Vlastimil Babka added:
+
+The order of parameters can be traced back all the way to 6ac99e8f23d4
+("bpf: Introduce bpf sk local storage") accross several refactorings,
+and that's why the commit is used as a Fixes: tag.
+
+In v6.10-rc1, a different commit 2c321f3f70bc ("mm: change inlined
+allocation helpers to account at the call site") however exposed the
+order of args in a way that gcc-14 has enough visibility to start
+warning about it, because (in !CONFIG_MEMCG case) bpf_map_kvcalloc is
+then a macro alias for kvcalloc instead of a static inline wrapper.
+
+To sum up the warning happens when the following conditions are all met:
+
+- gcc-14 is used (didn't see it with gcc-13)
+- commit 2c321f3f70bc is present
+- CONFIG_MEMCG is not enabled in .config
+- CONFIG_WERROR turns this from a compiler warning to error
+
+Fixes: 6ac99e8f23d4 ("bpf: Introduce bpf sk local storage")
+Reviewed-by: Andrii Nakryiko <andrii@kernel.org>
+Tested-by: Christian Kujau <lists@nerdbynature.de>
+Signed-off-by: Mohammad Shehar Yaar Tausif <sheharyaar48@gmail.com>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Link: https://lore.kernel.org/r/20240710100521.15061-2-vbabka@suse.cz
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/minix/namei.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ kernel/bpf/bpf_local_storage.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/minix/namei.c b/fs/minix/namei.c
-index d6031acc34f0c..a944a0f17b537 100644
---- a/fs/minix/namei.c
-+++ b/fs/minix/namei.c
-@@ -213,8 +213,7 @@ static int minix_rename(struct mnt_idmap *idmap,
- 		if (!new_de)
- 			goto out_dir;
- 		err = minix_set_link(new_de, new_page, old_inode);
--		kunmap(new_page);
--		put_page(new_page);
-+		unmap_and_put_page(new_page, new_de);
- 		if (err)
- 			goto out_dir;
- 		inode_set_ctime_current(new_inode);
+diff --git a/kernel/bpf/bpf_local_storage.c b/kernel/bpf/bpf_local_storage.c
+index bdea1a459153c..bea5873d96d15 100644
+--- a/kernel/bpf/bpf_local_storage.c
++++ b/kernel/bpf/bpf_local_storage.c
+@@ -782,8 +782,8 @@ bpf_local_storage_map_alloc(union bpf_attr *attr,
+ 	nbuckets = max_t(u32, 2, nbuckets);
+ 	smap->bucket_log = ilog2(nbuckets);
+ 
+-	smap->buckets = bpf_map_kvcalloc(&smap->map, sizeof(*smap->buckets),
+-					 nbuckets, GFP_USER | __GFP_NOWARN);
++	smap->buckets = bpf_map_kvcalloc(&smap->map, nbuckets,
++					 sizeof(*smap->buckets), GFP_USER | __GFP_NOWARN);
+ 	if (!smap->buckets) {
+ 		err = -ENOMEM;
+ 		goto free_smap;
 -- 
 2.43.0
 
