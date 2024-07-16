@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE56B12B72;
-	Tue, 16 Jul 2024 15:48:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878CF12B72;
+	Tue, 16 Jul 2024 15:48:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144907; cv=none; b=Lqw5qYqNQJrEERlQzQ+7Qmd940ckxOhoTLyJaKGg6dhZq0fBgiOWAArtsJZYdt0/+7hA8/6p4N/3H1h1lQEY2pQy4kiFh2IB0rOjqkjSMdqtMyVOoFbDirG8rFMqn70RL0guYzhomLJzNmgrS21ZYtFJfYKKTBVAvPAAyA9rOwM=
+	t=1721144910; cv=none; b=WV8dsQc0clOK/Oh0xVl5cTlTsFwARfdi6z+zVwrzVZ6+keVh41mnkdhMJT5uO5z0jDMuXHFpjIlDulNTItNl4pjxsCCFlLcAP9EiS5Wf31giPbV+Jq7zmq/PYU5EeNOcr+13zfrZ52WuOHsELDPhZMNI5IA0zcsC11oAiUJPSQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144907; c=relaxed/simple;
-	bh=ycZZs3JELOt0rcJppPZ2jhx+9hp3o03sBhYiZHqDxGQ=;
+	s=arc-20240116; t=1721144910; c=relaxed/simple;
+	bh=eo4TmgqCxcXYnqUsTfWQuqfqiy0cOXhFs0K6nh094Ws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WcMrig+mx4qSQR4+JSrNRvsv9Zv27JNSjYMADouzyHawTmnLMZBdr77wuCr4m8N6fgcOLVD3I7Z2zPJXXlwxHRLBrUzHHidzUAH/xy5DmVwKKX798ee3ZlTR8H9yQx03NYTu1VN4t2knpPLFilRRuBcFyVdy8NfT0JX/UJwVmD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R4V5RG1D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y110kSFYQZrQw5hRQ3EOzcFm1SemSyHIpXLUn2P3Ch0KIalOmulL4rTsjotNrMOr0uyKALIGFWsk4VPxlbfEM7aenDDQ7fW+NUCce0jm+NwHP8emtw+mC/VbbBJ8GTHItdkdzaTXm/Ea3c80qP6B5D3Ho9a7iIXCwYmEyeIJQ2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fxdMyi2v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R4V5RG1D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 265FFC116B1;
-	Tue, 16 Jul 2024 15:48:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fxdMyi2v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C980C116B1;
+	Tue, 16 Jul 2024 15:48:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144907;
-	bh=ycZZs3JELOt0rcJppPZ2jhx+9hp3o03sBhYiZHqDxGQ=;
+	s=korg; t=1721144910;
+	bh=eo4TmgqCxcXYnqUsTfWQuqfqiy0cOXhFs0K6nh094Ws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R4V5RG1DeAIPIJ10tRHBCQuCdVHsXfcpbKSVBGNL8VebENYvdq+YiHUa7rDSwz9O7
-	 +dDSKfchuH4pGOzwlgA3dlOprHNnAu6zQmhdp/VCeD9yYqzM/RE8ph6n1cvsj2jLK/
-	 UBXhrW2Hy2YIVvNeDl/uHS+TY7MgmHlPEhTTbBaw=
+	b=fxdMyi2vhTMsk/x0/QU8S9KyNYZPmi5AocaYf8mo8/OZstV4cvL/P3WpfLc3RsZK/
+	 NNGClHHc6G3wkt3xiRjIe1UCmpndEu9Wx6qFVjH8+FVBrZ6CfJ91aGgt7C8ETE/Srw
+	 MV6sbxOXmHj7bFE7Lv7/eUO3TIcQGepRKjsZgFlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Neal Cardwell <ncardwell@google.com>,
-	Jason Xing <kerneljasonxing@gmail.com>,
-	Jon Maxwell <jmaxwell37@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jian Hui Lee <jianhui.lee@canonical.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 036/143] tcp: avoid too many retransmit packets
-Date: Tue, 16 Jul 2024 17:30:32 +0200
-Message-ID: <20240716152757.377673529@linuxfoundation.org>
+Subject: [PATCH 6.9 037/143] net: ethernet: mtk-star-emac: set mac_managed_pm when probing
+Date: Tue, 16 Jul 2024 17:30:33 +0200
+Message-ID: <20240716152757.415496556@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -55,71 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jian Hui Lee <jianhui.lee@canonical.com>
 
-[ Upstream commit 97a9063518f198ec0adb2ecb89789de342bb8283 ]
+[ Upstream commit 8c6790b5c25dfac11b589cc37346bcf9e23ad468 ]
 
-If a TCP socket is using TCP_USER_TIMEOUT, and the other peer
-retracted its window to zero, tcp_retransmit_timer() can
-retransmit a packet every two jiffies (2 ms for HZ=1000),
-for about 4 minutes after TCP_USER_TIMEOUT has 'expired'.
+The below commit introduced a warning message when phy state is not in
+the states: PHY_HALTED, PHY_READY, and PHY_UP.
+commit 744d23c71af3 ("net: phy: Warn about incorrect mdio_bus_phy_resume() state")
 
-The fix is to make sure tcp_rtx_probe0_timed_out() takes
-icsk->icsk_user_timeout into account.
+mtk-star-emac doesn't need mdiobus suspend/resume. To fix the warning
+message during resume, indicate the phy resume/suspend is managed by the
+mac when probing.
 
-Before blamed commit, the socket would not timeout after
-icsk->icsk_user_timeout, but would use standard exponential
-backoff for the retransmits.
-
-Also worth noting that before commit e89688e3e978 ("net: tcp:
-fix unexcepted socket die when snd_wnd is 0"), the issue
-would last 2 minutes instead of 4.
-
-Fixes: b701a99e431d ("tcp: Add tcp_clamp_rto_to_user_timeout() helper to improve accuracy")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Neal Cardwell <ncardwell@google.com>
-Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
-Reviewed-by: Jon Maxwell <jmaxwell37@gmail.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20240710001402.2758273-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 744d23c71af3 ("net: phy: Warn about incorrect mdio_bus_phy_resume() state")
+Signed-off-by: Jian Hui Lee <jianhui.lee@canonical.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20240708065210.4178980-1-jianhui.lee@canonical.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_timer.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_star_emac.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/ipv4/tcp_timer.c b/net/ipv4/tcp_timer.c
-index 22d25f63858b9..cceb4fabd4c85 100644
---- a/net/ipv4/tcp_timer.c
-+++ b/net/ipv4/tcp_timer.c
-@@ -481,15 +481,26 @@ static bool tcp_rtx_probe0_timed_out(const struct sock *sk,
- 				     const struct sk_buff *skb,
- 				     u32 rtx_delta)
+diff --git a/drivers/net/ethernet/mediatek/mtk_star_emac.c b/drivers/net/ethernet/mediatek/mtk_star_emac.c
+index 31aebeb2e2858..25989c79c92e6 100644
+--- a/drivers/net/ethernet/mediatek/mtk_star_emac.c
++++ b/drivers/net/ethernet/mediatek/mtk_star_emac.c
+@@ -1524,6 +1524,7 @@ static int mtk_star_probe(struct platform_device *pdev)
  {
-+	const struct inet_connection_sock *icsk = inet_csk(sk);
-+	u32 user_timeout = READ_ONCE(icsk->icsk_user_timeout);
- 	const struct tcp_sock *tp = tcp_sk(sk);
--	const int timeout = TCP_RTO_MAX * 2;
-+	int timeout = TCP_RTO_MAX * 2;
- 	s32 rcv_delta;
+ 	struct device_node *of_node;
+ 	struct mtk_star_priv *priv;
++	struct phy_device *phydev;
+ 	struct net_device *ndev;
+ 	struct device *dev;
+ 	void __iomem *base;
+@@ -1649,6 +1650,12 @@ static int mtk_star_probe(struct platform_device *pdev)
+ 	netif_napi_add(ndev, &priv->rx_napi, mtk_star_rx_poll);
+ 	netif_napi_add_tx(ndev, &priv->tx_napi, mtk_star_tx_poll);
  
-+	if (user_timeout) {
-+		/* If user application specified a TCP_USER_TIMEOUT,
-+		 * it does not want win 0 packets to 'reset the timer'
-+		 * while retransmits are not making progress.
-+		 */
-+		if (rtx_delta > user_timeout)
-+			return true;
-+		timeout = min_t(u32, timeout, msecs_to_jiffies(user_timeout));
++	phydev = of_phy_find_device(priv->phy_node);
++	if (phydev) {
++		phydev->mac_managed_pm = true;
++		put_device(&phydev->mdio.dev);
 +	}
- 	/* Note: timer interrupt might have been delayed by at least one jiffy,
- 	 * and tp->rcv_tstamp might very well have been written recently.
- 	 * rcv_delta can thus be negative.
- 	 */
--	rcv_delta = inet_csk(sk)->icsk_timeout - tp->rcv_tstamp;
-+	rcv_delta = icsk->icsk_timeout - tp->rcv_tstamp;
- 	if (rcv_delta <= timeout)
- 		return false;
++
+ 	return devm_register_netdev(dev, ndev);
+ }
  
 -- 
 2.43.0
