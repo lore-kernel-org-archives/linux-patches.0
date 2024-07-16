@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E9B19E7DB;
-	Tue, 16 Jul 2024 16:07:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7562A1DDCE;
+	Tue, 16 Jul 2024 16:07:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721146031; cv=none; b=OtramU00f2DkR2/4v4j+gTavyK3oqVjxu9J7ZHumx7wA7urXpU4WMLPM31ciyN/j3bi8ZGiPRuG+ddOwoh1JJM9UKJHQ6eIOodug/k0JD8imTq4asJHoX/Q3YKz81KLHoChBHtsWKI7hnRgI69P0okqnUmuQgPknvhRGc3JlgPI=
+	t=1721146034; cv=none; b=idsWCTqgaDYQFNcgqfepKm8cZRqDOKJjfOTo7HICxYRL9T5aM8qEnY79pPRQCwMp+fj6BIuWCpq+2K4fGRh1CZb6sEM8QeLjn2ZK1YeOUEy/0vlI9+9A38hd7XvkkPeUE6Fv0OlYDPK9HRiKUS1CVeFQk2byMBeEW0DC5qcftXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721146031; c=relaxed/simple;
-	bh=fMm2cW87j2ZXsGqhIG/bA6fzkucWiHTz+RH1udU3tjQ=;
+	s=arc-20240116; t=1721146034; c=relaxed/simple;
+	bh=SZ3I3k8Qz8jZshaTVNrC4fpjq8pTD0wqaAMoNTmlrtI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bGLdLu09UtfV4ZkHDLj0mRjKYtGZ7FNpBmzekODRw5gqiuWkamgnxFP8BSNm4lmmwRYhnKQmdOS6tLzL5yIKPTPka1d65m9WR4j2XAiax8XpivBsp9kSH2NI+UZ6PZxljMqh21jq+UOCED2sH7XzAu5upg+gm6zp60fZDmknLJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LOeI/EE9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bKnSxqShT3+p0Ik16pN1VaecJw3jo5DMIpB4Kx7VJDKIGwWiOnVQsucKA2VuiAcWHH+BUY/XwPf6GFpxAgMRH3gwNVVqCLaDyRrQxcoOoBYLMNOuCW3sFlesUYsbpqS8A8jn6Oj7i4qPyuEHvRLPiJbFrYLtrJxkRUS7VKG9xug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KZg48C9C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LOeI/EE9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA768C4AF0B;
-	Tue, 16 Jul 2024 16:07:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KZg48C9C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE36BC116B1;
+	Tue, 16 Jul 2024 16:07:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721146031;
-	bh=fMm2cW87j2ZXsGqhIG/bA6fzkucWiHTz+RH1udU3tjQ=;
+	s=korg; t=1721146034;
+	bh=SZ3I3k8Qz8jZshaTVNrC4fpjq8pTD0wqaAMoNTmlrtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LOeI/EE9AF0+IcHlErF0JnmH02EUTfU+f53HsyQoe48OhBXOpiAo/V2CjeZZ7q+ji
-	 8gMHRf2JDCMBzitNPmpeLOlJvZ8fipDSM+wLo92cGvPirSltZ/de2w0F5fmWvcTKKM
-	 cHWkDNkXq2E6nQIXJjlOhKxSc4hpr1p8ahEwRwH8=
+	b=KZg48C9CJMlbWzMy1yuXSXgyGU2akdCCyMv/KiDdw/WO2W2DotgWq3sqCwI74Fwrf
+	 ty53kG+JRRKqr1zWlw0Fpe8tg6tzuQ2WZYSS2/YHKfXmRWgnJXG+YXiItocIC/H/pE
+	 cH25/sZ+whKEfYQU/iLhkOX3/n4dSFRCZ4M5JM64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jozef Hopko <jozef.hopko@altana.com>,
+	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>,
+	Ajay Singh <ajay.kathat@microchip.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 035/144] net: allow skb_datagram_iter to be called from any context
-Date: Tue, 16 Jul 2024 17:31:44 +0200
-Message-ID: <20240716152753.892421938@linuxfoundation.org>
+Subject: [PATCH 5.15 036/144] wifi: wilc1000: fix ies_len type in connect path
+Date: Tue, 16 Jul 2024 17:31:45 +0200
+Message-ID: <20240716152753.930600713@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
 References: <20240716152752.524497140@linuxfoundation.org>
@@ -46,64 +47,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sagi Grimberg <sagi@grimberg.me>
+From: Jozef Hopko <jozef.hopko@altana.com>
 
-[ Upstream commit d2d30a376d9cc94c6fb730c58b3e5b7426ecb6de ]
+[ Upstream commit 39ab8fff623053a50951b659e5f6b72343d7d78c ]
 
-We only use the mapping in a single context, so kmap_local is sufficient
-and cheaper. Make sure to use skb_frag_foreach_page as skb frags may
-contain compound pages and we need to map page by page.
+Commit 205c50306acf ("wifi: wilc1000: fix RCU usage in connect path")
+made sure that the IEs data was manipulated under the relevant RCU section.
+Unfortunately, while doing so, the commit brought a faulty implicit cast
+from int to u8 on the ies_len variable, making the parsing fail to be
+performed correctly if the IEs block is larger than 255 bytes. This failure
+can be observed with Access Points appending a lot of IEs TLVs in their
+beacon frames (reproduced with a Pixel phone acting as an Access Point,
+which brough 273 bytes of IE data in my testing environment).
 
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202406161539.b5ff7b20-oliver.sang@intel.com
-Fixes: 950fcaecd5cc ("datagram: consolidate datagram copy to iter helpers")
-Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
-Link: https://patch.msgid.link/20240626100008.831849-1-sagi@grimberg.me
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fix IEs parsing by removing this undesired implicit cast.
+
+Fixes: 205c50306acf ("wifi: wilc1000: fix RCU usage in connect path")
+Signed-off-by: Jozef Hopko <jozef.hopko@altana.com>
+Signed-off-by: Alexis Lothoré <alexis.lothore@bootlin.com>
+Acked-by: Ajay Singh <ajay.kathat@microchip.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/20240701-wilc_fix_ies_data-v1-1-7486cbacf98a@bootlin.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/datagram.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/net/wireless/microchip/wilc1000/hif.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/datagram.c b/net/core/datagram.c
-index 1ff8241217a9c..6b7db06eafe68 100644
---- a/net/core/datagram.c
-+++ b/net/core/datagram.c
-@@ -440,15 +440,22 @@ static int __skb_datagram_iter(const struct sk_buff *skb, int offset,
+diff --git a/drivers/net/wireless/microchip/wilc1000/hif.c b/drivers/net/wireless/microchip/wilc1000/hif.c
+index fe95a6201a679..3d6877acff3a0 100644
+--- a/drivers/net/wireless/microchip/wilc1000/hif.c
++++ b/drivers/net/wireless/microchip/wilc1000/hif.c
+@@ -364,7 +364,8 @@ void *wilc_parse_join_bss_param(struct cfg80211_bss *bss,
+ 	struct ieee80211_p2p_noa_attr noa_attr;
+ 	const struct cfg80211_bss_ies *ies;
+ 	struct wilc_join_bss_param *param;
+-	u8 rates_len = 0, ies_len;
++	u8 rates_len = 0;
++	int ies_len;
+ 	int ret;
  
- 		end = start + skb_frag_size(frag);
- 		if ((copy = end - offset) > 0) {
--			struct page *page = skb_frag_page(frag);
--			u8 *vaddr = kmap(page);
-+			u32 p_off, p_len, copied;
-+			struct page *p;
-+			u8 *vaddr;
- 
- 			if (copy > len)
- 				copy = len;
--			n = INDIRECT_CALL_1(cb, simple_copy_to_iter,
--					vaddr + skb_frag_off(frag) + offset - start,
--					copy, data, to);
--			kunmap(page);
-+
-+			skb_frag_foreach_page(frag,
-+					      skb_frag_off(frag) + offset - start,
-+					      copy, p, p_off, p_len, copied) {
-+				vaddr = kmap_local_page(p);
-+				n = INDIRECT_CALL_1(cb, simple_copy_to_iter,
-+					vaddr + p_off, p_len, data, to);
-+				kunmap_local(vaddr);
-+			}
-+
- 			offset += n;
- 			if (n != copy)
- 				goto short_copy;
+ 	param = kzalloc(sizeof(*param), GFP_KERNEL);
 -- 
 2.43.0
 
