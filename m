@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFD01DDCE;
-	Tue, 16 Jul 2024 16:12:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F791DDCE;
+	Tue, 16 Jul 2024 16:12:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721146370; cv=none; b=UqHPv8TfFS8nM+zEKK+n1tVKfcNqb7BjOq8E8KhDzikkQzikzPQbuBKDZIeTdnTP/ADOKTgmiyPkhy8Ky4wpgGm2SHJe9F1/zS83rJR4bXoReXYfLsN5oBtMJZ1KbdSz+w8wCT2t8JOk0WtYH5+BnFQzNdRqMkcQwmxthR8lja8=
+	t=1721146372; cv=none; b=d7blBl2wr6haV+Qhb2JA3PXGvl85UqNGLUba0/y6jLbPn4pCOLQ13MU47sbgw0jJgLp1aeWNXFnjJMEt8wDJ+9NwdFb33Uq2nTGtJSf7E3ryA6LYiFMCgmoyVVrn+30E9vY9wfT2TRbmzxGOAVytLT7Mfjd2rar2Ia+TFZKs4Yg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721146370; c=relaxed/simple;
-	bh=smD16ZXdtFdHpeFbQwrtxQHss9oWLYmXHlUUY4I8byg=;
+	s=arc-20240116; t=1721146372; c=relaxed/simple;
+	bh=PbAaPJ9zKK1uSUOo1AtvIch8I5bYoHbOIFjWj+7BVH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eg/35KWFFpH0hgeAa8rsI01mrym8DcSJ1rEgTyb4wFZ5pKLrYQ3yMShFJww0NicTEgGRXXBCI7mxdrgnOoTai0ISoEzt26qdttlc9XMGhQbN8MCXiA4G+/Scrjpd2zkt4ev+PbBZpvl9Z857TCjYeeZ2NagfB4+EHnZgXHP5tPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ezt072aR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ke064ZBH104g+yXQybmnTJCa0M9mzRiN9nJnl6wIUECrNZIrLCmcAxQE8JEex8DOjz2Pbj/81XWnZXlYafhqb223PWCJ+lZV6oHcHZUuXvo49hc+0v7Z7CfQKd7ToNZ66T09vAo0kb0vU0EahVN5mJ/X6bkavUzMit6oJKSRjhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VrDfTToE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ezt072aR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FA5EC116B1;
-	Tue, 16 Jul 2024 16:12:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VrDfTToE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49151C116B1;
+	Tue, 16 Jul 2024 16:12:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721146369;
-	bh=smD16ZXdtFdHpeFbQwrtxQHss9oWLYmXHlUUY4I8byg=;
+	s=korg; t=1721146372;
+	bh=PbAaPJ9zKK1uSUOo1AtvIch8I5bYoHbOIFjWj+7BVH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ezt072aRt7P/4CDD7rQfO39XlM1XtHJDhp2A9zvN/rI+s0aytMv/nx9s0O6dKgzKJ
-	 I1HWsMoGo9FIiNdPhBrWJmkvdKvgxq557RLUT/4tX4yB6f3QVi8cMeFjv6VYI01LTA
-	 2XqFCW6/Q+/Ea0/7vJuEz2axCRzBrCrsCuIozTww=
+	b=VrDfTToEHv0l5HFVCeUkL2ZrTROXZiRsXRrobVIosaVDvpoRk3TK5Mywo2vidf5Bi
+	 EFMqvVZNV8W0+HWf7ea9PjUQCGNI6OwQoV5S3hMs4XfP69mfBhWv7VZjSRuJ2lxvOM
+	 nfJDdPr51VRp8iZwi7FoKfUjsPTMq1LxyjdntVyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 5.15 144/144] i2c: rcar: fix error code in probe()
-Date: Tue, 16 Jul 2024 17:33:33 +0200
-Message-ID: <20240716152758.042335378@linuxfoundation.org>
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 127/144] wireguard: queueing: annotate intentional data race in cpu round robin
+Date: Tue, 16 Jul 2024 17:33:16 +0200
+Message-ID: <20240716152757.399665037@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
 References: <20240716152752.524497140@linuxfoundation.org>
@@ -51,35 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-commit 37a672be3ae357a0f87fbc00897fa7fcb3d7d782 upstream.
+commit 2fe3d6d2053c57f2eae5e85ca1656d185ebbe4e8 upstream.
 
-Return an error code if devm_reset_control_get_exclusive() fails.
-The current code returns success.
+KCSAN reports a race in the CPU round robin function, which, as the
+comment points out, is intentional:
 
-Fixes: 0e864b552b23 ("i2c: rcar: reset controller is mandatory for Gen3+")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+    BUG: KCSAN: data-race in wg_packet_send_staged_packets / wg_packet_send_staged_packets
+
+    read to 0xffff88811254eb28 of 4 bytes by task 3160 on cpu 1:
+     wg_cpumask_next_online drivers/net/wireguard/queueing.h:127 [inline]
+     wg_queue_enqueue_per_device_and_peer drivers/net/wireguard/queueing.h:173 [inline]
+     wg_packet_create_data drivers/net/wireguard/send.c:320 [inline]
+     wg_packet_send_staged_packets+0x60e/0xac0 drivers/net/wireguard/send.c:388
+     wg_packet_send_keepalive+0xe2/0x100 drivers/net/wireguard/send.c:239
+     wg_receive_handshake_packet drivers/net/wireguard/receive.c:186 [inline]
+     wg_packet_handshake_receive_worker+0x449/0x5f0 drivers/net/wireguard/receive.c:213
+     process_one_work kernel/workqueue.c:3248 [inline]
+     process_scheduled_works+0x483/0x9a0 kernel/workqueue.c:3329
+     worker_thread+0x526/0x720 kernel/workqueue.c:3409
+     kthread+0x1d1/0x210 kernel/kthread.c:389
+     ret_from_fork+0x4b/0x60 arch/x86/kernel/process.c:147
+     ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+
+    write to 0xffff88811254eb28 of 4 bytes by task 3158 on cpu 0:
+     wg_cpumask_next_online drivers/net/wireguard/queueing.h:130 [inline]
+     wg_queue_enqueue_per_device_and_peer drivers/net/wireguard/queueing.h:173 [inline]
+     wg_packet_create_data drivers/net/wireguard/send.c:320 [inline]
+     wg_packet_send_staged_packets+0x6e5/0xac0 drivers/net/wireguard/send.c:388
+     wg_packet_send_keepalive+0xe2/0x100 drivers/net/wireguard/send.c:239
+     wg_receive_handshake_packet drivers/net/wireguard/receive.c:186 [inline]
+     wg_packet_handshake_receive_worker+0x449/0x5f0 drivers/net/wireguard/receive.c:213
+     process_one_work kernel/workqueue.c:3248 [inline]
+     process_scheduled_works+0x483/0x9a0 kernel/workqueue.c:3329
+     worker_thread+0x526/0x720 kernel/workqueue.c:3409
+     kthread+0x1d1/0x210 kernel/kthread.c:389
+     ret_from_fork+0x4b/0x60 arch/x86/kernel/process.c:147
+     ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+
+    value changed: 0xffffffff -> 0x00000000
+
+Mark this race as intentional by using READ/WRITE_ONCE().
+
+Cc: stable@vger.kernel.org
+Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Link: https://patch.msgid.link/20240704154517.1572127-4-Jason@zx2c4.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-rcar.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireguard/queueing.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/i2c/busses/i2c-rcar.c
-+++ b/drivers/i2c/busses/i2c-rcar.c
-@@ -1105,8 +1105,10 @@ static int rcar_i2c_probe(struct platfor
- 	/* R-Car Gen3+ needs a reset before every transfer */
- 	if (priv->devtype >= I2C_RCAR_GEN3) {
- 		priv->rstc = devm_reset_control_get_exclusive(&pdev->dev, NULL);
--		if (IS_ERR(priv->rstc))
-+		if (IS_ERR(priv->rstc)) {
-+			ret = PTR_ERR(priv->rstc);
- 			goto out_pm_put;
-+		}
+--- a/drivers/net/wireguard/queueing.h
++++ b/drivers/net/wireguard/queueing.h
+@@ -126,10 +126,10 @@ static inline int wg_cpumask_choose_onli
+  */
+ static inline int wg_cpumask_next_online(int *last_cpu)
+ {
+-	int cpu = cpumask_next(*last_cpu, cpu_online_mask);
++	int cpu = cpumask_next(READ_ONCE(*last_cpu), cpu_online_mask);
+ 	if (cpu >= nr_cpu_ids)
+ 		cpu = cpumask_first(cpu_online_mask);
+-	*last_cpu = cpu;
++	WRITE_ONCE(*last_cpu, cpu);
+ 	return cpu;
+ }
  
- 		ret = reset_control_status(priv->rstc);
- 		if (ret < 0)
 
 
