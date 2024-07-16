@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D161DA4D;
-	Tue, 16 Jul 2024 15:49:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5746C27733;
+	Tue, 16 Jul 2024 15:49:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144995; cv=none; b=V/lyrav/gfhgwnv6okK6kCO3dDVPGNaGUP7bnhAWt2V8BJxKZCuh0eo9tUgGa9loWlgDhwh80RrXIuB1ft8x6M5nTXUKQwUJK3klIpDzG38C+XTrIePonwlBb9maZa1ovfWX2M/B/cuMdMLZKtmQPMNME3euaFj6dBGZiCaQ7OM=
+	t=1721144998; cv=none; b=THGbHZZbv8YyrkZFXWxDvlFjzJdf0ByBaAsP8V7jORcC0+I7/M7T2pOJAGxF9C4Npkjhry3oh5c8WVgLM25Qp9qn7TZBIB9a6Z2PppEmytYlwSfm8N8UTkpLDvA+wVNFti/LhSeI0L7Fxx5eGfP9D3ozA+4SR5JVgRiQK5Rjeto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144995; c=relaxed/simple;
-	bh=0XwFIkysHfaYSDF4Iz5L+7s0mKQ4bpNaNmG21Hhb5Dc=;
+	s=arc-20240116; t=1721144998; c=relaxed/simple;
+	bh=m0q9bOy0jgzHiWk+Gvq916U1ri+Ko9xMWmLMRecWLQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VUZyFckbsO2ULtV5D6Mh+fyAWaI7kRYjROd7GOxmpGVepoB/zbVKiVqN9T8z0FUtek7BG7Oq4hQp0Wy1TBcTVCzTUmd6qHhiXOrOvXFbf4jzOX1EUv5LctCuMdV0pxnGxG+jLgj+TriWiZluCJKz3Q6+30DS+qgH59F/Cmxl+tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=faZf78iq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L4ifaTSaLghuwebL/jmFJRnBRp1l9xY/141CFWQvpcQO3a3ZcdHm0NocoIAgWNC3qjGiI0a+XDFVewFwBfHgDwh4I78LmkIFstB36L08v7LElVwjrJtG195DIuo40T7jvGSQfCV3s2ljWe3KR6ov4kiHV/5HFQexMQSRRtuhubM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ahrx2Xlf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="faZf78iq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0E47C116B1;
-	Tue, 16 Jul 2024 15:49:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ahrx2Xlf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C714FC4AF0B;
+	Tue, 16 Jul 2024 15:49:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144995;
-	bh=0XwFIkysHfaYSDF4Iz5L+7s0mKQ4bpNaNmG21Hhb5Dc=;
+	s=korg; t=1721144998;
+	bh=m0q9bOy0jgzHiWk+Gvq916U1ri+Ko9xMWmLMRecWLQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=faZf78iqtV/9KmLl0SZZ715jpsriGuw8Y93D6+nNnWIJSE8deQCg4YeuIyVQhzPq0
-	 GkmZ3ukXP/VGEmofHktCzo7FZApey5bi/gpaC5+vpFeowtxzTacs+BdbUyXSMaqwz9
-	 shtHCIhm1ZCG+BR3WWyati/RIVv+haIo4+nlbswk=
+	b=Ahrx2XlfWa78NxcYFxyQ/1S5JIONHd7RPotRbh28qwlubzn0+nMWB1v2Y+I9wtYav
+	 KGpflHg3q4WdkqNDDueR2MhXlW+nutR4J+h5WcfFPZ0T2U6gX8lbPIvBwOHl5lBh0Y
+	 CJCTUQQsSjS0GZQ98w2j0NmfkApSSe61lNXNXVB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 033/143] bpf: replace bpf_timer_init with a generic helper
-Date: Tue, 16 Jul 2024 17:30:29 +0200
-Message-ID: <20240716152757.265247079@linuxfoundation.org>
+Subject: [PATCH 6.9 024/143] octeontx2-af: Fix incorrect value output on error path in rvu_check_rsrc_availability()
+Date: Tue, 16 Jul 2024 17:30:20 +0200
+Message-ID: <20240716152756.918496810@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -51,167 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Tissoires <bentiss@kernel.org>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit 56b4a177ae6322173360a93ea828ad18570a5a14 ]
+[ Upstream commit 442e26af9aa8115c96541026cbfeaaa76c85d178 ]
 
-No code change except for the new flags argument being stored in the
-local data struct.
+In rvu_check_rsrc_availability() in case of invalid SSOW req, an incorrect
+data is printed to error log. 'req->sso' value is printed instead of
+'req->ssow'. Looks like "copy-paste" mistake.
 
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
-Link: https://lore.kernel.org/r/20240420-bpf_wq-v2-2-6c986a5a741f@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: d4523831f07a ("bpf: Fail bpf_timer_cancel when callback is being cancelled")
+Fix this mistake by replacing 'req->sso' with 'req->ssow'.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 746ea74241fa ("octeontx2-af: Add RVU block LF provisioning support")
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20240705095317.12640-1-amishin@t-argos.ru
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/helpers.c | 91 ++++++++++++++++++++++++++++++--------------
- 1 file changed, 63 insertions(+), 28 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index 2544220c23338..ff18b467d7d75 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -1111,7 +1111,10 @@ struct bpf_hrtimer {
- 
- /* the actual struct hidden inside uapi struct bpf_timer */
- struct bpf_async_kern {
--	struct bpf_hrtimer *timer;
-+	union {
-+		struct bpf_async_cb *cb;
-+		struct bpf_hrtimer *timer;
-+	};
- 	/* bpf_spin_lock is used here instead of spinlock_t to make
- 	 * sure that it always fits into space reserved by struct bpf_timer
- 	 * regardless of LOCKDEP and spinlock debug flags.
-@@ -1119,6 +1122,10 @@ struct bpf_async_kern {
- 	struct bpf_spin_lock lock;
- } __attribute__((aligned(8)));
- 
-+enum bpf_async_type {
-+	BPF_ASYNC_TYPE_TIMER = 0,
-+};
-+
- static DEFINE_PER_CPU(struct bpf_hrtimer *, hrtimer_running);
- 
- static enum hrtimer_restart bpf_timer_cb(struct hrtimer *hrtimer)
-@@ -1160,46 +1167,55 @@ static enum hrtimer_restart bpf_timer_cb(struct hrtimer *hrtimer)
- 	return HRTIMER_NORESTART;
- }
- 
--BPF_CALL_3(bpf_timer_init, struct bpf_async_kern *, timer, struct bpf_map *, map,
--	   u64, flags)
-+static int __bpf_async_init(struct bpf_async_kern *async, struct bpf_map *map, u64 flags,
-+			    enum bpf_async_type type)
- {
--	clockid_t clockid = flags & (MAX_CLOCKS - 1);
-+	struct bpf_async_cb *cb;
- 	struct bpf_hrtimer *t;
-+	clockid_t clockid;
-+	size_t size;
- 	int ret = 0;
- 
--	BUILD_BUG_ON(MAX_CLOCKS != 16);
--	BUILD_BUG_ON(sizeof(struct bpf_async_kern) > sizeof(struct bpf_timer));
--	BUILD_BUG_ON(__alignof__(struct bpf_async_kern) != __alignof__(struct bpf_timer));
--
- 	if (in_nmi())
- 		return -EOPNOTSUPP;
- 
--	if (flags >= MAX_CLOCKS ||
--	    /* similar to timerfd except _ALARM variants are not supported */
--	    (clockid != CLOCK_MONOTONIC &&
--	     clockid != CLOCK_REALTIME &&
--	     clockid != CLOCK_BOOTTIME))
-+	switch (type) {
-+	case BPF_ASYNC_TYPE_TIMER:
-+		size = sizeof(struct bpf_hrtimer);
-+		break;
-+	default:
- 		return -EINVAL;
--	__bpf_spin_lock_irqsave(&timer->lock);
--	t = timer->timer;
-+	}
-+
-+	__bpf_spin_lock_irqsave(&async->lock);
-+	t = async->timer;
- 	if (t) {
- 		ret = -EBUSY;
- 		goto out;
- 	}
-+
- 	/* allocate hrtimer via map_kmalloc to use memcg accounting */
--	t = bpf_map_kmalloc_node(map, sizeof(*t), GFP_ATOMIC, map->numa_node);
--	if (!t) {
-+	cb = bpf_map_kmalloc_node(map, size, GFP_ATOMIC, map->numa_node);
-+	if (!cb) {
- 		ret = -ENOMEM;
- 		goto out;
- 	}
--	t->cb.value = (void *)timer - map->record->timer_off;
--	t->cb.map = map;
--	t->cb.prog = NULL;
--	rcu_assign_pointer(t->cb.callback_fn, NULL);
--	hrtimer_init(&t->timer, clockid, HRTIMER_MODE_REL_SOFT);
--	t->timer.function = bpf_timer_cb;
--	WRITE_ONCE(timer->timer, t);
--	/* Guarantee the order between timer->timer and map->usercnt. So
-+
-+	if (type == BPF_ASYNC_TYPE_TIMER) {
-+		clockid = flags & (MAX_CLOCKS - 1);
-+		t = (struct bpf_hrtimer *)cb;
-+
-+		hrtimer_init(&t->timer, clockid, HRTIMER_MODE_REL_SOFT);
-+		t->timer.function = bpf_timer_cb;
-+		cb->value = (void *)async - map->record->timer_off;
-+	}
-+	cb->map = map;
-+	cb->prog = NULL;
-+	cb->flags = flags;
-+	rcu_assign_pointer(cb->callback_fn, NULL);
-+
-+	WRITE_ONCE(async->cb, cb);
-+	/* Guarantee the order between async->cb and map->usercnt. So
- 	 * when there are concurrent uref release and bpf timer init, either
- 	 * bpf_timer_cancel_and_free() called by uref release reads a no-NULL
- 	 * timer or atomic64_read() below returns a zero usercnt.
-@@ -1209,15 +1225,34 @@ BPF_CALL_3(bpf_timer_init, struct bpf_async_kern *, timer, struct bpf_map *, map
- 		/* maps with timers must be either held by user space
- 		 * or pinned in bpffs.
- 		 */
--		WRITE_ONCE(timer->timer, NULL);
--		kfree(t);
-+		WRITE_ONCE(async->cb, NULL);
-+		kfree(cb);
- 		ret = -EPERM;
- 	}
- out:
--	__bpf_spin_unlock_irqrestore(&timer->lock);
-+	__bpf_spin_unlock_irqrestore(&async->lock);
- 	return ret;
- }
- 
-+BPF_CALL_3(bpf_timer_init, struct bpf_async_kern *, timer, struct bpf_map *, map,
-+	   u64, flags)
-+{
-+	clock_t clockid = flags & (MAX_CLOCKS - 1);
-+
-+	BUILD_BUG_ON(MAX_CLOCKS != 16);
-+	BUILD_BUG_ON(sizeof(struct bpf_async_kern) > sizeof(struct bpf_timer));
-+	BUILD_BUG_ON(__alignof__(struct bpf_async_kern) != __alignof__(struct bpf_timer));
-+
-+	if (flags >= MAX_CLOCKS ||
-+	    /* similar to timerfd except _ALARM variants are not supported */
-+	    (clockid != CLOCK_MONOTONIC &&
-+	     clockid != CLOCK_REALTIME &&
-+	     clockid != CLOCK_BOOTTIME))
-+		return -EINVAL;
-+
-+	return __bpf_async_init(timer, map, flags, BPF_ASYNC_TYPE_TIMER);
-+}
-+
- static const struct bpf_func_proto bpf_timer_init_proto = {
- 	.func		= bpf_timer_init,
- 	.gpl_only	= true,
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+index ff78251f92d44..5f661e67ccbcf 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+@@ -1643,7 +1643,7 @@ static int rvu_check_rsrc_availability(struct rvu *rvu,
+ 		if (req->ssow > block->lf.max) {
+ 			dev_err(&rvu->pdev->dev,
+ 				"Func 0x%x: Invalid SSOW req, %d > max %d\n",
+-				 pcifunc, req->sso, block->lf.max);
++				 pcifunc, req->ssow, block->lf.max);
+ 			return -EINVAL;
+ 		}
+ 		mappedlfs = rvu_get_rsrc_mapcount(pfvf, block->addr);
 -- 
 2.43.0
 
