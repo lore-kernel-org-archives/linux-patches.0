@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F968B641;
-	Tue, 16 Jul 2024 15:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8155FCA40;
+	Tue, 16 Jul 2024 15:40:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144414; cv=none; b=kGOG0Krrii6ccvelUYyT1Jz0jUneqHF1iocXYLSs63n9XjQl31UrFB4W2sz0YAScuazlxVXv0v0AooIX/GER6b+Uzriyq5EiEV6uj8nx/YZqCgCsB4uFKsoLXFsRuddi6I6V9dpLk67qON66AVwCGBH1Z++26YBUoTDHBTPwH/k=
+	t=1721144417; cv=none; b=KaJl58fpo1p0kV9MF5iZoSgei0hI6XPtntuey1bsLBNIwKO1Ni6XnPuGgarCpvTlm4JETvCKAG533FurHgaJJZhooN7Uj0g5OlmncfJMvFrsocnUWoQ+o+zZv8mC11jH90ek10Tlh9zfLasBV/oLecc6gpcywj+12y7UZI7UwJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144414; c=relaxed/simple;
-	bh=siWKAdMSWtqQHfQYTj4YtGeSqae57eCwUhnXXD+1BlQ=;
+	s=arc-20240116; t=1721144417; c=relaxed/simple;
+	bh=rhXhi6NoV+CR+ZuXTbZ7VPNcf6XVMih0IDBc5zR2+rA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DD4oaNT446eDTqOel+Qqa2niidBQuICmCJfazE7OboFHsgZEPHkvZzKop7UBuDJTjKZmSsqbDIbI9BvUpGKwQbVxjIQkMRoyiMx30i5SHy5gSXLgQaKr89yw3T1HdjqchnYHi/sWq6tvL/MbF1GTRoAMS6uFlzr/ooe1fEGr594=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uUzxqtX1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rV8eJLb7IwbCFwi131sqnygS99guXg5iQ6t8FzswWIq1uUFDtBkDZmvivCxPkqb93GGCcAxemOsOtwiIXWYLDxpYGXS61J7bTiGiLxD8Zlyve62Pv+siMPzT09fVFVUTY0T2Mr7CNFEsDF87IkTP+tazTaVnftpnTN/w1lgrm4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HmBmtRTU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uUzxqtX1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 081C5C116B1;
-	Tue, 16 Jul 2024 15:40:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HmBmtRTU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2756C116B1;
+	Tue, 16 Jul 2024 15:40:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144414;
-	bh=siWKAdMSWtqQHfQYTj4YtGeSqae57eCwUhnXXD+1BlQ=;
+	s=korg; t=1721144417;
+	bh=rhXhi6NoV+CR+ZuXTbZ7VPNcf6XVMih0IDBc5zR2+rA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uUzxqtX13XH6UsiuIImp8XPqr0mvvBIoLPh4KQyFqKYe5ZWuHuymgvbe7rKrS+9AU
-	 Cv25NKgVi00tk4urr8znaJgkJ4ZfI32rkxKAioRlPkCpQtQsy9nz/Ry9owIXLp/PI1
-	 qFIWuGAb8CPixUJReZgYcGZuAkyrzPtMSa8eM0x8=
+	b=HmBmtRTUTY0N/ieOrkaFViBsE0wB4CLjt19iz4T3ynjnta/6Qemal/BmbFvq9OUH2
+	 v6RZrtpqEbieo6fQzqO3oftoC0AmHRqMaixBYGW1i9kEnQycbLA0LRDab7ZV4+NjLU
+	 sVuurpRODkwUHQ2XeC57HkE2PdEDM1Dd9ioCYkfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	jinxiaobo <jinxiaobo@uniontech.com>,
-	WangYuli <wangyuli@uniontech.com>
-Subject: [PATCH 5.4 65/78] USB: Add USB_QUIRK_NO_SET_INTF quirk for START BP-850k
-Date: Tue, 16 Jul 2024 17:31:37 +0200
-Message-ID: <20240716152743.158090614@linuxfoundation.org>
+	Lee Jones <lee@kernel.org>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.4 66/78] usb: gadget: configfs: Prevent OOB read/write in usb_string_copy()
+Date: Tue, 16 Jul 2024 17:31:38 +0200
+Message-ID: <20240716152743.196513108@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152740.626160410@linuxfoundation.org>
 References: <20240716152740.626160410@linuxfoundation.org>
@@ -51,34 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Lee Jones <lee@kernel.org>
 
-commit 3859e85de30815a20bce7db712ce3d94d40a682d upstream.
+commit 6d3c721e686ea6c59e18289b400cc95c76e927e0 upstream.
 
-START BP-850K is a dot matrix printer that crashes when
-it receives a Set-Interface request and needs USB_QUIRK_NO_SET_INTF
-to work properly.
+Userspace provided string 's' could trivially have the length zero. Left
+unchecked this will firstly result in an OOB read in the form
+`if (str[0 - 1] == '\n') followed closely by an OOB write in the form
+`str[0 - 1] = '\0'`.
 
+There is already a validating check to catch strings that are too long.
+Let's supply an additional check for invalid strings that are too short.
+
+Signed-off-by: Lee Jones <lee@kernel.org>
 Cc: stable <stable@kernel.org>
-Signed-off-by: jinxiaobo <jinxiaobo@uniontech.com>
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Link: https://lore.kernel.org/r/202E4B2BD0F0FEA4+20240702154408.631201-1-wangyuli@uniontech.com
+Link: https://lore.kernel.org/r/20240705074339.633717-1-lee@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/quirks.c |    3 +++
+ drivers/usb/gadget/configfs.c |    3 +++
  1 file changed, 3 insertions(+)
 
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -504,6 +504,9 @@ static const struct usb_device_id usb_qu
- 	{ USB_DEVICE(0x1b1c, 0x1b38), .driver_info = USB_QUIRK_DELAY_INIT |
- 	  USB_QUIRK_DELAY_CTRL_MSG },
- 
-+	/* START BP-850k Printer */
-+	{ USB_DEVICE(0x1bc3, 0x0003), .driver_info = USB_QUIRK_NO_SET_INTF },
+--- a/drivers/usb/gadget/configfs.c
++++ b/drivers/usb/gadget/configfs.c
+@@ -116,9 +116,12 @@ static int usb_string_copy(const char *s
+ 	int ret;
+ 	char *str;
+ 	char *copy = *s_copy;
 +
- 	/* MIDI keyboard WORLDE MINI */
- 	{ USB_DEVICE(0x1c75, 0x0204), .driver_info =
- 			USB_QUIRK_CONFIG_INTF_STRINGS },
+ 	ret = strlen(s);
+ 	if (ret > USB_MAX_STRING_LEN)
+ 		return -EOVERFLOW;
++	if (ret < 1)
++		return -EINVAL;
+ 
+ 	if (copy) {
+ 		str = copy;
 
 
