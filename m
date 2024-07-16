@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F2519EEA2;
-	Tue, 16 Jul 2024 16:03:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D46419F498;
+	Tue, 16 Jul 2024 16:03:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145785; cv=none; b=aBwmxkg5y9KEnlxmRMdFeQ+A8D/VXrYKMi5x6NGKyVjN/K362IfEfqgUEBPlq9NpC5J51miGlkWbPgAo/0XNCbAULr2THOP+PlE2LlPn+vcRhUZxZBCd8m8T4AH+Jy5IVy5EM/y/z5ejFeHisseCq/NX63d7hkpD+xFheqc0oVk=
+	t=1721145788; cv=none; b=PDW4JHPEwDxy/X7D/s62/lUjEs72P7spd3Fy7axzBLlrb3Ah9QTh3OaCFKPpqsfVGfLYe7ZLFZs+lYBTQRoPMslqgYZrnxTdJX6e7jCHbOLPgfWybs7DT+kuxZoXo/4p5Ue7ghsjX229tGycV5WP78CWGzf3JEvXkQuEJpjZOl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145785; c=relaxed/simple;
-	bh=e/x/T71qazPYlnTzBjN8NZGUrE/Cj3b0/v0gAslDIDY=;
+	s=arc-20240116; t=1721145788; c=relaxed/simple;
+	bh=FmNAgN9w1XoAc+DZi5bgUJt23EOlWEvkeRlpOZE/rSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kEs2pR6no1C1vsZXXBjmLSGU5Oxzf+MTifKNtQWeZjA4zBbKDVC2ZxwSRfTq+Nktfrp5TNrai6EhPk2zcMyIEJ8TFA0Qu3jhQwgEyixxkNQISvobB0Nj7Mf+n7CRd/dtc7lt0sobPygZprxljxuYH/qO7jSEOZug2QxTbomZyjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IBon/fQq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c6y0FZL+ngsKtkigQhkd4ihfje66opYb7ERzVMuw5VBVg3Orecl4/H3OsXaWZjoGZmQCVZeycdjslpjAo2XKX0+2/2MfSH2+H+aqOlNAxoetp2AYdE6O+K5qP1R77UHuUfKLs69UmxKyWEsiYre3PG5brxlbgN4xE2yrjxELbsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kNMEdJW8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IBon/fQq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FC08C4AF15;
-	Tue, 16 Jul 2024 16:03:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kNMEdJW8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87951C4AF0B;
+	Tue, 16 Jul 2024 16:03:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145785;
-	bh=e/x/T71qazPYlnTzBjN8NZGUrE/Cj3b0/v0gAslDIDY=;
+	s=korg; t=1721145787;
+	bh=FmNAgN9w1XoAc+DZi5bgUJt23EOlWEvkeRlpOZE/rSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IBon/fQqTZMS+FD+zvRgig0RebU8EhA35JZKYDVhtngG13BSCspDAB7xKbmz09avB
-	 5q+thBhzS/TdGIfK3DgcEyWRtpFLFCZkapIaUlf2ZDxI8EJofBvUU8L+W9SZOJlecZ
-	 LRLUGXG+QR5x3UkJnd9o7bWAn7kQGvHKUtFrIngU=
+	b=kNMEdJW8DhHzodys2Ch4OmGYbC/U15LG7CNUFJJcn3ezEbkUBqRCHbNVDCleii29F
+	 U+k8bu1nR80plqLfRo0aYofYrevDcqQT4rjgL5+CZ4a1VDw1LnB+WBh6vPi/kuOwku
+	 IaNpCjYRzuy6hvVtRhb3OKH4XdDWp/SW1WHH10KU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	netdev@vger.kernel.org,
-	Ronald Wahl <ronald.wahl@raritan.com>,
-	Jacob Keller <jacob.e.keller@intel.com>
-Subject: [PATCH 6.6 056/121] net: ks8851: Fix potential TX stall after interface reopen
-Date: Tue, 16 Jul 2024 17:31:58 +0200
-Message-ID: <20240716152753.480501816@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jacky Huang <ychuang3@nuvoton.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.6 083/121] tty: serial: ma35d1: Add a NULL check for of_node
+Date: Tue, 16 Jul 2024 17:32:25 +0200
+Message-ID: <20240716152754.521430138@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152751.312512071@linuxfoundation.org>
 References: <20240716152751.312512071@linuxfoundation.org>
@@ -56,61 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ronald Wahl <ronald.wahl@raritan.com>
+From: Jacky Huang <ychuang3@nuvoton.com>
 
-commit 7a99afef17af66c276c1d6e6f4dbcac223eaf6ac upstream.
+commit acd09ac253b5de8fd79fc61a482ee19154914c7a upstream.
 
-The amount of TX space in the hardware buffer is tracked in the tx_space
-variable. The initial value is currently only set during driver probing.
+The pdev->dev.of_node can be NULL if the "serial" node is absent.
+Add a NULL check to return an error in such cases.
 
-After closing the interface and reopening it the tx_space variable has
-the last value it had before close. If it is smaller than the size of
-the first send packet after reopeing the interface the queue will be
-stopped. The queue is woken up after receiving a TX interrupt but this
-will never happen since we did not send anything.
-
-This commit moves the initialization of the tx_space variable to the
-ks8851_net_open function right before starting the TX queue. Also query
-the value from the hardware instead of using a hard coded value.
-
-Only the SPI chip variant is affected by this issue because only this
-driver variant actually depends on the tx_space variable in the xmit
-function.
-
-Fixes: 3dc5d4454545 ("net: ks8851: Fix TX stall caused by TX buffer overrun")
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Simon Horman <horms@kernel.org>
-Cc: netdev@vger.kernel.org
-Cc: stable@vger.kernel.org # 5.10+
-Signed-off-by: Ronald Wahl <ronald.wahl@raritan.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20240709195845.9089-1-rwahl@gmx.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 930cbf92db01 ("tty: serial: Add Nuvoton ma35d1 serial driver support")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/all/8df7ce45-fd58-4235-88f7-43fe7cd67e8f@moroto.mountain/
+Signed-off-by: Jacky Huang <ychuang3@nuvoton.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20240625064128.127-1-ychuang570808@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/micrel/ks8851_common.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/ma35d1_serial.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/drivers/net/ethernet/micrel/ks8851_common.c
-+++ b/drivers/net/ethernet/micrel/ks8851_common.c
-@@ -482,6 +482,7 @@ static int ks8851_net_open(struct net_de
- 	ks8851_wrreg16(ks, KS_IER, ks->rc_ier);
+diff --git a/drivers/tty/serial/ma35d1_serial.c b/drivers/tty/serial/ma35d1_serial.c
+index 19f0a305cc43..3b4206e815fe 100644
+--- a/drivers/tty/serial/ma35d1_serial.c
++++ b/drivers/tty/serial/ma35d1_serial.c
+@@ -688,12 +688,13 @@ static int ma35d1serial_probe(struct platform_device *pdev)
+ 	struct uart_ma35d1_port *up;
+ 	int ret = 0;
  
- 	ks->queued_len = 0;
-+	ks->tx_space = ks8851_rdreg16(ks, KS_TXMIR);
- 	netif_start_queue(ks->netdev);
- 
- 	netif_dbg(ks, ifup, ks->netdev, "network device up\n");
-@@ -1101,7 +1102,6 @@ int ks8851_probe_common(struct net_devic
- 	int ret;
- 
- 	ks->netdev = netdev;
--	ks->tx_space = 6144;
- 
- 	ks->gpio = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_HIGH);
- 	ret = PTR_ERR_OR_ZERO(ks->gpio);
+-	if (pdev->dev.of_node) {
+-		ret = of_alias_get_id(pdev->dev.of_node, "serial");
+-		if (ret < 0) {
+-			dev_err(&pdev->dev, "failed to get alias/pdev id, errno %d\n", ret);
+-			return ret;
+-		}
++	if (!pdev->dev.of_node)
++		return -ENODEV;
++
++	ret = of_alias_get_id(pdev->dev.of_node, "serial");
++	if (ret < 0) {
++		dev_err(&pdev->dev, "failed to get alias/pdev id, errno %d\n", ret);
++		return ret;
+ 	}
+ 	up = &ma35d1serial_ports[ret];
+ 	up->port.line = ret;
+-- 
+2.45.2
+
 
 
