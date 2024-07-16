@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6BA17CA0E;
-	Tue, 16 Jul 2024 16:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6821A1DDCE;
+	Tue, 16 Jul 2024 16:08:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721146104; cv=none; b=mhvZ0XzD93A9kwNK+siIcNZgbKrBCV7Q4ABtqE5gDHAcXTCB7ouLUmDqteh+UXmIZ1L6VizbQJy1cJwvEf55XeXVL0bSbxXl8pUsbVHnaKlk3M8+XC3YmBPyCWqpteJgr+u4HdZxDf5tuvh5plpD5WBf+++DrG3td5PKfydGvHg=
+	t=1721146107; cv=none; b=DLlfHHoTl+PQzkOAdJ2CN1C1nRuxUB+HW0DSnS10gGXWb0l72wMRMFxR0JlaHvKJ+Xq6MjZ3QHPCuf8AbK3N5FFfrpnrX1YHJSNtZ9AEXTr39H1910utn+NbpG60Zmh8Doh7ZAqYauWm2H1UiMYr/MZfEVjEqpbbQensR315+aw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721146104; c=relaxed/simple;
-	bh=Y18D0jcdh1B1n8qWaD7D6QQ4JJ8PkV0QUwy/a2UX8Bc=;
+	s=arc-20240116; t=1721146107; c=relaxed/simple;
+	bh=xb87T3IlEweTOpiQiTIIXbBPWz94EMfPrqsnDqTcyEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BG2794b8175OwEd8cIoFkq12p8Tk3KE8sBtwrYgG4Echqgu5LWKwcPBWyudXBghE+qtDjlsaB5lPvwAzsKRWpb9nSSNMZc68mqTeHdJEVYjQT5yhILEOgd56MLyUqinMv6m68wOkop7ump+FzcwTTsadP9GDc2pIPLZ5ukH1Bhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZKBPPRbY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TOkCPkTBpSfDLtS2gNLH9YhnaYvzCOr+tRoKyPjLQv1nBSInoR6uVPo4u2EvlWFTfzhpHPfal3y+lyfkpkyMKJ1Brys5XuJm4j/kxCuWwq0geBNDQY+OmJ5F8XqWK+SbHPU8NDsK3rcytPJpWvwW2qPIYcK8K3QpVODuzV4VmBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R5ygxzwV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZKBPPRbY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE2E7C116B1;
-	Tue, 16 Jul 2024 16:08:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R5ygxzwV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4B63C4AF10;
+	Tue, 16 Jul 2024 16:08:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721146104;
-	bh=Y18D0jcdh1B1n8qWaD7D6QQ4JJ8PkV0QUwy/a2UX8Bc=;
+	s=korg; t=1721146107;
+	bh=xb87T3IlEweTOpiQiTIIXbBPWz94EMfPrqsnDqTcyEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZKBPPRbYNrhIABNcgCcOEznF53u510xksFu1KW6G8vAzcgSmIdMsYWv1EreNXtH2+
-	 mYlNCcwoLpmwP/DsbAi3HG/OpgypGRHNla1X92qqGMminY85SY1vpaXtCWF036YHI+
-	 piU6I9CIF/zVcsII0qGhzvIk/GtwB1gMjw99WNJw=
+	b=R5ygxzwVMuWrZuIN7oq4EYPAQVlAKxCmjZZyu/869wJNp/TCdy6qaBls+6NF0Gyqg
+	 FR4lSh/DErpPw2avyVE/n1xFGW+9/Sx8eIE+aD3ZiMmWgxGylGj++R0OXenF0FzMtx
+	 CK96Vwsn8uedQ3D7I4Wjc04M04nrJU6LBKrYpRHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Lyude Paul <lyude@redhat.com>
-Subject: [PATCH 5.15 056/144] drm/nouveau: fix null pointer dereference in nouveau_connector_get_modes
-Date: Tue, 16 Jul 2024 17:32:05 +0200
-Message-ID: <20240716152754.701268846@linuxfoundation.org>
+	Wang Yong <wang.yong12@zte.com.cn>,
+	Lu Zhongjun <lu.zhongjun@zte.com.cn>,
+	Yang Tao <yang.tao172@zte.com.cn>,
+	Xu Xin <xu.xin16@zte.com.cn>,
+	Yang Yang <yang.yang29@zte.com.cn>,
+	Richard Weinberger <richard@nod.at>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 028/144] jffs2: Fix potential illegal address access in jffs2_free_inode
+Date: Tue, 16 Jul 2024 17:31:37 +0200
+Message-ID: <20240716152753.622040890@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
 References: <20240716152752.524497140@linuxfoundation.org>
@@ -50,35 +55,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Wang Yong <wang.yong12@zte.com.cn>
 
-commit 80bec6825b19d95ccdfd3393cf8ec15ff2a749b4 upstream.
+[ Upstream commit af9a8730ddb6a4b2edd779ccc0aceb994d616830 ]
 
-In nouveau_connector_get_modes(), the return value of drm_mode_duplicate()
-is assigned to mode, which will lead to a possible NULL pointer
-dereference on failure of drm_mode_duplicate(). Add a check to avoid npd.
+During the stress testing of the jffs2 file system,the following
+abnormal printouts were found:
+[ 2430.649000] Unable to handle kernel paging request at virtual address 0069696969696948
+[ 2430.649622] Mem abort info:
+[ 2430.649829]   ESR = 0x96000004
+[ 2430.650115]   EC = 0x25: DABT (current EL), IL = 32 bits
+[ 2430.650564]   SET = 0, FnV = 0
+[ 2430.650795]   EA = 0, S1PTW = 0
+[ 2430.651032]   FSC = 0x04: level 0 translation fault
+[ 2430.651446] Data abort info:
+[ 2430.651683]   ISV = 0, ISS = 0x00000004
+[ 2430.652001]   CM = 0, WnR = 0
+[ 2430.652558] [0069696969696948] address between user and kernel address ranges
+[ 2430.653265] Internal error: Oops: 96000004 [#1] PREEMPT SMP
+[ 2430.654512] CPU: 2 PID: 20919 Comm: cat Not tainted 5.15.25-g512f31242bf6 #33
+[ 2430.655008] Hardware name: linux,dummy-virt (DT)
+[ 2430.655517] pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[ 2430.656142] pc : kfree+0x78/0x348
+[ 2430.656630] lr : jffs2_free_inode+0x24/0x48
+[ 2430.657051] sp : ffff800009eebd10
+[ 2430.657355] x29: ffff800009eebd10 x28: 0000000000000001 x27: 0000000000000000
+[ 2430.658327] x26: ffff000038f09d80 x25: 0080000000000000 x24: ffff800009d38000
+[ 2430.658919] x23: 5a5a5a5a5a5a5a5a x22: ffff000038f09d80 x21: ffff8000084f0d14
+[ 2430.659434] x20: ffff0000bf9a6ac0 x19: 0169696969696940 x18: 0000000000000000
+[ 2430.659969] x17: ffff8000b6506000 x16: ffff800009eec000 x15: 0000000000004000
+[ 2430.660637] x14: 0000000000000000 x13: 00000001000820a1 x12: 00000000000d1b19
+[ 2430.661345] x11: 0004000800000000 x10: 0000000000000001 x9 : ffff8000084f0d14
+[ 2430.662025] x8 : ffff0000bf9a6b40 x7 : ffff0000bf9a6b48 x6 : 0000000003470302
+[ 2430.662695] x5 : ffff00002e41dcc0 x4 : ffff0000bf9aa3b0 x3 : 0000000003470342
+[ 2430.663486] x2 : 0000000000000000 x1 : ffff8000084f0d14 x0 : fffffc0000000000
+[ 2430.664217] Call trace:
+[ 2430.664528]  kfree+0x78/0x348
+[ 2430.664855]  jffs2_free_inode+0x24/0x48
+[ 2430.665233]  i_callback+0x24/0x50
+[ 2430.665528]  rcu_do_batch+0x1ac/0x448
+[ 2430.665892]  rcu_core+0x28c/0x3c8
+[ 2430.666151]  rcu_core_si+0x18/0x28
+[ 2430.666473]  __do_softirq+0x138/0x3cc
+[ 2430.666781]  irq_exit+0xf0/0x110
+[ 2430.667065]  handle_domain_irq+0x6c/0x98
+[ 2430.667447]  gic_handle_irq+0xac/0xe8
+[ 2430.667739]  call_on_irq_stack+0x28/0x54
+The parameter passed to kfree was 5a5a5a5a, which corresponds to the target field of
+the jffs_inode_info structure. It was found that all variables in the jffs_inode_info
+structure were 5a5a5a5a, except for the first member sem. It is suspected that these
+variables are not initialized because they were set to 5a5a5a5a during memory testing,
+which is meant to detect uninitialized memory.The sem variable is initialized in the
+function jffs2_i_init_once, while other members are initialized in
+the function jffs2_init_inode_info.
 
-Cc: stable@vger.kernel.org
-Fixes: 6ee738610f41 ("drm/nouveau: Add DRM driver for NVIDIA GPUs")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240627074204.3023776-1-make24@iscas.ac.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The function jffs2_init_inode_info is called after iget_locked,
+but in the iget_locked function, the destroy_inode process is triggered,
+which releases the inode and consequently, the target member of the inode
+is not initialized.In concurrent high pressure scenarios, iget_locked
+may enter the destroy_inode branch as described in the code.
+
+Since the destroy_inode functionality of jffs2 only releases the target,
+the fix method is to set target to NULL in jffs2_i_init_once.
+
+Signed-off-by: Wang Yong <wang.yong12@zte.com.cn>
+Reviewed-by: Lu Zhongjun <lu.zhongjun@zte.com.cn>
+Reviewed-by: Yang Tao <yang.tao172@zte.com.cn>
+Cc: Xu Xin <xu.xin16@zte.com.cn>
+Cc: Yang Yang <yang.yang29@zte.com.cn>
+Signed-off-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_connector.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/jffs2/super.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/nouveau/nouveau_connector.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_connector.c
-@@ -979,6 +979,9 @@ nouveau_connector_get_modes(struct drm_c
- 		struct drm_display_mode *mode;
+diff --git a/fs/jffs2/super.c b/fs/jffs2/super.c
+index 81ca58c10b728..40cc5e62907c1 100644
+--- a/fs/jffs2/super.c
++++ b/fs/jffs2/super.c
+@@ -58,6 +58,7 @@ static void jffs2_i_init_once(void *foo)
+ 	struct jffs2_inode_info *f = foo;
  
- 		mode = drm_mode_duplicate(dev, nv_connector->native_mode);
-+		if (!mode)
-+			return 0;
-+
- 		drm_mode_probed_add(connector, mode);
- 		ret = 1;
- 	}
+ 	mutex_init(&f->sem);
++	f->target = NULL;
+ 	inode_init_once(&f->vfs_inode);
+ }
+ 
+-- 
+2.43.0
+
 
 
