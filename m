@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6466DCA40;
-	Tue, 16 Jul 2024 15:35:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54C9CCA40;
+	Tue, 16 Jul 2024 15:35:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144136; cv=none; b=I7MOn2J+UwNhb5xow9m9KdSR1hm8s6LbpWl8TH3p8c3u8S38hvibSZhdvfsRRFD3xdaL6lLMShialWksZXJskWuIqvuMgw20TQDjnp4aeBr6Ba6kl7GaXR6bBqKFEMkxIajTevkTDBZAfEj80rQ5j+79GzmmK2L0D8eIAp/UQCA=
+	t=1721144139; cv=none; b=hSTibRLtGnd8vAZkYo1RGnryrrr15RT0Hyl6GyFTrwDjz/BqLJ7o/ZUQAjGZrkB7A96Y+c+EJFwHWyr1YWe0xPRATJY9iGk2NqkLxCkuOGTaccwFJAALRN5LReW1HApmE8OwQZBFgUoPbNYkZuZxUzp/RAWnKWGF0pMiSjMFlEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144136; c=relaxed/simple;
-	bh=A0+EfWxHC2+3gE9/p6Vitr3o1+0b5kDxywC5ysplWl8=;
+	s=arc-20240116; t=1721144139; c=relaxed/simple;
+	bh=glFW/3jmzDFxqV5ypPPWhygbfHSfl/hvfqVgwwoapYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mzcw9Faw9+4I7gae2VWSH9e0t3hWxDIN1hhjGXSwQw38SDnEprH57gaZ2cJntRelrLvb3JQ+umcWe6HEWHoR4fEpOGh8zSoyeFFAhf/E2iVpPJkubBNBWGQVkeMWhDLroY8iIPEXpN4QjKlgf4cPBJarowaPf0RaUJBhvBR6M6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aExP0tSp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GzAivBRQXJRoCWczc6IMeG10GPo+bBz/cVS0SEWWkcG/8HTi82yIW1yA3WsBElhgM9C+UEkCAKDC22wbri4gSJkorszatoo8l6C/Jtm0hcGd5U7AAIRxtFutjs2GCvDrgPU/7xEL3dbG/slUSF8gqvtBXVK0WmjZ9oPlBPn0TVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lb88ZlUW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aExP0tSp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB80CC116B1;
-	Tue, 16 Jul 2024 15:35:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lb88ZlUW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEBF0C116B1;
+	Tue, 16 Jul 2024 15:35:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144136;
-	bh=A0+EfWxHC2+3gE9/p6Vitr3o1+0b5kDxywC5ysplWl8=;
+	s=korg; t=1721144139;
+	bh=glFW/3jmzDFxqV5ypPPWhygbfHSfl/hvfqVgwwoapYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aExP0tSpnz4U6CywmG8Mt8n29qNc/0dbewnXFC6cIPSKnNVGS/sH7xMTZM2gg6ZEL
-	 6AK5cIngm2HqJQtoVaHamgM1wnJh83/PN/7Wya45/v9tJZ/6q7YwS/b76NJptvHTiC
-	 ylFJDdIHB1SJ7fw8qdutN9qGTMqT5rJq61sUrirw=
+	b=lb88ZlUWAGKL3Bc5HEvE+qkafSrlDiK01a/tyWXbv4pdhZF+3rBILly4Yy50kB46p
+	 9SPtDFhuxVRhlkpk+rw0vnaIOOGXQv+p0XdasK11gLG+7/kID3VtcBXCu+Y2utJGw9
+	 Noh/NMdnKD1IoWZWfka8GtXdbDyD1pGCxsOO0d4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>
-Subject: [PATCH 4.19 39/66] media: dw2102: fix a potential buffer overflow
-Date: Tue, 16 Jul 2024 17:31:14 +0200
-Message-ID: <20240716152739.658465888@linuxfoundation.org>
+	Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 40/66] i2c: pnx: Fix potential deadlock warning from del_timer_sync() call in isr
+Date: Tue, 16 Jul 2024 17:31:15 +0200
+Message-ID: <20240716152739.695535462@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152738.161055634@linuxfoundation.org>
 References: <20240716152738.161055634@linuxfoundation.org>
@@ -50,35 +51,184 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauro Carvalho Chehab <mchehab@kernel.org>
+From: Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>
 
-commit 1c73d0b29d04bf4082e7beb6a508895e118ee30d upstream.
+[ Upstream commit f63b94be6942ba82c55343e196bd09b53227618e ]
 
-As pointed by smatch:
-	 drivers/media/usb/dvb-usb/dw2102.c:802 su3000_i2c_transfer() error: __builtin_memcpy() '&state->data[4]' too small (64 vs 67)
+When del_timer_sync() is called in an interrupt context it throws a warning
+because of potential deadlock. The timer is used only to exit from
+wait_for_completion() after a timeout so replacing the call with
+wait_for_completion_timeout() allows to remove the problematic timer and
+its related functions altogether.
 
-That seemss to be due to a wrong copy-and-paste.
-
-Fixes: 0e148a522b84 ("media: dw2102: Don't translate i2c read into write")
-
-Reported-by: Hans Verkuil <hverkuil@xs4all.nl>
-Reviewed-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 41561f28e76a ("i2c: New Philips PNX bus driver")
+Signed-off-by: Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb/dw2102.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-pnx.c | 48 ++++++++----------------------------
+ 1 file changed, 10 insertions(+), 38 deletions(-)
 
---- a/drivers/media/usb/dvb-usb/dw2102.c
-+++ b/drivers/media/usb/dvb-usb/dw2102.c
-@@ -789,7 +789,7 @@ static int su3000_i2c_transfer(struct i2
+diff --git a/drivers/i2c/busses/i2c-pnx.c b/drivers/i2c/busses/i2c-pnx.c
+index 6e0e546ef83fc..4d09665a72e59 100644
+--- a/drivers/i2c/busses/i2c-pnx.c
++++ b/drivers/i2c/busses/i2c-pnx.c
+@@ -15,7 +15,6 @@
+ #include <linux/ioport.h>
+ #include <linux/delay.h>
+ #include <linux/i2c.h>
+-#include <linux/timer.h>
+ #include <linux/completion.h>
+ #include <linux/platform_device.h>
+ #include <linux/io.h>
+@@ -32,7 +31,6 @@ struct i2c_pnx_mif {
+ 	int			ret;		/* Return value */
+ 	int			mode;		/* Interface mode */
+ 	struct completion	complete;	/* I/O completion */
+-	struct timer_list	timer;		/* Timeout */
+ 	u8 *			buf;		/* Data buffer */
+ 	int			len;		/* Length of data buffer */
+ 	int			order;		/* RX Bytes to order via TX */
+@@ -117,24 +115,6 @@ static inline int wait_reset(struct i2c_pnx_algo_data *data)
+ 	return (timeout <= 0);
+ }
  
- 			if (msg[j].flags & I2C_M_RD) {
- 				/* single read */
--				if (1 + msg[j].len > sizeof(state->data)) {
-+				if (4 + msg[j].len > sizeof(state->data)) {
- 					warn("i2c rd: len=%d is too big!\n", msg[j].len);
- 					num = -EOPNOTSUPP;
- 					break;
+-static inline void i2c_pnx_arm_timer(struct i2c_pnx_algo_data *alg_data)
+-{
+-	struct timer_list *timer = &alg_data->mif.timer;
+-	unsigned long expires = msecs_to_jiffies(alg_data->timeout);
+-
+-	if (expires <= 1)
+-		expires = 2;
+-
+-	del_timer_sync(timer);
+-
+-	dev_dbg(&alg_data->adapter.dev, "Timer armed at %lu plus %lu jiffies.\n",
+-		jiffies, expires);
+-
+-	timer->expires = jiffies + expires;
+-
+-	add_timer(timer);
+-}
+-
+ /**
+  * i2c_pnx_start - start a device
+  * @slave_addr:		slave address
+@@ -259,8 +239,6 @@ static int i2c_pnx_master_xmit(struct i2c_pnx_algo_data *alg_data)
+ 				~(mcntrl_afie | mcntrl_naie | mcntrl_drmie),
+ 				  I2C_REG_CTL(alg_data));
+ 
+-			del_timer_sync(&alg_data->mif.timer);
+-
+ 			dev_dbg(&alg_data->adapter.dev,
+ 				"%s(): Waking up xfer routine.\n",
+ 				__func__);
+@@ -276,8 +254,6 @@ static int i2c_pnx_master_xmit(struct i2c_pnx_algo_data *alg_data)
+ 			~(mcntrl_afie | mcntrl_naie | mcntrl_drmie),
+ 			  I2C_REG_CTL(alg_data));
+ 
+-		/* Stop timer. */
+-		del_timer_sync(&alg_data->mif.timer);
+ 		dev_dbg(&alg_data->adapter.dev,
+ 			"%s(): Waking up xfer routine after zero-xfer.\n",
+ 			__func__);
+@@ -364,8 +340,6 @@ static int i2c_pnx_master_rcv(struct i2c_pnx_algo_data *alg_data)
+ 				 mcntrl_drmie | mcntrl_daie);
+ 			iowrite32(ctl, I2C_REG_CTL(alg_data));
+ 
+-			/* Kill timer. */
+-			del_timer_sync(&alg_data->mif.timer);
+ 			complete(&alg_data->mif.complete);
+ 		}
+ 	}
+@@ -400,8 +374,6 @@ static irqreturn_t i2c_pnx_interrupt(int irq, void *dev_id)
+ 			 mcntrl_drmie);
+ 		iowrite32(ctl, I2C_REG_CTL(alg_data));
+ 
+-		/* Stop timer, to prevent timeout. */
+-		del_timer_sync(&alg_data->mif.timer);
+ 		complete(&alg_data->mif.complete);
+ 	} else if (stat & mstatus_nai) {
+ 		/* Slave did not acknowledge, generate a STOP */
+@@ -419,8 +391,6 @@ static irqreturn_t i2c_pnx_interrupt(int irq, void *dev_id)
+ 		/* Our return value. */
+ 		alg_data->mif.ret = -EIO;
+ 
+-		/* Stop timer, to prevent timeout. */
+-		del_timer_sync(&alg_data->mif.timer);
+ 		complete(&alg_data->mif.complete);
+ 	} else {
+ 		/*
+@@ -453,9 +423,8 @@ static irqreturn_t i2c_pnx_interrupt(int irq, void *dev_id)
+ 	return IRQ_HANDLED;
+ }
+ 
+-static void i2c_pnx_timeout(struct timer_list *t)
++static void i2c_pnx_timeout(struct i2c_pnx_algo_data *alg_data)
+ {
+-	struct i2c_pnx_algo_data *alg_data = from_timer(alg_data, t, mif.timer);
+ 	u32 ctl;
+ 
+ 	dev_err(&alg_data->adapter.dev,
+@@ -472,7 +441,6 @@ static void i2c_pnx_timeout(struct timer_list *t)
+ 	iowrite32(ctl, I2C_REG_CTL(alg_data));
+ 	wait_reset(alg_data);
+ 	alg_data->mif.ret = -EIO;
+-	complete(&alg_data->mif.complete);
+ }
+ 
+ static inline void bus_reset_if_active(struct i2c_pnx_algo_data *alg_data)
+@@ -514,6 +482,7 @@ i2c_pnx_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
+ 	struct i2c_msg *pmsg;
+ 	int rc = 0, completed = 0, i;
+ 	struct i2c_pnx_algo_data *alg_data = adap->algo_data;
++	unsigned long time_left;
+ 	u32 stat;
+ 
+ 	dev_dbg(&alg_data->adapter.dev,
+@@ -548,7 +517,6 @@ i2c_pnx_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
+ 		dev_dbg(&alg_data->adapter.dev, "%s(): mode %d, %d bytes\n",
+ 			__func__, alg_data->mif.mode, alg_data->mif.len);
+ 
+-		i2c_pnx_arm_timer(alg_data);
+ 
+ 		/* initialize the completion var */
+ 		init_completion(&alg_data->mif.complete);
+@@ -564,7 +532,10 @@ i2c_pnx_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
+ 			break;
+ 
+ 		/* Wait for completion */
+-		wait_for_completion(&alg_data->mif.complete);
++		time_left = wait_for_completion_timeout(&alg_data->mif.complete,
++							alg_data->timeout);
++		if (time_left == 0)
++			i2c_pnx_timeout(alg_data);
+ 
+ 		if (!(rc = alg_data->mif.ret))
+ 			completed++;
+@@ -657,7 +628,10 @@ static int i2c_pnx_probe(struct platform_device *pdev)
+ 	alg_data->adapter.algo_data = alg_data;
+ 	alg_data->adapter.nr = pdev->id;
+ 
+-	alg_data->timeout = I2C_PNX_TIMEOUT_DEFAULT;
++	alg_data->timeout = msecs_to_jiffies(I2C_PNX_TIMEOUT_DEFAULT);
++	if (alg_data->timeout <= 1)
++		alg_data->timeout = 2;
++
+ #ifdef CONFIG_OF
+ 	alg_data->adapter.dev.of_node = of_node_get(pdev->dev.of_node);
+ 	if (pdev->dev.of_node) {
+@@ -677,8 +651,6 @@ static int i2c_pnx_probe(struct platform_device *pdev)
+ 	if (IS_ERR(alg_data->clk))
+ 		return PTR_ERR(alg_data->clk);
+ 
+-	timer_setup(&alg_data->mif.timer, i2c_pnx_timeout, 0);
+-
+ 	snprintf(alg_data->adapter.name, sizeof(alg_data->adapter.name),
+ 		 "%s", pdev->name);
+ 
+-- 
+2.43.0
+
 
 
