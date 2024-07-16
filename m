@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F06519AD51;
-	Tue, 16 Jul 2024 16:08:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C611DDCE;
+	Tue, 16 Jul 2024 16:08:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721146087; cv=none; b=PTVcNSBxwGfPzGzAkRL3nK9eaIY705tBISxbLfq1xF5FxId98Axew/PWPvC3ljv7ivQ7MfO0zyGxzx/GAVatgq2g3OoSUx9b1eD7AchIfiNVZd40yzjvpDgzU15N+DPau4ynsQbkodzhDgm2SqbAvKMvME5zRWRJnaQqQUUzkkc=
+	t=1721146090; cv=none; b=SqZvgU98j26gnlwUv2WiCtuGnzCFd5TUI/wLrJZPC2svDNIF7Ug6bjl7+EeZuZ42oG1sbzIPQAXY0IjJrAD9Ge+6OGS6c9eIIwwN/XTRM8JzCW1LEcRH00TqdloyexiwMCqAbF9jIsX462zyl63ftr8q6x1CeAINUUJ0IH3eMIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721146087; c=relaxed/simple;
-	bh=uTRx3+1Od3DBB5wM2S3OaoRJSC20AxlkBTa8KGGKcP4=;
+	s=arc-20240116; t=1721146090; c=relaxed/simple;
+	bh=wgk+j4U8P31Ia0nOCWu6kVu/ZbsZJDAdMZzhu0FKulM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NqBdlvRX3qgx0+dL9YuSFprpHXnIpe3/WIK5Vo545hjRz3ZDwqMDmFqEtdgL8ZJcMJHuZ6KbjD+lWOebs7ymewcgH+w8vVbjyrdPg2aWCasXqFo9R0EpaiCRLRb3tsBDGzhO8Za8OKCMEdrmYj8EPWgd6PJwYRORNV727lINVZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=owI12RF6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iE3680Hhi1E7bglHlHhs9OQZjQ8lQBL+Lx9soOl2BlqE8OPdFZ3TIgsl7k1Lcg4ZeQMXys+fyPUc1fZvYyf6EurhXFaPaIIsCEA2VGFonsoQLtPz5NuRUeA6UAyKu+JuutjY3fZyxH5XrK+k5b6FxyZ5x6B19ktXLXU3YVOoAGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CFZI1FcC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="owI12RF6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9AB3C116B1;
-	Tue, 16 Jul 2024 16:08:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CFZI1FcC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD60CC116B1;
+	Tue, 16 Jul 2024 16:08:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721146087;
-	bh=uTRx3+1Od3DBB5wM2S3OaoRJSC20AxlkBTa8KGGKcP4=;
+	s=korg; t=1721146090;
+	bh=wgk+j4U8P31Ia0nOCWu6kVu/ZbsZJDAdMZzhu0FKulM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=owI12RF6OGVehFxZcHMpHZtzFWbj2jBJnMLpv05pIR/nTKWlFNznJYPrsPgwk2AHs
-	 vFW6LCPqbMPi4tlo90x761bFNQKNhPGhG4k/3Q9UvF0nn31CY8067qGAS8gDXLqj9U
-	 E7ABCr0xgx+4jaYUFsqtn4hgZgELioNF2F6bGmpU=
+	b=CFZI1FcC4+0prd7Ohx4e/x0R8d2Z1+rKurlqhM+4ZXvbLU5OcIb/ur4LVOz6QEfXZ
+	 6vbCio9UbQUkcc3TnFXmxwd26JmGCbYI85CQKEAvWebVmQTfn9dauQw4cGwOyCHxKn
+	 YWAtpQ696OoJljJ77+DgwUWlXMU5LCtSIPHSYG+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jimmy Assarsson <extja@kvaser.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.15 053/144] can: kvaser_usb: Explicitly initialize family in leafimx driver_info struct
-Date: Tue, 16 Jul 2024 17:32:02 +0200
-Message-ID: <20240716152754.586867929@linuxfoundation.org>
+	"Jose E. Marchesi" <jose.marchesi@oracle.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 027/144] bpf: Avoid uninitialized value in BPF_CORE_READ_BITFIELD
+Date: Tue, 16 Jul 2024 17:31:36 +0200
+Message-ID: <20240716152753.583666396@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
 References: <20240716152752.524497140@linuxfoundation.org>
@@ -50,33 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jimmy Assarsson <extja@kvaser.com>
+From: Jose E. Marchesi <jose.marchesi@oracle.com>
 
-commit 19d5b2698c35b2132a355c67b4d429053804f8cc upstream.
+[ Upstream commit 009367099eb61a4fc2af44d4eb06b6b4de7de6db ]
 
-Explicitly set the 'family' driver_info struct member for leafimx.
-Previously, the correct operation relied on KVASER_LEAF being the first
-defined value in enum kvaser_usb_leaf_family.
+[Changes from V1:
+ - Use a default branch in the switch statement to initialize `val'.]
 
-Fixes: e6c80e601053 ("can: kvaser_usb: kvaser_usb_leaf: fix CAN clock frequency regression")
-Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
-Link: https://lore.kernel.org/all/20240628194529.312968-1-extja@kvaser.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+GCC warns that `val' may be used uninitialized in the
+BPF_CRE_READ_BITFIELD macro, defined in bpf_core_read.h as:
+
+	[...]
+	unsigned long long val;						      \
+	[...]								      \
+	switch (__CORE_RELO(s, field, BYTE_SIZE)) {			      \
+	case 1: val = *(const unsigned char *)p; break;			      \
+	case 2: val = *(const unsigned short *)p; break;		      \
+	case 4: val = *(const unsigned int *)p; break;			      \
+	case 8: val = *(const unsigned long long *)p; break;		      \
+        }       							      \
+	[...]
+	val;								      \
+	}								      \
+
+This patch adds a default entry in the switch statement that sets
+`val' to zero in order to avoid the warning, and random values to be
+used in case __builtin_preserve_field_info returns unexpected values
+for BPF_FIELD_BYTE_SIZE.
+
+Tested in bpf-next master.
+No regressions.
+
+Signed-off-by: Jose E. Marchesi <jose.marchesi@oracle.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20240508101313.16662-1-jose.marchesi@oracle.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c |    1 +
+ tools/lib/bpf/bpf_core_read.h | 1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
-@@ -123,6 +123,7 @@ static const struct kvaser_usb_driver_in
- 
- static const struct kvaser_usb_driver_info kvaser_usb_driver_info_leafimx = {
- 	.quirks = 0,
-+	.family = KVASER_LEAF,
- 	.ops = &kvaser_usb_leaf_dev_ops,
- };
- 
+diff --git a/tools/lib/bpf/bpf_core_read.h b/tools/lib/bpf/bpf_core_read.h
+index e4aa9996a5501..b8e68a17f3f1b 100644
+--- a/tools/lib/bpf/bpf_core_read.h
++++ b/tools/lib/bpf/bpf_core_read.h
+@@ -101,6 +101,7 @@ enum bpf_enum_value_kind {
+ 	case 2: val = *(const unsigned short *)p; break;		      \
+ 	case 4: val = *(const unsigned int *)p; break;			      \
+ 	case 8: val = *(const unsigned long long *)p; break;		      \
++	default: val = 0; break;					      \
+ 	}								      \
+ 	val <<= __CORE_RELO(s, field, LSHIFT_U64);			      \
+ 	if (__CORE_RELO(s, field, SIGNED))				      \
+-- 
+2.43.0
+
 
 
