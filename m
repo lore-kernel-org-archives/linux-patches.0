@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC9B19FA72;
-	Tue, 16 Jul 2024 15:55:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A2B19B59C;
+	Tue, 16 Jul 2024 15:55:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145315; cv=none; b=UiAqaLRZrQWuMq7C0TLZHmMN//r9uy+5/5v/16G4bgi6dKxYNrTjmsGrRZR0XvJkeGNcWPbCvh5kHMhSF8DxSBApWZFOpaBeWTygGcYT/4KDjuIBgOihYmV72JJa1kykGO7I3neAwoqnAVKlswHKlIrbwUpSNJjK6wl+xtpFuV4=
+	t=1721145319; cv=none; b=NUR8JxdxMrJc3kgK7ejVzSdh45Vy0/EE96pFyIM99/XBiui4qn2CsFjlMpqLkMegLCwtWXuEqRac12cphkA+8BZKcGP9B0IGuMqdKxYlvrr5glvwZyv0cum6tXuPxse0B9Rq+Sh63IJm7sGEN/v5cxrbKz7K3fqNZEyIl7F4trM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145315; c=relaxed/simple;
-	bh=THcpGiaRv6ktTvH/+mDoqlrRqSlkajQu1wJUV2qpvZE=;
+	s=arc-20240116; t=1721145319; c=relaxed/simple;
+	bh=mjnqPaFUDn/3vIaWSlopmuYNDzNEHpL3Tv+pL+Zvu1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BalmeQTJomAE+YpoTqFJ32nkSKtOrkA/OgJv1WFljt8Qn+X3qtRvfymcl53DjQmFlQkB6nhyyfaVcJ970WXnIkQkhg8Qs2ci5xbSn99ZFnr+7zN47wPYbhsXb7LH6/iPgf4KwW0I/MwZsLpAoKgTYS6mr0RNtGEn+CVyxyGzD4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WFiiSDuQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sG77aDopo963qfjrxnaReQsUPQvQIe+pNkTooTFQE4AhTkXDtU2JS07XyicXPwsaOfjNylqAD14NuKCIi8kUIieSBYo7lCh1vCBWtYIrlmS24d6LPpatWl0QSJ14eca38u1YIiAEqIX1POSxF+50VBv7d7TGIyBCjcnM1r2X3NA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zUjUmtvL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WFiiSDuQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D3A9C4AF0B;
-	Tue, 16 Jul 2024 15:55:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zUjUmtvL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46FA3C4AF0B;
+	Tue, 16 Jul 2024 15:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145315;
-	bh=THcpGiaRv6ktTvH/+mDoqlrRqSlkajQu1wJUV2qpvZE=;
+	s=korg; t=1721145318;
+	bh=mjnqPaFUDn/3vIaWSlopmuYNDzNEHpL3Tv+pL+Zvu1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WFiiSDuQj+2nAG4HLJbgHpMdCcCe7uBmLeLH9kONIm8aFa7IjZuVvFakP+Nd0GGEQ
-	 JoVR5bz56Pk0j7KY+2lS8p/mps7KdpAHT6rg1noQpsTMoK2vZ7zxHj1CcexhRoH06T
-	 1V+2Kf/YjKdFHr3AzgtcV/i2/awCXqfeTvKUOoTk=
+	b=zUjUmtvLxXblQH9zKVAGGNp4Sq4LKHCV6UnoJIb9UsVunJEp386isQIc4qzMSJsl1
+	 VcRyqfYyNSQsf+AQkJ0A2Oq6twnuJvs1KyOiKwHpCpZDfuBzC9scOS3UwuJKRzM6zb
+	 2+gcZ8Gd+WhlHbgygQa9GddKXN10URpbVKY3+iG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ec0723ba9605678b14bf@syzkaller.appspotmail.com,
-	Dmitry Antipov <dmantipov@yandex.ru>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Woojung Huh <woojung.huh@microchip.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 25/96] ppp: reject claimed-as-LCP but actually malformed packets
-Date: Tue, 16 Jul 2024 17:31:36 +0200
-Message-ID: <20240716152747.484010221@linuxfoundation.org>
+Subject: [PATCH 6.1 26/96] ethtool: netlink: do not return SQI value if link is down
+Date: Tue, 16 Jul 2024 17:31:37 +0200
+Message-ID: <20240716152747.522111828@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152746.516194097@linuxfoundation.org>
 References: <20240716152746.516194097@linuxfoundation.org>
@@ -52,65 +53,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit f2aeb7306a898e1cbd03963d376f4b6656ca2b55 ]
+[ Upstream commit c184cf94e73b04ff7048d045f5413899bc664788 ]
 
-Since 'ppp_async_encode()' assumes valid LCP packets (with code
-from 1 to 7 inclusive), add 'ppp_check_packet()' to ensure that
-LCP packet has an actual body beyond PPP_LCP header bytes, and
-reject claimed-as-LCP but actually malformed data otherwise.
+Do not attach SQI value if link is down. "SQI values are only valid if
+link-up condition is present" per OpenAlliance specification of
+100Base-T1 Interoperability Test suite [1]. The same rule would apply
+for other link types.
 
-Reported-by: syzbot+ec0723ba9605678b14bf@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ec0723ba9605678b14bf
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+[1] https://opensig.org/automotive-ethernet-specifications/#
+
+Fixes: 806602191592 ("ethtool: provide UAPI for PHY Signal Quality Index (SQI)")
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Woojung Huh <woojung.huh@microchip.com>
+Link: https://patch.msgid.link/20240709061943.729381-1-o.rempel@pengutronix.de
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_generic.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ net/ethtool/linkstate.c | 41 ++++++++++++++++++++++++++++-------------
+ 1 file changed, 28 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
-index 1d71f5276241c..5a6fa566e722f 100644
---- a/drivers/net/ppp/ppp_generic.c
-+++ b/drivers/net/ppp/ppp_generic.c
-@@ -70,6 +70,7 @@
- #define MPHDRLEN_SSN	4	/* ditto with short sequence numbers */
- 
- #define PPP_PROTO_LEN	2
-+#define PPP_LCP_HDRLEN	4
- 
- /*
-  * An instance of /dev/ppp can be associated with either a ppp
-@@ -491,6 +492,15 @@ static ssize_t ppp_read(struct file *file, char __user *buf,
+diff --git a/net/ethtool/linkstate.c b/net/ethtool/linkstate.c
+index fb676f349455a..470582a70ccbe 100644
+--- a/net/ethtool/linkstate.c
++++ b/net/ethtool/linkstate.c
+@@ -36,6 +36,8 @@ static int linkstate_get_sqi(struct net_device *dev)
+ 	mutex_lock(&phydev->lock);
+ 	if (!phydev->drv || !phydev->drv->get_sqi)
+ 		ret = -EOPNOTSUPP;
++	else if (!phydev->link)
++		ret = -ENETDOWN;
+ 	else
+ 		ret = phydev->drv->get_sqi(phydev);
+ 	mutex_unlock(&phydev->lock);
+@@ -54,6 +56,8 @@ static int linkstate_get_sqi_max(struct net_device *dev)
+ 	mutex_lock(&phydev->lock);
+ 	if (!phydev->drv || !phydev->drv->get_sqi_max)
+ 		ret = -EOPNOTSUPP;
++	else if (!phydev->link)
++		ret = -ENETDOWN;
+ 	else
+ 		ret = phydev->drv->get_sqi_max(phydev);
+ 	mutex_unlock(&phydev->lock);
+@@ -61,6 +65,17 @@ static int linkstate_get_sqi_max(struct net_device *dev)
  	return ret;
- }
+ };
  
-+static bool ppp_check_packet(struct sk_buff *skb, size_t count)
++static bool linkstate_sqi_critical_error(int sqi)
 +{
-+	/* LCP packets must include LCP header which 4 bytes long:
-+	 * 1-byte code, 1-byte identifier, and 2-byte length.
-+	 */
-+	return get_unaligned_be16(skb->data) != PPP_LCP ||
-+		count >= PPP_PROTO_LEN + PPP_LCP_HDRLEN;
++	return sqi < 0 && sqi != -EOPNOTSUPP && sqi != -ENETDOWN;
 +}
 +
- static ssize_t ppp_write(struct file *file, const char __user *buf,
- 			 size_t count, loff_t *ppos)
++static bool linkstate_sqi_valid(struct linkstate_reply_data *data)
++{
++	return data->sqi >= 0 && data->sqi_max >= 0 &&
++	       data->sqi <= data->sqi_max;
++}
++
+ static int linkstate_get_link_ext_state(struct net_device *dev,
+ 					struct linkstate_reply_data *data)
  {
-@@ -513,6 +523,11 @@ static ssize_t ppp_write(struct file *file, const char __user *buf,
- 		kfree_skb(skb);
+@@ -92,12 +107,12 @@ static int linkstate_prepare_data(const struct ethnl_req_info *req_base,
+ 	data->link = __ethtool_get_link(dev);
+ 
+ 	ret = linkstate_get_sqi(dev);
+-	if (ret < 0 && ret != -EOPNOTSUPP)
++	if (linkstate_sqi_critical_error(ret))
  		goto out;
- 	}
-+	ret = -EINVAL;
-+	if (unlikely(!ppp_check_packet(skb, count))) {
-+		kfree_skb(skb);
-+		goto out;
+ 	data->sqi = ret;
+ 
+ 	ret = linkstate_get_sqi_max(dev);
+-	if (ret < 0 && ret != -EOPNOTSUPP)
++	if (linkstate_sqi_critical_error(ret))
+ 		goto out;
+ 	data->sqi_max = ret;
+ 
+@@ -122,11 +137,10 @@ static int linkstate_reply_size(const struct ethnl_req_info *req_base,
+ 	len = nla_total_size(sizeof(u8)) /* LINKSTATE_LINK */
+ 		+ 0;
+ 
+-	if (data->sqi != -EOPNOTSUPP)
+-		len += nla_total_size(sizeof(u32));
+-
+-	if (data->sqi_max != -EOPNOTSUPP)
+-		len += nla_total_size(sizeof(u32));
++	if (linkstate_sqi_valid(data)) {
++		len += nla_total_size(sizeof(u32)); /* LINKSTATE_SQI */
++		len += nla_total_size(sizeof(u32)); /* LINKSTATE_SQI_MAX */
 +	}
  
- 	switch (pf->kind) {
- 	case INTERFACE:
+ 	if (data->link_ext_state_provided)
+ 		len += nla_total_size(sizeof(u8)); /* LINKSTATE_EXT_STATE */
+@@ -147,13 +161,14 @@ static int linkstate_fill_reply(struct sk_buff *skb,
+ 	    nla_put_u8(skb, ETHTOOL_A_LINKSTATE_LINK, !!data->link))
+ 		return -EMSGSIZE;
+ 
+-	if (data->sqi != -EOPNOTSUPP &&
+-	    nla_put_u32(skb, ETHTOOL_A_LINKSTATE_SQI, data->sqi))
+-		return -EMSGSIZE;
++	if (linkstate_sqi_valid(data)) {
++		if (nla_put_u32(skb, ETHTOOL_A_LINKSTATE_SQI, data->sqi))
++			return -EMSGSIZE;
+ 
+-	if (data->sqi_max != -EOPNOTSUPP &&
+-	    nla_put_u32(skb, ETHTOOL_A_LINKSTATE_SQI_MAX, data->sqi_max))
+-		return -EMSGSIZE;
++		if (nla_put_u32(skb, ETHTOOL_A_LINKSTATE_SQI_MAX,
++				data->sqi_max))
++			return -EMSGSIZE;
++	}
+ 
+ 	if (data->link_ext_state_provided) {
+ 		if (nla_put_u8(skb, ETHTOOL_A_LINKSTATE_EXT_STATE,
 -- 
 2.43.0
 
