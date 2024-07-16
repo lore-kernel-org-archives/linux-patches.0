@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4496C12B72;
-	Tue, 16 Jul 2024 15:48:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39ADB19B59C;
+	Tue, 16 Jul 2024 15:48:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144934; cv=none; b=mH3tonIEPyGuUnQnQ81/rEq62tdVggzRLiQ832WR9Y3NDf+bI+MmduitjH0HmyYlxYJjQIdxsFSnTHtatXOPpEOKwrvStBoLin9dktcCHbdjtYhewPctRxubTvnXyFuN/GTmFZF0ghhK90jCUBglkI+F07FygBHPmIPgAEh8jHQ=
+	t=1721144937; cv=none; b=LhUAwKN4TRXPM8vV9EBWR8zGQUCqSHl6noIM9uZ4WKFT+HsNb1V3rBpUc3wCpuJiDg8qqnA/KhkfL6lZuSuVxZB/bnjt/2swzJ5cvNxy9Fl//oAWuWhUPThgiV/3oRTJhJOr1CeTcvB1wzjPI6ngnlf9AgCHbUMI6ACINYNvBuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144934; c=relaxed/simple;
-	bh=NrEYfEupjXHaPgmQUZMuECp6gCiv2kmWERNtaIgTLsA=;
+	s=arc-20240116; t=1721144937; c=relaxed/simple;
+	bh=ljNyt4AEDAkX7GW9SIrE7eTQpv0CYk33ibptlsaUcOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ft+9DWp3eueRZokGWiF/d5IMCi7tZJxMt4FBxFoW9llDbzULZ5oOKqkc+mXN59Mu6viepLiu80r7Oz3BCg2IyHYJzElFULt1C+86YPlJJDjxHXsO1TXhEm82V2+IgRrFDQl2uJHe/qshnVnccVvQD4baaPAlTRHgL8V7ZHrLzaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M50hpMgj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iCN0B498VDvGIwbMlLF+HI9DcTWM1KWAypdLZD0YIyE8+LAVmRDjHa1hUfx3k5TC6ALwZGlMFv3XUxbbCfccBWWNABQk5YZblonYmTWNffmMY9DzDI8cOVXIPcAIpl4QV6Y9+qtzPq+UwDQhStt70BRGWw+0w3SykWepVMj2XhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PVNrP1zU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M50hpMgj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFC0FC4AF0B;
-	Tue, 16 Jul 2024 15:48:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PVNrP1zU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4CDBC116B1;
+	Tue, 16 Jul 2024 15:48:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144934;
-	bh=NrEYfEupjXHaPgmQUZMuECp6gCiv2kmWERNtaIgTLsA=;
+	s=korg; t=1721144937;
+	bh=ljNyt4AEDAkX7GW9SIrE7eTQpv0CYk33ibptlsaUcOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M50hpMgj5b8ZzM+WU+C3+OmPUTrZs6o8qMe41rdMLFWs1MeJEcI7y8JABIkG5Bj95
-	 NuK4qGgmv/QTSNn6SgcO04+rCDOMOtdV4m4TBQnD2cWbj+T3ILt5Cefs5o4bQAwj3Y
-	 7cLWYzGGjL/A7vmduftL8E+CioWKSn603RiZnceo=
+	b=PVNrP1zUabtTpRBY3kOXDd+x+MBytE4IWWrYRUGyQTulhPGEpqU/P5n+ok5wCMvsX
+	 JRZQFee6dDZLvJoy1f+DpvLWPSXL+mNIqX3S6K5Sl8H4Bky0QqxVRdEa/9qtW9c1xp
+	 CalLSYLBKZfxJrzYP8p3dKoSzBeNLF1kHumHf6bU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lex Siegel <usiegl00@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Neil Brown <neilb@suse.de>,
-	Trond Myklebust <trondmy@kernel.org>,
-	Anna Schumaker <anna@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 044/143] net, sunrpc: Remap EPERM in case of connection failure in xs_tcp_setup_socket
-Date: Tue, 16 Jul 2024 17:30:40 +0200
-Message-ID: <20240716152757.683335839@linuxfoundation.org>
+Subject: [PATCH 6.9 045/143] arm64: dts: qcom: sc8180x: Fix LLCC reg property again
+Date: Tue, 16 Jul 2024 17:30:41 +0200
+Message-ID: <20240716152757.721091047@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -55,61 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-[ Upstream commit 626dfed5fa3bfb41e0dffd796032b555b69f9cde ]
+[ Upstream commit 3df1627d8370a9c420b49743976b3eeba32afbbc ]
 
-When using a BPF program on kernel_connect(), the call can return -EPERM. This
-causes xs_tcp_setup_socket() to loop forever, filling up the syslog and causing
-the kernel to potentially freeze up.
+Commit '74cf6675c35e ("arm64: dts: qcom: sc8180x: Fix LLCC reg
+property")' transitioned the SC8180X LLCC node to describe each memory
+region individually, but did not include all the regions.
 
-Neil suggested:
+The result is that Linux fails to find the last regions, so extend the
+definition to cover all the blocks.
 
-  This will propagate -EPERM up into other layers which might not be ready
-  to handle it. It might be safer to map EPERM to an error we would be more
-  likely to expect from the network system - such as ECONNREFUSED or ENETDOWN.
+This also corrects the related DeviceTree validation error.
 
-ECONNREFUSED as error seems reasonable. For programs setting a different error
-can be out of reach (see handling in 4fbac77d2d09) in particular on kernels
-which do not have f10d05966196 ("bpf: Make BPF_PROG_RUN_ARRAY return -err
-instead of allow boolean"), thus given that it is better to simply remap for
-consistent behavior. UDP does handle EPERM in xs_udp_send_request().
-
-Fixes: d74bad4e74ee ("bpf: Hooks for sys_connect")
-Fixes: 4fbac77d2d09 ("bpf: Hooks for sys_bind")
-Co-developed-by: Lex Siegel <usiegl00@gmail.com>
-Signed-off-by: Lex Siegel <usiegl00@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Neil Brown <neilb@suse.de>
-Cc: Trond Myklebust <trondmy@kernel.org>
-Cc: Anna Schumaker <anna@kernel.org>
-Link: https://github.com/cilium/cilium/issues/33395
-Link: https://lore.kernel.org/bpf/171374175513.12877.8993642908082014881@noble.neil.brown.name
-Link: https://patch.msgid.link/9069ec1d59e4b2129fc23433349fd5580ad43921.1720075070.git.daniel@iogearbox.net
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 74cf6675c35e ("arm64: dts: qcom: sc8180x: Fix LLCC reg property")
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240525-sc8180x-llcc-reg-fixup-v1-1-0c13d4ea94f2@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtsock.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/arm64/boot/dts/qcom/sc8180x.dtsi | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
-index ce18716491c8f..b9121adef8b76 100644
---- a/net/sunrpc/xprtsock.c
-+++ b/net/sunrpc/xprtsock.c
-@@ -2442,6 +2442,13 @@ static void xs_tcp_setup_socket(struct work_struct *work)
- 		transport->srcport = 0;
- 		status = -EAGAIN;
- 		break;
-+	case -EPERM:
-+		/* Happens, for instance, if a BPF program is preventing
-+		 * the connect. Remap the error so upper layers can better
-+		 * deal with it.
-+		 */
-+		status = -ECONNREFUSED;
-+		fallthrough;
- 	case -EINVAL:
- 		/* Happens, for instance, if the user specified a link
- 		 * local IPv6 address without a scope-id.
+diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
+index 053f7861c3cec..b594938c757bf 100644
+--- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
+@@ -2608,11 +2608,14 @@
+ 
+ 		system-cache-controller@9200000 {
+ 			compatible = "qcom,sc8180x-llcc";
+-			reg = <0 0x09200000 0 0x50000>, <0 0x09280000 0 0x50000>,
+-			      <0 0x09300000 0 0x50000>, <0 0x09380000 0 0x50000>,
+-			      <0 0x09600000 0 0x50000>;
++			reg = <0 0x09200000 0 0x58000>, <0 0x09280000 0 0x58000>,
++			      <0 0x09300000 0 0x58000>, <0 0x09380000 0 0x58000>,
++			      <0 0x09400000 0 0x58000>, <0 0x09480000 0 0x58000>,
++			      <0 0x09500000 0 0x58000>, <0 0x09580000 0 0x58000>,
++			      <0 0x09600000 0 0x58000>;
+ 			reg-names = "llcc0_base", "llcc1_base", "llcc2_base",
+-				    "llcc3_base", "llcc_broadcast_base";
++				    "llcc3_base", "llcc4_base", "llcc5_base",
++				    "llcc6_base", "llcc7_base",  "llcc_broadcast_base";
+ 			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
+ 		};
+ 
 -- 
 2.43.0
 
