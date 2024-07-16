@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2545719AD93;
-	Tue, 16 Jul 2024 15:58:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C73219E7DB;
+	Tue, 16 Jul 2024 15:58:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145535; cv=none; b=cdEbHZLquV2wk40U9z7dszFq4nh9hUr33LlKbg/HDYH4MaMNgkNsSb1Obzqn5F5gCxsLHiHltCYswowviYrgUwZVjMwUpr9kdyq/hiMgwUsaOoXJuK7Is6l2tcUiX8jPtqtSmGT10qjDhmczO+aP/9iKlBvdVOYKrK1/4QqwHzk=
+	t=1721145538; cv=none; b=mMcgdw2VryHP7GnIcbeyynWnd2OaT80UU3Huu86m/EzUiQ7/4J5TL9eTS+7gGDxwlOr63iS4vsaG3vTiRO8L9fTpreT4jv/aO8kC1EjwkxmhGZ0LlrckOfOn15PeJ9mY8S2kaXB/8wjEju5skM/1JRFZ7sVOhiQhHTrCok2jmY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145535; c=relaxed/simple;
-	bh=dQiey/ZovuebsT5NY8fTKJQONmVsKLpij+M3ayfBSsk=;
+	s=arc-20240116; t=1721145538; c=relaxed/simple;
+	bh=SqELmr4t8HBs+be16NFhaohH2arkkQFBnMgrwCx3Ed0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TATgtFvfWED24KglmiOwxhim/fTVoGBeKe4BJh3o8z0MzThtHzsMk/42x/YT2ZolaWoIEWrh/SdJz300hbf/ZG58y0e5+SGcK5uzrg3ECPZBB00pADrOiLG4C7tithX1/AT3tmRt64kEcv9heo5/pYi5U5lZlXgPzeBcvFn0rUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cv1WAvF+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LggVgqyDNR4YombwF3uLoNcnzxQSBfCnzkJObLZAVCIZJQV07/Jp2yqkUL6RwgMBPo0G9HpfQJZLYyrmd8rPSqeLoSKfajs6FMDSKSyLqhQgnCb7yvmvVD+W1h6WZSYY7aAyZy8u+CaE+OOKmpwkTEBALTkQroHFqpE/q0BO8sI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uqe1kwjW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cv1WAvF+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F929C116B1;
-	Tue, 16 Jul 2024 15:58:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uqe1kwjW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F388C116B1;
+	Tue, 16 Jul 2024 15:58:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145535;
-	bh=dQiey/ZovuebsT5NY8fTKJQONmVsKLpij+M3ayfBSsk=;
+	s=korg; t=1721145538;
+	bh=SqELmr4t8HBs+be16NFhaohH2arkkQFBnMgrwCx3Ed0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cv1WAvF+PaBhnttwvozX5kzsbUPTtq+VBAAnUoSw1WR2IFkWNbMD50jXLEgtaoS4G
-	 lQtI3q3VXcJOKFkswl+OQi8mcjgn993DGNgzjT+/tA3vgYaZHNP+BRHKhQEMIWbTQr
-	 bc6rO6ghm+ROZse392dgHUs1qX8RSYhXxNSeSc+M=
+	b=uqe1kwjWNJFTChgUai5TmEvdfnBfXJlX6KzCUloYsI+HAyuRdEQcErF1CcmFR2WOD
+	 1jbcWVyBM3Id/eKqd0dRu2oXf7t/+w97wLDiBJsH6dDkjQK3sAU8i+LQ+zxfKp0zF0
+	 n2JD2y2cbUXOkmx3xXcTXMW742jJmkaancCl1MlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 6.1 96/96] i2c: rcar: fix error code in probe()
-Date: Tue, 16 Jul 2024 17:32:47 +0200
-Message-ID: <20240716152750.203443803@linuxfoundation.org>
+	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 69/96] ALSA: hda/realtek: Limit mic boost on VAIO PRO PX
+Date: Tue, 16 Jul 2024 17:32:20 +0200
+Message-ID: <20240716152749.164671223@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152746.516194097@linuxfoundation.org>
 References: <20240716152746.516194097@linuxfoundation.org>
@@ -51,35 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
 
-commit 37a672be3ae357a0f87fbc00897fa7fcb3d7d782 upstream.
+commit 6db03b1929e207d2c6e84e75a9cd78124b3d6c6d upstream.
 
-Return an error code if devm_reset_control_get_exclusive() fails.
-The current code returns success.
+The internal mic boost on the VAIO models VJFE-CL and VJFE-IL is too high.
+Fix this by applying the ALC269_FIXUP_LIMIT_INT_MIC_BOOST fixup to the machine
+to limit the gain.
 
-Fixes: 0e864b552b23 ("i2c: rcar: reset controller is mandatory for Gen3+")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20240705141012.5368-1-edson.drosdeck@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-rcar.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/i2c/busses/i2c-rcar.c
-+++ b/drivers/i2c/busses/i2c-rcar.c
-@@ -1121,8 +1121,10 @@ static int rcar_i2c_probe(struct platfor
- 	/* R-Car Gen3+ needs a reset before every transfer */
- 	if (priv->devtype >= I2C_RCAR_GEN3) {
- 		priv->rstc = devm_reset_control_get_exclusive(&pdev->dev, NULL);
--		if (IS_ERR(priv->rstc))
-+		if (IS_ERR(priv->rstc)) {
-+			ret = PTR_ERR(priv->rstc);
- 			goto out_pm_put;
-+		}
- 
- 		ret = reset_control_status(priv->rstc);
- 		if (ret < 0)
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9923,6 +9923,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x10cf, 0x1845, "Lifebook U904", ALC269_FIXUP_LIFEBOOK_EXTMIC),
+ 	SND_PCI_QUIRK(0x10ec, 0x10f2, "Intel Reference board", ALC700_FIXUP_INTEL_REFERENCE),
+ 	SND_PCI_QUIRK(0x10ec, 0x118c, "Medion EE4254 MD62100", ALC256_FIXUP_MEDION_HEADSET_NO_PRESENCE),
++	SND_PCI_QUIRK(0x10ec, 0x11bc, "VAIO VJFE-IL", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x10ec, 0x1230, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
+ 	SND_PCI_QUIRK(0x10ec, 0x124c, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
+ 	SND_PCI_QUIRK(0x10ec, 0x1252, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
+@@ -10155,6 +10156,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1d72, 0x1901, "RedmiBook 14", ALC256_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1945, "Redmi G", ALC256_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1947, "RedmiBook Air", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
++	SND_PCI_QUIRK(0x2782, 0x0214, "VAIO VJFE-CL", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
+ 	SND_PCI_QUIRK(0x2782, 0x1707, "Vaio VJFE-ADL", ALC298_FIXUP_SPK_VOLUME),
+ 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
 
 
