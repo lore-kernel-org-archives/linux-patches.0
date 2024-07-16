@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5746C27733;
-	Tue, 16 Jul 2024 15:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 452C219E7CF;
+	Tue, 16 Jul 2024 15:50:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144998; cv=none; b=THGbHZZbv8YyrkZFXWxDvlFjzJdf0ByBaAsP8V7jORcC0+I7/M7T2pOJAGxF9C4Npkjhry3oh5c8WVgLM25Qp9qn7TZBIB9a6Z2PppEmytYlwSfm8N8UTkpLDvA+wVNFti/LhSeI0L7Fxx5eGfP9D3ozA+4SR5JVgRiQK5Rjeto=
+	t=1721145001; cv=none; b=cpCyb5g5o7lBee05taMqfmJpat51xKuIXUl2fUx4fqRgGzZQU53xj1ToWGKosxTJtNVVNoFC3MUAlBrsOHEEi65WLAUORiXSenbwYMJU3mSUx8lR9sTv3EH9MZ8uAHrTB64tanYOCgFe1NM79oZ8KBNeM6ZH7ai3R2porYU/j3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144998; c=relaxed/simple;
-	bh=m0q9bOy0jgzHiWk+Gvq916U1ri+Ko9xMWmLMRecWLQU=;
+	s=arc-20240116; t=1721145001; c=relaxed/simple;
+	bh=idtORb1cdWbMpllf6Sb/z3RYg+3q5YiIdorbZW/ImxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L4ifaTSaLghuwebL/jmFJRnBRp1l9xY/141CFWQvpcQO3a3ZcdHm0NocoIAgWNC3qjGiI0a+XDFVewFwBfHgDwh4I78LmkIFstB36L08v7LElVwjrJtG195DIuo40T7jvGSQfCV3s2ljWe3KR6ov4kiHV/5HFQexMQSRRtuhubM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ahrx2Xlf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tpyDZeni27xZodmzvttGBCwZyW/k1glGdGYjt08HRk1AJ67Gm/pE9aSMqSvu7ODEco9XyPQSKumpAJZFk8TMQz7rgI7uIizWULvuV6iUZ2+pBXFxOI9wTBVbFBzdEa5whb7JvCKRc1vDullm90tPjwLPCpMpnVkEtoTHtl/4Xkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K47Eoh3I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ahrx2Xlf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C714FC4AF0B;
-	Tue, 16 Jul 2024 15:49:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K47Eoh3I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6BCC4AF0B;
+	Tue, 16 Jul 2024 15:50:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144998;
-	bh=m0q9bOy0jgzHiWk+Gvq916U1ri+Ko9xMWmLMRecWLQU=;
+	s=korg; t=1721145001;
+	bh=idtORb1cdWbMpllf6Sb/z3RYg+3q5YiIdorbZW/ImxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ahrx2XlfWa78NxcYFxyQ/1S5JIONHd7RPotRbh28qwlubzn0+nMWB1v2Y+I9wtYav
-	 KGpflHg3q4WdkqNDDueR2MhXlW+nutR4J+h5WcfFPZ0T2U6gX8lbPIvBwOHl5lBh0Y
-	 CJCTUQQsSjS0GZQ98w2j0NmfkApSSe61lNXNXVB4=
+	b=K47Eoh3IjPtLhIYDFMtUVqvyy2sMz3P1cgngaHzykN+JvbT5vr0w1nw9iHrgVJi42
+	 HihLMlfyXvMjUPSGTaiBJ5Qm3airX5gkDEQZAGcKqh2OauMqU6UH79GMBuKdGLN2mH
+	 9xcfxF1owamTMGF2VxwItusTkXmNgWZZyDXIsDiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Ahmed Zaki <ahmed.zaki@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 024/143] octeontx2-af: Fix incorrect value output on error path in rvu_check_rsrc_availability()
-Date: Tue, 16 Jul 2024 17:30:20 +0200
-Message-ID: <20240716152756.918496810@linuxfoundation.org>
+Subject: [PATCH 6.9 058/143] net: ethtool: Fix RSS setting
+Date: Tue, 16 Jul 2024 17:30:54 +0200
+Message-ID: <20240716152758.211489124@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -52,41 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Saeed Mahameed <saeedm@nvidia.com>
 
-[ Upstream commit 442e26af9aa8115c96541026cbfeaaa76c85d178 ]
+[ Upstream commit 503757c809281a24d50ac2538401d3b1302b301c ]
 
-In rvu_check_rsrc_availability() in case of invalid SSOW req, an incorrect
-data is printed to error log. 'req->sso' value is printed instead of
-'req->ssow'. Looks like "copy-paste" mistake.
+When user submits a rxfh set command without touching XFRM_SYM_XOR,
+rxfh.input_xfrm is set to RXH_XFRM_NO_CHANGE, which is equal to 0xff.
 
-Fix this mistake by replacing 'req->sso' with 'req->ssow'.
+Testing if (rxfh.input_xfrm & RXH_XFRM_SYM_XOR &&
+	    !ops->cap_rss_sym_xor_supported)
+		return -EOPNOTSUPP;
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Will always be true on devices that don't set cap_rss_sym_xor_supported,
+since rxfh.input_xfrm & RXH_XFRM_SYM_XOR is always true, if input_xfrm
+was not set, i.e RXH_XFRM_NO_CHANGE=0xff, which will result in failure
+of any command that doesn't require any change of XFRM, e.g RSS context
+or hash function changes.
 
-Fixes: 746ea74241fa ("octeontx2-af: Add RVU block LF provisioning support")
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20240705095317.12640-1-amishin@t-argos.ru
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+To avoid this breakage, test if rxfh.input_xfrm != RXH_XFRM_NO_CHANGE
+before testing other conditions. Note that the problem will only trigger
+with XFRM-aware userspace, old ethtool CLI would continue to work.
+
+Fixes: 0dd415d15505 ("net: ethtool: add a NO_CHANGE uAPI for new RXFH's input_xfrm")
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Reviewed-by: Ahmed Zaki <ahmed.zaki@intel.com>
+Link: https://patch.msgid.link/20240710225538.43368-1-saeed@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ethtool/ioctl.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-index ff78251f92d44..5f661e67ccbcf 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-@@ -1643,7 +1643,7 @@ static int rvu_check_rsrc_availability(struct rvu *rvu,
- 		if (req->ssow > block->lf.max) {
- 			dev_err(&rvu->pdev->dev,
- 				"Func 0x%x: Invalid SSOW req, %d > max %d\n",
--				 pcifunc, req->sso, block->lf.max);
-+				 pcifunc, req->ssow, block->lf.max);
- 			return -EINVAL;
- 		}
- 		mappedlfs = rvu_get_rsrc_mapcount(pfvf, block->addr);
+diff --git a/net/ethtool/ioctl.c b/net/ethtool/ioctl.c
+index e645d751a5e89..223dcd25d88a2 100644
+--- a/net/ethtool/ioctl.c
++++ b/net/ethtool/ioctl.c
+@@ -1306,7 +1306,8 @@ static noinline_for_stack int ethtool_set_rxfh(struct net_device *dev,
+ 	if (rxfh.input_xfrm && rxfh.input_xfrm != RXH_XFRM_SYM_XOR &&
+ 	    rxfh.input_xfrm != RXH_XFRM_NO_CHANGE)
+ 		return -EINVAL;
+-	if ((rxfh.input_xfrm & RXH_XFRM_SYM_XOR) &&
++	if (rxfh.input_xfrm != RXH_XFRM_NO_CHANGE &&
++	    (rxfh.input_xfrm & RXH_XFRM_SYM_XOR) &&
+ 	    !ops->cap_rss_sym_xor_supported)
+ 		return -EOPNOTSUPP;
+ 
 -- 
 2.43.0
 
