@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A90D53B;
-	Tue, 16 Jul 2024 15:34:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942961448ED;
+	Tue, 16 Jul 2024 15:34:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144053; cv=none; b=qMNgxR3giQmyqYiUiZbYobrYk5lp2jfoQPqvnniijZRtoMmgg8xsvJtOXJxHaG9aLgXersUvY3fFKaaI1z6TrFlaHcU61UEDT4zglooLU5w0our3g928dE2UvVgsngJi+n85XnRXUIMu+iuVXmnd6zb+AFqSrSySX06oXUR9buo=
+	t=1721144056; cv=none; b=qMm0ZlY8uNt5+LeiCvqEsLlUdA6DVbf/Rdi/ostr/tSQSfATjFzS2epksPcj9A5SStJHeBhQlu57GNt3wh6Xj+oNDMavhlhuA5Diu4m0lU3RbUvd48yBWYHyruUXkA1Vguqn5j9Rq5hAfNRpAN0ptQeJFZ+AuhihbBzywdVkoFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144053; c=relaxed/simple;
-	bh=0uADDyyYfVTkNogd5tBz+kjhyGmeHiBV6R3iksmo4y0=;
+	s=arc-20240116; t=1721144056; c=relaxed/simple;
+	bh=omEYgwGydIeQxTS4FGz/Ne7aLOelFc7mb44q6ObFbtA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=McDyWm+CqDX2saoWQDS4xyvZ/JSrv30fNIXqK1n1cJdT6TZvITULafUACo+4rNa8Osr01YnaLFCMMXz2NPqBp/9F6+47IaT1nJs0o1gqDDoQC8fZhbSevBGTnDmlp66aQCLkvoertqWvCkXjqETuxi/HmqPod+W6dIc4iNghxsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jxIj47T9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GyzxTSUuyEhmHR40RLS4ipH3UyZx+pcE3cjxJz6yxUKcszUiUMH1E8g8GgdWof3+IKkNnKo7O9/+z/6Rlf+ogz7/VauOVceQv+Q+RvZU1nw38UMM8azF9TUK+RaT2XPukPnUOnCZrRAscEVF4LrQ5pV3gnm36jSHuNRiVZSzBhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dL4lTPzu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jxIj47T9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF372C116B1;
-	Tue, 16 Jul 2024 15:34:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dL4lTPzu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3268C116B1;
+	Tue, 16 Jul 2024 15:34:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144053;
-	bh=0uADDyyYfVTkNogd5tBz+kjhyGmeHiBV6R3iksmo4y0=;
+	s=korg; t=1721144056;
+	bh=omEYgwGydIeQxTS4FGz/Ne7aLOelFc7mb44q6ObFbtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jxIj47T92aUUjdwoMYL8CiV145hFC/NOX7xYpL2oOOy4yvIJgSkI4oYe18XXGgNcj
-	 Ff+duDmXFXhTk+rqHFgfFDubqj+7LCxdgTjuMpWeeozeL2BdA+yzmmg8EOtjKu23UW
-	 tvGcUNUK1TS4i2ruc2H37pqKC2pKC+1p3VnqdouE=
+	b=dL4lTPzuT+ZbB7/iFnoTIZa3P17cL+8VpTILIvlqScRqbdUjBvjmcONwcbngMf5LE
+	 0vmC3VvYW3zNBlXJ9EwEIWBbqoBA2QGbCHJdhni12IAI+AdWu/33NTCeSupOAwUlu1
+	 08SErWwvCGc461Zv1sLGX+ZVsESddumfsCQwArZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 12/66] media: dvb-frontends: tda10048: Fix integer overflow
-Date: Tue, 16 Jul 2024 17:30:47 +0200
-Message-ID: <20240716152738.631802633@linuxfoundation.org>
+Subject: [PATCH 4.19 13/66] i2c: i801: Annotate apanel_addr as __ro_after_init
+Date: Tue, 16 Jul 2024 17:30:48 +0200
+Message-ID: <20240716152738.669651202@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152738.161055634@linuxfoundation.org>
 References: <20240716152738.161055634@linuxfoundation.org>
@@ -52,51 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 1aa1329a67cc214c3b7bd2a14d1301a795760b07 ]
+[ Upstream commit 355b1513b1e97b6cef84b786c6480325dfd3753d ]
 
-state->xtal_hz can be up to 16M, so it can overflow a 32 bit integer
-when multiplied by pll_mfactor.
+Annotate this variable as __ro_after_init to protect it from being
+overwritten later.
 
-Create a new 64 bit variable to hold the calculations.
-
-Link: https://lore.kernel.org/linux-media/20240429-fix-cocci-v3-25-3c4865f5a4b0@chromium.org
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-frontends/tda10048.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/i2c/busses/i2c-i801.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/dvb-frontends/tda10048.c b/drivers/media/dvb-frontends/tda10048.c
-index 6ca1b25542c5c..888ae41b76857 100644
---- a/drivers/media/dvb-frontends/tda10048.c
-+++ b/drivers/media/dvb-frontends/tda10048.c
-@@ -422,6 +422,7 @@ static int tda10048_set_if(struct dvb_frontend *fe, u32 bw)
- 	struct tda10048_config *config = &state->config;
- 	int i;
- 	u32 if_freq_khz;
-+	u64 sample_freq;
+diff --git a/drivers/i2c/busses/i2c-i801.c b/drivers/i2c/busses/i2c-i801.c
+index c18b899e510ec..c1e2539b79502 100644
+--- a/drivers/i2c/busses/i2c-i801.c
++++ b/drivers/i2c/busses/i2c-i801.c
+@@ -1039,7 +1039,7 @@ static const struct pci_device_id i801_ids[] = {
+ MODULE_DEVICE_TABLE(pci, i801_ids);
  
- 	dprintk(1, "%s(bw = %d)\n", __func__, bw);
+ #if defined CONFIG_X86 && defined CONFIG_DMI
+-static unsigned char apanel_addr;
++static unsigned char apanel_addr __ro_after_init;
  
-@@ -463,9 +464,11 @@ static int tda10048_set_if(struct dvb_frontend *fe, u32 bw)
- 	dprintk(1, "- pll_pfactor = %d\n", state->pll_pfactor);
- 
- 	/* Calculate the sample frequency */
--	state->sample_freq = state->xtal_hz * (state->pll_mfactor + 45);
--	state->sample_freq /= (state->pll_nfactor + 1);
--	state->sample_freq /= (state->pll_pfactor + 4);
-+	sample_freq = state->xtal_hz;
-+	sample_freq *= state->pll_mfactor + 45;
-+	do_div(sample_freq, state->pll_nfactor + 1);
-+	do_div(sample_freq, state->pll_pfactor + 4);
-+	state->sample_freq = sample_freq;
- 	dprintk(1, "- sample_freq = %d\n", state->sample_freq);
- 
- 	/* Update the I/F */
+ /* Scan the system ROM for the signature "FJKEYINF" */
+ static __init const void __iomem *bios_signature(const void __iomem *bios)
 -- 
 2.43.0
 
