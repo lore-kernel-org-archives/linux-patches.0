@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A3E1DDCE;
-	Tue, 16 Jul 2024 16:01:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3713B1DDCE;
+	Tue, 16 Jul 2024 16:01:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145711; cv=none; b=Ef8W/eP5cjKU/nNj7CRoAHYyj40lgnJPofmmgkV1yU9/bRpncyOxatzBz43KQUT+7Abt3e6wUa2bU0dyQqQxgpgbN12t0HFCyJ6DRjZAeFJZbAS73i/YVIBLyvJTeArB4WB09EuExRnOsxXrX77gCpuIz94otjLasQ4I87T+8Mw=
+	t=1721145714; cv=none; b=tXZ6xpAh9QEUfVIbGVOqmYZhtZQaWMDCs5JrhpxCNNLOlVpzHaNr1aN74V/V3jyCL5lEUHmr8NEYFLxjZih4nxWUwHKYt8Y5vA0hrks1IZdyDP5HmFK/RKmPC+v71HvwlZ0vt/1j7VIzvSf8Z/NNRqQeZ7TwCchAaebDrLEIBdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145711; c=relaxed/simple;
-	bh=tUHuPRcL6oXQRKLnHNeIBgLScdCFOG/IUyrueMdcQjg=;
+	s=arc-20240116; t=1721145714; c=relaxed/simple;
+	bh=+R4juWCR1oq7XidCQmAluwLdhk3ztTmxPzS290dQkSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e936Ue5MkqQ428ebrL6wlBrHEsK2AyzieRPAnDZ/xw/YcMkTmpGXjGcwROPBleqINKw0Gx0BRZARHawbamN0bqgRWh/5hNnchgWrHipKZNJnaWHVfmGj/M1o3zy9GhXZN0OzEMB10Cu7ahj2tG64k1Jws3UTwDyJ9CiTbhu7nv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJk1UN6U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TyO1iqKy1lu0XmT+dRKthmAIdQbBtY9oGTDHKZ7jt6q2EZeDQNgvPMm16RuMe2qPFVnw/yv0CROm99DNvhKK0G4QzpC6BdaBX+rDmOOWriyvhdz+4bWQDNavcfO8qnDVoFg/1SIgJok5byVIIy1uW8b8RcE8Z66dk1QRi8lxjVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lI1fOhnJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJk1UN6U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F80C116B1;
-	Tue, 16 Jul 2024 16:01:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lI1fOhnJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABF38C116B1;
+	Tue, 16 Jul 2024 16:01:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145711;
-	bh=tUHuPRcL6oXQRKLnHNeIBgLScdCFOG/IUyrueMdcQjg=;
+	s=korg; t=1721145714;
+	bh=+R4juWCR1oq7XidCQmAluwLdhk3ztTmxPzS290dQkSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lJk1UN6UqLWL/YR91p0KA6HrF8oMQ2rx0aoggr2B3QRZ7npp2XJSoQAVicH1NsAoR
-	 Ob41/Vuc2xUZWytPsffuwgoUET4ndICuyXj2SJY1c6w6rbKpL1zzEkSqrkdSRZUh8S
-	 H4FJoTG4VXM0ORCkG+KO3uyruQLYouJNVd62Qvrc=
+	b=lI1fOhnJ7FIHkZLXxom6HbCOuPNuo3QTbEnB8tzkCvUeQYI6MU+25aOXdip+V5SJR
+	 fYboNIVmw9kNALIAgIjo1QzcATXY/J8N7NiUylUlg/uFitPvTcRzCkfYIOQeO0xnPr
+	 octbA4eFNvtLi4BkEOXmuidwaJ0oMLqG2dO9po0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Dohyun Kim <dohyunkim@google.com>,
+	Neel Natu <neelnatu@google.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 028/121] bpf: replace bpf_timer_init with a generic helper
-Date: Tue, 16 Jul 2024 17:31:30 +0200
-Message-ID: <20240716152752.406709084@linuxfoundation.org>
+Subject: [PATCH 6.6 029/121] bpf: Fail bpf_timer_cancel when callback is being cancelled
+Date: Tue, 16 Jul 2024 17:31:31 +0200
+Message-ID: <20240716152752.445484086@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152751.312512071@linuxfoundation.org>
 References: <20240716152751.312512071@linuxfoundation.org>
@@ -51,167 +53,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Tissoires <bentiss@kernel.org>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit 56b4a177ae6322173360a93ea828ad18570a5a14 ]
+[ Upstream commit d4523831f07a267a943f0dde844bf8ead7495f13 ]
 
-No code change except for the new flags argument being stored in the
-local data struct.
+Given a schedule:
 
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
-Link: https://lore.kernel.org/r/20240420-bpf_wq-v2-2-6c986a5a741f@kernel.org
+timer1 cb			timer2 cb
+
+bpf_timer_cancel(timer2);	bpf_timer_cancel(timer1);
+
+Both bpf_timer_cancel calls would wait for the other callback to finish
+executing, introducing a lockup.
+
+Add an atomic_t count named 'cancelling' in bpf_hrtimer. This keeps
+track of all in-flight cancellation requests for a given BPF timer.
+Whenever cancelling a BPF timer, we must check if we have outstanding
+cancellation requests, and if so, we must fail the operation with an
+error (-EDEADLK) since cancellation is synchronous and waits for the
+callback to finish executing. This implies that we can enter a deadlock
+situation involving two or more timer callbacks executing in parallel
+and attempting to cancel one another.
+
+Note that we avoid incrementing the cancelling counter for the target
+timer (the one being cancelled) if bpf_timer_cancel is not invoked from
+a callback, to avoid spurious errors. The whole point of detecting
+cur->cancelling and returning -EDEADLK is to not enter a busy wait loop
+(which may or may not lead to a lockup). This does not apply in case the
+caller is in a non-callback context, the other side can continue to
+cancel as it sees fit without running into errors.
+
+Background on prior attempts:
+
+Earlier versions of this patch used a bool 'cancelling' bit and used the
+following pattern under timer->lock to publish cancellation status.
+
+lock(t->lock);
+t->cancelling = true;
+mb();
+if (cur->cancelling)
+	return -EDEADLK;
+unlock(t->lock);
+hrtimer_cancel(t->timer);
+t->cancelling = false;
+
+The store outside the critical section could overwrite a parallel
+requests t->cancelling assignment to true, to ensure the parallely
+executing callback observes its cancellation status.
+
+It would be necessary to clear this cancelling bit once hrtimer_cancel
+is done, but lack of serialization introduced races. Another option was
+explored where bpf_timer_start would clear the bit when (re)starting the
+timer under timer->lock. This would ensure serialized access to the
+cancelling bit, but may allow it to be cleared before in-flight
+hrtimer_cancel has finished executing, such that lockups can occur
+again.
+
+Thus, we choose an atomic counter to keep track of all outstanding
+cancellation requests and use it to prevent lockups in case callbacks
+attempt to cancel each other while executing in parallel.
+
+Reported-by: Dohyun Kim <dohyunkim@google.com>
+Reported-by: Neel Natu <neelnatu@google.com>
+Fixes: b00628b1c7d5 ("bpf: Introduce bpf timers.")
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20240709185440.1104957-2-memxor@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: d4523831f07a ("bpf: Fail bpf_timer_cancel when callback is being cancelled")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/helpers.c | 91 ++++++++++++++++++++++++++++++--------------
- 1 file changed, 63 insertions(+), 28 deletions(-)
+ kernel/bpf/helpers.c | 38 +++++++++++++++++++++++++++++++++++---
+ 1 file changed, 35 insertions(+), 3 deletions(-)
 
 diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index b7669e1236f70..c34c93aa5a5e7 100644
+index c34c93aa5a5e7..9ab6be9653059 100644
 --- a/kernel/bpf/helpers.c
 +++ b/kernel/bpf/helpers.c
-@@ -1110,7 +1110,10 @@ struct bpf_hrtimer {
+@@ -1106,6 +1106,7 @@ struct bpf_async_cb {
+ struct bpf_hrtimer {
+ 	struct bpf_async_cb cb;
+ 	struct hrtimer timer;
++	atomic_t cancelling;
+ };
  
  /* the actual struct hidden inside uapi struct bpf_timer */
- struct bpf_async_kern {
--	struct bpf_hrtimer *timer;
-+	union {
-+		struct bpf_async_cb *cb;
-+		struct bpf_hrtimer *timer;
-+	};
- 	/* bpf_spin_lock is used here instead of spinlock_t to make
- 	 * sure that it always fits into space reserved by struct bpf_timer
- 	 * regardless of LOCKDEP and spinlock debug flags.
-@@ -1118,6 +1121,10 @@ struct bpf_async_kern {
- 	struct bpf_spin_lock lock;
- } __attribute__((aligned(8)));
+@@ -1204,6 +1205,7 @@ static int __bpf_async_init(struct bpf_async_kern *async, struct bpf_map *map, u
+ 		clockid = flags & (MAX_CLOCKS - 1);
+ 		t = (struct bpf_hrtimer *)cb;
  
-+enum bpf_async_type {
-+	BPF_ASYNC_TYPE_TIMER = 0,
-+};
-+
- static DEFINE_PER_CPU(struct bpf_hrtimer *, hrtimer_running);
++		atomic_set(&t->cancelling, 0);
+ 		hrtimer_init(&t->timer, clockid, HRTIMER_MODE_REL_SOFT);
+ 		t->timer.function = bpf_timer_cb;
+ 		cb->value = (void *)async - map->record->timer_off;
+@@ -1364,7 +1366,8 @@ static void drop_prog_refcnt(struct bpf_async_cb *async)
  
- static enum hrtimer_restart bpf_timer_cb(struct hrtimer *hrtimer)
-@@ -1159,46 +1166,55 @@ static enum hrtimer_restart bpf_timer_cb(struct hrtimer *hrtimer)
- 	return HRTIMER_NORESTART;
- }
- 
--BPF_CALL_3(bpf_timer_init, struct bpf_async_kern *, timer, struct bpf_map *, map,
--	   u64, flags)
-+static int __bpf_async_init(struct bpf_async_kern *async, struct bpf_map *map, u64 flags,
-+			    enum bpf_async_type type)
+ BPF_CALL_1(bpf_timer_cancel, struct bpf_async_kern *, timer)
  {
--	clockid_t clockid = flags & (MAX_CLOCKS - 1);
-+	struct bpf_async_cb *cb;
- 	struct bpf_hrtimer *t;
-+	clockid_t clockid;
-+	size_t size;
+-	struct bpf_hrtimer *t;
++	struct bpf_hrtimer *t, *cur_t;
++	bool inc = false;
  	int ret = 0;
  
--	BUILD_BUG_ON(MAX_CLOCKS != 16);
--	BUILD_BUG_ON(sizeof(struct bpf_async_kern) > sizeof(struct bpf_timer));
--	BUILD_BUG_ON(__alignof__(struct bpf_async_kern) != __alignof__(struct bpf_timer));
--
  	if (in_nmi())
- 		return -EOPNOTSUPP;
- 
--	if (flags >= MAX_CLOCKS ||
--	    /* similar to timerfd except _ALARM variants are not supported */
--	    (clockid != CLOCK_MONOTONIC &&
--	     clockid != CLOCK_REALTIME &&
--	     clockid != CLOCK_BOOTTIME))
-+	switch (type) {
-+	case BPF_ASYNC_TYPE_TIMER:
-+		size = sizeof(struct bpf_hrtimer);
-+		break;
-+	default:
- 		return -EINVAL;
--	__bpf_spin_lock_irqsave(&timer->lock);
--	t = timer->timer;
-+	}
-+
-+	__bpf_spin_lock_irqsave(&async->lock);
-+	t = async->timer;
- 	if (t) {
- 		ret = -EBUSY;
+@@ -1376,14 +1379,41 @@ BPF_CALL_1(bpf_timer_cancel, struct bpf_async_kern *, timer)
+ 		ret = -EINVAL;
  		goto out;
  	}
+-	if (this_cpu_read(hrtimer_running) == t) {
 +
- 	/* allocate hrtimer via map_kmalloc to use memcg accounting */
--	t = bpf_map_kmalloc_node(map, sizeof(*t), GFP_ATOMIC, map->numa_node);
--	if (!t) {
-+	cb = bpf_map_kmalloc_node(map, size, GFP_ATOMIC, map->numa_node);
-+	if (!cb) {
- 		ret = -ENOMEM;
- 		goto out;
- 	}
--	t->cb.value = (void *)timer - map->record->timer_off;
--	t->cb.map = map;
--	t->cb.prog = NULL;
--	rcu_assign_pointer(t->cb.callback_fn, NULL);
--	hrtimer_init(&t->timer, clockid, HRTIMER_MODE_REL_SOFT);
--	t->timer.function = bpf_timer_cb;
--	WRITE_ONCE(timer->timer, t);
--	/* Guarantee the order between timer->timer and map->usercnt. So
-+
-+	if (type == BPF_ASYNC_TYPE_TIMER) {
-+		clockid = flags & (MAX_CLOCKS - 1);
-+		t = (struct bpf_hrtimer *)cb;
-+
-+		hrtimer_init(&t->timer, clockid, HRTIMER_MODE_REL_SOFT);
-+		t->timer.function = bpf_timer_cb;
-+		cb->value = (void *)async - map->record->timer_off;
++	cur_t = this_cpu_read(hrtimer_running);
++	if (cur_t == t) {
+ 		/* If bpf callback_fn is trying to bpf_timer_cancel()
+ 		 * its own timer the hrtimer_cancel() will deadlock
+-		 * since it waits for callback_fn to finish
++		 * since it waits for callback_fn to finish.
++		 */
++		ret = -EDEADLK;
++		goto out;
 +	}
-+	cb->map = map;
-+	cb->prog = NULL;
-+	cb->flags = flags;
-+	rcu_assign_pointer(cb->callback_fn, NULL);
 +
-+	WRITE_ONCE(async->cb, cb);
-+	/* Guarantee the order between async->cb and map->usercnt. So
- 	 * when there are concurrent uref release and bpf timer init, either
- 	 * bpf_timer_cancel_and_free() called by uref release reads a no-NULL
- 	 * timer or atomic64_read() below returns a zero usercnt.
-@@ -1208,15 +1224,34 @@ BPF_CALL_3(bpf_timer_init, struct bpf_async_kern *, timer, struct bpf_map *, map
- 		/* maps with timers must be either held by user space
- 		 * or pinned in bpffs.
++	/* Only account in-flight cancellations when invoked from a timer
++	 * callback, since we want to avoid waiting only if other _callbacks_
++	 * are waiting on us, to avoid introducing lockups. Non-callback paths
++	 * are ok, since nobody would synchronously wait for their completion.
++	 */
++	if (!cur_t)
++		goto drop;
++	atomic_inc(&t->cancelling);
++	/* Need full barrier after relaxed atomic_inc */
++	smp_mb__after_atomic();
++	inc = true;
++	if (atomic_read(&cur_t->cancelling)) {
++		/* We're cancelling timer t, while some other timer callback is
++		 * attempting to cancel us. In such a case, it might be possible
++		 * that timer t belongs to the other callback, or some other
++		 * callback waiting upon it (creating transitive dependencies
++		 * upon us), and we will enter a deadlock if we continue
++		 * cancelling and waiting for it synchronously, since it might
++		 * do the same. Bail!
  		 */
--		WRITE_ONCE(timer->timer, NULL);
--		kfree(t);
-+		WRITE_ONCE(async->cb, NULL);
-+		kfree(cb);
- 		ret = -EPERM;
+ 		ret = -EDEADLK;
+ 		goto out;
  	}
++drop:
+ 	drop_prog_refcnt(&t->cb);
  out:
--	__bpf_spin_unlock_irqrestore(&timer->lock);
-+	__bpf_spin_unlock_irqrestore(&async->lock);
+ 	__bpf_spin_unlock_irqrestore(&timer->lock);
+@@ -1391,6 +1421,8 @@ BPF_CALL_1(bpf_timer_cancel, struct bpf_async_kern *, timer)
+ 	 * if it was running.
+ 	 */
+ 	ret = ret ?: hrtimer_cancel(&t->timer);
++	if (inc)
++		atomic_dec(&t->cancelling);
+ 	rcu_read_unlock();
  	return ret;
  }
- 
-+BPF_CALL_3(bpf_timer_init, struct bpf_async_kern *, timer, struct bpf_map *, map,
-+	   u64, flags)
-+{
-+	clock_t clockid = flags & (MAX_CLOCKS - 1);
-+
-+	BUILD_BUG_ON(MAX_CLOCKS != 16);
-+	BUILD_BUG_ON(sizeof(struct bpf_async_kern) > sizeof(struct bpf_timer));
-+	BUILD_BUG_ON(__alignof__(struct bpf_async_kern) != __alignof__(struct bpf_timer));
-+
-+	if (flags >= MAX_CLOCKS ||
-+	    /* similar to timerfd except _ALARM variants are not supported */
-+	    (clockid != CLOCK_MONOTONIC &&
-+	     clockid != CLOCK_REALTIME &&
-+	     clockid != CLOCK_BOOTTIME))
-+		return -EINVAL;
-+
-+	return __bpf_async_init(timer, map, flags, BPF_ASYNC_TYPE_TIMER);
-+}
-+
- static const struct bpf_func_proto bpf_timer_init_proto = {
- 	.func		= bpf_timer_init,
- 	.gpl_only	= true,
 -- 
 2.43.0
 
