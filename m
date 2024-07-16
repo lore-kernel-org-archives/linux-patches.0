@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C70A1DDCE;
-	Tue, 16 Jul 2024 16:02:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DCAF1DDCE;
+	Tue, 16 Jul 2024 16:02:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145752; cv=none; b=nSn5UVAUT5TbCo21Z9b6jH3lFnil7eMF1DPWLMgUit6CFlKcuk0nnneM0LJvHFkAxJWWMmFBHfuJKKD022uGgoHuzqk17BaB6PVQT+UQGBDGPqn/5/NOFH4zbZSNK68nmT6Go0aGk0o4SOna1J1M2i3UtNK0waP7zvAPY2k74cg=
+	t=1721145755; cv=none; b=LJ5Ihk5lgqk40/yc8yWbLVBQQ5t0abBQKCm41mfoABu+Ks6fZ12b1FjZd6Y4vpQ48v8FuYfwbc7f56C1PBxJwqQD5MyjN5FvWBglXf7xG/h5AgxcCgzjuQfxBfn/5XTASouJ+pPWfDV6Mo1uTr49NEppOpYw9R7eBEX21UAhAY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145752; c=relaxed/simple;
-	bh=whA5mQS/SHpyIAmH2+hitP/l+uYAK+m3QaGL7HaBtZs=;
+	s=arc-20240116; t=1721145755; c=relaxed/simple;
+	bh=ODMwaSQjRSqPnIjp3W9LQffPZmpAeUdUZro5xVYuuIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NiNMKZSSQmqmq0/jdBaNwolA3cc/rN4Ot6A/380PV21le31gFU/e9+Jx6agH7uRG+EIf0V2aKVV0/dcgeArjQSPiOX7HfLrcLyn0HmhN2vxgNlR5ZEmHtVPt1x9cCxm4h8FsjwzP9UFqB6c49rln4/VvbMbdKtHUO+GH4SGq/V4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vHJ7YqpX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TttEuJC1bsbFTSF2lRsK4c5/9qRccx6Lah2ra9LzfXnJatTeOy6nv78qQqvrT7lMB1s7NsIRvabNhNh7flyezn/BnbhvpP53CT72YSGDAR/Onu5KVlaB14qTKOi7pYIqSYnkcAilbYuUHxBUfL0cquaoIqddn+SNQwoGD4p/PTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GrWhJCKy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHJ7YqpX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5146C116B1;
-	Tue, 16 Jul 2024 16:02:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GrWhJCKy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7D7C116B1;
+	Tue, 16 Jul 2024 16:02:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145752;
-	bh=whA5mQS/SHpyIAmH2+hitP/l+uYAK+m3QaGL7HaBtZs=;
+	s=korg; t=1721145755;
+	bh=ODMwaSQjRSqPnIjp3W9LQffPZmpAeUdUZro5xVYuuIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vHJ7YqpXhG7YyNj0cMY+BId6PcZ/SaLsXG2HuEdsW3kYcdJp1Rqkr4H+9Af6GAMPK
-	 4reCOlcRnIWt7Yy8VNMgyuOo0hImFbu8NzXbMi9bbptt5ljwBizSPrN4Fi+nnS0PV6
-	 1uMddWk51WcoQLfUm1INwL2P+WqmAwSfnRyTgHqc=
+	b=GrWhJCKy/UXoyzq/iJBLknVPKXbKdd71borUWHpHV9u2C+qaRr6Ssz2hSk1cMALd5
+	 6j8ZKO0RH/GGUkpm8cR7n9GFbUg1GSJGBI9JwiCL5HlY838BOwD5up0J5g6WSrJLng
+	 MkQ6somvZIIoHZHzgq3pxyNanZadzgJG9hrcn/28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	netdev@vger.kernel.org,
-	Ronald Wahl <ronald.wahl@raritan.com>
-Subject: [PATCH 6.6 055/121] net: ks8851: Fix deadlock with the SPI chip variant
-Date: Tue, 16 Jul 2024 17:31:57 +0200
-Message-ID: <20240716152753.439385530@linuxfoundation.org>
+	Gavin Shan <gshan@redhat.com>,
+	David Hildenbrand <david@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Don Dutile <ddutile@redhat.com>,
+	Hugh Dickins <hughd@google.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	William Kucharski <william.kucharski@oracle.com>,
+	Zhenyu Zhang <zhenyzha@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 073/121] mm/filemap: skip to create PMD-sized page cache if needed
+Date: Tue, 16 Jul 2024 17:32:15 +0200
+Message-ID: <20240716152754.136460774@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152751.312512071@linuxfoundation.org>
 References: <20240716152751.312512071@linuxfoundation.org>
@@ -55,115 +59,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ronald Wahl <ronald.wahl@raritan.com>
+From: Gavin Shan <gshan@redhat.com>
 
-commit 0913ec336a6c0c4a2b296bd9f74f8e41c4c83c8c upstream.
+commit 3390916aca7af1893ed2ebcdfee1d6fdb65bb058 upstream.
 
-When SMP is enabled and spinlocks are actually functional then there is
-a deadlock with the 'statelock' spinlock between ks8851_start_xmit_spi
-and ks8851_irq:
+On ARM64, HPAGE_PMD_ORDER is 13 when the base page size is 64KB.  The
+PMD-sized page cache can't be supported by xarray as the following error
+messages indicate.
 
-    watchdog: BUG: soft lockup - CPU#0 stuck for 27s!
-    call trace:
-      queued_spin_lock_slowpath+0x100/0x284
-      do_raw_spin_lock+0x34/0x44
-      ks8851_start_xmit_spi+0x30/0xb8
-      ks8851_start_xmit+0x14/0x20
-      netdev_start_xmit+0x40/0x6c
-      dev_hard_start_xmit+0x6c/0xbc
-      sch_direct_xmit+0xa4/0x22c
-      __qdisc_run+0x138/0x3fc
-      qdisc_run+0x24/0x3c
-      net_tx_action+0xf8/0x130
-      handle_softirqs+0x1ac/0x1f0
-      __do_softirq+0x14/0x20
-      ____do_softirq+0x10/0x1c
-      call_on_irq_stack+0x3c/0x58
-      do_softirq_own_stack+0x1c/0x28
-      __irq_exit_rcu+0x54/0x9c
-      irq_exit_rcu+0x10/0x1c
-      el1_interrupt+0x38/0x50
-      el1h_64_irq_handler+0x18/0x24
-      el1h_64_irq+0x64/0x68
-      __netif_schedule+0x6c/0x80
-      netif_tx_wake_queue+0x38/0x48
-      ks8851_irq+0xb8/0x2c8
-      irq_thread_fn+0x2c/0x74
-      irq_thread+0x10c/0x1b0
-      kthread+0xc8/0xd8
-      ret_from_fork+0x10/0x20
+------------[ cut here ]------------
+WARNING: CPU: 35 PID: 7484 at lib/xarray.c:1025 xas_split_alloc+0xf8/0x128
+Modules linked in: nft_fib_inet nft_fib_ipv4 nft_fib_ipv6 nft_fib  \
+nft_reject_inet nf_reject_ipv4 nf_reject_ipv6 nft_reject nft_ct    \
+nft_chain_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4    \
+ip_set rfkill nf_tables nfnetlink vfat fat virtio_balloon drm      \
+fuse xfs libcrc32c crct10dif_ce ghash_ce sha2_ce sha256_arm64      \
+sha1_ce virtio_net net_failover virtio_console virtio_blk failover \
+dimlib virtio_mmio
+CPU: 35 PID: 7484 Comm: test Kdump: loaded Tainted: G W 6.10.0-rc5-gavin+ #9
+Hardware name: QEMU KVM Virtual Machine, BIOS edk2-20240524-1.el9 05/24/2024
+pstate: 83400005 (Nzcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+pc : xas_split_alloc+0xf8/0x128
+lr : split_huge_page_to_list_to_order+0x1c4/0x720
+sp : ffff800087a4f6c0
+x29: ffff800087a4f6c0 x28: ffff800087a4f720 x27: 000000001fffffff
+x26: 0000000000000c40 x25: 000000000000000d x24: ffff00010625b858
+x23: ffff800087a4f720 x22: ffffffdfc0780000 x21: 0000000000000000
+x20: 0000000000000000 x19: ffffffdfc0780000 x18: 000000001ff40000
+x17: 00000000ffffffff x16: 0000018000000000 x15: 51ec004000000000
+x14: 0000e00000000000 x13: 0000000000002000 x12: 0000000000000020
+x11: 51ec000000000000 x10: 51ece1c0ffff8000 x9 : ffffbeb961a44d28
+x8 : 0000000000000003 x7 : ffffffdfc0456420 x6 : ffff0000e1aa6eb8
+x5 : 20bf08b4fe778fca x4 : ffffffdfc0456420 x3 : 0000000000000c40
+x2 : 000000000000000d x1 : 000000000000000c x0 : 0000000000000000
+Call trace:
+ xas_split_alloc+0xf8/0x128
+ split_huge_page_to_list_to_order+0x1c4/0x720
+ truncate_inode_partial_folio+0xdc/0x160
+ truncate_inode_pages_range+0x1b4/0x4a8
+ truncate_pagecache_range+0x84/0xa0
+ xfs_flush_unmap_range+0x70/0x90 [xfs]
+ xfs_file_fallocate+0xfc/0x4d8 [xfs]
+ vfs_fallocate+0x124/0x2e8
+ ksys_fallocate+0x4c/0xa0
+ __arm64_sys_fallocate+0x24/0x38
+ invoke_syscall.constprop.0+0x7c/0xd8
+ do_el0_svc+0xb4/0xd0
+ el0_svc+0x44/0x1d8
+ el0t_64_sync_handler+0x134/0x150
+ el0t_64_sync+0x17c/0x180
 
-This issue has not been identified earlier because tests were done on
-a device with SMP disabled and so spinlocks were actually NOPs.
+Fix it by skipping to allocate PMD-sized page cache when its size is
+larger than MAX_PAGECACHE_ORDER.  For this specific case, we will fall to
+regular path where the readahead window is determined by BDI's sysfs file
+(read_ahead_kb).
 
-Now use spin_(un)lock_bh for TX queue related locking to avoid execution
-of softirq work synchronously that would lead to a deadlock.
-
-Fixes: 3dc5d4454545 ("net: ks8851: Fix TX stall caused by TX buffer overrun")
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Simon Horman <horms@kernel.org>
-Cc: netdev@vger.kernel.org
-Cc: stable@vger.kernel.org # 5.10+
-Signed-off-by: Ronald Wahl <ronald.wahl@raritan.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20240706101337.854474-1-rwahl@gmx.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lkml.kernel.org/r/20240627003953.1262512-4-gshan@redhat.com
+Fixes: 4687fdbb805a ("mm/filemap: Support VM_HUGEPAGE for file mappings")
+Signed-off-by: Gavin Shan <gshan@redhat.com>
+Suggested-by: David Hildenbrand <david@redhat.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Darrick J. Wong <djwong@kernel.org>
+Cc: Don Dutile <ddutile@redhat.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: William Kucharski <william.kucharski@oracle.com>
+Cc: Zhenyu Zhang <zhenyzha@redhat.com>
+Cc: <stable@vger.kernel.org>	[5.18+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/micrel/ks8851_common.c |    8 ++++----
- drivers/net/ethernet/micrel/ks8851_spi.c    |    4 ++--
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ mm/filemap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/micrel/ks8851_common.c
-+++ b/drivers/net/ethernet/micrel/ks8851_common.c
-@@ -352,11 +352,11 @@ static irqreturn_t ks8851_irq(int irq, v
- 		netif_dbg(ks, intr, ks->netdev,
- 			  "%s: txspace %d\n", __func__, tx_space);
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -3157,7 +3157,7 @@ static struct file *do_sync_mmap_readahe
  
--		spin_lock(&ks->statelock);
-+		spin_lock_bh(&ks->statelock);
- 		ks->tx_space = tx_space;
- 		if (netif_queue_stopped(ks->netdev))
- 			netif_wake_queue(ks->netdev);
--		spin_unlock(&ks->statelock);
-+		spin_unlock_bh(&ks->statelock);
- 	}
- 
- 	if (status & IRQ_SPIBEI) {
-@@ -635,14 +635,14 @@ static void ks8851_set_rx_mode(struct ne
- 
- 	/* schedule work to do the actual set of the data if needed */
- 
--	spin_lock(&ks->statelock);
-+	spin_lock_bh(&ks->statelock);
- 
- 	if (memcmp(&rxctrl, &ks->rxctrl, sizeof(rxctrl)) != 0) {
- 		memcpy(&ks->rxctrl, &rxctrl, sizeof(ks->rxctrl));
- 		schedule_work(&ks->rxctrl_work);
- 	}
- 
--	spin_unlock(&ks->statelock);
-+	spin_unlock_bh(&ks->statelock);
- }
- 
- static int ks8851_set_mac_address(struct net_device *dev, void *addr)
---- a/drivers/net/ethernet/micrel/ks8851_spi.c
-+++ b/drivers/net/ethernet/micrel/ks8851_spi.c
-@@ -340,10 +340,10 @@ static void ks8851_tx_work(struct work_s
- 
- 	tx_space = ks8851_rdreg16_spi(ks, KS_TXMIR);
- 
--	spin_lock(&ks->statelock);
-+	spin_lock_bh(&ks->statelock);
- 	ks->queued_len -= dequeued_len;
- 	ks->tx_space = tx_space;
--	spin_unlock(&ks->statelock);
-+	spin_unlock_bh(&ks->statelock);
- 
- 	ks8851_unlock_spi(ks, &flags);
- }
+ #ifdef CONFIG_TRANSPARENT_HUGEPAGE
+ 	/* Use the readahead code, even if readahead is disabled */
+-	if (vm_flags & VM_HUGEPAGE) {
++	if ((vm_flags & VM_HUGEPAGE) && HPAGE_PMD_ORDER <= MAX_PAGECACHE_ORDER) {
+ 		fpin = maybe_unlock_mmap_for_io(vmf, fpin);
+ 		ractl._index &= ~((unsigned long)HPAGE_PMD_NR - 1);
+ 		ra->size = HPAGE_PMD_NR;
 
 
