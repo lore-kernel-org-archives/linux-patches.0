@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECE927733;
-	Tue, 16 Jul 2024 15:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E05195B27;
+	Tue, 16 Jul 2024 15:46:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144760; cv=none; b=bGiXO3qgdIKjNE5IA7Yv3WBo3TvWh9UY4VbDTOQ3dnD2q7x+Qc6xRLSepGis+v4tNWboiPdH2FV1UsqjUc8CQobVyqcle08JONaXdL+278q7Q2sjuN9YQdOmZ9geCZfYwr4piWrVA8NWECs2ljYmDRe9wkl9C2LAVx4O8vIoHlc=
+	t=1721144763; cv=none; b=DyQIeM8dJ59ZC0DP1K0301VyIXwj321cp1hqkgjbm+52OkggfGMz48Nnq9FY8/v2nnhGEBV9CPphUY89cRjbRCQDcd25ZahnuySr2Ij0cKf2nxl4Vcyo2U6qXOXTenH2XujbgcMMa9rvZX78Sc6irQxxc6l0J5hC2+EekzOjhJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144760; c=relaxed/simple;
-	bh=h+cYKHsJTvKDol8dN6YF53ZYzak+Bw4zZpDud52tnW4=;
+	s=arc-20240116; t=1721144763; c=relaxed/simple;
+	bh=qhXY+6yPEqPBfZW27k4mD0WT6UpprRY3MWMu4jC1jHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e2os/d3wshxxMHoxCJ1mIZiZSsocIlKKxcqTfJ4JT1Q89oVuciuEMIj//9vjmVy+dU7Rge5BMNzTmocizcYmNL9AUVSMFcILMcrVcxi/uB6hV5pj+5riswLj1M7dVbDFsVc8rZPVXgrsIxQW/4FsjevQPhXkh2po57T1AeSNxOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dgB7JEFB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=noD/9Chs4N4rL+1UH/l/kKdawXSMHOwl7eNh1txf3uH3m66dxi4W0wz27N8u16S3J0UE1ENzpvxHK5s5wt0kEPSVDfzYbFXJUtznc16UpIxUS4PosjvQDFFT5Q80cEoHLgZn7vJLo77Jq0m0d+QY+x1f+KDEWkwPWXx8gWBGgoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Lxw0ikK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dgB7JEFB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 862C7C4AF0B;
-	Tue, 16 Jul 2024 15:45:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Lxw0ikK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CEE0C116B1;
+	Tue, 16 Jul 2024 15:46:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144759;
-	bh=h+cYKHsJTvKDol8dN6YF53ZYzak+Bw4zZpDud52tnW4=;
+	s=korg; t=1721144762;
+	bh=qhXY+6yPEqPBfZW27k4mD0WT6UpprRY3MWMu4jC1jHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dgB7JEFBP5fwH2Y2LH3944QHCfVr7BEX/vFRHrs8CB7AtnB6JHEd9cgqSibi+qAww
-	 Q7rAG7qBf31hvyM3VDBaQG/oFyJbgRCxQ9rh1K9TH/xMJ23f+1aMNsQxVBOS/Ugbnm
-	 Jaa7P+4SAxNWezF1GspPpYN0/nSK+6S7mWdPMV+0=
+	b=0Lxw0ikK4QBXN4nYbrLioP2dkSgAXvDHG+X0uEqb0S2M4tSggVW+0JOC+4nI9CIaz
+	 XBZ8yjbCXeY7cpLg9XapUSXg5YsSyuh1SmXiK5spHMdIPhx3KmsYkjD1yLBauJvhB8
+	 Bc93MYbsqKjfijlvV8M4WwQyM0qg/c/WrvfJci4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>,
-	Fenghua Yu <fenghua.yu@intel.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Frank Scheiner <frank.scheiner@web.de>
-Subject: [PATCH 5.10 095/108] efi: ia64: move IA64-only declarations to new asm/efi.h header
-Date: Tue, 16 Jul 2024 17:31:50 +0200
-Message-ID: <20240716152749.637909264@linuxfoundation.org>
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Woojung Huh <woojung.huh@microchip.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 067/108] ethtool: netlink: do not return SQI value if link is down
+Date: Tue, 16 Jul 2024 17:31:22 +0200
+Message-ID: <20240716152748.554117362@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152745.988603303@linuxfoundation.org>
 References: <20240716152745.988603303@linuxfoundation.org>
@@ -52,168 +53,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-commit 8ff059b8531f3b98e14f0461859fc7cdd95823e4 upstream.
+[ Upstream commit c184cf94e73b04ff7048d045f5413899bc664788 ]
 
-Move some EFI related declarations that are only referenced on IA64 to
-a new asm/efi.h arch header.
+Do not attach SQI value if link is down. "SQI values are only valid if
+link-up condition is present" per OpenAlliance specification of
+100Base-T1 Interoperability Test suite [1]. The same rule would apply
+for other link types.
 
-Cc: Tony Luck <tony.luck@intel.com>
-Cc: Fenghua Yu <fenghua.yu@intel.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Cc: Frank Scheiner <frank.scheiner@web.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[1] https://opensig.org/automotive-ethernet-specifications/#
+
+Fixes: 806602191592 ("ethtool: provide UAPI for PHY Signal Quality Index (SQI)")
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Woojung Huh <woojung.huh@microchip.com>
+Link: https://patch.msgid.link/20240709061943.729381-1-o.rempel@pengutronix.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/ia64/include/asm/efi.h      |   13 +++++++++++++
- arch/ia64/kernel/efi.c           |    1 +
- arch/ia64/kernel/machine_kexec.c |    1 +
- arch/ia64/kernel/mca.c           |    1 +
- arch/ia64/kernel/smpboot.c       |    1 +
- arch/ia64/kernel/time.c          |    1 +
- arch/ia64/kernel/uncached.c      |    4 +---
- arch/ia64/mm/contig.c            |    1 +
- arch/ia64/mm/discontig.c         |    1 +
- arch/ia64/mm/init.c              |    1 +
- include/linux/efi.h              |    6 ------
- 11 files changed, 22 insertions(+), 9 deletions(-)
- create mode 100644 arch/ia64/include/asm/efi.h
+ net/ethtool/linkstate.c | 41 ++++++++++++++++++++++++++++-------------
+ 1 file changed, 28 insertions(+), 13 deletions(-)
 
---- /dev/null
-+++ b/arch/ia64/include/asm/efi.h
-@@ -0,0 +1,13 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+#ifndef _ASM_EFI_H
-+#define _ASM_EFI_H
+diff --git a/net/ethtool/linkstate.c b/net/ethtool/linkstate.c
+index fb676f349455a..470582a70ccbe 100644
+--- a/net/ethtool/linkstate.c
++++ b/net/ethtool/linkstate.c
+@@ -36,6 +36,8 @@ static int linkstate_get_sqi(struct net_device *dev)
+ 	mutex_lock(&phydev->lock);
+ 	if (!phydev->drv || !phydev->drv->get_sqi)
+ 		ret = -EOPNOTSUPP;
++	else if (!phydev->link)
++		ret = -ENETDOWN;
+ 	else
+ 		ret = phydev->drv->get_sqi(phydev);
+ 	mutex_unlock(&phydev->lock);
+@@ -54,6 +56,8 @@ static int linkstate_get_sqi_max(struct net_device *dev)
+ 	mutex_lock(&phydev->lock);
+ 	if (!phydev->drv || !phydev->drv->get_sqi_max)
+ 		ret = -EOPNOTSUPP;
++	else if (!phydev->link)
++		ret = -ENETDOWN;
+ 	else
+ 		ret = phydev->drv->get_sqi_max(phydev);
+ 	mutex_unlock(&phydev->lock);
+@@ -61,6 +65,17 @@ static int linkstate_get_sqi_max(struct net_device *dev)
+ 	return ret;
+ };
+ 
++static bool linkstate_sqi_critical_error(int sqi)
++{
++	return sqi < 0 && sqi != -EOPNOTSUPP && sqi != -ENETDOWN;
++}
 +
-+typedef int (*efi_freemem_callback_t) (u64 start, u64 end, void *arg);
++static bool linkstate_sqi_valid(struct linkstate_reply_data *data)
++{
++	return data->sqi >= 0 && data->sqi_max >= 0 &&
++	       data->sqi <= data->sqi_max;
++}
 +
-+void *efi_get_pal_addr(void);
-+void efi_map_pal_code(void);
-+void efi_memmap_walk(efi_freemem_callback_t, void *);
-+void efi_memmap_walk_uc(efi_freemem_callback_t, void *);
-+void efi_gettimeofday(struct timespec64 *ts);
-+
-+#endif
---- a/arch/ia64/kernel/efi.c
-+++ b/arch/ia64/kernel/efi.c
-@@ -34,6 +34,7 @@
- #include <linux/kexec.h>
- #include <linux/mm.h>
+ static int linkstate_get_link_ext_state(struct net_device *dev,
+ 					struct linkstate_reply_data *data)
+ {
+@@ -92,12 +107,12 @@ static int linkstate_prepare_data(const struct ethnl_req_info *req_base,
+ 	data->link = __ethtool_get_link(dev);
  
-+#include <asm/efi.h>
- #include <asm/io.h>
- #include <asm/kregs.h>
- #include <asm/meminit.h>
---- a/arch/ia64/kernel/machine_kexec.c
-+++ b/arch/ia64/kernel/machine_kexec.c
-@@ -16,6 +16,7 @@
- #include <linux/numa.h>
- #include <linux/mmzone.h>
+ 	ret = linkstate_get_sqi(dev);
+-	if (ret < 0 && ret != -EOPNOTSUPP)
++	if (linkstate_sqi_critical_error(ret))
+ 		goto out;
+ 	data->sqi = ret;
  
-+#include <asm/efi.h>
- #include <asm/numa.h>
- #include <asm/mmu_context.h>
- #include <asm/setup.h>
---- a/arch/ia64/kernel/mca.c
-+++ b/arch/ia64/kernel/mca.c
-@@ -91,6 +91,7 @@
- #include <linux/gfp.h>
+ 	ret = linkstate_get_sqi_max(dev);
+-	if (ret < 0 && ret != -EOPNOTSUPP)
++	if (linkstate_sqi_critical_error(ret))
+ 		goto out;
+ 	data->sqi_max = ret;
  
- #include <asm/delay.h>
-+#include <asm/efi.h>
- #include <asm/meminit.h>
- #include <asm/page.h>
- #include <asm/ptrace.h>
---- a/arch/ia64/kernel/smpboot.c
-+++ b/arch/ia64/kernel/smpboot.c
-@@ -45,6 +45,7 @@
- #include <asm/cache.h>
- #include <asm/current.h>
- #include <asm/delay.h>
-+#include <asm/efi.h>
- #include <asm/io.h>
- #include <asm/irq.h>
- #include <asm/mca.h>
---- a/arch/ia64/kernel/time.c
-+++ b/arch/ia64/kernel/time.c
-@@ -26,6 +26,7 @@
- #include <linux/sched/cputime.h>
+@@ -122,11 +137,10 @@ static int linkstate_reply_size(const struct ethnl_req_info *req_base,
+ 	len = nla_total_size(sizeof(u8)) /* LINKSTATE_LINK */
+ 		+ 0;
  
- #include <asm/delay.h>
-+#include <asm/efi.h>
- #include <asm/hw_irq.h>
- #include <asm/ptrace.h>
- #include <asm/sal.h>
---- a/arch/ia64/kernel/uncached.c
-+++ b/arch/ia64/kernel/uncached.c
-@@ -20,14 +20,12 @@
- #include <linux/genalloc.h>
- #include <linux/gfp.h>
- #include <linux/pgtable.h>
-+#include <asm/efi.h>
- #include <asm/page.h>
- #include <asm/pal.h>
- #include <linux/atomic.h>
- #include <asm/tlbflush.h>
- 
+-	if (data->sqi != -EOPNOTSUPP)
+-		len += nla_total_size(sizeof(u32));
 -
--extern void __init efi_memmap_walk_uc(efi_freemem_callback_t, void *);
--
- struct uncached_pool {
- 	struct gen_pool *pool;
- 	struct mutex add_chunk_mutex;	/* serialize adding a converted chunk */
---- a/arch/ia64/mm/contig.c
-+++ b/arch/ia64/mm/contig.c
-@@ -20,6 +20,7 @@
- #include <linux/nmi.h>
- #include <linux/swap.h>
+-	if (data->sqi_max != -EOPNOTSUPP)
+-		len += nla_total_size(sizeof(u32));
++	if (linkstate_sqi_valid(data)) {
++		len += nla_total_size(sizeof(u32)); /* LINKSTATE_SQI */
++		len += nla_total_size(sizeof(u32)); /* LINKSTATE_SQI_MAX */
++	}
  
-+#include <asm/efi.h>
- #include <asm/meminit.h>
- #include <asm/sections.h>
- #include <asm/mca.h>
---- a/arch/ia64/mm/discontig.c
-+++ b/arch/ia64/mm/discontig.c
-@@ -24,6 +24,7 @@
- #include <linux/efi.h>
- #include <linux/nodemask.h>
- #include <linux/slab.h>
-+#include <asm/efi.h>
- #include <asm/tlb.h>
- #include <asm/meminit.h>
- #include <asm/numa.h>
---- a/arch/ia64/mm/init.c
-+++ b/arch/ia64/mm/init.c
-@@ -27,6 +27,7 @@
- #include <linux/swiotlb.h>
+ 	if (data->link_ext_state_provided)
+ 		len += nla_total_size(sizeof(u8)); /* LINKSTATE_EXT_STATE */
+@@ -147,13 +161,14 @@ static int linkstate_fill_reply(struct sk_buff *skb,
+ 	    nla_put_u8(skb, ETHTOOL_A_LINKSTATE_LINK, !!data->link))
+ 		return -EMSGSIZE;
  
- #include <asm/dma.h>
-+#include <asm/efi.h>
- #include <asm/io.h>
- #include <asm/numa.h>
- #include <asm/patch.h>
---- a/include/linux/efi.h
-+++ b/include/linux/efi.h
-@@ -171,8 +171,6 @@ int efi_capsule_setup_info(struct capsul
-                            size_t hdr_bytes);
- int __efi_capsule_setup_info(struct capsule_info *cap_info);
+-	if (data->sqi != -EOPNOTSUPP &&
+-	    nla_put_u32(skb, ETHTOOL_A_LINKSTATE_SQI, data->sqi))
+-		return -EMSGSIZE;
++	if (linkstate_sqi_valid(data)) {
++		if (nla_put_u32(skb, ETHTOOL_A_LINKSTATE_SQI, data->sqi))
++			return -EMSGSIZE;
  
--typedef int (*efi_freemem_callback_t) (u64 start, u64 end, void *arg);
--
- /*
-  * Types and defines for Time Services
-  */
-@@ -609,10 +607,6 @@ efi_guid_to_str(efi_guid_t *guid, char *
- }
+-	if (data->sqi_max != -EOPNOTSUPP &&
+-	    nla_put_u32(skb, ETHTOOL_A_LINKSTATE_SQI_MAX, data->sqi_max))
+-		return -EMSGSIZE;
++		if (nla_put_u32(skb, ETHTOOL_A_LINKSTATE_SQI_MAX,
++				data->sqi_max))
++			return -EMSGSIZE;
++	}
  
- extern void efi_init (void);
--extern void *efi_get_pal_addr (void);
--extern void efi_map_pal_code (void);
--extern void efi_memmap_walk (efi_freemem_callback_t callback, void *arg);
--extern void efi_gettimeofday (struct timespec64 *ts);
- #ifdef CONFIG_EFI
- extern void efi_enter_virtual_mode (void);	/* switch EFI to virtual mode, if possible */
- #else
+ 	if (data->link_ext_state_provided) {
+ 		if (nla_put_u8(skb, ETHTOOL_A_LINKSTATE_EXT_STATE,
+-- 
+2.43.0
+
 
 
