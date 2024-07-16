@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58531136643;
-	Tue, 16 Jul 2024 16:00:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4430B136643;
+	Tue, 16 Jul 2024 16:00:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145634; cv=none; b=Pm2LlB+y17aOaeXE8YJJ0nCK9UeyytEgGU/UwlSj/6xeBzIKN4F5IWUryv1r4pQIg0BxBWn5sBUIxWLkv3jmYXNDumSRT9J2ItICRFEakLbi2VAwdwEtDA2j9ybdXTcBOulQaNy/vCy3zuP7HFE8XfDYsxIBeTUeHkdOpq+87RQ=
+	t=1721145637; cv=none; b=os5TCfVoFM41uh+z8d6LRV8ySjecXaVGkSpQ4lWfvbDWzDX3ArbL5WlFQTSwo8IyN85ofQI7Nwoiw4bU5s/BHk3lWiuNpERe4ECf/F7Z8PqKAGm1K7vkjIVjEEUuHK1SCs3MfkZcV1OUU3GJkPLLuJayO5yuAFCESmasghTAvwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145634; c=relaxed/simple;
-	bh=inOGOjOt31Ab3Z9/hF2TRfEyramXV5SdAGmcCQov29k=;
+	s=arc-20240116; t=1721145637; c=relaxed/simple;
+	bh=ZTqTV4C3hZ2i8CjQmAkemmzK4CX4JkutVYmWQp+j95E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h8qUWyOEneNFaHhI89mK88fHK4jwVPUogY+aU1CGb50PsWgxqPRUVEraxFslg11n4f1dBPnICyE69d9z3CMsS7LM10dzDvMBbn9M4eywRyJmzTnCADYh88lVolMMrl44ILRFYKoYD8fFIBzcI+B1z+gk+riS4yjFBS3CF3Kh86g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hjf2Hd/9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tRE0ZsLxMCaqO7Ss+MDb9rduGpJKWloWe2LhVibSBLNIMR7gl6C+s2bfCxfBm3t718Ah3MulYzYmD3Ao54UYRwXematfT37HxWcNCXiVoBX6ph98o3zBnshnDQt2BM3RxNe2wH6CYl0oEDtWlbiHy/nEoO0WlRi+XVeNz8cXbBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BLEZVEOL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hjf2Hd/9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D220DC116B1;
-	Tue, 16 Jul 2024 16:00:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BLEZVEOL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEEEAC116B1;
+	Tue, 16 Jul 2024 16:00:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145634;
-	bh=inOGOjOt31Ab3Z9/hF2TRfEyramXV5SdAGmcCQov29k=;
+	s=korg; t=1721145637;
+	bh=ZTqTV4C3hZ2i8CjQmAkemmzK4CX4JkutVYmWQp+j95E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hjf2Hd/9bEswwhIyVG1OYC6+Fi2wLuaB5JNJBeXb4t23apr0HF9Tsd2l65VrccYpX
-	 QIlexJ/HfV5O/9HSQlDkf7CjzSwe4FRpeS5/o196SwLTArQUBamGiC8NM7jHhsU5pw
-	 6hsmvuvejBRQxjx+nZBrAveCJLosD/XUFolYKAYc=
+	b=BLEZVEOLeMgocZ+GWKOt4Cfk1b8mo0/aA0pEFrhy9Batuo151qDYiKNzNP24swZnS
+	 BcmQReQhBGEVFmfN3zu3biQ4SgBMfAOQUB5nLnRrOH61n7WEN9OyX7d6puzhIGqmZF
+	 2iOoaoii+J55uz9n7HIFqsVuvanak+unKvTBDp78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Gerald Yang <gerald.yang@canonical.com>,
+	Chengen Du <chengen.du@canonical.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 033/121] udp: Set SOCK_RCU_FREE earlier in udp_lib_get_port().
-Date: Tue, 16 Jul 2024 17:31:35 +0200
-Message-ID: <20240716152752.597597541@linuxfoundation.org>
+Subject: [PATCH 6.6 034/121] net/sched: Fix UAF when resolving a clash
+Date: Tue, 16 Jul 2024 17:31:36 +0200
+Message-ID: <20240716152752.635784117@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152751.312512071@linuxfoundation.org>
 References: <20240716152751.312512071@linuxfoundation.org>
@@ -53,121 +52,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Chengen Du <chengen.du@canonical.com>
 
-[ Upstream commit 5c0b485a8c6116516f33925b9ce5b6104a6eadfd ]
+[ Upstream commit 26488172b0292bed837b95a006a3f3431d1898c3 ]
 
-syzkaller triggered the warning [0] in udp_v4_early_demux().
+KASAN reports the following UAF:
 
-In udp_v[46]_early_demux() and sk_lookup(), we do not touch the refcount
-of the looked-up sk and use sock_pfree() as skb->destructor, so we check
-SOCK_RCU_FREE to ensure that the sk is safe to access during the RCU grace
-period.
+ BUG: KASAN: slab-use-after-free in tcf_ct_flow_table_process_conn+0x12b/0x380 [act_ct]
+ Read of size 1 at addr ffff888c07603600 by task handler130/6469
 
-Currently, SOCK_RCU_FREE is flagged for a bound socket after being put
-into the hash table.  Moreover, the SOCK_RCU_FREE check is done too early
-in udp_v[46]_early_demux() and sk_lookup(), so there could be a small race
-window:
+ Call Trace:
+  <IRQ>
+  dump_stack_lvl+0x48/0x70
+  print_address_description.constprop.0+0x33/0x3d0
+  print_report+0xc0/0x2b0
+  kasan_report+0xd0/0x120
+  __asan_load1+0x6c/0x80
+  tcf_ct_flow_table_process_conn+0x12b/0x380 [act_ct]
+  tcf_ct_act+0x886/0x1350 [act_ct]
+  tcf_action_exec+0xf8/0x1f0
+  fl_classify+0x355/0x360 [cls_flower]
+  __tcf_classify+0x1fd/0x330
+  tcf_classify+0x21c/0x3c0
+  sch_handle_ingress.constprop.0+0x2c5/0x500
+  __netif_receive_skb_core.constprop.0+0xb25/0x1510
+  __netif_receive_skb_list_core+0x220/0x4c0
+  netif_receive_skb_list_internal+0x446/0x620
+  napi_complete_done+0x157/0x3d0
+  gro_cell_poll+0xcf/0x100
+  __napi_poll+0x65/0x310
+  net_rx_action+0x30c/0x5c0
+  __do_softirq+0x14f/0x491
+  __irq_exit_rcu+0x82/0xc0
+  irq_exit_rcu+0xe/0x20
+  common_interrupt+0xa1/0xb0
+  </IRQ>
+  <TASK>
+  asm_common_interrupt+0x27/0x40
 
-  CPU1                                 CPU2
-  ----                                 ----
-  udp_v4_early_demux()                 udp_lib_get_port()
-  |                                    |- hlist_add_head_rcu()
-  |- sk = __udp4_lib_demux_lookup()    |
-  |- DEBUG_NET_WARN_ON_ONCE(sk_is_refcounted(sk));
-                                       `- sock_set_flag(sk, SOCK_RCU_FREE)
+ Allocated by task 6469:
+  kasan_save_stack+0x38/0x70
+  kasan_set_track+0x25/0x40
+  kasan_save_alloc_info+0x1e/0x40
+  __kasan_krealloc+0x133/0x190
+  krealloc+0xaa/0x130
+  nf_ct_ext_add+0xed/0x230 [nf_conntrack]
+  tcf_ct_act+0x1095/0x1350 [act_ct]
+  tcf_action_exec+0xf8/0x1f0
+  fl_classify+0x355/0x360 [cls_flower]
+  __tcf_classify+0x1fd/0x330
+  tcf_classify+0x21c/0x3c0
+  sch_handle_ingress.constprop.0+0x2c5/0x500
+  __netif_receive_skb_core.constprop.0+0xb25/0x1510
+  __netif_receive_skb_list_core+0x220/0x4c0
+  netif_receive_skb_list_internal+0x446/0x620
+  napi_complete_done+0x157/0x3d0
+  gro_cell_poll+0xcf/0x100
+  __napi_poll+0x65/0x310
+  net_rx_action+0x30c/0x5c0
+  __do_softirq+0x14f/0x491
 
-We had the same bug in TCP and fixed it in commit 871019b22d1b ("net:
-set SOCK_RCU_FREE before inserting socket into hashtable").
+ Freed by task 6469:
+  kasan_save_stack+0x38/0x70
+  kasan_set_track+0x25/0x40
+  kasan_save_free_info+0x2b/0x60
+  ____kasan_slab_free+0x180/0x1f0
+  __kasan_slab_free+0x12/0x30
+  slab_free_freelist_hook+0xd2/0x1a0
+  __kmem_cache_free+0x1a2/0x2f0
+  kfree+0x78/0x120
+  nf_conntrack_free+0x74/0x130 [nf_conntrack]
+  nf_ct_destroy+0xb2/0x140 [nf_conntrack]
+  __nf_ct_resolve_clash+0x529/0x5d0 [nf_conntrack]
+  nf_ct_resolve_clash+0xf6/0x490 [nf_conntrack]
+  __nf_conntrack_confirm+0x2c6/0x770 [nf_conntrack]
+  tcf_ct_act+0x12ad/0x1350 [act_ct]
+  tcf_action_exec+0xf8/0x1f0
+  fl_classify+0x355/0x360 [cls_flower]
+  __tcf_classify+0x1fd/0x330
+  tcf_classify+0x21c/0x3c0
+  sch_handle_ingress.constprop.0+0x2c5/0x500
+  __netif_receive_skb_core.constprop.0+0xb25/0x1510
+  __netif_receive_skb_list_core+0x220/0x4c0
+  netif_receive_skb_list_internal+0x446/0x620
+  napi_complete_done+0x157/0x3d0
+  gro_cell_poll+0xcf/0x100
+  __napi_poll+0x65/0x310
+  net_rx_action+0x30c/0x5c0
+  __do_softirq+0x14f/0x491
 
-Let's apply the same fix for UDP.
+The ct may be dropped if a clash has been resolved but is still passed to
+the tcf_ct_flow_table_process_conn function for further usage. This issue
+can be fixed by retrieving ct from skb again after confirming conntrack.
 
-[0]:
-WARNING: CPU: 0 PID: 11198 at net/ipv4/udp.c:2599 udp_v4_early_demux+0x481/0xb70 net/ipv4/udp.c:2599
-Modules linked in:
-CPU: 0 PID: 11198 Comm: syz-executor.1 Not tainted 6.9.0-g93bda33046e7 #13
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-RIP: 0010:udp_v4_early_demux+0x481/0xb70 net/ipv4/udp.c:2599
-Code: c5 7a 15 fe bb 01 00 00 00 44 89 e9 31 ff d3 e3 81 e3 bf ef ff ff 89 de e8 2c 74 15 fe 85 db 0f 85 02 06 00 00 e8 9f 7a 15 fe <0f> 0b e8 98 7a 15 fe 49 8d 7e 60 e8 4f 39 2f fe 49 c7 46 60 20 52
-RSP: 0018:ffffc9000ce3fa58 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffffff8318c92c
-RDX: ffff888036ccde00 RSI: ffffffff8318c2f1 RDI: 0000000000000001
-RBP: ffff88805a2dd6e0 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000000 R11: 0001ffffffffffff R12: ffff88805a2dd680
-R13: 0000000000000007 R14: ffff88800923f900 R15: ffff88805456004e
-FS:  00007fc449127640(0000) GS:ffff88807dc00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007fc449126e38 CR3: 000000003de4b002 CR4: 0000000000770ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000600
-PKRU: 55555554
-Call Trace:
- <TASK>
- ip_rcv_finish_core.constprop.0+0xbdd/0xd20 net/ipv4/ip_input.c:349
- ip_rcv_finish+0xda/0x150 net/ipv4/ip_input.c:447
- NF_HOOK include/linux/netfilter.h:314 [inline]
- NF_HOOK include/linux/netfilter.h:308 [inline]
- ip_rcv+0x16c/0x180 net/ipv4/ip_input.c:569
- __netif_receive_skb_one_core+0xb3/0xe0 net/core/dev.c:5624
- __netif_receive_skb+0x21/0xd0 net/core/dev.c:5738
- netif_receive_skb_internal net/core/dev.c:5824 [inline]
- netif_receive_skb+0x271/0x300 net/core/dev.c:5884
- tun_rx_batched drivers/net/tun.c:1549 [inline]
- tun_get_user+0x24db/0x2c50 drivers/net/tun.c:2002
- tun_chr_write_iter+0x107/0x1a0 drivers/net/tun.c:2048
- new_sync_write fs/read_write.c:497 [inline]
- vfs_write+0x76f/0x8d0 fs/read_write.c:590
- ksys_write+0xbf/0x190 fs/read_write.c:643
- __do_sys_write fs/read_write.c:655 [inline]
- __se_sys_write fs/read_write.c:652 [inline]
- __x64_sys_write+0x41/0x50 fs/read_write.c:652
- x64_sys_call+0xe66/0x1990 arch/x86/include/generated/asm/syscalls_64.h:2
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x4b/0x110 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x4b/0x53
-RIP: 0033:0x7fc44a68bc1f
-Code: 89 54 24 18 48 89 74 24 10 89 7c 24 08 e8 e9 cf f5 ff 48 8b 54 24 18 48 8b 74 24 10 41 89 c0 8b 7c 24 08 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 31 44 89 c7 48 89 44 24 08 e8 3c d0 f5 ff 48
-RSP: 002b:00007fc449126c90 EFLAGS: 00000293 ORIG_RAX: 0000000000000001
-RAX: ffffffffffffffda RBX: 00000000004bc050 RCX: 00007fc44a68bc1f
-RDX: 0000000000000032 RSI: 00000000200000c0 RDI: 00000000000000c8
-RBP: 00000000004bc050 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000032 R11: 0000000000000293 R12: 0000000000000000
-R13: 000000000000000b R14: 00007fc44a5ec530 R15: 0000000000000000
- </TASK>
-
-Fixes: 6acc9b432e67 ("bpf: Add helper to retrieve socket in BPF")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20240709191356.24010-1-kuniyu@amazon.com
+Fixes: 0cc254e5aa37 ("net/sched: act_ct: Offload connections with commit action")
+Co-developed-by: Gerald Yang <gerald.yang@canonical.com>
+Signed-off-by: Gerald Yang <gerald.yang@canonical.com>
+Signed-off-by: Chengen Du <chengen.du@canonical.com>
+Link: https://patch.msgid.link/20240710053747.13223-1-chengen.du@canonical.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/sched/act_ct.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index 16ca211c8619d..73fb814460b6b 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -326,6 +326,8 @@ int udp_lib_get_port(struct sock *sk, unsigned short snum,
- 			goto fail_unlock;
- 		}
- 
-+		sock_set_flag(sk, SOCK_RCU_FREE);
+diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
+index 1bd86868726bf..3ac19516ed803 100644
+--- a/net/sched/act_ct.c
++++ b/net/sched/act_ct.c
+@@ -1073,6 +1073,14 @@ TC_INDIRECT_SCOPE int tcf_ct_act(struct sk_buff *skb, const struct tc_action *a,
+ 		 */
+ 		if (nf_conntrack_confirm(skb) != NF_ACCEPT)
+ 			goto drop;
 +
- 		sk_add_node_rcu(sk, &hslot->head);
- 		hslot->count++;
- 		sock_prot_inuse_add(sock_net(sk), sk->sk_prot, 1);
-@@ -342,7 +344,7 @@ int udp_lib_get_port(struct sock *sk, unsigned short snum,
- 		hslot2->count++;
- 		spin_unlock(&hslot2->lock);
++		/* The ct may be dropped if a clash has been resolved,
++		 * so it's necessary to retrieve it from skb again to
++		 * prevent UAF.
++		 */
++		ct = nf_ct_get(skb, &ctinfo);
++		if (!ct)
++			skip_add = true;
  	}
--	sock_set_flag(sk, SOCK_RCU_FREE);
-+
- 	error = 0;
- fail_unlock:
- 	spin_unlock_bh(&hslot->lock);
+ 
+ 	if (!skip_add)
 -- 
 2.43.0
 
