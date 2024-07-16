@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F7A19B3DD;
-	Tue, 16 Jul 2024 15:44:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CE521DDF5;
+	Tue, 16 Jul 2024 15:44:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144669; cv=none; b=ijWycfWfPhIK9kPTSeGlZgYYduRo1d3vS/YeHQMZ2mJdmSat1XJM94uHVKYpGNVZhlpge+tlKyYIxR8qvw58rjDrYjI4S6iWASjTap04NC3Ypj+pKoj1MYAmhtEKvroqKsYF9JeglNtLbMyIpcDOcvF/4nusVBkSq034nbmboGU=
+	t=1721144672; cv=none; b=ptx6K+pPq7mWYonNZMX6AmNfDDs5N9oFK+eRrDTCi9zsm9924VbwlaxNOezo0a8Na1tE1BtlLpi8GM6ZNXG3CrgSS3n4TgtdrxdkslTPHvQGO52wHimi6t3p6bv4iusKY+dpoX6BUOC9ZJEMIucMrcGLPYj8bbziHMWUvn6JZ9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144669; c=relaxed/simple;
-	bh=RIdiEtPqB0lr2Wbd4MG8bXWQfdzF8FPsPvBEmUnCsnA=;
+	s=arc-20240116; t=1721144672; c=relaxed/simple;
+	bh=injNBOEK7F7bArPhgoIuMpV+NFC5CFl3jP29h0mnG7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jV40TTGkA2VFOvZMMgD0ptqDKU+/5Z8AuF2nwq0njV5HDQfrIAoTCeNyOyl1Z55ZiCrBMW/c7T04mrFvtNU+Eicgnwhb69t8MfVjRJ5nDvKGJSXhcGzBCVaj2jd8+MJl25ropWiSToBviWP2L1sZWX/dYjkUEfhKN+oHnFwqQT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ykv1GTNQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BierquxVS9TY2aKXtS2GvBub66VJaHTC4tMmuhFPgLVfINU52p/+2Mma2xuPPBa7ljWtuIN6YVqbp3J2JNcCT3DRWFrv6yzn/bRp6lm+PIsYvRoN/4U3GzJWtsiyTdGMKMhwK472ytZYUVzSBtHF8FZReCy/3UPNA+yNYiOPfUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=14e2TwOe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ykv1GTNQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A01C116B1;
-	Tue, 16 Jul 2024 15:44:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="14e2TwOe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7FEFC116B1;
+	Tue, 16 Jul 2024 15:44:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144669;
-	bh=RIdiEtPqB0lr2Wbd4MG8bXWQfdzF8FPsPvBEmUnCsnA=;
+	s=korg; t=1721144672;
+	bh=injNBOEK7F7bArPhgoIuMpV+NFC5CFl3jP29h0mnG7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ykv1GTNQ4mHKntHRFvURswTPKEf9E+zSQb+5PkYkVRCYuYXqyeeuMXvFMHMXiGSA/
-	 qQbcSnUfxalDE9OSHEE+zkdzReHMfJXOEB6wKiWjGrFDWFpV4LyVeBoYqth5kUzPPK
-	 sDtUoSW9RIbhN8QBRFEzjCug9nf/30Y7yG2x/YGk=
+	b=14e2TwOeFys0MMkAcLhJLo0yIowZfzIQN4lhdLPR6L66qjQXtRqvJ4TzYuH5905PN
+	 ZPME+pON0qNaX2tPhwFDDUaQAQUKa43JByJzrTiKWjzBdup/CGzT7+JAeGyYdeXlFN
+	 QdDVmtKHkS8K+lV9P1vIYHqYe5fjcMsY87mRKQSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinliang Zheng <alexjlzheng@tencent.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Mateusz Guzik <mjguzik@gmail.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Tycho Andersen <tandersen@netflix.com>,
+	Jan Kara <jack@suse.cz>,
+	Zach OKeefe <zokeefe@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 036/108] mm: optimize the redundant loop of mm_update_owner_next()
-Date: Tue, 16 Jul 2024 17:30:51 +0200
-Message-ID: <20240716152747.384147491@linuxfoundation.org>
+Subject: [PATCH 5.10 037/108] mm: avoid overflows in dirty throttling logic
+Date: Tue, 16 Jul 2024 17:30:52 +0200
+Message-ID: <20240716152747.422699475@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152745.988603303@linuxfoundation.org>
 References: <20240716152745.988603303@linuxfoundation.org>
@@ -57,47 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinliang Zheng <alexjlzheng@tencent.com>
+From: Jan Kara <jack@suse.cz>
 
-commit cf3f9a593dab87a032d2b6a6fb205e7f3de4f0a1 upstream.
+commit 385d838df280eba6c8680f9777bfa0d0bfe7e8b2 upstream.
 
-When mm_update_owner_next() is racing with swapoff (try_to_unuse()) or
-/proc or ptrace or page migration (get_task_mm()), it is impossible to
-find an appropriate task_struct in the loop whose mm_struct is the same as
-the target mm_struct.
+The dirty throttling logic is interspersed with assumptions that dirty
+limits in PAGE_SIZE units fit into 32-bit (so that various multiplications
+fit into 64-bits).  If limits end up being larger, we will hit overflows,
+possible divisions by 0 etc.  Fix these problems by never allowing so
+large dirty limits as they have dubious practical value anyway.  For
+dirty_bytes / dirty_background_bytes interfaces we can just refuse to set
+so large limits.  For dirty_ratio / dirty_background_ratio it isn't so
+simple as the dirty limit is computed from the amount of available memory
+which can change due to memory hotplug etc.  So when converting dirty
+limits from ratios to numbers of pages, we just don't allow the result to
+exceed UINT_MAX.
 
-If the above race condition is combined with the stress-ng-zombie and
-stress-ng-dup tests, such a long loop can easily cause a Hard Lockup in
-write_lock_irq() for tasklist_lock.
+This is root-only triggerable problem which occurs when the operator
+sets dirty limits to >16 TB.
 
-Recognize this situation in advance and exit early.
-
-Link: https://lkml.kernel.org/r/20240620122123.3877432-1-alexjlzheng@tencent.com
-Signed-off-by: Jinliang Zheng <alexjlzheng@tencent.com>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Mateusz Guzik <mjguzik@gmail.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Oleg Nesterov <oleg@redhat.com>
-Cc: Tycho Andersen <tandersen@netflix.com>
+Link: https://lkml.kernel.org/r/20240621144246.11148-2-jack@suse.cz
+Signed-off-by: Jan Kara <jack@suse.cz>
+Reported-by: Zach O'Keefe <zokeefe@google.com>
+Reviewed-By: Zach O'Keefe <zokeefe@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/exit.c |    2 ++
- 1 file changed, 2 insertions(+)
+ mm/page-writeback.c |   30 ++++++++++++++++++++++++++----
+ 1 file changed, 26 insertions(+), 4 deletions(-)
 
---- a/kernel/exit.c
-+++ b/kernel/exit.c
-@@ -432,6 +432,8 @@ retry:
- 	 * Search through everything else, we should not get here often.
- 	 */
- 	for_each_process(g) {
-+		if (atomic_read(&mm->mm_users) <= 1)
-+			break;
- 		if (g->flags & PF_KTHREAD)
- 			continue;
- 		for_each_thread(g, c) {
+--- a/mm/page-writeback.c
++++ b/mm/page-writeback.c
+@@ -432,13 +432,20 @@ static void domain_dirty_limits(struct d
+ 	else
+ 		bg_thresh = (bg_ratio * available_memory) / PAGE_SIZE;
+ 
+-	if (bg_thresh >= thresh)
+-		bg_thresh = thresh / 2;
+ 	tsk = current;
+ 	if (rt_task(tsk)) {
+ 		bg_thresh += bg_thresh / 4 + global_wb_domain.dirty_limit / 32;
+ 		thresh += thresh / 4 + global_wb_domain.dirty_limit / 32;
+ 	}
++	/*
++	 * Dirty throttling logic assumes the limits in page units fit into
++	 * 32-bits. This gives 16TB dirty limits max which is hopefully enough.
++	 */
++	if (thresh > UINT_MAX)
++		thresh = UINT_MAX;
++	/* This makes sure bg_thresh is within 32-bits as well */
++	if (bg_thresh >= thresh)
++		bg_thresh = thresh / 2;
+ 	dtc->thresh = thresh;
+ 	dtc->bg_thresh = bg_thresh;
+ 
+@@ -488,7 +495,11 @@ static unsigned long node_dirty_limit(st
+ 	if (rt_task(tsk))
+ 		dirty += dirty / 4;
+ 
+-	return dirty;
++	/*
++	 * Dirty throttling logic assumes the limits in page units fit into
++	 * 32-bits. This gives 16TB dirty limits max which is hopefully enough.
++	 */
++	return min_t(unsigned long, dirty, UINT_MAX);
+ }
+ 
+ /**
+@@ -524,10 +535,17 @@ int dirty_background_bytes_handler(struc
+ 		void *buffer, size_t *lenp, loff_t *ppos)
+ {
+ 	int ret;
++	unsigned long old_bytes = dirty_background_bytes;
+ 
+ 	ret = proc_doulongvec_minmax(table, write, buffer, lenp, ppos);
+-	if (ret == 0 && write)
++	if (ret == 0 && write) {
++		if (DIV_ROUND_UP(dirty_background_bytes, PAGE_SIZE) >
++								UINT_MAX) {
++			dirty_background_bytes = old_bytes;
++			return -ERANGE;
++		}
+ 		dirty_background_ratio = 0;
++	}
+ 	return ret;
+ }
+ 
+@@ -553,6 +571,10 @@ int dirty_bytes_handler(struct ctl_table
+ 
+ 	ret = proc_doulongvec_minmax(table, write, buffer, lenp, ppos);
+ 	if (ret == 0 && write && vm_dirty_bytes != old_bytes) {
++		if (DIV_ROUND_UP(vm_dirty_bytes, PAGE_SIZE) > UINT_MAX) {
++			vm_dirty_bytes = old_bytes;
++			return -ERANGE;
++		}
+ 		writeback_set_ratelimit();
+ 		vm_dirty_ratio = 0;
+ 	}
 
 
