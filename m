@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEEB12B72;
-	Tue, 16 Jul 2024 15:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC45617A93F;
+	Tue, 16 Jul 2024 15:48:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144884; cv=none; b=IWUfjjP6A6ngqBQ5/WsdEyzW/FOb5jx9s8xgKizvTQ6dQJkLEYJaCOalDq7cAWyvWwhS7Ng4c89IlkrhfHL8hQ0UKT0Jkak97Uxu8c4Gnk80aN8eI4XggiBktt6XzWy07Medl9zNrHLp17MuaOqfMTRs3ic36LttdInUu2QFphs=
+	t=1721144887; cv=none; b=oGX5AIEITVCXHMrNQYu9tf2tTyA4SyHUA76apsjyxv0TrKCNpXxxT94FbfvAW1X4cQeGrYpRT9irqIQyBliMVANUU01WWSRdQ2rMARfN0768yQBxWlXusOfHG2jMgRUKtrBD8QS7f0u9/xTNRKgER1W5SJlIc6FMiSPv515rRzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144884; c=relaxed/simple;
-	bh=Xg41I+gKstuJ8mlyC9vyl2o2g3+j7pIVfHIb5Z/U7BQ=;
+	s=arc-20240116; t=1721144887; c=relaxed/simple;
+	bh=Ew9BJ1VXRcGEM8UwR/wsmxE+ByEnPgHTA753VZ4hwfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ncwnks4R4PlcsedYwmwSlNGbnhJYpsoqSWARkOmEXKB+ccf4ne1wjdQNDIhjjehPdYS5TcpAJf5SM3RBpcLXb4Z9ko67y15ZtjnFhZuLlbsI42uFIk5169GpCYL/cbDSim/M9s6Jh+WHssX4EL8QKjFJHfaw5jDWdgWP0yca9JY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ObK+3Fl5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rLvks1d4K+o+gb0v3J4gVGdlXjCICDOW8zLPR4nOqmPDRyA0Uceuphzr/phv8MkzaLxG4V1/os6A01XyiNjc65ARW/IpUFUK3QcCMJrEsE2F+DjTsSiNwkSudL4E1pH3K5EHBYKZ4yd8GlT2uME37++QBmejR8ATFfruA7ZXDmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKiVHRc7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ObK+3Fl5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76230C116B1;
-	Tue, 16 Jul 2024 15:48:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKiVHRc7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67713C116B1;
+	Tue, 16 Jul 2024 15:48:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144883;
-	bh=Xg41I+gKstuJ8mlyC9vyl2o2g3+j7pIVfHIb5Z/U7BQ=;
+	s=korg; t=1721144886;
+	bh=Ew9BJ1VXRcGEM8UwR/wsmxE+ByEnPgHTA753VZ4hwfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ObK+3Fl5KdA/wMXn+ssniA7bXRDtNY9lPK+mlxs/wQTRztbW+B9G+dPENc6OP8OYh
-	 YhuSXBoE40RquSglSyl12+zJW40mI7j+LETOkZd2oy1zDT/wPhiB8PaoIXzqC+LyX+
-	 JO6n9HDVZvdAk+JCMVv3KQamjuH5YGqWeJoqRank=
+	b=jKiVHRc74noDBs0zYmfJNNursBI45/w9nUXMQvC9JIEcs2iJPkN4oFAVrFFQH7co6
+	 q6rZ7T1SRG5gApxYAC8waup1oXeJZitpzcftD2Ftf2SZ7EXv+SlV2mYWop8MzZHbTb
+	 BrM6HhMY090ph9v7mMnMskUb1ubfJepneDav+XQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Baokun Li <libaokun1@huawei.com>,
+	Jeff Layton <jlayton@kernel.org>,
 	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Jia Zhu <zhujia.zj@bytedance.com>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 006/143] cachefiles: propagate errors from vfs_getxattr() to avoid infinite loop
-Date: Tue, 16 Jul 2024 17:30:02 +0200
-Message-ID: <20240716152756.231176514@linuxfoundation.org>
+Subject: [PATCH 6.9 007/143] cachefiles: stop sending new request when dropping object
+Date: Tue, 16 Jul 2024 17:30:03 +0200
+Message-ID: <20240716152756.268889242@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -54,65 +56,88 @@ Content-Transfer-Encoding: 8bit
 
 From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 0ece614a52bc9d219b839a6a29282b30d10e0c48 ]
+[ Upstream commit b2415d1f4566b6939acacc69637eaa57815829c1 ]
 
-In cachefiles_check_volume_xattr(), the error returned by vfs_getxattr()
-is not passed to ret, so it ends up returning -ESTALE, which leads to an
-endless loop as follows:
+Added CACHEFILES_ONDEMAND_OBJSTATE_DROPPING indicates that the cachefiles
+object is being dropped, and is set after the close request for the dropped
+object completes, and no new requests are allowed to be sent after this
+state.
 
-cachefiles_acquire_volume
-retry:
-  ret = cachefiles_check_volume_xattr
-    ret = -ESTALE
-    xlen = vfs_getxattr // return -EIO
-    // The ret is not updated when xlen < 0, so -ESTALE is returned.
-    return ret
-  // Supposed to jump out of the loop at this judgement.
-  if (ret != -ESTALE)
-      goto error_dir;
-  cachefiles_bury_object
-    //  EIO causes rename failure
-  goto retry;
+This prepares for the later addition of cancel_work_sync(). It prevents
+leftover reopen requests from being sent, to avoid processing unnecessary
+requests and to avoid cancel_work_sync() blocking by waiting for daemon to
+complete the reopen requests.
 
-Hence propagate the error returned by vfs_getxattr() to avoid the above
-issue. Do the same in cachefiles_check_auxdata().
-
-Fixes: 32e150037dce ("fscache, cachefiles: Store the volume coherency data")
-Fixes: 72b957856b0c ("cachefiles: Implement metadata/coherency data storage in xattrs")
 Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Link: https://lore.kernel.org/r/20240628062930.2467993-5-libaokun@huaweicloud.com
+Link: https://lore.kernel.org/r/20240628062930.2467993-6-libaokun@huaweicloud.com
+Acked-by: Jeff Layton <jlayton@kernel.org>
 Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Reviewed-by: Jia Zhu <zhujia.zj@bytedance.com>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 12e009d60852 ("cachefiles: wait for ondemand_object_worker to finish when dropping object")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cachefiles/xattr.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/cachefiles/internal.h |  2 ++
+ fs/cachefiles/ondemand.c | 10 ++++++++--
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/fs/cachefiles/xattr.c b/fs/cachefiles/xattr.c
-index bcb6173943ee4..4dd8a993c60a8 100644
---- a/fs/cachefiles/xattr.c
-+++ b/fs/cachefiles/xattr.c
-@@ -110,9 +110,11 @@ int cachefiles_check_auxdata(struct cachefiles_object *object, struct file *file
- 	if (xlen == 0)
- 		xlen = vfs_getxattr(&nop_mnt_idmap, dentry, cachefiles_xattr_cache, buf, tlen);
- 	if (xlen != tlen) {
--		if (xlen < 0)
-+		if (xlen < 0) {
-+			ret = xlen;
- 			trace_cachefiles_vfs_error(object, file_inode(file), xlen,
- 						   cachefiles_trace_getxattr_error);
-+		}
- 		if (xlen == -EIO)
- 			cachefiles_io_error_obj(
- 				object,
-@@ -252,6 +254,7 @@ int cachefiles_check_volume_xattr(struct cachefiles_volume *volume)
- 		xlen = vfs_getxattr(&nop_mnt_idmap, dentry, cachefiles_xattr_cache, buf, len);
- 	if (xlen != len) {
- 		if (xlen < 0) {
-+			ret = xlen;
- 			trace_cachefiles_vfs_error(NULL, d_inode(dentry), xlen,
- 						   cachefiles_trace_getxattr_error);
- 			if (xlen == -EIO)
+diff --git a/fs/cachefiles/internal.h b/fs/cachefiles/internal.h
+index 6845a90cdfcce..a1a1d25e95147 100644
+--- a/fs/cachefiles/internal.h
++++ b/fs/cachefiles/internal.h
+@@ -48,6 +48,7 @@ enum cachefiles_object_state {
+ 	CACHEFILES_ONDEMAND_OBJSTATE_CLOSE, /* Anonymous fd closed by daemon or initial state */
+ 	CACHEFILES_ONDEMAND_OBJSTATE_OPEN, /* Anonymous fd associated with object is available */
+ 	CACHEFILES_ONDEMAND_OBJSTATE_REOPENING, /* Object that was closed and is being reopened. */
++	CACHEFILES_ONDEMAND_OBJSTATE_DROPPING, /* Object is being dropped. */
+ };
+ 
+ struct cachefiles_ondemand_info {
+@@ -335,6 +336,7 @@ cachefiles_ondemand_set_object_##_state(struct cachefiles_object *object) \
+ CACHEFILES_OBJECT_STATE_FUNCS(open, OPEN);
+ CACHEFILES_OBJECT_STATE_FUNCS(close, CLOSE);
+ CACHEFILES_OBJECT_STATE_FUNCS(reopening, REOPENING);
++CACHEFILES_OBJECT_STATE_FUNCS(dropping, DROPPING);
+ 
+ static inline bool cachefiles_ondemand_is_reopening_read(struct cachefiles_req *req)
+ {
+diff --git a/fs/cachefiles/ondemand.c b/fs/cachefiles/ondemand.c
+index 89f118d68d125..14f91a9fbe447 100644
+--- a/fs/cachefiles/ondemand.c
++++ b/fs/cachefiles/ondemand.c
+@@ -494,7 +494,8 @@ static int cachefiles_ondemand_send_req(struct cachefiles_object *object,
+ 		 */
+ 		xas_lock(&xas);
+ 
+-		if (test_bit(CACHEFILES_DEAD, &cache->flags)) {
++		if (test_bit(CACHEFILES_DEAD, &cache->flags) ||
++		    cachefiles_ondemand_object_is_dropping(object)) {
+ 			xas_unlock(&xas);
+ 			ret = -EIO;
+ 			goto out;
+@@ -535,7 +536,8 @@ static int cachefiles_ondemand_send_req(struct cachefiles_object *object,
+ 	 * If error occurs after creating the anonymous fd,
+ 	 * cachefiles_ondemand_fd_release() will set object to close.
+ 	 */
+-	if (opcode == CACHEFILES_OP_OPEN)
++	if (opcode == CACHEFILES_OP_OPEN &&
++	    !cachefiles_ondemand_object_is_dropping(object))
+ 		cachefiles_ondemand_set_object_close(object);
+ 	kfree(req);
+ 	return ret;
+@@ -634,8 +636,12 @@ int cachefiles_ondemand_init_object(struct cachefiles_object *object)
+ 
+ void cachefiles_ondemand_clean_object(struct cachefiles_object *object)
+ {
++	if (!object->ondemand)
++		return;
++
+ 	cachefiles_ondemand_send_req(object, CACHEFILES_OP_CLOSE, 0,
+ 			cachefiles_ondemand_init_close_req, NULL);
++	cachefiles_ondemand_set_object_dropping(object);
+ }
+ 
+ int cachefiles_ondemand_init_obj_info(struct cachefiles_object *object,
 -- 
 2.43.0
 
