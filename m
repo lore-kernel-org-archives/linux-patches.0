@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B6B1DA4D;
-	Tue, 16 Jul 2024 15:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898201DDCE;
+	Tue, 16 Jul 2024 15:50:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145027; cv=none; b=SCQHuCYYf2Yc+oBgprzu6z+odDKmX87pGzxYjOKJHhvzduvcsUCKFZxpjyG3sgsHuG6gCuPBcfi93AOshCvj2+zF/AQPCrR7iTqYKpuCIFKXAtuHtcR/If2WuA8JSFE2aIrvMRhXAzdPuK2brSzS1yxCTVEjC4PlOaV41nKm8rg=
+	t=1721145031; cv=none; b=jAPUNEIQnGBXVGvl+sbtS70Z5/AoO8cCpBdwzfPPPoqY1aqXmzUSZUtsAymaxZfO8ELGJFQB8lUkO+lGpI4jvhi9GN41NM/dI68YiGh0se05qXEntgDeXF6YR/S4UzWpYO4GFzcISIuyGANNrGrMSJkyvuHBBWZonrpRaOW1Qmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145027; c=relaxed/simple;
-	bh=rvM+J7XcPa7eMAFu5bVwKN3K1aEOXXgKiWa2B4/yLOI=;
+	s=arc-20240116; t=1721145031; c=relaxed/simple;
+	bh=sN+5AqOCbAEV8VRTc6V/2nPMZXxEVW0fwf74xU/NKEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BtO0wABKX5pN9nXGnMyp/MuRaPFEoDlNVNBGTQO4MtiHLGxuMic/+LiavTWuIV7prJRkHBitd+zGuhFX06HOh0UMUdPSeYN4wumzyAsmQI+Kh6uZl3GDqFUZReIF2hfwFaofju7Hx1lp7DJ/R21oFSTLNbSxZUKMjeQ1bSOtZek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JyQmhscY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WuitesKovh8WnZqKes2I05thj1KWWU/IanbsrkAbnbj1snO5XjwShpmXENten9IZFY19r+5jQJdSsDFxvPZ2nPz5onGnKF+jFxR8oBnBFx+9qH5FVffyrM46q1ltKieugbEMwhG/hMLbw2XzKFVF6463lESDfYNHlQTncyhyZo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TTglqeY5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JyQmhscY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27EF8C4AF0B;
-	Tue, 16 Jul 2024 15:50:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TTglqeY5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9550BC116B1;
+	Tue, 16 Jul 2024 15:50:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145027;
-	bh=rvM+J7XcPa7eMAFu5bVwKN3K1aEOXXgKiWa2B4/yLOI=;
+	s=korg; t=1721145031;
+	bh=sN+5AqOCbAEV8VRTc6V/2nPMZXxEVW0fwf74xU/NKEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JyQmhscYKjmAGSJ8e4TRA8zV8IS00Y0okFgKR0c+tLQmNM3cq8hgLX58Ofk8m1K/q
-	 WdpTnz0CTf6tfj4ClB98jS+rfEu915Z2Mtbu7EELYmvtQqHMZ1x+9N+04nFDvTPlN2
-	 6uc/dx08anmmbQP2IpdUrxw5uqMaFwacsFw8n9RI=
+	b=TTglqeY5kv1ycH5Ce5chPCEEJ+DXNLU9n2Jruo7HW2lx/gP4pZcGJpKPyMEXdRPb2
+	 oHYMJ2aD1uzNyKWOJpu+7PZN/LWquym9S+2VeI5PtgnI1M3OdUwFDj7SkwqmvjvjVR
+	 URNeq3EBEs33Snp1moYghKKTDpJh56YVMB5pQt4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Smirnov <d.smirnov@inbox.lv>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.9 075/143] USB: serial: mos7840: fix crash on resume
-Date: Tue, 16 Jul 2024 17:31:11 +0200
-Message-ID: <20240716152758.862446342@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	jinxiaobo <jinxiaobo@uniontech.com>,
+	WangYuli <wangyuli@uniontech.com>
+Subject: [PATCH 6.9 076/143] USB: Add USB_QUIRK_NO_SET_INTF quirk for START BP-850k
+Date: Tue, 16 Jul 2024 17:31:12 +0200
+Message-ID: <20240716152758.901914509@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -50,96 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Smirnov <d.smirnov@inbox.lv>
+From: WangYuli <wangyuli@uniontech.com>
 
-commit c15a688e49987385baa8804bf65d570e362f8576 upstream.
+commit 3859e85de30815a20bce7db712ce3d94d40a682d upstream.
 
-Since commit c49cfa917025 ("USB: serial: use generic method if no
-alternative is provided in usb serial layer"), USB serial core calls the
-generic resume implementation when the driver has not provided one.
+START BP-850K is a dot matrix printer that crashes when
+it receives a Set-Interface request and needs USB_QUIRK_NO_SET_INTF
+to work properly.
 
-This can trigger a crash on resume with mos7840 since support for
-multiple read URBs was added back in 2011. Specifically, both port read
-URBs are now submitted on resume for open ports, but the context pointer
-of the second URB is left set to the core rather than mos7840 port
-structure.
-
-Fix this by implementing dedicated suspend and resume functions for
-mos7840.
-
-Tested with Delock 87414 USB 2.0 to 4x serial adapter.
-
-Signed-off-by: Dmitry Smirnov <d.smirnov@inbox.lv>
-[ johan: analyse crash and rewrite commit message; set busy flag on
-         resume; drop bulk-in check; drop unnecessary usb_kill_urb() ]
-Fixes: d83b405383c9 ("USB: serial: add support for multiple read urbs")
-Cc: stable@vger.kernel.org	# 3.3
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Cc: stable <stable@kernel.org>
+Signed-off-by: jinxiaobo <jinxiaobo@uniontech.com>
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Link: https://lore.kernel.org/r/202E4B2BD0F0FEA4+20240702154408.631201-1-wangyuli@uniontech.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/mos7840.c |   45 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 45 insertions(+)
+ drivers/usb/core/quirks.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/serial/mos7840.c
-+++ b/drivers/usb/serial/mos7840.c
-@@ -1737,6 +1737,49 @@ static void mos7840_port_remove(struct u
- 	kfree(mos7840_port);
- }
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -506,6 +506,9 @@ static const struct usb_device_id usb_qu
+ 	{ USB_DEVICE(0x1b1c, 0x1b38), .driver_info = USB_QUIRK_DELAY_INIT |
+ 	  USB_QUIRK_DELAY_CTRL_MSG },
  
-+static int mos7840_suspend(struct usb_serial *serial, pm_message_t message)
-+{
-+	struct moschip_port *mos7840_port;
-+	struct usb_serial_port *port;
-+	int i;
++	/* START BP-850k Printer */
++	{ USB_DEVICE(0x1bc3, 0x0003), .driver_info = USB_QUIRK_NO_SET_INTF },
 +
-+	for (i = 0; i < serial->num_ports; ++i) {
-+		port = serial->port[i];
-+		if (!tty_port_initialized(&port->port))
-+			continue;
-+
-+		mos7840_port = usb_get_serial_port_data(port);
-+
-+		usb_kill_urb(mos7840_port->read_urb);
-+		mos7840_port->read_urb_busy = false;
-+	}
-+
-+	return 0;
-+}
-+
-+static int mos7840_resume(struct usb_serial *serial)
-+{
-+	struct moschip_port *mos7840_port;
-+	struct usb_serial_port *port;
-+	int res;
-+	int i;
-+
-+	for (i = 0; i < serial->num_ports; ++i) {
-+		port = serial->port[i];
-+		if (!tty_port_initialized(&port->port))
-+			continue;
-+
-+		mos7840_port = usb_get_serial_port_data(port);
-+
-+		mos7840_port->read_urb_busy = true;
-+		res = usb_submit_urb(mos7840_port->read_urb, GFP_NOIO);
-+		if (res)
-+			mos7840_port->read_urb_busy = false;
-+	}
-+
-+	return 0;
-+}
-+
- static struct usb_serial_driver moschip7840_4port_device = {
- 	.driver = {
- 		   .owner = THIS_MODULE,
-@@ -1764,6 +1807,8 @@ static struct usb_serial_driver moschip7
- 	.port_probe = mos7840_port_probe,
- 	.port_remove = mos7840_port_remove,
- 	.read_bulk_callback = mos7840_bulk_in_callback,
-+	.suspend = mos7840_suspend,
-+	.resume = mos7840_resume,
- };
- 
- static struct usb_serial_driver * const serial_drivers[] = {
+ 	/* MIDI keyboard WORLDE MINI */
+ 	{ USB_DEVICE(0x1c75, 0x0204), .driver_info =
+ 			USB_QUIRK_CONFIG_INTF_STRINGS },
 
 
