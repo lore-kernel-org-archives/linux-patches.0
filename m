@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE4419AD93;
-	Tue, 16 Jul 2024 15:53:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7000619AD93;
+	Tue, 16 Jul 2024 15:53:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145191; cv=none; b=EdgU9MzBbnMAzMV2ZThFsVQzSEbWJkHVGW5RpVV3OasGfdPjapf6vonMjIUPwkF41jcvurpmxDPG49CeWSx+iOCbfenLO2VwLIHkpMrkynf3FG+AZPjIMghUOEVpfCgayW+yCE+xPVg9xgo8cU7+l0YHyrSIDwqlZhseKqGFnH8=
+	t=1721145194; cv=none; b=VgaCiI7GsRMly+wJ1h2CNxgTm5TBoJN7dqUvIcdQ/oPp8XkvyTC8/z6zb55+7sOaV0TYjZmUtBMfZTI6GC7wlodYnijYqBnT4ssdskbq38ckrL7PKS6JMLZ1iL+SmoGFZJZOg5JBJuTtFgRsJOw6ku2K08lH+fvZmeCeNJvesFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145191; c=relaxed/simple;
-	bh=2VM1wC7aIlehK0RgB8UnKAFUcegy0g56UN8lLtXFbkE=;
+	s=arc-20240116; t=1721145194; c=relaxed/simple;
+	bh=uEBRN6c6H873oOGN0xArC1JYthuJ+Fx6dWW3xP2BrJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sv11AiyHskztCayhWjVKABhZo2ydvkznG/CeUckn3n80E86Xu8sWfjriSX2XBmt/xciRb8NU0KLE3fJH6R5d/NUDCh21VP7JeECPyAlzi2eRTBNpKjPSuw1VLnRJE9T0v58ttG7m8MmgpLji3Uk4S5/iLD6TrgyE0JsmweptRlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EVksQQPb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OuW+HA6cCLUwR9KD6ZsmvT26R8kGudIf1zrEivsphRs23OA81CdbIacj8kYoBzwtG0hc4h+079hLCBom5ARqDXSJpgiE/PrcADDYCDn92fzh8DxGv+MqT50DUHgZm/GvCGGu3KwBUYFDC9XLNmYm3ZW6PTH0VVx8gWtqRpoDMeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m214Sf9A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EVksQQPb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06B50C116B1;
-	Tue, 16 Jul 2024 15:53:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m214Sf9A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB138C116B1;
+	Tue, 16 Jul 2024 15:53:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145191;
-	bh=2VM1wC7aIlehK0RgB8UnKAFUcegy0g56UN8lLtXFbkE=;
+	s=korg; t=1721145194;
+	bh=uEBRN6c6H873oOGN0xArC1JYthuJ+Fx6dWW3xP2BrJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EVksQQPb09n8mJtSIi8GzkENAkkMsOnT9+88JkUHvM0crIOszeA8JrU8UUMi/ZIZo
-	 OunoJ5BbQ/ph7Lxv+ENckGXY57XUz8FqhpGJ98hzwYKl5vyddj1Qj52PZMFnKADna3
-	 lXLcetPaSRFBrFIb8Cp2xCBGHnUjPIP/EEICT4gk=
+	b=m214Sf9ALGMg4BTA62cSpO6RJGJ0sYYomA6V1FMGF0iSXByh/UqIfa1CwsQTIqC4z
+	 Nw9BRpiphT13Pcf6h/CibhY2q9+SzWdSQk3Vv7L8p3IQmYQG9Zf8Baj+w2Gj32EGzn
+	 bEvIFEoGZG4mZ3GF15Eap+N+67meWpvTrQcVtwxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steev Klimaszewski <steev@kali.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.9 096/143] arm64: dts: qcom: sc8280xp-x13s: fix touchscreen power on
-Date: Tue, 16 Jul 2024 17:31:32 +0200
-Message-ID: <20240716152759.669211812@linuxfoundation.org>
+Subject: [PATCH 6.9 097/143] arm64: dts: qcom: x1e80100-crd: fix WCD audio codec TX port mapping
+Date: Tue, 16 Jul 2024 17:31:33 +0200
+Message-ID: <20240716152759.709689332@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -51,65 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 7bfb6a4289b0a63d67ec7d4ce3018cb4a7442f6a upstream.
+commit dfce1771680c70a437556bc81e3e1e22088b67de upstream.
 
-The Elan eKTH5015M touch controller on the X13s requires a 300 ms delay
-before sending commands after having deasserted reset during power on.
+Starting with the LPASS v11 (SM8550 also X1E80100), there is an
+additional output port on SWR2 Soundwire instance, thus WCD9385 audio
+codec TX port mapping should be shifted by one.  This is a necessary fix
+for proper audio recording via analogue microphones connected to WCD9385
+codec (e.g. headset AMIC2).
 
-Switch to the Elan specific binding so that the OS can determine the
-required power-on sequence and make sure that the controller is always
-detected during boot.
-
-Note that the always-on 1.8 V supply (s10b) is not used by the
-controller directly and should not be described.
-
-Fixes: 32c231385ed4 ("arm64: dts: qcom: sc8280xp: add Lenovo Thinkpad X13s devicetree")
-Cc: stable@vger.kernel.org	# 6.0
-Tested-by: Steev Klimaszewski <steev@kali.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20240507144821.12275-6-johan+linaro@kernel.org
+Fixes: 229c9ce0fd11 ("arm64: dts: qcom: x1e80100-crd: add WCD9385 Audio Codec")
+Cc: stable@vger.kernel.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240611142555.994675-1-krzysztof.kozlowski@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts |   15 ++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/qcom/x1e80100-crd.dts |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -618,15 +618,16 @@
- 
- 	status = "okay";
- 
--	/* FIXME: verify */
- 	touchscreen@10 {
--		compatible = "hid-over-i2c";
-+		compatible = "elan,ekth5015m", "elan,ekth6915";
- 		reg = <0x10>;
- 
--		hid-descr-addr = <0x1>;
- 		interrupts-extended = <&tlmm 175 IRQ_TYPE_LEVEL_LOW>;
--		vdd-supply = <&vreg_misc_3p3>;
--		vddl-supply = <&vreg_s10b>;
-+		reset-gpios = <&tlmm 99 (GPIO_ACTIVE_LOW | GPIO_OPEN_DRAIN)>;
-+		no-reset-on-power-off;
-+
-+		vcc33-supply = <&vreg_misc_3p3>;
-+		vccio-supply = <&vreg_misc_3p3>;
- 
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&ts0_default>;
-@@ -1417,8 +1418,8 @@
- 		reset-n-pins {
- 			pins = "gpio99";
- 			function = "gpio";
--			output-high;
--			drive-strength = <16>;
-+			drive-strength = <2>;
-+			bias-disable;
- 		};
+--- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+@@ -736,7 +736,7 @@
+ 	wcd_tx: codec@0,3 {
+ 		compatible = "sdw20217010d00";
+ 		reg = <0 3>;
+-		qcom,tx-port-mapping = <1 1 2 3>;
++		qcom,tx-port-mapping = <2 2 3 4>;
  	};
+ };
  
 
 
