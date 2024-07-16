@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25F31DDCE;
-	Tue, 16 Jul 2024 15:57:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A3E1DDCE;
+	Tue, 16 Jul 2024 15:58:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145478; cv=none; b=Bcxbvfp0kN9PqeBljn6jQySBL9K1eVZjly9WukyfHVH/UvMSJvOzNMxNCRGddob/bMhhgFSTXz3oRKRI1wsMknuhnZDgz/0De8A8WblinD9AKZjr07kEOgVUna2bd0oHlu6Eot4MnNeqoEleQv+s90uDvocxep3unDfLzNaoG9I=
+	t=1721145481; cv=none; b=Zd2fhiv0IboCz9EaiyoDkwDalQoZupa1hc9I9pKWZ0nepuLI7cwkXAmAlwjTAHZQssoPyy3YMdG7lA+I27lc41M3y44UkGuR2c/eDwhRDYrd3MUTldTEAfbqetNBDEi4Gr/JklTPYHtkplqVKdOS3TJyzR4gTgNgHbkCJwasjZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145478; c=relaxed/simple;
-	bh=bZlItLHhCmbpaEhx0R0geBZh6v7pSnGoQSlEj2UxELI=;
+	s=arc-20240116; t=1721145481; c=relaxed/simple;
+	bh=vCbBIQkak/y9tfc1DFRgQXTW9ppXbM3Vq4FjU9fcaFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oobWEE9caE4bhCNbcWO3Ej95TblpoaTVoy1JyEeXDMDPRhWhus/Rb2sK3BdpQa1eXQptLQseKbDVgDMaKuhNwt7dpqhFhLVVGoLlEr/huOPkCGmCh5qg0wS47spZxrKOLoQCDAPAV+1fConYkJ1rshvaOJZvxH8+yVqgyeXi7dM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1bIgRpZ9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pyopN2VCtFh0I/rTxqhSdAGpV9o6iDhry2qWRRyZf/YCTHQZASvZIdvrdnpuTedSIYP/jv1GHMgYKn5wuhhm8Zt7VA15ryBQj1F0tbPY99X9Kxn5NPc3VxIbrq+/Fb4X43Ih9hwxv9OY78BQX9EXqsJLzL5wMsyBmmlDwD8ajU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cXKYzgD0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1bIgRpZ9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12EBFC116B1;
-	Tue, 16 Jul 2024 15:57:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cXKYzgD0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D2E0C116B1;
+	Tue, 16 Jul 2024 15:58:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145478;
-	bh=bZlItLHhCmbpaEhx0R0geBZh6v7pSnGoQSlEj2UxELI=;
+	s=korg; t=1721145481;
+	bh=vCbBIQkak/y9tfc1DFRgQXTW9ppXbM3Vq4FjU9fcaFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1bIgRpZ9JyNA9dwOm9iB4kTFUL4NdXWgOzFcE7pt+m4qmBbAP4fatQF6BJlw4MTTX
-	 3APgLKzsmgx10k6nKqT9s896bL2aHFr2QzHkaqIPa3DDKRqqsEaLzxct7tgcjHpKu9
-	 KLOKS87L5M/YP2CNslFuLkpKIFV2Sij5GObsU2l4=
+	b=cXKYzgD0WqtHTePT40vRzNDIJGPQhjIMysT8RepW0Cqei87teJtHbRWLiDtsf2Abw
+	 Ucd8njewh71AUF7oMuTzkhRxrZCSqcmyD/DXiWHzdBAF1fNEEGMIyf28IGW14VrQTL
+	 GR1KwlvU28TOTUJAIBbNWmmuM9jjNz4NySvp6Gx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ekansh Gupta <quic_ekangupt@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Caleb Connolly <caleb.connolly@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 6.1 79/96] misc: fastrpc: Copy the complete capability structure to user
-Date: Tue, 16 Jul 2024 17:32:30 +0200
-Message-ID: <20240716152749.550944790@linuxfoundation.org>
+	Greg Thelen <gthelen@google.com>,
+	Jim Mattson <jmattson@google.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.1 80/96] x86/retpoline: Move a NOENDBR annotation to the SRSO dummy return thunk
+Date: Tue, 16 Jul 2024 17:32:31 +0200
+Message-ID: <20240716152749.589880661@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152746.516194097@linuxfoundation.org>
 References: <20240716152746.516194097@linuxfoundation.org>
@@ -53,41 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ekansh Gupta <quic_ekangupt@quicinc.com>
+From: Jim Mattson <jmattson@google.com>
 
-commit e7f0be3f09c6e955dc8009129862b562d8b64513 upstream.
+The linux-6.1-y backport of commit b377c66ae350 ("x86/retpoline: Add
+NOENDBR annotation to the SRSO dummy return thunk") misplaced the new
+NOENDBR annotation, repeating the annotation on __x86_return_thunk,
+rather than adding the annotation to the !CONFIG_CPU_SRSO version of
+srso_alias_untrain_ret, as intended.
 
-User is passing capability ioctl structure(argp) to get DSP
-capabilities. This argp is copied to a local structure to get domain
-and attribute_id information. After getting the capability, only
-capability value is getting copied to user argp which will not be
-useful if the use is trying to get the capability by checking the
-capability member of fastrpc_ioctl_capability structure. Copy the
-complete capability structure so that user can get the capability
-value from the expected member of the structure.
+Move the annotation to the right place.
 
-Fixes: 6c16fd8bdd40 ("misc: fastrpc: Add support to get DSP capabilities")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20240628114501.14310-3-srinivas.kandagatla@linaro.org
+Fixes: b377c66ae350 ("x86/retpoline: Add NOENDBR annotation to the SRSO dummy return thunk")
+Reported-by: Greg Thelen <gthelen@google.com>
+Signed-off-by: Jim Mattson <jmattson@google.com>
+Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |    2 +-
+ arch/x86/lib/retpoline.S |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -1603,7 +1603,7 @@ static int fastrpc_get_dsp_info(struct f
- 	if (err)
- 		return err;
- 
--	if (copy_to_user(argp, &cap.capability, sizeof(cap.capability)))
-+	if (copy_to_user(argp, &cap, sizeof(cap)))
- 		return -EFAULT;
- 
- 	return 0;
+--- a/arch/x86/lib/retpoline.S
++++ b/arch/x86/lib/retpoline.S
+@@ -107,6 +107,7 @@ __EXPORT_THUNK(srso_alias_untrain_ret)
+ /* dummy definition for alternatives */
+ SYM_START(srso_alias_untrain_ret, SYM_L_GLOBAL, SYM_A_NONE)
+ 	ANNOTATE_UNRET_SAFE
++	ANNOTATE_NOENDBR
+ 	ret
+ 	int3
+ SYM_FUNC_END(srso_alias_untrain_ret)
+@@ -261,7 +262,6 @@ SYM_CODE_START(__x86_return_thunk)
+ 	UNWIND_HINT_FUNC
+ 	ANNOTATE_NOENDBR
+ 	ANNOTATE_UNRET_SAFE
+-	ANNOTATE_NOENDBR
+ 	ret
+ 	int3
+ SYM_CODE_END(__x86_return_thunk)
 
 
