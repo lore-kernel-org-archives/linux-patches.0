@@ -1,40 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A0031DDCE;
-	Tue, 16 Jul 2024 16:13:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F1F19DF71;
+	Tue, 16 Jul 2024 16:13:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721146390; cv=none; b=X6HID01s5cM8OuRBjupG7W1xiRe8jk7dbqe+4ViShrpgobrL3lcH9iqCQnfL7B/av9ol2bhilnB63i3RucfeL6DZAhdoeyuvFoiKJONXMIhmSX7mLHofJBJfjkCTSwFrbjCFlfp7nxvVCnepAJkWkQNsXGCBJS5G1Q+ehcKyeBw=
+	t=1721146393; cv=none; b=Hg0inhDJObEw/sWH4DVin7RPkCo1BxnfkPa1cDaD8kbcnsYSiOBkTfCfApV8+bz/cAsr7grjms3070Q9VgbNRsUOuF13Z78FSPM2MHgUrHjslWmDOAEwgGFLA8xOUW1WR2XmZrvNafezc1r8G12ybH/LcitvnBmM8j49JwM71/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721146390; c=relaxed/simple;
-	bh=3V76RbKLnu5gtfRp+NsYipB/qEqFLjJJybwtD/BWg/M=;
+	s=arc-20240116; t=1721146393; c=relaxed/simple;
+	bh=9CDQsYfLsrsEWfaB2FJ7eLOcKRm2DOg2aZp17IsNPIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gn9fYC/wDdCp40zhvdf9f5L1ixOuct5x3nK6GPJoWOmCuTJUdwAgV5uKagpp8w7tQxfYcCrKkmgA9qnVSvszC4iFCLK1oXMs0eBl+aKeRDbR7hdydKdQvFIsmSYPO9WuXtJt7c6clGoc/hADKvugthwgwx6tZxTG6dpb665fUeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U4tIvJSX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I3dWqESnobXpAoTvGdqr5oapSbU0yak2QTi7EKlg8f6ezuREEzjL7mI7jiCnl+BJR6L3pPcyasKBGRYyvofsnmuoNGThraGuQvNxjEmq/ninWpVuXdJoi9lT39+6WGoIx60QCeEGvazylSSHM5AqNPfBjZCTt1WFOt75/gqMqO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V9jOlRql; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U4tIvJSX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10BE3C116B1;
-	Tue, 16 Jul 2024 16:13:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V9jOlRql"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF66FC116B1;
+	Tue, 16 Jul 2024 16:13:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721146390;
-	bh=3V76RbKLnu5gtfRp+NsYipB/qEqFLjJJybwtD/BWg/M=;
+	s=korg; t=1721146393;
+	bh=9CDQsYfLsrsEWfaB2FJ7eLOcKRm2DOg2aZp17IsNPIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U4tIvJSX2kXuBt9QvxXSSynE3ejT95LjiDWhQHEvMF5bMFzIoTUKtsExeXP0+kQS+
-	 4Grz3OJ5vZ3ZQaAlF5xQxp5dQbfS3AFxPPDBF2gyW3ZCXYQ00rYzCa8OvT7lPoobCt
-	 T/fW8Li5MT2slS3k7Kk6Am1To7RAYZVT/fDRmzS8=
+	b=V9jOlRqloiSGt0Hxqm7jyag9vMHzbgMf3whcnRt+fl94j1E3moytIPwiPabJS2qE7
+	 XlyCF/+QeAMb/thXCusYGHgzv6fr4DWQIdHcVgzZHyvSgVgBFyecDjf4UucLGaL4ax
+	 fcc7tk2oRrQoEj1HGUdJ1v7m7QZDJO8X/4cuaPwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dirk Behme <dirk.behme@de.bosch.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 133/144] i2c: rcar: bring hardware to known state when probing
-Date: Tue, 16 Jul 2024 17:33:22 +0200
-Message-ID: <20240716152757.628106113@linuxfoundation.org>
+	Audra Mitchell <audra@redhat.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Andrea Arcangeli <aarcange@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Mike Rapoport <rppt@linux.vnet.ibm.com>,
+	Peter Xu <peterx@redhat.com>,
+	Rafael Aquini <raquini@redhat.com>,
+	Shaohua Li <shli@fb.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 124/144] Fix userfaultfd_api to return EINVAL as expected
+Date: Tue, 16 Jul 2024 17:33:13 +0200
+Message-ID: <20240716152757.287526195@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
 References: <20240716152752.524497140@linuxfoundation.org>
@@ -53,71 +59,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Audra Mitchell <audra@redhat.com>
 
-[ Upstream commit 4e36c0f20cb1c74c7bd7ea31ba432c1c4a989031 ]
+commit 1723f04caacb32cadc4e063725d836a0c4450694 upstream.
 
-When probing, the hardware is not brought into a known state. This may
-be a problem when a hypervisor restarts Linux without resetting the
-hardware, leaving an old state running. Make sure the hardware gets
-initialized, especially interrupts should be cleared and disabled.
+Currently if we request a feature that is not set in the Kernel config we
+fail silently and return all the available features.  However, the man
+page indicates we should return an EINVAL.
 
-Reported-by: Dirk Behme <dirk.behme@de.bosch.com>
-Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Closes: https://lore.kernel.org/r/20240702045535.2000393-1-dirk.behme@de.bosch.com
-Fixes: 6ccbe607132b ("i2c: add Renesas R-Car I2C driver")
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+We need to fix this issue since we can end up with a Kernel warning should
+a program request the feature UFFD_FEATURE_WP_UNPOPULATED on a kernel with
+the config not set with this feature.
+
+ [  200.812896] WARNING: CPU: 91 PID: 13634 at mm/memory.c:1660 zap_pte_range+0x43d/0x660
+ [  200.820738] Modules linked in:
+ [  200.869387] CPU: 91 PID: 13634 Comm: userfaultfd Kdump: loaded Not tainted 6.9.0-rc5+ #8
+ [  200.877477] Hardware name: Dell Inc. PowerEdge R6525/0N7YGH, BIOS 2.7.3 03/30/2022
+ [  200.885052] RIP: 0010:zap_pte_range+0x43d/0x660
+
+Link: https://lkml.kernel.org/r/20240626130513.120193-1-audra@redhat.com
+Fixes: e06f1e1dd499 ("userfaultfd: wp: enabled write protection in userfaultfd API")
+Signed-off-by: Audra Mitchell <audra@redhat.com>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Mike Rapoport <rppt@linux.vnet.ibm.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Rafael Aquini <raquini@redhat.com>
+Cc: Shaohua Li <shli@fb.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-rcar.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ fs/userfaultfd.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/busses/i2c-rcar.c b/drivers/i2c/busses/i2c-rcar.c
-index 2c016f0299fce..97900fe0c3bcf 100644
---- a/drivers/i2c/busses/i2c-rcar.c
-+++ b/drivers/i2c/busses/i2c-rcar.c
-@@ -221,6 +221,14 @@ static void rcar_i2c_init(struct rcar_i2c_priv *priv)
- 
- }
- 
-+static void rcar_i2c_reset_slave(struct rcar_i2c_priv *priv)
-+{
-+	rcar_i2c_write(priv, ICSIER, 0);
-+	rcar_i2c_write(priv, ICSSR, 0);
-+	rcar_i2c_write(priv, ICSCR, SDBS);
-+	rcar_i2c_write(priv, ICSAR, 0); /* Gen2: must be 0 if not using slave */
-+}
+--- a/fs/userfaultfd.c
++++ b/fs/userfaultfd.c
+@@ -1935,7 +1935,7 @@ static int userfaultfd_api(struct userfa
+ 		goto out;
+ 	features = uffdio_api.features;
+ 	ret = -EINVAL;
+-	if (uffdio_api.api != UFFD_API || (features & ~UFFD_API_FEATURES))
++	if (uffdio_api.api != UFFD_API)
+ 		goto err_out;
+ 	ret = -EPERM;
+ 	if ((features & UFFD_FEATURE_EVENT_FORK) && !capable(CAP_SYS_PTRACE))
+@@ -1949,6 +1949,11 @@ static int userfaultfd_api(struct userfa
+ #ifndef CONFIG_HAVE_ARCH_USERFAULTFD_WP
+ 	uffdio_api.features &= ~UFFD_FEATURE_PAGEFAULT_FLAG_WP;
+ #endif
 +
- static int rcar_i2c_bus_barrier(struct rcar_i2c_priv *priv)
- {
- 	int ret;
-@@ -959,11 +967,8 @@ static int rcar_unreg_slave(struct i2c_client *slave)
- 
- 	/* ensure no irq is running before clearing ptr */
- 	disable_irq(priv->irq);
--	rcar_i2c_write(priv, ICSIER, 0);
--	rcar_i2c_write(priv, ICSSR, 0);
-+	rcar_i2c_reset_slave(priv);
- 	enable_irq(priv->irq);
--	rcar_i2c_write(priv, ICSCR, SDBS);
--	rcar_i2c_write(priv, ICSAR, 0); /* Gen2: must be 0 if not using slave */
- 
- 	priv->slave = NULL;
- 
-@@ -1075,7 +1080,9 @@ static int rcar_i2c_probe(struct platform_device *pdev)
- 		goto out_pm_disable;
- 	}
- 
--	rcar_i2c_write(priv, ICSAR, 0); /* Gen2: must be 0 if not using slave */
-+	/* Bring hardware to known state */
-+	rcar_i2c_init(priv);
-+	rcar_i2c_reset_slave(priv);
- 
- 	if (priv->devtype < I2C_RCAR_GEN3) {
- 		irqflags |= IRQF_NO_THREAD;
--- 
-2.43.0
-
++	ret = -EINVAL;
++	if (features & ~uffdio_api.features)
++		goto err_out;
++
+ 	uffdio_api.ioctls = UFFD_API_IOCTLS;
+ 	ret = -EFAULT;
+ 	if (copy_to_user(buf, &uffdio_api, sizeof(uffdio_api)))
 
 
