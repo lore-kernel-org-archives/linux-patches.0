@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8E1717A93F;
-	Tue, 16 Jul 2024 15:55:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA81419E809;
+	Tue, 16 Jul 2024 15:55:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145310; cv=none; b=WNJSMsH6KalIlN1ExaAYNQzQN7F0Ofs6Lvh6up1naUC76J7zq/g51gfAuBTvE0K+vsq4QYuVM4Bu3STHt2rGSm94+wmGkR0ZlJdRmT48iHYpG6qF7toOZOjM8xARwYH/VBBFyHzRuN+adOcmCEuxJOLbCD5TT6CtZlAOA2PWuRI=
+	t=1721145313; cv=none; b=BUJ+exsZefU8TdDxRCl+++Y6FEqDn8N/Floh+lVhnh9t5+k0yr4LV5WyvHsSuEI8DjF7LQjuUKZ64DMzQfooLfk74dnt+aqMi2Cn4aE4PMXnckQD4Lsyjx8eviSvtfXiHY1sKS8Xvdj1L4gq6oEcfvT37U4hcclnabwl9tGpogg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145310; c=relaxed/simple;
-	bh=hwppegqHY/GmTO2qMPIVA5ZGPBLEW7y+ulrEh/dk6Nk=;
+	s=arc-20240116; t=1721145313; c=relaxed/simple;
+	bh=Xx2CmBkOEShO1IHg+Hrohe1D0YE4pqzvEB/847ABjRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L5ay+lV9UM8pWYHDSaiaihfHDsasf2+9HXZ93S8YMWUS39eW+2Pu/HOOlqK/dlCjZs5Kn+4UB1UuPRehFTc2QNj74NnEl8UVmDEPK9Md6fcYcAVvhHpkWe1cCKq/vZWbB4kpphU0r331fkZESz2ewmdtWTbA5Wjwjw5q9X7px4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ynbb//zt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aryMI6shiFdzU2SSqZ87Cr85veHqSxDRmHOYyf7Z8U972C7wKGDpYxRKYYarfqr1TUYB9zdavI+4dFdQG8/HeRTg+Iz3c/VK1L5qQ1M+sXuFFWmQrn3SAbX4JRGoMNTrmS9AZxJDpj2hLovENc8aGymlVYqJbHhydLg6pbcqHqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ul/8pEVu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ynbb//zt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 643A7C116B1;
-	Tue, 16 Jul 2024 15:55:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ul/8pEVu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D3B1C4AF0B;
+	Tue, 16 Jul 2024 15:55:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145309;
-	bh=hwppegqHY/GmTO2qMPIVA5ZGPBLEW7y+ulrEh/dk6Nk=;
+	s=korg; t=1721145312;
+	bh=Xx2CmBkOEShO1IHg+Hrohe1D0YE4pqzvEB/847ABjRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ynbb//zt2vnJk9fVtEdHFR+7mVEJESi4wRf6qBX0uEtFifvCkCrLGt8DUwJ0K4ajc
-	 z70tpJbId+0VV6rm/QTeV6/Z/VvNpfvQ9kZsvalaDjTiAxelDS8a6OlMWVwCNRYVpR
-	 8RiazV4RF5Sv3RtZVPl1WjZAYKHOFGB7IZMkWgDU=
+	b=ul/8pEVuQ4XnX9rO6rtNytDYBNAqhyYX3Mbq1RiR2E/65dd8Cx4NHM1g4kyPmgcUL
+	 MkR4bypn/86BzE9UQu2s+71cjIm40KO6gK4EreOm/ufK1u23fKIuY1EiMCRYxb2yi0
+	 YbJkaCfDWjoVZ/tKVddyPvVOT9+mnQyeSGQtOMY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Christian Kujau <lists@nerdbynature.de>,
-	Mohammad Shehar Yaar Tausif <sheharyaar48@gmail.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Jian Hui Lee <jianhui.lee@canonical.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 23/96] bpf: fix order of args in call to bpf_map_kvcalloc
-Date: Tue, 16 Jul 2024 17:31:34 +0200
-Message-ID: <20240716152747.406463108@linuxfoundation.org>
+Subject: [PATCH 6.1 24/96] net: ethernet: mtk-star-emac: set mac_managed_pm when probing
+Date: Tue, 16 Jul 2024 17:31:35 +0200
+Message-ID: <20240716152747.445256689@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152746.516194097@linuxfoundation.org>
 References: <20240716152746.516194097@linuxfoundation.org>
@@ -54,59 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohammad Shehar Yaar Tausif <sheharyaar48@gmail.com>
+From: Jian Hui Lee <jianhui.lee@canonical.com>
 
-[ Upstream commit af253aef183a31ce62d2e39fc520b0ebfb562bb9 ]
+[ Upstream commit 8c6790b5c25dfac11b589cc37346bcf9e23ad468 ]
 
-The original function call passed size of smap->bucket before the number of
-buckets which raises the error 'calloc-transposed-args' on compilation.
+The below commit introduced a warning message when phy state is not in
+the states: PHY_HALTED, PHY_READY, and PHY_UP.
+commit 744d23c71af3 ("net: phy: Warn about incorrect mdio_bus_phy_resume() state")
 
-Vlastimil Babka added:
+mtk-star-emac doesn't need mdiobus suspend/resume. To fix the warning
+message during resume, indicate the phy resume/suspend is managed by the
+mac when probing.
 
-The order of parameters can be traced back all the way to 6ac99e8f23d4
-("bpf: Introduce bpf sk local storage") accross several refactorings,
-and that's why the commit is used as a Fixes: tag.
-
-In v6.10-rc1, a different commit 2c321f3f70bc ("mm: change inlined
-allocation helpers to account at the call site") however exposed the
-order of args in a way that gcc-14 has enough visibility to start
-warning about it, because (in !CONFIG_MEMCG case) bpf_map_kvcalloc is
-then a macro alias for kvcalloc instead of a static inline wrapper.
-
-To sum up the warning happens when the following conditions are all met:
-
-- gcc-14 is used (didn't see it with gcc-13)
-- commit 2c321f3f70bc is present
-- CONFIG_MEMCG is not enabled in .config
-- CONFIG_WERROR turns this from a compiler warning to error
-
-Fixes: 6ac99e8f23d4 ("bpf: Introduce bpf sk local storage")
-Reviewed-by: Andrii Nakryiko <andrii@kernel.org>
-Tested-by: Christian Kujau <lists@nerdbynature.de>
-Signed-off-by: Mohammad Shehar Yaar Tausif <sheharyaar48@gmail.com>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Link: https://lore.kernel.org/r/20240710100521.15061-2-vbabka@suse.cz
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 744d23c71af3 ("net: phy: Warn about incorrect mdio_bus_phy_resume() state")
+Signed-off-by: Jian Hui Lee <jianhui.lee@canonical.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20240708065210.4178980-1-jianhui.lee@canonical.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/bpf_local_storage.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_star_emac.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/kernel/bpf/bpf_local_storage.c b/kernel/bpf/bpf_local_storage.c
-index 888b8e481083f..51a9f024c1829 100644
---- a/kernel/bpf/bpf_local_storage.c
-+++ b/kernel/bpf/bpf_local_storage.c
-@@ -620,8 +620,8 @@ bpf_local_storage_map_alloc(union bpf_attr *attr,
- 	nbuckets = max_t(u32, 2, nbuckets);
- 	smap->bucket_log = ilog2(nbuckets);
+diff --git a/drivers/net/ethernet/mediatek/mtk_star_emac.c b/drivers/net/ethernet/mediatek/mtk_star_emac.c
+index 7050351250b7a..ad27749c0931c 100644
+--- a/drivers/net/ethernet/mediatek/mtk_star_emac.c
++++ b/drivers/net/ethernet/mediatek/mtk_star_emac.c
+@@ -1531,6 +1531,7 @@ static int mtk_star_probe(struct platform_device *pdev)
+ {
+ 	struct device_node *of_node;
+ 	struct mtk_star_priv *priv;
++	struct phy_device *phydev;
+ 	struct net_device *ndev;
+ 	struct device *dev;
+ 	void __iomem *base;
+@@ -1656,6 +1657,12 @@ static int mtk_star_probe(struct platform_device *pdev)
+ 	netif_napi_add(ndev, &priv->rx_napi, mtk_star_rx_poll);
+ 	netif_napi_add_tx(ndev, &priv->tx_napi, mtk_star_tx_poll);
  
--	smap->buckets = bpf_map_kvcalloc(&smap->map, sizeof(*smap->buckets),
--					 nbuckets, GFP_USER | __GFP_NOWARN);
-+	smap->buckets = bpf_map_kvcalloc(&smap->map, nbuckets,
-+					 sizeof(*smap->buckets), GFP_USER | __GFP_NOWARN);
- 	if (!smap->buckets) {
- 		bpf_map_area_free(smap);
- 		return ERR_PTR(-ENOMEM);
++	phydev = of_phy_find_device(priv->phy_node);
++	if (phydev) {
++		phydev->mac_managed_pm = true;
++		put_device(&phydev->mdio.dev);
++	}
++
+ 	return devm_register_netdev(dev, ndev);
+ }
+ 
 -- 
 2.43.0
 
