@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E6451DDCE;
-	Tue, 16 Jul 2024 15:50:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF771DDCE;
+	Tue, 16 Jul 2024 15:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145059; cv=none; b=FlPzaD7mgxa0y5IE+YvwlZrW79W65a3mmGog1WOWmyaoOQGfviAsg6DD10iv5IToKRjQC9+DOB9dMmU31ip27pAnpSgPN7Z5CSQck78E2oxmtB7bfGEmDQBg4+FYKwEzYwoYzR7Ceow+Q5SsLpiG3Pt6q+SrupGJP+TXRTFPLq4=
+	t=1721145062; cv=none; b=nVt37Do09LmBcCRJxmWmD5Tp/RCJqVhhW7Dzp6jAKtC41q9WSR7dZ9ZFBOzezAY1d+AmHeWVgIUC5W8O1H89WJGCE9QYUcq+HVdsD1H9R8cu4FOu0OoQogQV7uhc7KtbTc55+izcqGCkD+4QouSLCT8c3xGp+SVaYw8D14yZkvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145059; c=relaxed/simple;
-	bh=GRm/TN8vnbFZ1fwMxx8KrUkSIg4s1Nhe/Dj0L4QMyjc=;
+	s=arc-20240116; t=1721145062; c=relaxed/simple;
+	bh=HK6afoSxeumJXzTj/M/OeM+0UmV2W0OdEfpjSy0g5CM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NjrcEE/8sZop0ilKGXvDme6RKMfZozbivnqo/nIgOjvDnMtlSGIDN8yJ4dqTECkO3uXUfVu9JcduFPBp2iANPv+wZ2gXZi/voTHo2Nyec1EUqhL0dhZDWDqkUY9riZM61vLR+CdfaLeNK2vmrnYGNUJDaD4EOASQQjJOqQZGHfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xqPBZ2tv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aQCa4Faz94WZkr+OsGgHeGI4+vxfvD5XVN3K0NKlahT6vDV5wkuGTzTpH1OtR3EkWJYHFGtWbU6EW+pW7UhlkWfZuL8nCJiEk5cVWd5FetkkMDf/YeGllCW5NVpAOeu/z+zZVH4mYie2V4TfeQXcfmysZJ6sW2YvDK8O3VA2sXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVC0lPyR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xqPBZ2tv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5676C116B1;
-	Tue, 16 Jul 2024 15:50:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVC0lPyR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B75B9C116B1;
+	Tue, 16 Jul 2024 15:51:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145059;
-	bh=GRm/TN8vnbFZ1fwMxx8KrUkSIg4s1Nhe/Dj0L4QMyjc=;
+	s=korg; t=1721145062;
+	bh=HK6afoSxeumJXzTj/M/OeM+0UmV2W0OdEfpjSy0g5CM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xqPBZ2tvlUaJtI6Hrhco2Z34uAWtqL/VmiCpSaw+o5ChP+d0/wpWmx5YWNYLpLsdJ
-	 +q/6YWTSGCytuWmN/kJoC/4jWciQk2flOtn3fS9va5E6kIMWguWsK1ce8o4CmK7EWx
-	 A/OzPmEe4t2fJR184k3kJgZ1rMHL3kITF6bf3mRU=
+	b=GVC0lPyRJOSjllcbmM2DMSzkjZJUdp2lZXDE3NxFxNWoNiy3zLWd+I4Wqs3vBBqEO
+	 NFBDF+V5io+/uTp86ZfytBZrbY0uUpFtgeZEpVKtCC38sg1o+wGkpMJj/5IBSQiklF
+	 N/53ynugoVZhQnqbarZlEYneGHk+1ZsG4wgSlP0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunseong Kim <yskelg@gmail.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	stable@kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.9 084/143] s390/mm: Add NULL pointer check to crst_table_free() base_crst_free()
-Date: Tue, 16 Jul 2024 17:31:20 +0200
-Message-ID: <20240716152759.206872946@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+d3abed1ad3d367fa2627@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.9 085/143] nilfs2: fix kernel bug on rename operation of broken directory
+Date: Tue, 16 Jul 2024 17:31:21 +0200
+Message-ID: <20240716152759.244223676@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -53,49 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit b5efb63acf7bddaf20eacfcac654c25c446eabe8 upstream.
+commit a9e1ddc09ca55746079cc479aa3eb6411f0d99d4 upstream.
 
-crst_table_free() used to work with NULL pointers before the conversion
-to ptdescs.  Since crst_table_free() can be called with a NULL pointer
-(error handling in crst_table_upgrade() add an explicit check.
+Syzbot reported that in rename directory operation on broken directory on
+nilfs2, __block_write_begin_int() called to prepare block write may fail
+BUG_ON check for access exceeding the folio/page size.
 
-Also add the same check to base_crst_free() for consistency reasons.
+This is because nilfs_dotdot(), which gets parent directory reference
+entry ("..") of the directory to be moved or renamed, does not check
+consistency enough, and may return location exceeding folio/page size for
+broken directories.
 
-In real life this should not happen, since order two GFP_KERNEL
-allocations will not fail, unless FAIL_PAGE_ALLOC is enabled and used.
+Fix this issue by checking required directory entries ("." and "..") in
+the first chunk of the directory in nilfs_dotdot().
 
-Reported-by: Yunseong Kim <yskelg@gmail.com>
-Fixes: 6326c26c1514 ("s390: convert various pgalloc functions to use ptdescs")
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Acked-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Cc: stable@kernel.org
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lkml.kernel.org/r/20240628165107.9006-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+d3abed1ad3d367fa2627@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d3abed1ad3d367fa2627
+Fixes: 2ba466d74ed7 ("nilfs2: directory entry operations")
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/mm/pgalloc.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/nilfs2/dir.c |   32 ++++++++++++++++++++++++++++++--
+ 1 file changed, 30 insertions(+), 2 deletions(-)
 
---- a/arch/s390/mm/pgalloc.c
-+++ b/arch/s390/mm/pgalloc.c
-@@ -55,6 +55,8 @@ unsigned long *crst_table_alloc(struct m
+--- a/fs/nilfs2/dir.c
++++ b/fs/nilfs2/dir.c
+@@ -384,11 +384,39 @@ found:
  
- void crst_table_free(struct mm_struct *mm, unsigned long *table)
+ struct nilfs_dir_entry *nilfs_dotdot(struct inode *dir, struct folio **foliop)
  {
-+	if (!table)
-+		return;
- 	pagetable_free(virt_to_ptdesc(table));
+-	struct nilfs_dir_entry *de = nilfs_get_folio(dir, 0, foliop);
++	struct folio *folio;
++	struct nilfs_dir_entry *de, *next_de;
++	size_t limit;
++	char *msg;
+ 
++	de = nilfs_get_folio(dir, 0, &folio);
+ 	if (IS_ERR(de))
+ 		return NULL;
+-	return nilfs_next_entry(de);
++
++	limit = nilfs_last_byte(dir, 0);  /* is a multiple of chunk size */
++	if (unlikely(!limit || le64_to_cpu(de->inode) != dir->i_ino ||
++		     !nilfs_match(1, ".", de))) {
++		msg = "missing '.'";
++		goto fail;
++	}
++
++	next_de = nilfs_next_entry(de);
++	/*
++	 * If "next_de" has not reached the end of the chunk, there is
++	 * at least one more record.  Check whether it matches "..".
++	 */
++	if (unlikely((char *)next_de == (char *)de + nilfs_chunk_size(dir) ||
++		     !nilfs_match(2, "..", next_de))) {
++		msg = "missing '..'";
++		goto fail;
++	}
++	*foliop = folio;
++	return next_de;
++
++fail:
++	nilfs_error(dir->i_sb, "directory #%lu %s", dir->i_ino, msg);
++	folio_release_kmap(folio, de);
++	return NULL;
  }
  
-@@ -262,6 +264,8 @@ static unsigned long *base_crst_alloc(un
- 
- static void base_crst_free(unsigned long *table)
- {
-+	if (!table)
-+		return;
- 	pagetable_free(virt_to_ptdesc(table));
- }
- 
+ ino_t nilfs_inode_by_name(struct inode *dir, const struct qstr *qstr)
 
 
