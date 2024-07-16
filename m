@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D4A5F9E8;
-	Tue, 16 Jul 2024 15:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D5E8F9E8;
+	Tue, 16 Jul 2024 15:44:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144663; cv=none; b=c1cqEuWVMCHExWh2c8I6nDc5lpPzBNsViu0ClW7zpPk6h4mZhs32GEItLmv28gVQxo5+Fg3TM79PUnNF+OcFYn034N/+29aLIPCg71euXCUx4WLKG3tNS/7paVo/2QvweZxyeO8WRNmfP58bHVNA4SmH2eAVo6kNq77B4yoZWsw=
+	t=1721144666; cv=none; b=pZzq59dr8/8TSbk1WKlYRmYglD7HaeaSliB/fcFb6CTfc9eg4NUN5zFbJvtiOUZmTmGKuHmHMnzfUMR2KljZiMwX6uplY7mxiCT1L09OHgDx2kaKUyxKAK0wtFndc90sSMlmCnRTXPk4FudRGzccOHYzhxkxOKcF5G4JqrQPltk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144663; c=relaxed/simple;
-	bh=wyqES2wZKGzO1F5tTFviC6UOObjqfSviQ8sv3GF1654=;
+	s=arc-20240116; t=1721144666; c=relaxed/simple;
+	bh=dgrXM2wsE2547ZoLxOvFB3qJBv0kHRuqC9Oy2oPaJdM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A2ptxIQ66ME4rc02y02Abq0uiS/q+ANh/35ew3zNzkE75k50Dlw0IuItajGZhpjOb8uoxGP2JVTw5x1G0Vs8BNlivZL1IlddcISxwsofSHB+6p7eOuJi3LFqG9rVJBWShRoM17oFIe+zKOgivKuCAFJnrF2LMaDzfSvwlI/xw0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0WnTVN5c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rc/vTpP2txh3XzDTmPM9NYEFRRK0mg3BbGaShEBKPrEuQ2vB1sRvaMgRAV4muVd3yqRl2ukNMbsrrCr+LyPCZkNLLdrdz72NmnFpqu73XkbDiZhQKg1cHcf4LY6tZFGvflWmOsousYQnxQ9ZgkwIdl6NB4bf0gZM/rSW64zkyJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2coeF7A1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0WnTVN5c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E084DC116B1;
-	Tue, 16 Jul 2024 15:44:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2coeF7A1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E64C116B1;
+	Tue, 16 Jul 2024 15:44:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144663;
-	bh=wyqES2wZKGzO1F5tTFviC6UOObjqfSviQ8sv3GF1654=;
+	s=korg; t=1721144666;
+	bh=dgrXM2wsE2547ZoLxOvFB3qJBv0kHRuqC9Oy2oPaJdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0WnTVN5cjyC8cVo3KHkAxstVQDlvgQDBsE+484FQdLHE8RpXYnBO4P1uShE5vORpk
-	 eTcOAOVWtn7cdn995arFA/KhP17DTAmfk0FH/idHWp9qzE66X56ijJv4Zqlt32sLfS
-	 D2rwiXHJaAiOeD6YE6LgJmrNy+jnF2JEOyb7FzPY=
+	b=2coeF7A1R8xvH0gAEhZaSqWF7yWIpV1/CZlYEGdfK4m93m1Ht8Aoz5qmu5/BaPBd8
+	 m+dm9C3WBzGDJvEDbUl24e8pXIldVMDE4JFkpGp9+JBZ5fmyYP54Z1nEa1GBhB+moc
+	 w0O4AvlV8XlsKehm4OidZaVmd31p4xpDiPxRU9dA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Hillf Danton <hdanton@sina.com>,
+	syzbot+d79afb004be235636ee8@syzkaller.appspotmail.com,
 	Jan Kara <jack@suse.cz>,
+	Hillf Danton <hdanton@sina.com>,
 	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 034/108] nilfs2: fix inode number range checks
-Date: Tue, 16 Jul 2024 17:30:49 +0200
-Message-ID: <20240716152747.307408562@linuxfoundation.org>
+Subject: [PATCH 5.10 035/108] nilfs2: add missing check for inode numbers on directory entries
+Date: Tue, 16 Jul 2024 17:30:50 +0200
+Message-ID: <20240716152747.346127994@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152745.988603303@linuxfoundation.org>
 References: <20240716152745.988603303@linuxfoundation.org>
@@ -55,98 +56,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit e2fec219a36e0993642844be0f345513507031f4 upstream.
+commit bb76c6c274683c8570ad788f79d4b875bde0e458 upstream.
 
-Patch series "nilfs2: fix potential issues related to reserved inodes".
+Syzbot reported that mounting and unmounting a specific pattern of
+corrupted nilfs2 filesystem images causes a use-after-free of metadata
+file inodes, which triggers a kernel bug in lru_add_fn().
 
-This series fixes one use-after-free issue reported by syzbot, caused by
-nilfs2's internal inode being exposed in the namespace on a corrupted
-filesystem, and a couple of flaws that cause problems if the starting
-number of non-reserved inodes written in the on-disk super block is
-intentionally (or corruptly) changed from its default value.
+As Jan Kara pointed out, this is because the link count of a metadata file
+gets corrupted to 0, and nilfs_evict_inode(), which is called from iput(),
+tries to delete that inode (ifile inode in this case).
 
+The inconsistency occurs because directories containing the inode numbers
+of these metadata files that should not be visible in the namespace are
+read without checking.
 
-This patch (of 3):
+Fix this issue by treating the inode numbers of these internal files as
+errors in the sanity check helper when reading directory folios/pages.
 
-In the current implementation of nilfs2, "nilfs->ns_first_ino", which
-gives the first non-reserved inode number, is read from the superblock,
-but its lower limit is not checked.
+Also thanks to Hillf Danton and Matthew Wilcox for their initial mm-layer
+analysis.
 
-As a result, if a number that overlaps with the inode number range of
-reserved inodes such as the root directory or metadata files is set in the
-super block parameter, the inode number test macros (NILFS_MDT_INODE and
-NILFS_VALID_INODE) will not function properly.
-
-In addition, these test macros use left bit-shift calculations using with
-the inode number as the shift count via the BIT macro, but the result of a
-shift calculation that exceeds the bit width of an integer is undefined in
-the C specification, so if "ns_first_ino" is set to a large value other
-than the default value NILFS_USER_INO (=11), the macros may potentially
-malfunction depending on the environment.
-
-Fix these issues by checking the lower bound of "nilfs->ns_first_ino" and
-by preventing bit shifts equal to or greater than the NILFS_USER_INO
-constant in the inode number test macros.
-
-Also, change the type of "ns_first_ino" from signed integer to unsigned
-integer to avoid the need for type casting in comparisons such as the
-lower bound check introduced this time.
-
-Link: https://lkml.kernel.org/r/20240623051135.4180-1-konishi.ryusuke@gmail.com
-Link: https://lkml.kernel.org/r/20240623051135.4180-2-konishi.ryusuke@gmail.com
+Link: https://lkml.kernel.org/r/20240623051135.4180-3-konishi.ryusuke@gmail.com
 Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+d79afb004be235636ee8@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d79afb004be235636ee8
+Reported-by: Jan Kara <jack@suse.cz>
+Closes: https://lkml.kernel.org/r/20240617075758.wewhukbrjod5fp5o@quack3
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Cc: Hillf Danton <hdanton@sina.com>
-Cc: Jan Kara <jack@suse.cz>
 Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/nilfs.h     |    5 +++--
- fs/nilfs2/the_nilfs.c |    6 ++++++
- fs/nilfs2/the_nilfs.h |    2 +-
- 3 files changed, 10 insertions(+), 3 deletions(-)
+ fs/nilfs2/dir.c   |    6 ++++++
+ fs/nilfs2/nilfs.h |    5 +++++
+ 2 files changed, 11 insertions(+)
 
+--- a/fs/nilfs2/dir.c
++++ b/fs/nilfs2/dir.c
+@@ -143,6 +143,9 @@ static bool nilfs_check_page(struct page
+ 			goto Enamelen;
+ 		if (((offs + rec_len - 1) ^ offs) & ~(chunk_size-1))
+ 			goto Espan;
++		if (unlikely(p->inode &&
++			     NILFS_PRIVATE_INODE(le64_to_cpu(p->inode))))
++			goto Einumber;
+ 	}
+ 	if (offs != limit)
+ 		goto Eend;
+@@ -168,6 +171,9 @@ Enamelen:
+ 	goto bad_entry;
+ Espan:
+ 	error = "directory entry across blocks";
++	goto bad_entry;
++Einumber:
++	error = "disallowed inode number";
+ bad_entry:
+ 	nilfs_error(sb,
+ 		    "bad entry in directory #%lu: %s - offset=%lu, inode=%lu, rec_len=%d, name_len=%d",
 --- a/fs/nilfs2/nilfs.h
 +++ b/fs/nilfs2/nilfs.h
-@@ -116,9 +116,10 @@ enum {
- #define NILFS_FIRST_INO(sb) (((struct the_nilfs *)sb->s_fs_info)->ns_first_ino)
+@@ -121,6 +121,11 @@ enum {
+ 	((ino) >= NILFS_FIRST_INO(sb) ||				\
+ 	 ((ino) < NILFS_USER_INO && (NILFS_SYS_INO_BITS & BIT(ino))))
  
- #define NILFS_MDT_INODE(sb, ino) \
--	((ino) < NILFS_FIRST_INO(sb) && (NILFS_MDT_INO_BITS & BIT(ino)))
-+	((ino) < NILFS_USER_INO && (NILFS_MDT_INO_BITS & BIT(ino)))
- #define NILFS_VALID_INODE(sb, ino) \
--	((ino) >= NILFS_FIRST_INO(sb) || (NILFS_SYS_INO_BITS & BIT(ino)))
-+	((ino) >= NILFS_FIRST_INO(sb) ||				\
-+	 ((ino) < NILFS_USER_INO && (NILFS_SYS_INO_BITS & BIT(ino))))
- 
++#define NILFS_PRIVATE_INODE(ino) ({					\
++	ino_t __ino = (ino);						\
++	((__ino) < NILFS_USER_INO && (__ino) != NILFS_ROOT_INO &&	\
++	 (__ino) != NILFS_SKETCH_INO); })
++
  /**
   * struct nilfs_transaction_info: context information for synchronization
---- a/fs/nilfs2/the_nilfs.c
-+++ b/fs/nilfs2/the_nilfs.c
-@@ -452,6 +452,12 @@ static int nilfs_store_disk_layout(struc
- 	}
- 
- 	nilfs->ns_first_ino = le32_to_cpu(sbp->s_first_ino);
-+	if (nilfs->ns_first_ino < NILFS_USER_INO) {
-+		nilfs_err(nilfs->ns_sb,
-+			  "too small lower limit for non-reserved inode numbers: %u",
-+			  nilfs->ns_first_ino);
-+		return -EINVAL;
-+	}
- 
- 	nilfs->ns_blocks_per_segment = le32_to_cpu(sbp->s_blocks_per_segment);
- 	if (nilfs->ns_blocks_per_segment < NILFS_SEG_MIN_BLOCKS) {
---- a/fs/nilfs2/the_nilfs.h
-+++ b/fs/nilfs2/the_nilfs.h
-@@ -182,7 +182,7 @@ struct the_nilfs {
- 	unsigned long		ns_nrsvsegs;
- 	unsigned long		ns_first_data_block;
- 	int			ns_inode_size;
--	int			ns_first_ino;
-+	unsigned int		ns_first_ino;
- 	u32			ns_crc_seed;
- 
- 	/* /sys/fs/<nilfs>/<device> */
+  * @ti_magic: Magic number
 
 
