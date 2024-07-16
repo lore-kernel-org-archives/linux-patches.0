@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A867B641;
-	Tue, 16 Jul 2024 15:41:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6831E894;
+	Tue, 16 Jul 2024 15:41:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144462; cv=none; b=dBEF/9Pbn65/+ZjRlgaAs27svLGSUsSa/vkvr2s32Tn6JecKCdTwXnaWUB+nQyJu4hJFhThfZFMhB47teEmDbpROxLBnW5tmeIcrNYvoFD3KxS88ouVlaBcKhtNbSOcq33jGLs+zHs99ZwlvE2JA9wXbFa5onGmfwH5pp1q+LQk=
+	t=1721144467; cv=none; b=WB8t89B3VroBNuztUEQA4ebRN5eJCB6PlTxAOOmYDX1rNB/+TwpIvmTPEnFhq1qx6WvChzQfMTa5zNIE3moLWTjCfN2YU8G2JFqD0c6oK9YeSnUCpHny2QwgD4cTFVAIZqy+v2sJdpKQzEtuB+IrqwscZ+tG9PPwp2a+LqnhW0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144462; c=relaxed/simple;
-	bh=qQrfzvZBB43qGL/KT6ZWTfuPIjmY4ksiocp63WSMgGs=;
+	s=arc-20240116; t=1721144467; c=relaxed/simple;
+	bh=HzkewxaBY9QR83ft0SUVuBsAlGN1Qk8O+E6d8sdWIsI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tjdq1zlpPmFgF5XsqnmTj4S4Z2Pn6WtHJq2XxBdkujecIDU7S6efo+J8EptHb9X2ngiicq7u7/xRHF/Jxd6gDH83lcMDV/Mz1L9LkxFKRmuV3S9DZCAyRRfvWZc8Ke+yPsjnQgRj6oy7+cA3t/uzRjJO4BY/v9+B4m3FKlmwYvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AREUMtcg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LaH1FlIkM9E++Fy2+zp2FTjtvuvR3WyuODSVQgayqAoyu84+4+2wOcfsmSWznMiuhqMWpH7Jl/PUIHNwyhyV8AkNL++g6jhZIAtquKvkAT73BFPt0bDHsMcadnbG16f+kTJ/1Rjc5NpfzjbObRcE8SoOFFi8WahteMHwQ27zUAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tn+7w0sC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AREUMtcg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA189C116B1;
-	Tue, 16 Jul 2024 15:41:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tn+7w0sC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAF17C116B1;
+	Tue, 16 Jul 2024 15:41:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144462;
-	bh=qQrfzvZBB43qGL/KT6ZWTfuPIjmY4ksiocp63WSMgGs=;
+	s=korg; t=1721144467;
+	bh=HzkewxaBY9QR83ft0SUVuBsAlGN1Qk8O+E6d8sdWIsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AREUMtcggqAJussCcaxmb2xJqTAUeQ2K3zOivkTHU0b1Z6DNgxwcLjHo7ftqcrl9Z
-	 i3S7Q9tlHB5cicmcNUmnnewiJkzD/ax9dkk1amap8gbK+thA4CBcY7p+c4YuEWiLaU
-	 thGhovAfg6ph4qPBvIVRHLGW0k6T49QAxBQ7oR5E=
+	b=Tn+7w0sC14xgRsEOgUsCLogdLwXAoSwUN8NgKxI/mPlxgkhFBXGzr6FyBMU1V09cT
+	 nJmSCKJe3tljmzbJoE68oRZqMixnz8F29MPIsuqQWFCRqa+MmBbxuggjXBQH7aLWsL
+	 i/yZDA0ZwXjxZn5pQ6KCHmIZ0FwBSTMLz5AX5ySU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ec0723ba9605678b14bf@syzkaller.appspotmail.com,
-	Dmitry Antipov <dmantipov@yandex.ru>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 54/78] ppp: reject claimed-as-LCP but actually malformed packets
-Date: Tue, 16 Jul 2024 17:31:26 +0200
-Message-ID: <20240716152742.732360887@linuxfoundation.org>
+Subject: [PATCH 5.4 55/78] udp: Set SOCK_RCU_FREE earlier in udp_lib_get_port().
+Date: Tue, 16 Jul 2024 17:31:27 +0200
+Message-ID: <20240716152742.769781199@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152740.626160410@linuxfoundation.org>
 References: <20240716152740.626160410@linuxfoundation.org>
@@ -52,65 +53,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit f2aeb7306a898e1cbd03963d376f4b6656ca2b55 ]
+[ Upstream commit 5c0b485a8c6116516f33925b9ce5b6104a6eadfd ]
 
-Since 'ppp_async_encode()' assumes valid LCP packets (with code
-from 1 to 7 inclusive), add 'ppp_check_packet()' to ensure that
-LCP packet has an actual body beyond PPP_LCP header bytes, and
-reject claimed-as-LCP but actually malformed data otherwise.
+syzkaller triggered the warning [0] in udp_v4_early_demux().
 
-Reported-by: syzbot+ec0723ba9605678b14bf@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ec0723ba9605678b14bf
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+In udp_v[46]_early_demux() and sk_lookup(), we do not touch the refcount
+of the looked-up sk and use sock_pfree() as skb->destructor, so we check
+SOCK_RCU_FREE to ensure that the sk is safe to access during the RCU grace
+period.
+
+Currently, SOCK_RCU_FREE is flagged for a bound socket after being put
+into the hash table.  Moreover, the SOCK_RCU_FREE check is done too early
+in udp_v[46]_early_demux() and sk_lookup(), so there could be a small race
+window:
+
+  CPU1                                 CPU2
+  ----                                 ----
+  udp_v4_early_demux()                 udp_lib_get_port()
+  |                                    |- hlist_add_head_rcu()
+  |- sk = __udp4_lib_demux_lookup()    |
+  |- DEBUG_NET_WARN_ON_ONCE(sk_is_refcounted(sk));
+                                       `- sock_set_flag(sk, SOCK_RCU_FREE)
+
+We had the same bug in TCP and fixed it in commit 871019b22d1b ("net:
+set SOCK_RCU_FREE before inserting socket into hashtable").
+
+Let's apply the same fix for UDP.
+
+[0]:
+WARNING: CPU: 0 PID: 11198 at net/ipv4/udp.c:2599 udp_v4_early_demux+0x481/0xb70 net/ipv4/udp.c:2599
+Modules linked in:
+CPU: 0 PID: 11198 Comm: syz-executor.1 Not tainted 6.9.0-g93bda33046e7 #13
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+RIP: 0010:udp_v4_early_demux+0x481/0xb70 net/ipv4/udp.c:2599
+Code: c5 7a 15 fe bb 01 00 00 00 44 89 e9 31 ff d3 e3 81 e3 bf ef ff ff 89 de e8 2c 74 15 fe 85 db 0f 85 02 06 00 00 e8 9f 7a 15 fe <0f> 0b e8 98 7a 15 fe 49 8d 7e 60 e8 4f 39 2f fe 49 c7 46 60 20 52
+RSP: 0018:ffffc9000ce3fa58 EFLAGS: 00010293
+RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffffff8318c92c
+RDX: ffff888036ccde00 RSI: ffffffff8318c2f1 RDI: 0000000000000001
+RBP: ffff88805a2dd6e0 R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000000000000 R11: 0001ffffffffffff R12: ffff88805a2dd680
+R13: 0000000000000007 R14: ffff88800923f900 R15: ffff88805456004e
+FS:  00007fc449127640(0000) GS:ffff88807dc00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fc449126e38 CR3: 000000003de4b002 CR4: 0000000000770ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000600
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ ip_rcv_finish_core.constprop.0+0xbdd/0xd20 net/ipv4/ip_input.c:349
+ ip_rcv_finish+0xda/0x150 net/ipv4/ip_input.c:447
+ NF_HOOK include/linux/netfilter.h:314 [inline]
+ NF_HOOK include/linux/netfilter.h:308 [inline]
+ ip_rcv+0x16c/0x180 net/ipv4/ip_input.c:569
+ __netif_receive_skb_one_core+0xb3/0xe0 net/core/dev.c:5624
+ __netif_receive_skb+0x21/0xd0 net/core/dev.c:5738
+ netif_receive_skb_internal net/core/dev.c:5824 [inline]
+ netif_receive_skb+0x271/0x300 net/core/dev.c:5884
+ tun_rx_batched drivers/net/tun.c:1549 [inline]
+ tun_get_user+0x24db/0x2c50 drivers/net/tun.c:2002
+ tun_chr_write_iter+0x107/0x1a0 drivers/net/tun.c:2048
+ new_sync_write fs/read_write.c:497 [inline]
+ vfs_write+0x76f/0x8d0 fs/read_write.c:590
+ ksys_write+0xbf/0x190 fs/read_write.c:643
+ __do_sys_write fs/read_write.c:655 [inline]
+ __se_sys_write fs/read_write.c:652 [inline]
+ __x64_sys_write+0x41/0x50 fs/read_write.c:652
+ x64_sys_call+0xe66/0x1990 arch/x86/include/generated/asm/syscalls_64.h:2
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0x4b/0x110 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
+RIP: 0033:0x7fc44a68bc1f
+Code: 89 54 24 18 48 89 74 24 10 89 7c 24 08 e8 e9 cf f5 ff 48 8b 54 24 18 48 8b 74 24 10 41 89 c0 8b 7c 24 08 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 31 44 89 c7 48 89 44 24 08 e8 3c d0 f5 ff 48
+RSP: 002b:00007fc449126c90 EFLAGS: 00000293 ORIG_RAX: 0000000000000001
+RAX: ffffffffffffffda RBX: 00000000004bc050 RCX: 00007fc44a68bc1f
+RDX: 0000000000000032 RSI: 00000000200000c0 RDI: 00000000000000c8
+RBP: 00000000004bc050 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000032 R11: 0000000000000293 R12: 0000000000000000
+R13: 000000000000000b R14: 00007fc44a5ec530 R15: 0000000000000000
+ </TASK>
+
+Fixes: 6acc9b432e67 ("bpf: Add helper to retrieve socket in BPF")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20240709191356.24010-1-kuniyu@amazon.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_generic.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ net/ipv4/udp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
-index 078c0f474f966..3cd4196b36b21 100644
---- a/drivers/net/ppp/ppp_generic.c
-+++ b/drivers/net/ppp/ppp_generic.c
-@@ -70,6 +70,7 @@
- #define MPHDRLEN_SSN	4	/* ditto with short sequence numbers */
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index b17b636548122..1ccdb6a9ab892 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -313,6 +313,8 @@ int udp_lib_get_port(struct sock *sk, unsigned short snum,
+ 			goto fail_unlock;
+ 		}
  
- #define PPP_PROTO_LEN	2
-+#define PPP_LCP_HDRLEN	4
- 
- /*
-  * An instance of /dev/ppp can be associated with either a ppp
-@@ -491,6 +492,15 @@ static ssize_t ppp_read(struct file *file, char __user *buf,
- 	return ret;
- }
- 
-+static bool ppp_check_packet(struct sk_buff *skb, size_t count)
-+{
-+	/* LCP packets must include LCP header which 4 bytes long:
-+	 * 1-byte code, 1-byte identifier, and 2-byte length.
-+	 */
-+	return get_unaligned_be16(skb->data) != PPP_LCP ||
-+		count >= PPP_PROTO_LEN + PPP_LCP_HDRLEN;
-+}
++		sock_set_flag(sk, SOCK_RCU_FREE);
 +
- static ssize_t ppp_write(struct file *file, const char __user *buf,
- 			 size_t count, loff_t *ppos)
- {
-@@ -513,6 +523,11 @@ static ssize_t ppp_write(struct file *file, const char __user *buf,
- 		kfree_skb(skb);
- 		goto out;
+ 		sk_add_node_rcu(sk, &hslot->head);
+ 		hslot->count++;
+ 		sock_prot_inuse_add(sock_net(sk), sk->sk_prot, 1);
+@@ -329,7 +331,7 @@ int udp_lib_get_port(struct sock *sk, unsigned short snum,
+ 		hslot2->count++;
+ 		spin_unlock(&hslot2->lock);
  	}
-+	ret = -EINVAL;
-+	if (unlikely(!ppp_check_packet(skb, count))) {
-+		kfree_skb(skb);
-+		goto out;
-+	}
- 
- 	switch (pf->kind) {
- 	case INTERFACE:
+-	sock_set_flag(sk, SOCK_RCU_FREE);
++
+ 	error = 0;
+ fail_unlock:
+ 	spin_unlock_bh(&hslot->lock);
 -- 
 2.43.0
 
