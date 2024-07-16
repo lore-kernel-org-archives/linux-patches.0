@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A4B91DDCE;
-	Tue, 16 Jul 2024 16:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909EA1DDCE;
+	Tue, 16 Jul 2024 16:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145833; cv=none; b=tu8rwsSG6n8/q9j1YhuOLwf1L/Q6MdaEChfiJz3b6bOe5qsvGBuJWGC4kn7JxwV56YI6LfA6o0krJmFnjEieyBUV3lzOOf9JK8XFQaY2qq1Z3smnlKGXcLwQAz9mw+lkljvAHlEFjWZbTwOgsbMJe10T6cF+v4f3JqU7apsCn7A=
+	t=1721145836; cv=none; b=b8dVXYWZVEVAk8LhkqLDM8KY7VyMCY403BgcKX+Fs/3phqz9YmNw9yiUMdLkwLUYGB4BfkY44ESWeS6zHOEFRWDkx6rcYbP0nTV75ak1kJZCKr3r4QwQEJ5clHR+55B8lhXcvGT34zSNimiyF3P3fje306QFHPvhDKEIzaQSJ6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145833; c=relaxed/simple;
-	bh=171rOtgENj18iS9+9amY7cmvJriutIRoiexCQpvO4aI=;
+	s=arc-20240116; t=1721145836; c=relaxed/simple;
+	bh=XIY7IRiuWQ7SePMyAg0Jpvjtpz7Hky0ejcYiehF6Byk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZerpYW6gF2jmFsQWVS67D1XT0vQI56ZHNKt7eAGS6p2LNHpIRo1+Uh5zfyGpt/1g4tAeekzMM9SBAPngyWvH6z2Y9L03Zd8FDUqtjWfZQHw65pjTo1WFSSQBV4LUNx1OQxT8WCWWTtwPcpYUDzoNlyQ4Y3HsC8ch5kIg0V0/r10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xrXmCIqW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rf1cgConFURTxZyYG7Nj4v5NY6+lwH1c/nTHAk1OQAhWUowqP94OIRmiN60MgQ9tbzpr2Eqk2vmaGdrUzr4IcR0TVgA4P+Zut/UMPbtbcfjNMwNnG26T2kLifdz8qyFbgNKyRnrGlo28j9CZeuRpriz+DEPtXPoOAYE5vD3M31A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0bFM8+oT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xrXmCIqW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E66EC4AF11;
-	Tue, 16 Jul 2024 16:03:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0bFM8+oT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14DDAC116B1;
+	Tue, 16 Jul 2024 16:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145833;
-	bh=171rOtgENj18iS9+9amY7cmvJriutIRoiexCQpvO4aI=;
+	s=korg; t=1721145836;
+	bh=XIY7IRiuWQ7SePMyAg0Jpvjtpz7Hky0ejcYiehF6Byk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xrXmCIqW/hdDsdQZSowMKCtIYKzhpkzqVUh2QxUkg8Lf1WkYgvmOcZEu6mlG3a/96
-	 Z1jvmCaAQzJWQUrL9Avc6cqcqD+bvA+aDvg+wM/NbUmgUucdDPw4rPfly+C24KalW7
-	 kv/F7Ndm0Q9TOhbXT/qpk4+7y4kPb2AICQsME9NU=
+	b=0bFM8+oTfCg2/SdsndVcCEfBMl2ZzrZk+fiTYirK5RTFbdbQW8KFN/rkR7FkB8mH6
+	 KrmTUBullg4lnz7C7cfIQN0fJM5zjhVBsDkZS7y4F4XdMn1bhKLvsrm0KLyJyoGSYL
+	 O/rr9HlBXtgj9kfb1XJeteUdZ3gPpCvJ9scDYkUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
 	Ekansh Gupta <quic_ekangupt@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 6.6 100/121] misc: fastrpc: Fix memory leak in audio daemon attach operation
-Date: Tue, 16 Jul 2024 17:32:42 +0200
-Message-ID: <20240716152755.176186703@linuxfoundation.org>
+Subject: [PATCH 6.6 101/121] misc: fastrpc: Fix ownership reassignment of remote heap
+Date: Tue, 16 Jul 2024 17:32:43 +0200
+Message-ID: <20240716152755.214197950@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152751.312512071@linuxfoundation.org>
 References: <20240716152751.312512071@linuxfoundation.org>
@@ -54,33 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Ekansh Gupta <quic_ekangupt@quicinc.com>
 
-commit ad0bd973a033003ca578c42a760d1dc77aeea15e upstream.
+commit a6f2f158f1ac4893a4967993105712bf3dad32d9 upstream.
 
-Audio PD daemon send the name as part of the init IOCTL call. This
-name needs to be copied to kernel for which memory is allocated.
-This memory is never freed which might result in memory leak. Free
-the memory when it is not needed.
+Audio PD daemon will allocate memory for audio PD dynamic loading
+usage when it is attaching for the first time to audio PD. As
+part of this, the memory ownership is moved to the VM where
+audio PD can use it. In case daemon process is killed without any
+impact to DSP audio PD, the daemon process will retry to attach to
+audio PD and in this case memory won't be reallocated. If the invoke
+fails due to any reason, as part of err_invoke, the memory ownership
+is getting reassigned to HLOS even when the memory was not allocated.
+At this time the audio PD might still be using the memory and an
+attemp of ownership reassignment would result in memory issue.
 
 Fixes: 0871561055e6 ("misc: fastrpc: Add support for audiopd")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20240628114501.14310-5-srinivas.kandagatla@linaro.org
+Link: https://lore.kernel.org/r/20240628114501.14310-6-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/misc/fastrpc.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 --- a/drivers/misc/fastrpc.c
 +++ b/drivers/misc/fastrpc.c
-@@ -1320,6 +1320,7 @@ static int fastrpc_init_create_static_pr
- 		goto err_invoke;
+@@ -1238,6 +1238,7 @@ static int fastrpc_init_create_static_pr
+ 	struct fastrpc_phy_page pages[1];
+ 	char *name;
+ 	int err;
++	bool scm_done = false;
+ 	struct {
+ 		int pgid;
+ 		u32 namelen;
+@@ -1289,6 +1290,7 @@ static int fastrpc_init_create_static_pr
+ 					fl->cctx->remote_heap->phys, fl->cctx->remote_heap->size, err);
+ 				goto err_map;
+ 			}
++			scm_done = true;
+ 		}
+ 	}
  
- 	kfree(args);
-+	kfree(name);
+@@ -1324,7 +1326,7 @@ static int fastrpc_init_create_static_pr
  
  	return 0;
  err_invoke:
+-	if (fl->cctx->vmcount) {
++	if (fl->cctx->vmcount && scm_done) {
+ 		u64 src_perms = 0;
+ 		struct qcom_scm_vmperm dst_perms;
+ 		u32 i;
 
 
