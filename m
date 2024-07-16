@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB3119AD72;
-	Tue, 16 Jul 2024 15:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5792A195B27;
+	Tue, 16 Jul 2024 15:58:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145493; cv=none; b=rWbwBSVm+oWFOEDis8wfPqgfbF/LPDwkJ9mLKOSHok6TTrI5mSukyAD6k2kbVGl9qCbhRmxqBJUtLFeoNqaF9l0wWEa6yDYWA2LxNau8vmCW+poiO4pdhzCP0MGDSi9K29uS2DHRd/L96b7IHRAbq5G8WaxhwuR8A8UchkXS4og=
+	t=1721145496; cv=none; b=ugLIt4VPT0XvG+Qki7REUZngJF4mB8Hr9TLoI6pvglHjG5wi+ZKFuDhuETvzUe+3i/tI+te4AxIKeipV75P6x/JPO8sEbzC+aHj5tXf6ayWZuF+9PhaMKqKqenrxAB5wAZkE0iK2qX2jicN6U4ytNQXj6Stua/biHPtj6kaajPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145493; c=relaxed/simple;
-	bh=cJbW0iwtJiAaAaAd6kkN0ptXjq2xHcafzj1tAAvpd9U=;
+	s=arc-20240116; t=1721145496; c=relaxed/simple;
+	bh=pC3nyRZgobTDlTtCQSSpvpUcT+TUzInE9Vqz0Eu59c4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z0TV28S6Zc8njBdHrLV+sk/K0YeUHVHLjweaHCowEQR565mefhqwhcx0xECgaykZrseIKPCoG+k/jZ1mkgeMLy79hlfUBdLL3Zq1Tk/j4uRZO/AOEBnPbu01IIByr5p2DWK3WTJnuzkzl6Jxd091ceKy99o5o23Hh1WOPOtousI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j50CYkIg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mn3BYud9XKXmmN5cOtT7uxJbioE/Zu9Sg8Xyvv+tehbsZ6lfCHSMctYq/ID0kmnFeFNBRUf79UxrXLQGTXhMP72Nuu04+5Fipx32IbYBiB6lDt77LhvvTZHw8lfbI2Tzxxv2/fItVCDxPE0dqq7Zv+uwgGJpzgQjLnXg7fQW/hA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dl8w1cg/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j50CYkIg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8696C116B1;
-	Tue, 16 Jul 2024 15:58:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dl8w1cg/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D49C116B1;
+	Tue, 16 Jul 2024 15:58:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145493;
-	bh=cJbW0iwtJiAaAaAd6kkN0ptXjq2xHcafzj1tAAvpd9U=;
+	s=korg; t=1721145496;
+	bh=pC3nyRZgobTDlTtCQSSpvpUcT+TUzInE9Vqz0Eu59c4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j50CYkIgdWmXTiXqstMri5oJNVFme255+YOfUac6KrPgIaXZ+bfXlRZDi6Sl+tDfK
-	 ndiCR1OOf58338o5XvQFD9uD9DMCvDbKH9gta0QzJJUjnjWD40ekWCnRNThYZhCTY1
-	 vLB7SZddby0hPd3FrtIJslm5MTHLLocDDVzW3770=
+	b=Dl8w1cg/DtmyCBMSCHIebtou36wm3samvJD6kUzi9qK40utE6NGNPWXKM469yStxS
+	 5Cws+t+AuPN0bv63VND1aHMkzSeIgd9IxdyrUkdXOkfoy01OTsQJVZ9uaiURNz5m9C
+	 yd86Yxv8WtgqEouqyprR7TgcP0IO7HJPtdRS7QUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+d3abed1ad3d367fa2627@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 84/96] nilfs2: fix kernel bug on rename operation of broken directory
-Date: Tue, 16 Jul 2024 17:32:35 +0200
-Message-ID: <20240716152749.747162543@linuxfoundation.org>
+	=?UTF-8?q?Micha=C5=82=20Kope=C4=87?= <michal.kopec@3mdeb.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 67/96] ALSA: hda/realtek: add quirk for Clevo V5[46]0TU
+Date: Tue, 16 Jul 2024 17:32:18 +0200
+Message-ID: <20240716152749.086064977@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152746.516194097@linuxfoundation.org>
 References: <20240716152746.516194097@linuxfoundation.org>
@@ -45,84 +44,37 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Michał Kopeć <michal.kopec@3mdeb.com>
 
-commit a9e1ddc09ca55746079cc479aa3eb6411f0d99d4 upstream.
+commit e1c6db864599be341cd3bcc041540383215ce05e upstream.
 
-Syzbot reported that in rename directory operation on broken directory on
-nilfs2, __block_write_begin_int() called to prepare block write may fail
-BUG_ON check for access exceeding the folio/page size.
+Apply quirk to fix combo jack detection on a new Clevo model: V5[46]0TU
 
-This is because nilfs_dotdot(), which gets parent directory reference
-entry ("..") of the directory to be moved or renamed, does not check
-consistency enough, and may return location exceeding folio/page size for
-broken directories.
-
-Fix this issue by checking required directory entries ("." and "..") in
-the first chunk of the directory in nilfs_dotdot().
-
-Link: https://lkml.kernel.org/r/20240628165107.9006-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+d3abed1ad3d367fa2627@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=d3abed1ad3d367fa2627
-Fixes: 2ba466d74ed7 ("nilfs2: directory entry operations")
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Michał Kopeć <michal.kopec@3mdeb.com>
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://patch.msgid.link/20240701111010.1496569-1-michal.kopec@3mdeb.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/dir.c |   32 ++++++++++++++++++++++++++++++--
- 1 file changed, 30 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/nilfs2/dir.c
-+++ b/fs/nilfs2/dir.c
-@@ -396,11 +396,39 @@ found:
- 
- struct nilfs_dir_entry *nilfs_dotdot(struct inode *dir, struct page **p)
- {
--	struct nilfs_dir_entry *de = nilfs_get_page(dir, 0, p);
-+	struct page *page;
-+	struct nilfs_dir_entry *de, *next_de;
-+	size_t limit;
-+	char *msg;
- 
-+	de = nilfs_get_page(dir, 0, &page);
- 	if (IS_ERR(de))
- 		return NULL;
--	return nilfs_next_entry(de);
-+
-+	limit = nilfs_last_byte(dir, 0);  /* is a multiple of chunk size */
-+	if (unlikely(!limit || le64_to_cpu(de->inode) != dir->i_ino ||
-+		     !nilfs_match(1, ".", de))) {
-+		msg = "missing '.'";
-+		goto fail;
-+	}
-+
-+	next_de = nilfs_next_entry(de);
-+	/*
-+	 * If "next_de" has not reached the end of the chunk, there is
-+	 * at least one more record.  Check whether it matches "..".
-+	 */
-+	if (unlikely((char *)next_de == (char *)de + nilfs_chunk_size(dir) ||
-+		     !nilfs_match(2, "..", next_de))) {
-+		msg = "missing '..'";
-+		goto fail;
-+	}
-+	*p = page;
-+	return next_de;
-+
-+fail:
-+	nilfs_error(dir->i_sb, "directory #%lu %s", dir->i_ino, msg);
-+	nilfs_put_page(page);
-+	return NULL;
- }
- 
- ino_t nilfs_inode_by_name(struct inode *dir, const struct qstr *qstr)
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10015,6 +10015,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1558, 0xa600, "Clevo NL50NU", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xa650, "Clevo NP[567]0SN[CD]", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xa671, "Clevo NP70SN[CDE]", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0x1558, 0xa763, "Clevo V54x_6x_TU", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xb018, "Clevo NP50D[BE]", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xb019, "Clevo NH77D[BE]Q", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xb022, "Clevo NH77D[DC][QW]", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
 
 
