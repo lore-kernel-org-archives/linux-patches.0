@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD531DDCE;
-	Tue, 16 Jul 2024 16:09:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B2E1DDCE;
+	Tue, 16 Jul 2024 16:09:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721146191; cv=none; b=E5evVwvROF/aL1oL+DSctxnDOi2yVXBWYsr4Qclay60CqNd1vjHVmmT3o50LM5fo71cvtSlchnNpZKMU11O/MbRkPC6r7hvxzAgVFdCsFXjV+725bM/uXIuNxlDrEGmd5tC46gx/Ekcwntp1CapxKwaZDvlgngurup29lDIfM5c=
+	t=1721146194; cv=none; b=r/r3qAph8nQOSmMyVXt34UALwNx2ufLn7Oq+vwwMVTviTADX+lGqJwaBEk4RwMyb5xWHPxo70LXqxbjPGZarAE1ZTOmLSKt6fDjed9VX4TZ/of99rARvT/PmXDJmsh/QpXN4ciwyMHWB4c4jYPmwEUSAmxViTcpi3kuvglY4dpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721146191; c=relaxed/simple;
-	bh=NGg73cMUeAFa8hdvGyZ/FmFSLbBSlB/b5V8/ObkNifI=;
+	s=arc-20240116; t=1721146194; c=relaxed/simple;
+	bh=T9WbLFWec4B0+DrG6LL+1sUfnzk6nk5DAcJoJipGfdM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AYvKnA2GZIed8MCD7LHVVNsXhbl7aox4BFXO5t97zfxeBe7lF7ZRLOr/RqC9EsuMkEcLxJ7OfEoi+r1DCcfA5jxnyN2zHSe5BbVYvum/ZZ4zLp7KBJ4wjw2LFOX6ndx87U9x7HLL6wHuMfg3uNtjDdlJ4bpvcY0wawnMKJTD0bw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ana6Z2uR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MKi+nF89gJiV2Tt50yoh+ByF62t7xpdfP0vM4Jq6qfVXP+zQud+mgFeo8GAWhEsSGj2jhZyTWem90PlJFThI7khixW2NLiGzLsHJgnVEce7HKQHpHPG6o8EemmxkKsCW3PyOiK88md5XbLFQwf6W/YO4Q5J+TflPpkrUKJynVMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJztWwGd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ana6Z2uR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8A89C116B1;
-	Tue, 16 Jul 2024 16:09:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJztWwGd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1C3EC116B1;
+	Tue, 16 Jul 2024 16:09:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721146191;
-	bh=NGg73cMUeAFa8hdvGyZ/FmFSLbBSlB/b5V8/ObkNifI=;
+	s=korg; t=1721146194;
+	bh=T9WbLFWec4B0+DrG6LL+1sUfnzk6nk5DAcJoJipGfdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ana6Z2uRz/9i+xbmhIc/DeX6IBamHMIAasUuVwfKo2dL09AUvUTUW3IPMsAgUbk5v
-	 vOCcYFVhoAEx1pGb0kxGh3Xv8KzU2a9iJEd9ePFsF47eJzEoQEfsgj8APR7YAqn3rA
-	 sW6KMePh8B1SG8bivA4L0DV5RzCoTmIdKo4124oU=
+	b=EJztWwGdCrdO9NeIwOxaAln75R9FSVUQVGBbJGyixrYvMxzBEm5AJ3zRKxI160MGN
+	 1Hlt5Xhhd77+FDvqLxA1BYVzSCRaW/fpn4sLh9o1cEM/JS/U35U//1m1reV52ssEdo
+	 YbeT1MwbkBYCD+XfcPGRQDh/cACGktslg6/Dd02s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Hugh Dickins <hughd@google.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 085/144] octeontx2-af: Fix incorrect value output on error path in rvu_check_rsrc_availability()
-Date: Tue, 16 Jul 2024 17:32:34 +0200
-Message-ID: <20240716152755.809774004@linuxfoundation.org>
+Subject: [PATCH 5.15 086/144] net: fix rc7s __skb_datagram_iter()
+Date: Tue, 16 Jul 2024 17:32:35 +0200
+Message-ID: <20240716152755.847401413@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
 References: <20240716152752.524497140@linuxfoundation.org>
@@ -52,41 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Hugh Dickins <hughd@google.com>
 
-[ Upstream commit 442e26af9aa8115c96541026cbfeaaa76c85d178 ]
+[ Upstream commit f153831097b4435f963e385304cc0f1acba1c657 ]
 
-In rvu_check_rsrc_availability() in case of invalid SSOW req, an incorrect
-data is printed to error log. 'req->sso' value is printed instead of
-'req->ssow'. Looks like "copy-paste" mistake.
+X would not start in my old 32-bit partition (and the "n"-handling looks
+just as wrong on 64-bit, but for whatever reason did not show up there):
+"n" must be accumulated over all pages before it's added to "offset" and
+compared with "copy", immediately after the skb_frag_foreach_page() loop.
 
-Fix this mistake by replacing 'req->sso' with 'req->ssow'.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 746ea74241fa ("octeontx2-af: Add RVU block LF provisioning support")
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20240705095317.12640-1-amishin@t-argos.ru
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: d2d30a376d9c ("net: allow skb_datagram_iter to be called from any context")
+Signed-off-by: Hugh Dickins <hughd@google.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Link: https://patch.msgid.link/fef352e8-b89a-da51-f8ce-04bc39ee6481@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/datagram.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-index bac42e0065c6c..bc8187e3f3393 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-@@ -1553,7 +1553,7 @@ static int rvu_check_rsrc_availability(struct rvu *rvu,
- 		if (req->ssow > block->lf.max) {
- 			dev_err(&rvu->pdev->dev,
- 				"Func 0x%x: Invalid SSOW req, %d > max %d\n",
--				 pcifunc, req->sso, block->lf.max);
-+				 pcifunc, req->ssow, block->lf.max);
- 			return -EINVAL;
- 		}
- 		mappedlfs = rvu_get_rsrc_mapcount(pfvf, block->addr);
+diff --git a/net/core/datagram.c b/net/core/datagram.c
+index 6b7db06eafe68..13f4bf82b2ee8 100644
+--- a/net/core/datagram.c
++++ b/net/core/datagram.c
+@@ -447,11 +447,12 @@ static int __skb_datagram_iter(const struct sk_buff *skb, int offset,
+ 			if (copy > len)
+ 				copy = len;
+ 
++			n = 0;
+ 			skb_frag_foreach_page(frag,
+ 					      skb_frag_off(frag) + offset - start,
+ 					      copy, p, p_off, p_len, copied) {
+ 				vaddr = kmap_local_page(p);
+-				n = INDIRECT_CALL_1(cb, simple_copy_to_iter,
++				n += INDIRECT_CALL_1(cb, simple_copy_to_iter,
+ 					vaddr + p_off, p_len, data, to);
+ 				kunmap_local(vaddr);
+ 			}
 -- 
 2.43.0
 
