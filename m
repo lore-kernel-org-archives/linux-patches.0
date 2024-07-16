@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45C219AD46;
-	Tue, 16 Jul 2024 15:52:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC35119E809;
+	Tue, 16 Jul 2024 15:52:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145132; cv=none; b=aDcljTJ62BoMSv8s0mOE22Tj50VJ74pS/WPk1TfDsOsH4X02fqT3uH+7/UFltuvkNDX5/EW+J4cUqXKx+zeL2HM9CdUxBuWCt8ywzYPoUdSNAgM/I0cXUJB+bcLdcbNqWETaJoF4CNIfMBotflILtFAF1vtTIAQDieCS4XQkaZg=
+	t=1721145135; cv=none; b=hnQAgLzGBdK3L0GRPTMe3v9+MXoBbpLBIhodLnSIEQZ7s2vN5SdeZhLo4Uch0kJIVsY4oubj3Qlsk/8DxzH6z64k16weZ7XKbeKdZNXTxQgi2VmlWmD4d8VVDUocDlPLsEM34NiivoxGVICAqJX3pxuZ46obFfr/fmwrLM1eeCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145132; c=relaxed/simple;
-	bh=D9MmMUgNZXfbMm+IwaBP3VOl/vRNpdbP86qvzraulto=;
+	s=arc-20240116; t=1721145135; c=relaxed/simple;
+	bh=+8L2tPgsUiWKNnbY3CciScwm219vFT6/CD3SawtT4LY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K3aOLznhTSeVSYsCmvFBUx9FG71CTHPHqvvMQRz0rCTkSHPXmNM+ETiEWw6J4HC0rep8QcTt4suoeXbEyj9LReUYWarkPSUDboNBipQimEP/MWQJl3U9ZZzbC8l8gBx8wV2jEy0zL8Fb/7Yuluu+yx5qu1Wvx101b4n4C2bF+8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aS6Tqnz3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rEqyqapp7X7hf+aNQotuaSJ3mSIMZCajyRqrvz7jBTFHWdFLk5kiqlC5w9eHQ3vnCZl01pXeTPT20KXqA8y/B9tNn3hWjvCSLZsFMvCIZ6rmmRaPiJfKCyGmK7T16XgwB2BZa68eOznSDqoy4YjhmfmgpFZhbe2CUjSQqmKlrEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wy9PzH7i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aS6Tqnz3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 408C8C116B1;
-	Tue, 16 Jul 2024 15:52:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wy9PzH7i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B9AFC4AF0B;
+	Tue, 16 Jul 2024 15:52:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145132;
-	bh=D9MmMUgNZXfbMm+IwaBP3VOl/vRNpdbP86qvzraulto=;
+	s=korg; t=1721145135;
+	bh=+8L2tPgsUiWKNnbY3CciScwm219vFT6/CD3SawtT4LY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aS6Tqnz37wYcAtGtPTu7z68HfHF6zzaMqi8DFHVmo+QWIBmiRGmh3ItP1adV0aPas
-	 +7McBKrb3ioDV2whCfMPAqnVv7CXqDkrB30+WXKM0mEgeS1mO3jR2FouLuz9FCuRS5
-	 JP8uD5bFP3En+cDSKQcWXvS+0cLkz/OM/3naBM10=
+	b=wy9PzH7ioZtfLAW4EN8rjKK7JpbQR1CPvLoJXK6b5O8EneTVy+/WUyh2yf1mx0DmJ
+	 maE0zIGuTBqUHRKuF283lOFPrPYDc+X9Z9Zb8DcpLqcQE9wS5KNG1lsn7d/r3SuEWX
+	 f9LvYFqGPlB41WdPNVEOruUDCwZW44h9jJDuDD10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yoonho Shin <yoonho.shin@samsung.com>,
-	Hobin Woo <hobin.woo@samsung.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.9 092/143] ksmbd: discard write access to the directory open
-Date: Tue, 16 Jul 2024 17:31:28 +0200
-Message-ID: <20240716152759.515830155@linuxfoundation.org>
+	Wentong Wu <wentong.wu@intel.com>,
+	Jason Chen <jason.z.chen@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>
+Subject: [PATCH 6.9 110/143] mei: vsc: Prevent timeout error with added delay post-firmware download
+Date: Tue, 16 Jul 2024 17:31:46 +0200
+Message-ID: <20240716152800.208810062@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -52,80 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hobin Woo <hobin.woo@samsung.com>
+From: Wentong Wu <wentong.wu@intel.com>
 
-commit e2e33caa5dc2eae7bddf88b22ce11ec3d760e5cd upstream.
+commit a9e8fe38195ae6f8e5b32907a17b397ff3ce3e48 upstream.
 
-may_open() does not allow a directory to be opened with the write access.
-However, some writing flags set by client result in adding write access
-on server, making ksmbd incompatible with FUSE file system. Simply, let's
-discard the write access when opening a directory.
+After completing the firmware download, the firmware requires some
+time to become functional. This change introduces additional sleep
+time before the first read operation to prevent a confusing timeout
+error in vsc_tp_xfer().
 
-list_add corruption. next is NULL.
-------------[ cut here ]------------
-kernel BUG at lib/list_debug.c:26!
-pc : __list_add_valid+0x88/0xbc
-lr : __list_add_valid+0x88/0xbc
-Call trace:
-__list_add_valid+0x88/0xbc
-fuse_finish_open+0x11c/0x170
-fuse_open_common+0x284/0x5e8
-fuse_dir_open+0x14/0x24
-do_dentry_open+0x2a4/0x4e0
-dentry_open+0x50/0x80
-smb2_open+0xbe4/0x15a4
-handle_ksmbd_work+0x478/0x5ec
-process_one_work+0x1b4/0x448
-worker_thread+0x25c/0x430
-kthread+0x104/0x1d4
-ret_from_fork+0x10/0x20
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Yoonho Shin <yoonho.shin@samsung.com>
-Signed-off-by: Hobin Woo <hobin.woo@samsung.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 566f5ca97680 ("mei: Add transport driver for IVSC device")
+Cc: stable@vger.kernel.org # for 6.8+
+Signed-off-by: Wentong Wu <wentong.wu@intel.com>
+Tested-by: Jason Chen <jason.z.chen@intel.com>
+Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240625081047.4178494-3-wentong.wu@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/misc/mei/platform-vsc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -2051,15 +2051,22 @@ out_err1:
-  * @access:		file access flags
-  * @disposition:	file disposition flags
-  * @may_flags:		set with MAY_ flags
-+ * @is_dir:		is creating open flags for directory
-  *
-  * Return:      file open flags
-  */
- static int smb2_create_open_flags(bool file_present, __le32 access,
- 				  __le32 disposition,
--				  int *may_flags)
-+				  int *may_flags,
-+				  bool is_dir)
- {
- 	int oflags = O_NONBLOCK | O_LARGEFILE;
+--- a/drivers/misc/mei/platform-vsc.c
++++ b/drivers/misc/mei/platform-vsc.c
+@@ -28,8 +28,8 @@
  
-+	if (is_dir) {
-+		access &= ~FILE_WRITE_DESIRE_ACCESS_LE;
-+		ksmbd_debug(SMB, "Discard write access to a directory\n");
-+	}
-+
- 	if (access & FILE_READ_DESIRED_ACCESS_LE &&
- 	    access & FILE_WRITE_DESIRE_ACCESS_LE) {
- 		oflags |= O_RDWR;
-@@ -3167,7 +3174,9 @@ int smb2_open(struct ksmbd_work *work)
+ #define MEI_VSC_MAX_MSG_SIZE		512
  
- 	open_flags = smb2_create_open_flags(file_present, daccess,
- 					    req->CreateDisposition,
--					    &may_flags);
-+					    &may_flags,
-+		req->CreateOptions & FILE_DIRECTORY_FILE_LE ||
-+		(file_present && S_ISDIR(d_inode(path.dentry)->i_mode)));
+-#define MEI_VSC_POLL_DELAY_US		(50 * USEC_PER_MSEC)
+-#define MEI_VSC_POLL_TIMEOUT_US		(200 * USEC_PER_MSEC)
++#define MEI_VSC_POLL_DELAY_US		(100 * USEC_PER_MSEC)
++#define MEI_VSC_POLL_TIMEOUT_US		(400 * USEC_PER_MSEC)
  
- 	if (!test_tree_conn_flag(tcon, KSMBD_TREE_CONN_FLAG_WRITABLE)) {
- 		if (open_flags & (O_CREAT | O_TRUNC)) {
+ #define mei_dev_to_vsc_hw(dev)		((struct mei_vsc_hw *)((dev)->hw))
+ 
 
 
