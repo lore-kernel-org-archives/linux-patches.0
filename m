@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22AB01448ED;
-	Tue, 16 Jul 2024 15:38:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63BAD19DF71;
+	Tue, 16 Jul 2024 15:38:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144322; cv=none; b=D9QZrD0+ZXLbNZbMGisObO2PZuIyatPRGVqxkRfilTHtTGrSU035OMKZjc1m8pqZQMIeeeEZCALVuv+12MNugRtCIYqHJEsUpGPsjNznp/mLavXwgAK/dVPjbU4WmeO3sn2T5FZjGD7ArbyV1APxLAYkTUx5ikHvOfpkJByboao=
+	t=1721144325; cv=none; b=UMBVNSevmKPJPaQWW3Nh+Jp0hXXNuyq4nkJQprCRPooMNJojV8t9jjW+evEBV/gYpSafLIpQma1sTiY3c7FoiUMGCn1i8FdWAs3odQUwQemq0mudeBmHTS3K0DK25zRqQCVk9CYMwqt5n6fASr5dSZhe8x+ZuImYwI0KBAfCEQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144322; c=relaxed/simple;
-	bh=q4hwBc6nUg97PKlhHKCb8OBfwQJFrZKevTFYaWxYvbI=;
+	s=arc-20240116; t=1721144325; c=relaxed/simple;
+	bh=TKrUuKdsbJaxg0o9aTysdmW70TTjwauY92Oj7EkqIwg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CDsNai2T44vaWkUumpWuGOdGhTazuNpCzQYGs/A+cLvONLDEJW+tnuXOP+bsC17D1pPTKaXlhXP4SBM/qp7opW1vKQ5xlbjzuCqnqmWAXxSKcJ83FoRjgpzwX4N8HSWCrEV94kb+BKwwQUINmhNT6b+mA7xT4TXtVZX4MgN3Gg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XRqJ6hiR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SCVCcD6A1BW99R+/CyyQLycQJaD/WG6tl8uQkDczTekpxbeWJx8rXzKb3Dm7RK29b5+bX8vWYGYJv1z1WyKvMo4Brp/mrqmhgb5mquY+TWalkxZbgWVEiYw6mr7aQukQNxNMVcIwzWWU1o3XvxBmjy1X7iWvfTtIyvr4U8qoNkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bt4b6fEb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRqJ6hiR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D0BDC4AF0E;
-	Tue, 16 Jul 2024 15:38:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bt4b6fEb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97614C4AF10;
+	Tue, 16 Jul 2024 15:38:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144322;
-	bh=q4hwBc6nUg97PKlhHKCb8OBfwQJFrZKevTFYaWxYvbI=;
+	s=korg; t=1721144325;
+	bh=TKrUuKdsbJaxg0o9aTysdmW70TTjwauY92Oj7EkqIwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XRqJ6hiRd6Bdtl35Z1YzR4v1yusvfcA98DuXKllXiS9QnGsQZ/ijPJz4YvnQFpuSt
-	 JKcuS2/2T1pQ1rTRGehuswpdKpu13EUxMQ8Q6ipDxui4Ws7xW52EAmcYnQ+GhUEZJL
-	 f0OV3i7yIE/Iy6iS2cdJoDQ24RRrEY2k1+WkxMt8=
+	b=Bt4b6fEbX3LGSYy3+oFP7+E5fzje5yae4g9xtlVK3RSfO3q8iVCE/3kAdfVUDxlNs
+	 rJ/8zY0cm44u7VEs6taOx2Zatzh6kz5cchwj5v+Kr5vq35y7drtBksKO60SD+dsu2v
+	 avNkncVJyraNF/cXe5eYxNLwKR8/Lax0UzR4EKtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinliang Zheng <alexjlzheng@tencent.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Mateusz Guzik <mjguzik@gmail.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Tycho Andersen <tandersen@netflix.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 34/78] mm: optimize the redundant loop of mm_update_owner_next()
-Date: Tue, 16 Jul 2024 17:31:06 +0200
-Message-ID: <20240716152741.957232577@linuxfoundation.org>
+	Jimmy Assarsson <extja@kvaser.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.4 35/78] can: kvaser_usb: Explicitly initialize family in leafimx driver_info struct
+Date: Tue, 16 Jul 2024 17:31:07 +0200
+Message-ID: <20240716152741.997332300@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152740.626160410@linuxfoundation.org>
 References: <20240716152740.626160410@linuxfoundation.org>
@@ -57,47 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinliang Zheng <alexjlzheng@tencent.com>
+From: Jimmy Assarsson <extja@kvaser.com>
 
-commit cf3f9a593dab87a032d2b6a6fb205e7f3de4f0a1 upstream.
+commit 19d5b2698c35b2132a355c67b4d429053804f8cc upstream.
 
-When mm_update_owner_next() is racing with swapoff (try_to_unuse()) or
-/proc or ptrace or page migration (get_task_mm()), it is impossible to
-find an appropriate task_struct in the loop whose mm_struct is the same as
-the target mm_struct.
+Explicitly set the 'family' driver_info struct member for leafimx.
+Previously, the correct operation relied on KVASER_LEAF being the first
+defined value in enum kvaser_usb_leaf_family.
 
-If the above race condition is combined with the stress-ng-zombie and
-stress-ng-dup tests, such a long loop can easily cause a Hard Lockup in
-write_lock_irq() for tasklist_lock.
-
-Recognize this situation in advance and exit early.
-
-Link: https://lkml.kernel.org/r/20240620122123.3877432-1-alexjlzheng@tencent.com
-Signed-off-by: Jinliang Zheng <alexjlzheng@tencent.com>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Mateusz Guzik <mjguzik@gmail.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Oleg Nesterov <oleg@redhat.com>
-Cc: Tycho Andersen <tandersen@netflix.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: e6c80e601053 ("can: kvaser_usb: kvaser_usb_leaf: fix CAN clock frequency regression")
+Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
+Link: https://lore.kernel.org/all/20240628194529.312968-1-extja@kvaser.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/exit.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/exit.c
-+++ b/kernel/exit.c
-@@ -433,6 +433,8 @@ retry:
- 	 * Search through everything else, we should not get here often.
- 	 */
- 	for_each_process(g) {
-+		if (atomic_read(&mm->mm_users) <= 1)
-+			break;
- 		if (g->flags & PF_KTHREAD)
- 			continue;
- 		for_each_thread(g, c) {
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
+@@ -114,6 +114,7 @@ static const struct kvaser_usb_driver_in
+ 
+ static const struct kvaser_usb_driver_info kvaser_usb_driver_info_leafimx = {
+ 	.quirks = 0,
++	.family = KVASER_LEAF,
+ 	.ops = &kvaser_usb_leaf_dev_ops,
+ };
+ 
 
 
