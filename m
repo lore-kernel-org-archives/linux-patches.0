@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C25C17A93F;
-	Tue, 16 Jul 2024 15:56:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ABDB19FA6B;
+	Tue, 16 Jul 2024 15:56:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145405; cv=none; b=Cf6eW8/RURAlq9AjkBj6sNZ4s2A03SIeXjmTRlW+1sriFQa0WIdfTvKOnwb7CIEmXxFu4/f02Vqc0rXjDZxW4t6CvbUOwi3xpnvx2L5/N/9rH1XijbExJiv6kFJyyxNRCmP7MAlcAcDf+Eu02gnvybK8SaCeyigtXUfnJeZi5+U=
+	t=1721145413; cv=none; b=aTAlijVwz0s04vnWJt18UKo5odWWvLvapsRblTkr5KVw5nb7I2XVpT40MCh7feZZFK8YxjrUZcmKnDhdFUACXUkjDU39cCzbR2ST9tSVABD7JlKrKrx6DT2BG40ajeCZzR7ccaMjt6oven7niQXqmKr9DMDycvYrlw4b6iico0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145405; c=relaxed/simple;
-	bh=Oif3yMnWJJlHGc5oNU10U9IwzoKKW9FNoangfdCCWa8=;
+	s=arc-20240116; t=1721145413; c=relaxed/simple;
+	bh=CQJazhY9RipsLptMhIPJEWw4GX0TQRKI+Z7em0qoFRg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lUABSXGd24Y1y2cGluLfGu8vKqY50Y+5Vh2z36Kv6yZ/PpaJRX5OnmHRfbu0P0wwWFgv5Ja7mcY1Rotf4i2jTNY8G2pQgOcwBVqFL67/jSV9xJzbFcF78XF368N/em6k9eSjbkAP6NGZuSff/QFPy9FGnJcC1r2XAHCs6HAVVW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xK5aOgH1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TxM5IL9aoWl8rlrLXegEm1atYTIPc8C/s/6OE6o7nHAJo7LjrVNqIwjdzup5orxFciMTtlrbzWKlxoeuOYsfGL7De+aZBjtgp2T4S1VPQVsk7ZokcNyMVHWy+L4jakDvNJlBYIO+mpXo6WXvZsqrlFgBPlyObI6sVLfuxJ/j/7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kyiK0C2M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xK5aOgH1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B551EC4AF11;
-	Tue, 16 Jul 2024 15:56:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kyiK0C2M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6111C4AF17;
+	Tue, 16 Jul 2024 15:56:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145405;
-	bh=Oif3yMnWJJlHGc5oNU10U9IwzoKKW9FNoangfdCCWa8=;
+	s=korg; t=1721145413;
+	bh=CQJazhY9RipsLptMhIPJEWw4GX0TQRKI+Z7em0qoFRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xK5aOgH1dW4Z9MSbdM+XMOXrMVWSX4kOJ5hmpDuqlylxWIpa9Q1sSZ4Yy8+uSCgFP
-	 slTGnQzzNTkbA3zboh04IykbJdLA9V3NEk7UAOuAYuMREj5OtE4gyXqpjeiuCgc0m+
-	 DJuS/aCsXZgn3FP4YWKdSX+cftYJOUzH/HYiLjfg=
+	b=kyiK0C2MNnunYVJNhVzFYhjQDnORZD+eoxBVnfTtd98UqPxsm5C+mKRWAu7u76wc4
+	 blM9KmufkrDTPmS3GVt5TcdmSFL4RlVOHfs9SOUMGyc5sFVc8Sd/eMMSIeP7scqkgY
+	 Zi+SkHVojCnL3TyyHuWXzHUL7+W2gQY2/xg1ALvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vanillan Wang <vanillanwang@163.com>,
+	Dmitry Smirnov <d.smirnov@inbox.lv>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.1 55/96] USB: serial: option: add Rolling RW350-GL variants
-Date: Tue, 16 Jul 2024 17:32:06 +0200
-Message-ID: <20240716152748.620399797@linuxfoundation.org>
+Subject: [PATCH 6.1 56/96] USB: serial: mos7840: fix crash on resume
+Date: Tue, 16 Jul 2024 17:32:07 +0200
+Message-ID: <20240716152748.658765982@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152746.516194097@linuxfoundation.org>
 References: <20240716152746.516194097@linuxfoundation.org>
@@ -50,93 +50,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vanillan Wang <vanillanwang@163.com>
+From: Dmitry Smirnov <d.smirnov@inbox.lv>
 
-commit ae420771551bd9f04347c59744dd062332bdec3e upstream.
+commit c15a688e49987385baa8804bf65d570e362f8576 upstream.
 
-Update the USB serial option driver support for the Rolling
-RW350-GL
-- VID:PID 33f8:0802, RW350-GL are laptop M.2 cards (with
-MBIM interfaces for /Linux/Chrome OS)
+Since commit c49cfa917025 ("USB: serial: use generic method if no
+alternative is provided in usb serial layer"), USB serial core calls the
+generic resume implementation when the driver has not provided one.
 
-Here are the outputs of usb-devices:
+This can trigger a crash on resume with mos7840 since support for
+multiple read URBs was added back in 2011. Specifically, both port read
+URBs are now submitted on resume for open ports, but the context pointer
+of the second URB is left set to the core rather than mos7840 port
+structure.
 
-usbmode=63: mbim, pipe
+Fix this by implementing dedicated suspend and resume functions for
+mos7840.
 
-T:  Bus=02 Lev=01 Prnt=01 Port=02 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
-D:  Ver= 3.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS= 9 #Cfgs=  1
-P:  Vendor=33f8 ProdID=0802 Rev=00.01
-S:  Manufacturer=Rolling Wireless S.a.r.l.
-S:  Product=USB DATA CARD
-C:  #Ifs= 3 Cfg#= 1 Atr=a0 MxPwr=896mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+Tested with Delock 87414 USB 2.0 to 4x serial adapter.
 
-usbmode=64: mbim, others at (If#= 5 adb)
-
-MBIM(MI0) + GNSS(MI2) + AP log(MI3) + AP META(MI4) + ADB(MI5) +
-MD AT(MI6) + MD META(MI7) + NPT(MI8) + Debug(MI9)
-
-T:  Bus=02 Lev=01 Prnt=01 Port=02 Cnt=01 Dev#=  5 Spd=5000 MxCh= 0
-D:  Ver= 3.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS= 9 #Cfgs=  1
-P:  Vendor=33f8 ProdID=0802 Rev=00.01
-S:  Manufacturer=Rolling Wireless S.a.r.l.
-S:  Product=USB DATA CARD
-C:  #Ifs=10 Cfg#= 1 Atr=a0 MxPwr=896mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
-E:  Ad=05(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=06(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 7 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=07(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=88(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 8 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=08(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=89(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 9 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=09(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=8a(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-
-Signed-off-by: Vanillan Wang <vanillanwang@163.com>
-Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Smirnov <d.smirnov@inbox.lv>
+[ johan: analyse crash and rewrite commit message; set busy flag on
+         resume; drop bulk-in check; drop unnecessary usb_kill_urb() ]
+Fixes: d83b405383c9 ("USB: serial: add support for multiple read urbs")
+Cc: stable@vger.kernel.org	# 3.3
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/serial/mos7840.c |   45 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2333,6 +2333,8 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(4) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x0115, 0xff),			/* Rolling RW135-GL (laptop MBIM) */
- 	  .driver_info = RSVD(5) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x0802, 0xff),			/* Rolling RW350-GL (laptop MBIM) */
-+	  .driver_info = RSVD(5) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0xff, 0x30) },	/* NetPrisma LCUK54-WWD for Global */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0x00, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0xff, 0x40) },
+--- a/drivers/usb/serial/mos7840.c
++++ b/drivers/usb/serial/mos7840.c
+@@ -1736,6 +1736,49 @@ static void mos7840_port_remove(struct u
+ 	kfree(mos7840_port);
+ }
+ 
++static int mos7840_suspend(struct usb_serial *serial, pm_message_t message)
++{
++	struct moschip_port *mos7840_port;
++	struct usb_serial_port *port;
++	int i;
++
++	for (i = 0; i < serial->num_ports; ++i) {
++		port = serial->port[i];
++		if (!tty_port_initialized(&port->port))
++			continue;
++
++		mos7840_port = usb_get_serial_port_data(port);
++
++		usb_kill_urb(mos7840_port->read_urb);
++		mos7840_port->read_urb_busy = false;
++	}
++
++	return 0;
++}
++
++static int mos7840_resume(struct usb_serial *serial)
++{
++	struct moschip_port *mos7840_port;
++	struct usb_serial_port *port;
++	int res;
++	int i;
++
++	for (i = 0; i < serial->num_ports; ++i) {
++		port = serial->port[i];
++		if (!tty_port_initialized(&port->port))
++			continue;
++
++		mos7840_port = usb_get_serial_port_data(port);
++
++		mos7840_port->read_urb_busy = true;
++		res = usb_submit_urb(mos7840_port->read_urb, GFP_NOIO);
++		if (res)
++			mos7840_port->read_urb_busy = false;
++	}
++
++	return 0;
++}
++
+ static struct usb_serial_driver moschip7840_4port_device = {
+ 	.driver = {
+ 		   .owner = THIS_MODULE,
+@@ -1763,6 +1806,8 @@ static struct usb_serial_driver moschip7
+ 	.port_probe = mos7840_port_probe,
+ 	.port_remove = mos7840_port_remove,
+ 	.read_bulk_callback = mos7840_bulk_in_callback,
++	.suspend = mos7840_suspend,
++	.resume = mos7840_resume,
+ };
+ 
+ static struct usb_serial_driver * const serial_drivers[] = {
 
 
