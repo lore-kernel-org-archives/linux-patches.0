@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D881919DF70;
-	Tue, 16 Jul 2024 15:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E97212B72;
+	Tue, 16 Jul 2024 15:45:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144713; cv=none; b=BS2nFiRLRJwOR8xLSfpA3pinOEtrykWSkJNb8lrng3FiqUBLp3ff3LE5ZggQaMi+HRjD3EUSWfknzbERKfZtcOmeRtpo88CswXNqb64MzNQLBqMx2n8j00tL+LluS4fJwIEJWBG3TqlAQSUfnlG0v3UKww6PfWbhqZFlHKRxT3k=
+	t=1721144721; cv=none; b=UIjY0/ur9p1zMAvDEwwY/IQyfxLrj+8NbT4cThzR9Ggtvq20ENr76jikCggxm0tfQfNvofeVkGZBSSb3FqgDkaQVgiWdZl2wgNcgBkr06rT/KE0tHWC8NMLWLydAcm7oUgSKmFgL8i8szk71rXT+Y7Wo3PGOfNPa1nDi0h3E6k4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144713; c=relaxed/simple;
-	bh=IycMh13wCJna4TlYyJwbhQC5K99P1YDyf1rb3WGIfI4=;
+	s=arc-20240116; t=1721144721; c=relaxed/simple;
+	bh=lf0OntD+UyICgjcdcBlDBgWEnSG+1wCdaTAquyRngwg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EjoR27G908lyAiI9nElA02yMbHgsCOWg/d0MSR7SX6XiHTXCAV1l83uJcExLGSB6y/NtYVcNqEz+Ld+q+g4ltX8LhtGwClh6D49SZD8RSP2PDGwBsiFNrg+LoO+eckeJRcdoK8Y70L8xEVqabm6r8l7Ph1T7wVdhI53ns8Zvvts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SFjCn9LL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZNwuWNM4pPboucYqybo1dcX9qcUNOlPA7GRx84VJnP6DdkhidXBTwKqiTBXxUFODPB/M+XlyZRCts1bgex7LRDcZ8GdcG0D2xUfCdRzqgf9Ki2w/On8BTVropr7UDYGRBD7kB9nXVm7ogGCXitt3LOmBP81dDe8pWTVtyS/fEnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dpZF2MTC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SFjCn9LL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FA60C116B1;
-	Tue, 16 Jul 2024 15:45:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dpZF2MTC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F419FC116B1;
+	Tue, 16 Jul 2024 15:45:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144713;
-	bh=IycMh13wCJna4TlYyJwbhQC5K99P1YDyf1rb3WGIfI4=;
+	s=korg; t=1721144721;
+	bh=lf0OntD+UyICgjcdcBlDBgWEnSG+1wCdaTAquyRngwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SFjCn9LLrUMcCTO9uwYbuGnU0lqZSV9FSMAygBacesKbRUowven47ekhW34B03f5M
-	 CiDm8EuyrbGkVuqDgsjjXfupmOotkGOyQFrBOaAYWP6ErylW40ROsZ0rJQs7m+qGi1
-	 //vbhm0KhesMbc2vkuldD1fA1BiEjOew1CPn7WhY=
+	b=dpZF2MTC2bU+Q0AqnPdUKlpFGRduh84ci15BLA5Fp0zebdggouyp0a7tCRgc0y8jP
+	 mrkb6qJghG+0AECpsTtAnPpVIoiTLcy2/pmno9sqVsLg/Gnc0kX/dW7N0tcQX8ZnOh
+	 aZxWihB/bliOtTFdSTrLGlPhzTbeS+fBnJMT9064=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Perches <joe@perches.com>,
-	Aleksander Jan Bajkowski <olek2@wp.pl>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 065/108] net: ethernet: lantiq_etop: fix double free in detach
-Date: Tue, 16 Jul 2024 17:31:20 +0200
-Message-ID: <20240716152748.478641354@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	jinxiaobo <jinxiaobo@uniontech.com>,
+	WangYuli <wangyuli@uniontech.com>
+Subject: [PATCH 5.10 083/108] USB: Add USB_QUIRK_NO_SET_INTF quirk for START BP-850k
+Date: Tue, 16 Jul 2024 17:31:38 +0200
+Message-ID: <20240716152749.170106799@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152745.988603303@linuxfoundation.org>
 References: <20240716152745.988603303@linuxfoundation.org>
@@ -53,43 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksander Jan Bajkowski <olek2@wp.pl>
+From: WangYuli <wangyuli@uniontech.com>
 
-[ Upstream commit e1533b6319ab9c3a97dad314dd88b3783bc41b69 ]
+commit 3859e85de30815a20bce7db712ce3d94d40a682d upstream.
 
-The number of the currently released descriptor is never incremented
-which results in the same skb being released multiple times.
+START BP-850K is a dot matrix printer that crashes when
+it receives a Set-Interface request and needs USB_QUIRK_NO_SET_INTF
+to work properly.
 
-Fixes: 504d4721ee8e ("MIPS: Lantiq: Add ethernet driver")
-Reported-by: Joe Perches <joe@perches.com>
-Closes: https://lore.kernel.org/all/fc1bf93d92bb5b2f99c6c62745507cc22f3a7b2d.camel@perches.com/
-Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20240708205826.5176-1-olek2@wp.pl
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable <stable@kernel.org>
+Signed-off-by: jinxiaobo <jinxiaobo@uniontech.com>
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Link: https://lore.kernel.org/r/202E4B2BD0F0FEA4+20240702154408.631201-1-wangyuli@uniontech.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/lantiq_etop.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/core/quirks.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/lantiq_etop.c b/drivers/net/ethernet/lantiq_etop.c
-index 62300d46d9186..1d7c0b872c594 100644
---- a/drivers/net/ethernet/lantiq_etop.c
-+++ b/drivers/net/ethernet/lantiq_etop.c
-@@ -213,9 +213,9 @@ ltq_etop_free_channel(struct net_device *dev, struct ltq_etop_chan *ch)
- 	if (ch->dma.irq)
- 		free_irq(ch->dma.irq, priv);
- 	if (IS_RX(ch->idx)) {
--		int desc;
-+		struct ltq_dma_channel *dma = &ch->dma;
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -504,6 +504,9 @@ static const struct usb_device_id usb_qu
+ 	{ USB_DEVICE(0x1b1c, 0x1b38), .driver_info = USB_QUIRK_DELAY_INIT |
+ 	  USB_QUIRK_DELAY_CTRL_MSG },
  
--		for (desc = 0; desc < LTQ_DESC_NUM; desc++)
-+		for (dma->desc = 0; dma->desc < LTQ_DESC_NUM; dma->desc++)
- 			dev_kfree_skb_any(ch->skb[ch->dma.desc]);
- 	}
- }
--- 
-2.43.0
-
++	/* START BP-850k Printer */
++	{ USB_DEVICE(0x1bc3, 0x0003), .driver_info = USB_QUIRK_NO_SET_INTF },
++
+ 	/* MIDI keyboard WORLDE MINI */
+ 	{ USB_DEVICE(0x1c75, 0x0204), .driver_info =
+ 			USB_QUIRK_CONFIG_INTF_STRINGS },
 
 
