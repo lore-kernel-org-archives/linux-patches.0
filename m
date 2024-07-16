@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9DE1DA4D;
-	Tue, 16 Jul 2024 15:46:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A129612B72;
+	Tue, 16 Jul 2024 15:46:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144774; cv=none; b=A/+L6iU2nk+2MeoDDcPJ8BXiVAyD6nq2QSzjkFKDQGgkWWHHRwx+ykwLH97PcGMtA781pHDtst+nEvrApQlYMG5i5V4yuqUVnqds40MvW5UYzaby2m1EZY5ZLK+QENHvUSVZF8nNSkyhp796mguMOxdwzdbbQqpByAEZ7/zl7dI=
+	t=1721144777; cv=none; b=J/EgYIkQ3kBWtue1yaMivrruYfftWnG+D2PPeLTtTJMCkorygUi+nQ1wHKxjuTzsumHgwjgpW40g6tZTrJqNewpxwuflHjJJaIrXquCMsZ0qfjAi23xZB6O7s8nX0ShnxCJbLbrulqbX2VtnBQMDbFLxWcwKM1oGaAe9tJRMUpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144774; c=relaxed/simple;
-	bh=nyp4ZMJXSG0ckSDr3wVck9f2sngwWWccIGP72NT5teA=;
+	s=arc-20240116; t=1721144777; c=relaxed/simple;
+	bh=k4SSdnPkjFUMM5cERrQ3yPFeR7hvb8FV9Kmj47ENHtc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EagfC4PkROGC5vS/vQ4uam8J9cznzWzCtMAxnAdJW2vTTr63XviMBJC53Mji3Ivk8Rhmkfp7vRio/d3xO9HNCBNiFsNI/sAXVfumz/q29X9O5MS27OnFg+iRUkHDTwAyXo08JbYmvWpRHvmOx1nYNTt6SwYYTwppo/5JzEwiCQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wdwXIoye; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EGBcNwUNN3YxRXSYhtJMAuhGCMacofZpaOHbSHBtSHwkWqDHWpFnYs5oq7l8oF5ttbYJVKSH6h/gDfz9A2KuefkK15AA6fs+KM+mZpd3+A58UoHRz/AcUKHZxbHp2XLZa5qTzhVC0e+HaWeei935qgryVDLITU8HXnQZeel5EJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CgrpTxci; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wdwXIoye"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A7DBC116B1;
-	Tue, 16 Jul 2024 15:46:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CgrpTxci"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 284BFC116B1;
+	Tue, 16 Jul 2024 15:46:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144774;
-	bh=nyp4ZMJXSG0ckSDr3wVck9f2sngwWWccIGP72NT5teA=;
+	s=korg; t=1721144777;
+	bh=k4SSdnPkjFUMM5cERrQ3yPFeR7hvb8FV9Kmj47ENHtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wdwXIoye5dDK2HUC6t2HwVsfHhqFOHbXwOPx8n2oz7Phchq+42bYCMNAN7Uto/PtD
-	 7pIRvd/RjOfpR99NoTmC1rLckkPjvdGfHsOttANQsTFMs07JlaJVOWnkGwT0YLxn+y
-	 uKLkjEPwNujijQm8W81kyhY8Wz8T5sQnQY5B6/Z0=
+	b=CgrpTxcih3YnixfXzgkG69yMcyS5/aMe9Xgw/ippAO92HB+UuoX1edi5IiWWUC3qj
+	 1fEre1nJgJy+5Nm8yj2JQocoAWvTNMlBbCr+KHVm4+WWnxofqFbpAlzMTHUO3F+97u
+	 6OBGZJCO2+WRinXBPD92KtJxeU76QhECJnDNloUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Michal Mazur <mmazur2@marvell.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 071/108] ARM: davinci: Convert comma to semicolon
-Date: Tue, 16 Jul 2024 17:31:26 +0200
-Message-ID: <20240716152748.708010966@linuxfoundation.org>
+Subject: [PATCH 5.10 072/108] octeontx2-af: fix detection of IP layer
+Date: Tue, 16 Jul 2024 17:31:27 +0200
+Message-ID: <20240716152748.745774874@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152745.988603303@linuxfoundation.org>
 References: <20240716152745.988603303@linuxfoundation.org>
@@ -52,34 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Michal Mazur <mmazur2@marvell.com>
 
-[ Upstream commit acc3815db1a02d654fbc19726ceaadca0d7dd81c ]
+[ Upstream commit 404dc0fd6fb0bb942b18008c6f8c0320b80aca20 ]
 
-Replace a comma between expression statements by a semicolon.
+Checksum and length checks are not enabled for IPv4 header with
+options and IPv6 with extension headers.
+To fix this a change in enum npc_kpu_lc_ltype is required which will
+allow adjustment of LTYPE_MASK to detect all types of IP headers.
 
-Fixes: efc1bb8a6fd5 ("davinci: add power management support")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: 21e6699e5cd6 ("octeontx2-af: Add NPC KPU profile")
+Signed-off-by: Michal Mazur <mmazur2@marvell.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-davinci/pm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/octeontx2/af/npc.h | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/mach-davinci/pm.c b/arch/arm/mach-davinci/pm.c
-index 323ee4e657c45..94d7d69b9db7c 100644
---- a/arch/arm/mach-davinci/pm.c
-+++ b/arch/arm/mach-davinci/pm.c
-@@ -62,7 +62,7 @@ static void davinci_pm_suspend(void)
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/npc.h b/drivers/net/ethernet/marvell/octeontx2/af/npc.h
+index dc34e564c9192..46689d95254bf 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/npc.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/npc.h
+@@ -54,8 +54,13 @@ enum npc_kpu_lb_ltype {
+ 	NPC_LT_LB_CUSTOM1 = 0xF,
+ };
  
- 	/* Configure sleep count in deep sleep register */
- 	val = __raw_readl(pm_config.deepsleep_reg);
--	val &= ~DEEPSLEEP_SLEEPCOUNT_MASK,
-+	val &= ~DEEPSLEEP_SLEEPCOUNT_MASK;
- 	val |= pm_config.sleepcount;
- 	__raw_writel(val, pm_config.deepsleep_reg);
- 
++/* Don't modify ltypes up to IP6_EXT, otherwise length and checksum of IP
++ * headers may not be checked correctly. IPv4 ltypes and IPv6 ltypes must
++ * differ only at bit 0 so mask 0xE can be used to detect extended headers.
++ */
+ enum npc_kpu_lc_ltype {
+-	NPC_LT_LC_IP = 1,
++	NPC_LT_LC_PTP = 1,
++	NPC_LT_LC_IP,
+ 	NPC_LT_LC_IP_OPT,
+ 	NPC_LT_LC_IP6,
+ 	NPC_LT_LC_IP6_EXT,
+@@ -63,7 +68,6 @@ enum npc_kpu_lc_ltype {
+ 	NPC_LT_LC_RARP,
+ 	NPC_LT_LC_MPLS,
+ 	NPC_LT_LC_NSH,
+-	NPC_LT_LC_PTP,
+ 	NPC_LT_LC_FCOE,
+ 	NPC_LT_LC_CUSTOM0 = 0xE,
+ 	NPC_LT_LC_CUSTOM1 = 0xF,
 -- 
 2.43.0
 
