@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B78CF9E8;
-	Tue, 16 Jul 2024 15:34:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 429F5E541;
+	Tue, 16 Jul 2024 15:34:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144068; cv=none; b=bt2RIP29UmcuHGroc4aSdWxisiOPu0pEI0OeXL5Z/3N7hjlLQiLXhLwY4DIs3J2LMS5QmG6bhoz/xsg8W6pdahWpegYHkQv5FmqxtkUgEKf60j0XktnQvHcSYhnqPcE5i+XsZnIC0l9BVLEucP9FzW74p0rndHlUsBP0Gyxxh/M=
+	t=1721144071; cv=none; b=cKM7ip50NEdvSZeqRUgFVUWqk7TG4tiRuEOKhK32KSUpcienF7F9cREzQuEEAYfaegzS4hvxKJWWM18M2XedTtkUqp1bDMhf0A+GRNeSTL+Pmva+7cUq+hh2JigtjnZsFijH+G1CNos05kYMI+gOeqAeNSEiAJ4668ppf9RQAp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144068; c=relaxed/simple;
-	bh=zTnnxogz/Yu7Oi9mlUAEVljxPNoj2i5wO8Tx03YeXpo=;
+	s=arc-20240116; t=1721144071; c=relaxed/simple;
+	bh=n47Se4qgNdZDTjenWrtSSWoJLJlVrw8DqlhSUe59TbI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XkZYGvQanP3JNP86sI1S2i2a9lui4rxgjPs26D9eE1kT2yVr6YOs7ID6WQL7xlBaZcGFL+rvwXbER0TXSbXFy9vZ4iPmHp+F8wD/pnyC3TU1+pHugb7WMNEFKXrXj61zhfO9hYaZHgONcwN8p9lTZN1m9gzpp/8r5b5HvLqCtNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PNxCLecu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ieZ27igURAT9JNRSDt0Jk/uU6inZufCdZDJb0Tqk+jnPmgwtf4aPoKjVqAprB0BMgcq6ESE3BSE1O+4Q+fkq0mhk/nvBngW14X4AiPVCV1eYysQ6w7p+SoopNRCDllDWT6bRe3UrFATKi38MXlro5QZFiO0P3LNO56Ow75RYQKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XWIBOsh7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNxCLecu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFB2FC116B1;
-	Tue, 16 Jul 2024 15:34:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XWIBOsh7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC19AC116B1;
+	Tue, 16 Jul 2024 15:34:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144068;
-	bh=zTnnxogz/Yu7Oi9mlUAEVljxPNoj2i5wO8Tx03YeXpo=;
+	s=korg; t=1721144071;
+	bh=n47Se4qgNdZDTjenWrtSSWoJLJlVrw8DqlhSUe59TbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PNxCLecuocE6EiDuCfWqGS3JKvpAQ5IOcukeJqngaBB9w+6mP0oaNcOkyMGCGV5Sp
-	 7XZPJu1ngyH2KTlJktS+N9SANWVEP7D/ArXwmOJWGwQtdkfFslobjM8nqyTt5KqYme
-	 3/wvWwRVVTBb+HRYgc3+gowzFywSaqszuFRBYN/Q=
+	b=XWIBOsh73AsJiNiLAOI9mVVWdayIyo1H6/IzTWSZAQbwDZZUq+t0bncAWBmdVxUF7
+	 v+fIwTttFmsSF2cCInNty/oxwSW/HzITclnTkxy9LzQWSY8fnOPmOKFHshErl++daC
+	 5rNCSCWximWjq/QhWkzWW0c6OkW9LVBTkboRRX6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bunk <micha@freedict.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Erick Archer <erick.archer@outlook.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Kees Cook <keescook@chromium.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 05/66] media: dw2102: Dont translate i2c read into write
-Date: Tue, 16 Jul 2024 17:30:40 +0200
-Message-ID: <20240716152738.373265387@linuxfoundation.org>
+Subject: [PATCH 4.19 06/66] sctp: prefer struct_size over open coded arithmetic
+Date: Tue, 16 Jul 2024 17:30:41 +0200
+Message-ID: <20240716152738.410985425@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152738.161055634@linuxfoundation.org>
 References: <20240716152738.161055634@linuxfoundation.org>
@@ -51,195 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bunk <micha@freedict.org>
+From: Erick Archer <erick.archer@outlook.com>
 
-[ Upstream commit 0e148a522b8453115038193e19ec7bea71403e4a ]
+[ Upstream commit e5c5f3596de224422561d48eba6ece5210d967b3 ]
 
-The code ignored the I2C_M_RD flag on I2C messages.  Instead it assumed
-an i2c transaction with a single message must be a write operation and a
-transaction with two messages would be a read operation.
+This is an effort to get rid of all multiplications from allocation
+functions in order to prevent integer overflows [1][2].
 
-Though this works for the driver code, it leads to problems once the i2c
-device is exposed to code not knowing this convention.  For example,
-I did "insmod i2c-dev" and issued read requests from userspace, which
-were translated into write requests and destroyed the EEPROM of my
-device.
+As the "ids" variable is a pointer to "struct sctp_assoc_ids" and this
+structure ends in a flexible array:
 
-So, just check and respect the I2C_M_READ flag, which indicates a read
-when set on a message.  If it is absent, it is a write message.
+struct sctp_assoc_ids {
+	[...]
+	sctp_assoc_t	gaids_assoc_id[];
+};
 
-Incidentally, changing from the case statement to a while loop allows
-the code to lift the limitation to two i2c messages per transaction.
+the preferred way in the kernel is to use the struct_size() helper to
+do the arithmetic instead of the calculation "size + size * count" in
+the kmalloc() function.
 
-There are 4 more *_i2c_transfer functions affected by the same behaviour
-and limitation that should be fixed in the same way.
+Also, refactor the code adding the "ids_size" variable to avoid sizing
+twice.
 
-Link: https://lore.kernel.org/linux-media/20220116112238.74171-2-micha@freedict.org
-Signed-off-by: Michael Bunk <micha@freedict.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+This way, the code is more readable and safer.
+
+This code was detected with the help of Coccinelle, and audited and
+modified manually.
+
+Link: https://www.kernel.org/doc/html/latest/process/deprecated.html#open-coded-arithmetic-in-allocator-arguments [1]
+Link: https://github.com/KSPP/linux/issues/160 [2]
+Signed-off-by: Erick Archer <erick.archer@outlook.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/PAXPR02MB724871DB78375AB06B5171C88B152@PAXPR02MB7248.eurprd02.prod.outlook.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb/dw2102.c | 120 ++++++++++++++++++-----------
- 1 file changed, 73 insertions(+), 47 deletions(-)
+ net/sctp/socket.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/usb/dvb-usb/dw2102.c b/drivers/media/usb/dvb-usb/dw2102.c
-index a3c5261f9aa41..aba5396742a85 100644
---- a/drivers/media/usb/dvb-usb/dw2102.c
-+++ b/drivers/media/usb/dvb-usb/dw2102.c
-@@ -719,6 +719,7 @@ static int su3000_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
- {
- 	struct dvb_usb_device *d = i2c_get_adapdata(adap);
- 	struct dw2102_state *state;
-+	int j;
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index f954d3c8876db..c429a1a2bfe23 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -6801,6 +6801,7 @@ static int sctp_getsockopt_assoc_ids(struct sock *sk, int len,
+ 	struct sctp_sock *sp = sctp_sk(sk);
+ 	struct sctp_association *asoc;
+ 	struct sctp_assoc_ids *ids;
++	size_t ids_size;
+ 	u32 num = 0;
  
- 	if (!d)
- 		return -ENODEV;
-@@ -732,11 +733,11 @@ static int su3000_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
- 		return -EAGAIN;
+ 	if (sctp_style(sk, TCP))
+@@ -6813,11 +6814,11 @@ static int sctp_getsockopt_assoc_ids(struct sock *sk, int len,
+ 		num++;
  	}
  
--	switch (num) {
--	case 1:
--		switch (msg[0].addr) {
-+	j = 0;
-+	while (j < num) {
-+		switch (msg[j].addr) {
- 		case SU3000_STREAM_CTRL:
--			state->data[0] = msg[0].buf[0] + 0x36;
-+			state->data[0] = msg[j].buf[0] + 0x36;
- 			state->data[1] = 3;
- 			state->data[2] = 0;
- 			if (dvb_usb_generic_rw(d, state->data, 3,
-@@ -748,61 +749,86 @@ static int su3000_i2c_transfer(struct i2c_adapter *adap, struct i2c_msg msg[],
- 			if (dvb_usb_generic_rw(d, state->data, 1,
- 					state->data, 2, 0) < 0)
- 				err("i2c transfer failed.");
--			msg[0].buf[1] = state->data[0];
--			msg[0].buf[0] = state->data[1];
-+			msg[j].buf[1] = state->data[0];
-+			msg[j].buf[0] = state->data[1];
- 			break;
- 		default:
--			if (3 + msg[0].len > sizeof(state->data)) {
--				warn("i2c wr: len=%d is too big!\n",
--				     msg[0].len);
-+			/* if the current write msg is followed by a another
-+			 * read msg to/from the same address
-+			 */
-+			if ((j+1 < num) && (msg[j+1].flags & I2C_M_RD) &&
-+			    (msg[j].addr == msg[j+1].addr)) {
-+				/* join both i2c msgs to one usb read command */
-+				if (4 + msg[j].len > sizeof(state->data)) {
-+					warn("i2c combined wr/rd: write len=%d is too big!\n",
-+					    msg[j].len);
-+					num = -EOPNOTSUPP;
-+					break;
-+				}
-+				if (1 + msg[j+1].len > sizeof(state->data)) {
-+					warn("i2c combined wr/rd: read len=%d is too big!\n",
-+					    msg[j+1].len);
-+					num = -EOPNOTSUPP;
-+					break;
-+				}
-+
-+				state->data[0] = 0x09;
-+				state->data[1] = msg[j].len;
-+				state->data[2] = msg[j+1].len;
-+				state->data[3] = msg[j].addr;
-+				memcpy(&state->data[4], msg[j].buf, msg[j].len);
-+
-+				if (dvb_usb_generic_rw(d, state->data, msg[j].len + 4,
-+					state->data, msg[j+1].len + 1, 0) < 0)
-+					err("i2c transfer failed.");
-+
-+				memcpy(msg[j+1].buf, &state->data[1], msg[j+1].len);
-+				j++;
-+				break;
-+			}
-+
-+			if (msg[j].flags & I2C_M_RD) {
-+				/* single read */
-+				if (1 + msg[j].len > sizeof(state->data)) {
-+					warn("i2c rd: len=%d is too big!\n", msg[j].len);
-+					num = -EOPNOTSUPP;
-+					break;
-+				}
-+
-+				state->data[0] = 0x09;
-+				state->data[1] = 0;
-+				state->data[2] = msg[j].len;
-+				state->data[3] = msg[j].addr;
-+				memcpy(&state->data[4], msg[j].buf, msg[j].len);
-+
-+				if (dvb_usb_generic_rw(d, state->data, 4,
-+					state->data, msg[j].len + 1, 0) < 0)
-+					err("i2c transfer failed.");
-+
-+				memcpy(msg[j].buf, &state->data[1], msg[j].len);
-+				break;
-+			}
-+
-+			/* single write */
-+			if (3 + msg[j].len > sizeof(state->data)) {
-+				warn("i2c wr: len=%d is too big!\n", msg[j].len);
- 				num = -EOPNOTSUPP;
- 				break;
- 			}
+-	if (len < sizeof(struct sctp_assoc_ids) + sizeof(sctp_assoc_t) * num)
++	ids_size = struct_size(ids, gaids_assoc_id, num);
++	if (len < ids_size)
+ 		return -EINVAL;
  
--			/* always i2c write*/
- 			state->data[0] = 0x08;
--			state->data[1] = msg[0].addr;
--			state->data[2] = msg[0].len;
-+			state->data[1] = msg[j].addr;
-+			state->data[2] = msg[j].len;
- 
--			memcpy(&state->data[3], msg[0].buf, msg[0].len);
-+			memcpy(&state->data[3], msg[j].buf, msg[j].len);
- 
--			if (dvb_usb_generic_rw(d, state->data, msg[0].len + 3,
-+			if (dvb_usb_generic_rw(d, state->data, msg[j].len + 3,
- 						state->data, 1, 0) < 0)
- 				err("i2c transfer failed.");
-+		} // switch
-+		j++;
- 
--		}
--		break;
--	case 2:
--		/* always i2c read */
--		if (4 + msg[0].len > sizeof(state->data)) {
--			warn("i2c rd: len=%d is too big!\n",
--			     msg[0].len);
--			num = -EOPNOTSUPP;
--			break;
--		}
--		if (1 + msg[1].len > sizeof(state->data)) {
--			warn("i2c rd: len=%d is too big!\n",
--			     msg[1].len);
--			num = -EOPNOTSUPP;
--			break;
--		}
+-	len = sizeof(struct sctp_assoc_ids) + sizeof(sctp_assoc_t) * num;
 -
--		state->data[0] = 0x09;
--		state->data[1] = msg[0].len;
--		state->data[2] = msg[1].len;
--		state->data[3] = msg[0].addr;
--		memcpy(&state->data[4], msg[0].buf, msg[0].len);
--
--		if (dvb_usb_generic_rw(d, state->data, msg[0].len + 4,
--					state->data, msg[1].len + 1, 0) < 0)
--			err("i2c transfer failed.");
--
--		memcpy(msg[1].buf, &state->data[1], msg[1].len);
--		break;
--	default:
--		warn("more than 2 i2c messages at a time is not handled yet.");
--		break;
--	}
-+	} // while
- 	mutex_unlock(&d->data_mutex);
- 	mutex_unlock(&d->i2c_mutex);
- 	return num;
++	len = ids_size;
+ 	ids = kmalloc(len, GFP_USER | __GFP_NOWARN);
+ 	if (unlikely(!ids))
+ 		return -ENOMEM;
 -- 
 2.43.0
 
