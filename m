@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B3201DDCE;
-	Tue, 16 Jul 2024 16:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B63417CA0E;
+	Tue, 16 Jul 2024 16:10:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721146212; cv=none; b=boPRfLCxSkfLqFsXtGuCegFNSxXIuZh9HU70sRc7Jb/e22yjCZhRF7Mc47uyEY2d0729n5a7TvQy295AYEyJx2RMqfNaJLXB0fzCnmghwMrmgXOxRpGG2hAhyp7b8NiB4+Xpe4hJ0itbfzrButqRvtsYQFDiq6Jyo0FXHdF80iY=
+	t=1721146215; cv=none; b=Y97Jg40MZEEXd+1890vt/dwx8TBGjeeoYNuRMqv0e9eb+bA0lryk5FLNPHMR+cYsXvlOVZw4xuF/XKRWxn031+dYTCQ/TajdIvuC6jLlcMtQQqWD392Z2RWKHcL6ZFlxbyYS9suinj6CyzsSZpsFTSIRS416L91ZkrYaYkEZM18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721146212; c=relaxed/simple;
-	bh=QMjw0sia1fWb6+xl0Z2UjwQTZK0x1csjUiRY7JxSufM=;
+	s=arc-20240116; t=1721146215; c=relaxed/simple;
+	bh=LKzCNFN+7u9+lCeDQvVYGdSBwFjNk51fbYiWIPxVkTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BbrPRZVArLAHIrUDUwtHJ+c1O6KMPqbVwKi7Zfxmxo1W2C4cuo77oGFSnIORAK3Fd/s9VVqbMDMpKfomj0cUUUhgc2z2YcdmtnHnzOYwWBONa5wEEjPWe28GTxZrSS8/2L6N++jJZT4no0U23TyU7OlPRM1VD4UKsVvewStVba0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=giWElIce; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cucZKv9K9fjO/xdcQcbY4MVus9hr+nf04BOPZFYN1U4l7cnUKnmuszoFS7vZQFNQPy2DZyRsphdNhOl4JXP2NXeFJNA2MWKs50hvBivav8bQuYj0bMnr9IG1IcCzuk4LO4fukdkBdToxToUWvnnk8yvk99qYHvyNx0mJKAkE6sQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iI2hPj/s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="giWElIce"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95BF4C116B1;
-	Tue, 16 Jul 2024 16:10:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iI2hPj/s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BAF9C116B1;
+	Tue, 16 Jul 2024 16:10:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721146212;
-	bh=QMjw0sia1fWb6+xl0Z2UjwQTZK0x1csjUiRY7JxSufM=;
+	s=korg; t=1721146214;
+	bh=LKzCNFN+7u9+lCeDQvVYGdSBwFjNk51fbYiWIPxVkTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=giWElIcebx4EAdVq06n2HZpNs9Rm7INwGSatZlcmgAx3wI6FDZs23Fqtn7sXDLFPj
-	 VZT9JdKcW1XDBmvD1troKEAyjXHQdy+rPMqs6P2Lm5aB/SHhRKuFCwN/hCqEYQzidi
-	 oOPIdHPWowRd9IeyvzERnXpdD0qUPzIArD/epoCY=
+	b=iI2hPj/sKvBg74FAaQ2SvWH0fVlELotEEHUQEVioNaLt+QlUuFmlWNe66ws3n8yGv
+	 PRbrLe0uvzyU8oUAgMnpjKArj/1DPCMau2dHZi/e6P/agfOnhwIFcJag9m5kd2uSVm
+	 Za1whz3Xoy/vFYZgd7A9bqZ+Rr/wyhhtUOGavOAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ghadi Elie Rahme <ghadi.rahme@canonical.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 061/144] bnx2x: Fix multiple UBSAN array-index-out-of-bounds
-Date: Tue, 16 Jul 2024 17:32:10 +0200
-Message-ID: <20240716152754.892935898@linuxfoundation.org>
+	GUO Zihua <guozihua@huawei.com>,
+	John Johansen <john.johansen@canonical.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
+	Casey Schaufler <casey@schaufler-ca.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>
+Subject: [PATCH 5.15 062/144] ima: Avoid blocking in RCU read-side critical section
+Date: Tue, 16 Jul 2024 17:32:11 +0200
+Message-ID: <20240716152754.931696070@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
 References: <20240716152752.524497140@linuxfoundation.org>
@@ -50,185 +54,341 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ghadi Elie Rahme <ghadi.rahme@canonical.com>
+From: GUO Zihua <guozihua@huawei.com>
 
-commit 134061163ee5ca4759de5c24ca3bd71608891ba7 upstream.
+commit 9a95c5bfbf02a0a7f5983280fe284a0ff0836c34 upstream.
 
-Fix UBSAN warnings that occur when using a system with 32 physical
-cpu cores or more, or when the user defines a number of Ethernet
-queues greater than or equal to FP_SB_MAX_E1x using the num_queues
-module parameter.
+A panic happens in ima_match_policy:
 
-Currently there is a read/write out of bounds that occurs on the array
-"struct stats_query_entry query" present inside the "bnx2x_fw_stats_req"
-struct in "drivers/net/ethernet/broadcom/bnx2x/bnx2x.h".
-Looking at the definition of the "struct stats_query_entry query" array:
-
-struct stats_query_entry query[FP_SB_MAX_E1x+
-         BNX2X_FIRST_QUEUE_QUERY_IDX];
-
-FP_SB_MAX_E1x is defined as the maximum number of fast path interrupts and
-has a value of 16, while BNX2X_FIRST_QUEUE_QUERY_IDX has a value of 3
-meaning the array has a total size of 19.
-Since accesses to "struct stats_query_entry query" are offset-ted by
-BNX2X_FIRST_QUEUE_QUERY_IDX, that means that the total number of Ethernet
-queues should not exceed FP_SB_MAX_E1x (16). However one of these queues
-is reserved for FCOE and thus the number of Ethernet queues should be set
-to [FP_SB_MAX_E1x -1] (15) if FCOE is enabled or [FP_SB_MAX_E1x] (16) if
-it is not.
-
-This is also described in a comment in the source code in
-drivers/net/ethernet/broadcom/bnx2x/bnx2x.h just above the Macro definition
-of FP_SB_MAX_E1x. Below is the part of this explanation that it important
-for this patch
-
-/*
-  * The total number of L2 queues, MSIX vectors and HW contexts (CIDs) is
-  * control by the number of fast-path status blocks supported by the
-  * device (HW/FW). Each fast-path status block (FP-SB) aka non-default
-  * status block represents an independent interrupts context that can
-  * serve a regular L2 networking queue. However special L2 queues such
-  * as the FCoE queue do not require a FP-SB and other components like
-  * the CNIC may consume FP-SB reducing the number of possible L2 queues
-  *
-  * If the maximum number of FP-SB available is X then:
-  * a. If CNIC is supported it consumes 1 FP-SB thus the max number of
-  *    regular L2 queues is Y=X-1
-  * b. In MF mode the actual number of L2 queues is Y= (X-1/MF_factor)
-  * c. If the FCoE L2 queue is supported the actual number of L2 queues
-  *    is Y+1
-  * d. The number of irqs (MSIX vectors) is either Y+1 (one extra for
-  *    slow-path interrupts) or Y+2 if CNIC is supported (one additional
-  *    FP interrupt context for the CNIC).
-  * e. The number of HW context (CID count) is always X or X+1 if FCoE
-  *    L2 queue is supported. The cid for the FCoE L2 queue is always X.
-  */
-
-However this driver also supports NICs that use the E2 controller which can
-handle more queues due to having more FP-SB represented by FP_SB_MAX_E2.
-Looking at the commits when the E2 support was added, it was originally
-using the E1x parameters: commit f2e0899f0f27 ("bnx2x: Add 57712 support").
-Back then FP_SB_MAX_E2 was set to 16 the same as E1x. However the driver
-was later updated to take full advantage of the E2 instead of having it be
-limited to the capabilities of the E1x. But as far as we can tell, the
-array "stats_query_entry query" was still limited to using the FP-SB
-available to the E1x cards as part of an oversignt when the driver was
-updated to take full advantage of the E2, and now with the driver being
-aware of the greater queue size supported by E2 NICs, it causes the UBSAN
-warnings seen in the stack traces below.
-
-This patch increases the size of the "stats_query_entry query" array by
-replacing FP_SB_MAX_E1x with FP_SB_MAX_E2 to be large enough to handle
-both types of NICs.
-
-Stack traces:
-
-UBSAN: array-index-out-of-bounds in
-       drivers/net/ethernet/broadcom/bnx2x/bnx2x_stats.c:1529:11
-index 20 is out of range for type 'stats_query_entry [19]'
-CPU: 12 PID: 858 Comm: systemd-network Not tainted 6.9.0-060900rc7-generic
-	     #202405052133
-Hardware name: HP ProLiant DL360 Gen9/ProLiant DL360 Gen9,
-	       BIOS P89 10/21/2019
+BUG: unable to handle kernel NULL pointer dereference at 0000000000000010
+PGD 42f873067 P4D 0
+Oops: 0000 [#1] SMP NOPTI
+CPU: 5 PID: 1286325 Comm: kubeletmonit.sh
+Kdump: loaded Tainted: P
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
+               BIOS 0.0.0 02/06/2015
+RIP: 0010:ima_match_policy+0x84/0x450
+Code: 49 89 fc 41 89 cf 31 ed 89 44 24 14 eb 1c 44 39
+      7b 18 74 26 41 83 ff 05 74 20 48 8b 1b 48 3b 1d
+      f2 b9 f4 00 0f 84 9c 01 00 00 <44> 85 73 10 74 ea
+      44 8b 6b 14 41 f6 c5 01 75 d4 41 f6 c5 02 74 0f
+RSP: 0018:ff71570009e07a80 EFLAGS: 00010207
+RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000200
+RDX: ffffffffad8dc7c0 RSI: 0000000024924925 RDI: ff3e27850dea2000
+RBP: 0000000000000000 R08: 0000000000000000 R09: ffffffffabfce739
+R10: ff3e27810cc42400 R11: 0000000000000000 R12: ff3e2781825ef970
+R13: 00000000ff3e2785 R14: 000000000000000c R15: 0000000000000001
+FS:  00007f5195b51740(0000)
+GS:ff3e278b12d40000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000010 CR3: 0000000626d24002 CR4: 0000000000361ee0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
 Call Trace:
- <TASK>
- dump_stack_lvl+0x76/0xa0
- dump_stack+0x10/0x20
- __ubsan_handle_out_of_bounds+0xcb/0x110
- bnx2x_prep_fw_stats_req+0x2e1/0x310 [bnx2x]
- bnx2x_stats_init+0x156/0x320 [bnx2x]
- bnx2x_post_irq_nic_init+0x81/0x1a0 [bnx2x]
- bnx2x_nic_load+0x8e8/0x19e0 [bnx2x]
- bnx2x_open+0x16b/0x290 [bnx2x]
- __dev_open+0x10e/0x1d0
-RIP: 0033:0x736223927a0a
-Code: d8 64 89 02 48 c7 c0 ff ff ff ff eb b8 0f 1f 00 f3 0f 1e fa 41 89 ca
-      64 8b 04 25 18 00 00 00 85 c0 75 15 b8 2c 00 00 00 0f 05 <48> 3d 00
-      f0 ff ff 77 7e c3 0f 1f 44 00 00 41 54 48 83 ec 30 44 89
-RSP: 002b:00007ffc0bb2ada8 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
-RAX: ffffffffffffffda RBX: 0000583df50f9c78 RCX: 0000736223927a0a
-RDX: 0000000000000020 RSI: 0000583df50ee510 RDI: 0000000000000003
-RBP: 0000583df50d4940 R08: 00007ffc0bb2adb0 R09: 0000000000000080
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000583df5103ae0
-R13: 000000000000035a R14: 0000583df50f9c30 R15: 0000583ddddddf00
-</TASK>
----[ end trace ]---
-------------[ cut here ]------------
-UBSAN: array-index-out-of-bounds in
-       drivers/net/ethernet/broadcom/bnx2x/bnx2x_stats.c:1546:11
-index 28 is out of range for type 'stats_query_entry [19]'
-CPU: 12 PID: 858 Comm: systemd-network Not tainted 6.9.0-060900rc7-generic
-	     #202405052133
-Hardware name: HP ProLiant DL360 Gen9/ProLiant DL360 Gen9,
-	       BIOS P89 10/21/2019
-Call Trace:
-<TASK>
-dump_stack_lvl+0x76/0xa0
-dump_stack+0x10/0x20
-__ubsan_handle_out_of_bounds+0xcb/0x110
-bnx2x_prep_fw_stats_req+0x2fd/0x310 [bnx2x]
-bnx2x_stats_init+0x156/0x320 [bnx2x]
-bnx2x_post_irq_nic_init+0x81/0x1a0 [bnx2x]
-bnx2x_nic_load+0x8e8/0x19e0 [bnx2x]
-bnx2x_open+0x16b/0x290 [bnx2x]
-__dev_open+0x10e/0x1d0
-RIP: 0033:0x736223927a0a
-Code: d8 64 89 02 48 c7 c0 ff ff ff ff eb b8 0f 1f 00 f3 0f 1e fa 41 89 ca
-      64 8b 04 25 18 00 00 00 85 c0 75 15 b8 2c 00 00 00 0f 05 <48> 3d 00
-      f0 ff ff 77 7e c3 0f 1f 44 00 00 41 54 48 83 ec 30 44 89
-RSP: 002b:00007ffc0bb2ada8 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
-RAX: ffffffffffffffda RBX: 0000583df50f9c78 RCX: 0000736223927a0a
-RDX: 0000000000000020 RSI: 0000583df50ee510 RDI: 0000000000000003
-RBP: 0000583df50d4940 R08: 00007ffc0bb2adb0 R09: 0000000000000080
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000583df5103ae0
-R13: 000000000000035a R14: 0000583df50f9c30 R15: 0000583ddddddf00
- </TASK>
----[ end trace ]---
-------------[ cut here ]------------
-UBSAN: array-index-out-of-bounds in
-       drivers/net/ethernet/broadcom/bnx2x/bnx2x_sriov.c:1895:8
-index 29 is out of range for type 'stats_query_entry [19]'
-CPU: 13 PID: 163 Comm: kworker/u96:1 Not tainted 6.9.0-060900rc7-generic
-	     #202405052133
-Hardware name: HP ProLiant DL360 Gen9/ProLiant DL360 Gen9,
-	       BIOS P89 10/21/2019
-Workqueue: bnx2x bnx2x_sp_task [bnx2x]
-Call Trace:
- <TASK>
- dump_stack_lvl+0x76/0xa0
- dump_stack+0x10/0x20
- __ubsan_handle_out_of_bounds+0xcb/0x110
- bnx2x_iov_adjust_stats_req+0x3c4/0x3d0 [bnx2x]
- bnx2x_storm_stats_post.part.0+0x4a/0x330 [bnx2x]
- ? bnx2x_hw_stats_post+0x231/0x250 [bnx2x]
- bnx2x_stats_start+0x44/0x70 [bnx2x]
- bnx2x_stats_handle+0x149/0x350 [bnx2x]
- bnx2x_attn_int_asserted+0x998/0x9b0 [bnx2x]
- bnx2x_sp_task+0x491/0x5c0 [bnx2x]
- process_one_work+0x18d/0x3f0
- </TASK>
----[ end trace ]---
+ ima_get_action+0x22/0x30
+ process_measurement+0xb0/0x830
+ ? page_add_file_rmap+0x15/0x170
+ ? alloc_set_pte+0x269/0x4c0
+ ? prep_new_page+0x81/0x140
+ ? simple_xattr_get+0x75/0xa0
+ ? selinux_file_open+0x9d/0xf0
+ ima_file_check+0x64/0x90
+ path_openat+0x571/0x1720
+ do_filp_open+0x9b/0x110
+ ? page_counter_try_charge+0x57/0xc0
+ ? files_cgroup_alloc_fd+0x38/0x60
+ ? __alloc_fd+0xd4/0x250
+ ? do_sys_open+0x1bd/0x250
+ do_sys_open+0x1bd/0x250
+ do_syscall_64+0x5d/0x1d0
+ entry_SYSCALL_64_after_hwframe+0x65/0xca
 
-Fixes: 50f0a562f8cc ("bnx2x: add fcoe statistics")
-Signed-off-by: Ghadi Elie Rahme <ghadi.rahme@canonical.com>
+Commit c7423dbdbc9e ("ima: Handle -ESTALE returned by
+ima_filter_rule_match()") introduced call to ima_lsm_copy_rule within a
+RCU read-side critical section which contains kmalloc with GFP_KERNEL.
+This implies a possible sleep and violates limitations of RCU read-side
+critical sections on non-PREEMPT systems.
+
+Sleeping within RCU read-side critical section might cause
+synchronize_rcu() returning early and break RCU protection, allowing a
+UAF to happen.
+
+The root cause of this issue could be described as follows:
+|	Thread A	|	Thread B	|
+|			|ima_match_policy	|
+|			|  rcu_read_lock	|
+|ima_lsm_update_rule	|			|
+|  synchronize_rcu	|			|
+|			|    kmalloc(GFP_KERNEL)|
+|			|      sleep		|
+==> synchronize_rcu returns early
+|  kfree(entry)		|			|
+|			|    entry = entry->next|
+==> UAF happens and entry now becomes NULL (or could be anything).
+|			|    entry->action	|
+==> Accessing entry might cause panic.
+
+To fix this issue, we are converting all kmalloc that is called within
+RCU read-side critical section to use GFP_ATOMIC.
+
+Fixes: c7423dbdbc9e ("ima: Handle -ESTALE returned by ima_filter_rule_match()")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20240627111405.1037812-1-ghadi.rahme@canonical.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: GUO Zihua <guozihua@huawei.com>
+Acked-by: John Johansen <john.johansen@canonical.com>
+Reviewed-by: Mimi Zohar <zohar@linux.ibm.com>
+Reviewed-by: Casey Schaufler <casey@schaufler-ca.com>
+[PM: fixed missing comment, long lines, !CONFIG_IMA_LSM_RULES case]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/net/ethernet/broadcom/bnx2x/bnx2x.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x.h
-+++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x.h
-@@ -1262,7 +1262,7 @@ enum {
+---
+ include/linux/lsm_hook_defs.h       |    2 +-
+ include/linux/security.h            |    5 +++--
+ kernel/auditfilter.c                |    5 +++--
+ security/apparmor/audit.c           |    6 +++---
+ security/apparmor/include/audit.h   |    2 +-
+ security/integrity/ima/ima.h        |    2 +-
+ security/integrity/ima/ima_policy.c |   15 +++++++++------
+ security/security.c                 |    6 ++++--
+ security/selinux/include/audit.h    |    4 +++-
+ security/selinux/ss/services.c      |    5 +++--
+ security/smack/smack_lsm.c          |    4 +++-
+ 11 files changed, 34 insertions(+), 22 deletions(-)
+
+--- a/include/linux/lsm_hook_defs.h
++++ b/include/linux/lsm_hook_defs.h
+@@ -379,7 +379,7 @@ LSM_HOOK(int, 0, key_getsecurity, struct
  
- struct bnx2x_fw_stats_req {
- 	struct stats_query_header hdr;
--	struct stats_query_entry query[FP_SB_MAX_E1x+
-+	struct stats_query_entry query[FP_SB_MAX_E2 +
- 		BNX2X_FIRST_QUEUE_QUERY_IDX];
- };
+ #ifdef CONFIG_AUDIT
+ LSM_HOOK(int, 0, audit_rule_init, u32 field, u32 op, char *rulestr,
+-	 void **lsmrule)
++	 void **lsmrule, gfp_t gfp)
+ LSM_HOOK(int, 0, audit_rule_known, struct audit_krule *krule)
+ LSM_HOOK(int, 0, audit_rule_match, u32 secid, u32 field, u32 op, void *lsmrule)
+ LSM_HOOK(void, LSM_RET_VOID, audit_rule_free, void *lsmrule)
+--- a/include/linux/security.h
++++ b/include/linux/security.h
+@@ -1896,7 +1896,8 @@ static inline int security_key_getsecuri
  
+ #ifdef CONFIG_AUDIT
+ #ifdef CONFIG_SECURITY
+-int security_audit_rule_init(u32 field, u32 op, char *rulestr, void **lsmrule);
++int security_audit_rule_init(u32 field, u32 op, char *rulestr, void **lsmrule,
++			     gfp_t gfp);
+ int security_audit_rule_known(struct audit_krule *krule);
+ int security_audit_rule_match(u32 secid, u32 field, u32 op, void *lsmrule);
+ void security_audit_rule_free(void *lsmrule);
+@@ -1904,7 +1905,7 @@ void security_audit_rule_free(void *lsmr
+ #else
+ 
+ static inline int security_audit_rule_init(u32 field, u32 op, char *rulestr,
+-					   void **lsmrule)
++					   void **lsmrule, gfp_t gfp)
+ {
+ 	return 0;
+ }
+--- a/kernel/auditfilter.c
++++ b/kernel/auditfilter.c
+@@ -521,7 +521,8 @@ static struct audit_entry *audit_data_to
+ 			entry->rule.buflen += f_val;
+ 			f->lsm_str = str;
+ 			err = security_audit_rule_init(f->type, f->op, str,
+-						       (void **)&f->lsm_rule);
++						       (void **)&f->lsm_rule,
++						       GFP_KERNEL);
+ 			/* Keep currently invalid fields around in case they
+ 			 * become valid after a policy reload. */
+ 			if (err == -EINVAL) {
+@@ -790,7 +791,7 @@ static inline int audit_dupe_lsm_field(s
+ 
+ 	/* our own (refreshed) copy of lsm_rule */
+ 	ret = security_audit_rule_init(df->type, df->op, df->lsm_str,
+-				       (void **)&df->lsm_rule);
++				       (void **)&df->lsm_rule, GFP_KERNEL);
+ 	/* Keep currently invalid fields around in case they
+ 	 * become valid after a policy reload. */
+ 	if (ret == -EINVAL) {
+--- a/security/apparmor/audit.c
++++ b/security/apparmor/audit.c
+@@ -173,7 +173,7 @@ void aa_audit_rule_free(void *vrule)
+ 	}
+ }
+ 
+-int aa_audit_rule_init(u32 field, u32 op, char *rulestr, void **vrule)
++int aa_audit_rule_init(u32 field, u32 op, char *rulestr, void **vrule, gfp_t gfp)
+ {
+ 	struct aa_audit_rule *rule;
+ 
+@@ -186,14 +186,14 @@ int aa_audit_rule_init(u32 field, u32 op
+ 		return -EINVAL;
+ 	}
+ 
+-	rule = kzalloc(sizeof(struct aa_audit_rule), GFP_KERNEL);
++	rule = kzalloc(sizeof(struct aa_audit_rule), gfp);
+ 
+ 	if (!rule)
+ 		return -ENOMEM;
+ 
+ 	/* Currently rules are treated as coming from the root ns */
+ 	rule->label = aa_label_parse(&root_ns->unconfined->label, rulestr,
+-				     GFP_KERNEL, true, false);
++				     gfp, true, false);
+ 	if (IS_ERR(rule->label)) {
+ 		int err = PTR_ERR(rule->label);
+ 		aa_audit_rule_free(rule);
+--- a/security/apparmor/include/audit.h
++++ b/security/apparmor/include/audit.h
+@@ -186,7 +186,7 @@ static inline int complain_error(int err
+ }
+ 
+ void aa_audit_rule_free(void *vrule);
+-int aa_audit_rule_init(u32 field, u32 op, char *rulestr, void **vrule);
++int aa_audit_rule_init(u32 field, u32 op, char *rulestr, void **vrule, gfp_t gfp);
+ int aa_audit_rule_known(struct audit_krule *rule);
+ int aa_audit_rule_match(u32 sid, u32 field, u32 op, void *vrule);
+ 
+--- a/security/integrity/ima/ima.h
++++ b/security/integrity/ima/ima.h
+@@ -428,7 +428,7 @@ static inline void ima_free_modsig(struc
+ #else
+ 
+ static inline int ima_filter_rule_init(u32 field, u32 op, char *rulestr,
+-				       void **lsmrule)
++				       void **lsmrule, gfp_t gfp)
+ {
+ 	return -EINVAL;
+ }
+--- a/security/integrity/ima/ima_policy.c
++++ b/security/integrity/ima/ima_policy.c
+@@ -370,7 +370,8 @@ static void ima_free_rule(struct ima_rul
+ 	kfree(entry);
+ }
+ 
+-static struct ima_rule_entry *ima_lsm_copy_rule(struct ima_rule_entry *entry)
++static struct ima_rule_entry *ima_lsm_copy_rule(struct ima_rule_entry *entry,
++						gfp_t gfp)
+ {
+ 	struct ima_rule_entry *nentry;
+ 	int i;
+@@ -379,7 +380,7 @@ static struct ima_rule_entry *ima_lsm_co
+ 	 * Immutable elements are copied over as pointers and data; only
+ 	 * lsm rules can change
+ 	 */
+-	nentry = kmemdup(entry, sizeof(*nentry), GFP_KERNEL);
++	nentry = kmemdup(entry, sizeof(*nentry), gfp);
+ 	if (!nentry)
+ 		return NULL;
+ 
+@@ -394,7 +395,8 @@ static struct ima_rule_entry *ima_lsm_co
+ 
+ 		ima_filter_rule_init(nentry->lsm[i].type, Audit_equal,
+ 				     nentry->lsm[i].args_p,
+-				     &nentry->lsm[i].rule);
++				     &nentry->lsm[i].rule,
++				     gfp);
+ 		if (!nentry->lsm[i].rule)
+ 			pr_warn("rule for LSM \'%s\' is undefined\n",
+ 				nentry->lsm[i].args_p);
+@@ -407,7 +409,7 @@ static int ima_lsm_update_rule(struct im
+ 	int i;
+ 	struct ima_rule_entry *nentry;
+ 
+-	nentry = ima_lsm_copy_rule(entry);
++	nentry = ima_lsm_copy_rule(entry, GFP_KERNEL);
+ 	if (!nentry)
+ 		return -ENOMEM;
+ 
+@@ -618,7 +620,7 @@ retry:
+ 		}
+ 
+ 		if (rc == -ESTALE && !rule_reinitialized) {
+-			lsm_rule = ima_lsm_copy_rule(rule);
++			lsm_rule = ima_lsm_copy_rule(rule, GFP_ATOMIC);
+ 			if (lsm_rule) {
+ 				rule_reinitialized = true;
+ 				goto retry;
+@@ -1080,7 +1082,8 @@ static int ima_lsm_rule_init(struct ima_
+ 	entry->lsm[lsm_rule].type = audit_type;
+ 	result = ima_filter_rule_init(entry->lsm[lsm_rule].type, Audit_equal,
+ 				      entry->lsm[lsm_rule].args_p,
+-				      &entry->lsm[lsm_rule].rule);
++				      &entry->lsm[lsm_rule].rule,
++				      GFP_KERNEL);
+ 	if (!entry->lsm[lsm_rule].rule) {
+ 		pr_warn("rule for LSM \'%s\' is undefined\n",
+ 			entry->lsm[lsm_rule].args_p);
+--- a/security/security.c
++++ b/security/security.c
+@@ -2587,9 +2587,11 @@ int security_key_getsecurity(struct key
+ 
+ #ifdef CONFIG_AUDIT
+ 
+-int security_audit_rule_init(u32 field, u32 op, char *rulestr, void **lsmrule)
++int security_audit_rule_init(u32 field, u32 op, char *rulestr, void **lsmrule,
++			     gfp_t gfp)
+ {
+-	return call_int_hook(audit_rule_init, 0, field, op, rulestr, lsmrule);
++	return call_int_hook(audit_rule_init, 0, field, op, rulestr, lsmrule,
++			     gfp);
+ }
+ 
+ int security_audit_rule_known(struct audit_krule *krule)
+--- a/security/selinux/include/audit.h
++++ b/security/selinux/include/audit.h
+@@ -18,12 +18,14 @@
+  *	@op: the operater the rule uses
+  *	@rulestr: the text "target" of the rule
+  *	@rule: pointer to the new rule structure returned via this
++ *	@gfp: GFP flag used for kmalloc
+  *
+  *	Returns 0 if successful, -errno if not.  On success, the rule structure
+  *	will be allocated internally.  The caller must free this structure with
+  *	selinux_audit_rule_free() after use.
+  */
+-int selinux_audit_rule_init(u32 field, u32 op, char *rulestr, void **rule);
++int selinux_audit_rule_init(u32 field, u32 op, char *rulestr, void **rule,
++			    gfp_t gfp);
+ 
+ /**
+  *	selinux_audit_rule_free - free an selinux audit rule structure.
+--- a/security/selinux/ss/services.c
++++ b/security/selinux/ss/services.c
+@@ -3560,7 +3560,8 @@ void selinux_audit_rule_free(void *vrule
+ 	}
+ }
+ 
+-int selinux_audit_rule_init(u32 field, u32 op, char *rulestr, void **vrule)
++int selinux_audit_rule_init(u32 field, u32 op, char *rulestr, void **vrule,
++			    gfp_t gfp)
+ {
+ 	struct selinux_state *state = &selinux_state;
+ 	struct selinux_policy *policy;
+@@ -3601,7 +3602,7 @@ int selinux_audit_rule_init(u32 field, u
+ 		return -EINVAL;
+ 	}
+ 
+-	tmprule = kzalloc(sizeof(struct selinux_audit_rule), GFP_KERNEL);
++	tmprule = kzalloc(sizeof(struct selinux_audit_rule), gfp);
+ 	if (!tmprule)
+ 		return -ENOMEM;
+ 
+--- a/security/smack/smack_lsm.c
++++ b/security/smack/smack_lsm.c
+@@ -4487,11 +4487,13 @@ static int smack_post_notification(const
+  * @op: required testing operator (=, !=, >, <, ...)
+  * @rulestr: smack label to be audited
+  * @vrule: pointer to save our own audit rule representation
++ * @gfp: type of the memory for the allocation
+  *
+  * Prepare to audit cases where (@field @op @rulestr) is true.
+  * The label to be audited is created if necessay.
+  */
+-static int smack_audit_rule_init(u32 field, u32 op, char *rulestr, void **vrule)
++static int smack_audit_rule_init(u32 field, u32 op, char *rulestr, void **vrule,
++				 gfp_t gfp)
+ {
+ 	struct smack_known *skp;
+ 	char **rule = (char **)vrule;
 
 
