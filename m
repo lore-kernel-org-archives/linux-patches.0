@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E4619E7E3;
-	Tue, 16 Jul 2024 15:46:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D879E1DA4D;
+	Tue, 16 Jul 2024 15:46:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144813; cv=none; b=Kvv9DxEmnHS7PN8E9cY8aTy3gweS6ibEptcdNYwb8BKR+ooAhueLZLlyiwOBEKZKUBk+zzN1t9J3BPidSDWvF6WxEL8g3bF0yCVsP9FWlfIK/64YJ9OSSA8VpyxWmkTQcbI3a/mhk+Jad2V8U0ha6GyZa0uG9W1Wu8lZfWhCvXw=
+	t=1721144815; cv=none; b=FyZpnLrYmDuNoyUW3nKfcdJInB+FLr1GYUY4RQ6pQU2zXLIpycqYxvNd9Eh50j3XsmU3lE56Mfqt2PBhXJaHAG7aDcCfxaP0iqGbvgbNvSQPvvNX61WWnpRSllKgBvl7hpdBPkPIeGcID9q27JN1vOewzi7NMbLq068w2uiw31w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144813; c=relaxed/simple;
-	bh=zftNQ9RKLhVgNCLTqyJadC7VNZgBUvIowAo7LmrjOZU=;
+	s=arc-20240116; t=1721144815; c=relaxed/simple;
+	bh=RfGGBb/FfRi0KYWoEziHF09famHM2M5jzkznIsHNzM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U07DVhE27UvSb3KjRGVsnW6EbgUM4Iid0vwfV+oP/zPv+oMnLQabXMZy6VjFbf3Yp+2mx6l6ZOM2d7Z9Qss9lULkn3IaCIszAWJmcXb2sbuFowCGOHR5eEXgJJMQRB1e2V3C8fmQgsIPtlXgZR1hd6Bky3+qG+FuHvLH0q4L5jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aM1bb8pR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pcZlyOiV6ztQ2UM0i4wRrF8vgzm0qjcdoNNpGlT/VJmUb2Q4L9/RM4LJwJa7wORzc62UcmTiPeuelrZRmMm/5VZSGpZBExwLyFDOb6H//HQapE+U0nwZr0cq5ERblErXTq+DeAWpPWzUJm0UXxrpKbNn3wrbseC2a3uEL05USi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MfH4PMEb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aM1bb8pR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73B20C4AF0B;
-	Tue, 16 Jul 2024 15:46:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MfH4PMEb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E54DC4AF11;
+	Tue, 16 Jul 2024 15:46:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144812;
-	bh=zftNQ9RKLhVgNCLTqyJadC7VNZgBUvIowAo7LmrjOZU=;
+	s=korg; t=1721144815;
+	bh=RfGGBb/FfRi0KYWoEziHF09famHM2M5jzkznIsHNzM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aM1bb8pR9JyEb938gkx269bJZXmfhUx+XT+6uU5T+x9Svy9UV6lIeNLuQBC5S+loO
-	 95UdTF0M+HfwVegyri2A8wf5pMYuQwySHA75R6QfY+ETOpJ90hYnmdb5nLXLwvVrbP
-	 2l0cwV/to0QvUj7NAzuP0N+rNq4pLrPgSOyL8+q4=
+	b=MfH4PMEboA3s+srIthKvtIAUcv9grtNgBDMt/bLHpSQA/f8yKou+6I7IB7EOgXC/1
+	 wU05rdqQsOLFV/eEvJ5Xmp9HttgGod3X1XwyDU67YTQbTIJv/ulgtA1F7rZTj6lxND
+	 P5SCKEVB2HxozeKHFvY5WwxeI6BOBMCSn9EEoX4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 102/108] i2c: mark HostNotify target address as used
-Date: Tue, 16 Jul 2024 17:31:57 +0200
-Message-ID: <20240716152749.912624394@linuxfoundation.org>
+Subject: [PATCH 5.10 103/108] i2c: rcar: Add R-Car Gen4 support
+Date: Tue, 16 Jul 2024 17:31:58 +0200
+Message-ID: <20240716152749.951070578@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152745.988603303@linuxfoundation.org>
 References: <20240716152745.988603303@linuxfoundation.org>
@@ -50,37 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit bd9f5348089b65612e5ca976e2ae22f005340331 ]
+[ Upstream commit ea01b71b07993d5c518496692f476a3c6b5d9786 ]
 
-I2C core handles the local target for receiving HostNotify alerts. There
-is no separate driver bound to that address. That means userspace can
-access it if desired, leading to further complications if controllers
-are not capable of reading their own local target. Bind the local target
-to the dummy driver so it will be marked as "handled by the kernel" if
-the HostNotify feature is used. That protects aginst userspace access
-and prevents other drivers binding to it.
+Add support for the I2C Bus Interface on R-Car Gen4 SoCs (e.g. R-Car
+S4-8) by matching on a family-specific compatible value.
 
-Fixes: 2a71593da34d ("i2c: smbus: add core function handling SMBus host-notify")
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+While I2C on R-Car Gen4 does support some extra features (Slave Clock
+Stretch Select), for now it is treated the same as I2C on R-Car Gen3.
+
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+[wsa: removed incorrect "FM+" from commit message]
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Stable-dep-of: ea5ea84c9d35 ("i2c: rcar: ensure Gen3+ reset does not disturb local targets")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/i2c-core-base.c | 1 +
+ drivers/i2c/busses/i2c-rcar.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/i2c/i2c-core-base.c b/drivers/i2c/i2c-core-base.c
-index e8a89e18c640e..6fac638e423ac 100644
---- a/drivers/i2c/i2c-core-base.c
-+++ b/drivers/i2c/i2c-core-base.c
-@@ -969,6 +969,7 @@ EXPORT_SYMBOL_GPL(i2c_unregister_device);
- 
- static const struct i2c_device_id dummy_id[] = {
- 	{ "dummy", 0 },
-+	{ "smbus_host_notify", 0 },
- 	{ },
+diff --git a/drivers/i2c/busses/i2c-rcar.c b/drivers/i2c/busses/i2c-rcar.c
+index 029d999708261..720c3fd757ef2 100644
+--- a/drivers/i2c/busses/i2c-rcar.c
++++ b/drivers/i2c/busses/i2c-rcar.c
+@@ -950,6 +950,7 @@ static const struct of_device_id rcar_i2c_dt_ids[] = {
+ 	{ .compatible = "renesas,rcar-gen1-i2c", .data = (void *)I2C_RCAR_GEN1 },
+ 	{ .compatible = "renesas,rcar-gen2-i2c", .data = (void *)I2C_RCAR_GEN2 },
+ 	{ .compatible = "renesas,rcar-gen3-i2c", .data = (void *)I2C_RCAR_GEN3 },
++	{ .compatible = "renesas,rcar-gen4-i2c", .data = (void *)I2C_RCAR_GEN3 },
+ 	{},
  };
- 
+ MODULE_DEVICE_TABLE(of, rcar_i2c_dt_ids);
 -- 
 2.43.0
 
