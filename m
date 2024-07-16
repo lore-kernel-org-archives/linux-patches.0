@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460E61DDCE;
-	Tue, 16 Jul 2024 16:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A55B17CA0E;
+	Tue, 16 Jul 2024 16:09:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721146145; cv=none; b=p/R4iCWXeoS8KaqGNOOJMGovQ8TRNnVFV0iHFx4dauWusT+KcJ8tu5W9zfyL1VoetXz/XdRnBz1w2fHuY1t7FsjgKQj3j28I864uXovhyn6tvBfeCaedBZhsKCyhxyL86FG37nh3uLncYAraipXQA7wfjDuCRVm6PrHBziupQCo=
+	t=1721146148; cv=none; b=NnaXA7cNBvij9MardnFGBel3LnKxNb3gOk/Rq6o9wrO1/LM+WW39qVSflEvhP8VTNkXm0OWSdWb2Y3BXxKEc+bHjqRkRTw/KDYnM4vlhIyjgyrEl5Ex7k7tdm8sKHT+tHI0dnG81omTiaKo9I1g3mZa/hxQ2323rIKKeBJWz6fk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721146145; c=relaxed/simple;
-	bh=gb+MIVOjxI2kcDceQ8Hy+zZlaWq3ZFUfiwwggkDm5WQ=;
+	s=arc-20240116; t=1721146148; c=relaxed/simple;
+	bh=2319MlCwjUugcVoxYBAzjm8npxVdOptlx3ix1zSKKlA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gzGGo7oJbmf30/hcasrCw4BBrlfDZC3w/bgUrnvnD7EobcS5jOXgo1/qoEa+zuvvq7DI5hONR5i4Zo4hSPneVKTCPL/0WATP0zfmZjxSvphMNq+WqXpZa0OXpG+jSA+M6Y4whIKexw3PrK6PP8GcxqbICrsK9zOnO+owD66BOF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VQfDrbLR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K/Z9AxGGQhW2E6ITDAvAuU1vURxCG6k2A8gBnJ3k/0v+dG5MmUW74SDeO2sWT/ihxhZbeMslbrJFpTlyyNkGR50W1Q2qCrfVJnrovTvNjuKHwfTWKuPXNIbWLa+ETDflUcWG2KUHX61QnrM6A+Os0ARxZPhXpWkschMqZNhHUJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xynw5G5+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VQfDrbLR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0631C116B1;
-	Tue, 16 Jul 2024 16:09:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xynw5G5+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A582AC116B1;
+	Tue, 16 Jul 2024 16:09:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721146145;
-	bh=gb+MIVOjxI2kcDceQ8Hy+zZlaWq3ZFUfiwwggkDm5WQ=;
+	s=korg; t=1721146148;
+	bh=2319MlCwjUugcVoxYBAzjm8npxVdOptlx3ix1zSKKlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VQfDrbLRwW87PsDeOMEhnloIJiJKOi2eVJlUwBnfMCrLCUqaFMve6//QaTxmFR8qh
-	 iegD8IEL3SZvUfYv4RSKMT5IKQU0x9VeTNm666UHbc1rda1tQtTT8ZXZ3FTqz4QC4p
-	 coiKGZOnj2MosrKP5GWNfLaiYt8Gs+8W8DVzqn4k=
+	b=xynw5G5+1JtV4j7frYH2qEwjd0yvKNDeDMjAveRB766gWVoWj6MtnwkHRetiiwDLq
+	 ngKjijyuDl/U49CuRSYDd8LtiKr+kvaXzq3iekTZV2ibV5ABmiy93rKH1BOeSJuRF4
+	 gVER+yTVtBwZ20hoW6h37LdLIsuRFYkoX+BDY5n0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	hmtheboy154 <buingoc67@gmail.com>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 072/144] platform/x86: touchscreen_dmi: Add info for GlobalSpace SolT IVW 11.6" tablet
-Date: Tue, 16 Jul 2024 17:32:21 +0200
-Message-ID: <20240716152755.314259299@linuxfoundation.org>
+Subject: [PATCH 5.15 073/144] platform/x86: touchscreen_dmi: Add info for the EZpad 6s Pro
+Date: Tue, 16 Jul 2024 17:32:22 +0200
+Message-ID: <20240716152755.352566083@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
 References: <20240716152752.524497140@linuxfoundation.org>
@@ -53,64 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: hmtheboy154 <buingoc67@gmail.com>
 
-[ Upstream commit 7c8639aa41343fd7b3dbe09baf6b0791fcc407a1 ]
+[ Upstream commit 3050052613790e75b5e4a8536930426b0a8b0774 ]
 
-This is a tablet created by GlobalSpace Technologies Limited
-which uses an Intel Atom x5-Z8300, 4GB of RAM & 64GB of storage.
+The "EZpad 6s Pro" uses the same touchscreen as the "EZpad 6 Pro B",
+unlike the "Ezpad 6 Pro" which has its own touchscreen.
 
-Link: https://web.archive.org/web/20171102141952/http://globalspace.in/11.6-device.html
 Signed-off-by: hmtheboy154 <buingoc67@gmail.com>
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240527091447.248849-2-hdegoede@redhat.com
+Link: https://lore.kernel.org/r/20240527091447.248849-3-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/touchscreen_dmi.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ drivers/platform/x86/touchscreen_dmi.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
-index 161bd19441042..c6605e0e4760e 100644
+index c6605e0e4760e..664a63c8a36c0 100644
 --- a/drivers/platform/x86/touchscreen_dmi.c
 +++ b/drivers/platform/x86/touchscreen_dmi.c
-@@ -874,6 +874,22 @@ static const struct ts_dmi_data schneider_sct101ctm_data = {
- 	.properties	= schneider_sct101ctm_props,
- };
- 
-+static const struct property_entry globalspace_solt_ivw116_props[] = {
-+	PROPERTY_ENTRY_U32("touchscreen-min-x", 7),
-+	PROPERTY_ENTRY_U32("touchscreen-min-y", 22),
-+	PROPERTY_ENTRY_U32("touchscreen-size-x", 1723),
-+	PROPERTY_ENTRY_U32("touchscreen-size-y", 1077),
-+	PROPERTY_ENTRY_STRING("firmware-name", "gsl1680-globalspace-solt-ivw116.fw"),
-+	PROPERTY_ENTRY_U32("silead,max-fingers", 10),
-+	PROPERTY_ENTRY_BOOL("silead,home-button"),
-+	{ }
-+};
-+
-+static const struct ts_dmi_data globalspace_solt_ivw116_data = {
-+	.acpi_name	= "MSSL1680:00",
-+	.properties	= globalspace_solt_ivw116_props,
-+};
-+
- static const struct property_entry techbite_arc_11_6_props[] = {
- 	PROPERTY_ENTRY_U32("touchscreen-min-x", 5),
- 	PROPERTY_ENTRY_U32("touchscreen-min-y", 7),
-@@ -1569,6 +1585,15 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "SCT101CTM"),
+@@ -1346,6 +1346,17 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
+ 			DMI_MATCH(DMI_BIOS_DATE, "04/24/2018"),
  		},
  	},
 +	{
-+		/* GlobalSpace SoLT IVW 11.6" */
-+		.driver_data = (void *)&globalspace_solt_ivw116_data,
++		/* Jumper EZpad 6s Pro */
++		.driver_data = (void *)&jumper_ezpad_6_pro_b_data,
 +		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Globalspace Tech Pvt Ltd"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "SolTIVW"),
-+			DMI_MATCH(DMI_PRODUCT_SKU, "PN20170413488"),
++			DMI_MATCH(DMI_SYS_VENDOR, "Jumper"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Ezpad"),
++			/* Above matches are too generic, add bios match */
++			DMI_MATCH(DMI_BIOS_VERSION, "E.WSA116_8.E1.042.bin"),
++			DMI_MATCH(DMI_BIOS_DATE, "01/08/2020"),
 +		},
 +	},
  	{
- 		/* Techbite Arc 11.6 */
- 		.driver_data = (void *)&techbite_arc_11_6_data,
+ 		/* Jumper EZpad 6 m4 */
+ 		.driver_data = (void *)&jumper_ezpad_6_m4_data,
 -- 
 2.43.0
 
