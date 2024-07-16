@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E571DDCE;
-	Tue, 16 Jul 2024 16:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319EB1DDCE;
+	Tue, 16 Jul 2024 16:00:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145646; cv=none; b=oOzKAdVVgO2zwo8TlsqWi/Lf1curl4xaJzNBufr1a9iQBNbLg7KVjlNfjLHf8Nq93zb+9JDEMIeAD2TdJDeMXTRBCd9skCa2yA1UONLfd6akBZhJg+o9bQHInjHSX4ai69Wz/+C2c6nq5/NOlc7wb9imhiamdV3oNwTjIC0JB3Y=
+	t=1721145649; cv=none; b=JR9eZ/pcgbW6JAUzsNitYl8iCezbIf7l4iiIJHM0WYTTpoP7tl8ZL/m/+Czwsd+XVbQ5ICzpzxreaEx9dZTeaM3nX36/j0rmpc4XIrhYuW2umAfGT04SzhTfFrAfE1qrWwXTLrRrvmjMcBSwy855weEt//8qA46pWK+oWRN+qPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145646; c=relaxed/simple;
-	bh=S87oRf6/Jm2mQr7rXW1dNEoc8U2v+zRDpZ8IuZ4XOZI=;
+	s=arc-20240116; t=1721145649; c=relaxed/simple;
+	bh=MEKViTN4DuistIxIwh74W5z01fIGKyXdqXgC4U+nn4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NbbkFigKUVRXG/stYc71LOKZoN/w/eNoFA7l03y3XvYA+bt3+0XEm/iZboHJHBe0S6NJAtSeAipoXRvYvzh1jUy8q3pO/Nf3/VawNwwq16e2svdOs7XMtzX0Ko/PkWk+f/b4v1BEtReCT/gGcboIOouAD92lDhYzioN76AXrHW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7Nn1dq3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LfUSszYXvcMiniPOOtdYgD/XipbVH86/1PdKlmPs4+B39l5TTi9MMCuz8DovswxSmHjRkafLGd30SUc7YSLymFXvzMIVC0e1WcR2UqYuBpRbqjsvuxGZohr1oJ/9Kzr7DQ0vQZ1ltj4dUSKWUEkdyeyZS3Wuyo6JRxD1WAuFS1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oeYMmFbl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7Nn1dq3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA30EC116B1;
-	Tue, 16 Jul 2024 16:00:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oeYMmFbl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A900EC116B1;
+	Tue, 16 Jul 2024 16:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145646;
-	bh=S87oRf6/Jm2mQr7rXW1dNEoc8U2v+zRDpZ8IuZ4XOZI=;
+	s=korg; t=1721145649;
+	bh=MEKViTN4DuistIxIwh74W5z01fIGKyXdqXgC4U+nn4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r7Nn1dq3gvB4xXIXScvplnbmE37aiMiRet/w6++INfOEkbJKKLDtlrWUriT7jr6Cm
-	 PUonoDfLJpe5TjU4EB7ojLI20YMSd/v5dblU1PI0cjEQNbAYZo45W7IWhr19Q+clg8
-	 gCJ2f+ME7zXWuIJwjITv00Q5HRPGmsntwYKaeGlA=
+	b=oeYMmFblVLV9/BKm2Dzj+0JT2qCVUOzGP/gnlUXacCYgK8+lMfJmYFlQPeysUU5f4
+	 jH6rszWLUEH3mr8ka2EPmKQd3cdXdTbRu4gEFkILYnbXCaLZdL/Q7IK41kXWUoG4Dh
+	 mNqRdOMjOQ9iIBkF853hYeBHR6yJ1SsaOxAe0z4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 037/121] arm64: dts: qcom: sc8180x: Fix LLCC reg property again
-Date: Tue, 16 Jul 2024 17:31:39 +0200
-Message-ID: <20240716152752.750553041@linuxfoundation.org>
+Subject: [PATCH 6.6 038/121] firmware: cs_dsp: Fix overflow checking of wmfw header
+Date: Tue, 16 Jul 2024 17:31:40 +0200
+Message-ID: <20240716152752.789185314@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152751.312512071@linuxfoundation.org>
 References: <20240716152751.312512071@linuxfoundation.org>
@@ -52,51 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 3df1627d8370a9c420b49743976b3eeba32afbbc ]
+[ Upstream commit 3019b86bce16fbb5bc1964f3544d0ce7d0137278 ]
 
-Commit '74cf6675c35e ("arm64: dts: qcom: sc8180x: Fix LLCC reg
-property")' transitioned the SC8180X LLCC node to describe each memory
-region individually, but did not include all the regions.
+Fix the checking that firmware file buffer is large enough for the
+wmfw header, to prevent overrunning the buffer.
 
-The result is that Linux fails to find the last regions, so extend the
-definition to cover all the blocks.
+The original code tested that the firmware data buffer contained
+enough bytes for the sums of the size of the structs
 
-This also corrects the related DeviceTree validation error.
+	wmfw_header + wmfw_adsp1_sizes + wmfw_footer
 
-Fixes: 74cf6675c35e ("arm64: dts: qcom: sc8180x: Fix LLCC reg property")
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20240525-sc8180x-llcc-reg-fixup-v1-1-0c13d4ea94f2@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+But wmfw_adsp1_sizes is only used on ADSP1 firmware. For ADSP2 and
+Halo Core the equivalent struct is wmfw_adsp2_sizes, which is
+4 bytes longer. So the length check didn't guarantee that there
+are enough bytes in the firmware buffer for a header with
+wmfw_adsp2_sizes.
+
+This patch splits the length check into three separate parts. Each
+of the wmfw_header, wmfw_adsp?_sizes and wmfw_footer are checked
+separately before they are used.
+
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: f6bc909e7673 ("firmware: cs_dsp: add driver to support firmware loading on Cirrus Logic DSPs")
+Link: https://patch.msgid.link/20240627141432.93056-2-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8180x.dtsi | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/firmware/cirrus/cs_dsp.c | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-index fbb9bf09078a0..dd207eb81360a 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-@@ -2551,11 +2551,14 @@
+diff --git a/drivers/firmware/cirrus/cs_dsp.c b/drivers/firmware/cirrus/cs_dsp.c
+index 79d4254d1f9bc..f0c3c4011411d 100644
+--- a/drivers/firmware/cirrus/cs_dsp.c
++++ b/drivers/firmware/cirrus/cs_dsp.c
+@@ -1267,6 +1267,10 @@ static unsigned int cs_dsp_adsp1_parse_sizes(struct cs_dsp *dsp,
+ 	const struct wmfw_adsp1_sizes *adsp1_sizes;
  
- 		system-cache-controller@9200000 {
- 			compatible = "qcom,sc8180x-llcc";
--			reg = <0 0x09200000 0 0x50000>, <0 0x09280000 0 0x50000>,
--			      <0 0x09300000 0 0x50000>, <0 0x09380000 0 0x50000>,
--			      <0 0x09600000 0 0x50000>;
-+			reg = <0 0x09200000 0 0x58000>, <0 0x09280000 0 0x58000>,
-+			      <0 0x09300000 0 0x58000>, <0 0x09380000 0 0x58000>,
-+			      <0 0x09400000 0 0x58000>, <0 0x09480000 0 0x58000>,
-+			      <0 0x09500000 0 0x58000>, <0 0x09580000 0 0x58000>,
-+			      <0 0x09600000 0 0x58000>;
- 			reg-names = "llcc0_base", "llcc1_base", "llcc2_base",
--				    "llcc3_base", "llcc_broadcast_base";
-+				    "llcc3_base", "llcc4_base", "llcc5_base",
-+				    "llcc6_base", "llcc7_base",  "llcc_broadcast_base";
- 			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
- 		};
+ 	adsp1_sizes = (void *)&firmware->data[pos];
++	if (sizeof(*adsp1_sizes) > firmware->size - pos) {
++		cs_dsp_err(dsp, "%s: file truncated\n", file);
++		return 0;
++	}
+ 
+ 	cs_dsp_dbg(dsp, "%s: %d DM, %d PM, %d ZM\n", file,
+ 		   le32_to_cpu(adsp1_sizes->dm), le32_to_cpu(adsp1_sizes->pm),
+@@ -1283,6 +1287,10 @@ static unsigned int cs_dsp_adsp2_parse_sizes(struct cs_dsp *dsp,
+ 	const struct wmfw_adsp2_sizes *adsp2_sizes;
+ 
+ 	adsp2_sizes = (void *)&firmware->data[pos];
++	if (sizeof(*adsp2_sizes) > firmware->size - pos) {
++		cs_dsp_err(dsp, "%s: file truncated\n", file);
++		return 0;
++	}
+ 
+ 	cs_dsp_dbg(dsp, "%s: %d XM, %d YM %d PM, %d ZM\n", file,
+ 		   le32_to_cpu(adsp2_sizes->xm), le32_to_cpu(adsp2_sizes->ym),
+@@ -1322,7 +1330,6 @@ static int cs_dsp_load(struct cs_dsp *dsp, const struct firmware *firmware,
+ 	struct regmap *regmap = dsp->regmap;
+ 	unsigned int pos = 0;
+ 	const struct wmfw_header *header;
+-	const struct wmfw_adsp1_sizes *adsp1_sizes;
+ 	const struct wmfw_footer *footer;
+ 	const struct wmfw_region *region;
+ 	const struct cs_dsp_region *mem;
+@@ -1338,10 +1345,8 @@ static int cs_dsp_load(struct cs_dsp *dsp, const struct firmware *firmware,
+ 
+ 	ret = -EINVAL;
+ 
+-	pos = sizeof(*header) + sizeof(*adsp1_sizes) + sizeof(*footer);
+-	if (pos >= firmware->size) {
+-		cs_dsp_err(dsp, "%s: file too short, %zu bytes\n",
+-			   file, firmware->size);
++	if (sizeof(*header) >= firmware->size) {
++		ret = -EOVERFLOW;
+ 		goto out_fw;
+ 	}
+ 
+@@ -1369,13 +1374,16 @@ static int cs_dsp_load(struct cs_dsp *dsp, const struct firmware *firmware,
+ 
+ 	pos = sizeof(*header);
+ 	pos = dsp->ops->parse_sizes(dsp, file, pos, firmware);
++	if ((pos == 0) || (sizeof(*footer) > firmware->size - pos)) {
++		ret = -EOVERFLOW;
++		goto out_fw;
++	}
+ 
+ 	footer = (void *)&firmware->data[pos];
+ 	pos += sizeof(*footer);
+ 
+ 	if (le32_to_cpu(header->len) != pos) {
+-		cs_dsp_err(dsp, "%s: unexpected header length %d\n",
+-			   file, le32_to_cpu(header->len));
++		ret = -EOVERFLOW;
+ 		goto out_fw;
+ 	}
+ 
+@@ -1501,6 +1509,9 @@ static int cs_dsp_load(struct cs_dsp *dsp, const struct firmware *firmware,
+ 	cs_dsp_buf_free(&buf_list);
+ 	kfree(text);
+ 
++	if (ret == -EOVERFLOW)
++		cs_dsp_err(dsp, "%s: file content overflows file data\n", file);
++
+ 	return ret;
+ }
  
 -- 
 2.43.0
