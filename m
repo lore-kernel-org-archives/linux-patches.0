@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D195E199EA3;
-	Tue, 16 Jul 2024 16:05:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC121DDCE;
+	Tue, 16 Jul 2024 16:05:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145938; cv=none; b=hONXXyenflr8HvFHuCFuh0BjidIxwg10sqbyJ9pRRcj8AJu7YamI+66Ws0lgAilmRMmxA+NJEja9MY7D1wjbZ7Hh5g8fRY8lDBrNb/o/grDilgKITv2O50rShIKPUzWmLUzdtjqA39FTCRDouiyeIQWq2csYQHWe2+/U5Kw39vA=
+	t=1721145941; cv=none; b=Xqw68K1fqvY7WI/x10tmJ2DwrW6knc26kPtWyj8SsrOfBEe7NwfZeFfgb66K1dR0yXSjuNqcM7MUvLNardSD3RWtRQc+X+POtSbo/4690CuPSDsH54mFvocxzJkAupdCSWifR4rMTx3XXes+hB8Jb3JJ12B8jGLcN8OIO2byu2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145938; c=relaxed/simple;
-	bh=eudxTO9ACYFEl5PEKgYF6ZUhlimUq48v6GQnbNLfqzY=;
+	s=arc-20240116; t=1721145941; c=relaxed/simple;
+	bh=Vb9rAUnRZli70ypUMaY7gfvJ+WGY5tNc0o50ADVua6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RvezeANFXuo2DYnT33aq6hARRp37HS774+4beqUbR4Y4A4SafcF0vHBfZKFmms3KBXkd2aq9+IOJYHyGnsasPUOQ5iSkS1Jwt+ncmuurCCgRWkdfBLB9DkuiTIFZp4/vfNmk98hqgbs5j/NUDKn6ju1A/9Gwpgi4dgLkYrcjTBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DmX+O76Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kxg8lM139vjUtB47Y9pY2dK9E4EAZRBLgfRMmSZUofm9BJzISyMuxhHQNhwrOYGxk08fuHf6ztN/lxECrAghSgGsyw/SUeBGuKBruVUYhXP0F+GsnHfFIw+ip7aqXsfmNCNY7V2AuNjvAUy+dERcr2d9Kdwond4U+vOa6ZV6Bs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pn/6XhrA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DmX+O76Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD6EC116B1;
-	Tue, 16 Jul 2024 16:05:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pn/6XhrA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41796C116B1;
+	Tue, 16 Jul 2024 16:05:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145938;
-	bh=eudxTO9ACYFEl5PEKgYF6ZUhlimUq48v6GQnbNLfqzY=;
+	s=korg; t=1721145941;
+	bh=Vb9rAUnRZli70ypUMaY7gfvJ+WGY5tNc0o50ADVua6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DmX+O76QMvbQwr7eHek2V1hE8jIAuW+IgjArMDfwRLQxCU+JTAH9RnF6dBIaLhc1m
-	 92zUW5iBmMeSs67UDOQ5PSOLWcHkOUEmhFORNNuYIrI1VKbi6rZ9nb+uEdRi62N4XW
-	 e9vR24lyluzFuS75buL4lGsgClic4JVlU8hj1LD8=
+	b=pn/6XhrAQrgjMZ9MziKKX94CaSguacwO8BS3qo1snIJ3w8vrukReYeWLDZvhBWo5B
+	 U+HkzXDCZ0JcT0iXqmTvgfiV9BDqDDlh3O7wWba8JZeG8JYMKKuqB0J2KWGPFy6oBn
+	 XRIWOaz9uMtcdg5D0bKgzveAc8yxI9gKj3ztrKaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 6.6 121/121] i2c: rcar: fix error code in probe()
-Date: Tue, 16 Jul 2024 17:33:03 +0200
-Message-ID: <20240716152755.983507861@linuxfoundation.org>
+	Suman Maity <suman.m.maity@oracle.com>,
+	Alexandre Chartre <alexandre.chartre@oracle.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 119/121] x86/bhi: Avoid warning in #DB handler due to BHI mitigation
+Date: Tue, 16 Jul 2024 17:33:01 +0200
+Message-ID: <20240716152755.905753679@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152751.312512071@linuxfoundation.org>
 References: <20240716152751.312512071@linuxfoundation.org>
@@ -51,35 +55,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Alexandre Chartre <alexandre.chartre@oracle.com>
 
-commit 37a672be3ae357a0f87fbc00897fa7fcb3d7d782 upstream.
+[ Upstream commit ac8b270b61d48fcc61f052097777e3b5e11591e0 ]
 
-Return an error code if devm_reset_control_get_exclusive() fails.
-The current code returns success.
+When BHI mitigation is enabled, if SYSENTER is invoked with the TF flag set
+then entry_SYSENTER_compat() uses CLEAR_BRANCH_HISTORY and calls the
+clear_bhb_loop() before the TF flag is cleared. This causes the #DB handler
+(exc_debug_kernel()) to issue a warning because single-step is used outside the
+entry_SYSENTER_compat() function.
 
-Fixes: 0e864b552b23 ("i2c: rcar: reset controller is mandatory for Gen3+")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To address this issue, entry_SYSENTER_compat() should use CLEAR_BRANCH_HISTORY
+after making sure the TF flag is cleared.
+
+The problem can be reproduced with the following sequence:
+
+  $ cat sysenter_step.c
+  int main()
+  { asm("pushf; pop %ax; bts $8,%ax; push %ax; popf; sysenter"); }
+
+  $ gcc -o sysenter_step sysenter_step.c
+
+  $ ./sysenter_step
+  Segmentation fault (core dumped)
+
+The program is expected to crash, and the #DB handler will issue a warning.
+
+Kernel log:
+
+  WARNING: CPU: 27 PID: 7000 at arch/x86/kernel/traps.c:1009 exc_debug_kernel+0xd2/0x160
+  ...
+  RIP: 0010:exc_debug_kernel+0xd2/0x160
+  ...
+  Call Trace:
+  <#DB>
+   ? show_regs+0x68/0x80
+   ? __warn+0x8c/0x140
+   ? exc_debug_kernel+0xd2/0x160
+   ? report_bug+0x175/0x1a0
+   ? handle_bug+0x44/0x90
+   ? exc_invalid_op+0x1c/0x70
+   ? asm_exc_invalid_op+0x1f/0x30
+   ? exc_debug_kernel+0xd2/0x160
+   exc_debug+0x43/0x50
+   asm_exc_debug+0x1e/0x40
+  RIP: 0010:clear_bhb_loop+0x0/0xb0
+  ...
+  </#DB>
+  <TASK>
+   ? entry_SYSENTER_compat_after_hwframe+0x6e/0x8d
+  </TASK>
+
+  [ bp: Massage commit message. ]
+
+Fixes: 7390db8aea0d ("x86/bhi: Add support for clearing branch history at syscall entry")
+Reported-by: Suman Maity <suman.m.maity@oracle.com>
+Signed-off-by: Alexandre Chartre <alexandre.chartre@oracle.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Reviewed-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Reviewed-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Link: https://lore.kernel.org/r/20240524070459.3674025-1-alexandre.chartre@oracle.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-rcar.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/entry/entry_64_compat.S | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/drivers/i2c/busses/i2c-rcar.c
-+++ b/drivers/i2c/busses/i2c-rcar.c
-@@ -1121,8 +1121,10 @@ static int rcar_i2c_probe(struct platfor
- 	/* R-Car Gen3+ needs a reset before every transfer */
- 	if (priv->devtype >= I2C_RCAR_GEN3) {
- 		priv->rstc = devm_reset_control_get_exclusive(&pdev->dev, NULL);
--		if (IS_ERR(priv->rstc))
-+		if (IS_ERR(priv->rstc)) {
-+			ret = PTR_ERR(priv->rstc);
- 			goto out_pm_put;
-+		}
+diff --git a/arch/x86/entry/entry_64_compat.S b/arch/x86/entry/entry_64_compat.S
+index 4c1dfc51c56e4..ebfccadf918cb 100644
+--- a/arch/x86/entry/entry_64_compat.S
++++ b/arch/x86/entry/entry_64_compat.S
+@@ -90,10 +90,6 @@ SYM_INNER_LABEL(entry_SYSENTER_compat_after_hwframe, SYM_L_GLOBAL)
  
- 		ret = reset_control_status(priv->rstc);
- 		if (ret < 0)
+ 	cld
+ 
+-	IBRS_ENTER
+-	UNTRAIN_RET
+-	CLEAR_BRANCH_HISTORY
+-
+ 	/*
+ 	 * SYSENTER doesn't filter flags, so we need to clear NT and AC
+ 	 * ourselves.  To save a few cycles, we can check whether
+@@ -117,6 +113,16 @@ SYM_INNER_LABEL(entry_SYSENTER_compat_after_hwframe, SYM_L_GLOBAL)
+ 	jnz	.Lsysenter_fix_flags
+ .Lsysenter_flags_fixed:
+ 
++	/*
++	 * CPU bugs mitigations mechanisms can call other functions. They
++	 * should be invoked after making sure TF is cleared because
++	 * single-step is ignored only for instructions inside the
++	 * entry_SYSENTER_compat function.
++	 */
++	IBRS_ENTER
++	UNTRAIN_RET
++	CLEAR_BRANCH_HISTORY
++
+ 	movq	%rsp, %rdi
+ 	call	do_SYSENTER_32
+ 	/* XEN PV guests always use IRET path */
+-- 
+2.43.0
+
 
 
