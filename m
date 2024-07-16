@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC35CD53B;
-	Tue, 16 Jul 2024 15:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C91D6CA40;
+	Tue, 16 Jul 2024 15:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144112; cv=none; b=YK2Ox8BFNPeMN19W4EO1aQEyFFQ4q1Spw6e9zMj/mVn0ZwdqdjaU2CZbc93Fb5dUbsw66A9DE4Lwj3kTPCdYYPbItRcgy+sMawsYiLlkAmfz4vOybg1dmHElDSyB0jKmp4b+2P4ZNyctEsKGdLZ3LlNyzSYF4TWvzmGrZ6K9uNA=
+	t=1721144115; cv=none; b=bTs4Z5MzplUUM1GojTqQZ+HHW/vpp9zQD6cCpvccAXYp6FgDYgNCwIo/PysbKcUlEStao3F9N1fSr8cHjedJ/RFbNzaKJSRDQGpEibz0zEMImlJGmHtbyji+N5OICDVdd0DQQ2mi8mtByiJQIgtG9t5UHLjdHNK5Ey1f2c8Pxco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144112; c=relaxed/simple;
-	bh=Q3I60QZF5IfcfRJW5LZjiLma4i6XMMVJYf44JDgWyJ8=;
+	s=arc-20240116; t=1721144115; c=relaxed/simple;
+	bh=jq6qnmLq8xvCZqtO6nhl7H+fWp1zl0pGhnVyo7oWi3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=akGzy5pJDk3l4JqNLVbB7LnuO5my7mRV3pWCj2yWKFsISnIynLOgZdvgucL3DrT18ssJpBqIKn7VhmLvU1QxoLQJQT/9HlJz576c8pD22M9W0jCFmnFZauqmi1+ngyGMm2apM9sSMjj4GPPqnY184gaXgbQCfj4+YoYUdLxbM3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JtMHbgwc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sjEO7Gu6zN0DK1LRozgPYOVhfhcKwOo06VcwqKh+EHXjk1wPJZ3EnPZ/TdwoRL0DgnMuWG2ZFGaStHlJuobqNIbE0lI1VkPxE9JzcN1g7hQcdVbJSmQrhE1yuJIzKMoDznVaT8eaek/sB/OU7gjak7PyhusSxXXKXDPVpHAXgnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=idhRoRKw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JtMHbgwc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44944C116B1;
-	Tue, 16 Jul 2024 15:35:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="idhRoRKw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 427A8C116B1;
+	Tue, 16 Jul 2024 15:35:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144112;
-	bh=Q3I60QZF5IfcfRJW5LZjiLma4i6XMMVJYf44JDgWyJ8=;
+	s=korg; t=1721144115;
+	bh=jq6qnmLq8xvCZqtO6nhl7H+fWp1zl0pGhnVyo7oWi3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JtMHbgwczZcAimwq6skTKBT75P/r4l9hvD0piuLGsgAeQBCR7CEl9qVIZWl+MLazq
-	 ltysdnSTr9fWnqGb0eFHNv6ZsM63WlHeqWChV+QaTc/4LCpoasNa9yID2t2SruWPL7
-	 Gy4JXvVnBkEOKqPnl02FE7Iqf/c7uB+Uc8xeDL44=
+	b=idhRoRKwcBuHWuWQCRtMdLmyTpraRA5T0UMTU+5vjKhLMopPVFUjpFcnTooaqUWoC
+	 oyCm2dP/YmfRbYfaE7YUzaIObez1UmqoO+Jw5H2dwwRSVC9YNCNB+M5hMCxtJBbOFq
+	 2DycK+KtKcqDRBdzq7LB4T3mahs/DMY+kH2lddKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaganath Kanakkassery <jaganath.kanakkassery@intel.com>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Wentao Guan <guanwentao@uniontech.com>
-Subject: [PATCH 4.19 32/66] Bluetooth: Fix incorrect pointer arithmatic in ext_adv_report_evt
-Date: Tue, 16 Jul 2024 17:31:07 +0200
-Message-ID: <20240716152739.392263551@linuxfoundation.org>
+	Jimmy Assarsson <extja@kvaser.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 4.19 33/66] can: kvaser_usb: Explicitly initialize family in leafimx driver_info struct
+Date: Tue, 16 Jul 2024 17:31:08 +0200
+Message-ID: <20240716152739.432485753@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152738.161055634@linuxfoundation.org>
 References: <20240716152738.161055634@linuxfoundation.org>
@@ -51,32 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jaganath Kanakkassery <jaganath.k.os@gmail.com>
+From: Jimmy Assarsson <extja@kvaser.com>
 
-commit cd9151b618da4723877bd94eae952f2e50acbc0e upstream.
+commit 19d5b2698c35b2132a355c67b4d429053804f8cc upstream.
 
-In ext_adv_report_event rssi comes before data (not after data as
-in legacy adv_report_evt) so "+ 1" is not required in the ptr arithmatic
-to point to next report.
+Explicitly set the 'family' driver_info struct member for leafimx.
+Previously, the correct operation relied on KVASER_LEAF being the first
+defined value in enum kvaser_usb_leaf_family.
 
-Signed-off-by: Jaganath Kanakkassery <jaganath.kanakkassery@intel.com>
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Fixes: e6c80e601053 ("can: kvaser_usb: kvaser_usb_leaf: fix CAN clock frequency regression")
+Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
+Link: https://lore.kernel.org/all/20240628194529.312968-1-extja@kvaser.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_event.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -5448,7 +5448,7 @@ static void hci_le_adv_report_evt(struct
- 			bt_dev_err(hdev, "Dropping invalid advertising data");
- 		}
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
+@@ -114,6 +114,7 @@ static const struct kvaser_usb_driver_in
  
--		ptr += sizeof(*ev) + ev->length + 1;
-+		ptr += sizeof(*ev) + ev->length;
- 	}
+ static const struct kvaser_usb_driver_info kvaser_usb_driver_info_leafimx = {
+ 	.quirks = 0,
++	.family = KVASER_LEAF,
+ 	.ops = &kvaser_usb_leaf_dev_ops,
+ };
  
- 	hci_dev_unlock(hdev);
 
 
