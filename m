@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3DB1DDF5;
-	Tue, 16 Jul 2024 15:41:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66600F9E8;
+	Tue, 16 Jul 2024 15:41:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144482; cv=none; b=Gpz71XaNhtMgji5nR9mjc+kEQl7Pu/ZyRHVf0kItQfa22TKUXx3a0mfQJHzdWEvySxJ5TTbr9y1d/NgRnB28uGUOuC8g0VIshq/UnHNqZ+f+7s4BAiGgcqTL7iTcu8MslKlS1Cb57VuXTTojHzXlMrBYkPOiWSMxFyxQl8Wllsc=
+	t=1721144485; cv=none; b=Q2LzqWd/l9h/XY7f7Bzg1gmeHcuVJE7Sn9CsA4gzPAzergTH6EGVDPS8ioi59G4izUfoPStIWQRwlIREnqkA2imrOcqM5g8h6UvEM2WBvCKJ21vTHsamoT9HNS7xlc63uYCbzdWyMef+ACTchmoStUExp9GP9j1qqzeFw/094Wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144482; c=relaxed/simple;
-	bh=84ZPYt59GO6iKQxoeEa04oQekm8LIN4VxZIDVYytl/I=;
+	s=arc-20240116; t=1721144485; c=relaxed/simple;
+	bh=4NlZU6tZkhx44xJzgOMXYgDh8EC4j3omIl9Bs+6q6Zg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kX9rj88OY1A1m0We0fnTOAzVyQLJ//kQslZ7/4Mc2LVv77zS2d2GS6Fzpc5Zm6ilwVHcGFcHkz/KvamdHhcK8cPPKAtR7HmYI0tLyeh7kr2YTIkaZuPhfpM1ZIXbODEuut4ROexE0lgL/jzYOOkWRhnsML5AKT6F0TnrqGoM0p0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cK2ib4zO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X5cz8goGMwvfbnA8MgZEb5j5HpL7LaJe1nao6kKfWX8iAIuMEMgkYCwNrdbTMLA2uJtV2bpShLYH1jWd0HpP8ABTKF25RjD/7sgPrnPyNKgtoIRvObFrBKwxF6NoacX4WARLu5d+7ofyiDMBBCNSipcronEfqMDIbgEsqYjFc+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bdvB93oB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cK2ib4zO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B673AC116B1;
-	Tue, 16 Jul 2024 15:41:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bdvB93oB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA5A5C4AF0D;
+	Tue, 16 Jul 2024 15:41:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144482;
-	bh=84ZPYt59GO6iKQxoeEa04oQekm8LIN4VxZIDVYytl/I=;
+	s=korg; t=1721144485;
+	bh=4NlZU6tZkhx44xJzgOMXYgDh8EC4j3omIl9Bs+6q6Zg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cK2ib4zOV2BNf7AMpLPRSeHIYEDZTJlHIKF6tzRj38UvYisJv02TCewLllpkEXJNg
-	 R6AKKME0GOlSg8NjL7qNMTCgvQsZfCHEXrX7VgkZhq2d2aSocuAJL0KU1JCrnIoA7A
-	 2RN32Ao5LZNUOthjOFMbB3lMglyi0Es1s/oabhDc=
+	b=bdvB93oB4k3B2qc6kYBsKeB5gRskdT55VbOw7mjdytWw7j6VLLvuIYWlPDO+iUJLg
+	 4cUvBHJTBkGjdK+OP6j4cZVrDxBl1a6fjz5ZeOPlxmGoctergS6ABY7lUkP0Ycmz4U
+	 cxgh3FtEIJtX15O/uRItQS+4bQeN5MIlL4OpsCPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neal Cardwell <ncardwell@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Yuchung Cheng <ycheng@google.com>,
-	Kevin Yang <yyd@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Erico Nunes <nunes.erico@gmail.com>,
+	Qiang Yu <yuq825@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 50/78] tcp: fix incorrect undo caused by DSACK of TLP retransmit
-Date: Tue, 16 Jul 2024 17:31:22 +0200
-Message-ID: <20240716152742.576387126@linuxfoundation.org>
+Subject: [PATCH 5.10 001/108] drm/lima: fix shared irq handling on driver remove
+Date: Tue, 16 Jul 2024 17:30:16 +0200
+Message-ID: <20240716152746.047552445@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240716152740.626160410@linuxfoundation.org>
-References: <20240716152740.626160410@linuxfoundation.org>
+In-Reply-To: <20240716152745.988603303@linuxfoundation.org>
+References: <20240716152745.988603303@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,109 +47,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Neal Cardwell <ncardwell@google.com>
+From: Erico Nunes <nunes.erico@gmail.com>
 
-[ Upstream commit 0ec986ed7bab6801faed1440e8839dcc710331ff ]
+[ Upstream commit a6683c690bbfd1f371510cb051e8fa49507f3f5e ]
 
-Loss recovery undo_retrans bookkeeping had a long-standing bug where a
-DSACK from a spurious TLP retransmit packet could cause an erroneous
-undo of a fast recovery or RTO recovery that repaired a single
-really-lost packet (in a sequence range outside that of the TLP
-retransmit). Basically, because the loss recovery state machine didn't
-account for the fact that it sent a TLP retransmit, the DSACK for the
-TLP retransmit could erroneously be implicitly be interpreted as
-corresponding to the normal fast recovery or RTO recovery retransmit
-that plugged a real hole, thus resulting in an improper undo.
+lima uses a shared interrupt, so the interrupt handlers must be prepared
+to be called at any time. At driver removal time, the clocks are
+disabled early and the interrupts stay registered until the very end of
+the remove process due to the devm usage.
+This is potentially a bug as the interrupts access device registers
+which assumes clocks are enabled. A crash can be triggered by removing
+the driver in a kernel with CONFIG_DEBUG_SHIRQ enabled.
+This patch frees the interrupts at each lima device finishing callback
+so that the handlers are already unregistered by the time we fully
+disable clocks.
 
-For example, consider the following buggy scenario where there is a
-real packet loss but the congestion control response is improperly
-undone because of this bug:
-
-+ send packets P1, P2, P3, P4
-+ P1 is really lost
-+ send TLP retransmit of P4
-+ receive SACK for original P2, P3, P4
-+ enter fast recovery, fast-retransmit P1, increment undo_retrans to 1
-+ receive DSACK for TLP P4, decrement undo_retrans to 0, undo (bug!)
-+ receive cumulative ACK for P1-P4 (fast retransmit plugged real hole)
-
-The fix: when we initialize undo machinery in tcp_init_undo(), if
-there is a TLP retransmit in flight, then increment tp->undo_retrans
-so that we make sure that we receive a DSACK corresponding to the TLP
-retransmit, as well as DSACKs for all later normal retransmits, before
-triggering a loss recovery undo. Note that we also have to move the
-line that clears tp->tlp_high_seq for RTO recovery, so that upon RTO
-we remember the tp->tlp_high_seq value until tcp_init_undo() and clear
-it only afterward.
-
-Also note that the bug dates back to the original 2013 TLP
-implementation, commit 6ba8a3b19e76 ("tcp: Tail loss probe (TLP)").
-
-However, this patch will only compile and work correctly with kernels
-that have tp->tlp_retrans, which was added only in v5.8 in 2020 in
-commit 76be93fc0702 ("tcp: allow at most one TLP probe per flight").
-So we associate this fix with that later commit.
-
-Fixes: 76be93fc0702 ("tcp: allow at most one TLP probe per flight")
-Signed-off-by: Neal Cardwell <ncardwell@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Cc: Yuchung Cheng <ycheng@google.com>
-Cc: Kevin Yang <yyd@google.com>
-Link: https://patch.msgid.link/20240703171246.1739561-1-ncardwell.sw@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Erico Nunes <nunes.erico@gmail.com>
+Signed-off-by: Qiang Yu <yuq825@gmail.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240401224329.1228468-2-nunes.erico@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 11 ++++++++++-
- net/ipv4/tcp_timer.c |  2 --
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/lima/lima_gp.c  | 2 ++
+ drivers/gpu/drm/lima/lima_mmu.c | 5 +++++
+ drivers/gpu/drm/lima/lima_pp.c  | 4 ++++
+ 3 files changed, 11 insertions(+)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 57907fe94b238..cf6221e9fda50 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -1956,8 +1956,16 @@ void tcp_clear_retrans(struct tcp_sock *tp)
- static inline void tcp_init_undo(struct tcp_sock *tp)
+diff --git a/drivers/gpu/drm/lima/lima_gp.c b/drivers/gpu/drm/lima/lima_gp.c
+index 6cf46b653e810..ca3842f719842 100644
+--- a/drivers/gpu/drm/lima/lima_gp.c
++++ b/drivers/gpu/drm/lima/lima_gp.c
+@@ -324,7 +324,9 @@ int lima_gp_init(struct lima_ip *ip)
+ 
+ void lima_gp_fini(struct lima_ip *ip)
  {
- 	tp->undo_marker = tp->snd_una;
-+
- 	/* Retransmission still in flight may cause DSACKs later. */
--	tp->undo_retrans = tp->retrans_out ? : -1;
-+	/* First, account for regular retransmits in flight: */
-+	tp->undo_retrans = tp->retrans_out;
-+	/* Next, account for TLP retransmits in flight: */
-+	if (tp->tlp_high_seq && tp->tlp_retrans)
-+		tp->undo_retrans++;
-+	/* Finally, avoid 0, because undo_retrans==0 means "can undo now": */
-+	if (!tp->undo_retrans)
-+		tp->undo_retrans = -1;
++	struct lima_device *dev = ip->dev;
+ 
++	devm_free_irq(dev->dev, ip->irq, ip);
  }
  
- static bool tcp_is_rack(const struct sock *sk)
-@@ -2036,6 +2044,7 @@ void tcp_enter_loss(struct sock *sk)
+ int lima_gp_pipe_init(struct lima_device *dev)
+diff --git a/drivers/gpu/drm/lima/lima_mmu.c b/drivers/gpu/drm/lima/lima_mmu.c
+index a1ae6c252dc2b..8ca7047adbaca 100644
+--- a/drivers/gpu/drm/lima/lima_mmu.c
++++ b/drivers/gpu/drm/lima/lima_mmu.c
+@@ -118,7 +118,12 @@ int lima_mmu_init(struct lima_ip *ip)
  
- 	tcp_set_ca_state(sk, TCP_CA_Loss);
- 	tp->high_seq = tp->snd_nxt;
-+	tp->tlp_high_seq = 0;
- 	tcp_ecn_queue_cwr(tp);
+ void lima_mmu_fini(struct lima_ip *ip)
+ {
++	struct lima_device *dev = ip->dev;
++
++	if (ip->id == lima_ip_ppmmu_bcast)
++		return;
  
- 	/* F-RTO RFC5682 sec 3.1 step 1: retransmit SND.UNA if no previous
-diff --git a/net/ipv4/tcp_timer.c b/net/ipv4/tcp_timer.c
-index 551c4a78f68d4..e20fced3c9cf6 100644
---- a/net/ipv4/tcp_timer.c
-+++ b/net/ipv4/tcp_timer.c
-@@ -467,8 +467,6 @@ void tcp_retransmit_timer(struct sock *sk)
- 	if (!tp->packets_out || WARN_ON_ONCE(tcp_rtx_queue_empty(sk)))
- 		return;
++	devm_free_irq(dev->dev, ip->irq, ip);
+ }
  
--	tp->tlp_high_seq = 0;
--
- 	if (!tp->snd_wnd && !sock_flag(sk, SOCK_DEAD) &&
- 	    !((1 << sk->sk_state) & (TCPF_SYN_SENT | TCPF_SYN_RECV))) {
- 		/* Receiver dastardly shrinks window. Our retransmits
+ void lima_mmu_flush_tlb(struct lima_ip *ip)
+diff --git a/drivers/gpu/drm/lima/lima_pp.c b/drivers/gpu/drm/lima/lima_pp.c
+index 54b208a4a768e..d34c9e8840f45 100644
+--- a/drivers/gpu/drm/lima/lima_pp.c
++++ b/drivers/gpu/drm/lima/lima_pp.c
+@@ -266,7 +266,9 @@ int lima_pp_init(struct lima_ip *ip)
+ 
+ void lima_pp_fini(struct lima_ip *ip)
+ {
++	struct lima_device *dev = ip->dev;
+ 
++	devm_free_irq(dev->dev, ip->irq, ip);
+ }
+ 
+ int lima_pp_bcast_resume(struct lima_ip *ip)
+@@ -299,7 +301,9 @@ int lima_pp_bcast_init(struct lima_ip *ip)
+ 
+ void lima_pp_bcast_fini(struct lima_ip *ip)
+ {
++	struct lima_device *dev = ip->dev;
+ 
++	devm_free_irq(dev->dev, ip->irq, ip);
+ }
+ 
+ static int lima_pp_task_validate(struct lima_sched_pipe *pipe,
 -- 
 2.43.0
 
