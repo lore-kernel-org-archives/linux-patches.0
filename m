@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA1F19B3E3;
-	Tue, 16 Jul 2024 16:09:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460E61DDCE;
+	Tue, 16 Jul 2024 16:09:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721146142; cv=none; b=PWdm+HiR+2snqbVbKi/OcHLgnWJ+f2MZZ71K5RASKmlT5vLA5JQSKAM6QKOBus8yRYaxa2h2BzDNGZ9lVekjGmviX0C6QFUn1SFAwxOwiIVtAka8wnMmYCv1T3R4XC/gfbyvp4RbeEQHlbrhljnBM58GvpvI5bT9iBm15pVHIvo=
+	t=1721146145; cv=none; b=p/R4iCWXeoS8KaqGNOOJMGovQ8TRNnVFV0iHFx4dauWusT+KcJ8tu5W9zfyL1VoetXz/XdRnBz1w2fHuY1t7FsjgKQj3j28I864uXovhyn6tvBfeCaedBZhsKCyhxyL86FG37nh3uLncYAraipXQA7wfjDuCRVm6PrHBziupQCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721146142; c=relaxed/simple;
-	bh=VrYtAdh3ZLxaq4bkw6S275Edze+YUScuM66WVbdDKNc=;
+	s=arc-20240116; t=1721146145; c=relaxed/simple;
+	bh=gb+MIVOjxI2kcDceQ8Hy+zZlaWq3ZFUfiwwggkDm5WQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cpzqpf1cYe6VD2Ob7Mx4PS1/6hjSGtZcFIFPF4U7i9sS3mExgisUt+Ul70CAY5HVjwZ6jfRhlHA/3XZcenUzrvpCuj0Rv47s2MynV+EPAAZQpU/l5NuQz7WabQnarOAzPgJsdMzQyZ+DTzK6gl4yg3soO1sijhiPp7q8vkRC5rU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HODdqMU5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gzGGo7oJbmf30/hcasrCw4BBrlfDZC3w/bgUrnvnD7EobcS5jOXgo1/qoEa+zuvvq7DI5hONR5i4Zo4hSPneVKTCPL/0WATP0zfmZjxSvphMNq+WqXpZa0OXpG+jSA+M6Y4whIKexw3PrK6PP8GcxqbICrsK9zOnO+owD66BOF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VQfDrbLR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HODdqMU5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3319C116B1;
-	Tue, 16 Jul 2024 16:09:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VQfDrbLR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0631C116B1;
+	Tue, 16 Jul 2024 16:09:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721146142;
-	bh=VrYtAdh3ZLxaq4bkw6S275Edze+YUScuM66WVbdDKNc=;
+	s=korg; t=1721146145;
+	bh=gb+MIVOjxI2kcDceQ8Hy+zZlaWq3ZFUfiwwggkDm5WQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HODdqMU5Wz0ULyCNfFn+SDNacAMgyVH80R6JmLNbHAZSguBh59nKi3CqGT06HMGJr
-	 EU30vDypKBoD0iNR8Zeg0byfxID1C2L49/PIgF4FgqgRL5i1O6g7Y5yqkRJEy1wSbu
-	 +MyPi7O4ptn4fPdmzZ9+MZmgEbm4d4NCS4Xo4cfM=
+	b=VQfDrbLRwW87PsDeOMEhnloIJiJKOi2eVJlUwBnfMCrLCUqaFMve6//QaTxmFR8qh
+	 iegD8IEL3SZvUfYv4RSKMT5IKQU0x9VeTNm666UHbc1rda1tQtTT8ZXZ3FTqz4QC4p
+	 coiKGZOnj2MosrKP5GWNfLaiYt8Gs+8W8DVzqn4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Wylder <jwylder@google.com>,
-	Mark Brown <broonie@kernel.org>,
+	hmtheboy154 <buingoc67@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 071/144] regmap-i2c: Subtract reg size from max_write
-Date: Tue, 16 Jul 2024 17:32:20 +0200
-Message-ID: <20240716152755.276381342@linuxfoundation.org>
+Subject: [PATCH 5.15 072/144] platform/x86: touchscreen_dmi: Add info for GlobalSpace SolT IVW 11.6" tablet
+Date: Tue, 16 Jul 2024 17:32:21 +0200
+Message-ID: <20240716152755.314259299@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
 References: <20240716152752.524497140@linuxfoundation.org>
@@ -51,44 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jim Wylder <jwylder@google.com>
+From: hmtheboy154 <buingoc67@gmail.com>
 
-[ Upstream commit 611b7eb19d0a305d4de00280e4a71a1b15c507fc ]
+[ Upstream commit 7c8639aa41343fd7b3dbe09baf6b0791fcc407a1 ]
 
-Currently, when an adapter defines a max_write_len quirk,
-the data will be chunked into data sizes equal to the
-max_write_len quirk value.  But the payload will be increased by
-the size of the register address before transmission.  The
-resulting value always ends up larger than the limit set
-by the quirk.
+This is a tablet created by GlobalSpace Technologies Limited
+which uses an Intel Atom x5-Z8300, 4GB of RAM & 64GB of storage.
 
-Avoid this error by setting regmap's max_write to the quirk's
-max_write_len minus the number of bytes for the register and
-padding.  This allows the chunking to work correctly for this
-limited case without impacting other use-cases.
-
-Signed-off-by: Jim Wylder <jwylder@google.com>
-Link: https://msgid.link/r/20240523211437.2839942-1-jwylder@google.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://web.archive.org/web/20171102141952/http://globalspace.in/11.6-device.html
+Signed-off-by: hmtheboy154 <buingoc67@gmail.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240527091447.248849-2-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regmap-i2c.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/platform/x86/touchscreen_dmi.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/drivers/base/regmap/regmap-i2c.c b/drivers/base/regmap/regmap-i2c.c
-index 3ec611dc0c09f..a905e955bbfc7 100644
---- a/drivers/base/regmap/regmap-i2c.c
-+++ b/drivers/base/regmap/regmap-i2c.c
-@@ -350,7 +350,8 @@ static const struct regmap_bus *regmap_get_i2c_bus(struct i2c_client *i2c,
+diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
+index 161bd19441042..c6605e0e4760e 100644
+--- a/drivers/platform/x86/touchscreen_dmi.c
++++ b/drivers/platform/x86/touchscreen_dmi.c
+@@ -874,6 +874,22 @@ static const struct ts_dmi_data schneider_sct101ctm_data = {
+ 	.properties	= schneider_sct101ctm_props,
+ };
  
- 		if (quirks->max_write_len &&
- 		    (bus->max_raw_write == 0 || bus->max_raw_write > quirks->max_write_len))
--			max_write = quirks->max_write_len;
-+			max_write = quirks->max_write_len -
-+				(config->reg_bits + config->pad_bits) / BITS_PER_BYTE;
- 
- 		if (max_read || max_write) {
- 			ret_bus = kmemdup(bus, sizeof(*bus), GFP_KERNEL);
++static const struct property_entry globalspace_solt_ivw116_props[] = {
++	PROPERTY_ENTRY_U32("touchscreen-min-x", 7),
++	PROPERTY_ENTRY_U32("touchscreen-min-y", 22),
++	PROPERTY_ENTRY_U32("touchscreen-size-x", 1723),
++	PROPERTY_ENTRY_U32("touchscreen-size-y", 1077),
++	PROPERTY_ENTRY_STRING("firmware-name", "gsl1680-globalspace-solt-ivw116.fw"),
++	PROPERTY_ENTRY_U32("silead,max-fingers", 10),
++	PROPERTY_ENTRY_BOOL("silead,home-button"),
++	{ }
++};
++
++static const struct ts_dmi_data globalspace_solt_ivw116_data = {
++	.acpi_name	= "MSSL1680:00",
++	.properties	= globalspace_solt_ivw116_props,
++};
++
+ static const struct property_entry techbite_arc_11_6_props[] = {
+ 	PROPERTY_ENTRY_U32("touchscreen-min-x", 5),
+ 	PROPERTY_ENTRY_U32("touchscreen-min-y", 7),
+@@ -1569,6 +1585,15 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "SCT101CTM"),
+ 		},
+ 	},
++	{
++		/* GlobalSpace SoLT IVW 11.6" */
++		.driver_data = (void *)&globalspace_solt_ivw116_data,
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Globalspace Tech Pvt Ltd"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "SolTIVW"),
++			DMI_MATCH(DMI_PRODUCT_SKU, "PN20170413488"),
++		},
++	},
+ 	{
+ 		/* Techbite Arc 11.6 */
+ 		.driver_data = (void *)&techbite_arc_11_6_data,
 -- 
 2.43.0
 
