@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E34AB641;
-	Tue, 16 Jul 2024 15:40:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52CF6B641;
+	Tue, 16 Jul 2024 15:40:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144429; cv=none; b=gkUVAbCMgut4IuLBfWLQkQNWAHgdEil+y8GN812nTk6tgLTUXwyHLGqd7WEoWHlAmwixYI6RnrScd03FGNXADL6yMTRQUTPW4DhLOJT6yqLR8u+w1U9Wuz4Lxc8a5EeJJZuBXNK7AC3mgCPDc9/Z5x/unG40tuwhQpLvpAI6q3U=
+	t=1721144432; cv=none; b=MNH2Zm5EZLJAIT41lViwt/jTxG5HH0O2BzxX2b8kQtQPQdgCbdrv2dHpXu4vQuMRKsPdoFkE+kDkxzLrCkPH+e13Jmd+ixUWYQUx4RtVfh0pCi6TdQetv6qsiUMUiGXiP8S8PNnDuCUWqFcVYk8AN7qX342VXp7rdPXXj655Vro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144429; c=relaxed/simple;
-	bh=8kQEFuKlBx/MTdIGSm3GObPp5bUz5LvSLyN+IH+7z+g=;
+	s=arc-20240116; t=1721144432; c=relaxed/simple;
+	bh=N1NA2LlHvCG9kxeD31w/NqEpjg19FFfcPw6r6ppqRnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qKMDj+kmXVFh4fw2CfpohU0dpOYAirzaqG0EM3BJ3PTXmBS+jIIBkp8bPScUQ5mLgYmiBC10FdsbXK3dvNsu/6toyHJP+uy2eGfFyRO3oCHmulAuWGbzbaabViJq6MQDg0mia2zLe8ttECbFZfAJOlRigrpB8Q6HxbaNvroS6d0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XiLJNydc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lkln/fpIyv4cuviL5pHigvFKKAuUSfsk2K4t6JWbnJ4u8vYYHVxKnILWjThKc7TSh4vDsFEmdzpd8ToUmLtSJ/6vah9Id2Tv2YK2orBaftU14lMbREthnJ8SewZbTMWWX8AEp9bfM9C/FUsnQdUxVXy42x8FQmdyqnwoRVWT6kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MWIWs7NE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XiLJNydc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9602C116B1;
-	Tue, 16 Jul 2024 15:40:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MWIWs7NE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC450C116B1;
+	Tue, 16 Jul 2024 15:40:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144429;
-	bh=8kQEFuKlBx/MTdIGSm3GObPp5bUz5LvSLyN+IH+7z+g=;
+	s=korg; t=1721144432;
+	bh=N1NA2LlHvCG9kxeD31w/NqEpjg19FFfcPw6r6ppqRnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XiLJNydc6tUh4ZN9b2BEuMKgQzHpbVmE7sWXWmv/4cCknufuSmCAdZdI9EPVS6Sz8
-	 Oo6I2XW+b/UiTmr4SoNZBzA73+sYSzxczVuYKrumMx6svV3RtNUM5/lgqXHj0n0cgD
-	 NuosnXlvPwDU/unTXDbNIk7Hs2r/mBBPXRx9VLmo=
+	b=MWIWs7NExBmgx50Xxlb1sQKsGF7icpaax80ut13v/nTojtIatDVCx6I6hS7feq7ZN
+	 J9kgFoJuX6DCR/OGnXsJ5V9IC7AOz1H4bAuQI14ObwEB7Ap6ulBucv0JsBoVJkxU/b
+	 GcenF+FXAjdQDAmg7iZ2i22Ku1uNOGhfyyhmNOxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksander Jan Bajkowski <olek2@wp.pl>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 52/78] net: lantiq_etop: add blank line after declaration
-Date: Tue, 16 Jul 2024 17:31:24 +0200
-Message-ID: <20240716152742.654264677@linuxfoundation.org>
+	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.4 70/78] ALSA: hda/realtek: Limit mic boost on VAIO PRO PX
+Date: Tue, 16 Jul 2024 17:31:42 +0200
+Message-ID: <20240716152743.350270745@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152740.626160410@linuxfoundation.org>
 References: <20240716152740.626160410@linuxfoundation.org>
@@ -51,40 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksander Jan Bajkowski <olek2@wp.pl>
+From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
 
-[ Upstream commit 4c46625bb586a741b8d0e6bdbddbcb2549fa1d36 ]
+commit 6db03b1929e207d2c6e84e75a9cd78124b3d6c6d upstream.
 
-This patch adds a missing line after the declaration and
-fixes the checkpatch warning:
+The internal mic boost on the VAIO models VJFE-CL and VJFE-IL is too high.
+Fix this by applying the ALC269_FIXUP_LIMIT_INT_MIC_BOOST fixup to the machine
+to limit the gain.
 
-WARNING: Missing a blank line after declarations
-+		int desc;
-+		for (desc = 0; desc < LTQ_DESC_NUM; desc++)
-
-Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
-Link: https://lore.kernel.org/r/20211228220031.71576-1-olek2@wp.pl
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: e1533b6319ab ("net: ethernet: lantiq_etop: fix double free in detach")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20240705141012.5368-1-edson.drosdeck@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/lantiq_etop.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/pci/hda/patch_realtek.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/lantiq_etop.c b/drivers/net/ethernet/lantiq_etop.c
-index 12e8b0f957d3d..98aa172da051f 100644
---- a/drivers/net/ethernet/lantiq_etop.c
-+++ b/drivers/net/ethernet/lantiq_etop.c
-@@ -214,6 +214,7 @@ ltq_etop_free_channel(struct net_device *dev, struct ltq_etop_chan *ch)
- 		free_irq(ch->dma.irq, priv);
- 	if (IS_RX(ch->idx)) {
- 		int desc;
-+
- 		for (desc = 0; desc < LTQ_DESC_NUM; desc++)
- 			dev_kfree_skb_any(ch->skb[ch->dma.desc]);
- 	}
--- 
-2.43.0
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -8331,6 +8331,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x10cf, 0x1845, "Lifebook U904", ALC269_FIXUP_LIFEBOOK_EXTMIC),
+ 	SND_PCI_QUIRK(0x10ec, 0x10f2, "Intel Reference board", ALC700_FIXUP_INTEL_REFERENCE),
+ 	SND_PCI_QUIRK(0x10ec, 0x118c, "Medion EE4254 MD62100", ALC256_FIXUP_MEDION_HEADSET_NO_PRESENCE),
++	SND_PCI_QUIRK(0x10ec, 0x11bc, "VAIO VJFE-IL", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x10ec, 0x1230, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
+ 	SND_PCI_QUIRK(0x10ec, 0x124c, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
+ 	SND_PCI_QUIRK(0x10ec, 0x1252, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
+@@ -8494,6 +8495,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1d72, 0x1901, "RedmiBook 14", ALC256_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1945, "Redmi G", ALC256_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1947, "RedmiBook Air", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
++	SND_PCI_QUIRK(0x2782, 0x0214, "VAIO VJFE-CL", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
+ 	SND_PCI_QUIRK(0x2782, 0x1707, "Vaio VJFE-ADL", ALC298_FIXUP_SPK_VOLUME),
+ 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
 
 
