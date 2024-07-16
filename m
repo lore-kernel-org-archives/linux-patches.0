@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A129612B72;
-	Tue, 16 Jul 2024 15:46:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C705D12B72;
+	Tue, 16 Jul 2024 15:46:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144777; cv=none; b=J/EgYIkQ3kBWtue1yaMivrruYfftWnG+D2PPeLTtTJMCkorygUi+nQ1wHKxjuTzsumHgwjgpW40g6tZTrJqNewpxwuflHjJJaIrXquCMsZ0qfjAi23xZB6O7s8nX0ShnxCJbLbrulqbX2VtnBQMDbFLxWcwKM1oGaAe9tJRMUpY=
+	t=1721144780; cv=none; b=uQ2+K9cyguxpUB9k3RRypEnogAPtKAluN+IVIo9hqxKecVC6j+5n/sAiNg0orcDJgOcuUAwInA7FxAvgyD72rXCrD2r7eTmHEtjXUy89qMGbEiDdVMNRxy6rewdG/HpVF5EVeMkzEMw+6InzHOIdRjgvLXkz8YmOwE93K4/RDU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144777; c=relaxed/simple;
-	bh=k4SSdnPkjFUMM5cERrQ3yPFeR7hvb8FV9Kmj47ENHtc=;
+	s=arc-20240116; t=1721144780; c=relaxed/simple;
+	bh=2vZXhwAUZh3YYKC7hcvDlGVZ5nJ6/raCmnO9xabXTMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EGBcNwUNN3YxRXSYhtJMAuhGCMacofZpaOHbSHBtSHwkWqDHWpFnYs5oq7l8oF5ttbYJVKSH6h/gDfz9A2KuefkK15AA6fs+KM+mZpd3+A58UoHRz/AcUKHZxbHp2XLZa5qTzhVC0e+HaWeei935qgryVDLITU8HXnQZeel5EJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CgrpTxci; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tZ7SgoTJYmcwg79mGQKF8QErpvGQ3KfLyVXhXc+7fPADdoSd+avMgB0aMygOlY6sZENV4XhaDQgOTm71GFX7P9GSXT9R+e172dTxWwUnCmeB0LxjPz5fSGlW71QSBbbY5N2H0hCXyds9rfkRAyhhN39kmDsvrOQoFPSA/U2KPwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2bWi8HPi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CgrpTxci"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 284BFC116B1;
-	Tue, 16 Jul 2024 15:46:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2bWi8HPi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 148AEC116B1;
+	Tue, 16 Jul 2024 15:46:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144777;
-	bh=k4SSdnPkjFUMM5cERrQ3yPFeR7hvb8FV9Kmj47ENHtc=;
+	s=korg; t=1721144780;
+	bh=2vZXhwAUZh3YYKC7hcvDlGVZ5nJ6/raCmnO9xabXTMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CgrpTxcih3YnixfXzgkG69yMcyS5/aMe9Xgw/ippAO92HB+UuoX1edi5IiWWUC3qj
-	 1fEre1nJgJy+5Nm8yj2JQocoAWvTNMlBbCr+KHVm4+WWnxofqFbpAlzMTHUO3F+97u
-	 6OBGZJCO2+WRinXBPD92KtJxeU76QhECJnDNloUM=
+	b=2bWi8HPiKpV5RIik5/tK6QqeghxLW31CaU4RnE786hugQ6CM82abfpnqmFbXIXtpC
+	 snpkQsJ2dT8vd6awHOIDm9D7CtXGD9RCVoWimyg9NbL51N9IHPc3MU1Xf/+z0x37Hb
+	 rYtuK9a6cM+tJbBw36mmLWob9Jks3mBLeXvSWnaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Mazur <mmazur2@marvell.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 072/108] octeontx2-af: fix detection of IP layer
-Date: Tue, 16 Jul 2024 17:31:27 +0200
-Message-ID: <20240716152748.745774874@linuxfoundation.org>
+Subject: [PATCH 5.10 063/108] octeontx2-af: Fix incorrect value output on error path in rvu_check_rsrc_availability()
+Date: Tue, 16 Jul 2024 17:31:18 +0200
+Message-ID: <20240716152748.400671744@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152745.988603303@linuxfoundation.org>
 References: <20240716152745.988603303@linuxfoundation.org>
@@ -51,50 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Mazur <mmazur2@marvell.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit 404dc0fd6fb0bb942b18008c6f8c0320b80aca20 ]
+[ Upstream commit 442e26af9aa8115c96541026cbfeaaa76c85d178 ]
 
-Checksum and length checks are not enabled for IPv4 header with
-options and IPv6 with extension headers.
-To fix this a change in enum npc_kpu_lc_ltype is required which will
-allow adjustment of LTYPE_MASK to detect all types of IP headers.
+In rvu_check_rsrc_availability() in case of invalid SSOW req, an incorrect
+data is printed to error log. 'req->sso' value is printed instead of
+'req->ssow'. Looks like "copy-paste" mistake.
 
-Fixes: 21e6699e5cd6 ("octeontx2-af: Add NPC KPU profile")
-Signed-off-by: Michal Mazur <mmazur2@marvell.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fix this mistake by replacing 'req->sso' with 'req->ssow'.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 746ea74241fa ("octeontx2-af: Add RVU block LF provisioning support")
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20240705095317.12640-1-amishin@t-argos.ru
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/npc.h | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/npc.h b/drivers/net/ethernet/marvell/octeontx2/af/npc.h
-index dc34e564c9192..46689d95254bf 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/npc.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/npc.h
-@@ -54,8 +54,13 @@ enum npc_kpu_lb_ltype {
- 	NPC_LT_LB_CUSTOM1 = 0xF,
- };
- 
-+/* Don't modify ltypes up to IP6_EXT, otherwise length and checksum of IP
-+ * headers may not be checked correctly. IPv4 ltypes and IPv6 ltypes must
-+ * differ only at bit 0 so mask 0xE can be used to detect extended headers.
-+ */
- enum npc_kpu_lc_ltype {
--	NPC_LT_LC_IP = 1,
-+	NPC_LT_LC_PTP = 1,
-+	NPC_LT_LC_IP,
- 	NPC_LT_LC_IP_OPT,
- 	NPC_LT_LC_IP6,
- 	NPC_LT_LC_IP6_EXT,
-@@ -63,7 +68,6 @@ enum npc_kpu_lc_ltype {
- 	NPC_LT_LC_RARP,
- 	NPC_LT_LC_MPLS,
- 	NPC_LT_LC_NSH,
--	NPC_LT_LC_PTP,
- 	NPC_LT_LC_FCOE,
- 	NPC_LT_LC_CUSTOM0 = 0xE,
- 	NPC_LT_LC_CUSTOM1 = 0xF,
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+index 23b829f974de1..e8a2552fb690a 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+@@ -1357,7 +1357,7 @@ static int rvu_check_rsrc_availability(struct rvu *rvu,
+ 		if (req->ssow > block->lf.max) {
+ 			dev_err(&rvu->pdev->dev,
+ 				"Func 0x%x: Invalid SSOW req, %d > max %d\n",
+-				 pcifunc, req->sso, block->lf.max);
++				 pcifunc, req->ssow, block->lf.max);
+ 			return -EINVAL;
+ 		}
+ 		mappedlfs = rvu_get_rsrc_mapcount(pfvf, block->addr);
 -- 
 2.43.0
 
