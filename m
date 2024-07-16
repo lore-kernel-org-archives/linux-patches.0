@@ -1,58 +1,95 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4EF413A25D;
-	Mon, 15 Jul 2024 19:25:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFE7719755B
+	for <patches@lists.linux.dev>; Tue, 16 Jul 2024 09:32:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721071545; cv=none; b=TpflnN+vgscyHvSgGBfK4cJTyXOqDpJVgJ9TkbIgYQ82MBb2XizQEL7MX7Iw4MpEljtz4kqmrXjKEbteKemJSZnIfLliEs8Z8GFJRjjePFJH7Tv+EXDGqfym31eej2IvPY11+5xg7t7IAfN+50mS7NQHZe+820QpA1fwBzx6quM=
+	t=1721122325; cv=none; b=mc1x0rWFN7ItFJdQzTkFR+8zO0HiD3cltbJDmR1It/3Uk3MpA7j73cgRkfhLAowNX1LaQqWtk23nV+/MtE/c23zX73KVYwGEn1KFqlG7ufTz4M+7HQvBFFlZ/HJRd0HbkDE807224MiII3+Csq7VAnSpaxJXhJT0Mb7Y2eO9AQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721071545; c=relaxed/simple;
-	bh=Chxr3Uuks9kyNfIoyGNkVK4Vg2r6tdc6gwgnwyG63do=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=bOu13gRcwWox1NeYF6szuJce0pUxwoHZYF4vVYZrv1ARmiMBGjMYdqfYXku5DlYjVJpApUg4FiThBUbMTZtrHR7EtWZL4DP301JImDD6twbg5JfVlL9YlnwLXA0QMysERP89F8aRysODmRw8uqDL2kRiE0jbdhVt/d6cN9mQ53Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kqRqWAd9; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kqRqWAd9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8821BC4AF0A;
-	Mon, 15 Jul 2024 19:25:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721071545;
-	bh=Chxr3Uuks9kyNfIoyGNkVK4Vg2r6tdc6gwgnwyG63do=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=kqRqWAd9bcejprhPo+5fMo5mIy3NShY7I5tA4bsem2pl0PPB+6CSBTb/X7NKnayvq
-	 xkDHsKl/hqmm8PDRT62rFfFw6CVIw2OkSSCN2PkqslCqo0F6oZjvnKN31qkXXMEq2k
-	 o4SE8V8rAM4NVKjYRK7VrZRI85g0BRXWLrvrcpa76kHau//q/vC5RlmhpMeU40Fy8l
-	 5aDoHjzDdbUvaCo5u3xBgcKF7kW669Lt5ZM1PjddWBT+k6DtB44UE3u2T0zuuXKbI9
-	 kIoV+N4i5p+ZlI//Mu2Sbl8N1BqA0QH7zfal+oXMQ7/aY02QCc2D8+EERaJi+RWM2A
-	 ImXaho6pi62+A==
-Message-ID: <97c4bc36e2584cc5258cd9feb0b283a3.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1721122325; c=relaxed/simple;
+	bh=YBZKfkIG/m5I6OPSrvhiArMqjbfjmW8QWVeuKuzfRMs=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=j/5xdraJVQsZ7IRkULYXNSxi7XGe6XSl+2tahHFMrvCr80pvhiwlrhwrYOVnajgBoOdbNuOsZAMAIKk6UrXVExjqoQvUn245yqyST+HUhOqgLAFKOlHzHU3HeDB+V17GFBCwM6MVJLoDsyXN6Mq8TQqbVXWBvqQUfkxztBJk8Qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.235])
+	by dggsgout11.his.huawei.com (SkyGuard) with ESMTP id 4WNYjz2TkTz4f3jMM
+	for <patches@lists.linux.dev>; Tue, 16 Jul 2024 17:31:51 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.128])
+	by mail.maildlp.com (Postfix) with ESMTP id 4A1DD1A0568
+	for <patches@lists.linux.dev>; Tue, 16 Jul 2024 17:31:59 +0800 (CST)
+Received: from huaweicloud.com (unknown [10.175.104.67])
+	by APP4 (Coremail) with SMTP id gCh0CgC3mjgNPpZmcQsjAQ--.11716S4;
+	Tue, 16 Jul 2024 17:31:59 +0800 (CST)
+From: libaokun@huaweicloud.com
+To: stable@vger.kernel.org,
+	gregkh@linuxfoundation.org
+Cc: sashal@kernel.org,
+	tytso@mit.edu,
+	jack@suse.cz,
+	patches@lists.linux.dev,
+	yi.zhang@huawei.com,
+	yangerkun@huawei.com,
+	libaokun@huaweicloud.com,
+	Baokun Li <libaokun1@huawei.com>
+Subject: [PATCH 6.6/6.9] ext4: avoid ptr null pointer dereference
+Date: Tue, 16 Jul 2024 17:29:29 +0800
+Message-Id: <20240716092929.864207-1-libaokun@huaweicloud.com>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20240710201246.1802189-9-sboyd@kernel.org>
-References: <20240710201246.1802189-1-sboyd@kernel.org> <20240710201246.1802189-9-sboyd@kernel.org>
-Subject: Re: [PATCH v7 8/8] clk: Add KUnit tests for clks registered with struct clk_parent_data
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org, Brendan Higgins <brendan.higgins@linux.dev>, David Gow <davidgow@google.com>, Rae Moar <rmoar@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rafael J . Wysocki <rafael@kernel.org>, Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>, Daniel Latypov <dlatypov@google.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Maxime Ripard <maxime@cerno.tech>
-To: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
-Date: Mon, 15 Jul 2024 12:25:43 -0700
-User-Agent: alot/0.10
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:gCh0CgC3mjgNPpZmcQsjAQ--.11716S4
+X-Coremail-Antispam: 1UD129KBjvdXoW7GFy7uFWxXw1UXF1kWF4kWFg_yoWfKrb_G3
+	s5Xr48Crs5Gw1Ik34fCr1YqryrKan5Zr15GFZaqr4a9F4rtr95Ja4qv397Ar48urWxWF9x
+	C3Z7CrW3WFyIgjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUIcSsGvfJTRUUUbTAFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
+	6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
+	A2z4x0Y4vE2Ix0cI8IcVAFwI0_Ar0_tr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr1j
+	6F4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0oV
+	Cq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
+	I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
+	4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628v
+	n2kIc2xKxwAKzVCY07xG64k0F24lc7CjxVAaw2AFwI0_Jw0_GFyl42xK82IYc2Ij64vIr4
+	1l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK
+	67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI
+	8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAv
+	wI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14
+	v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjfUO73vUUUUU
+X-CM-SenderInfo: 5olet0hnxqqx5xdzvxpfor3voofrz/1tbiAgAGBWaWL5QGDAAAsA
 
-Quoting Stephen Boyd (2024-07-10 13:12:44)
-> Test that clks registered with 'struct clk_parent_data' work as
-> intended and can find their parents.
->=20
-> Cc: Christian Marangi <ansuelsmth@gmail.com>
-> Cc: Brendan Higgins <brendan.higgins@linux.dev>
-> Reviewed-by: David Gow <davidgow@google.com>
-> Cc: Rae Moar <rmoar@google.com>
-> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-> ---
+From: Baokun Li <libaokun1@huawei.com>
 
-Applied to clk-next
+When commit 13df4d44a3aa ("ext4: fix slab-out-of-bounds in
+ext4_mb_find_good_group_avg_frag_lists()") was backported to stable, the
+commit f536808adcc3 ("ext4: refactor out ext4_generic_attr_store()") that
+uniformly determines if the ptr is null is not merged in, so it needs to
+be judged whether ptr is null or not in each case of the switch, otherwise
+null pointer dereferencing may occur.
+
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+---
+ fs/ext4/sysfs.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/fs/ext4/sysfs.c b/fs/ext4/sysfs.c
+index 63cbda3700ea..d65dccb44ed5 100644
+--- a/fs/ext4/sysfs.c
++++ b/fs/ext4/sysfs.c
+@@ -473,6 +473,8 @@ static ssize_t ext4_attr_store(struct kobject *kobj,
+ 			*((unsigned int *) ptr) = t;
+ 		return len;
+ 	case attr_clusters_in_group:
++		if (!ptr)
++			return 0;
+ 		ret = kstrtouint(skip_spaces(buf), 0, &t);
+ 		if (ret)
+ 			return ret;
+-- 
+2.39.2
+
