@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B2E1DDCE;
-	Tue, 16 Jul 2024 16:09:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD8D1DDCE;
+	Tue, 16 Jul 2024 16:09:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721146194; cv=none; b=r/r3qAph8nQOSmMyVXt34UALwNx2ufLn7Oq+vwwMVTviTADX+lGqJwaBEk4RwMyb5xWHPxo70LXqxbjPGZarAE1ZTOmLSKt6fDjed9VX4TZ/of99rARvT/PmXDJmsh/QpXN4ciwyMHWB4c4jYPmwEUSAmxViTcpi3kuvglY4dpw=
+	t=1721146197; cv=none; b=NUbKflYS6coaM8QqhDawRK1XPxFQQSp0fKmIOhTHjfwOoVE5htvPw2EXqM5BJZ5S2l6FX0veLKeGdR7365bjlISbdrd7QRzMBAkQ/ZhF8L7sNC0aY5e9cKLYQZKFCpeHHYBfVFg1EvAnQx46h7AkmhRQ+YI8JFVeW0vsvldH7sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721146194; c=relaxed/simple;
-	bh=T9WbLFWec4B0+DrG6LL+1sUfnzk6nk5DAcJoJipGfdM=;
+	s=arc-20240116; t=1721146197; c=relaxed/simple;
+	bh=mYT6dJadN6eQ6fxJDA5ZPkEDQJOTzJR2b8ZIrzENMPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MKi+nF89gJiV2Tt50yoh+ByF62t7xpdfP0vM4Jq6qfVXP+zQud+mgFeo8GAWhEsSGj2jhZyTWem90PlJFThI7khixW2NLiGzLsHJgnVEce7HKQHpHPG6o8EemmxkKsCW3PyOiK88md5XbLFQwf6W/YO4Q5J+TflPpkrUKJynVMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJztWwGd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iElWJENEW2aCObfeK2W7JGSmfbj/ZoInedG5daWoyxKtSn1rP+zym4Kgv9NmJvtrV3osbOQf91/oQkwr7s4cYeBzJCVu75YdsGkDLXex0nffXqCAY3kJgQPQJXUeNOlOC7xHZ5yaXwuQFvVSNq5PmwEo1vsZ07x6CZvwPJTcanI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BXRX9b04; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJztWwGd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1C3EC116B1;
-	Tue, 16 Jul 2024 16:09:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BXRX9b04"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6E7AC116B1;
+	Tue, 16 Jul 2024 16:09:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721146194;
-	bh=T9WbLFWec4B0+DrG6LL+1sUfnzk6nk5DAcJoJipGfdM=;
+	s=korg; t=1721146197;
+	bh=mYT6dJadN6eQ6fxJDA5ZPkEDQJOTzJR2b8ZIrzENMPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EJztWwGdCrdO9NeIwOxaAln75R9FSVUQVGBbJGyixrYvMxzBEm5AJ3zRKxI160MGN
-	 1Hlt5Xhhd77+FDvqLxA1BYVzSCRaW/fpn4sLh9o1cEM/JS/U35U//1m1reV52ssEdo
-	 YbeT1MwbkBYCD+XfcPGRQDh/cACGktslg6/Dd02s=
+	b=BXRX9b04Lvo6TLXeqiJdVFvdyCs7O5AdKAwKZ6tivblr7j/AQN1D0iNiaSRcq+vxV
+	 /gQ9EY6xi+NM2Qgu3uPMKEpjsTmKnPA0ZOS13S99DdBnlOu+cdhOkFVY2kAoA6PuS7
+	 gw2QOsjJXdhGXCX5JVB080WE21/rIfnorblk0qD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugh Dickins <hughd@google.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 086/144] net: fix rc7s __skb_datagram_iter()
-Date: Tue, 16 Jul 2024 17:32:35 +0200
-Message-ID: <20240716152755.847401413@linuxfoundation.org>
+	Val Packett <val@packett.cool>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 5.15 060/144] mtd: rawnand: rockchip: ensure NVDDR timings are rejected
+Date: Tue, 16 Jul 2024 17:32:09 +0200
+Message-ID: <20240716152754.854734313@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
 References: <20240716152752.524497140@linuxfoundation.org>
@@ -52,45 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugh Dickins <hughd@google.com>
+From: Val Packett <val@packett.cool>
 
-[ Upstream commit f153831097b4435f963e385304cc0f1acba1c657 ]
+commit b27d8946b5edd9827ee3c2f9ea1dd30022fb1ebe upstream.
 
-X would not start in my old 32-bit partition (and the "n"-handling looks
-just as wrong on 64-bit, but for whatever reason did not show up there):
-"n" must be accumulated over all pages before it's added to "offset" and
-compared with "copy", immediately after the skb_frag_foreach_page() loop.
+.setup_interface first gets called with a "target" value of
+NAND_DATA_IFACE_CHECK_ONLY, in which case an error is expected
+if the controller driver does not support the timing mode (NVDDR).
 
-Fixes: d2d30a376d9c ("net: allow skb_datagram_iter to be called from any context")
-Signed-off-by: Hugh Dickins <hughd@google.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Link: https://patch.msgid.link/fef352e8-b89a-da51-f8ce-04bc39ee6481@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a9ecc8c814e9 ("mtd: rawnand: Choose the best timings, NV-DDR included")
+Signed-off-by: Val Packett <val@packett.cool>
+Cc: stable@vger.kernel.org
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20240519031409.26464-1-val@packett.cool
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/datagram.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mtd/nand/raw/rockchip-nand-controller.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/datagram.c b/net/core/datagram.c
-index 6b7db06eafe68..13f4bf82b2ee8 100644
---- a/net/core/datagram.c
-+++ b/net/core/datagram.c
-@@ -447,11 +447,12 @@ static int __skb_datagram_iter(const struct sk_buff *skb, int offset,
- 			if (copy > len)
- 				copy = len;
+--- a/drivers/mtd/nand/raw/rockchip-nand-controller.c
++++ b/drivers/mtd/nand/raw/rockchip-nand-controller.c
+@@ -421,13 +421,13 @@ static int rk_nfc_setup_interface(struct
+ 	u32 rate, tc2rw, trwpw, trw2c;
+ 	u32 temp;
  
-+			n = 0;
- 			skb_frag_foreach_page(frag,
- 					      skb_frag_off(frag) + offset - start,
- 					      copy, p, p_off, p_len, copied) {
- 				vaddr = kmap_local_page(p);
--				n = INDIRECT_CALL_1(cb, simple_copy_to_iter,
-+				n += INDIRECT_CALL_1(cb, simple_copy_to_iter,
- 					vaddr + p_off, p_len, data, to);
- 				kunmap_local(vaddr);
- 			}
--- 
-2.43.0
-
+-	if (target < 0)
+-		return 0;
+-
+ 	timings = nand_get_sdr_timings(conf);
+ 	if (IS_ERR(timings))
+ 		return -EOPNOTSUPP;
+ 
++	if (target < 0)
++		return 0;
++
+ 	if (IS_ERR(nfc->nfc_clk))
+ 		rate = clk_get_rate(nfc->ahb_clk);
+ 	else
 
 
