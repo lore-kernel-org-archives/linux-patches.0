@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B96AB1DDCE;
-	Tue, 16 Jul 2024 16:05:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A45619AD93;
+	Tue, 16 Jul 2024 16:05:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145903; cv=none; b=X4kDScgvym+ef2K8r9g16KyEzUOeUnfyer2vJlGlmvTo4FxJCuYTHEkz0moRSeL7q0W0LGkyfaBAZMsb5HJssQDgwZALY4z9KfweJOJX1k+qRBg72R/fq9jMyfkvl9fIzRx6EwWw4GzSrHPBUp841kVExtKA1O5BbUDnmoKnXa4=
+	t=1721145906; cv=none; b=VdqRgmuaxc1ppEIMiO37Kl7aGW6/K0vC/YVHjowGoUaYqxuOt6JgqM2xMKxTCMzU+ZDKJ26exdn6dhkZhR2ASvYhh1YkNHTafiYKOl2sRZDz9ftl3AHZ+XA4gWCT+qsHWmagLDxDZDWMw1c0m2EzmVn9T3U4fB9NOE9ebwaKVVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145903; c=relaxed/simple;
-	bh=LQp0wJ6nBJ3ZCCqFc/smJhLn9Sxf+E4iWJJW5AVrTcI=;
+	s=arc-20240116; t=1721145906; c=relaxed/simple;
+	bh=Dh91e3V+CQrJ6ZHOqaoQNTHKcCoOtVf9zS8jILJ9HjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OgU4ttY/X8RtDYdb9w/f11ldlMXWM6x3zUhdK6LqIOccn8JWxkUWmQTK8oV/hyxVnw7DVCmPcdUtNhrpgbQuCXGm09BLsBF8q54cAPkbTW5URSsffJCKjMPUGwa3C24bwJYOzfU4zfziSm+rHYe4H8FkhE9gCsU2EkxYZ05ObCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k9zv0qqx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pOnwC2ddmEqLnDhFbwKjqMIt03vpCEOtPTAJ1HlwdUTbVoftijthfS+HFHKwQUg/ldM5qZJ00h0qg+dZkC/Lc+V8bp2K3dIADEjjyzQ5vYJe2Il4r9K30vKvaK2+bpdWoXfoiv8ycSyMBcX8bIrUCOvMCPr7wjrwjBrdY9Qr32E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZPiuGF6J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k9zv0qqx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36E24C116B1;
-	Tue, 16 Jul 2024 16:05:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZPiuGF6J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21590C116B1;
+	Tue, 16 Jul 2024 16:05:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145903;
-	bh=LQp0wJ6nBJ3ZCCqFc/smJhLn9Sxf+E4iWJJW5AVrTcI=;
+	s=korg; t=1721145906;
+	bh=Dh91e3V+CQrJ6ZHOqaoQNTHKcCoOtVf9zS8jILJ9HjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k9zv0qqxq9x+zc1nw5zImsNZE+8kD2B+7Q/tIV4P1Z2lbS6Kf7Ak4yyZzD5MqTyId
-	 oekfGXBZOYaZTcEBbaEcuRWcDg/nHz7zQ3LcXGKSPKfU2FijORvQYJj875KhpiJabL
-	 U9FUXxidHJElkjEOzoa75L4JapZWVE02QOG/eTpg=
+	b=ZPiuGF6J1zQQFaUSX8S9KhuqozK4kPkK3Izz88K9ZmWfIf30rs2i0BT8OqY5wLRkF
+	 OgbXepTGdU+nx6/v+Fn0AM4r6Q5qR9tj3hqg816xjcHBI9OYwIG/syXl4OSrfO82sR
+	 TAp0XhS8TnUw1MaEQ2XeNqaMJ6exKY+ZghvQA8Nk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Xiubo Li <xiubli@redhat.com>
-Subject: [PATCH 6.6 089/121] libceph: fix race between delayed_work() and ceph_monc_stop()
-Date: Tue, 16 Jul 2024 17:32:31 +0200
-Message-ID: <20240716152754.752003501@linuxfoundation.org>
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 116/121] i2c: rcar: clear NO_RXDMA flag after resetting
+Date: Tue, 16 Jul 2024 17:32:58 +0200
+Message-ID: <20240716152755.790188040@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152751.312512071@linuxfoundation.org>
 References: <20240716152751.312512071@linuxfoundation.org>
@@ -50,86 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-commit 69c7b2fe4c9cc1d3b1186d1c5606627ecf0de883 upstream.
+[ Upstream commit fea6b5ebb71a2830b042e42de7ae255017ac3ce8 ]
 
-The way the delayed work is handled in ceph_monc_stop() is prone to
-races with mon_fault() and possibly also finish_hunting().  Both of
-these can requeue the delayed work which wouldn't be canceled by any of
-the following code in case that happens after cancel_delayed_work_sync()
-runs -- __close_session() doesn't mess with the delayed work in order
-to avoid interfering with the hunting interval logic.  This part was
-missed in commit b5d91704f53e ("libceph: behave in mon_fault() if
-cur_mon < 0") and use-after-free can still ensue on monc and objects
-that hang off of it, with monc->auth and monc->monmap being
-particularly susceptible to quickly being reused.
+We should allow RXDMA only if the reset was really successful, so clear
+the flag after the reset call.
 
-To fix this:
-
-- clear monc->cur_mon and monc->hunting as part of closing the session
-  in ceph_monc_stop()
-- bail from delayed_work() if monc->cur_mon is cleared, similar to how
-  it's done in mon_fault() and finish_hunting() (based on monc->hunting)
-- call cancel_delayed_work_sync() after the session is closed
-
-Cc: stable@vger.kernel.org
-Link: https://tracker.ceph.com/issues/66857
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Xiubo Li <xiubli@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0e864b552b23 ("i2c: rcar: reset controller is mandatory for Gen3+")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ceph/mon_client.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-rcar.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ceph/mon_client.c
-+++ b/net/ceph/mon_client.c
-@@ -1085,13 +1085,19 @@ static void delayed_work(struct work_str
- 	struct ceph_mon_client *monc =
- 		container_of(work, struct ceph_mon_client, delayed_work.work);
+diff --git a/drivers/i2c/busses/i2c-rcar.c b/drivers/i2c/busses/i2c-rcar.c
+index 0ba88d44a7dbe..1d341bd2b4b96 100644
+--- a/drivers/i2c/busses/i2c-rcar.c
++++ b/drivers/i2c/busses/i2c-rcar.c
+@@ -856,10 +856,10 @@ static int rcar_i2c_master_xfer(struct i2c_adapter *adap,
  
--	dout("monc delayed_work\n");
- 	mutex_lock(&monc->mutex);
-+	dout("%s mon%d\n", __func__, monc->cur_mon);
-+	if (monc->cur_mon < 0) {
-+		goto out;
-+	}
-+
- 	if (monc->hunting) {
- 		dout("%s continuing hunt\n", __func__);
- 		reopen_session(monc);
- 	} else {
- 		int is_auth = ceph_auth_is_authenticated(monc->auth);
-+
-+		dout("%s is_authed %d\n", __func__, is_auth);
- 		if (ceph_con_keepalive_expired(&monc->con,
- 					       CEPH_MONC_PING_TIMEOUT)) {
- 			dout("monc keepalive timeout\n");
-@@ -1116,6 +1122,8 @@ static void delayed_work(struct work_str
- 		}
+ 	/* Gen3+ needs a reset. That also allows RXDMA once */
+ 	if (priv->devtype >= I2C_RCAR_GEN3) {
+-		priv->flags &= ~ID_P_NO_RXDMA;
+ 		ret = rcar_i2c_do_reset(priv);
+ 		if (ret)
+ 			goto out;
++		priv->flags &= ~ID_P_NO_RXDMA;
  	}
- 	__schedule_delayed(monc);
-+
-+out:
- 	mutex_unlock(&monc->mutex);
- }
  
-@@ -1232,13 +1240,15 @@ EXPORT_SYMBOL(ceph_monc_init);
- void ceph_monc_stop(struct ceph_mon_client *monc)
- {
- 	dout("stop\n");
--	cancel_delayed_work_sync(&monc->delayed_work);
- 
- 	mutex_lock(&monc->mutex);
- 	__close_session(monc);
-+	monc->hunting = false;
- 	monc->cur_mon = -1;
- 	mutex_unlock(&monc->mutex);
- 
-+	cancel_delayed_work_sync(&monc->delayed_work);
-+
- 	/*
- 	 * flush msgr queue before we destroy ourselves to ensure that:
- 	 *  - any work that references our embedded con is finished.
+ 	rcar_i2c_init(priv);
+-- 
+2.43.0
+
 
 
