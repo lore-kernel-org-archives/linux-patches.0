@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE3A19D8A8;
-	Tue, 16 Jul 2024 16:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B5A17CA0E;
+	Tue, 16 Jul 2024 16:06:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721146010; cv=none; b=QGlkxd80WIi+jxSNo68pcLH6hPoOJ6hR0wAe+AVKSSiFkugNgd6VdaOmEYtisMjRWFEd/W3Nt/GdcLs3gWyJ/x6PqKkpb9fUQr9ByBAW2aOse3Q75EvAmhVM5B0smWGMem1/fjhmb6Bp5vlTe2bVefyKw3vJyeVgDGuEXt4k/+E=
+	t=1721146014; cv=none; b=EUol8jGGmRbgSmRns7D6D8Q6PaNuf1gb+h7zwgy+agk4p9wInFeAv+1UUp+EA8KM9mdINAs7JvWTYoVa6pS/tMBzBrRGliDKmOE8wxnj0fxGbwwf2LRNcWhLJ+VC0FGtCiUHhpOfsNsF0dRz5PMFfhIYdAMN0ndaF76BC/TlV7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721146010; c=relaxed/simple;
-	bh=+ob5VK95PE8wNKqTHhd9vjswDCOHSEKElBpYw9TQ248=;
+	s=arc-20240116; t=1721146014; c=relaxed/simple;
+	bh=NF+K7y9TQmTybo88mTcYwUP93qgRMBONSAofAddKRXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dxrh0YlG4YlKwQgQYV/M4e/Sy50i3bKNa+8MQn1n5lDOVYSXQTO/waopdipWdLLpDQbtA4H0/uWH8zrOQDlfvWYkzYBO8fjmhvmci5SZaD1fEwkEsmWGbRJO+jgyRtSjZ6brdXXEYFxPZ7WZlKKGlalepx4GLT5YvgPOnAQ6bb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yzaWHK2f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lr+N1ZNwpB07XLT6jyd7DCDCq/ob2Zsn8vd4D5qa6kMOgS9pNCnypjhEWij5OiwUSmqBYBxOGrIJrDjacGXwNW7gFmXktAFPqX5S02UOxOxuPiOMPt70fV3g6MWtsDJUecrhS71yKLNekYf5pVAZlVmrGqkIfzuEX8igJhDo/bU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VEptu1P+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yzaWHK2f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 540F6C116B1;
-	Tue, 16 Jul 2024 16:06:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VEptu1P+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 432FDC116B1;
+	Tue, 16 Jul 2024 16:06:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721146010;
-	bh=+ob5VK95PE8wNKqTHhd9vjswDCOHSEKElBpYw9TQ248=;
+	s=korg; t=1721146013;
+	bh=NF+K7y9TQmTybo88mTcYwUP93qgRMBONSAofAddKRXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yzaWHK2fPVNxEagLnYZvOxWY3nIDCsB1svcpwg3IJsyYofjXRgveo0dSLmjLcA0DX
-	 PNUrEhb9rVJXO93COz/VPtKQWSJ7deDZh2IiCO2VAmDkWrJqkRzuP8km5/2weEeyn5
-	 coL0kJ8M9yEp9smrG3Cg5fzREbpdf0VAcB1xMeZ8=
+	b=VEptu1P+XJZAlnExdKH7Lqm8YmPKM6g0QEqvlqZZAKbpVBwODNoXJefGdCBn0YWMX
+	 HgGDUl68CIZ0GKqlLjI0+o34A7acCAd6lgxdR7hd6RHPDI7AHxkB7dAKAxpWOu3q2R
+	 uR5tFCUswDUVsP8r7584wIXd/IaOa8/Ex6baaktc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangwu Zhang <guazhang@redhat.com>,
-	Saurav Kashyap <skashyap@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	John Meneghini <jmeneghi@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Hailey Mothershead <hailmo@amazon.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 006/144] scsi: qedf: Make qedf_execute_tmf() non-preemptible
-Date: Tue, 16 Jul 2024 17:31:15 +0200
-Message-ID: <20240716152752.775249304@linuxfoundation.org>
+Subject: [PATCH 5.15 007/144] crypto: aead,cipher - zeroize key buffer after use
+Date: Tue, 16 Jul 2024 17:31:16 +0200
+Message-ID: <20240716152752.813199280@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
 References: <20240716152752.524497140@linuxfoundation.org>
@@ -54,52 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Meneghini <jmeneghi@redhat.com>
+From: Hailey Mothershead <hailmo@amazon.com>
 
-[ Upstream commit 0d8b637c9c5eeaa1a4e3dfb336f3ff918eb64fec ]
+[ Upstream commit 23e4099bdc3c8381992f9eb975c79196d6755210 ]
 
-Stop calling smp_processor_id() from preemptible code in
-qedf_execute_tmf90.  This results in BUG_ON() when running an RT kernel.
+I.G 9.7.B for FIPS 140-3 specifies that variables temporarily holding
+cryptographic information should be zeroized once they are no longer
+needed. Accomplish this by using kfree_sensitive for buffers that
+previously held the private key.
 
-[ 659.343280] BUG: using smp_processor_id() in preemptible [00000000] code: sg_reset/3646
-[ 659.343282] caller is qedf_execute_tmf+0x8b/0x360 [qedf]
-
-Tested-by: Guangwu Zhang <guazhang@redhat.com>
-Cc: Saurav Kashyap <skashyap@marvell.com>
-Cc: Nilesh Javali <njavali@marvell.com>
-Signed-off-by: John Meneghini <jmeneghi@redhat.com>
-Link: https://lore.kernel.org/r/20240403150155.412954-1-jmeneghi@redhat.com
-Acked-by: Saurav Kashyap <skashyap@marvell.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Hailey Mothershead <hailmo@amazon.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qedf/qedf_io.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ crypto/aead.c   | 3 +--
+ crypto/cipher.c | 3 +--
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/qedf/qedf_io.c b/drivers/scsi/qedf/qedf_io.c
-index a1a1f4e466609..450b2baf1fd14 100644
---- a/drivers/scsi/qedf/qedf_io.c
-+++ b/drivers/scsi/qedf/qedf_io.c
-@@ -2340,9 +2340,6 @@ static int qedf_execute_tmf(struct qedf_rport *fcport, struct scsi_cmnd *sc_cmd,
- 	io_req->fcport = fcport;
- 	io_req->cmd_type = QEDF_TASK_MGMT_CMD;
+diff --git a/crypto/aead.c b/crypto/aead.c
+index 16991095270d2..c4ece86c45bc4 100644
+--- a/crypto/aead.c
++++ b/crypto/aead.c
+@@ -35,8 +35,7 @@ static int setkey_unaligned(struct crypto_aead *tfm, const u8 *key,
+ 	alignbuffer = (u8 *)ALIGN((unsigned long)buffer, alignmask + 1);
+ 	memcpy(alignbuffer, key, keylen);
+ 	ret = crypto_aead_alg(tfm)->setkey(tfm, alignbuffer, keylen);
+-	memset(alignbuffer, 0, keylen);
+-	kfree(buffer);
++	kfree_sensitive(buffer);
+ 	return ret;
+ }
  
--	/* Record which cpu this request is associated with */
--	io_req->cpu = smp_processor_id();
--
- 	/* Set TM flags */
- 	io_req->io_req_flags = QEDF_READ;
- 	io_req->data_xfer_len = 0;
-@@ -2364,6 +2361,9 @@ static int qedf_execute_tmf(struct qedf_rport *fcport, struct scsi_cmnd *sc_cmd,
+diff --git a/crypto/cipher.c b/crypto/cipher.c
+index b47141ed4a9f3..395f0c2fbb9ff 100644
+--- a/crypto/cipher.c
++++ b/crypto/cipher.c
+@@ -34,8 +34,7 @@ static int setkey_unaligned(struct crypto_cipher *tfm, const u8 *key,
+ 	alignbuffer = (u8 *)ALIGN((unsigned long)buffer, alignmask + 1);
+ 	memcpy(alignbuffer, key, keylen);
+ 	ret = cia->cia_setkey(crypto_cipher_tfm(tfm), alignbuffer, keylen);
+-	memset(alignbuffer, 0, keylen);
+-	kfree(buffer);
++	kfree_sensitive(buffer);
+ 	return ret;
  
- 	spin_lock_irqsave(&fcport->rport_lock, flags);
- 
-+	/* Record which cpu this request is associated with */
-+	io_req->cpu = smp_processor_id();
-+
- 	sqe_idx = qedf_get_sqe_idx(fcport);
- 	sqe = &fcport->sq[sqe_idx];
- 	memset(sqe, 0, sizeof(struct fcoe_wqe));
+ }
 -- 
 2.43.0
 
