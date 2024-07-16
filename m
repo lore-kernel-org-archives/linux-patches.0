@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2853017A93F;
-	Tue, 16 Jul 2024 15:53:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1454217A93F;
+	Tue, 16 Jul 2024 15:53:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721145209; cv=none; b=nF6DA6pn1IovSaEAFSgTYd/YWz/AY4uSbV05z65aOhqm8caAU9rC0qhrluw7u3e+5znAiF34DM3OMXO6go+N8vPcadVBCdjDqQyTi9oogW73d1/03DhFQeiFVHwkLV6oZHpVlAWJVogiG/YL0kxIqea2jmJf4V8Ionk+pWGAPVs=
+	t=1721145212; cv=none; b=M0D/8+y0CMIkGOoAZOCMJDQ9B6fy7XBbC6zCTZiI6vYFB3HSOZ3OZYzV4N47UI1f5blpC5j9u/V0Jz9Q9nLBk1AkrvPqDCpn+gvFqXi/dm51i2FielRey7SPdkLnQ81U6aZf0l4l9eeb4d67liNxUf+W4SuktWnkizZditjvU/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721145209; c=relaxed/simple;
-	bh=+VhqDU8Ycv9I63f+rl4TxSh13c//1FVx1rJ/HcaJ2zw=;
+	s=arc-20240116; t=1721145212; c=relaxed/simple;
+	bh=IiWJyf/9/uDPgV5Oe3Bx2xBH1pd53qqPrTXmT4Dri4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dGYqtTW1EAGHKf+u5VJVPdcYcM2mcOecP3Gez67SmvsEzd/GMmV3/vGdG2HU6IjLB7XST66wLQVV2yLBdXkKnjGCzFCGB+olQlkI+BFeNdka3/3XfcvVVfCxJr+dzcsFyVqy7un2ICx4KYaqzT1mXQ8wiwnmPIUchCT9LPz5DcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=epPhfuke; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P+FBEkP7MSv3W8FQaQVBDeKzjpulq1W7JhGEY4eSv1CQUw9g9GcWDYUinjLN5Zk40PvCO9QVmbRJWhen4x2wvcpD+F5zmWEhK+YGiH2czoZXFqUz2GMyyvBmlRkp8eajOwgF/kcmcrlj53YnkG8NjPxUtAQE6qf/pm4gOGnvnEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=op9t6ozI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="epPhfuke"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A322EC116B1;
-	Tue, 16 Jul 2024 15:53:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="op9t6ozI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E27DC116B1;
+	Tue, 16 Jul 2024 15:53:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721145209;
-	bh=+VhqDU8Ycv9I63f+rl4TxSh13c//1FVx1rJ/HcaJ2zw=;
+	s=korg; t=1721145212;
+	bh=IiWJyf/9/uDPgV5Oe3Bx2xBH1pd53qqPrTXmT4Dri4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=epPhfukeBW/UTjGnPydzNgqiNIcYoabmdc50ee/OGE6KvEjgb7K7u0kEh2EkuHQ2E
-	 0GqgMbH9DTU9+ApAexWdgpJjJiVIN0bii50DENYbIrXEdzYHrHCUSdtARLpt8KI90q
-	 YGFsl30C7gS4trbFf5n25L/bXDuxUqCqbaqjW6uM=
+	b=op9t6ozIzQLBWz70bu8Tcfvg4dsQX7CrE898NTyXWK/S8lBXvzPWXvc8px8q9d/GK
+	 pvSam29tHbXV13DtK8cF/mNzEr4ivDHqwvuRtRecTdBBjsIg9474jBkbM4rULvIUra
+	 TTR7WmLtaCqJnAZYI3mjxDcgDKF+FDyzszn73ik4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"sashal@kernel.org, tytso@mit.edu, jack@suse.cz, patches@lists.linux.dev, yi.zhang@huawei.com, yangerkun@huawei.com, libaokun@huaweicloud.com, Baokun Li" <libaokun1@huawei.com>,
-	Baokun Li <libaokun1@huawei.com>
-Subject: [PATCH 6.9 134/143] ext4: avoid ptr null pointer dereference
-Date: Tue, 16 Jul 2024 17:32:10 +0200
-Message-ID: <20240716152801.150173479@linuxfoundation.org>
+	Dirk Behme <dirk.behme@de.bosch.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.9 135/143] i2c: rcar: bring hardware to known state when probing
+Date: Tue, 16 Jul 2024 17:32:11 +0200
+Message-ID: <20240716152801.189186289@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152755.980289992@linuxfoundation.org>
 References: <20240716152755.980289992@linuxfoundation.org>
@@ -50,32 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-When commit 13df4d44a3aa ("ext4: fix slab-out-of-bounds in
-ext4_mb_find_good_group_avg_frag_lists()") was backported to stable, the
-commit f536808adcc3 ("ext4: refactor out ext4_generic_attr_store()") that
-uniformly determines if the ptr is null is not merged in, so it needs to
-be judged whether ptr is null or not in each case of the switch, otherwise
-null pointer dereferencing may occur.
+[ Upstream commit 4e36c0f20cb1c74c7bd7ea31ba432c1c4a989031 ]
 
-Fixes: b829687ae122 ("ext4: fix slab-out-of-bounds in ext4_mb_find_good_group_avg_frag_lists()")
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+When probing, the hardware is not brought into a known state. This may
+be a problem when a hypervisor restarts Linux without resetting the
+hardware, leaving an old state running. Make sure the hardware gets
+initialized, especially interrupts should be cleared and disabled.
+
+Reported-by: Dirk Behme <dirk.behme@de.bosch.com>
+Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Closes: https://lore.kernel.org/r/20240702045535.2000393-1-dirk.behme@de.bosch.com
+Fixes: 6ccbe607132b ("i2c: add Renesas R-Car I2C driver")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/sysfs.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/i2c/busses/i2c-rcar.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
---- a/fs/ext4/sysfs.c
-+++ b/fs/ext4/sysfs.c
-@@ -473,6 +473,8 @@ static ssize_t ext4_attr_store(struct ko
- 			*((unsigned int *) ptr) = t;
- 		return len;
- 	case attr_clusters_in_group:
-+		if (!ptr)
-+			return 0;
- 		ret = kstrtouint(skip_spaces(buf), 0, &t);
- 		if (ret)
- 			return ret;
+diff --git a/drivers/i2c/busses/i2c-rcar.c b/drivers/i2c/busses/i2c-rcar.c
+index 828aa2ea0fe4c..ec73463ea9b5e 100644
+--- a/drivers/i2c/busses/i2c-rcar.c
++++ b/drivers/i2c/busses/i2c-rcar.c
+@@ -257,6 +257,14 @@ static void rcar_i2c_init(struct rcar_i2c_priv *priv)
+ 	}
+ }
+ 
++static void rcar_i2c_reset_slave(struct rcar_i2c_priv *priv)
++{
++	rcar_i2c_write(priv, ICSIER, 0);
++	rcar_i2c_write(priv, ICSSR, 0);
++	rcar_i2c_write(priv, ICSCR, SDBS);
++	rcar_i2c_write(priv, ICSAR, 0); /* Gen2: must be 0 if not using slave */
++}
++
+ static int rcar_i2c_bus_barrier(struct rcar_i2c_priv *priv)
+ {
+ 	int ret;
+@@ -1033,11 +1041,8 @@ static int rcar_unreg_slave(struct i2c_client *slave)
+ 
+ 	/* ensure no irq is running before clearing ptr */
+ 	disable_irq(priv->irq);
+-	rcar_i2c_write(priv, ICSIER, 0);
+-	rcar_i2c_write(priv, ICSSR, 0);
++	rcar_i2c_reset_slave(priv);
+ 	enable_irq(priv->irq);
+-	rcar_i2c_write(priv, ICSCR, SDBS);
+-	rcar_i2c_write(priv, ICSAR, 0); /* Gen2: must be 0 if not using slave */
+ 
+ 	priv->slave = NULL;
+ 
+@@ -1152,7 +1157,9 @@ static int rcar_i2c_probe(struct platform_device *pdev)
+ 		goto out_pm_disable;
+ 	}
+ 
+-	rcar_i2c_write(priv, ICSAR, 0); /* Gen2: must be 0 if not using slave */
++	/* Bring hardware to known state */
++	rcar_i2c_init(priv);
++	rcar_i2c_reset_slave(priv);
+ 
+ 	if (priv->devtype < I2C_RCAR_GEN3) {
+ 		irqflags |= IRQF_NO_THREAD;
+-- 
+2.43.0
+
 
 
