@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC5B21DDCE;
-	Tue, 16 Jul 2024 16:08:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A08DB2B9BC;
+	Tue, 16 Jul 2024 16:08:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721146127; cv=none; b=Io5aKlJW13uYODCiIBrtz5jLtANkLy39oWrDm2e/4GjvAqGUZD4J9h81W8JSG5VOUwKB5Ws80xmrIS6olJqULUdmfqTNDt0RedPXDWaLiGfoJNHqetyPYdNFFIexwUBDQyOpDKzaQdmpIaHVABNnD8R1oq6LC5OPzxqYXZ2ZAa0=
+	t=1721146130; cv=none; b=j/kztczPhzsrdqYBGf6KSM3uxgZtQPShNAdiUxV6c2LWb7I8M1GrlvlmcJjYFNRZ5/1a99Oq2R4uu3+TI/5rWgRON0K16I+yGtBu/2QFCi7uajTS7Rl3aPWb28HHqsVoOuWLY0qYsv2OVio87aHk+HK1qXXeB2dUGS3w/WzXnJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721146127; c=relaxed/simple;
-	bh=clm4OnFkBGTW7qhWQVF8TI4oKRnyyrpO4UE4YnrOpWo=;
+	s=arc-20240116; t=1721146130; c=relaxed/simple;
+	bh=9rBkiVpUbuZ6A3Vk5mpte4b7L2db7+s1qQ7XHV5GdJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BrKzemxo6uA88ieRH1QEXeNB9+TXcr1oJDAH+37/9zWX9EPshbrGkp/f2R8t8HVp5g1toB5NtkC7EinAop4S+1Zl41PkGz4H4788cT51bVcdhvX3HiWlS+NIXMat/Ds19x4aSerTZWWwapOpJaTJAtNl9iJmKb7Be3ymgV5LCAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tPsiwxaJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zu5dS9npTURYgRNbHnj6t2A/nsijOmCMOCgrbVhK68Fb4ydLPcZCObXFH3bm7wA8f5fhfFm+P7YMNIFGk+BMXeWhvpLdBXnb8OST8w51UEDSV2tDmGkOFowzceTao1XfArDDDsWxVLwKckKByl6oNB0x9ByfMjqfIVY9pLxYezA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uq8d+EZf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tPsiwxaJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32ADFC116B1;
-	Tue, 16 Jul 2024 16:08:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uq8d+EZf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A2BC4AF0D;
+	Tue, 16 Jul 2024 16:08:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721146127;
-	bh=clm4OnFkBGTW7qhWQVF8TI4oKRnyyrpO4UE4YnrOpWo=;
+	s=korg; t=1721146130;
+	bh=9rBkiVpUbuZ6A3Vk5mpte4b7L2db7+s1qQ7XHV5GdJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tPsiwxaJAmcGE9nUenc1+wq+XHVtknk5o8rgbzF2CFv0h+niy6WlU3XNk8JuE1efC
-	 lbUqTvk9/enCSj8r69BCQHpF5nt/+KF4WxdUPoLhlECGDHbl6V9Tx2SFKZTe3lnaKY
-	 /s/yupwmJz9mJil+3+tOPnQYP8cz0LIeYp+TjEAQ=
+	b=uq8d+EZfv17MsCA2eH15gA/MYvd/AnG3SC8PBPKrc5MhZossxWesBSyaX0vhHW98g
+	 xbij33SL33Q55UP3K7wwpNvh+wbog1o1vPKWkVy0tl/NFFwx/r0H+ih2O5OfWyRdDJ
+	 gj0Tc1UjqrJbdhJqnOLmHwqeHTfG/jVGH1R4RORw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 5.15 058/144] mtd: rawnand: Ensure ECC configuration is propagated to upper layers
-Date: Tue, 16 Jul 2024 17:32:07 +0200
-Message-ID: <20240716152754.777918135@linuxfoundation.org>
+	Jian-Hong Pan <jhp@endlessos.org>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 067/144] ALSA: hda/realtek: Enable headset mic of JP-IK LEAP W502 with ALC897
+Date: Tue, 16 Jul 2024 17:32:16 +0200
+Message-ID: <20240716152755.123234573@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
 References: <20240716152752.524497140@linuxfoundation.org>
@@ -50,68 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Jian-Hong Pan <jhp@endlessos.org>
 
-commit 3a1b777eb9fb75d09c45ae5dd1d007eddcbebf1f upstream.
+[ Upstream commit 45e37f9ce28d248470bab4376df2687a215d1b22 ]
 
-Until recently the "upper layer" was MTD. But following incremental
-reworks to bring spi-nand support and more recently generic ECC support,
-there is now an intermediate "generic NAND" layer that also needs to get
-access to some values. When using "converted" ECC engines, like the
-software ones, these values are already propagated correctly. But
-otherwise when using good old raw NAND controller drivers, we need to
-manually set these values ourselves at the end of the "scan" operation,
-once these values have been negotiated.
+JP-IK LEAP W502 laptop's headset mic is not enabled until
+ALC897_FIXUP_HEADSET_MIC_PIN3 quirk is applied.
 
-Without this propagation, later (generic) checks like the one warning
-users that the ECC strength is not high enough might simply no longer
-work.
+Here is the original pin node values:
 
-Fixes: 8c126720fe10 ("mtd: rawnand: Use the ECC framework nand_ecc_is_strong_enough() helper")
-Cc: stable@vger.kernel.org
-Reported-by: Sascha Hauer <s.hauer@pengutronix.de>
-Closes: https://lore.kernel.org/all/Zhe2JtvvN1M4Ompw@pengutronix.de/
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Tested-by: Sascha Hauer <s.hauer@pengutronix.de>
-Link: https://lore.kernel.org/linux-mtd/20240507085842.108844-1-miquel.raynal@bootlin.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+0x11 0x40000000
+0x12 0xb7a60130
+0x14 0x90170110
+0x15 0x411111f0
+0x16 0x411111f0
+0x17 0x411111f0
+0x18 0x411111f0
+0x19 0x411111f0
+0x1a 0x411111f0
+0x1b 0x03211020
+0x1c 0x411111f0
+0x1d 0x4026892d
+0x1e 0x411111f0
+0x1f 0x411111f0
+
+Signed-off-by: Jian-Hong Pan <jhp@endlessos.org>
+Link: https://lore.kernel.org/r/20240520055008.7083-2-jhp@endlessos.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/nand_base.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/mtd/nand/raw/nand_base.c
-+++ b/drivers/mtd/nand/raw/nand_base.c
-@@ -6050,6 +6050,7 @@ static const struct nand_ops rawnand_ops
- static int nand_scan_tail(struct nand_chip *chip)
- {
- 	struct mtd_info *mtd = nand_to_mtd(chip);
-+	struct nand_device *base = &chip->base;
- 	struct nand_ecc_ctrl *ecc = &chip->ecc;
- 	int ret, i;
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index ae59b208f12ac..fa504f319d43e 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10898,6 +10898,7 @@ enum {
+ 	ALC897_FIXUP_LENOVO_HEADSET_MODE,
+ 	ALC897_FIXUP_HEADSET_MIC_PIN2,
+ 	ALC897_FIXUP_UNIS_H3C_X500S,
++	ALC897_FIXUP_HEADSET_MIC_PIN3,
+ };
  
-@@ -6194,9 +6195,13 @@ static int nand_scan_tail(struct nand_ch
- 	if (!ecc->write_oob_raw)
- 		ecc->write_oob_raw = ecc->write_oob;
+ static const struct hda_fixup alc662_fixups[] = {
+@@ -11344,10 +11345,18 @@ static const struct hda_fixup alc662_fixups[] = {
+ 			{}
+ 		},
+ 	},
++	[ALC897_FIXUP_HEADSET_MIC_PIN3] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x19, 0x03a11050 }, /* use as headset mic */
++			{ }
++		},
++	},
+ };
  
--	/* propagate ecc info to mtd_info */
-+	/* Propagate ECC info to the generic NAND and MTD layers */
- 	mtd->ecc_strength = ecc->strength;
-+	if (!base->ecc.ctx.conf.strength)
-+		base->ecc.ctx.conf.strength = ecc->strength;
- 	mtd->ecc_step_size = ecc->size;
-+	if (!base->ecc.ctx.conf.step_size)
-+		base->ecc.ctx.conf.step_size = ecc->size;
- 
- 	/*
- 	 * Set the number of read / write steps for one page depending on ECC
-@@ -6204,6 +6209,8 @@ static int nand_scan_tail(struct nand_ch
- 	 */
- 	if (!ecc->steps)
- 		ecc->steps = mtd->writesize / ecc->size;
-+	if (!base->ecc.ctx.nsteps)
-+		base->ecc.ctx.nsteps = ecc->steps;
- 	if (ecc->steps * ecc->size != mtd->writesize) {
- 		WARN(1, "Invalid ECC parameters\n");
- 		ret = -EINVAL;
+ static const struct snd_pci_quirk alc662_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1019, 0x9087, "ECS", ALC662_FIXUP_ASUS_MODE2),
++	SND_PCI_QUIRK(0x1019, 0x9859, "JP-IK LEAP W502", ALC897_FIXUP_HEADSET_MIC_PIN3),
+ 	SND_PCI_QUIRK(0x1025, 0x022f, "Acer Aspire One", ALC662_FIXUP_INV_DMIC),
+ 	SND_PCI_QUIRK(0x1025, 0x0241, "Packard Bell DOTS", ALC662_FIXUP_INV_DMIC),
+ 	SND_PCI_QUIRK(0x1025, 0x0308, "Acer Aspire 8942G", ALC662_FIXUP_ASPIRE),
+-- 
+2.43.0
+
 
 
