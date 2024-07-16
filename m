@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB84F19DF88;
-	Tue, 16 Jul 2024 15:47:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9909A19E7E5;
+	Tue, 16 Jul 2024 15:47:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144821; cv=none; b=NRqpuLkytJk7LWtdv8FMGoxF8Eq9y9Oo6Fq7Wcp+n49bBl3TYg3wyVjYsaT+taQHMwfexJB0HeWM8IQLbzPDW97sZ4avWEof4ZrGKKh0FRWOERlDjhxsM74hbxh86CBoxMUtbKjU4QZ79Ehyna7+SVKZJkKhHydofTHInPdDEQM=
+	t=1721144824; cv=none; b=qk+ExTunCVuhG9rtLzlmt1wcam1PkQUxJT+Lu74RSozPQiVe0Gllp7pTZrmNDVb7QLAIP65yob5bV+UNeFeZYzO3Y2XlDutstFN3pWH6tRA8EEIA3u6BPATCmPEHjZX9RADSnrqRBH8TyJZKuPsz3qKPnhMzjLq95UR3iB7WXwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144821; c=relaxed/simple;
-	bh=o6QRcv2lXfVz6sL3kayNjZHUR9DdVS7Biqe71c00sMc=;
+	s=arc-20240116; t=1721144824; c=relaxed/simple;
+	bh=Z8OD7PVSn+Aplvp+fiRgp+/V2fhd69ayfxqfNgIHv1Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pN8NGsXoZ9rblGauRjFOLr38maKw2S+JVMQss+jeYrgYEeKN9DVshEbicp9tUDBiRwmtTFFj3tT3OufxdkvM1FTLF7fx+ge76zjSt9IbjLJMyPCRE9rIxqZim2TlRMPt86E9LHfmqfQ8ujjMabZvlVoq7AAYJAhXvCv3ztYZEqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IC018LND; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nSiwc7fMTUfqvJSyjB6qud17m7V+RFcGFkOeX9OHPAxvfGHvnn+V36zpv2ouUr+AvZDCO5iVINf1O/Kv6ltEu6uayuR/NcnW8hjFGUzQ2+ViwEB9jamXFwuvux14ok1fxKjrdKXvgjaDjrH7jDB6/BxBzr6NiWyVC5g+TrJVizU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dumEUXvR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IC018LND"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32692C116B1;
-	Tue, 16 Jul 2024 15:47:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dumEUXvR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB24C116B1;
+	Tue, 16 Jul 2024 15:47:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721144821;
-	bh=o6QRcv2lXfVz6sL3kayNjZHUR9DdVS7Biqe71c00sMc=;
+	s=korg; t=1721144824;
+	bh=Z8OD7PVSn+Aplvp+fiRgp+/V2fhd69ayfxqfNgIHv1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IC018LND197rZnTIqwW4KqynurrERX2X7Aix38XYlxeOhoe3TNuz8h/0gtijAE4Br
-	 7YnZTGwcIrU1cm3nIJha5wIsXI8NrMKbcUYjwgms00UuaBxbxPuSLtsi9K1StIe+vK
-	 IHwq9snlMPGnZuAjibh1HReMSATV6xn7zV84zVNI=
+	b=dumEUXvR6lJ6ivowkc0wVymBYrjf5hF5w9xqL6NnCdAxYJSsjIsArIGCjCfhEdpcv
+	 CGqj7a2FZ+9ope9LJtneqZG+X/fRKi3TB+qJikYd+xA+uecsQTXVflZOR+nJCnyrar
+	 5uLnqqDo/W24XVfn7ZJll7nFd5h6mk4w+7i9pGwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 105/108] i2c: rcar: introduce Gen4 devices
-Date: Tue, 16 Jul 2024 17:32:00 +0200
-Message-ID: <20240716152750.028172914@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	Ashwin Dayanand Kamat <ashwin.kamat@broadcom.com>
+Subject: [PATCH 5.10 096/108] ipv6: annotate data-races around cnf.disable_ipv6
+Date: Tue, 16 Jul 2024 17:31:51 +0200
+Message-ID: <20240716152749.676626026@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152745.988603303@linuxfoundation.org>
 References: <20240716152745.988603303@linuxfoundation.org>
@@ -53,77 +53,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 2b523c46e81ebd621515ab47117f95de197dfcbf ]
+commit d289ab65b89c1d4d88417cb6c03e923f21f95fae upstream.
 
-So far, we treated Gen4 as Gen3. But we are soon adding FM+ as a Gen4
-specific feature, so prepare the code for the new devtype.
+disable_ipv6 is read locklessly, add appropriate READ_ONCE()
+and WRITE_ONCE() annotations.
 
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Stable-dep-of: ea5ea84c9d35 ("i2c: rcar: ensure Gen3+ reset does not disturb local targets")
+v2: do not preload net before rtnl_trylock() in
+    addrconf_disable_ipv6() (Jiri)
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+[Ashwin: Regenerated the Patch for v5.10]
+Signed-off-by: Ashwin Dayanand Kamat <ashwin.kamat@broadcom.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-rcar.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ net/ipv6/addrconf.c   |    9 +++++----
+ net/ipv6/ip6_input.c  |    2 +-
+ net/ipv6/ip6_output.c |    2 +-
+ 3 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-rcar.c b/drivers/i2c/busses/i2c-rcar.c
-index 4b0222e5f584c..41c9d15c3bc69 100644
---- a/drivers/i2c/busses/i2c-rcar.c
-+++ b/drivers/i2c/busses/i2c-rcar.c
-@@ -116,6 +116,7 @@ enum rcar_i2c_type {
- 	I2C_RCAR_GEN1,
- 	I2C_RCAR_GEN2,
- 	I2C_RCAR_GEN3,
-+	I2C_RCAR_GEN4,
- };
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -4107,7 +4107,7 @@ static void addrconf_dad_work(struct wor
+ 			if (!ipv6_generate_eui64(addr.s6_addr + 8, idev->dev) &&
+ 			    ipv6_addr_equal(&ifp->addr, &addr)) {
+ 				/* DAD failed for link-local based on MAC */
+-				idev->cnf.disable_ipv6 = 1;
++				WRITE_ONCE(idev->cnf.disable_ipv6, 1);
  
- struct rcar_i2c_priv {
-@@ -380,8 +381,8 @@ static void rcar_i2c_dma_unmap(struct rcar_i2c_priv *priv)
- 	dma_unmap_single(chan->device->dev, sg_dma_address(&priv->sg),
- 			 sg_dma_len(&priv->sg), priv->dma_direction);
+ 				pr_info("%s: IPv6 being disabled!\n",
+ 					ifp->idev->dev->name);
+@@ -6220,7 +6220,8 @@ static void addrconf_disable_change(stru
+ 		idev = __in6_dev_get(dev);
+ 		if (idev) {
+ 			int changed = (!idev->cnf.disable_ipv6) ^ (!newf);
+-			idev->cnf.disable_ipv6 = newf;
++
++			WRITE_ONCE(idev->cnf.disable_ipv6, newf);
+ 			if (changed)
+ 				dev_disable_change(idev);
+ 		}
+@@ -6237,7 +6238,7 @@ static int addrconf_disable_ipv6(struct
  
--	/* Gen3 can only do one RXDMA per transfer and we just completed it */
--	if (priv->devtype == I2C_RCAR_GEN3 &&
-+	/* Gen3+ can only do one RXDMA per transfer and we just completed it */
-+	if (priv->devtype >= I2C_RCAR_GEN3 &&
- 	    priv->dma_direction == DMA_FROM_DEVICE)
- 		priv->flags |= ID_P_NO_RXDMA;
+ 	net = (struct net *)table->extra2;
+ 	old = *p;
+-	*p = newf;
++	WRITE_ONCE(*p, newf);
  
-@@ -819,8 +820,8 @@ static int rcar_i2c_master_xfer(struct i2c_adapter *adap,
- 	if (ret < 0)
- 		goto out;
+ 	if (p == &net->ipv6.devconf_dflt->disable_ipv6) {
+ 		rtnl_unlock();
+@@ -6245,7 +6246,7 @@ static int addrconf_disable_ipv6(struct
+ 	}
  
--	/* Gen3 needs a reset before allowing RXDMA once */
--	if (priv->devtype == I2C_RCAR_GEN3) {
-+	/* Gen3+ needs a reset. That also allows RXDMA once */
-+	if (priv->devtype >= I2C_RCAR_GEN3) {
- 		priv->flags &= ~ID_P_NO_RXDMA;
- 		ret = rcar_i2c_do_reset(priv);
- 		if (ret)
-@@ -948,7 +949,7 @@ static const struct of_device_id rcar_i2c_dt_ids[] = {
- 	{ .compatible = "renesas,rcar-gen1-i2c", .data = (void *)I2C_RCAR_GEN1 },
- 	{ .compatible = "renesas,rcar-gen2-i2c", .data = (void *)I2C_RCAR_GEN2 },
- 	{ .compatible = "renesas,rcar-gen3-i2c", .data = (void *)I2C_RCAR_GEN3 },
--	{ .compatible = "renesas,rcar-gen4-i2c", .data = (void *)I2C_RCAR_GEN3 },
-+	{ .compatible = "renesas,rcar-gen4-i2c", .data = (void *)I2C_RCAR_GEN4 },
- 	{},
- };
- MODULE_DEVICE_TABLE(of, rcar_i2c_dt_ids);
-@@ -1026,7 +1027,7 @@ static int rcar_i2c_probe(struct platform_device *pdev)
- 	if (of_property_read_bool(dev->of_node, "smbus"))
- 		priv->flags |= ID_P_HOST_NOTIFY;
+ 	if (p == &net->ipv6.devconf_all->disable_ipv6) {
+-		net->ipv6.devconf_dflt->disable_ipv6 = newf;
++		WRITE_ONCE(net->ipv6.devconf_dflt->disable_ipv6, newf);
+ 		addrconf_disable_change(net, newf);
+ 	} else if ((!newf) ^ (!old))
+ 		dev_disable_change((struct inet6_dev *)table->extra1);
+--- a/net/ipv6/ip6_input.c
++++ b/net/ipv6/ip6_input.c
+@@ -165,7 +165,7 @@ static struct sk_buff *ip6_rcv_core(stru
+ 	__IP6_UPD_PO_STATS(net, idev, IPSTATS_MIB_IN, skb->len);
  
--	if (priv->devtype == I2C_RCAR_GEN3) {
-+	if (priv->devtype >= I2C_RCAR_GEN3) {
- 		priv->rstc = devm_reset_control_get_exclusive(&pdev->dev, NULL);
- 		if (IS_ERR(priv->rstc))
- 			goto out_pm_put;
--- 
-2.43.0
-
+ 	if ((skb = skb_share_check(skb, GFP_ATOMIC)) == NULL ||
+-	    !idev || unlikely(idev->cnf.disable_ipv6)) {
++	    !idev || unlikely(READ_ONCE(idev->cnf.disable_ipv6))) {
+ 		__IP6_INC_STATS(net, idev, IPSTATS_MIB_INDISCARDS);
+ 		goto drop;
+ 	}
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -240,7 +240,7 @@ int ip6_output(struct net *net, struct s
+ 	skb->protocol = htons(ETH_P_IPV6);
+ 	skb->dev = dev;
+ 
+-	if (unlikely(idev->cnf.disable_ipv6)) {
++	if (unlikely(READ_ONCE(idev->cnf.disable_ipv6))) {
+ 		IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTDISCARDS);
+ 		kfree_skb(skb);
+ 		return 0;
 
 
