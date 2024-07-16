@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B430219ADA1;
-	Tue, 16 Jul 2024 16:12:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA6219DF9D;
+	Tue, 16 Jul 2024 16:13:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721146378; cv=none; b=RpXXXXSIuCl+MSVHYG+edknRLr/cNJYJhDae1ZaDQeWedK8i+5UdlkQEaNOsv4C/hG4f2HcJR9yN1v5VPqpKHiVP9HxACeUN8MqFuS58AaxPoicY+0MqLNmqBqkDKAz/ikeJdbfQztayHb30S3rR9R6nQDUvtWMDUP5LsH0g8Yw=
+	t=1721146381; cv=none; b=mk9K5/N02z8pwWiVwb9NzNtIgODl4/qCF4CQAVPfKXZYwv0L7EHdlWS9KbE6l58DwgtWjSPv6PRsqMaKmLu8NFS7gbOSawszCMfAl3sl3Kf+dHbTnJ37+teaV10IE1a4b23eDuLzYg9fejituV75sP7bnl42PZ0wNjdPVeacmbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721146378; c=relaxed/simple;
-	bh=4QSLXiG88u+IVgDrJ6f42d6XRPX1eIsqiFnjk2Q/S5s=;
+	s=arc-20240116; t=1721146381; c=relaxed/simple;
+	bh=Q2/RKcmhRhVt7ShnV3Vv+Bh692QSVjCnolOCeB6OKVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aToYLTbrgOCMU5W+1jERau8+H+sDQDGyqKgXIZJ/wBmzMa0zGkZ24BrM2F2DLchwEn5Go/7xEeJqUQg2x1+k5qoVbJTa64o3qjNe2zW3+fEGTdLUvYOg5bBHALXqQf5+UJGNA9mm0MF69/vBdeQ1X92YTMouGBcsorREJbQOwIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FN47vubA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zyw8d8ymfaG6CfUm7ACj7tKxQr7vdesKMTU0soJQa81x8tnumGXmTKNcDpvS65wfzUJl0I+bHEkx59v1Q9trC4BjsUQNpNGRi/gpSoovWubnM0/DRJFM6zOpQAuPZkx8gMKU2H8w5PhlRK2e/tcNdgQGZ7t2mtYip1ADxaZFluY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eGJlvuro; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FN47vubA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D4E7C4AF0D;
-	Tue, 16 Jul 2024 16:12:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eGJlvuro"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1200EC116B1;
+	Tue, 16 Jul 2024 16:13:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721146378;
-	bh=4QSLXiG88u+IVgDrJ6f42d6XRPX1eIsqiFnjk2Q/S5s=;
+	s=korg; t=1721146381;
+	bh=Q2/RKcmhRhVt7ShnV3Vv+Bh692QSVjCnolOCeB6OKVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FN47vubAxAqGoSjXNev/S2UQGzAv9nvYsBnwnyEjJk5uHorGP/1aq1PdioOrpkASM
-	 5FtOFyWNmf5YQmKNbHNvcleAiaw3zBBxh7GW/TUJ0QuzGGm2YxSnwRGhlHSQkbRt71
-	 r72Rizmhpz4CqeG1biqx5BkW5z8ok7i8XrT9Iip0=
+	b=eGJlvurojF4+1ubozg16TF5TTIgZXYxk2yoS9NRQ6bjAGr/rbvFk/MgzbcDBpAkEy
+	 Gv9ezUaVV8XKSO/5A4deT9gaJvxxvTMqoGBBXGAH4Lhe/cC4W+ZbgL65o+f7B1DxDj
+	 C8YOjfhyBExtbwcusKcinyjzugJ6MQku4yl8TRn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Ashwin Dayanand Kamat <ashwin.kamat@broadcom.com>
-Subject: [PATCH 5.15 129/144] ipv6: annotate data-races around cnf.disable_ipv6
-Date: Tue, 16 Jul 2024 17:33:18 +0200
-Message-ID: <20240716152757.475103534@linuxfoundation.org>
+Subject: [PATCH 5.15 130/144] ipv6: prevent NULL dereference in ip6_output()
+Date: Tue, 16 Jul 2024 17:33:19 +0200
+Message-ID: <20240716152757.512919062@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240716152752.524497140@linuxfoundation.org>
 References: <20240716152752.524497140@linuxfoundation.org>
@@ -55,86 +55,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-commit d289ab65b89c1d4d88417cb6c03e923f21f95fae upstream.
+commit 4db783d68b9b39a411a96096c10828ff5dfada7a upstream.
 
-disable_ipv6 is read locklessly, add appropriate READ_ONCE()
-and WRITE_ONCE() annotations.
+According to syzbot, there is a chance that ip6_dst_idev()
+returns NULL in ip6_output(). Most places in IPv6 stack
+deal with a NULL idev just fine, but not here.
 
-v2: do not preload net before rtnl_trylock() in
-    addrconf_disable_ipv6() (Jiri)
+syzbot reported:
 
+general protection fault, probably for non-canonical address 0xdffffc00000000bc: 0000 [#1] PREEMPT SMP KASAN PTI
+KASAN: null-ptr-deref in range [0x00000000000005e0-0x00000000000005e7]
+CPU: 0 PID: 9775 Comm: syz-executor.4 Not tainted 6.9.0-rc5-syzkaller-00157-g6a30653b604a #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
+ RIP: 0010:ip6_output+0x231/0x3f0 net/ipv6/ip6_output.c:237
+Code: 3c 1e 00 49 89 df 74 08 4c 89 ef e8 19 58 db f7 48 8b 44 24 20 49 89 45 00 49 89 c5 48 8d 9d e0 05 00 00 48 89 d8 48 c1 e8 03 <42> 0f b6 04 38 84 c0 4c 8b 74 24 28 0f 85 61 01 00 00 8b 1b 31 ff
+RSP: 0018:ffffc9000927f0d8 EFLAGS: 00010202
+RAX: 00000000000000bc RBX: 00000000000005e0 RCX: 0000000000040000
+RDX: ffffc900131f9000 RSI: 0000000000004f47 RDI: 0000000000004f48
+RBP: 0000000000000000 R08: ffffffff8a1f0b9a R09: 1ffffffff1f51fad
+R10: dffffc0000000000 R11: fffffbfff1f51fae R12: ffff8880293ec8c0
+R13: ffff88805d7fc000 R14: 1ffff1100527d91a R15: dffffc0000000000
+FS:  00007f135c6856c0(0000) GS:ffff8880b9400000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000020000080 CR3: 0000000064096000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+  NF_HOOK include/linux/netfilter.h:314 [inline]
+  ip6_xmit+0xefe/0x17f0 net/ipv6/ip6_output.c:358
+  sctp_v6_xmit+0x9f2/0x13f0 net/sctp/ipv6.c:248
+  sctp_packet_transmit+0x26ad/0x2ca0 net/sctp/output.c:653
+  sctp_packet_singleton+0x22c/0x320 net/sctp/outqueue.c:783
+  sctp_outq_flush_ctrl net/sctp/outqueue.c:914 [inline]
+  sctp_outq_flush+0x6d5/0x3e20 net/sctp/outqueue.c:1212
+  sctp_side_effects net/sctp/sm_sideeffect.c:1198 [inline]
+  sctp_do_sm+0x59cc/0x60c0 net/sctp/sm_sideeffect.c:1169
+  sctp_primitive_ASSOCIATE+0x95/0xc0 net/sctp/primitive.c:73
+  __sctp_connect+0x9cd/0xe30 net/sctp/socket.c:1234
+  sctp_connect net/sctp/socket.c:4819 [inline]
+  sctp_inet_connect+0x149/0x1f0 net/sctp/socket.c:4834
+  __sys_connect_file net/socket.c:2048 [inline]
+  __sys_connect+0x2df/0x310 net/socket.c:2065
+  __do_sys_connect net/socket.c:2075 [inline]
+  __se_sys_connect net/socket.c:2072 [inline]
+  __x64_sys_connect+0x7a/0x90 net/socket.c:2072
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Fixes: 778d80be5269 ("ipv6: Add disable_ipv6 sysctl to disable IPv6 operaion on specific interface.")
+Reported-by: syzbot <syzkaller@googlegroups.com>
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 4db783d68b9b ("ipv6: prevent NULL dereference in ip6_output()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Link: https://lore.kernel.org/r/20240507161842.773961-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 [Ashwin: Regenerated the Patch for v5.15]
 Signed-off-by: Ashwin Dayanand Kamat <ashwin.kamat@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/addrconf.c   |    9 +++++----
- net/ipv6/ip6_input.c  |    2 +-
  net/ipv6/ip6_output.c |    2 +-
- 3 files changed, 7 insertions(+), 6 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -4131,7 +4131,7 @@ static void addrconf_dad_work(struct wor
- 			if (!ipv6_generate_eui64(addr.s6_addr + 8, idev->dev) &&
- 			    ipv6_addr_equal(&ifp->addr, &addr)) {
- 				/* DAD failed for link-local based on MAC */
--				idev->cnf.disable_ipv6 = 1;
-+				WRITE_ONCE(idev->cnf.disable_ipv6, 1);
- 
- 				pr_info("%s: IPv6 being disabled!\n",
- 					ifp->idev->dev->name);
-@@ -6277,7 +6277,8 @@ static void addrconf_disable_change(stru
- 		idev = __in6_dev_get(dev);
- 		if (idev) {
- 			int changed = (!idev->cnf.disable_ipv6) ^ (!newf);
--			idev->cnf.disable_ipv6 = newf;
-+
-+			WRITE_ONCE(idev->cnf.disable_ipv6, newf);
- 			if (changed)
- 				dev_disable_change(idev);
- 		}
-@@ -6294,7 +6295,7 @@ static int addrconf_disable_ipv6(struct
- 
- 	net = (struct net *)table->extra2;
- 	old = *p;
--	*p = newf;
-+	WRITE_ONCE(*p, newf);
- 
- 	if (p == &net->ipv6.devconf_dflt->disable_ipv6) {
- 		rtnl_unlock();
-@@ -6302,7 +6303,7 @@ static int addrconf_disable_ipv6(struct
- 	}
- 
- 	if (p == &net->ipv6.devconf_all->disable_ipv6) {
--		net->ipv6.devconf_dflt->disable_ipv6 = newf;
-+		WRITE_ONCE(net->ipv6.devconf_dflt->disable_ipv6, newf);
- 		addrconf_disable_change(net, newf);
- 	} else if ((!newf) ^ (!old))
- 		dev_disable_change((struct inet6_dev *)table->extra1);
---- a/net/ipv6/ip6_input.c
-+++ b/net/ipv6/ip6_input.c
-@@ -164,7 +164,7 @@ static struct sk_buff *ip6_rcv_core(stru
- 	__IP6_UPD_PO_STATS(net, idev, IPSTATS_MIB_IN, skb->len);
- 
- 	if ((skb = skb_share_check(skb, GFP_ATOMIC)) == NULL ||
--	    !idev || unlikely(idev->cnf.disable_ipv6)) {
-+	    !idev || unlikely(READ_ONCE(idev->cnf.disable_ipv6))) {
- 		__IP6_INC_STATS(net, idev, IPSTATS_MIB_INDISCARDS);
- 		goto drop;
- 	}
 --- a/net/ipv6/ip6_output.c
 +++ b/net/ipv6/ip6_output.c
 @@ -221,7 +221,7 @@ int ip6_output(struct net *net, struct s
  	skb->protocol = htons(ETH_P_IPV6);
  	skb->dev = dev;
  
--	if (unlikely(idev->cnf.disable_ipv6)) {
-+	if (unlikely(READ_ONCE(idev->cnf.disable_ipv6))) {
+-	if (unlikely(READ_ONCE(idev->cnf.disable_ipv6))) {
++	if (unlikely(!idev || READ_ONCE(idev->cnf.disable_ipv6))) {
  		IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTDISCARDS);
  		kfree_skb(skb);
  		return 0;
