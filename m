@@ -1,88 +1,101 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E8C381DE
-	for <patches@lists.linux.dev>; Wed, 17 Jul 2024 10:14:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE87374C2
+	for <patches@lists.linux.dev>; Wed, 17 Jul 2024 10:40:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721211265; cv=none; b=nc5Nlmz7JsLi1rdHNmG8c5//NZjkQfp7M2PzqpUzFXiAdJJ3fUL8rjXX6LjuSYgdDjqOidji7UvqyIjOZ7yWjq2ZpLTgYnlZZg3Im3fOfiLfGqt5+MWrjPUpNL7BD/gT9fBekAZjbAvJznmZKlS1+Wvg7l4toQMgV/g9HPTv+xQ=
+	t=1721212832; cv=none; b=Dqli2jnZkbfP+3HcZpx2LL30rQ13XhRp32/2HAAGJf08P6LfYuUDk0rkhfD1iMA5iQYGOB9jGM3EMNJRL51eAOLuhl06V1ECJQ9N8MmQxIj1gGzhKodzc273fqO3Xy2hpPUmxcKvUR/ndDYGMkbfY1xU4sbgDP/kdwDRCcATq+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721211265; c=relaxed/simple;
-	bh=KLfYBROAVzEQxMT/bcJZk7bme2CD0dWiftFcImwlEhU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nqRfqr2dJ55mJQlKchdhj3JtEinsuJaRT/GtVLN8zLmL4dqxMxeMLmRM9nsTOQiBFucj5sjtWwm8NdlB+oA0v29Iex8btJxYXdQNi1KqDysBCaMX7BVTvGo1/DxnpO+5NFDwF7JvyS8bO3C+BrteWvbAnZBlzoXwudikbg6pjGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 920741C009C; Wed, 17 Jul 2024 12:14:22 +0200 (CEST)
-Date: Wed, 17 Jul 2024 12:14:22 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 6.9 000/142] 6.9.10-rc2 review
-Message-ID: <ZpeZfvXUVrVmb0m5@duo.ucw.cz>
-References: <20240717063806.741977243@linuxfoundation.org>
+	s=arc-20240116; t=1721212832; c=relaxed/simple;
+	bh=nLG7HzQccjTqp4Lu9GgprSBfB6cJU6QMPbFU6J7wqV4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QLcH8Zqkinx54Y1G16mjOaZ0aC848VwWxZW6wSpGpqleaF9ibI8hSHYcSdHfKFKghV3kPMhPMS6qcpQiq2KzHUs2qyADkDRLS0ncgV4gDo75jnL9WiYselfyHblUaBRiOnXIVaO9Pj+gclkql3/r5cMCJdWvI3E24ebQjyWCDPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=miEu1Pqu; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="miEu1Pqu"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-58e76294858so1246484a12.0
+        for <patches@lists.linux.dev>; Wed, 17 Jul 2024 03:40:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20230601; t=1721212829; x=1721817629; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=BeiA4+yCeVCI23SPrGp8AYyUosGnfCOYmYJM+U4xtYs=;
+        b=miEu1PquBMqI3d0+MmJn4VTMnw4Ngu14FvufjSnMwhJWf+ToRQBKK5yzBEGyA72J4O
+         BrolcNLRZkhKACquY4XYRb67hSBgVGS14o69oqLOwa7uE/MM4bbYR2OcKiVSXoObr6Vd
+         2wCMA5HmadFgcMAdOmIovF34YUbU6DwXBUbd5Y0HCzpma8CDAhpxWXDeD6SsYXF/XgVI
+         ZclQbIW8Py/3rW8DQlsuIvCD9REFdCwY7qTRqmOD4df0CoGiI+5/pYHGaMkbF/Z5tYmq
+         m4KYYUTnABFwUpzlQldKjWa1vOp/nd12rbGBeuNwse9bwJb+kVTxEKC8Pn23u9QEeCaK
+         WEzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721212829; x=1721817629;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BeiA4+yCeVCI23SPrGp8AYyUosGnfCOYmYJM+U4xtYs=;
+        b=E0k7yKOIAScslwW5qh3C7tdRLj+qUxBv7O0+qr7ZF1Ay7l+4C8a6hwm7L8/3V0PJ3T
+         1POhTe5xSSGfg7+42dzwHLnUdn+DxsMP9GNS7BflxOtei0nelYJvJT982VsM2wQAHqMk
+         n0HEjENRJMY4zsA/kjlwaGa1Jf+2tE+kXBGQe+A/aXqiIaAAuLG2WIhSee1D9Lzw+byG
+         JbYcSyTmh2pN6ZC4O3PAjNRqDhj7oLWKGEegAtRgRtK341TpD+IKXEq0xs+3mADZKSVl
+         ME8wdzGfa9HcN1oEinI1KXW9emLZrLYfYbtzzh8gsL7L8kKSe3JlEXNfIodaesQdeT7M
+         zg6g==
+X-Gm-Message-State: AOJu0Yzxn1aplbE+uYI3S8wCe5c2ENQCs67LcV66xyASy+z5YnDP8Wxp
+	/sJwQOFfzdu+JlJ0GYNgwf0IXPmSwS0N/ZmlmEEG1fzf3pOBF/2I+V5tjjY=
+X-Google-Smtp-Source: AGHT+IGPRYWY84cF4GKQ2fo+yH21EEObN21ZhtKUWYglYPTJwNess4mMJnLwjb5N0xFC6XWB6hbAVQ==
+X-Received: by 2002:a50:8750:0:b0:57c:b82e:884b with SMTP id 4fb4d7f45d1cf-5a06a475fc4mr1217233a12.19.1721212828702;
+        Wed, 17 Jul 2024 03:40:28 -0700 (PDT)
+Received: from [192.168.1.3] (p5b0576fa.dip0.t-ipconnect.de. [91.5.118.250])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-59b24a77114sm6820425a12.6.2024.07.17.03.40.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Jul 2024 03:40:28 -0700 (PDT)
+Message-ID: <eaa61714-6326-435c-9786-08884bfd1d51@googlemail.com>
+Date: Wed, 17 Jul 2024 12:40:26 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="SImE79dpAgX/N+q3"
-Content-Disposition: inline
-In-Reply-To: <20240717063806.741977243@linuxfoundation.org>
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.6 000/122] 6.6.41-rc2 review
+Content-Language: de-DE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240717063802.663310305@linuxfoundation.org>
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20240717063802.663310305@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-
---SImE79dpAgX/N+q3
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hi!
-
-> This is the start of the stable review cycle for the 6.9.10 release.
-> There are 142 patches in this series, all will be posted as a response
+Am 17.07.2024 um 08:39 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.6.41 release.
+> There are 122 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 
-CIP testing did not find any problems here:
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
+oddities or regressions found.
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.9.y
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
-6.6, 5.15, 5.4 pass our testing, too:
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.6.y
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-5.15.y
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-5.4.y
+Beste Grüße,
+Peter Schneider
 
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
 
-Best regards,
-                                                                Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---SImE79dpAgX/N+q3
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZpeZfgAKCRAw5/Bqldv6
-8q6aAJ92gtiaeCXcv5+Y1HNU3E6aFUxkxQCghvN5jDm688rH3DYvQjXfaHPATJk=
-=W4h1
------END PGP SIGNATURE-----
-
---SImE79dpAgX/N+q3--
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
