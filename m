@@ -1,33 +1,38 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1AC25779;
-	Tue, 16 Jul 2024 22:27:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from submarine.notk.org (62-210-214-84.rev.poneytelecom.eu [62.210.214.84])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D17F469D
+	for <patches@lists.linux.dev>; Wed, 17 Jul 2024 03:52:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.210.214.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721168878; cv=none; b=YFDzxL7nBmdJldqgzR0T3ZNOQzdE6N+Df4XerxJV+L65h+x4p2fKhRNsl+TRYcDnSk221hSpM0FZ9g7VMuNqk7dBi0FpeKHp8zp2ZEUDA+Prk42Ox41JPwOk/jKaaOb544R/dZnho4S8biHdf8JI2o+hfVvT4S5A5i5ZTD9OeCE=
+	t=1721188369; cv=none; b=XbROdfG6zR2TcAEVkBVhuGcFfq5x9iECwygrwBD52E1hfzGvXxfxJaQ2zb5of2JiIXHXwIb+pC/OyGSkvH3Iue+SwCDGZ42SrhHURRSknMRzhYCudIfa+7GCeu6/1+D6bSBkRjZ2XizHiYMsWovpu3bBXr3mTTywy5jNE6WA5Qc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721168878; c=relaxed/simple;
-	bh=XICf/J4vEdapWSlC6sB0/YElc+k5l1HHspEipF/GID4=;
+	s=arc-20240116; t=1721188369; c=relaxed/simple;
+	bh=190Y2A5xkCBOqBLn+NRs79sKGVhsrUJNdiw30AX0/LY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lQvVOrGBa3cOmxv2R96qYShEwW2sE+ywlRAMhMoHOZJ6yZxb2U/u3eDFgr1ZjBj3l6yYCQPcPTt+u1qBM1wMJdvLpMilFPeQ0A0J45466lZMqytxmufjE9CHaORMSWQAKSL9kRL/kgyNroxVOG/8sZSLjBw4AFt847aT9rGZ5t8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XSs8u8ZW; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=B6+vPS5G+EDBPGcPO3BTfk5+gaATyE1fiqVFKPVyUMrSmNfy9bp82Geyof/JmvOYO+beCwOObOSOj5ZNmUiuiBrB2yf+Rb+aFDQhyAwagF0gdYiVwrwKgMjnJwjxUwyhcj0tfVSJDSIpteOBan07qudO3Lwn8EEW/SbUDmzlhUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=fNmyyzfn; arc=none smtp.client-ip=62.210.214.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XSs8u8ZW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D111C116B1;
-	Tue, 16 Jul 2024 22:27:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721168878;
-	bh=XICf/J4vEdapWSlC6sB0/YElc+k5l1HHspEipF/GID4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=XSs8u8ZWC33CIePBO3MmP4uKeWQfbTDddsDj5CUFjfT8zWno7AS6gJCrexsqTFApc
-	 uG2E5k+B4vWkG1LdlPQw0fLnlyFP+BEmMzQyGJryenbNGhVet7POfjAoplMKy2ooF5
-	 G5d2H+jO1qz5kfUDAXAFedT4lrI70z+p5cpe486pqlAN9dEPiI1x7GxcdCn2nYZHDE
-	 euytfPGKXgH2zVV0ZKEd38OuKMWyd8A+uWEeT0H5w/VeilBUbL2IWjLoyz3kLZqABL
-	 yf96Ul+Sx2Moafy5uYOyAKSHelaOGaNlqSuyUERd6BjlHmO7t2YBd+gzFDgXc3S1WU
-	 WAChr+FfhLkqA==
-Date: Tue, 16 Jul 2024 23:27:51 +0100
-From: Mark Brown <broonie@kernel.org>
+	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="fNmyyzfn"
+Received: from gaia.codewreck.org (localhost [127.0.0.1])
+	by submarine.notk.org (Postfix) with ESMTPS id E7C5D14C1E1;
+	Wed, 17 Jul 2024 05:43:51 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
+	s=2; t=1721187837;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=j14M4ThIz7cvNgo7f5L+LNqEQlcj1D957zhm9JjOXec=;
+	b=fNmyyzfnLABXtw7SiMBKgJBpB5dozUh27ZCC1AlTl1BguCLzxzHJ9o9vDiF4dRBCQO1FLt
+	fk8Iqb2aGKPeACAX0SRDqkfsgXvRQXcP+vrGpza5E+ohE/sVh1zkA32d7SewCr0xYB8Wr1
+	HexnRmTPpu0mTReZfM/nu8uFdZxzraB5Cs1ZcH48mp6+1WL9T8MgDrBRIPtGKbVENb9xSw
+	snr4eMRYHCIftM0IBXzOvpMFFO2/lrjV8+2+8jZIDi3hP++y582mUedkrhHnwVBHpArBOq
+	svIx9zP8aY4zsGMLf78wqkUutrjqwYJe6xUxpstVjSmWV23TF8AAYF7yCVNYFw==
+Received: from localhost (gaia.codewreck.org [local])
+	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id fd859a0f;
+	Wed, 17 Jul 2024 03:43:50 +0000 (UTC)
+Date: Wed, 17 Jul 2024 12:43:35 +0900
+From: Dominique Martinet <asmadeus@codewreck.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
@@ -35,9 +40,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
 Subject: Re: [PATCH 5.10 000/108] 5.10.222-rc1 review
-Message-ID: <14f3a52b-c934-45e8-8d39-2fc199f3c3f6@sirena.org.uk>
+Message-ID: <Zpc957aQlIxd240C@codewreck.org>
 References: <20240716152745.988603303@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -45,38 +50,30 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="zTkn3FRT4d+unsDg"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20240716152745.988603303@linuxfoundation.org>
-X-Cookie: Think honk if you're a telepath.
 
-
---zTkn3FRT4d+unsDg
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Tue, Jul 16, 2024 at 05:30:15PM +0200, Greg Kroah-Hartman wrote:
+Greg Kroah-Hartman wrote on Tue, Jul 16, 2024 at 05:30:15PM +0200:
 > This is the start of the stable review cycle for the 5.10.222 release.
 > There are 108 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
+> 
+> Responses should be made by Thu, 18 Jul 2024 15:27:21 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.222-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
 
-Tested-by: Mark Brown <broonie@kernel.org>
+Tested 4ec8d630a600 ("Linux 5.10.222-rc1") on:
+- arm i.MX6ULL (Armadillo 640)
+- arm64 i.MX8MP (Armadillo G4)
 
---zTkn3FRT4d+unsDg
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmaW8+YACgkQJNaLcl1U
-h9D2ZQf7BX3dbGU4rvvrtSJgk/gZbVBNglgvPGznUitD8WVhh9tTDiELl0xTNYwe
-3vRiRlcN4szARBAy6ZNZ2uCYcMRHVDWxjiYtuffwUiBIsXLsdjxh8rFanEajoL0W
-HbX/cgSyEpQ6b1zSWoJlfn3cEz/7xnm8YyyhUpZN6lYFgKT2uZcEvwC6WEWFY96K
-jtNHRkFubL3uSDwy2xGCjQVGfQilREiWHtEZOiW00VemA2TiIK6JBIXI+j81RUsv
-CkzncFgmWalPlIF+FJhmk+WnWxfB3xSL8zRv2X7DxK9ZFbsTpHYbXX56IodaZ9W2
-jWhvSoN0letC8dnZlPafZKgC8VjEhg==
-=B/Ne
------END PGP SIGNATURE-----
-
---zTkn3FRT4d+unsDg--
+No obvious regression in dmesg or basic tests:
+Tested-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+-- 
+Dominique Martinet
