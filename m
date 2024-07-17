@@ -1,101 +1,360 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F1D1442F1
-	for <patches@lists.linux.dev>; Wed, 17 Jul 2024 09:50:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1FB19A;
+	Wed, 17 Jul 2024 10:12:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721209847; cv=none; b=T03a4mD3IVs32fUCbeWZUcgucrtnpRUrj0dPxfq4rWCKQoUfgUsRNkYAVIuOaNUq9QqbtLFP1S75lT6Gregpo6v/i5+xN26FiWtyQNeK1KIJ6An6o3FLg1621w56x4wr94cv/jbLc9oWfYWIHcss46WCvCaTi0s+A/qPrnzGFyw=
+	t=1721211169; cv=none; b=RGf9vzJqbXIULRPXJcpNvYSUChCxQvxYg/U6Shc/PFxfgu7QR79T+TC9bYRwY3sMQ1TwWjtRDC7+4rq83I37Mlf0qYdQN4LWCqb39tAh+nzFVcbmRrT72zzNGYyuIHFpm9h2HVZ2zZgcrSYZg/wiecim7fQhlRFmY5EFmiq24Ac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721209847; c=relaxed/simple;
-	bh=widKc8K6pYV76Mu2nvcrhjA5QONVBH9tGu2f247sgBg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lHek2HbtPUYEduUyo0DX91ZxFDPTWH5p80ns1MMR4WxLQjUySRzaFYU1XUj6itbz2mVvtElIdxcrwtwwfadIlg/QF2eWM4NZRiv8kTTS3CFu+WbOG7/1cRcS8MTAhECilizy52nJBUmgglzfVXx3gtIrELIIxasn2yAQ0Oh54Q4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=anh3LaTq; arc=none smtp.client-ip=209.85.218.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	s=arc-20240116; t=1721211169; c=relaxed/simple;
+	bh=XO6yNXx8Y9e/wjz3msMK6OmjBPUMFejOU3nfu7h+xhk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=txb27t0B9QTrNWc57h1OjyuvAz6vQNmO6f3MTCFyK7hnOBHFd2mcR6PrmCYvTkLEHAhBMzX9yX4MtesdFxu2G5mNqCHMhGhkJ98rGpCaTfklUs052SIA0jG9SnrkJuN7raFWZAM4Xb/Le9chitIoE0vJsHkSTC2NSRYTnFzq2+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eIDWLRjN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="anh3LaTq"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a77d9217e6fso737336666b.2
-        for <patches@lists.linux.dev>; Wed, 17 Jul 2024 02:50:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1721209844; x=1721814644; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dFYzt4+oRDf35DO6ym9OnuWNHVGbXwPsjErtYOtvDgY=;
-        b=anh3LaTqC5qEOo+HirvyMwtBFxbH7jWn8GC+X3GbOfCVl+Wjayz+pfZGX00lacJ2K8
-         9s9vvzzBDAG+4Ah0vK+EdB2H4cFpX7V2jr+TfLFCEs8c+YlenAPgMiAQ0NnQzxjgW0lf
-         cAWS8m4x3oh+d42ulu+88GyNxDOPpz8oDoMiNd+Kzr8iLCIqiWScwjkRutr3oTufC5O4
-         bz+zSL6WDN/C0PYl6el491yJXEfKR95b7k2HaCqArreUN1KUIz5d4mp0ZWamftMCi1ki
-         iKkpk/wZLd8TuJv4xiIeVdbeWSSE5Sijx/c/qdn5xBS4sv6OxStHua6KOIto9j7NNdjw
-         GPRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721209844; x=1721814644;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dFYzt4+oRDf35DO6ym9OnuWNHVGbXwPsjErtYOtvDgY=;
-        b=WPDjEp6F0VSoTgtS9Nnee3PZ3nyOZNdXYy6GNVTD6gaBSjdeqOTFMOeSTjZvkHDVgn
-         Z/MN0AC1d2G14qPUvS6TBqTRg0dhfu+1qe0Wb3rvhDM/0MOmsr51Ii+aditOLBPpNu6x
-         nqkmn8Ox3qcH3pOvVWPuN1tqzOvM9w6YN7vhNEwZx91U7YsZcnGdql98HClG4PT5DLHr
-         2Rr6qyA2CJvM3WQqkvWk3TuTOV6AgubVogi6DiJNNmI47nAEaIJDsaYnDJd1tfO/2MDb
-         D4+PTMqYHtJP1u4FMoDBVnTT+xsxGxOIczYVYCxsFSIeuscAFm0LRgjZ0OGSaVf5tWYi
-         2Gng==
-X-Gm-Message-State: AOJu0YyZcx+JDKIOwJah7isqY/HAaq17oV0Zp/NL3T4c6WhlXBTo4PgD
-	lQFNIAHFy1XcAeDZ63qNPbUqFxy8B3q7xvYivyYqjP1vA7tiiSY=
-X-Google-Smtp-Source: AGHT+IEr2sHIgKgs6+p3oVsZSoFqhiljMqhuzHMlM+ZfQkRyh6AyJ7nsZ0R/NgzjCdmjRCHQJo3S3Q==
-X-Received: by 2002:a17:906:f291:b0:a77:cf9d:f496 with SMTP id a640c23a62f3a-a7a011af228mr77259366b.39.1721209843495;
-        Wed, 17 Jul 2024 02:50:43 -0700 (PDT)
-Received: from [192.168.1.3] (p5b0576fa.dip0.t-ipconnect.de. [91.5.118.250])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a79bc5b7e9esm427481966b.62.2024.07.17.02.50.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Jul 2024 02:50:42 -0700 (PDT)
-Message-ID: <655921dc-bc68-4408-b07a-efcbf8fdd712@googlemail.com>
-Date: Wed, 17 Jul 2024 11:50:41 +0200
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eIDWLRjN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 033BEC32782;
+	Wed, 17 Jul 2024 10:12:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1721211168;
+	bh=XO6yNXx8Y9e/wjz3msMK6OmjBPUMFejOU3nfu7h+xhk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=eIDWLRjNJwEfVjpwYwdVYtpTBpKdxcO74xqvh5zfApTWnt+i5T5f+EDKiSkyrMh9G
+	 giYDEIthPvJ4W4Jm25cuWaqhTXNHygovqKtfo95uHCdhZHWyWskDv0rPkwnpVq8OQd
+	 xg5T0tOQDPEq59lvOoKxyjtER0JDBsr0MsJAg6ew=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	broonie@kernel.org
+Subject: [PATCH 4.19 00/66] 4.19.318-rc3 review
+Date: Wed, 17 Jul 2024 12:12:44 +0200
+Message-ID: <20240717101028.579732070@linuxfoundation.org>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.1 00/95] 6.1.100-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-References: <20240717063758.086668888@linuxfoundation.org>
-Content-Language: de-DE
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20240717063758.086668888@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.318-rc3.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-4.19.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 4.19.318-rc3
+X-KernelTest-Deadline: 2024-07-19T10:10+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Am 17.07.2024 um 08:39 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.1.100 release.
-> There are 95 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+This is the start of the stable review cycle for the 4.19.318 release.
+There are 66 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
-oddities or regressions found.
+Responses should be made by Fri, 19 Jul 2024 10:10:11 +0000.
+Anything received after that time might be too late.
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.318-rc3.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+and the diffstat can be found below.
+
+thanks,
+
+greg k-h
+
+-------------
+Pseudo-Shortlog of commits:
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 4.19.318-rc3
+
+Wolfram Sang <wsa+renesas@sang-engineering.com>
+    i2c: rcar: bring hardware to known state when probing
+
+Ryusuke Konishi <konishi.ryusuke@gmail.com>
+    nilfs2: fix kernel bug on rename operation of broken directory
+
+felix <fuzhen5@huawei.com>
+    SUNRPC: Fix RPC client cleaned up the freed pipefs dentries
+
+Eric Dumazet <edumazet@google.com>
+    tcp: avoid too many retransmit packets
+
+Eric Dumazet <edumazet@google.com>
+    tcp: use signed arithmetic in tcp_rtx_probe0_timed_out()
+
+Menglong Dong <imagedong@tencent.com>
+    net: tcp: fix unexcepted socket die when snd_wnd is 0
+
+Eric Dumazet <edumazet@google.com>
+    tcp: refactor tcp_retransmit_timer()
+
+Ilya Dryomov <idryomov@gmail.com>
+    libceph: fix race between delayed_work() and ceph_monc_stop()
+
+He Zhe <zhe.he@windriver.com>
+    hpet: Support 32-bit userspace
+
+Alan Stern <stern@rowland.harvard.edu>
+    USB: core: Fix duplicate endpoint bug by clearing reserved bits in the descriptor
+
+Lee Jones <lee@kernel.org>
+    usb: gadget: configfs: Prevent OOB read/write in usb_string_copy()
+
+WangYuli <wangyuli@uniontech.com>
+    USB: Add USB_QUIRK_NO_SET_INTF quirk for START BP-850k
+
+Vanillan Wang <vanillanwang@163.com>
+    USB: serial: option: add Rolling RW350-GL variants
+
+Mank Wang <mank.wang@netprisma.us>
+    USB: serial: option: add Netprisma LCUK54 series modules
+
+Slark Xiao <slark_xiao@163.com>
+    USB: serial: option: add support for Foxconn T99W651
+
+Bjørn Mork <bjorn@mork.no>
+    USB: serial: option: add Fibocom FM350-GL
+
+Daniele Palmas <dnlplm@gmail.com>
+    USB: serial: option: add Telit FN912 rmnet compositions
+
+Daniele Palmas <dnlplm@gmail.com>
+    USB: serial: option: add Telit generic core-dump composition
+
+Chen Ni <nichen@iscas.ac.cn>
+    ARM: davinci: Convert comma to semicolon
+
+Dmitry Antipov <dmantipov@yandex.ru>
+    ppp: reject claimed-as-LCP but actually malformed packets
+
+Aleksander Jan Bajkowski <olek2@wp.pl>
+    net: ethernet: lantiq_etop: fix double free in detach
+
+Aleksander Jan Bajkowski <olek2@wp.pl>
+    net: lantiq_etop: add blank line after declaration
+
+Neal Cardwell <ncardwell@google.com>
+    tcp: fix incorrect undo caused by DSACK of TLP retransmit
+
+Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+    drm/i915: make find_fw_domain work on intel_uncore
+
+Ryusuke Konishi <konishi.ryusuke@gmail.com>
+    nilfs2: fix incorrect inode allocation from reserved inodes
+
+Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>
+    i2c: pnx: Fix potential deadlock warning from del_timer_sync() call in isr
+
+Mauro Carvalho Chehab <mchehab@kernel.org>
+    media: dw2102: fix a potential buffer overflow
+
+Ghadi Elie Rahme <ghadi.rahme@canonical.com>
+    bnx2x: Fix multiple UBSAN array-index-out-of-bounds
+
+Alex Deucher <alexander.deucher@amd.com>
+    drm/amdgpu/atomfirmware: silence UBSAN warning
+
+Ma Ke <make24@iscas.ac.cn>
+    drm/nouveau: fix null pointer dereference in nouveau_connector_get_modes
+
+Jan Kara <jack@suse.cz>
+    Revert "mm/writeback: fix possible divide-by-zero in wb_dirty_limits(), again"
+
+Jan Kara <jack@suse.cz>
+    fsnotify: Do not generate events for O_PATH file descriptors
+
+Jimmy Assarsson <extja@kvaser.com>
+    can: kvaser_usb: Explicitly initialize family in leafimx driver_info struct
+
+Jaganath Kanakkassery <jaganath.k.os@gmail.com>
+    Bluetooth: Fix incorrect pointer arithmatic in ext_adv_report_evt
+
+Jinliang Zheng <alexjlzheng@tencent.com>
+    mm: optimize the redundant loop of mm_update_owner_next()
+
+Ryusuke Konishi <konishi.ryusuke@gmail.com>
+    nilfs2: add missing check for inode numbers on directory entries
+
+Ryusuke Konishi <konishi.ryusuke@gmail.com>
+    nilfs2: fix inode number range checks
+
+Shigeru Yoshida <syoshida@redhat.com>
+    inet_diag: Initialize pad field in struct inet_diag_req_v2
+
+Zijian Zhang <zijianzhang@bytedance.com>
+    selftests: make order checking verbose in msg_zerocopy selftest
+
+Zijian Zhang <zijianzhang@bytedance.com>
+    selftests: fix OOM in msg_zerocopy selftest
+
+Sam Sun <samsun1006219@gmail.com>
+    bonding: Fix out-of-bounds read in bond_option_arp_ip_targets_set()
+
+Jakub Kicinski <kuba@kernel.org>
+    tcp_metrics: validate source addr length
+
+Neal Cardwell <ncardwell@google.com>
+    UPSTREAM: tcp: fix DSACK undo in fast recovery to call tcp_try_to_open()
+
+Yuchung Cheng <ycheng@google.com>
+    net: tcp better handling of reordering then loss cases
+
+Yousuk Seung <ysseung@google.com>
+    tcp: add ece_ack flag to reno sack functions
+
+zhang kai <zhangkaiheb@126.com>
+    tcp: tcp_mark_head_lost is only valid for sack-tcp
+
+Eric Dumazet <edumazet@google.com>
+    tcp: take care of compressed acks in tcp_add_reno_sack()
+
+Holger Dengler <dengler@linux.ibm.com>
+    s390/pkey: Wipe sensitive data on failure
+
+Wang Yong <wang.yong12@zte.com.cn>
+    jffs2: Fix potential illegal address access in jffs2_free_inode
+
+Greg Kurz <groug@kaod.org>
+    powerpc/xmon: Check cpu id in commands "c#", "dp#" and "dx#"
+
+Mike Marshall <hubcap@omnibond.com>
+    orangefs: fix out-of-bounds fsid access
+
+Michael Ellerman <mpe@ellerman.id.au>
+    powerpc/64: Set _IO_BASE to POISON_POINTER_DELTA not 0 for CONFIG_PCI=n
+
+Heiner Kallweit <hkallweit1@gmail.com>
+    i2c: i801: Annotate apanel_addr as __ro_after_init
+
+Ricardo Ribalda <ribalda@chromium.org>
+    media: dvb-frontends: tda10048: Fix integer overflow
+
+Ricardo Ribalda <ribalda@chromium.org>
+    media: s2255: Use refcount_t instead of atomic_t for num_channels
+
+Ricardo Ribalda <ribalda@chromium.org>
+    media: dvb-frontends: tda18271c2dd: Remove casting during div
+
+Simon Horman <horms@kernel.org>
+    net: dsa: mv88e6xxx: Correct check for empty list
+
+Erick Archer <erick.archer@outlook.com>
+    Input: ff-core - prefer struct_size over open coded arithmetic
+
+Jean Delvare <jdelvare@suse.de>
+    firmware: dmi: Stop decoding on broken entry
+
+Erick Archer <erick.archer@outlook.com>
+    sctp: prefer struct_size over open coded arithmetic
+
+Michael Bunk <micha@freedict.org>
+    media: dw2102: Don't translate i2c read into write
+
+Alex Hung <alex.hung@amd.com>
+    drm/amd/display: Skip finding free audio for unknown engine_id
+
+Michael Guralnik <michaelgur@nvidia.com>
+    IB/core: Implement a limit on UMAD receive List
+
+Ricardo Ribalda <ribalda@chromium.org>
+    media: dvb-usb: dib0700_devices: Add missing release_firmware()
+
+Ricardo Ribalda <ribalda@chromium.org>
+    media: dvb: as102-fe: Fix as10x_register_addr packing
+
+Arnd Bergmann <arnd@arndb.de>
+    asm-generic: Move common compat types to asm-generic/compat.h
 
 
-Beste Grüße,
-Peter Schneider
+-------------
 
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
+Diffstat:
 
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+ Makefile                                          |   4 +-
+ arch/arm/mach-davinci/pm.c                        |   2 +-
+ arch/arm64/include/asm/compat.h                   |  20 +--
+ arch/mips/include/asm/compat.h                    |  22 +--
+ arch/parisc/include/asm/compat.h                  |  18 +--
+ arch/powerpc/include/asm/compat.h                 |  18 +--
+ arch/powerpc/include/asm/io.h                     |   2 +-
+ arch/powerpc/xmon/xmon.c                          |   6 +-
+ arch/s390/include/asm/compat.h                    |  18 +--
+ arch/sparc/include/asm/compat.h                   |  19 +--
+ arch/x86/include/asm/compat.h                     |  19 +--
+ drivers/char/hpet.c                               |  34 ++++-
+ drivers/firmware/dmi_scan.c                       |  11 ++
+ drivers/gpu/drm/amd/display/dc/core/dc_resource.c |   3 +
+ drivers/gpu/drm/amd/include/atomfirmware.h        |   2 +-
+ drivers/gpu/drm/i915/intel_uncore.c               |  20 +--
+ drivers/gpu/drm/nouveau/nouveau_connector.c       |   3 +
+ drivers/i2c/busses/i2c-i801.c                     |   2 +-
+ drivers/i2c/busses/i2c-pnx.c                      |  48 ++-----
+ drivers/i2c/busses/i2c-rcar.c                     |  17 ++-
+ drivers/infiniband/core/user_mad.c                |  21 ++-
+ drivers/input/ff-core.c                           |   7 +-
+ drivers/media/dvb-frontends/as102_fe_types.h      |   2 +-
+ drivers/media/dvb-frontends/tda10048.c            |   9 +-
+ drivers/media/dvb-frontends/tda18271c2dd.c        |   4 +-
+ drivers/media/usb/dvb-usb/dib0700_devices.c       |  18 ++-
+ drivers/media/usb/dvb-usb/dw2102.c                | 120 +++++++++-------
+ drivers/media/usb/s2255/s2255drv.c                |  20 +--
+ drivers/net/bonding/bond_options.c                |   6 +-
+ drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c  |   1 +
+ drivers/net/dsa/mv88e6xxx/chip.c                  |   4 +-
+ drivers/net/ethernet/broadcom/bnx2x/bnx2x.h       |   2 +-
+ drivers/net/ethernet/lantiq_etop.c                |   5 +-
+ drivers/net/ppp/ppp_generic.c                     |  15 ++
+ drivers/s390/crypto/pkey_api.c                    |   4 +-
+ drivers/usb/core/config.c                         |  18 ++-
+ drivers/usb/core/quirks.c                         |   3 +
+ drivers/usb/gadget/configfs.c                     |   3 +
+ drivers/usb/serial/option.c                       |  38 ++++++
+ fs/jffs2/super.c                                  |   1 +
+ fs/nilfs2/alloc.c                                 |  18 ++-
+ fs/nilfs2/alloc.h                                 |   4 +-
+ fs/nilfs2/dat.c                                   |   2 +-
+ fs/nilfs2/dir.c                                   |  38 +++++-
+ fs/nilfs2/ifile.c                                 |   7 +-
+ fs/nilfs2/nilfs.h                                 |  10 +-
+ fs/nilfs2/the_nilfs.c                             |   6 +
+ fs/nilfs2/the_nilfs.h                             |   2 +-
+ fs/orangefs/super.c                               |   3 +-
+ include/asm-generic/compat.h                      |  24 +++-
+ include/linux/compat.h                            |   2 -
+ include/linux/fsnotify.h                          |   8 +-
+ include/linux/sunrpc/clnt.h                       |   1 +
+ kernel/exit.c                                     |   2 +
+ mm/page-writeback.c                               |   2 +-
+ net/bluetooth/hci_event.c                         |   2 +-
+ net/ceph/mon_client.c                             |  14 +-
+ net/ipv4/inet_diag.c                              |   2 +
+ net/ipv4/tcp_input.c                              | 158 ++++++++++++----------
+ net/ipv4/tcp_metrics.c                            |   1 +
+ net/ipv4/tcp_timer.c                              |  45 +++++-
+ net/sctp/socket.c                                 |   7 +-
+ net/sunrpc/clnt.c                                 |   5 +-
+ tools/testing/selftests/net/msg_zerocopy.c        |  14 +-
+ 64 files changed, 580 insertions(+), 386 deletions(-)
+
+
