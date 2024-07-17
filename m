@@ -1,82 +1,130 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71DBF1CAB1;
-	Wed, 17 Jul 2024 13:04:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33EB3FB1B
+	for <patches@lists.linux.dev>; Wed, 17 Jul 2024 13:18:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721221447; cv=none; b=NTiFoUs9Ksll9W/A8fune5S9cLcc+y1uiBeRpsRpHwXAhU58hwieOAnPrWHvE0cDfAMkiH0mNL8Xnma/CMxQWuYxNtgmcyRpErHyxdCpfTYq9iAawsvS8H0yzA+fDC428ZQJyoFUDcfgLX9hHaq0ML2NofCboNGqxS526WRlvBw=
+	t=1721222286; cv=none; b=S13NLU4QXiDYsHM61G1ijFBQNJBHRJjCRuXO6IvmO1O8vaDgCjGKEnhwPRTT2R6U0hGuHOXPZwh+2GAi+r24yroZ0WSyAVo7qKfjD8COVlAuGMG2bBT/5txbx0U28W0ujfQzcUIGeOSGJrNzJL6i9HXQGk2ILFrVP+5kUm+bE4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721221447; c=relaxed/simple;
-	bh=EfoHhC4alA4XxntMcJQyaAM8VObvxJBSY7iPEZH4uIY=;
+	s=arc-20240116; t=1721222286; c=relaxed/simple;
+	bh=7iqN++i3ZubS2iWpxN4zveL0Qnvppbp3N9IY9JdbnCk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sLahA//dZSs54LLr4Q7svOkUsFKBaIs90EtxfancrOs3NruF8C/jLeyfY19n12k6jQy6918VDRp/+wGSGnbb0KpuedBjz9dyOLJOHXXDVdK/zWRm4fx0zZm0ctdxZgn6Zh5nIi+QQWM9vBP1MUeJEyMmIaOtKZCVO/Wvh9oddL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T/vOHMVX; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ytw8bT2GRX134UxUWzDhFyhUuDDBmlIaIa74pvNdCtsb4EYDtVEDk8wRkoeE9TjM5YT1+34M8SGRFkeq5VPvR9J38+kARehBuEeX4RJ/rnj9qaN29GZN8BFNOQEhaAd9B6qfG6pU2AlmLPP5+o8bnUfzyZ/EBvINrCHVLs9Dao4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kHcLqBw0; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T/vOHMVX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73F9CC32782;
-	Wed, 17 Jul 2024 13:04:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721221447;
-	bh=EfoHhC4alA4XxntMcJQyaAM8VObvxJBSY7iPEZH4uIY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=T/vOHMVXpPhqSLsxa7pB3G4AQZkv1NesJyiYYJ2ttNX0S/KERDCcST/YaGAE5PoKK
-	 gyrRiugBwxN56YN3Yb3p7TG3ErVgUW/n459omHn1/oHYwY37rFbac2P5fHmm9KkLkq
-	 +P+s0F+6S6JVPigyJTBgjo8TNb34eYQGK0XvGCHZFz3pmToUmrHP0EAq1NE8+3quLE
-	 k8mD/8xhNzCzoKm5JkW5Q+At9NDgoTS/6QNpdLwkMZwPAj+hfxLteLaEHouOM/T4HT
-	 egVzBcEZjNae1MqtpK7jLUi/dRp3hLa6btgB9q6+VTB7wybWPg+3KkcXIKQ+8VfULi
-	 tLzveoWNS2CQw==
-Date: Wed, 17 Jul 2024 14:04:00 +0100
-From: Mark Brown <broonie@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kHcLqBw0"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4266b1f1b21so47670085e9.1
+        for <patches@lists.linux.dev>; Wed, 17 Jul 2024 06:18:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721222283; x=1721827083; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=NAhyVZeZNHfTLcG66iU3ZKzdyO8F8izpO1LD0DjM+SY=;
+        b=kHcLqBw0VlyMbI9rzyIpjq27cPy/1w5CdvFZX1CP9hs8l3vaUHY1R0qpegJdxRJ0u7
+         M98y3npCfuakbOuFpPY+f0CysId5g7v/KUTIre/oi9QnkleHqLMWqURtFdKa8+J0r+Dd
+         YlgTKsHz61rrqT9p+bypTsscxKIFli7iH51nDzw7cO6NXtSoEdsSdrkBFuFp0dK5Orm2
+         7X9+3R6xrLmkBL+90a6n4XRDI27mwzTXTfDQFYy9AgPHswltWNIgnflWl2m9fQ40BzUW
+         HRavb7W6JOaxjyE72mgDfRi9Qgx9z1rEAoOkCDG7bim3BSpLNlc7d5KUqKVFetazAtmz
+         Pdgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721222283; x=1721827083;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NAhyVZeZNHfTLcG66iU3ZKzdyO8F8izpO1LD0DjM+SY=;
+        b=eUkomrAKmj+1cg4PVFvNmyzNXYbco4A834csWXq+4rGHVr3nveG2rnn6rUW/xKCG6f
+         +JSLTeC4sN7zlyTI0Dk3KPnFruasL2KcIbgJcq9do1qFXAxFHEoU60Yrq39RZFh/DV4v
+         rI1Tp2YPzQ7s01Q/GGWF0rW6psjW2Gb08fMd9bXd3yQbR/fKLmxH8obJW88YDDSv8ixH
+         aEQJ6lyWd3XE3OfQfu4QE+b+TYcx4sJreLhJMnGf0QI0zJGhSPqb7OSA9gbl+slOOZuv
+         08eOeDc9oL5p7VjkswFM0zM1iydYqg2aQcXxujTGhLqQAmI//hL6/KKzs3UXaNUCCH/u
+         DTrw==
+X-Forwarded-Encrypted: i=1; AJvYcCXmpRk0+Ol8PK/UKND1Sg6/txYTynkTlL6HYZ7utx7r9qZXkA/WhzeKjsOSJjLHaLrEnNTKAFPVinhQC7JUXS+YMjdrdVNLBg==
+X-Gm-Message-State: AOJu0YwBWJeXchswBeAroTkvA6SXmmvSLJkfK54+tP0Pp6UG79FA174p
+	mGRvyTwulOgsbP/LRbl5syqPQ1UPFbrayZe6rcq1Xi8vqbsGJN1+
+X-Google-Smtp-Source: AGHT+IG73iIVHWwFvMUzu8BFUqMeRaf43cFZU+nf7tUgwHKOxX90SsCq15JXtQj9Ir9B66zbf0CCIw==
+X-Received: by 2002:a5d:54cb:0:b0:367:9522:5e71 with SMTP id ffacd0b85a97d-368315f599dmr1162577f8f.10.1721222283046;
+        Wed, 17 Jul 2024 06:18:03 -0700 (PDT)
+Received: from skbuf ([188.25.155.184])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3680dafbb12sm11601866f8f.88.2024.07.17.06.18.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Jul 2024 06:18:02 -0700 (PDT)
+Date: Wed, 17 Jul 2024 16:18:00 +0300
+From: Vladimir Oltean <olteanv@gmail.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com
-Subject: Re: [PATCH 6.9 000/142] 6.9.10-rc2 review
-Message-ID: <75062431-b23d-442f-966f-8efee24ebf8c@sirena.org.uk>
-References: <20240717063806.741977243@linuxfoundation.org>
+	Christian Eggers <ceggers@arri.de>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.9 015/143] dsa: lan9303: Fix mapping between DSA port
+ number and PHY address
+Message-ID: <20240717131800.s3xygkvilgiwopfe@skbuf>
+References: <20240716152755.980289992@linuxfoundation.org>
+ <20240716152756.575531368@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="1YDpBjWSQCMZHotk"
-Content-Disposition: inline
-In-Reply-To: <20240717063806.741977243@linuxfoundation.org>
-X-Cookie: You should go home.
-
-
---1YDpBjWSQCMZHotk
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <20240716152756.575531368@linuxfoundation.org>
 
-On Wed, Jul 17, 2024 at 08:40:00AM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.9.10 release.
-> There are 142 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Hi Greg,
 
-Tested-by: Mark Brown <broonie@kernel.org>
+On Tue, Jul 16, 2024 at 05:30:11PM +0200, Greg Kroah-Hartman wrote:
+> 6.9-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
 
---1YDpBjWSQCMZHotk
-Content-Type: application/pgp-signature; name="signature.asc"
+This patch has a trivial conflict, in the context:
 
------BEGIN PGP SIGNATURE-----
+> diff --git a/drivers/net/dsa/lan9303-core.c b/drivers/net/dsa/lan9303-core.c
+> index 666b4d766c005..1f7000f90bb78 100644
+> --- a/drivers/net/dsa/lan9303-core.c
+> +++ b/drivers/net/dsa/lan9303-core.c
+>  	chip->ds->priv = chip;
+>  	chip->ds->ops = &lan9303_switch_ops;
+>  	chip->ds->phylink_mac_ops = &lan9303_phylink_mac_ops;
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        here - this line is simply not present in stable kernels
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmaXwT8ACgkQJNaLcl1U
-h9AF2gf/ccanwHYzDMwyh5xIYAvI/FyN2rpCFJgRQCSuefYMccMqA9vohUgwMYvb
-oyxXPrA7kV8AjGK2+HawUv3ZXPicKxI7lA7JOvBRzGSoRZroFEI3Dwhz4hyPtPnb
-IDeL+CE8ZOaWeYekfW7ey83JRd5mcMkBfO7eEBPtPNad1NsqHyW61eenGUvTiZC7
-MX9fyR4iaIAGU902YYJjobnZL9E7l0arHRaJkgS/GqEtAKRyuKDiE2Ky2+2th0Yr
-M/0+TKI7Z3LT93HP6pv8EvB3g3UWIHTfzakzuR4ELDuQPd5+xVhA32q2cTwhoMHD
-wCauy7NmWzwlBGDu7iaOVM/lpXB4+w==
-=P0Xh
------END PGP SIGNATURE-----
+> -	base = chip->phy_addr_base;
+> -	chip->ds->phys_mii_mask = GENMASK(LAN9303_NUM_PORTS - 1 + base, base);
+> +	chip->ds->phys_mii_mask = GENMASK(LAN9303_NUM_PORTS - 1, 0);
+>  
+>  	return dsa_register_switch(chip->ds);
+>  }
 
---1YDpBjWSQCMZHotk--
+But I don't advise backporting commits dd0c9855b413 ("net: dsa:
+introduce dsa_phylink_to_port()") and cae425cb43fe ("net: dsa: allow DSA
+switch drivers to provide their own phylink mac ops") in order to get
+that one line into this patch's context - because that line is just noise
+as far as this patch is concerned.
+
+I'm confused of what happened here.
+
+It looks like who generated these patches _knew_ that already, because
+when the patch was backported for 6.6, that conflict was properly
+resolved (notice how the chip->ds->phylink_mac_ops is not present in the
+context here: https://lore.kernel.org/stable/20240716152751.831607687@linuxfoundation.org/).
+
+But following that approach all the way to the end, "[PATCH 6.6 012/121]
+net: dsa: introduce dsa_phylink_to_port()" (https://lore.kernel.org/stable/20240716152751.792628497@linuxfoundation.org/)
+has no reason to exist! It is marked as a Stable-dep-of: the bug fix,
+but said bug fix was not backported in its original form anyway.
+Please drop it, it serves no purpose.
+
+I would advise dropping the following Stable-dep-of: patches for 6.9:
+https://lore.kernel.org/stable/20240716152756.461086951@linuxfoundation.org/
+https://lore.kernel.org/stable/20240716152756.498971328@linuxfoundation.org/
+
+and do the same for 6.9 as was done for 6.6: respin the patch without
+the "chip->ds->phylink_mac_ops" line in the context.
+
+Thanks,
+Vladimir
