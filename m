@@ -1,30 +1,30 @@
 Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85F4F180A9E
-	for <patches@lists.linux.dev>; Wed, 17 Jul 2024 18:04:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEC2318A954
+	for <patches@lists.linux.dev>; Wed, 17 Jul 2024 18:08:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721239471; cv=none; b=d4AFY5PZ50Ux38aO9X0FugRJ3OujSU+oBkwloL7274kvHyDr2yjQecV98wd0AIOg/d/xx8aeFkwJjO88w6E/YWdlYtcRB1RE2WZv1zpsRHFtgFTS2U1QDy+xjisY0XhmsWvjafxEr4J4PgTzOX3JR9rGZBoVqtXo+VWiQLud0+0=
+	t=1721239703; cv=none; b=tGHQ5bWae2L2Jqwr5P0+qgf+cgXmnH2FCDoGIcoAP1hw1C28TbCDjwlMThq6d1CIkaVkS7j1mlLssFVceFX9EW1msbekxngGvEDOTL/JxJN3AUbsVawRyq1t1K6GhXJtrogiwtImF7gpIpPKEQEuoOeFj2PULAgz/HhRa9Ljpyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721239471; c=relaxed/simple;
-	bh=J2mL7q0vY0f5WxwXSABB+/fLMrHwMl8UxpjoiNNq94Y=;
+	s=arc-20240116; t=1721239703; c=relaxed/simple;
+	bh=9hxNeCBB8b5Vej3mf5NmU9RvWiDp8eSSnsAiXtQIXko=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lfMy4GaP3FTGKMVde/E+B+6NALn/EOvIeauRWBVLyFGzfJ1WjG7lzNF2qS4i3lrNtAuMQ7dEgXmVYkjHVU/5B8Dq3WaIOD0jTKM08MEoiHJB4e9n82BDxjkcWQFRxe4CZ2JADFARwph8xJRuXJKh2S+1cg0/LZYbbJh0B1tIl8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=LMd1dFpB; arc=none smtp.client-ip=13.77.154.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=SOMs5KEoag0ff6LIE09l+D3hDru7a5d5COuyTiEl6JPNxndFQq/U/O+JXsxjYKsxb4SSoqo8oHgjnM9FmFYoeazCZozVrGJw7Iwl6fdkz4A3wYuHT9i+T/wwqZNga7mNBgP6ZxNmCHVeNcokrydF6NSUu2rAjpVw7IZrC6lDans=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=bQcdB+OW; arc=none smtp.client-ip=13.77.154.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="LMd1dFpB"
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="bQcdB+OW"
 Received: by linux.microsoft.com (Postfix, from userid 1131)
-	id 31F1920B7165; Wed, 17 Jul 2024 11:04:30 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 31F1920B7165
+	id 36C9B20B7165; Wed, 17 Jul 2024 11:08:22 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 36C9B20B7165
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1721239470;
-	bh=ig07ZMBGtAV2pZZn3LNiXBGVvQe7jS1nZy2AaBq/lnQ=;
+	s=default; t=1721239702;
+	bh=H0dZi2HUxG9Kqf5PJWw1uBjQr+BrpxyIdPGsVJYkk0E=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=LMd1dFpBkr3vrURiM6nuKBteE/j4fBjKRR/Lv4dDqrOCFz7cA99zEhj7QeIpldSq5
-	 oRi4eh8LbI3V1wNa8hWBrg4ha4vEcWLtuUjMtGQzRXhH7bIUmXsS3PJb0NKV3l/TZJ
-	 HyB2m8UhFb5gPSBHezEXfUNgZKdhhwbPgFfyczKU=
-Date: Wed, 17 Jul 2024 11:04:30 -0700
+	b=bQcdB+OWlkrw//dIOl2UeTwMbDLZvwwy0boDcuA9+VNDE8XG1ugev5Ry576RpnBRp
+	 4EEPBYiYvl8jTILSdIT0anJl/kRmx5YmD/FajfqQXN07CRJlJCt8MqNCBsThvqQz6Y
+	 pU7DahD2uJFda2au9EvHy1U7hjNe2X0pcZhAa8dk=
+Date: Wed, 17 Jul 2024 11:08:22 -0700
 From: Kelsey Steele <kelseysteele@linux.microsoft.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -34,9 +34,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
 	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 6.6 000/122] 6.6.41-rc2 review
-Message-ID: <20240717180430.GB7194@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
-References: <20240717063802.663310305@linuxfoundation.org>
+Subject: Re: [PATCH 6.1 00/95] 6.1.100-rc2 review
+Message-ID: <20240717180822.GC7194@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
+References: <20240717063758.086668888@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -45,12 +45,12 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240717063802.663310305@linuxfoundation.org>
+In-Reply-To: <20240717063758.086668888@linuxfoundation.org>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 
-On Wed, Jul 17, 2024 at 08:39:51AM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.41 release.
-> There are 122 patches in this series, all will be posted as a response
+On Wed, Jul 17, 2024 at 08:39:41AM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.100 release.
+> There are 95 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -61,6 +61,7 @@ No regressions found on WSL (x86 and arm64).
 
 Built, booted, and reviewed dmesg.
 
-Thank you. :)
+I had hit the previously reported build failure with -rc1 which is
+now resolved with -rc2. Thank you for always getting quick fixes out! :)
 
 Tested-by: Kelsey Steele <kelseysteele@linux.microsoft.com> 
