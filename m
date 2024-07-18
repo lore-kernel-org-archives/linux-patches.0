@@ -1,87 +1,106 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF10526ACF;
-	Thu, 18 Jul 2024 06:55:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from submarine.notk.org (62-210-214-84.rev.poneytelecom.eu [62.210.214.84])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 740E3763EE
+	for <patches@lists.linux.dev>; Thu, 18 Jul 2024 07:21:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.210.214.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721285738; cv=none; b=atWbQopI25rwD5gv8DYWD08oUuyEmagbrVN/QGc1LHx+cDZ9z/7mW/UzZW5H36L6v5F2StLA573q9CpPu/0pLOL3HCFA3frpWV5DAXc+UXJ2w9X2bCYNTrZCphjDfxsweav4+lGQ6dYcPOSs3WCyqJXpWzcfEp8yVQayQDu5DjU=
+	t=1721287280; cv=none; b=fSz8RfpXCb3GiA/X55KEgg5zOquyusGCelheEajNcxWUpYv1pJEvfyZ2ZCAXsHsIdB3C9lc7nDTPtLb4GrFB/vbC60OMZea/zfmVQGzm0wogna21YB3ZN323A6yAh3LXE9rhoyiXWfB+WWI5QaZEGPm6vxmw5aZmreBtxUwDSls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721285738; c=relaxed/simple;
-	bh=nFH7ut82unMgxgxSn/vjZJx5nU38HuR9Ig9R58XYFes=;
+	s=arc-20240116; t=1721287280; c=relaxed/simple;
+	bh=rodPdMqWswALPyc0nwR+ZLXdTdPhBNCc7nsEqwfJorg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nwbCSn/zTVbBV2Fghosd8MW+Rcq4kp5NJiSESpjqabHM2uv7jULwae/gpjyGim+/44Um3oG14XBB/VhuWlF/frFo+3++7Q8vwnfCXc6RMEwxSl/XnAxojZqLneqWJhLIUZbP0alo1ueluqJev1GvgLdvASDjqA0VNE+LynRCYlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YOvEi3rP; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=JdSaIDXMvUMOHI+OqIWq4FM9L7s0cuj49DAgzC1hmYlZBX9tAISyvh87a7zt++pp35KHOdTKb6eh+VtJ2wrvxrgtb78wS0xQR0+sfHG6VqVSxCLXpJu84uEl2+8VYjyz99TRZ3gBwyelQLkCsxZcumO8czcstkED31DuTUI8uAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=qhCbkG1+; arc=none smtp.client-ip=62.210.214.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YOvEi3rP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE7DC116B1;
-	Thu, 18 Jul 2024 06:55:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721285737;
-	bh=nFH7ut82unMgxgxSn/vjZJx5nU38HuR9Ig9R58XYFes=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YOvEi3rPsQSihVZL3J7iTGBlF80v0KaMUv45OTE52xI5S0fgUgT/2Q6Tz0B5CAJKK
-	 FYLAuRLnMQ0tcf5eDGzIIYs09RPSJNXzlEt70XZCuUFrPw1kHnCGqL75HcpiDTwREa
-	 VRaTDpesmQarSklaXYrRI8O99QO7dXDF1bDxOUTA=
-Date: Thu, 18 Jul 2024 08:55:34 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: Re: [PATCH 5.10 000/109] 5.10.222-rc2 review
-Message-ID: <2024071825-unifier-patriot-26c2@gregkh>
-References: <20240717063758.061781150@linuxfoundation.org>
- <CA+G9fYtfAbfcQ9J9Hzq-e6yoBVG3t_iHZ=bS2eJbO_aiOcquXQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="qhCbkG1+"
+Received: from gaia.codewreck.org (localhost [127.0.0.1])
+	by submarine.notk.org (Postfix) with ESMTPS id A5CB414C2DD;
+	Thu, 18 Jul 2024 09:21:08 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
+	s=2; t=1721287271;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=+rjvZQyHsJdpSR3htCONCiGKfa6XBkiGv3YmAB7J5z4=;
+	b=qhCbkG1+jEOVDWmzJOc62uCMpfeosooVgbok4QKuln+P4Wuj7r3ruNughtAa6lMtpdB6QA
+	bdic9LwIiLUK4oxByrSIhPJqMO+1elVoURS/Z0NlhPKlvRZSaVFbTQo68lUVWTgW/F3DrQ
+	sLGVRzcmcETc5FomeW38PX0xHTlYB6uG6N45hQOf/f/Dnfp2HvPSHGLa9QD2pOJPmyvXkp
+	8tV7m/6xtSASrJ9POWX0yPdO2QatKzu4mKBflk9Pcs+XBifMS/iHxKp05kTCeCMwkhWOys
+	t/h6M6PvPowNZuCFRz7WiU5GM5b6b/ANNrQjv464F/kOXnucKVUd75pgbt0BUw==
+Received: from localhost (gaia.codewreck.org [local])
+	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id 5c794c3b;
+	Thu, 18 Jul 2024 07:21:06 +0000 (UTC)
+Date: Thu, 18 Jul 2024 16:20:51 +0900
+From: Dominique Martinet <asmadeus@codewreck.org>
+To: Jeff Layton <jlayton@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, NeilBrown <neilb@suse.de>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Sasha Levin <sashal@kernel.org>, linux-nfs@vger.kernel.org
+Subject: Re: [PATCH 5.10 762/770] nfsd: separate nfsd_last_thread() from
+ nfsd_put()
+Message-ID: <ZpjCU1rS15JBasOV@codewreck.org>
+References: <20240618123407.280171066@linuxfoundation.org>
+ <20240618123436.685336265@linuxfoundation.org>
+ <ZnjyrccU0LXAFrZe@codewreck.org>
+ <3afa32d75feeae84d894e7e71ce8e24372df78f3.camel@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CA+G9fYtfAbfcQ9J9Hzq-e6yoBVG3t_iHZ=bS2eJbO_aiOcquXQ@mail.gmail.com>
+In-Reply-To: <3afa32d75feeae84d894e7e71ce8e24372df78f3.camel@kernel.org>
 
-On Thu, Jul 18, 2024 at 10:45:22AM +0530, Naresh Kamboju wrote:
-> On Wed, 17 Jul 2024 at 12:09, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > This is the start of the stable review cycle for the 5.10.222 release.
-> > There are 109 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Fri, 19 Jul 2024 06:37:32 +0000.
-> > Anything received after that time might be too late.
-> >
-> > The whole patch series can be found in one patch at:
-> >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.222-rc2.gz
-> > or in the git tree and branch at:
-> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> > and the diffstat can be found below.
-> >
-> > thanks,
-> >
-> > greg k-h
-> 
-> 
-> The QEMU arm64 booting kunit enabled boot failed with clang and gcc.
-> 
-> Anders bisected to this as first bad commit,
-> # first bad commit: [c2ef31fd37ae11e89cb63c73cb7ee05bf4376455]
->             arm64/bpf: Remove 128MB limit for BPF JIT programs
->             commit b89ddf4cca43f1269093942cf5c4e457fd45c335 upstream.
-> 
-> Reverting the above patch made the boot successful on QEMU arm64.
+(Sorry for the slow reply)
 
-Thanks, will go drop this now.
+Jeff Layton wrote on Tue, Jun 25, 2024 at 11:45:22AM -0400:
+> > Jeff, you're the one who suggested reverting the two back then, sorry
+> > to
+> > dump it on you but do you remember the kind of problems you ran into?
+> > Is there any chance it would have gone unoticed in the 5.15 tree for
+> > 2.5 months? (5.15.154 was April 2024)
+> 
+> Sorry, I don't think I kept a record of that panic that I hit at the
+> time. I do think that I looked at the original bug report and it looked
+> like it was probably the same problem, but I don't remember the
+> details.
+> 
+> I think I just mentioned reverting them because I didn't see the
+> benefit in taking those into an old kernel. These are privileged
+> anyway, so even if they are bugs I don't seem them as particularly
+> critical.
 
-greg k-h
+Right, normal users can't stop the nfsd so you're correct it probably
+doesn't matter as far as security goes (and this correctly doesn't have
+any of the shiny new CVEs assigned); I'm now curious why it got
+backported to all these trees at all if nothing needs it.
+
+Anyway, I really just started looking at it because it got reverted in
+6.1 so was wondering why it didn't get reverted in other trees, but if
+it hadn't made it to any tree I wouldn't have cared at all...
+
+As long as there doesn't seem to be a problem with older trees (and at
+least I'm not getting any weird hang or crash on shutdown on my 5.10)
+let's leave things as they are.
+
+> > (Bonus question: if that is really all there is, would that make
+> > sense
+> > / should we take the commits back in 6.1 with that extra fix?)
+> 
+> Maybe? The problem is that someone has to do the testing for this.
+> These interfaces aren't currently part of any testsuite, so a lot of
+> that tends to be a manual effort.
+
+Agreed, let's not add more work there if no-one can quickly test this.
+
+If it turns out some later commit that actually needs this gets
+backported to 6.1 we can always bring the pair of commits back when
+someone notices.
+
+Thanks!
+-- 
+Dominique
