@@ -1,27 +1,28 @@
 Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EDA21E489
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED712CA6
 	for <patches@lists.linux.dev>; Fri, 19 Jul 2024 13:31:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721395869; cv=none; b=k97e//CKRUZGNCOp54kNjh3NsoFd6yI2XRBgiltc+OpwPyLP7HM8oznFA5L3QdqiJlK9eYsJaPLh4ovefN1Yd1SRrEDOZo0XG+PIS5WU2AJzSchQ+XYm0aGlXENvGVd4vJRyxLN5F1PaY5Comw5oam+4BFmqQDX2bR8q+uR+g4Y=
+	t=1721395870; cv=none; b=DO0f7mb8a6f2t9UnnZfqrZVGGyQzcP/tdHxaEF1wXxQs5xcv+zuGFuxWU13fzhPKchyhJtdnMWN6lZh8tDKi+8A11X+/vWl2IEvD8i+ZsWmCO+bHOSCmhnpUhOaH3BxD5zPGVVNnRYv2AkD4eQ05zx507YizoN1OhHbLliwOUPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721395869; c=relaxed/simple;
-	bh=a6MdG+dEIxpgFg/rPT8/79+aMn0ucaNgjwkHdsOS1GY=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=J3UON4Xh1oYCwkyE7rgK4jO2YO4OUbGLJx6ysAOOqviiKcnjcDo4cZr5dcn67UrlM2MB9qXRTLbRq19HjXkMsdDvFBL2ys40Wrq8oazjv0hH2NYuxaN1mhC7A4cTG3OhdnWFKQrtGDkj1yu2CDKTv+JzUDhIhTjsYAM4c3BGHtU=
+	s=arc-20240116; t=1721395870; c=relaxed/simple;
+	bh=pCDocoJMBIa+8SDU6j+wXnId+Tyrf+kDprOvFmHaMCo=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=GKmrcyDHrbMiGz+nCFXZrU//AAuZaquHaUznpaKtgN8aTeClJ47LVWmaFz2JvSZw7LjQoKvIcdMARpXh3gZrogbQwD0F7Ev4pzZUShTN6qFPfCadfdEtE56SzD+QUb7G3oAuXp6krI+bCxs/GuBXqZlR+3bv6Qzv5kPMqIaENyE=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.216])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTP id 4WQVtK2LQJz4f3jZ1
+Received: from mail.maildlp.com (unknown [172.19.93.142])
+	by dggsgout11.his.huawei.com (SkyGuard) with ESMTP id 4WQVtK4lvRz4f3jZQ
 	for <patches@lists.linux.dev>; Fri, 19 Jul 2024 21:30:49 +0800 (CST)
 Received: from mail02.huawei.com (unknown [10.116.40.128])
-	by mail.maildlp.com (Postfix) with ESMTP id 6991C1A0FDB
+	by mail.maildlp.com (Postfix) with ESMTP id BDE571A084C
 	for <patches@lists.linux.dev>; Fri, 19 Jul 2024 21:30:57 +0800 (CST)
 Received: from huaweicloud.com (unknown [10.175.104.67])
-	by APP4 (Coremail) with SMTP id gCh0CgC3mjiNappm1UJPAg--.10508S4;
-	Fri, 19 Jul 2024 21:30:55 +0800 (CST)
+	by APP4 (Coremail) with SMTP id gCh0CgC3mjiNappm1UJPAg--.10508S5;
+	Fri, 19 Jul 2024 21:30:57 +0800 (CST)
 From: libaokun@huaweicloud.com
 To: stable@vger.kernel.org
 Cc: gregkh@linuxfoundation.org,
@@ -31,10 +32,12 @@ Cc: gregkh@linuxfoundation.org,
 	yangerkun@huawei.com,
 	libaokun1@huawei.com,
 	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.9 1/3] netfs, fscache: export fscache_put_volume() and add fscache_try_get_volume()
-Date: Fri, 19 Jul 2024 21:28:10 +0800
-Message-Id: <20240719132812.1542957-1-libaokun@huaweicloud.com>
+Subject: [PATCH 6.9 2/3] cachefiles: fix slab-use-after-free in fscache_withdraw_volume()
+Date: Fri, 19 Jul 2024 21:28:11 +0800
+Message-Id: <20240719132812.1542957-2-libaokun@huaweicloud.com>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240719132812.1542957-1-libaokun@huaweicloud.com>
+References: <20240719132812.1542957-1-libaokun@huaweicloud.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -42,113 +45,191 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:gCh0CgC3mjiNappm1UJPAg--.10508S4
-X-Coremail-Antispam: 1UD129KBjvJXoWxCr4fXF1kAryxGryfAw1DJrb_yoW5Kry8pr
-	ZrCr1xKr48Xw1xG3y5Xw47Zr1fZ3yDKan7G3yUGw15Cw4xJr1YqF12yw15ZF13A348JrWI
-	yF1Utryjgw1UZr7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUkmb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I
-	0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
-	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
-	0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41lw4CEc2x0rVAKj4xxMxkF7I0En4kS14v26r12
-	6r1DMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI
-	0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y
-	0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxV
-	WUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1l
-	IxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUzOJ5UUUUU
-X-CM-SenderInfo: 5olet0hnxqqx5xdzvxpfor3voofrz/1tbiAQAJBWaaI3sSLwABsV
+X-CM-TRANSID:gCh0CgC3mjiNappm1UJPAg--.10508S5
+X-Coremail-Antispam: 1UD129KBjvJXoW3GFy3Ww47Xw4UZr4UGrW5Awb_yoWxJw4xpF
+	ZIvryxtrW8u3yUGw45Xw47Xr93X3s8Ja1kWw18Jr18Cw4rAr1YqF1jkw1rZFy3C3ykArZ2
+	k3WUKryUWw1UAr7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUBmb4IE77IF4wAFF20E14v26ryj6rWUM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28IrcIa0xkI8VA2jI8067AKxVWUGw
+	A2048vs2IY020Ec7CjxVAFwI0_JFI_Gr1l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
+	w2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
+	WxJVW8Jr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+	GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx
+	0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWU
+	JVW8JwACjcxG0xvY0x0EwIxGrwAKzVCY07xG64k0F24lc7CjxVAaw2AFwI0_JF0_Jw1l42
+	xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWU
+	GwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI4
+	8JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4U
+	MIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I
+	8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxU7_OzUUUUU
+X-CM-SenderInfo: 5olet0hnxqqx5xdzvxpfor3voofrz/1tbiAgAJBWaaJBUUHQAAsK
 
 From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 85b08b31a22b481ec6528130daf94eee4452e23f ]
+[ Upstream commit 522018a0de6b6fcce60c04f86dfc5f0e4b6a1b36 ]
 
-Export fscache_put_volume() and add fscache_try_get_volume()
-helper function to allow cachefiles to get/put fscache_volume
-via linux/fscache-cache.h.
+We got the following issue in our fault injection stress test:
 
+==================================================================
+BUG: KASAN: slab-use-after-free in fscache_withdraw_volume+0x2e1/0x370
+Read of size 4 at addr ffff88810680be08 by task ondemand-04-dae/5798
+
+CPU: 0 PID: 5798 Comm: ondemand-04-dae Not tainted 6.8.0-dirty #565
+Call Trace:
+ kasan_check_range+0xf6/0x1b0
+ fscache_withdraw_volume+0x2e1/0x370
+ cachefiles_withdraw_volume+0x31/0x50
+ cachefiles_withdraw_cache+0x3ad/0x900
+ cachefiles_put_unbind_pincount+0x1f6/0x250
+ cachefiles_daemon_release+0x13b/0x290
+ __fput+0x204/0xa00
+ task_work_run+0x139/0x230
+
+Allocated by task 5820:
+ __kmalloc+0x1df/0x4b0
+ fscache_alloc_volume+0x70/0x600
+ __fscache_acquire_volume+0x1c/0x610
+ erofs_fscache_register_volume+0x96/0x1a0
+ erofs_fscache_register_fs+0x49a/0x690
+ erofs_fc_fill_super+0x6c0/0xcc0
+ vfs_get_super+0xa9/0x140
+ vfs_get_tree+0x8e/0x300
+ do_new_mount+0x28c/0x580
+ [...]
+
+Freed by task 5820:
+ kfree+0xf1/0x2c0
+ fscache_put_volume.part.0+0x5cb/0x9e0
+ erofs_fscache_unregister_fs+0x157/0x1b0
+ erofs_kill_sb+0xd9/0x1c0
+ deactivate_locked_super+0xa3/0x100
+ vfs_get_super+0x105/0x140
+ vfs_get_tree+0x8e/0x300
+ do_new_mount+0x28c/0x580
+ [...]
+==================================================================
+
+Following is the process that triggers the issue:
+
+        mount failed         |         daemon exit
+------------------------------------------------------------
+ deactivate_locked_super        cachefiles_daemon_release
+  erofs_kill_sb
+   erofs_fscache_unregister_fs
+    fscache_relinquish_volume
+     __fscache_relinquish_volume
+      fscache_put_volume(fscache_volume, fscache_volume_put_relinquish)
+       zero = __refcount_dec_and_test(&fscache_volume->ref, &ref);
+                                 cachefiles_put_unbind_pincount
+                                  cachefiles_daemon_unbind
+                                   cachefiles_withdraw_cache
+                                    cachefiles_withdraw_volumes
+                                     list_del_init(&volume->cache_link)
+       fscache_free_volume(fscache_volume)
+        cache->ops->free_volume
+         cachefiles_free_volume
+          list_del_init(&cachefiles_volume->cache_link);
+        kfree(fscache_volume)
+                                     cachefiles_withdraw_volume
+                                      fscache_withdraw_volume
+                                       fscache_volume->n_accesses
+                                       // fscache_volume UAF !!!
+
+The fscache_volume in cache->volumes must not have been freed yet, but its
+reference count may be 0. So use the new fscache_try_get_volume() helper
+function try to get its reference count.
+
+If the reference count of fscache_volume is 0, fscache_put_volume() is
+freeing it, so wait for it to be removed from cache->volumes.
+
+If its reference count is not 0, call cachefiles_withdraw_volume() with
+reference count protection to avoid the above issue.
+
+Fixes: fe2140e2f57f ("cachefiles: Implement volume support")
 Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Link: https://lore.kernel.org/r/20240628062930.2467993-2-libaokun@huaweicloud.com
+Link: https://lore.kernel.org/r/20240628062930.2467993-3-libaokun@huaweicloud.com
 Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: 522018a0de6b ("cachefiles: fix slab-use-after-free in fscache_withdraw_volume()")
-Stable-dep-of: 5d8f80578907 ("cachefiles: fix slab-use-after-free in cachefiles_withdraw_cookie()")
 Signed-off-by: Baokun Li <libaokun1@huawei.com>
 ---
- fs/netfs/fscache_volume.c     | 14 ++++++++++++++
- fs/netfs/internal.h           |  2 --
- include/linux/fscache-cache.h |  6 ++++++
- 3 files changed, 20 insertions(+), 2 deletions(-)
+ fs/cachefiles/cache.c          | 10 ++++++++++
+ include/trace/events/fscache.h |  4 ++++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/fs/netfs/fscache_volume.c b/fs/netfs/fscache_volume.c
-index cdf991bdd9de..cb75c07b5281 100644
---- a/fs/netfs/fscache_volume.c
-+++ b/fs/netfs/fscache_volume.c
-@@ -27,6 +27,19 @@ struct fscache_volume *fscache_get_volume(struct fscache_volume *volume,
- 	return volume;
- }
- 
-+struct fscache_volume *fscache_try_get_volume(struct fscache_volume *volume,
-+					      enum fscache_volume_trace where)
-+{
-+	int ref;
-+
-+	if (!__refcount_inc_not_zero(&volume->ref, &ref))
-+		return NULL;
-+
-+	trace_fscache_volume(volume->debug_id, ref + 1, where);
-+	return volume;
-+}
-+EXPORT_SYMBOL(fscache_try_get_volume);
-+
- static void fscache_see_volume(struct fscache_volume *volume,
- 			       enum fscache_volume_trace where)
- {
-@@ -420,6 +433,7 @@ void fscache_put_volume(struct fscache_volume *volume,
- 			fscache_free_volume(volume);
- 	}
- }
-+EXPORT_SYMBOL(fscache_put_volume);
+diff --git a/fs/cachefiles/cache.c b/fs/cachefiles/cache.c
+index f449f7340aad..56ef519a36a0 100644
+--- a/fs/cachefiles/cache.c
++++ b/fs/cachefiles/cache.c
+@@ -8,6 +8,7 @@
+ #include <linux/slab.h>
+ #include <linux/statfs.h>
+ #include <linux/namei.h>
++#include <trace/events/fscache.h>
+ #include "internal.h"
  
  /*
-  * Relinquish a volume representation cookie.
-diff --git a/fs/netfs/internal.h b/fs/netfs/internal.h
-index ec7045d24400..edf9b2a180ca 100644
---- a/fs/netfs/internal.h
-+++ b/fs/netfs/internal.h
-@@ -326,8 +326,6 @@ extern const struct seq_operations fscache_volumes_seq_ops;
+@@ -319,12 +320,20 @@ static void cachefiles_withdraw_volumes(struct cachefiles_cache *cache)
+ 	_enter("");
  
- struct fscache_volume *fscache_get_volume(struct fscache_volume *volume,
- 					  enum fscache_volume_trace where);
--void fscache_put_volume(struct fscache_volume *volume,
--			enum fscache_volume_trace where);
- bool fscache_begin_volume_access(struct fscache_volume *volume,
- 				 struct fscache_cookie *cookie,
- 				 enum fscache_access_trace why);
-diff --git a/include/linux/fscache-cache.h b/include/linux/fscache-cache.h
-index bdf7f3eddf0a..4c91a019972b 100644
---- a/include/linux/fscache-cache.h
-+++ b/include/linux/fscache-cache.h
-@@ -19,6 +19,7 @@
- enum fscache_cache_trace;
- enum fscache_cookie_trace;
- enum fscache_access_trace;
-+enum fscache_volume_trace;
+ 	for (;;) {
++		struct fscache_volume *vcookie = NULL;
+ 		struct cachefiles_volume *volume = NULL;
  
- enum fscache_cache_state {
- 	FSCACHE_CACHE_IS_NOT_PRESENT,	/* No cache is present for this name */
-@@ -97,6 +98,11 @@ extern void fscache_withdraw_cookie(struct fscache_cookie *cookie);
+ 		spin_lock(&cache->object_list_lock);
+ 		if (!list_empty(&cache->volumes)) {
+ 			volume = list_first_entry(&cache->volumes,
+ 						  struct cachefiles_volume, cache_link);
++			vcookie = fscache_try_get_volume(volume->vcookie,
++							 fscache_volume_get_withdraw);
++			if (!vcookie) {
++				spin_unlock(&cache->object_list_lock);
++				cpu_relax();
++				continue;
++			}
+ 			list_del_init(&volume->cache_link);
+ 		}
+ 		spin_unlock(&cache->object_list_lock);
+@@ -332,6 +341,7 @@ static void cachefiles_withdraw_volumes(struct cachefiles_cache *cache)
+ 			break;
  
- extern void fscache_io_error(struct fscache_cache *cache);
+ 		cachefiles_withdraw_volume(volume);
++		fscache_put_volume(vcookie, fscache_volume_put_withdraw);
+ 	}
  
-+extern struct fscache_volume *
-+fscache_try_get_volume(struct fscache_volume *volume,
-+		       enum fscache_volume_trace where);
-+extern void fscache_put_volume(struct fscache_volume *volume,
-+			       enum fscache_volume_trace where);
- extern void fscache_end_volume_access(struct fscache_volume *volume,
- 				      struct fscache_cookie *cookie,
- 				      enum fscache_access_trace why);
+ 	_leave("");
+diff --git a/include/trace/events/fscache.h b/include/trace/events/fscache.h
+index a6190aa1b406..f1a73aa83fbb 100644
+--- a/include/trace/events/fscache.h
++++ b/include/trace/events/fscache.h
+@@ -35,12 +35,14 @@ enum fscache_volume_trace {
+ 	fscache_volume_get_cookie,
+ 	fscache_volume_get_create_work,
+ 	fscache_volume_get_hash_collision,
++	fscache_volume_get_withdraw,
+ 	fscache_volume_free,
+ 	fscache_volume_new_acquire,
+ 	fscache_volume_put_cookie,
+ 	fscache_volume_put_create_work,
+ 	fscache_volume_put_hash_collision,
+ 	fscache_volume_put_relinquish,
++	fscache_volume_put_withdraw,
+ 	fscache_volume_see_create_work,
+ 	fscache_volume_see_hash_wake,
+ 	fscache_volume_wait_create_work,
+@@ -120,12 +122,14 @@ enum fscache_access_trace {
+ 	EM(fscache_volume_get_cookie,		"GET cook ")		\
+ 	EM(fscache_volume_get_create_work,	"GET creat")		\
+ 	EM(fscache_volume_get_hash_collision,	"GET hcoll")		\
++	EM(fscache_volume_get_withdraw,		"GET withd")            \
+ 	EM(fscache_volume_free,			"FREE     ")		\
+ 	EM(fscache_volume_new_acquire,		"NEW acq  ")		\
+ 	EM(fscache_volume_put_cookie,		"PUT cook ")		\
+ 	EM(fscache_volume_put_create_work,	"PUT creat")		\
+ 	EM(fscache_volume_put_hash_collision,	"PUT hcoll")		\
+ 	EM(fscache_volume_put_relinquish,	"PUT relnq")		\
++	EM(fscache_volume_put_withdraw,		"PUT withd")            \
+ 	EM(fscache_volume_see_create_work,	"SEE creat")		\
+ 	EM(fscache_volume_see_hash_wake,	"SEE hwake")		\
+ 	E_(fscache_volume_wait_create_work,	"WAIT crea")
 -- 
 2.39.2
 
