@@ -1,132 +1,176 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2085.outbound.protection.outlook.com [40.107.244.85])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BBB51CABF
-	for <patches@lists.linux.dev>; Mon, 22 Jul 2024 04:55:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721624140; cv=none; b=CIESLReYX8K42cMyRtH+0UqsVN3aB5znkKyTmSqpJgxzRM2vb9Ak3V8AqaBx2C0PnAl7dzBqNO9qte6dRx2OGdzJeK66n42keLV7sA4boo6uSegfhyIrfTxKhO72Hpi6Nq/Qdsa3dxFcu8k3EdjEIVqLIMycntRmgZu9Yfht/Jg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721624140; c=relaxed/simple;
-	bh=0up8aCtWNsxAC4uhGA5lK93k/Cdyl3JxBMFq0lL7/1o=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Grwyrzfe5NYwcnZr/62z02gNxwRM8jI9Fq4NJa/jW4N8yRGYQ362Lz+j9O561tqhP6WE4a+WeFg01vVqseaMyUprIBnAZlM8XpZL4EF54799rpudDoAW+qIt89POdUcPLHdLhgpNXuJ/IW0rjEfwYQ72xjy2415e1GcQ2TCXS64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Ztf37u1G; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4B216DC12
+	for <patches@lists.linux.dev>; Mon, 22 Jul 2024 16:04:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.244.85
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1721664257; cv=fail; b=amX5pdpVMJFWzpvQB5sHg158YU1Zt84PH9RleoFEfShzQ1E3oVelO8+iKmWfBmZCB9KXpvztwI1zH5pUku6v/ITySw3kQbyZQ/HY72Vj8jiWgPxhxpA4UHRHWXpx4bF0BitrNut9CfsjS+8PFQYyrQAwV30JiryryiMcAbZur38=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1721664257; c=relaxed/simple;
+	bh=CYxVVKDjIl2QkTgf+nPgfLltiYr/yaUCWUwtF911fqs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=gY1likinAl9apaxZZ4tyn9L8dFTHGVwTKKQKXPuaUEQzrCiqa1MPWfOqeaAYBup8ONIotWiQPof+3N8Af76XLHR2d8J413EYrXFMOvSG4cAi2ql3mpZ9wdfi3diOKd48t+wY2//TLjfJXWlf9faCCmV2dq7dQqM3jitE9mlZHDU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=cBrDdy+X; arc=fail smtp.client-ip=40.107.244.85
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ztf37u1G"
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46LNuPUg005325;
-	Mon, 22 Jul 2024 04:55:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=3nsbi7sFx1ra6m9fFn76vA3G
-	Jnm1RAxiBUkonXtuWyQ=; b=Ztf37u1G+BFvYeot7+ZPTwDE2Uw1R+Oliyu/BQof
-	sv7XMJJopnfA0iNDPNK7fw4+JDFfIgVdZiOVzXkxOfC4pcRqzyOAAwMacgipfjGj
-	S6eQSiiAATsnJ+j6oQHtS2/7wy5Gcg/aVyXAmdllUcwXXqoqoa/fs88lZNUEMIC1
-	3cUYaHiFlnlxWKWpJL3sYvOKSyUhVYPfqiHZEkgpuN5XmF4vGbXj2FbAJFGBZZBK
-	uHu/HLOqVz1ih28aHksdCVqqJC62VaW9VBeSytJAA5Mfam9a3d7EwUN46fUsIiqk
-	skYRlzIi+5YZVvkXLCwm6emKT6AiDKbLZSDX/tiMA+KoOg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40g5aujm26-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Jul 2024 04:55:33 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46M4tVsi025737
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Jul 2024 04:55:31 GMT
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Sun, 21 Jul 2024 21:55:29 -0700
-Date: Mon, 22 Jul 2024 10:25:26 +0530
-From: Pavan Kondeti <quic_pkondeti@quicinc.com>
-To: Stephen Boyd <swboyd@chromium.org>
-CC: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-        <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: Re: [PATCH RESEND 1/2] soc: qcom: cmd-db: Mark device as having no
- PM support
-Message-ID: <1cc3b5cb-a938-4768-a1eb-020e2d2f6ab8@quicinc.com>
-References: <20221015004934.3930651-1-swboyd@chromium.org>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="cBrDdy+X"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=BssVWwC9CZKuUdvyBnw08sBmFnbhjTaoyrtVZBjtpa2mNi1mM2C2GXFxhZ+Fa6anvlwE+0OOdOLQTCnG2qlSeWRiIF7oipNdoIMczbA97Fbq1yMBVTuFioN5wgnv1c1GdJ9JxiZLcgnC8INpUiRFRvELSIqTQwiA0Cd72l0r4tYYIHB4EBYjsUPVPFAAqmD8lLHxmc0qECvFGsdcQ7wH0QLn45NHLFqTka5sZNHBHWSl+qPUK2xWrEA1BGBIGgPnJ8okX6c48Ftdl8Yj6U222eUJPF3V9FduSwH/4EXgbtRYdp+kQ/6Zs8LTlXamaM4R/qabefq8CFzEa4QVAttv6Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ah9ti+BudhgtD8dLMqV8Z6VRTbLhW+z/jtSXyxQ6IJ8=;
+ b=YBxkSrezBm3166wJ+oOQ0/9LBt5Mq9i2qbY+ZArSER9tkJ+ELKZGu3YcBDdLOQRraMee+Hf9d0xAV0vrQWTAbJU/ns/IDnBN7j8pl+ctSTY6Tlb0ay1fJ5E42PHZqfNzYU2ymsFStJbRCtJSilEGWkX0yryw++tgtJHU76eLWCeYRCB+y7YKs5IpzBlatfUWckZeMEJCwvqDYvEgFwdZ0wCk1smbp3UJGUAxla8OxLBfc0pMcOkWAYaE7Dren/I9UrSi9WOb+DEZaKAQSG6hIFgbpDodAw8cnzNyi1RIpNjqPzDGCeLvaeHczQaX19EvhpN9mNJfynJ0EV8Ir7oVcA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ah9ti+BudhgtD8dLMqV8Z6VRTbLhW+z/jtSXyxQ6IJ8=;
+ b=cBrDdy+XyRnIJycwbIoGlnYcRtGPMXmS7pDOzlhzhKwd7EFD99V6ycHkw+PKhVuaHv5DEMweOfUjCJjsU+wCDhY1F9dGa48R/t+EXUhDdfhVdNnq5Y6N5pL4qR7ThTq3VaurioZWIWSUhwS8J4/0q8T5AGwCdVuxSy8PCO29L/F0sIw4T4PJBT70qPKAYWssT6h26pTo9LQ3CdYZDeSNBKnVezi3wq6UngqofD0IpOCwttzuQTpOCkV33CG54sPHeXHHqBvKdWe/Tvk3gPDwNxgPsE6iAXbsNrKYWVPDaXLj0UPNvR49r+Tl6mGnMAXOpoEahp44hVoeeK0YXrrT+w==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB3849.namprd12.prod.outlook.com (2603:10b6:5:1c7::26)
+ by IA1PR12MB8554.namprd12.prod.outlook.com (2603:10b6:208:450::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7784.14; Mon, 22 Jul
+ 2024 16:04:11 +0000
+Received: from DM6PR12MB3849.namprd12.prod.outlook.com
+ ([fe80::c296:774b:a5fc:965e]) by DM6PR12MB3849.namprd12.prod.outlook.com
+ ([fe80::c296:774b:a5fc:965e%4]) with mapi id 15.20.7784.016; Mon, 22 Jul 2024
+ 16:04:11 +0000
+Date: Mon, 22 Jul 2024 13:04:08 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Bagas Sanjaya <bagasdotme@gmail.com>
+Cc: Jonathan Corbet <corbet@lwn.net>, Itay Avraham <itayavr@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>, Leon Romanovsky <leon@kernel.org>,
+	linux-doc@vger.kernel.org, linux-rdma@vger.kernel.org,
+	netdev@vger.kernel.org, Paolo Abeni <pabeni@redhat.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
+	Aron Silverton <aron.silverton@oracle.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	David Ahern <dsahern@kernel.org>,
+	Christoph Hellwig <hch@infradead.org>, Jiri Pirko <jiri@nvidia.com>,
+	Leonid Bloch <lbloch@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>, linux-cxl@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH v2 1/8] fwctl: Add basic structure for a class subsystem
+ with a cdev
+Message-ID: <20240722160408.GJ3371438@nvidia.com>
+References: <0-v2-940e479ceba9+3821-fwctl_jgg@nvidia.com>
+ <1-v2-940e479ceba9+3821-fwctl_jgg@nvidia.com>
+ <ZnpLz_w0sKmYNVFt@archie.me>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZnpLz_w0sKmYNVFt@archie.me>
+X-ClientProxiedBy: BL0PR03CA0017.namprd03.prod.outlook.com
+ (2603:10b6:208:2d::30) To DM6PR12MB3849.namprd12.prod.outlook.com
+ (2603:10b6:5:1c7::26)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20221015004934.3930651-1-swboyd@chromium.org>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: eUiWWsH8vtpaN96ZP57UuiMYzZlt90U3
-X-Proofpoint-GUID: eUiWWsH8vtpaN96ZP57UuiMYzZlt90U3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-22_01,2024-07-18_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 bulkscore=0 malwarescore=0 suspectscore=0 mlxscore=0
- clxscore=1011 phishscore=0 spamscore=0 adultscore=0 mlxlogscore=999
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407220035
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB3849:EE_|IA1PR12MB8554:EE_
+X-MS-Office365-Filtering-Correlation-Id: 05366737-524c-4b74-f2ed-08dcaa67ed05
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|7416014|366016|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?pnrwZ79NAvNYvzddpRJmwMH96tXeowdzTWvn6hKnQ849rSaa2WBokAOYChO1?=
+ =?us-ascii?Q?tpC7ANudDGLDKfm+FE3z1v0O7cr3cvil9YPkk8GjtIr9KjpZjBYXZzYiVM7Y?=
+ =?us-ascii?Q?5lT7cysEcLSGduqTZMXXiBOzy4ydJ5MAZIHlji2DxoJXO4XdcF9+um2LBi+y?=
+ =?us-ascii?Q?H293d728RrVajUcSVRjjEXDQcSgOVwArM7Qgy9FhIrw7vkmfhZPb+wv14P/k?=
+ =?us-ascii?Q?8/yj9W92IrIuLg74I6nYA0ULsQ/7b/mMnVelLEHnjfW4MKjTaMUcw2EZLZ/s?=
+ =?us-ascii?Q?89jMd7FUE6DSMINkyihil+Lnkr4DR95eMZJSX9pqwe8+rso23Igjo8TAfeO/?=
+ =?us-ascii?Q?hEfq7r3C+Kw3jHYq4QtSZsW2zcw3ADCnGMWtdh4bBrB+eWJ4ITeISuznchaj?=
+ =?us-ascii?Q?Rc/VS9WBE2DZoJCgoQkbgE+HxdmzWVPmOi+ru36AiLDdHeYzKlCGfbssB7qP?=
+ =?us-ascii?Q?rSMEUkSQeCBTEXkvgqfn4hg+xEg050BOdwhIhW7t3xdlhPjBSr553aw3M9BZ?=
+ =?us-ascii?Q?hnq8TB+AGXA3IqmQxdDtB5Nks5Lae/jyaAXjZa3EsRfnzqiyEM0MwvhdAIVf?=
+ =?us-ascii?Q?guEl2LnKd0YK41+QqYIZ6ALdITEguBjW34wgsdw0XPxRxYrON3PaxGrn+FO8?=
+ =?us-ascii?Q?dQLV7Hm+7OQSi6Et1uoD4zHwQpy4pr3LfrXPQOsxGlpHw67mIqjY9zAvtkPf?=
+ =?us-ascii?Q?9o3EOLQyvCcwJycLOvAoG7IrcA8X6WN+LGWzhJcqLXkEPvmoSQOfjEBqQW07?=
+ =?us-ascii?Q?isWuiKTgNwyJ+XbD4JSLp7blJhKxguFyIYte2dWDD3XYkyvN9WVUQM5iSnfp?=
+ =?us-ascii?Q?dAlCnJH+d3IGxSgE5seDh8qdQtVwMwTuvL8EIjrN2x7KN0N84XIyz/NdQMnj?=
+ =?us-ascii?Q?PyKirHo2bsOCfm/DUmYG4cykoqsvSwQT5HlhHgUbDCGndXEXbthzXXZH50p6?=
+ =?us-ascii?Q?t89wnWoNUFS3qw/eGXjpA6MuQqKEmlG8+7kJbvO+Ll0yZJ0Gt8tzE4mzYyej?=
+ =?us-ascii?Q?Gvpu+0O4eHJ7vadelTHtUY6Os7LkRKKKPf6NbD+Q87ORVYe+wr7mx+7MSqi3?=
+ =?us-ascii?Q?GJQXkjwYemIQcao6VnAfKa1ic7BeDLXmMCPlKhjEbb5T4XKNTH2KTVw3Ntpq?=
+ =?us-ascii?Q?y2hemGJE4JNOEot7KPFRx1143c7grdwgRdutcHQ9MF/iszUCJuHL+fp6bUXb?=
+ =?us-ascii?Q?pmKFrY9HeD5nTsNHjwtT4JOW8SU+mJxXto2YVbq5xRHiMkmi0r7PfK9W4M96?=
+ =?us-ascii?Q?vtowGFDekVk+h8EZGbm5mHyo4uw3wp8NhBxqbxXLaQWxhiknUoKsOsGP9Y4d?=
+ =?us-ascii?Q?wyel6jCKBcrgwTrAsWUl53KN6VENJs/cGWL4hItJngsmYw=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB3849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(366016)(376014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?FvS0DY3X/rUseq1Td+7jJ9Vbh190nMutbsB1YxYWBvpK/Nls1XZ2UDSW34XA?=
+ =?us-ascii?Q?VzI8c7EDIq0AZhRDEaK7WqSj9n4qqLUvGqbgk/cN4GJiJ2aDIUCJGvMH+R0h?=
+ =?us-ascii?Q?2Rwa6OIK25A2bBUNmLaI+M4jdcLzJzNtrSXIofODKaICu4J865GgvNyIl+g3?=
+ =?us-ascii?Q?cu/5/EP4BvRxmVXFB0xiXoCw7o5H5Tzo9QM8WDsIEPh//ifGg+9B307ejcJy?=
+ =?us-ascii?Q?x0ubeZ0FayanwBayTPZj85d5QTG9phk9S5K+2BLZ+zg62RkG3bYLL6oqWkMZ?=
+ =?us-ascii?Q?mHWo4Z3UizNFMnQF3vOPS7qTwWFFeURO38ltzBufUkfZrEvEv/zz/72VPHYt?=
+ =?us-ascii?Q?gX/E5fR2to+QgbVB5YBLSIS3oqTTNZ4hzVxb9NIILcHUOuNTMayj4vUebpYV?=
+ =?us-ascii?Q?ZFWsev4TnSt0kz6FA7OqkJ2qJLLa3jsFPZ6XN5UokB2aJnDwIpmaYMNXdNX1?=
+ =?us-ascii?Q?xsumfjCNGemInkTGURKozOxtAHsioCVGigx0retxO28buwsEe4UZZXtB3HRP?=
+ =?us-ascii?Q?aA3VIrmqy7DqSexCRpQh2mP0AcXSUZmqWmOzdR9aCRSp1oThk5+nEFJAq2Ww?=
+ =?us-ascii?Q?kYlywqr0dMoYSljHYtq/82d5RnN8rPMW6SoZNE0mA37L2JC28RxGmbsxbSoR?=
+ =?us-ascii?Q?961TXxHHu9ttHMyEJj6ry/Tz7KYryIi4WFelgidvDWjkfScGTWf1yoPH7O0f?=
+ =?us-ascii?Q?SU/dGPqpozKd3CJVTqXnoqsE4bgryBWbF7TKYzYaZrzpJ0SiR/EIbhM474S1?=
+ =?us-ascii?Q?4bZuyEGxvsOz7a/Kz15Ni1uEG4rTTeOExlYJzZx2zoHS3vOuE/2DjRXwvOx/?=
+ =?us-ascii?Q?Idr3RFC8IgloXY5HjDGkxD5irNt6l58lprn+gwVora1i+tzU8U1VT8WA2u3E?=
+ =?us-ascii?Q?hnUUywjgyFx1BFfItmY93Npc+iiL0Qk3DLYJUTqTF8q0SoVrsnnHJ1s4QsaQ?=
+ =?us-ascii?Q?Ntq5TIxpUuGpfr5R6VuLrpcMSacey+9f/rm7t+smLnldZ2QikAgN9HVXF3JH?=
+ =?us-ascii?Q?KacKhu90Mxynp/ZTrd+pixzsPHZAG1EMUfgNyN1X/6UFdSySl64dcx9Q1dmZ?=
+ =?us-ascii?Q?Dpe1TIrPYSUdZW2fOw2EvSrL9VVT/Q6IOH/iNdaY8TTgQ92/+WSb2w/1Ohh7?=
+ =?us-ascii?Q?u5VOqDr0tazENc1qR9IgZMWA5lf9ZTGuZb9EKjvmKxck6ndnv/Ul/2Nyj10I?=
+ =?us-ascii?Q?MV2fnL7bQwgRQ/I2xTR8A7hbcoLo6fpAEE19HF2E8SyQDQR12KXuHNxp295k?=
+ =?us-ascii?Q?Jt40uS+uYmv45FOI8L9DtdDj4juutOhgQYHBdOQh75YriwrlKWh0/at1WOJi?=
+ =?us-ascii?Q?NeoDIFQdOzlLqBV/GNLcHLPhyjCiTFaHjTHK4CQV3vw+bs2FSzA53tF/zPGJ?=
+ =?us-ascii?Q?ieJn1MZgkUJFklaUu30LH8zk+weTp9K9lba5nqTgfRWXe4Lk/M9+03lz8n8a?=
+ =?us-ascii?Q?WZcnGkMYjmSue9seDhihqk33HpIV5a8+Asf+BjRioslcgQwOFjXaJLnjqwPq?=
+ =?us-ascii?Q?jyFgCnP/DOm4ySwQo0Bmh09wHdD/vQqnhkg9EVfgAou9JrHCZIj14UfN5Win?=
+ =?us-ascii?Q?lW5lM7RPcybEJvbZnVw=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 05366737-524c-4b74-f2ed-08dcaa67ed05
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB3849.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jul 2024 16:04:11.6350
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: loW7WlKNyzmC+DefxXLeBRqptgbqGLHcOZckCyc/GYudrVpgOJB4FXqW3BLa80lP
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB8554
 
-Hi Stephen,
-On Fri, Oct 14, 2022 at 05:49:33PM -0700, Stephen Boyd wrote:
-> This driver purely exposes information from memory to the kernel. Let's
-> mark it as not having any device PM functionality, so that during
-> suspend we skip even trying to call a suspend function on this device.
-> This clears up suspend logs more than anything else, but it also shaves
-> a few cycles off suspend.
+On Tue, Jun 25, 2024 at 11:47:11AM +0700, Bagas Sanjaya wrote:
+> On Mon, Jun 24, 2024 at 07:47:25PM -0300, Jason Gunthorpe wrote:
+> > +/**
+> > + * fwctl_alloc_device - Allocate a fwctl
+> > + * @parent: Physical device that provides the FW interface
+> > + * @ops: Driver ops to register
+> > + * @drv_struct: 'struct driver_fwctl' that holds the struct fwctl_device
+> > + * @member: Name of the struct fwctl_device in @drv_struct
+> > + *
+> > + * This allocates and initializes the fwctl_device embedded in the drv_struct.
+> > + * Upon success the pointer must be freed via fwctl_put(). Returns NULL on
+> > + * failure. Returns a 'drv_struct *' on success, NULL on error.
+> > + */
 > 
-> Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
+> Sphinx reports htmldocs warning:
 > 
-> Resend to fix Bjorn's email.
+> Documentation/userspace-api/fwctl:195: ./include/linux/fwctl.h:72: WARNING: Inline emphasis start-string without end-string.
 > 
->  drivers/soc/qcom/cmd-db.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
-> index 629a7188b576..33856abd560c 100644
-> --- a/drivers/soc/qcom/cmd-db.c
-> +++ b/drivers/soc/qcom/cmd-db.c
-> @@ -338,6 +338,8 @@ static int cmd_db_dev_probe(struct platform_device *pdev)
->  
->  	debugfs_create_file("cmd-db", 0400, NULL, NULL, &cmd_db_debugfs_ops);
->  
-> +	device_set_pm_not_required(&pdev->dev);
-> +
->  	return 0;
->  }
->  
-> 
+> I have to escape the pointer (while also cleaning up redundant wordings on
+> error case):
 
-Sorry for asking this question here, thought it would be easy for you to
-get the context.
+Got it thanks
 
-I was recently reading this driver and learned about
-device_set_pm_not_required() API. However, it is not clear how this is
-working in practice? 
-
-The driver is calling device_set_pm_not_required() in probe(), however
-all the checks for device_pm_not_required() happen before probe() is
-called. For ex: dpm_sysfs_add() and device_pm_add() both happens before
-probe(). I was expecting not to see
-/sys/bus/platform/devices/XXXXXX.aop-cmd-db/power directory but it is
-still present.
-
-Also, I believe once driver set this flag, the device clean up might not
-remove sysfs entries as we have device_pm_not_required() checks active
-by that time.
-
-Would it make sense to add code after probe() and take some action if
-device_pm_not_required() returns true?
-
-Thanks,
-Pavan
+Jason
