@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47CC414EC58;
-	Tue, 23 Jul 2024 18:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E53E13D600;
+	Tue, 23 Jul 2024 18:40:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721760036; cv=none; b=Z5/vbqaaOzZMYaUuUoTDPYuY6SrP1D02KvAubGrdQnpWixcsVeNEKLDIhs3adlaYIVFJpkfoJCIZlqzFmecLvt+axL0j1NsYNkxIBIOXaqgeO1BPznHRiT1T56/NjMirTFWSHH3gUo7a4aOqBrloS5ZT+9sPRL/ZKvSAcBc1ZaQ=
+	t=1721760039; cv=none; b=OzjpR33F+TEUm/PAjISRDE84O5qR5D6Uu7hoTwj2aHDpqgqYK6nHwOd5NqUdvI/xTk8nZ3GE++J3FJUfRfJeNs+k6ZdVDY7JxrmwKGuP2Sr3jRwjUFyIuKw+2W2wdyqip0h+Zar/dkQ5K6DARdUFhhYbveBlQ7QP58MCcPmp93U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721760036; c=relaxed/simple;
-	bh=1wcc7Yaz3nkReryr6/LwF6DbfniYTtnTcRdVlaVaXT8=;
+	s=arc-20240116; t=1721760039; c=relaxed/simple;
+	bh=QJWEm6CqPo9EXOSKBMS8J+0nKCvA1BiVSlLQqHRipcw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hTOokhSVh+XKXHOs7aICS6wtgx44ZasB/kJi5InMKe4+slMgW+1G0W8oMJAQUoWaPLnARuoO+ya65QimvJdmBLAdKGukc1rzwg0OYUzW+CLu1cmG+Q1X6CRiKRNs1YcNNnQUPrqVcoTCOhBPbF0emAHif85G901O+X40PMxCOM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GMJmjeUU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TjqSfamS1ZSvGwZ8UoWVLeVgAWb+5UgSy9OGhR7kEvxvz2tr6zRhKVs1oG4eUYFBoTJQOupvVC6uu/0nghsk62ZsufhmLzUsi9xigIIHMhtVyufBB2j8nFTod9uJFZApZOLz6WuMVxHeSRedmYgyX6tV5YqriUF/ykIRyTwS46U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=keJ3iOGN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GMJmjeUU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3185C4AF0B;
-	Tue, 23 Jul 2024 18:40:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="keJ3iOGN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B95C4AF0A;
+	Tue, 23 Jul 2024 18:40:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721760036;
-	bh=1wcc7Yaz3nkReryr6/LwF6DbfniYTtnTcRdVlaVaXT8=;
+	s=korg; t=1721760039;
+	bh=QJWEm6CqPo9EXOSKBMS8J+0nKCvA1BiVSlLQqHRipcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GMJmjeUUYsfHQA8iIOTAUnq0CA2/xMNqhTeg3pNJ2JaOOE/FSqtxxFmKj5m1WG7Ox
-	 rTRinv9id+dJAIbpEyhwm1BEcuHYTPDfhXua5/wWPSYAO2OX3tP1UekF9eEueQsc2+
-	 TQAqeo41NvSIM9GD4ymr3e9Bfc56B+1QA2jLmkd8=
+	b=keJ3iOGNTu2lDGiIqKKt9k13p3Y5mqQLl4ud/5ZWLrlIx5BXT7GLeN81CBpb2eYCj
+	 c8n7jaeztz49AguncSUtBQ58OPoR3maiehP1SFLcfOBlg7407pU2mZEm4M7blBA8E/
+	 nBo/GM02eY13n34x1vVAm+SVmuPc5tp+OBLALIPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Likun Gao <Likun.Gao@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Simon Trimmer <simont@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 082/163] drm/amdgpu: init TA fw for psp v14
-Date: Tue, 23 Jul 2024 20:23:31 +0200
-Message-ID: <20240723180146.640330533@linuxfoundation.org>
+Subject: [PATCH 6.9 083/163] ALSA: hda: cs35l56: Select SERIAL_MULTI_INSTANTIATE
+Date: Tue, 23 Jul 2024 20:23:32 +0200
+Message-ID: <20240723180146.679529179@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -51,44 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Likun Gao <Likun.Gao@amd.com>
+From: Simon Trimmer <simont@opensource.cirrus.com>
 
-[ Upstream commit ed5a4484f074aa2bfb1dad99ff3628ea8da4acdc ]
+[ Upstream commit 9b1effff19cdf2230d3ecb07ff4038a0da32e9cc ]
 
-Add support to init TA firmware for psp v14.
+The ACPI IDs used in the CS35L56 HDA drivers are all handled by the
+serial multi-instantiate driver which starts multiple Linux device
+instances from a single ACPI Device() node.
 
-Signed-off-by: Likun Gao <Likun.Gao@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+As serial multi-instantiate is not an optional part of the system add it
+as a dependency in Kconfig so that it is not overlooked.
+
+Signed-off-by: Simon Trimmer <simont@opensource.cirrus.com>
+Link: https://lore.kernel.org/20240619161602.117452-1-simont@opensource.cirrus.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/psp_v14_0.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/pci/hda/Kconfig | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/psp_v14_0.c b/drivers/gpu/drm/amd/amdgpu/psp_v14_0.c
-index 78a95f8f370be..238abd98072ad 100644
---- a/drivers/gpu/drm/amd/amdgpu/psp_v14_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/psp_v14_0.c
-@@ -32,7 +32,9 @@
- #include "mp/mp_14_0_2_sh_mask.h"
- 
- MODULE_FIRMWARE("amdgpu/psp_14_0_2_sos.bin");
-+MODULE_FIRMWARE("amdgpu/psp_14_0_2_ta.bin");
- MODULE_FIRMWARE("amdgpu/psp_14_0_3_sos.bin");
-+MODULE_FIRMWARE("amdgpu/psp_14_0_3_ta.bin");
- 
- /* For large FW files the time to complete can be very long */
- #define USBC_PD_POLLING_LIMIT_S 240
-@@ -64,6 +66,9 @@ static int psp_v14_0_init_microcode(struct psp_context *psp)
- 	case IP_VERSION(14, 0, 2):
- 	case IP_VERSION(14, 0, 3):
- 		err = psp_init_sos_microcode(psp, ucode_prefix);
-+		if (err)
-+			return err;
-+		err = psp_init_ta_microcode(psp, ucode_prefix);
- 		if (err)
- 			return err;
- 		break;
+diff --git a/sound/pci/hda/Kconfig b/sound/pci/hda/Kconfig
+index f806636242ee9..9f560a8186802 100644
+--- a/sound/pci/hda/Kconfig
++++ b/sound/pci/hda/Kconfig
+@@ -160,6 +160,7 @@ config SND_HDA_SCODEC_CS35L56_I2C
+ 	depends on ACPI || COMPILE_TEST
+ 	depends on SND_SOC
+ 	select FW_CS_DSP
++	select SERIAL_MULTI_INSTANTIATE
+ 	select SND_HDA_GENERIC
+ 	select SND_SOC_CS35L56_SHARED
+ 	select SND_HDA_SCODEC_CS35L56
+@@ -176,6 +177,7 @@ config SND_HDA_SCODEC_CS35L56_SPI
+ 	depends on ACPI || COMPILE_TEST
+ 	depends on SND_SOC
+ 	select FW_CS_DSP
++	select SERIAL_MULTI_INSTANTIATE
+ 	select SND_HDA_GENERIC
+ 	select SND_SOC_CS35L56_SHARED
+ 	select SND_HDA_SCODEC_CS35L56
 -- 
 2.43.0
 
