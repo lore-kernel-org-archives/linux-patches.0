@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAEAA157A4F;
-	Tue, 23 Jul 2024 18:27:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0EC4156F37;
+	Tue, 23 Jul 2024 18:27:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759231; cv=none; b=ieJT7poJasK0vefhr0s4dBr1FPdVpETjmMtlum/1oI8Vb2j+gsYjy4EdI6cn5OFP55kSv414HZE81xtexVV0mWOQke9KHxUXpoTT7/tUqV3pFYUd1tH8sUVj+5dZYmHP5DUb8nttl/oD53iSrVLxtlPscLu3QAgjkSt5ZbZBpDU=
+	t=1721759234; cv=none; b=M3Ev7xJ3EiS4neEMLlr/kxvja/0nQ16PSd5adfTZQK9OqNzc186NDxuOj16FI+0zr0vtKF/n2PeORNO/0uVSqlw2L0yRYfso+u6zo7KnmCPmwEqgBX8PkKpXfmTVZsdu4D6KDbxjfqjWPu9OUpec3iFtXi+6dZA7NtDuLn1B5Jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759231; c=relaxed/simple;
-	bh=4FsxlUhBL7+Ex2xFZCNw3l7DKSqxl44SRZb4W5wlnJM=;
+	s=arc-20240116; t=1721759234; c=relaxed/simple;
+	bh=umqC/fw6lYjhQfUB6Q9bW5ypaULukBPaI80gKN6VRIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VviquA31oIq/ZqCdBzAg62+N28U4t7KpWkgfxFj0tFOCE+2wk8iOXf4OfCWhxtkq9b5TactkkW6OERLSk2vxHjk/8JaqKKQm0+hoq8d4WaO8dh+6g8d4hLQEZLVkolRErq+fkuiMSJQPsI8IRt5u65sxKcWJJ/BskOSp1s/8rzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=01Ib/2Ci; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CW4ii0kB5XvQhpt1yId/6v0IQVARd/+w8cnOiqM/5AKHb1OsEgGRHWYUvmHIAunlNIt0KGYYobTqqeQCZwS+AkHAcnkc6qc5Ez7MKfC09/qWRh4j7PAOG/2cmpFNt3tnI3io0gftMFVWYfQRfU+iOHPGADOKa+pXUaaU8QHOHbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fxt5KZEF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="01Ib/2Ci"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65C84C4AF0A;
-	Tue, 23 Jul 2024 18:27:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fxt5KZEF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57604C4AF0A;
+	Tue, 23 Jul 2024 18:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759231;
-	bh=4FsxlUhBL7+Ex2xFZCNw3l7DKSqxl44SRZb4W5wlnJM=;
+	s=korg; t=1721759234;
+	bh=umqC/fw6lYjhQfUB6Q9bW5ypaULukBPaI80gKN6VRIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=01Ib/2CiTDiNjYi2hDpZN1eSwIyp1wcdVclXFQjUHC4tbOtxEcEdIDSKjvEWsU7nF
-	 7ztzNNuhb4NUYn96kvJRyI5hDjjtfbYOaKa95ptZsTz+6NtOUyWP3OV/92JKzHRaIb
-	 ViB4dSXNhaLji0FM0RAowykXcpNqA49kIOhgbMqE=
+	b=fxt5KZEFfRX+PuNZOrNGn25bbK68gHj5Xo0tqrUk2tp2sTxMmyWAeZ6sQKHDtL2uR
+	 tAaphvitSs6J/w8yZskcv4UbCO3h7QTvOGl3Nkj6lZEg1AF8qMpsEWc8x8uTAezntv
+	 EBzdTJsNOaCsR9X3/qgq+2cuoMN+SVM0dWiJ1/20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobias Jakobi <tjakobi@math.uni-bielefeld.de>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Chunguang Xu <chunguang.xu@shopee.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Max Gurtovoy <mgurtovoy@nvidia.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 046/105] drm: panel-orientation-quirks: Add quirk for Aya Neo KUN
-Date: Tue, 23 Jul 2024 20:23:23 +0200
-Message-ID: <20240723180405.022903468@linuxfoundation.org>
+Subject: [PATCH 6.1 047/105] nvme: avoid double free special payload
+Date: Tue, 23 Jul 2024 20:23:24 +0200
+Message-ID: <20240723180405.063434457@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180402.490567226@linuxfoundation.org>
 References: <20240723180402.490567226@linuxfoundation.org>
@@ -51,40 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tobias Jakobi <tjakobi@math.uni-bielefeld.de>
+From: Chunguang Xu <chunguang.xu@shopee.com>
 
-[ Upstream commit f74fb5df429ebc6a614dc5aa9e44d7194d402e5a ]
+[ Upstream commit e5d574ab37f5f2e7937405613d9b1a724811e5ad ]
 
-Similar to the other Aya Neo devices this one features
-again a portrait screen, here with a native resolution
-of 1600x2560.
+If a discard request needs to be retried, and that retry may fail before
+a new special payload is added, a double free will result. Clear the
+RQF_SPECIAL_LOAD when the request is cleaned.
 
-Signed-off-by: Tobias Jakobi <tjakobi@math.uni-bielefeld.de>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240310220401.895591-1-tjakobi@math.uni-bielefeld.de
+Signed-off-by: Chunguang Xu <chunguang.xu@shopee.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Max Gurtovoy <mgurtovoy@nvidia.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_panel_orientation_quirks.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/nvme/host/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-index 426bbee2d9f5e..5db52d6c5c35c 100644
---- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
-+++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-@@ -202,6 +202,12 @@ static const struct dmi_system_id orientation_data[] = {
- 		  DMI_MATCH(DMI_BOARD_NAME, "NEXT"),
- 		},
- 		.driver_data = (void *)&lcd800x1280_rightside_up,
-+	}, {	/* AYA NEO KUN */
-+		.matches = {
-+		  DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "AYANEO"),
-+		  DMI_MATCH(DMI_BOARD_NAME, "KUN"),
-+		},
-+		.driver_data = (void *)&lcd1600x2560_rightside_up,
- 	}, {	/* Chuwi HiBook (CWI514) */
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "Hampoo"),
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 75b4dd8a55b03..1aff793a1d77e 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -954,6 +954,7 @@ void nvme_cleanup_cmd(struct request *req)
+ 			clear_bit_unlock(0, &ctrl->discard_page_busy);
+ 		else
+ 			kfree(bvec_virt(&req->special_vec));
++		req->rq_flags &= ~RQF_SPECIAL_PAYLOAD;
+ 	}
+ }
+ EXPORT_SYMBOL_GPL(nvme_cleanup_cmd);
 -- 
 2.43.0
 
