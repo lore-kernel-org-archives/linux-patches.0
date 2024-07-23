@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E2413E03A;
-	Tue, 23 Jul 2024 18:45:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6793B49634;
+	Tue, 23 Jul 2024 18:45:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721760302; cv=none; b=Pg9jWMx+lHFiMuP1WeZduNpGMcuPfUwtnu5z5JjyTCOj0LyzEOnZsyc0adsJ8SsOPXFKt3TOyx344b5Pw7spQx0d8D7WNbH73MXEKgU/Oedo4PrskFNbxq3VGGONfjTZI1Vtf1mVP8Iyi0RNbudtQwjkd2Q40959xItmnhP784k=
+	t=1721760305; cv=none; b=fSvbGrMy+i840WDcRgqiBR9PrC8hM5WQjOvAx6L3NPorExK7JtuDsLg7pzv8BqVZ/5c6jqCbg/CVmIkfe56EvxryNhztIXMpo00dvE8eskAw41U1taLYHDmx/lfLAKSErTwky4K6HafStaHfrbjH5aRn9EqQ950kntYjwunfFqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721760302; c=relaxed/simple;
-	bh=aq9aSkkIDmDEtOPyu/9qf+ftMxcoZ0LbqDffSaKbnIg=;
+	s=arc-20240116; t=1721760305; c=relaxed/simple;
+	bh=lOgOjc/UxxLu6aUMefGMRWWnximUpo/wVPU0R0A73Cw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FExSVAX09LyQoIm4T4pZ55l+Ghi3WURg+YoKnHJ0AgJT10B5plZy8hytfxndXLu57q9JQSi28nnC1H3qxj3XhT97dpKhkMqikItzhX0M5n9VvotzNGwEkB1liM2c8InMRulObDahvgIByXA1NgElPiRIGn2sBYt2Uvd0yS75eS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ABB4taC0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c5ZHzmldIhx9oIU7DySCLHS0T81AnF2Gs2tIKafTjEQGiKWxi2ZbCYBVeQsuR/SNh3tE8opmTWpQwdVTfFF6MVQZUVh1rU61W5cvnp34l5U34QIYgM2BQ7j4GoJNc7wHOvr42iV2baNfEt9le6MGzaQL1nXPwBLeTakl/lcDCSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XqQ9Iu/i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ABB4taC0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA6C7C4AF09;
-	Tue, 23 Jul 2024 18:45:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqQ9Iu/i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E11A9C4AF0A;
+	Tue, 23 Jul 2024 18:45:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721760302;
-	bh=aq9aSkkIDmDEtOPyu/9qf+ftMxcoZ0LbqDffSaKbnIg=;
+	s=korg; t=1721760305;
+	bh=lOgOjc/UxxLu6aUMefGMRWWnximUpo/wVPU0R0A73Cw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ABB4taC0EGG9Ev+djBXWO5oJI8zrx57/UK7kqABoifVtGA2N8Vk39C4M53Zu/+du+
-	 BsMoFUMhDBQ5v9XYkwnWJtp0tRlX5O47EQUwDoyYCquMNRpP2fyUeyuHc4o39UCclv
-	 Ftq27cU0ocoWNtMyeXm+va9xnvE69wwrHJPpVM24=
+	b=XqQ9Iu/ifD/IFd7Br4bNcGjPOtDJ1N9tgT6in68PjV4q+01dwDLan7RvbU950eNrk
+	 koOSGOUB0IRZ2Z0L+wCBUGSoHh7rpnTD1V+QzUuKRZ0w8xSYMB5sn7K/gXIVMWDdd6
+	 uFOJEMIxHCl14rRcuePaptezaNyObpCJybZUPU0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Atish Patra <atishp@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Jerry Zuo <jerry.zuo@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 142/163] drivers/perf: riscv: Reset the counter to hpmevent mapping while starting cpus
-Date: Tue, 23 Jul 2024 20:24:31 +0200
-Message-ID: <20240723180148.959972762@linuxfoundation.org>
+Subject: [PATCH 6.9 133/163] drm/amd/display: Add refresh rate range check
+Date: Tue, 23 Jul 2024 20:24:22 +0200
+Message-ID: <20240723180148.613332848@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -52,37 +55,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Holland <samuel.holland@sifive.com>
+From: Tom Chung <chiahsuan.chung@amd.com>
 
-[ Upstream commit 7dd646cf745c34d31e7ed2a52265e9ca8308f58f ]
+[ Upstream commit 74ad26b36d303ac233eccadc5c3a8d7ee4709f31 ]
 
-Currently, we stop all the counters while a new cpu is brought online.
-However, the hpmevent to counter mappings are not reset. The firmware may
-have some stale encoding in their mapping structure which may lead to
-undesirable results. We have not encountered such scenario though.
+[Why]
+We only enable the VRR while monitor usable refresh rate range
+is greater than 10 Hz.
+But we did not check the range in DRM_EDID_FEATURE_CONTINUOUS_FREQ
+case.
 
-Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
-Signed-off-by: Atish Patra <atishp@rivosinc.com>
-Link: https://lore.kernel.org/r/20240628-misc_perf_fixes-v4-2-e01cfddcf035@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+[How]
+Add a refresh rate range check before set the freesync_capable flag
+in DRM_EDID_FEATURE_CONTINUOUS_FREQ case.
+
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Signed-off-by: Jerry Zuo <jerry.zuo@amd.com>
+Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/riscv_pmu_sbi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/perf/riscv_pmu_sbi.c b/drivers/perf/riscv_pmu_sbi.c
-index 3e44d2fb8bf81..6d3fdf3a688dd 100644
---- a/drivers/perf/riscv_pmu_sbi.c
-+++ b/drivers/perf/riscv_pmu_sbi.c
-@@ -634,7 +634,7 @@ static inline void pmu_sbi_stop_all(struct riscv_pmu *pmu)
- 	 * which may include counters that are not enabled yet.
- 	 */
- 	sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_STOP,
--		  0, pmu->cmask, 0, 0, 0, 0);
-+		  0, pmu->cmask, SBI_PMU_STOP_FLAG_RESET, 0, 0, 0);
- }
- 
- static inline void pmu_sbi_stop_hw_ctrs(struct riscv_pmu *pmu)
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 2152e40ee1c27..087d7aad8e6b4 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -11289,9 +11289,11 @@ void amdgpu_dm_update_freesync_caps(struct drm_connector *connector,
+ 		if (is_dp_capable_without_timing_msa(adev->dm.dc,
+ 						     amdgpu_dm_connector)) {
+ 			if (edid->features & DRM_EDID_FEATURE_CONTINUOUS_FREQ) {
+-				freesync_capable = true;
+ 				amdgpu_dm_connector->min_vfreq = connector->display_info.monitor_range.min_vfreq;
+ 				amdgpu_dm_connector->max_vfreq = connector->display_info.monitor_range.max_vfreq;
++				if (amdgpu_dm_connector->max_vfreq -
++				    amdgpu_dm_connector->min_vfreq > 10)
++					freesync_capable = true;
+ 			} else {
+ 				edid_check_required = edid->version > 1 ||
+ 						      (edid->version == 1 &&
 -- 
 2.43.0
 
