@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0C1713D600;
-	Tue, 23 Jul 2024 18:40:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90DE71586CB;
+	Tue, 23 Jul 2024 18:40:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721760016; cv=none; b=esDtvxglT+2iBH8tgVF1T7AVmXyBETCut41lPVfOD6plZRCr9nz4C1vUSLs9621Ui2sTV50RDR9yTyumlLQyHuEDET+i54cJmD2w41M6TKMf9QuGLH1th1PUMRzgbbRoXWdM9sNS8XnxslF5WhYaDEYf9n3JarOl5WZuZlypFeM=
+	t=1721760018; cv=none; b=gbKNDeXEX+p2alBsCD98ZfHi/ew3rVKz5/zodvki4a0HxrxmJezIqTwWqGkvSOmIvWu/Bbf4VUXoOSaV4bX4MsvIDMnGADuXTRfj7s4aNC9cbrQx3V8Rhr+yJKnVnLxejLYg23bvI/Q2oPqfAnghlYJBz7FhspJku3y5a5BG0Uk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721760016; c=relaxed/simple;
-	bh=+njlWah88fXdhK3sOTinwXMVTMhLNAQU6tKu/MY894Q=;
+	s=arc-20240116; t=1721760018; c=relaxed/simple;
+	bh=KbFOT0RlzmtwkWrbcURfuWnLO7/LHSZRmjl6qytRztU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HbN5upSihdovj2laxTdVGM1n/svk89Km6S29NlE7b810dB4/WwKC3KYRqOwBOaHetSeCfJGGtn73ENkQIa+4LU19MfKgUHlR2ZsALRV7eqNJn1PtCCCbg1Dsv2WdRMGp5GlTmeu1A/mVwIzVpdS0QqpAtmuuuBdH3EdeJ6KBbtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SHbkFMQd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LksjwXoRMGapLvfa/8oLMEzAHDvDzNzHP+qDGj+qbxPlJAkK8P4Hm/DbyeoSk484kV4+HDh09ui1LKleRxu5hHKaxb76KRj0a1JknugpEg67r/tw/kx1d9TOOGconMGAq9833MWNMaYatMSJREd0KmirGrpDWWjCBb5YlmMxHcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ef4yZRCX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SHbkFMQd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25392C4AF0A;
-	Tue, 23 Jul 2024 18:40:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ef4yZRCX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 191EBC4AF09;
+	Tue, 23 Jul 2024 18:40:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721760015;
-	bh=+njlWah88fXdhK3sOTinwXMVTMhLNAQU6tKu/MY894Q=;
+	s=korg; t=1721760018;
+	bh=KbFOT0RlzmtwkWrbcURfuWnLO7/LHSZRmjl6qytRztU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SHbkFMQdStPpmROVyz2VgHJoJ/JoDv5DGGczP3CpYIFsS+7MNsyFrWlRYqF6yOPyb
-	 N+I2gCO0pu9wf/dbSoA3e3x4eDXxKz9cgdWJWjUD1CNFMeCAvqMqdUV76+Awq+LmD7
-	 NVutfm67mSGr+gAN2tE8N6Vk2cvS49RLQp+6YPCQ=
+	b=Ef4yZRCXElbLwohLH44LNtnkLP6yYu6Y1XWVUrpwHPZdz8TAVK03pFXsg3nRvFAc0
+	 zeESrqTYPH3OL3Vy1ff/zo6B0OZ6KDSKqkOu2DAB2VpZF/lWmoPpvNXYLYiAA6qQJi
+	 fEgllYl+Byut7mdcGMY4DKB3LBGv1zJNpg1rFo/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suma Hegde <suma.hegde@amd.com>,
-	Naveen Krishna Chatradhi <naveenkrishna.chatradhi@amd.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Stefan Binding <sbinding@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 033/163] platform/x86/amd/hsmp: Check HSMP support on AMD family of processors
-Date: Tue, 23 Jul 2024 20:22:42 +0200
-Message-ID: <20240723180144.750710511@linuxfoundation.org>
+Subject: [PATCH 6.9 068/163] ALSA: hda: cs35l41: Support Lenovo Thinkbook 16P Gen 5
+Date: Tue, 23 Jul 2024 20:23:17 +0200
+Message-ID: <20240723180146.097530049@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -52,100 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suma Hegde <suma.hegde@amd.com>
+From: Stefan Binding <sbinding@opensource.cirrus.com>
 
-[ Upstream commit 77f1972bdcf7513293e8bbe376b9fe837310ee9c ]
+[ Upstream commit 82f3daed2d3590fa286a02301573a183dd902a0f ]
 
-HSMP interface is supported only on few x86 processors from AMD.
-Accessing HSMP registers on rest of the platforms might cause
-unexpected behaviour. So add a check.
+This laptop does not contain _DSD so needs to be supported using the
+configuration table.
 
-Also unavailability of this interface on rest of the processors
-is not an error. Hence, use pr_info() instead of the pr_err() to
-log the message.
-
-Signed-off-by: Suma Hegde <suma.hegde@amd.com>
-Reviewed-by: Naveen Krishna Chatradhi <naveenkrishna.chatradhi@amd.com>
-Link: https://lore.kernel.org/r/20240603081512.142909-1-suma.hegde@amd.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lore.kernel.org/r/20240606130351.333495-2-sbinding@opensource.cirrus.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/hsmp.c | 50 ++++++++++++++++++++++++++++-----
- 1 file changed, 43 insertions(+), 7 deletions(-)
+ sound/pci/hda/cs35l41_hda_property.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/platform/x86/amd/hsmp.c b/drivers/platform/x86/amd/hsmp.c
-index 1927be901108e..272d32a95e216 100644
---- a/drivers/platform/x86/amd/hsmp.c
-+++ b/drivers/platform/x86/amd/hsmp.c
-@@ -907,16 +907,44 @@ static int hsmp_plat_dev_register(void)
- 	return ret;
- }
+diff --git a/sound/pci/hda/cs35l41_hda_property.c b/sound/pci/hda/cs35l41_hda_property.c
+index 4f5e581cdd5ff..e034828df4452 100644
+--- a/sound/pci/hda/cs35l41_hda_property.c
++++ b/sound/pci/hda/cs35l41_hda_property.c
+@@ -118,6 +118,8 @@ static const struct cs35l41_config cs35l41_config_table[] = {
+ 	{ "17AA38B5", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, 1, -1, 0, 0, 0 },
+ 	{ "17AA38B6", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, 1, -1, 0, 0, 0 },
+ 	{ "17AA38B7", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, 1, -1, 0, 0, 0 },
++	{ "17AA38F9", 2, EXTERNAL, { CS35L41_RIGHT, CS35L41_LEFT, 0, 0 }, 0, 2, -1, 0, 0, 0 },
++	{ "17AA38FA", 2, EXTERNAL, { CS35L41_RIGHT, CS35L41_LEFT, 0, 0 }, 0, 2, -1, 0, 0, 0 },
+ 	{}
+ };
  
-+/*
-+ * This check is only needed for backward compatibility of previous platforms.
-+ * All new platforms are expected to support ACPI based probing.
-+ */
-+static bool legacy_hsmp_support(void)
-+{
-+	if (boot_cpu_data.x86_vendor != X86_VENDOR_AMD)
-+		return false;
-+
-+	switch (boot_cpu_data.x86) {
-+	case 0x19:
-+		switch (boot_cpu_data.x86_model) {
-+		case 0x00 ... 0x1F:
-+		case 0x30 ... 0x3F:
-+		case 0x90 ... 0x9F:
-+		case 0xA0 ... 0xAF:
-+			return true;
-+		default:
-+			return false;
-+		}
-+	case 0x1A:
-+		switch (boot_cpu_data.x86_model) {
-+		case 0x00 ... 0x1F:
-+			return true;
-+		default:
-+			return false;
-+		}
-+	default:
-+		return false;
-+	}
-+
-+	return false;
-+}
-+
- static int __init hsmp_plt_init(void)
- {
- 	int ret = -ENODEV;
+@@ -509,6 +511,8 @@ static const struct cs35l41_prop_model cs35l41_prop_model_table[] = {
+ 	{ "CSC3551", "17AA38B5", generic_dsd_config },
+ 	{ "CSC3551", "17AA38B6", generic_dsd_config },
+ 	{ "CSC3551", "17AA38B7", generic_dsd_config },
++	{ "CSC3551", "17AA38F9", generic_dsd_config },
++	{ "CSC3551", "17AA38FA", generic_dsd_config },
+ 	{}
+ };
  
--	if (boot_cpu_data.x86_vendor != X86_VENDOR_AMD || boot_cpu_data.x86 < 0x19) {
--		pr_err("HSMP is not supported on Family:%x model:%x\n",
--		       boot_cpu_data.x86, boot_cpu_data.x86_model);
--		return ret;
--	}
--
- 	/*
- 	 * amd_nb_num() returns number of SMN/DF interfaces present in the system
- 	 * if we have N SMN/DF interfaces that ideally means N sockets
-@@ -930,7 +958,15 @@ static int __init hsmp_plt_init(void)
- 		return ret;
- 
- 	if (!plat_dev.is_acpi_device) {
--		ret = hsmp_plat_dev_register();
-+		if (legacy_hsmp_support()) {
-+			/* Not ACPI device, but supports HSMP, register a plat_dev */
-+			ret = hsmp_plat_dev_register();
-+		} else {
-+			/* Not ACPI, Does not support HSMP */
-+			pr_info("HSMP is not supported on Family:%x model:%x\n",
-+				boot_cpu_data.x86, boot_cpu_data.x86_model);
-+			ret = -ENODEV;
-+		}
- 		if (ret)
- 			platform_driver_unregister(&amd_hsmp_driver);
- 	}
 -- 
 2.43.0
 
