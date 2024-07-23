@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9653513D896;
-	Tue, 23 Jul 2024 18:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D621586CB;
+	Tue, 23 Jul 2024 18:43:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721760219; cv=none; b=VDJ01hUVBU1x+Y00W4dZpVRVdQ3aQLss8f37pRv6HBfvcCQ+W3oVJW0JEC1SoIWUwQLYX/VNcYiOTXkLGSgkKc0ScWvwCkLp3W9T4cs+wBc7MqYXzEhKZ//BUqGJMuV/V9orZKKwD9sriP+dV2Kq/e0GV8p0mv5wXNSFn1p3RIQ=
+	t=1721760222; cv=none; b=GTLNCP6RHJsTTU4473w8J1G3O1Wpa8HVYd0HzWkpQBaw9FiGOXSLO7H1PFi0JwSfvOOyJu2gjolPS0s1Oi+fJb6Fp6el5Q00vJkmqLgWickB1KEaetMpkknYMYtfwNelYk83k4N4I8FJyWtQcghoM+sB6jpR760ockwNxgh2mNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721760219; c=relaxed/simple;
-	bh=8H7mSN8x085vq+Ek2PZP388bJHoQxyuzoE4yPj8hsIw=;
+	s=arc-20240116; t=1721760222; c=relaxed/simple;
+	bh=LQWtrTf9M1pPuE0rh3eVzAJQVZPj4iDRja5lL9A38pc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IDW4NJvq2cOEtdfjvlo2LV/xB7WAx5y/YpRW01ocse+y30pfAH0pzFnV8adjcS8+/sb/lZL9RldXEv4NPKAf7+LrAlTsUA9OOZI0yr82Ja0hqTGwhgDBCqD367i2XLXNoB2KbSz9D4jEztpR3V7xIbNPjQGuB+sc68PT1ISiCwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RQtlMh2O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Z/VBLhKBkSSih/rVKPOd6+7cYVr4Pkgg75s8xB75FYk4OaamoHwPvCc5y/1kS/3noUlT2Kj7RX+iNldO0BASbnrH19E4vQfaMaRrYhMMveqXwGUIcitLctlYjTPYSBVTviEQJQyeDp+h0zJIkM8oRwD6JdDQRLuKHup8UA2n0MQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ok14nLl1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RQtlMh2O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AE40C4AF09;
-	Tue, 23 Jul 2024 18:43:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ok14nLl1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DBA2C4AF09;
+	Tue, 23 Jul 2024 18:43:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721760219;
-	bh=8H7mSN8x085vq+Ek2PZP388bJHoQxyuzoE4yPj8hsIw=;
+	s=korg; t=1721760222;
+	bh=LQWtrTf9M1pPuE0rh3eVzAJQVZPj4iDRja5lL9A38pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RQtlMh2OIPaEuD9JEwD2K+aQxZLeMBnlq03aCqxHW2W1ErAIafsUMC13AfxIq32A7
-	 peQX23usx9xM9OlqEGaeOFdatq1YocQ2HWq408VsH6Bb6czYDTluubz2xXorXCfSq5
-	 Ghpn1kbWl5dGolkxFa2UhI/j0OqSt4iSjRfGTtoc=
+	b=Ok14nLl1SXVlubxUQN7f11sMB6x30ZUAcdsy0QHf3g8BauLMR/xeK3egFBaENprxX
+	 hUQn/zp9BIpUwwAa/BqqEVioFcEeDzR1xaImGIGeA2h1LIXL2QKIJocQq1QM1Ztg1/
+	 Gyo2HKl/Ign3FKrc4WwX4skR8/FY1DT45blZstqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Puranjay Mohan <puranjay@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 143/163] riscv: stacktrace: fix usage of ftrace_graph_ret_addr()
-Date: Tue, 23 Jul 2024 20:24:32 +0200
-Message-ID: <20240723180148.997680334@linuxfoundation.org>
+Subject: [PATCH 6.9 144/163] spi: imx: Dont expect DMA for i.MX{25,35,50,51,53} cspi devices
+Date: Tue, 23 Jul 2024 20:24:33 +0200
+Message-ID: <20240723180149.035344235@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -46,53 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Puranjay Mohan <puranjay@kernel.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 393da6cbb2ff89aadc47683a85269f913aa1c139 ]
+[ Upstream commit ce1dac560a74220f2e53845ec0723b562288aed4 ]
 
-ftrace_graph_ret_addr() takes an `idx` integer pointer that is used to
-optimize the stack unwinding. Pass it a valid pointer to utilize the
-optimizations that might be available in the future.
+While in commit 2dd33f9cec90 ("spi: imx: support DMA for imx35") it was
+claimed that DMA works on i.MX25, i.MX31 and i.MX35 the respective
+device trees don't add DMA channels. The Reference manuals of i.MX31 and
+i.MX25 also don't mention the CSPI core being DMA capable. (I didn't
+check the others.)
 
-The commit is making riscv's usage of ftrace_graph_ret_addr() match
-x86_64.
+Since commit e267a5b3ec59 ("spi: spi-imx: Use dev_err_probe for failed
+DMA channel requests") this results in an error message
 
-Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Link: https://lore.kernel.org/r/20240618145820.62112-1-puranjay@kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+	spi_imx 43fa4000.spi: error -ENODEV: can't get the TX DMA channel!
+
+during boot. However that isn't fatal and the driver gets loaded just
+fine, just without using DMA.
+
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://patch.msgid.link/20240508095610.2146640-2-u.kleine-koenig@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/stacktrace.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/spi/spi-imx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/kernel/stacktrace.c b/arch/riscv/kernel/stacktrace.c
-index 0d3f00eb0baee..10e311b2759d3 100644
---- a/arch/riscv/kernel/stacktrace.c
-+++ b/arch/riscv/kernel/stacktrace.c
-@@ -32,6 +32,7 @@ void notrace walk_stackframe(struct task_struct *task, struct pt_regs *regs,
- 			     bool (*fn)(void *, unsigned long), void *arg)
- {
- 	unsigned long fp, sp, pc;
-+	int graph_idx = 0;
- 	int level = 0;
- 
- 	if (regs) {
-@@ -68,7 +69,7 @@ void notrace walk_stackframe(struct task_struct *task, struct pt_regs *regs,
- 			pc = regs->ra;
- 		} else {
- 			fp = frame->fp;
--			pc = ftrace_graph_ret_addr(current, NULL, frame->ra,
-+			pc = ftrace_graph_ret_addr(current, &graph_idx, frame->ra,
- 						   &frame->ra);
- 			if (pc == (unsigned long)ret_from_exception) {
- 				if (unlikely(!__kernel_text_address(pc) || !fn(arg, pc)))
+diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
+index 09b6c1b45f1a1..09c676e50fe0e 100644
+--- a/drivers/spi/spi-imx.c
++++ b/drivers/spi/spi-imx.c
+@@ -1050,7 +1050,7 @@ static struct spi_imx_devtype_data imx35_cspi_devtype_data = {
+ 	.rx_available = mx31_rx_available,
+ 	.reset = mx31_reset,
+ 	.fifo_size = 8,
+-	.has_dmamode = true,
++	.has_dmamode = false,
+ 	.dynamic_burst = false,
+ 	.has_targetmode = false,
+ 	.devtype = IMX35_CSPI,
 -- 
 2.43.0
 
