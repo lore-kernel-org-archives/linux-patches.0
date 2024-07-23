@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2272042067;
-	Tue, 23 Jul 2024 18:33:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE8942067;
+	Tue, 23 Jul 2024 18:33:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759587; cv=none; b=o1qZyDWDaGtjE33HGOYQn7lsFY8p9Jq/RavpgsJI8rICbbvC4H5adN5IbMsmzIS2DUdl7vb83+M1WlKdlI3Ns56VsaKBfJ/BNnBUq+PInEhRlFaCX8JoUoO2x1fpIMJNFK7u4JLLgoyzGL1a2pe4mjtQ2TbZA+oCzMNIdw+Bs0g=
+	t=1721759590; cv=none; b=IrJ+up8MWwstCrD11znRvp6EDGPKAPPyEcZ8AUzktMBuoMt12eNS/9slCvZMtqrlP115Jt/MyKKyYyrCUErHx4Xjip4ahtqLujwN2soxgDw+E1vAVWZBvO/hY6sc+A9UNE5On9hJFEPyAFFwjWhPcxhylAVpwGX2vtgem5J6tWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759587; c=relaxed/simple;
-	bh=2DjtY3q4cEIcc/YBtEq+pBiuH3UfLO6szk+F3ObDTL8=;
+	s=arc-20240116; t=1721759590; c=relaxed/simple;
+	bh=/riMaBp1GMzhYjKYy1GKoH7H9eIEdUj5bs5IqitGT28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rsJa++pRVkztTWciGL8Dnri29+14hwVpHwAV3ZT+2OUB65YorDDcIFqmWzKG18XrcsxIcT37Q3Zt/egGn9PXVCYRBSacRhn/AVJBAHge3jYfLcevbuJX1gP4YLcxtL+A2MISX5526kdz6Qp2nkw3qbeKkRKB9JXsIG2MIw8e1JY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EvVWDH8T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YQAUNCLuidjDUWIl0YooibBCDi3hrCoNFQ7fAVDFtuqA+uHkwtLLg5j3+Uc4aUrRmJttxVnzirzTv78I/cEljRqvYVwSqvhNVwWfXLEGupLllcg/yy9r5Z7GS+KLEvY3NMaEtVjun2h21Vw2835E7LRHRnAbF7yCeh9txNlzTKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VcBa/xx5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EvVWDH8T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BB1CC4AF0A;
-	Tue, 23 Jul 2024 18:33:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VcBa/xx5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F648C4AF0A;
+	Tue, 23 Jul 2024 18:33:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759587;
-	bh=2DjtY3q4cEIcc/YBtEq+pBiuH3UfLO6szk+F3ObDTL8=;
+	s=korg; t=1721759590;
+	bh=/riMaBp1GMzhYjKYy1GKoH7H9eIEdUj5bs5IqitGT28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EvVWDH8Tz30zcUvwm75D5HqN9SmviWnSBoxcJtzHLvkCIKBlooVk38AgNHK/A+Ccb
-	 wX8KjDP9IJfCkMzHcl3m6GgTfCBbHojSR6RyI7cLS8f7UDa0PvZ8Itq+fC+iZNkRaa
-	 YRTCI/jhwqZ/8M1QujHk+uZ3nxFcYAGE6Xpvr1js=
+	b=VcBa/xx5zdNOuqMfmQPljN3lkgCe0JhM2Z0S6RfwPZfjbwO9+F3/tk+zZ7DMyMZdZ
+	 p2eLks1tmvXpA1CgEgVOlC+7GnfnM6DhoGFQezOwPVJIwxAiPkPa/yR8BY54ceiblg
+	 nbF9FZbDQSTH8Pn3yfBONggxOadpxwVjJhjPvVxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Hindborg <a.hindborg@samsung.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 030/129] null_blk: fix validation of block size
-Date: Tue, 23 Jul 2024 20:22:58 +0200
-Message-ID: <20240723180405.954924978@linuxfoundation.org>
+Subject: [PATCH 6.6 031/129] kconfig: gconf: give a proper initial state to the Save button
+Date: Tue, 23 Jul 2024 20:22:59 +0200
+Message-ID: <20240723180405.993508916@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180404.759900207@linuxfoundation.org>
 References: <20240723180404.759900207@linuxfoundation.org>
@@ -52,43 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Hindborg <a.hindborg@samsung.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit c462ecd659b5fce731f1d592285832fd6ad54053 ]
+[ Upstream commit 46edf4372e336ef3a61c3126e49518099d2e2e6d ]
 
-Block size should be between 512 and PAGE_SIZE and be a power of 2. The current
-check does not validate this, so update the check.
+Currently, the initial state of the "Save" button is always active.
 
-Without this patch, null_blk would Oops due to a null pointer deref when
-loaded with bs=1536 [1].
+If none of the CONFIG options are changed while loading the .config
+file, the "Save" button should be greyed out.
 
-Link: https://lore.kernel.org/all/87wmn8mocd.fsf@metaspace.dk/
+This can be fixed by calling conf_read() after widget initialization.
 
-Signed-off-by: Andreas Hindborg <a.hindborg@samsung.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20240603192645.977968-1-nmi@metaspace.dk
-[axboe: remove unnecessary braces and != 0 check]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/null_blk/main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ scripts/kconfig/gconf.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
-index 561706fc2cd8e..f1b7d7fdffec8 100644
---- a/drivers/block/null_blk/main.c
-+++ b/drivers/block/null_blk/main.c
-@@ -2013,8 +2013,8 @@ static int null_validate_conf(struct nullb_device *dev)
- 		return -EINVAL;
- 	}
+diff --git a/scripts/kconfig/gconf.c b/scripts/kconfig/gconf.c
+index 9709aca3a30fe..9e52c7360e55b 100644
+--- a/scripts/kconfig/gconf.c
++++ b/scripts/kconfig/gconf.c
+@@ -1478,7 +1478,6 @@ int main(int ac, char *av[])
  
--	dev->blocksize = round_down(dev->blocksize, 512);
--	dev->blocksize = clamp_t(unsigned int, dev->blocksize, 512, 4096);
-+	if (blk_validate_block_size(dev->blocksize))
-+		return -EINVAL;
+ 	conf_parse(name);
+ 	fixup_rootmenu(&rootmenu);
+-	conf_read(NULL);
  
- 	if (dev->queue_mode == NULL_Q_MQ && dev->use_per_node_hctx) {
- 		if (dev->submit_queues != nr_online_nodes)
+ 	/* Load the interface and connect signals */
+ 	init_main_window(glade_file);
+@@ -1486,6 +1485,8 @@ int main(int ac, char *av[])
+ 	init_left_tree();
+ 	init_right_tree();
+ 
++	conf_read(NULL);
++
+ 	switch (view_mode) {
+ 	case SINGLE_VIEW:
+ 		display_tree_part();
 -- 
 2.43.0
 
