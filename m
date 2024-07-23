@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3403B155351;
-	Tue, 23 Jul 2024 18:28:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25D2E155351;
+	Tue, 23 Jul 2024 18:28:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759303; cv=none; b=iAyVUT9o5heFdMxPJz7g+1bmofDQNIrrFyajIKYCP3t2Fl0Opg6VfYyL+jB3XV3GIHu+ALTeIxLiT8obzJZpVC2lIprhmRhCBB9LXUAbGm0HsIMiYvM2ioA+aX4UofbqjSsq8SWdmgCyx6y6AP3qyxGw6IPBsw6PUPlYwh3LMNY=
+	t=1721759306; cv=none; b=SoYNyKlvnb9DiTW5l/4OUgV3qYYDglNSM3fO2drde4oWCR9W10e09uPjgLVI0F07JOWfLFr69FOf4WhSswaA+3rTRITDiteAQDhLkfF2aenIFkRdrekBHjmabbPIAyL9EptMHwTwqEbGGiz+3YEJBzhioZRnI56kK218ND06/jU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759303; c=relaxed/simple;
-	bh=iWt3vCesViiahLxPypjaO0nblPpb2ft1LVAXtSZoK7w=;
+	s=arc-20240116; t=1721759306; c=relaxed/simple;
+	bh=o1Z+9KAjkp+D6DoWfMDKwVKGS/kjRmWYDNz0+zgRJtA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i42Vne80JyEKiwBXcvx3NDuUYw6KTCkdUkAVGLj7Xdd/b44elW7A2jvJstBriBGmANZYgU/gt7njKnXT+wYCoF37zh2klzSE5mixq4s6zZQN4FOxweA5BSN93yte43ycGz16UfGOg8RZ7E3YVQsN/Is/yOExksBC1FalJIg5jko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fj9NN614; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jFifvB9dS6TDZ3ZLULc+5SpnEotZviBSFGLpUiEQHJWlFQGsgv5Ayb3C8TykR7VKcKfI4FEYcP0tWEASyn3xwClUoHGqFR1DMdeyR1Siz+HYAPxSmhuMgXq1plEBZJ8BAbe17bcjjreatV0HfUA4ktvGsQdps8s/K4S9/uMddZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=We/W+QHA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fj9NN614"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE4F9C4AF09;
-	Tue, 23 Jul 2024 18:28:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="We/W+QHA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9722BC4AF0A;
+	Tue, 23 Jul 2024 18:28:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759303;
-	bh=iWt3vCesViiahLxPypjaO0nblPpb2ft1LVAXtSZoK7w=;
+	s=korg; t=1721759306;
+	bh=o1Z+9KAjkp+D6DoWfMDKwVKGS/kjRmWYDNz0+zgRJtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fj9NN614c/kbtn/mLF6EVlwd9S7kCfR+2kUaIlFss26aCDEvysq1zbEjyGLFi6wsX
-	 2JbszRs0yJRabTqIOaoogaZX+HcJkxByloCKr1gWfJetZCjSKgzCyXoBHZi7Q8IB7Z
-	 VHPRolMfAa+IUmJrdSG0nWhn7+GLbl+m8vbICVh4=
+	b=We/W+QHAOOCvva1kZzRE6ZAz4F6rTSMsfvaB+qbxqQuz1/XMzFTPEjH96eyOQsGe8
+	 /R80Vq39+fS6FoyG/6TDw2/Dt/za9jYolvO1BFPNKCKm8Xizk1PDoqw6o2VtX7p6zM
+	 JDrQR+V4U3uLTUKHNKZB1ghEzFShs3mgTLYtFLOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Nick Child <nnac123@linux.ibm.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 071/105] btrfs: qgroup: fix quota root leak after quota disable failure
-Date: Tue, 23 Jul 2024 20:23:48 +0200
-Message-ID: <20240723180405.982257088@linuxfoundation.org>
+Subject: [PATCH 6.1 072/105] ibmvnic: Add tx check to prevent skb leak
+Date: Tue, 23 Jul 2024 20:23:49 +0200
+Message-ID: <20240723180406.020576878@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180402.490567226@linuxfoundation.org>
 References: <20240723180402.490567226@linuxfoundation.org>
@@ -53,57 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Nick Child <nnac123@linux.ibm.com>
 
-[ Upstream commit a7e4c6a3031c74078dba7fa36239d0f4fe476c53 ]
+[ Upstream commit 0983d288caf984de0202c66641577b739caad561 ]
 
-If during the quota disable we fail when cleaning the quota tree or when
-deleting the root from the root tree, we jump to the 'out' label without
-ever dropping the reference on the quota root, resulting in a leak of the
-root since fs_info->quota_root is no longer pointing to the root (we have
-set it to NULL just before those steps).
+Below is a summary of how the driver stores a reference to an skb during
+transmit:
+    tx_buff[free_map[consumer_index]]->skb = new_skb;
+    free_map[consumer_index] = IBMVNIC_INVALID_MAP;
+    consumer_index ++;
+Where variable data looks like this:
+    free_map == [4, IBMVNIC_INVALID_MAP, IBMVNIC_INVALID_MAP, 0, 3]
+                                               	consumer_index^
+    tx_buff == [skb=null, skb=<ptr>, skb=<ptr>, skb=null, skb=null]
 
-Fix this by always doing a btrfs_put_root() call under the 'out' label.
-This is a problem that exists since qgroups were first added in 2012 by
-commit bed92eae26cc ("Btrfs: qgroup implementation and prototypes"), but
-back then we missed a kfree on the quota root and free_extent_buffer()
-calls on its root and commit root nodes, since back then roots were not
-yet reference counted.
+The driver has checks to ensure that free_map[consumer_index] pointed to
+a valid index but there was no check to ensure that this index pointed
+to an unused/null skb address. So, if, by some chance, our free_map and
+tx_buff lists become out of sync then we were previously risking an
+skb memory leak. This could then cause tcp congestion control to stop
+sending packets, eventually leading to ETIMEDOUT.
 
-Reviewed-by: Boris Burkov <boris@bur.io>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Therefore, add a conditional to ensure that the skb address is null. If
+not then warn the user (because this is still a bug that should be
+patched) and free the old pointer to prevent memleak/tcp problems.
+
+Signed-off-by: Nick Child <nnac123@linux.ibm.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/qgroup.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/ibm/ibmvnic.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
-index 80ca7b435b0d1..e482889667ec9 100644
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -1222,7 +1222,7 @@ int btrfs_quota_enable(struct btrfs_fs_info *fs_info)
+diff --git a/drivers/net/ethernet/ibm/ibmvnic.c b/drivers/net/ethernet/ibm/ibmvnic.c
+index 8f377d0a80fe6..6d17738c1c536 100644
+--- a/drivers/net/ethernet/ibm/ibmvnic.c
++++ b/drivers/net/ethernet/ibm/ibmvnic.c
+@@ -2288,6 +2288,18 @@ static netdev_tx_t ibmvnic_xmit(struct sk_buff *skb, struct net_device *netdev)
+ 	    (tx_pool->consumer_index + 1) % tx_pool->num_buffers;
  
- int btrfs_quota_disable(struct btrfs_fs_info *fs_info)
- {
--	struct btrfs_root *quota_root;
-+	struct btrfs_root *quota_root = NULL;
- 	struct btrfs_trans_handle *trans = NULL;
- 	int ret = 0;
- 
-@@ -1317,9 +1317,9 @@ int btrfs_quota_disable(struct btrfs_fs_info *fs_info)
- 	btrfs_free_tree_block(trans, btrfs_root_id(quota_root),
- 			      quota_root->node, 0, 1);
- 
--	btrfs_put_root(quota_root);
- 
- out:
-+	btrfs_put_root(quota_root);
- 	mutex_unlock(&fs_info->qgroup_ioctl_lock);
- 	if (ret && trans)
- 		btrfs_end_transaction(trans);
+ 	tx_buff = &tx_pool->tx_buff[bufidx];
++
++	/* Sanity checks on our free map to make sure it points to an index
++	 * that is not being occupied by another skb. If skb memory is
++	 * not freed then we see congestion control kick in and halt tx.
++	 */
++	if (unlikely(tx_buff->skb)) {
++		dev_warn_ratelimited(dev, "TX free map points to untracked skb (%s %d idx=%d)\n",
++				     skb_is_gso(skb) ? "tso_pool" : "tx_pool",
++				     queue_num, bufidx);
++		dev_kfree_skb_any(tx_buff->skb);
++	}
++
+ 	tx_buff->skb = skb;
+ 	tx_buff->index = bufidx;
+ 	tx_buff->pool_index = queue_num;
 -- 
 2.43.0
 
